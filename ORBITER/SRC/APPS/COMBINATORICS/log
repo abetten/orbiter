@@ -1,0 +1,1131 @@
+cnt=1 v=2 k=1 lambda=0 mu=1 top=-1 bottom=1
+factor_INT, the number is one
+b=1
+tb=-1
+f=0 g=1 r=0 s=-1
+is ruled out by Krein condition (1)
+cnt=2 v=4 k=2 lambda=0 mu=2 top=2 bottom=4
+b=2
+tb=1
+f=2 g=1 r=0 s=-2
+cnt=3 v=5 k=2 lambda=0 mu=1 top=0 bottom=5
+bottom is not a square
+cnt=4 v=6 k=3 lambda=0 mu=3 top=9 bottom=9
+b=3
+tb=3
+f=4 g=1 r=0 s=-3
+cnt=5 v=7 k=3 lambda=0 mu=2 top=6 bottom=8
+is ruled out by integrality condition
+cnt=6 v=7 k=3 lambda=1 mu=1 top=-6 bottom=8
+is ruled out by integrality condition
+cnt=7 v=8 k=4 lambda=0 mu=4 top=20 bottom=16
+b=4
+tb=5
+f=6 g=1 r=0 s=-4
+cnt=8 v=9 k=4 lambda=0 mu=3 top=16 bottom=13
+is ruled out by integrality condition
+cnt=9 v=9 k=4 lambda=1 mu=2 top=0 bottom=9
+b=3
+tb=0
+f=4 g=4 r=1 s=-2
+cnt=10 v=9 k=4 lambda=2 mu=1 top=-16 bottom=13
+is ruled out by integrality condition
+cnt=11 v=10 k=3 lambda=0 mu=1 top=3 bottom=9
+b=3
+tb=1
+f=5 g=4 r=1 s=-2
+cnt=12 v=10 k=5 lambda=0 mu=5 top=35 bottom=25
+b=5
+tb=7
+f=8 g=1 r=0 s=-5
+cnt=13 v=11 k=4 lambda=0 mu=2 top=12 bottom=12
+bottom is not a square
+cnt=14 v=11 k=5 lambda=0 mu=4 top=30 bottom=20
+bottom is not a square
+cnt=15 v=11 k=5 lambda=1 mu=3 top=10 bottom=12
+is ruled out by integrality condition
+cnt=16 v=11 k=5 lambda=2 mu=2 top=-10 bottom=12
+is ruled out by integrality condition
+cnt=17 v=11 k=5 lambda=3 mu=1 top=-30 bottom=20
+bottom is not a square
+cnt=18 v=12 k=6 lambda=0 mu=6 top=54 bottom=36
+b=6
+tb=9
+f=10 g=1 r=0 s=-6
+cnt=19 v=13 k=4 lambda=1 mu=1 top=-8 bottom=12
+is ruled out by integrality condition
+cnt=20 v=13 k=6 lambda=0 mu=5 top=48 bottom=29
+is ruled out by integrality condition
+cnt=21 v=13 k=6 lambda=1 mu=4 top=24 bottom=17
+is ruled out by integrality condition
+cnt=22 v=13 k=6 lambda=2 mu=3 top=0 bottom=13
+bottom is not a square
+cnt=23 v=13 k=6 lambda=3 mu=2 top=-24 bottom=17
+is ruled out by integrality condition
+cnt=24 v=13 k=6 lambda=4 mu=1 top=-48 bottom=29
+is ruled out by integrality condition
+cnt=25 v=14 k=7 lambda=0 mu=7 top=77 bottom=49
+b=7
+tb=11
+f=12 g=1 r=0 s=-7
+cnt=26 v=15 k=6 lambda=1 mu=3 top=16 bottom=16
+b=4
+tb=4
+f=9 g=5 r=1 s=-3
+cnt=27 v=15 k=7 lambda=0 mu=6 top=70 bottom=40
+is ruled out by integrality condition
+cnt=28 v=15 k=7 lambda=1 mu=5 top=42 bottom=24
+is ruled out by integrality condition
+cnt=29 v=15 k=7 lambda=2 mu=4 top=14 bottom=16
+is ruled out by integrality condition
+cnt=30 v=15 k=7 lambda=3 mu=3 top=-14 bottom=16
+is ruled out by integrality condition
+cnt=31 v=15 k=7 lambda=4 mu=2 top=-42 bottom=24
+is ruled out by integrality condition
+cnt=32 v=15 k=7 lambda=5 mu=1 top=-70 bottom=40
+is ruled out by integrality condition
+cnt=33 v=16 k=5 lambda=0 mu=2 top=20 bottom=16
+b=4
+tb=5
+f=10 g=5 r=1 s=-3
+cnt=34 v=16 k=5 lambda=2 mu=1 top=-25 bottom=17
+is ruled out by integrality condition
+cnt=35 v=16 k=6 lambda=2 mu=2 top=-12 bottom=16
+b=4
+tb=-3
+f=6 g=9 r=2 s=-2
+cnt=36 v=16 k=8 lambda=0 mu=8 top=104 bottom=64
+b=8
+tb=13
+f=14 g=1 r=0 s=-8
+cnt=37 v=17 k=4 lambda=0 mu=1 top=8 bottom=13
+is ruled out by integrality condition
+cnt=38 v=17 k=6 lambda=0 mu=3 top=36 bottom=21
+is ruled out by integrality condition
+cnt=39 v=17 k=8 lambda=0 mu=7 top=96 bottom=53
+is ruled out by integrality condition
+cnt=40 v=17 k=8 lambda=1 mu=6 top=64 bottom=33
+is ruled out by integrality condition
+cnt=41 v=17 k=8 lambda=2 mu=5 top=32 bottom=21
+is ruled out by integrality condition
+cnt=42 v=17 k=8 lambda=3 mu=4 top=0 bottom=17
+bottom is not a square
+cnt=43 v=17 k=8 lambda=4 mu=3 top=-32 bottom=21
+is ruled out by integrality condition
+cnt=44 v=17 k=8 lambda=5 mu=2 top=-64 bottom=33
+is ruled out by integrality condition
+cnt=45 v=17 k=8 lambda=6 mu=1 top=-96 bottom=53
+is ruled out by integrality condition
+cnt=46 v=18 k=9 lambda=0 mu=9 top=135 bottom=81
+b=9
+tb=15
+f=16 g=1 r=0 s=-9
+cnt=47 v=19 k=6 lambda=1 mu=2 top=6 bottom=17
+is ruled out by integrality condition
+cnt=48 v=19 k=6 lambda=3 mu=1 top=-48 bottom=24
+bottom is not a square
+cnt=49 v=19 k=8 lambda=2 mu=4 top=20 bottom=20
+bottom is not a square
+cnt=50 v=19 k=9 lambda=0 mu=8 top=126 bottom=68
+is ruled out by integrality condition
+cnt=51 v=19 k=9 lambda=1 mu=7 top=90 bottom=44
+is ruled out by integrality condition
+cnt=52 v=19 k=9 lambda=2 mu=6 top=54 bottom=28
+is ruled out by integrality condition
+cnt=53 v=19 k=9 lambda=3 mu=5 top=18 bottom=20
+is ruled out by integrality condition
+cnt=54 v=19 k=9 lambda=4 mu=4 top=-18 bottom=20
+is ruled out by integrality condition
+cnt=55 v=19 k=9 lambda=5 mu=3 top=-54 bottom=28
+is ruled out by integrality condition
+cnt=56 v=19 k=9 lambda=6 mu=2 top=-90 bottom=44
+is ruled out by integrality condition
+cnt=57 v=19 k=9 lambda=7 mu=1 top=-126 bottom=68
+is ruled out by integrality condition
+cnt=58 v=20 k=10 lambda=0 mu=10 top=170 bottom=100
+b=10
+tb=17
+f=18 g=1 r=0 s=-10
+cnt=59 v=21 k=5 lambda=1 mu=1 top=-10 bottom=16
+is ruled out by integrality condition
+cnt=60 v=21 k=8 lambda=1 mu=4 top=44 bottom=25
+is ruled out by integrality condition
+cnt=61 v=21 k=8 lambda=4 mu=2 top=-56 bottom=28
+bottom is not a square
+cnt=62 v=21 k=10 lambda=0 mu=9 top=160 bottom=85
+is ruled out by integrality condition
+cnt=63 v=21 k=10 lambda=1 mu=8 top=120 bottom=57
+is ruled out by integrality condition
+cnt=64 v=21 k=10 lambda=2 mu=7 top=80 bottom=37
+is ruled out by integrality condition
+cnt=65 v=21 k=10 lambda=3 mu=6 top=40 bottom=25
+b=5
+tb=8
+f=14 g=6 r=1 s=-4
+cnt=66 v=21 k=10 lambda=4 mu=5 top=0 bottom=21
+bottom is not a square
+cnt=67 v=21 k=10 lambda=5 mu=4 top=-40 bottom=25
+b=5
+tb=-8
+f=6 g=14 r=3 s=-2
+cnt=68 v=21 k=10 lambda=6 mu=3 top=-80 bottom=37
+is ruled out by integrality condition
+cnt=69 v=21 k=10 lambda=7 mu=2 top=-120 bottom=57
+is ruled out by integrality condition
+cnt=70 v=21 k=10 lambda=8 mu=1 top=-160 bottom=85
+is ruled out by integrality condition
+cnt=71 v=22 k=6 lambda=0 mu=2 top=30 bottom=20
+bottom is not a square
+cnt=72 v=22 k=7 lambda=0 mu=3 top=49 bottom=25
+is ruled out by integrality condition
+cnt=73 v=22 k=7 lambda=2 mu=2 top=-14 bottom=20
+is ruled out by integrality condition
+cnt=74 v=22 k=7 lambda=4 mu=1 top=-77 bottom=33
+is ruled out by integrality condition
+cnt=75 v=22 k=9 lambda=0 mu=6 top=108 bottom=48
+bottom is not a square
+cnt=76 v=22 k=9 lambda=4 mu=3 top=-39 bottom=25
+is ruled out by integrality condition
+cnt=77 v=22 k=11 lambda=0 mu=11 top=209 bottom=121
+b=11
+tb=19
+f=20 g=1 r=0 s=-11
+cnt=78 v=23 k=8 lambda=0 mu=4 top=72 bottom=32
+bottom is not a square
+cnt=79 v=23 k=10 lambda=3 mu=5 top=24 bottom=24
+bottom is not a square
+cnt=80 v=23 k=11 lambda=0 mu=10 top=198 bottom=104
+is ruled out by integrality condition
+cnt=81 v=23 k=11 lambda=1 mu=9 top=154 bottom=72
+is ruled out by integrality condition
+cnt=82 v=23 k=11 lambda=2 mu=8 top=110 bottom=48
+is ruled out by integrality condition
+cnt=83 v=23 k=11 lambda=3 mu=7 top=66 bottom=32
+is ruled out by integrality condition
+cnt=84 v=23 k=11 lambda=4 mu=6 top=22 bottom=24
+is ruled out by integrality condition
+cnt=85 v=23 k=11 lambda=5 mu=5 top=-22 bottom=24
+is ruled out by integrality condition
+cnt=86 v=23 k=11 lambda=6 mu=4 top=-66 bottom=32
+is ruled out by integrality condition
+cnt=87 v=23 k=11 lambda=7 mu=3 top=-110 bottom=48
+is ruled out by integrality condition
+cnt=88 v=23 k=11 lambda=8 mu=2 top=-154 bottom=72
+is ruled out by integrality condition
+cnt=89 v=23 k=11 lambda=9 mu=1 top=-198 bottom=104
+is ruled out by integrality condition
+cnt=90 v=24 k=12 lambda=0 mu=12 top=252 bottom=144
+b=12
+tb=21
+f=22 g=1 r=0 s=-12
+cnt=91 v=25 k=6 lambda=2 mu=1 top=-36 bottom=21
+is ruled out by integrality condition
+cnt=92 v=25 k=8 lambda=1 mu=3 top=32 bottom=24
+is ruled out by integrality condition
+cnt=93 v=25 k=8 lambda=3 mu=2 top=-40 bottom=25
+b=5
+tb=-8
+f=8 g=16 r=3 s=-2
+cnt=94 v=25 k=8 lambda=5 mu=1 top=-112 bottom=44
+is ruled out by integrality condition
+cnt=95 v=25 k=9 lambda=3 mu=3 top=-18 bottom=24
+is ruled out by integrality condition
+cnt=96 v=25 k=10 lambda=2 mu=5 top=52 bottom=29
+is ruled out by integrality condition
+cnt=97 v=25 k=12 lambda=0 mu=11 top=240 bottom=125
+is ruled out by integrality condition
+cnt=98 v=25 k=12 lambda=1 mu=10 top=192 bottom=89
+is ruled out by integrality condition
+cnt=99 v=25 k=12 lambda=2 mu=9 top=144 bottom=61
+is ruled out by integrality condition
+cnt=100 v=25 k=12 lambda=3 mu=8 top=96 bottom=41
+is ruled out by integrality condition
+cnt=101 v=25 k=12 lambda=4 mu=7 top=48 bottom=29
+is ruled out by integrality condition
+cnt=102 v=25 k=12 lambda=5 mu=6 top=0 bottom=25
+b=5
+tb=0
+f=12 g=12 r=2 s=-3
+cnt=103 v=25 k=12 lambda=6 mu=5 top=-48 bottom=29
+is ruled out by integrality condition
+cnt=104 v=25 k=12 lambda=7 mu=4 top=-96 bottom=41
+is ruled out by integrality condition
+cnt=105 v=25 k=12 lambda=8 mu=3 top=-144 bottom=61
+is ruled out by integrality condition
+cnt=106 v=25 k=12 lambda=9 mu=2 top=-192 bottom=89
+is ruled out by integrality condition
+cnt=107 v=25 k=12 lambda=10 mu=1 top=-240 bottom=125
+is ruled out by integrality condition
+cnt=108 v=26 k=5 lambda=0 mu=1 top=15 bottom=17
+is ruled out by integrality condition
+cnt=109 v=26 k=10 lambda=0 mu=6 top=130 bottom=52
+bottom is not a square
+cnt=110 v=26 k=10 lambda=3 mu=4 top=5 bottom=25
+b=5
+tb=1
+f=13 g=12 r=2 s=-3
+cnt=111 v=26 k=10 lambda=6 mu=2 top=-120 bottom=48
+bottom is not a square
+cnt=112 v=26 k=13 lambda=0 mu=13 top=299 bottom=169
+b=13
+tb=23
+f=24 g=1 r=0 s=-13
+cnt=113 v=27 k=10 lambda=1 mu=5 top=84 bottom=36
+b=6
+tb=14
+f=20 g=6 r=1 s=-5
+cnt=114 v=27 k=12 lambda=4 mu=6 top=28 bottom=28
+bottom is not a square
+cnt=115 v=27 k=13 lambda=0 mu=12 top=286 bottom=148
+is ruled out by integrality condition
+cnt=116 v=27 k=13 lambda=1 mu=11 top=234 bottom=108
+bottom is not a square
+cnt=117 v=27 k=13 lambda=2 mu=10 top=182 bottom=76
+is ruled out by integrality condition
+cnt=118 v=27 k=13 lambda=3 mu=9 top=130 bottom=52
+bottom is not a square
+cnt=119 v=27 k=13 lambda=4 mu=8 top=78 bottom=36
+b=6
+tb=13
+is ruled out by integrality condition (2)
+cnt=120 v=27 k=13 lambda=5 mu=7 top=26 bottom=28
+is ruled out by integrality condition
+cnt=121 v=27 k=13 lambda=6 mu=6 top=-26 bottom=28
+is ruled out by integrality condition
+cnt=122 v=27 k=13 lambda=7 mu=5 top=-78 bottom=36
+b=6
+tb=-13
+is ruled out by integrality condition (2)
+cnt=123 v=27 k=13 lambda=8 mu=4 top=-130 bottom=52
+bottom is not a square
+cnt=124 v=27 k=13 lambda=9 mu=3 top=-182 bottom=76
+is ruled out by integrality condition
+cnt=125 v=27 k=13 lambda=10 mu=2 top=-234 bottom=108
+bottom is not a square
+cnt=126 v=27 k=13 lambda=11 mu=1 top=-286 bottom=148
+is ruled out by integrality condition
+cnt=127 v=28 k=9 lambda=0 mu=4 top=90 bottom=36
+b=6
+tb=15
+f=21 g=6 r=1 s=-5
+is ruled out by Krein condition (2)
+cnt=128 v=28 k=9 lambda=2 mu=3 top=9 bottom=25
+is ruled out by integrality condition
+cnt=129 v=28 k=9 lambda=4 mu=2 top=-72 bottom=32
+bottom is not a square
+cnt=130 v=28 k=9 lambda=6 mu=1 top=-153 bottom=57
+is ruled out by integrality condition
+cnt=131 v=28 k=12 lambda=1 mu=8 top=165 bottom=65
+is ruled out by integrality condition
+cnt=132 v=28 k=12 lambda=6 mu=4 top=-78 bottom=36
+b=6
+tb=-13
+f=7 g=20 r=4 s=-2
+cnt=133 v=28 k=14 lambda=0 mu=14 top=350 bottom=196
+b=14
+tb=25
+f=26 g=1 r=0 s=-14
+cnt=134 v=29 k=7 lambda=0 mu=2 top=42 bottom=24
+is ruled out by integrality condition
+cnt=135 v=29 k=7 lambda=3 mu=1 top=-70 bottom=28
+bottom is not a square
+cnt=136 v=29 k=8 lambda=2 mu=2 top=-16 bottom=24
+is ruled out by integrality condition
+cnt=137 v=29 k=10 lambda=0 mu=5 top=120 bottom=45
+bottom is not a square
+cnt=138 v=29 k=12 lambda=3 mu=6 top=60 bottom=33
+is ruled out by integrality condition
+cnt=139 v=29 k=12 lambda=7 mu=3 top=-136 bottom=52
+is ruled out by integrality condition
+cnt=140 v=29 k=14 lambda=0 mu=13 top=336 bottom=173
+is ruled out by integrality condition
+cnt=141 v=29 k=14 lambda=1 mu=12 top=280 bottom=129
+is ruled out by integrality condition
+cnt=142 v=29 k=14 lambda=2 mu=11 top=224 bottom=93
+is ruled out by integrality condition
+cnt=143 v=29 k=14 lambda=3 mu=10 top=168 bottom=65
+is ruled out by integrality condition
+cnt=144 v=29 k=14 lambda=4 mu=9 top=112 bottom=45
+is ruled out by integrality condition
+cnt=145 v=29 k=14 lambda=5 mu=8 top=56 bottom=33
+is ruled out by integrality condition
+cnt=146 v=29 k=14 lambda=6 mu=7 top=0 bottom=29
+bottom is not a square
+cnt=147 v=29 k=14 lambda=7 mu=6 top=-56 bottom=33
+is ruled out by integrality condition
+cnt=148 v=29 k=14 lambda=8 mu=5 top=-112 bottom=45
+is ruled out by integrality condition
+cnt=149 v=29 k=14 lambda=9 mu=4 top=-168 bottom=65
+is ruled out by integrality condition
+cnt=150 v=29 k=14 lambda=10 mu=3 top=-224 bottom=93
+is ruled out by integrality condition
+cnt=151 v=29 k=14 lambda=11 mu=2 top=-280 bottom=129
+is ruled out by integrality condition
+cnt=152 v=29 k=14 lambda=12 mu=1 top=-336 bottom=173
+is ruled out by integrality condition
+cnt=153 v=30 k=15 lambda=0 mu=15 top=405 bottom=225
+b=15
+tb=27
+f=28 g=1 r=0 s=-15
+cnt=154 v=31 k=6 lambda=1 mu=1 top=-12 bottom=20
+is ruled out by integrality condition
+cnt=155 v=31 k=9 lambda=1 mu=3 top=42 bottom=28
+bottom is not a square
+cnt=156 v=31 k=10 lambda=1 mu=4 top=70 bottom=33
+is ruled out by integrality condition
+cnt=157 v=31 k=10 lambda=3 mu=3 top=-20 bottom=28
+is ruled out by integrality condition
+cnt=158 v=31 k=10 lambda=5 mu=2 top=-110 bottom=41
+is ruled out by integrality condition
+cnt=159 v=31 k=10 lambda=7 mu=1 top=-200 bottom=72
+is ruled out by integrality condition
+cnt=160 v=31 k=12 lambda=2 mu=6 top=96 bottom=40
+is ruled out by integrality condition
+cnt=161 v=31 k=12 lambda=5 mu=4 top=-54 bottom=33
+is ruled out by integrality condition
+cnt=162 v=31 k=12 lambda=8 mu=2 top=-204 bottom=76
+is ruled out by integrality condition
+cnt=163 v=31 k=14 lambda=5 mu=7 top=32 bottom=32
+bottom is not a square
+cnt=164 v=31 k=15 lambda=0 mu=14 top=390 bottom=200
+is ruled out by integrality condition
+cnt=165 v=31 k=15 lambda=1 mu=13 top=330 bottom=152
+is ruled out by integrality condition
+cnt=166 v=31 k=15 lambda=2 mu=12 top=270 bottom=112
+is ruled out by integrality condition
+cnt=167 v=31 k=15 lambda=3 mu=11 top=210 bottom=80
+is ruled out by integrality condition
+cnt=168 v=31 k=15 lambda=4 mu=10 top=150 bottom=56
+is ruled out by integrality condition
+cnt=169 v=31 k=15 lambda=5 mu=9 top=90 bottom=40
+is ruled out by integrality condition
+cnt=170 v=31 k=15 lambda=6 mu=8 top=30 bottom=32
+is ruled out by integrality condition
+cnt=171 v=31 k=15 lambda=7 mu=7 top=-30 bottom=32
+is ruled out by integrality condition
+cnt=172 v=31 k=15 lambda=8 mu=6 top=-90 bottom=40
+is ruled out by integrality condition
+cnt=173 v=31 k=15 lambda=9 mu=5 top=-150 bottom=56
+is ruled out by integrality condition
+cnt=174 v=31 k=15 lambda=10 mu=4 top=-210 bottom=80
+is ruled out by integrality condition
+cnt=175 v=31 k=15 lambda=11 mu=3 top=-270 bottom=112
+is ruled out by integrality condition
+cnt=176 v=31 k=15 lambda=12 mu=2 top=-330 bottom=152
+is ruled out by integrality condition
+cnt=177 v=31 k=15 lambda=13 mu=1 top=-390 bottom=200
+is ruled out by integrality condition
+cnt=178 v=32 k=16 lambda=0 mu=16 top=464 bottom=256
+b=16
+tb=29
+f=30 g=1 r=0 s=-16
+cnt=179 v=33 k=8 lambda=1 mu=2 top=16 bottom=25
+is ruled out by integrality condition
+cnt=180 v=33 k=8 lambda=4 mu=1 top=-112 bottom=37
+is ruled out by integrality condition
+cnt=181 v=33 k=12 lambda=1 mu=6 top=136 bottom=49
+is ruled out by integrality condition
+cnt=182 v=33 k=12 lambda=6 mu=3 top=-120 bottom=45
+bottom is not a square
+cnt=183 v=33 k=14 lambda=4 mu=7 top=68 bottom=37
+is ruled out by integrality condition
+cnt=184 v=33 k=16 lambda=0 mu=15 top=448 bottom=229
+is ruled out by integrality condition
+cnt=185 v=33 k=16 lambda=1 mu=14 top=384 bottom=177
+is ruled out by integrality condition
+cnt=186 v=33 k=16 lambda=2 mu=13 top=320 bottom=133
+is ruled out by integrality condition
+cnt=187 v=33 k=16 lambda=3 mu=12 top=256 bottom=97
+is ruled out by integrality condition
+cnt=188 v=33 k=16 lambda=4 mu=11 top=192 bottom=69
+is ruled out by integrality condition
+cnt=189 v=33 k=16 lambda=5 mu=10 top=128 bottom=49
+is ruled out by integrality condition
+cnt=190 v=33 k=16 lambda=6 mu=9 top=64 bottom=37
+is ruled out by integrality condition
+cnt=191 v=33 k=16 lambda=7 mu=8 top=0 bottom=33
+bottom is not a square
+cnt=192 v=33 k=16 lambda=8 mu=7 top=-64 bottom=37
+is ruled out by integrality condition
+cnt=193 v=33 k=16 lambda=9 mu=6 top=-128 bottom=49
+is ruled out by integrality condition
+cnt=194 v=33 k=16 lambda=10 mu=5 top=-192 bottom=69
+is ruled out by integrality condition
+cnt=195 v=33 k=16 lambda=11 mu=4 top=-256 bottom=97
+is ruled out by integrality condition
+cnt=196 v=33 k=16 lambda=12 mu=3 top=-320 bottom=133
+is ruled out by integrality condition
+cnt=197 v=33 k=16 lambda=13 mu=2 top=-384 bottom=177
+is ruled out by integrality condition
+cnt=198 v=33 k=16 lambda=14 mu=1 top=-448 bottom=229
+is ruled out by integrality condition
+cnt=199 v=34 k=9 lambda=0 mu=3 top=81 bottom=33
+is ruled out by integrality condition
+cnt=200 v=34 k=11 lambda=0 mu=5 top=143 bottom=49
+is ruled out by integrality condition
+cnt=201 v=34 k=11 lambda=2 mu=4 top=44 bottom=32
+is ruled out by integrality condition
+cnt=202 v=34 k=11 lambda=4 mu=3 top=-55 bottom=33
+is ruled out by integrality condition
+cnt=203 v=34 k=11 lambda=6 mu=2 top=-154 bottom=52
+is ruled out by integrality condition
+cnt=204 v=34 k=11 lambda=8 mu=1 top=-253 bottom=89
+is ruled out by integrality condition
+cnt=205 v=34 k=12 lambda=4 mu=4 top=-24 bottom=32
+bottom is not a square
+cnt=206 v=34 k=15 lambda=2 mu=10 top=234 bottom=84
+is ruled out by integrality condition
+cnt=207 v=34 k=15 lambda=8 mu=5 top=-129 bottom=49
+is ruled out by integrality condition
+cnt=208 v=34 k=17 lambda=0 mu=17 top=527 bottom=289
+b=17
+tb=31
+f=32 g=1 r=0 s=-17
+cnt=209 v=35 k=12 lambda=0 mu=6 top=180 bottom=60
+bottom is not a square
+cnt=210 v=35 k=14 lambda=3 mu=7 top=108 bottom=44
+is ruled out by integrality condition
+cnt=211 v=35 k=16 lambda=6 mu=8 top=36 bottom=36
+b=6
+tb=6
+f=20 g=14 r=2 s=-4
+cnt=212 v=35 k=17 lambda=0 mu=16 top=510 bottom=260
+is ruled out by integrality condition
+cnt=213 v=35 k=17 lambda=1 mu=15 top=442 bottom=204
+is ruled out by integrality condition
+cnt=214 v=35 k=17 lambda=2 mu=14 top=374 bottom=156
+is ruled out by integrality condition
+cnt=215 v=35 k=17 lambda=3 mu=13 top=306 bottom=116
+is ruled out by integrality condition
+cnt=216 v=35 k=17 lambda=4 mu=12 top=238 bottom=84
+is ruled out by integrality condition
+cnt=217 v=35 k=17 lambda=5 mu=11 top=170 bottom=60
+is ruled out by integrality condition
+cnt=218 v=35 k=17 lambda=6 mu=10 top=102 bottom=44
+is ruled out by integrality condition
+cnt=219 v=35 k=17 lambda=7 mu=9 top=34 bottom=36
+is ruled out by integrality condition
+cnt=220 v=35 k=17 lambda=8 mu=8 top=-34 bottom=36
+is ruled out by integrality condition
+cnt=221 v=35 k=17 lambda=9 mu=7 top=-102 bottom=44
+is ruled out by integrality condition
+cnt=222 v=35 k=17 lambda=10 mu=6 top=-170 bottom=60
+is ruled out by integrality condition
+cnt=223 v=35 k=17 lambda=11 mu=5 top=-238 bottom=84
+is ruled out by integrality condition
+cnt=224 v=35 k=17 lambda=12 mu=4 top=-306 bottom=116
+is ruled out by integrality condition
+cnt=225 v=35 k=17 lambda=13 mu=3 top=-374 bottom=156
+is ruled out by integrality condition
+cnt=226 v=35 k=17 lambda=14 mu=2 top=-442 bottom=204
+is ruled out by integrality condition
+cnt=227 v=35 k=17 lambda=15 mu=1 top=-510 bottom=260
+is ruled out by integrality condition
+cnt=228 v=36 k=7 lambda=2 mu=1 top=-49 bottom=25
+is ruled out by integrality condition
+cnt=229 v=36 k=10 lambda=4 mu=2 top=-90 bottom=36
+b=6
+tb=-15
+f=10 g=25 r=4 s=-2
+cnt=230 v=36 k=14 lambda=1 mu=8 top=217 bottom=73
+is ruled out by integrality condition
+cnt=231 v=36 k=14 lambda=4 mu=6 top=42 bottom=36
+b=6
+tb=7
+f=21 g=14 r=2 s=-4
+cnt=232 v=36 k=14 lambda=7 mu=4 top=-133 bottom=49
+b=7
+tb=-19
+f=8 g=27 r=5 s=-2
+cnt=233 v=36 k=14 lambda=10 mu=2 top=-308 bottom=112
+bottom is not a square
+cnt=234 v=36 k=15 lambda=2 mu=9 top=215 bottom=73
+is ruled out by integrality condition
+cnt=235 v=36 k=15 lambda=6 mu=6 top=-30 bottom=36
+b=6
+tb=-5
+f=15 g=20 r=3 s=-3
+cnt=236 v=36 k=15 lambda=10 mu=3 top=-275 bottom=97
+is ruled out by integrality condition
+cnt=237 v=36 k=18 lambda=0 mu=18 top=594 bottom=324
+b=18
+tb=33
+f=34 g=1 r=0 s=-18
+cnt=238 v=37 k=6 lambda=0 mu=1 top=24 bottom=21
+is ruled out by integrality condition
+cnt=239 v=37 k=8 lambda=0 mu=2 top=56 bottom=28
+bottom is not a square
+cnt=240 v=37 k=9 lambda=2 mu=2 top=-18 bottom=28
+is ruled out by integrality condition
+cnt=241 v=37 k=9 lambda=5 mu=1 top=-162 bottom=48
+is ruled out by integrality condition
+cnt=242 v=37 k=12 lambda=1 mu=5 top=120 bottom=44
+is ruled out by integrality condition
+cnt=243 v=37 k=12 lambda=3 mu=4 top=12 bottom=33
+is ruled out by integrality condition
+cnt=244 v=37 k=12 lambda=5 mu=3 top=-96 bottom=40
+is ruled out by integrality condition
+cnt=245 v=37 k=12 lambda=7 mu=2 top=-204 bottom=65
+is ruled out by integrality condition
+cnt=246 v=37 k=12 lambda=9 mu=1 top=-312 bottom=108
+is ruled out by integrality condition
+cnt=247 v=37 k=14 lambda=2 mu=7 top=152 bottom=53
+is ruled out by integrality condition
+cnt=248 v=37 k=15 lambda=0 mu=10 top=330 bottom=120
+is ruled out by integrality condition
+cnt=249 v=37 k=15 lambda=7 mu=5 top=-102 bottom=44
+is ruled out by integrality condition
+cnt=250 v=37 k=16 lambda=0 mu=12 top=400 bottom=160
+bottom is not a square
+cnt=251 v=37 k=16 lambda=5 mu=8 top=76 bottom=41
+is ruled out by integrality condition
+cnt=252 v=37 k=16 lambda=10 mu=4 top=-248 bottom=84
+is ruled out by integrality condition
+cnt=253 v=37 k=18 lambda=0 mu=17 top=576 bottom=293
+is ruled out by integrality condition
+cnt=254 v=37 k=18 lambda=1 mu=16 top=504 bottom=233
+is ruled out by integrality condition
+cnt=255 v=37 k=18 lambda=2 mu=15 top=432 bottom=181
+is ruled out by integrality condition
+cnt=256 v=37 k=18 lambda=3 mu=14 top=360 bottom=137
+is ruled out by integrality condition
+cnt=257 v=37 k=18 lambda=4 mu=13 top=288 bottom=101
+is ruled out by integrality condition
+cnt=258 v=37 k=18 lambda=5 mu=12 top=216 bottom=73
+is ruled out by integrality condition
+cnt=259 v=37 k=18 lambda=6 mu=11 top=144 bottom=53
+is ruled out by integrality condition
+cnt=260 v=37 k=18 lambda=7 mu=10 top=72 bottom=41
+is ruled out by integrality condition
+cnt=261 v=37 k=18 lambda=8 mu=9 top=0 bottom=37
+bottom is not a square
+cnt=262 v=37 k=18 lambda=9 mu=8 top=-72 bottom=41
+is ruled out by integrality condition
+cnt=263 v=37 k=18 lambda=10 mu=7 top=-144 bottom=53
+is ruled out by integrality condition
+cnt=264 v=37 k=18 lambda=11 mu=6 top=-216 bottom=73
+is ruled out by integrality condition
+cnt=265 v=37 k=18 lambda=12 mu=5 top=-288 bottom=101
+is ruled out by integrality condition
+cnt=266 v=37 k=18 lambda=13 mu=4 top=-360 bottom=137
+is ruled out by integrality condition
+cnt=267 v=37 k=18 lambda=14 mu=3 top=-432 bottom=181
+is ruled out by integrality condition
+cnt=268 v=37 k=18 lambda=15 mu=2 top=-504 bottom=233
+is ruled out by integrality condition
+cnt=269 v=37 k=18 lambda=16 mu=1 top=-576 bottom=293
+is ruled out by integrality condition
+cnt=270 v=38 k=19 lambda=0 mu=19 top=665 bottom=361
+b=19
+tb=35
+f=36 g=1 r=0 s=-19
+cnt=271 v=39 k=14 lambda=1 mu=7 top=200 bottom=64
+b=8
+tb=25
+is ruled out by integrality condition (2)
+cnt=272 v=39 k=16 lambda=4 mu=8 top=120 bottom=48
+bottom is not a square
+cnt=273 v=39 k=18 lambda=7 mu=9 top=40 bottom=40
+bottom is not a square
+cnt=274 v=39 k=19 lambda=0 mu=18 top=646 bottom=328
+is ruled out by integrality condition
+cnt=275 v=39 k=19 lambda=1 mu=17 top=570 bottom=264
+is ruled out by integrality condition
+cnt=276 v=39 k=19 lambda=2 mu=16 top=494 bottom=208
+is ruled out by integrality condition
+cnt=277 v=39 k=19 lambda=3 mu=15 top=418 bottom=160
+is ruled out by integrality condition
+cnt=278 v=39 k=19 lambda=4 mu=14 top=342 bottom=120
+is ruled out by integrality condition
+cnt=279 v=39 k=19 lambda=5 mu=13 top=266 bottom=88
+is ruled out by integrality condition
+cnt=280 v=39 k=19 lambda=6 mu=12 top=190 bottom=64
+is ruled out by integrality condition
+cnt=281 v=39 k=19 lambda=7 mu=11 top=114 bottom=48
+is ruled out by integrality condition
+cnt=282 v=39 k=19 lambda=8 mu=10 top=38 bottom=40
+is ruled out by integrality condition
+cnt=283 v=39 k=19 lambda=9 mu=9 top=-38 bottom=40
+is ruled out by integrality condition
+cnt=284 v=39 k=19 lambda=10 mu=8 top=-114 bottom=48
+is ruled out by integrality condition
+cnt=285 v=39 k=19 lambda=11 mu=7 top=-190 bottom=64
+is ruled out by integrality condition
+cnt=286 v=39 k=19 lambda=12 mu=6 top=-266 bottom=88
+is ruled out by integrality condition
+cnt=287 v=39 k=19 lambda=13 mu=5 top=-342 bottom=120
+is ruled out by integrality condition
+cnt=288 v=39 k=19 lambda=14 mu=4 top=-418 bottom=160
+is ruled out by integrality condition
+cnt=289 v=39 k=19 lambda=15 mu=3 top=-494 bottom=208
+is ruled out by integrality condition
+cnt=290 v=39 k=19 lambda=16 mu=2 top=-570 bottom=264
+is ruled out by integrality condition
+cnt=291 v=39 k=19 lambda=17 mu=1 top=-646 bottom=328
+is ruled out by integrality condition
+cnt=292 v=40 k=12 lambda=2 mu=4 top=54 bottom=36
+b=6
+tb=9
+f=24 g=15 r=2 s=-4
+cnt=293 v=40 k=13 lambda=0 mu=6 top=208 bottom=64
+b=8
+tb=26
+is ruled out by integrality condition (2)
+cnt=294 v=40 k=13 lambda=2 mu=5 top=91 bottom=41
+is ruled out by integrality condition
+cnt=295 v=40 k=13 lambda=4 mu=4 top=-26 bottom=36
+is ruled out by integrality condition
+cnt=296 v=40 k=13 lambda=6 mu=3 top=-143 bottom=49
+is ruled out by integrality condition
+cnt=297 v=40 k=13 lambda=8 mu=2 top=-260 bottom=80
+bottom is not a square
+cnt=298 v=40 k=13 lambda=10 mu=1 top=-377 bottom=129
+is ruled out by integrality condition
+cnt=299 v=40 k=15 lambda=6 mu=5 top=-69 bottom=41
+is ruled out by integrality condition
+cnt=300 v=40 k=18 lambda=3 mu=12 top=315 bottom=105
+bottom is not a square
+cnt=301 v=40 k=18 lambda=10 mu=6 top=-192 bottom=64
+b=8
+tb=-24
+is ruled out by integrality condition (2)
+cnt=302 v=40 k=20 lambda=0 mu=20 top=740 bottom=400
+b=20
+tb=37
+f=38 g=1 r=0 s=-20
+cnt=303 v=41 k=8 lambda=3 mu=1 top=-96 bottom=32
+bottom is not a square
+cnt=304 v=41 k=10 lambda=0 mu=3 top=100 bottom=37
+is ruled out by integrality condition
+cnt=305 v=41 k=10 lambda=3 mu=2 top=-60 bottom=33
+is ruled out by integrality condition
+cnt=306 v=41 k=10 lambda=6 mu=1 top=-220 bottom=61
+is ruled out by integrality condition
+cnt=307 v=41 k=12 lambda=4 mu=3 top=-64 bottom=37
+is ruled out by integrality condition
+cnt=308 v=41 k=14 lambda=0 mu=7 top=252 bottom=77
+is ruled out by integrality condition
+cnt=309 v=41 k=15 lambda=4 mu=6 top=50 bottom=40
+is ruled out by integrality condition
+cnt=310 v=41 k=15 lambda=9 mu=3 top=-270 bottom=84
+is ruled out by integrality condition
+cnt=311 v=41 k=16 lambda=0 mu=10 top=368 bottom=124
+is ruled out by integrality condition
+cnt=312 v=41 k=16 lambda=3 mu=8 top=168 bottom=57
+is ruled out by integrality condition
+cnt=313 v=41 k=16 lambda=6 mu=6 top=-32 bottom=40
+is ruled out by integrality condition
+cnt=314 v=41 k=16 lambda=9 mu=4 top=-232 bottom=73
+is ruled out by integrality condition
+cnt=315 v=41 k=16 lambda=12 mu=2 top=-432 bottom=156
+is ruled out by integrality condition
+cnt=316 v=41 k=18 lambda=6 mu=9 top=84 bottom=45
+is ruled out by integrality condition
+cnt=317 v=41 k=20 lambda=0 mu=19 top=720 bottom=365
+is ruled out by integrality condition
+cnt=318 v=41 k=20 lambda=1 mu=18 top=640 bottom=297
+is ruled out by integrality condition
+cnt=319 v=41 k=20 lambda=2 mu=17 top=560 bottom=237
+is ruled out by integrality condition
+cnt=320 v=41 k=20 lambda=3 mu=16 top=480 bottom=185
+is ruled out by integrality condition
+cnt=321 v=41 k=20 lambda=4 mu=15 top=400 bottom=141
+is ruled out by integrality condition
+cnt=322 v=41 k=20 lambda=5 mu=14 top=320 bottom=105
+is ruled out by integrality condition
+cnt=323 v=41 k=20 lambda=6 mu=13 top=240 bottom=77
+is ruled out by integrality condition
+cnt=324 v=41 k=20 lambda=7 mu=12 top=160 bottom=57
+is ruled out by integrality condition
+cnt=325 v=41 k=20 lambda=8 mu=11 top=80 bottom=45
+is ruled out by integrality condition
+cnt=326 v=41 k=20 lambda=9 mu=10 top=0 bottom=41
+bottom is not a square
+cnt=327 v=41 k=20 lambda=10 mu=9 top=-80 bottom=45
+is ruled out by integrality condition
+cnt=328 v=41 k=20 lambda=11 mu=8 top=-160 bottom=57
+is ruled out by integrality condition
+cnt=329 v=41 k=20 lambda=12 mu=7 top=-240 bottom=77
+is ruled out by integrality condition
+cnt=330 v=41 k=20 lambda=13 mu=6 top=-320 bottom=105
+is ruled out by integrality condition
+cnt=331 v=41 k=20 lambda=14 mu=5 top=-400 bottom=141
+is ruled out by integrality condition
+cnt=332 v=41 k=20 lambda=15 mu=4 top=-480 bottom=185
+is ruled out by integrality condition
+cnt=333 v=41 k=20 lambda=16 mu=3 top=-560 bottom=237
+is ruled out by integrality condition
+cnt=334 v=41 k=20 lambda=17 mu=2 top=-640 bottom=297
+is ruled out by integrality condition
+cnt=335 v=41 k=20 lambda=18 mu=1 top=-720 bottom=365
+is ruled out by integrality condition
+cnt=336 v=42 k=21 lambda=0 mu=21 top=819 bottom=441
+b=21
+tb=39
+f=40 g=1 r=0 s=-21
+cnt=337 v=43 k=7 lambda=1 mu=1 top=-14 bottom=24
+is ruled out by integrality condition
+cnt=338 v=43 k=12 lambda=1 mu=4 top=102 bottom=41
+is ruled out by integrality condition
+cnt=339 v=43 k=12 lambda=6 mu=2 top=-192 bottom=56
+is ruled out by integrality condition
+cnt=340 v=43 k=14 lambda=1 mu=6 top=182 bottom=57
+is ruled out by integrality condition
+cnt=341 v=43 k=14 lambda=3 mu=5 top=56 bottom=40
+is ruled out by integrality condition
+cnt=342 v=43 k=14 lambda=5 mu=4 top=-70 bottom=41
+is ruled out by integrality condition
+cnt=343 v=43 k=14 lambda=7 mu=3 top=-196 bottom=60
+is ruled out by integrality condition
+cnt=344 v=43 k=14 lambda=9 mu=2 top=-322 bottom=97
+is ruled out by integrality condition
+cnt=345 v=43 k=14 lambda=11 mu=1 top=-448 bottom=152
+is ruled out by integrality condition
+cnt=346 v=43 k=15 lambda=5 mu=5 top=-30 bottom=40
+is ruled out by integrality condition
+cnt=347 v=43 k=16 lambda=2 mu=8 top=220 bottom=68
+is ruled out by integrality condition
+cnt=348 v=43 k=18 lambda=1 mu=12 top=426 bottom=145
+is ruled out by integrality condition
+cnt=349 v=43 k=18 lambda=5 mu=9 top=132 bottom=52
+is ruled out by integrality condition
+cnt=350 v=43 k=18 lambda=9 mu=6 top=-162 bottom=57
+is ruled out by integrality condition
+cnt=351 v=43 k=18 lambda=13 mu=3 top=-456 bottom=160
+is ruled out by integrality condition
+cnt=352 v=43 k=20 lambda=8 mu=10 top=44 bottom=44
+bottom is not a square
+cnt=353 v=43 k=21 lambda=0 mu=20 top=798 bottom=404
+is ruled out by integrality condition
+cnt=354 v=43 k=21 lambda=1 mu=19 top=714 bottom=332
+is ruled out by integrality condition
+cnt=355 v=43 k=21 lambda=2 mu=18 top=630 bottom=268
+is ruled out by integrality condition
+cnt=356 v=43 k=21 lambda=3 mu=17 top=546 bottom=212
+is ruled out by integrality condition
+cnt=357 v=43 k=21 lambda=4 mu=16 top=462 bottom=164
+is ruled out by integrality condition
+cnt=358 v=43 k=21 lambda=5 mu=15 top=378 bottom=124
+is ruled out by integrality condition
+cnt=359 v=43 k=21 lambda=6 mu=14 top=294 bottom=92
+is ruled out by integrality condition
+cnt=360 v=43 k=21 lambda=7 mu=13 top=210 bottom=68
+is ruled out by integrality condition
+cnt=361 v=43 k=21 lambda=8 mu=12 top=126 bottom=52
+is ruled out by integrality condition
+cnt=362 v=43 k=21 lambda=9 mu=11 top=42 bottom=44
+is ruled out by integrality condition
+cnt=363 v=43 k=21 lambda=10 mu=10 top=-42 bottom=44
+is ruled out by integrality condition
+cnt=364 v=43 k=21 lambda=11 mu=9 top=-126 bottom=52
+is ruled out by integrality condition
+cnt=365 v=43 k=21 lambda=12 mu=8 top=-210 bottom=68
+is ruled out by integrality condition
+cnt=366 v=43 k=21 lambda=13 mu=7 top=-294 bottom=92
+is ruled out by integrality condition
+cnt=367 v=43 k=21 lambda=14 mu=6 top=-378 bottom=124
+is ruled out by integrality condition
+cnt=368 v=43 k=21 lambda=15 mu=5 top=-462 bottom=164
+is ruled out by integrality condition
+cnt=369 v=43 k=21 lambda=16 mu=4 top=-546 bottom=212
+is ruled out by integrality condition
+cnt=370 v=43 k=21 lambda=17 mu=3 top=-630 bottom=268
+is ruled out by integrality condition
+cnt=371 v=43 k=21 lambda=18 mu=2 top=-714 bottom=332
+is ruled out by integrality condition
+cnt=372 v=43 k=21 lambda=19 mu=1 top=-798 bottom=404
+is ruled out by integrality condition
+cnt=373 v=44 k=22 lambda=0 mu=22 top=902 bottom=484
+b=22
+tb=41
+f=42 g=1 r=0 s=-22
+cnt=374 v=45 k=11 lambda=1 mu=3 top=66 bottom=36
+b=6
+tb=11
+is ruled out by integrality condition (2)
+cnt=375 v=45 k=11 lambda=4 mu=2 top=-110 bottom=40
+is ruled out by integrality condition
+cnt=376 v=45 k=11 lambda=7 mu=1 top=-286 bottom=76
+is ruled out by integrality condition
+cnt=377 v=45 k=12 lambda=3 mu=3 top=-24 bottom=36
+b=6
+tb=-4
+f=20 g=24 r=3 s=-3
+cnt=378 v=45 k=16 lambda=1 mu=8 top=276 bottom=81
+is ruled out by integrality condition
+cnt=379 v=45 k=16 lambda=8 mu=4 top=-208 bottom=64
+b=8
+tb=-26
+f=9 g=35 r=6 s=-2
+cnt=380 v=45 k=18 lambda=4 mu=9 top=184 bottom=61
+is ruled out by integrality condition
+cnt=381 v=45 k=20 lambda=1 mu=15 top=576 bottom=216
+bottom is not a square
+cnt=382 v=45 k=20 lambda=7 mu=10 top=92 bottom=49
+is ruled out by integrality condition
+cnt=383 v=45 k=20 lambda=13 mu=5 top=-392 bottom=124
+is ruled out by integrality condition
+cnt=384 v=45 k=22 lambda=0 mu=21 top=880 bottom=445
+is ruled out by integrality condition
+cnt=385 v=45 k=22 lambda=1 mu=20 top=792 bottom=369
+is ruled out by integrality condition
+cnt=386 v=45 k=22 lambda=2 mu=19 top=704 bottom=301
+is ruled out by integrality condition
+cnt=387 v=45 k=22 lambda=3 mu=18 top=616 bottom=241
+is ruled out by integrality condition
+cnt=388 v=45 k=22 lambda=4 mu=17 top=528 bottom=189
+is ruled out by integrality condition
+cnt=389 v=45 k=22 lambda=5 mu=16 top=440 bottom=145
+is ruled out by integrality condition
+cnt=390 v=45 k=22 lambda=6 mu=15 top=352 bottom=109
+is ruled out by integrality condition
+cnt=391 v=45 k=22 lambda=7 mu=14 top=264 bottom=81
+is ruled out by integrality condition
+cnt=392 v=45 k=22 lambda=8 mu=13 top=176 bottom=61
+is ruled out by integrality condition
+cnt=393 v=45 k=22 lambda=9 mu=12 top=88 bottom=49
+is ruled out by integrality condition
+cnt=394 v=45 k=22 lambda=10 mu=11 top=0 bottom=45
+bottom is not a square
+cnt=395 v=45 k=22 lambda=11 mu=10 top=-88 bottom=49
+is ruled out by integrality condition
+cnt=396 v=45 k=22 lambda=12 mu=9 top=-176 bottom=61
+is ruled out by integrality condition
+cnt=397 v=45 k=22 lambda=13 mu=8 top=-264 bottom=81
+is ruled out by integrality condition
+cnt=398 v=45 k=22 lambda=14 mu=7 top=-352 bottom=109
+is ruled out by integrality condition
+cnt=399 v=45 k=22 lambda=15 mu=6 top=-440 bottom=145
+is ruled out by integrality condition
+cnt=400 v=45 k=22 lambda=16 mu=5 top=-528 bottom=189
+is ruled out by integrality condition
+cnt=401 v=45 k=22 lambda=17 mu=4 top=-616 bottom=241
+is ruled out by integrality condition
+cnt=402 v=45 k=22 lambda=18 mu=3 top=-704 bottom=301
+is ruled out by integrality condition
+cnt=403 v=45 k=22 lambda=19 mu=2 top=-792 bottom=369
+is ruled out by integrality condition
+cnt=404 v=45 k=22 lambda=20 mu=1 top=-880 bottom=445
+is ruled out by integrality condition
+cnt=405 v=46 k=9 lambda=0 mu=2 top=72 bottom=32
+bottom is not a square
+cnt=406 v=46 k=9 lambda=4 mu=1 top=-153 bottom=41
+is ruled out by integrality condition
+cnt=407 v=46 k=10 lambda=2 mu=2 top=-20 bottom=32
+is ruled out by integrality condition
+cnt=408 v=46 k=12 lambda=0 mu=4 top=156 bottom=48
+bottom is not a square
+cnt=409 v=46 k=15 lambda=0 mu=7 top=285 bottom=81
+is ruled out by integrality condition
+cnt=410 v=46 k=15 lambda=2 mu=6 top=150 bottom=52
+is ruled out by integrality condition
+cnt=411 v=46 k=15 lambda=4 mu=5 top=15 bottom=41
+is ruled out by integrality condition
+cnt=412 v=46 k=15 lambda=6 mu=4 top=-120 bottom=48
+bottom is not a square
+cnt=413 v=46 k=15 lambda=8 mu=3 top=-255 bottom=73
+is ruled out by integrality condition
+cnt=414 v=46 k=15 lambda=10 mu=2 top=-390 bottom=116
+is ruled out by integrality condition
+cnt=415 v=46 k=15 lambda=12 mu=1 top=-525 bottom=177
+is ruled out by integrality condition
+cnt=416 v=46 k=18 lambda=2 mu=10 top=324 bottom=96
+is ruled out by integrality condition
+cnt=417 v=46 k=18 lambda=5 mu=8 top=99 bottom=49
+is ruled out by integrality condition
+cnt=418 v=46 k=18 lambda=8 mu=6 top=-126 bottom=52
+is ruled out by integrality condition
+cnt=419 v=46 k=18 lambda=11 mu=4 top=-351 bottom=105
+is ruled out by integrality condition
+cnt=420 v=46 k=18 lambda=14 mu=2 top=-576 bottom=208
+is ruled out by integrality condition
+cnt=421 v=46 k=20 lambda=4 mu=12 top=320 bottom=96
+is ruled out by integrality condition
+cnt=422 v=46 k=20 lambda=9 mu=8 top=-85 bottom=49
+is ruled out by integrality condition
+cnt=423 v=46 k=20 lambda=14 mu=4 top=-490 bottom=164
+is ruled out by integrality condition
+cnt=424 v=46 k=21 lambda=4 mu=14 top=408 bottom=128
+is ruled out by integrality condition
+cnt=425 v=46 k=21 lambda=12 mu=7 top=-267 bottom=81
+is ruled out by integrality condition
+cnt=426 v=46 k=23 lambda=0 mu=23 top=989 bottom=529
+b=23
+tb=43
+f=44 g=1 r=0 s=-23
+cnt=427 v=47 k=16 lambda=0 mu=8 top=336 bottom=96
+bottom is not a square
+cnt=428 v=47 k=18 lambda=3 mu=9 top=240 bottom=72
+bottom is not a square
+cnt=429 v=47 k=20 lambda=6 mu=10 top=144 bottom=56
+is ruled out by integrality condition
+cnt=430 v=47 k=22 lambda=9 mu=11 top=48 bottom=48
+bottom is not a square
+cnt=431 v=47 k=23 lambda=0 mu=22 top=966 bottom=488
+is ruled out by integrality condition
+cnt=432 v=47 k=23 lambda=1 mu=21 top=874 bottom=408
+is ruled out by integrality condition
+cnt=433 v=47 k=23 lambda=2 mu=20 top=782 bottom=336
+is ruled out by integrality condition
+cnt=434 v=47 k=23 lambda=3 mu=19 top=690 bottom=272
+is ruled out by integrality condition
+cnt=435 v=47 k=23 lambda=4 mu=18 top=598 bottom=216
+is ruled out by integrality condition
+cnt=436 v=47 k=23 lambda=5 mu=17 top=506 bottom=168
+is ruled out by integrality condition
+cnt=437 v=47 k=23 lambda=6 mu=16 top=414 bottom=128
+is ruled out by integrality condition
+cnt=438 v=47 k=23 lambda=7 mu=15 top=322 bottom=96
+is ruled out by integrality condition
+cnt=439 v=47 k=23 lambda=8 mu=14 top=230 bottom=72
+is ruled out by integrality condition
+cnt=440 v=47 k=23 lambda=9 mu=13 top=138 bottom=56
+is ruled out by integrality condition
+cnt=441 v=47 k=23 lambda=10 mu=12 top=46 bottom=48
+is ruled out by integrality condition
+cnt=442 v=47 k=23 lambda=11 mu=11 top=-46 bottom=48
+is ruled out by integrality condition
+cnt=443 v=47 k=23 lambda=12 mu=10 top=-138 bottom=56
+is ruled out by integrality condition
+cnt=444 v=47 k=23 lambda=13 mu=9 top=-230 bottom=72
+is ruled out by integrality condition
+cnt=445 v=47 k=23 lambda=14 mu=8 top=-322 bottom=96
+is ruled out by integrality condition
+cnt=446 v=47 k=23 lambda=15 mu=7 top=-414 bottom=128
+is ruled out by integrality condition
+cnt=447 v=47 k=23 lambda=16 mu=6 top=-506 bottom=168
+is ruled out by integrality condition
+cnt=448 v=47 k=23 lambda=17 mu=5 top=-598 bottom=216
+is ruled out by integrality condition
+cnt=449 v=47 k=23 lambda=18 mu=4 top=-690 bottom=272
+is ruled out by integrality condition
+cnt=450 v=47 k=23 lambda=19 mu=3 top=-782 bottom=336
+is ruled out by integrality condition
+cnt=451 v=47 k=23 lambda=20 mu=2 top=-874 bottom=408
+is ruled out by integrality condition
+cnt=452 v=47 k=23 lambda=21 mu=1 top=-966 bottom=488
+is ruled out by integrality condition
+cnt=453 v=48 k=24 lambda=0 mu=24 top=1080 bottom=576
+b=24
+tb=45
+f=46 g=1 r=0 s=-24
+cnt=454 v=49 k=8 lambda=2 mu=1 top=-64 bottom=29
+is ruled out by integrality condition
+cnt=455 v=49 k=12 lambda=2 mu=3 top=24 bottom=37
+is ruled out by integrality condition
+cnt=456 v=49 k=12 lambda=5 mu=2 top=-168 bottom=49
+b=7
+tb=-24
+f=12 g=36 r=5 s=-2
+cnt=457 v=49 k=12 lambda=8 mu=1 top=-360 bottom=93
+is ruled out by integrality condition
+cnt=458 v=49 k=15 lambda=3 mu=5 top=66 bottom=44
+bottom is not a square
+cnt=459 v=49 k=16 lambda=1 mu=7 top=256 bottom=72
+is ruled out by integrality condition
+cnt=460 v=49 k=16 lambda=3 mu=6 top=112 bottom=49
+b=7
+tb=16
+f=32 g=16 r=2 s=-5
+cnt=461 v=49 k=16 lambda=5 mu=5 top=-32 bottom=44
+is ruled out by integrality condition
+cnt=462 v=49 k=16 lambda=7 mu=4 top=-176 bottom=57
+is ruled out by integrality condition
+cnt=463 v=49 k=16 lambda=9 mu=3 top=-320 bottom=88
+is ruled out by integrality condition
+cnt=464 v=49 k=16 lambda=11 mu=2 top=-464 bottom=137
+is ruled out by integrality condition
+cnt=465 v=49 k=16 lambda=13 mu=1 top=-608 bottom=204
+is ruled out by integrality condition
+cnt=466 v=49 k=18 lambda=2 mu=9 top=300 bottom=85
+is ruled out by integrality condition
+cnt=467 v=49 k=18 lambda=7 mu=6 top=-84 bottom=49
+b=7
+tb=-12
+f=18 g=30 r=4 s=-3
+cnt=468 v=49 k=18 lambda=12 mu=3 top=-468 bottom=141
+is ruled out by integrality condition
+cnt=469 v=49 k=20 lambda=5 mu=10 top=200 bottom=65
+is ruled out by integrality condition
+cnt=470 v=49 k=20 lambda=12 mu=5 top=-376 bottom=109
+is ruled out by integrality condition
+cnt=471 v=49 k=21 lambda=2 mu=14 top=534 bottom=172
+is ruled out by integrality condition
+cnt=472 v=49 k=21 lambda=11 mu=7 top=-234 bottom=72
+is ruled out by integrality condition
+cnt=473 v=49 k=22 lambda=8 mu=11 top=100 bottom=53
+is ruled out by integrality condition
+cnt=474 v=49 k=24 lambda=0 mu=23 top=1056 bottom=533
+is ruled out by integrality condition
+cnt=475 v=49 k=24 lambda=1 mu=22 top=960 bottom=449
+is ruled out by integrality condition
+cnt=476 v=49 k=24 lambda=2 mu=21 top=864 bottom=373
+is ruled out by integrality condition
+cnt=477 v=49 k=24 lambda=3 mu=20 top=768 bottom=305
+is ruled out by integrality condition
+cnt=478 v=49 k=24 lambda=4 mu=19 top=672 bottom=245
+is ruled out by integrality condition
+cnt=479 v=49 k=24 lambda=5 mu=18 top=576 bottom=193
+is ruled out by integrality condition
+cnt=480 v=49 k=24 lambda=6 mu=17 top=480 bottom=149
+is ruled out by integrality condition
+cnt=481 v=49 k=24 lambda=7 mu=16 top=384 bottom=113
+is ruled out by integrality condition
+cnt=482 v=49 k=24 lambda=8 mu=15 top=288 bottom=85
+is ruled out by integrality condition
+cnt=483 v=49 k=24 lambda=9 mu=14 top=192 bottom=65
+is ruled out by integrality condition
+cnt=484 v=49 k=24 lambda=10 mu=13 top=96 bottom=53
+is ruled out by integrality condition
+cnt=485 v=49 k=24 lambda=11 mu=12 top=0 bottom=49
+b=7
+tb=0
+f=24 g=24 r=3 s=-4
+cnt=486 v=49 k=24 lambda=12 mu=11 top=-96 bottom=53
+is ruled out by integrality condition
+cnt=487 v=49 k=24 lambda=13 mu=10 top=-192 bottom=65
+is ruled out by integrality condition
+cnt=488 v=49 k=24 lambda=14 mu=9 top=-288 bottom=85
+is ruled out by integrality condition
+cnt=489 v=49 k=24 lambda=15 mu=8 top=-384 bottom=113
+is ruled out by integrality condition
+cnt=490 v=49 k=24 lambda=16 mu=7 top=-480 bottom=149
+is ruled out by integrality condition
+cnt=491 v=49 k=24 lambda=17 mu=6 top=-576 bottom=193
+is ruled out by integrality condition
+cnt=492 v=49 k=24 lambda=18 mu=5 top=-672 bottom=245
+is ruled out by integrality condition
+cnt=493 v=49 k=24 lambda=19 mu=4 top=-768 bottom=305
+is ruled out by integrality condition
+cnt=494 v=49 k=24 lambda=20 mu=3 top=-864 bottom=373
+is ruled out by integrality condition
+cnt=495 v=49 k=24 lambda=21 mu=2 top=-960 bottom=449
+is ruled out by integrality condition
+cnt=496 v=49 k=24 lambda=22 mu=1 top=-1056 bottom=533
+is ruled out by integrality condition
+cnt=497 v=50 k=7 lambda=0 mu=1 top=35 bottom=25
+b=5
+tb=7
+f=28 g=21 r=2 s=-3
+cnt=498 v=50 k=14 lambda=3 mu=4 top=21 bottom=41
+is ruled out by integrality condition
+cnt=499 v=50 k=14 lambda=8 mu=2 top=-322 bottom=84
+is ruled out by integrality condition
+cnt=500 v=50 k=21 lambda=0 mu=15 top=693 bottom=249
+is ruled out by integrality condition
+cnt=501 v=50 k=21 lambda=4 mu=12 top=350 bottom=100
+b=10
+tb=35
+f=42 g=7 r=1 s=-9
+cnt=502 v=50 k=21 lambda=8 mu=9 top=7 bottom=49
+b=7
+tb=1
+f=25 g=24 r=3 s=-4
+cnt=503 v=50 k=21 lambda=12 mu=6 top=-336 bottom=96
+bottom is not a square
+cnt=504 v=50 k=21 lambda=16 mu=3 top=-679 bottom=241
+is ruled out by integrality condition
+cnt=505 v=50 k=25 lambda=0 mu=25 top=1175 bottom=625
+b=25
+tb=47
+f=48 g=1 r=0 s=-25

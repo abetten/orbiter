@@ -1,0 +1,38 @@
+DISCRETA_CPP = /usr/bin/g++
+CPPFLAGS = -Wall
+LIB = 
+LFLAGS = -lm
+
+
+all: galois action incidence snakesandladders discreta toplevel
+
+
+galois : galois2 ; cd GALOIS; $(MAKE)
+action : action2 ; cd ACTION; $(MAKE)
+incidence : incidence2 ; cd INCIDENCE; $(MAKE)
+snakesandladders : snakesandladders2 ; cd SNAKES_AND_LADDERS; $(MAKE)
+discreta : discreta2 ; cd DISCRETA; $(MAKE)
+toplevel : toplevel2 ; cd TOP_LEVEL; $(MAKE)
+galois2 : ; cd GALOIS; $(MAKE)
+action2 : ; cd ACTION; $(MAKE)
+incidence2 : ; cd INCIDENCE; $(MAKE)
+snakesandladders2 : ; cd SNAKES_AND_LADDERS; $(MAKE)
+discreta2 : ; cd DISCRETA; $(MAKE)
+toplevel2 : ; cd TOP_LEVEL; $(MAKE)
+
+
+clean:
+	cd GALOIS; $(MAKE) clean
+	cd ACTION; $(MAKE) clean
+	cd INCIDENCE; $(MAKE) clean
+	cd SNAKES_AND_LADDERS; $(MAKE) clean
+	cd DISCRETA; $(MAKE) clean
+	cd TOP_LEVEL; $(MAKE) clean
+	- rm *.o *.a 
+
+
+
+
+
+
+

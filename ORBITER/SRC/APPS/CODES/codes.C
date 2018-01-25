@@ -1,0 +1,30 @@
+// codes.C
+//
+// Anton Betten
+// December 30, 2003
+
+#include "codes.h"
+
+// global data:
+
+INT t0; // the system time when the program started
+
+
+int main(int argc, const char **argv)
+{
+	t0 = os_ticks();
+	
+	
+	{
+	code_generator cg;
+	
+	cg.init(argc, argv);
+
+	cg.main(cg.verbose_level);
+	
+	
+	}
+	the_end(t0);
+	//the_end_quietly(t0);
+}
+
