@@ -3,4 +3,3 @@ all: ;
 
 clean: ;
 	cd ORBITER; $(MAKE) clean
-
