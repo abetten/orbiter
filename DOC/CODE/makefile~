@@ -1,9 +1,0 @@
-
-
-
-tex1:
-	~/bin/a2tex.out <~/DEV.15/ORBITER/SRC/TOOLS/dlx.C >~dlx.tex
-	~/bin/a2tex.out <~/DATA.15/COMBINATORICS/sol25.txt >~sol25.tex
-
-
-	
