@@ -96,6 +96,10 @@ using namespace std;
 	// use Mac specific stuff like asking how much memory the process uses.
 	// used in util.C
 
+
+
+
+
 #define HAS_NAUTY 1
 
 // need to be defined in nauty_interface.C also.

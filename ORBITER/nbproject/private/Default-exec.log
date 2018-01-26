@@ -1,0 +1,7 @@
+called: /usr/bin/g++
+	/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS
+	/usr/bin/g++
+	partitions.C
+	-o
+	partitions.out
+
