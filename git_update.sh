@@ -11,7 +11,6 @@ WHITE='\033[00;37m'
 BOLD='\033[1m'
 UNDERLINE='\033[4m'
 
-
 LINE="----------------------------------------------------------------------------------"
 
 # find all .a files and delete them before uploading the code to github
