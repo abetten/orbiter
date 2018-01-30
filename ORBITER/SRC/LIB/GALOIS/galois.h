@@ -85,18 +85,29 @@
 
 using namespace std;
 
-
-// declare either or:
+/*----------------------------------------------------------------------------*/
+/// The following code block identifies the current operating system the code is
+/// being executed on and turns on specific macros in order to use system calls
+/// defined by that operating system.
+/*----------------------------------------------------------------------------*/
+#if defined(unix) || defined(__unix) || defined(__unix__)
 #define SYSTEMUNIX
-#undef SYSTEMWINDOWS
+#endif
 
+#if defined(_WIN32) || defined(_WIN64)
+#define SYSTEMWINDOWS
+#endif
 
-
+#if defined(__APPLE__) || defined(__MACH__)
 #define SYSTEM_IS_MACINTOSH
 	// use Mac specific stuff like asking how much memory the process uses.
 	// used in util.C
+#endif
 
-
+#if defined(__linux__) || defined(linux) || defined(__linux)
+#define SYSTEM_LINUX
+#endif
+/*----------------------------------------------------------------------------*/
 
 
 
