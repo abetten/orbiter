@@ -4,8 +4,454 @@
     <df root="/Users/sajeeb/Desktop/orbiter/ORBITER" name="0">
       <df name="SRC">
         <df name="APPS">
+          <df name="ARCS">
+            <in>arcs_main.C</in>
+            <in>arcs_orderly.C</in>
+            <in>create_group.C</in>
+            <in>k_arc_lifting.C</in>
+            <in>test_arc.C</in>
+            <in>test_hyperoval.C</in>
+          </df>
+          <df name="BLT">
+            <in>blt_main.C</in>
+            <in>blt_set.C</in>
+            <in>blt_set2.C</in>
+          </df>
+          <df name="CODES">
+            <in>code_generator.C</in>
+            <in>codes.C</in>
+          </df>
           <df name="COMBINATORICS">
+            <in>all_k_subsets.C</in>
+            <in>alphabet.C</in>
+            <in>alphabet2.C</in>
+            <in>burnside.C</in>
+            <in>cayley.C</in>
+            <in>cayley_sym_n.C</in>
+            <in>change_1_dollar.C</in>
+            <in>conic.C</in>
+            <in>conjugacy_classes_sym_n.C</in>
+            <in>costas.C</in>
+            <in>design.C</in>
+            <in>ferdinand.C</in>
+            <in>fibonacci.C</in>
+            <in>field.C</in>
+            <in>grassmann.C</in>
+            <in>group_ring.C</in>
+            <in>had.C</in>
+            <in>hadamard.C</in>
+            <in>hamming.C</in>
+            <in>johnson.C</in>
+            <in>johnson_table.C</in>
+            <in>lehmer.c</in>
+            <in>matrix_rank.C</in>
+            <in>nauty.C</in>
+            <in>nondecreasing.C</in>
+            <in>orthogonal.C</in>
+            <in>paley.C</in>
             <in>partitions.C</in>
+            <in>pentomino_5x5.C</in>
+            <in>poset_of_subsets.C</in>
+            <in>problem11.C</in>
+            <in>puzzle.C</in>
+            <in>random.C</in>
+            <in>random_permutation.C</in>
+            <in>rank_anything.C</in>
+            <in>rank_subsets_lex.C</in>
+            <in>sarnak.C</in>
+            <in>schlaefli.C</in>
+            <in>sequences.C</in>
+            <in>shrikhande.C</in>
+            <in>srg.C</in>
+            <in>subsets.C</in>
+            <in>tao.C</in>
+            <in>test.C</in>
+            <in>test2.C</in>
+            <in>unrank.C</in>
+            <in>winnie_li.C</in>
+          </df>
+          <df name="GRAPH">
+            <in>graph.C</in>
+            <in>graph_generator.C</in>
+          </df>
+          <df name="OVOID">
+            <in>make_design.C</in>
+            <in>ovoid.C</in>
+          </df>
+          <df name="PROJECTIVE_SPACE">
+            <in>analyze.C</in>
+            <in>analyze_projective_code.C</in>
+            <in>analyze_q_designs.C</in>
+            <in>baer_subplane.C</in>
+            <in>cheat_sheet_PG.C</in>
+            <in>determine_conic.C</in>
+            <in>determine_quadric.C</in>
+            <in>example_fano_plane.C</in>
+            <in>export_data.C</in>
+            <in>factor_space.C</in>
+            <in>hill.C</in>
+            <in>make_BLT_set.C</in>
+            <in>make_grassmannian.C</in>
+            <in>make_group.C</in>
+            <in>make_something.C</in>
+            <in>orthogonal_points.C</in>
+            <in>ovoid.C</in>
+            <in>plane_search.C</in>
+            <in>points.C</in>
+            <in>polar.C</in>
+            <in>process.C</in>
+            <in>process_PG.C</in>
+            <in>projective_space_main.C</in>
+            <in>simeon.C</in>
+            <in>test_PG.C</in>
+          </df>
+          <df name="REGULAR_LS">
+            <in>regular_ls.C</in>
+            <in>regular_ls_generator.C</in>
+            <in>transpose.C</in>
+          </df>
+          <df name="SUBSPACE_ORBITS">
+            <in>desarguesian_spread.C</in>
+            <in>linear_set.C</in>
+            <in>linear_set2.C</in>
+            <in>linear_set_main.C</in>
+            <in>subspace_orbits_main.C</in>
+          </df>
+          <df name="TDO">
+            <in>maxfit.C</in>
+            <in>packing.C</in>
+            <in>tdo_can.C</in>
+            <in>tdo_print.C</in>
+            <in>tdo_refine.C</in>
+            <in>tdo_refine_all.C</in>
+            <in>tdo_start.C</in>
+          </df>
+          <df name="TOOLS">
+            <in>all_cliques.C</in>
+            <in>all_cycles.C</in>
+            <in>all_rainbow_cliques.C</in>
+            <in>cc2widor.C</in>
+            <in>colored_graph.C</in>
+            <in>create_layered_graph_file.C</in>
+            <in>dlx.C</in>
+            <in>draw_colored_graph.C</in>
+            <in>draw_graph.C</in>
+            <in>latex_table.C</in>
+            <in>layered_graph_main.C</in>
+            <in>loop.C</in>
+            <in>plot_decomposition_matrix.C</in>
+            <in>run_blt.C</in>
+            <in>scheduler.C</in>
+            <in>solve_diophant.C</in>
+            <in>split.C</in>
+            <in>treedraw.C</in>
+            <in>widor.C</in>
+          </df>
+          <df name="TRANSLATION_PLANE">
+            <in>extending.C</in>
+            <in>translation_plane_main.C</in>
+          </df>
+        </df>
+        <df name="LIB">
+          <df name="ACTION">
+            <in>action.C</in>
+            <in>action_by_conjugation.C</in>
+            <in>action_by_representation.C</in>
+            <in>action_by_restriction.C</in>
+            <in>action_by_right_multiplication.C</in>
+            <in>action_by_subfield_structure.C</in>
+            <in>action_cb.C</in>
+            <in>action_global.C</in>
+            <in>action_indexing_cosets.C</in>
+            <in>action_induce.C</in>
+            <in>action_init.C</in>
+            <in>action_on_andre.C</in>
+            <in>action_on_bricks.C</in>
+            <in>action_on_cosets.C</in>
+            <in>action_on_determinant.C</in>
+            <in>action_on_factor_space.C</in>
+            <in>action_on_flags.C</in>
+            <in>action_on_grassmannian.C</in>
+            <in>action_on_homogeneous_polynomials.C</in>
+            <in>action_on_k_subsets.C</in>
+            <in>action_on_orbits.C</in>
+            <in>action_on_orthogonal.C</in>
+            <in>action_on_sets.C</in>
+            <in>action_on_sign.C</in>
+            <in>action_on_spread_set.C</in>
+            <in>action_on_subgroups.C</in>
+            <in>action_on_wedge_product.C</in>
+            <in>backtrack.C</in>
+            <in>group.C</in>
+            <in>interface.C</in>
+            <in>interface_matrix_group.C</in>
+            <in>interface_perm_group.C</in>
+            <in>linear_group.C</in>
+            <in>linear_group_description.C</in>
+            <in>matrix_group.C</in>
+            <in>orbit_transversal.C</in>
+            <in>page_storage.C</in>
+            <in>perm_group.C</in>
+            <in>product_action.C</in>
+            <in>projective_space_with_action.C</in>
+            <in>schreier.C</in>
+            <in>schreier_sims.C</in>
+            <in>schreier_vector.C</in>
+            <in>set_and_stabilizer.C</in>
+            <in>sims.C</in>
+            <in>sims2.C</in>
+            <in>sims3.C</in>
+            <in>sims_global.C</in>
+            <in>strong_generators.C</in>
+            <in>strong_generators_groups.C</in>
+            <in>subgroup.C</in>
+            <in>union_find.C</in>
+            <in>union_find_on_k_subsets.C</in>
+            <in>vector_ge.C</in>
+          </df>
+          <df name="DATA">
+            <in>data_BLT.C</in>
+            <in>data_BLT_old.C</in>
+            <in>data_DH.C</in>
+            <in>data_TP.C</in>
+            <in>data_hyperovals.C</in>
+            <in>data_packings_PG_3_3.C</in>
+            <in>surface_11.C</in>
+            <in>surface_13.C</in>
+            <in>surface_16.C</in>
+            <in>surface_17.C</in>
+            <in>surface_19.C</in>
+            <in>surface_23.C</in>
+            <in>surface_25.C</in>
+            <in>surface_27.C</in>
+            <in>surface_29.C</in>
+            <in>surface_31.C</in>
+            <in>surface_32.C</in>
+            <in>surface_37.C</in>
+            <in>surface_4.C</in>
+            <in>surface_41.C</in>
+            <in>surface_43.C</in>
+            <in>surface_47.C</in>
+            <in>surface_49.C</in>
+            <in>surface_53.C</in>
+            <in>surface_59.C</in>
+            <in>surface_61.C</in>
+            <in>surface_64.C</in>
+            <in>surface_67.C</in>
+            <in>surface_7.C</in>
+            <in>surface_71.C</in>
+            <in>surface_73.C</in>
+            <in>surface_79.C</in>
+            <in>surface_8.C</in>
+            <in>surface_81.C</in>
+            <in>surface_83.C</in>
+            <in>surface_89.C</in>
+            <in>surface_9.C</in>
+            <in>surface_97.C</in>
+          </df>
+          <df name="DISCRETA">
+            <in>base.C</in>
+            <in>bitmatrix.C</in>
+            <in>bt_key.C</in>
+            <in>btree.C</in>
+            <in>database.C</in>
+            <in>design.C</in>
+            <in>design_parameter.C</in>
+            <in>design_parameter_source.C</in>
+            <in>discreta_global.C</in>
+            <in>domain.C</in>
+            <in>geometry.C</in>
+            <in>global.C</in>
+            <in>group_selection.C</in>
+            <in>hollerith.C</in>
+            <in>integer.C</in>
+            <in>longinteger.C</in>
+            <in>matrix.C</in>
+            <in>memory.C</in>
+            <in>number_partition.C</in>
+            <in>page_table.C</in>
+            <in>perm_group_gens.C</in>
+            <in>permutation.C</in>
+            <in>solid.C</in>
+            <in>unipoly.C</in>
+            <in>vector.C</in>
+          </df>
+          <df name="GALOIS">
+            <in>INT_matrix.C</in>
+            <in>INT_vector.C</in>
+            <in>a_domain.C</in>
+            <in>andre_construction.C</in>
+            <in>andre_construction_line_element.C</in>
+            <in>andre_construction_point_element.C</in>
+            <in>brick_domain.C</in>
+            <in>buekenhout_metz.C</in>
+            <in>classify.C</in>
+            <in>classify_bitvectors.C</in>
+            <in>clique_finder.C</in>
+            <in>colored_graph.C</in>
+            <in>combinatorics.C</in>
+            <in>data.C</in>
+            <in>data_file.C</in>
+            <in>decomposition.C</in>
+            <in>desarguesian_spread.C</in>
+            <in>diophant.C</in>
+            <in>dlx.C</in>
+            <in>draw.C</in>
+            <in>eckardt_point.C</in>
+            <in>fancy_set.C</in>
+            <in>file_output.C</in>
+            <in>finite_field.C</in>
+            <in>finite_field_linear_algebra.C</in>
+            <in>finite_field_representations.C</in>
+            <in>finite_field_tables.C</in>
+            <in>finite_ring.C</in>
+            <in>flag.C</in>
+            <in>galois_global.C</in>
+            <in>generators_symplectic_group.C</in>
+            <in>geometric_object.C</in>
+            <in>geometric_operations.C</in>
+            <in>gl_classes.C</in>
+            <in>graph_layer.C</in>
+            <in>graph_node.C</in>
+            <in>grassmann.C</in>
+            <in>grassmann_embedded.C</in>
+            <in>group_generators.C</in>
+            <in>heisenberg.C</in>
+            <in>hermitian.C</in>
+            <in>hjelmslev.C</in>
+            <in>homogeneous_polynomial_domain.C</in>
+            <in>incidence_structure.C</in>
+            <in>klein_correspondence.C</in>
+            <in>knarr.C</in>
+            <in>layered_graph.C</in>
+            <in>layered_graph_draw_options.C</in>
+            <in>longinteger_domain.C</in>
+            <in>longinteger_object.C</in>
+            <in>magma_interface.C</in>
+            <in>mckay.C</in>
+            <in>memory.C</in>
+            <in>memory_object.C</in>
+            <in>mindist.C</in>
+            <in>mp_graphics.C</in>
+            <in>naugraph.c</in>
+            <in>nautil.c</in>
+            <in>nauty.c</in>
+            <in>nauty_interface.C</in>
+            <in>norm_tables.C</in>
+            <in>null_polarity_generator.C</in>
+            <in>number_theory.C</in>
+            <in>object_in_projective_space.C</in>
+            <in>orthogonal.C</in>
+            <in>orthogonal_points.C</in>
+            <in>partitionstack.C</in>
+            <in>plot.C</in>
+            <in>projective.C</in>
+            <in>projective_space.C</in>
+            <in>rainbow_cliques.C</in>
+            <in>rank_checker.C</in>
+            <in>set_of_sets.C</in>
+            <in>sorting.C</in>
+            <in>spreadsheet.C</in>
+            <in>subfield_structure.C</in>
+            <in>super_fast_hash.C</in>
+            <in>surface.C</in>
+            <in>surface_object.C</in>
+            <in>tensor.C</in>
+            <in>tree.C</in>
+            <in>tree_node.C</in>
+            <in>unipoly.C</in>
+            <in>unusual.C</in>
+            <in>util.C</in>
+            <in>vector_hashing.C</in>
+            <in>w3q.C</in>
+          </df>
+          <df name="INCIDENCE">
+            <in>dynamic_memory.C</in>
+            <in>geo_parameter.C</in>
+            <in>geometric_tests.C</in>
+            <in>inc_gen_global.C</in>
+            <in>incidence_global.C</in>
+            <in>packing.C</in>
+            <in>point_line.C</in>
+            <in>refine_3design.C</in>
+            <in>refine_columns.C</in>
+            <in>refine_rows.C</in>
+            <in>tdo_data.C</in>
+            <in>tdo_scheme.C</in>
+          </df>
+          <df name="SNAKES_AND_LADDERS">
+            <in>classification.C</in>
+            <in>compute_stabilizer.C</in>
+            <in>extension.C</in>
+            <in>flag_orbit_node.C</in>
+            <in>flag_orbits.C</in>
+            <in>generator.C</in>
+            <in>generator_classify.C</in>
+            <in>generator_combinatorics.C</in>
+            <in>generator_draw.C</in>
+            <in>generator_init.C</in>
+            <in>generator_io.C</in>
+            <in>generator_trace.C</in>
+            <in>oracle.C</in>
+            <in>oracle_downstep.C</in>
+            <in>oracle_downstep_subspace_action.C</in>
+            <in>oracle_io.C</in>
+            <in>oracle_upstep.C</in>
+            <in>oracle_upstep_subspace_action.C</in>
+            <in>orbit_node.C</in>
+            <in>recognize.C</in>
+            <in>set_stabilizer_compute.C</in>
+            <in>snakes_and_ladders_global.C</in>
+            <in>upstep_work.C</in>
+            <in>upstep_work_subspace_action.C</in>
+            <in>upstep_work_trace.C</in>
+          </df>
+          <df name="TOP_LEVEL">
+            <df name="OLD">
+              <in>surface_data.C</in>
+            </df>
+            <in>analyze_group.C</in>
+            <in>arc_generator.C</in>
+            <in>arc_lifting.C</in>
+            <in>choose_points_or_lines.C</in>
+            <in>classify_double_sixes.C</in>
+            <in>classify_trihedral_pairs.C</in>
+            <in>decomposition.C</in>
+            <in>elliptic_curve.C</in>
+            <in>exact_cover.C</in>
+            <in>exact_cover_arguments.C</in>
+            <in>extra.C</in>
+            <in>factor_group.C</in>
+            <in>incidence_structure.C</in>
+            <in>isomorph.C</in>
+            <in>isomorph_arguments.C</in>
+            <in>isomorph_database.C</in>
+            <in>isomorph_files.C</in>
+            <in>isomorph_global.C</in>
+            <in>isomorph_testing.C</in>
+            <in>isomorph_trace.C</in>
+            <in>object_in_projective_space_with_action.C</in>
+            <in>orbit_of_sets.C</in>
+            <in>orbit_of_subspaces.C</in>
+            <in>orbit_rep.C</in>
+            <in>polar.C</in>
+            <in>projective_space.C</in>
+            <in>recoordinatize.C</in>
+            <in>representatives.C</in>
+            <in>search_blocking_set.C</in>
+            <in>singer_cycle.C</in>
+            <in>subspace_orbits.C</in>
+            <in>surface_classify.C</in>
+            <in>surface_classify_wedge.C</in>
+            <in>surface_create.C</in>
+            <in>surface_create_description.C</in>
+            <in>surface_object_with_action.C</in>
+            <in>surface_with_action.C</in>
+            <in>top_level_global.C</in>
+            <in>translation_plane.C</in>
+            <in>translation_plane2.C</in>
+            <in>translation_plane_via_andre_model.C</in>
+            <in>young.C</in>
           </df>
         </df>
       </df>
@@ -31,6 +477,7 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <codeAssistance>
+        <resolveSymbolicLinks>true</resolveSymbolicLinks>
       </codeAssistance>
       <makefileType>
         <makeTool>
@@ -44,7 +491,2037 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/ARCS/arcs_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/ARCS/arcs_orderly.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/ARCS/create_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/ARCS/k_arc_lifting.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/ARCS/test_arc.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/ARCS/test_hyperoval.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/BLT/blt_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/BLT/blt_set.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/BLT/blt_set2.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/CODES/code_generator.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/CODES/codes.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/all_k_subsets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/alphabet.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/alphabet2.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/burnside.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/cayley.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/cayley_sym_n.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/change_1_dollar.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/conic.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/conjugacy_classes_sym_n.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/costas.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/design.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/ferdinand.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/fibonacci.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/field.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/grassmann.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/group_ring.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/had.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/hadamard.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/hamming.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/johnson.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/johnson_table.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/lehmer.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/matrix_rank.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/nauty.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/nondecreasing.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/orthogonal.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/paley.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
       <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/partitions.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/pentomino_5x5.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/poset_of_subsets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/problem11.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/puzzle.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/random.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/random_permutation.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/rank_anything.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/rank_subsets_lex.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/sarnak.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/schlaefli.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/sequences.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/shrikhande.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/srg.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/subsets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/tao.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/test.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/test2.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/unrank.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/COMBINATORICS/winnie_li.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/GRAPH/graph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/GRAPH/graph_generator.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/OVOID/make_design.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/OVOID/ovoid.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/analyze.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/analyze_projective_code.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/analyze_q_designs.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/baer_subplane.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/cheat_sheet_PG.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/determine_conic.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/determine_quadric.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/example_fano_plane.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/export_data.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/factor_space.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/hill.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/make_BLT_set.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/make_grassmannian.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/make_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/make_something.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/orthogonal_points.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/ovoid.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/plane_search.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/points.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/polar.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/process.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/process_PG.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/projective_space_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/simeon.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/PROJECTIVE_SPACE/test_PG.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/REGULAR_LS/regular_ls.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/REGULAR_LS/regular_ls_generator.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/REGULAR_LS/transpose.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/SUBSPACE_ORBITS/desarguesian_spread.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/SUBSPACE_ORBITS/linear_set.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/SUBSPACE_ORBITS/linear_set2.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/SUBSPACE_ORBITS/linear_set_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/SUBSPACE_ORBITS/subspace_orbits_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/maxfit.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/packing.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/tdo_can.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/tdo_print.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/tdo_refine.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/tdo_refine_all.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TDO/tdo_start.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/all_cliques.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/all_cycles.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/all_rainbow_cliques.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/cc2widor.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/colored_graph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/create_layered_graph_file.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/dlx.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/draw_colored_graph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/draw_graph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/latex_table.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/layered_graph_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/loop.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/plot_decomposition_matrix.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/run_blt.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/scheduler.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/solve_diophant.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/split.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/treedraw.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TOOLS/widor.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TRANSLATION_PLANE/extending.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/APPS/TRANSLATION_PLANE/translation_plane_main.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_by_conjugation.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_by_representation.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_by_restriction.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_by_right_multiplication.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_by_subfield_structure.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_cb.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_indexing_cosets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_induce.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_init.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_andre.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_bricks.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_cosets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_determinant.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_factor_space.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_flags.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_grassmannian.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_homogeneous_polynomials.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_k_subsets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_orbits.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_orthogonal.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_sets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_sign.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_spread_set.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_subgroups.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/action_on_wedge_product.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/backtrack.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/interface.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/interface_matrix_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/interface_perm_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/linear_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/linear_group_description.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/matrix_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/orbit_transversal.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/page_storage.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/perm_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/product_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/projective_space_with_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/schreier.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/schreier_sims.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/schreier_vector.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/set_and_stabilizer.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/sims.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/sims2.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/sims3.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/sims_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/strong_generators.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/strong_generators_groups.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/subgroup.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/union_find.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/union_find_on_k_subsets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/ACTION/vector_ge.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/data_BLT.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/data_BLT_old.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/data_DH.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/data_TP.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/data_hyperovals.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/data_packings_PG_3_3.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_11.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_13.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_16.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_17.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_19.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_23.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_25.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_27.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_29.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_31.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_32.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_37.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_4.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_41.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_43.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_47.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_49.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_53.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_59.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_61.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_64.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_67.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_7.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_71.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_73.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_79.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_8.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_81.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_83.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_89.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_9.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DATA/surface_97.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/base.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/bitmatrix.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/bt_key.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/btree.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/database.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/design.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/design_parameter.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/design_parameter_source.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/discreta_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/domain.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/geometry.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/group_selection.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/hollerith.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/integer.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/longinteger.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/matrix.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/memory.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/number_partition.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/page_table.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/perm_group_gens.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/permutation.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/solid.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/unipoly.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/DISCRETA/vector.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/INT_matrix.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/INT_vector.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/a_domain.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/andre_construction.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/andre_construction_line_element.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/andre_construction_point_element.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/brick_domain.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/buekenhout_metz.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/classify.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/classify_bitvectors.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/clique_finder.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/colored_graph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/combinatorics.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/data.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/data_file.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/decomposition.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/desarguesian_spread.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/diophant.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/dlx.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/draw.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/eckardt_point.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/fancy_set.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/file_output.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/finite_field.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/finite_field_linear_algebra.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/finite_field_representations.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/finite_field_tables.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/finite_ring.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/flag.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/galois_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/generators_symplectic_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/geometric_object.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/geometric_operations.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/gl_classes.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/graph_layer.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/graph_node.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/grassmann.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/grassmann_embedded.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/group_generators.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/heisenberg.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/hermitian.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/hjelmslev.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/homogeneous_polynomial_domain.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/incidence_structure.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/klein_correspondence.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/knarr.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/layered_graph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/layered_graph_draw_options.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/longinteger_domain.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/longinteger_object.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/magma_interface.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/mckay.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/memory.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/memory_object.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/mindist.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/mp_graphics.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/naugraph.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/nautil.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/nauty.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/nauty_interface.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/norm_tables.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/null_polarity_generator.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/number_theory.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/object_in_projective_space.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/orthogonal.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/orthogonal_points.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/partitionstack.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/plot.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/projective.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/projective_space.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/rainbow_cliques.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/rank_checker.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/set_of_sets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/sorting.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/spreadsheet.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/subfield_structure.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/super_fast_hash.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/surface.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/surface_object.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/tensor.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/tree.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/tree_node.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/unipoly.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/unusual.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/util.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/vector_hashing.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/GALOIS/w3q.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/dynamic_memory.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/geo_parameter.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/geometric_tests.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/inc_gen_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/incidence_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/packing.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/point_line.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/refine_3design.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/refine_columns.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/refine_rows.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/tdo_data.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/INCIDENCE/tdo_scheme.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/classification.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/compute_stabilizer.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/extension.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/flag_orbit_node.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/flag_orbits.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator_classify.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator_combinatorics.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator_draw.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator_init.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator_io.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/generator_trace.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/oracle.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/oracle_downstep.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/oracle_downstep_subspace_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/oracle_io.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/oracle_upstep.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/oracle_upstep_subspace_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/orbit_node.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/recognize.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/set_stabilizer_compute.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/snakes_and_ladders_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/upstep_work.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/upstep_work_subspace_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/SNAKES_AND_LADDERS/upstep_work_trace.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/OLD/surface_data.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/analyze_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/arc_generator.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/arc_lifting.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/choose_points_or_lines.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/classify_double_sixes.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/classify_trihedral_pairs.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/decomposition.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/elliptic_curve.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/exact_cover.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/exact_cover_arguments.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/extra.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/factor_group.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/incidence_structure.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph_arguments.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph_database.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph_files.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph_testing.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/isomorph_trace.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/object_in_projective_space_with_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/orbit_of_sets.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/orbit_of_subspaces.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/orbit_rep.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/polar.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/projective_space.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/recoordinatize.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/representatives.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/search_blocking_set.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/singer_cycle.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/subspace_orbits.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/surface_classify.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/surface_classify_wedge.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/surface_create.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/surface_create_description.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/surface_object_with_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/surface_with_action.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/top_level_global.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/translation_plane.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/translation_plane2.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/translation_plane_via_andre_model.C"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="/Users/sajeeb/Desktop/orbiter/ORBITER/SRC/LIB/TOP_LEVEL/young.C"
             ex="false"
             tool="1"
             flavor2="0">
