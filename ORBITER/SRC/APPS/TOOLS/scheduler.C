@@ -153,7 +153,9 @@ int main(int argc, char **argv)
 				//cout << "found symbol " << key << endl;
 				for (h = 0; h < nb_symbols; h++) {
 					if (strcmp(key, symbol_key[h]) == 0) {
-						cout << "the key matches symbol " << h << " = " << symbol_key[h] << " and will be replaced by " << symbol_value[h] << endl;
+						cout << "the key matches symbol " << h 
+							<< " = " << symbol_key[h] << " and will be replaced by " 
+							<< symbol_value[h] << endl;
 						strcpy(str + k, symbol_value[h]);
 						k += strlen(symbol_value[h]);
 						str[k] = 0;
