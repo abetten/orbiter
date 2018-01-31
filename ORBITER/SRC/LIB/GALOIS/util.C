@@ -1198,8 +1198,19 @@ INT os_memory_usage()
 	//cout << "resident_size=" << t_info.resident_size << endl;
 	//cout << "virtual_size=" << t_info.virtual_size << endl;
 	return t_info.resident_size;
-#else
-	return 0;
+#endif
+#ifdef SYSTEM_LINUX
+	int chars = 128; // number of characters to read from the /proc file in a given line
+        FILE* file = fopen("/proc/self/status", "r");
+        char line[chars];
+        while (fgets(line, chars, file) != NULL) {     // read one line at a time
+                if (strncmp(line, "VmPeak:", 7) == 0){ // compare the first 7 characters of every line
+                        char* p = line + 7;            // start reading from the 7th index of the line
+                        p[strlen(p)-3] = '\0';         // set the null terminator at the beginning of size units
+			fclose(file);                  // close the file stream
+                        return atoi(p);		       // return the size in KiB
+                }
+        }
 #endif
 }
 
@@ -2472,7 +2483,7 @@ char get_character(istream & is, INT verbose_level)
 	return c;
 }
 
-void replace_extension_with(char *p, const char *new_ext)
+inline void replace_extension_with(char *p, const char *new_ext)
 {
 	INT i, l;
 
