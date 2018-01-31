@@ -1200,7 +1200,7 @@ INT os_memory_usage()
 	return t_info.resident_size;
 #endif
 #ifdef SYSTEM_LINUX
-	int chars = 128; // number of characters to read from the /proc file in a given line
+	int chars = 128; // number of characters to read from the /proc/self/status file in a given line
         FILE* file = fopen("/proc/self/status", "r");
         char line[chars];
         while (fgets(line, chars, file) != NULL) {     // read one line at a time
