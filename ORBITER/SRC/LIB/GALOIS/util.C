@@ -2483,7 +2483,7 @@ char get_character(istream & is, INT verbose_level)
 	return c;
 }
 
-inline void replace_extension_with(char *p, const char *new_ext)
+void replace_extension_with(char *p, const char *new_ext)
 {
 	INT i, l;
 
