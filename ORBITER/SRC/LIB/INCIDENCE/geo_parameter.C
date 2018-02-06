@@ -555,7 +555,7 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 
 INT geo_parameter::input_mode_stack(ifstream &aStream, INT verbose_level)
 {
-#ifdef SYSTEMUNIX
+#if defined(SYSTEMUNIX) || defined(SYSTEM_IS_MACINTOSH)
 	INT f_v = (verbose_level >= 1);
 	string str;
 	INT i, l, val, v1, v2, v3, v4;
