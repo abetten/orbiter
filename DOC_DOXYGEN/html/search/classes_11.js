@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['schreier',['schreier',['../classschreier.html',1,'']]],
+  ['schreier_5fsims',['schreier_sims',['../classschreier__sims.html',1,'']]],
+  ['search_5fblocking_5fset',['search_blocking_set',['../classsearch__blocking__set.html',1,'']]],
+  ['set_5fand_5fstabilizer',['set_and_stabilizer',['../classset__and__stabilizer.html',1,'']]],
+  ['set_5fof_5fsets',['set_of_sets',['../classset__of__sets.html',1,'']]],
+  ['set_5fstabilizer_5fcompute',['set_stabilizer_compute',['../classset__stabilizer__compute.html',1,'']]],
+  ['sims',['sims',['../classsims.html',1,'']]],
+  ['singer_5fcycle',['singer_cycle',['../classsinger__cycle.html',1,'']]],
+  ['solid',['solid',['../classsolid.html',1,'']]],
+  ['solution_5ffile_5fdata',['solution_file_data',['../structsolution__file__data.html',1,'']]],
+  ['spreadsheet',['spreadsheet',['../classspreadsheet.html',1,'']]],
+  ['statsblk',['statsblk',['../structstatsblk.html',1,'']]],
+  ['strong_5fgenerators',['strong_generators',['../classstrong__generators.html',1,'']]],
+  ['subfield_5fstructure',['subfield_structure',['../classsubfield__structure.html',1,'']]],
+  ['subgroup',['subgroup',['../classsubgroup.html',1,'']]],
+  ['subspace_5forbits',['subspace_orbits',['../classsubspace__orbits.html',1,'']]],
+  ['surface',['surface',['../classsurface.html',1,'']]],
+  ['surface_5fclassify_5fwedge',['surface_classify_wedge',['../classsurface__classify__wedge.html',1,'']]],
+  ['surface_5fcreate',['surface_create',['../classsurface__create.html',1,'']]],
+  ['surface_5fcreate_5fdescription',['surface_create_description',['../classsurface__create__description.html',1,'']]],
+  ['surface_5fobject',['surface_object',['../classsurface__object.html',1,'']]],
+  ['surface_5fobject_5fwith_5faction',['surface_object_with_action',['../classsurface__object__with__action.html',1,'']]],
+  ['surface_5fwith_5faction',['surface_with_action',['../classsurface__with__action.html',1,'']]],
+  ['symmetry_5fgroup',['symmetry_group',['../unionsymmetry__group.html',1,'']]]
+];

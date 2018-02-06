@@ -1,0 +1,326 @@
+\hypertarget{classpage__storage}{}\section{page\+\_\+storage Class Reference}
+\label{classpage__storage}\index{page\+\_\+storage@{page\+\_\+storage}}
+
+
+{\ttfamily \#include $<$action.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \mbox{\hyperlink{classpage__storage_a63e3a96325570d8203f393046c604baf}{operator new}} (size\+\_\+t bytes)
+\item 
+void $\ast$ \mbox{\hyperlink{classpage__storage_a57f728ef5cf701d8980d8a0be688a282}{operator new\mbox{[}$\,$\mbox{]}}} (size\+\_\+t bytes)
+\item 
+void \mbox{\hyperlink{classpage__storage_acd19dee819277bdba2b0250861ca0e66}{operator delete}} (void $\ast$ptr, size\+\_\+t bytes)
+\item 
+void \mbox{\hyperlink{classpage__storage_a05ce8987a41317d29b96c3f59d23ec05}{operator delete\mbox{[}$\,$\mbox{]}}} (void $\ast$ptr, size\+\_\+t bytes)
+\item 
+void \mbox{\hyperlink{classpage__storage_a53d9d92efcff0000764402fcf7cef6e2}{init}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a1b79146c33d9a8e86fb3bfce780929d8}{entry\+\_\+size}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_aed45e309e22c067ac0ee69360379cb0c}{page\+\_\+length\+\_\+log}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classpage__storage_a7f239203bcb8c74f628993ea03c5d996}{add\+\_\+elt\+\_\+print\+\_\+function}} (void($\ast$\mbox{\hyperlink{classpage__storage_aa21cef3dca005352aa9e447ab5070c85}{elt\+\_\+print}})(void $\ast$\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, void $\ast$data, ostream \&ost), void $\ast$\mbox{\hyperlink{classpage__storage_aec80ee934d016857f972cfd2e95a7344}{elt\+\_\+print\+\_\+data}})
+\item 
+void \mbox{\hyperlink{classpage__storage_a61e349f7431f6e16328bcfbc7e1d5633}{print}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ \mbox{\hyperlink{classpage__storage_aa43eb1ae49a6688771f7a89cbe2cd7bf}{s\+\_\+i\+\_\+and\+\_\+allocate}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ \mbox{\hyperlink{classpage__storage_afbc8bf4d074acbe4bcc76ddad78793d8}{s\+\_\+i\+\_\+and\+\_\+deallocate}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ \mbox{\hyperlink{classpage__storage_aab89cc6a99b0a56d04255ae00e9a0849}{s\+\_\+i}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ \mbox{\hyperlink{classpage__storage_a5cd93495561a44c9c4bea8b8eef184cf}{s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&f\+\_\+allocated)
+\item 
+void \mbox{\hyperlink{classpage__storage_afd9fbd4ce71baa0b605f61d53dbab6ea}{check\+\_\+allocation\+\_\+table}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a3d04ee0a97310a8211e223ccea1d2d3f}{store}} (\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classpage__storage_a10a87bab5f2aac2f4ddf3ebe84cf897a}{dispose}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} hdl)
+\item 
+void \mbox{\hyperlink{classpage__storage_ada67dcd3273a8dff795eb8d8e60aa996}{check\+\_\+free\+\_\+list}} ()
+\item 
+\mbox{\hyperlink{classpage__storage_a7887e879ddae5516015edd4acc04fee8}{page\+\_\+storage}} ()
+\item 
+\mbox{\hyperlink{classpage__storage_a95391dd4f65d2d28da77553fcaaa2afc}{$\sim$page\+\_\+storage}} ()
+\item 
+void \mbox{\hyperlink{classpage__storage_a719dd1f54fd300fbc94ca2b750ed4508}{print\+\_\+storage\+\_\+used}} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a19ac77a3384c2547d313112cb900c9b6}{overall\+\_\+length}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a1b79146c33d9a8e86fb3bfce780929d8}{entry\+\_\+size}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_aed45e309e22c067ac0ee69360379cb0c}{page\+\_\+length\+\_\+log}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_ac40bcdca3c4cb88397d09c7f603c9cf5}{page\+\_\+length}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a902d760b17d91891bae23f889161bcf8}{page\+\_\+size}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a879ce648058190a74bcbfb71502518ca}{allocation\+\_\+table\+\_\+length}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a2d2b8b89bdfc3ef90526c539cea84a20}{page\+\_\+ptr\+\_\+used}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a8a098ef27d054c8be8571f3c864c6a8c}{page\+\_\+ptr\+\_\+allocated}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a254a2475a250db72b64cf8f2379ecb64}{page\+\_\+ptr\+\_\+oversize}}
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$$\ast$ \mbox{\hyperlink{classpage__storage_aaad5bcc49f7452f22d7b6b91375430a3}{pages}}
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$$\ast$ \mbox{\hyperlink{classpage__storage_a0f8f41d7d835b7a8d5b0327532d87ba0}{allocation\+\_\+tables}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a257b73b8ff27046486893f84f29cc87e}{next\+\_\+free\+\_\+entry}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_adf0cb1e4d8dc128c60485eb6ef649de5}{nb\+\_\+free\+\_\+entries}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a603209f68b698b9b380368cf1134a90f}{f\+\_\+elt\+\_\+print\+\_\+function}}
+\item 
+void($\ast$ \mbox{\hyperlink{classpage__storage_aa21cef3dca005352aa9e447ab5070c85}{elt\+\_\+print}} )(void $\ast$\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, void $\ast$data, ostream \&ost)
+\item 
+void $\ast$ \mbox{\hyperlink{classpage__storage_aec80ee934d016857f972cfd2e95a7344}{elt\+\_\+print\+\_\+data}}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_aad11c2d56adeaa7037d69e68180c98cc}{cntr\+\_\+new}} = 0
+\item 
+static \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_afaf83e3f8575169ddff61549609fb4d5}{cntr\+\_\+objects}} = 0
+\item 
+static \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classpage__storage_a42cf780f4063211e452fa47431d125b1}{f\+\_\+debug\+\_\+memory}} = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classpage__storage_a7887e879ddae5516015edd4acc04fee8}\label{classpage__storage_a7887e879ddae5516015edd4acc04fee8}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+storage@{page\+\_\+storage}}
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+storage()}{page\_storage()}}
+{\footnotesize\ttfamily page\+\_\+storage\+::page\+\_\+storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a95391dd4f65d2d28da77553fcaaa2afc}\label{classpage__storage_a95391dd4f65d2d28da77553fcaaa2afc}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!````~page\+\_\+storage@{$\sim$page\+\_\+storage}}
+\index{````~page\+\_\+storage@{$\sim$page\+\_\+storage}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{$\sim$page\+\_\+storage()}{~page\_storage()}}
+{\footnotesize\ttfamily page\+\_\+storage\+::$\sim$page\+\_\+storage (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classpage__storage_a7f239203bcb8c74f628993ea03c5d996}\label{classpage__storage_a7f239203bcb8c74f628993ea03c5d996}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!add\+\_\+elt\+\_\+print\+\_\+function@{add\+\_\+elt\+\_\+print\+\_\+function}}
+\index{add\+\_\+elt\+\_\+print\+\_\+function@{add\+\_\+elt\+\_\+print\+\_\+function}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{add\+\_\+elt\+\_\+print\+\_\+function()}{add\_elt\_print\_function()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::add\+\_\+elt\+\_\+print\+\_\+function (\begin{DoxyParamCaption}\item[{void($\ast$)(void $\ast$\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, void $\ast$data, ostream \&ost)}]{elt\+\_\+print,  }\item[{void $\ast$}]{elt\+\_\+print\+\_\+data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_afd9fbd4ce71baa0b605f61d53dbab6ea}\label{classpage__storage_afd9fbd4ce71baa0b605f61d53dbab6ea}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!check\+\_\+allocation\+\_\+table@{check\+\_\+allocation\+\_\+table}}
+\index{check\+\_\+allocation\+\_\+table@{check\+\_\+allocation\+\_\+table}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{check\+\_\+allocation\+\_\+table()}{check\_allocation\_table()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::check\+\_\+allocation\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_ada67dcd3273a8dff795eb8d8e60aa996}\label{classpage__storage_ada67dcd3273a8dff795eb8d8e60aa996}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!check\+\_\+free\+\_\+list@{check\+\_\+free\+\_\+list}}
+\index{check\+\_\+free\+\_\+list@{check\+\_\+free\+\_\+list}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{check\+\_\+free\+\_\+list()}{check\_free\_list()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::check\+\_\+free\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a10a87bab5f2aac2f4ddf3ebe84cf897a}\label{classpage__storage_a10a87bab5f2aac2f4ddf3ebe84cf897a}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!dispose@{dispose}}
+\index{dispose@{dispose}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{dispose()}{dispose()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::dispose (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{hdl }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a53d9d92efcff0000764402fcf7cef6e2}\label{classpage__storage_a53d9d92efcff0000764402fcf7cef6e2}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!init@{init}}
+\index{init@{init}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{entry\+\_\+size,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{page\+\_\+length\+\_\+log,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_acd19dee819277bdba2b0250861ca0e66}\label{classpage__storage_acd19dee819277bdba2b0250861ca0e66}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!operator delete@{operator delete}}
+\index{operator delete@{operator delete}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{operator delete()}{operator delete()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::operator delete (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a05ce8987a41317d29b96c3f59d23ec05}\label{classpage__storage_a05ce8987a41317d29b96c3f59d23ec05}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!operator delete\mbox{[}\mbox{]}@{operator delete[]}}
+\index{operator delete\mbox{[}\mbox{]}@{operator delete[]}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{operator delete[]()}{operator delete[]()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::operator delete\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a63e3a96325570d8203f393046c604baf}\label{classpage__storage_a63e3a96325570d8203f393046c604baf}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!operator new@{operator new}}
+\index{operator new@{operator new}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{operator new()}{operator new()}}
+{\footnotesize\ttfamily void $\ast$ page\+\_\+storage\+::operator new (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a57f728ef5cf701d8980d8a0be688a282}\label{classpage__storage_a57f728ef5cf701d8980d8a0be688a282}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!operator new\mbox{[}\mbox{]}@{operator new[]}}
+\index{operator new\mbox{[}\mbox{]}@{operator new[]}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{operator new[]()}{operator new[]()}}
+{\footnotesize\ttfamily void $\ast$ page\+\_\+storage\+::operator new\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a61e349f7431f6e16328bcfbc7e1d5633}\label{classpage__storage_a61e349f7431f6e16328bcfbc7e1d5633}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!print@{print}}
+\index{print@{print}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a719dd1f54fd300fbc94ca2b750ed4508}\label{classpage__storage_a719dd1f54fd300fbc94ca2b750ed4508}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!print\+\_\+storage\+\_\+used@{print\+\_\+storage\+\_\+used}}
+\index{print\+\_\+storage\+\_\+used@{print\+\_\+storage\+\_\+used}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{print\+\_\+storage\+\_\+used()}{print\_storage\_used()}}
+{\footnotesize\ttfamily void page\+\_\+storage\+::print\+\_\+storage\+\_\+used (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_aab89cc6a99b0a56d04255ae00e9a0849}\label{classpage__storage_aab89cc6a99b0a56d04255ae00e9a0849}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!s\+\_\+i@{s\+\_\+i}}
+\index{s\+\_\+i@{s\+\_\+i}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{s\+\_\+i()}{s\_i()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ page\+\_\+storage\+::s\+\_\+i (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_aa43eb1ae49a6688771f7a89cbe2cd7bf}\label{classpage__storage_aa43eb1ae49a6688771f7a89cbe2cd7bf}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!s\+\_\+i\+\_\+and\+\_\+allocate@{s\+\_\+i\+\_\+and\+\_\+allocate}}
+\index{s\+\_\+i\+\_\+and\+\_\+allocate@{s\+\_\+i\+\_\+and\+\_\+allocate}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{s\+\_\+i\+\_\+and\+\_\+allocate()}{s\_i\_and\_allocate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ page\+\_\+storage\+::s\+\_\+i\+\_\+and\+\_\+allocate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a5cd93495561a44c9c4bea8b8eef184cf}\label{classpage__storage_a5cd93495561a44c9c4bea8b8eef184cf}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit@{s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit}}
+\index{s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit@{s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit()}{s\_i\_and\_allocation\_bit()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ page\+\_\+storage\+::s\+\_\+i\+\_\+and\+\_\+allocation\+\_\+bit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{f\+\_\+allocated }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_afbc8bf4d074acbe4bcc76ddad78793d8}\label{classpage__storage_afbc8bf4d074acbe4bcc76ddad78793d8}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!s\+\_\+i\+\_\+and\+\_\+deallocate@{s\+\_\+i\+\_\+and\+\_\+deallocate}}
+\index{s\+\_\+i\+\_\+and\+\_\+deallocate@{s\+\_\+i\+\_\+and\+\_\+deallocate}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{s\+\_\+i\+\_\+and\+\_\+deallocate()}{s\_i\_and\_deallocate()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ page\+\_\+storage\+::s\+\_\+i\+\_\+and\+\_\+deallocate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classpage__storage_a3d04ee0a97310a8211e223ccea1d2d3f}\label{classpage__storage_a3d04ee0a97310a8211e223ccea1d2d3f}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!store@{store}}
+\index{store@{store}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{store()}{store()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classpage__storage_a879ce648058190a74bcbfb71502518ca}\label{classpage__storage_a879ce648058190a74bcbfb71502518ca}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!allocation\+\_\+table\+\_\+length@{allocation\+\_\+table\+\_\+length}}
+\index{allocation\+\_\+table\+\_\+length@{allocation\+\_\+table\+\_\+length}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{allocation\+\_\+table\+\_\+length}{allocation\_table\_length}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::allocation\+\_\+table\+\_\+length}
+
+\mbox{\Hypertarget{classpage__storage_a0f8f41d7d835b7a8d5b0327532d87ba0}\label{classpage__storage_a0f8f41d7d835b7a8d5b0327532d87ba0}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!allocation\+\_\+tables@{allocation\+\_\+tables}}
+\index{allocation\+\_\+tables@{allocation\+\_\+tables}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{allocation\+\_\+tables}{allocation\_tables}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}$\ast$$\ast$ page\+\_\+storage\+::allocation\+\_\+tables}
+
+\mbox{\Hypertarget{classpage__storage_aad11c2d56adeaa7037d69e68180c98cc}\label{classpage__storage_aad11c2d56adeaa7037d69e68180c98cc}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!cntr\+\_\+new@{cntr\+\_\+new}}
+\index{cntr\+\_\+new@{cntr\+\_\+new}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{cntr\+\_\+new}{cntr\_new}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::cntr\+\_\+new = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classpage__storage_afaf83e3f8575169ddff61549609fb4d5}\label{classpage__storage_afaf83e3f8575169ddff61549609fb4d5}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!cntr\+\_\+objects@{cntr\+\_\+objects}}
+\index{cntr\+\_\+objects@{cntr\+\_\+objects}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{cntr\+\_\+objects}{cntr\_objects}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::cntr\+\_\+objects = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classpage__storage_aa21cef3dca005352aa9e447ab5070c85}\label{classpage__storage_aa21cef3dca005352aa9e447ab5070c85}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!elt\+\_\+print@{elt\+\_\+print}}
+\index{elt\+\_\+print@{elt\+\_\+print}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{elt\+\_\+print}{elt\_print}}
+{\footnotesize\ttfamily void($\ast$  page\+\_\+storage\+::elt\+\_\+print) (void $\ast$\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, void $\ast$data, ostream \&ost)}
+
+\mbox{\Hypertarget{classpage__storage_aec80ee934d016857f972cfd2e95a7344}\label{classpage__storage_aec80ee934d016857f972cfd2e95a7344}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!elt\+\_\+print\+\_\+data@{elt\+\_\+print\+\_\+data}}
+\index{elt\+\_\+print\+\_\+data@{elt\+\_\+print\+\_\+data}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{elt\+\_\+print\+\_\+data}{elt\_print\_data}}
+{\footnotesize\ttfamily void$\ast$ page\+\_\+storage\+::elt\+\_\+print\+\_\+data}
+
+\mbox{\Hypertarget{classpage__storage_a1b79146c33d9a8e86fb3bfce780929d8}\label{classpage__storage_a1b79146c33d9a8e86fb3bfce780929d8}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!entry\+\_\+size@{entry\+\_\+size}}
+\index{entry\+\_\+size@{entry\+\_\+size}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{entry\+\_\+size}{entry\_size}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::entry\+\_\+size}
+
+\mbox{\Hypertarget{classpage__storage_a42cf780f4063211e452fa47431d125b1}\label{classpage__storage_a42cf780f4063211e452fa47431d125b1}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!f\+\_\+debug\+\_\+memory@{f\+\_\+debug\+\_\+memory}}
+\index{f\+\_\+debug\+\_\+memory@{f\+\_\+debug\+\_\+memory}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{f\+\_\+debug\+\_\+memory}{f\_debug\_memory}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::f\+\_\+debug\+\_\+memory = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classpage__storage_a603209f68b698b9b380368cf1134a90f}\label{classpage__storage_a603209f68b698b9b380368cf1134a90f}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!f\+\_\+elt\+\_\+print\+\_\+function@{f\+\_\+elt\+\_\+print\+\_\+function}}
+\index{f\+\_\+elt\+\_\+print\+\_\+function@{f\+\_\+elt\+\_\+print\+\_\+function}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{f\+\_\+elt\+\_\+print\+\_\+function}{f\_elt\_print\_function}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::f\+\_\+elt\+\_\+print\+\_\+function}
+
+\mbox{\Hypertarget{classpage__storage_adf0cb1e4d8dc128c60485eb6ef649de5}\label{classpage__storage_adf0cb1e4d8dc128c60485eb6ef649de5}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!nb\+\_\+free\+\_\+entries@{nb\+\_\+free\+\_\+entries}}
+\index{nb\+\_\+free\+\_\+entries@{nb\+\_\+free\+\_\+entries}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{nb\+\_\+free\+\_\+entries}{nb\_free\_entries}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::nb\+\_\+free\+\_\+entries}
+
+\mbox{\Hypertarget{classpage__storage_a257b73b8ff27046486893f84f29cc87e}\label{classpage__storage_a257b73b8ff27046486893f84f29cc87e}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!next\+\_\+free\+\_\+entry@{next\+\_\+free\+\_\+entry}}
+\index{next\+\_\+free\+\_\+entry@{next\+\_\+free\+\_\+entry}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{next\+\_\+free\+\_\+entry}{next\_free\_entry}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::next\+\_\+free\+\_\+entry}
+
+\mbox{\Hypertarget{classpage__storage_a19ac77a3384c2547d313112cb900c9b6}\label{classpage__storage_a19ac77a3384c2547d313112cb900c9b6}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!overall\+\_\+length@{overall\+\_\+length}}
+\index{overall\+\_\+length@{overall\+\_\+length}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{overall\+\_\+length}{overall\_length}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::overall\+\_\+length}
+
+\mbox{\Hypertarget{classpage__storage_ac40bcdca3c4cb88397d09c7f603c9cf5}\label{classpage__storage_ac40bcdca3c4cb88397d09c7f603c9cf5}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+length@{page\+\_\+length}}
+\index{page\+\_\+length@{page\+\_\+length}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+length}{page\_length}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::page\+\_\+length}
+
+\mbox{\Hypertarget{classpage__storage_aed45e309e22c067ac0ee69360379cb0c}\label{classpage__storage_aed45e309e22c067ac0ee69360379cb0c}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+length\+\_\+log@{page\+\_\+length\+\_\+log}}
+\index{page\+\_\+length\+\_\+log@{page\+\_\+length\+\_\+log}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+length\+\_\+log}{page\_length\_log}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::page\+\_\+length\+\_\+log}
+
+\mbox{\Hypertarget{classpage__storage_a8a098ef27d054c8be8571f3c864c6a8c}\label{classpage__storage_a8a098ef27d054c8be8571f3c864c6a8c}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+ptr\+\_\+allocated@{page\+\_\+ptr\+\_\+allocated}}
+\index{page\+\_\+ptr\+\_\+allocated@{page\+\_\+ptr\+\_\+allocated}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+ptr\+\_\+allocated}{page\_ptr\_allocated}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::page\+\_\+ptr\+\_\+allocated}
+
+\mbox{\Hypertarget{classpage__storage_a254a2475a250db72b64cf8f2379ecb64}\label{classpage__storage_a254a2475a250db72b64cf8f2379ecb64}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+ptr\+\_\+oversize@{page\+\_\+ptr\+\_\+oversize}}
+\index{page\+\_\+ptr\+\_\+oversize@{page\+\_\+ptr\+\_\+oversize}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+ptr\+\_\+oversize}{page\_ptr\_oversize}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::page\+\_\+ptr\+\_\+oversize}
+
+\mbox{\Hypertarget{classpage__storage_a2d2b8b89bdfc3ef90526c539cea84a20}\label{classpage__storage_a2d2b8b89bdfc3ef90526c539cea84a20}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+ptr\+\_\+used@{page\+\_\+ptr\+\_\+used}}
+\index{page\+\_\+ptr\+\_\+used@{page\+\_\+ptr\+\_\+used}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+ptr\+\_\+used}{page\_ptr\_used}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::page\+\_\+ptr\+\_\+used}
+
+\mbox{\Hypertarget{classpage__storage_a902d760b17d91891bae23f889161bcf8}\label{classpage__storage_a902d760b17d91891bae23f889161bcf8}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!page\+\_\+size@{page\+\_\+size}}
+\index{page\+\_\+size@{page\+\_\+size}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{page\+\_\+size}{page\_size}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} page\+\_\+storage\+::page\+\_\+size}
+
+\mbox{\Hypertarget{classpage__storage_aaad5bcc49f7452f22d7b6b91375430a3}\label{classpage__storage_aaad5bcc49f7452f22d7b6b91375430a3}} 
+\index{page\+\_\+storage@{page\+\_\+storage}!pages@{pages}}
+\index{pages@{pages}!page\+\_\+storage@{page\+\_\+storage}}
+\subsubsection{\texorpdfstring{pages}{pages}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}$\ast$$\ast$ page\+\_\+storage\+::pages}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+A\+C\+T\+I\+O\+N/\mbox{\hyperlink{action_8h}{action.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+A\+C\+T\+I\+O\+N/\mbox{\hyperlink{page__storage_8_c}{page\+\_\+storage.\+C}}\end{DoxyCompactItemize}

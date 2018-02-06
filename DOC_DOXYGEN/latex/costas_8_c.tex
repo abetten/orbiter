@@ -1,0 +1,253 @@
+\hypertarget{costas_8_c}{}\section{S\+R\+C/\+A\+P\+P\+S/\+C\+O\+M\+B\+I\+N\+A\+T\+O\+R\+I\+C\+S/costas.C File Reference}
+\label{costas_8_c}\index{S\+R\+C/\+A\+P\+P\+S/\+C\+O\+M\+B\+I\+N\+A\+T\+O\+R\+I\+C\+S/costas.\+C@{S\+R\+C/\+A\+P\+P\+S/\+C\+O\+M\+B\+I\+N\+A\+T\+O\+R\+I\+C\+S/costas.\+C}}
+{\ttfamily \#include \char`\"{}orbiter.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{costas_8_c_a6079b3b36c54787d2dca2de2fb2c96df}{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}}~1000000
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{costas_8_c_acc0ad4ae49a21a58400e5082ae6bbff3}{read}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{costas_8_c_a1be7f35236ad96218a7433ee282d50a8}{welch}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{costas_8_c_ac5a4ce7a73f025adc66d94ebdb8f2cfe}{Lempel\+\_\+\+Golomb}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{costas_8_c_a41b058c10b5e92d11505cd40b1ff6b28}{costas}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_a19b6864eaeff2e2424ca297158651278}{test}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_a2874dd7912bd978eaf022da0b45e301b}{test\+\_\+recursion}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{costas_8_c_a9e6a01ce8b12a78ac13edd94a5c451a1}{recursion}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_aebc6ed2ba3265d2e995ee19e0d2c6d2b}{lex\+\_\+compare}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}{B}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{costas_8_c_aefe15889a05bc0c7121bbf6b30e7917d}{make\+\_\+canonical}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Canonical, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_af674d0d89086cd0a1be0025dfe5ec16a}{is\+\_\+lexleast}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{costas_8_c_ab3d168af63cc369fc396300382735b31}{perm\+\_\+rotate\+\_\+right}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}{B}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{costas_8_c_aba51fd6a02cb25246a19ad82943a1e28}{perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}{B}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+int \mbox{\hyperlink{costas_8_c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_a4268f4fe222ffb119218a0199f5e1904}{t0}} = 0
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_aacbbb35f36efadbb40803bfb5480b737}{C}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_aca707001d4240cb0cd70022a0948ec5b}{A}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}{B}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_ab74e091224703c106c77917fb333458a}{A1}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_ac5673a2d6d3999709f786fc1a3521aa7}{A2}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_adb0d8a46d877766c3a4a9777eb0365a0}{A3}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{costas_8_c_af911d7b84fa7e3294d6128c858a62492}{f\+\_\+taken}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$$\ast$ \mbox{\hyperlink{costas_8_c_af13967e8da5ae214c112fd612639beaa}{D}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_a0029b734487624c93c3a72d74a8f2bf9}{nb\+\_\+sol}} = 0
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{costas_8_c_a84ed939529c4a353d8ff6acda335da1a}{nb\+\_\+sol\+\_\+lexleast}} = 0
+\item 
+\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} \mbox{\hyperlink{costas_8_c_ae0f4fbab08496423c202e63f926da01d}{fname1}} \mbox{[}1000\mbox{]}
+\item 
+\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} \mbox{\hyperlink{costas_8_c_a70ea09f3708149e1e32404af6c6fd7a8}{fname2}} \mbox{[}1000\mbox{]}
+\item 
+ofstream $\ast$ \mbox{\hyperlink{costas_8_c_a468adb9c32db55e51620a8435be6cb89}{fp1}}
+\item 
+ofstream $\ast$ \mbox{\hyperlink{costas_8_c_a4375226cd211c8f2324e15d58da08992}{fp2}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{costas_8_c_a6079b3b36c54787d2dca2de2fb2c96df}\label{costas_8_c_a6079b3b36c54787d2dca2de2fb2c96df}} 
+\index{costas.\+C@{costas.\+C}!M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE@{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}}
+\index{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE@{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}{MY\_BUFSIZE}}
+{\footnotesize\ttfamily \#define M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE~1000000}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{costas_8_c_a41b058c10b5e92d11505cd40b1ff6b28}\label{costas_8_c_a41b058c10b5e92d11505cd40b1ff6b28}} 
+\index{costas.\+C@{costas.\+C}!costas@{costas}}
+\index{costas@{costas}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{costas()}{costas()}}
+{\footnotesize\ttfamily void costas (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_af674d0d89086cd0a1be0025dfe5ec16a}\label{costas_8_c_af674d0d89086cd0a1be0025dfe5ec16a}} 
+\index{costas.\+C@{costas.\+C}!is\+\_\+lexleast@{is\+\_\+lexleast}}
+\index{is\+\_\+lexleast@{is\+\_\+lexleast}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{is\+\_\+lexleast()}{is\_lexleast()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} is\+\_\+lexleast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_ac5a4ce7a73f025adc66d94ebdb8f2cfe}\label{costas_8_c_ac5a4ce7a73f025adc66d94ebdb8f2cfe}} 
+\index{costas.\+C@{costas.\+C}!Lempel\+\_\+\+Golomb@{Lempel\+\_\+\+Golomb}}
+\index{Lempel\+\_\+\+Golomb@{Lempel\+\_\+\+Golomb}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{Lempel\+\_\+\+Golomb()}{Lempel\_Golomb()}}
+{\footnotesize\ttfamily void Lempel\+\_\+\+Golomb (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_aebc6ed2ba3265d2e995ee19e0d2c6d2b}\label{costas_8_c_aebc6ed2ba3265d2e995ee19e0d2c6d2b}} 
+\index{costas.\+C@{costas.\+C}!lex\+\_\+compare@{lex\+\_\+compare}}
+\index{lex\+\_\+compare@{lex\+\_\+compare}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{lex\+\_\+compare()}{lex\_compare()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lex\+\_\+compare (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{B,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_a3c04138a5bfe5d72780bb7e82a18e627}\label{costas_8_c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{costas.\+C@{costas.\+C}!main@{main}}
+\index{main@{main}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_aefe15889a05bc0c7121bbf6b30e7917d}\label{costas_8_c_aefe15889a05bc0c7121bbf6b30e7917d}} 
+\index{costas.\+C@{costas.\+C}!make\+\_\+canonical@{make\+\_\+canonical}}
+\index{make\+\_\+canonical@{make\+\_\+canonical}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{make\+\_\+canonical()}{make\_canonical()}}
+{\footnotesize\ttfamily void make\+\_\+canonical (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Canonical,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_aba51fd6a02cb25246a19ad82943a1e28}\label{costas_8_c_aba51fd6a02cb25246a19ad82943a1e28}} 
+\index{costas.\+C@{costas.\+C}!perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis@{perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis}}
+\index{perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis@{perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis()}{perm\_flip\_at\_vertical\_axis()}}
+{\footnotesize\ttfamily void perm\+\_\+flip\+\_\+at\+\_\+vertical\+\_\+axis (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{B,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_ab3d168af63cc369fc396300382735b31}\label{costas_8_c_ab3d168af63cc369fc396300382735b31}} 
+\index{costas.\+C@{costas.\+C}!perm\+\_\+rotate\+\_\+right@{perm\+\_\+rotate\+\_\+right}}
+\index{perm\+\_\+rotate\+\_\+right@{perm\+\_\+rotate\+\_\+right}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{perm\+\_\+rotate\+\_\+right()}{perm\_rotate\_right()}}
+{\footnotesize\ttfamily void perm\+\_\+rotate\+\_\+right (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{B,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_acc0ad4ae49a21a58400e5082ae6bbff3}\label{costas_8_c_acc0ad4ae49a21a58400e5082ae6bbff3}} 
+\index{costas.\+C@{costas.\+C}!read@{read}}
+\index{read@{read}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily void read (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_a9e6a01ce8b12a78ac13edd94a5c451a1}\label{costas_8_c_a9e6a01ce8b12a78ac13edd94a5c451a1}} 
+\index{costas.\+C@{costas.\+C}!recursion@{recursion}}
+\index{recursion@{recursion}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{recursion()}{recursion()}}
+{\footnotesize\ttfamily void recursion (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_a19b6864eaeff2e2424ca297158651278}\label{costas_8_c_a19b6864eaeff2e2424ca297158651278}} 
+\index{costas.\+C@{costas.\+C}!test@{test}}
+\index{test@{test}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{test()}{test()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} test (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_a2874dd7912bd978eaf022da0b45e301b}\label{costas_8_c_a2874dd7912bd978eaf022da0b45e301b}} 
+\index{costas.\+C@{costas.\+C}!test\+\_\+recursion@{test\+\_\+recursion}}
+\index{test\+\_\+recursion@{test\+\_\+recursion}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{test\+\_\+recursion()}{test\_recursion()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} test\+\_\+recursion (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{costas_8_c_a1be7f35236ad96218a7433ee282d50a8}\label{costas_8_c_a1be7f35236ad96218a7433ee282d50a8}} 
+\index{costas.\+C@{costas.\+C}!welch@{welch}}
+\index{welch@{welch}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{welch()}{welch()}}
+{\footnotesize\ttfamily void welch (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{costas_8_c_aca707001d4240cb0cd70022a0948ec5b}\label{costas_8_c_aca707001d4240cb0cd70022a0948ec5b}} 
+\index{costas.\+C@{costas.\+C}!A@{A}}
+\index{A@{A}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ A}
+
+\mbox{\Hypertarget{costas_8_c_ab74e091224703c106c77917fb333458a}\label{costas_8_c_ab74e091224703c106c77917fb333458a}} 
+\index{costas.\+C@{costas.\+C}!A1@{A1}}
+\index{A1@{A1}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{A1}{A1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ A1}
+
+\mbox{\Hypertarget{costas_8_c_ac5673a2d6d3999709f786fc1a3521aa7}\label{costas_8_c_ac5673a2d6d3999709f786fc1a3521aa7}} 
+\index{costas.\+C@{costas.\+C}!A2@{A2}}
+\index{A2@{A2}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{A2}{A2}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ A2}
+
+\mbox{\Hypertarget{costas_8_c_adb0d8a46d877766c3a4a9777eb0365a0}\label{costas_8_c_adb0d8a46d877766c3a4a9777eb0365a0}} 
+\index{costas.\+C@{costas.\+C}!A3@{A3}}
+\index{A3@{A3}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{A3}{A3}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ A3}
+
+\mbox{\Hypertarget{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}\label{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}} 
+\index{costas.\+C@{costas.\+C}!B@{B}}
+\index{B@{B}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{B}{B}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ B}
+
+\mbox{\Hypertarget{costas_8_c_aacbbb35f36efadbb40803bfb5480b737}\label{costas_8_c_aacbbb35f36efadbb40803bfb5480b737}} 
+\index{costas.\+C@{costas.\+C}!C@{C}}
+\index{C@{C}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{C}{C}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ C}
+
+\mbox{\Hypertarget{costas_8_c_af13967e8da5ae214c112fd612639beaa}\label{costas_8_c_af13967e8da5ae214c112fd612639beaa}} 
+\index{costas.\+C@{costas.\+C}!D@{D}}
+\index{D@{D}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{D}{D}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$$\ast$ D}
+
+\mbox{\Hypertarget{costas_8_c_af911d7b84fa7e3294d6128c858a62492}\label{costas_8_c_af911d7b84fa7e3294d6128c858a62492}} 
+\index{costas.\+C@{costas.\+C}!f\+\_\+taken@{f\+\_\+taken}}
+\index{f\+\_\+taken@{f\+\_\+taken}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{f\+\_\+taken}{f\_taken}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ f\+\_\+taken}
+
+\mbox{\Hypertarget{costas_8_c_ae0f4fbab08496423c202e63f926da01d}\label{costas_8_c_ae0f4fbab08496423c202e63f926da01d}} 
+\index{costas.\+C@{costas.\+C}!fname1@{fname1}}
+\index{fname1@{fname1}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{fname1}{fname1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} fname1\mbox{[}1000\mbox{]}}
+
+\mbox{\Hypertarget{costas_8_c_a70ea09f3708149e1e32404af6c6fd7a8}\label{costas_8_c_a70ea09f3708149e1e32404af6c6fd7a8}} 
+\index{costas.\+C@{costas.\+C}!fname2@{fname2}}
+\index{fname2@{fname2}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{fname2}{fname2}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} fname2\mbox{[}1000\mbox{]}}
+
+\mbox{\Hypertarget{costas_8_c_a468adb9c32db55e51620a8435be6cb89}\label{costas_8_c_a468adb9c32db55e51620a8435be6cb89}} 
+\index{costas.\+C@{costas.\+C}!fp1@{fp1}}
+\index{fp1@{fp1}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{fp1}{fp1}}
+{\footnotesize\ttfamily ofstream$\ast$ fp1}
+
+\mbox{\Hypertarget{costas_8_c_a4375226cd211c8f2324e15d58da08992}\label{costas_8_c_a4375226cd211c8f2324e15d58da08992}} 
+\index{costas.\+C@{costas.\+C}!fp2@{fp2}}
+\index{fp2@{fp2}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{fp2}{fp2}}
+{\footnotesize\ttfamily ofstream$\ast$ fp2}
+
+\mbox{\Hypertarget{costas_8_c_a0029b734487624c93c3a72d74a8f2bf9}\label{costas_8_c_a0029b734487624c93c3a72d74a8f2bf9}} 
+\index{costas.\+C@{costas.\+C}!nb\+\_\+sol@{nb\+\_\+sol}}
+\index{nb\+\_\+sol@{nb\+\_\+sol}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{nb\+\_\+sol}{nb\_sol}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+sol = 0}
+
+\mbox{\Hypertarget{costas_8_c_a84ed939529c4a353d8ff6acda335da1a}\label{costas_8_c_a84ed939529c4a353d8ff6acda335da1a}} 
+\index{costas.\+C@{costas.\+C}!nb\+\_\+sol\+\_\+lexleast@{nb\+\_\+sol\+\_\+lexleast}}
+\index{nb\+\_\+sol\+\_\+lexleast@{nb\+\_\+sol\+\_\+lexleast}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{nb\+\_\+sol\+\_\+lexleast}{nb\_sol\_lexleast}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+sol\+\_\+lexleast = 0}
+
+\mbox{\Hypertarget{costas_8_c_a4268f4fe222ffb119218a0199f5e1904}\label{costas_8_c_a4268f4fe222ffb119218a0199f5e1904}} 
+\index{costas.\+C@{costas.\+C}!t0@{t0}}
+\index{t0@{t0}!costas.\+C@{costas.\+C}}
+\subsubsection{\texorpdfstring{t0}{t0}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t0 = 0}
+

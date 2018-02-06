@@ -1700,20 +1700,7 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 		//CG.print();
 
 		fp << "# start case " << c << endl;
-		if (f_draw) {
-			BYTE fname_draw[1000];
-			
-			if (f_prefix) {
-				sprintf(fname_draw, "%s%s_graph", prefix, fname_tmp);
-				}
-			else {
-				sprintf(fname_draw, "%s_graph", fname_tmp);
-				}
-			cout << "colored_graph_all_cliques_list_of_cases fname_draw=" << fname_draw << endl;
-			CG.draw_partitioned(fname_draw, xmax_in, ymax_in, xmax_out, ymax_out, FALSE /* f_labels */, 
-				scale, line_width, verbose_level);
-			
-			}
+
 
 		CG.all_rainbow_cliques(&fp, f_output_solution_raw, 
 			f_maxdepth, maxdepth, 

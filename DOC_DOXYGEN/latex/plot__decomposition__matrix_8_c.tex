@@ -1,0 +1,63 @@
+\hypertarget{plot__decomposition__matrix_8_c}{}\section{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/plot\+\_\+decomposition\+\_\+matrix.C File Reference}
+\label{plot__decomposition__matrix_8_c}\index{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/plot\+\_\+decomposition\+\_\+matrix.\+C@{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/plot\+\_\+decomposition\+\_\+matrix.\+C}}
+{\ttfamily \#include \char`\"{}orbiter.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{plot__decomposition__matrix_8_c_a8d46d2e552765fe157db5a0247442503}{split}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname\+\_\+base, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} split\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+dots, \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$\mbox{\hyperlink{costas_8_c_af13967e8da5ae214c112fd612639beaa}{D}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax, double scale, double line\+\_\+width)
+\item 
+void \mbox{\hyperlink{plot__decomposition__matrix_8_c_ad8ff5913da1db136439cb6d5bfe6f093}{read\+\_\+orbit\+\_\+data}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+orbits, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&orbit\+\_\+fst, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&orbit\+\_\+len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&orbit\+\_\+number, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&orbit\+\_\+perm, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&orbit\+\_\+perm\+\_\+inv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&schreier\+\_\+vector, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&schreier\+\_\+prev, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{plot__decomposition__matrix_8_c_a5e87e6a70f1fd027af4fe50285948880}{draw\+\_\+it}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname\+\_\+base, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+dots, \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$\mbox{\hyperlink{costas_8_c_af13967e8da5ae214c112fd612639beaa}{D}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax, double scale, double line\+\_\+width)
+\item 
+void \mbox{\hyperlink{plot__decomposition__matrix_8_c_ac1625003fdeabc86385385f169bd3e21}{draw\+\_\+it2}} (\mbox{\hyperlink{classmp__graphics}{mp\+\_\+graphics}} \&G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+dots, \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$\mbox{\hyperlink{costas_8_c_af13967e8da5ae214c112fd612639beaa}{D}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax)
+\item 
+int \mbox{\hyperlink{plot__decomposition__matrix_8_c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{plot__decomposition__matrix_8_c_a4268f4fe222ffb119218a0199f5e1904}{t0}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{plot__decomposition__matrix_8_c_a5e87e6a70f1fd027af4fe50285948880}\label{plot__decomposition__matrix_8_c_a5e87e6a70f1fd027af4fe50285948880}} 
+\index{plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}!draw\+\_\+it@{draw\+\_\+it}}
+\index{draw\+\_\+it@{draw\+\_\+it}!plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}}
+\subsubsection{\texorpdfstring{draw\+\_\+it()}{draw\_it()}}
+{\footnotesize\ttfamily void draw\+\_\+it (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname\+\_\+base,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+dots,  }\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{D,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plot__decomposition__matrix_8_c_ac1625003fdeabc86385385f169bd3e21}\label{plot__decomposition__matrix_8_c_ac1625003fdeabc86385385f169bd3e21}} 
+\index{plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}!draw\+\_\+it2@{draw\+\_\+it2}}
+\index{draw\+\_\+it2@{draw\+\_\+it2}!plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}}
+\subsubsection{\texorpdfstring{draw\+\_\+it2()}{draw\_it2()}}
+{\footnotesize\ttfamily void draw\+\_\+it2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmp__graphics}{mp\+\_\+graphics}} \&}]{G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+dots,  }\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{D,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plot__decomposition__matrix_8_c_a3c04138a5bfe5d72780bb7e82a18e627}\label{plot__decomposition__matrix_8_c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}!main@{main}}
+\index{main@{main}!plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plot__decomposition__matrix_8_c_ad8ff5913da1db136439cb6d5bfe6f093}\label{plot__decomposition__matrix_8_c_ad8ff5913da1db136439cb6d5bfe6f093}} 
+\index{plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}!read\+\_\+orbit\+\_\+data@{read\+\_\+orbit\+\_\+data}}
+\index{read\+\_\+orbit\+\_\+data@{read\+\_\+orbit\+\_\+data}!plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}}
+\subsubsection{\texorpdfstring{read\+\_\+orbit\+\_\+data()}{read\_orbit\_data()}}
+{\footnotesize\ttfamily void read\+\_\+orbit\+\_\+data (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+orbits,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{N,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{orbit\+\_\+fst,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{orbit\+\_\+len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{orbit\+\_\+number,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{orbit\+\_\+perm,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{orbit\+\_\+perm\+\_\+inv,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{schreier\+\_\+vector,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{schreier\+\_\+prev,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{plot__decomposition__matrix_8_c_a8d46d2e552765fe157db5a0247442503}\label{plot__decomposition__matrix_8_c_a8d46d2e552765fe157db5a0247442503}} 
+\index{plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}!split@{split}}
+\index{split@{split}!plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}}
+\subsubsection{\texorpdfstring{split()}{split()}}
+{\footnotesize\ttfamily void split (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname\+\_\+base,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{split\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+dots,  }\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{D,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{plot__decomposition__matrix_8_c_a4268f4fe222ffb119218a0199f5e1904}\label{plot__decomposition__matrix_8_c_a4268f4fe222ffb119218a0199f5e1904}} 
+\index{plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}!t0@{t0}}
+\index{t0@{t0}!plot\+\_\+decomposition\+\_\+matrix.\+C@{plot\+\_\+decomposition\+\_\+matrix.\+C}}
+\subsubsection{\texorpdfstring{t0}{t0}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t0}
+

@@ -1,0 +1,102 @@
+\hypertarget{fibonacci_8_c}{}\section{S\+R\+C/\+A\+P\+P\+S/\+C\+O\+M\+B\+I\+N\+A\+T\+O\+R\+I\+C\+S/fibonacci.C File Reference}
+\label{fibonacci_8_c}\index{S\+R\+C/\+A\+P\+P\+S/\+C\+O\+M\+B\+I\+N\+A\+T\+O\+R\+I\+C\+S/fibonacci.\+C@{S\+R\+C/\+A\+P\+P\+S/\+C\+O\+M\+B\+I\+N\+A\+T\+O\+R\+I\+C\+S/fibonacci.\+C}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{fibonacci_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}~30
+\item 
+\#define \mbox{\hyperlink{fibonacci_8_c_aa8cecfc5c5c054d2875c03e77b7be15d}{T\+R\+UE}}~1
+\item 
+\#define \mbox{\hyperlink{fibonacci_8_c_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}~0
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{fibonacci_8_c_aad0ab3e729df30b98f713a5d5c85d590}{compute\+\_\+fibonacci}} (int \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{fibonacci_8_c_a0fa464c2e7d41805ac6377c75f6bbce6}{convert}} (int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, int \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{fibonacci_8_c_a660cfb2b0a23ae5a1ec0bbe7d246eb51}{convert\+\_\+to\+\_\+fibonacci}} (int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, int $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, int \&i\+\_\+max, int \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{fibonacci_8_c_ae71ac5a6ea382e5a64756750b12e8950}{print\+\_\+number}} (int $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, int i\+\_\+max)
+\item 
+int \mbox{\hyperlink{fibonacci_8_c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{fibonacci_8_c_ab78443a75edcfbbaa1be74fc5d94ec1d}{F}} \mbox{[}\mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}\mbox{]}
+\item 
+int \mbox{\hyperlink{fibonacci_8_c_aa07280b20c7249c2d094cb7d90a2afde}{S}} \mbox{[}\mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{fibonacci_8_c_aa93f0eb578d23995850d61f7d61c55c1}\label{fibonacci_8_c_aa93f0eb578d23995850d61f7d61c55c1}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!F\+A\+L\+SE@{F\+A\+L\+SE}}
+\index{F\+A\+L\+SE@{F\+A\+L\+SE}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{F\+A\+L\+SE}{FALSE}}
+{\footnotesize\ttfamily \#define F\+A\+L\+SE~0}
+
+\mbox{\Hypertarget{fibonacci_8_c_a0240ac851181b84ac374872dc5434ee4}\label{fibonacci_8_c_a0240ac851181b84ac374872dc5434ee4}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!N@{N}}
+\index{N@{N}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \#define N~30}
+
+\mbox{\Hypertarget{fibonacci_8_c_aa8cecfc5c5c054d2875c03e77b7be15d}\label{fibonacci_8_c_aa8cecfc5c5c054d2875c03e77b7be15d}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!T\+R\+UE@{T\+R\+UE}}
+\index{T\+R\+UE@{T\+R\+UE}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{T\+R\+UE}{TRUE}}
+{\footnotesize\ttfamily \#define T\+R\+UE~1}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{fibonacci_8_c_aad0ab3e729df30b98f713a5d5c85d590}\label{fibonacci_8_c_aad0ab3e729df30b98f713a5d5c85d590}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!compute\+\_\+fibonacci@{compute\+\_\+fibonacci}}
+\index{compute\+\_\+fibonacci@{compute\+\_\+fibonacci}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{compute\+\_\+fibonacci()}{compute\_fibonacci()}}
+{\footnotesize\ttfamily void compute\+\_\+fibonacci (\begin{DoxyParamCaption}\item[{int}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fibonacci_8_c_a0fa464c2e7d41805ac6377c75f6bbce6}\label{fibonacci_8_c_a0fa464c2e7d41805ac6377c75f6bbce6}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!convert@{convert}}
+\index{convert@{convert}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{convert()}{convert()}}
+{\footnotesize\ttfamily void convert (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fibonacci_8_c_a660cfb2b0a23ae5a1ec0bbe7d246eb51}\label{fibonacci_8_c_a660cfb2b0a23ae5a1ec0bbe7d246eb51}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!convert\+\_\+to\+\_\+fibonacci@{convert\+\_\+to\+\_\+fibonacci}}
+\index{convert\+\_\+to\+\_\+fibonacci@{convert\+\_\+to\+\_\+fibonacci}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{convert\+\_\+to\+\_\+fibonacci()}{convert\_to\_fibonacci()}}
+{\footnotesize\ttfamily void convert\+\_\+to\+\_\+fibonacci (\begin{DoxyParamCaption}\item[{int}]{n,  }\item[{int $\ast$}]{S,  }\item[{int \&}]{i\+\_\+max,  }\item[{int}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fibonacci_8_c_a3c04138a5bfe5d72780bb7e82a18e627}\label{fibonacci_8_c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!main@{main}}
+\index{main@{main}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{fibonacci_8_c_ae71ac5a6ea382e5a64756750b12e8950}\label{fibonacci_8_c_ae71ac5a6ea382e5a64756750b12e8950}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!print\+\_\+number@{print\+\_\+number}}
+\index{print\+\_\+number@{print\+\_\+number}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{print\+\_\+number()}{print\_number()}}
+{\footnotesize\ttfamily void print\+\_\+number (\begin{DoxyParamCaption}\item[{int $\ast$}]{S,  }\item[{int}]{i\+\_\+max }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{fibonacci_8_c_ab78443a75edcfbbaa1be74fc5d94ec1d}\label{fibonacci_8_c_ab78443a75edcfbbaa1be74fc5d94ec1d}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!F@{F}}
+\index{F@{F}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{F}{F}}
+{\footnotesize\ttfamily int F\mbox{[}\mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}\mbox{]}}
+
+\mbox{\Hypertarget{fibonacci_8_c_aa07280b20c7249c2d094cb7d90a2afde}\label{fibonacci_8_c_aa07280b20c7249c2d094cb7d90a2afde}} 
+\index{fibonacci.\+C@{fibonacci.\+C}!S@{S}}
+\index{S@{S}!fibonacci.\+C@{fibonacci.\+C}}
+\subsubsection{\texorpdfstring{S}{S}}
+{\footnotesize\ttfamily int S\mbox{[}\mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}\mbox{]}}
+

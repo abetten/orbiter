@@ -1,0 +1,64 @@
+\hypertarget{all__cycles_8_c}{}\section{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/all\+\_\+cycles.C File Reference}
+\label{all__cycles_8_c}\index{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/all\+\_\+cycles.\+C@{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/all\+\_\+cycles.\+C}}
+{\ttfamily \#include \char`\"{}orbiter.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}discreta.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{all__cycles_8_c_a0af9145868def351bff5cb923f4d72b4}{select\+\_\+cycles}} (\mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$CG, \mbox{\hyperlink{classgenerator}{generator}} $\ast$gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} level, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+selected\+\_\+orbits, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&orbits)
+\item 
+void \mbox{\hyperlink{all__cycles_8_c_a0f75338604b3e69ac0915f7fcd122ec7}{print\+\_\+orbits\+\_\+at\+\_\+level}} (\mbox{\hyperlink{classgenerator}{generator}} $\ast$gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} level, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{all__cycles_8_c_a9e3a033210b11f8f167631c923ff419a}{print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level}} (\mbox{\hyperlink{classgenerator}{generator}} $\ast$gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} level, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+selected\+\_\+orbits, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$orbits, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{all__cycles_8_c_a9dc326fc68b8e7b14d426fb8ac969a65}{early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+good\+\_\+candidates, void $\ast$data, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+int \mbox{\hyperlink{all__cycles_8_c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{all__cycles_8_c_a4268f4fe222ffb119218a0199f5e1904}{t0}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{all__cycles_8_c_a9dc326fc68b8e7b14d426fb8ac969a65}\label{all__cycles_8_c_a9dc326fc68b8e7b14d426fb8ac969a65}} 
+\index{all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}!early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles@{early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles}}
+\index{early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles@{early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles}!all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}}
+\subsubsection{\texorpdfstring{early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles()}{early\_test\_function\_paths\_and\_cycles()}}
+{\footnotesize\ttfamily void early\+\_\+test\+\_\+function\+\_\+paths\+\_\+and\+\_\+cycles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{S,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+good\+\_\+candidates,  }\item[{void $\ast$}]{data,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{all__cycles_8_c_a3c04138a5bfe5d72780bb7e82a18e627}\label{all__cycles_8_c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}!main@{main}}
+\index{main@{main}!all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{all__cycles_8_c_a0f75338604b3e69ac0915f7fcd122ec7}\label{all__cycles_8_c_a0f75338604b3e69ac0915f7fcd122ec7}} 
+\index{all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}!print\+\_\+orbits\+\_\+at\+\_\+level@{print\+\_\+orbits\+\_\+at\+\_\+level}}
+\index{print\+\_\+orbits\+\_\+at\+\_\+level@{print\+\_\+orbits\+\_\+at\+\_\+level}!all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}}
+\subsubsection{\texorpdfstring{print\+\_\+orbits\+\_\+at\+\_\+level()}{print\_orbits\_at\_level()}}
+{\footnotesize\ttfamily void print\+\_\+orbits\+\_\+at\+\_\+level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classgenerator}{generator}} $\ast$}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{level,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{all__cycles_8_c_a9e3a033210b11f8f167631c923ff419a}\label{all__cycles_8_c_a9e3a033210b11f8f167631c923ff419a}} 
+\index{all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}!print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level@{print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level}}
+\index{print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level@{print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level}!all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}}
+\subsubsection{\texorpdfstring{print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level()}{print\_selected\_orbits\_at\_level()}}
+{\footnotesize\ttfamily void print\+\_\+selected\+\_\+orbits\+\_\+at\+\_\+level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classgenerator}{generator}} $\ast$}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{level,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+selected\+\_\+orbits,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{orbits,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{all__cycles_8_c_a0af9145868def351bff5cb923f4d72b4}\label{all__cycles_8_c_a0af9145868def351bff5cb923f4d72b4}} 
+\index{all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}!select\+\_\+cycles@{select\+\_\+cycles}}
+\index{select\+\_\+cycles@{select\+\_\+cycles}!all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}}
+\subsubsection{\texorpdfstring{select\+\_\+cycles()}{select\_cycles()}}
+{\footnotesize\ttfamily void select\+\_\+cycles (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$}]{CG,  }\item[{\mbox{\hyperlink{classgenerator}{generator}} $\ast$}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{level,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+selected\+\_\+orbits,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{orbits }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{all__cycles_8_c_a4268f4fe222ffb119218a0199f5e1904}\label{all__cycles_8_c_a4268f4fe222ffb119218a0199f5e1904}} 
+\index{all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}!t0@{t0}}
+\index{t0@{t0}!all\+\_\+cycles.\+C@{all\+\_\+cycles.\+C}}
+\subsubsection{\texorpdfstring{t0}{t0}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t0}
+

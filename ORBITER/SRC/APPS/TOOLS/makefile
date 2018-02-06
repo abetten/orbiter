@@ -1,6 +1,6 @@
 SRC=../..
 DISCRETA_CPP = /usr/bin/g++
-CPPFLAGS = -Wall -I$(SRC)/LIB -I$(SRC)/LIB/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/LIB -I$(SRC)/LIB/DISCRETA -O3 -march=native -funroll-loops 
 LIB = \
 	$(SRC)/LIB/TOP_LEVEL/libtoplevel.a \
 	$(SRC)/LIB/DISCRETA/libdiscreta.a \
@@ -30,7 +30,9 @@ all: all_cliques.out \
 	solve_diophant.out \
 	split.out \
 	treedraw.out \
-	widor.out 
+	widor.out \
+	prepare_frames.out \
+	sajeeb.out 
 
 
 
@@ -90,6 +92,12 @@ treedraw.out:  treedraw.o ;
 
 widor.out:  widor.o ;
 	$(DISCRETA_CPP)  widor.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+prepare_frames.out:  prepare_frames.o ;
+	$(DISCRETA_CPP)  prepare_frames.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+sajeeb.out:  sajeeb.o ;
+	$(DISCRETA_CPP)  sajeeb.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

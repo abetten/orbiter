@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['save_5fascii_5fuse_5fcompress',['SAVE_ASCII_USE_COMPRESS',['../discreta_8h.html#a42b47a905cbdeb9c23945350308004b9',1,'discreta.h']]],
+  ['setbt',['SETBT',['../nauty_8h.html#aa6a01367c9a384408d19ccba06a29e6d',1,'nauty.h']]],
+  ['setdiff',['SETDIFF',['../nauty_8h.html#ada5e88586c3f1abcffb93c6c2a3e7997',1,'nauty.h']]],
+  ['setwd',['SETWD',['../nauty_8h.html#aae2dc2d100864b9e1554289ee860a906',1,'nauty.h']]],
+  ['setword_5fformat',['SETWORD_FORMAT',['../nauty_8h.html#a20f92c8f6459fb84d4844bfba57ee677',1,'nauty.h']]],
+  ['setword_5fint',['SETWORD_INT',['../nauty_8h.html#a0ceade7ba27f624428b3305a0f80fc36',1,'nauty.h']]],
+  ['singlyeven',['SINGLYEVEN',['../galois_8h.html#aa4244172a87c316f2d939e90b187f3c0',1,'galois.h']]],
+  ['sizeof_5fint',['SIZEOF_INT',['../nauty_8h.html#a44184cf844a916eee78598ab35fc966b',1,'nauty.h']]],
+  ['sizeof_5flong',['SIZEOF_LONG',['../nauty_8h.html#a22aece5d034fd9040a3d01c3797fdfe7',1,'nauty.h']]],
+  ['sizeof_5flong_5flong',['SIZEOF_LONG_LONG',['../nauty_8h.html#acd1ddb89a6f7f17d1c152499173c3eef',1,'nauty.h']]],
+  ['solid_5fradius',['SOLID_RADIUS',['../group__selection_8_c.html#a121769f4ef23fe2bfde115b2d772b30e',1,'group_selection.C']]],
+  ['spread_5fof_5ftype_5fdickson_5fkantor',['SPREAD_OF_TYPE_DICKSON_KANTOR',['../top__level_8h.html#ace41c1fb3ff4e679fb58bb08632e5085',1,'top_level.h']]],
+  ['spread_5fof_5ftype_5fftwkb',['SPREAD_OF_TYPE_FTWKB',['../top__level_8h.html#ad557b2ccc6e45d1033b152dd288621fa',1,'top_level.h']]],
+  ['spread_5fof_5ftype_5fganley',['SPREAD_OF_TYPE_GANLEY',['../top__level_8h.html#a5d3de5b97a23ae4f33cf0727902b4992',1,'top_level.h']]],
+  ['spread_5fof_5ftype_5fhudson',['SPREAD_OF_TYPE_HUDSON',['../top__level_8h.html#a352801a7051c62cde44a2f57483b26d7',1,'top_level.h']]],
+  ['spread_5fof_5ftype_5fkantor',['SPREAD_OF_TYPE_KANTOR',['../top__level_8h.html#a2e58ed986a6e532a22408ad76c0862d5',1,'top_level.h']]],
+  ['spread_5fof_5ftype_5fkantor2',['SPREAD_OF_TYPE_KANTOR2',['../top__level_8h.html#a61713df23d5eefb58e8bee0d93fc7117',1,'top_level.h']]],
+  ['spread_5fof_5ftype_5flaw_5fpenttila',['SPREAD_OF_TYPE_LAW_PENTTILA',['../top__level_8h.html#a10362ae646acf4a3071bc983d74d9013',1,'top_level.h']]],
+  ['swchunk0',['SWCHUNK0',['../nauty_8h.html#aaf8e1f6bddd66ca653406f6e9a724110',1,'nauty.h']]],
+  ['swchunk1',['SWCHUNK1',['../nauty_8h.html#a0ab74db177fae2dfde3cc5916e6161b7',1,'nauty.h']]],
+  ['system_5fis_5fmacintosh',['SYSTEM_IS_MACINTOSH',['../galois_8h.html#a2efd70c830aaf89edeb93eeef794a537',1,'galois.h']]],
+  ['systemunix',['SYSTEMUNIX',['../discreta_8h.html#a9a70e06de1f85c82cb4be656483f51e9',1,'SYSTEMUNIX():&#160;discreta.h'],['../galois_8h.html#a9a70e06de1f85c82cb4be656483f51e9',1,'SYSTEMUNIX():&#160;galois.h']]]
+];

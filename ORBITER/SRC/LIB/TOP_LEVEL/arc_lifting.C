@@ -1102,15 +1102,20 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 			INT coeff_out[20];
 
 
+			//Surf_A->A->element_invert(Elt4, Elt5, 0);
+
+
 			if (mtx->f_semilinear) {
 				INT n, frob, e;
 				
 				n = mtx->n;
 				frob = Elt4[n * n];
+#if 0
 				e = mtx->GFq->e;
 				if (frob) {
 					frob = e - frob;
 					}
+#endif
 				Surf->substitute_semilinear(the_equation, coeff_out, mtx->f_semilinear, frob, Elt4, 0 /* verbose_level */);
 				}
 			else {

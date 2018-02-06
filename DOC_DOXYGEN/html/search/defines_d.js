@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['p_5f',['P_',['../nauty_8h.html#ab251f706ac3a5f1b51cf67990f26b0c8',1,'nauty.h']]],
+  ['page_5flength_5flog',['PAGE_LENGTH_LOG',['../galois_8h.html#a097903ef5157d838d93d852a348630cd',1,'galois.h']]],
+  ['partition_5ftype_5fexponent',['PARTITION_TYPE_EXPONENT',['../discreta_8h.html#a128d9399d65bed1fc7f66ec017567dfc',1,'discreta.h']]],
+  ['partition_5ftype_5fvector',['PARTITION_TYPE_VECTOR',['../discreta_8h.html#ab8a0365df12a47a4c0faad1f6ae4eb50',1,'discreta.h']]],
+  ['pointandblocktactical',['POINTANDBLOCKTACTICAL',['../incidence_8h.html#ad7583a697118956b35b2d01bc7b2f5bf',1,'incidence.h']]],
+  ['pointer_5ftype_5fbyte',['POINTER_TYPE_BYTE',['../_g_a_l_o_i_s_2memory_8_c.html#a341f7169df7a4bd72319fa9e76c2f03b',1,'memory.C']]],
+  ['pointer_5ftype_5fint',['POINTER_TYPE_INT',['../_g_a_l_o_i_s_2memory_8_c.html#a3f4e6040e4715df597896976e9b770e2',1,'memory.C']]],
+  ['pointer_5ftype_5fobject',['POINTER_TYPE_OBJECT',['../_g_a_l_o_i_s_2memory_8_c.html#ae50e26c341156a8fac9bd16e4a506ed5',1,'memory.C']]],
+  ['pointer_5ftype_5fobjects',['POINTER_TYPE_OBJECTS',['../_g_a_l_o_i_s_2memory_8_c.html#aa86c4813374e2199af8b8442b550b59b',1,'memory.C']]],
+  ['pointer_5ftype_5fpbyte',['POINTER_TYPE_PBYTE',['../_g_a_l_o_i_s_2memory_8_c.html#a5017c95ebde3cdbd74138392c959fbbc',1,'memory.C']]],
+  ['pointer_5ftype_5fpint',['POINTER_TYPE_PINT',['../_g_a_l_o_i_s_2memory_8_c.html#a388d01a62105db0538cc7ad5a2ab695d',1,'memory.C']]],
+  ['pointer_5ftype_5fppint',['POINTER_TYPE_PPINT',['../_g_a_l_o_i_s_2memory_8_c.html#a00eb4c8fab5de7adf16a975db1b50b88',1,'memory.C']]],
+  ['pointer_5ftype_5fpvoid',['POINTER_TYPE_PVOID',['../_g_a_l_o_i_s_2memory_8_c.html#adffaa29b549b79d5035bba5fb5c3a93b',1,'memory.C']]],
+  ['pointer_5ftype_5fsmallint',['POINTER_TYPE_SMALLINT',['../_g_a_l_o_i_s_2memory_8_c.html#a2cc32fb1b343c1194a539c68799dafdc',1,'memory.C']]],
+  ['pointer_5ftype_5fsmallpint',['POINTER_TYPE_SMALLPINT',['../_g_a_l_o_i_s_2memory_8_c.html#a8d48a4c82e88db99bdb1c3a89851a70e',1,'memory.C']]],
+  ['pointer_5ftype_5fubyte',['POINTER_TYPE_UBYTE',['../_g_a_l_o_i_s_2memory_8_c.html#ab1c34ee381236356f380cd6ec692771b',1,'memory.C']]],
+  ['pointtactical',['POINTTACTICAL',['../incidence_8h.html#ae867efc70753a2838f9a4e7f389736f7',1,'incidence.h']]],
+  ['popcount',['POPCOUNT',['../nauty_8h.html#a450ddacb2cbdf2291eaa9822f7acfe1f',1,'nauty.h']]],
+  ['putc',['PUTC',['../nauty_8h.html#a0bee3a3f34614444102e93aeac1df1a9',1,'nauty.h']]],
+  ['putint',['PUTINT',['../_l_i_b_2_g_a_l_o_i_s_2nauty_8_c.html#a5311dff60fb902900b1860147a8c5bfd',1,'nauty.c']]],
+  ['putstr',['PUTSTR',['../_l_i_b_2_g_a_l_o_i_s_2nauty_8_c.html#a8a0a05cbe53aca08281546cbc9fac1bb',1,'nauty.c']]]
+];

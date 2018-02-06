@@ -1,0 +1,280 @@
+\hypertarget{classmemory}{}\section{memory Class Reference}
+\label{classmemory}\index{memory@{memory}}
+
+
+{\ttfamily \#include $<$discreta.\+h$>$}
+
+Inheritance diagram for memory\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmemory}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmemory_a05edf03af2b4a912939e00c7269e2085}{memory}} ()
+\item 
+\mbox{\hyperlink{classmemory_ade21bbe488443d2d3eb7b82a868298a6}{memory}} (const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+\mbox{\hyperlink{classmemory}{memory}} \& \mbox{\hyperlink{classmemory_a5550412426557d686fbf2df39e1dbb4c}{operator=}} (const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+void \mbox{\hyperlink{classmemory_a33aae277f9b8fe36b02e9d5da895451b}{settype\+\_\+memory}} ()
+\item 
+\mbox{\hyperlink{classmemory_ae5893b724ce22f38b776558384f21680}{$\sim$memory}} ()
+\item 
+void \mbox{\hyperlink{classmemory_a19366f9105d79a0e818cc19255d7ef4f}{freeself\+\_\+memory}} ()
+\item 
+\mbox{\hyperlink{discreta_8h_aaf25ee7e2306d78c74ec7bc48f092e81}{kind}} \mbox{\hyperlink{classmemory_a75dd039fc284723f284b9a62a199f623}{s\+\_\+virtual\+\_\+kind}} ()
+\item 
+void \mbox{\hyperlink{classmemory_a4fe4349915769808c6ff3cf83c661bf0}{copyobject\+\_\+to}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+ostream \& \mbox{\hyperlink{classmemory_a76e54475a51795259a3ebf1013a2559e}{print}} (ostream \&ost)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \& \mbox{\hyperlink{classmemory_acaa1796a2f548d35cf87e03252b2184c}{alloc\+\_\+length}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \& \mbox{\hyperlink{classmemory_a3312a01b206cef29ec0f85ee340002dd}{used\+\_\+length}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \& \mbox{\hyperlink{classmemory_a24db8a00f6c8abfa6bb762264357cb22}{cur\+\_\+pointer}} ()
+\item 
+char \& \mbox{\hyperlink{classmemory_a3b1cda7c761e823c258e4c7a13794012}{s\+\_\+i}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+char \& \mbox{\hyperlink{classmemory_adca93ab84b9c609f5ee78b00ea7cac4d}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classmemory_a616200900a07046cd6b0b86f12765909}{init}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length, char $\ast$\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}})
+\item 
+void \mbox{\hyperlink{classmemory_a44ac20be537668e94b5d42e6a6c74b6f}{alloc}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length)
+\item 
+void \mbox{\hyperlink{classmemory_a2ad10d7a4707651f6b101d919f8402ed}{append}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length, char $\ast$\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}})
+\item 
+void \mbox{\hyperlink{classmemory_a8aaa32764cd9a497d57740b5cb47953b}{realloc}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} new\+\_\+length)
+\item 
+void \mbox{\hyperlink{classmemory_a3f1889e0a03fd3afbb15bc78084c6356}{write\+\_\+char}} (char \mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{classmemory_ae96d2ffc64b3b3012960aae45f4c2a5b}{read\+\_\+char}} (char $\ast$\mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{classmemory_ad2bea2174f3f88051d259aa8b293bb4d}{write\+\_\+int}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classmemory_a2f9fe96745aaab0aebf075ab9d5fc43e}{read\+\_\+int}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classmemory_af8d8b6de66f74f406ee48bb5e3825bb8}{read\+\_\+file}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{classmemory_a665547a8b8662da816c6511cabd74ea1}{write\+\_\+file}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmemory_a6a5fd3fd3ace3bd98089e618ec4c1bca}{multiplicity\+\_\+of\+\_\+character}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} \mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{classmemory_afadcbb4b0b076d7f9552a9102b467683}{compress}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{classmemory_a1b74745da801f22d42ea54e54b23c014}{decompress}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmemory_a7f6c3fb11d9ef25fce0aa093bc9d9216}{csf}} ()
+\item 
+void \mbox{\hyperlink{classmemory_aa9d91eb1dde81ccc9fc3b45c742cafc6}{write\+\_\+mem}} (\mbox{\hyperlink{classmemory}{memory}} \&\mbox{\hyperlink{plane__search_8_c_ad2d23ebd03187a91edd45b1d5e496265}{M}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} debug\+\_\+depth)
+\item 
+void \mbox{\hyperlink{classmemory_abe07337c672fca9e605c5f9df86a8c1a}{read\+\_\+mem}} (\mbox{\hyperlink{classmemory}{memory}} \&\mbox{\hyperlink{plane__search_8_c_ad2d23ebd03187a91edd45b1d5e496265}{M}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} debug\+\_\+depth)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmemory_a05edf03af2b4a912939e00c7269e2085}\label{classmemory_a05edf03af2b4a912939e00c7269e2085}} 
+\index{memory@{memory}!memory@{memory}}
+\index{memory@{memory}!memory@{memory}}
+\subsubsection{\texorpdfstring{memory()}{memory()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily memory\+::memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_ade21bbe488443d2d3eb7b82a868298a6}\label{classmemory_ade21bbe488443d2d3eb7b82a868298a6}} 
+\index{memory@{memory}!memory@{memory}}
+\index{memory@{memory}!memory@{memory}}
+\subsubsection{\texorpdfstring{memory()}{memory()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily memory\+::memory (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_ae5893b724ce22f38b776558384f21680}\label{classmemory_ae5893b724ce22f38b776558384f21680}} 
+\index{memory@{memory}!````~memory@{$\sim$memory}}
+\index{````~memory@{$\sim$memory}!memory@{memory}}
+\subsubsection{\texorpdfstring{$\sim$memory()}{~memory()}}
+{\footnotesize\ttfamily memory\+::$\sim$memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmemory_a44ac20be537668e94b5d42e6a6c74b6f}\label{classmemory_a44ac20be537668e94b5d42e6a6c74b6f}} 
+\index{memory@{memory}!alloc@{alloc}}
+\index{alloc@{alloc}!memory@{memory}}
+\subsubsection{\texorpdfstring{alloc()}{alloc()}}
+{\footnotesize\ttfamily void memory\+::alloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_acaa1796a2f548d35cf87e03252b2184c}\label{classmemory_acaa1796a2f548d35cf87e03252b2184c}} 
+\index{memory@{memory}!alloc\+\_\+length@{alloc\+\_\+length}}
+\index{alloc\+\_\+length@{alloc\+\_\+length}!memory@{memory}}
+\subsubsection{\texorpdfstring{alloc\+\_\+length()}{alloc\_length()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}\& memory\+::alloc\+\_\+length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmemory_a2ad10d7a4707651f6b101d919f8402ed}\label{classmemory_a2ad10d7a4707651f6b101d919f8402ed}} 
+\index{memory@{memory}!append@{append}}
+\index{append@{append}!memory@{memory}}
+\subsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily void memory\+::append (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length,  }\item[{char $\ast$}]{d }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_afadcbb4b0b076d7f9552a9102b467683}\label{classmemory_afadcbb4b0b076d7f9552a9102b467683}} 
+\index{memory@{memory}!compress@{compress}}
+\index{compress@{compress}!memory@{memory}}
+\subsubsection{\texorpdfstring{compress()}{compress()}}
+{\footnotesize\ttfamily void memory\+::compress (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a4fe4349915769808c6ff3cf83c661bf0}\label{classmemory_a4fe4349915769808c6ff3cf83c661bf0}} 
+\index{memory@{memory}!copyobject\+\_\+to@{copyobject\+\_\+to}}
+\index{copyobject\+\_\+to@{copyobject\+\_\+to}!memory@{memory}}
+\subsubsection{\texorpdfstring{copyobject\+\_\+to()}{copyobject\_to()}}
+{\footnotesize\ttfamily void memory\+::copyobject\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a33180628d9ced231267229b3564790f3}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmemory_a7f6c3fb11d9ef25fce0aa093bc9d9216}\label{classmemory_a7f6c3fb11d9ef25fce0aa093bc9d9216}} 
+\index{memory@{memory}!csf@{csf}}
+\index{csf@{csf}!memory@{memory}}
+\subsubsection{\texorpdfstring{csf()}{csf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} memory\+::csf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a24db8a00f6c8abfa6bb762264357cb22}\label{classmemory_a24db8a00f6c8abfa6bb762264357cb22}} 
+\index{memory@{memory}!cur\+\_\+pointer@{cur\+\_\+pointer}}
+\index{cur\+\_\+pointer@{cur\+\_\+pointer}!memory@{memory}}
+\subsubsection{\texorpdfstring{cur\+\_\+pointer()}{cur\_pointer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}\& memory\+::cur\+\_\+pointer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmemory_a1b74745da801f22d42ea54e54b23c014}\label{classmemory_a1b74745da801f22d42ea54e54b23c014}} 
+\index{memory@{memory}!decompress@{decompress}}
+\index{decompress@{decompress}!memory@{memory}}
+\subsubsection{\texorpdfstring{decompress()}{decompress()}}
+{\footnotesize\ttfamily void memory\+::decompress (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a19366f9105d79a0e818cc19255d7ef4f}\label{classmemory_a19366f9105d79a0e818cc19255d7ef4f}} 
+\index{memory@{memory}!freeself\+\_\+memory@{freeself\+\_\+memory}}
+\index{freeself\+\_\+memory@{freeself\+\_\+memory}!memory@{memory}}
+\subsubsection{\texorpdfstring{freeself\+\_\+memory()}{freeself\_memory()}}
+{\footnotesize\ttfamily void memory\+::freeself\+\_\+memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a616200900a07046cd6b0b86f12765909}\label{classmemory_a616200900a07046cd6b0b86f12765909}} 
+\index{memory@{memory}!init@{init}}
+\index{init@{init}!memory@{memory}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void memory\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length,  }\item[{char $\ast$}]{d }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a6a5fd3fd3ace3bd98089e618ec4c1bca}\label{classmemory_a6a5fd3fd3ace3bd98089e618ec4c1bca}} 
+\index{memory@{memory}!multiplicity\+\_\+of\+\_\+character@{multiplicity\+\_\+of\+\_\+character}}
+\index{multiplicity\+\_\+of\+\_\+character@{multiplicity\+\_\+of\+\_\+character}!memory@{memory}}
+\subsubsection{\texorpdfstring{multiplicity\+\_\+of\+\_\+character()}{multiplicity\_of\_character()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} memory\+::multiplicity\+\_\+of\+\_\+character (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}}}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a5550412426557d686fbf2df39e1dbb4c}\label{classmemory_a5550412426557d686fbf2df39e1dbb4c}} 
+\index{memory@{memory}!operator=@{operator=}}
+\index{operator=@{operator=}!memory@{memory}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmemory}{memory}} \& memory\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_adca93ab84b9c609f5ee78b00ea7cac4d}\label{classmemory_adca93ab84b9c609f5ee78b00ea7cac4d}} 
+\index{memory@{memory}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!memory@{memory}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily char\& memory\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmemory_a76e54475a51795259a3ebf1013a2559e}\label{classmemory_a76e54475a51795259a3ebf1013a2559e}} 
+\index{memory@{memory}!print@{print}}
+\index{print@{print}!memory@{memory}}
+\subsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily ostream \& memory\+::print (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a036e48bc058347046fc9b73dd0951478}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmemory_ae96d2ffc64b3b3012960aae45f4c2a5b}\label{classmemory_ae96d2ffc64b3b3012960aae45f4c2a5b}} 
+\index{memory@{memory}!read\+\_\+char@{read\+\_\+char}}
+\index{read\+\_\+char@{read\+\_\+char}!memory@{memory}}
+\subsubsection{\texorpdfstring{read\+\_\+char()}{read\_char()}}
+{\footnotesize\ttfamily void memory\+::read\+\_\+char (\begin{DoxyParamCaption}\item[{char $\ast$}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_af8d8b6de66f74f406ee48bb5e3825bb8}\label{classmemory_af8d8b6de66f74f406ee48bb5e3825bb8}} 
+\index{memory@{memory}!read\+\_\+file@{read\+\_\+file}}
+\index{read\+\_\+file@{read\+\_\+file}!memory@{memory}}
+\subsubsection{\texorpdfstring{read\+\_\+file()}{read\_file()}}
+{\footnotesize\ttfamily void memory\+::read\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a2f9fe96745aaab0aebf075ab9d5fc43e}\label{classmemory_a2f9fe96745aaab0aebf075ab9d5fc43e}} 
+\index{memory@{memory}!read\+\_\+int@{read\+\_\+int}}
+\index{read\+\_\+int@{read\+\_\+int}!memory@{memory}}
+\subsubsection{\texorpdfstring{read\+\_\+int()}{read\_int()}}
+{\footnotesize\ttfamily void memory\+::read\+\_\+int (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_abe07337c672fca9e605c5f9df86a8c1a}\label{classmemory_abe07337c672fca9e605c5f9df86a8c1a}} 
+\index{memory@{memory}!read\+\_\+mem@{read\+\_\+mem}}
+\index{read\+\_\+mem@{read\+\_\+mem}!memory@{memory}}
+\subsubsection{\texorpdfstring{read\+\_\+mem()}{read\_mem()}}
+{\footnotesize\ttfamily void memory\+::read\+\_\+mem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmemory}{memory}} \&}]{M,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{debug\+\_\+depth }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a8aaa32764cd9a497d57740b5cb47953b}\label{classmemory_a8aaa32764cd9a497d57740b5cb47953b}} 
+\index{memory@{memory}!realloc@{realloc}}
+\index{realloc@{realloc}!memory@{memory}}
+\subsubsection{\texorpdfstring{realloc()}{realloc()}}
+{\footnotesize\ttfamily void memory\+::realloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{new\+\_\+length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a3b1cda7c761e823c258e4c7a13794012}\label{classmemory_a3b1cda7c761e823c258e4c7a13794012}} 
+\index{memory@{memory}!s\+\_\+i@{s\+\_\+i}}
+\index{s\+\_\+i@{s\+\_\+i}!memory@{memory}}
+\subsubsection{\texorpdfstring{s\+\_\+i()}{s\_i()}}
+{\footnotesize\ttfamily char\& memory\+::s\+\_\+i (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmemory_a75dd039fc284723f284b9a62a199f623}\label{classmemory_a75dd039fc284723f284b9a62a199f623}} 
+\index{memory@{memory}!s\+\_\+virtual\+\_\+kind@{s\+\_\+virtual\+\_\+kind}}
+\index{s\+\_\+virtual\+\_\+kind@{s\+\_\+virtual\+\_\+kind}!memory@{memory}}
+\subsubsection{\texorpdfstring{s\+\_\+virtual\+\_\+kind()}{s\_virtual\_kind()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{discreta_8h_aaf25ee7e2306d78c74ec7bc48f092e81}{kind}} memory\+::s\+\_\+virtual\+\_\+kind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a52778a6d6943a468be083d0785d418fb}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmemory_a33aae277f9b8fe36b02e9d5da895451b}\label{classmemory_a33aae277f9b8fe36b02e9d5da895451b}} 
+\index{memory@{memory}!settype\+\_\+memory@{settype\+\_\+memory}}
+\index{settype\+\_\+memory@{settype\+\_\+memory}!memory@{memory}}
+\subsubsection{\texorpdfstring{settype\+\_\+memory()}{settype\_memory()}}
+{\footnotesize\ttfamily void memory\+::settype\+\_\+memory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a3312a01b206cef29ec0f85ee340002dd}\label{classmemory_a3312a01b206cef29ec0f85ee340002dd}} 
+\index{memory@{memory}!used\+\_\+length@{used\+\_\+length}}
+\index{used\+\_\+length@{used\+\_\+length}!memory@{memory}}
+\subsubsection{\texorpdfstring{used\+\_\+length()}{used\_length()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}\& memory\+::used\+\_\+length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmemory_a3f1889e0a03fd3afbb15bc78084c6356}\label{classmemory_a3f1889e0a03fd3afbb15bc78084c6356}} 
+\index{memory@{memory}!write\+\_\+char@{write\+\_\+char}}
+\index{write\+\_\+char@{write\+\_\+char}!memory@{memory}}
+\subsubsection{\texorpdfstring{write\+\_\+char()}{write\_char()}}
+{\footnotesize\ttfamily void memory\+::write\+\_\+char (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_a665547a8b8662da816c6511cabd74ea1}\label{classmemory_a665547a8b8662da816c6511cabd74ea1}} 
+\index{memory@{memory}!write\+\_\+file@{write\+\_\+file}}
+\index{write\+\_\+file@{write\+\_\+file}!memory@{memory}}
+\subsubsection{\texorpdfstring{write\+\_\+file()}{write\_file()}}
+{\footnotesize\ttfamily void memory\+::write\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_ad2bea2174f3f88051d259aa8b293bb4d}\label{classmemory_ad2bea2174f3f88051d259aa8b293bb4d}} 
+\index{memory@{memory}!write\+\_\+int@{write\+\_\+int}}
+\index{write\+\_\+int@{write\+\_\+int}!memory@{memory}}
+\subsubsection{\texorpdfstring{write\+\_\+int()}{write\_int()}}
+{\footnotesize\ttfamily void memory\+::write\+\_\+int (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmemory_aa9d91eb1dde81ccc9fc3b45c742cafc6}\label{classmemory_aa9d91eb1dde81ccc9fc3b45c742cafc6}} 
+\index{memory@{memory}!write\+\_\+mem@{write\+\_\+mem}}
+\index{write\+\_\+mem@{write\+\_\+mem}!memory@{memory}}
+\subsubsection{\texorpdfstring{write\+\_\+mem()}{write\_mem()}}
+{\footnotesize\ttfamily void memory\+::write\+\_\+mem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmemory}{memory}} \&}]{M,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{debug\+\_\+depth }\end{DoxyParamCaption})}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/\mbox{\hyperlink{discreta_8h}{discreta.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/\mbox{\hyperlink{_d_i_s_c_r_e_t_a_2memory_8_c}{memory.\+C}}\end{DoxyCompactItemize}

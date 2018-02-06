@@ -1,0 +1,924 @@
+\hypertarget{classmatrix}{}\section{matrix Class Reference}
+\label{classmatrix}\index{matrix@{matrix}}
+
+
+{\ttfamily \#include $<$discreta.\+h$>$}
+
+Inheritance diagram for matrix\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmatrix}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmatrix_a4daf70b1506ea976352f20e4322a9c17}{matrix}} ()
+\item 
+\mbox{\hyperlink{classmatrix_ac9e2b8134d8bd8d9789133c187d81d74}{matrix}} (const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+\mbox{\hyperlink{classmatrix}{matrix}} \& \mbox{\hyperlink{classmatrix_a242b6281ca7b813d47d07bb474d10b8e}{operator=}} (const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+void $\ast$ \mbox{\hyperlink{classmatrix_af89d98f62742b78d8d67080a0c88763a}{operator new}} (size\+\_\+t, void $\ast$\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}})
+\item 
+void \mbox{\hyperlink{classmatrix_a1780283a64a789e4084d792683d276bb}{settype\+\_\+matrix}} ()
+\item 
+\mbox{\hyperlink{classmatrix_a8a2522496ff0ef7096ffcfdc851b85a1}{$\sim$matrix}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_ab47d61820499f35c15bf82fb6a3b9bd1}{freeself\+\_\+matrix}} ()
+\item 
+\mbox{\hyperlink{discreta_8h_aaf25ee7e2306d78c74ec7bc48f092e81}{kind}} \mbox{\hyperlink{classmatrix_a4880cc2b5e8d3f8f2d8038580364db56}{s\+\_\+virtual\+\_\+kind}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_a6a47f82604adaa39b21f6bfe6da9e898}{copyobject\+\_\+to}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+ostream \& \mbox{\hyperlink{classmatrix_aeb24c2fe68cc0a32d172c0fc06103dd2}{print}} (ostream \&)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a6009a90834a208f5f0a83d8ed651e4c5}{compare\+\_\+with}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&a)
+\item 
+\mbox{\hyperlink{classmatrix}{matrix}} \& \mbox{\hyperlink{classmatrix_a85921e1b3c604f625989b1c3d1697792}{m\+\_\+mn}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+\mbox{\hyperlink{classmatrix}{matrix}} \& \mbox{\hyperlink{classmatrix_ae9a8cf19bd93428639950725edbd2271}{m\+\_\+mn\+\_\+n}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+\mbox{\hyperlink{classmatrix}{matrix}} \& \mbox{\hyperlink{classmatrix_a5d3c1be0310affe3c1c8ffe3e89097f3}{realloc}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_afeb2e29600e68448b9d1130114b9606f}{s\+\_\+m}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a35f5321a5615451fdc8be7b953f8ac8b}{s\+\_\+n}} ()
+\item 
+\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \& \mbox{\hyperlink{classmatrix_ab36f1b3abd2df280224c50c9debb57df}{s\+\_\+ij}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \& \mbox{\hyperlink{classmatrix_af8d3c35817af62a3c0097ddf64422d96}{s\+\_\+iji}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}})
+\item 
+void \mbox{\hyperlink{classmatrix_a8cece141dbb3d39e94933c8da46dbd50}{m\+\_\+iji}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a)
+\item 
+\mbox{\hyperlink{classmatrix__access}{matrix\+\_\+access}} \mbox{\hyperlink{classmatrix_a7e7aaebd797dd2020f6df94c6b07ebc2}{operator\mbox{[}$\,$\mbox{]}}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classmatrix_abde18a5fb21ce4d884dceedb286ba899}{mult\+\_\+to}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a0a2f84ed7838f07779ae24c5a9086d33}{y}})
+\item 
+void \mbox{\hyperlink{classmatrix_a7b3866189e0d7f75e55805d6e9a43ace}{matrix\+\_\+mult\+\_\+to}} (\mbox{\hyperlink{classmatrix}{matrix}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a0a2f84ed7838f07779ae24c5a9086d33}{y}})
+\item 
+void \mbox{\hyperlink{classmatrix_a0e5dcee30e9e98346f389511c7700f1f}{vector\+\_\+mult\+\_\+to}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a0a2f84ed7838f07779ae24c5a9086d33}{y}})
+\item 
+void \mbox{\hyperlink{classmatrix_ae578f93fd93c59b9755d31b5fd11e14c}{multiply\+\_\+vector\+\_\+from\+\_\+left}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a0a2f84ed7838f07779ae24c5a9086d33}{y}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a137bc3b88c71382c675dea7a0bf9b5f2}{invert\+\_\+to}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+void \mbox{\hyperlink{classmatrix_a4ade010e5f49a23fab4cb5211b106e81}{add\+\_\+to}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a0a2f84ed7838f07779ae24c5a9086d33}{y}})
+\item 
+void \mbox{\hyperlink{classmatrix_acb93b95943eee2253b7b3b799333a24c}{negate\+\_\+to}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+void \mbox{\hyperlink{classmatrix_a780b461503be22827c4fdca66f779be1}{one}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_abd2e274d4905bc97eabf7c72d5e66b3d}{zero}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a1940fae0fd429e77918eaa3d68cecd12}{is\+\_\+zero}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a74aa38df064afa998cb0973ac3554ac0}{is\+\_\+one}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_abe8ed121d6bc29e1cc4432ad45542450}{Gauss}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}{f\+\_\+special}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+complete, \mbox{\hyperlink{class_vector}{Vector}} \&base\+\_\+cols, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+P, \mbox{\hyperlink{classmatrix}{matrix}} \&\mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a6248f2f23a2b0f011a21548cced5dc1f}{rank}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a75b3e1c7074bea2d399601ed2cff7a42}{get\+\_\+kernel}} (\mbox{\hyperlink{class_vector}{Vector}} \&base\+\_\+cols, \mbox{\hyperlink{classmatrix}{matrix}} \&kernel)
+\item 
+\mbox{\hyperlink{classmatrix}{matrix}} \& \mbox{\hyperlink{classmatrix_a1d8064be96298b81e8e060f02b9cef3e}{transpose}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a6ec12bab511dbb2f1426515819359390}{Asup2\+Ainf}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a7abdfef775e6f1e68856bbdb06004dce}{Ainf2\+Asup}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a606cce1a9d6430b751090e27ef31d2e4}{Asup2\+Acover}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a331c7926e93599378a25791e982b3c89}{Acover2nl}} (\mbox{\hyperlink{class_vector}{Vector}} \&nl)
+\item 
+void \mbox{\hyperlink{classmatrix_aa08a0bfacde81b35248690c099155bed}{Frobenius}} (\mbox{\hyperlink{classunipoly}{unipoly}} \&m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_ac98dd867d9148831126eaddd13b7da60}{Berlekamp}} (\mbox{\hyperlink{classunipoly}{unipoly}} \&m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_acd603a86fd752eb4da1a060bdaab478f}{companion\+\_\+matrix}} (\mbox{\hyperlink{classunipoly}{unipoly}} \&m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_aee7e0d79d2c1ef32f0cbebbcc7f40771}{elements\+\_\+to\+\_\+unipoly}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_a3c2f7a8bafecd1eb355c245cf0e157b2}{minus\+\_\+\+X\+\_\+times\+\_\+id}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_a42aa27f4ae06ceff8cb297894bb5aad4}{X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_aeb73764dd4346bb1a6998f2a3c507544}{smith\+\_\+normal\+\_\+form}} (\mbox{\hyperlink{classmatrix}{matrix}} \&\mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}}, \mbox{\hyperlink{classmatrix}{matrix}} \&Pv, \mbox{\hyperlink{classmatrix}{matrix}} \&Q, \mbox{\hyperlink{classmatrix}{matrix}} \&Qv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_ab1f7e8511834e7782ef09f59d8281c74}{smith\+\_\+eliminate\+\_\+column}} (\mbox{\hyperlink{classmatrix}{matrix}} \&\mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}}, \mbox{\hyperlink{classmatrix}{matrix}} \&Pv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a6672b6bbaad6060b6c230a2c10ec2eb5}{smith\+\_\+eliminate\+\_\+row}} (\mbox{\hyperlink{classmatrix}{matrix}} \&Q, \mbox{\hyperlink{classmatrix}{matrix}} \&Qv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_ad64ff9070fae0dc1c8957251d16e8146}{multiply\+\_\+2by2\+\_\+from\+\_\+left}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&aii, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&aij, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&aji, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&ajj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_a00455d7848021f33e9c8d280d1c8a0de}{multiply\+\_\+2by2\+\_\+from\+\_\+right}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&aii, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&aij, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&aji, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&ajj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_a46200f82b0e76394a82968029d5e5a61}{to\+\_\+vector\+\_\+of\+\_\+rows}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}})
+\item 
+void \mbox{\hyperlink{classmatrix_aeffa1035691fc1055ce1b52d2e31a114}{from\+\_\+vector\+\_\+of\+\_\+rows}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}})
+\item 
+void \mbox{\hyperlink{classmatrix_ab806288c2dcb40b77b2dfc53ab09f74d}{to\+\_\+vector\+\_\+of\+\_\+columns}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}})
+\item 
+void \mbox{\hyperlink{classmatrix_af666c6b895475348ffa818d0da96897b}{from\+\_\+vector\+\_\+of\+\_\+columns}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}})
+\item 
+void \mbox{\hyperlink{classmatrix_a0063caaa247f4546e31800f81e17a8cd}{evaluate\+\_\+at}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+void \mbox{\hyperlink{classmatrix_a69a80605be7914af5fd65e680944aeca}{K\+X\+\_\+module\+\_\+order\+\_\+ideal}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{classunipoly}{unipoly}} \&mue, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_accef670f4dfd666f9de32fe50754665d}{K\+X\+\_\+module\+\_\+apply}} (\mbox{\hyperlink{classunipoly}{unipoly}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}})
+\item 
+void \mbox{\hyperlink{classmatrix_afd55b3b44c36f039928862315f52428b}{K\+X\+\_\+module\+\_\+join}} (\mbox{\hyperlink{class_vector}{Vector}} \&v1, \mbox{\hyperlink{classunipoly}{unipoly}} \&mue1, \mbox{\hyperlink{class_vector}{Vector}} \&v2, \mbox{\hyperlink{classunipoly}{unipoly}} \&mue2, \mbox{\hyperlink{class_vector}{Vector}} \&v3, \mbox{\hyperlink{classunipoly}{unipoly}} \&mue3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_ace9dbe1f348d6fa63d1005e8f601897b}{K\+X\+\_\+cyclic\+\_\+module\+\_\+generator}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}}, \mbox{\hyperlink{classunipoly}{unipoly}} \&mue, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_ad8b6174329495126b165154d074bbcff}{K\+X\+\_\+module\+\_\+minpol}} (\mbox{\hyperlink{classunipoly}{unipoly}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{classunipoly}{unipoly}} \&m, \mbox{\hyperlink{classunipoly}{unipoly}} \&mue, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_af3908604699f48d25012d6500de591f0}{binomial}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+max)
+\item 
+void \mbox{\hyperlink{classmatrix_a0e7366c1db2c447d83f71f2c369e8d1d}{stirling\+\_\+second}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+ordered)
+\item 
+void \mbox{\hyperlink{classmatrix_a9041c3138924ebc58d539c9230898c6d}{stirling\+\_\+first}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+signless)
+\item 
+void \mbox{\hyperlink{classmatrix_a58a9004174ad450f80faba4db8c1be1c}{binomial}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+min, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k\+\_\+max, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+inverse)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a820b8de607274302772f753e7585e9fa}{hip}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_a169cd51dd98562746f81dd0b075f3f6f}{hip1}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_a773aa4ab691548beba8e6204d9f4ef21}{write\+\_\+mem}} (\mbox{\hyperlink{classmemory}{memory}} \&m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} debug\+\_\+depth)
+\item 
+void \mbox{\hyperlink{classmatrix_a11e3236059f10ed69c47c65c79e7f03b}{read\+\_\+mem}} (\mbox{\hyperlink{classmemory}{memory}} \&\mbox{\hyperlink{plane__search_8_c_ad2d23ebd03187a91edd45b1d5e496265}{M}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} debug\+\_\+depth)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_af06fd7824274febfcc10f734a06d1a6e}{csf}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_abf772e9b3338df569be017ffecb165ef}{calc\+\_\+theX}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+X, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&theX)
+\item 
+void \mbox{\hyperlink{classmatrix_a4bfbaa097eedb8b427169c593cbb40d0}{apply\+\_\+perms}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+row\+\_\+perm, \mbox{\hyperlink{classpermutation}{permutation}} \&row\+\_\+perm, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+col\+\_\+perm, \mbox{\hyperlink{classpermutation}{permutation}} \&col\+\_\+perm)
+\item 
+void \mbox{\hyperlink{classmatrix_a260e37c93f9e2d55d02ecddcb483659a}{apply\+\_\+col\+\_\+row\+\_\+perm}} (\mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}})
+\item 
+void \mbox{\hyperlink{classmatrix_ad413b1eccc8402fb7281d70dc06915f5}{apply\+\_\+row\+\_\+col\+\_\+perm}} (\mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}})
+\item 
+void \mbox{\hyperlink{classmatrix_a0ced6791191355bde858790aa4b156ac}{incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+tex, \mbox{\hyperlink{class_vector}{Vector}} \&decomp, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}})
+\item 
+void \mbox{\hyperlink{classmatrix_afd1ff3d3d7b507287af6891d94771bab}{print\+\_\+decomposed}} (ostream \&ost, \mbox{\hyperlink{class_vector}{Vector}} \&row\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&col\+\_\+decomp)
+\item 
+void \mbox{\hyperlink{classmatrix_a1eba80b1e47f3672e6880e7343eea8e4}{incma\+\_\+print\+\_\+ascii}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+tex, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+row\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&row\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+col\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&col\+\_\+decomp)
+\item 
+void \mbox{\hyperlink{classmatrix_a2f3ef897e502a22def6b90a7c02addf5}{incma\+\_\+print\+\_\+latex}} (ostream \&\mbox{\hyperlink{alphabet2_8_c_a362077c979b0bb65159c603270e40f70}{f}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+row\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&row\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+col\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&col\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labelling\+\_\+points, \mbox{\hyperlink{class_vector}{Vector}} \&point\+\_\+labels, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labelling\+\_\+blocks, \mbox{\hyperlink{class_vector}{Vector}} \&block\+\_\+labels)
+\item 
+void \mbox{\hyperlink{classmatrix_a6e282efff2dd195d9aaf94343768106d}{incma\+\_\+print\+\_\+latex2}} (ostream \&\mbox{\hyperlink{alphabet2_8_c_a362077c979b0bb65159c603270e40f70}{f}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} width, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} width\+\_\+10, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+outline\+\_\+thin, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$unit\+\_\+length, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$thick\+\_\+lines, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$thin\+\_\+lines, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$geo\+\_\+line\+\_\+width, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+row\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&row\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+col\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&col\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labelling\+\_\+points, \mbox{\hyperlink{class_vector}{Vector}} \&point\+\_\+labels, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labelling\+\_\+blocks, \mbox{\hyperlink{class_vector}{Vector}} \&block\+\_\+labels)
+\item 
+void \mbox{\hyperlink{classmatrix_a61ce2d156303d0a83652cc86c2ad51b7}{calc\+\_\+hash\+\_\+key}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} key\+\_\+len, \mbox{\hyperlink{classhollerith}{hollerith}} \&hash\+\_\+key, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_aecb27f51504ac8d90bb280b6a851942d}{is\+\_\+in\+\_\+center}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_a7c9caac34a30994119cd7048df71df6e}{power\+\_\+mod}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acab531abaa74a7e664e3986f2522b33a}{r}}, \mbox{\hyperlink{classinteger}{integer}} \&\mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}}, \mbox{\hyperlink{classmatrix}{matrix}} \&\mbox{\hyperlink{costas_8_c_aacbbb35f36efadbb40803bfb5480b737}{C}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmatrix_ab201caa82893894059d9e2432bd6b52a}{proj\+\_\+order\+\_\+mod}} (\mbox{\hyperlink{classinteger}{integer}} \&\mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}})
+\item 
+void \mbox{\hyperlink{classmatrix_a2b77483722eaba5108902dbbb96fc986}{P\+G\+\_\+rep}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+action\+\_\+from\+\_\+right, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+modified)
+\item 
+void \mbox{\hyperlink{classmatrix_af084532cc1d1b518ac2a6e7de1da3fa5}{P\+G\+\_\+rep}} (\mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+action\+\_\+from\+\_\+right, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+modified)
+\item 
+void \mbox{\hyperlink{classmatrix_a59a194ad8179725404d2b47a73070a88}{A\+G\+\_\+rep}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+action\+\_\+from\+\_\+right)
+\item 
+void \mbox{\hyperlink{classmatrix_aac08bbc6eaee5b48801521e04607f2c2}{A\+G\+\_\+rep}} (\mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+action\+\_\+from\+\_\+right)
+\item 
+void \mbox{\hyperlink{classmatrix_a6165884e70a04d1bd608f0321ec12040}{Mac\+Williams\+Transform}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{classmatrix_aae7c9c7c3540c5818d2df52ab67f8a52}{weight\+\_\+enumerator\+\_\+brute\+\_\+force}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}})
+\item 
+void \mbox{\hyperlink{classmatrix_a8183959565956f14466fe9d366c2c195}{Simplex\+\_\+code\+\_\+generator\+\_\+matrix}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classdiscreta__base_a6f7a0f7bdd115b9e4dde358cfa7ebf81}{k}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{classmatrix_adece30f74509652851c31e2d82e141e3}{P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classdiscreta__base_a6f7a0f7bdd115b9e4dde358cfa7ebf81}{k}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{classmatrix_ae05463d97ecc8ea3654c45a399b872e2}{P\+G\+\_\+k\+\_\+q\+\_\+design}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classdiscreta__base_a6f7a0f7bdd115b9e4dde358cfa7ebf81}{k}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{classmatrix_a75adb25c9f8753f1b81eafe4464b272a}{determinant}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmatrix_a364b1e3b29af6f6bd952448718d79467}{det}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{classmatrix_a94ca76d8c4919c9f1f20c362840aaf43}{det\+\_\+modify\+\_\+input\+\_\+matrix}} (\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{classmatrix_ae31cbfd77683849e20b757b80e248649}{P\+G\+\_\+line\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{classmatrix_a70721df39b7fb8a918953e832aba0ffa}{P\+G\+\_\+line\+\_\+unrank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a)
+\item 
+void \mbox{\hyperlink{classmatrix_a99bed1e311402c77fa47ad8fea5ba8ce}{P\+G\+\_\+point\+\_\+normalize}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} i0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} j0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} di, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} dj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length)
+\item 
+void \mbox{\hyperlink{classmatrix_a5e3395e0dabdef2f693d463814577f5d}{P\+G\+\_\+point\+\_\+unrank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} i0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} j0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} di, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} dj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a)
+\item 
+void \mbox{\hyperlink{classmatrix_a482c95dbcf39d23ea96bca94e2a3f8cb}{P\+G\+\_\+point\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} i0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} j0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} di, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} dj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&a)
+\item 
+void \mbox{\hyperlink{classmatrix_a441ad781cca88e28fce80ddba988306f}{P\+G\+\_\+element\+\_\+normalize}} ()
+\item 
+void \mbox{\hyperlink{classmatrix_a496577fb662ba6b5cb3e00d5f89b0860}{A\+G\+\_\+point\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} i0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} j0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} di, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} dj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&a)
+\item 
+void \mbox{\hyperlink{classmatrix_ac1e0b45861b868e879cc00201f7d0706}{A\+G\+\_\+point\+\_\+unrank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} i0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} j0, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} di, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} dj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} length, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a)
+\item 
+void \mbox{\hyperlink{classmatrix_a142f5c745cc0eda86c6fed61675f9e33}{canon\+\_\+nauty}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+row\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&row\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+col\+\_\+decomp, \mbox{\hyperlink{class_vector}{Vector}} \&col\+\_\+decomp, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+group, \mbox{\hyperlink{classperm__group}{perm\+\_\+group}} \&G, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+get\+\_\+aut\+\_\+group, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+aut\+\_\+group\+\_\+on\+\_\+lexleast, \mbox{\hyperlink{class_vector}{Vector}} \&aut\+\_\+gens, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vvv)
+\item 
+void \mbox{\hyperlink{classmatrix_ae2ce1d7bc40998e94c67cc2336f47665}{save\+\_\+as\+\_\+geometry}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} number, \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$label)
+\item 
+void \mbox{\hyperlink{classmatrix_af3f3f862fff707b2fbc690aa65e36d9f}{save\+\_\+as\+\_\+inc\+\_\+file}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname)
+\item 
+void \mbox{\hyperlink{classmatrix_a2673ef8a4c7d322da7a5b6c61a20c65a}{save\+\_\+as\+\_\+inc}} (ofstream \&\mbox{\hyperlink{alphabet2_8_c_a362077c979b0bb65159c603270e40f70}{f}})
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmatrix_a4daf70b1506ea976352f20e4322a9c17}\label{classmatrix_a4daf70b1506ea976352f20e4322a9c17}} 
+\index{matrix@{matrix}!matrix@{matrix}}
+\index{matrix@{matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{matrix()}{matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily matrix\+::matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ac9e2b8134d8bd8d9789133c187d81d74}\label{classmatrix_ac9e2b8134d8bd8d9789133c187d81d74}} 
+\index{matrix@{matrix}!matrix@{matrix}}
+\index{matrix@{matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{matrix()}{matrix()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily matrix\+::matrix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a8a2522496ff0ef7096ffcfdc851b85a1}\label{classmatrix_a8a2522496ff0ef7096ffcfdc851b85a1}} 
+\index{matrix@{matrix}!````~matrix@{$\sim$matrix}}
+\index{````~matrix@{$\sim$matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{$\sim$matrix()}{~matrix()}}
+{\footnotesize\ttfamily matrix\+::$\sim$matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmatrix_a331c7926e93599378a25791e982b3c89}\label{classmatrix_a331c7926e93599378a25791e982b3c89}} 
+\index{matrix@{matrix}!Acover2nl@{Acover2nl}}
+\index{Acover2nl@{Acover2nl}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Acover2nl()}{Acover2nl()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::\+Acover2nl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{nl }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a4ade010e5f49a23fab4cb5211b106e81}\label{classmatrix_a4ade010e5f49a23fab4cb5211b106e81}} 
+\index{matrix@{matrix}!add\+\_\+to@{add\+\_\+to}}
+\index{add\+\_\+to@{add\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{add\+\_\+to()}{add\_to()}}
+{\footnotesize\ttfamily void matrix\+::add\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a712a61311eb036d70a52871ed315f515}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_a496577fb662ba6b5cb3e00d5f89b0860}\label{classmatrix_a496577fb662ba6b5cb3e00d5f89b0860}} 
+\index{matrix@{matrix}!A\+G\+\_\+point\+\_\+rank@{A\+G\+\_\+point\+\_\+rank}}
+\index{A\+G\+\_\+point\+\_\+rank@{A\+G\+\_\+point\+\_\+rank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{A\+G\+\_\+point\+\_\+rank()}{AG\_point\_rank()}}
+{\footnotesize\ttfamily void matrix\+::\+A\+G\+\_\+point\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{di,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{dj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ac1e0b45861b868e879cc00201f7d0706}\label{classmatrix_ac1e0b45861b868e879cc00201f7d0706}} 
+\index{matrix@{matrix}!A\+G\+\_\+point\+\_\+unrank@{A\+G\+\_\+point\+\_\+unrank}}
+\index{A\+G\+\_\+point\+\_\+unrank@{A\+G\+\_\+point\+\_\+unrank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{A\+G\+\_\+point\+\_\+unrank()}{AG\_point\_unrank()}}
+{\footnotesize\ttfamily void matrix\+::\+A\+G\+\_\+point\+\_\+unrank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{di,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{dj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a59a194ad8179725404d2b47a73070a88}\label{classmatrix_a59a194ad8179725404d2b47a73070a88}} 
+\index{matrix@{matrix}!A\+G\+\_\+rep@{A\+G\+\_\+rep}}
+\index{A\+G\+\_\+rep@{A\+G\+\_\+rep}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{A\+G\+\_\+rep()}{AG\_rep()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void matrix\+::\+A\+G\+\_\+rep (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+action\+\_\+from\+\_\+right }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aac08bbc6eaee5b48801521e04607f2c2}\label{classmatrix_aac08bbc6eaee5b48801521e04607f2c2}} 
+\index{matrix@{matrix}!A\+G\+\_\+rep@{A\+G\+\_\+rep}}
+\index{A\+G\+\_\+rep@{A\+G\+\_\+rep}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{A\+G\+\_\+rep()}{AG\_rep()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void matrix\+::\+A\+G\+\_\+rep (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+action\+\_\+from\+\_\+right }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a7abdfef775e6f1e68856bbdb06004dce}\label{classmatrix_a7abdfef775e6f1e68856bbdb06004dce}} 
+\index{matrix@{matrix}!Ainf2\+Asup@{Ainf2\+Asup}}
+\index{Ainf2\+Asup@{Ainf2\+Asup}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Ainf2\+Asup()}{Ainf2Asup()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::\+Ainf2\+Asup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a260e37c93f9e2d55d02ecddcb483659a}\label{classmatrix_a260e37c93f9e2d55d02ecddcb483659a}} 
+\index{matrix@{matrix}!apply\+\_\+col\+\_\+row\+\_\+perm@{apply\+\_\+col\+\_\+row\+\_\+perm}}
+\index{apply\+\_\+col\+\_\+row\+\_\+perm@{apply\+\_\+col\+\_\+row\+\_\+perm}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{apply\+\_\+col\+\_\+row\+\_\+perm()}{apply\_col\_row\_perm()}}
+{\footnotesize\ttfamily void matrix\+::apply\+\_\+col\+\_\+row\+\_\+perm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a4bfbaa097eedb8b427169c593cbb40d0}\label{classmatrix_a4bfbaa097eedb8b427169c593cbb40d0}} 
+\index{matrix@{matrix}!apply\+\_\+perms@{apply\+\_\+perms}}
+\index{apply\+\_\+perms@{apply\+\_\+perms}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{apply\+\_\+perms()}{apply\_perms()}}
+{\footnotesize\ttfamily void matrix\+::apply\+\_\+perms (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+row\+\_\+perm,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{row\+\_\+perm,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+col\+\_\+perm,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{col\+\_\+perm }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ad413b1eccc8402fb7281d70dc06915f5}\label{classmatrix_ad413b1eccc8402fb7281d70dc06915f5}} 
+\index{matrix@{matrix}!apply\+\_\+row\+\_\+col\+\_\+perm@{apply\+\_\+row\+\_\+col\+\_\+perm}}
+\index{apply\+\_\+row\+\_\+col\+\_\+perm@{apply\+\_\+row\+\_\+col\+\_\+perm}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{apply\+\_\+row\+\_\+col\+\_\+perm()}{apply\_row\_col\_perm()}}
+{\footnotesize\ttfamily void matrix\+::apply\+\_\+row\+\_\+col\+\_\+perm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a606cce1a9d6430b751090e27ef31d2e4}\label{classmatrix_a606cce1a9d6430b751090e27ef31d2e4}} 
+\index{matrix@{matrix}!Asup2\+Acover@{Asup2\+Acover}}
+\index{Asup2\+Acover@{Asup2\+Acover}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Asup2\+Acover()}{Asup2Acover()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::\+Asup2\+Acover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a6ec12bab511dbb2f1426515819359390}\label{classmatrix_a6ec12bab511dbb2f1426515819359390}} 
+\index{matrix@{matrix}!Asup2\+Ainf@{Asup2\+Ainf}}
+\index{Asup2\+Ainf@{Asup2\+Ainf}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Asup2\+Ainf()}{Asup2Ainf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::\+Asup2\+Ainf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ac98dd867d9148831126eaddd13b7da60}\label{classmatrix_ac98dd867d9148831126eaddd13b7da60}} 
+\index{matrix@{matrix}!Berlekamp@{Berlekamp}}
+\index{Berlekamp@{Berlekamp}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Berlekamp()}{Berlekamp()}}
+{\footnotesize\ttfamily void matrix\+::\+Berlekamp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_af3908604699f48d25012d6500de591f0}\label{classmatrix_af3908604699f48d25012d6500de591f0}} 
+\index{matrix@{matrix}!binomial@{binomial}}
+\index{binomial@{binomial}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{binomial()}{binomial()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void matrix\+::binomial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+max }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a58a9004174ad450f80faba4db8c1be1c}\label{classmatrix_a58a9004174ad450f80faba4db8c1be1c}} 
+\index{matrix@{matrix}!binomial@{binomial}}
+\index{binomial@{binomial}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{binomial()}{binomial()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void matrix\+::binomial (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+inverse }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a61ce2d156303d0a83652cc86c2ad51b7}\label{classmatrix_a61ce2d156303d0a83652cc86c2ad51b7}} 
+\index{matrix@{matrix}!calc\+\_\+hash\+\_\+key@{calc\+\_\+hash\+\_\+key}}
+\index{calc\+\_\+hash\+\_\+key@{calc\+\_\+hash\+\_\+key}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{calc\+\_\+hash\+\_\+key()}{calc\_hash\_key()}}
+{\footnotesize\ttfamily void matrix\+::calc\+\_\+hash\+\_\+key (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{key\+\_\+len,  }\item[{\mbox{\hyperlink{classhollerith}{hollerith}} \&}]{hash\+\_\+key,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_abf772e9b3338df569be017ffecb165ef}\label{classmatrix_abf772e9b3338df569be017ffecb165ef}} 
+\index{matrix@{matrix}!calc\+\_\+theX@{calc\+\_\+theX}}
+\index{calc\+\_\+theX@{calc\+\_\+theX}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{calc\+\_\+the\+X()}{calc\_theX()}}
+{\footnotesize\ttfamily void matrix\+::calc\+\_\+theX (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+X,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{theX }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a142f5c745cc0eda86c6fed61675f9e33}\label{classmatrix_a142f5c745cc0eda86c6fed61675f9e33}} 
+\index{matrix@{matrix}!canon\+\_\+nauty@{canon\+\_\+nauty}}
+\index{canon\+\_\+nauty@{canon\+\_\+nauty}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{canon\+\_\+nauty()}{canon\_nauty()}}
+{\footnotesize\ttfamily void matrix\+::canon\+\_\+nauty (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+row\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{row\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+col\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{col\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+group,  }\item[{\mbox{\hyperlink{classperm__group}{perm\+\_\+group}} \&}]{G,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+get\+\_\+aut\+\_\+group,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+aut\+\_\+group\+\_\+on\+\_\+lexleast,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{aut\+\_\+gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vvv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_acd603a86fd752eb4da1a060bdaab478f}\label{classmatrix_acd603a86fd752eb4da1a060bdaab478f}} 
+\index{matrix@{matrix}!companion\+\_\+matrix@{companion\+\_\+matrix}}
+\index{companion\+\_\+matrix@{companion\+\_\+matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{companion\+\_\+matrix()}{companion\_matrix()}}
+{\footnotesize\ttfamily void matrix\+::companion\+\_\+matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a6009a90834a208f5f0a83d8ed651e4c5}\label{classmatrix_a6009a90834a208f5f0a83d8ed651e4c5}} 
+\index{matrix@{matrix}!compare\+\_\+with@{compare\+\_\+with}}
+\index{compare\+\_\+with@{compare\+\_\+with}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{compare\+\_\+with()}{compare\_with()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::compare\+\_\+with (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a3818444c4301d0b7ed47c3b850ea6c60}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_a6a47f82604adaa39b21f6bfe6da9e898}\label{classmatrix_a6a47f82604adaa39b21f6bfe6da9e898}} 
+\index{matrix@{matrix}!copyobject\+\_\+to@{copyobject\+\_\+to}}
+\index{copyobject\+\_\+to@{copyobject\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{copyobject\+\_\+to()}{copyobject\_to()}}
+{\footnotesize\ttfamily void matrix\+::copyobject\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a33180628d9ced231267229b3564790f3}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_af06fd7824274febfcc10f734a06d1a6e}\label{classmatrix_af06fd7824274febfcc10f734a06d1a6e}} 
+\index{matrix@{matrix}!csf@{csf}}
+\index{csf@{csf}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{csf()}{csf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::csf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a364b1e3b29af6f6bd952448718d79467}\label{classmatrix_a364b1e3b29af6f6bd952448718d79467}} 
+\index{matrix@{matrix}!det@{det}}
+\index{det@{det}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{det()}{det()}}
+{\footnotesize\ttfamily void matrix\+::det (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{d,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a94ca76d8c4919c9f1f20c362840aaf43}\label{classmatrix_a94ca76d8c4919c9f1f20c362840aaf43}} 
+\index{matrix@{matrix}!det\+\_\+modify\+\_\+input\+\_\+matrix@{det\+\_\+modify\+\_\+input\+\_\+matrix}}
+\index{det\+\_\+modify\+\_\+input\+\_\+matrix@{det\+\_\+modify\+\_\+input\+\_\+matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{det\+\_\+modify\+\_\+input\+\_\+matrix()}{det\_modify\_input\_matrix()}}
+{\footnotesize\ttfamily void matrix\+::det\+\_\+modify\+\_\+input\+\_\+matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{d,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a75adb25c9f8753f1b81eafe4464b272a}\label{classmatrix_a75adb25c9f8753f1b81eafe4464b272a}} 
+\index{matrix@{matrix}!determinant@{determinant}}
+\index{determinant@{determinant}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{determinant()}{determinant()}}
+{\footnotesize\ttfamily void matrix\+::determinant (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{d,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aee7e0d79d2c1ef32f0cbebbcc7f40771}\label{classmatrix_aee7e0d79d2c1ef32f0cbebbcc7f40771}} 
+\index{matrix@{matrix}!elements\+\_\+to\+\_\+unipoly@{elements\+\_\+to\+\_\+unipoly}}
+\index{elements\+\_\+to\+\_\+unipoly@{elements\+\_\+to\+\_\+unipoly}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{elements\+\_\+to\+\_\+unipoly()}{elements\_to\_unipoly()}}
+{\footnotesize\ttfamily void matrix\+::elements\+\_\+to\+\_\+unipoly (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a0063caaa247f4546e31800f81e17a8cd}\label{classmatrix_a0063caaa247f4546e31800f81e17a8cd}} 
+\index{matrix@{matrix}!evaluate\+\_\+at@{evaluate\+\_\+at}}
+\index{evaluate\+\_\+at@{evaluate\+\_\+at}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{evaluate\+\_\+at()}{evaluate\_at()}}
+{\footnotesize\ttfamily void matrix\+::evaluate\+\_\+at (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ab47d61820499f35c15bf82fb6a3b9bd1}\label{classmatrix_ab47d61820499f35c15bf82fb6a3b9bd1}} 
+\index{matrix@{matrix}!freeself\+\_\+matrix@{freeself\+\_\+matrix}}
+\index{freeself\+\_\+matrix@{freeself\+\_\+matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{freeself\+\_\+matrix()}{freeself\_matrix()}}
+{\footnotesize\ttfamily void matrix\+::freeself\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aa08a0bfacde81b35248690c099155bed}\label{classmatrix_aa08a0bfacde81b35248690c099155bed}} 
+\index{matrix@{matrix}!Frobenius@{Frobenius}}
+\index{Frobenius@{Frobenius}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Frobenius()}{Frobenius()}}
+{\footnotesize\ttfamily void matrix\+::\+Frobenius (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_af666c6b895475348ffa818d0da96897b}\label{classmatrix_af666c6b895475348ffa818d0da96897b}} 
+\index{matrix@{matrix}!from\+\_\+vector\+\_\+of\+\_\+columns@{from\+\_\+vector\+\_\+of\+\_\+columns}}
+\index{from\+\_\+vector\+\_\+of\+\_\+columns@{from\+\_\+vector\+\_\+of\+\_\+columns}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{from\+\_\+vector\+\_\+of\+\_\+columns()}{from\_vector\_of\_columns()}}
+{\footnotesize\ttfamily void matrix\+::from\+\_\+vector\+\_\+of\+\_\+columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aeffa1035691fc1055ce1b52d2e31a114}\label{classmatrix_aeffa1035691fc1055ce1b52d2e31a114}} 
+\index{matrix@{matrix}!from\+\_\+vector\+\_\+of\+\_\+rows@{from\+\_\+vector\+\_\+of\+\_\+rows}}
+\index{from\+\_\+vector\+\_\+of\+\_\+rows@{from\+\_\+vector\+\_\+of\+\_\+rows}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{from\+\_\+vector\+\_\+of\+\_\+rows()}{from\_vector\_of\_rows()}}
+{\footnotesize\ttfamily void matrix\+::from\+\_\+vector\+\_\+of\+\_\+rows (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_abe8ed121d6bc29e1cc4432ad45542450}\label{classmatrix_abe8ed121d6bc29e1cc4432ad45542450}} 
+\index{matrix@{matrix}!Gauss@{Gauss}}
+\index{Gauss@{Gauss}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Gauss()}{Gauss()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::\+Gauss (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+special,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+complete,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{base\+\_\+cols,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+P,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{P,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a75b3e1c7074bea2d399601ed2cff7a42}\label{classmatrix_a75b3e1c7074bea2d399601ed2cff7a42}} 
+\index{matrix@{matrix}!get\+\_\+kernel@{get\+\_\+kernel}}
+\index{get\+\_\+kernel@{get\+\_\+kernel}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{get\+\_\+kernel()}{get\_kernel()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::get\+\_\+kernel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{base\+\_\+cols,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{kernel }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a820b8de607274302772f753e7585e9fa}\label{classmatrix_a820b8de607274302772f753e7585e9fa}} 
+\index{matrix@{matrix}!hip@{hip}}
+\index{hip@{hip}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{hip()}{hip()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::hip (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a169cd51dd98562746f81dd0b075f3f6f}\label{classmatrix_a169cd51dd98562746f81dd0b075f3f6f}} 
+\index{matrix@{matrix}!hip1@{hip1}}
+\index{hip1@{hip1}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{hip1()}{hip1()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::hip1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a1eba80b1e47f3672e6880e7343eea8e4}\label{classmatrix_a1eba80b1e47f3672e6880e7343eea8e4}} 
+\index{matrix@{matrix}!incma\+\_\+print\+\_\+ascii@{incma\+\_\+print\+\_\+ascii}}
+\index{incma\+\_\+print\+\_\+ascii@{incma\+\_\+print\+\_\+ascii}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{incma\+\_\+print\+\_\+ascii()}{incma\_print\_ascii()}}
+{\footnotesize\ttfamily void matrix\+::incma\+\_\+print\+\_\+ascii (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+tex,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+row\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{row\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+col\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{col\+\_\+decomp }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a0ced6791191355bde858790aa4b156ac}\label{classmatrix_a0ced6791191355bde858790aa4b156ac}} 
+\index{matrix@{matrix}!incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed@{incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed}}
+\index{incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed@{incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed()}{incma\_print\_ascii\_permuted\_and\_decomposed()}}
+{\footnotesize\ttfamily void matrix\+::incma\+\_\+print\+\_\+ascii\+\_\+permuted\+\_\+and\+\_\+decomposed (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+tex,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{decomp,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a2f3ef897e502a22def6b90a7c02addf5}\label{classmatrix_a2f3ef897e502a22def6b90a7c02addf5}} 
+\index{matrix@{matrix}!incma\+\_\+print\+\_\+latex@{incma\+\_\+print\+\_\+latex}}
+\index{incma\+\_\+print\+\_\+latex@{incma\+\_\+print\+\_\+latex}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{incma\+\_\+print\+\_\+latex()}{incma\_print\_latex()}}
+{\footnotesize\ttfamily void matrix\+::incma\+\_\+print\+\_\+latex (\begin{DoxyParamCaption}\item[{ostream \&}]{f,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+row\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{row\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+col\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{col\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labelling\+\_\+points,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{point\+\_\+labels,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labelling\+\_\+blocks,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{block\+\_\+labels }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a6e282efff2dd195d9aaf94343768106d}\label{classmatrix_a6e282efff2dd195d9aaf94343768106d}} 
+\index{matrix@{matrix}!incma\+\_\+print\+\_\+latex2@{incma\+\_\+print\+\_\+latex2}}
+\index{incma\+\_\+print\+\_\+latex2@{incma\+\_\+print\+\_\+latex2}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{incma\+\_\+print\+\_\+latex2()}{incma\_print\_latex2()}}
+{\footnotesize\ttfamily void matrix\+::incma\+\_\+print\+\_\+latex2 (\begin{DoxyParamCaption}\item[{ostream \&}]{f,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{width,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{width\+\_\+10,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+outline\+\_\+thin,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{unit\+\_\+length,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{thick\+\_\+lines,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{thin\+\_\+lines,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{geo\+\_\+line\+\_\+width,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+row\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{row\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+col\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{col\+\_\+decomp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labelling\+\_\+points,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{point\+\_\+labels,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labelling\+\_\+blocks,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{block\+\_\+labels }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a137bc3b88c71382c675dea7a0bf9b5f2}\label{classmatrix_a137bc3b88c71382c675dea7a0bf9b5f2}} 
+\index{matrix@{matrix}!invert\+\_\+to@{invert\+\_\+to}}
+\index{invert\+\_\+to@{invert\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{invert\+\_\+to()}{invert\_to()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::invert\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a874a5ffb467f3896604a3c9bdf0cca50}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_aecb27f51504ac8d90bb280b6a851942d}\label{classmatrix_aecb27f51504ac8d90bb280b6a851942d}} 
+\index{matrix@{matrix}!is\+\_\+in\+\_\+center@{is\+\_\+in\+\_\+center}}
+\index{is\+\_\+in\+\_\+center@{is\+\_\+in\+\_\+center}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{is\+\_\+in\+\_\+center()}{is\_in\_center()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::is\+\_\+in\+\_\+center (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a74aa38df064afa998cb0973ac3554ac0}\label{classmatrix_a74aa38df064afa998cb0973ac3554ac0}} 
+\index{matrix@{matrix}!is\+\_\+one@{is\+\_\+one}}
+\index{is\+\_\+one@{is\+\_\+one}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{is\+\_\+one()}{is\_one()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::is\+\_\+one (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a28fa37aac83194174888d34f07f43848}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_a1940fae0fd429e77918eaa3d68cecd12}\label{classmatrix_a1940fae0fd429e77918eaa3d68cecd12}} 
+\index{matrix@{matrix}!is\+\_\+zero@{is\+\_\+zero}}
+\index{is\+\_\+zero@{is\+\_\+zero}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{is\+\_\+zero()}{is\_zero()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::is\+\_\+zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_ac75f6bdc1ba1b406e26cf921adfd9864}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_ace9dbe1f348d6fa63d1005e8f601897b}\label{classmatrix_ace9dbe1f348d6fa63d1005e8f601897b}} 
+\index{matrix@{matrix}!K\+X\+\_\+cyclic\+\_\+module\+\_\+generator@{K\+X\+\_\+cyclic\+\_\+module\+\_\+generator}}
+\index{K\+X\+\_\+cyclic\+\_\+module\+\_\+generator@{K\+X\+\_\+cyclic\+\_\+module\+\_\+generator}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{K\+X\+\_\+cyclic\+\_\+module\+\_\+generator()}{KX\_cyclic\_module\_generator()}}
+{\footnotesize\ttfamily void matrix\+::\+K\+X\+\_\+cyclic\+\_\+module\+\_\+generator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{mue,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_accef670f4dfd666f9de32fe50754665d}\label{classmatrix_accef670f4dfd666f9de32fe50754665d}} 
+\index{matrix@{matrix}!K\+X\+\_\+module\+\_\+apply@{K\+X\+\_\+module\+\_\+apply}}
+\index{K\+X\+\_\+module\+\_\+apply@{K\+X\+\_\+module\+\_\+apply}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{K\+X\+\_\+module\+\_\+apply()}{KX\_module\_apply()}}
+{\footnotesize\ttfamily void matrix\+::\+K\+X\+\_\+module\+\_\+apply (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{p,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_afd55b3b44c36f039928862315f52428b}\label{classmatrix_afd55b3b44c36f039928862315f52428b}} 
+\index{matrix@{matrix}!K\+X\+\_\+module\+\_\+join@{K\+X\+\_\+module\+\_\+join}}
+\index{K\+X\+\_\+module\+\_\+join@{K\+X\+\_\+module\+\_\+join}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{K\+X\+\_\+module\+\_\+join()}{KX\_module\_join()}}
+{\footnotesize\ttfamily void matrix\+::\+K\+X\+\_\+module\+\_\+join (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v1,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{mue1,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v2,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{mue2,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v3,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{mue3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ad8b6174329495126b165154d074bbcff}\label{classmatrix_ad8b6174329495126b165154d074bbcff}} 
+\index{matrix@{matrix}!K\+X\+\_\+module\+\_\+minpol@{K\+X\+\_\+module\+\_\+minpol}}
+\index{K\+X\+\_\+module\+\_\+minpol@{K\+X\+\_\+module\+\_\+minpol}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{K\+X\+\_\+module\+\_\+minpol()}{KX\_module\_minpol()}}
+{\footnotesize\ttfamily void matrix\+::\+K\+X\+\_\+module\+\_\+minpol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{p,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{m,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{mue,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a69a80605be7914af5fd65e680944aeca}\label{classmatrix_a69a80605be7914af5fd65e680944aeca}} 
+\index{matrix@{matrix}!K\+X\+\_\+module\+\_\+order\+\_\+ideal@{K\+X\+\_\+module\+\_\+order\+\_\+ideal}}
+\index{K\+X\+\_\+module\+\_\+order\+\_\+ideal@{K\+X\+\_\+module\+\_\+order\+\_\+ideal}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{K\+X\+\_\+module\+\_\+order\+\_\+ideal()}{KX\_module\_order\_ideal()}}
+{\footnotesize\ttfamily void matrix\+::\+K\+X\+\_\+module\+\_\+order\+\_\+ideal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{classunipoly}{unipoly}} \&}]{mue,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a8cece141dbb3d39e94933c8da46dbd50}\label{classmatrix_a8cece141dbb3d39e94933c8da46dbd50}} 
+\index{matrix@{matrix}!m\+\_\+iji@{m\+\_\+iji}}
+\index{m\+\_\+iji@{m\+\_\+iji}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{m\+\_\+iji()}{m\_iji()}}
+{\footnotesize\ttfamily void matrix\+::m\+\_\+iji (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmatrix_a85921e1b3c604f625989b1c3d1697792}\label{classmatrix_a85921e1b3c604f625989b1c3d1697792}} 
+\index{matrix@{matrix}!m\+\_\+mn@{m\+\_\+mn}}
+\index{m\+\_\+mn@{m\+\_\+mn}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{m\+\_\+mn()}{m\_mn()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmatrix}{matrix}} \& matrix\+::m\+\_\+mn (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ae9a8cf19bd93428639950725edbd2271}\label{classmatrix_ae9a8cf19bd93428639950725edbd2271}} 
+\index{matrix@{matrix}!m\+\_\+mn\+\_\+n@{m\+\_\+mn\+\_\+n}}
+\index{m\+\_\+mn\+\_\+n@{m\+\_\+mn\+\_\+n}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{m\+\_\+mn\+\_\+n()}{m\_mn\_n()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmatrix}{matrix}} \& matrix\+::m\+\_\+mn\+\_\+n (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a6165884e70a04d1bd608f0321ec12040}\label{classmatrix_a6165884e70a04d1bd608f0321ec12040}} 
+\index{matrix@{matrix}!Mac\+Williams\+Transform@{Mac\+Williams\+Transform}}
+\index{Mac\+Williams\+Transform@{Mac\+Williams\+Transform}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Mac\+Williams\+Transform()}{MacWilliamsTransform()}}
+{\footnotesize\ttfamily void matrix\+::\+Mac\+Williams\+Transform (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a7b3866189e0d7f75e55805d6e9a43ace}\label{classmatrix_a7b3866189e0d7f75e55805d6e9a43ace}} 
+\index{matrix@{matrix}!matrix\+\_\+mult\+\_\+to@{matrix\+\_\+mult\+\_\+to}}
+\index{matrix\+\_\+mult\+\_\+to@{matrix\+\_\+mult\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{matrix\+\_\+mult\+\_\+to()}{matrix\_mult\_to()}}
+{\footnotesize\ttfamily void matrix\+::matrix\+\_\+mult\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{x,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a3c2f7a8bafecd1eb355c245cf0e157b2}\label{classmatrix_a3c2f7a8bafecd1eb355c245cf0e157b2}} 
+\index{matrix@{matrix}!minus\+\_\+\+X\+\_\+times\+\_\+id@{minus\+\_\+\+X\+\_\+times\+\_\+id}}
+\index{minus\+\_\+\+X\+\_\+times\+\_\+id@{minus\+\_\+\+X\+\_\+times\+\_\+id}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{minus\+\_\+\+X\+\_\+times\+\_\+id()}{minus\_X\_times\_id()}}
+{\footnotesize\ttfamily void matrix\+::minus\+\_\+\+X\+\_\+times\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_abde18a5fb21ce4d884dceedb286ba899}\label{classmatrix_abde18a5fb21ce4d884dceedb286ba899}} 
+\index{matrix@{matrix}!mult\+\_\+to@{mult\+\_\+to}}
+\index{mult\+\_\+to@{mult\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{mult\+\_\+to()}{mult\_to()}}
+{\footnotesize\ttfamily void matrix\+::mult\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a54d5c16c016769e3365639721c06591e}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_ad64ff9070fae0dc1c8957251d16e8146}\label{classmatrix_ad64ff9070fae0dc1c8957251d16e8146}} 
+\index{matrix@{matrix}!multiply\+\_\+2by2\+\_\+from\+\_\+left@{multiply\+\_\+2by2\+\_\+from\+\_\+left}}
+\index{multiply\+\_\+2by2\+\_\+from\+\_\+left@{multiply\+\_\+2by2\+\_\+from\+\_\+left}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{multiply\+\_\+2by2\+\_\+from\+\_\+left()}{multiply\_2by2\_from\_left()}}
+{\footnotesize\ttfamily void matrix\+::multiply\+\_\+2by2\+\_\+from\+\_\+left (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{aii,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{aij,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{aji,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{ajj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a00455d7848021f33e9c8d280d1c8a0de}\label{classmatrix_a00455d7848021f33e9c8d280d1c8a0de}} 
+\index{matrix@{matrix}!multiply\+\_\+2by2\+\_\+from\+\_\+right@{multiply\+\_\+2by2\+\_\+from\+\_\+right}}
+\index{multiply\+\_\+2by2\+\_\+from\+\_\+right@{multiply\+\_\+2by2\+\_\+from\+\_\+right}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{multiply\+\_\+2by2\+\_\+from\+\_\+right()}{multiply\_2by2\_from\_right()}}
+{\footnotesize\ttfamily void matrix\+::multiply\+\_\+2by2\+\_\+from\+\_\+right (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{aii,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{aij,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{aji,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{ajj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ae578f93fd93c59b9755d31b5fd11e14c}\label{classmatrix_ae578f93fd93c59b9755d31b5fd11e14c}} 
+\index{matrix@{matrix}!multiply\+\_\+vector\+\_\+from\+\_\+left@{multiply\+\_\+vector\+\_\+from\+\_\+left}}
+\index{multiply\+\_\+vector\+\_\+from\+\_\+left@{multiply\+\_\+vector\+\_\+from\+\_\+left}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{multiply\+\_\+vector\+\_\+from\+\_\+left()}{multiply\_vector\_from\_left()}}
+{\footnotesize\ttfamily void matrix\+::multiply\+\_\+vector\+\_\+from\+\_\+left (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{x,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_acb93b95943eee2253b7b3b799333a24c}\label{classmatrix_acb93b95943eee2253b7b3b799333a24c}} 
+\index{matrix@{matrix}!negate\+\_\+to@{negate\+\_\+to}}
+\index{negate\+\_\+to@{negate\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{negate\+\_\+to()}{negate\_to()}}
+{\footnotesize\ttfamily void matrix\+::negate\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a65ad2034f2f4518d424b814974018a03}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_a780b461503be22827c4fdca66f779be1}\label{classmatrix_a780b461503be22827c4fdca66f779be1}} 
+\index{matrix@{matrix}!one@{one}}
+\index{one@{one}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{one()}{one()}}
+{\footnotesize\ttfamily void matrix\+::one (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a6f5d6422a0040950415db30e39dafd19}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_af89d98f62742b78d8d67080a0c88763a}\label{classmatrix_af89d98f62742b78d8d67080a0c88763a}} 
+\index{matrix@{matrix}!operator new@{operator new}}
+\index{operator new@{operator new}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{operator new()}{operator new()}}
+{\footnotesize\ttfamily void$\ast$ matrix\+::operator new (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{,  }\item[{void $\ast$}]{p }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmatrix_a242b6281ca7b813d47d07bb474d10b8e}\label{classmatrix_a242b6281ca7b813d47d07bb474d10b8e}} 
+\index{matrix@{matrix}!operator=@{operator=}}
+\index{operator=@{operator=}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmatrix}{matrix}} \& matrix\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a7e7aaebd797dd2020f6df94c6b07ebc2}\label{classmatrix_a7e7aaebd797dd2020f6df94c6b07ebc2}} 
+\index{matrix@{matrix}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmatrix__access}{matrix\+\_\+access}} matrix\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmatrix_adece30f74509652851c31e2d82e141e3}\label{classmatrix_adece30f74509652851c31e2d82e141e3}} 
+\index{matrix@{matrix}!P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane@{P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane}}
+\index{P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane@{P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane()}{PG\_design\_point\_vs\_hyperplane()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+design\+\_\+point\+\_\+vs\+\_\+hyperplane (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a441ad781cca88e28fce80ddba988306f}\label{classmatrix_a441ad781cca88e28fce80ddba988306f}} 
+\index{matrix@{matrix}!P\+G\+\_\+element\+\_\+normalize@{P\+G\+\_\+element\+\_\+normalize}}
+\index{P\+G\+\_\+element\+\_\+normalize@{P\+G\+\_\+element\+\_\+normalize}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+element\+\_\+normalize()}{PG\_element\_normalize()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+element\+\_\+normalize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ae05463d97ecc8ea3654c45a399b872e2}\label{classmatrix_ae05463d97ecc8ea3654c45a399b872e2}} 
+\index{matrix@{matrix}!P\+G\+\_\+k\+\_\+q\+\_\+design@{P\+G\+\_\+k\+\_\+q\+\_\+design}}
+\index{P\+G\+\_\+k\+\_\+q\+\_\+design@{P\+G\+\_\+k\+\_\+q\+\_\+design}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+k\+\_\+q\+\_\+design()}{PG\_k\_q\_design()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+k\+\_\+q\+\_\+design (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ae31cbfd77683849e20b757b80e248649}\label{classmatrix_ae31cbfd77683849e20b757b80e248649}} 
+\index{matrix@{matrix}!P\+G\+\_\+line\+\_\+rank@{P\+G\+\_\+line\+\_\+rank}}
+\index{P\+G\+\_\+line\+\_\+rank@{P\+G\+\_\+line\+\_\+rank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+line\+\_\+rank()}{PG\_line\_rank()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+line\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a70721df39b7fb8a918953e832aba0ffa}\label{classmatrix_a70721df39b7fb8a918953e832aba0ffa}} 
+\index{matrix@{matrix}!P\+G\+\_\+line\+\_\+unrank@{P\+G\+\_\+line\+\_\+unrank}}
+\index{P\+G\+\_\+line\+\_\+unrank@{P\+G\+\_\+line\+\_\+unrank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+line\+\_\+unrank()}{PG\_line\_unrank()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+line\+\_\+unrank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a99bed1e311402c77fa47ad8fea5ba8ce}\label{classmatrix_a99bed1e311402c77fa47ad8fea5ba8ce}} 
+\index{matrix@{matrix}!P\+G\+\_\+point\+\_\+normalize@{P\+G\+\_\+point\+\_\+normalize}}
+\index{P\+G\+\_\+point\+\_\+normalize@{P\+G\+\_\+point\+\_\+normalize}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+point\+\_\+normalize()}{PG\_point\_normalize()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+point\+\_\+normalize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{di,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{dj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a482c95dbcf39d23ea96bca94e2a3f8cb}\label{classmatrix_a482c95dbcf39d23ea96bca94e2a3f8cb}} 
+\index{matrix@{matrix}!P\+G\+\_\+point\+\_\+rank@{P\+G\+\_\+point\+\_\+rank}}
+\index{P\+G\+\_\+point\+\_\+rank@{P\+G\+\_\+point\+\_\+rank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+point\+\_\+rank()}{PG\_point\_rank()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+point\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{di,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{dj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a5e3395e0dabdef2f693d463814577f5d}\label{classmatrix_a5e3395e0dabdef2f693d463814577f5d}} 
+\index{matrix@{matrix}!P\+G\+\_\+point\+\_\+unrank@{P\+G\+\_\+point\+\_\+unrank}}
+\index{P\+G\+\_\+point\+\_\+unrank@{P\+G\+\_\+point\+\_\+unrank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+point\+\_\+unrank()}{PG\_point\_unrank()}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+point\+\_\+unrank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j0,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{di,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{dj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{length,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a2b77483722eaba5108902dbbb96fc986}\label{classmatrix_a2b77483722eaba5108902dbbb96fc986}} 
+\index{matrix@{matrix}!P\+G\+\_\+rep@{P\+G\+\_\+rep}}
+\index{P\+G\+\_\+rep@{P\+G\+\_\+rep}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+rep()}{PG\_rep()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+rep (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+action\+\_\+from\+\_\+right,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+modified }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_af084532cc1d1b518ac2a6e7de1da3fa5}\label{classmatrix_af084532cc1d1b518ac2a6e7de1da3fa5}} 
+\index{matrix@{matrix}!P\+G\+\_\+rep@{P\+G\+\_\+rep}}
+\index{P\+G\+\_\+rep@{P\+G\+\_\+rep}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{P\+G\+\_\+rep()}{PG\_rep()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void matrix\+::\+P\+G\+\_\+rep (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+action\+\_\+from\+\_\+right,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+modified }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a7c9caac34a30994119cd7048df71df6e}\label{classmatrix_a7c9caac34a30994119cd7048df71df6e}} 
+\index{matrix@{matrix}!power\+\_\+mod@{power\+\_\+mod}}
+\index{power\+\_\+mod@{power\+\_\+mod}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{power\+\_\+mod()}{power\_mod()}}
+{\footnotesize\ttfamily void matrix\+::power\+\_\+mod (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{r,  }\item[{\mbox{\hyperlink{classinteger}{integer}} \&}]{P,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{C }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aeb24c2fe68cc0a32d172c0fc06103dd2}\label{classmatrix_aeb24c2fe68cc0a32d172c0fc06103dd2}} 
+\index{matrix@{matrix}!print@{print}}
+\index{print@{print}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily ostream \& matrix\+::print (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a036e48bc058347046fc9b73dd0951478}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_afd1ff3d3d7b507287af6891d94771bab}\label{classmatrix_afd1ff3d3d7b507287af6891d94771bab}} 
+\index{matrix@{matrix}!print\+\_\+decomposed@{print\+\_\+decomposed}}
+\index{print\+\_\+decomposed@{print\+\_\+decomposed}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{print\+\_\+decomposed()}{print\_decomposed()}}
+{\footnotesize\ttfamily void matrix\+::print\+\_\+decomposed (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{row\+\_\+decomp,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{col\+\_\+decomp }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ab201caa82893894059d9e2432bd6b52a}\label{classmatrix_ab201caa82893894059d9e2432bd6b52a}} 
+\index{matrix@{matrix}!proj\+\_\+order\+\_\+mod@{proj\+\_\+order\+\_\+mod}}
+\index{proj\+\_\+order\+\_\+mod@{proj\+\_\+order\+\_\+mod}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{proj\+\_\+order\+\_\+mod()}{proj\_order\_mod()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::proj\+\_\+order\+\_\+mod (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classinteger}{integer}} \&}]{P }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a6248f2f23a2b0f011a21548cced5dc1f}\label{classmatrix_a6248f2f23a2b0f011a21548cced5dc1f}} 
+\index{matrix@{matrix}!rank@{rank}}
+\index{rank@{rank}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{rank()}{rank()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::rank (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a11e3236059f10ed69c47c65c79e7f03b}\label{classmatrix_a11e3236059f10ed69c47c65c79e7f03b}} 
+\index{matrix@{matrix}!read\+\_\+mem@{read\+\_\+mem}}
+\index{read\+\_\+mem@{read\+\_\+mem}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{read\+\_\+mem()}{read\_mem()}}
+{\footnotesize\ttfamily void matrix\+::read\+\_\+mem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmemory}{memory}} \&}]{M,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{debug\+\_\+depth }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a5d3c1be0310affe3c1c8ffe3e89097f3}\label{classmatrix_a5d3c1be0310affe3c1c8ffe3e89097f3}} 
+\index{matrix@{matrix}!realloc@{realloc}}
+\index{realloc@{realloc}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{realloc()}{realloc()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmatrix}{matrix}} \& matrix\+::realloc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ab36f1b3abd2df280224c50c9debb57df}\label{classmatrix_ab36f1b3abd2df280224c50c9debb57df}} 
+\index{matrix@{matrix}!s\+\_\+ij@{s\+\_\+ij}}
+\index{s\+\_\+ij@{s\+\_\+ij}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{s\+\_\+ij()}{s\_ij()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \& matrix\+::s\+\_\+ij (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_af8d3c35817af62a3c0097ddf64422d96}\label{classmatrix_af8d3c35817af62a3c0097ddf64422d96}} 
+\index{matrix@{matrix}!s\+\_\+iji@{s\+\_\+iji}}
+\index{s\+\_\+iji@{s\+\_\+iji}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{s\+\_\+iji()}{s\_iji()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}\& matrix\+::s\+\_\+iji (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\mbox{\Hypertarget{classmatrix_afeb2e29600e68448b9d1130114b9606f}\label{classmatrix_afeb2e29600e68448b9d1130114b9606f}} 
+\index{matrix@{matrix}!s\+\_\+m@{s\+\_\+m}}
+\index{s\+\_\+m@{s\+\_\+m}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{s\+\_\+m()}{s\_m()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::s\+\_\+m (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a35f5321a5615451fdc8be7b953f8ac8b}\label{classmatrix_a35f5321a5615451fdc8be7b953f8ac8b}} 
+\index{matrix@{matrix}!s\+\_\+n@{s\+\_\+n}}
+\index{s\+\_\+n@{s\+\_\+n}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{s\+\_\+n()}{s\_n()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::s\+\_\+n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a4880cc2b5e8d3f8f2d8038580364db56}\label{classmatrix_a4880cc2b5e8d3f8f2d8038580364db56}} 
+\index{matrix@{matrix}!s\+\_\+virtual\+\_\+kind@{s\+\_\+virtual\+\_\+kind}}
+\index{s\+\_\+virtual\+\_\+kind@{s\+\_\+virtual\+\_\+kind}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{s\+\_\+virtual\+\_\+kind()}{s\_virtual\_kind()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{discreta_8h_aaf25ee7e2306d78c74ec7bc48f092e81}{kind}} matrix\+::s\+\_\+virtual\+\_\+kind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a52778a6d6943a468be083d0785d418fb}{discreta\+\_\+base}}.
+
+\mbox{\Hypertarget{classmatrix_ae2ce1d7bc40998e94c67cc2336f47665}\label{classmatrix_ae2ce1d7bc40998e94c67cc2336f47665}} 
+\index{matrix@{matrix}!save\+\_\+as\+\_\+geometry@{save\+\_\+as\+\_\+geometry}}
+\index{save\+\_\+as\+\_\+geometry@{save\+\_\+as\+\_\+geometry}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{save\+\_\+as\+\_\+geometry()}{save\_as\_geometry()}}
+{\footnotesize\ttfamily void matrix\+::save\+\_\+as\+\_\+geometry (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{number,  }\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{label }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a2673ef8a4c7d322da7a5b6c61a20c65a}\label{classmatrix_a2673ef8a4c7d322da7a5b6c61a20c65a}} 
+\index{matrix@{matrix}!save\+\_\+as\+\_\+inc@{save\+\_\+as\+\_\+inc}}
+\index{save\+\_\+as\+\_\+inc@{save\+\_\+as\+\_\+inc}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{save\+\_\+as\+\_\+inc()}{save\_as\_inc()}}
+{\footnotesize\ttfamily void matrix\+::save\+\_\+as\+\_\+inc (\begin{DoxyParamCaption}\item[{ofstream \&}]{f }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_af3f3f862fff707b2fbc690aa65e36d9f}\label{classmatrix_af3f3f862fff707b2fbc690aa65e36d9f}} 
+\index{matrix@{matrix}!save\+\_\+as\+\_\+inc\+\_\+file@{save\+\_\+as\+\_\+inc\+\_\+file}}
+\index{save\+\_\+as\+\_\+inc\+\_\+file@{save\+\_\+as\+\_\+inc\+\_\+file}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{save\+\_\+as\+\_\+inc\+\_\+file()}{save\_as\_inc\_file()}}
+{\footnotesize\ttfamily void matrix\+::save\+\_\+as\+\_\+inc\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a1780283a64a789e4084d792683d276bb}\label{classmatrix_a1780283a64a789e4084d792683d276bb}} 
+\index{matrix@{matrix}!settype\+\_\+matrix@{settype\+\_\+matrix}}
+\index{settype\+\_\+matrix@{settype\+\_\+matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{settype\+\_\+matrix()}{settype\_matrix()}}
+{\footnotesize\ttfamily void matrix\+::settype\+\_\+matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a8183959565956f14466fe9d366c2c195}\label{classmatrix_a8183959565956f14466fe9d366c2c195}} 
+\index{matrix@{matrix}!Simplex\+\_\+code\+\_\+generator\+\_\+matrix@{Simplex\+\_\+code\+\_\+generator\+\_\+matrix}}
+\index{Simplex\+\_\+code\+\_\+generator\+\_\+matrix@{Simplex\+\_\+code\+\_\+generator\+\_\+matrix}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{Simplex\+\_\+code\+\_\+generator\+\_\+matrix()}{Simplex\_code\_generator\_matrix()}}
+{\footnotesize\ttfamily void matrix\+::\+Simplex\+\_\+code\+\_\+generator\+\_\+matrix (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ab1f7e8511834e7782ef09f59d8281c74}\label{classmatrix_ab1f7e8511834e7782ef09f59d8281c74}} 
+\index{matrix@{matrix}!smith\+\_\+eliminate\+\_\+column@{smith\+\_\+eliminate\+\_\+column}}
+\index{smith\+\_\+eliminate\+\_\+column@{smith\+\_\+eliminate\+\_\+column}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{smith\+\_\+eliminate\+\_\+column()}{smith\_eliminate\_column()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::smith\+\_\+eliminate\+\_\+column (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{P,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{Pv,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a6672b6bbaad6060b6c230a2c10ec2eb5}\label{classmatrix_a6672b6bbaad6060b6c230a2c10ec2eb5}} 
+\index{matrix@{matrix}!smith\+\_\+eliminate\+\_\+row@{smith\+\_\+eliminate\+\_\+row}}
+\index{smith\+\_\+eliminate\+\_\+row@{smith\+\_\+eliminate\+\_\+row}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{smith\+\_\+eliminate\+\_\+row()}{smith\_eliminate\_row()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} matrix\+::smith\+\_\+eliminate\+\_\+row (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{Q,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{Qv,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aeb73764dd4346bb1a6998f2a3c507544}\label{classmatrix_aeb73764dd4346bb1a6998f2a3c507544}} 
+\index{matrix@{matrix}!smith\+\_\+normal\+\_\+form@{smith\+\_\+normal\+\_\+form}}
+\index{smith\+\_\+normal\+\_\+form@{smith\+\_\+normal\+\_\+form}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{smith\+\_\+normal\+\_\+form()}{smith\_normal\_form()}}
+{\footnotesize\ttfamily void matrix\+::smith\+\_\+normal\+\_\+form (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{P,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{Pv,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{Q,  }\item[{\mbox{\hyperlink{classmatrix}{matrix}} \&}]{Qv,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a9041c3138924ebc58d539c9230898c6d}\label{classmatrix_a9041c3138924ebc58d539c9230898c6d}} 
+\index{matrix@{matrix}!stirling\+\_\+first@{stirling\+\_\+first}}
+\index{stirling\+\_\+first@{stirling\+\_\+first}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{stirling\+\_\+first()}{stirling\_first()}}
+{\footnotesize\ttfamily void matrix\+::stirling\+\_\+first (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+signless }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a0e7366c1db2c447d83f71f2c369e8d1d}\label{classmatrix_a0e7366c1db2c447d83f71f2c369e8d1d}} 
+\index{matrix@{matrix}!stirling\+\_\+second@{stirling\+\_\+second}}
+\index{stirling\+\_\+second@{stirling\+\_\+second}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{stirling\+\_\+second()}{stirling\_second()}}
+{\footnotesize\ttfamily void matrix\+::stirling\+\_\+second (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+min,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k\+\_\+max,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+ordered }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_ab806288c2dcb40b77b2dfc53ab09f74d}\label{classmatrix_ab806288c2dcb40b77b2dfc53ab09f74d}} 
+\index{matrix@{matrix}!to\+\_\+vector\+\_\+of\+\_\+columns@{to\+\_\+vector\+\_\+of\+\_\+columns}}
+\index{to\+\_\+vector\+\_\+of\+\_\+columns@{to\+\_\+vector\+\_\+of\+\_\+columns}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{to\+\_\+vector\+\_\+of\+\_\+columns()}{to\_vector\_of\_columns()}}
+{\footnotesize\ttfamily void matrix\+::to\+\_\+vector\+\_\+of\+\_\+columns (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a46200f82b0e76394a82968029d5e5a61}\label{classmatrix_a46200f82b0e76394a82968029d5e5a61}} 
+\index{matrix@{matrix}!to\+\_\+vector\+\_\+of\+\_\+rows@{to\+\_\+vector\+\_\+of\+\_\+rows}}
+\index{to\+\_\+vector\+\_\+of\+\_\+rows@{to\+\_\+vector\+\_\+of\+\_\+rows}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{to\+\_\+vector\+\_\+of\+\_\+rows()}{to\_vector\_of\_rows()}}
+{\footnotesize\ttfamily void matrix\+::to\+\_\+vector\+\_\+of\+\_\+rows (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a1d8064be96298b81e8e060f02b9cef3e}\label{classmatrix_a1d8064be96298b81e8e060f02b9cef3e}} 
+\index{matrix@{matrix}!transpose@{transpose}}
+\index{transpose@{transpose}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{transpose()}{transpose()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmatrix}{matrix}} \& matrix\+::transpose (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a0e5dcee30e9e98346f389511c7700f1f}\label{classmatrix_a0e5dcee30e9e98346f389511c7700f1f}} 
+\index{matrix@{matrix}!vector\+\_\+mult\+\_\+to@{vector\+\_\+mult\+\_\+to}}
+\index{vector\+\_\+mult\+\_\+to@{vector\+\_\+mult\+\_\+to}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{vector\+\_\+mult\+\_\+to()}{vector\_mult\_to()}}
+{\footnotesize\ttfamily void matrix\+::vector\+\_\+mult\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{x,  }\item[{\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&}]{y }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_aae7c9c7c3540c5818d2df52ab67f8a52}\label{classmatrix_aae7c9c7c3540c5818d2df52ab67f8a52}} 
+\index{matrix@{matrix}!weight\+\_\+enumerator\+\_\+brute\+\_\+force@{weight\+\_\+enumerator\+\_\+brute\+\_\+force}}
+\index{weight\+\_\+enumerator\+\_\+brute\+\_\+force@{weight\+\_\+enumerator\+\_\+brute\+\_\+force}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{weight\+\_\+enumerator\+\_\+brute\+\_\+force()}{weight\_enumerator\_brute\_force()}}
+{\footnotesize\ttfamily void matrix\+::weight\+\_\+enumerator\+\_\+brute\+\_\+force (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a773aa4ab691548beba8e6204d9f4ef21}\label{classmatrix_a773aa4ab691548beba8e6204d9f4ef21}} 
+\index{matrix@{matrix}!write\+\_\+mem@{write\+\_\+mem}}
+\index{write\+\_\+mem@{write\+\_\+mem}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{write\+\_\+mem()}{write\_mem()}}
+{\footnotesize\ttfamily void matrix\+::write\+\_\+mem (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmemory}{memory}} \&}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{debug\+\_\+depth }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_a42aa27f4ae06ceff8cb297894bb5aad4}\label{classmatrix_a42aa27f4ae06ceff8cb297894bb5aad4}} 
+\index{matrix@{matrix}!X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self@{X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self}}
+\index{X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self@{X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self()}{X\_times\_id\_minus\_self()}}
+{\footnotesize\ttfamily void matrix\+::\+X\+\_\+times\+\_\+id\+\_\+minus\+\_\+self (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmatrix_abd2e274d4905bc97eabf7c72d5e66b3d}\label{classmatrix_abd2e274d4905bc97eabf7c72d5e66b3d}} 
+\index{matrix@{matrix}!zero@{zero}}
+\index{zero@{zero}!matrix@{matrix}}
+\subsubsection{\texorpdfstring{zero()}{zero()}}
+{\footnotesize\ttfamily void matrix\+::zero (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classdiscreta__base_a424aa44bbb6ca48d30ad1087dbd6f210}{discreta\+\_\+base}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/\mbox{\hyperlink{discreta_8h}{discreta.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/\mbox{\hyperlink{matrix_8_c}{matrix.\+C}}\end{DoxyCompactItemize}

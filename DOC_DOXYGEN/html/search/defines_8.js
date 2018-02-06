@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['incidence_5fstructure_5frealization_5fby_5fhjelmslev',['INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV',['../galois_8h.html#ac3981e67a16056fdac6acb81004c2afb',1,'galois.h']]],
+  ['incidence_5fstructure_5frealization_5fby_5fmatrix',['INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX',['../galois_8h.html#a8319680b941d7e716cda051e03acc333',1,'galois.h']]],
+  ['incidence_5fstructure_5frealization_5fby_5forthogonal',['INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL',['../galois_8h.html#ae138d6cf2d58c494042ab62ac20328ab',1,'galois.h']]],
+  ['input_5ftype_5ffile_5fof_5flines',['INPUT_TYPE_FILE_OF_LINES',['../projective__space__main_8_c.html#a0fb86fbcc19f8e38e125003aaf4d42c6',1,'projective_space_main.C']]],
+  ['input_5ftype_5ffile_5fof_5fpackings',['INPUT_TYPE_FILE_OF_PACKINGS',['../projective__space__main_8_c.html#aab09205735a84524167452c1e6685c1a',1,'projective_space_main.C']]],
+  ['input_5ftype_5ffile_5fof_5fpackings_5fthrough_5fspread_5ftable',['INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE',['../projective__space__main_8_c.html#a88c2639da14a693fb35c059fc93f6dc1',1,'projective_space_main.C']]],
+  ['input_5ftype_5ffile_5fof_5fpoints',['INPUT_TYPE_FILE_OF_POINTS',['../projective__space__main_8_c.html#a9a56e20a90464a9bdaaf1e01b879fb3b',1,'projective_space_main.C']]],
+  ['input_5ftype_5fset_5fof_5flines',['INPUT_TYPE_SET_OF_LINES',['../projective__space__main_8_c.html#a0c47a4b0733f5b79d8c4e7614aacae9e',1,'projective_space_main.C']]],
+  ['input_5ftype_5fset_5fof_5fpacking',['INPUT_TYPE_SET_OF_PACKING',['../projective__space__main_8_c.html#a19abeed71fe9c5da738db86c08b0f9c0',1,'projective_space_main.C']]],
+  ['input_5ftype_5fset_5fof_5fpoints',['INPUT_TYPE_SET_OF_POINTS',['../projective__space__main_8_c.html#aeda470f1e883f29f050676e0aa64acde',1,'projective_space_main.C']]],
+  ['int_5fhas_5f4_5fbytes',['INT_HAS_4_BYTES',['../galois_8h.html#a91ef145daf4b5439358d7820be9a6572',1,'galois.h']]],
+  ['intersect',['INTERSECT',['../nauty_8h.html#aaf4f9aefc363e4347f128dc3d199d28e',1,'nauty.h']]],
+  ['interval_5fin_5fseconds',['INTERVAL_IN_SECONDS',['../galois_8h.html#a498a01824218ce3d03c0f2ce43b983dc',1,'galois.h']]],
+  ['iselement',['ISELEMENT',['../nauty_8h.html#a60f8c04bb93440d9aa6417eba6ccaf74',1,'nauty.h']]],
+  ['iselement0',['ISELEMENT0',['../nauty_8h.html#a93543003b2ac6a1fa0cf9b6e278001a3',1,'nauty.h']]],
+  ['iselement1',['ISELEMENT1',['../nauty_8h.html#ad5bf16f2ab62a0bb676371f481c5b661',1,'nauty.h']]]
+];

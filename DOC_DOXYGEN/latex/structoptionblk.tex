@@ -1,0 +1,175 @@
+\hypertarget{structoptionblk}{}\section{optionblk Struct Reference}
+\label{structoptionblk}\index{optionblk@{optionblk}}
+
+
+{\ttfamily \#include $<$nauty.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structoptionblk_a714f76f0799af813ddd1d38f4cda280e}{userrefproc}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$, int $\ast$, int $\ast$, int, int $\ast$, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$, \mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$, int $\ast$, int, int)
+\item 
+void \mbox{\hyperlink{structoptionblk_af9beba39e0ef5390236fa4ba21bb22cc}{userautomproc}} (int, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$, int $\ast$, int, int, int)
+\item 
+void \mbox{\hyperlink{structoptionblk_a6f25aadf1572fa2cd8b6b2bec2cdf21a}{userlevelproc}} (int $\ast$, int $\ast$, int, int $\ast$, \mbox{\hyperlink{structstatsblk}{statsblk}} $\ast$, int, int, int, int, int, int)
+\item 
+void \mbox{\hyperlink{structoptionblk_abd54a17ee8ac6152b1df9e62dbc38dd6}{usernodeproc}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$, int $\ast$, int $\ast$, int, int, int, int, int, int)
+\item 
+void \mbox{\hyperlink{structoptionblk_a3fc9271f35d31f4b1caa850101227aec}{usertcellproc}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$, int $\ast$, int $\ast$, int, int, \mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$, int $\ast$, int $\ast$, int, int, int($\ast$)(\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$, int $\ast$, int $\ast$, int, int, int, int), int, int)
+\item 
+void \mbox{\hyperlink{structoptionblk_a40fdcb235a8c4c4d3d595fbba271cc3e}{invarproc}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$, int $\ast$, int $\ast$, int, int, int, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$, int, \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}}, int, int)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structoptionblk_aa27167e1870cb094a982790a9bcab8b9}{getcanon}}
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{structoptionblk_a366bffcf748d7588bebb2f67d7774dbd}{digraph}}
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{structoptionblk_ae62f3afc72cb10357a4db7d821e25d34}{writeautoms}}
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{structoptionblk_a4d502a0fedb648a1748971c782de26e5}{writemarkers}}
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{structoptionblk_a4e08adf2a3ae903fde6de3146c552f37}{defaultptn}}
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{structoptionblk_a231913380ed09b83f5428d22b4b1ece3}{cartesian}}
+\item 
+int \mbox{\hyperlink{structoptionblk_a818e970d4ff5007b295691d099479fe1}{linelength}}
+\item 
+F\+I\+LE $\ast$ \mbox{\hyperlink{structoptionblk_a480cd90dd68b09665734b61be4bee543}{outfile}}
+\item 
+int \mbox{\hyperlink{structoptionblk_a544beb8407bc4cc875d4aa05986741f6}{tc\+\_\+level}}
+\item 
+int \mbox{\hyperlink{structoptionblk_a3960890ec52ef8048e91aa02d8980d74}{mininvarlevel}}
+\item 
+int \mbox{\hyperlink{structoptionblk_a8e37cdce82bc815a1b618c022ce77a44}{maxinvarlevel}}
+\item 
+int \mbox{\hyperlink{structoptionblk_a9f69df3e681ec4ca4f15f49fa8d72cb6}{invararg}}
+\item 
+\mbox{\hyperlink{structdispatchvec}{dispatchvec}} $\ast$ \mbox{\hyperlink{structoptionblk_a6d825ceea4b8d2b34a4834d2693b985f}{dispatch}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{structoptionblk_a40fdcb235a8c4c4d3d595fbba271cc3e}\label{structoptionblk_a40fdcb235a8c4c4d3d595fbba271cc3e}} 
+\index{optionblk@{optionblk}!invarproc@{invarproc}}
+\index{invarproc@{invarproc}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{invarproc()}{invarproc()}}
+{\footnotesize\ttfamily void optionblk\+::invarproc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{,  }\item[{int}]{,  }\item[{\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}}}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structoptionblk_af9beba39e0ef5390236fa4ba21bb22cc}\label{structoptionblk_af9beba39e0ef5390236fa4ba21bb22cc}} 
+\index{optionblk@{optionblk}!userautomproc@{userautomproc}}
+\index{userautomproc@{userautomproc}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{userautomproc()}{userautomproc()}}
+{\footnotesize\ttfamily void optionblk\+::userautomproc (\begin{DoxyParamCaption}\item[{int}]{,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structoptionblk_a6f25aadf1572fa2cd8b6b2bec2cdf21a}\label{structoptionblk_a6f25aadf1572fa2cd8b6b2bec2cdf21a}} 
+\index{optionblk@{optionblk}!userlevelproc@{userlevelproc}}
+\index{userlevelproc@{userlevelproc}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{userlevelproc()}{userlevelproc()}}
+{\footnotesize\ttfamily void optionblk\+::userlevelproc (\begin{DoxyParamCaption}\item[{int $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int $\ast$}]{,  }\item[{\mbox{\hyperlink{structstatsblk}{statsblk}} $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structoptionblk_abd54a17ee8ac6152b1df9e62dbc38dd6}\label{structoptionblk_abd54a17ee8ac6152b1df9e62dbc38dd6}} 
+\index{optionblk@{optionblk}!usernodeproc@{usernodeproc}}
+\index{usernodeproc@{usernodeproc}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{usernodeproc()}{usernodeproc()}}
+{\footnotesize\ttfamily void optionblk\+::usernodeproc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structoptionblk_a714f76f0799af813ddd1d38f4cda280e}\label{structoptionblk_a714f76f0799af813ddd1d38f4cda280e}} 
+\index{optionblk@{optionblk}!userrefproc@{userrefproc}}
+\index{userrefproc@{userrefproc}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{userrefproc()}{userrefproc()}}
+{\footnotesize\ttfamily void optionblk\+::userrefproc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int $\ast$}]{,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{,  }\item[{\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{structoptionblk_a3fc9271f35d31f4b1caa850101227aec}\label{structoptionblk_a3fc9271f35d31f4b1caa850101227aec}} 
+\index{optionblk@{optionblk}!usertcellproc@{usertcellproc}}
+\index{usertcellproc@{usertcellproc}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{usertcellproc()}{usertcellproc()}}
+{\footnotesize\ttfamily void optionblk\+::usertcellproc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int $\ast$}]{,  }\item[{int}]{,  }\item[{int}]{,  }\item[{int($\ast$)(\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$, int $\ast$, int $\ast$, int, int, int, int)}]{,  }\item[{int}]{,  }\item[{int}]{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structoptionblk_a231913380ed09b83f5428d22b4b1ece3}\label{structoptionblk_a231913380ed09b83f5428d22b4b1ece3}} 
+\index{optionblk@{optionblk}!cartesian@{cartesian}}
+\index{cartesian@{cartesian}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{cartesian}{cartesian}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} optionblk\+::cartesian}
+
+\mbox{\Hypertarget{structoptionblk_a4e08adf2a3ae903fde6de3146c552f37}\label{structoptionblk_a4e08adf2a3ae903fde6de3146c552f37}} 
+\index{optionblk@{optionblk}!defaultptn@{defaultptn}}
+\index{defaultptn@{defaultptn}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{defaultptn}{defaultptn}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} optionblk\+::defaultptn}
+
+\mbox{\Hypertarget{structoptionblk_a366bffcf748d7588bebb2f67d7774dbd}\label{structoptionblk_a366bffcf748d7588bebb2f67d7774dbd}} 
+\index{optionblk@{optionblk}!digraph@{digraph}}
+\index{digraph@{digraph}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{digraph}{digraph}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} optionblk\+::digraph}
+
+\mbox{\Hypertarget{structoptionblk_a6d825ceea4b8d2b34a4834d2693b985f}\label{structoptionblk_a6d825ceea4b8d2b34a4834d2693b985f}} 
+\index{optionblk@{optionblk}!dispatch@{dispatch}}
+\index{dispatch@{dispatch}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{dispatch}{dispatch}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structdispatchvec}{dispatchvec}}$\ast$ optionblk\+::dispatch}
+
+\mbox{\Hypertarget{structoptionblk_aa27167e1870cb094a982790a9bcab8b9}\label{structoptionblk_aa27167e1870cb094a982790a9bcab8b9}} 
+\index{optionblk@{optionblk}!getcanon@{getcanon}}
+\index{getcanon@{getcanon}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{getcanon}{getcanon}}
+{\footnotesize\ttfamily int optionblk\+::getcanon}
+
+\mbox{\Hypertarget{structoptionblk_a9f69df3e681ec4ca4f15f49fa8d72cb6}\label{structoptionblk_a9f69df3e681ec4ca4f15f49fa8d72cb6}} 
+\index{optionblk@{optionblk}!invararg@{invararg}}
+\index{invararg@{invararg}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{invararg}{invararg}}
+{\footnotesize\ttfamily int optionblk\+::invararg}
+
+\mbox{\Hypertarget{structoptionblk_a818e970d4ff5007b295691d099479fe1}\label{structoptionblk_a818e970d4ff5007b295691d099479fe1}} 
+\index{optionblk@{optionblk}!linelength@{linelength}}
+\index{linelength@{linelength}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{linelength}{linelength}}
+{\footnotesize\ttfamily int optionblk\+::linelength}
+
+\mbox{\Hypertarget{structoptionblk_a8e37cdce82bc815a1b618c022ce77a44}\label{structoptionblk_a8e37cdce82bc815a1b618c022ce77a44}} 
+\index{optionblk@{optionblk}!maxinvarlevel@{maxinvarlevel}}
+\index{maxinvarlevel@{maxinvarlevel}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{maxinvarlevel}{maxinvarlevel}}
+{\footnotesize\ttfamily int optionblk\+::maxinvarlevel}
+
+\mbox{\Hypertarget{structoptionblk_a3960890ec52ef8048e91aa02d8980d74}\label{structoptionblk_a3960890ec52ef8048e91aa02d8980d74}} 
+\index{optionblk@{optionblk}!mininvarlevel@{mininvarlevel}}
+\index{mininvarlevel@{mininvarlevel}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{mininvarlevel}{mininvarlevel}}
+{\footnotesize\ttfamily int optionblk\+::mininvarlevel}
+
+\mbox{\Hypertarget{structoptionblk_a480cd90dd68b09665734b61be4bee543}\label{structoptionblk_a480cd90dd68b09665734b61be4bee543}} 
+\index{optionblk@{optionblk}!outfile@{outfile}}
+\index{outfile@{outfile}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{outfile}{outfile}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ optionblk\+::outfile}
+
+\mbox{\Hypertarget{structoptionblk_a544beb8407bc4cc875d4aa05986741f6}\label{structoptionblk_a544beb8407bc4cc875d4aa05986741f6}} 
+\index{optionblk@{optionblk}!tc\+\_\+level@{tc\+\_\+level}}
+\index{tc\+\_\+level@{tc\+\_\+level}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{tc\+\_\+level}{tc\_level}}
+{\footnotesize\ttfamily int optionblk\+::tc\+\_\+level}
+
+\mbox{\Hypertarget{structoptionblk_ae62f3afc72cb10357a4db7d821e25d34}\label{structoptionblk_ae62f3afc72cb10357a4db7d821e25d34}} 
+\index{optionblk@{optionblk}!writeautoms@{writeautoms}}
+\index{writeautoms@{writeautoms}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{writeautoms}{writeautoms}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} optionblk\+::writeautoms}
+
+\mbox{\Hypertarget{structoptionblk_a4d502a0fedb648a1748971c782de26e5}\label{structoptionblk_a4d502a0fedb648a1748971c782de26e5}} 
+\index{optionblk@{optionblk}!writemarkers@{writemarkers}}
+\index{writemarkers@{writemarkers}!optionblk@{optionblk}}
+\subsubsection{\texorpdfstring{writemarkers}{writemarkers}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} optionblk\+::writemarkers}
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{nauty_8h}{nauty.\+h}}\end{DoxyCompactItemize}

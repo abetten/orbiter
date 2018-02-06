@@ -1,0 +1,179 @@
+\hypertarget{classvector__hashing}{}\section{vector\+\_\+hashing Class Reference}
+\label{classvector__hashing}\index{vector\+\_\+hashing@{vector\+\_\+hashing}}
+
+
+{\ttfamily \#include $<$galois.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classvector__hashing_af8767f6698600d3345811561be2116ed}{vector\+\_\+hashing}} ()
+\item 
+\mbox{\hyperlink{classvector__hashing_aa34aecaccd6399ffa4c66d5c12a28ee8}{$\sim$vector\+\_\+hashing}} ()
+\item 
+void \mbox{\hyperlink{classvector__hashing_a1324d458f4b77fce47b0048dc7f1aadd}{allocate}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_aefd29dfc01954a81db98b4ccc954a02f}{data\+\_\+size}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_a174054232bce7c4397fd94327711a8f3}{N}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_a2bfeff3ce35d212013ef702fd207849b}{bit\+\_\+length}})
+\item 
+void \mbox{\hyperlink{classvector__hashing_aa80d25dc4d37520e54e4e8d664d665e6}{compute\+\_\+tables}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classvector__hashing_a4954caab83535e063633dd5d27a564c5}{print}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_a4879796cc2ade5fcef891747909ec710}{rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$data)
+\item 
+void \mbox{\hyperlink{classvector__hashing_abbebd3a96a6d27a34b9b49af99e2ed3d}{unrank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$data)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_aefd29dfc01954a81db98b4ccc954a02f}{data\+\_\+size}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_a174054232bce7c4397fd94327711a8f3}{N}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_a2bfeff3ce35d212013ef702fd207849b}{bit\+\_\+length}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_a54bff0229c51a54d3b8be5a4e1601a75}{vector\+\_\+data}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_a4042f8d195a2f874da7549a0b0d67186}{H}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_a050653a1b4a8e6d399fea70552b44196}{H\+\_\+sorted}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_aeffca7a05c3693e6e513ecf4d49f8d76}{perm}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_ae25ec3034e1b01d99d98f0faddf8f7a1}{perm\+\_\+inv}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classvector__hashing_a078a840683143f9b0667eaa892d9b12b}{nb\+\_\+types}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_a5a5ca546a6777ac55dc667048786da42}{type\+\_\+first}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_a1006002ad13d352aa411dc8e0e101210}{type\+\_\+len}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classvector__hashing_ac107681a9784cfdf8c48a1041c1cfc59}{type\+\_\+value}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classvector__hashing_af8767f6698600d3345811561be2116ed}\label{classvector__hashing_af8767f6698600d3345811561be2116ed}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{vector\+\_\+hashing()}{vector\_hashing()}}
+{\footnotesize\ttfamily vector\+\_\+hashing\+::vector\+\_\+hashing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classvector__hashing_aa34aecaccd6399ffa4c66d5c12a28ee8}\label{classvector__hashing_aa34aecaccd6399ffa4c66d5c12a28ee8}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!````~vector\+\_\+hashing@{$\sim$vector\+\_\+hashing}}
+\index{````~vector\+\_\+hashing@{$\sim$vector\+\_\+hashing}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{$\sim$vector\+\_\+hashing()}{~vector\_hashing()}}
+{\footnotesize\ttfamily vector\+\_\+hashing\+::$\sim$vector\+\_\+hashing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classvector__hashing_a1324d458f4b77fce47b0048dc7f1aadd}\label{classvector__hashing_a1324d458f4b77fce47b0048dc7f1aadd}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!allocate@{allocate}}
+\index{allocate@{allocate}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{allocate()}{allocate()}}
+{\footnotesize\ttfamily void vector\+\_\+hashing\+::allocate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{data\+\_\+size,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{N,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{bit\+\_\+length }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classvector__hashing_aa80d25dc4d37520e54e4e8d664d665e6}\label{classvector__hashing_aa80d25dc4d37520e54e4e8d664d665e6}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!compute\+\_\+tables@{compute\+\_\+tables}}
+\index{compute\+\_\+tables@{compute\+\_\+tables}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{compute\+\_\+tables()}{compute\_tables()}}
+{\footnotesize\ttfamily void vector\+\_\+hashing\+::compute\+\_\+tables (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classvector__hashing_a4954caab83535e063633dd5d27a564c5}\label{classvector__hashing_a4954caab83535e063633dd5d27a564c5}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!print@{print}}
+\index{print@{print}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void vector\+\_\+hashing\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classvector__hashing_a4879796cc2ade5fcef891747909ec710}\label{classvector__hashing_a4879796cc2ade5fcef891747909ec710}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!rank@{rank}}
+\index{rank@{rank}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{rank()}{rank()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vector\+\_\+hashing\+::rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classvector__hashing_abbebd3a96a6d27a34b9b49af99e2ed3d}\label{classvector__hashing_abbebd3a96a6d27a34b9b49af99e2ed3d}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!unrank@{unrank}}
+\index{unrank@{unrank}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{unrank()}{unrank()}}
+{\footnotesize\ttfamily void vector\+\_\+hashing\+::unrank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{data }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classvector__hashing_a2bfeff3ce35d212013ef702fd207849b}\label{classvector__hashing_a2bfeff3ce35d212013ef702fd207849b}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!bit\+\_\+length@{bit\+\_\+length}}
+\index{bit\+\_\+length@{bit\+\_\+length}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{bit\+\_\+length}{bit\_length}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vector\+\_\+hashing\+::bit\+\_\+length}
+
+\mbox{\Hypertarget{classvector__hashing_aefd29dfc01954a81db98b4ccc954a02f}\label{classvector__hashing_aefd29dfc01954a81db98b4ccc954a02f}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!data\+\_\+size@{data\+\_\+size}}
+\index{data\+\_\+size@{data\+\_\+size}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{data\+\_\+size}{data\_size}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vector\+\_\+hashing\+::data\+\_\+size}
+
+\mbox{\Hypertarget{classvector__hashing_a4042f8d195a2f874da7549a0b0d67186}\label{classvector__hashing_a4042f8d195a2f874da7549a0b0d67186}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!H@{H}}
+\index{H@{H}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{H}{H}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::H}
+
+\mbox{\Hypertarget{classvector__hashing_a050653a1b4a8e6d399fea70552b44196}\label{classvector__hashing_a050653a1b4a8e6d399fea70552b44196}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!H\+\_\+sorted@{H\+\_\+sorted}}
+\index{H\+\_\+sorted@{H\+\_\+sorted}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{H\+\_\+sorted}{H\_sorted}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::\+H\+\_\+sorted}
+
+\mbox{\Hypertarget{classvector__hashing_a174054232bce7c4397fd94327711a8f3}\label{classvector__hashing_a174054232bce7c4397fd94327711a8f3}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!N@{N}}
+\index{N@{N}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{N}{N}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vector\+\_\+hashing\+::N}
+
+\mbox{\Hypertarget{classvector__hashing_a078a840683143f9b0667eaa892d9b12b}\label{classvector__hashing_a078a840683143f9b0667eaa892d9b12b}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!nb\+\_\+types@{nb\+\_\+types}}
+\index{nb\+\_\+types@{nb\+\_\+types}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{nb\+\_\+types}{nb\_types}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vector\+\_\+hashing\+::nb\+\_\+types}
+
+\mbox{\Hypertarget{classvector__hashing_aeffca7a05c3693e6e513ecf4d49f8d76}\label{classvector__hashing_aeffca7a05c3693e6e513ecf4d49f8d76}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!perm@{perm}}
+\index{perm@{perm}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{perm}{perm}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::perm}
+
+\mbox{\Hypertarget{classvector__hashing_ae25ec3034e1b01d99d98f0faddf8f7a1}\label{classvector__hashing_ae25ec3034e1b01d99d98f0faddf8f7a1}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!perm\+\_\+inv@{perm\+\_\+inv}}
+\index{perm\+\_\+inv@{perm\+\_\+inv}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{perm\+\_\+inv}{perm\_inv}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::perm\+\_\+inv}
+
+\mbox{\Hypertarget{classvector__hashing_a5a5ca546a6777ac55dc667048786da42}\label{classvector__hashing_a5a5ca546a6777ac55dc667048786da42}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!type\+\_\+first@{type\+\_\+first}}
+\index{type\+\_\+first@{type\+\_\+first}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{type\+\_\+first}{type\_first}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::type\+\_\+first}
+
+\mbox{\Hypertarget{classvector__hashing_a1006002ad13d352aa411dc8e0e101210}\label{classvector__hashing_a1006002ad13d352aa411dc8e0e101210}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!type\+\_\+len@{type\+\_\+len}}
+\index{type\+\_\+len@{type\+\_\+len}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{type\+\_\+len}{type\_len}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::type\+\_\+len}
+
+\mbox{\Hypertarget{classvector__hashing_ac107681a9784cfdf8c48a1041c1cfc59}\label{classvector__hashing_ac107681a9784cfdf8c48a1041c1cfc59}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!type\+\_\+value@{type\+\_\+value}}
+\index{type\+\_\+value@{type\+\_\+value}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{type\+\_\+value}{type\_value}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::type\+\_\+value}
+
+\mbox{\Hypertarget{classvector__hashing_a54bff0229c51a54d3b8be5a4e1601a75}\label{classvector__hashing_a54bff0229c51a54d3b8be5a4e1601a75}} 
+\index{vector\+\_\+hashing@{vector\+\_\+hashing}!vector\+\_\+data@{vector\+\_\+data}}
+\index{vector\+\_\+data@{vector\+\_\+data}!vector\+\_\+hashing@{vector\+\_\+hashing}}
+\subsubsection{\texorpdfstring{vector\+\_\+data}{vector\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ vector\+\_\+hashing\+::vector\+\_\+data}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{galois_8h}{galois.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{vector__hashing_8_c}{vector\+\_\+hashing.\+C}}\end{DoxyCompactItemize}

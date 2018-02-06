@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['u',['U',['../classdifference__set__in__heisenberg__group.html#ad19370f2be27e6066c49c5b3a5b7700b',1,'difference_set_in_heisenberg_group::U()'],['../classbuekenhout__metz.html#a077f205b35b27aa568f44656fb4b07d9',1,'buekenhout_metz::U()'],['../classcompute__stabilizer.html#a23c77f55b495ba15ee411ebc737ee29e',1,'compute_stabilizer::U()'],['../classovoid__generator.html#aff25630d1357ebc734201c3964d0277d',1,'ovoid_generator::u()'],['../classclassify__double__sixes.html#ad555915b27e96c0aee98a65bc67b4427',1,'classify_double_sixes::u()'],['../alphabet_8_c.html#a5874b4c2ec2e28321eea4e4871d08222',1,'u():&#160;alphabet.C'],['../alphabet2_8_c.html#a5874b4c2ec2e28321eea4e4871d08222',1,'u():&#160;alphabet2.C']]],
+  ['u1',['u1',['../classclassify__double__sixes.html#ae2b61434b32eacb383fea4c862f2811b',1,'classify_double_sixes']]],
+  ['u_5fgens',['U_gens',['../classdifference__set__in__heisenberg__group.html#a45964808540871b4b0d55c78aa4ba652',1,'difference_set_in_heisenberg_group']]],
+  ['u_5fgo',['U_go',['../classdifference__set__in__heisenberg__group.html#a6f746010e0ba026b41fda9b6907b8397',1,'difference_set_in_heisenberg_group']]],
+  ['uf',['UF',['../classunion__find__on__k__subsets.html#a421a75e48a66d5ef546503a6d55110a8',1,'union_find_on_k_subsets::UF()'],['../classisomorph.html#a963cf2760b76969c2439a83250847495',1,'isomorph::UF()']]],
+  ['underlying_5fset_5fsize',['underlying_set_size',['../classset__of__sets.html#a5af40b6f333f35f29c948c252043bfc0',1,'set_of_sets']]],
+  ['unip_5ff_5fprint_5fsub',['unip_f_print_sub',['../_g_a_l_o_i_s_2unipoly_8_c.html#ae0f0c8801dba2ad348b03493c928c733',1,'unipoly.C']]],
+  ['unip_5ff_5fuse_5fvariable_5fname',['unip_f_use_variable_name',['../_g_a_l_o_i_s_2unipoly_8_c.html#ad4f9b1efe1c95983b734e1d7feacc424',1,'unipoly.C']]],
+  ['unip_5fvariable_5fname',['unip_variable_name',['../_g_a_l_o_i_s_2unipoly_8_c.html#a6a07b9900672fad021466f1ab3162873',1,'unipoly.C']]],
+  ['unitangent_5fplanes',['Unitangent_planes',['../classsurface__object.html#aaae7006183fe0337646f9419c0763674',1,'surface_object']]],
+  ['unitangent_5fplanes_5fon_5flines',['Unitangent_planes_on_lines',['../classsurface__object.html#a8c481aad84aaad8ab805161a9d169429',1,'surface_object']]],
+  ['unitcoeffs',['unitcoeffs',['../classmckay_1_1t_m_c_k_a_y.html#a640367986232519161646d7fde5fa1d4',1,'mckay::tMCKAY']]],
+  ['unrank_5fpoint',['unrank_point',['../classaction__on__cosets.html#ac6479fd4aaa39cdbe6242e557c71560f',1,'action_on_cosets']]],
+  ['unrank_5fpoint_5ffunc',['unrank_point_func',['../classaction__on__factor__space.html#ae22a1e77aff9c3afbb2f0f49e48cd89b',1,'action_on_factor_space::unrank_point_func()'],['../classgenerator.html#ac82befb4c6d7c74c375257c25bb2baa8',1,'generator::unrank_point_func()']]],
+  ['unrank_5fvector_5fcallback',['unrank_vector_callback',['../classorbit__of__subspaces.html#aae2846b7a00d83ecd3c7d176dc2a055a',1,'orbit_of_subspaces']]],
+  ['unused',['unused',['../structbuffer.html#a30679a361b5a72146a3705d997655446',1,'buffer']]],
+  ['up',['Up',['../structdlx__node.html#a9093c5ee407cbfc878291ee64b72f530',1,'dlx_node']]],
+  ['upstep_5fprimary_5forbit',['upstep_primary_orbit',['../classflag__orbit__node.html#a598f3e80579424fe7b1e6136aa8fc21f',1,'flag_orbit_node']]],
+  ['upstep_5fsecondary_5forbit',['upstep_secondary_orbit',['../classflag__orbit__node.html#a2b0fd8872adb66ff81efb522d9d3f22e',1,'flag_orbit_node']]],
+  ['used_5flength',['used_length',['../classmemory__object.html#a7deeb1452089f3a16dfb9da259f3e4ae',1,'memory_object::used_length()'],['../classorbit__of__sets.html#a9acc3d48538bce4c7867fba8eee97b4a',1,'orbit_of_sets::used_length()'],['../classorbit__of__subspaces.html#a2fec07dcce03bbc9476faae26172ece3',1,'orbit_of_subspaces::used_length()']]],
+  ['user_5fdata',['user_data',['../classcolored__graph.html#ae8c2842fc5f7382948ec0cf0afd581e5',1,'colored_graph::user_data()'],['../classrainbow__cliques.html#a97f8b8a5deca9becc327c69640f66ecc',1,'rainbow_cliques::user_data()'],['../classfile__output.html#a7337cf9663a3cecb88dd03229a6356a6',1,'file_output::user_data()'],['../classexact__cover.html#ac1543bac5197f35715ff30402385ae4b',1,'exact_cover::user_data()'],['../classexact__cover__arguments.html#ab54c23f93b0dc645a512765906ab68ef',1,'exact_cover_arguments::user_data()']]],
+  ['user_5fdata_5fsize',['user_data_size',['../classcolored__graph.html#afc57ecc5e5d94a98904a8c7eb748a73f',1,'colored_graph']]]
+];

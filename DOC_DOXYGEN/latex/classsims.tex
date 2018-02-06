@@ -1,0 +1,1304 @@
+\hypertarget{classsims}{}\section{sims Class Reference}
+\label{classsims}\index{sims@{sims}}
+
+
+{\ttfamily \#include $<$action.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \mbox{\hyperlink{classsims_a6aeefc9697cb10f60e76c2b0e69e48ef}{operator new}} (size\+\_\+t bytes)
+\item 
+void $\ast$ \mbox{\hyperlink{classsims_a32921b09a44038da87de06573e9cdc17}{operator new\mbox{[}$\,$\mbox{]}}} (size\+\_\+t bytes)
+\item 
+void \mbox{\hyperlink{classsims_ad613390ec8ecb625454785ccc222d1d2}{operator delete}} (void $\ast$ptr, size\+\_\+t bytes)
+\item 
+void \mbox{\hyperlink{classsims_a5eaebf678ba04cf9022bceb41b643455}{operator delete\mbox{[}$\,$\mbox{]}}} (void $\ast$ptr, size\+\_\+t bytes)
+\item 
+\mbox{\hyperlink{classsims_ab96260ec513fe30c37c7a1933f4d6e7f}{sims}} ()
+\item 
+void \mbox{\hyperlink{classsims_a47d4aacfa330b9a59d87fb6bf7529e08}{null}} ()
+\item 
+\mbox{\hyperlink{classsims_a2eada2ad0e325eabb600f63769400b27}{sims}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}})
+\item 
+\mbox{\hyperlink{classsims_a7cc925349e00203fae2e4a54ca3788b3}{$\sim$sims}} ()
+\item 
+void \mbox{\hyperlink{classsims_ab596438fd94e1fcafbf69d32024e93bf}{freeself}} ()
+\item 
+void \mbox{\hyperlink{classsims_a5a4fd410f399c81c847052861e3bc3ff}{delete\+\_\+images}} ()
+\item 
+void \mbox{\hyperlink{classsims_a7fb1a9d3c6355c551f495d3d79e2303e}{init\+\_\+images}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_af6b4c88343d7529f126a8256cdaeb8fe}{nb\+\_\+images}})
+\item 
+void \mbox{\hyperlink{classsims_a2eedbb17ba9644f7d57d81dafab0eb01}{images\+\_\+append}} ()
+\item 
+void \mbox{\hyperlink{classsims_a02eb61ed14f75cfe4dc0770142c1bff0}{init}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}})
+\item 
+void \mbox{\hyperlink{classsims_a1010f2dc330b7c5ae10128c0b7dcbefd}{init\+\_\+without\+\_\+base}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}})
+\item 
+void \mbox{\hyperlink{classsims_a9768b0070683ba04b4211aa8d0de7fbd}{reallocate\+\_\+base}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} old\+\_\+base\+\_\+len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_abe36dd0812bde20447f5aaa8384596a7}{initialize\+\_\+table}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classsims_a6a55a0a4e5124654f999933fd635334a}{init\+\_\+trivial\+\_\+group}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ac55702550a4671a721f78345dd9bff70}{init\+\_\+trivial\+\_\+orbit}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classsims_aa2a7908389727bdfa05d034e8d53a818}{init\+\_\+generators}} (\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&generators, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a2917ebf2dc37af6cfa39310549994d98}{init\+\_\+generators}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a116abb02245f99c0152d867e0e640c77}{init\+\_\+generators\+\_\+by\+\_\+hdl}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a9adf5e45bd4cd2a32df14e1d756535d0}{nb\+\_\+gen}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$gen\+\_\+hdl)
+\item 
+void \mbox{\hyperlink{classsims_af8c21505bf172665ba503cf3138f38cd}{init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_add28c3fa3ed9825c7ccb4b1fb7ac22d4}{add\+\_\+generator}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a10ac0f054b6366025465e6775cb9983a}{create\+\_\+group\+\_\+tree}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+full, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a77dbb9429e40ca83098f314bf0e3c44a}{print\+\_\+transversals}} ()
+\item 
+void \mbox{\hyperlink{classsims_a817d3d28dddde6291dd166eed121057e}{print\+\_\+transversals\+\_\+short}} ()
+\item 
+void \mbox{\hyperlink{classsims_a122d9276cad4b4fbb8ea6f7831d43020}{print\+\_\+transversal\+\_\+lengths}} ()
+\item 
+void \mbox{\hyperlink{classsims_aafae664e1594cffd4317cf881748cf0b}{print\+\_\+orbit\+\_\+len}} ()
+\item 
+void \mbox{\hyperlink{classsims_a93c3d22dc3ac6d78acc60bad65234944}{print}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a49dfebd7ef9b23cb3c1264bc462f2233}{print\+\_\+generators}} ()
+\item 
+void \mbox{\hyperlink{classsims_ab1db48a4211b1bc26bf45af9f38b1613}{print\+\_\+generators\+\_\+tex}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsims_ae46e51d796b88c621c497fc1cb7cf90e}{print\+\_\+generators\+\_\+as\+\_\+permutations}} ()
+\item 
+void \mbox{\hyperlink{classsims_adead6abd4ac7a6a90073271c4fee5671}{print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}})
+\item 
+void \mbox{\hyperlink{classsims_ab26955fba9bb5a6fe176b4f12d0a6c5a}{print\+\_\+basic\+\_\+orbits}} ()
+\item 
+void \mbox{\hyperlink{classsims_ae777e80bb7cef4f757c701173f924a6d}{print\+\_\+basic\+\_\+orbit}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classsims_a4630b82437f49635da45c5fc1953d919}{print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_acdcef5adbae43ca98568ba1e6aa5b6a2}{generator\+\_\+depth}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} gen\+\_\+idx)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a0cc71edeac2341268435d5bbeb73fb8d}{generator\+\_\+depth}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classsims_aa442445175656570fa35febbe790efad}{group\+\_\+order}} (\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&\mbox{\hyperlink{simeon_8_c_a1516b736c8ebbfb03a9dd7d8826cd9a6}{go}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a26f7773de3c1fafc2230349ea3e3bfcb}{group\+\_\+order\+\_\+\+I\+NT}} ()
+\item 
+void \mbox{\hyperlink{classsims_a2fc3bfc40a993e0a6902374465304c0c}{print\+\_\+group\+\_\+order}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsims_a15c45e963bcaa8e2e073dc48b7c24aca}{print\+\_\+group\+\_\+order\+\_\+factored}} (ostream \&ost)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a2ce587ea215dec9f0f30db8fe3ebfee1}{is\+\_\+trivial\+\_\+group}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_ab7549d6212df09ad5fdcc8b5edbe8806}{last\+\_\+moved\+\_\+base\+\_\+point}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_ae649dbf5a9440550c1ca4e402c4b4b16}{get\+\_\+image}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} gen\+\_\+idx)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a7edd11da196628bd8f070786625e359d}{get\+\_\+image}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classsims_a3443b4bbfb5573864c29b627562819d2}{swap\+\_\+points}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}})
+\item 
+void \mbox{\hyperlink{classsims_a28e72977652add0bb45a5f703243fd33}{random\+\_\+element}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a5813a13a4b5685f8bab7d248fb12cf57}{random\+\_\+element\+\_\+of\+\_\+order}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} order, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_af5aeca809be7c10df8493c1b9ef9e980}{random\+\_\+elements\+\_\+of\+\_\+order}} (\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$elts, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$orders, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a8ae2ffa971c2aac809d83c18e4e91926}{path\+\_\+unrank\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_ad4cae0247047e591881fb8b8be40b540}{path\+\_\+rank\+\_\+\+I\+NT}} ()
+\item 
+void \mbox{\hyperlink{classsims_a4a9bc25b1b8e61ba34d6d3d9f9fb8ab8}{element\+\_\+from\+\_\+path}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_affad99d2bb7ef403201daefaeccb4f79}{element\+\_\+from\+\_\+path\+\_\+inv}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classsims_ae7e72ffe2204f17d3e4d19360c59f147}{element\+\_\+unrank}} (\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ae4ed39ddd4f985a306c6edae4d9f167e}{element\+\_\+unrank}} (\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classsims_a00fb332192d01becb17b6a059482fc8d}{element\+\_\+rank}} (\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classsims_a435d84bb7bf7292f14593b2a4344151f}{element\+\_\+unrank\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aac07b378ca225ec7f6f992ad08f31869}{element\+\_\+unrank\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a8ff29017c518c9ed459a7ea9eade2974}{element\+\_\+rank\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a110f6a1c3b27159d76726309fb0bd748}{is\+\_\+element\+\_\+of}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt)
+\item 
+void \mbox{\hyperlink{classsims_af0dc692d7920ab6e6cd4a79778faa6e0}{test\+\_\+element\+\_\+rank\+\_\+unrank}} ()
+\item 
+void \mbox{\hyperlink{classsims_a3d669dba4d005cd2399388f27f44cd04}{coset\+\_\+rep}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_abfeb782bd253f1df5253486afb120f6f}{compute\+\_\+coset\+\_\+rep\+\_\+depth}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a22a53a24eb86dcfe54cb3588776a4d96}{compute\+\_\+coset\+\_\+rep\+\_\+path}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&Path, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&Label, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&depth, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a388f523d4ec997fce4e9ede924de99b9}{coset\+\_\+rep\+\_\+inv}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} verbose\+\_\+level\+\_\+le)
+\item 
+void \mbox{\hyperlink{classsims_ad39d4ca10a1cf40a440f92d948802388}{compute\+\_\+base\+\_\+orbits}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a7f6b55695e29ce46f965ac4c87c31a06}{compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a1ded039dbe83239f4e116fe5b84fdcea}{extend\+\_\+base\+\_\+orbit}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} new\+\_\+gen\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aabf4d450355421818e97e614bbfe2e91}{compute\+\_\+base\+\_\+orbit}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_af93aba6d77ea121ff5e1dec9fefa0002}{compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} target\+\_\+length, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aeaf4ae6bb916342a66470730af69923a}{extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order}} (\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a325b6193239b8d4c8798a47ec1b834ac}{transitive\+\_\+extension}} (\mbox{\hyperlink{classschreier}{schreier}} \&\mbox{\hyperlink{pentomino__5x5_8_c_a0824fca46b94fc0ff4ae72f3c56481aa}{O}}, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a826450b2a9f6edb57f02dd84cb43dd28}{transitive\+\_\+extension\+\_\+tolerant}} (\mbox{\hyperlink{classschreier}{schreier}} \&\mbox{\hyperlink{pentomino__5x5_8_c_a0824fca46b94fc0ff4ae72f3c56481aa}{O}}, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+tolerant, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a7c93eb6a31f9111fb72df52ae8bf909e}{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$coset\+\_\+reps, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+cosets, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a16b0c199eba22eaf54b3900896725c44}{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$coset\+\_\+reps, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+cosets, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_abe87d351a703b4966c4a7dc23b7bcdc3}{transitive\+\_\+extension\+\_\+using\+\_\+generators}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Elt\+\_\+gens, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+gens, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} subgroup\+\_\+index, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a3ab0527c4d7d0647f8f442f3cfb4c1be}{point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{simeon_8_c_a13fda35b8976a20080ec22b9d9e44e5b}{A2}}, \mbox{\hyperlink{classsims}{sims}} \&\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ae1e1893dffa372d76135b05dcb0aa700}{point\+\_\+stabilizer}} (\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a3c07d7fe18b848f6c62bc4f9616747ed}{point\+\_\+stabilizer\+\_\+with\+\_\+action}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{simeon_8_c_a13fda35b8976a20080ec22b9d9e44e5b}{A2}}, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$tl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a9b8596883351af7ca772a7b0866a4027}{strip\+\_\+and\+\_\+add}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$residue, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a4d902cab732ddf9f60788dda85b0a775}{strip}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$residue, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&drop\+\_\+out\+\_\+level, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&image, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ac9f0f17058381524d70645e9d6893e4d}{add\+\_\+generator\+\_\+at\+\_\+level}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aed07e3f4041b31d62479ed90c4cc88c8}{add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$elt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aaa77048e586c36a7639fa61ff66e0a23}{random\+\_\+schreier\+\_\+generator}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a33747471a3e1ebdee59aff4edde62669}{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel}} (\mbox{\hyperlink{classsims}{sims}} $\ast$old\+\_\+G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a20958fd83e43b33c009e873b9df2fa11}{extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel}} (\mbox{\hyperlink{classsims}{sims}} $\ast$extending\+\_\+by\+\_\+G, \mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&target\+\_\+go, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ae5fdcadcb51929b4f5c02347384d8b8d}{conjugate}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{classsims}{sims}} $\ast$old\+\_\+G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+overshooting\+\_\+\+OK, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_abe588043fe8f4e073169e80ad696b3ea}{test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} size, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a60f53e947f3a0949805cf0e422749bf5}{test\+\_\+if\+\_\+subgroup}} (\mbox{\hyperlink{classsims}{sims}} $\ast$old\+\_\+G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_afde54d656304b5a92459615f2690ea64}{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process}} (\mbox{\hyperlink{classsims}{sims}} $\ast$K, \mbox{\hyperlink{classsims}{sims}} $\ast$old\+\_\+G, \mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&target\+\_\+go, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+override\+\_\+choose\+\_\+next\+\_\+base\+\_\+point, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}($\ast$choose\+\_\+next\+\_\+base\+\_\+point\+\_\+method)(\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}}), \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ae172f57a02f7c9f6e41163897ccbdb4c}{build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators}} (\mbox{\hyperlink{classsims}{sims}} $\ast$K, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$\mbox{\hyperlink{classsims_ac1db131c547341a79a8955526bf8cdf6}{gens}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+target\+\_\+go, \mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} $\ast$target\+\_\+go, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+override\+\_\+choose\+\_\+next\+\_\+base\+\_\+point, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}($\ast$choose\+\_\+next\+\_\+base\+\_\+point\+\_\+method)(\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}}), \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a7ecab5d843b1960ba9386e1b5dd41b95}{closure\+\_\+group}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+times, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ace25b785e118af45ce824503c303d03b}{write\+\_\+all\+\_\+group\+\_\+elements}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a2cbbf659341abe6196dba5ee638a976e}{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a000c1f285c6678fe7f591ced343588aa}{print\+\_\+all\+\_\+group\+\_\+elements}} ()
+\item 
+void \mbox{\hyperlink{classsims_ad3c082db18cfacc6d11206ccb984ef25}{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations}} ()
+\item 
+void \mbox{\hyperlink{classsims_aa117d84d5f8814bb566e170113355791}{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action}} (\mbox{\hyperlink{classaction}{action}} $\ast$A\+\_\+special)
+\item 
+void \mbox{\hyperlink{classsims_ac8dc8f09ae341b1b858b14221bb7646b}{print\+\_\+all\+\_\+transversal\+\_\+elements}} ()
+\item 
+void \mbox{\hyperlink{classsims_ad0740e3e94b3e417dbedf96666cd9add}{element\+\_\+as\+\_\+permutation}} (\mbox{\hyperlink{classaction}{action}} $\ast$A\+\_\+special, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elt\+\_\+rk, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$perm, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a311a6a637777448f31209da4f9c2d8e3}{table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&Table, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&sz, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ac445ae3fa3933272cbc36a711a1de17f}{regular\+\_\+representation}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$perm, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a86c7915d8d90083fd46b4019bd6c26c3}{center}} (\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&\mbox{\hyperlink{classsims_ac1db131c547341a79a8955526bf8cdf6}{gens}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$center\+\_\+element\+\_\+ranks, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+elements, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a55ca54637b837b2c84ca79851d857429}{all\+\_\+cosets}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$subset, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} size, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$all\+\_\+cosets, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ad683b221a956be18edb47de57bf8821a}{element\+\_\+ranks\+\_\+subgroup}} (\mbox{\hyperlink{classsims}{sims}} $\ast$\mbox{\hyperlink{classsubgroup}{subgroup}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$element\+\_\+ranks, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a76b4729b133fb5d7e1edaffe98a6eb5a}{find\+\_\+standard\+\_\+generators\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ord\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ord\+\_\+b, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ord\+\_\+ab, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+trials, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a2747368b290225e639103bff8e32ffc9}{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ord, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+trials, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_afea49ca2608d83a8e0fa9989e0730199}{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ord, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+trials, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} max\+\_\+trials, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aaa2d4a5f8ebb39fab9149d99b4d38fbc}{find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{alphabet2_8_c_a88859ce72faebb79ea0a2bca00a0f46b}{e}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+trials, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aa0b6be1174d616f816b74076ba8b1edd}{save\+\_\+list\+\_\+of\+\_\+elements}} (\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_ab7bb352911a48cf5c83b943be651f747}{read\+\_\+list\+\_\+of\+\_\+elements}} (\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_aac8aa3cabbbd4180db8c647156d0f7d4}{evaluate\+\_\+word\+\_\+\+I\+NT}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} word\+\_\+len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$word, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a525dbabfc86ad1da634566d10b29c1c1}{write\+\_\+sgs}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_acc819864b418090e81b8a060cdc384df}{read\+\_\+sgs}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$SG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_adfd9026256dd9d0ace0ebb56eff33498}{least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} lvl, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a4fd5eb5cfb71c206a57ac1205141a826}{mult\+\_\+by\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+b, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_ae38ce1b88c558e4bb4f8baa9cae54dab}{mult\+\_\+by\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+b)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_ae32c573c1c21293477e84964571e4621}{invert\+\_\+by\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_aa160a4a48cab8dc42e68ef955c98b17c}{conjugate\+\_\+by\+\_\+rank}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+b, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_ab5d31beb4b697e7c5cb05c530caae96a}{conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} rk\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Elt\+\_\+b, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Elt\+\_\+bv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_addc6f348759a62efab9c5d5b58ad3f61}{sylow\+\_\+subgroup}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{classsims}{sims}} $\ast$\mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a765233f627c6040b47d07b65ccb5529b}{is\+\_\+normalizing}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a239905009eec41ca1ca7ed9b794e1d0f}{create\+\_\+\+Cayley\+\_\+graph}} (\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$\mbox{\hyperlink{classsims_ac1db131c547341a79a8955526bf8cdf6}{gens}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&Adj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a300c4eeca13fe79bca4145c63da09142}{create\+\_\+group\+\_\+table}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&Table, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a6621d6ec45449ab1aa7bed5d72e5a829}{write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname\+\_\+base, \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$\mbox{\hyperlink{classsims_ac1db131c547341a79a8955526bf8cdf6}{gens}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_abd2e45239922c514c61c6ac523b72af0}{build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process}} (\mbox{\hyperlink{classsims}{sims}} $\ast$G, void($\ast$choose\+\_\+random\+\_\+generator\+\_\+for\+\_\+subgroup)(\mbox{\hyperlink{classsims}{sims}} $\ast$G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}}), \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a8abb8f266671da3862c8bc60294c23e8}{subgroup\+\_\+make\+\_\+characteristic\+\_\+vector}} (\mbox{\hyperlink{classsims}{sims}} $\ast$Sub, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{costas_8_c_aacbbb35f36efadbb40803bfb5480b737}{C}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_af81961f706ea98f0afd845146274a394}{normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$C\+\_\+sub, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Gen\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+gens, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&N\+\_\+go, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsims_a50d22de4969a10d88c7e7eece0ea0e3c}{order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$C\+\_\+sub, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Order, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Residue, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classaction}{action}} $\ast$ \mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a7495cb739606c584f678924d603e0c94}{my\+\_\+base\+\_\+len}}
+\item 
+\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \mbox{\hyperlink{classsims_ac1db131c547341a79a8955526bf8cdf6}{gens}}
+\item 
+\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \mbox{\hyperlink{classsims_a41d51199993a167db302ab9d1a7253cb}{gens\+\_\+inv}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_ad8fc021408c0dacd697f8bd9ea647456}{gen\+\_\+depth}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a411c00c78023dd47f7dc3324ff21a6a4}{gen\+\_\+perm}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a9adf5e45bd4cd2a32df14e1d756535d0}{nb\+\_\+gen}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a335f7f86ddd03bce4f414c53120e38e6}{path}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_af6b4c88343d7529f126a8256cdaeb8fe}{nb\+\_\+images}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$$\ast$ \mbox{\hyperlink{classsims_a1aca76aefaabba3ac26c1fa36403ac55}{images}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a63f4bc56c6b99fbcfaaa66e5d4beb0ad}{orbit\+\_\+len}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$$\ast$ \mbox{\hyperlink{classsims_afec20a4a686695d3df964733f905a3c7}{orbit}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$$\ast$ \mbox{\hyperlink{classsims_a82bf253b175af9a895da101f0c185e73}{orbit\+\_\+inv}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$$\ast$ \mbox{\hyperlink{classsims_a6ac0c65a6cec7d2e915ba54b55760786}{prev}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$$\ast$ \mbox{\hyperlink{classsims_a82f87c491aad777273eb7585830f1ce5}{label}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a261196d994dd065ef67a5e587528983e}{Elt1}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_aa75ddb6f722f9fa49d8614475326dc82}{Elt2}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a43b1a6ba376d740f171381acf3eb4294}{Elt3}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_afa6e528d6605cf6f260100ee99548421}{Elt4}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a59d83b753c0961acba332b805008128f}{strip1}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a8122c8a7cfc2ddd6af534379761c1926}{strip2}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a19fa4ca8899a61c97941470ca11f2120}{eltrk1}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a2c2c6545af6d7f6ca7c263a4617b1300}{eltrk2}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_aa58db04aa694c5d1a525c740a620a852}{cosetrep}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a9a6207f17375b33ce63169ac66b86033}{cosetrep\+\_\+tmp}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_aa99e196230a728c31c574fb68f9e3c0e}{schreier\+\_\+gen}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsims_a0fa86605b005dc9bf7150d392ec804e5}{schreier\+\_\+gen1}}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a5a4fcca6f8e8ce09f1871329c7e51fc4}{cntr\+\_\+new}} = 0
+\item 
+static \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a1b551ca3bc8411d979e64b65a67855c9}{cntr\+\_\+objects}} = 0
+\item 
+static \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsims_a903d1be5cbcbfdcaabf491fb30bb2e54}{f\+\_\+debug\+\_\+memory}} = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsims_ab96260ec513fe30c37c7a1933f4d6e7f}\label{classsims_ab96260ec513fe30c37c7a1933f4d6e7f}} 
+\index{sims@{sims}!sims@{sims}}
+\index{sims@{sims}!sims@{sims}}
+\subsubsection{\texorpdfstring{sims()}{sims()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily sims\+::sims (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2eada2ad0e325eabb600f63769400b27}\label{classsims_a2eada2ad0e325eabb600f63769400b27}} 
+\index{sims@{sims}!sims@{sims}}
+\index{sims@{sims}!sims@{sims}}
+\subsubsection{\texorpdfstring{sims()}{sims()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily sims\+::sims (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a7cc925349e00203fae2e4a54ca3788b3}\label{classsims_a7cc925349e00203fae2e4a54ca3788b3}} 
+\index{sims@{sims}!````~sims@{$\sim$sims}}
+\index{````~sims@{$\sim$sims}!sims@{sims}}
+\subsubsection{\texorpdfstring{$\sim$sims()}{~sims()}}
+{\footnotesize\ttfamily sims\+::$\sim$sims (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classsims_add28c3fa3ed9825c7ccb4b1fb7ac22d4}\label{classsims_add28c3fa3ed9825c7ccb4b1fb7ac22d4}} 
+\index{sims@{sims}!add\+\_\+generator@{add\+\_\+generator}}
+\index{add\+\_\+generator@{add\+\_\+generator}!sims@{sims}}
+\subsubsection{\texorpdfstring{add\+\_\+generator()}{add\_generator()}}
+{\footnotesize\ttfamily void sims\+::add\+\_\+generator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ac9f0f17058381524d70645e9d6893e4d}\label{classsims_ac9f0f17058381524d70645e9d6893e4d}} 
+\index{sims@{sims}!add\+\_\+generator\+\_\+at\+\_\+level@{add\+\_\+generator\+\_\+at\+\_\+level}}
+\index{add\+\_\+generator\+\_\+at\+\_\+level@{add\+\_\+generator\+\_\+at\+\_\+level}!sims@{sims}}
+\subsubsection{\texorpdfstring{add\+\_\+generator\+\_\+at\+\_\+level()}{add\_generator\_at\_level()}}
+{\footnotesize\ttfamily void sims\+::add\+\_\+generator\+\_\+at\+\_\+level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aed07e3f4041b31d62479ed90c4cc88c8}\label{classsims_aed07e3f4041b31d62479ed90c4cc88c8}} 
+\index{sims@{sims}!add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only@{add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only}}
+\index{add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only@{add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only}!sims@{sims}}
+\subsubsection{\texorpdfstring{add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only()}{add\_generator\_at\_level\_only()}}
+{\footnotesize\ttfamily void sims\+::add\+\_\+generator\+\_\+at\+\_\+level\+\_\+only (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a55ca54637b837b2c84ca79851d857429}\label{classsims_a55ca54637b837b2c84ca79851d857429}} 
+\index{sims@{sims}!all\+\_\+cosets@{all\+\_\+cosets}}
+\index{all\+\_\+cosets@{all\+\_\+cosets}!sims@{sims}}
+\subsubsection{\texorpdfstring{all\+\_\+cosets()}{all\_cosets()}}
+{\footnotesize\ttfamily void sims\+::all\+\_\+cosets (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{subset,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{size,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{all\+\_\+cosets,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae172f57a02f7c9f6e41163897ccbdb4c}\label{classsims_ae172f57a02f7c9f6e41163897ccbdb4c}} 
+\index{sims@{sims}!build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators@{build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators}}
+\index{build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators@{build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators}!sims@{sims}}
+\subsubsection{\texorpdfstring{build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators()}{build\_up\_group\_from\_generators()}}
+{\footnotesize\ttfamily void sims\+::build\+\_\+up\+\_\+group\+\_\+from\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{K,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$}]{gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+target\+\_\+go,  }\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} $\ast$}]{target\+\_\+go,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+override\+\_\+choose\+\_\+next\+\_\+base\+\_\+point,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}($\ast$)(\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})}]{choose\+\_\+next\+\_\+base\+\_\+point\+\_\+method,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_afde54d656304b5a92459615f2690ea64}\label{classsims_afde54d656304b5a92459615f2690ea64}} 
+\index{sims@{sims}!build\+\_\+up\+\_\+group\+\_\+random\+\_\+process@{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process}}
+\index{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process@{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process}!sims@{sims}}
+\subsubsection{\texorpdfstring{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process()}{build\_up\_group\_random\_process()}}
+{\footnotesize\ttfamily void sims\+::build\+\_\+up\+\_\+group\+\_\+random\+\_\+process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{K,  }\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{old\+\_\+G,  }\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&}]{target\+\_\+go,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+override\+\_\+choose\+\_\+next\+\_\+base\+\_\+point,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}($\ast$)(\mbox{\hyperlink{classaction}{action}} $\ast$\mbox{\hyperlink{classsims_a3311c97dc08837220191985b1c7ee73f}{A}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})}]{choose\+\_\+next\+\_\+base\+\_\+point\+\_\+method,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a33747471a3e1ebdee59aff4edde62669}\label{classsims_a33747471a3e1ebdee59aff4edde62669}} 
+\index{sims@{sims}!build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel@{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel}}
+\index{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel@{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel}!sims@{sims}}
+\subsubsection{\texorpdfstring{build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel()}{build\_up\_group\_random\_process\_no\_kernel()}}
+{\footnotesize\ttfamily void sims\+::build\+\_\+up\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{old\+\_\+G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_abd2e45239922c514c61c6ac523b72af0}\label{classsims_abd2e45239922c514c61c6ac523b72af0}} 
+\index{sims@{sims}!build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process@{build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process}}
+\index{build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process@{build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process}!sims@{sims}}
+\subsubsection{\texorpdfstring{build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process()}{build\_up\_subgroup\_random\_process()}}
+{\footnotesize\ttfamily void sims\+::build\+\_\+up\+\_\+subgroup\+\_\+random\+\_\+process (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{G,  }\item[{void($\ast$)(\mbox{\hyperlink{classsims}{sims}} $\ast$G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})}]{choose\+\_\+random\+\_\+generator\+\_\+for\+\_\+subgroup,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a86c7915d8d90083fd46b4019bd6c26c3}\label{classsims_a86c7915d8d90083fd46b4019bd6c26c3}} 
+\index{sims@{sims}!center@{center}}
+\index{center@{center}!sims@{sims}}
+\subsubsection{\texorpdfstring{center()}{center()}}
+{\footnotesize\ttfamily void sims\+::center (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{center\+\_\+element\+\_\+ranks,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+elements,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a7ecab5d843b1960ba9386e1b5dd41b95}\label{classsims_a7ecab5d843b1960ba9386e1b5dd41b95}} 
+\index{sims@{sims}!closure\+\_\+group@{closure\+\_\+group}}
+\index{closure\+\_\+group@{closure\+\_\+group}!sims@{sims}}
+\subsubsection{\texorpdfstring{closure\+\_\+group()}{closure\_group()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::closure\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+times,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aabf4d450355421818e97e614bbfe2e91}\label{classsims_aabf4d450355421818e97e614bbfe2e91}} 
+\index{sims@{sims}!compute\+\_\+base\+\_\+orbit@{compute\+\_\+base\+\_\+orbit}}
+\index{compute\+\_\+base\+\_\+orbit@{compute\+\_\+base\+\_\+orbit}!sims@{sims}}
+\subsubsection{\texorpdfstring{compute\+\_\+base\+\_\+orbit()}{compute\_base\_orbit()}}
+{\footnotesize\ttfamily void sims\+::compute\+\_\+base\+\_\+orbit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_af93aba6d77ea121ff5e1dec9fefa0002}\label{classsims_af93aba6d77ea121ff5e1dec9fefa0002}} 
+\index{sims@{sims}!compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length@{compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length}}
+\index{compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length@{compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length}!sims@{sims}}
+\subsubsection{\texorpdfstring{compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length()}{compute\_base\_orbit\_known\_length()}}
+{\footnotesize\ttfamily void sims\+::compute\+\_\+base\+\_\+orbit\+\_\+known\+\_\+length (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{target\+\_\+length,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ad39d4ca10a1cf40a440f92d948802388}\label{classsims_ad39d4ca10a1cf40a440f92d948802388}} 
+\index{sims@{sims}!compute\+\_\+base\+\_\+orbits@{compute\+\_\+base\+\_\+orbits}}
+\index{compute\+\_\+base\+\_\+orbits@{compute\+\_\+base\+\_\+orbits}!sims@{sims}}
+\subsubsection{\texorpdfstring{compute\+\_\+base\+\_\+orbits()}{compute\_base\_orbits()}}
+{\footnotesize\ttfamily void sims\+::compute\+\_\+base\+\_\+orbits (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a7f6b55695e29ce46f965ac4c87c31a06}\label{classsims_a7f6b55695e29ce46f965ac4c87c31a06}} 
+\index{sims@{sims}!compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length@{compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length}}
+\index{compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length@{compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length}!sims@{sims}}
+\subsubsection{\texorpdfstring{compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length()}{compute\_base\_orbits\_known\_length()}}
+{\footnotesize\ttfamily void sims\+::compute\+\_\+base\+\_\+orbits\+\_\+known\+\_\+length (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_abfeb782bd253f1df5253486afb120f6f}\label{classsims_abfeb782bd253f1df5253486afb120f6f}} 
+\index{sims@{sims}!compute\+\_\+coset\+\_\+rep\+\_\+depth@{compute\+\_\+coset\+\_\+rep\+\_\+depth}}
+\index{compute\+\_\+coset\+\_\+rep\+\_\+depth@{compute\+\_\+coset\+\_\+rep\+\_\+depth}!sims@{sims}}
+\subsubsection{\texorpdfstring{compute\+\_\+coset\+\_\+rep\+\_\+depth()}{compute\_coset\_rep\_depth()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::compute\+\_\+coset\+\_\+rep\+\_\+depth (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a22a53a24eb86dcfe54cb3588776a4d96}\label{classsims_a22a53a24eb86dcfe54cb3588776a4d96}} 
+\index{sims@{sims}!compute\+\_\+coset\+\_\+rep\+\_\+path@{compute\+\_\+coset\+\_\+rep\+\_\+path}}
+\index{compute\+\_\+coset\+\_\+rep\+\_\+path@{compute\+\_\+coset\+\_\+rep\+\_\+path}!sims@{sims}}
+\subsubsection{\texorpdfstring{compute\+\_\+coset\+\_\+rep\+\_\+path()}{compute\_coset\_rep\_path()}}
+{\footnotesize\ttfamily void sims\+::compute\+\_\+coset\+\_\+rep\+\_\+path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{Path,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{Label,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{depth,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae5fdcadcb51929b4f5c02347384d8b8d}\label{classsims_ae5fdcadcb51929b4f5c02347384d8b8d}} 
+\index{sims@{sims}!conjugate@{conjugate}}
+\index{conjugate@{conjugate}!sims@{sims}}
+\subsubsection{\texorpdfstring{conjugate()}{conjugate()}}
+{\footnotesize\ttfamily void sims\+::conjugate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{old\+\_\+G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+overshooting\+\_\+\+OK,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aa160a4a48cab8dc42e68ef955c98b17c}\label{classsims_aa160a4a48cab8dc42e68ef955c98b17c}} 
+\index{sims@{sims}!conjugate\+\_\+by\+\_\+rank@{conjugate\+\_\+by\+\_\+rank}}
+\index{conjugate\+\_\+by\+\_\+rank@{conjugate\+\_\+by\+\_\+rank}!sims@{sims}}
+\subsubsection{\texorpdfstring{conjugate\+\_\+by\+\_\+rank()}{conjugate\_by\_rank()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::conjugate\+\_\+by\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ab5d31beb4b697e7c5cb05c530caae96a}\label{classsims_ab5d31beb4b697e7c5cb05c530caae96a}} 
+\index{sims@{sims}!conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given@{conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given}}
+\index{conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given@{conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given}!sims@{sims}}
+\subsubsection{\texorpdfstring{conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given()}{conjugate\_by\_rank\_b\_bv\_given()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::conjugate\+\_\+by\+\_\+rank\+\_\+b\+\_\+bv\+\_\+given (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt\+\_\+b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt\+\_\+bv,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a3d669dba4d005cd2399388f27f44cd04}\label{classsims_a3d669dba4d005cd2399388f27f44cd04}} 
+\index{sims@{sims}!coset\+\_\+rep@{coset\+\_\+rep}}
+\index{coset\+\_\+rep@{coset\+\_\+rep}!sims@{sims}}
+\subsubsection{\texorpdfstring{coset\+\_\+rep()}{coset\_rep()}}
+{\footnotesize\ttfamily void sims\+::coset\+\_\+rep (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a388f523d4ec997fce4e9ede924de99b9}\label{classsims_a388f523d4ec997fce4e9ede924de99b9}} 
+\index{sims@{sims}!coset\+\_\+rep\+\_\+inv@{coset\+\_\+rep\+\_\+inv}}
+\index{coset\+\_\+rep\+\_\+inv@{coset\+\_\+rep\+\_\+inv}!sims@{sims}}
+\subsubsection{\texorpdfstring{coset\+\_\+rep\+\_\+inv()}{coset\_rep\_inv()}}
+{\footnotesize\ttfamily void sims\+::coset\+\_\+rep\+\_\+inv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level\+\_\+le }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a239905009eec41ca1ca7ed9b794e1d0f}\label{classsims_a239905009eec41ca1ca7ed9b794e1d0f}} 
+\index{sims@{sims}!create\+\_\+\+Cayley\+\_\+graph@{create\+\_\+\+Cayley\+\_\+graph}}
+\index{create\+\_\+\+Cayley\+\_\+graph@{create\+\_\+\+Cayley\+\_\+graph}!sims@{sims}}
+\subsubsection{\texorpdfstring{create\+\_\+\+Cayley\+\_\+graph()}{create\_Cayley\_graph()}}
+{\footnotesize\ttfamily void sims\+::create\+\_\+\+Cayley\+\_\+graph (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$}]{gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{Adj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a300c4eeca13fe79bca4145c63da09142}\label{classsims_a300c4eeca13fe79bca4145c63da09142}} 
+\index{sims@{sims}!create\+\_\+group\+\_\+table@{create\+\_\+group\+\_\+table}}
+\index{create\+\_\+group\+\_\+table@{create\+\_\+group\+\_\+table}!sims@{sims}}
+\subsubsection{\texorpdfstring{create\+\_\+group\+\_\+table()}{create\_group\_table()}}
+{\footnotesize\ttfamily void sims\+::create\+\_\+group\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{Table,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a10ac0f054b6366025465e6775cb9983a}\label{classsims_a10ac0f054b6366025465e6775cb9983a}} 
+\index{sims@{sims}!create\+\_\+group\+\_\+tree@{create\+\_\+group\+\_\+tree}}
+\index{create\+\_\+group\+\_\+tree@{create\+\_\+group\+\_\+tree}!sims@{sims}}
+\subsubsection{\texorpdfstring{create\+\_\+group\+\_\+tree()}{create\_group\_tree()}}
+{\footnotesize\ttfamily void sims\+::create\+\_\+group\+\_\+tree (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+full,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a5a4fd410f399c81c847052861e3bc3ff}\label{classsims_a5a4fd410f399c81c847052861e3bc3ff}} 
+\index{sims@{sims}!delete\+\_\+images@{delete\+\_\+images}}
+\index{delete\+\_\+images@{delete\+\_\+images}!sims@{sims}}
+\subsubsection{\texorpdfstring{delete\+\_\+images()}{delete\_images()}}
+{\footnotesize\ttfamily void sims\+::delete\+\_\+images (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ad0740e3e94b3e417dbedf96666cd9add}\label{classsims_ad0740e3e94b3e417dbedf96666cd9add}} 
+\index{sims@{sims}!element\+\_\+as\+\_\+permutation@{element\+\_\+as\+\_\+permutation}}
+\index{element\+\_\+as\+\_\+permutation@{element\+\_\+as\+\_\+permutation}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+as\+\_\+permutation()}{element\_as\_permutation()}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+as\+\_\+permutation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A\+\_\+special,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{elt\+\_\+rk,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{perm,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a4a9bc25b1b8e61ba34d6d3d9f9fb8ab8}\label{classsims_a4a9bc25b1b8e61ba34d6d3d9f9fb8ab8}} 
+\index{sims@{sims}!element\+\_\+from\+\_\+path@{element\+\_\+from\+\_\+path}}
+\index{element\+\_\+from\+\_\+path@{element\+\_\+from\+\_\+path}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+from\+\_\+path()}{element\_from\_path()}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+from\+\_\+path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_affad99d2bb7ef403201daefaeccb4f79}\label{classsims_affad99d2bb7ef403201daefaeccb4f79}} 
+\index{sims@{sims}!element\+\_\+from\+\_\+path\+\_\+inv@{element\+\_\+from\+\_\+path\+\_\+inv}}
+\index{element\+\_\+from\+\_\+path\+\_\+inv@{element\+\_\+from\+\_\+path\+\_\+inv}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+from\+\_\+path\+\_\+inv()}{element\_from\_path\_inv()}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+from\+\_\+path\+\_\+inv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a00fb332192d01becb17b6a059482fc8d}\label{classsims_a00fb332192d01becb17b6a059482fc8d}} 
+\index{sims@{sims}!element\+\_\+rank@{element\+\_\+rank}}
+\index{element\+\_\+rank@{element\+\_\+rank}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+rank()}{element\_rank()}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a8ff29017c518c9ed459a7ea9eade2974}\label{classsims_a8ff29017c518c9ed459a7ea9eade2974}} 
+\index{sims@{sims}!element\+\_\+rank\+\_\+\+I\+NT@{element\+\_\+rank\+\_\+\+I\+NT}}
+\index{element\+\_\+rank\+\_\+\+I\+NT@{element\+\_\+rank\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+rank\+\_\+\+I\+N\+T()}{element\_rank\_INT()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::element\+\_\+rank\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ad683b221a956be18edb47de57bf8821a}\label{classsims_ad683b221a956be18edb47de57bf8821a}} 
+\index{sims@{sims}!element\+\_\+ranks\+\_\+subgroup@{element\+\_\+ranks\+\_\+subgroup}}
+\index{element\+\_\+ranks\+\_\+subgroup@{element\+\_\+ranks\+\_\+subgroup}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+ranks\+\_\+subgroup()}{element\_ranks\_subgroup()}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+ranks\+\_\+subgroup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{subgroup,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{element\+\_\+ranks,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae7e72ffe2204f17d3e4d19360c59f147}\label{classsims_ae7e72ffe2204f17d3e4d19360c59f147}} 
+\index{sims@{sims}!element\+\_\+unrank@{element\+\_\+unrank}}
+\index{element\+\_\+unrank@{element\+\_\+unrank}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+unrank()}{element\_unrank()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+unrank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae4ed39ddd4f985a306c6edae4d9f167e}\label{classsims_ae4ed39ddd4f985a306c6edae4d9f167e}} 
+\index{sims@{sims}!element\+\_\+unrank@{element\+\_\+unrank}}
+\index{element\+\_\+unrank@{element\+\_\+unrank}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+unrank()}{element\_unrank()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+unrank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a435d84bb7bf7292f14593b2a4344151f}\label{classsims_a435d84bb7bf7292f14593b2a4344151f}} 
+\index{sims@{sims}!element\+\_\+unrank\+\_\+\+I\+NT@{element\+\_\+unrank\+\_\+\+I\+NT}}
+\index{element\+\_\+unrank\+\_\+\+I\+NT@{element\+\_\+unrank\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+unrank\+\_\+\+I\+N\+T()}{element\_unrank\_INT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+unrank\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aac07b378ca225ec7f6f992ad08f31869}\label{classsims_aac07b378ca225ec7f6f992ad08f31869}} 
+\index{sims@{sims}!element\+\_\+unrank\+\_\+\+I\+NT@{element\+\_\+unrank\+\_\+\+I\+NT}}
+\index{element\+\_\+unrank\+\_\+\+I\+NT@{element\+\_\+unrank\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{element\+\_\+unrank\+\_\+\+I\+N\+T()}{element\_unrank\_INT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void sims\+::element\+\_\+unrank\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aac8aa3cabbbd4180db8c647156d0f7d4}\label{classsims_aac8aa3cabbbd4180db8c647156d0f7d4}} 
+\index{sims@{sims}!evaluate\+\_\+word\+\_\+\+I\+NT@{evaluate\+\_\+word\+\_\+\+I\+NT}}
+\index{evaluate\+\_\+word\+\_\+\+I\+NT@{evaluate\+\_\+word\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{evaluate\+\_\+word\+\_\+\+I\+N\+T()}{evaluate\_word\_INT()}}
+{\footnotesize\ttfamily void sims\+::evaluate\+\_\+word\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{word\+\_\+len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{word,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a1ded039dbe83239f4e116fe5b84fdcea}\label{classsims_a1ded039dbe83239f4e116fe5b84fdcea}} 
+\index{sims@{sims}!extend\+\_\+base\+\_\+orbit@{extend\+\_\+base\+\_\+orbit}}
+\index{extend\+\_\+base\+\_\+orbit@{extend\+\_\+base\+\_\+orbit}!sims@{sims}}
+\subsubsection{\texorpdfstring{extend\+\_\+base\+\_\+orbit()}{extend\_base\_orbit()}}
+{\footnotesize\ttfamily void sims\+::extend\+\_\+base\+\_\+orbit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{new\+\_\+gen\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a20958fd83e43b33c009e873b9df2fa11}\label{classsims_a20958fd83e43b33c009e873b9df2fa11}} 
+\index{sims@{sims}!extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel@{extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel}}
+\index{extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel@{extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel}!sims@{sims}}
+\subsubsection{\texorpdfstring{extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel()}{extend\_group\_random\_process\_no\_kernel()}}
+{\footnotesize\ttfamily void sims\+::extend\+\_\+group\+\_\+random\+\_\+process\+\_\+no\+\_\+kernel (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{extending\+\_\+by\+\_\+G,  }\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&}]{target\+\_\+go,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aeaf4ae6bb916342a66470730af69923a}\label{classsims_aeaf4ae6bb916342a66470730af69923a}} 
+\index{sims@{sims}!extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order@{extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order}}
+\index{extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order@{extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order}!sims@{sims}}
+\subsubsection{\texorpdfstring{extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order()}{extract\_strong\_generators\_in\_order()}}
+{\footnotesize\ttfamily void sims\+::extract\+\_\+strong\+\_\+generators\+\_\+in\+\_\+order (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2747368b290225e639103bff8e32ffc9}\label{classsims_a2747368b290225e639103bff8e32ffc9}} 
+\index{sims@{sims}!find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT@{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT}}
+\index{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT@{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+N\+T()}{find\_element\_of\_given\_order\_INT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ord,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+trials,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_afea49ca2608d83a8e0fa9989e0730199}\label{classsims_afea49ca2608d83a8e0fa9989e0730199}} 
+\index{sims@{sims}!find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT@{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT}}
+\index{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT@{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+N\+T()}{find\_element\_of\_given\_order\_INT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::find\+\_\+element\+\_\+of\+\_\+given\+\_\+order\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ord,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+trials,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{max\+\_\+trials,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aaa2d4a5f8ebb39fab9149d99b4d38fbc}\label{classsims_aaa2d4a5f8ebb39fab9149d99b4d38fbc}} 
+\index{sims@{sims}!find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order@{find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order}}
+\index{find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order@{find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order}!sims@{sims}}
+\subsubsection{\texorpdfstring{find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order()}{find\_element\_of\_prime\_power\_order()}}
+{\footnotesize\ttfamily void sims\+::find\+\_\+element\+\_\+of\+\_\+prime\+\_\+power\+\_\+order (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{e,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+trials,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a76b4729b133fb5d7e1edaffe98a6eb5a}\label{classsims_a76b4729b133fb5d7e1edaffe98a6eb5a}} 
+\index{sims@{sims}!find\+\_\+standard\+\_\+generators\+\_\+\+I\+NT@{find\+\_\+standard\+\_\+generators\+\_\+\+I\+NT}}
+\index{find\+\_\+standard\+\_\+generators\+\_\+\+I\+NT@{find\+\_\+standard\+\_\+generators\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{find\+\_\+standard\+\_\+generators\+\_\+\+I\+N\+T()}{find\_standard\_generators\_INT()}}
+{\footnotesize\ttfamily void sims\+::find\+\_\+standard\+\_\+generators\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ord\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ord\+\_\+b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ord\+\_\+ab,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+trials,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ab596438fd94e1fcafbf69d32024e93bf}\label{classsims_ab596438fd94e1fcafbf69d32024e93bf}} 
+\index{sims@{sims}!freeself@{freeself}}
+\index{freeself@{freeself}!sims@{sims}}
+\subsubsection{\texorpdfstring{freeself()}{freeself()}}
+{\footnotesize\ttfamily void sims\+::freeself (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_acdcef5adbae43ca98568ba1e6aa5b6a2}\label{classsims_acdcef5adbae43ca98568ba1e6aa5b6a2}} 
+\index{sims@{sims}!generator\+\_\+depth@{generator\+\_\+depth}}
+\index{generator\+\_\+depth@{generator\+\_\+depth}!sims@{sims}}
+\subsubsection{\texorpdfstring{generator\+\_\+depth()}{generator\_depth()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::generator\+\_\+depth (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{gen\+\_\+idx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a0cc71edeac2341268435d5bbeb73fb8d}\label{classsims_a0cc71edeac2341268435d5bbeb73fb8d}} 
+\index{sims@{sims}!generator\+\_\+depth@{generator\+\_\+depth}}
+\index{generator\+\_\+depth@{generator\+\_\+depth}!sims@{sims}}
+\subsubsection{\texorpdfstring{generator\+\_\+depth()}{generator\_depth()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::generator\+\_\+depth (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae649dbf5a9440550c1ca4e402c4b4b16}\label{classsims_ae649dbf5a9440550c1ca4e402c4b4b16}} 
+\index{sims@{sims}!get\+\_\+image@{get\+\_\+image}}
+\index{get\+\_\+image@{get\+\_\+image}!sims@{sims}}
+\subsubsection{\texorpdfstring{get\+\_\+image()}{get\_image()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::get\+\_\+image (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{gen\+\_\+idx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a7edd11da196628bd8f070786625e359d}\label{classsims_a7edd11da196628bd8f070786625e359d}} 
+\index{sims@{sims}!get\+\_\+image@{get\+\_\+image}}
+\index{get\+\_\+image@{get\+\_\+image}!sims@{sims}}
+\subsubsection{\texorpdfstring{get\+\_\+image()}{get\_image()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::get\+\_\+image (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aa442445175656570fa35febbe790efad}\label{classsims_aa442445175656570fa35febbe790efad}} 
+\index{sims@{sims}!group\+\_\+order@{group\+\_\+order}}
+\index{group\+\_\+order@{group\+\_\+order}!sims@{sims}}
+\subsubsection{\texorpdfstring{group\+\_\+order()}{group\_order()}}
+{\footnotesize\ttfamily void sims\+::group\+\_\+order (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \&}]{go }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a26f7773de3c1fafc2230349ea3e3bfcb}\label{classsims_a26f7773de3c1fafc2230349ea3e3bfcb}} 
+\index{sims@{sims}!group\+\_\+order\+\_\+\+I\+NT@{group\+\_\+order\+\_\+\+I\+NT}}
+\index{group\+\_\+order\+\_\+\+I\+NT@{group\+\_\+order\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{group\+\_\+order\+\_\+\+I\+N\+T()}{group\_order\_INT()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::group\+\_\+order\+\_\+\+I\+NT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2eedbb17ba9644f7d57d81dafab0eb01}\label{classsims_a2eedbb17ba9644f7d57d81dafab0eb01}} 
+\index{sims@{sims}!images\+\_\+append@{images\+\_\+append}}
+\index{images\+\_\+append@{images\+\_\+append}!sims@{sims}}
+\subsubsection{\texorpdfstring{images\+\_\+append()}{images\_append()}}
+{\footnotesize\ttfamily void sims\+::images\+\_\+append (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a02eb61ed14f75cfe4dc0770142c1bff0}\label{classsims_a02eb61ed14f75cfe4dc0770142c1bff0}} 
+\index{sims@{sims}!init@{init}}
+\index{init@{init}!sims@{sims}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void sims\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_af8c21505bf172665ba503cf3138f38cd}\label{classsims_af8c21505bf172665ba503cf3138f38cd}} 
+\index{sims@{sims}!init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm@{init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm}}
+\index{init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm@{init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm()}{init\_generator\_depth\_and\_perm()}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aa2a7908389727bdfa05d034e8d53a818}\label{classsims_aa2a7908389727bdfa05d034e8d53a818}} 
+\index{sims@{sims}!init\+\_\+generators@{init\+\_\+generators}}
+\index{init\+\_\+generators@{init\+\_\+generators}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+generators()}{init\_generators()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{generators,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2917ebf2dc37af6cfa39310549994d98}\label{classsims_a2917ebf2dc37af6cfa39310549994d98}} 
+\index{sims@{sims}!init\+\_\+generators@{init\+\_\+generators}}
+\index{init\+\_\+generators@{init\+\_\+generators}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+generators()}{init\_generators()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a116abb02245f99c0152d867e0e640c77}\label{classsims_a116abb02245f99c0152d867e0e640c77}} 
+\index{sims@{sims}!init\+\_\+generators\+\_\+by\+\_\+hdl@{init\+\_\+generators\+\_\+by\+\_\+hdl}}
+\index{init\+\_\+generators\+\_\+by\+\_\+hdl@{init\+\_\+generators\+\_\+by\+\_\+hdl}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+generators\+\_\+by\+\_\+hdl()}{init\_generators\_by\_hdl()}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+generators\+\_\+by\+\_\+hdl (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{gen\+\_\+hdl }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a7fb1a9d3c6355c551f495d3d79e2303e}\label{classsims_a7fb1a9d3c6355c551f495d3d79e2303e}} 
+\index{sims@{sims}!init\+\_\+images@{init\+\_\+images}}
+\index{init\+\_\+images@{init\+\_\+images}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+images()}{init\_images()}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+images (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+images }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a6a55a0a4e5124654f999933fd635334a}\label{classsims_a6a55a0a4e5124654f999933fd635334a}} 
+\index{sims@{sims}!init\+\_\+trivial\+\_\+group@{init\+\_\+trivial\+\_\+group}}
+\index{init\+\_\+trivial\+\_\+group@{init\+\_\+trivial\+\_\+group}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+trivial\+\_\+group()}{init\_trivial\_group()}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+trivial\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ac55702550a4671a721f78345dd9bff70}\label{classsims_ac55702550a4671a721f78345dd9bff70}} 
+\index{sims@{sims}!init\+\_\+trivial\+\_\+orbit@{init\+\_\+trivial\+\_\+orbit}}
+\index{init\+\_\+trivial\+\_\+orbit@{init\+\_\+trivial\+\_\+orbit}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+trivial\+\_\+orbit()}{init\_trivial\_orbit()}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+trivial\+\_\+orbit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a1010f2dc330b7c5ae10128c0b7dcbefd}\label{classsims_a1010f2dc330b7c5ae10128c0b7dcbefd}} 
+\index{sims@{sims}!init\+\_\+without\+\_\+base@{init\+\_\+without\+\_\+base}}
+\index{init\+\_\+without\+\_\+base@{init\+\_\+without\+\_\+base}!sims@{sims}}
+\subsubsection{\texorpdfstring{init\+\_\+without\+\_\+base()}{init\_without\_base()}}
+{\footnotesize\ttfamily void sims\+::init\+\_\+without\+\_\+base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_abe36dd0812bde20447f5aaa8384596a7}\label{classsims_abe36dd0812bde20447f5aaa8384596a7}} 
+\index{sims@{sims}!initialize\+\_\+table@{initialize\+\_\+table}}
+\index{initialize\+\_\+table@{initialize\+\_\+table}!sims@{sims}}
+\subsubsection{\texorpdfstring{initialize\+\_\+table()}{initialize\_table()}}
+{\footnotesize\ttfamily void sims\+::initialize\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae32c573c1c21293477e84964571e4621}\label{classsims_ae32c573c1c21293477e84964571e4621}} 
+\index{sims@{sims}!invert\+\_\+by\+\_\+rank@{invert\+\_\+by\+\_\+rank}}
+\index{invert\+\_\+by\+\_\+rank@{invert\+\_\+by\+\_\+rank}!sims@{sims}}
+\subsubsection{\texorpdfstring{invert\+\_\+by\+\_\+rank()}{invert\_by\_rank()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::invert\+\_\+by\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a110f6a1c3b27159d76726309fb0bd748}\label{classsims_a110f6a1c3b27159d76726309fb0bd748}} 
+\index{sims@{sims}!is\+\_\+element\+\_\+of@{is\+\_\+element\+\_\+of}}
+\index{is\+\_\+element\+\_\+of@{is\+\_\+element\+\_\+of}!sims@{sims}}
+\subsubsection{\texorpdfstring{is\+\_\+element\+\_\+of()}{is\_element\_of()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::is\+\_\+element\+\_\+of (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a765233f627c6040b47d07b65ccb5529b}\label{classsims_a765233f627c6040b47d07b65ccb5529b}} 
+\index{sims@{sims}!is\+\_\+normalizing@{is\+\_\+normalizing}}
+\index{is\+\_\+normalizing@{is\+\_\+normalizing}!sims@{sims}}
+\subsubsection{\texorpdfstring{is\+\_\+normalizing()}{is\_normalizing()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::is\+\_\+normalizing (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2ce587ea215dec9f0f30db8fe3ebfee1}\label{classsims_a2ce587ea215dec9f0f30db8fe3ebfee1}} 
+\index{sims@{sims}!is\+\_\+trivial\+\_\+group@{is\+\_\+trivial\+\_\+group}}
+\index{is\+\_\+trivial\+\_\+group@{is\+\_\+trivial\+\_\+group}!sims@{sims}}
+\subsubsection{\texorpdfstring{is\+\_\+trivial\+\_\+group()}{is\_trivial\_group()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::is\+\_\+trivial\+\_\+group (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ab7549d6212df09ad5fdcc8b5edbe8806}\label{classsims_ab7549d6212df09ad5fdcc8b5edbe8806}} 
+\index{sims@{sims}!last\+\_\+moved\+\_\+base\+\_\+point@{last\+\_\+moved\+\_\+base\+\_\+point}}
+\index{last\+\_\+moved\+\_\+base\+\_\+point@{last\+\_\+moved\+\_\+base\+\_\+point}!sims@{sims}}
+\subsubsection{\texorpdfstring{last\+\_\+moved\+\_\+base\+\_\+point()}{last\_moved\_base\_point()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::last\+\_\+moved\+\_\+base\+\_\+point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_adfd9026256dd9d0ace0ebb56eff33498}\label{classsims_adfd9026256dd9d0ace0ebb56eff33498}} 
+\index{sims@{sims}!least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level@{least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level}}
+\index{least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level@{least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level}!sims@{sims}}
+\subsubsection{\texorpdfstring{least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level()}{least\_moved\_point\_at\_level()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::least\+\_\+moved\+\_\+point\+\_\+at\+\_\+level (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a4fd5eb5cfb71c206a57ac1205141a826}\label{classsims_a4fd5eb5cfb71c206a57ac1205141a826}} 
+\index{sims@{sims}!mult\+\_\+by\+\_\+rank@{mult\+\_\+by\+\_\+rank}}
+\index{mult\+\_\+by\+\_\+rank@{mult\+\_\+by\+\_\+rank}!sims@{sims}}
+\subsubsection{\texorpdfstring{mult\+\_\+by\+\_\+rank()}{mult\_by\_rank()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::mult\+\_\+by\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae38ce1b88c558e4bb4f8baa9cae54dab}\label{classsims_ae38ce1b88c558e4bb4f8baa9cae54dab}} 
+\index{sims@{sims}!mult\+\_\+by\+\_\+rank@{mult\+\_\+by\+\_\+rank}}
+\index{mult\+\_\+by\+\_\+rank@{mult\+\_\+by\+\_\+rank}!sims@{sims}}
+\subsubsection{\texorpdfstring{mult\+\_\+by\+\_\+rank()}{mult\_by\_rank()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::mult\+\_\+by\+\_\+rank (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{rk\+\_\+b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_af81961f706ea98f0afd845146274a394}\label{classsims_af81961f706ea98f0afd845146274a394}} 
+\index{sims@{sims}!normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector@{normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector}}
+\index{normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector@{normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector}!sims@{sims}}
+\subsubsection{\texorpdfstring{normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector()}{normalizer\_based\_on\_characteristic\_vector()}}
+{\footnotesize\ttfamily void sims\+::normalizer\+\_\+based\+\_\+on\+\_\+characteristic\+\_\+vector (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{C\+\_\+sub,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Gen\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{N,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{N\+\_\+go,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a47d4aacfa330b9a59d87fb6bf7529e08}\label{classsims_a47d4aacfa330b9a59d87fb6bf7529e08}} 
+\index{sims@{sims}!null@{null}}
+\index{null@{null}!sims@{sims}}
+\subsubsection{\texorpdfstring{null()}{null()}}
+{\footnotesize\ttfamily void sims\+::null (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ad613390ec8ecb625454785ccc222d1d2}\label{classsims_ad613390ec8ecb625454785ccc222d1d2}} 
+\index{sims@{sims}!operator delete@{operator delete}}
+\index{operator delete@{operator delete}!sims@{sims}}
+\subsubsection{\texorpdfstring{operator delete()}{operator delete()}}
+{\footnotesize\ttfamily void sims\+::operator delete (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a5eaebf678ba04cf9022bceb41b643455}\label{classsims_a5eaebf678ba04cf9022bceb41b643455}} 
+\index{sims@{sims}!operator delete\mbox{[}\mbox{]}@{operator delete[]}}
+\index{operator delete\mbox{[}\mbox{]}@{operator delete[]}!sims@{sims}}
+\subsubsection{\texorpdfstring{operator delete[]()}{operator delete[]()}}
+{\footnotesize\ttfamily void sims\+::operator delete\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{void $\ast$}]{ptr,  }\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a6aeefc9697cb10f60e76c2b0e69e48ef}\label{classsims_a6aeefc9697cb10f60e76c2b0e69e48ef}} 
+\index{sims@{sims}!operator new@{operator new}}
+\index{operator new@{operator new}!sims@{sims}}
+\subsubsection{\texorpdfstring{operator new()}{operator new()}}
+{\footnotesize\ttfamily void $\ast$ sims\+::operator new (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a32921b09a44038da87de06573e9cdc17}\label{classsims_a32921b09a44038da87de06573e9cdc17}} 
+\index{sims@{sims}!operator new\mbox{[}\mbox{]}@{operator new[]}}
+\index{operator new\mbox{[}\mbox{]}@{operator new[]}!sims@{sims}}
+\subsubsection{\texorpdfstring{operator new[]()}{operator new[]()}}
+{\footnotesize\ttfamily void $\ast$ sims\+::operator new\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{bytes }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a50d22de4969a10d88c7e7eece0ea0e3c}\label{classsims_a50d22de4969a10d88c7e7eece0ea0e3c}} 
+\index{sims@{sims}!order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup@{order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup}}
+\index{order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup@{order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup}!sims@{sims}}
+\subsubsection{\texorpdfstring{order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup()}{order\_structure\_relative\_to\_subgroup()}}
+{\footnotesize\ttfamily void sims\+::order\+\_\+structure\+\_\+relative\+\_\+to\+\_\+subgroup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{C\+\_\+sub,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Order,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Residue,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ad4cae0247047e591881fb8b8be40b540}\label{classsims_ad4cae0247047e591881fb8b8be40b540}} 
+\index{sims@{sims}!path\+\_\+rank\+\_\+\+I\+NT@{path\+\_\+rank\+\_\+\+I\+NT}}
+\index{path\+\_\+rank\+\_\+\+I\+NT@{path\+\_\+rank\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{path\+\_\+rank\+\_\+\+I\+N\+T()}{path\_rank\_INT()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::path\+\_\+rank\+\_\+\+I\+NT (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a8ae2ffa971c2aac809d83c18e4e91926}\label{classsims_a8ae2ffa971c2aac809d83c18e4e91926}} 
+\index{sims@{sims}!path\+\_\+unrank\+\_\+\+I\+NT@{path\+\_\+unrank\+\_\+\+I\+NT}}
+\index{path\+\_\+unrank\+\_\+\+I\+NT@{path\+\_\+unrank\+\_\+\+I\+NT}!sims@{sims}}
+\subsubsection{\texorpdfstring{path\+\_\+unrank\+\_\+\+I\+N\+T()}{path\_unrank\_INT()}}
+{\footnotesize\ttfamily void sims\+::path\+\_\+unrank\+\_\+\+I\+NT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae1e1893dffa372d76135b05dcb0aa700}\label{classsims_ae1e1893dffa372d76135b05dcb0aa700}} 
+\index{sims@{sims}!point\+\_\+stabilizer@{point\+\_\+stabilizer}}
+\index{point\+\_\+stabilizer@{point\+\_\+stabilizer}!sims@{sims}}
+\subsubsection{\texorpdfstring{point\+\_\+stabilizer()}{point\_stabilizer()}}
+{\footnotesize\ttfamily void sims\+::point\+\_\+stabilizer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{pt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a3ab0527c4d7d0647f8f442f3cfb4c1be}\label{classsims_a3ab0527c4d7d0647f8f442f3cfb4c1be}} 
+\index{sims@{sims}!point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action@{point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action}}
+\index{point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action@{point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action}!sims@{sims}}
+\subsubsection{\texorpdfstring{point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action()}{point\_stabilizer\_stabchain\_with\_action()}}
+{\footnotesize\ttfamily void sims\+::point\+\_\+stabilizer\+\_\+stabchain\+\_\+with\+\_\+action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A2,  }\item[{\mbox{\hyperlink{classsims}{sims}} \&}]{S,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{pt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a3c07d7fe18b848f6c62bc4f9616747ed}\label{classsims_a3c07d7fe18b848f6c62bc4f9616747ed}} 
+\index{sims@{sims}!point\+\_\+stabilizer\+\_\+with\+\_\+action@{point\+\_\+stabilizer\+\_\+with\+\_\+action}}
+\index{point\+\_\+stabilizer\+\_\+with\+\_\+action@{point\+\_\+stabilizer\+\_\+with\+\_\+action}!sims@{sims}}
+\subsubsection{\texorpdfstring{point\+\_\+stabilizer\+\_\+with\+\_\+action()}{point\_stabilizer\_with\_action()}}
+{\footnotesize\ttfamily void sims\+::point\+\_\+stabilizer\+\_\+with\+\_\+action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A2,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{pt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a93c3d22dc3ac6d78acc60bad65234944}\label{classsims_a93c3d22dc3ac6d78acc60bad65234944}} 
+\index{sims@{sims}!print@{print}}
+\index{print@{print}!sims@{sims}}
+\subsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void sims\+::print (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a000c1f285c6678fe7f591ced343588aa}\label{classsims_a000c1f285c6678fe7f591ced343588aa}} 
+\index{sims@{sims}!print\+\_\+all\+\_\+group\+\_\+elements@{print\+\_\+all\+\_\+group\+\_\+elements}}
+\index{print\+\_\+all\+\_\+group\+\_\+elements@{print\+\_\+all\+\_\+group\+\_\+elements}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+all\+\_\+group\+\_\+elements()}{print\_all\_group\_elements()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+all\+\_\+group\+\_\+elements (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ad3c082db18cfacc6d11206ccb984ef25}\label{classsims_ad3c082db18cfacc6d11206ccb984ef25}} 
+\index{sims@{sims}!print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations@{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations}}
+\index{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations@{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations()}{print\_all\_group\_elements\_as\_permutations()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aa117d84d5f8814bb566e170113355791}\label{classsims_aa117d84d5f8814bb566e170113355791}} 
+\index{sims@{sims}!print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action@{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action}}
+\index{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action@{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action()}{print\_all\_group\_elements\_as\_permutations\_in\_special\_action()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+all\+\_\+group\+\_\+elements\+\_\+as\+\_\+permutations\+\_\+in\+\_\+special\+\_\+action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A\+\_\+special }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2cbbf659341abe6196dba5ee638a976e}\label{classsims_a2cbbf659341abe6196dba5ee638a976e}} 
+\index{sims@{sims}!print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file@{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file}}
+\index{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file@{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file()}{print\_all\_group\_elements\_to\_file()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+all\+\_\+group\+\_\+elements\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ac8dc8f09ae341b1b858b14221bb7646b}\label{classsims_ac8dc8f09ae341b1b858b14221bb7646b}} 
+\index{sims@{sims}!print\+\_\+all\+\_\+transversal\+\_\+elements@{print\+\_\+all\+\_\+transversal\+\_\+elements}}
+\index{print\+\_\+all\+\_\+transversal\+\_\+elements@{print\+\_\+all\+\_\+transversal\+\_\+elements}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+all\+\_\+transversal\+\_\+elements()}{print\_all\_transversal\_elements()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+all\+\_\+transversal\+\_\+elements (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae777e80bb7cef4f757c701173f924a6d}\label{classsims_ae777e80bb7cef4f757c701173f924a6d}} 
+\index{sims@{sims}!print\+\_\+basic\+\_\+orbit@{print\+\_\+basic\+\_\+orbit}}
+\index{print\+\_\+basic\+\_\+orbit@{print\+\_\+basic\+\_\+orbit}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+basic\+\_\+orbit()}{print\_basic\_orbit()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+basic\+\_\+orbit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ab26955fba9bb5a6fe176b4f12d0a6c5a}\label{classsims_ab26955fba9bb5a6fe176b4f12d0a6c5a}} 
+\index{sims@{sims}!print\+\_\+basic\+\_\+orbits@{print\+\_\+basic\+\_\+orbits}}
+\index{print\+\_\+basic\+\_\+orbits@{print\+\_\+basic\+\_\+orbits}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+basic\+\_\+orbits()}{print\_basic\_orbits()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+basic\+\_\+orbits (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a4630b82437f49635da45c5fc1953d919}\label{classsims_a4630b82437f49635da45c5fc1953d919}} 
+\index{sims@{sims}!print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm@{print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm}}
+\index{print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm@{print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm()}{print\_generator\_depth\_and\_perm()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+generator\+\_\+depth\+\_\+and\+\_\+perm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a49dfebd7ef9b23cb3c1264bc462f2233}\label{classsims_a49dfebd7ef9b23cb3c1264bc462f2233}} 
+\index{sims@{sims}!print\+\_\+generators@{print\+\_\+generators}}
+\index{print\+\_\+generators@{print\+\_\+generators}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+generators()}{print\_generators()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+generators (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ae46e51d796b88c621c497fc1cb7cf90e}\label{classsims_ae46e51d796b88c621c497fc1cb7cf90e}} 
+\index{sims@{sims}!print\+\_\+generators\+\_\+as\+\_\+permutations@{print\+\_\+generators\+\_\+as\+\_\+permutations}}
+\index{print\+\_\+generators\+\_\+as\+\_\+permutations@{print\+\_\+generators\+\_\+as\+\_\+permutations}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+generators\+\_\+as\+\_\+permutations()}{print\_generators\_as\_permutations()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+generators\+\_\+as\+\_\+permutations (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_adead6abd4ac7a6a90073271c4fee5671}\label{classsims_adead6abd4ac7a6a90073271c4fee5671}} 
+\index{sims@{sims}!print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action@{print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action}}
+\index{print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action@{print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action()}{print\_generators\_as\_permutations\_override\_action()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+generators\+\_\+as\+\_\+permutations\+\_\+override\+\_\+action (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ab1db48a4211b1bc26bf45af9f38b1613}\label{classsims_ab1db48a4211b1bc26bf45af9f38b1613}} 
+\index{sims@{sims}!print\+\_\+generators\+\_\+tex@{print\+\_\+generators\+\_\+tex}}
+\index{print\+\_\+generators\+\_\+tex@{print\+\_\+generators\+\_\+tex}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+generators\+\_\+tex()}{print\_generators\_tex()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+generators\+\_\+tex (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a2fc3bfc40a993e0a6902374465304c0c}\label{classsims_a2fc3bfc40a993e0a6902374465304c0c}} 
+\index{sims@{sims}!print\+\_\+group\+\_\+order@{print\+\_\+group\+\_\+order}}
+\index{print\+\_\+group\+\_\+order@{print\+\_\+group\+\_\+order}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+group\+\_\+order()}{print\_group\_order()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+group\+\_\+order (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a15c45e963bcaa8e2e073dc48b7c24aca}\label{classsims_a15c45e963bcaa8e2e073dc48b7c24aca}} 
+\index{sims@{sims}!print\+\_\+group\+\_\+order\+\_\+factored@{print\+\_\+group\+\_\+order\+\_\+factored}}
+\index{print\+\_\+group\+\_\+order\+\_\+factored@{print\+\_\+group\+\_\+order\+\_\+factored}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+group\+\_\+order\+\_\+factored()}{print\_group\_order\_factored()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+group\+\_\+order\+\_\+factored (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aafae664e1594cffd4317cf881748cf0b}\label{classsims_aafae664e1594cffd4317cf881748cf0b}} 
+\index{sims@{sims}!print\+\_\+orbit\+\_\+len@{print\+\_\+orbit\+\_\+len}}
+\index{print\+\_\+orbit\+\_\+len@{print\+\_\+orbit\+\_\+len}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+orbit\+\_\+len()}{print\_orbit\_len()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+orbit\+\_\+len (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a122d9276cad4b4fbb8ea6f7831d43020}\label{classsims_a122d9276cad4b4fbb8ea6f7831d43020}} 
+\index{sims@{sims}!print\+\_\+transversal\+\_\+lengths@{print\+\_\+transversal\+\_\+lengths}}
+\index{print\+\_\+transversal\+\_\+lengths@{print\+\_\+transversal\+\_\+lengths}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+transversal\+\_\+lengths()}{print\_transversal\_lengths()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+transversal\+\_\+lengths (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a77dbb9429e40ca83098f314bf0e3c44a}\label{classsims_a77dbb9429e40ca83098f314bf0e3c44a}} 
+\index{sims@{sims}!print\+\_\+transversals@{print\+\_\+transversals}}
+\index{print\+\_\+transversals@{print\+\_\+transversals}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+transversals()}{print\_transversals()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+transversals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a817d3d28dddde6291dd166eed121057e}\label{classsims_a817d3d28dddde6291dd166eed121057e}} 
+\index{sims@{sims}!print\+\_\+transversals\+\_\+short@{print\+\_\+transversals\+\_\+short}}
+\index{print\+\_\+transversals\+\_\+short@{print\+\_\+transversals\+\_\+short}!sims@{sims}}
+\subsubsection{\texorpdfstring{print\+\_\+transversals\+\_\+short()}{print\_transversals\_short()}}
+{\footnotesize\ttfamily void sims\+::print\+\_\+transversals\+\_\+short (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a28e72977652add0bb45a5f703243fd33}\label{classsims_a28e72977652add0bb45a5f703243fd33}} 
+\index{sims@{sims}!random\+\_\+element@{random\+\_\+element}}
+\index{random\+\_\+element@{random\+\_\+element}!sims@{sims}}
+\subsubsection{\texorpdfstring{random\+\_\+element()}{random\_element()}}
+{\footnotesize\ttfamily void sims\+::random\+\_\+element (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a5813a13a4b5685f8bab7d248fb12cf57}\label{classsims_a5813a13a4b5685f8bab7d248fb12cf57}} 
+\index{sims@{sims}!random\+\_\+element\+\_\+of\+\_\+order@{random\+\_\+element\+\_\+of\+\_\+order}}
+\index{random\+\_\+element\+\_\+of\+\_\+order@{random\+\_\+element\+\_\+of\+\_\+order}!sims@{sims}}
+\subsubsection{\texorpdfstring{random\+\_\+element\+\_\+of\+\_\+order()}{random\_element\_of\_order()}}
+{\footnotesize\ttfamily void sims\+::random\+\_\+element\+\_\+of\+\_\+order (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{order,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_af5aeca809be7c10df8493c1b9ef9e980}\label{classsims_af5aeca809be7c10df8493c1b9ef9e980}} 
+\index{sims@{sims}!random\+\_\+elements\+\_\+of\+\_\+order@{random\+\_\+elements\+\_\+of\+\_\+order}}
+\index{random\+\_\+elements\+\_\+of\+\_\+order@{random\+\_\+elements\+\_\+of\+\_\+order}!sims@{sims}}
+\subsubsection{\texorpdfstring{random\+\_\+elements\+\_\+of\+\_\+order()}{random\_elements\_of\_order()}}
+{\footnotesize\ttfamily void sims\+::random\+\_\+elements\+\_\+of\+\_\+order (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$}]{elts,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{orders,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aaa77048e586c36a7639fa61ff66e0a23}\label{classsims_aaa77048e586c36a7639fa61ff66e0a23}} 
+\index{sims@{sims}!random\+\_\+schreier\+\_\+generator@{random\+\_\+schreier\+\_\+generator}}
+\index{random\+\_\+schreier\+\_\+generator@{random\+\_\+schreier\+\_\+generator}!sims@{sims}}
+\subsubsection{\texorpdfstring{random\+\_\+schreier\+\_\+generator()}{random\_schreier\_generator()}}
+{\footnotesize\ttfamily void sims\+::random\+\_\+schreier\+\_\+generator (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ab7bb352911a48cf5c83b943be651f747}\label{classsims_ab7bb352911a48cf5c83b943be651f747}} 
+\index{sims@{sims}!read\+\_\+list\+\_\+of\+\_\+elements@{read\+\_\+list\+\_\+of\+\_\+elements}}
+\index{read\+\_\+list\+\_\+of\+\_\+elements@{read\+\_\+list\+\_\+of\+\_\+elements}!sims@{sims}}
+\subsubsection{\texorpdfstring{read\+\_\+list\+\_\+of\+\_\+elements()}{read\_list\_of\_elements()}}
+{\footnotesize\ttfamily void sims\+::read\+\_\+list\+\_\+of\+\_\+elements (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_acc819864b418090e81b8a060cdc384df}\label{classsims_acc819864b418090e81b8a060cdc384df}} 
+\index{sims@{sims}!read\+\_\+sgs@{read\+\_\+sgs}}
+\index{read\+\_\+sgs@{read\+\_\+sgs}!sims@{sims}}
+\subsubsection{\texorpdfstring{read\+\_\+sgs()}{read\_sgs()}}
+{\footnotesize\ttfamily void sims\+::read\+\_\+sgs (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a9768b0070683ba04b4211aa8d0de7fbd}\label{classsims_a9768b0070683ba04b4211aa8d0de7fbd}} 
+\index{sims@{sims}!reallocate\+\_\+base@{reallocate\+\_\+base}}
+\index{reallocate\+\_\+base@{reallocate\+\_\+base}!sims@{sims}}
+\subsubsection{\texorpdfstring{reallocate\+\_\+base()}{reallocate\_base()}}
+{\footnotesize\ttfamily void sims\+::reallocate\+\_\+base (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{old\+\_\+base\+\_\+len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ac445ae3fa3933272cbc36a711a1de17f}\label{classsims_ac445ae3fa3933272cbc36a711a1de17f}} 
+\index{sims@{sims}!regular\+\_\+representation@{regular\+\_\+representation}}
+\index{regular\+\_\+representation@{regular\+\_\+representation}!sims@{sims}}
+\subsubsection{\texorpdfstring{regular\+\_\+representation()}{regular\_representation()}}
+{\footnotesize\ttfamily void sims\+::regular\+\_\+representation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{perm,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_aa0b6be1174d616f816b74076ba8b1edd}\label{classsims_aa0b6be1174d616f816b74076ba8b1edd}} 
+\index{sims@{sims}!save\+\_\+list\+\_\+of\+\_\+elements@{save\+\_\+list\+\_\+of\+\_\+elements}}
+\index{save\+\_\+list\+\_\+of\+\_\+elements@{save\+\_\+list\+\_\+of\+\_\+elements}!sims@{sims}}
+\subsubsection{\texorpdfstring{save\+\_\+list\+\_\+of\+\_\+elements()}{save\_list\_of\_elements()}}
+{\footnotesize\ttfamily void sims\+::save\+\_\+list\+\_\+of\+\_\+elements (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a4d902cab732ddf9f60788dda85b0a775}\label{classsims_a4d902cab732ddf9f60788dda85b0a775}} 
+\index{sims@{sims}!strip@{strip}}
+\index{strip@{strip}!sims@{sims}}
+\subsubsection{\texorpdfstring{strip()}{strip()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::strip (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{residue,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{drop\+\_\+out\+\_\+level,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{image,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a9b8596883351af7ca772a7b0866a4027}\label{classsims_a9b8596883351af7ca772a7b0866a4027}} 
+\index{sims@{sims}!strip\+\_\+and\+\_\+add@{strip\+\_\+and\+\_\+add}}
+\index{strip\+\_\+and\+\_\+add@{strip\+\_\+and\+\_\+add}!sims@{sims}}
+\subsubsection{\texorpdfstring{strip\+\_\+and\+\_\+add()}{strip\_and\_add()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::strip\+\_\+and\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{elt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{residue,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a8abb8f266671da3862c8bc60294c23e8}\label{classsims_a8abb8f266671da3862c8bc60294c23e8}} 
+\index{sims@{sims}!subgroup\+\_\+make\+\_\+characteristic\+\_\+vector@{subgroup\+\_\+make\+\_\+characteristic\+\_\+vector}}
+\index{subgroup\+\_\+make\+\_\+characteristic\+\_\+vector@{subgroup\+\_\+make\+\_\+characteristic\+\_\+vector}!sims@{sims}}
+\subsubsection{\texorpdfstring{subgroup\+\_\+make\+\_\+characteristic\+\_\+vector()}{subgroup\_make\_characteristic\_vector()}}
+{\footnotesize\ttfamily void sims\+::subgroup\+\_\+make\+\_\+characteristic\+\_\+vector (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{Sub,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{C,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a3443b4bbfb5573864c29b627562819d2}\label{classsims_a3443b4bbfb5573864c29b627562819d2}} 
+\index{sims@{sims}!swap\+\_\+points@{swap\+\_\+points}}
+\index{swap\+\_\+points@{swap\+\_\+points}!sims@{sims}}
+\subsubsection{\texorpdfstring{swap\+\_\+points()}{swap\_points()}}
+{\footnotesize\ttfamily void sims\+::swap\+\_\+points (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lvl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_addc6f348759a62efab9c5d5b58ad3f61}\label{classsims_addc6f348759a62efab9c5d5b58ad3f61}} 
+\index{sims@{sims}!sylow\+\_\+subgroup@{sylow\+\_\+subgroup}}
+\index{sylow\+\_\+subgroup@{sylow\+\_\+subgroup}!sims@{sims}}
+\subsubsection{\texorpdfstring{sylow\+\_\+subgroup()}{sylow\_subgroup()}}
+{\footnotesize\ttfamily void sims\+::sylow\+\_\+subgroup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{p,  }\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{P,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a311a6a637777448f31209da4f9c2d8e3}\label{classsims_a311a6a637777448f31209da4f9c2d8e3}} 
+\index{sims@{sims}!table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form@{table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form}}
+\index{table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form@{table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form}!sims@{sims}}
+\subsubsection{\texorpdfstring{table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form()}{table\_of\_group\_elements\_in\_data\_form()}}
+{\footnotesize\ttfamily void sims\+::table\+\_\+of\+\_\+group\+\_\+elements\+\_\+in\+\_\+data\+\_\+form (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\&}]{Table,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{sz,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_af0dc692d7920ab6e6cd4a79778faa6e0}\label{classsims_af0dc692d7920ab6e6cd4a79778faa6e0}} 
+\index{sims@{sims}!test\+\_\+element\+\_\+rank\+\_\+unrank@{test\+\_\+element\+\_\+rank\+\_\+unrank}}
+\index{test\+\_\+element\+\_\+rank\+\_\+unrank@{test\+\_\+element\+\_\+rank\+\_\+unrank}!sims@{sims}}
+\subsubsection{\texorpdfstring{test\+\_\+element\+\_\+rank\+\_\+unrank()}{test\_element\_rank\_unrank()}}
+{\footnotesize\ttfamily void sims\+::test\+\_\+element\+\_\+rank\+\_\+unrank (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_abe588043fe8f4e073169e80ad696b3ea}\label{classsims_abe588043fe8f4e073169e80ad696b3ea}} 
+\index{sims@{sims}!test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer@{test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer}}
+\index{test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer@{test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer}!sims@{sims}}
+\subsubsection{\texorpdfstring{test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer()}{test\_if\_in\_set\_stabilizer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::test\+\_\+if\+\_\+in\+\_\+set\+\_\+stabilizer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classaction}{action}} $\ast$}]{A,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{set,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{size,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a60f53e947f3a0949805cf0e422749bf5}\label{classsims_a60f53e947f3a0949805cf0e422749bf5}} 
+\index{sims@{sims}!test\+\_\+if\+\_\+subgroup@{test\+\_\+if\+\_\+subgroup}}
+\index{test\+\_\+if\+\_\+subgroup@{test\+\_\+if\+\_\+subgroup}!sims@{sims}}
+\subsubsection{\texorpdfstring{test\+\_\+if\+\_\+subgroup()}{test\_if\_subgroup()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::test\+\_\+if\+\_\+subgroup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsims}{sims}} $\ast$}]{old\+\_\+G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a325b6193239b8d4c8798a47ec1b834ac}\label{classsims_a325b6193239b8d4c8798a47ec1b834ac}} 
+\index{sims@{sims}!transitive\+\_\+extension@{transitive\+\_\+extension}}
+\index{transitive\+\_\+extension@{transitive\+\_\+extension}!sims@{sims}}
+\subsubsection{\texorpdfstring{transitive\+\_\+extension()}{transitive\_extension()}}
+{\footnotesize\ttfamily void sims\+::transitive\+\_\+extension (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classschreier}{schreier}} \&}]{O,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a826450b2a9f6edb57f02dd84cb43dd28}\label{classsims_a826450b2a9f6edb57f02dd84cb43dd28}} 
+\index{sims@{sims}!transitive\+\_\+extension\+\_\+tolerant@{transitive\+\_\+extension\+\_\+tolerant}}
+\index{transitive\+\_\+extension\+\_\+tolerant@{transitive\+\_\+extension\+\_\+tolerant}!sims@{sims}}
+\subsubsection{\texorpdfstring{transitive\+\_\+extension\+\_\+tolerant()}{transitive\_extension\_tolerant()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::transitive\+\_\+extension\+\_\+tolerant (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classschreier}{schreier}} \&}]{O,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+tolerant,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a16b0c199eba22eaf54b3900896725c44}\label{classsims_a16b0c199eba22eaf54b3900896725c44}} 
+\index{sims@{sims}!transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives@{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives}}
+\index{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives@{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives}!sims@{sims}}
+\subsubsection{\texorpdfstring{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives()}{transitive\_extension\_using\_coset\_representatives()}}
+{\footnotesize\ttfamily void sims\+::transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{coset\+\_\+reps,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+cosets,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a7c93eb6a31f9111fb72df52ae8bf909e}\label{classsims_a7c93eb6a31f9111fb72df52ae8bf909e}} 
+\index{sims@{sims}!transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators@{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators}}
+\index{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators@{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators}!sims@{sims}}
+\subsubsection{\texorpdfstring{transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators()}{transitive\_extension\_using\_coset\_representatives\_extract\_generators()}}
+{\footnotesize\ttfamily void sims\+::transitive\+\_\+extension\+\_\+using\+\_\+coset\+\_\+representatives\+\_\+extract\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{coset\+\_\+reps,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+cosets,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_abe87d351a703b4966c4a7dc23b7bcdc3}\label{classsims_abe87d351a703b4966c4a7dc23b7bcdc3}} 
+\index{sims@{sims}!transitive\+\_\+extension\+\_\+using\+\_\+generators@{transitive\+\_\+extension\+\_\+using\+\_\+generators}}
+\index{transitive\+\_\+extension\+\_\+using\+\_\+generators@{transitive\+\_\+extension\+\_\+using\+\_\+generators}!sims@{sims}}
+\subsubsection{\texorpdfstring{transitive\+\_\+extension\+\_\+using\+\_\+generators()}{transitive\_extension\_using\_generators()}}
+{\footnotesize\ttfamily void sims\+::transitive\+\_\+extension\+\_\+using\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Elt\+\_\+gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{subgroup\+\_\+index,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} \&}]{SG,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{tl,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_ace25b785e118af45ce824503c303d03b}\label{classsims_ace25b785e118af45ce824503c303d03b}} 
+\index{sims@{sims}!write\+\_\+all\+\_\+group\+\_\+elements@{write\+\_\+all\+\_\+group\+\_\+elements}}
+\index{write\+\_\+all\+\_\+group\+\_\+elements@{write\+\_\+all\+\_\+group\+\_\+elements}!sims@{sims}}
+\subsubsection{\texorpdfstring{write\+\_\+all\+\_\+group\+\_\+elements()}{write\_all\_group\_elements()}}
+{\footnotesize\ttfamily void sims\+::write\+\_\+all\+\_\+group\+\_\+elements (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a6621d6ec45449ab1aa7bed5d72e5a829}\label{classsims_a6621d6ec45449ab1aa7bed5d72e5a829}} 
+\index{sims@{sims}!write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group@{write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group}}
+\index{write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group@{write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group}!sims@{sims}}
+\subsubsection{\texorpdfstring{write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group()}{write\_as\_magma\_permutation\_group()}}
+{\footnotesize\ttfamily void sims\+::write\+\_\+as\+\_\+magma\+\_\+permutation\+\_\+group (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname\+\_\+base,  }\item[{\mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} $\ast$}]{gens,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsims_a525dbabfc86ad1da634566d10b29c1c1}\label{classsims_a525dbabfc86ad1da634566d10b29c1c1}} 
+\index{sims@{sims}!write\+\_\+sgs@{write\+\_\+sgs}}
+\index{write\+\_\+sgs@{write\+\_\+sgs}!sims@{sims}}
+\subsubsection{\texorpdfstring{write\+\_\+sgs()}{write\_sgs()}}
+{\footnotesize\ttfamily void sims\+::write\+\_\+sgs (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classsims_a3311c97dc08837220191985b1c7ee73f}\label{classsims_a3311c97dc08837220191985b1c7ee73f}} 
+\index{sims@{sims}!A@{A}}
+\index{A@{A}!sims@{sims}}
+\subsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classaction}{action}}$\ast$ sims\+::A}
+
+\mbox{\Hypertarget{classsims_a5a4fcca6f8e8ce09f1871329c7e51fc4}\label{classsims_a5a4fcca6f8e8ce09f1871329c7e51fc4}} 
+\index{sims@{sims}!cntr\+\_\+new@{cntr\+\_\+new}}
+\index{cntr\+\_\+new@{cntr\+\_\+new}!sims@{sims}}
+\subsubsection{\texorpdfstring{cntr\+\_\+new}{cntr\_new}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::cntr\+\_\+new = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classsims_a1b551ca3bc8411d979e64b65a67855c9}\label{classsims_a1b551ca3bc8411d979e64b65a67855c9}} 
+\index{sims@{sims}!cntr\+\_\+objects@{cntr\+\_\+objects}}
+\index{cntr\+\_\+objects@{cntr\+\_\+objects}!sims@{sims}}
+\subsubsection{\texorpdfstring{cntr\+\_\+objects}{cntr\_objects}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::cntr\+\_\+objects = 0\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classsims_aa58db04aa694c5d1a525c740a620a852}\label{classsims_aa58db04aa694c5d1a525c740a620a852}} 
+\index{sims@{sims}!cosetrep@{cosetrep}}
+\index{cosetrep@{cosetrep}!sims@{sims}}
+\subsubsection{\texorpdfstring{cosetrep}{cosetrep}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::cosetrep}
+
+\mbox{\Hypertarget{classsims_a9a6207f17375b33ce63169ac66b86033}\label{classsims_a9a6207f17375b33ce63169ac66b86033}} 
+\index{sims@{sims}!cosetrep\+\_\+tmp@{cosetrep\+\_\+tmp}}
+\index{cosetrep\+\_\+tmp@{cosetrep\+\_\+tmp}!sims@{sims}}
+\subsubsection{\texorpdfstring{cosetrep\+\_\+tmp}{cosetrep\_tmp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::cosetrep\+\_\+tmp}
+
+\mbox{\Hypertarget{classsims_a261196d994dd065ef67a5e587528983e}\label{classsims_a261196d994dd065ef67a5e587528983e}} 
+\index{sims@{sims}!Elt1@{Elt1}}
+\index{Elt1@{Elt1}!sims@{sims}}
+\subsubsection{\texorpdfstring{Elt1}{Elt1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::\+Elt1}
+
+\mbox{\Hypertarget{classsims_aa75ddb6f722f9fa49d8614475326dc82}\label{classsims_aa75ddb6f722f9fa49d8614475326dc82}} 
+\index{sims@{sims}!Elt2@{Elt2}}
+\index{Elt2@{Elt2}!sims@{sims}}
+\subsubsection{\texorpdfstring{Elt2}{Elt2}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::\+Elt2}
+
+\mbox{\Hypertarget{classsims_a43b1a6ba376d740f171381acf3eb4294}\label{classsims_a43b1a6ba376d740f171381acf3eb4294}} 
+\index{sims@{sims}!Elt3@{Elt3}}
+\index{Elt3@{Elt3}!sims@{sims}}
+\subsubsection{\texorpdfstring{Elt3}{Elt3}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::\+Elt3}
+
+\mbox{\Hypertarget{classsims_afa6e528d6605cf6f260100ee99548421}\label{classsims_afa6e528d6605cf6f260100ee99548421}} 
+\index{sims@{sims}!Elt4@{Elt4}}
+\index{Elt4@{Elt4}!sims@{sims}}
+\subsubsection{\texorpdfstring{Elt4}{Elt4}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::\+Elt4}
+
+\mbox{\Hypertarget{classsims_a19fa4ca8899a61c97941470ca11f2120}\label{classsims_a19fa4ca8899a61c97941470ca11f2120}} 
+\index{sims@{sims}!eltrk1@{eltrk1}}
+\index{eltrk1@{eltrk1}!sims@{sims}}
+\subsubsection{\texorpdfstring{eltrk1}{eltrk1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::eltrk1}
+
+\mbox{\Hypertarget{classsims_a2c2c6545af6d7f6ca7c263a4617b1300}\label{classsims_a2c2c6545af6d7f6ca7c263a4617b1300}} 
+\index{sims@{sims}!eltrk2@{eltrk2}}
+\index{eltrk2@{eltrk2}!sims@{sims}}
+\subsubsection{\texorpdfstring{eltrk2}{eltrk2}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::eltrk2}
+
+\mbox{\Hypertarget{classsims_a903d1be5cbcbfdcaabf491fb30bb2e54}\label{classsims_a903d1be5cbcbfdcaabf491fb30bb2e54}} 
+\index{sims@{sims}!f\+\_\+debug\+\_\+memory@{f\+\_\+debug\+\_\+memory}}
+\index{f\+\_\+debug\+\_\+memory@{f\+\_\+debug\+\_\+memory}!sims@{sims}}
+\subsubsection{\texorpdfstring{f\+\_\+debug\+\_\+memory}{f\_debug\_memory}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::f\+\_\+debug\+\_\+memory = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{classsims_ad8fc021408c0dacd697f8bd9ea647456}\label{classsims_ad8fc021408c0dacd697f8bd9ea647456}} 
+\index{sims@{sims}!gen\+\_\+depth@{gen\+\_\+depth}}
+\index{gen\+\_\+depth@{gen\+\_\+depth}!sims@{sims}}
+\subsubsection{\texorpdfstring{gen\+\_\+depth}{gen\_depth}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::gen\+\_\+depth}
+
+\mbox{\Hypertarget{classsims_a411c00c78023dd47f7dc3324ff21a6a4}\label{classsims_a411c00c78023dd47f7dc3324ff21a6a4}} 
+\index{sims@{sims}!gen\+\_\+perm@{gen\+\_\+perm}}
+\index{gen\+\_\+perm@{gen\+\_\+perm}!sims@{sims}}
+\subsubsection{\texorpdfstring{gen\+\_\+perm}{gen\_perm}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::gen\+\_\+perm}
+
+\mbox{\Hypertarget{classsims_ac1db131c547341a79a8955526bf8cdf6}\label{classsims_ac1db131c547341a79a8955526bf8cdf6}} 
+\index{sims@{sims}!gens@{gens}}
+\index{gens@{gens}!sims@{sims}}
+\subsubsection{\texorpdfstring{gens}{gens}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} sims\+::gens}
+
+\mbox{\Hypertarget{classsims_a41d51199993a167db302ab9d1a7253cb}\label{classsims_a41d51199993a167db302ab9d1a7253cb}} 
+\index{sims@{sims}!gens\+\_\+inv@{gens\+\_\+inv}}
+\index{gens\+\_\+inv@{gens\+\_\+inv}!sims@{sims}}
+\subsubsection{\texorpdfstring{gens\+\_\+inv}{gens\_inv}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvector__ge}{vector\+\_\+ge}} sims\+::gens\+\_\+inv}
+
+\mbox{\Hypertarget{classsims_a1aca76aefaabba3ac26c1fa36403ac55}\label{classsims_a1aca76aefaabba3ac26c1fa36403ac55}} 
+\index{sims@{sims}!images@{images}}
+\index{images@{images}!sims@{sims}}
+\subsubsection{\texorpdfstring{images}{images}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$$\ast$ sims\+::images}
+
+\mbox{\Hypertarget{classsims_a82f87c491aad777273eb7585830f1ce5}\label{classsims_a82f87c491aad777273eb7585830f1ce5}} 
+\index{sims@{sims}!label@{label}}
+\index{label@{label}!sims@{sims}}
+\subsubsection{\texorpdfstring{label}{label}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$$\ast$ sims\+::label}
+
+\mbox{\Hypertarget{classsims_a7495cb739606c584f678924d603e0c94}\label{classsims_a7495cb739606c584f678924d603e0c94}} 
+\index{sims@{sims}!my\+\_\+base\+\_\+len@{my\+\_\+base\+\_\+len}}
+\index{my\+\_\+base\+\_\+len@{my\+\_\+base\+\_\+len}!sims@{sims}}
+\subsubsection{\texorpdfstring{my\+\_\+base\+\_\+len}{my\_base\_len}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::my\+\_\+base\+\_\+len}
+
+\mbox{\Hypertarget{classsims_a9adf5e45bd4cd2a32df14e1d756535d0}\label{classsims_a9adf5e45bd4cd2a32df14e1d756535d0}} 
+\index{sims@{sims}!nb\+\_\+gen@{nb\+\_\+gen}}
+\index{nb\+\_\+gen@{nb\+\_\+gen}!sims@{sims}}
+\subsubsection{\texorpdfstring{nb\+\_\+gen}{nb\_gen}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::nb\+\_\+gen}
+
+\mbox{\Hypertarget{classsims_af6b4c88343d7529f126a8256cdaeb8fe}\label{classsims_af6b4c88343d7529f126a8256cdaeb8fe}} 
+\index{sims@{sims}!nb\+\_\+images@{nb\+\_\+images}}
+\index{nb\+\_\+images@{nb\+\_\+images}!sims@{sims}}
+\subsubsection{\texorpdfstring{nb\+\_\+images}{nb\_images}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} sims\+::nb\+\_\+images}
+
+\mbox{\Hypertarget{classsims_afec20a4a686695d3df964733f905a3c7}\label{classsims_afec20a4a686695d3df964733f905a3c7}} 
+\index{sims@{sims}!orbit@{orbit}}
+\index{orbit@{orbit}!sims@{sims}}
+\subsubsection{\texorpdfstring{orbit}{orbit}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$$\ast$ sims\+::orbit}
+
+\mbox{\Hypertarget{classsims_a82bf253b175af9a895da101f0c185e73}\label{classsims_a82bf253b175af9a895da101f0c185e73}} 
+\index{sims@{sims}!orbit\+\_\+inv@{orbit\+\_\+inv}}
+\index{orbit\+\_\+inv@{orbit\+\_\+inv}!sims@{sims}}
+\subsubsection{\texorpdfstring{orbit\+\_\+inv}{orbit\_inv}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$$\ast$ sims\+::orbit\+\_\+inv}
+
+\mbox{\Hypertarget{classsims_a63f4bc56c6b99fbcfaaa66e5d4beb0ad}\label{classsims_a63f4bc56c6b99fbcfaaa66e5d4beb0ad}} 
+\index{sims@{sims}!orbit\+\_\+len@{orbit\+\_\+len}}
+\index{orbit\+\_\+len@{orbit\+\_\+len}!sims@{sims}}
+\subsubsection{\texorpdfstring{orbit\+\_\+len}{orbit\_len}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::orbit\+\_\+len}
+
+\mbox{\Hypertarget{classsims_a335f7f86ddd03bce4f414c53120e38e6}\label{classsims_a335f7f86ddd03bce4f414c53120e38e6}} 
+\index{sims@{sims}!path@{path}}
+\index{path@{path}!sims@{sims}}
+\subsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::path}
+
+\mbox{\Hypertarget{classsims_a6ac0c65a6cec7d2e915ba54b55760786}\label{classsims_a6ac0c65a6cec7d2e915ba54b55760786}} 
+\index{sims@{sims}!prev@{prev}}
+\index{prev@{prev}!sims@{sims}}
+\subsubsection{\texorpdfstring{prev}{prev}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$$\ast$ sims\+::prev}
+
+\mbox{\Hypertarget{classsims_aa99e196230a728c31c574fb68f9e3c0e}\label{classsims_aa99e196230a728c31c574fb68f9e3c0e}} 
+\index{sims@{sims}!schreier\+\_\+gen@{schreier\+\_\+gen}}
+\index{schreier\+\_\+gen@{schreier\+\_\+gen}!sims@{sims}}
+\subsubsection{\texorpdfstring{schreier\+\_\+gen}{schreier\_gen}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::schreier\+\_\+gen}
+
+\mbox{\Hypertarget{classsims_a0fa86605b005dc9bf7150d392ec804e5}\label{classsims_a0fa86605b005dc9bf7150d392ec804e5}} 
+\index{sims@{sims}!schreier\+\_\+gen1@{schreier\+\_\+gen1}}
+\index{schreier\+\_\+gen1@{schreier\+\_\+gen1}!sims@{sims}}
+\subsubsection{\texorpdfstring{schreier\+\_\+gen1}{schreier\_gen1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::schreier\+\_\+gen1}
+
+\mbox{\Hypertarget{classsims_a59d83b753c0961acba332b805008128f}\label{classsims_a59d83b753c0961acba332b805008128f}} 
+\index{sims@{sims}!strip1@{strip1}}
+\index{strip1@{strip1}!sims@{sims}}
+\subsubsection{\texorpdfstring{strip1}{strip1}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ sims\+::strip1}
+
+\mbox{\Hypertarget{classsims_a8122c8a7cfc2ddd6af534379761c1926}\label{classsims_a8122c8a7cfc2ddd6af534379761c1926}} 
+\index{sims@{sims}!strip2@{strip2}}
+\index{strip2@{strip2}!sims@{sims}}
+\subsubsection{\texorpdfstring{strip2}{strip2}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ sims\+::strip2}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+A\+C\+T\+I\+O\+N/\mbox{\hyperlink{action_8h}{action.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+A\+C\+T\+I\+O\+N/\mbox{\hyperlink{sims_8_c}{sims.\+C}}\item 
+S\+R\+C/\+L\+I\+B/\+A\+C\+T\+I\+O\+N/\mbox{\hyperlink{sims2_8_c}{sims2.\+C}}\item 
+S\+R\+C/\+L\+I\+B/\+A\+C\+T\+I\+O\+N/\mbox{\hyperlink{sims3_8_c}{sims3.\+C}}\end{DoxyCompactItemize}

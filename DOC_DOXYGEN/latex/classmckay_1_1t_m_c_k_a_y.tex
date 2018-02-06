@@ -1,0 +1,249 @@
+\hypertarget{classmckay_1_1t_m_c_k_a_y}{}\section{mckay\+:\+:t\+M\+C\+K\+AY Class Reference}
+\label{classmckay_1_1t_m_c_k_a_y}\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+
+
+{\ttfamily \#include $<$galois.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a06d898c12ad8b7660e567044a84d9c91}{t\+M\+C\+K\+AY}} ()
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a04d009389cf387ded3ff067ff0f0588d}{Init}} (\mbox{\hyperlink{classdiophant}{diophant}} $\ast$lgs, const char $\ast$label, int a\+Eqn\+Anz, int a\+Var\+Anz)
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a1791dc846f3d51ac42c1afdd9b944864}{possolve}} (vector$<$ int $>$ \&lo, vector$<$ int $>$ \&hi, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ int $>$ \&neqn, int numeqn, int numvar, int \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a5def35a9348d8d7b98fba2ea773d4bca}{nb\+\_\+calls\+\_\+to\+\_\+solve}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a21648ad9b36a45c57df37e4929c5e87b}{first\+\_\+moved}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a2ea81d257de073b61b11cb4525bf6691}{second\+\_\+moved}}
+\item 
+const char $\ast$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_af023281b578951479c028925fb942f4d}{problem\+\_\+label}}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a7a9ce2b4e5e116ea813350c4d079ac0f}{subtract}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} eqn1, \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} \&e1, int l1, int lors1, int hirs1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} eqn2, \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} \&e2, int $\ast$pl2, int $\ast$plors2, int $\ast$phirs2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a0faf3830d1f34b4a6128fd237e0a9165}{pruneqn}} (vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&neqn, int numeqn, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a0828f082ab8a01478033caf5e9beea92}{varprune}} (vector$<$ int $>$ \&lo, vector$<$ int $>$ \&hi, vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&neqn, int numeqn, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a24360ef14adb39edfb6ad5c78ef246c2}{puteqns}} (vector$<$ int $>$ \&lo, vector$<$ int $>$ \&hi, int numvar, vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&neqn, int numeqn)
+\item 
+int \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a5083695703cb202b7c97f78990093316}{divideeqns}} (vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&neqn, int numeqn)
+\item 
+int \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_aa021019054cebdfddbdb9e2c18a17635}{gcd}} (int n1, int n2)
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a56834d9ca4b27c64bde14b8b6c1bceee}{solve}} (int level, vector$<$ int $>$ \&alo, vector$<$ int $>$ \&ahi, vector$<$ bool $>$ \&aactive, int numvar, vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&neqn, int numeqn, int \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a5f9cf01a66eebb00e706ac5d5cd900d8}{restrict\+\_\+variables}} (int level, vector$<$ int $>$ \&lo, vector$<$ int $>$ \&hi, vector$<$ bool $>$ \&\mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a237e335b7277a08587ce54ee12236963}{active}}, int numvar, vector$<$ int $>$ \&lorhs, vector$<$ int $>$ \&hirhs, vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&eqn, vector$<$ int $>$ \&neqn, int numeqn, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&f\+\_\+restriction\+\_\+made, int \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a52c5ffb02df95231c6cdb136c520c6c8}{log\+\_\+12l}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} current\+\_\+node, int level)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_ab7812cb1bb7afcaff01433556c6574d5}{\+\_\+eqnanz}}
+\item 
+int \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a5ca1f4da421400510c298d8cfe75471b}{\+\_\+varanz}}
+\item 
+vector$<$ bool $>$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a640367986232519161646d7fde5fa1d4}{unitcoeffs}}
+\item 
+vector$<$ bool $>$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a237e335b7277a08587ce54ee12236963}{active}}
+\item 
+int \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_aed51a894d0d8987f91afc7414f68f531}{rekurs}}
+\item 
+bool \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a64271150d4cbf651ec12f59224087752}{\+\_\+break}}
+\item 
+\mbox{\hyperlink{classdiophant}{diophant}} $\ast$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a9e645f5be4d62b67821d57330f31728d}{D}}
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_abe2a7638eb0da6af5d1fddf73a00b0ee}{range}}
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_ab2bd8c66986a510d4479979f3ca8f296}{split}}
+\item 
+vector$<$ int $>$ \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a37d34888869fad1a820a627482e439f0}{branch}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classmckay_1_1t_m_c_k_a_y_a9d002a160bc378bd660fc118a0157e75}{ticks0}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a06d898c12ad8b7660e567044a84d9c91}\label{classmckay_1_1t_m_c_k_a_y_a06d898c12ad8b7660e567044a84d9c91}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!t\+M\+C\+K\+AY@{t\+M\+C\+K\+AY}}
+\index{t\+M\+C\+K\+AY@{t\+M\+C\+K\+AY}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{t\+M\+C\+K\+A\+Y()}{tMCKAY()}}
+{\footnotesize\ttfamily mckay\+::t\+M\+C\+K\+A\+Y\+::t\+M\+C\+K\+AY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a5083695703cb202b7c97f78990093316}\label{classmckay_1_1t_m_c_k_a_y_a5083695703cb202b7c97f78990093316}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!divideeqns@{divideeqns}}
+\index{divideeqns@{divideeqns}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{divideeqns()}{divideeqns()}}
+{\footnotesize\ttfamily int mckay\+::t\+M\+C\+K\+A\+Y\+::divideeqns (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_aa021019054cebdfddbdb9e2c18a17635}\label{classmckay_1_1t_m_c_k_a_y_aa021019054cebdfddbdb9e2c18a17635}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!gcd@{gcd}}
+\index{gcd@{gcd}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{gcd()}{gcd()}}
+{\footnotesize\ttfamily int mckay\+::t\+M\+C\+K\+A\+Y\+::gcd (\begin{DoxyParamCaption}\item[{int}]{n1,  }\item[{int}]{n2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a04d009389cf387ded3ff067ff0f0588d}\label{classmckay_1_1t_m_c_k_a_y_a04d009389cf387ded3ff067ff0f0588d}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!Init@{Init}}
+\index{Init@{Init}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdiophant}{diophant}} $\ast$}]{lgs,  }\item[{const char $\ast$}]{label,  }\item[{int}]{a\+Eqn\+Anz,  }\item[{int}]{a\+Var\+Anz }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a52c5ffb02df95231c6cdb136c520c6c8}\label{classmckay_1_1t_m_c_k_a_y_a52c5ffb02df95231c6cdb136c520c6c8}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!log\+\_\+12l@{log\+\_\+12l}}
+\index{log\+\_\+12l@{log\+\_\+12l}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{log\+\_\+12l()}{log\_12l()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::log\+\_\+12l (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{current\+\_\+node,  }\item[{int}]{level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a1791dc846f3d51ac42c1afdd9b944864}\label{classmckay_1_1t_m_c_k_a_y_a1791dc846f3d51ac42c1afdd9b944864}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!possolve@{possolve}}
+\index{possolve@{possolve}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{possolve()}{possolve()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::possolve (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{lo,  }\item[{vector$<$ int $>$ \&}]{hi,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn,  }\item[{int}]{numvar,  }\item[{int}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a0faf3830d1f34b4a6128fd237e0a9165}\label{classmckay_1_1t_m_c_k_a_y_a0faf3830d1f34b4a6128fd237e0a9165}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!pruneqn@{pruneqn}}
+\index{pruneqn@{pruneqn}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{pruneqn()}{pruneqn()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::pruneqn (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a24360ef14adb39edfb6ad5c78ef246c2}\label{classmckay_1_1t_m_c_k_a_y_a24360ef14adb39edfb6ad5c78ef246c2}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!puteqns@{puteqns}}
+\index{puteqns@{puteqns}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{puteqns()}{puteqns()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::puteqns (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{lo,  }\item[{vector$<$ int $>$ \&}]{hi,  }\item[{int}]{numvar,  }\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a5f9cf01a66eebb00e706ac5d5cd900d8}\label{classmckay_1_1t_m_c_k_a_y_a5f9cf01a66eebb00e706ac5d5cd900d8}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!restrict\+\_\+variables@{restrict\+\_\+variables}}
+\index{restrict\+\_\+variables@{restrict\+\_\+variables}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{restrict\+\_\+variables()}{restrict\_variables()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} mckay\+::t\+M\+C\+K\+A\+Y\+::restrict\+\_\+variables (\begin{DoxyParamCaption}\item[{int}]{level,  }\item[{vector$<$ int $>$ \&}]{lo,  }\item[{vector$<$ int $>$ \&}]{hi,  }\item[{vector$<$ bool $>$ \&}]{active,  }\item[{int}]{numvar,  }\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{f\+\_\+restriction\+\_\+made,  }\item[{int}]{verbose\+\_\+level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a56834d9ca4b27c64bde14b8b6c1bceee}\label{classmckay_1_1t_m_c_k_a_y_a56834d9ca4b27c64bde14b8b6c1bceee}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!solve@{solve}}
+\index{solve@{solve}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{solve()}{solve()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::solve (\begin{DoxyParamCaption}\item[{int}]{level,  }\item[{vector$<$ int $>$ \&}]{alo,  }\item[{vector$<$ int $>$ \&}]{ahi,  }\item[{vector$<$ bool $>$ \&}]{aactive,  }\item[{int}]{numvar,  }\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn,  }\item[{int}]{verbose\+\_\+level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a7a9ce2b4e5e116ea813350c4d079ac0f}\label{classmckay_1_1t_m_c_k_a_y_a7a9ce2b4e5e116ea813350c4d079ac0f}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!subtract@{subtract}}
+\index{subtract@{subtract}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{subtract()}{subtract()}}
+{\footnotesize\ttfamily bool mckay\+::t\+M\+C\+K\+A\+Y\+::subtract (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{eqn1,  }\item[{\mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} \&}]{e1,  }\item[{int}]{l1,  }\item[{int}]{lors1,  }\item[{int}]{hirs1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{eqn2,  }\item[{\mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} \&}]{e2,  }\item[{int $\ast$}]{pl2,  }\item[{int $\ast$}]{plors2,  }\item[{int $\ast$}]{phirs2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a0828f082ab8a01478033caf5e9beea92}\label{classmckay_1_1t_m_c_k_a_y_a0828f082ab8a01478033caf5e9beea92}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!varprune@{varprune}}
+\index{varprune@{varprune}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{varprune()}{varprune()}}
+{\footnotesize\ttfamily void mckay\+::t\+M\+C\+K\+A\+Y\+::varprune (\begin{DoxyParamCaption}\item[{vector$<$ int $>$ \&}]{lo,  }\item[{vector$<$ int $>$ \&}]{hi,  }\item[{vector$<$ int $>$ \&}]{lorhs,  }\item[{vector$<$ int $>$ \&}]{hirhs,  }\item[{vector$<$ \mbox{\hyperlink{namespacemckay_a4f7cb66ed07fe573b2b08e73ab462c1a}{equation}} $>$ \&}]{eqn,  }\item[{vector$<$ int $>$ \&}]{neqn,  }\item[{int}]{numeqn,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a64271150d4cbf651ec12f59224087752}\label{classmckay_1_1t_m_c_k_a_y_a64271150d4cbf651ec12f59224087752}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!\+\_\+break@{\+\_\+break}}
+\index{\+\_\+break@{\+\_\+break}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{\+\_\+break}{\_break}}
+{\footnotesize\ttfamily bool mckay\+::t\+M\+C\+K\+A\+Y\+::\+\_\+break\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_ab7812cb1bb7afcaff01433556c6574d5}\label{classmckay_1_1t_m_c_k_a_y_ab7812cb1bb7afcaff01433556c6574d5}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!\+\_\+eqnanz@{\+\_\+eqnanz}}
+\index{\+\_\+eqnanz@{\+\_\+eqnanz}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{\+\_\+eqnanz}{\_eqnanz}}
+{\footnotesize\ttfamily int mckay\+::t\+M\+C\+K\+A\+Y\+::\+\_\+eqnanz\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a5ca1f4da421400510c298d8cfe75471b}\label{classmckay_1_1t_m_c_k_a_y_a5ca1f4da421400510c298d8cfe75471b}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!\+\_\+varanz@{\+\_\+varanz}}
+\index{\+\_\+varanz@{\+\_\+varanz}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{\+\_\+varanz}{\_varanz}}
+{\footnotesize\ttfamily int mckay\+::t\+M\+C\+K\+A\+Y\+::\+\_\+varanz\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a237e335b7277a08587ce54ee12236963}\label{classmckay_1_1t_m_c_k_a_y_a237e335b7277a08587ce54ee12236963}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!active@{active}}
+\index{active@{active}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{active}{active}}
+{\footnotesize\ttfamily vector$<$bool$>$ mckay\+::t\+M\+C\+K\+A\+Y\+::active\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a37d34888869fad1a820a627482e439f0}\label{classmckay_1_1t_m_c_k_a_y_a37d34888869fad1a820a627482e439f0}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!branch@{branch}}
+\index{branch@{branch}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{branch}{branch}}
+{\footnotesize\ttfamily vector$<$int$>$ mckay\+::t\+M\+C\+K\+A\+Y\+::branch\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a9e645f5be4d62b67821d57330f31728d}\label{classmckay_1_1t_m_c_k_a_y_a9e645f5be4d62b67821d57330f31728d}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!D@{D}}
+\index{D@{D}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{D}{D}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classdiophant}{diophant}}$\ast$ mckay\+::t\+M\+C\+K\+A\+Y\+::D\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a21648ad9b36a45c57df37e4929c5e87b}\label{classmckay_1_1t_m_c_k_a_y_a21648ad9b36a45c57df37e4929c5e87b}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!first\+\_\+moved@{first\+\_\+moved}}
+\index{first\+\_\+moved@{first\+\_\+moved}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{first\+\_\+moved}{first\_moved}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} mckay\+::t\+M\+C\+K\+A\+Y\+::first\+\_\+moved}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a5def35a9348d8d7b98fba2ea773d4bca}\label{classmckay_1_1t_m_c_k_a_y_a5def35a9348d8d7b98fba2ea773d4bca}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!nb\+\_\+calls\+\_\+to\+\_\+solve@{nb\+\_\+calls\+\_\+to\+\_\+solve}}
+\index{nb\+\_\+calls\+\_\+to\+\_\+solve@{nb\+\_\+calls\+\_\+to\+\_\+solve}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{nb\+\_\+calls\+\_\+to\+\_\+solve}{nb\_calls\_to\_solve}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} mckay\+::t\+M\+C\+K\+A\+Y\+::nb\+\_\+calls\+\_\+to\+\_\+solve}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_af023281b578951479c028925fb942f4d}\label{classmckay_1_1t_m_c_k_a_y_af023281b578951479c028925fb942f4d}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!problem\+\_\+label@{problem\+\_\+label}}
+\index{problem\+\_\+label@{problem\+\_\+label}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{problem\+\_\+label}{problem\_label}}
+{\footnotesize\ttfamily const char$\ast$ mckay\+::t\+M\+C\+K\+A\+Y\+::problem\+\_\+label}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_abe2a7638eb0da6af5d1fddf73a00b0ee}\label{classmckay_1_1t_m_c_k_a_y_abe2a7638eb0da6af5d1fddf73a00b0ee}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!range@{range}}
+\index{range@{range}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{range}{range}}
+{\footnotesize\ttfamily vector$<$int$>$ mckay\+::t\+M\+C\+K\+A\+Y\+::range\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_aed51a894d0d8987f91afc7414f68f531}\label{classmckay_1_1t_m_c_k_a_y_aed51a894d0d8987f91afc7414f68f531}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!rekurs@{rekurs}}
+\index{rekurs@{rekurs}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{rekurs}{rekurs}}
+{\footnotesize\ttfamily int mckay\+::t\+M\+C\+K\+A\+Y\+::rekurs\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a2ea81d257de073b61b11cb4525bf6691}\label{classmckay_1_1t_m_c_k_a_y_a2ea81d257de073b61b11cb4525bf6691}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!second\+\_\+moved@{second\+\_\+moved}}
+\index{second\+\_\+moved@{second\+\_\+moved}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{second\+\_\+moved}{second\_moved}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} mckay\+::t\+M\+C\+K\+A\+Y\+::second\+\_\+moved}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_ab2bd8c66986a510d4479979f3ca8f296}\label{classmckay_1_1t_m_c_k_a_y_ab2bd8c66986a510d4479979f3ca8f296}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!split@{split}}
+\index{split@{split}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{split}{split}}
+{\footnotesize\ttfamily vector$<$int$>$ mckay\+::t\+M\+C\+K\+A\+Y\+::split\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a9d002a160bc378bd660fc118a0157e75}\label{classmckay_1_1t_m_c_k_a_y_a9d002a160bc378bd660fc118a0157e75}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!ticks0@{ticks0}}
+\index{ticks0@{ticks0}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{ticks0}{ticks0}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} mckay\+::t\+M\+C\+K\+A\+Y\+::ticks0\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{classmckay_1_1t_m_c_k_a_y_a640367986232519161646d7fde5fa1d4}\label{classmckay_1_1t_m_c_k_a_y_a640367986232519161646d7fde5fa1d4}} 
+\index{mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}!unitcoeffs@{unitcoeffs}}
+\index{unitcoeffs@{unitcoeffs}!mckay\+::t\+M\+C\+K\+AY@{mckay\+::t\+M\+C\+K\+AY}}
+\subsubsection{\texorpdfstring{unitcoeffs}{unitcoeffs}}
+{\footnotesize\ttfamily vector$<$bool$>$ mckay\+::t\+M\+C\+K\+A\+Y\+::unitcoeffs\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{galois_8h}{galois.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{mckay_8_c}{mckay.\+C}}\end{DoxyCompactItemize}

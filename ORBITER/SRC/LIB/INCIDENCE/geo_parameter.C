@@ -359,7 +359,7 @@ INT geo_parameter::input(ifstream &aStream)
 	v = 0;
 	b = 0;
 	if (str == "HTDO") {
-		//cout << "reading decomposition HTDO" << endl;
+		cout << "geo_parameter::input read HTD, before input_mode_single" << endl;
 		return input_mode_single(aStream);
 		}
 #endif

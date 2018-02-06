@@ -1364,9 +1364,11 @@ INT delta_time(INT t0)
 
 INT file_size(const BYTE *name)
 {
+	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
 	INT handle, size;
 	
+	//cout << "Unix mode" << endl;
 	handle = open(name, O_RDWR/*mode*/);
 	size = lseek((int) handle, 0L, SEEK_END);
 	close((int) handle);
@@ -1375,6 +1377,7 @@ INT file_size(const BYTE *name)
 #ifdef SYSTEMMAC
 	INT handle, size;
 	
+	//cout << "Macintosh mode" << endl;
 	handle = open(name, O_RDONLY);
 		/* THINK C Unix Lib */
 	size = lseek(handle, 0L, SEEK_END);
@@ -1383,6 +1386,9 @@ INT file_size(const BYTE *name)
 	return(size);
 #endif
 #ifdef SYSTEMWINDOWS
+
+	//cout << "Windows mode" << endl;
+
 	INT handle = _open (name,_O_RDONLY);
 	INT size   = _lseek (handle,0,SEEK_END);
 	close (handle);

@@ -1,0 +1,787 @@
+\hypertarget{classsurface__object}{}\section{surface\+\_\+object Class Reference}
+\label{classsurface__object}\index{surface\+\_\+object@{surface\+\_\+object}}
+
+
+{\ttfamily \#include $<$galois.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classsurface__object_a73ac72eb094e7a6a72c3af701e2a4c6f}{surface\+\_\+object}} ()
+\item 
+\mbox{\hyperlink{classsurface__object_a880fa6d777c2bec7e7f01f1b667211c5}{$\sim$surface\+\_\+object}} ()
+\item 
+void \mbox{\hyperlink{classsurface__object_ada68e90aabf58a147af8daa60cf40e6a}{freeself}} ()
+\item 
+void \mbox{\hyperlink{classsurface__object_a8252a4bafc5b472c16387da74e1f9d0a}{null}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_afd4f4d1accbf361897374bd18d571913}{init\+\_\+equation}} (\mbox{\hyperlink{classsurface}{surface}} $\ast$\mbox{\hyperlink{classsurface__object_a23be3906bbf1ff7d8aab8a9b744595ba}{Surf}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fd2c77c27595731ee554e5b86a4b672}{eqn}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a078879fb001ac8384f2cc41d26049c81}{init}} (\mbox{\hyperlink{classsurface}{surface}} $\ast$\mbox{\hyperlink{classsurface__object_a23be3906bbf1ff7d8aab8a9b744595ba}{Surf}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fd2c77c27595731ee554e5b86a4b672}{eqn}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_ad6c02c3c1432f8adfe49932041ce1b20}{compute\+\_\+properties}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_aa2fc4ff039e9f3a5ac29718e29b6b90c}{find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a001a13b6ea34dbe559033af634203466}{enumerate\+\_\+points}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_aeef0d278d1d82c7af525add5ae85d713}{compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_abe0201b117e124fccff446f61b0faa47}{print\+\_\+neighbor\+\_\+sets}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a7ad585c88d5c8278850d5f4c9281798c}{compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_ae6d924af993146400e0e484e41def0ab}{compute\+\_\+tritangent\+\_\+planes}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a76f0933eada8322819007fb8670db6ee}{compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a89500b9c84a04ba16f97c3f0f25f3f34}{print\+\_\+line\+\_\+intersection\+\_\+graph}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a559eff30b652887fdcfecb2f13f3718f}{print\+\_\+adjacency\+\_\+matrix}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a5bbd3a8c13107c326d8fda82374dbc4c}{print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a0ef70b8d17e3add2cd9e8b95d7e56a28}{print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_adc569e1b86bec1e9eb1b13e08ae47c0d}{print\+\_\+tritangent\+\_\+planes}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_ac2ed7e410aa63f30610284e9584c1a13}{print\+\_\+generalized\+\_\+quadrangle}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_ad948559b08ec6d88a0138d943c4ecd3f}{print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a778d359240ca044debd3cca2d7f85762}{print\+\_\+lines}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a636657809582fe91c287bdf56c1b6cf3}{print\+\_\+equation}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_ac8a03f56927e2db66b4012a17a2bb49f}{print\+\_\+general}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a80d7fdb3c014dcdad81ce942399f5770}{print\+\_\+points}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a96fc0de92fc676cd9ac857eb8dceba10}{print\+\_\+double\+\_\+sixes}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a5288bd5c7da32fc2a827c27f8e727486}{print\+\_\+trihedral\+\_\+pairs}} (ostream \&ost)
+\item 
+void \mbox{\hyperlink{classsurface__object_a174ac7ffea380b2c2593fbe540da38c4}{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{pentomino__5x5_8_c_a2b44a927c3e8a68f69f9f943c32c696d}{T}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+T)
+\item 
+void \mbox{\hyperlink{classsurface__object_ae64b2ea950f99fb467960a0f2cbe7aa7}{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{pentomino__5x5_8_c_a2b44a927c3e8a68f69f9f943c32c696d}{T}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+T)
+\item 
+void \mbox{\hyperlink{classsurface__object_ae5f992f6e9c83b63306dbec1ce0ea7b9}{latex\+\_\+trihedral\+\_\+pair}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx)
+\item 
+void \mbox{\hyperlink{classsurface__object_a27fe2b23c959d65da1c1cac88a38ca08}{make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$F\+\_\+planes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$G\+\_\+planes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{plane__search_8_c_ae2170c3116b1f345ee7505695206555e}{lambda}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$equation, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_ac0255c793ce4ffc32e1cecb06756dc6f}{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$F\+\_\+planes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$G\+\_\+planes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{plane__search_8_c_ae2170c3116b1f345ee7505695206555e}{lambda}})
+\item 
+void \mbox{\hyperlink{classsurface__object_ae570775863861dbf2127f755b9c886bd}{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$F\+\_\+planes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$G\+\_\+planes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{plane__search_8_c_ae2170c3116b1f345ee7505695206555e}{lambda}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a02b3921d146d4b171a0f5e45e08cd8fc}{make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx)
+\item 
+void \mbox{\hyperlink{classsurface__object_a9e20745e8c7524828649a7e3988e166b}{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$nine\+\_\+lines, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$double\+\_\+sixes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a651b603f3f6c59fc16cab70d07567a62}{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$nine\+\_\+line\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$double\+\_\+sixes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a18aa0190feb8ab83910d5bdb7cc573c1}{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$nine\+\_\+line\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$double\+\_\+sixes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a723aad2a111e80cbe2e64323331d7f34}{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$nine\+\_\+line\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$double\+\_\+sixes, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_a04e29003af9e593bf04ccbe9e16e790e}{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$transversals5)
+\item 
+void \mbox{\hyperlink{classsurface__object_a767a62191b48c97e6b8ffb7e1eaccb5d}{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$transversals3)
+\item 
+void \mbox{\hyperlink{classsurface__object_a64f5dd248a3f8d73be3422e00478a4bd}{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a4, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$transversals2)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a3208e9a0a373dccc4569bf14b618dc9d}{find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+b)
+\item 
+void \mbox{\hyperlink{classsurface__object_a1e4cebe5104477253457ea2c0b86037e}{get\+\_\+planes\+\_\+through\+\_\+line}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$new\+\_\+lines, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$planes5)
+\item 
+void \mbox{\hyperlink{classsurface__object_a7d84feab77fd5ee7bee51d6f0b20e997}{find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} plane\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} forbidden\+\_\+line, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&line1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&line2)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a4cc84ee3f85ee271c663be786e8be807}{find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} plane\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} forbidden\+\_\+line1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} forbidden\+\_\+line2)
+\item 
+void \mbox{\hyperlink{classsurface__object_a42a024ed43efea97d8de9ed3493b5a8e}{identify\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$lines, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{hamming_8_c_ac0679276a2483f153f00d12bd590f382}{nb\+\_\+lines}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$line\+\_\+idx, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_ad1dea918afb2e6c9e19f575a851f776a}{print\+\_\+nine\+\_\+lines\+\_\+latex}} (ostream \&ost, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$nine\+\_\+lines, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$nine\+\_\+lines\+\_\+idx)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_ab2ef53e96689bef3c028b381ef8d62e8}{choose\+\_\+tritangent\+\_\+plane}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+b, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} transversal\+\_\+line, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a62a611022c607fc2a4adf7f5f8913a69}{compute\+\_\+transversal\+\_\+line}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} line\+\_\+b, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_ad69d8f44629ac7925c699c65e6214ec1}{clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Clebsch\+\_\+map, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{k__arc__lifting_8_c_a95284ca1ebfe74822e0c5a708e4b6bac}{Arc}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Blown\+\_\+up\+\_\+lines, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classsurface__object_aa1d1b9e23f5204624159f5acc325003b}{clebsch\+\_\+map\+\_\+print\+\_\+fibers}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Clebsch\+\_\+map)
+\item 
+void \mbox{\hyperlink{classsurface__object_ad78297ade0f2cb687756f81ac18bc01e}{compute\+\_\+clebsch\+\_\+maps}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a7a14a74403dd56a3ff5cf863aec676e3}{q}}
+\item 
+\mbox{\hyperlink{classfinite__field}{finite\+\_\+field}} $\ast$ \mbox{\hyperlink{classsurface__object_aa18a0d0dd0b756cc01a6056eb5b5a998}{F}}
+\item 
+\mbox{\hyperlink{classsurface}{surface}} $\ast$ \mbox{\hyperlink{classsurface__object_a23be3906bbf1ff7d8aab8a9b744595ba}{Surf}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a0fae2a45446843f691e91d58fb905afe}{Lines}} \mbox{[}27\mbox{]}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a0fd2c77c27595731ee554e5b86a4b672}{eqn}} \mbox{[}20\mbox{]}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a02e013f97cf4f94ca5f530cc3130b2d3}{Pts}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_abbacd75913dba543f3c56e01dd55a7b6}{nb\+\_\+pts}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_aef238e7e7c79fa0b8d0f565a79f27edd}{nb\+\_\+planes}}
+\item 
+\mbox{\hyperlink{classset__of__sets}{set\+\_\+of\+\_\+sets}} $\ast$ \mbox{\hyperlink{classsurface__object_a3bd427a3ff539f8a74bf28cacd352187}{pts\+\_\+on\+\_\+lines}}
+\item 
+\mbox{\hyperlink{classset__of__sets}{set\+\_\+of\+\_\+sets}} $\ast$ \mbox{\hyperlink{classsurface__object_a5075e6de0d91435a7f63c2bfea3f9766}{lines\+\_\+on\+\_\+point}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_aec6c6124562954d320485fbdc20d2cf5}{Eckardt\+\_\+points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a0763705cdd9316e689a0fda66b38cf81}{Eckardt\+\_\+points\+\_\+index}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a26375d6fb1195310d309c28b47dcbd72}{nb\+\_\+\+Eckardt\+\_\+points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a996a56d69d65da3477ac7e87d0f3def0}{Double\+\_\+points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a3a153a0199e5d721597f0474eccc18bb}{Double\+\_\+points\+\_\+index}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a02c107359dfab111b38d38dd5e8dad5d}{nb\+\_\+\+Double\+\_\+points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_acf56a8ed4faee4ba1cf0b22889df70d2}{Pts\+\_\+not\+\_\+on\+\_\+lines}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_abc79e4d403d07c4b9b8042ea1c57a078}{nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a1970c960a6a67bfd3df36cfe814e35d4}{plane\+\_\+type\+\_\+by\+\_\+points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_aca45161ecfdee5980838794d8f4caacc}{plane\+\_\+type\+\_\+by\+\_\+lines}}
+\item 
+\mbox{\hyperlink{classclassify}{classify}} $\ast$ \mbox{\hyperlink{classsurface__object_ae899e026c3a96402f63c4e5bcb6f0a53}{C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}}
+\item 
+\mbox{\hyperlink{classclassify}{classify}} $\ast$ \mbox{\hyperlink{classsurface__object_a676fd81765543f6198ee3e5acdc863ca}{Type\+\_\+pts\+\_\+on\+\_\+lines}}
+\item 
+\mbox{\hyperlink{classclassify}{classify}} $\ast$ \mbox{\hyperlink{classsurface__object_a0184e0304e880008fa802b4ea80d965d}{Type\+\_\+lines\+\_\+on\+\_\+point}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a8e0217bf0f07b82f7524df4a355cfc39}{Tritangent\+\_\+planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_ad8a016d3e003c6b5c6a6dc86ffecd561}{nb\+\_\+tritangent\+\_\+planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a6f01b349991bf46dfa2364dc7447cfa0}{Lines\+\_\+in\+\_\+tritangent\+\_\+plane}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a2c29305002881c61bb026a883af6c799}{Tritangent\+\_\+plane\+\_\+dual}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_ae381706c522977d2487573b095d28d78}{iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane}}
+\item 
+\mbox{\hyperlink{classclassify}{classify}} $\ast$ \mbox{\hyperlink{classsurface__object_ac5ebc23149afeda7ba0050ddd6db66a5}{Type\+\_\+iso\+\_\+tritangent\+\_\+planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_aaae7006183fe0337646f9419c0763674}{Unitangent\+\_\+planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classsurface__object_a7f965731f0cb6f96efb010cd10188db3}{nb\+\_\+unitangent\+\_\+planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a7dbf925eb272f98a80d935d983a56e88}{Line\+\_\+in\+\_\+unitangent\+\_\+plane}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a7ab6d77da7b7866dc06a0ecf69406ba6}{Tritangent\+\_\+planes\+\_\+on\+\_\+lines}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a32c95a8cab9fc77ebbe6c97631107e47}{Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a770b41d9b789d7d03b2ab16ae5cddac5}{Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a83fcf91f80006b8bddf016c4b64dc0d5}{Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a8c481aad84aaad8ab805161a9d169429}{Unitangent\+\_\+planes\+\_\+on\+\_\+lines}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a5daceb0f552a2bbcda9a13c3b1e6a3b4}{All\+\_\+\+Planes}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a4b76e3446e0122f90ced48cc5b765ca3}{Dual\+\_\+point\+\_\+ranks}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_ace7b0b8dfb6ddb4b14cfce1f8cddeab1}{Adj\+\_\+line\+\_\+intersection\+\_\+graph}}
+\item 
+\mbox{\hyperlink{classset__of__sets}{set\+\_\+of\+\_\+sets}} $\ast$ \mbox{\hyperlink{classsurface__object_a06e62075f093e7b6c287ba6c11df8ea6}{Line\+\_\+neighbors}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a3e07583d2134b589e9c4ca0988882061}{Line\+\_\+intersection\+\_\+pt}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classsurface__object_a7d8f5c7075dd8852209c9189e9bcfece}{Line\+\_\+intersection\+\_\+pt\+\_\+idx}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classsurface__object_a73ac72eb094e7a6a72c3af701e2a4c6f}\label{classsurface__object_a73ac72eb094e7a6a72c3af701e2a4c6f}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!surface\+\_\+object@{surface\+\_\+object}}
+\index{surface\+\_\+object@{surface\+\_\+object}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{surface\+\_\+object()}{surface\_object()}}
+{\footnotesize\ttfamily surface\+\_\+object\+::surface\+\_\+object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a880fa6d777c2bec7e7f01f1b667211c5}\label{classsurface__object_a880fa6d777c2bec7e7f01f1b667211c5}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!````~surface\+\_\+object@{$\sim$surface\+\_\+object}}
+\index{````~surface\+\_\+object@{$\sim$surface\+\_\+object}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{$\sim$surface\+\_\+object()}{~surface\_object()}}
+{\footnotesize\ttfamily surface\+\_\+object\+::$\sim$surface\+\_\+object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classsurface__object_ab2ef53e96689bef3c028b381ef8d62e8}\label{classsurface__object_ab2ef53e96689bef3c028b381ef8d62e8}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!choose\+\_\+tritangent\+\_\+plane@{choose\+\_\+tritangent\+\_\+plane}}
+\index{choose\+\_\+tritangent\+\_\+plane@{choose\+\_\+tritangent\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{choose\+\_\+tritangent\+\_\+plane()}{choose\_tritangent\_plane()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::choose\+\_\+tritangent\+\_\+plane (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{transversal\+\_\+line,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ad69d8f44629ac7925c699c65e6214ec1}\label{classsurface__object_ad69d8f44629ac7925c699c65e6214ec1}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines@{clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines}}
+\index{clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines@{clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines()}{clebsch\_map\_find\_arc\_and\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::clebsch\+\_\+map\+\_\+find\+\_\+arc\+\_\+and\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Clebsch\+\_\+map,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Arc,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Blown\+\_\+up\+\_\+lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_aa1d1b9e23f5204624159f5acc325003b}\label{classsurface__object_aa1d1b9e23f5204624159f5acc325003b}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!clebsch\+\_\+map\+\_\+print\+\_\+fibers@{clebsch\+\_\+map\+\_\+print\+\_\+fibers}}
+\index{clebsch\+\_\+map\+\_\+print\+\_\+fibers@{clebsch\+\_\+map\+\_\+print\+\_\+fibers}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{clebsch\+\_\+map\+\_\+print\+\_\+fibers()}{clebsch\_map\_print\_fibers()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::clebsch\+\_\+map\+\_\+print\+\_\+fibers (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Clebsch\+\_\+map }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_aeef0d278d1d82c7af525add5ae85d713}\label{classsurface__object_aeef0d278d1d82c7af525add5ae85d713}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph@{compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph}}
+\index{compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph@{compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph()}{compute\_adjacency\_matrix\_of\_line\_intersection\_graph()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::compute\+\_\+adjacency\+\_\+matrix\+\_\+of\+\_\+line\+\_\+intersection\+\_\+graph (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ad78297ade0f2cb687756f81ac18bc01e}\label{classsurface__object_ad78297ade0f2cb687756f81ac18bc01e}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+clebsch\+\_\+maps@{compute\+\_\+clebsch\+\_\+maps}}
+\index{compute\+\_\+clebsch\+\_\+maps@{compute\+\_\+clebsch\+\_\+maps}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+clebsch\+\_\+maps()}{compute\_clebsch\_maps()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::compute\+\_\+clebsch\+\_\+maps (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a7ad585c88d5c8278850d5f4c9281798c}\label{classsurface__object_a7ad585c88d5c8278850d5f4c9281798c}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points@{compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}}
+\index{compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points@{compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points()}{compute\_plane\_type\_by\_points()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::compute\+\_\+plane\+\_\+type\+\_\+by\+\_\+points (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a76f0933eada8322819007fb8670db6ee}\label{classsurface__object_a76f0933eada8322819007fb8670db6ee}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks@{compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks}}
+\index{compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks@{compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks()}{compute\_planes\_and\_dual\_point\_ranks()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::compute\+\_\+planes\+\_\+and\+\_\+dual\+\_\+point\+\_\+ranks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ad6c02c3c1432f8adfe49932041ce1b20}\label{classsurface__object_ad6c02c3c1432f8adfe49932041ce1b20}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+properties@{compute\+\_\+properties}}
+\index{compute\+\_\+properties@{compute\+\_\+properties}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+properties()}{compute\_properties()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::compute\+\_\+properties (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a62a611022c607fc2a4adf7f5f8913a69}\label{classsurface__object_a62a611022c607fc2a4adf7f5f8913a69}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+transversal\+\_\+line@{compute\+\_\+transversal\+\_\+line}}
+\index{compute\+\_\+transversal\+\_\+line@{compute\+\_\+transversal\+\_\+line}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+transversal\+\_\+line()}{compute\_transversal\_line()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::compute\+\_\+transversal\+\_\+line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ae6d924af993146400e0e484e41def0ab}\label{classsurface__object_ae6d924af993146400e0e484e41def0ab}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!compute\+\_\+tritangent\+\_\+planes@{compute\+\_\+tritangent\+\_\+planes}}
+\index{compute\+\_\+tritangent\+\_\+planes@{compute\+\_\+tritangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{compute\+\_\+tritangent\+\_\+planes()}{compute\_tritangent\_planes()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::compute\+\_\+tritangent\+\_\+planes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a001a13b6ea34dbe559033af634203466}\label{classsurface__object_a001a13b6ea34dbe559033af634203466}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!enumerate\+\_\+points@{enumerate\+\_\+points}}
+\index{enumerate\+\_\+points@{enumerate\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{enumerate\+\_\+points()}{enumerate\_points()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::enumerate\+\_\+points (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a64f5dd248a3f8d73be3422e00478a4bd}\label{classsurface__object_a64f5dd248a3f8d73be3422e00478a4bd}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines@{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines}}
+\index{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines@{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines()}{find\_common\_transversals\_to\_four\_disjoint\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+four\+\_\+disjoint\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a4,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{transversals2 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a767a62191b48c97e6b8ffb7e1eaccb5d}\label{classsurface__object_a767a62191b48c97e6b8ffb7e1eaccb5d}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines@{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines}}
+\index{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines@{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines()}{find\_common\_transversals\_to\_three\_disjoint\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+three\+\_\+disjoint\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{transversals3 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a04e29003af9e593bf04ccbe9e16e790e}\label{classsurface__object_a04e29003af9e593bf04ccbe9e16e790e}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines@{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines}}
+\index{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines@{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines()}{find\_common\_transversals\_to\_two\_disjoint\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::find\+\_\+common\+\_\+transversals\+\_\+to\+\_\+two\+\_\+disjoint\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{transversals5 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_aa2fc4ff039e9f3a5ac29718e29b6b90c}\label{classsurface__object_aa2fc4ff039e9f3a5ac29718e29b6b90c}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines@{find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines}}
+\index{find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines@{find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines()}{find\_double\_six\_and\_rearrange\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::find\+\_\+double\+\_\+six\+\_\+and\+\_\+rearrange\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a3208e9a0a373dccc4569bf14b618dc9d}\label{classsurface__object_a3208e9a0a373dccc4569bf14b618dc9d}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines@{find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines}}
+\index{find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines@{find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines()}{find\_tritangent\_plane\_through\_two\_lines()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::find\+\_\+tritangent\+\_\+plane\+\_\+through\+\_\+two\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+b }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a7d84feab77fd5ee7bee51d6f0b20e997}\label{classsurface__object_a7d84feab77fd5ee7bee51d6f0b20e997}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane@{find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane}}
+\index{find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane@{find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane()}{find\_two\_lines\_in\_plane()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::find\+\_\+two\+\_\+lines\+\_\+in\+\_\+plane (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{plane\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{forbidden\+\_\+line,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{line1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{line2 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a4cc84ee3f85ee271c663be786e8be807}\label{classsurface__object_a4cc84ee3f85ee271c663be786e8be807}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane@{find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane}}
+\index{find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane@{find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane()}{find\_unique\_line\_in\_plane()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::find\+\_\+unique\+\_\+line\+\_\+in\+\_\+plane (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{plane\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{forbidden\+\_\+line1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{forbidden\+\_\+line2 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ada68e90aabf58a147af8daa60cf40e6a}\label{classsurface__object_ada68e90aabf58a147af8daa60cf40e6a}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!freeself@{freeself}}
+\index{freeself@{freeself}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{freeself()}{freeself()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::freeself (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a1e4cebe5104477253457ea2c0b86037e}\label{classsurface__object_a1e4cebe5104477253457ea2c0b86037e}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!get\+\_\+planes\+\_\+through\+\_\+line@{get\+\_\+planes\+\_\+through\+\_\+line}}
+\index{get\+\_\+planes\+\_\+through\+\_\+line@{get\+\_\+planes\+\_\+through\+\_\+line}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{get\+\_\+planes\+\_\+through\+\_\+line()}{get\_planes\_through\_line()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::get\+\_\+planes\+\_\+through\+\_\+line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{new\+\_\+lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{line\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{planes5 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a9e20745e8c7524828649a7e3988e166b}\label{classsurface__object_a9e20745e8c7524828649a7e3988e166b}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair}}
+\index{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair()}{identify\_double\_six\_from\_trihedral\_pair()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{nine\+\_\+lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{double\+\_\+sixes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a651b603f3f6c59fc16cab70d07567a62}\label{classsurface__object_a651b603f3f6c59fc16cab70d07567a62}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one}}
+\index{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one()}{identify\_double\_six\_from\_trihedral\_pair\_type\_one()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+one (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{nine\+\_\+line\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{double\+\_\+sixes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a723aad2a111e80cbe2e64323331d7f34}\label{classsurface__object_a723aad2a111e80cbe2e64323331d7f34}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three}}
+\index{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three()}{identify\_double\_six\_from\_trihedral\_pair\_type\_three()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+three (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{nine\+\_\+line\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{double\+\_\+sixes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a18aa0190feb8ab83910d5bdb7cc573c1}\label{classsurface__object_a18aa0190feb8ab83910d5bdb7cc573c1}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two}}
+\index{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two@{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two()}{identify\_double\_six\_from\_trihedral\_pair\_type\_two()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::identify\+\_\+double\+\_\+six\+\_\+from\+\_\+trihedral\+\_\+pair\+\_\+type\+\_\+two (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{nine\+\_\+line\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{double\+\_\+sixes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a42a024ed43efea97d8de9ed3493b5a8e}\label{classsurface__object_a42a024ed43efea97d8de9ed3493b5a8e}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!identify\+\_\+lines@{identify\+\_\+lines}}
+\index{identify\+\_\+lines@{identify\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{identify\+\_\+lines()}{identify\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::identify\+\_\+lines (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{line\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a078879fb001ac8384f2cc41d26049c81}\label{classsurface__object_a078879fb001ac8384f2cc41d26049c81}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!init@{init}}
+\index{init@{init}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsurface}{surface}} $\ast$}]{Surf,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{eqn,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_afd4f4d1accbf361897374bd18d571913}\label{classsurface__object_afd4f4d1accbf361897374bd18d571913}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!init\+\_\+equation@{init\+\_\+equation}}
+\index{init\+\_\+equation@{init\+\_\+equation}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{init\+\_\+equation()}{init\_equation()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::init\+\_\+equation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classsurface}{surface}} $\ast$}]{Surf,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{eqn,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ae64b2ea950f99fb467960a0f2cbe7aa7}\label{classsurface__object_ae64b2ea950f99fb467960a0f2cbe7aa7}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs@{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs}}
+\index{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs@{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs()}{latex\_table\_of\_trihedral\_pairs()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{T,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+T }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a174ac7ffea380b2c2593fbe540da38c4}\label{classsurface__object_a174ac7ffea380b2c2593fbe540da38c4}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system@{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system}}
+\index{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system@{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system()}{latex\_table\_of\_trihedral\_pairs\_and\_clebsch\_system()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::latex\+\_\+table\+\_\+of\+\_\+trihedral\+\_\+pairs\+\_\+and\+\_\+clebsch\+\_\+system (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{T,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+T }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ae5f992f6e9c83b63306dbec1ce0ea7b9}\label{classsurface__object_ae5f992f6e9c83b63306dbec1ce0ea7b9}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!latex\+\_\+trihedral\+\_\+pair@{latex\+\_\+trihedral\+\_\+pair}}
+\index{latex\+\_\+trihedral\+\_\+pair@{latex\+\_\+trihedral\+\_\+pair}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{latex\+\_\+trihedral\+\_\+pair()}{latex\_trihedral\_pair()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::latex\+\_\+trihedral\+\_\+pair (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a02b3921d146d4b171a0f5e45e08cd8fc}\label{classsurface__object_a02b3921d146d4b171a0f5e45e08cd8fc}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form@{make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}}
+\index{make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form@{make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form()}{make\_and\_print\_equation\_in\_trihedral\_form()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::make\+\_\+and\+\_\+print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a27fe2b23c959d65da1c1cac88a38ca08}\label{classsurface__object_a27fe2b23c959d65da1c1cac88a38ca08}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form@{make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}}
+\index{make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form@{make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form()}{make\_equation\_in\_trihedral\_form()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::make\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t\+\_\+idx,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{F\+\_\+planes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{G\+\_\+planes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{lambda,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{equation,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a8252a4bafc5b472c16387da74e1f9d0a}\label{classsurface__object_a8252a4bafc5b472c16387da74e1f9d0a}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!null@{null}}
+\index{null@{null}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{null()}{null()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::null (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a559eff30b652887fdcfecb2f13f3718f}\label{classsurface__object_a559eff30b652887fdcfecb2f13f3718f}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+adjacency\+\_\+matrix@{print\+\_\+adjacency\+\_\+matrix}}
+\index{print\+\_\+adjacency\+\_\+matrix@{print\+\_\+adjacency\+\_\+matrix}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+adjacency\+\_\+matrix()}{print\_adjacency\_matrix()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+adjacency\+\_\+matrix (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a5bbd3a8c13107c326d8fda82374dbc4c}\label{classsurface__object_a5bbd3a8c13107c326d8fda82374dbc4c}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points@{print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points}}
+\index{print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points@{print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points()}{print\_adjacency\_matrix\_with\_intersection\_points()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+adjacency\+\_\+matrix\+\_\+with\+\_\+intersection\+\_\+points (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a96fc0de92fc676cd9ac857eb8dceba10}\label{classsurface__object_a96fc0de92fc676cd9ac857eb8dceba10}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+double\+\_\+sixes@{print\+\_\+double\+\_\+sixes}}
+\index{print\+\_\+double\+\_\+sixes@{print\+\_\+double\+\_\+sixes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+double\+\_\+sixes()}{print\_double\_sixes()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+double\+\_\+sixes (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a636657809582fe91c287bdf56c1b6cf3}\label{classsurface__object_a636657809582fe91c287bdf56c1b6cf3}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+equation@{print\+\_\+equation}}
+\index{print\+\_\+equation@{print\+\_\+equation}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+equation()}{print\_equation()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+equation (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ac0255c793ce4ffc32e1cecb06756dc6f}\label{classsurface__object_ac0255c793ce4ffc32e1cecb06756dc6f}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form@{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}}
+\index{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form@{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form()}{print\_equation\_in\_trihedral\_form()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{F\+\_\+planes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{G\+\_\+planes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lambda }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ae570775863861dbf2127f755b9c886bd}\label{classsurface__object_ae570775863861dbf2127f755b9c886bd}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only@{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only}}
+\index{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only@{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only()}{print\_equation\_in\_trihedral\_form\_equation\_only()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+equation\+\_\+in\+\_\+trihedral\+\_\+form\+\_\+equation\+\_\+only (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{F\+\_\+planes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{G\+\_\+planes,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{lambda }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ac8a03f56927e2db66b4012a17a2bb49f}\label{classsurface__object_ac8a03f56927e2db66b4012a17a2bb49f}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+general@{print\+\_\+general}}
+\index{print\+\_\+general@{print\+\_\+general}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+general()}{print\_general()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+general (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ac2ed7e410aa63f30610284e9584c1a13}\label{classsurface__object_ac2ed7e410aa63f30610284e9584c1a13}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+generalized\+\_\+quadrangle@{print\+\_\+generalized\+\_\+quadrangle}}
+\index{print\+\_\+generalized\+\_\+quadrangle@{print\+\_\+generalized\+\_\+quadrangle}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+generalized\+\_\+quadrangle()}{print\_generalized\_quadrangle()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+generalized\+\_\+quadrangle (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a89500b9c84a04ba16f97c3f0f25f3f34}\label{classsurface__object_a89500b9c84a04ba16f97c3f0f25f3f34}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+line\+\_\+intersection\+\_\+graph@{print\+\_\+line\+\_\+intersection\+\_\+graph}}
+\index{print\+\_\+line\+\_\+intersection\+\_\+graph@{print\+\_\+line\+\_\+intersection\+\_\+graph}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+line\+\_\+intersection\+\_\+graph()}{print\_line\_intersection\_graph()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+line\+\_\+intersection\+\_\+graph (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a778d359240ca044debd3cca2d7f85762}\label{classsurface__object_a778d359240ca044debd3cca2d7f85762}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+lines@{print\+\_\+lines}}
+\index{print\+\_\+lines@{print\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+lines()}{print\_lines()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+lines (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_abe0201b117e124fccff446f61b0faa47}\label{classsurface__object_abe0201b117e124fccff446f61b0faa47}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+neighbor\+\_\+sets@{print\+\_\+neighbor\+\_\+sets}}
+\index{print\+\_\+neighbor\+\_\+sets@{print\+\_\+neighbor\+\_\+sets}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+neighbor\+\_\+sets()}{print\_neighbor\_sets()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+neighbor\+\_\+sets (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ad1dea918afb2e6c9e19f575a851f776a}\label{classsurface__object_ad1dea918afb2e6c9e19f575a851f776a}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+nine\+\_\+lines\+\_\+latex@{print\+\_\+nine\+\_\+lines\+\_\+latex}}
+\index{print\+\_\+nine\+\_\+lines\+\_\+latex@{print\+\_\+nine\+\_\+lines\+\_\+latex}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+nine\+\_\+lines\+\_\+latex()}{print\_nine\_lines\_latex()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+nine\+\_\+lines\+\_\+latex (\begin{DoxyParamCaption}\item[{ostream \&}]{ost,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{nine\+\_\+lines,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{nine\+\_\+lines\+\_\+idx }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_ad948559b08ec6d88a0138d943c4ecd3f}\label{classsurface__object_ad948559b08ec6d88a0138d943c4ecd3f}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points@{print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}}
+\index{print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points@{print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points()}{print\_plane\_type\_by\_points()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+plane\+\_\+type\+\_\+by\+\_\+points (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a0ef70b8d17e3add2cd9e8b95d7e56a28}\label{classsurface__object_a0ef70b8d17e3add2cd9e8b95d7e56a28}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs@{print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs}}
+\index{print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs@{print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs()}{print\_planes\_in\_trihedral\_pairs()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+planes\+\_\+in\+\_\+trihedral\+\_\+pairs (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a80d7fdb3c014dcdad81ce942399f5770}\label{classsurface__object_a80d7fdb3c014dcdad81ce942399f5770}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+points@{print\+\_\+points}}
+\index{print\+\_\+points@{print\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+points()}{print\_points()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+points (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_a5288bd5c7da32fc2a827c27f8e727486}\label{classsurface__object_a5288bd5c7da32fc2a827c27f8e727486}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+trihedral\+\_\+pairs@{print\+\_\+trihedral\+\_\+pairs}}
+\index{print\+\_\+trihedral\+\_\+pairs@{print\+\_\+trihedral\+\_\+pairs}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+trihedral\+\_\+pairs()}{print\_trihedral\_pairs()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+trihedral\+\_\+pairs (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classsurface__object_adc569e1b86bec1e9eb1b13e08ae47c0d}\label{classsurface__object_adc569e1b86bec1e9eb1b13e08ae47c0d}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!print\+\_\+tritangent\+\_\+planes@{print\+\_\+tritangent\+\_\+planes}}
+\index{print\+\_\+tritangent\+\_\+planes@{print\+\_\+tritangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{print\+\_\+tritangent\+\_\+planes()}{print\_tritangent\_planes()}}
+{\footnotesize\ttfamily void surface\+\_\+object\+::print\+\_\+tritangent\+\_\+planes (\begin{DoxyParamCaption}\item[{ostream \&}]{ost }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classsurface__object_ace7b0b8dfb6ddb4b14cfce1f8cddeab1}\label{classsurface__object_ace7b0b8dfb6ddb4b14cfce1f8cddeab1}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Adj\+\_\+line\+\_\+intersection\+\_\+graph@{Adj\+\_\+line\+\_\+intersection\+\_\+graph}}
+\index{Adj\+\_\+line\+\_\+intersection\+\_\+graph@{Adj\+\_\+line\+\_\+intersection\+\_\+graph}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Adj\+\_\+line\+\_\+intersection\+\_\+graph}{Adj\_line\_intersection\_graph}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Adj\+\_\+line\+\_\+intersection\+\_\+graph}
+
+\mbox{\Hypertarget{classsurface__object_a5daceb0f552a2bbcda9a13c3b1e6a3b4}\label{classsurface__object_a5daceb0f552a2bbcda9a13c3b1e6a3b4}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!All\+\_\+\+Planes@{All\+\_\+\+Planes}}
+\index{All\+\_\+\+Planes@{All\+\_\+\+Planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{All\+\_\+\+Planes}{All\_Planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+All\+\_\+\+Planes}
+
+\mbox{\Hypertarget{classsurface__object_ae899e026c3a96402f63c4e5bcb6f0a53}\label{classsurface__object_ae899e026c3a96402f63c4e5bcb6f0a53}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points@{C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}}
+\index{C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points@{C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}{C\_plane\_type\_by\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classclassify}{classify}}$\ast$ surface\+\_\+object\+::\+C\+\_\+plane\+\_\+type\+\_\+by\+\_\+points}
+
+\mbox{\Hypertarget{classsurface__object_a996a56d69d65da3477ac7e87d0f3def0}\label{classsurface__object_a996a56d69d65da3477ac7e87d0f3def0}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Double\+\_\+points@{Double\+\_\+points}}
+\index{Double\+\_\+points@{Double\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Double\+\_\+points}{Double\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Double\+\_\+points}
+
+\mbox{\Hypertarget{classsurface__object_a3a153a0199e5d721597f0474eccc18bb}\label{classsurface__object_a3a153a0199e5d721597f0474eccc18bb}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Double\+\_\+points\+\_\+index@{Double\+\_\+points\+\_\+index}}
+\index{Double\+\_\+points\+\_\+index@{Double\+\_\+points\+\_\+index}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Double\+\_\+points\+\_\+index}{Double\_points\_index}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Double\+\_\+points\+\_\+index}
+
+\mbox{\Hypertarget{classsurface__object_a4b76e3446e0122f90ced48cc5b765ca3}\label{classsurface__object_a4b76e3446e0122f90ced48cc5b765ca3}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Dual\+\_\+point\+\_\+ranks@{Dual\+\_\+point\+\_\+ranks}}
+\index{Dual\+\_\+point\+\_\+ranks@{Dual\+\_\+point\+\_\+ranks}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Dual\+\_\+point\+\_\+ranks}{Dual\_point\_ranks}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Dual\+\_\+point\+\_\+ranks}
+
+\mbox{\Hypertarget{classsurface__object_aec6c6124562954d320485fbdc20d2cf5}\label{classsurface__object_aec6c6124562954d320485fbdc20d2cf5}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Eckardt\+\_\+points@{Eckardt\+\_\+points}}
+\index{Eckardt\+\_\+points@{Eckardt\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Eckardt\+\_\+points}{Eckardt\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Eckardt\+\_\+points}
+
+\mbox{\Hypertarget{classsurface__object_a0763705cdd9316e689a0fda66b38cf81}\label{classsurface__object_a0763705cdd9316e689a0fda66b38cf81}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Eckardt\+\_\+points\+\_\+index@{Eckardt\+\_\+points\+\_\+index}}
+\index{Eckardt\+\_\+points\+\_\+index@{Eckardt\+\_\+points\+\_\+index}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Eckardt\+\_\+points\+\_\+index}{Eckardt\_points\_index}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Eckardt\+\_\+points\+\_\+index}
+
+\mbox{\Hypertarget{classsurface__object_a770b41d9b789d7d03b2ab16ae5cddac5}\label{classsurface__object_a770b41d9b789d7d03b2ab16ae5cddac5}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane@{Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane}}
+\index{Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane@{Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane}{Eckardt\_to\_Tritangent\_plane}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Eckardt\+\_\+to\+\_\+\+Tritangent\+\_\+plane}
+
+\mbox{\Hypertarget{classsurface__object_a0fd2c77c27595731ee554e5b86a4b672}\label{classsurface__object_a0fd2c77c27595731ee554e5b86a4b672}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!eqn@{eqn}}
+\index{eqn@{eqn}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{eqn}{eqn}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::eqn\mbox{[}20\mbox{]}}
+
+\mbox{\Hypertarget{classsurface__object_aa18a0d0dd0b756cc01a6056eb5b5a998}\label{classsurface__object_aa18a0d0dd0b756cc01a6056eb5b5a998}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!F@{F}}
+\index{F@{F}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{F}{F}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfinite__field}{finite\+\_\+field}}$\ast$ surface\+\_\+object\+::F}
+
+\mbox{\Hypertarget{classsurface__object_ae381706c522977d2487573b095d28d78}\label{classsurface__object_ae381706c522977d2487573b095d28d78}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane@{iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane}}
+\index{iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane@{iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane}{iso\_type\_of\_tritangent\_plane}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::iso\+\_\+type\+\_\+of\+\_\+tritangent\+\_\+plane}
+
+\mbox{\Hypertarget{classsurface__object_a7dbf925eb272f98a80d935d983a56e88}\label{classsurface__object_a7dbf925eb272f98a80d935d983a56e88}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Line\+\_\+in\+\_\+unitangent\+\_\+plane@{Line\+\_\+in\+\_\+unitangent\+\_\+plane}}
+\index{Line\+\_\+in\+\_\+unitangent\+\_\+plane@{Line\+\_\+in\+\_\+unitangent\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Line\+\_\+in\+\_\+unitangent\+\_\+plane}{Line\_in\_unitangent\_plane}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Line\+\_\+in\+\_\+unitangent\+\_\+plane}
+
+\mbox{\Hypertarget{classsurface__object_a3e07583d2134b589e9c4ca0988882061}\label{classsurface__object_a3e07583d2134b589e9c4ca0988882061}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Line\+\_\+intersection\+\_\+pt@{Line\+\_\+intersection\+\_\+pt}}
+\index{Line\+\_\+intersection\+\_\+pt@{Line\+\_\+intersection\+\_\+pt}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Line\+\_\+intersection\+\_\+pt}{Line\_intersection\_pt}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Line\+\_\+intersection\+\_\+pt}
+
+\mbox{\Hypertarget{classsurface__object_a7d8f5c7075dd8852209c9189e9bcfece}\label{classsurface__object_a7d8f5c7075dd8852209c9189e9bcfece}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Line\+\_\+intersection\+\_\+pt\+\_\+idx@{Line\+\_\+intersection\+\_\+pt\+\_\+idx}}
+\index{Line\+\_\+intersection\+\_\+pt\+\_\+idx@{Line\+\_\+intersection\+\_\+pt\+\_\+idx}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Line\+\_\+intersection\+\_\+pt\+\_\+idx}{Line\_intersection\_pt\_idx}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Line\+\_\+intersection\+\_\+pt\+\_\+idx}
+
+\mbox{\Hypertarget{classsurface__object_a06e62075f093e7b6c287ba6c11df8ea6}\label{classsurface__object_a06e62075f093e7b6c287ba6c11df8ea6}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Line\+\_\+neighbors@{Line\+\_\+neighbors}}
+\index{Line\+\_\+neighbors@{Line\+\_\+neighbors}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Line\+\_\+neighbors}{Line\_neighbors}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classset__of__sets}{set\+\_\+of\+\_\+sets}}$\ast$ surface\+\_\+object\+::\+Line\+\_\+neighbors}
+
+\mbox{\Hypertarget{classsurface__object_a0fae2a45446843f691e91d58fb905afe}\label{classsurface__object_a0fae2a45446843f691e91d58fb905afe}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Lines@{Lines}}
+\index{Lines@{Lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Lines}{Lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::\+Lines\mbox{[}27\mbox{]}}
+
+\mbox{\Hypertarget{classsurface__object_a6f01b349991bf46dfa2364dc7447cfa0}\label{classsurface__object_a6f01b349991bf46dfa2364dc7447cfa0}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Lines\+\_\+in\+\_\+tritangent\+\_\+plane@{Lines\+\_\+in\+\_\+tritangent\+\_\+plane}}
+\index{Lines\+\_\+in\+\_\+tritangent\+\_\+plane@{Lines\+\_\+in\+\_\+tritangent\+\_\+plane}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Lines\+\_\+in\+\_\+tritangent\+\_\+plane}{Lines\_in\_tritangent\_plane}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Lines\+\_\+in\+\_\+tritangent\+\_\+plane}
+
+\mbox{\Hypertarget{classsurface__object_a5075e6de0d91435a7f63c2bfea3f9766}\label{classsurface__object_a5075e6de0d91435a7f63c2bfea3f9766}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!lines\+\_\+on\+\_\+point@{lines\+\_\+on\+\_\+point}}
+\index{lines\+\_\+on\+\_\+point@{lines\+\_\+on\+\_\+point}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{lines\+\_\+on\+\_\+point}{lines\_on\_point}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classset__of__sets}{set\+\_\+of\+\_\+sets}}$\ast$ surface\+\_\+object\+::lines\+\_\+on\+\_\+point}
+
+\mbox{\Hypertarget{classsurface__object_a02c107359dfab111b38d38dd5e8dad5d}\label{classsurface__object_a02c107359dfab111b38d38dd5e8dad5d}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+\+Double\+\_\+points@{nb\+\_\+\+Double\+\_\+points}}
+\index{nb\+\_\+\+Double\+\_\+points@{nb\+\_\+\+Double\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+\+Double\+\_\+points}{nb\_Double\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+\+Double\+\_\+points}
+
+\mbox{\Hypertarget{classsurface__object_a26375d6fb1195310d309c28b47dcbd72}\label{classsurface__object_a26375d6fb1195310d309c28b47dcbd72}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+\+Eckardt\+\_\+points@{nb\+\_\+\+Eckardt\+\_\+points}}
+\index{nb\+\_\+\+Eckardt\+\_\+points@{nb\+\_\+\+Eckardt\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+\+Eckardt\+\_\+points}{nb\_Eckardt\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+\+Eckardt\+\_\+points}
+
+\mbox{\Hypertarget{classsurface__object_aef238e7e7c79fa0b8d0f565a79f27edd}\label{classsurface__object_aef238e7e7c79fa0b8d0f565a79f27edd}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+planes@{nb\+\_\+planes}}
+\index{nb\+\_\+planes@{nb\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+planes}{nb\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_abbacd75913dba543f3c56e01dd55a7b6}\label{classsurface__object_abbacd75913dba543f3c56e01dd55a7b6}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+pts@{nb\+\_\+pts}}
+\index{nb\+\_\+pts@{nb\+\_\+pts}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+pts}{nb\_pts}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+pts}
+
+\mbox{\Hypertarget{classsurface__object_abc79e4d403d07c4b9b8042ea1c57a078}\label{classsurface__object_abc79e4d403d07c4b9b8042ea1c57a078}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines@{nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines}}
+\index{nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines@{nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines}{nb\_pts\_not\_on\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+pts\+\_\+not\+\_\+on\+\_\+lines}
+
+\mbox{\Hypertarget{classsurface__object_ad8a016d3e003c6b5c6a6dc86ffecd561}\label{classsurface__object_ad8a016d3e003c6b5c6a6dc86ffecd561}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+tritangent\+\_\+planes@{nb\+\_\+tritangent\+\_\+planes}}
+\index{nb\+\_\+tritangent\+\_\+planes@{nb\+\_\+tritangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+tritangent\+\_\+planes}{nb\_tritangent\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+tritangent\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_a7f965731f0cb6f96efb010cd10188db3}\label{classsurface__object_a7f965731f0cb6f96efb010cd10188db3}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!nb\+\_\+unitangent\+\_\+planes@{nb\+\_\+unitangent\+\_\+planes}}
+\index{nb\+\_\+unitangent\+\_\+planes@{nb\+\_\+unitangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{nb\+\_\+unitangent\+\_\+planes}{nb\_unitangent\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::nb\+\_\+unitangent\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_aca45161ecfdee5980838794d8f4caacc}\label{classsurface__object_aca45161ecfdee5980838794d8f4caacc}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!plane\+\_\+type\+\_\+by\+\_\+lines@{plane\+\_\+type\+\_\+by\+\_\+lines}}
+\index{plane\+\_\+type\+\_\+by\+\_\+lines@{plane\+\_\+type\+\_\+by\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{plane\+\_\+type\+\_\+by\+\_\+lines}{plane\_type\_by\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::plane\+\_\+type\+\_\+by\+\_\+lines}
+
+\mbox{\Hypertarget{classsurface__object_a1970c960a6a67bfd3df36cfe814e35d4}\label{classsurface__object_a1970c960a6a67bfd3df36cfe814e35d4}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!plane\+\_\+type\+\_\+by\+\_\+points@{plane\+\_\+type\+\_\+by\+\_\+points}}
+\index{plane\+\_\+type\+\_\+by\+\_\+points@{plane\+\_\+type\+\_\+by\+\_\+points}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{plane\+\_\+type\+\_\+by\+\_\+points}{plane\_type\_by\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::plane\+\_\+type\+\_\+by\+\_\+points}
+
+\mbox{\Hypertarget{classsurface__object_a02e013f97cf4f94ca5f530cc3130b2d3}\label{classsurface__object_a02e013f97cf4f94ca5f530cc3130b2d3}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Pts@{Pts}}
+\index{Pts@{Pts}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Pts}{Pts}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Pts}
+
+\mbox{\Hypertarget{classsurface__object_acf56a8ed4faee4ba1cf0b22889df70d2}\label{classsurface__object_acf56a8ed4faee4ba1cf0b22889df70d2}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Pts\+\_\+not\+\_\+on\+\_\+lines@{Pts\+\_\+not\+\_\+on\+\_\+lines}}
+\index{Pts\+\_\+not\+\_\+on\+\_\+lines@{Pts\+\_\+not\+\_\+on\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Pts\+\_\+not\+\_\+on\+\_\+lines}{Pts\_not\_on\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Pts\+\_\+not\+\_\+on\+\_\+lines}
+
+\mbox{\Hypertarget{classsurface__object_a3bd427a3ff539f8a74bf28cacd352187}\label{classsurface__object_a3bd427a3ff539f8a74bf28cacd352187}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!pts\+\_\+on\+\_\+lines@{pts\+\_\+on\+\_\+lines}}
+\index{pts\+\_\+on\+\_\+lines@{pts\+\_\+on\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{pts\+\_\+on\+\_\+lines}{pts\_on\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classset__of__sets}{set\+\_\+of\+\_\+sets}}$\ast$ surface\+\_\+object\+::pts\+\_\+on\+\_\+lines}
+
+\mbox{\Hypertarget{classsurface__object_a7a14a74403dd56a3ff5cf863aec676e3}\label{classsurface__object_a7a14a74403dd56a3ff5cf863aec676e3}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!q@{q}}
+\index{q@{q}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{q}{q}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} surface\+\_\+object\+::q}
+
+\mbox{\Hypertarget{classsurface__object_a23be3906bbf1ff7d8aab8a9b744595ba}\label{classsurface__object_a23be3906bbf1ff7d8aab8a9b744595ba}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Surf@{Surf}}
+\index{Surf@{Surf}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Surf}{Surf}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsurface}{surface}}$\ast$ surface\+\_\+object\+::\+Surf}
+
+\mbox{\Hypertarget{classsurface__object_a83fcf91f80006b8bddf016c4b64dc0d5}\label{classsurface__object_a83fcf91f80006b8bddf016c4b64dc0d5}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes@{Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes}}
+\index{Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes@{Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes}{Trihedral\_pairs\_as\_tritangent\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Trihedral\+\_\+pairs\+\_\+as\+\_\+tritangent\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_a2c29305002881c61bb026a883af6c799}\label{classsurface__object_a2c29305002881c61bb026a883af6c799}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Tritangent\+\_\+plane\+\_\+dual@{Tritangent\+\_\+plane\+\_\+dual}}
+\index{Tritangent\+\_\+plane\+\_\+dual@{Tritangent\+\_\+plane\+\_\+dual}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Tritangent\+\_\+plane\+\_\+dual}{Tritangent\_plane\_dual}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Tritangent\+\_\+plane\+\_\+dual}
+
+\mbox{\Hypertarget{classsurface__object_a32c95a8cab9fc77ebbe6c97631107e47}\label{classsurface__object_a32c95a8cab9fc77ebbe6c97631107e47}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt@{Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt}}
+\index{Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt@{Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt}{Tritangent\_plane\_to\_Eckardt}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Tritangent\+\_\+plane\+\_\+to\+\_\+\+Eckardt}
+
+\mbox{\Hypertarget{classsurface__object_a8e0217bf0f07b82f7524df4a355cfc39}\label{classsurface__object_a8e0217bf0f07b82f7524df4a355cfc39}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Tritangent\+\_\+planes@{Tritangent\+\_\+planes}}
+\index{Tritangent\+\_\+planes@{Tritangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Tritangent\+\_\+planes}{Tritangent\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Tritangent\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_a7ab6d77da7b7866dc06a0ecf69406ba6}\label{classsurface__object_a7ab6d77da7b7866dc06a0ecf69406ba6}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Tritangent\+\_\+planes\+\_\+on\+\_\+lines@{Tritangent\+\_\+planes\+\_\+on\+\_\+lines}}
+\index{Tritangent\+\_\+planes\+\_\+on\+\_\+lines@{Tritangent\+\_\+planes\+\_\+on\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Tritangent\+\_\+planes\+\_\+on\+\_\+lines}{Tritangent\_planes\_on\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Tritangent\+\_\+planes\+\_\+on\+\_\+lines}
+
+\mbox{\Hypertarget{classsurface__object_ac5ebc23149afeda7ba0050ddd6db66a5}\label{classsurface__object_ac5ebc23149afeda7ba0050ddd6db66a5}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Type\+\_\+iso\+\_\+tritangent\+\_\+planes@{Type\+\_\+iso\+\_\+tritangent\+\_\+planes}}
+\index{Type\+\_\+iso\+\_\+tritangent\+\_\+planes@{Type\+\_\+iso\+\_\+tritangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Type\+\_\+iso\+\_\+tritangent\+\_\+planes}{Type\_iso\_tritangent\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classclassify}{classify}}$\ast$ surface\+\_\+object\+::\+Type\+\_\+iso\+\_\+tritangent\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_a0184e0304e880008fa802b4ea80d965d}\label{classsurface__object_a0184e0304e880008fa802b4ea80d965d}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Type\+\_\+lines\+\_\+on\+\_\+point@{Type\+\_\+lines\+\_\+on\+\_\+point}}
+\index{Type\+\_\+lines\+\_\+on\+\_\+point@{Type\+\_\+lines\+\_\+on\+\_\+point}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Type\+\_\+lines\+\_\+on\+\_\+point}{Type\_lines\_on\_point}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classclassify}{classify}}$\ast$ surface\+\_\+object\+::\+Type\+\_\+lines\+\_\+on\+\_\+point}
+
+\mbox{\Hypertarget{classsurface__object_a676fd81765543f6198ee3e5acdc863ca}\label{classsurface__object_a676fd81765543f6198ee3e5acdc863ca}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Type\+\_\+pts\+\_\+on\+\_\+lines@{Type\+\_\+pts\+\_\+on\+\_\+lines}}
+\index{Type\+\_\+pts\+\_\+on\+\_\+lines@{Type\+\_\+pts\+\_\+on\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Type\+\_\+pts\+\_\+on\+\_\+lines}{Type\_pts\_on\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classclassify}{classify}}$\ast$ surface\+\_\+object\+::\+Type\+\_\+pts\+\_\+on\+\_\+lines}
+
+\mbox{\Hypertarget{classsurface__object_aaae7006183fe0337646f9419c0763674}\label{classsurface__object_aaae7006183fe0337646f9419c0763674}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Unitangent\+\_\+planes@{Unitangent\+\_\+planes}}
+\index{Unitangent\+\_\+planes@{Unitangent\+\_\+planes}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Unitangent\+\_\+planes}{Unitangent\_planes}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Unitangent\+\_\+planes}
+
+\mbox{\Hypertarget{classsurface__object_a8c481aad84aaad8ab805161a9d169429}\label{classsurface__object_a8c481aad84aaad8ab805161a9d169429}} 
+\index{surface\+\_\+object@{surface\+\_\+object}!Unitangent\+\_\+planes\+\_\+on\+\_\+lines@{Unitangent\+\_\+planes\+\_\+on\+\_\+lines}}
+\index{Unitangent\+\_\+planes\+\_\+on\+\_\+lines@{Unitangent\+\_\+planes\+\_\+on\+\_\+lines}!surface\+\_\+object@{surface\+\_\+object}}
+\subsubsection{\texorpdfstring{Unitangent\+\_\+planes\+\_\+on\+\_\+lines}{Unitangent\_planes\_on\_lines}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ surface\+\_\+object\+::\+Unitangent\+\_\+planes\+\_\+on\+\_\+lines}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{galois_8h}{galois.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{surface__object_8_c}{surface\+\_\+object.\+C}}\end{DoxyCompactItemize}

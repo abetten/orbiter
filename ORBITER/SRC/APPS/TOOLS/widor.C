@@ -37,16 +37,22 @@ int main(int argc, char **argv)
 	get_extension_if_present(str, ext);
 	chop_off_extension_if_present(str, ext);
 	sprintf(fname_out, "%s.tdo", str);
+
+	cout << "reading file " << widor_fname << endl;
 	{
 	geo_parameter GP;
 	tdo_scheme G;
 	ifstream f(widor_fname);
 	ofstream g(fname_out);
 	for (i = 0; ; i++) {
-		if (f.eof())
+		if (f.eof()) {
+			cout << "end of file reached" << endl;
 			break;
-		if (!GP.input(f))
+			}
+		if (!GP.input(f)) {
+			cout << "GP.input returns false" << endl;
 			break;
+			}
 		if (f_v) {
 			cout << "read decomposition " << i 
 				<< " v=" << GP.v << " b=" << GP.b << endl;

@@ -1,0 +1,97 @@
+\hypertarget{scheduler_8_c}{}\section{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/scheduler.C File Reference}
+\label{scheduler_8_c}\index{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/scheduler.\+C@{S\+R\+C/\+A\+P\+P\+S/\+T\+O\+O\+L\+S/scheduler.\+C}}
+{\ttfamily \#include \char`\"{}orbiter.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}discreta.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classjob__table}{job\+\_\+table}}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{scheduler_8_c_a6079b3b36c54787d2dca2de2fb2c96df}{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}}~\mbox{\hyperlink{galois_8h_a6a146c1b2155b03eb2ffa3f4ba755034}{O\+N\+E\+\_\+\+M\+I\+L\+L\+I\+ON}}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef class \mbox{\hyperlink{classjob__table}{job\+\_\+table}} \mbox{\hyperlink{scheduler_8_c_a230460f79db29f24f2aa40cadf07a218}{job\+\_\+table}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{scheduler_8_c_a25c4e69df3d752c2cee61cc00db89a9c}{do\+\_\+collate}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$collate\+\_\+output\+\_\+file\+\_\+mask, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$collated\+\_\+fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{scheduler_8_c_a58d44dc8f15bd41379991504e12a3e88}{do\+\_\+scheduling}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{_a_p_p_s_2_t_d_o_2packing_8_c_a0240ac851181b84ac374872dc5434ee4}{N}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$list\+\_\+of\+\_\+cases, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} J, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$input\+\_\+file\+\_\+mask, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$target\+\_\+file\+\_\+mask, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+command\+\_\+mask, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$command\+\_\+mask, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$excluded\+\_\+cases, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+excluded\+\_\+cases, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+reload, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+batch, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$job\+\_\+fname, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$batch\+\_\+template, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} template\+\_\+nb\+\_\+times, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+randomized, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$randomized\+\_\+fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+log\+\_\+prefix, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$log\+\_\+prefix, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{scheduler_8_c_a8a297557e06e79dff64e3345d704711b}{find\+\_\+free\+\_\+job}} (\mbox{\hyperlink{classjob__table}{job\+\_\+table}} $\ast$JT, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} J)
+\item 
+void \mbox{\hyperlink{scheduler_8_c_a07c624f7125df1373130c0288d35b869}{assign\+\_\+task}} (\mbox{\hyperlink{classjob__table}{job\+\_\+table}} $\ast$JT, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_ac310d9181e916ba43604099aee272c71}{t}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$list\+\_\+of\+\_\+cases, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$log\+\_\+prefix, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+batch, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$job\+\_\+fname, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$batch\+\_\+template, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} template\+\_\+nb\+\_\+times, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+int \mbox{\hyperlink{scheduler_8_c_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{scheduler_8_c_a4268f4fe222ffb119218a0199f5e1904}{t0}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{scheduler_8_c_a6079b3b36c54787d2dca2de2fb2c96df}\label{scheduler_8_c_a6079b3b36c54787d2dca2de2fb2c96df}} 
+\index{scheduler.\+C@{scheduler.\+C}!M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE@{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}}
+\index{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE@{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE}{MY\_BUFSIZE}}
+{\footnotesize\ttfamily \#define M\+Y\+\_\+\+B\+U\+F\+S\+I\+ZE~\mbox{\hyperlink{galois_8h_a6a146c1b2155b03eb2ffa3f4ba755034}{O\+N\+E\+\_\+\+M\+I\+L\+L\+I\+ON}}}
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{scheduler_8_c_a230460f79db29f24f2aa40cadf07a218}\label{scheduler_8_c_a230460f79db29f24f2aa40cadf07a218}} 
+\index{scheduler.\+C@{scheduler.\+C}!job\+\_\+table@{job\+\_\+table}}
+\index{job\+\_\+table@{job\+\_\+table}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{job\+\_\+table}{job\_table}}
+{\footnotesize\ttfamily typedef class \mbox{\hyperlink{classjob__table}{job\+\_\+table}} \mbox{\hyperlink{classjob__table}{job\+\_\+table}}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{scheduler_8_c_a07c624f7125df1373130c0288d35b869}\label{scheduler_8_c_a07c624f7125df1373130c0288d35b869}} 
+\index{scheduler.\+C@{scheduler.\+C}!assign\+\_\+task@{assign\+\_\+task}}
+\index{assign\+\_\+task@{assign\+\_\+task}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{assign\+\_\+task()}{assign\_task()}}
+{\footnotesize\ttfamily void assign\+\_\+task (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classjob__table}{job\+\_\+table}} $\ast$}]{JT,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{t,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{list\+\_\+of\+\_\+cases,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{log\+\_\+prefix,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+batch,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{job\+\_\+fname,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{batch\+\_\+template,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{template\+\_\+nb\+\_\+times,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8_c_a25c4e69df3d752c2cee61cc00db89a9c}\label{scheduler_8_c_a25c4e69df3d752c2cee61cc00db89a9c}} 
+\index{scheduler.\+C@{scheduler.\+C}!do\+\_\+collate@{do\+\_\+collate}}
+\index{do\+\_\+collate@{do\+\_\+collate}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{do\+\_\+collate()}{do\_collate()}}
+{\footnotesize\ttfamily void do\+\_\+collate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{N,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{collate\+\_\+output\+\_\+file\+\_\+mask,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{collated\+\_\+fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8_c_a58d44dc8f15bd41379991504e12a3e88}\label{scheduler_8_c_a58d44dc8f15bd41379991504e12a3e88}} 
+\index{scheduler.\+C@{scheduler.\+C}!do\+\_\+scheduling@{do\+\_\+scheduling}}
+\index{do\+\_\+scheduling@{do\+\_\+scheduling}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{do\+\_\+scheduling()}{do\_scheduling()}}
+{\footnotesize\ttfamily void do\+\_\+scheduling (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{N,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{list\+\_\+of\+\_\+cases,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{J,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{input\+\_\+file\+\_\+mask,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{target\+\_\+file\+\_\+mask,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+command\+\_\+mask,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{command\+\_\+mask,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{excluded\+\_\+cases,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+excluded\+\_\+cases,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+reload,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+batch,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{job\+\_\+fname,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{batch\+\_\+template,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{template\+\_\+nb\+\_\+times,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+randomized,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{randomized\+\_\+fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+log\+\_\+prefix,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{log\+\_\+prefix,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8_c_a8a297557e06e79dff64e3345d704711b}\label{scheduler_8_c_a8a297557e06e79dff64e3345d704711b}} 
+\index{scheduler.\+C@{scheduler.\+C}!find\+\_\+free\+\_\+job@{find\+\_\+free\+\_\+job}}
+\index{find\+\_\+free\+\_\+job@{find\+\_\+free\+\_\+job}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{find\+\_\+free\+\_\+job()}{find\_free\_job()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} find\+\_\+free\+\_\+job (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classjob__table}{job\+\_\+table}} $\ast$}]{JT,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{J }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{scheduler_8_c_a3c04138a5bfe5d72780bb7e82a18e627}\label{scheduler_8_c_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{scheduler.\+C@{scheduler.\+C}!main@{main}}
+\index{main@{main}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{scheduler_8_c_a4268f4fe222ffb119218a0199f5e1904}\label{scheduler_8_c_a4268f4fe222ffb119218a0199f5e1904}} 
+\index{scheduler.\+C@{scheduler.\+C}!t0@{t0}}
+\index{t0@{t0}!scheduler.\+C@{scheduler.\+C}}
+\subsubsection{\texorpdfstring{t0}{t0}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} t0}
+

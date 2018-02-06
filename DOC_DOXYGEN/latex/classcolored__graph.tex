@@ -1,0 +1,435 @@
+\hypertarget{classcolored__graph}{}\section{colored\+\_\+graph Class Reference}
+\label{classcolored__graph}\index{colored\+\_\+graph@{colored\+\_\+graph}}
+
+
+{\ttfamily \#include $<$galois.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcolored__graph_a104bcd930e68c04e4786678923bfdca1}{colored\+\_\+graph}} ()
+\item 
+\mbox{\hyperlink{classcolored__graph_a93ffac97a5f321e670478f0a44cc8b55}{$\sim$colored\+\_\+graph}} ()
+\item 
+void \mbox{\hyperlink{classcolored__graph_ac73b077b50e6439a617aec3f1f3fd864}{null}} ()
+\item 
+void \mbox{\hyperlink{classcolored__graph_a535b58df68ad6200bd6c8cde9bd09f57}{freeself}} ()
+\item 
+void \mbox{\hyperlink{classcolored__graph_a96fc94940e35bc6e6951bc355b48e5be}{compute\+\_\+edges}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_ac13cc7a798c3ee11bef01f01c8eab061}{is\+\_\+adjacent}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a3c850d5d5d6bde5de472a07ff7c49687}{set\+\_\+adjacency}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} a)
+\item 
+void \mbox{\hyperlink{classcolored__graph_a446033862cffb718270e87913e8fe843}{print}} ()
+\item 
+void \mbox{\hyperlink{classcolored__graph_a4b917cdc9c6203a5a750c321e791bc7d}{init}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}{nb\+\_\+points}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a3eb3124af17fec95f20c9c31f7267ba2}{nb\+\_\+colors}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$colors, \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$bitvec, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_aebead3f7d939828e4ec59c5d05def701}{f\+\_\+ownership\+\_\+of\+\_\+bitvec}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a988d41f23300407c71570cb7ea06e593}{init\+\_\+with\+\_\+point\+\_\+labels}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}{nb\+\_\+points}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a3eb3124af17fec95f20c9c31f7267ba2}{nb\+\_\+colors}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$colors, \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$bitvec, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_aebead3f7d939828e4ec59c5d05def701}{f\+\_\+ownership\+\_\+of\+\_\+bitvec}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$point\+\_\+labels, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a031519ee30b86a4077a5bcdc42ee2f18}{init\+\_\+no\+\_\+colors}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}{nb\+\_\+points}}, \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$bitvec, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_aebead3f7d939828e4ec59c5d05def701}{f\+\_\+ownership\+\_\+of\+\_\+bitvec}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a7dd89f3adcb0f1d70d4bb05be6400e73}{init\+\_\+adjacency}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}{nb\+\_\+points}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a3eb3124af17fec95f20c9c31f7267ba2}{nb\+\_\+colors}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$colors, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Adj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_aa5e628053139148b42e5ea61698d3bae}{init\+\_\+adjacency\+\_\+no\+\_\+colors}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}{nb\+\_\+points}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$Adj, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a9b5e52110265b750e709d8b84ba03d8f}{init\+\_\+user\+\_\+data}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$data, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} data\+\_\+size, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a562912fb7464addacd865057a1a48f75}{save}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_aa777bb4ea083ac13058d746d63c7f128}{load}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_ae25e8fa7873bb5a3409641c08ca95024}{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} target\+\_\+depth, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{plane__search_8_c_a0029b734487624c93c3a72d74a8f2bf9}{nb\+\_\+sol}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&decision\+\_\+step\+\_\+counter, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_adac4d97375919b00495f7023be88d749}{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} target\+\_\+depth, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+restrictions, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$restrictions, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{plane__search_8_c_a0029b734487624c93c3a72d74a8f2bf9}{nb\+\_\+sol}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&decision\+\_\+step\+\_\+counter, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a62ecc5d052397b136d676a316f94ff10}{all\+\_\+rainbow\+\_\+cliques}} (ofstream $\ast$\mbox{\hyperlink{k__arc__lifting_8_c_a67cc9fbd0817c2d140368e5ed1f2a44d}{fp}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+output\+\_\+solution\+\_\+raw, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+maxdepth, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} maxdepth, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+restrictions, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$restrictions, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+tree, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+decision\+\_\+nodes\+\_\+only, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname\+\_\+tree, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} print\+\_\+interval, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&search\+\_\+steps, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&decision\+\_\+steps, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{plane__search_8_c_a0029b734487624c93c3a72d74a8f2bf9}{nb\+\_\+sol}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&dt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_adc7194b4555c9c5dbde203b4502fdbdf}{all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function}} (ofstream $\ast$\mbox{\hyperlink{k__arc__lifting_8_c_a67cc9fbd0817c2d140368e5ed1f2a44d}{fp}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+output\+\_\+solution\+\_\+raw, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+maxdepth, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} maxdepth, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+restrictions, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$restrictions, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+tree, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+decision\+\_\+nodes\+\_\+only, const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname\+\_\+tree, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} print\+\_\+interval, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+has\+\_\+additional\+\_\+test\+\_\+function, void($\ast$call\+\_\+back\+\_\+additional\+\_\+test\+\_\+function)(\mbox{\hyperlink{classrainbow__cliques}{rainbow\+\_\+cliques}} $\ast$\mbox{\hyperlink{pentomino__5x5_8_c_a9e6c5a8291295bd0292db81cc90cb2cf}{R}}, void $\ast$\mbox{\hyperlink{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}{user\+\_\+data}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} current\+\_\+clique\+\_\+size, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$current\+\_\+clique, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+pts, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&reduced\+\_\+nb\+\_\+pts, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$pt\+\_\+list, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$pt\+\_\+list\+\_\+inv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}}), \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+has\+\_\+print\+\_\+current\+\_\+choice\+\_\+function, void($\ast$call\+\_\+back\+\_\+print\+\_\+current\+\_\+choice)(\mbox{\hyperlink{classclique__finder}{clique\+\_\+finder}} $\ast$CF, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} depth, void $\ast$\mbox{\hyperlink{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}{user\+\_\+data}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}}), void $\ast$\mbox{\hyperlink{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}{user\+\_\+data}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&search\+\_\+steps, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&decision\+\_\+steps, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{plane__search_8_c_a0029b734487624c93c3a72d74a8f2bf9}{nb\+\_\+sol}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&dt, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a1d55e0555a9def288aad59156b1e64db}{draw\+\_\+on\+\_\+circle}} (char $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labels, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+embedded, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+sideways, double tikz\+\_\+global\+\_\+scale, double tikz\+\_\+global\+\_\+line\+\_\+width)
+\item 
+void \mbox{\hyperlink{classcolored__graph_af6dd79e0c699432153b1a8cb60f5afad}{draw\+\_\+on\+\_\+circle\+\_\+2}} (\mbox{\hyperlink{classmp__graphics}{mp\+\_\+graphics}} \&G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labels)
+\item 
+void \mbox{\hyperlink{classcolored__graph_ac5fd42765545792be5d4533b782e3320}{draw}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+out, double scale, double line\+\_\+width, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a5c5ee5bee29d724887a32f6f43ca24ff}{draw\+\_\+\+Levi}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+draw\+\_\+labels, double scale, double line\+\_\+width, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a258eaac656baacbcbc064a933f7f11b0}{draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$parts, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+parts, double scale, double line\+\_\+width, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a244dcd80d20f6eeddd537a48a1541f96}{draw\+\_\+partitioned}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+labels, double scale, double line\+\_\+width, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$ \mbox{\hyperlink{classcolored__graph_abea9e2c972a799ae17763b8faad9c37a}{compute\+\_\+neighborhood\+\_\+subgraph}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, \mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&vertex\+\_\+subset, \mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&color\+\_\+subset, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$ \mbox{\hyperlink{classcolored__graph_a8f463f37779583b7d4fed1ac35097c2c}{compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, \mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&vertex\+\_\+subset, \mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&color\+\_\+subset, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}($\ast$test\+\_\+function)(\mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$CG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} test\+\_\+point, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, void $\ast$test\+\_\+function\+\_\+data, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}}), void $\ast$test\+\_\+function\+\_\+data, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a766c05f1b628f86b4de896bce33ec0f2}{export\+\_\+to\+\_\+magma}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a51fe2bb2a48069027ffef04450678b13}{export\+\_\+to\+\_\+file}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a497d62a41adacc9650c83f6d8629608b}{export\+\_\+laplacian\+\_\+to\+\_\+file}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a07a854d04202de45bb78cd9ae6efd521}{export\+\_\+to\+\_\+file\+\_\+matlab}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a1b241a243ef5c2d39d910403d28a083c}{early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a0d66f950aadf478e4e02729c5a02e0cf}{early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_ac770bb4447ee749f22d84f3d1cc8bdda}{early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&nb\+\_\+good\+\_\+candidates, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_abdaff45d4c5ecc114c6baf4f267e3815}{is\+\_\+cycle}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+e, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$edges, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classcolored__graph_a127bc92b3de713dda9f14651dad2fd57}{draw\+\_\+it}} (const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$\mbox{\hyperlink{classcolored__graph_a2ea0d275eb974b990ed7a6986b55ad19}{fname\+\_\+base}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+in, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax\+\_\+out, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax\+\_\+out, double scale, double line\+\_\+width)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} \mbox{\hyperlink{classcolored__graph_a2ea0d275eb974b990ed7a6986b55ad19}{fname\+\_\+base}} \mbox{[}1000\mbox{]}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}{nb\+\_\+points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a3eb3124af17fec95f20c9c31f7267ba2}{nb\+\_\+colors}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a1ab04d6e4112b3f71981089272ee7c17}{bitvector\+\_\+length}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_aca5364c17646a7b9441b53dcaeddacf1}{L}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classcolored__graph_aae1b72cc4494a30cacb81de2014ef883}{points}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classcolored__graph_ac16c00202c3a4c5e26c4891829ba0cad}{point\+\_\+color}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_afc57ecc5e5d94a98904a8c7eb748a73f}{user\+\_\+data\+\_\+size}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}{user\+\_\+data}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_aebead3f7d939828e4ec59c5d05def701}{f\+\_\+ownership\+\_\+of\+\_\+bitvec}}
+\item 
+\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$ \mbox{\hyperlink{classcolored__graph_a6cb486b16e1626a6d95ac9d3f88e1bab}{bitvector\+\_\+adjacency}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_a3041da9bb2bf98d1d4e4557244027206}{f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classcolored__graph_acf789bced16b3191802ddca7f0cfed1e}{nb\+\_\+edges}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classcolored__graph_a1964a27d6345bdc59d7f255ded3443cb}{list\+\_\+of\+\_\+edges}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcolored__graph_a104bcd930e68c04e4786678923bfdca1}\label{classcolored__graph_a104bcd930e68c04e4786678923bfdca1}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!colored\+\_\+graph@{colored\+\_\+graph}}
+\index{colored\+\_\+graph@{colored\+\_\+graph}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{colored\+\_\+graph()}{colored\_graph()}}
+{\footnotesize\ttfamily colored\+\_\+graph\+::colored\+\_\+graph (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a93ffac97a5f321e670478f0a44cc8b55}\label{classcolored__graph_a93ffac97a5f321e670478f0a44cc8b55}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!````~colored\+\_\+graph@{$\sim$colored\+\_\+graph}}
+\index{````~colored\+\_\+graph@{$\sim$colored\+\_\+graph}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{$\sim$colored\+\_\+graph()}{~colored\_graph()}}
+{\footnotesize\ttfamily colored\+\_\+graph\+::$\sim$colored\+\_\+graph (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcolored__graph_ae25e8fa7873bb5a3409641c08ca95024}\label{classcolored__graph_ae25e8fa7873bb5a3409641c08ca95024}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors@{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors}}
+\index{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors@{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors()}{all\_cliques\_of\_size\_k\_ignore\_colors()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{target\+\_\+depth,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+sol,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{decision\+\_\+step\+\_\+counter,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_adac4d97375919b00495f7023be88d749}\label{classcolored__graph_adac4d97375919b00495f7023be88d749}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file@{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file}}
+\index{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file@{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file()}{all\_cliques\_of\_size\_k\_ignore\_colors\_and\_write\_solutions\_to\_file()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::all\+\_\+cliques\+\_\+of\+\_\+size\+\_\+k\+\_\+ignore\+\_\+colors\+\_\+and\+\_\+write\+\_\+solutions\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{target\+\_\+depth,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+restrictions,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{restrictions,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+sol,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{decision\+\_\+step\+\_\+counter,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a62ecc5d052397b136d676a316f94ff10}\label{classcolored__graph_a62ecc5d052397b136d676a316f94ff10}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!all\+\_\+rainbow\+\_\+cliques@{all\+\_\+rainbow\+\_\+cliques}}
+\index{all\+\_\+rainbow\+\_\+cliques@{all\+\_\+rainbow\+\_\+cliques}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{all\+\_\+rainbow\+\_\+cliques()}{all\_rainbow\_cliques()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::all\+\_\+rainbow\+\_\+cliques (\begin{DoxyParamCaption}\item[{ofstream $\ast$}]{fp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+output\+\_\+solution\+\_\+raw,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+maxdepth,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{maxdepth,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+restrictions,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{restrictions,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+tree,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+decision\+\_\+nodes\+\_\+only,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname\+\_\+tree,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{print\+\_\+interval,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{search\+\_\+steps,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{decision\+\_\+steps,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+sol,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{dt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_adc7194b4555c9c5dbde203b4502fdbdf}\label{classcolored__graph_adc7194b4555c9c5dbde203b4502fdbdf}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function@{all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function}}
+\index{all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function@{all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function()}{all\_rainbow\_cliques\_with\_additional\_test\_function()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::all\+\_\+rainbow\+\_\+cliques\+\_\+with\+\_\+additional\+\_\+test\+\_\+function (\begin{DoxyParamCaption}\item[{ofstream $\ast$}]{fp,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+output\+\_\+solution\+\_\+raw,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+maxdepth,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{maxdepth,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+restrictions,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{restrictions,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+tree,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+decision\+\_\+nodes\+\_\+only,  }\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname\+\_\+tree,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{print\+\_\+interval,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+has\+\_\+additional\+\_\+test\+\_\+function,  }\item[{void($\ast$)(\mbox{\hyperlink{classrainbow__cliques}{rainbow\+\_\+cliques}} $\ast$\mbox{\hyperlink{pentomino__5x5_8_c_a9e6c5a8291295bd0292db81cc90cb2cf}{R}}, void $\ast$\mbox{\hyperlink{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}{user\+\_\+data}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} current\+\_\+clique\+\_\+size, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$current\+\_\+clique, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} nb\+\_\+pts, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&reduced\+\_\+nb\+\_\+pts, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$pt\+\_\+list, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$pt\+\_\+list\+\_\+inv, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})}]{call\+\_\+back\+\_\+additional\+\_\+test\+\_\+function,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+has\+\_\+print\+\_\+current\+\_\+choice\+\_\+function,  }\item[{void($\ast$)(\mbox{\hyperlink{classclique__finder}{clique\+\_\+finder}} $\ast$CF, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} depth, void $\ast$\mbox{\hyperlink{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}{user\+\_\+data}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})}]{call\+\_\+back\+\_\+print\+\_\+current\+\_\+choice,  }\item[{void $\ast$}]{user\+\_\+data,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{search\+\_\+steps,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{decision\+\_\+steps,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+sol,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{dt,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a96fc94940e35bc6e6951bc355b48e5be}\label{classcolored__graph_a96fc94940e35bc6e6951bc355b48e5be}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!compute\+\_\+edges@{compute\+\_\+edges}}
+\index{compute\+\_\+edges@{compute\+\_\+edges}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{compute\+\_\+edges()}{compute\_edges()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::compute\+\_\+edges (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_abea9e2c972a799ae17763b8faad9c37a}\label{classcolored__graph_abea9e2c972a799ae17763b8faad9c37a}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!compute\+\_\+neighborhood\+\_\+subgraph@{compute\+\_\+neighborhood\+\_\+subgraph}}
+\index{compute\+\_\+neighborhood\+\_\+subgraph@{compute\+\_\+neighborhood\+\_\+subgraph}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{compute\+\_\+neighborhood\+\_\+subgraph()}{compute\_neighborhood\_subgraph()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$ colored\+\_\+graph\+::compute\+\_\+neighborhood\+\_\+subgraph (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{pt,  }\item[{\mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&}]{vertex\+\_\+subset,  }\item[{\mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&}]{color\+\_\+subset,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a8f463f37779583b7d4fed1ac35097c2c}\label{classcolored__graph_a8f463f37779583b7d4fed1ac35097c2c}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function@{compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function}}
+\index{compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function@{compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function()}{compute\_neighborhood\_subgraph\_with\_additional\_test\_function()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$ colored\+\_\+graph\+::compute\+\_\+neighborhood\+\_\+subgraph\+\_\+with\+\_\+additional\+\_\+test\+\_\+function (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{pt,  }\item[{\mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&}]{vertex\+\_\+subset,  }\item[{\mbox{\hyperlink{classfancy__set}{fancy\+\_\+set}} $\ast$\&}]{color\+\_\+subset,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}($\ast$)(\mbox{\hyperlink{classcolored__graph}{colored\+\_\+graph}} $\ast$CG, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} test\+\_\+point, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{clique__finder_8_c_aec1f1a2b30fdca8844c2932384483145}{pt}}, void $\ast$test\+\_\+function\+\_\+data, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})}]{test\+\_\+function,  }\item[{void $\ast$}]{test\+\_\+function\+\_\+data,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_ac5fd42765545792be5d4533b782e3320}\label{classcolored__graph_ac5fd42765545792be5d4533b782e3320}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw@{draw}}
+\index{draw@{draw}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+out,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a127bc92b3de713dda9f14651dad2fd57}\label{classcolored__graph_a127bc92b3de713dda9f14651dad2fd57}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw\+\_\+it@{draw\+\_\+it}}
+\index{draw\+\_\+it@{draw\+\_\+it}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw\+\_\+it()}{draw\_it()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw\+\_\+it (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname\+\_\+base,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+out,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a5c5ee5bee29d724887a32f6f43ca24ff}\label{classcolored__graph_a5c5ee5bee29d724887a32f6f43ca24ff}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw\+\_\+\+Levi@{draw\+\_\+\+Levi}}
+\index{draw\+\_\+\+Levi@{draw\+\_\+\+Levi}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw\+\_\+\+Levi()}{draw\_Levi()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw\+\_\+\+Levi (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+draw\+\_\+labels,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a1d55e0555a9def288aad59156b1e64db}\label{classcolored__graph_a1d55e0555a9def288aad59156b1e64db}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw\+\_\+on\+\_\+circle@{draw\+\_\+on\+\_\+circle}}
+\index{draw\+\_\+on\+\_\+circle@{draw\+\_\+on\+\_\+circle}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw\+\_\+on\+\_\+circle()}{draw\_on\_circle()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw\+\_\+on\+\_\+circle (\begin{DoxyParamCaption}\item[{char $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labels,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+embedded,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+sideways,  }\item[{double}]{tikz\+\_\+global\+\_\+scale,  }\item[{double}]{tikz\+\_\+global\+\_\+line\+\_\+width }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_af6dd79e0c699432153b1a8cb60f5afad}\label{classcolored__graph_af6dd79e0c699432153b1a8cb60f5afad}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw\+\_\+on\+\_\+circle\+\_\+2@{draw\+\_\+on\+\_\+circle\+\_\+2}}
+\index{draw\+\_\+on\+\_\+circle\+\_\+2@{draw\+\_\+on\+\_\+circle\+\_\+2}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw\+\_\+on\+\_\+circle\+\_\+2()}{draw\_on\_circle\_2()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw\+\_\+on\+\_\+circle\+\_\+2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmp__graphics}{mp\+\_\+graphics}} \&}]{G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labels }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a244dcd80d20f6eeddd537a48a1541f96}\label{classcolored__graph_a244dcd80d20f6eeddd537a48a1541f96}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw\+\_\+partitioned@{draw\+\_\+partitioned}}
+\index{draw\+\_\+partitioned@{draw\+\_\+partitioned}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw\+\_\+partitioned()}{draw\_partitioned()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw\+\_\+partitioned (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+labels,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a258eaac656baacbcbc064a933f7f11b0}\label{classcolored__graph_a258eaac656baacbcbc064a933f7f11b0}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition@{draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition}}
+\index{draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition@{draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition()}{draw\_with\_a\_given\_partition()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::draw\+\_\+with\+\_\+a\+\_\+given\+\_\+partition (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+in,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax\+\_\+out,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{parts,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+parts,  }\item[{double}]{scale,  }\item[{double}]{line\+\_\+width,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a1b241a243ef5c2d39d910403d28a083c}\label{classcolored__graph_a1b241a243ef5c2d39d910403d28a083c}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search@{early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search}}
+\index{early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search@{early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search()}{early\_test\_func\_for\_clique\_search()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::early\+\_\+test\+\_\+func\+\_\+for\+\_\+clique\+\_\+search (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{S,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a0d66f950aadf478e4e02729c5a02e0cf}\label{classcolored__graph_a0d66f950aadf478e4e02729c5a02e0cf}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search@{early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search}}
+\index{early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search@{early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search()}{early\_test\_func\_for\_coclique\_search()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::early\+\_\+test\+\_\+func\+\_\+for\+\_\+coclique\+\_\+search (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{S,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_ac770bb4447ee749f22d84f3d1cc8bdda}\label{classcolored__graph_ac770bb4447ee749f22d84f3d1cc8bdda}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search@{early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search}}
+\index{early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search@{early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search()}{early\_test\_func\_for\_path\_and\_cycle\_search()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::early\+\_\+test\+\_\+func\+\_\+for\+\_\+path\+\_\+and\+\_\+cycle\+\_\+search (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{S,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{nb\+\_\+good\+\_\+candidates,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a497d62a41adacc9650c83f6d8629608b}\label{classcolored__graph_a497d62a41adacc9650c83f6d8629608b}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!export\+\_\+laplacian\+\_\+to\+\_\+file@{export\+\_\+laplacian\+\_\+to\+\_\+file}}
+\index{export\+\_\+laplacian\+\_\+to\+\_\+file@{export\+\_\+laplacian\+\_\+to\+\_\+file}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{export\+\_\+laplacian\+\_\+to\+\_\+file()}{export\_laplacian\_to\_file()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::export\+\_\+laplacian\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a51fe2bb2a48069027ffef04450678b13}\label{classcolored__graph_a51fe2bb2a48069027ffef04450678b13}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!export\+\_\+to\+\_\+file@{export\+\_\+to\+\_\+file}}
+\index{export\+\_\+to\+\_\+file@{export\+\_\+to\+\_\+file}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{export\+\_\+to\+\_\+file()}{export\_to\_file()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::export\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a07a854d04202de45bb78cd9ae6efd521}\label{classcolored__graph_a07a854d04202de45bb78cd9ae6efd521}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!export\+\_\+to\+\_\+file\+\_\+matlab@{export\+\_\+to\+\_\+file\+\_\+matlab}}
+\index{export\+\_\+to\+\_\+file\+\_\+matlab@{export\+\_\+to\+\_\+file\+\_\+matlab}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{export\+\_\+to\+\_\+file\+\_\+matlab()}{export\_to\_file\_matlab()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::export\+\_\+to\+\_\+file\+\_\+matlab (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a766c05f1b628f86b4de896bce33ec0f2}\label{classcolored__graph_a766c05f1b628f86b4de896bce33ec0f2}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!export\+\_\+to\+\_\+magma@{export\+\_\+to\+\_\+magma}}
+\index{export\+\_\+to\+\_\+magma@{export\+\_\+to\+\_\+magma}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{export\+\_\+to\+\_\+magma()}{export\_to\_magma()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::export\+\_\+to\+\_\+magma (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a535b58df68ad6200bd6c8cde9bd09f57}\label{classcolored__graph_a535b58df68ad6200bd6c8cde9bd09f57}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!freeself@{freeself}}
+\index{freeself@{freeself}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{freeself()}{freeself()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::freeself (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a4b917cdc9c6203a5a750c321e791bc7d}\label{classcolored__graph_a4b917cdc9c6203a5a750c321e791bc7d}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!init@{init}}
+\index{init@{init}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+colors,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{colors,  }\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{bitvec,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+ownership\+\_\+of\+\_\+bitvec,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a7dd89f3adcb0f1d70d4bb05be6400e73}\label{classcolored__graph_a7dd89f3adcb0f1d70d4bb05be6400e73}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!init\+\_\+adjacency@{init\+\_\+adjacency}}
+\index{init\+\_\+adjacency@{init\+\_\+adjacency}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{init\+\_\+adjacency()}{init\_adjacency()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::init\+\_\+adjacency (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+colors,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{colors,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Adj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_aa5e628053139148b42e5ea61698d3bae}\label{classcolored__graph_aa5e628053139148b42e5ea61698d3bae}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!init\+\_\+adjacency\+\_\+no\+\_\+colors@{init\+\_\+adjacency\+\_\+no\+\_\+colors}}
+\index{init\+\_\+adjacency\+\_\+no\+\_\+colors@{init\+\_\+adjacency\+\_\+no\+\_\+colors}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{init\+\_\+adjacency\+\_\+no\+\_\+colors()}{init\_adjacency\_no\_colors()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::init\+\_\+adjacency\+\_\+no\+\_\+colors (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{Adj,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a031519ee30b86a4077a5bcdc42ee2f18}\label{classcolored__graph_a031519ee30b86a4077a5bcdc42ee2f18}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!init\+\_\+no\+\_\+colors@{init\+\_\+no\+\_\+colors}}
+\index{init\+\_\+no\+\_\+colors@{init\+\_\+no\+\_\+colors}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{init\+\_\+no\+\_\+colors()}{init\_no\_colors()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::init\+\_\+no\+\_\+colors (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{bitvec,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+ownership\+\_\+of\+\_\+bitvec,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a9b5e52110265b750e709d8b84ba03d8f}\label{classcolored__graph_a9b5e52110265b750e709d8b84ba03d8f}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!init\+\_\+user\+\_\+data@{init\+\_\+user\+\_\+data}}
+\index{init\+\_\+user\+\_\+data@{init\+\_\+user\+\_\+data}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{init\+\_\+user\+\_\+data()}{init\_user\_data()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::init\+\_\+user\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{data,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{data\+\_\+size,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a988d41f23300407c71570cb7ea06e593}\label{classcolored__graph_a988d41f23300407c71570cb7ea06e593}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!init\+\_\+with\+\_\+point\+\_\+labels@{init\+\_\+with\+\_\+point\+\_\+labels}}
+\index{init\+\_\+with\+\_\+point\+\_\+labels@{init\+\_\+with\+\_\+point\+\_\+labels}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{init\+\_\+with\+\_\+point\+\_\+labels()}{init\_with\_point\_labels()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::init\+\_\+with\+\_\+point\+\_\+labels (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+colors,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{colors,  }\item[{\mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}} $\ast$}]{bitvec,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+ownership\+\_\+of\+\_\+bitvec,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{point\+\_\+labels,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_ac13cc7a798c3ee11bef01f01c8eab061}\label{classcolored__graph_ac13cc7a798c3ee11bef01f01c8eab061}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!is\+\_\+adjacent@{is\+\_\+adjacent}}
+\index{is\+\_\+adjacent@{is\+\_\+adjacent}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{is\+\_\+adjacent()}{is\_adjacent()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::is\+\_\+adjacent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_abdaff45d4c5ecc114c6baf4f267e3815}\label{classcolored__graph_abdaff45d4c5ecc114c6baf4f267e3815}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!is\+\_\+cycle@{is\+\_\+cycle}}
+\index{is\+\_\+cycle@{is\+\_\+cycle}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{is\+\_\+cycle()}{is\_cycle()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::is\+\_\+cycle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{nb\+\_\+e,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{edges,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_aa777bb4ea083ac13058d746d63c7f128}\label{classcolored__graph_aa777bb4ea083ac13058d746d63c7f128}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!load@{load}}
+\index{load@{load}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::load (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_ac73b077b50e6439a617aec3f1f3fd864}\label{classcolored__graph_ac73b077b50e6439a617aec3f1f3fd864}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!null@{null}}
+\index{null@{null}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{null()}{null()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::null (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a446033862cffb718270e87913e8fe843}\label{classcolored__graph_a446033862cffb718270e87913e8fe843}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!print@{print}}
+\index{print@{print}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{print()}{print()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a562912fb7464addacd865057a1a48f75}\label{classcolored__graph_a562912fb7464addacd865057a1a48f75}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!save@{save}}
+\index{save@{save}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::save (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classcolored__graph_a3c850d5d5d6bde5de472a07ff7c49687}\label{classcolored__graph_a3c850d5d5d6bde5de472a07ff7c49687}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!set\+\_\+adjacency@{set\+\_\+adjacency}}
+\index{set\+\_\+adjacency@{set\+\_\+adjacency}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{set\+\_\+adjacency()}{set\_adjacency()}}
+{\footnotesize\ttfamily void colored\+\_\+graph\+::set\+\_\+adjacency (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{a }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcolored__graph_a6cb486b16e1626a6d95ac9d3f88e1bab}\label{classcolored__graph_a6cb486b16e1626a6d95ac9d3f88e1bab}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!bitvector\+\_\+adjacency@{bitvector\+\_\+adjacency}}
+\index{bitvector\+\_\+adjacency@{bitvector\+\_\+adjacency}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{bitvector\+\_\+adjacency}{bitvector\_adjacency}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a122c4acf389c050379f00341fdcd5812}{U\+B\+Y\+TE}}$\ast$ colored\+\_\+graph\+::bitvector\+\_\+adjacency}
+
+\mbox{\Hypertarget{classcolored__graph_a1ab04d6e4112b3f71981089272ee7c17}\label{classcolored__graph_a1ab04d6e4112b3f71981089272ee7c17}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!bitvector\+\_\+length@{bitvector\+\_\+length}}
+\index{bitvector\+\_\+length@{bitvector\+\_\+length}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{bitvector\+\_\+length}{bitvector\_length}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::bitvector\+\_\+length}
+
+\mbox{\Hypertarget{classcolored__graph_a3041da9bb2bf98d1d4e4557244027206}\label{classcolored__graph_a3041da9bb2bf98d1d4e4557244027206}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges@{f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges}}
+\index{f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges@{f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges}{f\_has\_list\_of\_edges}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::f\+\_\+has\+\_\+list\+\_\+of\+\_\+edges}
+
+\mbox{\Hypertarget{classcolored__graph_aebead3f7d939828e4ec59c5d05def701}\label{classcolored__graph_aebead3f7d939828e4ec59c5d05def701}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!f\+\_\+ownership\+\_\+of\+\_\+bitvec@{f\+\_\+ownership\+\_\+of\+\_\+bitvec}}
+\index{f\+\_\+ownership\+\_\+of\+\_\+bitvec@{f\+\_\+ownership\+\_\+of\+\_\+bitvec}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{f\+\_\+ownership\+\_\+of\+\_\+bitvec}{f\_ownership\_of\_bitvec}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::f\+\_\+ownership\+\_\+of\+\_\+bitvec}
+
+\mbox{\Hypertarget{classcolored__graph_a2ea0d275eb974b990ed7a6986b55ad19}\label{classcolored__graph_a2ea0d275eb974b990ed7a6986b55ad19}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!fname\+\_\+base@{fname\+\_\+base}}
+\index{fname\+\_\+base@{fname\+\_\+base}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{fname\+\_\+base}{fname\_base}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_ab6cc7b4aeb6ea31aba2b3fbfc83ff5e6}{B\+Y\+TE}} colored\+\_\+graph\+::fname\+\_\+base\mbox{[}1000\mbox{]}}
+
+\mbox{\Hypertarget{classcolored__graph_aca5364c17646a7b9441b53dcaeddacf1}\label{classcolored__graph_aca5364c17646a7b9441b53dcaeddacf1}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!L@{L}}
+\index{L@{L}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{L}{L}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::L}
+
+\mbox{\Hypertarget{classcolored__graph_a1964a27d6345bdc59d7f255ded3443cb}\label{classcolored__graph_a1964a27d6345bdc59d7f255ded3443cb}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!list\+\_\+of\+\_\+edges@{list\+\_\+of\+\_\+edges}}
+\index{list\+\_\+of\+\_\+edges@{list\+\_\+of\+\_\+edges}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{list\+\_\+of\+\_\+edges}{list\_of\_edges}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ colored\+\_\+graph\+::list\+\_\+of\+\_\+edges}
+
+\mbox{\Hypertarget{classcolored__graph_a3eb3124af17fec95f20c9c31f7267ba2}\label{classcolored__graph_a3eb3124af17fec95f20c9c31f7267ba2}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!nb\+\_\+colors@{nb\+\_\+colors}}
+\index{nb\+\_\+colors@{nb\+\_\+colors}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{nb\+\_\+colors}{nb\_colors}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::nb\+\_\+colors}
+
+\mbox{\Hypertarget{classcolored__graph_acf789bced16b3191802ddca7f0cfed1e}\label{classcolored__graph_acf789bced16b3191802ddca7f0cfed1e}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!nb\+\_\+edges@{nb\+\_\+edges}}
+\index{nb\+\_\+edges@{nb\+\_\+edges}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{nb\+\_\+edges}{nb\_edges}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::nb\+\_\+edges}
+
+\mbox{\Hypertarget{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}\label{classcolored__graph_a1ad760b85dcd666b0013d7c91ebbff0e}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!nb\+\_\+points@{nb\+\_\+points}}
+\index{nb\+\_\+points@{nb\+\_\+points}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{nb\+\_\+points}{nb\_points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::nb\+\_\+points}
+
+\mbox{\Hypertarget{classcolored__graph_ac16c00202c3a4c5e26c4891829ba0cad}\label{classcolored__graph_ac16c00202c3a4c5e26c4891829ba0cad}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!point\+\_\+color@{point\+\_\+color}}
+\index{point\+\_\+color@{point\+\_\+color}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{point\+\_\+color}{point\_color}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ colored\+\_\+graph\+::point\+\_\+color}
+
+\mbox{\Hypertarget{classcolored__graph_aae1b72cc4494a30cacb81de2014ef883}\label{classcolored__graph_aae1b72cc4494a30cacb81de2014ef883}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!points@{points}}
+\index{points@{points}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{points}{points}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ colored\+\_\+graph\+::points}
+
+\mbox{\Hypertarget{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}\label{classcolored__graph_ae8c2842fc5f7382948ec0cf0afd581e5}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!user\+\_\+data@{user\+\_\+data}}
+\index{user\+\_\+data@{user\+\_\+data}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{user\+\_\+data}{user\_data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ colored\+\_\+graph\+::user\+\_\+data}
+
+\mbox{\Hypertarget{classcolored__graph_afc57ecc5e5d94a98904a8c7eb748a73f}\label{classcolored__graph_afc57ecc5e5d94a98904a8c7eb748a73f}} 
+\index{colored\+\_\+graph@{colored\+\_\+graph}!user\+\_\+data\+\_\+size@{user\+\_\+data\+\_\+size}}
+\index{user\+\_\+data\+\_\+size@{user\+\_\+data\+\_\+size}!colored\+\_\+graph@{colored\+\_\+graph}}
+\subsubsection{\texorpdfstring{user\+\_\+data\+\_\+size}{user\_data\_size}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} colored\+\_\+graph\+::user\+\_\+data\+\_\+size}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{galois_8h}{galois.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/\mbox{\hyperlink{_l_i_b_2_g_a_l_o_i_s_2colored__graph_8_c}{colored\+\_\+graph.\+C}}\end{DoxyCompactItemize}

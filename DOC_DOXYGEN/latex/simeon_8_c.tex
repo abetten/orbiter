@@ -1,0 +1,207 @@
+\hypertarget{simeon_8_c}{}\section{S\+R\+C/\+A\+P\+P\+S/\+P\+R\+O\+J\+E\+C\+T\+I\+V\+E\+\_\+\+S\+P\+A\+C\+E/simeon.C File Reference}
+\label{simeon_8_c}\index{S\+R\+C/\+A\+P\+P\+S/\+P\+R\+O\+J\+E\+C\+T\+I\+V\+E\+\_\+\+S\+P\+A\+C\+E/simeon.\+C@{S\+R\+C/\+A\+P\+P\+S/\+P\+R\+O\+J\+E\+C\+T\+I\+V\+E\+\_\+\+S\+P\+A\+C\+E/simeon.\+C}}
+{\ttfamily \#include \char`\"{}orbiter.\+h\char`\"{}}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_aea48fbc94e3a6fcfdebca8e2ff571716}{test\+\_\+function\+\_\+for\+\_\+arc}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} len, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$\mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}, void $\ast$data, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{simeon_8_c_a36cf3f9cb484fa44da7a7dfcbe9385d0}{do\+\_\+simeon}} (\mbox{\hyperlink{classset__and__stabilizer}{set\+\_\+and\+\_\+stabilizer}} $\ast$SaS)
+\item 
+int \mbox{\hyperlink{simeon_8_c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}} = 0
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}} = 11
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}} = 2
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}} = 2
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a43fa990200c3ddd47c35f151bd4d66bf}{k}} = 9
+\item 
+\mbox{\hyperlink{classfinite__field}{finite\+\_\+field}} $\ast$ \mbox{\hyperlink{simeon_8_c_a21a61c535ff7d9d4b674461d3b19fffa}{F}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_aa700953930747c9c9ec1202f5f746a23}{f\+\_\+projective}} = \mbox{\hyperlink{nauty_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{T\+R\+UE}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_acdff936645f55fa6d367c21b75128181}{f\+\_\+general}} = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_af0d85ac2f9ec44c7401cbecbdc23a5a7}{f\+\_\+affine}} = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_abe9d1351be10f92305ed7533cd3a3c08}{f\+\_\+semilinear}} = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}{f\+\_\+special}} = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}
+\item 
+\mbox{\hyperlink{classsims}{sims}} $\ast$ \mbox{\hyperlink{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}{S}}
+\item 
+\mbox{\hyperlink{classaction}{action}} $\ast$ \mbox{\hyperlink{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}{A}}
+\item 
+\mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} \mbox{\hyperlink{simeon_8_c_a1516b736c8ebbfb03a9dd7d8826cd9a6}{go}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{simeon_8_c_aec1406935bdb1fee3561fcb840964100}{Elt}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}}
+\item 
+\mbox{\hyperlink{classschreier}{schreier}} $\ast$ \mbox{\hyperlink{simeon_8_c_acbdfb9c3c18b898a9750f161e7255a6c}{Sch}}
+\item 
+\mbox{\hyperlink{classgenerator}{generator}} $\ast$ \mbox{\hyperlink{simeon_8_c_a77f431291e80a101f725d3a28a3f42c8}{Gen}}
+\item 
+\mbox{\hyperlink{classprojective__space}{projective\+\_\+space}} $\ast$ \mbox{\hyperlink{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}{P}}
+\item 
+\mbox{\hyperlink{classaction}{action}} $\ast$ \mbox{\hyperlink{simeon_8_c_a13fda35b8976a20080ec22b9d9e44e5b}{A2}}
+\item 
+\mbox{\hyperlink{classaction}{action}} $\ast$ \mbox{\hyperlink{simeon_8_c_a24df86d57df5e92613e47444f1d458ea}{A3}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{simeon_8_c_a36cf3f9cb484fa44da7a7dfcbe9385d0}\label{simeon_8_c_a36cf3f9cb484fa44da7a7dfcbe9385d0}} 
+\index{simeon.\+C@{simeon.\+C}!do\+\_\+simeon@{do\+\_\+simeon}}
+\index{do\+\_\+simeon@{do\+\_\+simeon}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{do\+\_\+simeon()}{do\_simeon()}}
+{\footnotesize\ttfamily void do\+\_\+simeon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classset__and__stabilizer}{set\+\_\+and\+\_\+stabilizer}} $\ast$}]{SaS }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{simeon_8_c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{simeon_8_c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{simeon.\+C@{simeon.\+C}!main@{main}}
+\index{main@{main}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{simeon_8_c_aea48fbc94e3a6fcfdebca8e2ff571716}\label{simeon_8_c_aea48fbc94e3a6fcfdebca8e2ff571716}} 
+\index{simeon.\+C@{simeon.\+C}!test\+\_\+function\+\_\+for\+\_\+arc@{test\+\_\+function\+\_\+for\+\_\+arc}}
+\index{test\+\_\+function\+\_\+for\+\_\+arc@{test\+\_\+function\+\_\+for\+\_\+arc}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{test\+\_\+function\+\_\+for\+\_\+arc()}{test\_function\_for\_arc()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} test\+\_\+function\+\_\+for\+\_\+arc (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{len,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$}]{S,  }\item[{void $\ast$}]{data,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}\label{simeon_8_c_a97833f04c3a9c008df5521a2fc291bb4}} 
+\index{simeon.\+C@{simeon.\+C}!A@{A}}
+\index{A@{A}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classaction}{action}}$\ast$ A}
+
+\mbox{\Hypertarget{simeon_8_c_a13fda35b8976a20080ec22b9d9e44e5b}\label{simeon_8_c_a13fda35b8976a20080ec22b9d9e44e5b}} 
+\index{simeon.\+C@{simeon.\+C}!A2@{A2}}
+\index{A2@{A2}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{A2}{A2}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classaction}{action}}$\ast$ A2}
+
+\mbox{\Hypertarget{simeon_8_c_a24df86d57df5e92613e47444f1d458ea}\label{simeon_8_c_a24df86d57df5e92613e47444f1d458ea}} 
+\index{simeon.\+C@{simeon.\+C}!A3@{A3}}
+\index{A3@{A3}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{A3}{A3}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classaction}{action}}$\ast$ A3}
+
+\mbox{\Hypertarget{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}\label{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}} 
+\index{simeon.\+C@{simeon.\+C}!d@{d}}
+\index{d@{d}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{d}{d}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} d = 2}
+
+\mbox{\Hypertarget{simeon_8_c_aec1406935bdb1fee3561fcb840964100}\label{simeon_8_c_aec1406935bdb1fee3561fcb840964100}} 
+\index{simeon.\+C@{simeon.\+C}!Elt@{Elt}}
+\index{Elt@{Elt}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{Elt}{Elt}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ Elt}
+
+\mbox{\Hypertarget{simeon_8_c_a21a61c535ff7d9d4b674461d3b19fffa}\label{simeon_8_c_a21a61c535ff7d9d4b674461d3b19fffa}} 
+\index{simeon.\+C@{simeon.\+C}!F@{F}}
+\index{F@{F}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{F}{F}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfinite__field}{finite\+\_\+field}}$\ast$ F}
+
+\mbox{\Hypertarget{simeon_8_c_af0d85ac2f9ec44c7401cbecbdc23a5a7}\label{simeon_8_c_af0d85ac2f9ec44c7401cbecbdc23a5a7}} 
+\index{simeon.\+C@{simeon.\+C}!f\+\_\+affine@{f\+\_\+affine}}
+\index{f\+\_\+affine@{f\+\_\+affine}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{f\+\_\+affine}{f\_affine}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+affine = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}}
+
+\mbox{\Hypertarget{simeon_8_c_acdff936645f55fa6d367c21b75128181}\label{simeon_8_c_acdff936645f55fa6d367c21b75128181}} 
+\index{simeon.\+C@{simeon.\+C}!f\+\_\+general@{f\+\_\+general}}
+\index{f\+\_\+general@{f\+\_\+general}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{f\+\_\+general}{f\_general}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+general = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}}
+
+\mbox{\Hypertarget{simeon_8_c_aa700953930747c9c9ec1202f5f746a23}\label{simeon_8_c_aa700953930747c9c9ec1202f5f746a23}} 
+\index{simeon.\+C@{simeon.\+C}!f\+\_\+projective@{f\+\_\+projective}}
+\index{f\+\_\+projective@{f\+\_\+projective}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{f\+\_\+projective}{f\_projective}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+projective = \mbox{\hyperlink{nauty_8h_aa8cecfc5c5c054d2875c03e77b7be15d}{T\+R\+UE}}}
+
+\mbox{\Hypertarget{simeon_8_c_abe9d1351be10f92305ed7533cd3a3c08}\label{simeon_8_c_abe9d1351be10f92305ed7533cd3a3c08}} 
+\index{simeon.\+C@{simeon.\+C}!f\+\_\+semilinear@{f\+\_\+semilinear}}
+\index{f\+\_\+semilinear@{f\+\_\+semilinear}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{f\+\_\+semilinear}{f\_semilinear}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+semilinear = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}}
+
+\mbox{\Hypertarget{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}\label{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}} 
+\index{simeon.\+C@{simeon.\+C}!f\+\_\+special@{f\+\_\+special}}
+\index{f\+\_\+special@{f\+\_\+special}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{f\+\_\+special}{f\_special}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+special = \mbox{\hyperlink{nauty_8h_aa93f0eb578d23995850d61f7d61c55c1}{F\+A\+L\+SE}}}
+
+\mbox{\Hypertarget{simeon_8_c_a77f431291e80a101f725d3a28a3f42c8}\label{simeon_8_c_a77f431291e80a101f725d3a28a3f42c8}} 
+\index{simeon.\+C@{simeon.\+C}!Gen@{Gen}}
+\index{Gen@{Gen}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{Gen}{Gen}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classgenerator}{generator}}$\ast$ Gen}
+
+\mbox{\Hypertarget{simeon_8_c_a1516b736c8ebbfb03a9dd7d8826cd9a6}\label{simeon_8_c_a1516b736c8ebbfb03a9dd7d8826cd9a6}} 
+\index{simeon.\+C@{simeon.\+C}!go@{go}}
+\index{go@{go}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{go}{go}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classlonginteger__object}{longinteger\+\_\+object}} go}
+
+\mbox{\Hypertarget{simeon_8_c_a43fa990200c3ddd47c35f151bd4d66bf}\label{simeon_8_c_a43fa990200c3ddd47c35f151bd4d66bf}} 
+\index{simeon.\+C@{simeon.\+C}!k@{k}}
+\index{k@{k}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{k}{k}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} k = 9}
+
+\mbox{\Hypertarget{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}\label{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}} 
+\index{simeon.\+C@{simeon.\+C}!n@{n}}
+\index{n@{n}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{n}{n}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} n = 2}
+
+\mbox{\Hypertarget{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}\label{simeon_8_c_a7fa15551e800919e93401fbbcd8e71e8}} 
+\index{simeon.\+C@{simeon.\+C}!P@{P}}
+\index{P@{P}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{P}{P}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classprojective__space}{projective\+\_\+space}}$\ast$ P}
+
+\mbox{\Hypertarget{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}\label{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}} 
+\index{simeon.\+C@{simeon.\+C}!q@{q}}
+\index{q@{q}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{q}{q}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q = 11}
+
+\mbox{\Hypertarget{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}\label{simeon_8_c_adab47f8243f1b5a2c31df2535d6b37d0}} 
+\index{simeon.\+C@{simeon.\+C}!S@{S}}
+\index{S@{S}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{S}{S}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classsims}{sims}}$\ast$ S}
+
+\mbox{\Hypertarget{simeon_8_c_acbdfb9c3c18b898a9750f161e7255a6c}\label{simeon_8_c_acbdfb9c3c18b898a9750f161e7255a6c}} 
+\index{simeon.\+C@{simeon.\+C}!Sch@{Sch}}
+\index{Sch@{Sch}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{Sch}{Sch}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classschreier}{schreier}}$\ast$ Sch}
+
+\mbox{\Hypertarget{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}\label{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}} 
+\index{simeon.\+C@{simeon.\+C}!v@{v}}
+\index{v@{v}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{v}{v}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ v}
+
+\mbox{\Hypertarget{simeon_8_c_a818073fbcc2f439e7c56952f67386122}\label{simeon_8_c_a818073fbcc2f439e7c56952f67386122}} 
+\index{simeon.\+C@{simeon.\+C}!verbose\+\_\+level@{verbose\+\_\+level}}
+\index{verbose\+\_\+level@{verbose\+\_\+level}!simeon.\+C@{simeon.\+C}}
+\subsubsection{\texorpdfstring{verbose\+\_\+level}{verbose\_level}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} verbose\+\_\+level = 0}
+

@@ -1,0 +1,251 @@
+\hypertarget{classelliptic__curve}{}\section{elliptic\+\_\+curve Class Reference}
+\label{classelliptic__curve}\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+
+
+{\ttfamily \#include $<$top\+\_\+level.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classelliptic__curve_ae1ce376e47410f2845e5fd3c59b5296d}{elliptic\+\_\+curve}} ()
+\item 
+\mbox{\hyperlink{classelliptic__curve_a087cbee00624368ff64a68ce7100b09f}{$\sim$elliptic\+\_\+curve}} ()
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a9f4125b14561601e03c85903673f4d16}{null}} ()
+\item 
+void \mbox{\hyperlink{classelliptic__curve_af552b2de089253cf968d1dcf63394d18}{freeself}} ()
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a0146cb7d2585f1e15e49d77a7496190f}{init}} (\mbox{\hyperlink{classfinite__field}{finite\+\_\+field}} $\ast$\mbox{\hyperlink{classelliptic__curve_a2b4a8140101de7fe21ef774497372c94}{F}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_ade70b18ed97add66f8811cb584ad1915}{b}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a540307713774a2f3b7aaf5ffabeb1678}{c}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a07f848c282b8e731d9e99e9b358d5a9a}{compute\+\_\+points}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a2690f776fb20537f5bab2235cdb13f1a}{add\+\_\+point\+\_\+to\+\_\+table}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a0a2f84ed7838f07779ae24c5a9086d33}{y}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} z)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a786cd8da18139b9b01f285f030916f2d}{evaluate\+\_\+\+R\+HS}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a20722db9691dc742ba191cad745a2821}{print\+\_\+points}} ()
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a13b3d332ae835291810049d19cf10c85}{print\+\_\+points\+\_\+affine}} ()
+\item 
+void \mbox{\hyperlink{classelliptic__curve_af927b0ba3e6d959598f9d372ec7315c2}{addition}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} y1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} y2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} y3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&z1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&z2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&z3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_afa9d40e1a626257ad802bdb5a157ad0a}{draw\+\_\+grid}} (char $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} xmax, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} ymax, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+with\+\_\+points, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_a20f858541aed9bfaabdf69b10f18cdbe}{draw\+\_\+grid2}} (\mbox{\hyperlink{classmp__graphics}{mp\+\_\+graphics}} \&G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+with\+\_\+points, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_aab796461061a1041a6b17a9866153544}{make\+\_\+affine\+\_\+point}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x3, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&a, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&\mbox{\hyperlink{classelliptic__curve_ade70b18ed97add66f8811cb584ad1915}{b}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_ac5cc1cd9f3021de56372cc0a0f75b0bd}{compute\+\_\+addition\+\_\+table}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a818073fbcc2f439e7c56952f67386122}{verbose\+\_\+level}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_aee7da611d1ad05db8e6d2d7d797db3fa}{print\+\_\+addition\+\_\+table}} ()
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a2f85c4e92cae10020fcbba2cd1867405}{index\+\_\+of\+\_\+point}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} x3)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a301b1112ceb719ffc59c809747b0d014}{order\+\_\+of\+\_\+point}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{classelliptic__curve_ae2f2b3b6f0803419fd576d16a225811c}{print\+\_\+all\+\_\+powers}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a89ca852ca743b5523e754aa1b5b90496}{q}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a7ddc1196eb8f45d85dfad3171831ab1c}{p}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a0d7ba46a2a9484d27989ea71ab769ae6}{e}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_ade70b18ed97add66f8811cb584ad1915}{b}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a540307713774a2f3b7aaf5ffabeb1678}{c}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{classelliptic__curve_a7ace4da8285026af8c6bfd0253ff614b}{nb}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classelliptic__curve_aa6d73dc15171e7a096ebbdf3aaed5319}{T}}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} $\ast$ \mbox{\hyperlink{classelliptic__curve_ac8f4568dc59a3f03bf5b4b320cae56a6}{A}}
+\item 
+\mbox{\hyperlink{classfinite__field}{finite\+\_\+field}} $\ast$ \mbox{\hyperlink{classelliptic__curve_a2b4a8140101de7fe21ef774497372c94}{F}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classelliptic__curve_ae1ce376e47410f2845e5fd3c59b5296d}\label{classelliptic__curve_ae1ce376e47410f2845e5fd3c59b5296d}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{elliptic\+\_\+curve()}{elliptic\_curve()}}
+{\footnotesize\ttfamily elliptic\+\_\+curve\+::elliptic\+\_\+curve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a087cbee00624368ff64a68ce7100b09f}\label{classelliptic__curve_a087cbee00624368ff64a68ce7100b09f}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!````~elliptic\+\_\+curve@{$\sim$elliptic\+\_\+curve}}
+\index{````~elliptic\+\_\+curve@{$\sim$elliptic\+\_\+curve}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{$\sim$elliptic\+\_\+curve()}{~elliptic\_curve()}}
+{\footnotesize\ttfamily elliptic\+\_\+curve\+::$\sim$elliptic\+\_\+curve (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classelliptic__curve_a2690f776fb20537f5bab2235cdb13f1a}\label{classelliptic__curve_a2690f776fb20537f5bab2235cdb13f1a}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!add\+\_\+point\+\_\+to\+\_\+table@{add\+\_\+point\+\_\+to\+\_\+table}}
+\index{add\+\_\+point\+\_\+to\+\_\+table@{add\+\_\+point\+\_\+to\+\_\+table}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{add\+\_\+point\+\_\+to\+\_\+table()}{add\_point\_to\_table()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::add\+\_\+point\+\_\+to\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{y,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{z }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_af927b0ba3e6d959598f9d372ec7315c2}\label{classelliptic__curve_af927b0ba3e6d959598f9d372ec7315c2}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!addition@{addition}}
+\index{addition@{addition}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{addition()}{addition()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::addition (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{y1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{y2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{y3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{z1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{z2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{z3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_ac5cc1cd9f3021de56372cc0a0f75b0bd}\label{classelliptic__curve_ac5cc1cd9f3021de56372cc0a0f75b0bd}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!compute\+\_\+addition\+\_\+table@{compute\+\_\+addition\+\_\+table}}
+\index{compute\+\_\+addition\+\_\+table@{compute\+\_\+addition\+\_\+table}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{compute\+\_\+addition\+\_\+table()}{compute\_addition\_table()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::compute\+\_\+addition\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a07f848c282b8e731d9e99e9b358d5a9a}\label{classelliptic__curve_a07f848c282b8e731d9e99e9b358d5a9a}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!compute\+\_\+points@{compute\+\_\+points}}
+\index{compute\+\_\+points@{compute\+\_\+points}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{compute\+\_\+points()}{compute\_points()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::compute\+\_\+points (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_afa9d40e1a626257ad802bdb5a157ad0a}\label{classelliptic__curve_afa9d40e1a626257ad802bdb5a157ad0a}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!draw\+\_\+grid@{draw\+\_\+grid}}
+\index{draw\+\_\+grid@{draw\+\_\+grid}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{draw\+\_\+grid()}{draw\_grid()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::draw\+\_\+grid (\begin{DoxyParamCaption}\item[{char $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{xmax,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{ymax,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+with\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a20f858541aed9bfaabdf69b10f18cdbe}\label{classelliptic__curve_a20f858541aed9bfaabdf69b10f18cdbe}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!draw\+\_\+grid2@{draw\+\_\+grid2}}
+\index{draw\+\_\+grid2@{draw\+\_\+grid2}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{draw\+\_\+grid2()}{draw\_grid2()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::draw\+\_\+grid2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classmp__graphics}{mp\+\_\+graphics}} \&}]{G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+with\+\_\+points,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a786cd8da18139b9b01f285f030916f2d}\label{classelliptic__curve_a786cd8da18139b9b01f285f030916f2d}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!evaluate\+\_\+\+R\+HS@{evaluate\+\_\+\+R\+HS}}
+\index{evaluate\+\_\+\+R\+HS@{evaluate\+\_\+\+R\+HS}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{evaluate\+\_\+\+R\+H\+S()}{evaluate\_RHS()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::evaluate\+\_\+\+R\+HS (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_af552b2de089253cf968d1dcf63394d18}\label{classelliptic__curve_af552b2de089253cf968d1dcf63394d18}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!freeself@{freeself}}
+\index{freeself@{freeself}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{freeself()}{freeself()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::freeself (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a2f85c4e92cae10020fcbba2cd1867405}\label{classelliptic__curve_a2f85c4e92cae10020fcbba2cd1867405}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!index\+\_\+of\+\_\+point@{index\+\_\+of\+\_\+point}}
+\index{index\+\_\+of\+\_\+point@{index\+\_\+of\+\_\+point}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{index\+\_\+of\+\_\+point()}{index\_of\_point()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::index\+\_\+of\+\_\+point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x3 }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a0146cb7d2585f1e15e49d77a7496190f}\label{classelliptic__curve_a0146cb7d2585f1e15e49d77a7496190f}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!init@{init}}
+\index{init@{init}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfinite__field}{finite\+\_\+field}} $\ast$}]{F,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{c,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_aab796461061a1041a6b17a9866153544}\label{classelliptic__curve_aab796461061a1041a6b17a9866153544}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!make\+\_\+affine\+\_\+point@{make\+\_\+affine\+\_\+point}}
+\index{make\+\_\+affine\+\_\+point@{make\+\_\+affine\+\_\+point}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{make\+\_\+affine\+\_\+point()}{make\_affine\_point()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::make\+\_\+affine\+\_\+point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{x3,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{a,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{verbose\+\_\+level }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a9f4125b14561601e03c85903673f4d16}\label{classelliptic__curve_a9f4125b14561601e03c85903673f4d16}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!null@{null}}
+\index{null@{null}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{null()}{null()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::null (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a301b1112ceb719ffc59c809747b0d014}\label{classelliptic__curve_a301b1112ceb719ffc59c809747b0d014}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!order\+\_\+of\+\_\+point@{order\+\_\+of\+\_\+point}}
+\index{order\+\_\+of\+\_\+point@{order\+\_\+of\+\_\+point}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{order\+\_\+of\+\_\+point()}{order\_of\_point()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::order\+\_\+of\+\_\+point (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_aee7da611d1ad05db8e6d2d7d797db3fa}\label{classelliptic__curve_aee7da611d1ad05db8e6d2d7d797db3fa}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!print\+\_\+addition\+\_\+table@{print\+\_\+addition\+\_\+table}}
+\index{print\+\_\+addition\+\_\+table@{print\+\_\+addition\+\_\+table}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{print\+\_\+addition\+\_\+table()}{print\_addition\_table()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::print\+\_\+addition\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_ae2f2b3b6f0803419fd576d16a225811c}\label{classelliptic__curve_ae2f2b3b6f0803419fd576d16a225811c}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!print\+\_\+all\+\_\+powers@{print\+\_\+all\+\_\+powers}}
+\index{print\+\_\+all\+\_\+powers@{print\+\_\+all\+\_\+powers}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{print\+\_\+all\+\_\+powers()}{print\_all\_powers()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::print\+\_\+all\+\_\+powers (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a20722db9691dc742ba191cad745a2821}\label{classelliptic__curve_a20722db9691dc742ba191cad745a2821}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!print\+\_\+points@{print\+\_\+points}}
+\index{print\+\_\+points@{print\+\_\+points}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{print\+\_\+points()}{print\_points()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::print\+\_\+points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classelliptic__curve_a13b3d332ae835291810049d19cf10c85}\label{classelliptic__curve_a13b3d332ae835291810049d19cf10c85}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!print\+\_\+points\+\_\+affine@{print\+\_\+points\+\_\+affine}}
+\index{print\+\_\+points\+\_\+affine@{print\+\_\+points\+\_\+affine}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{print\+\_\+points\+\_\+affine()}{print\_points\_affine()}}
+{\footnotesize\ttfamily void elliptic\+\_\+curve\+::print\+\_\+points\+\_\+affine (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classelliptic__curve_ac8f4568dc59a3f03bf5b4b320cae56a6}\label{classelliptic__curve_ac8f4568dc59a3f03bf5b4b320cae56a6}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!A@{A}}
+\index{A@{A}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ elliptic\+\_\+curve\+::A}
+
+\mbox{\Hypertarget{classelliptic__curve_ade70b18ed97add66f8811cb584ad1915}\label{classelliptic__curve_ade70b18ed97add66f8811cb584ad1915}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!b@{b}}
+\index{b@{b}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{b}{b}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::b}
+
+\mbox{\Hypertarget{classelliptic__curve_a540307713774a2f3b7aaf5ffabeb1678}\label{classelliptic__curve_a540307713774a2f3b7aaf5ffabeb1678}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!c@{c}}
+\index{c@{c}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{c}{c}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::c}
+
+\mbox{\Hypertarget{classelliptic__curve_a0d7ba46a2a9484d27989ea71ab769ae6}\label{classelliptic__curve_a0d7ba46a2a9484d27989ea71ab769ae6}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!e@{e}}
+\index{e@{e}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{e}{e}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::e}
+
+\mbox{\Hypertarget{classelliptic__curve_a2b4a8140101de7fe21ef774497372c94}\label{classelliptic__curve_a2b4a8140101de7fe21ef774497372c94}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!F@{F}}
+\index{F@{F}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{F}{F}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfinite__field}{finite\+\_\+field}}$\ast$ elliptic\+\_\+curve\+::F}
+
+\mbox{\Hypertarget{classelliptic__curve_a7ace4da8285026af8c6bfd0253ff614b}\label{classelliptic__curve_a7ace4da8285026af8c6bfd0253ff614b}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!nb@{nb}}
+\index{nb@{nb}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{nb}{nb}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::nb}
+
+\mbox{\Hypertarget{classelliptic__curve_a7ddc1196eb8f45d85dfad3171831ab1c}\label{classelliptic__curve_a7ddc1196eb8f45d85dfad3171831ab1c}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!p@{p}}
+\index{p@{p}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{p}{p}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::p}
+
+\mbox{\Hypertarget{classelliptic__curve_a89ca852ca743b5523e754aa1b5b90496}\label{classelliptic__curve_a89ca852ca743b5523e754aa1b5b90496}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!q@{q}}
+\index{q@{q}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{q}{q}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} elliptic\+\_\+curve\+::q}
+
+\mbox{\Hypertarget{classelliptic__curve_aa6d73dc15171e7a096ebbdf3aaed5319}\label{classelliptic__curve_aa6d73dc15171e7a096ebbdf3aaed5319}} 
+\index{elliptic\+\_\+curve@{elliptic\+\_\+curve}!T@{T}}
+\index{T@{T}!elliptic\+\_\+curve@{elliptic\+\_\+curve}}
+\subsubsection{\texorpdfstring{T}{T}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}$\ast$ elliptic\+\_\+curve\+::T}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+S\+R\+C/\+L\+I\+B/\+T\+O\+P\+\_\+\+L\+E\+V\+E\+L/\mbox{\hyperlink{top__level_8h}{top\+\_\+level.\+h}}\item 
+S\+R\+C/\+L\+I\+B/\+T\+O\+P\+\_\+\+L\+E\+V\+E\+L/\mbox{\hyperlink{elliptic__curve_8_c}{elliptic\+\_\+curve.\+C}}\end{DoxyCompactItemize}

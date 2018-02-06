@@ -1,0 +1,36 @@
+\hypertarget{super__fast__hash_8_c}{}\section{S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/super\+\_\+fast\+\_\+hash.C File Reference}
+\label{super__fast__hash_8_c}\index{S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/super\+\_\+fast\+\_\+hash.\+C@{S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/super\+\_\+fast\+\_\+hash.\+C}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{super__fast__hash_8_c_abc7d71657be8975a51684e41029b7964}{get16bits}}(\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}})
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t \mbox{\hyperlink{super__fast__hash_8_c_a11d69a8cb5ac90dfb13d2e25df8eb1ce}{Super\+Fast\+Hash}} (const char $\ast$data, int len)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{super__fast__hash_8_c_abc7d71657be8975a51684e41029b7964}\label{super__fast__hash_8_c_abc7d71657be8975a51684e41029b7964}} 
+\index{super\+\_\+fast\+\_\+hash.\+C@{super\+\_\+fast\+\_\+hash.\+C}!get16bits@{get16bits}}
+\index{get16bits@{get16bits}!super\+\_\+fast\+\_\+hash.\+C@{super\+\_\+fast\+\_\+hash.\+C}}
+\subsubsection{\texorpdfstring{get16bits}{get16bits}}
+{\footnotesize\ttfamily \#define get16bits(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{simeon_8_c_a4339ca06fa882e69473d37bd6d7917d1}{d}} }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+((((uint32\_t)(((\textcolor{keyword}{const} uint8\_t *)(\mbox{\hyperlink{alphabet_8_c_a6f364afbe132c4ecfea48bde1b0618ba}{d}}))[1])) << 8)\(\backslash\)
+                       +(uint32\_t)(((\textcolor{keyword}{const} uint8\_t *)(\mbox{\hyperlink{alphabet_8_c_a6f364afbe132c4ecfea48bde1b0618ba}{d}}))[0]) )
+\end{DoxyCode}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{super__fast__hash_8_c_a11d69a8cb5ac90dfb13d2e25df8eb1ce}\label{super__fast__hash_8_c_a11d69a8cb5ac90dfb13d2e25df8eb1ce}} 
+\index{super\+\_\+fast\+\_\+hash.\+C@{super\+\_\+fast\+\_\+hash.\+C}!Super\+Fast\+Hash@{Super\+Fast\+Hash}}
+\index{Super\+Fast\+Hash@{Super\+Fast\+Hash}!super\+\_\+fast\+\_\+hash.\+C@{super\+\_\+fast\+\_\+hash.\+C}}
+\subsubsection{\texorpdfstring{Super\+Fast\+Hash()}{SuperFastHash()}}
+{\footnotesize\ttfamily uint32\+\_\+t Super\+Fast\+Hash (\begin{DoxyParamCaption}\item[{const char $\ast$}]{data,  }\item[{int}]{len }\end{DoxyParamCaption})}
+

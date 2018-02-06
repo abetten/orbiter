@@ -1,0 +1,164 @@
+\hypertarget{naugraph_8c}{}\section{S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/naugraph.c File Reference}
+\label{naugraph_8c}\index{S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/naugraph.\+c@{S\+R\+C/\+L\+I\+B/\+G\+A\+L\+O\+I\+S/naugraph.\+c}}
+{\ttfamily \#include \char`\"{}nauty.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{naugraph_8c_a2d0442c6641916fecbcb3749301f733f}{O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS}}
+\item 
+\#define \mbox{\hyperlink{naugraph_8c_ad788ce1b71ea0baf618007e96a885ef4}{M\+A\+SH}}(\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}},  \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})~((((\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}}) $^\wedge$ 065435) + (\mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})) \& 077777)
+\item 
+\#define \mbox{\hyperlink{naugraph_8c_a325be1c1a7c05cde0e37f483e9e1368c}{C\+L\+E\+A\+N\+UP}}(\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}})~((int)((\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}}) \% 077777))
+\item 
+\#define \mbox{\hyperlink{naugraph_8c_a52037c938e3c1b126c6277da5ca689d0}{M}}~m
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{naugraph_8c_a7ec8679596f22db83dc5a4810a3aaa09}{D\+Y\+N\+A\+L\+L\+S\+T\+AT}} (\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}}, workset, workset\+\_\+sz)
+\item 
+\mbox{\hyperlink{naugraph_8c_aa018f375fe97502d71a3c0e9d9fdb19d}{D\+Y\+N\+A\+L\+L\+S\+T\+AT}} (\mbox{\hyperlink{classpermutation}{permutation}}, workperm, workperm\+\_\+sz)
+\item 
+\mbox{\hyperlink{naugraph_8c_a9583de48099173ff8603b3a0d92ac66e}{D\+Y\+N\+A\+L\+L\+S\+T\+AT}} (int, bucket, bucket\+\_\+sz)
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{naugraph_8c_a3f66e6ea5ffe060c5f4186d61df512a2}{isautom}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$g, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$perm, \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} digraph, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+int \mbox{\hyperlink{naugraph_8c_a26989dc74c9feea512b841ad998eb154}{testcanlab}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$g, \mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$canong, int $\ast$lab, int $\ast$samerows, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{naugraph_8c_a0a3937e9f75801ab3a83818124192e4f}{updatecan}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$g, \mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$canong, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$lab, int samerows, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{naugraph_8c_a724668d8280b37b852c337b6d0ac63bc}{refine}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$g, int $\ast$lab, int $\ast$ptn, int level, int $\ast$numcells, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$\mbox{\hyperlink{test_8_c_a6305520cf78b894bf9380f5102f323a0}{count}}, \mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$active, int $\ast$code, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{naugraph_8c_a4af9294970d5f2af8c31e62d526c9b2d}{refine1}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$g, int $\ast$lab, int $\ast$ptn, int level, int $\ast$numcells, \mbox{\hyperlink{classpermutation}{permutation}} $\ast$\mbox{\hyperlink{test_8_c_a6305520cf78b894bf9380f5102f323a0}{count}}, \mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$active, int $\ast$code, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} \mbox{\hyperlink{naugraph_8c_a9b9aaddd8528f9facf0ab18d33d4557a}{cheapautom}} (int $\ast$ptn, int level, \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} digraph, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+int \mbox{\hyperlink{naugraph_8c_a252dd2ccebf61e23528bc2a20eda23b0}{bestcell}} (\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$g, int $\ast$lab, int $\ast$ptn, int level, int tc\+\_\+level, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{naugraph_8c_a78e99d7e9a752bf1e6849ffc06799bbe}{naugraph\+\_\+check}} (int wordsize, int m, int \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, int \mbox{\hyperlink{tdo__start_8_c_a0f1d0e4d3d22d72be50dfaa5f7f59b72}{version}})
+\item 
+void \mbox{\hyperlink{naugraph_8c_a9c0d3ef0474255a077944f433fd0baf8}{naugraph\+\_\+freedyn}} (void)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structdispatchvec}{dispatchvec}} \mbox{\hyperlink{naugraph_8c_a46457986fd61d1ebbc3c6b6b54fc621e}{dispatch\+\_\+graph}}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{naugraph_8c_a325be1c1a7c05cde0e37f483e9e1368c}\label{naugraph_8c_a325be1c1a7c05cde0e37f483e9e1368c}} 
+\index{naugraph.\+c@{naugraph.\+c}!C\+L\+E\+A\+N\+UP@{C\+L\+E\+A\+N\+UP}}
+\index{C\+L\+E\+A\+N\+UP@{C\+L\+E\+A\+N\+UP}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{C\+L\+E\+A\+N\+UP}{CLEANUP}}
+{\footnotesize\ttfamily \#define C\+L\+E\+A\+N\+UP(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}} }\end{DoxyParamCaption})~((int)((\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}}) \% 077777))}
+
+\mbox{\Hypertarget{naugraph_8c_a52037c938e3c1b126c6277da5ca689d0}\label{naugraph_8c_a52037c938e3c1b126c6277da5ca689d0}} 
+\index{naugraph.\+c@{naugraph.\+c}!M@{M}}
+\index{M@{M}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{M}{M}}
+{\footnotesize\ttfamily \#define M~m}
+
+\mbox{\Hypertarget{naugraph_8c_ad788ce1b71ea0baf618007e96a885ef4}\label{naugraph_8c_ad788ce1b71ea0baf618007e96a885ef4}} 
+\index{naugraph.\+c@{naugraph.\+c}!M\+A\+SH@{M\+A\+SH}}
+\index{M\+A\+SH@{M\+A\+SH}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{M\+A\+SH}{MASH}}
+{\footnotesize\ttfamily \#define M\+A\+SH(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}},  }\item[{}]{\mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}} }\end{DoxyParamCaption})~((((\mbox{\hyperlink{alphabet2_8_c_a89606eca6b563ec68d2da2e84657736f}{l}}) $^\wedge$ 065435) + (\mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})) \& 077777)}
+
+\mbox{\Hypertarget{naugraph_8c_a2d0442c6641916fecbcb3749301f733f}\label{naugraph_8c_a2d0442c6641916fecbcb3749301f733f}} 
+\index{naugraph.\+c@{naugraph.\+c}!O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS@{O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS}}
+\index{O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS@{O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS}{ONE\_WORD\_SETS}}
+{\footnotesize\ttfamily \#define O\+N\+E\+\_\+\+W\+O\+R\+D\+\_\+\+S\+E\+TS}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{naugraph_8c_a252dd2ccebf61e23528bc2a20eda23b0}\label{naugraph_8c_a252dd2ccebf61e23528bc2a20eda23b0}} 
+\index{naugraph.\+c@{naugraph.\+c}!bestcell@{bestcell}}
+\index{bestcell@{bestcell}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{bestcell()}{bestcell()}}
+{\footnotesize\ttfamily int bestcell (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{g,  }\item[{int $\ast$}]{lab,  }\item[{int $\ast$}]{ptn,  }\item[{int}]{level,  }\item[{int}]{tc\+\_\+level,  }\item[{int}]{m,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a9b9aaddd8528f9facf0ab18d33d4557a}\label{naugraph_8c_a9b9aaddd8528f9facf0ab18d33d4557a}} 
+\index{naugraph.\+c@{naugraph.\+c}!cheapautom@{cheapautom}}
+\index{cheapautom@{cheapautom}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{cheapautom()}{cheapautom()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} cheapautom (\begin{DoxyParamCaption}\item[{int $\ast$}]{ptn,  }\item[{int}]{level,  }\item[{\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}}}]{digraph,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a7ec8679596f22db83dc5a4810a3aaa09}\label{naugraph_8c_a7ec8679596f22db83dc5a4810a3aaa09}} 
+\index{naugraph.\+c@{naugraph.\+c}!D\+Y\+N\+A\+L\+L\+S\+T\+AT@{D\+Y\+N\+A\+L\+L\+S\+T\+AT}}
+\index{D\+Y\+N\+A\+L\+L\+S\+T\+AT@{D\+Y\+N\+A\+L\+L\+S\+T\+AT}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{D\+Y\+N\+A\+L\+L\+S\+T\+A\+T()}{DYNALLSTAT()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily D\+Y\+N\+A\+L\+L\+S\+T\+AT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}}}]{,  }\item[{workset}]{,  }\item[{workset\+\_\+sz}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_aa018f375fe97502d71a3c0e9d9fdb19d}\label{naugraph_8c_aa018f375fe97502d71a3c0e9d9fdb19d}} 
+\index{naugraph.\+c@{naugraph.\+c}!D\+Y\+N\+A\+L\+L\+S\+T\+AT@{D\+Y\+N\+A\+L\+L\+S\+T\+AT}}
+\index{D\+Y\+N\+A\+L\+L\+S\+T\+AT@{D\+Y\+N\+A\+L\+L\+S\+T\+AT}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{D\+Y\+N\+A\+L\+L\+S\+T\+A\+T()}{DYNALLSTAT()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily D\+Y\+N\+A\+L\+L\+S\+T\+AT (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}}}]{,  }\item[{workperm}]{,  }\item[{workperm\+\_\+sz}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a9583de48099173ff8603b3a0d92ac66e}\label{naugraph_8c_a9583de48099173ff8603b3a0d92ac66e}} 
+\index{naugraph.\+c@{naugraph.\+c}!D\+Y\+N\+A\+L\+L\+S\+T\+AT@{D\+Y\+N\+A\+L\+L\+S\+T\+AT}}
+\index{D\+Y\+N\+A\+L\+L\+S\+T\+AT@{D\+Y\+N\+A\+L\+L\+S\+T\+AT}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{D\+Y\+N\+A\+L\+L\+S\+T\+A\+T()}{DYNALLSTAT()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily D\+Y\+N\+A\+L\+L\+S\+T\+AT (\begin{DoxyParamCaption}\item[{int}]{,  }\item[{bucket}]{,  }\item[{bucket\+\_\+sz}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a3f66e6ea5ffe060c5f4186d61df512a2}\label{naugraph_8c_a3f66e6ea5ffe060c5f4186d61df512a2}} 
+\index{naugraph.\+c@{naugraph.\+c}!isautom@{isautom}}
+\index{isautom@{isautom}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{isautom()}{isautom()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}} isautom (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{g,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{perm,  }\item[{\mbox{\hyperlink{nauty_8h_a621c38f1f10a1c565d897e3178b16d6e}{boolean}}}]{digraph,  }\item[{int}]{m,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a78e99d7e9a752bf1e6849ffc06799bbe}\label{naugraph_8c_a78e99d7e9a752bf1e6849ffc06799bbe}} 
+\index{naugraph.\+c@{naugraph.\+c}!naugraph\+\_\+check@{naugraph\+\_\+check}}
+\index{naugraph\+\_\+check@{naugraph\+\_\+check}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{naugraph\+\_\+check()}{naugraph\_check()}}
+{\footnotesize\ttfamily void naugraph\+\_\+check (\begin{DoxyParamCaption}\item[{int}]{wordsize,  }\item[{int}]{m,  }\item[{int}]{n,  }\item[{int}]{version }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a9c0d3ef0474255a077944f433fd0baf8}\label{naugraph_8c_a9c0d3ef0474255a077944f433fd0baf8}} 
+\index{naugraph.\+c@{naugraph.\+c}!naugraph\+\_\+freedyn@{naugraph\+\_\+freedyn}}
+\index{naugraph\+\_\+freedyn@{naugraph\+\_\+freedyn}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{naugraph\+\_\+freedyn()}{naugraph\_freedyn()}}
+{\footnotesize\ttfamily void naugraph\+\_\+freedyn (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a724668d8280b37b852c337b6d0ac63bc}\label{naugraph_8c_a724668d8280b37b852c337b6d0ac63bc}} 
+\index{naugraph.\+c@{naugraph.\+c}!refine@{refine}}
+\index{refine@{refine}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{refine()}{refine()}}
+{\footnotesize\ttfamily void refine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{g,  }\item[{int $\ast$}]{lab,  }\item[{int $\ast$}]{ptn,  }\item[{int}]{level,  }\item[{int $\ast$}]{numcells,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{count,  }\item[{\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$}]{active,  }\item[{int $\ast$}]{code,  }\item[{int}]{m,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a4af9294970d5f2af8c31e62d526c9b2d}\label{naugraph_8c_a4af9294970d5f2af8c31e62d526c9b2d}} 
+\index{naugraph.\+c@{naugraph.\+c}!refine1@{refine1}}
+\index{refine1@{refine1}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{refine1()}{refine1()}}
+{\footnotesize\ttfamily void refine1 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{g,  }\item[{int $\ast$}]{lab,  }\item[{int $\ast$}]{ptn,  }\item[{int}]{level,  }\item[{int $\ast$}]{numcells,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{count,  }\item[{\mbox{\hyperlink{nauty_8h_a9690bea211101f22a5e154087590c3da}{set}} $\ast$}]{active,  }\item[{int $\ast$}]{code,  }\item[{int}]{m,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a26989dc74c9feea512b841ad998eb154}\label{naugraph_8c_a26989dc74c9feea512b841ad998eb154}} 
+\index{naugraph.\+c@{naugraph.\+c}!testcanlab@{testcanlab}}
+\index{testcanlab@{testcanlab}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{testcanlab()}{testcanlab()}}
+{\footnotesize\ttfamily int testcanlab (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{g,  }\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{canong,  }\item[{int $\ast$}]{lab,  }\item[{int $\ast$}]{samerows,  }\item[{int}]{m,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{naugraph_8c_a0a3937e9f75801ab3a83818124192e4f}\label{naugraph_8c_a0a3937e9f75801ab3a83818124192e4f}} 
+\index{naugraph.\+c@{naugraph.\+c}!updatecan@{updatecan}}
+\index{updatecan@{updatecan}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{updatecan()}{updatecan()}}
+{\footnotesize\ttfamily void updatecan (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{g,  }\item[{\mbox{\hyperlink{nauty_8h_a28c08db7c5948ab173e0f0497773f2f1}{graph}} $\ast$}]{canong,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} $\ast$}]{lab,  }\item[{int}]{samerows,  }\item[{int}]{m,  }\item[{int}]{n }\end{DoxyParamCaption})}
+
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{naugraph_8c_a46457986fd61d1ebbc3c6b6b54fc621e}\label{naugraph_8c_a46457986fd61d1ebbc3c6b6b54fc621e}} 
+\index{naugraph.\+c@{naugraph.\+c}!dispatch\+\_\+graph@{dispatch\+\_\+graph}}
+\index{dispatch\+\_\+graph@{dispatch\+\_\+graph}!naugraph.\+c@{naugraph.\+c}}
+\subsubsection{\texorpdfstring{dispatch\+\_\+graph}{dispatch\_graph}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structdispatchvec}{dispatchvec}} dispatch\+\_\+graph}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+  \{\mbox{\hyperlink{naugraph_8c_a3f66e6ea5ffe060c5f4186d61df512a2}{isautom}},\mbox{\hyperlink{naugraph_8c_a26989dc74c9feea512b841ad998eb154}{testcanlab}},\mbox{\hyperlink{naugraph_8c_a0a3937e9f75801ab3a83818124192e4f}{updatecan}},\mbox{\hyperlink{naugraph_8c_a724668d8280b37b852c337b6d0ac63bc}{refine}},\mbox{\hyperlink{naugraph_8c_a4af9294970d5f2af8c31e62d526c9b2d}{refine1}},
+      \mbox{\hyperlink{naugraph_8c_a9b9aaddd8528f9facf0ab18d33d4557a}{cheapautom}},\mbox{\hyperlink{naugraph_8c_a252dd2ccebf61e23528bc2a20eda23b0}{bestcell}},
+   \mbox{\hyperlink{naugraph_8c_a9c0d3ef0474255a077944f433fd0baf8}{naugraph\_freedyn}},\mbox{\hyperlink{naugraph_8c_a78e99d7e9a752bf1e6849ffc06799bbe}{naugraph\_check}},NULL,NULL\}
+\end{DoxyCode}

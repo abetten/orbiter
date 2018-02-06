@@ -1,0 +1,583 @@
+\hypertarget{perm__group__gens_8_c}{}\section{S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/perm\+\_\+group\+\_\+gens.C File Reference}
+\label{perm__group__gens_8_c}\index{S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/perm\+\_\+group\+\_\+gens.\+C@{S\+R\+C/\+L\+I\+B/\+D\+I\+S\+C\+R\+E\+T\+A/perm\+\_\+group\+\_\+gens.\+C}}
+{\ttfamily \#include \char`\"{}orbiter.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{perm__group__gens_8_c_a7e7232f278193dd8684f973ee70ef3f5}{M\+Y\+\_\+\+D\+E\+B\+UG}}~0
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{perm__group__gens_8_c_ab87d0c1fef9d3078f5ce5f1358bc398a}{vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{perm__group__gens_8_c_ac0291199b2706f0eb554ae24d2e7cefc}{is\+\_\+abelian}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_acc8a80f029f6dab3698452c49e06b783}{read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, char $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&f\+\_\+cyclic\+\_\+notation, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a937affd15a6c49ebf8cd5118198fe5a4}{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, char $\ast$group\+\_\+label, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+cyclic\+\_\+notation)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_afdd96b23ffd162968dc51417edd6b516}{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, char $\ast$fname, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+cyclic\+\_\+notation)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a4e32af1a953cd573a544c550971a6600}{read\+\_\+file\+\_\+of\+\_\+generators}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, char $\ast$fname)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a9e83943a9850c1c4c8ef0c293cd1d2b9}{read\+\_\+generators}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, ifstream \&\mbox{\hyperlink{alphabet2_8_c_a362077c979b0bb65159c603270e40f70}{f}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ae43736cf13bd458db457ffee9f2dc141}{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, char $\ast$group\+\_\+label)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a54e6e8eb88549e0cfefe641653e84715}{write\+\_\+file\+\_\+of\+\_\+generators}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, char $\ast$fname)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ae6b0a48acd164c33e2de0566005a940f}{write\+\_\+generators}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, ofstream \&\mbox{\hyperlink{alphabet2_8_c_a362077c979b0bb65159c603270e40f70}{f}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ae58a2cfa50029df04a015a6c9e529ea9}{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, char $\ast$group\+\_\+label)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a75e679cabe7c7178aee2378f15d15e34}{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, char $\ast$fname)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a4514cb772ccb0840095328820d9eaf5d}{write\+\_\+generators\+\_\+gap}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, ofstream \&\mbox{\hyperlink{alphabet2_8_c_a362077c979b0bb65159c603270e40f70}{f}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a18fe71fe1f7f8c7d1cadc3efc1c6d788}{vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{srg_8_c_af40a326b23c68a27cebe60f16634a2cb}{V}}, \mbox{\hyperlink{class_vector}{Vector}} \&subset, \mbox{\hyperlink{class_vector}{Vector}} \&W)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_abf75fcf99a78bdfb7c0028547f7c0054}{vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{srg_8_c_af40a326b23c68a27cebe60f16634a2cb}{V}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a9d07604f4a1c321585752cabfc94955b}{vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{srg_8_c_af40a326b23c68a27cebe60f16634a2cb}{V}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a394633eb67f30ca43fc9aff8abfff329}{vec\+\_\+conjugate}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_abd8d371d1cb9f8c4c9cd730a9f1d899d}{vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{costas_8_c_ad1f767566c3189fb90e9cffcc5dd4680}{B}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ad65b14ae1fbc7903f14e2c28c4d7294f}{vec\+\_\+induce3}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ac60864f2b7c636649eca13b67280fbe1}{vec\+\_\+induce2}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a19ec562c31abd023c81ef386ecbdc167}{vec\+\_\+induce\+\_\+on\+\_\+2tuples}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+injective)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ac4dd25e0c5667e96be14b00ee2b6fc14}{vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a0dd3a7f059eb598bd7dbd95cc557a397}{vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{perm__group__gens_8_c_a3af229f9b239b34ea1f9905b3b620e0d}{vec\+\_\+generators\+\_\+degree}} (\mbox{\hyperlink{class_vector}{Vector}} \&a)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_abd19615607abe35d6ccfc1f4d421dc2e}{vec\+\_\+generators\+\_\+remove\+\_\+fixpoint}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_acb559820d9ca11295b4500f179ef6392}{i}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ae2abdba2094e87b7f58ee9042738b4f5}{vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ab33fa2e167b2501e5761fee699b4c285}{vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a43fa990200c3ddd47c35f151bd4d66bf}{k}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ae405774a9bffab9b714a3da636bfde42}{vec\+\_\+generators\+\_\+trivial\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} deg)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a87458d3ec3a12155abeb73c81bb3653c}{vec\+\_\+generators\+\_\+cyclic\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} deg)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a1ac987f6157a88be8bee578587046082}{vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_afd7b9d51a9afeae2685f3cae8b915ac4}{vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a8fd875094f55682c6bf65d1fb5e6e2bc}{vec\+\_\+generators\+\_\+symmetric\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} deg)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a34d3004f7ecbf30db1a05c884e130744}{vec\+\_\+generators\+\_\+alternating\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} deg)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a5c62097e9ad2623b09a8dfbe9380db7d}{vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} deg)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a907f18425762b941f30b5f833116b8b0}{vec\+\_\+generators\+\_\+dihedral\+\_\+group}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} deg)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a82bad2f129ab5f3daafc1a84a29d5dba}{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a79f40f9f619ba6f8a6c32e6c1df04e52}{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a07c56b14e85701ba7f5105d7c953175b}{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a6728e2b0fff129a1db3e8d0dc8c86304}{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a2fc2258663a8a040ec6eca37c3ff1bf9}{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a495e8fc7eb66aa894326671762caae26}{vec\+\_\+generators\+\_\+diagonal\+\_\+sum}} (\mbox{\hyperlink{class_vector}{Vector}} \&a, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a3b4aa49d08bb6b5c3869db345c80e4b3}{vec\+\_\+generators\+\_\+comma}} (\mbox{\hyperlink{class_vector}{Vector}} \&a, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a178e3d36947987c3450d143f398dd802}{vec\+\_\+generators\+\_\+direct\+\_\+sum}} (\mbox{\hyperlink{class_vector}{Vector}} \&a, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a341c284927a6c274b1d05fe365ea3354}{vec\+\_\+generators\+\_\+direct\+\_\+product}} (\mbox{\hyperlink{class_vector}{Vector}} \&a, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a4e1e0e72dd773439e333c84dd762a9c3}{c}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a16af2db378d422175df1fdf70cb02806}{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a67390878e31e37836b12fa5d56e72394}{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} subgroup\+\_\+index, \mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_aece7a22e0963ee87d325797900443bd2}{vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a9e10945efd7f35b31fdeb07fa51a86a7}{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+PG}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_aa7e25c62e5735b9785e9dfa02413cbab}{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+AG}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a7823a00ce1bf9cd69d1f9543e594e0e6}{vec\+\_\+generators\+\_\+affine\+\_\+translations}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ac4f5e1074cf38552f67cd4ed6deba6ea}{vec\+\_\+generators\+\_\+affine\+\_\+translations}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a265645d026830ea3330152d82df495ce}{vec\+\_\+generators\+\_\+projective\+\_\+representation}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{class_vector}{Vector}} \&a, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+action\+\_\+from\+\_\+right, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+modified, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a27181dfd3b9ac8fa1675843fa3a8fdf0}{vec\+\_\+generators\+\_\+affine\+\_\+representation}} (\mbox{\hyperlink{classdomain}{domain}} $\ast$dom, \mbox{\hyperlink{class_vector}{Vector}} \&a, \mbox{\hyperlink{class_vector}{Vector}} \&\mbox{\hyperlink{alphabet2_8_c_a148e3876077787926724625411d6e7a9}{b}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ae56b1d99562cb32203518575c689746d}{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}{f\+\_\+special}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+frobenius, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+modified, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a689108f410f773f0681e21a864097f16}{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}{f\+\_\+special}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+frobenius, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+translations, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_adc1a2bfe52c3047a066884771aa01321}{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} subgroup\+\_\+index, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}{f\+\_\+special}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+frobenius, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+translations, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a13788b99964245e11ec79a47adaa667b}{kernel\+\_\+of\+\_\+homomorphism}} (\mbox{\hyperlink{class_vector}{Vector}} \&gens, \mbox{\hyperlink{class_vector}{Vector}} \&kernel\+\_\+gens, void($\ast$hom)(\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&image), \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_af41c889a65ee026d1939647e26904adb}{vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+SL}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ad85c37ec8824d1e7eabc836ff3dbad23}{vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+SL}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a97f04daa9d190c578504d38e10c3e0d8}{vec\+\_\+generators\+\_\+even\+\_\+subgroup}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{class_vector}{Vector}} \&gen\+\_\+even\+\_\+subgroup, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_afd20ce17f98bf2947c213845b48f6bf3}{vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} first, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} len)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_aa29d82e7082af21ca98bbd658b809bce}{wreath\+\_\+embedding}} (\mbox{\hyperlink{classpermutation}{permutation}} \&g, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a42c6a1b7d30f5f22238fb4676b165162}{wreath\+\_\+embedding\+\_\+component}} (\mbox{\hyperlink{classpermutation}{permutation}} \&g, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a37d972ae0b47b9099e30983131d31916}{j}}, \mbox{\hyperlink{classpermutation}{permutation}} \&\mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}})
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a56af443e0e934cce54204f9f84961fe9}{vec\+\_\+generators\+\_\+wreath\+\_\+product}} (\mbox{\hyperlink{class_vector}{Vector}} \&G, \mbox{\hyperlink{class_vector}{Vector}} \&H, \mbox{\hyperlink{class_vector}{Vector}} \&W, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ac8211ff119f98d5166a3ff122af8c5ee}{vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a7f2cd26777ce0ff3fdaf8d02aacbddfb}{n}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} m, \mbox{\hyperlink{class_vector}{Vector}} \&G)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ac70761795da8630f4939bc3e00707d79}{vec\+\_\+generators\+\_\+q1\+\_\+q2}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q2, \mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{classhollerith}{hollerith}} \&label, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+write\+\_\+generators\+\_\+to\+\_\+file, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a0b5ce8828dd8a35cbfec4450f0d76edc}{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a5874b4c2ec2e28321eea4e4871d08222}{u}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_aeb3f3030944801b163bc3b829a7f6710}{v}}, \mbox{\hyperlink{class_vector}{Vector}} \&G, \mbox{\hyperlink{classhollerith}{hollerith}} \&label, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+write\+\_\+generators\+\_\+to\+\_\+file, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_aee37285cfb5987a4fc1f5c7580865175}{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} q2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} u1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} v1, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} u2, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} v2, \mbox{\hyperlink{class_vector}{Vector}} \&G, \mbox{\hyperlink{classhollerith}{hollerith}} \&label, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+write\+\_\+generators\+\_\+to\+\_\+file, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+vv)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_a93659c1c7a668dd6adf9f217c608e1f1}{vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup}} (\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a92cbb483a3b27ae1a0dbfcb125ce216f}{q}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} subgroup\+\_\+index, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{simeon_8_c_a5c9bb19da4c942e41c1d5cfc81f4cfd7}{f\+\_\+special}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+frobenius, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+translations, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\item 
+void \mbox{\hyperlink{perm__group__gens_8_c_ac6282a87dd1be1a9024a460f89e6d756}{vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane}} (\mbox{\hyperlink{class_vector}{Vector}} \&gen, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \mbox{\hyperlink{alphabet2_8_c_a533391314665d6bf1b5575e9a9cd8552}{p}}, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+modified, \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} f\+\_\+v)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{perm__group__gens_8_c_a7e7232f278193dd8684f973ee70ef3f5}\label{perm__group__gens_8_c_a7e7232f278193dd8684f973ee70ef3f5}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!M\+Y\+\_\+\+D\+E\+B\+UG@{M\+Y\+\_\+\+D\+E\+B\+UG}}
+\index{M\+Y\+\_\+\+D\+E\+B\+UG@{M\+Y\+\_\+\+D\+E\+B\+UG}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{M\+Y\+\_\+\+D\+E\+B\+UG}{MY\_DEBUG}}
+{\footnotesize\ttfamily \#define M\+Y\+\_\+\+D\+E\+B\+UG~0}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{perm__group__gens_8_c_ac0291199b2706f0eb554ae24d2e7cefc}\label{perm__group__gens_8_c_ac0291199b2706f0eb554ae24d2e7cefc}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!is\+\_\+abelian@{is\+\_\+abelian}}
+\index{is\+\_\+abelian@{is\+\_\+abelian}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{is\+\_\+abelian()}{is\_abelian()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} is\+\_\+abelian (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a13788b99964245e11ec79a47adaa667b}\label{perm__group__gens_8_c_a13788b99964245e11ec79a47adaa667b}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!kernel\+\_\+of\+\_\+homomorphism@{kernel\+\_\+of\+\_\+homomorphism}}
+\index{kernel\+\_\+of\+\_\+homomorphism@{kernel\+\_\+of\+\_\+homomorphism}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{kernel\+\_\+of\+\_\+homomorphism()}{kernel\_of\_homomorphism()}}
+{\footnotesize\ttfamily void kernel\+\_\+of\+\_\+homomorphism (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gens,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{kernel\+\_\+gens,  }\item[{void($\ast$)(\mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&\mbox{\hyperlink{alphabet2_8_c_a6150e0515f7202e2fb518f7206ed97dc}{x}}, \mbox{\hyperlink{classdiscreta__base}{discreta\+\_\+base}} \&image)}]{hom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a4e32af1a953cd573a544c550971a6600}\label{perm__group__gens_8_c_a4e32af1a953cd573a544c550971a6600}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!read\+\_\+file\+\_\+of\+\_\+generators@{read\+\_\+file\+\_\+of\+\_\+generators}}
+\index{read\+\_\+file\+\_\+of\+\_\+generators@{read\+\_\+file\+\_\+of\+\_\+generators}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{read\+\_\+file\+\_\+of\+\_\+generators()}{read\_file\_of\_generators()}}
+{\footnotesize\ttfamily void read\+\_\+file\+\_\+of\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{char $\ast$}]{fname }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_acc8a80f029f6dab3698452c49e06b783}\label{perm__group__gens_8_c_acc8a80f029f6dab3698452c49e06b783}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml@{read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml}}
+\index{read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml@{read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml()}{read\_file\_of\_generators\_xml()}}
+{\footnotesize\ttfamily void read\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{char $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} \&}]{f\+\_\+cyclic\+\_\+notation,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a9e83943a9850c1c4c8ef0c293cd1d2b9}\label{perm__group__gens_8_c_a9e83943a9850c1c4c8ef0c293cd1d2b9}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!read\+\_\+generators@{read\+\_\+generators}}
+\index{read\+\_\+generators@{read\+\_\+generators}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{read\+\_\+generators()}{read\_generators()}}
+{\footnotesize\ttfamily void read\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{ifstream \&}]{f }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a0dd3a7f059eb598bd7dbd95cc557a397}\label{perm__group__gens_8_c_a0dd3a7f059eb598bd7dbd95cc557a397}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end@{vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end}}
+\index{vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end@{vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end()}{vec\_add\_fixpoint\_at\_end()}}
+{\footnotesize\ttfamily void vec\+\_\+add\+\_\+fixpoint\+\_\+at\+\_\+end (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ac4dd25e0c5667e96be14b00ee2b6fc14}\label{perm__group__gens_8_c_ac4dd25e0c5667e96be14b00ee2b6fc14}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front@{vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front}}
+\index{vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front@{vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front()}{vec\_add\_fixpoint\_in\_front()}}
+{\footnotesize\ttfamily void vec\+\_\+add\+\_\+fixpoint\+\_\+in\+\_\+front (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a394633eb67f30ca43fc9aff8abfff329}\label{perm__group__gens_8_c_a394633eb67f30ca43fc9aff8abfff329}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+conjugate@{vec\+\_\+conjugate}}
+\index{vec\+\_\+conjugate@{vec\+\_\+conjugate}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+conjugate()}{vec\_conjugate()}}
+{\footnotesize\ttfamily void vec\+\_\+conjugate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{p }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_af41c889a65ee026d1939647e26904adb}\label{perm__group__gens_8_c_af41c889a65ee026d1939647e26904adb}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+SL@{vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+SL}}
+\index{vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+SL@{vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+SL}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+S\+L()}{vec\_generators\_A5\_in\_PSL()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+A5\+\_\+in\+\_\+\+P\+SL (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a27181dfd3b9ac8fa1675843fa3a8fdf0}\label{perm__group__gens_8_c_a27181dfd3b9ac8fa1675843fa3a8fdf0}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+affine\+\_\+representation@{vec\+\_\+generators\+\_\+affine\+\_\+representation}}
+\index{vec\+\_\+generators\+\_\+affine\+\_\+representation@{vec\+\_\+generators\+\_\+affine\+\_\+representation}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+affine\+\_\+representation()}{vec\_generators\_affine\_representation()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+affine\+\_\+representation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a7823a00ce1bf9cd69d1f9543e594e0e6}\label{perm__group__gens_8_c_a7823a00ce1bf9cd69d1f9543e594e0e6}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+affine\+\_\+translations@{vec\+\_\+generators\+\_\+affine\+\_\+translations}}
+\index{vec\+\_\+generators\+\_\+affine\+\_\+translations@{vec\+\_\+generators\+\_\+affine\+\_\+translations}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+affine\+\_\+translations()}{vec\_generators\_affine\_translations()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+affine\+\_\+translations (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ac4f5e1074cf38552f67cd4ed6deba6ea}\label{perm__group__gens_8_c_ac4f5e1074cf38552f67cd4ed6deba6ea}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+affine\+\_\+translations@{vec\+\_\+generators\+\_\+affine\+\_\+translations}}
+\index{vec\+\_\+generators\+\_\+affine\+\_\+translations@{vec\+\_\+generators\+\_\+affine\+\_\+translations}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+affine\+\_\+translations()}{vec\_generators\_affine\_translations()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+affine\+\_\+translations (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a93659c1c7a668dd6adf9f217c608e1f1}\label{perm__group__gens_8_c_a93659c1c7a668dd6adf9f217c608e1f1}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup@{vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup}}
+\index{vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup@{vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup()}{vec\_generators\_AGGL1q\_subgroup()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+A\+G\+G\+L1q\+\_\+subgroup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{subgroup\+\_\+index,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+special,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+frobenius,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+translations,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a34d3004f7ecbf30db1a05c884e130744}\label{perm__group__gens_8_c_a34d3004f7ecbf30db1a05c884e130744}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+alternating\+\_\+group@{vec\+\_\+generators\+\_\+alternating\+\_\+group}}
+\index{vec\+\_\+generators\+\_\+alternating\+\_\+group@{vec\+\_\+generators\+\_\+alternating\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+alternating\+\_\+group()}{vec\_generators\_alternating\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+alternating\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{deg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a5c62097e9ad2623b09a8dfbe9380db7d}\label{perm__group__gens_8_c_a5c62097e9ad2623b09a8dfbe9380db7d}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert@{vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert}}
+\index{vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert@{vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert()}{vec\_generators\_alternating\_group\_huppert()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+alternating\+\_\+group\+\_\+huppert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{deg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_afd7b9d51a9afeae2685f3cae8b915ac4}\label{perm__group__gens_8_c_afd7b9d51a9afeae2685f3cae8b915ac4}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm@{vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm}}
+\index{vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm@{vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm()}{vec\_generators\_AutCq\_in\_Cqm()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Aut\+Cq\+\_\+in\+\_\+\+Cqm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a1ac987f6157a88be8bee578587046082}\label{perm__group__gens_8_c_a1ac987f6157a88be8bee578587046082}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm@{vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm}}
+\index{vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm@{vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm()}{vec\_generators\_Cn\_in\_Cnm()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Cn\+\_\+in\+\_\+\+Cnm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a3b4aa49d08bb6b5c3869db345c80e4b3}\label{perm__group__gens_8_c_a3b4aa49d08bb6b5c3869db345c80e4b3}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+comma@{vec\+\_\+generators\+\_\+comma}}
+\index{vec\+\_\+generators\+\_\+comma@{vec\+\_\+generators\+\_\+comma}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+comma()}{vec\_generators\_comma()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+comma (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{b,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a87458d3ec3a12155abeb73c81bb3653c}\label{perm__group__gens_8_c_a87458d3ec3a12155abeb73c81bb3653c}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+cyclic\+\_\+group@{vec\+\_\+generators\+\_\+cyclic\+\_\+group}}
+\index{vec\+\_\+generators\+\_\+cyclic\+\_\+group@{vec\+\_\+generators\+\_\+cyclic\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+cyclic\+\_\+group()}{vec\_generators\_cyclic\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+cyclic\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{deg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a3af229f9b239b34ea1f9905b3b620e0d}\label{perm__group__gens_8_c_a3af229f9b239b34ea1f9905b3b620e0d}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+degree@{vec\+\_\+generators\+\_\+degree}}
+\index{vec\+\_\+generators\+\_\+degree@{vec\+\_\+generators\+\_\+degree}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+degree()}{vec\_generators\_degree()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vec\+\_\+generators\+\_\+degree (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a495e8fc7eb66aa894326671762caae26}\label{perm__group__gens_8_c_a495e8fc7eb66aa894326671762caae26}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+diagonal\+\_\+sum@{vec\+\_\+generators\+\_\+diagonal\+\_\+sum}}
+\index{vec\+\_\+generators\+\_\+diagonal\+\_\+sum@{vec\+\_\+generators\+\_\+diagonal\+\_\+sum}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+diagonal\+\_\+sum()}{vec\_generators\_diagonal\_sum()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+diagonal\+\_\+sum (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{b,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a907f18425762b941f30b5f833116b8b0}\label{perm__group__gens_8_c_a907f18425762b941f30b5f833116b8b0}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+dihedral\+\_\+group@{vec\+\_\+generators\+\_\+dihedral\+\_\+group}}
+\index{vec\+\_\+generators\+\_\+dihedral\+\_\+group@{vec\+\_\+generators\+\_\+dihedral\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+dihedral\+\_\+group()}{vec\_generators\_dihedral\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+dihedral\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{deg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a341c284927a6c274b1d05fe365ea3354}\label{perm__group__gens_8_c_a341c284927a6c274b1d05fe365ea3354}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+direct\+\_\+product@{vec\+\_\+generators\+\_\+direct\+\_\+product}}
+\index{vec\+\_\+generators\+\_\+direct\+\_\+product@{vec\+\_\+generators\+\_\+direct\+\_\+product}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+direct\+\_\+product()}{vec\_generators\_direct\_product()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+direct\+\_\+product (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{b,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a178e3d36947987c3450d143f398dd802}\label{perm__group__gens_8_c_a178e3d36947987c3450d143f398dd802}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+direct\+\_\+sum@{vec\+\_\+generators\+\_\+direct\+\_\+sum}}
+\index{vec\+\_\+generators\+\_\+direct\+\_\+sum@{vec\+\_\+generators\+\_\+direct\+\_\+sum}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+direct\+\_\+sum()}{vec\_generators\_direct\_sum()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+direct\+\_\+sum (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{b,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{c }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a97f04daa9d190c578504d38e10c3e0d8}\label{perm__group__gens_8_c_a97f04daa9d190c578504d38e10c3e0d8}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+even\+\_\+subgroup@{vec\+\_\+generators\+\_\+even\+\_\+subgroup}}
+\index{vec\+\_\+generators\+\_\+even\+\_\+subgroup@{vec\+\_\+generators\+\_\+even\+\_\+subgroup}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+even\+\_\+subgroup()}{vec\_generators\_even\_subgroup()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+even\+\_\+subgroup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen\+\_\+even\+\_\+subgroup,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_aa7e25c62e5735b9785e9dfa02413cbab}\label{perm__group__gens_8_c_aa7e25c62e5735b9785e9dfa02413cbab}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+AG@{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+AG}}
+\index{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+AG@{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+AG}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+A\+G()}{vec\_generators\_frobenius\_in\_AG()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+AG (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a9e10945efd7f35b31fdeb07fa51a86a7}\label{perm__group__gens_8_c_a9e10945efd7f35b31fdeb07fa51a86a7}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+PG@{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+PG}}
+\index{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+PG@{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+PG}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+P\+G()}{vec\_generators\_frobenius\_in\_PG()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+frobenius\+\_\+in\+\_\+\+PG (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a689108f410f773f0681e21a864097f16}\label{perm__group__gens_8_c_a689108f410f773f0681e21a864097f16}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation}}
+\index{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation()}{vec\_generators\_GL\_n\_q\_affine\_representation()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+affine\+\_\+representation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+special,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+frobenius,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+translations,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a16af2db378d422175df1fdf70cb02806}\label{perm__group__gens_8_c_a16af2db378d422175df1fdf70cb02806}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices}}
+\index{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices()}{vec\_generators\_GL\_n\_q\_as\_matrices()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ae56b1d99562cb32203518575c689746d}\label{perm__group__gens_8_c_ae56b1d99562cb32203518575c689746d}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation}}
+\index{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation()}{vec\_generators\_GL\_n\_q\_projective\_representation()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+projective\+\_\+representation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+special,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+frobenius,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+modified,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_adc1a2bfe52c3047a066884771aa01321}\label{perm__group__gens_8_c_adc1a2bfe52c3047a066884771aa01321}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation}}
+\index{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation()}{vec\_generators\_GL\_n\_q\_subgroup\_affine\_representation()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+affine\+\_\+representation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{subgroup\+\_\+index,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+special,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+frobenius,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+translations,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a67390878e31e37836b12fa5d56e72394}\label{perm__group__gens_8_c_a67390878e31e37836b12fa5d56e72394}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices}}
+\index{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices@{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices()}{vec\_generators\_GL\_n\_q\_subgroup\_as\_matrices()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+G\+L\+\_\+n\+\_\+q\+\_\+subgroup\+\_\+as\+\_\+matrices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{subgroup\+\_\+index,  }\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ab33fa2e167b2501e5761fee699b4c285}\label{perm__group__gens_8_c_ab33fa2e167b2501e5761fee699b4c285}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q@{vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q}}
+\index{vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q@{vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q()}{vec\_generators\_induce\_on\_lines\_of\_PG\_k\_q()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+induce\+\_\+on\+\_\+lines\+\_\+of\+\_\+\+P\+G\+\_\+k\+\_\+q (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{k,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ab87d0c1fef9d3078f5ce5f1358bc398a}\label{perm__group__gens_8_c_ab87d0c1fef9d3078f5ce5f1358bc398a}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group@{vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group}}
+\index{vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group@{vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group()}{vec\_generators\_is\_trivial\_group()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}} vec\+\_\+generators\+\_\+is\+\_\+trivial\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a79f40f9f619ba6f8a6c32e6c1df04e52}\label{perm__group__gens_8_c_a79f40f9f619ba6f8a6c32e6c1df04e52}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11}}
+\index{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11()}{vec\_generators\_Mathieu\_11()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Mathieu\+\_\+11 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a07c56b14e85701ba7f5105d7c953175b}\label{perm__group__gens_8_c_a07c56b14e85701ba7f5105d7c953175b}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12}}
+\index{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12()}{vec\_generators\_Mathieu\_12()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Mathieu\+\_\+12 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a6728e2b0fff129a1db3e8d0dc8c86304}\label{perm__group__gens_8_c_a6728e2b0fff129a1db3e8d0dc8c86304}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23}}
+\index{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23()}{vec\_generators\_Mathieu\_23()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Mathieu\+\_\+23 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a2fc2258663a8a040ec6eca37c3ff1bf9}\label{perm__group__gens_8_c_a2fc2258663a8a040ec6eca37c3ff1bf9}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24}}
+\index{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24()}{vec\_generators\_Mathieu\_24()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Mathieu\+\_\+24 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a82bad2f129ab5f3daafc1a84a29d5dba}\label{perm__group__gens_8_c_a82bad2f129ab5f3daafc1a84a29d5dba}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n}}
+\index{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n@{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n()}{vec\_generators\_Mathieu\_n()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Mathieu\+\_\+n (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a265645d026830ea3330152d82df495ce}\label{perm__group__gens_8_c_a265645d026830ea3330152d82df495ce}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+projective\+\_\+representation@{vec\+\_\+generators\+\_\+projective\+\_\+representation}}
+\index{vec\+\_\+generators\+\_\+projective\+\_\+representation@{vec\+\_\+generators\+\_\+projective\+\_\+representation}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+projective\+\_\+representation()}{vec\_generators\_projective\_representation()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+projective\+\_\+representation (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{a,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{b,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+action\+\_\+from\+\_\+right,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+modified,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ac70761795da8630f4939bc3e00707d79}\label{perm__group__gens_8_c_ac70761795da8630f4939bc3e00707d79}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+q1\+\_\+q2@{vec\+\_\+generators\+\_\+q1\+\_\+q2}}
+\index{vec\+\_\+generators\+\_\+q1\+\_\+q2@{vec\+\_\+generators\+\_\+q1\+\_\+q2}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+q1\+\_\+q2()}{vec\_generators\_q1\_q2()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+q1\+\_\+q2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q2,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{classhollerith}{hollerith}} \&}]{label,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+write\+\_\+generators\+\_\+to\+\_\+file,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_aee37285cfb5987a4fc1f5c7580865175}\label{perm__group__gens_8_c_aee37285cfb5987a4fc1f5c7580865175}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2@{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2}}
+\index{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2@{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2()}{vec\_generators\_q1\_q2\_au1bv1\_au2bv2()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+au1bv1\+\_\+au2bv2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{u1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{v1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{u2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{v2,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{\mbox{\hyperlink{classhollerith}{hollerith}} \&}]{label,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+write\+\_\+generators\+\_\+to\+\_\+file,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a0b5ce8828dd8a35cbfec4450f0d76edc}\label{perm__group__gens_8_c_a0b5ce8828dd8a35cbfec4450f0d76edc}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv@{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv}}
+\index{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv@{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv()}{vec\_generators\_q1\_q2\_aubv()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+q1\+\_\+q2\+\_\+aubv (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q1,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q2,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{u,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{v,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{\mbox{\hyperlink{classhollerith}{hollerith}} \&}]{label,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+write\+\_\+generators\+\_\+to\+\_\+file,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+vv }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ae2abdba2094e87b7f58ee9042738b4f5}\label{perm__group__gens_8_c_ae2abdba2094e87b7f58ee9042738b4f5}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power@{vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power}}
+\index{vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power@{vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power()}{vec\_generators\_raise\_to\_nth\_power()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+raise\+\_\+to\+\_\+nth\+\_\+power (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_abd19615607abe35d6ccfc1f4d421dc2e}\label{perm__group__gens_8_c_abd19615607abe35d6ccfc1f4d421dc2e}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+remove\+\_\+fixpoint@{vec\+\_\+generators\+\_\+remove\+\_\+fixpoint}}
+\index{vec\+\_\+generators\+\_\+remove\+\_\+fixpoint@{vec\+\_\+generators\+\_\+remove\+\_\+fixpoint}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+remove\+\_\+fixpoint()}{vec\_generators\_remove\_fixpoint()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+remove\+\_\+fixpoint (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_afd20ce17f98bf2947c213845b48f6bf3}\label{perm__group__gens_8_c_afd20ce17f98bf2947c213845b48f6bf3}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset@{vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset}}
+\index{vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset@{vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset()}{vec\_generators\_restrict\_to\_subset()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+restrict\+\_\+to\+\_\+subset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{first,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{len }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ad85c37ec8824d1e7eabc836ff3dbad23}\label{perm__group__gens_8_c_ad85c37ec8824d1e7eabc836ff3dbad23}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+SL@{vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+SL}}
+\index{vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+SL@{vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+SL}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+S\+L()}{vec\_generators\_S4\_in\_PSL()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+S4\+\_\+in\+\_\+\+P\+SL (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{q,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ac6282a87dd1be1a9024a460f89e6d756}\label{perm__group__gens_8_c_ac6282a87dd1be1a9024a460f89e6d756}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane@{vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane}}
+\index{vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane@{vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane()}{vec\_generators\_singer\_cycle\_on\_points\_of\_projective\_plane()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+singer\+\_\+cycle\+\_\+on\+\_\+points\+\_\+of\+\_\+projective\+\_\+plane (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{p,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+modified,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_aece7a22e0963ee87d325797900443bd2}\label{perm__group__gens_8_c_aece7a22e0963ee87d325797900443bd2}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices@{vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices}}
+\index{vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices@{vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices()}{vec\_generators\_SL\_n\_q\_as\_matrices()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+S\+L\+\_\+n\+\_\+q\+\_\+as\+\_\+matrices (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{classdomain}{domain}} $\ast$}]{dom,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ac8211ff119f98d5166a3ff122af8c5ee}\label{perm__group__gens_8_c_ac8211ff119f98d5166a3ff122af8c5ee}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm@{vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm}}
+\index{vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm@{vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm()}{vec\_generators\_Sn\_wreath\_Sm()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+\+Sn\+\_\+wreath\+\_\+\+Sm (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a8fd875094f55682c6bf65d1fb5e6e2bc}\label{perm__group__gens_8_c_a8fd875094f55682c6bf65d1fb5e6e2bc}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+symmetric\+\_\+group@{vec\+\_\+generators\+\_\+symmetric\+\_\+group}}
+\index{vec\+\_\+generators\+\_\+symmetric\+\_\+group@{vec\+\_\+generators\+\_\+symmetric\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+symmetric\+\_\+group()}{vec\_generators\_symmetric\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+symmetric\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{deg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ae405774a9bffab9b714a3da636bfde42}\label{perm__group__gens_8_c_ae405774a9bffab9b714a3da636bfde42}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+trivial\+\_\+group@{vec\+\_\+generators\+\_\+trivial\+\_\+group}}
+\index{vec\+\_\+generators\+\_\+trivial\+\_\+group@{vec\+\_\+generators\+\_\+trivial\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+trivial\+\_\+group()}{vec\_generators\_trivial\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+trivial\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{deg }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a56af443e0e934cce54204f9f84961fe9}\label{perm__group__gens_8_c_a56af443e0e934cce54204f9f84961fe9}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+generators\+\_\+wreath\+\_\+product@{vec\+\_\+generators\+\_\+wreath\+\_\+product}}
+\index{vec\+\_\+generators\+\_\+wreath\+\_\+product@{vec\+\_\+generators\+\_\+wreath\+\_\+product}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+generators\+\_\+wreath\+\_\+product()}{vec\_generators\_wreath\_product()}}
+{\footnotesize\ttfamily void vec\+\_\+generators\+\_\+wreath\+\_\+product (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{H,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{W,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+v }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a9d07604f4a1c321585752cabfc94955b}\label{perm__group__gens_8_c_a9d07604f4a1c321585752cabfc94955b}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group@{vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group}}
+\index{vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group@{vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group()}{vec\_hol\_of\_cyclic\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{V,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ac60864f2b7c636649eca13b67280fbe1}\label{perm__group__gens_8_c_ac60864f2b7c636649eca13b67280fbe1}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+induce2@{vec\+\_\+induce2}}
+\index{vec\+\_\+induce2@{vec\+\_\+induce2}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+induce2()}{vec\_induce2()}}
+{\footnotesize\ttfamily void vec\+\_\+induce2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ad65b14ae1fbc7903f14e2c28c4d7294f}\label{perm__group__gens_8_c_ad65b14ae1fbc7903f14e2c28c4d7294f}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+induce3@{vec\+\_\+induce3}}
+\index{vec\+\_\+induce3@{vec\+\_\+induce3}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+induce3()}{vec\_induce3()}}
+{\footnotesize\ttfamily void vec\+\_\+induce3 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_abd8d371d1cb9f8c4c9cd730a9f1d899d}\label{perm__group__gens_8_c_abd8d371d1cb9f8c4c9cd730a9f1d899d}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks@{vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks}}
+\index{vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks@{vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks()}{vec\_induce\_action\_on\_blocks()}}
+{\footnotesize\ttfamily void vec\+\_\+induce\+\_\+action\+\_\+on\+\_\+blocks (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{B }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a19ec562c31abd023c81ef386ecbdc167}\label{perm__group__gens_8_c_a19ec562c31abd023c81ef386ecbdc167}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+induce\+\_\+on\+\_\+2tuples@{vec\+\_\+induce\+\_\+on\+\_\+2tuples}}
+\index{vec\+\_\+induce\+\_\+on\+\_\+2tuples@{vec\+\_\+induce\+\_\+on\+\_\+2tuples}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+induce\+\_\+on\+\_\+2tuples()}{vec\_induce\_on\_2tuples()}}
+{\footnotesize\ttfamily void vec\+\_\+induce\+\_\+on\+\_\+2tuples (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+injective }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a18fe71fe1f7f8c7d1cadc3efc1c6d788}\label{perm__group__gens_8_c_a18fe71fe1f7f8c7d1cadc3efc1c6d788}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset@{vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset}}
+\index{vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset@{vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset()}{vec\_induced\_group\_on\_subset()}}
+{\footnotesize\ttfamily void vec\+\_\+induced\+\_\+group\+\_\+on\+\_\+subset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{V,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{subset,  }\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{W }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_abf75fcf99a78bdfb7c0028547f7c0054}\label{perm__group__gens_8_c_abf75fcf99a78bdfb7c0028547f7c0054}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group@{vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group}}
+\index{vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group@{vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group()}{vec\_subgroup\_of\_hol\_of\_cyclic\_group()}}
+{\footnotesize\ttfamily void vec\+\_\+subgroup\+\_\+of\+\_\+hol\+\_\+of\+\_\+cyclic\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{V,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{i }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_aa29d82e7082af21ca98bbd658b809bce}\label{perm__group__gens_8_c_aa29d82e7082af21ca98bbd658b809bce}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!wreath\+\_\+embedding@{wreath\+\_\+embedding}}
+\index{wreath\+\_\+embedding@{wreath\+\_\+embedding}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{wreath\+\_\+embedding()}{wreath\_embedding()}}
+{\footnotesize\ttfamily void wreath\+\_\+embedding (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{g,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{q }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a42c6a1b7d30f5f22238fb4676b165162}\label{perm__group__gens_8_c_a42c6a1b7d30f5f22238fb4676b165162}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!wreath\+\_\+embedding\+\_\+component@{wreath\+\_\+embedding\+\_\+component}}
+\index{wreath\+\_\+embedding\+\_\+component@{wreath\+\_\+embedding\+\_\+component}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{wreath\+\_\+embedding\+\_\+component()}{wreath\_embedding\_component()}}
+{\footnotesize\ttfamily void wreath\+\_\+embedding\+\_\+component (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{g,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{n,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{m,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{j,  }\item[{\mbox{\hyperlink{classpermutation}{permutation}} \&}]{q }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a54e6e8eb88549e0cfefe641653e84715}\label{perm__group__gens_8_c_a54e6e8eb88549e0cfefe641653e84715}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+file\+\_\+of\+\_\+generators@{write\+\_\+file\+\_\+of\+\_\+generators}}
+\index{write\+\_\+file\+\_\+of\+\_\+generators@{write\+\_\+file\+\_\+of\+\_\+generators}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+file\+\_\+of\+\_\+generators()}{write\_file\_of\_generators()}}
+{\footnotesize\ttfamily void write\+\_\+file\+\_\+of\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{char $\ast$}]{fname }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a75e679cabe7c7178aee2378f15d15e34}\label{perm__group__gens_8_c_a75e679cabe7c7178aee2378f15d15e34}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap}}
+\index{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap()}{write\_file\_of\_generators\_gap()}}
+{\footnotesize\ttfamily void write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{char $\ast$}]{fname }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ae58a2cfa50029df04a015a6c9e529ea9}\label{perm__group__gens_8_c_ae58a2cfa50029df04a015a6c9e529ea9}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label}}
+\index{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label()}{write\_file\_of\_generators\_gap\_group\_label()}}
+{\footnotesize\ttfamily void write\+\_\+file\+\_\+of\+\_\+generators\+\_\+gap\+\_\+group\+\_\+label (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{char $\ast$}]{group\+\_\+label }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ae43736cf13bd458db457ffee9f2dc141}\label{perm__group__gens_8_c_ae43736cf13bd458db457ffee9f2dc141}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label}}
+\index{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label()}{write\_file\_of\_generators\_group\_label()}}
+{\footnotesize\ttfamily void write\+\_\+file\+\_\+of\+\_\+generators\+\_\+group\+\_\+label (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{char $\ast$}]{group\+\_\+label }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_afdd96b23ffd162968dc51417edd6b516}\label{perm__group__gens_8_c_afdd96b23ffd162968dc51417edd6b516}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml}}
+\index{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml()}{write\_file\_of\_generators\_xml()}}
+{\footnotesize\ttfamily void write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{char $\ast$}]{fname,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+cyclic\+\_\+notation }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a937affd15a6c49ebf8cd5118198fe5a4}\label{perm__group__gens_8_c_a937affd15a6c49ebf8cd5118198fe5a4}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label}}
+\index{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label@{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label()}{write\_file\_of\_generators\_xml\_group\_label()}}
+{\footnotesize\ttfamily void write\+\_\+file\+\_\+of\+\_\+generators\+\_\+xml\+\_\+group\+\_\+label (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{gen,  }\item[{char $\ast$}]{group\+\_\+label,  }\item[{\mbox{\hyperlink{galois_8h_a09fddde158a3a20bd2dcadb609de11dc}{I\+NT}}}]{f\+\_\+cyclic\+\_\+notation }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_ae6b0a48acd164c33e2de0566005a940f}\label{perm__group__gens_8_c_ae6b0a48acd164c33e2de0566005a940f}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+generators@{write\+\_\+generators}}
+\index{write\+\_\+generators@{write\+\_\+generators}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+generators()}{write\_generators()}}
+{\footnotesize\ttfamily void write\+\_\+generators (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{ofstream \&}]{f }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{perm__group__gens_8_c_a4514cb772ccb0840095328820d9eaf5d}\label{perm__group__gens_8_c_a4514cb772ccb0840095328820d9eaf5d}} 
+\index{perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}!write\+\_\+generators\+\_\+gap@{write\+\_\+generators\+\_\+gap}}
+\index{write\+\_\+generators\+\_\+gap@{write\+\_\+generators\+\_\+gap}!perm\+\_\+group\+\_\+gens.\+C@{perm\+\_\+group\+\_\+gens.\+C}}
+\subsubsection{\texorpdfstring{write\+\_\+generators\+\_\+gap()}{write\_generators\_gap()}}
+{\footnotesize\ttfamily void write\+\_\+generators\+\_\+gap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vector}{Vector}} \&}]{G,  }\item[{ofstream \&}]{f }\end{DoxyParamCaption})}
+

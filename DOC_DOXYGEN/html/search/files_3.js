@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['data_2ec',['data.C',['../data_8_c.html',1,'']]],
+  ['data_5fblt_2ec',['data_BLT.C',['../data___b_l_t_8_c.html',1,'']]],
+  ['data_5fblt_5fold_2ec',['data_BLT_old.C',['../data___b_l_t__old_8_c.html',1,'']]],
+  ['data_5fdh_2ec',['data_DH.C',['../data___d_h_8_c.html',1,'']]],
+  ['data_5ffile_2ec',['data_file.C',['../data__file_8_c.html',1,'']]],
+  ['data_5fhyperovals_2ec',['data_hyperovals.C',['../data__hyperovals_8_c.html',1,'']]],
+  ['data_5fpackings_5fpg_5f3_5f3_2ec',['data_packings_PG_3_3.C',['../data__packings___p_g__3__3_8_c.html',1,'']]],
+  ['data_5ftp_2ec',['data_TP.C',['../data___t_p_8_c.html',1,'']]],
+  ['database_2ec',['database.C',['../database_8_c.html',1,'']]],
+  ['decomposition_2ec',['decomposition.C',['../_g_a_l_o_i_s_2decomposition_8_c.html',1,'(Global Namespace)'],['../_t_o_p___l_e_v_e_l_2decomposition_8_c.html',1,'(Global Namespace)']]],
+  ['desarguesian_5fspread_2ec',['desarguesian_spread.C',['../_a_p_p_s_2_s_u_b_s_p_a_c_e___o_r_b_i_t_s_2desarguesian__spread_8_c.html',1,'(Global Namespace)'],['../_l_i_b_2_g_a_l_o_i_s_2desarguesian__spread_8_c.html',1,'(Global Namespace)']]],
+  ['design_2ec',['design.C',['../_a_p_p_s_2_c_o_m_b_i_n_a_t_o_r_i_c_s_2design_8_c.html',1,'(Global Namespace)'],['../_l_i_b_2_d_i_s_c_r_e_t_a_2design_8_c.html',1,'(Global Namespace)']]],
+  ['design_5fparameter_2ec',['design_parameter.C',['../design__parameter_8_c.html',1,'']]],
+  ['design_5fparameter_5fsource_2ec',['design_parameter_source.C',['../design__parameter__source_8_c.html',1,'']]],
+  ['determine_5fconic_2ec',['determine_conic.C',['../determine__conic_8_c.html',1,'']]],
+  ['determine_5fquadric_2ec',['determine_quadric.C',['../determine__quadric_8_c.html',1,'']]],
+  ['diophant_2ec',['diophant.C',['../diophant_8_c.html',1,'']]],
+  ['discreta_2eh',['discreta.h',['../discreta_8h.html',1,'']]],
+  ['discreta_5fglobal_2ec',['discreta_global.C',['../discreta__global_8_c.html',1,'']]],
+  ['dlx_2ec',['dlx.C',['../_a_p_p_s_2_t_o_o_l_s_2dlx_8_c.html',1,'(Global Namespace)'],['../_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html',1,'(Global Namespace)']]],
+  ['domain_2ec',['domain.C',['../domain_8_c.html',1,'']]],
+  ['draw_2ec',['draw.C',['../draw_8_c.html',1,'']]],
+  ['draw_5fcolored_5fgraph_2ec',['draw_colored_graph.C',['../draw__colored__graph_8_c.html',1,'']]],
+  ['draw_5fgraph_2ec',['draw_graph.C',['../draw__graph_8_c.html',1,'']]],
+  ['dynamic_5fmemory_2ec',['dynamic_memory.C',['../dynamic__memory_8_c.html',1,'']]]
+];
