@@ -49,6 +49,7 @@ int main(int argc, const char **argv)
 
 
 
+	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);

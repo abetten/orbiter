@@ -96,6 +96,7 @@ int main(int argc, char **argv)
 	cout << "scheduler.out" << endl;
 	
 	// first pass: get definitions:
+	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);

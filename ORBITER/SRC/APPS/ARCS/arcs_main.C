@@ -29,6 +29,7 @@ int main(int argc, const char **argv)
 	
 	Gen = new arc_generator;
 
+	cout << argv[0] << endl;
 	cout << "before Gen->read_arguments" << endl;
 	Gen->read_arguments(argc, argv);
 	

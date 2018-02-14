@@ -99,6 +99,7 @@ using namespace std;
 #endif
 
 #if defined(__APPLE__) || defined(__MACH__)
+#define SYSTEMUNIX
 #define SYSTEM_IS_MACINTOSH
 	// use Mac specific stuff like asking how much memory the process uses.
 	// used in util.C
@@ -2791,7 +2792,10 @@ public:
 	finite_field *F;
 	INT *base_cols;
 	INT *coset;
-	INT *M; // [n * n]. This used to be [k * n] but now we allow for embedded subspaces.
+	INT *M; // [n * n], this used to be [k * n] but now we allow for embedded subspaces.
+	INT *M2; // [n * n], used in dual_spread
+	INT *v; // [n], for points_covered
+	INT *w; // [n], for points_covered
 	grassmann *G;
 
 	grassmann();
@@ -2819,6 +2823,7 @@ public:
 		// Mtx must be n x n
 	void line_regulus_in_PG_3_q(INT *&regulus, INT &regulus_size, INT verbose_level);
 		// the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
+	void compute_dual_spread(INT *spread, INT *dual_spread, INT spread_size, INT verbose_level);
 };
 
 
@@ -3487,6 +3492,9 @@ INT is_csv_file(const BYTE *fname);
 INT is_xml_file(const BYTE *fname);
 void os_date_string(BYTE *str, INT sz);
 INT os_seconds_past_1970();
+void povray_beginning(ostream &ost);
+void povray_end(ostream &ost);
+void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, INT last_frame);
 
 
 
@@ -6822,4 +6830,37 @@ public:
 	void encode_object_packing(INT *&encoding, INT &encoding_sz, INT verbose_level);
 
 };
+
+
+// ####################################################################################
+// numerics.C:
+// ####################################################################################
+
+
+void double_vec_add(double *a, double *b, double *c, INT len);
+void double_vec_subtract(double *a, double *b, double *c, INT len);
+void double_vec_scalar_multiple(double *a, double lambda, INT len);
+INT Gauss_elimination(double *A, INT m, INT n, INT *base_cols, INT f_complete, INT verbose_level);
+void print_system(double *A, INT m, INT n);
+void get_kernel(double *M, INT m, INT n, INT *base_cols, INT nb_base_cols, 
+	INT &kernel_m, INT &kernel_n, double *kernel);
+INT Null_space(double *M, INT m, INT n, double *K, INT verbose_level);
+// K will be k x n
+// where k is the return value.
+void double_vec_normalize_from_back(double *v, INT len);
+void double_vec_normalize_to_minus_one_from_back(double *v, INT len);
+INT triangular_prism(double *P1, double *P2, double *P3, 
+	double *abc3, double *angles3, double *T3, 
+	INT verbose_level);
+INT general_prism(double *Pts, INT nb_pts, double *Pts_xy, 
+	double *abc3, double *angles3, double *T3, 
+	INT verbose_level);
+double rad2deg(double phi);
+void mult_matrix(double *v, double *R, double *vR);
+void print_matrix(double *R);
+void make_Rz(double *R, double phi);
+void make_Ry(double *R, double psi);
+void make_Rx(double *R, double chi);
+double atan_xy(double x, double y);
+
 

@@ -71,6 +71,7 @@ MODULES = \
 	norm_tables.o \
 	null_polarity_generator.o \
 	number_theory.o \
+	numerics.o \
 	object_in_projective_space.o \
 	orthogonal.o \
 	orthogonal_points.o \
@@ -170,6 +171,7 @@ cpp:
 	$(UNIX_TO_DOS) norm_tables.C $(CPP_PREFIX)norm_tables.cpp
 	$(UNIX_TO_DOS) null_polarity_generator.C $(CPP_PREFIX)null_polarity_generator.cpp
 	$(UNIX_TO_DOS) number_theory.C $(CPP_PREFIX)number_theory.cpp
+	$(UNIX_TO_DOS) numerics.C $(CPP_PREFIX)numerics.cpp
 	$(UNIX_TO_DOS) object_in_projective_space.C $(CPP_PREFIX)object_in_projective_space.cpp
 	$(UNIX_TO_DOS) orthogonal.C $(CPP_PREFIX)orthogonal.cpp
 	$(UNIX_TO_DOS) orthogonal_points.C $(CPP_PREFIX)orthogonal_points.cpp

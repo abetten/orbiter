@@ -18,6 +18,7 @@ int main(int argc, const char **argv)
 	{
 	code_generator cg;
 	
+	cout << argv[0] << endl;
 	cg.init(argc, argv);
 
 	cg.main(cg.verbose_level);

@@ -24,6 +24,14 @@ void the_end(INT t0)
 		}
 	time_check(cout, t0);
 	cout << endl;
+
+
+	INT mem_usage;
+	BYTE fname[1000];
+
+	mem_usage = os_memory_usage();
+	sprintf(fname, "memory_usage.csv");
+	INT_matrix_write_csv(fname, &mem_usage, 1, 1);
 }
 
 void dump_object_memory()

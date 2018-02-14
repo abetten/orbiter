@@ -1,1 +1,8 @@
 ORBITER/nbproject/
+*.a
+*.out
+*.o
+*~
+orbiter.tar.gz
+
+

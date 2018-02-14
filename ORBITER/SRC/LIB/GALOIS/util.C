@@ -4184,6 +4184,7 @@ void INT_matrix_read_csv(const BYTE *fname, INT *&M, INT &m, INT &n, INT verbose
 		}
 	if (file_size(fname) <= 0) {
 		cout << "INT_matrix_read_csv file " << fname << " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
 		}
 	{
@@ -4654,5 +4655,186 @@ INT os_seconds_past_1970()
 	}
 	return a;
 }
+
+void povray_beginning(ostream &ost)
+{
+	ost << "//Files with predefined colors and textures" << endl;
+	ost << "#version 3.7;" << endl;
+	ost << "#include \"colors.inc\"" << endl;
+	ost << "#include \"glass.inc\"" << endl;
+	ost << "#include \"golds.inc\"" << endl;
+	ost << "#include \"metals.inc\"" << endl;
+	ost << "#include \"stones.inc\"" << endl;
+	ost << "#include \"woods.inc\"" << endl;
+	ost << endl;
+	ost << "//Place the camera" << endl;
+	ost << "camera {" << endl;
+	ost << "   sky <0,0,1> " << endl;
+	ost << "   direction <-1,0,0>" << endl;
+	ost << "   right <-4/3,0,0> " << endl;
+	ost << "	//location <-2.5,0.6,-3>*3" << endl;
+	ost << "	//look_at<0,0.2,0>" << endl;
+	ost << "   location  <0,5,0>  //Camera location" << endl;
+	ost << "   look_at   <0,0,0>    //Where camera is pointing" << endl;
+	ost << "   angle 22      //Angle of the view" << endl;
+	ost << "	// 22 is default, 18 is closer,  28 is further away" << endl;
+	ost << "}" << endl;
+	ost << endl;
+	ost << "//Ambient light to brighten up darker pictures" << endl;
+	ost << "//global_settings { ambient_light White }" << endl;
+	ost << "global_settings { max_trace_level 10 }" << endl;
+	ost << endl;
+	ost << endl;
+	ost << "//Place a light" << endl;
+	ost << "//light_source { <15,30,1> color White*2 }   " << endl;          
+	ost << "//light_source { <10,10,0> color White*2 }  " << endl;           
+	ost << "light_source { <0,2,0> color White*2 }    " << endl;         
+	ost << "light_source { <0,0,2> color White }" << endl;
+	ost << "//light_source { <0,10,0> color White*2}" << endl;
+	ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << "//plane{z,7 pigment {SkyBlue} }" << endl;
+	ost << "plane{y,7 pigment {SkyBlue} }" << endl;
+	ost << endl;
+	ost << "//texture {T_Silver_3A}" << endl;
+	ost << endl;
+	ost << "//Set a background color" << endl;
+	ost << "background { color SkyBlue }" << endl;
+	ost << endl;
+	ost << "union{ " << endl;
+	ost << endl;
+	ost << endl;
+}
+
+void povray_end(ostream &ost)
+{
+	ost << "	// the next three steps will perform a rotation around the axis of symmetry 1,1,1:" << endl;
+	ost << endl;
+	ost << "	// move 1,1,1 to 1,0,0:" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	1/sqrt(3),2/sqrt(6),0," << endl;
+	ost << "	1/sqrt(3),-1/sqrt(6),1/sqrt(2)," << endl;
+	ost << "	1/sqrt(3),-1/sqrt(6),-1/sqrt(2)," << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+	ost << "        rotate <360*clock,0,0> " << endl;
+	ost << endl;
+	ost << "	// move 1,0,0 back to 1,1,1:" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	1/sqrt(3),1/sqrt(3),1/sqrt(3)," << endl;
+	ost << "	2/sqrt(6),-1/sqrt(6),-1/sqrt(6)," << endl;
+	ost << "	0,1/sqrt(2),-1/sqrt(2)," << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+	ost << "	// and now we pull the axis 1,1,1 up:" << endl;
+	ost << endl;
+	ost << "		#declare A=pi/4;" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	cos(A),0,sin(A)," << endl;
+	ost << "	0,1,0," << endl;
+	ost << "	-sin(A),0,cos(A)," << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+	ost << " 	scale  0.3        // 0.9 macro  " << endl;
+	ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << "	clipped_by { sphere{ < 0,0.,0. > ,0.9  } } // < 0.2,0.2,0.2 > , 1.8" << endl;
+	ost << "	//clipped_by { sphere{ < 0,0.,0. > ,0.8  } } // < 0.2,0.2,0.2 > , 1.8" << endl;
+	ost << "	bounded_by { clipped_by }" << endl;
+	ost << endl;
+	ost << "	// rotate the top towards the viewpoint so we can see slightly from above:" << endl;
+	ost << "	//rotate <-5,0,0>  // this does not work" << endl;
+	ost << endl;
+	ost << "	// trying to tilt it up a bit:" << endl;
+	ost << endl;
+	ost << "	// move 1,1,1 to 1,0,0:" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	1/sqrt(3),2/sqrt(6),0," << endl;
+	ost << "	1/sqrt(3),-1/sqrt(6),1/sqrt(2)," << endl;
+	ost << "	1/sqrt(3),-1/sqrt(6),-1/sqrt(2)," << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << "        rotate <0,30,0> " << endl;
+	ost << endl;
+	ost << "	// move 1,0,0 back to 1,1,1:" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	1/sqrt(3),1/sqrt(3),1/sqrt(3)," << endl;
+	ost << "	2/sqrt(6),-1/sqrt(6),-1/sqrt(6)," << endl;
+	ost << "	0,1/sqrt(2),-1/sqrt(2)," << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << "}" << endl;
+	ost << endl;
+	ost << endl;
+	ost << "/* 	        #declare r=0.09 ; " << endl;
+	ost << endl;
+	ost << "object{ // x-axis" << endl;
+	ost << "cylinder{< 0,0,0 >,<1.5,0,0 > ,r }" << endl;
+	ost << " 	pigment{Red} " << endl;
+	ost << endl;
+	ost << "} " << endl;
+	ost << "object{ // y-axis" << endl;
+	ost << "cylinder{< 0,0,0 >,<0,1.5,0 > ,r }" << endl;
+	ost << " 	pigment{Green} " << endl;
+	ost << endl;
+	ost << "} " << endl;
+	ost << "object{ // z-axis" << endl;
+	ost << "cylinder{< 0,0,0 >,<0,0,1.5 > ,r }" << endl;
+	ost << " 	pigment{Blue} " << endl;
+ 	ost << endl;
+	ost << "} */" << endl;
+	ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << "#declare d = .8; " << endl;
+	ost << endl;
+	ost << "plane {" << endl;
+	ost << "    //y, -d" << endl;
+	ost << "    z, -d" << endl;
+	ost << "    texture {" << endl;
+	ost << "      pigment {SkyBlue}   // Yellow" << endl;
+	ost << "      //pigment {" << endl;
+	ost << "      //  checker" << endl;
+	ost << "      //  color rgb<0.5, 0, 0>" << endl;
+	ost << "      //  color rgb<0, 0.5, 0.5>" << endl;
+	ost << "      //}" << endl;
+	ost << "      finish {" << endl;
+	ost << "        diffuse 0.6" << endl;
+	ost << "        ambient 0.2" << endl;
+	ost << "        phong 1" << endl;
+	ost << "        phong_size 100" << endl;
+	ost << "        reflection 0.25" << endl;
+	ost << "      }" << endl;
+	ost << "    }" << endl;
+	ost << "  }" << endl;
+	ost << endl;
+	ost << endl;
+
+}
+
+
+void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, INT last_frame)
+{
+	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;
+	ost << "Antialias=On" << endl;
+	ost << endl;
+	ost << "Antialias_Threshold=0.1" << endl;
+	ost << "Antialias_Depth=2" << endl;
+	ost << "Input_File_Name=" << fname_pov << endl;
+	ost << endl;
+	ost << "Initial_Frame=" << first_frame << endl;
+	ost << "Final_Frame=" << last_frame << endl;
+	ost << "Initial_Clock=0" << endl;
+	ost << "Final_Clock=1" << endl;
+	ost << endl;
+	ost << "Cyclic_Animation=on" << endl;
+	ost << "Pause_when_Done=off" << endl;
+}
+
 
 

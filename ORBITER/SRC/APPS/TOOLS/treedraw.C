@@ -52,12 +52,7 @@ int main(int argc, const char **argv)
 	INT f_circletext = FALSE;
 	INT f_count_leaves = FALSE;
 
-#if 0
-	if (argc <= 1) {
-		print_usage();
-		exit(1);
-		}
-#endif
+	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[i + 1]);
