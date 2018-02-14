@@ -56,6 +56,7 @@ int main(int argc, char **argv)
 	INT nb_restrictions = 0;
 
 
+	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);

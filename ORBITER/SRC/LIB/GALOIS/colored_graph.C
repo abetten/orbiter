@@ -427,6 +427,7 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 	cout << endl;
 #endif
 
+	f_ownership_of_bitvec = TRUE;
 	bitvector_adjacency = NEW_UBYTE(bitvector_length);
 	fread_UBYTEs(fp, bitvector_adjacency, bitvector_length);
 
@@ -1682,7 +1683,10 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 	
 	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,decision_steps,dt" << endl;
 	for (i = 0; i < nb_cases; i++) {
-		colored_graph CG;
+		colored_graph *CG;
+
+
+		CG = new colored_graph;
 
 		c = list_of_cases[i];
 		if (f_v) {
@@ -1695,14 +1699,14 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 		else {
 			strcpy(fname, fname_tmp);
 			}
-		CG.load(fname, verbose_level - 2);
+		CG->load(fname, verbose_level - 2);
 
-		//CG.print();
+		//CG->print();
 
 		fp << "# start case " << c << endl;
 
 
-		CG.all_rainbow_cliques(&fp, f_output_solution_raw, 
+		CG->all_rainbow_cliques(&fp, f_output_solution_raw, 
 			f_maxdepth, maxdepth, 
 			FALSE /* f_restrictions */, NULL /* restrictions */, 
 			FALSE /* f_tree */, FALSE /* f_decision_nodes_only */, NULL /* fname_tree */,
@@ -1711,12 +1715,13 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 			verbose_level - 1);
 		fp << "# end case " << c << " " << nb_sol << " " << search_steps 
 				<< " " << decision_steps << " " << dt << endl;
-		fp_stats << i << "," << c << "," << nb_sol << "," << CG.nb_points << "," << search_steps << "," << decision_steps << "," << dt << endl;
+		fp_stats << i << "," << c << "," << nb_sol << "," << CG->nb_points << "," << search_steps << "," << decision_steps << "," << dt << endl;
 		Search_steps += search_steps;
 		Decision_steps += decision_steps;
 		Nb_sol += nb_sol;
 		Dt += dt;
 		
+		delete CG;
 		}
 	fp << -1 << " " << Nb_sol << " " << Search_steps 
 				<< " " << Decision_steps << " " << Dt << endl;

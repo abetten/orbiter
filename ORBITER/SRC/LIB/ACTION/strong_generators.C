@@ -458,7 +458,7 @@ void strong_generators::init_transposed_group(strong_generators *SG, INT verbose
 	INT f_v = (verbose_level >= 1);
 	vector_ge *gens;
 	longinteger_object go;
-	INT i;	
+	INT i;
 	
 	if (f_v) {
 		cout << "strong_generators::init_transposed_group" << endl;

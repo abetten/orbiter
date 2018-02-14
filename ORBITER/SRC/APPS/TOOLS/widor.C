@@ -19,11 +19,8 @@ int main(int argc, char **argv)
 	BYTE label[1000];
 	INT verbose_level = 0;
 		
-	if (argc <= 1) {
-		//print_usage();
-		exit(1);
-		}
-	for (i = 1; i < argc - 1; i++) {
+	cout << argv[0] << endl;
+	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
 			cout << "-v " << verbose_level << endl;

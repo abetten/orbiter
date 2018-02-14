@@ -69,6 +69,7 @@ int main(int argc, const char **argv)
 
 
 	t0 = os_ticks();
+	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -501,8 +502,8 @@ int main(int argc, const char **argv)
 
 
 //end:
-	//the_end(t0);
-	the_end_quietly(t0);
+	the_end(t0);
+	//the_end_quietly(t0);
 }
 
 

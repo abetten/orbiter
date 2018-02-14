@@ -19,6 +19,7 @@ void blt_set::read_arguments(int argc, const char **argv)
 {
 	INT i;
 		
+	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-schreier") == 0) {
 			f_override_schreier_depth = TRUE;
@@ -456,19 +457,22 @@ void blt_set::create_graphs(
 
 	BYTE fname[1000];
 	BYTE fname_list_of_cases[1000];
+	BYTE fname_time[1000];
 	BYTE graph_fname_base[1000];
 	INT orbit;
 	INT nb_orbits;
-	//INT width;
 	INT *list_of_cases;
 	INT nb_of_cases;
-	//INT nb_vertices;
+
+	INT *Time;
+	INT time_idx;
 
 
 
 
 	sprintf(fname, "%s_lvl_%ld", prefix_with_directory, starter_size);
 	sprintf(fname_list_of_cases, "%slist_of_cases_%s_%ld_%ld_%ld.txt", output_prefix, prefix, starter_size, orbit_at_level_r, orbit_at_level_m);
+	sprintf(fname_time, "%stime_%s_%ld_%ld_%ld.csv", output_prefix, prefix, starter_size, orbit_at_level_r, orbit_at_level_m);
 
 	nb_orbits = count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
@@ -479,12 +483,10 @@ void blt_set::create_graphs(
 		exit(1);
 		}
 
-#if 0
-	//width = log10(nb_orbits) + 1;
-	if (f_v) {
-		cout << "blt_set::create_graphs width=" << width << endl;
-		}
-#endif
+
+	Time = NEW_INT(nb_orbits * 2);
+	INT_vec_zero(Time, nb_orbits * 2);
+	time_idx = 0;
 
 	nb_of_cases = 0;
 	list_of_cases = NEW_INT(nb_orbits);
@@ -500,7 +502,8 @@ void blt_set::create_graphs(
 		colored_graph *CG = NULL;
 		INT nb_vertices = -1;
 
-
+		INT t0 = os_ticks();
+		
 		if (create_graph(orbit, level_of_candidates_file, 
 			output_prefix, 
 			f_lexorder_test, f_eliminate_graphs_if_possible, 
@@ -515,12 +518,18 @@ void blt_set::create_graphs(
 			CG->save(fname, verbose_level - 2);
 			
 			nb_vertices = CG->nb_points;
-			//delete CG;
 			}
 
 		if (CG) {
 			delete CG;
 			}
+
+		INT t1 = os_ticks();
+
+		Time[time_idx * 2 + 0] = orbit;
+		Time[time_idx * 2 + 1] = t1 - t0;
+		time_idx++;
+		
 		if (f_vv) {
 			if (nb_vertices >= 0) {
 				cout << "blt_set::create_graphs creating graph associated with orbit " << orbit << " / " << nb_orbits << " with " << nb_vertices << " vertices created" << endl;
@@ -531,11 +540,17 @@ void blt_set::create_graphs(
 			}
 		}
 
+	INT_matrix_write_csv(fname_time, Time, time_idx, 2);
+	if (f_v) {
+		cout << "blt_set::create_graphs Written file " << fname_time << " of size " << file_size(fname_time) << endl;
+		}
+
 	write_set_to_file(fname_list_of_cases, list_of_cases, nb_of_cases, 0 /*verbose_level */);
 	if (f_v) {
 		cout << "blt_set::create_graphs Written file " << fname_list_of_cases << " of size " << file_size(fname_list_of_cases) << endl;
 		}
 
+	FREE_INT(Time);
 	FREE_INT(list_of_cases);
 
 	//registry_dump_sorted();
