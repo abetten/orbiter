@@ -1106,7 +1106,7 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 
 
 			if (mtx->f_semilinear) {
-				INT n, frob, e;
+				INT n, frob; //, e;
 				
 				n = mtx->n;
 				frob = Elt4[n * n];
@@ -1311,8 +1311,8 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 
 static void intersection_matrix_entry_print(INT *p, INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data)
 {
-	arc_lifting *AL;
-	AL = (arc_lifting *) data;
+	//arc_lifting *AL;
+	//AL = (arc_lifting *) data;
 	INT a, b;
 	
 	if (i == -1) {

@@ -19,8 +19,8 @@ INT tdo_scheme::td3_refine_rows(INT verbose_level, INT f_once,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-    INT R, l1, l2, r;
-    INT nb_eqns, nb_vars = 0;
+	INT R, /*l1,*/ l2, r;
+	INT nb_eqns, nb_vars = 0;
 	INT point_types_allocated;
 	partitionstack P;
 	INT lambda2;
@@ -44,7 +44,7 @@ INT tdo_scheme::td3_refine_rows(INT verbose_level, INT f_once,
 	get_column_split_partition(verbose_level, P);
 	
 	R = nb_row_classes[ROW];
-	l1 = nb_col_classes[ROW];
+	//l1 = nb_col_classes[ROW];
 	l2 = nb_col_classes[COL];
 
 	
@@ -452,7 +452,7 @@ INT tdo_scheme::td3_refine_columns(INT verbose_level, INT f_once,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	INT R, l1, l2, r, nb_eqns, nb_vars = 0;
+	INT R, /*l1,*/ l2, r, nb_eqns, nb_vars = 0;
 	INT line_types_allocated;
 	partitionstack P;
 	INT lambda2;
@@ -476,7 +476,7 @@ INT tdo_scheme::td3_refine_columns(INT verbose_level, INT f_once,
 	get_row_split_partition(verbose_level, P);
 	
 	R = nb_col_classes[COL];
-	l1 = nb_row_classes[COL];
+	//l1 = nb_row_classes[COL];
 	l2 = nb_row_classes[ROW];
 	
 	T.allocate(R);

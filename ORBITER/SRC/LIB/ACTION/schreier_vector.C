@@ -284,10 +284,10 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 	INT i, n;
 	INT *pts;
 	INT *prev;
-	INT *label;
+	//INT *label;
 	INT *Depth;
 	INT d, s;
-	INT pt, pr, la;
+	INT /*pt,*/ pr; //, la;
 	//INT pt1, pr1;
 
 	if (f_v) {
@@ -296,7 +296,7 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 	n = sv[0];
 	pts = sv + 1;
 	prev = pts + n;
-	label = prev + n;
+	//label = prev + n;
 	if (f_v) {
 		cout << "schreier vector of length " << n << ":" << endl;
 		}
@@ -304,7 +304,7 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 	Depth = NEW_INT(n);
 	INT_vec_zero(Depth, n);
 	for (i = 0; i < n; i++) {
-		pt = pts[i];
+		//pt = pts[i];
 		pr = prev[i];
 		if (Depth[i] > 0) {
 			continue;
@@ -321,9 +321,9 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 
 	s = 0;
 	for (i = 0; i < n; i++) {
-		pt = pts[i];
+		//pt = pts[i];
 		pr = prev[i];
-		la = label[i];
+		//la = label[i];
 		d = Depth[i];
 
 #if 0

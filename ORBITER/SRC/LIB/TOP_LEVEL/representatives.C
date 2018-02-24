@@ -264,7 +264,7 @@ void representatives::read_representatives_and_stabilizers(INT verbose_level)
 	{
 	ifstream f1(fname_rep);
 	FILE *f2;
-	INT i, j, first, len, a, b, c, d, e;
+	INT i, j, /*first,*/ len, a, b, c, d, e;
 	
 	f2 = fopen(fname_stabgens, "rb");
 	
@@ -293,7 +293,7 @@ void representatives::read_representatives_and_stabilizers(INT verbose_level)
 			exit(1);
 			}
 		rep[i] = b;
-		first = c;
+		//first = c;
 		len = d;
 		gens.init(A);
 		gens.allocate(len);

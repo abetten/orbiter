@@ -3493,8 +3493,11 @@ INT is_xml_file(const BYTE *fname);
 void os_date_string(BYTE *str, INT sz);
 INT os_seconds_past_1970();
 void povray_beginning(ostream &ost);
+void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost);
+void povray_animation_rotate_around_origin_and_given_vector(double *v, ostream &ost);
 void povray_end(ostream &ost);
 void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, INT last_frame);
+void test_typedefs();
 
 
 
@@ -3723,6 +3726,10 @@ public:
 	INT f_has_bitvector;
 	UBYTE *bitvector_adjacency;
 
+	INT f_has_row_by_row_adjacency_matrix;
+	BYTE **row_by_row_adjacency_matrix; // [n][n]
+
+
 	INT *pt_list;
 	INT *pt_list_inv;
 	INT *nb_points;
@@ -3787,6 +3794,7 @@ public:
 		INT f_maxdepth, INT maxdepth, 
 		INT f_store_solutions, 
 		INT verbose_level);
+	void delinearize_adjacency_list(INT verbose_level);
 	void allocate_bitmatrix(INT verbose_level);
 	void init_restrictions(INT *restrictions, INT verbose_level);
 	clique_finder();
@@ -3940,6 +3948,7 @@ public:
 		INT verbose_level);
 	void export_to_magma(const BYTE *fname, INT verbose_level);
 	void export_to_file(const BYTE *fname, INT verbose_level);
+	void export_to_text(const BYTE *fname, INT verbose_level);
 	void export_laplacian_to_file(const BYTE *fname, INT verbose_level);
 	void export_to_file_matlab(const BYTE *fname, INT verbose_level);
 	void early_test_func_for_clique_search(INT *S, INT len, 
@@ -6837,6 +6846,7 @@ public:
 // ####################################################################################
 
 
+void double_vec_print(double *a, INT len);
 void double_vec_add(double *a, double *b, double *c, INT len);
 void double_vec_subtract(double *a, double *b, double *c, INT len);
 void double_vec_scalar_multiple(double *a, double lambda, INT len);
@@ -6862,5 +6872,26 @@ void make_Rz(double *R, double phi);
 void make_Ry(double *R, double psi);
 void make_Rx(double *R, double chi);
 double atan_xy(double x, double y);
+double dot_product(double *u, double *v, INT len);
+void cross_product(double *u, double *v, double *n);
+double distance_from_origin(double x1, double x2, double x3);
+double distance_from_origin(double *x, INT len);
+void make_unit_vector(double *v, INT len);
+void center_of_mass(double *Pts, INT len, INT *Pt_idx, INT nb_pts, double *c);
+void plane_through_three_points(double *p1, double *p2, double *p3, double *n, double &d);
+void orthogonal_transformation_from_point_to_basis_vector(double *from, 
+	double *A, double *Av, INT verbose_level);
+void output_double(double a, ostream &ost);
+void mult_matrix_4x4(double *v, double *R, double *vR);
+void transpose_matrix_4x4(double *A, double *At);
+void substitute_quadric_linear(double *coeff_in, double *coeff_out, 
+	double *A4_inv, INT verbose_level);
+void substitute_cubic_linear(double *coeff_in, double *coeff_out, 
+	double *A4_inv, INT verbose_level);
+void make_transform_t_varphi_u_double(INT n, double *varphi, double *u, double *A, double *Av, INT verbose_level);
+// varphi are the dual coordinates of a plane.
+// u is a vector such that varphi(u) \neq -1.
+// A = I + varphi * u.
+void matrix_double_inverse(double *A, double *Av, INT n, INT verbose_level);
 
 

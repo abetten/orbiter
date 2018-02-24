@@ -729,11 +729,11 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 	INT epsilon = 0;
 	INT n = 4;
 	//INT c1 = 0, c2 = 0, c3 = 0;
-	INT d = 5;
-	INT *Pts1;
+	//INT d = 5;
+	//INT *Pts1;
 	orthogonal *O;
 	INT q = Fq->q;
-	INT *v;
+	//INT *v;
 	//BYTE BLT_label[1000];
 	
 	if (f_v) {
@@ -748,8 +748,8 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 
 	//BLT = BLT_representative(q, BLT_k);
 
-	v = NEW_INT(d);
-	Pts1 = NEW_INT(nb_pts);
+	//v = NEW_INT(d);
+	//Pts1 = NEW_INT(nb_pts);
 	Pts = NEW_INT(nb_pts);
 
 	cout << "create_BLT currently disabled" << endl;
@@ -1318,12 +1318,12 @@ void create_whole_space(INT n, finite_field *F,
 {
 	INT f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT i, d;
+	INT i; //, d;
 
 	if (f_v) {
 		cout << "create_whole_space" << endl;
 		}
-	d = n + 1;
+	//d = n + 1;
 	P = new projective_space;
 
 	

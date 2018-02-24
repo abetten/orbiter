@@ -637,166 +637,166 @@ void cubic_surface_stab_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_s
 INT cubic_surface_nb_Eckardt_points(INT q, INT i)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	INT *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_nb_E;
 		nb = surface_4_nb_reps;
-		sz = surface_4_size;
+		//sz = surface_4_size;
 		}
 	else if (q == 7) {
 		p = surface_7_nb_E;
 		nb = surface_7_nb_reps;
-		sz = surface_7_size;
+		//sz = surface_7_size;
 		}
 	else if (q == 8) {
 		p = surface_8_nb_E;
 		nb = surface_8_nb_reps;
-		sz = surface_8_size;
+		//sz = surface_8_size;
 		}
 	else if (q == 9) {
 		p = surface_9_nb_E;
 		nb = surface_9_nb_reps;
-		sz = surface_9_size;
+		//sz = surface_9_size;
 		}
 	else if (q == 11) {
 		p = surface_11_nb_E;
 		nb = surface_11_nb_reps;
-		sz = surface_11_size;
+		//sz = surface_11_size;
 		}
 	else if (q == 13) {
 		p = surface_13_nb_E;
 		nb = surface_13_nb_reps;
-		sz = surface_13_size;
+		//sz = surface_13_size;
 		}
 	else if (q == 16) {
 		p = surface_16_nb_E;
 		nb = surface_16_nb_reps;
-		sz = surface_16_size;
+		//sz = surface_16_size;
 		}
 	else if (q == 17) {
 		p = surface_17_nb_E;
 		nb = surface_17_nb_reps;
-		sz = surface_17_size;
+		//sz = surface_17_size;
 		}
 	else if (q == 19) {
 		p = surface_19_nb_E;
 		nb = surface_19_nb_reps;
-		sz = surface_19_size;
+		//sz = surface_19_size;
 		}
 	else if (q == 23) {
 		p = surface_23_nb_E;
 		nb = surface_23_nb_reps;
-		sz = surface_23_size;
+		//sz = surface_23_size;
 		}
 	else if (q == 25) {
 		p = surface_25_nb_E;
 		nb = surface_25_nb_reps;
-		sz = surface_25_size;
+		//sz = surface_25_size;
 		}
 	else if (q == 27) {
 		p = surface_27_nb_E;
 		nb = surface_27_nb_reps;
-		sz = surface_27_size;
+		//sz = surface_27_size;
 		}
 	else if (q == 29) {
 		p = surface_29_nb_E;
 		nb = surface_29_nb_reps;
-		sz = surface_29_size;
+		//sz = surface_29_size;
 		}
 	else if (q == 31) {
 		p = surface_31_nb_E;
 		nb = surface_31_nb_reps;
-		sz = surface_31_size;
+		//sz = surface_31_size;
 		}
 	else if (q == 32) {
 		p = surface_32_nb_E;
 		nb = surface_32_nb_reps;
-		sz = surface_32_size;
+		//sz = surface_32_size;
 		}
 	else if (q == 37) {
 		p = surface_37_nb_E;
 		nb = surface_37_nb_reps;
-		sz = surface_37_size;
+		//sz = surface_37_size;
 		}
 	else if (q == 41) {
 		p = surface_41_nb_E;
 		nb = surface_41_nb_reps;
-		sz = surface_41_size;
+		//sz = surface_41_size;
 		}
 	else if (q == 43) {
 		p = surface_43_nb_E;
 		nb = surface_43_nb_reps;
-		sz = surface_43_size;
+		//sz = surface_43_size;
 		}
 	else if (q == 47) {
 		p = surface_47_nb_E;
 		nb = surface_47_nb_reps;
-		sz = surface_47_size;
+		//sz = surface_47_size;
 		}
 	else if (q == 49) {
 		p = surface_49_nb_E;
 		nb = surface_49_nb_reps;
-		sz = surface_49_size;
+		//sz = surface_49_size;
 		}
 	else if (q == 53) {
 		p = surface_53_nb_E;
 		nb = surface_53_nb_reps;
-		sz = surface_53_size;
+		//sz = surface_53_size;
 		}
 	else if (q == 59) {
 		p = surface_59_nb_E;
 		nb = surface_59_nb_reps;
-		sz = surface_59_size;
+		//sz = surface_59_size;
 		}
 	else if (q == 61) {
 		p = surface_61_nb_E;
 		nb = surface_61_nb_reps;
-		sz = surface_61_size;
+		//sz = surface_61_size;
 		}
 	else if (q == 64) {
 		p = surface_64_nb_E;
 		nb = surface_64_nb_reps;
-		sz = surface_64_size;
+		//sz = surface_64_size;
 		}
 	else if (q == 67) {
 		p = surface_67_nb_E;
 		nb = surface_67_nb_reps;
-		sz = surface_67_size;
+		//sz = surface_67_size;
 		}
 	else if (q == 71) {
 		p = surface_71_nb_E;
 		nb = surface_71_nb_reps;
-		sz = surface_71_size;
+		//sz = surface_71_size;
 		}
 	else if (q == 73) {
 		p = surface_73_nb_E;
 		nb = surface_73_nb_reps;
-		sz = surface_73_size;
+		//sz = surface_73_size;
 		}
 	else if (q == 79) {
 		p = surface_79_nb_E;
 		nb = surface_79_nb_reps;
-		sz = surface_79_size;
+		//sz = surface_79_size;
 		}
 	else if (q == 81) {
 		p = surface_81_nb_E;
 		nb = surface_81_nb_reps;
-		sz = surface_81_size;
+		//sz = surface_81_size;
 		}
 	else if (q == 83) {
 		p = surface_83_nb_E;
 		nb = surface_83_nb_reps;
-		sz = surface_83_size;
+		//sz = surface_83_size;
 		}
 	else if (q == 89) {
 		p = surface_89_nb_E;
 		nb = surface_89_nb_reps;
-		sz = surface_89_size;
+		//sz = surface_89_size;
 		}
 	else if (q == 97) {
 		p = surface_97_nb_E;
 		nb = surface_97_nb_reps;
-		sz = surface_97_size;
+		//sz = surface_97_size;
 		}
 	else {
 		cout << "cubic_surface_nb_Eckardt_points q=" << q << " I don't have information for this case" << endl;
@@ -817,166 +817,166 @@ INT cubic_surface_nb_Eckardt_points(INT q, INT i)
 INT *cubic_surface_single_six(INT q, INT i)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	INT *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_single_six;
 		nb = surface_4_nb_reps;
-		sz = surface_4_size;
+		//sz = surface_4_size;
 		}
 	else if (q == 7) {
 		p = surface_7_single_six;
 		nb = surface_7_nb_reps;
-		sz = surface_7_size;
+		//sz = surface_7_size;
 		}
 	else if (q == 8) {
 		p = surface_8_single_six;
 		nb = surface_8_nb_reps;
-		sz = surface_8_size;
+		//sz = surface_8_size;
 		}
 	else if (q == 9) {
 		p = surface_9_single_six;
 		nb = surface_9_nb_reps;
-		sz = surface_9_size;
+		//sz = surface_9_size;
 		}
 	else if (q == 11) {
 		p = surface_11_single_six;
 		nb = surface_11_nb_reps;
-		sz = surface_11_size;
+		//sz = surface_11_size;
 		}
 	else if (q == 13) {
 		p = surface_13_single_six;
 		nb = surface_13_nb_reps;
-		sz = surface_13_size;
+		//sz = surface_13_size;
 		}
 	else if (q == 16) {
 		p = surface_16_single_six;
 		nb = surface_16_nb_reps;
-		sz = surface_16_size;
+		//sz = surface_16_size;
 		}
 	else if (q == 17) {
 		p = surface_17_single_six;
 		nb = surface_17_nb_reps;
-		sz = surface_17_size;
+		//sz = surface_17_size;
 		}
 	else if (q == 19) {
 		p = surface_19_single_six;
 		nb = surface_19_nb_reps;
-		sz = surface_19_size;
+		//sz = surface_19_size;
 		}
 	else if (q == 23) {
 		p = surface_23_single_six;
 		nb = surface_23_nb_reps;
-		sz = surface_23_size;
+		//sz = surface_23_size;
 		}
 	else if (q == 25) {
 		p = surface_25_single_six;
 		nb = surface_25_nb_reps;
-		sz = surface_25_size;
+		//sz = surface_25_size;
 		}
 	else if (q == 27) {
 		p = surface_27_single_six;
 		nb = surface_27_nb_reps;
-		sz = surface_27_size;
+		//sz = surface_27_size;
 		}
 	else if (q == 29) {
 		p = surface_29_single_six;
 		nb = surface_29_nb_reps;
-		sz = surface_29_size;
+		//sz = surface_29_size;
 		}
 	else if (q == 31) {
 		p = surface_31_single_six;
 		nb = surface_31_nb_reps;
-		sz = surface_31_size;
+		//sz = surface_31_size;
 		}
 	else if (q == 32) {
 		p = surface_32_single_six;
 		nb = surface_32_nb_reps;
-		sz = surface_32_size;
+		//sz = surface_32_size;
 		}
 	else if (q == 37) {
 		p = surface_37_single_six;
 		nb = surface_37_nb_reps;
-		sz = surface_37_size;
+		//sz = surface_37_size;
 		}
 	else if (q == 41) {
 		p = surface_41_single_six;
 		nb = surface_41_nb_reps;
-		sz = surface_41_size;
+		//sz = surface_41_size;
 		}
 	else if (q == 43) {
 		p = surface_43_single_six;
 		nb = surface_43_nb_reps;
-		sz = surface_43_size;
+		//sz = surface_43_size;
 		}
 	else if (q == 47) {
 		p = surface_47_single_six;
 		nb = surface_47_nb_reps;
-		sz = surface_47_size;
+		//sz = surface_47_size;
 		}
 	else if (q == 49) {
 		p = surface_49_single_six;
 		nb = surface_49_nb_reps;
-		sz = surface_49_size;
+		//sz = surface_49_size;
 		}
 	else if (q == 53) {
 		p = surface_53_single_six;
 		nb = surface_53_nb_reps;
-		sz = surface_53_size;
+		//sz = surface_53_size;
 		}
 	else if (q == 59) {
 		p = surface_59_single_six;
 		nb = surface_59_nb_reps;
-		sz = surface_59_size;
+		//sz = surface_59_size;
 		}
 	else if (q == 61) {
 		p = surface_61_single_six;
 		nb = surface_61_nb_reps;
-		sz = surface_61_size;
+		//sz = surface_61_size;
 		}
 	else if (q == 64) {
 		p = surface_64_single_six;
 		nb = surface_64_nb_reps;
-		sz = surface_64_size;
+		//sz = surface_64_size;
 		}
 	else if (q == 67) {
 		p = surface_67_single_six;
 		nb = surface_67_nb_reps;
-		sz = surface_67_size;
+		//sz = surface_67_size;
 		}
 	else if (q == 71) {
 		p = surface_71_single_six;
 		nb = surface_71_nb_reps;
-		sz = surface_71_size;
+		//sz = surface_71_size;
 		}
 	else if (q == 73) {
 		p = surface_73_single_six;
 		nb = surface_73_nb_reps;
-		sz = surface_73_size;
+		//sz = surface_73_size;
 		}
 	else if (q == 79) {
 		p = surface_79_single_six;
 		nb = surface_79_nb_reps;
-		sz = surface_79_size;
+		//sz = surface_79_size;
 		}
 	else if (q == 81) {
 		p = surface_81_single_six;
 		nb = surface_81_nb_reps;
-		sz = surface_81_size;
+		//sz = surface_81_size;
 		}
 	else if (q == 83) {
 		p = surface_83_single_six;
 		nb = surface_83_nb_reps;
-		sz = surface_83_size;
+		//sz = surface_83_size;
 		}
 	else if (q == 89) {
 		p = surface_89_single_six;
 		nb = surface_89_nb_reps;
-		sz = surface_89_size;
+		//sz = surface_89_size;
 		}
 	else if (q == 97) {
 		p = surface_97_single_six;
 		nb = surface_97_nb_reps;
-		sz = surface_97_size;
+		//sz = surface_97_size;
 		}
 	else {
 		cout << "cubic_surface_single_six q=" << q << " I don't have information for this case" << endl;
@@ -996,166 +996,166 @@ INT *cubic_surface_single_six(INT q, INT i)
 INT *cubic_surface_Lines(INT q, INT i)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	INT *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_Lines;
 		nb = surface_4_nb_reps;
-		sz = surface_4_size;
+		//sz = surface_4_size;
 		}
 	else if (q == 7) {
 		p = surface_7_Lines;
 		nb = surface_7_nb_reps;
-		sz = surface_7_size;
+		//sz = surface_7_size;
 		}
 	else if (q == 8) {
 		p = surface_8_Lines;
 		nb = surface_8_nb_reps;
-		sz = surface_8_size;
+		//sz = surface_8_size;
 		}
 	else if (q == 9) {
 		p = surface_9_Lines;
 		nb = surface_9_nb_reps;
-		sz = surface_9_size;
+		//sz = surface_9_size;
 		}
 	else if (q == 11) {
 		p = surface_11_Lines;
 		nb = surface_11_nb_reps;
-		sz = surface_11_size;
+		//sz = surface_11_size;
 		}
 	else if (q == 13) {
 		p = surface_13_Lines;
 		nb = surface_13_nb_reps;
-		sz = surface_13_size;
+		//sz = surface_13_size;
 		}
 	else if (q == 16) {
 		p = surface_16_Lines;
 		nb = surface_16_nb_reps;
-		sz = surface_16_size;
+		//sz = surface_16_size;
 		}
 	else if (q == 17) {
 		p = surface_17_Lines;
 		nb = surface_17_nb_reps;
-		sz = surface_17_size;
+		//sz = surface_17_size;
 		}
 	else if (q == 19) {
 		p = surface_19_Lines;
 		nb = surface_19_nb_reps;
-		sz = surface_19_size;
+		//sz = surface_19_size;
 		}
 	else if (q == 23) {
 		p = surface_23_Lines;
 		nb = surface_23_nb_reps;
-		sz = surface_23_size;
+		//sz = surface_23_size;
 		}
 	else if (q == 25) {
 		p = surface_25_Lines;
 		nb = surface_25_nb_reps;
-		sz = surface_25_size;
+		//sz = surface_25_size;
 		}
 	else if (q == 27) {
 		p = surface_27_Lines;
 		nb = surface_27_nb_reps;
-		sz = surface_27_size;
+		//sz = surface_27_size;
 		}
 	else if (q == 29) {
 		p = surface_29_Lines;
 		nb = surface_29_nb_reps;
-		sz = surface_29_size;
+		//sz = surface_29_size;
 		}
 	else if (q == 31) {
 		p = surface_31_Lines;
 		nb = surface_31_nb_reps;
-		sz = surface_31_size;
+		//sz = surface_31_size;
 		}
 	else if (q == 32) {
 		p = surface_32_Lines;
 		nb = surface_32_nb_reps;
-		sz = surface_32_size;
+		//sz = surface_32_size;
 		}
 	else if (q == 37) {
 		p = surface_37_Lines;
 		nb = surface_37_nb_reps;
-		sz = surface_37_size;
+		//sz = surface_37_size;
 		}
 	else if (q == 41) {
 		p = surface_41_Lines;
 		nb = surface_41_nb_reps;
-		sz = surface_41_size;
+		//sz = surface_41_size;
 		}
 	else if (q == 43) {
 		p = surface_43_Lines;
 		nb = surface_43_nb_reps;
-		sz = surface_43_size;
+		//sz = surface_43_size;
 		}
 	else if (q == 47) {
 		p = surface_47_Lines;
 		nb = surface_47_nb_reps;
-		sz = surface_47_size;
+		//sz = surface_47_size;
 		}
 	else if (q == 49) {
 		p = surface_49_Lines;
 		nb = surface_49_nb_reps;
-		sz = surface_49_size;
+		//sz = surface_49_size;
 		}
 	else if (q == 53) {
 		p = surface_53_Lines;
 		nb = surface_53_nb_reps;
-		sz = surface_53_size;
+		//sz = surface_53_size;
 		}
 	else if (q == 59) {
 		p = surface_59_Lines;
 		nb = surface_59_nb_reps;
-		sz = surface_59_size;
+		//sz = surface_59_size;
 		}
 	else if (q == 61) {
 		p = surface_61_Lines;
 		nb = surface_61_nb_reps;
-		sz = surface_61_size;
+		//sz = surface_61_size;
 		}
 	else if (q == 64) {
 		p = surface_64_Lines;
 		nb = surface_64_nb_reps;
-		sz = surface_64_size;
+		//sz = surface_64_size;
 		}
 	else if (q == 67) {
 		p = surface_67_Lines;
 		nb = surface_67_nb_reps;
-		sz = surface_67_size;
+		//sz = surface_67_size;
 		}
 	else if (q == 71) {
 		p = surface_71_Lines;
 		nb = surface_71_nb_reps;
-		sz = surface_71_size;
+		//sz = surface_71_size;
 		}
 	else if (q == 73) {
 		p = surface_73_Lines;
 		nb = surface_73_nb_reps;
-		sz = surface_73_size;
+		//sz = surface_73_size;
 		}
 	else if (q == 79) {
 		p = surface_79_Lines;
 		nb = surface_79_nb_reps;
-		sz = surface_79_size;
+		//sz = surface_79_size;
 		}
 	else if (q == 81) {
 		p = surface_81_Lines;
 		nb = surface_81_nb_reps;
-		sz = surface_81_size;
+		//sz = surface_81_size;
 		}
 	else if (q == 83) {
 		p = surface_83_Lines;
 		nb = surface_83_nb_reps;
-		sz = surface_83_size;
+		//sz = surface_83_size;
 		}
 	else if (q == 89) {
 		p = surface_89_Lines;
 		nb = surface_89_nb_reps;
-		sz = surface_89_size;
+		//sz = surface_89_size;
 		}
 	else if (q == 97) {
 		p = surface_97_Lines;
 		nb = surface_97_nb_reps;
-		sz = surface_97_size;
+		//sz = surface_97_size;
 		}
 	else {
 		cout << "cubic_surface_Lines q=" << q << " I don't have information for this case" << endl;
@@ -2657,7 +2657,7 @@ void GlynnI_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level
 	INT e = F->e;
 	INT N = q + 2;
 	INT i, t, te, a;
-	INT sigma, gamma = 0, Sigma, Gamma, exponent;
+	INT sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
 	INT *Mtx;
 
 	if (f_v) {
@@ -2680,8 +2680,8 @@ void GlynnI_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level
 		exit(1);
 		}
 
-	cout << "GlynnI_hyperoval sigma = " << sigma << " gamma = " << i << endl;
-	Gamma = i_power_j(2, gamma);
+	cout << "GlynnI_hyperoval sigma = " << sigma << " gamma = " << gamma << endl;
+	//Gamma = i_power_j(2, gamma);
 	Sigma = i_power_j(2, sigma);
 
 	exponent = 3 * Sigma + 4;
@@ -3654,7 +3654,7 @@ void create_Law_71_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 	INT v[5], v0, v1, v2, v3, v4;
 	INT i;
 	INT coordinates[] = {
-#if 0
+#if 1
 		0,0,0,0,1,
 		1,0,0,0,0,
 		1,20,1,33,5,

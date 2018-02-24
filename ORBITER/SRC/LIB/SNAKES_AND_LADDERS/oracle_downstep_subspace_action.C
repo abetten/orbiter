@@ -498,7 +498,7 @@ void oracle::find_extensions_subspace_action(generator *gen, schreier &O,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	//INT f_vvv = (verbose_level >= 3);
-	INT h, k, fst, len, pt, pt1;
+	INT h, k, fst, /*len,*/ pt, pt1;
 	
 	if (f_v) {
 		cout << "oracle::find_extensions_subspace_action" << endl;
@@ -524,7 +524,7 @@ void oracle::find_extensions_subspace_action(generator *gen, schreier &O,
 		}
 	for (k = 0; k < O.nb_orbits; k++) {
 		fst = O.orbit_first[k];
-		len = O.orbit_len[k];
+		//len = O.orbit_len[k];
 		pt1 = O.orbit[fst];
 		pt = AF->preimage(pt1, verbose_level - 2);
 		if (f_vv) {

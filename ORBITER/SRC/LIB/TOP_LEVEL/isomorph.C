@@ -1170,7 +1170,7 @@ void isomorph::test_memory()
 	orbit_no = 0;
 	INT verbose_level = 0;
 	INT id;
-	action *AA;
+	//action *AA;
 	sims *Stab;
 	INT data[1000];
 	
@@ -1185,7 +1185,7 @@ void isomorph::test_memory()
 	load_solution(id, data);
 	
 	//cout << "calling induced_action_on_set" << endl;
-	AA = NULL;
+	//AA = NULL;
 	
 	while (TRUE) {
 		induced_action_on_set(Stab, data, 0/*verbose_level*/);
@@ -1198,7 +1198,7 @@ void isomorph::test_edges(INT verbose_level)
 	INT *transporter1;
 	INT *transporter2;
 	INT *Elt1, *Elt2;
-	INT r1, r2;
+	//INT r1, r2;
 	INT id1, id2;
 	INT data1[1000];
 	INT data2[1000];
@@ -1211,12 +1211,12 @@ void isomorph::test_edges(INT verbose_level)
 	Elt1 = NEW_INT(A->elt_size_in_INT);
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	
-	r1 = test_edge(1, subset1, transporter1, verbose_level);
+	/*r1 =*/ test_edge(1, subset1, transporter1, verbose_level);
 	id1 = orbit_perm[orbit_fst[1]];
 	
 	INT subset2[] = {0, 1, 2, 3, 4, 6 };
 	
-	r2 = test_edge(74, subset2, transporter2, verbose_level);
+	/*r2 =*/ test_edge(74, subset2, transporter2, verbose_level);
 	id2 = orbit_perm[orbit_fst[74]];
 	
 	A->element_invert(transporter2, Elt1, FALSE);
@@ -1551,7 +1551,7 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_obj
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	INT h, rep, first, c, id;
+	INT h, rep, first, /*c,*/ id;
 	INT data[1000];
 	
 	if (f_v) {
@@ -1567,7 +1567,7 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_obj
 			}
 		rep = Reps->rep[h];
 		first = orbit_fst[rep];
-		c = starter_number[first];
+		//c = starter_number[first];
 		id = orbit_perm[first];		
 		load_solution(id, data);
 

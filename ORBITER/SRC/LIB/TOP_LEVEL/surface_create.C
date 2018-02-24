@@ -146,7 +146,7 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			}
 		INT *p_lines;
 		INT nb_iso;
-		INT nb_E = 0;
+		//INT nb_E = 0;
 
 		nb_iso = cubic_surface_nb_reps(q);
 		if (Descr->iso >= nb_iso) {
@@ -155,7 +155,7 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			}
 		p_lines = cubic_surface_Lines(q, Descr->iso);
 		INT_vec_copy(p_lines, Lines, 27);
-		nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
+		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 		//rearrange_lines_according_to_double_six(Lines, 0 /* verbose_level */);
 		Surf->build_cubic_surface_from_lines(27, Lines, coeffs, 0 /* verbose_level */);
 		f_has_lines = TRUE;

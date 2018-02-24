@@ -141,14 +141,14 @@ void Hill_cap56(int argc, const char **argv,
 
 	sims *S;
 	longinteger_object go;
-	INT goi;
+	//INT goi;
 	INT *Elt;
 
 	Elt = NEW_INT(P->A->elt_size_in_INT);
 	S = P->A->Sims;
 	S->group_order(go);	
 	cout << "found a group of order " << go << endl;
-	goi = go.as_INT();
+	//goi = go.as_INT();
 
 	if (f_v) {
 		cout << "Hill_cap finding an element of order 7" << endl;
@@ -182,7 +182,7 @@ void Hill_cap56(int argc, const char **argv,
 
 
 	INT *pt_coords;
-	INT *Good_orbits;
+	//INT *Good_orbits;
 	INT *set;
 	INT a, nb_pts, j;
 
@@ -190,7 +190,7 @@ void Hill_cap56(int argc, const char **argv,
 	nb_pts = P->A->degree;
 	pt_coords = NEW_INT(nb_pts * n);
 	set = NEW_INT(nb_pts);
-	Good_orbits = NEW_INT(N);
+	//Good_orbits = NEW_INT(N);
 
 	for (i = 0; i < nb_pts; i++) {
 		O->unrank_point(pt_coords + i * n, 1, i, 0);

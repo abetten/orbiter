@@ -1942,6 +1942,14 @@ INT finite_field::RREF_and_kernel(INT n, INT k, INT *A, INT verbose_level)
 	if (f_v) {
 		cout << "finite_field::RREF_and_kernel n=" << n << " k=" << k << endl;
 		}
+#if 0
+	if (k > n) {
+		m = k;
+		}
+	else {
+		m = n;
+		}
+#endif
 	m = MAXIMUM(k, n);
 	B = NEW_INT(m * n);
 	K = NEW_INT(n * n);

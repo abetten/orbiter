@@ -825,10 +825,10 @@ void group::print_strong_generators_with_different_action_verbose(ostream &ost, 
 			if (f_v) {
 				cout << "group::print_strong_generators_with_different_action_verbose computing images individually" << endl;
 				}
-			INT j, k;
+			INT j; //, k;
 			for (j = 0; j < A2->degree; j++) {
 				//cout << "group::print_strong_generators_with_different_action_verbose  computing image of " << j << endl;
-				k = A2->element_image_of(j, Elt, 0 /*verbose_level - 2*/);
+				/*k =*/ A2->element_image_of(j, Elt, 0 /*verbose_level - 2*/);
 				//cout << "group::print_strong_generators_with_different_action_verbose  image of " << j << " is " << k << endl;
 				}
 			}

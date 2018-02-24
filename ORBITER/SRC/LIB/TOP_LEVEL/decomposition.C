@@ -95,7 +95,7 @@ void decomposition_projective_space(INT k, finite_field *F,
 			}
 
 
-		INT hash;
+		//INT hash;
 		INT TDO_depth;
 		INT f_labeled = TRUE;
 
@@ -105,7 +105,7 @@ void decomposition_projective_space(INT k, finite_field *F,
 		if (f_vv) {
 			cout << "decomposition_projective_space before compute_TDO" << endl;
 			}
-		hash = Inc.compute_TDO(Stack, ht0, TDO_depth, verbose_level + 2);
+		/*hash =*/ Inc.compute_TDO(Stack, ht0, TDO_depth, verbose_level + 2);
 		if (f_vv) {
 			cout << "decomposition_projective_space after compute_TDO" << endl;
 			}

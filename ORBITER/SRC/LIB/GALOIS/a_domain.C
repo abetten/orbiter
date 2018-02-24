@@ -230,7 +230,7 @@ INT a_domain::is_one(INT *elt, INT verbose_level)
 			}
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, g, ret;
+		INT at, ab, g;
 		
 		at = elt[0];
 		ab = elt[1];

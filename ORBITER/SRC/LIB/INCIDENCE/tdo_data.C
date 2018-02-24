@@ -354,9 +354,9 @@ void tdo_data::solve_second_system_from_file(INT verbose_level,
 	int f_v = (verbose_level >= 1);
 	INT cnt, i, j, a, nb_sol, *the_solution;
 	INT h, r, u, f, l, first, distributions_allocated;
-	INT Nb_vars, Nb_eqns;
+	INT Nb_vars; //, Nb_eqns;
 	
-	Nb_eqns = D2->m;
+	//Nb_eqns = D2->m;
 	Nb_vars = D2->n;
 	the_solution = NEW_INT(Nb_vars);
 	{
@@ -425,14 +425,14 @@ void tdo_data::solve_second_system(INT verbose_level,
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
 	INT distributions_allocated, nb_sol, a, h, r, u, i, f, l, j, first, ret;
-	INT Nb_vars, Nb_eqns, nb_steps = 0;
+	INT Nb_vars, /*Nb_eqns,*/ nb_steps = 0;
 	
 	if (f_v) {
 		cout << "tdo_data::solve_second_system" << endl;
 		cout << "f_use_mckay_solver=" << f_use_mckay_solver << endl;
 		cout << "f_once=" << f_once << endl;
 		}
-	Nb_eqns = D2->m;
+	//Nb_eqns = D2->m;
 	Nb_vars = D2->n;
 
 	distributions_allocated = 100;

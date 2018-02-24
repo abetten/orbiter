@@ -25,11 +25,11 @@ void translation_plane::print_isomorphism_type(isomorph *Iso,
 	const BYTE *symbol_for_print = "\\alpha";
 	INT i, p, h;
 	longinteger_object so;
-	action *AA; // the action induced on the set
+	//action *AA; // the action induced on the set
 	INT *pt_list;
 	INT f, l, j, idx, pt;
 
-	AA = Orb.A;
+	//AA = Orb.A;
 
 
 	factor_prime_power(q, p, h);
@@ -785,7 +785,7 @@ void translation_plane::plane_intersection_type_of_klein_image(
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_v3 = FALSE; //(verbose_level >= 3);
-	finite_field *F;
+	//finite_field *F;
 	INT N;
 	INT *the_set_out;
 
@@ -809,7 +809,7 @@ void translation_plane::plane_intersection_type_of_klein_image(
 		}
 
 
-	F = P3->F;
+	//F = P3->F;
 
 	if (f_v) {
 		cout << "translation_plane::plane_intersection_type_of_klein_image after P3->klein_correspondence" << endl;
@@ -2036,7 +2036,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
 
-	INT i, first, c, id;
+	INT i, first, /*c,*/ id;
 	INT u, v, h, rep, tt;
 	longinteger_object go;
 	INT data[1000];
@@ -2054,7 +2054,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -2208,7 +2208,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -2492,7 +2492,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	INT rep, first, c, id;
+	INT rep, first, /*c,*/ id;
 	sims *Stab;
 	INT data[1000];
 	INT data2[1000];
@@ -2515,7 +2515,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 
 	rep = Iso.Reps->rep[h];
 	first = Iso.orbit_fst[rep];
-	c = Iso.starter_number[first];
+	//c = Iso.starter_number[first];
 	id = Iso.orbit_perm[first];		
 	Iso.load_solution(id, data);
 
@@ -2665,7 +2665,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 
 void translation_plane::orbit_info_short(ofstream &f, isomorph &Iso, INT h)
 {
-	INT rep, first, c, id;
+	INT rep, first, /*c,*/ id;
 
 	sims *Stab;
 		
@@ -2673,7 +2673,7 @@ void translation_plane::orbit_info_short(ofstream &f, isomorph &Iso, INT h)
 
 	rep = Iso.Reps->rep[h];
 	first = Iso.orbit_fst[rep];
-	c = Iso.starter_number[first];
+	//c = Iso.starter_number[first];
 	id = Iso.orbit_perm[first];		
 	Iso.load_solution(id, data);
 

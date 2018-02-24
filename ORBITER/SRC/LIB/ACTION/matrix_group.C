@@ -1508,9 +1508,9 @@ void matrix_group::GL_print_easy(INT *Elt, ostream &ost)
 
 void matrix_group::GL_code_for_make_element(INT *Elt, INT *data)
 {
-	int w;
+	//int w;
 	
-	w = (int) GFq->log10_of_q;
+	//w = (int) GFq->log10_of_q;
 	INT_vec_copy(Elt, data, n * n);
 	if (f_affine) {
 		INT_vec_copy(Elt + n * n, data + n * n, n);

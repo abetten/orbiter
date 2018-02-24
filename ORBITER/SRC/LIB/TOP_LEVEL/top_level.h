@@ -737,7 +737,7 @@ void isomorph_compute_down_orbits_worker(isomorph *Iso, void *data, INT verbose_
 void isomorph_compute_down_orbits_for_isomorphism_type(isomorph *Iso, INT orbit, 
 	INT &cnt_orbits, INT &cnt_special_orbits, INT *&special_orbit_identify, INT verbose_level);
 void isomorph_report_data_in_source_code_inside_tex(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &F, INT verbose_level);
-void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &f, INT selection_size, INT *selection, INT verbose_level);
+void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &fp, INT selection_size, INT *selection, INT verbose_level);
 
 
 

@@ -95,7 +95,7 @@ INT tdo_scheme::refine_cols_hard(partitionstack &P, INT verbose_level, INT f_onc
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	//INT nb_eqns, nb_vars;
-	INT R, l1, l2, L1, L2, r;
+	INT R, /*l1,*/ l2, L1, L2, r;
 	INT line_types_allocated;
 	INT nb_sol, nb_sol1, f_survive;
 	{
@@ -111,7 +111,7 @@ INT tdo_scheme::refine_cols_hard(partitionstack &P, INT verbose_level, INT f_onc
 		cout << "f_use_mckay_solver=" << f_use_mckay_solver << endl;
 		}
 	R = nb_col_classes[COL];
-	l1 = nb_row_classes[COL];
+	//l1 = nb_row_classes[COL];
 	l2 = nb_row_classes[ROW];
 
 	if (f_v) {
@@ -306,7 +306,7 @@ INT tdo_scheme::refine_cols_hard(partitionstack &P, INT verbose_level, INT f_onc
 
 
 
-	INT idx, f, l;
+	INT idx, /*f,*/ l;
 	idx = 0;
 	for (r = 0; r < R; r++) {
 		l = T.types_len[r];
@@ -315,11 +315,11 @@ INT tdo_scheme::refine_cols_hard(partitionstack &P, INT verbose_level, INT f_onc
 				cout << "T.multiple_types[idx] != r" << endl;
 				exit(1);
 				}
-			f = T.types_first2[idx];
+			//f = T.types_first2[idx];
 			idx++;
 			}
 		else {
-			f = -1;
+			//f = -1;
 			}
 		}
 
@@ -416,7 +416,7 @@ INT tdo_scheme::tdo_columns_setup_first_system(INT verbose_level,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	INT i, j, f, l, I, J, rr, R, S, a, a2, s, l1, l2, L1, L2;
+	INT i, j, f, l, I, J, rr, R, S, a, a2, s, /*l1, l2,*/ L1, L2;
 	INT h, u, d, d2, o, e, p, eqn_number, nb_vars, nb_eqns;
 	
 	// create all partitions which are refined line types
@@ -432,8 +432,8 @@ INT tdo_scheme::tdo_columns_setup_first_system(INT verbose_level,
 		}
 		
 	R = nb_col_classes[COL];
-	l1 = nb_row_classes[COL];
-	l2 = nb_row_classes[ROW]; // the finer scheme
+	//l1 = nb_row_classes[COL];
+	//l2 = nb_row_classes[ROW]; // the finer scheme
 
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 
@@ -751,10 +751,10 @@ void tdo_scheme::tdo_columns_setup_second_system_eqns_counting(INT verbose_level
 	INT *line_types, INT nb_line_types,
 	INT eqn_start)
 {
-	INT l2, L1, L2, i, r, f, l, j, c, J, I, a, b, S, s;
+	INT /*l2,*/ L1, L2, i, r, f, l, j, c, J, I, a, b, S, s;
 	BYTE label[100];
 
-	l2 = nb_row_classes[ROW];
+	//l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 
 	for (i = 0; i < T.nb_multiple_types; i++) {
@@ -829,11 +829,11 @@ INT tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(INT verbose_lev
 {
 	INT f_v = (verbose_level >= 1);
 	INT nb_eqns_packing;
-	INT l2, L1, L2, i, r, f, l, j, c, J, I, k, h, rr, p, u, a, len, f_used;
+	INT /*l2,*/ L1, L2, i, r, f, l, j, c, J, I, k, h, rr, p, u, a, len, f_used;
 	BYTE label[100];
 	
 	nb_eqns_packing = 0;
-	l2 = nb_row_classes[ROW];
+	//l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 	for (I = 0; I < L2; I++) {
 		len = row_classes_len[ROW][I];

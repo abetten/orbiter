@@ -221,6 +221,7 @@ void strong_generators::generators_for_the_monomial_group(action *A,
 	go_factored = NEW_INT(3 * n + 1);
 	data = NEW_INT(n * n + n + 1);
 
+	pos_frobenius = 0;
 	if (Mtx->f_projective) {
 		cout << "strong_generators::generators_for_the_monomial_group  type is projective" << endl;
 		pos_frobenius = n * n;
@@ -1603,13 +1604,13 @@ void strong_generators::generators_for_the_identity_subgroup(action *A_linear,
 	vector_ge *my_gens;
 	finite_field *F;
 	INT *Q;
-	INT n, i, h, len, q;
+	INT n, i, h, len; //, q;
 	
 	if (f_v) {
 		cout << "strong_generators::generators_for_the_identity_subgroup" << endl;
 		}
 	F = Mtx->GFq;
-	q = F->q;
+	//q = F->q;
 	n = Mtx->n;
 	Elt1 = NEW_INT(A_linear->elt_size_in_INT);
 	my_gens = new vector_ge;

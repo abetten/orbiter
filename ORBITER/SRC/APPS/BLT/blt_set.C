@@ -540,6 +540,9 @@ void blt_set::create_graphs(
 			}
 		}
 
+	if (f_v) {
+		cout << "blt_set::create_graphs writing file " << fname_time << endl;
+		}
 	INT_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set::create_graphs Written file " << fname_time << " of size " << file_size(fname_time) << endl;

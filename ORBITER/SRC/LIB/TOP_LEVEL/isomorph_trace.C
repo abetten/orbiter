@@ -886,7 +886,7 @@ INT isomorph::handle_extension_database(INT cur_level, INT cur_node_global,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	INT i, pt0, pt, orbit_len, t = 0, d = 0;
+	INT i, pt0, pt, /*orbit_len,*/ t = 0, d = 0;
 	INT pos, ref, nb_strong_generators, nb_extensions, nb_fusion, next_node_global;
 	
 
@@ -917,7 +917,7 @@ INT isomorph::handle_extension_database(INT cur_level, INT cur_node_global,
 	nb_fusion = 0;
 	for (i = 0; i < nb_extensions; i++) {
 		pt = v->s_ii(pos++);
-		orbit_len = v->s_ii(pos++);
+		//orbit_len = v->s_ii(pos++);
 		t = v->s_ii(pos++);
 		d = v->s_ii(pos++);
 		if (pt == pt0) {

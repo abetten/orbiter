@@ -711,7 +711,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 	//INT f_vvv = (verbose_level >= 3);
 	finite_field *FQ;
 	finite_field *Fq;
-	INT Q, q;
+	INT /*Q,*/ q;
 	INT *v, *w1, *w2, *w3, *v2;
 	INT *components;
 	INT *embedding;
@@ -722,7 +722,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		cout << "andre_preimage" << endl;
 		}
 	FQ = P2->F;
-	Q = FQ->q;
+	//Q = FQ->q;
 	alpha = FQ->p;
 	if (f_vv) {
 		cout << "alpha=" << alpha << endl;
@@ -1012,7 +1012,7 @@ void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, INT *M, INT nb_
 {
 	INT f_v = (verbose_level >= 1);
 	UBYTE *bitvector_adjacency;
-	INT L, bitvector_length_in_bits, bitvector_length;
+	INT L, /*bitvector_length_in_bits,*/ bitvector_length;
 	INT i, j, k, r, c;
 	INT N;
 	
@@ -1024,7 +1024,7 @@ void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, INT *M, INT nb_
 	N = nb_rows + nb_cols;
 	L = (N * (N - 1)) >> 1;
 
-	bitvector_length_in_bits = L;
+	//bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
 	bitvector_adjacency = NEW_UBYTE(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {

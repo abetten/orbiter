@@ -102,7 +102,7 @@ void subfield_structure::init(finite_field *FQ, finite_field *Fq, INT verbose_le
 void subfield_structure::init_with_given_basis(finite_field *FQ, finite_field *Fq, INT *given_basis, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT alpha, omega, i, j, h;
+	INT /*alpha,*/ /*omega,*/ i, j, h;
 
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis" << endl;
@@ -131,8 +131,8 @@ void subfield_structure::init_with_given_basis(finite_field *FQ, finite_field *F
 	Fq_element = NEW_INT(Q);
 	v = NEW_INT(s);
 
-	alpha = FQ->p; // the primitive element
-	omega = FQ->power(alpha, s);
+	//alpha = FQ->p; // the primitive element
+	//omega = FQ->power(alpha, s);
 	for (i = 0; i < s; i++) {
 		Basis[i] = given_basis[i];
 		}

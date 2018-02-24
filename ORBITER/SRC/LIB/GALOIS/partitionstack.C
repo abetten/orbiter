@@ -538,7 +538,7 @@ void partitionstack::print_classes_points_and_lines(ostream& ost)
 
 ostream& partitionstack::print(ostream& ost)
 {
-	INT i, j, first, len, a, pt, prev_pt, j0;
+	INT i, j, first, len, a, /*pt,*/ prev_pt, j0;
 	INT f_erroneous2 = FALSE;
 
 	//check();
@@ -553,7 +553,7 @@ ostream& partitionstack::print(ostream& ost)
 		for (j = 1; j <= len; j++) {
 			prev_pt = pointList[first + j - 1];
 			if (j == len || pointList[first + j] != prev_pt + 1) {
-				pt = pointList[first + j];
+				//pt = pointList[first + j];
 				if (j0 == j - 1) {
 					cout << prev_pt;
 					if (j < len)
@@ -2436,6 +2436,7 @@ void partitionstack::split_by_orbit_partition(INT nb_orbits,
 			INT_vec_print(cout, Set, l);
 			cout << endl;
 			}
+		cell_idx = 0;
 		if (!is_subset_of_cell(Set, l, cell_idx)) {
 			cout << "partitionstack::split_by_orbit_partition the subset is not subset of a cell of the partition, error" << endl;
 			exit(1);

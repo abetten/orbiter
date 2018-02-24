@@ -1545,7 +1545,7 @@ void surface_object::make_equation_in_trihedral_form(INT t_idx,
 	INT f_v = (verbose_level >= 1);
 	INT i, c, h;
 	INT row_col_Eckardt_points[6];
-	INT plane_rk[6];
+	//INT plane_rk[6];
 	INT plane_idx[6];
 
 	if (f_v) {
@@ -1560,7 +1560,7 @@ void surface_object::make_equation_in_trihedral_form(INT t_idx,
 	INT_vec_copy(Surf->Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
 	for (i = 0; i < 6; i++) {
 		plane_idx[i] = Eckardt_to_Tritangent_plane[row_col_Eckardt_points[i]];
-		plane_rk[i] = Tritangent_planes[plane_idx[i]];
+		//plane_rk[i] = Tritangent_planes[plane_idx[i]];
 		}
 	for (i = 0; i < 3; i++) {
 		c = Tritangent_plane_dual[plane_idx[i]];
@@ -2049,7 +2049,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(INT *Lines
 	INT X3[5], X3_len;
 	INT X4[6], X4_len;
 	INT X5[6], X5_len;
-	INT X6[27], X6_len;
+	INT X6[27]; //, X6_len;
 
 	get_planes_through_line(new_lines, Surf->line_cij(l, n), X1);
 	X1_len = 5;
@@ -2148,7 +2148,7 @@ void surface_object::identify_double_six_from_trihedral_pair_type_two(INT *Lines
 		new_lines[Surf->line_ai(p)] = line;
 
 		find_common_transversals_to_four_disjoint_lines(new_lines[Surf->line_ai(l)], new_lines[Surf->line_ai(m)], new_lines[Surf->line_ai(n)], new_lines[Surf->line_ai(p)], X6);
-		X6_len = 2;
+		//X6_len = 2;
 
 		for (c2 = 0; c2 < 2; c2++) {
 			

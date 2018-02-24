@@ -143,9 +143,9 @@ INT action_on_orthogonal::compute_image_INT(INT *Elt, INT i, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT j;
-	action *A;
+	//action *A;
 	
-	A = original_action;
+	//A = original_action;
 
 	if (f_v) {
 		cout << "action_on_orthogonal::compute_image_INT i = " << i << endl;

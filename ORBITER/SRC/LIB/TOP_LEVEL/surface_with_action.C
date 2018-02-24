@@ -780,7 +780,7 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 			cout << "intersecting blow up lines with plane:" << endl;
 			}
 		INT intersection_points[6];
-		INT intersection_points_local[6];
+		//INT intersection_points_local[6];
 		INT u, a;
 		INT v[4];
 		INT Plane[16];
@@ -805,7 +805,7 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 			F->reduce_mod_subspace_and_get_coefficient_vector(
 				3, 4, Plane, base_cols, 
 				v, coefficients, 0 /* verbose_level */);
-			intersection_points_local[u] = Surf->P2->rank_point(coefficients);
+			//intersection_points_local[u] = Surf->P2->rank_point(coefficients);
 			}
 
 

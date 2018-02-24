@@ -2007,7 +2007,7 @@ void surface::create_special_fifteen_lines(INT *fifteen_lines, INT a, INT b, INT
 		-1,0,-4,-5,0,-1,4,5, // 13 = c_46
 		0,1,0,0,0,0,1,0 // 14 = c_56
 		};
-	INT i, m1, a2, a2p1, a2m1, ba2p1, ba2m1, twoa;
+	INT i, m1, a2, a2p1, a2m1, ba2p1, /*ba2m1,*/ twoa;
 	INT c, c2, cm2, c3, cm3, c4, cm4, c5, cm5;
 
 	// 2 stands for (2a)/(b(a^2+1))
@@ -2028,7 +2028,7 @@ void surface::create_special_fifteen_lines(INT *fifteen_lines, INT a, INT b, INT
 	a2m1 = F->add(a2, m1);
 	twoa = F->add(a, a);
 	ba2p1 = F->mult(b, a2p1);
-	ba2m1 = F->mult(b, a2m1);
+	//ba2m1 = F->mult(b, a2m1);
 
 	if (ba2p1 == 0) {
 		cout << "surface::create_special_fifteen_lines ba2p1 = 0, cannot invert" << endl;
@@ -2697,12 +2697,12 @@ void surface::create_starter_configuration(INT line_idx, INT subset_idx,
 	INT f_v = (verbose_level >= 1);
 	INT subset[5];
 	INT subset2[5];
-	INT h, nCk;
+	INT h; //, nCk;
 	
 	if (f_v) {
 		cout << "surface::create_starter_configuration" << endl;
 		}
-	nCk = INT_n_choose_k(line_neighbors->Set_size[line_idx], 5);
+	//nCk = INT_n_choose_k(line_neighbors->Set_size[line_idx], 5);
 	unrank_k_subset(subset_idx, subset, line_neighbors->Set_size[line_idx], 5);
 	for (h = 0; h < 5; h++) {
 		subset2[h] = line_neighbors->Sets[line_idx][subset[h]];
@@ -2811,7 +2811,7 @@ INT surface::identify_three_lines(INT *lines, INT verbose_level)
 	INT iso = 0;
 	INT *Adj;
 	INT i, j, c;
-	INT a1, a2, a3;
+	INT a1, a2; //, a3;
 
 	if (f_v) {
 		cout << "surface::identify_three_lines" << endl;
@@ -2845,7 +2845,7 @@ INT surface::identify_three_lines(INT *lines, INT verbose_level)
 			0 /*verbose_level */);
 		a1 = Intersection_pt[0 * 3 + 1];
 		a2 = Intersection_pt[0 * 3 + 2];
-		a3 = Intersection_pt[1 * 3 + 2];
+		//a3 = Intersection_pt[1 * 3 + 2];
 		if (a1 == a2) {
 			INT Basis[3 * 8];
 
@@ -3630,7 +3630,7 @@ void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(INT 
 	cout << endl;
 
 	INT t2, f2, l2, sz;
-	INT t1, f1, l1, pt;
+	INT t1, f1, /*l1,*/ pt;
 	
 	for (t2 = 0; t2 < C.second_nb_types; t2++) {
 		f2 = C.second_type_first[t2];
@@ -3644,7 +3644,7 @@ void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(INT 
 		for (i = 0; i < l2; i++) {
 			t1 = C.second_sorting_perm_inv[f2 + i];
 			f1 = C.type_first[t1];
-			l1 = C.type_len[t1];
+			//l1 = C.type_len[t1];
 			pt = C.data_sorted[f1];
 			T_idx[i] = pt;
 #if 0

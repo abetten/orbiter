@@ -1103,12 +1103,12 @@ INT point_line::count_CR(partitionstack &P, INT col_cell, INT row_cell)
 INT point_line::count_RC_representative(partitionstack &P, 
 	INT row_cell, INT row_cell_pt, INT col_cell)
 {
-	INT f1, f2, l1, l2, e1, e2, j, s = 0;
+	INT f1, f2, /*l1,*/ l2, e1, e2, j, s = 0;
 	INT first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[row_cell];
 	f2 = P.startCell[col_cell];
-	l1 = P.cellSize[row_cell];
+	//l1 = P.cellSize[row_cell];
 	l2 = P.cellSize[col_cell];
 	e1 = P.pointList[f1 + row_cell_pt];
 	for (j = 0; j < l2; j++) {
@@ -1123,13 +1123,13 @@ INT point_line::count_RC_representative(partitionstack &P,
 INT point_line::count_CR_representative(partitionstack &P, 
 	INT col_cell, INT col_cell_pt, INT row_cell)
 {
-	INT f1, f2, l1, l2, e1, e2, i, s = 0;
+	INT f1, f2, l1, /*l2,*/ e1, e2, i, s = 0;
 	INT first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[row_cell];
 	f2 = P.startCell[col_cell];
 	l1 = P.cellSize[row_cell];
-	l2 = P.cellSize[col_cell];
+	//l2 = P.cellSize[col_cell];
 	e2 = P.pointList[f2 + col_cell_pt] - first_column_element;
 	for (i = 0; i < l1; i++) {
 		e1 = P.pointList[f1 + i];
@@ -1184,13 +1184,13 @@ INT point_line::count_pairs_RRC_representative(partitionstack &P, INT row_cell1,
 // returns the number of joinings from a point of row_cell1 to elements of row_cell2 within col_cell
 // if that number exists, -1 otherwise
 {
-	INT f1, f2, f3, l1, l2, l3, e1, e2, e3, u, j, nb = -1, nb1;
+	INT f1, f2, f3, /*l1,*/ l2, l3, e1, e2, e3, u, j, nb = -1, nb1;
 	INT first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[row_cell1];
 	f2 = P.startCell[row_cell2];
 	f3 = P.startCell[col_cell];
-	l1 = P.cellSize[row_cell1];
+	//l1 = P.cellSize[row_cell1];
 	l2 = P.cellSize[row_cell2];
 	l3 = P.cellSize[col_cell];
 	e1 = P.pointList[f1 + row_cell_pt];
@@ -1222,13 +1222,13 @@ INT point_line::count_pairs_CCR_representative(partitionstack &P, INT col_cell1,
 // returns the number of joinings from a point of col_cell1 to elements of col_cell2 within row_cell
 // if that number exists, -1 otherwise
 {
-	INT f1, f2, f3, l1, l2, l3, e1, e2, e3, u, i, nb = -1, nb1;
+	INT f1, f2, f3, /*l1,*/ l2, l3, e1, e2, e3, u, i, nb = -1, nb1;
 	INT first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[col_cell1];
 	f2 = P.startCell[col_cell2];
 	f3 = P.startCell[row_cell];
-	l1 = P.cellSize[col_cell1];
+	//l1 = P.cellSize[col_cell1];
 	l2 = P.cellSize[col_cell2];
 	l3 = P.cellSize[row_cell];
 	e1 = P.pointList[f1 + col_cell_pt] - first_column_element;

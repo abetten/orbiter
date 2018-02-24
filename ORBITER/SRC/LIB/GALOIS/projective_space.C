@@ -1600,9 +1600,9 @@ void projective_space::compute_bisecants_and_conics(INT *arc6, INT *&bisecants, 
 		}
 
 	for (j = 0; j < 6; j++) {
-		INT deleted_point;
+		//INT deleted_point;
 		
-		deleted_point = arc6[j];
+		//deleted_point = arc6[j];
 		INT_vec_copy(arc6, arc5, j);
 		INT_vec_copy(arc6 + j + 1, arc5 + j, 5 - j);
 
@@ -1632,7 +1632,7 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic(INT *arc6, ecka
 	INT f_v = (verbose_level >= 1);
 	INT i, j, h, pi, pj, bi, bj, p;
 	INT multiplicity = 6;
-	INT t, f, l, s, u, len;
+	INT t, f, l, s, u; //, len;
 
 	INT arc5[5];
 	INT *bisecants; // [15]
@@ -1721,7 +1721,7 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic(INT *arc6, ecka
 				cout << "Pts[s] != C.data_sorted[f]" << endl;
 				exit(1);
 				}
-			len = 0;
+			//len = 0;
 			for (u = 0; u < l; u++) {
 				h = C.sorting_perm_inv[f + u];
 				H1[u] = h;
@@ -1898,7 +1898,7 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(IN
 	INT f_v = (verbose_level >= 1);
 	INT i, j, h, pi, pj, bi, bj, p;
 	INT multiplicity = 6;
-	INT t, f, l, s, u, len;
+	INT t, f, l, s, u; //, len;
 
 	INT arc5[5];
 #if 0
@@ -1989,7 +1989,7 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(IN
 				cout << "Pts[s] != C.data_sorted[f]" << endl;
 				exit(1);
 				}
-			len = 0;
+			//len = 0;
 			for (u = 0; u < l; u++) {
 				h = C.sorting_perm_inv[f + u];
 				H1[u] = h;
@@ -4118,7 +4118,7 @@ void projective_space::create_unital_XXq_YZq_ZYq(INT *U, INT &sz, INT verbose_le
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	finite_field *FQ;
+	//finite_field *FQ;
 	INT *v;
 	INT e, i, a;
 	INT X, Y, Z, Xq, Yq, Zq;
@@ -4134,7 +4134,7 @@ void projective_space::create_unital_XXq_YZq_ZYq(INT *U, INT &sz, INT verbose_le
 		cout << "projective_space::create_unital_XXq_YZq_ZYq ODD(F->e)" << endl;
 		exit(1);
  		}
-	FQ = F;
+	//FQ = F;
 	
 	v = NEW_INT(3);
 	e = F->e >> 1;
@@ -5176,7 +5176,7 @@ void projective_space::cheat_sheet_subspaces(ostream &f, INT k, INT verbose_leve
 	grassmann *Gr;
 	INT *v;
 	INT n1, k1;
-	INT nb_points;
+	//INT nb_points;
 	INT nb_k_subspaces;
 	INT i, j, u;
 	INT f_need_comma = FALSE;
@@ -5197,7 +5197,7 @@ void projective_space::cheat_sheet_subspaces(ostream &f, INT k, INT verbose_leve
 	Gr->init(n1, k1, F, 0 /*verbose_level*/);
 
 
-	nb_points = N_points;
+	//nb_points = N_points;
 	nb_k_subspaces = generalized_binomial(n1, k1, q);
 
 
@@ -5320,7 +5320,7 @@ void projective_space::conic_type_randomized(INT nb_times,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_v3 = (verbose_level >= 3);
-	INT rk, h, i, j, a, d, N, l, cnt;
+	INT rk, h, i, j, a, /*d,*/ N, l, cnt;
 
 	INT input_pts[5];
 	INT six_coeffs[6];
@@ -5346,7 +5346,7 @@ void projective_space::conic_type_randomized(INT nb_times,
 		cout << "projective_space::conic_type_randomized the input set if not a set" << endl;
 		exit(1);
 		}
-	d = n + 1;
+	//d = n + 1;
 	N = INT_n_choose_k(set_size, 5);
 
 	if (f_v) {
@@ -5646,7 +5646,7 @@ void projective_space::conic_type(
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_v3 = (verbose_level >= 3);
-	INT rk, h, i, j, a, d, N, l;
+	INT rk, h, i, j, a, /*d,*/ N, l;
 
 	INT input_pts[5];
 	INT six_coeffs[6];
@@ -5672,7 +5672,7 @@ void projective_space::conic_type(
 		cout << "projective_space::conic_type the input set if not a set" << endl;
 		exit(1);
 		}
-	d = n + 1;
+	//d = n + 1;
 	N = INT_n_choose_k(set_size, 5);
 
 	if (f_v) {
@@ -6142,7 +6142,7 @@ INT projective_space::elliptic_curve_addition(INT *A6, INT p1_rk, INT p2_rk, INT
 
 
 		INT lambda_top, lambda_bottom, lambda, nu_top, nu_bottom, nu;
-		INT three, two, m_one;
+		INT three, two; //, m_one;
 		INT c;
 
 		c = F->add4(y1, y2, F->mult(a1, x2), a3);
@@ -6156,7 +6156,7 @@ INT projective_space::elliptic_curve_addition(INT *A6, INT p1_rk, INT p2_rk, INT
 
 			two = F->add(1, 1);
 			three = F->add(two, 1);
-			m_one = F->negate(1);
+			//m_one = F->negate(1);
 		
 		
 		
@@ -6623,7 +6623,7 @@ void projective_space::decomposition(INT nb_subsets, INT *sz, INT **subsets,
 
 
 
-	INT ht0, c, l;
+	INT /*ht0,*/ c, l;
 
 	Stack = new partitionstack;
 	Stack->allocate(nb_pts + nb_lines, 0);
@@ -6635,7 +6635,7 @@ void projective_space::decomposition(INT nb_subsets, INT *sz, INT **subsets,
 	for (level = 0; level < nb_subsets; level++) {
 
 
-		ht0 = Stack->ht;
+		//ht0 = Stack->ht;
 
 		if (sz[level]) {
 			c = Stack->cellNumber[Stack->invPointList[subsets[level][0]]];

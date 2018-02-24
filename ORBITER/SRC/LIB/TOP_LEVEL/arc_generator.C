@@ -847,6 +847,8 @@ void arc_generator::lifting_prepare_function_new(exact_cover *E, INT starter_cas
 
 	// find all tangent lines:
 
+	fst = 0;
+	len = 0;
 	for (i = 0; i < C.nb_types; i++) {
 		fst = C.type_first[i];
 		len = C.type_len[i];
@@ -1043,7 +1045,7 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 
-	INT i, first, c, id;
+	INT i, first, /*c,*/ id;
 	INT u, v, h, rep, tt;
 	longinteger_object go;
 	INT data[1000];
@@ -1061,7 +1063,7 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -1212,7 +1214,7 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -1376,14 +1378,14 @@ void arc_generator::report_decompositions(isomorph &Iso, ofstream &f, INT orbit,
 	S.split_cell_front_or_back(data, target_size, TRUE /* f_front */, 0 /* verbose_level*/);
 				
 	INT TDO_depth = N;
-	INT TDO_ht;
+	//INT TDO_ht;
 
 
 	if (f_v) {
 		cout << "arc_generator::report_decompositions before Inc->compute_TDO_safe" << endl;
 		}
 	Inc->compute_TDO_safe(S, TDO_depth, verbose_level - 3);
-	TDO_ht = S.ht;
+	//TDO_ht = S.ht;
 
 
 	if (S.ht < 50) {

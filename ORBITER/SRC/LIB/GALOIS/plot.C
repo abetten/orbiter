@@ -25,7 +25,7 @@ void draw_density(BYTE *prefix, INT *the_set, INT set_size,
 	INT factor_1000 = 1000;
 	//BYTE ext[1000];
 	BYTE fname_full[1000];
-	INT i, prev, prev_start;
+	INT i, prev; //, prev_start;
 	INT *outline_value;
 	INT *outline_number;
 	INT outline_sz = 0;
@@ -60,14 +60,14 @@ void draw_density(BYTE *prefix, INT *the_set, INT set_size,
 	outline_number = NEW_INT(set_size);
 	outline_sz = 0;
 	prev = set[0];
-	prev_start = 0;
+	//prev_start = 0;
 	for (i = 1; i <= set_size; i++) {
 		if (i == set_size || set[i] != prev) {
 			outline_value[outline_sz] = prev;
 			outline_number[outline_sz] = i - 1;
 			outline_sz++;
 			prev = set[i];
-			prev_start = i;
+			//prev_start = i;
 			}
 		}
 	if (f_vv) {
@@ -131,7 +131,7 @@ void draw_density_multiple_curves(BYTE *prefix,
 	INT factor_1000 = 1000;
 	//BYTE ext[1000];
 	BYTE fname_full[1000];
-	INT i, prev, prev_start;
+	INT i, prev; //, prev_start;
 	INT **outline_value;
 	INT **outline_number;
 	INT *outline_sz;
@@ -169,14 +169,14 @@ void draw_density_multiple_curves(BYTE *prefix,
 		outline_sz[curve] = 0;
 		max_x = MAXIMUM(max_x, Data_size[curve]);
 		prev = Data2[curve][0];
-		prev_start = 0;
+		//prev_start = 0;
 		for (i = 1; i <= Data_size[curve]; i++) {
 			if (i == Data_size[curve] || Data2[curve][i] != prev) {
 				outline_value[curve][outline_sz[curve]] = prev;
 				outline_number[curve][outline_sz[curve]] = i - 1;
 				outline_sz[curve]++;
 				prev = Data2[curve][i];
-				prev_start = i;
+				//prev_start = i;
 				}
 			}
 		if (f_v5) {
