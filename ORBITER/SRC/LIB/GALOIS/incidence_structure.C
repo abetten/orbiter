@@ -635,10 +635,10 @@ void incidence_structure::save_inc_file(BYTE *fname)
 
 void incidence_structure::save_row_by_row_file(BYTE *fname)
 {
-    INT i, j, nb_inc;
+    INT i, j; //, nb_inc;
     int w;
 
-	nb_inc = get_nb_inc();
+	//nb_inc = get_nb_inc();
 	
 	if (!f_rowsums_constant) {
 		cout << "incidence_structure::save_row_by_row_file rowsums are not constant" << endl;
@@ -1406,7 +1406,7 @@ void incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex
 {
 	INT f_v = (verbose_level >= 1);
 	INT *incidences;
-	INT c1, c2, f1, f2, l1, l2;
+	INT c1, c2, f1, f2, l1; //, l2;
 	INT i, j, rij;
 	INT u, v, x, a, b, c, J;
 	INT *row_scheme;
@@ -1446,7 +1446,7 @@ void incidence_structure::print_row_tactical_decomposition_scheme_incidences_tex
 
 			c2 = col_classes[j];
 			f2 = PStack.startCell[c2];
-			l2 = PStack.cellSize[c2];
+			//l2 = PStack.cellSize[c2];
 
 			ost << "\\subsubsection*{Row class " << i << " (cell " << c1 << ") vs. col class " << j << " (cell " << c2 << ")";
 			if (f_local_coordinates) {
@@ -1504,7 +1504,7 @@ void incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex
 {
 	INT f_v = (verbose_level >= 1);
 	INT *incidences;
-	INT c1, c2, f1, f2, l1, l2;
+	INT c1, c2, f1, f2, /*l1,*/ l2;
 	INT i, j, kij;
 	INT u, v, y, a, b, c, I;
 	INT *col_scheme;
@@ -1525,7 +1525,7 @@ void incidence_structure::print_col_tactical_decomposition_scheme_incidences_tex
 	for (i = 0; i < nb_row_classes; i++) {
 		c1 = row_classes[i];
 		f1 = PStack.startCell[c1];
-		l1 = PStack.cellSize[c1];
+		//l1 = PStack.cellSize[c1];
 		
 		for (j = 0; j < nb_col_classes; j++) {
 
@@ -1600,7 +1600,7 @@ void incidence_structure::get_incidences_by_row_scheme(partitionstack &PStack,
 	INT rij, INT *&incidences, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT c1, c2, f1, f2, l1, l2, x, nb, u, y, c, i, j;
+	INT c1, c2, f1, /*f2,*/ l1, /*l2,*/ x, nb, u, y, c, i, j;
 	INT *sz;
 	INT *neighbors;
 	
@@ -1611,8 +1611,8 @@ void incidence_structure::get_incidences_by_row_scheme(partitionstack &PStack,
 	f1 = PStack.startCell[c1];
 	l1 = PStack.cellSize[c1];
 	c2 = col_classes[col_class_idx];
-	f2 = PStack.startCell[c2];
-	l2 = PStack.cellSize[c2];
+	//f2 = PStack.startCell[c2];
+	//l2 = PStack.cellSize[c2];
 	incidences = NEW_INT(l1 * rij);
 	neighbors = NEW_INT(max_r);
 	sz = NEW_INT(l1);
@@ -1651,7 +1651,7 @@ void incidence_structure::get_incidences_by_col_scheme(partitionstack &PStack,
 	INT kij, INT *&incidences, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT c1, c2, f1, f2, l1, l2, x, nb, u, y, c, i, j;
+	INT c1, c2, /*f1,*/ f2, /*l1,*/ l2, x, nb, u, y, c, i, j;
 	INT *sz;
 	INT *neighbors;
 	
@@ -1659,8 +1659,8 @@ void incidence_structure::get_incidences_by_col_scheme(partitionstack &PStack,
 		cout << "incidence_structure::get_incidences_by_col_scheme" << endl;
 		}
 	c1 = row_classes[row_class_idx];
-	f1 = PStack.startCell[c1];
-	l1 = PStack.cellSize[c1];
+	//f1 = PStack.startCell[c1];
+	//l1 = PStack.cellSize[c1];
 	c2 = col_classes[col_class_idx];
 	f2 = PStack.startCell[c2];
 	l2 = PStack.cellSize[c2];

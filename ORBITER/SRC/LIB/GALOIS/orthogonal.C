@@ -4394,7 +4394,7 @@ void orthogonal::parabolic_even_point_to_type_and_index(INT *v, INT &type, INT &
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_start_with_one, value_middle, value_end, f_middle_is_zero;
-	INT a, b, c, l, ll, lll, field1, field2, sub_index, sub_sub_index;
+	INT a, b, /*c,*/ l, ll, lll, field1, field2, sub_index, sub_sub_index;
 	
 	if (f_v) {
 		cout << "parabolic_even_point_to_type_and_index:";
@@ -4465,7 +4465,7 @@ void orthogonal::parabolic_even_point_to_type_and_index(INT *v, INT &type, INT &
 		sub_sub_index = rank_N1(v + 1, 1, m - 1);
 		a = F->add(1, value_middle);
 		b = v[1 + 2 * (m - 1) + 0];
-		c = v[1 + 2 * (m - 1) + 1];
+		//c = v[1 + 2 * (m - 1) + 1];
 		if (a == 0 || a == 1) {
 			cout << "error in parabolic_even_point_to_type_and_index a == 0 || a == 1" << endl;
 			exit(1);
@@ -4921,7 +4921,7 @@ finish:
 
 INT orthogonal::parabolic_neighbor34_rank(INT *v, INT verbose_level)
 {
-	INT len1, len2, len3, len4, len5, av;
+	INT len1, len2, len3, len4, /*len5,*/ av;
 	INT index, sub_len, a, b, sub_index, sub_sub_index, multiplyer;
 	INT f_v = (verbose_level >= 1);
 	
@@ -4944,7 +4944,7 @@ INT orthogonal::parabolic_neighbor34_rank(INT *v, INT verbose_level)
 	len2 = (q - 1) * N1_mm2;
 	len3 = (q - 1) * N1_mm2;
 	len4 = (q - 1) * S_mm2;
-	len5 = (q - 1) * (q - 2) * N1_mm2;
+	//len5 = (q - 1) * (q - 2) * N1_mm2;
 
 	if (v[0] == 0) {
 		if (v[2] != F->negate(1)) {
@@ -5108,7 +5108,7 @@ finish:
 
 INT orthogonal::parabolic_neighbor53_rank(INT *v, INT verbose_level)
 {
-	INT len1, len2;
+	INT len1; //, len2;
 	INT index, a, sub_index;
 	INT f_v = (verbose_level >= 1);
 	
@@ -5129,7 +5129,7 @@ INT orthogonal::parabolic_neighbor53_rank(INT *v, INT verbose_level)
 	a = v[n - 1];
 
 	len1 = (q - 1) * Sbar_mm2;
-	len2 = (q - 1) * N1_mm2;
+	//len2 = (q - 1) * N1_mm2;
 
 	if (v[0] == 0) {
 		// case 1
@@ -5214,7 +5214,7 @@ finish:
 
 INT orthogonal::parabolic_neighbor54_rank(INT *v, INT verbose_level)
 {
-	INT len1, len2;
+	INT len1; //, len2;
 	INT index, a, sub_index;
 	INT f_v = (verbose_level >= 1);
 	
@@ -5240,7 +5240,7 @@ INT orthogonal::parabolic_neighbor54_rank(INT *v, INT verbose_level)
 	a = v[n - 2];
 
 	len1 = (q - 1) * Sbar_mm2;
-	len2 = (q - 1) * N1_mm2;
+	//len2 = (q - 1) * N1_mm2;
 
 	if (v[0] == 0) {
 		// case 1
@@ -7266,7 +7266,7 @@ void orthogonal::Siegel_Transformation3(INT *T,
 	INT verbose_level)
 {
 	INT i, j, a, b, av, bv, minus_one;
-	INT k;
+	//INT k;
 	INT *Gram;
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -7274,7 +7274,7 @@ void orthogonal::Siegel_Transformation3(INT *T,
 	if (f_v) {
 		cout << "Siegel_Transformation3" << endl;
 		}
-	k = n - 1;
+	//k = n - 1;
 	Gram = Gram_matrix;
 	if (f_v) {
 		cout << "n=" << n << endl;

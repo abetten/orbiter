@@ -64,6 +64,7 @@ int mindist(int n, int k, int q, int *G,
 	MD.f = (int) e;
 	MD.idx_zero = idx_zero;
 	MD.idx_one = idx_one;
+	MD.idx_mone = 0; // will be computed when we print the tables next
 	MD.ff_mult = (int *) malloc(sizeof(int) * q * q);
 	MD.ff_add = (int *) malloc(sizeof(int) * q * q);
 	MD.ff_inv = (int *) malloc(sizeof(int) * q);
@@ -233,7 +234,7 @@ static int min_weight(MINDIST *MD)
 	int a, b;
  int w_c,w_t,w_r; /* minimum-weight of code /regarded /not regarded codevectors */
  int size = 0; /* number of information subsets */
- int w_1 = -1;
+ //int w_1 = -1;
 	
 	/* allocate base pointer for the (k,n)-generator matrices */
 	MD->S = (int ***)malloc((sizeof (int **))*(n+2));
@@ -251,9 +252,11 @@ static int min_weight(MINDIST *MD)
 		/* evaluate minimumweight of codevectors created by linearcombination
 		   of t rows of the systematic generator matrices S[1],...,S[M] */
 		w_t = weight_of_linear_combinations(MD, t); 
+#if 0
 		if (t == 1) {
 			w_1 = w_t;
 			}
+#endif
 		if (MD->f_v) {
 			printf("\\bar{d}_%d=%d\n", t, w_t);
 			}

@@ -12,6 +12,20 @@
 
 #define EPSILON 0.01
 
+void double_vec_print(double *a, INT len)
+{
+	INT i;
+	
+	cout << "(";
+	for (i = 0; i < len; i++) {
+		cout << a[i];
+		if (i < len - 1) {
+			cout << ", ";
+			}
+		}
+	cout << ")";
+}
+
 void double_vec_add(double *a, double *b, double *c, INT len)
 {
 	INT i;
@@ -849,6 +863,582 @@ double atan_xy(double x, double y)
 	return phi;
 }
 
+double dot_product(double *u, double *v, INT len)
+{
+	double d;
+	INT i;
+
+	d = 0;
+	for (i = 0; i < len; i++) {
+		d += u[i] * v[i];
+		}
+	return d;
+}
+
+void cross_product(double *u, double *v, double *n)
+{
+	n[0] = u[1] * v[2] - v[1] * u[2];
+	n[1] = u[2] * v[0] - u[0] * v[2];
+	n[2] = u[0] * v[1] - u[1] * v[0];
+}
+
+double distance_from_origin(double x1, double x2, double x3)
+{
+	double d;
+
+	d = sqrt(x1 * x1 + x2 * x2 + x3 * x3);
+	return d;
+}
+
+double distance_from_origin(double *x, INT len)
+{
+	double d;
+	INT i;
+
+	d = 0;
+	for (i = 0; i < len; i++) {
+		d += x[i] * x[i];
+		}
+	d = sqrt(d);
+	return d;
+}
+
+void make_unit_vector(double *v, INT len)
+{
+	double d, dv;
+
+	d = distance_from_origin(v, len);
+	if (ABS(d) < 0.00001) {
+		cout << "make_unit_vector ABS(d) < 0.00001" << endl;
+		exit(1);
+		}
+	dv = 1. / d;
+	double_vec_scalar_multiple(v, dv, len);
+}
+
+void center_of_mass(double *Pts, INT len, INT *Pt_idx, INT nb_pts, double *c)
+{
+	INT i, h, idx;
+	double a;
+
+	for (i = 0; i < len; i++) {
+		c[i] = 0.;
+		}
+	for (h = 0; h < nb_pts; h++) {
+		idx = Pt_idx[h];
+		for (i = 0; i < len; i++) {
+			c[i] += Pts[idx * len + i];
+			}
+		}
+	a = 1. / nb_pts;
+	double_vec_scalar_multiple(c, a, len);
+}
+
+void plane_through_three_points(double *p1, double *p2, double *p3, double *n, double &d)
+{
+	INT i;
+	double a, b;
+	double u[3];
+	double v[3];
+
+	double_vec_subtract(p2, p1, u, 3); // u = p2 - p1
+	double_vec_subtract(p3, p1, v, 3); // v = p3 - p1
+
+#if 0
+	cout << "u=" << endl;
+	print_system(u, 1, 3);
+	cout << endl;
+	cout << "v=" << endl;
+	print_system(v, 1, 3);
+	cout << endl;
+#endif
+
+	cross_product(u, v, n);
+
+#if 0
+	cout << "n=" << endl;
+	print_system(n, 1, 3);
+	cout << endl;
+#endif
+
+	a = distance_from_origin(n[0], n[1], n[2]);
+	if (ABS(a) < 0.00001) {
+		cout << "plane_through_three_points ABS(a) < 0.00001" << endl;
+		exit(1);
+		}
+	b = 1. / a;
+	for (i = 0; i < 3; i++) {
+		n[i] *= b;
+		}
+
+#if 0
+	cout << "n unit=" << endl;
+	print_system(n, 1, 3);
+	cout << endl;
+#endif
+
+	d = dot_product(p1, n, 3);
+}
+
+void orthogonal_transformation_from_point_to_basis_vector(double *from, 
+	double *A, double *Av, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, i0, i1, j;
+	double d, a;
+
+	if (f_v) {
+		cout << "orthogonal_transformation_from_point_to_basis_vector" << endl;
+		}
+	double_vec_copy(from, Av, 3);
+	a = 0.;
+	i0 = -1;
+	for (i = 0; i < 3; i++) {
+		if (ABS(Av[i]) > a) {
+			i0 = i;
+			a = ABS(Av[i]);
+			}
+		}
+	if (i0 == -1) {
+		cout << "i0 == -1" << endl;
+		exit(1);
+		}
+	if (i0 == 0) {
+		i1 = 1;
+		}
+	else if (i0 == 1) {
+		i1 = 2;
+		}
+	else {
+		i1 = 0;
+		}
+	for (i = 0; i < 3; i++) {
+		Av[3 + i] = 0.;
+		}
+	Av[3 + i1] = -Av[i0];
+	Av[3 + i0] = Av[i1];
+	// now the dot product of the first row and the secon row is zero.
+	d = dot_product(Av, Av + 3, 3);
+	if (ABS(d) > 0.01) {
+		cout << "dot product between first and second row of Av is not zero" << endl;
+		exit(1);
+		}
+	cross_product(Av, Av + 3, Av + 6);
+	d = dot_product(Av, Av + 6, 3);
+	if (ABS(d) > 0.01) {
+		cout << "dot product between first and third row of Av is not zero" << endl;
+		exit(1);
+		}
+	d = dot_product(Av + 3, Av + 6, 3);
+	if (ABS(d) > 0.01) {
+		cout << "dot product between second and third row of Av is not zero" << endl;
+		exit(1);
+		}
+	make_unit_vector(Av, 3);
+	make_unit_vector(Av + 3, 3);
+	make_unit_vector(Av + 6, 3);
+
+	// make A the transpose of Av.
+	// for orthonormal matrices, the inverse is the transpose.
+	for (i = 0; i < 3; i++) {
+		for (j = 0; j < 3; j++) {
+			A[j * 3 + i] = Av[i * 3 + j];
+			}
+		}
+
+	if (f_v) {
+		cout << "orthogonal_transformation_from_point_to_basis_vector done" << endl;
+		}
+}
+
+void output_double(double a, ostream &ost)
+{
+	if (ABS(a) < 0.0001) {
+		ost << 0;
+		}
+	else {
+		ost << a;
+		}
+}
+
+void mult_matrix_4x4(double *v, double *R, double *vR)
+{
+	INT i, j;
+	double c;
+
+	for (j = 0; j < 4; j++) {
+		c = 0;
+		for (i = 0; i < 4; i++) {
+			c += v[i] * R[i * 4 + j];
+			}
+		vR[j] = c;
+		}
+}
 
 
+void transpose_matrix_4x4(double *A, double *At)
+{
+	INT i, j;
+
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
+			At[i * 4 + j] = A[j * 4 + i];
+			}
+		}
+}
+
+void substitute_quadric_linear(double *coeff_in, double *coeff_out, 
+	double *A4_inv, INT verbose_level)
+// uses povray ordering of monomials
+// 1: x^2
+// 2: xy
+// 3: xz
+// 4: x
+// 5: y^2
+// 6: yz
+// 7: y
+// 8: z^2
+// 9: z
+// 10: 1
+{
+	INT f_v = (verbose_level >= 1);
+	INT Variables[] = {
+		0,0,
+		0,1,
+		0,2,
+		0,3,
+		1,1,
+		1,2,
+		1,3,
+		2,2,
+		2,3,
+		3,3
+		};
+	INT Affine_to_monomial[16];
+	INT *V;
+	INT nb_monomials = 10;
+	INT degree = 2;
+	INT n = 4;
+	double coeff2[10];
+	double coeff3[10];
+	double b, c;
+	INT h, i, j, a, nb_affine, idx;
+	INT A[2];
+	INT v[4];
+
+	if (f_v) {
+		cout << "substitute_quadric_linear" << endl;
+		}
+
+	nb_affine = i_power_j(n, degree);
+
+	for (i = 0; i < nb_affine; i++) {
+		AG_element_unrank(n /* q */, A, 1, degree, i);
+		INT_vec_zero(v, n);
+		for (j = 0; j < degree; j++) {
+			a = A[j];
+			v[a]++;
+			}
+		for (idx = 0; idx < 10; idx++) {
+			if (INT_vec_compare(v, Variables + idx * 2, 2) == 0) {
+				break;
+				}
+			}
+		if (idx == 10) {
+			cout << "could not determine Affine_to_monomial" << endl;
+			exit(1);
+			}
+		Affine_to_monomial[i] = idx;	
+		}
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		coeff3[i] = 0.;
+		}
+	for (h = 0; h < nb_monomials; h++) {
+		c = coeff_in[h];
+		if (c == 0) {
+			continue;
+			}
+		
+		V = Variables + h * degree;
+			// a list of the indices of the variables which appear in the monomial
+			// (possibly with repeats)
+			// Example: the monomial x_0^3 becomes 0,0,0
+
+
+		for (i = 0; i < nb_monomials; i++) {
+			coeff2[i] = 0.;
+			}
+		for (a = 0; a < nb_affine; a++) {
+
+			AG_element_unrank(n /* q */, A, 1, degree, a);
+				// sequence of length degree over the alphabet  0,...,n-1.
+			b = 1.;
+			for (j = 0; j < degree; j++) {
+				//factors[j] = Mtx_inv[V[j] * n + A[j]];
+				b *= A4_inv[A[j] * n + V[j]];
+				}
+			idx = Affine_to_monomial[a];
+
+			coeff2[idx] += b;
+			}
+		for (j = 0; j < nb_monomials; j++) {
+			coeff2[j] *= c;
+			}
+
+		for (j = 0; j < nb_monomials; j++) {
+			coeff3[j] += coeff2[j];
+			}
+		}
+
+	for (j = 0; j < nb_monomials; j++) {
+		coeff_out[j] = coeff3[j];
+		}
+
+
+	if (f_v) {
+		cout << "substitute_quadric_linear done" << endl;
+		}
+}
+
+void substitute_cubic_linear(double *coeff_in, double *coeff_out, 
+	double *A4_inv, INT verbose_level)
+// uses povray ordering of monomials
+// http://www.povray.org/documentation/view/3.6.1/298/
+// 1: x^3
+// 2: x^2y
+// 3: x^2z
+// 4: x^2
+// 5: xy^2
+// 6: xyz
+// 7: xy
+// 8: xz^2
+// 9: xz
+// 10: x
+// 11: y^3
+// 12: y^2z
+// 13: y^2
+// 14: yz^2
+// 15: yz
+// 16: y
+// 17: z^3
+// 18: z^2
+// 19: z
+// 20: 1
+{
+	INT f_v = TRUE;//(verbose_level >= 1);
+	INT Variables[] = {
+		0,0,0,
+		0,0,1,
+		0,0,2,
+		0,0,3,
+		0,1,1,
+		0,1,2,
+		0,1,3,
+		0,2,2,
+		0,2,3,
+		0,3,3,
+		1,1,1,
+		1,1,2,
+		1,1,3,
+		1,2,2,
+		1,2,3,
+		1,3,3,
+		2,2,2,
+		2,2,3,
+		2,3,3,
+		3,3,3,
+		};
+	INT *Monomials;
+	INT Affine_to_monomial[64];
+	INT *V;
+	INT nb_monomials = 20;
+	INT degree = 3;
+	INT n = 4;
+	double coeff2[20];
+	double coeff3[20];
+	double b, c;
+	INT h, i, j, a, nb_affine, idx;
+	INT A[3];
+	INT v[4];
+
+	if (f_v) {
+		cout << "substitute_cubic_linear" << endl;
+		}
+
+	nb_affine = i_power_j(n, degree);
+
+
+	if (f_v) {
+		cout << "Variables:" << endl;
+		INT_matrix_print(Variables, 20, 3);
+		}
+	Monomials = NEW_INT(nb_monomials * n);
+	INT_vec_zero(Monomials, nb_monomials * n);
+	for (i = 0; i < nb_monomials; i++) {
+		for (j = 0; j < degree; j++) {
+			a = Variables[i * degree + j];
+			Monomials[i * n + a]++;
+			}
+		}
+	if (f_v) {
+		cout << "Monomials:" << endl;
+		INT_matrix_print(Monomials, 20, 4);
+		}
+
+	for (i = 0; i < nb_affine; i++) {
+		AG_element_unrank(n /* q */, A, 1, degree, i);
+		INT_vec_zero(v, n);
+		for (j = 0; j < degree; j++) {
+			a = A[j];
+			v[a]++;
+			}
+		for (idx = 0; idx < 20; idx++) {
+			if (INT_vec_compare(v, Monomials + idx * 4, 4) == 0) {
+				break;
+				}
+			}
+		if (idx == 20) {
+			cout << "could not determine Affine_to_monomial" << endl;
+			cout << "Monomials:" << endl;
+			INT_matrix_print(Monomials, 20, 4);
+			cout << "v=";
+			INT_vec_print(cout, v, 4);
+			exit(1);
+			}
+		Affine_to_monomial[i] = idx;	
+		}
+
+	if (f_v) {
+		cout << "Affine_to_monomial:";
+		INT_vec_print(cout, Affine_to_monomial, nb_affine);
+		cout << endl;
+		}
+
+
+	for (i = 0; i < nb_monomials; i++) {
+		coeff3[i] = 0.;
+		}
+	for (h = 0; h < nb_monomials; h++) {
+		c = coeff_in[h];
+		if (c == 0) {
+			continue;
+			}
+		
+		V = Variables + h * degree;
+			// a list of the indices of the variables which appear in the monomial
+			// (possibly with repeats)
+			// Example: the monomial x_0^3 becomes 0,0,0
+
+
+		for (i = 0; i < nb_monomials; i++) {
+			coeff2[i] = 0.;
+			}
+		for (a = 0; a < nb_affine; a++) {
+
+			AG_element_unrank(n /* q */, A, 1, degree, a);
+				// sequence of length degree over the alphabet  0,...,n-1.
+			b = 1.;
+			for (j = 0; j < degree; j++) {
+				//factors[j] = Mtx_inv[V[j] * n + A[j]];
+				b *= A4_inv[A[j] * n + V[j]];
+				}
+			idx = Affine_to_monomial[a];
+
+			coeff2[idx] += b;
+			}
+		for (j = 0; j < nb_monomials; j++) {
+			coeff2[j] *= c;
+			}
+
+		for (j = 0; j < nb_monomials; j++) {
+			coeff3[j] += coeff2[j];
+			}
+		}
+
+	for (j = 0; j < nb_monomials; j++) {
+		coeff_out[j] = coeff3[j];
+		}
+
+	FREE_INT(Monomials);
+	
+	if (f_v) {
+		cout << "substitute_cubic_linear done" << endl;
+		}
+}
+
+void make_transform_t_varphi_u_double(INT n, double *varphi, double *u, double *A, double *Av, INT verbose_level)
+// varphi are the dual coordinates of a plane.
+// u is a vector such that varphi(u) \neq -1.
+// A = I + varphi * u.
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, j;
+
+	if (f_v) {
+		cout << "make_transform_t_varphi_u_double" << endl;
+		}
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			if (i == j) {
+				A[i * n + j] = 1. + varphi[i] * u[j];
+				}
+			else {
+				A[i * n + j] = varphi[i] * u[j];
+				}
+			}
+		}
+	matrix_double_inverse(A, Av, n, 0 /* verbose_level */);
+	if (f_v) {
+		cout << "make_transform_t_varphi_u_double done" << endl;
+		}
+}
+
+void matrix_double_inverse(double *A, double *Av, INT n, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	double *M;
+	INT *base_cols;
+	INT i, j, two_n, rk;
+
+	if (f_v) {
+		cout << "matrix_double_inverse" << endl;
+		}
+	two_n = n * 2;
+	M = new double [n * n * 2];
+	base_cols = NEW_INT(two_n);
+
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			M[i * two_n + j] = A[i * n + j];
+			if (i == j) {
+				M[i * two_n + n + j] = 1.;
+				}
+			else {
+				M[i * two_n + n + j] = 0.;
+				}
+			}
+		}
+	rk = Gauss_elimination(M, n, two_n, base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	if (rk < n) {
+		cout << "matrix_double_inverse the matrix is not invertible" << endl;
+		exit(1);
+		}
+	if (base_cols[n - 1] != n - 1) {
+		cout << "matrix_double_inverse the matrix is not invertible" << endl;
+		exit(1);
+		}
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < n; j++) {
+			Av[i * n + j] = M[i * two_n + n + j];
+			}
+		}
+	
+	delete [] M;
+	FREE_INT(base_cols);
+	if (f_v) {
+		cout << "matrix_double_inverse done" << endl;
+		}
+}
 

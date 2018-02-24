@@ -1646,12 +1646,12 @@ void longinteger_domain::random_number_less_than_n(
 	longinteger_object &n, longinteger_object &r)
 {
 	INT i, l, rr;
-	char *n_rep;
+	//char *n_rep;
 	char *r_rep;
 	
 	l = n.len();
 	n.assign_to(r);
-	n_rep = n.rep();
+	//n_rep = n.rep();
 	r_rep = r.rep();
 	while (TRUE) {
 		for (i = l - 1; i >= 0; i--) {

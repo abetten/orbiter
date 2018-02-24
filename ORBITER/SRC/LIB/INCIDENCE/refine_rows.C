@@ -355,7 +355,7 @@ INT tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	INT i, r, R, l1, l2, L1, L2;
+	INT i, r, R, l1, /*l2,*/ L1, L2;
 	INT nb_sol;
 	INT point_types_allocated;
 	INT h, u;
@@ -375,7 +375,7 @@ INT tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 		}
 	R = nb_row_classes[ROW];
 	l1 = nb_col_classes[ROW];
-	l2 = nb_col_classes[COL];
+	//l2 = nb_col_classes[COL];
 
 	if (f_v) {
 		cout << "the_row_scheme is:" << endl;
@@ -1067,11 +1067,11 @@ INT tdo_scheme::tdo_rows_setup_second_system_eqns_packing(INT verbose_level,
 {
 	INT f_v = (verbose_level >= 1);
 	INT nb_eqns_packing;
-	INT l2, i, r, f, l, j, c, J, JJ, k, h, rr, p, u, a, len, f_used, L1, L2;
+	INT /*l2,*/ i, r, f, l, j, c, J, JJ, k, h, rr, p, u, a, len, f_used, L1, L2;
 	BYTE label[100];
 	//INT nb_vars = T.D1->n;
 	
-	l2 = nb_col_classes[COL];
+	//l2 = nb_col_classes[COL];
 	row_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
 
 	nb_eqns_packing = 0;

@@ -866,7 +866,7 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 	projective_space *P2, *P4;
 	INT a, a0, a1;
 	INT b, b0, b1;
-	INT i, h, k, alpha, d;
+	INT i, h, k, alpha; //, d;
 	INT *v, *w1, *w2, *w3, *v2;
 	INT *components;
 	INT *embedding;
@@ -887,7 +887,7 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
-	d = 5;
+	//d = 5;
 
 
 	if (f_v) {

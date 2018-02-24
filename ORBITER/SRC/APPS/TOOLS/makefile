@@ -32,7 +32,9 @@ all: all_cliques.out \
 	treedraw.out \
 	widor.out \
 	prepare_frames.out \
-	sajeeb.out 
+	sajeeb.out \
+	create_file.out \
+	missing_files.out
 
 
 
@@ -98,6 +100,12 @@ prepare_frames.out:  prepare_frames.o ;
 
 sajeeb.out:  sajeeb.o ;
 	$(DISCRETA_CPP)  sajeeb.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+create_file.out:  create_file.o ;
+	$(DISCRETA_CPP)  create_file.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+missing_files.out:  missing_files.o ;
+	$(DISCRETA_CPP)  missing_files.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

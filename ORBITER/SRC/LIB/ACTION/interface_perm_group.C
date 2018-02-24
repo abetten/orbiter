@@ -32,10 +32,10 @@ INT perm_group_element_image_of(action &A, INT a, void *elt, INT verbose_level)
 			b = Elt[a];
 			}
 		else {
-			INT x, y, xx, yy;
+			INT /*x,*/ y, xx, yy;
 			
 			a -= G.offset;
-			x = a / G.n;
+			//x = a / G.n;
 			y = a % G.n;
 			xx = Elt[a];
 			yy = Elt[G.m + y] - G.m;

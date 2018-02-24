@@ -854,7 +854,7 @@ void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, INT &elt_size, INT n, f
 	vector_ge *gens;
 	INT *Elt;
 	INT h, i, l, alpha;
-	matrix_group *M;
+	//matrix_group *M;
 
 	if (f_v) {
 		cout << "compute_generators_GL_n_q" << endl;
@@ -862,7 +862,7 @@ void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, INT &elt_size, INT n, f
 	A = new action;
 
 	A->init_projective_group(n, F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
-	M = A->G.matrix_grp;
+	//M = A->G.matrix_grp;
 
 	gens = A->Strong_gens->gens;
 	//gens = A->strong_generators;
@@ -1211,14 +1211,14 @@ void lift_generators_to_subfield_structure(
 	INT f_vv = (verbose_level >= 2);
 	INT q, Q, m;
 	finite_field *Fq;
-	finite_field *FQ;
+	//finite_field *FQ;
 	sims *Sims;
 
 	if (f_v) {
 		cout << "lift_generators_to_subfield_structure" << endl;
 		}
 	Fq = S->Fq;
-	FQ = S->FQ;
+	//FQ = S->FQ;
 	q = Fq->q;
 	Q = i_power_j(q, s);
 	m = n / s;
@@ -2552,7 +2552,7 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 	INT d = P->n + 1;
 	INT *v1, *v2, *v1_save;
 	INT *w1, *w2, *w1_save;
-	INT q, h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
+	INT /*q,*/ h, hh, i, j, l, e, frobenius_inv, lambda, rk, c, cv;
 	INT *system;
 	INT *base_cols;
 	
@@ -2563,7 +2563,7 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 		cout << "d=" << d << endl;
 		}
 	F = P->F;
-	q = F->q;
+	//q = F->q;
 	
 	v1 = NEW_INT(d);
 	v2 = NEW_INT(d);
@@ -2588,11 +2588,6 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 				}				
 			}
 		INT_vec_copy(v1, v1_save, d);
-#if 0
-		for (hh = 0; hh < d; hh++) {
-			v1_save[hh] = v1[hh];
-			}
-#endif
 		i = P->rank_point(v1);
 			// Now, the value of i should be equal to e.
 		j = A->element_image_of(i, Elt, 0);
@@ -2603,11 +2598,6 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 
 
 		INT_vec_copy(v2, Mtx + e * d, d);
-#if 0
-		for (hh = 0; hh < d; hh++) {
-			Mtx[e * d + hh] = v2[hh];
-			}
-#endif
 		}
 
 	if (f_vv) {
@@ -2624,11 +2614,6 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 		v1[h] = 1;
 		}
 	INT_vec_copy(v1, v1_save, d);
-#if 0
-	for (hh = 0; hh < d; hh++) {
-		v1_save[hh] = v1[hh];
-		}
-#endif
 	i = P->rank_point(v1);
 	j = A->element_image_of(i, Elt, 0);
 	P->unrank_point(v2, j);
@@ -2677,6 +2662,7 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 		cout << "projective_space::reverse_engineer_semilinear_map figuring out the frobenius" << endl;
 		}
 
+	frobenius = 0;
 	if (F->q != F->p) {
 
 		// create the vector (1,p,0,...,0)
@@ -2693,11 +2679,6 @@ INT reverse_engineer_semilinear_map(action *A, projective_space *P,
 				}				
 			}
 		INT_vec_copy(v1, v1_save, d);
-#if 0
-		for (hh = 0; hh < d; hh++) {
-			v1_save[hh] = v1[hh];
-			}
-#endif
 		i = P->rank_point(v1);
 		j = A->element_image_of(i, Elt, 0);
 		P->unrank_point(v2, j);
@@ -3897,6 +3878,7 @@ void do_canonical_form(INT n, finite_field *F,
 		FALSE, NULL, 
 		verbose_level);
 	//P->draw_point_set_in_plane(fname_base, set, set_size, TRUE /*f_with_points*/, 0 /* verbose_level */);
+	delete Stab;
 	delete A_linear;
 	delete P;
 

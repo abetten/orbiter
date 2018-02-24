@@ -913,7 +913,7 @@ void oval_polynomial(finite_field &GFq, INT *S, unipoly_domain &D, unipoly_objec
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT i, v[3], x, y;
+	INT i, v[3], x; //, y;
 	INT *map;
 	
 	if (f_v) {
@@ -927,7 +927,7 @@ void oval_polynomial(finite_field &GFq, INT *S, unipoly_domain &D, unipoly_objec
 			exit(1);
 			}
 		x = v[0];
-		y = v[1];
+		//y = v[1];
 		//cout << "map[" << i << "] = " << xx << endl;
 		map[i] = x;
 		}

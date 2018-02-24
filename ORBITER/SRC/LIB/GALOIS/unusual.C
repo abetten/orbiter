@@ -712,12 +712,12 @@ void unusual_model::create_Mondello_BLT_set(INT *BLT, INT verbose_level)
 	INT i, beta, gamma;
 	INT *norm_one_table, nb_norm_one = 0;
 	INT *Table;
-	INT minus_one, four, five, minus_four_fifth, minus_one_fifth;
+	INT /*minus_one,*/ four, five, minus_four_fifth, minus_one_fifth;
 	
 	if (f_v) {
 		cout << "unusual_model::create_Mondello_BLT_set" << endl;
 		}
-	minus_one = F.negate(1);
+	//minus_one = F.negate(1);
 	four = 4 % F.p;
 	five = 5 % F.p;
 	minus_four_fifth = F.negate(F.mult(four, F.inverse(five)));
@@ -1279,6 +1279,7 @@ void unusual_model::create_4by4_matrix(INT *M4,
 {
 	INT i, j, f_phi, coeff = 0, image1, image2;
 	
+	f_phi = FALSE;
 	for (i = 0; i < 2; i++) {
 		for (j = 0; j < 2; j++) {
 			if (i == 0 && j == 0) {

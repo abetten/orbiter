@@ -658,7 +658,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(sprea
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT nb_orbits;
+	//INT nb_orbits;
 	INT i, k;
 	INT *Stab_order;
 	INT *Len;
@@ -680,7 +680,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(sprea
 
 	k = 5;
 
-	nb_orbits = Five_plus_one->nb_orbits_at_level(k);
+	//nb_orbits = Five_plus_one->nb_orbits_at_level(k);
 	rep = NEW_INT(k);
 	lines = NEW_INT(k);
 	Stab_order = NEW_INT(nb);

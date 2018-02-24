@@ -1212,6 +1212,7 @@ INT os_memory_usage()
                 }
         }
 #endif
+	return 0;
 }
 
 INT os_ticks()
@@ -3791,7 +3792,7 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE *buf;
-	INT nb_sol;
+	//INT nb_sol;
 	INT N = 1000;
 	INT i;
 	INT the_case;
@@ -3819,7 +3820,7 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 	ifstream fp(fname);
 
 	
-	nb_sol = 0;
+	//nb_sol = 0;
 	the_case = -1;
 	while (TRUE) {
 		if (fp.eof()) {
@@ -3949,7 +3950,7 @@ void read_solutions_from_file_by_case(const BYTE *fname,
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE *buf;
-	INT nb_sol;
+	//INT nb_sol;
 	INT i;
 	INT nb_case1;
 	INT the_case;
@@ -3973,7 +3974,7 @@ void read_solutions_from_file_by_case(const BYTE *fname,
 	ifstream fp(fname);
 
 	
-	nb_sol = 0;
+	//nb_sol = 0;
 	nb_case1 = 0; 
 	the_case = -1;
 	while (TRUE) {
@@ -4707,11 +4708,12 @@ void povray_beginning(ostream &ost)
 	ost << endl;
 }
 
-void povray_end(ostream &ost)
+void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost)
 {
-	ost << "	// the next three steps will perform a rotation around the axis of symmetry 1,1,1:" << endl;
+	ost << "	// the next three steps will perform a rotation" << endl;
+	ost << "	// around the axis of symmetry 1,1,1:" << endl;
 	ost << endl;
-	ost << "	// move 1,1,1 to 1,0,0:" << endl;
+	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
 	ost << "	matrix<" << endl;
 	ost << "	1/sqrt(3),2/sqrt(6),0," << endl;
 	ost << "	1/sqrt(3),-1/sqrt(6),1/sqrt(2)," << endl;
@@ -4721,7 +4723,8 @@ void povray_end(ostream &ost)
 	ost << endl;
 	ost << "        rotate <360*clock,0,0> " << endl;
 	ost << endl;
-	ost << "	// move 1,0,0 back to 1,1,1:" << endl;
+	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
+	ost << endl;
 	ost << "	matrix<" << endl;
 	ost << "	1/sqrt(3),1/sqrt(3),1/sqrt(3)," << endl;
 	ost << "	2/sqrt(6),-1/sqrt(6),-1/sqrt(6)," << endl;
@@ -4729,6 +4732,79 @@ void povray_end(ostream &ost)
 	ost << "	0,0,0>" << endl;
 	ost << endl;
 	ost << endl;
+}
+
+void povray_animation_rotate_around_origin_and_given_vector(double *v, ostream &ost)
+{
+	double A[9], Av[9];
+
+	orthogonal_transformation_from_point_to_basis_vector(v, 
+		A, Av, 0 /* verbose_level */);
+	
+	ost << "	// the next three steps will perform a rotation" << endl;
+	ost << "	// around the axis of symmetry 1,1,1:" << endl;
+	ost << endl;
+	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	";
+	output_double(A[0], ost);
+	ost << ",";
+	output_double(A[1], ost);
+	ost << ",";
+	output_double(A[2], ost);
+	ost << ",";
+	ost << "	";
+	output_double(A[3], ost);
+	ost << ",";
+	output_double(A[4], ost);
+	ost << ",";
+	output_double(A[5], ost);
+	ost << ",";
+	ost << "	";
+	output_double(A[6], ost);
+	ost << ",";
+	output_double(A[7], ost);
+	ost << ",";
+	output_double(A[8], ost);
+	ost << ",";
+	ost << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+	ost << "        rotate <360*clock,0,0> " << endl;
+	ost << endl;
+	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
+	ost << endl;
+	ost << "	matrix<" << endl;
+	ost << "	";
+	output_double(Av[0], ost);
+	ost << ",";
+	output_double(Av[1], ost);
+	ost << ",";
+	output_double(Av[2], ost);
+	ost << ",";
+	ost << "	";
+	output_double(Av[3], ost);
+	ost << ",";
+	output_double(Av[4], ost);
+	ost << ",";
+	output_double(Av[5], ost);
+	ost << ",";
+	ost << "	";
+	output_double(Av[6], ost);
+	ost << ",";
+	output_double(Av[7], ost);
+	ost << ",";
+	output_double(Av[8], ost);
+	ost << ",";
+	ost << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+}
+
+void povray_end(ostream &ost)
+{
 	ost << "	// and now we pull the axis 1,1,1 up:" << endl;
 	ost << endl;
 	ost << "		#declare A=pi/4;" << endl;
@@ -4836,5 +4912,29 @@ void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, INT last_f
 	ost << "Pause_when_Done=off" << endl;
 }
 
+
+void test_typedefs()
+{
+	cout << "test_typedefs()" << endl;
+	if (sizeof(INT2) != 2) {
+		cout << "warning: sizeof(INT2)=" << sizeof(INT2) << endl;
+		}
+	if (sizeof(INT4) != 4) {
+		cout << "warning: sizeof(INT4)=" << sizeof(INT4) << endl;
+		}
+	if (sizeof(INT8) != 8) {
+		cout << "warning: sizeof(INT8)=" << sizeof(INT8) << endl;
+		}
+	if (sizeof(UINT2) != 2) {
+		cout << "warning: sizeof(UINT2)=" << sizeof(UINT2) << endl;
+		}
+	if (sizeof(UINT4) != 4) {
+		cout << "warning: sizeof(UINT2)=" << sizeof(UINT4) << endl;
+		}
+	if (sizeof(UINT8) != 8) {
+		cout << "warning: sizeof(UINT2)=" << sizeof(UINT8) << endl;
+		}
+	cout << "test_typedefs() done" << endl;
+}
 
 

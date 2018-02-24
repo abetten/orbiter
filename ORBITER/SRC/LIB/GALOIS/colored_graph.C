@@ -431,6 +431,11 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 	bitvector_adjacency = NEW_UBYTE(bitvector_length);
 	fread_UBYTEs(fp, bitvector_adjacency, bitvector_length);
 
+#if 0
+	for (i = 0; i < bitvector_length; i++) {
+		cout << i << " : " << (INT) bitvector_adjacency[i] << endl;
+		}
+#endif
 
 	fclose(fp);
 	if (f_v) {
@@ -1168,7 +1173,7 @@ void colored_graph::export_to_magma(const BYTE *fname, INT verbose_level)
 		ofstream fp(fname);
 
 		neighbors = NEW_INT(nb_points);
-		fp << "Gamma := Graph< " << nb_points << " | [" << endl;
+		fp << "G := Graph< " << nb_points << " | [" << endl;
 		for (i = 0; i < nb_points; i++) {
 
 
@@ -1255,6 +1260,52 @@ void colored_graph::export_to_file(const BYTE *fname, INT verbose_level)
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
+		}
+}
+
+void colored_graph::export_to_text(const BYTE *fname, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, j;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_text" << endl;
+		}
+	{
+		ofstream fp(fname);
+
+		fp << "" << endl;
+		for (i = 0; i < nb_points; i++) {
+
+
+
+			fp << "";
+			for (j = 0; j < nb_points; j++) {
+				if (is_adjacent(i, j)) {
+					fp << "1";
+					}
+				else {
+					fp << "0";
+					}
+				if (j < nb_points - 1) {
+					fp << ", ";
+					}
+				}
+			fp << "";
+			if (i < nb_points - 1) {
+				fp << " " << endl;
+				}
+			}
+		fp << "" << endl;
+
+		
+
+
+	}
+	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_text" << endl;
 		}
 }
 
@@ -1444,7 +1495,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(INT *S, INT len,
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
-	INT i, j, a, b, pt, x, y;
+	INT i, j, a, b, /*pt,*/ x, y;
 	INT *v;
 
 	if (f_v) {
@@ -1464,7 +1515,7 @@ void colored_graph::early_test_func_for_path_and_cycle_search(INT *S, INT len,
 	v = NEW_INT(nb_points);
 	INT_vec_zero(v, nb_points);
 
-	pt = S[len - 1];
+	//pt = S[len - 1];
 
 	for (i = 0; i < len; i++) {
 		a = S[i];
@@ -1493,7 +1544,7 @@ INT colored_graph::is_cycle(INT nb_e, INT *edges, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 	INT i, a, b, x, y;
 	INT *v;
-	INT ret = TRUE;
+	//INT ret = TRUE;
 
 	if (f_v) {
 		cout << "colored_graph::is_cycle" << endl;
@@ -1509,10 +1560,10 @@ INT colored_graph::is_cycle(INT nb_e, INT *edges, INT verbose_level)
 		v[y]++;
 		}
 
-	ret = TRUE;
+	//ret = TRUE;
 	for (i = 0; i < nb_points; i++) {
 		if (v[i] != 0 && v[i] != 2) {
-			ret = FALSE;
+			//ret = FALSE;
 			break;
 			}
 		}

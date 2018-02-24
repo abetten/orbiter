@@ -43,8 +43,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 	INT f_vv = (verbose_level >= 2);
 	//INT f_v4 = (verbose_level >= 4);
 	//partitionstack S;
-	INT N;
-	INT ht0;
+	//INT N;
+	//INT ht0;
 	//INT hash;
 	//INT i;
 	BYTE fname[1000];
@@ -66,13 +66,13 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			}
 		}
 
-	N = Inc->nb_points() + Inc->nb_lines();
+	//N = Inc->nb_points() + Inc->nb_lines();
 	
 	if (f_v) {
 		cout << "extra.C: incidence_structure_compute_TDA_general initial partition:" << endl;
 		S.print_classes_points_and_lines(cout);
 		}
-	ht0 = S.ht;
+	//ht0 = S.ht;
 
 
 	if (f_combined_action) {

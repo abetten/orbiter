@@ -1549,7 +1549,7 @@ void generator::map_to_canonical_k_subset(INT *the_set, INT set_size, INT subset
 	INT *subset;
 	INT *canonical_subset;
 	INT *Elt1;
-	INT f, i, j, k, idx;
+	INT f, i, j, k; //, idx;
 	INT reduced_set_size;
 	//INT f_implicit_fusion = TRUE;
 	
@@ -1590,7 +1590,7 @@ void generator::map_to_canonical_k_subset(INT *the_set, INT set_size, INT subset
 		//f_implicit_fusion, 
 		verbose_level - 3);
 
-	idx = local_idx + f;
+	//idx = local_idx + f;
 
 	if (f_vv) {
 		cout << "generator::map_to_canonical_k_subset after trace_set local_idx=" << local_idx << endl;
@@ -1887,7 +1887,7 @@ void generator::generate_source_code(INT level, INT verbose_level)
 	INT iso_type;
 	INT *rep;
 	INT i, j;
-	INT f, nb_iso;
+	INT /*f,*/ nb_iso;
 	INT *set;
 	longinteger_object go;
 
@@ -1898,47 +1898,47 @@ void generator::generate_source_code(INT level, INT verbose_level)
 	sprintf(fname, "%s.C", my_prefix);
 
 	set = NEW_INT(level);
-	f = first_oracle_node_at_level[level];
+	//f = first_oracle_node_at_level[level];
 	nb_iso = nb_orbits_at_level(level);
 
 
 
 		
 	{
-	ofstream f(fname);
+	ofstream fp(fname);
 
-	f << "INT " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
-	f << "INT " << prefix << "_size = " << level << ";" << endl;
-	f << "INT " << prefix << "_reps[] = {" << endl;
+	fp << "INT " << prefix << "_nb_reps = " << nb_iso << ";" << endl;
+	fp << "INT " << prefix << "_size = " << level << ";" << endl;
+	fp << "INT " << prefix << "_reps[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		get_set_by_level(level, iso_type, set);
 		rep = set;
-		f << "\t";
+		fp << "\t";
 		for (i = 0; i < level; i++) {
-			f << rep[i];
-			f << ", ";
+			fp << rep[i];
+			fp << ", ";
 			}
-		f << endl;
+		fp << endl;
 		}
-	f << "};" << endl;
-	f << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
+	fp << "};" << endl;
+	fp << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		//rep = The_surface[iso_type]->coeff;
 
 		set_and_stabilizer *SaS;
 
 		SaS = get_set_and_stabilizer(level, iso_type, 0 /* verbose_level */);
-		f << "\t\"";
+		fp << "\t\"";
 		
-		SaS->target_go.print_not_scientific(f);
-		f << "\"," << endl;
+		SaS->target_go.print_not_scientific(fp);
+		fp << "\"," << endl;
 
 		delete SaS;
 		}
-	f << "};" << endl;
+	fp << "};" << endl;
 
 
-	f << "INT " << prefix << "_make_element_size = " << A->make_element_size << ";" << endl;
+	fp << "INT " << prefix << "_make_element_size = " << A->make_element_size << ";" << endl;
 	
 	{
 	INT *stab_gens_first;
@@ -1948,7 +1948,7 @@ void generator::generate_source_code(INT level, INT verbose_level)
 	stab_gens_first = NEW_INT(nb_iso);
 	stab_gens_len = NEW_INT(nb_iso);
 	fst = 0;
-	f << "INT " << prefix << "_stab_gens[] = {" << endl;
+	fp << "INT " << prefix << "_stab_gens[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 
 		
@@ -1966,40 +1966,40 @@ void generator::generate_source_code(INT level, INT verbose_level)
 			if (f_vv) {
 				cout << "generator::generate_source_code before extract_strong_generators_in_order generator " << j << " / " << stab_gens_len[iso_type] << endl;
 				}
-			f << "\t";
-			A->element_print_for_make_element(SaS->Strong_gens->gens->ith(j), f);
-			f << endl;
+			fp << "\t";
+			A->element_print_for_make_element(SaS->Strong_gens->gens->ith(j), fp);
+			fp << endl;
 			}
 
 		delete SaS;
 
 		}
-	f << "};" << endl;
+	fp << "};" << endl;
 
 
-	f << "INT " << prefix << "_stab_gens_fst[] = { ";
+	fp << "INT " << prefix << "_stab_gens_fst[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
-		f << stab_gens_first[iso_type];
+		fp << stab_gens_first[iso_type];
 		if (iso_type < nb_iso - 1) {
-			f << ", ";
+			fp << ", ";
 			}
 		if (((iso_type + 1) % 10) == 0) {
-			f << endl << "\t";
+			fp << endl << "\t";
 			}
 		}
-	f << "};" << endl;
+	fp << "};" << endl;
 	
-	f << "INT " << prefix << "_stab_gens_len[] = { ";
+	fp << "INT " << prefix << "_stab_gens_len[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
-		f << stab_gens_len[iso_type];
+		fp << stab_gens_len[iso_type];
 		if (iso_type < nb_iso - 1) {
-			f << ", ";
+			fp << ", ";
 			}
 		if (((iso_type + 1) % 10) == 0) {
-			f << endl << "\t";
+			fp << endl << "\t";
 			}
 		}
-	f << "};" << endl;
+	fp << "};" << endl;
 
 
 

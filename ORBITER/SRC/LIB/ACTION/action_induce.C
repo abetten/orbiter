@@ -76,7 +76,7 @@ void action::induced_action_by_representation_on_conic(action *A_old,
 	INT f_v = (verbose_level >= 1);
 	action *A;
 	action_by_representation *Rep; // do not free
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_by_representation_on_conic f_induce_action=" << f_induce_action << endl;
@@ -96,7 +96,7 @@ void action::induced_action_by_representation_on_conic(action *A_old,
 		cout << "action::induced_action_by_representation_on_conic action not of matrix group type" << endl;
 		exit(1);
 		}
-	M = A->G.matrix_grp;
+	//M = A->G.matrix_grp;
 
 	Rep = NEW_OBJECT(action_by_representation);
 	Rep->init_action_on_conic(*A_old, verbose_level);
@@ -140,7 +140,7 @@ void action::induced_action_on_cosets(action_on_cosets *A_on_cosets,
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_cosets f_induce_action=" << f_induce_action << endl;
@@ -159,6 +159,7 @@ void action::induced_action_on_cosets(action_on_cosets *A_on_cosets,
 		cout << "action::induced_action_on_cosets action not of linear type" << endl;
 		exit(1);
 		}
+#if 0
 	if (A->type_G == matrix_group_t) {
 		M = A->G.matrix_grp;
 		}
@@ -166,6 +167,7 @@ void action::induced_action_on_cosets(action_on_cosets *A_on_cosets,
 		action *sub = A->subaction;
 		M = sub->G.matrix_grp;
 		}
+#endif
 	type_G = action_on_cosets_t;
 	G.OnCosets = A_on_cosets;
 	f_allocated = FALSE;
@@ -205,7 +207,7 @@ void action::induced_action_on_factor_space(action *A_old,
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_factor_space f_induce_action=" << f_induce_action << endl;
@@ -224,6 +226,7 @@ void action::induced_action_on_factor_space(action *A_old,
 		cout << "action::induced_action_on_factor_space action not of linear type" << endl;
 		exit(1);
 		}
+#if 0
 	if (A->type_G == matrix_group_t) {
 		M = A->G.matrix_grp;
 		}
@@ -231,6 +234,7 @@ void action::induced_action_on_factor_space(action *A_old,
 		action *sub = A->subaction;
 		M = sub->G.matrix_grp;
 		}
+#endif
 	type_G = action_on_factor_space_t;
 	G.AF = AF;
 	f_allocated = FALSE;
@@ -338,7 +342,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian f_induce_action=" << f_induce_action << endl;
@@ -364,6 +368,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian action is of linear type" << endl;
 		}
+#if 0
 	if (A->type_G == matrix_group_t) {
 		if (f_v) {
 			cout << "action::induced_action_on_grassmannian A->type_G == matrix_group_t" << endl;
@@ -377,6 +382,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 		action *sub = A->subaction;
 		M = sub->G.matrix_grp;
 		}
+#endif
 	type_G = action_on_grassmannian_t;
 	G.AG = AG;
 	f_allocated = FALSE;
@@ -497,7 +503,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_orthogonal f_induce_action=" << f_induce_action << endl;
@@ -528,6 +534,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 		cout << "action::induced_action_on_orthogonal action not of linear type" << endl;
 		exit(1);
 		}
+#if 0
 	if (A->type_G == matrix_group_t) {
 		M = A->G.matrix_grp;
 		}
@@ -535,6 +542,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 		action *sub = A->subaction;
 		M = sub->G.matrix_grp;
 		}
+#endif
 	type_G = action_on_orthogonal_t;
 	G.AO = AO;
 	f_allocated = TRUE;
@@ -574,7 +582,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_wedge_product f_induce_action=" << f_induce_action << endl;
@@ -593,7 +601,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 		cout << "action::induced_action_on_wedge_product action not of matrix group type" << endl;
 		exit(1);
 		}
-	M = A->G.matrix_grp;
+	//M = A->G.matrix_grp;
 	type_G = action_on_wedge_product_t;
 	G.AW = AW;
 	f_allocated = TRUE;
@@ -635,7 +643,7 @@ void action::induced_action_by_subfield_structure(action *A_old,
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_by_subfield_structure f_induce_action=" << f_induce_action << endl;
@@ -654,7 +662,7 @@ void action::induced_action_by_subfield_structure(action *A_old,
 		cout << "action::induced_action_by_subfield_structure action not of matrix group type" << endl;
 		exit(1);
 		}
-	M = A->G.matrix_grp;
+	//M = A->G.matrix_grp;
 	type_G = action_by_subfield_structure_t;
 	G.SubfieldStructure = SubfieldStructure;
 	f_allocated = TRUE;
@@ -1678,7 +1686,7 @@ void action::induced_action_on_homogeneous_polynomials(action *A_old,
 	INT f_v = (verbose_level >= 1);
 	action *A;
 	action_on_homogeneous_polynomials *OnHP;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials f_induce_action=" << f_induce_action << endl;
@@ -1698,7 +1706,7 @@ void action::induced_action_on_homogeneous_polynomials(action *A_old,
 		cout << "action::induced_action_on_homogeneous_polynomials action not of matrix group type" << endl;
 		exit(1);
 		}
-	M = A->G.matrix_grp;
+	//M = A->G.matrix_grp;
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials before OnHP->init" << endl;
@@ -1751,7 +1759,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(action
 	INT f_v = (verbose_level >= 1);
 	action *A;
 	action_on_homogeneous_polynomials *OnHP;
-	matrix_group *M;
+	//matrix_group *M;
 	
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations f_induce_action=" << f_induce_action << endl;
@@ -1771,7 +1779,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(action
 		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations action not of matrix group type" << endl;
 		exit(1);
 		}
-	M = A->G.matrix_grp;
+	//M = A->G.matrix_grp;
 
 	if (f_v) {
 		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations before OnHP->init" << endl;

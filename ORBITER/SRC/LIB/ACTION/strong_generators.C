@@ -1769,7 +1769,7 @@ void strong_generators::generators_for_shallow_schreier_tree(BYTE *label, vector
 
 		
 		INT *Depth;
-		INT avgi, f, l, idx;
+		INT avgi, f, /*l,*/ idx;
 
 		Depth = NEW_INT(Sch->A->degree);
 		for (i = 0; i < Sch->A->degree; i++) {
@@ -1800,10 +1800,10 @@ void strong_generators::generators_for_shallow_schreier_tree(BYTE *label, vector
 		if (f_v) {
 			cout << "average as INT = " << avgi << endl;
 			}
-        f = 0;
+		f = 0;
 		for (i = 0; i < Cl.nb_types; i++) {
 			f = Cl.type_first[i];
-			l = Cl.type_len[i];
+			//l = Cl.type_len[i];
 			if (Cl.data_sorted[f] == avgi) {
 				break;
 				}

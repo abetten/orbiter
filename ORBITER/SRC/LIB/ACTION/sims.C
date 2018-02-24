@@ -1477,12 +1477,12 @@ INT sims::element_rank_INT(INT *Elt)
 
 INT sims::is_element_of(INT *elt)
 {
-	INT i, j, bi, jj, l;
+	INT i, j, bi, jj; //, l;
 	
 	A->element_move(elt, eltrk1, FALSE);
 	for (i = 0; i < A->base_len; i++) {
 		bi = A->base[i];
-		l = orbit_len[i];
+		//l = orbit_len[i];
 		
 		
 		jj = A->element_image_of(bi, eltrk1, FALSE);
@@ -3247,7 +3247,7 @@ void sims::build_up_group_random_process(sims *K,
 	INT f_v4 = (verbose_level >= 7);
 	longinteger_domain D;
 	longinteger_object go, G_order, K_order, KG_order, quo, rem;
-	INT drop_out_level, image, cnt, b, c, f_added, old_base_len;
+	INT drop_out_level, image, cnt, b, c, /*f_added,*/ old_base_len;
 	action *GA;
 	action *KA;
 	
@@ -3328,7 +3328,7 @@ void sims::build_up_group_random_process(sims *K,
 					cout << endl;
 					}
 				}
-			f_added = FALSE;
+			//f_added = FALSE;
 			if (!GA->element_is_one(GA->Elt2, 0)) {
 				if (f_vvv) {
 					cout << "sims::build_up_group_random_process: the residue is not trivial, we need to choose another base point" << endl;
@@ -3388,7 +3388,7 @@ void sims::build_up_group_random_process(sims *K,
 					if (f_vvv) {
 						cout << "sims::build_up_group_random_process: the residue has been added as kernel generator at level " << drop_out_level << endl;
 						}
-					f_added = TRUE;
+					//f_added = TRUE;
 					}
 				else {
 					if (f_vvv) {
@@ -3429,7 +3429,7 @@ void sims::build_up_group_random_process(sims *K,
 				}
 			}
 		else {
-			f_added = TRUE;
+			//f_added = TRUE;
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process: element needs to be inserted at level = " 
 					<< drop_out_level << " with image " << image << endl;
@@ -4315,6 +4315,7 @@ INT sims::find_element_of_given_order_INT(INT *Elt, INT ord, INT &nb_trials, INT
 		cout << "max_trials = " << max_trials << endl;
 		}
 	Elt1 = NEW_INT(A->elt_size_in_INT);
+	o = 0;
 	while (nb_trials < max_trials) {
 		nb_trials++;
 		if (f_vv) {

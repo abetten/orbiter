@@ -58,12 +58,19 @@ void clique_finder::init(const BYTE *label, INT n,
 	clique_finder::adj_list_coded = adj_list_coded;
 	clique_finder::f_has_bitvector = f_has_bitvector;
 	clique_finder::bitvector_adjacency = bitvector_adjacency;
+
+	f_has_row_by_row_adjacency_matrix = FALSE;
+	row_by_row_adjacency_matrix = NULL;
 	
 	if (f_v) {
 		cout << "clique_finder::init " << label << " n=" << n << " target_depth=" << target_depth << endl;
 		cout << "f_has_adj_list=" << f_has_adj_list << endl;
 		cout << "f_has_bitvector=" << f_has_bitvector << endl;
 		}
+
+
+	delinearize_adjacency_list(verbose_level);
+
 	nb_sol = 0;
 
 	pt_list = NEW_INT(n);
@@ -102,6 +109,47 @@ void clique_finder::init(const BYTE *label, INT n,
 
 	if (f_v) {
 		cout << "clique_finder::init finished" << endl;
+		}
+}
+
+void clique_finder::delinearize_adjacency_list(INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, j, k, aij;
+
+	if (f_v) {
+		cout << "clique_finder::delinearize_adjacency_list" << endl;
+		}
+	row_by_row_adjacency_matrix = NEW_PBYTE(n);
+	for (i = 0; i < n; i++) {
+		row_by_row_adjacency_matrix[i] = NEW_BYTE(n);
+		for (j = 0; j < n; j++) {
+			row_by_row_adjacency_matrix[i][j] = 0;
+			}
+		}
+	k = 0;
+	for (i = 0; i < n; i++) {
+		for (j = i + 1; j < n; j++) {
+			if (f_has_bitvector) {
+				aij = bitvector_s_i(bitvector_adjacency, k);
+				}
+			else if (f_has_adj_list) {
+				aij = adj_list_coded[k];
+				}
+			else {
+				cout << "clique_finder::delinearize_adjacency_list we don't have bitvector or adjacency list" << endl;
+				exit(1);
+				}
+			if (aij) {
+				row_by_row_adjacency_matrix[i][j] = 1;
+				row_by_row_adjacency_matrix[j][i] = 1;
+				}
+			k++;
+			}
+		}
+	f_has_row_by_row_adjacency_matrix = TRUE;
+	if (f_v) {
+		cout << "clique_finder::delinearize_adjacency_list done" << endl;
 		}
 }
 
@@ -215,6 +263,9 @@ void clique_finder::null()
 	fp_tree = NULL;
 
 	f_has_bitmatrix = FALSE;
+
+	f_has_row_by_row_adjacency_matrix = FALSE;
+	row_by_row_adjacency_matrix = NULL;
 	
 	point_labels = NULL;
 	point_is_suspicous = NULL;
@@ -293,6 +344,14 @@ void clique_finder::free()
 	if (current_clique) {
 		FREE_INT(current_clique);
 		}
+	if (f_has_row_by_row_adjacency_matrix) {
+		INT i;
+		for (i = 0; i < n; i++) {
+			FREE_BYTE(row_by_row_adjacency_matrix[i]);
+			}
+		FREE_PBYTE(row_by_row_adjacency_matrix);
+		}
+
 	null();
 }
 
@@ -540,11 +599,22 @@ INT clique_finder::is_adjacent(INT depth, INT i, INT j)
 {
 	INT a;
 
-	//a = adjacency[i * n + j];
+
+#if 0
 	if (i == j) {
 		return 0;
 		}
-	a = s_ij(i, j);
+#endif
+
+	//a = adjacency[i * n + j];
+	if (f_has_row_by_row_adjacency_matrix) {
+		a = row_by_row_adjacency_matrix[i][j];
+		}
+	else {
+		a = s_ij(i, j);
+		}
+
+
 #if 0
 	if (a == -1) {
 		a = (*call_back_is_adjacent)(this, i, j, 0/* verbose_level */);
@@ -605,12 +675,12 @@ void clique_finder::write_entry_to_tree_file(INT depth, INT verbose_level)
 
 void clique_finder::m_iji(INT i, INT j, INT a)
 {
-	INT m, n, N; //, jj, bit;
+	INT m, n; //, N; //, jj, bit;
 	//UBYTE mask;
 	
 	m = bitmatrix_m;
 	n = bitmatrix_n;
-	N = bitmatrix_N;
+	//N = bitmatrix_N;
 	if (i < 0 || i >= m) {
 		cout << "clique_finder::m_iji() addressing error, i = " << i << ", m = " << m << endl;
 		exit(1);		
@@ -653,15 +723,24 @@ INT clique_finder::s_ij(INT i, INT j)
 		return 0;
 		}
 
-	if (f_has_bitmatrix) {
+	if (f_has_row_by_row_adjacency_matrix) {
+		return row_by_row_adjacency_matrix[i][j];
+		}
+	else if (f_has_bitmatrix) {
 		return bitvector_s_i(bitmatrix_adjacency, i * n + j);
 		}
 	else if (f_has_adj_list) {
+		if (i == j) {
+			return 0;
+			}
 		k = ij2k(i, j, n);
 		aij = adj_list_coded[k];
 		return aij;
 		}
 	else if (f_has_bitvector) {
+		if (i == j) {
+			return 0;
+			}
 		k = ij2k(i, j, n);
 		aij = bitvector_s_i(bitvector_adjacency, k);
 		return aij;

@@ -679,7 +679,7 @@ void spreadsheet::tokenize(const BYTE *fname,
 	BYTE buf[BUFSIZE];
 	BYTE *p_buf;
 	BYTE str[BUFSIZE];
-	INT i, r;
+	INT i; //, r;
 
 	if (f_v) {
 		cout << "spreadsheet::tokenize file=" << fname << endl;
@@ -722,7 +722,7 @@ void spreadsheet::tokenize(const BYTE *fname,
 			}
 		//s_scan_token(&p_buf, str);
 		//s_scan_token(&p_buf, str);
-		r = s_scan_token_comma_separated(&p_buf, str);
+		/* r =*/ s_scan_token_comma_separated(&p_buf, str);
 
 		if (f_vv) {
 			cout << "Token " << setw(6) << i << " is '" << str << "'" << endl;
@@ -781,7 +781,7 @@ void spreadsheet::tokenize(const BYTE *fname,
 			}
 		//s_scan_token(&p_buf, str);
 		//s_scan_token(&p_buf, str);
-		r = s_scan_token_comma_separated(&p_buf, str);
+		/*r = */ s_scan_token_comma_separated(&p_buf, str);
 #if 0
 		if (strcmp(str, ",") == 0) {
 			continue;
@@ -1162,7 +1162,7 @@ void spreadsheet::join_with(spreadsheet *S2, INT by1, INT by2, INT verbose_level
 void spreadsheet::patch_with(spreadsheet *S2, BYTE *join_by)
 {
 	INT by1;
-	INT t0, t1, t2, t3;
+	INT t0, t1, /*t2,*/ t3;
 	INT i1, i2;
 	INT what_idx;
 	INT nb_patch = 0;
@@ -1181,7 +1181,7 @@ void spreadsheet::patch_with(spreadsheet *S2, BYTE *join_by)
 		BYTE *patch_value;
 		t0 = S2->Table[i2 * S2->nb_cols + 0];
 		t1 = S2->Table[i2 * S2->nb_cols + 1];
-		t2 = S2->Table[i2 * S2->nb_cols + 2];
+		//t2 = S2->Table[i2 * S2->nb_cols + 2];
 		t3 = S2->Table[i2 * S2->nb_cols + 3];
 		if (t0 == -1) {
 			continue;

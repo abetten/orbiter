@@ -2182,7 +2182,7 @@ void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_leve
 	INT *base_images1;
 	INT *base_images2;
 	INT *Elt1, *Elt2;
-	INT i, j, bi, oj, j0 = 0, image0 = 0, image;
+	INT i, j, /*bi,*/ oj, j0 = 0, image0 = 0, image;
 
 
 	if (f_v) {
@@ -2197,7 +2197,7 @@ void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_leve
 	element_move(Elt, Elt1, 0);
 	for (i = level; i < base_len; i++) {
 		element_base_images(Elt1, base_images1);
-		bi = base[i];
+		//bi = base[i];
 		if (f_vv) {
 			cout << "level " << i << " S->orbit_len[i]=" << S->orbit_len[i] << endl;
 			}
@@ -2597,7 +2597,7 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 	INT f_v = (verbose_level  >= 1);
 	INT f_v5 = FALSE; //(verbose_level  >= 1);
 	schreier *Sch;
-	INT i, loc, orb, first, a, a0;
+	INT i, /*loc,*/ orb, first, a, a0;
 
 	if (f_v) {
 		cout << "action::lexorder_test" << endl;
@@ -2628,7 +2628,7 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 		if (FALSE) {
 			cout << "action::lexorder_test  Looking at point " << a << endl;
 			}
-		loc = Sch->orbit_inv[a];
+		//loc = Sch->orbit_inv[a];
 		orb = Sch->orbit_number(a); //Sch->orbit_no[loc];
 		first = Sch->orbit_first[orb];
 		a0 = Sch->orbit[first];
@@ -2936,7 +2936,7 @@ void action::point_stabilizer_any_point(INT &pt,
 		cout << "action::point_stabilizer_any_point" << endl;
 		}
 	
-	INT f, len;
+	INT f; //, len;
 	longinteger_object go;
 	
 	if (f_v) {
@@ -2948,7 +2948,7 @@ void action::point_stabilizer_any_point(INT &pt,
 
 
 	f = Sch->orbit_first[0];
-	len = Sch->orbit_len[0];
+	//len = Sch->orbit_len[0];
 	pt = Sch->orbit[f];
 
 	if (f_v) {
@@ -2995,7 +2995,7 @@ void action::point_stabilizer_any_point_with_given_group(
 		cout << "action::point_stabilizer_any_point_with_given_group" << endl;
 		}
 	
-	INT f, len;
+	INT f; //, len;
 	longinteger_object go;
 	
 	if (f_v) {
@@ -3007,7 +3007,7 @@ void action::point_stabilizer_any_point_with_given_group(
 
 
 	f = Sch->orbit_first[0];
-	len = Sch->orbit_len[0];
+	//len = Sch->orbit_len[0];
 	pt = Sch->orbit[f];
 
 	if (f_v) {

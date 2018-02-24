@@ -833,27 +833,27 @@ void O4_isomorphism_4to2(finite_field *F, INT *At, INT *As, INT &f_switch, INT *
 	INT ev, fv;
 	INT P[4], Q[4], R[4], S[4];
 	INT Rx, Ry, Sx, Sy;
-	INT b11, b12, b13, b14;
-	INT b21, b22, b23, b24;
-	INT b31, b32, b33, b34;
-	INT b41, b42, b43, b44;
+	INT /*b11,*/ b12, b13, b14;
+	INT /*b21,*/ b22, b23, b24;
+	INT /*b31,*/ b32, b33, b34;
+	INT /*b41,*/ b42, b43, b44;
 
 	if (f_v) {
 		cout << "O4_isomorphism_4to2" << endl;
 		}
-	b11 = B[0 * 4 + 0];
+	//b11 = B[0 * 4 + 0];
 	b12 = B[0 * 4 + 1];
 	b13 = B[0 * 4 + 2];
 	b14 = B[0 * 4 + 3];
-	b21 = B[1 * 4 + 0];
+	//b21 = B[1 * 4 + 0];
 	b22 = B[1 * 4 + 1];
 	b23 = B[1 * 4 + 2];
 	b24 = B[1 * 4 + 3];
-	b31 = B[2 * 4 + 0];
+	//b31 = B[2 * 4 + 0];
 	b32 = B[2 * 4 + 1];
 	b33 = B[2 * 4 + 2];
 	b34 = B[2 * 4 + 3];
-	b41 = B[3 * 4 + 0];
+	//b41 = B[3 * 4 + 0];
 	b42 = B[3 * 4 + 1];
 	b43 = B[3 * 4 + 2];
 	b44 = B[3 * 4 + 3];
@@ -1119,7 +1119,7 @@ void O4_grid_coordinates_unrank(finite_field &F, INT &x1, INT &x2, INT &x3, INT 
 
 void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT pt_x4, INT *tangent_plane, INT verbose_level)
 {
-	INT A[4];
+	//INT A[4];
 	INT C[3 * 4];
 	INT q, size, x, y, z, xx, yy, zz, h, k;
 	INT x1, x2, x3, x4;
@@ -1138,10 +1138,12 @@ void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT
 		<< " pt_x4=" << pt_x4 << endl; 
 	q = F.q;
 	size = q + 1;
+#if 0
 	A[0] = pt_x1;
 	A[3] = pt_x2;
 	A[2] = F.negate(pt_x3);
 	A[1] = pt_x4;
+#endif
 	
 	INT *secants1;
 	INT *secants2;

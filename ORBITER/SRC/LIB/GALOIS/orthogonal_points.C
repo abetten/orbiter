@@ -2112,7 +2112,7 @@ void test_Orthogonal(INT epsilon, INT k, INT q)
 {
 	finite_field GFq;
 	INT *v;
-	INT i, j, a, stride = 1, n, len; //, h, wt;
+	INT i, j, a, stride = 1, /*n,*/ len; //, h, wt;
 	INT nb;
 	INT c1 = 0, c2 = 0, c3 = 0;
 	INT verbose_level = 0;
@@ -2120,7 +2120,7 @@ void test_Orthogonal(INT epsilon, INT k, INT q)
 	cout << "test_Orthogonal" << endl;
 	GFq.init(q, verbose_level);
 	v = NEW_INT(k + 1);
-	n = Witt_index(epsilon, k);
+	//n = Witt_index(epsilon, k);
 	len = k + 1;
 	nb = nb_pts_Qepsilon(epsilon, k, q);
 	cout << "Q^" << epsilon << "(" << k << "," << q << ") has " << nb << " singular points" << endl;

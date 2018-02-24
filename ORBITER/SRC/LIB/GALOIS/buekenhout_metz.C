@@ -366,11 +366,11 @@ void buekenhout_metz::init_ovoid_Uab_even(INT a, INT b, INT verbose_level)
 		}
 	
 	INT X0, X1, Y1, Z, i, aa;
-	INT a1, a2, b1, b2, delta, delta2, lambda, lambda_big, c1, c2, c3;
+	INT a1, a2, /*b1,*/ b2, delta, delta2, lambda, lambda_big, c1, c2, c3;
 	
 	a1 = components[a * 2 + 0];
 	a2 = components[a * 2 + 1];
-	b1 = components[b * 2 + 0];
+	//b1 = components[b * 2 + 0]; // b1 is unused
 	b2 = components[b * 2 + 1];
 	delta = 2;
 	delta2 = FQ->mult(delta, delta);
@@ -559,7 +559,7 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 3);
-	INT i, j, a, b, c1, c2, h;
+	INT i, j, a, /*b,*/ c1, c2, h;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital_tex" << endl;
@@ -662,11 +662,11 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 			cout << ") ";
 #endif
 
+#if 0
 			INT rk;
 			
 			rk = P2->rank_point(v);
 
-#if 0
 			//cout << rk << " ";
 
 			INT x, y, t1, t2, t3;
@@ -696,9 +696,9 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 				//exit(1);
 				}
 			FQ->print_element_with_symbol(cout, y, TRUE /* f_exponential */, 8, "\\alpha");
-#endif
 
 			b = P2->rank_point(v);
+#endif
 			}
 
 		cout << "\\\\" << endl;

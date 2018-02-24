@@ -40,7 +40,7 @@ INT t0; // the system time when the program started
 void do_collate(INT N, const BYTE *collate_output_file_mask, const BYTE *collated_fname, INT verbose_level);
 void do_scheduling(INT N, INT *list_of_cases, 
 	INT J, 
-	const BYTE *input_file_mask, 
+	INT f_input_file_mask, const BYTE *input_file_mask, 
 	const BYTE *target_file_mask, 
 	INT f_command_mask, const BYTE *command_mask, 
 	INT *excluded_cases, INT nb_excluded_cases,
@@ -267,10 +267,12 @@ int main(int argc, char **argv)
 		cout << "please use option -J <J>" << endl;
 		exit(1);
 		}
+#if 0
 	if (!f_input_file_mask) {
 		cout << "please use option -input_file_mask <input_file_mask>" << endl;
 		exit(1);
 		}
+#endif
 	if (!f_target_file_mask) {
 		cout << "please use option -target_file_mask <target_file_mask>" << endl;
 		exit(1);
@@ -300,7 +302,7 @@ int main(int argc, char **argv)
 
 	do_scheduling(N, list_of_cases, 
 		J, 
-		input_file_mask, 
+		f_input_file_mask, input_file_mask, 
 		target_file_mask, 
 		f_command_mask, command_mask, 
 		excluded_cases, nb_excluded_cases,
@@ -410,7 +412,7 @@ void do_collate(INT N, const BYTE *collate_output_file_mask, const BYTE *collate
 
 void do_scheduling(INT N, INT *list_of_cases, 
 	INT J, 
-	const BYTE *input_file_mask, 
+	INT f_input_file_mask, const BYTE *input_file_mask, 
 	const BYTE *target_file_mask, 
 	INT f_command_mask, const BYTE *command_mask, 
 	INT *excluded_cases, INT nb_excluded_cases,
@@ -427,7 +429,9 @@ void do_scheduling(INT N, INT *list_of_cases,
 		cout << "do_scheduling" << endl;
 		cout << "N = " << N << endl;
 		cout << "J = " << J << endl;
-		cout << "input_file_mask = " << input_file_mask << endl;
+		if (f_input_file_mask) {
+			cout << "input_file_mask = " << input_file_mask << endl;
+			}
 		cout << "target_file_mask = " << target_file_mask << endl;
 		cout << "f_command_mask = " << f_command_mask << endl;
 		if (f_command_mask) {
@@ -472,11 +476,13 @@ void do_scheduling(INT N, INT *list_of_cases,
 
 	for (i = 0; i < N; i++) {
 		c = list_of_cases[i];
-		sprintf(input_fname, input_file_mask, c);
-		sprintf(target_fname, target_file_mask, c);
-		if (file_size(input_fname) <= 0) {
-			cout << "The input file does not exist: please check the file " << input_fname << endl;
-			exit(1);
+		if (f_input_file_mask) {
+			sprintf(input_fname, input_file_mask, c);
+			sprintf(target_fname, target_file_mask, c);
+			if (file_size(input_fname) <= 0) {
+				cout << "The input file does not exist: please check the file " << input_fname << endl;
+				exit(1);
+				}
 			}
 		if (file_size(target_fname) > 0) {
 			task_completed[i] = 1;

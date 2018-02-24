@@ -18,7 +18,7 @@ INT tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 	INT f_vvv = (verbose_level >= 3);
 	INT f_vvvv = (verbose_level >= 4);
 	INT f_v5 = (verbose_level >= 7);
-	INT i, s, d, l2, L1, L2, cnt, new_nb_distributions; 
+	INT i, s, d, /*l2,*/ L1, L2, cnt, new_nb_distributions; 
 	INT f_ruled_out;
 	INT *ruled_out_by;
 	INT *non_zero_blocks, nb_non_zero_blocks;
@@ -26,7 +26,7 @@ INT tdo_scheme::geometric_test_for_row_scheme(partitionstack &P,
 	if (f_vvv) {
 		cout << "tdo_refine::geometric_test_for_row_scheme nb_distributions=" << nb_distributions << endl;
 		}
-	l2 = nb_col_classes[COL];
+	//l2 = nb_col_classes[COL];
 	row_refinement_L1_L2(P, f_omit1, omit1, L1, L2, verbose_level - 3);
 	if (L2 != point_type_len) {
 		cout << "tdo_refine::geometric_test_for_row_scheme L2 != point_type_len" << endl;

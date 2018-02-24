@@ -2135,7 +2135,7 @@ void schreier::subtree_draw_vertices(mp_graphics &G, INT f_circletext, INT paren
 	INT f_v = (verbose_level >= 1);
 	INT pt = orbit[i];
 	INT x, y, l, ii;
-	INT Px[2], Py[2];
+	//INT Px[2], Py[2];
 	char str[1000];
 	
 	if (f_v) {
@@ -2145,13 +2145,15 @@ void schreier::subtree_draw_vertices(mp_graphics &G, INT f_circletext, INT paren
 	x = placement_x[pt];
 	calc_y_coordinate(y, l, max_depth);
 
+#if 0
 	Px[0] = parent_x;
 	Py[0] = parent_y;
 	Px[1] = x;
 	Py[1] = y;
 	//cout << "schreier::subtree_draw_vertices " << parent_x << "," << parent_y << " - " << x << "," << y << endl;
 	//G.polygon2(Px, Py, 0, 1);
-	
+#endif
+
 	for (ii = i + 1; ii < last; ii++) {
 		if (prev[ii] == pt) {
 			subtree_draw_vertices(G, f_circletext, x, y, weight, placement_x, max_depth, ii, last, rad, 
@@ -2259,14 +2261,14 @@ void schreier::print_path(ostream &ost, INT *path, INT l)
 
 void schreier::intersection_vector(INT *set, INT len, INT *intersection_cnt)
 {
-	INT i, pt, pt_loc, o;
+	INT i, pt, /*pt_loc,*/ o;
 	
 	for (i = 0; i < nb_orbits; i++) {
 		intersection_cnt[i] = 0;
 		}
 	for (i = 0; i < len; i++) {
 		pt = set[i];
-		pt_loc = orbit_inv[pt];
+		//pt_loc = orbit_inv[pt];
 		o = orbit_number(pt); // orbit_no[pt_loc];
 		intersection_cnt[o]++;
 		}
@@ -2668,7 +2670,7 @@ void schreier::get_orbit(INT orbit_idx, INT *set, INT &len, INT verbose_level)
 void schreier::compute_orbit_statistic(INT *set, INT set_size, INT *orbit_count, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT i, a, j, o;
+	INT i, a, /*j,*/ o;
 
 	if (f_v) {
 		cout << "schreier::compute_orbit_statistic" << endl;
@@ -2681,7 +2683,7 @@ void schreier::compute_orbit_statistic(INT *set, INT set_size, INT *orbit_count,
 #endif
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
-		j = orbit_inv[a];
+		//j = orbit_inv[a];
 		o = orbit_number(a); //orbit_no[j];
 		orbit_count[o]++;
 		}
@@ -3050,12 +3052,12 @@ INT schreier::find_shortest_orbit_if_unique(INT &idx)
 void schreier::elements_in_orbit_of(INT pt, INT *orb, INT &nb, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT pos, idx, f;
+	INT /*pos,*/ idx, f;
 
 	if (f_v) {
 		cout << "schreier::elements_in_orbit_of" << endl;
 		}
-	pos = orbit_inv[pt];
+	//pos = orbit_inv[pt];
 	idx = orbit_number(pt); //orbit_no[pos];
 	f = orbit_first[idx];
 	nb = orbit_len[idx];
@@ -3146,6 +3148,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(INT *Adj, INT n, INT *&De
 			cout << "I = " << I << " f1 = " << f1 << " l1 = " << l1 << endl;
 			}
 		for (J = 0; J < nb_orbits; J++) {
+			r0 = 0;
 			f2 = orbit_first[J];
 			l2 = orbit_len[J];
 			if (f_v) {

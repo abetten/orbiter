@@ -389,7 +389,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		cout << endl;
 		}
 
-	INT nb_U_orbits_on_subset;
+	//INT nb_U_orbits_on_subset;
 	
 	G_orb.compute_point_orbit(base_pt, 0 /* verbose_level - 2*/);
 	if (f_v) {
@@ -399,7 +399,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		}
 
 	U_orb.orbits_on_invariant_subset_fast(orbit_len, orbit, verbose_level - 2);
-	nb_U_orbits_on_subset = U_orb.nb_orbits;
+	//nb_U_orbits_on_subset = U_orb.nb_orbits;
 	if (f_v) {
 		cout << "U-orbits: ";
 		U_orb.print_orbit_length_distribution(cout);

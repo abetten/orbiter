@@ -54,6 +54,7 @@ int main(int argc, char **argv)
 	INT f_restrictions = FALSE;
 	INT restrictions[1000];
 	INT nb_restrictions = 0;
+	INT f_export_magma = FALSE;
 
 
 	cout << argv[0] << endl;
@@ -143,9 +144,52 @@ int main(int argc, char **argv)
 			INT_vec_print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
 			}
+		else if (strcmp(argv[i], "-export_magma") == 0) {
+			f_export_magma = TRUE;
+			cout << "-export_magma " << endl;
+			}
 		}
 
+
+
 	if (f_file) {
+
+		if (f_export_magma) {
+
+			cout << "export_magma" << endl;
+
+
+			colored_graph CG;
+			BYTE fname_magma[1000];
+			BYTE fname_text[1000];
+
+			strcpy(fname_magma, fname);
+
+			strcpy(fname_text, fname);
+
+		
+			replace_extension_with(fname_magma, ".magma");
+			replace_extension_with(fname_text, ".txt");
+
+			cout << "exporting to magma as " << fname_magma << endl;
+
+			cout << "loading graph from file " << fname << endl;
+			CG.load(fname, verbose_level - 1);
+			cout << "found a graph with " << CG.nb_points << " points"  << endl;
+
+
+			CG.export_to_magma(fname_magma, verbose_level);
+
+			CG.export_to_text(fname_text, verbose_level);
+			
+			cout << "export_magma done" << endl;
+			}
+		else {
+			cout << "no mgama export" << endl;
+			}
+
+
+
 
 		if (f_no_colors) {
 			colored_graph CG;

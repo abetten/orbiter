@@ -764,10 +764,10 @@ void isomorph_classification_graph(action *A_base, action *A, generator *gen,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_implicit_fusion = FALSE;
-	INT t0;
+	//INT t0;
 
 
-	t0 = os_ticks();
+	//t0 = os_ticks();
 
 
 	if (f_v) {
@@ -1165,7 +1165,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(isomorph *Iso, INT orbit,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	INT id, rep, first, c;
+	INT id, rep, first; //, c;
 	INT data[1000];
 
 	if (f_v) {
@@ -1177,7 +1177,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(isomorph *Iso, INT orbit,
 
 	rep = Iso->Reps->rep[orbit];
 	first = Iso->orbit_fst[rep];
-	c = Iso->starter_number[first];
+	//c = Iso->starter_number[first];
 	id = Iso->orbit_perm[first];		
 	Iso->load_solution(id, data);
 
@@ -1357,56 +1357,56 @@ void isomorph_report_data_in_source_code_inside_tex(isomorph &Iso, const BYTE *p
 }
 
 
-void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &f, INT selection_size, INT *selection, INT verbose_level)
+void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &fp, INT selection_size, INT *selection, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	//INT f_vvv = (verbose_level >= 3);
-	INT h, rep, first, c, id, i, s;
+	INT h, rep, first, /*c,*/ id, i, s;
 	INT data[1000];
 
 	if (f_v) {
 		cout << "isomorph_report_data_in_source_code" << endl;
 		}
 
-	f << "\\chapter{The " << label_of_structure_plural << " in Numeric Form}" << endl << endl;
+	fp << "\\chapter{The " << label_of_structure_plural << " in Numeric Form}" << endl << endl;
 
-	//f << "\\clearpage" << endl << endl;
+	//fp << "\\clearpage" << endl << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 		for (i = 0; i < Iso.size; i++) {
-			f << data[i];
+			fp << data[i];
 			if (i < Iso.size - 1) {
-				f << ", ";
+				fp << ", ";
 				}
 			}
-		f << "\\\\" << endl;
+		fp << "\\\\" << endl;
 		}
-	f << "\\begin{verbatim}" << endl << endl;
-	f << "INT " << prefix << "_size = " << Iso.size << ";" << endl;
-	f << "INT " << prefix << "_nb_reps = " << selection_size << ";" << endl;
-	f << "INT " << prefix << "_reps[] = {" << endl;
+	fp << "\\begin{verbatim}" << endl << endl;
+	fp << "INT " << prefix << "_size = " << Iso.size << ";" << endl;
+	fp << "INT " << prefix << "_nb_reps = " << selection_size << ";" << endl;
+	fp << "INT " << prefix << "_reps[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
-		f << "\t";
+		fp << "\t";
 		for (i = 0; i < Iso.size; i++) {
-			f << data[i];
-			f << ", ";
+			fp << data[i];
+			fp << ", ";
 			}
-		f << endl;
+		fp << endl;
 		}
-	f << "};" << endl;
-	f << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
+	fp << "};" << endl;
+	fp << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 
@@ -1414,22 +1414,22 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso
 		
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 		if (Iso.Reps->stab[h]) {
 			Iso.Reps->stab[h]->group_order(go);
-			f << "\"";
-			go.print_not_scientific(f);
-			f << "\"," << endl;
+			fp << "\"";
+			go.print_not_scientific(fp);
+			fp << "\"," << endl;
 			}
 		else {
-			f << "\"";
-			f << "1";
-			f << "\"," << endl;
+			fp << "\"";
+			fp << "1";
+			fp << "\"," << endl;
 			}
 		}
-	f << "};" << endl;
+	fp << "};" << endl;
 	
 	{
 	INT *stab_gens_first;
@@ -1439,7 +1439,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso
 	stab_gens_first = NEW_INT(selection_size);
 	stab_gens_len = NEW_INT(selection_size);
 	fst = 0;
-	f << "INT " << prefix << "_stab_gens[] = {" << endl;
+	fp << "INT " << prefix << "_stab_gens[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		vector_ge *gens;
@@ -1462,34 +1462,34 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso
 			if (f_vv) {
 				cout << "isomorph_report_data_in_source_code_inside_tex_with_selection before extract_strong_generators_in_order generator " << j << " / " << gens->len << endl;
 				}
-			f << "";
-			Iso.A_base->element_print_for_make_element(gens->ith(j), f);
-			f << endl;
+			fp << "";
+			Iso.A_base->element_print_for_make_element(gens->ith(j), fp);
+			fp << endl;
 			}
 
 		FREE_INT(tl);
 		delete gens;
 		}
-	f << "};" << endl;
-	f << "INT " << prefix << "_stab_gens_fst[] = { ";
+	fp << "};" << endl;
+	fp << "INT " << prefix << "_stab_gens_fst[] = { ";
 	for (s = 0; s < selection_size; s++) {
-		f << stab_gens_first[s];
+		fp << stab_gens_first[s];
 		if (s < selection_size - 1) {
-			f << ", ";
+			fp << ", ";
 			}
 		}
-	f << "};" << endl;
-	f << "INT " << prefix << "_stab_gens_len[] = { ";
+	fp << "};" << endl;
+	fp << "INT " << prefix << "_stab_gens_len[] = { ";
 	for (s = 0; s < selection_size; s++) {
-		f << stab_gens_len[s];
+		fp << stab_gens_len[s];
 		if (s < selection_size - 1) {
-			f << ", ";
+			fp << ", ";
 			}
 		}
-	f << "};" << endl;
-	f << "INT " << prefix << "_make_element_size = " << Iso.A_base->make_element_size << ";" << endl;
+	fp << "};" << endl;
+	fp << "INT " << prefix << "_make_element_size = " << Iso.A_base->make_element_size << ";" << endl;
 	}
-	f << "\\end{verbatim}" << endl << endl;
+	fp << "\\end{verbatim}" << endl << endl;
 }
 
 

@@ -201,7 +201,7 @@ void finite_field::representing_matrix9_R(INT *A, INT q, INT a, INT b, INT c, IN
 void finite_field::representing_matrix9_U(INT *A, INT a, INT b, INT c, INT d, INT beta)
 {
 	INT beta_q, delta, gamma;
-	INT r, q, q1,q2,tq, tq1, tq2;
+	INT r, q, q1,q2,tq, tq1; //, tq2;
 	
 	r = e >> 1;
 	if (e != 2 * r) {
@@ -213,7 +213,7 @@ void finite_field::representing_matrix9_U(INT *A, INT a, INT b, INT c, INT d, IN
 	q2 = q + 2;
 	tq = 2 * q;
 	tq1 = tq + 1;
-	tq2 = tq + 2;
+	//tq2 = tq + 2;
 	beta_q = frobenius_power(beta, r);
 	delta = inverse(add(beta, negate(beta_q)));
 	gamma = mult(delta, beta);
@@ -567,14 +567,14 @@ void finite_field::representing_matrix8_V(INT *A, INT beta)
 
 void finite_field::representing_matrix9b(INT *A, INT beta)
 {
-	INT r, q, beta_q, delta, minus_one, i; // gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
+	INT r, /*q,*/ beta_q, delta, minus_one, i; // gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
 	
 	r = e / 2;
 	if (e != 2 * r) {
 		cout << "finite_field::representing_matrix9b field does not have a quadratic subfield" << endl;
 		exit(1);
 		}
-	q = i_power_j(p, r);
+	//q = i_power_j(p, r);
 	minus_one = negate(1);
 	beta_q = frobenius_power(beta, r);
 	delta = add(beta_q, beta);

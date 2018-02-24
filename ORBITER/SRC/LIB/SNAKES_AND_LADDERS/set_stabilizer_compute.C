@@ -611,7 +611,7 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 	INT subset[1000];
 	INT canonical_subset[1000];
 	INT i;
-	INT idx, f, local_idx, subset_rk, print_mod;
+	INT /*idx,*/ f, local_idx, subset_rk, print_mod;
 	INT *Elt1;
 	//INT f_implicit_fusion = TRUE;
 	
@@ -679,7 +679,7 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 			if (FALSE) {
 				cout << "set_stabilizer_compute::compute_frequencies after trace_set, local_idx = " << local_idx << endl;
 				}
-			idx = local_idx + f;
+			//idx = local_idx + f;
 			
 			if (FALSE /*f_vvv*/) {
 				cout << "local_idx=" << local_idx << endl;

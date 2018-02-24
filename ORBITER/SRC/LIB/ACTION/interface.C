@@ -1001,9 +1001,9 @@ void induced_action_element_dispose(action &A, INT hdl, INT verbose_level)
 		cout << "induced_action_element_dispose()" << endl;
 		}
 	if (A.type_G == product_action_t) {
-		product_action *PA;
+		//product_action *PA;
 		
-		PA = A.G.product_action_data;
+		//PA = A.G.product_action_data;
 		// do nothing!
 		}
 	else {
@@ -1318,9 +1318,9 @@ void induced_action_print_point(action &A, INT a, ostream &ost)
 		ost << a;
 		}
 	else if (A.type_G == product_action_t) {
-		product_action *PA;
+		//product_action *PA;
 		
-		PA = A.G.product_action_data;
+		//PA = A.G.product_action_data;
 		ost << a;
 		}
 	else if (A.type_G == action_on_grassmannian_t) {

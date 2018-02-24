@@ -713,7 +713,7 @@ void oracle::find_extensions(generator *gen,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
 	INT f_vvv = FALSE; //(verbose_level >= 3);
-	INT h, k, fst, len, rep;
+	INT h, k, fst, /*len,*/ rep;
 	action_by_restriction *ABR = NULL;
 
 	if (f_using_invariant_subset) {
@@ -742,7 +742,7 @@ void oracle::find_extensions(generator *gen,
 	nb_extensions = 0;
 	for (k = 0; k < O.nb_orbits; k++) {
 		fst = O.orbit_first[k];
-		len = O.orbit_len[k];
+		//len = O.orbit_len[k];
 		rep = O.orbit[fst];
 		if (f_using_invariant_subset) {
 			rep = ABR->points[rep];
@@ -1544,7 +1544,7 @@ void oracle::relabel_schreier_vector(action &AR, INT verbose_level)
 	INT n, i;
 	INT *pts;
 	INT *prev;
-	INT *label;
+	//INT *label;
 
 	if (f_v) {
 		cout << "oracle::relabel_schreier_vector" << endl;
@@ -1562,7 +1562,7 @@ void oracle::relabel_schreier_vector(action &AR, INT verbose_level)
 		}
 	if (nb_strong_generators) {
 		prev = pts + n;
-		label = prev + n;
+		//label = prev + n;
 		for (i = 0; i < n; i++) {
 			if (prev[i] >= 0) {
 				prev[i] = ABR->points[prev[i]];
