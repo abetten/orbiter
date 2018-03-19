@@ -788,6 +788,18 @@ void INT_matrix_print_tex(ostream &ost, INT *p, INT m, INT n)
 	ost << "\\end{array}" << endl;
 }
 
+void INT_matrix_print_bitwise(INT *p, INT m, INT n)
+{
+	INT i, j;
+	
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			cout << p[i * n + j];
+			}
+		cout << endl;
+		}
+}
+
 void INT_vec_distribution_compute_and_print(ostream &ost, INT *v, INT v_len)
 {
 	INT *val, *mult, len;	
@@ -883,6 +895,21 @@ void INT_set_print_tex(ostream &ost, INT *v, INT len)
 		}
 	ost << " \\}";
 }
+
+void INT_set_print_masked_tex(ostream &ost, 
+	INT *v, INT len, const BYTE *mask_begin, const BYTE *mask_end)
+{
+	INT i;
+	
+	ost << "\\{ ";
+	for (i = 0; i < len; i++) {
+		ost << mask_begin << v[i] << mask_end;
+		if (i < len - 1)
+			ost << ", ";
+		}
+	ost << " \\}";
+}
+
 
 void INT_set_print_tex_for_inline_text(ostream &ost, INT *v, INT len)
 {
@@ -1975,11 +2002,15 @@ static void test_swap()
 	ptr = (char *) &test;
 	if (ptr[0] == 0x44) {
 		f_has_swap = TRUE;
-		//cout << "we have a swap" << endl;
+		cout << "we have a swap" << endl;
+		}
+	else if (ptr[0] == 0x11) {
+		f_has_swap = FALSE;
+		cout << "we don't have a swap" << endl;
 		}
 	else {
-		f_has_swap = FALSE;
-		//cout << "we don't have a swap" << endl;
+		cout << "The test_swap() test is inconclusive" << endl;
+		exit(1); 
 		}
 	f_has_swap_initialized = TRUE;
 }
@@ -2000,11 +2031,11 @@ void block_swap_bytes(SCHAR *ptr, INT size, INT no)
 		test_swap();
 	if ((f_has_swap) && (size > 1)) {
 
-		for(; no--; ) {
+		for (; no--; ) {
 	
 			ptr_start = ptr;
 			ptr_end = ptr_start + (size - 1);
-			for(i = size / 2; i--; ) {
+			for (i = size / 2; i--; ) {
 				chr = *ptr_start;
 				*ptr_start++ = *ptr_end;
 				*ptr_end-- = chr;
@@ -2914,7 +2945,7 @@ INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
 
 	if (f_v) {
 		cout << "count_number_of_orbits_in_file " << fname << endl;
-		cout << "trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "count_number_of_orbits_in_file trying to read file " << fname << " of size " << file_size(fname) << endl;
 		}
 
 	if (file_size(fname) < 0) {
@@ -2951,15 +2982,21 @@ INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
 		s_scan_int(&p_buf, &len);
 		if (len == -1) {
 			if (f_v) {
-				cout << "found a complete file with " << nb_sol << " solutions" << endl;
+				cout << "count_number_of_orbits_in_file found a complete file with " << nb_sol << " solutions" << endl;
 				}
 			break;
+			}
+		else {
+			if (f_v) {
+				cout << "count_number_of_orbits_in_file found a set of size " << len << endl;
+				}
 			}
 		nb_sol++;
 		}
 	}
 	ret = nb_sol;
 //finish:
+
 	FREE_BYTE(buf);
 
 	return ret;
@@ -3329,8 +3366,14 @@ void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT ver
 	ifstream f(fname);
 	
 	f >> set_size;
+	if (f_v) {
+		cout << "read_set_from_file allocating set of size " << set_size << endl;
+		}
 	the_set = NEW_INT(set_size);
 	
+	if (f_v) {
+		cout << "read_set_from_file reading set of size " << set_size << endl;
+		}
 	for (i = 0; i < set_size; i++) {
 		f >> a;
 		//if (f_v) {
@@ -3432,7 +3475,10 @@ void write_set_to_file_as_INT4(const BYTE *fname, INT *the_set, INT set_size, IN
 	f.write((char *) &a, sizeof(INT4));
 	b = a;
 	if (b != set_size) {
-		cout << "write_set_to_file_as_INT4 data loss" << endl;
+		cout << "write_set_to_file_as_INT4 data loss regarding set_size" << endl;
+		cout << "set_size=" << set_size << endl;
+		cout << "a=" << a << endl;
+		cout << "b=" << b << endl;
 		exit(1);
 		}
 	for (i = 0; i < set_size; i++) {
@@ -3441,6 +3487,53 @@ void write_set_to_file_as_INT4(const BYTE *fname, INT *the_set, INT set_size, IN
 		b = a;
 		if (b != the_set[i]) {
 			cout << "write_set_to_file_as_INT4 data loss" << endl;
+			cout << "i=" << i << endl;
+			cout << "the_set[i]=" << the_set[i] << endl;
+			cout << "a=" << a << endl;
+			cout << "b=" << b << endl;
+			exit(1);
+			}
+		}
+	}
+	if (f_v) {
+		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		}
+}
+
+void write_set_to_file_as_INT8(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i;
+	INT8 a;
+	INT b;
+	
+	if (f_v) {
+		cout << "write_set_to_file_as_INT8 opening file " << fname << " for writing" << endl;
+		}
+	{
+	ofstream f(fname, ios::binary);
+	
+
+	a = (INT8) set_size;
+	f.write((char *) &a, sizeof(INT8));
+	b = a;
+	if (b != set_size) {
+		cout << "write_set_to_file_as_INT8 data loss regarding set_size" << endl;
+		cout << "set_size=" << set_size << endl;
+		cout << "a=" << a << endl;
+		cout << "b=" << b << endl;
+		exit(1);
+		}
+	for (i = 0; i < set_size; i++) {
+		a = (INT8) the_set[i];
+		f.write((char *) &a, sizeof(INT8));
+		b = a;
+		if (b != the_set[i]) {
+			cout << "write_set_to_file_as_INT8 data loss" << endl;
+			cout << "i=" << i << endl;
+			cout << "the_set[i]=" << the_set[i] << endl;
+			cout << "a=" << a << endl;
+			cout << "b=" << b << endl;
 			exit(1);
 			}
 		}
@@ -4152,6 +4245,29 @@ void INT_matrix_write_csv(const BYTE *fname, INT *M, INT m, INT n)
 	}
 }
 
+void double_matrix_write_csv(const BYTE *fname, double *M, INT m, INT n)
+{
+	INT i, j;
+
+	{
+	ofstream f(fname);
+	
+	f << "Row";
+	for (j = 0; j < n; j++) {
+		f << ",C" << j;
+		}
+	f << endl;
+	for (i = 0; i < m; i++) {
+		f << i;
+		for (j = 0; j < n; j++) {
+			f << "," << M[i * n + j];
+			}
+		f << endl;
+		}
+	f << "END" << endl;
+	}
+}
+
 void INT_matrix_write_csv_with_labels(const BYTE *fname, INT *M, INT m, INT n, const BYTE **column_label)
 {
 	INT i, j;
@@ -4205,6 +4321,41 @@ void INT_matrix_read_csv(const BYTE *fname, INT *&M, INT &m, INT &n, INT verbose
 	}
 	if (f_v) {
 		cout << "INT_matrix_read_csv done" << endl;
+		}
+
+}
+
+void double_matrix_read_csv(const BYTE *fname, double *&M, INT &m, INT &n, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, j;
+
+	if (f_v) {
+		cout << "double_matrix_read_csv reading file " << fname << endl;
+		}
+	if (file_size(fname) <= 0) {
+		cout << "double_matrix_read_csv file " << fname << " does not exist or is empty" << endl;
+		cout << "file_size(fname)=" << file_size(fname) << endl;
+		exit(1);
+		}
+	{
+	spreadsheet S;
+	double d;
+
+	S.read_spreadsheet(fname, 0/*verbose_level - 1*/);
+
+	m = S.nb_rows - 1;
+	n = S.nb_cols - 1;
+	M = new double [m * n];
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			sscanf(S.get_string(i + 1, j + 1), "%lf", &d);
+			M[i * n + j] = d;
+			}
+		}
+	}
+	if (f_v) {
+		cout << "double_matrix_read_csv done" << endl;
 		}
 
 }
@@ -4803,6 +4954,75 @@ void povray_animation_rotate_around_origin_and_given_vector(double *v, ostream &
 	ost << endl;
 }
 
+void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(double *v, double angle_zero_one, ostream &ost)
+{
+	double A[9], Av[9];
+
+	orthogonal_transformation_from_point_to_basis_vector(v, 
+		A, Av, 0 /* verbose_level */);
+	
+	ost << "	// the next three steps will perform a rotation" << endl;
+	ost << "	// around the axis of symmetry 1,1,1:" << endl;
+	ost << endl;
+	ost << "	// move 1,1,1 to sqrt(3),0,0:" << endl;
+	ost << "	matrix<" << endl;
+	ost << "	";
+	output_double(A[0], ost);
+	ost << ",";
+	output_double(A[1], ost);
+	ost << ",";
+	output_double(A[2], ost);
+	ost << ",";
+	ost << "	";
+	output_double(A[3], ost);
+	ost << ",";
+	output_double(A[4], ost);
+	ost << ",";
+	output_double(A[5], ost);
+	ost << ",";
+	ost << "	";
+	output_double(A[6], ost);
+	ost << ",";
+	output_double(A[7], ost);
+	ost << ",";
+	output_double(A[8], ost);
+	ost << ",";
+	ost << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+	ost << "        rotate <" << angle_zero_one * 360. << ",0,0> " << endl;
+	ost << endl;
+	ost << "	// move sqrt(3),0,0 back to 1,1,1:" << endl;
+	ost << endl;
+	ost << "	matrix<" << endl;
+	ost << "	";
+	output_double(Av[0], ost);
+	ost << ",";
+	output_double(Av[1], ost);
+	ost << ",";
+	output_double(Av[2], ost);
+	ost << ",";
+	ost << "	";
+	output_double(Av[3], ost);
+	ost << ",";
+	output_double(Av[4], ost);
+	ost << ",";
+	output_double(Av[5], ost);
+	ost << ",";
+	ost << "	";
+	output_double(Av[6], ost);
+	ost << ",";
+	output_double(Av[7], ost);
+	ost << ",";
+	output_double(Av[8], ost);
+	ost << ",";
+	ost << endl;
+	ost << "	0,0,0>" << endl;
+	ost << endl;
+	ost << endl;
+}
+
 void povray_end(ostream &ost)
 {
 	ost << "	// and now we pull the axis 1,1,1 up:" << endl;
@@ -4935,6 +5155,68 @@ void test_typedefs()
 		cout << "warning: sizeof(UINT2)=" << sizeof(UINT8) << endl;
 		}
 	cout << "test_typedefs() done" << endl;
+}
+
+void concatenate_files(const BYTE *fname_in_mask, INT N, 
+	const BYTE *fname_out, const BYTE *EOF_marker, INT f_title_line, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	BYTE fname[1000];
+	BYTE *buf;
+	INT h, cnt;
+
+	if (f_v) {
+		cout << "concatenate_files " << fname_in_mask << " N=" << N << " fname_out=" << fname_out << endl;
+		}
+
+	buf = NEW_BYTE(MY_BUFSIZE);
+
+	{
+	ofstream fp_out(fname_out);
+	for (h = 0; h < N; h++) {
+		sprintf(fname, fname_in_mask, h);
+		if (file_size(fname) < 0) {
+			cout << "concatenate_files input file does not exist" << endl;
+			exit(1);
+			}
+		
+			{
+			ifstream fp(fname);
+
+			cnt = 0;
+			while (TRUE) {
+				if (fp.eof()) {
+					cout << "Encountered End-of-file without having seem EOF marker, perhaps the file is corrupt. I was trying to read the file " << fname << endl;
+					//exit(1);
+					break;
+					}
+				
+				fp.getline(buf, MY_BUFSIZE, '\n');	
+				cout << "Read: " << buf << endl;
+				if (strncmp(buf, EOF_marker, strlen(EOF_marker)) == 0) {
+					break;
+					}
+				if (f_title_line) {
+					if (h == 0 || cnt) {
+						fp_out << buf << endl;
+						}
+					}
+				else {
+					fp_out << buf << endl;
+					}
+				cnt++;
+				}
+			}
+		} // next h
+	fp_out << EOF_marker << endl;
+	}
+	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	FREE_BYTE(buf);
+	if (f_v) {
+		cout << "concatenate_files done" << endl;
+		}
+
 }
 
 

@@ -1814,7 +1814,7 @@ void surface_classify_wedge::report_surface(ostream &ost, INT orbit_index, INT v
 	surface_object *SO;
 
 	SO = new surface_object;
-	SO->init(Surf, Lines, equation, verbose_level);
+	SO->init(Surf, Lines, equation, TRUE /*f_find_double_six_and_rearrange_lines*/, verbose_level);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface before SO->enumerate_points" << endl;

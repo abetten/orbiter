@@ -1530,7 +1530,7 @@ void TP_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_size,
 
 
 
-INT BLT_nb_reps(INT q, INT k)
+INT BLT_nb_reps(INT q)
 {
 	INT nb;
 
@@ -1590,6 +1590,9 @@ INT BLT_nb_reps(INT q, INT k)
 		}
 	else if (q == 53) {
 		nb = BLT_53_nb_reps;
+		}
+	else if (q == 71) {
+		nb = BLT_71_nb_reps;
 		}
 	else {
 		cout << "BLT_nb_reps q=" << q << " I don't have information for this case" << endl;
@@ -1698,6 +1701,11 @@ INT *BLT_representative(INT q, INT no)
 		nb = BLT_53_nb_reps;
 		sz = BLT_53_size;
 		}
+	else if (q == 71) {
+		p = BLT_71_reps;
+		nb = BLT_71_nb_reps;
+		sz = BLT_71_size;
+		}
 	else {
 		cout << "BLT_representative q=" << q << " I don't have information for this field order" << endl;
 		exit(1);
@@ -1714,7 +1722,7 @@ INT *BLT_representative(INT q, INT no)
 	return p;
 }
 
-void BLT_stab_gens(INT q, INT k, INT no, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void BLT_stab_gens(INT q, INT no, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
@@ -1871,6 +1879,14 @@ void BLT_stab_gens(INT q, INT k, INT no, INT *&data, INT &nb_gens, INT &data_siz
 		f = BLT_53_stab_gens_fst[no];
 		l = BLT_53_stab_gens_len[no];
 		stab_order = BLT_53_stab_order[no];
+		}
+	else if (q == 71) {
+		Reps = BLT_71_stab_gens;
+		nb = BLT_71_nb_reps;
+		make_element_size = BLT_71_make_element_size;
+		f = BLT_71_stab_gens_fst[no];
+		l = BLT_71_stab_gens_len[no];
+		stab_order = BLT_71_stab_order[no];
 		}
 	else {
 		cout << "BLT_representative q=" << q << " I don't have information for this field order" << endl;
@@ -3648,6 +3664,12 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 
 
 void create_Law_71_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+// This example can be found in Maska Law's thesis on page 115.
+// Maska Law: Flocks, generalised quadrangles and translatrion planes from BLT-sets,
+// The University of Western Australia, 2003.
+// Note the coordinates here are different (for an unknown reason).
+// Law suggests to construct an infinite family starting form the subgroup A_4 of 
+// the stabilizer of the Fisher/Thas/Walker/Kantor examples.
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);

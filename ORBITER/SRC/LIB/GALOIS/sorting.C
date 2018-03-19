@@ -856,6 +856,40 @@ INT vec_search_general(void *vec,
 	return f_found;
 }
 
+INT INT_vec_search_and_insert_if_necessary(INT *v, INT &len, INT a)
+{
+	INT idx, t;
+
+	if (!INT_vec_search(v, len, a, idx)) {
+		for (t = len - 1; t >= idx; t--) {
+			v[t + 1] = v[t];
+			}
+		v[idx] = a;
+		len++;
+		return TRUE;
+		}
+	else {
+		return FALSE;
+		}
+}
+
+INT INT_vec_search_and_remove_if_found(INT *v, INT &len, INT a)
+{
+	INT idx, t;
+
+	if (INT_vec_search(v, len, a, idx)) {
+		for (t = idx; t < len - 1; t++) {
+			v[t] = v[t + 1];
+			}
+		len--;
+		return TRUE;
+		}
+	else {
+		return FALSE;
+		}
+}
+
+
 INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx the position where it should be inserted if 

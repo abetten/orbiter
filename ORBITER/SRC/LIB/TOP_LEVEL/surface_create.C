@@ -106,6 +106,23 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			}
 		f_has_lines = TRUE;
 
+		Sg = new strong_generators;
+		//Sg->init(Surf_A->A, verbose_level);
+		if (f_v) {
+			cout << "surface_create::init before Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+			}
+		Sg->generators_for_the_stabilizer_of_the_cubic_surface_family_24(Surf_A->A, 
+			F, FALSE /* f_with_normalizer */, f_semilinear, 
+			verbose_level);
+		if (f_v) {
+			cout << "surface_create::init after Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+			}
+		f_has_group = TRUE;
+
+		sprintf(prefix, "family_q%ld_a%ld", F->q, Descr->parameter_a);
+		sprintf(label_txt, "family_q%ld_a%ld", F->q, Descr->parameter_a);
+		sprintf(label_tex, "family\\_q%ld\\_a%ld", F->q, Descr->parameter_a);
+		
 		}
 	else if (Descr->f_by_coefficients) {
 
@@ -138,6 +155,10 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			coeffs[b] = a;
 			}
 		FREE_INT(surface_coeffs);
+		f_has_lines = FALSE;
+		sprintf(prefix, "by_coefficients_q%ld", F->q);
+		sprintf(label_txt, "by_coefficients_q%ld", F->q);
+		sprintf(label_tex, "by\\_coefficients\\_q%ld", F->q);
 		}
 	else if (Descr->f_catalogue) {
 
@@ -169,6 +190,10 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			F, Descr->iso, 
 			verbose_level);
 		f_has_group = TRUE;
+
+		sprintf(prefix, "catalogue_q%ld_%ld", F->q, Descr->iso);
+		sprintf(label_txt, "catalogue_q%ld_%ld", F->q, Descr->iso);
+		sprintf(label_tex, "catalogue\\_q%ld\\_%ld", F->q, Descr->iso);
 		if (f_v) {
 			cout << "surface_create::init after Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
 			}
@@ -221,6 +246,18 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 
 		Sg = AL->Aut_gens->create_copy();
 		f_has_group = TRUE;
+		f_has_lines = FALSE;
+		sprintf(prefix, "arc_q%ld", F->q);
+		sprintf(label_txt, "arc_q%ld", F->q);
+		sprintf(label_tex, "arc\\_q%ld", F->q);
+
+		INT i;
+
+		for (i = 0; i < 6; i++) {
+			sprintf(prefix + strlen(prefix), "_%ld", arc[i]);
+			sprintf(label_txt + strlen(label_txt), "_%ld", arc[i]);
+			sprintf(label_tex + strlen(label_tex), "\\_%ld", arc[i]);
+			}
 		
 		//AL->print(fp);
 
@@ -247,10 +284,16 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 		INT_vec_print(cout, Lines, 27);
 		cout << endl;
 		}
+	else {
+		cout << "surface_create::init The surface has no lines computed" << endl;
+		}
 
 	if (f_has_group) {
 		cout << "surface_create::init the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
+		}
+	else {
+		cout << "surface_create::init The surface has no group computed" << endl;
 		}
 
 

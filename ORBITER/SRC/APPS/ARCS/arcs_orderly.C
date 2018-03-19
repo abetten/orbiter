@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 	cout << "k=" << k << endl;
 	cout << "q=" << q << endl;
 	cout << "poly=";
-	if (poly) {
+	if (f_poly) {
 		cout << poly;
 		}
 	else {
@@ -200,7 +200,7 @@ int main(int argc, char **argv)
 void do_arc_lifting(projective_space *P, INT k, 
 	INT *arc, INT arc_sz, INT target_sz, INT verbose_level)
 {
-	INT d, i;
+	INT /*d,*/ i;
 
 	
 	::target_sz = target_sz;
@@ -209,7 +209,7 @@ void do_arc_lifting(projective_space *P, INT k,
 	INT_vec_copy(arc, Arc, arc_sz);
 
 	cout << "do_arc_lifting" << endl;
-	d = P->n + 1;
+	//d = P->n + 1;
 	F = P->F;
 	
 	Nb_total = NEW_INT(target_sz + 1);

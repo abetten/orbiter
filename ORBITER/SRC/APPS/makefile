@@ -8,6 +8,7 @@ all: ;
 	cd PROJECTIVE_SPACE; $(MAKE) all
 	cd REGULAR_LS; $(MAKE) all
 	cd SUBSPACE_ORBITS; $(MAKE) all
+	cd SURFACES; $(MAKE) all
 	cd TDO; $(MAKE) all
 	cd TOOLS; $(MAKE) all
 	cd TRANSLATION_PLANE; $(MAKE) all
@@ -22,6 +23,7 @@ clean: ;
 	cd PROJECTIVE_SPACE; $(MAKE) clean
 	cd REGULAR_LS; $(MAKE) clean
 	cd SUBSPACE_ORBITS; $(MAKE) clean
+	cd SURFACES; $(MAKE) clean
 	cd TDO; $(MAKE) clean
 	cd TOOLS; $(MAKE) clean
 	cd TRANSLATION_PLANE; $(MAKE) clean

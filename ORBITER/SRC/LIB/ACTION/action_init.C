@@ -54,7 +54,7 @@ void action::init_orthogonal_group(INT epsilon,
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	allocate_element_data();
 	init_function_pointers_induced_action();
-
+	make_element_size = A->make_element_size;
 
 	sprintf(group_prefix, "O%ld_%ld_%ld", epsilon, n, q);
 	sprintf(label, "O^%s(%ld,%ld)", plus_minus_string(epsilon), n, q);

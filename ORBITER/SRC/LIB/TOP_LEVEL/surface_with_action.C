@@ -514,12 +514,10 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 	INT *Arc6, 
 	const BYTE *arc_label, const BYTE *arc_label_short, 
 	INT nb_surfaces, 
-	arc_generator *Gen, 
+	six_arcs_not_on_a_conic *Six_arcs, 
 	INT *Arc_identify_nb, 
 	INT *Arc_identify, 
 	INT *f_deleted, 
-	INT *Not_on_conic_idx, 
-	INT nb_arcs_not_on_conic, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -737,7 +735,13 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		Surf->prepare_clebsch_map(ds, ds_row, line1, line2, transversal, 0 /*verbose_level*/);
 
 		if (f_v) {
-			cout << "line1=" << line1 << " line2=" << line2 << " transversal=" << transversal << endl;
+			cout << "line1=" << line1 
+				<< " = " << Surf->Line_label_tex[line1] 
+				<< " line2=" << line2 
+				<< " = " << Surf->Line_label_tex[line2] 
+				<< " transversal=" << transversal 
+				<< " = " << Surf->Line_label_tex[transversal] 
+				<< endl;
 			}
 	
 
@@ -763,12 +767,14 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		plane_rk_global = SOA->SO->Tritangent_planes[plane_rk];
 
 		if (f_v) {
-			cout << "transversal = " << transversal << endl;
+			cout << "transversal = " << transversal 
+				<< " = " << Surf->Line_label_tex[transversal] 
+				<< endl;
 			cout << "plane_rk = " << plane_rk << " = " << plane_rk_global << endl;
 			}
 		if (f_log_fp) {
-			fp << "transversal = " << transversal << "\\\\" << endl;
-			fp << "plane\\_rk = " << plane_rk << " = " << plane_rk_global << "\\\\" << endl;
+			fp << "transversal = " << transversal << " = " << Surf->Line_label_tex[transversal] << "\\\\" << endl;
+			fp << "plane\\_rk = \\pi_{" << plane_rk << "} = \\pi_{" << Surf->Eckard_point_label_tex[plane_rk] << "} = " << plane_rk_global << "\\\\" << endl;
 
 
 			fp << "The plane is:" << endl;
@@ -813,20 +819,35 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		Clebsch_coeff = NEW_INT(SOA->SO->nb_pts * 4);
 
 		if (!Surf->clebsch_map(SOA->SO->Lines, SOA->SO->Pts, SOA->SO->nb_pts, line_idx, plane_rk_global, 
-			Clebsch_map, Clebsch_coeff, 0 /*verbose_level*/)) {
+			Clebsch_map, Clebsch_coeff, verbose_level)) {
 			cout << "The plane contains one of the lines, this should not happen" << endl;
 			exit(1);
+			}
+		if (f_log_fp) {
+			fp << "Clebsch map for lines " << line1 
+				<< " = " << Surf->Line_label_tex[line1] << ", " 
+				<< line2 << " = " 
+				<< Surf->Line_label_tex[line2] 
+				<< "\\\\" << endl;
+
+			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
 			}
 
 		
 
 		if (f_v) {
-			cout << "clebsch map for lines " << line1 << ", " << line2 << " before clebsch_map_print_fibers:" << endl;
+			cout << "clebsch map for lines " << line1 
+				<< " = " << Surf->Line_label_tex[line1] << ", " 
+				<< line2 << " = " << Surf->Line_label_tex[line2] 
+				<< " before clebsch_map_print_fibers:" << endl;
 			}
 		SOA->SO->clebsch_map_print_fibers(Clebsch_map);
 
 		if (f_v) {
-			cout << "clebsch map for lines " << line1 << ", " << line2 << "  before clebsch_map_find_arc_and_lines:" << endl;
+			cout << "clebsch map for lines " << line1 
+				<< " = " << Surf->Line_label_tex[line1] << ", " 
+				<< line2 << " = " << Surf->Line_label_tex[line2] 
+				<< "  before clebsch_map_find_arc_and_lines:" << endl;
 			}
 
 		SOA->SO->clebsch_map_find_arc_and_lines(Clebsch_map, Arc, Blown_up_lines, 0 /* verbose_level */);
@@ -849,28 +870,34 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 
 
 		if (f_log_fp) {
-			fp << "Clebsch map for lines " << line1 << ", " << line2 << " yields arc = ";
+			fp << "Clebsch map for lines " << line1 
+				<< " = " << Surf->Line_label_tex[line1] << ", " 
+				<< line2 << " = " << Surf->Line_label_tex[line2] 
+				<< " yields arc = ";
 			INT_vec_print(fp, Arc, 6);
 			fp << " : blown up lines = ";
 			INT_vec_print(fp, Blown_up_lines, 6);
 			fp << "\\\\" << endl;
+
+			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
 			}
 
 
-		Gen->gen->identify(Arc, 6, transporter, orbit_at_level, 0 /*verbose_level */);
+		Six_arcs->Gen->gen->identify(Arc, 6, transporter, orbit_at_level, 0 /*verbose_level */);
 
 
 	
 
 		INT idx;
 			
-		if (!INT_vec_search(Not_on_conic_idx, nb_arcs_not_on_conic, orbit_at_level, idx)) {
+		if (!INT_vec_search(Six_arcs->Not_on_conic_idx, 
+			Six_arcs->nb_arcs_not_on_conic, orbit_at_level, idx)) {
 			cout << "could not find orbit" << endl;
 			exit(1);
 			}
 		f_deleted[idx] = TRUE;
 
-		Arc_identify[nb_surfaces * nb_arcs_not_on_conic + j] = idx;
+		Arc_identify[nb_surfaces * Six_arcs->nb_arcs_not_on_conic + j] = idx;
 
 
 		if (f_v) {
@@ -897,7 +924,9 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		}
 	if (f_log_fp) {
 		fp << "The following " << Arc_identify_nb[nb_surfaces] << " arcs are involved with surface " <<   nb_surfaces << ": $";
-		INT_vec_print(fp, Arc_identify + nb_surfaces * nb_arcs_not_on_conic, Arc_identify_nb[nb_surfaces]);
+		INT_vec_print(fp, 
+			Arc_identify + nb_surfaces * Six_arcs->nb_arcs_not_on_conic, 
+			Arc_identify_nb[nb_surfaces]);
 		fp << "$\\\\" << endl;
 		}
 

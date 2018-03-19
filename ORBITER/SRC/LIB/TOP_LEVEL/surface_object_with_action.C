@@ -148,8 +148,10 @@ INT surface_object_with_action::init_equation(surface_with_action *Surf_A, INT *
 
 
 
-void surface_object_with_action::init(surface_with_action *Surf_A, INT *Lines, INT *eqn, 
-	strong_generators *Aut_gens, INT verbose_level)
+void surface_object_with_action::init(surface_with_action *Surf_A, 
+	INT *Lines, INT *eqn, 
+	strong_generators *Aut_gens, INT f_find_double_six_and_rearrange_lines, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -166,7 +168,7 @@ void surface_object_with_action::init(surface_with_action *Surf_A, INT *Lines, I
 	if (f_v) {
 		cout << "surface_object_with_action::init before SO->init" << endl;
 		}
-	SO->init(Surf_A->Surf, Lines, eqn, verbose_level);
+	SO->init(Surf_A->Surf, Lines, eqn, f_find_double_six_and_rearrange_lines, verbose_level);
 	if (f_v) {
 		cout << "surface_object_with_action::init after SO->init" << endl;
 		}
@@ -670,10 +672,10 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	transporter = NEW_INT(Surf_A->A->elt_size_in_INT);
 
-	cout << "cheat_sheet The surface has points not on lines, we are computing the quartic" << endl;
+	cout << "surface_object_with_action::quartic The surface has points not on lines, we are computing the quartic" << endl;
 	compute_quartic(0 /* pt_orbit */, pt_A, pt_B, transporter, SO->eqn, equation_nice, verbose_level);
 
-	cout << "surface_object_with_action::compute_quartic equation_nice=" << endl;
+	cout << "surface_object_with_action::quartic equation_nice=" << endl;
 	Surf->Poly3_4->print_equation(cout, equation_nice);
 	cout << endl;
 	
@@ -696,9 +698,9 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	INT *f2;
 	INT *f3;
 	
-	cout << "cheat_sheet before Surf->split_nice_equation" << endl;
+	cout << "surface_object_with_action::quartic before Surf->split_nice_equation" << endl;
 	Surf->split_nice_equation(equation_nice, f1, f2, f3, 0 /* verbose_level */);
-	cout << "cheat_sheet after Surf->split_nice_equation" << endl;
+	cout << "surface_object_with_action::quartic after Surf->split_nice_equation" << endl;
 
 
 	cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) + x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
@@ -731,7 +733,7 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	Pts_on_surface = NEW_INT(nb_pts_on_surface);
 
 	
-	cout << "cheat_sheet before Surf_A->A->map_a_set_and_reorder" << endl;
+	cout << "surface_object_with_action::quartic before Surf_A->A->map_a_set_and_reorder" << endl;
 	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface, nb_pts_on_surface, transporter, 0 /* verbose_level */);
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		Surf->unrank_point(v, Pts_on_surface[i]);
@@ -781,7 +783,7 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	
 	INT *tangent_quadric;
 
-	cout << "cheat_sheet before Surf->assemble_tangent_quadric" << endl;
+	cout << "surface_object_with_action::quartic before Surf->assemble_tangent_quadric" << endl;
 	Surf->assemble_tangent_quadric(f1, f2, f3, tangent_quadric, verbose_level);
 
 	ost << "The tangent quadric is given as" << endl;
@@ -796,7 +798,7 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	
 	Pts_on_tangent_quadric = NEW_INT(Surf->P->N_points);
 	
-	cout << "cheat_sheet before Surf->Poly2_4->enumerate_points" << endl;
+	cout << "surface_object_with_action::quartic before Surf->Poly2_4->enumerate_points" << endl;
 	Surf->Poly2_4->enumerate_points(tangent_quadric, Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 0 /* verbose_level */);
 	cout << "We found " << nb_pts_on_tangent_quadric << " points on the tangent quadric." << endl;
 
@@ -894,7 +896,7 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	Pts_on_curve = NEW_INT(Surf->P2->N_points);
 
-	cout << "cheat_sheet before Surf->Poly4_x123->enumerate_points" << endl;
+	cout << "surface_object_with_action::quartic before Surf->Poly4_x123->enumerate_points" << endl;
 	Surf->Poly4_x123->enumerate_points(curve, Pts_on_curve, sz_curve, 0 /* verbose_level */);
 	cout << "We found " << sz_curve << " points on the quartic quadric." << endl;
 
@@ -1021,6 +1023,13 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet before SO->print_points" << endl;
 		}
 	SO->print_points(ost);
+
+
+	if (f_v) {
+		cout << "surface_object_with_action::cheat_sheet before SO->print_lines_with_points_on_them" << endl;
+		}
+	SO->print_lines_with_points_on_them(ost);
+
 
 
 	if (f_v) {

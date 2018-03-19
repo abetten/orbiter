@@ -356,11 +356,21 @@ void isomorph::read_solutions_from_clique_finder(INT nb_files, const BYTE **fnam
 		INT **Solutions;
 		INT the_case, h; //, u, v;
 		INT nb_solutions_total;
+		BYTE fname_summary[1000];
+		BYTE extension[1000];
 		
+		strcpy(fname_summary, fname[i]);
+		chop_off_extension_if_present(fname_summary, extension);
+		strcat(fname_summary, "_summary.csv");
+
 		count_number_of_solutions_in_file_by_case(fname[i], 
 			nb_solutions, case_nb, nb_cases, 
 			verbose_level - 2);
 
+		
+		INT_vecs_write_csv(case_nb, nb_solutions, nb_cases, 
+			fname_summary, "Case_nb", "Nb_sol");
+		
 		nb_solutions_total = 0;
 		for (h = 0; h < nb_cases; h++) {
 			nb_solutions_total += nb_solutions[h];

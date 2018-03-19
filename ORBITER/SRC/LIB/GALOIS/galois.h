@@ -507,6 +507,7 @@ public:
 	INT *private_mult_table();
 	INT zero();
 	INT one();
+	INT minus_one();
 	INT is_zero(INT i);
 	INT is_one(INT i);
 	INT mult(INT i, INT j);
@@ -869,6 +870,9 @@ public:
 	// returns TRUE if a map exists
 	INT BallChowdhury_matrix_entry(INT *Coord, INT *C, INT *U, INT k, INT sz_U, 
 		INT *T, INT verbose_level);
+	void cubic_surface_family_24_generators(INT f_with_normalizer, 
+		INT f_semilinear, 
+		INT *&gens, INT &nb_gens, INT &data_size, INT &group_order, INT verbose_level);
 
 	// ####################################################################################
 	// finite_field_representations.C:
@@ -2650,9 +2654,9 @@ INT TP_nb_reps(INT q, INT k);
 INT *TP_representative(INT q, INT k, INT i);
 void TP_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order);
 
-INT BLT_nb_reps(INT q, INT k);
+INT BLT_nb_reps(INT q);
 INT *BLT_representative(INT q, INT no);
-void BLT_stab_gens(INT q, INT k, INT no, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order);
+void BLT_stab_gens(INT q, INT no, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order);
 
 
 
@@ -2804,7 +2808,7 @@ public:
 	INT nb_of_subspaces(INT verbose_level);
 	void print_single_generator_matrix_tex(ostream &ost, INT a);
 	void print_set(INT *v, INT len);
-	void print_set_tex(ofstream &fp, INT *v, INT len);
+	void print_set_tex(ostream &ost, INT *v, INT len);
 	INT nb_points_covered(INT verbose_level);
 	void points_covered(INT *the_points, INT verbose_level);
 	void unrank_INT_here(INT *Mtx, INT rk, INT verbose_level);
@@ -2984,7 +2988,6 @@ public:
 
 
 
-
 // ####################################################################################
 // projective.C:
 // ####################################################################################
@@ -3035,6 +3038,7 @@ INT PHG_element_rank(finite_ring &R, INT *v, INT stride, INT len);
 void PHG_element_unrank(finite_ring &R, INT *v, INT stride, INT len, INT rk);
 INT nb_PHG_elements(INT n, finite_ring &R);
 void display_all_PHG_elements(INT n, INT q);
+void display_table_of_projective_points(ostream &ost, finite_field *F, INT *v, INT nb_pts, INT len);
 
 
 // ####################################################################################
@@ -3321,6 +3325,8 @@ void INT_swap(INT& x, INT& y);
 void INT_set_print(INT *v, INT len);
 void INT_set_print(ostream &ost, INT *v, INT len);
 void INT_set_print_tex(ostream &ost, INT *v, INT len);
+void INT_set_print_masked_tex(ostream &ost, 
+	INT *v, INT len, const BYTE *mask_begin, const BYTE *mask_end);
 void INT_set_print_tex_for_inline_text(ostream &ost, INT *v, INT len);
 void INT_vec_print(ostream &ost, INT *v, INT len);
 void INT_vec_print_as_matrix(ostream &ost, INT *v, INT len, INT width, INT f_tex);
@@ -3351,6 +3357,7 @@ INT INT_matrix_max_log_of_entries(INT *p, INT m, INT n);
 void INT_matrix_print(INT *p, INT m, INT n);
 void INT_matrix_print(INT *p, INT m, INT n, INT w);
 void INT_matrix_print_tex(ostream &ost, INT *p, INT m, INT n);
+void INT_matrix_print_bitwise(INT *p, INT m, INT n);
 void UBYTE_print_bitwise(ostream &ost, UBYTE u);
 void UBYTE_move(UBYTE *p, UBYTE *q, INT len);
 void INT_submatrix_all_rows(INT *A, INT m, INT n, INT nb_cols, INT *cols, INT *B);
@@ -3438,6 +3445,7 @@ void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT ver
 void write_set_to_file(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level);
 void read_set_from_file_INT4(const BYTE *fname, INT *&the_set, INT &set_size, INT verbose_level);
 void write_set_to_file_as_INT4(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level);
+void write_set_to_file_as_INT8(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level);
 void read_k_th_set_from_file(const BYTE *fname, INT k, INT *&the_set, INT &set_size, INT verbose_level);
 void write_incidence_matrix_to_file(BYTE *fname, INT *Inc, INT m, INT n, INT verbose_level);
 void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n, 
@@ -3467,8 +3475,10 @@ void INT_vec_write_csv(INT *v, INT len, const BYTE *fname, const BYTE *label);
 void INT_vecs_write_csv(INT *v1, INT *v2, INT len, const BYTE *fname, const BYTE *label1, const BYTE *label2);
 void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len, const BYTE *fname, const BYTE **column_label);
 void INT_matrix_write_csv(const BYTE *fname, INT *M, INT m, INT n);
+void double_matrix_write_csv(const BYTE *fname, double *M, INT m, INT n);
 void INT_matrix_write_csv_with_labels(const BYTE *fname, INT *M, INT m, INT n, const BYTE **column_label);
 void INT_matrix_read_csv(const BYTE *fname, INT *&M, INT &m, INT &n, INT verbose_level);
+void double_matrix_read_csv(const BYTE *fname, double *&M, INT &m, INT &n, INT verbose_level);
 void INT_matrix_write_text(const BYTE *fname, INT *M, INT m, INT n);
 void INT_matrix_read_text(const BYTE *fname, INT *&M, INT &m, INT &n);
 INT compare_sets(INT *set1, INT *set2, INT sz1, INT sz2);
@@ -3495,9 +3505,13 @@ INT os_seconds_past_1970();
 void povray_beginning(ostream &ost);
 void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost);
 void povray_animation_rotate_around_origin_and_given_vector(double *v, ostream &ost);
+void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(double *v, double angle_zero_one, ostream &ost);
 void povray_end(ostream &ost);
 void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, INT last_frame);
 void test_typedefs();
+void concatenate_files(const BYTE *fname_in_mask, INT N, 
+	const BYTE *fname_out, const BYTE *EOF_marker, INT f_title_line, 
+	INT verbose_level);
 
 
 
@@ -3595,6 +3609,8 @@ INT vec_search(void **v, INT (*compare_func)(void *a, void *b, void *data), void
 INT vec_search_general(void *vec, 
 	INT (*compare_func)(void *vec, void *a, INT b, void *data_for_compare), void *data_for_compare, 
 	INT len, void *a, INT &idx, INT verbose_level);
+INT INT_vec_search_and_insert_if_necessary(INT *v, INT &len, INT a);
+INT INT_vec_search_and_remove_if_found(INT *v, INT &len, INT a);
 INT INT_vec_search(INT *v, INT len, INT a, INT &idx);
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx the position where it should be inserted if 
@@ -3983,13 +3999,20 @@ void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw,
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level);
 void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, INT f_output_solution_raw, 
-	INT f_draw, INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	const BYTE *fname_template, 
+	const BYTE *fname_sol, const BYTE *fname_stats, 
+	INT f_split, INT split_r, INT split_m, 
+	INT f_maxdepth, INT maxdepth, 
+	INT f_prefix, const BYTE *prefix, 
+	INT print_interval, 
+	INT verbose_level);
+void colored_graph_all_cliques_list_of_files(INT nb_cases, 
+	INT *Case_number, const BYTE **Case_fname, 
+	INT f_output_solution_raw, 
 	const BYTE *fname_sol, const BYTE *fname_stats, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_prefix, const BYTE *prefix, 
 	INT print_interval, 
-	double scale, double line_width, 
 	INT verbose_level);
 void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_level);
 
@@ -6381,6 +6404,7 @@ public:
 	void assemble_tangent_quadric(INT *f1, INT *f2, INT *f3, INT *&tangent_quadric, INT verbose_level);
 	void print_polynomial_domains(ostream &ost);
 	void print_line_labelling(ostream &ost);
+	void print_set_of_lines_tex(ostream &ost, INT *v, INT len);
 
 };
 
@@ -6567,7 +6591,8 @@ public:
 	void null();
 	INT init_equation(surface *Surf, INT *eqn, INT verbose_level);
 		// returns FALSE if the surface does not have 27 lines
-	void init(surface *Surf, INT *Lines, INT *eqn, INT verbose_level);
+	void init(surface *Surf, INT *Lines, INT *eqn, 
+		INT f_find_double_six_and_rearrange_lines, INT verbose_level);
 	void compute_properties(INT verbose_level);
 	void find_double_six_and_rearrange_lines(INT *Lines, INT verbose_level);
 	void enumerate_points(INT verbose_level);
@@ -6584,6 +6609,7 @@ public:
 	void print_generalized_quadrangle(ostream &ost);
 	void print_plane_type_by_points(ostream &ost);
 	void print_lines(ostream &ost);
+	void print_lines_with_points_on_them(ostream &ost);
 	void print_equation(ostream &ost);
 	void print_general(ostream &ost);
 	void print_points(ostream &ost);
@@ -6616,7 +6642,15 @@ public:
 	INT compute_transversal_line(INT line_a, INT line_b, INT verbose_level);
 	void clebsch_map_find_arc_and_lines(INT *Clebsch_map, INT *Arc, INT *Blown_up_lines, INT verbose_level);
 	void clebsch_map_print_fibers(INT *Clebsch_map);
-	void compute_clebsch_maps(INT verbose_level);
+	//void compute_clebsch_maps(INT verbose_level);
+	void compute_clebsch_map(INT line_a, INT line_b, 
+		INT transversal_line, 
+		INT &tritangent_plane_rk, 
+		INT *Clebsch_map, INT *Clebsch_coeff, 
+		INT verbose_level);
+	// Clebsch_map[nb_pts]
+	// Clebsch_coeff[nb_pts * 4]
+	void clebsch_map_latex(ostream &ost, INT *Clebsch_map, INT *Clebsch_coeff);
 
 
 };

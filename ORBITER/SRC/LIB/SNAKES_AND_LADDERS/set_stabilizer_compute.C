@@ -611,14 +611,14 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 	INT subset[1000];
 	INT canonical_subset[1000];
 	INT i;
-	INT /*idx,*/ f, local_idx, subset_rk, print_mod;
+	INT /*idx, f,*/ local_idx, subset_rk, print_mod;
 	INT *Elt1;
 	//INT f_implicit_fusion = TRUE;
 	
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
 
-	f = gen->first_oracle_node_at_level[level];
+	//f = gen->first_oracle_node_at_level[level];
 	nb_orbits = gen->nb_orbits_at_level(level);
 	n_choose_k = INT_n_choose_k(set_size, level);
 	

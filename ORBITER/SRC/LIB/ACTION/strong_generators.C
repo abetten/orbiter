@@ -1603,7 +1603,9 @@ void strong_generators::read_from_memory_object(memory_object *m, INT verbose_le
 		cout << "strong_generators::read_from_memory_object" << endl;
 		}
 	m->read_int(&l);
-	cout << "strong_generators::read_from_memory_object l=" << l << endl;
+	if (f_v) {
+		cout << "strong_generators::read_from_memory_object l=" << l << endl;
+		}
 	if (l != A->base_len) {
 		cout << "strong_generators::read_from_memory_object l != A->base_len" << endl;
 		}
@@ -1614,9 +1616,11 @@ void strong_generators::read_from_memory_object(memory_object *m, INT verbose_le
 		m->read_int(&tl[i]);
 		}
 
-	cout << "strong_generators::read_from_memory_object tl=";
-	INT_vec_print(cout, tl, A->base_len);
-	cout << endl;
+	if (f_v) {
+		cout << "strong_generators::read_from_memory_object tl=";
+		INT_vec_print(cout, tl, A->base_len);
+		cout << endl;
+		}
 	
 	gens->read_from_memory_object(m, verbose_level - 1);
 	if (f_v) {

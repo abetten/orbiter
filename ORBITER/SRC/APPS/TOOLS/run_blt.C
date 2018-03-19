@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	system("mkdir G ISO SOLUTIONS STARTER_DIR SYSTEMS");
 
 
-	sprintf(cmd1, "%s/SRC/APPS/BLT/blt_main.out -v %ld -BLT -q %ld -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_%ld  -schreier 5 -starter -W", orbiter_path, verbose_level_run, q, q);
+	sprintf(cmd1, "%s/SRC/APPS/BLT/blt_main.out -v %ld -BLT -q %ld -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_%ld  -schreier 5 -starter -W", orbiter_path, verbose_level_run + 3, q, q);
 
 	if (f_slice) {
 		sprintf(cmd2, "%s/SRC/APPS/BLT/blt_main.out -v %ld -BLT -q %ld -starter_size 5 -input_prefix STARTER_DIR/ -output_prefix SYSTEMS/ -solution_prefix SOLUTIONS/ -base_fname BLT_%ld -create_graphs %ld %ld 4 -lex -output_prefix G/", orbiter_path, verbose_level_run, q, q, slice_r, slice_m);
@@ -90,6 +90,8 @@ int main(int argc, char **argv)
 		sprintf(cmd3, "%s/SRC/APPS/TOOLS/all_rainbow_cliques.out -v %ld -list_of_cases G/list_of_cases_BLT_%ld_5_0_1.txt G/graph_BLT_%ld_5_%%ld.bin -output_file SOLUTIONS/BLT_%ld_solutions_5_0_1.txt", orbiter_path, verbose_level_run, q, q, q);
 		}
 
+
+//stage4:
 
 	if (f_slice) {
 		sprintf(cmd4, "sleep 1");

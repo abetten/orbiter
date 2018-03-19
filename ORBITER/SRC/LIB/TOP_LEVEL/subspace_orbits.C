@@ -215,7 +215,6 @@ void subspace_orbits::compute_orbits(INT verbose_level)
 	Gen->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
-		//f_implicit_fusion, 
 		f_debug, 
 		verbose_level - 1);
 	

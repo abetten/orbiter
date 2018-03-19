@@ -80,7 +80,7 @@ public:
 		int argc, const char **argv, 
 		INT verbose_level);
 	void init_group(INT verbose_level);
-	void init_orthogonal(INT verbose_level);
+	//void init_orthogonal(INT verbose_level);
 	void init_orthogonal_hash(INT verbose_level);
 	void init2(INT verbose_level);
 	void create_graphs(

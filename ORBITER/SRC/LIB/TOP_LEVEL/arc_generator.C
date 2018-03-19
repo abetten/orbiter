@@ -253,6 +253,7 @@ void arc_generator::init(finite_field *F,
 		}
 	
 	arc_generator::F = F;
+	q = F->q;
 	arc_generator::argc = argc;
 	arc_generator::argv = argv;
 	strcpy(starter_directory_name, input_prefix);
@@ -287,7 +288,7 @@ void arc_generator::init(finite_field *F,
 
 	INT f_basis = TRUE;
 	if (f_v) {
-		cout << "arc_generator::init calling init_matrix_group" << endl;
+		cout << "arc_generator::init calling init_projective_group" << endl;
 		}
 	A->init_projective_group(n + 1, F, f_semilinear, f_basis, 0 /*verbose_level*/);
 

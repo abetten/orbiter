@@ -126,4 +126,5 @@ int main(int argc, char **argv)
 		printf("\n");
 		
 		} while (next_lehmercode(n, code));
+	return 0;
 }

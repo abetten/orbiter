@@ -281,7 +281,8 @@ INT surface_object::init_equation(surface *Surf, INT *eqn, INT verbose_level)
 
 }
 
-void surface_object::init(surface *Surf, INT *Lines, INT *eqn, INT verbose_level)
+void surface_object::init(surface *Surf, INT *Lines, INT *eqn, 
+	INT f_find_double_six_and_rearrange_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -303,10 +304,17 @@ void surface_object::init(surface *Surf, INT *Lines, INT *eqn, INT verbose_level
 		cout << endl;
 		}
 
-	find_double_six_and_rearrange_lines(surface_object::Lines, verbose_level);
+	if (f_find_double_six_and_rearrange_lines) {
+		if (f_v) {
+			cout << "surface_object::init before find_double_six_and_rearrange_lines" << endl;
+			}
+		find_double_six_and_rearrange_lines(surface_object::Lines, verbose_level);
+		if (f_v) {
+			cout << "surface_object::init after find_double_six_and_rearrange_lines" << endl;
+			}
+		}
 
 	if (f_v) {
-		cout << "surface_object::init after find_double_six_and_rearrange_lines" << endl;
 		cout << "surface_object::init Lines:";
 		INT_vec_print(cout, surface_object::Lines, 27);
 		cout << endl;
@@ -1172,8 +1180,31 @@ void surface_object::print_plane_type_by_points(ostream &ost)
 
 void surface_object::print_lines(ostream &ost)
 {
-	ost << "\\subsection*{The 27 Lines}" << endl;
+	ost << "\\subsection*{The 27 lines}" << endl;
 	Surf->print_lines_tex(ost, Lines);
+}
+
+void surface_object::print_lines_with_points_on_them(ostream &ost)
+{
+	ost << "\\subsection*{The 27 lines with points on them}" << endl;
+	INT i;
+	
+	for (i = 0; i < 27; i++) {
+		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
+		Surf->Gr->unrank_INT(Lines[i], 0 /*verbose_level*/);
+		ost << "$$" << endl;
+		ost << "\\ell_{" << i << "} = " << Surf->Line_label_tex[i] << " = \\left[" << endl;
+		//print_integer_matrix_width(cout, Gr->M, k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_tex(ost, Surf->Gr->M, 2, 4);
+		ost << "\\right]_{" << Lines[i] << "}" << endl;
+		ost << "$$" << endl;
+		ost << "which contains the point set " << endl;
+		ost << "$$" << endl;
+		ost << "\\{ P_{i} \\mid i \\in ";
+		INT_set_print_tex(ost, pts_on_lines->Sets[i], pts_on_lines->Set_size[i]);
+		ost << "\\}." << endl;
+		ost << "$$" << endl; 
+		}
 }
 
 void surface_object::print_equation(ostream &ost)
@@ -2445,26 +2476,34 @@ void surface_object::print_nine_lines_latex(ostream &ost, INT *nine_lines, INT *
 INT surface_object::choose_tritangent_plane(INT line_a, INT line_b, INT transversal_line, INT verbose_level)
 {
 	INT f_v = TRUE; // (verbose_level >= 1);
-	INT i, plane, idx;
+	INT i, plane, idx, a;
 	
 	if (f_v) {
 		cout << "surface_object::choose_tritangent_plane" << endl;
-		cout << "transversal_line=" << transversal_line << endl;
 		cout << "line_a=" << line_a << endl;
 		cout << "line_b=" << line_b << endl;
+		cout << "transversal_line=" << transversal_line << endl;
+		//cout << "Tritangent_planes_on_lines:" << endl;
+		//INT_matrix_print(Tritangent_planes_on_lines, 27, 5);
 		}
-	for (i = 0; i < 5; i++) {
-		plane = Tritangent_planes_on_lines[transversal_line * 5 + i];
+	if (FALSE) {
+		cout << "Testing the following planes: ";
+		INT_vec_print(cout, Tritangent_planes_on_lines + transversal_line * 5, 5);
+		cout << endl;
+		}
+	for (i = 4; i >= 0; i--) {
+		a = Tritangent_planes_on_lines[transversal_line * 5 + i];
+		plane = Tritangent_plane_to_Eckardt[a];
 		if (f_v) {
-			cout << "testing plane " << plane << endl;
+			cout << "testing plane " << a << " = " << plane << endl;
 			}
-		if (INT_vec_search_linear(Lines_in_tritangent_plane + plane * 3, 3, line_a, idx)) {
+		if (INT_vec_search_linear(Lines_in_tritangent_plane + a * 3, 3, line_a, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_a" << endl;
 				}
 			continue;
 			}
-		if (INT_vec_search_linear(Lines_in_tritangent_plane + plane * 3, 3, line_b, idx)) {
+		if (INT_vec_search_linear(Lines_in_tritangent_plane + a * 3, 3, line_b, idx)) {
 			if (f_v) {
 				cout << "The plane is bad, it contains line_b" << endl;
 				}
@@ -2519,6 +2558,13 @@ void surface_object::clebsch_map_find_arc_and_lines(INT *Clebsch_map, INT *Arc, 
 	if (f_v) {
 		cout << "surface_object::clebsch_map_find_arc_and_lines" << endl;
 		}
+
+
+	if (f_v) {
+		cout << "lines_on_point:" << endl;
+		lines_on_point->print_table();
+		}
+	
 	{
 	classify C2;
 
@@ -2556,7 +2602,7 @@ void surface_object::clebsch_map_find_arc_and_lines(INT *Clebsch_map, INT *Arc, 
 				f1 = C2.type_first[t1];
 				l1 = C2.type_len[t1];
 				pt = C2.data_sorted[f1];
-				cout << "arc point " << pt << " belongs to the " << l1 << " surface points in the list of Pts (local numbering): ";
+				cout << "arc point " << pt << " belongs to the " << l1 << " surface points in the list of Pts (point indices): ";
 				for (j = 0; j < l1; j++) {
 					u = C2.sorting_perm_inv[f1 + j];
 					cout << u;
@@ -2582,20 +2628,33 @@ void surface_object::clebsch_map_find_arc_and_lines(INT *Clebsch_map, INT *Arc, 
 			fiber[0] = C2.sorting_perm_inv[f1 + 0];
 			fiber[1] = C2.sorting_perm_inv[f1 + 1];
 
+			if (f_v) {
+				cout << "lines through point fiber[0]=" << fiber[0] << " : ";
+				Surf->print_set_of_lines_tex(cout, lines_on_point->Sets[fiber[0]], lines_on_point->Set_size[fiber[0]]);
+				cout << endl;
+				cout << "lines through point fiber[1]=" << fiber[1] << " : ";
+				Surf->print_set_of_lines_tex(cout, lines_on_point->Sets[fiber[1]], lines_on_point->Set_size[fiber[1]]);
+				cout << endl;
+				}
+			
 			// find the unique line which passes through the surface points fiber[0] and fiber[1]:
 			if (!lines_on_point->find_common_element_in_two_sets(fiber[0], fiber[1], common_elt)) {
-				cout << "The fiber does not seem to come from a line" << endl;
+				cout << "The fiber does not seem to come from a line, i=" << i << endl;
 			
 
-#if 0
+#if 1
 				cout << "The fiber does not seem to come from a line" << endl;
 				cout << "i=" << i << " / " << l2 << endl;
 				cout << "pt=" << pt << endl;
 				cout << "fiber[0]=" << fiber[0] << endl;
 				cout << "fiber[1]=" << fiber[1] << endl;
-				cout << "lines_on_point:" << endl;
-				lines_on_point->print_table();
-				exit(1);
+				cout << "lines through point fiber[0]=" << fiber[0] << " : ";
+				Surf->print_set_of_lines_tex(cout, lines_on_point->Sets[fiber[0]], lines_on_point->Set_size[fiber[0]]);
+				cout << endl;
+				cout << "lines through point fiber[1]=" << fiber[1] << " : ";
+				Surf->print_set_of_lines_tex(cout, lines_on_point->Sets[fiber[1]], lines_on_point->Set_size[fiber[1]]);
+				cout << endl;
+				//exit(1);
 #endif
 				}
 			else {
@@ -2649,6 +2708,7 @@ void surface_object::clebsch_map_find_arc_and_lines(INT *Clebsch_map, INT *Arc, 
 
 	if (nb_blow_up_lines != 6) {
 		cout << "nb_blow_up_lines != 6" << endl;
+		cout << "nb_blow_up_lines = " << nb_blow_up_lines << endl;
 		exit(1);
 		}
 	} // end of classify C2
@@ -2702,6 +2762,7 @@ void surface_object::clebsch_map_print_fibers(INT *Clebsch_map)
 	}
 }
 
+#if 0
 void surface_object::compute_clebsch_maps(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -2793,5 +2854,119 @@ void surface_object::compute_clebsch_maps(INT verbose_level)
 		cout << "surface_object::compute_clebsch_maps done" << endl;
 		}
 }
+#endif
+
+void surface_object::compute_clebsch_map(INT line_a, INT line_b, 
+	INT transversal_line, 
+	INT &tritangent_plane_rk, 
+	INT *Clebsch_map, INT *Clebsch_coeff, 
+	INT verbose_level)
+// Clebsch_map[nb_pts]
+// Clebsch_coeff[nb_pts * 4]
+{
+	INT f_v = (verbose_level >= 1);
+	INT line_idx[2];
+	INT plane_rk_global;
+	
+	if (f_v) {
+		cout << "surface_object::compute_clebsch_map" << endl;
+		}
+
+	if (Adj_line_intersection_graph[line_a * 27 + line_b] == 1) {
+		cout << "surface_object::compute_clebsch_map the lines are adjacent" << endl;
+		exit(1);
+		}
+
+	line_idx[0] = line_a;
+	line_idx[1] = line_b;
+
+	if (f_v) {
+		cout << "#######################" << endl;
+		cout << "clebsch map for lines " << line_a << ", " << line_b << " with transversal " << transversal_line << ":" << endl;
+		}
+
+	//transversal_line = compute_transversal_line(line_a, line_b, 0 /* verbose_level */);
+	
+	tritangent_plane_rk = choose_tritangent_plane(line_a, line_b, transversal_line, 0 /* verbose_level */);
+
+	plane_rk_global = Tritangent_planes[Eckardt_to_Tritangent_plane[tritangent_plane_rk]];
+
+	if (f_v) {
+		cout << "transversal\\_line = " << transversal_line << "\\\\" << endl;
+		cout << "tritangent\\_plane\\_rank = " << tritangent_plane_rk << " = " << plane_rk_global << "\\\\" << endl;
+		}
+
+
+	if (!Surf->clebsch_map(Lines, Pts, nb_pts, line_idx, plane_rk_global, 
+		Clebsch_map, Clebsch_coeff, 0 /*verbose_level*/)) {
+		cout << "surface_object::compute_clebsch_map The plane contains one of the lines, this should not happen" << endl;
+		exit(1);
+		}
+
+	if (f_v) {
+		cout << "surface_object::compute_clebsch_map done" << endl;
+		}
+}
+
+void surface_object::clebsch_map_latex(ostream &ost, INT *Clebsch_map, INT *Clebsch_coeff)
+{
+	INT i, j, a;
+	INT v[4];
+	INT w[3];
+
+	ost << "$$";
+	ost << "\\begin{array}{|c|c|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & P_i & \\mbox{lines} & \\Phi(P_i) & \\Phi(P_i)\\\\" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		ost << i;
+		ost << " & ";
+		a = Pts[i];
+		Surf->unrank_point(v, a);
+		INT_vec_print(ost, v, 4);
+		ost << " & ";
+
+		for (j = 0; j < lines_on_point->Set_size[i]; j++) {
+			a = lines_on_point->Sets[i][j];
+			ost << Surf->Line_label_tex[a];
+			if (j < lines_on_point->Set_size[i] - 1) {
+				ost << ", ";
+				}
+			}
+		ost << " & ";
+
+
+		if (Clebsch_map[i] >= 0) {
+			INT_vec_print(ost, Clebsch_coeff + i * 4, 4);
+			}
+		else {
+			ost << "\\mbox{undef}";
+			}
+		ost << " & ";
+		if (Clebsch_map[i] >= 0) {
+			Surf->P2->unrank_point(w, Clebsch_map[i]);
+			INT_vec_print(ost, w, 3);
+			}
+		else {
+			ost << "\\mbox{undef}";
+			}
+		ost << "\\\\" << endl;
+		if (((i + 1) % 30) == 0) {
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			ost << "$$" << endl;
+			ost << "$$";
+			ost << "\\begin{array}{|c|c|c|c|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "i & P_i & \\mbox{lines} & \\Phi(P_i) & \\Phi(P_i)\\\\" << endl;
+			ost << "\\hline" << endl;
+			}
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$" << endl;
+}
+
 
 

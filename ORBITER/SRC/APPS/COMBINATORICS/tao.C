@@ -272,7 +272,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a, b, t;
-	INT h, k, f, l, u, v, len1, len2, pos, s;
+	INT h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
@@ -373,10 +373,10 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 	Paired_with = NEW_INT(Sch->nb_orbits);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		f = Sch->orbit_first[i];
-		l = Sch->orbit_len[i];
+		//l = Sch->orbit_len[i];
 		a = Sch->orbit[f];
 		b = H->element_negate_by_rank(a, 0 /* verbose_level */);
-		pos = Sch->orbit_inv[b];
+		//pos = Sch->orbit_inv[b];
 		j = Sch->orbit_number(b); // Sch->orbit_no[pos];
 		Paired_with[i] = j;
 		}
@@ -609,7 +609,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		cout << endl;
 
 		INT *Pairing;
-		INT s, a, b, f, l, o1, o2, pos;
+		INT s, a, b, f, l, o1, o2; //, pos;
 
 
 		Pairing = NEW_INT(nb_long_orbits);
@@ -622,7 +622,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 
 			cout << "normalizer orbit " << a << " / " << Sch1->nb_orbits << " is U-orbit " << o1 << endl;
 			cout << "U-orbit " << o1 << " is paired with U-orbit " << o2 << endl;
-			pos = Sch1->orbit_inv[o2];
+			//pos = Sch1->orbit_inv[o2];
 			b = Sch1->orbit_number(o2); // Sch1->orbit_no[pos];
 			cout << "Which is normalizer orbit " << b << endl;
 			Pairing[a] = b;
