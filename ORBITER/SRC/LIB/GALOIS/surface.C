@@ -5406,13 +5406,27 @@ void surface::prepare_clebsch_map(INT ds, INT ds_row, INT &line1, INT &line2, IN
 
 INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT plane_rk, 
 	INT *Image_rk, INT *Image_coeff, INT verbose_level)
+// assuming: 
+// In:
+// Lines[27]
+// Pts[nb_pts]
+// Out:
+// Image_rk[nb_pts]  (image point in the plane in local coordinates)
+//   Note Image_rk[i] is -1 if Pts[i] does not have an image.
+// Image_coeff[nb_pts * 4] (image point in the plane in PG(3,q) coordinates)
 {
 	INT f_v = (verbose_level >= 1);
 	INT Plane[4 * 4];
 	INT Line_a[2 * 4];
 	INT Line_b[2 * 4];
-	INT Dual_planes[4 * 4];
+	INT Dual_planes[4 * 4]; 
+		// dual coefficients of three planes:
+		// the first plane is line_a together with the surface point
+		// the second plane is line_b together with the surface point
+		// the third plane is the plane onto which we map.
+		// the fourth row is for the image point.
 	INT M[4 * 4];
+	INT v[4];
 	INT i, h, pt, r;
 	INT coefficients[3];
 	INT base_cols[4];
@@ -5430,16 +5444,19 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 	F->RREF_and_kernel(4, 3, Plane, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "Plane:" << endl;
+		cout << "Plane (3 basis vectors and dual coordinates):" << endl;
 		INT_matrix_print(Plane, 4, 4);
 		cout << "base_cols: ";
 		INT_vec_print(cout, base_cols, r);
 		cout << endl;
 		}
 
+	// make sure the two lines are not contained in the plane onto which we map:
+
+	// test line_a:
 	P->Grass_lines->unrank_INT_here(Line_a, Lines[line_idx[0]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line a:" << endl;
+		cout << "Line a = " << Line_label_tex[line_idx[0]] << ":" << endl;
 		INT_matrix_print(Line_a, 2, 4);
 		}
 	for (i = 0; i < 2; i++) {
@@ -5451,10 +5468,12 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 		cout << "surface::clebsch_map Line a lies inside the hyperplane" << endl;
 		return FALSE;
 		}
+
+	// test line_b:
 	P->Grass_lines->unrank_INT_here(Line_b, Lines[line_idx[1]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line b:" << endl;
-		INT_matrix_print(Line_a, 2, 4);
+		cout << "Line b = " << Line_label_tex[line_idx[1]] << ":" << endl;
+		INT_matrix_print(Line_b, 2, 4);
 		}
 	for (i = 0; i < 2; i++) {
 		if (F->dot_product(4, Line_b + i * 4, Plane + 3 * 4)) {
@@ -5466,15 +5485,23 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 		return FALSE;
 		}
 
+	// and now, map all surface points:
 	for (h = 0; h < nb_pts; h++) {
 		pt = Pts[h];
 
+		unrank_point(v, pt);
+
 		INT_vec_zero(Image_coeff + h * 4, 4);
 		if (f_v) {
-			cout << "pt " << h << " / " << nb_pts << " is " << pt << ":" << endl;
+			cout << "pt " << h << " / " << nb_pts << " is " << pt << " = ";
+			INT_vec_print(cout, v, 4);
+			cout << ":" << endl;
 			}
+
+		// make sure the points do not lie on either line_a or line_b
+		// because the map is undefined there:
 		INT_vec_copy(Line_a, M, 2 * 4);
-		unrank_point(M + 2 * 4, pt);
+		INT_vec_copy(v, M + 2 * 4, 4);
 		if (F->Gauss_easy(M, 3, 4) == 2) {
 			if (f_v) {
 				cout << "The point is on line_a" << endl;
@@ -5483,7 +5510,7 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 			continue;
 			}
 		INT_vec_copy(Line_b, M, 2 * 4);
-		unrank_point(M + 2 * 4, pt);
+		INT_vec_copy(v, M + 2 * 4, 4);
 		if (F->Gauss_easy(M, 3, 4) == 2) {
 			if (f_v) {
 				cout << "The point is on line_b" << endl;
@@ -5492,18 +5519,38 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 			continue;
 			}
 		
+		// The point is good:
+
+		// Compute the first plane in dual coordinates:
 		INT_vec_copy(Line_a, M, 2 * 4);
-		unrank_point(M + 2 * 4, pt);
+		INT_vec_copy(v, M + 2 * 4, 4);
 		F->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		INT_vec_copy(M + 3 * 4, Dual_planes, 4);
+		if (f_v) {
+			cout << "First plane in dual coordinates: ";
+			INT_vec_print(cout, M + 3 * 4, 4);
+			cout << endl;
+			}
 
+		// Compute the second plane in dual coordinates:
 		INT_vec_copy(Line_b, M, 2 * 4);
-		unrank_point(M + 2 * 4, pt);
+		INT_vec_copy(v, M + 2 * 4, 4);
 		F->RREF_and_kernel(4, 3, M, 0 /* verbose_level */);
 		INT_vec_copy(M + 3 * 4, Dual_planes + 4, 4);
+		if (f_v) {
+			cout << "Second plane in dual coordinates: ";
+			INT_vec_print(cout, M + 3 * 4, 4);
+			cout << endl;
+			}
 
 
+		// The third plane is the image plane, given by dual coordinates:
 		INT_vec_copy(Plane + 3 * 4, Dual_planes + 8, 4);
+		if (f_v) {
+			cout << "Dual coordinates for all three planes: ";
+			INT_vec_print(cout, M + 3 * 4, 4);
+			cout << endl;
+			}
 		if (F->RREF_and_kernel(4, 3, Dual_planes, 0 /* verbose_level */) < 3) {
 			if (f_v) {
 				cout << "The line is contained in the plane" << endl;
@@ -5511,8 +5558,10 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 			Image_rk[h] = -1;
 			continue;
 			}
+		PG_element_normalize(*F, Dual_planes + 12, 1, 4);
 		INT_vec_copy(Dual_planes + 12, Image_coeff + h * 4, 4);
 		
+		// compute local coordinates of the image point:
 		F->reduce_mod_subspace_and_get_coefficient_vector(
 			3, 4, Plane, base_cols, 
 			Dual_planes + 12, coefficients, 0 /* verbose_level */);
@@ -6328,6 +6377,20 @@ void surface::print_line_labelling(ostream &ost)
 			}
 		}
 	ost << "$$" << endl;
+}
+
+void surface::print_set_of_lines_tex(ostream &ost, INT *v, INT len)
+{
+	INT i;
+	
+	ost << "\\{";
+	for (i = 0; i < len; i++) {
+		ost << Line_label_tex[v[i]];
+		if (i < len - 1) {
+			ost << ", ";
+			}
+		}
+	ost << "\\}";
 }
 
 

@@ -705,7 +705,7 @@ void classify_trihedral_pairs::downstep(INT verbose_level)
 		R->Strong_gens = NULL;
 		delete R;
 		if (f_v) {
-			cout << "flag orbit orbit " << i << " / " << nb_orbits_ordered_total << " is type 1 orbit " << i << " / " << nb_orbits_type1 << " stab order " << go << endl;
+			cout << "flag orbit " << i << " / " << nb_orbits_ordered_total << " is type 1 orbit " << i << " / " << nb_orbits_type1 << " stab order " << go << endl;
 			}
 		}
 	if (f_v) {
@@ -730,7 +730,7 @@ void classify_trihedral_pairs::downstep(INT verbose_level)
 		R->Strong_gens = NULL;
 		delete R;
 		if (f_v) {
-			cout << "flag orbit orbit " << nb_orbits_type1 +  i << " / " << nb_orbits_ordered_total << " is type 2 orbit " << i << " / " << nb_orbits_type2 << " stab order " << go << endl;
+			cout << "flag orbit " << nb_orbits_type1 +  i << " / " << nb_orbits_ordered_total << " is type 2 orbit " << i << " / " << nb_orbits_type2 << " stab order " << go << endl;
 			}
 		}
 	if (f_v) {

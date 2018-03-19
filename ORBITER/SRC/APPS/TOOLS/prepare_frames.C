@@ -27,7 +27,8 @@ int main(int argc, const char **argv)
 
 	INT verbose_level = 0;
 	INT nb_inputs = FALSE;
-	INT input_nb_files[1000];
+	INT input_first[1000];
+	INT input_last[1000];
 	const BYTE *input_mask[1000];
 	INT f_o = FALSE;
 	const BYTE *output_mask = NULL;
@@ -42,9 +43,10 @@ int main(int argc, const char **argv)
 			cout << "-v " << verbose_level << endl;
 			}
 		else if (strcmp(argv[i], "-i") == 0) {
-			input_nb_files[nb_inputs] = atoi(argv[++i]);
+			input_first[nb_inputs] = atoi(argv[++i]);
+			input_last[nb_inputs] = atoi(argv[++i]);
 			input_mask[nb_inputs] = argv[++i];
-			cout << "-i " << input_nb_files[nb_inputs] << " " << input_mask[nb_inputs] << endl;
+			cout << "-i " << input_first[nb_inputs] << " " << input_last[nb_inputs] << " " << input_mask[nb_inputs] << endl;
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-o") == 0) {
@@ -61,15 +63,15 @@ int main(int argc, const char **argv)
 
 	nb_frames = 0;
 	for (i = 0; i < nb_inputs; i++) {
-		nb_frames += input_nb_files[i];
+		nb_frames += input_last[i] - input_first[i] + 1;
 		}
 
 	cout << "nb_frames = " << nb_frames << endl;
 	h = 0;
 	for (i = 0; i < nb_inputs; i++) {
 		cout << "input " << i << " / " << nb_inputs << endl;
-		for (j = 1; j <= input_nb_files[i]; j++) {
-			cout << "input frame " << j << " / " << input_nb_files[i] << endl;
+		for (j = input_first[i]; j <= input_last[i]; j++) {
+			cout << "input frame " << j << " / " << input_last[i] << endl;
 			sprintf(input_fname, input_mask[i], (int) j);
 			sprintf(output_fname, output_mask, (int) h);
 			sprintf(cmd, "cp %s %s", input_fname, output_fname);

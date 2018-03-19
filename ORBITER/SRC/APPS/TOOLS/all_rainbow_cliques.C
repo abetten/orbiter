@@ -34,27 +34,24 @@ int main(int argc, char **argv)
 	const BYTE *prefix = NULL;
 	INT f_output_file = FALSE;
 	const BYTE *output_file = NULL;
-	INT f_draw = FALSE;
 	INT f_tree = FALSE;
 	INT f_decision_nodes_only = FALSE;
 	const BYTE *fname_tree = NULL;
-	INT f_coordinates = FALSE;
-	INT xmax_in = ONE_MILLION;
-	INT ymax_in = ONE_MILLION;
-	INT xmax_out = ONE_MILLION;
-	INT ymax_out = ONE_MILLION;
 	INT f_output_solution_raw = FALSE;
 	INT f_no_colors = FALSE;
 	INT clique_size;
 	INT f_solution_file = FALSE;
-	INT f_scale = FALSE;
-	double scale = .45;
-	INT f_line_width = FALSE;
-	double line_width = 1.5;
 	INT f_restrictions = FALSE;
 	INT restrictions[1000];
 	INT nb_restrictions = 0;
 	INT f_export_magma = FALSE;
+	INT f_split = FALSE;
+	INT split_r = 0;
+	INT split_m = 0;
+	INT f_input_list_of_files = FALSE;
+	INT input_list_of_files_nb = 0;
+	INT input_list_of_files_case[100000];
+	const BYTE *input_list_of_files_fname[100000];
 
 
 	cout << argv[0] << endl;
@@ -67,6 +64,20 @@ int main(int argc, char **argv)
 			f_file = TRUE;
 			fname = argv[++i];
 			cout << "-file " << fname << endl;
+			}
+		else if (strcmp(argv[i], "-input_list_of_files") == 0) {
+			f_input_list_of_files = TRUE;
+			cout << "-input_list_of_files " << endl;
+			while (TRUE) {
+				input_list_of_files_case[input_list_of_files_nb] = atoi(argv[++i]);
+				input_list_of_files_fname[input_list_of_files_nb] = argv[++i];
+				if (input_list_of_files_case[input_list_of_files_nb] == -1) {
+					break;
+					}
+				cout << input_list_of_files_case[input_list_of_files_nb] << " " << input_list_of_files_fname[input_list_of_files_nb] << endl;
+				input_list_of_files_nb++;
+				}
+			cout << "-1" << endl;
 			}
 		else if (strcmp(argv[i], "-tree") == 0) {
 			f_tree = TRUE;
@@ -96,21 +107,9 @@ int main(int argc, char **argv)
 			output_file = argv[++i];
 			cout << "-output_file " << output_file << endl;
 			}
-		else if (strcmp(argv[i], "-draw") == 0) {
-			f_draw = TRUE;
-			cout << "-draw " << endl;
-			}
 		else if (strcmp(argv[i], "-output_solution_raw") == 0) {
 			f_output_solution_raw = TRUE;
 			cout << "-output_solution_raw " << endl;
-			}
-		else if (strcmp(argv[i], "-coordinates") == 0) {
-			f_coordinates = TRUE;
-			xmax_in = atoi(argv[++i]);
-			ymax_in = atoi(argv[++i]);
-			xmax_out = atoi(argv[++i]);
-			ymax_out = atoi(argv[++i]);
-			cout << "-coordinates " << xmax_in << " " << ymax_in << " " << xmax_out << " " << ymax_out << endl;
 			}
 		else if (strcmp(argv[i], "-no_colors") == 0) {
 			f_no_colors = TRUE;
@@ -120,16 +119,6 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-solution_file") == 0) {
 			f_solution_file = TRUE;
 			cout << "-solution_file " << endl;
-			}
-		else if (strcmp(argv[i], "-scale") == 0) {
-			f_scale = TRUE;
-			sscanf(argv[++i], "%lf", &scale);
-			cout << "-scale " << scale << endl;
-			}
-		else if (strcmp(argv[i], "-line_width") == 0) {
-			f_line_width = TRUE;
-			sscanf(argv[++i], "%lf", &line_width);
-			cout << "-line_width " << line_width << endl;
 			}
 		else if (strcmp(argv[i], "-restrictions") == 0) {
 			f_restrictions = TRUE;
@@ -147,6 +136,12 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-export_magma") == 0) {
 			f_export_magma = TRUE;
 			cout << "-export_magma " << endl;
+			}
+		else if (strcmp(argv[i], "-split") == 0) {
+			f_split = TRUE;
+			split_r = atoi(argv[++i]);
+			split_m = atoi(argv[++i]);
+			cout << "-split " << split_r << " " << split_m << endl;
 			}
 		}
 
@@ -258,7 +253,7 @@ int main(int argc, char **argv)
 		else {
 
 
-
+#if 0
 			if (f_draw) {
 				cout << "before colored_graph_draw" << endl;
 				colored_graph_draw(fname, 
@@ -267,6 +262,7 @@ int main(int argc, char **argv)
 					verbose_level - 1);
 				cout << "after colored_graph_draw" << endl;
 				}
+#endif
 
 
 			cout << "finding rainbow cliques, calling colored_graph_all_cliques" << endl;
@@ -275,14 +271,12 @@ int main(int argc, char **argv)
 
 
 			colored_graph_all_cliques(fname, f_output_solution_raw, 
-				//f_draw, xmax_in, ymax_in, xmax_out, ymax_out, 
 				f_output_file, output_file, 
 				f_maxdepth, maxdepth, 
 				f_restrictions, restrictions, 
 				f_tree, f_decision_nodes_only, fname_tree,  
 				print_interval, 
 				search_steps, decision_steps, nb_sol, dt, 
-				//scale, line_width, 
 				verbose_level);
 				// in GALOIS/colored_graph.C
 
@@ -296,36 +290,84 @@ int main(int argc, char **argv)
 		INT nb_cases;
 		BYTE fname_sol[1000];
 		BYTE fname_stats[1000];
+		BYTE split[1000];
 		
+
+		if (f_split) {
+			sprintf(split, "_split_%ld_%ld.txt", split_r, split_m);
+			}
+
+
 		if (f_output_file) {
 			sprintf(fname_sol, "%s", output_file);
 			sprintf(fname_stats, "%s", output_file);
-			replace_extension_with(fname_stats, "_stats.csv");
 			}
 		else {
 			sprintf(fname_sol, "solutions_%s", fname_list_of_cases);
 			sprintf(fname_stats, "statistics_%s", fname_list_of_cases);
-			replace_extension_with(fname_stats, ".csv");
 			}
+
+
+		if (f_split) {
+			replace_extension_with(fname_sol, split);
+			replace_extension_with(fname_stats, split);
+			}
+		replace_extension_with(fname_stats, "_stats.csv");
+
+
 		read_set_from_file(fname_list_of_cases, list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
 		colored_graph_all_cliques_list_of_cases(list_of_cases, nb_cases, f_output_solution_raw, 
-			f_draw, xmax_in, ymax_in, xmax_out, ymax_out, 
 			fname_template, 
 			fname_sol, fname_stats, 
+			f_split, split_r, split_m, 
 			f_maxdepth, maxdepth, 
 			f_prefix, prefix, 
 			print_interval, 
-			scale, line_width, 
 			verbose_level);
 		
 		FREE_INT(list_of_cases);
 		cout << "all_rainbow_cliques.out written file " << fname_sol << " of size " << file_size(fname_sol) << endl;
 		cout << "all_rainbow_cliques.out written file " << fname_stats << " of size " << file_size(fname_stats) << endl;
 		}
+	else if (f_input_list_of_files) {
+		
+		cout << "input_list_of_files with " << input_list_of_files_nb << " input files" << endl;
+
+		BYTE fname_sol[1000];
+		BYTE fname_stats[1000];
+
+		if (f_output_file) {
+			sprintf(fname_sol, "%s", output_file);
+			sprintf(fname_stats, "%s", output_file);
+			}
+		else {
+			sprintf(fname_sol, "solutions_%s", fname_list_of_cases);
+			sprintf(fname_stats, "statistics_%s", fname_list_of_cases);
+			}
+
+
+		replace_extension_with(fname_stats, "_stats.csv");
+
+
+		colored_graph_all_cliques_list_of_files(input_list_of_files_nb /* nb_cases */, 
+			input_list_of_files_case /* Case_number */, input_list_of_files_fname /* Case_fname */, 
+			f_output_solution_raw, 
+			fname_sol, fname_stats, 
+			f_maxdepth, maxdepth, 
+			f_prefix, prefix, 
+			print_interval, 
+			verbose_level);
+
+		cout << "all_rainbow_cliques.out written file " << fname_sol << " of size " << file_size(fname_sol) << endl;
+		cout << "all_rainbow_cliques.out written file " << fname_stats << " of size " << file_size(fname_stats) << endl;
+
+
+
+		}
 	else {
-		cout << "Please use options -file or -list_of_cases" << endl;
+		cout << "Please use options -file or -list_of_cases or -input_list_of_files" << endl;
 		exit(1);
 		}
 

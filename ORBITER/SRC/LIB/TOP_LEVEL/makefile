@@ -6,6 +6,8 @@ CPP_PREFIX=f_
 UNIX_TO_DOS = ~/bin/unix2dos -n 
 
 MODULES = \
+	BLT_set_create.o \
+	BLT_set_create_description.o \
 	analyze_group.o \
 	arc_generator.o \
 	arc_lifting.o \
@@ -36,6 +38,7 @@ MODULES = \
 	representatives.o \
 	search_blocking_set.o \
 	singer_cycle.o \
+	six_arcs_not_on_a_conic.o \
 	subspace_orbits.o \
 	surface_classify_wedge.o \
 	surface_create.o \
@@ -93,6 +96,7 @@ cpp:
 	$(UNIX_TO_DOS) representatives.C $(CPP_PREFIX)representatives.cpp
 	$(UNIX_TO_DOS) search_blocking_set.C $(CPP_PREFIX)search_blocking_set.cpp
 	$(UNIX_TO_DOS) singer_cycle.C $(CPP_PREFIX)singer_cycle.cpp
+	$(UNIX_TO_DOS) six_arcs_not_on_a_conic.C $(CPP_PREFIX)six_arcs_not_on_a_conic.cpp
 	$(UNIX_TO_DOS) subspace_orbits.C $(CPP_PREFIX)subspace_orbits.cpp
 	$(UNIX_TO_DOS) surface_classify_wedge.C $(CPP_PREFIX)surface_classify_wedge.cpp
 	$(UNIX_TO_DOS) surface_create.C $(CPP_PREFIX)surface_create.cpp

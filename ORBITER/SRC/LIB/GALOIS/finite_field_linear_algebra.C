@@ -5195,5 +5195,58 @@ INT finite_field::BallChowdhury_matrix_entry(INT *Coord, INT *C, INT *U, INT k, 
 	return d;
 }
 
+void finite_field::cubic_surface_family_24_generators(INT f_with_normalizer, 
+	INT f_semilinear, 
+	INT *&gens, INT &nb_gens, INT &data_size, INT &group_order, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT m_one;
+
+	if (f_v) {
+		cout << "finite_field::cubic_surface_family_24_generators" << endl;
+		}
+	m_one = minus_one();
+	nb_gens = 3;
+	data_size = 16;
+	if (f_semilinear) {
+		data_size++;
+		}
+	if (EVEN(q)) {
+		group_order = 6;
+		}
+	else {
+		group_order = 24;
+		}
+	if (f_with_normalizer) {
+		nb_gens++;
+		group_order *= q - 1;
+		}
+	gens = NEW_INT(nb_gens * data_size);
+	INT_vec_zero(gens, nb_gens * data_size);
+		// this sets the field automorphism index
+		// to zero if we are semilinear
+
+	gens[0 * data_size + 0 * 4 + 0] = 1;
+	gens[0 * data_size + 1 * 4 + 2] = 1;
+	gens[0 * data_size + 2 * 4 + 1] = 1;
+	gens[0 * data_size + 3 * 4 + 3] = 1;
+	gens[1 * data_size + 0 * 4 + 1] = 1;
+	gens[1 * data_size + 1 * 4 + 0] = 1;
+	gens[1 * data_size + 2 * 4 + 2] = 1;
+	gens[1 * data_size + 3 * 4 + 3] = 1;
+	gens[2 * data_size + 0 * 4 + 0] = m_one;
+	gens[2 * data_size + 1 * 4 + 2] = 1;
+	gens[2 * data_size + 2 * 4 + 1] = 1;
+	gens[2 * data_size + 3 * 4 + 3] = m_one;
+	if (f_with_normalizer) {
+		gens[3 * data_size + 0 * 4 + 0] = 1;
+		gens[3 * data_size + 1 * 4 + 1] = 1;
+		gens[3 * data_size + 2 * 4 + 2] = 1;
+		gens[3 * data_size + 3 * 4 + 3] = primitive_root();
+		}
+	if (f_v) {
+		cout << "finite_field::cubic_surface_family_24_generators done" << endl;
+		}
+}
 
 

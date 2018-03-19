@@ -876,7 +876,7 @@ void database::add_data_DB_standard(void *d,
 	INT old_file_size;
 	
 	if (f_v) {
-		cout << "database::add_data_DB()" << endl;
+		cout << "database::add_data_DB_standard()" << endl;
 		}
 	user2total(size, &total, &pad);
 	data2 = (BYTE *) new BYTE[total];
@@ -906,11 +906,15 @@ void database::add_data_DB_standard(void *d,
 	for (i = 0; i < pad; i++)
 		pc[size + i] = 0;
 	old_file_size = file_size();
+	if (old_file_size <= 0) {
+		cout << "database::add_data_DB_standard old_file_size <= 0" << endl;
+		exit(1);
+		}
 	file_seek(old_file_size);
 	file_write(data2, 1, total);
 	*datref = (UINT4)(old_file_size >> size_of_header_log());
 	if (((INT)((UINT)*datref << size_of_header_log())) != old_file_size) {
-		cout << "database::add_data_DB ((UINT)*datref << size_of_header_log()) != old_file_size" << endl;
+		cout << "database::add_data_DB_standard ((UINT)*datref << size_of_header_log()) != old_file_size" << endl;
 		cout << "old_file_size=" << old_file_size << endl;
 		cout << "*datref=" << *datref << endl;
 		cout << "size_of_header_log()=" << size_of_header_log() << endl;
@@ -980,7 +984,7 @@ void database::add_data_DB_compact(void *d,
 	file_write(data2, 1, total);
 	*datref = (UINT4)(old_file_size >> size_of_header_log());
 	if (((INT)((UINT)*datref << size_of_header_log())) != old_file_size) {
-		cout << "database::add_data_DB ((UINT)*datref << size_of_header_log()) != old_file_size" << endl;
+		cout << "database::add_data_DB_compact ((UINT)*datref << size_of_header_log()) != old_file_size" << endl;
 		cout << "old_file_size=" << old_file_size << endl;
 		cout << "*datref=" << *datref << endl;
 		cout << "size_of_header_log()=" << size_of_header_log() << endl;

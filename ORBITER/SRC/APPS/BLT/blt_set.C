@@ -308,6 +308,7 @@ void blt_set::init_group(INT verbose_level)
 		}
 }
 
+#if 0
 void blt_set::init_orthogonal(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -341,6 +342,7 @@ void blt_set::init_orthogonal(INT verbose_level)
 		cout << "blt_set::init_orthogonal finished" << endl;
 		}
 }
+#endif
 
 void blt_set::init_orthogonal_hash(INT verbose_level)
 {
@@ -810,10 +812,10 @@ INT blt_set::create_graph(
 
 
 
-	INT f, l, idx;
+	INT f, /*l,*/ idx;
 
 	f = C2.second_type_first[0];
-	l = C2.second_type_len[0];
+	//l = C2.second_type_len[0];
 	idx = C2.second_sorting_perm_inv[f + 0];
 #if 0
 	if (C.type_len[idx] != minimal_type_multiplicity) {

@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 	cout << "k=" << k << endl;
 	cout << "q=" << q << endl;
 	cout << "poly=";
-	if (poly) {
+	if (f_poly) {
 		cout << poly;
 		}
 	else {

@@ -126,7 +126,12 @@ int main(int argc, const char **argv)
 
 	F = new finite_field;
 
-	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
+	if (f_poly) {
+		F->init_override_polynomial(q, poly, 0 /* verbose_level */);
+		}
+	else {
+		F->init(q, 0 /* verbose_level */);
+		}
 
 	Gen.init_basic(F, 
 		ECA->input_prefix, ECA->base_fname, ECA->starter_size, 

@@ -331,9 +331,9 @@ void do_it(INT n, INT verbose_level)
 
 		matrix M;
 
-		INT n, deg;
+		INT /*n,*/ deg;
 
-		n = character_degree[i];
+		//n = character_degree[i];
 		
 		create_matrix(M, i, S, nb_classes, 
 			character_degree, class_size, 
@@ -751,7 +751,7 @@ void compute_multiplication_constants_center_of_group_ring(action *A,
 	schreier *Sch, INT nb_classes, INT *&N, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT r, rl, rf, s, sl, sf, i, a, j, b, c, idx, t, tf, tl;
+	INT r, rl, rf, s, sl, sf, i, a, j, b, c, idx, t, tf; //, tl;
 
 
 	if (f_v) {
@@ -785,7 +785,7 @@ void compute_multiplication_constants_center_of_group_ring(action *A,
 					t = Sch->orbit_number(c); //Sch->orbit_no[idx];
 					
 					tf = Sch->orbit_first[t];
-					tl = Sch->orbit_len[t];
+					//tl = Sch->orbit_len[t];
 
 					if (idx == tf) {
 						N[r * nb_classes * nb_classes + s * nb_classes + t]++;
@@ -810,7 +810,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 	INT *Elt2;
 	INT *Choice;
 	INT *Nb;
-	INT t, h, i, idx, j;
+	INT t, h, i, /*idx,*/ j;
 
 	if (f_v) {
 		cout << "compute_Distribution_table" << endl;
@@ -849,7 +849,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 			i = ABC->rank(Elt1);
 
 
-			idx = Sch->orbit_inv[i];
+			//idx = Sch->orbit_inv[i];
 					
 			j = Sch->orbit_number(i); // Sch->orbit_no[idx];
 					

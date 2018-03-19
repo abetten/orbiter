@@ -34,7 +34,10 @@ all: all_cliques.out \
 	prepare_frames.out \
 	sajeeb.out \
 	create_file.out \
-	missing_files.out
+	missing_files.out \
+	read_solutions.out \
+	join_sets.out \
+	concatenate_files.out 
 
 
 
@@ -106,6 +109,15 @@ create_file.out:  create_file.o ;
 
 missing_files.out:  missing_files.o ;
 	$(DISCRETA_CPP)  missing_files.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+read_solutions.out:  read_solutions.o ;
+	$(DISCRETA_CPP)  read_solutions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+join_sets.out:  join_sets.o ;
+	$(DISCRETA_CPP)  join_sets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+concatenate_files.out:  concatenate_files.o ;
+	$(DISCRETA_CPP)  concatenate_files.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

@@ -111,19 +111,19 @@ void grassmann::print_set(INT *v, INT len)
 		}
 }
 
-void grassmann::print_set_tex(ofstream &fp, INT *v, INT len)
+void grassmann::print_set_tex(ostream &ost, INT *v, INT len)
 {
 	INT i;
 	
 	for (i = 0; i < len; i++) {
-		fp << "subspace " << i << " / " << len << " is " << v[i] << ":\\\\" << endl;
+		ost << "subspace " << i << " / " << len << " is " << v[i] << ":\\\\" << endl;
 		unrank_INT(v[i], 0 /*verbose_level*/);
-		fp << "$$" << endl;
-		fp << "\\left[" << endl;
+		ost << "$$" << endl;
+		ost << "\\left[" << endl;
 		//print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
-		print_integer_matrix_tex(fp, M, k, n);
-		fp << "\\right]" << endl;
-		fp << "$$" << endl;
+		print_integer_matrix_tex(ost, M, k, n);
+		ost << "\\right]" << endl;
+		ost << "$$" << endl;
 		}
 }
 

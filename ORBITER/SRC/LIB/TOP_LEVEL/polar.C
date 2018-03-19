@@ -645,7 +645,7 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 
 void polar::show_stabilizer(INT depth, INT orbit_idx, INT verbose_level)
 {
-	INT node2;
+	//INT node2;
 	//oracle *O2;
 	//vector_ge *gens;
 	//INT *tl;
@@ -656,7 +656,7 @@ void polar::show_stabilizer(INT depth, INT orbit_idx, INT verbose_level)
 	//gens = new vector_ge;
 	//tl = NEW_INT(A->base_len);
 	Elt = NEW_INT(A->elt_size_in_INT);	
-	node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
+	//node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
 	//O2 = &Gen->root[node2];
 
 	Gen->get_stabilizer_generators(Strong_gens,  

@@ -2024,7 +2024,7 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(actio
 		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface before cubic_surface_stab_gens" << endl;
 		}
 	cubic_surface_stab_gens(F->q, iso, data, nb_gens, data_size, ascii_target_go);
-
+		// in GALOIS/data.C
 
 	vector_ge *gens;
 
@@ -2064,6 +2064,148 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(actio
 		}
 }
 
+
+void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(action *A, 
+	finite_field *F, INT f_with_normalizer, INT f_semilinear, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24" << endl;
+		cout << "q=" << F->q << endl;
+		cout << "f_with_normalizer=" << f_with_normalizer << endl;
+		cout << "f_semilinear=" << f_semilinear << endl;
+		}
+
+	INT *data;
+	INT nb_gens;
+	INT data_size;
+	INT group_order;
+	longinteger_object target_go;
+	INT i;
+	
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 before cubic_surface_stab_gens" << endl;
+		}
+
+	F->cubic_surface_family_24_generators(f_with_normalizer, 
+		f_semilinear, 
+		data, nb_gens, data_size, group_order, verbose_level);
+	//cubic_surface_stab_gens(F->q, iso, data, nb_gens, data_size, ascii_target_go);
+		// in GALOIS/data.C
+
+	vector_ge *gens;
+
+	gens = new vector_ge;
+	gens->init(A);
+	target_go.create(group_order);
+
+
+	gens->allocate(nb_gens);
+	for (i = 0; i < nb_gens; i++) {
+		A->make_element(gens->ith(i), data + i * data_size, 0);
+		}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 before generators_to_strong_generators" << endl;
+		}
+	generators_to_strong_generators(A, 
+		TRUE /* f_target_go */, target_go, 
+		gens, Strong_gens2, 
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 after generators_to_strong_generators" << endl;
+		}
+	
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	FREE_INT(data);
+	delete Strong_gens2;
+	delete gens;
+
+	if (f_v) {
+		cout << "strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24 done" << endl;
+		}
+}
+
+void strong_generators::BLT_set_from_catalogue_stabilizer(action *A, 
+	finite_field *F, INT iso, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer" << endl;
+		cout << "q=" << F->q << endl;
+		cout << "iso=" << iso << endl;
+		}
+
+	INT *data;
+	INT nb_gens;
+	INT data_size;
+	const BYTE *ascii_target_go;
+	longinteger_object target_go;
+	INT i;
+	
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer before BLT_stab_gens" << endl;
+		}
+	BLT_stab_gens(F->q, iso, data, nb_gens, data_size, ascii_target_go);
+		// in GALOIS/data.C
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer data_size=" << data_size << endl;
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer nb_gens=" << nb_gens << endl;
+		}
+
+	vector_ge *gens;
+
+	gens = new vector_ge;
+	gens->init(A);
+	target_go.create_from_base_10_string(ascii_target_go);
+
+
+	gens->allocate(nb_gens);
+	for (i = 0; i < nb_gens; i++) {
+		A->make_element(gens->ith(i), data + i * data_size, 0);
+		}
+
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer generators are:"
+ << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer before generators_to_strong_generators" << endl;
+		}
+	generators_to_strong_generators(A, 
+		TRUE /* f_target_go */, target_go, 
+		gens, Strong_gens2, 
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer after generators_to_strong_generators" << endl;
+		}
+	
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	delete Strong_gens2;
+	delete gens;
+
+	if (f_v) {
+		cout << "strong_generators::BLT_set_from_catalogue_stabilizer done" << endl;
+		}
+}
 
 
 

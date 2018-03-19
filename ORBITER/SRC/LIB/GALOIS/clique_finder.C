@@ -776,7 +776,7 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 	if (depth && nb_candidates[depth - 1] > 1) {
 		decision_step_counter++;
 		}
-	if ((counter & ((1 << 18) - 1)) == 0) {
+	if ((counter & ((1 << 23) - 1)) == 0) {
 		my_verbose_level = verbose_level + 1;
 		}
 	else {

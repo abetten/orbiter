@@ -265,7 +265,7 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 	//INT y_offset4 = -350;
 	//INT delta_x = 1000;
 	//INT delta_y = 1000;
-	INT nb_e, Nb_e, pt, dx, dx0, Dx, /*Dx0,*/ nxt, hdl, depth, hdl2;
+	INT nb_e, Nb_e, pt, dx, dx0, /*Dx, Dx0,*/ nxt, hdl, depth, hdl2;
 	INT set0[100];
 	INT set1[100];
 	BYTE str[1000];
@@ -312,6 +312,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 					" Nb_e=" << Nb_e << endl;
 				cout << "root[i].E[j].type=" << root[i].E[j].type << endl;
 				}
+
+#if 0
 			if (Nb_e) {
 				Dx = MINIMUM(Width[j] / Nb_e, 200);
 				//Dx0 = ((Nb_e - 1) * Dx) >> 1;
@@ -320,6 +322,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 				Dx = 0;
 				//Dx0 = 0;
 				}
+#endif
+
 			if (root[i].E[j].type == EXTENSION_TYPE_EXTENSION) {
 				// extension node
 				pt = root[i].E[j].pt;

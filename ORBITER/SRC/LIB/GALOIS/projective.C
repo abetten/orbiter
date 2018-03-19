@@ -1247,3 +1247,41 @@ void display_all_PHG_elements(INT n, INT q)
 }
 
 
+void display_table_of_projective_points(ostream &ost, finite_field *F, INT *v, INT nb_pts, INT len)
+{
+	INT i;
+	INT *coords;
+	
+	coords = NEW_INT(len);
+	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
+	ost << "$$" << endl;
+	ost << "\\begin{array}{|c|c|c|}" << endl;
+	ost << "\\hline" << endl;
+	ost << "i & a_i & P_{a_i}\\\\" << endl;
+	ost << "\\hline" << endl;
+	ost << "\\hline" << endl;
+	for (i = 0; i < nb_pts; i++) {
+		PG_element_unrank_modified(*F, coords, 1, 3, v[i]);
+		ost << i << " & " << v[i] << " & ";
+		INT_vec_print(ost, coords, len);
+		ost << "\\\\" << endl;
+		if (((i + 1) % 30) == 0) {
+			ost << "\\hline" << endl;
+			ost << "\\end{array}" << endl;
+			ost << "$$}%" << endl;
+			ost << "$$" << endl;
+			ost << "\\begin{array}{|c|c|c|}" << endl;
+			ost << "\\hline" << endl;
+			ost << "i & a_i & P_{a_i}\\\\" << endl;
+			ost << "\\hline" << endl;
+			ost << "\\hline" << endl;
+			}
+		}
+	ost << "\\hline" << endl;
+	ost << "\\end{array}" << endl;
+	ost << "$$}%" << endl;
+	FREE_INT(coords);
+}
+
+
+

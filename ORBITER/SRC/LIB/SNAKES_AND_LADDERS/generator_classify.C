@@ -239,7 +239,7 @@ void generator::extend_level(INT size,
 // calls downstep, upstep
 {
 	INT f_v = (verbose_level >= 1);
-	INT f, cur; //, l;
+	//INT f, cur; //, l;
 
 	if (f_v) {
 		cout << "##################################################################################################" << endl;
@@ -254,8 +254,8 @@ void generator::extend_level(INT size,
 		//cout << "f_write_candidate_file=" << f_write_candidate_file << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	f = first_oracle_node_at_level[size];
-	cur = first_oracle_node_at_level[size + 1];
+	//f = first_oracle_node_at_level[size];
+	//cur = first_oracle_node_at_level[size + 1];
 	//l = cur - f;
 
 	if (f_v) {

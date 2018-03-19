@@ -2017,9 +2017,9 @@ void bt_key_fill_in(BYTE *key, Vector& V, Vector& the_object);
 void bt_key_get_INT4(BYTE **key, INT4 &i);
 void bt_key_get_INT2(BYTE **key, INT2 &i);
 
-//#define BTREEMAXKEYLEN 12
+#define BTREEMAXKEYLEN 12
 //#define BTREEMAXKEYLEN 48
-#define BTREEMAXKEYLEN 512
+//#define BTREEMAXKEYLEN 512
 
 typedef struct keycarrier {
 	BYTE c[BTREEMAXKEYLEN];

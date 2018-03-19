@@ -1712,13 +1712,12 @@ void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw,
 }
 
 void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, INT f_output_solution_raw, 
-	INT f_draw, INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	const BYTE *fname_template, 
 	const BYTE *fname_sol, const BYTE *fname_stats, 
+	INT f_split, INT split_r, INT split_m, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_prefix, const BYTE *prefix, 
 	INT print_interval, 
-	double scale, double line_width, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1728,12 +1727,20 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 	BYTE fname[1000];
 	BYTE fname_tmp[1000];
 
+	if (f_v) {
+		cout << "colored_graph_all_cliques_list_of_cases" << endl;
+		}
 	{
 	ofstream fp(fname_sol);
 	ofstream fp_stats(fname_stats);
 	
 	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,decision_steps,dt" << endl;
 	for (i = 0; i < nb_cases; i++) {
+
+
+		if (f_split && ((i % split_m) == split_r)) {
+			continue;
+			}
 		colored_graph *CG;
 
 
@@ -1780,6 +1787,81 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 	}
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_cases done Nb_sol=" << Nb_sol << endl;
+		}
+}
+
+void colored_graph_all_cliques_list_of_files(INT nb_cases, 
+	INT *Case_number, const BYTE **Case_fname, 
+	INT f_output_solution_raw, 
+	const BYTE *fname_sol, const BYTE *fname_stats, 
+	INT f_maxdepth, INT maxdepth, 
+	INT f_prefix, const BYTE *prefix, 
+	INT print_interval, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, c;
+	INT Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
+	INT search_steps, decision_steps, nb_sol, dt;
+
+	if (f_v) {
+		cout << "colored_graph_all_cliques_list_of_files" << endl;
+		}
+	{
+	ofstream fp(fname_sol);
+	ofstream fp_stats(fname_stats);
+	
+	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,decision_steps,dt" << endl;
+	for (i = 0; i < nb_cases; i++) {
+
+
+		colored_graph *CG;
+		const BYTE *fname;
+
+
+		CG = new colored_graph;
+
+		c = Case_number[i];
+		fname = Case_fname[i];
+		
+		if (f_v) {
+			cout << "colored_graph_all_cliques_list_of_files case " << i << " / " << nb_cases << " which is " << c << " in file " << fname << endl;
+			}
+
+		if (file_size(fname) <= 0) {
+			cout << "colored_graph_all_cliques_list_of_files file " << fname << " does not exist" << endl;
+			exit(1);
+			}
+		CG->load(fname, verbose_level - 2);
+
+		//CG->print();
+
+		fp << "# start case " << c << endl;
+
+
+		CG->all_rainbow_cliques(&fp, f_output_solution_raw, 
+			f_maxdepth, maxdepth, 
+			FALSE /* f_restrictions */, NULL /* restrictions */, 
+			FALSE /* f_tree */, FALSE /* f_decision_nodes_only */, NULL /* fname_tree */,
+			print_interval, 
+			search_steps, decision_steps, nb_sol, dt, 
+			verbose_level - 1);
+		fp << "# end case " << c << " " << nb_sol << " " << search_steps 
+				<< " " << decision_steps << " " << dt << endl;
+		fp_stats << i << "," << c << "," << nb_sol << "," << CG->nb_points << "," << search_steps << "," << decision_steps << "," << dt << endl;
+		Search_steps += search_steps;
+		Decision_steps += decision_steps;
+		Nb_sol += nb_sol;
+		Dt += dt;
+		
+		delete CG;
+		}
+	fp << -1 << " " << Nb_sol << " " << Search_steps 
+				<< " " << Decision_steps << " " << Dt << endl;
+	fp_stats << "END" << endl;
+	}
+	if (f_v) {
+		cout << "colored_graph_all_cliques_list_of_files done Nb_sol=" << Nb_sol << endl;
 		}
 }
 

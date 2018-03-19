@@ -287,7 +287,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	INT f_book = TRUE;
 	INT f_title = TRUE;
 	BYTE title[1000];
-	const BYTE *author = "Anton Betten";
+	const BYTE *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;
@@ -306,7 +306,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
 
-	INT i, first, c, id;
+	INT i, first, /* c,*/ id;
 	INT u, v, h, rep, tt;
 	longinteger_object go;
 	INT data[1000];
@@ -325,7 +325,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 			}
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -419,7 +419,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 			}
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -496,7 +496,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 
@@ -830,7 +830,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 	INT f_book = TRUE;
 	INT f_title = TRUE;
 	BYTE title[1000];
-	const BYTE *author = "Anton Betten";
+	const BYTE *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;
@@ -849,7 +849,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 
-	INT h, rep, first, c, id;
+	INT h, rep, first, id;
 	longinteger_object go;
 	INT data[1000];
 	//INT data2[1000];
@@ -857,7 +857,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
 		first = Iso.orbit_fst[rep];
-		c = Iso.starter_number[first];
+		//c = Iso.starter_number[first];
 		id = Iso.orbit_perm[first];		
 		Iso.load_solution(id, data);
 

@@ -29,6 +29,7 @@ void orbit_of_subspaces::null()
 	Subspaces = NULL;
 	prev = NULL;
 	label = NULL;
+	data_tmp = NULL;
 }
 
 void orbit_of_subspaces::freeself()
@@ -46,6 +47,9 @@ void orbit_of_subspaces::freeself()
 		}
 	if (label) {
 		FREE_INT(label);
+		}
+	if (data_tmp) {
+		FREE_INT(data_tmp);
 		}
 	null();
 }
@@ -82,7 +86,9 @@ void orbit_of_subspaces::init(action *A, action *A2, finite_field *F,
 	orbit_of_subspaces::compute_image_of_vector_callback_data = compute_image_of_vector_callback_data;
 	kn = k * n;
 	sz = 1 + k + kn;
-	sz_for_compare = 1 + k + kn; // A betten June 29 2014
+	sz_for_compare = 1 + k + kn;
+	
+	data_tmp = NEW_INT(sz);
 	
 	if (f_v) {
 		cout << "orbit_of_subspaces::init before compute" << endl;
@@ -94,8 +100,8 @@ void orbit_of_subspaces::init(action *A, action *A2, finite_field *F,
 
 	if (f_v) {
 		cout << "orbit_of_subspaces::init printing the orbit" << endl;
+		print_orbit();
 		}
-	print_orbit();
 
 	if (f_v) {
 		cout << "orbit_of_subspaces::init done" << endl;
@@ -441,6 +447,7 @@ void orbit_of_subspaces::compute(INT verbose_level)
 }
 
 void orbit_of_subspaces::get_transporter(INT idx, INT *transporter, INT verbose_level)
+// transporter is an element which maps the orbit representative to the given subspace.
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt1, *Elt2;
@@ -579,6 +586,38 @@ void orbit_of_subspaces::get_random_schreier_generator(INT *Elt, INT verbose_lev
 		}
 }
 
+strong_generators *orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep(
+	longinteger_object &full_group_order, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	strong_generators *gens;
+	sims *Stab;
+
+	if (f_v) {
+		cout << "orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep" << endl;
+		}
+
+	compute_stabilizer(A /* default_action */, full_group_order, 
+		Stab, 0 /*verbose_level*/);
+
+	longinteger_object stab_order;
+
+	Stab->group_order(stab_order);
+	if (f_v) {
+		cout << "orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep found a stabilizer group of order " << stab_order << endl;
+		}
+	
+	gens = new strong_generators;
+	gens->init(A);
+	gens->init_from_sims(Stab, verbose_level);
+
+	delete Stab;
+	if (f_v) {
+		cout << "orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep done" << endl;
+		}
+	return gens;
+}
+
 void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_object &go, 
 	sims *&Stab, INT verbose_level)
 // this function allocates a sims structure into Stab.
@@ -693,6 +732,44 @@ INT orbit_of_subspaces::search_data(INT *data, INT &idx)
 }
 
 
+INT orbit_of_subspaces::search_data_raw(INT *data_raw, INT &idx, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, ret;
+	
+	if (f_v) {
+		cout << "orbit_of_subspaces::search_data_raw" << endl;
+		}
+	data_tmp[0] = 0;
+	
+	for (i = 0; i < k; i++) {
+
+		data_tmp[1 + i] = data_raw[i];
+		unrank_vector(data_raw[i], data_tmp + 1 + k + i * n, verbose_level - 2);
+		}
+
+	if (f_v) {
+		cout << "orbit_of_subspaces::search_data_raw searching for";
+		INT_vec_print(cout, data_tmp, 1 + k + i * n);
+		cout << endl;
+		}
+
+
+	
+	if (search_data(data_tmp, idx)) {
+		ret = TRUE;
+		}
+	else {
+		ret = FALSE;
+		}
+	
+	if (f_v) {
+		cout << "orbit_of_subspaces::search_data_raw done" << endl;
+		}
+	return ret;
+}
+
+
 INT orbit_of_subspaces_compare_func(void *a, void *b, void *data)
 {
 	INT *A = (INT *)a;
@@ -710,5 +787,6 @@ INT orbit_of_subspaces_compare_func(void *a, void *b, void *data)
 		}
 	return 0;
 }
+
 
 

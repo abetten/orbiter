@@ -2960,6 +2960,12 @@ public:
 	void generators_for_the_stabilizer_of_the_cubic_surface(action *A, 
 		finite_field *F, INT iso, 
 		INT verbose_level);
+	void generators_for_the_stabilizer_of_the_cubic_surface_family_24(action *A, 
+		finite_field *F, INT f_with_normalizer, INT f_semilinear, 
+		INT verbose_level);
+	void BLT_set_from_catalogue_stabilizer(action *A, 
+		finite_field *F, INT iso, 
+		INT verbose_level);
 
 
 };

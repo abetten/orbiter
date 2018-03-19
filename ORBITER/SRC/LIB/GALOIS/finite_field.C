@@ -978,6 +978,11 @@ INT finite_field::one()
 	return 1;
 }
 
+INT finite_field::minus_one()
+{
+	return negate(1);
+}
+
 INT finite_field::is_zero(INT i)
 {
 	if (i == 0)

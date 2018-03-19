@@ -233,6 +233,9 @@ void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const BYTE *fn
 		cout << "set_of_sets::init_from_orbiter_file fname=" << fname << endl;
 		}
 	nb_sets = count_number_of_orbits_in_file(fname, verbose_level - 1);
+	if (f_v) {
+		cout << "set_of_sets::init_from_orbiter_file nb_sets=" << nb_sets << endl;
+		}
 	set_of_sets::underlying_set_size = underlying_set_size;
 	Sets = NEW_PINT(nb_sets);
 	Set_size = NEW_INT(nb_sets);
@@ -256,7 +259,7 @@ void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const BYTE *fn
 			break;
 			}
 		
-		//cout << "count_number_of_orbits_in_file reading line, nb_sol = " << nb_sol << endl;
+		//cout << "set_of_sets::init_from_orbiter_file reading line, nb_sol = " << nb_sol << endl;
 		fp.getline(buf, MY_BUFSIZE, '\n');
 		if (strlen(buf) == 0) {
 			cout << "set_of_sets::init_from_orbiter_file reading an empty line" << endl;
@@ -274,6 +277,11 @@ void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const BYTE *fn
 				cout << "set_of_sets::init_from_orbiter_file found a complete file with " << nb_sol << " solutions" << endl;
 				}
 			break;
+			}
+		else {
+			if (f_v) {
+				cout << "set_of_sets::init_from_orbiter_file reading a set of size " << len << endl;
+				}
 			}
 		Sets[nb_sol] = NEW_INT(len);
 		Set_size[nb_sol] = len;

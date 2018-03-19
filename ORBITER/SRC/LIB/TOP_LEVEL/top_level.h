@@ -39,6 +39,9 @@ typedef class object_in_projective_space_with_action object_in_projective_space_
 typedef class surface_create_description surface_create_description; // added January 14, 2018
 typedef class surface_create surface_create; // added January 14, 2018
 typedef class arc_lifting arc_lifting; // added January 14, 2018
+typedef class six_arcs_not_on_a_conic six_arcs_not_on_a_conic; // added March 6, 2018
+typedef class BLT_set_create_description BLT_set_create_description; // added March 17, 2018
+typedef class BLT_set_create BLT_set_create; // added March 17, 2018
 
 
 // ####################################################################################
@@ -1687,6 +1690,7 @@ public:
 	INT f_has_desired_pivots;
 	INT *desired_pivots; // [k]
 	INT *subspace_by_rank; // [k]
+	INT *data_tmp; // [sz]
 
 	INT f_has_rank_functions;
 	void *rank_unrank_data;
@@ -1725,11 +1729,15 @@ public:
 	void print_orbit();
 	void compute(INT verbose_level);
 	void get_transporter(INT idx, INT *transporter, INT verbose_level);
+		// transporter is an element which maps the orbit representative to the given subspace.
 	void get_random_schreier_generator(INT *Elt, INT verbose_level);
+	strong_generators *generators_for_stabilizer_of_orbit_rep(
+		longinteger_object &full_group_order, INT verbose_level);
 	void compute_stabilizer(action *default_action, longinteger_object &go, 
 		sims *&Stab, INT verbose_level);
 		// this function allocates a sims structure into Stab.
 	INT search_data(INT *data, INT &idx);
+	INT search_data_raw(INT *data_raw, INT &idx, INT verbose_level);
 };
 
 INT orbit_of_subspaces_compare_func(void *a, void *b, void *data);
@@ -2500,12 +2508,10 @@ public:
 		INT *Arc6, 
 		const BYTE *arc_label, const BYTE *arc_label_short, 
 		INT nb_surfaces, 
-		arc_generator *Gen, 
+		six_arcs_not_on_a_conic *Six_arcs, 
 		INT *Arc_identify_nb, 
 		INT *Arc_identify, 
 		INT *f_deleted, 
-		INT *Not_on_conic_idx, 
-		INT nb_arcs_not_on_conic, 
 		INT verbose_level);
 
 };
@@ -2558,8 +2564,10 @@ public:
 	void freeself();
 	INT init_equation(surface_with_action *Surf_A, INT *eqn, 
 		strong_generators *Aut_gens, INT verbose_level);
-	void init(surface_with_action *Surf_A, INT *Lines, INT *eqn, 
-		strong_generators *Aut_gens, INT verbose_level);
+	void init(surface_with_action *Surf_A, 
+		INT *Lines, INT *eqn, 
+		strong_generators *Aut_gens, INT f_find_double_six_and_rearrange_lines, 
+		INT verbose_level);
 	void init_surface_object(surface_with_action *Surf_A, surface_object *SO, 
 		strong_generators *Aut_gens, INT verbose_level);
 	void compute_orbits_of_automorphism_group(INT verbose_level);
@@ -2851,6 +2859,8 @@ public:
 	surface_create_description *Descr;
 
 	BYTE prefix[1000];
+	BYTE label_txt[1000];
+	BYTE label_tex[1000];
 
 	INT q;
 	finite_field *F;
@@ -3011,6 +3021,106 @@ public:
 	void loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset_reps, 
 		INT *&aut_T_index, INT *&aut_coset_index, INT verbose_level);
 	void create_surface(surface_with_action *Surf_A, INT *Arc6, INT verbose_level);
+};
+
+
+// ####################################################################################
+// six_arcs_not_on_a_conic.C:
+// ####################################################################################
+
+
+class six_arcs_not_on_a_conic {
+
+public:
+
+	finite_field *F; // do not free
+	projective_space *P2; // do not free
+	
+	arc_generator *Gen;
+	BYTE base_fname[1000];
+
+	INT nb_orbits;
+
+	INT *Not_on_conic_idx;
+	INT nb_arcs_not_on_conic;
+	
+	six_arcs_not_on_a_conic();
+	~six_arcs_not_on_a_conic();
+	void null();
+	void freeself();
+	void init(finite_field *F, projective_space *P2, 
+		int argc, const char **argv, 
+		INT verbose_level);
+	void report_latex(ostream &ost);
+};
+
+// ####################################################################################
+// BLT_set_create_description.C:
+// ####################################################################################
+
+
+
+class BLT_set_create_description {
+
+public:
+
+	INT f_q;
+	INT q;
+	INT f_catalogue;
+	INT iso;
+	//INT f_by_coefficients;
+	//const BYTE *coefficients_text;
+	INT f_family;
+	const BYTE *family_name;
+
+
+	
+	BLT_set_create_description();
+	~BLT_set_create_description();
+	void null();
+	void freeself();
+	INT read_arguments(int argc, const char **argv, 
+		INT verbose_level);
+};
+
+// ####################################################################################
+// surface_create.C:
+// ####################################################################################
+
+
+
+class BLT_set_create {
+
+public:
+	BLT_set_create_description *Descr;
+
+	BYTE prefix[1000];
+	BYTE label_txt[1000];
+	BYTE label_tex[1000];
+
+	INT q;
+	finite_field *F;
+
+	INT f_semilinear;
+	
+	action *A; // orthogonal group
+	INT degree;
+	orthogonal *O;
+	
+	INT *set;
+	INT f_has_group;
+	strong_generators *Sg;
+	
+
+
+	
+	BLT_set_create();
+	~BLT_set_create();
+	void null();
+	void freeself();
+	void init(BLT_set_create_description *Descr, INT verbose_level);
+	void apply_transformations(const BYTE **transform_coeffs, 
+		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
 
 
