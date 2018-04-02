@@ -1,4 +1,4 @@
-// translation_plane2.C
+// spread2.C
 // 
 // Anton Betten
 // November 17, 2009
@@ -7,12 +7,13 @@
 //
 // moved here from translation_plane.C: April 23, 2013
 // moved to TOP_LEVEL: November 2, 2013
+// renamed to spread2.C from translation_plane2.C: March 25, 2018
 //
 //
 
 #include "orbiter.h"
 
-void translation_plane::print_isomorphism_type(isomorph *Iso, 
+void spread::print_isomorphism_type(isomorph *Iso, 
 	INT iso_cnt, sims *Stab, schreier &Orb, 
 	INT *data, INT verbose_level)
 // called from callback_print_isomorphism_type()
@@ -38,7 +39,7 @@ void translation_plane::print_isomorphism_type(isomorph *Iso,
 		}
 
 	if (f_v) {
-		cout << "translation_plane::print_isomorphism_type" << endl;
+		cout << "spread::print_isomorphism_type" << endl;
 		}
 
 	sprintf(fname, "%s_%ld.tex", Iso->prefix, iso_cnt);
@@ -55,7 +56,7 @@ void translation_plane::print_isomorphism_type(isomorph *Iso,
 		}
 
 	latex_head(file, FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/, 
-		"Anton Betten" /*BYTE *author*/, FALSE/* f_toc*/, 
+		"Orbiter" /*BYTE *author*/, FALSE/* f_toc*/, 
 		FALSE /* f_landscape*/,
 		FALSE /* f_12pt */, 
 		TRUE /* f_enlarged_page */, 
@@ -121,12 +122,12 @@ void translation_plane::print_isomorphism_type(isomorph *Iso,
 
 
 	if (f_v) {
-		cout << "translation_plane::print_isomorphism_type calling induced_action_on_set_and_kernel" << endl;
+		cout << "spread::print_isomorphism_type calling induced_action_on_set_and_kernel" << endl;
 		}
 	Iso->induced_action_on_set_and_kernel(file, A, Stab, Iso->size, data, verbose_level - 1);
 
 	if (f_v) {
-		cout << "translation_plane::print_isomorphism_type induced_action_on_set_and_kernel finished" << endl;
+		cout << "spread::print_isomorphism_type induced_action_on_set_and_kernel finished" << endl;
 		}
 
 
@@ -186,8 +187,8 @@ void translation_plane::print_isomorphism_type(isomorph *Iso,
 	}
 
 	if (f_v) {
-		cout << "translation_plane::print_isomorphism_type written file " << fname << " of size " << file_size(fname) << endl;
-		cout << "translation_plane::print_isomorphism_type written file " << fname_klein << " of size " << file_size(fname_klein) << endl;
+		cout << "spread::print_isomorphism_type written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "spread::print_isomorphism_type written file " << fname_klein << " of size " << file_size(fname_klein) << endl;
 		}
 
 
@@ -196,7 +197,7 @@ void translation_plane::print_isomorphism_type(isomorph *Iso,
 
 
 #if 0
-void translation_plane::klein_plane_intersections(INT *data, INT data_size, 
+void spread::klein_plane_intersections(INT *data, INT data_size, 
 	longinteger_object *&R,
 	INT **&Pts_on_plane, 
 	INT *&nb_pts_on_plane, 
@@ -218,7 +219,7 @@ void translation_plane::klein_plane_intersections(INT *data, INT data_size,
 	grassmann *Gr;
 
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections" << endl;
+		cout << "spread::klein_plane_intersections" << endl;
 		}
 	set_size = data_size;
 	P3 = new projective_space;
@@ -241,7 +242,7 @@ void translation_plane::klein_plane_intersections(INT *data, INT data_size,
 
 
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections after P3->klein_correspondence" << endl;
+		cout << "spread::klein_plane_intersections after P3->klein_correspondence" << endl;
 		}
 	coords = NEW_INT(set_size * 6);
 	for (i = 0; i < set_size; i++) {
@@ -300,14 +301,14 @@ void translation_plane::klein_plane_intersections(INT *data, INT data_size,
 			}
 		}
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections The Klein-image forms an ovoid." << endl;
+		cout << "spread::klein_plane_intersections The Klein-image forms an ovoid." << endl;
 		}
 	
 	v = NEW_INT(d);
 
 	N = P5->nb_rk_k_subspaces_as_INT(3);
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections N = " << N << endl;
+		cout << "spread::klein_plane_intersections N = " << N << endl;
 		}
 
 	
@@ -317,7 +318,7 @@ void translation_plane::klein_plane_intersections(INT *data, INT data_size,
 	Gr->init(6, 3, F, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections before plane_intersection_type_fast" << endl;
+		cout << "spread::klein_plane_intersections before plane_intersection_type_fast" << endl;
 		}
 	P5->plane_intersection_type_fast(Gr, the_set_out, set_size, 
 		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
@@ -325,7 +326,7 @@ void translation_plane::klein_plane_intersections(INT *data, INT data_size,
 
 
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections: We found " << nb_planes << " planes." << endl;
+		cout << "spread::klein_plane_intersections: We found " << nb_planes << " planes." << endl;
 #if 1
 		for (i = 0; i < nb_planes; i++) {
 			cout << setw(3) << i << " : " << R[i] 
@@ -351,12 +352,12 @@ void translation_plane::klein_plane_intersections(INT *data, INT data_size,
 	FREE_INT(v);
 	FREE_INT(coords);
 	if (f_v) {
-		cout << "translation_plane::klein_plane_intersections done" << endl;
+		cout << "spread::klein_plane_intersections done" << endl;
 		}
 }
 #endif
 
-void translation_plane::save_klein_invariants(BYTE *prefix, 
+void spread::save_klein_invariants(BYTE *prefix, 
 	INT iso_cnt, 
 	INT *data, INT data_size, INT verbose_level)
 {
@@ -368,11 +369,11 @@ void translation_plane::save_klein_invariants(BYTE *prefix,
 	INT i, j;
 
 	if (f_v) {
-		cout << "translation_plane::klein_invariants" << endl;
+		cout << "spread::klein_invariants" << endl;
 		}
 	
 	if (Klein == NULL) {
-		cout << "translation_plane::klein_invariants Klein == NULL" << endl;
+		cout << "spread::klein_invariants Klein == NULL" << endl;
 		exit(1);
 		}
 	
@@ -425,11 +426,11 @@ void translation_plane::save_klein_invariants(BYTE *prefix,
 	FREE_INT(nb_pts_on_plane);
 
 	if (f_v) {
-		cout << "translation_plane::klein_invariants done" << endl;
+		cout << "spread::klein_invariants done" << endl;
 		}
 }
 
-void translation_plane::klein(ofstream &ost, 
+void spread::klein(ofstream &ost, 
 	isomorph *Iso, 
 	INT iso_cnt, sims *Stab, schreier &Orb, 
 	INT *data, INT data_size, INT verbose_level)
@@ -467,7 +468,7 @@ void translation_plane::klein(ofstream &ost,
 
 	C.init(nb_pts_on_plane, nb_planes, f_second, 0);
 	if (f_v) {
-		cout << "translation_plane::klein: plane-intersection type: ";
+		cout << "spread::klein: plane-intersection type: ";
 		C.print(FALSE /*f_backwards*/);
 		}
 	
@@ -635,12 +636,12 @@ void translation_plane::klein(ofstream &ost,
 	FREE_INT(nb_pts_on_plane);
 
 	if (f_v) {
-		cout << "translation_plane::klein done" << endl;
+		cout << "spread::klein done" << endl;
 		}
 }
 
 #if 0
-void translation_plane::test_plane_intersection_type_of_klein_image(
+void spread::test_plane_intersection_type_of_klein_image(
 	const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -654,7 +655,7 @@ void translation_plane::test_plane_intersection_type_of_klein_image(
 	INT size;
 
 	if (f_v) {
-		cout << "translation_plane::test_plane_intersection_type_of_klein_image" << endl;
+		cout << "spread::test_plane_intersection_type_of_klein_image" << endl;
 		}
 	P3 = new projective_space;
 	
@@ -775,7 +776,7 @@ void translation_plane::test_plane_intersection_type_of_klein_image(
 }
 #endif
 
-void translation_plane::plane_intersection_type_of_klein_image(
+void spread::plane_intersection_type_of_klein_image(
 	projective_space *P3, 
 	projective_space *P5, 
 	grassmann *Gr, 
@@ -790,7 +791,7 @@ void translation_plane::plane_intersection_type_of_klein_image(
 	INT *the_set_out;
 
 	if (f_v) {
-		cout << "translation_plane::plane_intersection_type_of_klein_image" << endl;
+		cout << "spread::plane_intersection_type_of_klein_image" << endl;
 		}
 	the_set_out = NEW_INT(size);
 	
@@ -812,13 +813,13 @@ void translation_plane::plane_intersection_type_of_klein_image(
 	//F = P3->F;
 
 	if (f_v) {
-		cout << "translation_plane::plane_intersection_type_of_klein_image after P3->klein_correspondence" << endl;
+		cout << "spread::plane_intersection_type_of_klein_image after P3->klein_correspondence" << endl;
 		}
 
 	
 	N = P5->nb_rk_k_subspaces_as_INT(3);
 	if (f_v) {
-		cout << "translation_plane::klein N = " << N << endl;
+		cout << "spread::klein N = " << N << endl;
 		}
 
 
@@ -830,7 +831,7 @@ void translation_plane::plane_intersection_type_of_klein_image(
 	FREE_INT(the_set_out);
 }
 
-void translation_plane::czerwinski_oakden(INT level, INT verbose_level)
+void spread::czerwinski_oakden(INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1410,7 +1411,7 @@ void translation_plane::czerwinski_oakden(INT level, INT verbose_level)
 		};
 
 	if (f_v) {
-		cout << "translation_plane::czerwinski_oakden" << endl;
+		cout << "spread::czerwinski_oakden" << endl;
 		}
 
 	const BYTE *label[] = {
@@ -1495,7 +1496,7 @@ void translation_plane::czerwinski_oakden(INT level, INT verbose_level)
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
 }
 
-void translation_plane::write_spread_to_file(INT type_of_spread, INT verbose_level)
+void spread::write_spread_to_file(INT type_of_spread, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *data;
@@ -1503,7 +1504,7 @@ void translation_plane::write_spread_to_file(INT type_of_spread, INT verbose_lev
 	BYTE fname[1000];
 
 	if (f_v) {
-		cout << "translation_plane::write_spread_to_file" << endl;
+		cout << "spread::write_spread_to_file" << endl;
 		}
 	if (type_of_spread == SPREAD_OF_TYPE_FTWKB) {
 		sprintf(fname, "spread_q%ld_FTW.txt", q);
@@ -1540,7 +1541,7 @@ void translation_plane::write_spread_to_file(INT type_of_spread, INT verbose_lev
 	FREE_INT(data);
 }
 
-void translation_plane::make_spread(INT *data, INT type_of_spread, INT verbose_level)
+void spread::make_spread(INT *data, INT type_of_spread, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1550,24 +1551,24 @@ void translation_plane::make_spread(INT *data, INT type_of_spread, INT verbose_l
 	INT q1 = i_power_j(F->p, (F->e >> 1));
 
 	if (f_v) {
-		cout << "translation_plane::make_spread q=" << q << " q1=" << q1 << endl;
+		cout << "spread::make_spread q=" << q << " q1=" << q1 << endl;
 		}
 	if (n != 4) {
-		cout << "translation_plane::make_spread n != 4" << endl;
+		cout << "spread::make_spread n != 4" << endl;
 		exit(1);
 		}
 	if (EVEN(q)) {
-		cout << "translation_plane::make_spread need q odd" << endl;
+		cout << "spread::make_spread need q odd" << endl;
 		exit(1);
 		}
 	if (k != 2) {
-		cout << "translation_plane::make_spread k != 2" << endl;
+		cout << "spread::make_spread k != 2" << endl;
 		exit(1);
 		}
 	for (eta = q1; eta < q; eta++) {
 		if (F->negate(F->power(eta, q1)) == eta) {
 			if (f_v) {
-				cout << "translation_plane::make_spread eta=" << eta << endl;
+				cout << "spread::make_spread eta=" << eta << endl;
 				}
 			break;
 			}
@@ -1614,21 +1615,21 @@ void translation_plane::make_spread(INT *data, INT type_of_spread, INT verbose_l
 		} // next h
 	if (check_function(sz, data, verbose_level - 2)) {
 		if (f_v) {
-			cout << "translation_plane::make_spread The set is a spread" << endl;
+			cout << "spread::make_spread The set is a spread" << endl;
 			}
 		}
 	else {
-		cout << "translation_plane::make_spreadThe set is NOT a spread" << endl;
+		cout << "spread::make_spreadThe set is NOT a spread" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "translation_plane::make_spread done" << endl;
+		cout << "spread::make_spread done" << endl;
 		}
 }
 
 
-void translation_plane::make_spread_from_q_clan(INT *data, INT type_of_spread, INT verbose_level)
+void spread::make_spread_from_q_clan(INT *data, INT type_of_spread, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1638,14 +1639,14 @@ void translation_plane::make_spread_from_q_clan(INT *data, INT type_of_spread, I
 	INT three, five, nonsquare = 0, minus_nonsquare = 0, nonsquare_inv = 0;
 
 	if (f_v) {
-		cout << "translation_plane::make_spread_from_q_clan" << endl;
+		cout << "spread::make_spread_from_q_clan" << endl;
 		}
 	if (n != 4) {
-		cout << "translation_plane::make_spread_from_q_clan n != 4" << endl;
+		cout << "spread::make_spread_from_q_clan n != 4" << endl;
 		exit(1);
 		}
 	if (k != 2) {
-		cout << "translation_plane::make_spread_from_q_clan k != 2" << endl;
+		cout << "spread::make_spread_from_q_clan k != 2" << endl;
 		exit(1);
 		}
 	three = F->add3(1, 1, 1);
@@ -1794,7 +1795,7 @@ void translation_plane::make_spread_from_q_clan(INT *data, INT type_of_spread, I
 		}
 }
 
-void translation_plane::read_and_print_spread(const BYTE *fname, INT verbose_level)
+void spread::read_and_print_spread(const BYTE *fname, INT verbose_level)
 {
 	INT *data;
 	INT sz;
@@ -1804,7 +1805,7 @@ void translation_plane::read_and_print_spread(const BYTE *fname, INT verbose_lev
 	FREE_INT(data);
 }
 
-void translation_plane::HMO(const BYTE *fname, INT verbose_level)
+void spread::HMO(const BYTE *fname, INT verbose_level)
 {
 	INT *data;
 	INT sz, i, h, h1;
@@ -1815,7 +1816,7 @@ void translation_plane::HMO(const BYTE *fname, INT verbose_level)
 	INT M[8];
 	
 	if (order != q * q) {
-		cout << "translation_plane::print_spread order != q * q" << endl;
+		cout << "spread::print_spread order != q * q" << endl;
 		exit(1);
 		}
 	read_set_from_file(fname, data, sz, verbose_level);
@@ -1840,7 +1841,7 @@ void translation_plane::HMO(const BYTE *fname, INT verbose_level)
 		Ge[i] = Sub->FQ_embedding[G[i]];
 		He[i] = Sub->FQ_embedding[H[i]];
 		}
-	cout << "translation_plane::HMO after embedding" << endl;
+	cout << "spread::HMO after embedding" << endl;
 	cout << "Ge:" << endl;
 	INT_matrix_print(Ge, q, q);
 	cout << "He:" << endl;
@@ -1930,7 +1931,7 @@ void translation_plane::HMO(const BYTE *fname, INT verbose_level)
 	FREE_INT(HH);
 }
 
-void translation_plane::get_spread_matrices(INT *G, INT *H, INT *data, INT verbose_level)
+void spread::get_spread_matrices(INT *G, INT *H, INT *data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h, i, x, y, f, g;
@@ -1938,7 +1939,7 @@ void translation_plane::get_spread_matrices(INT *G, INT *H, INT *data, INT verbo
 	INT M[8];
 
 	if (f_v) {
-		cout << "translation_plane::get_spread_matrices" << endl;
+		cout << "spread::get_spread_matrices" << endl;
 		}
 	for (i = 0; i < order; i++) {
 		G[i] = -1;
@@ -1981,7 +1982,7 @@ void translation_plane::get_spread_matrices(INT *G, INT *H, INT *data, INT verbo
 		H[x * q + y] = g;
 		}
 	if (f_v) {
-		cout << "translation_plane::get_FG_matrices" << endl;
+		cout << "spread::get_FG_matrices" << endl;
 		cout << "G:" << endl;
 		INT_matrix_print(G, q, q);
 		cout << "H:" << endl;
@@ -1989,7 +1990,7 @@ void translation_plane::get_spread_matrices(INT *G, INT *H, INT *data, INT verbo
 		}
 }
 
-void translation_plane::print_spread(INT *data, INT sz)
+void spread::print_spread(INT *data, INT sz)
 {
 	//INT sz = order + 1;
 	INT h;
@@ -2001,37 +2002,37 @@ void translation_plane::print_spread(INT *data, INT sz)
 		}	
 }
 
-void translation_plane::report2(isomorph &Iso, INT verbose_level)
+void spread::report2(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE fname[1000];
 	INT target_size = order + 1;
 
 	if (f_v) {
-		cout << "translation_plane::report2" << endl;
+		cout << "spread::report2" << endl;
 		}
-	sprintf(fname, "report_TP_%ld.tex", order);
+	sprintf(fname, "report_Spreads_q%ld_k%ld.tex", q, k);
 
 	{
 	ofstream f(fname);
 	INT f_book = TRUE;
 	INT f_title = TRUE;
 	BYTE title[1000];
-	const BYTE *author = "Anton Betten";
+	const BYTE *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;
 	INT f_enlarged_page = TRUE;
 	INT f_pagenumbers = TRUE;
 
-	sprintf(title, "Translation Planes of Order $%ld$", order);
-	cout << "Writing file " << fname << " with " << Iso.Reps->count << " translation planes:" << endl;
+	sprintf(title, "$%ld$-Spreads of PG($%ld,%ld$)", k - 1, 2 * k - 1, q);
+	cout << "Writing file " << fname << " with " << Iso.Reps->count << " spreads:" << endl;
 	latex_head(f, f_book, f_title, 
 		title, author, 
 		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers);
 
 	f << "\\chapter{Summary}" << endl << endl;
-	f << "There are " << Iso.Reps->count << " Translation Planes." << endl << endl;
+	f << "There are " << Iso.Reps->count << " spreads." << endl << endl;
 
 
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
@@ -2067,7 +2068,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 		//f << "Stabilizer has order $";
 		//go.print_not_scientific(f);
 		if (f_v) {
-			cout << "translation_plane::print_isomorphism_types computing induced action on the set (in data)" << endl;
+			cout << "spread::print_isomorphism_types computing induced action on the set (in data)" << endl;
 			}
 		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
@@ -2200,7 +2201,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 	f << "\\end{center}" << endl << endl;
 
 
-	f << "\\chapter{The Translation Planes}" << endl << endl;
+	f << "\\chapter{The Spreads}" << endl << endl;
 
 	f << "\\clearpage" << endl << endl;
 
@@ -2246,7 +2247,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 		Stab = Iso.Reps->stab[h];
 
 		if (f_v) {
-			cout << "translation_plane::print_isomorphism_types computing induced action on the set (in data)" << endl;
+			cout << "spread::print_isomorphism_types computing induced action on the set (in data)" << endl;
 			}
 		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
@@ -2429,8 +2430,8 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 	BYTE prefix[1000];
 	BYTE label_of_structure_plural[1000];
 
-	sprintf(prefix, "TP_%ld_%ld", q, k);
-	sprintf(label_of_structure_plural, "Translation Planes");
+	sprintf(prefix, "Spreads_%ld_%ld", q, k);
+	sprintf(label_of_structure_plural, "Spreads");
 	isomorph_report_data_in_source_code_inside_tex(Iso, 
 		prefix, label_of_structure_plural, f, verbose_level);
 
@@ -2447,7 +2448,7 @@ void translation_plane::report2(isomorph &Iso, INT verbose_level)
 
 }
 
-void translation_plane::all_cooperstein_thas_quotients(isomorph &Iso, INT verbose_level)
+void spread::all_cooperstein_thas_quotients(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h;
@@ -2455,7 +2456,7 @@ void translation_plane::all_cooperstein_thas_quotients(isomorph &Iso, INT verbos
 	INT cnt = 0;
 
 	if (f_v) {
-		cout << "translation_plane::all_cooperstein_thas_quotients" << endl;
+		cout << "spread::all_cooperstein_thas_quotients" << endl;
 		}
 
 
@@ -2482,13 +2483,13 @@ void translation_plane::all_cooperstein_thas_quotients(isomorph &Iso, INT verbos
 	//Iso.close_solution_database(verbose_level - 1);
 
 	if (f_v) {
-		cout << "translation_plane::all_cooperstein_thas_quotients done" << endl;
+		cout << "spread::all_cooperstein_thas_quotients done" << endl;
 		}
 }
 
 
 
-void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, INT h, INT &cnt, INT verbose_level)
+void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, INT h, INT &cnt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2509,8 +2510,8 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 
 
 	if (f_v ) {
-		cout << "translation_plane::cooperstein_thas_quotients" << endl;
-		cout << "translation_plane::cooperstein_thas_quotients h=" << h << endl;
+		cout << "spread::cooperstein_thas_quotients" << endl;
+		cout << "spread::cooperstein_thas_quotients h=" << h << endl;
 		}
 
 	rep = Iso.Reps->rep[h];
@@ -2529,17 +2530,17 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 	Stab->group_order(go);
 
 	if (f_v) {
-		cout << "translation_plane::cooperstein_thas_quotients Isomorphism type " << h << " with automorphism group of order " << go << ":" << endl;
+		cout << "spread::cooperstein_thas_quotients Isomorphism type " << h << " with automorphism group of order " << go << ":" << endl;
 		}
 
 	if (f_vv) {
-		cout << "translation_plane::cooperstein_thas_quotients before compute_all_point_orbits" << endl;
+		cout << "spread::cooperstein_thas_quotients before compute_all_point_orbits" << endl;
 		}
 
 	Iso.A_base->compute_all_point_orbits(Orb, Stab->gens, 0 /*verbose_level - 2*/);
 
 	if (f_vv) {
-		cout << "translation_plane::cooperstein_thas_quotients There are " << Orb.nb_orbits << " orbits on points" << endl;
+		cout << "spread::cooperstein_thas_quotients There are " << Orb.nb_orbits << " orbits on points" << endl;
 		}
 
 
@@ -2566,7 +2567,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 		Dom.integral_division_by_INT(go, orbit_length, stab_order, rem);
 
 		if (f_vv) {
-			cout << "translation_plane::cooperstein_thas_quotients Orbit " << u << " is represented by point " << the_point << " orbit lnegth = " << orbit_length << " stabilizer order before " << go << " after " << stab_order << endl;
+			cout << "spread::cooperstein_thas_quotients Orbit " << u << " is represented by point " << the_point << " orbit lnegth = " << orbit_length << " stabilizer order before " << go << " after " << stab_order << endl;
 			}
 
 
@@ -2581,7 +2582,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 				}
 			}
 		if (i == order + 1) {
-			cout << "translation_plane::cooperstein_thas_quotients Did not find the point" << endl;
+			cout << "spread::cooperstein_thas_quotients Did not find the point" << endl;
 			exit(1);
 			}
 		i0 = i;
@@ -2592,7 +2593,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 				}
 			}
 		if (j != order) {
-			cout << "translation_plane::cooperstein_thas_quotients j != order" << endl;
+			cout << "spread::cooperstein_thas_quotients j != order" << endl;
 			exit(1);
 			}
 		for (i = 0; i < order; i++) {
@@ -2614,7 +2615,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 #endif
 
 			if (f_vv) {
-				cout << "translation_plane::cooperstein_thas_quotients the reduction of the " << i << "-th matrix is:" << endl;
+				cout << "spread::cooperstein_thas_quotients the reduction of the " << i << "-th matrix is:" << endl;
 				INT_matrix_print(Mtx, k, n - 1);
 				}
 
@@ -2623,7 +2624,7 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 			}
 
 		if (f_vv) {
-			cout << "translation_plane::cooperstein_thas_quotients The quotient system with respect to orbit " << u << " / " << Orb.nb_orbits << " is:" << endl;
+			cout << "spread::cooperstein_thas_quotients The quotient system with respect to orbit " << u << " / " << Orb.nb_orbits << " is:" << endl;
 			INT_vec_print(cout, data2, order);
 			cout << endl;
 			}
@@ -2659,11 +2660,11 @@ void translation_plane::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, I
 	FREE_INT(List);
 	delete Gr;
 	if (f_v ) {
-		cout << "translation_plane::cooperstein_thas_quotients done" << endl;
+		cout << "spread::cooperstein_thas_quotients done" << endl;
 		}
 }
 
-void translation_plane::orbit_info_short(ofstream &f, isomorph &Iso, INT h)
+void spread::orbit_info_short(ofstream &f, isomorph &Iso, INT h)
 {
 	INT rep, first, /*c,*/ id;
 
@@ -2718,7 +2719,7 @@ void translation_plane::orbit_info_short(ofstream &f, isomorph &Iso, INT h)
 
 
 
-void translation_plane::report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, INT verbose_level)
+void spread::report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, INT verbose_level)
 {
 	sims *Stab;
 	longinteger_object go;
@@ -2753,12 +2754,12 @@ void translation_plane::report_stabilizer(isomorph &Iso, ofstream &f, INT orbit,
 
 
 
-void translation_plane_early_test_func_callback(INT *S, INT len, 
+void spread_early_test_func_callback(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -2775,40 +2776,40 @@ void translation_plane_early_test_func_callback(INT *S, INT len,
 		}
 }
 
-INT translation_plane_check_function_callback(INT len, INT *S, void *data, INT verbose_level)
+INT spread_check_function_callback(INT len, INT *S, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	INT f_OK;
 	
 	f_OK = T->check_function(len, S, verbose_level);
 	return f_OK;
 }
 
-INT translation_plane_check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level)
+INT spread_check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	INT f_OK;
 	
 	f_OK = T->check_function_incremental(len, S, verbose_level);
 	return f_OK; 
 }
 
-INT translation_plane_check_conditions(INT len, INT *S, void *data, INT verbose_level)
+INT spread_check_conditions(INT len, INT *S, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	return T->check_function(len, S, verbose_level);
 }
 
-void translation_plane_callback_report(isomorph *Iso, void *data, INT verbose_level)
+void spread_callback_report(isomorph *Iso, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	
 	T->report2(*Iso, verbose_level);
 }
 
-void translation_plane_callback_make_quotients(isomorph *Iso, void *data, INT verbose_level)
+void spread_callback_make_quotients(isomorph *Iso, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	
 	T->all_cooperstein_thas_quotients(*Iso, verbose_level);
 }

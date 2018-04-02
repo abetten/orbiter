@@ -33,25 +33,48 @@ void colored_graph::null()
 
 void colored_graph::freeself()
 {
-	//cout << "colored_graph::freeself" << endl;
+	INT verbose_level = 1;
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "colored_graph::freeself" << endl;
+		}
 	if (user_data) {
+		if (f_v) {
+			cout << "colored_graph::freeself user_data" << endl;
+			}
 		FREE_INT(user_data);
 		}
 	if (points) {
+		if (f_v) {
+			cout << "colored_graph::freeself points" << endl;
+			}
 		FREE_INT(points);
 		}
 	if (point_color) {
+		if (f_v) {
+			cout << "colored_graph::freeself point_color" << endl;
+			}
 		FREE_INT(point_color);
 		}
 	if (f_ownership_of_bitvec) {
 		if (bitvector_adjacency) {
+			if (f_v) {
+				cout << "colored_graph::freeself bitvector_adjacency" << endl;
+				}
 			FREE_UBYTE(bitvector_adjacency);
 			}
 		}
 	if (list_of_edges) {
+		if (f_v) {
+			cout << "colored_graph::freeself list_of_edges" << endl;
+			}
 		FREE_INT(list_of_edges);
 		}
 	null();
+	if (f_v) {
+		cout << "colored_graph::freeself" << endl;
+		}
 }
 
 void colored_graph::compute_edges(INT verbose_level)
@@ -772,6 +795,8 @@ void colored_graph::draw(const BYTE *fname,
 
 void colored_graph::draw_Levi(const BYTE *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
+	INT f_partition, INT nb_row_parts, INT *row_part_first, 
+	INT nb_col_parts, INT *col_part_first, 
 	INT m, INT n, INT f_draw_labels, 
 	double scale, double line_width, 
 	INT verbose_level)
@@ -826,7 +851,8 @@ void colored_graph::draw_Levi(const BYTE *fname,
 		}
 	
 	draw_bitmatrix(fname, f_dots, 
-		FALSE, 0, NULL, 0, NULL, 
+		//FALSE, 0, NULL, 0, NULL, 
+		f_partition, nb_row_parts, row_part_first, nb_col_parts, col_part_first, 
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, D, NULL, 
 		m, n, 

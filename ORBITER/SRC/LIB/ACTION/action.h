@@ -17,7 +17,8 @@ typedef class group group;
 typedef class page_storage page_storage;
 typedef class action_on_sets action_on_sets;
 typedef class action_on_k_subsets action_on_k_subsets;
-typedef class action_by_right_multiplication action_by_right_multiplication;
+typedef class action_by_right_multiplication 
+	action_by_right_multiplication;
 typedef class action_by_restriction action_by_restriction;
 typedef class action_by_conjugation action_by_conjugation;
 typedef class action_on_orbits action_on_orbits;
@@ -32,7 +33,8 @@ typedef class action_on_cosets action_on_cosets;
 typedef class action_on_factor_space action_on_factor_space;
 typedef class action_on_determinant action_on_determinant;
 typedef class action_on_sign action_on_sign;
-typedef class action_on_homogeneous_polynomials action_on_homogeneous_polynomials;
+typedef class action_on_homogeneous_polynomials 
+	action_on_homogeneous_polynomials;
 typedef class product_action product_action;
 typedef class union_find union_find;
 typedef class union_find_on_k_subsets union_find_on_k_subsets;
@@ -51,9 +53,9 @@ typedef class action_on_subgroups action_on_subgroups;
 typedef class orbit_transversal orbit_transversal;
 
 
-// ####################################################################################
+// #############################################################################
 // action.C:
-// ####################################################################################
+// #############################################################################
 
 enum symmetry_group_type { 
 	unknown_symmetry_group_t, 
@@ -145,7 +147,9 @@ public:
 	INT degree; // the size of the set we act on
 
 	INT f_is_linear; // is it a linear action
-		// matrix_group_t, action_on_wedge_product_t, action_by_representation_t
+		// matrix_group_t, 
+		// action_on_wedge_product_t, 
+		// action_by_representation_t
 	INT dimension; // if f_is_linear
 	
 	INT f_has_base; // set to TRUE in allocate_base_data()
@@ -191,29 +195,49 @@ public:
 	INT *path;
 	
 	// function pointers for group actions
-	INT (*ptr_element_image_of)(action &A, INT a, void *elt, INT verbose_level);
-	void (*ptr_element_image_of_low_level)(action &A, INT *input, INT *output, void *elt, INT verbose_level);
-	INT (*ptr_element_linear_entry_ij)(action &A, void *elt, INT i, INT j, INT verbose_level);
-	INT (*ptr_element_linear_entry_frobenius)(action &A, void *elt, INT verbose_level);
+	INT (*ptr_element_image_of)(action &A, INT a, void *elt, 
+		INT verbose_level);
+	void (*ptr_element_image_of_low_level)(action &A, 
+		INT *input, INT *output, void *elt, INT verbose_level);
+	INT (*ptr_element_linear_entry_ij)(action &A, 
+		void *elt, INT i, INT j, INT verbose_level);
+	INT (*ptr_element_linear_entry_frobenius)(action &A, 
+		void *elt, INT verbose_level);
 	void (*ptr_element_one)(action &A, void *elt, INT verbose_level);
 	INT (*ptr_element_is_one)(action &A, void *elt, INT verbose_level);
-	void (*ptr_element_unpack)(action &A, void *elt, void *Elt, INT verbose_level);
-	void (*ptr_element_pack)(action &A, void *Elt, void *elt, INT verbose_level);
-	void (*ptr_element_retrieve)(action &A, INT hdl, void *elt, INT verbose_level);
-	INT (*ptr_element_store)(action &A, void *elt, INT verbose_level);
-	void (*ptr_element_mult)(action &A, void *a, void *b, void *ab, INT verbose_level);
-	void (*ptr_element_invert)(action &A, void *a, void *av, INT verbose_level);
-	void (*ptr_element_transpose)(action &A, void *a, void *at, INT verbose_level);
-	void (*ptr_element_move)(action &A, void *a, void *b, INT verbose_level);
-	void (*ptr_element_dispose)(action &A, INT hdl, INT verbose_level);
-	void (*ptr_element_print)(action &A, void *elt, ostream &ost);
-	void (*ptr_element_print_quick)(action &A, void *elt, ostream &ost);
-	void (*ptr_element_print_latex)(action &A, void *elt, ostream &ost);
-	void (*ptr_element_print_verbose)(action &A, void *elt, ostream &ost);
-	void (*ptr_print_point)(action &A, INT i, ostream &ost); // added: 1/18/2009
-	void (*ptr_element_code_for_make_element)(action &A, void *elt, INT *data); // added Nov 24, 2016
-	void (*ptr_element_print_for_make_element)(action &A, void *elt, ostream &ost); // added Nov 8, 2010
-	void (*ptr_element_print_for_make_element_no_commas)(action &A, void *elt, ostream &ost); // added Sept 22, 2016
+	void (*ptr_element_unpack)(action &A, void *elt, 
+		void *Elt, INT verbose_level);
+	void (*ptr_element_pack)(action &A, void *Elt, 
+		void *elt, INT verbose_level);
+	void (*ptr_element_retrieve)(action &A, INT hdl, 
+		void *elt, INT verbose_level);
+	INT (*ptr_element_store)(action &A, void *elt, 
+		INT verbose_level);
+	void (*ptr_element_mult)(action &A, 
+		void *a, void *b, void *ab, INT verbose_level);
+	void (*ptr_element_invert)(action &A, 
+		void *a, void *av, INT verbose_level);
+	void (*ptr_element_transpose)(action &A, 
+		void *a, void *at, INT verbose_level);
+	void (*ptr_element_move)(action &A, 
+		void *a, void *b, INT verbose_level);
+	void (*ptr_element_dispose)(action &A, 
+		INT hdl, INT verbose_level);
+	void (*ptr_element_print)(action &A, 
+		void *elt, ostream &ost);
+	void (*ptr_element_print_quick)(action &A, 
+		void *elt, ostream &ost);
+	void (*ptr_element_print_latex)(action &A, 
+		void *elt, ostream &ost);
+	void (*ptr_element_print_verbose)(action &A, 
+		void *elt, ostream &ost);
+	void (*ptr_print_point)(action &A, INT i, ostream &ost);
+	void (*ptr_element_code_for_make_element)(action &A, 
+		void *elt, INT *data);
+	void (*ptr_element_print_for_make_element)(action &A, 
+		void *elt, ostream &ost);
+	void (*ptr_element_print_for_make_element_no_commas)(action &A, 
+		void *elt, ostream &ost);
 	
 	INT nb_times_image_of_called;
 	INT nb_times_image_of_low_level_called;
@@ -231,7 +255,8 @@ public:
 	UBYTE *elt1;
 	BYTE *element_rw_memory_object;
 		// [coded_elt_size_in_char]
-		// for element_write_to_memory_object, element_read_from_memory_object
+		// for element_write_to_memory_object, 
+		// element_read_from_memory_object
 
 	
 	BYTE group_prefix[1000];
@@ -254,10 +279,14 @@ public:
 	void free_base_data();
 	
 	INT find_non_fixed_point(void *elt, INT verbose_level);
-	INT find_fixed_points(void *elt, INT *fixed_points, INT verbose_level);
-	INT test_if_set_stabilizes(INT *Elt, INT size, INT *set, INT verbose_level);
-	void map_a_set(INT *set, INT *image_set, INT n, INT *Elt, INT verbose_level);
-	void map_a_set_and_reorder(INT *set, INT *image_set, INT n, INT *Elt, INT verbose_level);
+	INT find_fixed_points(void *elt, 
+		INT *fixed_points, INT verbose_level);
+	INT test_if_set_stabilizes(INT *Elt, 
+		INT size, INT *set, INT verbose_level);
+	void map_a_set(INT *set, INT *image_set, 
+		INT n, INT *Elt, INT verbose_level);
+	void map_a_set_and_reorder(INT *set, INT *image_set, 
+		INT n, INT *Elt, INT verbose_level);
 	void print_all_elements();
 
 	void init_sims(sims *G, INT verbose_level);
@@ -317,8 +346,10 @@ public:
 		vector_ge &gens, vector_ge &subset_of_gens, 
 		INT verbose_level);
 	void compute_strong_generators_from_sims(INT verbose_level);
-	void make_element_from_permutation_representation(INT *Elt, INT *data, INT verbose_level);
-	void make_element_from_base_image(INT *Elt, INT *data, INT verbose_level);
+	void make_element_from_permutation_representation(INT *Elt, 
+		INT *data, INT verbose_level);
+	void make_element_from_base_image(INT *Elt, INT *data, 
+		INT verbose_level);
 	void make_element_2x2(INT *Elt, INT a0, INT a1, INT a2, INT a3);
 	void make_element(INT *Elt, INT *data, INT verbose_level);
 	void build_up_automorphism_group_from_aut_data(INT nb_auts, 
@@ -328,7 +359,8 @@ public:
 		INT n, INT verbose_level);
 	void word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3, 
 		const BYTE *word, INT verbose_level);
-	void init_group_from_generators(INT *group_generator_data, INT group_generator_size, 
+	void init_group_from_generators(INT *group_generator_data, 
+		INT group_generator_size, 
 		INT f_group_order_target, const BYTE *group_order_target, 
 		vector_ge *gens, strong_generators *&Strong_gens, 
 		INT verbose_level);
@@ -347,72 +379,101 @@ public:
 	void print_vector_as_permutation(vector_ge &v);
 	void element_print_base_images(INT *Elt);
 	void element_print_base_images(INT *Elt, ostream &ost);
-	void element_print_base_images_verbose(INT *Elt, ostream &ost, INT verbose_level);
+	void element_print_base_images_verbose(INT *Elt, 
+		ostream &ost, INT verbose_level);
 	void element_base_images(INT *Elt, INT *base_images);
-	void element_base_images_verbose(INT *Elt, INT *base_images, INT verbose_level);
-	void minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_level);
-	void element_conjugate_bvab(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verbose_level);
-	void element_conjugate_babv(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verbose_level);
-	void element_commutator_abavbv(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verbose_level);
-	void read_representatives(BYTE *fname, INT *&Reps, INT &nb_reps, INT &size, INT verbose_level);
-	void read_representatives_and_strong_generators(BYTE *fname, INT *&Reps, 
-		BYTE **&Aut_ascii, INT &nb_reps, INT &size, INT verbose_level);
-	void read_file_and_print_representatives(BYTE *fname, INT f_print_stabilizer_generators);
+	void element_base_images_verbose(INT *Elt, 
+		INT *base_images, INT verbose_level);
+	void minimize_base_images(INT level, sims *S, 
+		INT *Elt, INT verbose_level);
+	void element_conjugate_bvab(INT *Elt_A, 
+		INT *Elt_B, INT *Elt_C, INT verbose_level);
+	void element_conjugate_babv(INT *Elt_A, 
+		INT *Elt_B, INT *Elt_C, INT verbose_level);
+	void element_commutator_abavbv(INT *Elt_A, 
+		INT *Elt_B, INT *Elt_C, INT verbose_level);
+	void read_representatives(BYTE *fname, 
+		INT *&Reps, INT &nb_reps, INT &size, INT verbose_level);
+	void read_representatives_and_strong_generators(BYTE *fname, 
+		INT *&Reps, 
+		BYTE **&Aut_ascii, INT &nb_reps, 
+		INT &size, INT verbose_level);
+	void read_file_and_print_representatives(BYTE *fname, 
+		INT f_print_stabilizer_generators);
 	void read_set_and_stabilizer(const BYTE *fname, 
 		INT no, INT *&set, INT &set_sz, sims *&stab, 
 		strong_generators *&Strong_gens, 
 		INT &nb_cases, 
 		INT verbose_level);
-	void get_generators_from_ascii_coding(BYTE *ascii_coding, vector_ge *&gens, INT *&tl, INT verbose_level);
+	void get_generators_from_ascii_coding(BYTE *ascii_coding, 
+		vector_ge *&gens, INT *&tl, INT verbose_level);
 	void lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test, 
-		vector_ge *gens, INT max_starter, INT verbose_level);
-	void compute_orbits_on_points(schreier *&Sch, vector_ge *gens, INT verbose_level);
-	void stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no, vector_ge *&gens, const BYTE *&stab_order, INT verbose_level);
-	void stabilizer_of_translation_plane_representative(INT q, INT k, INT no, vector_ge *&gens, const BYTE *&stab_order, INT verbose_level);
-	//void element_write_memory_object(INT *Elt, BYTE *elt, memory_object *m, INT verbose_level);
-		// please use element_write_to_memory_object
-	//void element_read_memory_object(INT *Elt, BYTE *elt, memory_object *m, INT verbose_level);
-		// please use element_read_from_memory_object
-	void normalizer_using_MAGMA(const BYTE *prefix, sims *G, sims *H, INT verbose_level);
-	void conjugacy_classes_using_MAGMA(const BYTE *prefix, sims *G, INT verbose_level);
-	void centralizer_using_MAGMA(const BYTE *prefix, sims *G, INT *Elt, INT verbose_level);
+		vector_ge *gens, INT max_starter, 
+		INT verbose_level);
+	void compute_orbits_on_points(schreier *&Sch, 
+		vector_ge *gens, INT verbose_level);
+	void stabilizer_of_dual_hyperoval_representative(INT k, 
+		INT n, INT no, vector_ge *&gens, 
+		const BYTE *&stab_order, INT verbose_level);
+	void stabilizer_of_translation_plane_representative(INT q, 
+		INT k, INT no, vector_ge *&gens, const BYTE *&stab_order, 
+		INT verbose_level);
+	void normalizer_using_MAGMA(const BYTE *prefix, 
+		sims *G, sims *H, INT verbose_level);
+	void conjugacy_classes_using_MAGMA(const BYTE *prefix, 
+		sims *G, INT verbose_level);
+	void centralizer_using_MAGMA(const BYTE *prefix, 
+		sims *G, INT *Elt, INT verbose_level);
 	void point_stabilizer_any_point(INT &pt, 
-		schreier *&Sch, sims *&Stab, strong_generators *&stab_gens, 
+		schreier *&Sch, sims *&Stab, 
+		strong_generators *&stab_gens, 
 		INT verbose_level);
 	void point_stabilizer_any_point_with_given_group(
 		strong_generators *input_gens, 
 		INT &pt, 
-		schreier *&Sch, sims *&Stab, strong_generators *&stab_gens, 
+		schreier *&Sch, sims *&Stab, 
+		strong_generators *&stab_gens, 
 		INT verbose_level);
-	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr, INT line_rk, INT *Elt, INT verbose_level);
+	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr, 
+		INT line_rk, INT *Elt, INT verbose_level);
 
 
 
 	// action_indexing_cosets.C:
-	void coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_level);
-	INT coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level);
+	void coset_unrank(sims *G, sims *U, INT rank, 
+		INT *Elt, INT verbose_level);
+	INT coset_rank(sims *G, sims *U, 
+		INT *Elt, INT verbose_level);
 		// used in generator::coset_unrank and generator::coset_rank
-		// which in turn are used by generator::orbit_element_unrank and 
+		// which in turn are used by 
+		// generator::orbit_element_unrank and 
 		// generator::orbit_element_rank
 
 	// action_init.C:
-	void init_BLT(finite_field *F, INT f_basis, INT f_init_hash_table, INT verbose_level);
+	void init_BLT(finite_field *F, INT f_basis, 
+		INT f_init_hash_table, INT verbose_level);
 	void init_group_from_strong_generators(vector_ge *gens, sims *K, 
 		INT given_base_length, INT *given_base,
 		INT verbose_level);
 	void init_orthogonal_group(INT epsilon, 
 		INT n, finite_field *F, 
-		INT f_on_points, INT f_on_lines, INT f_on_points_and_lines, 
+		INT f_on_points, INT f_on_lines, 
+		INT f_on_points_and_lines, 
 		INT f_semilinear, 
 		INT f_basis, INT verbose_level);
-	void init_projective_special_group(INT n, finite_field *F, INT f_semilinear, INT f_basis, INT verbose_level);
-	void init_projective_group(INT n, finite_field *F, INT f_semilinear, INT f_basis, INT verbose_level);
+	void init_projective_special_group(INT n, finite_field *F, 
+		INT f_semilinear, INT f_basis, INT verbose_level);
+	void init_projective_group(INT n, finite_field *F, 
+		INT f_semilinear, INT f_basis, INT verbose_level);
 	void init_affine_group(INT n, finite_field *F, 
 		INT f_semilinear, 
 		INT f_basis, INT verbose_level);
-	void init_general_linear_group(INT n, finite_field *F, INT f_semilinear, INT f_basis, INT verbose_level);
-	void setup_linear_group_from_strong_generators(matrix_group *M, INT verbose_level);
-	void init_matrix_group_strong_generators_builtin(matrix_group *M, INT verbose_level);
+	void init_general_linear_group(INT n, finite_field *F, 
+		INT f_semilinear, INT f_basis, INT verbose_level);
+	void setup_linear_group_from_strong_generators(matrix_group *M, 
+		INT verbose_level);
+	void init_matrix_group_strong_generators_builtin(matrix_group *M, 
+		INT verbose_level);
 	void init_permutation_group(INT degree, INT verbose_level);
 	void init_permutation_group_from_generators(INT degree, 
 		INT f_target_go, longinteger_object &target_go, 
@@ -421,7 +482,8 @@ public:
 		INT verbose_level);
 	void init_affine_group(INT n, INT q, INT f_translations, 
 		INT f_semilinear, INT frobenius_power, 
-		INT f_multiplication, INT multiplication_order, INT verbose_level);
+		INT f_multiplication, 
+		INT multiplication_order, INT verbose_level);
 	void init_affine_grid_group(INT q1, INT q2, 
 		INT f_translations1, INT f_translations2, 
 		INT f_semilinear1, INT frobenius_power1, 
@@ -437,13 +499,15 @@ public:
 	void init_function_pointers_induced_action();
 	void create_sims(INT verbose_level);
 	void create_orthogonal_group(action *subaction, 
-		INT f_has_target_group_order, longinteger_object &target_go, 
+		INT f_has_target_group_order, 
+		longinteger_object &target_go, 
 		void (* callback_choose_random_generator)(INT iteration, 
 			INT *Elt, void *data, INT verbose_level), 
 		INT verbose_level);
 	
 	// action_induce.C:
-	void init_action_on_lines(action *A, finite_field *F, INT n, INT verbose_level);
+	void init_action_on_lines(action *A, finite_field *F, 
+		INT n, INT verbose_level);
 	void induced_action_by_representation_on_conic(action *A_old, 
 		INT f_induce_action, sims *old_G, 
 		INT verbose_level);
@@ -454,7 +518,8 @@ public:
 		action_on_factor_space *AF, 
 		INT f_induce_action, sims *old_G, 
 		INT verbose_level);
-	action *induced_action_on_grassmannian(INT k, INT verbose_level);
+	action *induced_action_on_grassmannian(INT k, 
+		INT verbose_level);
 	void induced_action_on_grassmannian(action *A_old, 
 		action_on_grassmannian *AG, 
 		INT f_induce_action, sims *old_G, 
@@ -475,30 +540,37 @@ public:
 		action_by_subfield_structure *SubfieldStructure, 
 		INT f_induce_action, sims *old_G, 
 		INT verbose_level);
-	void induced_action_on_determinant(sims *old_G, INT verbose_level);
-	void induced_action_on_sign(sims *old_G, INT verbose_level);
+	void induced_action_on_determinant(sims *old_G, 
+		INT verbose_level);
+	void induced_action_on_sign(sims *old_G, 
+		INT verbose_level);
 	void induced_action_by_conjugation(sims *old_G, 
-		sims *Base_group, INT f_ownership, INT f_basis, INT verbose_level);
-	void induced_action_by_right_multiplication(INT f_basis, sims *old_G, 
-		sims *Base_group, INT f_ownership, INT verbose_level);
-	action *create_induced_action_on_sets(INT nb_sets, INT set_size, INT *sets, INT verbose_level);
+		sims *Base_group, INT f_ownership, 
+		INT f_basis, INT verbose_level);
+	void induced_action_by_right_multiplication(
+		INT f_basis, sims *old_G, 
+		sims *Base_group, INT f_ownership, 
+		INT verbose_level);
+	action *create_induced_action_on_sets(INT nb_sets, 
+		INT set_size, INT *sets, 
+		INT verbose_level);
 	void induced_action_on_sets(action &old_action, sims *old_G, 
 		INT nb_sets, INT set_size, INT *sets, 
 		INT f_induce_action, INT verbose_level);
 	action *create_induced_action_on_subgroups(sims *S, 
-		INT nb_subgroups, INT group_order, subgroup **Subgroups, INT verbose_level);
-	void induced_action_on_subgroups(action *old_action, sims *S, 
-		INT nb_subgroups, INT group_order, subgroup **Subgroups, 
+		INT nb_subgroups, INT group_order, 
+		subgroup **Subgroups, INT verbose_level);
+	void induced_action_on_subgroups(action *old_action, 
+		sims *S, 
+		INT nb_subgroups, INT group_order, 
+		subgroup **Subgroups, 
 		INT verbose_level);
-	void induced_action_by_restriction_on_orbit_with_schreier_vector(action &old_action, 
+	void induced_action_by_restriction_on_orbit_with_schreier_vector(
+		action &old_action, 
 		INT f_induce_action, sims *old_G, 
 		INT *sv, INT pt, INT verbose_level);
-#if 0
-	void induced_action_by_restriction(action &old_action, sims *old_G, 
-		INT set_size, INT *set, INT f_induce_action, INT verbose_level);
-		// calls induced_action_on_sets
-#endif
-	action *restricted_action(INT *points, INT nb_points, INT verbose_level);
+	action *restricted_action(INT *points, INT nb_points, 
+		INT verbose_level);
 	void induced_action_by_restriction(action &old_action, 
 		INT f_induce_action, sims *old_G, 
 		INT nb_points, INT *points, INT verbose_level);
@@ -506,35 +578,46 @@ public:
 	void induced_action_on_pairs(action &old_action, sims *old_G, 
 		INT verbose_level);
 	action *create_induced_action_on_ordered_pairs(INT verbose_level);
-	void induced_action_on_ordered_pairs(action &old_action, sims *old_G, 
+	void induced_action_on_ordered_pairs(action &old_action, 
+		sims *old_G, 
 		INT verbose_level);
 	void induced_action_on_k_subsets(action &old_action, INT k, 
 		INT verbose_level);
-	void induced_action_on_orbits(action *old_action, schreier *Sch, INT f_play_it_safe, 
+	void induced_action_on_orbits(action *old_action, 
+		schreier *Sch, INT f_play_it_safe, 
 		INT verbose_level);
-	void induced_action_on_flags(action *old_action, INT *type, INT type_len, 
+	void induced_action_on_flags(action *old_action, 
+		INT *type, INT type_len, 
 		INT verbose_level);
-	void induced_action_on_bricks(action &old_action, brick_domain *B, INT f_linear_action, 
+	void induced_action_on_bricks(action &old_action, 
+		brick_domain *B, INT f_linear_action, 
 		INT verbose_level);
-	void induced_action_on_andre(action *An, action *An1, andre_construction *Andre, 
+	void induced_action_on_andre(action *An, 
+		action *An1, andre_construction *Andre, 
 		INT verbose_level);
-	void setup_product_action(action *A1, action *A2, INT f_use_projections, INT verbose_level);
+	void setup_product_action(action *A1, action *A2, 
+		INT f_use_projections, INT verbose_level);
 	void induced_action_on_homogeneous_polynomials(action *A_old, 
 		homogeneous_polynomial_domain *HPD, 
 		INT f_induce_action, sims *old_G, 
 		INT verbose_level);
-	void induced_action_on_homogeneous_polynomials_given_by_equations(action *A_old, 
+	void induced_action_on_homogeneous_polynomials_given_by_equations(
+		action *A_old, 
 		homogeneous_polynomial_domain *HPD, 
 		INT *Equations, INT nb_equations, 
 		INT f_induce_action, sims *old_G, 
 		INT verbose_level);
 	void induced_action_recycle_sims(action &old_action, 
 		INT verbose_level);
-	void induced_action_override_sims(action &old_action, sims *old_G, 
+	void induced_action_override_sims(action &old_action, 
+		sims *old_G, 
 		INT verbose_level);
 	void induce(action *old_action, sims *old_G, 
-		INT base_of_choice_len, INT *base_of_choice, INT verbose_level);
-	INT least_moved_point_at_level(INT level, INT verbose_level);
+		INT base_of_choice_len, 
+		INT *base_of_choice, 
+		INT verbose_level);
+	INT least_moved_point_at_level(INT level, 
+		INT verbose_level);
 	void lex_least_base_in_place(INT verbose_level);
 	void lex_least_base(action *old_action, INT verbose_level);
 	INT test_if_lex_least_base(INT verbose_level);
@@ -573,8 +656,10 @@ public:
 	void print_for_make_element_no_commas(ostream &ost, void *elt);
 	
 	INT element_image_of(INT a, void *elt, INT verbose_level);
-	void element_image_of_low_level(INT *input, INT *output, void *elt, INT verbose_level);
-	INT element_linear_entry_ij(void *elt, INT i, INT j, INT verbose_level);
+	void element_image_of_low_level(INT *input, INT *output, 
+		void *elt, INT verbose_level);
+	INT element_linear_entry_ij(void *elt, INT i, INT j, 
+		INT verbose_level);
 	INT element_linear_entry_frobenius(void *elt, INT verbose_level);
 	void element_one(void *elt, INT verbose_level);
 	INT element_is_one(void *elt, INT verbose_level);
@@ -592,27 +677,46 @@ public:
 	void element_print_latex(void *elt, ostream &ost);
 	void element_print_verbose(void *elt, ostream &ost);
 	void element_code_for_make_element(void *elt, INT *data);
-	void element_print_for_make_element(void *elt, ostream &ost);
-	void element_print_for_make_element_no_commas(void *elt, ostream &ost);
-	void element_print_as_permutation(void *elt, ostream &ost);
-	void element_as_permutation(void *elt, INT *perm, INT verbose_level);
-	void element_print_as_permutation_verbose(void *elt, ostream &ost, INT verbose_level);
-	void element_print_as_permutation_with_offset(void *elt, ostream &ost, 
+	void element_print_for_make_element(void *elt, 
+		ostream &ost);
+	void element_print_for_make_element_no_commas(void *elt, 
+		ostream &ost);
+	void element_print_as_permutation(void *elt, 
+		ostream &ost);
+	void element_as_permutation(void *elt, 
+		INT *perm, INT verbose_level);
+	void element_print_as_permutation_verbose(void *elt, 
+		ostream &ost, INT verbose_level);
+	void element_print_as_permutation_with_offset(void *elt, 
+		ostream &ost, 
 		INT offset, INT f_do_it_anyway_even_for_big_degree, 
-		INT f_print_cycles_of_length_one, INT verbose_level);
-	void element_print_as_permutation_with_offset_and_max_cycle_length(void *elt, 
-		ostream &ost, INT offset, INT max_cycle_length, INT f_orbit_structure);
-	void element_print_image_of_set(void *elt, INT size, INT *set);
+		INT f_print_cycles_of_length_one, 
+		INT verbose_level);
+	void element_print_as_permutation_with_offset_and_max_cycle_length(
+		void *elt, 
+		ostream &ost, INT offset, INT max_cycle_length, 
+		INT f_orbit_structure);
+	void element_print_image_of_set(void *elt, 
+		INT size, INT *set);
 	INT element_signum_of_permutation(void *elt);
-	void element_write_file_fp(INT *Elt, FILE *fp, INT verbose_level);
-	void element_read_file_fp(INT *Elt, FILE *fp, INT verbose_level);
-	void element_write_file(INT *Elt, const BYTE *fname, INT verbose_level);
-	void element_read_file(INT *Elt, const BYTE *fname, INT verbose_level);
-	void element_write_to_memory_object(INT *Elt, memory_object *m, INT verbose_level);
-	void element_read_from_memory_object(INT *Elt, memory_object *m, INT verbose_level);
-	void element_write_to_file_binary(INT *Elt, ofstream &fp, INT verbose_level);
-	void element_read_from_file_binary(INT *Elt, ifstream &fp, INT verbose_level);
-	void random_element(sims *S, INT *Elt, INT verbose_level);
+	void element_write_file_fp(INT *Elt, 
+		FILE *fp, INT verbose_level);
+	void element_read_file_fp(INT *Elt, 
+		FILE *fp, INT verbose_level);
+	void element_write_file(INT *Elt, 
+		const BYTE *fname, INT verbose_level);
+	void element_read_file(INT *Elt, 
+		const BYTE *fname, INT verbose_level);
+	void element_write_to_memory_object(INT *Elt, 
+		memory_object *m, INT verbose_level);
+	void element_read_from_memory_object(INT *Elt, 
+		memory_object *m, INT verbose_level);
+	void element_write_to_file_binary(INT *Elt, 
+		ofstream &fp, INT verbose_level);
+	void element_read_from_file_binary(INT *Elt, 
+		ifstream &fp, INT verbose_level);
+	void random_element(sims *S, INT *Elt, 
+		INT verbose_level);
 
 	// in backtrack.C:
 	INT is_minimal(
@@ -636,9 +740,9 @@ public:
 
 
 
-// ####################################################################################
+// #############################################################################
 // action_global.C:
-// ####################################################################################
+// #############################################################################
 
 
 action *create_automorphism_group_from_group_table(const BYTE *fname_base, 
@@ -650,31 +754,48 @@ void create_linear_group(sims *&S, action *&A,
 	INT f_projective, INT f_general, INT f_affine, 
 	INT f_semilinear, INT f_special, 
 	INT verbose_level);
-action *create_induced_action_by_restriction(action *A, sims *S, INT size, INT *set, INT f_induce, INT verbose_level);
-action *create_induced_action_on_sets(action *A, sims *S, INT nb_sets, INT set_size, INT *sets, INT f_induce, INT verbose_level);
-void create_orbits_on_subset_using_restricted_action(action *&A_by_restriction, schreier *&Orbits, action *A, sims *S, INT size, INT *set, INT verbose_level);
-void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets, schreier *&Orbits, action *A, sims *S, INT nb_sets, INT set_size, INT *sets, INT verbose_level);
-action *new_action_by_right_multiplication(sims *group_we_act_on, INT f_transfer_ownership, INT verbose_level);
+action *create_induced_action_by_restriction(action *A, sims *S, 
+	INT size, INT *set, INT f_induce, INT verbose_level);
+action *create_induced_action_on_sets(action *A, sims *S, 
+	INT nb_sets, INT set_size, INT *sets, INT f_induce, 
+	INT verbose_level);
+void create_orbits_on_subset_using_restricted_action(
+	action *&A_by_restriction, schreier *&Orbits, 
+	action *A, sims *S, INT size, INT *set, 
+	INT verbose_level);
+void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets, 
+	schreier *&Orbits, action *A, sims *S, 
+	INT nb_sets, INT set_size, INT *sets, INT verbose_level);
+action *new_action_by_right_multiplication(sims *group_we_act_on, 
+	INT f_transfer_ownership, INT verbose_level);
 void action_print_symmetry_group_type(ostream &ost, symmetry_group_type a);
-INT choose_next_base_point_default_method(action *A, INT *Elt, INT verbose_level);
-void make_generators_stabilizer_of_three_components(action *A_PGL_n_q, action *A_PGL_k_q, 
+INT choose_next_base_point_default_method(action *A, INT *Elt, 
+	INT verbose_level);
+void make_generators_stabilizer_of_three_components(
+	action *A_PGL_n_q, action *A_PGL_k_q, 
 	INT k, vector_ge *gens, INT verbose_level);
-void make_generators_stabilizer_of_two_components(action *A_PGL_n_q, action *A_PGL_k_q, 
+void make_generators_stabilizer_of_two_components(
+	action *A_PGL_n_q, action *A_PGL_k_q, 
 	INT k, vector_ge *gens, INT verbose_level);
 // used in semifield
 void generators_to_strong_generators(action *A, 
 	INT f_target_go, longinteger_object &target_go, 
 	vector_ge *gens, strong_generators *&Strong_gens, 
 	INT verbose_level);
-void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, INT &elt_size, INT n, finite_field *F, INT verbose_level);
-void order_of_PGGL_n_q(longinteger_object &go, INT n, INT q, INT f_semilinear);
-void set_orthogonal_group_type(INT f_siegel, INT f_reflection, INT f_similarity, INT f_semisimilarity);
+void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, 
+	INT &elt_size, INT n, finite_field *F, INT verbose_level);
+void order_of_PGGL_n_q(longinteger_object &go, INT n, INT q, 
+	INT f_semilinear);
+void set_orthogonal_group_type(INT f_siegel, 
+	INT f_reflection, INT f_similarity, INT f_semisimilarity);
 INT get_orthogonal_group_type_f_reflection();
 void callback_choose_random_generator_orthogonal(INT iteration, 
 	INT *Elt, void *data, INT verbose_level);
 	// for use in action_init.C
-void test_matrix_group(INT k, INT q, INT f_semilinear, INT verbose_level);
-void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, action *Aq, subfield_structure *S, INT n, INT verbose_level);
+void test_matrix_group(INT k, INT q, INT f_semilinear, 
+	INT verbose_level);
+void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 
+	action *Aq, subfield_structure *S, INT n, INT verbose_level);
 void retract_generators(vector_ge *gens_in, vector_ge *&gens_out, 
 	action *AQ, subfield_structure *S, INT n, 
 	INT verbose_level);
@@ -689,7 +810,8 @@ action *create_automorphism_group_of_graph(
 	INT n, INT *Adj, 
 	INT verbose_level);
 #endif
-action *create_automorphism_group_of_colored_graph_object(colored_graph *CG, INT verbose_level);
+action *create_automorphism_group_of_colored_graph_object(
+	colored_graph *CG, INT verbose_level);
 action *create_automorphism_group_of_colored_graph(
 	INT n, INT f_bitvec, UBYTE *Adj_bitvec, INT *Adj, 
 	INT *vertex_colors, 
@@ -703,9 +825,12 @@ action *create_automorphism_group_of_graph_with_partition_and_labeling(
 	INT nb_parts, INT *parts, 
 	INT *labeling, 
 	INT verbose_level);
-void create_incidence_matrix_of_graph(INT *Adj, INT n, INT *&M, INT &nb_rows, INT &nb_cols, INT verbose_level);
-action *create_automorphism_group_of_graph(INT *Adj, INT n, INT verbose_level);
-action *create_automorphism_group_and_canonical_labeling_of_graph(INT *Adj, INT n, INT *labeling, INT verbose_level);
+void create_incidence_matrix_of_graph(INT *Adj, INT n, 
+	INT *&M, INT &nb_rows, INT &nb_cols, INT verbose_level);
+action *create_automorphism_group_of_graph(INT *Adj, 
+	INT n, INT verbose_level);
+action *create_automorphism_group_and_canonical_labeling_of_graph(
+	INT *Adj, INT n, INT *labeling, INT verbose_level);
 // labeling[n]
 action *create_automorphism_group_of_block_system(
 	INT nb_points, INT nb_blocks, INT block_size, INT *Blocks, 
@@ -719,66 +844,93 @@ action *create_automorphism_group_of_incidence_structure(
 action *create_automorphism_group_of_incidence_structure_low_level(
 	INT m, INT n, INT nb_inc, INT *X, 
 	INT verbose_level);
-void test_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X, 
-	INT &f_self_dual, INT &f_self_polar, INT verbose_level);
-void do_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X, 
-	INT &f_self_dual, INT &f_self_polar, INT verbose_level);
-void add_configuration_graph(ofstream &g, INT m, INT n, INT nb_inc, INT *X, INT f_first, INT verbose_level);
+void test_self_dual_self_polar(INT input_no, 
+	INT m, INT n, INT nb_inc, INT *X, 
+	INT &f_self_dual, INT &f_self_polar, 
+	INT verbose_level);
+void do_self_dual_self_polar(INT input_no, 
+	INT m, INT n, INT nb_inc, INT *X, 
+	INT &f_self_dual, INT &f_self_polar, 
+	INT verbose_level);
+void add_configuration_graph(ofstream &g, 
+	INT m, INT n, INT nb_inc, INT *X, INT f_first, 
+	INT verbose_level);
 // O4_model:
-void O4_isomorphism_2to4_embedded(action *A4, action *A5, finite_field *Fq, 
-	INT f_switch, INT *mtx2x2_T, INT *mtx2x2_S, INT *Elt, INT verbose_level);
-void O5_to_O4(action *A4, action *A5, finite_field *Fq, 
-	INT *mtx4x4, INT *mtx5x5, INT verbose_level);
-void O4_to_O5(action *A4, action *A5, finite_field *Fq, 
-	INT *mtx4x4, INT *mtx5x5, INT verbose_level);
-void print_4x4_as_2x2(action *A2, finite_field *Fq, INT *mtx4x4);
+void O4_isomorphism_2to4_embedded(action *A4, 
+	action *A5, finite_field *Fq, 
+	INT f_switch, INT *mtx2x2_T, INT *mtx2x2_S, INT *Elt, 
+	INT verbose_level);
+void O5_to_O4(action *A4, action *A5, 
+	finite_field *Fq, 
+	INT *mtx4x4, INT *mtx5x5, 
+	INT verbose_level);
+void O4_to_O5(action *A4, action *A5, 
+	finite_field *Fq, 
+	INT *mtx4x4, INT *mtx5x5, 
+	INT verbose_level);
+void print_4x4_as_2x2(action *A2, 
+	finite_field *Fq, INT *mtx4x4);
 
-INT reverse_engineer_semilinear_map(action *A, projective_space *P, 
+INT reverse_engineer_semilinear_map(action *A, 
+	projective_space *P, 
 	INT *Elt, INT *Mtx, INT &frobenius, 
 	INT verbose_level);
 sims *set_stabilizer_in_projective_space(
 	action *A_linear, projective_space *P, 
 	INT *set, INT set_size, INT &canonical_pt, 
 	INT *canonical_set_or_NULL, 
-	INT f_save_incma_in_and_out, const BYTE *save_incma_in_and_out_prefix, 
+	INT f_save_incma_in_and_out, 
+	const BYTE *save_incma_in_and_out_prefix, 
 	INT verbose_level);
-void projective_space_init_line_action(projective_space *P, action *A_points, action *&A_on_lines, INT verbose_level);
-void color_distribution_matrix(action *A, INT *Elt, INT n, UBYTE *Adj, INT *colors, classify *C, 
+void projective_space_init_line_action(projective_space *P, 
+	action *A_points, action *&A_on_lines, 
+	INT verbose_level);
+void color_distribution_matrix(action *A, 
+	INT *Elt, INT n, UBYTE *Adj, INT *colors, classify *C, 
 	INT *&Mtx, INT verbose_level);
-void test_color_distribution(action *A, vector_ge *gens, INT n, UBYTE *Adj, INT *colors, INT verbose_level);
-void color_preserving_subgroup(action *A, INT n, UBYTE *Adj, INT *colors, sims *&Subgroup, INT verbose_level);
-INT test_automorphism_group_of_graph_bitvec(action *A, INT n, UBYTE *Adj, INT verbose_level);
-void compute_conjugacy_classes(sims *S, action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch, 
-	strong_generators *&SG, INT &nb_classes, INT *&class_size, INT *&class_rep, 
+void test_color_distribution(action *A, 
+	vector_ge *gens, INT n, UBYTE *Adj, INT *colors, 
+	INT verbose_level);
+void color_preserving_subgroup(action *A, 
+	INT n, UBYTE *Adj, INT *colors, sims *&Subgroup, 
+	INT verbose_level);
+INT test_automorphism_group_of_graph_bitvec(action *A, 
+	INT n, UBYTE *Adj, INT verbose_level);
+void compute_conjugacy_classes(sims *S, action *&Aconj, 
+	action_by_conjugation *&ABC, schreier *&Sch, 
+	strong_generators *&SG, INT &nb_classes, 
+	INT *&class_size, INT *&class_rep, 
 	INT verbose_level);
 INT group_ring_element_size(action *A, sims *S);
 void group_ring_element_create(action *A, sims *S, INT *&elt);
 void group_ring_element_free(action *A, sims *S, INT *elt);
 void group_ring_element_print(action *A, sims *S, INT *elt);
-void group_ring_element_copy(action *A, sims *S, INT *elt_from, INT *elt_to);
-void group_ring_element_zero(action *A, sims *S, INT *elt);
-void group_ring_element_mult(action *A, sims *S, INT *elt1, INT *elt2, INT *elt3);
-void perm_print_cycles_sorted_by_length(ostream &ost, INT degree, INT *perm, INT verbose_level);
+void group_ring_element_copy(action *A, sims *S, 
+	INT *elt_from, INT *elt_to);
+void group_ring_element_zero(action *A, sims *S, 
+	INT *elt);
+void group_ring_element_mult(action *A, sims *S, 
+	INT *elt1, INT *elt2, INT *elt3);
+void perm_print_cycles_sorted_by_length(ostream &ost, 
+	INT degree, INT *perm, INT verbose_level);
 void perm_print_cycles_sorted_by_length_offset(ostream &ost, 
-	INT degree, INT *perm, INT offset, INT f_do_it_anyway_even_for_big_degree, 
+	INT degree, INT *perm, INT offset, 
+	INT f_do_it_anyway_even_for_big_degree, 
 	INT f_print_cycles_of_length_one, INT verbose_level);
-#if 0
-void set_and_stabilizer_apply(set_and_stabilizer *&SaS, INT *data, INT f_inverse, INT verbose_level);
-set_and_stabilizer *set_and_stabilizer_apply_to(set_and_stabilizer *SaS, INT *data, INT f_inverse, INT verbose_level);
-#endif
 void do_canonical_form(INT n, finite_field *F, 
 	INT *set, INT set_size, INT f_semilinear, 
 	const BYTE *fname_base, INT verbose_level);
-void create_action_and_compute_orbits_on_equations(action *A, homogeneous_polynomial_domain *HPD, 
+void create_action_and_compute_orbits_on_equations(
+	action *A, homogeneous_polynomial_domain *HPD, 
 	INT *The_equations, INT nb_equations, strong_generators *gens, 
 	action *&A_on_equations, schreier *&Orb, INT verbose_level);
 
 
 
 
-// ####################################################################################
+// #############################################################################
 // action_by_representation.C:
-// ####################################################################################
+// #############################################################################
 
 class action_by_representation {
 public:
@@ -811,13 +963,14 @@ public:
 	INT compute_image_INT(
 		action &A, INT *Elt, INT a, INT verbose_level);
 	void compute_image_INT_low_level(
-		action &A, INT *Elt, INT *input, INT *output, INT verbose_level);
+		action &A, INT *Elt, INT *input, INT *output, 
+		INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // action_by_subfield_structure.C:
-// ####################################################################################
+// #############################################################################
 
 class action_by_subfield_structure {
 public:
@@ -863,13 +1016,14 @@ public:
 	INT compute_image_INT(
 		action &A, INT *Elt, INT a, INT verbose_level);
 	void compute_image_INT_low_level(
-		action &A, INT *Elt, INT *input, INT *output, INT verbose_level);
+		action &A, INT *Elt, INT *input, INT *output, 
+		INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // action_on_wedge_product.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_wedge_product {
 public:
@@ -903,17 +1057,21 @@ public:
 	INT rank_point(INT *v);
 	INT compute_image_INT(
 		action &A, INT *Elt, INT a, INT verbose_level);
-	INT element_entry_frobenius(action &A, INT *Elt, INT verbose_level);
-	INT element_entry_ij(action &A, INT *Elt, INT I, INT J, INT verbose_level);
-	INT element_entry_ijkl(action &A, INT *Elt, INT i, INT j, INT k, INT l, INT verbose_level);
+	INT element_entry_frobenius(action &A, INT *Elt, 
+		INT verbose_level);
+	INT element_entry_ij(action &A, INT *Elt, INT I, INT J, 
+		INT verbose_level);
+	INT element_entry_ijkl(action &A, INT *Elt, 
+		INT i, INT j, INT k, INT l, INT verbose_level);
 	void compute_image_INT_low_level(
-		action &A, INT *Elt, INT *input, INT *output, INT verbose_level);
+		action &A, INT *Elt, INT *input, INT *output, 
+		INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // action_on_grassmannian.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_grassmannian {
 public:
@@ -951,7 +1109,8 @@ public:
 	void null();
 	void free();
 	void init(action &A, grassmann *G, INT verbose_level);
-	void init_embedding(INT big_n, INT *ambient_space, INT verbose_level);
+	void init_embedding(INT big_n, INT *ambient_space, 
+		INT verbose_level);
 	void compute_image_longinteger(action *A, INT *Elt, 
 		longinteger_object &i, longinteger_object &j, 
 		INT verbose_level);
@@ -964,9 +1123,9 @@ public:
 	void print_point(INT a, ostream &ost);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_spread_set.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_spread_set {
 public:
@@ -1002,12 +1161,13 @@ public:
 	void subspace_to_matrix(INT *subspace, INT *mtx, INT verbose_level);
 	void unrank_point(INT rk, INT *mtx, INT verbose_level);
 	INT rank_point(INT *mtx, INT verbose_level);
-	void compute_image_low_level(INT *Elt, INT *input, INT *output, INT verbose_level);
+	void compute_image_low_level(INT *Elt, INT *input, INT *output, 
+		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_orthogonal.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_orthogonal {
 public:
@@ -1028,15 +1188,16 @@ public:
 	void null();
 	void free();
 	void init(action *original_action, orthogonal *O, 
-		INT f_on_points, INT f_on_lines, INT f_on_points_and_lines, INT verbose_level);
+		INT f_on_points, INT f_on_lines, INT f_on_points_and_lines, 
+		INT verbose_level);
 	INT map_a_point(INT *Elt, INT i, INT verbose_level);
 	INT map_a_line(INT *Elt, INT i, INT verbose_level);
 	INT compute_image_INT(INT *Elt, INT i, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_cosets.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_cosets {
 public:
@@ -1047,7 +1208,8 @@ public:
 	INT *subspace_basis; // [dimension_of_subspace * n]
 	INT *base_cols; // [dimension_of_subspace] 
 		// the pivot column for the subspace basis
-		// to be used if a vector v[len] is reduced modulo a subspace
+		// to be used if a vector v[len] 
+		// is reduced modulo a subspace
 	
 	INT nb_points;
 	INT *Points; // ordered list of point ranks
@@ -1079,9 +1241,9 @@ public:
 
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_factor_space.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_factor_space {
 public:
@@ -1102,7 +1264,8 @@ public:
 		// to be used if a vector v[len] is reduced modulo a subspace
 
 	INT degree; 
-		// the number of projective points in the small space (i.e., the factor space)
+		// the number of projective points in the small space 
+		// (i.e., the factor space)
 		// (q^factor_space_len - 1) / (q - 1), 
 		// as computed by compute_degree();
 	INT large_degree; 
@@ -1115,12 +1278,14 @@ public:
 
 	INT *embedding; 
 		// [factor_space_len]
-		// the list of columns that are not pivot columns, i.e. not in base_cols[] 
+		// the list of columns that are not pivot columns, 
+		// i.e. not in base_cols[] 
 		// this is the set-theoretic complement of base_cols
 	INT *projection_table; 
 		// [nb_points]
 		// projection_table[i] = j 
-		// menas that the Gauss reduced vector in the coset of point_list[i] 
+		// means that the Gauss reduced vector in 
+		// the coset of point_list[i] 
 		// is in coset_reps_Gauss[j]
 	INT *preimage_table; // [degree]
 	INT *tmp; // [factor_space_len] 
@@ -1140,49 +1305,66 @@ public:
 		// the entries are ranks of vectors in the large space
 
 	INT *tmp_w; // [len] temporary vector for use in rank
-	INT *tmp_w1; // [subspace_basis_size] temporary vector for lexleast_element_in_coset
-	INT *tmp_v1; // [len] temporary vector for use in lexleast_element_in_coset
-	INT *tmp_v2; // [len] temporary vector for use in lexleast_element_in_coset
+	INT *tmp_w1;
+		// [subspace_basis_size] 
+		// temporary vector for lexleast_element_in_coset
+	INT *tmp_v1;
+		// [len] temporary vector 
+		// for use in lexleast_element_in_coset
+	INT *tmp_v2;
+		// [len] temporary vector 
+		// for use in lexleast_element_in_coset
 	
 	action_on_factor_space();
 	~action_on_factor_space();
 	void null();
 	void free();
-	void init_light(action &A_base, action &A, INT len, finite_field *F, 
+	void init_light(action &A_base, action &A, INT len, 
+		finite_field *F, 
 		INT *subspace_basis_ranks, INT subspace_basis_size, 
 		INT (*rank_point_func)(INT *v, void *data), 
 		void (*unrank_point_func)(INT *v, INT rk, void *data), 
 		void *rank_point_data, 
 		INT verbose_level);
-	void init_by_rank_table_mode(action &A_base, action &A, INT len, finite_field *F, 
+	void init_by_rank_table_mode(action &A_base, 
+		action &A, INT len, finite_field *F, 
 		INT *subspace_basis_ranks, INT subspace_basis_size, 
 		INT *point_list, INT nb_points, 
 		INT (*rank_point_func)(INT *v, void *data), 
 		void (*unrank_point_func)(INT *v, INT rk, void *data), 
 		void *rank_point_data, 
 		INT verbose_level);
-	void init_by_rank(action &A_base, action &A, INT len, finite_field *F, 
-		INT *subspace_basis_ranks, INT subspace_basis_size, INT f_compute_tables, INT verbose_level);
-	void init_from_coordinate_vectors(action &A_base, action &A, INT len, finite_field *F, 
-		INT *subspace_basis, INT subspace_basis_size, INT f_compute_tables, INT verbose_level);
-	void init2(action &A_base, action &A, INT f_compute_tables, INT verbose_level);
+	void init_by_rank(action &A_base, action &A, 
+		INT len, finite_field *F, 
+		INT *subspace_basis_ranks, INT subspace_basis_size, 
+		INT f_compute_tables, INT verbose_level);
+	void init_from_coordinate_vectors(action &A_base, 
+		action &A, INT len, finite_field *F, 
+		INT *subspace_basis, INT subspace_basis_size, 
+		INT f_compute_tables, INT verbose_level);
+	void init2(action &A_base, action &A, 
+		INT f_compute_tables, INT verbose_level);
 	void compute_projection_table(INT verbose_level);
 	INT compute_degree();
 	INT compute_large_degree();
 	void list_all_elements();
 	void reduce_mod_subspace(INT *v, INT verbose_level);
 	INT lexleast_element_in_coset(INT rk, INT verbose_level);
-		// This function computes the lexleast element in the coset modulo the subspace.
+		// This function computes the lexleast 
+		// element in the coset modulo the subspace.
 		// It does so by looping over all q^subspace_basis_size 
 		// elements in the subspace and ranking the corresponding 
 		// vector in the large space using rank_in_large_space(v2).
 	INT project_onto_Gauss_reduced_vector(INT rk, INT verbose_level);
 	INT project(INT rk, INT verbose_level);
-		// unranks the vector rk, and reduces it modiulo the subspace basis.
-		// The non-pivot components are considered as a vector in F_q^factor_space_len 
+		// unranks the vector rk, and reduces it 
+		// modulo the subspace basis.
+		// The non-pivot components are considered 
+		// as a vector in F_q^factor_space_len 
 		// and ranked using the rank function for projective space.
 		// This rank is returned.
-		// If the vector turns out to lie in the subspace, a -1 is returned.
+		// If the vector turns out to lie in the 
+		// subspace, -1 is returned.
 	INT preimage(INT rk, INT verbose_level);
 	void unrank(INT *v, INT rk, INT verbose_level);
 	INT rank(INT *v, INT verbose_level);
@@ -1191,9 +1373,9 @@ public:
 	INT compute_image(action *A, INT *Elt, INT i, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_determinant.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_determinant {
 public:
@@ -1218,12 +1400,13 @@ public:
 	void null();
 	void free();
 	void init(action &A, INT f_projective, INT m, INT verbose_level);
-	void compute_image(action *A, INT *Elt, INT i, INT &j, INT verbose_level);
+	void compute_image(action *A, INT *Elt, INT i, INT &j, 
+		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_sign.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_sign {
 public:
@@ -1240,9 +1423,9 @@ public:
 	void compute_image(INT *Elt, INT i, INT &j, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_by_conjugation.C:
-// ####################################################################################
+// #############################################################################
 
 class action_by_conjugation {
 public:
@@ -1272,9 +1455,9 @@ public:
 	INT multiply(action *A, INT i, INT j, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_by_right_multiplication.C:
-// ####################################################################################
+// #############################################################################
 
 class action_by_right_multiplication {
 public:
@@ -1298,12 +1481,13 @@ public:
 	void null();
 	void free();
 	void init(sims *Base_group, INT f_ownership, INT verbose_level);
-	void compute_image(action *A, INT *Elt, INT i, INT &j, INT verbose_level);
+	void compute_image(action *A, INT *Elt, INT i, INT &j, 
+		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_sets.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_sets {
 public:
@@ -1326,8 +1510,10 @@ public:
 	~action_on_sets();
 	void null();
 	void free();
-	void init(INT nb_sets, INT set_size, INT *input_sets, INT verbose_level);
-	void compute_image(action *A, INT *Elt, INT i, INT &j, INT verbose_level);
+	void init(INT nb_sets, INT set_size, 
+		INT *input_sets, INT verbose_level);
+	void compute_image(action *A, INT *Elt, 
+		INT i, INT &j, INT verbose_level);
 	void print_sets_sorted();
 	void print_sets_in_original_ordering();
 	void test_sets();
@@ -1336,9 +1522,9 @@ public:
 INT action_on_sets_compare(void *a, void *b, void *data);
 INT action_on_sets_compare_inverted(void *a, void *b, void *data);
 
-// ####################################################################################
+// #############################################################################
 // action_on_subgroups.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_subgroups {
 public:
@@ -1359,7 +1545,8 @@ public:
 	void null();
 	void free();
 	void init(action *A, sims *S, INT nb_subgroups, 
-		INT subgroup_order, subgroup **Subgroups, INT verbose_level);
+		INT subgroup_order, subgroup **Subgroups, 
+		INT verbose_level);
 	INT compute_image(INT *Elt, INT a, INT verbose_level);
 
 };
@@ -1368,9 +1555,9 @@ INT action_on_subgroups_compare(void *a, void *b, void *data);
 INT action_on_subgroups_compare_inverted(void *a, void *b, void *data);
 
 
-// ####################################################################################
+// #############################################################################
 // action_on_k_subsets.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_k_subsets {
 public:
@@ -1396,9 +1583,9 @@ public:
 	void compute_image(INT *Elt, INT i, INT &j, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_bricks.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_bricks {
 public:
@@ -1412,15 +1599,19 @@ public:
 	~action_on_bricks();
 	void null();
 	void free();
-	void init(action *A, brick_domain *B, INT f_linear_action, INT verbose_level);
-	void compute_image(INT *Elt, INT i, INT &j, INT verbose_level);
-	void compute_image_linear_action(INT *Elt, INT i, INT &j, INT verbose_level);
-	void compute_image_permutation_action(INT *Elt, INT i, INT &j, INT verbose_level);
+	void init(action *A, brick_domain *B, INT f_linear_action, 
+		INT verbose_level);
+	void compute_image(INT *Elt, INT i, INT &j, 
+		INT verbose_level);
+	void compute_image_linear_action(INT *Elt, INT i, INT &j, 
+		INT verbose_level);
+	void compute_image_permutation_action(INT *Elt, INT i, INT &j, 
+		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_andre.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_andre {
 public:
@@ -1440,15 +1631,19 @@ public:
 	~action_on_andre();
 	void null();
 	void free();
-	void init(action *An, action *An1, andre_construction *Andre, INT verbose_level);
-	void compute_image(INT *Elt, INT i, INT &j, INT verbose_level);
-	INT compute_image_of_point(INT *Elt, INT pt_idx, INT verbose_level);
-	INT compute_image_of_line(INT *Elt, INT line_idx, INT verbose_level);
+	void init(action *An, action *An1, 
+		andre_construction *Andre, INT verbose_level);
+	void compute_image(INT *Elt, INT i, INT &j, 
+		INT verbose_level);
+	INT compute_image_of_point(INT *Elt, INT pt_idx, 
+		INT verbose_level);
+	INT compute_image_of_line(INT *Elt, INT line_idx, 
+		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_orbits.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_orbits {
 public:
@@ -1461,14 +1656,15 @@ public:
 	~action_on_orbits();
 	void null();
 	void free();
-	void init(action *A, schreier *Sch, INT f_play_it_safe, INT verbose_level);
+	void init(action *A, schreier *Sch, INT f_play_it_safe, 
+		INT verbose_level);
 	INT compute_image(INT *Elt, INT i, INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // action_on_flags.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_flags {
 public:
@@ -1487,14 +1683,15 @@ public:
 	~action_on_flags();
 	void null();
 	void free();
-	void init(action *A, INT *type, INT type_len, INT verbose_level);
+	void init(action *A, INT *type, INT type_len, 
+		INT verbose_level);
 	INT compute_image(INT *Elt, INT i, INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // action_by_restriction.C:
-// ####################################################################################
+// #############################################################################
 
 class action_by_restriction {
 public:
@@ -1521,9 +1718,9 @@ public:
 	INT compute_image(action *A, INT *Elt, INT i, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // product_action.C:
-// ####################################################################################
+// #############################################################################
 
 class product_action {
 public:
@@ -1543,8 +1740,10 @@ public:
 	INT elt_size_in_INT;
 	INT coded_elt_size_in_char;
 
-	INT *Elt1, *Elt2, *Elt3; // temporary storage
-	UBYTE *elt1, *elt2, *elt3; // temporary storage, used in element_store()
+	INT *Elt1, *Elt2, *Elt3;
+		// temporary storage
+	UBYTE *elt1, *elt2, *elt3;
+		// temporary storage, used in element_store()
 
 	page_storage *Elts;
 	
@@ -1552,13 +1751,15 @@ public:
 	~product_action();
 	void null();
 	void free();
-	void init(action *A1, action *A2, INT f_use_projections, INT verbose_level);
+	void init(action *A1, action *A2, INT f_use_projections, 
+		INT verbose_level);
 	INT compute_image(action *A, INT *Elt, INT i, INT verbose_level);
 	void element_one(action *A, INT *Elt, INT verbose_level);
 	INT element_is_one(action *A, INT *Elt, INT verbose_level);
 	void element_unpack(UBYTE *elt, INT *Elt, INT verbose_level);
 	void element_pack(INT *Elt, UBYTE *elt, INT verbose_level);
-	void element_retrieve(action *A, INT hdl, INT *Elt, INT verbose_level);
+	void element_retrieve(action *A, INT hdl, INT *Elt, 
+		INT verbose_level);
 	INT element_store(action *A, INT *Elt, INT verbose_level);
 	void element_mult(INT *A, INT *B, INT *AB, INT verbose_level);
 	void element_invert(INT *A, INT *Av, INT verbose_level);
@@ -1569,9 +1770,9 @@ public:
 	void make_element(INT *Elt, INT *data, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // action_on_homogeneous_polynomials.C:
-// ####################################################################################
+// #############################################################################
 
 class action_on_homogeneous_polynomials {
 public:
@@ -1599,8 +1800,10 @@ public:
 	~action_on_homogeneous_polynomials();
 	void null();
 	void free();
-	void init(action *A, homogeneous_polynomial_domain *HPD, INT verbose_level);
-	void init_invariant_set_of_equations(INT *Equations, INT nb_equations, INT verbose_level);
+	void init(action *A, homogeneous_polynomial_domain *HPD, 
+		INT verbose_level);
+	void init_invariant_set_of_equations(INT *Equations, 
+		INT nb_equations, INT verbose_level);
 	void unrank_point(INT *v, INT rk);
 	INT rank_point(INT *v);
 	INT compute_image_INT(INT *Elt, INT a, INT verbose_level);
@@ -1610,9 +1813,9 @@ public:
 
 
 
-// ####################################################################################
+// #############################################################################
 // matrix_group.C:
-// ####################################################################################
+// #############################################################################
 
 class matrix_group {
 
@@ -1626,12 +1829,15 @@ public:
 	static INT f_debug_memory;
 
 	INT f_projective;
-		// n x n matrices (possibly with Frobenius) acting on PG(n - 1, q)
+		// n x n matrices (possibly with Frobenius) 
+		// acting on PG(n - 1, q)
 	INT f_affine;
-		// n x n matrices plus translations (possibly with Frobenius) 
+		// n x n matrices plus translations
+		// (possibly with Frobenius) 
 		// acting on F_q^n
 	INT f_general_linear;
-		// n x n matrices (possibly with Frobenius) acting on F_q^n
+		// n x n matrices (possibly with Frobenius) 
+		// acting on F_q^n
 
 	INT n;
 		// the size of the matrices
@@ -1660,7 +1866,8 @@ public:
 	
 	INT f_GFq_is_allocated;
 		// if TRUE, GFq will be destroyed in the destructor
-		// if FALSE, it is the responsability of someone else to destroy GFq
+		// if FALSE, it is the responsability 
+		// of someone else to destroy GFq
 	
 	finite_field *GFq;
 	void *data;
@@ -1669,14 +1876,21 @@ public:
 
 	
 	// temporary variables, do not use!
-	INT *Elt1, *Elt2, *Elt3; // used for mult, invert
-	INT *Elt4; // used for invert
+	INT *Elt1, *Elt2, *Elt3;
+		// used for mult, invert
+	INT *Elt4;
+		// used for invert
 	INT *Elt5;
-	INT *tmp_M; // used for GL_mult_internal
-	INT *base_cols; // used for Gauss during invert
-	INT *v1, *v2; // temporary vectors of length 2n
-	INT *v3; // used in GL_mult_vector_from_the_left_contragredient
-	UBYTE *elt1, *elt2, *elt3; // temporary storage, used in element_store()
+	INT *tmp_M;
+		// used for GL_mult_internal
+	INT *base_cols;
+		// used for Gauss during invert
+	INT *v1, *v2;
+		// temporary vectors of length 2n
+	INT *v3;
+		// used in GL_mult_vector_from_the_left_contragredient
+	UBYTE *elt1, *elt2, *elt3;
+		// temporary storage, used in element_store()
 	
 	page_storage *Elts;
 	
@@ -1686,9 +1900,12 @@ public:
 	void null();
 	void freeself();
 	
-	void init_projective_group(INT n, finite_field *F, INT f_semilinear, action *A, INT verbose_level);
-	void init_affine_group(INT n, finite_field *F, INT f_semilinear, action *A, INT verbose_level);
-	void init_general_linear_group(INT n, finite_field *F, INT f_semilinear, action *A, INT verbose_level);
+	void init_projective_group(INT n, finite_field *F, 
+		INT f_semilinear, action *A, INT verbose_level);
+	void init_affine_group(INT n, finite_field *F, 
+		INT f_semilinear, action *A, INT verbose_level);
+	void init_general_linear_group(INT n, finite_field *F, 
+		INT f_semilinear, action *A, INT verbose_level);
 	void allocate_data(INT verbose_level);
 	void free_data(INT verbose_level);
 	void setup_page_storage(INT page_length_log, INT verbose_level);
@@ -1704,9 +1921,12 @@ public:
 	INT image_of_element(INT *Elt, INT a, INT verbose_level);
 	INT GL_image_of_PG_element(INT *Elt, INT a, INT verbose_level);
 	INT GL_image_of_AG_element(INT *Elt, INT a, INT verbose_level);
-	void action_from_the_right_all_types(INT *v, INT *A, INT *vA, INT verbose_level);
-	void projective_action_from_the_right(INT *v, INT *A, INT *vA, INT verbose_level);
-	void general_linear_action_from_the_right(INT *v, INT *A, INT *vA, INT verbose_level);
+	void action_from_the_right_all_types(
+		INT *v, INT *A, INT *vA, INT verbose_level);
+	void projective_action_from_the_right(
+		INT *v, INT *A, INT *vA, INT verbose_level);
+	void general_linear_action_from_the_right(
+		INT *v, INT *A, INT *vA, INT verbose_level);
 	void GL_one(INT *Elt);
 	void GL_one_internal(INT *Elt);
 	void GL_zero(INT *Elt);
@@ -1740,14 +1960,17 @@ public:
 		INT f_similarity,
 		INT f_semisimilarity, 
 		INT *Elt, INT verbose_level);
-	void matrices_without_eigenvector_one(sims *S, INT *&Sol, INT &cnt, INT f_path_select, INT select_value, INT verbose_level);
-	void matrix_minor(INT *Elt, INT *Elt1, matrix_group *mtx1, INT f, INT verbose_level);
+	void matrices_without_eigenvector_one(sims *S, INT *&Sol, INT &cnt, 
+		INT f_path_select, INT select_value, 
+		INT verbose_level);
+	void matrix_minor(INT *Elt, INT *Elt1, 
+		matrix_group *mtx1, INT f, INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // perm_group.C:
-// ####################################################################################
+// #############################################################################
 
 class perm_group {
 
@@ -1775,8 +1998,10 @@ public:
 	INT elt_size_INT;
 	
 	INT *Elt1, *Elt2, *Elt3, *Elt4;
-	UBYTE *elt1, *elt2, *elt3; // temporary storage, used in element_store()
-	INT *Eltrk1, *Eltrk2, *Eltrk3; // used in strore / retrieve
+	UBYTE *elt1, *elt2, *elt3;
+		// temporary storage, used in element_store()
+	INT *Eltrk1, *Eltrk2, *Eltrk3;
+		// used in strore / retrieve
 	
 	page_storage *Elts;
 
@@ -1785,7 +2010,8 @@ public:
 	void null();
 	void free();
 	void allocate();
-	void init_product_action(INT m, INT n, INT page_length_log, INT verbose_level);
+	void init_product_action(INT m, INT n, 
+		INT page_length_log, INT verbose_level);
 	void init(INT degree, INT page_length_log, INT verbose_level);
 	void init_data(INT page_length_log, INT verbose_level);
 	void init_with_base(INT degree, 
@@ -1812,7 +2038,8 @@ public:
 
 void perm_group_find_strong_generators_at_level(INT level, INT degree, 
 	INT given_base_length, INT *given_base,
-	INT nb_gens, INT *gens, INT &nb_generators_found, INT *idx_generators_found);
+	INT nb_gens, INT *gens, 
+	INT &nb_generators_found, INT *idx_generators_found);
 void perm_group_generators_direct_product(INT nb_diagonal_elements,
 	INT degree1, INT degree2, INT &degree3, 
 	INT nb_gens1, INT nb_gens2, INT &nb_gens3, 
@@ -1820,9 +2047,9 @@ void perm_group_generators_direct_product(INT nb_diagonal_elements,
 	INT base_len1, INT base_len2, INT &base_len3, 
 	INT *base1, INT *base2, INT *&base3);
 
-// ####################################################################################
+// #############################################################################
 // page_storage.C:
-// ####################################################################################
+// #############################################################################
 
 class page_storage {
 
@@ -1841,7 +2068,8 @@ public:
 	INT page_length_log; // number of bits
 	INT page_length; // entries per page
 	INT page_size; // size in BYTE of one page
-	INT allocation_table_length; // size in BYTE of one allocation table
+	INT allocation_table_length;
+		// size in BYTE of one allocation table
 	
 	INT page_ptr_used;
 	INT page_ptr_allocated;
@@ -1853,8 +2081,11 @@ public:
 	INT next_free_entry;
 	INT nb_free_entries;
 	
-	void init(INT entry_size, INT page_length_log, INT verbose_level);
-	void add_elt_print_function(void (* elt_print)(void *p, void *data, ostream &ost), void *elt_print_data);
+	void init(INT entry_size, INT page_length_log, 
+		INT verbose_level);
+	void add_elt_print_function(
+		void (* elt_print)(void *p, void *data, ostream &ost), 
+		void *elt_print_data);
 	void print();
 	UBYTE *s_i_and_allocate(INT i);
 	UBYTE *s_i_and_deallocate(INT i);
@@ -1878,9 +2109,9 @@ void test_page_storage(INT f_v);
 
 
 
-// ####################################################################################
+// #############################################################################
 // vector_ge.C:
-// ####################################################################################
+// #############################################################################
 
 class vector_ge {
 
@@ -1913,8 +2144,10 @@ public:
 		// data[nb_elements * degree]
 	void init_from_data(action *A, INT *data, 
 		INT nb_elements, INT elt_size, INT verbose_level);
-	void init_conjugate_svas_of(vector_ge *v, INT *Elt, INT verbose_level);
-	void init_conjugate_sasv_of(vector_ge *v, INT *Elt, INT verbose_level);
+	void init_conjugate_svas_of(vector_ge *v, INT *Elt, 
+		INT verbose_level);
+	void init_conjugate_sasv_of(vector_ge *v, INT *Elt, 
+		INT verbose_level);
 	INT *ith(INT i);
 	void print(ostream &ost);
 	//ostream& print(ostream& ost);
@@ -1934,22 +2167,31 @@ public:
 	void conjugate_sasv(INT *Elt);
 	void print_with_given_action(ostream &ost, action *A2);
 	void print(ostream &ost, INT f_print_as_permutation, 
-		INT f_offset, INT offset, INT f_do_it_anyway_even_for_big_degree, 
+		INT f_offset, INT offset, 
+		INT f_do_it_anyway_even_for_big_degree, 
 		INT f_print_cycles_of_length_one);
-	void write_to_memory_object(memory_object *m, INT verbose_level);
-	void read_from_memory_object(memory_object *m, INT verbose_level);
-	void write_to_file_binary(ofstream &fp, INT verbose_level);
-	void read_from_file_binary(ifstream &fp, INT verbose_level);
-	void extract_subset_of_elements_by_rank_text_vector(const BYTE *rank_vector_text, sims *S, INT verbose_level);
-	void extract_subset_of_elements_by_rank(INT *rank_vector, INT len, sims *S, INT verbose_level);
+	void write_to_memory_object(memory_object *m, 
+		INT verbose_level);
+	void read_from_memory_object(memory_object *m, 
+		INT verbose_level);
+	void write_to_file_binary(ofstream &fp, 
+		INT verbose_level);
+	void read_from_file_binary(ifstream &fp, 
+		INT verbose_level);
+	void extract_subset_of_elements_by_rank_text_vector(
+		const BYTE *rank_vector_text, sims *S, 
+		INT verbose_level);
+	void extract_subset_of_elements_by_rank(INT *rank_vector, 
+		INT len, sims *S, INT verbose_level);
 	INT test_if_all_elements_stabilize_a_point(action *A2, INT pt);
-	INT test_if_all_elements_stabilize_a_set(action *A2, INT *set, INT sz, INT verbose_level);
+	INT test_if_all_elements_stabilize_a_set(action *A2, 
+		INT *set, INT sz, INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // schreier.C:
-// ####################################################################################
+// #############################################################################
 
 
 class schreier {
@@ -1976,11 +2218,13 @@ public:
 	INT *orbit; // [A->degree]
 	INT *orbit_inv; // [A->degree]
 
-		// prev, label and orbit_no are indexed by the points in the order as listed in orbit.
+		// prev, label and orbit_no are indexed 
+		// by the points in the order as listed in orbit.
 	INT *prev; // [A->degree]
 	INT *label; // [A->degree]
 	//INT *orbit_no; // [A->degree]
-		// to find out which orbit point a lies in, use orbit_number(pt).
+		// to find out which orbit point a lies in, 
+		// use orbit_number(pt).
 		// It used to be orbit_no[orbit_inv[a]]
 
 	INT *orbit_first;  // [A->degree + 1]
@@ -1988,8 +2232,10 @@ public:
 	INT nb_orbits;
 	
 	INT *Elt1, *Elt2, *Elt3;
-	INT *schreier_gen, *schreier_gen1; // used in random_schreier_generator
-	INT *cosetrep, *cosetrep_tmp; // used in coset_rep / coset_rep_inv
+	INT *schreier_gen, *schreier_gen1;
+		// used in random_schreier_generator
+	INT *cosetrep, *cosetrep_tmp;
+		// used in coset_rep / coset_rep_inv
 	
 	INT f_print_function;
 	void (*print_function)(ostream &ost, INT pt, void *data);
@@ -2008,9 +2254,11 @@ public:
 	void init_single_generator(INT *elt);
 	void init_generators(vector_ge &generators);
 	void init_generators(INT nb, INT *elt);
-		// elt must point to nb * A->elt_size_in_INT INT's that are 
+		// elt must point to nb * A->elt_size_in_INT 
+		// INT's that are 
 		// group elements in INT format
-	void init_generators_by_hdl(INT nb_gen, INT *gen_hdl, INT verbose_level);
+	void init_generators_by_hdl(INT nb_gen, INT *gen_hdl, 
+		INT verbose_level);
 	INT get_image(INT i, INT gen_idx, INT verbose_level);
 	void print_orbit_lengths(ostream &ost);
 	void print_orbit_length_distribution(ostream &ost);
@@ -2018,11 +2266,14 @@ public:
 	void print(ostream &ost);
 	void print_and_list_orbits(ostream &ost);
 	void print_and_list_orbits_tex(ostream &ost);
-	void print_and_list_orbits_of_given_length(ostream &ost, INT len);
+	void print_and_list_orbits_of_given_length(ostream &ost, 
+		INT len);
 	void print_and_list_orbits_and_stabilizer(ostream &ost, 
 		action *default_action, longinteger_object &go, 
-		void (*print_point)(ostream &ost, INT pt, void *data), void *data);
-	void print_and_list_orbits_using_labels(ostream &ost, INT *labels);
+		void (*print_point)(ostream &ost, INT pt, void *data), 
+			void *data);
+	void print_and_list_orbits_using_labels(ostream &ost, 
+		INT *labels);
 	void print_tables(ostream &ost, INT f_with_cosetrep);
 	void print_tables_latex(ostream &ost, INT f_with_cosetrep);
 	void print_generators();
@@ -2030,25 +2281,33 @@ public:
 	void print_orbit_using_labels(INT orbit_no, INT *labels);
 	void print_orbit(ostream &ost, INT orbit_no);
 	void print_orbit_tex(ostream &ost, INT orbit_no);
-	void print_and_list_orbit_and_stabilizer_tex(INT i, action *default_action, 
-			longinteger_object &full_group_order, ostream &ost);
-	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(INT i, action *default_action, 
-			strong_generators *gens, ostream &ost);
+	void print_and_list_orbit_and_stabilizer_tex(INT i, 
+		action *default_action, 
+		longinteger_object &full_group_order, 
+		ostream &ost);
+	void print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
+		INT i, action *default_action, 
+		strong_generators *gens, ostream &ost);
 	void print_and_list_orbit_tex(INT i, ostream &ost);
 	void print_and_list_orbits_sorted_by_length_tex(ostream &ost);
-	void print_and_list_orbits_and_stabilizer_sorted_by_length(ostream &ost, INT f_tex, 
-		action *default_action, longinteger_object &full_group_order);
-	void print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(
+	void print_and_list_orbits_and_stabilizer_sorted_by_length(
+		ostream &ost, INT f_tex, 
+		action *default_action, 
+		longinteger_object &full_group_order);
+	void 
+print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(
 		ostream &ost, INT f_tex, 
 		action *default_action, strong_generators *gens_full_group);
 	void print_and_list_orbits_sorted_by_length(ostream &ost);
 	void print_and_list_orbits_sorted_by_length(ostream &ost, INT f_tex);
 	void print_orbit_using_labels(ostream &ost, INT orbit_no, INT *labels);
 	void print_orbit_using_callback(ostream &ost, INT orbit_no, 
-		void (*print_point)(ostream &ost, INT pt, void *data), void *data);
+		void (*print_point)(ostream &ost, INT pt, void *data), 
+		void *data);
 	void print_orbit_type(INT f_backwards);
 	void list_all_orbits_tex(ostream &ost);
-	void print_orbit_through_labels(ostream &ost, INT orbit_no, INT *point_labels);
+	void print_orbit_through_labels(ostream &ost, 
+		INT orbit_no, INT *point_labels);
 	void print_orbit_sorted(ostream &ost, INT orbit_no);
 	void print_orbit(INT cur, INT last);
 	void swap_points(INT i, INT j);
@@ -2056,83 +2315,118 @@ public:
 	INT orbit_representative(INT pt);
 	INT depth_in_tree(INT j);
 		// j is a coset, not a point
-	void transporter_from_orbit_rep_to_point(INT pt, INT &orbit_idx, INT *Elt, INT verbose_level);
-	void transporter_from_point_to_orbit_rep(INT pt, INT &orbit_idx, INT *Elt, INT verbose_level);
+	void transporter_from_orbit_rep_to_point(INT pt, 
+		INT &orbit_idx, INT *Elt, INT verbose_level);
+	void transporter_from_point_to_orbit_rep(INT pt, 
+		INT &orbit_idx, INT *Elt, INT verbose_level);
 	void coset_rep(INT j);
 		// j is a coset, not a point
 		// result is in cosetrep
-		// determines an element in the group that moves the orbit representative 
+		// determines an element in the group 
+		// that moves the orbit representative 
 		// to the j-th point in the orbit.
 	void coset_rep_with_verbosity(INT j, INT verbose_level);
 	void coset_rep_inv(INT j);
-	void get_schreier_vector(INT *&sv, INT f_trivial_group, INT f_compact);
-	void get_schreier_vector_compact(INT *&sv, INT f_trivial_group);
+	void get_schreier_vector(INT *&sv, 
+		INT f_trivial_group, INT f_compact);
+	void get_schreier_vector_compact(INT *&sv, 
+		INT f_trivial_group);
 		// allocates and creates array sv[size] using NEW_INT
 		// where size is n + 1 if  f_trivial_group is TRUE
 		// and size is 3 * n + 1 otherwise
-		// Here, n is the combined size of all orbits counted by nb_orbits
+		// Here, n is the combined size of all orbits 
+		// counted by nb_orbits
 		// sv[0] is equal to n
-		// sv + 1 is the array point_list of size [n], listing the point in increasing order
+		// sv + 1 is the array point_list of size [n], 
+		// listing the point in increasing order
 		// if f_trivial_group, sv + 1 + n is the array prev[n] and 
 		// sv + 1 + 2 * n is the array label[n] 
 	void get_schreier_vector_ordinary(INT *&sv);
-		// allocates and creates array sv[2 * A->degree] using NEW_INT
+		// allocates and creates array sv[2 * A->degree] 
+		// using NEW_INT
 		// sv[i * 2 + 0] is prev[i]
 		// sv[i * 2 + 1] is label[i]
 	void extend_orbit(INT *elt, INT verbose_level);
 	void compute_all_point_orbits(INT verbose_level);
 	void compute_all_point_orbits_with_prefered_reps(
-		INT *prefered_reps, INT nb_prefered_reps, INT verbose_level);
-	void compute_all_point_orbits_with_preferred_labels(INT *preferred_labels, INT verbose_level);
-	void compute_all_orbits_on_invariant_subset(INT len, INT *subset, INT verbose_level);
+		INT *prefered_reps, INT nb_prefered_reps, 
+		INT verbose_level);
+	void compute_all_point_orbits_with_preferred_labels(
+		INT *preferred_labels, INT verbose_level);
+	void compute_all_orbits_on_invariant_subset(INT len, 
+		INT *subset, INT verbose_level);
 	INT sum_up_orbit_lengths();
-	//void compute_point_orbit_single_permutation(INT pt, INT n, INT *perm, INT verbose_level);
 	void compute_point_orbit(INT pt, INT verbose_level);
-	void non_trivial_random_schreier_generator(action *A_original, INT verbose_level);
-		// computes non trivial random Schreier generator into schreier_gen
+	void non_trivial_random_schreier_generator(action *A_original, 
+		INT verbose_level);
+		// computes non trivial random Schreier 
+		// generator into schreier_gen
 		// non-trivial is with respect to A_original
-	void random_schreier_generator_ith_orbit(INT orbit_no, INT verbose_level);
+	void random_schreier_generator_ith_orbit(INT orbit_no, 
+		INT verbose_level);
 	void random_schreier_generator(INT verbose_level);
 		// computes random Schreier generator into schreier_gen
 	void trace_back(INT *path, INT i, INT &j);
 	void print_tree(INT orbit_no);
-	void draw_tree(char *label, INT orbit_no, INT xmax, INT ymax, INT f_circletext, INT rad, 
+	void draw_tree(char *label, INT orbit_no, 
+		INT xmax, INT ymax, INT f_circletext, INT rad, 
 		INT f_embedded, INT f_sideways, 
 		double scale, double line_width, 
 		INT f_has_point_labels, INT *point_labels, 
 		INT verbose_level);
-	void draw_tree2(char *fname, INT xmax, INT ymax, INT f_circletext, 
-		INT *weight, INT *placement_x, INT max_depth, INT i, INT last, INT rad, 
+	void draw_tree2(char *fname, INT xmax, INT ymax, 
+		INT f_circletext, 
+		INT *weight, INT *placement_x, INT max_depth, 
+		INT i, INT last, INT rad, 
 		INT f_embedded, INT f_sideways, 
 		double scale, double line_width, 
 		INT f_has_point_labels, INT *point_labels, 
 		INT verbose_level);
-	void subtree_draw_lines(mp_graphics &G, INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
-		INT *placement_x, INT max_depth, INT i, INT last, INT verbose_level);
-	void subtree_draw_vertices(mp_graphics &G, INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
+	void subtree_draw_lines(mp_graphics &G, INT f_circletext, 
+		INT parent_x, INT parent_y, INT *weight, 
+		INT *placement_x, INT max_depth, INT i, INT last, 
+		INT verbose_level);
+	void subtree_draw_vertices(mp_graphics &G, 
+		INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
 		INT *placement_x, INT max_depth, INT i, INT last, INT rad, 
 		INT f_has_point_labels, INT *point_labels, 
 		INT verbose_level);
-	void subtree_place(INT *weight, INT *placement_x, INT left, INT right, INT i, INT last);
-	INT subtree_calc_weight(INT *weight, INT &max_depth, INT i, INT last);
+	void subtree_place(INT *weight, INT *placement_x, 
+		INT left, INT right, INT i, INT last);
+	INT subtree_calc_weight(INT *weight, INT &max_depth, 
+		INT i, INT last);
 	INT subtree_depth_first(ostream &ost, INT *path, INT i, INT last);
 	void print_path(ostream &ost, INT *path, INT l);
-	void intersection_vector(INT *set, INT len, INT *intersection_cnt);
-	void orbits_on_invariant_subset_fast(INT len, INT *subset, INT verbose_level);
-	void orbits_on_invariant_subset(INT len, INT *subset, INT &nb_orbits_on_subset, INT *&orbit_perm, INT *&orbit_perm_inv);
-	void get_orbit_partition_of_points_and_lines(partitionstack &S, INT verbose_level);
-	void get_orbit_partition(partitionstack &S, INT verbose_level);
-	strong_generators *generators_for_stabilizer_of_arbitrary_point_and_transversal(action *default_action, 
-		longinteger_object &full_group_order, INT pt, vector_ge *&cosets, INT verbose_level);
-	strong_generators *generators_for_stabilizer_of_arbitrary_point(action *default_action, 
-		longinteger_object &full_group_order, INT pt, INT verbose_level);
-	strong_generators *generators_for_stabilizer_of_orbit_rep(action *default_action, 
-		longinteger_object &full_group_order, INT orbit_idx, INT verbose_level);
-	void point_stabilizer(action *default_action, longinteger_object &go, 
+	void intersection_vector(INT *set, INT len, 
+		INT *intersection_cnt);
+	void orbits_on_invariant_subset_fast(INT len, 
+		INT *subset, INT verbose_level);
+	void orbits_on_invariant_subset(INT len, INT *subset, 
+		INT &nb_orbits_on_subset, INT *&orbit_perm, INT *&orbit_perm_inv);
+	void get_orbit_partition_of_points_and_lines(
+		partitionstack &S, INT verbose_level);
+	void get_orbit_partition(partitionstack &S, 
+		INT verbose_level);
+	strong_generators *generators_for_stabilizer_of_arbitrary_point_and_transversal(
+		action *default_action, 
+		longinteger_object &full_group_order, 
+		INT pt, vector_ge *&cosets, INT verbose_level);
+	strong_generators *generators_for_stabilizer_of_arbitrary_point(
+		action *default_action, 
+		longinteger_object &full_group_order, INT pt, 
+		INT verbose_level);
+	strong_generators *generators_for_stabilizer_of_orbit_rep(
+		action *default_action, 
+		longinteger_object &full_group_order, 
+		INT orbit_idx, INT verbose_level);
+	void point_stabilizer(action *default_action, 
+		longinteger_object &go, 
 		sims *&Stab, INT orbit_no, INT verbose_level);
 		// this function allocates a sims structure into Stab.
-	void get_orbit(INT orbit_idx, INT *set, INT &len, INT verbose_level);
-	void compute_orbit_statistic(INT *set, INT set_size, INT *orbit_count, INT verbose_level);
+	void get_orbit(INT orbit_idx, INT *set, INT &len, 
+		INT verbose_level);
+	void compute_orbit_statistic(INT *set, INT set_size, 
+		INT *orbit_count, INT verbose_level);
 	void test_sv(action *A, INT *hdl_strong_generators, INT *sv, 
 		INT f_trivial_group, INT f_compact, INT verbose_level);
 	void write_to_memory_object(memory_object *m, INT verbose_level);
@@ -2146,24 +2440,28 @@ public:
 	void orbits_as_set_of_sets(set_of_sets *&S, INT verbose_level);
 	void get_orbit_reps(INT *&Reps, INT &nb_reps, INT verbose_level);
 	INT find_shortest_orbit_if_unique(INT &idx);
-	void elements_in_orbit_of(INT pt, INT *orb, INT &nb, INT verbose_level);
-	void get_orbit_lengths_once_each(INT *&orbit_lengths, INT &nb_orbit_lengths);
+	void elements_in_orbit_of(INT pt, INT *orb, INT &nb, 
+		INT verbose_level);
+	void get_orbit_lengths_once_each(INT *&orbit_lengths, 
+		INT &nb_orbit_lengths);
 	INT orbit_number(INT pt);
 	void latex(const BYTE *fname);
-	void get_orbit_decomposition_scheme_of_graph(INT *Adj, INT n, INT *&Decomp_scheme, INT verbose_level);
+	void get_orbit_decomposition_scheme_of_graph(
+		INT *Adj, INT n, INT *&Decomp_scheme, INT verbose_level);
 
 };
 
 
-// ####################################################################################
+// #############################################################################
 // schreier_vector.C:
-// ####################################################################################
+// #############################################################################
 
 
 INT schreier_vector_coset_rep_inv_general(action *A, 
 	INT *sv, INT *hdl_gen, INT pt, 
 	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_check_image, INT f_allow_failure, INT verbose_level);
+	INT f_trivial_group, INT f_check_image, 
+	INT f_allow_failure, INT verbose_level);
 // determines pt0 to be the first point of the orbit containing pt.
 // cosetrep will be a group element that maps pt to pt0.
 INT schreier_vector_coset_rep_inv_compact_general(action *A, 
@@ -2173,28 +2471,34 @@ INT schreier_vector_coset_rep_inv_compact_general(action *A,
 	INT f_allow_failure, INT verbose_level);
 void schreier_vector_coset_rep_inv(action *A, INT *sv, INT *hdl_gen, INT pt, 
 	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_compact, INT f_check_image, INT verbose_level);
-	// determines pt0 to be the first point of the orbit containing pt.
+	INT f_trivial_group, INT f_compact, INT f_check_image, 
+	INT verbose_level);
+	// determines pt0 to be the first point of the 
+	// orbit containing pt.
 	// cosetrep will be a group element that maps pt to pt0.
-void schreier_vector_coset_rep_inv_compact(action *A, INT *sv, INT *hdl_gen, INT pt, 
+void schreier_vector_coset_rep_inv_compact(action *A, 
+	INT *sv, INT *hdl_gen, INT pt, 
 	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_check_image, INT verbose_level);
-void schreier_vector_coset_rep_inv1(action *A, INT *sv, INT *hdl_gen, INT pt, 
+	INT f_trivial_group, INT f_check_image, 
+	INT verbose_level);
+void schreier_vector_coset_rep_inv1(action *A, 
+	INT *sv, INT *hdl_gen, INT pt, 
 	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3);
 
 
 void schreier_vector_print(INT *sv);
 void schreier_vector_print_tree(INT *sv, INT verbose_level);
-INT schreier_vector_compute_depth_recursively(INT n, INT *Depth, INT *pts, INT *prev, INT pt);
+INT schreier_vector_compute_depth_recursively(INT n, 
+	INT *Depth, INT *pts, INT *prev, INT pt);
 INT sv_number_of_orbits(INT *sv);
 void analyze_schreier_vector(INT *sv, INT verbose_level);
 	// we assume that the group is not trivial
 INT schreier_vector_determine_depth_recursion(INT n, INT *pts, INT *prev, 
 	INT *depth, INT *ancestor, INT pos);
 
-// ####################################################################################
+// #############################################################################
 // sims.C:
-// ####################################################################################
+// #############################################################################
 
 class sims {
 
@@ -2238,14 +2542,19 @@ public:
 	INT nb_images;
 	INT **images;
 	
-	INT *orbit_len; // [base_len]
+	INT *orbit_len;
+		// [base_len]
 		// orbit_len[i] is the length of the i-th basic orbit.
 	
-	INT **orbit; // [base_len][A->deg]
-		// orbit[i][j] is the j-th point in the orbit of the i-th base point.
+	INT **orbit;
+		// [base_len][A->deg]
+		// orbit[i][j] is the j-th point in the orbit 
+		// of the i-th base point.
 		// for 0 \le j < orbit_len[i].
-		// for orbit_len[i] \le j < A->deg, the points not in the orbit are listed.
-	INT **orbit_inv; // [base_len][A->deg]
+		// for orbit_len[i] \le j < A->deg, 
+		// the points not in the orbit are listed.
+	INT **orbit_inv;
+		// [base_len][A->deg]
 		// orbit[i] is the inverse of the permutation orbit[i],
 		// i.e. given a point j,
 		// orbit_inv[i][j] is the coset (or position in the orbit)
@@ -2258,10 +2567,14 @@ public:
 	// storage for temporary data and 
 	// group elements computed by various routines.
 	INT *Elt1, *Elt2, *Elt3, *Elt4;
-	INT *strip1, *strip2; // used in strip
-	INT *eltrk1, *eltrk2; // used in element rank unrank
-	INT *cosetrep, *cosetrep_tmp; // used in coset_rep / coset_rep_inv
-	INT *schreier_gen, *schreier_gen1; // used in random_schreier_generator
+	INT *strip1, *strip2;
+		// used in strip
+	INT *eltrk1, *eltrk2;
+		// used in element rank unrank
+	INT *cosetrep, *cosetrep_tmp;
+		// used in coset_rep / coset_rep_inv
+	INT *schreier_gen, *schreier_gen1;
+		// used in random_schreier_generator
 	
 	sims();
 	void null();
@@ -2273,7 +2586,8 @@ public:
 	void init_images(INT nb_images);
 	void images_append();
 	void init(action *A);
-		// initializes the trivial group with the base as given in A
+		// initializes the trivial group 
+		// with the base as given in A
 	void init_without_base(action *A);
 	void reallocate_base(INT old_base_len, INT verbose_level);
 	void initialize_table(INT i);
@@ -2293,7 +2607,8 @@ public:
 		// computes the depth of the element, 
 		// updates the arrays gen_depth and gen_perm accordingly
 		// does not change the transversals
-	void create_group_tree(const BYTE *fname, INT f_full, INT verbose_level);
+	void create_group_tree(const BYTE *fname, INT f_full, 
+		INT verbose_level);
 	void print_transversals();
 	void print_transversals_short();
 	void print_transversal_lengths();
@@ -2302,7 +2617,8 @@ public:
 	void print_generators();
 	void print_generators_tex(ostream &ost);
 	void print_generators_as_permutations();
-	void print_generators_as_permutations_override_action(action *A);
+	void print_generators_as_permutations_override_action(
+		action *A);
 	void print_basic_orbits();
 	void print_basic_orbit(INT i);
 	//void sort();
@@ -2322,30 +2638,40 @@ public:
 	INT last_moved_base_point();
 		// j == -1 means the group is trivial
 	INT get_image(INT i, INT gen_idx);
-		// get the image of a point i under generator gen_idx, goes through a 
-		// table of stored images by default. Computes the image only if not yet available.
+		// get the image of a point i under generator gen_idx, 
+		// goes through a 
+		// table of stored images by default. 
+		// Computes the image only if not yet available.
 	INT get_image(INT i, INT *elt);
-		// get the image of a point i under a given group element, does not go through a table.
+		// get the image of a point i under a given group element, 
+		// does not go through a table.
 	void swap_points(INT lvl, INT i, INT j);
 		// swaps two points given by their cosets
 	void random_element(INT *elt, INT verbose_level);
-		// compute a random element among the group elements represented by the chain
+		// compute a random element among the group elements 
+		// represented by the chain
 		// (chooses random cosets along the stabilizer chain)
-	void random_element_of_order(INT *elt, INT order, INT verbose_level);
-	void random_elements_of_order(vector_ge *elts, INT *orders, INT nb, INT verbose_level);
+	void random_element_of_order(INT *elt, INT order, 
+		INT verbose_level);
+	void random_elements_of_order(vector_ge *elts, 
+		INT *orders, INT nb, INT verbose_level);
 	void path_unrank_INT(INT a);
 	INT path_rank_INT();
 	
 	void element_from_path(INT *elt, INT verbose_level);
-		// given coset representatives in path[], the corresponding 
+		// given coset representatives in path[], 
+		// the corresponding 
 		// element is multiplied.
 		// uses eltrk1, eltrk2
 	void element_from_path_inv(INT *elt);
-	void element_unrank(longinteger_object &a, INT *elt, INT verbose_level);
+	void element_unrank(longinteger_object &a, INT *elt, 
+		INT verbose_level);
 	void element_unrank(longinteger_object &a, INT *elt);
 		// Returns group element whose rank is a. 
-		// the elements represented by the chain are enumerated 0, ... go - 1
-		// with the convention that 0 always stands for the identity element.
+		// the elements represented by the chain are 
+		// enumerated 0, ... go - 1
+		// with the convention that 0 always stands 
+		// for the identity element.
 		// The computed group element will be computed into Elt1
 	void element_rank(longinteger_object &a, INT *elt);
 		// Computes the rank of the element in elt into a.
@@ -2356,31 +2682,41 @@ public:
 	INT is_element_of(INT *elt);
 	void test_element_rank_unrank();
 	void coset_rep(INT i, INT j, INT verbose_level);
-		// computes a coset representative in transversal i which maps
-		// the i-th base point to the point which is in coset j of the i-th basic orbit.
+		// computes a coset representative in transversal i 
+		// which maps
+		// the i-th base point to the point which is in 
+		// coset j of the i-th basic orbit.
 		// j is a coset, not a point
 		// result is in cosetrep
 	INT compute_coset_rep_depth(INT i, INT j, INT verbose_level);
-	void compute_coset_rep_path(INT i, INT j, INT *&Path, INT *&Label, INT &depth, INT verbose_level);
-	//void coset_rep_recursion(INT i, INT j, INT depth, INT verbose_level);
+	void compute_coset_rep_path(INT i, INT j, INT *&Path, 
+		INT *&Label, INT &depth, INT verbose_level);
 	void coset_rep_inv(INT i, INT j, INT verbose_level_le);
 		// computes the inverse element of what coset_rep computes,
-		// i.e. an element which maps the j-th point in the orbit to the 
+		// i.e. an element which maps the 
+		// j-th point in the orbit to the 
 		// i-th base point.
 		// j is a coset, not a point
 		// result is in cosetrep
-	//void coset_rep_inv_recursion(INT i, INT j, INT verbose_level);
 	void compute_base_orbits(INT verbose_level);
-	void compute_base_orbits_known_length(INT *tl, INT verbose_level);
-	void extend_base_orbit(INT new_gen_idx, INT lvl, INT verbose_level);
+	void compute_base_orbits_known_length(INT *tl, 
+		INT verbose_level);
+	void extend_base_orbit(INT new_gen_idx, INT lvl, 
+		INT verbose_level);
 	void compute_base_orbit(INT lvl, INT verbose_level);
 		// applies all generators at the given level to compute
 		// the corresponding basic orbit.
-		// the generators are the first nb_gen[lvl] in the generator arry
-	void compute_base_orbit_known_length(INT lvl, INT target_length, INT verbose_level);
-	void extract_strong_generators_in_order(vector_ge &SG, INT *tl, INT verbose_level);
-	void transitive_extension(schreier &O, vector_ge &SG, INT *tl, INT verbose_level);
-	INT transitive_extension_tolerant(schreier &O, vector_ge &SG, INT *tl, INT f_tolerant, INT verbose_level);
+		// the generators are the first nb_gen[lvl] 
+		// in the generator arry
+	void compute_base_orbit_known_length(INT lvl, 
+		INT target_length, INT verbose_level);
+	void extract_strong_generators_in_order(vector_ge &SG, 
+		INT *tl, INT verbose_level);
+	void transitive_extension(schreier &O, vector_ge &SG, 
+		INT *tl, INT verbose_level);
+	INT transitive_extension_tolerant(schreier &O, 
+		vector_ge &SG, INT *tl, INT f_tolerant, 
+		INT verbose_level);
 	void transitive_extension_using_coset_representatives_extract_generators(
 		INT *coset_reps, INT nb_cosets, 
 		vector_ge &SG, INT *tl, 
@@ -2392,97 +2728,141 @@ public:
 		INT *Elt_gens, INT nb_gens, INT subgroup_index, 
 		vector_ge &SG, INT *tl, 
 		INT verbose_level);
-	void point_stabilizer_stabchain_with_action(action *A2, sims &S, INT pt, INT verbose_level);
-		// first computes the orbit of the point pt in action A2 under the generators 
-		// that are stored at present (using a temporary schreier object),
+	void point_stabilizer_stabchain_with_action(action *A2, 
+		sims &S, INT pt, INT verbose_level);
+		// first computes the orbit of the point pt 
+		// in action A2 under the generators 
+		// that are stored at present 
+		// (using a temporary schreier object),
 		// then sifts random schreier generators into S
-	void point_stabilizer(vector_ge &SG, INT *tl, INT pt, INT verbose_level);
-		// computes strong generating set for the stabilizer of point pt
-	void point_stabilizer_with_action(action *A2, vector_ge &SG, INT *tl, INT pt, INT verbose_level);
-		// computes strong generating set for the stabilizer of point pt in action A2
+	void point_stabilizer(vector_ge &SG, INT *tl, 
+		INT pt, INT verbose_level);
+		// computes strong generating set 
+		// for the stabilizer of point pt
+	void point_stabilizer_with_action(action *A2, 
+		vector_ge &SG, INT *tl, INT pt, INT verbose_level);
+		// computes strong generating set for 
+		// the stabilizer of point pt in action A2
 	INT strip_and_add(INT *elt, INT *residue, INT verbose_level);
-		// returns TRUE if something was added, FALSE if element stripped through
-	INT strip(INT *elt, INT *residue, INT &drop_out_level, INT &image, INT verbose_level);
+		// returns TRUE if something was added, 
+		// FALSE if element stripped through
+	INT strip(INT *elt, INT *residue, INT &drop_out_level, 
+		INT &image, INT verbose_level);
 		// returns TRUE if the element sifts through
-	void add_generator_at_level(INT *elt, INT lvl, INT verbose_level);
-		// add the generator to the array of generators and then extends the 
+	void add_generator_at_level(INT *elt, INT lvl, 
+		INT verbose_level);
+		// add the generator to the array of generators 
+		// and then extends the 
 		// basic orbits 0,..,lvl using extend_base_orbit
-	void add_generator_at_level_only(INT *elt, INT lvl, INT verbose_level);
-		// add the generator to the array of generators and then extends the 
+	void add_generator_at_level_only(INT *elt, 
+		INT lvl, INT verbose_level);
+		// add the generator to the array of generators 
+		// and then extends the 
 		// basic orbit lvl using extend_base_orbit
 	void random_schreier_generator(INT verbose_level);
 		// computes random Schreier generator into schreier_gen
-	void build_up_group_random_process_no_kernel(sims *old_G, INT verbose_level);
-	void extend_group_random_process_no_kernel(sims *extending_by_G, longinteger_object &target_go, INT verbose_level);
+	void build_up_group_random_process_no_kernel(sims *old_G, 
+		INT verbose_level);
+	void extend_group_random_process_no_kernel(sims *extending_by_G, 
+		longinteger_object &target_go, 
+		INT verbose_level);
 	void conjugate(action *A, sims *old_G, INT *Elt, 
 		INT f_overshooting_OK, INT verbose_level);
 		// Elt * g * Elt^{-1} where g is in old_G
-	INT test_if_in_set_stabilizer(action *A, INT *set, INT size, INT verbose_level);
+	INT test_if_in_set_stabilizer(action *A, 
+		INT *set, INT size, INT verbose_level);
 	INT test_if_subgroup(sims *old_G, INT verbose_level);
 	void build_up_group_random_process(sims *K, sims *old_G, 
 		longinteger_object &target_go, 
 		INT f_override_choose_next_base_point,
-		INT (*choose_next_base_point_method)(action *A, INT *Elt, INT verbose_level), 
+		INT (*choose_next_base_point_method)(action *A, 
+			INT *Elt, INT verbose_level), 
 		INT verbose_level);
 	void build_up_group_from_generators(sims *K, vector_ge *gens, 
 		INT f_target_go, longinteger_object *target_go, 
 		INT f_override_choose_next_base_point,
-		INT (*choose_next_base_point_method)(action *A, INT *Elt, INT verbose_level), 
+		INT (*choose_next_base_point_method)(action *A, 
+			INT *Elt, INT verbose_level), 
 		INT verbose_level);
 	INT closure_group(INT nb_times, INT verbose_level);
 	void write_all_group_elements(BYTE *fname, INT verbose_level);
-	void print_all_group_elements_to_file(BYTE *fname, INT verbose_level);
+	void print_all_group_elements_to_file(BYTE *fname, 
+		INT verbose_level);
 	void print_all_group_elements();
 	void print_all_group_elements_as_permutations();
-	void print_all_group_elements_as_permutations_in_special_action(action *A_special);
+	void print_all_group_elements_as_permutations_in_special_action(
+		action *A_special);
 	void print_all_transversal_elements();
-	void element_as_permutation(action *A_special, INT elt_rk, INT *perm, INT verbose_level);
-	void table_of_group_elements_in_data_form(INT *&Table, INT &len, INT &sz, INT verbose_level);
-	void regular_representation(INT *Elt, INT *perm, INT verbose_level);
-	void center(vector_ge &gens, INT *center_element_ranks, INT &nb_elements, INT verbose_level);
-	void all_cosets(INT *subset, INT size, INT *all_cosets, INT verbose_level);
-	void element_ranks_subgroup(sims *subgroup, INT *element_ranks, INT verbose_level);
-	void find_standard_generators_INT(INT ord_a, INT ord_b, INT ord_ab, INT &a, INT &b, INT &nb_trials, INT verbose_level);
-	INT find_element_of_given_order_INT(INT ord, INT &nb_trials, INT verbose_level);
-	INT find_element_of_given_order_INT(INT *Elt, INT ord, INT &nb_trials, INT max_trials, INT verbose_level);
-	void find_element_of_prime_power_order(INT p, INT *Elt, INT &e, INT &nb_trials, INT verbose_level);
-	void save_list_of_elements(BYTE *fname, INT verbose_level);
-	void read_list_of_elements(action *A, BYTE *fname, INT verbose_level);
-	void evaluate_word_INT(INT word_len, INT *word, INT *Elt, INT verbose_level);
+	void element_as_permutation(action *A_special, 
+		INT elt_rk, INT *perm, INT verbose_level);
+	void table_of_group_elements_in_data_form(INT *&Table, 
+		INT &len, INT &sz, INT verbose_level);
+	void regular_representation(INT *Elt, INT *perm, 
+		INT verbose_level);
+	void center(vector_ge &gens, INT *center_element_ranks, 
+		INT &nb_elements, INT verbose_level);
+	void all_cosets(INT *subset, INT size, 
+		INT *all_cosets, INT verbose_level);
+	void element_ranks_subgroup(sims *subgroup, 
+		INT *element_ranks, INT verbose_level);
+	void find_standard_generators_INT(INT ord_a, INT ord_b, 
+		INT ord_ab, INT &a, INT &b, INT &nb_trials, 
+		INT verbose_level);
+	INT find_element_of_given_order_INT(INT ord, 
+		INT &nb_trials, INT verbose_level);
+	INT find_element_of_given_order_INT(INT *Elt, 
+		INT ord, INT &nb_trials, INT max_trials, 
+		INT verbose_level);
+	void find_element_of_prime_power_order(INT p, 
+		INT *Elt, INT &e, INT &nb_trials, INT verbose_level);
+	void save_list_of_elements(BYTE *fname, 
+		INT verbose_level);
+	void read_list_of_elements(action *A, 
+		BYTE *fname, INT verbose_level);
+	void evaluate_word_INT(INT word_len, 
+		INT *word, INT *Elt, INT verbose_level);
 	void write_sgs(const BYTE *fname, INT verbose_level);
-	void read_sgs(const BYTE *fname, vector_ge *SG, INT verbose_level);
+	void read_sgs(const BYTE *fname, vector_ge *SG, 
+		INT verbose_level);
 	INT least_moved_point_at_level(INT lvl, INT verbose_level);
-	//INT identify_group(BYTE *path_t144, BYTE *discreta_home, INT verbose_level);
 	INT mult_by_rank(INT rk_a, INT rk_b, INT verbose_level);
 	INT mult_by_rank(INT rk_a, INT rk_b);
 	INT invert_by_rank(INT rk_a, INT verbose_level);
 	INT conjugate_by_rank(INT rk_a, INT rk_b, INT verbose_level);
 		// comutes b^{-1} * a * b
-	INT conjugate_by_rank_b_bv_given(INT rk_a, INT *Elt_b, INT *Elt_bv, INT verbose_level);
+	INT conjugate_by_rank_b_bv_given(INT rk_a, 
+		INT *Elt_b, INT *Elt_bv, INT verbose_level);
 	void sylow_subgroup(INT p, sims *P, INT verbose_level);
 	INT is_normalizing(INT *Elt, INT verbose_level);
-	void create_Cayley_graph(vector_ge *gens, INT *&Adj, INT &n, INT verbose_level);
+	void create_Cayley_graph(vector_ge *gens, INT *&Adj, INT &n, 
+		INT verbose_level);
 	void create_group_table(INT *&Table, INT &n, INT verbose_level);
-	void write_as_magma_permutation_group(const BYTE *fname_base, vector_ge *gens, INT verbose_level);
+	void write_as_magma_permutation_group(const BYTE *fname_base, 
+		vector_ge *gens, INT verbose_level);
 
 	// sims2.C:
 	void build_up_subgroup_random_process(sims *G, 
-		void (*choose_random_generator_for_subgroup)(sims *G, INT *Elt, INT verbose_level), 
+		void (*choose_random_generator_for_subgroup)(
+			sims *G, INT *Elt, INT verbose_level), 
 		INT verbose_level);
 
 	// sims3.C:
-	void subgroup_make_characteristic_vector(sims *Sub, INT *C, INT verbose_level);
+	void subgroup_make_characteristic_vector(sims *Sub, 
+		INT *C, INT verbose_level);
 	void normalizer_based_on_characteristic_vector(INT *C_sub, 
-		INT *Gen_idx, INT nb_gens, INT *N, INT &N_go, INT verbose_level);
+		INT *Gen_idx, INT nb_gens, INT *N, INT &N_go, 
+		INT verbose_level);
 	void order_structure_relative_to_subgroup(INT *C_sub, 
 		INT *Order, INT *Residue, INT verbose_level);
 };
 
 // in sims_global.C:
-sims *create_sims_from_generators_with_target_group_order_factorized(action *A, 
+sims *create_sims_from_generators_with_target_group_order_factorized(
+		action *A, 
 		vector_ge *gens, INT *tl, INT len, INT verbose_level);
 sims *create_sims_from_generators_with_target_group_order(action *A, 
-		vector_ge *gens, longinteger_object &target_go, INT verbose_level);
+		vector_ge *gens, longinteger_object &target_go, 
+		INT verbose_level);
 sims *create_sims_from_generators_with_target_group_order_INT(action *A, 
 	vector_ge *gens, INT target_go, INT verbose_level);
 sims *create_sims_from_generators_without_target_group_order(action *A, 
@@ -2490,17 +2870,20 @@ sims *create_sims_from_generators_without_target_group_order(action *A,
 sims *create_sims_from_single_generator_without_target_group_order(action *A, 
 	INT *Elt, INT verbose_level);
 sims *create_sims_from_generators_randomized(action *A, 
-	vector_ge *gens, INT f_target_go, longinteger_object &target_go, INT verbose_level);
-sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_level);
+	vector_ge *gens, INT f_target_go, 
+	longinteger_object &target_go, INT verbose_level);
+sims *create_sims_for_centralizer_of_matrix(action *A, 
+	INT *Mtx, INT verbose_level);
 
 
 // sims2.C:
-void choose_random_generator_derived_group(sims *G, INT *Elt, INT verbose_level);
+void choose_random_generator_derived_group(sims *G, INT *Elt, 
+	INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // schreier_sims.C:
-// ####################################################################################
+// #############################################################################
 
 class schreier_sims {
 
@@ -2526,7 +2909,8 @@ public:
 	vector_ge *gens;
 
 	INT f_from_random_process;
-	void (*callback_choose_random_generator)(INT iteration, INT *Elt, void *data, INT verbose_level);
+	void (*callback_choose_random_generator)(INT iteration, 
+		INT *Elt, void *data, INT verbose_level);
 	void *callback_choose_random_generator_data;
 	
 	INT f_from_old_G;
@@ -2537,7 +2921,8 @@ public:
 	INT *base_of_choice;
 
 	INT f_override_choose_next_base_point_method;
-	INT (*choose_next_base_point_method)(action *A, INT *Elt, INT verbose_level); 
+	INT (*choose_next_base_point_method)(action *A, 
+		INT *Elt, INT verbose_level); 
 
 	INT iteration;
 
@@ -2547,34 +2932,42 @@ public:
 	void freeself();
 	void init(action *A, INT verbose_level);
 	void interested_in_kernel(action *KA, INT verbose_level);
-	void init_target_group_order(longinteger_object &tgo, INT verbose_level);
+	void init_target_group_order(longinteger_object &tgo, 
+		INT verbose_level);
 	void init_generators(vector_ge *gens, INT verbose_level);
 	void init_random_process(
-		void (*callback_choose_random_generator)(INT iteration, INT *Elt, void *data, INT verbose_level), 
+		void (*callback_choose_random_generator)(
+		INT iteration, INT *Elt, void *data, 
+		INT verbose_level), 
 		void *callback_choose_random_generator_data, 
 		INT verbose_level);
 	void init_old_G(sims *old_G, INT verbose_level);
 	void init_base_of_choice(
-		INT base_of_choice_len, INT *base_of_choice, INT verbose_level);
+		INT base_of_choice_len, INT *base_of_choice, 
+		INT verbose_level);
 	void init_choose_next_base_point_method(
-		INT (*choose_next_base_point_method)(action *A, INT *Elt, INT verbose_level), 
+		INT (*choose_next_base_point_method)(action *A, 
+		INT *Elt, INT verbose_level), 
 		INT verbose_level);
 	void compute_group_orders();
 	void print_group_orders();
 	void get_generator_internal(INT *Elt, INT verbose_level);
 	void get_generator_external(INT *Elt, INT verbose_level);
-	void get_generator_external_from_generators(INT *Elt, INT verbose_level);
-	void get_generator_external_random_process(INT *Elt, INT verbose_level);
-	void get_generator_external_old_G(INT *Elt, INT verbose_level);
+	void get_generator_external_from_generators(INT *Elt, 
+		INT verbose_level);
+	void get_generator_external_random_process(INT *Elt, 
+		INT verbose_level);
+	void get_generator_external_old_G(INT *Elt, 
+		INT verbose_level);
 	void get_generator(INT *Elt, INT verbose_level);
 	void closure_group(INT verbose_level);
 	void create_group(INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // group.C:
-// ####################################################################################
+// #############################################################################
 
 class group {
 
@@ -2613,7 +3006,8 @@ public:
 	void delete_sims();
 	void init_strong_generators_empty_set();
 	void init_strong_generators(vector_ge &SG, INT *tl);
-	void init_strong_generators_by_hdl(INT nb_gen, INT *gen_hdl, INT *tl, INT verbose_level);
+	void init_strong_generators_by_hdl(INT nb_gen, INT *gen_hdl, 
+		INT *tl, INT verbose_level);
 	void delete_strong_generators();
 	void require_ascii_coding();
 	void require_strong_generators();
@@ -2626,110 +3020,180 @@ public:
 	void schreier_sims(INT verbose_level);
 	void get_strong_generators(INT verbose_level);
 	void point_stabilizer(group &stab, INT pt, INT verbose_level);
-	void point_stabilizer_with_action(action *A2, group &stab, INT pt, INT verbose_level);
-	void induced_action(action &induced_action, group &H, group &K, INT verbose_level);
+	void point_stabilizer_with_action(action *A2, 
+		group &stab, INT pt, INT verbose_level);
+	void induced_action(action &induced_action, 
+		group &H, group &K, INT verbose_level);
 	void extension(group &N, group &H, INT verbose_level);
 		// N needs to have strong generators, 
 		// H needs to have sims
 		// N and H may have different actions, 
 		// the action of N is taken for the extension.
-	void print_strong_generators(ostream &ost, INT f_print_as_permutation);
-	void print_strong_generators_with_different_action(ostream &ost, action *A2);
-	void print_strong_generators_with_different_action_verbose(ostream &ost, action *A2, INT verbose_level);
+	void print_strong_generators(ostream &ost, 
+		INT f_print_as_permutation);
+	void print_strong_generators_with_different_action(
+		ostream &ost, action *A2);
+	void print_strong_generators_with_different_action_verbose(
+		ostream &ost, action *A2, INT verbose_level);
 
 };
 
 
-// ####################################################################################
+// #############################################################################
 // interface.C
-// ####################################################################################
+// #############################################################################
 
-INT induced_action_element_image_of(action &A, INT a, void *elt, INT verbose_level);
-void induced_action_element_image_of_low_level(action &A, INT *input, INT *output, void *elt, INT verbose_level);
-INT induced_action_element_linear_entry_ij(action &A, void *elt, INT i, INT j, INT verbose_level);
-INT induced_action_element_linear_entry_frobenius(action &A, void *elt, INT verbose_level);
-void induced_action_element_one(action &A, void *elt, INT verbose_level);
-INT induced_action_element_is_one(action &A, void *elt, INT verbose_level);
-void induced_action_element_unpack(action &A, void *elt, void *Elt, INT verbose_level);
-void induced_action_element_pack(action &A, void *Elt, void *elt, INT verbose_level);
-void induced_action_element_retrieve(action &A, INT hdl, void *elt, INT verbose_level);
-INT induced_action_element_store(action &A, void *elt, INT verbose_level);
-void induced_action_element_mult(action &A, void *a, void *b, void *ab, INT verbose_level);
-void induced_action_element_invert(action &A, void *a, void *av, INT verbose_level);
-void induced_action_element_transpose(action &A, void *a, void *at, INT verbose_level);
-void induced_action_element_move(action &A, void *a, void *b, INT verbose_level);
-void induced_action_element_dispose(action &A, INT hdl, INT verbose_level);
-void induced_action_element_print(action &A, void *elt, ostream &ost);
-void induced_action_element_print_quick(action &A, void *elt, ostream &ost);
-void induced_action_element_print_latex(action &A, void *elt, ostream &ost);
-void induced_action_element_print_verbose(action &A, void *elt, ostream &ost);
-void induced_action_element_code_for_make_element(action &A, void *elt, INT *data);
-void induced_action_element_print_for_make_element(action &A, void *elt, ostream &ost);
-void induced_action_element_print_for_make_element_no_commas(action &A, void *elt, ostream &ost);
+INT induced_action_element_image_of(action &A, INT a, 
+	void *elt, INT verbose_level);
+void induced_action_element_image_of_low_level(action &A, 
+	INT *input, INT *output, void *elt, INT verbose_level);
+INT induced_action_element_linear_entry_ij(action &A, 
+	void *elt, INT i, INT j, INT verbose_level);
+INT induced_action_element_linear_entry_frobenius(action &A, 
+	void *elt, INT verbose_level);
+void induced_action_element_one(action &A, 
+	void *elt, INT verbose_level);
+INT induced_action_element_is_one(action &A, 
+	void *elt, INT verbose_level);
+void induced_action_element_unpack(action &A, 
+	void *elt, void *Elt, INT verbose_level);
+void induced_action_element_pack(action &A, 
+	void *Elt, void *elt, INT verbose_level);
+void induced_action_element_retrieve(action &A, 
+	INT hdl, void *elt, INT verbose_level);
+INT induced_action_element_store(action &A, 
+	void *elt, INT verbose_level);
+void induced_action_element_mult(action &A, 
+	void *a, void *b, void *ab, INT verbose_level);
+void induced_action_element_invert(action &A, 
+	void *a, void *av, INT verbose_level);
+void induced_action_element_transpose(action &A, 
+	void *a, void *at, INT verbose_level);
+void induced_action_element_move(action &A, 
+	void *a, void *b, INT verbose_level);
+void induced_action_element_dispose(action &A, 
+	INT hdl, INT verbose_level);
+void induced_action_element_print(action &A, 
+	void *elt, ostream &ost);
+void induced_action_element_print_quick(action &A, 
+	void *elt, ostream &ost);
+void induced_action_element_print_latex(action &A, 
+	void *elt, ostream &ost);
+void induced_action_element_print_verbose(action &A, 
+	void *elt, ostream &ost);
+void induced_action_element_code_for_make_element(action &A, 
+	void *elt, INT *data);
+void induced_action_element_print_for_make_element(action &A, 
+	void *elt, ostream &ost);
+void induced_action_element_print_for_make_element_no_commas(
+	action &A, void *elt, ostream &ost);
 void induced_action_print_point(action &A, INT a, ostream &ost);
 
 
-// ####################################################################################
+// #############################################################################
 // interface_matrix_group.C
-// ####################################################################################
+// #############################################################################
 
 
-INT matrix_group_element_image_of(action &A, INT a, void *elt, INT verbose_level);
-void matrix_group_element_image_of_low_level(action &A, INT *input, INT *output, void *elt, INT verbose_level);
-INT matrix_group_element_linear_entry_ij(action &A, void *elt, INT i, INT j, INT verbose_level);
-INT matrix_group_element_linear_entry_frobenius(action &A, void *elt, INT verbose_level);
-void matrix_group_element_one(action &A, void *elt, INT verbose_level);
-INT matrix_group_element_is_one(action &A, void *elt, INT verbose_level);
-void matrix_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_level);
-void matrix_group_element_pack(action &A, void *Elt, void *elt, INT verbose_level);
-void matrix_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_level);
-INT matrix_group_element_store(action &A, void *elt, INT verbose_level);
-void matrix_group_element_mult(action &A, void *a, void *b, void *ab, INT verbose_level);
-void matrix_group_element_invert(action &A, void *a, void *av, INT verbose_level);
-void matrix_group_element_transpose(action &A, void *a, void *at, INT verbose_level);
-void matrix_group_element_move(action &A, void *a, void *b, INT verbose_level);
-void matrix_group_element_dispose(action &A, INT hdl, INT verbose_level);
-void matrix_group_element_print(action &A, void *elt, ostream &ost);
-void matrix_group_element_code_for_make_element(action &A, void *elt, INT *data);
-void matrix_group_element_print_for_make_element(action &A, void *elt, ostream &ost);
-void matrix_group_element_print_for_make_element_no_commas(action &A, void *elt, ostream &ost);
-void matrix_group_element_print_quick(action &A, void *elt, ostream &ost);
-void matrix_group_element_print_latex(action &A, void *elt, ostream &ost);
-void matrix_group_element_print_as_permutation(action &A, void *elt, ostream &ost);
-void matrix_group_element_print_verbose(action &A, void *elt, ostream &ost);
-void matrix_group_elt_print(void *elt, void *data, ostream &ost);
-void matrix_group_print_point(action &A, INT a, ostream &ost);
+INT matrix_group_element_image_of(action &A, INT a, 
+	void *elt, INT verbose_level);
+void matrix_group_element_image_of_low_level(action &A, 
+	INT *input, INT *output, void *elt, INT verbose_level);
+INT matrix_group_element_linear_entry_ij(action &A, 
+	void *elt, INT i, INT j, INT verbose_level);
+INT matrix_group_element_linear_entry_frobenius(action &A, 
+	void *elt, INT verbose_level);
+void matrix_group_element_one(action &A, 
+	void *elt, INT verbose_level);
+INT matrix_group_element_is_one(action &A, 
+	void *elt, INT verbose_level);
+void matrix_group_element_unpack(action &A, 
+	void *elt, void *Elt, INT verbose_level);
+void matrix_group_element_pack(action &A, 
+	void *Elt, void *elt, INT verbose_level);
+void matrix_group_element_retrieve(action &A, 
+	INT hdl, void *elt, INT verbose_level);
+INT matrix_group_element_store(action &A, 
+	void *elt, INT verbose_level);
+void matrix_group_element_mult(action &A, 
+	void *a, void *b, void *ab, INT verbose_level);
+void matrix_group_element_invert(action &A, 
+	void *a, void *av, INT verbose_level);
+void matrix_group_element_transpose(action &A, 
+	void *a, void *at, INT verbose_level);
+void matrix_group_element_move(action &A, 
+	void *a, void *b, INT verbose_level);
+void matrix_group_element_dispose(action &A, 
+	INT hdl, INT verbose_level);
+void matrix_group_element_print(action &A, 
+	void *elt, ostream &ost);
+void matrix_group_element_code_for_make_element(
+	action &A, void *elt, INT *data);
+void matrix_group_element_print_for_make_element(
+	action &A, void *elt, ostream &ost);
+void matrix_group_element_print_for_make_element_no_commas(
+	action &A, void *elt, ostream &ost);
+void matrix_group_element_print_quick(action &A, 
+	void *elt, ostream &ost);
+void matrix_group_element_print_latex(action &A, 
+	void *elt, ostream &ost);
+void matrix_group_element_print_as_permutation(
+	action &A, void *elt, ostream &ost);
+void matrix_group_element_print_verbose(action &A, 
+	void *elt, ostream &ost);
+void matrix_group_elt_print(void *elt, 
+	void *data, ostream &ost);
+void matrix_group_print_point(action &A, 
+	INT a, ostream &ost);
 
 
-// ####################################################################################
+// #############################################################################
 // interface_perm_group.C
-// ####################################################################################
+// #############################################################################
 
-INT perm_group_element_image_of(action &A, INT a, void *elt, INT verbose_level);
-void perm_group_element_one(action &A, void *elt, INT verbose_level);
-INT perm_group_element_is_one(action &A, void *elt, INT verbose_level);
-void perm_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_level);
-void perm_group_element_pack(action &A, void *Elt, void *elt, INT verbose_level);
-void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_level);
-INT perm_group_element_store(action &A, void *elt, INT verbose_level);
-void perm_group_element_mult(action &A, void *a, void *b, void *ab, INT verbose_level);
-void perm_group_element_invert(action &A, void *a, void *av, INT verbose_level);
-void perm_group_element_move(action &A, void *a, void *b, INT verbose_level);
-void perm_group_element_dispose(action &A, INT hdl, INT verbose_level);
-void perm_group_element_print(action &A, void *elt, ostream &ost);
-void perm_group_element_print_latex(action &A, void *elt, ostream &ost);
-void perm_group_element_print_verbose(action &A, void *elt, ostream &ost);
-void perm_group_element_code_for_make_element(action &A, void *elt, INT *data);
-void perm_group_element_print_for_make_element(action &A, void *elt, ostream &ost);
-void perm_group_element_print_for_make_element_no_commas(action &A, void *elt, ostream &ost);
-void perm_group_elt_print(void *elt, void *data, ostream &ost);
+INT perm_group_element_image_of(action &A, INT a, 
+	void *elt, INT verbose_level);
+void perm_group_element_one(action &A, 
+	void *elt, INT verbose_level);
+INT perm_group_element_is_one(action &A, 
+	void *elt, INT verbose_level);
+void perm_group_element_unpack(action &A, 
+	void *elt, void *Elt, INT verbose_level);
+void perm_group_element_pack(action &A, 
+	void *Elt, void *elt, INT verbose_level);
+void perm_group_element_retrieve(action &A, 
+	INT hdl, void *elt, INT verbose_level);
+INT perm_group_element_store(action &A, 
+	void *elt, INT verbose_level);
+void perm_group_element_mult(action &A, 
+	void *a, void *b, void *ab, INT verbose_level);
+void perm_group_element_invert(action &A, 
+	void *a, void *av, INT verbose_level);
+void perm_group_element_move(action &A, 
+	void *a, void *b, INT verbose_level);
+void perm_group_element_dispose(action &A, 
+	INT hdl, INT verbose_level);
+void perm_group_element_print(action &A, 
+	void *elt, ostream &ost);
+void perm_group_element_print_latex(action &A, 
+	void *elt, ostream &ost);
+void perm_group_element_print_verbose(action &A, 
+	void *elt, ostream &ost);
+void perm_group_element_code_for_make_element(action &A, 
+	void *elt, INT *data);
+void perm_group_element_print_for_make_element(action &A, 
+	void *elt, ostream &ost);
+void perm_group_element_print_for_make_element_no_commas(
+	action &A, void *elt, ostream &ost);
+void perm_group_elt_print(void *elt, void *data, 
+	ostream &ost);
 void perm_group_print_point(action &A, INT a, ostream &ost);
 
 
 
-// ####################################################################################
+// #############################################################################
 // union_find.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -2763,9 +3227,9 @@ public:
 	void add_generator(INT *Elt, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // union_find_on_k_subsets.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -2805,9 +3269,9 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // strong_generators.C:
-// ####################################################################################
+// #############################################################################
 
 
 class strong_generators {
@@ -2825,49 +3289,74 @@ public:
 	void init(action *A);
 	void init(action *A, INT verbose_level);
 	void init_from_sims(sims *S, INT verbose_level);
-	void init_from_ascii_coding(action *A, BYTE *ascii_coding, INT verbose_level);
+	void init_from_ascii_coding(action *A, 
+		BYTE *ascii_coding, INT verbose_level);
 	strong_generators *create_copy();
-	void init_copy(strong_generators *S, INT verbose_level);
-	void init_by_hdl(action *A, INT *gen_hdl, INT nb_gen, INT verbose_level);
-	void init_from_permutation_representation(action *A, INT *data, 
+	void init_copy(strong_generators *S, 
+		INT verbose_level);
+	void init_by_hdl(action *A, INT *gen_hdl, 
+		INT nb_gen, INT verbose_level);
+	void init_from_permutation_representation(action *A, 
+		INT *data, 
 		INT nb_elements, INT group_order, 
 		INT verbose_level);
 	void init_from_data(action *A, INT *data, 
-		INT nb_elements, INT elt_size, INT *transversal_length, 
+		INT nb_elements, INT elt_size, 
+		INT *transversal_length, 
 		INT verbose_level);
-	void init_from_data_with_target_go_ascii(action *A, INT *data, 
-		INT nb_elements, INT elt_size, const BYTE *ascii_target_go,
+	void init_from_data_with_target_go_ascii(action *A, 
+		INT *data, 
+		INT nb_elements, INT elt_size, 
+		const BYTE *ascii_target_go,
 		INT verbose_level);
-	void init_from_data_with_target_go(action *A, INT *data_gens, 
-		INT data_gens_size, INT nb_gens, longinteger_object &target_go, 
+	void init_from_data_with_target_go(action *A, 
+		INT *data_gens, 
+		INT data_gens_size, INT nb_gens, 
+		longinteger_object &target_go, 
 		INT verbose_level);
-	void init_point_stabilizer_of_arbitrary_point_through_schreier(schreier *Sch, 
-		INT pt, INT &orbit_idx, longinteger_object &full_group_order, INT verbose_level);
+	void init_point_stabilizer_of_arbitrary_point_through_schreier(
+		schreier *Sch, 
+		INT pt, INT &orbit_idx, 
+		longinteger_object &full_group_order, 
+		INT verbose_level);
 	void init_point_stabilizer_orbit_rep_schreier(schreier *Sch, 
-		INT orbit_idx, longinteger_object &full_group_order, INT verbose_level);
-	void init_generators_for_the_conjugate_group_avGa(strong_generators *SG, INT *Elt_a, INT verbose_level);
-	void init_generators_for_the_conjugate_group_aGav(strong_generators *SG, INT *Elt_a, INT verbose_level);
-	void init_transposed_group(strong_generators *SG, INT verbose_level);
-	void init_group_extension(strong_generators *subgroup, INT *data, INT index, 
+		INT orbit_idx, longinteger_object &full_group_order, 
 		INT verbose_level);
-	void init_group_extension(strong_generators *subgroup, vector_ge *new_gens, INT index, 
+	void init_generators_for_the_conjugate_group_avGa(
+		strong_generators *SG, INT *Elt_a, INT verbose_level);
+	void init_generators_for_the_conjugate_group_aGav(
+		strong_generators *SG, INT *Elt_a, INT verbose_level);
+	void init_transposed_group(strong_generators *SG, 
 		INT verbose_level);
-	void switch_to_subgroup(const BYTE *rank_vector_text, const BYTE *subgroup_order_text, sims *S, 
-		INT *&subgroup_gens_idx, INT &nb_subgroup_gens, INT verbose_level);
-	void init_subgroup(action *A, INT *subgroup_gens_idx, INT nb_subgroup_gens, 
+	void init_group_extension(strong_generators *subgroup, 
+		INT *data, INT index, 
+		INT verbose_level);
+	void init_group_extension(strong_generators *subgroup, 
+		vector_ge *new_gens, INT index, 
+		INT verbose_level);
+	void switch_to_subgroup(const BYTE *rank_vector_text, 
+		const BYTE *subgroup_order_text, sims *S, 
+		INT *&subgroup_gens_idx, INT &nb_subgroup_gens, 
+		INT verbose_level);
+	void init_subgroup(action *A, INT *subgroup_gens_idx, 
+		INT nb_subgroup_gens, 
 		const BYTE *subgroup_order_text, 
 		sims *S, 
 		INT verbose_level);
 	sims *create_sims(INT verbose_level);
-	sims *create_sims_in_different_action(action *A_given, INT verbose_level);
-	void add_generators(vector_ge *coset_reps, INT group_index, INT verbose_level);
-	void add_single_generator(INT *Elt, INT group_index, INT verbose_level);
+	sims *create_sims_in_different_action(action *A_given, 
+		INT verbose_level);
+	void add_generators(vector_ge *coset_reps, 
+		INT group_index, INT verbose_level);
+	void add_single_generator(INT *Elt, 
+		INT group_index, INT verbose_level);
 	void group_order(longinteger_object &go);
 	INT group_order_as_INT();
 	void print_generators();
 	void print_generators_ost(ostream &ost);
 	void print_generators_in_source_code();
-	void print_generators_in_source_code_to_file(const BYTE *fname);
+	void print_generators_in_source_code_to_file(
+	const BYTE *fname);
 	void print_generators_even_odd();
 	void print_generators_MAGMA(action *A, ostream &ost);
 	void print_generators_tex();
@@ -2876,16 +3365,25 @@ public:
 	void print_with_given_action(ostream &ost, action *A2);
 	void print_elements_ost(ostream &ost);
 	void print_elements_latex_ost(ostream &ost);
-	void create_group_table(INT *&Table, INT &go, INT verbose_level);
-	void list_of_elements_of_subgroup(strong_generators *gens_subgroup, 
-		INT *&Subgroup_elements_by_index, INT &sz_subgroup, INT verbose_level);
-	void compute_schreier_with_given_action(action *A_given, schreier *&Sch, INT verbose_level);
-	void compute_schreier_with_given_action_on_a_given_set(action *A_given, 
+	void create_group_table(INT *&Table, INT &go, 
+		INT verbose_level);
+	void list_of_elements_of_subgroup(
+		strong_generators *gens_subgroup, 
+		INT *&Subgroup_elements_by_index, 
+		INT &sz_subgroup, INT verbose_level);
+	void compute_schreier_with_given_action(action *A_given, 
+		schreier *&Sch, INT verbose_level);
+	void compute_schreier_with_given_action_on_a_given_set(
+		action *A_given, 
 		schreier *&Sch, INT *set, INT len, INT verbose_level);
-	void orbits_on_points(INT &nb_orbits, INT *&orbit_reps, INT verbose_level);
-	void orbits_on_points_with_given_action(action *A_given, INT &nb_orbits, INT *&orbit_reps, INT verbose_level);
-	schreier *orbits_on_points_schreier(action *A_given, INT verbose_level);
-	schreier *orbit_of_one_point_schreier(action *A_given, INT pt, INT verbose_level);
+	void orbits_on_points(INT &nb_orbits, INT *&orbit_reps, 
+		INT verbose_level);
+	void orbits_on_points_with_given_action(action *A_given, 
+		INT &nb_orbits, INT *&orbit_reps, INT verbose_level);
+	schreier *orbits_on_points_schreier(action *A_given, 
+		INT verbose_level);
+	schreier *orbit_of_one_point_schreier(action *A_given, 
+		INT pt, INT verbose_level);
 	void orbits_light(action *A_given, 
 		INT *&Orbit_reps, INT *&Orbit_lengths, INT &nb_orbits, 
 		INT **&Pts_per_generator, INT *&Nb_per_generator, 
@@ -2893,17 +3391,23 @@ public:
 	void write_to_memory_object(memory_object *m, INT verbose_level);
 	void read_from_memory_object(memory_object *m, INT verbose_level);
 	void write_to_file_binary(ofstream &fp, INT verbose_level);
-	void read_from_file_binary(action *A, ifstream &fp, INT verbose_level);
+	void read_from_file_binary(action *A, ifstream &fp, 
+		INT verbose_level);
 	void write_file(const BYTE *fname, INT verbose_level);
 	void read_file(action *A, const BYTE *fname, INT verbose_level);
-	void generators_for_shallow_schreier_tree(BYTE *label, vector_ge *chosen_gens, INT verbose_level);
+	void generators_for_shallow_schreier_tree(BYTE *label, 
+		vector_ge *chosen_gens, INT verbose_level);
 	void compute_ascii_coding(BYTE *&ascii_coding, INT verbose_level);
 	void decode_ascii_coding(BYTE *ascii_coding, INT verbose_level);
-	void export_permutation_group_to_magma(const BYTE *fname, INT verbose_level);
-	void compute_and_print_orbits_on_a_given_set(action *A_given, INT *set, INT len, INT verbose_level);
-	void compute_and_print_orbits(action *A_given, INT verbose_level);
+	void export_permutation_group_to_magma(const BYTE *fname, 
+		INT verbose_level);
+	void compute_and_print_orbits_on_a_given_set(action *A_given,
+		INT *set, INT len, INT verbose_level);
+	void compute_and_print_orbits(action *A_given, 
+		INT verbose_level);
 	INT test_if_normalizing(sims *S, INT verbose_level);
-	void test_if_set_is_invariant_under_given_action(action *A_given, INT *set, INT set_sz, INT verbose_level);
+	void test_if_set_is_invariant_under_given_action(action *A_given, 
+		INT *set, INT set_sz, INT verbose_level);
 	strong_generators *point_stabilizer(INT pt, INT verbose_level);
 	void make_element_which_moves_a_point_from_A_to_B(action *A_given, 
 		INT pt_A, INT pt_B, INT *Elt, INT verbose_level);
@@ -2928,15 +3432,21 @@ public:
 		matrix_group *Mtx, INT verbose_level);
 	void generators_for_symplectic_group(action *A, 
 		matrix_group *Mtx, INT verbose_level);
-	void init_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_level);
-	void init_centralizer_of_matrix_general_linear(action *A_projective, action *A_general_linear, INT *Mtx, INT verbose_level);
-	void field_reduction(action *Aq, INT n, INT s, finite_field *Fq, INT verbose_level);
+	void init_centralizer_of_matrix(action *A, INT *Mtx, 
+		INT verbose_level);
+	void init_centralizer_of_matrix_general_linear(action *A_projective, 
+		action *A_general_linear, INT *Mtx, 
+		INT verbose_level);
+	void field_reduction(action *Aq, INT n, INT s, 
+		finite_field *Fq, INT verbose_level);
 	void generators_for_translation_plane_in_andre_model(
 		action *A_PGL_n1_q, action *A_PGL_n_q, 
 		matrix_group *Mtx_n1, matrix_group *Mtx_n, 
-		vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
+		vector_ge *spread_stab_gens, 
+		longinteger_object &spread_stab_go, 
 		INT verbose_level);
-	void generators_for_the_stabilizer_of_two_components(action *A_PGL_n_q, 
+	void generators_for_the_stabilizer_of_two_components(
+		action *A_PGL_n_q, 
 		matrix_group *Mtx, INT verbose_level);
 	void regulus_stabilizer(action *A_PGL_n_q, 
 		matrix_group *Mtx, INT verbose_level);
@@ -2948,35 +3458,44 @@ public:
 		matrix_group *Mtx, INT verbose_level);
 	void generators_for_parabolic_subgroup(action *A_PGL_n_q, 
 		matrix_group *Mtx, INT k, INT verbose_level);
-	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(action *A_PGL_4_q, 
+	void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+		action *A_PGL_4_q, 
 		matrix_group *Mtx, INT verbose_level);
-	void generators_for_stabilizer_of_triangle_in_PGL4(action *A_PGL_4_q, 
+	void generators_for_stabilizer_of_triangle_in_PGL4(
+		action *A_PGL_4_q, 
 		matrix_group *Mtx, INT verbose_level);
 	void generators_for_the_orthogonal_group(action *A, 
 		finite_field *F, INT n, 
 		INT epsilon, 
 		INT f_semilinear, 
 		INT verbose_level);
-	void generators_for_the_stabilizer_of_the_cubic_surface(action *A, 
+	void generators_for_the_stabilizer_of_the_cubic_surface(
+		action *A, 
 		finite_field *F, INT iso, 
 		INT verbose_level);
-	void generators_for_the_stabilizer_of_the_cubic_surface_family_24(action *A, 
+	void generators_for_the_stabilizer_of_the_cubic_surface_family_24(
+		action *A, 
 		finite_field *F, INT f_with_normalizer, INT f_semilinear, 
 		INT verbose_level);
 	void BLT_set_from_catalogue_stabilizer(action *A, 
 		finite_field *F, INT iso, 
 		INT verbose_level);
+	void stabilizer_of_spread_from_catalogue(action *A, 
+		INT q, INT k, INT iso, 
+		INT verbose_level);
 
 
 };
 
-void strong_generators_array_write_file(const BYTE *fname, strong_generators *p, INT nb, INT verbose_level);
-void strong_generators_array_read_from_file(const BYTE *fname, action *A, strong_generators *&p, INT &nb, INT verbose_level);
+void strong_generators_array_write_file(const BYTE *fname, 
+	strong_generators *p, INT nb, INT verbose_level);
+void strong_generators_array_read_from_file(const BYTE *fname, 
+	action *A, strong_generators *&p, INT &nb, INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // linear_group.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -3046,17 +3565,20 @@ public:
 	~linear_group();
 	void null();
 	void freeself();
-	void init(linear_group_description *description, INT verbose_level);
+	void init(linear_group_description *description, 
+		INT verbose_level);
 	void init_PGL2q_OnConic(BYTE *prefix, INT verbose_level);
 	void init_wedge_action(BYTE *prefix, INT verbose_level);
 	void init_monomial_group(BYTE *prefix, INT verbose_level);
 	void init_diagonal_group(BYTE *prefix, INT verbose_level);
-	void init_singer_group(BYTE *prefix, INT singer_power, INT verbose_level);
+	void init_singer_group(BYTE *prefix, INT singer_power, 
+		INT verbose_level);
 	void init_null_polarity_group(BYTE *prefix, INT verbose_level);
 	void init_borel_subgroup_upper(BYTE *prefix, INT verbose_level);
 	void init_identity_subgroup(BYTE *prefix, INT verbose_level);
 	void init_symplectic_group(BYTE *prefix, INT verbose_level);
-	void init_subfield_structure_action(BYTE *prefix, INT s, INT verbose_level);
+	void init_subfield_structure_action(BYTE *prefix, INT s, 
+		INT verbose_level);
 	void init_orthogonal_group(BYTE *prefix, 
 		INT epsilon, INT verbose_level);
 	void init_subgroup_from_file(BYTE *prefix, 
@@ -3064,9 +3586,9 @@ public:
 		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // set_and_stabilizer.C:
-// ####################################################################################
+// #############################################################################
 
 class set_and_stabilizer {
 
@@ -3101,19 +3623,22 @@ public:
 	void apply_to_self(INT *Elt, INT verbose_level);
 	void apply_to_self_inverse(INT *Elt, INT verbose_level);
 	void apply_to_self_element_raw(INT *Elt_data, INT verbose_level);
-	void apply_to_self_inverse_element_raw(INT *Elt_data, INT verbose_level);
-	void rearrange_by_orbits(INT *&orbit_first, INT *&orbit_length, INT *&orbit, 
+	void apply_to_self_inverse_element_raw(INT *Elt_data, 
+		INT verbose_level);
+	void rearrange_by_orbits(INT *&orbit_first, 
+		INT *&orbit_length, INT *&orbit, 
 		INT &nb_orbits, INT verbose_level);
 	action *create_restricted_action_on_the_set(INT verbose_level);
 	void print_restricted_action_on_the_set(INT verbose_level);
 	void test_if_group_acts(INT verbose_level);
 	
-	void init_surface(surface *Surf, action *A, action *A2, INT q, INT no, INT verbose_level);
+	void init_surface(surface *Surf, action *A, action *A2, 
+		INT q, INT no, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // subgroup.C:
-// ####################################################################################
+// #############################################################################
 
 class subgroup {
 public:
@@ -3133,9 +3658,9 @@ public:
 
 };
 
-// ####################################################################################
+// #############################################################################
 // orbit_transversal.C:
-// ####################################################################################
+// #############################################################################
 
 class orbit_transversal {
 
@@ -3150,12 +3675,13 @@ public:
 	~orbit_transversal();
 	void null();
 	void freeself();
-	void read_from_file(action *A, action *A2, const BYTE *fname, INT verbose_level);
+	void read_from_file(action *A, action *A2, 
+		const BYTE *fname, INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // projective_space_with_action.C:
-// ####################################################################################
+// #############################################################################
 
 
 class projective_space_with_action {
@@ -3189,13 +3715,18 @@ public:
 	strong_generators *set_stabilizer(
 		INT *set, INT set_size, INT &canonical_pt, 
 		INT *canonical_set_or_NULL, 
-		INT f_save_incma_in_and_out, const BYTE *save_incma_in_and_out_prefix, 
-		INT f_compute_canonical_form, UBYTE *&canonical_form, INT &canonical_form_len, 
+		INT f_save_incma_in_and_out, 
+		const BYTE *save_incma_in_and_out_prefix, 
+		INT f_compute_canonical_form, 
+		UBYTE *&canonical_form, INT &canonical_form_len, 
 		INT verbose_level);
 	strong_generators *set_stabilizer_of_object(
 		object_in_projective_space *OiP, 
-		INT f_save_incma_in_and_out, const BYTE *save_incma_in_and_out_prefix, 
-		INT f_compute_canonical_form, UBYTE *&canonical_form, INT &canonical_form_len, 
+		INT f_save_incma_in_and_out, 
+		const BYTE *save_incma_in_and_out_prefix, 
+		INT f_compute_canonical_form, 
+		UBYTE *&canonical_form, 
+		INT &canonical_form_len, 
 		INT verbose_level);
 	void report_fixed_objects_in_PG_3_tex(
 		INT *Elt, ostream &ost, 

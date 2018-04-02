@@ -27,7 +27,8 @@ public:
 	//INT f_lex;
 	INT f_debug;
 	INT f_has_extra_test_func;
-	INT (*extra_test_func)(void *, INT len, INT *S, void *extra_test_func_data, INT verbose_level);
+	INT (*extra_test_func)(void *, INT len, INT *S, 
+		void *extra_test_func_data, INT verbose_level);
 	void *extra_test_func_data;
 	INT *Basis; // [depth * vector_space_dimension]
 	INT *base_cols;
@@ -51,7 +52,7 @@ public:
 	INT f_identify;
 	INT k;
 	INT order;
-	translation_plane *T;
+	spread *T;
 	
 
 
@@ -70,12 +71,14 @@ public:
 	void null();
 	void freeself();
 	void init(int argc, const char **argv, 
-		INT s, INT n, INT q, const BYTE *poly_q, const BYTE *poly_Q, 
+		INT s, INT n, INT q, 
+		const BYTE *poly_q, const BYTE *poly_Q, 
 		INT depth, INT f_identify, INT verbose_level);
 	void do_classify(INT verbose_level);
 	INT test_set(INT len, INT *S, INT verbose_level);
 	void compute_intersection_types_at_level(INT level, 
-		INT &nb_nodes, INT *&Intersection_dimensions, INT verbose_level);
+		INT &nb_nodes, INT *&Intersection_dimensions, 
+		INT verbose_level);
 	void calculate_intersections(INT depth, INT verbose_level);
 	void read_data_file(INT depth, INT verbose_level);
 	void print_orbits_at_level(INT level);

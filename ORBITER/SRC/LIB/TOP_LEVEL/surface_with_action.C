@@ -571,8 +571,8 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify before SOA->init" << endl;
 		}
-	if (!SOA->init_equation(this, AL->the_equation, /* New_clebsch->SO, */
-		AL->Aut_gens /* New_clebsch->SaS->Strong_gens*/, verbose_level)) {
+	if (!SOA->init_equation(this, AL->the_equation, 
+		AL->Aut_gens, verbose_level)) {
 		cout << "surface_with_action::arc_lifting_and_classify the surface does not have 27 lines" << endl;
 		exit(1);
 		}
@@ -732,10 +732,16 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 			cout << "double six = " << ds << " row = " << ds_row << endl;
 			}
 
-		Surf->prepare_clebsch_map(ds, ds_row, line1, line2, transversal, 0 /*verbose_level*/);
+		if (f_v) {
+			cout << "surface_with_action::arc_lifting_and_classify before Surf->prepare_clebsch_map" << endl;
+			}
+		Surf->prepare_clebsch_map(ds, ds_row, line1, line2, transversal, verbose_level);
+		if (f_v) {
+			cout << "surface_with_action::arc_lifting_and_classify after Surf->prepare_clebsch_map" << endl;
+			}
 
 		if (f_v) {
-			cout << "line1=" << line1 
+			cout << "surface_with_action::arc_lifting_and_classify line1=" << line1 
 				<< " = " << Surf->Line_label_tex[line1] 
 				<< " line2=" << line2 
 				<< " = " << Surf->Line_label_tex[line2] 
@@ -764,17 +770,17 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		plane_rk = SOA->SO->choose_tritangent_plane(line1, line2, transversal, 0 /* verbose_level */);
 
 		//plane_rk_global = New_clebsch->Unitangent_planes[plane_rk];
-		plane_rk_global = SOA->SO->Tritangent_planes[plane_rk];
+		plane_rk_global = SOA->SO->Tritangent_planes[SOA->SO->Eckardt_to_Tritangent_plane[plane_rk]];
 
 		if (f_v) {
-			cout << "transversal = " << transversal 
+			cout << "surface_with_action::arc_lifting_and_classify transversal = " << transversal 
 				<< " = " << Surf->Line_label_tex[transversal] 
 				<< endl;
 			cout << "plane_rk = " << plane_rk << " = " << plane_rk_global << endl;
 			}
 		if (f_log_fp) {
-			fp << "transversal = " << transversal << " = " << Surf->Line_label_tex[transversal] << "\\\\" << endl;
-			fp << "plane\\_rk = \\pi_{" << plane_rk << "} = \\pi_{" << Surf->Eckard_point_label_tex[plane_rk] << "} = " << plane_rk_global << "\\\\" << endl;
+			fp << "transversal = " << transversal << " = $" << Surf->Line_label_tex[transversal] << "$\\\\" << endl;
+			fp << "plane\\_rk = $\\pi_{" << plane_rk << "} = \\pi_{" << Surf->Eckard_point_label_tex[plane_rk] << "} = " << plane_rk_global << "$\\\\" << endl;
 
 
 			fp << "The plane is:" << endl;
@@ -783,7 +789,7 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 
 		
 		if (f_v) {
-			cout << "intersecting blow up lines with plane:" << endl;
+			cout << "surface_with_action::arc_lifting_and_classify intersecting blow up lines with plane:" << endl;
 			}
 		INT intersection_points[6];
 		//INT intersection_points_local[6];
@@ -799,18 +805,54 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 
 		if (f_v) {
 			INT_matrix_print(Plane, 3, 4);
-			cout << "base_cols: ";
+			cout << "surface_with_action::arc_lifting_and_classify base_cols: ";
 			INT_vec_print(cout, base_cols, 3);
 			cout << endl;
 			}
 
+
+		if (f_v) {
+			cout << "surface_with_action::arc_lifting_and_classify Lines with points on them:" << endl;
+			SOA->SO->print_lines_with_points_on_them(cout);
+			cout << "The half double six is no " << k << "$ = " << Surf->Half_double_six_label_tex[k] << "$ : $";
+			INT_vec_print(cout, Surf->Half_double_sixes + k * 6, 6);
+			cout << " = \\{" << endl;
+			for (h = 0; h < 6; h++) {
+				cout << Surf->Line_label_tex[Surf->Half_double_sixes[k * 6 + h]];
+				if (h < 6 - 1) {
+					cout << ", ";
+					}
+				}
+			cout << "\\}$\\\\" << endl;
+			}
+
 		for (u = 0; u < 6; u++) {
+
+			if (f_v) {
+				cout << "surface_with_action::arc_lifting_and_classify u=" << u << " / 6" << endl;
+				}
 			a = SOA->SO->Lines[Surf->Half_double_sixes[k * 6 + u]];
+			if (f_v) {
+				cout << "surface_with_action::arc_lifting_and_classify intersecting line " << a << " and plane " << plane_rk_global << endl;
+				}
 			intersection_points[u] = Surf->P->point_of_intersection_of_a_line_and_a_plane_in_three_space(a, plane_rk_global, 0 /* verbose_level */);
+			if (f_v) {
+				cout << "surface_with_action::arc_lifting_and_classify intersection point " << intersection_points[u] << endl;
+				}
 			Surf->P->unrank_point(v, intersection_points[u]);
+			if (f_v) {
+				cout << "surface_with_action::arc_lifting_and_classify which is ";
+				INT_vec_print(cout, v, 4);
+				cout << endl;
+				}
 			F->reduce_mod_subspace_and_get_coefficient_vector(
 				3, 4, Plane, base_cols, 
 				v, coefficients, 0 /* verbose_level */);
+			if (f_v) {
+				cout << "surface_with_action::arc_lifting_and_classify local coefficients ";
+				INT_vec_print(cout, coefficients, 3);
+				cout << endl;
+				}
 			//intersection_points_local[u] = Surf->P2->rank_point(coefficients);
 			}
 
@@ -824,11 +866,11 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 			exit(1);
 			}
 		if (f_log_fp) {
-			fp << "Clebsch map for lines " << line1 
+			fp << "Clebsch map for lines $" << line1 
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
 				<< line2 << " = " 
 				<< Surf->Line_label_tex[line2] 
-				<< "\\\\" << endl;
+				<< "$\\\\" << endl;
 
 			SOA->SO->clebsch_map_latex(fp, Clebsch_map, Clebsch_coeff);
 			}
@@ -870,12 +912,12 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 
 
 		if (f_log_fp) {
-			fp << "Clebsch map for lines " << line1 
+			fp << "Clebsch map for lines $" << line1 
 				<< " = " << Surf->Line_label_tex[line1] << ", " 
 				<< line2 << " = " << Surf->Line_label_tex[line2] 
-				<< " yields arc = ";
-			INT_vec_print(fp, Arc, 6);
-			fp << " : blown up lines = ";
+				<< "$ yields arc = $";
+			INT_set_print_tex(fp, Arc, 6);
+			fp << "$ : blown up lines = ";
 			INT_vec_print(fp, Blown_up_lines, 6);
 			fp << "\\\\" << endl;
 

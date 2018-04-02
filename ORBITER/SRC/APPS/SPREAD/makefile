@@ -12,16 +12,18 @@ LFLAGS = -lm
 
 
 
-MODULES =  \
-	extending.o \
 
 
-all: translation_plane_main.out 
+all: spread_classify.out \
+	spread_create.out
 
 
 
-translation_plane_main.out: translation_plane_main.o $(MODULES) ;
-	$(DISCRETA_CPP) translation_plane_main.o $(MODULES) $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+spread_classify.out: spread_classify.o  ;
+	$(DISCRETA_CPP) spread_classify.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+spread_create.out: spread_create.o ;
+	$(DISCRETA_CPP) spread_create.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 %.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 

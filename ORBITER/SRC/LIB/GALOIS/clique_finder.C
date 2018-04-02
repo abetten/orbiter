@@ -495,7 +495,7 @@ void clique_finder::log_choice(INT depth)
 
 	cout << "choice ";
 	for (i = 0; i < depth; i++) {
-		cout << i << ": " << current_choice[i] << "/" << nb_candidates[i];
+		cout << i << ": " << current_choice[i] << "/" << nb_candidates[i] << "(" << nb_points[i] << ")";
 		if (i < depth - 1)
 			cout << ", ";
 		}

@@ -6,56 +6,91 @@
 //
 // based on global.h, which was taken from reader.h: 3/22/09
 
-typedef class representatives representatives; // added 7/3/12
-typedef class isomorph isomorph; // added 3/22/09
-typedef class search_blocking_set search_blocking_set; // added Nov 2, 2010
-typedef class choose_points_or_lines choose_points_or_lines; // added Nov 29, 2010
-typedef class subspace_orbits subspace_orbits; // added March 29, 2012 (started Jan 25, 2010)
+typedef class representatives representatives;
+	// added 7/3/12
+typedef class isomorph isomorph;
+	// added 3/22/09
+typedef class search_blocking_set search_blocking_set;
+	// added Nov 2, 2010
+typedef class choose_points_or_lines choose_points_or_lines;
+	// added Nov 29, 2010
+typedef class subspace_orbits subspace_orbits;
+	// added March 29, 2012 (started Jan 25, 2010)
 typedef struct factor_group factor_group;
 typedef class orbit_rep orbit_rep;
-typedef class orbit_of_sets orbit_of_sets; // added March 27, 2013
-typedef class singer_cycle singer_cycle; // added March 27, 2013
-typedef class exact_cover exact_cover; // added April 30, 2013
-typedef class recoordinatize recoordinatize; // added November 2, 2013
-typedef class translation_plane translation_plane; // added November 2, 2013
+typedef class orbit_of_sets orbit_of_sets;
+	// added March 27, 2013
+typedef class singer_cycle singer_cycle;
+	// added March 27, 2013
+typedef class exact_cover exact_cover;
+	// added April 30, 2013
+typedef class recoordinatize recoordinatize;
+	// added November 2, 2013
+typedef class spread spread;
+	// added November 2, 2013
 typedef class polar polar;
-typedef class orbit_of_subspaces orbit_of_subspaces; // added April 10, 2014
-typedef class young young; // added March 16, 2015
-typedef class exact_cover_arguments exact_cover_arguments; // added January 12, 2016
-typedef class translation_plane_via_andre_model translation_plane_via_andre_model; // added January 25, 2016
-typedef class isomorph_arguments isomorph_arguments; // added January 27, 2016
+typedef class orbit_of_subspaces orbit_of_subspaces;
+	// added April 10, 2014
+typedef class young young;
+	// added March 16, 2015
+typedef class exact_cover_arguments exact_cover_arguments;
+	// added January 12, 2016
+typedef class translation_plane_via_andre_model 
+	translation_plane_via_andre_model;
+	// added January 25, 2016
+typedef class isomorph_arguments isomorph_arguments;
+	// added January 27, 2016
 typedef struct isomorph_worker_data isomorph_worker_data;
-typedef class elliptic_curve elliptic_curve; // added November 19, 2014
-//typedef class surface_classify surface_classify; // added August 28, 2016
-typedef class surface_classify_wedge surface_classify_wedge; // added September 2, 2016
-//typedef class surface_data surface_data; // added August 30, 2016
-//typedef surface_data *p_surface_data;
-typedef class arc_generator arc_generator; // moved here February 23, 2017
-typedef class surface_with_action surface_with_action; // added March 22, 2017
-typedef class surface_object_with_action surface_object_with_action; // added October 4, 2017
-typedef class classify_trihedral_pairs classify_trihedral_pairs; // added October 9, 2017
-typedef class classify_double_sixes classify_double_sixes; // added October 10, 2017
-typedef class object_in_projective_space_with_action object_in_projective_space_with_action; // added December 30, 2017
-typedef class surface_create_description surface_create_description; // added January 14, 2018
-typedef class surface_create surface_create; // added January 14, 2018
-typedef class arc_lifting arc_lifting; // added January 14, 2018
-typedef class six_arcs_not_on_a_conic six_arcs_not_on_a_conic; // added March 6, 2018
-typedef class BLT_set_create_description BLT_set_create_description; // added March 17, 2018
-typedef class BLT_set_create BLT_set_create; // added March 17, 2018
+typedef class elliptic_curve elliptic_curve;
+	// added November 19, 2014
+typedef class surface_classify_wedge surface_classify_wedge;
+	// added September 2, 2016
+typedef class arc_generator arc_generator;
+	// moved here February 23, 2017
+typedef class surface_with_action surface_with_action;
+	// added March 22, 2017
+typedef class surface_object_with_action surface_object_with_action;
+	// added October 4, 2017
+typedef class classify_trihedral_pairs classify_trihedral_pairs;
+	// added October 9, 2017
+typedef class classify_double_sixes classify_double_sixes;
+	// added October 10, 2017
+typedef class object_in_projective_space_with_action 
+	object_in_projective_space_with_action;
+	// added December 30, 2017
+typedef class surface_create_description surface_create_description;
+	// added January 14, 2018
+typedef class surface_create surface_create;
+	// added January 14, 2018
+typedef class arc_lifting arc_lifting;
+	// added January 14, 2018
+typedef class six_arcs_not_on_a_conic six_arcs_not_on_a_conic;
+	// added March 6, 2018
+typedef class BLT_set_create_description BLT_set_create_description;
+	// added March 17, 2018
+typedef class BLT_set_create BLT_set_create;
+	// added March 17, 2018
+typedef class spread_create_description spread_create_description;
+	// added March 22, 2018
+typedef class spread_create spread_create;
+	// added March 22, 2018
+typedef class spread_lifting spread_lifting;
+	// added April 1, 2018
 
 
-// ####################################################################################
+
+// #############################################################################
 // top_level_global.C
-// ####################################################################################
+// #############################################################################
 
 
 INT callback_partial_ovoid_test(INT len, INT *S, void *data, INT verbose_level);
 
 
 
-// ####################################################################################
+// #############################################################################
 // representatives.C
-// ####################################################################################
+// #############################################################################
 
 class representatives {
 public:
@@ -120,13 +155,13 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // isomorph.C
 // isomorph_testing.C
 // isomorph_database.C
 // isomorph_trace.C
 // isomorph_files.C
-// ####################################################################################
+// #############################################################################
 
 
 class isomorph {
@@ -171,10 +206,12 @@ public:
 
 	
 	INT *solution_first;
-		// [nb_starter + 1] the beginning of solutions belonging to a given starter
+		// [nb_starter + 1] the beginning of solutions 
+		// belonging to a given starter
 		// previously called case_first
 	INT *solution_len;
-		// [nb_starter + 1] the number of solutions belonging to a given starter
+		// [nb_starter + 1] the number of solutions 
+		// belonging to a given starter
 		// previously called case_len
 
 
@@ -184,12 +221,14 @@ public:
 		// isomorph::count_solutions_from_clique_finder
 		// isomorph::count_solutions
 
-		// they are written to file in isomorph::write_solution_first_and_len()
+		// they are written to file in 
+		// isomorph::write_solution_first_and_len()
 
 
 
 	INT *starter_number;
-		// [N]  starter_number[i] = j means that solution i belongs to starter j
+		// [N]  starter_number[i] = j means that 
+		// solution i belongs to starter j
 		// previously called case_number
 
 
@@ -223,10 +262,13 @@ public:
 
 	INT nb_orbits;
 		// Number of flag orbits.
-		// Overall number of orbits of stabilizers of starters on the solutions
+		// Overall number of orbits of stabilizers 
+		// of starters on the solutions
 		// computed in orbits_of_stabilizer, 
-		// which in turn calls orbits_of_stabilizer_case for each starter
-		// orbits_of_stabilizer_case takes the strong generators from the 
+		// which in turn calls orbits_of_stabilizer_case 
+		// for each starter
+		// orbits_of_stabilizer_case takes the 
+		// strong generators from the 
 		// generator data structure
 		// For computing the orbits, induced_action_on_sets
 		// is used to establish an action on sets.
@@ -239,7 +281,8 @@ public:
 
 	INT *orbit_fst;
 		// [nb_orbits + 1]
-		// orbit_fst[i] is the beginning of solutions associated to the i-th flag orbit 
+		// orbit_fst[i] is the beginning of solutions 
+		// associated to the i-th flag orbit 
 		// in the sorted list of solutions
 		// allocated in isomorph::read_orbit_data()
 
@@ -251,16 +294,19 @@ public:
 
 	INT *orbit_number;
 		// [N]
-		// orbit_number[i] is the flag orbit containing the i-th solution 
+		// orbit_number[i] is the flag orbit 
+		// containing the i-th solution 
 		// in the original labeling
 		// allocated in isomorph::read_orbit_data()
 
  
 	INT *orbit_perm;
 		// [N]
-		// orbit_perm[i] is the original label of the i-th solution in the ordered list
+		// orbit_perm[i] is the original label 
+		// of the i-th solution in the ordered list
 		// we often see id = orbit_perm[orbit_fst[orbit_no]];
-		// this is the index of the first solution associated to flag orbit orbit_no, for instance
+		// this is the index of the first solution 
+		// associated to flag orbit orbit_no, for instance
 		// allocated in isomorph::read_orbit_data()
 
 	INT *orbit_perm_inv;
@@ -278,10 +324,12 @@ public:
 	// added Dec 25, 2012:
 	// computed in isomorph.C isomorph::orbits_of_stabilizer
 	// these variables are not used ?? (Oct 30, 2014)
-	// They are used, for instance in isomorph_testing.C isomorph::write_classification_graph (May 3, 2015)
+	// They are used, for instance in isomorph_testing.C 
+	// isomorph::write_classification_graph (May 3, 2015)
 	INT *starter_orbit_fst;
 		// [nb_starter + 1]
-		// the beginning of flag orbits belonging to a given starter
+		// the beginning of flag orbits 
+		// belonging to a given starter
 	INT *starter_nb_orbits;
 		// [nb_starter]
 		// the number of flag orbits belonging to a given starter
@@ -323,7 +371,8 @@ public:
 	longinteger_object stabilizer_group_order;
 
 	INT stabilizer_nb_generators;
-	INT **stabilizer_generators; // INT[stabilizer_nb_generators][size]
+	INT **stabilizer_generators;
+		// INT[stabilizer_nb_generators][size]
 
 
 	INT *stabilizer_orbit;
@@ -365,8 +414,6 @@ public:
 	BYTE fname_ge2[1000];
 	FILE *fp_ge1, *fp_ge2;
 	Vector *v;
-	//INT first_node;
-	//database *D;
 	database *DB_sol;
 	INT *id_to_datref;
 	INT *id_to_hash;
@@ -382,7 +429,8 @@ public:
 	sims *stabilizer_recreated;
 	
 
-	void (*print_set_function)(isomorph *Iso, INT iso_cnt, sims *Stab, schreier &Orb, 
+	void (*print_set_function)(isomorph *Iso, 
+		INT iso_cnt, sims *Stab, schreier &Orb, 
 		INT *data, void *print_set_data, INT verbose_level);
 	void *print_set_data;
 	
@@ -403,23 +451,25 @@ public:
 		INT size, INT level, 
 		INT f_use_database_for_starter, 
 		INT f_implicit_fusion, INT verbose_level);
-	void init_solution(INT verbose_level); // previously init_cases
+	void init_solution(INT verbose_level);
 	void load_table_of_solutions(INT verbose_level);
-	void init_starter_number(INT verbose_level); // previously init_case_number
+	void init_starter_number(INT verbose_level);
 	void list_solutions_by_starter();
 	void list_solutions_by_orbit();
 	void orbits_of_stabilizer(INT verbose_level);
-	void orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verbose_level);
+	void orbits_of_stabilizer_case(INT the_case, 
+		vector_ge &gens, INT verbose_level);
 	void orbit_representative(INT i, INT &i0, 
 		INT &orbit, INT *transporter, INT verbose_level);
-	// slow because it calls load_strong_generators
+		// slow because it calls load_strong_generators
 	void test_orbit_representative(INT verbose_level);
 	void test_identify_solution(INT verbose_level);
 	void compute_stabilizer(sims *&Stab, INT verbose_level);
 	void test_compute_stabilizer(INT verbose_level);
 	void test_memory();
 	void test_edges(INT verbose_level);
-	INT test_edge(INT n1, INT *subset1, INT *transporter, INT verbose_level);
+	INT test_edge(INT n1, INT *subset1, 
+		INT *transporter, INT verbose_level);
 #if 0
 	void read_data_file(INT f_recompute_schreier, INT verbose_level);
 	// Reads the data for starters.
@@ -432,26 +482,32 @@ public:
 #endif
 	void read_data_files_for_starter(INT level, 
 		const BYTE *prefix, INT verbose_level);
-		// Calls gen->read_level_file_binary for all levels i from 0 to level
+		// Calls gen->read_level_file_binary 
+		// for all levels i from 0 to level
 		// Uses letter a files for i from 0 to level - 1
 		// and letter b file for i = level.
-		// If gen->f_starter is TRUE, we start from i = gen->starter_size instead.
+		// If gen->f_starter is TRUE, 
+		// we start from i = gen->starter_size instead.
 		// Finally, it computes nb_starter.
 	void compute_nb_starter(INT level, INT verbose_level);
 	void print_node_local(INT level, INT node_local);
 	void print_node_global(INT level, INT node_global);
 	void test_hash(INT verbose_level);
-	void compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_object *&Ago_induced, INT verbose_level);
+	void compute_Ago_Ago_induced(longinteger_object *&Ago, 
+		longinteger_object *&Ago_induced, INT verbose_level);
 	void init_high_level(action *A, generator *gen, 
-		INT size, BYTE *prefix_classify, BYTE *prefix, INT level, INT verbose_level);
+		INT size, BYTE *prefix_classify, BYTE *prefix, 
+		INT level, INT verbose_level);
 	
 
 
 	// isomorph_testing.C:
 	void iso_test_init(INT verbose_level);
 	void iso_test_init2(INT verbose_level);
-	void probe(INT flag_orbit, INT subset_rk, INT f_implicit_fusion, INT verbose_level);
-	void isomorph_testing(INT t0, INT f_play_back, const BYTE *play_back_file_name, 
+	void probe(INT flag_orbit, INT subset_rk, 
+		INT f_implicit_fusion, INT verbose_level);
+	void isomorph_testing(INT t0, INT f_play_back, 
+		const BYTE *play_back_file_name, 
 		INT f_implicit_fusion, INT print_mod, INT verbose_level);
 	void write_classification_matrix(INT verbose_level);
 	void write_classification_graph(INT verbose_level);
@@ -470,14 +526,19 @@ public:
 	INT is_minimal(INT verbose_level);
 	void stabilizer_action_exit();
 	void stabilizer_action_init(INT verbose_level);
-		// Computes the permutations of the set that are induced by the 
+		// Computes the permutations of the set 
+		// that are induced by the 
 		// generators for the stabilizer in AA
 	void stabilizer_action_add_generator(INT *Elt, INT verbose_level);
 	void print_statistics_iso_test(INT t0, sims *Stab);
-	INT identify(INT *set, INT f_implicit_fusion, INT verbose_level);
-	INT identify_database_is_open(INT *set, INT f_implicit_fusion, INT verbose_level);
-	void induced_action_on_set_basic(sims *S, INT *set, INT verbose_level);
-	void induced_action_on_set(sims *S, INT *set, INT verbose_level);
+	INT identify(INT *set, INT f_implicit_fusion, 
+		INT verbose_level);
+	INT identify_database_is_open(INT *set, 
+		INT f_implicit_fusion, INT verbose_level);
+	void induced_action_on_set_basic(sims *S, 
+		INT *set, INT verbose_level);
+	void induced_action_on_set(sims *S, 
+		INT *set, INT verbose_level);
 	// Called by do_iso_test and print_isomorphism_types
 	// Creates the induced action on the set from the given action.
 	// The given action is gen->A2
@@ -486,7 +547,8 @@ public:
 	// Allocates a new union_find data structure and initializes it 
 	// using the generators in S.
 	// Calls action::induced_action_by_restriction()
-	INT handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_level);
+	INT handle_automorphism(INT *set, 
+		sims *Stab, INT *Elt, INT verbose_level);
 
 	// isomorph_database.C:
 	void setup_and_open_solution_database(INT verbose_level);
@@ -509,11 +571,14 @@ public:
 		// We assume that the starter is of size 5 and that 
 		// fields 3-8 are the starter
 	void add_solution_to_database(INT *data, 
-		INT nb, INT id, INT no, INT nb_solutions, INT h, UINT4 &datref, 
+		INT nb, INT id, INT no, 
+		INT nb_solutions, INT h, UINT4 &datref, 
 		INT print_mod, INT verbose_level);
 	void load_solution(INT id, INT *data);
-	void load_solution_by_btree(INT btree_idx, INT idx, INT &id, INT *data);
-	INT find_extension_easy(INT *set, INT case_nb, INT &idx, INT verbose_level);
+	void load_solution_by_btree(INT btree_idx, 
+		INT idx, INT &id, INT *data);
+	INT find_extension_easy(INT *set, 
+		INT case_nb, INT &idx, INT verbose_level);
 		// returns TRUE if found, FALSE otherwise
 		// Called from identify_solution
 		// Linear search through all solutions at a given starter.
@@ -523,99 +588,145 @@ public:
 		INT first, INT len, INT &idx, 
 		INT f_btree_idx, INT btree_idx, 
 		INT f_through_hash, INT verbose_level);
-	INT find_extension_easy_old(INT *set, INT case_nb, INT &idx, INT verbose_level);
-	INT find_extension_easy_new(INT *set, INT case_nb, INT &idx, INT verbose_level);
-	INT open_database_and_identify_object(INT *set, INT *transporter, 
+	INT find_extension_easy_old(INT *set, 
+		INT case_nb, INT &idx, INT verbose_level);
+	INT find_extension_easy_new(INT *set, 
+		INT case_nb, INT &idx, INT verbose_level);
+	INT open_database_and_identify_object(INT *set, 
+		INT *transporter, 
 		INT f_implicit_fusion, INT verbose_level);
-	void init_DB_level(database &D, INT level, INT verbose_level);
+	void init_DB_level(database &D, INT level, 
+		INT verbose_level);
 	void create_level_database(INT level, INT verbose_level);
-	void load_strong_generators(INT cur_level, INT cur_node_local, 
-		vector_ge &gens, longinteger_object &go, INT verbose_level);
-		// Called from compute_stabilizer and from orbit_representative
-	void load_strong_generators_oracle(INT cur_level, INT cur_node_local, 
-		vector_ge &gens, longinteger_object &go, INT verbose_level);
-	void load_strong_generators_database(INT cur_level, INT cur_node_local, 
-		vector_ge &gens, longinteger_object &go, INT verbose_level);
-		// Reads node cur_node_local (local index) from database D through btree 0
+	void load_strong_generators(INT cur_level, 
+		INT cur_node_local, 
+		vector_ge &gens, longinteger_object &go, 
+		INT verbose_level);
+		// Called from compute_stabilizer and 
+		// from orbit_representative
+	void load_strong_generators_oracle(INT cur_level, 
+		INT cur_node_local, 
+		vector_ge &gens, longinteger_object &go, 
+		INT verbose_level);
+	void load_strong_generators_database(INT cur_level, 
+		INT cur_node_local, 
+		vector_ge &gens, longinteger_object &go, 
+		INT verbose_level);
+		// Reads node cur_node_local (local index) 
+		// from database D through btree 0
 		// Reads generators from file fp_ge
 
 	// isomorph_trace.C:
 	INT identify_solution_relaxed(INT *set, INT *transporter, 
-		INT f_implicit_fusion, INT &orbit_no, INT &f_failure_to_find_point, INT verbose_level);
+		INT f_implicit_fusion, INT &orbit_no, 
+		INT &f_failure_to_find_point, 
+		INT verbose_level);
 	// returns the orbit number corresponding to 
 	// the canonical version of set and the extension.
 	// Calls trace_set and find_extension_easy.
 	// Called from process_rearranged_set
 	INT identify_solution(INT *set, INT *transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
+		INT f_implicit_fusion, INT &f_failure_to_find_point, 
+		INT verbose_level);
 		// returns the orbit number corresponding to 
 		// the canonical version of set and the extension.
 		// Calls trace_set and find_extension_easy.
 		// If needed, calls make_set_smaller
 	INT trace_set(INT *canonical_set, INT *transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
-		// returns the case number of the canonical set (local orbit number)
+		INT f_implicit_fusion, INT &f_failure_to_find_point, 
+		INT verbose_level);
+		// returns the case number of the canonical set 
+		// (local orbit number)
 		// Called from identify_solution and identify_solution_relaxed
 		// calls trace_set_recursion
 	void make_set_smaller(INT case_nb_local, 
 		INT *set, INT *transporter, INT verbose_level);
-	// Called from identify_solution.
-	// The goal is to produce a set that is lexicographically 
-	// smaller than the current starter.
-	// To do this, we find an element that is less than 
-	// the largest element in the current starter.
-	// There are two ways to find such an element.
-	// Either, the set already contains such an element, 
-	// or one can produce such an element by applying an element in the 
-	// stabilizer of the current starter.
-	INT trace_set_recursion(INT cur_level, INT cur_node_global, 
+		// Called from identify_solution.
+		// The goal is to produce a set that is lexicographically 
+		// smaller than the current starter.
+		// To do this, we find an element that is less than 
+		// the largest element in the current starter.
+		// There are two ways to find such an element.
+		// Either, the set already contains such an element, 
+		// or one can produce such an element 
+		// by applying an element in the 
+		// stabilizer of the current starter.
+	INT trace_set_recursion(INT cur_level, 
+		INT cur_node_global, 
 		INT *canonical_set, INT *transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
+		INT f_implicit_fusion, 
+		INT &f_failure_to_find_point, INT verbose_level);
 		// returns the node in the generator that corresponds 
 		// to the canonical_set.
 		// Called from trace_set.
 		// Calls trace_next_point and handle_extension.
-	INT trace_next_point(INT cur_level, INT cur_node_global, 
+	INT trace_next_point(INT cur_level, 
+		INT cur_node_global, 
 		INT *canonical_set, INT *transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
+		INT f_implicit_fusion, 
+		INT &f_failure_to_find_point, INT verbose_level);
 		// Called from trace_set_recursion
 		// Calls oracle::trace_next_point_in_place 
 		// and (possibly) trace_next_point_database
 		// Returns FALSE is the set becomes lexicographically smaller
-	INT trace_next_point_database(INT cur_level, INT cur_node_global, 
-		INT *canonical_set, INT *Elt_transporter, INT verbose_level);
-		// Returns FALSE is the set becomes lexicographically smaller
-	INT handle_extension(INT cur_level, INT cur_node_global, 
+	INT trace_next_point_database(INT cur_level, 
+		INT cur_node_global, 
 		INT *canonical_set, INT *Elt_transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
-	INT handle_extension_database(INT cur_level, INT cur_node_global, 
-		INT *canonical_set, INT *Elt_transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
-	INT handle_extension_oracle(INT cur_level, INT cur_node_global, 
-		INT *canonical_set, INT *Elt_transporter, 
-		INT f_implicit_fusion, INT &f_failure_to_find_point, INT verbose_level);
-	// Returns next_node_global at level cur_level + 1.
-	void apply_fusion_element_database(INT cur_level, INT cur_node_global, 
-		INT current_extension, INT *canonical_set, INT *Elt_transporter, INT ref, 
 		INT verbose_level);
-	void apply_fusion_element_oracle(INT cur_level, INT cur_node_global, 
-		INT current_extension, INT *canonical_set, INT *Elt_transporter, 
+		// Returns FALSE is the set becomes lexicographically smaller
+	INT handle_extension(INT cur_level, 
+		INT cur_node_global, 
+		INT *canonical_set, INT *Elt_transporter, 
+		INT f_implicit_fusion, 
+		INT &f_failure_to_find_point, INT verbose_level);
+	INT handle_extension_database(INT cur_level, 
+		INT cur_node_global, 
+		INT *canonical_set, INT *Elt_transporter, 
+		INT f_implicit_fusion, 
+		INT &f_failure_to_find_point, 
+		INT verbose_level);
+	INT handle_extension_oracle(INT cur_level, 
+		INT cur_node_global, 
+		INT *canonical_set, INT *Elt_transporter, 
+		INT f_implicit_fusion, 
+		INT &f_failure_to_find_point, 
+		INT verbose_level);
+	// Returns next_node_global at level cur_level + 1.
+	void apply_fusion_element_database(INT cur_level, 
+		INT cur_node_global, 
+		INT current_extension, INT *canonical_set, 
+		INT *Elt_transporter, INT ref, 
+		INT verbose_level);
+	void apply_fusion_element_oracle(INT cur_level, 
+		INT cur_node_global, 
+		INT current_extension, INT *canonical_set, 
+		INT *Elt_transporter, 
 		INT verbose_level);
 
 
 	// isomorph_files.C:
-	void init_solutions(INT **Solutions, INT *Nb_sol, INT verbose_level);
+	void init_solutions(INT **Solutions, 
+		INT *Nb_sol, INT verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
-	void count_solutions_from_clique_finder_case_by_case(INT nb_files, INT *list_of_cases, const BYTE **fname, INT verbose_level);
-	void count_solutions_from_clique_finder(INT nb_files, const BYTE **fname, INT verbose_level);
-	void read_solutions_from_clique_finder_case_by_case(INT nb_files, INT *list_of_cases, const BYTE **fname, INT verbose_level);
-	void read_solutions_from_clique_finder(INT nb_files, const BYTE **fname, INT verbose_level);
+	void count_solutions_from_clique_finder_case_by_case(INT nb_files, 
+		INT *list_of_cases, const BYTE **fname, 
+		INT verbose_level);
+	void count_solutions_from_clique_finder(INT nb_files, 
+		const BYTE **fname, 
+		INT verbose_level);
+	void read_solutions_from_clique_finder_case_by_case(INT nb_files, 
+		INT *list_of_cases, const BYTE **fname, 
+		INT verbose_level);
+	void read_solutions_from_clique_finder(INT nb_files, 
+		const BYTE **fname, INT verbose_level);
 	void add_solutions_to_database(INT *Solutions, 
-		INT the_case, INT nb_solutions, INT nb_solutions_total, INT print_mod, INT &no, 
+		INT the_case, INT nb_solutions, INT nb_solutions_total, 
+		INT print_mod, INT &no, 
 		INT verbose_level);
 	void build_up_database(INT nb_files, const BYTE **fname, 
 		INT f_has_final_test_function, 
-		INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level),
+		INT (*final_test_function)(INT *data, INT sz, 
+			void *final_test_data, INT verbose_level),
 		void *final_test_data, 
 		INT verbose_level);
 	void init_cases_from_file_modulus_and_build_up_database(
@@ -623,28 +734,34 @@ public:
 		INT f_collated, INT base_split, 
 		INT f_get_statistics, 
 		INT f_has_final_test_function, 
-		INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level),
+		INT (*final_test_function)(INT *data, INT sz, 
+			void *final_test_data, INT verbose_level),
 		void *final_test_data, 
 		INT verbose_level);
 	void init_cases_from_file_mixed_modulus_and_build_up_database(
 		INT nb_Mod, INT *Mod_r, INT *Mod_split, INT *Mod_base_split, 
 		INT level, INT f_get_statistics, 
 		INT f_has_final_test_function, 
-		INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level),
+		INT (*final_test_function)(INT *data, INT sz, 
+			void *final_test_data, INT verbose_level),
 		void *final_test_data, 
 		INT verbose_level);
-	void count_solutions(INT nb_files, const BYTE **fname, INT f_get_statistics, 
+	void count_solutions(INT nb_files, 
+		const BYTE **fname, INT f_get_statistics, 
 		INT f_has_final_test_function, 
-		INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level),
+		INT (*final_test_function)(INT *data, INT sz, 
+			void *final_test_data, INT verbose_level),
 		void *final_test_data, 
 		INT verbose_level);
-	void get_statistics(INT nb_files, const BYTE **fname, INT verbose_level);
+	void get_statistics(INT nb_files, const BYTE **fname, 
+		INT verbose_level);
 	void write_statistics();
 	void evaluate_statistics(INT verbose_level);
 	void count_solutions2(INT nb_files, const BYTE **fname, 
 		INT &total_days, INT &total_hours, INT &total_minutes, 
 		INT f_has_final_test_function, 
-		INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level),
+		INT (*final_test_function)(INT *data, INT sz, 
+			void *final_test_data, INT verbose_level),
 		void *final_test_data, 
 		INT verbose_level);
 	void write_solution_first_and_len(); // previously write_case_len
@@ -652,104 +769,154 @@ public:
 	void write_starter_nb_orbits(INT verbose_level);
 	void read_starter_nb_orbits(INT verbose_level);
 	void write_hash_and_datref_file(INT verbose_level);
-	// Writes the file 'fname_hash_and_datref' containing id_to_hash[] and id_to_datref[]
+		// Writes the file 'fname_hash_and_datref' 
+		// containing id_to_hash[] and id_to_datref[]
 	void read_hash_and_datref_file(INT verbose_level);
-	// Reads the file 'fname_hash_and_datref' containing id_to_hash[] and id_to_datref[]
-	// Also initializes hash_vs_id_hash and hash_vs_id_id
-	// Called from init_solution
+		// Reads the file 'fname_hash_and_datref' 
+		// containing id_to_hash[] and id_to_datref[]
+		// Also initializes hash_vs_id_hash and hash_vs_id_id
+		// Called from init_solution
 	void write_orbit_data(INT verbose_level);
-	// Writes the file 'fname_staborbits'
+		// Writes the file 'fname_staborbits'
 	void read_orbit_data(INT verbose_level);
-	// Reads from the file 'fname_staborbits'
-	// Reads nb_orbits, N, 
-	// orbit_fst[nb_orbits + 1]
-	// orbit_len[nb_orbits]
-	// orbit_number[N]
-	// orbit_perm[N]
-	// schreier_vector[N]
-	// schreier_prev[N]
-	// and computed orbit_perm_inv[N]
-	void print_isomorphism_types(INT f_select, INT select_first, INT select_len, INT verbose_level);
-	// Calls print_set_function (if available)
-	void induced_action_on_set_and_kernel(ostream &file, action *A, sims *Stab, INT size, INT *set, INT verbose_level);
-	void handle_event_files(INT nb_event_files, const BYTE **event_file_name, INT verbose_level);
-	void read_event_file(const BYTE *event_file_name, INT verbose_level);
-	void skip_through_event_file(ifstream &f, INT verbose_level);
-	void skip_through_event_file1(ifstream &f, INT case_no, INT orbit_no, INT verbose_level);
+		// Reads from the file 'fname_staborbits'
+		// Reads nb_orbits, N, 
+		// orbit_fst[nb_orbits + 1]
+		// orbit_len[nb_orbits]
+		// orbit_number[N]
+		// orbit_perm[N]
+		// schreier_vector[N]
+		// schreier_prev[N]
+		// and computed orbit_perm_inv[N]
+	void print_isomorphism_types(INT f_select, 
+		INT select_first, INT select_len, 
+		INT verbose_level);
+		// Calls print_set_function (if available)
+	void induced_action_on_set_and_kernel(ostream &file, 
+		action *A, sims *Stab, INT size, INT *set, 
+		INT verbose_level);
+	void handle_event_files(INT nb_event_files, 
+		const BYTE **event_file_name, INT verbose_level);
+	void read_event_file(const BYTE *event_file_name, 
+		INT verbose_level);
+	void skip_through_event_file(ifstream &f, 
+		INT verbose_level);
+	void skip_through_event_file1(ifstream &f, 
+		INT case_no, INT orbit_no, INT verbose_level);
 	void event_file_completed_cases(const BYTE *event_file_name, 
-		INT &nb_completed_cases, INT *completed_cases, INT verbose_level);
-	void event_file_read_case(const BYTE *event_file_name, INT case_no, INT verbose_level);
-	void event_file_read_case1(ifstream &f, INT case_no, INT verbose_level);
-	INT next_subset_play_back(INT &subset_rank, ifstream *play_back_file, 
+		INT &nb_completed_cases, INT *completed_cases, 
+		INT verbose_level);
+	void event_file_read_case(const BYTE *event_file_name, 
+		INT case_no, INT verbose_level);
+	void event_file_read_case1(ifstream &f, 
+		INT case_no, INT verbose_level);
+	INT next_subset_play_back(INT &subset_rank, 
+		ifstream *play_back_file, 
 		INT &f_eof, INT verbose_level);
-	void read_everything_including_classification(const BYTE *prefix_classify, INT verbose_level);
+	void read_everything_including_classification(
+		const BYTE *prefix_classify, INT verbose_level);
 
 
 };
 
 
 // isomorph_global.C:
-void isomorph_read_statistic_files(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix, INT level, 
+void isomorph_read_statistic_files(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix, INT level, 
 	const BYTE **fname, INT nb_files, INT verbose_level);
-void isomorph_build_db(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, INT verbose_level);
-void isomorph_read_solution_files(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
+void isomorph_build_db(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, INT verbose_level);
+void isomorph_read_solution_files(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT nb_files, 
 	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level),
+	INT (*final_test_function)(INT *data, INT sz, 
+		void *final_test_data, INT verbose_level),
 	void *final_test_data, 
 	INT verbose_level);
-void isomorph_init_solutions_from_memory(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
+void isomorph_init_solutions_from_memory(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
 	INT **Solutions, INT *Nb_sol, INT verbose_level);
-void isomorph_read_solution_files_from_clique_finder_case_by_case(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
-	const BYTE **fname, INT *list_of_cases, INT nb_files, INT verbose_level);
-void isomorph_read_solution_files_from_clique_finder(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
+void isomorph_read_solution_files_from_clique_finder_case_by_case(
+	action *A_base, action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
+	const BYTE **fname, INT *list_of_cases, 
+	INT nb_files, INT verbose_level);
+void isomorph_read_solution_files_from_clique_finder(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT nb_files, INT verbose_level);
-void isomorph_compute_orbits(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, INT verbose_level);
-void isomorph_testing(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
-	INT f_play_back, const BYTE *old_event_file, INT print_mod, INT verbose_level);
-void isomorph_classification_graph(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
+void isomorph_compute_orbits(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, INT verbose_level);
+void isomorph_testing(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
+	INT f_play_back, const BYTE *old_event_file, 
+	INT print_mod, INT verbose_level);
+void isomorph_classification_graph(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
 	INT verbose_level);
-void isomorph_identify(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
+void isomorph_identify(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
 	INT identify_nb_files, const BYTE **fname, INT *Iso_type, 
 	INT f_save, INT verbose_level);
-void isomorph_identify_table(action *A_base, action *A, generator *gen, 
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
+void isomorph_identify_table(action *A_base, 
+	action *A, generator *gen, 
+	INT size, const BYTE *prefix_classify, 
+	const BYTE *prefix_iso, INT level, 
 	INT nb_rows, INT *Table, INT *Iso_type, 
 	INT verbose_level);
-// Table[nb_rows * size]
+	// Table[nb_rows * size]
 void isomorph_worker(action *A_base, action *A, generator *gen, 
 	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, 
 	void (*work_callback)(isomorph *Iso, void *data, INT verbose_level), 
 	void *work_data, 
 	INT level, INT verbose_level);
-void isomorph_compute_down_orbits(action *A_base, action *A, generator *gen, 
+void isomorph_compute_down_orbits(action *A_base, 
+	action *A, generator *gen, 
 	INT size, const BYTE *prefix_classify, const BYTE *prefix, 
 	void *data, 
 	INT level, INT verbose_level);
-void isomorph_compute_down_orbits_worker(isomorph *Iso, void *data, INT verbose_level);
-void isomorph_compute_down_orbits_for_isomorphism_type(isomorph *Iso, INT orbit, 
-	INT &cnt_orbits, INT &cnt_special_orbits, INT *&special_orbit_identify, INT verbose_level);
-void isomorph_report_data_in_source_code_inside_tex(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &F, INT verbose_level);
-void isomorph_report_data_in_source_code_inside_tex_with_selection(isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, ostream &fp, INT selection_size, INT *selection, INT verbose_level);
+void isomorph_compute_down_orbits_worker(isomorph *Iso, 
+	void *data, INT verbose_level);
+void isomorph_compute_down_orbits_for_isomorphism_type(
+	isomorph *Iso, INT orbit, 
+	INT &cnt_orbits, INT &cnt_special_orbits, 
+	INT *&special_orbit_identify, 
+	INT verbose_level);
+void isomorph_report_data_in_source_code_inside_tex(
+	isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, 
+	ostream &F, INT verbose_level);
+void isomorph_report_data_in_source_code_inside_tex_with_selection(
+	isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, 
+	ostream &fp, INT selection_size, INT *selection, 
+	INT verbose_level);
 
 
 
 
 
 
-// ####################################################################################
+// #############################################################################
 // extra.C:
-// ####################################################################################
+// #############################################################################
 
 
 void isomorph_print_set(ostream &ost, INT len, INT *S, void *data);
@@ -782,7 +949,8 @@ void compute_lifts_new(
 	INT f_draw_system, const BYTE *fname_system, 
 	INT f_write_tree, const BYTE *fname_tree,
 	void (*prepare_function_new)(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+		INT *candidates, INT nb_candidates, 
+		strong_generators *Strong_gens, 
 		diophant *&Dio, INT *&col_label, 
 		INT &f_ruled_out, 
 		INT verbose_level), 
@@ -792,17 +960,19 @@ void compute_lifts_new(
 		void *data, INT verbose_level), 
 	void *early_test_function_data,
 	INT f_has_solution_test_function, 
-	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level), 
+	INT (*solution_test_func)(exact_cover *EC, 
+		INT *S, INT len, void *data, INT verbose_level), 
 	void *solution_test_func_data,
 	INT f_has_late_cleanup_function, 
-	void (*late_cleanup_function)(exact_cover *EC, INT starter_case, INT verbose_level), 
+	void (*late_cleanup_function)(exact_cover *EC, 
+		INT starter_case, INT verbose_level), 
 	INT verbose_level);
 
 
 
-// ####################################################################################
+// #############################################################################
 // incidence_structure.C:
-// ####################################################################################
+// #############################################################################
 
 
 void incidence_structure_compute_tda(partitionstack &S, 
@@ -830,24 +1000,25 @@ void incidence_structure_compute_TDO_TDA(incidence_structure *Inc,
 	INT f_pic, 
 	INT &TDO_ht, INT &TDA_ht, 
 	INT verbose_level);
-INT incidence_structure_find_blocking_set(incidence_structure *Inc, INT input_no, 
+INT incidence_structure_find_blocking_set(incidence_structure *Inc, 
+	INT input_no, 
 	INT *blocking_set, INT &blocking_set_size, 
 	INT blocking_set_starter_size, 
 	INT f_all_blocking_sets, 
 	INT f_blocking_set_size_desired, INT blocking_set_size_desired, 
 	INT verbose_level);
 
-// ####################################################################################
+// #############################################################################
 // projective_space.C:
-// ####################################################################################
+// #############################################################################
 
 
-//void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose_level);
 void Hill_cap56(int argc, const char **argv, 
 	BYTE *fname, INT &nb_Pts, INT *&Pts, 
 	INT verbose_level);
 void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz);
-INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, INT set_sz, INT k, INT verbose_level);
+INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, 
+	INT set_sz, INT k, INT verbose_level);
 void create_Buekenhout_Metz(
 	finite_field *Fq, finite_field *FQ, 
 	INT f_classical, INT f_Uab, INT parameter_a, INT parameter_b, 
@@ -855,9 +1026,9 @@ void create_Buekenhout_Metz(
 	INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // factor_group.C:
-// ####################################################################################
+// #############################################################################
 
 
 struct factor_group {
@@ -879,26 +1050,30 @@ void create_factor_group(action *A, sims *S, INT goi,
 
 
 // in analyze_group.C:
-void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verbose_level);
-void compute_regular_representation(action *A, sims *S, vector_ge *SG, INT *&perm, INT verbose_level);
-void presentation(action *A, sims *S, INT goi, vector_ge *gens, INT *primes, INT verbose_level);
+void analyze_group(action *A, sims *S, vector_ge *SG, 
+	vector_ge *gens2, INT verbose_level);
+void compute_regular_representation(action *A, sims *S, 
+	vector_ge *SG, INT *&perm, INT verbose_level);
+void presentation(action *A, sims *S, INT goi, vector_ge *gens, 
+	INT *primes, INT verbose_level);
 
 
 
 
-// ####################################################################################
+// #############################################################################
 // decomposition.C:
-// ####################################################################################
+// #############################################################################
 
 
-void decomposition_projective_space(INT k, finite_field *F, INT nb_subsets, INT *sz, INT **subsets, 
+void decomposition_projective_space(INT k, finite_field *F, 
+	INT nb_subsets, INT *sz, INT **subsets, 
 	//INT f_semilinear, INT f_basis, 
 	INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // search_blocking_set.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -937,18 +1112,22 @@ public:
 	void find_partial_blocking_sets(INT depth, INT verbose_level);
 	INT test_level(INT depth, INT verbose_level);
 	INT test_blocking_set(INT len, INT *S, INT verbose_level);
-	INT test_blocking_set_upper_bound_only(INT len, INT *S, INT verbose_level);
-	void search_for_blocking_set(INT input_no, INT level, INT f_all, INT verbose_level);
-	INT recursive_search_for_blocking_set(INT input_no, INT starter_level, INT level, INT verbose_level);
+	INT test_blocking_set_upper_bound_only(INT len, INT *S, 
+		INT verbose_level);
+	void search_for_blocking_set(INT input_no, 
+		INT level, INT f_all, INT verbose_level);
+	INT recursive_search_for_blocking_set(INT input_no, 
+		INT starter_level, INT level, INT verbose_level);
 	void save_line_intersection_size(INT level);
 	void restore_line_intersection_size(INT level);
 };
 
-INT callback_check_partial_blocking_set(INT len, INT *S, void *data, INT verbose_level);
+INT callback_check_partial_blocking_set(INT len, INT *S, 
+	void *data, INT verbose_level);
 
-// ####################################################################################
+// #############################################################################
 // choose_points_or_lines.C:
-// ####################################################################################
+// #############################################################################
 
 class choose_points_or_lines {
 
@@ -1013,13 +1192,15 @@ public:
 		action *A, action *A_lines, 
 		INT f_choose_lines, 
 		INT nb_points_or_lines, 
-		INT (*check_function)(INT len, INT *S, void *data, INT verbose_level), 
+		INT (*check_function)(INT len, INT *S, void *data, 
+			INT verbose_level), 
 		INT t0, 
 		INT verbose_level);
 	void compute_orbits_from_sims(sims *G, INT verbose_level);
 	void compute_orbits(strong_generators *Strong_gens, INT verbose_level);
 	void choose_orbit(INT orbit_no, INT &f_hit_favorite, INT verbose_level);
-	INT favorite_orbit_representative(INT *transporter, INT *transporter_inv, 
+	INT favorite_orbit_representative(INT *transporter, 
+		INT *transporter_inv, 
 		INT *the_favorite_representative, 
 		INT verbose_level);
 	void print_rep();
@@ -1029,9 +1210,9 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // subspace_orbits.C
-// ####################################################################################
+// #############################################################################
 
 
 class subspace_orbits {
@@ -1083,7 +1264,8 @@ public:
 	void unrank_set_to_matrix(INT len, INT *S, INT *M);
 	void rank_set_from_matrix(INT len, INT *S, INT *M);
 	void Kramer_Mesner_matrix(INT t, INT k, INT f_print_matrix, 
-		INT f_read_solutions, const BYTE *solution_fname, INT verbose_level);
+		INT f_read_solutions, const BYTE *solution_fname, 
+		INT verbose_level);
 	void print_all_solutions(diophant *D, INT k, INT *Sol, INT nb_sol, 
 		INT **Subspace_ranks, INT &nb_subspaces, INT verbose_level);
 	void print_one_solution(diophant *D, INT k, INT *sol, 
@@ -1092,23 +1274,24 @@ public:
 	INT compute_minimum_distance(INT len, INT *S);
 	void print_set(INT len, INT *S);
 	INT test_set(INT len, INT *S, INT verbose_level);
-	INT test_minimum_distance(INT len, INT *S, INT mindist, INT verbose_level);
-	INT test_if_self_orthogonal(INT len, INT *S, INT f_doubly_even, INT verbose_level);
+	INT test_minimum_distance(INT len, INT *S, 
+		INT mindist, INT verbose_level);
+	INT test_if_self_orthogonal(INT len, INT *S, 
+		INT f_doubly_even, INT verbose_level);
 };
 
 
 INT subspace_orbits_rank_point_func(INT *v, void *data);
 void subspace_orbits_unrank_point_func(INT *v, INT rk, void *data);
-//INT subspace_orbits_test_func(ostream &ost, INT len, INT *S, void *data, INT verbose_level);
 void subspace_orbits_early_test_func(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // orbit_rep.C
-// ####################################################################################
+// #############################################################################
 
 class orbit_rep {
 public:
@@ -1150,9 +1333,9 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // singer_cycle.C
-// ####################################################################################
+// #############################################################################
 
 class singer_cycle {
 public:	
@@ -1182,14 +1365,15 @@ public:
 	~singer_cycle();
 	void null();
 	void freeself();
-	void init(INT n, finite_field *F, action *A, action *A2, INT verbose_level);
+	void init(INT n, finite_field *F, action *A, 
+		action *A2, INT verbose_level);
 	void init_lines(INT verbose_level);
 };
 
 
-// ####################################################################################
+// #############################################################################
 // orbit_of_sets.C
-// ####################################################################################
+// #############################################################################
 
 class orbit_of_sets {
 public:
@@ -1208,18 +1392,20 @@ public:
 	~orbit_of_sets();
 	void null();
 	void freeself();
-	void init(action *A, action *A2, INT *set, INT sz, vector_ge *gens, INT verbose_level);
+	void init(action *A, action *A2, INT *set, INT sz, 
+		vector_ge *gens, INT verbose_level);
 	void compute(INT verbose_level);
-	void get_table_of_orbits(INT *&Table, INT &orbit_length, INT &set_size, INT verbose_level);
+	void get_table_of_orbits(INT *&Table, INT &orbit_length, 
+		INT &set_size, INT verbose_level);
 };
 
 INT orbit_of_sets_compare_func(void *a, void *b, void *data);
 
 
 
-// ####################################################################################
+// #############################################################################
 // exact_cover.C
-// ####################################################################################
+// #############################################################################
 
 class exact_cover {
 public:
@@ -1239,7 +1425,8 @@ public:
 	
 
 	void (*prepare_function_new)(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+		INT *candidates, INT nb_candidates, 
+		strong_generators *Strong_gens, 
 		diophant *&Dio, INT *&col_label, 
 		INT &f_ruled_out, 
 		INT verbose_level);
@@ -1253,11 +1440,13 @@ public:
 	void *early_test_func_data;
 
 	INT f_has_solution_test_func;
-	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level);
+	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, 
+		void *data, INT verbose_level);
 	void *solution_test_func_data;
 
 	INT f_has_late_cleanup_function;
-	void (*late_cleanup_function)(exact_cover *E, INT starter_case, INT verbose_level);
+	void (*late_cleanup_function)(exact_cover *E, 
+		INT starter_case, INT verbose_level);
 
 
 	INT target_size;
@@ -1286,7 +1475,8 @@ public:
 	void init_basic(void *user_data, 
 		action *A_base, action *A_on_blocks, 
 		INT target_size, INT starter_size, 
-		const BYTE *input_prefix, const BYTE *output_prefix, const BYTE *solution_prefix, const BYTE *base_fname, 
+		const BYTE *input_prefix, const BYTE *output_prefix, 
+		const BYTE *solution_prefix, const BYTE *base_fname, 
 		INT f_lex, 
 		INT verbose_level);
 
@@ -1299,7 +1489,8 @@ public:
 		INT verbose_level);
 	void init_prepare_function_new(
 		void (*prepare_function_new)(exact_cover *E, INT starter_case, 
-			INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+			INT *candidates, INT nb_candidates, 
+			strong_generators *Strong_gens, 
 			diophant *&Dio, INT *&col_label, 
 			INT &f_ruled_out, 
 			INT verbose_level),
@@ -1308,11 +1499,13 @@ public:
 	void set_single_case(INT single_case, INT verbose_level);
 	void randomize(const BYTE *random_permutation_fname, INT verbose_level);
 	void add_solution_test_function(
-		INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level), 
+		INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, 
+		void *data, INT verbose_level), 
 		void *solution_test_func_data,
 		INT verbose_level);
 	void add_late_cleanup_function(
-		void (*late_cleanup_function)(exact_cover *E, INT starter_case, INT verbose_level)
+		void (*late_cleanup_function)(exact_cover *E, 
+		INT starter_case, INT verbose_level)
 		);
 	void compute_liftings_new(INT f_solve, INT f_save, INT f_read_instead, 
 		INT f_draw_system, const BYTE *fname_system, 
@@ -1320,21 +1513,22 @@ public:
 	void compute_liftings_single_case_new(INT starter_case, 
 		INT f_solve, INT f_save, INT f_read_instead, 
 		INT &nb_col, 
-		INT *&Solutions, INT &sol_length, INT &nb_sol, INT &nb_backtrack, INT &dt, 
+		INT *&Solutions, INT &sol_length, INT &nb_sol, 
+		INT &nb_backtrack, INT &dt, 
 		INT f_draw_system, const BYTE *fname_system, 
 		INT f_write_tree, const BYTE *fname_tree, 
 		INT verbose_level);
-	void lexorder_test(INT *live_blocks2, INT &nb_live_blocks2, vector_ge *stab_gens, 
+	void lexorder_test(INT *live_blocks2, INT &nb_live_blocks2, 
+		vector_ge *stab_gens, 
 		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // recoordinatize.C
-// ####################################################################################
+// #############################################################################
 
 class recoordinatize {
 public:
-	//translation_plane *T;
 	INT n;
 	INT k;
 	INT q;
@@ -1345,7 +1539,8 @@ public:
 	INT f_projective;
 	INT f_semilinear;
 	INT nCkq; // n choose k in q
-	INT (*check_function_incremental)(INT len, INT *S, void *check_function_incremental_data, INT verbose_level);
+	INT (*check_function_incremental)(INT len, INT *S, 
+		void *check_function_incremental_data, INT verbose_level);
 	void *check_function_incremental_data;
 
 
@@ -1375,24 +1570,28 @@ public:
 	~recoordinatize();
 	void null();
 	void freeself();
-	void init(INT n, INT k, finite_field *F, grassmann *Grass, action *A, action *A2, 
+	void init(INT n, INT k, finite_field *F, grassmann *Grass, 
+		action *A, action *A2, 
 		INT f_projective, INT f_semilinear, 
-		INT (*check_function_incremental)(INT len, INT *S, void *data, INT verbose_level), 
+		INT (*check_function_incremental)(INT len, INT *S, 
+			void *data, INT verbose_level), 
 		void *check_function_incremental_data, 
 		INT verbose_level);
 	void do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level);
 	void compute_starter(INT *&S, INT &size, 
 		strong_generators *&Strong_gens, INT verbose_level);
-	void stabilizer_of_first_three(strong_generators *&Strong_gens, INT verbose_level);
+	void stabilizer_of_first_three(strong_generators *&Strong_gens, 
+		INT verbose_level);
 	void compute_live_points(INT verbose_level);
-	void compute_live_points_low_level(INT *&live_points, INT &nb_live_points, INT verbose_level);
+	void compute_live_points_low_level(INT *&live_points, 
+		INT &nb_live_points, INT verbose_level);
 	void make_first_three(INT &j1, INT &j2, INT &j3, INT verbose_level);
 };
 
 
-// ####################################################################################
-// translation_plane.C
-// ####################################################################################
+// #############################################################################
+// spread.C
+// #############################################################################
 
 #define SPREAD_OF_TYPE_FTWKB 1
 #define SPREAD_OF_TYPE_KANTOR 2
@@ -1403,7 +1602,7 @@ public:
 #define SPREAD_OF_TYPE_HUDSON 7
 
 
-class translation_plane {
+class spread {
 public:
 
 	finite_field *F;
@@ -1470,12 +1669,15 @@ public:
 
 
 	INT Nb;
-	INT *Data1; // [max_depth * kn], previously [Nb * n], which was too much
-	INT *Data2; // [n * n]
+	INT *Data1;
+		// [max_depth * kn], 
+		// previously [Nb * n], which was too much
+	INT *Data2;
+		// [n * n]
 
 
-	translation_plane();
-	~translation_plane();
+	spread();
+	~spread();
 	void null();
 	void freeself();
 	void init(INT order, INT n, INT k, INT max_depth, 
@@ -1485,14 +1687,17 @@ public:
 		INT starter_size,  
 		int argc, const char **argv, 
 		INT verbose_level);
+	void unrank_point(INT *v, INT a);
+	INT rank_point(INT *v);
+	void unrank_subspace(INT *M, INT a);
+	INT rank_subspace(INT *M);
 	void print_points();
+	void print_points(INT *pts, INT len);
 	void print_elements();
 	void print_elements_and_points();
 	void read_arguments(int argc, const char **argv);
 	void init2(INT verbose_level);
 	void compute(INT verbose_level);
-	//void identify(INT *data, INT sz, INT *transporter, INT &orbit_at_level, INT verbose_level);
-	//void test_identify(INT level, INT nb_times, INT verbose_level);
 	void early_test_func(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
 		INT *good_candidates, INT &nb_good_candidates, 
@@ -1501,26 +1706,20 @@ public:
 	INT check_function_incremental(INT len, INT *S, INT verbose_level);
 	INT check_function_pair(INT rk1, INT rk2, INT verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+		INT *candidates, INT nb_candidates, 
+		strong_generators *Strong_gens, 
 		diophant *&Dio, INT *&col_labels, 
 		INT &f_ruled_out, 
 		INT verbose_level);
-	void compute_dual_spread(INT *spread, INT *dual_spread, INT verbose_level);
+	void compute_dual_spread(INT *spread, INT *dual_spread, 
+		INT verbose_level);
 
 
-	// translation_plane2.C:
+	// spread2.C:
 	void print_isomorphism_type(isomorph *Iso, 
 		INT iso_cnt, sims *Stab, schreier &Orb, 
 		INT *data, INT verbose_level);
 		// called from callback_print_isomorphism_type()
-#if 0
-	void klein_plane_intersections(INT *data, INT data_size, 
-		longinteger_object *&R,
-		INT **&Pts_on_plane, 
-		INT *&nb_pts_on_plane, 
-		INT &nb_planes, 
-		INT verbose_level);
-#endif
 	void save_klein_invariants(BYTE *prefix, 
 		INT iso_cnt, 
 		INT *data, INT data_size, INT verbose_level);
@@ -1528,10 +1727,6 @@ public:
 		isomorph *Iso, 
 		INT iso_cnt, sims *Stab, schreier &Orb, 
 		INT *data, INT data_size, INT verbose_level);
-#if 0
-	void test_plane_intersection_type_of_klein_image(
-		const BYTE *fname, INT verbose_level);
-#endif
 	void plane_intersection_type_of_klein_image(
 		projective_space *P3, 
 		projective_space *P5, 
@@ -1543,48 +1738,115 @@ public:
 	void czerwinski_oakden(INT level, INT verbose_level);
 	void write_spread_to_file(INT type_of_spread, INT verbose_level);
 	void make_spread(INT *data, INT type_of_spread, INT verbose_level);
-	void make_spread_from_q_clan(INT *data, INT type_of_spread, INT verbose_level);
+	void make_spread_from_q_clan(INT *data, INT type_of_spread, 
+		INT verbose_level);
 	void read_and_print_spread(const BYTE *fname, INT verbose_level);
 	void HMO(const BYTE *fname, INT verbose_level);
 	void get_spread_matrices(INT *F, INT *G, INT *data, INT verbose_level);
 	void print_spread(INT *data, INT sz);
 	void report2(isomorph &Iso, INT verbose_level);
 	void all_cooperstein_thas_quotients(isomorph &Iso, INT verbose_level);
-	void cooperstein_thas_quotients(isomorph &Iso, ofstream &f, INT h, INT &cnt, INT verbose_level);
+	void cooperstein_thas_quotients(isomorph &Iso, ofstream &f, 
+		INT h, INT &cnt, INT verbose_level);
 	void orbit_info_short(ofstream &f, isomorph &Iso, INT h);
-	void report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, INT verbose_level);
+	void report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, 
+		INT verbose_level);
 	void print(INT len, INT *S);
 };
 
 
-void translation_plane_lifting_early_test_function(INT *S, INT len, 
+void spread_lifting_early_test_function(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level);
-void translation_plane_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
+void spread_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
 	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, INT *&col_labels, 
 	INT &f_ruled_out, 
 	INT verbose_level);
-INT starter_canonize_callback(INT *Set, INT len, INT *Elt, void *data, INT verbose_level);
-INT translation_plane_check_function_incremental(INT len, INT *S, void *data, INT verbose_level);
+INT starter_canonize_callback(INT *Set, INT len, INT *Elt, 
+	void *data, INT verbose_level);
+INT spread_check_function_incremental(INT len, INT *S, 
+	void *data, INT verbose_level);
 
 
-// translation_plane2.C:
-void translation_plane_early_test_func_callback(INT *S, INT len, 
+// spread2.C:
+void spread_early_test_func_callback(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level);
-INT translation_plane_check_function_callback(INT len, INT *S, void *data, INT verbose_level);
-INT translation_plane_check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level);
-INT translation_plane_check_conditions(INT len, INT *S, void *data, INT verbose_level);
-void translation_plane_callback_report(isomorph *Iso, void *data, INT verbose_level);
-void translation_plane_callback_make_quotients(isomorph *Iso, void *data, INT verbose_level);
+INT spread_check_function_callback(INT len, INT *S, 
+	void *data, INT verbose_level);
+INT spread_check_function_incremental_callback(INT len, INT *S, 
+	void *data, INT verbose_level);
+INT spread_check_conditions(INT len, INT *S, void *data, INT verbose_level);
+void spread_callback_report(isomorph *Iso, void *data, INT verbose_level);
+void spread_callback_make_quotients(isomorph *Iso, void *data, 
+	INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
+// spread_lifting.C
+// #############################################################################
+
+class spread_lifting {
+public:
+
+	spread *S;
+	exact_cover *E;
+	
+	INT *starter;
+	INT starter_size;
+	INT starter_case_number;
+	INT starter_number_of_cases;
+	INT f_lex;
+
+	INT *candidates;
+	INT nb_candidates;
+	strong_generators *Strong_gens;
+
+	INT *points_covered_by_starter;
+		// [nb_points_covered_by_starter]
+	INT nb_points_covered_by_starter;
+
+	INT nb_free_points;
+	INT *free_point_list; // [nb_free_points]
+	INT *point_idx; // [nb_points_total]
+		// point_idx[i] = index of a point in free_point_list 
+		// or -1 if the point is in points_covered_by_starter
+
+
+	INT nb_needed;
+
+	INT *col_labels; // [nb_cols]
+	INT nb_cols;
+
+	
+	spread_lifting();
+	~spread_lifting();
+	void null();
+	void freeself();
+	void init(spread *S, exact_cover *E, 
+		INT *starter, INT starter_size, 
+		INT starter_case_number, INT starter_number_of_cases, 
+		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+		INT f_lex, 
+		INT verbose_level);
+	void compute_points_covered_by_starter(
+		INT verbose_level);
+	void prepare_free_points(
+		INT verbose_level);
+	diophant *create_system(INT verbose_level);
+	void find_coloring(diophant *Dio, 
+		INT *&col_color, INT &nb_colors, 
+		INT verbose_level);
+
+};
+
+
+// #############################################################################
 // polar.C: (added June 1, 2010)
-// ####################################################################################
+// #############################################################################
 
 	
 
@@ -1600,11 +1862,6 @@ public:
 
 	action *A; // the orthogonal action
 
-#if 0
-	action_on_grassmannian *AG;
-			// on k-dimensional subspaces of GF(q)^n,
-			// not needed
-#endif
 
 	
 	matrix_group *Mtx; // only a copy of a pointer, not to be freed
@@ -1618,7 +1875,6 @@ public:
 
 	INT schreier_depth;
 	INT f_use_invariant_subset_if_available;
-	//INT f_implicit_fusion;
 	INT f_debug;
 
 	INT f_has_strong_generators;
@@ -1629,17 +1885,22 @@ public:
 	
 	polar();
 	~polar();
-	void init_group_by_base_images(INT *group_generator_data, INT group_generator_size, 
-		INT f_group_order_target, const BYTE *group_order_target, INT verbose_level);
+	void init_group_by_base_images(INT *group_generator_data, 
+		INT group_generator_size, 
+		INT f_group_order_target, const BYTE *group_order_target, 
+		INT verbose_level);
 	void init_group(INT *group_generator_data, INT group_generator_size, 
-		INT f_group_order_target, const BYTE *group_order_target, INT verbose_level);
+		INT f_group_order_target, const BYTE *group_order_target, 
+		INT verbose_level);
 	void init(int argc, const char **argv, action *A, orthogonal *O, 
-		INT epsilon, INT n, INT k, finite_field *F, INT depth, INT verbose_level);
+		INT epsilon, INT n, INT k, finite_field *F, INT depth, 
+		INT verbose_level);
 	void init2(INT verbose_level);
 	void compute_orbits(INT t0, INT verbose_level);
 	void compute_cosets(INT depth, INT orbit_idx, INT verbose_level);
 	void dual_polar_graph(INT depth, INT orbit_idx, 
-		longinteger_object *&Rank_table, INT &nb_maximals, INT verbose_level);
+		longinteger_object *&Rank_table, INT &nb_maximals, 
+		INT verbose_level);
 	void show_stabilizer(INT depth, INT orbit_idx, INT verbose_level);
 	void compute_Kramer_Mesner_matrix(INT t, INT k, INT verbose_level);
 	INT test(INT *S, INT len, INT verbose_level);
@@ -1655,8 +1916,10 @@ public:
 	void get_stabilizer(INT orbit_idx, group &G, longinteger_object &go_G);
 	void get_orbit_length(INT orbit_idx, longinteger_object &length);
 	INT get_orbit_length_as_INT(INT orbit_idx);
-	void orbit_element_unrank(INT orbit_idx, INT rank, INT *set, INT verbose_level);
-	void orbit_element_rank(INT &orbit_idx, INT &rank, INT *set, INT verbose_level);
+	void orbit_element_unrank(INT orbit_idx, INT rank, 
+		INT *set, INT verbose_level);
+	void orbit_element_rank(INT &orbit_idx, INT &rank, 
+		INT *set, INT verbose_level);
 	void unrank_point(INT *v, INT rk);
 	INT rank_point(INT *v);
 	void list_whole_orbit(INT depth, INT orbit_idx, INT f_limit, INT limit);
@@ -1672,9 +1935,9 @@ void polar_callback_early_test_func(INT *S, INT len,
 	void *data, INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // orbit_of_subspaces.C
-// ####################################################################################
+// #############################################################################
 
 class orbit_of_subspaces {
 public:
@@ -1694,9 +1957,12 @@ public:
 
 	INT f_has_rank_functions;
 	void *rank_unrank_data;
-	INT (*rank_vector_callback)(INT *v, INT n, void *data, INT verbose_level);
-	void (*unrank_vector_callback)(INT rk, INT *v, INT n, void *data, INT verbose_level);
-	void (*compute_image_of_vector_callback)(INT *v, INT *w, INT *Elt, void *data, INT verbose_level);
+	INT (*rank_vector_callback)(INT *v, INT n, 
+		void *data, INT verbose_level);
+	void (*unrank_vector_callback)(INT rk, INT *v, 
+		INT n, void *data, INT verbose_level);
+	void (*compute_image_of_vector_callback)(INT *v, INT *w, 
+		INT *Elt, void *data, INT verbose_level);
 	void *compute_image_of_vector_callback_data;
 
 	INT position_of_original_subspace;
@@ -1715,21 +1981,27 @@ public:
 		INT *subspace, INT k, INT n, 
 		INT f_has_desired_pivots, INT *desired_pivots, 
 		INT f_has_rank_functions, void *rank_unrank_data, 
-		INT (*rank_vector_callback)(INT *v, INT n, void *data, INT verbose_level), 
-		void (*unrank_vector_callback)(INT rk, INT *v, INT n, void *data, INT verbose_level), 
-		void (*compute_image_of_vector_callback)(INT *v, INT *w, INT *Elt, void *data, INT verbose_level), 
+		INT (*rank_vector_callback)(INT *v, INT n, 
+			void *data, INT verbose_level), 
+		void (*unrank_vector_callback)(INT rk, INT *v, 
+			INT n, void *data, INT verbose_level), 
+		void (*compute_image_of_vector_callback)(INT *v, 
+			INT *w, INT *Elt, void *data, INT verbose_level), 
 		void *compute_image_of_vector_callback_data, 
 		vector_ge *gens, INT verbose_level);
 	INT rank_vector(INT *v, INT verbose_level);
 	void unrank_vector(INT rk, INT *v, INT verbose_level);
 	void rref(INT *subspace, INT verbose_level);
 	void rref_and_rank_and_hash(INT *subspace, INT verbose_level);
-	void map_a_subspace(INT *subspace, INT *image_subspace, INT *Elt, INT verbose_level);
-	void map_a_basis(INT *basis, INT *image_basis, INT *Elt, INT verbose_level);
+	void map_a_subspace(INT *subspace, INT *image_subspace, 
+		INT *Elt, INT verbose_level);
+	void map_a_basis(INT *basis, INT *image_basis, INT *Elt, 
+		INT verbose_level);
 	void print_orbit();
 	void compute(INT verbose_level);
 	void get_transporter(INT idx, INT *transporter, INT verbose_level);
-		// transporter is an element which maps the orbit representative to the given subspace.
+		// transporter is an element which maps the orbit 
+		// representative to the given subspace.
 	void get_random_schreier_generator(INT *Elt, INT verbose_level);
 	strong_generators *generators_for_stabilizer_of_orbit_rep(
 		longinteger_object &full_group_order, INT verbose_level);
@@ -1742,9 +2014,9 @@ public:
 
 INT orbit_of_subspaces_compare_func(void *a, void *b, void *data);
 
-// ####################################################################################
+// #############################################################################
 // young.C
-// ####################################################################################
+// #############################################################################
 
 class young {
 public:
@@ -1785,8 +2057,10 @@ public:
 	void create_module(INT *h_alpha, 
 		INT *&Base, INT *&base_cols, INT &rk, 
 		INT verbose_level);
-	void create_representations(INT *Base, INT *Base_inv, INT rk, INT verbose_level);
-	void create_representation(INT *Base, INT *base_cols, INT rk, INT group_elt, INT *Mtx, INT verbose_level);
+	void create_representations(INT *Base, INT *Base_inv, INT rk, 
+		INT verbose_level);
+	void create_representation(INT *Base, INT *base_cols, INT rk, 
+		INT group_elt, INT *Mtx, INT verbose_level);
 		// Mtx[rk * rk * D->size_of_instance_in_INT]
 	void young_symmetrizer(INT *row_parts, INT nb_row_parts, 
 		INT *tableau, 
@@ -1799,9 +2073,9 @@ public:
 		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // exact_cover_arguments.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -1834,7 +2108,8 @@ public:
 	INT f_write_tree;
 	const BYTE *fname_tree;
 	void (*prepare_function_new)(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+		INT *candidates, INT nb_candidates, 
+		strong_generators *Strong_gens, 
 		diophant *&Dio, INT *&col_label, 
 		INT &f_ruled_out, 
 		INT verbose_level);
@@ -1844,10 +2119,12 @@ public:
 		void *data, INT verbose_level);
 	void *early_test_function_data;
 	INT f_has_solution_test_function;
-	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level);
+	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, 
+		void *data, INT verbose_level);
 	void *solution_test_func_data;
 	INT f_has_late_cleanup_function;
-	void (*late_cleanup_function)(exact_cover *EC, INT starter_case, INT verbose_level);
+	void (*late_cleanup_function)(exact_cover *EC, 
+		INT starter_case, INT verbose_level);
 
 	INT f_randomized;
 	const BYTE *random_permutation_fname;
@@ -1863,9 +2140,9 @@ public:
 
 
 
-// ##################################################################################################
+// #############################################################################
 // translation_plane_via_andre_model.C
-// ##################################################################################################
+// #############################################################################
 
 
 class translation_plane_via_andre_model {
@@ -1905,22 +2182,26 @@ public:
 	void null();
 	void freeself();
 	void init(INT *spread_elements_numeric, INT k, finite_field *F, 
-		vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, INT verbose_level);
+		vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
+		INT verbose_level);
 	void classify_arcs(const BYTE *prefix, INT depth, INT verbose_level);
 	void classify_subplanes(const BYTE *prefix, INT verbose_level);
 	INT check_arc(INT *S, INT len, INT verbose_level);
 	INT check_subplane(INT *S, INT len, INT verbose_level);
-	INT check_if_quadrangle_defines_a_subplane(INT *S, INT *subplane7, INT verbose_level);
+	INT check_if_quadrangle_defines_a_subplane(INT *S, INT *subplane7, 
+		INT verbose_level);
 };
 
 
-INT translation_plane_via_andre_model_check_arc(INT len, INT *S, void *data, INT verbose_level);
-INT translation_plane_via_andre_model_check_subplane(INT len, INT *S, void *data, INT verbose_level);
+INT translation_plane_via_andre_model_check_arc(INT len, INT *S, 
+	void *data, INT verbose_level);
+INT translation_plane_via_andre_model_check_subplane(INT len, INT *S, 
+	void *data, INT verbose_level);
 
 
-// ##################################################################################################
+// #############################################################################
 // isomorph_arguments.C
-// ##################################################################################################
+// #############################################################################
 
 class isomorph_arguments {
 public:
@@ -1959,12 +2240,15 @@ public:
 	const BYTE *prefix_with_directory;
 	exact_cover_arguments *ECA;
 	
-	void (*callback_report)(isomorph *Iso, void *data, INT verbose_level);
-	void (*callback_subset_orbits)(isomorph *Iso, void *data, INT verbose_level);
+	void (*callback_report)(isomorph *Iso, void *data, 
+		INT verbose_level);
+	void (*callback_subset_orbits)(isomorph *Iso, void *data, 
+		INT verbose_level);
 	void *callback_data;
 
 	INT f_has_final_test_function;
-	INT (*final_test_function)(INT *data, INT sz, void *final_test_data, INT verbose_level);
+	INT (*final_test_function)(INT *data, INT sz, 
+		void *final_test_data, INT verbose_level);
 	void *final_test_data;
 	
 	isomorph_arguments();
@@ -1974,9 +2258,12 @@ public:
 	void read_arguments(int argc, const char **argv, 
 		INT verbose_level);
 	void init(action *A, action *A2, generator *gen, 
-		INT target_size, const BYTE *prefix_with_directory, exact_cover_arguments *ECA, 
-		void (*callback_report)(isomorph *Iso, void *data, INT verbose_level), 
-		void (*callback_subset_orbits)(isomorph *Iso, void *data, INT verbose_level), 
+		INT target_size, const BYTE *prefix_with_directory, 
+		exact_cover_arguments *ECA, 
+		void (*callback_report)(isomorph *Iso, void *data, 
+			INT verbose_level), 
+		void (*callback_subset_orbits)(isomorph *Iso, void *data, 
+			INT verbose_level), 
 		void *callback_data, 
 		INT verbose_level);
 	void execute(INT verbose_level);
@@ -1989,9 +2276,9 @@ struct isomorph_worker_data {
 	void *callback_data;
 };
 
-// ####################################################################################
+// #############################################################################
 // elliptic_curve.C:
-// ####################################################################################
+// #############################################################################
 
 
 // needs sqrt_mod_involved from DISCRETA/global.C
@@ -2025,9 +2312,12 @@ public:
 		INT x1, INT x2, INT x3, 
 		INT y1, INT y2, INT y3, 
 		INT &z1, INT &z2, INT &z3, INT verbose_level);
-	void draw_grid(char *fname, INT xmax, INT ymax, INT f_with_points, INT verbose_level);
-	void draw_grid2(mp_graphics &G, INT f_with_points, INT verbose_level);
-	void make_affine_point(INT x1, INT x2, INT x3, INT &a, INT &b, INT verbose_level);
+	void draw_grid(char *fname, INT xmax, INT ymax, 
+		INT f_with_points, INT verbose_level);
+	void draw_grid2(mp_graphics &G, 
+		INT f_with_points, INT verbose_level);
+	void make_affine_point(INT x1, INT x2, INT x3, 
+		INT &a, INT &b, INT verbose_level);
 	void compute_addition_table(INT verbose_level);
 	void print_addition_table();
 	INT index_of_point(INT x1, INT x2, INT x3);
@@ -2036,90 +2326,10 @@ public:
 };
 
 
-#if 0
-// ####################################################################################
-// surface_classify.C
-// ####################################################################################
 
-class surface_classify {
-public:
-	finite_field *F;
-	INT q;
-	action *A;
-	orthogonal *O;
-	generator *gen;
-
-	INT *u, *v; // temporary vectors of length 6
-
-	klein_correspondence *Klein;
-	surface *Surf;
-	schreier *Sch;
-	longinteger_object go;
-	sims *Stab;
-	strong_generators *stab_gens;
-	INT pt;
-	INT *Pts;
-	INT nb_pts;
-	action *A_on_neighbors;
-
-	INT len; // number of orbits on 5-sets of lines
-	INT *Idx;
-	INT nb; // number of good orbits
-
-	surface_data **The_surface;
-	INT *Nb_points;
-	INT *Nb_lines;
-	INT *Nb_double_six;
-	INT *Nb_E;
-	INT *is_isomorphic_to;
-	INT *Ago0;
-	INT *Ago_nb_cosets;
-	INT *Ago;
-	INT *Orb;
-	INT **Coeffs;
-	INT nb_iso;
-	INT nb_E;
-	INT *Elt0;
-	INT *Elt1;
-
-
-	surface_classify();
-	~surface_classify();
-	void null();
-	void freeself();
-	void init(finite_field *F, action *A, orthogonal *O, 
-		generator *gen, 
-		INT verbose_level);
-	INT surface_test(INT *S, INT len, INT verbose_level);
-	void process_surfaces(INT nb_identify, 
-		BYTE **Identify_label, 
-		INT **Identify_coeff, 
-		INT **Identify_monomial, 
-		INT *Identify_length, 
-		INT verbose_level);
-	void test_orbits(INT verbose_level);
-	void make_table_of_double_sixes(INT *Lines, INT nb_lines, 
-		set_of_sets *SoS, INT *&Table, INT &N, INT verbose_level);
-	void classify_surfaces(INT verbose_level);
-	INT new_surface(INT orb, INT iso_type, INT verbose_level);
-	void identify(INT nb_identify, 
-		BYTE **Identify_label, 
-		INT **Identify_coeff, 
-		INT **Identify_monomial, 
-		INT *Identify_length, 
-		INT **&Label, 
-		INT *&nb_Labels, 
-		INT verbose_level);
-	void allocate_data();
-	void free_data();
-
-
-};
-#endif
-
-// ####################################################################################
+// #############################################################################
 // surface_classify_wedge.C
-// ####################################################################################
+// #############################################################################
 
 class surface_classify_wedge {
 public:
@@ -2167,26 +2377,6 @@ public:
 
 	
 
-#if 0
-	// this is old stuff:
-
-	vector_ge *Isomorphisms; // [nb]
-
-	INT nb_iso;
-	surface_data **The_surface; // [nb_iso]
-
-	INT *is_isomorphic_to; // allocated [len], used as [nb], 
-		// iso_type associated to this node
-		// a transporter is stored in Isomorphisms
-	
-	INT *Orb; // [nb], used as [nb_iso], indexed by iso_type, 
-		// lists the initial orbit (index into Idx) 
-		// that led to the definition of the isomorphism type
-
-	// old stuff until here
-#endif
-
-
 
 	surface_classify_wedge();
 	~surface_classify_wedge();
@@ -2205,18 +2395,6 @@ public:
 	void write_file(ofstream &fp, INT verbose_level);
 	void read_file(ifstream &fp, INT verbose_level);
 
-#if 0
-	void do_classify_surfaces(INT verbose_level);
-	INT new_surface(INT orb, INT iso_type, INT verbose_level);
-	void store_isomorphism(INT *Elt, INT orb, INT verbose_level);
-	void store_identity(INT orb, INT verbose_level);
-	void generate_source_code(INT verbose_level);
-	void print_surfaces();
-	void print_surface(set_and_stabilizer *SaS, INT verbose_level);
-	void starter_configurations_which_are_involved(INT iso_type, 
-		INT *&Starter_configuration_idx, INT &nb_starter_conf, INT verbose_level);
-	void derived_arcs(INT verbose_level);
-#endif
 
 	void identify_surfaces(INT verbose_level);
 	void identify(INT nb_identify, 
@@ -2244,92 +2422,10 @@ public:
 };
 
 
-#if 0
-// ####################################################################################
-// surface_data.C
-// ####################################################################################
 
-class surface_data {
-public:
-	surface_classify_wedge *SC;
-	action *A;
-	finite_field *F;
-	INT q;
-	INT nb_monomials; // = SC->Surf->nb_monomials
-
-
-	INT orb;
-	INT idx;
-	INT iso_type;
-	
-	INT S[5]; 
-		// the starter configuration:
-		// the set of 5 lisjoint lines as indices into Neighbor
-	INT S2[6]; 
-		// S2[0..4] is the 5 lines a_1,...,a_5 as lines in PG(3,q). 
-		// S2[5] is the transversal b_6
-
-	INT v[6];
-	INT w[6];
-	
-	INT f_data_allocated;
-	INT *D; // [6 * 8]; the unranked version of S2[6]
-	INT *coeff; // [nb_monomials]
-
-	// the points on the surface:
-	INT *Surface;
-	INT nb_points_on_surface;
-
-	// the lines on the surface:
-	INT *Lines; // [27]
-	INT *Lines_wedge; // [27]
-	INT *Lines_klein; // [27]
-	INT nb_lines;
-
-	set_of_sets *pts_on_lines;
-
-	incidence_structure *IS;
-	partitionstack *PStack;
-	INT nb_E;
-
-	INT *Adj;
-
-	set_of_sets *line_intersections;
-	INT nb_starter_configurations;
-	INT *Table;
-
-	INT ago0;
-	INT nb_cosets;
-	INT nb_aut;
-	vector_ge *Aut_cosets;
-
-	INT *Elt0;
-	INT *Elt1;
-	INT *Elt2;
-
-	strong_generators *stab_gens;
-	longinteger_object ago;
-
-
-	surface_data();
-	~surface_data();
-	void null();
-	void freeself();
-	void allocate_data();
-	void free_data();
-	INT init(surface_classify_wedge *SC, INT orb, INT iso_type, INT verbose_level);
-	void automorphisms_and_isomorphisms(INT verbose_level);
-	void automorphisms_and_isomorphisms_with_spreadsheet(spreadsheet *&Sp, INT verbose_level);
-	void compute_decomposition_schemes(INT verbose_level);
-	void compute_adjacency_matrix_and_line_intersections(INT verbose_level);
-	void print(INT iso_type);
-	void store_automorphism_coset(INT *Elt, INT verbose_level);
-};
-#endif
-
-// ####################################################################################
+// #############################################################################
 // arc_generator.C
-// ####################################################################################
+// #############################################################################
 
 
 class arc_generator {
@@ -2415,33 +2511,34 @@ public:
 		INT *candidates, INT nb_candidates, 
 		INT *good_candidates, INT &nb_good_candidates, 
 		INT verbose_level);
-	//INT check_arc(INT *S, INT len, INT verbose_level);
+		//INT check_arc(INT *S, INT len, INT verbose_level);
 	void print(INT len, INT *S);
 	void print_set_in_affine_plane(INT len, INT *S);
 	void point_unrank(INT *v, INT rk);
 	INT point_rank(INT *v);
 	void compute_line_type(INT *set, INT len, INT verbose_level);
-	void lifting_prepare_function_new(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+	void lifting_prepare_function_new(exact_cover *E, 
+		INT starter_case, 
+		INT *candidates, INT nb_candidates, 
+		strong_generators *Strong_gens, 
 		diophant *&Dio, INT *&col_labels, 
 		INT &f_ruled_out, 
 		INT verbose_level);
-	// compute the incidence matrix of tangent lines versus candidate points
-	// extended by external lines versus candidate points
+		// compute the incidence matrix of tangent lines 
+		// versus candidate points
+		// extended by external lines versus candidate points
 	INT arc_test(INT *S, INT len, INT verbose_level);
 	void report(isomorph &Iso, INT verbose_level);
 	void report_decompositions(isomorph &Iso, ofstream &f, INT orbit, 
 		INT *data, INT verbose_level);
-	void report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, INT verbose_level);
+	void report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, 
+		INT verbose_level);
 	void simeon(INT len, INT *S, INT s, INT verbose_level);
-#if 0
-	INT simeon_matrix_entry(INT *Coord, INT *C, INT *E, INT *S, INT len, INT s, 
-		INT *T, INT verbose_level);
-#endif
 };
 
 
-INT callback_arc_test(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level);
+INT callback_arc_test(exact_cover *EC, INT *S, INT len, 
+	void *data, INT verbose_level);
 INT check_arc(INT len, INT *S, void *data, INT verbose_level);
 INT placebo_test_function(INT len, INT *S, void *data, INT verbose_level);
 void arc_generator_early_test_function(INT *S, INT len, 
@@ -2452,7 +2549,8 @@ void placebo_early_test_function(INT *S, INT len,
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level);
-void arc_generator_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
+void arc_generator_lifting_prepare_function_new(
+	exact_cover *EC, INT starter_case, 
 	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, INT *&col_labels, 
 	INT &f_ruled_out, 
@@ -2463,9 +2561,9 @@ void callback_arc_report(isomorph *Iso, void *data, INT verbose_level);
 void arc_print(INT len, INT *S, void *data);
 
 
-// ####################################################################################
+// #############################################################################
 // surface_with_action.C:
-// ####################################################################################
+// #############################################################################
 
 
 class surface_with_action {
@@ -2501,9 +2599,11 @@ public:
 	void init(surface *Surf, INT f_semilinear, INT verbose_level);
 	void init_group(INT f_semilinear, INT verbose_level);
 	INT create_double_six_safely(
-		INT *five_lines, INT transversal_line, INT *double_six, INT verbose_level);
+		INT *five_lines, INT transversal_line, 
+		INT *double_six, INT verbose_level);
 	INT create_double_six_from_five_lines_with_a_common_transversal(
-		INT *five_lines, INT transversal_line, INT *double_six, INT verbose_level);
+		INT *five_lines, INT transversal_line, 
+		INT *double_six, INT verbose_level);
 	void arc_lifting_and_classify(INT f_log_fp, ofstream &fp, 
 		INT *Arc6, 
 		const BYTE *arc_label, const BYTE *arc_label_short, 
@@ -2519,9 +2619,9 @@ public:
 
 
 
-// ####################################################################################
+// #############################################################################
 // surface_object_with_action.C:
-// ####################################################################################
+// #############################################################################
 
 
 class surface_object_with_action {
@@ -2535,7 +2635,8 @@ public:
 	surface_with_action *Surf_A; // do not free
 
 	surface_object *SO; // do not free
-	strong_generators *Aut_gens;  // generators for the automorphism group
+	strong_generators *Aut_gens; 
+		// generators for the automorphism group
 
 	action *A_on_points;
 	action *A_on_Eckardt_points;
@@ -2566,9 +2667,11 @@ public:
 		strong_generators *Aut_gens, INT verbose_level);
 	void init(surface_with_action *Surf_A, 
 		INT *Lines, INT *eqn, 
-		strong_generators *Aut_gens, INT f_find_double_six_and_rearrange_lines, 
+		strong_generators *Aut_gens, 
+		INT f_find_double_six_and_rearrange_lines, 
 		INT verbose_level);
-	void init_surface_object(surface_with_action *Surf_A, surface_object *SO, 
+	void init_surface_object(surface_with_action *Surf_A, 
+		surface_object *SO, 
 		strong_generators *Aut_gens, INT verbose_level);
 	void compute_orbits_of_automorphism_group(INT verbose_level);
 	void init_orbits_on_points(INT verbose_level);
@@ -2591,9 +2694,9 @@ public:
 };
 
 
-// ####################################################################################
+// #############################################################################
 // classify_trihedral_pairs.C:
-// ####################################################################################
+// #############################################################################
 
 
 class classify_trihedral_pairs {
@@ -2649,7 +2752,8 @@ public:
 	void upstep(INT verbose_level);
 	void print_trihedral_pairs(ostream &ost);
 	strong_generators *identify_trihedral_pair_and_get_stabilizer(
-		INT *planes6, INT *transporter, INT &orbit_index, INT verbose_level);
+		INT *planes6, INT *transporter, INT &orbit_index, 
+		INT verbose_level);
 	void identify_trihedral_pair(INT *planes6, 
 		INT *transporter, INT &orbit_index, INT verbose_level);
 
@@ -2665,9 +2769,9 @@ void classify_trihedral_pairs_early_test_function_type2(INT *S, INT len,
 	void *data, INT verbose_level);
 
 
-// ####################################################################################
+// #############################################################################
 // classify_double_sixes.C:
-// ####################################################################################
+// #############################################################################
 
 
 class classify_double_sixes {
@@ -2744,18 +2848,26 @@ public:
 	INT *Pts_wedge_to_line; // [nb_pts]
 	INT *line_to_pts_wedge; // [nb_lines_PG_3]
 
-	action *A_on_neighbors; // restricted action A2 on the set Neighbors[]
+	action *A_on_neighbors; 
+		// restricted action A2 on the set Neighbors[]
 
-	generator *Five_plus_one; // orbits on five-plus-one configurations
+	generator *Five_plus_one;
+		// orbits on five-plus-one configurations
 
 
 	INT *u, *v, *w; // temporary vectors of length 6
 	INT *u1, *v1; // temporary vectors of length 6
 
-	INT len; // = gen->nb_orbits_at_level(5) = number of orbits on 5-sets of lines
-	INT *Idx; // Idx[nb], list of orbits for which the system has rank 19
+	INT len;
+		// = gen->nb_orbits_at_level(5) 
+		// = number of orbits on 5-sets of lines
+	INT *Idx;
+		// Idx[nb], list of orbits 
+		// for which the system has rank 19
 	INT nb; // number of good orbits
-	INT *Po; // Po[Flag_orbits->nb_flag_orbits], list of orbits for which a double six exists
+	INT *Po;
+		// Po[Flag_orbits->nb_flag_orbits], 
+		//list of orbits for which a double six exists
 
 	
 	flag_orbits *Flag_orbits;
@@ -2771,19 +2883,19 @@ public:
 		int argc, const char **argv, 
 		INT verbose_level);
 	void compute_neighbors(INT verbose_level);
-	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, INT verbose_level);
+	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
+		INT verbose_level);
 	void classify_partial_ovoids(INT verbose_level);
 	INT partial_ovoid_test(INT *S, INT len, INT verbose_level);
 	void test_orbits(INT verbose_level);
-	void make_spreadsheet_of_fiveplusone_configurations(spreadsheet *&Sp, 
-		/*INT f_with_fusion, INT *Fusion, vector_ge *transporter,*/ 
+	void make_spreadsheet_of_fiveplusone_configurations(
+		spreadsheet *&Sp, 
 		INT verbose_level);
 	void identify_five_plus_one(INT *five_lines, INT transversal_line, 
 		INT *five_lines_out_as_neighbors, INT &orbit_index, 
 		INT *transporter, INT verbose_level);
 	void classify(INT verbose_level);
 	void downstep(INT verbose_level);
-	//void downstep2(INT verbose_level);
 	void upstep(INT verbose_level);
 	void print_five_plus_ones(ostream &ost);
 	void identify_double_six(INT *double_six, 
@@ -2793,17 +2905,19 @@ public:
 
 };
 
-// ####################################################################################
+// #############################################################################
 // object_in_projective_space_with_action.C:
-// ####################################################################################
+// #############################################################################
 
 
 class object_in_projective_space_with_action {
 
 public:
 
-	object_in_projective_space *OiP; // do not free
-	strong_generators *Aut_gens;  // generators for the automorphism group
+	object_in_projective_space *OiP;
+		// do not free
+	strong_generators *Aut_gens;
+		// generators for the automorphism group
 
 
 	object_in_projective_space_with_action();
@@ -2816,9 +2930,9 @@ public:
 
 
 
-// ####################################################################################
+// #############################################################################
 // surface_create_description.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -2847,9 +2961,9 @@ public:
 		INT verbose_level);
 };
 
-// ####################################################################################
+// #############################################################################
 // surface_create.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -2893,9 +3007,9 @@ public:
 
 
 
-// ####################################################################################
+// #############################################################################
 // arc_lifting.C:
-// ####################################################################################
+// #############################################################################
 
 
 class arc_lifting {
@@ -2913,7 +3027,8 @@ public:
 	INT arc_size;
 	
 
-	// data from projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data:
+	// data from projective_space::
+	// find_Eckardt_points_from_arc_not_on_conic_prepare_data:
 		INT *bisecants; // [15]
 		INT *Intersections; // [15 * 15]
 		INT *B_pts; // [nb_B_pts]
@@ -2986,10 +3101,35 @@ public:
 	~arc_lifting();
 	void null();
 	void freeself();
-	void init(surface_with_action *Surf_A, INT *arc, INT arc_size, INT verbose_level);
+	void create_surface(surface_with_action *Surf_A, INT *Arc6, 
+		INT verbose_level);
+	void lift_prepare(INT verbose_level);
+	void loop_over_trihedral_pairs(vector_ge *cosets, 
+		vector_ge *&coset_reps, 
+		INT *&aut_T_index, INT *&aut_coset_index, INT verbose_level);
+	void init(surface_with_action *Surf_A, INT *arc, INT arc_size, 
+		INT verbose_level);
 	void find_Eckardt_points(INT verbose_level);
 	void find_trihedral_pairs(INT verbose_level);
-	void lift_prepare(INT verbose_level);
+	void create_the_six_plane_equations(INT t_idx, 
+		INT *The_six_plane_equations, INT *planes6, 
+		INT verbose_level);
+	void create_surface_from_trihedral_pair_and_arc(
+		INT t_idx, INT *planes6, 
+		INT *The_six_plane_equations, INT *The_surface_equations, 
+		INT &lambda, INT &lambda_rk, INT verbose_level);
+		// plane6[6]
+		// The_six_plane_equations[6 * 4]
+		// The_surface_equations[(q + 1) * 20]
+	strong_generators *create_stabilizer_of_trihedral_pair(INT *planes6, 
+		INT &trihedral_pair_orbit_index, INT verbose_level);
+	void create_action_on_equations_and_compute_orbits(
+		INT *The_surface_equations, 
+		strong_generators *gens_for_stabilizer_of_trihedral_pair, 
+		action *&A_on_equations, schreier *&Orb, 
+		INT verbose_level);
+	void create_clebsch_system(INT *The_six_plane_equations, 
+		INT lambda, INT verbose_level);
 	void print(ostream &ost);
 	void print_Eckardt_point_data(ostream &ost);
 	void print_bisecants(ostream &ost);
@@ -3001,32 +3141,17 @@ public:
 	void print_lines(ostream &ost);
 	void print_dual_point_ranks(ostream &ost);
 	void print_FG(ostream &ost);
-	void print_the_six_plane_equations(INT *The_six_plane_equations, INT *plane6, ostream &ost);
+	void print_the_six_plane_equations(INT *The_six_plane_equations, 
+		INT *plane6, ostream &ost);
 	void print_surface_equations_on_line(INT *The_surface_equations, 
 		INT lambda, INT lambda_rk, ostream &ost);
-	void create_the_six_plane_equations(INT t_idx, INT *The_six_plane_equations, INT *planes6, INT verbose_level);
-	void create_surface_from_trihedral_pair_and_arc(INT t_idx, INT *planes6, 
-		INT *The_six_plane_equations, INT *The_surface_equations, 
-		INT &lambda, INT &lambda_rk, INT verbose_level);
-		// plane6[6]
-		// The_six_plane_equations[6 * 4]
-		// The_surface_equations[(q + 1) * 20]
-	strong_generators *create_stabilizer_of_trihedral_pair(INT *planes6, 
-		INT &trihedral_pair_orbit_index, INT verbose_level);
-	void create_action_on_equations_and_compute_orbits(INT *The_surface_equations, 
-		strong_generators *gens_for_stabilizer_of_trihedral_pair, 
-		action *&A_on_equations, schreier *&Orb, 
-		INT verbose_level);
-	void create_clebsch_system(INT *The_six_plane_equations, INT lambda, INT verbose_level);
-	void loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset_reps, 
-		INT *&aut_T_index, INT *&aut_coset_index, INT verbose_level);
-	void create_surface(surface_with_action *Surf_A, INT *Arc6, INT verbose_level);
+	void print_equations();
 };
 
 
-// ####################################################################################
+// #############################################################################
 // six_arcs_not_on_a_conic.C:
-// ####################################################################################
+// #############################################################################
 
 
 class six_arcs_not_on_a_conic {
@@ -3054,9 +3179,9 @@ public:
 	void report_latex(ostream &ost);
 };
 
-// ####################################################################################
+// #############################################################################
 // BLT_set_create_description.C:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -3068,8 +3193,6 @@ public:
 	INT q;
 	INT f_catalogue;
 	INT iso;
-	//INT f_by_coefficients;
-	//const BYTE *coefficients_text;
 	INT f_family;
 	const BYTE *family_name;
 
@@ -3083,9 +3206,9 @@ public:
 		INT verbose_level);
 };
 
-// ####################################################################################
-// surface_create.C:
-// ####################################################################################
+// #############################################################################
+// BLT_set_create.C:
+// #############################################################################
 
 
 
@@ -3123,5 +3246,76 @@ public:
 		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
 
+
+// #############################################################################
+// spread_create_description.C:
+// #############################################################################
+
+
+
+class spread_create_description {
+
+public:
+
+	INT f_q;
+	INT q;
+	INT f_k;
+	INT k;
+	INT f_catalogue;
+	INT iso;
+	INT f_family;
+	const BYTE *family_name;
+
+
+	
+	spread_create_description();
+	~spread_create_description();
+	void null();
+	void freeself();
+	INT read_arguments(int argc, const char **argv, 
+		INT verbose_level);
+};
+
+// #############################################################################
+// spread_create.C:
+// #############################################################################
+
+
+
+class spread_create {
+
+public:
+	spread_create_description *Descr;
+
+	BYTE prefix[1000];
+	BYTE label_txt[1000];
+	BYTE label_tex[1000];
+
+	INT q;
+	finite_field *F;
+	INT k;
+
+	INT f_semilinear;
+	
+	action *A;
+	INT degree;
+	
+	INT *set;
+	INT sz;
+
+	INT f_has_group;
+	strong_generators *Sg;
+	
+
+
+	
+	spread_create();
+	~spread_create();
+	void null();
+	void freeself();
+	void init(spread_create_description *Descr, INT verbose_level);
+	void apply_transformations(const BYTE **transform_coeffs, 
+		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
+};
 
 

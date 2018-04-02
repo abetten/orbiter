@@ -93,7 +93,9 @@ set_and_stabilizer *classification::get_set_and_stabilizer(INT orbit_index, INT 
 
 void classification::print_latex(ostream &ost, const BYTE *title)
 {
-
+	INT verbose_level = 0;
+	INT f_v = (verbose_level >= 1);
+	
 	cout << "classification::print_latex" << endl;
 	
 	//ost << "\\clearpage" << endl;
@@ -119,15 +121,21 @@ void classification::print_latex(ostream &ost, const BYTE *title)
 
 	for (i = 0; i < nb_orbits; i++) {
 
-		cout << "orbit " << i << " / " << nb_orbits << ":" << endl;
+		if (f_v) {
+			cout << "orbit " << i << " / " << nb_orbits << ":" << endl;
+			}
 
 		Orbit[i].gens->group_order(go1);
 
-		cout << "stab order " << go1 << endl;
+		if (f_v) {
+			cout << "stab order " << go1 << endl;
+			}
 		
 		D.integral_division_exact(go, go1, ol);
 
-		cout << "orbit length " << ol << endl;
+		if (f_v) {
+			cout << "orbit length " << ol << endl;
+			}
 		
 		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
 		INT_set_print_tex_for_inline_text(ost, Rep + i * representation_sz, representation_sz);

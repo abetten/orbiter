@@ -52,6 +52,8 @@ int main(int argc, char **argv)
 	INT input_list_of_files_nb = 0;
 	INT input_list_of_files_case[100000];
 	const BYTE *input_list_of_files_fname[100000];
+	INT f_success_file = FALSE;
+	const BYTE *success_fname = NULL;
 
 
 	cout << argv[0] << endl;
@@ -64,6 +66,11 @@ int main(int argc, char **argv)
 			f_file = TRUE;
 			fname = argv[++i];
 			cout << "-file " << fname << endl;
+			}
+		else if (strcmp(argv[i], "-success_file") == 0) {
+			f_success_file = TRUE;
+			success_fname = argv[++i];
+			cout << "-success_file " << success_fname << endl;
 			}
 		else if (strcmp(argv[i], "-input_list_of_files") == 0) {
 			f_input_list_of_files = TRUE;
@@ -369,6 +376,15 @@ int main(int argc, char **argv)
 	else {
 		cout << "Please use options -file or -list_of_cases or -input_list_of_files" << endl;
 		exit(1);
+		}
+
+
+	if (f_success_file) {
+		{
+		ofstream fp(success_fname);
+		fp << "Success" << endl;
+		}
+		cout << "Written file " << success_fname << " of size " << file_size(success_fname) << endl;
 		}
 
 	cout << "all_rainbow_cliques.out is done" << endl;

@@ -3144,14 +3144,14 @@ void schreier::get_orbit_decomposition_scheme_of_graph(INT *Adj, INT n, INT *&De
 	for (I = 0; I < nb_orbits; I++) {
 		f1 = orbit_first[I];
 		l1 = orbit_len[I];
-		if (f_v) {
+		if (FALSE) {
 			cout << "I = " << I << " f1 = " << f1 << " l1 = " << l1 << endl;
 			}
 		for (J = 0; J < nb_orbits; J++) {
 			r0 = 0;
 			f2 = orbit_first[J];
 			l2 = orbit_len[J];
-			if (f_v) {
+			if (FALSE) {
 				cout << "J = " << J << " f2 = " << f2 << " l2 = " << l2 << endl;
 				}
 			for (i = 0; i < l1; i++) {
@@ -3177,7 +3177,7 @@ void schreier::get_orbit_decomposition_scheme_of_graph(INT *Adj, INT n, INT *&De
 						}
 					}
 				}
-			if (f_v) {
+			if (FALSE) {
 				cout << "I = " << I << " J = " << J << " r = " << r0 << endl;
 				}
 			Decomp_scheme[I * nb_orbits + J] = r0;

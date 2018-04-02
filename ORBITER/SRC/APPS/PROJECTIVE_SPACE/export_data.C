@@ -54,12 +54,14 @@ int main(int argc, char **argv)
 		INT *Table;
 		INT width;
 		
-		sprintf(fname, "TP_%ld_%ld.csv", q, k);
-		nb_reps = TP_nb_reps(q, k);
+		sprintf(fname, "Spread_%ld_%ld.csv", q, k);
+		nb_reps = Spread_nb_reps(q, k);
 		width = i_power_j(q, k) + 1;
 		Table = NEW_INT(nb_reps * width);
 		for (i = 0; i < nb_reps; i++) {
-			p = TP_representative(q, k, i);
+			INT sz;
+			
+			p = Spread_representative(q, k, i, sz);
 			INT_vec_copy(p, Table + i * width, width);
 			}
 		INT_matrix_write_csv(fname, Table, nb_reps, width);

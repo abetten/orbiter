@@ -70,6 +70,7 @@ int main(int argc, char **argv)
 	INT f_Levi = FALSE;
 	INT Levi_m = 0;
 	INT Levi_n = 0;
+	INT f_Levi_discrete = FALSE;
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -202,6 +203,10 @@ int main(int argc, char **argv)
 			Levi_n = atoi(argv[++i]);
 			cout << "-Levi " << Levi_m << " " << Levi_n << endl;
 			}
+		else if (strcmp(argv[i], "-Levi_discrete") == 0) {
+			f_Levi_discrete = TRUE;
+			cout << "-Levi_discrete " << endl;
+			}
 
 		}
 
@@ -261,7 +266,31 @@ int main(int argc, char **argv)
 				scale, line_width, verbose_level);
 			}
 		else if (f_Levi) {
-			CG->draw_Levi(fname2, xmax_in, ymax_in, xmax_out, ymax_out, Levi_m, Levi_n, f_labels, 
+
+			INT f_partition_Levi = FALSE;
+			INT nb_row_parts = 0;
+			INT *row_part_first = NULL;
+			INT nb_col_parts = 0;
+			INT *col_part_first = NULL;
+
+			if (f_Levi_discrete) {
+				f_partition_Levi = TRUE;
+				nb_row_parts = Levi_m;
+				row_part_first = NEW_INT(Levi_m + 1);
+				nb_col_parts = Levi_n;
+				col_part_first = NEW_INT(Levi_n + 1);
+				for (i = 0; i < Levi_m + 1; i++) {
+					row_part_first[i] = i;
+					}
+				for (i = 0; i < Levi_n + 1; i++) {
+					col_part_first[i] = i;
+					}
+				}
+			cout << "before CG->draw_Levi" << endl;
+			CG->draw_Levi(fname2, xmax_in, ymax_in, xmax_out, ymax_out, 
+				f_partition_Levi, nb_row_parts, row_part_first, 
+				nb_col_parts, col_part_first, 
+				Levi_m, Levi_n, f_labels, 
 				scale, line_width, verbose_level);
 			}
 		else {

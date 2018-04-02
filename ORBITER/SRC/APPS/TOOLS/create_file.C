@@ -346,7 +346,7 @@ void create_files_list_of_cases(spreadsheet *S,
 			fp << str << endl;
 			NT = N * nb_tasks;
 			for (t = 0; t < nb_tasks; t++) {
-				sprintf(str, command, i, t);
+				sprintf(str, command, i, t, i, t);
 				fp << str << " \\" << endl;
 				for (j = 0; j < nb_cases; j++) {
 					if ((j % N) != i) {

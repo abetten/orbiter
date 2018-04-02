@@ -5,7 +5,7 @@
 // started:  July 9, 2009
 
 
-// TP data is available for:
+// Spread data is available for:
 // 2^2 = 4
 // 3^2 = 9
 // 2^4 = 16
@@ -57,14 +57,15 @@
 #include "../DATA/surface_97.C"
 
 #include "../DATA/data_DH.C"
-#include "../DATA/data_TP.C"
+
+#include "../DATA/data_spreads.C"
+
 #include "../DATA/data_BLT.C"
 
-// missing:
-//53 done Aug 13, 2017
-//59
-//61
-//67
+
+// ####################################################################################
+// Cubic surfaces:
+// ####################################################################################
 
 
 
@@ -1174,6 +1175,11 @@ INT *cubic_surface_Lines(INT q, INT i)
 
 
 
+// ####################################################################################
+// Hyperovals:
+// ####################################################################################
+
+
 INT hyperoval_nb_reps(INT q)
 {
 	INT nb;
@@ -1279,6 +1285,13 @@ void hyperoval_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_size, cons
 
 
 
+// ####################################################################################
+// Dual hyperovals:
+// ####################################################################################
+
+
+
+
 INT DH_nb_reps(INT k, INT n)
 {
 	INT nb;
@@ -1369,155 +1382,158 @@ void DH_stab_gens(INT k, INT n, INT i, INT *&data, INT &nb_gens, INT &data_size,
 
 
 
+// ####################################################################################
+// Spreads:
+// ####################################################################################
 
 
 
 
-INT TP_nb_reps(INT q, INT k)
+INT Spread_nb_reps(INT q, INT k)
 {
 	INT nb;
 
 	if (q == 2 && k == 2) {
-		nb = TP_2_2_nb_reps;
+		nb = Spreads_2_2_nb_reps;
 		}
 	else if (q == 3 && k == 2) {
-		nb = TP_3_2_nb_reps;
+		nb = Spreads_3_2_nb_reps;
 		}
 	else if (q == 2 && k == 4) {
-		nb = TP_2_4_nb_reps;
+		nb = Spreads_2_4_nb_reps;
 		}
 	else if (q == 4 && k == 2) {
-		nb = TP_4_2_nb_reps;
+		nb = Spreads_4_2_nb_reps;
 		}
 	else if (q == 5 && k == 2) {
-		nb = TP_5_2_nb_reps;
+		nb = Spreads_5_2_nb_reps;
 		}
 	else if (q == 3 && k == 3) {
-		nb = TP_3_3_nb_reps;
+		nb = Spreads_3_3_nb_reps;
 		}
 	else {
-		cout << "TP_nb_reps q=" << q << " k=" << k << " I don't have information for this case" << endl;
+		cout << "Spread_nb_reps q=" << q << " k=" << k << " I don't have information for this case" << endl;
 		exit(1);
 		}
 	return nb;
 }
 
 
-INT *TP_representative(INT q, INT k, INT i)
+INT *Spread_representative(INT q, INT k, INT i, INT &sz)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	INT *p, nb;
 
 	if (q == 2 && k == 2) {
-		p = TP_2_2_reps;
-		nb = TP_2_2_nb_reps;
-		sz = TP_2_2_size;
+		p = Spreads_2_2_reps;
+		nb = Spreads_2_2_nb_reps;
+		sz = Spreads_2_2_size;
 		}
 	else if (q == 3 && k == 2) {
-		p = TP_3_2_reps;
-		nb = TP_3_2_nb_reps;
-		sz = TP_3_2_size;
+		p = Spreads_3_2_reps;
+		nb = Spreads_3_2_nb_reps;
+		sz = Spreads_3_2_size;
 		}
 	else if (q == 2 && k == 4) {
-		p = TP_2_4_reps;
-		nb = TP_2_4_nb_reps;
-		sz = TP_2_4_size;
+		p = Spreads_2_4_reps;
+		nb = Spreads_2_4_nb_reps;
+		sz = Spreads_2_4_size;
 		}
 	else if (q == 4 && k == 2) {
-		p = TP_4_2_reps;
-		nb = TP_4_2_nb_reps;
-		sz = TP_4_2_size;
+		p = Spreads_4_2_reps;
+		nb = Spreads_4_2_nb_reps;
+		sz = Spreads_4_2_size;
 		}
 	else if (q == 5 && k == 2) {
-		p = TP_5_2_reps;
-		nb = TP_5_2_nb_reps;
-		sz = TP_5_2_size;
+		p = Spreads_5_2_reps;
+		nb = Spreads_5_2_nb_reps;
+		sz = Spreads_5_2_size;
 		}
 	else if (q == 3 && k == 3) {
-		p = TP_3_3_reps;
-		nb = TP_3_3_nb_reps;
-		sz = TP_3_3_size;
+		p = Spreads_3_3_reps;
+		nb = Spreads_3_3_nb_reps;
+		sz = Spreads_3_3_size;
 		}
 	else {
-		cout << "TP_representative q=" << q << " k=" << k << " I don't have information for this field order" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "TP_representative q=" << q << " k=" << k << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "TP_representative q=" << q << " k=" << k << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	p += i * sz;
 	return p;
 }
 
-void TP_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void Spread_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
 	INT f, l;
 	
 	if (q == 2 && k == 2) {
-		Reps = TP_2_2_stab_gens;
-		nb = TP_2_2_nb_reps;
-		make_element_size = TP_2_2_make_element_size;
-		f = TP_2_2_stab_gens_fst[i];
-		l = TP_2_2_stab_gens_len[i];
-		stab_order = TP_2_2_stab_order[i];
+		Reps = Spreads_2_2_stab_gens;
+		nb = Spreads_2_2_nb_reps;
+		make_element_size = Spreads_2_2_make_element_size;
+		f = Spreads_2_2_stab_gens_fst[i];
+		l = Spreads_2_2_stab_gens_len[i];
+		stab_order = Spreads_2_2_stab_order[i];
 		}
 	else if (q == 3 && k == 2) {
-		Reps = TP_3_2_stab_gens;
-		nb = TP_3_2_nb_reps;
-		make_element_size = TP_3_2_make_element_size;
-		f = TP_3_2_stab_gens_fst[i];
-		l = TP_3_2_stab_gens_len[i];
-		stab_order = TP_3_2_stab_order[i];
+		Reps = Spreads_3_2_stab_gens;
+		nb = Spreads_3_2_nb_reps;
+		make_element_size = Spreads_3_2_make_element_size;
+		f = Spreads_3_2_stab_gens_fst[i];
+		l = Spreads_3_2_stab_gens_len[i];
+		stab_order = Spreads_3_2_stab_order[i];
 		}
 	else if (q == 2 && k == 4) {
-		Reps = TP_2_4_stab_gens;
-		nb = TP_2_4_nb_reps;
-		make_element_size = TP_2_4_make_element_size;
-		f = TP_2_4_stab_gens_fst[i];
-		l = TP_2_4_stab_gens_len[i];
-		stab_order = TP_2_4_stab_order[i];
+		Reps = Spreads_2_4_stab_gens;
+		nb = Spreads_2_4_nb_reps;
+		make_element_size = Spreads_2_4_make_element_size;
+		f = Spreads_2_4_stab_gens_fst[i];
+		l = Spreads_2_4_stab_gens_len[i];
+		stab_order = Spreads_2_4_stab_order[i];
 		}
 	else if (q == 4 && k == 2) {
-		Reps = TP_4_2_stab_gens;
-		nb = TP_4_2_nb_reps;
-		make_element_size = TP_4_2_make_element_size;
-		f = TP_4_2_stab_gens_fst[i];
-		l = TP_4_2_stab_gens_len[i];
-		stab_order = TP_4_2_stab_order[i];
+		Reps = Spreads_4_2_stab_gens;
+		nb = Spreads_4_2_nb_reps;
+		make_element_size = Spreads_4_2_make_element_size;
+		f = Spreads_4_2_stab_gens_fst[i];
+		l = Spreads_4_2_stab_gens_len[i];
+		stab_order = Spreads_4_2_stab_order[i];
 		}
 	else if (q == 5 && k == 2) {
-		Reps = TP_5_2_stab_gens;
-		nb = TP_5_2_nb_reps;
-		make_element_size = TP_5_2_make_element_size;
-		f = TP_5_2_stab_gens_fst[i];
-		l = TP_5_2_stab_gens_len[i];
-		stab_order = TP_5_2_stab_order[i];
+		Reps = Spreads_5_2_stab_gens;
+		nb = Spreads_5_2_nb_reps;
+		make_element_size = Spreads_5_2_make_element_size;
+		f = Spreads_5_2_stab_gens_fst[i];
+		l = Spreads_5_2_stab_gens_len[i];
+		stab_order = Spreads_5_2_stab_order[i];
 		}
 	else if (q == 3 && k == 3) {
-		Reps = TP_3_3_stab_gens;
-		nb = TP_3_3_nb_reps;
-		make_element_size = TP_3_3_make_element_size;
-		f = TP_3_3_stab_gens_fst[i];
-		l = TP_3_3_stab_gens_len[i];
-		stab_order = TP_3_3_stab_order[i];
+		Reps = Spreads_3_3_stab_gens;
+		nb = Spreads_3_3_nb_reps;
+		make_element_size = Spreads_3_3_make_element_size;
+		f = Spreads_3_3_stab_gens_fst[i];
+		l = Spreads_3_3_stab_gens_len[i];
+		stab_order = Spreads_3_3_stab_order[i];
 		}
 	else {
-		cout << "TP_representative q=" << q << " k=" << k << " I don't have information for this field order" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "TP_representative q=" << q << " k=" << k << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "TP_representative q=" << q << " k=" << k << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	nb_gens = l;
@@ -1526,6 +1542,9 @@ void TP_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_size,
 }
 
 
+// ####################################################################################
+// BLT sets:
+// ####################################################################################
 
 
 
@@ -1591,11 +1610,20 @@ INT BLT_nb_reps(INT q)
 	else if (q == 53) {
 		nb = BLT_53_nb_reps;
 		}
+	else if (q == 59) {
+		nb = BLT_59_nb_reps;
+		}
+	else if (q == 61) {
+		nb = BLT_61_nb_reps;
+		}
+	else if (q == 67) {
+		nb = BLT_67_nb_reps;
+		}
 	else if (q == 71) {
 		nb = BLT_71_nb_reps;
 		}
 	else {
-		cout << "BLT_nb_reps q=" << q << " I don't have information for this case" << endl;
+		cout << "BLT_nb_reps q=" << q << " I don't have information for this order" << endl;
 		exit(1);
 		}
 	return nb;
@@ -1700,6 +1728,21 @@ INT *BLT_representative(INT q, INT no)
 		p = BLT_53_reps;
 		nb = BLT_53_nb_reps;
 		sz = BLT_53_size;
+		}
+	else if (q == 59) {
+		p = BLT_59_reps;
+		nb = BLT_59_nb_reps;
+		sz = BLT_59_size;
+		}
+	else if (q == 61) {
+		p = BLT_61_reps;
+		nb = BLT_61_nb_reps;
+		sz = BLT_61_size;
+		}
+	else if (q == 67) {
+		p = BLT_67_reps;
+		nb = BLT_67_nb_reps;
+		sz = BLT_67_size;
 		}
 	else if (q == 71) {
 		p = BLT_71_reps;
@@ -1879,6 +1922,30 @@ void BLT_stab_gens(INT q, INT no, INT *&data, INT &nb_gens, INT &data_size, cons
 		f = BLT_53_stab_gens_fst[no];
 		l = BLT_53_stab_gens_len[no];
 		stab_order = BLT_53_stab_order[no];
+		}
+	else if (q == 59) {
+		Reps = BLT_59_stab_gens;
+		nb = BLT_59_nb_reps;
+		make_element_size = BLT_59_make_element_size;
+		f = BLT_59_stab_gens_fst[no];
+		l = BLT_59_stab_gens_len[no];
+		stab_order = BLT_59_stab_order[no];
+		}
+	else if (q == 61) {
+		Reps = BLT_61_stab_gens;
+		nb = BLT_61_nb_reps;
+		make_element_size = BLT_61_make_element_size;
+		f = BLT_61_stab_gens_fst[no];
+		l = BLT_61_stab_gens_len[no];
+		stab_order = BLT_61_stab_order[no];
+		}
+	else if (q == 67) {
+		Reps = BLT_67_stab_gens;
+		nb = BLT_67_nb_reps;
+		make_element_size = BLT_67_make_element_size;
+		f = BLT_67_stab_gens_fst[no];
+		l = BLT_67_stab_gens_len[no];
+		stab_order = BLT_67_stab_order[no];
 		}
 	else if (q == 71) {
 		Reps = BLT_71_stab_gens;

@@ -253,7 +253,10 @@ INT surface_object::init_equation(surface *Surf, INT *eqn, INT verbose_level)
 		cout << endl;
 		}
 
-	find_double_six_and_rearrange_lines(surface_object::Lines, verbose_level);
+	if (f_v) {
+		cout << "surface_object::init_equation before find_double_six_and_rearrange_lines" << endl;
+		}
+	find_double_six_and_rearrange_lines(surface_object::Lines, 0 /*verbose_level*/);
 
 	if (f_v) {
 		cout << "surface_object::init_equation after find_double_six_and_rearrange_lines" << endl;
