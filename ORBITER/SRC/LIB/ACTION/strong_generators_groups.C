@@ -2207,5 +2207,79 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(action *A,
 		}
 }
 
+void strong_generators::stabilizer_of_spread_from_catalogue(action *A, 
+	INT q, INT k, INT iso, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue" << endl;
+		cout << "q=" << q << endl;
+		cout << "k=" << k << endl;
+		cout << "iso=" << iso << endl;
+		}
+
+	INT *data;
+	INT nb_gens;
+	INT data_size;
+	const BYTE *ascii_target_go;
+	longinteger_object target_go;
+	INT i;
+	
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue before BLT_stab_gens" << endl;
+		}
+	Spread_stab_gens(q, k, iso, data, nb_gens, data_size, ascii_target_go);
+		// in GALOIS/data.C
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue data_size=" << data_size << endl;
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue nb_gens=" << nb_gens << endl;
+		}
+
+	vector_ge *gens;
+
+	gens = new vector_ge;
+	gens->init(A);
+	target_go.create_from_base_10_string(ascii_target_go);
+
+
+	gens->allocate(nb_gens);
+	for (i = 0; i < nb_gens; i++) {
+		A->make_element(gens->ith(i), data + i * data_size, 0);
+		}
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue generators are:"
+ << endl;
+		gens->print_quick(cout);
+		}
+
+
+
+	strong_generators *Strong_gens2;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue before generators_to_strong_generators" << endl;
+		}
+	generators_to_strong_generators(A, 
+		TRUE /* f_target_go */, target_go, 
+		gens, Strong_gens2, 
+		0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue after generators_to_strong_generators" << endl;
+		}
+	
+	init_copy(Strong_gens2, 0 /* verbose_level */);
+
+	delete Strong_gens2;
+	delete gens;
+
+	if (f_v) {
+		cout << "strong_generators::stabilizer_of_spread_from_catalogue done" << endl;
+		}
+}
+
 
 

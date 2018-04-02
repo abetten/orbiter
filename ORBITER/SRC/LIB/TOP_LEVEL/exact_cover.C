@@ -537,7 +537,7 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 		R->candidates, R->nb_candidates, R->Strong_gens, 
 		Dio, col_labels, 
 		f_ruled_out, 
-		verbose_level - 3);
+		verbose_level);
 
 	if (f_vv) {
 		cout << "exact_cover::compute_liftings_single_case_new after prepare function" << endl;
@@ -579,14 +579,23 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 			}
 
 		BYTE fname[1000];
+		BYTE fname_Levi[1000];
 		BYTE fname_sol[1000];
 
-		sprintf(fname, "%ssystem_%ld_%ld.txt", output_prefix, starter_case, starter_nb_cases);
-		sprintf(fname_sol, "%ssystem_%ld_%ld.sol", output_prefix, starter_case, starter_nb_cases);
+		sprintf(fname, "%ssystem_%ld.txt", output_prefix, starter_case);
+		sprintf(fname_Levi, "%ssystem_%ld_Levi_graph.bin", output_prefix, starter_case);
+		sprintf(fname_sol, "%ssystem_%ld.sol", output_prefix, starter_case);
 
 
 		if (f_save) {
 		
+			if (f_v) {
+				cout << "exact_cover::compute_liftings_single_case_new before save_as_Levi_graph, fname=" << fname_Levi << endl;
+				}
+
+			
+			Dio->save_as_Levi_graph(fname_Levi, verbose_level - 1);
+
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new before save_in_compact_format, fname=" << fname << endl;
 				}
@@ -612,15 +621,15 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 				}
 			else if (f_read_instead) {
 				BYTE fname_sol[1000];
-				const BYTE *fname_solutions_mask = "%ssystem_%ld_%ld.solutions";
+				const BYTE *fname_solutions_mask = "%ssystem_%ld.solutions";
 				
-				sprintf(fname_sol, fname_solutions_mask, solution_prefix, starter_case, starter_nb_cases);
+				sprintf(fname_sol, fname_solutions_mask, solution_prefix, starter_case);
 
 				if (f_v) {
 					cout << "exact_cover::compute_liftings_single_case_new trying to read solution file " << fname_sol << " of size " << file_size(fname_sol) << endl;
 					}
 
-				Dio->read_solutions_from_file(fname_sol, verbose_level - 2);
+				Dio->read_solutions_from_file(fname_sol, 0 /*verbose_level - 2*/);
 				Dio->nb_steps_betten = 0;
 
 				if (f_v) {
@@ -638,11 +647,11 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 					Dio->write_solutions(verbose_level);
 					}
 #endif
-				Dio->get_solutions(Solutions, nb_sol, verbose_level - 1);
+				Dio->get_solutions(Solutions, nb_sol, 0/*verbose_level - 1*/);
 				if (f_v4) {
 					cout << "exact_cover::compute_liftings_single_case_new nb_sol=" << nb_sol << endl;
-					cout << "exact_cover::compute_liftings_single_case_new Solutions:" << endl;
-					INT_matrix_print(Solutions, nb_sol, sol_length);
+					//cout << "exact_cover::compute_liftings_single_case_new Solutions:" << endl;
+					//INT_matrix_print(Solutions, nb_sol, sol_length);
 					}
 
 				if (f_save) {
@@ -657,8 +666,8 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 					}
 				if (f_v4) {
 					cout << "exact_cover::compute_liftings_single_case_new nb_sol=" << nb_sol << endl;
-					cout << "exact_cover::compute_liftings_single_case_new Solutions in terms of col_labels[]:" << endl;
-					INT_matrix_print(Solutions, nb_sol, sol_length);
+					//cout << "exact_cover::compute_liftings_single_case_new Solutions in terms of col_labels[]:" << endl;
+					//INT_matrix_print(Solutions, nb_sol, sol_length);
 					}
 				}
 			else {
@@ -709,7 +718,7 @@ void exact_cover::lexorder_test(INT *live_blocks2, INT &nb_live_blocks2, vector_
 			cout << "exact_cover::lexorder_test Before lexorder_test, nb_live_blocks2=" << nb_live_blocks2 << endl;
 			}
 		A_on_blocks->lexorder_test(live_blocks2, nb_live_blocks2, nb_accepted, 
-			stab_gens /*starter_stabilizer_gens */, max_starter, verbose_level - 4);
+			stab_gens /*starter_stabilizer_gens */, max_starter, verbose_level);
 
 		if (f_vvv) {
 			cout << "exact_cover::lexorder_test After lexorder_test, nb_live_blocks2=" << nb_accepted << " we reject " << nb_live_blocks2 - nb_accepted << " blocks" << endl;

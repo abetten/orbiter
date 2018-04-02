@@ -39,6 +39,11 @@ MODULES = \
 	search_blocking_set.o \
 	singer_cycle.o \
 	six_arcs_not_on_a_conic.o \
+	spread.o \
+	spread2.o \
+	spread_create.o \
+	spread_create_description.o \
+	spread_lifting.o \
 	subspace_orbits.o \
 	surface_classify_wedge.o \
 	surface_create.o \
@@ -46,8 +51,6 @@ MODULES = \
 	surface_object_with_action.o \
 	surface_with_action.o \
 	top_level_global.o \
-	translation_plane.o \
-	translation_plane2.o \
 	translation_plane_via_andre_model.o \
 	young.o
 		
@@ -97,6 +100,9 @@ cpp:
 	$(UNIX_TO_DOS) search_blocking_set.C $(CPP_PREFIX)search_blocking_set.cpp
 	$(UNIX_TO_DOS) singer_cycle.C $(CPP_PREFIX)singer_cycle.cpp
 	$(UNIX_TO_DOS) six_arcs_not_on_a_conic.C $(CPP_PREFIX)six_arcs_not_on_a_conic.cpp
+	$(UNIX_TO_DOS) spread.C $(CPP_PREFIX)spread.cpp
+	$(UNIX_TO_DOS) spread2.C $(CPP_PREFIX)spread2.cpp
+	$(UNIX_TO_DOS) spread_lifting.C $(CPP_PREFIX)spread_lifting.cpp
 	$(UNIX_TO_DOS) subspace_orbits.C $(CPP_PREFIX)subspace_orbits.cpp
 	$(UNIX_TO_DOS) surface_classify_wedge.C $(CPP_PREFIX)surface_classify_wedge.cpp
 	$(UNIX_TO_DOS) surface_create.C $(CPP_PREFIX)surface_create.cpp
@@ -104,8 +110,6 @@ cpp:
 	$(UNIX_TO_DOS) surface_object_with_action.C $(CPP_PREFIX)surface_object_with_action.cpp
 	$(UNIX_TO_DOS) surface_with_action.C $(CPP_PREFIX)surface_with_action.cpp
 	$(UNIX_TO_DOS) top_level_global.C $(CPP_PREFIX)top_level_global.cpp
-	$(UNIX_TO_DOS) translation_plane.C $(CPP_PREFIX)translation_plane.cpp
-	$(UNIX_TO_DOS) translation_plane2.C $(CPP_PREFIX)translation_plane2.cpp
 	$(UNIX_TO_DOS) translation_plane_via_andre_model.C $(CPP_PREFIX)translation_plane_via_andre_model.cpp
 	$(UNIX_TO_DOS) young.C $(CPP_PREFIX)young.cpp
 	$(UNIX_TO_DOS) top_level.h ../WINDOWS/top_level.h

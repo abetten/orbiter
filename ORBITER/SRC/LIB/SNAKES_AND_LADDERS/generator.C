@@ -1549,7 +1549,7 @@ void generator::map_to_canonical_k_subset(INT *the_set, INT set_size, INT subset
 	INT *subset;
 	INT *canonical_subset;
 	INT *Elt1;
-	INT f, i, j, k; //, idx;
+	INT i, j, k; //, idx;
 	INT reduced_set_size;
 	//INT f_implicit_fusion = TRUE;
 	
@@ -1580,7 +1580,7 @@ void generator::map_to_canonical_k_subset(INT *the_set, INT set_size, INT subset
 
 
 	// trace the subset:
-	f = first_oracle_node_at_level[subset_size];
+	//f = first_oracle_node_at_level[subset_size];
 	
 	if (f_vv) {
 		cout << "generator::map_to_canonical_k_subset before trace_set" << endl;

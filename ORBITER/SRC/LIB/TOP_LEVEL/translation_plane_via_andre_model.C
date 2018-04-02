@@ -83,8 +83,10 @@ void translation_plane_via_andre_model::freeself()
 }
 
 
-void translation_plane_via_andre_model::init(INT *spread_elements_numeric, INT k, finite_field *F, 
-	vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, INT verbose_level)
+void translation_plane_via_andre_model::init(INT *spread_elements_numeric, 
+	INT k, finite_field *F, 
+	vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);

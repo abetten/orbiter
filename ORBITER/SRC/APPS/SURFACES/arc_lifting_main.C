@@ -12,6 +12,9 @@
 #include "orbiter.h"
 
 
+INT t0 = 0;
+
+
 int main(int argc, const char **argv);
 void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT verbose_level);
 void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, INT verbose_level);
@@ -26,6 +29,9 @@ int main(int argc, const char **argv)
 	const BYTE *the_arc_text = NULL;
 	INT f_classify = FALSE;
 	INT i;
+
+	t0 = os_ticks();
+
 
 	surface *Surf;
 	surface_with_action *Surf_A;
@@ -57,9 +63,18 @@ int main(int argc, const char **argv)
 			}
 		}
 
+
+	INT f_v = (verbose_level >= 1);
+		
 	F->init(q, 0);
 
-	Surf->init(F, verbose_level);
+	if (f_v) {
+		cout << "before Surf->init" << endl;
+		}
+	Surf->init(F, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf->init" << endl;
+		}
 
 	INT f_semilinear;
 
@@ -70,20 +85,32 @@ int main(int argc, const char **argv)
 		f_semilinear = TRUE;
 		}
 
-	cout << "before Surf->init_large_polynomial_domains" << endl;
-	Surf->init_large_polynomial_domains(verbose_level);
-	cout << "after Surf->init_large_polynomial_domains" << endl;
+	if (f_v) {
+		cout << "before Surf->init_large_polynomial_domains" << endl;
+		}
+	Surf->init_large_polynomial_domains(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf->init_large_polynomial_domains" << endl;
+		}
 
 
-	cout << "before Surf_A->init" << endl;
-	Surf_A->init(Surf, f_semilinear, verbose_level);
-	cout << "after Surf_A->init" << endl;
+	if (f_v) {
+		cout << "before Surf_A->init" << endl;
+		}
+	Surf_A->init(Surf, f_semilinear, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf_A->init" << endl;
+		}
 	
 
 
-	cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
-	Surf_A->Classify_trihedral_pairs->classify(verbose_level);
-	cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
+	if (f_v) {
+		cout << "before Surf_A->Classify_trihedral_pairs->classify" << endl;
+		}
+	Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Surf_A->Classify_trihedral_pairs->classify" << endl;
+		}
 
 
 	
@@ -102,6 +129,8 @@ int main(int argc, const char **argv)
 		classify_arcs_and_do_arc_lifting(argc, argv, Surf_A, verbose_level);
 		}
 
+	the_end(t0);
+	//the_end_quietly(t0);
 	
 }
 
@@ -201,9 +230,15 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 	// classify six arcs not on a conic:
 
+	if (f_v) {
+		cout << "before Six_arcs->init" << endl;
+		}
 	Six_arcs->init(F, Surf->P2, 
 		argc, argv, 
-		verbose_level);
+		0 /*verbose_level*/);
+	if (f_v) {
+		cout << "after Six_arcs->init" << endl;
+		}
 
 
 
@@ -231,30 +266,31 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 	Six_arcs->report_latex(fp);
 
-	Surf->print_polynomial_domains(fp);
-	Surf->print_line_labelling(fp);
+	if (f_v) {
+		Surf->print_polynomial_domains(fp);
+		Surf->print_line_labelling(fp);
 
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf->print_Steiner_and_Eckardt" << endl;
-	Surf->print_Steiner_and_Eckardt(fp);
-	cout << "classify_arcs_and_do_arc_lifting after Surf->print_Steiner_and_Eckardt" << endl;
+		cout << "classify_arcs_and_do_arc_lifting before Surf->print_Steiner_and_Eckardt" << endl;
+		Surf->print_Steiner_and_Eckardt(fp);
+		cout << "classify_arcs_and_do_arc_lifting after Surf->print_Steiner_and_Eckardt" << endl;
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf->print_clebsch_P" << endl;
-	Surf->print_clebsch_P(fp);
-	cout << "classify_arcs_and_do_arc_lifting after Surf->print_clebsch_P" << endl;
+		cout << "classify_arcs_and_do_arc_lifting before Surf->print_clebsch_P" << endl;
+		Surf->print_clebsch_P(fp);
+		cout << "classify_arcs_and_do_arc_lifting after Surf->print_clebsch_P" << endl;
 	
 
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type1" << endl;
-	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
+		cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type1" << endl;
+		Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type2" << endl;
-	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
+		cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type2" << endl;
+		Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
 
-	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs" << endl;
-	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp);
+		cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs" << endl;
+		Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp);
 
-
+		}
 
 
 
@@ -291,7 +327,10 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 			continue;
 			}
 		
-		cout << "classify_arcs_and_do_arc_lifting extending arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << ":" << endl;
+
+		if (f_v) {
+			cout << "classify_arcs_and_do_arc_lifting extending arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << ":" << endl;
+			}
 
 		fp << "\\clearpage\n\\section{Extending arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << "}" << endl;
 
@@ -320,7 +359,9 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		sprintf(arc_label, "%ld / %ld", arc_idx, Six_arcs->nb_arcs_not_on_conic);
 		sprintf(arc_label_short, "Arc%ld", arc_idx);
 		
-		cout << "classify_arcs_and_do_arc_lifting before do_arc_lifting" << endl;
+		if (f_v) {
+			cout << "classify_arcs_and_do_arc_lifting before do_arc_lifting" << endl;
+			}
 
 		Surf_A->arc_lifting_and_classify(TRUE /* f_log_fp */, fp, 
 			Arc6, arc_label, arc_label_short, 
@@ -331,7 +372,9 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 			f_deleted, 
 			verbose_level);
 
-		cout << "classify_arcs_and_do_arc_lifting after do_arc_lifting" << endl;
+		if (f_v) {
+			cout << "classify_arcs_and_do_arc_lifting after do_arc_lifting" << endl;
+			}
 		
 
 		

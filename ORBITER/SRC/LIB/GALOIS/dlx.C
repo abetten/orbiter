@@ -1175,6 +1175,7 @@ void Cover(dlx_node *ColNode)
 
 	for (RowNode = ColNode->Down; RowNode != ColNode; RowNode = RowNode->Down) {
 		//cout << "RowNode " << RowNode->row << "/" << RowNode->col << endl;
+
 		for (RightNode = RowNode->Right; RightNode != RowNode; RightNode = RightNode->Right) {
 			j = RightNode->col;
 			Nb_col_nodes[j]--;

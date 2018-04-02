@@ -5456,7 +5456,7 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 	// test line_a:
 	P->Grass_lines->unrank_INT_here(Line_a, Lines[line_idx[0]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line a = " << Line_label_tex[line_idx[0]] << ":" << endl;
+		cout << "Line a = " << Line_label_tex[line_idx[0]] << " = " << Lines[line_idx[0]] << ":" << endl;
 		INT_matrix_print(Line_a, 2, 4);
 		}
 	for (i = 0; i < 2; i++) {
@@ -5472,7 +5472,7 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 	// test line_b:
 	P->Grass_lines->unrank_INT_here(Line_b, Lines[line_idx[1]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line b = " << Line_label_tex[line_idx[1]] << ":" << endl;
+		cout << "Line b = " << Line_label_tex[line_idx[1]] << " = " << Lines[line_idx[1]] << ":" << endl;
 		INT_matrix_print(Line_b, 2, 4);
 		}
 	for (i = 0; i < 2; i++) {
@@ -5547,11 +5547,21 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 		// The third plane is the image plane, given by dual coordinates:
 		INT_vec_copy(Plane + 3 * 4, Dual_planes + 8, 4);
 		if (f_v) {
-			cout << "Dual coordinates for all three planes: ";
-			INT_vec_print(cout, M + 3 * 4, 4);
+			cout << "Dual coordinates for all three planes: " << endl;
+			INT_matrix_print(Dual_planes, 3, 4);
 			cout << endl;
 			}
-		if (F->RREF_and_kernel(4, 3, Dual_planes, 0 /* verbose_level */) < 3) {
+
+		r = F->RREF_and_kernel(4, 3, Dual_planes, 0 /* verbose_level */);
+		if (f_v) {
+			cout << "Dual coordinates and perp: " << endl;
+			INT_matrix_print(Dual_planes, 4, 4);
+			cout << endl;
+			cout << "matrix of dual coordinates has rank " << r << endl;
+			}
+
+
+		if (r < 3) {
 			if (f_v) {
 				cout << "The line is contained in the plane" << endl;
 				}
@@ -5559,6 +5569,11 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 			continue;
 			}
 		PG_element_normalize(*F, Dual_planes + 12, 1, 4);
+		if (f_v) {
+			cout << "intersection point normalized: ";
+			INT_vec_print(cout, Dual_planes + 12, 4);
+			cout << endl;
+			}
 		INT_vec_copy(Dual_planes + 12, Image_coeff + h * 4, 4);
 		
 		// compute local coordinates of the image point:

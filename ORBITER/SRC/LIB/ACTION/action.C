@@ -7,9 +7,9 @@
 #include "action.h"
 
 
-// ####################################################################################
+// #############################################################################
 // class action:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -2705,7 +2705,7 @@ void action::stabilizer_of_translation_plane_representative(INT q, INT k, INT no
 	if (f_v) {
 		cout << "action::stabilizer_of_translation_plane_representative" << endl;
 		}
-	TP_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
+	Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
 
 	gens = new vector_ge;
 	gens->init(this);

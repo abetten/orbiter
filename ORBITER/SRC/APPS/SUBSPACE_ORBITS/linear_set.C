@@ -226,7 +226,10 @@ void linear_set::init(int argc, const char **argv,
 		cout << "linear_set::init before init_general_linear_group GL(" << n << "," << Fq->q << ")" << endl;
 		}
 	Aq = new action;
-	Aq->init_general_linear_group(n, Fq, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
+	Aq->init_general_linear_group(n, Fq, 
+		FALSE /* f_semilinear */, 
+		TRUE /* f_basis */, 
+		verbose_level - 2);
 	if (f_v) {
 		cout << "linear_set::init after init_general_linear_group GL(" << n << "," << Fq->q << ")" << endl;
 		}
@@ -237,7 +240,10 @@ void linear_set::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set::init before init_general_linear_group GL(" << m << "," << FQ->q << ")" << endl;
 		}
-	AQ->init_general_linear_group(m, FQ, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
+	AQ->init_general_linear_group(m, FQ, 
+		FALSE /* f_semilinear */, 
+		TRUE /* f_basis */, 
+		verbose_level - 2);
 	if (f_v) {
 		cout << "linear_set::init after init_general_linear_group GL(" << m << "," << FQ->q << ")" << endl;
 		}
@@ -253,7 +259,10 @@ void linear_set::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set::init before init_projective_group PGL(" << m << "," << FQ->q << ")" << endl;
 		}
-	A_PGLQ->init_projective_group(m, FQ, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
+	A_PGLQ->init_projective_group(m, FQ, 
+		FALSE /* f_semilinear */, 
+		TRUE /* f_basis */, 
+		verbose_level - 2);
 	if (f_v) {
 		cout << "linear_set::init after init_projective_group PGL(" << m << "," << FQ->q << ")" << endl;
 		}
@@ -262,7 +271,9 @@ void linear_set::init(int argc, const char **argv,
 	if (f_v) {
 		cout << "linear_set::init before linear_set_lift_generators_to_subfield_structure" << endl;
 		}
-	lift_generators_to_subfield_structure(n, s, SubS, Aq, AQ, Strong_gens, verbose_level);
+	lift_generators_to_subfield_structure(n, s, 
+		SubS, Aq, AQ, Strong_gens, 
+		verbose_level);
 		// in ACTION/action_global.C
 	if (f_v) {
 		cout << "linear_set::init after linear_set_lift_generators_to_subfield_structure" << endl;
@@ -388,7 +399,7 @@ void linear_set::init(int argc, const char **argv,
 
 
 	if (f_identify) {
-		T = new translation_plane;
+		T = new spread;
 
 		INT f_recoordinatize = TRUE;
 		
@@ -396,14 +407,14 @@ void linear_set::init(int argc, const char **argv,
 		order = i_power_j(q, k);
 
 		if (f_v) {
-			cout << "Classifying translation planes of order " << order << endl;
+			cout << "Classifying spreads of order " << order << endl;
 			}
 
 		INT max_depth = order + 1;
 
 		T->init(order, n, k, max_depth, 
 			Fq, f_recoordinatize, 
-			"TP_STARTER", "TP", order + 1, 
+			"SPREADS_STARTER", "Spreads", order + 1, 
 			argc, argv, 
 			MINIMUM(verbose_level - 1, 2));
 	
@@ -412,11 +423,11 @@ void linear_set::init(int argc, const char **argv,
 		T->init2(verbose_level);
 
 		if (f_v) {
-			cout << "Classifying translation planes of order " << order << ":" << endl;
+			cout << "Classifying spreads planes of order " << order << ":" << endl;
 			}
 		T->compute(0 /*verbose_level*/);
 		if (f_v) {
-			cout << "Translation planes of order " << order << " have been classified" << endl;
+			cout << "Spreads of order " << order << " have been classified" << endl;
 			}
 		}
 
@@ -485,13 +496,18 @@ INT linear_set::test_set(INT len, INT *S, INT verbose_level)
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
-		PG_element_unrank_modified(*Fq, Basis + i * vector_space_dimension, 1, vector_space_dimension, S[i]);
+		PG_element_unrank_modified(*Fq, 
+			Basis + i * vector_space_dimension, 1, 
+			vector_space_dimension, S[i]);
 		}
 	if (f_vv) {
 		cout << "coordinate matrix:" << endl;
-		print_integer_matrix_width(cout, Basis, len, vector_space_dimension, vector_space_dimension, Fq->log10_of_q);
+		print_integer_matrix_width(cout, Basis, 
+			len, vector_space_dimension, vector_space_dimension, 
+			Fq->log10_of_q);
 		}
-	rk = Fq->Gauss_simple(Basis, len, vector_space_dimension, base_cols, 0 /*verbose_level - 2*/);
+	rk = Fq->Gauss_simple(Basis, len, vector_space_dimension, 
+			base_cols, 0 /*verbose_level - 2*/);
 	if (f_v) {
 		cout << "the matrix has rank " << rk << endl;
 		}
@@ -500,7 +516,8 @@ INT linear_set::test_set(INT len, INT *S, INT verbose_level)
 		}
 	if (ret) {
 		if (f_has_extra_test_func) {
-			ret = (*extra_test_func)(this, len, S, extra_test_func_data, verbose_level);
+			ret = (*extra_test_func)(this, len, S, 
+				extra_test_func_data, verbose_level);
 			}
 		}
 
@@ -535,10 +552,12 @@ void linear_set::compute_intersection_types_at_level(INT level,
 	for (node = 0; node < nb_nodes; node++) {
 		Gen->get_set_by_level(level, node, set);
 		for (i = 0; i < level; i++) {
-			PG_element_unrank_modified(*Fq, Basis + i * n, 1, n, set[i]);
+			PG_element_unrank_modified(*Fq, 
+				Basis + i * n, 1, n, set[i]);
 			}
 		D->compute_intersection_type(level, Basis, 
-			Intersection_dimensions + node * D->N, 0 /*verbose_level - 1*/);
+			Intersection_dimensions + node * D->N, 
+			0 /*verbose_level - 1*/);
 		}
 
 
@@ -573,7 +592,8 @@ void linear_set::calculate_intersections(INT depth, INT verbose_level)
 	for (level = 0; level <= depth; level++) {
 		cout << "Computing intersection types at level " << level << " / " << depth << ":" << endl;
 		compute_intersection_types_at_level(level, 
-			Nb_nodes[level], Intersection_dimensions[level], verbose_level - 1);
+			Nb_nodes[level], Intersection_dimensions[level], 
+			verbose_level - 1);
 		cout << "nb_nodes=" << Nb_nodes[level] << endl;
 		}
 	for (level = 0; level <= depth; level++) {
@@ -878,7 +898,8 @@ void linear_set::init_secondary(int argc, const char **argv,
 	Gen2->init(Aq, Aq, Strong_gens_previous, Gen2->depth /* sz */, verbose_level);
 	cout << "linear_set::init_secondary after Gen2->init" << endl;
 
-	Gen2->f_max_depth = FALSE; // could have been set to true because of -depth option
+	Gen2->f_max_depth = FALSE;
+		// could have been set to true because of -depth option
 
 #if 0
 	Gen2->init_check_func(
@@ -1574,9 +1595,9 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 }
 
 
-// ####################################################################################
+// #############################################################################
 // global functions:
-// ####################################################################################
+// #############################################################################
 
 
 INT linear_set_rank_point_func(INT *v, void *data)

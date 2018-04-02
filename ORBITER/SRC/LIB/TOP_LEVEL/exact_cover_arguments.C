@@ -223,7 +223,7 @@ void exact_cover_arguments::compute_lifts(INT verbose_level)
 	E->compute_liftings_new(f_solve, f_save, f_read, 
 		f_draw_system, fname_system, 
 		f_write_tree, fname_tree,
-		verbose_level - 1);
+		verbose_level);
 
 	delete E;
 	

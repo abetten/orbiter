@@ -1,4 +1,4 @@
-// translation_plane_main.C
+// spread_classify.C
 // 
 // Anton Betten
 // July 9, 2013
@@ -10,19 +10,20 @@
 
 #include "orbiter.h"
 #include "discreta.h"
-#include "translation_plane.h"
 
 
 // global data:
 
 INT t0; // the system time when the program started
 
+void print_spread(INT len, INT *S, void *data);
+
 
 #define MAX_FILES 1000
 
 int main(int argc, const char **argv)
 {
-	INT i, j;
+	INT i;
 	INT verbose_level = 0;
 	INT f_poly = FALSE;
 	const BYTE *poly = NULL;
@@ -36,9 +37,8 @@ int main(int argc, const char **argv)
 	INT f_starter = FALSE;
 
 
-	INT f_identify = FALSE;
-	INT identify_data[1000];
-	INT identify_data_sz = 0;
+	INT nb_identify = 0;
+	const BYTE *identify_data[1000];
 
 
 	INT f_list = FALSE;
@@ -47,7 +47,6 @@ int main(int argc, const char **argv)
 	const BYTE *fname_print_spread;
 	INT f_HMO = FALSE;
 	const BYTE *fname_HMO;
-	INT f_Fano = FALSE;
 	INT f_print_representatives = FALSE;
 	INT representatives_size = 0;
 	const BYTE *representatives_fname = NULL;
@@ -139,21 +138,10 @@ int main(int argc, const char **argv)
 			}
 
 		else if (strcmp(argv[i], "-identify") == 0) {
-			INT a;
 			
-			f_identify = TRUE;
-			j = 0;
-			while (TRUE) {
-				a = atoi(argv[++i]);
-				if (a == -1) {
-					break;
-					}
-				identify_data[j++] = a;
-				}
-			identify_data_sz = j;
-			cout << "-identify ";
-			INT_vec_print(cout, identify_data, identify_data_sz);
-			cout << endl;
+			identify_data[nb_identify] = argv[++i];
+			cout << "-identify " << identify_data[nb_identify] << endl;
+			nb_identify++;
 			}
 		else if (strcmp(argv[i], "-test_identify") == 0) {
 			f_test_identify = TRUE;
@@ -169,13 +157,6 @@ int main(int argc, const char **argv)
 			cout << "-make_quotients " << endl;
 			}
 
-#if 0
-		else if (strcmp(argv[i], "-plane_type_klein") == 0) {
-			f_plane_type_klein = TRUE;
-			fname_plane_type_klein = argv[++i];
-			cout << "-plane_type_klein " << fname_plane_type_klein << endl;
-			}
-#endif
 		else if (strcmp(argv[i], "-print_spread") == 0) {
 			f_print_spread = TRUE;
 			fname_print_spread = argv[++i];
@@ -188,10 +169,6 @@ int main(int argc, const char **argv)
 			}
 
 
-		else if (strcmp(argv[i], "-Fano") == 0) {
-			f_Fano = TRUE;
-			cout << "-Fano " << endl;
-			}
 		else if (strcmp(argv[i], "-print_representatives") == 0) {
 			f_print_representatives = TRUE;
 			representatives_size = atoi(argv[++i]);
@@ -229,15 +206,15 @@ int main(int argc, const char **argv)
 
 
 	if (!f_order) {
-		cout << "translation_plane_main.C please use option -order <order>" << endl;
+		cout << "spread_classify.C please use option -order <order>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_starter_size) {
-		cout << "translation_plane_main.C please use option -starter_size <starter_size>" << endl;
+		cout << "spread_classify.C please use option -starter_size <starter_size>" << endl;
 		exit(1);
 		}
 	if (!ECA->f_has_input_prefix) {
-		cout << "translation_plane_main.C please use option -input_prefix <input_prefix>" << endl;
+		cout << "spread_classify.C please use option -input_prefix <input_prefix>" << endl;
 		exit(1);
 		}
 
@@ -248,24 +225,24 @@ int main(int argc, const char **argv)
 
 	if (f_dim_over_kernel) {
 		if (e % dim_over_kernel) {
-			cout << "translation_plane_main.C dim_over_kernel does not divide e" << endl;
+			cout << "spread_classify.C dim_over_kernel does not divide e" << endl;
 			exit(1);
 			}
 		e1 = e / dim_over_kernel;
 		n = 2 * dim_over_kernel;
 		k = dim_over_kernel;
 		q = i_power_j(p, e1);
-		cout << "translation_plane_main.C order=" << order << " n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "spread_classify.C order=" << order << " n=" << n << " k=" << k << " q=" << q << endl;
 		}
 	else {
 		n = 2 * e;
 		k = e;
 		q = p;
-		cout << "translation_plane_main.C order=" << order << " n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "spread_classify.C order=" << order << " n=" << n << " k=" << k << " q=" << q << endl;
 		}
 
 	finite_field *F;
-	translation_plane T;
+	spread T;
 
 	F = new finite_field;
 
@@ -275,17 +252,17 @@ int main(int argc, const char **argv)
 	
 	INT max_depth = i_power_j(F->q, k) + 1;
 
-	cout << "translation_plane_main.C before T.init" << endl;
+	cout << "spread_classify.C before T.init" << endl;
 	T.init(order, n, k, max_depth, 
 		F, f_recoordinatize, 
 		ECA->input_prefix, ECA->base_fname, ECA->starter_size, 
 		argc, argv, 
 		verbose_level - 1);
-	cout << "translation_plane_main.C after T.init" << endl;
+	cout << "spread_classify.C after T.init" << endl;
 	
 	T.init2(verbose_level - 1);
 
-	cout << "translation_plane_main.C before IA.init" << endl;
+	cout << "spread_classify.C before IA.init" << endl;
 
 	BYTE prefix_with_directory[1000];
 
@@ -293,31 +270,25 @@ int main(int argc, const char **argv)
 
 	IA->init(T.A, T.A2, T.gen, 
 		T.spread_size, prefix_with_directory, ECA,
-		translation_plane_callback_report,
+		spread_callback_report,
 		NULL /* callback_subset_orbits */,
 		&T,
 		verbose_level - 1);
 
 
 	if (f_make_spread) {
-		cout << "translation_plane_main.C f_make_spread" << endl;
+		cout << "spread_classify.C f_make_spread" << endl;
 		T.write_spread_to_file(type_of_spread, verbose_level);
 		}
 	else if (f_starter) {
 
 
-		cout << "translation_plane_main.C f_starter" << endl;
+		cout << "spread_classify.C f_starter" << endl;
 		
 		T.compute(verbose_level);
 
-#if 0
-		BYTE fname[1000];
-
-		sprintf(fname, "%s_lvl_%ld", T.gen->fname_base, depth);
-		//T.gen->A->read_file_and_print_representatives(fname, FALSE);
-#endif
-		cout << "translation_plane_main.C starter_size = " << ECA->starter_size << endl;
-		cout << "translation_plane_main.C spread_size = " << T.spread_size << endl;
+		cout << "spread_classify.C starter_size = " << ECA->starter_size << endl;
+		cout << "spread_classify.C spread_size = " << T.spread_size << endl;
 	
 
 		if (f_list) {
@@ -325,7 +296,7 @@ int main(int argc, const char **argv)
 		
 			T.gen->list_all_orbits_at_level(ECA->starter_size, 
 				TRUE, 
-				print_translation_plane, 
+				print_spread, 
 				&T, 
 				f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
 
@@ -339,7 +310,7 @@ int main(int argc, const char **argv)
 		
 		if (f_draw_poset) {
 			if (f_v) {
-				cout << "translation_plane_main.C before gen->draw_poset" << endl;
+				cout << "spread_classify.C before gen->draw_poset" << endl;
 				}
 			T.gen->draw_poset(T.gen->fname_base, ECA->starter_size, 0 /* data1 */, f_embedded, f_sideways, verbose_level);
 			}
@@ -347,21 +318,21 @@ int main(int argc, const char **argv)
 
 		if (f_print_data_structure) {
 			if (f_v) {
-				cout << "translation_plane_main.C before gen->print_data_structure_tex" << endl;
+				cout << "spread_classify.C before gen->print_data_structure_tex" << endl;
 				}
 			T.gen->print_data_structure_tex(ECA->starter_size, 0 /*gen->verbose_level*/);
 			}
 
 
 		}
-	else if (f_identify) {
+	else if (nb_identify) {
 
-		cout << "translation_plane_main.C f_identify" << endl;
+		cout << "spread_classify.C f_identify" << endl;
 
 		
-		cout << "translation_plane_main.C classifying translation planes" << endl;
+		cout << "spread_classify.C classifying translation planes" << endl;
 		T.compute(0 /* verbose_level */);
-		cout << "translation_plane_main.C classifying translation planes done" << endl;
+		cout << "spread_classify.C classifying translation planes done" << endl;
 
 		//T.gen->print_node(5);
 		INT *transporter;
@@ -369,24 +340,32 @@ int main(int argc, const char **argv)
 		
 		transporter = NEW_INT(T.gen->A->elt_size_in_INT);
 		
-		cout << "translation_plane_main.C identifying ";
-		INT_vec_print(cout, identify_data, identify_data_sz);
-		cout << endl;
-		T.gen->identify(identify_data, identify_data_sz, transporter, orbit_at_level, verbose_level);
+		for (i = 0; i < nb_identify; i++) {
+
+			INT *data;
+			INT sz;
+
+			INT_vec_scan(identify_data[i], data, sz);
+			cout << "spread_classify.C identifying set " << i << " / " << nb_identify << " : ";
+			INT_vec_print(cout, data, sz);
+			cout << endl;
+			T.gen->identify(data, sz, transporter, orbit_at_level, verbose_level);
+
+			cout << "The set " << i << " / " << nb_identify << " is identified to belong to orbit " << orbit_at_level << endl;
+			cout << "A transporter is " << endl;
+			T.gen->A->element_print_quick(transporter, cout);
+
+			FREE_INT(data);
+			}
 
 		FREE_INT(transporter);
 		}
-#if 0
-	else if (f_Fano) {
-		do_Fano_subplanes(T, order, verbose_level);
-		}
-#endif
 	else if (f_test_identify) {
-		cout << "translation_plane_main.C f_test_identify" << endl;
+		cout << "spread_classify.C f_test_identify" << endl;
 		
-		cout << "translation_plane_main.C classifying translation planes" << endl;
+		cout << "spread_classify.C classifying translation planes" << endl;
 		T.compute(0 /* verbose_level */);
-		cout << "translation_plane_main.C classifying translation planes done" << endl;
+		cout << "spread_classify.C classifying translation planes done" << endl;
 
 		T.gen->test_identify(identify_level, identify_nb_times, verbose_level);
 		}
@@ -394,21 +373,21 @@ int main(int argc, const char **argv)
 
 	if (ECA->f_lift) {
 	
-		cout << "translation_plane_main.C f_lift" << endl;
+		cout << "spread_classify.C f_lift" << endl;
 		
 		ECA->target_size = T.spread_size;
 		ECA->user_data = (void *) &T;
 		ECA->A = T.A;
 		ECA->A2 = T.A2;
-		ECA->prepare_function_new = translation_plane_lifting_prepare_function_new;
-		ECA->early_test_function = translation_plane_lifting_early_test_function;
+		ECA->prepare_function_new = spread_lifting_prepare_function_new;
+		ECA->early_test_function = spread_lifting_early_test_function;
 		ECA->early_test_function_data = (void *) &T;
 		
 		//compute_lifts(ECA, verbose_level);
 			// in TOP_LEVEL/extra.C
 
 		if (f_v) {
-			cout << "translation_plane_main.C before ECA->compute_lifts" << endl;
+			cout << "spread_classify.C before ECA->compute_lifts" << endl;
 			}
 
 
@@ -416,34 +395,17 @@ int main(int argc, const char **argv)
 
 	
 		if (f_v) {
-			cout << "translation_plane_main.C after ECA->compute_lifts" << endl;
+			cout << "spread_classify.C after ECA->compute_lifts" << endl;
 			}
 
 
 
 		}
 
-	cout << "translation_plane_main.C before IA->execute" << endl;
+	cout << "spread_classify.C before IA->execute" << endl;
 	IA->execute(verbose_level);
-	cout << "translation_plane_main.C after IA->execute" << endl;
+	cout << "spread_classify.C after IA->execute" << endl;
 
-
-#if 0
-	if (f_CO) {
-		T.czerwinski_oakden(level, verbose_level);
-		}
-	else if (f_make_quotients) {
-		isomorph_worker(T.A, T.A2, T.gen, 
-			T.spread_size /* target_size */, T.prefix_with_directory, IA->prefix_iso, 
-			translation_plane_callback_make_quotients, &T, 
-			ECA->starter_size, verbose_level);
-
-		}
-	else if (f_plane_type_klein) {
-		T.test_plane_intersection_type_of_klein_image(
-			fname_plane_type_klein, verbose_level);
-		}
-#endif
 
 	if (f_print_spread) {
 		T.read_and_print_spread(fname_print_spread, verbose_level);
@@ -452,15 +414,6 @@ int main(int argc, const char **argv)
 		T.HMO(fname_HMO, verbose_level);
 		}
 
-#if 0
-	else if (f_down_orbits) {
-		isomorph_compute_down_orbits(T.A, T.A2, T.gen, 
-			T.spread_size, 
-			T.gen->fname_base, (BYTE *)"ISO/", 
-			&T, 
-			down_orbits_level, verbose_level);
-		}
-#endif
 
 	if (f_print_representatives) {
 		orbit_rep *R;
@@ -468,7 +421,7 @@ int main(int argc, const char **argv)
 		INT no, nb;
 		BYTE fname[1000];
 		
-		cout << "translation_plane_main.C printing orbit representatives at level " << representatives_size << endl;
+		cout << "spread_classify.C printing orbit representatives at level " << representatives_size << endl;
 		R = new orbit_rep;
 		M = NEW_INT(T.k * T.n);
 
@@ -480,7 +433,7 @@ int main(int argc, const char **argv)
 		for (no = 0; no < nb; no++) {
 			R->init_from_file(T.A /*A_base*/, (BYTE *) representatives_fname, 
 				representatives_size, no, representatives_size - 1/*level_of_candidates_file*/, 
-				translation_plane_lifting_early_test_function, 
+				spread_lifting_early_test_function, 
 				&T, 
 				verbose_level - 1
 				);
@@ -507,9 +460,9 @@ int main(int argc, const char **argv)
 }
 
 
-void print_translation_plane(INT len, INT *S, void *data)
+void print_spread(INT len, INT *S, void *data)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	
 	T->print(len, S);
 }

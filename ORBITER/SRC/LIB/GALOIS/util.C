@@ -2987,7 +2987,7 @@ INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
 			break;
 			}
 		else {
-			if (f_v) {
+			if (FALSE) {
 				cout << "count_number_of_orbits_in_file found a set of size " << len << endl;
 				}
 			}

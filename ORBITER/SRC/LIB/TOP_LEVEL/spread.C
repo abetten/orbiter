@@ -1,27 +1,27 @@
-// translation_plane.C
+// spread.C
 // 
 // Anton Betten
 // November 17, 2009
 //
 // moved to TOP_LEVEL: November 2, 2013
-// 
+// renamed to spread.C from translation_plane.C: March 25, 2018
 //
 //
 
 #include "orbiter.h"
 
 
-translation_plane::translation_plane()
+spread::spread()
 {
 	null();
 }
 
-translation_plane::~translation_plane()
+spread::~spread()
 {
 	freeself();
 }
 
-void translation_plane::null()
+void spread::null()
 {
 	f_override_schreier_depth = FALSE;
 	f_print_generators = FALSE;
@@ -51,7 +51,7 @@ void translation_plane::null()
 	//Data3 = NULL;
 }
 
-void translation_plane::freeself()
+void spread::freeself()
 {
 	if (A) {
 		delete A;
@@ -114,7 +114,7 @@ void translation_plane::freeself()
 	null();
 }
 
-void translation_plane::init(INT order, INT n, INT k, INT max_depth, 
+void spread::init(INT order, INT n, INT k, INT max_depth, 
 	finite_field *F, INT f_recoordinatize, 
 	const BYTE *input_prefix, 
 	const BYTE *base_fname,
@@ -128,28 +128,28 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 	
 	
 	if (f_v) {
-		cout << "translation_plane::init" << endl;
+		cout << "spread::init" << endl;
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
 		cout << "q=" << F->q << endl;
 		}
-	translation_plane::argc = argc;
-	translation_plane::argv = argv;
+	spread::argc = argc;
+	spread::argv = argv;
 	
-	translation_plane::order = order;
+	spread::order = order;
 	spread_size = order + 1;
-	translation_plane::n = n;
-	translation_plane::k = k;
-	translation_plane::max_depth = max_depth;
+	spread::n = n;
+	spread::k = k;
+	spread::max_depth = max_depth;
 	kn = k * n;
-	translation_plane::F = F;
-	translation_plane::f_recoordinatize = f_recoordinatize;
+	spread::F = F;
+	spread::f_recoordinatize = f_recoordinatize;
 	q = F->q;
 	
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
 	//sprintf(prefix_with_directory, "%s%s", starter_directory_name, base_fname);
-	translation_plane::starter_size = starter_size;
+	spread::starter_size = starter_size;
 
 
 	tmp_M1 = NEW_INT(n * n);
@@ -168,13 +168,13 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 
 	if (is_prime(q)) {
 		if (f_v) {
-			cout << "translation_plane::init q=" << q << " is a prime, putting f_semilinear = FALSE" << endl;
+			cout << "spread::init q=" << q << " is a prime, putting f_semilinear = FALSE" << endl;
 			}
 		f_semilinear = FALSE;
 		}
 	else {
 		if (f_v) {
-			cout << "translation_plane::init q=" << q << " is not a prime" << endl;
+			cout << "spread::init q=" << q << " is not a prime" << endl;
 			}
 		}
 
@@ -185,16 +185,16 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 
 
 	if (f_v) {
-		cout << "translation_plane::init before init_projective_group" << endl;
+		cout << "spread::init before init_projective_group" << endl;
 		}
 	A->init_projective_group(n, F, f_semilinear, f_basis, 0 /*verbose_level*/);
 	
 	if (f_v) {
-		cout << "translation_plane::init after init_projective_group, checking group order" << endl;
+		cout << "spread::init after init_projective_group, checking group order" << endl;
 		}
 	A->Sims->group_order(go);
 	if (f_v) {
-		cout << "translation_plane::init after init_projective_group group of order " << go << " has been created" <<  endl;
+		cout << "spread::init after init_projective_group group of order " << go << " has been created" <<  endl;
 		}
 
 
@@ -213,21 +213,21 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 	nb_points_total = nb_pts = generalized_binomial(n, 1, q);
 	
 	if (f_v) {
-		cout << "translation_plane::init nCkq = {n \\choose k}_q = " << nCkq << endl;
-		cout << "translation_plane::init r = {k \\choose 1}_q = " << r << endl;
-		cout << "translation_plane::init nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
+		cout << "spread::init nCkq = {n \\choose k}_q = " << nCkq << endl;
+		cout << "spread::init r = {k \\choose 1}_q = " << r << endl;
+		cout << "spread::init nb_pts = {n \\choose 1}_q = " << nb_pts << endl;
 		}
 
 
 
 	if (f_v) {
-		cout << "translation_plane::init before AG->init" <<  endl;
+		cout << "spread::init before AG->init" <<  endl;
 		}
 	
 	AG->init(*A, Grass, 0 /*verbose_level - 2*/);
 	
 	if (f_v) {
-		cout << "translation_plane::init after AG->init" <<  endl;
+		cout << "spread::init after AG->init" <<  endl;
 		}
 
 	A2->induced_action_on_grassmannian(A, AG, 
@@ -235,7 +235,7 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 		MINIMUM(verbose_level - 2, 2));
 	
 	if (f_v) {
-		cout << "translation_plane::init after A2->induced_action_on_grassmannian" <<  endl;
+		cout << "spread::init after A2->induced_action_on_grassmannian" <<  endl;
 		}
 
 	if (f_vv) {
@@ -299,22 +299,22 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 		longinteger_object go;
 		
 		A->Strong_gens->group_order(go);
-		cout << "translation_plane::init The order of PGGL(n,q) is " << go << endl;
+		cout << "spread::init The order of PGGL(n,q) is " << go << endl;
 		}
 
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "translation_plane::init before recoordinatize::init" << endl;
+			cout << "spread::init before recoordinatize::init" << endl;
 			}
 		R = new recoordinatize;
 		R->init(n, k, F, Grass, A, A2, 
 			f_projective, f_semilinear, 
-			translation_plane_check_function_incremental, (void *) this, 
+			spread_check_function_incremental, (void *) this, 
 			verbose_level);
 
 		if (f_v) {
-			cout << "translation_plane::init before recoordinatize::compute_starter" << endl;
+			cout << "spread::init before recoordinatize::compute_starter" << endl;
 			}
 		R->compute_starter(Starter, Starter_size, 
 			Starter_Strong_gens, MINIMUM(verbose_level - 1, 1));
@@ -322,7 +322,7 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 		longinteger_object go;
 		Starter_Strong_gens->group_order(go);
 		if (TRUE /*f_v*/) {
-			cout << "translation_plane::init The stabilizer of the first three components has order " << go << endl;
+			cout << "spread::init The stabilizer of the first three components has order " << go << endl;
 			}
 
 
@@ -330,18 +330,18 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 		}
 	else {
 		if (f_v) {
-			cout << "translation_plane::init we are not using recoordinatization, please use option -recoordinatize" << endl;
+			cout << "spread::init we are not using recoordinatization, please use option -recoordinatize" << endl;
 			//exit(1);
 			}
 		Nb = generalized_binomial(n, k, q); //R->nCkq; // this makes no sense
 		}
 
 	if (f_v) {
-		cout << "translation_plane::init Nb = " << Nb << endl;
-		cout << "translation_plane::init kn = " << kn << endl;
-		cout << "translation_plane::init n = " << n << endl;
-		cout << "translation_plane::init k = " << k << endl;
-		cout << "translation_plane::init allocating Data1 and Data2" << endl;
+		cout << "spread::init Nb = " << Nb << endl;
+		cout << "spread::init kn = " << kn << endl;
+		cout << "spread::init n = " << n << endl;
+		cout << "spread::init k = " << k << endl;
+		cout << "spread::init allocating Data1 and Data2" << endl;
 		}
 	
 	Data1 = NEW_INT(max_depth * kn);
@@ -353,7 +353,7 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 	if (k == 2 && is_prime(q)) {
 		Sing = new singer_cycle;
 		if (f_v) {
-			cout << "translation_plane::init before singer_cycle::init" << endl;
+			cout << "spread::init before singer_cycle::init" << endl;
 			}
 		Sing->init(4, F, A, A2, 0 /*verbose_level*/);
 		Sing->init_lines(0 /*verbose_level*/);
@@ -363,7 +363,7 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 	if (k == 2) {
 		
 		if (f_v) {
-			cout << "translation_plane::init k = 2, initializing klein correspondence" << endl;
+			cout << "spread::init k = 2, initializing klein correspondence" << endl;
 			}
 		Klein = new klein_correspondence;
 		O = new orthogonal;
@@ -373,26 +373,52 @@ void translation_plane::init(INT order, INT n, INT k, INT max_depth,
 		}
 	else {
 		if (f_v) {
-			cout << "translation_plane::init we are not initializing klein correspondence" << endl;
+			cout << "spread::init we are not initializing klein correspondence" << endl;
 			}
 		O = NULL;
 		Klein = NULL;
 		}
 	
 	if (f_v) {
-		cout << "translation_plane::init done" << endl;
+		cout << "spread::init done" << endl;
 		}
 }
 
-void translation_plane::print_points()
+void spread::unrank_point(INT *v, INT a)
+{
+	PG_element_unrank_modified(*F, v, 1, n, a);
+}
+
+INT spread::rank_point(INT *v)
+{
+	INT a;
+	
+	PG_element_rank_modified(*F, v, 1, n, a);
+	return a;
+}
+
+void spread::unrank_subspace(INT *M, INT a)
+{
+	Grass->unrank_INT_here(M, a, 0/*verbose_level - 4*/);
+}
+
+INT spread::rank_subspace(INT *M)
+{
+	INT a;
+	
+	a = Grass->rank_INT_here(M, 0 /*verbose_level*/);
+	return a;
+}
+
+void spread::print_points()
 {
 	INT *v;
 	INT i;
 
-	cout << "translation_plane::print_points" << endl;
+	cout << "spread::print_points" << endl;
 	v = NEW_INT(n);
 	for (i = 0; i < nb_pts; i++) {
-		PG_element_unrank_modified(*F, v, 1, n, i);
+		unrank_point(v, i);
 		cout << "point " << i << " : ";
 		INT_vec_print(cout, v, n);
 		cout << endl;
@@ -400,33 +426,54 @@ void translation_plane::print_points()
 	FREE_INT(v);
 }
 
-void translation_plane::print_elements()
+void spread::print_points(INT *pts, INT len)
+{
+	INT *v;
+	INT h, i;
+
+	cout << "spread::print_points" << endl;
+	v = NEW_INT(n);
+	for (h = 0; h < len; h++) {
+		i = pts[h];
+		unrank_point(v, i);
+		cout << "point " << h << " : " << i << " : ";
+		INT_vec_print(cout, v, n);
+		cout << endl;
+		}
+	FREE_INT(v);
+}
+
+void spread::print_elements()
 {
 	INT i, j;
+	INT *M;
 	
+	M = NEW_INT(kn);
 	for (i = 0; i < nCkq; i++) {
 		if (FALSE) {
 			cout << i << ":" << endl;
 			}
-		Grass->unrank_INT(i, 0);
+		unrank_subspace(M, i);
 		if (FALSE) {
-			print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
+			print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 			}
-		j = Grass->rank_INT(0);
+		j = rank_subspace(M);
 		if (j != i) {
 			cout << "rank yields " << j << " != " << i << endl;
 			exit(1);
 			}
 		}
+	FREE_INT(M);
 }
 
-void translation_plane::print_elements_and_points()
+void spread::print_elements_and_points()
 {
 	INT i, a, b;
-	INT *v, *w;
+	INT *M, *v, *w;
 	INT *Line;
 
-	cout << "translation_plane::print_elements_and_points" << endl;
+	cout << "spread::print_elements_and_points" << endl;
+	M = NEW_INT(kn);
 	v = NEW_INT(k);
 	w = NEW_INT(n);
 	Line = NEW_INT(r);
@@ -434,25 +481,26 @@ void translation_plane::print_elements_and_points()
 		if (FALSE) {
 			cout << i << ":" << endl;
 			}
-		Grass->unrank_INT(i, 0);
+		unrank_subspace(M, i);
 		for (a = 0; a < r; a++) {
 			PG_element_unrank_modified(*F, v, 1, k, a);
-			F->mult_matrix(v, Grass->M, w, 1, k, n);
-			PG_element_rank_modified(*F, w, 1, n, b);
+			F->mult_matrix(v, M, w, 1, k, n);
+			b = rank_point(w);
 			Line[a] = b;
 			}
 		cout << "line " << i << ":" << endl;
-		print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
-		cout << "points on line " << i << " : ";
+		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		cout << "points on subspace " << i << " : ";
 		INT_vec_print(cout, Line, r);
 		cout << endl;
 		}
+	FREE_INT(M);
 	FREE_INT(v);
 	FREE_INT(w);
 	FREE_INT(Line);
 }
 
-void translation_plane::read_arguments(int argc, const char **argv)
+void spread::read_arguments(int argc, const char **argv)
 {
 	INT i;
 	
@@ -469,14 +517,14 @@ void translation_plane::read_arguments(int argc, const char **argv)
 		}
 }
 
-void translation_plane::init2(INT verbose_level)
+void spread::init2(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
 	//INT depth;
 	
 	if (f_v) {
-		cout << "translation_plane::init2" << endl;
+		cout << "spread::init2" << endl;
 		}
 	//depth = order + 1;
 
@@ -484,7 +532,7 @@ void translation_plane::init2(INT verbose_level)
 	
 	if (f_recoordinatize) {
 		if (f_v) {
-			cout << "translation_plane::init2 before gen->initialize_with_starter" << endl;
+			cout << "spread::init2 before gen->initialize_with_starter" << endl;
 			}
 		gen->initialize_with_starter(A, A2, 
 			A->Strong_gens, 
@@ -500,12 +548,12 @@ void translation_plane::init2(INT verbose_level)
 			starter_canonize_callback, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "translation_plane::init2 after gen->initialize_with_starter" << endl;
+			cout << "spread::init2 after gen->initialize_with_starter" << endl;
 			}
 		}
 	else {
 		if (f_v) {
-			cout << "translation_plane::init2 before gen->initialize" << endl;
+			cout << "spread::init2 before gen->initialize" << endl;
 			}
 		gen->initialize(A, A2, 
 			A->Strong_gens, 
@@ -513,7 +561,7 @@ void translation_plane::init2(INT verbose_level)
 			starter_directory_name, prefix, 
 			verbose_level - 2);
 		if (f_v) {
-			cout << "translation_plane::init2 after gen->initialize" << endl;
+			cout << "spread::init2 after gen->initialize" << endl;
 			}
 		}
 
@@ -531,14 +579,14 @@ void translation_plane::init2(INT verbose_level)
 	// we have an early test function:
 
 	gen->init_early_test_func(
-		translation_plane_early_test_func_callback, 
+		spread_early_test_func_callback, 
 		this,  
 		verbose_level);
 
 	// We also have an incremental check function. 
 	// This is only used by the clique finder:
 	gen->init_incremental_check_func(
-		translation_plane_check_function_incremental_callback, 
+		spread_check_function_incremental_callback, 
 		this /* candidate_check_data */);
 
 
@@ -550,11 +598,11 @@ void translation_plane::init2(INT verbose_level)
 
 
 	if (f_v) {
-		cout << "translation_plane::init2 done" << endl;
+		cout << "spread::init2 done" << endl;
 		}
 }
 
-void translation_plane::compute(INT verbose_level)
+void spread::compute(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT schreier_depth = gen->depth;
@@ -564,7 +612,7 @@ void translation_plane::compute(INT verbose_level)
 
 
 	if (f_v) {
-		cout << "translation_plane::compute" << endl;
+		cout << "spread::compute" << endl;
 		}
 
 	
@@ -572,7 +620,7 @@ void translation_plane::compute(INT verbose_level)
 		schreier_depth = override_schreier_depth;
 		}
 	if (f_v) {
-		cout << "translation_plane::compute calling generator_main" << endl;
+		cout << "spread::compute calling generator_main" << endl;
 		}
 
 	gen->f_max_depth = TRUE;
@@ -588,11 +636,11 @@ void translation_plane::compute(INT verbose_level)
 	INT length;
 	
 	if (f_v) {
-		cout << "translation_plane::compute done with generator_main" << endl;
+		cout << "spread::compute done with generator_main" << endl;
 		}
 	length = gen->nb_orbits_at_level(gen->max_depth);
 	if (f_v) {
-		cout << "translation_plane::compute We found " << length << " orbits on " 
+		cout << "spread::compute We found " << length << " orbits on " 
 			<< gen->max_depth << "-sets of " << k 
 			<< "-subspaces in PG(" << n - 1 << "," << q << ")" 
 			<< " satisfying the partial spread condition" << endl;
@@ -601,12 +649,12 @@ void translation_plane::compute(INT verbose_level)
 
 
 	if (f_v) {
-		cout << "translation_plane::compute done" << endl;
+		cout << "spread::compute done" << endl;
 		}
 }
 
 
-void translation_plane::early_test_func(INT *S, INT len, 
+void spread::early_test_func(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	INT verbose_level)
@@ -619,7 +667,7 @@ void translation_plane::early_test_func(INT *S, INT len,
 	INT *B, *base_cols;
 		
 	if (f_v) {
-		cout << "translation_plane::early_test_func checking set ";
+		cout << "spread::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
@@ -635,18 +683,16 @@ void translation_plane::early_test_func(INT *S, INT len,
 		}
 
 	if (len + 1 > max_depth) {
-		cout << "translation_plane::early_test_func len + 1 > max_depth" << endl;
+		cout << "spread::early_test_func len + 1 > max_depth" << endl;
 		exit(1);
 		}
-	M = Data2;
-	MM = Data1;
-	//M = NEW_INT(n * n);
-	//MM = NEW_INT((len + 1) * k * n);
+	M = Data2; // [n * n]
+	MM = Data1; // [(len + 1) * kn]
 	B = tmp_M3;
 	base_cols = tmp_M4;
 
 	for (i = 0; i < len; i++) {
-		Grass->unrank_INT_here(MM + i * k * n, S[i], 0/*verbose_level - 4*/);
+		unrank_subspace(MM + i * kn, S[i]);
 		}
 	if (f_v) {
 		for (i = 0; i < len; i++) {
@@ -665,8 +711,8 @@ void translation_plane::early_test_func(INT *S, INT len,
 			i0 = len - 1;
 			}
 		for (i = i0; i < len; i++) {
-			INT_vec_copy(MM + i * k * n, M, k * n);
-			INT_vec_copy(Grass->M, M + k * n, k * n);
+			INT_vec_copy(MM + i * kn, M, k * n);
+			INT_vec_copy(Grass->M, M + kn, k * n);
 
 			if (f_vv) {
 				cout << "testing (p_" << i << ",candidates[" << j << "])=(" << S[i] <<  "," << candidates[j] << ")" << endl;
@@ -690,13 +736,12 @@ void translation_plane::early_test_func(INT *S, INT len,
 			}
 		} // next j
 	
-
-	//FREE_INT(M);
-	//FREE_INT(MM);
-
+	if (f_v) {
+		cout << "spread::early_test_func done" << endl;
+		}
 }
 
-INT translation_plane::check_function(INT len, INT *S, INT verbose_level)
+INT spread::check_function(INT len, INT *S, INT verbose_level)
 // checks all {len \choose 2} pairs. This is very inefficient.
 {
 	INT f_OK = TRUE;
@@ -707,16 +752,14 @@ INT translation_plane::check_function(INT len, INT *S, INT verbose_level)
 	INT *B, *base_cols;
 		
 	if (f_v) {
-		cout << "translation_plane::check_function checking set ";
+		cout << "spread::check_function checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
-	M1 = tmp_M1;
-	M = tmp_M2;
+	M1 = tmp_M1; // [kn]
+	M = tmp_M2; // [n * n]
 	B = tmp_M3;
 	base_cols = tmp_M4;
-	//M1 = NEW_INT(k * n);
-	//M = NEW_INT(n * n);
 	
 	if (f_v) {
 		for (i = 0; i < len; i++) {
@@ -727,10 +770,10 @@ INT translation_plane::check_function(INT len, INT *S, INT verbose_level)
 		}
 
 	for (i = 0; i < len; i++) {
-		Grass->unrank_INT_here(M1, S[i], 0/*verbose_level - 4*/);
+		unrank_subspace(M1, S[i]);
 		for (j = i + 1; j < len; j++) {
-			INT_vec_copy(M1, M, k * n);
-			Grass->unrank_INT_here(M + k * n, S[j], 0/*verbose_level - 4*/);
+			INT_vec_copy(M1, M, kn);
+			unrank_subspace(M + kn, S[j]);
 
 			if (f_vv) {
 				cout << "testing (p_" << i << ",p_" << j << ")=(" << S[i] << "," << S[j] << ")" << endl;
@@ -754,9 +797,6 @@ INT translation_plane::check_function(INT len, INT *S, INT verbose_level)
 			break;
 		}
 
-	//FREE_INT(M1);
-	//FREE_INT(M);
-
 	if (f_OK) {
 		if (f_v) {
 			cout << "OK" << endl;
@@ -772,7 +812,7 @@ INT translation_plane::check_function(INT len, INT *S, INT verbose_level)
 
 }
 
-INT translation_plane::check_function_incremental(INT len, INT *S, INT verbose_level)
+INT spread::check_function_incremental(INT len, INT *S, INT verbose_level)
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1) 
 {
 	INT f_OK = TRUE;
@@ -783,7 +823,7 @@ INT translation_plane::check_function_incremental(INT len, INT *S, INT verbose_l
 	INT *B, *base_cols;
 		
 	if (f_v) {
-		cout << "translation_plane::check_function_incremental checking set ";
+		cout << "spread::check_function_incremental checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -791,12 +831,10 @@ INT translation_plane::check_function_incremental(INT len, INT *S, INT verbose_l
 		f_OK = TRUE;
 		goto finish;
 		}
-	M1 = tmp_M1;
-	M = tmp_M2;
+	M1 = tmp_M1; // [kn]
+	M = tmp_M2; // [n * n]
 	B = tmp_M3;
 	base_cols = tmp_M4;
-	//M = NEW_INT(n * n);
-	//M1 = NEW_INT(k * n);
 	
 	if (f_v) {
 		for (i = 0; i < len; i++) {
@@ -808,10 +846,10 @@ INT translation_plane::check_function_incremental(INT len, INT *S, INT verbose_l
 	
 	j = len - 1;
 	
-	Grass->unrank_INT_here(M1, S[j], 0/*verbose_level - 4*/);
+	unrank_subspace(M1, S[j]);
 	for (i = 0; i < len - 1; i++) {
-		Grass->unrank_INT_here(M, S[i], 0/*verbose_level - 4*/);
-		INT_vec_copy(M1, M + k * n, k * n);
+		unrank_subspace(M, S[i]);
+		INT_vec_copy(M1, M + kn, kn);
 		
 		if (f_vv) {
 			cout << "testing (p_" << i << ",p_" << j << ")=(" << S[i] <<  "," << S[j] << ")" << endl;
@@ -832,9 +870,6 @@ INT translation_plane::check_function_incremental(INT len, INT *S, INT verbose_l
 			}
 		}
 
-	//FREE_INT(M);
-	//FREE_INT(M1);
-
 finish:
 	if (f_OK) {
 		if (f_v) {
@@ -851,7 +886,7 @@ finish:
 
 }
 
-INT translation_plane::check_function_pair(INT rk1, INT rk2, INT verbose_level)
+INT spread::check_function_pair(INT rk1, INT rk2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -860,23 +895,20 @@ INT translation_plane::check_function_pair(INT rk1, INT rk2, INT verbose_level)
 	INT *B, *base_cols;
 		
 	if (f_v) {
-		cout << "translation_plane::check_function_pair checking (" << rk1 << "," << rk2 << ")" << endl;
+		cout << "spread::check_function_pair checking (" << rk1 << "," << rk2 << ")" << endl;
 		}
-	M = tmp_M1;
-	//M = NEW_INT(n * n);
+	M = tmp_M1; // [n * n]
 	B = tmp_M3;
 	base_cols = tmp_M4;
 	
-	Grass->unrank_INT_here(M, rk1, 0/*verbose_level - 4*/);
-	Grass->unrank_INT_here(M + k * n, rk2, 0/*verbose_level - 4*/);
+	unrank_subspace(M, rk1);
+	unrank_subspace(M + kn, rk2);
 
 	if (f_vv) {
 		cout << "testing (" << rk1 <<  "," << rk2 << ")" << endl;
 		print_integer_matrix_width(cout, M, n, n, n, F->log10_of_q + 1);
 		}
 	rk = F->rank_of_matrix_memory_given(M, n, B, base_cols, 0);
-
-	//FREE_INT(M);
 
 	if (rk < n) {
 		if (f_v) {
@@ -892,245 +924,134 @@ INT translation_plane::check_function_pair(INT rk1, INT rk2, INT verbose_level)
 		}
 }
 
-void translation_plane::lifting_prepare_function_new(exact_cover *E, INT starter_case, 
+void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case, 
 	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, INT *&col_labels, 
 	INT &f_ruled_out, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
-	INT nb_free_points, nb_needed;
 	
 	if (f_v) {
-		cout << "translation_plane::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "spread::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
 		}
 
 
+	spread_lifting *SL;
 
-	INT *points_covered_by_starter;
-	INT nb_points_covered_by_starter;
+	SL = new spread_lifting;
 
-	INT *free_point_list; // [nb_free_points]
-	INT *point_idx; // [nb_points_total]
-		// point_idx[i] = index of a point in free_point_list 
-		// or -1 if the point is in points_covered_by_starter
-
-
-	INT i, j, h, idx, a, b;
-	INT *point_list;
-	INT nb_points;
-
-	points_covered_by_starter = NEW_INT(E->starter_size * block_size);
-	for (i = 0; i < E->starter_size; i++) {
-		a = E->starter[i];
-		Grass->unrank_INT(a, 0/*verbose_level - 4*/);
-		all_PG_elements_in_subspace(F, Grass->M, k, n, point_list, nb_points, 0 /*verbose_level - 2*/);
-			// in projective.C
-		
-		if (nb_points != block_size) {
-			cout << "translation_plane::lifting_prepare_function_new nb_points != block_size" << endl;
-			exit(1);
-			}
-		for (j = 0; j < block_size; j++) {
-			points_covered_by_starter[i * block_size + j] = point_list[j];
-			}
-
-		if (f_v3) {
-			cout << "starter element " << i << " / " << E->starter_size << " is " << a << ":" << endl;
-			INT_matrix_print(Grass->M, k, n);
-			//cout << endl;
-			cout << "points_covered_by_starter: " << endl;
-			INT_vec_print(cout, points_covered_by_starter + i * block_size, block_size);
-			cout << endl;
-			}
-
-		FREE_INT(point_list);
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new before SL->init" << endl;
 		}
-	nb_points_covered_by_starter = E->starter_size * block_size;
-	INT_vec_heapsort(points_covered_by_starter, nb_points_covered_by_starter);
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new covered points computed:" << endl;
-		cout << "translation_plane::lifting_prepare_function_new nb_points_covered_by_starter=" << nb_points_covered_by_starter << endl;
-		INT_vec_print(cout, points_covered_by_starter, nb_points_covered_by_starter);
+	SL->init(this, E, 
+		E->starter, E->starter_size, 
+		starter_case, E->starter_nb_cases, 
+		candidates, nb_candidates, Strong_gens, 
+		E->f_lex, 
+		verbose_level);
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new after SL->init" << endl;
+		}
+
+	
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new before SL->create_system" << endl;
+		}
+
+	Dio = SL->create_system(verbose_level);
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
+		}
+
+	INT *col_color;
+	INT nb_colors;
+
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new before SL->find_coloring" << endl;
+		}
+	SL->find_coloring(Dio, 
+		col_color, nb_colors, 
+		verbose_level);
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new after SL->find_coloring" << endl;
+		}
+
+	if (f_v) {
+		cout << "col_color=";
+		INT_vec_print(cout, col_color, Dio->n);
 		cout << endl;
 		}
+
+	UBYTE *Adj;
 	
-	nb_free_points = nb_points_total - nb_points_covered_by_starter;
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new nb_free_points=" << nb_free_points << endl;
-		}
-	free_point_list = NEW_INT(nb_free_points);
-	point_idx = NEW_INT(nb_points_total);
-	j = 0;
-	for (i = 0; i < nb_points_total; i++) {
-		if (INT_vec_search(points_covered_by_starter, nb_points_covered_by_starter, i, idx)) {
-			point_idx[i] = -1;
-			}
-		else {
-			free_point_list[j] = i;
-			point_idx[i] = j;
-			j++;
-			}
-		}
-	if (j != nb_free_points) {
-		cout << "translation_plane::lifting_prepare_function_new j != nb_free_points" << endl;
-		exit(1);
-		}
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new computed free points" << endl;
-		}
-	nb_needed = spread_size - E->starter_size;
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new nb_needed=" << nb_needed << endl;
-		cout << "translation_plane::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
-		}
-
-
-
-#if 0
-	nb_live_blocks2 = nb_candidates;
-	live_blocks2 = NEW_INT(nb_live_blocks2);
-	for (j = 0; j < nb_candidates; j++) {
-		a = candidates[j];
-		live_blocks2[j] = a;
-		}
-#endif
-
-	col_labels = NEW_INT(nb_candidates);
-
-
-	INT_vec_copy(candidates, col_labels, nb_candidates);
-
-
-	INT nb_rows = nb_free_points;
-	INT nb_cols = nb_candidates;
-
-
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new candidates: ";
-		INT_vec_print(cout, candidates, nb_candidates);
-		cout << " (nb_candidates=" << nb_candidates << ")" << endl;
-		}
-
-
-
-
-	if (E->f_lex) {
-		INT nb_cols_before;
-
-		nb_cols_before = nb_cols;
-		E->lexorder_test(col_labels, nb_cols, Strong_gens->gens, 
-			verbose_level - 2);
-		if (f_v) {
-			cout << "translation_plane::lifting_prepare_function_new after lexorder test nb_candidates before: " << nb_cols_before << " reduced to  " << nb_cols << " (deleted " << nb_cols_before - nb_cols << ")" << endl;
-			}
-		}
-
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new after lexorder test" << endl;
-		cout << "translation_plane::lifting_prepare_function_new nb_cols=" << nb_cols << endl;
-		}
-
-
-
-
-	Dio = new diophant;
-	Dio->open(nb_rows, nb_cols);
-	Dio->sum = nb_needed;
-
-	for (i = 0; i < nb_rows; i++) {
-		Dio->type[i] = t_EQ;
-		Dio->RHS[i] = 1;
-		}
-
-	Dio->fill_coefficient_matrix_with(0);
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new initializing Inc" << endl;
-		cout << "translation_plane::lifting_prepare_function_new nb_rows = " << nb_rows << endl;
-		cout << "translation_plane::lifting_prepare_function_new nb_cols = " << nb_cols << endl;
-		}
-	for (j = 0; j < nb_cols; j++) {
-		a = col_labels[j];
-		Grass->unrank_INT(a, 0/*verbose_level - 4*/);
-		if (f_vv) {
-			cout << "candidate " << j << " / " << nb_cols << " is " << a << " is " << endl;
-			INT_matrix_print(Grass->M, k, n);
-			}
-		all_PG_elements_in_subspace(F, Grass->M, k, n, point_list, nb_points, 0 /*verbose_level*/);
-		if (nb_points != block_size) {
-			cout << "translation_plane::lifting_prepare_function_new nb_points != E->block_size" << endl;
-			exit(1);
-			}
-		if (FALSE /*f_vv*/) {
-			cout << "List of points: ";
-			INT_vec_print(cout, point_list, nb_points);
-			cout << endl;
-			}
-
-		if (f_v3) {
-			cout << "candidate element " << i << " / " << nb_cols << " is " << a << ":" << endl;
-			INT_matrix_print(Grass->M, k, n);
-			cout << endl; 
-			}
-
-
-
-		for (h = 0; h < block_size; h++) {
-			b = point_list[h];
-			i = point_idx[b];
-			if (i == -1) {
-				cout << "translation_plane::lifting_prepare_function_new candidate block contains point that is already covered" << endl;
-				exit(1);
-				}
-			if (i < 0 || i >= nb_free_points) {
-				cout << "translation_plane::lifting_prepare_function_new i < 0 || i >= nb_free_points" << endl;
-				exit(1);
-				}
-			Dio->Aij(i, j) = 1;
-			}
-		FREE_INT(point_list);
-		}
-
-	if (f_vv) {
-		cout << "translation_plane::lifting_prepare_function_new coefficient matrix" << endl;
-		for (i = 0; i < nb_rows; i++) {
-			for (j = 0; j < nb_cols; j++) {
-				cout << Dio->Aij(i, j);
-				}
-			cout << endl;
-			}
-		}
-
-	FREE_INT(points_covered_by_starter);
-	FREE_INT(free_point_list);
-	FREE_INT(point_idx);
 	if (f_v) {
-		cout << "translation_plane::lifting_prepare_function_new nb_free_points=" << nb_free_points << " nb_candidates=" << nb_candidates << endl;
+		cout << "spread::lifting_prepare_function_new before Dio->make_clique_graph_adjacency_matrix" << endl;
+		}
+	Dio->make_clique_graph_adjacency_matrix(Adj, verbose_level);
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new after Dio->make_clique_graph_adjacency_matrix" << endl;
+		}
+
+	colored_graph *CG;
+
+	CG = new colored_graph;
+
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new before CG->init_with_point_labels" << endl;
+		}
+	CG->init_with_point_labels(SL->nb_cols, nb_colors, 
+		col_color, Adj, TRUE /* f_ownership_of_bitvec */, 
+		SL->col_labels /* point_labels */, 
+		verbose_level);
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new after CG->init_with_point_labels" << endl;
+		}
+	
+	BYTE fname_clique_graph[1000];
+
+	sprintf(fname_clique_graph, "%sgraph_%ld.bin", E->output_prefix, starter_case);
+	CG->save(fname_clique_graph, verbose_level - 1);
+	if (f_v) {
+		cout << "Written file " << fname_clique_graph << " of size " << file_size(fname_clique_graph) << endl;
+		}
+
+	delete CG;
+
+	col_labels = SL->col_labels;
+	SL->col_labels = NULL;
+
+	delete SL;
+	//FREE_UBYTE(Adj);
+	FREE_INT(col_color);
+	
+	if (f_v) {
+		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
 		}
 
 	if (f_v) {
-		cout << "translation_plane::lifting_prepare_function_new done" << endl;
+		cout << "spread::lifting_prepare_function_new done" << endl;
 		}
 }
 
-void translation_plane::compute_dual_spread(INT *spread, INT *dual_spread, INT verbose_level)
+
+
+void spread::compute_dual_spread(INT *spread, INT *dual_spread, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "translation_plane::compute_dual_spread" << endl;
+		cout << "spread::compute_dual_spread" << endl;
 		}
 
 	Grass->compute_dual_spread(spread, dual_spread, spread_size, verbose_level - 1);
 
 	if (f_v) {
-		cout << "translation_plane::compute_dual_spread done" << endl;
+		cout << "spread::compute_dual_spread done" << endl;
 		}
 }
 
-void translation_plane::print(INT len, INT *S)
+void spread::print(INT len, INT *S)
 {
 	INT i;
 	INT f_elements_exponential = FALSE;
@@ -1153,21 +1074,21 @@ void translation_plane::print(INT len, INT *S)
 }
 
 
-// ####################################################################################
+// #############################################################################
 // global functions:
-// ####################################################################################
+// #############################################################################
 
 
-void translation_plane_lifting_early_test_function(INT *S, INT len, 
+void spread_lifting_early_test_function(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "translation_plane_lifting_early_test_function for set ";
+		cout << "spread_lifting_early_test_function for set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -1176,21 +1097,21 @@ void translation_plane_lifting_early_test_function(INT *S, INT len,
 		good_candidates, nb_good_candidates, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "translation_plane_lifting_early_test_function done" << endl;
+		cout << "spread_lifting_early_test_function done" << endl;
 		}
 }
 
-void translation_plane_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
+void spread_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
 	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
 	diophant *&Dio, INT *&col_labels, 
 	INT &f_ruled_out, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	translation_plane *T = (translation_plane *) EC->user_data;
+	spread *T = (spread *) EC->user_data;
 
 	if (f_v) {
-		cout << "translation_plane_lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "spread_lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
 		}
 
 	T->lifting_prepare_function_new(EC, starter_case, 
@@ -1200,15 +1121,15 @@ void translation_plane_lifting_prepare_function_new(exact_cover *EC, INT starter
 
 
 	if (f_v) {
-		cout << "translation_plane_lifting_prepare_function_new after lifting_prepare_function_new" << endl;
+		cout << "spread_lifting_prepare_function_new after lifting_prepare_function_new" << endl;
 		}
 
 	if (f_v) {
-		cout << "translation_plane_lifting_prepare_function_new nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
+		cout << "spread_lifting_prepare_function_new nb_rows=" << Dio->m << " nb_cols=" << Dio->n << endl;
 		}
 
 	if (f_v) {
-		cout << "translation_plane_lifting_prepare_function_new done" << endl;
+		cout << "spread_lifting_prepare_function_new done" << endl;
 		}
 }
 
@@ -1217,7 +1138,7 @@ void translation_plane_lifting_prepare_function_new(exact_cover *EC, INT starter
 
 INT starter_canonize_callback(INT *Set, INT len, INT *Elt, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	
@@ -1236,9 +1157,9 @@ INT starter_canonize_callback(INT *Set, INT len, INT *Elt, void *data, INT verbo
 	return TRUE;
 }
 
-INT translation_plane_check_function_incremental(INT len, INT *S, void *data, INT verbose_level)
+INT spread_check_function_incremental(INT len, INT *S, void *data, INT verbose_level)
 {
-	translation_plane *T = (translation_plane *) data;
+	spread *T = (spread *) data;
 	INT ret;
 
 	ret = T->check_function_incremental(len, S, verbose_level);
