@@ -791,6 +791,33 @@ void grassmann::unrank_INT_here_and_extend_basis(INT *Mtx, INT rk, INT verbose_l
 		}
 }
 
+void grassmann::unrank_INT_here_and_compute_perp(INT *Mtx, INT rk, INT verbose_level)
+// Mtx must be n x n
+{
+	INT f_v = (verbose_level >= 1);
+	INT r;
+	INT *base_cols; // [n]
+	INT *embedding;
+
+	if (f_v) {
+		cout << "grassmann::unrank_INT_here_and_compute_perp" << endl;
+		}
+	unrank_INT(rk, verbose_level);
+	INT_vec_copy(M, Mtx, k * n);
+	base_cols = NEW_INT(n);
+	embedding = base_cols + k;
+	r = F->RREF_and_kernel(n, k, Mtx, 0 /* verbose_level */);
+	if (r != k) {
+		cout << "r != k" << endl;
+		exit(1);
+		}
+	
+	FREE_INT(base_cols);
+	if (f_v) {
+		cout << "grassmann::unrank_INT_here_and_compute_perp done" << endl;
+		}
+}
+
 void grassmann::line_regulus_in_PG_3_q(INT *&regulus, INT &regulus_size, INT verbose_level)
 // the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 {

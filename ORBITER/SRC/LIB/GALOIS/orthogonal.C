@@ -7472,16 +7472,27 @@ void orthogonal::create_random_Siegel_transformation(INT *Mtx, INT verbose_level
 		}
 
 	rk_u = random_integer(nb_pts);
-
+	if (f_v) {
+		cout << "orthogonal::create_random_Siegel_transformation rk_u=" << rk_u << endl;
+		}
 	unrank_point(u, 1, rk_u, 0 /* verbose_level*/);
 	//Q_epsilon_unrank(*F, u, 1 /*stride*/, epsilon, d - 1, form_c1, form_c2, form_c3, rk_u);
 			
 	while (TRUE) {
 		rk_v = random_integer(nb_pts_affine);
+		if (f_v) {
+			cout << "orthogonal::create_random_Siegel_transformation trying rk_v=" << rk_v << endl;
+			}
 		AG_element_unrank(q, v, 1 /* stride */, d, rk_v);
 		alpha = ::evaluate_bilinear_form(*F, u, v, d, Gram_matrix);
 		if (alpha == 0) {
+			if (f_v) {
+				cout << "orthogonal::create_random_Siegel_transformation it works" << endl;
+				}
 			break;
+			}
+		if (f_v) {
+			cout << "orthogonal::create_random_Siegel_transformation fail, try again" << endl;
 			}
 		}
 	if (f_vv) {

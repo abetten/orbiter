@@ -325,12 +325,18 @@ void load_colored_graph(const BYTE *fname, INT &nb_vertices, INT &nb_colors,
 
 	nb_vertices = fread_INT4(fp);
 	nb_colors = fread_INT4(fp);
+	if (f_v) {
+		cout << "load_colored_graph nb_vertices=" << nb_vertices << " nb_colors=" << nb_colors << endl;
+		}
 
 
 	L = (nb_vertices * (nb_vertices - 1)) >> 1;
 
 	bitvector_length = (L + 7) >> 3;
 
+	if (f_v) {
+		cout << "load_colored_graph user_data_size=" << user_data_size << endl;
+		}
 	user_data_size = fread_INT4(fp);
 	user_data = NEW_INT(user_data_size);
 	

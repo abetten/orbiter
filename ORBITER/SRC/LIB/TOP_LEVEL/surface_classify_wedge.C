@@ -1739,7 +1739,7 @@ void surface_classify_wedge::identify_surface(INT *coeff_of_given_surface,
 		}
 }
 
-void surface_classify_wedge::latex_surfaces(ostream &ost)
+void surface_classify_wedge::latex_surfaces(ostream &ost, INT f_with_stabilizers)
 {
 	BYTE title[10000];
 	BYTE title_ds[10000];
@@ -1771,7 +1771,7 @@ void surface_classify_wedge::latex_surfaces(ostream &ost)
 	Classify_double_sixes->Double_sixes->print_latex(ost, title_ds);
 #endif
 
-	Surfaces->print_latex(ost, title);
+	Surfaces->print_latex(ost, title, f_with_stabilizers);
 
 
 #if 1

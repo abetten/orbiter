@@ -5,6 +5,23 @@
 
 #include "galois.h"
 
+INT Hamming_distance_binary(INT a, INT b, INT n)
+{
+	INT i, d, u, v;
+
+	d = 0;
+	for (i = 0; i < n; i++) {
+		u = a % 2;
+		v = b % 2;
+		if (u != v) {
+			d++;
+			}
+		a >>= 1;
+		b >>= 1;
+		}
+	return d;
+}
+
 INT INT_factorial(INT a)
 {
 	INT n, i;
@@ -282,6 +299,28 @@ void set_complement(INT *subset, INT subset_size, INT *complement, INT &size_com
 			}
 		complement[size_complement++] = i;
 		}
+}
+
+void set_complement_safe(INT *subset, INT subset_size, INT *complement, INT &size_complement, INT universal_set_size)
+// subset does not need to be in increasing order
+{
+	INT i, j;
+	INT *subset2;
+
+	subset2 = NEW_INT(subset_size);
+	INT_vec_copy(subset, subset2, subset_size);
+	INT_vec_heapsort(subset2, subset_size);
+	
+	j = 0;
+	size_complement = 0;
+	for (i = 0; i < universal_set_size; i++) {
+		if (j < subset_size && subset2[j] == i) {
+			j++;
+			continue;
+			}
+		complement[size_complement++] = i;
+		}
+	FREE_INT(subset2);
 }
 
 void set_add_elements(INT *elts, INT &size, INT *elts_to_add, INT nb_elts_to_add)

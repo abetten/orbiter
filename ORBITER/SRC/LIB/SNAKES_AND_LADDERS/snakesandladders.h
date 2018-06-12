@@ -1562,7 +1562,8 @@ public:
 		longinteger_object &go, INT verbose_level);
 	set_and_stabilizer *get_set_and_stabilizer(INT orbit_index, 
 		INT verbose_level);
-	void print_latex(ostream &ost, const BYTE *title);
+	void print_latex(ostream &ost, 
+		const BYTE *title, INT f_with_stabilizers);
 	void write_file(ofstream &fp, INT verbose_level);
 	void read_file(ifstream &fp, INT verbose_level);
 	

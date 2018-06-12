@@ -1569,6 +1569,11 @@ void action::make_element_from_permutation_representation(INT *Elt, INT *data, I
 	for (i = 0; i < base_len; i++) {
 		a = base[i];
 		base_image[i] = data[a];
+		if (base_image[i] >= degree) {
+			cout << "action::make_element_from_permutation_representation base_image[i] >= degree" << endl;
+			cout << "i=" << i << " base[i] = " << a << " base_image[i]=" << base_image[i] << endl;
+			exit(1);
+			}
 		}
 	make_element_from_base_image(Elt, base_image, verbose_level);
 
@@ -2610,9 +2615,13 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 		}
 	Sch->init(this);
 	Sch->init_generators(*gens);
-	Sch->compute_all_point_orbits(0);
+
+	//Sch->compute_all_point_orbits(0);
+	Sch->compute_all_orbits_on_invariant_subset(set_sz, 
+		set, 0 /* verbose_level */);
+
 	if (f_v) {
-		cout << "action::lexorder_test: there are " << Sch->nb_orbits << " orbits on points" << endl;
+		cout << "action::lexorder_test: there are " << Sch->nb_orbits << " orbits on set" << endl;
 		Sch->print_orbit_length_distribution(cout);
 		}
 	if (f_v5) {
@@ -2913,6 +2922,8 @@ void action::centralizer_using_MAGMA(const BYTE *prefix, sims *G, INT *Elt, INT 
 	fp << "for h := 1 to #Generators(C) do for i := 1 to " << n << " do printf \"%o\", i^C.h; printf \" \"; end for; printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
+	cout << "Written file " << fname_magma << " of size " << file_size(fname_magma) << endl;
+	
 	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
 	cout << "executing centralizer command in MAGMA" << endl;
 	system(cmd);

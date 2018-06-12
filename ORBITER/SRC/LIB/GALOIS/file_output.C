@@ -54,7 +54,7 @@ void file_output::open(const BYTE *fname, void *user_data, INT verbose_level)
 
 void file_output::close()
 {
-	*fp << "-1" << endl;
+	//*fp << "-1" << endl;
 	delete fp;
 	fp = NULL;
 	f_file_is_open = FALSE;
@@ -75,5 +75,9 @@ void file_output::write_line(INT nb, INT *data, INT verbose_level)
 	*fp << endl;
 }
 
+void file_output::write_EOF(INT nb_sol, INT verbose_level)
+{
+	*fp << "-1 " << nb_sol << endl;
+}
 
 

@@ -18,6 +18,7 @@ all: all_cliques.out \
 	cc2widor.out \
 	colored_graph.out \
 	create_layered_graph_file.out \
+	distribution.out \
 	dlx.out \
 	draw_graph.out \
 	draw_colored_graph.out \
@@ -36,8 +37,11 @@ all: all_cliques.out \
 	create_file.out \
 	missing_files.out \
 	read_solutions.out \
+	read_orbiter_file.out \
 	join_sets.out \
-	concatenate_files.out 
+	concatenate_files.out \
+	graph.out \
+	collect.out 
 
 
 
@@ -58,6 +62,9 @@ colored_graph.out:  colored_graph.o ;
 
 create_layered_graph_file.out:  create_layered_graph_file.o ;
 	$(DISCRETA_CPP)  create_layered_graph_file.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+distribution.out:  distribution.o;
+	$(DISCRETA_CPP)  distribution.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 dlx.out:  dlx.o;
 	$(DISCRETA_CPP)  dlx.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -113,11 +120,20 @@ missing_files.out:  missing_files.o ;
 read_solutions.out:  read_solutions.o ;
 	$(DISCRETA_CPP)  read_solutions.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
+read_orbiter_file.out:  read_orbiter_file.o ;
+	$(DISCRETA_CPP)  read_orbiter_file.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
 join_sets.out:  join_sets.o ;
 	$(DISCRETA_CPP)  join_sets.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 concatenate_files.out:  concatenate_files.o ;
 	$(DISCRETA_CPP)  concatenate_files.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+graph.out:  graph.o ;
+	$(DISCRETA_CPP)  graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+collect.out:  collect.o ;
+	$(DISCRETA_CPP)  collect.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

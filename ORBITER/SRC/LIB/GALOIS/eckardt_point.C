@@ -119,6 +119,31 @@ void eckardt_point::latex_to_str(BYTE *str)
 		}
 }
 
+void eckardt_point::latex_to_str_without_E(BYTE *str)
+{
+	INT t, i, j;
+	
+	str[0] = 0;
+	if (len == 3) {
+		//sprintf(str + strlen(str), "{");
+		for (t = 0; t < 3; t++) {
+			k2ij(index[t], i, j, 6);
+			sprintf(str + strlen(str), "%ld%ld", i + 1, j + 1);
+			if (t < 2) {
+				sprintf(str + strlen(str), ",");
+				}
+			}
+		//sprintf(str + strlen(str), "}");
+		}
+	else if (len == 2) {
+		sprintf(str + strlen(str), "%ld%ld", index[0] + 1, index[1] + 1);
+		}
+	else {
+		cout << "eckardt_point::latex len is illegal" << endl;
+		exit(1);
+		}
+}
+
 
 
 void eckardt_point::init2(INT i, INT j)

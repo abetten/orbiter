@@ -76,7 +76,7 @@ typedef class spread_create spread_create;
 	// added March 22, 2018
 typedef class spread_lifting spread_lifting;
 	// added April 1, 2018
-
+typedef class k_arc_generator k_arc_generator;
 
 
 // #############################################################################
@@ -470,16 +470,6 @@ public:
 	void test_edges(INT verbose_level);
 	INT test_edge(INT n1, INT *subset1, 
 		INT *transporter, INT verbose_level);
-#if 0
-	void read_data_file(INT f_recompute_schreier, INT verbose_level);
-	// Reads the data for starters.
-	// First, it reads the data file whose name is fname_data_file,
-	// which contains the data up to level - 1
-	// and sets depth_completed to one level less, which is level - 2.
-	// Then, the bottom two levels are read from the level databases 
-	// through the object database D.
-	// In this step, it calls init_DB_level.
-#endif
 	void read_data_files_for_starter(INT level, 
 		const BYTE *prefix, INT verbose_level);
 		// Calls gen->read_level_file_binary 
@@ -820,7 +810,10 @@ public:
 };
 
 
+// #############################################################################
 // isomorph_global.C:
+// #############################################################################
+
 void isomorph_read_statistic_files(action *A_base, 
 	action *A, generator *gen, 
 	INT size, const BYTE *prefix_classify, 
@@ -1637,10 +1630,13 @@ public:
 
 
 	// allocated in init();
-	action *A; // P Gamma L(n,q) 
-	action *A2; // action of A on grassmannian of k-subspaces of V(n,q)
+	action *A;
+		// P Gamma L(n,q) 
+	action *A2;
+		// action of A on grassmannian of k-subspaces of V(n,q)
 	action_on_grassmannian *AG;
-	grassmann *Grass; // {n choose k}_q
+	grassmann *Grass;
+		// {n choose k}_q
 
 
 	INT f_recoordinatize;
@@ -2181,14 +2177,19 @@ public:
 	~translation_plane_via_andre_model();
 	void null();
 	void freeself();
-	void init(INT *spread_elements_numeric, INT k, finite_field *F, 
-		vector_ge *spread_stab_gens, longinteger_object &spread_stab_go, 
+	void init(INT *spread_elements_numeric, 
+		INT k, finite_field *F, 
+		vector_ge *spread_stab_gens, 
+		longinteger_object &spread_stab_go, 
 		INT verbose_level);
-	void classify_arcs(const BYTE *prefix, INT depth, INT verbose_level);
-	void classify_subplanes(const BYTE *prefix, INT verbose_level);
+	void classify_arcs(const BYTE *prefix, 
+		INT depth, INT verbose_level);
+	void classify_subplanes(const BYTE *prefix, 
+		INT verbose_level);
 	INT check_arc(INT *S, INT len, INT verbose_level);
 	INT check_subplane(INT *S, INT len, INT verbose_level);
-	INT check_if_quadrangle_defines_a_subplane(INT *S, INT *subplane7, 
+	INT check_if_quadrangle_defines_a_subplane(
+		INT *S, INT *subplane7, 
 		INT verbose_level);
 };
 
@@ -2382,8 +2383,6 @@ public:
 	~surface_classify_wedge();
 	void null();
 	void freeself();
-	//void allocate_data();
-	//void free_data();
 	void read_arguments(int argc, const char **argv, 
 		INT verbose_level);
 	void init(finite_field *F, linear_group *LG, 
@@ -2402,11 +2401,8 @@ public:
 		INT **Identify_coeff, 
 		INT **Identify_monomial, 
 		INT *Identify_length, 
-		//INT **&Label, 
-		//INT *&nb_Labels, 
 		INT verbose_level);
 	void identify_surface_command_line(INT cnt, 
-		//INT **&Label, INT *&nb_Labels, 
 		INT &isomorphic_to, INT *Elt_isomorphism, 
 		INT verbose_level);
 	void identify_Sa_and_print_table(INT verbose_level);
@@ -2414,7 +2410,7 @@ public:
 	void identify_surface(INT *coeff_of_given_surface, 
 		INT &isomorphic_to, INT *Elt_isomorphism, 
 		INT verbose_level);
-	void latex_surfaces(ostream &ost);
+	void latex_surfaces(ostream &ost, INT f_with_stabilizers);
 	void report_surface(ostream &ost, INT orbit_index, INT verbose_level);
 	void generate_source_code(INT verbose_level);
 		// no longer produces nb_E[] and single_six[]
@@ -2682,15 +2678,19 @@ public:
 	void init_orbits_on_tritangent_planes(INT verbose_level);
 	void init_orbits_on_trihedral_pairs(INT verbose_level);
 	void init_orbits_on_points_not_on_lines(INT verbose_level);
-	void print_automorphism_group(ostream &ost);
+	void print_automorphism_group(ostream &ost, 
+		INT f_print_orbits, const BYTE *fname_mask);
 	void compute_quartic(INT pt_orbit, 
 		INT &pt_A, INT &pt_B, INT *transporter, 
 		INT *equation, INT *equation_nice, INT verbose_level);
 	void quartic(ostream &ost, INT verbose_level);
 	void cheat_sheet(ostream &ost, 
-		const BYTE *label_txt, const BYTE *label_tex, INT verbose_level);
+		const BYTE *label_txt, const BYTE *label_tex, 
+		INT f_print_orbits, const BYTE *fname_mask, 
+		INT verbose_level);
 	void cheat_sheet_quartic_curve(ostream &ost, 
-		const BYTE *label_txt, const BYTE *label_tex, INT verbose_level);
+		const BYTE *label_txt, const BYTE *label_tex, 
+		INT verbose_level);
 };
 
 
@@ -2750,7 +2750,8 @@ public:
 	void classify(INT verbose_level);
 	void downstep(INT verbose_level);
 	void upstep(INT verbose_level);
-	void print_trihedral_pairs(ostream &ost);
+	void print_trihedral_pairs(ostream &ost, 
+		INT f_with_stabilizers);
 	strong_generators *identify_trihedral_pair_and_get_stabilizer(
 		INT *planes6, INT *transporter, INT &orbit_index, 
 		INT verbose_level);
@@ -2976,6 +2977,8 @@ public:
 	BYTE label_txt[1000];
 	BYTE label_tex[1000];
 
+	INT f_ownership;
+
 	INT q;
 	finite_field *F;
 
@@ -2999,7 +3002,11 @@ public:
 	~surface_create();
 	void null();
 	void freeself();
+	void init_with_data(surface_create_description *Descr, 
+		surface_with_action *Surf_A, 
+		INT verbose_level);
 	void init(surface_create_description *Descr, INT verbose_level);
+	void init2(INT verbose_level);
 	void apply_transformations(const BYTE **transform_coeffs, 
 		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
@@ -3146,6 +3153,8 @@ public:
 	void print_surface_equations_on_line(INT *The_surface_equations, 
 		INT lambda, INT lambda_rk, ostream &ost);
 	void print_equations();
+	void print_isomorphism_types_of_trihedral_pairs(ostream &ost, 
+		vector_ge *cosets);
 };
 
 
@@ -3317,5 +3326,92 @@ public:
 	void apply_transformations(const BYTE **transform_coeffs, 
 		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
+
+// #############################################################################
+// k_arc_generator.C:
+// #############################################################################
+
+
+class k_arc_generator {
+
+public:
+
+	finite_field *F; // do not free
+	projective_space *P2; // do not free
+	
+	arc_generator *Gen;
+	BYTE base_fname[1000];
+
+	INT d;
+	INT sz;
+
+	INT nb_orbits;
+
+	INT *line_type;
+	INT *k_arc_idx;
+	INT nb_k_arcs;
+	
+	k_arc_generator();
+	~k_arc_generator();
+	void null();
+	void freeself();
+	void init(finite_field *F, projective_space *P2, 
+		INT d, INT sz, 
+		int argc, const char **argv, 
+		INT verbose_level);
+	void compute_line_type(INT *set, INT len, INT verbose_level);
+	//void report_latex(ostream &ost);
+};
+
+// #############################################################################
+// orbit_of_equations.C
+// #############################################################################
+
+class orbit_of_equations {
+public:
+	action *A;
+	action_on_homogeneous_polynomials *AonHPD;
+	finite_field *F;
+	strong_generators *SG;
+	INT nb_monomials;
+	INT sz; // = 1 + nb_monomials
+	INT sz_for_compare; // = 1 + nb_monomials
+	INT *data_tmp; // [sz]
+
+	INT position_of_original_object;
+	INT allocation_length;
+	INT used_length;
+	INT **Equations;
+	INT *prev;
+	INT *label;
+
+
+	orbit_of_equations();
+	~orbit_of_equations();
+	void null();
+	void freeself();
+	void init(action *A, finite_field *F, 
+		action_on_homogeneous_polynomials *AonHPD, 
+		strong_generators *SG, INT *coeff_in, 
+		INT verbose_level);
+	void map_an_equation(INT *object_in, INT *object_out, 
+		INT *Elt, INT verbose_level);
+	void print_orbit();
+	void compute_orbit(INT *coeff, INT verbose_level);
+	void get_transporter(INT idx, INT *transporter, INT verbose_level);
+		// transporter is an element which maps 
+		// the orbit representative to the given subspace.
+	void get_random_schreier_generator(INT *Elt, INT verbose_level);
+	void compute_stabilizer(action *default_action, 
+		longinteger_object &go, 
+		sims *&Stab, INT verbose_level);
+		// this function allocates a sims structure into Stab.
+	strong_generators *generators_for_stabilizer_of_orbit_rep(
+		longinteger_object &full_group_order, INT verbose_level);
+	INT search_data(INT *data, INT &idx);
+	void save_csv(const BYTE *fname, INT verbose_level);
+};
+
+INT orbit_of_equations_compare_func(void *a, void *b, void *data);
 
 

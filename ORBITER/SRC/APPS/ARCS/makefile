@@ -16,6 +16,7 @@ all: arcs_main.out \
 	create_group.out \
 	test_arc.out \
 	k_arc_lifting.out \
+	k_arc_generator_main.out \
 	arcs_orderly.out 
 
 
@@ -30,6 +31,9 @@ create_group.out:  create_group.o;
 
 test_arc.out:  test_arc.o;
 	$(DISCRETA_CPP)  test_arc.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+k_arc_generator_main.out:  k_arc_generator_main.o;
+	$(DISCRETA_CPP)  k_arc_generator_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 k_arc_lifting.out:  k_arc_lifting.o;
 	$(DISCRETA_CPP)  k_arc_lifting.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

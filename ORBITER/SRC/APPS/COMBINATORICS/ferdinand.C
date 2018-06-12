@@ -31,13 +31,16 @@ public:
 	INT go_subgroup;
 	INT nb_involutions;
 	INT *f_has_order2;
-	INT *f_subgroup;
+	INT *f_subgroup; // [go]
+	INT *list_of_elements; // [go]
+	INT *list_of_elements_inverse; // [go]
 
 	action *A;
 	finite_field *F;
 	INT target_depth;
 
 	INT *Elt1;
+	INT *Elt2;
 	vector_ge *gens;
 	vector_ge *gens_subgroup;
 	longinteger_object target_go, target_go_subgroup;
@@ -72,13 +75,24 @@ public:
 	INT incremental_check_func(INT len, INT *S, INT verbose_level);
 	void classify_subsets(INT verbose_level);
 	void write_file(INT verbose_level);
+	void create_Adjacency_list(INT *Adj, 
+		INT *connection_set, INT connection_set_sz, 
+		INT verbose_level);
+	// Adj[go * connection_set_sz]
+	void create_additional_edges(INT *Additional_neighbor, 
+		INT *Additional_neighbor_sz, 
+		INT connection_element, 
+		INT verbose_level);
+	// Additional_neighbor[go], Additional_neighbor_sz[go]
 
 };
 
 
 
 
-void ferdinand(INT level, INT group, INT subgroup, INT verbose_level);
+void ferdinand(INT level, INT group, INT subgroup, 
+	INT f_create_graph, INT create_graph_level, INT create_graph_index, INT connection_element, 
+	INT verbose_level);
 INT ferdinand_incremental_check_func(INT len, INT *S, void *data, INT verbose_level);
 
 
@@ -91,6 +105,10 @@ int main(int argc, char **argv)
 	INT group = 0;
 	INT f_subgroup = FALSE;
 	INT subgroup = 0;
+	INT f_create_graph = FALSE;
+	INT create_graph_level = 0;
+	INT create_graph_index = 0;
+	INT connection_element = 0;
 	INT i;
 	
 	
@@ -114,6 +132,13 @@ int main(int argc, char **argv)
 			subgroup = atoi(argv[++i]);
 			cout << "-subgroup " << subgroup << endl;
 			}
+		else if (strcmp(argv[i], "-create_graph") == 0) {
+			f_create_graph = TRUE;
+			create_graph_level = atoi(argv[++i]);
+			create_graph_index = atoi(argv[++i]);
+			connection_element = atoi(argv[++i]);
+			cout << "-create_graph " << create_graph_level << " " << create_graph_index << " " << connection_element << endl;
+			}
 		}
 	if (!f_level) {
 		cout << "please use option -level <level>" << endl;
@@ -123,14 +148,18 @@ int main(int argc, char **argv)
 		cout << "please use option -group <group>" << endl;
 		exit(1);
 		}
-	ferdinand(level, group, subgroup, verbose_level);
+	ferdinand(level, group, subgroup, 
+		f_create_graph, create_graph_level, create_graph_index, connection_element, 
+		verbose_level);
 	cout << "end" << endl;
 }
 
 
 
 
-void ferdinand(INT level, INT group, INT subgroup, INT verbose_level)
+void ferdinand(INT level, INT group, INT subgroup, 
+	INT f_create_graph, INT create_graph_level, INT create_graph_index, INT connection_element, 
+	INT verbose_level)
 {
 
 	cayley_graph_search *Cayley;
@@ -145,7 +174,7 @@ void ferdinand(INT level, INT group, INT subgroup, INT verbose_level)
 	Cayley->init(level, group, subgroup, verbose_level);
 	cout << "after init" << endl;
 
-		
+
 	cout << "before classify_subsets" << endl;
 	Cayley->classify_subsets(verbose_level);
 	cout << "after classify_subsets" << endl;
@@ -154,8 +183,111 @@ void ferdinand(INT level, INT group, INT subgroup, INT verbose_level)
 	cout << "before write_file" << endl;
 	Cayley->write_file(verbose_level);
 	cout << "after write_file" << endl;
+	
+
+	if (f_create_graph) {
+		cout << "creating graph level=" << create_graph_level << " index = " << create_graph_index << endl;
+
+		set_and_stabilizer *SaS;
+
+		SaS = Cayley->gen->get_set_and_stabilizer(create_graph_level, 
+			create_graph_index, verbose_level);
+		cout << "the orbit representative is:" << endl;
+		SaS->print_set_tex(cout);
+		cout << endl;
+
+		INT go;
+		INT *Adj;
+		INT *Adj_list;
+		INT *Additional_neighbor;
+		INT *Additional_neighbor_sz;
+
+		go = Cayley->go;
+		Additional_neighbor = NEW_INT(go);
+		Additional_neighbor_sz = NEW_INT(go);
+		Adj_list = NEW_INT(go * SaS->sz);
+		Adj = NEW_INT(go * go);
+		Cayley->create_Adjacency_list(Adj_list, 
+			SaS->data, SaS->sz, 
+			verbose_level);
+
+		cout << "The adjacency list is:" << endl;
+		INT_matrix_print(Adj_list, go, SaS->sz);
+
+		Cayley->create_additional_edges(Additional_neighbor, 
+			Additional_neighbor_sz, 
+			connection_element, 
+			verbose_level);
+
+		cout << "additional neighbors have been computed" << endl;
 
 
+		INT_vec_zero(Adj, go * go);
+
+		INT i, j, ii, jj, h;
+		for (i = 0; i < go; i++) {
+			for (h = 0; h < SaS->sz; h++) {
+				j = Adj_list[i * SaS->sz + h];
+				ii = Cayley->list_of_elements_inverse[i];
+				jj = Cayley->list_of_elements_inverse[j];
+				Adj[ii * go + jj] = 1;
+				Adj[jj * go + ii] = 1;
+				}
+			if (Additional_neighbor_sz[i]) {
+				j = Additional_neighbor[i];
+				ii = Cayley->list_of_elements_inverse[i];
+				jj = Cayley->list_of_elements_inverse[j];
+				Adj[ii * go + jj] = 1;
+				Adj[jj * go + ii] = 1;
+				}
+			}
+		cout << "The adjacency matrix is:" << endl;
+		for (i = 0; i < go; i++) {
+			for (j = 0; j < go; j++) {
+				cout << Adj[i * go + j];
+				}
+			cout << endl;
+			}
+
+		cout << "Maple output:" << endl;
+		cout << "A := Matrix([" << endl;
+		for (i = 0; i < go; i++) {
+			cout << "[";
+			for (j = 0; j < go; j++) {
+				cout << Adj[i * go + j];
+				if (j < go - 1) {
+					cout << ",";
+					}
+				}
+			cout << "]";
+			if (i < go - 1) {
+				cout << ",";
+				}
+			cout << endl;
+			}
+		cout << "]);" << endl;
+		cout << "Eigenvalues(A);" << endl;
+
+
+		colored_graph *CG;
+
+		CG = new colored_graph;
+
+		CG->init_adjacency(go /* nb_points*/, 2 /* nb_colors */, 
+			Cayley->f_subgroup /*colors*/, Adj, 0 /* verbose_level*/);
+
+		BYTE fname[1000];
+
+		sprintf(fname, "F_%ld_%ld_%ld.bin", go, create_graph_level, connection_element);
+		CG->save(fname, verbose_level);
+
+		delete CG;
+		FREE_INT(Adj_list);
+		FREE_INT(Adj);
+		FREE_INT(Additional_neighbor);
+		FREE_INT(Additional_neighbor_sz);
+
+		}
 
 
 
@@ -207,6 +339,54 @@ void cayley_graph_search::init(INT level, INT group, INT subgroup, INT verbose_l
 	init_group2(verbose_level);
 	if (f_v) {
 		cout << "cayley_graph_search::init after init_group2" << endl;
+		}
+
+	INT i, j;
+	cout << "The elements of the subgroup are:" << endl;
+	for (i = 0; i < go; i++) {
+		if (f_subgroup[i]) {
+			cout << i << " ";
+			}
+		}
+	cout << endl;
+	list_of_elements = NEW_INT(go);
+	list_of_elements_inverse = NEW_INT(go);
+	for (i = 0; i < go_subgroup; i++) {
+		S_subgroup->element_unrank_INT(i, Elt1);
+		cout << "Element " << setw(5) << i << " / " << go_subgroup << ":" << endl;
+		A->element_print(Elt1, cout);
+		j = S->element_rank_INT(Elt1);
+		cout << "is element " << j << endl;
+		list_of_elements[i] = j;
+		}
+	
+	cout << "generators:" << endl;
+	for (i = 0; i < nb_generators; i++) {
+		cout << "generator " << i << " / " << nb_generators << " is " << generators[i] << endl;
+		A->element_print_quick(Strong_gens->gens->ith(i), cout);
+		cout << endl;
+		}
+	
+	for (i = 0; i < go_subgroup; i++) {
+		S->element_unrank_INT(list_of_elements[i], Elt1);
+		A->element_mult(Elt1, Strong_gens->gens->ith(0), Elt2, 0);
+		j = S->element_rank_INT(Elt2);
+		list_of_elements[go_subgroup + i] = j;
+		cout << "Element " << setw(5) << i << " / " << go_subgroup << " * b = " << endl;
+		A->element_print(Elt2, cout);
+		j = S->element_rank_INT(Elt1);
+		cout << "is element " << j << endl;
+		}
+
+	for (i = 0; i < go; i++) {
+		j = list_of_elements[i];
+		list_of_elements_inverse[j] = i;
+		}
+
+
+	cout << "List of elements and inverse:" << endl;
+	for (i = 0; i < go; i++) {
+		cout << i << " : " << list_of_elements[i] << " : " << list_of_elements_inverse[i] << endl;
 		}
 
 
@@ -381,6 +561,7 @@ void cayley_graph_search::init_group_level_3(INT verbose_level)
 
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_INT(A->elt_size_in_INT);
 
 
 	gens = new vector_ge;
@@ -471,6 +652,7 @@ void cayley_graph_search::init_group_level_4(INT verbose_level)
 
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_INT(A->elt_size_in_INT);
 	gens = new vector_ge;
 	gens_subgroup = new vector_ge;
 	gens->init(A);
@@ -713,6 +895,7 @@ void cayley_graph_search::init_group_level_5(INT verbose_level)
 
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_INT(A->elt_size_in_INT);
 	gens = new vector_ge;
 	gens_subgroup = new vector_ge;
 	gens->init(A);
@@ -840,9 +1023,7 @@ void cayley_graph_search::classify_subsets(INT verbose_level)
 		prefix, 
 		f_W, f_w,
 		Aut, Aut, 
-		//A, A2, 
 		Aut_gens, 
-		//Strong_gens, 
 		NULL /* ferdinand3_early_test_func */,
 		NULL /* void *early_test_func_data */, 
 		ferdinand_incremental_check_func /* INT (*candidate_incremental_check_func)(INT len, INT *S, void *data, INT verbose_level)*/, 
@@ -911,10 +1092,8 @@ void cayley_graph_search::write_file(INT verbose_level)
 
 		INT n;
 		INT *Adj;
-		INT *image_set;
 
 		Adj = NEW_INT(go * sz);
-		image_set = NEW_INT(sz);
 
 		nb_orbits = gen->nb_orbits_at_level(sz);
 		cout << "We found " << nb_orbits << " orbits on " << sz << "-subsets" << endl;
@@ -946,27 +1125,9 @@ void cayley_graph_search::write_file(INT verbose_level)
 				}
 
 
-			for (i = 0; i < go; i++) {
-				S->element_unrank_INT(i, Elt1);
-
-#if 0
-				cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
-
-				cout << "set: ";
-				INT_vec_print(cout, SaS->data, target_depth);
-				cout << endl;
-#endif
-
-				A2->map_a_set_and_reorder(SaS->data, image_set, sz, Elt1, 0 /* verbose_level */);
-
-#if 0
-				cout << "image_set: ";
-				INT_vec_print(cout, image_set, target_depth);
-				cout << endl;
-#endif
-			
-				INT_vec_copy(image_set, Adj + i * sz, sz);
-				}
+			create_Adjacency_list(Adj, 
+				SaS->data, sz, 
+				verbose_level);
 			//cout << "The adjacency sets are:" << endl;
 			//print_integer_matrix_with_standard_labels(cout, Adj, go, sz, FALSE /* f_tex */);
 			fp << "{";
@@ -1001,7 +1162,6 @@ void cayley_graph_search::write_file(INT verbose_level)
 		//fp << "];" << endl;
 
 		delete Adj;
-		delete image_set;
 		} // end of fp
 
 	cout << "written file " << fname_graphs << " of size " << file_size(fname_graphs) << endl;
@@ -1034,5 +1194,87 @@ void cayley_graph_search::write_file(INT verbose_level)
 		}
 }
 
+void cayley_graph_search::create_Adjacency_list(INT *Adj, 
+	INT *connection_set, INT connection_set_sz, 
+	INT verbose_level)
+// Adj[go * connection_set_sz]
+{
+	INT f_v = FALSE;//(verbose_level >= 1);
+	INT i;
+	
+	if (f_v) {
+		cout << "cayley_graph_search::create_Adjacency_list" << endl;
+		}
+	for (i = 0; i < go; i++) {
+		S->element_unrank_INT(i, Elt1);
 
+#if 0
+		cout << "Element " << setw(5) << i << " / " << go << ":" << endl;
+
+		cout << "set: ";
+		INT_vec_print(cout, connection_set, connection_set_sz);
+		cout << endl;
+#endif
+
+		A2->map_a_set_and_reorder(connection_set, Adj + i * connection_set_sz, connection_set_sz, Elt1, 0 /* verbose_level */);
+
+#if 0
+		cout << "image_set: ";
+		INT_vec_print(cout, Adj + i * connection_set_sz, connection_set_sz);
+		cout << endl;
+#endif
+	
+		}
+#if 0
+	//cout << "The adjacency sets are:" << endl;
+	//print_integer_matrix_with_standard_labels(cout, Adj, go, sz, FALSE /* f_tex */);
+	cout << "{";
+	for (i = 0; i < go; i++) {
+		cout << i << ":[";
+		for (j = 0; j < sz; j++) {
+			cout << Adj[i * connection_set_sz + j];
+			if (j < connection_set_sz - 1) {
+				cout << ",";
+				}
+			}
+		cout << "]";
+#if 1
+		if (i < go - 1) {
+				cout << ",";
+			}
+#endif
+		}
+	cout << "}";
+#endif
+
+	if (f_v) {
+		cout << "cayley_graph_search::create_Adjacency_list done" << endl;
+		}
+}
+
+void cayley_graph_search::create_additional_edges(INT *Additional_neighbor, 
+	INT *Additional_neighbor_sz, 
+	INT connection_element, 
+	INT verbose_level)
+// Additional_neighbor[go], Additional_neighbor_sz[go]
+{
+	INT f_v = (verbose_level >= 1);
+	INT i;
+	
+	if (f_v) {
+		cout << "cayley_graph_search::create_Adjacency_list" << endl;
+		}
+	for (i = 0; i < go; i++) {
+		Additional_neighbor_sz[i] = 0;
+		}
+	//S->element_unrank_INT(connection_element, Elt2);
+	for (i = 0; i < go; i++) {
+		if (!f_subgroup[i]) {
+			continue;
+			}
+		S->element_unrank_INT(i, Elt1);
+		Additional_neighbor[i] = A2->element_image_of(connection_element, Elt1, 0 /* verbose_level */);
+		Additional_neighbor_sz[i]++;
+		}
+}
 

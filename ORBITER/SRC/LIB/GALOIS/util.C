@@ -39,7 +39,8 @@ void INT_vec_apply(INT *from, INT *through, INT *to, INT len)
 		}
 }
 
-INT INT_vec_is_constant_on_subset(INT *v, INT *subset, INT sz, INT &value)
+INT INT_vec_is_constant_on_subset(INT *v, 
+	INT *subset, INT sz, INT &value)
 {
 	INT a, i;
 
@@ -100,7 +101,8 @@ INT INT_vec_find_first_nonzero_entry(INT *v, INT len)
 			return i;
 			}
 		}
-	cout << "INT_vec_find_first_nonzero_entry the vector is all zero" << endl;
+	cout << "INT_vec_find_first_nonzero_entry the vector is all zero" 
+		<< endl;
 	exit(1);
 }
 
@@ -156,7 +158,8 @@ void INT_vec_swap(INT *v1, INT *v2, INT len)
 		}
 }
 
-void INT_vec_delete_element_assume_sorted(INT *v, INT &len, INT a)
+void INT_vec_delete_element_assume_sorted(INT *v, 
+	INT &len, INT a)
 {
 	INT idx, i;
 
@@ -183,7 +186,8 @@ UBYTE *bitvector_allocate(INT length)
 	return p;
 }
 
-UBYTE *bitvector_allocate_and_coded_length(INT length, INT &coded_length)
+UBYTE *bitvector_allocate_and_coded_length(
+	INT length, INT &coded_length)
 {
 	INT l, i;
 	UBYTE *p;
@@ -250,7 +254,8 @@ INT INT_vec_hash(INT *data, INT len)
 {
 	uint32_t h;
 
-	h = SuperFastHash ((const char *) data, (uint32_t) len * sizeof(INT));
+	h = SuperFastHash ((const char *) data, 
+		(uint32_t) len * sizeof(INT));
 	return (INT) h;
 }
 
@@ -456,7 +461,8 @@ void BYTE_swap(BYTE *p, BYTE *q, INT len)
 		}
 }
 
-void print_integer_matrix(ostream &ost, INT *p, INT m, INT n)
+void print_integer_matrix(ostream &ost, 
+	INT *p, INT m, INT n)
 {
 	INT i, j;
 	
@@ -468,7 +474,8 @@ void print_integer_matrix(ostream &ost, INT *p, INT m, INT n)
 		}
 }
 
-void print_integer_matrix_width(ostream &ost, INT *p, INT m, INT n, INT dim_n, INT w)
+void print_integer_matrix_width(ostream &ost, 
+	INT *p, INT m, INT n, INT dim_n, INT w)
 {
 	INT i, j;
 	
@@ -483,7 +490,8 @@ void print_integer_matrix_width(ostream &ost, INT *p, INT m, INT n, INT dim_n, I
 		}
 }
 
-void print_01_matrix_tex(ostream &ost, INT *p, INT m, INT n)
+void print_01_matrix_tex(ostream &ost, 
+	INT *p, INT m, INT n)
 {
 	INT i, j;
 	
@@ -496,7 +504,8 @@ void print_01_matrix_tex(ostream &ost, INT *p, INT m, INT n)
 		}
 }
 
-void print_integer_matrix_tex(ostream &ost, INT *p, INT m, INT n)
+void print_integer_matrix_tex(ostream &ost, 
+	INT *p, INT m, INT n)
 {
 	INT i, j;
 	
@@ -513,7 +522,9 @@ void print_integer_matrix_tex(ostream &ost, INT *p, INT m, INT n)
 	ost << "\\end{array}" << endl;
 }
 
-void print_integer_matrix_with_labels(ostream &ost, INT *p, INT m, INT n, INT *row_labels, INT *col_labels, INT f_tex)
+void print_integer_matrix_with_labels(ostream &ost, 
+	INT *p, INT m, INT n, INT *row_labels, INT *col_labels, 
+	INT f_tex)
 {
 	INT i, j;
 	
@@ -558,23 +569,29 @@ void print_integer_matrix_with_labels(ostream &ost, INT *p, INT m, INT n, INT *r
 		}
 }
 
-void print_integer_matrix_with_standard_labels(ostream &ost, INT *p, INT m, INT n, INT f_tex)
+void print_integer_matrix_with_standard_labels(ostream &ost, 
+	INT *p, INT m, INT n, INT f_tex)
 {
-	print_integer_matrix_with_standard_labels_and_offset(ost, p, m, n, 0, 0, f_tex);
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		p, m, n, 0, 0, f_tex);
 
 }
 
-void print_integer_matrix_with_standard_labels_and_offset(ostream &ost, INT *p, INT m, INT n, INT m_offset, INT n_offset, INT f_tex)
+void print_integer_matrix_with_standard_labels_and_offset(ostream &ost, 
+	INT *p, INT m, INT n, INT m_offset, INT n_offset, INT f_tex)
 {
 	if (f_tex) {
-		print_integer_matrix_with_standard_labels_and_offset_tex(ost, p, m, n, m_offset, n_offset);
+		print_integer_matrix_with_standard_labels_and_offset_tex(
+			ost, p, m, n, m_offset, n_offset);
 		}
 	else {
-		print_integer_matrix_with_standard_labels_and_offset_text(ost, p, m, n, m_offset, n_offset);
+		print_integer_matrix_with_standard_labels_and_offset_text(
+			ost, p, m, n, m_offset, n_offset);
 		}
 }
 
-void print_integer_matrix_with_standard_labels_and_offset_text(ostream &ost, INT *p, INT m, INT n, INT m_offset, INT n_offset)
+void print_integer_matrix_with_standard_labels_and_offset_text(
+	ostream &ost, INT *p, INT m, INT n, INT m_offset, INT n_offset)
 {
 	INT i, j, w;
 	
@@ -596,7 +613,9 @@ void print_integer_matrix_with_standard_labels_and_offset_text(ostream &ost, INT
 		}
 }
 
-void print_integer_matrix_with_standard_labels_and_offset_tex(ostream &ost, INT *p, INT m, INT n, INT m_offset, INT n_offset)
+void print_integer_matrix_with_standard_labels_and_offset_tex(
+	ostream &ost, INT *p, INT m, INT n, 
+	INT m_offset, INT n_offset)
 {
 	INT i, j;
 	
@@ -618,7 +637,8 @@ void print_integer_matrix_with_standard_labels_and_offset_tex(ostream &ost, INT 
 	ost << "\\end{array}" << endl;
 }
 
-void print_integer_matrix_tex_block_by_block(ostream &ost, INT *p, INT m, INT n, INT block_width)
+void print_integer_matrix_tex_block_by_block(ostream &ost, 
+	INT *p, INT m, INT n, INT block_width)
 {
 	INT i, j, I, J, nb_row_blocks, nb_col_blocks, v, w;
 	INT *M;
@@ -642,9 +662,15 @@ void print_integer_matrix_tex_block_by_block(ostream &ost, INT *p, INT m, INT n,
 					M[i * w + j] = p[(I * block_width + i) * n + J * block_width + j];
 					}
 				}
-			cout << "print_integer_matrix_tex_block_by_block I=" << I << " J=" << J << " v=" << v << " w=" << w << " M=" << endl;
+			cout << "print_integer_matrix_tex_block_by_block I=" 
+				<< I << " J=" << J << " v=" << v 
+				<< " w=" << w << " M=" << endl;
 			INT_matrix_print(M, v, w);
-			print_integer_matrix_with_standard_labels_and_offset(ost, M, v, w, I * block_width, J * block_width, TRUE /* f_tex*/);
+			print_integer_matrix_with_standard_labels_and_offset(
+				ost, M, v, w, 
+				I * block_width, 
+				J * block_width, 
+				TRUE /* f_tex*/);
 #if 0
 			ost << "\\begin{array}{*{" << w << "}{r}}" << endl;
 			for (i = 0; i < block_width; i++) {
@@ -667,7 +693,8 @@ void print_integer_matrix_tex_block_by_block(ostream &ost, INT *p, INT m, INT n,
 	FREE_INT(M);
 }
 
-void print_big_integer_matrix_tex(ostream &ost, INT *p, INT m, INT n)
+void print_big_integer_matrix_tex(ostream &ost, 
+	INT *p, INT m, INT n)
 {
 	INT i, j;
 	
@@ -679,7 +706,8 @@ void print_big_integer_matrix_tex(ostream &ost, INT *p, INT m, INT n)
 		}
 }
 
-void INT_matrix_make_block_matrix_2x2(INT *Mtx, INT k, INT *A, INT *B, INT *C, INT *D)
+void INT_matrix_make_block_matrix_2x2(INT *Mtx, 
+	INT k, INT *A, INT *B, INT *C, INT *D)
 // makes the 2k x 2k block matrix 
 // (A B)
 // (C D)
@@ -709,7 +737,8 @@ void INT_matrix_make_block_matrix_2x2(INT *Mtx, INT k, INT *A, INT *B, INT *C, I
 		}
 }
 
-void INT_matrix_delete_column_in_place(INT *Mtx, INT k, INT n, INT pivot)
+void INT_matrix_delete_column_in_place(INT *Mtx, 
+	INT k, INT n, INT pivot)
 // afterwards, the matrix is k x (n - 1)
 {
 	INT i, j, jj;
@@ -800,7 +829,8 @@ void INT_matrix_print_bitwise(INT *p, INT m, INT n)
 		}
 }
 
-void INT_vec_distribution_compute_and_print(ostream &ost, INT *v, INT v_len)
+void INT_vec_distribution_compute_and_print(ostream &ost, 
+	INT *v, INT v_len)
 {
 	INT *val, *mult, len;	
 	
@@ -812,7 +842,8 @@ void INT_vec_distribution_compute_and_print(ostream &ost, INT *v, INT v_len)
 	FREE_INT(mult);
 }
 
-void INT_vec_distribution(INT *v, INT len_v, INT *&val, INT *&mult, INT &len)
+void INT_vec_distribution(INT *v, 
+	INT len_v, INT *&val, INT *&mult, INT &len)
 {
 	INT i, j, a, idx;
 	
@@ -836,7 +867,8 @@ void INT_vec_distribution(INT *v, INT len_v, INT *&val, INT *&mult, INT &len)
 		}
 }
 
-void INT_distribution_print(ostream &ost, INT *val, INT *mult, INT len)
+void INT_distribution_print(ostream &ost, 
+	INT *val, INT *mult, INT len)
 {
 	INT i;
 	
@@ -897,7 +929,9 @@ void INT_set_print_tex(ostream &ost, INT *v, INT len)
 }
 
 void INT_set_print_masked_tex(ostream &ost, 
-	INT *v, INT len, const BYTE *mask_begin, const BYTE *mask_end)
+	INT *v, INT len, 
+	const BYTE *mask_begin, 
+	const BYTE *mask_end)
 {
 	INT i;
 	
@@ -911,7 +945,8 @@ void INT_set_print_masked_tex(ostream &ost,
 }
 
 
-void INT_set_print_tex_for_inline_text(ostream &ost, INT *v, INT len)
+void INT_set_print_tex_for_inline_text(ostream &ost, 
+	INT *v, INT len)
 {
 	INT i;
 	
@@ -948,7 +983,8 @@ void INT_vec_print(ostream &ost, INT *v, INT len)
 		}
 }
 
-void INT_vec_print_as_matrix(ostream &ost, INT *v, INT len, INT width, INT f_tex)
+void INT_vec_print_as_matrix(ostream &ost, 
+	INT *v, INT len, INT width, INT f_tex)
 {
 	INT *w;
 	INT i;
@@ -959,7 +995,8 @@ void INT_vec_print_as_matrix(ostream &ost, INT *v, INT len, INT width, INT f_tex
 		w[len + i] = 0;
 		}
 	
-	print_integer_matrix_with_standard_labels(ost, w, (len + width - 1) / width, width, f_tex);
+	print_integer_matrix_with_standard_labels(ost, 
+		w, (len + width - 1) / width, width, f_tex);
 
 	FREE_INT(w);
 }
@@ -1070,7 +1107,8 @@ void UBYTE_move(UBYTE *p, UBYTE *q, INT len)
 		*q++ = *p++;
 }
 
-void INT_submatrix_all_rows(INT *A, INT m, INT n, INT nb_cols, INT *cols, INT *B)
+void INT_submatrix_all_rows(INT *A, INT m, INT n, 
+	INT nb_cols, INT *cols, INT *B)
 {
 	INT i, j;
 	
@@ -1081,7 +1119,8 @@ void INT_submatrix_all_rows(INT *A, INT m, INT n, INT nb_cols, INT *cols, INT *B
 		}
 }
 
-void INT_submatrix_all_cols(INT *A, INT m, INT n, INT nb_rows, INT *rows, INT *B)
+void INT_submatrix_all_cols(INT *A, INT m, INT n, 
+	INT nb_rows, INT *rows, INT *B)
 {
 	INT i, j;
 	
@@ -1092,7 +1131,8 @@ void INT_submatrix_all_cols(INT *A, INT m, INT n, INT nb_rows, INT *rows, INT *B
 		}
 }
 
-void INT_submatrix(INT *A, INT m, INT n, INT nb_rows, INT *rows, INT nb_cols, INT *cols, INT *B)
+void INT_submatrix(INT *A, INT m, INT n, 
+	INT nb_rows, INT *rows, INT nb_cols, INT *cols, INT *B)
 {
 	INT i, j;
 	
@@ -1228,16 +1268,22 @@ INT os_memory_usage()
 #endif
 #ifdef SYSTEM_LINUX
 	int chars = 128; // number of characters to read from the /proc/self/status file in a given line
-        FILE* file = fopen("/proc/self/status", "r");
-        char line[chars];
-        while (fgets(line, chars, file) != NULL) {     // read one line at a time
-                if (strncmp(line, "VmPeak:", 7) == 0){ // compare the first 7 characters of every line
-                        char* p = line + 7;            // start reading from the 7th index of the line
-                        p[strlen(p)-3] = '\0';         // set the null terminator at the beginning of size units
-			fclose(file);                  // close the file stream
-                        return atoi(p);		       // return the size in KiB
-                }
-        }
+	FILE* file = fopen("/proc/self/status", "r");
+	char line[chars];
+	while (fgets(line, chars, file) != NULL) {     
+		// read one line at a time
+		if (strncmp(line, "VmPeak:", 7) == 0) {
+			// compare the first 7 characters of every line
+			char* p = line + 7;
+			// start reading from the 7th index of the line
+			p[strlen(p)-3] = '\0';
+			// set the null terminator at the beginning of size units
+			fclose(file);
+			// close the file stream
+			return atoi(p);
+			// return the size in KiB
+			}
+		}
 #endif
 	return 0;
 }
@@ -1473,19 +1519,28 @@ void fread_UBYTEs(FILE *fp, UBYTE *p, INT len)
 
 void latex_head_easy(ostream& ost)
 {
-	latex_head(ost, FALSE /* f_book */, FALSE /* f_title */, 
+	latex_head(ost, 
+		FALSE /* f_book */, 
+		FALSE /* f_title */, 
 		"", "", 
-		FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-		FALSE /* f_enlarged_page */, FALSE /* f_pagenumbers */);
+		FALSE /*f_toc */, 
+		FALSE /* f_landscape */, 
+		FALSE /* f_12pt */, 
+		FALSE /* f_enlarged_page */, 
+		FALSE /* f_pagenumbers */);
 
 }
 
 void latex_head_easy_sideways(ostream& ost)
 {
-	latex_head(ost, FALSE /* f_book */, FALSE /* f_title */, 
+	latex_head(ost, FALSE /* f_book */, 
+		FALSE /* f_title */, 
 		"", "", 
-		FALSE /*f_toc */, TRUE /* f_landscape */, FALSE /* f_12pt */, 
-		FALSE /* f_enlarged_page */, FALSE /* f_pagenumbers */);
+		FALSE /*f_toc */, 
+		TRUE /* f_landscape */, 
+		FALSE /* f_12pt */, 
+		FALSE /* f_enlarged_page */, 
+		FALSE /* f_pagenumbers */);
 
 }
 
@@ -1494,428 +1549,428 @@ void latex_head(ostream& ost, INT f_book, INT f_title,
 	INT f_toc, INT f_landscape, INT f_12pt, 
 	INT f_enlarged_page, INT f_pagenumbers)
 {
-if (f_12pt) {
-	ost << "\\documentclass[12pt]{";
-	}
-else {
-	ost << "\\documentclass{";
-	}
-if (f_book)
-	ost << "book";
-else
-	ost << "article";
-ost << "}\n"; 
-ost << "% a4paper\n";
-ost << endl;
-ost << "%\\usepackage[dvips]{epsfig}\n"; 
-ost << "%\\usepackage{cours11, cours}\n"; 
-ost << "%\\usepackage{fancyheadings}\n"; 
-ost << "%\\usepackage{calc}\n"; 
-ost << "\\usepackage{amsmath}\n"; 
-ost << "\\usepackage{amssymb}\n"; 
-ost << "\\usepackage{latexsym}\n"; 
-ost << "\\usepackage{epsfig}\n"; 
-ost << "\\usepackage{enumerate}\n"; 
-ost << "%\\usepackage{supertabular}\n"; 
-ost << "%\\usepackage{wrapfig}\n"; 
-ost << "%\\usepackage{blackbrd}\n"; 
-ost << "%\\usepackage{epic,eepic}\n"; 
-ost << "\\usepackage{rotating}\n"; 
-ost << "\\usepackage{multicol}\n"; 
-ost << "%\\usepackage{multirow}\n"; 
-ost << "\\usepackage{makeidx} % additional command see\n"; 
-ost << "\\usepackage{rotating}\n"; 
-ost << "\\usepackage{array}\n"; 
-ost << "\\usepackage{tikz}\n"; 
-ost << "%\\usepackage{amsmath,amsfonts} \n"; 
-ost << endl;
-ost << endl;
-ost << "%\\usepackage[mtbold,mtplusscr]{mathtime}\n"; 
-ost << "% lucidacal,lucidascr,\n"; 
-ost << endl;
-ost << "%\\usepackage{mathtimy}\n"; 
-ost << "%\\usepackage{bm}\n"; 
-ost << "%\\usepackage{avant}\n"; 
-ost << "%\\usepackage{basker}\n"; 
-ost << "%\\usepackage{bembo}\n"; 
-ost << "%\\usepackage{bookman}\n"; 
-ost << "%\\usepackage{chancery}\n"; 
-ost << "%\\usepackage{garamond}\n"; 
-ost << "%\\usepackage{helvet}\n"; 
-ost << "%\\usepackage{newcent}\n"; 
-ost << "%\\usepackage{palatino}\n"; 
-ost << "%\\usepackage{times}\n"; 
-ost << "%\\usepackage{pifont}\n"; 
-if (f_enlarged_page) {
-	ost << "\\usepackage{fullpage}" << endl;
-	ost << "\\usepackage[top=1in,bottom=1in,right=1in,left=1in]{geometry}" << endl;
-#if 0
-	ost << "%\\voffset=-1.5cm" << endl;
-	ost << "\\hoffset=-2cm" << endl;
-	ost << "\\textwidth=20cm" << endl;
-	ost << "%\\topmargin 0.0in" << endl;
-	ost << "\\textheight 25cm" << endl;
-#endif
-	}
-ost << endl;
-ost << endl;
-ost << endl;
-ost << "%\\parindent=0pt\n"; 
-ost << endl;
-//ost << "\\renewcommand{\\baselinestretch}{1.5}\n"; 
-ost << endl;
-
-
-#if 0
-if (f_enlarged_page) {
-	ost << "\\hoffset -2cm\n"; 
-	ost << "\\voffset -1cm\n"; 
-	ost << "\\topmargin 0.0cm\n"; 
-	if (f_landscape) {
-		ost << "\\textheight=18cm\n"; 
-		ost << "\\textwidth=23cm\n"; 
+	if (f_12pt) {
+		ost << "\\documentclass[12pt]{";
 		}
 	else {
-		ost << "\\textheight=23cm\n"; 
-		ost << "\\textwidth=18cm\n"; 
+		ost << "\\documentclass{";
 		}
-	}
-else {
-	ost << "\\hoffset -0.7cm\n"; 
-	ost << "%\\voffset 0cm\n"; 
+	if (f_book)
+		ost << "book";
+	else
+		ost << "article";
+	ost << "}\n"; 
+	ost << "% a4paper\n";
 	ost << endl;
+	ost << "%\\usepackage[dvips]{epsfig}\n"; 
+	ost << "%\\usepackage{cours11, cours}\n"; 
+	ost << "%\\usepackage{fancyheadings}\n"; 
+	ost << "%\\usepackage{calc}\n"; 
+	ost << "\\usepackage{amsmath}\n"; 
+	ost << "\\usepackage{amssymb}\n"; 
+	ost << "\\usepackage{latexsym}\n"; 
+	ost << "\\usepackage{epsfig}\n"; 
+	ost << "\\usepackage{enumerate}\n"; 
+	ost << "%\\usepackage{supertabular}\n"; 
+	ost << "%\\usepackage{wrapfig}\n"; 
+	ost << "%\\usepackage{blackbrd}\n"; 
+	ost << "%\\usepackage{epic,eepic}\n"; 
+	ost << "\\usepackage{rotating}\n"; 
+	ost << "\\usepackage{multicol}\n"; 
+	ost << "%\\usepackage{multirow}\n"; 
+	ost << "\\usepackage{makeidx} % additional command see\n"; 
+	ost << "\\usepackage{rotating}\n"; 
+	ost << "\\usepackage{array}\n"; 
+	ost << "\\usepackage{tikz}\n"; 
+	ost << "%\\usepackage{amsmath,amsfonts} \n"; 
+	ost << endl;
+	ost << endl;
+	ost << "%\\usepackage[mtbold,mtplusscr]{mathtime}\n"; 
+	ost << "% lucidacal,lucidascr,\n"; 
+	ost << endl;
+	ost << "%\\usepackage{mathtimy}\n"; 
+	ost << "%\\usepackage{bm}\n"; 
+	ost << "%\\usepackage{avant}\n"; 
+	ost << "%\\usepackage{basker}\n"; 
+	ost << "%\\usepackage{bembo}\n"; 
+	ost << "%\\usepackage{bookman}\n"; 
+	ost << "%\\usepackage{chancery}\n"; 
+	ost << "%\\usepackage{garamond}\n"; 
+	ost << "%\\usepackage{helvet}\n"; 
+	ost << "%\\usepackage{newcent}\n"; 
+	ost << "%\\usepackage{palatino}\n"; 
+	ost << "%\\usepackage{times}\n"; 
+	ost << "%\\usepackage{pifont}\n"; 
+	if (f_enlarged_page) {
+		ost << "\\usepackage{fullpage}" << endl;
+		ost << "\\usepackage[top=1in,bottom=1in,right=1in,left=1in]{geometry}" << endl;
+#if 0
+		ost << "%\\voffset=-1.5cm" << endl;
+		ost << "\\hoffset=-2cm" << endl;
+		ost << "\\textwidth=20cm" << endl;
+		ost << "%\\topmargin 0.0in" << endl;
+		ost << "\\textheight 25cm" << endl;
+#endif
+		}
+	ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << "%\\parindent=0pt\n"; 
+	ost << endl;
+	//ost << "\\renewcommand{\\baselinestretch}{1.5}\n"; 
+	ost << endl;
+
+
+#if 0
+	if (f_enlarged_page) {
+		ost << "\\hoffset -2cm\n"; 
+		ost << "\\voffset -1cm\n"; 
+		ost << "\\topmargin 0.0cm\n"; 
+		if (f_landscape) {
+			ost << "\\textheight=18cm\n"; 
+			ost << "\\textwidth=23cm\n"; 
+			}
+		else {
+			ost << "\\textheight=23cm\n"; 
+			ost << "\\textwidth=18cm\n"; 
+			}
+		}
+	else {
+		ost << "\\hoffset -0.7cm\n"; 
+		ost << "%\\voffset 0cm\n"; 
+		ost << endl;
+		ost << "%\\oddsidemargin=15pt\n"; 
+		ost << endl;
+		ost << "%\\oddsidemargin 0pt\n"; 
+		ost << "%\\evensidemargin 0pt\n"; 
+		ost << "%\\topmargin 0pt\n"; 
+		ost << endl;
+#if 1
+		if (f_landscape) {
+			ost << "\\textwidth = 20cm\n"; 
+			ost << "\\textheight= 17cm\n"; 
+			}
+		else {
+			ost << "\\textwidth = 17cm\n"; 
+			ost << "\\textheight= 21cm\n"; 
+			}
+		ost << endl;
+#endif
+		}
+#endif
+
+
+	ost << "%\\topmargin=0pt\n"; 
+	ost << "%\\headsep=18pt\n"; 
+	ost << "%\\footskip=45pt\n"; 
+	ost << "%\\mathsurround=1pt\n"; 
+	ost << "%\\evensidemargin=0pt\n"; 
 	ost << "%\\oddsidemargin=15pt\n"; 
 	ost << endl;
-	ost << "%\\oddsidemargin 0pt\n"; 
-	ost << "%\\evensidemargin 0pt\n"; 
-	ost << "%\\topmargin 0pt\n"; 
+
+	ost << "%\\setlength{\\textheight}{\\baselineskip*41+\\topskip}\n"; 
 	ost << endl;
-#if 1
-	if (f_landscape) {
-		ost << "\\textwidth = 20cm\n"; 
-		ost << "\\textheight= 17cm\n"; 
-		}
-	else {
-		ost << "\\textwidth = 17cm\n"; 
-		ost << "\\textheight= 21cm\n"; 
-		}
-	ost << endl;
-#endif
-	}
-#endif
 
 
-ost << "%\\topmargin=0pt\n"; 
-ost << "%\\headsep=18pt\n"; 
-ost << "%\\footskip=45pt\n"; 
-ost << "%\\mathsurround=1pt\n"; 
-ost << "%\\evensidemargin=0pt\n"; 
-ost << "%\\oddsidemargin=15pt\n"; 
-ost << endl;
+	ost << "\\newcommand{\\sectionline}{" << endl;
+	ost << "   \\nointerlineskip \\vspace{\\baselineskip}" << endl;
+	ost << "   \\hspace{\\fill}\\rule{0.9\\linewidth}{1.7pt}\\hspace{\\fill}" << endl;
+	ost << "   \\par\\nointerlineskip \\vspace{\\baselineskip}" << endl;
+	ost << "   }" << endl;
 
-ost << "%\\setlength{\\textheight}{\\baselineskip*41+\\topskip}\n"; 
-ost << endl;
+	ost << "\\newcommand\\setTBstruts{\\def\\T{\\rule{0pt}{2.6ex}}%" << endl;
+	ost << "\\def\\B{\\rule[-1.2ex]{0pt}{0pt}}}" << endl;
 
+	ost << "\\newcommand{\\ans}[1]{\\\\{\\bf ANSWER}: {#1}}" << endl;
+	ost << "\\newcommand{\\Aut}{{\\rm Aut}}\n"; 
+	ost << "\\newcommand{\\Sym}{{\\rm Sym}}\n"; 
+	ost << "\\newcommand{\\sFix}{{\\cal Fix}}\n"; 
+	ost << "\\newcommand{\\sOrbits}{{\\cal Orbits}}\n"; 
+	//ost << "\\newcommand{\\sFix}{{\\mathscr Fix}}\n"; 
+	//ost << "\\newcommand{\\sOrbits}{{\\mathscr Orbits}}\n"; 
+	ost << "\\newcommand{\\Stab}{{\\rm Stab}}\n"; 
+	ost << "\\newcommand{\\Fix}{{\\rm Fix}}\n"; 
+	ost << "\\newcommand{\\fix}{{\\rm fix}}\n"; 
+	ost << "\\newcommand{\\Orbits}{{\\rm Orbits}}\n"; 
+	ost << "\\newcommand{\\PG}{{\\rm PG}}\n"; 
+	ost << "\\newcommand{\\AG}{{\\rm AG}}\n"; 
+	ost << "\\newcommand{\\SQS}{{\\rm SQS}}\n"; 
+	ost << "\\newcommand{\\STS}{{\\rm STS}}\n"; 
+	//ost << "\\newcommand{\\Sp}{{\\rm Sp}}\n"; 
+	ost << "\\newcommand{\\PSL}{{\\rm PSL}}\n"; 
+	ost << "\\newcommand{\\PGL}{{\\rm PGL}}\n"; 
+	ost << "\\newcommand{\\PSSL}{{\\rm P\\Sigma L}}\n"; 
+	ost << "\\newcommand{\\PGGL}{{\\rm P\\Gamma L}}\n"; 
+	ost << "\\newcommand{\\SL}{{\\rm SL}}\n"; 
+	ost << "\\newcommand{\\GL}{{\\rm GL}}\n"; 
+	ost << "\\newcommand{\\SSL}{{\\rm \\Sigma L}}\n"; 
+	ost << "\\newcommand{\\GGL}{{\\rm \\Gamma L}}\n"; 
+	ost << "\\newcommand{\\ASL}{{\\rm ASL}}\n"; 
+	ost << "\\newcommand{\\AGL}{{\\rm AGL}}\n"; 
+	ost << "\\newcommand{\\ASSL}{{\\rm A\\Sigma L}}\n"; 
+	ost << "\\newcommand{\\AGGL}{{\\rm A\\Gamma L}}\n"; 
+	ost << "\\newcommand{\\PSU}{{\\rm PSU}}\n"; 
+	ost << "\\newcommand{\\HS}{{\\rm HS}}\n"; 
+	ost << "\\newcommand{\\Hol}{{\\rm Hol}}\n"; 
+	ost << "\\newcommand{\\SO}{{\\rm SO}}\n"; 
+	ost << "\\newcommand{\\ASO}{{\\rm ASO}}\n"; 
 
-ost << "\\newcommand{\\sectionline}{" << endl;
-ost << "   \\nointerlineskip \\vspace{\\baselineskip}" << endl;
-ost << "   \\hspace{\\fill}\\rule{0.9\\linewidth}{1.7pt}\\hspace{\\fill}" << endl;
-ost << "   \\par\\nointerlineskip \\vspace{\\baselineskip}" << endl;
-ost << "   }" << endl;
-
-ost << "\\newcommand\\setTBstruts{\\def\\T{\\rule{0pt}{2.6ex}}%" << endl;
-ost << "\\def\\B{\\rule[-1.2ex]{0pt}{0pt}}}" << endl;
-
-ost << "\\newcommand{\\ans}[1]{\\\\{\\bf ANSWER}: {#1}}" << endl;
-ost << "\\newcommand{\\Aut}{{\\rm Aut}}\n"; 
-ost << "\\newcommand{\\Sym}{{\\rm Sym}}\n"; 
-ost << "\\newcommand{\\sFix}{{\\cal Fix}}\n"; 
-ost << "\\newcommand{\\sOrbits}{{\\cal Orbits}}\n"; 
-//ost << "\\newcommand{\\sFix}{{\\mathscr Fix}}\n"; 
-//ost << "\\newcommand{\\sOrbits}{{\\mathscr Orbits}}\n"; 
-ost << "\\newcommand{\\Stab}{{\\rm Stab}}\n"; 
-ost << "\\newcommand{\\Fix}{{\\rm Fix}}\n"; 
-ost << "\\newcommand{\\fix}{{\\rm fix}}\n"; 
-ost << "\\newcommand{\\Orbits}{{\\rm Orbits}}\n"; 
-ost << "\\newcommand{\\PG}{{\\rm PG}}\n"; 
-ost << "\\newcommand{\\AG}{{\\rm AG}}\n"; 
-ost << "\\newcommand{\\SQS}{{\\rm SQS}}\n"; 
-ost << "\\newcommand{\\STS}{{\\rm STS}}\n"; 
-//ost << "\\newcommand{\\Sp}{{\\rm Sp}}\n"; 
-ost << "\\newcommand{\\PSL}{{\\rm PSL}}\n"; 
-ost << "\\newcommand{\\PGL}{{\\rm PGL}}\n"; 
-ost << "\\newcommand{\\PSSL}{{\\rm P\\Sigma L}}\n"; 
-ost << "\\newcommand{\\PGGL}{{\\rm P\\Gamma L}}\n"; 
-ost << "\\newcommand{\\SL}{{\\rm SL}}\n"; 
-ost << "\\newcommand{\\GL}{{\\rm GL}}\n"; 
-ost << "\\newcommand{\\SSL}{{\\rm \\Sigma L}}\n"; 
-ost << "\\newcommand{\\GGL}{{\\rm \\Gamma L}}\n"; 
-ost << "\\newcommand{\\ASL}{{\\rm ASL}}\n"; 
-ost << "\\newcommand{\\AGL}{{\\rm AGL}}\n"; 
-ost << "\\newcommand{\\ASSL}{{\\rm A\\Sigma L}}\n"; 
-ost << "\\newcommand{\\AGGL}{{\\rm A\\Gamma L}}\n"; 
-ost << "\\newcommand{\\PSU}{{\\rm PSU}}\n"; 
-ost << "\\newcommand{\\HS}{{\\rm HS}}\n"; 
-ost << "\\newcommand{\\Hol}{{\\rm Hol}}\n"; 
-ost << "\\newcommand{\\SO}{{\\rm SO}}\n"; 
-ost << "\\newcommand{\\ASO}{{\\rm ASO}}\n"; 
-
-ost << "\\newcommand{\\la}{\\langle}\n"; 
-ost << "\\newcommand{\\ra}{\\rangle}\n"; 
+	ost << "\\newcommand{\\la}{\\langle}\n"; 
+	ost << "\\newcommand{\\ra}{\\rangle}\n"; 
 
 
-ost << "\\newcommand{\\cA}{{\\cal A}}\n"; 
-ost << "\\newcommand{\\cB}{{\\cal B}}\n"; 
-ost << "\\newcommand{\\cC}{{\\cal C}}\n"; 
-ost << "\\newcommand{\\cD}{{\\cal D}}\n"; 
-ost << "\\newcommand{\\cE}{{\\cal E}}\n"; 
-ost << "\\newcommand{\\cF}{{\\cal F}}\n"; 
-ost << "\\newcommand{\\cG}{{\\cal G}}\n"; 
-ost << "\\newcommand{\\cH}{{\\cal H}}\n"; 
-ost << "\\newcommand{\\cI}{{\\cal I}}\n"; 
-ost << "\\newcommand{\\cJ}{{\\cal J}}\n"; 
-ost << "\\newcommand{\\cK}{{\\cal K}}\n"; 
-ost << "\\newcommand{\\cL}{{\\cal L}}\n"; 
-ost << "\\newcommand{\\cM}{{\\cal M}}\n"; 
-ost << "\\newcommand{\\cN}{{\\cal N}}\n"; 
-ost << "\\newcommand{\\cO}{{\\cal O}}\n"; 
-ost << "\\newcommand{\\cP}{{\\cal P}}\n"; 
-ost << "\\newcommand{\\cQ}{{\\cal Q}}\n"; 
-ost << "\\newcommand{\\cR}{{\\cal R}}\n"; 
-ost << "\\newcommand{\\cS}{{\\cal S}}\n"; 
-ost << "\\newcommand{\\cT}{{\\cal T}}\n"; 
-ost << "\\newcommand{\\cU}{{\\cal U}}\n"; 
-ost << "\\newcommand{\\cV}{{\\cal V}}\n"; 
-ost << "\\newcommand{\\cW}{{\\cal W}}\n"; 
-ost << "\\newcommand{\\cX}{{\\cal X}}\n"; 
-ost << "\\newcommand{\\cY}{{\\cal Y}}\n"; 
-ost << "\\newcommand{\\cZ}{{\\cal Z}}\n"; 
+	ost << "\\newcommand{\\cA}{{\\cal A}}\n"; 
+	ost << "\\newcommand{\\cB}{{\\cal B}}\n"; 
+	ost << "\\newcommand{\\cC}{{\\cal C}}\n"; 
+	ost << "\\newcommand{\\cD}{{\\cal D}}\n"; 
+	ost << "\\newcommand{\\cE}{{\\cal E}}\n"; 
+	ost << "\\newcommand{\\cF}{{\\cal F}}\n"; 
+	ost << "\\newcommand{\\cG}{{\\cal G}}\n"; 
+	ost << "\\newcommand{\\cH}{{\\cal H}}\n"; 
+	ost << "\\newcommand{\\cI}{{\\cal I}}\n"; 
+	ost << "\\newcommand{\\cJ}{{\\cal J}}\n"; 
+	ost << "\\newcommand{\\cK}{{\\cal K}}\n"; 
+	ost << "\\newcommand{\\cL}{{\\cal L}}\n"; 
+	ost << "\\newcommand{\\cM}{{\\cal M}}\n"; 
+	ost << "\\newcommand{\\cN}{{\\cal N}}\n"; 
+	ost << "\\newcommand{\\cO}{{\\cal O}}\n"; 
+	ost << "\\newcommand{\\cP}{{\\cal P}}\n"; 
+	ost << "\\newcommand{\\cQ}{{\\cal Q}}\n"; 
+	ost << "\\newcommand{\\cR}{{\\cal R}}\n"; 
+	ost << "\\newcommand{\\cS}{{\\cal S}}\n"; 
+	ost << "\\newcommand{\\cT}{{\\cal T}}\n"; 
+	ost << "\\newcommand{\\cU}{{\\cal U}}\n"; 
+	ost << "\\newcommand{\\cV}{{\\cal V}}\n"; 
+	ost << "\\newcommand{\\cW}{{\\cal W}}\n"; 
+	ost << "\\newcommand{\\cX}{{\\cal X}}\n"; 
+	ost << "\\newcommand{\\cY}{{\\cal Y}}\n"; 
+	ost << "\\newcommand{\\cZ}{{\\cal Z}}\n"; 
 
-ost << "\\newcommand{\\rmA}{{\\rm A}}\n"; 
-ost << "\\newcommand{\\rmB}{{\\rm B}}\n"; 
-ost << "\\newcommand{\\rmC}{{\\rm C}}\n"; 
-ost << "\\newcommand{\\rmD}{{\\rm D}}\n"; 
-ost << "\\newcommand{\\rmE}{{\\rm E}}\n"; 
-ost << "\\newcommand{\\rmF}{{\\rm F}}\n"; 
-ost << "\\newcommand{\\rmG}{{\\rm G}}\n"; 
-ost << "\\newcommand{\\rmH}{{\\rm H}}\n"; 
-ost << "\\newcommand{\\rmI}{{\\rm I}}\n"; 
-ost << "\\newcommand{\\rmJ}{{\\rm J}}\n"; 
-ost << "\\newcommand{\\rmK}{{\\rm K}}\n"; 
-ost << "\\newcommand{\\rmL}{{\\rm L}}\n"; 
-ost << "\\newcommand{\\rmM}{{\\rm M}}\n"; 
-ost << "\\newcommand{\\rmN}{{\\rm N}}\n"; 
-ost << "\\newcommand{\\rmO}{{\\rm O}}\n"; 
-ost << "\\newcommand{\\rmP}{{\\rm P}}\n"; 
-ost << "\\newcommand{\\rmQ}{{\\rm Q}}\n"; 
-ost << "\\newcommand{\\rmR}{{\\rm R}}\n"; 
-ost << "\\newcommand{\\rmS}{{\\rm S}}\n"; 
-ost << "\\newcommand{\\rmT}{{\\rm T}}\n"; 
-ost << "\\newcommand{\\rmU}{{\\rm U}}\n"; 
-ost << "\\newcommand{\\rmV}{{\\rm V}}\n"; 
-ost << "\\newcommand{\\rmW}{{\\rm W}}\n"; 
-ost << "\\newcommand{\\rmX}{{\\rm X}}\n"; 
-ost << "\\newcommand{\\rmY}{{\\rm Y}}\n"; 
-ost << "\\newcommand{\\rmZ}{{\\rm Z}}\n"; 
+	ost << "\\newcommand{\\rmA}{{\\rm A}}\n"; 
+	ost << "\\newcommand{\\rmB}{{\\rm B}}\n"; 
+	ost << "\\newcommand{\\rmC}{{\\rm C}}\n"; 
+	ost << "\\newcommand{\\rmD}{{\\rm D}}\n"; 
+	ost << "\\newcommand{\\rmE}{{\\rm E}}\n"; 
+	ost << "\\newcommand{\\rmF}{{\\rm F}}\n"; 
+	ost << "\\newcommand{\\rmG}{{\\rm G}}\n"; 
+	ost << "\\newcommand{\\rmH}{{\\rm H}}\n"; 
+	ost << "\\newcommand{\\rmI}{{\\rm I}}\n"; 
+	ost << "\\newcommand{\\rmJ}{{\\rm J}}\n"; 
+	ost << "\\newcommand{\\rmK}{{\\rm K}}\n"; 
+	ost << "\\newcommand{\\rmL}{{\\rm L}}\n"; 
+	ost << "\\newcommand{\\rmM}{{\\rm M}}\n"; 
+	ost << "\\newcommand{\\rmN}{{\\rm N}}\n"; 
+	ost << "\\newcommand{\\rmO}{{\\rm O}}\n"; 
+	ost << "\\newcommand{\\rmP}{{\\rm P}}\n"; 
+	ost << "\\newcommand{\\rmQ}{{\\rm Q}}\n"; 
+	ost << "\\newcommand{\\rmR}{{\\rm R}}\n"; 
+	ost << "\\newcommand{\\rmS}{{\\rm S}}\n"; 
+	ost << "\\newcommand{\\rmT}{{\\rm T}}\n"; 
+	ost << "\\newcommand{\\rmU}{{\\rm U}}\n"; 
+	ost << "\\newcommand{\\rmV}{{\\rm V}}\n"; 
+	ost << "\\newcommand{\\rmW}{{\\rm W}}\n"; 
+	ost << "\\newcommand{\\rmX}{{\\rm X}}\n"; 
+	ost << "\\newcommand{\\rmY}{{\\rm Y}}\n"; 
+	ost << "\\newcommand{\\rmZ}{{\\rm Z}}\n"; 
 
-ost << "\\newcommand{\\bA}{{\\bf A}}\n"; 
-ost << "\\newcommand{\\bB}{{\\bf B}}\n"; 
-ost << "\\newcommand{\\bC}{{\\bf C}}\n"; 
-ost << "\\newcommand{\\bD}{{\\bf D}}\n"; 
-ost << "\\newcommand{\\bE}{{\\bf E}}\n"; 
-ost << "\\newcommand{\\bF}{{\\bf F}}\n"; 
-ost << "\\newcommand{\\bG}{{\\bf G}}\n"; 
-ost << "\\newcommand{\\bH}{{\\bf H}}\n"; 
-ost << "\\newcommand{\\bI}{{\\bf I}}\n"; 
-ost << "\\newcommand{\\bJ}{{\\bf J}}\n"; 
-ost << "\\newcommand{\\bK}{{\\bf K}}\n"; 
-ost << "\\newcommand{\\bL}{{\\bf L}}\n"; 
-ost << "\\newcommand{\\bM}{{\\bf M}}\n"; 
-ost << "\\newcommand{\\bN}{{\\bf N}}\n"; 
-ost << "\\newcommand{\\bO}{{\\bf O}}\n"; 
-ost << "\\newcommand{\\bP}{{\\bf P}}\n"; 
-ost << "\\newcommand{\\bQ}{{\\bf Q}}\n"; 
-ost << "\\newcommand{\\bR}{{\\bf R}}\n"; 
-ost << "\\newcommand{\\bS}{{\\bf S}}\n"; 
-ost << "\\newcommand{\\bT}{{\\bf T}}\n"; 
-ost << "\\newcommand{\\bU}{{\\bf U}}\n"; 
-ost << "\\newcommand{\\bV}{{\\bf V}}\n"; 
-ost << "\\newcommand{\\bW}{{\\bf W}}\n"; 
-ost << "\\newcommand{\\bX}{{\\bf X}}\n"; 
-ost << "\\newcommand{\\bY}{{\\bf Y}}\n"; 
-ost << "\\newcommand{\\bZ}{{\\bf Z}}\n"; 
+	ost << "\\newcommand{\\bA}{{\\bf A}}\n"; 
+	ost << "\\newcommand{\\bB}{{\\bf B}}\n"; 
+	ost << "\\newcommand{\\bC}{{\\bf C}}\n"; 
+	ost << "\\newcommand{\\bD}{{\\bf D}}\n"; 
+	ost << "\\newcommand{\\bE}{{\\bf E}}\n"; 
+	ost << "\\newcommand{\\bF}{{\\bf F}}\n"; 
+	ost << "\\newcommand{\\bG}{{\\bf G}}\n"; 
+	ost << "\\newcommand{\\bH}{{\\bf H}}\n"; 
+	ost << "\\newcommand{\\bI}{{\\bf I}}\n"; 
+	ost << "\\newcommand{\\bJ}{{\\bf J}}\n"; 
+	ost << "\\newcommand{\\bK}{{\\bf K}}\n"; 
+	ost << "\\newcommand{\\bL}{{\\bf L}}\n"; 
+	ost << "\\newcommand{\\bM}{{\\bf M}}\n"; 
+	ost << "\\newcommand{\\bN}{{\\bf N}}\n"; 
+	ost << "\\newcommand{\\bO}{{\\bf O}}\n"; 
+	ost << "\\newcommand{\\bP}{{\\bf P}}\n"; 
+	ost << "\\newcommand{\\bQ}{{\\bf Q}}\n"; 
+	ost << "\\newcommand{\\bR}{{\\bf R}}\n"; 
+	ost << "\\newcommand{\\bS}{{\\bf S}}\n"; 
+	ost << "\\newcommand{\\bT}{{\\bf T}}\n"; 
+	ost << "\\newcommand{\\bU}{{\\bf U}}\n"; 
+	ost << "\\newcommand{\\bV}{{\\bf V}}\n"; 
+	ost << "\\newcommand{\\bW}{{\\bf W}}\n"; 
+	ost << "\\newcommand{\\bX}{{\\bf X}}\n"; 
+	ost << "\\newcommand{\\bY}{{\\bf Y}}\n"; 
+	ost << "\\newcommand{\\bZ}{{\\bf Z}}\n"; 
 
 #if 0
-ost << "\\newcommand{\\sA}{{\\mathscr A}}\n"; 
-ost << "\\newcommand{\\sB}{{\\mathscr B}}\n"; 
-ost << "\\newcommand{\\sC}{{\\mathscr C}}\n"; 
-ost << "\\newcommand{\\sD}{{\\mathscr D}}\n"; 
-ost << "\\newcommand{\\sE}{{\\mathscr E}}\n"; 
-ost << "\\newcommand{\\sF}{{\\mathscr F}}\n"; 
-ost << "\\newcommand{\\sG}{{\\mathscr G}}\n"; 
-ost << "\\newcommand{\\sH}{{\\mathscr H}}\n"; 
-ost << "\\newcommand{\\sI}{{\\mathscr I}}\n"; 
-ost << "\\newcommand{\\sJ}{{\\mathscr J}}\n"; 
-ost << "\\newcommand{\\sK}{{\\mathscr K}}\n"; 
-ost << "\\newcommand{\\sL}{{\\mathscr L}}\n"; 
-ost << "\\newcommand{\\sM}{{\\mathscr M}}\n"; 
-ost << "\\newcommand{\\sN}{{\\mathscr N}}\n"; 
-ost << "\\newcommand{\\sO}{{\\mathscr O}}\n"; 
-ost << "\\newcommand{\\sP}{{\\mathscr P}}\n"; 
-ost << "\\newcommand{\\sQ}{{\\mathscr Q}}\n"; 
-ost << "\\newcommand{\\sR}{{\\mathscr R}}\n"; 
-ost << "\\newcommand{\\sS}{{\\mathscr S}}\n"; 
-ost << "\\newcommand{\\sT}{{\\mathscr T}}\n"; 
-ost << "\\newcommand{\\sU}{{\\mathscr U}}\n"; 
-ost << "\\newcommand{\\sV}{{\\mathscr V}}\n"; 
-ost << "\\newcommand{\\sW}{{\\mathscr W}}\n"; 
-ost << "\\newcommand{\\sX}{{\\mathscr X}}\n"; 
-ost << "\\newcommand{\\sY}{{\\mathscr Y}}\n"; 
-ost << "\\newcommand{\\sZ}{{\\mathscr Z}}\n"; 
+	ost << "\\newcommand{\\sA}{{\\mathscr A}}\n"; 
+	ost << "\\newcommand{\\sB}{{\\mathscr B}}\n"; 
+	ost << "\\newcommand{\\sC}{{\\mathscr C}}\n"; 
+	ost << "\\newcommand{\\sD}{{\\mathscr D}}\n"; 
+	ost << "\\newcommand{\\sE}{{\\mathscr E}}\n"; 
+	ost << "\\newcommand{\\sF}{{\\mathscr F}}\n"; 
+	ost << "\\newcommand{\\sG}{{\\mathscr G}}\n"; 
+	ost << "\\newcommand{\\sH}{{\\mathscr H}}\n"; 
+	ost << "\\newcommand{\\sI}{{\\mathscr I}}\n"; 
+	ost << "\\newcommand{\\sJ}{{\\mathscr J}}\n"; 
+	ost << "\\newcommand{\\sK}{{\\mathscr K}}\n"; 
+	ost << "\\newcommand{\\sL}{{\\mathscr L}}\n"; 
+	ost << "\\newcommand{\\sM}{{\\mathscr M}}\n"; 
+	ost << "\\newcommand{\\sN}{{\\mathscr N}}\n"; 
+	ost << "\\newcommand{\\sO}{{\\mathscr O}}\n"; 
+	ost << "\\newcommand{\\sP}{{\\mathscr P}}\n"; 
+	ost << "\\newcommand{\\sQ}{{\\mathscr Q}}\n"; 
+	ost << "\\newcommand{\\sR}{{\\mathscr R}}\n"; 
+	ost << "\\newcommand{\\sS}{{\\mathscr S}}\n"; 
+	ost << "\\newcommand{\\sT}{{\\mathscr T}}\n"; 
+	ost << "\\newcommand{\\sU}{{\\mathscr U}}\n"; 
+	ost << "\\newcommand{\\sV}{{\\mathscr V}}\n"; 
+	ost << "\\newcommand{\\sW}{{\\mathscr W}}\n"; 
+	ost << "\\newcommand{\\sX}{{\\mathscr X}}\n"; 
+	ost << "\\newcommand{\\sY}{{\\mathscr Y}}\n"; 
+	ost << "\\newcommand{\\sZ}{{\\mathscr Z}}\n"; 
 #else
-ost << "\\newcommand{\\sA}{{\\cal A}}\n"; 
-ost << "\\newcommand{\\sB}{{\\cal B}}\n"; 
-ost << "\\newcommand{\\sC}{{\\cal C}}\n"; 
-ost << "\\newcommand{\\sD}{{\\cal D}}\n"; 
-ost << "\\newcommand{\\sE}{{\\cal E}}\n"; 
-ost << "\\newcommand{\\sF}{{\\cal F}}\n"; 
-ost << "\\newcommand{\\sG}{{\\cal G}}\n"; 
-ost << "\\newcommand{\\sH}{{\\cal H}}\n"; 
-ost << "\\newcommand{\\sI}{{\\cal I}}\n"; 
-ost << "\\newcommand{\\sJ}{{\\cal J}}\n"; 
-ost << "\\newcommand{\\sK}{{\\cal K}}\n"; 
-ost << "\\newcommand{\\sL}{{\\cal L}}\n"; 
-ost << "\\newcommand{\\sM}{{\\cal M}}\n"; 
-ost << "\\newcommand{\\sN}{{\\cal N}}\n"; 
-ost << "\\newcommand{\\sO}{{\\cal O}}\n"; 
-ost << "\\newcommand{\\sP}{{\\cal P}}\n"; 
-ost << "\\newcommand{\\sQ}{{\\cal Q}}\n"; 
-ost << "\\newcommand{\\sR}{{\\cal R}}\n"; 
-ost << "\\newcommand{\\sS}{{\\cal S}}\n"; 
-ost << "\\newcommand{\\sT}{{\\cal T}}\n"; 
-ost << "\\newcommand{\\sU}{{\\cal U}}\n"; 
-ost << "\\newcommand{\\sV}{{\\cal V}}\n"; 
-ost << "\\newcommand{\\sW}{{\\cal W}}\n"; 
-ost << "\\newcommand{\\sX}{{\\cal X}}\n"; 
-ost << "\\newcommand{\\sY}{{\\cal Y}}\n"; 
-ost << "\\newcommand{\\sZ}{{\\cal Z}}\n"; 
+	ost << "\\newcommand{\\sA}{{\\cal A}}\n"; 
+	ost << "\\newcommand{\\sB}{{\\cal B}}\n"; 
+	ost << "\\newcommand{\\sC}{{\\cal C}}\n"; 
+	ost << "\\newcommand{\\sD}{{\\cal D}}\n"; 
+	ost << "\\newcommand{\\sE}{{\\cal E}}\n"; 
+	ost << "\\newcommand{\\sF}{{\\cal F}}\n"; 
+	ost << "\\newcommand{\\sG}{{\\cal G}}\n"; 
+	ost << "\\newcommand{\\sH}{{\\cal H}}\n"; 
+	ost << "\\newcommand{\\sI}{{\\cal I}}\n"; 
+	ost << "\\newcommand{\\sJ}{{\\cal J}}\n"; 
+	ost << "\\newcommand{\\sK}{{\\cal K}}\n"; 
+	ost << "\\newcommand{\\sL}{{\\cal L}}\n"; 
+	ost << "\\newcommand{\\sM}{{\\cal M}}\n"; 
+	ost << "\\newcommand{\\sN}{{\\cal N}}\n"; 
+	ost << "\\newcommand{\\sO}{{\\cal O}}\n"; 
+	ost << "\\newcommand{\\sP}{{\\cal P}}\n"; 
+	ost << "\\newcommand{\\sQ}{{\\cal Q}}\n"; 
+	ost << "\\newcommand{\\sR}{{\\cal R}}\n"; 
+	ost << "\\newcommand{\\sS}{{\\cal S}}\n"; 
+	ost << "\\newcommand{\\sT}{{\\cal T}}\n"; 
+	ost << "\\newcommand{\\sU}{{\\cal U}}\n"; 
+	ost << "\\newcommand{\\sV}{{\\cal V}}\n"; 
+	ost << "\\newcommand{\\sW}{{\\cal W}}\n"; 
+	ost << "\\newcommand{\\sX}{{\\cal X}}\n"; 
+	ost << "\\newcommand{\\sY}{{\\cal Y}}\n"; 
+	ost << "\\newcommand{\\sZ}{{\\cal Z}}\n"; 
 #endif
 
-ost << "\\newcommand{\\frakA}{{\\mathfrak A}}\n"; 
-ost << "\\newcommand{\\frakB}{{\\mathfrak B}}\n"; 
-ost << "\\newcommand{\\frakC}{{\\mathfrak C}}\n"; 
-ost << "\\newcommand{\\frakD}{{\\mathfrak D}}\n"; 
-ost << "\\newcommand{\\frakE}{{\\mathfrak E}}\n"; 
-ost << "\\newcommand{\\frakF}{{\\mathfrak F}}\n"; 
-ost << "\\newcommand{\\frakG}{{\\mathfrak G}}\n"; 
-ost << "\\newcommand{\\frakH}{{\\mathfrak H}}\n"; 
-ost << "\\newcommand{\\frakI}{{\\mathfrak I}}\n"; 
-ost << "\\newcommand{\\frakJ}{{\\mathfrak J}}\n"; 
-ost << "\\newcommand{\\frakK}{{\\mathfrak K}}\n"; 
-ost << "\\newcommand{\\frakL}{{\\mathfrak L}}\n"; 
-ost << "\\newcommand{\\frakM}{{\\mathfrak M}}\n"; 
-ost << "\\newcommand{\\frakN}{{\\mathfrak N}}\n"; 
-ost << "\\newcommand{\\frakO}{{\\mathfrak O}}\n"; 
-ost << "\\newcommand{\\frakP}{{\\mathfrak P}}\n"; 
-ost << "\\newcommand{\\frakQ}{{\\mathfrak Q}}\n"; 
-ost << "\\newcommand{\\frakR}{{\\mathfrak R}}\n"; 
-ost << "\\newcommand{\\frakS}{{\\mathfrak S}}\n"; 
-ost << "\\newcommand{\\frakT}{{\\mathfrak T}}\n"; 
-ost << "\\newcommand{\\frakU}{{\\mathfrak U}}\n"; 
-ost << "\\newcommand{\\frakV}{{\\mathfrak V}}\n"; 
-ost << "\\newcommand{\\frakW}{{\\mathfrak W}}\n"; 
-ost << "\\newcommand{\\frakX}{{\\mathfrak X}}\n"; 
-ost << "\\newcommand{\\frakY}{{\\mathfrak Y}}\n"; 
-ost << "\\newcommand{\\frakZ}{{\\mathfrak Z}}\n"; 
+	ost << "\\newcommand{\\frakA}{{\\mathfrak A}}\n"; 
+	ost << "\\newcommand{\\frakB}{{\\mathfrak B}}\n"; 
+	ost << "\\newcommand{\\frakC}{{\\mathfrak C}}\n"; 
+	ost << "\\newcommand{\\frakD}{{\\mathfrak D}}\n"; 
+	ost << "\\newcommand{\\frakE}{{\\mathfrak E}}\n"; 
+	ost << "\\newcommand{\\frakF}{{\\mathfrak F}}\n"; 
+	ost << "\\newcommand{\\frakG}{{\\mathfrak G}}\n"; 
+	ost << "\\newcommand{\\frakH}{{\\mathfrak H}}\n"; 
+	ost << "\\newcommand{\\frakI}{{\\mathfrak I}}\n"; 
+	ost << "\\newcommand{\\frakJ}{{\\mathfrak J}}\n"; 
+	ost << "\\newcommand{\\frakK}{{\\mathfrak K}}\n"; 
+	ost << "\\newcommand{\\frakL}{{\\mathfrak L}}\n"; 
+	ost << "\\newcommand{\\frakM}{{\\mathfrak M}}\n"; 
+	ost << "\\newcommand{\\frakN}{{\\mathfrak N}}\n"; 
+	ost << "\\newcommand{\\frakO}{{\\mathfrak O}}\n"; 
+	ost << "\\newcommand{\\frakP}{{\\mathfrak P}}\n"; 
+	ost << "\\newcommand{\\frakQ}{{\\mathfrak Q}}\n"; 
+	ost << "\\newcommand{\\frakR}{{\\mathfrak R}}\n"; 
+	ost << "\\newcommand{\\frakS}{{\\mathfrak S}}\n"; 
+	ost << "\\newcommand{\\frakT}{{\\mathfrak T}}\n"; 
+	ost << "\\newcommand{\\frakU}{{\\mathfrak U}}\n"; 
+	ost << "\\newcommand{\\frakV}{{\\mathfrak V}}\n"; 
+	ost << "\\newcommand{\\frakW}{{\\mathfrak W}}\n"; 
+	ost << "\\newcommand{\\frakX}{{\\mathfrak X}}\n"; 
+	ost << "\\newcommand{\\frakY}{{\\mathfrak Y}}\n"; 
+	ost << "\\newcommand{\\frakZ}{{\\mathfrak Z}}\n"; 
 
-ost << "\\newcommand{\\fraka}{{\\mathfrak a}}\n"; 
-ost << "\\newcommand{\\frakb}{{\\mathfrak b}}\n"; 
-ost << "\\newcommand{\\frakc}{{\\mathfrak c}}\n"; 
-ost << "\\newcommand{\\frakd}{{\\mathfrak d}}\n"; 
-ost << "\\newcommand{\\frake}{{\\mathfrak e}}\n"; 
-ost << "\\newcommand{\\frakf}{{\\mathfrak f}}\n"; 
-ost << "\\newcommand{\\frakg}{{\\mathfrak g}}\n"; 
-ost << "\\newcommand{\\frakh}{{\\mathfrak h}}\n"; 
-ost << "\\newcommand{\\fraki}{{\\mathfrak i}}\n"; 
-ost << "\\newcommand{\\frakj}{{\\mathfrak j}}\n"; 
-ost << "\\newcommand{\\frakk}{{\\mathfrak k}}\n"; 
-ost << "\\newcommand{\\frakl}{{\\mathfrak l}}\n"; 
-ost << "\\newcommand{\\frakm}{{\\mathfrak m}}\n"; 
-ost << "\\newcommand{\\frakn}{{\\mathfrak n}}\n"; 
-ost << "\\newcommand{\\frako}{{\\mathfrak o}}\n"; 
-ost << "\\newcommand{\\frakp}{{\\mathfrak p}}\n"; 
-ost << "\\newcommand{\\frakq}{{\\mathfrak q}}\n"; 
-ost << "\\newcommand{\\frakr}{{\\mathfrak r}}\n"; 
-ost << "\\newcommand{\\fraks}{{\\mathfrak s}}\n"; 
-ost << "\\newcommand{\\frakt}{{\\mathfrak t}}\n"; 
-ost << "\\newcommand{\\fraku}{{\\mathfrak u}}\n"; 
-ost << "\\newcommand{\\frakv}{{\\mathfrak v}}\n"; 
-ost << "\\newcommand{\\frakw}{{\\mathfrak w}}\n"; 
-ost << "\\newcommand{\\frakx}{{\\mathfrak x}}\n"; 
-ost << "\\newcommand{\\fraky}{{\\mathfrak y}}\n"; 
-ost << "\\newcommand{\\frakz}{{\\mathfrak z}}\n"; 
+	ost << "\\newcommand{\\fraka}{{\\mathfrak a}}\n"; 
+	ost << "\\newcommand{\\frakb}{{\\mathfrak b}}\n"; 
+	ost << "\\newcommand{\\frakc}{{\\mathfrak c}}\n"; 
+	ost << "\\newcommand{\\frakd}{{\\mathfrak d}}\n"; 
+	ost << "\\newcommand{\\frake}{{\\mathfrak e}}\n"; 
+	ost << "\\newcommand{\\frakf}{{\\mathfrak f}}\n"; 
+	ost << "\\newcommand{\\frakg}{{\\mathfrak g}}\n"; 
+	ost << "\\newcommand{\\frakh}{{\\mathfrak h}}\n"; 
+	ost << "\\newcommand{\\fraki}{{\\mathfrak i}}\n"; 
+	ost << "\\newcommand{\\frakj}{{\\mathfrak j}}\n"; 
+	ost << "\\newcommand{\\frakk}{{\\mathfrak k}}\n"; 
+	ost << "\\newcommand{\\frakl}{{\\mathfrak l}}\n"; 
+	ost << "\\newcommand{\\frakm}{{\\mathfrak m}}\n"; 
+	ost << "\\newcommand{\\frakn}{{\\mathfrak n}}\n"; 
+	ost << "\\newcommand{\\frako}{{\\mathfrak o}}\n"; 
+	ost << "\\newcommand{\\frakp}{{\\mathfrak p}}\n"; 
+	ost << "\\newcommand{\\frakq}{{\\mathfrak q}}\n"; 
+	ost << "\\newcommand{\\frakr}{{\\mathfrak r}}\n"; 
+	ost << "\\newcommand{\\fraks}{{\\mathfrak s}}\n"; 
+	ost << "\\newcommand{\\frakt}{{\\mathfrak t}}\n"; 
+	ost << "\\newcommand{\\fraku}{{\\mathfrak u}}\n"; 
+	ost << "\\newcommand{\\frakv}{{\\mathfrak v}}\n"; 
+	ost << "\\newcommand{\\frakw}{{\\mathfrak w}}\n"; 
+	ost << "\\newcommand{\\frakx}{{\\mathfrak x}}\n"; 
+	ost << "\\newcommand{\\fraky}{{\\mathfrak y}}\n"; 
+	ost << "\\newcommand{\\frakz}{{\\mathfrak z}}\n"; 
 
 
-ost << "\\newcommand{\\Tetra}{{\\mathfrak Tetra}}\n"; 
-ost << "\\newcommand{\\Cube}{{\\mathfrak Cube}}\n"; 
-ost << "\\newcommand{\\Octa}{{\\mathfrak Octa}}\n"; 
-ost << "\\newcommand{\\Dode}{{\\mathfrak Dode}}\n"; 
-ost << "\\newcommand{\\Ico}{{\\mathfrak Ico}}\n"; 
+	ost << "\\newcommand{\\Tetra}{{\\mathfrak Tetra}}\n"; 
+	ost << "\\newcommand{\\Cube}{{\\mathfrak Cube}}\n"; 
+	ost << "\\newcommand{\\Octa}{{\\mathfrak Octa}}\n"; 
+	ost << "\\newcommand{\\Dode}{{\\mathfrak Dode}}\n"; 
+	ost << "\\newcommand{\\Ico}{{\\mathfrak Ico}}\n"; 
 
-ost << "\\newcommand{\\bbF}{{\\mathbb F}}\n"; 
-ost << "\\newcommand{\\bbQ}{{\\mathbb Q}}\n"; 
-ost << "\\newcommand{\\bbC}{{\\mathbb C}}\n"; 
-ost << "\\newcommand{\\bbR}{{\\mathbb R}}\n"; 
+	ost << "\\newcommand{\\bbF}{{\\mathbb F}}\n"; 
+	ost << "\\newcommand{\\bbQ}{{\\mathbb Q}}\n"; 
+	ost << "\\newcommand{\\bbC}{{\\mathbb C}}\n"; 
+	ost << "\\newcommand{\\bbR}{{\\mathbb R}}\n"; 
 
-ost << endl;
-ost << endl;
-ost << endl;
-ost << "%\\makeindex\n"; 
-ost << endl;
-ost << "\\begin{document} \n"; 
-ost << "\\setTBstruts" << endl;
-ost << endl;	
-ost << "\\bibliographystyle{plain}\n"; 
-if (!f_pagenumbers) {
-	ost << "\\pagestyle{empty}\n"; 
-	}
-ost << "%\\large\n"; 
-ost << endl;
-ost << "{\\allowdisplaybreaks%\n"; 
-ost << endl;
-ost << endl;
-ost << endl;
-ost << endl;
-ost << "%\\makeindex\n"; 
-ost << endl;
-ost << "%\\renewcommand{\\labelenumi}{(\\roman{enumi})}\n"; 
-ost << endl;
-
-if (f_title) {
-	ost << "\\title{" << title << "}\n"; 
-	ost << "\\author{" << author << "}%end author\n"; 
-	ost << "%\\date{}\n"; 
-	ost << "\\maketitle%\n"; 
-	}
-ost << "\\pagenumbering{roman}\n"; 
-ost << "%\\thispagestyle{empty}\n"; 
-if (f_toc) {
-	ost << "\\tableofcontents\n"; 
-	}
-ost << "%\\input et.tex%\n"; 
-ost << "%\\thispagestyle{empty}%\\phantom{page2}%\\clearpage%\n"; 
-ost << "%\\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%\n"; 
-ost << "%\\tableofcontents\n"; 
-ost << "%\\listofsymbols\n"; 
-if (f_toc){
-	ost << "\\clearpage\n"; 
 	ost << endl;
-	}
-ost << "\\pagenumbering{arabic}\n"; 
-ost << "%\\pagenumbering{roman}\n"; 
-ost << endl;
-ost << endl;
-ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << "%\\makeindex\n"; 
+	ost << endl;
+	ost << "\\begin{document} \n"; 
+	ost << "\\setTBstruts" << endl;
+	ost << endl;	
+	ost << "\\bibliographystyle{plain}\n"; 
+	if (!f_pagenumbers) {
+		ost << "\\pagestyle{empty}\n"; 
+		}
+	ost << "%\\large\n"; 
+	ost << endl;
+	ost << "{\\allowdisplaybreaks%\n"; 
+	ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << endl;
+	ost << "%\\makeindex\n"; 
+	ost << endl;
+	ost << "%\\renewcommand{\\labelenumi}{(\\roman{enumi})}\n"; 
+	ost << endl;
+
+	if (f_title) {
+		ost << "\\title{" << title << "}\n"; 
+		ost << "\\author{" << author << "}%end author\n"; 
+		ost << "%\\date{}\n"; 
+		ost << "\\maketitle%\n"; 
+		}
+	ost << "\\pagenumbering{roman}\n"; 
+	ost << "%\\thispagestyle{empty}\n"; 
+	if (f_toc) {
+		ost << "\\tableofcontents\n"; 
+		}
+	ost << "%\\input et.tex%\n"; 
+	ost << "%\\thispagestyle{empty}%\\phantom{page2}%\\clearpage%\n"; 
+	ost << "%\\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}%\n"; 
+	ost << "%\\tableofcontents\n"; 
+	ost << "%\\listofsymbols\n"; 
+	if (f_toc){
+		ost << "\\clearpage\n"; 
+		ost << endl;
+		}
+	ost << "\\pagenumbering{arabic}\n"; 
+	ost << "%\\pagenumbering{roman}\n"; 
+	ost << endl;
+	ost << endl;
+	ost << endl;
 }
 
 
@@ -2093,7 +2148,8 @@ void decode_UBYTE(char *&p, UBYTE &a)
 	a = (UBYTE)i;
 }
 
-void print_incidence_structure(ostream &ost, INT m, INT n, INT len, INT *S)
+void print_incidence_structure(ostream &ost, 
+	INT m, INT n, INT len, INT *S)
 {
 	INT *M;
 	INT h, i, j;
@@ -2350,13 +2406,15 @@ void double_vec_scan_from_stream(istream & is, double *&v, INT &len)
 		}
 }
 
-void scan_permutation_from_string(const char *s, INT *&perm, INT &degree, INT verbose_level)
+void scan_permutation_from_string(const char *s, 
+	INT *&perm, INT &degree, INT verbose_level)
 {
 	istringstream ins(s);
 	scan_permutation_from_stream(ins, perm, degree, verbose_level);
 }
 
-void scan_permutation_from_stream(istream & is, INT *&perm, INT &degree, INT verbose_level)
+void scan_permutation_from_stream(istream & is, 
+	INT *&perm, INT &degree, INT verbose_level)
 // Scans a permutation from a stream.
 {
 	INT f_v = (verbose_level >= 1);
@@ -2407,7 +2465,8 @@ void scan_permutation_from_stream(istream & is, INT *&perm, INT &degree, INT ver
 			if (dig > largest_point)
 				largest_point = dig;
 			if (f_v) {
-				cout << "digit as string: " << s << ", numeric: " << dig << endl;
+				cout << "digit as string: " << s 
+					<< ", numeric: " << dig << endl;
 				}
 			if (dig < 0) { 
 				cout << "permutation::scan(): digit < 0" << endl;
@@ -2422,7 +2481,10 @@ void scan_permutation_from_stream(istream & is, INT *&perm, INT &degree, INT ver
 				
 				l1 = MAXIMUM(l + (l >> 1), largest_point + 1);
 				if (f_v) {
-					cout << "permutation::scan(): digit = " << dig << " >= " << l << ", extending permutation degree to " << l1 << endl;
+					cout << "permutation::scan(): digit = " 
+						<< dig << " >= " << l 
+						<< ", extending permutation degree to " 
+						<< l1 << endl;
 					}
 				perm1 = NEW_INT(l1);
 				cycle1 = NEW_INT(l1);
@@ -2516,7 +2578,8 @@ char get_character(istream & is, INT verbose_level)
 		}
 	is >> c;
 	if (f_v) {
-		cout << "get_character: \"" << c << "\", ascii=" << (INT)c << endl;
+		cout << "get_character: \"" << c 
+			<< "\", ascii=" << (INT)c << endl;
 		}
 	return c;
 }
@@ -2569,6 +2632,22 @@ void get_extension_if_present(const char *p, char *ext)
 		if (p[i] == '.') {
 			//cout << "p[" << i << "] is dot" << endl;
 			strcpy(ext, p + i);
+			return;
+			}
+		}
+}
+
+void get_extension_if_present_and_chop_off(char *p, char *ext)
+{
+	INT i, l = strlen(p);
+	
+	//cout << "get_extension_if_present " << p << " l=" << l << endl;
+	ext[0] = 0;
+	for (i = l - 1; i >= 0; i--) {
+		if (p[i] == '.') {
+			//cout << "p[" << i << "] is dot" << endl;
+			strcpy(ext, p + i);
+			p[i] = 0;
 			return;
 			}
 		}
@@ -2851,7 +2930,8 @@ INT INT_vec_hash(INT *v, INT len, INT bit_length)
 }
 
 void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers, 
-	INT *&Set_sizes, INT **&Sets, BYTE **&Ago_ascii, BYTE **&Aut_ascii, 
+	INT *&Set_sizes, INT **&Sets, 
+	BYTE **&Ago_ascii, BYTE **&Aut_ascii, 
 	INT *&Casenumbers, 
 	INT verbose_level)
 {
@@ -2862,7 +2942,8 @@ void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers,
 	BYTE *p_buf;
 	
 	if (f_v) {
-		cout << "parse_sets f_casenumbers=" << f_casenumbers << " nb_cases = " << nb_cases << endl;
+		cout << "parse_sets f_casenumbers=" << f_casenumbers 
+			<< " nb_cases = " << nb_cases << endl;
 		}
 	
 	ago_ascii = NEW_BYTE(MY_BUFSIZE);
@@ -2887,7 +2968,8 @@ void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers,
 			casenumber = h;
 			}
 		
-		parse_line(p_buf, Set_sizes[h], Sets[h], ago_ascii, aut_ascii);
+		parse_line(p_buf, Set_sizes[h], Sets[h], 
+			ago_ascii, aut_ascii);
 
 		Casenumbers[h] = casenumber;
 		
@@ -2904,7 +2986,8 @@ void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers,
 #endif
 
 		if (f_vv && ((h % 1000000) == 0)) {
-			cout << h << " : " << Casenumbers[h] << " : " << data[h] << endl;
+			cout << h << " : " << Casenumbers[h] 
+				<< " : " << data[h] << endl;
 			}
 		}
 	
@@ -2913,7 +2996,8 @@ void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers,
 	FREE_BYTE(aut_ascii);
 }
 
-void parse_line(BYTE *line, INT &len, INT *&set, BYTE *ago_ascii, BYTE *aut_ascii)
+void parse_line(BYTE *line, INT &len, 
+	INT *&set, BYTE *ago_ascii, BYTE *aut_ascii)
 {
 	INT i;
 	BYTE *p_buf;
@@ -2945,7 +3029,8 @@ INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
 
 	if (f_v) {
 		cout << "count_number_of_orbits_in_file " << fname << endl;
-		cout << "count_number_of_orbits_in_file trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "count_number_of_orbits_in_file trying to read file " 
+			<< fname << " of size " << file_size(fname) << endl;
 		}
 
 	if (file_size(fname) < 0) {
@@ -3010,7 +3095,8 @@ INT count_number_of_lines_in_file(const BYTE *fname, INT verbose_level)
 
 	if (f_v) {
 		cout << "count_number_of_lines_in_file " << fname << endl;
-		cout << "trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "trying to read file " << fname << " of size " 
+			<< file_size(fname) << endl;
 		}
 
 	if (file_size(fname) < 0) {
@@ -3042,7 +3128,8 @@ INT count_number_of_lines_in_file(const BYTE *fname, INT verbose_level)
 	return nb_lines;
 }
 
-INT try_to_read_file(const BYTE *fname, INT &nb_cases, BYTE **&data, INT verbose_level)
+INT try_to_read_file(const BYTE *fname, 
+	INT &nb_cases, BYTE **&data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT n1;
@@ -3050,7 +3137,8 @@ INT try_to_read_file(const BYTE *fname, INT &nb_cases, BYTE **&data, INT verbose
 	INT nb_sol, len, a;
 	
 	if (f_v) {
-		cout << "try_to_read_file trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "try_to_read_file trying to read file " << fname 
+			<< " of size " << file_size(fname) << endl;
 		}
 	buf = NEW_BYTE(MY_BUFSIZE);
 
@@ -3095,7 +3183,8 @@ INT try_to_read_file(const BYTE *fname, INT &nb_cases, BYTE **&data, INT verbose
 		s_scan_int(&p_buf, &len);
 		if (len == -1) {
 			if (f_v) {
-				cout << "found a complete file with " << nb_sol << " solutions" << endl;
+				cout << "found a complete file with " 
+					<< nb_sol << " solutions" << endl;
 				}
 			break;
 			}
@@ -3141,7 +3230,8 @@ INT try_to_read_file(const BYTE *fname, INT &nb_cases, BYTE **&data, INT verbose
 		s_scan_int(&p_buf, &a);
 		if (a == -1) {
 			if (f_v) {
-				cout << "read " << nb_sol << " solutions" << endl;
+				cout << "read " << nb_sol 
+					<< " solutions" << endl;
 				}
 			break;
 			}
@@ -3171,15 +3261,18 @@ void read_and_parse_data_file(const BYTE *fname, INT &nb_cases,
 	INT f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "read_and_parse_data_file: reading file " << fname << endl;
+		cout << "read_and_parse_data_file: reading file " 
+			<< fname << endl;
 		}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level)) {
 		if (f_vv) {
-			cout << "file read containing " << nb_cases << " cases" << endl;
+			cout << "file read containing " << nb_cases 
+				<< " cases" << endl;
 			}
 		}
 	else {
-		cout << "read_and_parse_data_file couldn't read file " << fname << endl;
+		cout << "read_and_parse_data_file couldn't read file " 
+			<< fname << endl;
 		exit(1);
 		}
 	
@@ -3299,7 +3392,9 @@ void free_data_fancy(INT nb_cases,
 void read_and_parse_data_file_fancy(const BYTE *fname, 
 	INT f_casenumbers, 
 	INT &nb_cases, 
-	INT *&Set_sizes, INT **&Sets, BYTE **&Ago_ascii, BYTE **&Aut_ascii, 
+	INT *&Set_sizes, INT **&Sets, 
+	BYTE **&Ago_ascii, 
+	BYTE **&Aut_ascii, 
 	INT *&Casenumbers, 
 	INT verbose_level)
 {
@@ -3309,18 +3404,21 @@ void read_and_parse_data_file_fancy(const BYTE *fname,
 	INT i;
 	
 	if (f_v) {
-		cout << "read_and_parse_data_file_fancy: reading file " << fname << endl;
+		cout << "read_and_parse_data_file_fancy: reading file " 
+			<< fname << endl;
 		}
 	if (f_vv) {
 		cout << "read_and_parse_data_file_fancy before try_to_read_file" << endl;
 		}
 	if (try_to_read_file(fname, nb_cases, data, verbose_level - 1)) {
 		if (f_vv) {
-			cout << "read_and_parse_data_file_fancy file read containing " << nb_cases << " cases" << endl;
+			cout << "read_and_parse_data_file_fancy file read containing " 
+				<< nb_cases << " cases" << endl;
 			}
 		}
 	else {
-		cout << "read_and_parse_data_file_fancy: couldn't read file fname=" << fname << endl;
+		cout << "read_and_parse_data_file_fancy: couldn't read file fname=" 
+			<< fname << endl;
 		exit(1);
 		}
 	
@@ -3354,25 +3452,30 @@ void read_and_parse_data_file_fancy(const BYTE *fname,
 		}
 }
 
-void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT verbose_level)
+void read_set_from_file(const BYTE *fname, 
+	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT i, a;
 	
 	if (f_v) {
-		cout << "read_set_from_file opening file " << fname << " of size " << file_size(fname) << " for reading" << endl;
+		cout << "read_set_from_file opening file " << fname 
+			<< " of size " << file_size(fname) 
+			<< " for reading" << endl;
 		}
 	ifstream f(fname);
 	
 	f >> set_size;
 	if (f_v) {
-		cout << "read_set_from_file allocating set of size " << set_size << endl;
+		cout << "read_set_from_file allocating set of size " 
+			<< set_size << endl;
 		}
 	the_set = NEW_INT(set_size);
 	
 	if (f_v) {
-		cout << "read_set_from_file reading set of size " << set_size << endl;
+		cout << "read_set_from_file reading set of size " 
+			<< set_size << endl;
 		}
 	for (i = 0; i < set_size; i++) {
 		f >> a;
@@ -3384,7 +3487,8 @@ void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT ver
 		the_set[i] = a;
 		}
 	if (f_v) {
-		cout << "read a set of size " << set_size << " from file " << fname << endl;
+		cout << "read a set of size " << set_size 
+			<< " from file " << fname << endl;
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
@@ -3393,13 +3497,15 @@ void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT ver
 		}
 }
 
-void write_set_to_file(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level)
+void write_set_to_file(const BYTE *fname, 
+	INT *the_set, INT set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
 	
 	if (f_v) {
-		cout << "write_set_to_file opening file " << fname << " for writing" << endl;
+		cout << "write_set_to_file opening file " 
+			<< fname << " for writing" << endl;
 		}
 	{
 	ofstream f(fname);
@@ -3417,11 +3523,13 @@ void write_set_to_file(const BYTE *fname, INT *the_set, INT set_size, INT verbos
 	f << endl << -1 << endl;
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size " 
+			<< file_size(fname) << endl;
 		}
 }
 
-void read_set_from_file_INT4(const BYTE *fname, INT *&the_set, INT &set_size, INT verbose_level)
+void read_set_from_file_INT4(const BYTE *fname, 
+	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -3429,7 +3537,9 @@ void read_set_from_file_INT4(const BYTE *fname, INT *&the_set, INT &set_size, IN
 	INT4 a;
 	
 	if (f_v) {
-		cout << "read_set_from_file_INT4 opening file " << fname << " of size " << file_size(fname) << " for reading" << endl;
+		cout << "read_set_from_file_INT4 opening file " << fname 
+			<< " of size " << file_size(fname) 
+			<< " for reading" << endl;
 		}
 	ifstream f(fname, ios::binary);
 	
@@ -3448,7 +3558,8 @@ void read_set_from_file_INT4(const BYTE *fname, INT *&the_set, INT &set_size, IN
 		the_set[i] = b;
 		}
 	if (f_v) {
-		cout << "read a set of size " << set_size << " from file " << fname << endl;
+		cout << "read a set of size " << set_size 
+			<< " from file " << fname << endl;
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
@@ -3457,7 +3568,8 @@ void read_set_from_file_INT4(const BYTE *fname, INT *&the_set, INT &set_size, IN
 		}
 }
 
-void write_set_to_file_as_INT4(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level)
+void write_set_to_file_as_INT4(const BYTE *fname, 
+	INT *the_set, INT set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -3465,7 +3577,8 @@ void write_set_to_file_as_INT4(const BYTE *fname, INT *the_set, INT set_size, IN
 	INT b;
 	
 	if (f_v) {
-		cout << "write_set_to_file_as_INT4 opening file " << fname << " for writing" << endl;
+		cout << "write_set_to_file_as_INT4 opening file " 
+			<< fname << " for writing" << endl;
 		}
 	{
 	ofstream f(fname, ios::binary);
@@ -3496,11 +3609,13 @@ void write_set_to_file_as_INT4(const BYTE *fname, INT *the_set, INT set_size, IN
 		}
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname 
+			<< " of size " << file_size(fname) << endl;
 		}
 }
 
-void write_set_to_file_as_INT8(const BYTE *fname, INT *the_set, INT set_size, INT verbose_level)
+void write_set_to_file_as_INT8(const BYTE *fname, 
+	INT *the_set, INT set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -3508,7 +3623,8 @@ void write_set_to_file_as_INT8(const BYTE *fname, INT *the_set, INT set_size, IN
 	INT b;
 	
 	if (f_v) {
-		cout << "write_set_to_file_as_INT8 opening file " << fname << " for writing" << endl;
+		cout << "write_set_to_file_as_INT8 opening file " 
+			<< fname << " for writing" << endl;
 		}
 	{
 	ofstream f(fname, ios::binary);
@@ -3539,18 +3655,22 @@ void write_set_to_file_as_INT8(const BYTE *fname, INT *the_set, INT set_size, IN
 		}
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname 
+			<< " of size " << file_size(fname) << endl;
 		}
 }
 
-void read_k_th_set_from_file(const BYTE *fname, INT k, INT *&the_set, INT &set_size, INT verbose_level)
+void read_k_th_set_from_file(const BYTE *fname, INT k, 
+	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT i, a, h;
 	
 	if (f_v) {
-		cout << "read_k_th_set_from_file opening file " << fname << " of size " << file_size(fname) << " for reading" << endl;
+		cout << "read_k_th_set_from_file opening file " 
+			<< fname << " of size " << file_size(fname) 
+			<< " for reading" << endl;
 		}
 	ifstream f(fname);
 	
@@ -3561,7 +3681,9 @@ void read_k_th_set_from_file(const BYTE *fname, INT k, INT *&the_set, INT &set_s
 		for (i = 0; i < set_size; i++) {
 			f >> a;
 			if (f_v) {
-				cout << "read_k_th_set_from_file: h=" << h << " the " << i << "-th number is " << a << endl;
+				cout << "read_k_th_set_from_file: h=" 
+					<< h << " the " << i 
+					<< "-th number is " << a << endl;
 				}
 			//if (a == -1)
 				//break;
@@ -3569,7 +3691,8 @@ void read_k_th_set_from_file(const BYTE *fname, INT k, INT *&the_set, INT &set_s
 			}
 		}
 	if (f_v) {
-		cout << "read a set of size " << set_size << " from file " << fname << endl;
+		cout << "read a set of size " << set_size 
+			<< " from file " << fname << endl;
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
@@ -3579,13 +3702,15 @@ void read_k_th_set_from_file(const BYTE *fname, INT k, INT *&the_set, INT &set_s
 }
 
 
-void write_incidence_matrix_to_file(BYTE *fname, INT *Inc, INT m, INT n, INT verbose_level)
+void write_incidence_matrix_to_file(BYTE *fname, 
+	INT *Inc, INT m, INT n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, nb_inc;
 	
 	if (f_v) {
-		cout << "write_incidence_matrix_to_file opening file " << fname << " for writing" << endl;
+		cout << "write_incidence_matrix_to_file opening file " 
+			<< fname << " for writing" << endl;
 		}
 	{
 	ofstream f(fname);
@@ -3608,7 +3733,8 @@ void write_incidence_matrix_to_file(BYTE *fname, INT *Inc, INT m, INT n, INT ver
 	f << -1 << endl;
 	}
 	if (f_v) {
-		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "Written file " << fname << " of size " 
+			<< file_size(fname) << endl;
 		}
 }
 
@@ -3627,7 +3753,8 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 
 
 	if (f_v) {
-		cout << "read_incidence_matrix_from_inc_file " << inc_file_name << " no " << inc_file_idx << endl;
+		cout << "read_incidence_matrix_from_inc_file " 
+			<< inc_file_name << " no " << inc_file_idx << endl;
 		}
 	{
 	ifstream f(inc_file_name);
@@ -3667,7 +3794,8 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 			//cout << cnt << " : " << a << " ";
 			}
 		if (a == -1) {
-			cout << "\nread_incidence_matrix_from_inc_file: found a complete file with " << cnt << " solutions" << endl;
+			cout << "\nread_incidence_matrix_from_inc_file: found a complete file with " 
+				<< cnt << " solutions" << endl;
 			break;
 			}
 		X[0] = a;
@@ -3676,7 +3804,8 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 		for (h = 1; h < nb_inc; h++) {
 			s_scan_int(&p_buf, &a);
 			if (a < 0 || a >= m * n) {
-				cout << "attention, read " << a << " h=" << h << endl;
+				cout << "attention, read " << a 
+					<< " h=" << h << endl;
 				exit(1);
 				}
 			X[h] = a;
@@ -3693,7 +3822,8 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 				}
 			if (f_vv) {
 				cout << "read_incidence_matrix_from_inc_file: found the following incidence matrix:" << endl;
-				print_integer_matrix_width(cout, M, m, n, n, 1);
+				print_integer_matrix_width(cout, 
+					M, m, n, n, 1);
 				}
 			break;
 			}
@@ -3717,7 +3847,8 @@ INT inc_file_get_number_of_geometries(
 
 
 	if (f_v) {
-		cout << "inc_file_get_number_of_geometries " << inc_file_name << endl;
+		cout << "inc_file_get_number_of_geometries " 
+			<< inc_file_name << endl;
 		}
 	{
 	ifstream f(inc_file_name);
@@ -3766,7 +3897,8 @@ INT inc_file_get_number_of_geometries(
 		for (h = 1; h < nb_inc; h++) {
 			s_scan_int(&p_buf, &a);
 			if (a < 0 || a >= m * n) {
-				cout << "attention, read " << a << " h=" << h << endl;
+				cout << "attention, read " << a 
+					<< " h=" << h << endl;
 				exit(1);
 				}
 			X[h] = a;
@@ -3836,12 +3968,14 @@ void count_number_of_solutions_in_file(const BYTE *fname,
 
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file " << fname << endl;
-		cout << "trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "trying to read file " << fname << " of size " 
+			<< file_size(fname) << endl;
 		}
 
 	nb_solutions = 0;
 	if (file_size(fname) < 0) {
-		cout << "count_number_of_solutions_in_file file " << fname <<  " does not exist" << endl;
+		cout << "count_number_of_solutions_in_file file " 
+			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
 		}
@@ -3892,15 +4026,18 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 	INT the_case_count = 0;
 
 	if (f_v) {
-		cout << "count_number_of_solutions_in_file_by_case " << fname << endl;
-		cout << "trying to read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "count_number_of_solutions_in_file_by_case " 
+			<< fname << endl;
+		cout << "trying to read file " << fname << " of size " 
+			<< file_size(fname) << endl;
 		}
 
 	nb_solutions = NEW_INT(N);
 	case_nb = NEW_INT(N);
 	nb_cases = 0;
 	if (file_size(fname) < 0) {
-		cout << "count_number_of_solutions_in_file_by_case file " << fname <<  " does not exist" << endl;
+		cout << "count_number_of_solutions_in_file_by_case file " 
+			<< fname <<  " does not exist" << endl;
 		exit(1);
 		//return;
 		}
@@ -3965,7 +4102,8 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 	}
 	FREE_BYTE(buf);
 	if (f_v) {
-		cout << "count_number_of_solutions_in_file_by_case " << fname << endl;
+		cout << "count_number_of_solutions_in_file_by_case " 
+			<< fname << endl;
 		cout << "nb_cases = " << nb_cases << endl;
 		}
 }
@@ -3981,8 +4119,10 @@ void read_solutions_from_file(const BYTE *fname,
 
 	if (f_v) {
 		cout << "read_solutions_from_file" << endl;
-		cout << "read_solutions_from_file trying to read file " << fname << " of size " << file_size(fname) << endl;
-		cout << "read_solutions_from_file solution_size=" << solution_size << endl;
+		cout << "read_solutions_from_file trying to read file " 
+			<< fname << " of size " << file_size(fname) << endl;
+		cout << "read_solutions_from_file solution_size=" 
+			<< solution_size << endl;
 		}
 
 	if (file_size(fname) < 0) {
@@ -3995,7 +4135,8 @@ void read_solutions_from_file(const BYTE *fname,
 		nb_solutions, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "read_solutions_from_file, reading " << nb_solutions << " solutions" << endl;
+		cout << "read_solutions_from_file, reading " 
+			<< nb_solutions << " solutions" << endl;
 		}
 
 
@@ -4051,8 +4192,10 @@ void read_solutions_from_file_by_case(const BYTE *fname,
 
 	if (f_v) {
 		cout << "read_solutions_from_file_by_case" << endl;
-		cout << "read_solutions_from_file_by_case trying to read file " << fname << " of size " << file_size(fname) << endl;
-		cout << "read_solutions_from_file_by_case solution_size=" << solution_size << endl;
+		cout << "read_solutions_from_file_by_case trying to read file " 
+			<< fname << " of size " << file_size(fname) << endl;
+		cout << "read_solutions_from_file_by_case solution_size=" 
+			<< solution_size << endl;
 		}
 
 	if (file_size(fname) < 0) {
@@ -4163,7 +4306,8 @@ void copy_file_to_ostream(ostream &ost, BYTE *fname)
 
 }
 
-void INT_vec_write_csv(INT *v, INT len, const BYTE *fname, const BYTE *label)
+void INT_vec_write_csv(INT *v, INT len, 
+	const BYTE *fname, const BYTE *label)
 {
 	INT i;
 
@@ -4178,7 +4322,8 @@ void INT_vec_write_csv(INT *v, INT len, const BYTE *fname, const BYTE *label)
 	}
 }
 
-void INT_vecs_write_csv(INT *v1, INT *v2, INT len, const BYTE *fname, const BYTE *label1, const BYTE *label2)
+void INT_vecs_write_csv(INT *v1, INT *v2, INT len, 
+	const BYTE *fname, const BYTE *label1, const BYTE *label2)
 {
 	INT i;
 
@@ -4193,7 +4338,8 @@ void INT_vecs_write_csv(INT *v1, INT *v2, INT len, const BYTE *fname, const BYTE
 	}
 }
 
-void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len, const BYTE *fname, const BYTE **column_label)
+void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len, 
+	const BYTE *fname, const BYTE **column_label)
 {
 	INT i, j;
 
@@ -4268,7 +4414,8 @@ void double_matrix_write_csv(const BYTE *fname, double *M, INT m, INT n)
 	}
 }
 
-void INT_matrix_write_csv_with_labels(const BYTE *fname, INT *M, INT m, INT n, const BYTE **column_label)
+void INT_matrix_write_csv_with_labels(const BYTE *fname, 
+	INT *M, INT m, INT n, const BYTE **column_label)
 {
 	INT i, j;
 
@@ -4291,7 +4438,8 @@ void INT_matrix_write_csv_with_labels(const BYTE *fname, INT *M, INT m, INT n, c
 	}
 }
 
-void INT_matrix_read_csv(const BYTE *fname, INT *&M, INT &m, INT &n, INT verbose_level)
+void INT_matrix_read_csv(const BYTE *fname, 
+	INT *&M, INT &m, INT &n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a;
@@ -4300,7 +4448,8 @@ void INT_matrix_read_csv(const BYTE *fname, INT *&M, INT &m, INT &n, INT verbose
 		cout << "INT_matrix_read_csv reading file " << fname << endl;
 		}
 	if (file_size(fname) <= 0) {
-		cout << "INT_matrix_read_csv file " << fname << " does not exist or is empty" << endl;
+		cout << "INT_matrix_read_csv file " << fname 
+			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
 		}
@@ -4325,16 +4474,19 @@ void INT_matrix_read_csv(const BYTE *fname, INT *&M, INT &m, INT &n, INT verbose
 
 }
 
-void double_matrix_read_csv(const BYTE *fname, double *&M, INT &m, INT &n, INT verbose_level)
+void double_matrix_read_csv(const BYTE *fname, 
+	double *&M, INT &m, INT &n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
 
 	if (f_v) {
-		cout << "double_matrix_read_csv reading file " << fname << endl;
+		cout << "double_matrix_read_csv reading file " 
+			<< fname << endl;
 		}
 	if (file_size(fname) <= 0) {
-		cout << "double_matrix_read_csv file " << fname << " does not exist or is empty" << endl;
+		cout << "double_matrix_read_csv file " << fname 
+			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
 		}
@@ -4382,7 +4534,8 @@ void INT_matrix_read_text(const BYTE *fname, INT *&M, INT &m, INT &n)
 	INT i, j;
 
 	if (file_size(fname) <= 0) {
-		cout << "INT_matrix_read_text The file " << fname << " does not exist" << endl;
+		cout << "INT_matrix_read_text The file " 
+			<< fname << " does not exist" << endl;
 		exit(1);
 		}
 	{
@@ -4486,7 +4639,9 @@ finish:
 	return ret;
 }
 
-void make_graph_of_disjoint_sets_from_rows_of_matrix(INT *M, INT m, INT n, INT *&Adj, INT verbose_level)
+void make_graph_of_disjoint_sets_from_rows_of_matrix(
+	INT *M, INT m, INT n, 
+	INT *&Adj, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a;
@@ -4501,7 +4656,8 @@ void make_graph_of_disjoint_sets_from_rows_of_matrix(INT *M, INT m, INT n, INT *
 
 	for (i = 0; i < m; i++) {
 		for (j = i + 1; j < m; j++) {
-			if (test_if_sets_are_disjoint(M + i * n, M + j * n, n, n)) {
+			if (test_if_sets_are_disjoint(
+				M + i * n, M + j * n, n, n)) {
 				a = 1;
 				}
 			else {
@@ -4513,7 +4669,8 @@ void make_graph_of_disjoint_sets_from_rows_of_matrix(INT *M, INT m, INT n, INT *
 		}
 }
 
-void write_exact_cover_problem_to_file(INT *Inc, INT nb_rows, INT nb_cols, const BYTE *fname)
+void write_exact_cover_problem_to_file(INT *Inc, 
+		INT nb_rows, INT nb_cols, const BYTE *fname)
 {
 	INT i, j, d;
 	
@@ -4536,7 +4693,8 @@ void write_exact_cover_problem_to_file(INT *Inc, INT nb_rows, INT nb_cols, const
 		fp << endl;
 		}
 	}
-	cout << "write_exact_cover_problem_to_file written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "write_exact_cover_problem_to_file written file " 
+		<< fname << " of size " << file_size(fname) << endl;
 }
 
 #define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
@@ -4557,10 +4715,12 @@ void read_solution_file(BYTE *fname,
 	x = NEW_INT(nb_cols);
 	y = NEW_INT(nb_rows);
 	if (f_v) {
-		cout << "read_solution_file reading file " << fname << " of size " << file_size(fname) << endl;
+		cout << "read_solution_file reading file " << fname 
+			<< " of size " << file_size(fname) << endl;
 		}
 	if (file_size(fname) <= 0) {
-		cout << "read_solution_file There is something wrong with the file " << fname << endl;
+		cout << "read_solution_file There is something wrong with the file " 
+			<< fname << endl;
 		exit(1);
 		}
 	BYTE *buf;
@@ -4611,7 +4771,9 @@ void read_solution_file(BYTE *fname,
 			}
 	}
 	if (f_v) {
-		cout << "read_solution_file: Counted " << nb_sol << " solutions in " << fname << " starting to read now." << endl;
+		cout << "read_solution_file: Counted " << nb_sol 
+			<< " solutions in " << fname 
+			<< " starting to read now." << endl;
 		}
 	sol_length = nb_max;
 	Solutions = NEW_INT(nb_sol * sol_length);
@@ -4638,7 +4800,8 @@ void read_solution_file(BYTE *fname,
 			}
 	}
 	if (f_v) {
-		cout << "read_solution_file: Read " << nb_sol << " solutions from file " << fname << endl;
+		cout << "read_solution_file: Read " << nb_sol 
+			<< " solutions from file " << fname << endl;
 		}
 	FREE_INT(x);
 	FREE_INT(y);
@@ -4664,11 +4827,13 @@ void INT_vec_print_to_str(BYTE *str, INT *data, INT len)
 	strcat(str, "\"");
 }
 
-void INT_matrix_print_with_labels_and_partition(ostream &ost, INT *p, INT m, INT n, 
+void INT_matrix_print_with_labels_and_partition(ostream &ost, 
+	INT *p, INT m, INT n, 
 	INT *row_labels, INT *col_labels, 
 	INT *row_part_first, INT *row_part_len, INT nb_row_parts,  
 	INT *col_part_first, INT *col_part_len, INT nb_col_parts, 
-	void (*process_function_or_NULL)(INT *p, INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data), 
+	void (*process_function_or_NULL)(INT *p, INT m, INT n, 
+		INT i, INT j, INT val, BYTE *output, void *data), 
 	void *data, 
 	INT f_tex)
 {
@@ -4691,7 +4856,9 @@ void INT_matrix_print_with_labels_and_partition(ostream &ost, INT *p, INT m, INT
 			ost << " ";
 			}
 		if (process_function_or_NULL) {
-			(*process_function_or_NULL)(p, m, n, -1, j, col_labels[j], output, data);
+			(*process_function_or_NULL)(
+				p, m, n, -1, j, 
+				col_labels[j], output, data);
 			ost << output;
 			}
 		else {
@@ -4710,7 +4877,9 @@ void INT_matrix_print_with_labels_and_partition(ostream &ost, INT *p, INT m, INT
 			i = row_part_first[I] + u;
 			
 			if (process_function_or_NULL) {
-				(*process_function_or_NULL)(p, m, n, i, -1, row_labels[i], output, data);
+				(*process_function_or_NULL)(
+					p, m, n, i, -1, 
+					row_labels[i], output, data);
 				ost << output;
 				}
 			else {
@@ -4727,7 +4896,9 @@ void INT_matrix_print_with_labels_and_partition(ostream &ost, INT *p, INT m, INT
 						ost << " ";
 						}
 					if (process_function_or_NULL) {
-						(*process_function_or_NULL)(p, m, n, i, j, p[i * n + j], output, data);
+						(*process_function_or_NULL)(
+						p, m, n, i, j, p[i * n + j], 
+						output, data);
 						ost << output;
 						}
 					else {
@@ -4808,7 +4979,8 @@ INT os_seconds_past_1970()
 	return a;
 }
 
-void povray_beginning(ostream &ost)
+void povray_beginning(ostream &ost, INT angle)
+// angle = 22 
 {
 	ost << "//Files with predefined colors and textures" << endl;
 	ost << "#version 3.7;" << endl;
@@ -4828,7 +5000,7 @@ void povray_beginning(ostream &ost)
 	ost << "	//look_at<0,0.2,0>" << endl;
 	ost << "   location  <0,5,0>  //Camera location" << endl;
 	ost << "   look_at   <0,0,0>    //Where camera is pointing" << endl;
-	ost << "   angle 22      //Angle of the view" << endl;
+	ost << "   angle " << angle << "      //Angle of the view" << endl;
 	ost << "	// 22 is default, 18 is closer,  28 is further away" << endl;
 	ost << "}" << endl;
 	ost << endl;
@@ -4885,7 +5057,8 @@ void povray_animation_rotate_around_origin_and_1_1_1(ostream &ost)
 	ost << endl;
 }
 
-void povray_animation_rotate_around_origin_and_given_vector(double *v, ostream &ost)
+void povray_animation_rotate_around_origin_and_given_vector(
+	double *v, ostream &ost)
 {
 	double A[9], Av[9];
 
@@ -4954,7 +5127,8 @@ void povray_animation_rotate_around_origin_and_given_vector(double *v, ostream &
 	ost << endl;
 }
 
-void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(double *v, double angle_zero_one, ostream &ost)
+void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+	double *v, double angle_zero_one, ostream &ost)
 {
 	double A[9], Av[9];
 
@@ -5023,7 +5197,8 @@ void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(dou
 	ost << endl;
 }
 
-void povray_end(ostream &ost)
+void povray_end(ostream &ost, double clipping_radius)
+// clipping_radius = 0.9
 {
 	ost << "	// and now we pull the axis 1,1,1 up:" << endl;
 	ost << endl;
@@ -5039,8 +5214,8 @@ void povray_end(ostream &ost)
 	ost << endl;
 	ost << endl;
 	ost << endl;
-	ost << "	clipped_by { sphere{ < 0,0.,0. > ,0.9  } } // < 0.2,0.2,0.2 > , 1.8" << endl;
-	ost << "	//clipped_by { sphere{ < 0,0.,0. > ,0.8  } } // < 0.2,0.2,0.2 > , 1.8" << endl;
+	ost << "	clipped_by { sphere{ < 0,0.,0. > , " 
+		<< clipping_radius << "  } } // < 0.2,0.2,0.2 > , 1.8" << endl;
 	ost << "	bounded_by { clipped_by }" << endl;
 	ost << endl;
 	ost << "	// rotate the top towards the viewpoint so we can see slightly from above:" << endl;
@@ -5114,7 +5289,8 @@ void povray_end(ostream &ost)
 }
 
 
-void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, INT last_frame)
+void povray_ini(ostream &ost, const BYTE *fname_pov, 
+	INT first_frame, INT last_frame)
 {
 	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;
 	ost << "Antialias=On" << endl;
@@ -5167,7 +5343,8 @@ void concatenate_files(const BYTE *fname_in_mask, INT N,
 	INT h, cnt;
 
 	if (f_v) {
-		cout << "concatenate_files " << fname_in_mask << " N=" << N << " fname_out=" << fname_out << endl;
+		cout << "concatenate_files " << fname_in_mask 
+			<< " N=" << N << " fname_out=" << fname_out << endl;
 		}
 
 	buf = NEW_BYTE(MY_BUFSIZE);
@@ -5211,7 +5388,8 @@ void concatenate_files(const BYTE *fname_in_mask, INT N,
 		} // next h
 	fp_out << EOF_marker << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out << " of size " 
+		<< file_size(fname_out) << endl;
 	FREE_BYTE(buf);
 	if (f_v) {
 		cout << "concatenate_files done" << endl;

@@ -172,7 +172,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost)
 	l = orbits_on_trihedra_type1->nb_orbits_at_level(3);
 
 	ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Classification of trihedra of type 1 in $\\PG(3," << q << ")$}" << endl;
+	ost << "\\subsection*{Classification of Double Triplets of type 1 in $\\PG(3," << q << ")$}" << endl;
 
 
 
@@ -195,7 +195,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost)
 
 	ost << "The group of type 1 has " 
 		<< l 
-		<< " orbits on trihedra of type 1 in $\\PG(3," << q << ").$" << endl << endl;
+		<< " orbits on double triplets of type 1 in $\\PG(3," << q << ").$" << endl << endl;
 	for (i = 0; i < l; i++) {
 		set_and_stabilizer *R;
 
@@ -212,7 +212,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(ostream &ost)
 		delete R;
 		}
 
-	ost << "The overall number of trihedra of type 1 in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
+	ost << "The overall number of double triplets of type 1 in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
 void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
@@ -222,7 +222,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
 	l = orbits_on_trihedra_type2->nb_orbits_at_level(3);
 
 	ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Classification of trihedra of type 2 in $\\PG(3," << q << ")$}" << endl;
+	ost << "\\subsection*{Classification of Double Triplets of type 2 in $\\PG(3," << q << ")$}" << endl;
 
 
 
@@ -245,7 +245,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
 
 	ost << "The group of type 2 has " 
 		<< l 
-		<< " orbits on trihedra of type 2 in $\\PG(3," << q << ").$" << endl << endl;
+		<< " orbits on double triplets of type 2 in $\\PG(3," << q << ").$" << endl << endl;
 	for (i = 0; i < l; i++) {
 		set_and_stabilizer *R;
 
@@ -262,7 +262,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(ostream &ost)
 		delete R;
 		}
 
-	ost << "The overall number of trihedra of type 2 in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
+	ost << "The overall number of double triplets of type 2 in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
 }
 
 void classify_trihedral_pairs::early_test_func_type1(INT *S, INT len, 
@@ -905,9 +905,11 @@ void classify_trihedral_pairs::upstep(INT verbose_level)
 		}
 }
 
-void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost)
+void classify_trihedral_pairs::print_trihedral_pairs(ostream &ost, 
+	INT f_with_stabilizers)
 {
-	Trihedral_pairs->print_latex(ost, "Classification of Trihedral Pairs");
+	Trihedral_pairs->print_latex(ost, 
+		"Classification of Double Triplets", f_with_stabilizers);
 }
 
 

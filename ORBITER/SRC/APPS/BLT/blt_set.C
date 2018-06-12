@@ -693,6 +693,8 @@ INT blt_set::create_graph(
 	if (f_v) {
 		cout << "blt_set::create_graph" << endl;
 		cout << "blt_set::create_graph f_lexorder_test=" << f_lexorder_test << endl;
+		cout << "blt_set::create_graph orbit_at_level=" << orbit_at_level << endl;
+		cout << "blt_set::create_graph level_of_candidates_file=" << level_of_candidates_file << endl;
 		}
 
 	CG = NULL;
@@ -710,12 +712,18 @@ INT blt_set::create_graph(
 
 
 	R = new orbit_rep;
+	if (f_v) {
+		cout << "blt_set::create_graph before R->init_from_file" << endl;
+		}
 	R->init_from_file(A, prefix_with_directory, 
 		starter_size, orbit_at_level, level_of_candidates_file, 
 		early_test_func_callback, 
 		this /* early_test_func_callback_data */, 
 		verbose_level - 1
 		);
+	if (f_v) {
+		cout << "blt_set::create_graph after R->init_from_file" << endl;
+		}
 	nb = q + 1 - starter_size;
 
 
@@ -751,7 +759,8 @@ INT blt_set::create_graph(
 
 
 	// we must do this. 
-	// For instance, what of we have no points left, then the minimal color stuff break down.
+	// For instance, what of we have no points left, 
+	// then the minimal color stuff break down.
 	//if (f_eliminate_graphs_if_possible) {
 		if (R->nb_candidates < nb) {
 			if (f_v) {
@@ -788,7 +797,7 @@ INT blt_set::create_graph(
 		special_line, 
 		R->candidates, R->nb_candidates, 
 		point_color, nb_colors, 
-		verbose_level - 3);
+		verbose_level);
 
 
 	classify C;
@@ -1148,6 +1157,11 @@ void blt_set::compute_colors(INT orbit_at_level,
 
 	for (i = 0; i < nb_candidates; i++) {
 		O->unrank_point(v3, 1, candidates[i], 0);
+		if (f_vv) {
+			cout << "candidate " << i << " / " << nb_candidates << " is " << candidates[i] << " = ";
+			INT_vec_print(cout, v3, 5);
+			cout << endl;
+			}
 		a = O->evaluate_bilinear_form(v1, v3, 1);
 		b = O->evaluate_bilinear_form(v2, v3, 1);
 		if (a == 0) {
@@ -1272,46 +1286,52 @@ void blt_set::early_test_func(INT *S, INT len,
 					O->F->mult(m1[4], v3[4]) 
 				);
 
-			m3[0] = O->F->mult(two, v3[0]);
-			m3[1] = v3[2];
-			m3[2] = v3[1];
-			m3[3] = v3[4];
-			m3[4] = v3[3];
 
-			f_OK = TRUE;
-			for (i = 1; i < len; i++) {
-				//fxy = evaluate_bilinear_form(v1, v2, 1);
+			if (fxz == 0) {
+				f_OK = FALSE;
+				}
+			else {
+				m3[0] = O->F->mult(two, v3[0]);
+				m3[1] = v3[2];
+				m3[2] = v3[1];
+				m3[3] = v3[4];
+				m3[4] = v3[3];
 
-				v2 = Pts + i * 5;
+				f_OK = TRUE;
+				for (i = 1; i < len; i++) {
+					//fxy = evaluate_bilinear_form(v1, v2, 1);
+
+					v2 = Pts + i * 5;
 		
-				fxy = O->F->add5(
-					O->F->mult(m1[0], v2[0]), 
-					O->F->mult(m1[1], v2[1]), 
-					O->F->mult(m1[2], v2[2]), 
-					O->F->mult(m1[3], v2[3]), 
-					O->F->mult(m1[4], v2[4]) 
-					);
+					fxy = O->F->add5(
+						O->F->mult(m1[0], v2[0]), 
+						O->F->mult(m1[1], v2[1]), 
+						O->F->mult(m1[2], v2[2]), 
+						O->F->mult(m1[3], v2[3]), 
+						O->F->mult(m1[4], v2[4]) 
+						);
 		
-				//fyz = evaluate_bilinear_form(v2, v3, 1);
-				fyz = O->F->add5(
-						O->F->mult(m3[0], v2[0]), 
-						O->F->mult(m3[1], v2[1]), 
-						O->F->mult(m3[2], v2[2]), 
-						O->F->mult(m3[3], v2[3]), 
-						O->F->mult(m3[4], v2[4]) 
-					);
+					//fyz = evaluate_bilinear_form(v2, v3, 1);
+					fyz = O->F->add5(
+							O->F->mult(m3[0], v2[0]), 
+							O->F->mult(m3[1], v2[1]), 
+							O->F->mult(m3[2], v2[2]), 
+							O->F->mult(m3[3], v2[3]), 
+							O->F->mult(m3[4], v2[4]) 
+						);
 
-				a = O->F->product3(fxy, fxz, fyz);
+					a = O->F->product3(fxy, fxz, fyz);
 
-				if (a == 0) {
-					f_OK = FALSE;
-					break;
+					if (a == 0) {
+						f_OK = FALSE;
+						break;
+						}
+					if (O->f_is_minus_square[a]) {
+						f_OK = FALSE;
+						break;
+						}
+
 					}
-				if (O->f_is_minus_square[a]) {
-					f_OK = FALSE;
-					break;
-					}
-
 				}
 			if (f_OK) {
 				good_candidates[nb_good_candidates++] = candidates[j];

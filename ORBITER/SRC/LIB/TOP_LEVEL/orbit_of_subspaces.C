@@ -581,6 +581,8 @@ void orbit_of_subspaces::get_random_schreier_generator(INT *Elt, INT verbose_lev
 	FREE_INT(E3);
 	FREE_INT(E4);
 	FREE_INT(E5);
+	FREE_INT(cur_basis);
+	FREE_INT(new_basis);
 	if (f_v) {
 		cout << "orbit_of_subspaces::get_random_schreier_generator done" << endl;
 		}

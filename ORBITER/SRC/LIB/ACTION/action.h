@@ -2368,13 +2368,20 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 		// computes random Schreier generator into schreier_gen
 	void trace_back(INT *path, INT i, INT &j);
 	void print_tree(INT orbit_no);
-	void draw_tree(char *label, INT orbit_no, 
+	void draw_forest(const char *fname_mask, 
+		INT xmax, INT ymax, 
+		INT f_circletext, INT rad, 
+		INT f_embedded, INT f_sideways, 
+		double scale, double line_width, 
+		INT f_has_point_labels, INT *point_labels, 
+		INT verbose_level);
+	void draw_tree(const char *fname, INT orbit_no, 
 		INT xmax, INT ymax, INT f_circletext, INT rad, 
 		INT f_embedded, INT f_sideways, 
 		double scale, double line_width, 
 		INT f_has_point_labels, INT *point_labels, 
 		INT verbose_level);
-	void draw_tree2(char *fname, INT xmax, INT ymax, 
+	void draw_tree2(const char *fname, INT xmax, INT ymax, 
 		INT f_circletext, 
 		INT *weight, INT *placement_x, INT max_depth, 
 		INT i, INT last, INT rad, 

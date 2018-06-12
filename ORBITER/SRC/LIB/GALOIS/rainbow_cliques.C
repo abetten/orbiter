@@ -137,7 +137,7 @@ void rainbow_cliques::search_with_additional_test_function(
 		CF->print_current_choice_data = user_data;
 		}
 	
-	CF->call_back_clique_found_data = this;
+	CF->call_back_clique_found_data1 = this;
 	
 	
 	if (f_restrictions) {
@@ -335,7 +335,7 @@ void call_back_colored_graph_clique_found(clique_finder *CF, INT verbose_level)
 
 	//cout << "call_back_colored_graph_clique_found" << endl;
 	
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
+	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
 
 	if (f_v) {
 		INT i, pt, c;
@@ -362,7 +362,7 @@ void call_back_colored_graph_add_point(clique_finder *CF,
 	INT pt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
+	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
 	INT c;
 	
 	c = R->graph->point_color[pt];
@@ -385,7 +385,7 @@ void call_back_colored_graph_delete_point(clique_finder *CF,
 	INT pt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
+	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
 	INT c;
 	
 	c = R->graph->point_color[pt];
@@ -407,7 +407,7 @@ INT call_back_colored_graph_find_candidates(clique_finder *CF,
 {
 	//verbose_level = 1;
 	INT f_v = (verbose_level >= 1);
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
+	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
 	INT ret;
 
 	if (R->f_has_additional_test_function) {

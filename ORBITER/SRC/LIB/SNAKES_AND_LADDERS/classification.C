@@ -91,7 +91,8 @@ set_and_stabilizer *classification::get_set_and_stabilizer(INT orbit_index, INT 
 	return SaS;
 }
 
-void classification::print_latex(ostream &ost, const BYTE *title)
+void classification::print_latex(ostream &ost, 
+	const BYTE *title, INT f_with_stabilizers)
 {
 	INT verbose_level = 0;
 	INT f_v = (verbose_level >= 1);
@@ -144,8 +145,11 @@ void classification::print_latex(ostream &ost, const BYTE *title)
 		ost << "}$ orbit length $";
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
-
-		D.add_in_place(Ol, ol);
+		if (f_with_stabilizers) {
+			//ost << "Strong generators are:" << endl;
+			Orbit[i].gens->print_generators_tex(ost);
+			D.add_in_place(Ol, ol);
+			}
 
 
 		}

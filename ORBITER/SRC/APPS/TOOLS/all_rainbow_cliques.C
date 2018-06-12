@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	const BYTE *fname_list_of_cases = NULL;
 	const BYTE *fname_template = NULL;
 	INT f_prefix = FALSE;
-	const BYTE *prefix = NULL;
+	const BYTE *prefix = "";
 	INT f_output_file = FALSE;
 	const BYTE *output_file = NULL;
 	INT f_tree = FALSE;

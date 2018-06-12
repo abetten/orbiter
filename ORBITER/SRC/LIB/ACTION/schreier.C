@@ -263,7 +263,8 @@ void schreier::init_generators(INT nb, INT *elt)
 	init_images(nb, 0 /* verbose_level */);	
 }
 
-void schreier::init_generators_by_hdl(INT nb_gen, INT *gen_hdl, INT verbose_level)
+void schreier::init_generators_by_hdl(INT nb_gen, 
+	INT *gen_hdl, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -413,7 +414,8 @@ void schreier::print(ostream &ost)
 
 void schreier::print_and_list_orbits_and_stabilizer(ostream &ost, 
 	action *default_action, longinteger_object &go, 
-	void (*print_point)(ostream &ost, INT pt, void *data), void *data)
+	void (*print_point)(ostream &ost, INT pt, void *data), 
+	void *data)
 {
 	INT i;
 	
@@ -481,8 +483,9 @@ void schreier::print_and_list_orbit_tex(INT i, ostream &ost)
 	ost << " of length " << orbit_len[i] << "\\\\" << endl;
 }
 
-void schreier::print_and_list_orbit_and_stabilizer_tex(INT i, action *default_action, 
-		longinteger_object &full_group_order, ostream &ost)
+void schreier::print_and_list_orbit_and_stabilizer_tex(INT i, 
+	action *default_action, 
+	longinteger_object &full_group_order, ostream &ost)
 {
 	ost << " Orbit " << i << " / " << nb_orbits << " : ";
 	print_orbit_tex(ost, i);
@@ -498,8 +501,9 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(INT i, action *default_ac
 	delete gens;
 }
 
-void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(INT i, action *default_action, 
-		strong_generators *gens, ostream &ost)
+void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
+	INT i, action *default_action, 
+	strong_generators *gens, ostream &ost)
 {
 	longinteger_object full_group_order;
 
@@ -549,7 +553,8 @@ void schreier::print_and_list_orbits_sorted_by_length(ostream &ost)
 	print_and_list_orbits_sorted_by_length(ost, FALSE);
 }
 
-void schreier::print_and_list_orbits_sorted_by_length(ostream &ost, INT f_tex)
+void schreier::print_and_list_orbits_sorted_by_length(
+	ostream &ost, INT f_tex)
 {
 	INT i, h;
 	INT *Len;
@@ -599,7 +604,8 @@ void schreier::print_and_list_orbits_sorted_by_length(ostream &ost, INT f_tex)
 	FREE_INT(Perm_inv);
 }
 
-void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(ostream &ost, INT f_tex, 
+void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
+	ostream &ost, INT f_tex, 
 	action *default_action, longinteger_object &full_group_order)
 {
 	INT i, h;
@@ -652,7 +658,8 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(ostream &os
 
 void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(
 	ostream &ost, INT f_tex, 
-	action *default_action, strong_generators *gens_full_group)
+	action *default_action, 
+	strong_generators *gens_full_group)
 {
 	INT i, h;
 	INT *Len;
@@ -706,7 +713,8 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_st
 	FREE_INT(Perm_inv);
 }
 
-void schreier::print_and_list_orbits_of_given_length(ostream &ost, INT len)
+void schreier::print_and_list_orbits_of_given_length(
+	ostream &ost, INT len)
 {
 	INT i;
 
@@ -741,7 +749,8 @@ void schreier::print_and_list_orbits_using_labels(ostream &ost, INT *labels)
 	ost << endl;
 }
 
-void schreier::print_tables(ostream &ost, INT f_with_cosetrep)
+void schreier::print_tables(ostream &ost, 
+	INT f_with_cosetrep)
 {
     INT i;
     int w; //  j, k;
@@ -781,7 +790,8 @@ void schreier::print_tables(ostream &ost, INT f_with_cosetrep)
 	ost << endl;
 }
 
-void schreier::print_tables_latex(ostream &ost, INT f_with_cosetrep)
+void schreier::print_tables_latex(ostream &ost, 
+	INT f_with_cosetrep)
 {
     INT i;
     int w; //  j, k;
@@ -916,7 +926,8 @@ void schreier::print_orbit_tex(ostream &ost, INT orbit_no)
 	FREE_INT(v);
 }
 
-void schreier::print_orbit_using_labels(ostream &ost, INT orbit_no, INT *labels)
+void schreier::print_orbit_using_labels(ostream &ost, 
+	INT orbit_no, INT *labels)
 {
 	INT i, first, len;
 	INT *v;
@@ -934,8 +945,10 @@ void schreier::print_orbit_using_labels(ostream &ost, INT orbit_no, INT *labels)
 	FREE_INT(v);
 }
 
-void schreier::print_orbit_using_callback(ostream &ost, INT orbit_no, 
-	void (*print_point)(ostream &ost, INT pt, void *data), void *data)
+void schreier::print_orbit_using_callback(ostream &ost, 
+	INT orbit_no, 
+	void (*print_point)(ostream &ost, INT pt, void *data), 
+	void *data)
 {
 	INT i, first, len;
 	
@@ -977,7 +990,8 @@ void schreier::list_all_orbits_tex(ostream &ost)
 	ost << "$";
 }
 
-void schreier::print_orbit_through_labels(ostream &ost, INT orbit_no, INT *point_labels)
+void schreier::print_orbit_through_labels(ostream &ost, 
+	INT orbit_no, INT *point_labels)
 {
 	INT i, first, len;
 	INT *v;
@@ -1083,7 +1097,8 @@ INT schreier::depth_in_tree(INT j)
 		}
 }
 
-void schreier::transporter_from_orbit_rep_to_point(INT pt, INT &orbit_idx, INT *Elt, INT verbose_level)
+void schreier::transporter_from_orbit_rep_to_point(INT pt, 
+	INT &orbit_idx, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT pos;
@@ -1101,7 +1116,8 @@ void schreier::transporter_from_orbit_rep_to_point(INT pt, INT &orbit_idx, INT *
 		}
 }
 
-void schreier::transporter_from_point_to_orbit_rep(INT pt, INT &orbit_idx, INT *Elt, INT verbose_level)
+void schreier::transporter_from_point_to_orbit_rep(INT pt, 
+	INT &orbit_idx, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT pos;
@@ -1185,7 +1201,8 @@ void schreier::coset_rep_inv(INT j)
 		}
 }
 
-void schreier::get_schreier_vector(INT *&sv, INT f_trivial_group, INT f_compact)
+void schreier::get_schreier_vector(INT *&sv, 
+	INT f_trivial_group, INT f_compact)
 {
 	if (f_compact) {
 		get_schreier_vector_compact(sv, f_trivial_group);
@@ -1195,7 +1212,8 @@ void schreier::get_schreier_vector(INT *&sv, INT f_trivial_group, INT f_compact)
 		}
 }
 
-void schreier::get_schreier_vector_compact(INT *&sv, INT f_trivial_group)
+void schreier::get_schreier_vector_compact(INT *&sv, 
+	INT f_trivial_group)
 // allocated and creates array sv[size] using NEW_INT
 // where size is n + 1 if  f_trivial_group is TRUE
 // and size is 3 * n + 1 otherwise
@@ -1389,7 +1407,8 @@ void schreier::compute_all_point_orbits(INT verbose_level)
 }
 
 void schreier::compute_all_point_orbits_with_prefered_reps(
-	INT *prefered_reps, INT nb_prefered_reps, INT verbose_level)
+	INT *prefered_reps, INT nb_prefered_reps, 
+	INT verbose_level)
 {
 	INT i, pt, pt_loc, cur;
 	INT f_v = (verbose_level >= 1);
@@ -1424,7 +1443,8 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 }
 
 
-void schreier::compute_all_point_orbits_with_preferred_labels(INT *preferred_labels, INT verbose_level)
+void schreier::compute_all_point_orbits_with_preferred_labels(
+	INT *preferred_labels, INT verbose_level)
 {
 	INT pt, pt_loc, cur, a, i;
 	INT f_v = (verbose_level >= 1);
@@ -1487,7 +1507,8 @@ void schreier::compute_all_point_orbits_with_preferred_labels(INT *preferred_lab
 	FREE_INT(perm_inv);
 }
 
-void schreier::compute_all_orbits_on_invariant_subset(INT len, INT *subset, INT verbose_level)
+void schreier::compute_all_orbits_on_invariant_subset(
+	INT len, INT *subset, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, f;
@@ -1620,7 +1641,8 @@ void schreier::compute_point_orbit(INT pt, INT verbose_level)
 	nb_orbits++;
 }
 
-void schreier::non_trivial_random_schreier_generator(action *A_original, INT verbose_level)
+void schreier::non_trivial_random_schreier_generator(
+	action *A_original, INT verbose_level)
 // computes non trivial random Schreier generator into schreier_gen
 // non-trivial is with respect to A_original
 {
@@ -1661,7 +1683,8 @@ void schreier::non_trivial_random_schreier_generator(action *A_original, INT ver
 		}
 }
 
-void schreier::random_schreier_generator_ith_orbit(INT orbit_no, INT verbose_level)
+void schreier::random_schreier_generator_ith_orbit(
+	INT orbit_no, INT verbose_level)
 {
 	INT first, len, r1, r2, pt, pt2, pt2_coset;
 	INT *gen;
@@ -1911,7 +1934,43 @@ void schreier::print_tree(INT orbit_no)
 	FREE_INT(path);
 }
 
-void schreier::draw_tree(char *label, INT orbit_no, INT xmax, INT ymax, INT f_circletext, INT rad, 
+void schreier::draw_forest(const char *fname_mask, 
+	INT xmax, INT ymax, 
+	INT f_circletext, INT rad, 
+	INT f_embedded, INT f_sideways, 
+	double scale, double line_width, 
+	INT f_has_point_labels, INT *point_labels, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	BYTE fname[1000];
+	INT i;
+
+	if (f_v) {
+		cout << "schreier::draw_forest" << endl;
+		}
+	for (i = 0; i < nb_orbits; i++) {
+		sprintf(fname, fname_mask, i);
+
+		if (f_v) {
+			cout << "schreier::draw_forest drawing orbit " << i << " / " << nb_orbits << endl;
+			}
+		draw_tree(fname, 
+			i /* orbit_no */, xmax, ymax, 
+			f_circletext, rad, 
+			f_embedded, f_sideways, 
+			scale, line_width, 
+			f_has_point_labels, point_labels, 
+			verbose_level);
+		}
+	if (f_v) {
+		cout << "schreier::draw_forest done" << endl;
+		}
+}
+
+void schreier::draw_tree(const char *fname, 
+	INT orbit_no, INT xmax, INT ymax, 
+	INT f_circletext, INT rad, 
 	INT f_embedded, INT f_sideways, 
 	double scale, double line_width, 
 	INT f_has_point_labels, INT *point_labels, 
@@ -1958,7 +2017,8 @@ void schreier::draw_tree(char *label, INT orbit_no, INT xmax, INT ymax, INT f_ci
 	if (orbit_len[orbit_no] > 100) {
 		f_circletext = FALSE;
 		}
-	draw_tree2(label, xmax, ymax, f_circletext, weight, placement_x, max_depth, i, last, rad, 
+	draw_tree2(fname, xmax, ymax, f_circletext, 
+		weight, placement_x, max_depth, i, last, rad, 
 		f_embedded, f_sideways, 
 		scale, line_width, 
 		f_has_point_labels, point_labels, 
@@ -1996,8 +2056,10 @@ static void calc_y_coordinate(INT &y, INT l, INT max_depth)
 	y = 1000000 - y;
 }
 
-void schreier::draw_tree2(char *fname, INT xmax, INT ymax, INT f_circletext, 
-	INT *weight, INT *placement_x, INT max_depth, INT i, INT last, INT rad, 
+void schreier::draw_tree2(const char *fname, 
+	INT xmax, INT ymax, INT f_circletext, 
+	INT *weight, INT *placement_x, 
+	INT max_depth, INT i, INT last, INT rad, 
 	INT f_embedded, INT f_sideways, 
 	double scale, double line_width, 
 	INT f_has_point_labels, INT *point_labels, 
@@ -2013,7 +2075,8 @@ void schreier::draw_tree2(char *fname, INT xmax, INT ymax, INT f_circletext,
 		cout << "schreier::draw_tree2" << endl;
 		}
 	sprintf(fname_full, "%s.mp", fname);
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, 
+		f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -2027,9 +2090,11 @@ void schreier::draw_tree2(char *fname, INT xmax, INT ymax, INT f_circletext,
 	calc_y_coordinate(y, 0, max_depth);
 	
 
-	subtree_draw_lines(G, f_circletext, x, y, weight, placement_x, max_depth, i, last, verbose_level);
+	subtree_draw_lines(G, f_circletext, x, y, weight, 
+		placement_x, max_depth, i, last, verbose_level);
 
-	subtree_draw_vertices(G, f_circletext, x, y, weight, placement_x, max_depth, i, last, rad, 
+	subtree_draw_vertices(G, f_circletext, x, y, weight, 
+		placement_x, max_depth, i, last, rad, 
 		f_has_point_labels, point_labels, 
 		verbose_level);
 
@@ -2057,7 +2122,7 @@ void schreier::draw_tree2(char *fname, INT xmax, INT ymax, INT f_circletext,
 		H = 0.;
 		}
 	sprintf(str, "N=%ld, avg=%lf,  gens=%ld, H=%lf", N, avg, nb_gens, H);
-	G.aligned_text(x, y, "", str);
+	//G.aligned_text(x, y, "", str);
 	
 
 #if 0
@@ -2078,13 +2143,15 @@ void schreier::draw_tree2(char *fname, INT xmax, INT ymax, INT f_circletext,
 		}
 }
 
-void schreier::subtree_draw_lines(mp_graphics &G, INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
-	INT *placement_x, INT max_depth, INT i, INT last, INT verbose_level)
+void schreier::subtree_draw_lines(mp_graphics &G, 
+	INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
+	INT *placement_x, INT max_depth, INT i, INT last, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT pt = orbit[i];
 	INT x, y, l, ii;
-	INT Px[2], Py[2];
+	INT Px[3], Py[3];
 	
 	if (f_v) {
 		cout << "schreier::subtree_draw_lines" << endl;
@@ -2099,6 +2166,8 @@ void schreier::subtree_draw_lines(mp_graphics &G, INT f_circletext, INT parent_x
 	Py[0] = parent_y;
 	Px[1] = x;
 	Py[1] = y;
+	Px[2] = (Px[0] + Px[1]) >> 1;
+	Py[2] = (Py[0] + Py[1]) >> 1;
 	//cout << "schreier::subtree_draw_lines " << parent_x << "," << parent_y << " - " << x << "," << y << endl;
 
 
@@ -2112,8 +2181,11 @@ void schreier::subtree_draw_lines(mp_graphics &G, INT f_circletext, INT parent_x
 		}
 #endif
 	if (l > 1) {
+		BYTE str[1000];
 		// if pt is not the root node:
 		G.polygon2(Px, Py, 0, 1);
+		sprintf(str, "$\\alpha_{%ld}$", label[i]);
+		G.aligned_text(Px[2], Py[2], "", str);
 		}
 	
 	for (ii = i + 1; ii < last; ii++) {
@@ -2127,7 +2199,8 @@ void schreier::subtree_draw_lines(mp_graphics &G, INT f_circletext, INT parent_x
 		}
 }
 
-void schreier::subtree_draw_vertices(mp_graphics &G, INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
+void schreier::subtree_draw_vertices(mp_graphics &G, 
+	INT f_circletext, INT parent_x, INT parent_y, INT *weight, 
 	INT *placement_x, INT max_depth, INT i, INT last, INT rad, 
 	INT f_has_point_labels, INT *point_labels, 
 	INT verbose_level)
@@ -2185,7 +2258,8 @@ void schreier::subtree_draw_vertices(mp_graphics &G, INT f_circletext, INT paren
 		}
 }
 
-void schreier::subtree_place(INT *weight, INT *placement_x, INT left, INT right, INT i, INT last)
+void schreier::subtree_place(INT *weight, INT *placement_x, 
+	INT left, INT right, INT i, INT last)
 {
 	INT pt = orbit[i];
 	INT ii, l, w, w0, w1, lft, rgt, width;
@@ -2210,7 +2284,8 @@ void schreier::subtree_place(INT *weight, INT *placement_x, INT left, INT right,
 		}
 }
 
-INT schreier::subtree_calc_weight(INT *weight, INT &max_depth, INT i, INT last)
+INT schreier::subtree_calc_weight(INT *weight, 
+	INT &max_depth, INT i, INT last)
 {
 	INT pt = orbit[i];
 	INT ii, l, w = 1, w1;
@@ -2274,7 +2349,8 @@ void schreier::intersection_vector(INT *set, INT len, INT *intersection_cnt)
 		}
 }
 
-void schreier::orbits_on_invariant_subset_fast(INT len, INT *subset, INT verbose_level)
+void schreier::orbits_on_invariant_subset_fast(
+	INT len, INT *subset, INT verbose_level)
 {
 	INT i, p, j;
 	INT f_v = (verbose_level >= 1);
@@ -2315,7 +2391,9 @@ void schreier::orbits_on_invariant_subset_fast(INT len, INT *subset, INT verbose
 		}
 }
 
-void schreier::orbits_on_invariant_subset(INT len, INT *subset, INT &nb_orbits_on_subset, INT *&orbit_perm, INT *&orbit_perm_inv)
+void schreier::orbits_on_invariant_subset(INT len, INT *subset, 
+	INT &nb_orbits_on_subset, 
+	INT *&orbit_perm, INT *&orbit_perm_inv)
 {
 	INT i, j, a, pos;
 	
@@ -2348,7 +2426,8 @@ void schreier::orbits_on_invariant_subset(INT len, INT *subset, INT &nb_orbits_o
 		}	
 }
 
-void schreier::get_orbit_partition_of_points_and_lines(partitionstack &S, INT verbose_level)
+void schreier::get_orbit_partition_of_points_and_lines(
+	partitionstack &S, INT verbose_level)
 {
 	INT first_column_element, pos, first_column_orbit, i, j, f, l, a;
 	INT f_v = (verbose_level >= 1);
@@ -2387,7 +2466,8 @@ void schreier::get_orbit_partition_of_points_and_lines(partitionstack &S, INT ve
 		}
 }
 
-void schreier::get_orbit_partition(partitionstack &S, INT verbose_level)
+void schreier::get_orbit_partition(partitionstack &S, 
+	INT verbose_level)
 {
 	INT pos, i, j, f, l, a;
 	INT f_v = (verbose_level >= 1);
@@ -2408,8 +2488,10 @@ void schreier::get_orbit_partition(partitionstack &S, INT verbose_level)
 		}
 }
 
-strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal(action *default_action, 
-	longinteger_object &full_group_order, INT pt, vector_ge *&cosets, INT verbose_level)
+strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal(
+	action *default_action, 
+	longinteger_object &full_group_order, INT pt, vector_ge *&cosets, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	strong_generators *gens0;
@@ -2478,8 +2560,10 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 	return gens;
 }
 
-strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(action *default_action, 
-	longinteger_object &full_group_order, INT pt, INT verbose_level)
+strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
+	action *default_action, 
+	longinteger_object &full_group_order, INT pt, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	strong_generators *gens0;
@@ -2528,8 +2612,10 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(action
 }
 
 
-strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(action *default_action, 
-	longinteger_object &full_group_order, INT orbit_idx, INT verbose_level)
+strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
+	action *default_action, 
+	longinteger_object &full_group_order, INT orbit_idx, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	strong_generators *gens;
@@ -2561,8 +2647,10 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(action *defa
 	return gens;
 }
 
-void schreier::point_stabilizer(action *default_action, longinteger_object &go, 
-	sims *&Stab, INT orbit_no, INT verbose_level)
+void schreier::point_stabilizer(action *default_action, 
+	longinteger_object &go, 
+	sims *&Stab, INT orbit_no, 
+	INT verbose_level)
 // this function allocates a sims structure into Stab.
 {
 	Stab = new sims;
@@ -2656,7 +2744,8 @@ void schreier::point_stabilizer(action *default_action, longinteger_object &go,
 		}
 }
 
-void schreier::get_orbit(INT orbit_idx, INT *set, INT &len, INT verbose_level)
+void schreier::get_orbit(INT orbit_idx, INT *set, INT &len, 
+	INT verbose_level)
 {
 	INT f, i;
 
@@ -2667,7 +2756,8 @@ void schreier::get_orbit(INT orbit_idx, INT *set, INT &len, INT verbose_level)
 		}
 }
 
-void schreier::compute_orbit_statistic(INT *set, INT set_size, INT *orbit_count, INT verbose_level)
+void schreier::compute_orbit_statistic(INT *set, INT set_size, 
+	INT *orbit_count, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a, /*j,*/ o;
@@ -2692,8 +2782,10 @@ void schreier::compute_orbit_statistic(INT *set, INT set_size, INT *orbit_count,
 		}
 }
 
-void schreier::test_sv(action *A, INT *hdl_strong_generators, INT *sv, 
-	INT f_trivial_group, INT f_compact, INT verbose_level)
+void schreier::test_sv(action *A, 
+	INT *hdl_strong_generators, INT *sv, 
+	INT f_trivial_group, INT f_compact, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *crep, *Elt1, *Elt2, *Elt3;
@@ -3049,7 +3141,8 @@ INT schreier::find_shortest_orbit_if_unique(INT &idx)
 	return f_is_unique;
 }
 
-void schreier::elements_in_orbit_of(INT pt, INT *orb, INT &nb, INT verbose_level)
+void schreier::elements_in_orbit_of(INT pt, 
+	INT *orb, INT &nb, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT /*pos,*/ idx, f;
@@ -3067,7 +3160,8 @@ void schreier::elements_in_orbit_of(INT pt, INT *orb, INT &nb, INT verbose_level
 		}
 }
 
-void schreier::get_orbit_lengths_once_each(INT *&orbit_lengths, INT &nb_orbit_lengths)
+void schreier::get_orbit_lengths_once_each(
+	INT *&orbit_lengths, INT &nb_orbit_lengths)
 {
 	INT *val, *mult, len;	
 	
@@ -3106,7 +3200,7 @@ INT schreier::orbit_number(INT pt)
 		return idx;
 		}
 	else {
-		cout << "schreier::orbit_number something is wrong" << endl;
+		cout << "schreier::orbit_number something is wrong, perhaps the orbit of the point has not yet been computed" << endl;
 		exit(1);
 		}
 }
@@ -3128,7 +3222,9 @@ void schreier::latex(const BYTE *fname)
 	}
 }
 
-void schreier::get_orbit_decomposition_scheme_of_graph(INT *Adj, INT n, INT *&Decomp_scheme, INT verbose_level)
+void schreier::get_orbit_decomposition_scheme_of_graph(
+	INT *Adj, INT n, INT *&Decomp_scheme, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT I, J;

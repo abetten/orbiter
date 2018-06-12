@@ -3425,7 +3425,7 @@ void surface::make_Eckardt_points(INT verbose_level)
 	Eckard_point_label = NEW_PBYTE(nb_Eckardt_points);
 	Eckard_point_label_tex = NEW_PBYTE(nb_Eckardt_points);
 	for (i = 0; i < nb_Eckardt_points; i++) {
-		Eckardt_points[i].latex_to_str(str);
+		Eckardt_points[i].latex_to_str_without_E(str);
 		l = strlen(str);
 		Eckard_point_label[i] = NEW_BYTE(l + 1);
 		strcpy(Eckard_point_label[i], str);
@@ -3925,8 +3925,47 @@ void surface::create_lines_from_plane_equations(INT *The_plane_equations, INT *L
 		}
 }
 
-void surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(INT *arc6, INT *base_curves4, 
-	INT *&Web_of_cubic_curves, INT *&The_plane_equations, INT verbose_level)
+void surface::web_of_cubic_curves_rank_of_foursubsets(INT *Web_of_cubic_curves, 
+	INT *&rk, INT &N, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT set[4], i, j, a;
+	INT B[4 * 10];
+
+	if (f_v) {
+		cout << "surface::web_of_cubic_curves_rank_of_foursubsets" << endl;
+		}
+	if (f_v) {
+		cout << "web of cubic curves:" << endl;
+		INT_matrix_print(Web_of_cubic_curves, 45, 10);
+		}
+	N = INT_n_choose_k(45, 4);
+	rk = NEW_INT(N);
+	for (i = 0; i < N; i++) {
+		unrank_k_subset(i, set, 45, 4);
+		if (f_v) {
+			cout << "subset " << i << " / " << N << " is ";
+			INT_vec_print(cout, set, 4);
+			cout << endl;
+			}
+		for (j = 0; j < 4; j++) {
+			a = set[j];
+			INT_vec_copy(Web_of_cubic_curves + a * 10, 
+				B + j * 10, 10);
+			}
+		rk[i] = F->rank_of_rectangular_matrix(B, 
+			4, 10, 0 /* verbose_level */);
+		}
+	if (f_v) {
+		cout << "surface::web_of_cubic_curves_rank_of_foursubsets done" << endl;
+		}
+}
+
+void surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(
+	INT *arc6, INT *base_curves4, 
+	INT *&Web_of_cubic_curves, INT *&The_plane_equations, 
+	INT verbose_level)
+// Web_of_cubic_curves[45 * 10]
 {
 	INT f_v = (verbose_level >= 1);
 	INT h, rk, idx;
@@ -3943,6 +3982,7 @@ void surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_
 	base_curves = NEW_INT(5 * 10);
 	curves = NEW_INT(5 * 10);
 	curves_t = NEW_INT(10 * 5);
+
 
 
 	for (h = 0; h < 4; h++) {
@@ -5343,6 +5383,406 @@ INT surface::find_half_double_six(INT *half_double_six)
 	exit(1);
 }
 
+INT surface::type_of_line(INT line)
+// 0 = a_i, 1 = b_i, 2 = c_ij
+{
+	if (line < 6) {
+		return 0;
+		}
+	else if (line < 12) {
+		return 1;
+		}
+	else if (line < 27) {
+		return 2;
+		}
+	else {
+		cout << "surface::type_of_line error" << endl;
+		exit(1);
+		}
+}
+
+void surface::index_of_line(INT line, INT &i, INT &j)
+// returns i for a_i, i for b_i and (i,j) for c_ij 
+{
+	INT a;
+	
+	if (line < 6) { // ai
+		i = line;
+		}
+	else if (line < 12) { // bj
+		i = line - 6;
+		}
+	else if (line < 27) { // c_ij
+		a = line - 12;
+		k2ij(a, i, j, 6);
+		}
+	else {
+		cout << "surface::index_of_line error" << endl;
+		exit(1);
+		}
+}
+
+void surface::ijklm2n(INT i, INT j, INT k, INT l, INT m, INT &n)
+{
+	INT v[6];
+	INT size_complement;
+
+	v[0] = i;
+	v[1] = j;
+	v[2] = k;
+	v[3] = l;
+	v[4] = m;
+	set_complement_safe(v, 5, v + 5, size_complement, 6);
+	if (size_complement != 1) {
+		cout << "surface::ijklm2n size_complement != 1" << endl;
+		exit(1);
+		}
+	n = v[5];
+}
+
+void surface::ijkl2mn(INT i, INT j, INT k, INT l, INT &m, INT &n)
+{
+	INT v[6];
+	INT size_complement;
+
+	v[0] = i;
+	v[1] = j;
+	v[2] = k;
+	v[3] = l;
+	set_complement_safe(v, 4, v + 4, size_complement, 6);
+	if (size_complement != 2) {
+		cout << "surface::ijkl2mn size_complement != 2" << endl;
+		exit(1);
+		}
+	m = v[4];
+	n = v[5];
+}
+
+void surface::ijk2lmn(INT i, INT j, INT k, INT &l, INT &m, INT &n)
+{
+	INT v[6];
+	INT size_complement;
+
+	v[0] = i;
+	v[1] = j;
+	v[2] = k;
+	cout << "surface::ijk2lmn v=";
+	INT_vec_print(cout, v, 3);
+	cout << endl;
+	set_complement_safe(v, 3, v + 3, size_complement, 6);
+	if (size_complement != 3) {
+		cout << "surface::ijk2lmn size_complement != 3" << endl;
+		cout << "size_complement=" << size_complement << endl;
+		exit(1);
+		}
+	l = v[3];
+	m = v[4];
+	n = v[5];
+}
+
+void surface::ij2klmn(INT i, INT j, INT &k, INT &l, INT &m, INT &n)
+{
+	INT v[6];
+	INT size_complement;
+
+	v[0] = i;
+	v[1] = j;
+	set_complement_safe(v, 2, v + 2, size_complement, 6);
+	if (size_complement != 4) {
+		cout << "surface::ij2klmn size_complement != 4" << endl;
+		exit(1);
+		}
+	k = v[2];
+	l = v[3];
+	m = v[4];
+	n = v[5];
+}
+
+void surface::get_half_double_six_associated_with_Clebsch_map(
+	INT line1, INT line2, INT transversal, 
+	INT hds[6],
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT t1, t2, t3;
+	INT i, j, k, l, m, n;
+	INT i1, j1;
+	INT null;
+	
+	if (f_v) {
+		cout << "surface::get_half_double_six_associated_with_Clebsch_map" << endl;
+		}
+
+	if (line1 > line2) {
+		cout << "surface::get_half_double_six_associated_with_Clebsch_map line1 > line2" << endl;
+		exit(1);
+		}
+	t1 = type_of_line(line1);
+	t2 = type_of_line(line2);
+	t3 = type_of_line(transversal);
+
+	if (f_v) {
+		cout << "t1=" << t1 << " t2=" << t2 << " t3=" << t3 << endl;
+		}
+	if (t1 == 0 && t2 == 0) { // ai and aj:
+		index_of_line(line1, i, null);
+		index_of_line(line2, j, null);
+		if (t3 == 1) { // bk
+			index_of_line(transversal, k, null);
+			//cout << "i=" << i << " j=" << j << " k=" << k <<< endl;
+			ijk2lmn(i, j, k, l, m, n);
+			// bl, bm, bn, cij, cik, cjk
+			hds[0] = line_bi(l);
+			hds[1] = line_bi(m);
+			hds[2] = line_bi(n);
+			hds[3] = line_cij(i, j);
+			hds[4] = line_cij(i, k);
+			hds[5] = line_cij(j, k);
+			}
+		else if (t3 == 2) { // cij
+			index_of_line(transversal, i1, j1);
+				// test whether {i1,j1} =  {i,j}
+			if ((i == i1 && j == j1) || (i == j1 && j == i1)) {
+				ij2klmn(i, j, k, l, m, n);
+				// bi, bj, bk, bl, bm, bn
+				hds[0] = line_bi(i);
+				hds[1] = line_bi(j);
+				hds[2] = line_bi(k);
+				hds[3] = line_bi(l);
+				hds[4] = line_bi(m);
+				hds[5] = line_bi(n);
+				}
+			else {
+				cout << "surface::get_half_doble_six_associated_with_Clebsch_map not {i,j} = {i1,j1}" << endl;
+				exit(1);
+				}
+			}
+		}
+	else if (t1 == 1 && t2 == 1) { // bi and bj:
+		index_of_line(line1, i, null);
+		index_of_line(line2, j, null);
+		if (t3 == 0) { // ak
+			index_of_line(transversal, k, null);
+			ijk2lmn(i, j, k, l, m, n);
+			// al, am, an, cij, cik, cjk
+			hds[0] = line_ai(l);
+			hds[1] = line_ai(m);
+			hds[2] = line_ai(n);
+			hds[3] = line_cij(i, j);
+			hds[4] = line_cij(i, k);
+			hds[5] = line_cij(j, k);
+			}
+		else if (t3 == 2) { // cij
+			index_of_line(transversal, i1, j1);
+			if ((i == i1 && j == j1) || (i == j1 && j == i1)) {
+				ij2klmn(i, j, k, l, m, n);
+				// ai, aj, ak, al, am, an
+				hds[0] = line_ai(i);
+				hds[1] = line_ai(j);
+				hds[2] = line_ai(k);
+				hds[3] = line_ai(l);
+				hds[4] = line_ai(m);
+				hds[5] = line_ai(n);
+				}
+			else {
+				cout << "surface::get_half_doble_six_associated_with_Clebsch_map not {i,j} = {i1,j1}" << endl;
+				exit(1);
+				}
+			}
+		}
+	else if (t1 == 0 && t2 == 1) { // ai and bi:
+		index_of_line(line1, i, null);
+		index_of_line(line2, j, null);
+		if (j != i) {
+			cout << "surface::get_half_double_six_associated_with_Clebsch_map j != i" << endl;
+			exit(1);
+			}
+		if (t3 != 2) {
+			cout << "surface::get_half_double_six_associated_with_Clebsch_map t3 != 2" << endl;
+			exit(1);
+			}
+		index_of_line(transversal, i1, j1);
+		if (i1 == i) {
+			j = j1;
+			}
+		else {
+			j = i1;
+			}
+		ij2klmn(i, j, k, l, m, n);
+		// cik, cil, cim, cin, aj, bj
+		hds[0] = line_cij(i, k);
+		hds[1] = line_cij(i, l);
+		hds[2] = line_cij(i, m);
+		hds[3] = line_cij(i, n);
+		hds[4] = line_ai(j);
+		hds[5] = line_bi(j);
+		}
+	else if (t1 == 1 && t2 == 2) { // bi and cjk:
+		index_of_line(line1, i, null);
+		index_of_line(line2, j, k);
+		if (t3 == 2) { // cil
+			index_of_line(transversal, i1, j1);
+			if (i1 == i) {
+				l = j1;
+				}
+			else if (j1 == i) {
+				l = i1;
+				}
+			else {
+				cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+				exit(1);
+				}
+			ijkl2mn(i, j, k, l, m, n);
+			// cin, cim, aj, ak, al, cnm
+			hds[0] = line_cij(i, n);
+			hds[1] = line_cij(i, m);
+			hds[2] = line_ai(j);
+			hds[3] = line_ai(k);
+			hds[4] = line_ai(l);
+			hds[5] = line_cij(n, m);
+			}
+		else if (t3 == 0) { // aj
+			index_of_line(transversal, j1, null);
+			if (j1 == k) {
+				// swap k and j
+				INT tmp = k;
+				k = j;
+				j = tmp;
+				}
+			if (j1 != j) {
+				cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+				exit(1);
+				}
+			ijk2lmn(i, j, k, l, m, n);
+			// ak, cil, cim, cin, bk, cij
+			hds[0] = line_ai(k);
+			hds[1] = line_cij(i, l);
+			hds[2] = line_cij(i, m);
+			hds[3] = line_cij(i, n);
+			hds[4] = line_bi(k);
+			hds[5] = line_cij(i, j);
+			}
+		}
+	else if (t1 == 0 && t2 == 2) { // ai and cjk:
+		index_of_line(line1, i, null);
+		index_of_line(line2, j, k);
+		if (t3 == 2) { // cil
+			index_of_line(transversal, i1, j1);
+			if (i1 == i) {
+				l = j1;
+				}
+			else if (j1 == i) {
+				l = i1;
+				}
+			else {
+				cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+				exit(1);
+				}
+			ijkl2mn(i, j, k, l, m, n);
+			// cin, cim, bj, bk, bl, cnm
+			hds[0] = line_cij(i, n);
+			hds[1] = line_cij(i, m);
+			hds[2] = line_bi(j);
+			hds[3] = line_bi(k);
+			hds[4] = line_bi(l);
+			hds[5] = line_cij(n, m);
+			}
+		else if (t3 == 1) { // bj
+			index_of_line(transversal, j1, null);
+			if (j1 == k) {
+				// swap k and j
+				INT tmp = k;
+				k = j;
+				j = tmp;
+				}
+			if (j1 != j) {
+				cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+				exit(1);
+				}
+			ijk2lmn(i, j, k, l, m, n);
+			// bk, cil, cim, cin, ak, cij
+			hds[0] = line_bi(k);
+			hds[1] = line_cij(i, l);
+			hds[2] = line_cij(i, m);
+			hds[3] = line_cij(i, n);
+			hds[4] = line_ai(k);
+			hds[5] = line_cij(i, j);
+			}
+		}
+	else if (t1 == 2 && t2 == 2) { // cij and cik:
+		index_of_line(line1, i, j);
+		index_of_line(line2, i1, j1);
+		if (i == i1) {
+			k = j1;
+			}
+		else if (i == j1) {
+			k = i1;
+			}
+		else if (j == i1) {
+			j = i;
+			i = i1;
+			k = j1;
+			}
+		else if (j == j1) {
+			j = i;
+			i = j1;
+			k = i1;
+			}
+		else {
+			cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+			exit(1);
+			}
+		if (t3 == 0) { // ai
+			index_of_line(transversal, i1, null);
+			if (i1 != i) {
+				cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+				exit(1);
+				}
+			ijk2lmn(i, j, k, l, m, n);
+			// bi, clm, cnm, cln, bj, bk
+			hds[0] = line_bi(i);
+			hds[1] = line_cij(l, m);
+			hds[2] = line_cij(n, m);
+			hds[3] = line_cij(l, n);
+			hds[4] = line_bi(j);
+			hds[5] = line_bi(k);
+			}
+		else if (t3 == 1) { // bi
+			index_of_line(transversal, i1, null);
+			if (i1 != i) {
+				cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+				exit(1);
+				}
+			ijk2lmn(i, j, k, l, m, n);
+			// ai, clm, cnm, cln, aj, ak
+			hds[0] = line_ai(i);
+			hds[1] = line_cij(l, m);
+			hds[2] = line_cij(n, m);
+			hds[3] = line_cij(l, n);
+			hds[4] = line_ai(j);
+			hds[5] = line_ai(k);
+			}
+		else if (t3 == 2) { // clm
+			index_of_line(transversal, l, m);
+			ijklm2n(i, j, k, l, m, n);
+			// ai, bi, cmn, cln, ckn, cjn
+			hds[0] = line_ai(i);
+			hds[1] = line_bi(i);
+			hds[2] = line_cij(m, n);
+			hds[3] = line_cij(l, n);
+			hds[4] = line_cij(k, n);
+			hds[5] = line_cij(j, n);
+			}
+		}
+	else {
+		cout << "surface::get_half_double_six_associated_with_Clebsch_map error" << endl;
+		exit(1);
+		}
+	if (f_v) {
+		cout << "surface::get_half_double_six_associated_with_Clebsch_map done" << endl;
+		}
+}
+
 void surface::prepare_clebsch_map(INT ds, INT ds_row, INT &line1, INT &line2, INT &transversal, INT verbose_level)
 {
 	INT ij, i, j, k, l, m, n, size_complement;
@@ -6408,4 +6848,66 @@ void surface::print_set_of_lines_tex(ostream &ost, INT *v, INT len)
 	ost << "\\}";
 }
 
+void surface::tritangent_plane_to_trihedral_pair_and_position(
+	INT tritangent_plane_idx, 
+	INT &trihedral_pair_idx, INT &position, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	static INT Table[] = {
+		0, 2, // 0
+		0, 5, // 1
+		22, 0, // 2
+		0, 1, // 3
+		20, 0, // 4
+		1, 1, // 5
+		26, 0, //6
+		5, 1, // 7
+		32, 0, //8
+		6, 1, //9
+		0, 0, //10
+		25, 0, // 11
+		1, 0, // 12
+		43, 0, //13
+		2, 0, //14
+		55, 0, // 15
+		3, 0, // 16
+		3, 3, //17
+		4, 0, //18
+		67, 0, // 19
+		5, 0, // 20
+		73, 0, // 21
+		6, 0, // 22
+		6, 3, // 23
+		7, 0, // 24
+		79, 0, // 25
+		8, 0, // 26
+		8, 3, // 27
+		9, 0, // 28
+		9, 3, // 29
+		115, 0, // 30
+		114, 0, // 31
+		34, 2, // 32
+		113, 0, // 33
+		111, 0, // 34
+		34, 5, // 35
+		74, 2, // 36
+		110, 0, // 37
+		49, 2, // 38
+		26, 5, // 39
+		38, 5, // 40
+		53, 5, // 41
+		36, 5, // 42
+		45, 5, // 43
+		51, 5, // 44
+		};
+
+	if (f_v) {
+		cout << "surface::tritangent_plane_to_trihedral_pair_and_position" << endl;
+		}
+	trihedral_pair_idx = Table[2 * tritangent_plane_idx + 0];
+	position = Table[2 * tritangent_plane_idx + 1];
+	if (f_v) {
+		cout << "surface::tritangent_plane_to_trihedral_pair_and_position done" << endl;
+		}
+}
 

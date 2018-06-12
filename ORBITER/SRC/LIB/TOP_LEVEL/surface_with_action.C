@@ -510,7 +510,8 @@ INT surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 	return TRUE;
 }
 
-void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp, 
+void surface_with_action::arc_lifting_and_classify(
+	INT f_log_fp, ofstream &fp, 
 	INT *Arc6, 
 	const BYTE *arc_label, const BYTE *arc_label_short, 
 	INT nb_surfaces, 
@@ -571,6 +572,15 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify before SOA->init" << endl;
 		}
+
+	SOA->init(this, 
+		AL->Lines27, AL->the_equation, 
+		AL->Aut_gens, FALSE /* f_find_double_six_and_rearrange_lines */, 
+		verbose_level);
+	if (f_v) {
+		cout << "surface_with_action::arc_lifting_and_classify after SOA->init" << endl;
+		}
+#if 0
 	if (!SOA->init_equation(this, AL->the_equation, 
 		AL->Aut_gens, verbose_level)) {
 		cout << "surface_with_action::arc_lifting_and_classify the surface does not have 27 lines" << endl;
@@ -579,6 +589,7 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 	if (f_v) {
 		cout << "surface_with_action::arc_lifting_and_classify after SOA->init" << endl;
 		}
+#endif
 
 
 
@@ -631,6 +642,11 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		SOA->SO->print_tritangent_planes(fp);
 
 
+		if (f_v) {
+			cout << "surface_with_action::arc_lifting_and_classify before SOA->SO->print_Steiner_and_Eckardt" << endl;
+			}
+		SOA->SO->print_Steiner_and_Eckardt(fp);
+
 		//SOA->SO->print_planes_in_trihedral_pairs(fp);
 
 		if (f_v) {
@@ -658,7 +674,12 @@ void surface_with_action::arc_lifting_and_classify(INT f_log_fp, ofstream &fp,
 		if (f_v) {
 			cout << "surface_with_action::arc_lifting_and_classify before SOA->print_automorphism_group" << endl;
 			}
-		SOA->print_automorphism_group(fp);
+
+		BYTE fname_mask[1000];
+
+		sprintf(fname_mask, "orbit_half_double_sixes_q%ld_iso%ld_%%ld", q, nb_surfaces);
+		SOA->print_automorphism_group(fp, TRUE /* f_print_orbits */, 
+			fname_mask);
 		}
 
 	

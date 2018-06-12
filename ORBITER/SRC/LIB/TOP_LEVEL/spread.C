@@ -931,6 +931,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
+	INT f_v3 = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
@@ -959,7 +960,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 		cout << "spread::lifting_prepare_function_new before SL->create_system" << endl;
 		}
 
-	Dio = SL->create_system(verbose_level);
+	Dio = SL->create_system(verbose_level - 2);
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
 		}
@@ -972,12 +973,12 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 		}
 	SL->find_coloring(Dio, 
 		col_color, nb_colors, 
-		verbose_level);
+		verbose_level - 2);
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new after SL->find_coloring" << endl;
 		}
 
-	if (f_v) {
+	if (f_v3) {
 		cout << "col_color=";
 		INT_vec_print(cout, col_color, Dio->n);
 		cout << endl;
@@ -988,7 +989,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new before Dio->make_clique_graph_adjacency_matrix" << endl;
 		}
-	Dio->make_clique_graph_adjacency_matrix(Adj, verbose_level);
+	Dio->make_clique_graph_adjacency_matrix(Adj, verbose_level - 2);
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new after Dio->make_clique_graph_adjacency_matrix" << endl;
 		}
