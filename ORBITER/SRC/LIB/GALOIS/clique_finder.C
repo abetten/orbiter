@@ -294,7 +294,8 @@ void clique_finder::null()
 	call_back_print_current_choice = NULL;
 	print_current_choice_data = NULL;
 	
-	call_back_clique_found_data = NULL;
+	call_back_clique_found_data1 = NULL;
+	call_back_clique_found_data2 = NULL;
 	
 }
 

@@ -548,7 +548,8 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(INT verbose_
 }
 
 
-void surface_object_with_action::print_automorphism_group(ostream &ost)
+void surface_object_with_action::print_automorphism_group(ostream &ost, 
+	INT f_print_orbits, const BYTE *fname_mask)
 {
 	longinteger_object go;
 
@@ -560,21 +561,26 @@ void surface_object_with_action::print_automorphism_group(ostream &ost)
 	ost << "\\bigskip" << endl;
 	ost << "\\subsection*{Orbits on points}" << endl;
 	//Orbits_on_points->print_and_list_orbits_and_stabilizer_sorted_by_length(ost, TRUE, Surf_A->A, go);
-	Orbits_on_points->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_points->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on Eckardt points}" << endl;
-	Orbits_on_Eckardt_points->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_Eckardt_points->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on Double points}" << endl;
-	Orbits_on_Double_points->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_Double_points->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on points not on lines}" << endl;
 	//Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
-	Orbits_on_points_not_on_lines->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 
 	ost << "\\subsection*{Orbits on lines}" << endl;
-	Orbits_on_lines->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	INT *Decomp_scheme;
 	INT nb;
@@ -587,13 +593,65 @@ void surface_object_with_action::print_automorphism_group(ostream &ost)
 	
 
 	ost << "\\subsection*{Orbits on single sixes}" << endl;
-	Orbits_on_single_sixes->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_single_sixes->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
+	if (f_print_orbits) {
+
+		INT xmax = 1000000;
+		INT ymax = 1000000;
+		INT f_circletext = TRUE;
+		INT rad = 22000;
+		INT f_embedded = FALSE;
+		INT f_sideways = FALSE;
+		double scale = 0.33;
+		double line_width = 0.5;
+		INT f_has_point_labels = FALSE;
+		INT *point_labels = NULL;
+	
+		Orbits_on_single_sixes->draw_forest(fname_mask, 
+			xmax, ymax, 
+			f_circletext, rad, 
+			f_embedded, f_sideways, 
+			scale, line_width, 
+			f_has_point_labels, point_labels, 
+			0 /*verbose_level*/);
+
+
+		INT i;
+		for (i = 0; i < Orbits_on_single_sixes->nb_orbits; i++) {
+			BYTE fname[1000];
+
+			sprintf(fname, fname_mask, i);
+			ost << "" << endl; 
+			ost << "\\bigskip" << endl; 
+			ost << "" << endl; 
+			ost << "Orbit " << i << " consisting of the following " << Orbits_on_single_sixes->orbit_len[i] << " half double sixes:" << endl; 
+			ost << "$$" << endl;
+			INT_set_print_tex(ost, 
+				Orbits_on_single_sixes->orbit + 
+					Orbits_on_single_sixes->orbit_first[i], 
+				Orbits_on_single_sixes->orbit_len[i]);
+			ost << "$$" << endl;
+			ost << "" << endl; 
+			ost << "\\begin{center}" << endl;
+			ost << "\\input " << fname << endl; 
+			ost << "\\end{center}" << endl;
+			ost << "" << endl; 
+			}
+
+
+		}
+
+	
 	ost << "\\subsection*{Orbits on tritangent planes}" << endl;
-	Orbits_on_tritangent_planes->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_tritangent_planes->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on trihedral pairs}" << endl;
-	Orbits_on_trihedral_pairs->print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
+	Orbits_on_trihedral_pairs->print_and_list_orbits_sorted_by_length_tex(ost);
+		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 }
 
@@ -975,7 +1033,9 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 
 void surface_object_with_action::cheat_sheet(ostream &ost, 
-	const BYTE *label_txt, const BYTE *label_tex, INT verbose_level)
+	const BYTE *label_txt, const BYTE *label_tex, 
+	INT f_print_orbits, const BYTE *fname_mask, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1072,7 +1132,8 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	if (f_v) {
 		cout << "surface_object_with_action::cheat_sheet before print_automorphism_group" << endl;
 		}
-	print_automorphism_group(ost);
+	print_automorphism_group(ost, 
+		f_print_orbits, fname_mask);
 	
 
 #if 0

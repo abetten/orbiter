@@ -77,7 +77,7 @@ void spread_lifting::init(spread *S, exact_cover *E,
 	if (f_v) {
 		cout << "spread_lifting::init before compute_points_covered_by_starter" << endl;
 		}
-	compute_points_covered_by_starter(verbose_level);
+	compute_points_covered_by_starter(verbose_level - 2);
 	if (f_v) {
 		cout << "spread_lifting::init after compute_points_covered_by_starter" << endl;
 		}
@@ -85,7 +85,7 @@ void spread_lifting::init(spread *S, exact_cover *E,
 	if (f_v) {
 		cout << "spread_lifting::init before prepare_free_points" << endl;
 		}
-	prepare_free_points(verbose_level);
+	prepare_free_points(verbose_level - 2);
 	if (f_v) {
 		cout << "spread_lifting::init after prepare_free_points" << endl;
 		}
@@ -107,7 +107,7 @@ void spread_lifting::init(spread *S, exact_cover *E,
 
 		nb_cols_before = nb_cols;
 		E->lexorder_test(col_labels, nb_cols, Strong_gens->gens, 
-			verbose_level);
+			verbose_level - 2);
 		if (f_v) {
 			cout << "spread_lifting::init after lexorder test nb_candidates before: " << nb_cols_before << " reduced to  " << nb_cols << " (deleted " << nb_cols_before - nb_cols << ")" << endl;
 			}
@@ -229,8 +229,8 @@ void spread_lifting::prepare_free_points(
 diophant *spread_lifting::create_system(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT f_vv = TRUE; //(verbose_level >= 2);
-	INT f_v5 = TRUE; // (verbose_level >= 5);
+	INT f_vv = (verbose_level >= 2);
+	INT f_v5 = (verbose_level >= 5);
 	diophant *Dio;
 	INT nb_rows = nb_free_points;
 	INT i, j, a, b, h;

@@ -1697,7 +1697,7 @@ action *create_automorphism_group_of_graph(INT *Adj, INT n, INT verbose_level)
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level);
 	if (f_v) {
-		cout << "create_automorphism_group_of_graph after nauty_interface_graph_INT" << endl;
+		cout << "create_automorphism_group_of_graph after nauty_interface_graph_INT Ago=" << Ago << endl;
 		}
 	action *A;
 	longinteger_object ago;
@@ -1706,11 +1706,17 @@ action *create_automorphism_group_of_graph(INT *Adj, INT n, INT verbose_level)
 	ago.create(Ago);
 	A = new action;
 
+	if (f_v) {
+		cout << "create_automorphism_group_of_graph before A->init_permutation_group_from_generators" << endl;
+		}
 	A->init_permutation_group_from_generators(n, 
 		TRUE, ago, 
 		Aut_counter, Aut, 
 		Base_length, Base,
 		0 /*verbose_level - 2*/);
+	if (f_v) {
+		cout << "create_automorphism_group_of_graph after A->init_permutation_group_from_generators" << endl;
+		}
 
 	if (f_v) {
 		cout << "create_automorphism_group_of_graph: created action ";

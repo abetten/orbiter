@@ -46,11 +46,8 @@ int main(int argc, char **argv)
 
 void Baer_subplane(INT q, INT verbose_level)
 {
-	//INT f_with_group = FALSE;
-	//INT f_semilinear = TRUE;
 	const BYTE *override_poly_Q = NULL;
 	const BYTE *override_poly_q = NULL;
-	//INT f_basis = TRUE;
 	projective_space *P2;
 	INT Q;
 	INT *S;
@@ -70,10 +67,7 @@ void Baer_subplane(INT q, INT verbose_level)
 	Fq->init_override_polynomial(q, override_poly_q, 0);
 
 	P2->init(2, FQ, 
-		//f_with_group, 
-		//FALSE /* f_line_action */, 
 		TRUE /* f_init_incidence_structure */, 
-		//f_semilinear, f_basis, 
 		verbose_level);
 
 

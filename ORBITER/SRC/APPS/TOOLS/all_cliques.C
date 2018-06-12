@@ -15,6 +15,10 @@
 
 INT t0; // the system time when the program started
 
+void use_group(const BYTE *fname, colored_graph *CG, 
+	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
+	INT f_sideways, INT nb_print_level, INT *print_level, 
+	INT verbose_level);
 void print_orbits_at_level(generator *gen, INT level, INT verbose_level);
 void save_orbits_at_level(const BYTE *fname, generator *gen, INT level, INT verbose_level);
 void early_test_function_cliques(INT *S, INT len, 
@@ -28,12 +32,16 @@ void early_test_function_cocliques(INT *S, INT len,
 
 int main(int argc, char **argv)
 {
-	INT i, j;
+	INT i;
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
 	const BYTE *fname = NULL;
+	INT f_use_group = FALSE;
 	INT f_all_cliques = FALSE;
+	INT f_all_cliques_of_size = FALSE;
+	INT clique_size = 0;
+	const BYTE *solution_fname = NULL;
 	INT f_all_cocliques = FALSE;
 	INT f_draw_poset = FALSE;
 	INT f_embedded = FALSE;
@@ -56,6 +64,16 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-all_cliques") == 0) {
 			f_all_cliques = TRUE;
 			cout << "-all_cliques " << endl;
+			}
+		else if (strcmp(argv[i], "-all_cliques_of_size") == 0) {
+			f_all_cliques_of_size = TRUE;
+			clique_size = atoi(argv[++i]);
+			solution_fname = argv[++i];
+			cout << "-all_cliques_of_size " << clique_size << " " << solution_fname << endl;
+			}
+		else if (strcmp(argv[i], "-use_group") == 0) {
+			f_use_group = TRUE;
+			cout << "-use_group " << endl;
 			}
 		else if (strcmp(argv[i], "-all_cocliques") == 0) {
 			f_all_cocliques = TRUE;
@@ -92,7 +110,51 @@ int main(int argc, char **argv)
 
 
 
+	if (f_use_group) {
 
+		use_group(fname, CG, 
+			f_all_cliques, f_all_cocliques, f_draw_poset, f_embedded, 
+			f_sideways, nb_print_level, print_level, 
+			verbose_level);
+
+		} // f_use_group
+
+	else {
+		if (f_all_cliques_of_size) {
+			INT nb_sol;
+			INT decision_step_counter;
+			
+			CG->all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
+				clique_size /* target_depth */, 
+				solution_fname, 
+				FALSE /* f_restrictions */, NULL /* INT *restrictions */, 
+				nb_sol, decision_step_counter, 
+				verbose_level - 2);
+
+			cout << "Written file " << solution_fname << " of size " << file_size(solution_fname) << endl;
+			cout << "nb_sol = " << nb_sol << endl;
+			cout << "decision_step_counter = " << decision_step_counter << endl;
+			}
+		else {
+			cout << "don't know what to do" << endl;
+			}
+		}
+
+
+	delete CG;
+
+	the_end(t0);
+	//the_end_quietly(t0);
+
+}
+
+
+void use_group(const BYTE *fname, colored_graph *CG, 
+	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
+	INT f_sideways, INT nb_print_level, INT *print_level, 
+	INT verbose_level)
+{
+	INT i, j;
 	INT *Adj;
 	action *Aut;
 	longinteger_object ago;
@@ -122,7 +184,7 @@ int main(int argc, char **argv)
 
 	action *Aut_on_points;
 	INT *points;
-	
+
 	Aut_on_points = new action;
 	points = NEW_INT(CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
@@ -132,14 +194,14 @@ int main(int argc, char **argv)
 	Aut_on_points->induced_action_by_restriction(*Aut, 
 		TRUE /* f_induce_action */, Aut->Sims, 
 		CG->nb_points /* nb_points */, points, verbose_level);
-	
+
 	Aut_on_points->group_order(ago);	
 	cout << "ago on points = " << ago << endl;
 
 	{
 	schreier S;
 	strong_generators SG;
-	
+
 	Aut_on_points->compute_strong_generators_from_sims(verbose_level);
 	SG.init_from_sims(Aut_on_points->Sims, verbose_level);
 	Aut_on_points->compute_all_point_orbits(S, 
@@ -148,14 +210,17 @@ int main(int argc, char **argv)
 		/*all_point_orbits(S, verbose_level);*/
 	cout << "has " << S.nb_orbits << " orbits on points" << endl;
 	}
-	
+
+
+
+
 	BYTE prefix[1000];
 	generator *gen;
 	INT nb_orbits, depth;
-	
-
 
 	if (f_all_cliques) {
+
+
 
 		strcpy(prefix, fname);
 		replace_extension_with(prefix, "_cliques");
@@ -231,7 +296,7 @@ int main(int argc, char **argv)
 			sprintf(fname, "reps_at_level_%ld.txt", print_level[i]);
 			save_orbits_at_level(fname, gen, print_level[i], verbose_level);
 			}
-			
+		
 			}
 		}
 
@@ -239,11 +304,6 @@ int main(int argc, char **argv)
 	FREE_INT(points);
 	delete Aut_on_points;
 	delete Aut;
-	delete CG;
-
-	the_end(t0);
-	//the_end_quietly(t0);
-
 }
 
 void print_orbits_at_level(generator *gen, INT level, INT verbose_level)

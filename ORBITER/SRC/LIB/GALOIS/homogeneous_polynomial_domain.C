@@ -397,6 +397,26 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, INT *mon)
 		}
 }
 
+void homogeneous_polynomial_domain::print_monomial(BYTE *str, INT i)
+{
+	INT j, a;
+	
+	str[0] = 0;
+	for (j = 0; j < n; j++) {
+		a = Monomials[i * n + j];
+		if (a == 0) {
+			continue;
+			}
+		strcat(str + strlen(str), symbols_latex[j]);
+		if (a >= 10) {
+			sprintf(str + strlen(str), "^{%ld}", a);
+			}
+		else if (a > 1) {
+			sprintf(str + strlen(str), "^%ld", a);
+			}
+		}
+}
+
 void homogeneous_polynomial_domain::print_equation(ostream &ost, INT *coeffs)
 {
 	INT i, c;

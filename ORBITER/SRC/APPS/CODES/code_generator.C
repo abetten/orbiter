@@ -8,9 +8,9 @@
 
 #include "codes.h"
 
-// ##################################################################################################
+// #############################################################################
 // start of class code_generator
-// ##################################################################################################
+// #############################################################################
 
 
 void code_generator::read_arguments(int argc, const char **argv)
@@ -48,6 +48,12 @@ void code_generator::read_arguments(int argc, const char **argv)
 			f_linear = TRUE;
 			k = atoi(argv[++i]);
 			cout << "-k " << k << endl;
+			}
+		else if (strcmp(argv[i], "-nmk") == 0) {
+			f_nmk = TRUE;
+			f_linear = TRUE;
+			nmk = atoi(argv[++i]);
+			cout << "-nmk " << nmk << endl;
 			}
 		else if (strcmp(argv[i], "-N") == 0) {
 			f_N = TRUE;
@@ -109,8 +115,8 @@ void code_generator::read_arguments(int argc, const char **argv)
 		exit(1);
 		}
 
-	if (!f_n) {
-		cout << "Please use option -n <n> to specify n" << endl;
+	if (!f_n && !f_nmk) {
+		cout << "Please use option -n <n> or -nmk <nmk> " << endl;
 		exit(1);
 		}
 	if (!f_q) {
@@ -121,9 +127,21 @@ void code_generator::read_arguments(int argc, const char **argv)
 		cout << "Please use option -d <d> to specify d" << endl;
 		exit(1);
 		}
-	if (!f_k && !f_N) {
-		cout << "Please use option -k <k> to specify k for linear codes of -N <N> for nonlinear codes" << endl;
+	if (!f_k && !f_nmk && !f_N) {
+		cout << "Please use option -k <k> or -nmk <nmk> for linear codes or -N <N> for nonlinear codes" << endl;
 		exit(1);
+		}
+	if (f_nmk) {
+		if (f_n) {
+			k = n - nmk;
+			}
+		else if (f_k) {
+			n = k + nmk;
+			}
+		else {
+			n = 200;
+			k = n - nmk;
+			}
 		}
 	cout << "n=" << n << endl;
 	if (f_linear) {
@@ -162,10 +180,13 @@ code_generator::~code_generator()
 void code_generator::null()
 {
 	verbose_level = 0;
+	f_nmk = FALSE;
 	f_linear = FALSE;
 	f_nonlinear = FALSE;
 	gen = NULL;
 	F = NULL;
+	v1 = NULL;
+	v2 = NULL;
 	A = NULL;
 	description = NULL;
 	L = NULL;
@@ -186,6 +207,12 @@ void code_generator::freeself()
 		}
 	if (F) {
 		delete F;
+		}
+	if (v1) {
+		FREE_INT(v1);
+		}
+	if (v2) {
+		FREE_INT(v2);
 		}
 	if (gen) {
 		delete gen;
@@ -229,11 +256,26 @@ void code_generator::init(int argc, const char **argv)
 
 
 	if (f_linear) {
-		sprintf(gen->fname_base, "CODES_%ld_%ld_%ld_%ld/codes_%ld_%ld_%ld_%ld", n, k, q, d, n, k, q, d);
+		if (f_nmk) {
+			sprintf(directory_path, "CODES_NMK_%ld_%ld_%ld/", nmk, q, d);
+			sprintf(prefix, "codes_nmk_%ld_%ld_%ld", nmk, q, d);
+			}
+		else {
+			sprintf(directory_path, "CODES_%ld_%ld_%ld_%ld/", n, k, q, d);
+			sprintf(prefix, "codes_%ld_%ld_%ld_%ld", n, k, q, d);
+			}
 		}
 	else if (f_nonlinear) {
-		sprintf(gen->fname_base, "NONLINEAR_CODES_%ld_%ld_%ld/nonlinear_codes_%ld_%ld_%ld", n, q, d, n, q, d);
+		sprintf(directory_path, "NONLINEAR_CODES_%ld_%ld_%ld/", n, q, d);
+		sprintf(prefix, "nonlinear_codes_%ld_%ld_%ld", n, q, d);
 		}
+	if (strlen(directory_path)) {
+		BYTE cmd[1000];
+
+		sprintf(cmd, "mkdir %s", directory_path);
+		system(cmd);
+		}
+	sprintf(gen->fname_base, "%s%s", directory_path, prefix);
 	
 	
 	if (f_linear) {
@@ -242,6 +284,9 @@ void code_generator::init(int argc, const char **argv)
 		if (f_v) {
 			cout << "code_generator::init calling init_projective_group, dimension = " << nmk << endl;
 			}
+
+		v1 = NEW_INT(nmk);
+		v2 = NEW_INT(nmk);
 
 		A->init_projective_group(nmk, F, 
 			f_semilinear, 
@@ -363,7 +408,9 @@ void code_generator::print(INT len, INT *S)
 	if (f_linear) {
 		cout << "generator matrix:" << endl;
 		for (j = 0; j < len; j++) {
-			PG_element_unrank_modified(*F, rc.M1 + j, len /* stride */, nmk /* len */, S[j]);
+			PG_element_unrank_modified(*F, 
+				rc.M1 + j, len /* stride */, nmk /* len */, 
+				S[j]);
 			}
 		print_integer_matrix(cout, rc.M1, nmk, len);
 
@@ -444,7 +491,8 @@ void code_generator::main(INT verbose_level)
 		INT *Table;
 		INT nb_rows, nb_cols;
 
-		gen->get_table_of_nodes(Table, nb_rows, nb_cols, 0 /*verbose_level*/);
+		gen->get_table_of_nodes(Table, 
+			nb_rows, nb_cols, 0 /*verbose_level*/);
 	
 		INT_matrix_write_csv("data.csv", Table, nb_rows, nb_cols);
 
@@ -464,13 +512,19 @@ void code_generator::main(INT verbose_level)
 		}
 
 #if 1
-		INT f_show_orbit_decomposition = TRUE, f_show_stab = TRUE, f_save_stab = TRUE, f_show_whole_orbit = FALSE;
+		INT f_show_orbit_decomposition = TRUE;
+		INT f_show_stab = TRUE;
+		INT f_save_stab = TRUE;
+		INT f_show_whole_orbit = FALSE;
 		
 		gen->list_all_orbits_at_level(depth, 
 			TRUE, 
 			print_code, 
 			this, 
-			f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+			f_show_orbit_decomposition, 
+			f_show_stab, 
+			f_save_stab, 
+			f_show_whole_orbit);
 
 #if 0
 		INT d;
@@ -482,7 +536,9 @@ void code_generator::main(INT verbose_level)
 		}
 
 	if (f_draw_poset) {
-		gen->draw_poset(gen->fname_base, depth, 0 /* data1 */, f_embedded, f_sideways, verbose_level);
+		gen->draw_poset(gen->fname_base, depth, 
+			0 /* data1 */, f_embedded, f_sideways, 
+			verbose_level);
 		}
 	if (f_print_data_structure) {
 		gen->print_data_structure_tex(depth, verbose_level);
@@ -492,9 +548,11 @@ void code_generator::main(INT verbose_level)
 		}
 }
 
-void code_generator::early_test_func_by_using_group(INT *S, INT len, 
+void code_generator::early_test_func_by_using_group(
+	INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, INT verbose_level)
+	INT *good_candidates, INT &nb_good_candidates, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -516,7 +574,8 @@ void code_generator::early_test_func_by_using_group(INT *S, INT len,
 	INT f_orbit_is_good;
 	INT s, a;
 
-	node = gen->find_oracle_node_for_set(len, S, FALSE /* f_tolerant */, 0);
+	node = gen->find_oracle_node_for_set(len, S, 
+		FALSE /* f_tolerant */, 0);
 	O = gen->root + node;
 
 	if (f_v) {
@@ -528,11 +587,17 @@ void code_generator::early_test_func_by_using_group(INT *S, INT len,
 	schreier Schreier;
 
 	Schreier.init(gen->A2);
-	Schreier.init_generators_by_hdl(O->nb_strong_generators, O->hdl_strong_generators, 0);
-	Schreier.orbits_on_invariant_subset_fast(nb_candidates, candidates, 0/*verbose_level*/);
+
+	Schreier.init_generators_by_hdl(
+		O->nb_strong_generators, O->hdl_strong_generators, 0);
+
+	Schreier.orbits_on_invariant_subset_fast(
+		nb_candidates, candidates, 
+		0/*verbose_level*/);
 
 	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group after Schreier.compute_all_orbits_on_invariant_subset, we found " << Schreier.nb_orbits << " orbits" << endl;
+		cout << "code_generator::early_test_func_by_using_group after Schreier.compute_all_orbits_on_invariant_subset, we found " 
+		<< Schreier.nb_orbits << " orbits" << endl;
 		}
 	nb_good_candidates = 0;
 	nb_good_orbits = 0;
@@ -571,31 +636,53 @@ void code_generator::early_test_func_by_using_group(INT *S, INT len,
 
 	INT_vec_heapsort(good_candidates, nb_good_candidates);
 	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group after Schreier.compute_all_orbits_on_invariant_subset, we found " << nb_good_candidates << " good candidates in " << nb_good_orbits << " good orbits" << endl;
+		cout << "code_generator::early_test_func_by_using_group after Schreier.compute_all_orbits_on_invariant_subset, we found " 
+			<< nb_good_candidates << " good candidates in " 
+			<< nb_good_orbits << " good orbits" << endl;
 		}
 }
 
 INT code_generator::Hamming_distance(INT a, INT b)
 {
-	INT i, d, u, v;
+	INT f_v = TRUE;
+	INT d = 0;
+	INT i;
 
-	d = 0;
-	for (i = 0; i < n; i++) {
-		u = a % 2;
-		v = b % 2;
-		if (u != v) {
-			d++;
+	if (f_v) {
+		cout << "code_generator::Hamming_distance a=" << a << " b=" << b << endl;
+		}
+	if (f_nonlinear) {
+		if (q == 2) {
+			d = Hamming_distance_binary(a, b, n);
 			}
-		a >>= 1;
-		b >>= 1;
+		else {
+			cout << "code_generator::Hamming_distance f_nonlinear and q != 2" << endl;
+			exit(1);
+			}
+		}
+	if (f_linear) {
+		PG_element_unrank_modified(*F, 
+			v1, 1 /* stride */, nmk /* len */, 
+			a);
+		PG_element_unrank_modified(*F, 
+			v2, 1 /* stride */, nmk /* len */, 
+			b);
+		for (i = 0; i < nmk; i++) {
+			if (v1[i] != v2[i]) {
+				d++;
+				}
+			}
+		}
+	if (f_v) {
+		cout << "code_generator::Hamming_distance a=" << a << " b=" << b << " d=" << d << endl;
 		}
 	return d;
 }
 
 
-// ##################################################################################################
+// #############################################################################
 // callback functions
-// ##################################################################################################
+// #############################################################################
 
 void check_mindist_early_test_func(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
@@ -613,7 +700,10 @@ void check_mindist_early_test_func(INT *S, INT len,
 		//cout << endl;
 		}
 
-	cg->early_test_func_by_using_group(S, len, candidates, nb_candidates, good_candidates, nb_good_candidates, verbose_level);
+	cg->early_test_func_by_using_group(S, len, 
+		candidates, nb_candidates, 
+		good_candidates, nb_good_candidates, 
+		verbose_level);
 
 #if 0
 	nb_good_candidates = 0;
@@ -637,7 +727,8 @@ void check_mindist_early_test_func(INT *S, INT len,
 	
 
 	if (f_v) {
-		cout << "check_mindist_early_test_func nb_good_candidates=" << nb_good_candidates << endl;
+		cout << "check_mindist_early_test_func nb_good_candidates=" 
+			<< nb_good_candidates << endl;
 		}
 }
 
@@ -685,7 +776,8 @@ INT check_mindist_incremental(INT len, INT *S, void *data, INT verbose_level)
 		cout << " (incrementally)";
 		}
 	if (cg->f_linear) {
-		if (!cg->rc.check_rank_last_two_are_fixed(len, S, verbose_level - 1)) {
+		if (!cg->rc.check_rank_last_two_are_fixed(len, S, 
+			verbose_level - 1)) {
 			return FALSE;
 			}
 		}

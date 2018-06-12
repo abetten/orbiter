@@ -28,7 +28,9 @@ MODULES = \
 	isomorph_global.o \
 	isomorph_testing.o \
 	isomorph_trace.o \
+	k_arc_generator.o \
 	object_in_projective_space_with_action.o \
+	orbit_of_equations.o \
 	orbit_of_sets.o \
 	orbit_of_subspaces.o \
 	orbit_rep.o \
@@ -89,7 +91,9 @@ cpp:
 	$(UNIX_TO_DOS) isomorph_global.C $(CPP_PREFIX)isomorph_global.cpp
 	$(UNIX_TO_DOS) isomorph_testing.C $(CPP_PREFIX)isomorph_testing.cpp
 	$(UNIX_TO_DOS) isomorph_trace.C $(CPP_PREFIX)isomorph_trace.cpp
+	$(UNIX_TO_DOS) k_arc_generator.C $(CPP_PREFIX)k_arc_generator.cpp
 	$(UNIX_TO_DOS) object_in_projective_space_with_action.C $(CPP_PREFIX)object_in_projective_space_with_action.cpp
+	$(UNIX_TO_DOS) orbit_of_equations.C $(CPP_PREFIX)orbit_of_equations.cpp
 	$(UNIX_TO_DOS) orbit_of_sets.C $(CPP_PREFIX)orbit_of_sets.cpp
 	$(UNIX_TO_DOS) orbit_of_subspaces.C $(CPP_PREFIX)orbit_of_subspaces.cpp
 	$(UNIX_TO_DOS) orbit_rep.C $(CPP_PREFIX)orbit_rep.cpp

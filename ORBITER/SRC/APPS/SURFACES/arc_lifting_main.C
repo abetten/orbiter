@@ -121,11 +121,19 @@ int main(int argc, const char **argv)
 
 		INT_vec_scan(the_arc_text, arc, arc_size);
 		
+		if (f_v) {
+			cout << "before lift_single_arc" << endl;
+			}
 		lift_single_arc(arc, arc_size, Surf_A, verbose_level);
+		if (f_v) {
+			cout << "after lift_single_arc" << endl;
+			}
 		}
 	
 	if (f_classify) {
-		cout << "before classify_arcs_and_do_arc_lifting" << endl;
+		if (f_v) {
+			cout << "before classify_arcs_and_do_arc_lifting" << endl;
+			}
 		classify_arcs_and_do_arc_lifting(argc, argv, Surf_A, verbose_level);
 		}
 
@@ -149,7 +157,7 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 
 
 	if (f_v) {
-		cout << "arc_lifting q=" << q << endl;
+		cout << "lift_single_arc q=" << q << endl;
 		cout << "Lifting the arc ";
 		INT_vec_print(cout, arc, arc_size);
 		cout << endl;
@@ -157,18 +165,24 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 
 
 	if (arc_size != 6) {
-		cout << "arc_lifting arc_size != 6" << endl;
+		cout << "lift_single_arc arc_size != 6" << endl;
 		exit(1);
 		}
 
 	{
 	BYTE title[10000];
 	BYTE author[10000];
+	INT i;
 	
 	sprintf(title, "Lifting a single arc over GF(%ld) ", q);
 	sprintf(author, "");
 
-	sprintf(fname_arc_lifting, "single_arc_lifting_q%ld.tex", q);
+	sprintf(fname_arc_lifting, "single_arc_lifting_q%ld_arc", q);
+
+	for (i = 0; i < 6; i++) {
+		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%ld", arc[i]);
+		}
+	sprintf(fname_arc_lifting + strlen(fname_arc_lifting), ".tex");
 	ofstream fp(fname_arc_lifting);
 
 
@@ -186,12 +200,34 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 	display_table_of_projective_points(fp, F, arc, 6, 3);
 	
 
+
+
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type1" << endl;
+	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type1(fp);
+
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type2" << endl;
+	Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
+
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs no stabs" << endl;
+	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp, FALSE /* f_with_stabilizers */);
+
+	cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs with stabs" << endl;
+	Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp, TRUE /* f_with_stabilizers */);
+
+
+
 	arc_lifting *AL;
 
 	AL = new arc_lifting;
 
 
+	if (f_v) {
+		cout << "lift_single_arc before AL->create_surface" << endl;
+		}
 	AL->create_surface(Surf_A, arc, verbose_level);
+	if (f_v) {
+		cout << "lift_single_arc after AL->create_surface" << endl;
+		}
 
 	AL->print(fp);
 
@@ -204,7 +240,7 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 	cout << "Written file " << fname_arc_lifting << " of size " << file_size(fname_arc_lifting) << endl;
 
 	if (f_v) {
-		cout << "arc_lifting done" << endl;
+		cout << "lift_single_arc done" << endl;
 		}
 }
 
@@ -287,8 +323,11 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		cout << "classify_arcs_and_do_arc_lifting before Surf_A->list_orbits_on_trihedra_type2" << endl;
 		Surf_A->Classify_trihedral_pairs->list_orbits_on_trihedra_type2(fp);
 
-		cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs" << endl;
-		Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp);
+		cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs no stabs" << endl;
+		Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp, FALSE /* f_with_stabilizers */);
+
+		cout << "classify_arcs_and_do_arc_lifting before Surf_A->print_trihedral_pairs with stabs" << endl;
+		Surf_A->Classify_trihedral_pairs->print_trihedral_pairs(fp, TRUE /* f_with_stabilizers */);
 
 		}
 
@@ -347,6 +386,11 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		//INT_vec_print(fp, Arc6, 6);
 		The_arc->print_set_tex(fp);
 		fp << "$$" << endl;
+
+		display_table_of_projective_points(fp, F, 
+			The_arc->data, 6, 3);
+
+
 		fp << "The stabilizer is the following group:\\\\" << endl;
 		The_arc->Strong_gens->print_generators_tex(fp);
 

@@ -1053,6 +1053,10 @@ void strong_generators::print_generators_tex(ostream &ost)
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / " << gens->len << " is:" << endl;
 		A->element_print_latex(gens->ith(i), ost);
+		if (((i + 1) % 4) == 0 && i < gens->len - 1) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+			}
 		}
 	ost << "$$" << endl;
 }

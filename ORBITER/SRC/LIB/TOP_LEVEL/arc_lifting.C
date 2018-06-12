@@ -12,7 +12,10 @@
 #include "orbiter.h"
 
 
-static void intersection_matrix_entry_print(INT *p, INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data);
+static void intersection_matrix_entry_print(INT *p, 
+	INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data);
+static void Web_of_cubic_curves_entry_print(INT *p, 
+	INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data);
 
 arc_lifting::arc_lifting()
 {
@@ -193,7 +196,74 @@ void arc_lifting::freeself()
 	null();
 }
 
-void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT verbose_level)
+#if 0
+void arc_lifting::create_surface_fancy(surface_with_action *Surf_A, 
+	INT *Arc6_in_PG3q, INT hyp, INT tritangent_plane_idx, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT q;
+	surface *Surf;
+	INT Arc6[6];
+	INT Plane[12];
+	INT base_cols[4];
+	INT w[4];
+	INT coefficients[3];
+	INT trihedral_pair_idx;
+	INT position;
+
+	if (f_v) {
+		cout << "arc_lifting::create_surface_fancy" << endl;
+		}
+
+
+	q = Surf_A->F->q;
+	Surf = Surf_A->Surf;
+
+	Surf->tritangent_plane_to_trihedral_pair_and_position(
+		tritangent_plane_idx, 
+		trihedral_pair_idx, position,
+		verbose_level);
+
+
+	if (f_v) {
+		cout << "arc_lifting::create_surface_fancy before arc_lifting->init" << endl;
+		}
+	init(Surf_A, Arc6, 6, verbose_level - 2);
+
+	Surf->Gr3->unrank_INT_here(Plane, hyp, 0 /*verbose_level */);
+	if (f_v) {
+		cout << "arc_lifting::create_surface_fancy Basis for hyperplane hyp=" hyp << ":" << endl;
+		INT_matrix_print(Plane, 3, 4);
+		}
+	for (i = 0; i < 6; i++) {
+		Surf->P->unrank_point(w, Arc6_in_PG3q[i]);
+		F->reduce_mod_subspace_and_get_coefficient_vector(
+				3, 4, Plane, base_cols, 
+				w, coefficients, 0 /* verbose_level */);
+		Arc6[i] = Surf->P2->rank_point(coefficients);
+		}
+	if (f_v) {
+		cout << "arc_lifting::create_surface_fancy The arc in local coordinates:" << endl;
+		INT_vec_print(cout, Arc6, 6);
+		cout << endl;
+		}
+
+	if (f_v) {
+		cout << "arc_lifting::create_surface_fancy before arc_lifting->init" << endl;
+		}
+	init(Surf_A, Arc6, 6, verbose_level - 2);
+
+
+
+
+	if (f_v) {
+		cout << "arc_lifting::create_surface_fancy done" << endl;
+		}
+}
+#endif
+
+void arc_lifting::create_surface(surface_with_action *Surf_A, 
+	INT *Arc6, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q;
@@ -226,15 +296,14 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 
 
 
-	t_idx = T_idx[0];
 	The_surface_equations = NEW_INT((q + 1) * 20);
 	
 	if (f_v) {
 		cout << "arc_lifting::create_surface before arc_lifting->create_surface_from_trihedral_pair_and_arc" << endl;
 		}
-	create_surface_from_trihedral_pair_and_arc(t_idx, planes6, 
+	create_surface_from_trihedral_pair_and_arc(t_idx0, planes6, 
 		The_six_plane_equations, The_surface_equations, 
-		lambda, lambda_rk, 0 /*verbose_level*/);
+		lambda, lambda_rk, verbose_level);
 
 	if (f_v) {
 		print_equations();
@@ -244,14 +313,20 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 	if (f_v) {
 		cout << "do_arc_lifting before create_clebsch_system" << endl;
 		}
-	create_clebsch_system(The_six_plane_equations, lambda, 0 /* verbose_level */);
+	create_clebsch_system(
+		The_six_plane_equations, 
+		lambda, 
+		0 /* verbose_level */);
 
 
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface before arc_lifting->create_stabilizer_of_trihedral_pair" << endl;
 		}
-	stab_gens = create_stabilizer_of_trihedral_pair(planes6, trihedral_pair_orbit_index, 0 /*verbose_level*/);
+	stab_gens = create_stabilizer_of_trihedral_pair(
+		planes6, 
+		trihedral_pair_orbit_index, 
+		0 /*verbose_level*/);
 
 	stab_gens->group_order(stabilizer_of_trihedral_pair_go);
 	if (f_v) {
@@ -263,7 +338,8 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 	if (f_v) {
 		cout << "arc_lifting::create_surface before AL->create_action_on_equations_and_compute_orbits" << endl;
 		}
-	create_action_on_equations_and_compute_orbits(The_surface_equations, 
+	create_action_on_equations_and_compute_orbits(
+		The_surface_equations, 
 		stab_gens /* strong_generators *gens_for_stabilizer_of_trihedral_pair */, 
 		A_on_equations, Orb, 
 		0 /* verbose_level */);
@@ -279,8 +355,13 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 	//Surf_A->A->group_order(go_PGL);
 
 
-	gens_subgroup = Orb->generators_for_stabilizer_of_arbitrary_point_and_transversal(Surf_A->A, 
-		stabilizer_of_trihedral_pair_go, lambda_rk /* pt */, cosets, 0 /* verbose_level */);
+	gens_subgroup = 
+		Orb->generators_for_stabilizer_of_arbitrary_point_and_transversal(
+			Surf_A->A, 
+			stabilizer_of_trihedral_pair_go, 
+			lambda_rk /* pt */, 
+			cosets, 
+			0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface we found the following coset representatives:" << endl;
@@ -313,12 +394,20 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 
 
 
-	Surf->compute_nine_lines_by_dual_point_ranks(Dual_point_ranks + 0 * 6, Dual_point_ranks + 0 * 6 + 3, nine_lines, 0 /* verbose_level */);
+	Surf->compute_nine_lines_by_dual_point_ranks(
+		Dual_point_ranks + 0 * 6, 
+		Dual_point_ranks + 0 * 6 + 3, 
+		nine_lines, 
+		0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface before loop_over_trihedral_pairs" << endl;
 		}
-	loop_over_trihedral_pairs(cosets, coset_reps, aut_T_index, aut_coset_index, verbose_level);
+	loop_over_trihedral_pairs(cosets, 
+		coset_reps, 
+		aut_T_index, 
+		aut_coset_index, 
+		verbose_level);
 	if (f_v) {
 		cout << "arc_lifting::create_surface after loop_over_trihedral_pairs" << endl;
 		cout << "arc_lifting::create_surface we found an orbit of length " << coset_reps->len << endl;
@@ -334,7 +423,8 @@ void arc_lifting::create_surface(surface_with_action *Surf_A, INT *Arc6, INT ver
 		cout << "arc_lifting::create_surface Extending the group:" << endl;
 		}
 	Aut_gens = new strong_generators;
-	Aut_gens->init_group_extension(gens_subgroup, coset_reps, coset_reps->len, verbose_level - 3);
+	Aut_gens->init_group_extension(gens_subgroup, 
+		coset_reps, coset_reps->len, verbose_level - 3);
 
 	Aut_gens->group_order(ago);
 	if (f_v) {
@@ -374,16 +464,26 @@ void arc_lifting::lift_prepare(INT verbose_level)
 	Elt5 = NEW_INT(Surf_A->A->elt_size_in_INT);
 
 	
-	t_idx0 = T_idx[0];
+	//t_idx0 = T_idx[0];
+	t_idx0 = T_idx[115];
+	//t_idx = T_idx[0];
+	t_idx = T_idx[115];
 	if (f_v) {
-		cout << "We choose thrihedral pair t_idx0=" << t_idx0 << endl;
+		cout << "We choose trihedral pair t_idx0=" << t_idx0 << endl;
 		}
 	INT_vec_copy(Surf->Trihedral_to_Eckardt + t_idx0 * 6, row_col_Eckardt_points, 6);
 
+#if 0
 	base_curves4[0] = row_col_Eckardt_points[0];
 	base_curves4[1] = row_col_Eckardt_points[1];
 	base_curves4[2] = row_col_Eckardt_points[3];
 	base_curves4[3] = row_col_Eckardt_points[4];
+#else
+	base_curves4[3] = row_col_Eckardt_points[0];
+	base_curves4[0] = row_col_Eckardt_points[1];
+	base_curves4[1] = row_col_Eckardt_points[3];
+	base_curves4[2] = row_col_Eckardt_points[4];
+#endif
 	
 	if (f_v) {
 		cout << "base_curves4=";
@@ -395,7 +495,8 @@ void arc_lifting::lift_prepare(INT verbose_level)
 	if (f_v) {
 		cout << "Creating the web of cubic curves through the arc:" << endl;
 		}
-	Surf->create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(arc, base_curves4, 
+	Surf->create_web_of_cubic_curves_and_equations_based_on_four_tritangent_planes(
+		arc, base_curves4, 
 		Web_of_cubic_curves, The_plane_equations, 0 /*verbose_level*/);
 
 
@@ -419,6 +520,26 @@ void arc_lifting::lift_prepare(INT verbose_level)
 	if (f_v) {
 		cout << "The cubic curves all pass through the arc" << endl;
 		}
+
+
+	if (f_v) {
+		cout << "Computing the ranks of 4-subsets:" << endl;
+		}
+
+	INT *Rk;
+	INT N;
+	
+	Surf->web_of_cubic_curves_rank_of_foursubsets(Web_of_cubic_curves, 
+		Rk, N, 0 /*verbose_level*/);
+	{
+	classify C;
+	C.init(Rk, N, FALSE, 0 /* verbose_level */);
+	cout << "classification of ranks of 4-subsets:" << endl;
+	C.print_naked_tex(cout, TRUE /* f_backwards */);
+	cout << endl;
+	}
+
+	FREE_INT(Rk);
 
 	if (f_vv) {
 		cout << "Web_of_cubic_curves:" << endl;
@@ -525,13 +646,20 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 	orbit_length = 0;
 
 
-	Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(Dual_point_ranks + 0 * 6, 
-		transporter0, orbit_index0, 0 /*verbose_level*/);
+	Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
+		Dual_point_ranks + t_idx0 * 6, 
+		transporter0, 
+		orbit_index0, 
+		0 /*verbose_level*/);
 	if (f_v) {
-		cout << "Trihedral pair 0 lies in orbit " << orbit_index0 << endl;
+		cout << "Trihedral pair " << t_idx0 << " lies in orbit " << orbit_index0 << endl;
 		}
 	
-	Surf->compute_nine_lines_by_dual_point_ranks(Dual_point_ranks + 0 * 6, Dual_point_ranks + 0 * 6 + 3, Nine_lines0, 0 /* verbose_level */);
+	Surf->compute_nine_lines_by_dual_point_ranks(
+		Dual_point_ranks + t_idx0 * 6, 
+		Dual_point_ranks + t_idx0 * 6 + 3, 
+		Nine_lines0, 
+		0 /* verbose_level */);
 
 	if (FALSE) {
 		cout << "The first trihedral pair gives the following nine lines: ";
@@ -541,7 +669,7 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 
 	coset_reps = new vector_ge;
 	coset_reps->init(Surf_A->A);
-	coset_reps->allocate(nb_T * 2);
+	coset_reps->allocate(nb_T * cosets->len);
 
 	aut_T_index = NEW_INT(nb_T * cosets->len);
 	aut_coset_index = NEW_INT(nb_T * cosets->len);
@@ -555,7 +683,11 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 
 		INT_vec_copy(Dual_point_ranks + i * 6, planes6, 6);
 
-		Surf->compute_nine_lines_by_dual_point_ranks(planes6, planes6 + 3, Nine_lines, 0 /* verbose_level */);
+		Surf->compute_nine_lines_by_dual_point_ranks(
+			planes6, 
+			planes6 + 3, 
+			Nine_lines, 
+			0 /* verbose_level */);
 
 		if (FALSE) {
 			cout << "The " << i << "-th trihedral pair gives the following nine lines: ";
@@ -572,7 +704,8 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 			}
 
 		if (FALSE) {
-			Surf->print_trihedral_pair_in_dual_coordinates_in_GAP(planes6, planes6 + 3);
+			Surf->print_trihedral_pair_in_dual_coordinates_in_GAP(
+				planes6, planes6 + 3);
 			cout << endl;
 			}
 
@@ -580,26 +713,36 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 		
 
 
-		Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(planes6, 
-			transporter, orbit_index, 0 /*verbose_level */);
+		Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
+			planes6, 
+			transporter, 
+			orbit_index, 
+			0 /*verbose_level */);
 
 
 		if (orbit_index != orbit_index0) {
 			if (f_v) {
-				cout << "trihedral pair " << i << " / " << nb_T << " lies in orbit " << orbit_index << " and so T_0 and T_i are not isomorphic" << endl;
+				cout << "trihedral pair " << i << " / " << nb_T << " lies in orbit " << orbit_index << " and so $T_{" << t_idx0 << "}$ and T_i are not isomorphic" << endl;
 				}
 			continue;
 			}
 		if (f_v) {
-			cout << "trihedral pair " << i << " / " << nb_T << " lies in orbit " << orbit_index << " and so T_0 and T_i are isomorphic" << endl;
+			cout << "trihedral pair " << i << " / " << nb_T << " lies in orbit " << orbit_index << " and so $T_{" << t_idx0 << "}$ and T_i are isomorphic" << endl;
 			}
 		
 
 		Surf_A->A->element_invert(transporter, Elt1, 0);
 		Surf_A->A->element_mult(transporter0, Elt1, Elt2, 0);
+		if (f_v) {
+			cout << "Elt2:" << endl;
+			Surf_A->A->element_print_quick(Elt2, cout);
+			}
 
 		for (j = 0; j < cosets->len; j++) {
 
+			if (f_v) {
+				cout << "testing coset j=" << j << " / " << cosets->len << endl;
+				}
 			//Surf_A->A->element_invert(cosets->ith(j), Elt5, 0);
 			//Surf_A->A->element_mult(Elt5, Elt2, Elt3, 0);
 
@@ -626,6 +769,14 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 
 			//Surf_A->A->element_invert(Elt4, Elt5, 0);
 
+			if (f_v) {
+				cout << "Elt4:" << endl;
+				Surf_A->A->element_print_quick(Elt4, cout);
+				}
+
+			if (f_v) {
+				cout << "mtx->f_semilinear=" << mtx->f_semilinear << endl;
+				}
 
 			if (mtx->f_semilinear) {
 				INT n, frob; //, e;
@@ -638,15 +789,24 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 					frob = e - frob;
 					}
 #endif
-				Surf->substitute_semilinear(the_equation, coeff_out, mtx->f_semilinear, frob, Elt4, 0 /* verbose_level */);
+				Surf->substitute_semilinear(the_equation, 
+					coeff_out, 
+					mtx->f_semilinear, 
+					frob, 
+					Elt4, 
+					0 /* verbose_level */);
 				}
 			else {
-				Surf->substitute_semilinear(the_equation, coeff_out, FALSE, 0, Elt4, 0 /* verbose_level */);
+				Surf->substitute_semilinear(the_equation, 
+					coeff_out, 
+					FALSE, 0, 
+					Elt4, 
+					0 /* verbose_level */);
 				}
 
 			PG_element_normalize(*F, coeff_out, 1, 20);
 
-			if (FALSE) {
+			if (f_v) {
 				cout << "The transformed equation is:" << endl;
 				INT_vec_print(cout, coeff_out, 20);
 				cout << endl;
@@ -659,7 +819,10 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 					cout << "coset rep = " << endl;
 					Surf_A->A->element_print_quick(Elt3, cout);
 					}
-				Surf->compute_nine_lines_by_dual_point_ranks(planes6, planes6 + 3, Nine_lines, 0 /* verbose_level */);
+				Surf->compute_nine_lines_by_dual_point_ranks(
+					planes6, planes6 + 3, 
+					Nine_lines, 
+					0 /* verbose_level */);
 
 
 				if (FALSE) {
@@ -669,7 +832,8 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 					}
 
 
-				Surf_A->A->element_move(Elt4, coset_reps->ith(orbit_length), 0);
+				Surf_A->A->element_move(Elt4, 
+					coset_reps->ith(orbit_length), 0);
 
 				aut_T_index[orbit_length] = i;
 				aut_coset_index[orbit_length] = j;
@@ -700,7 +864,8 @@ void arc_lifting::loop_over_trihedral_pairs(vector_ge *cosets, vector_ge *&coset
 
 
 
-void arc_lifting::init(surface_with_action *Surf_A, INT *arc, INT arc_size, INT verbose_level)
+void arc_lifting::init(surface_with_action *Surf_A, 
+	INT *arc, INT arc_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -823,7 +988,7 @@ void arc_lifting::create_the_six_plane_equations(INT t_idx, INT *The_six_plane_e
 	INT i;
 
 	if (f_v) {
-		cout << "arc_lifting::create_the_six_plane_equations" << endl;
+		cout << "arc_lifting::create_the_six_plane_equations t_idx=" << t_idx << endl;
 		}
 
 
@@ -851,9 +1016,12 @@ void arc_lifting::create_the_six_plane_equations(INT t_idx, INT *The_six_plane_e
 		}
 }
 
-void arc_lifting::create_surface_from_trihedral_pair_and_arc(INT t_idx, INT *planes6, 
-	INT *The_six_plane_equations, INT *The_surface_equations, 
-	INT &lambda, INT &lambda_rk, INT verbose_level)
+void arc_lifting::create_surface_from_trihedral_pair_and_arc(
+	INT t_idx, INT *planes6, 
+	INT *The_six_plane_equations, 
+	INT *The_surface_equations, 
+	INT &lambda, INT &lambda_rk, 
+	INT verbose_level)
 // plane6[6]
 // The_six_plane_equations[6 * 4]
 // The_surface_equations[(q + 1) * 20]
@@ -861,23 +1029,28 @@ void arc_lifting::create_surface_from_trihedral_pair_and_arc(INT t_idx, INT *pla
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc" << endl;
+		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc t_idx=" << t_idx << endl;
 		}
 
-	create_the_six_plane_equations(t_idx, The_six_plane_equations, planes6, verbose_level);
+	create_the_six_plane_equations(t_idx, 
+		The_six_plane_equations, planes6, 
+		verbose_level);
 
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc before create_equations_for_pencil_of_surfaces_from_trihedral_pair" << endl;
 		}
 	Surf->create_equations_for_pencil_of_surfaces_from_trihedral_pair(
-		The_six_plane_equations, The_surface_equations, verbose_level);
+		The_six_plane_equations, The_surface_equations, 
+		verbose_level);
 
 	if (f_v) {
 		cout << "arc_lifting::create_surface_from_trihedral_pair_and_arc before create_lambda_from_trihedral_pair_and_arc" << endl;
 		}
-	Surf->create_lambda_from_trihedral_pair_and_arc(arc, Web_of_cubic_curves, 
-		The_plane_equations, t_idx, lambda, lambda_rk, verbose_level);
+	Surf->create_lambda_from_trihedral_pair_and_arc(arc, 
+		Web_of_cubic_curves, 
+		The_plane_equations, t_idx, lambda, lambda_rk, 
+		verbose_level);
 
 
 	INT_vec_copy(The_surface_equations + lambda_rk * 20, the_equation, 20);
@@ -887,8 +1060,10 @@ void arc_lifting::create_surface_from_trihedral_pair_and_arc(INT t_idx, INT *pla
 		}
 }
 
-strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(INT *planes6, 
-	INT &trihedral_pair_orbit_index, INT verbose_level)
+strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(
+	INT *planes6, 
+	INT &trihedral_pair_orbit_index, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -908,7 +1083,8 @@ strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(INT *planes6
 		}
 
 	gens_dual = Surf_A->Classify_trihedral_pairs->identify_trihedral_pair_and_get_stabilizer(
-		planes6, transporter, trihedral_pair_orbit_index, verbose_level);
+		planes6, transporter, trihedral_pair_orbit_index, 
+		verbose_level);
 
 	if (f_v) {
 		cout << "arc_lifting::create_stabilizer_of_trihedral_pair after Surf_A->identify_trihedral_pair_and_get_stabilizer" << endl;
@@ -946,7 +1122,8 @@ strong_generators *arc_lifting::create_stabilizer_of_trihedral_pair(INT *planes6
 	return gens;
 }
 
-void arc_lifting::create_action_on_equations_and_compute_orbits(INT *The_surface_equations, 
+void arc_lifting::create_action_on_equations_and_compute_orbits(
+	INT *The_surface_equations, 
 	strong_generators *gens_for_stabilizer_of_trihedral_pair, 
 	action *&A_on_equations, schreier *&Orb, 
 	INT verbose_level)
@@ -961,9 +1138,14 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(INT *The_surface
 		cout << "arc_lifting::create_action_on_equations_and_compute_orbits before create_action_and_compute_orbits_on_equations" << endl;
 		}
 
-	create_action_and_compute_orbits_on_equations(Surf_A->A, Surf->Poly3_4, 
-		The_surface_equations, q + 1 /* nb_equations */, gens_for_stabilizer_of_trihedral_pair, 
-		A_on_equations, Orb, verbose_level);
+	create_action_and_compute_orbits_on_equations(Surf_A->A, 
+		Surf->Poly3_4, 
+		The_surface_equations, 
+		q + 1 /* nb_equations */, 
+		gens_for_stabilizer_of_trihedral_pair, 
+		A_on_equations, 
+		Orb, 
+		verbose_level);
 		// in ACTION/action_global.C
 
 	if (f_v) {
@@ -971,7 +1153,8 @@ void arc_lifting::create_action_on_equations_and_compute_orbits(INT *The_surface
 		}
 }
 
-void arc_lifting::create_clebsch_system(INT *The_six_plane_equations, INT lambda, INT verbose_level)
+void arc_lifting::create_clebsch_system(INT *The_six_plane_equations, 
+	INT lambda, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -996,7 +1179,8 @@ void arc_lifting::create_clebsch_system(INT *The_six_plane_equations, INT lambda
 		cout << endl;
 		}
 
-	Surf->prepare_system_from_FG(F_plane, G_plane, lambda, System, verbose_level);
+	Surf->prepare_system_from_FG(F_plane, G_plane, 
+		lambda, System, verbose_level);
 
 	cout << "The System:" << endl;
 	for (i = 0; i < 3; i++) {
@@ -1117,6 +1301,8 @@ void arc_lifting::print(ostream &ost)
 	ost << "The automorphism group of the surface has order " << go << "\\\\" << endl;
 	Aut_gens->print_generators_tex(ost);
 
+
+	print_isomorphism_types_of_trihedral_pairs(ost, cosets);
 }
 
 void arc_lifting::print_Eckardt_point_data(ostream &ost)
@@ -1139,21 +1325,29 @@ void arc_lifting::print_Eckardt_point_data(ostream &ost)
 void arc_lifting::print_bisecants(ostream &ost)
 {
 	INT i, j, h, a;
+	INT Mtx[9];
 	
 	ost << "The 15 bisecants are:\\\\" << endl;
 	ost << "$$" << endl;
-	ost << "\\begin{array}{|r|r|r|r|}" << endl;
+	ost << "\\begin{array}{|r|r|r|r|r|}" << endl;
 	ost << "\\hline" << endl;
-	ost << "h & P_iP_j & \\mbox{rank} & \\mbox{line}\\\\" << endl;
+	ost << "h & P_iP_j & \\mbox{rank} & \\mbox{line} & \\mbox{equation}\\\\" << endl;
 	ost << "\\hline" << endl;
 	ost << "\\hline" << endl;
 	for (h = 0; h < 15; h++) {
 		a = bisecants[h];
 		k2ij(h, i, j, 6);
-		ost << h << " & P_" << i + 1 << "P_" << j + 1 << " & " << a << " & " << endl;
+		ost << h << " & P_{" << i + 1 << "}P_{" << j + 1 << "} & " << a << " & " << endl;
 		ost << "\\left[ " << endl;
 		Surf->P2->Grass_lines->print_single_generator_matrix_tex(ost, a);
 		ost << "\\right] ";
+
+		Surf->P2->Grass_lines->unrank_INT_here_and_compute_perp(Mtx, a, 
+			0 /*verbose_level */);
+		PG_element_normalize(*F, Mtx + 6, 1, 3);
+		
+		ost << " & ";
+		Surf->Poly1->print_equation(ost, Mtx + 6);
 		ost << "\\\\" << endl; 
 		}
 	ost << "\\hline" << endl;
@@ -1197,7 +1391,7 @@ void arc_lifting::print_conics(ostream &ost)
 	ost << "\\hline" << endl;
 	for (h = 0; h < 6; h++) {
 		ost << h + 1 << " & C_" << h + 1 << " & " << endl;
-		Surf->Poly2_x123->print_equation(ost, conic_coefficients + h * 6);
+		Surf->Poly2->print_equation(ost, conic_coefficients + h * 6);
 		ost << "\\\\" << endl; 
 		}
 	ost << "\\hline" << endl;
@@ -1222,30 +1416,124 @@ void arc_lifting::print_Eckardt_points(ostream &ost)
 
 void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 {
-	ost << "The web of cubic curves is:" << endl;
+	ost << "The web of cubic curves is:\\\\" << endl;
+
+#if 0
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, Web_of_cubic_curves, 15, 10, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels(ost, 
+		Web_of_cubic_curves, 15, 10, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, Web_of_cubic_curves + 15 * 10, 15, 10, 15, 0, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		Web_of_cubic_curves + 15 * 10, 15, 10, 15, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, Web_of_cubic_curves + 30 * 10, 15, 10, 30, 0, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		Web_of_cubic_curves + 30 * 10, 15, 10, 30, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
+#endif
+
+	INT *bisecants;
+	INT *conics;
+
+	INT labels[15];
+	INT row_fst[1];
+	INT row_len[1];
+	INT col_fst[1];
+	INT col_len[1];
+	row_fst[0] = 0;
+	row_len[0] = 15;
+	col_fst[0] = 0;
+	col_len[0] = 10;
+	BYTE str[1000];
+	INT i, j, k, l, m, n, h, ij, kl, mn;
+
+	Surf->P2->compute_bisecants_and_conics(arc, bisecants, conics, 0 /*verbose_level*/);
+
+	for (h = 0; h < 45; h++) {
+		ost << "$";
+		sprintf(str, "W_{%s}=\\Phi\\big(\\pi_{%ld}\\big) = \\Phi\\big(\\pi_{%s}\\big)", Surf->Eckard_point_label[h], h, Surf->Eckard_point_label[h]);
+		ost << str;
+		ost << " = ";
+		if (h < 30) {
+			ordered_pair_unrank(h, i, j, 6);
+			ij = ij2k(i, j, 6);
+			ost << "C_" << j + 1 << "P_{" << i + 1 << "}P_{" << j + 1 << "} = ";
+			ost << "\\big(";
+			Surf->Poly2->print_equation(ost, conics + j * 6);
+			ost << "\\big)";
+			ost << "\\big(";
+			Surf->Poly1->print_equation(ost, bisecants + ij * 3);
+			ost << "\\big)";
+			//multiply_conic_times_linear(conics + j * 6, bisecants + ij * 3, ten_coeff, 0 /* verbose_level */);
+			}
+		else {
+			unordered_triple_pair_unrank(h - 30, i, j, k, l, m, n);
+			ij = ij2k(i, j, 6);
+			kl = ij2k(k, l, 6);
+			mn = ij2k(m, n, 6);
+			ost << "P_{" << i + 1 << "}P_{" << j + 1 << "},P_{" << k + 1 << "}P_{" << l + 1 << "},P_{" << m + 1 << "}P_{" << n + 1 << "} = ";
+			ost << "\\big(";
+			Surf->Poly1->print_equation(ost, bisecants + ij * 3);
+			ost << "\\big)";
+			ost << "\\big(";
+			Surf->Poly1->print_equation(ost, bisecants + kl * 3);
+			ost << "\\big)";
+			ost << "\\big(";
+			Surf->Poly1->print_equation(ost, bisecants + mn * 3);
+			ost << "\\big)";
+			//multiply_linear_times_linear_times_linear(bisecants + ij * 3, bisecants + kl * 3, bisecants + mn * 3, ten_coeff, 0 /* verbose_level */);
+			}
+		ost << " = ";
+		Surf->Poly3->print_equation(ost, Web_of_cubic_curves + h * 10);
+		ost << "$\\\\";
+		}
+
+	ost << "The coeffcients are:" << endl;
+	for (i = 0; i < 15; i++) {
+		labels[i] = i;
+		}
+	ost << "$$" << endl;
+	INT_matrix_print_with_labels_and_partition(ost, Web_of_cubic_curves, 15, 10, 
+		labels, labels, 
+		row_fst, row_len, 1,  
+		col_fst, col_len, 1,  
+		Web_of_cubic_curves_entry_print, (void *) this, 
+		TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	for (i = 0; i < 15; i++) {
+		labels[i] = 15 + i;
+		}
+	ost << "$$" << endl;
+	INT_matrix_print_with_labels_and_partition(ost, Web_of_cubic_curves, 15, 10, 
+		labels, labels, 
+		row_fst, row_len, 1,  
+		col_fst, col_len, 1,  
+		Web_of_cubic_curves_entry_print, (void *) this, 
+		TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	for (i = 0; i < 15; i++) {
+		labels[i] = 30 + i;
+		}
+	ost << "$$" << endl;
+	INT_matrix_print_with_labels_and_partition(ost, Web_of_cubic_curves, 15, 10, 
+		labels, labels, 
+		row_fst, row_len, 1,  
+		col_fst, col_len, 1,  
+		Web_of_cubic_curves_entry_print, (void *) this, 
+		TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	FREE_INT(bisecants);
+	FREE_INT(conics);
+
 }
 
 void arc_lifting::print_trihedral_plane_equations(ostream &ost)
 {
-	INT *M;
-	INT i, j;
-
-	M = NEW_INT(45 * 5);
-	for (i = 0; i < 45; i++) {
-		for (j = 0; j < 4; j++) {
-			M[i * 5 + j] = The_plane_equations[i * 4 + j];
-			}
-		M[i * 5 + 4] = The_plane_duals[i];
-		}
+	INT i;
 	
 	ost << "The chosen abstract trihedral pair is no " << t_idx0 << ":" << endl;
 	ost << "$$" << endl;
@@ -1260,23 +1548,51 @@ void arc_lifting::print_trihedral_plane_equations(ostream &ost)
 	INT_vec_print(ost, base_curves4, 4);
 	ost << "$$" << endl;
 	ost << "The four base curves are:\\\\";
+	for (i = 0; i < 4; i++) {
+		ost << "$$" << endl;
+		ost << "W_{" << Surf->Eckard_point_label[base_curves4[i]];
+		ost << "}=\\Phi\\big(\\pi_{" << base_curves4[i] << "}\\big) = \\Phi\\big(\\pi_{" << Surf->Eckard_point_label[base_curves4[i]] << "}\\big)=V\\Big(" << endl;
+		Surf->Poly3->print_equation(ost, base_curves + i * 10);
+		ost << "\\Big)" << endl;
+		ost << "$$" << endl;
+		}
+
+	ost << "The coefficients of the four base curves are:\\\\";
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost, base_curves, 4, 10, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 
-	ost << "The resulting plane equations and dual point ranks are:\\\\";
-	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, M, 15, 5, TRUE /* f_tex*/);
-	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, M + 15 * 5, 15, 5, 15, 0, TRUE /* f_tex*/);
-	ost << "\\;\\;" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, M + 30 * 5, 15, 5, 30, 0, TRUE /* f_tex*/);
-	ost << "$$" << endl;
+	ost << "The resulting plane equations are:\\\\";
+	for (i = 0; i < 45; i++) {
+		ost << "$\\pi_{" << i << "}=\\pi_{" << Surf->Eckard_point_label[i] << "}=V\\Big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + i * 4);
+		ost << "\\Big)$\\\\";
+		}
 
+	ost << "The dual coordinates of the plane equations are:\\\\";
+	ost << "$$" << endl;
+	print_integer_matrix_with_standard_labels(ost, 
+		The_plane_equations, 15, 4, TRUE /* f_tex*/);
+	ost << "\\;\\;" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		The_plane_equations + 15 * 4, 15, 4, 15, 0, TRUE /* f_tex*/);
+	ost << "\\;\\;" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		The_plane_equations + 30 * 4, 15, 4, 30, 0, TRUE /* f_tex*/);
+	ost << "$$" << endl;
+	ost << "The dual ranks are:\\\\";
+	ost << "$$" << endl;
+	print_integer_matrix_with_standard_labels(ost, 
+		The_plane_duals, 15, 1, TRUE /* f_tex*/);
+	ost << "\\;\\;" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		The_plane_duals + 15 * 1, 15, 1, 15, 0, TRUE /* f_tex*/);
+	ost << "\\;\\;" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		The_plane_duals + 30 * 1, 15, 1, 30, 0, TRUE /* f_tex*/);
+	ost << "$$" << endl;
 
 	print_lines(ost);
-
-	FREE_INT(M);
 }
 
 void arc_lifting::print_lines(ostream &ost)
@@ -1318,29 +1634,31 @@ void arc_lifting::print_FG(ostream &ost)
 	ost << "$$" << endl;
 }
 
-void arc_lifting::print_the_six_plane_equations(INT *The_six_plane_equations, INT *plane6, ostream &ost)
+void arc_lifting::print_the_six_plane_equations(INT *The_six_plane_equations, 
+	INT *plane6, ostream &ost)
 {
-	INT *M;
-	INT i, j;
-
-	M = NEW_INT(6 * 5);
-	for (i = 0; i < 6; i++) {
-		for (j = 0; j < 4; j++) {
-			M[i * 5 + j] = The_six_plane_equations[i * 4 + j];
-			}
-		M[i * 5 + 4] = plane6[i];
-		}
+	INT i, h;
 	
-	ost << "The six plane equations are (with dual point rank):" << endl;
+	ost << "The six plane equations are:" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, M, 6, 5, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels(ost, The_six_plane_equations, 6, 4, TRUE /* f_tex*/);
 	ost << "$$" << endl;
-	FREE_INT(M);
+
+	ost << "The six plane equations are:\\\\";
+	for (i = 0; i < 6; i++) {
+		h = row_col_Eckardt_points[i];
+		ost << "$\\pi_{" << h << "}=\\pi_{" << Surf->Eckard_point_label[h] << "}=V\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + h * 4);
+		ost << "\\big)$\\\\";
+		}
 }
 
 void arc_lifting::print_surface_equations_on_line(INT *The_surface_equations, 
 	INT lambda, INT lambda_rk, ostream &ost)
 {
+	INT i;
+	INT v[2];
+	
 	ost << "The $q+1$ equations on the line are:" << endl;
 	ost << "$$" << endl;
 	print_integer_matrix_with_standard_labels(ost, The_surface_equations, q + 1, 20, TRUE /* f_tex*/);
@@ -1348,6 +1666,40 @@ void arc_lifting::print_surface_equations_on_line(INT *The_surface_equations,
 	ost << "$$" << endl;
 	ost << "\\lambda = " << lambda << ", \\; \\mbox{in row} \\; " << lambda_rk << endl;
 	ost << "$$" << endl;
+	
+	ost << "The $q+1$ equations on the line are:\\\\" << endl;
+	for (i = 0; i < q + 1; i++) {
+		ost << "Row " << i << " : ";
+
+		PG_element_unrank_modified(*F, v, 1, 2, i);
+		PG_element_normalize_from_front(*F, v, 1, 2);
+		
+		ost << "$";
+		ost << v[0] << " \\cdot ";
+		ost << "\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + row_col_Eckardt_points[0] * 4);
+		ost << "\\big)";
+		ost << "\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + row_col_Eckardt_points[1] * 4);
+		ost << "\\big)";
+		ost << "\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + row_col_Eckardt_points[2] * 4);
+		ost << "\\big)";
+		ost << "+";
+		ost << v[1] << " \\cdot ";
+		ost << "\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + row_col_Eckardt_points[3] * 4);
+		ost << "\\big)";
+		ost << "\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + row_col_Eckardt_points[4] * 4);
+		ost << "\\big)";
+		ost << "\\big(";
+		Surf->Poly1_4->print_equation(ost, The_plane_equations + row_col_Eckardt_points[5] * 4);
+		ost << "\\big)";
+		ost << " = ";
+		Surf->Poly3_4->print_equation(ost, The_surface_equations + i * 20);
+		ost << "$\\\\";
+		}
 }
 
 
@@ -1372,7 +1724,318 @@ void arc_lifting::print_equations()
 }
 
 
-static void intersection_matrix_entry_print(INT *p, INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data)
+
+void arc_lifting::print_isomorphism_types_of_trihedral_pairs(ostream &ost, 
+	vector_ge *cosets)
+{
+	INT i, j;
+	INT planes6[6];
+	INT orbit_index0;
+	INT orbit_index;
+	INT *transporter0;
+	INT *transporter;
+	INT list[120];
+	INT list_sz = 0;
+	INT Tt[17];
+	INT Iso[120];
+
+	cout << "arc_lifting::print_isomorphism_types_of_trihedral_pairs" << endl;
+
+	ost << "\\bigskip" << endl;
+	ost << "" << endl;
+	ost << "\\section*{Computing the Automorphism Group}" << endl;
+	ost << "" << endl;
+
+	ost << "The equation of the surface is: $" << endl;
+	INT_vec_print(ost, the_equation, 20);
+	ost << "$\\\\" << endl;
+
+
+
+	ost << "\\bigskip" << endl;
+	ost << "" << endl;
+	ost << "\\subsection*{Computing the Automorphism Group, Step 1}" << endl;
+	ost << "" << endl;
+
+
+
+	transporter0 = NEW_INT(Surf_A->A->elt_size_in_INT);
+	transporter = NEW_INT(Surf_A->A->elt_size_in_INT);
+
+	Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
+		Dual_point_ranks + t_idx0 * 6, 
+		transporter0, 
+		orbit_index0, 
+		0 /*verbose_level*/);
+	ost << "Trihedral pair $T_{" << t_idx0 << "}$ lies in orbit " << orbit_index0 << "\\\\" << endl;
+	ost << "An isomorphism is given by" << endl;
+	ost << "$$" << endl;
+	Surf_A->A->element_print_latex(transporter0, ost);
+	ost << "$$" << endl;
+	
+
+
+
+	for (i = 0; i < nb_T; i++) {
+
+			cout << "testing if trihedral pair " << i << " / " << nb_T << " = " << T_idx[i];
+			cout << " lies in the orbit:" << endl;
+
+		INT_vec_copy(Dual_point_ranks + i * 6, planes6, 6);
+		Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
+			planes6, 
+			transporter, 
+			orbit_index, 
+			0 /*verbose_level */);
+		
+		ost << "Trihedral pair " << i << " lies in orbit " << orbit_index << "\\\\" << endl;
+		ost << "An isomorphism is given by" << endl;
+		ost << "$$" << endl;
+		Surf_A->A->element_print_latex(transporter, ost);
+		ost << "$$" << endl;
+
+
+		Iso[i] = orbit_index;
+		
+		if (orbit_index != orbit_index0) {
+			continue;
+			}
+		
+		list[list_sz++] = i;
+
+		Surf_A->A->element_invert(transporter, Elt1, 0);
+		Surf_A->A->element_mult(transporter0, Elt1, Elt2, 0);
+		
+		ost << "An isomorphism between $T_{" << i << "}$ and $T_{" << t_idx0 << "}$ is given by" << endl;
+		ost << "$$" << endl;
+		Surf_A->A->element_print_latex(Elt2, ost);
+		ost << "$$" << endl;
+
+
+		} // next i
+
+	ost << "The isomorphism types of the trihedral pairs in the list of double triplets are:" << endl;
+	ost << "$$" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, Iso + 0 * 1, 40, 1, 0, 0, TRUE /* f_tex */);
+	ost << "\\quad" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, Iso + 40 * 1, 40, 1, 40, 0, TRUE /* f_tex */);
+	ost << "\\quad" << endl;
+	print_integer_matrix_with_standard_labels_and_offset(ost, Iso + 80 * 1, 40, 1, 80, 0, TRUE /* f_tex */);
+	ost << "$$" << endl;
+
+	INT I, h, iso;
+	ost << "The isomorphism types of the trihedral pairs in the list of double triplets are:" << endl;
+	for (I = 0; I < 12; I++) {
+		ost << "$$" << endl;
+		ost << "\\begin{array}{c|c|c|c|c|c|}" << endl;
+		ost << "i & T_i & \\mbox{trihedral pair} & \\mbox{double triplet} & \\mbox{iso} & \\mbox{map}\\\\" << endl;
+		ost << "\\hline" << endl;
+		for (h = 0; h < 10; h++) {
+			i = I * 10 + h;
+			ost << i << " & T_{" << Surf_A->Surf->Trihedral_pair_labels[i] << "} & ";
+
+			INT_vec_copy(Dual_point_ranks + i * 6, planes6, 6);
+			Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
+				planes6, 
+				transporter, 
+				orbit_index, 
+				0 /*verbose_level */);
+
+
+			ost << "\\{";
+			for (j = 0; j < 3; j++) {
+				ost << planes6[j];
+				if (j < 3 - 1) {
+					ost << ", ";
+					}
+				}
+			ost << "; ";
+			for (j = 0; j < 3; j++) {
+				ost << planes6[3 + j];
+				if (j < 3 - 1) {
+					ost << ", ";
+					}
+				}
+			ost << "\\}";
+
+			iso = Iso[i];
+			INT_vec_copy(Surf_A->Classify_trihedral_pairs->Trihedral_pairs->Rep + 
+				iso * Surf_A->Classify_trihedral_pairs->Trihedral_pairs->representation_sz, 
+				planes6, 6);
+			
+			ost << " & ";
+			ost << "\\{";
+			for (j = 0; j < 3; j++) {
+				ost << planes6[j];
+				if (j < 3 - 1) {
+					ost << ", ";
+					}
+				}
+			ost << "; ";
+			for (j = 0; j < 3; j++) {
+				ost << planes6[3 + j];
+				if (j < 3 - 1) {
+					ost << ", ";
+					}
+				}
+			ost << "\\}";
+			ost << " & " << iso << " & " << endl;
+			Surf_A->A->element_print_latex(transporter, ost);
+			ost << "\\\\[4pt]" << endl;
+			ost << "\\hline" << endl;
+			}
+		ost << "\\end{array}" << endl;
+		ost << "$$" << endl;
+		}
+
+	ost << "There are " << list_sz << " trihedral pairs which are isomorphic to the double triplet of $T_0$:\\\\" << endl;
+	INT_set_print_tex(ost, list, list_sz);
+	ost << "$$" << endl;
+	ost << "\\{ ";
+	for (i = 0; i < list_sz; i++) {
+		ost << "T_{" << list[i] << "}";
+		if (i < list_sz - 1)
+			ost << ", ";
+		}
+	ost << " \\}";
+	ost << "$$" << endl;
+
+
+	ost << "\\bigskip" << endl;
+	ost << "" << endl;
+	ost << "\\subsection*{Computing the Automorphism Group, Step 2}" << endl;
+	ost << "" << endl;
+
+
+
+
+	ost << "We are now looping over the " << list_sz << " trihedral pairs which are isomorphic to the double triplet of $T_0$ and over the " << cosets->len << " cosets:\\\\" << endl;
+	for (i = 0; i < list_sz; i++) {
+		ost << "i=" << i << " / " << list_sz << " considering $T_{" << list[i] << "}$:\\\\";
+
+		INT_vec_copy(Dual_point_ranks + list[i] * 6, planes6, 6);
+
+
+		Surf_A->Classify_trihedral_pairs->identify_trihedral_pair(
+			planes6, 
+			transporter, 
+			orbit_index, 
+			0 /*verbose_level */);
+
+		Surf_A->A->element_invert(transporter, Elt1, 0);
+		Surf_A->A->element_mult(transporter0, Elt1, Elt2, 0);
+
+		ost << "The isomorphism from $T_0$ to $T_{" <<  list[i] << "}$ is :" << endl;
+		ost << "$$" << endl;
+		Surf_A->A->element_print_latex(Elt2, ost);
+		ost << " = " << endl;
+		Surf_A->A->element_print_latex(transporter0, ost);
+		ost << " \\cdot " << endl;
+		ost << "\\left(" << endl;
+		Surf_A->A->element_print_latex(transporter, ost);
+		ost << "\\right)^{-1}" << endl;
+		ost << "$$" << endl;
+
+		for (j = 0; j < cosets->len; j++) {
+			ost << "i=" << i << " / " << list_sz << " j=" << j << " / " << cosets->len << " considering coset given by:" << endl;
+			ost << "$$" << endl;
+			Surf_A->A->element_print_latex(cosets->ith(j), ost);
+			ost << "$$" << endl;
+
+
+
+			matrix_group *mtx;
+
+			mtx = Surf_A->A->G.matrix_grp;
+
+			F->transpose_matrix(Elt2, Tt, 4, 4);
+			if (mtx->f_semilinear) {
+				// if we are doing semilinear:
+				Tt[4 * 4] = Elt2[4 * 4]; 
+				}
+
+
+			Surf_A->A->make_element(Elt3, Tt, 0);
+			Surf_A->A->element_invert(cosets->ith(j), Elt5, 0);
+			Surf_A->A->element_mult(Elt3, Elt5, Elt4, 0);
+	
+			//cout << "transporter transposed:" << endl;
+			//A->print_quick(cout, Elt2);
+
+			INT coeff_out[20];
+
+
+			//Surf_A->A->element_invert(Elt4, Elt5, 0);
+
+			ost << "i=" << i << " / " << list_sz << " j=" << j << " / " << cosets->len << " testing element:" << endl;
+			ost << "$$" << endl;
+			Surf_A->A->element_print_latex(Elt4, ost);
+			ost << " = " << endl;
+			Surf_A->A->element_print_latex(Elt3, ost);
+			ost << " \\cdot " << endl;
+			Surf_A->A->element_print_latex(Elt5, ost);
+			ost << "$$" << endl;
+
+
+			if (mtx->f_semilinear) {
+				INT n, frob; //, e;
+				
+				n = mtx->n;
+				frob = Elt4[n * n];
+#if 0
+				e = mtx->GFq->e;
+				if (frob) {
+					frob = e - frob;
+					}
+#endif
+				Surf->substitute_semilinear(the_equation, 
+					coeff_out, 
+					mtx->f_semilinear, 
+					frob, 
+					Elt4, 
+					0 /* verbose_level */);
+				}
+			else {
+				Surf->substitute_semilinear(the_equation, 
+					coeff_out, 
+					FALSE, 0, 
+					Elt4, 
+					0 /* verbose_level */);
+				}
+
+			PG_element_normalize(*F, coeff_out, 1, 20);
+
+			ost << "The transformed equation is: $" << endl;
+			INT_vec_print(ost, coeff_out, 20);
+			ost << "$\\\\" << endl;
+
+
+			if (INT_vec_compare(coeff_out, the_equation, 20) == 0) {
+				ost << "trihedral pair " << i << " / " << nb_T << ", coset " << j << " / " << cosets->len << " gives an automorphism\\\\" << endl;
+				ost << "automorphism = " << endl;
+				ost << "$$" << endl;
+				Surf_A->A->element_print_latex(Elt4, ost);
+				ost << "$$" << endl;
+
+				}
+			else {
+				ost << "The equation is different, the group element is not an automorphism\\\\" << endl;
+				}
+			
+			} // next j
+		} // next i
+
+
+	FREE_INT(transporter);
+	FREE_INT(transporter0);
+}
+
+
+
+
+
+static void intersection_matrix_entry_print(INT *p, 
+	INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data)
 {
 	//arc_lifting *AL;
 	//AL = (arc_lifting *) data;
@@ -1393,6 +2056,23 @@ static void intersection_matrix_entry_print(INT *p, INT m, INT n, INT i, INT j, 
 		else {
 			sprintf(output, "%ld", val);
 			}
+		}
+}
+
+static void Web_of_cubic_curves_entry_print(INT *p, 
+	INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data)
+{
+	arc_lifting *AL;
+	AL = (arc_lifting *) data;
+	
+	if (i == -1) {
+		AL->Surf->Poly3->print_monomial(output, j);
+		}
+	else if (j == -1) {
+		sprintf(output, "\\pi_{%ld} = \\pi_{%s}", i, AL->Surf->Eckard_point_label[i]);
+		}
+	else {
+		sprintf(output, "%ld", val);
 		}
 }
 

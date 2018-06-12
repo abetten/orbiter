@@ -53,7 +53,9 @@ void double_vec_scalar_multiple(double *a, double lambda, INT len)
 		}
 }
 
-INT Gauss_elimination(double *A, INT m, INT n, INT *base_cols, INT f_complete, INT verbose_level)
+INT Gauss_elimination(double *A, INT m, INT n, 
+	INT *base_cols, INT f_complete, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -131,7 +133,9 @@ INT Gauss_elimination(double *A, INT m, INT n, INT *base_cols, INT f_complete, I
 		// do the gaussian elimination: 
 
 		if (f_vv) {
-			cout << "doing elimination in column " << j << " from row " << i + 1 << " to row " << m - 1 << ":" << endl;
+			cout << "doing elimination in column " << j 
+				<< " from row " << i + 1 << " to row " 
+				<< m - 1 << ":" << endl;
 			}
 		for (k = i + 1; k < m; k++) {
 			if (f_vv) {
@@ -219,9 +223,12 @@ void print_system(double *A, INT m, INT n)
 		}
 }
 
-void get_kernel(double *M, INT m, INT n, INT *base_cols, INT nb_base_cols, 
-	INT &kernel_m, INT &kernel_n, double *kernel)
-// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) doubles)
+void get_kernel(double *M, INT m, INT n, 
+	INT *base_cols, INT nb_base_cols, 
+	INT &kernel_m, INT &kernel_n, 
+	double *kernel)
+// kernel must point to the appropriate amount of memory! 
+// (at least n * (n - nb_base_cols) doubles)
 // m is not used!
 {
 	INT r, k, i, j, ii, iii, a, b;
@@ -305,7 +312,8 @@ void get_kernel(double *M, INT m, INT n, INT *base_cols, INT nb_base_cols,
 	FREE_INT(kcol);
 }
 
-INT Null_space(double *M, INT m, INT n, double *K, INT verbose_level)
+INT Null_space(double *M, INT m, INT n, double *K, 
+	INT verbose_level)
 // K will be k x n
 // where k is the return value.
 {
@@ -322,7 +330,9 @@ INT Null_space(double *M, INT m, INT n, double *K, INT verbose_level)
 	
 	base_cols = NEW_INT(n);
 	
-	rk = Gauss_elimination(M, m, n, base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	rk = Gauss_elimination(M, m, n, base_cols, 
+		TRUE /* f_complete */, 0 /* verbose_level */);
+	
 	get_kernel(M, m, n, base_cols, rk /* nb_base_cols */, 
 		kernel_m, kernel_n, Ker);
 	
@@ -713,7 +723,8 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 		mult_matrix(Moved_pts3 + h * 3, Rx, Moved_pts4 + h * 3);
 		}
 	if (f_vv) {
-		cout << "after rotation Rx by an angle of " << rad2deg(chi) << ":" << endl;
+		cout << "after rotation Rx by an angle of " 
+			<< rad2deg(chi) << ":" << endl;
 		cout << "P8=";
 		double_vec_print(cout, P8, 3);
 		cout << endl;
@@ -916,7 +927,8 @@ void make_unit_vector(double *v, INT len)
 	double_vec_scalar_multiple(v, dv, len);
 }
 
-void center_of_mass(double *Pts, INT len, INT *Pt_idx, INT nb_pts, double *c)
+void center_of_mass(double *Pts, INT len, 
+	INT *Pt_idx, INT nb_pts, double *c)
 {
 	INT i, h, idx;
 	double a;
@@ -934,7 +946,8 @@ void center_of_mass(double *Pts, INT len, INT *Pt_idx, INT nb_pts, double *c)
 	double_vec_scalar_multiple(c, a, len);
 }
 
-void plane_through_three_points(double *p1, double *p2, double *p3, double *n, double &d)
+void plane_through_three_points(double *p1, double *p2, double *p3, 
+	double *n, double &d)
 {
 	INT i;
 	double a, b;
@@ -980,7 +993,8 @@ void plane_through_three_points(double *p1, double *p2, double *p3, double *n, d
 	d = dot_product(p1, n, 3);
 }
 
-void orthogonal_transformation_from_point_to_basis_vector(double *from, 
+void orthogonal_transformation_from_point_to_basis_vector(
+	double *from, 
 	double *A, double *Av, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1270,7 +1284,7 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 	nb_affine = i_power_j(n, degree);
 
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "Variables:" << endl;
 		INT_matrix_print(Variables, 20, 3);
 		}
@@ -1282,7 +1296,7 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 			Monomials[i * n + a]++;
 			}
 		}
-	if (f_v) {
+	if (FALSE) {
 		cout << "Monomials:" << endl;
 		INT_matrix_print(Monomials, 20, 4);
 		}
@@ -1310,7 +1324,7 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		Affine_to_monomial[i] = idx;	
 		}
 
-	if (f_v) {
+	if (FALSE) {
 		cout << "Affine_to_monomial:";
 		INT_vec_print(cout, Affine_to_monomial, nb_affine);
 		cout << endl;
@@ -1327,7 +1341,8 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 			}
 		
 		V = Variables + h * degree;
-			// a list of the indices of the variables which appear in the monomial
+			// a list of the indices of the variables 
+			// which appear in the monomial
 			// (possibly with repeats)
 			// Example: the monomial x_0^3 becomes 0,0,0
 
@@ -1338,7 +1353,8 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		for (a = 0; a < nb_affine; a++) {
 
 			AG_element_unrank(n /* q */, A, 1, degree, a);
-				// sequence of length degree over the alphabet  0,...,n-1.
+				// sequence of length degree 
+				// over the alphabet  0,...,n-1.
 			b = 1.;
 			for (j = 0; j < degree; j++) {
 				//factors[j] = Mtx_inv[V[j] * n + A[j]];
@@ -1368,7 +1384,10 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		}
 }
 
-void make_transform_t_varphi_u_double(INT n, double *varphi, double *u, double *A, double *Av, INT verbose_level)
+void make_transform_t_varphi_u_double(INT n, 
+	double *varphi, 
+	double *u, double *A, double *Av, 
+	INT verbose_level)
 // varphi are the dual coordinates of a plane.
 // u is a vector such that varphi(u) \neq -1.
 // A = I + varphi * u.
@@ -1395,7 +1414,8 @@ void make_transform_t_varphi_u_double(INT n, double *varphi, double *u, double *
 		}
 }
 
-void matrix_double_inverse(double *A, double *Av, INT n, INT verbose_level)
+void matrix_double_inverse(double *A, double *Av, INT n, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	double *M;
@@ -1420,7 +1440,8 @@ void matrix_double_inverse(double *A, double *Av, INT n, INT verbose_level)
 				}
 			}
 		}
-	rk = Gauss_elimination(M, n, two_n, base_cols, TRUE /* f_complete */, 0 /* verbose_level */);
+	rk = Gauss_elimination(M, n, two_n, base_cols, 
+		TRUE /* f_complete */, 0 /* verbose_level */);
 	if (rk < n) {
 		cout << "matrix_double_inverse the matrix is not invertible" << endl;
 		exit(1);

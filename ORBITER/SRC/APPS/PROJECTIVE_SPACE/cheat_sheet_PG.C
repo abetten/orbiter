@@ -152,6 +152,8 @@ void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 	f << "\\section{Points and Lines}" << endl;
 	P->cheat_sheet_points(f, verbose_level);
 	
+	P->cheat_sheet_point_table(f, verbose_level);
+	
 
 
 	f << "\\clearpage" << endl << endl;

@@ -149,7 +149,8 @@ int main(int argc, const char **argv)
 
 	} // clean up graph_generator
 	
-	the_end_quietly(t0);
+	the_end(t0);
+	//the_end_quietly(t0);
 }
 
 void usage(int argc, const char **argv)

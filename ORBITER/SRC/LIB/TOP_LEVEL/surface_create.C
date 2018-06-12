@@ -24,6 +24,7 @@ surface_create::~surface_create()
 
 void surface_create::null()
 {
+	f_ownership = FALSE;
 	F = NULL;
 	Surf = NULL;
 	Surf_A = NULL;
@@ -34,20 +35,68 @@ void surface_create::null()
 
 void surface_create::freeself()
 {
-	if (F) {
-		delete F;
-		}
-	if (Surf) {
-		delete Surf;
-		}
-	if (Surf_A) {
-		delete Surf_A;
+	if (f_ownership) {
+		if (F) {
+			delete F;
+			}
+		if (Surf) {
+			delete Surf;
+			}
+		if (Surf_A) {
+			delete Surf_A;
+			}
 		}
 	if (Sg) {
 		delete Sg;
 		}
 	null();
 }
+
+void surface_create::init_with_data(surface_create_description *Descr, 
+	surface_with_action *Surf_A, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+	
+	if (f_v) {
+		cout << "surface_create::init_with_data" << endl;
+		}
+
+	surface_create::Descr = Descr;
+
+	f_ownership = FALSE;
+	surface_create::Surf_A = Surf_A;
+
+
+	if (is_prime(q)) {
+		f_semilinear = FALSE;
+		}
+	else {
+		f_semilinear = TRUE;
+		}
+
+	surface_create::F = Surf_A->F;
+	q = F->q;
+	surface_create::Surf = Surf_A->Surf;
+	if (Descr->q != F->q) {
+		cout << "surface_create::init_with_data Descr->q != F->q" << endl;
+		exit(1);
+		}
+
+	if (f_v) {
+		cout << "surface_create::init_with_data before init2" << endl;
+		}
+	init2(verbose_level - 1);
+	if (f_v) {
+		cout << "surface_create::init_with_data after init2" << endl;
+		}
+
+	if (f_v) {
+		cout << "surface_create::init_with_data done" << endl;
+		}
+}
+
 
 void surface_create::init(surface_create_description *Descr, INT verbose_level)
 {
@@ -66,12 +115,24 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 	if (f_v) {
 		cout << "surface_create::init q = " << q << endl;
 		}
+	if (f_v) {
+		cout << "surface_create::init creating finite field of order " << q << endl;
+		}
+
+	f_ownership = FALSE;
+
 	F = new finite_field;
 	F->init(q, 0);
 	
 
+	if (f_v) {
+		cout << "surface_create::init creating surface object" << endl;
+		}
 	Surf = new surface;
-	Surf->init(F, verbose_level);
+	Surf->init(F, 0 /*verbose_level*/);
+	if (f_v) {
+		cout << "surface_create::init creating surface object done" << endl;
+		}
 
 
 	if (is_prime(q)) {
@@ -89,33 +150,60 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 
 	Surf_A = new surface_with_action;
 	
-	cout << "before Surf_A->init" << endl;
+	if (f_v) {
+		cout << "before Surf_A->init" << endl;
+		}
 	Surf_A->init(Surf, f_semilinear, verbose_level);
-	cout << "after Surf_A->init" << endl;
+	if (f_v) {
+		cout << "after Surf_A->init" << endl;
+		}
 
 
+
+	if (f_v) {
+		cout << "surface_create::init before init2" << endl;
+		}
+	init2(verbose_level);
+	if (f_v) {
+		cout << "surface_create::init after init2" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "surface_create::init done" << endl;
+		}
+}
+
+void surface_create::init2(INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
 
 	
+	if (f_v) {
+		cout << "surface_create::init2" << endl;
+		}
+
+
 	if (Descr->f_family_S) {
 		if (f_v) {
-			cout << "surface_create::init before Surf->create_surface_family_S a=" << Descr->parameter_a << endl;
+			cout << "surface_create::init2 before Surf->create_surface_family_S a=" << Descr->parameter_a << endl;
 			}
 		Surf->create_surface_family_S(Descr->parameter_a, Lines, coeffs, verbose_level - 1);
 		if (f_v) {
-			cout << "surface_create::init after Surf->create_surface_family_S" << endl;
+			cout << "surface_create::init2 after Surf->create_surface_family_S" << endl;
 			}
 		f_has_lines = TRUE;
 
 		Sg = new strong_generators;
 		//Sg->init(Surf_A->A, verbose_level);
 		if (f_v) {
-			cout << "surface_create::init before Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 before Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
 			}
 		Sg->generators_for_the_stabilizer_of_the_cubic_surface_family_24(Surf_A->A, 
 			F, FALSE /* f_with_normalizer */, f_semilinear, 
 			verbose_level);
 		if (f_v) {
-			cout << "surface_create::init after Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 after Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
 			}
 		f_has_group = TRUE;
 
@@ -127,7 +215,7 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 	else if (Descr->f_by_coefficients) {
 
 		if (f_v) {
-			cout << "surface_create::init surface is given by the coefficients" << endl;
+			cout << "surface_create::init2 surface is given by the coefficients" << endl;
 			}
 
 		INT *surface_coeffs;
@@ -136,7 +224,7 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 	
 		INT_vec_scan(Descr->coefficients_text, surface_coeffs, nb_coeffs);
 		if (ODD(nb_coeffs)) {
-			cout << "surface_create::init number of surface coefficients must be even" << endl;
+			cout << "surface_create::init2 number of surface coefficients must be even" << endl;
 			exit(1);
 			}
 		INT_vec_zero(coeffs, 20);
@@ -145,11 +233,11 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			a = surface_coeffs[2 * i + 0];
 			b = surface_coeffs[2 * i + 1];
 			if (a < 0 || a >= q) {
-				cout << "surface_create::init coefficient out of range" << endl;
+				cout << "surface_create::init2 coefficient out of range" << endl;
 				exit(1);
 				}
 			if (b < 0 || b >= 20) {
-				cout << "surface_create::init variable index out of range" << endl;
+				cout << "surface_create::init2 variable index out of range" << endl;
 				exit(1);
 				}
 			coeffs[b] = a;
@@ -163,7 +251,7 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 	else if (Descr->f_catalogue) {
 
 		if (f_v) {
-			cout << "surface_create::init surface from catalogue" << endl;
+			cout << "surface_create::init2 surface from catalogue" << endl;
 			}
 		INT *p_lines;
 		INT nb_iso;
@@ -171,20 +259,22 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 
 		nb_iso = cubic_surface_nb_reps(q);
 		if (Descr->iso >= nb_iso) {
-			cout << "surface_create::init iso >= nb_iso, this cubic surface does not exist" << endl;
+			cout << "surface_create::init2 iso >= nb_iso, this cubic surface does not exist" << endl;
 			exit(1);
 			}
 		p_lines = cubic_surface_Lines(q, Descr->iso);
 		INT_vec_copy(p_lines, Lines, 27);
 		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
-		//rearrange_lines_according_to_double_six(Lines, 0 /* verbose_level */);
+
+		Surf->rearrange_lines_according_to_double_six(Lines, 0 /* verbose_level */);
+		
 		Surf->build_cubic_surface_from_lines(27, Lines, coeffs, 0 /* verbose_level */);
 		f_has_lines = TRUE;
 
 		Sg = new strong_generators;
 		//Sg->init(Surf_A->A, verbose_level);
 		if (f_v) {
-			cout << "surface_create::init before Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 before Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
 			}
 		Sg->generators_for_the_stabilizer_of_the_cubic_surface(Surf_A->A, 
 			F, Descr->iso, 
@@ -195,13 +285,13 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 		sprintf(label_txt, "catalogue_q%ld_%ld", F->q, Descr->iso);
 		sprintf(label_tex, "catalogue\\_q%ld\\_%ld", F->q, Descr->iso);
 		if (f_v) {
-			cout << "surface_create::init after Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
+			cout << "surface_create::init2 after Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
 			}
 		}
 	else if (Descr->f_arc_lifting) {
 
 		if (f_v) {
-			cout << "surface_create::init by arc lifting" << endl;
+			cout << "surface_create::init2 by arc lifting" << endl;
 			}
 
 		INT *arc;
@@ -215,17 +305,17 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 			}
 		
 		if (f_v) {
-			cout << "surface_create::init arc: ";
+			cout << "surface_create::init2 arc: ";
 			INT_vec_print(cout, arc, 6);
 			cout << endl;
 			}
 
 		if (f_v) {
-			cout << "surface_create::init before Surf_A->Classify_trihedral_pairs->classify" << endl;
+			cout << "surface_create::init2 before Surf_A->Classify_trihedral_pairs->classify" << endl;
 			}
-		Surf_A->Classify_trihedral_pairs->classify(verbose_level);
+		Surf_A->Classify_trihedral_pairs->classify(0 /*verbose_level*/);
 		if (f_v) {
-			cout << "surface_create::init after Surf_A->Classify_trihedral_pairs->classify" << endl;
+			cout << "surface_create::init2 after Surf_A->Classify_trihedral_pairs->classify" << endl;
 			}
 
 
@@ -235,11 +325,11 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 
 
 		if (f_v) {
-			cout << "surface_create::init before AL->create_surface" << endl;
+			cout << "surface_create::init2 before AL->create_surface" << endl;
 			}
 		AL->create_surface(Surf_A, arc, verbose_level);
 		if (f_v) {
-			cout << "surface_create::init after AL->create_surface" << endl;
+			cout << "surface_create::init2 after AL->create_surface" << endl;
 			}
 
 		INT_vec_copy(AL->The_surface_equations + AL->lambda_rk * 20, coeffs, 20);
@@ -268,38 +358,38 @@ void surface_create::init(surface_create_description *Descr, INT verbose_level)
 		FREE_INT(arc);
 		}
 	else {
-		cout << "surface_create::init we do not recognize the type of surface" << endl;
+		cout << "surface_create::init2 we do not recognize the type of surface" << endl;
 		exit(1);
 		}
 
 
 	if (f_v) {
-		cout << "surface_create::init coeffs = ";
+		cout << "surface_create::init2 coeffs = ";
 		INT_vec_print(cout, coeffs, 20);
 		cout << endl;
 		}
 
 	if (f_has_lines) {
-		cout << "surface_create::init Lines = ";
+		cout << "surface_create::init2 Lines = ";
 		INT_vec_print(cout, Lines, 27);
 		cout << endl;
 		}
 	else {
-		cout << "surface_create::init The surface has no lines computed" << endl;
+		cout << "surface_create::init2 The surface has no lines computed" << endl;
 		}
 
 	if (f_has_group) {
-		cout << "surface_create::init the stabilizer is:" << endl;
+		cout << "surface_create::init2 the stabilizer is:" << endl;
 		Sg->print_generators_tex(cout);
 		}
 	else {
-		cout << "surface_create::init The surface has no group computed" << endl;
+		cout << "surface_create::init2 The surface has no group computed" << endl;
 		}
 
 
 
 	if (f_v) {
-		cout << "surface_create::init done" << endl;
+		cout << "surface_create::init2 done" << endl;
 		}
 }
 
