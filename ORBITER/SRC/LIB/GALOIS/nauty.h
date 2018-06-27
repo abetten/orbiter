@@ -1,8 +1,7 @@
 /**************************************************************************
-*    This is the header file for Version 2.2 of nauty().                  *
-*    Generated automatically from nauty-h.in by configure.
+*    This is the header file for Version 2.6 of nauty().                  *
+*    nauty.h.  Generated from nauty-h.in by configure.
 **************************************************************************/
-
 
 #ifndef  _NAUTY_H_    /* only process this file once */
 #define  _NAUTY_H_
@@ -12,22 +11,61 @@ creating nauty.h out of nauty-h.in.  If configure is not being used,
 it is necessary to check they are correct.
 ====================================================================*/
 
-/* Check whether various headers are available */
+/* Check whether various headers or options are available */
 #define HAVE_UNISTD_H  1    /* <unistd.h> */
 #define HAVE_SYSTYPES_H  1    /* <sys/types.h> */
 #define HAVE_STDDEF_H  1     /* <stddef.h> */
 #define HAVE_STDLIB_H  1    /* <stdlib.h> */
 #define HAVE_STRING_H  1    /* <string.h> */
-#define MALLOC_DEC 1  /* 1 = malloc() is declared in stdlib.h,
-				 2 = in malloc.h, 0 = in neither place */
-#define HAS_MATH_INF 1 /* INFINITY is defined in math.h or
-				some system header likely to be used */
+#define MALLOC_DEC 1  /* 1 = malloc() is declared in stdlib.h, */
+				 /* 2 = in malloc.h, 0 = in neither place */
+#define HAS_MATH_INF 1 /* INFINITY is defined in math.h or */
+				 /* some system header likely to be used */
+#define HAS_STDIO_UNLOCK 1  /* Whether there are getc_unlocked, */
+		               /* putc_unlocked,flockfile and funlockfile*/
 
+#define DEFAULT_WORDSIZE 0
 #define SIZEOF_INT 4
-#define SIZEOF_LONG 4
+#define SIZEOF_LONG 8
 #define SIZEOF_LONG_LONG 8   /* 0 if nonexistent */
+#define SIZEOF_INT128 16   /* 0 if nonexistent */
 
 #define HAVE_CONST 1    /* compiler properly supports const */
+
+/* Note that the following is only for running nauty in multiple threads
+   and will slow it down a little otherwise. */
+#define HAVE_TLS 0   /* have storage attribute for thread-local */
+#define TLS_ATTR   /* if so, what it is.  if not, empty */
+
+#define USE_ANSICONTROLS 0 
+                          /* whether --enable-ansicontrols is used */
+
+#define _FILE_OFFSET_BITS 0
+#if _FILE_OFFSET_BITS == 64
+#define _LARGEFILE_SOURCE
+#else
+#undef _FILE_OFFSET_BITS
+#endif
+
+/* Support of gcc extensions __builtin_clz, __builtin_clzl, __builtin_clzll */
+#define HAVE_CLZ 1
+#define HAVE_CLZL 1
+#define HAVE_CLZLL 1
+
+/* Support of gcc extensions
+      __builtin_popcount, __builtin_popcountl, __builtin_popcountll
+   Note that these may only be fast if the compiler switch -mpopcnt is used.
+
+   Also the intrinsics
+      _mm_popcnt_u32, _mm_popcnt_u64
+   for the Intel compiler icc.  These need no compiler switch.
+*/
+#define HAVE_HWPOPCNT 1
+#define HAVE_POPCNT 1
+#define HAVE_POPCNTL 1
+#define HAVE_POPCNTLL 1
+#define HAVE_MMPOP32 0
+#define HAVE_MMPOP64 0
 
 /*==================================================================*/
 
@@ -38,17 +76,10 @@ it is necessary to check they are correct.
 #include "defs.h"
 #include "system.h"
 #include "bs.h"
-#undef BIGNAUTY
-#define BIGNAUTY
-#undef OLDEXTDEFS
 #define OLDEXTDEFS
 #else
 #include <stdio.h>
 #define P_(x) x
-#endif
-
-#if defined(__cray) || defined(__cray__) || defined(cray)
-#define SYS_CRAY        /* Cray UNIX, portable or standard C */
 #endif
 
 #if defined(__unix) || defined(__unix__) || defined(unix)
@@ -62,34 +93,18 @@ it is necessary to check they are correct.
 /*****************************************************************************
 *                                                                            *
 *    AUTHOR: Brendan D. McKay                                                *
-*            Computer Science Department                                     *
+*            Research School of Computer Science                             *
 *            Australian National University                                  *
-*            Canberra, ACT 0200, Australia                                   *
-*            phone:  +61 2 6125 3845    fax:  +61 2 6125 0010                *
-*            email:  bdm@cs.anu.edu.au                                       *
+*            Canberra, ACT 2601, Australia                                   *
+*            phone:  +61 2 6125 3845                                         *
+*            email:  Brendan.McKay@anu.edu.au                                *
 *                                                                            *
-*   Copyright (1984-2004) Brendan McKay.  All rights reserved.  Permission   *
-*   is hereby given for use and/or distribution with the exception of        *
-*   sale for profit or application with nontrivial military significance.    *
-*   You must not remove this copyright notice, and you must document any     *
-*   changes that you make to this program.                                   *
-*   This software is subject to this copyright only, irrespective of         *
-*   any copyright attached to any package of which this is a part.           *
+*  This software is subject to copyright as detailed in the file COPYRIGHT.  *
 *                                                                            *
-*   This program is only provided "as is".  No responsibility will be taken  *
-*   by the author, his employer or his pet rabbit* for any misfortune which  *
-*   befalls you because of its use.  I don't think it will delete all your   *
-*   files, burn down your computer room or turn your children against you,   *
-*   but if it does: stiff cheddar.  On the other hand, I very much welcome   *
-*   bug reports, or at least I would if there were any bugs.                 *
-*                                                       * RIP, 1989          *
-*                                                                            *
-*   If you wish to acknowledge use of this program in published articles,    *
-*   please do so by citing the User's Guide:                                 *
-*                                                                            *
-*     B. D. McKay, nauty User's Guide (Version 1.5), Technical Report        *
-*         TR-CS-90-02, Australian National University, Department of         *
-*         Computer Science, 1990.                                            *
+*   Reference manual:                                                        *
+*     B. D. McKay and A. Piperno, nauty User's Guide (Version 2.5),          *
+*         http://pallini.di.uniroma1.it                                      *
+*         http://cs.anu.edu.au/~bdm/nauty/                                   *
 *                                                                            *
 *   CHANGE HISTORY                                                           *
 *       10-Nov-87 : final changes for version 1.2                            *
@@ -216,6 +231,48 @@ it is necessary to check they are correct.
 *                     tend to find them a nuisance                           *
 *                   - Don't define the obsolete symbol INFINITY if it is     *
 *                     defined already                                        *
+*       17-Nov-04 : - make 6 counters in statsblk unsigned long              *
+*       17-Jan-04 : - add init() and cleanup() to dispatchvec                *
+*       12-Nov-05 : - Changed NAUTY_INFINITY to 2^30+2 in BIGNAUTY case      *
+*       22-Nov-06 : Starting 2.4                                             *
+*                   - removed usertcellproc from options                     *
+*                     changed bestcell to targetcell in dispatch vector      *
+*                     declare targetcell and maketargetcell                  *
+*       29-Nov-06 : - add extraoptions to optionblk                          *
+*                   - add declarations of extra_autom and extra_level        *
+*       10-Dec-06 : - BIGNAUTY is gone!  Now permutation=shortish=int.       *
+*                     NAUTY_INFINITY only depends on whether sizeof(int)=2.  *
+*       27-Jun-08 : - define nauty_counter and LONG_LONG_COUNTERS            *
+*       30-Jun-08 : - declare version 2.4                                    *
+*        8-Nov-09 : - final release of version 2.4;                          *
+*       10-Nov-10 : Starting 2.5                                             *
+*                   - declare shortish and permutation obsolete, now int     *
+*       14-Nov-10 : - SETWORDSNEEDED(n)                                      *
+*       23-May-10 : - declare densenauty()                                   *
+*       29-Jun-10 : - add PRINT_COUNTER(f,x)                                 *
+*                   - add DEFAULTOPTIONS_DIGRAPH()                           *
+*       27-Mar-11 : - declare writegroupsize()                               *
+*       14-Jan-12 : - add HAVE_TLS and TLS_ATTR                              *
+*       21-Feb-12 : - add ENABLE_ANSI                                        *
+*       18-Mar-12 : - add COUNTER_FMT                                        *
+*       18-Aug-12 : - add ADDONEARC, ADDONEEDGE, EMPTYGRAPH                  *
+*       29-Aug-12 : - add CLZ macros and FIRSTBITNZ                          *
+*       19-Oct-12 : - add DEFAULT_WORDSIZE                                   *
+*        3-Jan-12 : Released 2.5rc1                                          *
+*       18-Jan-12 : Froze 2.5                                                *
+*       18-Jan-12 : - add NAUABORTED and NAUKILLED                           *
+*                   - add nauty_kill_request                                 *
+*                   - add usercanonproc                                      *
+*        1-Oct-15 : - add COUNTER_FMT_RAW                                    *
+*       10-Jan-16 : - defined POPCOUNTMAC, optionally use popcnt             *
+*                   - remove SYS_CRAY, let's hope it is long obsolete        *
+*                   - add Intel popcount intrinsics for icc                  *
+*       12-Jan-16 : - DYNFREE and CONDYNFREE now set the pointer to NULL     *
+*       16-Jan-16 : - Change NAUTY_INFINITY to 2 billion + 2                 *
+*                 : Froze 2.6                                                *
+*       12-Mar-16 : - Add const to alloc_error()                             *
+*                                                                            *
+* ++++++ This file is automatically generated, don't edit it by hand! ++++++
 *                                                                            *
 *****************************************************************************/
 
@@ -224,7 +281,7 @@ it is necessary to check they are correct.
 *   16-bit, 32-bit and 64-bit versions can be selected by defining WORDSIZE. *
 *   The largest graph that can be handled has MAXN vertices.                 *
 *   Both WORDSIZE and MAXN can be defined on the command line.               *
-*   WORDSIZE must be 16, 32 or 64; MAXN must be <= NAUTY_INFINITY - 2;       *
+*   WORDSIZE must be 16, 32 or 64; MAXN must be <= NAUTY_INFINITY-2;         *
 *                                                                            *
 *   With a very slight loss of efficiency (depending on platform), nauty     *
 *   can be compiled to dynamically allocate arrays.  Predefine MAXN=0 to     *
@@ -258,10 +315,9 @@ it is necessary to check they are correct.
 *    A 'graph' consists of n contiguous sets.  The i-th set represents       *
 *    the vertices adjacent to vertex i, for i = 0,1,...,n-1.                 *
 *                                                                            *
-*    A 'permutation' is an array of n short ints (ints in the case that      *
-*    BIGNAUTY is defined) , repesenting a permutation of the set             *
-*    {0,1,...,n-1}.  The value of the i-th entry is the number to which      *
-*    i is mapped.                                                            *
+*    A 'permutation' is an array of n ints repesenting a permutation of      *
+*    the set {0,1,...,n-1}.  The value of the i-th entry is the number to    *
+*    which i is mapped.                                                      *
 *                                                                            *
 *    If g is a graph and p is a permutation, then g^p is the graph in        *
 *    which vertex i is adjacent to vertex j iff vertex p[i] is adjacent      *
@@ -275,14 +331,6 @@ it is necessary to check they are correct.
 *    This is  refined for the root of the tree, which has level 1.           *
 *                                                                            *
 *****************************************************************************/
-
-#ifdef BIGNAUTY
-#define NAUTYVERSIONID 2201   /* 1000 times the version number */
-#define NAUTYREQUIRED 2201    /* Minimum compatible version */
-#else
-#define NAUTYVERSIONID 2200
-#define NAUTYREQUIRED 2200
-#endif
 
 #ifndef NAUTY_IN_MAGMA
 #if HAVE_SYSTYPES_H
@@ -305,8 +353,14 @@ it is necessary to check they are correct.
 #endif
 
 /* WORDSIZE is the number of set elements per setword (16, 32 or 64).
-   Starting at version 2.2, WORDSIZE and setword are defined as follows:
-   If WORDSIZE is so far undefined, use 32 unless longs have more
+   WORDSIZE and setword are defined as follows:
+
+   DEFAULT_WORDSIZE is usually 0 but is set by the configure script
+   to NN if --enable-wordsize=NN is used, where NN is 16, 32 or 64.
+
+   If WORDSIZE is not defined, but DEFAULT_WORDSIZE > 0, then set
+      WORDSIZE to the same value as DEFAULT_WORDSIZE.
+   If WORDSIZE is so far undefined, use 32 unless longs have more 
       than 32 bits, in which case use 64.
    Define setword thus:
       WORDSIZE==16 : unsigned short
@@ -319,6 +373,12 @@ it is necessary to check they are correct.
 #ifdef NAUTY_IN_MAGMA
 #undef WORDSIZE
 #define WORDSIZE WORDBITS
+#endif
+
+#ifndef WORDSIZE
+#if DEFAULT_WORDSIZE > 0
+#define WORDSIZE DEFAULT_WORDSIZE
+#endif
 #endif
 
 #ifdef WORDSIZE
@@ -336,10 +396,6 @@ it is necessary to check they are correct.
 #endif
 
 #endif  /* WORDSIZE */
-
-#if defined(BIGNAUTY) && (WORDSIZE==16)
- #error "BIGNAUTY requires WORDSIZE 32 or 64"
-#endif
 
 #ifdef NAUTY_IN_MAGMA
 typedef t_uint setword;
@@ -379,14 +435,30 @@ typedef unsigned long long setword;
 
 #endif /* NAUTY_IN_MAGMA else */
 
+#if SIZEOF_LONG_LONG>=8 && SIZEOF_LONG==4
+typedef unsigned long long nauty_counter;
+#define LONG_LONG_COUNTERS 1
+#define COUNTER_FMT "%llu"
+#define COUNTER_FMT_RAW "llu"
+#else
+typedef unsigned long nauty_counter;
+#define LONG_LONG_COUNTERS 0
+#define COUNTER_FMT "%lu"
+#define COUNTER_FMT_RAW "lu"
+#endif
+#define PRINT_COUNTER(f,x) fprintf(f,COUNTER_FMT,x)
+
+#define NAUTYVERSIONID (26040+HAVE_TLS)  /* 10000*version + HAVE_TLS */
+#define NAUTYREQUIRED NAUTYVERSIONID  /* Minimum compatible version */
+
 #if WORDSIZE==16
-#define NAUTYVERSION "2.2 (16 bits)"
+#define NAUTYVERSION "2.6 (16 bits)"
 #endif
 #if WORDSIZE==32
-#define NAUTYVERSION "2.2 (32 bits)"
+#define NAUTYVERSION "2.6 (32 bits)"
 #endif
 #if WORDSIZE==64
-#define NAUTYVERSION "2.2 (64 bits)"
+#define NAUTYVERSION "2.6 (64 bits)"
 #endif
 
 #ifndef  MAXN  /* maximum allowed n value; use 0 for dynamic sizing. */
@@ -407,18 +479,21 @@ typedef unsigned long long setword;
 #define SETWD(pos) ((pos)>>4)  /* number of setword containing bit pos */
 #define SETBT(pos) ((pos)&0xF) /* position within setword of bit pos */
 #define TIMESWORDSIZE(w) ((w)<<4)
+#define SETWORDSNEEDED(n) ((((n)-1)>>4)+1)  /* setwords needed for n bits */
 #endif
 
 #if  WORDSIZE==32
 #define SETWD(pos) ((pos)>>5)
 #define SETBT(pos) ((pos)&0x1F)
 #define TIMESWORDSIZE(w) ((w)<<5)
+#define SETWORDSNEEDED(n) ((((n)-1)>>5)+1)
 #endif
 
 #if  WORDSIZE==64
 #define SETWD(pos) ((pos)>>6)
 #define SETBT(pos) ((pos)&0x3F)
 #define TIMESWORDSIZE(w) ((w)<<6)    /* w*WORDSIZE */
+#define SETWORDSNEEDED(n) ((((n)-1)>>6)+1)
 #endif
 
 #ifdef NAUTY_IN_MAGMA
@@ -432,7 +507,10 @@ typedef unsigned long long setword;
 #define FLIPELEMENT1(setadd,pos) (*(setadd) ^= BITT[pos])
 #define ISELEMENT1(setadd,pos)   ((*(setadd) & BITT[pos]) != 0)
 #define EMPTYSET1(setadd,m)   *(setadd) = 0;
-#define GRAPHROW1(g,v,m) ((set*)(g) + (v))
+#define GRAPHROW1(g,v,m) ((set*)(g)+(v))
+#define ADDONEARC1(g,v,w,m) (g)[v] |= BITT[w]
+#define ADDONEEDGE1(g,v,w,m) { ADDONEARC1(g,v,w,m); ADDONEARC1(g,w,v,m); }
+#define EMPTYGRAPH1(g,m,n) EMPTYSET0(g,n)  /* really EMPTYSET0 */
 
 #define ADDELEMENT0(setadd,pos)  ((setadd)[SETWD(pos)] |= BITT[SETBT(pos)])
 #define DELELEMENT0(setadd,pos)  ((setadd)[SETWD(pos)] &= ~BITT[SETBT(pos)])
@@ -441,7 +519,10 @@ typedef unsigned long long setword;
 #define EMPTYSET0(setadd,m) \
     {setword *es; \
     for (es = (setword*)(setadd)+(m); --es >= (setword*)(setadd);) *es=0;}
-#define GRAPHROW0(g,v,m) ((set*)(g) + (long)(v)*(long)(m))
+#define GRAPHROW0(g,v,m) ((set*)(g) + (m)*(size_t)(v))
+#define ADDONEARC0(g,v,w,m) ADDELEMENT0(GRAPHROW0(g,v,m),w)
+#define ADDONEEDGE0(g,v,w,m) { ADDONEARC0(g,v,w,m); ADDONEARC0(g,w,v,m); }
+#define EMPTYGRAPH0(g,m,n) EMPTYSET0(g,(m)*(size_t)(n))
 
 #if  (MAXM==1) && defined(ONE_WORD_SETS)
 #define ADDELEMENT ADDELEMENT1
@@ -450,6 +531,9 @@ typedef unsigned long long setword;
 #define ISELEMENT ISELEMENT1
 #define EMPTYSET EMPTYSET1
 #define GRAPHROW GRAPHROW1
+#define ADDONEARC ADDONEARC1
+#define ADDONEEDGE ADDONEEDGE1
+#define EMPTYGRAPH EMPTYGRAPH1
 #else
 #define ADDELEMENT ADDELEMENT0
 #define DELELEMENT DELELEMENT0
@@ -457,7 +541,11 @@ typedef unsigned long long setword;
 #define ISELEMENT ISELEMENT0
 #define EMPTYSET EMPTYSET0
 #define GRAPHROW GRAPHROW0
+#define ADDONEARC ADDONEARC0
+#define ADDONEEDGE ADDONEEDGE0
+#define EMPTYGRAPH EMPTYGRAPH0
 #endif
+
 
 #ifdef NAUTY_IN_MAGMA
 #undef EMPTYSET
@@ -471,7 +559,7 @@ typedef unsigned long long setword;
 #define SETDIFF(word1,word2)   ((word1) &= ~(word2)) /* - word2 into word1 */
 #define XOR(word1,word2)       ((word1) ^= (word2))  /* XOR word2 into word1 */
 #define ZAPBIT(word,x) ((word) &= ~BITT[x])  /* delete bit x in setword */
-#define TAKEBIT(iw,w) {iw = FIRSTBIT(w); w ^= BITT[iw];}
+#define TAKEBIT(iw,w) {(iw) = FIRSTBITNZ(w); (w) ^= BITT[iw];}
 
 #ifdef SETWORD_LONGLONG
 #define MSK3232 0xFFFFFFFF00000000ULL
@@ -479,15 +567,16 @@ typedef unsigned long long setword;
 #define MSK0856 0xFF00000000000000ULL
 #define MSK1632 0x0000FFFF00000000ULL
 #define MSK0840     0xFF0000000000ULL
-#define MSK1616         0xFFFF0000ULL
-#define MSK0824         0xFF000000ULL
-#define MSK0808             0xFF00ULL
+#define MSK1616         0xFFFF0000ULL 
+#define MSK0824         0xFF000000ULL 
+#define MSK0808             0xFF00ULL 
 #define MSK63C  0x7FFFFFFFFFFFFFFFULL
 #define MSK31C          0x7FFFFFFFULL
 #define MSK15C              0x7FFFULL
 #define MSK64   0xFFFFFFFFFFFFFFFFULL
 #define MSK32           0xFFFFFFFFULL
 #define MSK16               0xFFFFULL
+#define MSK8                  0xFFULL
 #endif
 
 #ifdef SETWORD_LONG
@@ -496,15 +585,16 @@ typedef unsigned long long setword;
 #define MSK0856 0xFF00000000000000UL
 #define MSK1632 0x0000FFFF00000000UL
 #define MSK0840     0xFF0000000000UL
-#define MSK1616         0xFFFF0000UL
-#define MSK0824         0xFF000000UL
-#define MSK0808             0xFF00UL
+#define MSK1616         0xFFFF0000UL 
+#define MSK0824         0xFF000000UL 
+#define MSK0808             0xFF00UL 
 #define MSK63C  0x7FFFFFFFFFFFFFFFUL
 #define MSK31C          0x7FFFFFFFUL
 #define MSK15C              0x7FFFUL
 #define MSK64   0xFFFFFFFFFFFFFFFFUL
 #define MSK32           0xFFFFFFFFUL
 #define MSK16               0xFFFFUL
+#define MSK8                  0xFFUL
 #endif
 
 #if defined(SETWORD_INT) || defined(SETWORD_SHORT)
@@ -513,15 +603,16 @@ typedef unsigned long long setword;
 #define MSK0856 0xFF00000000000000U
 #define MSK1632 0x0000FFFF00000000U
 #define MSK0840     0xFF0000000000U
-#define MSK1616         0xFFFF0000U
+#define MSK1616         0xFFFF0000U 
 #define MSK0824         0xFF000000U
-#define MSK0808             0xFF00U
+#define MSK0808             0xFF00U 
 #define MSK63C  0x7FFFFFFFFFFFFFFFU
 #define MSK31C          0x7FFFFFFFU
 #define MSK15C              0x7FFFU
 #define MSK64   0xFFFFFFFFFFFFFFFFU
 #define MSK32           0xFFFFFFFFU
 #define MSK16               0xFFFFU
+#define MSK8                  0xFFU
 #endif
 
 #if defined(SETWORD_LONGLONG)
@@ -573,20 +664,24 @@ typedef unsigned long long setword;
 #endif
 
 /* POPCOUNT(x) = number of 1-bits in a setword x
-   POPCOUNT(x) = number of first 1-bit in non-zero setword (0..WORDSIZE-1)
+   POPCOUNTMAC(x) = Macro version of POPCOUNT
+   FIRSTBIT(x) = number of first 1-bit in non-zero setword (0..WORDSIZE-1)
+                   or WORDSIZE if x == 0
+   FIRSTBITNZ(x) = as FIRSTBIT(x) but assumes x is not zero
    BITMASK(x)  = setword whose rightmost WORDSIZE-x-1 (numbered) bits
                  are 1 and the rest 0 (0 <= x < WORDSIZE)
+                 (I.e., bits 0..x are unselected and the rest selected.)
    ALLBITS     = all (numbered) bits in a setword  */
 
 #if  WORDSIZE==64
-#define POPCOUNT(x) (bytecount[(x)>>56 & 0xFF] + bytecount[(x)>>48 & 0xFF] \
+#define POPCOUNTMAC(x) (bytecount[(x)>>56 & 0xFF] + bytecount[(x)>>48 & 0xFF] \
                    + bytecount[(x)>>40 & 0xFF] + bytecount[(x)>>32 & 0xFF] \
                    + bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
                    + bytecount[(x)>>8 & 0xFF]  + bytecount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK3232 ? \
                        (x) &   MSK1648 ? \
                          (x) & MSK0856 ? \
-                         0+leftbit[((x)>>56) & 0xFF] : \
+                         0+leftbit[((x)>>56) & MSK8] : \
                          8+leftbit[(x)>>48] \
                        : (x) & MSK0840 ? \
                          16+leftbit[(x)>>40] : \
@@ -607,10 +702,10 @@ typedef unsigned long long setword;
 #endif
 
 #if  WORDSIZE==32
-#define POPCOUNT(x) (bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
+#define POPCOUNTMAC(x) (bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
                         + bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK1616 ? ((x) & MSK0824 ? \
-                     leftbit[((x)>>24) & 0xFF] : 8+leftbit[(x)>>16]) \
+                     leftbit[((x)>>24) & MSK8] : 8+leftbit[(x)>>16]) \
                     : ((x) & MSK0808 ? 16+leftbit[(x)>>8] : 24+leftbit[x]))
 #define BITMASK(x)  (MSK31C >> (x))
 #define ALLBITS  MSK32
@@ -619,20 +714,69 @@ typedef unsigned long long setword;
 #endif
 
 #if  WORDSIZE==16
-#define POPCOUNT(x) (bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
-#define FIRSTBIT(x) ((x) & MSK0808 ? leftbit[((x)>>8) & 0xFF] : 8+leftbit[x])
+#define POPCOUNTMAC(x) (bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
+#define FIRSTBIT(x) ((x) & MSK0808 ? leftbit[((x)>>8) & MSK8] : 8+leftbit[x])
 #define BITMASK(x)  (MSK15C >> (x))
 #define ALLBITS  MSK16
 #define SWCHUNK0(w) ((long)(w)&0xFFFFL)
 #endif
 
-#ifdef  SYS_CRAY
-#undef POPCOUNT
+#if defined(SETWORD_LONGLONG) && HAVE_CLZLL
 #undef FIRSTBIT
-#undef BITMASK
-#define POPCOUNT(x) _popcnt(x)
-#define FIRSTBIT(x) _leadz(x)
-#define BITMASK(x)  _mask(65+(x))
+#undef FIRSTBITNZ
+#define FIRSTBITNZ(x) __builtin_clzll(x)
+#define FIRSTBIT(x) ((x) ? FIRSTBITNZ(x) : WORDSIZE)
+#endif
+#if defined(SETWORD_LONG) && HAVE_CLZL
+#undef FIRSTBIT
+#undef FIRSTBITNZ
+#define FIRSTBITNZ(x) __builtin_clzl(x)
+#define FIRSTBIT(x) ((x) ? FIRSTBITNZ(x) : WORDSIZE)
+#endif
+#if defined(SETWORD_INT) && HAVE_CLZ
+#undef FIRSTBIT
+#undef FIRSTBITNZ
+#define FIRSTBITNZ(x) __builtin_clz(x)
+#define FIRSTBIT(x) ((x) ? FIRSTBITNZ(x) : WORDSIZE)
+#endif
+
+#ifndef FIRSTBITNZ
+#define FIRSTBITNZ FIRSTBIT
+#endif
+
+/* Use popcount instructions if available */
+#define POPCOUNT POPCOUNTMAC
+
+#ifdef __INTEL_COMPILER
+#include <nmmintrin.h>
+#if WORDSIZE==64 && HAVE_MMPOP64
+#undef POPCOUNT
+#define POPCOUNT(x) _mm_popcnt_u64(x)
+#endif
+#if WORDSIZE==32 && HAVE_MMPOP32
+#undef POPCOUNT
+#define POPCOUNT(x) _mm_popcnt_u32(x)
+#endif
+
+#else
+
+/* Note that, unlike icc, gcc will not use the POPCNT instruction without
+   permission, in which case it defines __POPCNT__ .
+*/
+#ifdef __POPCNT__
+#if defined(SETWORD_LONGLONG) && HAVE_POPCNTLL
+#undef POPCOUNT
+#define POPCOUNT(x) __builtin_popcountll(x)
+#endif
+#if defined(SETWORD_LONG) && HAVE_POPCNTL
+#undef POPCOUNT
+#define POPCOUNT(x) __builtin_popcountl(x)
+#endif
+#if defined(SETWORD_INT) && HAVE_POPCNT
+#undef POPCOUNT
+#define POPCOUNT(x) __builtin_popcount(x)
+#endif
+#endif
 #endif
 
 #ifdef NAUTY_IN_MAGMA
@@ -652,21 +796,24 @@ typedef unsigned long long setword;
 #define FALSE    0
 #define TRUE     1
 
-#ifdef BIGNAUTY
-#define NAUTY_INFINITY 0xFFFFFFF   /* positive int greater than MAXN+2 */
-typedef int shortish;
+#if SIZEOF_INT>=4
+#define NAUTY_INFINITY 2000000002  /* Max graph size is 2 billion */
 #else
-#define NAUTY_INFINITY 0x7FFF      /* positive short int greater than MAXN+2 */
-typedef short shortish;
+#define NAUTY_INFINITY 0x7FFF
 #endif
+
+/* The following four types are obsolete, use int in new code. */
+typedef int shortish;
+typedef shortish permutation;
+typedef int nvector,np2vector; 
 
 /* For backward compatibility: */
 #if !HAS_MATH_INF && !defined(INFINITY)
 #define INFINITY NAUTY_INFINITY
 #endif
 
-#if MAXN > NAUTY_INFINITY-3
- #error MAXN must be at most NAUTY_INFINITY-3
+#if MAXN > NAUTY_INFINITY-2
+ #error MAXN must be at most NAUTY_INFINITY-2
 #endif
 
     /* typedefs for sets, graphs, permutations, etc.: */
@@ -676,8 +823,6 @@ typedef int boolean;    /* boolean MUST be the same as int */
 #define UPROC void      /* obsolete */
 
 typedef setword set,graph;
-typedef int nvector,np2vector;   /* obsolete */
-typedef shortish permutation;
 #ifdef NAUTY_IN_MAGMA
 typedef graph nauty_graph;
 typedef set nauty_set;
@@ -693,48 +838,55 @@ typedef struct
     int numgenerators;      /* number of generators found */
     int errstatus;          /* if non-zero : an error code */
 #define outofspace errstatus;   /* for backwards compatibility */
-    long numnodes;          /* total number of nodes */
-    long numbadleaves;      /* number of leaves of no use */
-    int maxlevel;           /* maximum depth of search */
-    long tctotal;           /* total size of all target cells */
-    long canupdates;        /* number of updates of best label */
-    long invapplics;        /* number of applications of invarproc */
-    long invsuccesses;      /* number of successful applics of invarproc() */
+    unsigned long numnodes;      /* total number of nodes */
+    unsigned long numbadleaves;  /* number of leaves of no use */
+    int maxlevel;                /* maximum depth of search */
+    unsigned long tctotal;       /* total size of all target cells */
+    unsigned long canupdates;    /* number of updates of best label */
+    unsigned long invapplics;    /* number of applications of invarproc */
+    unsigned long invsuccesses;  /* number of successful uses of invarproc() */
     int invarsuclevel;      /* least level where invarproc worked */
 } statsblk;
 
 /* codes for errstatus field (see nauty.c for more accurate descriptions): */
+/* 0 is normal - no error */
 #define NTOOBIG      1      /* n > MAXN or n > WORDSIZE*m */
 #define MTOOBIG      2      /* m > MAXM */
 #define CANONGNIL    3      /* canong = NULL, but getcanon = TRUE */
+#define NAUABORTED   4      /* nauty is terminated early under program control */
+#define NAUKILLED    5      /* nauty is terminated early by caught signal */
 
 /* manipulation of real approximation to group size */
 #define MULTIPLY(s1,s2,i) if ((s1 *= i) >= 1e10) {s1 /= 1e10; s2 += 10;}
 
+struct optionstruct;  /* incomplete definition */
+
 typedef struct
 {
     boolean (*isautom)        /* test for automorphism */
-            (graph*,permutation*,boolean,int,int);
+            (graph*,int*,boolean,int,int);
     int     (*testcanlab)     /* test for better labelling */
             (graph*,graph*,int*,int*,int,int);
     void    (*updatecan)      /* update canonical object */
-            (graph*,graph*,permutation*,int,int,int);
+            (graph*,graph*,int*,int,int,int);
     void    (*refine)         /* refine partition */
-            (graph*,int*,int*,int,int*,permutation*,set*,int*,int,int);
+            (graph*,int*,int*,int,int*,int*,set*,int*,int,int);
     void    (*refine1)        /* refine partition, MAXM==1 */
-            (graph*,int*,int*,int,int*,permutation*,set*,int*,int,int);
+            (graph*,int*,int*,int,int*,int*,set*,int*,int,int);
     boolean (*cheapautom)     /* test for easy automorphism */
             (int*,int,boolean,int);
-    int     (*bestcell)       /* find best cell to split */
-            (graph*,int*,int*,int,int,int,int);
+    int     (*targetcell)     /* decide which cell to split */
+            (graph*,int*,int*,int,int,boolean,int,int,int);
     void    (*freedyn)(void); /* free dynamic memory */
     void    (*check)          /* check compilation parameters */
             (int,int,int,int);
-    void    (*dv_spare1)();
-    void    (*dv_spare2)();
+    void    (*init)(graph*,graph**,graph*,graph**,int*,int*,set*,
+                   struct optionstruct*,int*,int,int);
+    void    (*cleanup)(graph*,graph**,graph*,graph**,int*,int*,
+                      struct optionstruct*,statsblk*,int,int);
 } dispatchvec;
 
-typedef struct
+typedef struct optionstruct
 {
     int getcanon;             /* make canong and canonlab? */
 #define LABELONLY 2   /* new value UNIMPLEMENTED */
@@ -746,23 +898,24 @@ typedef struct
     int linelength;           /* max chars/line (excl. '\n') for output */
     FILE *outfile;            /* file for output, if any */
     void (*userrefproc)       /* replacement for usual refine procedure */
-         (graph*,int*,int*,int,int*,permutation*,set*,int*,int,int);
+         (graph*,int*,int*,int,int*,int*,set*,int*,int,int);
     void (*userautomproc)     /* procedure called for each automorphism */
-         (int,permutation*,int*,int,int,int);
+         (int,int*,int*,int,int,int);
     void (*userlevelproc)     /* procedure called for each level */
          (int*,int*,int,int*,statsblk*,int,int,int,int,int,int);
     void (*usernodeproc)      /* procedure called for each node */
          (graph*,int*,int*,int,int,int,int,int,int);
-    void (*usertcellproc)     /* replacement for targetcell procedure */
-         (graph*,int*,int*,int,int,set*,int*,int*,int,int,
-              int(*)(graph*,int*,int*,int,int,int,int),int,int);
+    int  (*usercanonproc)     /* procedure called for better labellings */
+         (graph*,int*,graph*,int,int,int,int);
     void (*invarproc)         /* procedure to compute vertex-invariant */
-         (graph*,int*,int*,int,int,int,permutation*,int,boolean,int,int);
+         (graph*,int*,int*,int,int,int,int*,int,boolean,int,int);
     int tc_level;             /* max level for smart target cell choosing */
     int mininvarlevel;        /* min level for invariant computation */
     int maxinvarlevel;        /* max level for invariant computation */
     int invararg;             /* value passed to (*invarproc)() */
     dispatchvec *dispatch;    /* vector of object-specific routines */
+    boolean schreier;         /* use random schreier method */
+    void *extra_options;      /* arbitrary extra options */
 #ifdef NAUTY_IN_MAGMA
     boolean print_stats;      /* CAYLEY specfic - GYM Sep 1990 */
     char *invarprocname;      /* Magma - no longer global sjc 1994 */
@@ -783,10 +936,16 @@ typedef struct
 
 #define DEFAULTOPTIONS_GRAPH(options) optionblk options = \
  {0,FALSE,FALSE,FALSE,TRUE,FALSE,CONSOLWIDTH, \
-  NULL,NULL,NULL,NULL,NULL,NULL,NULL,100,0,1,0,&dispatch_graph}
+  NULL,NULL,NULL,NULL,NULL,NULL,NULL,100,0,1,0,&dispatch_graph,FALSE,NULL}
+#define DEFAULTOPTIONS_DIGRAPH(options) optionblk options = \
+ {0,TRUE,FALSE,FALSE,TRUE,FALSE,CONSOLWIDTH, \
+  NULL,NULL,NULL,NULL,NULL,NULL,adjacencies,100,0,999,0,&dispatch_graph,FALSE,NULL}
 
 #ifndef DEFAULTOPTIONS
 #define DEFAULTOPTIONS DEFAULTOPTIONS_GRAPH
+#endif
+#ifndef DEFAULTOPTIONS_DENSEGRAPH
+#define DEFAULTOPTIONS_DENSEGRAPH DEFAULTOPTIONS_GRAPH
 #endif
 
 #ifdef NAUTY_IN_MAGMA
@@ -816,10 +975,10 @@ extern void free(void*);
 
 /* ALLOCS(x,y) should return a pointer (any pointer type) to x*y units of new
    storage, not necessarily initialised.  A "unit" of storage is defined by
-   the sizeof operator.   x and y are integer values of type int or larger,
+   the sizeof operator.   x and y are integer values of type int or larger, 
    but x*y may well be too large for an int.  The macro should cast to the
-   correct type for the call.  On failure, ALLOCS(x,y) should return a NULL
-   pointer.  FREES(p) should free storage previously allocated by ALLOCS,
+   correct type for the call.  On failure, ALLOCS(x,y) should return a NULL 
+   pointer.  FREES(p) should free storage previously allocated by ALLOCS, 
    where p is the value that ALLOCS returned. */
 
 #ifdef NAUTY_IN_MAGMA
@@ -828,7 +987,7 @@ extern void free(void*);
 #define FREES(p) mem_free(p)
 #else
 #define ALLOCS(x,y) malloc((size_t)(x)*(size_t)(y))
-#define REALLOCS(p,x) realloc(p,(size_t)(x))
+#define REALLOCS(p,x) realloc(p,(size_t)(x)) 
 #define FREES(p) free(p)
 #endif
 
@@ -843,22 +1002,21 @@ extern void free(void*);
    DYNALLOC2 test if there is enough space allocated, and if not free
    the existing space and allocate a bigger space.  The allocated space
    is not initialised.
-
+   
    In the case of DYNALLOC1, the space is allocated using
        ALLOCS(sz,sizeof(type)).
    In the case of DYNALLOC2, the space is allocated using
        ALLOCS(sz1,sz2*sizeof(type)).
 
    DYNREALLOC is like DYNALLOC1 except that the old contents are copied
-   into the new space.  realloc() is assumed.  This is not currently
-   used by nauty or dreadnaut.
+   into the new space. Availability of realloc() is assumed.
 
    DYNFREE frees any allocated array and sets name_sz back to 0.
    CONDYNFREE does the same, but only if name_sz exceeds some limit.
 */
 
 #define DYNALLSTAT(type,name,name_sz) \
-	static type *name; static size_t name_sz=0
+	static TLS_ATTR type *name; static TLS_ATTR size_t name_sz=0
 #define DYNALLOC1(type,name,name_sz,sz,msg) \
  if ((size_t)(sz) > name_sz) \
  { if (name_sz) FREES(name); name_sz = (sz); \
@@ -872,14 +1030,16 @@ extern void free(void*);
  {if ((size_t)(sz) > name_sz) \
  { if ((name = (type*)REALLOCS(name,(sz)*sizeof(type))) == NULL) \
       {alloc_error(msg);} else name_sz = (sz);}}
-#define DYNFREE(name,name_sz) if (name_sz) {FREES(name); name_sz = 0;}
+#define DYNFREE(name,name_sz) \
+  { if (name) FREES(name); name = NULL; name_sz = 0;}
 #define CONDYNFREE(name,name_sz,minsz) \
- if (name_sz > (size_t)(minsz)) {FREES(name); name_sz = 0;}
+ if (name_sz > (size_t)(minsz)) {DYNFREE(name,name_sz);}
 
 /* File to write error messages to (used as first argument to fprintf()). */
 #define ERRFILE stderr
 
-#ifdef OLDEXTDEFS
+/* Don't use OLDEXTDEFS, it is only still here for Magma. */
+#ifdef OLDEXTDEFS   
 #define EXTDEF_CLASS
 #ifdef EXTDEFS
 #define EXTDEF_TYPE 1
@@ -892,6 +1052,7 @@ extern void free(void*);
 #endif
 
 extern int labelorg;   /* Declared in nautil.c */
+extern volatile int nauty_kill_request;  /* Also declared in nautil.c */
 
 #ifndef NAUTY_IN_MAGMA
   /* Things equivalent to bit, bytecount, leftbit are defined
@@ -905,7 +1066,7 @@ extern int leftbit[];
     /* array giving setwords with single 1-bit */
 #if  WORDSIZE==64
 #ifdef SETWORD_LONGLONG
-EXTDEF_CLASS
+EXTDEF_CLASS const
 setword bit[] = {01000000000000000000000LL,0400000000000000000000LL,
                  0200000000000000000000LL,0100000000000000000000LL,
                  040000000000000000000LL,020000000000000000000LL,
@@ -927,7 +1088,7 @@ setword bit[] = {01000000000000000000000LL,0400000000000000000000LL,
                  02000LL,01000LL,0400LL,0200LL,0100LL,040LL,020LL,010LL,
 		 04LL,02LL,01LL};
 #else
-EXTDEF_CLASS
+EXTDEF_CLASS const
 setword bit[] = {01000000000000000000000,0400000000000000000000,
                  0200000000000000000000,0100000000000000000000,
                  040000000000000000000,020000000000000000000,
@@ -949,7 +1110,7 @@ setword bit[] = {01000000000000000000000,0400000000000000000000,
 #endif
 
 #if  WORDSIZE==32
-EXTDEF_CLASS
+EXTDEF_CLASS const
 setword bit[] = {020000000000,010000000000,04000000000,02000000000,
                  01000000000,0400000000,0200000000,0100000000,040000000,
                  020000000,010000000,04000000,02000000,01000000,0400000,
@@ -958,13 +1119,13 @@ setword bit[] = {020000000000,010000000000,04000000000,02000000000,
 #endif
 
 #if WORDSIZE==16
-EXTDEF_CLASS
+EXTDEF_CLASS const
 setword bit[] = {0100000,040000,020000,010000,04000,02000,01000,0400,0200,
                  0100,040,020,010,04,02,01};
 #endif
 
     /*  array giving number of 1-bits in bytes valued 0..255: */
-EXTDEF_CLASS
+EXTDEF_CLASS const
 int bytecount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
                    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
                    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
@@ -983,7 +1144,7 @@ int bytecount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
                    4,5,5,6,5,6,6,7,5,6,6,7,6,7,7,8};
 
     /* array giving position (1..7) of high-order 1-bit in byte: */
-EXTDEF_CLASS
+EXTDEF_CLASS const
 int leftbit[] =   {8,7,6,6,5,5,5,5,4,4,4,4,4,4,4,4,
                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
                    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
@@ -1014,51 +1175,64 @@ int leftbit[] =   {8,7,6,6,5,5,5,5,4,4,4,4,4,4,4,4,
 extern "C" {
 #endif
 
-extern void alloc_error(char*);
-extern int bestcell(graph*,int*,int*,int,int,int,int);
+extern void alloc_error(const char*);
 extern void breakout(int*,int*,int,int,int,set*,int);
 extern boolean cheapautom(int*,int,boolean,int);
-extern void doref(graph*,int*,int*,int,int*,int*,permutation*,set*,int*,
-  void(*)(graph*,int*,int*,int,int*,permutation*,set*,int*,int,int),
-  void(*)(graph*,int*,int*,int,int,int,permutation*,int,boolean,int,int),
+extern void doref(graph*,int*,int*,int,int*,int*,int*,set*,int*,
+  void(*)(graph*,int*,int*,int,int*,int*,set*,int*,int,int),
+  void(*)(graph*,int*,int*,int,int,int,int*,int,boolean,int,int),
   int,int,int,boolean,int,int);
-extern boolean isautom(graph*,permutation*,boolean,int,int);
+extern void extra_autom(int*,int);
+extern void extra_level(int,int*,int*,int,int,int,int,int,int);
+extern boolean isautom(graph*,int*,boolean,int,int);
 extern dispatchvec dispatch_graph;
 extern int itos(int,char*);
-extern void fmperm(permutation*,set*,set*,int,int);
+extern void fmperm(int*,set*,set*,int,int);
 extern void fmptn(int*,int*,int,set*,set*,int,int);
 extern void longprune(set*,set*,set*,set*,int);
 extern void nauty(graph*,int*,int*,set*,int*,optionblk*,
-                  statsblk*,set*,int,int,int,graph*);
+			statsblk*,set*,int,int,int,graph*);
 
-extern int *aut; // Abdullah !!!
+
+/* Abdullah 2018 */
+extern int *aut;
 extern int aut_counter;
 extern int *base;
 extern int base_length;
 extern int *transversal_length;
 extern int ago;
-extern int nextelement(set*,int,int);
-extern int orbjoin(int*,permutation*,int);
-extern void permset(set*,set*,int,permutation*);
-extern void putstring(FILE*,char*);
-extern void refine(graph*,int*,int*,int,int*,permutation*,set*,int*,int,int);
-extern void refine1(graph*,int*,int*,int,int*,permutation*,set*,int*,int,int);
-extern void shortprune(set*,set*,int);
-extern void targetcell(graph*,int*,int*,int,int,set*,int*,
-         int*,int,int,int(*)(graph*,int*,int*,int,int,int,int),int,int);
-extern int testcanlab(graph*,graph*,int*,int*,int,int);
-extern void updatecan(graph*,graph*,permutation*,int,int,int);
-extern void writeperm(FILE*,permutation*,boolean,int,int);
 extern void store_perm(permutation*,int);
+/* Done Abdullah 2018 */
+				  
+			
+extern void maketargetcell(graph*,int*,int*,int,set*,int*,int*,int,boolean,
+           int,int (*)(graph*,int*,int*,int,int,boolean,int,int,int),int,int);
+extern int nextelement(set*,int,int);
+extern int orbjoin(int*,int*,int);
+extern void permset(set*,set*,int,int*);
+extern void putstring(FILE*,char*);
+extern void refine(graph*,int*,int*,int,int*,int*,set*,int*,int,int);
+extern void refine1(graph*,int*,int*,int,int*,int*,set*,int*,int,int);
+extern void shortprune(set*,set*,int);
+extern int targetcell(graph*,int*,int*,int,int,boolean,int,int,int);
+extern int testcanlab(graph*,graph*,int*,int*,int,int);
+extern void updatecan(graph*,graph*,int*,int,int,int);
+extern void writeperm(FILE*,int*,boolean,int,int);
 extern void nauty_freedyn(void);
 extern void nauty_check(int,int,int,int);
 extern void naugraph_check(int,int,int,int);
 extern void nautil_check(int,int,int,int);
 extern void nautil_freedyn(void);
 extern void naugraph_freedyn(void);
+extern void densenauty(graph*,int*,int*,int*,
+			optionblk*,statsblk*,int,int,graph*);
+extern void writegroupsize(FILE*,double,int);
 
 #ifdef __cplusplus
 }
 #endif
+
+/* ++++++ This file is automatically generated, don't edit it by hand! ++++++ */
+
 
 #endif  /* _NAUTY_H_ */
