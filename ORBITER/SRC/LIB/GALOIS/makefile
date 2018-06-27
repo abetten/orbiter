@@ -68,6 +68,8 @@ MODULES = \
 	nauty.o \
 	nautil.o \
 	naugraph.o \
+	schreier.o \
+	naurng.o \
 	norm_tables.o \
 	null_polarity_generator.o \
 	number_theory.o \
