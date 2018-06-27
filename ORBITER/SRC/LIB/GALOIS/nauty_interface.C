@@ -32,7 +32,7 @@
 static graph g[MAXN * MAXM];
 static graph canong[MAXN * MAXM];
 static nvector lab[MAXN], ptn[MAXN], orbits[MAXN];
-static setword workspace[MAX_WORKSPACE * MAXM];
+//static setword workspace[MAX_WORKSPACE * MAXM];
 
 using namespace std;
 
@@ -110,8 +110,9 @@ void nauty_interface_graph_bitvec(INT v, UBYTE *bitvector_adjacency,
 	//cout << "calling nauty..." << endl;
 	if (f_v) {
 		cout << "nauty_interface_graph_bitvec calling nauty" << endl;
-		}
-	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	}
+//	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_v) {
 		cout << "nauty_interface_graph_bitvec after nauty" << endl;
 		cout << "base_length=" << base_length << endl;
@@ -207,8 +208,9 @@ void nauty_interface_graph_INT(INT v, INT *Adj,
 	//cout << "calling nauty..." << endl;
 	if (f_v) {
 		cout << "nauty_interface_graph_INT calling nauty" << endl;
-		}
-	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	}
+//	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_v) {
 		cout << "nauty_interface_graph_INT after nauty" << endl;
 		}
@@ -307,7 +309,8 @@ void nauty_interface_INT(INT v, INT b, INT *X, INT nb_inc,
 		}
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
-	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+//	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	//cout << "numnodes=" << stats.numnodes << endl;
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
@@ -399,7 +402,8 @@ void nauty_interface(int v, int b, INT *X, INT nb_inc,
 		}
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
-	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+//	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	//cout << "numnodes=" << stats.numnodes << endl;
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
@@ -481,7 +485,8 @@ void nauty_interface_matrix(int *M, int v, int b,
 		}
 	//ptn[v - 1] = 0;
 	//cout << "nauty_interface_matrix, calling nauty..." << endl;
-	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+//	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	//cout << "nauty_interface_matrix, numnodes=" << stats.numnodes << endl;
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
@@ -572,8 +577,9 @@ void nauty_interface_matrix_INT(INT *M, INT v, INT b,
 	//ptn[v - 1] = 0;
 	if (f_vv) {
 		cout << "nauty_interface_matrix_INT, calling nauty..." << endl;
-		}
-	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	}
+//	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
+	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_vv) {
 		cout << "nauty_interface_matrix_INT, after nauty" << endl;
 		cout << "nauty_interface_matrix_INT, ago=" << ago << endl;
