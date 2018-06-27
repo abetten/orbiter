@@ -4979,7 +4979,7 @@ INT os_seconds_past_1970()
 	return a;
 }
 
-void povray_beginning(ostream &ost, INT angle)
+void povray_beginning(ostream &ost, double angle)
 // angle = 22 
 {
 	ost << "//Files with predefined colors and textures" << endl;
@@ -4990,6 +4990,7 @@ void povray_beginning(ostream &ost, INT angle)
 	ost << "#include \"metals.inc\"" << endl;
 	ost << "#include \"stones.inc\"" << endl;
 	ost << "#include \"woods.inc\"" << endl;
+	ost << "#include \"textures.inc\"" << endl;
 	ost << endl;
 	ost << "//Place the camera" << endl;
 	ost << "camera {" << endl;

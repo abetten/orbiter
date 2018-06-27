@@ -395,7 +395,9 @@ void surface::init(finite_field *F, INT verbose_level)
 
 	init_line_data(verbose_level);
 
-	make_trihedral_pairs(Trihedral_pairs, Trihedral_pair_labels, nb_trihedral_pairs, verbose_level);
+	make_trihedral_pairs(Trihedral_pairs, 
+		Trihedral_pair_labels, nb_trihedral_pairs, 
+		verbose_level);
 	
 	process_trihedral_pairs(verbose_level);
 
@@ -520,7 +522,8 @@ void surface::init_large_polynomial_domains(INT verbose_level)
 		}
 }
 
-void surface::label_variables_3(homogeneous_polynomial_domain *HPD, INT verbose_level)
+void surface::label_variables_3(homogeneous_polynomial_domain *HPD, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
@@ -565,7 +568,8 @@ void surface::label_variables_3(homogeneous_polynomial_domain *HPD, INT verbose_
 	
 }
 
-void surface::label_variables_x123(homogeneous_polynomial_domain *HPD, INT verbose_level)
+void surface::label_variables_x123(homogeneous_polynomial_domain *HPD, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
@@ -610,7 +614,8 @@ void surface::label_variables_x123(homogeneous_polynomial_domain *HPD, INT verbo
 	
 }
 
-void surface::label_variables_4(homogeneous_polynomial_domain *HPD, INT verbose_level)
+void surface::label_variables_4(homogeneous_polynomial_domain *HPD, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
@@ -655,7 +660,8 @@ void surface::label_variables_4(homogeneous_polynomial_domain *HPD, INT verbose_
 	
 }
 
-void surface::label_variables_27(homogeneous_polynomial_domain *HPD, INT verbose_level)
+void surface::label_variables_27(homogeneous_polynomial_domain *HPD, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, l;
@@ -732,7 +738,8 @@ void surface::label_variables_27(homogeneous_polynomial_domain *HPD, INT verbose
 	
 }
 
-void surface::label_variables_24(homogeneous_polynomial_domain *HPD, INT verbose_level)
+void surface::label_variables_24(homogeneous_polynomial_domain *HPD, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, l;
@@ -853,7 +860,8 @@ void surface::init_line_data(INT verbose_level)
 
 	if (f_v) {
 		cout << "surface::init_line_data Sets:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Sets, 30, 2, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Sets, 30, 2, FALSE /* f_tex */);
 		//INT_matrix_print(Sets, 30, 2);
 		}
 
@@ -874,7 +882,8 @@ void surface::init_line_data(INT verbose_level)
 
 	if (f_v) {
 		cout << "Sets2:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Sets2, 15, 2, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Sets2, 15, 2, FALSE /* f_tex */);
 		//INT_matrix_print(Sets2, 15, 2);
 		}
 
@@ -898,7 +907,8 @@ void surface::init_line_data(INT verbose_level)
 			sprintf(str, "c_{%ld%ld}", a, b);
 			}
 		if (f_v) {
-			cout << "creating label " << str << " for line " << i << endl;
+			cout << "creating label " << str 
+				<< " for line " << i << endl;
 			}
 		l = strlen(str);
 		Line_label[i] = NEW_BYTE(l + 1);
@@ -920,7 +930,8 @@ void surface::init_line_data(INT verbose_level)
 			sprintf(str, "c_{%ld%ld}", a, b);
 			}
 		if (f_v) {
-			cout << "creating label " << str << " for line " << i << endl;
+			cout << "creating label " << str 
+				<< " for line " << i << endl;
 			}
 		l = strlen(str);
 		Line_label_tex[i] = NEW_BYTE(l + 1);
@@ -996,7 +1007,8 @@ INT surface::rank_plane(INT *v)
 	return rk;
 }
 
-void surface::build_cubic_surface_from_lines(INT len, INT *S, INT *coeff, INT verbose_level)
+void surface::build_cubic_surface_from_lines(INT len, INT *S, 
+	INT *coeff, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT r;
@@ -1047,7 +1059,9 @@ INT surface::compute_system_in_RREF(INT len, INT *S, INT verbose_level)
 				}
 			}
 		else {
-			P->create_points_on_line(a, pt_list + nb_pts, 0 /* verbose_level */);
+			P->create_points_on_line(a, 
+				pt_list + nb_pts, 
+				0 /* verbose_level */);
 			nb_pts += P->k;
 			}
 		}
@@ -1070,14 +1084,18 @@ INT surface::compute_system_in_RREF(INT len, INT *S, INT verbose_level)
 
 	for (i = 0; i < nb_pts; i++) {
 		for (j = 0; j < nb_monomials; j++) {
-			System[i * nb_monomials + j] = F->evaluate_monomial(Poly3_4->Monomials + j * n, Pts + i * n, n);
+			System[i * nb_monomials + j] = 
+				F->evaluate_monomial(
+					Poly3_4->Monomials + j * n, 
+					Pts + i * n, n);
 			}
 		}
 	if (f_v && FALSE) {
 		cout << "surface::compute_system_in_RREF The system:" << endl;
 		INT_matrix_print(System, nb_pts, nb_monomials);
 		}
-	r = F->Gauss_simple(System, nb_pts, nb_monomials, base_cols, 0 /* verbose_level */);
+	r = F->Gauss_simple(System, nb_pts, nb_monomials, 
+		base_cols, 0 /* verbose_level */);
 	if (FALSE) {
 		cout << "surface::compute_system_in_RREF The system in RREF:" << endl;
 		INT_matrix_print(System, nb_pts, nb_monomials);
@@ -1114,7 +1132,8 @@ INT surface::test(INT len, INT *S, INT verbose_level)
 	return ret;
 }
 
-void surface::enumerate_points(INT *coeff, INT *Pts, INT &nb_pts, INT verbose_level)
+void surface::enumerate_points(INT *coeff, 
+	INT *Pts, INT &nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1128,14 +1147,16 @@ void surface::enumerate_points(INT *coeff, INT *Pts, INT &nb_pts, INT verbose_le
 		}
 }
 
-void surface::substitute_semilinear(INT *coeff_in, INT *coeff_out, INT f_semilinear, INT frob, INT *Mtx_inv, INT verbose_level)
+void surface::substitute_semilinear(INT *coeff_in, INT *coeff_out, 
+	INT f_semilinear, INT frob, INT *Mtx_inv, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "surface::substitute_semilinear" << endl;
 		}
-	Poly3_4->substitute_semilinear(coeff_in, coeff_out, f_semilinear, frob, Mtx_inv, verbose_level);
+	Poly3_4->substitute_semilinear(coeff_in, coeff_out, 
+		f_semilinear, frob, Mtx_inv, verbose_level);
 	if (f_v) {
 		cout << "surface::substitute_semilinear done" << endl;
 		}
@@ -1170,7 +1191,8 @@ void surface::compute_intersection_points(INT *Adj,
 		}
 }
 
-void surface::compute_intersection_points_and_indices(INT *Adj, INT *Points, INT nb_points, 
+void surface::compute_intersection_points_and_indices(INT *Adj, 
+	INT *Points, INT nb_points, 
 	INT *Lines, INT nb_lines, 
 	INT *&Intersection_pt, INT *&Intersection_pt_idx, 
 	INT verbose_level)
@@ -1190,10 +1212,12 @@ void surface::compute_intersection_points_and_indices(INT *Adj, INT *Points, INT
 			a2 = Lines[j2];
 			if (Adj[j1 * nb_lines + j2]) {
 				pt = P->line_intersection(a1, a2);
-				if (!INT_vec_search(Points, nb_points, pt, idx)) {
+				if (!INT_vec_search(Points, nb_points, 
+					pt, idx)) {
 					cout << "surface::compute_intersection_points_and_indices cannot find point in Points" << endl;
 					cout << "Points:";
-					INT_vec_print_fully(cout, Points, nb_points);
+					INT_vec_print_fully(cout, 
+						Points, nb_points);
 					cout << endl;
 					cout << "pt=" << pt << endl;
 					exit(1);
@@ -1210,7 +1234,8 @@ void surface::compute_intersection_points_and_indices(INT *Adj, INT *Points, INT
 		}
 }
 
-void surface::lines_meet3_and_skew3(INT *lines_meet3, INT *lines_skew3, INT *&lines, INT &nb_lines, INT verbose_level)
+void surface::lines_meet3_and_skew3(INT *lines_meet3, INT *lines_skew3, 
+	INT *&lines, INT &nb_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT o_rank[6];
@@ -1240,7 +1265,8 @@ void surface::lines_meet3_and_skew3(INT *lines_meet3, INT *lines_skew3, INT *&li
 	nb_lines = 0;
 	for (i = 0; i < perp_sz; i++) {
 		for (j = 0; j < 3; j++) {
-			if (O->evaluate_bilinear_form_by_rank(perp[i], o_rank[3 + j]) == 0) {
+			if (O->evaluate_bilinear_form_by_rank(perp[i], 
+				o_rank[3 + j]) == 0) {
 				break;
 				}
 			}
@@ -1260,7 +1286,8 @@ void surface::lines_meet3_and_skew3(INT *lines_meet3, INT *lines_skew3, INT *&li
 		}
 }
 
-void surface::perp_of_three_lines(INT *three_lines, INT *&perp, INT &perp_sz, INT verbose_level)
+void surface::perp_of_three_lines(INT *three_lines, 
+	INT *&perp, INT &perp_sz, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT o_rank[3];
@@ -1286,7 +1313,8 @@ void surface::perp_of_three_lines(INT *three_lines, INT *&perp, INT &perp_sz, IN
 		}
 }
 
-INT surface::perp_of_four_lines(INT *four_lines, INT *trans12, INT &perp_sz, INT verbose_level)
+INT surface::perp_of_four_lines(INT *four_lines, INT *trans12, 
+	INT &perp_sz, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT o_rank[4];
@@ -1324,7 +1352,8 @@ finish:
 	return ret;
 }
 
-INT surface::rank_of_four_lines_on_Klein_quadric(INT *four_lines, INT verbose_level)
+INT surface::rank_of_four_lines_on_Klein_quadric(INT *four_lines, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT o_rank[4];
@@ -1344,7 +1373,8 @@ INT surface::rank_of_four_lines_on_Klein_quadric(INT *four_lines, INT verbose_le
 
 	coords = NEW_INT(4 * 6);
 	for (i = 0; i < 4; i++) {
-		O->unrank_point(coords + i * 6, 1, o_rank[i], 0 /* verbose_level */);
+		O->unrank_point(coords + i * 6, 1, 
+			o_rank[i], 0 /* verbose_level */);
 		}
 	rk = F->Gauss_easy(coords, 4, 6);
 	FREE_INT(coords);
@@ -1354,7 +1384,8 @@ INT surface::rank_of_four_lines_on_Klein_quadric(INT *four_lines, INT verbose_le
 	return rk;
 }
 
-INT surface::create_double_six_from_five_lines_with_a_common_transversal(INT *five_pts, INT *double_six, INT verbose_level)
+INT surface::create_double_six_from_five_lines_with_a_common_transversal(
+	INT *five_pts, INT *double_six, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT o_rank[12];
@@ -1412,7 +1443,8 @@ INT surface::create_double_six_from_five_lines_with_a_common_transversal(INT *fi
 		if (f_v) {
 			cout << "subset " << rk << " / " << nb_subsets << " : " << endl;
 			}
-		O->perp_of_k_points(pts, 4, Perp[rk], Perp_sz[rk], verbose_level - 1);
+		O->perp_of_k_points(pts, 4, 
+			Perp[rk], Perp_sz[rk], verbose_level - 1);
 		if (f_v) {
 			cout << "the perp of the subset ";
 			INT_vec_print(cout, subset, 4);
@@ -1507,7 +1539,8 @@ INT surface::create_double_six_from_five_lines_with_a_common_transversal(INT *fi
 	if (f_v) {
 		for (i = 0; i < 12; i++) {
 			for (j = 0; j < 12; j++) {
-				if (O->evaluate_bilinear_form_by_rank(o_rank[i], o_rank[j]) == 0) {
+				if (O->evaluate_bilinear_form_by_rank(
+					o_rank[i], o_rank[j]) == 0) {
 					cout << "1";
 					}
 				else {
@@ -1532,7 +1565,8 @@ finish:
 }
 
 
-INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *double_six, INT verbose_level)
+INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, 
+	INT *double_six, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT o_rank[12];
@@ -1548,7 +1582,8 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *dou
 
 	for (i = 0; i < 6; i++) {
 		for (j = i + 1; j < 6; j++) {
-			if (O->evaluate_bilinear_form_by_rank(o_rank[i], o_rank[j]) == 0) {
+			if (O->evaluate_bilinear_form_by_rank(
+				o_rank[i], o_rank[j]) == 0) {
 				cout << "two of the given lines intersect, error" << endl;
 				exit(1);
 				}
@@ -1565,7 +1600,8 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *dou
 	Perp_without_pt = NEW_PINT(6);
 	for (i = 0; i < 6; i++) {
 		Perp_without_pt[i] = NEW_INT(sz);
-		O->perp(o_rank[i], Perp_without_pt[i], perp_sz, 0 /* verbose_level */);
+		O->perp(o_rank[i], Perp_without_pt[i], perp_sz, 
+			0 /* verbose_level */);
 		if (perp_sz != sz) {
 			cout << "perp_sz != sz" << endl;
 			exit(1);
@@ -1595,7 +1631,12 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *dou
 	I2_sz = NEW_INT(six2);
 	for (rk = 0; rk < six2; rk++) {
 		unrank_k_subset(rk, subset, 6, 2);
-		INT_vec_intersect(Perp_without_pt[subset[0]], perp_sz, Perp_without_pt[subset[1]], perp_sz, I2[rk], I2_sz[rk]);
+		INT_vec_intersect(
+			Perp_without_pt[subset[0]], 
+			perp_sz, 
+			Perp_without_pt[subset[1]], 
+			perp_sz, 
+			I2[rk], I2_sz[rk]);
 		if (f_v) {
 			cout << "Perp_" << subset[0] << " \\cap Perp_" << subset[1] << " of size " << I2_sz[rk] << " = ";
 			INT_vec_print(cout, I2[rk], I2_sz[rk]);
@@ -1609,7 +1650,10 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *dou
 		unrank_k_subset(rk, subset, 6, 3);
 		rk2 = rank_k_subset(subset, 6, 2);
 		unrank_k_subset(rk, subset, 6, 3);
-		INT_vec_intersect(I2[rk2], I2_sz[rk2], Perp_without_pt[subset[2]], perp_sz, I3[rk], I3_sz[rk]);
+		INT_vec_intersect(I2[rk2], I2_sz[rk2], 
+			Perp_without_pt[subset[2]], 
+			perp_sz, 
+			I3[rk], I3_sz[rk]);
 		if (f_v) {
 			cout << "Perp_" << subset[0] << " \\cap Perp_" << subset[1] << " \\cap Perp_" << subset[2] << " of size " << I3_sz[rk] << " = ";
 			INT_vec_print(cout, I3[rk], I3_sz[rk]);
@@ -1624,7 +1668,9 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *dou
 		unrank_k_subset(rk, subset, 6, 4);
 		rk2 = rank_k_subset(subset, 6, 3);
 		unrank_k_subset(rk, subset, 6, 4);
-		INT_vec_intersect(I3[rk2], I3_sz[rk2], Perp_without_pt[subset[3]], perp_sz, I4[rk], I4_sz[rk]);
+		INT_vec_intersect(I3[rk2], I3_sz[rk2], 
+			Perp_without_pt[subset[3]], perp_sz, 
+			I4[rk], I4_sz[rk]);
 		if (f_v) {
 			cout << rk << " / " << six4 << " : Perp_" << subset[0] << " \\cap Perp_" << subset[1] << " \\cap Perp_" << subset[2] << " \\cap Perp_" << subset[3] << " of size " << I4_sz[rk] << " = ";
 			INT_vec_print(cout, I4[rk], I4_sz[rk]);
@@ -1639,7 +1685,9 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six, INT *dou
 		unrank_k_subset(rk, subset, 6, 5);
 		rk2 = rank_k_subset(subset, 6, 4);
 		unrank_k_subset(rk, subset, 6, 5);
-		INT_vec_intersect(I4[rk2], I4_sz[rk2], Perp_without_pt[subset[4]], perp_sz, I5[rk], I5_sz[rk]);
+		INT_vec_intersect(I4[rk2], I4_sz[rk2], 
+			Perp_without_pt[subset[4]], perp_sz, 
+			I5[rk], I5_sz[rk]);
 		if (f_v) {
 			cout << rk << " / " << six5 << " : Perp_" << subset[0] << " \\cap Perp_" << subset[1] << " \\cap Perp_" << subset[2] << " \\cap Perp_" << subset[3] << " \\cap Perp_" << subset[4] << " of size " << I5_sz[rk] << " = ";
 			INT_vec_print(cout, I5[rk], I5_sz[rk]);
@@ -1709,7 +1757,8 @@ void surface::latex_double_six(ostream &ost, INT *double_six)
 	ost << "\\end{array}" << endl;
 }
 
-void surface::create_the_fifteen_other_lines(INT *double_six, INT *fifteen_other_lines, INT verbose_level)
+void surface::create_the_fifteen_other_lines(INT *double_six, 
+	INT *fifteen_other_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1736,7 +1785,8 @@ void surface::create_the_fifteen_other_lines(INT *double_six, INT *fifteen_other
 			}
 		Planes[h] = Gr3->rank_INT_here(Basis0, 0/* verbose_level*/);
 		if (f_v) {
-			cout << "plane " << h << " / " << 30 << " has rank " << Planes[h] << " and basis ";
+			cout << "plane " << h << " / " << 30 
+				<< " has rank " << Planes[h] << " and basis ";
 			INT_vec_print(cout, Basis0, 12);
 			cout << endl;
 			}
@@ -1758,10 +1808,13 @@ void surface::create_the_fifteen_other_lines(INT *double_six, INT *fifteen_other
 			}
 		Lines[h] = Gr->rank_INT_here(Basis0, 0/* verbose_level*/);
 		for (i = 0; i < 2; i++) {
-			PG_element_normalize_from_front(*F, Basis0 + i * 4, 1, 4);
+			PG_element_normalize_from_front(*F, 
+				Basis0 + i * 4, 1, 4);
 			}
 		if (f_v) {
-			cout << "line " << h << " / " << 15 << " has rank " << Lines[h] << " and basis ";
+			cout << "line " << h << " / " << 15 
+				<< " has rank " << Lines[h] 
+				<< " and basis ";
 			INT_vec_print(cout, Basis0, 8);
 			cout << endl;
 			}
@@ -1779,7 +1832,8 @@ void surface::create_the_fifteen_other_lines(INT *double_six, INT *fifteen_other
 	
 }
 
-void surface::compute_adjacency_matrix_of_line_intersection_graph(INT *&Adj, INT *S, INT n, INT verbose_level)
+void surface::compute_adjacency_matrix_of_line_intersection_graph(
+	INT *&Adj, INT *S, INT n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1799,7 +1853,8 @@ void surface::compute_adjacency_matrix_of_line_intersection_graph(INT *&Adj, INT
 	INT_vec_zero(Adj, n * n);
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
-			if (O->evaluate_bilinear_form_by_rank(o_rank[i], o_rank[j]) == 0) {
+			if (O->evaluate_bilinear_form_by_rank(
+				o_rank[i], o_rank[j]) == 0) {
 				Adj[i * n + j] = 1;
 				Adj[j * n + i] = 1;
 				}
@@ -1810,7 +1865,8 @@ void surface::compute_adjacency_matrix_of_line_intersection_graph(INT *&Adj, INT
 		}
 }
 
-void surface::compute_adjacency_matrix_of_line_disjointness_graph(INT *&Adj, INT *S, INT n, INT verbose_level)
+void surface::compute_adjacency_matrix_of_line_disjointness_graph(
+	INT *&Adj, INT *S, INT n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1830,7 +1886,8 @@ void surface::compute_adjacency_matrix_of_line_disjointness_graph(INT *&Adj, INT
 	INT_vec_zero(Adj, n * n);
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
-			if (O->evaluate_bilinear_form_by_rank(o_rank[i], o_rank[j]) != 0) {
+			if (O->evaluate_bilinear_form_by_rank(
+				o_rank[i], o_rank[j]) != 0) {
 				Adj[i * n + j] = 1;
 				Adj[j * n + i] = 1;
 				}
@@ -1841,7 +1898,8 @@ void surface::compute_adjacency_matrix_of_line_disjointness_graph(INT *&Adj, INT
 		}
 }
 
-void surface::compute_points_on_lines(INT *Pts_on_surface, INT nb_points_on_surface, 
+void surface::compute_points_on_lines(
+	INT *Pts_on_surface, INT nb_points_on_surface, 
 	INT *Lines, INT nb_lines, 
 	set_of_sets *&pts_on_lines, 
 	INT verbose_level)
@@ -1890,7 +1948,8 @@ void surface::compute_points_on_lines(INT *Pts_on_surface, INT nb_points_on_surf
 		}
 }
 
-INT surface::test_special_form_alpha_beta(INT *coeff, INT &alpha, INT &beta, INT verbose_level)
+INT surface::test_special_form_alpha_beta(INT *coeff, 
+	INT &alpha, INT &beta, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT ret = TRUE;
@@ -1902,7 +1961,8 @@ INT surface::test_special_form_alpha_beta(INT *coeff, INT &alpha, INT &beta, INT
 	if (f_v) {
 		cout << "surface::test_special_form_alpha_beta" << endl;
 		}
-	if (!INT_vec_is_constant_on_subset(coeff, zeroes, sizeof(zeroes) / sizeof(INT), a)) {
+	if (!INT_vec_is_constant_on_subset(coeff, 
+		zeroes, sizeof(zeroes) / sizeof(INT), a)) {
 		cout << "surface::test_special_form_alpha_beta not constant on zero set" << endl;
 		return FALSE;
 		}
@@ -1914,12 +1974,14 @@ INT surface::test_special_form_alpha_beta(INT *coeff, INT &alpha, INT &beta, INT
 		cout << "surface::test_special_form_alpha_beta not normalized" << endl;
 		exit(1);
 		}
-	if (!INT_vec_is_constant_on_subset(coeff, alphas, sizeof(alphas) / sizeof(INT), a)) {
+	if (!INT_vec_is_constant_on_subset(coeff, 
+		alphas, sizeof(alphas) / sizeof(INT), a)) {
 		cout << "surface::test_special_form_alpha_beta not constant on alpha set" << endl;
 		return FALSE;
 		}
 	alpha = a;
-	if (!INT_vec_is_constant_on_subset(coeff, betas, sizeof(betas) / sizeof(INT), a)) {
+	if (!INT_vec_is_constant_on_subset(coeff, 
+		betas, sizeof(betas) / sizeof(INT), a)) {
 		cout << "surface::test_special_form_alpha_beta not constant on beta set" << endl;
 		return FALSE;
 		}
@@ -1931,7 +1993,8 @@ INT surface::test_special_form_alpha_beta(INT *coeff, INT &alpha, INT &beta, INT
 	return ret;
 }
 
-void surface::create_special_double_six(INT *double_six, INT a, INT b, INT verbose_level)
+void surface::create_special_double_six(INT *double_six, 
+	INT a, INT b, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT Basis[12 * 8] = {
@@ -1987,7 +2050,8 @@ void surface::create_special_double_six(INT *double_six, INT a, INT b, INT verbo
 		}
 }
 
-void surface::create_special_fifteen_lines(INT *fifteen_lines, INT a, INT b, INT verbose_level)
+void surface::create_special_fifteen_lines(INT *fifteen_lines, 
+	INT a, INT b, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT Basis[15 * 8] = {
@@ -2099,14 +2163,16 @@ void surface::create_special_fifteen_lines(INT *fifteen_lines, INT a, INT b, INT
 		Basis[i] = c;
 		}
 	for (i = 0; i < 15; i++) {
-		fifteen_lines[i] = Gr->rank_INT_here(Basis + i * 8, 0 /* verbose_level */);
+		fifteen_lines[i] = Gr->rank_INT_here(
+			Basis + i * 8, 0 /* verbose_level */);
 		}
 	if (f_v) {
 		cout << "surface::create_special_fifteen_lines done" << endl;
 		}
 }
 
-void surface::create_remaining_fifteen_lines(INT *double_six, INT *fifteen_lines, INT verbose_level)
+void surface::create_remaining_fifteen_lines(INT *double_six, 
+	INT *fifteen_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2121,7 +2187,8 @@ void surface::create_remaining_fifteen_lines(INT *double_six, INT *fifteen_lines
 			if (f_vv) {
 				cout << "surface::create_remaining_fifteen_lines creating line c_ij where i=" << i << " j=" << j << ":" << endl;
 				}
-			fifteen_lines[h++] = compute_cij(double_six, i, j, 0 /*verbose_level*/);
+			fifteen_lines[h++] = compute_cij(
+				double_six, i, j, 0 /*verbose_level*/);
 			}
 		}
 	if (f_v) {
@@ -2226,7 +2293,9 @@ INT surface::compute_cij(INT *double_six, INT i, INT j, INT verbose_level)
 	return cij;
 }
 
-INT surface::compute_transversals_of_any_four(INT *&Trans, INT &nb_subsets, INT *lines, INT sz, INT verbose_level)
+INT surface::compute_transversals_of_any_four(INT *&Trans, 
+	INT &nb_subsets, INT *lines, INT sz, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT trans12[2];
@@ -2247,9 +2316,11 @@ INT surface::compute_transversals_of_any_four(INT *&Trans, INT &nb_subsets, INT 
 			}
 
 		if (f_v) {
-			cout << "testing subset " << rk << " / " << nb_subsets << " : " << endl;
+			cout << "testing subset " << rk << " / " 
+				<< nb_subsets << " : " << endl;
 			}
-		if (!perp_of_four_lines(four_lines, trans12, perp_sz, 0 /*verbose_level*/)) {
+		if (!perp_of_four_lines(four_lines, trans12, 
+			perp_sz, 0 /*verbose_level*/)) {
 
 			if (f_v) {
 				cout << "The 4-subset does not lead to two transversal lines: ";
@@ -2275,7 +2346,8 @@ INT surface::compute_transversals_of_any_four(INT *&Trans, INT &nb_subsets, INT 
 	return ret;
 }
 
-INT surface::compute_rank_of_any_four(INT *&Rk, INT &nb_subsets, INT *lines, INT sz, INT verbose_level)
+INT surface::compute_rank_of_any_four(INT *&Rk, INT &nb_subsets, 
+	INT *lines, INT sz, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT subset[4];
@@ -2295,10 +2367,12 @@ INT surface::compute_rank_of_any_four(INT *&Rk, INT &nb_subsets, INT *lines, INT
 			}
 
 		if (f_v) {
-			cout << "testing subset " << rk << " / " << nb_subsets << " : " << endl;
+			cout << "testing subset " << rk << " / " 
+				<< nb_subsets << " : " << endl;
 			}
 
-		Rk[rk] = rank_of_four_lines_on_Klein_quadric(four_lines, 0 /* verbose_level */);
+		Rk[rk] = rank_of_four_lines_on_Klein_quadric(
+			four_lines, 0 /* verbose_level */);
 		if (Rk[rk] < 4) {
 			ret = FALSE;
 			}
@@ -2323,7 +2397,8 @@ void surface::create_equation_Sab(INT a, INT b, INT *coeff, INT verbose_level)
 		cout << "surface::create_equation_Sab" << endl;
 		}
 	alpha = F->negate(F->mult(b, b));
-	beta = F->mult(F->mult(F->power(b, 3), F->add(1, F->mult(a, a))), F->inverse(a));
+	beta = F->mult(F->mult(F->power(b, 3), 
+		F->add(1, F->mult(a, a))), F->inverse(a));
 	INT_vec_zero(coeff, nb_monomials);
 	
 	coeff[3] = 1;
@@ -2372,9 +2447,12 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 	
 	coeff = NEW_INT(20);
 	alpha0 = F->negate(F->mult(b, b));
-	beta0 = F->mult(F->mult(F->power(b, 3), F->add(1, F->mult(a, a))), F->inverse(a));
+	beta0 = F->mult(F->mult(F->power(b, 3), 
+		F->add(1, F->mult(a, a))), F->inverse(a));
 	if (f_v) {
-		cout << "surface::create_surface_ab a=" << a << " b=" << b << " alpha0=" << alpha0 << " beta0=" << beta0 << endl;
+		cout << "surface::create_surface_ab a=" 
+			<< a << " b=" << b << " alpha0=" << alpha0 
+			<< " beta0=" << beta0 << endl;
 		}
 	
 #if 0
@@ -2426,7 +2504,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 		cout << endl;
 		}
 
-	create_remaining_fifteen_lines(Lines, Lines + 12, 0 /* verbose_level */);
+	create_remaining_fifteen_lines(Lines, 
+		Lines + 12, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "surface::create_surface_ab The remaining 15 lines are:";
@@ -2455,7 +2534,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 
 	rk = compute_system_in_RREF(27, Lines, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "surface::create_surface_ab a=" << a << " b=" << b << " rk=" << rk << endl;
+		cout << "surface::create_surface_ab a=" << a 
+			<< " b=" << b << " rk=" << rk << endl;
 		}
 
 	if (rk != 19) {
@@ -2499,7 +2579,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 	INT *Intersection_pt;
 	INT *Intersection_pt_idx;
 
-	compute_adjacency_matrix_of_line_intersection_graph(Adj, Lines, 27, verbose_level);
+	compute_adjacency_matrix_of_line_intersection_graph(
+		Adj, Lines, 27, verbose_level);
 	if (f_v) {
 		cout << "surface::create_surface_ab The adjacency matrix is:" << endl;
 		INT_matrix_print(Adj, 27, 27);
@@ -2507,7 +2588,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 
 
 
-	compute_intersection_points_and_indices(Adj, Pts, nb_pts, Lines, 27, 
+	compute_intersection_points_and_indices(
+		Adj, Pts, nb_pts, Lines, 27, 
 		Intersection_pt, Intersection_pt_idx, 
 		verbose_level);
 
@@ -2529,7 +2611,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 
 
 
-	if (!test_special_form_alpha_beta(coeff, alpha, beta, 0 /* verbose_level */)) {
+	if (!test_special_form_alpha_beta(coeff, alpha, beta, 
+		0 /* verbose_level */)) {
 		cout << "surface::create_surface_ab not of special form" << endl;
 		exit(1);
 		}
@@ -2550,7 +2633,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 	{
 	INT Lines2[27];
 	P->find_lines_which_are_contained(Pts, nb_pts, 
-		Lines2, nb_lines, 27 /* max_lines */, 0 /* verbose_level */);
+		Lines2, nb_lines, 27 /* max_lines */, 
+		0 /* verbose_level */);
 	}
 	
 	if (f_v) {
@@ -2579,7 +2663,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 	pts_on_lines->get_eckardt_points(E, nb_E, 0 /* verbose_level */);
 	//nb_E = pts_on_lines->number_of_eckardt_points(verbose_level);
 	if (f_v) {
-		cout << "surface::create_surface_ab The surface contains " << nb_E << " Eckardt points" << endl;
+		cout << "surface::create_surface_ab The surface contains " 
+			<< nb_E << " Eckardt points" << endl;
 		}
 
 #if 0
@@ -2605,7 +2690,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 			cout << i << " : " << ee << " : ";
 			INT_vec_print(cout, v, 4);
 			cout << " on lines: ";
-			INT_vec_print(cout, lines_on_pt->Sets[e], lines_on_pt->Set_size[e]);
+			INT_vec_print(cout, lines_on_pt->Sets[e], 
+				lines_on_pt->Set_size[e]);
 			cout << endl;
 			}
 		}
@@ -2625,7 +2711,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 }
 
 void surface::list_starter_configurations(INT *Lines, INT nb_lines, 
-	set_of_sets *line_intersections, INT *&Table, INT &N, INT verbose_level)
+	set_of_sets *line_intersections, INT *&Table, INT &N, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT subset[5];
@@ -2645,9 +2732,11 @@ void surface::list_starter_configurations(INT *Lines, INT nb_lines,
 			}
 		nCk = INT_n_choose_k(line_intersections->Set_size[i], 5);
 		for (j = 0; j < nCk; j++) {
-			unrank_k_subset(j, subset, line_intersections->Set_size[i], 5);
+			unrank_k_subset(j, subset, 
+				line_intersections->Set_size[i], 5);
 			for (h = 0; h < 5; h++) {
-				subset2[h] = line_intersections->Sets[i][subset[h]];
+				subset2[h] = 
+				line_intersections->Sets[i][subset[h]];
 				S3[h] = Lines[subset2[h]];
 				}
 			S3[5] = Lines[i];
@@ -2658,7 +2747,9 @@ void surface::list_starter_configurations(INT *Lines, INT nb_lines,
 			}
 		}
 	if (f_v) {
-		cout << "surface::list_starter_configurations We found " << N << " starter configurations on this surface" << endl;
+		cout << "surface::list_starter_configurations We found " 
+			<< N << " starter configurations on this surface" 
+			<< endl;
 		}
 	Table = NEW_INT(N * 2);
 	N1 = 0;
@@ -2668,9 +2759,11 @@ void surface::list_starter_configurations(INT *Lines, INT nb_lines,
 			}
 		nCk = INT_n_choose_k(line_intersections->Set_size[i], 5);
 		for (j = 0; j < nCk; j++) {
-			unrank_k_subset(j, subset, line_intersections->Set_size[i], 5);
+			unrank_k_subset(j, subset, 
+				line_intersections->Set_size[i], 5);
 			for (h = 0; h < 5; h++) {
-				subset2[h] = line_intersections->Sets[i][subset[h]];
+				subset2[h] = 
+				line_intersections->Sets[i][subset[h]];
 				S3[h] = Lines[subset2[h]];
 				}
 			S3[5] = Lines[i];
@@ -2691,8 +2784,10 @@ void surface::list_starter_configurations(INT *Lines, INT nb_lines,
 		}
 }
 
-void surface::create_starter_configuration(INT line_idx, INT subset_idx, 
-	set_of_sets *line_neighbors, INT *Lines, INT *S, INT verbose_level)
+void surface::create_starter_configuration(
+	INT line_idx, INT subset_idx, 
+	set_of_sets *line_neighbors, INT *Lines, INT *S, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT subset[5];
@@ -2703,7 +2798,8 @@ void surface::create_starter_configuration(INT line_idx, INT subset_idx,
 		cout << "surface::create_starter_configuration" << endl;
 		}
 	//nCk = INT_n_choose_k(line_neighbors->Set_size[line_idx], 5);
-	unrank_k_subset(subset_idx, subset, line_neighbors->Set_size[line_idx], 5);
+	unrank_k_subset(subset_idx, subset, 
+		line_neighbors->Set_size[line_idx], 5);
 	for (h = 0; h < 5; h++) {
 		subset2[h] = line_neighbors->Sets[line_idx][subset[h]];
 		S[h] = Lines[subset2[h]];
@@ -2790,7 +2886,8 @@ INT surface::identify_two_lines(INT *lines, INT verbose_level)
 		cout << "surface::identify_two_lines" << endl;
 		}
 	
-	compute_adjacency_matrix_of_line_intersection_graph(Adj, lines, 2, 0 /* verbose_level */);
+	compute_adjacency_matrix_of_line_intersection_graph(
+		Adj, lines, 2, 0 /* verbose_level */);
 	if (Adj[0 * 2 + 1]) {
 		iso = 1;
 		}
@@ -2817,7 +2914,8 @@ INT surface::identify_three_lines(INT *lines, INT verbose_level)
 		cout << "surface::identify_three_lines" << endl;
 		}
 	
-	compute_adjacency_matrix_of_line_intersection_graph(Adj, lines, 3, 0 /* verbose_level */);
+	compute_adjacency_matrix_of_line_intersection_graph(
+		Adj, lines, 3, 0 /* verbose_level */);
 
 	
 	c = 0;
@@ -2841,7 +2939,8 @@ INT surface::identify_three_lines(INT *lines, INT verbose_level)
 		INT *Intersection_pt;
 		INT rk;
 
-		compute_intersection_points(Adj, lines, 3, Intersection_pt, 
+		compute_intersection_points(Adj, 
+			lines, 3, Intersection_pt, 
 			0 /*verbose_level */);
 		a1 = Intersection_pt[0 * 3 + 1];
 		a2 = Intersection_pt[0 * 3 + 2];
@@ -2850,7 +2949,8 @@ INT surface::identify_three_lines(INT *lines, INT verbose_level)
 			INT Basis[3 * 8];
 
 			for (i = 0; i < 3; i++) {
-				Gr->unrank_INT_here(Basis + i * 8, lines[i], 0 /* verbose_level */);
+				Gr->unrank_INT_here(Basis + i * 8, 
+					lines[i], 0 /* verbose_level */);
 				}
 			rk = F->Gauss_easy(Basis, 6, 4);
 			if (rk == 3) {
@@ -2879,8 +2979,10 @@ INT surface::identify_three_lines(INT *lines, INT verbose_level)
 }
 
 
-void surface::make_spreadsheet_of_lines_in_three_kinds(spreadsheet *&Sp, 
-	INT *Wedge_rk, INT *Line_rk, INT *Klein_rk, INT nb_lines, INT verbose_level)
+void surface::make_spreadsheet_of_lines_in_three_kinds(
+	spreadsheet *&Sp, 
+	INT *Wedge_rk, INT *Line_rk, INT *Klein_rk, INT nb_lines, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a;
@@ -3038,7 +3140,8 @@ void surface::print_Steiner_and_Eckardt(ostream &ost)
 
 void surface::latex_abstract_trihedral_pair(ostream &ost, INT t_idx)
 {
-	latex_trihedral_pair(ost, Trihedral_pairs + t_idx * 9, Trihedral_to_Eckardt + t_idx * 6);
+	latex_trihedral_pair(ost, Trihedral_pairs + t_idx * 9, 
+		Trihedral_to_Eckardt + t_idx * 6);
 }
 
 void surface::latex_trihedral_pair(ostream &ost, INT *T, INT *TE)
@@ -3072,10 +3175,12 @@ void surface::latex_table_of_trihedral_pairs(ostream &ost)
 	cout << "surface::latex_table_of_trihedral_pairs" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_trihedral_pairs; i++) {
-		ost << "$T_{" << i << "} = T_{" << Trihedral_pair_labels[i] << "} = \\\\" << endl;
+		ost << "$T_{" << i << "} = T_{" 
+			<< Trihedral_pair_labels[i] << "} = \\\\" << endl;
 		//ost << "\\left[" << endl;
 		//ost << "\\begin{array}" << endl;
-		latex_trihedral_pair(ost, Trihedral_pairs + i * 9, Trihedral_to_Eckardt + i * 6);
+		latex_trihedral_pair(ost, Trihedral_pairs + i * 9, 
+			Trihedral_to_Eckardt + i * 6);
 		//ost << "\\end{array}" << endl;
 		//ost << "\\right]" << endl;
 		ost << "$\\\\" << endl;
@@ -3098,9 +3203,12 @@ void surface::print_trihedral_pairs(ostream &ost)
 	
 	ost << "List of trihedral pairs:\\\\" << endl;
 	for (i = 0; i < nb_trihedral_pairs; i++) {
-		ost << i << " / " << nb_trihedral_pairs << ": $T_{" << i << "} =  T_{" << Trihedral_pair_labels[i] << "}=(";
+		ost << i << " / " << nb_trihedral_pairs 
+			<< ": $T_{" << i << "} =  T_{" 
+			<< Trihedral_pair_labels[i] << "}=(";
 		for (j = 0; j < 6; j++) {
-			ost << "\\pi_{" << Trihedral_to_Eckardt[i * 6 + j] << "}";
+			ost << "\\pi_{" << Trihedral_to_Eckardt[i * 6 + j] 
+				<< "}";
 			if (j == 2) {
 				ost << "; ";
 				}
@@ -3112,13 +3220,16 @@ void surface::print_trihedral_pairs(ostream &ost)
 		}
 	ost << "List of trihedral pairs numerically:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, Trihedral_to_Eckardt, 40, 6, 0, 0, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		Trihedral_to_Eckardt, 40, 6, 0, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		Trihedral_to_Eckardt + 40 * 6, 40, 6, 40, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels_and_offset(ost, Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels_and_offset(ost, 
+		Trihedral_to_Eckardt + 80 * 6, 40, 6, 80, 0, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
 
@@ -3172,7 +3283,8 @@ void surface::latex_table_of_tritangent_planes(ostream &ost)
 	cout << "surface::latex_table_of_tritangent_planes done" << endl;
 }
 
-void surface::find_tritangent_planes_intersecting_in_a_line(INT line_idx, INT &plane1, INT &plane2, INT verbose_level)
+void surface::find_tritangent_planes_intersecting_in_a_line(INT line_idx, 
+	INT &plane1, INT &plane2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT idx;
@@ -3202,7 +3314,9 @@ void surface::find_tritangent_planes_intersecting_in_a_line(INT line_idx, INT &p
 }
 
 
-void surface::make_trihedral_pairs(INT *&T, BYTE **&T_label, INT &nb_trihedral_pairs, INT verbose_level)
+void surface::make_trihedral_pairs(INT *&T, 
+	BYTE **&T_label, INT &nb_trihedral_pairs, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h, s, idx;
@@ -3250,9 +3364,18 @@ void surface::make_trihedral_pairs(INT *&T, BYTE **&T_label, INT &nb_trihedral_p
 		unrank_k_subset(h, subset, 6, 4);
 		for (s = 0; s < 6; s++, idx++) {
 			unrank_k_subset(s, second_subset, 4, 2);
-			set_complement(second_subset, 2, complement, size_complement, 4);
-			make_Tlmnp(T + idx * 9, subset[second_subset[0]], subset[second_subset[1]], subset[complement[0]], subset[complement[1]]);
-			sprintf(label, "%ld%ld,%ld%ld", subset[second_subset[0]] + 1, subset[second_subset[1]] + 1, subset[complement[0]] + 1, subset[complement[1]] + 1);
+			set_complement(second_subset, 2, complement, 
+				size_complement, 4);
+			make_Tlmnp(T + idx * 9, 
+				subset[second_subset[0]], 
+				subset[second_subset[1]], 
+				subset[complement[0]], 
+				subset[complement[1]]);
+			sprintf(label, "%ld%ld,%ld%ld", 
+				subset[second_subset[0]] + 1, 
+				subset[second_subset[1]] + 1, 
+				subset[complement[0]] + 1, 
+				subset[complement[1]] + 1);
 			T_label[idx] = NEW_BYTE(strlen(label) + 1);
 			strcpy(T_label[idx], label);
 			}
@@ -3264,9 +3387,18 @@ void surface::make_trihedral_pairs(INT *&T, BYTE **&T_label, INT &nb_trihedral_p
 		subset[0] = 0;
 		subset[1]++;
 		subset[2]++;
-		set_complement(subset, 3, complement, size_complement, 6);
-		make_Tdefght(T + idx * 9, subset[0], subset[1], subset[2], complement[0], complement[1], complement[2]);
-		sprintf(label, "%ld%ld%ld,%ld%ld%ld", subset[0] + 1, subset[1] + 1, subset[2] + 1, complement[0] + 1, complement[1] + 1, complement[2] + 1);
+		set_complement(subset, 3, complement, 
+			size_complement, 6);
+		make_Tdefght(T + idx * 9, 
+			subset[0], subset[1], subset[2], 
+			complement[0], complement[1], complement[2]);
+		sprintf(label, "%ld%ld%ld,%ld%ld%ld", 
+			subset[0] + 1, 
+			subset[1] + 1, 
+			subset[2] + 1, 
+			complement[0] + 1, 
+			complement[1] + 1, 
+			complement[2] + 1);
 		T_label[idx] = NEW_BYTE(strlen(label) + 1);
 		strcpy(T_label[idx], label);
 		}
@@ -3279,8 +3411,10 @@ void surface::make_trihedral_pairs(INT *&T, BYTE **&T_label, INT &nb_trihedral_p
 
 	if (f_v) {
 		cout << "The trihedral pairs are:" << endl;
-		print_integer_matrix_with_standard_labels(cout, T, 120, 9, FALSE /* f_tex */);
-		print_integer_matrix_with_standard_labels(cout, T, 120, 9, TRUE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			T, 120, 9, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			T, 120, 9, TRUE /* f_tex */);
 		}
 
 	if (f_v) {
@@ -3326,29 +3460,39 @@ void surface::process_trihedral_pairs(INT verbose_level)
 
 	if (f_v) {
 		cout << "surface::process_trihedral_pairs The trihedral pairs row sets:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Trihedral_pairs_row_sets, 120, 3, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Trihedral_pairs_row_sets, 120, 3, 
+			FALSE /* f_tex */);
 		//print_integer_matrix_with_standard_labels(cout, Trihedral_pairs_row_sets, 120, 3, TRUE /* f_tex */);
 		cout << "The trihedral pairs col sets:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Trihedral_pairs_col_sets, 120, 3, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Trihedral_pairs_col_sets, 120, 3, 
+			FALSE /* f_tex */);
 		//print_integer_matrix_with_standard_labels(cout, Trihedral_pairs_col_sets, 120, 3, TRUE /* f_tex */);
 		}
 
 	Classify_trihedral_pairs_row_values = new classify;
-	Classify_trihedral_pairs_row_values->init(Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
+	Classify_trihedral_pairs_row_values->init(
+		Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
 
 	if (f_v) {
 		cout << "surface::process_trihedral_pairs sorted row values:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Classify_trihedral_pairs_row_values->data_sorted, 120 * 3 / 10, 10, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Classify_trihedral_pairs_row_values->data_sorted, 
+			120 * 3 / 10, 10, FALSE /* f_tex */);
 		//INT_matrix_print(Classify_trihedral_pairs_row_values->data_sorted, 120, 3);
 		//cout << endl;
 		}
 
 	Classify_trihedral_pairs_col_values = new classify;
-	Classify_trihedral_pairs_col_values->init(Trihedral_pairs_col_sets, 120 * 3, FALSE, 0);
+	Classify_trihedral_pairs_col_values->init(Trihedral_pairs_col_sets, 
+		120 * 3, FALSE, 0);
 
 	if (f_v) {
 		cout << "surface::process_trihedral_pairs sorted col values:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Classify_trihedral_pairs_col_values->data_sorted, 120 * 3 / 10, 10, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Classify_trihedral_pairs_col_values->data_sorted, 
+			120 * 3 / 10, 10, FALSE /* f_tex */);
 		}
 	if (f_v) {
 		cout << "surface::process_trihedral_pairs done" << endl;
@@ -3452,7 +3596,8 @@ void surface::init_Trihedral_to_Eckardt(INT verbose_level)
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
-				tritangent_plane[j] = Trihedral_pairs[t * 9 + i * 3 + j];
+				tritangent_plane[j] = 
+					Trihedral_pairs[t * 9 + i * 3 + j];
 				}
 #if 0
 			if (t == 111) {
@@ -3471,7 +3616,8 @@ void surface::init_Trihedral_to_Eckardt(INT verbose_level)
 			}
 		for (j = 0; j < 3; j++) {
 			for (i = 0; i < 3; i++) {
-				tritangent_plane[i] = Trihedral_pairs[t * 9 + i * 3 + j];
+				tritangent_plane[i] = 
+					Trihedral_pairs[t * 9 + i * 3 + j];
 				}
 #if 0
 			if (t == 5) {
@@ -3480,7 +3626,8 @@ void surface::init_Trihedral_to_Eckardt(INT verbose_level)
 				cout << endl;
 				}
 #endif
-			rk = Eckardt_point_from_tritangent_plane(tritangent_plane);
+			rk = Eckardt_point_from_tritangent_plane(
+				tritangent_plane);
 #if 0
 			if (t == 5) {
 				cout << "rk=" << rk << endl;
@@ -3491,7 +3638,9 @@ void surface::init_Trihedral_to_Eckardt(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "Trihedral_to_Eckardt:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Trihedral_to_Eckardt, nb_trihedral_pairs, 6, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Trihedral_to_Eckardt, nb_trihedral_pairs, 6, 
+			FALSE /* f_tex */);
 		}
 	if (f_v) {
 		cout << "surface::init_Trihedral_to_Eckardt done" << endl;
@@ -3538,7 +3687,8 @@ void surface::init_collinear_Eckardt_triples(INT verbose_level)
 	collinear_Eckardt_triples_rank = NEW_INT(nb_collinear_Eckardt_triples);
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 2; i++) {
-			INT_vec_copy(Trihedral_to_Eckardt + 6 * t + i * 3, subset, 3);
+			INT_vec_copy(Trihedral_to_Eckardt + 6 * t + i * 3, 
+				subset, 3);
 			INT_vec_heapsort(subset, 3);
 			rk = rank_k_subset(subset, nb_Eckardt_points, 3);
 			collinear_Eckardt_triples_rank[t * 2 + i] = rk;
@@ -3546,18 +3696,23 @@ void surface::init_collinear_Eckardt_triples(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "collinear_Eckardt_triples_rank:" << endl;
-		print_integer_matrix_with_standard_labels(cout, collinear_Eckardt_triples_rank, nb_trihedral_pairs, 2, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			collinear_Eckardt_triples_rank, nb_trihedral_pairs, 2, 
+			FALSE /* f_tex */);
 		}
 
 	Classify_collinear_Eckardt_triples = new classify;
-	Classify_collinear_Eckardt_triples->init(collinear_Eckardt_triples_rank, nb_collinear_Eckardt_triples, FALSE, 0);
+	Classify_collinear_Eckardt_triples->init(
+		collinear_Eckardt_triples_rank, nb_collinear_Eckardt_triples, 
+		FALSE, 0);
 	
 	if (f_v) {
 		cout << "surface::init_collinear_Eckardt_triples done" << endl;
 		}
 }
 
-void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(INT *E_idx, INT nb_E, 
+void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(
+	INT *E_idx, INT nb_E, 
 	INT *&T_idx, INT &nb_T, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3590,7 +3745,9 @@ void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(INT 
 		//INT_vec_print(cout, set, 3);
 		//cout << " rk=" << rk << endl;
 
-		if (INT_vec_search(Classify_collinear_Eckardt_triples->data_sorted, nb_collinear_Eckardt_triples, rk, idx)) {
+		if (INT_vec_search(
+			Classify_collinear_Eckardt_triples->data_sorted, 
+			nb_collinear_Eckardt_triples, rk, idx)) {
 			//cout << "idx=" << idx << endl;
 			for (i = idx; i >= 0; i--) {
 				//cout << "i=" << i << " value=" << Classify_collinear_Eckardt_triples->data_sorted[i] << " collinear triple index = " << Classify_collinear_Eckardt_triples->sorting_perm_inv[i] / 3 << endl;
@@ -3672,14 +3829,17 @@ void surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points(INT 
 	INT_vec_print(cout, T_idx, nb_T);
 	cout << endl;
 	for (i = 0; i < nb_T; i++) {
-		cout << i << " / " << nb_T << " T_{" << Trihedral_pair_labels[T_idx[i]] << "}" << endl;
+		cout << i << " / " << nb_T << " T_{" 
+			<< Trihedral_pair_labels[T_idx[i]] << "}" << endl;
 		}
 	if (f_v) {
 		cout << "surface::find_trihedral_pairs_from_collinear_triples_of_Eckardt_points done" << endl;
 		}
 }
 
-void surface::multiply_conic_times_linear(INT *six_coeff, INT *three_coeff, INT *ten_coeff, INT verbose_level)
+void surface::multiply_conic_times_linear(INT *six_coeff, 
+	INT *three_coeff, INT *ten_coeff, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a, b, c, idx;
@@ -3696,7 +3856,8 @@ void surface::multiply_conic_times_linear(INT *six_coeff, INT *three_coeff, INT 
 		for (j = 0; j < 3; j++) {
 			b = three_coeff[j];
 			c = F->mult(a, b);
-			INT_vec_add(Poly2->Monomials + i * 3, Poly1->Monomials + j * 3, M, 3);
+			INT_vec_add(Poly2->Monomials + i * 3, 
+				Poly1->Monomials + j * 3, M, 3);
 			idx = Poly3->index_of_monomial(M);
 			if (idx >= 10) {
 				cout << "surface::multiply_conic_times_linear idx >= 10" << endl;
@@ -3712,7 +3873,9 @@ void surface::multiply_conic_times_linear(INT *six_coeff, INT *three_coeff, INT 
 		}
 }
 
-void surface::multiply_linear_times_linear_times_linear(INT *three_coeff1, INT *three_coeff2, INT *three_coeff3, INT *ten_coeff, INT verbose_level)
+void surface::multiply_linear_times_linear_times_linear(
+	INT *three_coeff1, INT *three_coeff2, INT *three_coeff3, 
+	INT *ten_coeff, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, k, a, b, c, d, idx;
@@ -3730,7 +3893,10 @@ void surface::multiply_linear_times_linear_times_linear(INT *three_coeff1, INT *
 			for (k = 0; k < 3; k++) {
 				c = three_coeff3[k];
 				d = F->mult3(a, b, c);
-				INT_vec_add3(Poly1->Monomials + i * 3, Poly1->Monomials + j * 3, Poly1->Monomials + k * 3, M, 3);
+				INT_vec_add3(Poly1->Monomials + i * 3, 
+					Poly1->Monomials + j * 3, 
+					Poly1->Monomials + k * 3, 
+					M, 3);
 				idx = Poly3->index_of_monomial(M);
 				if (idx >= 10) {
 					cout << "surface::multiply_linear_times_linear_times_linear idx >= 10" << endl;
@@ -3747,7 +3913,9 @@ void surface::multiply_linear_times_linear_times_linear(INT *three_coeff1, INT *
 		}
 }
 
-void surface::multiply_linear_times_linear_times_linear_in_space(INT *four_coeff1, INT *four_coeff2, INT *four_coeff3, INT *twenty_coeff, INT verbose_level)
+void surface::multiply_linear_times_linear_times_linear_in_space(
+	INT *four_coeff1, INT *four_coeff2, INT *four_coeff3, 
+	INT *twenty_coeff, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, k, a, b, c, d, idx;
@@ -3765,7 +3933,10 @@ void surface::multiply_linear_times_linear_times_linear_in_space(INT *four_coeff
 			for (k = 0; k < 4; k++) {
 				c = four_coeff3[k];
 				d = F->mult3(a, b, c);
-				INT_vec_add3(Poly1_4->Monomials + i * 4, Poly1_4->Monomials + j * 4, Poly1_4->Monomials + k * 4, M, 4);
+				INT_vec_add3(Poly1_4->Monomials + i * 4, 
+					Poly1_4->Monomials + j * 4, 
+					Poly1_4->Monomials + k * 4, 
+					M, 4);
 				idx = index_of_monomial(M);
 				if (idx >= 20) {
 					cout << "surface::multiply_linear_times_linear_times_linear_in_space idx >= 20" << endl;
@@ -3782,7 +3953,8 @@ void surface::multiply_linear_times_linear_times_linear_in_space(INT *four_coeff
 		}
 }
 
-void surface::multiply_Poly2_3_times_Poly2_3(INT *input1, INT *input2, INT *result, INT verbose_level)
+void surface::multiply_Poly2_3_times_Poly2_3(INT *input1, INT *input2, 
+	INT *result, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a, b, c, idx;
@@ -3798,7 +3970,9 @@ void surface::multiply_Poly2_3_times_Poly2_3(INT *input1, INT *input2, INT *resu
 		for (j = 0; j < Poly2->nb_monomials; j++) {
 			b = input2[j];
 			c = F->mult(a, b);
-			INT_vec_add(Poly2->Monomials + i * 3, Poly2->Monomials + j * 3, M, 3);
+			INT_vec_add(Poly2->Monomials + i * 3, 
+				Poly2->Monomials + j * 3, 
+				M, 3);
 			idx = Poly4_x123->index_of_monomial(M);
 			result[idx] = F->add(result[idx], c);
 			}
@@ -3810,7 +3984,8 @@ void surface::multiply_Poly2_3_times_Poly2_3(INT *input1, INT *input2, INT *resu
 		}
 }
 
-void surface::multiply_Poly1_3_times_Poly3_3(INT *input1, INT *input2, INT *result, INT verbose_level)
+void surface::multiply_Poly1_3_times_Poly3_3(INT *input1, INT *input2, 
+	INT *result, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a, b, c, idx;
@@ -3826,7 +4001,8 @@ void surface::multiply_Poly1_3_times_Poly3_3(INT *input1, INT *input2, INT *resu
 		for (j = 0; j < Poly3->nb_monomials; j++) {
 			b = input2[j];
 			c = F->mult(a, b);
-			INT_vec_add(Poly1->Monomials + i * 3, Poly3->Monomials + j * 3, M, 3);
+			INT_vec_add(Poly1->Monomials + i * 3, 
+				Poly3->Monomials + j * 3, M, 3);
 			idx = Poly4_x123->index_of_monomial(M);
 			result[idx] = F->add(result[idx], c);
 			}
@@ -3837,7 +4013,8 @@ void surface::multiply_Poly1_3_times_Poly3_3(INT *input1, INT *input2, INT *resu
 		}
 }
 
-void surface::web_of_cubic_curves(INT *arc6, INT *&curves, INT verbose_level)
+void surface::web_of_cubic_curves(INT *arc6, INT *&curves, 
+	INT verbose_level)
 // curves[45 * 10]
 {
 	INT f_v = (verbose_level >= 1);
@@ -3850,7 +4027,8 @@ void surface::web_of_cubic_curves(INT *arc6, INT *&curves, INT verbose_level)
 	if (f_v) {
 		cout << "surface::web_of_cubic_curves" << endl;
 		}
-	P2->compute_bisecants_and_conics(arc6, bisecants, conics, verbose_level);
+	P2->compute_bisecants_and_conics(arc6, 
+		bisecants, conics, verbose_level);
 	
 	curves = NEW_INT(45 * 10);
 
@@ -3861,7 +4039,10 @@ void surface::web_of_cubic_curves(INT *arc6, INT *&curves, INT verbose_level)
 	for (rk = 0; rk < 30; rk++, a++) {
 		ordered_pair_unrank(rk, i, j, 6);
 		ij = ij2k(i, j, 6);
-		multiply_conic_times_linear(conics + j * 6, bisecants + ij * 3, ten_coeff, 0 /* verbose_level */);
+		multiply_conic_times_linear(conics + j * 6, 
+			bisecants + ij * 3, 
+			ten_coeff, 
+			0 /* verbose_level */);
 		INT_vec_copy(ten_coeff, curves + a * 10, 10);
 		}
 
@@ -3871,7 +4052,12 @@ void surface::web_of_cubic_curves(INT *arc6, INT *&curves, INT verbose_level)
 		ij = ij2k(i, j, 6);
 		kl = ij2k(k, l, 6);
 		mn = ij2k(m, n, 6);
-		multiply_linear_times_linear_times_linear(bisecants + ij * 3, bisecants + kl * 3, bisecants + mn * 3, ten_coeff, 0 /* verbose_level */);
+		multiply_linear_times_linear_times_linear(
+			bisecants + ij * 3, 
+			bisecants + kl * 3, 
+			bisecants + mn * 3, 
+			ten_coeff, 
+			0 /* verbose_level */);
 		INT_vec_copy(ten_coeff, curves + a * 10, 10);
 		}
 
@@ -3893,16 +4079,20 @@ void surface::web_of_cubic_curves(INT *arc6, INT *&curves, INT verbose_level)
 		}
 }
 
-void surface::print_web_of_cubic_curves(ostream &ost, INT *Web_of_cubic_curves)
+void surface::print_web_of_cubic_curves(ostream &ost, 
+	INT *Web_of_cubic_curves)
 // curves[45 * 10]
 {
 	ost << "Web of cubic curves:\\\\" << endl;
 	ost << "$$" << endl;
-	print_integer_matrix_with_standard_labels(ost, Web_of_cubic_curves, 45, 10, TRUE /* f_tex*/);
+	print_integer_matrix_with_standard_labels(ost, 
+		Web_of_cubic_curves, 45, 10, TRUE /* f_tex*/);
 	ost << "$$" << endl;
 }
 
-void surface::create_lines_from_plane_equations(INT *The_plane_equations, INT *Lines27, INT verbose_level)
+void surface::create_lines_from_plane_equations(
+	INT *The_plane_equations, 
+	INT *Lines27, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT line_idx, plane1, plane2;
@@ -3913,7 +4103,8 @@ void surface::create_lines_from_plane_equations(INT *The_plane_equations, INT *L
 		}
 
 	for (line_idx = 0; line_idx < 27; line_idx++) {
-		find_tritangent_planes_intersecting_in_a_line(line_idx, plane1, plane2, 0 /* verbose_level */);
+		find_tritangent_planes_intersecting_in_a_line(
+			line_idx, plane1, plane2, 0 /* verbose_level */);
 		INT_vec_copy(The_plane_equations + plane1 * 4, Basis, 4);
 		INT_vec_copy(The_plane_equations + plane2 * 4, Basis + 4, 4);
 		F->perp_standard(4, 2, Basis, 0 /* verbose_level */);
@@ -3925,7 +4116,8 @@ void surface::create_lines_from_plane_equations(INT *The_plane_equations, INT *L
 		}
 }
 
-void surface::web_of_cubic_curves_rank_of_foursubsets(INT *Web_of_cubic_curves, 
+void surface::web_of_cubic_curves_rank_of_foursubsets(
+	INT *Web_of_cubic_curves, 
 	INT *&rk, INT &N, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3986,7 +4178,8 @@ void surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_
 
 
 	for (h = 0; h < 4; h++) {
-		INT_vec_copy(Web_of_cubic_curves + base_curves4[h] * 10, base_curves + h * 10, 10);
+		INT_vec_copy(Web_of_cubic_curves + base_curves4[h] * 10, 
+			base_curves + h * 10, 10);
 		}
 
 	if (f_v) {
@@ -4010,10 +4203,12 @@ void surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_
 			}
 		else {
 			INT_vec_copy(base_curves, curves, 4 * 10);
-			INT_vec_copy(Web_of_cubic_curves + h * 10, curves + 4 * 10, 10);
+			INT_vec_copy(Web_of_cubic_curves + h * 10, 
+				curves + 4 * 10, 10);
 		
 			if (f_v) {
-				cout << "h=" << h << " / " << 45 << " the system is:" << endl;
+				cout << "h=" << h << " / " << 45 
+					<< " the system is:" << endl;
 				INT_matrix_print(curves, 5, 10);
 				}
 
@@ -4024,23 +4219,28 @@ void surface::create_web_of_cubic_curves_and_equations_based_on_four_tritangent_
 				INT_matrix_print(curves_t, 10, 5);
 				}
 		
-			rk = F->RREF_and_kernel(5, 10, curves_t, 0 /* verbose_level */);
+			rk = F->RREF_and_kernel(5, 10, curves_t, 
+				0 /* verbose_level */);
 			if (rk != 4) {
 				cout << "surface::create_surface_and_planes_from_trihedral_pair_and_arc the rank of the system is not equal to 4" << endl;
 				cout << "rk = " << rk << endl;
 				exit(1);
 				}
 			if (curves_t[4 * 5 + 4] != F->negate(1)) {
-				cout << "h=" << h << " / " << 2 << " curves_t[4 * 5 + 4] != -1" << endl;
+				cout << "h=" << h << " / " << 2 
+					<< " curves_t[4 * 5 + 4] != -1" << endl;
 				exit(1);
 				}
-			INT_vec_copy(curves_t + 4 * 5, The_plane_equations + h * 4, 4);
+			INT_vec_copy(curves_t + 4 * 5, 
+				The_plane_equations + h * 4, 4);
 
-			PG_element_normalize(*F, The_plane_equations + h * 4, 1, 4);
+			PG_element_normalize(*F, 
+				The_plane_equations + h * 4, 1, 4);
 			
 			}
 		if (f_v) {
-			cout << "h=" << h << " / " << 45 << ": the plane equation is ";
+			cout << "h=" << h << " / " << 45 
+				<< ": the plane equation is ";
 			INT_vec_print(cout, The_plane_equations + h * 4, 4);
 			cout << endl;
 			}
@@ -4103,7 +4303,8 @@ void surface::print_equation_wrapped(ostream &ost, INT *the_equation)
 }
 
 void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
-	INT *The_six_plane_equations, INT *The_surface_equations, INT verbose_level)
+	INT *The_six_plane_equations, INT *The_surface_equations, 
+	INT verbose_level)
 // The_surface_equations[(q + 1) * 20]
 {
 	INT f_v = (verbose_level >= 1);
@@ -4137,8 +4338,10 @@ void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 		F->scalar_multiply_vector_in_place(v[0], eqn_F2, 20);
 		INT_vec_copy(eqn_G, eqn_G2, 20);
 		F->scalar_multiply_vector_in_place(v[1], eqn_G2, 20);
-		F->add_vector(eqn_F2, eqn_G2, The_surface_equations + l * 20, 20);
-		PG_element_normalize(*F, The_surface_equations + l * 20, 1, 20);
+		F->add_vector(eqn_F2, eqn_G2, 
+			The_surface_equations + l * 20, 20);
+		PG_element_normalize(*F, 
+			The_surface_equations + l * 20, 1, 20);
 		}
 
 	if (f_v) {
@@ -4146,8 +4349,12 @@ void surface::create_equations_for_pencil_of_surfaces_from_trihedral_pair(
 		}
 }
 
-void surface::create_lambda_from_trihedral_pair_and_arc(INT *arc6, INT *Web_of_cubic_curves, 
-	INT *The_plane_equations, INT t_idx, INT &lambda, INT &lambda_rk, INT verbose_level)
+void surface::create_lambda_from_trihedral_pair_and_arc(
+	INT *arc6, 
+	INT *Web_of_cubic_curves, 
+	INT *The_plane_equations, INT t_idx, 
+	INT &lambda, INT &lambda_rk, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -4170,7 +4377,8 @@ void surface::create_lambda_from_trihedral_pair_and_arc(INT *arc6, INT *Web_of_c
 			<< endl;
 		}
 
-	INT_vec_copy(Trihedral_to_Eckardt + t_idx * 6, row_col_Eckardt_points, 6);
+	INT_vec_copy(Trihedral_to_Eckardt + t_idx * 6, 
+		row_col_Eckardt_points, 6);
 	
 	if (f_v) {
 		cout << "row_col_Eckardt_points = ";
@@ -4193,7 +4401,8 @@ void surface::create_lambda_from_trihedral_pair_and_arc(INT *arc6, INT *Web_of_c
 	if (f_v) {
 		cout << "surface::create_lambda_from_trihedral_pair_and_arc before find_point_not_on_six_curves" << endl;
 		}
-	find_point_not_on_six_curves(arc6, six_curves, pt, f_point_was_found, verbose_level);
+	find_point_not_on_six_curves(arc6, six_curves, 
+		pt, f_point_was_found, verbose_level);
 	if (!f_point_was_found) {
 		lambda = 1;
 		}
@@ -4205,7 +4414,8 @@ void surface::create_lambda_from_trihedral_pair_and_arc(INT *arc6, INT *Web_of_c
 
 		Poly3->unrank_point(v, pt);
 		for (i = 0; i < 6; i++) {
-			evals[i] = Poly3->evaluate_at_a_point(six_curves + i * 10, v);
+			evals[i] = Poly3->evaluate_at_a_point(
+				six_curves + i * 10, v);
 			}
 
 		if (f_v) {
@@ -4239,10 +4449,18 @@ void surface::create_lambda_from_trihedral_pair_and_arc(INT *arc6, INT *Web_of_c
 
 
 		for (i = 0; i < 6; i++) {
-			evals_for_point[i] = Poly1_4->evaluate_at_a_point(The_plane_equations + row_col_Eckardt_points[i] * 4, pt_on_surface);
+			evals_for_point[i] = 
+				Poly1_4->evaluate_at_a_point(
+				The_plane_equations + 
+					row_col_Eckardt_points[i] * 4, 
+				pt_on_surface);
 			}
-		a = F->mult3(evals_for_point[0], evals_for_point[1], evals_for_point[2]);
-		b = F->mult3(evals_for_point[3], evals_for_point[4], evals_for_point[5]);
+		a = F->mult3(evals_for_point[0], 
+			evals_for_point[1], 
+			evals_for_point[2]);
+		b = F->mult3(evals_for_point[3], 
+			evals_for_point[4], 
+			evals_for_point[5]);
 		lambda = F->mult(F->negate(a), F->inverse(b));
 		if (f_v) {
 			cout << "lambda = " << lambda << endl;
@@ -4258,8 +4476,11 @@ void surface::create_lambda_from_trihedral_pair_and_arc(INT *arc6, INT *Web_of_c
 }
 
 
-void surface::create_surface_equation_from_trihedral_pair(INT *arc6, INT *Web_of_cubic_curves, 
-	INT *The_plane_equations, INT t_idx, INT *surface_equation, INT &lambda, INT verbose_level)
+void surface::create_surface_equation_from_trihedral_pair(INT *arc6, 
+	INT *Web_of_cubic_curves, 
+	INT *The_plane_equations, INT t_idx, INT *surface_equation, 
+	INT &lambda, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *The_surface_equations;
@@ -4285,12 +4506,16 @@ void surface::create_surface_equation_from_trihedral_pair(INT *arc6, INT *Web_of
 	The_surface_equations = NEW_INT((q + 1) * 20);
 
 	create_equations_for_pencil_of_surfaces_from_trihedral_pair(
-		The_six_plane_equations, The_surface_equations, verbose_level - 2);
+		The_six_plane_equations, The_surface_equations, 
+		verbose_level - 2);
 
-	create_lambda_from_trihedral_pair_and_arc(arc6, Web_of_cubic_curves, 
-		The_plane_equations, t_idx, lambda, lambda_rk, verbose_level - 2);
+	create_lambda_from_trihedral_pair_and_arc(arc6, 
+		Web_of_cubic_curves, 
+		The_plane_equations, t_idx, lambda, lambda_rk, 
+		verbose_level - 2);
 	
-	INT_vec_copy(The_surface_equations + lambda_rk * 20, surface_equation, 20);
+	INT_vec_copy(The_surface_equations + lambda_rk * 20, 
+		surface_equation, 20);
 
 	FREE_INT(The_surface_equations);
 
@@ -4300,7 +4525,8 @@ void surface::create_surface_equation_from_trihedral_pair(INT *arc6, INT *Web_of
 }
 
 void surface::extract_six_curves_from_web(INT *Web_of_cubic_curves, 
-	INT *row_col_Eckardt_points, INT *six_curves, INT verbose_level)
+	INT *row_col_Eckardt_points, INT *six_curves, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -4309,7 +4535,8 @@ void surface::extract_six_curves_from_web(INT *Web_of_cubic_curves,
 		cout << "surface::extract_six_curves_from_web" << endl;
 		}
 	for (i = 0; i < 6; i++) {
-		INT_vec_copy(Web_of_cubic_curves + row_col_Eckardt_points[i] * 10, six_curves + i * 10, 10);
+		INT_vec_copy(Web_of_cubic_curves + row_col_Eckardt_points[i] * 10, 
+			six_curves + i * 10, 10);
 		}
 
 	if (f_v) {
@@ -4321,7 +4548,9 @@ void surface::extract_six_curves_from_web(INT *Web_of_cubic_curves,
 		}
 }
 
-void surface::find_point_not_on_six_curves(INT *arc6, INT *six_curves, INT &pt, INT &f_point_was_found, INT verbose_level)
+void surface::find_point_not_on_six_curves(INT *arc6, INT *six_curves, 
+	INT &pt, INT &f_point_was_found, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT v[3];
@@ -4330,7 +4559,8 @@ void surface::find_point_not_on_six_curves(INT *arc6, INT *six_curves, INT &pt, 
 	
 	if (f_v) {
 		cout << "surface::find_point_not_on_six_curves" << endl;
-		cout << "surface::find_point_not_on_six_curves P2->N_points=" << P2->N_points << endl;
+		cout << "surface::find_point_not_on_six_curves P2->N_points=" 
+			<< P2->N_points << endl;
 		}
 	pt = -1;
 	for (pt = 0; pt < P2->N_points; pt++) {
@@ -4360,7 +4590,8 @@ void surface::find_point_not_on_six_curves(INT *arc6, INT *six_curves, INT &pt, 
 		}
 }
 
-INT surface::plane_from_three_lines(INT *three_lines, INT verbose_level)
+INT surface::plane_from_three_lines(INT *three_lines, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT Basis[6 * 4];
@@ -4383,7 +4614,8 @@ INT surface::plane_from_three_lines(INT *three_lines, INT verbose_level)
 	return rk;
 }
 
-void surface::Trihedral_pairs_to_planes(INT *Lines, INT *Planes, INT verbose_level)
+void surface::Trihedral_pairs_to_planes(INT *Lines, INT *Planes, 
+	INT verbose_level)
 // Planes[nb_trihedral_pairs * 6]
 {
 	INT f_v = (verbose_level >= 1);
@@ -4397,35 +4629,43 @@ void surface::Trihedral_pairs_to_planes(INT *Lines, INT *Planes, INT verbose_lev
 	for (t = 0; t < nb_trihedral_pairs; t++) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
-				tritangent_plane[j] = Trihedral_pairs[t * 9 + i * 3 + j];
+				tritangent_plane[j] = 
+					Trihedral_pairs[t * 9 + i * 3 + j];
 				}
 			for (j = 0; j < 3; j++) {
-				three_lines[j] = Lines[tritangent_plane[j]];
+				three_lines[j] = 
+					Lines[tritangent_plane[j]];
 				}
-			rk = plane_from_three_lines(three_lines, 0 /* verbose_level */);
+			rk = plane_from_three_lines(three_lines, 
+				0 /* verbose_level */);
 			Planes[t * 6 + i] = rk;
 			}
 		for (j = 0; j < 3; j++) {
 			for (i = 0; i < 3; i++) {
-				tritangent_plane[i] = Trihedral_pairs[t * 9 + i * 3 + j];
+				tritangent_plane[i] = 
+					Trihedral_pairs[t * 9 + i * 3 + j];
 				}
 			for (i = 0; i < 3; i++) {
-				three_lines[i] = Lines[tritangent_plane[i]];
+				three_lines[i] = 
+					Lines[tritangent_plane[i]];
 				}
-			rk = plane_from_three_lines(three_lines, 0 /* verbose_level */);
+			rk = plane_from_three_lines(three_lines, 
+				0 /* verbose_level */);
 			Planes[t * 6 + 3 + j] = rk;
 			}
 		}
 	if (f_v) {
 		cout << "Trihedral_pairs_to_planes:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Planes, nb_trihedral_pairs, 6, FALSE /* f_tex */);
+		print_integer_matrix_with_standard_labels(cout, 
+			Planes, nb_trihedral_pairs, 6, FALSE /* f_tex */);
 		}
 	if (f_v) {
 		cout << "surface::Trihedral_pairs_to_planes done" << endl;
 		}
 }
 
-void surface::rearrange_lines_according_to_double_six(INT *Lines, INT verbose_level)
+void surface::rearrange_lines_according_to_double_six(INT *Lines, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Adj;
@@ -4438,7 +4678,8 @@ void surface::rearrange_lines_according_to_double_six(INT *Lines, INT verbose_le
 	if (f_v) {
 		cout << "surface::rearrange_lines_according_to_double_six before compute_adjacency_matrix_of_line_intersection_graph" << endl;
 		}
-	compute_adjacency_matrix_of_line_intersection_graph(Adj, Lines, nb_lines, 0 /* verbose_level */);
+	compute_adjacency_matrix_of_line_intersection_graph(Adj, 
+		Lines, nb_lines, 0 /* verbose_level */);
 
 
 	set_of_sets *line_intersections;
@@ -4450,13 +4691,15 @@ void surface::rearrange_lines_according_to_double_six(INT *Lines, INT verbose_le
 	if (f_v) {
 		cout << "surface::rearrange_lines_according_to_double_six before line_intersections->init_from_adjacency_matrix" << endl;
 		}
-	line_intersections->init_from_adjacency_matrix(nb_lines, Adj, 0 /* verbose_level */);
+	line_intersections->init_from_adjacency_matrix(nb_lines, Adj, 
+		0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "surface::rearrange_lines_according_to_double_six before list_starter_configurations" << endl;
 		}
 	list_starter_configurations(Lines, nb_lines, 
-		line_intersections, Starter_Table, nb_starter,  0 /*verbose_level */);
+		line_intersections, Starter_Table, nb_starter,  
+		0 /*verbose_level */);
 
 	INT l, line_idx, subset_idx;
 
@@ -4471,8 +4714,10 @@ void surface::rearrange_lines_according_to_double_six(INT *Lines, INT verbose_le
 	if (f_v) {
 		cout << "surface::rearrange_lines_according_to_double_six before rearrange_lines_according_to_starter_configuration" << endl;
 		}
-	rearrange_lines_according_to_starter_configuration(Lines, New_lines, 
-		line_idx, subset_idx, Adj, line_intersections, 0 /*verbose_level*/);
+	rearrange_lines_according_to_starter_configuration(
+		Lines, New_lines, 
+		line_idx, subset_idx, Adj, 
+		line_intersections, 0 /*verbose_level*/);
 
 	INT_vec_copy(New_lines, Lines, 27);
 
@@ -4484,8 +4729,11 @@ void surface::rearrange_lines_according_to_double_six(INT *Lines, INT verbose_le
 		}
 }
 
-void surface::rearrange_lines_according_to_starter_configuration(INT *Lines, INT *New_lines, 
-	INT line_idx, INT subset_idx, INT *Adj, set_of_sets *line_intersections, INT verbose_level)
+void surface::rearrange_lines_according_to_starter_configuration(
+	INT *Lines, INT *New_lines, 
+	INT line_idx, INT subset_idx, INT *Adj, 
+	set_of_sets *line_intersections, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT S3[6];
@@ -4497,7 +4745,8 @@ void surface::rearrange_lines_according_to_starter_configuration(INT *Lines, INT
 		cout << "surface::rearrange_lines_according_to_starter_configuration" << endl;
 		}
 	
-	create_starter_configuration(line_idx, subset_idx, line_intersections, Lines, S3, 0 /* verbose_level */);
+	create_starter_configuration(line_idx, subset_idx, 
+		line_intersections, Lines, S3, 0 /* verbose_level */);
 	
 
 	if (f_v) {
@@ -4544,17 +4793,21 @@ void surface::rearrange_lines_according_to_starter_configuration(INT *Lines, INT
 			cout << endl;
 			}
 		
-		Line_idx[6 + i] = intersection_of_four_lines_but_not_b6(Adj, four_lines, Line_idx[11], verbose_level);
+		Line_idx[6 + i] = intersection_of_four_lines_but_not_b6(
+			Adj, four_lines, Line_idx[11], verbose_level);
 		if (f_v) {
-			cout << "b_" << i + 1 << " = " << Line_idx[6 + i] << endl;
+			cout << "b_" << i + 1 << " = " 
+				<< Line_idx[6 + i] << endl;
 			}
 		}
 
 	INT five_lines_idx[5];
 	INT_vec_copy(Line_idx + 6, five_lines_idx, 5);
-	Line_idx[5] = intersection_of_five_lines(Adj, five_lines_idx, verbose_level);
+	Line_idx[5] = intersection_of_five_lines(Adj, 
+		five_lines_idx, verbose_level);
 	if (f_v) {
-		cout << "a_" << i + 1 << " = " << Line_idx[5] << endl;
+		cout << "a_" << i + 1 << " = " 
+			<< Line_idx[5] << endl;
 		}
 	
 
@@ -4569,7 +4822,9 @@ void surface::rearrange_lines_according_to_starter_configuration(INT *Lines, INT
 	h = 0;
 	for (i = 0; i < 6; i++) {
 		for (j = i + 1; j < 6; j++, h++) {
-			New_lines[12 + h] = compute_cij(double_six, i, j, 0 /* verbose_level */);
+			New_lines[12 + h] = compute_cij(
+				double_six, i, j, 
+				0 /* verbose_level */);
 			}
 		}
 	if (f_v) {
@@ -4583,7 +4838,8 @@ void surface::rearrange_lines_according_to_starter_configuration(INT *Lines, INT
 		}
 }
 
-INT surface::intersection_of_four_lines_but_not_b6(INT *Adj, INT *four_lines_idx, INT b6, INT verbose_level)
+INT surface::intersection_of_four_lines_but_not_b6(INT *Adj, 
+	INT *four_lines_idx, INT b6, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, i, j;
@@ -4616,7 +4872,8 @@ INT surface::intersection_of_four_lines_but_not_b6(INT *Adj, INT *four_lines_idx
 	return a;
 }
 
-INT surface::intersection_of_five_lines(INT *Adj, INT *five_lines_idx, INT verbose_level)
+INT surface::intersection_of_five_lines(INT *Adj, 
+	INT *five_lines_idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, i, j;
@@ -4646,7 +4903,8 @@ INT surface::intersection_of_five_lines(INT *Adj, INT *five_lines_idx, INT verbo
 	return a;
 }
 
-void surface::create_surface_family_S(INT a, INT *Lines27, INT *equation20, INT verbose_level)
+void surface::create_surface_family_S(INT a, INT *Lines27, 
+	INT *equation20, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -4952,7 +5210,8 @@ void surface::create_surface(INT f_iso, INT iso, INT f_S, INT a, INT f_equation,
 }
 #endif
 
-void surface::rearrange_lines_according_to_a_given_double_six(INT *Lines, 
+void surface::rearrange_lines_according_to_a_given_double_six(
+	INT *Lines, 
 	INT *New_lines, INT *double_six, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -4968,7 +5227,9 @@ void surface::rearrange_lines_according_to_a_given_double_six(INT *Lines,
 	h = 0;
 	for (i = 0; i < 6; i++) {
 		for (j = i + 1; j < 6; j++, h++) {
-			New_lines[12 + h] = compute_cij(New_lines /*double_six */, i, j, 0 /* verbose_level */);
+			New_lines[12 + h] = compute_cij(
+				New_lines /*double_six */, 
+				i, j, 0 /* verbose_level */);
 			}
 		}
 	if (f_v) {
@@ -5003,7 +5264,8 @@ void surface::compute_tritangent_planes(INT *Lines,
 		INT_vec_print(cout, Lines, 27);
 		cout << endl;
 		}
-	P->line_plane_incidence_matrix_restricted(Lines, 27, Inc_lines_planes, nb_planes, 0 /* verbose_level */);
+	P->line_plane_incidence_matrix_restricted(Lines, 27, 
+		Inc_lines_planes, nb_planes, 0 /* verbose_level */);
 
 	The_plane_type = NEW_INT(nb_planes);
 	INT_vec_zero(The_plane_type, nb_planes);
@@ -5025,7 +5287,8 @@ void surface::compute_tritangent_planes(INT *Lines,
 		}
 
 
-	Plane_type.get_class_by_value(Tritangent_planes, nb_tritangent_planes, 3 /* value */, 0 /* verbose_level */);
+	Plane_type.get_class_by_value(Tritangent_planes, 
+		nb_tritangent_planes, 3 /* value */, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface::compute_tritangent_planes The tritangent planes are: ";
 		INT_vec_print(cout, Tritangent_planes, nb_tritangent_planes);
@@ -5047,7 +5310,8 @@ void surface::compute_tritangent_planes(INT *Lines,
 		}
 
 
-	Plane_type.get_class_by_value(Unitangent_planes, nb_unitangent_planes, 1 /* value */, 0 /* verbose_level */);
+	Plane_type.get_class_by_value(Unitangent_planes, 
+		nb_unitangent_planes, 1 /* value */, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "surface::compute_tritangent_planes The unitangent planes are: ";
 		INT_vec_print(cout, Unitangent_planes, nb_unitangent_planes);
@@ -5076,7 +5340,9 @@ void surface::compute_tritangent_planes(INT *Lines,
 		}
 }
 
-void surface::compute_external_lines_on_three_tritangent_planes(INT *Lines, INT *&External_lines, INT &nb_external_lines, INT verbose_level)
+void surface::compute_external_lines_on_three_tritangent_planes(
+	INT *Lines, INT *&External_lines, INT &nb_external_lines, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -5105,7 +5371,9 @@ void surface::compute_external_lines_on_three_tritangent_planes(INT *Lines, INT 
 
 	if (f_v) {
 		cout << "surface::compute_external_lines_on_three_tritangent_planes Lines_in_tritangent_plane: " << endl;
-		print_integer_matrix_with_standard_labels(cout, Lines_in_tritangent_plane, nb_tritangent_planes, 3, FALSE);
+		print_integer_matrix_with_standard_labels(cout, 
+			Lines_in_tritangent_plane, nb_tritangent_planes, 
+			3, FALSE);
 		}
 
 	INT *Intersection_matrix; // [nb_tritangent_planes * nb_tritangent_planes]
@@ -5119,7 +5387,9 @@ void surface::compute_external_lines_on_three_tritangent_planes(INT *Lines, INT 
 		cout << "surface::compute_external_lines_on_three_tritangent_planes Computing intersection matrix of tritangent planes:" << endl;
 		}
 		
-	P->plane_intersection_matrix_in_three_space(Tritangent_planes, nb_tritangent_planes, Intersection_matrix, 0 /* verbose_level */);
+	P->plane_intersection_matrix_in_three_space(Tritangent_planes, 
+		nb_tritangent_planes, Intersection_matrix, 
+		0 /* verbose_level */);
 
 	Plane_intersections = NEW_INT(nb_tritangent_planes * nb_tritangent_planes);
 	Plane_intersections_general = NEW_INT(nb_tritangent_planes * nb_tritangent_planes);
@@ -5141,13 +5411,16 @@ void surface::compute_external_lines_on_three_tritangent_planes(INT *Lines, INT 
 
 	if (f_v) {
 		cout << "surface::compute_external_lines_on_three_tritangent_planes The tritangent planes intersecting in surface lines:" << endl;
-		print_integer_matrix_with_standard_labels(cout, Plane_intersections, nb_tritangent_planes, nb_tritangent_planes, FALSE);
+		print_integer_matrix_with_standard_labels(cout, 
+			Plane_intersections, nb_tritangent_planes, 
+			nb_tritangent_planes, FALSE);
 		}
 
 
 	classify Plane_intersection_type;
 
-	Plane_intersection_type.init(Plane_intersections, nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
+	Plane_intersection_type.init(Plane_intersections, 
+		nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
 	if (f_v) {
 		cout << "surface::compute_external_lines_on_three_tritangent_planes The surface lines in terms of plane intersections are: ";
 		Plane_intersection_type.print_naked(TRUE);
@@ -5162,7 +5435,8 @@ void surface::compute_external_lines_on_three_tritangent_planes(INT *Lines, INT 
 
 	classify Plane_intersection_type2;
 	
-	Plane_intersection_type2.init(Plane_intersections_general, nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
+	Plane_intersection_type2.init(Plane_intersections_general, 
+		nb_tritangent_planes * nb_tritangent_planes, TRUE, 0);
 	if (f_v) {
 		cout << "The other lines in terms of plane intersections are: ";
 		Plane_intersection_type2.print_naked(TRUE);
@@ -5170,7 +5444,8 @@ void surface::compute_external_lines_on_three_tritangent_planes(INT *Lines, INT 
 		}
 
 
-	Plane_intersection_type2.get_data_by_multiplicity(External_lines, nb_external_lines, 6, 0 /* verbose_level */);
+	Plane_intersection_type2.get_data_by_multiplicity(
+		External_lines, nb_external_lines, 6, 0 /* verbose_level */);
 
 	INT_vec_heapsort(External_lines, nb_external_lines);
 
@@ -5213,13 +5488,17 @@ void surface::init_double_sixes(INT verbose_level)
 		}
 	h++;
 	
-	// second type: D_{ij} : a_1, b_1, c_23, c_24, c_25, c_26; a_2, b_2, c_13, c_14, c_15, c_16
+	// second type: 
+	// D_{ij} : 
+	// a_1, b_1, c_23, c_24, c_25, c_26; 
+	// a_2, b_2, c_13, c_14, c_15, c_16
 	for (ij = 0; ij < 15; ij++, h++) {
 		//cout << "second type " << ij << " / " << 15 << endl;
 		k2ij(ij, i, j, 6);
 		set[0] = i;
 		set[1] = j;
-		set_complement(set, 2 /* subset_size */, set + 2, size_complement, 6 /* universal_set_size */);
+		set_complement(set, 2 /* subset_size */, set + 2, 
+			size_complement, 6 /* universal_set_size */);
 		//cout << "set : ";
 		//INT_vec_print(cout, set, 6);
 		//cout << endl;
@@ -5235,11 +5514,14 @@ void surface::init_double_sixes(INT verbose_level)
 			}
 		}
 
-	// third type: D_{ijk} : a_1, a_2, a_3, c_56, c_46, c_45; c_23, c_13, c_12, b_4, b_5, b_6 
+	// third type: D_{ijk} : 
+	// a_1, a_2, a_3, c_56, c_46, c_45; 
+	// c_23, c_13, c_12, b_4, b_5, b_6 
 	for (v = 0; v < 20; v++, h++) {
 		//cout << "third type " << v << " / " << 20 << endl;
 		unrank_k_subset(v, set, 6, 3);
-		set_complement(set, 3 /* subset_size */, set + 3, size_complement, 6 /* universal_set_size */);
+		set_complement(set, 3 /* subset_size */, set + 3, 
+			size_complement, 6 /* universal_set_size */);
 		i = set[0];
 		j = set[1];
 		k = set[2];
@@ -5277,20 +5559,23 @@ void surface::init_double_sixes(INT verbose_level)
 			k2ij(ij, a, b, 6);
 			set[0] = a;
 			set[1] = b;
-			set_complement(set, 2 /* subset_size */, set + 2, size_complement, 6 /* universal_set_size */);
+			set_complement(set, 2 /* subset_size */, set + 2, 
+				size_complement, 6 /* universal_set_size */);
 			sprintf(str, "D_{%ld%ld}", a + 1, b + 1);
 			}
 		else {
 			v = i - 16;
 			unrank_k_subset(v, set, 6, 3);
-			set_complement(set, 3 /* subset_size */, set + 3, size_complement, 6 /* universal_set_size */);
+			set_complement(set, 3 /* subset_size */, set + 3, 
+				size_complement, 6 /* universal_set_size */);
 			a = set[0];
 			b = set[1];
 			c = set[2];
 			sprintf(str, "D_{%ld%ld%ld}", a + 1, b + 1, c + 1);
 			}
 		if (f_v) {
-			cout << "creating label " << str << " for Double six " << i << endl;
+			cout << "creating label " << str 
+				<< " for Double six " << i << endl;
 			}
 		l = strlen(str);
 		Double_six_label_tex[i] = NEW_BYTE(l + 1);
@@ -5319,7 +5604,8 @@ void surface::create_half_double_sixes(INT verbose_level)
 	INT_vec_copy(Double_six, Half_double_sixes, 36 * 12);
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
-			INT_vec_heapsort(Half_double_sixes + (2 * i + j) * 6, 6);
+			INT_vec_heapsort(
+				Half_double_sixes + (2 * i + j) * 6, 6);
 			Half_double_six_to_double_six[2 * i + j] = i;
 			Half_double_six_to_double_six_row[2 * i + j] = j;
 			}
@@ -5337,17 +5623,22 @@ void surface::create_half_double_sixes(INT verbose_level)
 				k2ij(ij, a, b, 6);
 				set[0] = a;
 				set[1] = b;
-				set_complement(set, 2 /* subset_size */, set + 2, size_complement, 6 /* universal_set_size */);
+				set_complement(set, 2 /* subset_size */, 
+					set + 2, size_complement, 
+					6 /* universal_set_size */);
 				sprintf(str, "D_{%ld%ld}", a + 1, b + 1);
 				}
 			else {
 				v = i - 16;
 				unrank_k_subset(v, set, 6, 3);
-				set_complement(set, 3 /* subset_size */, set + 3, size_complement, 6 /* universal_set_size */);
+				set_complement(set, 3 /* subset_size */, 
+					set + 3, size_complement, 
+					6 /* universal_set_size */);
 				a = set[0];
 				b = set[1];
 				c = set[2];
-				sprintf(str, "D_{%ld%ld%ld}", a + 1, b + 1, c + 1);
+				sprintf(str, "D_{%ld%ld%ld}", 
+					a + 1, b + 1, c + 1);
 				}
 			if (j == 0) {
 				sprintf(str + strlen(str), "^\\top");
@@ -5356,7 +5647,9 @@ void surface::create_half_double_sixes(INT verbose_level)
 				sprintf(str + strlen(str), "^\\bot");
 				}
 			if (f_v) {
-				cout << "creating label " << str << " for half double six " << 2 * i + j << endl;
+				cout << "creating label " << str 
+					<< " for half double six " 
+					<< 2 * i + j << endl;
 				}
 			l = strlen(str);
 			Half_double_six_label_tex[2 * i + j] = NEW_BYTE(l + 1);
@@ -5375,7 +5668,8 @@ INT surface::find_half_double_six(INT *half_double_six)
 
 	INT_vec_heapsort(half_double_six, 6);
 	for (i = 0; i < 72; i++) {
-		if (INT_vec_compare(half_double_six, Half_double_sixes + i * 6, 6) == 0) {
+		if (INT_vec_compare(half_double_six, 
+			Half_double_sixes + i * 6, 6) == 0) {
 			return i;
 			}
 		}
@@ -5783,7 +6077,9 @@ void surface::get_half_double_six_associated_with_Clebsch_map(
 		}
 }
 
-void surface::prepare_clebsch_map(INT ds, INT ds_row, INT &line1, INT &line2, INT &transversal, INT verbose_level)
+void surface::prepare_clebsch_map(INT ds, INT ds_row, 
+	INT &line1, INT &line2, INT &transversal, 
+	INT verbose_level)
 {
 	INT ij, i, j, k, l, m, n, size_complement;
 	INT set[6];
@@ -5822,7 +6118,8 @@ void surface::prepare_clebsch_map(INT ds, INT ds_row, INT &line1, INT &line2, IN
 		}
 	ds -= 15;
 	unrank_k_subset(ds, set, 6, 3);
-	set_complement(set, 3 /* subset_size */, set + 3, size_complement, 6 /* universal_set_size */);
+	set_complement(set, 3 /* subset_size */, set + 3, 
+		size_complement, 6 /* universal_set_size */);
 	i = set[0];
 	j = set[1];
 	k = set[2];
@@ -5844,8 +6141,10 @@ void surface::prepare_clebsch_map(INT ds, INT ds_row, INT &line1, INT &line2, IN
 	
 }
 
-INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT plane_rk, 
-	INT *Image_rk, INT *Image_coeff, INT verbose_level)
+INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, 
+	INT line_idx[2], INT plane_rk, 
+	INT *Image_rk, INT *Image_coeff, 
+	INT verbose_level)
 // assuming: 
 // In:
 // Lines[27]
@@ -5894,9 +6193,11 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 	// make sure the two lines are not contained in the plane onto which we map:
 
 	// test line_a:
-	P->Grass_lines->unrank_INT_here(Line_a, Lines[line_idx[0]], 0 /* verbose_level */);
+	P->Grass_lines->unrank_INT_here(Line_a, 
+		Lines[line_idx[0]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line a = " << Line_label_tex[line_idx[0]] << " = " << Lines[line_idx[0]] << ":" << endl;
+		cout << "Line a = " << Line_label_tex[line_idx[0]] 
+			<< " = " << Lines[line_idx[0]] << ":" << endl;
 		INT_matrix_print(Line_a, 2, 4);
 		}
 	for (i = 0; i < 2; i++) {
@@ -5910,9 +6211,11 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 		}
 
 	// test line_b:
-	P->Grass_lines->unrank_INT_here(Line_b, Lines[line_idx[1]], 0 /* verbose_level */);
+	P->Grass_lines->unrank_INT_here(Line_b, 
+		Lines[line_idx[1]], 0 /* verbose_level */);
 	if (f_v) {
-		cout << "Line b = " << Line_label_tex[line_idx[1]] << " = " << Lines[line_idx[1]] << ":" << endl;
+		cout << "Line b = " << Line_label_tex[line_idx[1]] 
+			<< " = " << Lines[line_idx[1]] << ":" << endl;
 		INT_matrix_print(Line_b, 2, 4);
 		}
 	for (i = 0; i < 2; i++) {
@@ -6019,10 +6322,12 @@ INT surface::clebsch_map(INT *Lines, INT *Pts, INT nb_pts, INT line_idx[2], INT 
 		// compute local coordinates of the image point:
 		F->reduce_mod_subspace_and_get_coefficient_vector(
 			3, 4, Plane, base_cols, 
-			Dual_planes + 12, coefficients, 0 /* verbose_level */);
+			Dual_planes + 12, coefficients, 
+			0 /* verbose_level */);
 		Image_rk[h] = P2->rank_point(coefficients);
 		if (f_v) {
-			cout << "pt " << h << " / " << nb_pts << " is " << pt << " : image = ";
+			cout << "pt " << h << " / " << nb_pts 
+				<< " is " << pt << " : image = ";
 			INT_vec_print(cout, Image_coeff + h * 4, 4);
 			cout << " image = " << Image_rk[h] << endl;
 			}
@@ -6042,7 +6347,8 @@ void surface::print_lines_tex(ostream &ost, INT *Lines)
 		//fp << "Line " << i << " is " << v[i] << ":\\\\" << endl;
 		Gr->unrank_INT(Lines[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
-		ost << "\\ell_{" << i << "} = " << Line_label_tex[i] << " = \\left[" << endl;
+		ost << "\\ell_{" << i << "} = " 
+			<< Line_label_tex[i] << " = \\left[" << endl;
 		//print_integer_matrix_width(cout, Gr->M, k, n, n, F->log10_of_q + 1);
 		print_integer_matrix_tex(ost, Gr->M, 2, 4);
 		ost << "\\right]_{" << Lines[i] << "}" << endl;
@@ -6078,12 +6384,14 @@ void surface::clebsch_cubics(INT verbose_level)
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
-			Clebsch_P[i * 4 + j] = Clebsch_Pij + (i * 4 + j) * nb_monomials2;
+			Clebsch_P[i * 4 + j] = 
+				Clebsch_Pij + (i * 4 + j) * nb_monomials2;
 			}
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			Clebsch_P3[i * 3 + j] = Clebsch_Pij + (i * 4 + j) * nb_monomials2;
+			Clebsch_P3[i * 3 + j] = 
+				Clebsch_Pij + (i * 4 + j) * nb_monomials2;
 			}
 		}
 	INT coeffs[] = {
@@ -6227,7 +6535,8 @@ void surface::clebsch_cubics(INT verbose_level)
 	CC = NEW_PINT(4 * Poly3->nb_monomials);
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < Poly3->nb_monomials; j++) {
-			CC[i * Poly3->nb_monomials + j] = Clebsch_coeffs + (i * Poly3->nb_monomials + j) * nb_monomials3;
+			CC[i * Poly3->nb_monomials + j] = 
+				Clebsch_coeffs + (i * Poly3->nb_monomials + j) * nb_monomials3;
 			}
 		}
 	for (i = 0; i < Poly3->nb_monomials; i++) {
@@ -6237,7 +6546,8 @@ void surface::clebsch_cubics(INT verbose_level)
 				INT_vec_copy(Poly6_27->Monomials + j * 27 + 3, M24, 24);
 				idx = Poly3_24->index_of_monomial(M24);
 				for (h = 0; h < 4; h++) {
-					CC[h * Poly3->nb_monomials + i][idx] = F->add(CC[h * Poly3->nb_monomials + i][idx], C[h][j]);
+					CC[h * Poly3->nb_monomials + i][idx] = 
+						F->add(CC[h * Poly3->nb_monomials + i][idx], C[h][j]);
 					}
 				}
 			}
@@ -6386,7 +6696,8 @@ INT surface::evaluate_general_cubics(INT *clebsch_coeffs_polynomial,
 }
 #endif
 
-void surface::multiply_222_27_and_add(INT *M1, INT *M2, INT *M3, INT scalar, INT *MM, INT verbose_level)
+void surface::multiply_222_27_and_add(INT *M1, INT *M2, INT *M3, 
+	INT scalar, INT *MM, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, k, a, b, c, d, idx;
@@ -6417,7 +6728,10 @@ void surface::multiply_222_27_and_add(INT *M1, INT *M2, INT *M3, INT scalar, INT
 					continue;
 					}
 				d = F->mult3(a, b, c);
-				INT_vec_add3(Poly2_27->Monomials + i * 27, Poly2_27->Monomials + j * 27, Poly2_27->Monomials + k * 27, M, 27);
+				INT_vec_add3(Poly2_27->Monomials + i * 27, 
+					Poly2_27->Monomials + j * 27, 
+					Poly2_27->Monomials + k * 27, 
+					M, 27);
 				idx = Poly6_27->index_of_monomial(M);
 				if (idx >= nb_monomials6) {
 					cout << "surface::multiply_222_27_and_add idx >= nb_monomials6" << endl;
@@ -6435,7 +6749,8 @@ void surface::multiply_222_27_and_add(INT *M1, INT *M2, INT *M3, INT scalar, INT
 		}
 }
 
-void surface::minor22(INT **P3, INT i1, INT i2, INT j1, INT j2, INT scalar, INT *Ad, INT verbose_level)
+void surface::minor22(INT **P3, INT i1, INT i2, INT j1, INT j2, 
+	INT scalar, INT *Ad, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a, b, d, idx;
@@ -6461,7 +6776,9 @@ void surface::minor22(INT **P3, INT i1, INT i2, INT j1, INT j2, INT scalar, INT 
 				continue;
 				}
 			d = F->mult(a, b);
-			INT_vec_add(Poly2_27->Monomials + i * 27, Poly2_27->Monomials + j * 27, M, 27);
+			INT_vec_add(Poly2_27->Monomials + i * 27, 
+				Poly2_27->Monomials + j * 27, 
+				M, 27);
 			idx = Poly4_27->index_of_monomial(M);
 			if (idx >= nb_monomials4) {
 				cout << "surface::minor22 idx >= nb_monomials4" << endl;
@@ -6482,7 +6799,9 @@ void surface::minor22(INT **P3, INT i1, INT i2, INT j1, INT j2, INT scalar, INT 
 				continue;
 				}
 			d = F->mult(a, b);
-			INT_vec_add(Poly2_27->Monomials + i * 27, Poly2_27->Monomials + j * 27, M, 27);
+			INT_vec_add(Poly2_27->Monomials + i * 27, 
+				Poly2_27->Monomials + j * 27, 
+				M, 27);
 			idx = Poly4_27->index_of_monomial(M);
 			if (idx >= nb_monomials4) {
 				cout << "surface::minor22 idx >= nb_monomials4" << endl;
@@ -6525,7 +6844,9 @@ void surface::multiply42_and_add(INT *M1, INT *M2, INT *MM, INT verbose_level)
 				continue;
 				}
 			d = F->mult(a, b);
-			INT_vec_add(Poly4_27->Monomials + i * 27, Poly2_27->Monomials + j * 27, M, 27);
+			INT_vec_add(Poly4_27->Monomials + i * 27, 
+				Poly2_27->Monomials + j * 27, 
+				M, 27);
 			idx = Poly6_27->index_of_monomial(M);
 			if (idx >= nb_monomials6) {
 				cout << "surface::multiply42_and_add idx >= nb_monomials6" << endl;
@@ -6540,7 +6861,8 @@ void surface::multiply42_and_add(INT *M1, INT *M2, INT *MM, INT verbose_level)
 		}
 }
 
-void surface::prepare_system_from_FG(INT *F_planes, INT *G_planes, INT lambda, INT *&system, INT verbose_level)
+void surface::prepare_system_from_FG(INT *F_planes, INT *G_planes, 
+	INT lambda, INT *&system, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -6615,7 +6937,8 @@ void surface::print_system(ostream &ost, INT *system)
 }
 
 
-void surface::compute_nine_lines(INT *F_planes, INT *G_planes, INT *nine_lines, INT verbose_level)
+void surface::compute_nine_lines(INT *F_planes, INT *G_planes, 
+	INT *nine_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -6629,7 +6952,8 @@ void surface::compute_nine_lines(INT *F_planes, INT *G_planes, INT *nine_lines, 
 			INT_vec_copy(F_planes + i * 4, Basis, 4);
 			INT_vec_copy(G_planes + j * 4, Basis + 4, 4);
 			F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
-			nine_lines[i * 3 + j] = Gr->rank_INT_here(Basis + 8, 0 /* verbose_level */);
+			nine_lines[i * 3 + j] = Gr->rank_INT_here(
+				Basis + 8, 0 /* verbose_level */);
 			}
 		}
 	if (f_v) {
@@ -6642,7 +6966,8 @@ void surface::compute_nine_lines(INT *F_planes, INT *G_planes, INT *nine_lines, 
 		}
 }
 
-void surface::compute_nine_lines_by_dual_point_ranks(INT *F_planes_rank, INT *G_planes_rank, INT *nine_lines, INT verbose_level)
+void surface::compute_nine_lines_by_dual_point_ranks(INT *F_planes_rank, 
+	INT *G_planes_rank, INT *nine_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -6665,7 +6990,8 @@ void surface::compute_nine_lines_by_dual_point_ranks(INT *F_planes_rank, INT *G_
 			INT_vec_copy(F_planes + i * 4, Basis, 4);
 			INT_vec_copy(G_planes + j * 4, Basis + 4, 4);
 			F->RREF_and_kernel(4, 2, Basis, 0 /* verbose_level */);
-			nine_lines[i * 3 + j] = Gr->rank_INT_here(Basis + 8, 0 /* verbose_level */);
+			nine_lines[i * 3 + j] = Gr->rank_INT_here(
+				Basis + 8, 0 /* verbose_level */);
 			}
 		}
 	if (f_v) {
@@ -6678,7 +7004,8 @@ void surface::compute_nine_lines_by_dual_point_ranks(INT *F_planes_rank, INT *G_
 		}
 }
 
-void surface::print_trihedral_pair_in_dual_coordinates_in_GAP(INT *F_planes_rank, INT *G_planes_rank)
+void surface::print_trihedral_pair_in_dual_coordinates_in_GAP(
+	INT *F_planes_rank, INT *G_planes_rank)
 {
 	INT i;
 	INT F_planes[12];
@@ -6704,7 +7031,8 @@ void surface::print_trihedral_pair_in_dual_coordinates_in_GAP(INT *F_planes_rank
 	cout << "];";
 }
 
-void surface::split_nice_equation(INT *nice_equation, INT *&f1, INT *&f2, INT *&f3, INT verbose_level)
+void surface::split_nice_equation(INT *nice_equation, 
+	INT *&f1, INT *&f2, INT *&f3, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -6749,7 +7077,8 @@ void surface::split_nice_equation(INT *nice_equation, INT *&f1, INT *&f2, INT *&
 		}
 }
 
-void surface::assemble_tangent_quadric(INT *f1, INT *f2, INT *f3, INT *&tangent_quadric, INT verbose_level)
+void surface::assemble_tangent_quadric(INT *f1, INT *f2, INT *f3, 
+	INT *&tangent_quadric, INT verbose_level)
 // 2*x_0*f_1 + f_2
 {
 	INT f_v = (verbose_level >= 1);
@@ -6823,7 +7152,8 @@ void surface::print_line_labelling(ostream &ost)
 		ost << "\\hline" << endl;
 		ost << "\\hline" << endl;
 		for (h = 0; h < 9; h++) {
-			ost << j * 9 + h << " & " << Line_label_tex[j * 9 + h] << "\\\\" << endl; 
+			ost << j * 9 + h << " & " 
+				<< Line_label_tex[j * 9 + h] << "\\\\" << endl; 
 			}
 		ost << "\\hline" << endl;
 		ost << "\\end{array}" << endl;
