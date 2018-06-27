@@ -290,7 +290,7 @@ void extend(INT arc_size)
 
 	FREE_INT(canonical_set);
 	
-	exit(1);
+	//exit(1);
 	
 	strong_generators *gens;
 
