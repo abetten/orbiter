@@ -26,7 +26,7 @@ int main(int argc, const char **argv)
 	{
 
 	INT verbose_level = 0;
-	INT nb_inputs = FALSE;
+	INT nb_inputs = 0;
 	INT input_first[1000];
 	INT input_len[1000];
 	const BYTE *input_mask[1000];
@@ -79,7 +79,7 @@ int main(int argc, const char **argv)
 		cout << "input " << i << " / " << nb_inputs << endl;
 		for (u = 0; u < input_len[i]; u++) {
 			j = input_first[i] + u;
-			cout << "input frame " << j << " / " << input_len[i] << endl;
+			cout << "input " << i << " / " << nb_inputs << " frame " << j << " / " << input_len[i] << endl;
 			sprintf(input_fname, input_mask[i], (int) j);
 			sprintf(output_fname, output_mask, (int) h);
 			sprintf(cmd, "cp %s %s", input_fname, output_fname);
@@ -87,6 +87,7 @@ int main(int argc, const char **argv)
 			h++;
 			}
 		}
+	cout << "nb_frames = " << nb_frames << " copied" << endl;
 #if 0
 	if (h != nb_frames) {
 		cout << "h != nb_frames" << endl;
