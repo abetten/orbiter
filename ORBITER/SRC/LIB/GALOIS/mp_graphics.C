@@ -2351,7 +2351,40 @@ void mp_graphics::color_tikz(ofstream &fp, INT color)
 		fp << "red";
 	else if (color == 3)
 		fp << "green";
+	else if (color == 4)
+		fp << "blue";
+	else if (color == 5)
+		fp << "cyan";
+	else if (color == 6)
+		fp << "magenta";
+	else if (color == 7)
+		fp << "pink";
+	else if (color == 8)
+		fp << "orange";
+	else if (color == 9)
+		fp << "lightgray";
+	else if (color == 10)
+		fp << "brown";
+	else if (color == 11)
+		fp << "lime";
+	else if (color == 12)
+		fp << "olive";
+	else if (color == 13)
+		fp << "gray";
+	else if (color == 14)
+		fp << "purple";
+	else if (color == 15)
+		fp << "teal";
+	else if (color == 16)
+		fp << "violet";
+	else if (color == 16)
+		fp << "darkgray";
+	else {
+		cout << "mp_graphics::color_tikz color = " << color 
+			<< ", we don't have a color for this" << endl;
+		}
 }
+// red, green, blue, cyan, magenta, yellow, black, gray, darkgray, lightgray, brown, lime, olive, orange, pink, purple, teal, violet and white.
 
 void mp_graphics::fill_idx_tikz(ofstream &fp, INT *Px, INT *Py, INT *Idx, INT n, const char *symbol, INT f_cycle)
 {

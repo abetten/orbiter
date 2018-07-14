@@ -473,7 +473,7 @@ void arc_lifting::lift_prepare(INT verbose_level)
 		}
 	INT_vec_copy(Surf->Trihedral_to_Eckardt + t_idx0 * 6, row_col_Eckardt_points, 6);
 
-#if 0
+#if 1
 	base_curves4[0] = row_col_Eckardt_points[0];
 	base_curves4[1] = row_col_Eckardt_points[1];
 	base_curves4[2] = row_col_Eckardt_points[3];

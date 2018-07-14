@@ -34,6 +34,8 @@ int main(int argc, const char **argv)
 	const BYTE *output_mask = NULL;
 	INT f_output_starts_at = FALSE;
 	INT output_starts_at = 0;
+	INT f_step = FALSE;
+	INT step = 0;
 
 
 	INT i;
@@ -50,6 +52,11 @@ int main(int argc, const char **argv)
 			input_mask[nb_inputs] = argv[++i];
 			cout << "-i " << input_first[nb_inputs] << " " << input_len[nb_inputs] << " " << input_mask[nb_inputs] << endl;
 			nb_inputs++;
+			}
+		else if (strcmp(argv[i], "-step") == 0) {
+			f_step = TRUE;
+			step = atoi(argv[++i]);
+			cout << "-step " << step << endl;
 			}
 		else if (strcmp(argv[i], "-o") == 0) {
 			f_o = TRUE;
@@ -80,6 +87,10 @@ int main(int argc, const char **argv)
 		for (u = 0; u < input_len[i]; u++) {
 			j = input_first[i] + u;
 			cout << "input " << i << " / " << nb_inputs << " frame " << j << " / " << input_len[i] << endl;
+
+			if (f_step) {
+				j *= step;
+				}			
 			sprintf(input_fname, input_mask[i], (int) j);
 			sprintf(output_fname, output_mask, (int) h);
 			sprintf(cmd, "cp %s %s", input_fname, output_fname);

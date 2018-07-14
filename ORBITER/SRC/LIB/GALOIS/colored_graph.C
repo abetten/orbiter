@@ -842,6 +842,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *
 
 void colored_graph::draw_on_circle(char *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
+	INT f_radius, double radius, 
 	INT f_labels, INT f_embedded, INT f_sideways, 
 	double tikz_global_scale, double tikz_global_line_width)
 {
@@ -861,7 +862,7 @@ void colored_graph::draw_on_circle(char *fname,
 	//G.header();
 	//G.begin_figure(1000 /* factor_1000 */);
 	
-	draw_on_circle_2(G, f_labels);
+	draw_on_circle_2(G, f_labels, f_radius, radius);
 
 
 	G.finish(cout, TRUE);
@@ -870,15 +871,16 @@ void colored_graph::draw_on_circle(char *fname,
 	
 }
 
-void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels)
+void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels, 
+	INT f_radius, double radius)
 {
 	INT n = nb_points;
 	INT i, j;
 	INT *Px, *Py;
 	INT *Px1, *Py1;
 	double phi = 360. / (double) n;
-	INT rad1 = 500000;
-	INT rad2 = 5000;
+	double rad1 = 500000;
+	double rad2 = 5000;
 	//BYTE str[1000];
 	
 	Px = NEW_INT(n);
@@ -886,6 +888,9 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels)
 	Px1 = NEW_INT(n);
 	Py1 = NEW_INT(n);
 	
+	if (f_radius) {
+		rad2 = radius;
+		}
 	for (i = 0; i < n; i++) {
 		on_circle_int(Px, Py, i, ((INT)(90. + (double)i * phi)) % 360, rad1);
 		//cout << "i=" << i << " Px=" << Px[i] << " Py=" << Py[i] << endl;
@@ -914,12 +919,23 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels)
 			}
 		}
 	for (i = 0; i < n; i++) {
+
+#if 0
 		G.sf_interior(100);
 		G.sf_color(0);
 		G.circle(Px[i], Py[i], rad2);
+#endif
 
+		// draw solid:
+		G.sf_interior(1);
+		G.sf_color(2 + point_color[i]);
+		//G.sf_color(0);
+		G.circle(Px[i], Py[i], rad2);
+
+		// draw outline:
 		G.sf_interior(0);
-		G.sf_color(0);
+		G.sf_color(1);
+		//G.sf_color(0);
 		G.circle(Px[i], Py[i], rad2);
 		}
 	if (f_labels) {

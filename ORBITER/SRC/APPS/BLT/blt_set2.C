@@ -298,7 +298,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	cout << "Writing file " << fname << " with " << Iso.Reps->count << " BLT-sets:" << endl;
 	latex_head(f, f_book, f_title, 
 		title, author, 
-		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers);
+		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
+		NULL /* extra_praeamble */);
 
 	f << "\\chapter{Summary}" << endl << endl;
 	f << "There are " << Iso.Reps->count << " BLT-sets." << endl << endl;
@@ -841,7 +842,8 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 	cout << "Writing file " << fname << " with " << Iso.Reps->count << " BLT-sets:" << endl;
 	latex_head(f, f_book, f_title, 
 		title, author, 
-		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers);
+		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
+		NULL /* extra_praeamble */);
 
 	f << "\\chapter{Summary}" << endl << endl;
 	f << "There are " << Iso.Reps->count << " BLT-sets." << endl << endl;

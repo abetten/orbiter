@@ -618,7 +618,8 @@ void design_parameter_database_export_tex(BYTE *path_db)
 		FALSE /* f_landscape */,
 		TRUE /* f_12pt */, 
 		TRUE /* f_enlarged_page */, 
-		TRUE /* f_pagenumbers */);
+		TRUE /* f_pagenumbers */,
+		NULL /* extra_praeamble */);
 	printing_mode pm(printing_mode_latex);
 	
 

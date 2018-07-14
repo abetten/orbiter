@@ -108,7 +108,8 @@ void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 		title, author, FALSE /* f_toc */, FALSE /* f_landscape */,
 			TRUE /* f_12pt */, 
 			TRUE /* f_enlarged_page */, 
-			TRUE /* f_pagenumbers */);
+			TRUE /* f_pagenumbers */, 
+			NULL /* extra_praeamble */);
 
 	f << "\\small" << endl;
 	f << "\\arraycolsep=2pt" << endl;
