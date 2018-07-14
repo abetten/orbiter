@@ -3940,11 +3940,13 @@ INT4 fread_INT4(FILE *fp);
 void fwrite_UBYTEs(FILE *fp, UBYTE *p, INT len);
 void fread_UBYTEs(FILE *fp, UBYTE *p, INT len);
 void latex_head_easy(ostream& ost);
+void latex_head_easy_with_extras_in_the_praeamble(ostream& ost, const BYTE *extras);
 void latex_head_easy_sideways(ostream& ost);
 void latex_head(ostream& ost, INT f_book, INT f_title, 
 	const BYTE *title, const BYTE *author, 
 	INT f_toc, INT f_landscape, INT f_12pt, 
-	INT f_enlarged_page, INT f_pagenumbers);
+	INT f_enlarged_page, INT f_pagenumbers, 
+	const BYTE *extras_for_preamble);
 void latex_foot(ostream& ost);
 void seed_random_generator_with_system_time();
 void seed_random_generator(INT seed);
@@ -3966,6 +3968,7 @@ void scan_permutation_from_stream(istream & is,
 	INT *&perm, INT &degree, INT verbose_level);
 char get_character(istream & is, INT verbose_level);
 void replace_extension_with(char *p, const char *new_ext);
+void chop_off_extension(char *p);
 void chop_off_extension_if_present(char *p, const char *ext);
 void get_fname_base(const char *p, BYTE *fname_base);
 void get_extension_if_present(const char *p, char *ext);
@@ -4091,7 +4094,10 @@ void povray_animation_rotate_around_origin_and_given_vector(double *v,
 	ostream &ost);
 void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	double *v, double angle_zero_one, ostream &ost);
-void povray_end(ostream &ost, double clipping_radius);
+void povray_union_start(ostream &ost);
+void povray_union_end(ostream &ost, double clipping_radius);
+void povray_bottom_plane(ostream &ost);
+void povray_rotate_111(INT h, INT nb_frames, ostream &fp);
 void povray_ini(ostream &ost, const BYTE *fname_pov, INT first_frame, 
 	INT last_frame);
 void test_typedefs();
@@ -4558,9 +4564,11 @@ public:
 		INT verbose_level);
 	void draw_on_circle(char *fname, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
+		INT f_radius, double radius, 
 		INT f_labels, INT f_embedded, INT f_sideways, 
 		double tikz_global_scale, double tikz_global_line_width);
-	void draw_on_circle_2(mp_graphics &G, INT f_labels);
+	void draw_on_circle_2(mp_graphics &G, INT f_labels, 
+		INT f_radius, double radius);
 	void draw(const BYTE *fname, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 		double scale, double line_width, 
@@ -7924,6 +7932,7 @@ public:
 		INT verbose_level);
 	void encode_object_packing(INT *&encoding, INT &encoding_sz, 
 		INT verbose_level);
+	void klein(INT verbose_level);
 
 };
 
@@ -7962,6 +7971,7 @@ void make_Rx(double *R, double chi);
 double atan_xy(double x, double y);
 double dot_product(double *u, double *v, INT len);
 void cross_product(double *u, double *v, double *n);
+double distance_euclidean(double *x, double *y, INT len);
 double distance_from_origin(double x1, double x2, double x3);
 double distance_from_origin(double *x, INT len);
 void make_unit_vector(double *v, INT len);
@@ -7983,5 +7993,7 @@ void make_transform_t_varphi_u_double(INT n, double *varphi, double *u,
 // u is a vector such that varphi(u) \neq -1.
 // A = I + varphi * u.
 void matrix_double_inverse(double *A, double *Av, INT n, INT verbose_level);
+INT line_centered(double *pt1_in, double *pt2_in, 
+	double *pt1_out, double *pt2_out, double r);
 
 

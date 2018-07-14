@@ -728,7 +728,7 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 		}	
 	S->init(A_base);
 	S->init_generators(gens, FALSE);
-	S->compute_base_orbits(2 /*verbose_level - 2*/);
+	S->compute_base_orbits(0 /*verbose_level - 2*/);
 	S->group_order(S_go);
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer_case The starter has a stabilizer of order " << S_go << endl;

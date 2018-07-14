@@ -652,4 +652,111 @@ void object_in_projective_space::encode_object_packing(INT *&encoding, INT &enco
 		}
 }
 
+void object_in_projective_space::klein(INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "object_in_projective_space::klein" << endl;
+		}
+	if (type != t_LNS) {
+		if (f_v) {
+			cout << "object_in_projective_space::klein not of type t_LNS" << endl;
+			}
+		return;
+		}
+	if (P->n != 3) {
+		if (f_v) {
+			cout << "object_in_projective_space::klein not in three space" << endl;
+			}
+		return;
+		}
+
+
+	projective_space *P5;
+	grassmann *Gr;
+	INT *pts_klein;
+	INT i, N;
+	
+	longinteger_object *R;
+	INT **Pts_on_plane;
+	INT *nb_pts_on_plane;
+	INT nb_planes;
+
+
+
+	P5 = new projective_space;
+	
+	P5->init(5, P->F, 
+		FALSE /* f_init_incidence_structure */, 
+		0 /* verbose_level - 2 */);
+
+	pts_klein = NEW_INT(sz);
+	
+	if (f_v) {
+		cout << "object_in_projective_space::klein before P3->klein_correspondence" << endl;
+		}
+	P->klein_correspondence(P5, 
+		set, sz, pts_klein, 0/*verbose_level*/);
+
+
+	N = P5->nb_rk_k_subspaces_as_INT(3);
+	if (f_v) {
+		cout << "object_in_projective_space::klein N = " << N << endl;
+		}
+
+	
+
+	Gr = new grassmann;
+
+	Gr->init(6, 3, P->F, 0 /* verbose_level */);
+
+	if (f_v) {
+		cout << "object_in_projective_space::klein before plane_intersection_type_fast" << endl;
+		}
+	P5->plane_intersection_type_slow(Gr, pts_klein, sz, 
+		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
+		verbose_level /*- 3*/);
+
+	if (f_v) {
+		cout << "object_in_projective_space::klein We found " << nb_planes << " planes." << endl;
+
+		classify C;
+
+		C.init(nb_pts_on_plane, nb_planes, FALSE, 0);
+		cout << "plane types are: ";
+		C.print(TRUE /* f_backwards*/);
+		cout << endl;
+#if 0
+		for (i = 0; i < nb_planes; i++) {
+			if (nb_pts_on_plane[i] >= 3) {
+				cout << setw(3) << i << " / " << nb_planes << " : " << R[i] 
+					<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
+				INT_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+				cout << endl;
+				}
+			}
+#endif
+		}
+	cout << "before delete [] R;" << endl;
+	delete [] R;
+	cout << "before FREE_INT(Pts_on_plane[i]);" << endl;
+	for (i = 0; i < nb_planes; i++) {
+		FREE_INT(Pts_on_plane[i]);
+		}
+	cout << "before FREE_PINT(Pts_on_plane);" << endl;
+	FREE_PINT(Pts_on_plane);
+	cout << "before FREE_INT(nb_pts_on_plane);" << endl;
+	FREE_INT(nb_pts_on_plane);
+
+	
+	
+	FREE_INT(pts_klein);
+	delete P5;
+	delete Gr;
+	if (f_v) {
+		cout << "object_in_projective_space::klein done" << endl;
+		}
+}
+
 

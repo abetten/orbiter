@@ -1527,7 +1527,23 @@ void latex_head_easy(ostream& ost)
 		FALSE /* f_landscape */, 
 		FALSE /* f_12pt */, 
 		FALSE /* f_enlarged_page */, 
-		FALSE /* f_pagenumbers */);
+		FALSE /* f_pagenumbers */, 
+		NULL /* extras_for_preamble */);
+
+}
+
+void latex_head_easy_with_extras_in_the_praeamble(ostream& ost, const BYTE *extras)
+{
+	latex_head(ost, 
+		FALSE /* f_book */, 
+		FALSE /* f_title */, 
+		"", "", 
+		FALSE /*f_toc */, 
+		FALSE /* f_landscape */, 
+		FALSE /* f_12pt */, 
+		FALSE /* f_enlarged_page */, 
+		FALSE /* f_pagenumbers */, 
+		extras /* extras_for_preamble */);
 
 }
 
@@ -1540,14 +1556,16 @@ void latex_head_easy_sideways(ostream& ost)
 		TRUE /* f_landscape */, 
 		FALSE /* f_12pt */, 
 		FALSE /* f_enlarged_page */, 
-		FALSE /* f_pagenumbers */);
+		FALSE /* f_pagenumbers */, 
+		NULL /* extras_for_preamble */);
 
 }
 
 void latex_head(ostream& ost, INT f_book, INT f_title, 
 	const BYTE *title, const BYTE *author, 
 	INT f_toc, INT f_landscape, INT f_12pt, 
-	INT f_enlarged_page, INT f_pagenumbers)
+	INT f_enlarged_page, INT f_pagenumbers, 
+	const BYTE *extras_for_preamble)
 {
 	if (f_12pt) {
 		ost << "\\documentclass[12pt]{";
@@ -1582,6 +1600,8 @@ void latex_head(ostream& ost, INT f_book, INT f_title,
 	ost << "\\usepackage{rotating}\n"; 
 	ost << "\\usepackage{array}\n"; 
 	ost << "\\usepackage{tikz}\n"; 
+	ost << "\\usepackage{anyfontsize}\n"; 
+	ost << "\\usepackage{t1enc}\n"; 
 	ost << "%\\usepackage{amsmath,amsfonts} \n"; 
 	ost << endl;
 	ost << endl;
@@ -1611,6 +1631,10 @@ void latex_head(ostream& ost, INT f_book, INT f_title,
 		ost << "%\\topmargin 0.0in" << endl;
 		ost << "\\textheight 25cm" << endl;
 #endif
+		}
+
+	if (extras_for_preamble) {
+		ost << extras_for_preamble << endl;
 		}
 	ost << endl;
 	ost << endl;
@@ -2596,6 +2620,22 @@ void replace_extension_with(char *p, const char *new_ext)
 			}
 		}
 	strcat(p, new_ext);
+}
+
+void chop_off_extension(char *p)
+{
+	INT len = strlen(p);
+	INT i;
+	
+	for (i = len - 1; i >= 0; i--) {
+		if (p[i] == '/') {
+			break;
+			}
+		if (p[i] == '.') {
+			p[i] = 0;
+			break;
+			}
+		}
 }
 
 void chop_off_extension_if_present(char *p, const char *ext)
@@ -4992,6 +5032,9 @@ void povray_beginning(ostream &ost, double angle)
 	ost << "#include \"woods.inc\"" << endl;
 	ost << "#include \"textures.inc\"" << endl;
 	ost << endl;
+
+
+#if 0
 	ost << "//Place the camera" << endl;
 	ost << "camera {" << endl;
 	ost << "   sky <0,0,1> " << endl;
@@ -5028,6 +5071,48 @@ void povray_beginning(ostream &ost, double angle)
 	ost << "background { color SkyBlue }" << endl;
 	ost << endl;
 	ost << "union{ " << endl;
+	ost << "/* 	        #declare r=0.09 ; " << endl;
+	ost << endl;
+	ost << "object{ // x-axis" << endl;
+	ost << "cylinder{< 0,0,0 >,<1.5,0,0 > ,r }" << endl;
+	ost << " 	pigment{Red} " << endl;
+	ost << endl;
+	ost << "} " << endl;
+	ost << "object{ // y-axis" << endl;
+	ost << "cylinder{< 0,0,0 >,<0,1.5,0 > ,r }" << endl;
+	ost << " 	pigment{Green} " << endl;
+	ost << endl;
+	ost << "} " << endl;
+	ost << "object{ // z-axis" << endl;
+	ost << "cylinder{< 0,0,0 >,<0,0,1.5 > ,r }" << endl;
+	ost << " 	pigment{Blue} " << endl;
+ 	ost << endl;
+	ost << "} */" << endl;
+#else
+	ost << "//Place the camera" << endl;
+	ost << "camera {" << endl;
+	ost << "   sky <1,1,1> " << endl;
+	ost << "   //direction <1,0,0>" << endl;
+	ost << "   //right <1,1,0> " << endl;
+	ost << "   location  <-3,1,3>" << endl;
+	ost << "   look_at   <1,1,1>*-1/sqrt(3)" << endl;
+	ost << "   angle " << angle << "      //Angle of the view" << endl;
+	ost << "	// smaller numbers are closer. Must be less than 180" << endl;
+	ost << "}" << endl;
+	ost << endl;
+	ost << "//Ambient light to brighten up darker pictures" << endl;
+	ost << "//global_settings { ambient_light White }" << endl;
+	ost << "global_settings { max_trace_level 10 }" << endl;
+	ost << endl;
+	ost << "//Place a light" << endl;
+	ost << "light_source { <4,4,4> color White }  " << endl;  
+	ost << "light_source { <-5,0,5> color White }" << endl;
+	ost << endl;
+	ost << "//Set a background color" << endl;
+	ost << "background { color SkyBlue }" << endl;
+	ost << endl;
+	ost << "// main part:" << endl;
+#endif
 	ost << endl;
 	ost << endl;
 }
@@ -5198,51 +5283,12 @@ void povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
 	ost << endl;
 }
 
-void povray_end(ostream &ost, double clipping_radius)
-// clipping_radius = 0.9
+void povray_union_start(ostream &ost)
 {
-	ost << "	// and now we pull the axis 1,1,1 up:" << endl;
-	ost << endl;
-	ost << "		#declare A=pi/4;" << endl;
-	ost << "	matrix<" << endl;
-	ost << "	cos(A),0,sin(A)," << endl;
-	ost << "	0,1,0," << endl;
-	ost << "	-sin(A),0,cos(A)," << endl;
-	ost << "	0,0,0>" << endl;
+	ost << "union{ " << endl;
 	ost << endl;
 	ost << endl;
-	ost << " 	scale  0.3        // 0.9 macro  " << endl;
-	ost << endl;
-	ost << endl;
-	ost << endl;
-	ost << "	clipped_by { sphere{ < 0,0.,0. > , " 
-		<< clipping_radius << "  } } // < 0.2,0.2,0.2 > , 1.8" << endl;
-	ost << "	bounded_by { clipped_by }" << endl;
-	ost << endl;
-	ost << "	// rotate the top towards the viewpoint so we can see slightly from above:" << endl;
-	ost << "	//rotate <-5,0,0>  // this does not work" << endl;
-	ost << endl;
-	ost << "	// trying to tilt it up a bit:" << endl;
-	ost << endl;
-	ost << "	// move 1,1,1 to 1,0,0:" << endl;
-	ost << "	matrix<" << endl;
-	ost << "	1/sqrt(3),2/sqrt(6),0," << endl;
-	ost << "	1/sqrt(3),-1/sqrt(6),1/sqrt(2)," << endl;
-	ost << "	1/sqrt(3),-1/sqrt(6),-1/sqrt(2)," << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << "        rotate <0,30,0> " << endl;
-	ost << endl;
-	ost << "	// move 1,0,0 back to 1,1,1:" << endl;
-	ost << "	matrix<" << endl;
-	ost << "	1/sqrt(3),1/sqrt(3),1/sqrt(3)," << endl;
-	ost << "	2/sqrt(6),-1/sqrt(6),-1/sqrt(6)," << endl;
-	ost << "	0,1/sqrt(2),-1/sqrt(2)," << endl;
-	ost << "	0,0,0>" << endl;
-	ost << endl;
-	ost << "}" << endl;
-	ost << endl;
-	ost << endl;
+	ost << "// uncomment this if you need axes:" << endl;
 	ost << "/* 	        #declare r=0.09 ; " << endl;
 	ost << endl;
 	ost << "object{ // x-axis" << endl;
@@ -5260,6 +5306,39 @@ void povray_end(ostream &ost, double clipping_radius)
 	ost << " 	pigment{Blue} " << endl;
  	ost << endl;
 	ost << "} */" << endl;
+}
+
+void povray_union_end(ostream &ost, double clipping_radius)
+{
+	ost << endl;
+	ost << " 	scale  1.0" << endl;
+	ost << endl;
+	ost << "	clipped_by { sphere{ < 0.,0.,0. > , " 
+		<< clipping_radius << "  } }" << endl;
+	ost << "	bounded_by { clipped_by }" << endl;
+	ost << endl;
+	ost << "} // union" << endl;
+}
+
+void povray_bottom_plane(ostream &ost)
+{
+
+	ost << endl;
+	ost << "//bottom plane:" << endl;
+	ost << "plane {" << endl;
+	ost << "    <1,1,1>*1/sqrt(3), -2" << endl;
+	ost << "    texture {" << endl;
+	ost << "      pigment {SteelBlue}" << endl;
+	ost << "      finish {" << endl;
+	ost << "        diffuse 0.6" << endl;
+	ost << "        ambient 0.2" << endl;
+	ost << "        phong 1" << endl;
+	ost << "        phong_size 100" << endl;
+	ost << "        reflection 0.25" << endl;
+	ost << "      }" << endl;
+	ost << "    }" << endl;
+	ost << "  } // end plane" << endl;
+#if 0
 	ost << endl;
 	ost << endl;
 	ost << endl;
@@ -5284,9 +5363,23 @@ void povray_end(ostream &ost, double clipping_radius)
 	ost << "      }" << endl;
 	ost << "    }" << endl;
 	ost << "  }" << endl;
+#endif
 	ost << endl;
 	ost << endl;
 
+}
+
+void povray_rotate_111(INT h, INT nb_frames, ostream &fp)
+{
+	//INT nb_frames_per_rotation;
+	//nb_frames_per_rotation = nb_frames;
+	double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
+		// rotate in the opposite direction
+	
+	double v[3] = {1.,1.,1.};
+	
+	povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle(
+		v, angle_zero_one, fp);
 }
 
 

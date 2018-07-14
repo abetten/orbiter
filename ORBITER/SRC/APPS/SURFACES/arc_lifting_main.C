@@ -189,7 +189,8 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 	latex_head(fp, FALSE /* f_book */, TRUE /* f_title */, 
 		title, author, 
 		FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-		TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/);
+		TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/, 
+		NULL /* extra_praeamble */);
 
 
 	fp << "We are lifting the arc ";
@@ -291,7 +292,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	latex_head(fp, FALSE /* f_book */, TRUE /* f_title */, 
 		title, author, 
 		FALSE /*f_toc */, FALSE /* f_landscape */, FALSE /* f_12pt */, 
-		TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/);
+		TRUE /*f_enlarged_page */, TRUE /* f_pagenumbers*/, 
+		NULL /* extra_praeamble */);
 
 
 	if (f_v) {

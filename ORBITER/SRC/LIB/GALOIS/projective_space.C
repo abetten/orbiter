@@ -4579,34 +4579,48 @@ void projective_space::plane_intersection_type_slow(
 		unrank_point(Coords + i * d, set[i]);
 		}
 	if (f_vv) {
-		cout << "projective_space::plane_intersection_type_fast Coords:" << endl;
+		cout << "projective_space::plane_intersection_type_slow Coords:" << endl;
 		INT_matrix_print(Coords, set_size, d);
 		}
 
 	l = 0;
 	for (rk = 0; rk < N_planes; rk++) {
 
+		if (N_planes > 1000000) {
+			if ((rk % 250000) == 0) {
+				cout << "projective_space::plane_intersection_type_slow " << rk << " / " << N_planes << endl;
+				}
+			}
 		G->unrank_INT(rk, 0 /* verbose_level */);
+		INT_vec_copy(G->M, Basis_save, 3 * d);
+#if 0
 		for (i = 0; i < 3 * d; i++) {
 			Basis_save[i] = G->M[i];
 			}
+#endif
 		INT *pts_on_plane;
 		INT nb = 0;
 	
 		pts_on_plane = NEW_INT(set_size);
 			
 		for (u = 0; u < set_size; u++) {
+			INT_vec_copy(Basis_save, Basis, 3 * d);
+			INT_vec_copy(Coords + u * d, Basis + 3 * d, d);
+#if 0
 			for (i = 0; i < 3 * d; i++) {
 				Basis[i] = Basis_save[i];
 				}
 			for (i = 0; i < d; i++) {
 				Basis[3 * d + i] = Coords[u * d + i];
 				}
+#endif
 			r = F->rank_of_rectangular_matrix(Basis, 4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				pts_on_plane[nb++] = u;
 				}
 			}
+
+		
 		Pts_on_plane[l] = pts_on_plane;
 		nb_pts_on_plane[l] = nb;
 		R[l].create(rk);

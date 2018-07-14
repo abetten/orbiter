@@ -60,7 +60,8 @@ void spread::print_isomorphism_type(isomorph *Iso,
 		FALSE /* f_landscape*/,
 		FALSE /* f_12pt */, 
 		TRUE /* f_enlarged_page */, 
-		TRUE /* f_pagenumbers */);
+		TRUE /* f_pagenumbers */, 
+		NULL /* extra_praeamble */);
 	
 	
 	file << "\\parindent=0pt" << endl;
@@ -2029,7 +2030,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 	cout << "Writing file " << fname << " with " << Iso.Reps->count << " spreads:" << endl;
 	latex_head(f, f_book, f_title, 
 		title, author, 
-		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers);
+		f_toc, f_landscape, f_12pt, f_enlarged_page, f_pagenumbers, 
+		NULL /* extra_praeamble */);
 
 	f << "\\chapter{Summary}" << endl << endl;
 	f << "There are " << Iso.Reps->count << " spreads." << endl << endl;

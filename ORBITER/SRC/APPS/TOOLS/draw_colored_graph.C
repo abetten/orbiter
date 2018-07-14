@@ -71,6 +71,8 @@ int main(int argc, char **argv)
 	INT Levi_m = 0;
 	INT Levi_n = 0;
 	INT f_Levi_discrete = FALSE;
+	INT f_radius = FALSE;
+	double radius = 1000;
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -119,6 +121,11 @@ int main(int argc, char **argv)
 		else if (strcmp(argv[i], "-sideways") == 0) {
 			f_sideways = TRUE;
 			cout << "-sideways " << endl;
+			}
+		else if (strcmp(argv[i], "-radius") == 0) {
+			f_radius = TRUE;
+			sscanf(argv[++i], "%lf", &radius);
+			cout << "-radius " << radius << endl;
 			}
 		else if (strcmp(argv[i], "-scale") == 0) {
 			f_scale = TRUE;
@@ -247,6 +254,7 @@ int main(int argc, char **argv)
 		replace_extension_with(fname2, "_on_circle");
 		CG->draw_on_circle(fname2, 
 			xmax_in, ymax_in, xmax_out, ymax_out,
+			f_radius, radius, 
 			f_labels, f_embedded, f_sideways, 
 			scale, line_width);
 		}

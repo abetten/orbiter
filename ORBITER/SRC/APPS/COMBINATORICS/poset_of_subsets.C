@@ -5,7 +5,8 @@
 
 #include "orbiter.h"
 
-void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  INT verbose_level);
+void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  
+	INT f_depth_first, INT f_breadth_first, INT verbose_level);
 
 
 int main(int argc, char **argv)
@@ -15,6 +16,8 @@ int main(int argc, char **argv)
 	INT f_n = FALSE;
 	INT n;
 	INT f_tree = FALSE;
+	INT f_depth_first = FALSE;
+	INT f_breadth_first = FALSE;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -25,6 +28,14 @@ int main(int argc, char **argv)
 			f_n = TRUE;
 			n = atoi(argv[++i]);
 			cout << "-n " << n << endl;
+			}
+		else if (strcmp(argv[i], "-depth_first") == 0) {
+			f_depth_first = TRUE;
+			cout << "-depth_first " << endl;
+			}
+		else if (strcmp(argv[i], "-breadth_first") == 0) {
+			f_breadth_first = TRUE;
+			cout << "-breadth_first " << endl;
 			}
 		else if (strcmp(argv[i], "-tree") == 0) {
 			f_tree = TRUE;
@@ -46,14 +57,16 @@ int main(int argc, char **argv)
 		}
 	sprintf(fname + strlen(fname), ".layered_graph");
 	
-	make_subset_lattice(LG, n, f_tree, verbose_level);
+	make_subset_lattice(LG, n, f_tree, 
+		f_depth_first, f_breadth_first, verbose_level);
 	
 	LG->write_file(fname, 0 /*verbose_level*/);
 
 	delete LG;
 }
 
-void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  INT verbose_level)
+void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  
+	INT f_depth_first, INT f_breadth_first, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -96,11 +109,43 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  INT verbose_lev
 			LG->add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
 
 			BYTE text[1000];
-			if (k) {
-				sprintf(text, "%ld", set1[k - 1]);
+			INT a, j, j0;
+			if (f_depth_first) {
+				cout << "k=" << k << " r=" << r << " set=";
+				INT_vec_print(cout, set1, k);
+				cout << endl;
+				a = 0;
+				for (i = k - 1; i >= 0; i--) {
+					if (i) {
+						j0 = set1[i - 1];
+						}
+					else {
+						j0 = -1;
+						}
+					cout << "i=" << i << " set1[i]=" << set1[i] << endl;
+					for (j = j0 + 1; j < set1[i]; j++) {
+						cout << "i = " << i << " j=" << j << " adding " << i_power_j(2, n - j - 1) << endl;
+						a += i_power_j(2, n - j - 1);
+						}
+					}
+				a += k;
+				sprintf(text, "%ld", a);
+				}
+			else if (f_breadth_first) {
+				a = 0;
+				for (i = 0; i < k; i++) {
+					a += Nb[i];
+					}
+				a += r;
+				sprintf(text, "%ld", a);
 				}
 			else {
-				text[0] = 0;
+				if (k) {
+					sprintf(text, "%ld", set1[k - 1]);
+					}
+				else {
+					text[0] = 0;
+					}
 				}
 			LG->add_text(k, r, text, 0/*verbose_level*/);
 			}

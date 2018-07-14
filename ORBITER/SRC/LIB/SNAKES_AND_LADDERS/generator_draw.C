@@ -1626,7 +1626,8 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 			}
 		else {
 			// .9 means we don't draw a label at that node
-			LG->set_radius_factor_for_all_nodes_at_level(i, .9 /* radius_factor */, 0 /* verbose_level */);
+			//LG->set_radius_factor_for_all_nodes_at_level(i, .9 /* radius_factor */, 0 /* verbose_level */);
+			LG->set_radius_factor_for_all_nodes_at_level(i, 4 /* radius_factor */, 0 /* verbose_level */);
 			}
 		}
 	

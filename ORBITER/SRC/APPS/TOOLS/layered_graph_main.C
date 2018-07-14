@@ -271,6 +271,7 @@ void draw_vertex_callback(layered_graph *LG, mp_graphics *G, INT layer, INT node
 	cout << "draw_vertex_callback node " << node << endl;
 	if (f_my_type) {
 		if (strcmp(the_type, "as_graph") == 0) {
+			cout << "drawing as graph, calling draw_vertex_callback_graph" << endl;
 			draw_vertex_callback_graph(LG, G, layer, node, x, y, dx, dy);
 			}
 		if (strcmp(the_type, "as_tournament") == 0) {
@@ -438,6 +439,7 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, IN
 
 	if (LG->L[layer].Nodes[node].f_has_vec_data) {
 
+		cout << "node has vector data" << endl;
 		BYTE str[1000000];
 		INT i;
 		INT *D;

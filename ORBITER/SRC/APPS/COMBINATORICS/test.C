@@ -1017,7 +1017,8 @@ void one_by_one()
 		FALSE /* f_landscape*/,
 			FALSE /* f_12pt */, 
 			TRUE /* f_enlarged_page */, 
-			TRUE /* f_pagenumbers */);
+			TRUE /* f_pagenumbers */, 
+			NULL /* extra_praeamble */);
 	
 	file << "\\pagestyle{empty}" << endl;
 	//file << "\\section{BLT set " << cnt << " over GF$(" << q << ")$}" << endl;

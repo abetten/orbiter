@@ -893,6 +893,20 @@ void cross_product(double *u, double *v, double *n)
 	n[2] = u[0] * v[1] - u[1] * v[0];
 }
 
+double distance_euclidean(double *x, double *y, INT len)
+{
+	double d, a;
+	INT i;
+
+	d = 0;
+	for (i = 0; i < len; i++) {
+		a = y[i] - x[i];
+		d += a * a;
+		}
+	d = sqrt(d);
+	return d;
+}
+
 double distance_from_origin(double x1, double x2, double x3)
 {
 	double d;
@@ -1241,7 +1255,7 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 // 19: z
 // 20: 1
 {
-	INT f_v = TRUE;//(verbose_level >= 1);
+	INT f_v = (verbose_level >= 1);
 	INT Variables[] = {
 		0,0,0,
 		0,0,1,
@@ -1462,4 +1476,69 @@ void matrix_double_inverse(double *A, double *Av, INT n,
 		cout << "matrix_double_inverse done" << endl;
 		}
 }
+
+
+INT line_centered(double *pt1_in, double *pt2_in, 
+	double *pt1_out, double *pt2_out, double r)
+{
+	double v[3];
+	double x1, x2, x3, y1, y2, y3;
+	double a, b, c, av, d, e;
+	double lambda1, lambda2;
+
+	x1 = pt1_in[0];
+	x2 = pt1_in[1];
+	x3 = pt1_in[2];
+	
+	y1 = pt2_in[0];
+	y2 = pt2_in[1];
+	y3 = pt2_in[2];
+	
+	v[0] = y1 - x1;
+	v[1] = y2 - x2;
+	v[2] = y3 - x3;
+	// solve 
+	// (x1+\lambda*v[0])^2 + (x2+\lambda*v[1])^2 + (x3+\lambda*v[2])^2 = r^2
+	// which gives the quadratic
+	// (v[0]^2+v[1]^2+v[2]^2) * \lambda^2 
+	// + (2*x1*v[0] + 2*x2*v[1] + 2*x3*v[2]) * \lambda 
+	// + x1^2 + x2^2 + x3^2 - r^2 
+	// = 0
+	a = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	b = 2 * (x1 * v[0] + x2 * v[1] + x3 * v[2]);
+	c = x1 * x1 + x2 * x2 + x3 * x3 - r * r;
+	av = 1. / a;
+	b = b * av;
+	c = c * av;
+	d = b * b * 0.25 - c;
+	if (d < 0) {
+		cout << "line_centered d < 0" << endl;
+		cout << "d=" << d << endl;
+		cout << "a=" << a << endl;
+		cout << "b=" << b << endl;
+		cout << "c=" << c << endl;
+		cout << "pt1_in=";
+		double_vec_print(pt1_in, 3);
+		cout << endl;
+		cout << "pt2_in=";
+		double_vec_print(pt2_in, 3);
+		cout << endl;
+		cout << "v=";
+		double_vec_print(v, 3);
+		cout << endl;
+		return FALSE;
+		}
+	e = sqrt(d);
+	lambda1 = -b * 0.5 + e;
+	lambda2 = -b * 0.5 - e;
+	pt1_out[0] = x1 + lambda1 * v[0];
+	pt1_out[1] = x2 + lambda1 * v[1];
+	pt1_out[2] = x3 + lambda1 * v[2];
+	pt2_out[0] = x1 + lambda2 * v[0];
+	pt2_out[1] = x2 + lambda2 * v[1];
+	pt2_out[2] = x3 + lambda2 * v[2];
+	return TRUE;
+}
+
+
 
