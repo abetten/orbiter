@@ -31,7 +31,6 @@ int main(int argc, const char **argv)
 	graph_generator Gen;
 	INT schreier_depth = 10000;
 	INT f_use_invariant_subset_if_available = TRUE;
-	//INT f_implicit_fusion = FALSE;
 	INT f_debug = FALSE;
 	INT depth;
 	INT f_embedded = TRUE;
@@ -45,7 +44,6 @@ int main(int argc, const char **argv)
 	depth = Gen.gen->main(t0, 
 		schreier_depth, 
 		f_use_invariant_subset_if_available, 
-		//Gen.f_lex,
 		f_debug, 
 		Gen.gen->verbose_level);
 	cout << "Gen.gen->main returns depth=" << depth << endl;
@@ -57,13 +55,17 @@ int main(int argc, const char **argv)
 	//Gen.gen->draw_poset(Gen.gen->fname_base, depth, Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
 
 	if (Gen.f_draw_poset) {
-		Gen.gen->draw_poset(Gen.gen->fname_base, depth, Gen.n /* data1 */, f_embedded, f_sideways, Gen.gen->verbose_level);
+		Gen.gen->draw_poset(Gen.gen->fname_base, depth, 
+			Gen.n /* data1 */, f_embedded, f_sideways, 
+			Gen.gen->verbose_level);
 		}
 
 
 	if (Gen.f_draw_full_poset) {
 		//double x_stretch = 0.4;
-		Gen.gen->draw_poset_full(Gen.gen->fname_base, depth, Gen.n /* data1 */, f_embedded, f_sideways, Gen.x_stretch, Gen.gen->verbose_level);
+		Gen.gen->draw_poset_full(Gen.gen->fname_base, depth, 
+			Gen.n /* data1 */, f_embedded, f_sideways, 
+			Gen.x_stretch, Gen.gen->verbose_level);
 		}
 
 	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
@@ -147,6 +149,18 @@ int main(int argc, const char **argv)
 		FREE_INT(transporter);
 		}
 
+	INT N, F, level;
+	
+	N = 0;
+	F = 0;
+	for (level = 0; level <= Gen.gen->depth; level++) {
+		N += Gen.gen->nb_orbits_at_level(level);
+		}
+	for (level = 0; level < Gen.gen->depth; level++) {
+		F += Gen.gen->nb_flag_orbits_up_at_level(level);
+		}
+	cout << "N=" << N << endl;
+	cout << "F=" << F << endl;
 	} // clean up graph_generator
 	
 	the_end(t0);

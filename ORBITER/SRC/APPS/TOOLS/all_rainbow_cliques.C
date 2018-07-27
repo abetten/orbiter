@@ -16,6 +16,16 @@
 INT t0; // the system time when the program started
 
 
+#if 0
+fname, f_output_solution_raw, 
+					f_output_file, output_file, 
+					f_maxdepth, maxdepth, 
+					f_restrictions, restrictions, 
+					f_tree, f_decision_nodes_only, fname_tree,  
+					print_interval, 
+					search_steps, decision_steps, nb_sol, dt, 
+					verbose_level
+#endif
 
 int main(int argc, char **argv)
 {
@@ -54,6 +64,7 @@ int main(int argc, char **argv)
 	const BYTE *input_list_of_files_fname[100000];
 	INT f_success_file = FALSE;
 	const BYTE *success_fname = NULL;
+	INT f_nonrecursive = FALSE;
 
 
 	cout << argv[0] << endl;
@@ -66,6 +77,10 @@ int main(int argc, char **argv)
 			f_file = TRUE;
 			fname = argv[++i];
 			cout << "-file " << fname << endl;
+			}
+		else if (strcmp(argv[i], "-nonrecursive") == 0) {
+			f_nonrecursive = TRUE;
+			cout << "-nonrecursive " << endl;
 			}
 		else if (strcmp(argv[i], "-success_file") == 0) {
 			f_success_file = TRUE;
@@ -272,23 +287,39 @@ int main(int argc, char **argv)
 #endif
 
 
-			cout << "finding rainbow cliques, calling colored_graph_all_cliques" << endl;
 
-			INT search_steps, decision_steps, nb_sol, dt;
+			if (f_nonrecursive) {
+				INT nb_sol, nb_backtrack_nodes;
+
+				cout << "finding rainbow cliques, calling colored_graph_all_rainbow_cliques_nonrecursive" << endl;
+
+				nb_sol = colored_graph_all_rainbow_cliques_nonrecursive(fname, nb_backtrack_nodes, verbose_level);
+
+				cout << "nb_sol = " << nb_sol << endl;
+				cout << "nb_backtrack_nodes = " << nb_backtrack_nodes << endl;
+			
+				cout << "finding rainbow cliques, after colored_graph_all_rainbow_cliques_nonrecursive" << endl;
+				}
+			else {
+				cout << "finding rainbow cliques, calling colored_graph_all_cliques" << endl;
+
+				INT search_steps, decision_steps, nb_sol, dt;
 
 
-			colored_graph_all_cliques(fname, f_output_solution_raw, 
-				f_output_file, output_file, 
-				f_maxdepth, maxdepth, 
-				f_restrictions, restrictions, 
-				f_tree, f_decision_nodes_only, fname_tree,  
-				print_interval, 
-				search_steps, decision_steps, nb_sol, dt, 
-				verbose_level);
-				// in GALOIS/colored_graph.C
+				colored_graph_all_cliques(fname, f_output_solution_raw, 
+					f_output_file, output_file, 
+					f_maxdepth, maxdepth, 
+					f_restrictions, restrictions, 
+					f_tree, f_decision_nodes_only, fname_tree,  
+					print_interval, 
+					search_steps, decision_steps, nb_sol, dt, 
+					verbose_level);
+					// in GALOIS/colored_graph.C
 
+				cout << "nb_sol = " << nb_sol << endl;
 
-			cout << "after colored_graph_all_cliques" << endl;
+				cout << "after colored_graph_all_cliques" << endl;
+				}
 
 			}
 		}

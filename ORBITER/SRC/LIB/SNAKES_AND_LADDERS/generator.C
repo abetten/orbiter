@@ -15,6 +15,19 @@ INT generator::nb_orbits_at_level(INT level)
 	return l;
 }
 
+INT generator::nb_flag_orbits_up_at_level(INT level)
+{
+	INT f, l, i, F;
+
+	f = first_oracle_node_at_level[level];
+	l = nb_orbits_at_level(level);
+	F = 0;
+	for (i = 0; i < l; i++) {
+		F += root[f + i].nb_extensions;
+		}
+	return F;
+}
+
 oracle *generator::get_node_ij(INT level, INT node)
 {
 	INT f;

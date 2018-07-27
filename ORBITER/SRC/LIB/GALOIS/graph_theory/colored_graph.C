@@ -261,20 +261,47 @@ void colored_graph::print()
 	
 	cout << "colored graph with " << nb_points << " points and " << nb_colors << " colors" << endl;
 
-	cout << "i : points[i] : point_color[i]" << endl;
+	cout << "i : point_label[i] : point_color[i]" << endl;
 	for (i = 0; i < nb_points; i++) {
 		cout << i << " : " << points[i] << " : " << point_color[i] << endl;
 		}
+	cout << endl;
 	
 	classify C;
 
-	C.init(point_color, nb_points, FALSE, 0);
+	C.init(point_color, nb_points, TRUE, 0);
+
+	INT *A;
+	INT I, J, f1, l1, f2, l2, ii, jj, idx1, idx2;
+
+	cout << "color : size  of color class: color class" << endl;
+	for (I = 0; I < C.nb_types; I++) {
+		f1 = C.type_first[I];
+		l1 = C.type_len[I];
+		cout << I << " : " << l1 << " : ";
+		for (i = 0; i < l1; i++) {
+			ii = f1 + i;
+			idx1 = C.sorting_perm_inv[ii];
+			cout << idx1;
+			if (i < l1 - 1) {
+				cout << ", ";
+				}
+			}
+		cout << endl;
+		}
+	cout << endl;
+	
+
 	cout << "point colors: ";
-	C.print_naked(TRUE);
+	C.print_first(TRUE);
 	cout << endl;
 
-	
-	cout << "Adjacency:" << endl;
+	cout << "color class sizes: ";
+	C.print_second(TRUE);
+	cout << endl;
+
+
+	cout << "Adjacency (blocked off by color classes):" << endl;
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {
 			aij = is_adjacent(i, j);
@@ -283,8 +310,6 @@ void colored_graph::print()
 		cout << endl;
 		}
 
-	INT *A;
-	INT I, J, f1, l1, f2, l2, ii, jj, idx1, idx2;
 
 	A = NEW_INT(nb_points * nb_points);
 	for (I = 0; I < C.nb_types; I++) {
@@ -494,6 +519,47 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 
 	if (f_v) {
 		cout << "colored_graph::init_adjacency" << endl;
+		}
+
+}
+
+void colored_graph::init_adjacency_upper_triangle(INT nb_points, INT nb_colors, 
+	INT *colors, INT *Adj, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, j, k;
+	INT bitvector_length;
+	UBYTE *bitvec;
+
+
+	if (f_v) {
+		cout << "colored_graph::init_adjacency_upper_triangle" << endl;
+		cout << "nb_points=" << nb_points << endl;
+		cout << "nb_colors=" << nb_colors << endl;
+		}
+	L = (nb_points * (nb_points - 1)) >> 1;
+
+	bitvector_length = (L + 7) >> 3;
+	bitvec = NEW_UBYTE(bitvector_length);
+	for (i = 0; i < bitvector_length; i++) {
+		bitvec[i] = 0;
+		}
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++) {
+			k = ij2k(i, j, nb_points);
+			if (Adj[k]) {
+				bitvector_m_ii(bitvec, k, 1);
+				}
+			}
+		}
+	init(nb_points, nb_colors, 
+		colors, bitvec, TRUE /* f_ownership_of_bitvec */, 
+		verbose_level);
+
+	// do not free bitvec here
+
+	if (f_v) {
+		cout << "colored_graph::init_adjacency_upper_triangle" << endl;
 		}
 
 }
@@ -1460,6 +1526,70 @@ void colored_graph::export_to_magma(const BYTE *fname, INT verbose_level)
 		}
 }
 
+void colored_graph::export_to_maple(const BYTE *fname, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT i, j, h;
+	INT nb_edges;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_maple" << endl;
+		}
+	{
+		ofstream fp(fname);
+
+
+
+
+		//4
+		//6
+		//1 2   1 3   1 4   2 3   2 4   3 4
+		//3 4
+		//The first integer 4 is the number of vertices.  
+		// The second integer 6 is the number of edges. 
+		// This is followed by the edges on multiple lines with more 
+		// than one edge per line. 
+		// To read the graph back into Maple you would do
+		//G := ImportGraph(K4, edges);
+
+
+		fp << nb_points << endl;
+
+		nb_edges = 0;
+		for (i = 0; i < nb_points; i++) {
+			for (j = i + 1; j < nb_points; j++) {
+				if (is_adjacent(i, j)) {
+					nb_edges++;
+					}
+				}
+
+			}
+		fp << nb_edges << endl;
+		h = 0;
+		for (i = 0; i < nb_points; i++) {
+			for (j = i + 1; j < nb_points; j++) {
+				if (is_adjacent(i, j)) {
+					h++;
+					fp << i + 1 << " " << j + 1 << " ";
+					if ((h % 10) == 0) {
+						fp << endl;
+						}
+					}
+				}
+			}
+		fp << endl;
+		fp << endl;
+
+
+
+	}
+	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+
+	if (f_v) {
+		cout << "colored_graph::export_to_maple" << endl;
+		}
+}
+
 void colored_graph::export_to_file(const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1867,6 +1997,331 @@ void colored_graph::draw_it(const BYTE *fname_base,
 
 
 
+
+
+INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT f_vv = (verbose_level >= 2);
+	
+	if (f_v) {
+		cout << "colored_graph::rainbow_cliques_nonrecursive" << endl;
+		}
+
+	INT *live_pts;
+	INT *start;
+	INT *end;
+	INT *min_color;
+	INT *choice;
+	INT *cc; // [nb_colors]
+	INT *cf; // [nb_colors]
+	INT *cs; // [nb_colors]
+	INT target_depth = nb_colors;
+	INT nb_sol = 0;
+	INT depth;
+	INT c0;
+	INT nb_min_color;
+	INT i, a, c, s;
+
+
+	live_pts = NEW_INT(nb_points);
+	start = NEW_INT(nb_colors + 1);
+	end = NEW_INT(nb_colors + 1);
+	min_color = NEW_INT(nb_colors + 1);
+	choice = NEW_INT(nb_colors + 1);
+	cc = NEW_INT(nb_colors);
+	cf = NEW_INT(nb_colors);
+	cs = NEW_INT(nb_colors);
+
+	for (i = 0; i < nb_points; i++) {
+		live_pts[i] = i;
+		}
+	
+	start[0] = 0;
+	end[0] = nb_points;
+	for (i = 0; i < nb_colors; i++) {
+		min_color[i] = -1;
+		choice[i] = 0;
+		cs[i] = FALSE;
+		}
+	
+	depth = 0;
+	nb_backtrack_nodes = 0;
+
+	while (TRUE) {
+
+		nb_backtrack_nodes++;
+
+
+#if 0
+		if (depth == 2 && cc[1] != 9963) {
+			depth--;
+			}
+
+		if (depth == 3 && cc[2] != 10462) {
+			depth--;
+			}
+		if (depth == 4 && cc[3] != 1) {
+			depth--;
+			}
+#endif
+
+		if (f_vv) {
+			cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth 
+			<< " : cc=";
+			INT_vec_print(cout, cc, depth);
+			cout << " : start=";
+			INT_vec_print(cout, start, depth + 1);
+			cout << " : end=";
+			INT_vec_print(cout, end, depth + 1);
+			cout << " : min_color=";
+			INT_vec_print(cout, min_color, depth + 1);
+			cout << " : choice=";
+			INT_vec_print(cout, choice, depth + 1);
+			cout << endl;
+			cout << "live_pts=";
+			INT_vec_print_fully(cout, live_pts + start[depth], end[depth] - start[depth]);
+			cout << endl;
+			cout << "live points (full) = ";
+			INT_vec_print_fully(cout, live_pts, nb_points);
+			cout << endl;
+			}
+
+		
+		if (depth == target_depth) {
+			cout << "solution " << nb_sol << " : ";
+			INT_vec_print_fully(cout, cc, depth);
+			cout << endl;
+			nb_sol++;
+			depth--;
+			}
+
+		if (min_color[depth] == -1) {
+
+			if (f_vv) {
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", initializing new level" << endl;
+				}
+			// clump by adjacency:
+			if (depth) {
+
+				a = cc[depth - 1];
+				s = start[depth];
+				for (i = s; i < end[depth]; i++) {
+					if (is_adjacent(a, live_pts[i])) {
+						if (i != s) {
+							INT tmp;
+
+							tmp = live_pts[s];
+							live_pts[s] = live_pts[i];
+							live_pts[i] = tmp;
+							}
+						s++;
+						}
+					}
+				end[depth + 1] = s;
+				}
+			else {
+				end[depth + 1] = end[depth];
+				}
+
+			if (f_vv) {
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", after clump by adjacency end[" << depth + 1 << "]=" << end[depth + 1] << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth;
+				cout << endl;
+				cout << "live points = ";
+				INT_vec_print_fully(cout, live_pts + start[depth], end[depth + 1] - start[depth]);
+				cout << endl;
+				cout << "live points (full) = ";
+				INT_vec_print_fully(cout, live_pts, nb_points);
+				cout << endl;
+				}
+
+			// compute color frequency:
+			for (i = 0; i < nb_colors; i++) {
+				cf[i] = 0;
+				}
+			for (i = start[depth]; i < end[depth + 1]; i++) {
+				a = live_pts[i];
+				c = point_color[a];
+				cf[c]++;
+				}
+			nb_min_color = INT_MAX;
+			c0 = -1;
+			for (c = 0; c < nb_colors; c++) {
+				if (cf[c] < nb_min_color && !cs[c]) {
+					c0 = c;
+					nb_min_color = cf[c];
+					}
+				}
+			if (f_vv) {
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", cf = ";
+				INT_vec_print(cout, cf, nb_colors);
+				cout << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", cs = ";
+				INT_vec_print(cout, cs, nb_colors);
+				cout << endl;
+				}
+
+
+			min_color[depth] = c0;
+
+			// clamp by color class:
+			s = start[depth];
+			for (i = s; i < end[depth + 1]; i++) {
+				if (point_color[live_pts[i]] == c0) {
+					if (i != s) {
+						INT tmp;
+
+						tmp = live_pts[s];
+						live_pts[s] = live_pts[i];
+						live_pts[i] = tmp;
+						}
+					s++;
+					}
+				}
+			start[depth + 1] = s;
+			choice[depth] = 0;
+
+			if (f_vv) {
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", after clump by color class start[" << depth + 1 << "]=" << start[depth + 1] << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", min color = " << c0 << endl;
+				cout << "min color class " << min_color[depth] << " of size " << start[depth + 1] - start[depth] << endl;
+				//cout << "starts at start[depth]= " << start[depth] << endl;
+				//cout << "ends at start[depth+1]= " << start[depth+1] << endl;
+				INT_vec_print_fully(cout, live_pts + start[depth], start[depth + 1] - start[depth]);
+				cout << endl;
+				}
+
+#if 0
+			if (depth == 5) {
+				exit(1);
+				}
+#endif
+			} // if mincolor
+
+		INT j;
+
+		j = choice[depth];
+
+
+		if (start[depth + 1] - start[depth]) {
+			if (j < start[depth + 1] - start[depth]) {
+				if (f_vv) {
+					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", j < start[depth + 1] - start[depth]" << endl;
+					}
+				if (j) {
+					a = cc[depth];
+					c = point_color[a];
+					cs[c] = FALSE; // this can be dropped since all points have the same color
+					if (f_vv) {
+						cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", dropping point " << a << " of color " << c << endl;
+						}
+					}
+				a = live_pts[start[depth] + j];
+				c = point_color[a];
+				if (f_vv) {
+					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", adding point " << a << " of color " << c << endl;
+					}
+
+				cs[c] = TRUE;
+				cc[depth] = a;
+				choice[depth]++;
+
+
+#if 0
+				if (depth == 4 
+					&& cc[0] == 28 
+					&& cc[1] == 9963
+					&& cc[2] == 10462 
+					&& cc[3] == 1 
+					&& cc[4] == 948
+					//&& cc[5] == 7816
+					) {
+					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << " at checkpoint" << endl;
+					cout << "live points = ";
+					INT_vec_print_fully(cout, live_pts + start[depth], end[depth + 1] - start[depth]);
+					cout << endl;
+					cout << "live points (full) = ";
+					INT_vec_print_fully(cout, live_pts, nb_points);
+					cout << endl;
+					cout << "cc=";
+					INT_vec_print(cout, cc, depth + 1);
+					cout << "start=";
+					INT_vec_print(cout, start, depth + 1);
+					cout << "end=";
+					INT_vec_print(cout, end, depth + 1);
+					cout << "min_color=";
+					INT_vec_print(cout, min_color, depth + 1);
+					cout << "choice=";
+					INT_vec_print(cout, choice, depth + 1);
+					cout << endl;
+					cout << "cs=";
+					INT_vec_print(cout, cs, nb_colors);
+					cout << endl;
+					cout << "min color class " << min_color[depth] << " of size " << start[depth + 1] - start[depth] << endl;
+					//cout << "starts at start[depth]= " << start[depth] << endl;
+					//cout << "ends at start[depth+1]= " << start[depth+1] << endl;
+					INT_vec_print_fully(cout, live_pts + start[depth], start[depth + 1] - start[depth]);
+					cout << endl;
+
+					//exit(1);
+					f_vv = TRUE;
+					}
+#endif
+
+
+				depth++;
+				}
+			else {
+				if (f_vv) {
+					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", j not < start[depth + 1] - start[depth]" << endl;
+					}
+				a = cc[depth];
+				c = point_color[a];
+				if (f_vv) {
+					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", dropping point " << a << " of color " << c << endl;
+					}
+				cs[c] = FALSE;
+				min_color[depth] = -1;
+				choice[depth] = 0;
+				depth--;
+				}
+			}
+		else {
+			if (f_vv) {
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", minimum color class is empty, backtracking" << endl;
+				}
+			// we could not go in, so we don't have to clean up anything
+			min_color[depth] = -1;
+			choice[depth] = 0;
+			depth--;
+			}
+
+		if (depth < 0) break;
+		
+		} // while
+
+
+	FREE_INT(live_pts);
+	FREE_INT(start);
+	FREE_INT(end);
+	FREE_INT(min_color);
+	FREE_INT(choice);
+	FREE_INT(cc);
+	FREE_INT(cf);
+	FREE_INT(cs);
+	if (f_v) {
+		cout << "colored_graph::rainbow_cliques_nonrecursive done" << endl;
+		}
+	return nb_sol;
+}
+
+
+// #############################################################################
+// global functions:
+// #############################################################################
+
 void colored_graph_draw(const BYTE *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	double scale, double line_width, 
@@ -1895,7 +2350,6 @@ void colored_graph_draw(const BYTE *fname,
 		cout << "colored_graph_draw done" << endl;
 		}
 }
-
 
 void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw, 
 	INT f_output_fname, const BYTE *output_fname, 
@@ -2136,6 +2590,30 @@ void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_lev
 		}
 }
 
+INT colored_graph_all_rainbow_cliques_nonrecursive(const BYTE *fname, 
+	INT &nb_backtrack_nodes, 
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	colored_graph CG;
+	INT nb_sol;
+	
+	if (f_v) {
+		cout << "colored_graph_all_rainbow_cliques_nonrecursive" << endl;
+		}
+	CG.load(fname, verbose_level - 1);
+	//CG.print();
 
+	{
+	if (f_v) {
+		cout << "colored_graph_all_cliques before CG.all_rainbow_cliques" << endl;
+		}
+	nb_sol = CG.rainbow_cliques_nonrecursive(nb_backtrack_nodes, verbose_level - 1);
+	}
+	if (f_v) {
+		cout << "colored_graph_all_rainbow_cliques_nonrecursive done" << endl;
+		}
+	return nb_sol;
+}
 
 

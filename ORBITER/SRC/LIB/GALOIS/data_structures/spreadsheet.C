@@ -944,6 +944,22 @@ void spreadsheet::find_rows(INT verbose_level)
 		}
 }
 
+void spreadsheet::get_value_double_or_NA(INT i, INT j, double &val, INT &f_NA)
+{
+	BYTE *str;
+
+	str = get_string(i, j);
+	cout << "spreadsheet::get_value_double_or_NA str=" << str << endl;
+	if (strcmp(str, "NA") == 0) {
+		val = 0;
+		f_NA = TRUE;
+		}
+	else {
+		val = get_double(i, j);
+		f_NA = FALSE;
+		}
+}
+
 BYTE *spreadsheet::get_string(INT i, INT j)
 {
 	INT t;

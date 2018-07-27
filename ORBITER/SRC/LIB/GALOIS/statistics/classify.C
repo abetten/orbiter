@@ -169,15 +169,28 @@ INT classify::class_of(INT pt_idx)
 void classify::print(INT f_backwards)
 {
 	if (f_second) {
+		print_second(f_backwards);
+		}
+	else {
+		print_first(f_backwards);
+		}
+}
+
+void classify::print_first(INT f_backwards)
+{
+	INT_vec_print_types(cout, f_backwards, data_sorted, 
+		nb_types, type_first, type_len);
+	cout << endl;	
+}
+
+void classify::print_second(INT f_backwards)
+{
+	if (f_second) {
 		INT_vec_print_types(cout, f_backwards, second_data_sorted, 
 			second_nb_types, second_type_first, second_type_len);
 		cout << endl;	
 		}
-	else {
-		INT_vec_print_types(cout, f_backwards, data_sorted, 
-			nb_types, type_first, type_len);
-		cout << endl;	
-		}
+
 }
 
 void classify::print_file(ostream &ost, INT f_backwards)

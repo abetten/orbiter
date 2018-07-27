@@ -10,7 +10,6 @@
 #include <deque>
 
 typedef class dynamic_memory dynamic_memory;
-typedef class partition_backtrack partition_backtrack;
 typedef class point_line point_line;
 typedef struct plane_data PLANE_DATA;
 typedef class tdo_scheme tdo_scheme;

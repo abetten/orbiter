@@ -1,4 +1,4 @@
-// unipoly.C
+// unipoly_domain.C
 //
 // Anton Betten
 //

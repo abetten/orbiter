@@ -666,19 +666,31 @@ void surface_object::compute_adjacency_matrix_of_line_intersection_graph(
 		cout << "surface_object::compute_adjacency_matrix_of_line_intersection_graph" << endl;
 		}
 
+	if (f_v) {
+		cout << "surface_object::compute_adjacency_matrix_of_line_intersection_graph before Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
+		}
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(
 		Adj_line_intersection_graph, Lines, 27, verbose_level - 2);
+	if (f_v) {
+		cout << "surface_object::compute_adjacency_matrix_of_line_intersection_graph after Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
+		}
 
 	Line_neighbors = new set_of_sets;
 	Line_neighbors->init_from_adjacency_matrix(27, 
 		Adj_line_intersection_graph, 0 /* verbose_level*/);
 	
+	if (f_v) {
+		cout << "surface_object::compute_adjacency_matrix_of_line_intersection_graph before Surf->compute_intersection_points_and_indices" << endl;
+		}
 	Surf->compute_intersection_points_and_indices(
 		Adj_line_intersection_graph, 
 		Pts, nb_pts, 
 		Lines, 27 /* nb_lines */, 
 		Line_intersection_pt, Line_intersection_pt_idx, 
-		verbose_level - 2);
+		verbose_level);
+	if (f_v) {
+		cout << "surface_object::compute_adjacency_matrix_of_line_intersection_graph after Surf->compute_intersection_points_and_indices" << endl;
+		}
 #if 0
 	Surf->compute_intersection_points(Adj_line_intersection_graph, Line_intersection_pt, Line_intersection_pt_idx, 
 		Lines, 27, verbose_level - 2);
