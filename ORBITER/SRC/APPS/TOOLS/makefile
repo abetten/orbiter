@@ -41,7 +41,8 @@ all: all_cliques.out \
 	join_sets.out \
 	concatenate_files.out \
 	graph.out \
-	collect.out 
+	collect.out \
+	create_graph.out 
 
 
 
@@ -134,6 +135,9 @@ graph.out:  graph.o ;
 
 collect.out:  collect.o ;
 	$(DISCRETA_CPP)  collect.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+create_graph.out:  create_graph.o ;
+	$(DISCRETA_CPP)  create_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

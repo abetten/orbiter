@@ -26,6 +26,7 @@ int main(int argc, const char **argv)
 	INT nb_transform = 0;
 	const BYTE *transform_coeffs[1000];
 	INT f_inverse_transform[1000];
+	INT f_quartic = FALSE;
 
 	t0 = os_ticks();
 
@@ -53,6 +54,10 @@ int main(int argc, const char **argv)
 			f_inverse_transform[nb_transform] = TRUE;
 			cout << "-transform_inverse " << transform_coeffs[nb_transform] << endl;
 			nb_transform++;
+			}
+		else if (strcmp(argv[i], "-quartic") == 0) {
+			f_quartic = TRUE;
+			cout << "-quartic " << endl;
 			}
 		}
 	if (!f_description) {
@@ -326,10 +331,21 @@ int main(int argc, const char **argv)
 
 			//fp << "The six-arcs not on a conic are:\\\\" << endl;
 			Six_arcs->report_latex(fp);
+
+
+			if (f_quartic) {
+				SoA->quartic(fp, verbose_level);
+				}
+
+
+
+
 	
 			latex_foot(fp);
 		}
 		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+
+
 
 		delete SoA;
 		delete Six_arcs;
@@ -337,6 +353,7 @@ int main(int argc, const char **argv)
 
 
 		}
+
 
 
 	FREE_INT(Elt2);

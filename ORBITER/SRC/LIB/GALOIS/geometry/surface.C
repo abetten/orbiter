@@ -1219,6 +1219,10 @@ void surface::compute_intersection_points_and_indices(INT *Adj,
 					INT_vec_print_fully(cout, 
 						Points, nb_points);
 					cout << endl;
+					cout << "j1=" << j1 << endl;
+					cout << "j2=" << j2 << endl;
+					cout << "a1=" << a1 << endl;
+					cout << "a2=" << a2 << endl;
 					cout << "pt=" << pt << endl;
 					exit(1);
 					}

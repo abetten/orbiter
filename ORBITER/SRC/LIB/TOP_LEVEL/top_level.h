@@ -2886,7 +2886,9 @@ public:
 	void compute_neighbors(INT verbose_level);
 	void make_spreadsheet_of_neighbors(spreadsheet *&Sp, 
 		INT verbose_level);
-	void classify_partial_ovoids(INT verbose_level);
+	void classify_partial_ovoids(INT f_draw_poset, 
+		INT f_draw_poset_full, 
+		INT verbose_level);
 	INT partial_ovoid_test(INT *S, INT len, INT verbose_level);
 	void test_orbits(INT verbose_level);
 	void make_spreadsheet_of_fiveplusone_configurations(

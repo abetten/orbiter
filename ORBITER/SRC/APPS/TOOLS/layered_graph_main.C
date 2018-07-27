@@ -254,6 +254,9 @@ int main(int argc, const char **argv)
 	strcpy(fname_out, fname);
 	chop_off_extension_if_present(fname_out, ".layered_graph");
 	strcat(fname_out, "_draw");
+	if (f_spanning_tree) {
+		strcat(fname_out, "_tree");
+		}
 	//replace_extension_with(fname_out, const char *new_ext);
 
 	LG->draw_with_options(fname_out, &O, 0 /* verbose_level */);

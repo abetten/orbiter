@@ -321,6 +321,7 @@ public:
 
 	// generator.C:
 	INT nb_orbits_at_level(INT level);
+	INT nb_flag_orbits_up_at_level(INT level);
 	oracle *get_node_ij(INT level, INT node);
 	INT poset_structure_is_contained(INT *set1, INT sz1, 
 		INT *set2, INT sz2, INT verbose_level);

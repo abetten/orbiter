@@ -341,7 +341,9 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(spreadsheet *&Sp, INT 
 		}
 }
 
-void classify_double_sixes::classify_partial_ovoids(INT verbose_level)
+void classify_double_sixes::classify_partial_ovoids(INT f_draw_poset, 
+	INT f_draw_poset_full, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT schreier_depth = 10000;
@@ -371,7 +373,14 @@ void classify_double_sixes::classify_partial_ovoids(INT verbose_level)
 		cout << "classify_double_sixes::classify_partial_ovoids classifying starter done" << endl;
 		}
 	
-	if (q < 20) {
+	if (f_draw_poset) {
+		{
+		BYTE fname_poset[1000];
+		sprintf(fname_poset, "fiveplusone_q%ld", q);
+		Five_plus_one->draw_poset(fname_poset, 5 /*depth*/, 0 /* data1 */, TRUE /* f_embedded */, FALSE /* f_sideways */, 0 /* verbose_level */);
+		}
+		}
+	if (f_draw_poset_full) {
 		{
 		BYTE fname_poset[1000];
 		sprintf(fname_poset, "fiveplusone_q%ld", q);

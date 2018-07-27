@@ -38,6 +38,9 @@ int main(int argc, const char **argv)
 	INT f_double_sixes_only = FALSE;
 	INT f_read_surfaces = FALSE;
 	INT q;
+	INT f_draw_poset = FALSE;
+	INT f_draw_poset_full = FALSE;
+	
 	
 
 
@@ -70,6 +73,14 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-read_surfaces") == 0) {
 			f_read_surfaces = TRUE;
 			cout << "-read_surfaces" << endl;
+			}
+		else if (strcmp(argv[i], "-draw_poset") == 0) {
+			f_draw_poset = TRUE;
+			cout << "-draw_poset" << endl;
+			}
+		else if (strcmp(argv[i], "-draw_poset_full") == 0) {
+			f_draw_poset_full = TRUE;
+			cout << "-draw_poset_full" << endl;
 			}
 		}
 
@@ -108,7 +119,7 @@ int main(int argc, const char **argv)
 		cout << "surface_classify before SCW->init" << endl;
 		}
 	
-	SCW->init(F, LG, argc, argv, verbose_level - 1);
+	SCW->init(F, LG, argc, argv, 0 /*verbose_level - 1*/);
 
 	if (f_v) {
 		cout << "surface_classify after SCW->init" << endl;
@@ -145,7 +156,9 @@ int main(int argc, const char **argv)
 		if (f_v) {
 			cout << "surface_classify before SCW->Classify_double_sixes->classify_partial_ovoids" << endl;
 			}
-		SCW->Classify_double_sixes->classify_partial_ovoids(verbose_level - 1);
+		SCW->Classify_double_sixes->classify_partial_ovoids(f_draw_poset, 
+			f_draw_poset_full, 
+			verbose_level - 1);
 		if (f_v) {
 			cout << "surface_classify after SCW->Classify_double_sixes->classify_partial_ovoids" << endl;
 			}
