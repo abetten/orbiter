@@ -920,15 +920,6 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 	action *A0, strong_generators *Strong_gens, 
 	INT *set, INT set_size, INT verbose_level);
 
-void solve_diophant(INT *Inc, INT nb_rows, INT nb_cols, INT nb_needed, 
-	INT f_has_Rhs, INT *Rhs, 
-	INT *&Solutions, INT &nb_sol, INT &nb_backtrack, INT &dt, 
-	INT f_DLX, 
-	INT f_draw_system, const BYTE *fname_system, 
-	INT f_write_tree, const BYTE *fname_tree, 
-	INT verbose_level);
-// allocates Solutions[nb_sol * target_size]
-// where target_size = starter_size + nb_needed
 void compute_lifts(exact_cover_arguments *ECA, INT verbose_level);
 void compute_lifts_new(
 	action *A, action *A2, 

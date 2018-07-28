@@ -85,6 +85,14 @@
 
 using namespace std;
 
+
+#include <iostream>
+#include <map>
+#include <vector>
+#include <deque>
+
+
+
 /*----------------------------------------------------------------------------*/
 /// The following code block identifies the current operating system the code is
 /// being executed on and turns on specific macros in order to use system calls
@@ -279,6 +287,14 @@ typedef class heisenberg heisenberg;
 typedef class desarguesian_spread desarguesian_spread;
 typedef class classify_bitvectors classify_bitvectors;
 typedef class object_in_projective_space object_in_projective_space;
+typedef class dynamic_memory dynamic_memory;
+typedef class point_line point_line;
+typedef struct plane_data PLANE_DATA;
+typedef class tdo_scheme tdo_scheme;
+typedef class tdo_data tdo_data;
+typedef struct solution_file_data solution_file_data;
+typedef class geo_parameter geo_parameter;
+
 
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) allocate_int(n, __FILE__, __LINE__)

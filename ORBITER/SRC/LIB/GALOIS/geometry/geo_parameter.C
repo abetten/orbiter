@@ -4,7 +4,6 @@
 // started:  May 6, 2008
 
 #include "galois.h"
-#include "incidence.h"
 
 geo_parameter::geo_parameter()
 {

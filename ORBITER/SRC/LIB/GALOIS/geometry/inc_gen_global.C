@@ -5,25 +5,6 @@
 // Jan 28 2007
 
 #include "galois.h"
-#include "incidence.h"
-
-#if 0
-INT ordered_pair_rank(INT i, INT j, INT n)
-{
-	if (j > i)
-		return i * (n - 1) + j - 1;
-	else
-		return i * (n - 1) + j;
-}
-
-void ordered_pair_unrank(INT &i, INT &j, INT n, INT rk)
-{
-	i = rk / (n - 1);
-	j = rk - i * (n - 1);
-	if (j >= i)
-		j++;
-}
-#endif
 
 
 INT ijk_rank(INT i, INT j, INT k, INT n)
