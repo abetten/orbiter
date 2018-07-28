@@ -17,8 +17,7 @@ all: algebra_and_number_theory \
 	graphics \
 	io_and_os \
 	solvers \
-	statistics \
-	libgalois.a
+	statistics 
 
 
 
@@ -51,31 +50,6 @@ statistics2 :  ; cd statistics; $(MAKE)
 
 
 
-libgalois.a: algebra_and_number_theory \
-	coding_theory \
-	combinatorics \
-	data_structures \
-	geometry \
-	globals \
-	graph_theory \
-	graph_theory_nauty \
-	graphics \
-	io_and_os \
-	solvers \
-	statistics ;
-	ar ruvs libgalois.a \
-		algebra_and_number_theory/*.o \
-		coding_theory/*.o \
-		combinatorics/*.o \
-		data_structures/*.o \
-		geometry/*.o \
-		globals/*.o \
-		graph_theory/*.o \
-		graph_theory_nauty/*.o \
-		graphics/*.o \
-		io_and_os/*.o \
-		solvers/*.o \
-		statistics/*.o \
 
 
 

@@ -4,7 +4,7 @@ LIB =
 LFLAGS = -lm
 
 
-all: galois action snakesandladders discreta toplevel
+all: galois action snakesandladders discreta toplevel liborbiter.a
 
 
 galois : galois2 ; 
@@ -33,4 +33,22 @@ clean:
 
 
 
+liborbiter.a:  ;
+	ar ruvs liborbiter.a \
+		GALOIS/algebra_and_number_theory/*.o \
+		GALOIS/coding_theory/*.o \
+		GALOIS/combinatorics/*.o \
+		GALOIS/data_structures/*.o \
+		GALOIS/geometry/*.o \
+		GALOIS/globals/*.o \
+		GALOIS/graph_theory/*.o \
+		GALOIS/graph_theory_nauty/*.o \
+		GALOIS/graphics/*.o \
+		GALOIS/io_and_os/*.o \
+		GALOIS/solvers/*.o \
+		GALOIS/statistics/*.o \
+		ACTION/*.o \
+		SNAKES_AND_LADDERS/*.o \
+		DISCRETA/*.o \
+		TOP_LEVEL/*.o 
 
