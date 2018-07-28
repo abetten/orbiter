@@ -5,11 +5,6 @@
 // separated out from partition_backtrack.C: 1/3/10
 
 #include "galois.h"
-#include "incidence.h"
-
-// #####################################################################################
-// dynamic_memory
-// #####################################################################################
 
 dynamic_memory::dynamic_memory()
 {

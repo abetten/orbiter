@@ -50,7 +50,8 @@ void exact_cover::freeself()
 void exact_cover::init_basic(void *user_data, 
 	action *A_base, action *A_on_blocks, 
 	INT target_size, INT starter_size, 
-	const BYTE *input_prefix, const BYTE *output_prefix, const BYTE *solution_prefix, const BYTE *base_fname, 
+	const BYTE *input_prefix, const BYTE *output_prefix, 
+	const BYTE *solution_prefix, const BYTE *base_fname, 
 	INT f_lex, 
 	INT verbose_level)
 {

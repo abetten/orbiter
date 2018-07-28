@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	dynamic_memory.o \
 	file_output.o \
 	memory.o \
 	memory_object.o \

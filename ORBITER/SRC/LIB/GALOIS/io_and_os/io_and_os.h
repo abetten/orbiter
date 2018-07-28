@@ -7,6 +7,24 @@
 // 2nd version started:  December 7, 2003
 // galois started:  August 12, 2005
 
+
+// #################################################################################
+// dynamic_memory.C:
+// #################################################################################
+
+
+
+class dynamic_memory {
+public:
+	INT *ptr;
+	INT size_allocated;
+	INT size_used;
+	dynamic_memory();
+	~dynamic_memory();
+	void allocate();
+	void reallocate(INT required_size, INT f_copy_over);
+};
+
 // #############################################################################
 // file_output.C:
 // #############################################################################

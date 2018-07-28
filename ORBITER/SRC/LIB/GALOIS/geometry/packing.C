@@ -5,7 +5,6 @@
 // moved here from refine: 1/3/10
 
 #include "galois.h"
-#include "incidence.h"
 
 INT TDO_upper_bounds_v_max_init = 12;
 INT TDO_upper_bounds_v_max = -1;

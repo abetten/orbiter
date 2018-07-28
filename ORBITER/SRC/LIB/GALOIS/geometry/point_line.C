@@ -1,7 +1,6 @@
 
 
 #include "galois.h"
-#include "incidence.h"
 
 INT point_line::is_desarguesian_plane(INT f_v, INT f_vv)
 {

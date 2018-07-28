@@ -181,6 +181,24 @@ public:
 
 void diophant_callback_solution_found(INT *sol, 
 	INT len, INT nb_sol, void *data);
+INT diophant_solve_first_mckay(diophant *Dio, INT f_once, INT verbose_level);
+INT diophant_solve_all_mckay(diophant *Dio, INT &nb_backtrack_nodes, INT verbose_level);
+INT diophant_solve_once_mckay(diophant *Dio, INT verbose_level);
+INT diophant_solve_next_mckay(diophant *Dio, INT verbose_level);
+void diophant_solve_mckay(diophant *Dio, const BYTE *label, INT maxresults, INT &nb_backtrack_nodes, INT &nb_sol, INT verbose_level);
+void diophant_solve_mckay_override_minrhs_in_inequalities(diophant *Dio, const BYTE *label, 
+	INT maxresults, INT &nb_backtrack_nodes, 
+	INT minrhs, INT &nb_sol, INT verbose_level);
+void solve_diophant(INT *Inc, INT nb_rows, INT nb_cols, INT nb_needed, 
+	INT f_has_Rhs, INT *Rhs, 
+	INT *&Solutions, INT &nb_sol, INT &nb_backtrack, INT &dt, 
+	INT f_DLX, 
+	INT f_draw_system, const BYTE *fname_system, 
+	INT f_write_tree, const BYTE *fname_tree, 
+	INT verbose_level);
+// allocates Solutions[nb_sol * target_size]
+// where target_size = starter_size + nb_needed
+
 
 // #############################################################################
 // dlx.C:
