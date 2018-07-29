@@ -294,6 +294,7 @@ typedef class tdo_scheme tdo_scheme;
 typedef class tdo_data tdo_data;
 typedef struct solution_file_data solution_file_data;
 typedef class geo_parameter geo_parameter;
+typedef class scene scene;
 
 
 #ifdef MEMORY_DEBUG

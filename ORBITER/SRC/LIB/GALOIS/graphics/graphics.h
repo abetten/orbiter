@@ -460,6 +460,226 @@ void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3,
 	double &a, double &b);
 
 // #############################################################################
+// scene.C
+// #############################################################################
+
+#define SCENE_MAX_LINES 100000
+#define SCENE_MAX_EDGES 100000
+#define SCENE_MAX_POINTS 100000
+#define SCENE_MAX_PLANES 10000
+#define SCENE_MAX_QUADRICS 10000
+#define SCENE_MAX_CUBICS 10000
+#define SCENE_MAX_FACES 10000
+
+// #############################################################################
+// scene.C:
+// #############################################################################
+
+
+class scene {
+public:
+	
+	INT nb_lines;
+	double *Line_coords;
+		// [nb_lines * 6] a line is given by two points
+	
+	INT nb_edges;
+	INT *Edge_points;
+		// [nb_edges * 2]
+
+	INT nb_points;
+	double *Point_coords;
+		// [nb_points * 3]
+
+	INT nb_planes;
+	double *Plane_coords;
+		// [nb_planes * 4]
+
+	INT nb_quadrics;
+	double *Quadric_coords;
+		// [nb_quadrics * 10]
+
+	INT nb_cubics;
+	double *Cubic_coords;
+		// [nb_cubics * 20]
+
+	INT nb_faces;
+	INT *Nb_face_points; // [nb_faces]
+	INT **Face_points; // [nb_faces]
+
+
+	
+	void *extra_data;
+
+
+	scene();
+	~scene();
+	void null();
+	void freeself();
+	void init(INT verbose_level);
+	scene *transformed_copy(double *A4, double *A4_inv, 
+		double rad, INT verbose_level);
+	void print();
+	void transform_lines(scene *S, double *A4, double *A4_inv, 
+		double rad, INT verbose_level);
+	void copy_edges(scene *S, double *A4, double *A4_inv, 
+		INT verbose_level);
+	void transform_points(scene *S, double *A4, double *A4_inv, 
+		INT verbose_level);
+	void transform_planes(scene *S, double *A4, double *A4_inv, 
+		INT verbose_level);
+	void transform_quadrics(scene *S, double *A4, double *A4_inv, 
+		INT verbose_level);
+	void transform_cubics(scene *S, double *A4, double *A4_inv, 
+		INT verbose_level);
+	void copy_faces(scene *S, double *A4, double *A4_inv, 
+		INT verbose_level);
+	INT line_pt_and_dir(double *x6, double rad);
+	INT line6(double *x6);
+	INT line(double x1, double x2, double x3, 
+		double y1, double y2, double y3);
+	INT line_through_two_points(INT pt1, INT pt2, 
+		double rad);
+	INT edge(INT pt1, INT pt2);
+	void points(double *Coords, INT nb_points);
+	INT point(double x1, double x2, double x3);
+	INT point_center_of_mass_of_face(INT face_idx);
+	INT point_center_of_mass_of_edge(INT edge_idx);
+	INT point_center_of_mass(INT *Pt_idx, INT nb_pts);
+	INT triangle(INT line1, INT line2, INT line3, INT verbose_level);
+	INT point_as_intersection_of_two_lines(INT line1, INT line2);
+	INT plane_from_dual_coordinates(double *x4);
+	INT plane(double x1, double x2, double x3, double a);
+		// A plane is called a polynomial shape because 
+		// it is defined by a first order polynomial equation. 
+		// Given a plane: plane { <A, B, C>, D }
+		// it can be represented by the equation 
+		// A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
+		// see http://www.povray.org/documentation/view/3.6.1/297/
+	INT plane_through_three_points(INT pt1, INT pt2, INT pt3);
+	INT quadric_through_three_lines(INT line_idx1, 
+		INT line_idx2, INT line_idx3, INT verbose_level);
+	INT quadric(double *coeff);
+	// povray ordering of monomials:
+	// http://www.povray.org/documentation/view/3.6.1/298/
+	// 1: x^2
+	// 2: xy
+	// 3: xz
+	// 4: x
+	// 5: y^2
+	// 6: yz
+	// 7: y
+	// 8: z^2
+	// 9: z
+	// 10: 1
+	INT cubic(double *coeff);
+	// povray ordering of monomials:
+	// http://www.povray.org/documentation/view/3.6.1/298/
+	// 1: x^3
+	// 2: x^2y
+	// 3: x^2z
+	// 4: x^2
+	// 5: xy^2
+	// 6: xyz
+	// 7: xy
+	// 8: xz^2
+	// 9: xz
+	// 10: x
+	// 11: y^3
+	// 12: y^2z
+	// 13: y^2
+	// 14: yz^2
+	// 15: yz
+	// 16: y
+	// 17: z^3
+	// 18: z^2
+	// 19: z
+	// 20: 1
+	INT face(INT *pts, INT nb_pts);
+	INT face3(INT pt1, INT pt2, INT pt3);
+	INT face4(INT pt1, INT pt2, INT pt3, INT pt4);
+	INT face5(INT pt1, INT pt2, INT pt3, INT pt4, INT pt5);
+	void draw_lines_with_selection(INT *selection, INT nb_select, 
+		double r, const BYTE *options, ostream &ost);
+	void draw_line_with_selection(INT line_idx, 
+		double r, const BYTE *options, ostream &ost);
+	void draw_lines_cij_with_selection(INT *selection, INT nb_select, 
+		ostream &ost);
+	void draw_lines_cij(ostream &ost);
+	void draw_lines_ai_with_selection(INT *selection, INT nb_select, 
+		ostream &ost);
+	void draw_lines_ai(ostream &ost);
+	void draw_lines_bj_with_selection(INT *selection, INT nb_select, 
+		ostream &ost);
+	void draw_lines_bj(ostream &ost);
+	void draw_edges_with_selection(INT *selection, INT nb_select, 
+		double rad, const BYTE *options, ostream &ost);
+	void draw_faces_with_selection(INT *selection, INT nb_select, 
+		double thickness_half, const BYTE *options, ostream &ost);
+	void draw_face(INT idx, double thickness_half, const BYTE *options, 
+		ostream &ost);
+	void draw_text(const BYTE *text, double thickness_half, double extra_spacing, 
+			double scale, 
+			double off_x, double off_y, double off_z, 
+			const BYTE *color_options, 
+			double x, double y, double z, 
+			double up_x, double up_y, double up_z, 
+			double view_x, double view_y, double view_z, 
+			ostream &ost, INT verbose_level);
+	void draw_planes_with_selection(INT *selection, INT nb_select, 
+		const BYTE *options, ostream &ost);
+	void draw_points_with_selection(INT *selection, INT nb_select, 
+		double rad, const BYTE *options, ostream &ost);
+	void draw_cubic_with_selection(INT *selection, INT nb_select, 
+		const BYTE *options, ostream &ost);
+	void draw_quadric_with_selection(INT *selection, INT nb_select, 
+		const BYTE *options, ostream &ost);
+	INT intersect_line_and_plane(INT line_idx, INT plane_idx, 
+		INT &intersection_point_idx, 
+		INT verbose_level);
+	INT intersect_line_and_line(INT line1_idx, INT line2_idx, 
+		double &lambda, 
+		INT verbose_level);
+#if 0
+	INT line_centered(double *pt1_in, double *pt2_in, 
+		double *pt1_out, double *pt2_out, 
+		double r);
+#endif
+	INT line_extended(double x1, double x2, double x3, 
+		double y1, double y2, double y3, 
+		double r);
+	void map_a_line(INT line1, INT line2, 
+		INT plane_idx, INT line_idx, double spread, 
+		INT nb_pts, 
+		INT *New_line_idx, INT &nb_new_lines, 
+		INT *New_pt_idx, INT &nb_new_points, INT verbose_level);
+	INT map_a_point(INT line1, INT line2, 
+		INT plane_idx, double pt_in[3], 
+		INT &new_line_idx, INT &new_pt_idx, 
+		INT verbose_level);
+	void lines_a();
+	void lines_b();
+	void lines_cij();
+	void Eckardt_points();
+	void fourD_cube(double rad_desired);
+	void rescale(INT first_pt_idx, double rad_desired);
+	double euclidean_distance(INT pt1, INT pt2);
+	double distance_from_origin(INT pt);
+	void fourD_cube_edges(INT first_pt_idx);
+	void hypercube(INT n, double rad_desired);
+	void Dodecahedron_points();
+	void Dodecahedron_edges(INT first_pt_idx);
+	void Dodecahedron_planes(INT first_pt_idx);
+	void tritangent_planes();
+	void clebsch_cubic();
+	double distance_between_two_points(INT pt1, INT pt2);
+	void create_five_plus_one();
+	void create_Hilbert_model();
+
+};
+
+
+// #############################################################################
 // tree.C:
 // #############################################################################
 
