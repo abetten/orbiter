@@ -20,7 +20,7 @@ void action::init_orthogonal_group(INT epsilon,
 	INT q = F->q;
 
 	if (f_v) {
-		cout << "action::init_orthogonal_group" << endl;
+		cout << "action::init_orthogonal_group verbose_level=" << verbose_level << endl;
 		}
 	A = new action;
 	if (f_vv) {
@@ -71,13 +71,13 @@ void action::init_orthogonal_group(INT epsilon,
 		
 		if (get_orthogonal_group_type_f_reflection()) {
 			if (f_vv) {
-				cout << "action::init_orthogonal_group with reflections" << endl;
+				cout << "action::init_orthogonal_group with reflections, before order_PO_epsilon" << endl;
 				}
 			order_PO_epsilon(f_semilinear, epsilon, n - 1, F->q, target_go, verbose_level);
 			}
 		else {
 			if (f_vv) {
-				cout << "action::init_orthogonal_group without reflections" << endl;
+				cout << "action::init_orthogonal_group without reflections, before order_POmega_epsilon" << endl;
 				}
 			order_POmega_epsilon(epsilon, n - 1, F->q, target_go, verbose_level);
 			}
@@ -139,7 +139,9 @@ void action::init_BLT(finite_field *F, INT f_basis, INT f_init_hash_table, INT v
 		cout << "action::init_BLT before init_orthogonal_group" << endl;
 		}
 	init_orthogonal_group(epsilon, n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */, 
+		FALSE /* f_on_lines */, 
+		FALSE /* f_on_points_and_lines */, 
 		f_semilinear, 
 		f_basis, 
 		verbose_level - 2);
@@ -287,7 +289,8 @@ void action::init_group_from_strong_generators(vector_ge *gens, sims *K,
 		}
 }
 
-void action::init_projective_special_group(INT n, finite_field *F, INT f_semilinear, INT f_basis, INT verbose_level)
+void action::init_projective_special_group(INT n, finite_field *F, 
+	INT f_semilinear, INT f_basis, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -331,11 +334,10 @@ void action::init_projective_special_group(INT n, finite_field *F, INT f_semilin
 		}
 }
 
-void action::init_projective_group(INT n, finite_field *F, INT f_semilinear, INT f_basis, INT verbose_level)
+void action::init_projective_group(INT n, finite_field *F, 
+	INT f_semilinear, INT f_basis, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
 	matrix_group *M;
 	
 	if (f_v) {
@@ -367,7 +369,8 @@ void action::init_projective_group(INT n, finite_field *F, INT f_semilinear, INT
 
 	low_level_point_size = M->low_level_point_size;
 	if (f_v) {
-		cout << "action::init_projective_group low_level_point_size=" << low_level_point_size<< endl;
+		cout << "action::init_projective_group low_level_point_size=" 
+			<< low_level_point_size<< endl;
 		}
 	strcpy(label, M->label);
 	strcpy(label_tex, M->label_tex);
@@ -412,8 +415,6 @@ void action::init_affine_group(INT n, finite_field *F,
 	INT f_basis, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
 	matrix_group *M;
 	
 	if (f_v) {
@@ -434,12 +435,13 @@ void action::init_affine_group(INT n, finite_field *F,
 	f_is_linear = TRUE;
 	dimension = n;
 		
-	M->init_affine_group(n, F, f_semilinear, /*f_no_translations,*/ this, verbose_level - 1);
+	M->init_affine_group(n, F, f_semilinear, this, verbose_level - 1);
 
 
 	low_level_point_size = M->low_level_point_size;
 	if (f_v) {
-		cout << "action::init_affine_group low_level_point_size=" << low_level_point_size<< endl;
+		cout << "action::init_affine_group low_level_point_size=" 
+		<< low_level_point_size<< endl;
 		}
 	strcpy(label, M->label);
 	strcpy(label_tex, M->label_tex);
@@ -478,8 +480,6 @@ void action::init_general_linear_group(INT n, finite_field *F,
 	INT f_basis, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
 	matrix_group *M;
 	
 	if (f_v) {
@@ -500,12 +500,14 @@ void action::init_general_linear_group(INT n, finite_field *F,
 	f_is_linear = TRUE;
 	dimension = n;
 		
-	M->init_general_linear_group(n, F, f_semilinear, this, verbose_level - 1);
+	M->init_general_linear_group(n, F, 
+		f_semilinear, this, verbose_level - 1);
 
 
 	low_level_point_size = M->low_level_point_size;
 	if (f_v) {
-		cout << "action::init_general_linear_group low_level_point_size=" << low_level_point_size<< endl;
+		cout << "action::init_general_linear_group low_level_point_size=" 
+			<< low_level_point_size<< endl;
 		}
 	strcpy(label, M->label);
 	strcpy(label_tex, M->label_tex);
@@ -539,7 +541,8 @@ void action::init_general_linear_group(INT n, finite_field *F,
 		}	
 }
 
-void action::setup_linear_group_from_strong_generators(matrix_group *M, INT verbose_level)
+void action::setup_linear_group_from_strong_generators(matrix_group *M, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -585,7 +588,8 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M, INT verb
 		}
 }
 
-void action::init_matrix_group_strong_generators_builtin(matrix_group *M, INT verbose_level)
+void action::init_matrix_group_strong_generators_builtin(matrix_group *M, 
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT n, q;
@@ -763,7 +767,9 @@ void action::init_permutation_group_from_generators(INT degree,
 	generators->init(this);
 	generators->allocate(nb_gens);
 	for (i = 0; i < nb_gens; i++) {
-		make_element(generators->ith(i), gens + i * degree, 0 /*verbose_level*/);
+		make_element(generators->ith(i), 
+			gens + i * degree, 
+			0 /*verbose_level*/);
 		}
 	
 
@@ -808,9 +814,12 @@ void action::init_permutation_group_from_generators(INT degree,
 		}
 }
 
-void action::init_affine_group(INT n, INT q, INT f_translations, 
+void action::init_affine_group(INT n, INT q, 
+	INT f_translations, 
 	INT f_semilinear, INT frobenius_power, 
-	INT f_multiplication, INT multiplication_order, INT verbose_level)
+	INT f_multiplication, 
+	INT multiplication_order, 
+	INT verbose_level)
 {
 	INT nb_gens, degree;
 	INT *gens;
@@ -894,14 +903,16 @@ void action::init_affine_grid_group(INT q1, INT q2,
 		cout << "computing generators for the direct product" << endl;
 		}
 	if (f_diagonal) {
-		perm_group_generators_direct_product(1, degree1, degree2, degree3, 
+		perm_group_generators_direct_product(1, 
+			degree1, degree2, degree3, 
 			nb_gens1, nb_gens2, nb_gens3, 
 			gens1, gens2, gens3, 
 			given_base_length1, given_base_length2, given_base_length3, 
 			given_base1, given_base2, given_base3);
 		}
 	else {
-		perm_group_generators_direct_product(0, degree1, degree2, degree3, 
+		perm_group_generators_direct_product(0, 
+			degree1, degree2, degree3, 
 			nb_gens1, nb_gens2, nb_gens3, 
 			gens1, gens2, gens3, 
 			given_base_length1, given_base_length2, given_base_length3, 

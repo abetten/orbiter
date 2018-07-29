@@ -1464,21 +1464,19 @@ void order_Pomega_plusminus(INT epsilon, INT m, INT q, longinteger_object &o, IN
 }
 #endif
 
-void order_PO_epsilon(INT f_semilinear, INT epsilon, INT k, INT q, longinteger_object &go, INT verbose_level)
+void order_PO_epsilon(INT f_semilinear, INT epsilon, INT k, INT q, 
+	longinteger_object &go, INT verbose_level)
 // k is projective dimension
 {
 	INT f_v = (verbose_level >= 1);
-	INT w, m;
+	INT m;
 	
 	if (f_v) {
 		cout << "order_PO_epsilon" << endl;
 		}
-	w = Witt_index(epsilon, k);
-	if (epsilon == -1) {
-		m = w + 1;
-		}
-	else {
-		m = w;
+	m = Witt_index(epsilon, k);
+	if (f_v) {
+		cout << "Witt index = " << m << endl;
 		}
 	order_PO(epsilon, m, q, go, verbose_level);
 	if (f_semilinear) {
@@ -1495,6 +1493,12 @@ void order_PO_epsilon(INT f_semilinear, INT epsilon, INT k, INT q, longinteger_o
 
 void order_PO(INT epsilon, INT m, INT q, longinteger_object &o, INT verbose_level)
 {
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "order_PO epsilon = " << epsilon << " m=" << m << " q=" << q << endl;
+		}
+
 	if (epsilon == 0) {
 		order_PO_parabolic(m, q, o, verbose_level);
 		}

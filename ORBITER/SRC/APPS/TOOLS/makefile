@@ -22,6 +22,7 @@ all: all_cliques.out \
 	layered_graph_main.out \
 	loop.out \
 	plot_decomposition_matrix.out  \
+	plot_xy.out \
 	run_blt.out  \
 	scheduler.out \
 	solve_diophant.out \
@@ -83,6 +84,9 @@ loop.out:  loop.o ;
 
 plot_decomposition_matrix.out:  plot_decomposition_matrix.o;
 	$(DISCRETA_CPP)  plot_decomposition_matrix.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+plot_xy.out:  plot_xy.o ;
+	$(DISCRETA_CPP)  plot_xy.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 run_blt.out:  run_blt.o;
 	$(DISCRETA_CPP)  run_blt.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
