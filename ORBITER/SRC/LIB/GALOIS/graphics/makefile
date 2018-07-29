@@ -9,6 +9,7 @@ MODULES = \
 	draw.o \
 	mp_graphics.o \
 	plot.o \
+	scene.o \
 	tree.o \
 	tree_node.o
 

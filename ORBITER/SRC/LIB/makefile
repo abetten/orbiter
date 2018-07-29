@@ -118,6 +118,7 @@ MODULES= \
 		GALOIS/graphics/draw.o \
 		GALOIS/graphics/mp_graphics.o \
 		GALOIS/graphics/plot.o \
+		GALOIS/graphics/scene.o \
 		GALOIS/graphics/tree.o \
 		GALOIS/graphics/tree_node.o \
 		GALOIS/io_and_os/dynamic_memory.o \
