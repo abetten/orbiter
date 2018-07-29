@@ -1228,7 +1228,7 @@ void orthogonal::init(INT epsilon, INT n, finite_field *F, INT verbose_level)
 	form_c2 = 0;
 	form_c3 = 0;
 	if (epsilon == -1) {
-		choose_anisotropic_form(*F, form_c1, form_c2, form_c3, verbose_level - 2);
+		choose_anisotropic_form(*F, form_c1, form_c2, form_c3, verbose_level);
 		}
 	if (f_v) {
 		cout << "orthogonal::init computing Gram matrix" << endl;

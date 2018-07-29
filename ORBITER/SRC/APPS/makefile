@@ -4,6 +4,7 @@ all: ;
 	cd CODES; $(MAKE) all
 	cd COMBINATORICS; $(MAKE) all
 	cd GRAPH; $(MAKE) all
+	cd GROUPS; $(MAKE) all
 	cd OVOID; $(MAKE) all
 	cd PROJECTIVE_SPACE; $(MAKE) all
 	cd REGULAR_LS; $(MAKE) all
@@ -19,6 +20,7 @@ clean: ;
 	cd CODES; $(MAKE) clean
 	cd COMBINATORICS; $(MAKE) clean
 	cd GRAPH; $(MAKE) clean
+	cd GROUPS; $(MAKE) clean
 	cd OVOID; $(MAKE) clean
 	cd PROJECTIVE_SPACE; $(MAKE) clean
 	cd REGULAR_LS; $(MAKE) clean
