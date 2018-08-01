@@ -948,7 +948,7 @@ public:
 	void compute_point_stabilizer_in_standard_setting(generator *gen, 
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
-		group &H, longinteger_object &go_H, 
+		group &H, /* longinteger_object &go_H, */
 		INT pt, INT pt_orbit_len, 
 		INT verbose_level);
 	void init_extension_node_prepare_G(generator *gen, 

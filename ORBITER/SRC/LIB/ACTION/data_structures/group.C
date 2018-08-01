@@ -497,8 +497,11 @@ void group::point_stabilizer_with_action(action *A2, group &stab, INT pt, INT ve
 	INT *tl;
 	
 	if (f_v) {
-		cout << "group::point_stabilizer_with_action() computing stabilizer of point " << pt << " in action " << A2->label << endl;
-		cout << "internal action is " << stab.A->label << endl;
+		cout << "group::point_stabilizer_with_action() ";
+		cout << "computing stabilizer of point " << pt 
+			<< " in action " << A2->label 
+			<< " internal action is " << stab.A->label << endl;
+		cout << "verbose_level = " << verbose_level << endl;
 		}
 	
 	

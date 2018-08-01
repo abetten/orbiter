@@ -715,7 +715,7 @@ INT upstep_work::upstep_for_sets(INT verbose_level)
 				// in upstep_work_trace.C
 
 		if (f_v) {
-			cout << "upstep_work::upstep_for_sets find_automorphism_by_tracing returns " << trace_result_as_text(r) << endl;
+			cout << "upstep_work::upstep_for_sets coset " << coset << " / " << nb_cosets << " find_automorphism_by_tracing returns " << trace_result_as_text(r) << endl;
 			}
 		
 
@@ -795,12 +795,18 @@ INT upstep_work::upstep_for_sets(INT verbose_level)
 		cout << "upstep_work::upstep_for_sets upstep orbit length for set ";
 		INT_set_print(cout, gen->S, size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
+
+		cout << "coset_table of length " << nb_cosets_processed << ":" << endl;
+		print_coset_table(coset_table, nb_cosets_processed);
 		}
 	vector_ge SG_extension;
 	INT *tl_extension = NEW_INT(gen->A->base_len);
 	INT f_tolerant = TRUE;
 	
-	H->S->transitive_extension_tolerant(up_orbit, SG_extension, tl_extension, f_tolerant, verbose_level - 3);
+	if (f_vvv) {
+		cout << "upstep_work::upstep_for_sets H->S->transitive_extension_tolerant up_orbit.orbit_len[0]=" << up_orbit.orbit_len[0] << endl;
+		}
+	H->S->transitive_extension_tolerant(up_orbit, SG_extension, tl_extension, f_tolerant, 0 /*verbose_level - 3*/);
 	H->delete_strong_generators();
 	H->init_strong_generators(SG_extension, tl_extension);
 	

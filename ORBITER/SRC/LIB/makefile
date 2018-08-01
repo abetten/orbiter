@@ -125,6 +125,7 @@ MODULES= \
 		GALOIS/io_and_os/file_output.o \
 		GALOIS/io_and_os/memory.o \
 		GALOIS/io_and_os/memory_object.o \
+		GALOIS/io_and_os/orbiter_data_file.o \
 		GALOIS/io_and_os/util.o \
 		GALOIS/solvers/diophant.o \
 		GALOIS/solvers/dlx.o \

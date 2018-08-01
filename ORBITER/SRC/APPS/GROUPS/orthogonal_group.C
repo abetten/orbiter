@@ -148,6 +148,11 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 		A->element_print_as_permutation(SG->gens->ith(i), cout);
 		cout << endl;
 		}
+	cout << "Generators are:" << endl;
+	for (i = 0; i < SG->gens->len; i++) {
+		A->element_print_as_permutation(SG->gens->ith(i), cout);
+		cout << endl;
+		}
 	cout << "Generators in compact permutation form are:" << endl;
 	cout << SG->gens->len << " " << A->degree << endl;
 	for (i = 0; i < SG->gens->len; i++) {

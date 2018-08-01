@@ -10,6 +10,7 @@ MODULES = \
 	file_output.o \
 	memory.o \
 	memory_object.o \
+	orbiter_data_file.o \
 	util.o
 
 

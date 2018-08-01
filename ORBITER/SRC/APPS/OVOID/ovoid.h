@@ -25,6 +25,11 @@ void callback_print_set(INT len, INT *S, void *data);
 INT callback_check_conditions(INT len, INT *S, void *data, INT verbose_level);
 //INT callback_check_surface(INT len, INT *S, void *data, INT verbose_level);
 
+// #############################################################################
+// ovoid_generator.C:
+// #############################################################################
+
+
 class ovoid_generator {
 
 public:
@@ -64,6 +69,15 @@ public:
 
 	INT f_poly;
 	const BYTE *override_poly;
+
+	INT f_draw_poset;
+	INT f_embedded;
+	INT f_sideways;
+
+	INT f_read;
+	INT read_level;
+
+	BYTE prefix_with_directory[1000];
 
 	INT nb_identify;
 	BYTE **Identify_label;

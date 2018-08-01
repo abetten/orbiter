@@ -879,6 +879,23 @@ void schreier::print_generators()
 		}
 }
 
+void schreier::print_generators_with_permutations()
+{
+	INT j;
+	
+	cout << gens.len << " generators in action " << A->label << " of degree " << A->degree << ":" << endl;
+	for (j = 0; j < gens.len; j++) {
+		cout << "generator " << j << ":" << endl;
+		//A->element_print(gens.ith(j), cout);
+		A->element_print_quick(gens.ith(j), cout);
+		A->element_print_as_permutation(gens.ith(j), cout);
+		cout << endl;
+		if (j < gens.len - 1) {
+			cout << ", " << endl;
+			}
+		}
+}
+
 void schreier::print_orbit(INT orbit_no)
 {
 	print_orbit(cout, orbit_no);
