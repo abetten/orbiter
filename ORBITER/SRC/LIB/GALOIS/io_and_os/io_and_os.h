@@ -138,6 +138,30 @@ public:
 	void decompress(INT verbose_level);
 };
 
+// #################################################################################
+// orbiter_data_file.C:
+// #################################################################################
+
+
+
+class orbiter_data_file {
+public:
+	INT nb_cases;
+	INT **sets;
+	INT *set_sizes;
+	BYTE **Ago_ascii;
+	BYTE **Aut_ascii;
+	INT *Casenumbers;
+	
+	orbiter_data_file();
+	~orbiter_data_file();
+	void null();
+	void freeself();
+	void load(const BYTE *fname, INT verbose_level);
+};
+
+
+
 // #############################################################################
 // util.C:
 // #############################################################################

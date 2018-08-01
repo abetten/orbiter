@@ -92,7 +92,7 @@ void action::init_orthogonal_group(INT epsilon,
 		create_orthogonal_group(A /*subaction*/, 
 			TRUE /* f_has_target_go */, target_go, 
 			callback_choose_random_generator_orthogonal, 
-			verbose_level - 2);
+			0 /*verbose_level - 2*/);
 		if (f_vv) {
 			cout << "action::init_orthogonal_group after create_orthogonal_group" << endl;
 			}

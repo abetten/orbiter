@@ -109,7 +109,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		compute_point_stabilizer_in_standard_setting(gen, 
 			prev, prev_ex, size, 
 			G, go_G, 
-			H, go_H, 
+			H, /*go_H, */
 			pt, pt_orbit_len, 
 			verbose_level - 3);
 		if (f_vv) {
@@ -264,14 +264,24 @@ void oracle::compute_point_stabilizer_in_subspace_setting(generator *gen,
 void oracle::compute_point_stabilizer_in_standard_setting(generator *gen, 
 	INT prev, INT prev_ex, INT size, 
 	group &G, longinteger_object &go_G, 
-	group &H, longinteger_object &go_H, 
+	group &H, /*longinteger_object &go_H, */
 	INT pt, INT pt_orbit_len, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	
+	INT r;
+	longinteger_object go_H;
+	longinteger_domain D;
+
+
+	D.integral_division_by_INT(go_G, pt_orbit_len, go_H, r);
+	if (r != 0) {
+		cout << "oracle::compute_point_stabilizer_in_standard_setting r != 0" << endl;
+		exit(1);
+		}
+
 	H.init(gen->A);
 	
 	oracle *Op = &gen->root[prev];
@@ -279,6 +289,9 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 
 	if (f_v) {
 		cout << "oracle::compute_point_stabilizer_in_standard_setting, verbose_level = " << verbose_level << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, go_G = " << go_G << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, pt_orbit_len = " << pt_orbit_len << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, go_H = " << go_H << endl;
 		}
 
 	if (Op->sv) {
@@ -298,7 +311,7 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 				}
 			AR.induced_action_by_restriction_on_orbit_with_schreier_vector(*gen->A2, 
 				FALSE /* f_induce_action */, NULL /* old_G */, 
-				Op->sv, pt, 0 /*verbose_level - 1*/);
+				Op->sv, pt, verbose_level - 1);
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
 				cout << " oracle::compute_point_stabilizer_in_standard_setting created action of degree " << AR.degree << endl;
@@ -307,7 +320,22 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 				gen->print_level_extension_info(size, prev, prev_ex);
 				cout << " oracle::compute_point_stabilizer_in_standard_setting calling G.point_stabilizer_with_action" << endl;
 				}
-			G.point_stabilizer_with_action(&AR, H, 0 /*pt */, 0 /*verbose_level - 3*/);
+			G.point_stabilizer_with_action(&AR, H, 0 /*pt */, verbose_level - 3);
+			if (f_vvv) {
+				gen->print_level_extension_info(size, prev, prev_ex);
+				cout << " oracle::compute_point_stabilizer_in_standard_setting after G.point_stabilizer_with_action" << endl;
+				}
+
+			longinteger_object go_H1;
+			H.group_order(go_H1);
+			longinteger_domain D;
+			if (D.compare(go_H, go_H1) != 0) {
+				cout << "oracle::compute_point_stabilizer_in_standard_setting go_H is incorrect" << endl;
+				cout << "go_H=" << go_H << endl;
+				cout << "go_H1=" << go_H1 << endl;
+				exit(1);
+				}
+			
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
 				cout << " oracle::compute_point_stabilizer_in_standard_setting G.point_stabilizer_with_action done" << endl;

@@ -1625,13 +1625,13 @@ void order_PO_minus(INT m, INT q, longinteger_object &o, INT verbose_level)
 	if (f_v) {
 		cout << "order_PO_minus " << q << "^" << m + 1 << " + 1 = " << S << endl;
 		}
-	// now S = q^m-1
+	// now S = q^{m+1}-1
 
 	D.mult(O, S, T);
 	T.assign_to(O);
 
 	D.mult(O, Q, T);
-	if (ODD(q)) {
+	if (EVEN(q)) {
 		D.mult(T, Two, o);
 		}
 	else {

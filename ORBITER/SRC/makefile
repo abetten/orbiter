@@ -1,8 +1,8 @@
 all: ;
-	cd LIB; $(MAKE) all
-	cd APPS; $(MAKE) all
+	cd lib; $(MAKE) all
+	cd apps; $(MAKE) all
 
 clean: ;
-	cd LIB; $(MAKE) clean
-	cd APPS; $(MAKE) clean
+	cd lib; $(MAKE) clean
+	cd apps; $(MAKE) clean
 

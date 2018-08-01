@@ -1,7 +1,7 @@
 MY_PATH=../../..
-SRC=$(MY_PATH)/SRC
+SRC=$(MY_PATH)/src
 
-GROUPS_PATH=$(SRC)/APPS/GROUPS
+GROUPS_PATH=$(SRC)/apps/groups
 
 
 Op42:

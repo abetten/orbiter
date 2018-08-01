@@ -2369,7 +2369,9 @@ void sims::point_stabilizer_stabchain_with_action(action *A2, sims &S, INT pt, I
 	INT f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "sims::point_stabilizer_stabchain_with_action computing stabilizer of point " << pt << " in action " << A2->label << " verbose_level=" << verbose_level << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action computing stabilizer of point " 
+			<< pt << " in action " << A2->label 
+			<< " verbose_level=" << verbose_level << endl;
 		cout << "internal action: " << A->label << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
@@ -2384,6 +2386,15 @@ void sims::point_stabilizer_stabchain_with_action(action *A2, sims &S, INT pt, I
 	
 	if (f_vvv && A2->degree < 150) {
 		O.print_generators();
+		O.print_generators_with_permutations();
+		INT j;
+		for (j = 0; j < O.gens.len; j++) {
+			cout << "generator " << j << ":" << endl;
+			//A->element_print(gens.ith(j), cout);
+			//A->element_print_quick(gens.ith(j), cout);
+			A->element_print_as_permutation(O.gens.ith(j), cout);
+			cout << endl;
+			}
 		}
 
 	if (f_vv) {
@@ -2406,7 +2417,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2, sims &S, INT pt, I
 		exit(1);
 		}
 	if (f_v) {
-		cout << "sims::point_stabilizer_stabchain_with_action group_order = " << go << " orbit_len = " << orbit_len << " stab_order = " << stab_order << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action group_order = " << go << " orbit_len = " << orbit_len << " target stab_order = " << stab_order << endl;
 		}
 	if (stab_order.is_one()) {
 		if (f_v) {
@@ -2441,29 +2452,42 @@ void sims::point_stabilizer_stabchain_with_action(action *A2, sims &S, INT pt, I
 	
 	S.group_order(cur_stab_order);
 	if (f_vv) {
-		cout << "sims::point_stabilizer_stabchain_with_action found a stabilizer of order " << cur_stab_order << " of " << stab_order << endl;
+		cout << "sims::point_stabilizer_stabchain_with_action before the loop, stabilizer has order " << cur_stab_order << " of " << stab_order << endl;
 		cout << "sims::point_stabilizer_stabchain_with_action creating the stabilizer using random generators" << endl;
 		}
 	
 	while (D.compare_unsigned(cur_stab_order, stab_order) != 0) {
 	
+
+		if (f_vv) {
+			cout << "sims::point_stabilizer_stabchain_with_action loop iteration " << cnt << endl;
+			}
+
 		if (cnt % 2 || nb_gen[0] == 0) {
 			if (f_vv) {
 				cout << "sims::point_stabilizer_stabchain_with_action creating random generator no " << cnt + 1 << " using the Schreier vector" << endl;
 				}
-			O.non_trivial_random_schreier_generator(A2, verbose_level - 5);
+			O.non_trivial_random_schreier_generator(A2, 0 /*verbose_level - 5*/);
 			p_schreier_gen = O.schreier_gen;
 			}
 		else {
 			if (f_vv) {
 				cout << "sims::point_stabilizer_stabchain_with_action creating random generator no " << cnt + 1 << " using the Sims chain" << endl;
 				}
-			S.random_schreier_generator(verbose_level - 5);
+			S.random_schreier_generator(0 /*verbose_level - 5*/);
 			p_schreier_gen = S.schreier_gen;
 			}
 		cnt++;
 		if (f_vv) {
 			cout << "sims::point_stabilizer_stabchain_with_action random generator no " << cnt << endl;
+			A->element_print_quick(p_schreier_gen, cout);
+			cout << endl;
+			cout << "sims::point_stabilizer_stabchain_with_action random generator no " << cnt << " as permutation in natural action:" << endl;
+			A->element_print_as_permutation(p_schreier_gen, cout);
+			cout << endl;
+			cout << "sims::point_stabilizer_stabchain_with_action random generator no " << cnt << " as permutation in chosen action:" << endl;
+			A2->element_print_as_permutation(p_schreier_gen, cout);
+			cout << endl;
 			}
 		image = A2->element_image_of(pt, p_schreier_gen, 0 /* verbose_level */);
 		if (image != pt) {
@@ -2480,29 +2504,47 @@ void sims::point_stabilizer_stabchain_with_action(action *A2, sims &S, INT pt, I
 				}
 			}
 		
+		if (f_vv) {
+			cout << "sims::point_stabilizer_stabchain_with_action random generator no " << cnt << " before strip_and_add" << endl;
+			}
 		if (!S.strip_and_add(p_schreier_gen, Elt1 /* residue */, verbose_level - 3)) {
 			if (f_vvv) {
 				cout << "sims::point_stabilizer_stabchain_with_action strip_and_add returns FALSE" << endl;
 				}
 			//continue;
 			}
+		if (f_vv) {
+			cout << "sims::point_stabilizer_stabchain_with_action random generator no " << cnt << " before strip_and_add" << endl;
+			}
 
 		S.group_order(cur_stab_order);
 		if (f_vv) {
 			cout << "sims::point_stabilizer_stabchain_with_action group order " << go << endl;
 			cout << "orbit length " << orbit_len << endl;
-			cout << "stabilizer order " << stab_order << endl;
-			cout << "found a stabilizer of order " << cur_stab_order << " of " << stab_order 
+			cout << "current stab_order = " << cur_stab_order << " / " << stab_order
 				<< " with " << S.gens.len << " strong generators" << endl;
-			D.integral_division(stab_order, cur_stab_order, rgo, rem, 0);
-			cout << "remaining factor: " << rgo << " remainder " << rem << endl;
+			}
+
+		INT cmp;
+		
+		cmp = D.compare_unsigned(cur_stab_order, stab_order);
+		if (f_vv) {
+			cout << "sims::point_stabilizer_stabchain_with_action compare yields " << cmp << endl;
+			}
+		if (cmp > 0) {	
+			cout << "sims::point_stabilizer_stabchain_with_action overshooting the target group order" << endl;
+			cout << "current stab_order = " << cur_stab_order << " / " << stab_order << endl;
+			exit(1);
+			}
+		D.integral_division(stab_order, cur_stab_order, rgo, rem, 0);
+		if (f_vv) {
+			cout << "sims::point_stabilizer_stabchain_with_action remaining factor: " << rgo << " remainder " << rem << endl;
 			}
 
 		if (D.compare_unsigned(cur_stab_order, stab_order) == 1) {
 			cout << "sims::point_stabilizer_stabchain_with_action group order " << go << endl;
 			cout << "orbit length " << orbit_len << endl;
-			cout << "stabilizer order " << stab_order << endl;
-			cout << "found a stabilizer of order " << cur_stab_order << " of " << stab_order 
+			cout << "current stab_order = " << cur_stab_order << " / " << stab_order
 				<< " with " << S.gens.len << " strong generators" << endl;
 			D.integral_division(stab_order, cur_stab_order, rgo, rem, 0);
 			cout << "remaining factor: " << rgo << " remainder " << rem << endl;
@@ -2543,7 +2585,9 @@ void sims::point_stabilizer_with_action(action *A2, vector_ge &SG, INT *tl, INT 
 	sims S;
 	
 	if (f_v) {
-		cout << "sims::point_stabilizer_with_action" << endl;
+		cout << "sims::point_stabilizer_with_action pt=" << pt << endl;
+		cout << "sims::point_stabilizer_with_action action = " << A2->label << endl;
+		cout << "sims::point_stabilizer_with_action internal action = " << A->label << endl;
 		}
 	if (f_v) {
 		cout << "sims::point_stabilizer_with_action before point_stabilizer_stabchain_with_action" << endl;
