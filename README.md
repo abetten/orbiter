@@ -2,7 +2,8 @@
 classification of combinatorial objects
 
 
-Please see DOC/orbiter.pdf 
+Please see ORBITER/doc/orbiter.pdf 
 
 Anton Betten
-March 18, 2016
+March 18, 2016,
+July 31, 2018
