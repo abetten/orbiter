@@ -58,16 +58,31 @@ void generator::housekeeping(INT i, INT f_write_files, INT t0, INT verbose_level
 		sprintf(my_fname_base, "%sa", fname_base);
 		if (f_v) {
 			cout << "generator_housekeeping my_fname_base=" << my_fname_base << endl;
+			cout << "generator_housekeeping before write_level_file_binary" << endl;
 			}
 		write_level_file_binary(i, my_fname_base, 0/*verbose_level*/);
 		if (i) {		
 			sprintf(my_fname_base, "%sb", fname_base);
+			if (f_v) {
+				cout << "generator_housekeeping my_fname_base=" << my_fname_base << endl;
+				cout << "generator_housekeeping before write_level_file_binary" << endl;
+				}
 			write_level_file_binary(i - 1, my_fname_base, 0/*verbose_level*/);
+			if (f_v) {
+				cout << "generator_housekeeping my_fname_base=" << my_fname_base << endl;
+				cout << "generator_housekeeping before write_sv_level_file_binary" << endl;
+				}
 			write_sv_level_file_binary(i - 1, my_fname_base, 
 				FALSE, 0, 0, 0 /*verbose_level*/);
 			}
 #endif
+		if (f_v) {
+			cout << "generator_housekeeping before write_lvl_file" << endl;
+			}
 		write_lvl_file(fname_base, i, t0, FALSE /* f_with_strong_generators */, FALSE /* f_long_version */, 0);
+		if (f_v) {
+			cout << "generator_housekeeping before generator::write_data_file" << endl;
+			}
 		generator::write_data_file(i /* depth_completed */, fname_base, 0);
 
 		if (f_v) {
@@ -600,7 +615,7 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base, INT lvl, INT 
 		}
 }
 
-void generator_read_candidates_of_orbit(BYTE *fname, INT orbit_at_level, 
+void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
 	INT *&candidates, INT &nb_candidates, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

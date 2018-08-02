@@ -19,6 +19,11 @@ ovoid_generator::ovoid_generator()
 	A = NULL;
 	O = NULL;
 	
+	u = NULL;
+	v = NULL;
+	w = NULL;
+	tmp1 = NULL;
+
 	f_max_depth = FALSE;
 	f_list = FALSE;
 	f_poly = FALSE;
@@ -30,20 +35,16 @@ ovoid_generator::ovoid_generator()
 	f_read = FALSE;
 	read_level = 0;
 
-	nb_identify = 0;
-	Identify_label = NULL;
-	Identify_coeff = NULL;
-	Identify_monomial = NULL;
-	Identify_length = NULL;
+	K = NULL;
+	color_table = NULL;
 
-	// for surface:
-	//f_surface = FALSE;
+	Pts = NULL;
+	Candidates = NULL;
 }
 
 ovoid_generator::~ovoid_generator()
 {
 	INT f_v = FALSE;
-	INT i;
 
 	if (f_v) {
 		cout << "ovoid_generator::~ovoid_generator()" << endl;
@@ -54,34 +55,30 @@ ovoid_generator::~ovoid_generator()
 	if (F) {
 		delete F;
 		}
-
-	if (Identify_label) {
-		for (i = 0; i < nb_identify; i++) {
-			FREE_BYTE(Identify_label[i]);
-			}
-		FREE_PBYTE(Identify_label);
-		}
-	if (Identify_coeff) {
-		for (i = 0; i < nb_identify; i++) {
-			FREE_INT(Identify_coeff[i]);
-			}
-		FREE_PINT(Identify_coeff);
-		}
-	if (Identify_monomial) {
-		for (i = 0; i < nb_identify; i++) {
-			FREE_INT(Identify_monomial[i]);
-			}
-		FREE_PINT(Identify_monomial);
-		}
-	if (Identify_length) {
-		FREE_INT(Identify_length);
-		}
-
-#if 0
-	if (SC) {
-		delete SC;
-		}
-#endif
+	if (K) {
+		delete K;
+	}
+	if (u) {
+		FREE_INT(u);
+	}
+	if (v) {
+		FREE_INT(v);
+	}
+	if (w) {
+		FREE_INT(w);
+	}
+	if (tmp1) {
+		FREE_INT(tmp1);
+	}
+	if (color_table) {
+		FREE_INT(color_table);
+	}
+	if (Pts) {
+		FREE_INT(Pts);
+	}
+	if (Candidates) {
+		FREE_INT(Candidates);
+	}
 	
 	if (f_v) {
 		cout << "ovoid_generator::~ovoid_generator() after delete A" << endl;
@@ -158,7 +155,7 @@ void ovoid_generator::init(int argc, const char **argv, INT &verbose_level)
 	AO = A->G.AO;
 	O = AO->O;
 
-	N = O->nb_points + O->nb_lines;
+	N = O->nb_points;
 	
 	if (f_vv) {
 		cout << "The finite field is:" << endl;
@@ -171,41 +168,13 @@ void ovoid_generator::init(int argc, const char **argv, INT &verbose_level)
 		cout << "alpha=" << O->alpha << endl;
 		}
 
+	Pts = NEW_INT(N * d);
+	Candidates = NEW_INT(N * d);
+
 
 
 	//A->Strong_gens->print_generators_even_odd();
 	
-
-#if 0
-	if (f_surface) {
-
-		if (n != 5) {
-			cout << "surface needs n = 5" << endl;
-			exit(1);
-			}
-		if (epsilon != 1) {
-			cout << "surface needs epsilon = 1" << endl;
-			exit(1);
-			}
-
-		
-
-		if (f_v) {
-			cout << "surface:" << endl;
-			}
-
-		SC = new surface_classify;
-
-		if (f_v) {
-			cout << "before SC->init" << endl;
-			}
-		SC->init(F, A, O, gen, verbose_level);
-		if (f_v) {
-			cout << "after SC->init" << endl;
-			}
-
-		}
-#endif
 
 	if (f_max_depth) {
 		depth = max_depth;
@@ -233,42 +202,31 @@ void ovoid_generator::init(int argc, const char **argv, INT &verbose_level)
 		}
 	
 
-	if (FALSE /* f_surface*/) {
+	gen->init(A, A,
+		A->Strong_gens,
+		gen->depth /* sz */,
+		verbose_level - 1);
+
 #if 0
-		gen->init(A, SC->A_on_neighbors, 
-			SC->stab_gens,  
-			gen->depth /* sz */, 
-			verbose_level - 1);
-
-#if 1
-		gen->init_check_func(callback_check_surface, 
-			(void *)this /* candidate_check_data */);
+	gen->init_check_func(callback_check_conditions,
+		(void *)this /* candidate_check_data */);
 #endif
 
-		//gen->f_print_function = TRUE;
-		//gen->print_function = callback_print_set;
-		//gen->print_function_data = (void *) this;
-	
+	// we have an early test function:
 
-		sprintf(gen->fname_base, "surface_%ld", q);
-#endif
-		}
-	else {
-		gen->init(A, A, 
-			A->Strong_gens,  
-			gen->depth /* sz */, 
-			verbose_level - 1);
+	gen->init_early_test_func(
+		ovoid_generator_early_test_func_callback,
+		this,
+		verbose_level);
 
-		gen->init_check_func(callback_check_conditions, 
-			(void *)this /* candidate_check_data */);
 
-		gen->f_print_function = TRUE;
-		gen->print_function = callback_print_set;
-		gen->print_function_data = (void *) this;
-	
 
-		sprintf(gen->fname_base, "ovoid_Q%ld_%ld_%ld", epsilon, n, q);
-		}
+	gen->f_print_function = TRUE;
+	gen->print_function = callback_print_set;
+	gen->print_function_data = (void *) this;
+
+
+	sprintf(gen->fname_base, "ovoid_Q%ld_%ld_%ld", epsilon, n, q);
 
 	if (f_v) {
 		cout << "fname_base = " << gen->fname_base << endl;
@@ -288,6 +246,67 @@ void ovoid_generator::init(int argc, const char **argv, INT &verbose_level)
 		}
 	
 	gen->root[0].init_root_node(gen, gen->verbose_level);
+
+
+	if (epsilon == 1 && d == 6) {
+		if (f_v) {
+			cout << "allocating Klein correspondence" << endl;
+			}
+		K = new klein_correspondence;
+
+		if (f_v) {
+			cout << "before K->init" << endl;
+		}
+		INT i, j, c, fxy;
+		INT B[8];
+		INT pivots[2] = {2,3};
+
+		K->init(F, O, verbose_level);
+		color_table = NEW_INT(N);
+		nb_colors = nb_AG_elements(2, F->q);
+		O->unrank_point(u, 1, 0, 0);
+		for (i = 0; i < N; i++) {
+			O->unrank_point(v, 1, i, 0);
+			fxy = O->evaluate_bilinear_form(u, v, 1);
+			if (i && fxy != 0) {
+				j = K->Point_on_quadric_to_line[i];
+				K->P3->Grass_lines->unrank_INT_here(B, j, 0 /* verbose_level */);
+				F->Gauss_INT_with_given_pivots(B,
+					FALSE /* f_special */, TRUE /* f_complete */, pivots, 2 /*nb_pivots*/,
+					2 /*m*/, 4 /* n*/,
+					0 /*verbose_level*/);
+				if (B[2] != 1 || B[3] != 0 || B[6] != 0 || B[7] != 1) {
+					cout << "The shape of B is wrong" << endl;
+					exit(1);
+				}
+				AG_element_rank(F->q, B, 1, 2, c);
+			} else {
+				c = -1;
+			}
+			color_table[i] = c;
+		}
+		cout << "nb_colors = " << nb_colors << endl;
+		cout << "color table:" << endl;
+		for (i = 0; i < N; i++) {
+			cout << i << " / " << N << " : ";
+			INT_vec_print(cout, v, d);
+
+			O->unrank_point(v, 1, i, 0);
+			fxy = O->evaluate_bilinear_form(u, v, 1);
+			if (i && fxy != 0) {
+				j = K->Point_on_quadric_to_line[i];
+				K->P3->Grass_lines->unrank_INT_here(B, j, 0 /* verbose_level */);
+				F->Gauss_INT_with_given_pivots(B,
+					FALSE /* f_special */, TRUE /* f_complete */, pivots, 2 /*nb_pivots*/,
+					2 /*m*/, 4 /* n*/,
+					0 /*verbose_level*/);
+				cout << " : " << endl;
+				INT_matrix_print(B, 2, 4);
+			}
+			cout << " : " << color_table[i] << endl;
+		}
+
+	}
 	if (f_v) {
 		cout << "init() finished" << endl;
 		}
@@ -295,7 +314,7 @@ void ovoid_generator::init(int argc, const char **argv, INT &verbose_level)
 
 void ovoid_generator::read_arguments(int argc, const char **argv, INT &verbose_level)
 {
-	INT i, j;
+	INT i;
 	INT f_epsilon = FALSE;
 	INT f_n = FALSE;
 	INT f_q = FALSE;
@@ -337,49 +356,6 @@ void ovoid_generator::read_arguments(int argc, const char **argv, INT &verbose_l
 			f_poly = TRUE;
 			override_poly = argv[++i];
 			cout << "-poly " << override_poly << endl;
-			}
-#if 0
-		else if (strcmp(argv[i], "-surface") == 0) {
-			f_surface = TRUE;
-			cout << "-surface " << endl;
-			}
-#endif
-		else if (strcmp(argv[i], "-identify") == 0) {
-			if (nb_identify == 0) {
-				Identify_label = NEW_PBYTE(1000);
-				Identify_coeff = NEW_PINT(1000);
-				Identify_monomial = NEW_PINT(1000);
-				Identify_length = NEW_INT(1000);
-				}
-			INT coeff[1000];
-			INT monomial[1000];
-			INT nb_terms = 0;
-			cout << "-identify " << endl;
-			const BYTE *label = argv[++i];
-			cout << "-identify " << label << endl;
-			Identify_label[nb_identify] = NEW_BYTE(strlen(label) + 1);
-			strcpy(Identify_label[nb_identify], label);
-			for (j = 0; ; j++) {
-				coeff[j] = atoi(argv[++i]);
-				if (coeff[j] == -1) {
-					break;
-					}
-				monomial[j] = atoi(argv[++i]);
-				}
-			nb_terms = j;
-			Identify_coeff[nb_identify] = NEW_INT(nb_terms);
-			Identify_monomial[nb_identify] = NEW_INT(nb_terms);
-			Identify_length[nb_identify] = nb_terms;
-			INT_vec_copy(coeff, Identify_coeff[nb_identify], nb_terms);
-			INT_vec_copy(monomial, Identify_monomial[nb_identify], nb_terms);
-			cout << "-identify " << Identify_label[nb_identify] << " ";
-			for (j = 0; j < Identify_length[nb_identify]; j++) {
-				cout << Identify_coeff[nb_identify][j] << " ";
-				cout << Identify_monomial[nb_identify][j] << " ";
-				}
-			cout << "-1" << endl;
-			nb_identify++;
-			
 			}
 		else if (strcmp(argv[i], "-draw_poset") == 0) {
 			f_draw_poset = TRUE;
@@ -452,39 +428,70 @@ INT ovoid_generator::check_conditions(INT len, INT *S, INT verbose_level)
 		}
 }
 
-#if 0
-INT ovoid_generator::check_surface(INT len, INT *S, INT verbose_level)
+void ovoid_generator::early_test_func(INT *S, INT len,
+	INT *candidates, INT nb_candidates,
+	INT *good_candidates, INT &nb_good_candidates,
+	INT verbose_level)
 {
-	INT f_OK = TRUE;
-	INT f_surface_test = FALSE;
 	INT f_v = (verbose_level >= 1);
-	
+	INT f_vv = (verbose_level >= 2);
+	INT i, j;
+	INT *v1, *v2;
+	INT fxy;
+
 	if (f_v) {
-		cout << "ovoid_generator::check_surface checking set ";
+		cout << "ovoid_generator::early_test_func checking set ";
 		print_set(cout, len, S);
-		}
-	if (!SC->surface_test(S, len, verbose_level - 1)) {
-		f_OK = FALSE;
-		f_surface_test = TRUE;
-		}
-	if (f_OK) {
-		if (f_v) {
-			cout << "OK" << endl;
+		cout << endl;
+		cout << "candidate set of size " << nb_candidates << ":" << endl;
+		INT_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+		if (f_vv) {
+			for (i = 0; i < nb_candidates; i++) {
+				O->unrank_point(u, 1, candidates[i], 0/*verbose_level - 4*/);
+				cout << "candidate " << i << "=" << candidates[i] << ": ";
+				INT_vec_print(cout, u, d);
+				cout << endl;
+				}
 			}
-		return TRUE;
+		}
+	for (i = 0; i < len; i++) {
+		O->unrank_point(Pts + i * d, 1, S[i], 0/*verbose_level - 4*/);
+		}
+	for (i = 0; i < nb_candidates; i++) {
+		O->unrank_point(Candidates + i * d, 1, candidates[i], 0/*verbose_level - 4*/);
+		}
+
+	if (len == 0) {
+		INT_vec_copy(candidates, good_candidates, nb_candidates);
+		nb_good_candidates = nb_candidates;
 		}
 	else {
-		if (f_v) {
-			cout << "not OK because of ";
-			if (f_surface_test) {
-				cout << "surface test";
-				}
-			cout << endl;
+		nb_good_candidates = 0;
+
+		if (f_vv) {
+			cout << "ovoid_generator::early_test_func before testing" << endl;
 			}
-		return FALSE;
-		}
+		for (j = 0; j < nb_candidates; j++) {
+
+
+			if (f_vv) {
+				cout << "ovoid_generator::early_test_func testing " << j << " / " << nb_candidates << endl;
+				}
+
+			v1 = Pts + (len - 1) * d;
+			v2 = Candidates + j * d;
+
+
+			fxy = O->evaluate_bilinear_form(v1, v2, 1);
+
+
+			if (fxy) {
+				good_candidates[nb_good_candidates++] = candidates[j];
+				}
+			} // next j
+		} // else
 }
-#endif
 
 INT ovoid_generator::collinearity_test(INT *S, INT len, INT verbose_level)
 {
@@ -549,26 +556,238 @@ void ovoid_generator::print(INT *S, INT len)
 		}
 }
 
-#if 0
-void ovoid_generator::process_surfaces(INT verbose_level)
+void ovoid_generator::make_graphs(orbiter_data_file *ODF,
+	INT f_split, INT split_r, INT split_m,
+	const BYTE *candidates_fname,
+	const BYTE *fname_mask,
+	INT verbose_level)
+{
+	INT orbit_idx;
+	INT f_v = (verbose_level >= 1);
+	BYTE fname_graph[1000];
+
+	if (f_v) {
+		cout << "ovoid_generator::make_graphs" << endl;
+		}
+
+	for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
+
+		if (f_split) {
+			if ((orbit_idx % split_m) == split_r) {
+				continue;
+			}
+		}
+		cout << orbit_idx << " / " << ODF->nb_cases << " : ";
+		INT_vec_print(cout, ODF->sets[orbit_idx], ODF->set_sizes[orbit_idx]);
+		cout << " : " << ODF->Ago_ascii[orbit_idx] << " : " << ODF->Aut_ascii[orbit_idx] << endl;
+
+		sprintf(fname_graph, fname_mask, orbit_idx);
+		INT *candidates;
+		INT nb_candidates;
+
+		generator_read_candidates_of_orbit(candidates_fname, orbit_idx /* orbit_at_level */,
+				candidates, nb_candidates, 0 /* verbose_level */);
+		cout << "With " << nb_candidates << " live points: ";
+		INT_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+
+		colored_graph *CG;
+
+		create_graph(ODF,
+				orbit_idx,
+				candidates, nb_candidates,
+				CG,
+				verbose_level);
+
+		CG->save(fname_graph, 0);
+
+
+		delete CG;
+		FREE_INT(candidates);
+
+	}
+	if (f_v) {
+		cout << "ovoid_generator::make_graphs done" << endl;
+		}
+}
+
+void ovoid_generator::create_graph(orbiter_data_file *ODF,
+	INT orbit_idx,
+	INT *candidates, INT nb_candidates,
+	colored_graph *&CG,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-
+	INT i, j, k, fxy;
+	INT nb_points = nb_candidates;
+	INT nb_colors = 1;
+	INT starter_size;
+	INT *point_color = NULL;
+	INT *Pts;
+	INT L, nb_colors_used;
 
 	if (f_v) {
-		cout << "ovoid_generator::process_surfaces" << endl;
-		}
-	SC->process_surfaces(nb_identify, 
-		Identify_label, 
-		Identify_coeff, 
-		Identify_monomial, 
-		Identify_length, 
-		verbose_level);
-	if (f_v) {
-		cout << "ovoid_generator::process_surfaces done" << endl;
+		cout << "ovoid_generator::create_graph for orbit_idx = " << orbit_idx << " nb_points = " << nb_points << endl;
+	}
+
+	starter_size = ODF->set_sizes[orbit_idx];
+
+	UBYTE *bitvector_adjacency = NULL;
+	INT bitvector_length_in_bits;
+	INT bitvector_length;
+	Pts = NEW_INT(nb_points * d);
+	for (i = 0; i < nb_points; i++) {
+		O->unrank_point(Pts + i * d, 1, candidates[i], 0);
+	}
+
+	L = (nb_points * (nb_points - 1)) >> 1;
+
+	bitvector_length_in_bits = L;
+	bitvector_length = (L + 7) >> 3;
+	bitvector_adjacency = NEW_UBYTE(bitvector_length);
+	for (i = 0; i < bitvector_length; i++) {
+		bitvector_adjacency[i] = 0;
 		}
 
+	k = 0;
+	for (i = 0; i < nb_points; i++) {
+		for (j = i + 1; j < nb_points; j++, k++) {
+			fxy = O->evaluate_bilinear_form(Pts + i * d, Pts + j * d, 1);
+			if (fxy != 0) {
+				bitvector_m_ii(bitvector_adjacency, k, 1);
+			}
+		}
+	}
+
+	point_color = NEW_INT(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		point_color[i] = 0;
+	}
+
+	if (epsilon == 1 && d == 6) {
+		compute_coloring(ODF->sets[orbit_idx], starter_size,
+				candidates, nb_points, point_color, nb_colors_used, verbose_level);
+		// check if coloring is proper:
+		k = 0;
+		for (i = 0; i < nb_points; i++) {
+			for (j = i + 1; j < nb_points; j++, k++) {
+				if (bitvector_s_i(bitvector_adjacency, k)) {
+					if (point_color[i] == point_color[j]) {
+						cout << "the coloring is not proper" << endl;
+						cout << "point " << i << " has color " << point_color[i] << endl;
+						cout << "point " << j << " has color " << point_color[j] << endl;
+						exit(1);
+					}
+				}
+			}
+		}
+	} else {
+		nb_colors_used = nb_colors;
+	}
+
+	CG = new colored_graph;
+
+	CG->init(nb_points, nb_colors_used,
+		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
+		// the adjacency becomes part of the colored_graph object
+
+	INT_vec_copy(candidates, CG->points, nb_candidates);
+	CG->init_user_data(ODF->sets[orbit_idx], starter_size, verbose_level - 2);
+	sprintf(CG->fname_base, "graph_ovoid_%ld_%ld_%ld", q, starter_size, orbit_idx);
+
+	FREE_INT(Pts);
+	FREE_INT(point_color);
+	// don't free bitvector_adjacency, it has become part of the graph object
+	if (f_v) {
+		cout << "ovoid_generator::create_graph done" << endl;
+	}
 }
-#endif
 
+void ovoid_generator::compute_coloring(INT *starter, INT starter_size,
+		INT *candidates, INT nb_points,
+		INT *point_color, INT &nb_colors_used, INT verbose_level)
+{
+	INT f_v (verbose_level >= 1);
+	INT i, j, c, pos;
+
+	if (f_v) {
+		cout << "ovoid_generator::compute_coloring" << endl;
+	}
+	if (starter_size < 1) {
+		cout << "starter_size < 1" << endl;
+		exit(1);
+	}
+	if (starter[0] != 0) {
+		cout << "starter[0] != 0" << endl;
+		exit(1);
+	}
+	INT *colors;
+	INT *color_pos;
+
+	colors = NEW_INT(nb_colors);
+	color_pos = NEW_INT(nb_colors);
+	cout << "starter:";
+	INT_vec_print(cout, starter, starter_size);
+	cout << endl;
+	for (i = 1; i < starter_size; i++) {
+		c = color_table[starter[i]];
+		colors[i - 1] = c;
+		if (c == -1) {
+			cout << "c == -1 for starter[i]" << endl;
+			exit(1);
+		}
+	}
+	INT_vec_heapsort(colors, starter_size - 1);
+	cout << "colors:";
+	INT_vec_print(cout, colors, starter_size - 1);
+	cout << endl;
+	nb_colors_used = nb_colors - (starter_size - 1);
+	INT_vec_complement(colors, nb_colors, starter_size - 1);
+	for (i = 0; i < nb_colors; i++) {
+		c = colors[i];
+		color_pos[c] = i;
+	}
+	for (i = 0; i < nb_points; i++) {
+		j = candidates[i];
+		c = color_table[j];
+		if (c == -1) {
+			cout << "c == -1" << endl;
+			exit(1);
+		}
+		pos = color_pos[c];
+		if (pos < starter_size - 1) {
+			cout << "pos < starter_size - 1" << endl;
+			exit(1);
+		}
+		point_color[i] = pos - (starter_size - 1);
+	}
+	FREE_INT(colors);
+	FREE_INT(color_pos);
+	if (f_v) {
+		cout << "ovoid_generator::compute_coloring done" << endl;
+	}
+}
+
+
+void ovoid_generator_early_test_func_callback(INT *S, INT len,
+	INT *candidates, INT nb_candidates,
+	INT *good_candidates, INT &nb_good_candidates,
+	void *data, INT verbose_level)
+{
+	ovoid_generator *Gen = (ovoid_generator *) data;
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "ovoid_generator_early_test_func_callback for set ";
+		print_set(cout, len, S);
+		cout << endl;
+		}
+	Gen->early_test_func(S, len,
+		candidates, nb_candidates,
+		good_candidates, nb_good_candidates,
+		verbose_level - 2);
+	if (f_v) {
+		cout << "ovoid_generator_early_test_func_callback done" << endl;
+		}
+}
 

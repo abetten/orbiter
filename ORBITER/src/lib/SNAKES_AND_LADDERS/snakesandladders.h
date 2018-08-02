@@ -54,6 +54,17 @@ void read_orbit_rep_and_candidates_from_files_and_process(action *A,
 	INT &nb_candidates,
 	INT &nb_cases, 
 	INT verbose_level);
+void read_candidates_for_one_orbit_from_file(BYTE *prefix,
+		INT level, INT orbit_at_level, INT level_of_candidates_file,
+		INT *S,
+		void (*early_test_func_callback)(INT *S, INT len,
+			INT *candidates, INT nb_candidates,
+			INT *good_candidates, INT &nb_good_candidates,
+			void *data, INT verbose_level),
+		void *early_test_func_callback_data,
+		INT *&candidates,
+		INT &nb_candidates,
+		INT verbose_level);
 void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix, 
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	INT *&starter,
@@ -64,6 +75,9 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	INT &nb_candidates,
 	INT &nb_cases, 
 	INT verbose_level);
+INT find_orbit_index_in_data_file(const BYTE *prefix,
+		INT level_of_candidates_file, INT *starter,
+		INT verbose_level);
 void compute_orbits_on_subsets(generator *&gen, 
 	INT target_depth,
 	const BYTE *prefix, 
@@ -750,7 +764,7 @@ public:
 };
 
 // in generator_io.C:
-void generator_read_candidates_of_orbit(BYTE *fname, INT orbit_at_level, 
+void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
 	INT *&candidates, INT &nb_candidates, INT verbose_level);
 
 // #############################################################################

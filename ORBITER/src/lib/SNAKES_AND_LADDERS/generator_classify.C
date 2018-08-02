@@ -169,7 +169,7 @@ INT generator::main(INT t0,
 		if (f_v) {
 			cout << "generator::main: ";
 			print_problem_label();
-			cout << " calling extend_level " << i << endl;
+			cout << " calling extend_level " << i << " f_write_candidate_file=" << f_write_candidate_file << endl;
 			}
 
 		if (i <= schreier_depth) {
