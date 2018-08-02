@@ -43,6 +43,7 @@ int main(int argc, char **argv)
 		}
 	
 
+#if 0
 	INT nb_orbits;
 	BYTE **data;
 	INT *Set_sizes;
@@ -76,30 +77,53 @@ int main(int argc, char **argv)
 		Set_sizes, Sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		verbose_level);
+#else
+	orbiter_data_file *ODF;
+	INT *Ago;
+	BYTE fname[1000];
+	BYTE candidates_fname[1000];
+	INT f_has_candidates = FALSE;
+	INT level;
+
+	sprintf(fname, "%s", file_name);
+	sprintf(candidates_fname, "%s_candidates.bin", fname);
+	if (file_size(candidates_fname) > 0) {
+		f_has_candidates = TRUE;
+	}
+	ODF = new orbiter_data_file;
+	ODF->load(fname, verbose_level);
+	if (ODF->nb_cases == 0) {
+		cout << "The file is empty" << endl;
+		exit(1);
+	}
+	level = ODF->set_sizes[0];
+	cout << "found " << ODF->nb_cases << " orbits at level " << level << endl;
+
+#endif
 	cout << "after parse_sets, scanning Ago[i]" << endl;
-	Ago = NEW_INT(nb_orbits);
-	for (j = 0; j < nb_orbits; j++) {
-		Ago[j] = atoi(Ago_ascii[j]);
+	Ago = NEW_INT(ODF->nb_cases);
+	for (j = 0; j < ODF->nb_cases; j++) {
+		Ago[j] = atoi(ODF->Ago_ascii[j]);
 		}
 	cout << "after scanning Ago" << endl;
 
 	
 
-	if (nb_orbits == 0) {
-		cout << "nb_orbits == 0" << endl;
+	if (ODF->nb_cases == 0) {
+		cout << "ODF->nb_cases == 0" << endl;
 		exit(1);
 		}
 
-	
+	INT nb_orbits = ODF->nb_cases;
 
-	INT level;
+	//INT level;
 	PBYTE *Text_level;
 	PBYTE *Text_node;
 	PBYTE *Text_orbit_reps;
 	PBYTE *Text_stab_order;
 	BYTE str[10000];
 
-	level = Set_sizes[0];
+	//level = Set_sizes[0];
 
 	cout << "level=" << level << endl;
 
@@ -117,12 +141,12 @@ int main(int argc, char **argv)
 		Text_node[i] = NEW_BYTE(strlen(str) + 1);
 		strcpy(Text_node[i], str);
 
-		INT_vec_print_to_str(str, Sets[i], level);
+		INT_vec_print_to_str(str, ODF->sets[i], level);
 		Text_orbit_reps[i] = NEW_BYTE(strlen(str) + 1);
 		strcpy(Text_orbit_reps[i], str);
 		
-		Text_stab_order[i] = NEW_BYTE(strlen(Ago_ascii[i]) + 1);
-		strcpy(Text_stab_order[i], Ago_ascii[i]);
+		Text_stab_order[i] = NEW_BYTE(strlen(ODF->Ago_ascii[i]) + 1);
+		strcpy(Text_stab_order[i], ODF->Ago_ascii[i]);
 		
 		}
 

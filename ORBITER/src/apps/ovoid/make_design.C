@@ -5,7 +5,7 @@
 //
 //
 // 
-// Creates the incidence mtrix of 
+// Creates the incidence matrix of
 // a symmetric 2-(v,k,lambda) design from tables computed from 
 // a partial ovoid in O^-(6,q) (or partial spread of H(3,q^2)).
 // Here, v = 1/2(q^3 + q + 2), k = q^1+1, lambda = 2q

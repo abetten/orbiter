@@ -79,6 +79,80 @@ void read_orbit_rep_and_candidates_from_files_and_process(action *A, BYTE *prefi
 		}
 }
 
+void read_candidates_for_one_orbit_from_file(BYTE *prefix,
+		INT level, INT orbit_at_level, INT level_of_candidates_file,
+		INT *S,
+		void (*early_test_func_callback)(INT *S, INT len,
+			INT *candidates, INT nb_candidates,
+			INT *good_candidates, INT &nb_good_candidates,
+			void *data, INT verbose_level),
+		void *early_test_func_callback_data,
+		INT *&candidates,
+		INT &nb_candidates,
+		INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT h, orbit_idx;
+	INT *candidates1 = NULL;
+	INT nb_candidates1;
+
+	if (f_v) {
+		cout << "read_candidates_for_one_orbit_from_file" << endl;
+		cout << "level=" << level
+				<< " orbit_at_level=" << orbit_at_level
+				<< " level_of_candidates_file=" << level_of_candidates_file << endl;
+	}
+
+	orbit_idx = find_orbit_index_in_data_file(prefix,
+			level_of_candidates_file, S,
+			verbose_level);
+
+	if (f_v) {
+		cout << "read_candidates_for_one_orbit_from_file orbit_idx=" << orbit_idx << endl;
+	}
+
+	if (f_v) {
+		cout << "read_orbit_rep_and_candidates_from_files before generator_read_candidates_of_orbit" << endl;
+		}
+	BYTE fname2[1000];
+	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix, level_of_candidates_file);
+ 	generator_read_candidates_of_orbit(fname2, orbit_idx,
+		candidates1, nb_candidates1, verbose_level - 1);
+
+
+	for (h = level_of_candidates_file; h < level; h++) {
+
+		INT *candidates2;
+		INT nb_candidates2;
+
+		if (f_v) {
+			cout << "read_orbit_rep_and_candidates_from_files_and_process testing candidates at level " << h << " number of candidates = " << nb_candidates1 << endl;
+			}
+		candidates2 = NEW_INT(nb_candidates1);
+
+		(*early_test_func_callback)(S, h + 1,
+			candidates1, nb_candidates1,
+			candidates2, nb_candidates2,
+			early_test_func_callback_data, 0 /*verbose_level - 1*/);
+
+		if (f_v) {
+			cout << "read_orbit_rep_and_candidates_from_files_and_process number of candidates at level " << h + 1 << " reduced from " << nb_candidates1 << " to " << nb_candidates2 << " by " << nb_candidates1 - nb_candidates2 << endl;
+			}
+
+		INT_vec_copy(candidates2, candidates1, nb_candidates2);
+		nb_candidates1 = nb_candidates2;
+
+		FREE_INT(candidates2);
+		}
+
+	candidates = candidates1;
+	nb_candidates = nb_candidates1;
+
+	if (f_v) {
+		cout << "read_candidates_for_one_orbit_from_file done" << endl;
+	}
+}
+
 void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix, 
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	INT *&starter,
@@ -104,13 +178,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	//longinteger_object stab_go;
 
 	BYTE fname1[1000];
-	BYTE fname2[1000];
-	BYTE fname3[1000];
-
 	sprintf(fname1, "%s_lvl_%ld", prefix, level);
-	sprintf(fname3, "%s_lvl_%ld", prefix, level_of_candidates_file);
-
-	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix, level_of_candidates_file);
 	
 	A->read_set_and_stabilizer(fname1, 
 		orbit_at_level, starter, starter_sz, Stab, 
@@ -140,6 +208,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 		// Once we have the candidates for the prefix, we run it through the 
 		// test function to find the candidate set of starter as a subset 
 		// of this set. 
+
+#if 0
 		if (file_size(fname3) <= 0) {
 			cout << "read_orbit_rep_and_candidates_from_files file " << fname3 << " does not exist" << endl;
 			exit(1);
@@ -201,6 +271,11 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 				}
 			}
 		FREE_INT(S);
+#else
+		orbit_at_candidate_level = find_orbit_index_in_data_file(prefix,
+				level_of_candidates_file, starter,
+				verbose_level);
+#endif
 		}
 	if (f_v) {
 		cout << "read_orbit_rep_and_candidates_from_files Found starter, orbit_at_candidate_level=" << orbit_at_candidate_level << endl;
@@ -212,6 +287,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	if (f_v) {
 		cout << "read_orbit_rep_and_candidates_from_files before generator_read_candidates_of_orbit" << endl;
 		}
+	BYTE fname2[1000];
+	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix, level_of_candidates_file);
  	generator_read_candidates_of_orbit(fname2, orbit_at_candidate_level, 
 		candidates, nb_candidates, verbose_level - 1);
 
@@ -233,6 +310,89 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 		}
 }
 
+INT find_orbit_index_in_data_file(const BYTE *prefix,
+		INT level_of_candidates_file, INT *starter,
+		INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	BYTE fname[1000];
+	INT orbit_idx;
+
+	if (f_v) {
+		cout << "find_orbit_index_in_data_file" << endl;
+	}
+
+	sprintf(fname, "%s_lvl_%ld", prefix, level_of_candidates_file);
+
+	if (file_size(fname) <= 0) {
+		cout << "find_orbit_index_in_data_file file " << fname << " does not exist" << endl;
+		exit(1);
+		}
+	ifstream f(fname);
+	INT a, i, cnt;
+	INT *S;
+	BYTE buf[MY_OWN_BUFSIZE];
+	INT len, str_len;
+	BYTE *p_buf;
+
+	S = NEW_INT(level_of_candidates_file);
+
+	cnt = 0;
+	f.getline(buf, MY_OWN_BUFSIZE, '\n'); // skip the first line
+
+	orbit_idx = 0;
+
+	while (TRUE) {
+		if (f.eof()) {
+			break;
+			}
+		f.getline(buf, MY_OWN_BUFSIZE, '\n');
+		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
+		str_len = strlen(buf);
+		if (str_len == 0) {
+			cout << "read_orbit_rep_and_candidates_from_files str_len == 0" << endl;
+			exit(1);
+			}
+
+		// check for comment line:
+		if (buf[0] == '#')
+			continue;
+
+		p_buf = buf;
+		s_scan_int(&p_buf, &a);
+		if (a == -1) {
+			break;
+			}
+		len = a;
+		if (a != level_of_candidates_file) {
+			cout << "a != level_of_candidates_file" << endl;
+			cout << "a=" << a << endl;
+			cout << "level_of_candidates_file=" << level_of_candidates_file << endl;
+			exit(1);
+			}
+		for (i = 0; i < len; i++) {
+			s_scan_int(&p_buf, &S[i]);
+			}
+		for (i = 0; i < level_of_candidates_file; i++) {
+			if (S[i] != starter[i]) {
+				break;
+				}
+			}
+		if (i == level_of_candidates_file) {
+			// We found the representative that matches the prefix:
+			orbit_idx = cnt;
+			break;
+			}
+		else {
+			cnt++;
+			}
+		}
+	FREE_INT(S);
+	if (f_v) {
+		cout << "find_orbit_index_in_data_file done" << endl;
+	}
+	return orbit_idx;
+}
 
 void compute_orbits_on_subsets(generator *&gen, 
 	INT target_depth,

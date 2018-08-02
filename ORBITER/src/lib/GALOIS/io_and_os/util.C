@@ -306,6 +306,7 @@ const BYTE *plus_minus_letter(INT epsilon)
 
 void INT_vec_complement(INT *v, INT n, INT k)
 // computes the complement to v + k (v must be allocated to n lements)
+// the first k elements of v[] must be in increasing order.
 {
 	INT *w;
 	INT j1, j2, i;

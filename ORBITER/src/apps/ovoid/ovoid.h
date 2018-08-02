@@ -23,7 +23,6 @@ void usage(int argc, const char **argv);
 INT check_conditions(INT len, INT *S, void *data, INT verbose_level);
 void callback_print_set(INT len, INT *S, void *data);
 INT callback_check_conditions(INT len, INT *S, void *data, INT verbose_level);
-//INT callback_check_surface(INT len, INT *S, void *data, INT verbose_level);
 
 // #############################################################################
 // ovoid_generator.C:
@@ -50,10 +49,9 @@ public:
 	INT m; // Witt index
 	INT depth; // search depth
 
-	INT N; // = O->nb_points + O->nb_lines;
+	INT N; // = O->nb_points
 	
 	INT *u, *v, *w, *tmp1; // vectors of length d
-	INT *tl;
 		
 	INT nb_sol; // number of solutions so far
 
@@ -79,32 +77,12 @@ public:
 
 	BYTE prefix_with_directory[1000];
 
-	INT nb_identify;
-	BYTE **Identify_label;
-	INT **Identify_coeff;
-	INT **Identify_monomial;
-	INT *Identify_length;
+	klein_correspondence *K;
+	INT *color_table;
+	INT nb_colors;
 
-#if 0
-	// for surface:
-	INT f_surface;
-	surface_classify *SC;
-#endif
-
-
-#if 0
-	INT f_surface;
-	klein_correspondence *Klein;
-	surface *Surf;
-	schreier *Sch;
-	longinteger_object go;
-	sims *Stab;
-	strong_generators *stab_gens;
-	INT pt;
-	INT *Pts;
-	INT nb_pts;
-	action *A_on_neighbors;
-#endif
+	INT *Pts; // [N * d]
+	INT *Candidates; // [N * d]
 
 
 	ovoid_generator();
@@ -112,15 +90,29 @@ public:
 	void init(int argc, const char **argv, INT &verbose_level);
 	void read_arguments(int argc, const char **argv, INT &verbose_level);
 	INT check_conditions(INT len, INT *S, INT verbose_level);
-	//INT check_surface(INT len, INT *S, INT verbose_level);
+	void early_test_func(INT *S, INT len,
+		INT *candidates, INT nb_candidates,
+		INT *good_candidates, INT &nb_good_candidates,
+		INT verbose_level);
 	INT collinearity_test(INT *S, INT len, INT verbose_level);
-	INT surface_test(INT *S, INT len, INT verbose_level);
 	void print(INT *S, INT len);
-	//void process_surfaces(INT verbose_level);
-#if 0
-	void make_table_of_double_sixes(INT *Lines, INT nb_lines, 
-		set_of_sets *SoS, INT *&Table, INT &N, INT verbose_level);
-#endif
+	void make_graphs(orbiter_data_file *ODF,
+		INT f_split, INT split_r, INT split_m,
+		const BYTE *candidates_fname,
+		const BYTE *fname_mask,
+		INT verbose_level);
+	void create_graph(orbiter_data_file *ODF,
+		INT orbit_idx,
+		INT *candidates, INT nb_candidates,
+		colored_graph *&CG,
+		INT verbose_level);
+	void compute_coloring(INT *starter, INT starter_size,
+			INT *candidates, INT nb_points,
+			INT *point_color, INT &nb_colors_used, INT verbose_level);
 
 };
 
+void ovoid_generator_early_test_func_callback(INT *S, INT len,
+	INT *candidates, INT nb_candidates,
+	INT *good_candidates, INT &nb_good_candidates,
+	void *data, INT verbose_level);
