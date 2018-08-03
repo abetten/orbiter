@@ -10,69 +10,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT perm_group::cntr_new = 0;
-INT perm_group::cntr_objects = 0;
-INT perm_group::f_debug_memory = FALSE;
-
-void *perm_group::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "perm_group::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *perm_group::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(perm_group);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "perm_group::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void perm_group::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "perm_group::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return ::free(ptr);
-}
-
-void perm_group::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(perm_group);
-	if (f_debug_memory) {
-		cout << "perm_group::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return ::free(ptr);
-}
-
 perm_group::perm_group()
 {
 	null();

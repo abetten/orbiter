@@ -6,69 +6,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT group::cntr_new = 0;
-INT group::cntr_objects = 0;
-INT group::f_debug_memory = FALSE;
-
-void *group::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "group::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *group::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(group);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "group::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void group::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "group::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void group::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(group);
-	if (f_debug_memory) {
-		cout << "group::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 group::group()
 {
 	f_has_ascii_coding = FALSE;

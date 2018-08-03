@@ -111,10 +111,10 @@ INT matrix_group_element_is_one(action &A, void *elt, INT verbose_level)
 		cout << "matrix_group_element_is_one" << endl;
 		}
 	if (G.f_kernel_is_diagonal_matrices) {
-		f_is_one = G.GL_is_one(A, Elt);
+		f_is_one = G.GL_is_one(Elt);
 		}
 	else if (!G.f_projective) {
-		f_is_one = G.GL_is_one(A, Elt);
+		f_is_one = G.GL_is_one(Elt);
 		}
 	else {
 		/* if (A.ptr_element_image_of == element_image_of_line_through_vertex || 

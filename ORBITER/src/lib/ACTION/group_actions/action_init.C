@@ -561,7 +561,6 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 		cout << "action::setup_linear_group_from_strong_generators before S->compute_base_orbits_known_length" << endl;
 		}
 	sims *S;
-	//longinteger_object go1;
 
 	S = NEW_OBJECT(sims);
 
@@ -574,7 +573,6 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 	if (f_v) {
 		cout << "action::setup_linear_group_from_strong_generators after S->compute_base_orbits_known_length" << endl;
 		}
-	//S->group_order(go1);
 
 
 	if (f_v) {

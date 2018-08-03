@@ -6,69 +6,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT page_storage::cntr_new = 0;
-INT page_storage::cntr_objects = 0;
-INT page_storage::f_debug_memory = FALSE;
-
-void *page_storage::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "page_storage::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *page_storage::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(page_storage);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "page_storage::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void page_storage::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "page_storage::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void page_storage::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(page_storage);
-	if (f_debug_memory) {
-		cout << "page_storage::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 page_storage::page_storage()
 {
 	page_ptr_used = 0;

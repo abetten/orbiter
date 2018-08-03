@@ -261,11 +261,13 @@ void colored_graph::print()
 	
 	cout << "colored graph with " << nb_points << " points and " << nb_colors << " colors" << endl;
 
+#if 0
 	cout << "i : point_label[i] : point_color[i]" << endl;
 	for (i = 0; i < nb_points; i++) {
 		cout << i << " : " << points[i] << " : " << point_color[i] << endl;
 		}
 	cout << endl;
+#endif
 	
 	classify C;
 
@@ -300,7 +302,7 @@ void colored_graph::print()
 	C.print_second(TRUE);
 	cout << endl;
 
-
+#if 0
 	cout << "Adjacency (blocked off by color classes):" << endl;
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {
@@ -333,7 +335,8 @@ void colored_graph::print()
 			cout << endl;
 			}
 		}
-	FREE_INT(A);	
+	FREE_INT(A);
+#endif
 }
 
 void colored_graph::print_points_and_colors()

@@ -98,8 +98,13 @@ public:
 	void print(INT *S, INT len);
 	void make_graphs(orbiter_data_file *ODF,
 		INT f_split, INT split_r, INT split_m,
-		const BYTE *candidates_fname,
+		INT f_lexorder_test,
 		const BYTE *fname_mask,
+		INT verbose_level);
+	void make_one_graph(orbiter_data_file *ODF,
+		INT orbit_idx,
+		INT f_lexorder_test,
+		colored_graph *&CG,
 		INT verbose_level);
 	void create_graph(orbiter_data_file *ODF,
 		INT orbit_idx,

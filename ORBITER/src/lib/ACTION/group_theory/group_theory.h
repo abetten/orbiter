@@ -112,14 +112,6 @@ public:
 class matrix_group {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT f_projective;
 		// n x n matrices (possibly with Frobenius) 
 		// acting on PG(n - 1, q)
@@ -222,7 +214,7 @@ public:
 	void GL_one(INT *Elt);
 	void GL_one_internal(INT *Elt);
 	void GL_zero(INT *Elt);
-	INT GL_is_one(action &A, INT *Elt);
+	INT GL_is_one(INT *Elt);
 	void GL_mult(INT *A, INT *B, INT *AB, INT verbose_level);
 	void GL_mult_internal(INT *A, INT *B, INT *AB, INT verbose_level);
 	void GL_copy(INT *A, INT *B);
@@ -267,14 +259,6 @@ public:
 class perm_group {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT degree;
 	
 	INT f_induced_action;
@@ -293,7 +277,7 @@ public:
 	UBYTE *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 	INT *Eltrk1, *Eltrk2, *Eltrk3;
-		// used in strore / retrieve
+		// used in store / retrieve
 	
 	page_storage *Elts;
 
@@ -350,15 +334,6 @@ void perm_group_generators_direct_product(INT nb_diagonal_elements,
 class schreier {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
-
 	action *A;
 	vector_ge gens;
 	vector_ge gens_inv;
@@ -702,15 +677,6 @@ public:
 class sims {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
-
 	action *A;
 
 	INT my_base_len;
@@ -906,7 +872,7 @@ public:
 		// applies all generators at the given level to compute
 		// the corresponding basic orbit.
 		// the generators are the first nb_gen[lvl] 
-		// in the generator arry
+		// in the generator array
 	void compute_base_orbit_known_length(INT lvl, 
 		INT target_length, INT verbose_level);
 	void extract_strong_generators_in_order(vector_ge &SG, 
@@ -1332,4 +1298,63 @@ public:
 };
 
 
+// #############################################################################
+// wreath_product.C:
+// #############################################################################
+
+class wreath_product {
+
+public:
+	matrix_group *M;
+	finite_field *F;
+	INT q;
+	INT nb_factors;
+
+	INT degree_of_matrix_group;
+	INT dimension_of_matrix_group;
+	INT dimension_of_tensor_action;
+	INT degree_of_tensor_action;
+	INT degree_overall;
+	perm_group *P;
+	INT elt_size_INT;
+
+	INT *mtx_size;
+	INT *index_set1;
+	INT *index_set2;
+	INT *u;
+	INT *v;
+	INT *w;
+	INT *A1;
+	INT *A2;
+	INT *A3;
+	INT *tmp_Elt1;
+	INT *tmp_perm1;
+
+	INT bits_per_digit;
+	INT bits_per_elt;
+	INT char_per_elt;
+
+
+	page_storage *Elts;
+
+	wreath_product();
+	~wreath_product();
+	void null();
+	void freeself();
+	void init_tensor_wreath_product(matrix_group *M, INT nb_factors, INT verbose_level);
+	INT element_image_of(INT *Elt, INT a, INT verbose_level);
+	void element_one(INT *Elt);
+	INT element_is_one(INT *Elt);
+	void element_mult(INT *A, INT *B, INT *AB, INT verbose_level);
+	void element_move(INT *A, INT *B, INT verbose_level);
+	void element_invert(INT *A, INT *Av, INT verbose_level);
+	void apply_permutation(INT *Elt, INT *v_in, INT *v_out, INT verbose_level);
+	INT offset_i(INT i);
+	void create_matrix(INT *Elt, INT *A, INT verbose_level);
+		// uses A1, A2
+	void element_pack(INT *Elt, UBYTE *elt);
+	void element_unpack(UBYTE *elt, INT *Elt);
+	void put_digit(UBYTE *elt, INT f, INT i, INT j, INT d);
+	INT get_digit(UBYTE *elt, INT f, INT i, INT j);
+};
 

@@ -749,7 +749,9 @@ void strong_generators::init_centralizer_of_matrix(action *A, INT *Mtx, INT verb
 		}
 }
 
-void strong_generators::init_centralizer_of_matrix_general_linear(action *A_projective, action *A_general_linear, INT *Mtx, INT verbose_level)
+void strong_generators::init_centralizer_of_matrix_general_linear(
+		action *A_projective, action *A_general_linear, INT *Mtx,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -820,7 +822,9 @@ void strong_generators::init_centralizer_of_matrix_general_linear(action *A_proj
 		}
 }
 
-void strong_generators::field_reduction(action *Aq, INT n, INT s, finite_field *Fq, INT verbose_level)
+void strong_generators::field_reduction(action *Aq,
+		INT n, INT s, finite_field *Fq,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q, Q, m, t;
@@ -900,8 +904,8 @@ void strong_generators::field_reduction(action *Aq, INT n, INT s, finite_field *
 	gens1->init(Aq);
 	gens1->allocate(nb_gens);
 	for (t = 0; t < nb_gens; t++) {
-		cout << "strong_generators::field_reduction " << t << 
-" / " << nb_gens << endl;
+		cout << "strong_generators::field_reduction " << t
+				<< " / " << nb_gens << endl;
 		EltQ = gens->ith(t);
 		S->lift_matrix(EltQ, m, Mtx, 0 /* verbose_level */);
 		if (f_v) {
@@ -914,8 +918,8 @@ void strong_generators::field_reduction(action *Aq, INT n, INT s, finite_field *
 			Aq->element_print_quick(Eltq, cout);
 			}
 		Aq->element_move(Eltq, gens1->ith(t), 0);
-		cout << "strong_generators::field_reduction " << t << 
-" / " << nb_gens << " done" << endl;
+		cout << "strong_generators::field_reduction " << t
+				<< " / " << nb_gens << " done" << endl;
 		}
 
 	if (f_v) {
@@ -1128,7 +1132,8 @@ void strong_generators::generators_for_translation_plane_in_andre_model(
 		}
 }
 
-void strong_generators::generators_for_the_stabilizer_of_two_components(action *A_PGL_n_q, 
+void strong_generators::generators_for_the_stabilizer_of_two_components(
+	action *A_PGL_n_q,
 	matrix_group *Mtx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1758,7 +1763,8 @@ void strong_generators::generators_for_parabolic_subgroup(action *A_PGL_n_q,
 		}
 }
 
-void strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(action *A_PGL_4_q, 
+void strong_generators::generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+	action *A_PGL_4_q,
 	matrix_group *Mtx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1851,7 +1857,8 @@ void strong_generators::generators_for_stabilizer_of_three_collinear_points_in_P
 		}
 }
 
-void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(action *A_PGL_4_q, 
+void strong_generators::generators_for_stabilizer_of_triangle_in_PGL4(
+	action *A_PGL_4_q,
 	matrix_group *Mtx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1965,7 +1972,8 @@ void strong_generators::generators_for_the_orthogonal_group(action *A,
 
 	A2->init_orthogonal_group(epsilon, 
 		n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */, FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, 
 		TRUE /* f_basis */, verbose_level);
 
@@ -2001,7 +2009,8 @@ void strong_generators::generators_for_the_orthogonal_group(action *A,
 		}
 }
 
-void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(action *A, 
+void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
+	action *A,
 	finite_field *F, INT iso, 
 	INT verbose_level)
 {
@@ -2065,7 +2074,8 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(actio
 }
 
 
-void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(action *A, 
+void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_family_24(
+	action *A,
 	finite_field *F, INT f_with_normalizer, INT f_semilinear, 
 	INT verbose_level)
 {
@@ -2134,7 +2144,8 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface_famil
 		}
 }
 
-void strong_generators::BLT_set_from_catalogue_stabilizer(action *A, 
+void strong_generators::BLT_set_from_catalogue_stabilizer(
+	action *A,
 	finite_field *F, INT iso, 
 	INT verbose_level)
 {
@@ -2207,7 +2218,8 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(action *A,
 		}
 }
 
-void strong_generators::stabilizer_of_spread_from_catalogue(action *A, 
+void strong_generators::stabilizer_of_spread_from_catalogue(
+	action *A,
 	INT q, INT k, INT iso, 
 	INT verbose_level)
 {

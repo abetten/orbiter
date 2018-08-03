@@ -13,15 +13,6 @@
 class group {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
-
 	action *A;
 
 	INT f_has_ascii_coding;
@@ -107,14 +98,6 @@ public:
 class page_storage {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT overall_length;
 	
 	INT entry_size; // in BYTE

@@ -163,6 +163,7 @@ MODULES= \
 		ACTION/group_theory/strong_generators.o \
 		ACTION/group_theory/strong_generators_groups.o \
 		ACTION/group_theory/subgroup.o \
+		ACTION/group_theory/wreath_product.o \
 		ACTION/induced_actions/action_by_conjugation.o \
 		ACTION/induced_actions/action_by_representation.o \
 		ACTION/induced_actions/action_by_restriction.o \

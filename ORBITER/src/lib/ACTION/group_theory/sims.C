@@ -6,69 +6,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT sims::cntr_new = 0;
-INT sims::cntr_objects = 0;
-INT sims::f_debug_memory = FALSE;
-
-void *sims::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "sims::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *sims::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(sims);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "sims::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void sims::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "sims::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void sims::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(sims);
-	if (f_debug_memory) {
-		cout << "sims::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 sims::sims()
 {
 	null();

@@ -18,7 +18,8 @@ MODULES = \
 	sims_global.o \
 	strong_generators.o \
 	strong_generators_groups.o \
-	subgroup.o
+	subgroup.o \
+	wreath_product.o 
 
 
 all : $(MODULES)

@@ -45,16 +45,19 @@ int main(int argc, const char **argv)
 	if (Gen.f_read) {
 		orbiter_data_file *ODF;
 		BYTE fname[1000];
-		BYTE candidates_fname[1000];
-		INT f_has_candidates = FALSE;
+		//BYTE candidates_fname[1000];
+		//INT f_has_candidates = FALSE;
 		INT i, j;
 		INT level = Gen.read_level;
 
 		sprintf(fname, "%s_lvl_%ld", Gen.prefix_with_directory, level);
+
+#if 0
 		sprintf(candidates_fname, "%s_candidates.bin", fname);
 		if (file_size(candidates_fname) > 0) {
 			f_has_candidates = TRUE;
 		}
+#endif
 		ODF = new orbiter_data_file;
 		ODF->load(fname, verbose_level);
 		cout << "found " << ODF->nb_cases << " orbits at level " << level << endl;
@@ -64,15 +67,49 @@ int main(int argc, const char **argv)
 		INT split_r = 0;
 		INT split_m = 1;
 		BYTE fname_graph_mask[1000];
+		INT f_lexorder = TRUE;
 
-		sprintf(fname_graph_mask, "graph_ovoid_Q%ld_%ld_%ld_case%%ld.bin", Gen.epsilon, Gen.d - 1, Gen.q);
+		sprintf(fname_graph_mask, "graph_ovoid_Q%ld_%ld_%ld_level%ld_case%%ld.bin", Gen.epsilon, Gen.d - 1, Gen.q, level);
 
 		cout << "creating graphs:" << endl;
+
+#if 0
 		Gen.make_graphs(ODF,
 			f_split, split_r, split_m,
-			candidates_fname,
+			f_lexorder,
+			//candidates_fname,
 			fname_graph_mask,
 			verbose_level);
+#else
+		INT orbit_idx;
+
+		for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
+
+			if (f_split) {
+				if ((orbit_idx % split_m) == split_r) {
+					continue;
+				}
+			}
+			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
+			INT_vec_print(cout, ODF->sets[orbit_idx], ODF->set_sizes[orbit_idx]);
+			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : " << ODF->Aut_ascii[orbit_idx] << endl;
+
+			BYTE fname_graph[1000];
+			colored_graph *CG;
+
+			sprintf(fname_graph, fname_graph_mask, orbit_idx);
+
+			Gen.make_one_graph(ODF,
+				orbit_idx,
+				f_lexorder,
+				CG,
+				verbose_level);
+
+			CG->save(fname_graph, 0);
+
+			delete CG;
+		} // for orbit_idx
+#endif
 		cout << "creating graphs done" << endl;
 
 
@@ -114,6 +151,7 @@ int main(int argc, const char **argv)
 				delete SG;
 			}
 
+#if 0
 			INT *candidates;
 			INT nb_candidates;
 
@@ -135,7 +173,8 @@ int main(int argc, const char **argv)
 						nb_candidates,
 						verbose_level);
 			}
-			}
+#endif
+			} // end for i
 		delete ODF;
 		}
 	else {
