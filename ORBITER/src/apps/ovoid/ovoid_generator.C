@@ -126,7 +126,8 @@ void ovoid_generator::init(int argc, const char **argv, INT &verbose_level)
 	//f_semilinear = TRUE;
 
 	
-	sprintf(prefix_with_directory, "ovoid_Q%ld_%ld_%ld", epsilon, d - 1, q);
+	sprintf(prefix, "ovoid_Q%ld_%ld_%ld", epsilon, d - 1, q);
+	sprintf(prefix_with_directory, "%s", prefix);
 	
 	F->init_override_polynomial(q, override_poly, 0);
 
@@ -558,17 +559,21 @@ void ovoid_generator::print(INT *S, INT len)
 
 void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 	INT f_split, INT split_r, INT split_m,
-	const BYTE *candidates_fname,
+	INT f_lexorder_test,
 	const BYTE *fname_mask,
 	INT verbose_level)
 {
 	INT orbit_idx;
 	INT f_v = (verbose_level >= 1);
+	INT f_v3 = (verbose_level >= 3);
 	BYTE fname_graph[1000];
+	INT level;
 
 	if (f_v) {
 		cout << "ovoid_generator::make_graphs" << endl;
 		}
+
+	level = ODF->set_sizes[0];
 
 	for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
 
@@ -582,14 +587,76 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 		cout << " : " << ODF->Ago_ascii[orbit_idx] << " : " << ODF->Aut_ascii[orbit_idx] << endl;
 
 		sprintf(fname_graph, fname_mask, orbit_idx);
+
 		INT *candidates;
 		INT nb_candidates;
 
-		generator_read_candidates_of_orbit(candidates_fname, orbit_idx /* orbit_at_level */,
+#if 0
+		generator_read_candidates_of_orbit(
+				candidates_fname, orbit_idx /* orbit_at_level */,
 				candidates, nb_candidates, 0 /* verbose_level */);
+#endif
+
+		cout << "ovoid_generator::make_graphs before read_candidates_for_one_orbit_from_file prefix=" << prefix << endl;
+		read_candidates_for_one_orbit_from_file(prefix,
+				level, orbit_idx, level - 1 /* level_of_candidates_file */,
+				ODF->sets[orbit_idx],
+				ovoid_generator_early_test_func_callback,
+				this,
+				candidates,
+				nb_candidates,
+				verbose_level);
+
+
+
 		cout << "With " << nb_candidates << " live points: ";
 		INT_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
+
+
+
+		if (strcmp(ODF->Ago_ascii[orbit_idx], "1") != 0) {
+
+
+			INT max_starter;
+
+
+			strong_generators *SG;
+			longinteger_object go;
+
+			SG = new strong_generators;
+			SG->init(A);
+			SG->decode_ascii_coding(ODF->Aut_ascii[orbit_idx], 0 /* verbose_level */);
+			SG->group_order(go);
+
+			max_starter = ODF->sets[orbit_idx][ODF->set_sizes[orbit_idx] - 1];
+
+			if (f_v) {
+				cout << "max_starter=" << max_starter << endl;
+			}
+
+
+
+			if (f_lexorder_test) {
+				INT nb_candidates2;
+
+				if (f_v) {
+					cout << "ovoid_generator::make_graphs Case " << orbit_idx << " / " << ODF->nb_cases << " Before lexorder_test" << endl;
+				}
+				A->lexorder_test(candidates, nb_candidates, nb_candidates2,
+					SG->gens, max_starter, 0 /*verbose_level - 3*/);
+				if (f_v) {
+					cout << "ovoid_generator::make_graphs After lexorder_test nb_candidates=" << nb_candidates2 << " eliminated " << nb_candidates - nb_candidates2 << " candidates" << endl;
+				}
+				nb_candidates = nb_candidates2;
+			}
+		}
+
+
+
+
+
+
 
 		colored_graph *CG;
 
@@ -601,6 +668,10 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 
 		CG->save(fname_graph, 0);
 
+		if (f_v3) {
+			CG->print();
+			//CG->print_points_and_colors();
+		}
 
 		delete CG;
 		FREE_INT(candidates);
@@ -608,6 +679,113 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 	}
 	if (f_v) {
 		cout << "ovoid_generator::make_graphs done" << endl;
+		}
+}
+
+void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
+	INT orbit_idx,
+	INT f_lexorder_test,
+	colored_graph *&CG,
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT level;
+
+	if (f_v) {
+		cout << "ovoid_generator::make_one_graph" << endl;
+		}
+
+	level = ODF->set_sizes[0];
+
+
+	INT *candidates;
+	INT nb_candidates;
+
+
+	cout << "ovoid_generator::make_one_graph before read_candidates_for_one_orbit_from_file prefix=" << prefix << endl;
+	read_candidates_for_one_orbit_from_file(prefix,
+			level, orbit_idx, level - 1 /* level_of_candidates_file */,
+			ODF->sets[orbit_idx],
+			ovoid_generator_early_test_func_callback,
+			this,
+			candidates,
+			nb_candidates,
+			verbose_level);
+
+
+
+	cout << "With " << nb_candidates << " live points." << endl;
+#if 0
+	if (f_v3) {
+		INT_vec_print(cout, candidates, nb_candidates);
+		cout << endl;
+	}
+#endif
+
+
+	if (strcmp(ODF->Ago_ascii[orbit_idx], "1") != 0) {
+
+
+		INT max_starter;
+
+
+		strong_generators *SG;
+		longinteger_object go;
+
+		SG = new strong_generators;
+		SG->init(A);
+		SG->decode_ascii_coding(ODF->Aut_ascii[orbit_idx], 0 /* verbose_level */);
+		SG->group_order(go);
+
+		max_starter = ODF->sets[orbit_idx][ODF->set_sizes[orbit_idx] - 1];
+
+		if (f_v) {
+			cout << "max_starter=" << max_starter << endl;
+		}
+
+
+
+		if (f_lexorder_test) {
+			INT nb_candidates2;
+
+			if (f_v) {
+				cout << "ovoid_generator::make_graphs Case " << orbit_idx << " / " << ODF->nb_cases << " Before lexorder_test" << endl;
+			}
+			A->lexorder_test(candidates, nb_candidates, nb_candidates2,
+				SG->gens, max_starter, 0 /*verbose_level - 3*/);
+			if (f_v) {
+				cout << "ovoid_generator::make_graphs After lexorder_test nb_candidates=" << nb_candidates2 << " eliminated " << nb_candidates - nb_candidates2 << " candidates" << endl;
+			}
+			nb_candidates = nb_candidates2;
+		}
+	}
+
+
+
+
+
+
+
+
+	create_graph(ODF,
+			orbit_idx,
+			candidates, nb_candidates,
+			CG,
+			verbose_level);
+
+
+#if 0
+	if (f_v3) {
+		CG->print();
+		//CG->print_points_and_colors();
+	}
+#endif
+
+	FREE_INT(candidates);
+
+
+	if (f_v) {
+		cout << "ovoid_generator::make_one_graph done" << endl;
 		}
 }
 

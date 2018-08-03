@@ -11,68 +11,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT matrix_group::cntr_new = 0;
-INT matrix_group::cntr_objects = 0;
-INT matrix_group::f_debug_memory = FALSE;
-
-void *matrix_group::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "matrix_group::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *matrix_group::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(matrix_group);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "matrix_group::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void matrix_group::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "matrix_group::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void matrix_group::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(matrix_group);
-	if (f_debug_memory) {
-		cout << "matrix_group::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
 
 matrix_group::matrix_group()
 {
@@ -138,7 +76,9 @@ void matrix_group::freeself()
 		}
 }
 
-void matrix_group::init_projective_group(INT n, finite_field *F, INT f_semilinear, action *A, INT verbose_level)
+void matrix_group::init_projective_group(INT n,
+		finite_field *F, INT f_semilinear, action *A,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -201,7 +141,9 @@ void matrix_group::init_projective_group(INT n, finite_field *F, INT f_semilinea
 		}
 }
 
-void matrix_group::init_affine_group(INT n, finite_field *F, INT f_semilinear, action *A, INT verbose_level)
+void matrix_group::init_affine_group(INT n,
+		finite_field *F, INT f_semilinear, action *A,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -260,7 +202,9 @@ void matrix_group::init_affine_group(INT n, finite_field *F, INT f_semilinear, a
 		}
 }
 
-void matrix_group::init_general_linear_group(INT n, finite_field *F, INT f_semilinear, action *A, INT verbose_level)
+void matrix_group::init_general_linear_group(INT n,
+		finite_field *F, INT f_semilinear, action *A,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -455,7 +399,6 @@ void matrix_group::setup_page_storage(INT page_length_log, INT verbose_level)
 		cout << "matrix_group::setup_page_storage calling GL_one()" << endl;
 		}
 	GL_one(Elt1);
-	//GL_print_easy(Elt1, cout);
 	GL_pack(Elt1, elt1);
 	if (f_vv) {
 		cout << "matrix_group::setup_page_storage calling Elts->store()" << endl;
@@ -592,7 +535,8 @@ void matrix_group::init_base_projective(action *A, INT verbose_level)
 	if (f_vv) {
 		cout << "matrix_group::init_base_projective degree=" << degree << endl;
 		}
-	A->base_len = matrix_group_base_len_projective_group(n, q, f_semilinear, verbose_level - 1);
+	A->base_len = matrix_group_base_len_projective_group(
+			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
 		cout << "matrix_group::init_base_projective base_len=" << A->base_len << endl;
 		}
@@ -628,7 +572,8 @@ void matrix_group::init_base_affine(action *A, INT verbose_level)
 	if (f_vv) {
 		cout << "matrix_group::init_base_affine degree=" << degree << endl;
 		}
-	A->base_len = matrix_group_base_len_affine_group(n, q, f_semilinear, verbose_level - 1);
+	A->base_len = matrix_group_base_len_affine_group(
+			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
 		cout << "matrix_group::init_base_affine base_len=" << A->base_len << endl;
 		}
@@ -663,7 +608,8 @@ void matrix_group::init_base_general_linear(action *A, INT verbose_level)
 	if (f_vv) {
 		cout << "matrix_group::init_base_general_linear degree=" << degree << endl;
 		}
-	A->base_len = matrix_group_base_len_general_linear_group(n, q, f_semilinear, verbose_level - 1);
+	A->base_len = matrix_group_base_len_general_linear_group(
+			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
 		cout << "matrix_group::init_base_general_linear base_len=" << A->base_len << endl;
 		}
@@ -699,7 +645,8 @@ void matrix_group::init_gl_classes(INT verbose_level)
 	if (GFq->e == 1) {
 		// the following was added Dec 2, 2013:
 		if (f_v) {
-			cout << "matrix_group::init_gl_classes before init gl_classes n = " << n << " before new gl_classes" << endl;
+			cout << "matrix_group::init_gl_classes before init gl_classes n = "
+					<< n << " before new gl_classes" << endl;
 			}
 		C = new gl_classes;
 		if (f_v) {
@@ -719,7 +666,7 @@ void matrix_group::init_gl_classes(INT verbose_level)
 		}
 }
 
-// implementation of functions for GL(n,q):
+// implementation functions for matrix group elements:
 
 INT matrix_group::GL_element_entry_ij(INT *Elt, INT i, INT j)
 {
@@ -784,19 +731,11 @@ INT matrix_group::GL_image_of_PG_element(INT *Elt, INT a, INT verbose_level)
 		cout << "matrix_group::GL_image_of_PG_element" << endl;
 		}
 	PG_element_unrank_modified(*GFq, v1, 1, n, a);
-	//cout << "a=" << a << " v1=";
-	//print_integer_matrix(cout, v1, 1, n);
-	
-	//GL_mult_vector_from_the_right(Elt, v1, v2);
-	//GL_mult_vector_from_the_left(v1, Elt, v2);
-	
-	//GL_image_of_PG_element_low_level(Elt, v1, v2, verbose_level - 1);
+
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 	
-	//cout << " v2=v1 * A=";
-	//print_integer_matrix(cout, v2, 1, n);
-
 	PG_element_rank_modified(*GFq, v2, 1, n, b);
+
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_PG_element done" << endl;
 		}
@@ -813,26 +752,19 @@ INT matrix_group::GL_image_of_AG_element(INT *Elt, INT a, INT verbose_level)
 		}
 	
 	AG_element_unrank(GFq->q, v1, 1, n, a);
-	//cout << "a=" << a << " v1=";
-	//print_integer_matrix(cout, v1, 1, n);
-	
-	//GL_mult_vector_from_the_right(Elt, v1, v2);
-	//GL_mult_vector_from_the_left(v1, Elt, v2);
 
-	//GL_image_of_AG_element_low_level(Elt, v1, v2, verbose_level - 1);
 	action_from_the_right_all_types(v1, Elt, v2, verbose_level - 1);
 
-	//cout << " v2=v1 * A=";
-	//print_integer_matrix(cout, v2, 1, n);
-
 	AG_element_rank(GFq->q, v2, 1, n, b);
+
 	if (f_v) {
 		cout << "matrix_group::GL_image_of_AG_element done" << endl;
 		}
 	return b;
 }
 
-void matrix_group::action_from_the_right_all_types(INT *v, INT *A, INT *vA, INT verbose_level)
+void matrix_group::action_from_the_right_all_types(
+		INT *v, INT *A, INT *vA, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -860,7 +792,8 @@ void matrix_group::action_from_the_right_all_types(INT *v, INT *A, INT *vA, INT 
 		}
 }
 
-void matrix_group::projective_action_from_the_right(INT *v, INT *A, INT *vA, INT verbose_level)
+void matrix_group::projective_action_from_the_right(
+		INT *v, INT *A, INT *vA, INT verbose_level)
 // vA = (v * A)^{p^f} if f_semilinear,
 // vA = v * A otherwise
 {
@@ -875,7 +808,8 @@ void matrix_group::projective_action_from_the_right(INT *v, INT *A, INT *vA, INT
 		}	
 }
 
-void matrix_group::general_linear_action_from_the_right(INT *v, INT *A, INT *vA, INT verbose_level)
+void matrix_group::general_linear_action_from_the_right(
+		INT *v, INT *A, INT *vA, INT verbose_level)
 // vA = (v * A)^{p^f} if f_semilinear,
 // vA = v * A otherwise
 {
@@ -889,128 +823,6 @@ void matrix_group::general_linear_action_from_the_right(INT *v, INT *A, INT *vA,
 		cout << "matrix_group::general_linear_action_from_the_right done"  << endl;
 		}	
 }
-
-
-#if 0
-INT matrix_group::GL_image_of_line_through_vertex(INT *Elt, INT a, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b, c, i, j, x, rk, base_cols[2];
-	
-	if (f_v) {
-		cout << "matrix_group::GL_image_of_line_through_vertex():" << endl;
-		}
-	if (f_vv) {
-		cout << "matrix:" << endl;
-		print_integer_matrix(cout, Elt, n, n);
-		cout << "point a=" << a << endl;
-		}
-	
-	b = a;
-	
-	v1[0] = v1[1] = v1[2] = 0;
-	v1[3] = 1;
-	PG_element_unrank_modified(*GFq, v1 + n, 1, 3, b);
-	v1[7] = 0;
-	
-	if (f_vv) {
-		cout << "line through vertex:" << endl;
-		print_integer_matrix(cout, v1, 2, n);
-		}
-	
-	GL_mult_vector_from_the_left(v1, Elt, v2);
-	GL_mult_vector_from_the_left(v1 + n, Elt, v2 + n);
-	
-	if (f_vv) {
-		cout << "image:" << endl;
-		print_integer_matrix(cout, v2, 2, n);
-		}
-	
-	// reverse the order of the columns:
-	for (i = 0; i < 2; i++) {
-		for (j = 0; j < n; j++) {
-			x = v2[i * n + j];
-			v1[i * n + n - 1 - j] = x;
-			}
-		}
-	if (f_vv) {
-		cout << "reversed:" << endl;
-		print_integer_matrix(cout, v1, 2, n);
-		}
-	rk = GFq->Gauss_INT(v1, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
-		FALSE /* f_P */, NULL /* P */, 2 /* m */, 4 /* n */, 0 /* Pn */, 
-		0 /* verbose_level */);
-	if (f_vv) {
-		cout << "after Gauss:" << endl;
-		print_integer_matrix(cout, v1, 2, n);
-		}
-	if (rk != 2) {
-		cout << "GL_image_of_line_through_vertex() rk != 2" << endl;
-		exit(1);
-		}
-	if (v1[0] != 1 || v1[1] || v1[2] || v1[3]) {
-		cout << "GL_image_of_line_through_vertex() line does not go through vertex" << endl;
-		exit(1);
-		}
-	
-	for (j = 0; j < 3; j++) {
-		x = v1[1 * n + 1 + j];
-		v2[2 - j] = x;
-		}
-	if (f_vv) {
-		cout << "reversed:" << endl;
-		print_integer_matrix(cout, v2, 1, 3);
-		}
-	
-	PG_element_rank_modified(*GFq, v2, 1, 3, c);
-	if (f_v) {
-		cout << "matrix_group::GL_image_of_line_through_vertex " << a << "->" << c << endl;
-		}
-	return c;
-
-}
-
-INT matrix_group::GL_image_of_plane_not_through_vertex_in_contragredient_action(INT *Elt, INT a, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	//globals &gl = * (globals *) data;
-	//Flock &F = *gl.U.F;
-	//INT f, s, h, g;
-	INT b;
-	//f_v = TRUE;
-
-	if (n != 4) {
-		cout << "matrix_group::GL_image_of_plane_not_through_vertex_in_contragredient_action() n != 4" << endl;
-		exit(1);
-		}
-	AG_element_unrank(GFq->q, v1, 1, n - 1, a);
-	v1[3] = 1;
-	if (f_v) {
-		cout << "plane " << a << " : " << v1[0] << "," << v1[1] << "," << v1[2] << "," << v1[3] << endl;
-		}
-	
-	//GL_invert(Elt, Elt5);
-	//GL_mult_vector_from_the_left_contragredient(Elt5, v1, v2);
-	GL_mult_vector_from_the_left_contragredient(Elt + elt_size_INT_half, v1, v2);
-	if (v2[3] == 0) {
-		cout << "matrix_group::GL_image_of_plane_not_through_vertex_in_contragredient_action() v2[3] is zero" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "maps to " << v2[0] << "," << v2[1] << "," << v2[2] << "," << v2[3] << endl;
-		}
-	PG_element_normalize(*GFq, v2, 1, 4);
-	if (f_v) {
-		cout << "normalized: " << v2[0] << "," << v2[1] << "," << v2[2] << "," << v2[3] << endl;
-		}
-	AG_element_rank(GFq->q, v2, 1, 3, b);
-	if (f_v) {
-		cout << "image of plane " << a << " is " << b << endl;
-		}
-	return b;
-}
-#endif
 
 void matrix_group::GL_one(INT *Elt)
 {
@@ -1078,7 +890,7 @@ void matrix_group::GL_zero(INT *Elt)
 	GL_copy_internal(Elt, Elt + elt_size_INT_half);
 }
 
-INT matrix_group::GL_is_one(action &A, INT *Elt)
+INT matrix_group::GL_is_one(INT *Elt)
 {
 	INT c;
 	
@@ -1129,64 +941,6 @@ INT matrix_group::GL_is_one(action &A, INT *Elt)
 		}
 	return TRUE;
 }
-
-
-#if 0
-void matrix_group::GL_mult_vector_from_the_right(INT *A, INT *v, INT *Av)
-// Av = A * v^{p^f}, where f is the Frobenius power (if f_semilinear, otherwise f=0)
-{
-	if (!f_projective) {
-		cout << "matrix_group::GL_mult_vector_from_the_right affine" << endl;
-		exit(1);
-		}
-	if (f_semilinear) {
-		GFq->semilinear_action_from_the_left(A, v, Av, n);
-		}
-	else {
-		GFq->mult_vector_from_the_right(A, v, Av, n, n);
-		}
-}
-#endif
-
-#if 0
-void matrix_group::GL_mult_vector_from_the_left_contragredient(INT *Ainv, INT *v, INT *Av)
-// Av = v^{p^{e-f}} * (A^{-1})^\top if f_semilinear, otherwise f = 0.
-{
-	INT i = 0, k, a, b, ab, c, f;
-	
-	if (!f_projective) {
-		cout << "matrix_group::GL_mult_vector_from_the_left_contragredient affine not yet implemented" << endl;
-		exit(1);
-		}
-	if (f_semilinear) {
-		f = Ainv[n * n];
-		if (f == 0) {
-			f = 0;
-			}
-		else {
-			f = GFq->e - f;
-			}
-		}
-	for (i = 0; i < n; i++) {
-		if (f_semilinear) {
-			v3[i] = GFq->frobenius_power(v[i], f);
-			}
-		else {
-			v3[i] = v[i];
-			}
-		}
-	for (i = 0; i < n; i++) {
-		c = 0;
-		for (k = 0; k < n; k++) {
-			a = v3[k];
-			b = Ainv[i * n + k];
-			ab = GFq->mult(a, b);
-			c = GFq->add(c, ab);
-			}
-		Av[i] = c;
-		}
-}
-#endif
 
 void matrix_group::GL_mult(INT *A, INT *B, INT *AB, INT verbose_level)
 {
@@ -1508,9 +1262,6 @@ void matrix_group::GL_print_easy(INT *Elt, ostream &ost)
 
 void matrix_group::GL_code_for_make_element(INT *Elt, INT *data)
 {
-	//int w;
-	
-	//w = (int) GFq->log10_of_q;
 	INT_vec_copy(Elt, data, n * n);
 	if (f_affine) {
 		INT_vec_copy(Elt + n * n, data + n * n, n);
@@ -1523,7 +1274,6 @@ void matrix_group::GL_code_for_make_element(INT *Elt, INT *data)
 			data[n * n] = Elt[n * n];
 			}
 		}
-	//ost << endl;
 }
 
 void matrix_group::GL_print_for_make_element(INT *Elt, ostream &ost)
@@ -1552,7 +1302,6 @@ void matrix_group::GL_print_for_make_element(INT *Elt, ostream &ost)
 			ost << Elt[n * n] << ", ";
 			}
 		}
-	//ost << endl;
 }
 
 void matrix_group::GL_print_for_make_element_no_commas(INT *Elt, ostream &ost)
@@ -1581,7 +1330,6 @@ void matrix_group::GL_print_for_make_element_no_commas(INT *Elt, ostream &ost)
 			ost << Elt[n * n] << " ";
 			}
 		}
-	//ost << endl;
 }
 
 void matrix_group::GL_print_easy_normalized(INT *Elt, ostream &ost)
@@ -1892,37 +1640,20 @@ void matrix_group::make_element(INT *Elt, INT *data, INT verbose_level)
 
 void matrix_group::make_GL_element(INT *Elt, INT *A, INT f)
 {
-	//INT i;
-	
 	if (f_projective) {
 		INT_vec_copy(A, Elt, n * n);
-#if 0
-		for (i = 0; i < n * n; i++) {
-			Elt[i] = A[i];
-			}
-#endif
 		if (f_semilinear) {
 			Elt[n * n] = f % GFq->e;
 			}
 		}
 	else if (f_affine) {
 		INT_vec_copy(A, Elt, n * n + n);
-#if 0
-		for (i = 0; i < n * n + n; i++) {
-			Elt[i] = A[i];
-			}
-#endif
 		if (f_semilinear) {
 			Elt[n * n + n] = f % GFq->e;
 			}
 		}
 	else if (f_general_linear) {
 		INT_vec_copy(A, Elt, n * n);
-#if 0
-		for (i = 0; i < n * n; i++) {
-			Elt[i] = A[i];
-			}
-#endif
 		if (f_semilinear) {
 			Elt[n * n] = f % GFq->e;
 			}
@@ -1942,9 +1673,7 @@ void matrix_group::orthogonal_group_random_generator(action *A, orthogonal *O,
 	INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
-	//INT r;
 	INT *Mtx;
 
 	if (f_v) {
@@ -1988,157 +1717,10 @@ void matrix_group::orthogonal_group_random_generator(action *A, orthogonal *O,
 		}
 }
 
-#if 0
-INT matrix_group::orthogonal_action_on_point(INT *Elt, INT a, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT b;
-	
-	if (f_v) {
-		cout << "matrix_group::orthogonal_action_on_point" << endl;
-		}
-	if (f_vv) {
-		cout << "matrix_group::orthogonal_action_on_point a = " << a << endl;
-		}
-	O->unrank_point(O->v1, 1, a, 0);
-	if (f_vvv) {
-		cout << a << " : ";
-		INT_vec_print(cout, O->v1, O->n);
-		cout << endl;
-		}
-	projective_action_from_the_right(O->v1, Elt, O->v3, 0);
-	if (f_vvv) {
-		INT_vec_print(cout, O->v3, O->n);
-		cout << endl;
-		}
-	O->normalize_point(O->v3, 1);
-	if (f_vvv) {
-		cout << "normalized:" << endl;
-		INT_vec_print(cout, O->v3, O->n);
-		cout << endl;
-		}
-	b = O->rank_point(O->v3, 1, 0);
-	if (f_vv) {
-		cout << "matrix_group::orthogonal_action_on_point" << a << " -> " << b << endl;
-		}
-	if (f_v) {
-		cout << "matrix_group::orthogonal_action_on_point done" << endl;
-		}
-	return b;
-}
 
-INT matrix_group::orthogonal_action_on_line(INT *Elt, INT a, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b, p1, p2, q1, q2;
-	
-	if (f_v) {
-		cout << "matrix_group::orthogonal_action_on_line" << endl;
-		}
-	if (f_vv) {
-		cout << "matrix_group::orthogonal_action_on_line a = " << a << endl;
-		}
-	if (a >= O->nb_lines) {
-		cout << "matrix_group::orthogonal_action_on_line a too big" << endl;
-		cout << "a=" << a << endl;
-		cout << "O->nb_lines=" << O->nb_lines << endl;
-		cout << "O->nb_points=" << O->nb_points << endl;
-		exit(1);
-		}
-	O->unrank_line(p1, p2, a, 0);
-	O->unrank_point(O->v1, 1, p1, 0);
-	O->unrank_point(O->v2, 1, p2, 0);
-	projective_action_from_the_right(O->v1, Elt, O->v3, 0);
-	q1 = O->rank_point(O->v3, 1, 0);
-	projective_action_from_the_right(O->v2, Elt, O->v3, 0);
-	q2 = O->rank_point(O->v3, 1, 0);
-	b = O->rank_line(q1, q2, 0);
-	if (f_vv) {
-		cout << "matrix_group::orthogonal_action_on_line" << a << " -> " << b << endl;
-		}
-	if (f_v) {
-		cout << "matrix_group::orthogonal_action_on_line done" << endl;
-		}
-	return b;
-}
-
-
-INT matrix_group::orthogonal_point_line_action_from_the_right(INT *Elt, INT a, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b;
-	
-	if (f_v) {
-		cout << "matrix_group::orthogonal_point_line_action_from_the_right() a = " << a << endl;
-		GL_print_easy(Elt, cout);
-		}
-	if (O == NULL) {
-		cout << "matrix_group::orthogonal_point_line_action_from_the_right O == NULL" << endl;
-		exit(1);
-		} 
-	if (a >= O->nb_points) {
-		if (f_v) {
-			cout << "line action" << endl;
-			}
-		a -= O->nb_points;
-		b = orthogonal_action_on_line(Elt, a, verbose_level - 1);
-		b += O->nb_points;
-		}
-	else {
-		if (f_vv) {
-			cout << "point action" << endl;
-			}
-		b = orthogonal_action_on_point(Elt, a, verbose_level - 1);
-		}
-		
-	if (f_v) {
-		cout << "matrix_group::orthogonal_point_line_action_from_the_right" << a << "->" << b << endl;
-		}
-	return b;
-}
-
-INT matrix_group::GL_image_under_orthogonal_action_from_the_right(INT *Elt, INT a, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b;
-	
-	if (f_v) {
-		cout << "matrix_group::GL_image_under_orthogonal_action_from_the_right" << endl;
-		}
-	Q_epsilon_unrank(*GFq, v1, 1, orthogonal_epsilon, orthogonal_k, 
-		orthogonal_form_c1, orthogonal_form_c2, orthogonal_form_c3, a);
-	if (f_vv) {
-		cout << "GL_image_under_orthogonal_action_from_the_right() a = " << a << " v1 = ";
-		INT_vec_print(cout, v1, orthogonal_d);
-		cout << endl;
-	
-		GL_print_easy(Elt, cout);
-		}
-	
-	projective_action_from_the_right(v1, Elt, v2, 0);
-
-	if (f_vv) {
-		cout << " v2 = v1 * A=";
-		INT_vec_print(cout, v2, orthogonal_d);
-		cout << endl;
-		}
-
-	b = Q_epsilon_rank(*GFq, v2, 1, orthogonal_epsilon, orthogonal_k, 
-		orthogonal_form_c1, orthogonal_form_c2, orthogonal_form_c3);
-	if (f_v) {
-		cout << "matrix_group::GL_image_under_orthogonal_action_from_the_right " << a << "->" << b << endl;
-		}
-	return b;
-}
-#endif
-
-
-void matrix_group::matrices_without_eigenvector_one(sims *S, INT *&Sol, INT &cnt, INT f_path_select, INT select_value, INT verbose_level)
+void matrix_group::matrices_without_eigenvector_one(sims *S,
+		INT *&Sol, INT &cnt, INT f_path_select, INT select_value,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt1;
@@ -2206,7 +1788,8 @@ void matrix_group::matrices_without_eigenvector_one(sims *S, INT *&Sol, INT &cnt
 				cout << "testing level " << i << " / " << n << ":" << endl;
 				INT_matrix_print(Mtx2, (i + 1), n);
 				}
-			if (GFq->rank_of_rectangular_matrix_memory_given(Mtx2, (i + 1), n, Mtx3, Mtx4, 0 /* verbose_level */) < i + 1) {
+			if (GFq->rank_of_rectangular_matrix_memory_given(Mtx2,
+					(i + 1), n, Mtx3, Mtx4, 0 /* verbose_level */) < i + 1) {
 				if (FALSE) {
 					cout << "failing level " << i << endl;
 					}

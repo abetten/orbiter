@@ -13,69 +13,6 @@
 
 
 
-INT action::cntr_new = 0;
-INT action::cntr_objects = 0;
-INT action::f_debug_memory = FALSE;
-
-void *action::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "action::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *action::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "action::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void action::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "action::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void action::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action);
-	if (f_debug_memory) {
-		cout << "action::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 action::action()
 {
 	label[0] = 0;

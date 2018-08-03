@@ -174,50 +174,6 @@ void create_linear_group(sims *&S, action *&A,
 		cout << "action_global.C create_linear_group sims object has been created" << endl;
 		}
 
-#if 0
-	vector_ge *SG;
-	INT *tl;
-
-	SG = new vector_ge;
-	tl = NEW_INT(A->base_len);
-	A->get_strong_generators(SG, tl, verbose_level - 1);
-
-	sims *Sims;
-	
-	Sims = new sims;
-	Sims->init(A);
-	Sims->init_trivial_group(verbose_level - 1);
-	Sims->init_generators(*A->strong_generators, FALSE);
-	Sims->compute_base_orbits(verbose_level - 1);
-	
-	A->f_has_sims = TRUE;
-	A->Sims = Sims;
-
-	cout << "action sims initialized" << endl;
-	
-	if (linear_f_special) {
-		action A_on_det;
-		longinteger_object go;
-		
-		cout << "computing intersection with special linear group" << endl;
-		A_on_det.induced_action_on_determinant(A->Sims, verbose_level);
-		cout << "induced_action_on_determinant finished" << endl;
-		A_on_det.Kernel->group_order(go);
-		cout << "intersection has order " << go << endl;
-		//A_on_det.Kernel->compute_strong_generators(*SG, verbose_level - 1);
-		A_on_det.Kernel->extract_strong_generators_in_order(*SG, tl, verbose_level - 1);
-		
-		sims *Sims2;
-		
-		Sims2 = new sims;
-		Sims2->init(A);
-		Sims2->init_trivial_group(verbose_level - 1);
-		Sims2->init_generators(*SG, FALSE);
-		Sims2->compute_base_orbits(verbose_level - 1);
-	
-		A->init_sims(Sims2, verbose_level);
-		}
-#endif
 
 	
 	
@@ -242,7 +198,8 @@ void create_linear_group(sims *&S, action *&A,
 
 
 
-action *create_induced_action_by_restriction(action *A, sims *S, INT size, INT *set, INT f_induce, INT verbose_level)
+action *create_induced_action_by_restriction(action *A,
+		sims *S, INT size, INT *set, INT f_induce, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action *A2;
@@ -251,15 +208,17 @@ action *create_induced_action_by_restriction(action *A, sims *S, INT size, INT *
 		cout << "create_induced_action_by_restriction" << endl;
 		}
 	A2 = new action;
-	//A2->induced_action_by_restriction(*A, S, size, set, f_induce, verbose_level - 1);
-	A2->induced_action_by_restriction(*A, f_induce,  S, size, set, verbose_level - 1);
+	A2->induced_action_by_restriction(*A,
+			f_induce,  S, size, set, verbose_level - 1);
 	if (f_v) {
 		cout << "create_induced_action_by_restriction done" << endl;
 		}
 	return A2;
 }
 
-action *create_induced_action_on_sets(action *A, sims *S, INT nb_sets, INT set_size, INT *sets, INT f_induce, INT verbose_level)
+action *create_induced_action_on_sets(action *A,
+		sims *S, INT nb_sets, INT set_size, INT *sets, INT f_induce,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action *A2;
@@ -268,7 +227,8 @@ action *create_induced_action_on_sets(action *A, sims *S, INT nb_sets, INT set_s
 		cout << "create_induced_action_on_sets" << endl;
 		}
 	A2 = new action;
-	A2->induced_action_on_sets(*A, S, nb_sets, set_size, sets, f_induce, verbose_level - 1);
+	A2->induced_action_on_sets(*A,
+			S, nb_sets, set_size, sets, f_induce, verbose_level - 1);
 	if (f_v) {
 		cout << "create_induced_action_on_sets done" << endl;
 		}
@@ -276,7 +236,9 @@ action *create_induced_action_on_sets(action *A, sims *S, INT nb_sets, INT set_s
 }
 
 
-void create_orbits_on_subset_using_restricted_action(action *&A_by_restriction, schreier *&Orbits, action *A, sims *S, INT size, INT *set, INT verbose_level)
+void create_orbits_on_subset_using_restricted_action(action *&A_by_restriction,
+		schreier *&Orbits, action *A, sims *S, INT size, INT *set,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_induce = FALSE;
@@ -284,7 +246,8 @@ void create_orbits_on_subset_using_restricted_action(action *&A_by_restriction, 
 	if (f_v) {
 		cout << "create_orbits_on_subset_using_restricted_action" << endl;
 		}
-	A_by_restriction = create_induced_action_by_restriction(A, S, size, set, f_induce, verbose_level - 1);
+	A_by_restriction = create_induced_action_by_restriction(A,
+			S, size, set, f_induce, verbose_level - 1);
 	Orbits = new schreier;
 
 	A_by_restriction->compute_all_point_orbits(*Orbits, S->gens, verbose_level - 2);
@@ -294,7 +257,10 @@ void create_orbits_on_subset_using_restricted_action(action *&A_by_restriction, 
 	
 }
 
-void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets, schreier *&Orbits, action *A, sims *S, INT nb_sets, INT set_size, INT *sets, INT verbose_level)
+void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets,
+		schreier *&Orbits, action *A, sims *S,
+		INT nb_sets, INT set_size, INT *sets,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_induce = FALSE;
@@ -302,7 +268,8 @@ void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets, schreier *&O
 	if (f_v) {
 		cout << "create_orbits_on_sets_using_action_on_sets" << endl;
 		}
-	A_on_sets = create_induced_action_on_sets(A, S, nb_sets, set_size, sets, f_induce, verbose_level - 1);
+	A_on_sets = create_induced_action_on_sets(A,
+			S, nb_sets, set_size, sets, f_induce, verbose_level - 1);
 	Orbits = new schreier;
 
 	A_on_sets->compute_all_point_orbits(*Orbits, S->gens, verbose_level - 2);
@@ -313,7 +280,8 @@ void create_orbits_on_sets_using_action_on_sets(action *&A_on_sets, schreier *&O
 }
 
 
-action *new_action_by_right_multiplication(sims *group_we_act_on, INT f_transfer_ownership, INT verbose_level)
+action *new_action_by_right_multiplication(sims *group_we_act_on,
+		INT f_transfer_ownership, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
@@ -322,8 +290,10 @@ action *new_action_by_right_multiplication(sims *group_we_act_on, INT f_transfer
 		cout << "new_action_by_right_multiplication" << endl;
 		}
 	A = new action;
-	A->induced_action_by_right_multiplication(FALSE /* f_basis */, NULL /* sims *old_G */, 
-		group_we_act_on, f_transfer_ownership /* f_ownership */, verbose_level - 1);
+	A->induced_action_by_right_multiplication(FALSE /* f_basis */,
+		NULL /* sims *old_G */,
+		group_we_act_on, f_transfer_ownership /* f_ownership */,
+		verbose_level - 1);
 	if (f_v) {
 		cout << "new_action_by_right_multiplication done" << endl;
 		}
@@ -338,11 +308,6 @@ void action_print_symmetry_group_type(ostream &ost, symmetry_group_type a)
 	else if (a == matrix_group_t) {
 		ost << "matrix_group_t";
 		}
-#if 0
-	else if (a == perm_group_dp_t) {
-		ost << "perm_group_dp_t";
-		}
-#endif
 	else if (a == perm_group_t) {
 		ost << "perm_group_t";
 		}
@@ -447,7 +412,8 @@ INT choose_next_base_point_default_method(action *A, INT *Elt, INT verbose_level
 	return b;
 }
 
-void make_generators_stabilizer_of_two_components(action *A_PGL_n_q, action *A_PGL_k_q, 
+void make_generators_stabilizer_of_two_components(
+	action *A_PGL_n_q, action *A_PGL_k_q,
 	INT k, vector_ge *gens, INT verbose_level)
 // used in semifield.C
 // does not include the swap
@@ -599,7 +565,8 @@ void make_generators_stabilizer_of_two_components(action *A_PGL_n_q, action *A_P
 }
 
 
-void make_generators_stabilizer_of_three_components(action *A_PGL_n_q, action *A_PGL_k_q, 
+void make_generators_stabilizer_of_three_components(
+	action *A_PGL_n_q, action *A_PGL_k_q,
 	INT k, vector_ge *gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -615,8 +582,6 @@ void make_generators_stabilizer_of_three_components(action *A_PGL_n_q, action *A
 	finite_field *Fq;
 	INT minus_one;
 	strong_generators *gens_PGL_k;
-	//vector_ge *gens_PGL_k;
-
 
 	if (f_v) {
 		cout << "make_generators_stabilizer_of_three_components" << endl;
@@ -731,9 +696,6 @@ void generators_to_strong_generators(action *A,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//longinteger_object go;
-	//longinteger_domain D;
 
 	if (f_v) {
 		cout << "generators_to_strong_generators" << endl;
@@ -742,85 +704,6 @@ void generators_to_strong_generators(action *A,
 			}
 		}
 
-#if 0
-	sims *G, *K;
-	G = new sims;
-	K = new sims;
-	G->init(A);
-	K->init(A);
-	K->init_trivial_group(0);
-	G->init_trivial_group(0);
-	if (f_v) {
-		cout << "generators_to_strong_generators before G->build_up_group_from_generators, target_go = " << target_go << endl;
-		}
-	G->build_up_group_from_generators(K, gens, 
-		f_target_go, &target_go, 
-		FALSE /*f_override_choose_next_base_point */,
-		NULL /*INT (*choose_next_base_point_method)(action *A, INT *Elt, INT verbose_level)*/, 
-		verbose_level - 2);
-
-	
-
-	
-	G->group_order(go);
-
-	INT nb_times = 200;
-	
-	while (TRUE) {
-		if (D.compare_unsigned(go, target_go) == 0) {
-			if (f_v) {
-				cout << "generators_to_strong_generators: group orders match, we are done" << endl;
-				}
-			break;
-			}
-		
-		if (f_v) {
-			cout << "generators_to_strong_generators: group orders do not match" << endl;
-			cout << "go = " << go << endl;
-			cout << "target_go = " << target_go << endl;
-			}
-		
-		if (f_v) {
-			cout << "generators_to_strong_generators: calling closure_group" << endl;
-			}
-		G->closure_group(nb_times, 0/*verbose_level*/);
-		G->group_order(go);
-		if (f_v) {
-			cout << "generators_to_strong_generators:  new group order go=" << go << endl;
-			}
-		}
-	if (f_v) {
-		cout << "generators_to_strong_generators reached group of order " << go << endl;
-		cout << "extracting strong generators:" << endl;
-		}
-
-	Strong_gens = new strong_generators;
-	Strong_gens->init_from_sims(G, 0);
-
-#if 0
-	G->extract_strong_generators_in_order(*strong_gens, tl, 0/*verbose_level - 2*/);
-	if (f_v) {
-		cout << "tl: ";
-		INT_vec_print(cout, tl, A->base_len);
-		cout << endl;
-		}
-	if (f_v) {
-		cout << "there are " << strong_gens->len << " strong generators:" << endl;
-		}
-#endif
-	if (f_vv) {
-		INT h;
-		for (h = 0; h < Strong_gens->gens->len; h++) {
-			cout << "generator " << h << ":" << endl;
-			//cout << "in action A0:" << endl;
-			//A0->element_print(gens.ith(h), cout);
-			cout << "in action A:" << endl;
-			A->element_print(Strong_gens->gens->ith(h), cout);
-			}
-		}
-	delete G;
-	delete K;
-#else
 	sims *S;
 	
 	if (f_v) {
@@ -840,13 +723,14 @@ void generators_to_strong_generators(action *A,
 
 	delete S;
 
-#endif
 	if (f_v) {
 		cout << "generators_to_strong_generators done" << endl;
 		}
 }
 
-void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, INT &elt_size, INT n, finite_field *F, INT verbose_level)
+void compute_generators_GL_n_q(INT *&Gens,
+		INT &nb_gens, INT &elt_size, INT n, finite_field *F,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -854,18 +738,16 @@ void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, INT &elt_size, INT n, f
 	vector_ge *gens;
 	INT *Elt;
 	INT h, i, l, alpha;
-	//matrix_group *M;
 
 	if (f_v) {
 		cout << "compute_generators_GL_n_q" << endl;
 		}
 	A = new action;
 
-	A->init_projective_group(n, F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
-	//M = A->G.matrix_grp;
+	A->init_projective_group(n, F,
+			FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
 
 	gens = A->Strong_gens->gens;
-	//gens = A->strong_generators;
 
 	l = gens->len;
 	nb_gens = l + 1;
@@ -896,13 +778,13 @@ void compute_generators_GL_n_q(INT *&Gens, INT &nb_gens, INT &elt_size, INT n, f
 		
 		}
 	delete A;
-	//delete F;
 	if (f_v) {
 		cout << "compute_generators_GL_n_q done" << endl;
 		}
 }
 
-void order_of_PGGL_n_q(longinteger_object &go, INT n, INT q, INT f_semilinear)
+void order_of_PGGL_n_q(longinteger_object &go,
+		INT n, INT q, INT f_semilinear)
 {
 	INT verbose_level = 0;
 	action *A;
@@ -982,92 +864,6 @@ void callback_choose_random_generator_orthogonal(INT iteration,
 
 }
 
-#if 0
-void callback_choose_random_generator_orthogonal_but_no_reflection(INT iteration, 
-	INT *Elt, void *data, INT verbose_level)
-{
-	//verbose_level += 5;
-	INT f_v = (verbose_level >= 1);
-
-	if (f_v) {
-		cout << "callback_choose_random_generator_orthogonal iteration=" << iteration << endl;
-		}
-
-	schreier_sims *ss = (schreier_sims *) data;
-	action *A = ss->GA;
-	action *subaction = ss->KA;
-	matrix_group *M;
-	INT f_siegel = TRUE;
-	INT f_reflection = FALSE;
-	INT f_similarity = TRUE;
-	INT f_semisimilarity = TRUE;
-	action_on_orthogonal *AO;
-	orthogonal *O;
-	
-	AO = A->G.AO;
-	O = AO->O;
-	
-	
-	M = subaction->G.matrix_grp;
-	M->orthogonal_group_random_generator(ss->GA, O, 
-		f_siegel, f_reflection, f_similarity, f_semisimilarity, 
-		Elt, verbose_level - 2);
-	//M->GL_invert_internal(Elt, Elt + M->elt_size_INT_half, 0);
-
-}
-#endif
-
-
-#if 0
-INT choose_next_base_point_ovoidal_method(action *A, INT *Elt, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT i, a, b, c, f;
-	matrix_group *M;
-	orthogonal *O;
-	
-	M = A->subaction->G.matrix_grp;
-	if (M == NULL) {
-		cout << "choose_next_base_point_ovoidal_method M == NULL" << endl;
-		exit(1);
-		}
-	O = M->O;
-	if (O == NULL) {
-		cout << "choose_next_base_point_ovoidal_method O == NULL" << endl;
-		exit(1);
-		}
-
-	for (b = 0; b < A->degree; b++) {
-		for (i = 0; i < A->base_len; i++) {
-			a = A->base[i];
-			if (a == b)
-				break;
-			f = O->evaluate_bilinear_form_by_rank(a, b);
-			if (f == 0)
-				break;
-			}
-		if (i < A->base_len)
-			continue;
-		c = A->element_image_of(b, Elt, FALSE);
-		if (c != b) {
-			if (f_v) {
-				cout << "moves " << b << " to " << c << endl;
-				}
-			break;
-			}
-		}
-	if (b == A->degree) {
-		cout << "choose_next_base_point_ovoidal_method did not find another base point" << endl;
-		exit(1);
-		}
-	if (f_v) {
-		cout << "choose_next_base_point_ovoidal_method current base: ";
-		INT_vec_print(cout, A->base, A->base_len);
-		cout << " choosing next base point to be " << b << endl;
-		}
-	return b;
-}
-#endif
 
 
 void test_matrix_group(INT k, INT q, INT f_semilinear, INT verbose_level)
@@ -1172,8 +968,8 @@ void retract_generators(vector_ge *gens_in, vector_ge *&gens_out,
 	gens_out->allocate(nb_gens);
 	for (t = 0; t < nb_gens; t++) {
 		if (f_vv) {
-			cout << "retract_generators " << t << 
-" / " << nb_gens << endl;
+			cout << "retract_generators " << t
+					<< " / " << nb_gens << endl;
 			}
 		Eltq = gens_in->ith(t);
 		S->retract_matrix(Eltq, n, Mtx, m, 0 /* verbose_level */);
@@ -1188,8 +984,8 @@ void retract_generators(vector_ge *gens_in, vector_ge *&gens_out,
 			}
 		AQ->element_move(EltQ, gens_out->ith(t), 0);
 		if (f_vv) {
-			cout << "retract_generators " << t << 
-" / " << nb_gens << " done" << endl;
+			cout << "retract_generators " << t
+					<< " / " << nb_gens << " done" << endl;
 			}
 		}
 	FREE_INT(EltQ);
@@ -1446,7 +1242,8 @@ action *create_automorphism_group_of_colored_graph(
 		cout << "create_automorphism_group_of_colored_graph before create_automorphism_group_of_graph_with_partition_and_labeling" << endl;
 		cout << "nb_edges=" << nb_edges << endl;
 		}
-	A = create_automorphism_group_of_graph_with_partition_and_labeling(n1, TRUE, Adj1, NULL, nb_parts, parts, labeling, verbose_level);
+	A = create_automorphism_group_of_graph_with_partition_and_labeling(
+			n1, TRUE, Adj1, NULL, nb_parts, parts, labeling, verbose_level);
 	if (f_v) {
 		cout << "create_automorphism_group_of_colored_graph done" << endl;
 		}
@@ -1472,7 +1269,8 @@ action *create_automorphism_group_of_graph_bitvec(
 	if (f_v) {
 		cout << "create_automorphism_group_of_graph_bitvec" << endl;
 		}
-	A = create_automorphism_group_of_graph_with_partition_and_labeling(n, TRUE, Adj_bitvec, NULL, 1, parts, labeling, verbose_level);
+	A = create_automorphism_group_of_graph_with_partition_and_labeling(
+			n, TRUE, Adj_bitvec, NULL, 1, parts, labeling, verbose_level);
 	if (f_v) {
 		cout << "create_automorphism_group_of_graph_bitvec done" << endl;
 		}
@@ -1608,7 +1406,8 @@ action *create_automorphism_group_of_graph_with_partition_and_labeling(
 	return A;
 }
 
-void create_incidence_matrix_of_graph(INT *Adj, INT n, INT *&M, INT &nb_rows, INT &nb_cols, INT verbose_level)
+void create_incidence_matrix_of_graph(INT *Adj, INT n,
+		INT *&M, INT &nb_rows, INT &nb_cols, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, u;
@@ -1737,7 +1536,8 @@ action *create_automorphism_group_of_graph(INT *Adj, INT n, INT verbose_level)
 }
 
 
-action *create_automorphism_group_and_canonical_labeling_of_graph(INT *Adj, INT n, INT *labeling, INT verbose_level)
+action *create_automorphism_group_and_canonical_labeling_of_graph(
+		INT *Adj, INT n, INT *labeling, INT verbose_level)
 // labeling[n]
 {
 	INT f_v = (verbose_level >= 1);
@@ -2023,7 +1823,8 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 	return A;
 }
 
-void test_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X, 
+void test_self_dual_self_polar(INT input_no,
+	INT m, INT n, INT nb_inc, INT *X,
 	INT &f_self_dual, INT &f_self_polar, INT verbose_level)
 {
 	INT M, N, i, j, h, Nb_inc, a;
@@ -2061,15 +1862,19 @@ void test_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X,
 			}
 		}
 	
-	do_self_dual_self_polar(input_no, M, N, Nb_inc, Y, f_self_dual, f_self_polar, verbose_level - 1);
+	do_self_dual_self_polar(input_no,
+			M, N, Nb_inc, Y, f_self_dual, f_self_polar,
+			verbose_level - 1);
 
 	FREE_INT(Mtx);
 	FREE_INT(Y);
 }
 
 
-void do_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X, 
-	INT &f_self_dual, INT &f_self_polar, INT verbose_level)
+void do_self_dual_self_polar(INT input_no,
+	INT m, INT n, INT nb_inc, INT *X,
+	INT &f_self_dual, INT &f_self_polar,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2124,7 +1929,9 @@ void do_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X,
 	labeling = NEW_INT(m + n);
 	//labeling_inv = NEW_INT(m + n);
 
-	nauty_interface_INT(m, n, X, nb_inc, labeling, partitions, Aut, Aut_counter, Base, Base_length, Transversal_length, Ago);
+	nauty_interface_INT(m, n, X, nb_inc,
+			labeling, partitions, Aut, Aut_counter,
+			Base, Base_length, Transversal_length, Ago);
 
 	if (f_vv) {
 		if ((input_no % 500) == 0) {
@@ -2257,7 +2064,9 @@ void do_self_dual_self_polar(INT input_no, INT m, INT n, INT nb_inc, INT *X,
 	//FREE_INT(BASE);
 }
 
-void add_configuration_graph(ofstream &g, INT m, INT n, INT nb_inc, INT *X, INT f_first, INT verbose_level)
+void add_configuration_graph(ofstream &g,
+		INT m, INT n, INT nb_inc, INT *X, INT f_first,
+		INT verbose_level)
 {
 	incidence_structure Inc;
 	INT *joining_table;
@@ -2547,7 +2356,8 @@ void print_4x4_as_2x2(action *A2, finite_field *Fq, INT *mtx4x4)
 	FREE_INT(elt1);
 }
 
-INT reverse_engineer_semilinear_map(action *A, projective_space *P, 
+INT reverse_engineer_semilinear_map(action *A,
+	projective_space *P,
 	INT *Elt, INT *Mtx, INT &frobenius, 
 	INT verbose_level)
 // uses the function A->element_image_of
@@ -2914,7 +2724,8 @@ sims *set_stabilizer_in_projective_space(
 		if (f_vv) {
 			cout << "Incma in:" << endl;
 			if (nb_rows < 10) {
-				print_integer_matrix_width(cout, Incma, nb_rows, nb_cols, nb_cols, 1);
+				print_integer_matrix_width(cout,
+						Incma, nb_rows, nb_cols, nb_cols, 1);
 				}
 			else {
 				cout << "too large to print" << endl;
@@ -2923,8 +2734,10 @@ sims *set_stabilizer_in_projective_space(
 		BYTE fname_csv[1000];
 		BYTE fname_bin[1000];
 
-		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv", save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%ld_%ld.bin", save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv",
+				save_incma_in_and_out_prefix, nb_rows, nb_cols);
+		sprintf(fname_bin, "%sIncma_in_%ld_%ld.bin",
+				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		INT_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
@@ -2932,7 +2745,8 @@ sims *set_stabilizer_in_projective_space(
 			}
 
 		colored_graph *CG;
-		create_Levi_graph_from_incidence_matrix(CG, Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
+		create_Levi_graph_from_incidence_matrix(CG,
+				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_INT(Incma);
 		delete CG;
@@ -3223,7 +3037,8 @@ sims *set_stabilizer_in_projective_space(
 }
 
 
-void projective_space_init_line_action(projective_space *P, action *A_points, action *&A_on_lines, INT verbose_level)
+void projective_space_init_line_action(projective_space *P,
+		action *A_points, action *&A_on_lines, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action_on_grassmannian *AoL;
@@ -3278,7 +3093,8 @@ void projective_space_init_line_action(projective_space *P, action *A_points, ac
 		}
 }
 
-void color_distribution_matrix(action *A, INT *Elt, INT n, UBYTE *Adj, INT *colors, classify *C, 
+void color_distribution_matrix(action *A,
+	INT *Elt, INT n, UBYTE *Adj, INT *colors, classify *C,
 	INT *&Mtx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3303,7 +3119,8 @@ void color_distribution_matrix(action *A, INT *Elt, INT n, UBYTE *Adj, INT *colo
 		}
 }
 
-void test_color_distribution(action *A, vector_ge *gens, INT n, UBYTE *Adj, INT *colors, INT verbose_level)
+void test_color_distribution(action *A,
+	vector_ge *gens, INT n, UBYTE *Adj, INT *colors, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 1);
@@ -3337,7 +3154,8 @@ void test_color_distribution(action *A, vector_ge *gens, INT n, UBYTE *Adj, INT 
 		}
 }
 
-void color_preserving_subgroup(action *A, INT n, UBYTE *Adj, INT *colors, sims *&Subgroup, INT verbose_level)
+void color_preserving_subgroup(action *A,
+	INT n, UBYTE *Adj, INT *colors, sims *&Subgroup, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
@@ -3421,7 +3239,8 @@ void color_preserving_subgroup(action *A, INT n, UBYTE *Adj, INT *colors, sims *
 		}
 }
 
-INT test_automorphism_group_of_graph_bitvec(action *A, INT n, UBYTE *Adj, INT verbose_level)
+INT test_automorphism_group_of_graph_bitvec(action *A,
+	INT n, UBYTE *Adj, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	strong_generators *SG;
@@ -3469,7 +3288,8 @@ INT test_automorphism_group_of_graph_bitvec(action *A, INT n, UBYTE *Adj, INT ve
 	return TRUE;
 }
 
-void compute_conjugacy_classes(sims *S, action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch, 
+void compute_conjugacy_classes(sims *S,
+	action *&Aconj, action_by_conjugation *&ABC, schreier *&Sch,
 	strong_generators *&SG, INT &nb_classes, INT *&class_size, INT *&class_rep, 
 	INT verbose_level)
 {
@@ -3606,9 +3426,11 @@ void group_ring_element_mult(action *A, sims *S, INT *elt1, INT *elt2, INT *elt3
 }
 
 
-void perm_print_cycles_sorted_by_length(ostream &ost, INT degree, INT *perm, INT verbose_level)
+void perm_print_cycles_sorted_by_length(ostream &ost,
+		INT degree, INT *perm, INT verbose_level)
 {
-	perm_print_cycles_sorted_by_length_offset(ost, degree, perm, 0, FALSE, TRUE, verbose_level);
+	perm_print_cycles_sorted_by_length_offset(ost,
+			degree, perm, 0, FALSE, TRUE, verbose_level);
 }
 
 void perm_print_cycles_sorted_by_length_offset(ostream &ost, 
@@ -3749,97 +3571,6 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	delete A;
 }
 
-#if 0
-void set_and_stabilizer_apply(set_and_stabilizer *&SaS, INT *data, INT f_inverse, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	set_and_stabilizer *SaS2;
-	
-	if (f_v) {
-		cout << "set_and_stabilizer_apply" << endl;
-		}
-
-
-	SaS2 = set_and_stabilizer_apply_to(SaS, data, f_inverse, verbose_level);
-
-
-	delete SaS;
-	SaS = SaS2;
-
-	if (f_v) {
-		cout << "set_and_stabilizer_apply done" << endl;
-		}
-}
-
-set_and_stabilizer *set_and_stabilizer_apply_to(set_and_stabilizer *SaS, INT *data, INT f_inverse, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT *Elt;
-	action *A;
-	set_and_stabilizer *SaS2;
-	
-	if (f_v) {
-		cout << "set_and_stabilizer_apply_to" << endl;
-		}
-	A = SaS->A;
-
-	if (f_v) {
-		cout << "set_and_stabilizer_apply_to, we apply the element ";
-		INT_vec_print(cout, data, A->make_element_size);
-		cout << endl;
-		}
-
-
-	if (f_v) {
-		cout << "the original set is:" << endl;
-		INT_vec_print(cout, SaS->data, SaS->sz);
-		cout << endl;
-		}
-	
-	SaS2 = new set_and_stabilizer;
-
-	Elt = NEW_INT(A->elt_size_in_INT);
-	A->make_element(Elt, data, 0);
-
-	if (f_v) {
-		cout << "Elt=" << endl;
-		A->element_print_quick(Elt, cout);
-		cout << endl;
-		}
-
-
-	if (f_inverse) {
-		INT *Eltv;
-		
-		Eltv = NEW_INT(A->elt_size_in_INT);
-		A->element_invert(Elt, Eltv, 0);
-
-		SaS2 = SaS->apply(Eltv, verbose_level);
-
-		FREE_INT(Eltv);
-		}
-	else {
-		SaS2 = SaS->apply(Elt, verbose_level);
-		}
-
-	if (f_v) {
-		cout << "the image set is:" << endl;
-		INT_vec_print(cout, SaS2->data, SaS2->sz);
-		cout << endl;
-		}
-
-	FREE_INT(Elt);
-	if (f_v) {
-		cout << "set_and_stabilizer_apply_to done" << endl;
-		}
-
-	if (f_v) {
-		cout << "set_and_stabilizer_apply_to done" << endl;
-		}
-	return SaS2;
-
-}
-#endif
 
 void do_canonical_form(INT n, finite_field *F, 
 	INT *set, INT set_size, INT f_semilinear, 
@@ -3883,7 +3614,8 @@ void do_canonical_form(INT n, finite_field *F,
 		set, set_size, canonical_pt, NULL /* canonical_set_or_NULL */, 
 		FALSE, NULL, 
 		verbose_level);
-	//P->draw_point_set_in_plane(fname_base, set, set_size, TRUE /*f_with_points*/, 0 /* verbose_level */);
+	//P->draw_point_set_in_plane(fname_base, set, set_size,
+	// TRUE /*f_with_points*/, 0 /* verbose_level */);
 	delete Stab;
 	delete A_linear;
 	delete P;
@@ -3894,7 +3626,8 @@ void do_canonical_form(INT n, finite_field *F,
 
 }
 
-void create_action_and_compute_orbits_on_equations(action *A, homogeneous_polynomial_domain *HPD, 
+void create_action_and_compute_orbits_on_equations(
+	action *A, homogeneous_polynomial_domain *HPD,
 	INT *The_equations, INT nb_equations, strong_generators *gens, 
 	action *&A_on_equations, schreier *&Orb, INT verbose_level)
 {
