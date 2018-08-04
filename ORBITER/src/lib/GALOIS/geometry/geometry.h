@@ -1360,14 +1360,6 @@ public:
 class orthogonal {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT epsilon;
 	INT n; // the algebraic dimension
 	INT m; // Witt index

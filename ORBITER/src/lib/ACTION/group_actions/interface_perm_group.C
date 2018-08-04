@@ -356,7 +356,7 @@ void perm_group_element_print_for_make_element_no_commas(action &A, void *elt, o
 }
 
 
-
+#if 0
 void perm_group_elt_print(void *elt, void *data, ostream &ost)
 {
 	perm_group &G = * (perm_group *) data;
@@ -366,6 +366,7 @@ void perm_group_elt_print(void *elt, void *data, ostream &ost)
 	G.unpack(p_elt, Elt);
 	G.print(Elt, ost);
 }
+#endif
 
 void perm_group_print_point(action &A, INT a, ostream &ost)
 {

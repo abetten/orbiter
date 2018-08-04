@@ -373,13 +373,15 @@ void action::element_print_as_permutation_with_offset(void *elt, ostream &ost,
 #if 0
 	if (degree) {
 		if (f_v) {
-			cout << "action::element_print_as_permutation_with_offset: calling perm_print_cycles_sorted_by_length_offset" << endl;
+			cout << "action::element_print_as_permutation_with_offset: "
+					"calling perm_print_cycles_sorted_by_length_offset" << endl;
 			}
 		//ost << "perm of degree " << degree << " : ";
 		//INT_vec_print_fully(ost, v, degree);
 		//ost << " = ";
 
-		perm_print_cycles_sorted_by_length_offset(ost, degree, v, offset, 				f_do_it_anyway_even_for_big_degree, f_print_cycles_of_length_one, 
+		perm_print_cycles_sorted_by_length_offset(ost, degree, v, offset,
+			f_do_it_anyway_even_for_big_degree, f_print_cycles_of_length_one,
 			verbose_level);
 			// in action_global.C
 		}
@@ -403,7 +405,8 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(void 
 		v[i] = j;
 		}
 	//perm_print(ost, v, degree);
-	perm_print_offset(ost, v, degree, offset, f_cycle_length, f_max_cycle_length, max_cycle_length, f_orbit_structure);
+	perm_print_offset(ost, v, degree, offset, f_cycle_length,
+			f_max_cycle_length, max_cycle_length, f_orbit_structure);
 	FREE_INT(v);
 }
 

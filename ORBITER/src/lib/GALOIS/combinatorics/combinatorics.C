@@ -926,6 +926,21 @@ void perm_identity(INT *a, INT n)
 		}
 }
 
+void perm_elementary_transposition(INT *a, INT n, INT f)
+{
+	INT i;
+
+	if (f >= n - 1) {
+		cout << "perm_elementary_transposition f >= n - 1" << endl;
+		exit(1);
+	}
+	for (i = 0; i < n; i++) {
+		a[i] = i;
+		}
+	a[f] = f + 1;
+	a[f + 1] = f;
+}
+
 void perm_mult(INT *a, INT *b, INT *c, INT n)
 {
 	INT i, j, k;

@@ -19,8 +19,6 @@ void the_end(INT t0)
 		free_global_data();
 		registry_dump();
 		registry_dump_sorted();
-
-		dump_object_memory();
 		}
 	time_check(cout, t0);
 	cout << endl;
@@ -33,90 +31,6 @@ void the_end(INT t0)
 	sprintf(fname, "memory_usage.csv");
 	INT_matrix_write_csv(fname, &mem_usage, 1, 1);
 }
-
-void dump_object_memory()
-{
-	cout << "GALOIS:" << endl;
-	if (finite_field::cntr_new)
-		cout << "finite_field::cntr_new=" << finite_field::cntr_new << endl;
-	if (finite_field::cntr_objects)
-		cout << "finite_field::cntr_objects=" << finite_field::cntr_objects << endl;
-	if (longinteger_object::cntr_new)
-		cout << "longinteger_object::cntr_new=" << longinteger_object::cntr_new << endl;
-	if (longinteger_object::cntr_objects)
-		cout << "longinteger_object::cntr_objects=" << longinteger_object::cntr_objects << endl;
-	if (longinteger_domain::cntr_new)
-		cout << "longinteger_domain::cntr_new=" << longinteger_domain::cntr_new << endl;
-	if (longinteger_domain::cntr_objects)
-		cout << "longinteger_domain::cntr_objects=" << longinteger_domain::cntr_objects << endl;
-	if (unipoly_domain::cntr_new)
-		cout << "unipoly_domain::cntr_new=" << unipoly_domain::cntr_new << endl;
-	if (unipoly_domain::cntr_objects)
-		cout << "unipoly_domain::cntr_objects=" << unipoly_domain::cntr_objects << endl;
-	if (rank_checker::cntr_new)
-		cout << "rank_checker::cntr_new=" << rank_checker::cntr_new << endl;
-	if (rank_checker::cntr_objects)
-		cout << "rank_checker::cntr_objects=" << rank_checker::cntr_objects << endl;
-	if (mp_graphics::cntr_new)
-		cout << "mp_graphics::cntr_new=" << mp_graphics::cntr_new << endl;
-	if (mp_graphics::cntr_objects)
-		cout << "mp_graphics::cntr_objects=" << mp_graphics::cntr_objects << endl;
-	if (partitionstack::cntr_new)
-		cout << "partitionstack::cntr_new=" << partitionstack::cntr_new << endl;
-	if (partitionstack::cntr_objects)
-		cout << "partitionstack::cntr_objects=" << partitionstack::cntr_objects << endl;
-	if (orthogonal::cntr_new)
-		cout << "orthogonal::cntr_new=" << orthogonal::cntr_new << endl;
-	if (orthogonal::cntr_objects)
-		cout << "orthogonal::cntr_objects=" << orthogonal::cntr_objects << endl;
-	
-	cout << "ACTION:" << endl;
-	if (action::cntr_new)
-		cout << "action::cntr_new=" << action::cntr_new << endl;
-	if (action::cntr_objects)
-		cout << "action::cntr_objects=" << action::cntr_objects << endl;
-	if (action_on_sets::cntr_new)
-		cout << "action_on_sets::cntr_new=" << action_on_sets::cntr_new << endl;
-	if (action_on_sets::cntr_objects)
-		cout << "action_on_sets::cntr_objects=" << action_on_sets::cntr_objects << endl;
-	if (product_action::cntr_new)
-		cout << "product_action::cntr_new=" << product_action::cntr_new << endl;
-	if (product_action::cntr_objects)
-		cout << "product_action::cntr_objects=" << product_action::cntr_objects << endl;
-	if (matrix_group::cntr_new)
-		cout << "matrix_group::cntr_new=" << matrix_group::cntr_new << endl;
-	if (matrix_group::cntr_objects)
-		cout << "matrix_group::cntr_objects=" << matrix_group::cntr_objects << endl;
-	if (perm_group::cntr_new)
-		cout << "perm_group::cntr_new=" << perm_group::cntr_new << endl;
-	if (perm_group::cntr_objects)
-		cout << "perm_group::cntr_objects=" << perm_group::cntr_objects << endl;
-	if (page_storage::cntr_new)
-		cout << "page_storage::cntr_new=" << page_storage::cntr_new << endl;
-	if (page_storage::cntr_objects)
-		cout << "page_storage::cntr_objects=" << page_storage::cntr_objects << endl;
-	if (vector_ge::cntr_new)
-		cout << "vector_ge::cntr_new=" << vector_ge::cntr_new << endl;
-	if (vector_ge::cntr_objects)
-		cout << "vector_ge::cntr_objects=" << vector_ge::cntr_objects << endl;
-	if (schreier::cntr_new)
-		cout << "schreier::cntr_new=" << schreier::cntr_new << endl;
-	if (schreier::cntr_objects)
-		cout << "schreier::cntr_objects=" << schreier::cntr_objects << endl;
-	if (sims::cntr_new)
-		cout << "sims::cntr_new=" << sims::cntr_new << endl;
-	if (sims::cntr_objects)
-		cout << "sims::cntr_objects=" << sims::cntr_objects << endl;
-	if (group::cntr_new)
-		cout << "group::cntr_new=" << group::cntr_new << endl;
-	if (group::cntr_objects)
-		cout << "group::cntr_objects=" << group::cntr_objects << endl;
-	cout << endl;
-
-	cout << "vector_ge:" << endl;
-	dump_memory_chain(vector_ge::allocated_objects);
-}
-
 
 void the_end_quietly(INT t0)
 {

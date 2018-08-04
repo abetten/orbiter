@@ -150,6 +150,7 @@ MODULES= \
 		ACTION/group_actions/interface.o \
 		ACTION/group_actions/interface_matrix_group.o \
 		ACTION/group_actions/interface_perm_group.o \
+		ACTION/group_actions/interface_wreath_product.o \
 		ACTION/group_theory/linear_group.o \
 		ACTION/group_theory/linear_group_description.o \
 		ACTION/group_theory/matrix_group.o \

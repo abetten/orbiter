@@ -10,69 +10,6 @@
 #include "galois.h"
 
 
-INT unipoly_domain::cntr_new = 0;
-INT unipoly_domain::cntr_objects = 0;
-INT unipoly_domain::f_debug_memory = FALSE;
-
-void *unipoly_domain::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "unipoly_domain::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *unipoly_domain::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(unipoly_domain);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "unipoly_domain::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void unipoly_domain::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "unipoly_domain::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void unipoly_domain::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(unipoly_domain);
-	if (f_debug_memory) {
-		cout << "unipoly_domain::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 unipoly_domain::unipoly_domain(finite_field *GFq)
 {
 	gfq = GFq;

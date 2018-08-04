@@ -273,8 +273,7 @@ void colored_graph::print()
 
 	C.init(point_color, nb_points, TRUE, 0);
 
-	INT *A;
-	INT I, J, f1, l1, f2, l2, ii, jj, idx1, idx2;
+	INT I, f1, l1, ii, idx1;
 
 	cout << "color : size  of color class: color class" << endl;
 	for (I = 0; I < C.nb_types; I++) {
@@ -303,6 +302,8 @@ void colored_graph::print()
 	cout << endl;
 
 #if 0
+	INT *A;
+	INT J, f2, l2, jj, idx2;
 	cout << "Adjacency (blocked off by color classes):" << endl;
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {

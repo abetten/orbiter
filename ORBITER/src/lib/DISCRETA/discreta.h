@@ -2556,7 +2556,6 @@ void prepare_2_orbits_in_product_action(char *group_label,
 // discreta_global.C:
 void free_global_data();
 void the_end(INT t0);
-void dump_object_memory();
 void the_end_quietly(INT t0);
 void calc_Kramer_Mesner_matrix_neighboring(generator *gen, 
 	INT level, matrix &M, INT verbose_level);

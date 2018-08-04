@@ -170,6 +170,7 @@ void h2ijk(INT h, INT &i, INT &j, INT &k, INT n);
 void random_permutation(INT *random_permutation, INT n);
 void perm_move(INT *from, INT *to, INT n);
 void perm_identity(INT *a, INT n);
+void perm_elementary_transposition(INT *a, INT n, INT f);
 void perm_mult(INT *a, INT *b, INT *c, INT n);
 void perm_conjugate(INT *a, INT *b, INT *c, INT n);
 // c := a^b = b^-1 * a * b

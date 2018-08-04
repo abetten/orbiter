@@ -37,6 +37,7 @@ void wreath_product::null()
 	A3 = NULL;
 	tmp_Elt1 = NULL;
 	tmp_perm1 = NULL;
+	elt1 = NULL;
 	Elts = NULL;
 }
 
@@ -84,6 +85,9 @@ void wreath_product::freeself()
 	if (P) {
 		delete P;
 	}
+	if (elt1) {
+		FREE_UBYTE(elt1);
+	}
 	if (Elts) {
 		delete Elts;
 	}
@@ -93,7 +97,8 @@ void wreath_product::freeself()
 		}
 }
 
-void wreath_product::init_tensor_wreath_product(matrix_group *M, INT nb_factors, INT verbose_level)
+void wreath_product::init_tensor_wreath_product(matrix_group *M,
+		action *A_mtx, INT nb_factors, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -102,14 +107,17 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M, INT nb_factors,
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
 	}
 	if (M->f_projective) {
-		cout << "void wreath_product::init_tensor_wreath_product the input group must be of type general linear (not projective)" << endl;
+		cout << "void wreath_product::init_tensor_wreath_product "
+				"the input group must be of type general linear (not projective)" << endl;
 		exit(1);
 	}
 	if (M->f_affine) {
-		cout << "void wreath_product::init_tensor_wreath_product the input group must be of type general linear (not affine)" << endl;
+		cout << "void wreath_product::init_tensor_wreath_product "
+				"the input group must be of type general linear (not affine)" << endl;
 		exit(1);
 	}
 	wreath_product::M = M;
+	wreath_product::A_mtx = A_mtx;
 	wreath_product::nb_factors = nb_factors;
 	F = M->GFq;
 	q = F->q;
@@ -117,9 +125,14 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M, INT nb_factors,
 	P = new perm_group;
 	P->init(nb_factors, 10 /* page_length_log */, 0 /* verbose_level */);
 
+	sprintf(label, "%s_wreath_Sym%ld", M->label, nb_factors);
+	sprintf(label_tex, "%s \\wr {\\rm Sym}(%ld)", M->label_tex, nb_factors);
+
 	degree_of_matrix_group = M->degree;
 	dimension_of_matrix_group = M->n;
 	dimension_of_tensor_action = dimension_of_matrix_group * nb_factors;
+	low_level_point_size = dimension_of_tensor_action;
+	make_element_size = nb_factors + nb_factors * dimension_of_matrix_group * dimension_of_matrix_group;
 	degree_of_tensor_action = (i_power_j(q, dimension_of_tensor_action) - 1) / (q - 1);
 	degree_overall = nb_factors + nb_factors * degree_of_matrix_group + degree_of_tensor_action;
 	if (f_v) {
@@ -149,6 +162,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M, INT nb_factors,
 	bits_per_digit = M->bits_per_digit;
 	bits_per_elt = nb_factors * dimension_of_matrix_group * dimension_of_matrix_group * bits_per_digit;
 	char_per_elt = nb_factors + ((bits_per_elt + 7) >> 3);
+	elt1 = NEW_UBYTE(char_per_elt);
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product bits_per_digit = " << bits_per_digit << endl;
 		cout << "wreath_product::init_tensor_wreath_product bits_per_elt = " << bits_per_elt << endl;
@@ -166,17 +180,55 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M, INT nb_factors,
 INT wreath_product::element_image_of(INT *Elt, INT a, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT b;
+	INT f, b, c;
 
 	if (f_v) {
 		cout << "wreath_product::element_image_of" << endl;
 	}
-	PG_element_unrank_modified(*F, u, 1, dimension_of_tensor_action, a);
-	create_matrix(Elt, A3, 0 /* verbose_level */);
-	F->mult_vector_from_the_left(u, A3, v,
-			dimension_of_tensor_action, dimension_of_tensor_action);
-	apply_permutation(Elt, v, w, 0 /* verbose_level*/);
-	PG_element_rank_modified(*F, w, 1, dimension_of_tensor_action, b);
+	b = 0;
+	if (a < nb_factors) {
+		if (f_v) {
+			cout << "wreath_product::element_image_of we are in the permutation" << endl;
+		}
+		b = Elt[a];
+	} else {
+		a -= nb_factors;
+		b += nb_factors;
+		for (f = 0; f < nb_factors; f++) {
+			if (a < M->degree) {
+				if (f_v) {
+					cout << "wreath_product::element_image_of we are in component " << f << " reduced input a=" << a << endl;
+				}
+				AG_element_unrank(q, u, 1, M->n, a);
+				F->mult_vector_from_the_left(u, Elt + offset_i(f), v,
+						M->n, M->n);
+				AG_element_rank(q, v, 1, M->n, c);
+				if (f_v) {
+					cout << "wreath_product::element_image_of we are in component " << f << " reduced output c=" << c << endl;
+				}
+				b += c;
+				break;
+			} else {
+				a -= M->degree;
+				b += M->degree;
+			}
+		} // next f
+		if (f == nb_factors) {
+			if (f_v) {
+				cout << "wreath_product::element_image_of we are in the tensor product component reduced input a = " << a << endl;
+			}
+			PG_element_unrank_modified(*F, u, 1, dimension_of_tensor_action, a);
+			create_matrix(Elt, A3, 0 /* verbose_level */);
+			F->mult_vector_from_the_left(u, A3, v,
+					dimension_of_tensor_action, dimension_of_tensor_action);
+			apply_permutation(Elt, v, w, 0 /* verbose_level*/);
+			PG_element_rank_modified(*F, w, 1, dimension_of_tensor_action, c);
+			if (f_v) {
+				cout << "wreath_product::element_image_of we are in component " << f << " reduced output c=" << c << endl;
+			}
+			b += c;
+		}
+	}
 	if (f_v) {
 		cout << "wreath_product::element_image_of " << a << " maps to " << b << endl;
 	}
@@ -382,3 +434,129 @@ INT wreath_product::get_digit(UBYTE *elt, INT f, INT i, INT j)
 	return d;
 }
 
+void wreath_product::make_element_from_one_component(INT *Elt, INT f, INT *Elt_component)
+{
+		INT g;
+
+		P->one(Elt);
+		for (g = 0; g < nb_factors; g++) {
+			if (g == f) {
+				M->GL_copy(Elt_component, Elt + offset_i(g));
+			} else {
+				M->GL_one(Elt + offset_i(g));
+			}
+		}
+}
+
+void wreath_product::make_element_from_permutation(INT *Elt, INT *perm)
+{
+		INT f;
+
+		for (f = 0; f < nb_factors; f++) {
+			Elt[f] = perm[f];
+		}
+		for (f = 0; f < nb_factors; f++) {
+			M->GL_one(Elt + offset_i(f));
+		}
+}
+
+void wreath_product::make_element(INT *Elt, INT *data)
+{
+	INT f, offset;
+
+	for (f = 0; f < nb_factors; f++) {
+		Elt[f] = data[f];
+	}
+	offset = nb_factors;
+	for (f = 0; f < nb_factors; f++) {
+		M->make_element(Elt + offset_i(f), data + offset, 0 /* verbose_level */);
+		offset += M->elt_size_INT_half;
+	}
+}
+
+void wreath_product::element_print_easy(INT *Elt, ostream &ost)
+{
+	INT f;
+
+	ost << "begin element of wreath product: " << endl;
+	ost << "[";
+	for (f = 0; f < nb_factors; f++) {
+		ost << Elt[f];
+		if (f < nb_factors - 1) {
+			ost << ", ";
+		}
+	}
+	ost << "]" << endl;
+	for (f = 0; f < nb_factors; f++) {
+		ost << "factor " << f << ":" << endl;
+		M->GL_print_easy(Elt + offset_i(f), ost);
+	}
+	ost << "end element of wreath product" << endl;
+}
+
+void wreath_product::make_strong_generators(INT *&data,
+		INT &size, INT &nb_gens, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT *GL_data;
+	INT GL_size;
+	INT GL_nb_gens;
+	INT h, k, f, g;
+	INT *dat;
+
+	if (f_v) {
+		cout << "wreath_product::make_strong_generators" << endl;
+	}
+	if (f_v) {
+		cout << "wreath_product::make_strong_generators "
+				"before strong_generators_for_general_linear_group" << endl;
+	}
+	strong_generators_for_general_linear_group(dimension_of_matrix_group, F,
+		FALSE /*M->f_semilinear*/,
+		GL_data, GL_size, GL_nb_gens,
+		verbose_level - 1);
+		// in GALOIS/projective.C
+	if (f_v) {
+		cout << "wreath_product::make_strong_generators "
+				"after strong_generators_for_general_linear_group" << endl;
+	}
+	nb_gens = nb_factors - 1 + nb_factors * GL_nb_gens;
+	size = nb_factors + nb_factors *
+			dimension_of_matrix_group * dimension_of_matrix_group;
+	data = NEW_INT(nb_gens * size);
+	dat = NEW_INT(size);
+
+	h = 0;
+	// generators for the components:
+	for (f = nb_factors - 1; f >= 0; f--) {
+		for (g = 0; g < GL_nb_gens; g++) {
+			perm_identity(dat, nb_factors);
+			for (k = 0; k < nb_factors; k++) {
+				if (k == f) {
+					INT_vec_copy(GL_data + g * GL_size, dat + offset_i(k), GL_size);
+				} else {
+					F->identity_matrix(dat + offset_i(k), dimension_of_matrix_group);
+				}
+			}
+			INT_vec_copy(dat, data + h * size, size);
+			h++;
+		}
+	}
+	// create the elementary swap permutations:
+	for (k = 0; k < nb_factors - 1; k++) {
+		perm_elementary_transposition(dat, nb_factors, k);
+		for (f = 0; f < nb_factors; f++) {
+			F->identity_matrix(dat + offset_i(f), dimension_of_matrix_group);
+		}
+		INT_vec_copy(dat, data + h * size, size);
+		h++;
+	}
+	if (h != nb_gens) {
+		cout << "h != nb_gens" << endl;
+		exit(1);
+	}
+	FREE_INT(dat);
+	if (f_v) {
+		cout << "wreath_product::make_strong_generators done" << endl;
+	}
+}

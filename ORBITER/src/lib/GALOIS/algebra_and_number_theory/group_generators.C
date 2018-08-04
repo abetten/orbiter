@@ -1601,7 +1601,7 @@ void strong_generators_for_projective_linear_group(INT n, finite_field *F,
 
 	cur = 0;
 
-	// the autmorphic collineation:
+	// the automorphic collineation:
 	if (f_semilinear) {
 		F->identity_matrix(M, n);
 		M[n * n] = 1;

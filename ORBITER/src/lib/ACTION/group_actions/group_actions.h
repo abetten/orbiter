@@ -329,6 +329,8 @@ public:
 		// generator::orbit_element_rank
 
 	// action_init.C:
+	void init_wreath_product_group(INT nb_factors, INT n, finite_field *F,
+		INT f_basis, INT verbose_level);
 	void init_BLT(finite_field *F, INT f_basis, 
 		INT f_init_hash_table, INT verbose_level);
 	void init_group_from_strong_generators(vector_ge *gens, sims *K, 
@@ -374,6 +376,7 @@ public:
 	void init_symmetric_group(INT degree, INT verbose_level);
 	void null_function_pointers();
 	void init_function_pointers_matrix_group();
+	void init_function_pointers_wreath_product_group();
 	void init_function_pointers_permutation_group();
 	void init_function_pointers_induced_action();
 	void create_sims(INT verbose_level);
@@ -904,8 +907,8 @@ void matrix_group_element_print_as_permutation(
 	action &A, void *elt, ostream &ost);
 void matrix_group_element_print_verbose(action &A, 
 	void *elt, ostream &ost);
-void matrix_group_elt_print(void *elt, 
-	void *data, ostream &ost);
+//void matrix_group_elt_print(void *elt,
+//	void *data, ostream &ost);
 void matrix_group_print_point(action &A, 
 	INT a, ostream &ost);
 
@@ -948,8 +951,64 @@ void perm_group_element_print_for_make_element(action &A,
 	void *elt, ostream &ost);
 void perm_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, ostream &ost);
-void perm_group_elt_print(void *elt, void *data, 
-	ostream &ost);
+//void perm_group_elt_print(void *elt, void *data,
+//	ostream &ost);
 void perm_group_print_point(action &A, INT a, ostream &ost);
+
+// #############################################################################
+// interface_wreath_product_group.C
+// #############################################################################
+
+
+INT wreath_product_group_element_image_of(action &A, INT a,
+	void *elt, INT verbose_level);
+void wreath_product_group_element_image_of_low_level(action &A,
+	INT *input, INT *output, void *elt, INT verbose_level);
+INT wreath_product_group_element_linear_entry_ij(action &A,
+	void *elt, INT i, INT j, INT verbose_level);
+INT wreath_product_group_element_linear_entry_frobenius(action &A,
+	void *elt, INT verbose_level);
+void wreath_product_group_element_one(action &A,
+	void *elt, INT verbose_level);
+INT wreath_product_group_element_is_one(action &A,
+	void *elt, INT verbose_level);
+void wreath_product_group_element_unpack(action &A,
+	void *elt, void *Elt, INT verbose_level);
+void wreath_product_group_element_pack(action &A,
+	void *Elt, void *elt, INT verbose_level);
+void wreath_product_group_element_retrieve(action &A,
+	INT hdl, void *elt, INT verbose_level);
+INT wreath_product_group_element_store(action &A,
+	void *elt, INT verbose_level);
+void wreath_product_group_element_mult(action &A,
+	void *a, void *b, void *ab, INT verbose_level);
+void wreath_product_group_element_invert(action &A,
+	void *a, void *av, INT verbose_level);
+void wreath_product_group_element_transpose(action &A,
+	void *a, void *at, INT verbose_level);
+void wreath_product_group_element_move(action &A,
+	void *a, void *b, INT verbose_level);
+void wreath_product_group_element_dispose(action &A,
+	INT hdl, INT verbose_level);
+void wreath_product_group_element_print(action &A,
+	void *elt, ostream &ost);
+void wreath_product_group_element_code_for_make_element(
+	action &A, void *elt, INT *data);
+void wreath_product_group_element_print_for_make_element(
+	action &A, void *elt, ostream &ost);
+void wreath_product_group_element_print_for_make_element_no_commas(
+	action &A, void *elt, ostream &ost);
+void wreath_product_group_element_print_quick(action &A,
+	void *elt, ostream &ost);
+void wreath_product_group_element_print_latex(action &A,
+	void *elt, ostream &ost);
+void wreath_product_group_element_print_as_permutation(
+	action &A, void *elt, ostream &ost);
+void wreath_product_group_element_print_verbose(action &A,
+	void *elt, ostream &ost);
+//void wreath_product_group_elt_print(void *elt,
+//	void *data, ostream &ost);
+void wreath_product_group_print_point(action &A,
+	INT a, ostream &ost);
 
 

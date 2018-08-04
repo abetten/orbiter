@@ -87,7 +87,8 @@ action::~action()
 				}
 			FREE_OBJECT(G.matrix_grp);
 			if (f_vv) {
-				cout << "action::~action() freeing G.matrix_grp finished" << endl;
+				cout << "action::~action() freeing G.matrix_grp finished"
+						<< endl;
 				}
 			G.matrix_grp = NULL;
 			}
@@ -97,7 +98,8 @@ action::~action()
 				}
 			FREE_OBJECT(G.perm_grp);
 			if (f_vv) {
-				cout << "action::~action() freeing G.perm_group_t finished" << endl;
+				cout << "action::~action() freeing G.perm_group_t finished"
+						<< endl;
 				}
 			G.perm_grp = NULL;
 			}
@@ -119,7 +121,8 @@ action::~action()
 				}
 			FREE_OBJECT(G.on_k_subsets);
 			if (f_vv) {
-				cout << "action::~action() freeing G.on_k_subsets finished" << endl;
+				cout << "action::~action() freeing G.on_k_subsets finished"
+						<< endl;
 				}
 			G.on_k_subsets = NULL;
 			}
@@ -221,7 +224,8 @@ action::~action()
 			G.OnHP = NULL;
 			}
 		else {
-			cout << "action::~action don't know how to free the object; action type is ";
+			cout << "action::~action don't know "
+					"how to free the object; action type is ";
 			print_symmetry_group_type(cout);
 			cout << endl;
 			exit(1);
@@ -545,13 +549,15 @@ INT action::find_non_fixed_point(void *elt, INT verbose_level)
 	return -1;
 }
 
-INT action::find_fixed_points(void *elt, INT *fixed_points, INT verbose_level)
+INT action::find_fixed_points(void *elt,
+		INT *fixed_points, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, n = 0;
 	
 	if (f_v) {
-		cout << "computing fixed points in action " << label << " of degree " << degree << endl;
+		cout << "computing fixed points in action "
+				<< label << " of degree " << degree << endl;
 		}
 	for (i = 0; i < degree; i++) {
 		j = element_image_of(i, elt, 0);
@@ -565,7 +571,8 @@ INT action::find_fixed_points(void *elt, INT *fixed_points, INT verbose_level)
 	return n;
 }
 
-INT action::test_if_set_stabilizes(INT *Elt, INT size, INT *set, INT verbose_level)
+INT action::test_if_set_stabilizes(INT *Elt,
+		INT size, INT *set, INT verbose_level)
 {
 	INT *set1, *set2;
 	INT i, cmp;
@@ -595,19 +602,22 @@ INT action::test_if_set_stabilizes(INT *Elt, INT size, INT *set, INT verbose_lev
 	FREE_INT(set2);
 	if (cmp == 0) {
 		if (f_v) {
-			cout << "action::test_if_set_stabilizes done, returning TRUE" << endl;
+			cout << "action::test_if_set_stabilizes "
+					"done, returning TRUE" << endl;
 			}
 		return TRUE;
 		}
 	else {
 		if (f_v) {
-			cout << "action::test_if_set_stabilizes done, returning FALSE" << endl;
+			cout << "action::test_if_set_stabilizes "
+					"done, returning FALSE" << endl;
 			}
 		return FALSE;
 		}
 }
 
-void action::map_a_set(INT *set, INT *image_set, INT n, INT *Elt, INT verbose_level)
+void action::map_a_set(INT *set,
+		INT *image_set, INT n, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -630,12 +640,14 @@ void action::map_a_set(INT *set, INT *image_set, INT n, INT *Elt, INT verbose_le
 			}
 		image_set[i] = element_image_of(set[i], Elt, verbose_level - 2);
 		if (f_vv) {
-			cout << "i=" << i << " image of " << set[i] << " is " << image_set[i] << endl;
+			cout << "i=" << i << " image of "
+					<< set[i] << " is " << image_set[i] << endl;
 			}
 		}
 }
 
-void action::map_a_set_and_reorder(INT *set, INT *image_set, INT n, INT *Elt, INT verbose_level)
+void action::map_a_set_and_reorder(INT *set,
+		INT *image_set, INT n, INT *Elt, INT verbose_level)
 {
 	map_a_set(set, image_set, n, Elt, verbose_level);
 	INT_vec_heapsort(image_set, n);
@@ -649,7 +661,8 @@ void action::init_sims(sims *G, INT verbose_level)
 	INT i, k;
 	
 	if (f_v) {
-		cout << "action::init_sims action " << label << " base_len = " << base_len << endl;
+		cout << "action::init_sims action " << label
+				<< " base_len = " << base_len << endl;
 		}
 	if (f_has_sims) {
 		delete Sims;
@@ -657,7 +670,9 @@ void action::init_sims(sims *G, INT verbose_level)
 		f_has_sims = FALSE;
 		}
 	if (G->A != this) {
-		cout << "action::init_sims action " << label << " sims object has different action " << G->A->label << endl;
+		cout << "action::init_sims action " << label
+				<< " sims object has different action "
+				<< G->A->label << endl;
 		exit(1);
 		}
 	Sims = G;
@@ -683,11 +698,13 @@ void action::init_base_from_sims(sims *G, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "action::init_base_from_sims, base length " << base_len << endl;
+		cout << "action::init_base_from_sims, "
+				"base length " << base_len << endl;
 		//G->print(TRUE);
 		}
 	for (i = 0; i < base_len; i++) {
-		//cout << "i = " << i << " base[i]=" << base[i] << " tl[i]=" << tl[i] << endl;
+		//cout << "i = " << i << " base[i]="
+		// << base[i] << " tl[i]=" << tl[i] << endl;
 		//base[i] = bi = base[i];
 		//transversal_length[i] = tl[i];
 		//cout << "a" << endl;
@@ -722,7 +739,8 @@ void action::init_base_from_sims(sims *G, INT verbose_level)
 		}
 }
 
-INT action::element_has_order_two(INT *E1, INT verbose_level)
+INT action::element_has_order_two(INT *E1,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT ret;
@@ -745,7 +763,8 @@ INT action::element_has_order_two(INT *E1, INT verbose_level)
 	return ret;
 }
 
-INT action::product_has_order_two(INT *E1, INT *E2, INT verbose_level)
+INT action::product_has_order_two(INT *E1,
+		INT *E2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT ret;
@@ -769,7 +788,8 @@ INT action::product_has_order_two(INT *E1, INT *E2, INT verbose_level)
 	return ret;
 }
 
-INT action::product_has_order_three(INT *E1, INT *E2, INT verbose_level)
+INT action::product_has_order_three(INT *E1,
+		INT *E2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT ret;
@@ -843,7 +863,8 @@ INT action::element_order_verbose(void *elt, INT verbose_level)
 				break;
 				}
 			if (have_seen[next]) {
-				cout << "action::element_order_if_divisor_of(): have_seen[next]\n"; 
+				cout << "action::element_order_if_divisor_of(): "
+						"have_seen[next]\n";
 				exit(1);
 				}
 			l1 = next;
@@ -857,7 +878,8 @@ INT action::element_order_verbose(void *elt, INT verbose_level)
 		}
 	FREE_INT(have_seen);
 	if (f_v) {
-		cout << "action::element_order_verbose done order=" << order << endl;
+		cout << "action::element_order_verbose "
+				"done order=" << order << endl;
 		}
 	return order;
 }
@@ -898,7 +920,8 @@ INT action::element_order_if_divisor_of(void *elt, INT o)
 				break;
 				}
 			if (have_seen[next]) {
-				cout << "action::element_order_if_divisor_of(): have_seen[next]\n"; 
+				cout << "action::element_order_if_divisor_of(): "
+						"have_seen[next]" << endl;
 				exit(1);
 				}
 			l1 = next;
@@ -917,7 +940,8 @@ INT action::element_order_if_divisor_of(void *elt, INT o)
 	return order;
 }
 
-void action::compute_all_point_orbits(schreier &S, vector_ge &gens, INT verbose_level)
+void action::compute_all_point_orbits(schreier &S,
+		vector_ge &gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -946,7 +970,8 @@ INT action::depth_in_stab_chain(INT *Elt)
 	return base_len;
 }
 
-void action::strong_generators_at_depth(INT depth, vector_ge &gen)
+void action::strong_generators_at_depth(INT depth,
+		vector_ge &gen)
 // all strong generators that leave base points 0,..., depth - 1 fix
 {
 	INT i, j, l, n;
@@ -1002,7 +1027,8 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 		S[i].point_stabilizer_stabchain_with_action(this, 
 			S[i + 1], sequence[i], 0 /*verbose_level - 2*/);
 		if (f_vv) {
-			cout << "stabilizer of " << i << "-th point " << sequence[i] << " has order ";
+			cout << "stabilizer of " << i << "-th point "
+					<< sequence[i] << " has order ";
 			S[i + 1].print_group_order(cout);
 			cout << endl;
 			if (f_vvv) {
@@ -1031,14 +1057,16 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 		}
 }
 
-INT action::compute_orbit_of_point(vector_ge &strong_generators, INT pt, INT *orbit, INT verbose_level)
+INT action::compute_orbit_of_point(vector_ge &strong_generators,
+		INT pt, INT *orbit, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	schreier Schreier;
 	INT len, i, f;
 	
 	if (f_v) {
-		cout << "action::compute_orbit_of_point: computing orbit of point " << pt << endl;
+		cout << "action::compute_orbit_of_point: "
+				"computing orbit of point " << pt << endl;
 		}
 	Schreier.init(this);
 	Schreier.init_generators(strong_generators);
@@ -1067,14 +1095,16 @@ INT action::compute_orbit_of_point_generators_by_handle(INT nb_gen,
 }
 
 
-INT action::least_image_of_point(vector_ge &strong_generators, INT pt, INT *transporter, INT verbose_level)
+INT action::least_image_of_point(vector_ge &strong_generators,
+	INT pt, INT *transporter, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	schreier Schreier;
 	INT len, image, pos, i;
 	
 	if (f_v) {
-		cout << "action::least_image_of_point: computing least image of " << pt << endl;
+		cout << "action::least_image_of_point: "
+				"computing least image of " << pt << endl;
 		}
 	Schreier.init(this);
 	Schreier.init_generators(strong_generators);
@@ -1091,12 +1121,14 @@ INT action::least_image_of_point(vector_ge &strong_generators, INT pt, INT *tran
 		exit(1);
 		}
 	if (f_v) {
-		cout << "action::least_image_of_point: least image of " << pt << " is " << image << endl;
+		cout << "action::least_image_of_point: "
+				"least image of " << pt << " is " << image << endl;
 		}
 	return image;
 }
 
-INT action::least_image_of_point_generators_by_handle(INT nb_gen, INT *gen_handle, 
+INT action::least_image_of_point_generators_by_handle(
+	INT nb_gen, INT *gen_handle,
 	INT pt, INT *transporter, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
@@ -1131,7 +1163,8 @@ void action::all_point_orbits(schreier &Schreier, INT verbose_level)
 	Schreier.compute_all_point_orbits(verbose_level);
 }
 
-void action::compute_stabilizer_orbits(partitionstack *&Staborbits, INT verbose_level)
+void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1149,12 +1182,14 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits, INT verbose_
 			}
 		cout << "degree = " << degree << endl;
 		}
-	Staborbits = NEW_OBJECTS(partitionstack, base_len); // where is this freed???
+	Staborbits = NEW_OBJECTS(partitionstack, base_len);
+		// where is this freed???
 
 	for (i = 0; i < base_len; i++) {
 		strong_generators_at_depth(i, gen);
 		if (FALSE) {
-			cout << "level " << i << " found " << gen.len << " strong generators" << endl;
+			cout << "level " << i << " found "
+					<< gen.len << " strong generators" << endl;
 			}
 		if (FALSE) {
 			gen.print(cout);
@@ -1182,7 +1217,8 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits, INT verbose_
 			cout << "found " << S->ht << " orbits" << endl;
 			}
 		if (f_vv) {
-			cout << "level " << i << " with " << gen.len << " strong generators : ";
+			cout << "level " << i << " with "
+					<< gen.len << " strong generators : ";
 			//cout << "orbit partition at level " << i << ":" << endl;
 			cout << *S;
 			}
@@ -1195,7 +1231,8 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits, INT verbose_
 }
 
 
-INT action::check_if_in_set_stabilizer(INT *Elt, INT size, INT *set, INT verbose_level)
+INT action::check_if_in_set_stabilizer(INT *Elt,
+		INT size, INT *set, INT verbose_level)
 {
 	INT i, a, b, idx;
 	INT *ordered_set;
@@ -1218,7 +1255,9 @@ INT action::check_if_in_set_stabilizer(INT *Elt, INT size, INT *set, INT verbose
 				cout << "ordered_set: ";
 				INT_vec_print(cout, ordered_set, size);
 				cout << endl;
-				cout << "image of " << i << " th element " << a << " is " << b << " is not found" << endl;
+				cout << "image of " << i << "-th element "
+						<< a << " is " << b
+						<< " is not found" << endl;
 				}
 			FREE_INT(ordered_set);
 			return FALSE;
@@ -1229,7 +1268,8 @@ INT action::check_if_in_set_stabilizer(INT *Elt, INT size, INT *set, INT verbose
 	
 }
 
-INT action::check_if_transporter_for_set(INT *Elt, INT size, INT *set1, INT *set2, INT verbose_level)
+INT action::check_if_transporter_for_set(INT *Elt,
+		INT size, INT *set1, INT *set2, INT verbose_level)
 {
 	INT i, a, b, idx;
 	INT *ordered_set2;
@@ -1237,7 +1277,8 @@ INT action::check_if_transporter_for_set(INT *Elt, INT size, INT *set1, INT *set
 	INT f_vv = (verbose_level >= 4);
 	
 	if (f_vv) {
-		cout << "action::check_if_transporter_for_set size=" << size << endl;
+		cout << "action::check_if_transporter_for_set "
+				"size=" << size << endl;
 		INT_vec_print(cout, set1, size);
 		cout << endl;
 		INT_vec_print(cout, set2, size);
@@ -1276,7 +1317,9 @@ INT action::check_if_transporter_for_set(INT *Elt, INT size, INT *set1, INT *set
 				cout << "ordered: ";
 				INT_vec_print(cout, ordered_set2, size);
 				cout << endl;
-				cout << "image of " << i << " th element " << a << " is " << b << " is not found" << endl;
+				cout << "image of " << i << "-th element "
+						<< a << " is " << b
+						<< " is not found" << endl;
 				}
 			FREE_INT(ordered_set2);
 			return FALSE;
@@ -1287,14 +1330,17 @@ INT action::check_if_transporter_for_set(INT *Elt, INT size, INT *set1, INT *set
 	
 }
 
-void action::compute_set_orbit(vector_ge &gens, INT size, INT *set, 
-	INT &nb_sets, INT **&Sets, INT **&Transporter, INT verbose_level)
+void action::compute_set_orbit(vector_ge &gens,
+	INT size, INT *set,
+	INT &nb_sets, INT **&Sets, INT **&Transporter,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *image_set;
 	INT **New_Sets;
 	INT **New_Transporter;
-	INT nb_finished, allocated_nb_sets, new_allocated_nb_sets, nb_gens, i, j, h;
+	INT nb_finished, allocated_nb_sets;
+	INT new_allocated_nb_sets, nb_gens, i, j, h;
 	
 	if (f_v) {
 		cout << "action::compute_set_orbit: ";
@@ -1323,7 +1369,8 @@ void action::compute_set_orbit(vector_ge &gens, INT size, INT *set,
 
 	while (nb_finished < nb_sets) {
 		if (f_v) {
-			cout << "nb_finished=" << nb_finished << " nb_sets=" << nb_sets << endl;
+			cout << "nb_finished=" << nb_finished
+					<< " nb_sets=" << nb_sets << endl;
 			}
 		for (i = 0; i < nb_gens; i++) {
 			map_a_set_and_reorder(Sets[nb_finished], image_set, size, 
@@ -1349,11 +1396,13 @@ void action::compute_set_orbit(vector_ge &gens, INT size, INT *set,
 			Sets[nb_sets] = image_set;
 			image_set = NEW_INT(size);
 			Transporter[nb_sets] = NEW_INT(elt_size_in_INT);
-			element_mult(Transporter[nb_finished], gens.ith(i), Transporter[nb_sets], 0);
+			element_mult(Transporter[nb_finished],
+					gens.ith(i), Transporter[nb_sets], 0);
 			nb_sets++;
 			if (nb_sets == allocated_nb_sets) {
 				new_allocated_nb_sets = allocated_nb_sets + 100;
-				cout << "reallocating to size " << new_allocated_nb_sets << endl;
+				cout << "reallocating to size "
+						<< new_allocated_nb_sets << endl;
 				New_Sets = NEW_PINT(new_allocated_nb_sets);
 				New_Transporter = NEW_PINT(new_allocated_nb_sets);
 				for (h = 0; h < nb_sets; h++) {
@@ -1371,7 +1420,8 @@ void action::compute_set_orbit(vector_ge &gens, INT size, INT *set,
 		}
 	FREE_INT(image_set);
 	if (f_v) {
-		cout << "action::compute_set_orbit found an orbit of size " << nb_sets << endl;
+		cout << "action::compute_set_orbit "
+				"found an orbit of size " << nb_sets << endl;
 		for (i = 0; i < nb_sets; i++) {
 			cout << i << " : ";
 			INT_vec_print(cout, Sets[i], size);
@@ -1423,8 +1473,10 @@ void action::compute_minimal_set(vector_ge &gens, INT size, INT *set,
 	delete_set_orbit(nb_sets, Sets, Transporter);
 }
 
-void action::find_strong_generators_at_level(INT base_len, INT *the_base, INT level, 
-	vector_ge &gens, vector_ge &subset_of_gens, INT verbose_level)
+void action::find_strong_generators_at_level(
+	INT base_len, INT *the_base, INT level,
+	vector_ge &gens, vector_ge &subset_of_gens,
+	INT verbose_level)
 {
 	INT nb_generators_found;
 	INT *gen_idx;
@@ -1433,7 +1485,8 @@ void action::find_strong_generators_at_level(INT base_len, INT *the_base, INT le
 	INT f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "action::find_strong_generators_at_level level=" << level << " base: ";
+		cout << "action::find_strong_generators_at_level "
+				"level=" << level << " base: ";
 		INT_vec_print(cout, the_base, base_len);
 		cout << endl;
 		}
@@ -1493,7 +1546,8 @@ void action::compute_strong_generators_from_sims(INT verbose_level)
 		}
 }
 
-void action::make_element_from_permutation_representation(INT *Elt, INT *data, INT verbose_level)
+void action::make_element_from_permutation_representation(
+		INT *Elt, INT *data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *base_image;
@@ -1507,8 +1561,10 @@ void action::make_element_from_permutation_representation(INT *Elt, INT *data, I
 		a = base[i];
 		base_image[i] = data[a];
 		if (base_image[i] >= degree) {
-			cout << "action::make_element_from_permutation_representation base_image[i] >= degree" << endl;
-			cout << "i=" << i << " base[i] = " << a << " base_image[i]=" << base_image[i] << endl;
+			cout << "action::make_element_from_permutation_representation "
+					"base_image[i] >= degree" << endl;
+			cout << "i=" << i << " base[i] = " << a
+					<< " base_image[i]=" << base_image[i] << endl;
 			exit(1);
 			}
 		}
@@ -1516,11 +1572,13 @@ void action::make_element_from_permutation_representation(INT *Elt, INT *data, I
 
 	FREE_INT(base_image);
 	if (f_v) {
-		cout << "action::make_element_from_permutation_representation done" << endl;
+		cout << "action::make_element_from_permutation_representation done"
+				<< endl;
 		}
 }
 
-void action::make_element_from_base_image(INT *Elt, INT *data, INT verbose_level)
+void action::make_element_from_base_image(INT *Elt,
+		INT *data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
@@ -1546,7 +1604,8 @@ void action::make_element_from_base_image(INT *Elt, INT *data, INT verbose_level
 		print_info();
 		}
 	if (!f_has_sims) {
-		cout << "action::make_element_from_base_image fatal: does not have sims" << endl;
+		cout << "action::make_element_from_base_image "
+				"fatal: does not have sims" << endl;
 		exit(1);
 		}
 	S = Sims;
@@ -1577,7 +1636,9 @@ void action::make_element_from_base_image(INT *Elt, INT *data, INT verbose_level
 			element_print_as_permutation_with_offset(Elt3, cout, 
 				offset, f_do_it_anyway_even_for_big_degree, 
 				f_print_cycles_of_length_one, 0/*verbose_level*/);
-			cout << "i=" << i << " b_pt=" << b_pt << " yi=" << yi << " z=" << z << " j=" << j << endl; 
+			cout << "i=" << i << " b_pt=" << b_pt
+					<< " yi=" << yi << " z="
+					<< z << " j=" << j << endl;
 			}
 		S->coset_rep(i, j, 0);
 		if (f_vv) {
@@ -1606,7 +1667,8 @@ void action::make_element_from_base_image(INT *Elt, INT *data, INT verbose_level
 			cout << "b_pt=" << b_pt << " -> " << c << endl;
 			}
 		if (c != yi) {
-			cout << "action::make_element_from_base_image fatal: element_image_of(b_pt, Elt3, 0) != yi" << endl;
+			cout << "action::make_element_from_base_image "
+					"fatal: element_image_of(b_pt, Elt3, 0) != yi" << endl;
 			exit(1);
 			}
 		}
@@ -1615,7 +1677,8 @@ void action::make_element_from_base_image(INT *Elt, INT *data, INT verbose_level
 		yi = data[i];
 		b = element_image_of(base[i], Elt, 0);
 		if (yi != b) {
-			cout << "action::make_element_from_base_image fatal: yi != b" << endl;
+			cout << "action::make_element_from_base_image fatal: yi != b"
+					<< endl;
 			cout << "i=" << i << endl;
 			cout << "base[i]=" << base[i] << endl;
 			cout << "yi=" << yi << endl;
@@ -1703,7 +1766,8 @@ void action::make_element(INT *Elt, INT *data, INT verbose_level)
 		}
 }
 
-void action::build_up_automorphism_group_from_aut_data(INT nb_auts, INT *aut_data, 
+void action::build_up_automorphism_group_from_aut_data(
+	INT nb_auts, INT *aut_data,
 	sims &S, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1712,7 +1776,8 @@ void action::build_up_automorphism_group_from_aut_data(INT nb_auts, INT *aut_dat
 	longinteger_object go;
 	
 	if (f_v) {
-		cout << "action::build_up_automorphism_group_from_aut_data action=" << label << " nb_auts=" << nb_auts << endl;
+		cout << "action::build_up_automorphism_group_from_aut_data "
+				"action=" << label << " nb_auts=" << nb_auts << endl;
 		}
 	Elt1 = NEW_INT(elt_size_in_INT);
 	Elt2 = NEW_INT(elt_size_in_INT);
@@ -1739,7 +1804,8 @@ void action::build_up_automorphism_group_from_aut_data(INT nb_auts, INT *aut_dat
 		if (S.strip_and_add(Elt1, Elt2, 0/*verbose_level*/)) {
 			S.group_order(go);
 			if (f_v) {
-				cout << "generator " << h << " added, new group order " << go << endl;
+				cout << "generator " << h
+						<< " added, new group order " << go << endl;
 				S.print_transversal_lengths();
 				S.print_transversals_short();
 				}
@@ -1754,7 +1820,8 @@ void action::build_up_automorphism_group_from_aut_data(INT nb_auts, INT *aut_dat
 	FREE_INT(Elt2);
 }
 
-void action::element_power_INT_in_place(INT *Elt, INT n, INT verbose_level)
+void action::element_power_INT_in_place(INT *Elt,
+		INT n, INT verbose_level)
 {
 	INT *Elt2;
 	INT *Elt3;
@@ -1780,7 +1847,8 @@ void action::element_power_INT_in_place(INT *Elt, INT n, INT verbose_level)
 	FREE_INT(Elt4);
 }
 
-void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3, const BYTE *word, INT verbose_level)
+void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3,
+		const BYTE *word, INT verbose_level)
 {
 	INT *Elt4;
 	INT *Elt5;
@@ -1811,7 +1879,8 @@ void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3, const BYTE *word, INT v
 	FREE_INT(Elt5);
 }
 
-void action::init_group_from_generators(INT *group_generator_data, INT group_generator_size, 
+void action::init_group_from_generators(
+	INT *group_generator_data, INT group_generator_size,
 	INT f_group_order_target, const BYTE *group_order_target, 
 	vector_ge *gens, strong_generators *&Strong_gens, 
 	INT verbose_level)
@@ -1839,7 +1908,9 @@ void action::init_group_from_generators(INT *group_generator_data, INT group_gen
 	Elt = NEW_INT(elt_size_in_INT);
 	nb_gens = group_generator_size / make_element_size;
 	if (nb_gens * make_element_size != group_generator_size) {
-		cout << "action::init_group_from_generators fatal: group_generator_size is not divisible by make_element_size" << endl;
+		cout << "action::init_group_from_generators fatal: "
+				"group_generator_size is not divisible by make_element_size"
+				<< endl;
 		cout << "make_element_size=" << make_element_size << endl;
 		cout << "group_generator_size=" << group_generator_size << endl;
 		exit(1);
@@ -1915,7 +1986,8 @@ void action::init_group_from_generators_by_base_images(
 		cout << "base_len=" << base_len << endl;
 		}
 	if (nb_gens * base_len != group_generator_size) {
-		cout << "action::init_group_from_generators_by_base_images fatal: group_generator_size is not divisible by base_len" << endl;
+		cout << "action::init_group_from_generators_by_base_images fatal: "
+				"group_generator_size is not divisible by base_len" << endl;
 		cout << "base_len=" << base_len << endl;
 		cout << "group_generator_size=" << group_generator_size << endl;
 		exit(1);
@@ -2076,7 +2148,8 @@ void action::element_print_base_images(INT *Elt, ostream &ost)
 	element_print_base_images_verbose(Elt, cout, 0);
 }
 
-void action::element_print_base_images_verbose(INT *Elt, ostream &ost, INT verbose_level)
+void action::element_print_base_images_verbose(
+		INT *Elt, ostream &ost, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *base_images;
@@ -2096,7 +2169,8 @@ void action::element_base_images(INT *Elt, INT *base_images)
 	element_base_images_verbose(Elt, base_images, 0);
 }
 
-void action::element_base_images_verbose(INT *Elt, INT *base_images, INT verbose_level)
+void action::element_base_images_verbose(
+		INT *Elt, INT *base_images, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2108,16 +2182,19 @@ void action::element_base_images_verbose(INT *Elt, INT *base_images, INT verbose
 	for (i = 0; i < base_len; i++) {
 		bi = base[i];
 		if (f_vv) {
-			cout << "the " << i << "-th base point is " << bi << " is mapped to:" << endl;
+			cout << "the " << i << "-th base point is "
+					<< bi << " is mapped to:" << endl;
 			}
 		base_images[i] = element_image_of(bi, Elt, verbose_level - 2);
 		if (f_vv) {
-			cout << "the " << i << "-th base point is " << bi << " is mapped to: " << base_images[i] << endl;
+			cout << "the " << i << "-th base point is "
+					<< bi << " is mapped to: " << base_images[i] << endl;
 			}
 		}
 }
 
-void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_level)
+void action::minimize_base_images(INT level,
+		sims *S, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2141,13 +2218,16 @@ void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_leve
 		element_base_images(Elt1, base_images1);
 		//bi = base[i];
 		if (f_vv) {
-			cout << "level " << i << " S->orbit_len[i]=" << S->orbit_len[i] << endl;
+			cout << "level " << i << " S->orbit_len[i]="
+					<< S->orbit_len[i] << endl;
 			}
 		for (j = 0; j < S->orbit_len[i]; j++) {
 			oj = S->orbit[i][j];
 			image = element_image_of(oj, Elt1, 0);
 			if (f_vv) {
-				cout << "level " << i << " j=" << j << " oj=" << oj << " image=" << image << endl;
+				cout << "level " << i << " j=" << j
+						<< " oj=" << oj << " image="
+						<< image << endl;
 				}
 			if (j == 0) {
 				image0 = image;
@@ -2156,7 +2236,10 @@ void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_leve
 			else {
 				if (image < image0) {
 					if (f_vv) {
-						cout << "level " << i << " coset j=" << j << " image=" << image << "less that image0 = " << image0 << endl;
+						cout << "level " << i << " coset j="
+								<< j << " image=" << image
+								<< "less that image0 = "
+								<< image0 << endl;
 						}
 					image0 = image;
 					j0 = j;
@@ -2164,7 +2247,8 @@ void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_leve
 				}
 			}
 		if (f_vv) {
-			cout << "level " << i << " S->orbit_len[i]=" << S->orbit_len[i] << " j0=" << j0 << endl;
+			cout << "level " << i << " S->orbit_len[i]="
+					<< S->orbit_len[i] << " j0=" << j0 << endl;
 			}
 		S->coset_rep(i, j0, 0 /*verbose_level*/);
 		if (f_vv) {
@@ -2198,7 +2282,8 @@ void action::minimize_base_images(INT level, sims *S, INT *Elt, INT verbose_leve
 }
 
 
-void action::element_conjugate_bvab(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verbose_level)
+void action::element_conjugate_bvab(INT *Elt_A,
+		INT *Elt_B, INT *Elt_C, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -2231,7 +2316,8 @@ void action::element_conjugate_bvab(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verb
 		}
 }
 
-void action::element_conjugate_babv(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verbose_level)
+void action::element_conjugate_babv(INT *Elt_A,
+		INT *Elt_B, INT *Elt_C, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -2252,7 +2338,8 @@ void action::element_conjugate_babv(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verb
 	FREE_INT(Elt2);
 }
 
-void action::element_commutator_abavbv(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT verbose_level)
+void action::element_commutator_abavbv(INT *Elt_A,
+		INT *Elt_B, INT *Elt_C, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -2279,7 +2366,8 @@ void action::element_commutator_abavbv(INT *Elt_A, INT *Elt_B, INT *Elt_C, INT v
 	FREE_INT(Elt4);
 }
 
-void action::read_representatives(BYTE *fname, INT *&Reps, INT &nb_reps, INT &size, INT verbose_level)
+void action::read_representatives(BYTE *fname,
+		INT *&Reps, INT &nb_reps, INT &size, INT verbose_level)
 {
 	INT f_casenumbers = FALSE;
 	INT nb_cases;
@@ -2291,7 +2379,8 @@ void action::read_representatives(BYTE *fname, INT *&Reps, INT &nb_reps, INT &si
 	INT i, j;
 	
 
-	cout << "action::read_file_and_print_representatives reading file " << fname << endl;
+	cout << "action::read_file_and_print_representatives "
+			"reading file " << fname << endl;
 	
 	read_and_parse_data_file_fancy(fname, 
 		f_casenumbers, 
@@ -2313,7 +2402,8 @@ void action::read_representatives(BYTE *fname, INT *&Reps, INT &nb_reps, INT &si
 		Casenumbers);
 }
 
-void action::read_representatives_and_strong_generators(BYTE *fname, INT *&Reps, 
+void action::read_representatives_and_strong_generators(
+	BYTE *fname, INT *&Reps,
 	BYTE **&Aut_ascii, INT &nb_reps, INT &size, INT verbose_level)
 //INT **&Tl, vector_ge **gens, 
 {
@@ -2327,7 +2417,8 @@ void action::read_representatives_and_strong_generators(BYTE *fname, INT *&Reps,
 	INT i, j;
 	
 
-	cout << "action::read_file_and_print_representatives reading file " << fname << endl;
+	cout << "action::read_file_and_print_representatives "
+			"reading file " << fname << endl;
 	
 	read_and_parse_data_file_fancy(fname, 
 		f_casenumbers, 
@@ -2349,7 +2440,8 @@ void action::read_representatives_and_strong_generators(BYTE *fname, INT *&Reps,
 		Casenumbers);
 }
 
-void action::read_file_and_print_representatives(BYTE *fname, INT f_print_stabilizer_generators)
+void action::read_file_and_print_representatives(
+		BYTE *fname, INT f_print_stabilizer_generators)
 {
 	INT f_casenumbers = FALSE;
 	INT nb_cases;
@@ -2361,7 +2453,8 @@ void action::read_file_and_print_representatives(BYTE *fname, INT f_print_stabil
 	INT i;
 	
 
-	cout << "action::read_file_and_print_representatives reading file " << fname << endl;
+	cout << "action::read_file_and_print_representatives reading file "
+			<< fname << endl;
 	
 	read_and_parse_data_file_fancy(fname, 
 		f_casenumbers, 
@@ -2389,7 +2482,8 @@ void action::read_file_and_print_representatives(BYTE *fname, INT f_print_stabil
 
 		gens = NEW_OBJECT(vector_ge);
 		tl = NEW_INT(base_len);
-		G->S->extract_strong_generators_in_order(*gens, tl, 0 /* verbose_level */);
+		G->S->extract_strong_generators_in_order(*gens, tl,
+				0 /* verbose_level */);
 		cout << "Stabilizer has order " << go << " tl=";
 		INT_vec_print(cout, tl, base_len);
 		cout << endl;
@@ -2431,7 +2525,8 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 	
 
 	if (f_v) {
-		cout << "action::read_set_and_stabilizer reading file " << fname << " no=" << no << endl;
+		cout << "action::read_set_and_stabilizer reading file " << fname
+				<< " no=" << no << endl;
 		}
 	
 	read_and_parse_data_file_fancy(fname, 
@@ -2443,7 +2538,8 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 		// GALOIS/util.C
 
 	if (f_vv) {
-		cout << "action::read_set_and_stabilizer after read_and_parse_data_file_fancy" << endl;
+		cout << "action::read_set_and_stabilizer "
+				"after read_and_parse_data_file_fancy" << endl;
 		cout << "Aut_ascii[no]=" << Aut_ascii[no] << endl;
 		cout << "Set_sizes[no]=" << Set_sizes[no] << endl;
 		}
@@ -2458,11 +2554,13 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 	G = NEW_OBJECT(group);
 	G->init(this);
 	if (f_vv) {
-		cout << "action::read_set_and_stabilizer before G->init_ascii_coding_to_sims" << endl;
+		cout << "action::read_set_and_stabilizer "
+				"before G->init_ascii_coding_to_sims" << endl;
 		}
 	G->init_ascii_coding_to_sims(Aut_ascii[no]);
 	if (f_vv) {
-		cout << "action::read_set_and_stabilizer after G->init_ascii_coding_to_sims" << endl;
+		cout << "action::read_set_and_stabilizer "
+				"after G->init_ascii_coding_to_sims" << endl;
 		}
 		
 	stab = G->S;
@@ -2495,7 +2593,8 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 
 }
 
-void action::get_generators_from_ascii_coding(BYTE *ascii_coding, vector_ge *&gens, INT *&tl, INT verbose_level)
+void action::get_generators_from_ascii_coding(
+		BYTE *ascii_coding, vector_ge *&gens, INT *&tl, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2508,11 +2607,13 @@ void action::get_generators_from_ascii_coding(BYTE *ascii_coding, vector_ge *&ge
 	G = NEW_OBJECT(group);
 	G->init(this);
 	if (f_vv) {
-		cout << "action::get_generators_from_ascii_coding before G->init_ascii_coding_to_sims" << endl;
+		cout << "action::get_generators_from_ascii_coding "
+				"before G->init_ascii_coding_to_sims" << endl;
 		}
 	G->init_ascii_coding_to_sims(ascii_coding);
 	if (f_vv) {
-		cout << "action::get_generators_from_ascii_coding after G->init_ascii_coding_to_sims" << endl;
+		cout << "action::get_generators_from_ascii_coding "
+				"after G->init_ascii_coding_to_sims" << endl;
 		}
 		
 
@@ -2520,10 +2621,12 @@ void action::get_generators_from_ascii_coding(BYTE *ascii_coding, vector_ge *&ge
 
 	gens = NEW_OBJECT(vector_ge);
 	tl = NEW_INT(base_len);
-	G->S->extract_strong_generators_in_order(*gens, tl, 0 /* verbose_level */);
+	G->S->extract_strong_generators_in_order(*gens, tl,
+			0 /* verbose_level */);
 
 	if (f_vv) {
-		cout << "action::get_generators_from_ascii_coding Group order=" << go << endl;
+		cout << "action::get_generators_from_ascii_coding Group order="
+				<< go << endl;
 		}
 
 	FREE_OBJECT(G);
@@ -2533,8 +2636,10 @@ void action::get_generators_from_ascii_coding(BYTE *ascii_coding, vector_ge *&ge
 }
 
 
-void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test, 
-	vector_ge *gens, INT max_starter, INT verbose_level)
+void action::lexorder_test(INT *set, INT set_sz,
+	INT &set_sz_after_test,
+	vector_ge *gens, INT max_starter,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level  >= 1);
 	INT f_v5 = FALSE; //(verbose_level  >= 1);
@@ -2548,7 +2653,9 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 	Sch = NEW_OBJECT(schreier);
 
 	if (f_v) {
-		cout << "action::lexorder_test computing orbits in action of degree " << degree << ", max_starter=" << max_starter << endl;
+		cout << "action::lexorder_test computing orbits in action "
+				"of degree " << degree << ", max_starter="
+				<< max_starter << endl;
 		}
 	Sch->init(this);
 	Sch->init_generators(*gens);
@@ -2558,7 +2665,8 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 		set, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "action::lexorder_test: there are " << Sch->nb_orbits << " orbits on set" << endl;
+		cout << "action::lexorder_test: there are "
+				<< Sch->nb_orbits << " orbits on set" << endl;
 		Sch->print_orbit_length_distribution(cout);
 		}
 	if (f_v5) {
@@ -2580,7 +2688,10 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 		a0 = Sch->orbit[first];
 		if (a0 < max_starter) {
 			if (f_v) {
-				cout << "action::lexorder_test  Point " << a << " maps to " << a0 << " which is less than max_starter = " << max_starter << " so we eliminate" << endl;
+				cout << "action::lexorder_test  Point " << a
+						<< " maps to " << a0 << " which is less than "
+						"max_starter = " << max_starter
+						<< " so we eliminate" << endl;
 				}
 			}
 		else {
@@ -2588,7 +2699,9 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 			}
 		}
 	if (f_v) {
-		cout << "action::lexorder_test Of the " << set_sz << " points, we accept " << set_sz_after_test << " and we reject " << set_sz - set_sz_after_test << endl;
+		cout << "action::lexorder_test Of the " << set_sz
+				<< " points, we accept " << set_sz_after_test
+				<< " and we reject " << set_sz - set_sz_after_test << endl;
 		}
 	FREE_OBJECT(Sch);
 	if (f_v) {
@@ -2597,7 +2710,8 @@ void action::lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test,
 	
 }
 
-void action::compute_orbits_on_points(schreier *&Sch, vector_ge *gens, INT verbose_level)
+void action::compute_orbits_on_points(schreier *&Sch,
+		vector_ge *gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -2610,11 +2724,14 @@ void action::compute_orbits_on_points(schreier *&Sch, vector_ge *gens, INT verbo
 	Sch->compute_all_point_orbits(verbose_level);
 	//Sch.print_and_list_orbits(cout);
 	if (f_v) {
-		cout << "action::compute_orbits_on_points done, we found " << Sch->nb_orbits << " orbits" << endl;
+		cout << "action::compute_orbits_on_points done, we found "
+				<< Sch->nb_orbits << " orbits" << endl;
 		}
 }
 
-void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no, vector_ge *&gens, const BYTE *&stab_order, INT verbose_level)
+void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no,
+		vector_ge *&gens, const BYTE *&stab_order,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2630,18 +2747,23 @@ void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no, v
 	gens->init(this);
 	gens->allocate(nb_gens);
 	if (f_vv) {
-		cout << "action::stabilizer_of_dual_hyperoval_representative creating stabilizer generators:" << endl;
+		cout << "action::stabilizer_of_dual_hyperoval_representative "
+				"creating stabilizer generators:" << endl;
 		}
 	for (i = 0; i < nb_gens; i++) {
 		make_element(gens->ith(i), data + i * data_size, 0 /*verbose_level*/);
 		}
 	
 	if (f_v) {
-		cout << "action::stabilizer_of_dual_hyperoval_representative done" << endl;
+		cout << "action::stabilizer_of_dual_hyperoval_representative done"
+				<< endl;
 		}
 }
 
-void action::stabilizer_of_translation_plane_representative(INT q, INT k, INT no, vector_ge *&gens, const BYTE *&stab_order, INT verbose_level)
+void action::stabilizer_of_translation_plane_representative(
+		INT q, INT k, INT no,
+		vector_ge *&gens, const BYTE *&stab_order,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2649,7 +2771,8 @@ void action::stabilizer_of_translation_plane_representative(INT q, INT k, INT no
 	INT i;
 
 	if (f_v) {
-		cout << "action::stabilizer_of_translation_plane_representative" << endl;
+		cout << "action::stabilizer_of_translation_plane_representative"
+				<< endl;
 		}
 	Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
 
@@ -2657,54 +2780,21 @@ void action::stabilizer_of_translation_plane_representative(INT q, INT k, INT no
 	gens->init(this);
 	gens->allocate(nb_gens);
 	if (f_vv) {
-		cout << "action::stabilizer_of_translation_plane_representative creating stabilizer generators:" << endl;
+		cout << "action::stabilizer_of_translation_plane_representative "
+				"creating stabilizer generators:" << endl;
 		}
 	for (i = 0; i < nb_gens; i++) {
 		make_element(gens->ith(i), data + i * data_size, 0 /*verbose_level*/);
 		}
 	
 	if (f_v) {
-		cout << "action::stabilizer_of_translation_plane_representative done" << endl;
+		cout << "action::stabilizer_of_translation_plane_representative done"
+				<< endl;
 		}
 }
 
-#if 0
-void action::element_write_memory_object(INT *Elt, BYTE *elt, memory_object *m, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	
-	if (f_v) {
-		cout << "action::element_write_memory_object" << endl;
-		}
-	element_pack(Elt, elt, FALSE);
-	for (i = 0; i < coded_elt_size_in_char; i++) {
-		m->write_char(elt[i]);
-		}
-	if (f_v) {
-		cout << "action::element_write_memory_object done" << endl;
-		}
-}
-
-void action::element_read_memory_object(INT *Elt, BYTE *elt, memory_object *m, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	
-	if (f_v) {
-		cout << "action::element_read_memory_object" << endl;
-		}
-	for (i = 0; i < coded_elt_size_in_char; i++) {
-		m->read_char(&elt[i]);
-		}
-	element_unpack(elt, Elt, FALSE);
-	if (f_v) {
-		cout << "action::element_read_memory_object done" << endl;
-		}
-}
-#endif
-
-void action::normalizer_using_MAGMA(const BYTE *prefix, sims *G, sims *H, INT verbose_level)
+void action::normalizer_using_MAGMA(const BYTE *prefix,
+		sims *G, sims *H, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE fname_magma[1000];
@@ -2748,7 +2838,10 @@ void action::normalizer_using_MAGMA(const BYTE *prefix, sims *G, sims *H, INT ve
 	fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
 	fp << "printf \"%o\", #N; printf \"\\n\";" << endl;
 	fp << "printf \"%o\", #Generators(N); printf \"\\n\";" << endl;
-	fp << "for h := 1 to #Generators(N) do for i := 1 to " << n << " do printf \"%o\", i^N.h; printf \", \"; if i mod 25 eq 0 then printf \"\n\"; end if; end for; printf \"\\n\"; end for;" << endl;
+	fp << "for h := 1 to #Generators(N) do for i := 1 to "
+			<< n << " do printf \"%o\", i^N.h; printf \", \"; "
+			"if i mod 25 eq 0 then printf \"\n\"; end if; "
+			"end for; printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
 	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
@@ -2762,7 +2855,8 @@ void action::normalizer_using_MAGMA(const BYTE *prefix, sims *G, sims *H, INT ve
 		}
 }
 
-void action::conjugacy_classes_using_MAGMA(const BYTE *prefix, sims *G, INT verbose_level)
+void action::conjugacy_classes_using_MAGMA(const BYTE *prefix,
+		sims *G, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE fname_magma[1000];
@@ -2798,7 +2892,10 @@ void action::conjugacy_classes_using_MAGMA(const BYTE *prefix, sims *G, INT verb
 
 	fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
 	fp << "printf \"%o\", #C; printf \"\\n\";" << endl;
-	fp << "for h := 1 to #C do  printf \"%o\", C[h][1]; printf \" \";  printf \"%o\", C[h][2]; printf \" \";   for i := 1 to " << n << " do printf \"%o\", i^C[h][3]; printf \" \"; end for; printf \"\\n\"; end for;" << endl;
+	fp << "for h := 1 to #C do  printf \"%o\", C[h][1]; printf \" \";"
+			"printf \"%o\", C[h][2]; printf \" \";   for i := 1 to "
+			<< n << " do printf \"%o\", i^C[h][3]; printf \" \"; end for; "
+			"printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
 	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
@@ -2814,7 +2911,8 @@ void action::conjugacy_classes_using_MAGMA(const BYTE *prefix, sims *G, INT verb
 		}
 }
 
-void action::centralizer_using_MAGMA(const BYTE *prefix, sims *G, INT *Elt, INT verbose_level)
+void action::centralizer_using_MAGMA(const BYTE *prefix,
+		sims *G, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE fname_magma[1000];
@@ -2856,10 +2954,13 @@ void action::centralizer_using_MAGMA(const BYTE *prefix, sims *G, INT *Elt, INT 
 	fp << "SetOutputFile(\"" << fname_output << "\");" << endl;
 	fp << "printf \"%o\", #C; printf \"\\n\";" << endl;
 	fp << "printf \"%o\", #Generators(C); printf \"\\n\";" << endl;
-	fp << "for h := 1 to #Generators(C) do for i := 1 to " << n << " do printf \"%o\", i^C.h; printf \" \"; end for; printf \"\\n\"; end for;" << endl;
+	fp << "for h := 1 to #Generators(C) do for i := 1 to "
+			<< n << " do printf \"%o\", i^C.h; printf \" \"; end for;"
+			" printf \"\\n\"; end for;" << endl;
 	fp << "UnsetOutputFile();" << endl;
 	}
-	cout << "Written file " << fname_magma << " of size " << file_size(fname_magma) << endl;
+	cout << "Written file " << fname_magma
+			<< " of size " << file_size(fname_magma) << endl;
 	
 	sprintf(cmd, "/scratch/magma/magma %s", fname_magma);
 	cout << "executing centralizer command in MAGMA" << endl;
@@ -2888,11 +2989,13 @@ void action::point_stabilizer_any_point(INT &pt,
 	longinteger_object go;
 	
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point computing all point orbits:" << endl;
+		cout << "action::point_stabilizer_any_point "
+				"computing all point orbits:" << endl;
 		}
 	Sch = Strong_gens->orbits_on_points_schreier(this, 0 /* verbose_level */);
 	//compute_all_point_orbits(Sch, *Strong_gens->gens, 0 /* verbose_level */);
-	cout << "computing all point orbits done, found " << Sch->nb_orbits << " orbits" << endl;
+	cout << "computing all point orbits done, found "
+			<< Sch->nb_orbits << " orbits" << endl;
 
 
 	f = Sch->orbit_first[0];
@@ -2900,12 +3003,14 @@ void action::point_stabilizer_any_point(INT &pt,
 	pt = Sch->orbit[f];
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point orbit rep = " << pt << endl;
+		cout << "action::point_stabilizer_any_point orbit rep = "
+				<< pt << endl;
 		}
 
 	group_order(go);
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point Computing point stabilizer:" << endl;
+		cout << "action::point_stabilizer_any_point "
+				"Computing point stabilizer:" << endl;
 		}
 	Sch->point_stabilizer(this, go, 
 		Stab, 0 /* orbit_no */, 0 /* verbose_level */);
@@ -2913,17 +3018,21 @@ void action::point_stabilizer_any_point(INT &pt,
 	Stab->group_order(go);
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point Computing point stabilizer done:" << endl;
-		cout << "action::point_stabilizer_any_point point stabilizer is a group of order " << go << endl;
+		cout << "action::point_stabilizer_any_point "
+				"Computing point stabilizer done:" << endl;
+		cout << "action::point_stabilizer_any_point "
+				"point stabilizer is a group of order " << go << endl;
 		}
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point computing strong generators for the point stabilizer:" << endl;
+		cout << "action::point_stabilizer_any_point computing "
+				"strong generators for the point stabilizer:" << endl;
 		}
 	stab_gens = new strong_generators;
 	stab_gens->init_from_sims(Stab, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point strong generators for the point stabilizer have been computed" << endl;
+		cout << "action::point_stabilizer_any_point strong generators "
+				"for the point stabilizer have been computed" << endl;
 		}
 
 	if (f_v) {
@@ -2947,11 +3056,13 @@ void action::point_stabilizer_any_point_with_given_group(
 	longinteger_object go;
 	
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group computing all point orbits:" << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"computing all point orbits:" << endl;
 		}
 	Sch = input_gens->orbits_on_points_schreier(this, 0 /* verbose_level */);
 	//compute_all_point_orbits(Sch, *Strong_gens->gens, 0 /* verbose_level */);
-	cout << "computing all point orbits done, found " << Sch->nb_orbits << " orbits" << endl;
+	cout << "computing all point orbits done, found "
+			<< Sch->nb_orbits << " orbits" << endl;
 
 
 	f = Sch->orbit_first[0];
@@ -2959,12 +3070,14 @@ void action::point_stabilizer_any_point_with_given_group(
 	pt = Sch->orbit[f];
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group orbit rep = " << pt << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"orbit rep = " << pt << endl;
 		}
 
 	input_gens->group_order(go);
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group Computing point stabilizer:" << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"Computing point stabilizer:" << endl;
 		}
 	Sch->point_stabilizer(this, go, 
 		Stab, 0 /* orbit_no */, 0 /* verbose_level */);
@@ -2972,25 +3085,34 @@ void action::point_stabilizer_any_point_with_given_group(
 	Stab->group_order(go);
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group Computing point stabilizer done:" << endl;
-		cout << "action::point_stabilizer_any_point_with_given_group point stabilizer is a group of order " << go << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"Computing point stabilizer done:" << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"point stabilizer is a group of order " << go << endl;
 		}
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group computing strong generators for the point stabilizer:" << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"computing strong generators for the point stabilizer:"
+				<< endl;
 		}
 	stab_gens = new strong_generators;
 	stab_gens->init_from_sims(Stab, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group strong generators for the point stabilizer have been computed" << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group "
+				"strong generators for the point stabilizer "
+				"have been computed" << endl;
 		}
 
 	if (f_v) {
-		cout << "action::point_stabilizer_any_point_with_given_group done" << endl;
+		cout << "action::point_stabilizer_any_point_with_given_group done"
+				<< endl;
 		}
 }
 
-void action::make_element_which_moves_a_line_in_PG3q(grassmann *Gr, INT line_rk, INT *Elt, INT verbose_level)
+void action::make_element_which_moves_a_line_in_PG3q(
+		grassmann *Gr,
+		INT line_rk, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 

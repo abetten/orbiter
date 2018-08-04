@@ -16,69 +16,6 @@
 // now comes partitionstack
 // ####################################################################################
 
-INT partitionstack::cntr_new = 0;
-INT partitionstack::cntr_objects = 0;
-INT partitionstack::f_debug_memory = FALSE;
-
-void *partitionstack::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "partitionstack::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *partitionstack::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(partitionstack);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "partitionstack::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void partitionstack::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "partitionstack::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return ::free(ptr);
-}
-
-void partitionstack::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(partitionstack);
-	if (f_debug_memory) {
-		cout << "partitionstack::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return ::free(ptr);
-}
-
 ostream& operator<<(ostream& ost, partitionstack& p)
 {
 	// cout << "partitionstack::operator<< starting" << endl;

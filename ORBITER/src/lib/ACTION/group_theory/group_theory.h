@@ -196,6 +196,7 @@ public:
 	void compute_elt_size(INT verbose_level);
 	void init_base(action *A, INT verbose_level);
 	void init_base_projective(action *A, INT verbose_level);
+	// initializes base, base_len, degree, transversal_length, orbit, orbit_inv
 	void init_base_affine(action *A, INT verbose_level);
 	void init_base_general_linear(action *A, INT verbose_level);
 	void init_gl_classes(INT verbose_level);
@@ -1306,15 +1307,21 @@ class wreath_product {
 
 public:
 	matrix_group *M;
+	action *A_mtx;
 	finite_field *F;
 	INT q;
 	INT nb_factors;
+
+	BYTE label[1000];
+	BYTE label_tex[1000];
 
 	INT degree_of_matrix_group;
 	INT dimension_of_matrix_group;
 	INT dimension_of_tensor_action;
 	INT degree_of_tensor_action;
 	INT degree_overall;
+	INT low_level_point_size;
+	INT make_element_size;
 	perm_group *P;
 	INT elt_size_INT;
 
@@ -1334,6 +1341,8 @@ public:
 	INT bits_per_elt;
 	INT char_per_elt;
 
+	UBYTE *elt1;
+
 
 	page_storage *Elts;
 
@@ -1341,7 +1350,8 @@ public:
 	~wreath_product();
 	void null();
 	void freeself();
-	void init_tensor_wreath_product(matrix_group *M, INT nb_factors, INT verbose_level);
+	void init_tensor_wreath_product(matrix_group *M,
+			action *A_mtx, INT nb_factors, INT verbose_level);
 	INT element_image_of(INT *Elt, INT a, INT verbose_level);
 	void element_one(INT *Elt);
 	INT element_is_one(INT *Elt);
@@ -1356,5 +1366,11 @@ public:
 	void element_unpack(UBYTE *elt, INT *Elt);
 	void put_digit(UBYTE *elt, INT f, INT i, INT j, INT d);
 	INT get_digit(UBYTE *elt, INT f, INT i, INT j);
+	void make_element_from_one_component(INT *Elt, INT f, INT *Elt_component);
+	void make_element_from_permutation(INT *Elt, INT *perm);
+	void make_element(INT *Elt, INT *data);
+	void element_print_easy(INT *Elt, ostream &ost);
+	void make_strong_generators(INT *&data,
+			INT &size, INT &nb_gens, INT verbose_level);
 };
 
