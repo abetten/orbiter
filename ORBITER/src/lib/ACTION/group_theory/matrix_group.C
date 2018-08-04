@@ -523,6 +523,7 @@ void matrix_group::init_base(action *A, INT verbose_level)
 }
 
 void matrix_group::init_base_projective(action *A, INT verbose_level)
+// initializes base, base_len, degree, transversal_length, orbit, orbit_inv
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 1);
@@ -552,7 +553,7 @@ void matrix_group::init_base_projective(action *A, INT verbose_level)
 		A->base, A->transversal_length, 
 		A->orbit, A->orbit_inv, 
 		verbose_level - 1);
-		// in GALOIS/projective.C
+		// in GALOIS/group_generators.C
 
 	if (f_v) {
 		cout << "matrix_group::init_base_projective: finished" << endl;
@@ -588,7 +589,7 @@ void matrix_group::init_base_affine(action *A, INT verbose_level)
 		A->base_len, A->degree, 
 		A->base, A->transversal_length, 
 		verbose_level - 1);
-		// in GALOIS/projective.C
+		// in GALOIS/group_generators.C
 
 	if (f_v) {
 		cout << "matrix_group::init_base_affine: finished" << endl;
@@ -610,6 +611,7 @@ void matrix_group::init_base_general_linear(action *A, INT verbose_level)
 		}
 	A->base_len = matrix_group_base_len_general_linear_group(
 			n, q, f_semilinear, verbose_level - 1);
+	// in GALOIS/group_generators.C
 	if (f_vv) {
 		cout << "matrix_group::init_base_general_linear base_len=" << A->base_len << endl;
 		}
@@ -624,7 +626,7 @@ void matrix_group::init_base_general_linear(action *A, INT verbose_level)
 		A->base_len, A->degree, 
 		A->base, A->transversal_length, 
 		verbose_level - 1);
-		// in GALOIS/projective.C
+		// in GALOIS/group_generators.C
 
 	if (f_v) {
 		cout << "matrix_group::init_base_affine: finished" << endl;

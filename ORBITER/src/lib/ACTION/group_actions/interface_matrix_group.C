@@ -469,6 +469,7 @@ void matrix_group_element_print_verbose(action &A, void *elt, ostream &ost)
 }
 
 
+#if 0
 void matrix_group_elt_print(void *elt, void *data, ostream &ost)
 {
 	matrix_group &G = * (matrix_group *) data;
@@ -478,7 +479,7 @@ void matrix_group_elt_print(void *elt, void *data, ostream &ost)
 	G.GL_unpack(p_elt, Elt, FALSE);
 	G.GL_print_easy(Elt, ost);
 }
-
+#endif
 
 void matrix_group_print_point(action &A, INT a, ostream &ost)
 {

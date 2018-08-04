@@ -172,14 +172,6 @@ public:
 	double tikz_global_line_width; // 1.5 works
 
 
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	mp_graphics();
 	mp_graphics(const char *file_name, 
 		INT xmin, INT ymin, INT xmax, INT ymax, 

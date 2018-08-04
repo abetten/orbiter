@@ -10,69 +10,6 @@
 
 #include "galois.h"
 
-INT orthogonal::cntr_new = 0;
-INT orthogonal::cntr_objects = 0;
-INT orthogonal::f_debug_memory = FALSE;
-
-void *orthogonal::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "orthogonal::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *orthogonal::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(orthogonal);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "orthogonal::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void orthogonal::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "orthogonal::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void orthogonal::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(orthogonal);
-	if (f_debug_memory) {
-		cout << "orthogonal::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 void orthogonal::unrank_point(INT *v, INT stride, INT rk, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

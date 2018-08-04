@@ -8,11 +8,16 @@ LFLAGS = -lm
 
 
 
-all:  orthogonal_group.out 
+all:  orthogonal_group.out \
+		wreath_product.out
 
 
 orthogonal_group.out:  orthogonal_group.o;
 	$(DISCRETA_CPP)  orthogonal_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+
+wreath_product.out:  wreath_product.o;
+	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 %.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<

@@ -11,69 +11,6 @@
 
 #define CREATE_TABLE_UPPER_BOUND 1024
 
-INT finite_field::cntr_new = 0;
-INT finite_field::cntr_objects = 0;
-INT finite_field::f_debug_memory = FALSE;
-
-void *finite_field::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "finite_field::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *finite_field::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(finite_field);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "finite_field::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void finite_field::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "finite_field::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void finite_field::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(finite_field);
-	if (f_debug_memory) {
-		cout << "finite_field::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 finite_field::finite_field()
 {
 	null();

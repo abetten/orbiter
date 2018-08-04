@@ -130,14 +130,6 @@ private:
 	BYTE *symbol_for_print;
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-	
 	const BYTE *override_poly;
 	BYTE *polynomial;
 		// the actual polynomial we consider 
@@ -1186,14 +1178,6 @@ void homogeneous_polynomial_domain_swap_monomial(void *data,
 class longinteger_domain {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-	
 	INT compare(longinteger_object &a, longinteger_object &b);
 	INT compare_unsigned(longinteger_object &a, longinteger_object &b);
 		// returns -1 if a < b, 0 if a = b, 
@@ -1448,14 +1432,6 @@ void INT_mult_fractions(INT at, INT ab, INT bt, INT bb,
 class rank_checker {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-	
 	finite_field *GFq;
 	INT m, n, d;
 	
@@ -1541,15 +1517,6 @@ public:
 	INT factor_degree;
 	INT *factor_coeffs;
 	unipoly_object factor_poly;
-
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-	
 
 	unipoly_domain(finite_field *GFq);
 	unipoly_domain(finite_field *GFq, unipoly_object m);

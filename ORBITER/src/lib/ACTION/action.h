@@ -51,12 +51,14 @@ typedef class subgroup subgroup;
 typedef class subgroup *psubgroup;
 typedef class action_on_subgroups action_on_subgroups;
 typedef class orbit_transversal orbit_transversal;
+typedef class wreath_product wreath_product;
 
 
 enum symmetry_group_type { 
 	unknown_symmetry_group_t, 
 	matrix_group_t, 
 	perm_group_t, 
+	wreath_product_t,
 	action_on_sets_t,
 	action_on_subgroups_t,
 	action_on_k_subsets_t,
@@ -92,6 +94,7 @@ enum representation_type {
 union symmetry_group {
 	matrix_group *matrix_grp;
 	perm_group *perm_grp;
+	wreath_product *wreath_product_group;
 	action_on_sets *on_sets;
 	action_on_subgroups *on_subgroups;
 	action_on_k_subsets *on_k_subsets;
@@ -124,16 +127,6 @@ union symmetry_group {
 class vector_ge {
 
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-	static INT allocation_id;
-	static void *allocated_objects;
-
 	action *A;
 	INT *data;
 	INT len;

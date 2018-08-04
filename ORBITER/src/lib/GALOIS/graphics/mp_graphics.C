@@ -5,69 +5,6 @@
 
 #include "galois.h"
 
-INT mp_graphics::cntr_new = 0;
-INT mp_graphics::cntr_objects = 0;
-INT mp_graphics::f_debug_memory = FALSE;
-
-void *mp_graphics::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "mp_graphics::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *mp_graphics::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(mp_graphics);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "mp_graphics::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void mp_graphics::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "mp_graphics::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void mp_graphics::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(mp_graphics);
-	if (f_debug_memory) {
-		cout << "mp_graphics::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 mp_graphics::mp_graphics()
 {
 	default_values();

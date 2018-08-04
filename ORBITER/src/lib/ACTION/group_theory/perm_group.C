@@ -147,7 +147,7 @@ void perm_group::init_data(INT page_length_log, INT verbose_level)
 		cout << "perm_group::init_data() calling Elts->init()" << endl;
 		}
 	Elts->init(char_per_elt /* entry_size */, page_length_log, verbose_level - 2);
-	Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
+	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
 
 
 	if (f_vv) {
@@ -208,7 +208,7 @@ void perm_group::init_with_base(INT degree,
 		cout << "perm_group::init() calling Elts->init()" << endl;
 		}
 	Elts->init(char_per_elt /* entry_size */, page_length_log, verbose_level - 2);
-	Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
+	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
 
 
 	if (f_vv) {

@@ -15,8 +15,9 @@ MODULES = \
 	backtrack.o \
 	interface.o \
 	interface_matrix_group.o \
-	interface_perm_group.o
-
+	interface_perm_group.o \
+	interface_wreath_product.o
+	
 
 all : $(MODULES)
 
