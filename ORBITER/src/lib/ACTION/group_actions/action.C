@@ -15,6 +15,16 @@
 
 action::action()
 {
+	null();
+}
+
+action::~action()
+{
+	freeself();
+}
+
+void action::null()
+{
 	label[0] = 0;
 	label_tex[0] = 0;
 	
@@ -61,10 +71,9 @@ action::action()
 	f_subaction_is_allocated = FALSE;
 	f_has_sims = FALSE;
 	f_has_kernel = FALSE;
-	
 };
 
-action::~action()
+void action::freeself()
 {
 	INT i;
 	INT f_v = FALSE;
@@ -91,6 +100,20 @@ action::~action()
 						<< endl;
 				}
 			G.matrix_grp = NULL;
+			}
+		else if (type_G == wreath_product_t) {
+			if (f_vv) {
+				cout << "action::~action() freeing "
+						"G.wreath_product_group" << endl;
+				cout << "G.wreath_product_group="
+						<< G.wreath_product_group << endl;
+				}
+			FREE_OBJECT(G.wreath_product_group);
+			if (f_vv) {
+				cout << "action::~action() freeing "
+						"G.wreath_product_group finished" << endl;
+				}
+			G.wreath_product_group = NULL;
 			}
 		else if (type_G == perm_group_t) {
 			if (f_vv) {
@@ -1747,6 +1770,12 @@ void action::make_element(INT *Elt, INT *data, INT verbose_level)
 			}
 		G.matrix_grp->make_element(Elt, data, verbose_level);
 		}
+	else if (type_G == wreath_product_t) {
+		if (f_v) {
+			cout << "action::make_element wreath_product_t" << endl;
+			}
+		G.wreath_product_group->make_element(Elt, data, verbose_level);
+		}
 	else if (f_has_subaction) {
 		if (f_v) {
 			cout << "action::make_element subaction" << endl;
@@ -1763,6 +1792,7 @@ void action::make_element(INT *Elt, INT *data, INT verbose_level)
 		cout << "action::make_element unknown type_G: ";
 		print_symmetry_group_type(cout);
 		cout << endl;
+		exit(1);
 		}
 }
 
@@ -3148,6 +3178,26 @@ void action::make_element_which_moves_a_line_in_PG3q(
 	if (f_v) {
 		cout << "action::make_element_which_moves_a_line_in_PG3q done" << endl;
 		}
+}
+
+void action::list_elements_as_permutations_vertically(vector_ge *gens,
+		ostream &ost)
+{
+	INT i, j, a, len;
+
+	len = gens->len;
+	for (j = 0; j < len; j++) {
+		ost << " & \\alpha_{" << j << "}";
+	}
+	ost << "\\\\" << endl;
+	for (i = 0; i < degree; i++) {
+		ost << setw(3) << i;
+		for (j = 0; j < len; j++) {
+			a = element_image_of(i, gens->ith(j), 0 /* verbose_level */);
+			ost << " & " << setw(3) << a;
+		}
+		ost << "\\\\" << endl;
+	}
 }
 
 

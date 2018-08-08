@@ -86,11 +86,14 @@ void gl_classes::init(INT k, finite_field *F, INT verbose_level)
 
 	First_irred[1] = 0;
 	if (f_v) {
-		cout << "gl_classes::init before make_linear_irreducible_polynomials" << endl;
+		cout << "gl_classes::init before make_linear_"
+				"irreducible_polynomials" << endl;
 		}
-	make_linear_irreducible_polynomials(q, Nb_irred[1], Tables[1], verbose_level - 2);
+	make_linear_irreducible_polynomials(q, Nb_irred[1],
+			Tables[1], verbose_level - 2);
 	if (f_v) {
-		cout << "gl_classes::init after make_linear_irreducible_polynomials" << endl;
+		cout << "gl_classes::init after make_linear_"
+				"irreducible_polynomials" << endl;
 		}
 	nb_irred += Nb_irred[1];
 	//First_irred[2] = First_irred[1] + Nb_irred[1];
@@ -102,11 +105,14 @@ void gl_classes::init(INT k, finite_field *F, INT verbose_level)
 		First_irred[d] = First_irred[d - 1] + Nb_irred[d - 1];
 
 		if (f_v) {
-			cout << "gl_classes::init before F->make_all_irreducible_polynomials_of_degree_d" << endl;
+			cout << "gl_classes::init before F->make_all_irreducible_"
+					"polynomials_of_degree_d" << endl;
 			}
-		F->make_all_irreducible_polynomials_of_degree_d(d, Nb_irred[d], Tables[d], verbose_level - 2);
+		F->make_all_irreducible_polynomials_of_degree_d(d,
+				Nb_irred[d], Tables[d], verbose_level - 2);
 		if (f_v) {
-			cout << "gl_classes::init after F->make_all_irreducible_polynomials_of_degree_d" << endl;
+			cout << "gl_classes::init after F->make_all_irreducible_"
+					"polynomials_of_degree_d" << endl;
 			}
 
 		nb_irred += Nb_irred[d];
@@ -116,7 +122,8 @@ void gl_classes::init(INT k, finite_field *F, INT verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "gl_classes::init k = " << k << " q = " << q << " nb_irred = " << nb_irred << endl;
+		cout << "gl_classes::init k = " << k << " q = " << q
+				<< " nb_irred = " << nb_irred << endl;
 		}
 	Degree = NEW_INT(nb_irred);
 	
@@ -139,11 +146,13 @@ void gl_classes::init(INT k, finite_field *F, INT verbose_level)
 		}
 	for (d = 1; d <= k; d++) {
 
-		make_all_partitions_of_n(d, Partitions[d], Nb_part[d], verbose_level - 2);
+		make_all_partitions_of_n(d, Partitions[d],
+				Nb_part[d], verbose_level - 2);
 
 		}
 	if (f_v) {
-		cout << "gl_classes k = " << k << " q = " << q << " Nb_part = ";
+		cout << "gl_classes k = " << k
+				<< " q = " << q << " Nb_part = ";
 		INT_vec_print(cout, Nb_part + 1, k);
 		cout << endl;
 		}
@@ -151,7 +160,8 @@ void gl_classes::init(INT k, finite_field *F, INT verbose_level)
 
 
 	if (f_v) {
-		cout << "gl_classes::init k = " << k << " q = " << q << " done" << endl;
+		cout << "gl_classes::init k = " << k
+				<< " q = " << q << " done" << endl;
 		}
 }
 
@@ -192,13 +202,15 @@ INT gl_classes::select_polynomial_first(INT *Select, INT verbose_level)
 		}
 	if (k1 == 0) {
 		if (f_v) {
-			cout << "gl_classes::select_polynomial_first returns TRUE" << endl;
+			cout << "gl_classes::select_polynomial_first "
+					"returns TRUE" << endl;
 			}
 		return TRUE;
 		}
 	else {
 		if (f_v) {
-			cout << "gl_classes::select_polynomial_first returns FALSE" << endl;
+			cout << "gl_classes::select_polynomial_first "
+					"returns FALSE" << endl;
 			}
 		return FALSE;
 		}
@@ -227,7 +239,8 @@ INT gl_classes::select_polynomial_next(INT *Select, INT verbose_level)
 			}
 		if (i == nb_irred) {
 			if (f_v) {
-				cout << "gl_classes::select_polynomial_next return FALSE" << endl;
+				cout << "gl_classes::select_polynomial_next "
+						"return FALSE" << endl;
 				}
 			return FALSE;
 			}
@@ -240,11 +253,13 @@ INT gl_classes::select_polynomial_next(INT *Select, INT verbose_level)
 			Select[ii] = m;
 			k1 -= m * d;
 			if (f_vv) {
-				cout << "Select[" << ii << "]=" << m << ", k1=" << k1 << endl;
+				cout << "Select[" << ii << "]=" << m
+						<< ", k1=" << k1 << endl;
 				}
 			if (k1 == 0) {
 				if (f_v) {
-					cout << "gl_classes::select_polynomial_next return FALSE" << endl;
+					cout << "gl_classes::select_polynomial_next "
+							"return FALSE" << endl;
 					}
 				return TRUE;
 				}
@@ -258,7 +273,8 @@ INT gl_classes::select_polynomial_next(INT *Select, INT verbose_level)
 	return FALSE;
 }
 
-INT gl_classes::select_partition_first(INT *Select, INT *Select_partition, INT verbose_level)
+INT gl_classes::select_partition_first(INT *Select,
+		INT *Select_partition, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -272,7 +288,8 @@ INT gl_classes::select_partition_first(INT *Select, INT *Select_partition, INT v
 	return TRUE;
 }
 
-INT gl_classes::select_partition_next(INT *Select, INT *Select_partition, INT verbose_level)
+INT gl_classes::select_partition_next(INT *Select,
+		INT *Select_partition, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, m;
@@ -293,7 +310,8 @@ INT gl_classes::select_partition_next(INT *Select, INT *Select_partition, INT ve
 	return FALSE;
 }
 
-INT gl_classes::first(INT *Select, INT *Select_partition, INT verbose_level)
+INT gl_classes::first(INT *Select,
+		INT *Select_partition, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -304,7 +322,8 @@ INT gl_classes::first(INT *Select, INT *Select_partition, INT verbose_level)
 		return FALSE;
 		}
 	while (TRUE) {
-		if (select_partition_first(Select, Select_partition, verbose_level)) {
+		if (select_partition_first(Select,
+			Select_partition, verbose_level)) {
 			return TRUE;
 			}
 		if (!select_polynomial_next(Select, verbose_level)) {
@@ -313,7 +332,8 @@ INT gl_classes::first(INT *Select, INT *Select_partition, INT verbose_level)
 		}
 }
 
-INT gl_classes::next(INT *Select, INT *Select_partition, INT verbose_level)
+INT gl_classes::next(INT *Select,
+		INT *Select_partition, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -327,14 +347,16 @@ INT gl_classes::next(INT *Select, INT *Select_partition, INT verbose_level)
 		if (!select_polynomial_next(Select, verbose_level)) {
 			return FALSE;
 			}
-		if (select_partition_first(Select, Select_partition, verbose_level)) {
+		if (select_partition_first(Select,
+			Select_partition, verbose_level)) {
 			return TRUE;
 			}
 		}
 }
 
 
-void gl_classes::print_matrix_and_centralizer_order_latex(ofstream &ost, gl_class_rep *R)
+void gl_classes::print_matrix_and_centralizer_order_latex(
+		ofstream &ost, gl_class_rep *R)
 {
 	INT *Mtx;
 	longinteger_object go, co, cl, r, f, g;
@@ -373,7 +395,8 @@ void gl_classes::print_matrix_and_centralizer_order_latex(ofstream &ost, gl_clas
 
 	make_matrix_from_class_rep(Mtx, R, 0 /* verbose_level */);
 
-	centralizer_order_Kung(Select_polynomial, Select_Partition, co, 0 /*verbose_level - 2*/);
+	centralizer_order_Kung(Select_polynomial,
+			Select_Partition, co, 0 /*verbose_level - 2*/);
 	
 	D.integral_division(go, co, cl, r, 0 /* verbose_level */);
 
@@ -403,7 +426,8 @@ void gl_classes::print_matrix_and_centralizer_order_latex(ofstream &ost, gl_clas
 	FREE_INT(Mtx);
 }
 
-void gl_classes::make_matrix_from_class_rep(INT *Mtx, gl_class_rep *R, INT verbose_level)
+void gl_classes::make_matrix_from_class_rep(INT *Mtx,
+		gl_class_rep *R, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Select, *Select_Partition;
@@ -433,7 +457,8 @@ void gl_classes::make_matrix_from_class_rep(INT *Mtx, gl_class_rep *R, INT verbo
 }
 
 
-void gl_classes::make_matrix(INT *Mtx, INT *Select, INT *Select_Partition, INT verbose_level)
+void gl_classes::make_matrix(INT *Mtx,
+		INT *Select, INT *Select_Partition, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, m, p, d, tt;
@@ -551,7 +576,9 @@ void gl_classes::centralizer_order_Kung_basic(INT nb_irreds,
 		m = poly_mult[a];
 		p = partition_idx[a];
 		if (f_v) {
-			cout << "gl_classes::centralizer_order_Kung_basic a=" << a << " d=" << d << " m=" << m << " p=" << p << endl;
+			cout << "gl_classes::centralizer_order_Kung_basic "
+					"a=" << a << " d=" << d
+					<< " m=" << m << " p=" << p << endl;
 			}
 		if (m) {
 			part = Partitions[m] + p * m;
@@ -584,7 +611,8 @@ void gl_classes::centralizer_order_Kung_basic(INT nb_irreds,
 		}
 }
 
-void gl_classes::centralizer_order_Kung(INT *Select_polynomial, INT *Select_partition, longinteger_object &co, 
+void gl_classes::centralizer_order_Kung(INT *Select_polynomial,
+	INT *Select_partition, longinteger_object &co,
 	INT verbose_level)
 // Computes the centralizer order of a matrix in GL(k,q) 
 // according to Kung's formula~\cite{Kung81}.
@@ -628,7 +656,8 @@ void gl_classes::centralizer_order_Kung(INT *Select_polynomial, INT *Select_part
 
 
 
-void gl_classes::make_classes(gl_class_rep *&R, INT &nb_classes, INT f_no_eigenvalue_one, INT verbose_level)
+void gl_classes::make_classes(gl_class_rep *&R, INT &nb_classes,
+		INT f_no_eigenvalue_one, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -664,7 +693,8 @@ void gl_classes::make_classes(gl_class_rep *&R, INT &nb_classes, INT f_no_eigenv
 		g.assign_to(go);
 		}
 	if (f_vv) {
-		cout << "gl_classes::make_classes The order of GL(k,q) is " << go << endl;
+		cout << "gl_classes::make_classes The order of GL(k,q) is "
+				<< go << endl;
 		}
 
 	sum.create(0);
@@ -707,7 +737,8 @@ void gl_classes::make_classes(gl_class_rep *&R, INT &nb_classes, INT f_no_eigenv
 			cout << endl;
 			}
 
-		make_matrix(Mtx, Select_polynomial, Select_partition, verbose_level - 2);
+		make_matrix(Mtx, Select_polynomial, Select_partition,
+				verbose_level - 2);
 
 		if (f_vv) {
 			cout << "Representative:" << endl;
@@ -749,7 +780,8 @@ loop1:
 	nb_classes = cnt;
 
 	if (f_vv) {
-		cout << "Total = " << sum << " in " << nb_classes << " conjugacy classes" << endl;
+		cout << "Total = " << sum << " in " << nb_classes
+				<< " conjugacy classes" << endl;
 		}
 
 	R = new gl_class_rep[nb_classes];
@@ -791,9 +823,11 @@ loop1:
 			}
 
 
-		R[cnt].init(nb_irred, Select_polynomial, Select_partition, verbose_level);
+		R[cnt].init(nb_irred,
+				Select_polynomial, Select_partition, verbose_level);
 
-		make_matrix(Mtx, Select_polynomial, Select_partition, verbose_level - 2);
+		make_matrix(Mtx,
+				Select_polynomial, Select_partition, verbose_level - 2);
 
 		if (f_vv) {
 			cout << "Representative:" << endl;
@@ -839,11 +873,13 @@ loop2:
 	FREE_INT(Select_partition);
 	
 	if (f_v) {
-		cout << "gl_classes::make_classes k = " << k << " q = " << q << " done" << endl;
+		cout << "gl_classes::make_classes k = " << k << " q = " << q
+				<< " done" << endl;
 		}
 }
 
-void gl_classes::identify_matrix(INT *Mtx, gl_class_rep *R, INT *Basis, INT verbose_level)
+void gl_classes::identify_matrix(INT *Mtx,
+		gl_class_rep *R, INT *Basis, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -856,7 +892,8 @@ void gl_classes::identify_matrix(INT *Mtx, gl_class_rep *R, INT *Basis, INT verb
 
 
 	if (f_v) {
-		cout << "gl_classes::identify_matrix k = " << k << " q = " << q << endl;
+		cout << "gl_classes::identify_matrix "
+				"k = " << k << " q = " << q << endl;
 		}
 	if (f_vv) {
 		cout << "gl_classes::identify_matrix input matrix=" << endl;
@@ -881,7 +918,8 @@ void gl_classes::identify_matrix(INT *Mtx, gl_class_rep *R, INT *Basis, INT verb
 	U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
 
 	if (f_vv) {
-		cout << "gl_classes::identify_matrix The characteristic polynomial is ";
+		cout << "gl_classes::identify_matrix "
+				"The characteristic polynomial is ";
 		U.print_object(char_poly, cout);
 		cout << endl;
 		}
@@ -889,7 +927,8 @@ void gl_classes::identify_matrix(INT *Mtx, gl_class_rep *R, INT *Basis, INT verb
 	U.substitute_matrix_in_polynomial(char_poly, Mtx, M2, k, verbose_level);
 
 	if (f_vv) {
-		cout << "gl_classes::identify_matrix After substitution, the matrix is " << endl;
+		cout << "gl_classes::identify_matrix "
+				"After substitution, the matrix is " << endl;
 		INT_matrix_print(M2, k, k);
 		}
 
@@ -932,11 +971,13 @@ void gl_classes::identify_matrix(INT *Mtx, gl_class_rep *R, INT *Basis, INT verb
 	FREE_INT(Select_partition);
 	
 	if (f_v) {
-		cout << "gl_classes::identify_matrix k = " << k << " q = " << q << " done" << endl;
+		cout << "gl_classes::identify_matrix "
+				"k = " << k << " q = " << q << " done" << endl;
 		}
 }
 
-void gl_classes::identify2(INT *Mtx, unipoly_object &poly, INT *Mult, INT *Select_partition, INT *Basis, 
+void gl_classes::identify2(INT *Mtx, unipoly_object &poly,
+	INT *Mult, INT *Select_partition, INT *Basis,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -965,7 +1006,8 @@ void gl_classes::identify2(INT *Mtx, unipoly_object &poly, INT *Mult, INT *Selec
 
 		
 	if (f_v) {
-		cout << "gl_classes::identify2 k = " << k << " q = " << q << " Irreds: ";
+		cout << "gl_classes::identify2 "
+				"k = " << k << " q = " << q << " Irreds: ";
 		INT_vec_print(cout, Irreds, nb_irreds);
 		cout << endl;
 		}
@@ -982,7 +1024,8 @@ void gl_classes::identify2(INT *Mtx, unipoly_object &poly, INT *Mult, INT *Selec
 		cout << "gl_classes::identify2 before compute_data_on_blocks" << endl;
 		}
 
-	compute_data_on_blocks(Mtx, Irreds, nb_irreds, Degree, Mult, Data, verbose_level);
+	compute_data_on_blocks(Mtx, Irreds, nb_irreds,
+			Degree, Mult, Data, verbose_level);
 
 	INT_vec_zero(Select_partition, nb_irreds);
 	for (i = 0; i < nb_irreds; i++) {
@@ -990,15 +1033,18 @@ void gl_classes::identify2(INT *Mtx, unipoly_object &poly, INT *Mult, INT *Selec
 		}
 
 	if (f_v) {
-		cout << "gl_classes::identify2 before choose_basis_for_rational_normal_form" << endl;
+		cout << "gl_classes::identify2 before "
+				"choose_basis_for_rational_normal_form" << endl;
 		}
 
 
-	choose_basis_for_rational_normal_form(Mtx, Data, nb_irreds, Basis, verbose_level);
+	choose_basis_for_rational_normal_form(Mtx, Data,
+			nb_irreds, Basis, verbose_level);
 
 
 	if (f_v) {
-		cout << "gl_classes::identify2 after choose_basis_for_rational_normal_form" << endl;
+		cout << "gl_classes::identify2 after "
+				"choose_basis_for_rational_normal_form" << endl;
 		}
 
 
@@ -1016,11 +1062,13 @@ void gl_classes::identify2(INT *Mtx, unipoly_object &poly, INT *Mult, INT *Selec
 	FREE_INT(Irreds);
 	
 	if (f_v) {
-		cout << "gl_classes::identify2 k = " << k << " q = " << q << " done" << endl;
+		cout << "gl_classes::identify2 "
+				"k = " << k << " q = " << q << " done" << endl;
 		}
 }
 
-void gl_classes::compute_data_on_blocks(INT *Mtx, INT *Irreds, INT nb_irreds, 
+void gl_classes::compute_data_on_blocks(
+	INT *Mtx, INT *Irreds, INT nb_irreds,
 	INT *Degree, INT *Mult, matrix_block_data *Data,
 	INT verbose_level)
 {
@@ -1041,7 +1089,8 @@ void gl_classes::compute_data_on_blocks(INT *Mtx, INT *Irreds, INT nb_irreds,
 	b0 = 0;
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
-			cout << "gl_classes::compute_data_on_blocks polynomial " << h << " / " << nb_irreds << endl;
+			cout << "gl_classes::compute_data_on_blocks "
+					"polynomial " << h << " / " << nb_irreds << endl;
 			}
 		u = Irreds[h];
 		d = Degree[u];
@@ -1059,20 +1108,23 @@ void gl_classes::compute_data_on_blocks(INT *Mtx, INT *Irreds, INT nb_irreds,
 		U.substitute_matrix_in_polynomial(P, Mtx, M2, k, verbose_level);
 
 		if (f_vv) {
-			cout << "gl_classes::compute_data_on_blocks matrix substituted into polynomial = " << endl;
+			cout << "gl_classes::compute_data_on_blocks "
+					"matrix substituted into polynomial = " << endl;
 			INT_matrix_print(M2, k, k);
 			cout << endl;
 			}
 
 		
 
-		compute_generalized_kernels(Data + h, M2, d, b0, Mult[u], poly_coeffs, verbose_level);
+		compute_generalized_kernels(Data + h, M2, d, b0,
+				Mult[u], poly_coeffs, verbose_level);
 
 		b0 += d * Mult[u];
 
 	
 		if (f_v) {
-			cout << "gl_classes::compute_data_on_blocks after compute_generalized_kernels" << endl;
+			cout << "gl_classes::compute_data_on_blocks "
+					"after compute_generalized_kernels" << endl;
 			}
 
 		} // next h
@@ -1086,7 +1138,9 @@ void gl_classes::compute_data_on_blocks(INT *Mtx, INT *Irreds, INT nb_irreds,
 }
 
 
-void gl_classes::compute_generalized_kernels(matrix_block_data *Data, INT *M2, INT d, INT b0, INT m, INT *poly_coeffs, INT verbose_level)
+void gl_classes::compute_generalized_kernels(matrix_block_data *Data,
+		INT *M2, INT d, INT b0, INT m, INT *poly_coeffs,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1115,17 +1169,21 @@ void gl_classes::compute_generalized_kernels(matrix_block_data *Data, INT *M2, I
 	for (cnt = 1; cnt <= k; cnt++) {
 
 		if (f_vv) {
-			cout << "gl_classes::compute_generalized_kernels cnt = " << cnt << " computing kernel of:" << endl;
+			cout << "gl_classes::compute_generalized_kernels "
+					"cnt = " << cnt << " computing kernel of:" << endl;
 			INT_matrix_print(M3, k, k);
 			cout << endl;
 			}
 		INT_vec_copy(M3, M4, k * k);
 		rank = F->Gauss_simple(M4, k, k, base_cols, 0 /*verbose_level*/);
-		F->matrix_get_kernel_as_INT_matrix(M4, k, k, base_cols, rank, &Data->K[cnt]);
+		F->matrix_get_kernel_as_INT_matrix(M4, k, k,
+				base_cols, rank, &Data->K[cnt]);
 
 		if (f_vv) {
-			cout << "gl_classes::compute_generalized_kernels kernel = " << endl;
-			INT_matrix_print(Data->K[cnt].M, Data->K[cnt].m, Data->K[cnt].n);
+			cout << "gl_classes::compute_generalized_kernels "
+					"kernel = " << endl;
+			INT_matrix_print(Data->K[cnt].M,
+					Data->K[cnt].m, Data->K[cnt].n);
 			cout << endl;
 			}
 
@@ -1164,7 +1222,8 @@ void gl_classes::compute_generalized_kernels(matrix_block_data *Data, INT *M2, I
 	Data->part_idx = identify_partition(Data->part, m, verbose_level - 2);
 
 	if (f_v) {
-		cout << "gl_classes::compute_generalized_kernels part_idx = " << Data->part_idx << endl;
+		cout << "gl_classes::compute_generalized_kernels "
+				"part_idx = " << Data->part_idx << endl;
 		}
 
 	FREE_INT(M3);
@@ -1191,7 +1250,8 @@ INT gl_classes::identify_partition(INT *part, INT m, INT verbose_level)
 			}
 		}
 	if (i == Nb_part[m]) {
-		cout << "gl_classes::identify_partition did not find partition" << endl;
+		cout << "gl_classes::identify_partition "
+				"did not find partition" << endl;
 		cout << "looking for:" << endl;
 		INT_vec_print(cout, part, m);
 		cout << endl;
@@ -1205,7 +1265,8 @@ INT gl_classes::identify_partition(INT *part, INT m, INT verbose_level)
 	return i;
 }
 
-void gl_classes::choose_basis_for_rational_normal_form(INT *Mtx, matrix_block_data *Data, INT nb_irreds, 
+void gl_classes::choose_basis_for_rational_normal_form(
+	INT *Mtx, matrix_block_data *Data, INT nb_irreds,
 	INT *Basis, 
 	INT verbose_level)
 {
@@ -1217,7 +1278,8 @@ void gl_classes::choose_basis_for_rational_normal_form(INT *Mtx, matrix_block_da
 		cout << "gl_classes::choose_basis_for_rational_normal_form" << endl;
 		}
 	if (f_vv) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form Mtx=" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_form "
+				"Mtx=" << endl;
 		INT_matrix_print(Mtx, k, k);
 		cout << endl;
 		}
@@ -1226,29 +1288,37 @@ void gl_classes::choose_basis_for_rational_normal_form(INT *Mtx, matrix_block_da
 		
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_vv) {
-			cout << "gl_classes::choose_basis_for_rational_normal_form before choose_basis_for_rational_normal_form_block " << h << " / " << nb_irreds << " b = " << b << endl;
+			cout << "gl_classes::choose_basis_for_rational_normal_form "
+					"before choose_basis_for_rational_normal_form_block "
+					<< h << " / " << nb_irreds << " b = " << b << endl;
 			}
 
-		choose_basis_for_rational_normal_form_block(Mtx, Data + h, Basis, b, verbose_level - 2);
+		choose_basis_for_rational_normal_form_block(Mtx,
+				Data + h, Basis, b, verbose_level - 2);
 
 
 		if (f_vv) {
-			cout << "gl_classes::identify2 after choose_basis_for_rational_normal_form_block " << h << " / " << nb_irreds << endl;
+			cout << "gl_classes::identify2 after "
+					"choose_basis_for_rational_normal_form_block "
+					<< h << " / " << nb_irreds << endl;
 			}
 
 
 		}
 	if (b != k) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form b != k" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_form "
+				"b != k" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form done" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_form "
+				"done" << endl;
 		}
 }
 
-void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_block_data *Data, 
+void gl_classes::choose_basis_for_rational_normal_form_block(
+	INT *Mtx, matrix_block_data *Data,
 	INT *Basis, INT &b, 
 	INT verbose_level)
 {
@@ -1258,7 +1328,8 @@ void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_bl
 
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form_block" << endl;
+		cout << "gl_classes::choose_basis_for_rational_"
+				"normal_form_block" << endl;
 		}
 
 	B0 = b;
@@ -1290,7 +1361,9 @@ void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_bl
 				
 
 			if (f > 1) {
-				F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(&Data->K[f], &Data->K[f - 1], Forbidden_subspace, v, verbose_level - 1);
+				F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+						&Data->K[f], &Data->K[f - 1], Forbidden_subspace,
+						v, verbose_level - 1);
 				}
 			else {
 				INT_matrix *Dummy_subspace;
@@ -1299,7 +1372,9 @@ void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_bl
 
 				Dummy_subspace->allocate(k, 0);
 					
-				F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(&Data->K[f], Dummy_subspace, Forbidden_subspace, v, verbose_level - 1);
+				F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+						&Data->K[f], Dummy_subspace, Forbidden_subspace, v,
+						verbose_level - 1);
 
 
 				delete Dummy_subspace;
@@ -1318,7 +1393,8 @@ void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_bl
 					}
 				for (g = 0; g < Data->d; g++) {
 					if (f_v) {
-						cout << "c=" << c << " / " << f << " b0=" << b0 << "g=" << g << " / " << Data->d << endl;
+						cout << "c=" << c << " / " << f << " b0=" << b0
+								<< "g=" << g << " / " << Data->d << endl;
 						}
 					for (i = 0; i < k; i++) {
 						Basis[i * k + b] = v[i];
@@ -1339,15 +1415,18 @@ void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_bl
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
 							coeff = Data->poly_coeffs[ii];
-							//coeff = F->negate(Data->poly_coeffs[ii]); // mistake corrected Dec 29, 2016
-							F->vector_add_apply_with_stride(v, Basis + b0 + ii, k, coeff, k);
+							//coeff = F->negate(Data->poly_coeffs[ii]);
+							// mistake corrected Dec 29, 2016
+							F->vector_add_apply_with_stride(v,
+									Basis + b0 + ii, k, coeff, k);
 							}
 						}
 					
 					} // next g
 				} // next c
 			if (f_v) {
-				cout << "gl_classes::choose_basis_for_rational_normal_form_block Basis = " << endl;
+				cout << "gl_classes::choose_basis_for_rational_normal_"
+						"form_block Basis = " << endl;
 				INT_matrix_print(Basis, k, k);
 				cout << endl;
 				}
@@ -1358,12 +1437,14 @@ void gl_classes::choose_basis_for_rational_normal_form_block(INT *Mtx, matrix_bl
 	FREE_INT(w);
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form_block done" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_"
+				"form_block done" << endl;
 		}
 }
 
 
-void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R, 
+void gl_classes::generators_for_centralizer(
+	INT *Mtx, gl_class_rep *R,
 	INT *Basis, INT **&Gens, INT &nb_gens, INT &nb_alloc, 
 	INT verbose_level)
 {
@@ -1378,7 +1459,8 @@ void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R,
 
 
 	if (f_v) {
-		cout << "gl_classes::generators_for_centralizer k = " << k << " q = " << q << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"k = " << k << " q = " << q << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	if (f_vv) {
@@ -1403,14 +1485,17 @@ void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R,
 	U.characteristic_polynomial(Mtx, k, char_poly, verbose_level - 2);
 
 	if (f_vv) {
-		cout << "gl_classes::generators_for_centralizer The characteristic polynomial is ";
+		cout << "gl_classes::generators_for_centralizer "
+				"The characteristic polynomial is ";
 		U.print_object(char_poly, cout);
 		cout << endl;
 		}
 
-	U.substitute_matrix_in_polynomial(char_poly, Mtx, M2, k, verbose_level);
+	U.substitute_matrix_in_polynomial(char_poly,
+			Mtx, M2, k, verbose_level);
 	if (f_vv) {
-		cout << "gl_classes::generators_for_centralizer After substitution, the matrix is " << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"After substitution, the matrix is " << endl;
 		INT_matrix_print(M2, k, k);
 		}
 
@@ -1431,13 +1516,17 @@ void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R,
 
 	
 	if (f_v) {
-		cout << "gl_classes::generators_for_centralizer we found " << nb_gens << " transformation matrices" << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"we found " << nb_gens << " transformation matrices" << endl;
 		}
 	if (f_vv) {
-		cout << "gl_classes::generators_for_centralizer we found " << nb_gens << " transformation matrices, they are" << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"we found " << nb_gens << " transformation matrices, "
+				"they are" << endl;
 		INT i;
 		for (i = 0; i < nb_gens; i++) {
-			cout << "transformation matrix " << i << " / " << nb_gens << " is" << endl;
+			cout << "transformation matrix " << i << " / "
+					<< nb_gens << " is" << endl;
 			INT_matrix_print(Gens[i], k, k);
 			}
 		}
@@ -1449,7 +1538,8 @@ void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R,
 		}
 
 	if (f_vv) {
-		cout << "gl_classes::generators_for_centralizer we found " << nb_gens << " generators" << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"we found " << nb_gens << " generators" << endl;
 		INT i;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "generator " << i << " / " << nb_gens << " is" << endl;
@@ -1468,7 +1558,8 @@ void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R,
 	F->mult_matrix(M2, Basis, M3, k, k, k);
 
 	if (f_vv) {
-		cout << "gl_classes::generators_for_centralizer B^-1 * A * B = " << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"B^-1 * A * B = " << endl;
 		INT_matrix_print(M3, k, k);
 		cout << endl;
 		}
@@ -1485,13 +1576,15 @@ void gl_classes::generators_for_centralizer(INT *Mtx, gl_class_rep *R,
 	FREE_INT(Select_partition);
 	
 	if (f_v) {
-		cout << "gl_classes::generators_for_centralizer k = " << k << " q = " << q << " done" << endl;
+		cout << "gl_classes::generators_for_centralizer "
+				"k = " << k << " q = " << q << " done" << endl;
 		}
 }
 
 
 
-void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mult, INT *Select_partition, 
+void gl_classes::centralizer_generators(INT *Mtx,
+	unipoly_object &poly, INT *Mult, INT *Select_partition,
 	INT *Basis, INT **&Gens, INT &nb_gens, INT &nb_alloc,  
 	INT verbose_level)
 {
@@ -1501,7 +1594,8 @@ void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mul
 	INT *Irreds;
 
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators k = " << k << " q = " << q << endl;
+		cout << "gl_classes::centralizer_generators "
+				"k = " << k << " q = " << q << endl;
 		}
 
 	nb_irreds = INT_vec_count_number_of_nonzero_entries(Mult, nb_irred);
@@ -1521,7 +1615,8 @@ void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mul
 
 		
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators k = " << k << " q = " << q << " Irreds: ";
+		cout << "gl_classes::centralizer_generators "
+				"k = " << k << " q = " << q << " Irreds: ";
 		INT_vec_print(cout, Irreds, nb_irreds);
 		cout << endl;
 		}
@@ -1535,10 +1630,12 @@ void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mul
 
 
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators before compute_data_on_blocks" << endl;
+		cout << "gl_classes::centralizer_generators "
+				"before compute_data_on_blocks" << endl;
 		}
 
-	compute_data_on_blocks(Mtx, Irreds, nb_irreds, Degree, Mult, Data, verbose_level);
+	compute_data_on_blocks(Mtx, Irreds, nb_irreds,
+			Degree, Mult, Data, verbose_level);
 
 
 	INT_vec_zero(Select_partition, nb_irreds);
@@ -1547,17 +1644,20 @@ void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mul
 		}
 
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators before choose_basis_for_rational_normal_form" << endl;
+		cout << "gl_classes::centralizer_generators "
+				"before choose_basis_for_rational_normal_form" << endl;
 		}
 
 
 
 
-	choose_basis_for_rational_normal_form(Mtx, Data, nb_irreds, Basis, verbose_level);
+	choose_basis_for_rational_normal_form(Mtx, Data,
+			nb_irreds, Basis, verbose_level);
 
 
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators after choose_basis_for_rational_normal_form" << endl;
+		cout << "gl_classes::centralizer_generators "
+				"after choose_basis_for_rational_normal_form" << endl;
 		}
 
 
@@ -1567,7 +1667,9 @@ void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mul
 
 	for (h = 0; h < nb_irreds; h++) {
 		if (f_v) {
-			cout << "gl_classes::centralizer_generators before centralizer_generators_block " << h << " / " << nb_irreds << endl;
+			cout << "gl_classes::centralizer_generators "
+					"before centralizer_generators_block " << h
+					<< " / " << nb_irreds << endl;
 			}
 
 		centralizer_generators_block(Mtx, Data, nb_irreds, h, 
@@ -1582,12 +1684,15 @@ void gl_classes::centralizer_generators(INT *Mtx, unipoly_object &poly, INT *Mul
 	FREE_INT(Irreds);
 
 	if (f_v) {
-		cout << "gl_classes::centralizer_generators k = " << k << " q = " << q << " done, we found " << nb_gens << " generators" << endl;
+		cout << "gl_classes::centralizer_generators "
+				"k = " << k << " q = " << q << " done, "
+				"we found " << nb_gens << " generators" << endl;
 		}
 }
 
 
-void gl_classes::centralizer_generators_block(INT *Mtx, matrix_block_data *Data, INT nb_irreds, INT h, 
+void gl_classes::centralizer_generators_block(INT *Mtx,
+	matrix_block_data *Data, INT nb_irreds, INT h,
 	INT **&Gens, INT &nb_gens, INT &nb_alloc,  
 	INT verbose_level)
 {
@@ -1606,14 +1711,17 @@ void gl_classes::centralizer_generators_block(INT *Mtx, matrix_block_data *Data,
 
 	for (level1 = Data[h].height; level1 >= 1; level1--) {
 		if (f_vv) {
-			cout << "gl_classes::centralizer_generators_block h = " << h << " level1 = " << level1 << endl;
+			cout << "gl_classes::centralizer_generators_block "
+					"h = " << h << " level1 = " << level1 << endl;
 			}
 
 		af = Data[h].part[level1 - 1];
 		for (level2 = 0; level2 < af; level2++) {
 
 			if (f_vv) {
-				cout << "gl_classes::centralizer_generators_block h = " << h << " level1 = " << level1 << " level2=" << level2 << " / " << af << endl;
+				cout << "gl_classes::centralizer_generators_block "
+						"h = " << h << " level1 = " << level1
+						<< " level2=" << level2 << " / " << af << endl;
 				}
 
 			coset = 0;
@@ -1631,19 +1739,25 @@ void gl_classes::centralizer_generators_block(INT *Mtx, matrix_block_data *Data,
 					}
 
 				if (f_vv) {
-					cout << "gl_classes::centralizer_generators_block h = " << h << " level1 = " << level1 << " level2 = " << level2 << " coset = " << coset << endl;
+					cout << "gl_classes::centralizer_generators_block "
+							"h = " << h << " level1 = " << level1
+							<< " level2 = " << level2
+							<< " coset = " << coset << endl;
 					}
 				if (b != Data[h].b0) {
-					cout << "gl_classes::centralizer_generators_block b != Data[h].b0" << endl;
+					cout << "gl_classes::centralizer_generators_block "
+							"b != Data[h].b0" << endl;
 					exit(1);
 					}
-				if (!choose_basis_for_rational_normal_form_coset(level1, level2, coset, 
+				if (!choose_basis_for_rational_normal_form_coset(
+						level1, level2, coset,
 					Mtx, Data + h, b, Basis, verbose_level - 2)) {
 					break;
 					}
 
 				if (b != Data[h].b1) {
-					cout << "gl_classes::centralizer_generators_block b != Data[h].b1" << endl;
+					cout << "gl_classes::centralizer_generators_block "
+							"b != Data[h].b1" << endl;
 					exit(1);
 					}
 				for (i = h + 1; i < nb_irreds; i++) {
@@ -1652,12 +1766,16 @@ void gl_classes::centralizer_generators_block(INT *Mtx, matrix_block_data *Data,
 						verbose_level - 2);
 					}
 				if (b != k) {
-					cout << "gl_classes::centralizer_generators_block b != k" << endl;
+					cout << "gl_classes::centralizer_generators_block "
+							"b != k" << endl;
 					exit(1);
 					}
 
 				if (f_vv) {
-					cout << "gl_classes::centralizer_generators_block h = " << h << " level1 = " << level1 << " level2=" << level2 << " / " << af << " chosen matrix:" << endl;
+					cout << "gl_classes::centralizer_generators_block "
+							"h = " << h << " level1 = " << level1
+							<< " level2=" << level2 << " / " << af
+							<< " chosen matrix:" << endl;
 					INT_matrix_print(Basis, k, k);
 					}
 
@@ -1693,7 +1811,8 @@ void gl_classes::centralizer_generators_block(INT *Mtx, matrix_block_data *Data,
 
 
 
-INT gl_classes::choose_basis_for_rational_normal_form_coset(INT level1, INT level2, INT &coset, 
+INT gl_classes::choose_basis_for_rational_normal_form_coset(
+	INT level1, INT level2, INT &coset,
 	INT *Mtx, matrix_block_data *Data, INT &b, INT *Basis, 
 	INT verbose_level)
 {
@@ -1705,7 +1824,9 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(INT level1, INT leve
 
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form_coset level1 = " << level1 << " level2 = " << level2 << " coset = " << coset << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_form_coset "
+				"level1 = " << level1 << " level2 = " << level2
+				<< " coset = " << coset << endl;
 		}
 
 	B0 = b;
@@ -1738,12 +1859,16 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(INT level1, INT leve
 
 			if (f > 1) {
 				if (f == level1 && e == level2) {
-					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(coset, &Data->K[f], &Data->K[f - 1], Forbidden_subspace, v, verbose_level - 2)) {
+					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
+							coset, &Data->K[f], &Data->K[f - 1],
+							Forbidden_subspace, v, verbose_level - 2)) {
 						ret = FALSE;
 						}
 					}
 				else {
-					F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(&Data->K[f], &Data->K[f - 1], Forbidden_subspace, v, verbose_level - 2);
+					F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+							&Data->K[f], &Data->K[f - 1], Forbidden_subspace,
+							v, verbose_level - 2);
 					}
 				}
 			else {
@@ -1754,13 +1879,18 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(INT level1, INT leve
 				Dummy_subspace->allocate(k, 0);
 					
 				if (f == level1 && e == level2) {
-					//cout << "f = " << f << " == level, calling choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset" << endl;
-					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(coset, &Data->K[f], Dummy_subspace, Forbidden_subspace, v, verbose_level - 2)) {
+					//cout << "f = " << f << " == level, calling "
+					//	"choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset" << endl;
+					if (!F->choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
+							coset, &Data->K[f], Dummy_subspace,
+							Forbidden_subspace, v, verbose_level - 2)) {
 						ret = FALSE;
 						}
 					}
 				else {
-					F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(&Data->K[f], Dummy_subspace, Forbidden_subspace, v, verbose_level - 2);
+					F->choose_vector_in_here_but_not_in_here_or_here_column_spaces(
+							&Data->K[f], Dummy_subspace, Forbidden_subspace, v,
+							verbose_level - 2);
 					}
 
 
@@ -1771,7 +1901,10 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(INT level1, INT leve
 
 			if (ret == FALSE) {
 				if (f_v) {
-					cout << "gl_classes::choose_basis_for_rational_normal_form_coset level1 = " << level1 << " level2 = " << level2 << " coset = " << coset << " could not choose vector, finished" << endl;
+					cout << "gl_classes::choose_basis_for_rational_normal_"
+							"form_coset level1 = " << level1 << " level2 = "
+							<< level2 << " coset = " << coset
+							<< " could not choose vector, finished" << endl;
 					}
 				goto the_end;
 				}
@@ -1804,14 +1937,16 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(INT level1, INT leve
 					if (g == Data->d - 1) {
 						for (ii = 0; ii < Data->d; ii++) {
 							coeff = F->negate(Data->poly_coeffs[ii]);
-							F->vector_add_apply_with_stride(v, Basis + b0 + ii, k, coeff, k);
+							F->vector_add_apply_with_stride(v,
+									Basis + b0 + ii, k, coeff, k);
 							}
 						}
 					
 					} // next g
 				} // next c
 			if (f_vv) {
-				cout << "gl_classes::choose_basis_for_rational_normal_form_coset Basis = " << endl;
+				cout << "gl_classes::choose_basis_for_rational_normal_"
+						"form_coset Basis = " << endl;
 				INT_matrix_print(Basis, k, k);
 				cout << endl;
 				}
@@ -1823,12 +1958,14 @@ the_end:
 	FREE_INT(w);
 
 	if (f_v) {
-		cout << "gl_classes::choose_basis_for_rational_normal_form_coset done" << endl;
+		cout << "gl_classes::choose_basis_for_rational_normal_"
+				"form_coset done" << endl;
 		}
 	return ret;
 }
 
-void gl_classes::factor_polynomial(unipoly_object &poly, INT *Mult, INT verbose_level)
+void gl_classes::factor_polynomial(
+		unipoly_object &poly, INT *Mult, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1837,7 +1974,8 @@ void gl_classes::factor_polynomial(unipoly_object &poly, INT *Mult, INT verbose_
 	INT i, d_poly, d, tt;
 
 	if (f_v) {
-		cout << "gl_classes::factor_polynomial k = " << k << " q = " << q << endl;
+		cout << "gl_classes::factor_polynomial "
+				"k = " << k << " q = " << q << endl;
 		}
 	U.create_object_by_rank(Poly, 0);
 	U.create_object_by_rank(P, 0);
@@ -1855,7 +1993,8 @@ void gl_classes::factor_polynomial(unipoly_object &poly, INT *Mult, INT verbose_
 			}
 		tt = i - First_irred[d];
 		U.delete_object(P);
-		U.create_object_of_degree_with_coefficients(P, d, Tables[d] + tt * (d + 1));
+		U.create_object_of_degree_with_coefficients(P, d,
+				Tables[d] + tt * (d + 1));
 
 		if (f_vv) {
 			cout << "gl_classes::factor_polynomial trial division by = ";
@@ -1886,11 +2025,13 @@ void gl_classes::factor_polynomial(unipoly_object &poly, INT *Mult, INT verbose_
 	U.delete_object(R);
 	
 	if (f_v) {
-		cout << "gl_classes::factor_polynomial k = " << k << " q = " << q << " done" << endl;
+		cout << "gl_classes::factor_polynomial "
+				"k = " << k << " q = " << q << " done" << endl;
 		}
 }
 
-INT gl_classes::find_class_rep(gl_class_rep *Reps, INT nb_reps, gl_class_rep *R, INT verbose_level)
+INT gl_classes::find_class_rep(gl_class_rep *Reps,
+		INT nb_reps, gl_class_rep *R, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT m, i;
@@ -1903,12 +2044,14 @@ INT gl_classes::find_class_rep(gl_class_rep *Reps, INT nb_reps, gl_class_rep *R,
 		if (Reps[i].type_coding.m != m) {
 			continue;
 			}
-		if (INT_vec_compare(Reps[i].type_coding.M, R->type_coding.M, m * 3) == 0) {
+		if (INT_vec_compare(Reps[i].type_coding.M,
+				R->type_coding.M, m * 3) == 0) {
 			break;
 			}
 		}
 	if (i == nb_reps) {
-		//cout << "gl_classes::find_class_rep dould not find representative" << endl;
+		//cout << "gl_classes::find_class_rep dould not "
+		//"find representative" << endl;
 		//exit(1); 
 		return -1;
 		}
@@ -1926,7 +2069,8 @@ gl_class_rep::~gl_class_rep()
 {
 }
 
-void gl_class_rep::init(INT nb_irred, INT *Select_polynomial, INT *Select_partition, INT verbose_level)
+void gl_class_rep::init(INT nb_irred, INT *Select_polynomial,
+		INT *Select_partition, INT verbose_level)
 {
 	INT l, i;
 		
@@ -1948,7 +2092,10 @@ void gl_class_rep::init(INT nb_irred, INT *Select_polynomial, INT *Select_partit
 		}
 }
 
-void gl_class_rep::compute_vector_coding(gl_classes *C, INT &nb_irred, INT *&Poly_degree, INT *&Poly_mult, INT *&Partition_idx, INT verbose_level)
+void gl_class_rep::compute_vector_coding(gl_classes *C,
+		INT &nb_irred, INT *&Poly_degree,
+		INT *&Poly_mult, INT *&Partition_idx,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -1958,7 +2105,8 @@ void gl_class_rep::compute_vector_coding(gl_classes *C, INT &nb_irred, INT *&Pol
 		}
 	nb_irred = type_coding.s_m();
 	if (f_v) {
-		cout << "gl_class_rep::compute_vector_coding nb_irred=" << nb_irred << endl;
+		cout << "gl_class_rep::compute_vector_coding "
+				"nb_irred=" << nb_irred << endl;
 		}
 	Poly_degree = NEW_INT(nb_irred);
 	Poly_mult = NEW_INT(nb_irred);
@@ -1973,7 +2121,8 @@ void gl_class_rep::compute_vector_coding(gl_classes *C, INT &nb_irred, INT *&Pol
 		}
 }
 
-void gl_class_rep::centralizer_order_Kung(gl_classes *C, longinteger_object &co, INT verbose_level)
+void gl_class_rep::centralizer_order_Kung(gl_classes *C,
+		longinteger_object &co, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Poly_degree;
@@ -1985,7 +2134,8 @@ void gl_class_rep::centralizer_order_Kung(gl_classes *C, longinteger_object &co,
 		cout << "gl_class_rep::centralizer_order_Kung" << endl;
 		}
 
-	compute_vector_coding(C, nb_irred, Poly_degree, Poly_mult, Partition_idx, verbose_level);
+	compute_vector_coding(C, nb_irred, Poly_degree,
+			Poly_mult, Partition_idx, verbose_level);
 
 	C->centralizer_order_Kung_basic(nb_irred, 
 		Poly_degree, Poly_mult, Partition_idx, 

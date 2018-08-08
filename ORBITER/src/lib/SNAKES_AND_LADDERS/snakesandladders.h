@@ -302,6 +302,7 @@ public:
 	INT (*rank_point_func)(INT *v, void *data);
 	void (*unrank_point_func)(INT *v, INT rk, void *data);
 	void *rank_point_data;
+	INT *tmp_v1; // [vector_space_dimension]
 
 	INT f_early_test_func;
 	void (*early_test_func)(INT *S, INT len, 

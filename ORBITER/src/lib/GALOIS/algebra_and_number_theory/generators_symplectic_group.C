@@ -72,7 +72,8 @@ void generators_symplectic_group::freeself()
 	null();
 }
 
-void generators_symplectic_group::init(finite_field *F, INT n, INT verbose_level)
+void generators_symplectic_group::init(finite_field *F,
+		INT n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -108,7 +109,8 @@ void generators_symplectic_group::init(finite_field *F, INT n, INT verbose_level
 	create_first_candidate_set(verbose_level);
 
 	if (f_v) {
-		cout << "first candidate set has size " << nb_candidates[0] << endl;
+		cout << "first candidate set has size "
+				<< nb_candidates[0] << endl;
 		}
 
 	//backtrack_search(0 /* depth */, verbose_level);
@@ -124,7 +126,8 @@ void generators_symplectic_group::init(finite_field *F, INT n, INT verbose_level
 	for (i = 0; i < n; i++) {
 		transversal_length[i] = 1;
 		}
-	count_strong_generators(nb_gens, transversal_length, first_moved, 0, verbose_level);
+	count_strong_generators(nb_gens,
+			transversal_length, first_moved, 0, verbose_level);
 
 	if (f_v) {
 		cout << "We found " << nb_gens << " strong generators" << endl;
@@ -161,7 +164,9 @@ void generators_symplectic_group::init(finite_field *F, INT n, INT verbose_level
 		}
 }
 
-INT generators_symplectic_group::count_strong_generators(INT &nb, INT *transversal_length, INT &first_moved, INT depth, INT verbose_level)
+INT generators_symplectic_group::count_strong_generators(INT &nb,
+		INT *transversal_length, INT &first_moved, INT depth,
+		INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	INT a;
@@ -175,25 +180,31 @@ INT generators_symplectic_group::count_strong_generators(INT &nb, INT *transvers
 		nb++;
 		return FALSE;
 		}
-	for (cur_candidate[depth] = 0; cur_candidate[depth] < nb_candidates[depth]; cur_candidate[depth]++) {
+	for (cur_candidate[depth] = 0;
+			cur_candidate[depth] < nb_candidates[depth];
+			cur_candidate[depth]++) {
 		if (cur_candidate[depth] && depth < first_moved) {
 			first_moved = depth;
 			}	
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
-			cout << "depth " << depth << " " << cur_candidate[depth] << " / " << nb_candidates[depth] << " which is " << a << endl;
+			cout << "depth " << depth << " " << cur_candidate[depth]
+				<< " / " << nb_candidates[depth] << " which is " << a << endl;
 			}
 		INT_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
-		if (!count_strong_generators(nb, transversal_length, first_moved, depth + 1, verbose_level) && depth > first_moved) {
+		if (!count_strong_generators(nb, transversal_length,
+			first_moved, depth + 1, verbose_level)
+			&& depth > first_moved) {
 			return FALSE;
 			}
 		}
 	return TRUE;
 }
 
-INT generators_symplectic_group::get_strong_generators(INT *Data, INT &nb, INT &first_moved, INT depth, INT verbose_level)
+INT generators_symplectic_group::get_strong_generators(INT *Data,
+		INT &nb, INT &first_moved, INT depth, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	INT a;
@@ -205,31 +216,37 @@ INT generators_symplectic_group::get_strong_generators(INT *Data, INT &nb, INT &
 		nb++;
 		return FALSE;
 		}
-	for (cur_candidate[depth] = 0; cur_candidate[depth] < nb_candidates[depth]; cur_candidate[depth]++) {
+	for (cur_candidate[depth] = 0;
+			cur_candidate[depth] < nb_candidates[depth];
+			cur_candidate[depth]++) {
 		if (cur_candidate[depth] && depth < first_moved) {
 			first_moved = depth;
 			}	
 		a = candidates[depth][cur_candidate[depth]];
 		if (FALSE) {
-			cout << "depth " << depth << " " << cur_candidate[depth] << " / " << nb_candidates[depth] << " which is " << a << endl;
+			cout << "depth " << depth << " " << cur_candidate[depth]
+				<< " / " << nb_candidates[depth] << " which is " << a << endl;
 			}
 		INT_vec_copy(Points + a * n, Mtx + depth * n, n);
 		create_next_candidate_set(depth, 0 /* verbose_level */);
 
-		if (!get_strong_generators(Data, nb, first_moved, depth + 1, verbose_level) && depth > first_moved) {
+		if (!get_strong_generators(Data, nb, first_moved,
+				depth + 1, verbose_level) && depth > first_moved) {
 			return FALSE;
 			}
 		}
 	return TRUE;
 }
 
-void generators_symplectic_group::create_first_candidate_set(INT verbose_level)
+void generators_symplectic_group::create_first_candidate_set(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, nb;
 
 	if (f_v) {
-		cout << "generators_symplectic_group::create_first_candidate_set" << endl;
+		cout << "generators_symplectic_group::create_first_"
+				"candidate_set" << endl;
 		}
 	nb = 0;
 	// skip over the zero vector:
@@ -239,17 +256,20 @@ void generators_symplectic_group::create_first_candidate_set(INT verbose_level)
 	nb_candidates[0] = nb;
 	
 	if (f_v) {
-		cout << "generators_symplectic_group::create_first_candidate_set done" << endl;
+		cout << "generators_symplectic_group::create_first_"
+				"candidate_set done" << endl;
 		}
 }
 
-void generators_symplectic_group::create_next_candidate_set(INT level, INT verbose_level)
+void generators_symplectic_group::create_next_candidate_set(
+		INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, ai, nb;
 
 	if (f_v) {
-		cout << "generators_symplectic_group::create_next_candidate_set level=" << level << endl;
+		cout << "generators_symplectic_group::create_next_"
+				"candidate_set level=" << level << endl;
 		}
 	nb = 0;
 
@@ -281,7 +301,9 @@ void generators_symplectic_group::create_next_candidate_set(INT level, INT verbo
 	nb_candidates[level + 1] = nb;
 	
 	if (f_v) {
-		cout << "generators_symplectic_group::create_next_candidate_set done, found " << nb_candidates[level + 1] << " candidates at level " << level + 1 << endl;
+		cout << "generators_symplectic_group::create_next_"
+				"candidate_set done, found " << nb_candidates[level + 1]
+				<< " candidates at level " << level + 1 << endl;
 		}
 }
 

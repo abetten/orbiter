@@ -121,7 +121,7 @@ void vector_ge::init_from_data(action *A, INT *data,
 	init(A);
 	allocate(nb_elements);
 	for (i = 0; i < nb_elements; i++) {
-		A->make_element(Elt, data + i * elt_size, 0/*verbose_level*/);
+		A->make_element(Elt, data + i * elt_size, verbose_level);
 		if (f_vv) {
 			cout << "vector_ge::init_from_data generator " << i << ": " << endl;
 			A->element_print_quick(Elt, cout);

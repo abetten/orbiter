@@ -9,69 +9,6 @@
 #include "galois.h"
 
 
-INT finite_ring::cntr_new = 0;
-INT finite_ring::cntr_objects = 0;
-INT finite_ring::f_debug_memory = FALSE;
-
-void *finite_ring::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "finite_ring::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *finite_ring::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(finite_ring);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "finite_ring::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void finite_ring::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "finite_ring::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void finite_ring::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(finite_ring);
-	if (f_debug_memory) {
-		cout << "finite_ring::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 finite_ring::finite_ring()
 {
 	null();
@@ -233,7 +170,8 @@ INT finite_ring::inverse(INT i)
 	return inv_table[i];
 }
 
-INT finite_ring::Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols, 
+INT finite_ring::Gauss_INT(INT *A, INT f_special,
+	INT f_complete, INT *base_cols,
 	INT f_P, INT *P, INT m, INT n, INT Pn, INT verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
@@ -284,7 +222,8 @@ INT finite_ring::Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols
 			}
 		
 		if (f_vv) {
-			cout << "row " << i << " pivot in row " << k << " colum " << j << endl;
+			cout << "row " << i << " pivot in row " << k
+					<< " colum " << j << endl;
 			}
 		
 		base_cols[i] = j;

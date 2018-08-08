@@ -6,7 +6,8 @@
 #include "orbiter.h"
 
 
-void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *gen, 
+void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
+	generator *gen,
 	INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep, INT verbose_level)
 // called by oracle::trace_next_point
 {
@@ -17,14 +18,17 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *g
 	INT f_check_image = FALSE;
 
 	if (f_v) {
-		cout << "oracle::orbit_representative_and_coset_rep_inv_subspace_action" << endl;
-		cout << "node=" << node << " prev=" << prev << " pt=" << pt << endl;
+		cout << "oracle::orbit_representative_and_coset_"
+				"rep_inv_subspace_action" << endl;
+		cout << "node=" << node << " prev=" << prev
+				<< " pt=" << pt << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "setting up factor space action" << endl;
 		}
 
 	if (gen->f_early_test_func) {
-		gen->root[node].setup_factor_space_action_light(gen, AF, lvl, verbose_level - 2);
+		gen->root[node].setup_factor_space_action_light(gen,
+				AF, lvl, verbose_level - 2);
 
 			// oracle_downstep_subspace_action.C
 
@@ -36,18 +40,23 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *g
 #endif
 		}
 	else {
-		gen->root[node].setup_factor_space_action(gen, AF, A_factor_space, lvl, 
+		gen->root[node].setup_factor_space_action(gen,
+				AF, A_factor_space, lvl,
 			FALSE /*f_compute_tables*/, verbose_level - 2);
 		}
 
 	//projected_pt = AF.project(pt_to_trace, verbose_level - 2);
-	projected_pt = AF.project_onto_Gauss_reduced_vector(pt_to_trace, verbose_level - 2);
+	projected_pt = AF.project_onto_Gauss_reduced_vector(
+			pt_to_trace, verbose_level - 2);
 
 
-	//G.point_stabilizer_with_action(&A_factor_space, H, projected_pt, 0);
+	//G.point_stabilizer_with_action(&A_factor_space,
+	// H, projected_pt, 0);
 
 	if (f_v) {
-		cout << "oracle::representative_and_coset_rep_inv_subspace_action lvl=" << lvl << " pt_to_trace=" << pt_to_trace << " projects onto " << projected_pt << endl;
+		cout << "oracle::representative_and_coset_rep_inv_subspace_action "
+				"lvl=" << lvl << " pt_to_trace=" << pt_to_trace
+				<< " projects onto " << projected_pt << endl;
 		}
 	cosetrep = gen->Elt1;
 	if (nb_strong_generators == 0) {
@@ -59,7 +68,10 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *g
 		pt0 = AF.lexleast_element_in_coset(projected_pt0, verbose_level - 2);
 
 		if (f_v) {
-			cout << "oracle::representative_and_coset_rep_inv_subspace_action lvl=" << lvl << " stabilizer is trivial, projected_pt0=" << projected_pt0 << " pt0=" << pt0 << endl;
+			cout << "oracle::representative_and_coset_rep_inv_subspace_"
+					"action lvl=" << lvl << " stabilizer is trivial, "
+					"projected_pt0=" << projected_pt0
+					<< " pt0=" << pt0 << endl;
 			}
 		return;
 		}
@@ -70,8 +82,11 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *g
 			f_trivial_group = FALSE;
 		else 
 			f_trivial_group = TRUE;
-		//cout << "Node " << node << " oracle::orbit_representative_and_coset_rep_inv_subspace_action calling schreier_vector_coset_rep_inv" << endl;
-		schreier_vector_coset_rep_inv(gen->A2 /*&A_factor_space*/, 
+		//cout << "Node " << node << " oracle::orbit_representative_and_"
+		//"coset_rep_inv_subspace_action calling schreier_vector_"
+		//"coset_rep_inv" << endl;
+		schreier_vector_coset_rep_inv(
+			gen->A2 /*&A_factor_space*/,
 			sv, 
 			hdl_strong_generators, 
 			projected_pt, 
@@ -82,25 +97,35 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *g
 			f_check_image, 
 			verbose_level - 1);
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
-		//cout << "Node " << node << " oracle::orbit_representative_and_coset_rep_inv_subspace_action schreier_vector_coset_rep_inv done" << endl;
+		//cout << "Node " << node << " oracle::orbit_representative_and_"
+		//"coset_rep_inv_subspace_action schreier_vector_coset_"
+		//"rep_inv done" << endl;
 		
 		//pt0 = AF.preimage(projected_pt0, verbose_level - 2);
-		pt0 = AF.lexleast_element_in_coset(projected_pt0, verbose_level - 2);
+		pt0 = AF.lexleast_element_in_coset(
+				projected_pt0, verbose_level - 2);
 
 		if (f_v) {
-			cout << "oracle::orbit_representative_and_coset_rep_inv_subspace_action with schreier vector: pt_to_trace=" << pt_to_trace 
-				<< " projected_pt0=" << projected_pt0 << " preimage=" << pt0 << endl;
+			cout << "oracle::orbit_representative_and_coset_rep_inv_"
+					"subspace_action with schreier vector: "
+					"pt_to_trace=" << pt_to_trace
+				<< " projected_pt0=" << projected_pt0
+				<< " preimage=" << pt0 << endl;
 			}
 		INT a;
 		a = gen->A2->element_image_of(pt_to_trace, gen->Elt1, 0);
 		if (f_v) {
-			cout << "oracle::orbit_representative_and_coset_rep_inv_subspace_action " << pt_to_trace << "->" << a << endl;
+			cout << "oracle::orbit_representative_and_coset_rep_inv_"
+					"subspace_action " << pt_to_trace << "->" << a << endl;
 			}
 		return;
 		}
 	else {
-		cout << "Node " << node << " oracle::orbit_representative_and_coset_rep_inv_subspace_action sv not available (fatal)" << endl;
-		cout << "node=" << node << " prev=" << prev << " pt=" << pt << endl;
+		cout << "Node " << node << " oracle::orbit_representative_and_"
+				"coset_rep_inv_subspace_action sv not "
+				"available (fatal)" << endl;
+		cout << "node=" << node << " prev=" << prev
+				<< " pt=" << pt << endl;
 		cout << "pt_to_trace=" << pt_to_trace << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		exit(1);
@@ -114,12 +139,15 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(generator *g
 		verbose_level - 1);
 	pt0 = AF.preimage(projected_pt0, verbose_level - 2);
 	if (f_v) {
-		cout << "oracle::orbit_representative_and_coset_rep_inv pt_to_trace=" << pt_to_trace 
-			<< " projected_pt0=" << projected_pt0 << " preimage=" << pt0 << endl;
+		cout << "oracle::orbit_representative_and_coset_rep_inv "
+				"pt_to_trace=" << pt_to_trace
+			<< " projected_pt0=" << projected_pt0
+			<< " preimage=" << pt0 << endl;
 		}
 	//return;
 	if (f_v) {
-		cout << "oracle::orbit_representative_and_coset_rep_inv_subspace_action done" << endl;
+		cout << "oracle::orbit_representative_and_coset_rep_inv_"
+				"subspace_action done" << endl;
 		}
 #endif
 }

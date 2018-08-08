@@ -12,10 +12,12 @@ INT action::image_of(void *elt, INT a)
 	return (*ptr_element_image_of)(*this, a, elt, 0);
 }
 
-void action::image_of_low_level(void *elt, INT *input, INT *output)
+void action::image_of_low_level(void *elt,
+		INT *input, INT *output, INT verbose_level)
 {
 	nb_times_image_of_low_level_called++;
-	(*ptr_element_image_of_low_level)(*this, input, output, elt, 0);
+	(*ptr_element_image_of_low_level)(*this,
+			input, output, elt, verbose_level);
 }
 
 INT action::linear_entry_ij(void *elt, INT i, INT j)

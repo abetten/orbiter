@@ -29,7 +29,7 @@ int registry_size = 0;
 void *registry_pointer[REGISTRY_SIZE];
 int registry_type[REGISTRY_SIZE];
 int registry_n[REGISTRY_SIZE];
-int registry_size_of[REGISTRY_SIZE]; // needed for ovjects of type class 
+int registry_size_of[REGISTRY_SIZE]; // needed for objects of type class
 const char *registry_file[REGISTRY_SIZE];
 int registry_line[REGISTRY_SIZE];
 

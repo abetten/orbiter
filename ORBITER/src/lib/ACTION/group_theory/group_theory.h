@@ -585,6 +585,7 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 	void latex(const BYTE *fname);
 	void get_orbit_decomposition_scheme_of_graph(
 		INT *Adj, INT n, INT *&Decomp_scheme, INT verbose_level);
+	void list_elements_as_permutations_vertically(ostream &ost);
 
 };
 
@@ -1325,6 +1326,7 @@ public:
 	perm_group *P;
 	INT elt_size_INT;
 
+	INT *perm_offset_i;
 	INT *mtx_size;
 	INT *index_set1;
 	INT *index_set2;
@@ -1336,6 +1338,8 @@ public:
 	INT *A3;
 	INT *tmp_Elt1;
 	INT *tmp_perm1;
+	INT *tmp_perm2;
+	INT *induced_perm; // [dimension_of_tensor_action]
 
 	INT bits_per_digit;
 	INT bits_per_elt;
@@ -1343,6 +1347,13 @@ public:
 
 	UBYTE *elt1;
 
+	INT base_len_in_component;
+	INT *base_for_component;
+	INT *tl_for_component;
+
+	INT base_length;
+	INT *the_base;
+	INT *the_transversal_length;
 
 	page_storage *Elts;
 
@@ -1353,11 +1364,15 @@ public:
 	void init_tensor_wreath_product(matrix_group *M,
 			action *A_mtx, INT nb_factors, INT verbose_level);
 	INT element_image_of(INT *Elt, INT a, INT verbose_level);
+	void element_image_of_low_level(INT *Elt,
+			INT *input, INT *output, INT verbose_level);
+		// we assume that we are in the tensor product domain
 	void element_one(INT *Elt);
 	INT element_is_one(INT *Elt);
 	void element_mult(INT *A, INT *B, INT *AB, INT verbose_level);
 	void element_move(INT *A, INT *B, INT verbose_level);
 	void element_invert(INT *A, INT *Av, INT verbose_level);
+	void compute_induced_permutation(INT *Elt, INT *perm);
 	void apply_permutation(INT *Elt, INT *v_in, INT *v_out, INT verbose_level);
 	INT offset_i(INT i);
 	void create_matrix(INT *Elt, INT *A, INT verbose_level);
@@ -1368,9 +1383,10 @@ public:
 	INT get_digit(UBYTE *elt, INT f, INT i, INT j);
 	void make_element_from_one_component(INT *Elt, INT f, INT *Elt_component);
 	void make_element_from_permutation(INT *Elt, INT *perm);
-	void make_element(INT *Elt, INT *data);
+	void make_element(INT *Elt, INT *data, INT verbose_level);
 	void element_print_easy(INT *Elt, ostream &ost);
-	void make_strong_generators(INT *&data,
+	void compute_base_and_transversals(INT verbose_level);
+	void make_strong_generators_data(INT *&data,
 			INT &size, INT &nb_gens, INT verbose_level);
 };
 

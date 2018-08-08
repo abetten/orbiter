@@ -10,7 +10,8 @@
 #include "galois.h"
 
 
-void diagonal_orbit_perm(INT n, finite_field &GFq, INT *orbit, INT *orbit_inv, INT verbose_level)
+void diagonal_orbit_perm(INT n, finite_field &GFq,
+		INT *orbit, INT *orbit_inv, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *v = NEW_INT(n + 1);
@@ -50,7 +51,8 @@ void diagonal_orbit_perm(INT n, finite_field &GFq, INT *orbit, INT *orbit_inv, I
 	FREE_INT(v);
 }
 
-void frobenius_orbit_perm(INT n, finite_field &GFq, INT *orbit, INT *orbit_inv, 
+void frobenius_orbit_perm(INT n, finite_field &GFq,
+	INT *orbit, INT *orbit_inv,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -61,7 +63,8 @@ void frobenius_orbit_perm(INT n, finite_field &GFq, INT *orbit, INT *orbit_inv,
 	INT i, j;
 	
 	if (f_v) {
-		cout << "frobenius_orbit_perm n=" << n << " (vector space dimension)" << endl;
+		cout << "frobenius_orbit_perm n=" << n
+				<< " (vector space dimension)" << endl;
 		cout << "l=" << l << endl;
 		}
 	if (GFq.e == 1) {
@@ -74,11 +77,13 @@ void frobenius_orbit_perm(INT n, finite_field &GFq, INT *orbit, INT *orbit_inv,
 		orbit_inv[i] = i;
 		}
 	if (f_v) {
-		cout << "before PG_element_unrank_modified(" << n + GFq.p << ")" << endl;
+		cout << "before PG_element_unrank_modified("
+				<< n + GFq.p << ")" << endl;
 		}
 	PG_element_unrank_modified(GFq, v, 1, n, n + GFq.p);
 	if (f_v) {
-		cout << "after PG_element_unrank_modified(" << n + GFq.p << ")" << endl;
+		cout << "after PG_element_unrank_modified("
+				<< n + GFq.p << ")" << endl;
 		}
 	for (i = 0; i < ll; i++) {
 		if (f_v) {
@@ -102,7 +107,9 @@ void frobenius_orbit_perm(INT n, finite_field &GFq, INT *orbit, INT *orbit_inv,
 	FREE_INT(v);
 }
 
-void translation_in_AG(finite_field &GFq, INT n, INT i, INT a, INT *perm, INT *v, INT verbose_level)
+void translation_in_AG(finite_field &GFq,
+		INT n, INT i, INT a, INT *perm, INT *v,
+		INT verbose_level)
 // v[n] needs to be allocated 
 // p[q^n] needs to be allocated
 {
@@ -127,7 +134,9 @@ void translation_in_AG(finite_field &GFq, INT n, INT i, INT a, INT *perm, INT *v
 		}
 }
 
-void frobenius_in_AG(finite_field &GFq, INT n, INT *perm, INT *v, INT verbose_level)
+void frobenius_in_AG(finite_field &GFq,
+		INT n, INT *perm, INT *v,
+		INT verbose_level)
 // v[n] needs to be allocated 
 // p[q^n] needs to be allocated
 {
@@ -152,7 +161,9 @@ void frobenius_in_AG(finite_field &GFq, INT n, INT *perm, INT *v, INT verbose_le
 		}
 }
 
-void frobenius_in_PG(finite_field &GFq, INT n, INT *perm, INT *v, INT verbose_level)
+void frobenius_in_PG(finite_field &GFq,
+		INT n, INT *perm, INT *v,
+		INT verbose_level)
 // v[n + 1] needs to be allocated 
 // p[q^n+...+q+1] needs to be allocated
 {
@@ -177,8 +188,10 @@ void frobenius_in_PG(finite_field &GFq, INT n, INT *perm, INT *v, INT verbose_le
 		}
 }
 
-void AG_representation_of_matrix(finite_field &GFq, INT n, INT f_from_the_right, 
-	INT *M, INT *v, INT *w, INT *perm, INT verbose_level)
+void AG_representation_of_matrix(finite_field &GFq,
+	INT n, INT f_from_the_right,
+	INT *M, INT *v, INT *w, INT *perm,
+	INT verbose_level)
 // perm[q^n] needs to be already allocated
 {
 	INT f_v = (verbose_level >= 1);
@@ -215,7 +228,8 @@ void AG_representation_one_dimensional(finite_field &GFq,
 	q = GFq.q;
 	l = q;
 	if (f_v) {
-		cout << "AG_representation_one_dimensional() : q = " << q << " a=" << a << endl;
+		cout << "AG_representation_one_dimensional() : "
+				"q = " << q << " a=" << a << endl;
 		}
 	for (i = 0; i < q; i++) {
 		AG_element_unrank(q, &v, 1 /* stride */, 1, i);
@@ -236,7 +250,8 @@ INT nb_generators_affine_translations(finite_field &GFq, INT n)
 	return n * GFq.e;
 }
 
-void generators_affine_translations(finite_field &GFq, INT n, INT *perms, INT verbose_level)
+void generators_affine_translations(finite_field &GFq,
+		INT n, INT *perms, INT verbose_level)
 // primes[n * d] needs to be allocated, where d = q^n
 {
 	INT f_v = (verbose_level >= 1);
@@ -246,7 +261,8 @@ void generators_affine_translations(finite_field &GFq, INT n, INT *perms, INT ve
 	l = nb_AG_elements(n, GFq.q);
 	
 	if (f_v) {
-		cout << "computing generators for affine translations, q=" << GFq.q << " n = " << n << endl;
+		cout << "computing generators for affine translations, "
+				"q=" << GFq.q << " n = " << n << endl;
 		}
 	v = NEW_INT(n);
 	for (i = 0; i < n; i++) {
@@ -259,7 +275,8 @@ void generators_affine_translations(finite_field &GFq, INT n, INT *perms, INT ve
 	FREE_INT(v);
 }
 
-void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, finite_field &GFq2, 
+void generators_AGL1xAGL1_subdirect1(
+	finite_field &GFq1, finite_field &GFq2,
 	INT u, INT v, INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -287,9 +304,11 @@ void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, finite_field &GFq2,
 		cout << "affine translations created" << endl;
 		}
 	
-	AG_representation_one_dimensional(GFq1, GFq1.alpha, perms1 + (nb1 + 1) * q1, 
+	AG_representation_one_dimensional(GFq1, GFq1.alpha,
+			perms1 + (nb1 + 1) * q1,
 		verbose_level - 2);
-	AG_representation_one_dimensional(GFq2, GFq2.alpha, perms2 + (nb2 + 1) * q2, 
+	AG_representation_one_dimensional(GFq2, GFq2.alpha,
+			perms2 + (nb2 + 1) * q2,
 		verbose_level - 2);
 	if (f_v) {
 		cout << "AG_representation_one_dimensional created" << endl;
@@ -310,11 +329,13 @@ void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, finite_field &GFq2,
 		}
 	
 	for (i = 0; i < nb1; i++) {
-		perm_direct_product(q1, q2, perms1 + (i + 1) * q1, perms2, perms + k * q12);
+		perm_direct_product(q1, q2,
+				perms1 + (i + 1) * q1, perms2, perms + k * q12);
 		k++;
 		}
 	for (i = 0; i < nb2; i++) {
-		perm_direct_product(q1, q2, perms1, perms2 + (i + 1) * q2, perms + k * q12);
+		perm_direct_product(q1, q2,
+				perms1, perms2 + (i + 1) * q2, perms + k * q12);
 		k++;
 		}
 	perm_direct_product(q1, q2, 
@@ -323,7 +344,8 @@ void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, finite_field &GFq2,
 		perms + k * q12);
 	k++;
 	if (f_v) {
-		cout << "generators for subdirect product AGL(1," << q1 << ") x AGL(1," << q2 << ") created" << endl;
+		cout << "generators for subdirect product "
+				"AGL(1," << q1 << ") x AGL(1," << q2 << ") created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -335,7 +357,8 @@ void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, finite_field &GFq2,
 	FREE_INT(perms2);
 }
 
-void generators_AGL1q(finite_field &GFq, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_AGL1q(finite_field &GFq,
+		INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -351,7 +374,8 @@ void generators_AGL1q(finite_field &GFq, INT &nb_perms, INT *&perms, INT verbose
 		cout << "affine translations created" << endl;
 		}
 	
-	AG_representation_one_dimensional(GFq, GFq.alpha, perms + nb * q, verbose_level - 2);
+	AG_representation_one_dimensional(GFq, GFq.alpha,
+			perms + nb * q, verbose_level - 2);
 	if (f_v) {
 		cout << "AG_representation_one_dimensional created" << endl;
 		}
@@ -367,7 +391,8 @@ void generators_AGL1q(finite_field &GFq, INT &nb_perms, INT *&perms, INT verbose
 		}
 }
 
-void generators_AGL1q_subgroup(finite_field &GFq, INT index_in_multiplicative_group, 
+void generators_AGL1q_subgroup(finite_field &GFq,
+	INT index_in_multiplicative_group,
 	INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -386,7 +411,8 @@ void generators_AGL1q_subgroup(finite_field &GFq, INT index_in_multiplicative_gr
 	
 	a = GFq.alpha;
 	b = GFq.power(a, index_in_multiplicative_group);
-	AG_representation_one_dimensional(GFq, b, perms + nb * q, verbose_level - 2);
+	AG_representation_one_dimensional(GFq, b,
+			perms + nb * q, verbose_level - 2);
 	if (f_v) {
 		cout << "AG_representation_one_dimensional created" << endl;
 		}
@@ -402,7 +428,8 @@ void generators_AGL1q_subgroup(finite_field &GFq, INT index_in_multiplicative_gr
 		}
 }
 
-void generators_AGL1_x_AGL1(finite_field &GFq1, finite_field &GFq2, INT &deg, 
+void generators_AGL1_x_AGL1(
+	finite_field &GFq1, finite_field &GFq2, INT &deg,
 	INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -423,7 +450,8 @@ void generators_AGL1_x_AGL1(finite_field &GFq1, finite_field &GFq2, INT &deg,
 	FREE_INT(perms1);
 	FREE_INT(perms2);
 	if (f_v) {
-		cout << "generators for AGL(1," << deg1 << ") x AGL(1," << deg2 << ") created" << endl;
+		cout << "generators for AGL(1," << deg1
+				<< ") x AGL(1," << deg2 << ") created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -433,7 +461,8 @@ void generators_AGL1_x_AGL1(finite_field &GFq1, finite_field &GFq2, INT &deg,
 		}
 }
 
-void generators_AGL1_x_AGL1_extension(finite_field &GFq1, finite_field &GFq2, INT u, INT v, 
+void generators_AGL1_x_AGL1_extension(
+	finite_field &GFq1, finite_field &GFq2, INT u, INT v,
 	INT &deg, INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -478,8 +507,10 @@ void generators_AGL1_x_AGL1_extension(finite_field &GFq1, finite_field &GFq2, IN
 		}
 }
 
-void generators_AGL1_x_AGL1_extended_once(finite_field &F1, finite_field &F2, INT u, INT v, 
-	INT &deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_AGL1_x_AGL1_extended_once(
+	finite_field &F1, finite_field &F2, INT u, INT v,
+	INT &deg, INT &nb_perms, INT *&perms,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -489,8 +520,10 @@ void generators_AGL1_x_AGL1_extended_once(finite_field &F1, finite_field &F2, IN
 	
 	q1 = F1.q;
 	q2 = F2.q;
-	generators_AGL1_x_AGL1(F1, F2, deg1, nb_perms1, perms1, verbose_level - 1);
-	generators_AGL1_x_AGL1_extension(F1, F2, u, v, deg2, nb_perms2, perms2, verbose_level - 1);
+	generators_AGL1_x_AGL1(F1, F2,
+			deg1, nb_perms1, perms1, verbose_level - 1);
+	generators_AGL1_x_AGL1_extension(F1, F2, u, v, deg2,
+			nb_perms2, perms2, verbose_level - 1);
 	
 	generators_concatenate(deg1, nb_perms1, perms1, 
 		deg2, nb_perms2, perms2, 
@@ -500,7 +533,8 @@ void generators_AGL1_x_AGL1_extended_once(finite_field &F1, finite_field &F2, IN
 	FREE_INT(perms2);
 	
 	if (f_v) {
-		cout << "generators for AGL(1," << q1 << ") x AGL(1," << q2 << ") extended by a^" << u << "b^" << v << " created" << endl;
+		cout << "generators for AGL(1," << q1 << ") x AGL(1," << q2 << ") "
+				"extended by a^" << u << "b^" << v << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -510,7 +544,10 @@ void generators_AGL1_x_AGL1_extended_once(finite_field &F1, finite_field &F2, IN
 		}
 }
 
-void generators_AGL1_x_AGL1_extended_twice(finite_field &F1, finite_field &F2, INT u1, INT v1, INT u2, INT v2, INT &deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_AGL1_x_AGL1_extended_twice(
+		finite_field &F1, finite_field &F2,
+		INT u1, INT v1, INT u2, INT v2, INT &deg, INT &nb_perms, INT *&perms,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -520,16 +557,22 @@ void generators_AGL1_x_AGL1_extended_twice(finite_field &F1, finite_field &F2, I
 	
 	q1 = F1.q;
 	q2 = F2.q;
-	generators_AGL1_x_AGL1_extended_once(F1, F2, u1, v1, deg1, nb_perms1, perms1, verbose_level - 1);
-	generators_AGL1_x_AGL1_extension(F1, F2, u2, v2, deg2, nb_perms2, perms2, verbose_level - 1);
+	generators_AGL1_x_AGL1_extended_once(F1, F2, u1, v1,
+			deg1, nb_perms1, perms1, verbose_level - 1);
+	generators_AGL1_x_AGL1_extension(F1, F2, u2, v2,
+			deg2, nb_perms2, perms2, verbose_level - 1);
 	
-	generators_concatenate(deg1, nb_perms1, perms1, deg2, nb_perms2, perms2, deg, nb_perms, perms, verbose_level - 1);
+	generators_concatenate(deg1, nb_perms1, perms1, deg2,
+			nb_perms2, perms2, deg, nb_perms, perms,
+			verbose_level - 1);
 	
 	FREE_INT(perms1);
 	FREE_INT(perms2);
 	
 	if (f_v) {
-		cout << "generators for AGL(1," << q1 << ") x AGL(1," << q2 << ") extended by a^" << u1 << "b^" << v1 << " and by a^" << u2 << "b^" << v2 << " created" << endl;
+		cout << "generators for AGL(1," << q1 << ") x AGL(1," << q2 << ") "
+				"extended by a^" << u1 << "b^" << v1
+				<< " and by a^" << u2 << "b^" << v2 << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -539,7 +582,8 @@ void generators_AGL1_x_AGL1_extended_twice(finite_field &F1, finite_field &F2, I
 		}
 }
 
-void generators_symmetric_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_symmetric_group(INT deg,
+		INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -558,7 +602,8 @@ void generators_symmetric_group(INT deg, INT &nb_perms, INT *&perms, INT verbose
 		perms[i * deg + i + 1] = i;
 		}
 	if (f_v) {
-		cout << "generators for symmetric group of degree " << deg << " created" << endl;
+		cout << "generators for symmetric group of degree "
+				<< deg << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -568,7 +613,8 @@ void generators_symmetric_group(INT deg, INT &nb_perms, INT *&perms, INT verbose
 		}
 }
 
-void generators_cyclic_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_cyclic_group(INT deg,
+		INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -586,7 +632,8 @@ void generators_cyclic_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_le
 		}
 	perms[i * deg + i + deg - 1] = 0;
 	if (f_v) {
-		cout << "generators for cyclic group of degree " << deg << " created" << endl;
+		cout << "generators for cyclic group of degree "
+				<< deg << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -596,7 +643,8 @@ void generators_cyclic_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_le
 		}
 }
 
-void generators_dihedral_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_dihedral_group(INT deg,
+		INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -620,7 +668,8 @@ void generators_dihedral_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_
 		perms[i * deg + deg - 1 - j] = j;
 		}
 	if (f_v) {
-		cout << "generators for dihedral group of degree " << deg << " created" << endl;
+		cout << "generators for dihedral group of degree "
+				<< deg << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -630,7 +679,8 @@ void generators_dihedral_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_
 		}
 }
 
-void generators_dihedral_involution(INT deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_dihedral_involution(INT deg,
+		INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -650,7 +700,8 @@ void generators_dihedral_involution(INT deg, INT &nb_perms, INT *&perms, INT ver
 		perms[i * deg + deg - 1 - j] = j;
 		}
 	if (f_v) {
-		cout << "generators for dihedral involution of degree " << deg << " created" << endl;
+		cout << "generators for dihedral involution of degree "
+				<< deg << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -660,7 +711,8 @@ void generators_dihedral_involution(INT deg, INT &nb_perms, INT *&perms, INT ver
 		}
 }
 
-void generators_identity_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_identity_group(INT deg,
+		INT &nb_perms, INT *&perms, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -677,7 +729,8 @@ void generators_identity_group(INT deg, INT &nb_perms, INT *&perms, INT verbose_
 		perms[j] = j;
 		}
 	if (f_v) {
-		cout << "generators for identity group of degree " << deg << " created" << endl;
+		cout << "generators for identity group of degree "
+				<< deg << " created" << endl;
 		}
 	if (f_vv) {
 		for (i = 0; i < nb_perms; i++) {
@@ -706,7 +759,8 @@ void order_Bn_group_factorized(INT n, INT *&factors, INT &nb_factors)
 		}
 }
 
-void generators_Bn_group(INT n, INT &deg, INT &nb_perms, INT *&perms, INT verbose_level)
+void generators_Bn_group(INT n, INT &deg, INT &nb_perms, INT *&perms,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -732,7 +786,8 @@ void generators_Bn_group(INT n, INT &deg, INT &nb_perms, INT *&perms, INT verbos
 		perms[j * deg + 2 * i + 1] = 2 * i;
 		}
 	if (f_v) {
-		cout << "generators for Bn group of order n = " << n << " and degree " << deg << " created" << endl;
+		cout << "generators for Bn group of order n = " << n
+				<< " and degree " << deg << " created" << endl;
 		}
 	if (j != nb_perms) {
 		cout << "generators_Bn_group j != nb_perms" << endl;
@@ -768,11 +823,13 @@ void generators_direct_product(INT deg1, INT nb_perms1, INT *perms1,
 	perm_identity(id2, deg2);
 	
 	for (i = 0; i < nb_perms1; i++) {
-		perm_direct_product(deg1, deg2, perms1 + i * deg1, id2, perms3 + k * deg3);
+		perm_direct_product(deg1, deg2,
+				perms1 + i * deg1, id2, perms3 + k * deg3);
 		k++;
 		}
 	for (i = 0; i < nb_perms2; i++) {
-		perm_direct_product(deg1, deg2, id1, perms2 + i * deg2, perms3 + k * deg3);
+		perm_direct_product(deg1, deg2, id1,
+				perms2 + i * deg2, perms3 + k * deg3);
 		k++;
 		}
 	FREE_INT(id1);
@@ -825,7 +882,9 @@ void generators_concatenate(INT deg1, INT nb_perms1, INT *perms1,
 		}
 }
 
-void O4_isomorphism_4to2(finite_field *F, INT *At, INT *As, INT &f_switch, INT *B, INT verbose_level)
+void O4_isomorphism_4to2(finite_field *F,
+		INT *At, INT *As, INT &f_switch, INT *B,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -857,13 +916,15 @@ void O4_isomorphism_4to2(finite_field *F, INT *At, INT *As, INT &f_switch, INT *
 	b42 = B[3 * 4 + 1];
 	b43 = B[3 * 4 + 2];
 	b44 = B[3 * 4 + 3];
-	O4_grid_coordinates_unrank(*F, P[0], P[1], P[2], P[3], 0, 0, verbose_level);
+	O4_grid_coordinates_unrank(*F, P[0], P[1], P[2], P[3],
+			0, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (0,0) = ";
 		INT_vec_print(cout, P, 4);
 		cout << endl;
 		}
-	O4_grid_coordinates_unrank(*F, Q[0], Q[1], Q[2], Q[3], 1, 0, verbose_level);
+	O4_grid_coordinates_unrank(*F, Q[0], Q[1], Q[2], Q[3],
+			1, 0, verbose_level);
 	if (f_vv) {
 		cout << "grid point (1,0) = ";
 		INT_vec_print(cout, Q, 4);
@@ -871,10 +932,13 @@ void O4_isomorphism_4to2(finite_field *F, INT *At, INT *As, INT &f_switch, INT *
 		}
 	F->mult_vector_from_the_left(P, B, R, 4, 4);
 	F->mult_vector_from_the_left(Q, B, S, 4, 4);
-	O4_grid_coordinates_rank(*F, R[0], R[1], R[2], R[3], Rx, Ry, verbose_level);
-	O4_grid_coordinates_rank(*F, S[0], S[1], S[2], S[3], Sx, Sy, verbose_level);
+	O4_grid_coordinates_rank(*F, R[0], R[1], R[2], R[3],
+			Rx, Ry, verbose_level);
+	O4_grid_coordinates_rank(*F, S[0], S[1], S[2], S[3],
+			Sx, Sy, verbose_level);
 	if (f_vv) {
-		cout << "Rx=" << Rx << " Ry=" << Ry << " Sx=" << Sx << " Sy=" << Sy << endl;
+		cout << "Rx=" << Rx << " Ry=" << Ry
+				<< " Sx=" << Sx << " Sy=" << Sy << endl;
 		}
 	if (Ry == Sy) {
 		f_switch = FALSE;
@@ -985,7 +1049,8 @@ void O4_isomorphism_4to2(finite_field *F, INT *At, INT *As, INT &f_switch, INT *
 	
 }
 
-void O4_isomorphism_2to4(finite_field *F, INT *At, INT *As, INT f_switch, INT *B)
+void O4_isomorphism_2to4(finite_field *F,
+		INT *At, INT *As, INT f_switch, INT *B)
 {
 	INT a, b, c, d, e, f, g, h;
 
@@ -1035,7 +1100,9 @@ void O4_isomorphism_2to4(finite_field *F, INT *At, INT *As, INT f_switch, INT *B
 		}
 }
 
-void O4_grid_coordinates_rank(finite_field &F, INT x1, INT x2, INT x3, INT x4, INT &grid_x, INT &grid_y, INT verbose_level)
+void O4_grid_coordinates_rank(finite_field &F,
+		INT x1, INT x2, INT x3, INT x4, INT &grid_x, INT &grid_y,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b, c, d, av, e;
@@ -1091,7 +1158,10 @@ void O4_grid_coordinates_rank(finite_field &F, INT x1, INT x2, INT x3, INT x4, I
 	PG_element_rank_modified(F, w, 1, 2, grid_y);
 }
 
-void O4_grid_coordinates_unrank(finite_field &F, INT &x1, INT &x2, INT &x3, INT &x4, INT grid_x, INT grid_y, INT verbose_level)
+void O4_grid_coordinates_unrank(finite_field &F,
+		INT &x1, INT &x2, INT &x3, INT &x4,
+		INT grid_x, INT grid_y,
+		INT verbose_level)
 {	
 	INT f_v = (verbose_level >= 1);
 	INT a, b, c, d;
@@ -1117,7 +1187,10 @@ void O4_grid_coordinates_unrank(finite_field &F, INT &x1, INT &x2, INT &x3, INT 
 	x4 = b;
 }
 
-void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT pt_x4, INT *tangent_plane, INT verbose_level)
+void O4_find_tangent_plane(finite_field &F,
+		INT pt_x1, INT pt_x2, INT pt_x3, INT pt_x4,
+		INT *tangent_plane,
+		INT verbose_level)
 {
 	//INT A[4];
 	INT C[3 * 4];
@@ -1162,7 +1235,8 @@ void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT
 			//cout << "nb_secants=" << nb_secants << endl;
 			O4_grid_coordinates_unrank(F, x1, x2, x3, x4, x, y, 0);
 
-			//cout << "x1=" << x1 << " x2=" << x2 << " x3=" << x3 << " x4=" << x4 << endl;
+			//cout << "x1=" << x1 << " x2=" << x2
+			//<< " x3=" << x3 << " x4=" << x4 << endl;
 			
 			
 
@@ -1214,7 +1288,8 @@ void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT
 					if (zz == z) 
 						continue;
 					O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, 0);
-					//cout << "y1=" << y1 << " y2=" << y2 << " y3=" << y3 << " y4=" << y4 << endl;
+					//cout << "y1=" << y1 << " y2=" << y2
+					//<< " y3=" << y3 << " y4=" << y4 << endl;
 					C[0] = pt_x1;
 					C[1] = pt_x2;
 					C[2] = pt_x3;
@@ -1269,9 +1344,12 @@ void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT
 		z = complement[h];
 		x = z / size;
 		y = z % size;
-		cout << setw(3) << h << " : " << setw(4) << z << " : " << x << "," << y << " : ";
-		O4_grid_coordinates_unrank(F, y1, y2, y3, y4, x, y, verbose_level);
-		cout << "y1=" << y1 << " y2=" << y2 << " y3=" << y3 << " y4=" << y4 << endl;
+		cout << setw(3) << h << " : " << setw(4) << z
+				<< " : " << x << "," << y << " : ";
+		O4_grid_coordinates_unrank(F, y1, y2, y3, y4,
+				x, y, verbose_level);
+		cout << "y1=" << y1 << " y2=" << y2
+				<< " y3=" << y3 << " y4=" << y4 << endl;
 		T[h * 4 + 0] = y1;
 		T[h * 4 + 1] = y2;
 		T[h * 4 + 2] = y3;
@@ -1306,16 +1384,21 @@ void O4_find_tangent_plane(finite_field &F, INT pt_x1, INT pt_x2, INT pt_x3, INT
 		y = z % size;
 		xx = zz / size;
 		yy = zz % size;
-		cout << "(" << x << "," << y << "),(" << xx << "," << yy << ")" << endl;
-		O4_grid_coordinates_unrank(F, x1, x2, x3, x4, x, y, verbose_level);
-		cout << "x1=" << x1 << " x2=" << x2 << " x3=" << x3 << " x4=" << x4 << endl;
+		cout << "(" << x << "," << y << "),(" << xx
+				<< "," << yy << ")" << endl;
+		O4_grid_coordinates_unrank(F, x1, x2, x3, x4,
+				x, y, verbose_level);
+		cout << "x1=" << x1 << " x2=" << x2
+				<< " x3=" << x3 << " x4=" << x4 << endl;
 		O4_grid_coordinates_unrank(F, y1, y2, y3, y4, xx, yy, verbose_level);
-		cout << "y1=" << y1 << " y2=" << y2 << " y3=" << y3 << " y4=" << y4 << endl;
+		cout << "y1=" << y1 << " y2=" << y2
+				<< " y3=" << y3 << " y4=" << y4 << endl;
 		}
 #endif
 }
 
-INT matrix_group_base_len_projective_group(INT n, INT q, INT f_semilinear, INT verbose_level)
+INT matrix_group_base_len_projective_group(INT n, INT q,
+		INT f_semilinear, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT base_len;
@@ -1328,12 +1411,16 @@ INT matrix_group_base_len_projective_group(INT n, INT q, INT f_semilinear, INT v
 		base_len++;
 		}
 	if (f_v) {
-		cout << "matrix_group_base_len_projective_group: n=" << n << " q=" << q << " f_semilinear=" << f_semilinear << " base_len = " << base_len << endl;
+		cout << "matrix_group_base_len_projective_group: "
+				"n=" << n << " q=" << q
+				<< " f_semilinear=" << f_semilinear
+				<< " base_len = " << base_len << endl;
 		}
 	return base_len;
 }
 
-INT matrix_group_base_len_affine_group(INT n, INT q, INT f_semilinear, INT verbose_level)
+INT matrix_group_base_len_affine_group(INT n, INT q,
+		INT f_semilinear, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT base_len;
@@ -1344,12 +1431,16 @@ INT matrix_group_base_len_affine_group(INT n, INT q, INT f_semilinear, INT verbo
 		base_len++;
 		}
 	if (f_v) {
-		cout << "matrix_group_base_len_affine_group: n=" << n << " q=" << q << " f_semilinear=" << f_semilinear << " base_len = " << base_len << endl;
+		cout << "matrix_group_base_len_affine_group: "
+				"n=" << n << " q=" << q
+				<< " f_semilinear=" << f_semilinear
+				<< " base_len = " << base_len << endl;
 		}
 	return base_len;
 }
 
-INT matrix_group_base_len_general_linear_group(INT n, INT q, INT f_semilinear, INT verbose_level)
+INT matrix_group_base_len_general_linear_group(INT n, INT q,
+		INT f_semilinear, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT base_len;
@@ -1360,7 +1451,10 @@ INT matrix_group_base_len_general_linear_group(INT n, INT q, INT f_semilinear, I
 		base_len++;
 		}
 	if (f_v) {
-		cout << "matrix_group_base_len_general_linear_group: n=" << n << " q=" << q << " f_semilinear=" << f_semilinear << " base_len = " << base_len << endl;
+		cout << "matrix_group_base_len_general_linear_group: "
+				"n=" << n << " q=" << q
+				<< " f_semilinear=" << f_semilinear
+				<< " base_len = " << base_len << endl;
 		}
 	return base_len;
 }
@@ -1396,19 +1490,24 @@ void projective_matrix_group_base_and_orbits(INT n,
 		}
 	//transversal_length[0] = nb_PG_elements(n - 1, q);
 	for (i = 0; i < n; i++) {
-		transversal_length[i] = nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
+		transversal_length[i] =
+				nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits transversal " << i << " of length " << transversal_length[i] << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"transversal " << i << " of length "
+					<< transversal_length[i] << endl;
 			}
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits before PG_element_modified_not_in_subspace_perm" << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"before PG_element_modified_not_in_subspace_perm" << endl;
 			}
 		PG_element_modified_not_in_subspace_perm(n - 1, i - 1, 
 			*F, orbit[i], orbit_inv[i], 0);
 			// global function in GALOIS/projective.C
 
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits after PG_element_modified_not_in_subspace_perm" << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"after PG_element_modified_not_in_subspace_perm" << endl;
 			}
 		
 		if (FALSE) {
@@ -1421,15 +1520,19 @@ void projective_matrix_group_base_and_orbits(INT n,
 	if (q > 2) {
 		transversal_length[i] = nb_AG_elements(n - 1, q - 1);
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits: diagonal transversal " << i << " of length " << transversal_length[i] << endl;
+			cout << "projective_matrix_group_base_and_orbits: "
+					"diagonal transversal " << i << " of length "
+					<< transversal_length[i] << endl;
 			}
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits before diagonal_orbit_perm" << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"before diagonal_orbit_perm" << endl;
 			}
 		diagonal_orbit_perm(n, *F, orbit[i], orbit_inv[i], 0);
 			// global function in GALOIS/projective.C
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits after diagonal_orbit_perm" << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"after diagonal_orbit_perm" << endl;
 			}
 
 		if (FALSE) {
@@ -1443,15 +1546,20 @@ void projective_matrix_group_base_and_orbits(INT n,
 	if (f_semilinear) {
 		transversal_length[i] = F->e;
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits: frobenius transversal " << i << " of length " << transversal_length[i] << endl;
+			cout << "projective_matrix_group_base_and_orbits: "
+					"frobenius transversal " << i << " of length "
+					<< transversal_length[i] << endl;
 			}
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits before frobenius_orbit_perm" << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"before frobenius_orbit_perm" << endl;
 			}
-		frobenius_orbit_perm(n, *F, orbit[i], orbit_inv[i], verbose_level - 2);
+		frobenius_orbit_perm(n, *F,
+				orbit[i], orbit_inv[i], verbose_level - 2);
 			// global function in GALOIS/projective.C
 		if (f_vv) {
-			cout << "projective_matrix_group_base_and_orbits after frobenius_orbit_perm" << endl;
+			cout << "projective_matrix_group_base_and_orbits "
+					"after frobenius_orbit_perm" << endl;
 			}
 
 		if (FALSE) {
@@ -1466,7 +1574,8 @@ void projective_matrix_group_base_and_orbits(INT n,
 		cout << "projective_matrix_group_base_and_orbits base: ";
 		INT_vec_print(cout, base, base_len);
 		cout << endl;
-		cout << "projective_matrix_group_base_and_orbits transversal_length: ";
+		cout << "projective_matrix_group_base_and_orbits "
+				"transversal_length: ";
 		INT_vec_print(cout, transversal_length, base_len);
 		cout << endl;
 		}
@@ -1506,14 +1615,16 @@ void affine_matrix_group_base_and_transversal_length(INT n,
 		c++;
 		}
 	if (c != base_len) {
-		cout << "affine_matrix_group_base_and_transversal_length c != base_len" << endl;
+		cout << "affine_matrix_group_base_and_transversal_length "
+				"c != base_len" << endl;
 		exit(1);
 		}
 	if (f_v) {
 		cout << "affine_matrix_group_base_and_transversal_length base: ";
 		INT_vec_print(cout, base, base_len);
 		cout << endl;
-		cout << "affine_matrix_group_base_and_transversal_length transversal_length: ";
+		cout << "affine_matrix_group_base_and_transversal_length "
+				"transversal_length: ";
 		INT_vec_print(cout, transversal_length, base_len);
 		cout << endl;
 		}
@@ -1536,7 +1647,8 @@ void general_linear_matrix_group_base_and_transversal_length(INT n,
 
 
 	if (f_v) {
-		cout << "general_linear_matrix_group_base_and_transversal_length" << endl;
+		cout << "general_linear_matrix_group_base_and_"
+				"transversal_length" << endl;
 		}
 	q = F->q;
 	c = 0;
@@ -1551,26 +1663,31 @@ void general_linear_matrix_group_base_and_transversal_length(INT n,
 		c++;
 		}
 	if (c != base_len) {
-		cout << "general_linear_matrix_group_base_and_transversal_length c != base_len" << endl;
+		cout << "general_linear_matrix_group_base_and_"
+				"transversal_length c != base_len" << endl;
 		cout << "c=" << c << endl;
 		cout << "base_len=" << base_len << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "general_linear_matrix_group_base_and_transversal_length base: ";
+		cout << "general_linear_matrix_group_base_and_"
+				"transversal_length base: ";
 		INT_vec_print(cout, base, base_len);
 		cout << endl;
-		cout << "general_linear_matrix_group_base_and_transversal_length transversal_length: ";
+		cout << "general_linear_matrix_group_base_and_"
+				"transversal_length transversal_length: ";
 		INT_vec_print(cout, transversal_length, base_len);
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "general_linear_matrix_group_base_and_transversal_length done" << endl;
+		cout << "general_linear_matrix_group_base_and_"
+				"transversal_length done" << endl;
 		}
 }
 
 
-void strong_generators_for_projective_linear_group(INT n, finite_field *F, 
+void strong_generators_for_projective_linear_group(
+	INT n, finite_field *F,
 	INT f_semilinear, 
 	INT *&data, INT &size, INT &nb_gens, 
 	INT verbose_level)
@@ -1614,7 +1731,8 @@ void strong_generators_for_projective_linear_group(INT n, finite_field *F,
 	if (F->q > 2) {
 		for (h = 0; h < n - 1; h++) {
 			if (f_vv) {
-				cout << "generators for primitive elements on the diagonal:" << endl;
+				cout << "generators for primitive elements "
+						"on the diagonal:" << endl;
 				}
 			F->identity_matrix(M, n);
 			M[h * n + h] = F->primitive_root();
@@ -1629,7 +1747,8 @@ void strong_generators_for_projective_linear_group(INT n, finite_field *F,
 	// the entries in the last row:
 	for (h = 0; h < n - 1; h++) {
 		if (f_vv) {
-			cout << "generators for entries in the last row (e=" << F->e << "):" << endl;
+			cout << "generators for entries in the last row "
+					"(e=" << F->e << "):" << endl;
 			}
 		for (u = 0; u < F->e; u++) {
 			F->identity_matrix(M, n);
@@ -1660,18 +1779,21 @@ void strong_generators_for_projective_linear_group(INT n, finite_field *F,
 		}
 
 	if (cur != nb_gens) {
-		cout << "strong_generators_for_projective_linear_group cur != nb_gens" << endl;
+		cout << "strong_generators_for_projective_linear_group "
+				"cur != nb_gens" << endl;
 		exit(1);
 		}
 	
 	FREE_INT(M);
 	if (f_v) {
-		cout << "strong_generators_for_projective_linear_group done" << endl;
+		cout << "strong_generators_for_projective_linear_group "
+				"done" << endl;
 		}
 }
 
 
-void strong_generators_for_affine_linear_group(INT n, finite_field *F, 
+void strong_generators_for_affine_linear_group(
+	INT n, finite_field *F,
 	INT f_semilinear, 
 	INT *&data, INT &size, INT &nb_gens, 
 	INT verbose_level)
@@ -1714,7 +1836,8 @@ void strong_generators_for_affine_linear_group(INT n, finite_field *F,
 	// the entries in the last row:
 	for (h = 0; h < n - 1; h++) {
 		if (f_vv) {
-			cout << "generators for entries in the last row (e=" << F->e << "):" << endl;
+			cout << "generators for entries in the last row "
+					"(e=" << F->e << "):" << endl;
 			}
 		for (u = 0; u < F->e; u++) {
 			INT_vec_zero(data + cur * size, size);
@@ -1732,7 +1855,8 @@ void strong_generators_for_affine_linear_group(INT n, finite_field *F,
 		// the primitive element on the last diagonal:
 		h = n - 1;
 		if (f_vv) {
-			cout << "generators for primitive element on the last diagonal:" << endl;
+			cout << "generators for primitive element "
+					"on the last diagonal:" << endl;
 			}
 		INT_vec_zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
@@ -1777,7 +1901,8 @@ void strong_generators_for_affine_linear_group(INT n, finite_field *F,
 		} // next h
 
 	if (cur != nb_gens) {
-		cout << "strong_generators_for_affine_linear_group cur != nb_gens" << endl;
+		cout << "strong_generators_for_affine_linear_group "
+				"cur != nb_gens" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -1785,7 +1910,8 @@ void strong_generators_for_affine_linear_group(INT n, finite_field *F,
 		}
 }
 
-void strong_generators_for_general_linear_group(INT n, finite_field *F, 
+void strong_generators_for_general_linear_group(
+	INT n, finite_field *F,
 	INT f_semilinear, 
 	INT *&data, INT &size, INT &nb_gens, 
 	INT verbose_level)
@@ -1827,7 +1953,8 @@ void strong_generators_for_general_linear_group(INT n, finite_field *F,
 	// the entries in the last row:
 	for (h = 0; h < n - 1; h++) {
 		if (f_vv) {
-			cout << "generators for entries in the last row (e=" << F->e << "):" << endl;
+			cout << "generators for entries in the last row "
+					"(e=" << F->e << "):" << endl;
 			}
 		for (u = 0; u < F->e; u++) {
 			INT_vec_zero(data + cur * size, size);
@@ -1845,7 +1972,8 @@ void strong_generators_for_general_linear_group(INT n, finite_field *F,
 		// the primitive element on the last diagonal:
 		h = n - 1;
 		if (f_vv) {
-			cout << "generators for primitive element on the last diagonal:" << endl;
+			cout << "generators for primitive element "
+					"on the last diagonal:" << endl;
 			}
 		INT_vec_zero(data + cur * size, size);
 		F->identity_matrix(data + cur * size, n);
@@ -1877,7 +2005,8 @@ void strong_generators_for_general_linear_group(INT n, finite_field *F,
 
 
 	if (cur != nb_gens) {
-		cout << "strong_generators_for_general_linear_group cur != nb_gens" << endl;
+		cout << "strong_generators_for_general_linear_group "
+				"cur != nb_gens" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -1885,7 +2014,8 @@ void strong_generators_for_general_linear_group(INT n, finite_field *F,
 		}
 }
 
-void generators_for_parabolic_subgroup(INT n, finite_field *F, 
+void generators_for_parabolic_subgroup(
+	INT n, finite_field *F,
 	INT f_semilinear, INT k, 
 	INT *&data, INT &size, INT &nb_gens, 
 	INT verbose_level)
@@ -1928,7 +2058,8 @@ void generators_for_parabolic_subgroup(INT n, finite_field *F,
 
 	// the primitive elements on the diagonal:
 	if (f_vv) {
-		cout << "generators for primitive elements on the diagonal, cur=" << cur << endl;
+		cout << "generators for primitive elements "
+				"on the diagonal, cur=" << cur << endl;
 		}
 	if (F->q > 2) {
 		for (h = 0; h < n - 1; h++) {
@@ -1944,7 +2075,8 @@ void generators_for_parabolic_subgroup(INT n, finite_field *F,
 
 	// the entries in the last row:
 	if (f_vv) {
-		cout << "generators for the entries in the last row of a diagonal block, cur=" << cur << endl;
+		cout << "generators for the entries in the last row "
+				"of a diagonal block, cur=" << cur << endl;
 		}
 	for (h = 0; h < k - 1; h++) {
 		for (u = 0; u < F->e; u++) {
@@ -1971,7 +2103,8 @@ void generators_for_parabolic_subgroup(INT n, finite_field *F,
 
 	// entries in the lower left block:
 	if (f_vv) {
-		cout << "generators for the entries in the lower left block, cur=" << cur << endl;
+		cout << "generators for the entries in the lower left block, "
+				"cur=" << cur << endl;
 		}
 	for (g = k; g < n; g++) {
 		for (h = 0; h < k; h++) {
@@ -1989,7 +2122,8 @@ void generators_for_parabolic_subgroup(INT n, finite_field *F,
 
 	// the swaps along the diagonal:
 	if (f_vv) {
-		cout << "generators for swaps along the diagonal, cur=" << cur << endl;
+		cout << "generators for swaps along the diagonal, "
+				"cur=" << cur << endl;
 		}
 	for (h = n - 2; h >= n - k; h--) {
 		F->identity_matrix(M, n);
@@ -2017,7 +2151,8 @@ void generators_for_parabolic_subgroup(INT n, finite_field *F,
 		}
 
 	if (cur != nb_gens) {
-		cout << "generators_for_parabolic_subgroup cur != nb_gens" << endl;
+		cout << "generators_for_parabolic_subgroup "
+				"cur != nb_gens" << endl;
 		cout << "cur = " << cur << endl;
 		cout << "nb_gens = " << nb_gens << endl;
 		exit(1);
@@ -2029,7 +2164,8 @@ void generators_for_parabolic_subgroup(INT n, finite_field *F,
 		}
 }
 
-void generators_for_stabilizer_of_three_collinear_points_in_PGL4(finite_field *F, 
+void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
+	finite_field *F,
 	INT f_semilinear, 
 	INT *&data, INT &size, INT &nb_gens, 
 	INT verbose_level)
@@ -2041,7 +2177,8 @@ void generators_for_stabilizer_of_three_collinear_points_in_PGL4(finite_field *F
 	INT n = 4;
 	
 	if (f_v) {
-		cout << "generators_for_stabilizer_of_three_collinear_points_in_PGL4" << endl;
+		cout << "generators_for_stabilizer_of_three_collinear_"
+				"points_in_PGL4" << endl;
 		}
 	size = n * n;
 	if (f_semilinear) {
@@ -2079,7 +2216,8 @@ void generators_for_stabilizer_of_three_collinear_points_in_PGL4(finite_field *F
 
 	// Sym_3 in top left block:
 	if (f_vv) {
-		cout << "generators for Sym_3 in top left block, cur=" << cur << endl;
+		cout << "generators for Sym_3 in top left block, "
+				"cur=" << cur << endl;
 		}
 	F->identity_matrix(M, n);
 	M[0 * 4 + 0] = 0;
@@ -2163,7 +2301,8 @@ void generators_for_stabilizer_of_three_collinear_points_in_PGL4(finite_field *F
 
 
 	if (cur != nb_gens) {
-		cout << "generators_for_stabilizer_of_three_collinear_points_in_PGL4 cur != nb_gens" << endl;
+		cout << "generators_for_stabilizer_of_three_"
+				"collinear_points_in_PGL4 cur != nb_gens" << endl;
 		cout << "cur = " << cur << endl;
 		cout << "nb_gens = " << nb_gens << endl;
 		exit(1);
@@ -2171,12 +2310,14 @@ void generators_for_stabilizer_of_three_collinear_points_in_PGL4(finite_field *F
 	
 	FREE_INT(M);
 	if (f_v) {
-		cout << "generators_for_stabilizer_of_three_collinear_points_in_PGL4 done" << endl;
+		cout << "generators_for_stabilizer_of_three_"
+				"collinear_points_in_PGL4 done" << endl;
 		}
 }
 
 
-void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F, 
+void generators_for_stabilizer_of_triangle_in_PGL4(
+	finite_field *F,
 	INT f_semilinear, 
 	INT *&data, INT &size, INT &nb_gens, 
 	INT verbose_level)
@@ -2222,7 +2363,8 @@ void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F,
 
 	// Sym_3 in top left block:
 	if (f_vv) {
-		cout << "generators for Sym_3 in top left block, cur=" << cur << endl;
+		cout << "generators for Sym_3 in top left block, "
+				"cur=" << cur << endl;
 		}
 	F->identity_matrix(M, n);
 	M[0 * 4 + 0] = 0;
@@ -2294,7 +2436,8 @@ void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F,
 
 
 	if (cur != nb_gens) {
-		cout << "generators_for_stabilizer_of_triangle_in_PGL4 cur != nb_gens" << endl;
+		cout << "generators_for_stabilizer_of_triangle_in_PGL4 "
+				"cur != nb_gens" << endl;
 		cout << "cur = " << cur << endl;
 		cout << "nb_gens = " << nb_gens << endl;
 		exit(1);

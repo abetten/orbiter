@@ -6,7 +6,8 @@
 #include "orbiter.h"
 
 void oracle::init_root_node(generator *gen, INT verbose_level)
-// copies gen->SG0 and gen->transversal_length into the oracle structure using store_strong_generators
+// copies gen->SG0 and gen->transversal_length
+// into the oracle structure using store_strong_generators
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -24,7 +25,7 @@ void oracle::init_root_node(generator *gen, INT verbose_level)
 	if (f_v) {
 		cout << "storing strong generators" << endl;
 		}
-	store_strong_generators(gen, gen->Strong_gens /* *gen->SG0, gen->transversal_length */);
+	store_strong_generators(gen, gen->Strong_gens);
 		// stores the strong generators into the oracle structure, 
 		// copies transversal_length into tl
 	if (f_v) {
@@ -54,15 +55,18 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 #endif
 
 	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_H, verbose_level = " << verbose_level << endl;
+		cout << "oracle::init_extension_node_prepare_H, "
+				"verbose_level = " << verbose_level << endl;
 		}
 
 	
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H computing stabilizer of point " << pt 
-			<< " (of index " << pt_orbit_len << " in a group of order " << go_G;
+		cout << "oracle::init_extension_node_prepare_H "
+				"computing stabilizer of point " << pt
+			<< " (of index " << pt_orbit_len
+			<< " in a group of order " << go_G;
 		if (G.f_has_sims && !go_G.is_one()) {
 			cout << " = ";
 			G.S->print_group_order_factored(cout);
@@ -75,7 +79,9 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H computing stabilizer of point " << pt << " in group of order " << go_G << endl;
+		cout << "oracle::init_extension_node_prepare_H "
+				"computing stabilizer of point " << pt
+				<< " in group of order " << go_G << endl;
 		}
 
 	if (gen->f_on_subspaces) {
@@ -83,7 +89,9 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H before compute_point_stabilizer_in_subspace_setting" << endl;
+			cout << "oracle::init_extension_node_prepare_H "
+					"before compute_point_stabilizer_in_subspace_setting"
+					<< endl;
 			}
 		compute_point_stabilizer_in_subspace_setting(gen, 
 			prev, prev_ex, size, 
@@ -94,7 +102,9 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H after compute_point_stabilizer_in_subspace_setting" << endl;
+			cout << "oracle::init_extension_node_prepare_H "
+					"after compute_point_stabilizer_in_subspace_setting"
+					<< endl;
 			}
 
 		}
@@ -104,7 +114,9 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H before compute_point_stabilizer_in_standard_setting" << endl;
+			cout << "oracle::init_extension_node_prepare_H "
+					"before compute_point_stabilizer_in_standard_setting"
+					<< endl;
 			}
 		compute_point_stabilizer_in_standard_setting(gen, 
 			prev, prev_ex, size, 
@@ -115,7 +127,9 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H after compute_point_stabilizer_in_standard_setting" << endl;
+			cout << "oracle::init_extension_node_prepare_H "
+					"after compute_point_stabilizer_in_standard_setting"
+					<< endl;
 			}
 
 		}
@@ -123,13 +137,15 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << "oracle::init_extension_node_prepare_H calling schreier_sims for point stabilizer" << endl;
+		cout << "oracle::init_extension_node_prepare_H "
+				"calling schreier_sims for point stabilizer" << endl;
 		}
 	H.schreier_sims(0);
 
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << "oracle::init_extension_node_prepare_H after schreier_sims for point stabilizer" << endl;
+		cout << "oracle::init_extension_node_prepare_H "
+				"after schreier_sims for point stabilizer" << endl;
 		}
 	
 
@@ -143,7 +159,8 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H point stabilizer has order ";
+		cout << "oracle::init_extension_node_prepare_H "
+				"point stabilizer has order ";
 		H.print_group_order(cout);
 		//cout << endl;
 		cout << ", of index = " << q << " in " << go_G << endl;
@@ -152,7 +169,8 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (q.as_INT() != pt_orbit_len) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H: fatal: q != pt_orbit_len" << endl;
+		cout << "oracle::init_extension_node_prepare_H: "
+				"fatal: q != pt_orbit_len" << endl;
 		cout << "q = " << q.as_INT() << endl;
 		cout << "pt_orbit_len = " << pt_orbit_len << endl;
 		exit(1);
@@ -160,7 +178,8 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H point stabilizer is generated by:" << endl;
+		cout << "oracle::init_extension_node_prepare_H "
+				"point stabilizer is generated by:" << endl;
 		INT f_print_as_permutation = FALSE;
 		if (/*f_v10 &&*/ gen->A2->degree < 100) {
 			f_print_as_permutation = TRUE;
@@ -173,7 +192,8 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		}
 }
 
-void oracle::compute_point_stabilizer_in_subspace_setting(generator *gen, 
+void oracle::compute_point_stabilizer_in_subspace_setting(
+	generator *gen,
 	INT prev, INT prev_ex, INT size, 
 	group &G, longinteger_object &go_G, 
 	group &H, longinteger_object &go_H, 
@@ -186,7 +206,8 @@ void oracle::compute_point_stabilizer_in_subspace_setting(generator *gen,
 
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_subspace_setting, verbose_level = " << verbose_level << endl;
+		cout << "oracle::compute_point_stabilizer_in_subspace_setting, "
+				"verbose_level = " << verbose_level << endl;
 		}
 
 	H.init(gen->A);
@@ -203,24 +224,32 @@ void oracle::compute_point_stabilizer_in_subspace_setting(generator *gen,
 		INT i;
 		
 		if (f_v) {
-			cout << "oracle::compute_point_stabilizer_in_subspace_setting, with early test function, before Op->setup_factor_space_action_with_early_test" << endl;
+			cout << "oracle::compute_point_stabilizer_in_subspace_setting, "
+					"with early test function, before Op->setup_factor_space_"
+					"action_with_early_test" << endl;
 			}
 		Op->setup_factor_space_action_with_early_test(gen, 
 			AF, A_factor_space, size - 1, 
 			verbose_level - 4);
 		if (f_v) {
-			cout << "oracle::compute_point_stabilizer_in_subspace_setting after Op->setup_factor_space_action_with_early_test" << endl;
+			cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+					"after Op->setup_factor_space_action_with_early_test"
+					<< endl;
 			}
 		for (i = 0; i < AF.nb_cosets; i++) {
 			if (AF.preimage(i, 0) == pt) {
 				if (f_vv) {
-					cout << "oracle::compute_point_stabilizer_in_subspace_setting: point pt=" << pt << " is coset " << i << endl;
+					cout << "oracle::compute_point_stabilizer_in_subspace_"
+							"setting: point pt=" << pt
+							<< " is coset " << i << endl;
 					}
 				break;
 				}
 			}
 		if (i == AF.nb_cosets) {
-			cout << "oracle::compute_point_stabilizer_in_subspace_setting fatal: could not find the coset corresponding to point " << pt << endl;
+			cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+					"fatal: could not find the coset corresponding "
+					"to point " << pt << endl;
 			exit(1);
 			}
 		projected_pt = i;
@@ -230,33 +259,49 @@ void oracle::compute_point_stabilizer_in_subspace_setting(generator *gen,
 		
 		if (f_vvv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
-			cout << " oracle::compute_point_stabilizer_in_subspace_setting, without early test function,  setting up factor space action:" << endl;
+			cout << " oracle::compute_point_stabilizer_in_subspace_setting, "
+					"without early test function,  setting up factor "
+					"space action:" << endl;
 			}
-		Op->setup_factor_space_action(gen, AF, A_factor_space, size - 1, 
-			TRUE /*f_compute_tables*/, verbose_level - 4);
+		Op->setup_factor_space_action(gen,
+			AF,
+			A_factor_space,
+			size - 1,
+			TRUE /*f_compute_tables*/,
+			verbose_level - 4);
+
 		projected_pt = AF.project(pt, verbose_level - 4);
 		}
 
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << " oracle::compute_point_stabilizer_in_subspace_setting  pt=" << pt << " projected_pt=" << projected_pt << endl;
+		cout << " oracle::compute_point_stabilizer_in_subspace_setting "
+				" pt=" << pt << " projected_pt=" << projected_pt << endl;
 		}
 	if (projected_pt == -1) {
-		cout << "oracle::compute_point_stabilizer_in_subspace_setting fatal: projected_pt == -1" << endl;
+		cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+				"fatal: projected_pt == -1" << endl;
 		exit(1);
 		}
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << " oracle::compute_point_stabilizer_in_subspace_setting calling G.point_stabilizer_with_action" << endl;
+		cout << " oracle::compute_point_stabilizer_in_subspace_setting "
+				"calling G.point_stabilizer_with_action" << endl;
 		}
-	G.point_stabilizer_with_action(&A_factor_space, H, projected_pt, verbose_level - 4);
+	G.point_stabilizer_with_action(
+			&A_factor_space,
+			H,
+			projected_pt,
+			verbose_level - 4);
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << " oracle::compute_point_stabilizer_in_subspace_setting G.point_stabilizer_with_action done" << endl;
+		cout << " oracle::compute_point_stabilizer_in_subspace_setting "
+				"G.point_stabilizer_with_action done" << endl;
 		}
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_subspace_setting done" << endl;
+		cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+				"done" << endl;
 		}
 
 }
@@ -278,7 +323,8 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 
 	D.integral_division_by_INT(go_G, pt_orbit_len, go_H, r);
 	if (r != 0) {
-		cout << "oracle::compute_point_stabilizer_in_standard_setting r != 0" << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting "
+				"r != 0" << endl;
 		exit(1);
 		}
 
@@ -288,16 +334,22 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, verbose_level = " << verbose_level << endl;
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, go_G = " << go_G << endl;
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, pt_orbit_len = " << pt_orbit_len << endl;
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, go_H = " << go_H << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+				"verbose_level = " << verbose_level << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+				"go_G = " << go_G << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+				"pt_orbit_len = " << pt_orbit_len << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+				"go_H = " << go_H << endl;
 		}
 
 	if (Op->sv) {
 		if (f_vvv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
-			cout << " oracle::compute_point_stabilizer_in_standard_setting setting up restricted action from the previous schreier vector:" << endl;
+			cout << " oracle::compute_point_stabilizer_in_standard_setting "
+					"setting up restricted action from the previous "
+					"schreier vector:" << endl;
 			}
 		action AR;
 
@@ -307,30 +359,44 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_setting calling AR.induced_action_by_restriction_on_orbit_with_schreier_vector" << endl;
+				cout << " oracle::compute_point_stabilizer_in_standard_"
+						"setting calling AR.induced_action_by_restriction_"
+						"on_orbit_with_schreier_vector" << endl;
 				}
-			AR.induced_action_by_restriction_on_orbit_with_schreier_vector(*gen->A2, 
-				FALSE /* f_induce_action */, NULL /* old_G */, 
-				Op->sv, pt, verbose_level - 1);
+			AR.induced_action_by_restriction_on_orbit_with_schreier_vector(
+				*gen->A2,
+				FALSE /* f_induce_action */,
+				NULL /* old_G */,
+				Op->sv,
+				pt,
+				verbose_level - 1);
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_setting created action of degree " << AR.degree << endl;
+				cout << " oracle::compute_point_stabilizer_in_standard_"
+						"setting created action of degree "
+						<< AR.degree << endl;
 				}
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_setting calling G.point_stabilizer_with_action" << endl;
+				cout << " oracle::compute_point_stabilizer_in_standard_"
+						"setting calling G.point_stabilizer_with_action"
+						<< endl;
 				}
-			G.point_stabilizer_with_action(&AR, H, 0 /*pt */, verbose_level - 3);
+			G.point_stabilizer_with_action(&AR,
+					H, 0 /*pt */, verbose_level - 3);
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_setting after G.point_stabilizer_with_action" << endl;
+				cout << " oracle::compute_point_stabilizer_in_standard_"
+						"setting after G.point_stabilizer_with_action"
+						<< endl;
 				}
 
 			longinteger_object go_H1;
 			H.group_order(go_H1);
 			longinteger_domain D;
 			if (D.compare(go_H, go_H1) != 0) {
-				cout << "oracle::compute_point_stabilizer_in_standard_setting go_H is incorrect" << endl;
+				cout << "oracle::compute_point_stabilizer_in_standard_"
+						"setting go_H is incorrect" << endl;
 				cout << "go_H=" << go_H << endl;
 				cout << "go_H1=" << go_H1 << endl;
 				exit(1);
@@ -338,7 +404,9 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 			
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_setting G.point_stabilizer_with_action done" << endl;
+				cout << " oracle::compute_point_stabilizer_in_standard_"
+						"setting G.point_stabilizer_with_action done"
+						<< endl;
 				}
 			}
 		else {
@@ -368,13 +436,15 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 		}
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_standard_setting done" << endl;
+		cout << "oracle::compute_point_stabilizer_in_standard_setting "
+				"done" << endl;
 		}
 
 }
 
 void oracle::init_extension_node_prepare_G(generator *gen, 
-	INT prev, INT prev_ex, INT size, group &G, longinteger_object &go_G, 
+	INT prev, INT prev_ex, INT size,
+	group &G, longinteger_object &go_G,
 	INT verbose_level)
 // sets up the group G using the strong generators that are stored
 {
@@ -391,30 +461,48 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G calling init_strong_generators_by_hdl" << endl;
-		INT_vec_print(cout, Op.hdl_strong_generators, Op.nb_strong_generators);
+		cout << "oracle::init_extension_node_prepare_G "
+				"calling init_strong_generators_by_hdl" << endl;
+		INT_vec_print(cout,
+				Op.hdl_strong_generators,
+				Op.nb_strong_generators);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	G.init_strong_generators_by_hdl(Op.nb_strong_generators, Op.hdl_strong_generators, Op.tl, 0);
-	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
-		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G calling schreier_sims for stabilizer with " 
-			<< Op.nb_strong_generators << " strong generators" << endl;
-		}
+	G.init_strong_generators_by_hdl(
+			Op.nb_strong_generators,
+			Op.hdl_strong_generators,
+			Op.tl, verbose_level - 1);
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G the strong generators are:" << endl; 
-		G.print_strong_generators(cout, FALSE /* f_print_as_permutation */);
+		cout << "oracle::init_extension_node_prepare_G "
+				"the strong generators are:" << endl;
+		G.print_strong_generators(cout,
+				FALSE /* f_print_as_permutation */);
 		}
-	G.schreier_sims(0);
+
+	if (f_vv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "oracle::init_extension_node_prepare_G "
+				"before schreier_sims for stabilizer with "
+			<< Op.nb_strong_generators << " strong generators" << endl;
+		}
+	G.schreier_sims(verbose_level - 2);
+	if (f_vv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "oracle::init_extension_node_prepare_G "
+				"after schreier_sims" << endl;
+		}
+
 	G.group_order(go_G);
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "_{" << go_G << "}, previous stabilizer reconstructed" << endl;
+		cout << "_{" << go_G << "}, previous stabilizer "
+				"has been reconstructed" << endl;
 		}
 	
 	if (f_v) {
@@ -462,7 +550,8 @@ INT oracle::get_nb_of_orbits_under_stabilizer()
 	return nb;
 }
 
-void oracle::get_stabilizer_order(generator *gen, longinteger_object &go)
+void oracle::get_stabilizer_order(generator *gen,
+		longinteger_object &go)
 {
 	strong_generators *Strong_gens;
 
@@ -478,15 +567,18 @@ void oracle::get_stabilizer(generator *gen,
 	INT f_v = (verbose_level >= 1);
 	
 	G.init(gen->A);
-	G.init_strong_generators_by_hdl(nb_strong_generators, hdl_strong_generators, tl, 0);
+	G.init_strong_generators_by_hdl(
+			nb_strong_generators, hdl_strong_generators, tl, 0);
 	if (f_v) {
-		cout << "oracle::get_stabilizer calling schreier_sims for stabilizer with " 
+		cout << "oracle::get_stabilizer calling "
+				"schreier_sims for stabilizer with "
 			<< nb_strong_generators << " strong generators" << endl;
 		}
 	G.schreier_sims(verbose_level - 3);
 	G.group_order(go_G);
 	if (f_v) {
-		cout << "oracle::get_stabilizer stabilizer has order " << go_G << endl;
+		cout << "oracle::get_stabilizer stabilizer has order "
+				<< go_G << endl;
 		}
 }
 
@@ -499,10 +591,12 @@ void oracle::get_stabilizer_generators(generator *gen,
 	
 	if (f_v) {
 		cout << "oracle::get_stabilizer_generators" << endl;
-		cout << "oracle::get_stabilizer_generators nb_strong_generators=" << nb_strong_generators << endl;
+		cout << "oracle::get_stabilizer_generators "
+				"nb_strong_generators=" << nb_strong_generators << endl;
 		}
 	Strong_gens = new strong_generators;
-	Strong_gens->init_by_hdl(gen->A, hdl_strong_generators, nb_strong_generators, 0);
+	Strong_gens->init_by_hdl(gen->A,
+			hdl_strong_generators, nb_strong_generators, 0);
 	//gens.init_by_hdl(gen->A, hdl_strong_generators, nb_strong_generators);
 	if (nb_strong_generators == 0) {
 		for (i = 0; i < gen->A->base_len; i++) {
@@ -549,7 +643,8 @@ void oracle::freeself()
 #endif
 		FREE_INT(hdl_strong_generators);
 		hdl_strong_generators = NULL;
-		//cout << "oracle::freeself() deleting hdl_strong_generators done" << endl;
+		//cout << "oracle::freeself() "
+		//"deleting hdl_strong_generators done" << endl;
 		}
 	if (tl) {
 		//cout << "oracle::freeself() deleting tl" << endl;
@@ -569,8 +664,10 @@ void oracle::freeself()
 	//cout << "oracle::freeself() finished" << endl;
 }
 
-void oracle::oracle_depth_breadth_perm_and_inverse(generator *gen, INT max_depth, 
-	INT &idx, INT hdl, INT cur_depth, INT *perm, INT *perm_inv)
+void oracle::oracle_depth_breadth_perm_and_inverse(
+	generator *gen, INT max_depth,
+	INT &idx, INT hdl, INT cur_depth,
+	INT *perm, INT *perm_inv)
 {
 	INT i, nxt;
 	
@@ -590,7 +687,8 @@ void oracle::oracle_depth_breadth_perm_and_inverse(generator *gen, INT max_depth
 		}
 }
 
-INT oracle::find_extension_from_point(generator *gen, INT pt, INT verbose_level)
+INT oracle::find_extension_from_point(generator *gen,
+		INT pt, INT verbose_level)
 // a -1 means not found
 {
 	INT i;
@@ -622,7 +720,8 @@ void oracle::print_extensions(ostream &ost)
 
 		print_extension_type(ost, E[i].type);
 		if (E[i].type == EXTENSION_TYPE_FUSION) {
-			ost << " -> (" << E[i].data1 << "," << E[i].data2 << ") hdl=" << E[i].data << endl;
+			ost << " -> (" << E[i].data1 << ","
+					<< E[i].data2 << ") hdl=" << E[i].data << endl;
 			}
 		else if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			ost << " -> " << E[i].data << endl;
@@ -638,7 +737,8 @@ void oracle::print_extensions(ostream &ost)
 	cout << "done with node " << node << endl;
 }
 
-void oracle::store_strong_generators(generator *gen, strong_generators *Strong_gens)
+void oracle::store_strong_generators(generator *gen,
+		strong_generators *Strong_gens)
 {
 	INT i;
 	
@@ -651,7 +751,9 @@ void oracle::store_strong_generators(generator *gen, strong_generators *Strong_g
 		hdl_strong_generators = NEW_INT(nb_strong_generators);
 		tl = NEW_INT(gen->A->base_len);
 		for (i = 0; i < nb_strong_generators; i++) {
-			hdl_strong_generators[i] = gen->A->element_store(Strong_gens->gens->ith(i), FALSE);
+			hdl_strong_generators[i] =
+					gen->A->element_store(
+							Strong_gens->gens->ith(i), FALSE);
 			}
 		INT_vec_copy(Strong_gens->tl, tl, gen->A->base_len);
 #if 0
@@ -662,7 +764,8 @@ void oracle::store_strong_generators(generator *gen, strong_generators *Strong_g
 		}
 }
 
-void oracle::log_current_node_without_group(generator *gen, INT s, ostream &f, INT verbose_level)
+void oracle::log_current_node_without_group(generator *gen,
+		INT s, ostream &f, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object go;
@@ -674,7 +777,8 @@ void oracle::log_current_node_without_group(generator *gen, INT s, ostream &f, I
 	store_set_to(gen, s - 1, gen->set0);
 	
 	if (f_v) {
-		f << "# ***** orbit ***** " << node - gen->first_oracle_node_at_level[s] << " "<< endl;
+		f << "# ***** orbit ***** " <<
+				node - gen->first_oracle_node_at_level[s] << " "<< endl;
 		}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
@@ -686,7 +790,8 @@ void oracle::log_current_node_without_group(generator *gen, INT s, ostream &f, I
 	if (f_v) {
 		f << "# BEGINCOMMENT" << endl;
 		if (gen->f_print_function) {
-			(*gen->print_function)(f, s, gen->set0, gen->print_function_data);
+			(*gen->print_function)(f, s,
+					gen->set0, gen->print_function_data);
 			}
 		
 		f << "# ENDCOMMENT" << endl;
@@ -694,22 +799,27 @@ void oracle::log_current_node_without_group(generator *gen, INT s, ostream &f, I
 #endif
 }
 
-void oracle::log_current_node(generator *gen, INT s, ostream &f, INT f_with_stabilizer_generators, INT verbose_level)
+void oracle::log_current_node(generator *gen,
+		INT s, ostream &f, INT f_with_stabilizer_generators,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object go, rk;
 	INT i;
 
 	if (f_v) {
-		cout << "oracle::log_current_node node=" << node << " s=" << s << endl;
+		cout << "oracle::log_current_node node="
+				<< node << " s=" << s << endl;
 		}
 	store_set_to(gen, s - 1, gen->set0);
 	if (f_v) {
-		cout << "oracle::log_current_node node=" << node << " after store_set_to" << endl;
+		cout << "oracle::log_current_node node="
+				<< node << " after store_set_to" << endl;
 		}
 	
 	if (f_v) {
-		f << "# ***** orbit ***** " << node - gen->first_oracle_node_at_level[s] << " "<< endl;
+		f << "# ***** orbit ***** "
+				<< node - gen->first_oracle_node_at_level[s] << " "<< endl;
 		}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
@@ -719,28 +829,34 @@ void oracle::log_current_node(generator *gen, INT s, ostream &f, INT f_with_stab
 	if (nb_strong_generators == 0) {
 		f << " 1" << endl;
 		if (f_v) {
-			cout << "oracle::log_current_node node=" << node << " done" << endl;
+			cout << "oracle::log_current_node "
+					"node=" << node << " done" << endl;
 			}
 		return;
 		}
 
 
 	if (f_v) {
-		cout << "oracle::log_current_node node=" << node << " creating group" << endl;
+		cout << "oracle::log_current_node "
+				"node=" << node << " creating group" << endl;
 		}
 
 	group G;
 
 	G.init(gen->A);
-	G.init_strong_generators_by_hdl(nb_strong_generators, hdl_strong_generators, tl, FALSE);
+	G.init_strong_generators_by_hdl(
+			nb_strong_generators, hdl_strong_generators, tl, FALSE);
 
 #if 0
 	if (node == 26) {
-		cout << "oracle::log_current_node node=26 with " << nb_strong_generators << " strong generators" << endl;
+		cout << "oracle::log_current_node node=26 with "
+				<< nb_strong_generators << " strong generators" << endl;
 		strong_generators *Strong_gens;
 
 		Strong_gens = new strong_generators;
-		Strong_gens->init_by_hdl(gen->A, hdl_strong_generators, nb_strong_generators, verbose_level);
+		Strong_gens->init_by_hdl(gen->A,
+				hdl_strong_generators,
+				nb_strong_generators, verbose_level);
 		Strong_gens->print_generators();
 		delete Strong_gens;
 		cout << "tl=" << endl;
@@ -752,18 +868,22 @@ void oracle::log_current_node(generator *gen, INT s, ostream &f, INT f_with_stab
 #endif
 
 	if (f_v) {
-		cout << "oracle::log_current_node node=" << node << " before schreier_sims" << endl;
+		cout << "oracle::log_current_node "
+				"node=" << node << " before schreier_sims" << endl;
 		}
 	G.schreier_sims(0);
 	if (f_v) {
-		cout << "oracle::log_current_node node=" << node << " after schreier_sims" << endl;
+		cout << "oracle::log_current_node "
+				"node=" << node << " after schreier_sims" << endl;
 		}
 	G.group_order(go);
 	if (f_v) {
-		cout << "oracle::log_current_node node=" << node << " group order = " << go << endl;
+		cout << "oracle::log_current_node "
+				"node=" << node << " group order = " << go << endl;
 		}
 	//if (f_v) {
-		//cout << "oracle::log_current_node() stabilizer of order " << go << " reconstructed" << endl;
+		//cout << "oracle::log_current_node() "
+		//"stabilizer of order " << go << " reconstructed" << endl;
 		//}
 	if (go.is_one()) {
 		go.print_not_scientific(f);
@@ -794,12 +914,14 @@ void oracle::log_current_node(generator *gen, INT s, ostream &f, INT f_with_stab
 	if (FALSE /* f_v */) {
 		f << "# BEGINCOMMENT" << endl;
 		if (gen->f_print_function) {
-			(*gen->print_function)(f, s, gen->set0, gen->print_function_data);
+			(*gen->print_function)(f, s, gen->set0,
+					gen->print_function_data);
 			}
 		
 		if (!go.is_one()) {
 			if (f_v) {
-				cout << "oracle::log_current_node node=" << node << " printing generators" << endl;
+				cout << "oracle::log_current_node "
+						"node=" << node << " printing generators" << endl;
 				}
 			G.require_strong_generators();
 			f << "tl: ";
@@ -829,7 +951,9 @@ void oracle::log_current_node(generator *gen, INT s, ostream &f, INT f_with_stab
 #endif
 }
 
-void oracle::log_current_node_after_applying_group_element(generator *gen, INT s, ostream &f, INT hdl, INT verbose_level)
+void oracle::log_current_node_after_applying_group_element(
+		generator *gen, INT s, ostream &f, INT hdl,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object go;
@@ -855,7 +979,9 @@ void oracle::log_current_node_after_applying_group_element(generator *gen, INT s
 		}
 	
 	if (f_v) {
-		f << "# ***** orbit ***** " << node - gen->first_oracle_node_at_level[s] << " "<< endl;
+		f << "# ***** orbit ***** "
+				<< node - gen->first_oracle_node_at_level[s]
+				<< " " << endl;
 		}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
@@ -864,11 +990,15 @@ void oracle::log_current_node_after_applying_group_element(generator *gen, INT s
 	group G;
 
 	G.init(gen->A);
-	G.init_strong_generators_by_hdl(nb_strong_generators, hdl_strong_generators, tl, FALSE);
+	G.init_strong_generators_by_hdl(
+			nb_strong_generators,
+			hdl_strong_generators, tl,
+			FALSE);
 	G.schreier_sims(0);
 	G.group_order(go);
 	//if (f_v) {
-		//cout << "oracle::log_current_node() stabilizer of order " << go << " reconstructed" << endl;
+		//cout << "oracle::log_current_node() "
+		//"stabilizer of order " << go << " reconstructed" << endl;
 		//}
 	if (go.is_one()) {
 		f << go << endl;
@@ -881,7 +1011,8 @@ void oracle::log_current_node_after_applying_group_element(generator *gen, INT s
 	if (f_v) {
 #if 0
 		if (gen->f_print_function) {
-			(*gen->print_function)(f, s, S, gen->print_function_data);
+			(*gen->print_function)(f, s, S,
+					gen->print_function_data);
 			}
 #endif
 		if (!go.is_one()) {
@@ -907,7 +1038,8 @@ void oracle::log_current_node_after_applying_group_element(generator *gen, INT s
 	FREE_INT(Elt2);
 }
 
-void oracle::log_current_node_with_candidates(generator *gen, INT lvl, ostream &f, INT verbose_level)
+void oracle::log_current_node_with_candidates(
+		generator *gen, INT lvl, ostream &f, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	INT i;
@@ -931,7 +1063,8 @@ void oracle::log_current_node_with_candidates(generator *gen, INT lvl, ostream &
 		lvl, 
 		n, subset, f_subset_is_allocated, 
 		verbose_level)) {
-		cout << "oracle::log_current_node_with_candidates downstep_get_invariant_subset returns FALSE" << endl;
+		cout << "oracle::log_current_node_with_candidates "
+				"downstep_get_invariant_subset returns FALSE" << endl;
 		exit(1);
 		}
 	candidates = NEW_INT(n);
@@ -977,13 +1110,16 @@ void oracle::store_set(generator *gen, INT i)
 		}
 }
 
-void oracle::store_set_with_verbose_level(generator *gen, INT i, INT verbose_level)
+void oracle::store_set_with_verbose_level(
+		generator *gen, INT i, INT verbose_level)
 // stores a set of size i + 1 to gen->S[]
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "oracle::store_set_with_verbose_level node=" << node << " prev=" << prev << " pt=" << pt << " i=" << i << endl;
+		cout << "oracle::store_set_with_verbose_level "
+				"node=" << node << " prev=" << prev
+				<< " pt=" << pt << " i=" << i << endl;
 		}
 	if (i < 0)
 		return;
@@ -1017,7 +1153,8 @@ void oracle::store_set_to(generator *gen, INT *to)
 	store_set_to(gen, depth_of_node(gen), to);
 }
 
-INT oracle::check_node_and_set_consistency(generator *gen, INT i, INT *set)
+INT oracle::check_node_and_set_consistency(
+		generator *gen, INT i, INT *set)
 {
 	if (i < 0)
 		return TRUE;
@@ -1030,7 +1167,8 @@ INT oracle::check_node_and_set_consistency(generator *gen, INT i, INT *set)
 			cout << "check_node_and_set_consistency prev == -1" << endl;
 			exit(1);
 			}
-		gen->root[prev].check_node_and_set_consistency(gen, i - 1, set);
+		gen->root[prev].check_node_and_set_consistency(
+				gen, i - 1, set);
 		}
 	return TRUE;
 }
@@ -1049,7 +1187,8 @@ void oracle::print_set_verbose(generator *gen)
 	set = NEW_INT(depth);
 	store_set_to(gen, depth - 1, set /* gen->S0 */);
 	if (gen->f_print_function) {
-		(*gen->print_function)(depth, set /* gen->S0 */, gen->print_function_data);
+		(*gen->print_function)(depth,
+				set /* gen->S0 */, gen->print_function_data);
 		}
 	FREE_INT(set);
 	//cout << "oracle::print_set_verbose done" << endl;
@@ -1096,7 +1235,8 @@ void oracle::print_node(generator *gen)
 	
 	//orbit = NEW_INT(gen->A->degree);
 	depth = depth_of_node(gen);
-	cout << "Node " << node << " at depth " << depth << ", prev=" << prev << endl;
+	cout << "Node " << node << " at depth "
+			<< depth << ", prev=" << prev << endl;
 	print_set(gen);
 	cout << endl;
 	//cout << "pt=" << pt << endl;
@@ -1107,7 +1247,8 @@ void oracle::print_node(generator *gen)
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
 
 	if (gen->f_print_function) {
-		(*gen->print_function)(depth, set /* gen->S0 */, gen->print_function_data);
+		(*gen->print_function)(depth,
+				set /* gen->S0 */, gen->print_function_data);
 		}
 
 	FREE_INT(set);
@@ -1115,7 +1256,8 @@ void oracle::print_node(generator *gen)
 	
 #if 0
 	for (i = 0; i < nb_extensions; i++) {
-		cout << setw(3) << i << " : " << setw(7) << E[i].pt << " : " << setw(5) << E[i].orbit_len << " : ";
+		cout << setw(3) << i << " : " << setw(7)
+				<< E[i].pt << " : " << setw(5) << E[i].orbit_len << " : ";
 		len = gen->A->compute_orbit_of_point_generators_by_handle(
 			nb_strong_generators, hdl_strong_generators, E[i].pt, orbit, 0);
 		if (len != E[i].orbit_len) {
@@ -1139,10 +1281,12 @@ void oracle::print_node(generator *gen)
 			//cout << " to ";
 			gen->A->map_a_set(gen->S, gen->set[0], depth + 1, gen->Elt1, 0);
 			//INT_vec_print(cout, gen->set[0], depth + 1);
-			INT_vec_heapsort(gen->set[0], depth + 1); // INT_vec_sort(depth + 1, gen->set[0]);
+			INT_vec_heapsort(gen->set[0], depth + 1);
+			// INT_vec_sort(depth + 1, gen->set[0]);
 			//cout << " = ";
 			//INT_vec_print(cout, gen->set[0], depth + 1);
-			node2 = gen->find_oracle_node_for_set(depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
+			node2 = gen->find_oracle_node_for_set(
+					depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
 			//cout << node2;
 			cout << "fusion to node " << node2;
 			}
@@ -1164,26 +1308,34 @@ void oracle::print_extensions(generator *gen)
 	INT *orbit;
 	
 	depth = depth_of_node(gen);
-	cout << "oracle::print_extensions node=" << node << " at depth " << depth << " degree=" << gen->A2->degree << endl;
+	cout << "oracle::print_extensions node=" << node
+			<< " at depth " << depth
+			<< " degree=" << gen->A2->degree << endl;
 	print_extensions(cout);
 	orbit = NEW_INT(gen->A2->degree);
 
 	if (nb_extensions >= 10) {
-		cout << "too many to print (nb_extensions=" << nb_extensions << ")" << endl;
+		cout << "too many to print "
+				"(nb_extensions=" << nb_extensions << ")" << endl;
 		return;
 		}
 
 #if 0
 	for (i = 0; i < nb_extensions; i++) {
-		cout << setw(3) << i << " : " << setw(7) << E[i].pt << " : " << setw(5) << E[i].orbit_len << " : ";
+		cout << setw(3) << i << " : " << setw(7) << E[i].pt
+				<< " : " << setw(5) << E[i].orbit_len << " : ";
 
 #if 0
-		cout << "before gen->A->compute_orbit_of_point_generators_by_handle nb_strong_generators=" << nb_strong_generators << endl;
+		cout << "before gen->A->compute_orbit_of_point_generators_"
+				"by_handle nb_strong_generators="
+				<< nb_strong_generators << endl;
 #endif
 
 		if (FALSE) {
 			len = gen->A2->compute_orbit_of_point_generators_by_handle(
-				nb_strong_generators, hdl_strong_generators, E[i].pt, orbit, 0);
+				nb_strong_generators,
+				hdl_strong_generators,
+				E[i].pt, orbit, 0);
 			cout << "orbit of length " << len << endl;
 			if (len != E[i].orbit_len) {
 				cout << "oracle::print_extensions len != E[i].orbit_len" << endl;
@@ -1218,7 +1370,8 @@ void oracle::print_extensions(generator *gen)
 			cout << " = " << endl;
 			INT_vec_print(cout, gen->set[0], depth + 1);
 			cout << endl;
-			node2 = gen->find_oracle_node_for_set(depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
+			node2 = gen->find_oracle_node_for_set(
+					depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
 			cout << "Which is node " << node2 << endl;
 			cout << "fusion to node " << node2 << endl;
 #endif
@@ -1238,7 +1391,8 @@ void oracle::print_extensions(generator *gen)
 	FREE_INT(orbit);	
 }
 
-void oracle::reconstruct_extensions_from_sv(generator *gen, INT verbose_level)
+void oracle::reconstruct_extensions_from_sv(
+		generator *gen, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -1269,7 +1423,8 @@ void oracle::reconstruct_extensions_from_sv(generator *gen, INT verbose_level)
 		ancestor[i] = -1;
 		}
 	for (i = 0; i < n; i++) {
-		schreier_vector_determine_depth_recursion(n, pts, prev, depth, ancestor, i);
+		schreier_vector_determine_depth_recursion(
+				n, pts, prev, depth, ancestor, i);
 		}
 	
 	nb_extensions = nb;
@@ -1289,7 +1444,8 @@ void oracle::reconstruct_extensions_from_sv(generator *gen, INT verbose_level)
 	for (i = 0; i < n; i++) {
 		a = ancestor[i];
 		if (!INT_vec_search(orbit_reps, nb, a, idx)) {
-			cout << "oracle::reconstruct_extensions_from_sv  did not find orbit rep" << endl;
+			cout << "oracle::reconstruct_extensions_from_sv "
+					"did not find orbit rep" << endl;
 			exit(1);
 			}
 		E[idx].orbit_len++;

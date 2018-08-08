@@ -926,6 +926,18 @@ void perm_identity(INT *a, INT n)
 		}
 }
 
+INT perm_is_identity(INT *a, INT n)
+{
+	INT i;
+
+	for (i = 0; i < n; i++) {
+		if (a[i] != i) {
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
 void perm_elementary_transposition(INT *a, INT n, INT f)
 {
 	INT i;

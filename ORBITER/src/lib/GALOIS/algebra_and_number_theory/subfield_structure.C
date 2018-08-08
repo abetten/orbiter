@@ -57,7 +57,8 @@ void subfield_structure::freeself()
 	null();
 }
 
-void subfield_structure::init(finite_field *FQ, finite_field *Fq, INT verbose_level)
+void subfield_structure::init(finite_field *FQ,
+		finite_field *Fq, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT alpha, omega, i;
@@ -99,7 +100,9 @@ void subfield_structure::init(finite_field *FQ, finite_field *Fq, INT verbose_le
 		}
 }
 
-void subfield_structure::init_with_given_basis(finite_field *FQ, finite_field *Fq, INT *given_basis, INT verbose_level)
+void subfield_structure::init_with_given_basis(
+		finite_field *FQ, finite_field *Fq, INT *given_basis,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT /*alpha,*/ /*omega,*/ i, j, h;
@@ -112,7 +115,8 @@ void subfield_structure::init_with_given_basis(finite_field *FQ, finite_field *F
 	Q = FQ->q;
 	q = Fq->q;
 	if (FQ->p != Fq->p) {
-		cout << "subfield_structure::init_with_given_basis different characteristics" << endl;
+		cout << "subfield_structure::init_with_given_basis "
+				"different characteristics" << endl;
 		exit(1);
 		}
 	s = FQ->e / Fq->e;
@@ -215,7 +219,8 @@ INT subfield_structure::evaluate_over_Fq(INT *v)
 	return a;
 }
 
-void subfield_structure::lift_matrix(INT *MQ, INT m, INT *Mq, INT verbose_level)
+void subfield_structure::lift_matrix(INT *MQ,
+		INT m, INT *Mq, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, I, J, a, b, c, d, u, v, n;
@@ -245,7 +250,8 @@ void subfield_structure::lift_matrix(INT *MQ, INT m, INT *Mq, INT verbose_level)
 		}
 }
 
-void subfield_structure::retract_matrix(INT *Mq, INT n, INT *MQ, INT m, INT verbose_level)
+void subfield_structure::retract_matrix(INT *Mq,
+		INT n, INT *MQ, INT m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *vec;
@@ -277,7 +283,8 @@ void subfield_structure::retract_matrix(INT *Mq, INT n, INT *MQ, INT m, INT verb
 					}
 				else {
 					if (a != MQ[i * m + j]) {
-						cout << "subfield_structure::retract_matrix a != MQ[i * m + j]" << endl;
+						cout << "subfield_structure::retract_matrix "
+								"a != MQ[i * m + j]" << endl;
 						exit(1);
 						}
 					}

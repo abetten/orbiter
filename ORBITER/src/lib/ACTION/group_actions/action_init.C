@@ -5,10 +5,60 @@
 
 #include "GALOIS/galois.h"
 #include "action.h"
+#include <cstring>
+	// for memcpy
+
+void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
+		finite_field *F, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	action *A_wreath;
+	action *Awr;
+	wreath_product *W;
+	INT *points;
+	INT nb_points;
+	INT i;
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict" << endl;
+		cout << "nb_factors=" << nb_factors
+				<< " n=" << n << " q=" << F->q << endl;
+		}
+	A_wreath = new action;
+	A_wreath->init_wreath_product_group(nb_factors, n, F, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"after A_wreath->init_wreath_product_group" << endl;
+	}
+
+	W = A_wreath->G.wreath_product_group;
+	nb_points = W->degree_of_tensor_action;
+	points = NEW_INT(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = W->perm_offset_i[nb_factors] + i;
+	}
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"before A_wreath->restricted_action" << endl;
+	}
+	Awr = A_wreath->restricted_action(points, nb_points,
+			verbose_level);
+	Awr->f_is_linear = TRUE;
+	if (f_v) {
+		cout << "action::init_wreath_product_group_and_restrict "
+				"after A_wreath->restricted_action" << endl;
+	}
+
+	memcpy(this, Awr, sizeof(action));
+	Awr->null();
+	delete Awr;
+}
+
 
 void action::init_wreath_product_group(INT nb_factors, INT n,
 		finite_field *F,
-		INT f_basis, INT verbose_level)
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action *A_mtx;
@@ -19,7 +69,6 @@ void action::init_wreath_product_group(INT nb_factors, INT n,
 		cout << "action::init_wreath_product_group" << endl;
 		cout << "nb_factors=" << nb_factors
 				<< " n=" << n << " q=" << F->q << endl;
-		cout << "f_basis=" << f_basis << endl;
 		}
 
 	A_mtx = NEW_OBJECT(action);
@@ -80,21 +129,87 @@ void action::init_wreath_product_group(INT nb_factors, INT n,
 
 	strcpy(group_prefix, label);
 
-#if 0
-	if (f_basis) {
-		if (f_v) {
-			cout << "action::init_wreath_product_group "
-					"before setup_linear_group_from_strong_generators"
-					<< endl;
-			}
-		setup_linear_group_from_strong_generators(M, verbose_level);
-		if (f_v) {
-			cout << "action::init_wreath_product_group "
-					"after setup_linear_group_from_strong_generators"
-					<< endl;
-			}
+
+
+	degree = W->degree_overall;
+	if (f_v) {
+		cout << "action::init_wreath_product_group degree=" << degree << endl;
 		}
-#endif
+	base_len = W->base_length;
+	if (f_v) {
+		cout << "action::init_wreath_product_group base_len=" << base_len << endl;
+		}
+
+	allocate_base_data(base_len);
+
+	INT_vec_copy(W->the_base, base, base_len);
+	INT_vec_copy(W->the_transversal_length, transversal_length, base_len);
+
+	INT *gens_data;
+	INT gens_size;
+	INT gens_nb;
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before W->make_strong_generators_data" << endl;
+		}
+	W->make_strong_generators_data(gens_data,
+			gens_size, gens_nb, verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after W->make_strong_generators_data" << endl;
+		}
+	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before Strong_gens->init_from_data" << endl;
+		}
+	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
+			transversal_length, verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after Strong_gens->init_from_data" << endl;
+		}
+	f_has_strong_generators = TRUE;
+	FREE_INT(gens_data);
+
+	sims *S;
+
+	S = NEW_OBJECT(sims);
+
+	S->init(this);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before S->init_generators" << endl;
+		}
+	S->init_generators(*Strong_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after S->init_generators" << endl;
+		}
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before S->compute_base_orbits_known_length" << endl;
+		}
+	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after S->compute_base_orbits_known_length" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"before init_sims" << endl;
+		}
+
+	init_sims(S, verbose_level);
+
+	if (f_v) {
+		cout << "action::init_wreath_product_group "
+				"after init_sims" << endl;
+		}
+
 	if (f_v) {
 		cout << "action::init_wreath_product_group, finished setting up "
 				<< group_prefix;
