@@ -11,6 +11,8 @@
 
 class action {
 public:
+
+
 	// the symmetry group is a permutation group
 	INT f_allocated;
 	symmetry_group_type type_G;
@@ -148,6 +150,8 @@ public:
 	// action.C:
 	action();
 	~action();
+	void null();
+	void freeself();
 	
 	void null_element_data();
 	void allocate_element_data();
@@ -315,6 +319,8 @@ public:
 		INT verbose_level);
 	void make_element_which_moves_a_line_in_PG3q(grassmann *Gr, 
 		INT line_rk, INT *Elt, INT verbose_level);
+	void list_elements_as_permutations_vertically(vector_ge *gens,
+			ostream &ost);
 
 
 
@@ -329,8 +335,10 @@ public:
 		// generator::orbit_element_rank
 
 	// action_init.C:
+	void init_wreath_product_group_and_restrict(INT nb_factors, INT n,
+			finite_field *F, INT verbose_level);
 	void init_wreath_product_group(INT nb_factors, INT n, finite_field *F,
-		INT f_basis, INT verbose_level);
+		INT verbose_level);
 	void init_BLT(finite_field *F, INT f_basis, 
 		INT f_init_hash_table, INT verbose_level);
 	void init_group_from_strong_generators(vector_ge *gens, sims *K, 
@@ -510,7 +518,8 @@ public:
 
 	// action_cb.C:
 	INT image_of(void *elt, INT a);
-	void image_of_low_level(void *elt, INT *input, INT *output);
+	void image_of_low_level(void *elt,
+			INT *input, INT *output, INT verbose_level);
 	INT linear_entry_ij(void *elt, INT i, INT j);
 	INT linear_entry_frobenius(void *elt);
 	void one(void *elt);
@@ -907,8 +916,6 @@ void matrix_group_element_print_as_permutation(
 	action &A, void *elt, ostream &ost);
 void matrix_group_element_print_verbose(action &A, 
 	void *elt, ostream &ost);
-//void matrix_group_elt_print(void *elt,
-//	void *data, ostream &ost);
 void matrix_group_print_point(action &A, 
 	INT a, ostream &ost);
 
@@ -951,8 +958,6 @@ void perm_group_element_print_for_make_element(action &A,
 	void *elt, ostream &ost);
 void perm_group_element_print_for_make_element_no_commas(
 	action &A, void *elt, ostream &ost);
-//void perm_group_elt_print(void *elt, void *data,
-//	ostream &ost);
 void perm_group_print_point(action &A, INT a, ostream &ost);
 
 // #############################################################################
@@ -1006,8 +1011,6 @@ void wreath_product_group_element_print_as_permutation(
 	action &A, void *elt, ostream &ost);
 void wreath_product_group_element_print_verbose(action &A,
 	void *elt, ostream &ost);
-//void wreath_product_group_elt_print(void *elt,
-//	void *data, ostream &ost);
 void wreath_product_group_print_point(action &A,
 	INT a, ostream &ost);
 

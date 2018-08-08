@@ -6,69 +6,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT action_by_representation::cntr_new = 0;
-INT action_by_representation::cntr_objects = 0;
-INT action_by_representation::f_debug_memory = FALSE;
-
-void *action_by_representation::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "action_by_representation::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *action_by_representation::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action_by_representation);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "action_by_representation::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void action_by_representation::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "action_by_representation::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return ::free(ptr);
-}
-
-void action_by_representation::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action_by_representation);
-	if (f_debug_memory) {
-		cout << "action_by_representation::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return ::free(ptr);
-}
-
 action_by_representation::action_by_representation()
 {
 	null();

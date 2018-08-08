@@ -6,69 +6,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT action_by_restriction::cntr_new = 0;
-INT action_by_restriction::cntr_objects = 0;
-INT action_by_restriction::f_debug_memory = FALSE;
-
-void *action_by_restriction::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "action_by_restriction::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *action_by_restriction::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action_by_restriction);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "action_by_restriction::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void action_by_restriction::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "action_by_restriction::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return ::free(ptr);
-}
-
-void action_by_restriction::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action_by_restriction);
-	if (f_debug_memory) {
-		cout << "action_by_restriction::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return ::free(ptr);
-}
-
 action_by_restriction::action_by_restriction()
 {
 	null();
@@ -100,7 +37,8 @@ void action_by_restriction::free()
 	null();
 }
 
-void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
+void action_by_restriction::init_from_sv(INT *sv,
+		INT pt, INT verbose_level)
 {
 	INT i, idx;
 	INT f_v = (verbose_level >= 1);
@@ -108,7 +46,8 @@ void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
 	INT f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "action_by_restriction::init_from_sv pt=" << pt << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"pt=" << pt << endl;
 		}
 	INT n;
 	INT *pts;
@@ -126,11 +65,13 @@ void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
 	prev = pts + n;
 	label = prev + n;
 	if (f_v) {
-		cout << "action_by_restriction::init_from_sv schreier vector of length " << n << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"schreier vector of length " << n << endl;
 		}
 
 	if (!INT_vec_search(pts, n, pt, idx)) {
-		cout << "action_by_restriction::init_from_sv fatal: point " << pt << " not found" << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"fatal: point " << pt << " not found" << endl;
 		exit(1);
 		}
 
@@ -143,16 +84,22 @@ void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
 		ancestor[i] = -1;
 		}
 	if (f_vv) {
-		cout << "action_by_restriction::init_from_sv determining depth using schreier_vector_determine_depth_recursion" << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"determining depth using schreier_vector_determine_"
+				"depth_recursion" << endl;
 		}
 	for (i = 0; i < n; i++) {
-		schreier_vector_determine_depth_recursion(n, pts, prev, depth, ancestor, i);
+		schreier_vector_determine_depth_recursion(n,
+				pts, prev, depth, ancestor, i);
 		}
 	if (f_vv) {
-		cout << "action_by_restriction::init_from_sv determining depth using schreier_vector_determine_depth_recursion done" << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"determining depth using schreier_vector_"
+				"determine_depth_recursion done" << endl;
 		}
 	if (f_vvv && n < 100) {
-		cout << "i : pts[i] : prev[i] : label[i] : depth[i] : ancestor[i]" << endl;
+		cout << "i : pts[i] : prev[i] : label[i] : "
+				"depth[i] : ancestor[i]" << endl;
 		for (i = 0; i < n; i++) {
 			cout 
 				<< setw(5) << i << " : " 
@@ -171,7 +118,8 @@ void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "action_by_restriction::init_from_sv found orbit of length " << orbit_len << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"found orbit of length " << orbit_len << endl;
 		}
 	orbit_elts = NEW_INT(orbit_len);
 	for (i = 0; i < orbit_len; i++) {
@@ -183,12 +131,14 @@ void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
 		cout << endl;
 		}	
 	if (orbit_elts[0] != pt) {
-		cout << "action_by_restriction::init_from_sv fatal: orbit_elts[0] != pt" << endl;
+		cout << "action_by_restriction::init_from_sv "
+				"fatal: orbit_elts[0] != pt" << endl;
 		exit(1);
 		}
 	for (i = 1; i < orbit_len; i++) {
 		if (orbit_elts[i] < orbit_elts[i - 1]) {
-			cout << "action_by_restriction::init_from_sv fatal: orbit_elts[] not increasing" << endl;
+			cout << "action_by_restriction::init_from_sv "
+					"fatal: orbit_elts[] not increasing" << endl;
 			exit(1);
 			}
 		}
@@ -200,14 +150,16 @@ void action_by_restriction::init_from_sv(INT *sv, INT pt, INT verbose_level)
 	FREE_INT(orbit_elts);
 }
 
-void action_by_restriction::init(INT nb_points, INT *points, INT verbose_level)
+void action_by_restriction::init(INT nb_points, INT *points,
+		INT verbose_level)
 // the array points must be orderd
 {
 	INT i;
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "action_by_restriction::init nb_points=" << nb_points << endl;
+		cout << "action_by_restriction::init nb_points="
+				<< nb_points << endl;
 		}
 	action_by_restriction::nb_points = nb_points;
 	action_by_restriction::points = NEW_INT(nb_points);
@@ -224,7 +176,8 @@ void action_by_restriction::init(INT nb_points, INT *points, INT verbose_level)
 		}
 }
 
-INT action_by_restriction::compute_image(action *A, INT *Elt, INT i, INT verbose_level)
+INT action_by_restriction::compute_image(
+		action *A, INT *Elt, INT i, INT verbose_level)
 {
 	INT idx, b, c, h;
 	INT f_v = (verbose_level >= 1);
@@ -234,7 +187,8 @@ INT action_by_restriction::compute_image(action *A, INT *Elt, INT i, INT verbose
 		cout << "action_by_restriction::compute_image i = " << i << endl;
 		}
 	if (i < 0 || i >= nb_points) {
-		cout << "action_by_restriction::compute_image i = " << i << " out of range" << endl;
+		cout << "action_by_restriction::compute_image "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	if (f_vv) {
@@ -250,7 +204,8 @@ INT action_by_restriction::compute_image(action *A, INT *Elt, INT i, INT verbose
 		cout << "image of " << points[i] << " is " << b << endl;
 		}
 	if (!INT_vec_search(points_sorted, nb_points, b, idx)) {
-		cout << "action_by_restriction::compute_image fatal: image point " << b << " not found" << endl;
+		cout << "action_by_restriction::compute_image fatal: "
+				"image point " << b << " not found" << endl;
 		cout << "action: ";
 		A->print_info();
 
@@ -274,8 +229,10 @@ INT action_by_restriction::compute_image(action *A, INT *Elt, INT i, INT verbose
 		//INT_vec_print(cout, points_sorted, nb_points);
 		//cout << endl;
 
-		cout << "We compute the image point again, this time with more output" << endl;
-		b = A->element_image_of(points[i], Elt, 10 /* verbose_level - 2*/);
+		cout << "We compute the image point again, "
+				"this time with more output" << endl;
+		b = A->element_image_of(points[i],
+				Elt, 10 /* verbose_level - 2*/);
 		exit(1);
 		}
 	if (f_v) {

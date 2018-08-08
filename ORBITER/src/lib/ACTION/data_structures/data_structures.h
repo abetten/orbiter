@@ -26,11 +26,12 @@ public:
 	sims *S;
 	
 	group();
+	~group();
+	void null();
+	void freeself();
 	group(action *A);
 	group(action *A, const char *ascii_coding);
 	group(action *A, vector_ge &SG, INT *tl);
-	~group();
-	void freeself();
 	void init(action *A);
 	void init_ascii_coding_to_sims(const char *ascii_coding);
 	void init_ascii_coding(const char *ascii_coding);

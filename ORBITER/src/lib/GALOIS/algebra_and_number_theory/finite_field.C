@@ -114,7 +114,8 @@ void finite_field::init_symbol_for_print(const BYTE *symbol)
 	strcpy(symbol_for_print, symbol);
 }
 
-void finite_field::init_override_polynomial(INT q, const BYTE *poly, INT verbose_level)
+void finite_field::init_override_polynomial(INT q,
+		const BYTE *poly, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -146,11 +147,13 @@ void finite_field::init_override_polynomial(INT q, const BYTE *poly, INT verbose
 				}
 			}
 		if (f_v) {
-			cout << "finite_field::init_override_polynomial using poly " << poly << endl;
+			cout << "finite_field::init_override_polynomial using poly "
+					<< poly << endl;
 			}
 		}
 	if (f_v) {
-		cout << "finite_field::init_override_polynomial() GF(" << q << ") = GF(" << p << "^" << e << ")";
+		cout << "finite_field::init_override_polynomial() GF(" << q << ") "
+				"= GF(" << p << "^" << e << ")";
 		if (e > 1) {
 			cout << ", polynomial = ";
 			print_minimum_polynomial(p, poly);
@@ -215,7 +218,8 @@ void finite_field::init_override_polynomial(INT q, const BYTE *poly, INT verbose
 	
 	
 	if (f_vv) {
-		cout << "computing frobenius_table and absolute_trace_table q=" << q << endl;
+		cout << "computing frobenius_table and "
+				"absolute_trace_table q=" << q << endl;
 		}
 	frobenius_table = NEW_INT(q);
 	absolute_trace_table = NEW_INT(q);
@@ -223,7 +227,8 @@ void finite_field::init_override_polynomial(INT q, const BYTE *poly, INT verbose
 	for (i = 0; i < q; i++) {
 		frobenius_table[i] = power(i, p);
 		if (FALSE) {
-			cout << "frobenius_table[" << i << "]=" << frobenius_table[i] << endl;
+			cout << "frobenius_table[" << i << "]="
+					<< frobenius_table[i] << endl;
 			}
 		}
 	
@@ -233,7 +238,8 @@ void finite_field::init_override_polynomial(INT q, const BYTE *poly, INT verbose
 
 	
 	if (f_vv) {
-		cout << "init_override_polynomial() field of order " << q << " initialized" << endl;
+		cout << "init_override_polynomial() field of order "
+				<< q << " initialized" << endl;
 		if (f_vv && q <= CREATE_TABLE_UPPER_BOUND) {
 			if (e > 1) {
 				print_tables_extension_field(poly);
@@ -264,19 +270,22 @@ void finite_field::print_minimum_polynomial(INT p, const BYTE *polynomial)
 
 	Fq.print_object(n, cout);
 	}
-	//cout << "finite_field::print_minimum_polynomial before delete_object" << endl;
+	//cout << "finite_field::print_minimum_polynomial "
+	//"before delete_object" << endl;
 	FX.delete_object(m);
 	FX.delete_object(n);
 }
 
-INT finite_field::compute_subfield_polynomial(INT order_subfield, INT verbose_level)
+INT finite_field::compute_subfield_polynomial(INT order_subfield,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT p1, e1, q1, i, j, jj, subgroup_index;
 
 	if (f_v) {
-		cout << "finite_field::compute_subfield_polynomial for subfield of order " << order_subfield << endl;
+		cout << "finite_field::compute_subfield_polynomial "
+				"for subfield of order " << order_subfield << endl;
 		}
 	factor_prime_power(order_subfield, p1, e1);
 	if (p1 != p) {
@@ -310,7 +319,8 @@ INT finite_field::compute_subfield_polynomial(INT order_subfield, INT verbose_le
 	base_cols = NEW_INT(e);
 	q1 = i_power_j(p, e1);
 	subgroup_index = (q - 1) / (q1 - 1);
-	cout << "subfield " << p << "^" << e1 << " : subgroup_index = " << subgroup_index << endl;
+	cout << "subfield " << p << "^" << e1 << " : subgroup_index = "
+			<< subgroup_index << endl;
 	for (i = 0; i <= e1; i++) {
 		j = i * subgroup_index;
 		jj = alpha_power(j);
@@ -378,7 +388,8 @@ INT finite_field::compute_subfield_polynomial(INT order_subfield, INT verbose_le
 		unipoly_object elt;
 		
 		FX.create_object_by_rank(elt, a);
-		cout << "subfield of order " << i_power_j(p, e1) << " : " << a << " = ";
+		cout << "subfield of order " << i_power_j(p, e1)
+				<< " : " << a << " = ";
 		Fq.print_object(elt, cout);
 		cout << endl;
 		Fq.delete_object(elt);
@@ -415,12 +426,14 @@ void finite_field::compute_subfields(INT verbose_level)
 		if ((e % e1) == 0) {
 			INT poly;
 
-			poly = compute_subfield_polynomial(i_power_j(p, e1), verbose_level);
+			poly = compute_subfield_polynomial(
+					i_power_j(p, e1), verbose_level);
 			{
 				unipoly_object elt;
 				
 				FX.create_object_by_rank(elt, poly);
-				cout << "subfield of order " << i_power_j(p, e1) << " : " << poly << " = ";
+				cout << "subfield of order " << i_power_j(p, e1)
+						<< " : " << poly << " = ";
 				Fq.print_object(elt, cout);
 				cout << endl;
 				Fq.delete_object(elt);
@@ -438,7 +451,8 @@ void finite_field::create_alpha_table(INT verbose_level)
 	alpha_power_table = NEW_INT(q);
 
 	if (f_v) {
-		cout << "creating alpha table, q=" << q << " p=" << p << " e=" << e << endl;
+		cout << "creating alpha table, q=" << q
+				<< " p=" << p << " e=" << e << endl;
 		}
 	if (e > 1) {
 		create_alpha_table_extension_field(verbose_level);
@@ -458,7 +472,8 @@ void finite_field::create_alpha_table_extension_field(INT verbose_level)
 	INT i, k;
 	
 	if (f_v) {
-		cout << "create_alpha_table_extension_field, q=" << q << " p=" << p << " e=" << e << endl;
+		cout << "create_alpha_table_extension_field, "
+				"q=" << q << " p=" << p << " e=" << e << endl;
 		}
 
 	alpha = p;
@@ -498,7 +513,8 @@ void finite_field::create_alpha_table_extension_field(INT verbose_level)
 			cout << " has rank " << k << endl;
 			}
 		if (k < 0 || k >= q) {
-			cout << "error in finite_field::create_alpha_table_extension_field k = " << k << endl;
+			cout << "error in finite_field::create_alpha_table_"
+					"extension_field k = " << k << endl;
 			}
 
 		alpha_power_table[i] = k;
@@ -518,7 +534,8 @@ void finite_field::create_alpha_table_extension_field(INT verbose_level)
 	FX.delete_object(m);
 
 	if (f_v) {
-		cout << "finished create_alpha_table_extension_field, q=" << q << " p=" << p << " e=" << e << endl;
+		cout << "finished create_alpha_table_extension_field, "
+				"q=" << q << " p=" << p << " e=" << e << endl;
 		}
 }
 
@@ -529,7 +546,8 @@ void finite_field::create_alpha_table_prime_field(INT verbose_level)
 	INT i, a;
 	
 	if (f_v) {
-		cout << "create_alpha_table_prime_field, q=" << q << " p=" << p << " e=" << e << endl;
+		cout << "create_alpha_table_prime_field, "
+				"q=" << q << " p=" << p << " e=" << e << endl;
 		}
 	alpha = ::primitive_root(p, f_v);
 	if (f_v) {
@@ -539,7 +557,8 @@ void finite_field::create_alpha_table_prime_field(INT verbose_level)
 	a = 1;
 	for (i = 0; i < p; i++) {
 		if (a < 0 || a >= q) {
-			cout << "error in finite_field::create_alpha_table_prime_field() a = " << a << endl;
+			cout << "error in finite_field::create_alpha_table_prime_field() "
+					"a = " << a << endl;
 			}
 		alpha_power_table[i] = a;
 		log_alpha_table[a] = i;
@@ -722,7 +741,8 @@ void finite_field::print_tables()
 
 
 
-	cout << "i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : log_alpha(i)" << endl;
+	cout << "i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : "
+			"log_alpha(i)" << endl;
 	for (i = 0; i < q; i++) {
 		if (i)
 			a = inverse(i);
@@ -763,7 +783,8 @@ void finite_field::print_tables_extension_field(const BYTE *poly)
 
 
 
-	cout << "i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : log_alpha(i) : elt[i]" << endl;
+	cout << "i : inverse(i) : frobenius_power(i, 1) : alpha_power(i) : "
+			"log_alpha(i) : elt[i]" << endl;
 	for (i = 0; i < q; i++) {
 		if (i)
 			a = inverse(i);
@@ -830,7 +851,8 @@ void finite_field::display_T2(ostream &ost)
 	
 	ost << "i & T2(i)" << endl;
 	for (i = 0; i < q; i++) {
-		ost << setw((int) log10_of_q) << i << " & " << setw((int) log10_of_q) << T2(i) << endl;
+		ost << setw((int) log10_of_q) << i << " & "
+				<< setw((int) log10_of_q) << T2(i) << endl;
 		}
 }
 
@@ -840,7 +862,8 @@ void finite_field::display_T3(ostream &ost)
 	
 	ost << "i & T3(i)" << endl;
 	for (i = 0; i < q; i++) {
-		ost << setw((int) log10_of_q) << i << " & " << setw((int) log10_of_q) << T3(i) << endl;
+		ost << setw((int) log10_of_q) << i << " & "
+				<< setw((int) log10_of_q) << T3(i) << endl;
 		}
 }
 
@@ -850,7 +873,8 @@ void finite_field::display_N2(ostream &ost)
 	
 	ost << "i & N2(i)" << endl;
 	for (i = 0; i < q; i++) {
-		ost << setw((int) log10_of_q) << i << " & " << setw((int) log10_of_q) << N2(i) << endl;
+		ost << setw((int) log10_of_q) << i << " & "
+				<< setw((int) log10_of_q) << N2(i) << endl;
 		}
 }
 
@@ -860,11 +884,13 @@ void finite_field::display_N3(ostream &ost)
 	
 	ost << "i & N3(i)" << endl;
 	for (i = 0; i < q; i++) {
-		ost << setw((int) log10_of_q) << i << " & " << setw((int) log10_of_q) << N3(i) << endl;
+		ost << setw((int) log10_of_q) << i << " & "
+				<< setw((int) log10_of_q) << N3(i) << endl;
 		}
 }
 
-void finite_field::print_integer_matrix_zech(ostream &ost, INT *p, INT m, INT n)
+void finite_field::print_integer_matrix_zech(ostream &ost,
+		INT *p, INT m, INT n)
 {
 	INT i, j, a, h;
     int w;
@@ -890,7 +916,8 @@ void finite_field::print_integer_matrix_zech(ostream &ost, INT *p, INT m, INT n)
 INT *finite_field::private_add_table()
 {
 	if (!f_has_table) {
-		cout << "error: finite_field::private_add_table  tables not computed" << endl;
+		cout << "error: finite_field::private_add_table  "
+				"tables not computed" << endl;
 		exit(1);
 		}
 	return add_table;
@@ -899,7 +926,8 @@ INT *finite_field::private_add_table()
 INT *finite_field::private_mult_table()
 {
 	if (!f_has_table) {
-		cout << "error: finite_field::private_mult_table  tables not computed" << endl;
+		cout << "error: finite_field::private_mult_table  "
+				"tables not computed" << endl;
 		exit(1);
 		}
 	return mult_table;
@@ -1139,7 +1167,8 @@ INT finite_field::add7(INT i1, INT i2, INT i3, INT i4, INT i5, INT i6, INT i7)
 	return x;
 }
 
-INT finite_field::add8(INT i1, INT i2, INT i3, INT i4, INT i5, INT i6, INT i7, INT i8)
+INT finite_field::add8(INT i1, INT i2, INT i3, INT i4, INT i5,
+		INT i6, INT i7, INT i8)
 {
 	INT x;
 	
@@ -1208,7 +1237,8 @@ INT finite_field::power(INT a, INT n)
 			}
 		b = mult(b, b);
 		n >>= 1;
-		//cout << "finite_field::power: " << b << "^" << n << " * " << c << endl;
+		//cout << "finite_field::power: " << b << "^"
+		//<< n << " * " << c << endl;
 		}
 	return c;
 }
@@ -1219,7 +1249,8 @@ INT finite_field::frobenius_power(INT a, INT i)
 	INT j;
 	
 	if (frobenius_table == NULL) {
-		cout << "finite_field::frobenius_power frobenius_table == NULL" << endl;
+		cout << "finite_field::frobenius_power "
+				"frobenius_table == NULL" << endl;
 		exit(1);
 		}
 	for (j = 0; j < i; j++) {
@@ -1299,7 +1330,8 @@ INT finite_field::N2(INT a)
 	
 	r = e >> 1;
 	if (e != 2 * r) {
-		cout << "finite_field::N2 field does not have a quadratic subfield" << endl;
+		cout << "finite_field::N2 field does not have a "
+				"quadratic subfield" << endl;
 		exit(1);
 		}
 	b = frobenius_power(a, r);
@@ -1314,7 +1346,8 @@ INT finite_field::N3(INT a)
 	
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::N3 field does not have a cubic subfield" << endl;
+		cout << "finite_field::N3 field does not have a "
+				"cubic subfield" << endl;
 		exit(1);
 		}
 	b = frobenius_power(a, r);
@@ -1331,7 +1364,8 @@ INT finite_field::T2(INT a)
 	
 	r = e >> 1;
 	if (e != 2 * r) {
-		cout << "finite_field::T2 field does not have a quadratic subfield" << endl;
+		cout << "finite_field::T2 field does not have a "
+				"quadratic subfield" << endl;
 		exit(1);
 		}
 	b = frobenius_power(a, r);
@@ -1346,7 +1380,8 @@ INT finite_field::T3(INT a)
 	
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::T3 field does not have a cubic subfield" << endl;
+		cout << "finite_field::T3 field does not have a "
+				"cubic subfield" << endl;
 		exit(1);
 		}
 	b = frobenius_power(a, r);
@@ -1363,14 +1398,16 @@ INT finite_field::bar(INT a)
 	
 	r = e >> 1;
 	if (e != 2 * r) {
-		cout << "finite_field::bar field does not have a quadratic subfield" << endl;
+		cout << "finite_field::bar field does not have a "
+				"quadratic subfield" << endl;
 		exit(1);
 		}
 	b = frobenius_power(a, r);
 	return b;
 }
 
-void finite_field::abc2xy(INT a, INT b, INT c, INT &x, INT &y, INT verbose_level)
+void finite_field::abc2xy(INT a, INT b, INT c,
+		INT &x, INT &y, INT verbose_level)
 // given a, b, c, determine x and y such that 
 // c = a * x^2 + b * y^2
 // such elements x and y exist for any choice of a, b, c.
@@ -1385,7 +1422,8 @@ void finite_field::abc2xy(INT a, INT b, INT c, INT &x, INT &y, INT verbose_level
 			cc = add(mult(a, xx), mult(b, yy));
 			if (cc == c) {
 				if (f_v) {
-					cout << "finite_field::abc2xy q=" << q << " x=" << x << " y=" << y << endl;
+					cout << "finite_field::abc2xy q=" << q
+							<< " x=" << x << " y=" << y << endl;
 					}
 				return;
 				}
@@ -1398,7 +1436,8 @@ void finite_field::abc2xy(INT a, INT b, INT c, INT &x, INT &y, INT verbose_level
 	exit(1);
 }
 
-INT finite_field::retract(finite_field &subfield, INT index, INT a, INT verbose_level)
+INT finite_field::retract(finite_field &subfield,
+		INT index, INT a, INT verbose_level)
 {
 	INT b;
 	
@@ -1406,7 +1445,9 @@ INT finite_field::retract(finite_field &subfield, INT index, INT a, INT verbose_
 	return b;
 }
 
-void finite_field::retract_INT_vec(finite_field &subfield, INT index, INT *v_in, INT *v_out, INT len, INT verbose_level)
+void finite_field::retract_INT_vec(finite_field &subfield,
+		INT index, INT *v_in, INT *v_out, INT len,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b, i, j, idx, m, n, k;
@@ -1417,7 +1458,8 @@ void finite_field::retract_INT_vec(finite_field &subfield, INT index, INT *v_in,
 	n = e / index;
 	m = i_power_j(p, n);
 	if (m != subfield.q) {
-		cout << "finite_field::retract_INT_vec subfield order does not match" << endl;
+		cout << "finite_field::retract_INT_vec subfield "
+				"order does not match" << endl;
 		exit(1);
 		}
 	idx = (q - 1) / (m - 1);
@@ -1434,7 +1476,8 @@ void finite_field::retract_INT_vec(finite_field &subfield, INT index, INT *v_in,
 			}
 		i = log_alpha(a);
 		if (i % idx) {
-			cout << "finite_field::retract_INT_vec index=" << index << " k=" << k << " a=" << a << endl;
+			cout << "finite_field::retract_INT_vec index=" << index
+					<< " k=" << k << " a=" << a << endl;
 			cout << "element does not lie in the subfield" << endl;
 			exit(1);
 			}
@@ -1447,13 +1490,15 @@ void finite_field::retract_INT_vec(finite_field &subfield, INT index, INT *v_in,
 		}
 }
 
-INT finite_field::embed(finite_field &subfield, INT index, INT b, INT verbose_level)
+INT finite_field::embed(finite_field &subfield,
+		INT index, INT b, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, i, j, idx, m, n;
 		
 	if (f_v) {
-		cout << "finite_field::embed index=" << index << " b=" << b << endl;
+		cout << "finite_field::embed index=" << index
+				<< " b=" << b << endl;
 		}
 	if (b == 0) {
 		a = 0;
@@ -1475,13 +1520,16 @@ INT finite_field::embed(finite_field &subfield, INT index, INT b, INT verbose_le
 	a = alpha_power(i);
 finish:
 	if (f_v) {
-		cout << "finite_field::embed index=" << index << " b=" << b << " a=" << a << endl;
+		cout << "finite_field::embed index=" << index
+				<< " b=" << b << " a=" << a << endl;
 		}
 	return a;
 }
 
-void finite_field::subfield_embedding_2dimensional(finite_field &subfield, 
-	INT *&components, INT *&embedding, INT *&pair_embedding, INT verbose_level)
+void finite_field::subfield_embedding_2dimensional(
+		finite_field &subfield,
+	INT *&components, INT *&embedding, INT *&pair_embedding,
+	INT verbose_level)
 // we think of F as two dimensional vector space over f with basis (1,alpha)
 // for i,j \in f, with x = i + j * alpha \in F, we have 
 // pair_embedding[i * q + j] = x;
@@ -1525,22 +1573,26 @@ void finite_field::subfield_embedding_2dimensional(finite_field &subfield,
 			x = add(I, mult(alpha, J));
 			if (pair_embedding[i * q + j] != -1) {
 				cout << "error" << endl;
-				cout << "element (" << i << "," << j << ") embeds as (" << I << "," << J << ") = " << x << endl;
+				cout << "element (" << i << "," << j << ") embeds "
+						"as (" << I << "," << J << ") = " << x << endl;
 				exit(1);
 				}
 			pair_embedding[i * q + j] = x;
 			components[x * 2 + 0] = i;
 			components[x * 2 + 1] = j;
 			if (f_vv) {
-				cout << "element (" << i << "," << j << ") embeds as (" << I << "," << J << ") = " << x << endl;
+				cout << "element (" << i << "," << j << ") embeds "
+						"as (" << I << "," << J << ") = " << x << endl;
 				}
 			}
 		}
 	if (f_vv) {
-		print_embedding(subfield, components, embedding, pair_embedding);
+		print_embedding(subfield, components,
+				embedding, pair_embedding);
 		}
 	if (f_v) {
-		cout << "finite_field::subfield_embedding_2dimensional finished" << endl;
+		cout << "finite_field::subfield_embedding_2dimensional "
+				"finished" << endl;
 		}
 }
 
@@ -1557,12 +1609,14 @@ void finite_field::print_embedding(finite_field &subfield,
 		}
 	cout << "components:" << endl;
 	for (i = 0; i < Q; i++) {
-		cout << setw(4) << i << setw(4) << components[i * 2 + 0] << setw(4) << components[i * 2 + 1] << endl;
+		cout << setw(4) << i << setw(4) << components[i * 2 + 0]
+			<< setw(4) << components[i * 2 + 1] << endl;
 		}
 	cout << "pair_embeddings:" << endl;
 	for (i = 0; i < q; i++) {
 		for (j = 0; j < q; j++) {
-			cout << setw(4) << i << setw(4) << j << setw(4) << pair_embedding[i * q + j] << endl;
+			cout << setw(4) << i << setw(4) << j << setw(4)
+				<< pair_embedding[i * q + j] << endl;
 			}
 		}
 }
@@ -1611,7 +1665,8 @@ void finite_field::print_indicator_square_nonsquare(INT a)
 	INT l;
 	
 	if (p == 2) {
-		cout << "finite_field::print_indicator_square_nonsquare the characteristic is two" << endl;
+		cout << "finite_field::print_indicator_square_nonsquare "
+				"the characteristic is two" << endl;
 		exit(1);
 		}
 	if (a == 0) {
@@ -1636,16 +1691,19 @@ void finite_field::print_element(ostream &ost, INT a)
 	else {
 		width = log10_of_q;
 		}
-	print_element_with_symbol(ost, a, f_print_as_exponentials, width, symbol_for_print);
+	print_element_with_symbol(ost, a, f_print_as_exponentials,
+			width, symbol_for_print);
 }
 
-void finite_field::print_element_with_symbol(ostream &ost, INT a, INT f_exponential, INT width, const BYTE *symbol)
+void finite_field::print_element_with_symbol(ostream &ost,
+		INT a, INT f_exponential, INT width, const BYTE *symbol)
 {
 	INT b;
 	
 	if (f_exponential) {
 		if (symbol == NULL) {
-			cout << "finite_field::print_element_with_symbol symbol == NULL" << endl;
+			cout << "finite_field::print_element_with_symbol "
+					"symbol == NULL" << endl;
 			return;
 			}
 		if (a == 0) {
@@ -1683,7 +1741,8 @@ void finite_field::INT_vec_print(ostream &ost, INT *v, INT len)
 	ost << ")";
 }
 
-void finite_field::INT_vec_print_elements_exponential(ostream &ost, INT *v, INT len, const BYTE *symbol_for_print)
+void finite_field::INT_vec_print_elements_exponential(ostream &ost,
+		INT *v, INT len, const BYTE *symbol_for_print)
 {
 	INT i;
 	ost << "(";
@@ -1697,7 +1756,8 @@ void finite_field::INT_vec_print_elements_exponential(ostream &ost, INT *v, INT 
 	ost << ")";
 }
 
-void finite_field::latex_addition_table(ostream &f, INT f_elements_exponential, const BYTE *symbol_for_print)
+void finite_field::latex_addition_table(ostream &f,
+		INT f_elements_exponential, const BYTE *symbol_for_print)
 {
 	INT i, j, k;
 	
@@ -1708,18 +1768,21 @@ void finite_field::latex_addition_table(ostream &f, INT f_elements_exponential, 
 	f << "+ ";
 	for (i = 0; i < q; i++) {
 		f << " &";
-		print_element_with_symbol(f, i, f_elements_exponential, 10 /* width */, 
+		print_element_with_symbol(f, i, f_elements_exponential,
+				10 /* width */,
 			symbol_for_print);
 		}
 	f << "\\\\" << endl;
 	f << "\\hline" << endl;
 	for (i = 0; i < q; i++) {
-		print_element_with_symbol(f, i, f_elements_exponential, 10 /* width */, 
+		print_element_with_symbol(f, i, f_elements_exponential,
+				10 /* width */,
 			symbol_for_print);
 		for (j = 0; j < q; j++) {
 			k = add(i, j);
 			f << "&";
-			print_element_with_symbol(f, k, f_elements_exponential, 10 /* width */, 
+			print_element_with_symbol(f, k, f_elements_exponential,
+					10 /* width */,
 				symbol_for_print);
 			}
 		f << "\\\\" << endl;
@@ -1729,7 +1792,8 @@ void finite_field::latex_addition_table(ostream &f, INT f_elements_exponential, 
 	//f << "$$" << endl;
 }
 
-void finite_field::latex_multiplication_table(ostream &f, INT f_elements_exponential, const BYTE *symbol_for_print)
+void finite_field::latex_multiplication_table(ostream &f,
+		INT f_elements_exponential, const BYTE *symbol_for_print)
 {
 	INT i, j, k;
 	
@@ -1739,19 +1803,22 @@ void finite_field::latex_multiplication_table(ostream &f, INT f_elements_exponen
 	f << "\\cdot ";
 	for (i = 1; i < q; i++) {
 		f << " &";
-		print_element_with_symbol(f, i, f_elements_exponential, 10 /* width */, 
+		print_element_with_symbol(f, i, f_elements_exponential,
+				10 /* width */,
 			symbol_for_print);
 		}
 	f << "\\\\" << endl;
 	f << "\\hline" << endl;
 	for (i = 1; i < q; i++) {
 		f << setw(3);
-		print_element_with_symbol(f, i, f_elements_exponential, 10 /* width */, 
+		print_element_with_symbol(f, i, f_elements_exponential,
+				10 /* width */,
 			symbol_for_print);
 		for (j = 1; j < q; j++) {
 			k = mult(i, j);
 			f << "&" << setw(3);
-			print_element_with_symbol(f, k, f_elements_exponential, 10 /* width */, 
+			print_element_with_symbol(f, k, f_elements_exponential,
+					10 /* width */,
 				symbol_for_print);
 			}
 		f << "\\\\" << endl;
@@ -1760,7 +1827,8 @@ void finite_field::latex_multiplication_table(ostream &f, INT f_elements_exponen
 	f << "\\end{array}" << endl;
 }
 
-void finite_field::latex_matrix(ostream &f, INT f_elements_exponential, const BYTE *symbol_for_print, INT *M, INT m, INT n)
+void finite_field::latex_matrix(ostream &f, INT f_elements_exponential,
+		const BYTE *symbol_for_print, INT *M, INT m, INT n)
 {
 	INT i, j;
 	
@@ -1768,7 +1836,8 @@ void finite_field::latex_matrix(ostream &f, INT f_elements_exponential, const BY
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			f << setw(3);
-			print_element_with_symbol(f, M[i * n + j], f_elements_exponential, 10 /* width */, 
+			print_element_with_symbol(f, M[i * n + j],
+				f_elements_exponential, 10 /* width */,
 				symbol_for_print);
 			if (j < n - 1) {
 				f << " & ";
@@ -1812,7 +1881,8 @@ INT finite_field::evaluate_conic_form(INT *six_coeffs, INT *v3)
 	return val;
 }
 
-INT finite_field::evaluate_quadric_form_in_PG_three(INT *ten_coeffs, INT *v4)
+INT finite_field::evaluate_quadric_form_in_PG_three(
+		INT *ten_coeffs, INT *v4)
 {
 	INT val, val1;
 	
@@ -1911,7 +1981,8 @@ INT finite_field::evaluate_symplectic_form(INT len, INT *x, INT *y)
 	INT i, n, c;
 
 	if (ODD(len)) {
-		cout << "finite_field::evaluate_symplectic_form len must be even" << endl;
+		cout << "finite_field::evaluate_symplectic_form len must be even"
+				<< endl;
 		cout << "len=" << len << endl;
 		exit(1);
 		}
@@ -1934,7 +2005,8 @@ INT finite_field::evaluate_quadratic_form_x0x3mx1x2(INT *x)
 	return a;
 }
 
-INT finite_field::is_totally_isotropic_wrt_symplectic_form(INT k, INT n, INT *Basis)
+INT finite_field::is_totally_isotropic_wrt_symplectic_form(
+		INT k, INT n, INT *Basis)
 {
 	INT i, j;
 
@@ -1987,7 +2059,8 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 	f << "$$" << endl;
 	f << "\\begin{array}{|r|r|r|}" << endl;
 	f << "\\hline" << endl;
-	f << "\\mbox{order} & \\mbox{polynomial} & \\mbox{polynomial} \\\\" << endl;
+	f << "\\mbox{order} & \\mbox{polynomial} & \\mbox{polynomial} \\\\"
+			<< endl;
 	f << "\\hline" << endl;
 	for (h = 2; h < e; h++) {
 		if ((e % h) == 0) {
@@ -1996,7 +2069,8 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 			f << "\\hline" << endl;
 			INT poly;
 
-			poly = compute_subfield_polynomial(i_power_j(p, h), verbose_level);
+			poly = compute_subfield_polynomial(
+					i_power_j(p, h), verbose_level);
 			{
 				finite_field GFp;
 				GFp.init(p, 0);
@@ -2004,7 +2078,8 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 				unipoly_domain FX(&GFp);
 				unipoly_object m;
 
-				FX.create_object_by_rank_string(m, polynomial, 0/*verbose_level*/);
+				FX.create_object_by_rank_string(m, polynomial,
+						0/*verbose_level*/);
 				unipoly_domain Fq(&GFp, m);
 				unipoly_object elt;
 				
@@ -2137,7 +2212,8 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 
 	if (q <= 64) {
 		f << "$$" << endl;
-		latex_addition_table(f, FALSE /* f_elements_exponential */, symbol_for_print);
+		latex_addition_table(f, FALSE /* f_elements_exponential */,
+				symbol_for_print);
 		if (q >= 10) {
 			f << "$$" << endl;
 			f << "$$" << endl;
@@ -2145,11 +2221,13 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 		else {
 			f << "\\qquad" << endl;
 			}
-		latex_addition_table(f, TRUE /* f_elements_exponential */, symbol_for_print);
+		latex_addition_table(f, TRUE /* f_elements_exponential */,
+				symbol_for_print);
 		f << "$$" << endl;
 
 		f << "$$" << endl;
-		latex_multiplication_table(f, FALSE /* f_elements_exponential */, symbol_for_print);
+		latex_multiplication_table(f, FALSE /* f_elements_exponential */,
+				symbol_for_print);
 		if (q >= 10) {
 			f << "$$" << endl;
 			f << "$$" << endl;
@@ -2157,7 +2235,8 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 		else {
 			f << "\\qquad" << endl;
 			}
-		latex_multiplication_table(f, TRUE /* f_elements_exponential */, symbol_for_print);
+		latex_multiplication_table(f, TRUE /* f_elements_exponential */,
+				symbol_for_print);
 		f << "$$" << endl;
 		}
 	else {
@@ -2206,7 +2285,8 @@ void finite_field::cheat_sheet_bottom(ostream &f)
 }
 
 
-INT finite_field::evaluate_monomial(INT *monomial, INT *variables, INT nb_vars)
+INT finite_field::evaluate_monomial(INT *monomial,
+		INT *variables, INT nb_vars)
 {
 	INT i, j, a, b, x;
 
@@ -2223,7 +2303,8 @@ INT finite_field::evaluate_monomial(INT *monomial, INT *variables, INT nb_vars)
 
 void finite_field::projective_point_unrank(INT n, INT *v, INT rk)
 {
-	PG_element_unrank_modified(*this, v, 1 /* stride */, n + 1 /* len */, rk);
+	PG_element_unrank_modified(*this, v, 1 /* stride */,
+			n + 1 /* len */, rk);
 }
 
 INT finite_field::projective_point_rank(INT n, INT *v)

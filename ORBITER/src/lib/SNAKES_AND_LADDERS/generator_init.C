@@ -107,6 +107,7 @@ void generator::null()
 	f_on_subspaces = FALSE;
 	rank_point_func = NULL;
 	unrank_point_func = NULL;
+	tmp_v1 = NULL;
 
 	f_early_test_func = FALSE;
 	early_test_func = NULL;
@@ -124,9 +125,7 @@ void generator::null()
 	schreier_tree_f_sideways = FALSE;
 	schreier_tree_scale = 0.3;
 	schreier_tree_line_width = 1.;
-	
-	//CFI = NULL;
-	
+
 	t0 = os_ticks();
 }
 
@@ -181,6 +180,9 @@ void generator::freeself()
 	if (f_v) {
 		cout << "generator::freeself  after exit_oracle" << endl;
 		}
+	if (tmp_v1) {
+		FREE_INT(tmp_v1);
+	}
 
 
 	if (f_v) {
@@ -572,7 +574,8 @@ void generator::initialize_with_starter(action *A_base, action *A_use,
 	INT *starter_live_points, 
 	INT starter_nb_live_points, 
 	void *starter_canonize_data, 
-	INT (*starter_canonize)(INT *Set, INT len, INT *Elt, void *data, INT verbose_level), 
+	INT (*starter_canonize)(INT *Set, INT len,
+			INT *Elt, void *data, INT verbose_level),
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -596,7 +599,8 @@ void generator::initialize_with_starter(action *A_base, action *A_use,
 	//f_allowed_to_show_group_elements = TRUE;
 
 	if (f_vv) {
-		cout << "generator::initialize_with_starter calling gen->init" << endl;
+		cout << "generator::initialize_with_starter "
+				"calling gen->init" << endl;
 		}
 	init(A_base, A_use, 
 		gens, 
@@ -605,7 +609,8 @@ void generator::initialize_with_starter(action *A_base, action *A_use,
 	
 
 	if (f_vv) {
-		cout << "generator::initialize_with_starter calling init_starter" << endl;
+		cout << "generator::initialize_with_starter "
+				"calling init_starter" << endl;
 		}
 	init_starter(starter_size, 
 		starter, 
@@ -619,11 +624,13 @@ void generator::initialize_with_starter(action *A_base, action *A_use,
 	INT nb_oracle_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "generator::initialize_with_starter calling gen->init_oracle" << endl;
+		cout << "generator::initialize_with_starter "
+				"calling gen->init_oracle" << endl;
 		}
 	init_oracle(nb_oracle_nodes, verbose_level - 1);
 	if (f_vv) {
-		cout << "generator::initialize_with_starter calling gen->init_root_node" << endl;
+		cout << "generator::initialize_with_starter "
+				"calling gen->init_root_node" << endl;
 		}
 	init_root_node(verbose_level);
 
@@ -633,7 +640,8 @@ void generator::initialize_with_starter(action *A_base, action *A_use,
 }
 
 void generator::init_root_node_invariant_subset(
-	INT *invariant_subset, INT invariant_subset_size, INT verbose_level)
+	INT *invariant_subset, INT invariant_subset_size,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -644,7 +652,9 @@ void generator::init_root_node_invariant_subset(
 	invariant_subset_for_root_node = invariant_subset;
 	invariant_subset_for_root_node_size = invariant_subset_size;
 	if (f_v) {
-		cout << "generator::init_root_node_invariant_subset installed invariant subset of size " << invariant_subset_size << endl;
+		cout << "generator::init_root_node_invariant_subset "
+				"installed invariant subset of size "
+				<< invariant_subset_size << endl;
 		}
 }
 
@@ -674,9 +684,11 @@ void generator::init_root_node(INT verbose_level)
 			nb_unprocessed_nodes_at_level[i] = 0;
 			
 			if (f_vv) {
-				cout << "generator::init_root_node initializing node at level " << i << endl;
+				cout << "generator::init_root_node initializing "
+						"node at level " << i << endl;
 				}
-			first_oracle_node_at_level[i + 1] = first_oracle_node_at_level[i] + 1;
+			first_oracle_node_at_level[i + 1] =
+					first_oracle_node_at_level[i] + 1;
 			root[i].E = new extension[1];
 			root[i].nb_extensions = 1;
 			root[i].E[0].type = EXTENSION_TYPE_EXTENSION;
@@ -689,14 +701,18 @@ void generator::init_root_node(INT verbose_level)
 			root[i + 1].sv = NULL;
 			}
 		if (f_vv) {
-			cout << "generator::init_root_node storing strong generators" << endl;
+			cout << "generator::init_root_node "
+					"storing strong generators" << endl;
 			}
-		root[starter_size].store_strong_generators(this, starter_strong_gens);
-		first_oracle_node_at_level[starter_size + 1] = starter_size + 1;
+		root[starter_size].store_strong_generators(
+				this, starter_strong_gens);
+		first_oracle_node_at_level[starter_size + 1] =
+				starter_size + 1;
 		if (f_vv) {
 			cout << "i : first_oracle_node_at_level[i]" << endl;
 			for (i = 0; i <= starter_size + 1; i++) {
-				cout << i << " : " << first_oracle_node_at_level[i] << endl;
+				cout << i << " : "
+						<< first_oracle_node_at_level[i] << endl;
 				}
 			}
 		}
@@ -792,14 +808,17 @@ void generator::reallocate()
 	INT increment_new;
 	INT verbose_level = 0;
 	
-	increment_new = oracle_nodes_increment + oracle_nodes_increment_last;
-	reallocate_to(nb_oracle_nodes_allocated + oracle_nodes_increment, verbose_level - 1);
+	increment_new = oracle_nodes_increment +
+			oracle_nodes_increment_last;
+	reallocate_to(nb_oracle_nodes_allocated +
+			oracle_nodes_increment, verbose_level - 1);
 	oracle_nodes_increment_last = oracle_nodes_increment;
 	oracle_nodes_increment = increment_new;
 	
 }
 
-void generator::reallocate_to(INT new_number_of_nodes, INT verbose_level)
+void generator::reallocate_to(INT new_number_of_nodes,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -809,11 +828,14 @@ void generator::reallocate_to(INT new_number_of_nodes, INT verbose_level)
 		cout << "generator::reallocate_to" << endl;
 		}
 	if (new_number_of_nodes < nb_oracle_nodes_allocated) {
-		cout << "generator::reallocate_to new_number_of_nodes < nb_oracle_nodes_allocated" << endl;
+		cout << "generator::reallocate_to new_number_of_nodes < "
+				"nb_oracle_nodes_allocated" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "generator::reallocate_to from " << nb_oracle_nodes_allocated << " to " << new_number_of_nodes << endl;
+		cout << "generator::reallocate_to from "
+				<< nb_oracle_nodes_allocated
+				<< " to " << new_number_of_nodes << endl;
 		}
 	new_root = new oracle[new_number_of_nodes];
 	for (i = 0; i < nb_oracle_nodes_allocated; i++) {
@@ -830,7 +852,8 @@ void generator::reallocate_to(INT new_number_of_nodes, INT verbose_level)
 
 
 void generator::init_check_func(
-	INT (*candidate_check_func)(INT len, INT *S, void *data, INT verbose_level), 
+	INT (*candidate_check_func)(INT len, INT *S,
+			void *data, INT verbose_level),
 	void *candidate_check_data)
 {
 	f_candidate_check_func = TRUE;
@@ -839,12 +862,15 @@ void generator::init_check_func(
 }
 
 void generator::init_incremental_check_func(
-	INT (*candidate_incremental_check_func)(INT len, INT *S, void *data, INT verbose_level), 
+	INT (*candidate_incremental_check_func)(INT len,
+			INT *S, void *data, INT verbose_level),
 	void *candidate_incremental_check_data)
 {
 	f_candidate_incremental_check_func = TRUE;
-	generator::candidate_incremental_check_func = candidate_incremental_check_func;
-	generator::candidate_incremental_check_data = candidate_incremental_check_data;
+	generator::candidate_incremental_check_func =
+			candidate_incremental_check_func;
+	generator::candidate_incremental_check_data =
+			candidate_incremental_check_data;
 }
 
 void generator::init_starter(INT starter_size, 
@@ -853,16 +879,19 @@ void generator::init_starter(INT starter_size,
 	INT *starter_live_points, 
 	INT starter_nb_live_points, 
 	void *starter_canonize_data, 
-	INT (*starter_canonize)(INT *Set, INT len, INT *Elt, void *data, INT verbose_level), 
+	INT (*starter_canonize)(INT *Set, INT len,
+			INT *Elt, void *data, INT verbose_level),
 	INT verbose_level)
-// Does not initialize the first starter nodes. This is done in init_root_node 
+// Does not initialize the first starter nodes.
+// This is done in init_root_node
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "generator::init_starter starter: ";
 		INT_vec_print(cout, starter, starter_size);
-		cout << " with " << starter_strong_gens->gens->len << " strong generators and " 
+		cout << " with " << starter_strong_gens->gens->len
+			<< " strong generators and "
 			<< starter_nb_live_points << " live points" << endl;
 		}
 	f_starter = TRUE;
@@ -886,7 +915,9 @@ void generator::init_vector_space_action(INT vector_space_dimension,
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::init_vector_space_action vector_space_dimension=" << vector_space_dimension << endl;
+		cout << "generator::init_vector_space_action "
+				"vector_space_dimension="
+				<< vector_space_dimension << endl;
 		}
 	f_on_subspaces = TRUE;
 	generator::vector_space_dimension = vector_space_dimension;
@@ -895,9 +926,14 @@ void generator::init_vector_space_action(INT vector_space_dimension,
 	generator::unrank_point_func = unrank_point_func;
 	generator::rank_point_data = data;
 
-	tmp_find_node_for_subspace_by_rank1 = NEW_INT(vector_space_dimension);
-	tmp_find_node_for_subspace_by_rank2 = NEW_INT(sz * vector_space_dimension);
-	tmp_find_node_for_subspace_by_rank3 = NEW_INT(vector_space_dimension);
+	tmp_find_node_for_subspace_by_rank1 =
+			NEW_INT(vector_space_dimension);
+	tmp_find_node_for_subspace_by_rank2 =
+			NEW_INT(sz * vector_space_dimension);
+	tmp_find_node_for_subspace_by_rank3 =
+			NEW_INT(vector_space_dimension);
+	tmp_v1 =
+			NEW_INT(vector_space_dimension);
 }
 
 void generator::init_early_test_func(

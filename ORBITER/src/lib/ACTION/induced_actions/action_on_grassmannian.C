@@ -6,69 +6,6 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-INT action_on_grassmannian::cntr_new = 0;
-INT action_on_grassmannian::cntr_objects = 0;
-INT action_on_grassmannian::f_debug_memory = FALSE;
-
-void *action_on_grassmannian::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "action_on_grassmannian::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *action_on_grassmannian::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action_on_grassmannian);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "action_on_grassmannian::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void action_on_grassmannian::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "action_on_grassmannian::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return ::free(ptr);
-}
-
-void action_on_grassmannian::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(action_on_grassmannian);
-	if (f_debug_memory) {
-		cout << "action_on_grassmannian::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return ::free(ptr);
-}
-
 action_on_grassmannian::action_on_grassmannian()
 {
 	null();
@@ -81,7 +18,7 @@ action_on_grassmannian::~action_on_grassmannian()
 
 void action_on_grassmannian::null()
 {
-	M = NULL;
+	//M = NULL;
 	M1 = NULL;
 	M2 = NULL;
 	G = NULL;
@@ -97,13 +34,15 @@ void action_on_grassmannian::free()
 
 	if (M1) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free before free M1" << endl;
+			cout << "action_on_grassmannian::free "
+					"before free M1" << endl;
 			}
 		FREE_INT(M1);
 		}
 	if (M2) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free before free M2" << endl;
+			cout << "action_on_grassmannian::free "
+					"before free M2" << endl;
 			}
 		FREE_INT(M2);
 		}
@@ -114,26 +53,30 @@ void action_on_grassmannian::free()
 #endif
 	if (GE) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free before free GE" << endl;
+			cout << "action_on_grassmannian::free "
+					"before free GE" << endl;
 			}
 		delete GE;
 		}
 	if (subspace_basis) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free before free subspace_basis" << endl;
+			cout << "action_on_grassmannian::free "
+					"before free subspace_basis" << endl;
 			}
 		FREE_INT(subspace_basis);
 		}
 	if (subspace_basis2) {
 		if (f_v) {
-			cout << "action_on_grassmannian::free before free subspace_basis2" << endl;
+			cout << "action_on_grassmannian::free "
+					"before free subspace_basis2" << endl;
 			}
 		FREE_INT(subspace_basis2);
 		}
 	null();
 }
 
-void action_on_grassmannian::init(action &A, grassmann *G, INT verbose_level)
+void action_on_grassmannian::init(action &A,
+		grassmann *G, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object go;
@@ -158,22 +101,17 @@ void action_on_grassmannian::init(action &A, grassmann *G, INT verbose_level)
 		cout << "q=" << q << endl;
 		}
 	
-#if 0
-	G = new grassmann;
-	G->init(n, k, q, F, verbose_level - 1);
-#endif
 
 	M1 = NEW_INT(k * n);
 	M2 = NEW_INT(k * n);
 	
-	if (A.type_G != matrix_group_t && 
-		A.type_G != action_on_wedge_product_t && 
-		A.type_G != action_by_subfield_structure_t && 
-		A.type_G != action_by_representation_t && 
-		A.type_G != action_on_spread_set_t) {
-		cout << "action_on_grassmannian::init action not of linear type" << endl;
+	if (!A.f_is_linear) {
+		cout << "action_on_grassmannian::init "
+				"action not of linear type" << endl;
 		exit(1);
 		}
+
+#if 0
 	if (A.type_G == matrix_group_t) {
 		M = A.G.matrix_grp;
 		}
@@ -181,6 +119,7 @@ void action_on_grassmannian::init(action &A, grassmann *G, INT verbose_level)
 		action *sub = A.subaction;
 		M = sub->G.matrix_grp;
 		}
+#endif
 	
 	D.q_binomial(degree, n, k, q, 0);
 	max_string_length = degree.len();
@@ -195,7 +134,8 @@ void action_on_grassmannian::init(action &A, grassmann *G, INT verbose_level)
 		}
 }
 
-void action_on_grassmannian::init_embedding(INT big_n, INT *ambient_space, INT verbose_level)
+void action_on_grassmannian::init_embedding(INT big_n,
+		INT *ambient_space, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -203,7 +143,8 @@ void action_on_grassmannian::init_embedding(INT big_n, INT *ambient_space, INT v
 		cout << "action_on_grassmannian::init_embedding" << endl;
 		cout << "big_n=" << big_n << endl;
 		cout << "ambient space:" << endl;
-		print_integer_matrix_width(cout, ambient_space, n, big_n, big_n, F->log10_of_q);
+		print_integer_matrix_width(cout, ambient_space,
+				n, big_n, big_n, F->log10_of_q);
 		}
 	action_on_grassmannian::big_n = big_n;
 	f_embedding = TRUE;
@@ -214,23 +155,28 @@ void action_on_grassmannian::init_embedding(INT big_n, INT *ambient_space, INT v
 }
 
 
-void action_on_grassmannian::compute_image_longinteger(action *A, INT *Elt, 
-	longinteger_object &i, longinteger_object &j, INT verbose_level)
+void action_on_grassmannian::compute_image_longinteger(
+	action *A, INT *Elt,
+	longinteger_object &i, longinteger_object &j,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT h;
 	
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_longinteger i = " << i << endl;
+		cout << "action_on_grassmannian::compute_image_longinteger "
+				"i = " << i << endl;
 		}
 	G->unrank_longinteger(i, 0/*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "after G->unrank_longinteger" << endl;
-		print_integer_matrix_width(cout, G->M, G->k, G->n, G->n, F->log10_of_q);
+		print_integer_matrix_width(cout, G->M,
+				G->k, G->n, G->n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(G->M + h * n, M1 + h * n, Elt, verbose_level - 1);
+		A->element_image_of_low_level(G->M + h * n,
+				M1 + h * n, Elt, verbose_level - 1);
 		}
 	//A->element_image_of_low_level(G->M, M1, Elt, verbose_level - 1);
 #if 0
@@ -243,7 +189,8 @@ void action_on_grassmannian::compute_image_longinteger(action *A, INT *Elt,
 #endif
 	if (f_vv) {
 		cout << "after element_image_of_low_level" << endl;
-		print_integer_matrix_width(cout, M1, G->k, G->n, G->n, F->log10_of_q);
+		print_integer_matrix_width(cout, M1,
+				G->k, G->n, G->n, F->log10_of_q);
 		}
 	
 	INT_vec_copy(M1, G->M, k * n);
@@ -254,11 +201,13 @@ void action_on_grassmannian::compute_image_longinteger(action *A, INT *Elt,
 #endif
 	G->rank_longinteger(j, 0/*verbose_level - 1*/);
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_longinteger image of " << i << " is " << j << endl;
+		cout << "action_on_grassmannian::compute_image_longinteger "
+				"image of " << i << " is " << j << endl;
 		}
 }
 
-INT action_on_grassmannian::compute_image_INT(action *A, INT *Elt, 
+INT action_on_grassmannian::compute_image_INT(
+	action *A, INT *Elt,
 	INT i, INT verbose_level)
 {
 	if (f_embedding) {
@@ -269,7 +218,8 @@ INT action_on_grassmannian::compute_image_INT(action *A, INT *Elt,
 		}
 }
 
-INT action_on_grassmannian::compute_image_INT_ordinary(action *A, INT *Elt, 
+INT action_on_grassmannian::compute_image_INT_ordinary(
+	action *A, INT *Elt,
 	INT i, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -277,17 +227,22 @@ INT action_on_grassmannian::compute_image_INT_ordinary(action *A, INT *Elt,
 	INT h, j;
 	
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_ordinary i = " << i << endl;
-		cout << "A->low_level_point_size=" << A->low_level_point_size << endl;
+		cout << "action_on_grassmannian::compute_image_INT_ordinary "
+				"i = " << i << endl;
+		cout << "A->low_level_point_size="
+				<< A->low_level_point_size << endl;
 		cout << "using action " << A->label << endl;
 		}
 	G->unrank_INT(i, verbose_level - 1);
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_ordinary after G->unrank_INT" << endl;
-		print_integer_matrix_width(cout, G->M, G->k, G->n, G->n, M->GFq->log10_of_q);
+		cout << "action_on_grassmannian::compute_image_INT_ordinary "
+				"after G->unrank_INT" << endl;
+		print_integer_matrix_width(cout, G->M,
+				G->k, G->n, G->n, 2/* M->GFq->log10_of_q*/);
 		}
 	for (h = 0; h < k; h++) {
-		A->element_image_of_low_level(G->M + h * n, M1 + h * n, Elt, verbose_level - 1);
+		A->element_image_of_low_level(G->M + h * n,
+				M1 + h * n, Elt, verbose_level - 1);
 		}
 #if 0
 	F->mult_matrix_matrix(G->M, Elt, M1, k, n, n);
@@ -306,12 +261,14 @@ INT action_on_grassmannian::compute_image_INT_ordinary(action *A, INT *Elt,
 #endif
 	j = G->rank_INT(verbose_level - 1);
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_ordinary image of " << i << " is " << j << endl;
+		cout << "action_on_grassmannian::compute_image_INT_ordinary "
+				"image of " << i << " is " << j << endl;
 		}
 	return j;
 }
 
-INT action_on_grassmannian::compute_image_INT_embedded(action *A, INT *Elt, 
+INT action_on_grassmannian::compute_image_INT_embedded(
+	action *A, INT *Elt,
 	INT i, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -319,27 +276,36 @@ INT action_on_grassmannian::compute_image_INT_embedded(action *A, INT *Elt,
 	INT j, h;
 	
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded i = " << i << endl;
+		cout << "action_on_grassmannian::compute_image_INT_embedded "
+				"i = " << i << endl;
 		cout << "calling GE->unrank_INT" << endl;
 		}
 	GE->unrank_INT(subspace_basis, i, 0 /*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded subspace_basis:" << endl;
+		cout << "action_on_grassmannian::compute_image_INT_embedded "
+				"subspace_basis:" << endl;
 		cout << "k=" << k << endl;
 		cout << "big_n=" << big_n << endl;
-		print_integer_matrix_width(cout, subspace_basis, k, big_n, big_n, F->log10_of_q);
+		print_integer_matrix_width(cout, subspace_basis,
+				k, big_n, big_n, F->log10_of_q);
 		}
 	for (h = 0; h < k; h++) {
 		A->element_image_of_low_level(
-			subspace_basis + h * big_n, subspace_basis2 + h * big_n, Elt, verbose_level - 1);
+			subspace_basis + h * big_n,
+			subspace_basis2 + h * big_n,
+			Elt, verbose_level - 1);
 		}
 	
-	//A->element_image_of_low_level(subspace_basis, subspace_basis2, Elt, verbose_level - 1);
+	//A->element_image_of_low_level(subspace_basis,
+	// subspace_basis2, Elt, verbose_level - 1);
 #if 0
-	F->mult_matrix_matrix(subspace_basis, Elt, subspace_basis2, k, big_n, big_n);
+	F->mult_matrix_matrix(subspace_basis, Elt,
+			subspace_basis2, k, big_n, big_n);
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded after mult_matrix_matrix:" << endl;
-		print_integer_matrix_width(cout, subspace_basis2, k, big_n, big_n, F->log10_of_q);
+		cout << "action_on_grassmannian::compute_image_INT_embedded "
+				"after mult_matrix_matrix:" << endl;
+		print_integer_matrix_width(cout, subspace_basis2,
+				k, big_n, big_n, F->log10_of_q);
 		}
 	
 	if (M->f_semilinear) {
@@ -352,12 +318,16 @@ INT action_on_grassmannian::compute_image_INT_embedded(action *A, INT *Elt,
 #endif
 	
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded subspace_basis after the action:" << endl;
-		print_integer_matrix_width(cout, subspace_basis2, k, big_n, big_n, F->log10_of_q);
+		cout << "action_on_grassmannian::compute_image_INT_embedded "
+				"subspace_basis after the action:" << endl;
+		print_integer_matrix_width(cout, subspace_basis2,
+				k, big_n, big_n, F->log10_of_q);
 		}
-	j = GE->rank_INT(subspace_basis2, 0 /*verbose_level - 1 */);
+	j = GE->rank_INT(subspace_basis2,
+			0 /*verbose_level - 1 */);
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded image of " << i << " is " << j << endl;
+		cout << "action_on_grassmannian::compute_image_INT_embedded "
+				"image of " << i << " is " << j << endl;
 		}
 	return j;
 }
@@ -365,7 +335,8 @@ INT action_on_grassmannian::compute_image_INT_embedded(action *A, INT *Elt,
 void action_on_grassmannian::print_point(INT a, ostream &ost)
 {
 	G->unrank_INT(a, 0);
-	print_integer_matrix_width(ost, G->M, G->k, G->n, G->n, M->GFq->log10_of_q);
+	print_integer_matrix_width(ost, G->M,
+			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
 }
 
 

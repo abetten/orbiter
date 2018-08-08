@@ -257,7 +257,7 @@ colored_graph *colored_graph::sort_by_color_classes(INT verbose_level)
 
 void colored_graph::print()
 {
-	INT i, j, aij;
+	INT i;
 	
 	cout << "colored graph with " << nb_points << " points and " << nb_colors << " colors" << endl;
 
@@ -303,7 +303,7 @@ void colored_graph::print()
 
 #if 0
 	INT *A;
-	INT J, f2, l2, jj, idx2;
+	INT j, J, f2, l2, jj, idx2, aij;
 	cout << "Adjacency (blocked off by color classes):" << endl;
 	for (i = 0; i < nb_points; i++) {
 		for (j = 0; j < nb_points; j++) {

@@ -28,7 +28,8 @@ void action_on_flags::free()
 	null();
 }
 
-void action_on_flags::init(action *A, INT *type, INT type_len, INT verbose_level)
+void action_on_flags::init(action *A, INT *type,
+		INT type_len, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -39,7 +40,8 @@ void action_on_flags::init(action *A, INT *type, INT type_len, INT verbose_level
 	action_on_flags::type = type;
 	action_on_flags::type_len = type_len;
 	if (!A->f_is_linear) {
-		cout << "action_on_flags::init the action must be linear but is not" << endl;
+		cout << "action_on_flags::init the action must be "
+				"linear but is not" << endl;
 		exit(1);
 		}
 	n = A->dimension;
@@ -76,10 +78,12 @@ INT action_on_flags::compute_image(INT *Elt, INT i, INT verbose_level)
 	INT h, j;
 
 	if (f_v) {
-		cout << "action_on_flags::compute_image i = " << i << endl;
+		cout << "action_on_flags::compute_image "
+				"i = " << i << endl;
 		}
 	if (i < 0 || i >= degree) {
-		cout << "action_on_flags::compute_image i = " << i << " out of range" << endl;
+		cout << "action_on_flags::compute_image "
+				"i = " << i << " out of range" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -92,13 +96,16 @@ INT action_on_flags::compute_image(INT *Elt, INT i, INT verbose_level)
 		INT_matrix_print(M1, Flag->K, n);
 		}
 	if (f_v) {
-		cout << "action_on_flags::compute_image before image_of_low_level" << endl;
+		cout << "action_on_flags::compute_image "
+				"before image_of_low_level" << endl;
 		}
 	for (h = 0; h < Flag->K; h++) {
-		A->image_of_low_level(Elt, M1 + h * n, M2 + h * n);
+		A->image_of_low_level(Elt,
+				M1 + h * n, M2 + h * n, verbose_level - 1);
 		}
 	if (f_v) {
-		cout << "action_on_flags::compute_image after image_of_low_level" << endl;
+		cout << "action_on_flags::compute_image "
+				"after image_of_low_level" << endl;
 		}
 	if (f_v) {
 		cout << "action_on_flags::compute_image M2=" << endl;
@@ -107,7 +114,8 @@ INT action_on_flags::compute_image(INT *Elt, INT i, INT verbose_level)
 	j = Flag->rank(M2, 0 /*verbose_level*/);
 
 	if (f_v) {
-		cout << "action_on_flags::compute_image " << i << " maps to " << j << endl;
+		cout << "action_on_flags::compute_image "
+				<< i << " maps to " << j << endl;
 		}
 	return j;
 }

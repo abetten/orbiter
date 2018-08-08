@@ -11,7 +11,8 @@
 INT generator::compute_orbits(INT from_level, INT to_level, 
 	INT f_write_candidate_file, 
 	INT verbose_level)
-// returns TRUE if there is at least one orbit at level to_level, FALSE otherwise
+// returns TRUE if there is at least one orbit at level to_level,
+// FALSE otherwise
 {
 	INT f_v = (verbose_level >= 1);
 	INT level;
@@ -23,9 +24,11 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 
 
 	if (f_v) {
-		cout << "generator::compute_orbits from " << from_level << " to " << to_level << endl;
+		cout << "generator::compute_orbits from "
+				<< from_level << " to " << to_level << endl;
 		cout << "f_lex=" << f_lex << endl;
-		cout << "f_write_candidate_file=" << f_write_candidate_file << endl;
+		cout << "f_write_candidate_file="
+				<< f_write_candidate_file << endl;
 		cout << "fname_base=" << fname_base << endl;
 		}
 
@@ -51,14 +54,16 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 		f_write_files = (f_W || (f_w && level == to_level - 1));
 	
 		
-		housekeeping(level + 1, f_write_files, os_ticks(), verbose_level - 1);
+		housekeeping(level + 1, f_write_files,
+				os_ticks(), verbose_level - 1);
 
 		INT nb_nodes;
 		nb_nodes = nb_orbits_at_level(level + 1);
 		if (nb_nodes == 0) {
 			INT j;
 			for (j = level + 2; j <= to_level + 1; j++) {
-				first_oracle_node_at_level[j] = first_oracle_node_at_level[j - 1];
+				first_oracle_node_at_level[j] =
+						first_oracle_node_at_level[j - 1];
 				}
 			return level;
 			}	
@@ -67,7 +72,8 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 
 	
 	if (f_v) {
-		cout << "generator::compute_orbits from " << from_level << " to " << to_level << " done" << endl;
+		cout << "generator::compute_orbits from "
+				<< from_level << " to " << to_level << " done" << endl;
 		}
 	return to_level;
 }
@@ -105,7 +111,8 @@ INT generator::main(INT t0,
 		}
 	if (f_recover) {
 		if (f_v) {
-			cout << "generator::main: recovering from file " << recover_fname << endl;
+			cout << "generator::main: recovering from file "
+					<< recover_fname << endl;
 			}
 
 
@@ -122,7 +129,8 @@ INT generator::main(INT t0,
 		
 		if (f_v) {
 			cout << "depth_completed = " << depth_completed << endl;
-			cout << "generator::main: recreating schreier vectors to depth " << depth_completed - 1 << endl;
+			cout << "generator::main: recreating schreier vectors "
+					"to depth " << depth_completed - 1 << endl;
 			}
 	
 		recreate_schreier_vectors_up_to_level(depth_completed - 1, 
@@ -169,18 +177,22 @@ INT generator::main(INT t0,
 		if (f_v) {
 			cout << "generator::main: ";
 			print_problem_label();
-			cout << " calling extend_level " << i << " f_write_candidate_file=" << f_write_candidate_file << endl;
+			cout << " calling extend_level " << i
+					<< " f_write_candidate_file="
+					<< f_write_candidate_file << endl;
 			}
 
 		if (i <= schreier_depth) {
 			f_create_schreier_vector = TRUE;
 			if (f_v) {
-				cout << "we will store schreier vectors for this level" << endl;
+				cout << "we will store schreier vectors "
+						"for this level" << endl;
 				}
 			}
 		else {
 			if (f_v) {
-				cout << "we will NOT store schreier vectors for this level" << endl;
+				cout << "we will NOT store schreier vectors "
+						"for this level" << endl;
 				}
 			f_create_schreier_vector = FALSE;
 			}
@@ -217,7 +229,8 @@ INT generator::main(INT t0,
 		if (nb_nodes == 0) {
 			INT j;
 			for (j = i + 2; j <= target_depth + 1; j++) {
-				first_oracle_node_at_level[j] = first_oracle_node_at_level[j - 1];
+				first_oracle_node_at_level[j] =
+						first_oracle_node_at_level[j - 1];
 				}
 			return i + 1;
 			}	
@@ -242,16 +255,23 @@ void generator::extend_level(INT size,
 	//INT f, cur; //, l;
 
 	if (f_v) {
-		cout << "##################################################################################################" << endl;
+		cout << "####################################################"
+				"##############################################" << endl;
 		print_problem_label();
 		cout << endl;
-		cout << "generator::extend_level constructing nodes at depth " << size + 1 << endl;
-		cout << "generator::extend_level from " << nb_orbits_at_level(size) << " nodes at depth " << size << endl;
-		//cout << "f_create_schreier_vector=" << f_create_schreier_vector << endl;
-		//cout << "f_use_invariant_subset_if_available=" << f_use_invariant_subset_if_available << endl;
+		cout << "generator::extend_level constructing nodes at depth "
+				<< size + 1 << endl;
+		cout << "generator::extend_level from "
+				<< nb_orbits_at_level(size)
+				<< " nodes at depth " << size << endl;
+		//cout << "f_create_schreier_vector="
+		//<< f_create_schreier_vector << endl;
+		//cout << "f_use_invariant_subset_if_available="
+		//<< f_use_invariant_subset_if_available << endl;
 		//cout << "f_compact=" << f_compact << endl;
 		//cout << "f_debug=" << f_debug << endl;
-		//cout << "f_write_candidate_file=" << f_write_candidate_file << endl;
+		//cout << "f_write_candidate_file="
+		//<< f_write_candidate_file << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	//f = first_oracle_node_at_level[size];
@@ -259,7 +279,8 @@ void generator::extend_level(INT size,
 	//l = cur - f;
 
 	if (f_v) {
-		cout << "generator::extend_level " << size << " calling downstep" << endl;
+		cout << "generator::extend_level " << size
+				<< " calling downstep" << endl;
 		}
 	downstep(size, f_create_schreier_vector, f_compact, 
 		f_use_invariant_subset_if_available, 
@@ -271,9 +292,11 @@ void generator::extend_level(INT size,
 
 	if (f_write_candidate_file) {
 		if (f_v) {
-			cout << "generator::extend_level size = " << size << " before write_candidates_binary_using_sv" << endl;
+			cout << "generator::extend_level size = " << size
+					<< " before write_candidates_binary_using_sv" << endl;
 			}
-		write_candidates_binary_using_sv(fname_base, size, t0, 1 /*verbose_level */);
+		write_candidates_binary_using_sv(fname_base,
+				size, t0, 1 /*verbose_level */);
 		}
 
 	if (f_v) {
@@ -307,19 +330,18 @@ void generator::downstep(INT size,
 	l = cur - f;
 
 	if (f_v) {
-		cout << "##################################################################################################" << endl;
+		cout << "################################################"
+				"##################################################" << endl;
 		print_problem_label();
 		cout << endl;
-		cout << "downstep depth " << size <<  " verbose_level=" << verbose_level << endl;
+		cout << "downstep depth " << size
+				<< " verbose_level=" << verbose_level << endl;
 		}
 	progress_last_time = 0;
 	progress = 0;
 	
 	for (u = 0; u < l; u++) {
 		
-		if (l == 12 && u == 9) {
-			verbose_level += 20;
-			}
 
 		
 		prev = f + u;
@@ -400,16 +422,19 @@ void generator::upstep(INT size,
 	progress_last_time = 0;
 
 	if (f_v) {
-		cout << "##################################################################################################" << endl;
+		cout << "#################################################"
+				"#################################################" << endl;
 		print_problem_label();
 		cout << endl;
 		cout << "extension step depth " << size << endl;
 		cout << "verbose_level=" << verbose_level << endl;
-		cout << "f_indicate_not_canonicals=" << f_indicate_not_canonicals << endl;
+		cout << "f_indicate_not_canonicals="
+				<< f_indicate_not_canonicals << endl;
 		}
 	count_extension_nodes_at_level(size);
 	if (f_v) {
-		cout << "with " << nb_extension_nodes_at_level_total[size] << " extension nodes" << endl;
+		cout << "with " << nb_extension_nodes_at_level_total[size]
+			<< " extension nodes" << endl;
 		}
 	for (u = 0; u < l; u++) {
 
@@ -425,8 +450,8 @@ void generator::upstep(INT size,
 		else {
 			}
 
-#if 0
-		if (f_v) {
+#if 1
+		if (f_v4) {
 			cout << "generator::upstep before extend_node" << endl;
 			print_extensions_at_level(cout, size);
 			}
@@ -438,9 +463,10 @@ void generator::upstep(INT size,
 			fp, 
 			verbose_level - 2);
 
-#if 0
-		if (f_v) {
-			cout << "generator::upstep after extend_node, size=" << size << endl;
+#if 1
+		if (f_v4) {
+			cout << "generator::upstep after extend_node, size="
+					<< size << endl;
 			}
 #endif
 			
@@ -490,20 +516,24 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 	INT verbose_level_down;
 
 	if (f_v4) {
-		cout << "generator::extend_node prev=" << prev << " cur=" << cur << endl;
+		cout << "generator::extend_node prev=" << prev
+				<< " cur=" << cur << endl;
 		}
 	
-	while (cur + root[prev].nb_extensions + 10 >= nb_oracle_nodes_allocated) {
+	while (cur + root[prev].nb_extensions + 10 >=
+			nb_oracle_nodes_allocated) {
 		print_level_info(size + 1, prev);
 		if (f_v) {
 			cout << "generator::extend_node running out of nodes" << endl;
 			cout << "cur = " << cur << endl;
-			cout << "allocated nodes = " << nb_oracle_nodes_allocated << endl;
+			cout << "allocated nodes = "
+					<< nb_oracle_nodes_allocated << endl;
 			cout << "reallocating" << endl;
 			}
 		reallocate();
 		if (f_v) {
-			cout << "allocated nodes = " << nb_oracle_nodes_allocated << endl;
+			cout << "allocated nodes = "
+					<< nb_oracle_nodes_allocated << endl;
 			}
 		}
 			
@@ -533,7 +563,8 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 #endif
 			}
 
-		cout << " with " << root[prev].nb_extensions << " extensions" << endl;
+		cout << " with " << root[prev].nb_extensions
+				<< " extensions" << endl;
 		cout << " verbose_level=" << verbose_level << endl;
 		if (FALSE /*f_vvv*/) {
 			//print_set_verbose(prev);
@@ -550,7 +581,9 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 		
 
 		if (f_vvv) {
-			cout << "generator::extend_node working on extension " << prev_ex << " / " << root[prev].nb_extensions << ":" << endl;
+			cout << "generator::extend_node working on extension "
+					<< prev_ex << " / " << root[prev].nb_extensions
+					<< ":" << endl;
 			}
 	
 
@@ -569,25 +602,43 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 #endif
 		verbose_level_down = verbose_level - 4;
 
+		if (f_vvv) {
+			cout << "generator::extend_node working on extension "
+					<< prev_ex << " / " << root[prev].nb_extensions
+					<< ": before Work.init" << endl;
+			}
 		Work.init(this, size, prev, prev_ex, cur, 
 			f_debug, 
 			f_lex, 
 			f_indicate_not_canonicals, fp, 
 			verbose_level_down);
+		if (f_vvv) {
+			cout << "generator::extend_node working on extension "
+					<< prev_ex << " / " << root[prev].nb_extensions
+					<< ": after Work.init" << endl;
+			}
 		
 		//cout << "after Work.init" << endl;
 		
 
 		if (f_vvv) {
 			if ((prev_ex % Work.mod_for_printing) == 0 && prev_ex) {
-				print_progress_by_extension(size, cur, prev, prev_ex, nb_ext_cur, nb_fuse_cur);
+				print_progress_by_extension(size, cur,
+						prev, prev_ex, nb_ext_cur, nb_fuse_cur);
 				}
+			}
+		if (f_vvv) {
+			cout << "generator::extend_node working on extension "
+					<< prev_ex << " / " << root[prev].nb_extensions
+					<< ": before Work.handle_extension nb_ext_cur="
+					<< nb_ext_cur << endl;
 			}
 		Work.handle_extension(nb_fuse_cur, nb_ext_cur, 
 			verbose_level_down);
 
 		if (f_vvv) {
-			cout << "generator::extend_node after Work.handle_extension" << endl;
+			cout << "generator::extend_node after "
+					"Work.handle_extension" << endl;
 			}
 
 		
@@ -595,7 +646,9 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 		}
 
 		if (f_vvv) {
-			cout << "generator::extend_node working on extension " << prev_ex << " / " << root[prev].nb_extensions << ":" << endl;
+			cout << "generator::extend_node working on extension "
+					<< prev_ex << " / " << root[prev].nb_extensions
+					<< ":" << endl;
 			cout << "generator::extend_node after freeing Work" << endl;
 			}
 

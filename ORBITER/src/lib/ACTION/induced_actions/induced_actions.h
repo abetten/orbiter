@@ -11,14 +11,6 @@
 
 class action_by_conjugation {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	sims *Base_group;
 	INT f_ownership;
 	INT goi;
@@ -43,14 +35,6 @@ public:
 
 class action_by_representation {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	enum representation_type type;
 	INT n;
 	INT q;
@@ -82,14 +66,6 @@ public:
 
 class action_by_restriction {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT nb_points;
 	INT *points; // [nb_points]
 	INT *points_sorted; // [nb_points]
@@ -111,14 +87,6 @@ public:
 
 class action_by_right_multiplication {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	sims *Base_group;
 	INT f_ownership;
 	INT goi;
@@ -141,14 +109,6 @@ public:
 
 class action_by_subfield_structure {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT n;
 	INT Q;
 	const BYTE *poly_q;
@@ -297,14 +257,6 @@ public:
 
 class action_on_determinant {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	matrix_group *M;
 	INT f_projective;
 	INT m;
@@ -328,14 +280,6 @@ public:
 
 class action_on_factor_space {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT len; // length of vectors in large space
 	finite_field *F;
 	INT *subspace_basis; // [subspace_basis_size * len]
@@ -486,14 +430,6 @@ public:
 
 class action_on_grassmannian {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	INT n;
 	INT k;
 	INT q;
@@ -502,7 +438,7 @@ public:
 	
 	action *A;
 	grassmann *G;
-	matrix_group *M;
+	//matrix_group *M;
 	INT *M1;
 	INT *M2;
 
@@ -581,14 +517,6 @@ public:
 
 class action_on_k_subsets {
 public:
-	void *operator new(size_t bytes);
-	void *operator new[](size_t bytes);
-	void operator delete(void *ptr, size_t bytes);
-	void operator delete[](void *ptr, size_t bytes);
-	static INT cntr_new;
-	static INT cntr_objects;
-	static INT f_debug_memory;
-
 	action *A;
 	INT k;
 	INT degree;

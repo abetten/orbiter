@@ -10,7 +10,8 @@
 
 #include "galois.h"
 
-void finite_field::representing_matrix8_R(INT *A, INT q, INT a, INT b, INT c, INT d)
+void finite_field::representing_matrix8_R(INT *A,
+		INT q, INT a, INT b, INT c, INT d)
 {
 	INT i;	
 	
@@ -92,7 +93,8 @@ void finite_field::representing_matrix8_R(INT *A, INT q, INT a, INT b, INT c, IN
 	transpose_matrix_in_place(A, 8);
 }
 
-void finite_field::representing_matrix9_R(INT *A, INT q, INT a, INT b, INT c, INT d)
+void finite_field::representing_matrix9_R(INT *A,
+		INT q, INT a, INT b, INT c, INT d)
 {
 	INT i;
 	INT tq = 2 * q;
@@ -198,14 +200,16 @@ void finite_field::representing_matrix9_R(INT *A, INT q, INT a, INT b, INT c, IN
 	
 }
 
-void finite_field::representing_matrix9_U(INT *A, INT a, INT b, INT c, INT d, INT beta)
+void finite_field::representing_matrix9_U(INT *A,
+		INT a, INT b, INT c, INT d, INT beta)
 {
 	INT beta_q, delta, gamma;
 	INT r, q, q1,q2,tq, tq1; //, tq2;
 	
 	r = e >> 1;
 	if (e != 2 * r) {
-		cout << "finite_field::representing_matrix9_U field does not have a quadratic subfield" << endl;
+		cout << "finite_field::representing_matrix9_U "
+				"field does not have a quadratic subfield" << endl;
 		exit(1);
 		}
 	q = i_power_j(p, r);
@@ -324,7 +328,8 @@ void finite_field::representing_matrix8_U(INT *A, INT a, INT b, INT c, INT d, IN
 	
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8_U field does not have a cubic subfield" << endl;
+		cout << "finite_field::representing_matrix8_U "
+				"field does not have a cubic subfield" << endl;
 		exit(1);
 		}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
@@ -514,7 +519,8 @@ void finite_field::representing_matrix8_V(INT *A, INT beta)
 	
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8_V field does not have a cubic subfield" << endl;
+		cout << "finite_field::representing_matrix8_V "
+				"field does not have a cubic subfield" << endl;
 		exit(1);
 		}
 	//cout << "a=" << a << " b=" << b << " c=" << c << " d=" << d << endl;
@@ -567,11 +573,13 @@ void finite_field::representing_matrix8_V(INT *A, INT beta)
 
 void finite_field::representing_matrix9b(INT *A, INT beta)
 {
-	INT r, /*q,*/ beta_q, delta, minus_one, i; // gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
+	INT r, /*q,*/ beta_q, delta, minus_one, i;
+		// gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
 	
 	r = e / 2;
 	if (e != 2 * r) {
-		cout << "finite_field::representing_matrix9b field does not have a quadratic subfield" << endl;
+		cout << "finite_field::representing_matrix9b field "
+				"does not have a quadratic subfield" << endl;
 		exit(1);
 		}
 	//q = i_power_j(p, r);
@@ -623,7 +631,8 @@ void finite_field::representing_matrix9b(INT *A, INT beta)
 #endif
 }
 
-void finite_field::representing_matrix8a(INT *A, INT a, INT b, INT c, INT d, INT beta)
+void finite_field::representing_matrix8a(INT *A,
+		INT a, INT b, INT c, INT d, INT beta)
 {
 
 
@@ -633,7 +642,8 @@ void finite_field::representing_matrix8a(INT *A, INT a, INT b, INT c, INT d, INT
 	
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8a field does not have a cubic subfield" << endl;
+		cout << "finite_field::representing_matrix8a "
+				"field does not have a cubic subfield" << endl;
 		exit(1);
 		}
 	q = i_power_j(p, r);
@@ -737,7 +747,8 @@ void finite_field::representing_matrix8b(INT *A, INT beta)
 	
 	r = e / 3;
 	if (e != 3 * r) {
-		cout << "finite_field::representing_matrix8b field does not have a cubic subfield" << endl;
+		cout << "finite_field::representing_matrix8b "
+				"field does not have a cubic subfield" << endl;
 		exit(1);
 		}
 	q = i_power_j(p, r);
@@ -818,7 +829,8 @@ INT finite_field::Term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3)
 	return T2(x);
 }
 
-INT finite_field::Term4(INT a1, INT a2, INT a3, INT a4, INT e1, INT e2, INT e3, INT e4)
+INT finite_field::Term4(INT a1, INT a2, INT a3, INT a4,
+		INT e1, INT e2, INT e3, INT e4)
 {
 	INT x;
 	
@@ -826,7 +838,8 @@ INT finite_field::Term4(INT a1, INT a2, INT a3, INT a4, INT e1, INT e2, INT e3, 
 	return T2(x);
 }
 
-INT finite_field::Term5(INT a1, INT a2, INT a3, INT a4, INT a5, INT e1, INT e2, INT e3, INT e4, INT e5)
+INT finite_field::Term5(INT a1, INT a2, INT a3, INT a4, INT a5,
+		INT e1, INT e2, INT e3, INT e4, INT e5)
 {
 	INT x;
 	
@@ -876,7 +889,8 @@ INT finite_field::term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3)
 	return x;
 }
 
-INT finite_field::term4(INT a1, INT a2, INT a3, INT a4, INT e1, INT e2, INT e3, INT e4)
+INT finite_field::term4(INT a1, INT a2, INT a3, INT a4,
+		INT e1, INT e2, INT e3, INT e4)
 {
 	INT x;
 	
@@ -896,7 +910,8 @@ INT finite_field::term4(INT a1, INT a2, INT a3, INT a4, INT e1, INT e2, INT e3, 
 	return x;
 }
 
-INT finite_field::term5(INT a1, INT a2, INT a3, INT a4, INT a5, INT e1, INT e2, INT e3, INT e4, INT e5)
+INT finite_field::term5(INT a1, INT a2, INT a3, INT a4, INT a5,
+		INT e1, INT e2, INT e3, INT e4, INT e5)
 {
 	INT x;
 	

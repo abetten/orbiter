@@ -131,7 +131,8 @@ void upstep_work::handle_extension(INT &nb_fuse_cur, INT &nb_ext_cur, INT verbos
 	INT type;
 
 	if (f_v) {
-		cout << "upstep_work::handle_extension verbose_level = " << verbose_level << endl;
+		cout << "upstep_work::handle_extension verbose_level = "
+				<< verbose_level << endl;
 		cout << "prev=" << prev << " prev_ex=" << prev_ex << endl;
 		}
 	pt = O_prev->E[prev_ex].pt;
@@ -313,13 +314,16 @@ INT upstep_work::init_extension_node(INT verbose_level)
 // depending on the type of action
 // then changes the type of the extension to EXTENSION_TYPE_EXTENSION
 //
-// Establishes a new node at depth 'size' (i.e., a set of size 'size') as an extension 
+// Establishes a new node at depth 'size'
+// (i.e., a set of size 'size') as an extension
 // of a previous node (prev) at depth size - 1 
 // with respect to a given point (pt).
-// This function is to be called for the next free oracle node which will 
+// This function is to be called for the next
+// free oracle node which will
 // become the descendant of the previous node (prev).
 // the extension node corresponds to the point pt. 
-// returns FALSE if the set is not canonical (provided f_indicate_not_canonicals is TRUE)
+// returns FALSE if the set is not canonical
+// (provided f_indicate_not_canonicals is TRUE)
 {
 	//if (prev == 1) {verbose_level += 40; cout << "node with prev == 1 reached" << endl;}
 
@@ -376,7 +380,9 @@ INT upstep_work::init_extension_node(INT verbose_level)
 		}
 
 	if (f_vv) {
-		cout << "point " << pt << " lies in an orbit of length " << pt_orbit_len << " verbose_level = " << verbose_level << endl;
+		cout << "point " << pt << " lies in an orbit of length "
+				<< pt_orbit_len
+				<< " verbose_level = " << verbose_level << endl;
 		}
 
 
@@ -395,7 +401,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_set_print(cout, gen->S, size);
-		cout << "upstep_work::init_extension_node before O_cur->init_extension_node_prepare_G" << endl;
+		cout << "upstep_work::init_extension_node "
+				"before O_cur->init_extension_node_prepare_G" << endl;
 		}
 	O_cur->init_extension_node_prepare_G(gen, 
 		prev, prev_ex, size, *G, go_G, 
@@ -404,7 +411,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_set_print(cout, gen->S, size);
-		cout << "upstep_work::init_extension_node after O_cur->init_extension_node_prepare_G" << endl;
+		cout << "upstep_work::init_extension_node "
+				"after O_cur->init_extension_node_prepare_G" << endl;
 		}
 
 	
@@ -423,7 +431,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 		cout << "(orbit length = " << pt_orbit_len << ")" << endl;
 		}
 	
-	O_prev->E[prev_ex].type = EXTENSION_TYPE_PROCESSING; // currently processing
+	O_prev->E[prev_ex].type = EXTENSION_TYPE_PROCESSING;
+		// currently processing
 	O_prev->E[prev_ex].data = cur;
 	
 
@@ -433,7 +442,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_set_print(cout, gen->S, size);
-		cout << "upstep_work::init_extension_node before O_cur->init_extension_node_prepare_H" << endl;
+		cout << "upstep_work::init_extension_node "
+				"before O_cur->init_extension_node_prepare_H" << endl;
 		}
 	
 	O_cur->init_extension_node_prepare_H(gen, 
@@ -456,7 +466,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_set_print(cout, gen->S, size);
-		cout << "upstep_work::init_extension_node after O_cur->init_extension_node_prepare_H" << endl;
+		cout << "upstep_work::init_extension_node "
+				"after O_cur->init_extension_node_prepare_H" << endl;
 		}
 
 	
@@ -470,7 +481,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 		if (f_v) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "upstep_work::init_extension_node calling upstep_subspace_action" << endl;
+			cout << "upstep_work::init_extension_node "
+					"calling upstep_subspace_action" << endl;
 			}
 		if (!upstep_subspace_action(verbose_level - 2)) {
 
@@ -480,13 +492,16 @@ INT upstep_work::init_extension_node(INT verbose_level)
 					}
 				return FALSE;
 				}
-			cout << "upstep_subspace_action returns FALSE, the set is not canonical, this should not happen" << endl;
+			cout << "upstep_subspace_action returns FALSE, "
+					"the set is not canonical, this should not happen"
+					<< endl;
 			exit(1);
 			}
 		if (f_v) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "upstep_work::init_extension_node after upstep_subspace_action" << endl;
+			cout << "upstep_work::init_extension_node "
+					"after upstep_subspace_action" << endl;
 			}
 		}
 	else {

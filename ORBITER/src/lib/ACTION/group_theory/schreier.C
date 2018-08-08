@@ -186,7 +186,8 @@ void schreier::init_single_generator(INT *elt)
 void schreier::init_generators(vector_ge &generators)
 {
 	if (generators.len) {
-		init_generators(generators.len, generators.ith(0));
+		init_generators(generators.len,
+				generators.ith(0));
 		}
 	else {
 		init_generators(generators.len, NULL);
@@ -194,7 +195,8 @@ void schreier::init_generators(vector_ge &generators)
 }
 
 void schreier::init_generators(INT nb, INT *elt)
-// elt must point to nb * A->elt_size_in_INT INT's that are 
+// elt must point to nb * A->elt_size_in_INT
+// INT's that are
 // group elements in INT format
 {
 	INT i;
@@ -204,7 +206,8 @@ void schreier::init_generators(INT nb, INT *elt)
 	for (i = 0; i < nb; i++) {
 		//cout << "schreier::init_generators i = " << i << endl;
 		gens.copy_in(i, elt + i * A->elt_size_in_INT);
-		A->element_invert(elt + i * A->elt_size_in_INT, gens_inv.ith(i), 0);
+		A->element_invert(elt + i * A->elt_size_in_INT,
+				gens_inv.ith(i), 0);
 		}
 	init_images(nb, 0 /* verbose_level */);	
 }
@@ -224,24 +227,29 @@ void schreier::init_generators_by_hdl(INT nb_gen,
 	gens.allocate(nb_gen);
 	gens_inv.allocate(nb_gen);
 	for (i = 0; i < nb_gen; i++) {
-		//cout << "schreier::init_generators_by_hdl i = " << i << endl;
+		//cout << "schreier::init_generators_by_hdl "
+		// "i = " << i << endl;
 		A->element_retrieve(gen_hdl[i], gens.ith(i), 0);
 		
-		//cout << "schreier::init_generators_by_hdl generator i = " << i << ":" << endl;
+		//cout << "schreier::init_generators_by_hdl "
+		// "generator i = " << i << ":" << endl;
 		//A->element_print_quick(gens.ith(i), cout);
 
 		A->element_invert(gens.ith(i), gens_inv.ith(i), 0);
 		}
 	if (f_vv) {
-		cout << "schreier::init_generators_by_hdl generators:" << endl;
+		cout << "schreier::init_generators_by_hdl "
+				"generators:" << endl;
 		gens.print(cout);
 		}
 	if (f_v) {
-		cout << "schreier::init_generators_by_hdl before init_images()" << endl;
+		cout << "schreier::init_generators_by_hdl "
+				"before init_images()" << endl;
 		}
 	init_images(nb_gen, verbose_level);	
 	if (f_v) {
-		cout << "schreier::init_generators_by_hdl done" << endl;
+		cout << "schreier::init_generators_by_hdl "
+				"done" << endl;
 		}
 }
 
@@ -255,16 +263,20 @@ INT schreier::get_image(INT i, INT gen_idx, INT verbose_level)
 				<< i << " under generator " << gen_idx << endl;
 		}
 	if (images == NULL) {
-		a = A->element_image_of(i, gens.ith(gen_idx), verbose_level - 2);
-		//cout << "schreier::get_image() images == NULL" << endl;
+		a = A->element_image_of(i,
+				gens.ith(gen_idx), verbose_level - 2);
+		//cout << "schreier::get_image"
+		// "images == NULL" << endl;
 		//exit(1);
 		}
 	else {
 		a = images[gen_idx][i];
 		if (a == -1) {
-			a = A->element_image_of(i, gens.ith(gen_idx), verbose_level - 2);
+			a = A->element_image_of(i,
+					gens.ith(gen_idx), verbose_level - 2);
 			if (f_v) {
-				cout << "schreier::get_image image of i=" << i << " is " << a << endl;
+				cout << "schreier::get_image image of "
+						"i=" << i << " is " << a << endl;
 				}
 			images[gen_idx][i] = a;
 			images[gen_idx][A->degree + a] = i;
@@ -329,7 +341,8 @@ void schreier::print_orbit_reps(ostream &ost)
 	INT i, c, r;
 	
 	ost << nb_orbits << " orbits" << endl;
-	ost << "orbits of a group with " << gens.len << " generators:" << endl;
+	ost << "orbits of a group with " << gens.len
+			<< " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i] : rep" << endl;
 	for (i = 0; i < nb_orbits; i++) {
 		ost << setw(3) << i << " : " << setw(6)
@@ -353,7 +366,8 @@ void schreier::print(ostream &ost)
 	ost << "orbit group with " << gens.len << " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < nb_orbits; i++) {
-		ost << i << " : " << orbit_first[i] << " : " << orbit_len[i] << endl;
+		ost << i << " : " << orbit_first[i] << " : "
+				<< orbit_len[i] << endl;
 		//<< " : ";
 		//print_orbit(ost, i);
 		//ost << endl;
@@ -376,7 +390,8 @@ void schreier::print_and_list_orbits_and_stabilizer(ostream &ost,
 		sims *Stab;
 		strong_generators *SG;
 
-		ost << "Orbit " << i << " / " << nb_orbits << " : of length " << orbit_len[i];
+		ost << "Orbit " << i << " / " << nb_orbits
+				<< " : of length " << orbit_len[i];
 		ost << " is:" << endl;
 		print_orbit(ost, i);
 		ost << endl;
@@ -468,7 +483,8 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 
 	strong_generators *gens_stab;
 
-	gens_stab = generators_for_stabilizer_of_orbit_rep(default_action, 
+	gens_stab = generators_for_stabilizer_of_orbit_rep(
+		default_action,
 		full_group_order, i, 0 /*verbose_level */);
 	
 	gens_stab->print_generators_tex(ost);
@@ -483,7 +499,8 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 			Subgroup_elements_by_index, sz_subgroup,
 			0 /* verbose_level */);
 
-		INT_vec_heapsort(Subgroup_elements_by_index, sz_subgroup);
+		INT_vec_heapsort(Subgroup_elements_by_index,
+				sz_subgroup);
 
 		ost << "The subgroup consists of the following "
 				<< sz_subgroup << " elements:" << endl;
@@ -500,12 +517,14 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 	delete gens_stab;
 }
 
-void schreier::print_and_list_orbits_sorted_by_length_tex(ostream &ost)
+void schreier::print_and_list_orbits_sorted_by_length_tex(
+		ostream &ost)
 {
 	print_and_list_orbits_sorted_by_length(ost, TRUE);
 }
 
-void schreier::print_and_list_orbits_sorted_by_length(ostream &ost)
+void schreier::print_and_list_orbits_sorted_by_length(
+		ostream &ost)
 {
 	print_and_list_orbits_sorted_by_length(ost, FALSE);
 }
@@ -567,7 +586,8 @@ void schreier::print_and_list_orbits_sorted_by_length(
 
 void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length(
 	ostream &ost, INT f_tex, 
-	action *default_action, longinteger_object &full_group_order)
+	action *default_action,
+	longinteger_object &full_group_order)
 {
 	INT i, h;
 	INT *Len;
@@ -662,8 +682,10 @@ void schreier::print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_st
 	for (h = 0; h < nb_orbits; h++) {
 		i = Perm_inv[h];
 		if (f_tex) {
-			//print_and_list_orbit_and_stabilizer_tex(i, default_action, full_group_order, ost);
-			print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(i, default_action, 
+			//print_and_list_orbit_and_stabilizer_tex(
+			// i, default_action, full_group_order, ost);
+			print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
+				i, default_action,
 				gens_full_group, ost);
 			}
 		else {
@@ -693,7 +715,8 @@ void schreier::print_and_list_orbits_of_given_length(
 		if (orbit_len[i] != len) {
 			continue;
 			}
-		ost << " Orbit " << i << " / " << nb_orbits << " : " << orbit_len[i];
+		ost << " Orbit " << i << " / "
+				<< nb_orbits << " : " << orbit_len[i];
 		ost << " : ";
 		print_orbit(ost, i);
 		ost << endl;
@@ -701,7 +724,8 @@ void schreier::print_and_list_orbits_of_given_length(
 	ost << endl;
 }
 
-void schreier::print_and_list_orbits_using_labels(ostream &ost, INT *labels)
+void schreier::print_and_list_orbits_using_labels(
+		ostream &ost, INT *labels)
 {
 	INT i;
 	
@@ -709,7 +733,8 @@ void schreier::print_and_list_orbits_using_labels(ostream &ost, INT *labels)
 	ost << "orbit group with " << gens.len << " generators:" << endl;
 	ost << "i : orbit_first[i] : orbit_len[i]" << endl;
 	for (i = 0; i < nb_orbits; i++) {
-		ost << i << " : " << orbit_first[i] << " : " << orbit_len[i];
+		ost << i << " : " << orbit_first[i]
+			<< " : " << orbit_len[i];
 		ost << " : ";
 		print_orbit_using_labels(ost, i, labels);
 		ost << endl;
@@ -744,8 +769,10 @@ void schreier::print_tables(ostream &ost,
 		coset_rep(i);
 		//coset_rep_inv(i);
 		ost << setw(w) << i << " : " << " : " 
-			<< setw(w) << orbit[i] << " : " << setw(w) << orbit_inv[i] << " : " 
-			<< setw(w) << prev[i] << " : " << setw(w) << label[i];
+			<< setw(w) << orbit[i] << " : "
+			<< setw(w) << orbit_inv[i] << " : "
+			<< setw(w) << prev[i] << " : "
+			<< setw(w) << label[i];
 		if (f_with_cosetrep) {
 			ost << " : ";
 			//A->element_print(Elt1, cout);
@@ -795,8 +822,10 @@ void schreier::print_tables_latex(ostream &ost,
 		coset_rep(i);
 		//coset_rep_inv(i);
 		ost << i << " & " 
-			<< setw(w) << orbit[i] << " & " << setw(w) << orbit_inv[i] << " & " 
-			<< setw(w) << prev[i] << " & " << setw(w) << label[i];
+			<< setw(w) << orbit[i] << " & "
+			<< setw(w) << orbit_inv[i] << " & "
+			<< setw(w) << prev[i] << " & "
+			<< setw(w) << label[i];
 		if (f_with_cosetrep) {
 			ost << " & ";
 			//A->element_print(Elt1, cout);
@@ -871,7 +900,8 @@ void schreier::print_orbit(INT orbit_no)
 	print_orbit(cout, orbit_no);
 }
 
-void schreier::print_orbit_using_labels(INT orbit_no, INT *labels)
+void schreier::print_orbit_using_labels(
+		INT orbit_no, INT *labels)
 {
 	print_orbit_using_labels(cout, orbit_no, labels);
 }
@@ -1031,7 +1061,8 @@ void schreier::print_orbit(INT cur, INT last)
 			cout << ">";
 		if (i == last)
 			cout << ">";
-		cout << i << " : " << orbit[i] << " : " << orbit_inv[i] << endl;
+		cout << i << " : " << orbit[i]
+			<< " : " << orbit_inv[i] << endl;
 		}
 	cout << endl;
 }
@@ -1091,7 +1122,8 @@ void schreier::transporter_from_orbit_rep_to_point(INT pt,
 	INT pos;
 
 	if (f_v) {
-		cout << "schreier::transporter_from_orbit_rep_to_point" << endl;
+		cout << "schreier::transporter_from_orbit_"
+				"rep_to_point" << endl;
 		}
 	pos = orbit_inv[pt];
 	orbit_idx = orbit_number(pt); //orbit_no[pos];
@@ -1099,7 +1131,8 @@ void schreier::transporter_from_orbit_rep_to_point(INT pt,
 	coset_rep(pos);
 	A->element_move(cosetrep, Elt, 0);
 	if (f_v) {
-		cout << "schreier::transporter_from_orbit_rep_to_point done" << endl;
+		cout << "schreier::transporter_from_orbit_"
+				"rep_to_point done" << endl;
 		}
 }
 
@@ -1110,7 +1143,8 @@ void schreier::transporter_from_point_to_orbit_rep(INT pt,
 	INT pos;
 
 	if (f_v) {
-		cout << "schreier::transporter_from_point_to_orbit_rep" << endl;
+		cout << "schreier::transporter_from_point_"
+				"to_orbit_rep" << endl;
 		}
 	pos = orbit_inv[pt];
 	orbit_idx = orbit_number(pt); //orbit_no[pos];
@@ -1119,14 +1153,16 @@ void schreier::transporter_from_point_to_orbit_rep(INT pt,
 	A->element_invert(cosetrep, Elt, 0);
 	//A->element_move(cosetrep, Elt, 0);
 	if (f_v) {
-		cout << "schreier::transporter_from_point_to_orbit_rep done" << endl;
+		cout << "schreier::transporter_from_point_to_orbit_rep "
+				"done" << endl;
 		}
 }
 
 void schreier::coset_rep(INT j)
 // j is a coset, not a point
 // result is in cosetrep
-// determines an element in the group that moves the orbit representative 
+// determines an element in the group
+// that moves the orbit representative
 // to the j-th point in the orbit.
 {
 	INT *gen;
@@ -1145,7 +1181,8 @@ void schreier::coset_rep(INT j)
 void schreier::coset_rep_with_verbosity(INT j, INT verbose_level)
 // j is a coset, not a point
 // result is in cosetrep
-// determines an element in the group that moves the orbit representative 
+// determines an element in the group
+// that moves the orbit representative
 // to the j-th point in the orbit.
 {
 	INT f_v = (verbose_level >= 1);
@@ -1171,7 +1208,8 @@ void schreier::coset_rep_with_verbosity(INT j, INT verbose_level)
 		A->element_one(cosetrep, 0);
 		}
 	if (f_v) {
-		cout << "schreier::coset_rep_with_verbosity j=" << j << " done" << endl;
+		cout << "schreier::coset_rep_with_verbosity "
+				"j=" << j << " done" << endl;
 		}
 }
 
@@ -1210,7 +1248,8 @@ void schreier::get_schreier_vector_compact(INT *&sv,
 // and size is 3 * n + 1 otherwise
 // Here, n is the combined size of all orbits counted by nb_orbits
 // sv[0] is equal to n
-// sv + 1 is the array point_list of size [n], listing the point in increasing order
+// sv + 1 is the array point_list of size [n],
+// listing the point in increasing order
 // Unless f_trivial_group, sv + 1 + n is the array prev[n] and 
 // sv + 1 + 2 * n is the array label[n] 
 {
@@ -1234,7 +1273,8 @@ void schreier::get_schreier_vector_compact(INT *&sv,
 		ff += l;
 		}
 	if (ff != n) {
-		cout << "schreier::get_schreier_vector_compact ff != n" << endl;
+		cout << "schreier::get_schreier_vector_compact "
+				"ff != n" << endl;
 		exit(1);
 		}
 	INT_vec_heapsort(point_list, n);
@@ -1290,10 +1330,12 @@ void schreier::extend_orbit(INT *elt, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
 	//INT f_vvv = (verbose_level >= 3);
-	INT cur, total0, total, cur_pt, gen_first, i, next_pt, next_pt_loc;
+	INT cur, total0, total, cur_pt;
+	INT gen_first, i, next_pt, next_pt_loc;
 	
 	if (f_v) {
-		cout << "extend_orbit() extending orbit " << nb_orbits - 1 << " of length " 
+		cout << "extend_orbit() extending orbit "
+				<< nb_orbits - 1 << " of length "
 			<< orbit_len[nb_orbits - 1] << endl;
 		}
 
@@ -1307,7 +1349,8 @@ void schreier::extend_orbit(INT *elt, INT verbose_level)
 	while (cur < total) {
 		cur_pt = orbit[cur];
 		if (FALSE) {
-			cout << "schreier::extend_orbit applying generator to " << cur_pt << endl;
+			cout << "schreier::extend_orbit "
+					"applying generator to " << cur_pt << endl;
 			}
 #if 0
 		if (cur < total0)
@@ -1355,7 +1398,8 @@ void schreier::extend_orbit(INT *elt, INT verbose_level)
 		}
 	if (FALSE) {
 		cout << "{ ";
-		for (i = orbit_first[nb_orbits - 1]; i < orbit_first[nb_orbits]; i++) {
+		for (i = orbit_first[nb_orbits - 1];
+				i < orbit_first[nb_orbits]; i++) {
 			cout << orbit[i];
 			if (i < orbit_first[nb_orbits] - 1)
 				cout << ", ";
@@ -1371,7 +1415,8 @@ void schreier::compute_all_point_orbits(INT verbose_level)
 	INT f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits verbose_level=" << verbose_level << endl;
+		cout << "schreier::compute_all_point_orbits "
+				"verbose_level=" << verbose_level << endl;
 		}
 	if (A->degree > ONE_MILLION) {
 		f_vv = FALSE;
@@ -1419,7 +1464,8 @@ void schreier::compute_all_point_orbits_with_prefered_reps(
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_prefered_reps" << endl;
+		cout << "schreier::compute_all_point_orbits_"
+				"with_prefered_reps" << endl;
 		}
 	initialize_tables();
 	for (i = 0; i < nb_prefered_reps; i++) {
@@ -1457,14 +1503,16 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 	INT *labels, *perm, *perm_inv;
 	
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_preferred_labels" << endl;
+		cout << "schreier::compute_all_point_orbits_with_"
+				"preferred_labels" << endl;
 		//cout << "preferred_labels :";
 		//INT_vec_print(cout, preferred_labels, A->degree);
 		//cout << endl;
 		cout << "A->degree = " << A->degree << endl;
 		}
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_preferred_labels allocating tables" << endl;
+		cout << "schreier::compute_all_point_orbits_with_"
+				"preferred_labels allocating tables" << endl;
 		}
 	initialize_tables();
 	labels = NEW_INT(A->degree);
@@ -1474,13 +1522,16 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 		labels[i] = preferred_labels[i];
 		}
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_preferred_labels allocating tables done, sorting" << endl;
+		cout << "schreier::compute_all_point_orbits_"
+				"with_preferred_labels allocating tables done, "
+				"sorting" << endl;
 		}
 	INT_vec_sorting_permutation(labels, A->degree,
 			perm, perm_inv, TRUE /* f_increasingly */);
 
 	if (f_v) {
-		cout << "schreier::compute_all_point_orbits_with_preferred_labels sorting done" << endl;
+		cout << "schreier::compute_all_point_orbits_"
+				"with_preferred_labels sorting done" << endl;
 		}
 	
 	for (a = 0; a < A->degree; a++) {
@@ -1490,17 +1541,21 @@ void schreier::compute_all_point_orbits_with_preferred_labels(
 		if (pt_loc < cur) {
 			continue;
 			}
-		// now we need to make sure that the point pt is moved to position cur:
-		// actually this is not needed as the function compute_point_orbit does this, too.
+		// now we need to make sure that the point pt
+		// is moved to position cur:
+		// actually this is not needed as the
+		// function compute_point_orbit does this, too.
 		swap_points(cur, pt_loc);
 		
 		if (f_v) {
-			cout << "schreier::compute_all_point_orbits_with_preferred_labels computing orbit of point "
+			cout << "schreier::compute_all_point_orbits_with_"
+					"preferred_labels computing orbit of point "
 					<< pt << " = " << a << " / " << A->degree << endl;
 			}
 		compute_point_orbit(pt, verbose_level - 2);
 		if (f_v) {
-			cout << "schreier::compute_all_point_orbits_with_preferred_labels computing orbit of point "
+			cout << "schreier::compute_all_point_orbits_with_"
+					"preferred_labels computing orbit of point "
 					<< pt << " done, found an orbit of length "
 					<< orbit_len[nb_orbits - 1]
 					<< " nb_orbits = " << nb_orbits << endl;
@@ -1524,7 +1579,7 @@ void schreier::compute_all_orbits_on_invariant_subset(
 	INT i, f;
 	
 	if (f_v) {
-		cout << "schreier::compute_all_orbits_on_invariant_subset()" << endl;
+		cout << "schreier::compute_all_orbits_on_invariant_subset" << endl;
 		cout << "computing orbits on a set of size " << len << endl;
 		}
 	initialize_tables();
@@ -1538,7 +1593,8 @@ void schreier::compute_all_orbits_on_invariant_subset(
 		compute_point_orbit(orbit[f], 0 /* verbose_level */);
 		}
 	if (f > len) {
-		cout << "schreier::compute_all_orbits_on_invariant_subset the set is not G-invariant" << endl;
+		cout << "schreier::compute_all_orbits_on_invariant_subset "
+				"the set is not G-invariant" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -1561,23 +1617,27 @@ INT schreier::sum_up_orbit_lengths()
 
 void schreier::compute_point_orbit(INT pt, INT verbose_level)
 {
-	INT pt_loc, cur, cur_pt, total, i, next_pt, next_pt_loc, total1, cur1;
+	INT pt_loc, cur, cur_pt, total, i, next_pt;
+	INT next_pt_loc, total1, cur1;
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; // (verbose_level >= 5);
 	//INT f_vvv = FALSE; //(verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "schreier::compute_point_orbit" << endl;
-		cout << "computing orbit of point " << pt << " in action " << A->label << endl;
+		cout << "computing orbit of point " << pt
+				<< " in action " << A->label << endl;
 		}
 	pt_loc = orbit_inv[pt];
 	cur = orbit_first[nb_orbits];
 	if (pt_loc < cur) {
-		cout << "schreier::compute_point_orbit() i < orbit_first[nb_orbits]" << endl;
+		cout << "schreier::compute_point_orbit "
+				"i < orbit_first[nb_orbits]" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "schreier::compute_point_orbit computing orbit of pt " << pt << endl;
+		cout << "schreier::compute_point_orbit "
+				"computing orbit of pt " << pt << endl;
 		}
 	if (pt_loc > orbit_first[nb_orbits]) {
 		swap_points(orbit_first[nb_orbits], pt_loc);
@@ -1593,15 +1653,18 @@ void schreier::compute_point_orbit(INT pt, INT verbose_level)
 			}
 		for (i = 0; i < gens.len; i++) {
 			if (f_vv) {
-				cout << "schreier::compute_point_orbit applying generator "
+				cout << "schreier::compute_point_orbit "
+						"applying generator "
 						<< i << " to point " << cur_pt << endl;
 				}
-			next_pt = get_image(cur_pt, i, 0 /*verbose_level - 5*/); // !!
+			next_pt = get_image(cur_pt, i,
+				0 /*verbose_level - 5*/); // !!
 				// A->element_image_of(cur_pt, gens.ith(i), FALSE);
 			next_pt_loc = orbit_inv[next_pt];
 			if (f_vv) {
 				cout << "schreier::compute_point_orbit generator "
-						<< i << " maps " << cur_pt << " to " << next_pt << endl;
+						<< i << " maps " << cur_pt
+						<< " to " << next_pt << endl;
 				}
 			if (next_pt_loc < total)
 				continue;
@@ -1617,7 +1680,8 @@ void schreier::compute_point_orbit(INT pt, INT verbose_level)
 			total++;
 			total1 = total - orbit_first[nb_orbits];
 			cur1 = cur - orbit_first[nb_orbits];
-			if ((total1 % 10000) == 0 || (cur1 > 0 && (cur1 % 10000) == 0)) {
+			if ((total1 % 10000) == 0 ||
+					(cur1 > 0 && (cur1 % 10000) == 0)) {
 				cout << "schreier::compute_point_orbit degree = "
 						<< A->degree << " length = " << total1
 					<< " processed = " << cur1 << " nb_orbits="
@@ -1644,7 +1708,8 @@ void schreier::compute_point_orbit(INT pt, INT verbose_level)
 		}
 	if (FALSE) {
 		cout << "{ ";
-		for (i = orbit_first[nb_orbits]; i < orbit_first[nb_orbits + 1]; i++) {
+		for (i = orbit_first[nb_orbits];
+				i < orbit_first[nb_orbits + 1]; i++) {
 			cout << orbit[i];
 			if (i < orbit_first[nb_orbits + 1] - 1)
 				cout << ", ";
@@ -1653,7 +1718,8 @@ void schreier::compute_point_orbit(INT pt, INT verbose_level)
 		}
 	if (FALSE) {
 		cout << "coset reps:" << endl;
-		for (i = orbit_first[nb_orbits]; i < orbit_first[nb_orbits + 1]; i++) {
+		for (i = orbit_first[nb_orbits];
+				i < orbit_first[nb_orbits + 1]; i++) {
 			cout << i << " : " << endl;
 			coset_rep(i);
 			A->element_print(cosetrep, cout);
@@ -1678,17 +1744,22 @@ void schreier::non_trivial_random_schreier_generator(
 	INT cnt = 0;
 	
 	if (f_v) {
-		cout << "schreier::non_trivial_random_schreier_generator verbose_level=" << verbose_level << endl;
+		cout << "schreier::non_trivial_random_schreier_generator "
+				"verbose_level=" << verbose_level << endl;
 		}
 	while (TRUE) {
 		if (f_v) {
-			cout << "schreier::non_trivial_random_schreier_generator calling random_schreier_generator" << endl;
+			cout << "schreier::non_trivial_random_schreier_generator "
+					"calling random_schreier_generator "
+					"(cnt=" << cnt << ")" << endl;
 			}
 		random_schreier_generator(verbose_level - 1);
 		cnt++;
 		if (!A_original->element_is_one(schreier_gen, verbose_level - 5)) {
 			if (f_vv) {
-				cout << "schreier::non_trivial_random_schreier_generator found a non-trivial random Schreier generator in " << cnt << " trials" << endl;
+				cout << "schreier::non_trivial_random_schreier_generator "
+						"found a non-trivial random Schreier generator in "
+						<< cnt << " trials" << endl;
 				}
 			if (f_vvv) {
 				A->element_print(schreier_gen, cout);
@@ -1702,7 +1773,9 @@ void schreier::non_trivial_random_schreier_generator(
 				cout << endl;
 				}
 			if (f_vv) {
-				cout << "schreier::non_trivial_random_schreier_generator the element is the identity in action " << A_original->label << ", trying again" << endl;
+				cout << "schreier::non_trivial_random_schreier_generator "
+						"the element is the identity in action "
+						<< A_original->label << ", trying again" << endl;
 				}
 			}
 		}
@@ -1718,7 +1791,8 @@ void schreier::random_schreier_generator_ith_orbit(
 	INT f_vvv = FALSE; //(verbose_level >= 3);
 	
 	if (f_v) {
-		cout << "schreier::random_schreier_generator_ith_orbit, orbit " << orbit_no << endl;
+		cout << "schreier::random_schreier_generator_ith_orbit, "
+				"orbit " << orbit_no << endl;
 		}
 	if (f_vvv) {
 		cout << "generators are:" << endl;
@@ -1766,7 +1840,8 @@ void schreier::random_schreier_generator_ith_orbit(
 			}
 		}
 	if (f_vv) {
-		cout << "random coset " << r1 << ", random generator " << r2 << endl;
+		cout << "random coset " << r1
+				<< ", random generator " << r2 << endl;
 		}
 	
 	A->element_mult(cosetrep, gen, schreier_gen1, 0);
@@ -1788,11 +1863,13 @@ void schreier::random_schreier_generator_ith_orbit(
 		cout << "pt2_coset=" << pt2_coset << endl;
 		}
 	if (pt2_coset < first) {
-		cout << "schreier::random_schreier_generator_ith_orbit pt2_coset < first" << endl;
+		cout << "schreier::random_schreier_generator_ith_orbit "
+				"pt2_coset < first" << endl;
 		exit(1);
 		}
 	if (pt2_coset >= first + len) {
-		cout << "schreier::random_schreier_generator_ith_orbit pt2_coset >= first + len" << endl;
+		cout << "schreier::random_schreier_generator_ith_orbit "
+				"pt2_coset >= first + len" << endl;
 		exit(1);
 		}
 	
@@ -1809,11 +1886,13 @@ void schreier::random_schreier_generator_ith_orbit(
 	
 	A->element_mult(schreier_gen1, cosetrep, schreier_gen, 0);
 	if (A->element_image_of(pt, schreier_gen, 0) != pt) {
-		cout << "schreier::random_schreier_generator_ith_orbit() fatal: schreier generator does not stabilize pt" << endl;
+		cout << "schreier::random_schreier_generator_ith_orbit "
+				"fatal: schreier generator does not stabilize pt" << endl;
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "schreier::random_schreier_generator_ith_orbit done" << endl;
+		cout << "schreier::random_schreier_generator_ith_orbit "
+				"done" << endl;
 		}
 	if (f_vvv) {
 		A->element_print_quick(schreier_gen, cout);
@@ -1829,14 +1908,15 @@ void schreier::random_schreier_generator(INT verbose_level)
 // computes random Schreier generator into schreier_gen
 {
 	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; // (verbose_level >= 2);
-	INT r1, r2, pt, pt2, pt2_coset;
+	INT f_vv = (verbose_level >= 2);
+	INT r1, r2, pt, pt2, pt2b, pt2_coset;
 	INT *gen;
 	INT pt1, pt1b;
 	
 	if (f_v) {
 		cout << "schreier::random_schreier_generator orbit_len = " 
-			<< orbit_len[0] << " nb generators = " << gens.len << " in action " << A->label << endl;
+			<< orbit_len[0] << " nb generators = "
+			<< gens.len << " in action " << A->label << endl;
 		}
 	pt = orbit[0];
 	if (f_vv) {
@@ -1858,7 +1938,8 @@ void schreier::random_schreier_generator(INT verbose_level)
 		cout << "image of pt under cosetrep = " << pt1b << endl;
 		}
 	if (pt1b != pt1) {
-		cout << "schreier::random_schreier_generator fatal: cosetrep does not work" << endl;
+		cout << "schreier::random_schreier_generator fatal: "
+				"cosetrep does not work" << endl;
 		cout << "pt=" << pt << endl;
 		cout << "random coset " << r1 << endl;
 		cout << "pt1=" << pt1 << endl;
@@ -1873,12 +1954,14 @@ void schreier::random_schreier_generator(INT verbose_level)
 	r2 = random_integer(gens.len);
 	gen = gens.ith(r2);
 	if (f_vv) {
-		cout << "random coset " << r1 << ", random generator " << r2 << endl;
+		cout << "random coset " << r1 << ", "
+				"random generator " << r2 << endl;
 		cout << "generator:" << endl;
 		A->element_print_quick(gen, cout);
 		cout << "image of pt1 under generator = pt2 = "
 				<< A->element_image_of(pt1, gen, 0) << endl;
 		}
+	pt2b = A->element_image_of(pt1, gen, 0);
 	
 	A->element_mult(cosetrep, gen, schreier_gen1, 0);
 	if (f_vv) {
@@ -1889,6 +1972,44 @@ void schreier::random_schreier_generator(INT verbose_level)
 	if (f_vv) {
 		cout << "image of pt under cosetrep*gen = " << pt2 << endl;
 		}
+	if (pt2 != pt2b) {
+		cout << "schreier::random_schreier_generator "
+				"something is wrong! " << endl;
+		cout << "pt2=" << pt2 << " = image of pt "
+				"under cosetrep * gen" << endl;
+		cout << "pt2b=" << pt2b << " = image of pt1 "
+				"under gen" << endl;
+		cout << "cosetrep:" << endl;
+		A->element_print_quick(cosetrep, cout);
+		cout << "generator:" << endl;
+		A->element_print_quick(gen, cout);
+		cout << "cosetrep * gen=" << endl;
+		A->element_print_quick(schreier_gen1, cout);
+		cout << "pt=" << pt << endl;
+		cout << "pt1=" << pt1 << endl;
+		cout << "pt1b=" << pt1b << endl;
+		cout << "pt2=" << pt2 << endl;
+		cout << "pt2b=" << pt2b << endl;
+
+		cout << "repeat 1" << endl;
+		cout << "repeating pt1b = A->element_image_of(pt, "
+				"cosetrep, 0):" << endl;
+		pt1b = A->element_image_of(pt, cosetrep, verbose_level + 3);
+		cout << "pt1b = " << pt1b << endl;
+
+		cout << "repeat 2" << endl;
+		cout << "repeating pt2b = A->element_image_of(pt1, "
+				"gen, 0):" << endl;
+		pt2b = A->element_image_of(pt1, gen, verbose_level + 3);
+
+		cout << "repeat 3" << endl;
+		cout << "repeating pt2 = A->element_image_of(pt, "
+				"schreier_gen1, 0):" << endl;
+		pt2 = A->element_image_of(pt, schreier_gen1, verbose_level + 3);
+
+
+		exit(1);
+	}
 	//cout << "maps " << pt << " to " << pt2 << endl;
 	pt2_coset = orbit_inv[pt2];
 	
@@ -1909,7 +2030,8 @@ void schreier::random_schreier_generator(INT verbose_level)
 				<< A->element_image_of(pt, schreier_gen, 0) << endl;
 		}
 	if (A->element_image_of(pt, schreier_gen, 0) != pt) {
-		cout << "schreier::random_schreier_generator() fatal: schreier generator does not stabilize pt" << endl;
+		cout << "schreier::random_schreier_generator() "
+				"fatal: schreier generator does not stabilize pt" << endl;
 		exit(1);
 		}
 	if (FALSE) {
@@ -2324,7 +2446,8 @@ INT schreier::subtree_calc_weight(INT *weight,
 	return w;
 }
 
-INT schreier::subtree_depth_first(ostream &ost, INT *path, INT i, INT last)
+INT schreier::subtree_depth_first(ostream &ost,
+		INT *path, INT i, INT last)
 {
 	INT pt = orbit[i];
 	INT ii, l, w = 1, w1;
@@ -2355,7 +2478,8 @@ void schreier::print_path(ostream &ost, INT *path, INT l)
 	ost << endl;
 }
 
-void schreier::intersection_vector(INT *set, INT len, INT *intersection_cnt)
+void schreier::intersection_vector(INT *set,
+		INT len, INT *intersection_cnt)
 {
 	INT i, pt, /*pt_loc,*/ o;
 	
@@ -2380,7 +2504,8 @@ void schreier::orbits_on_invariant_subset_fast(
 	
 	if (f_v) {
 		cout << "schreier::orbits_on_invariant_subset_fast "
-			"computing orbits on invariant subset of size " << len << " in action ";
+			"computing orbits on invariant subset "
+			"of size " << len << " in action ";
 		A->print_info();
 		}
 	
@@ -2396,8 +2521,10 @@ void schreier::orbits_on_invariant_subset_fast(
 		}
 #if 0
 	if (orbit_first[nb_orbits] != len) {
-		cout << "schreier::orbits_on_invariant_subset_fast orbit_first[nb_orbits] != len" << endl;
-		cout << "orbit_first[nb_orbits] = " << orbit_first[nb_orbits] << endl;
+		cout << "schreier::orbits_on_invariant_subset_"
+				"fast orbit_first[nb_orbits] != len" << endl;
+		cout << "orbit_first[nb_orbits] = "
+				<< orbit_first[nb_orbits] << endl;
 		cout << "len = " << len << endl;
 		cout << "subset:" << endl;
 		INT_vec_print(cout, subset, len);
@@ -2455,14 +2582,16 @@ void schreier::get_orbit_partition_of_points_and_lines(
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "schreier::get_orbit_partition_of_points_and_lines" << endl;
+		cout << "schreier::get_orbit_partition_"
+				"of_points_and_lines" << endl;
 		}
 	first_column_element = S.startCell[1];
 	if (f_v) {
-		cout << "first_column_element = " << first_column_element << endl;
+		cout << "first_column_element = "
+				<< first_column_element << endl;
 		}
 	pos = orbit_inv[first_column_element];
-	first_column_orbit = orbit_number(first_column_element); // orbit_no[pos];
+	first_column_orbit = orbit_number(first_column_element);
 	
 	for (i = first_column_orbit - 1; i > 0; i--) {
 		f = orbit_first[i];
@@ -2525,7 +2654,8 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 	INT i, fst, len;
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal" << endl;
+		cout << "schreier::generators_for_stabilizer_of_"
+				"arbitrary_point_and_transversal" << endl;
 		}
 	
 	cosets = new vector_ge;
@@ -2546,7 +2676,9 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 			orbit_index1, transporter, 0 /* verbose_level */);
 
 	if (orbit_index1 != orbit_index) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal orbit_index1 != orbit_index" << endl;
+		cout << "schreier::generators_for_stabilizer_of_"
+				"arbitrary_point_and_transversal "
+				"orbit_index1 != orbit_index" << endl;
 		exit(1);
 		}
 	
@@ -2554,16 +2686,22 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal before gens->init_generators_for_the_conjugate_group_aGav" << endl;
+		cout << "schreier::generators_for_stabilizer_of_"
+				"arbitrary_point_and_transversal before "
+				"gens->init_generators_for_the_conjugate_group_aGav" << endl;
 		}
 	gens->init_generators_for_the_conjugate_group_aGav(gens0, 
 		transporter, verbose_level);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal after gens->init_generators_for_the_conjugate_group_aGav" << endl;
+		cout << "schreier::generators_for_stabilizer_of_"
+				"arbitrary_point_and_transversal after "
+				"gens->init_generators_for_the_conjugate_group_aGav" << endl;
 		}
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal computing coset representatives" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point_and_transversal computing "
+				"coset representatives" << endl;
 		}
 	for (i = 0; i < len; i++) {
 		transporter_from_orbit_rep_to_point(orbit[fst + i],
@@ -2571,14 +2709,17 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 		A->element_mult(transporter, transporter1, cosets->ith(i), 0);
 		}
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal computing coset representatives done" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point_and_transversal computing "
+				"coset representatives done" << endl;
 		}
 
 	FREE_INT(transporter);
 	FREE_INT(transporter1);
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point_and_transversal done" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point_and_transversal done" << endl;
 		}
 	delete gens0;
 	return gens;
@@ -2597,7 +2738,8 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 	INT *transporter;
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point" << endl;
 		}
 	
 	transporter = NEW_INT(A->elt_size_in_INT);
@@ -2611,7 +2753,8 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 			orbit_index1, transporter, 0 /* verbose_level */);
 
 	if (orbit_index1 != orbit_index) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point orbit_index1 != orbit_index" << endl;
+		cout << "schreier::generators_for_stabilizer_of_"
+				"arbitrary_point orbit_index1 != orbit_index" << endl;
 		exit(1);
 		}
 	
@@ -2619,18 +2762,23 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point before gens->init_generators_for_the_conjugate_group_aGav" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point before gens->init_generators_"
+				"for_the_conjugate_group_aGav" << endl;
 		}
 	gens->init_generators_for_the_conjugate_group_aGav(gens0, 
 		transporter, verbose_level);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point after gens->init_generators_for_the_conjugate_group_aGav" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point after gens->init_generators_"
+				"for_the_conjugate_group_aGav" << endl;
 		}
 
 	FREE_INT(transporter);
 	
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_arbitrary_point done" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_arbitrary_point done" << endl;
 		}
 	delete gens0;
 	return gens;
@@ -2647,7 +2795,8 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 	sims *Stab;
 
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_orbit_rep" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_orbit_rep" << endl;
 		}
 
 
@@ -2658,7 +2807,9 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 
 	Stab->group_order(stab_order);
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_orbit_rep found a stabilizer group of order " << stab_order << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_orbit_rep found a stabilizer group "
+				"of order " << stab_order << endl;
 		}
 	
 	gens = new strong_generators;
@@ -2667,7 +2818,8 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 
 	delete Stab;
 	if (f_v) {
-		cout << "schreier::generators_for_stabilizer_of_orbit_rep done" << endl;
+		cout << "schreier::generators_for_stabilizer_"
+				"of_orbit_rep done" << endl;
 		}
 	return gens;
 }
@@ -2691,8 +2843,10 @@ void schreier::point_stabilizer(action *default_action,
 	
 	
 	if (f_v) {
-		cout << "schreier::point_stabilizer computing stabilizer of representative of orbit " 
-			<< orbit_no << " inside a group of order " << go << " in action ";
+		cout << "schreier::point_stabilizer "
+				"computing stabilizer of representative of orbit "
+			<< orbit_no << " inside a group of "
+					"order " << go << " in action ";
 		default_action->print_info();
 		cout << endl;
 		}
@@ -2700,7 +2854,8 @@ void schreier::point_stabilizer(action *default_action,
 	len = orbit_len[orbit_no];
 	D.integral_division_by_INT(go, len, target_go, r);
 	if (r) {	
-		cout << "schreier::point_stabilizer orbit length does not divide group order" << endl;
+		cout << "schreier::point_stabilizer "
+				"orbit length does not divide group order" << endl;
 		exit(1);
 		}
 	if (f_vv) {
@@ -2715,7 +2870,8 @@ void schreier::point_stabilizer(action *default_action,
 			break;
 			}
 		if (cnt % 2 || Stab->nb_gen[0] == 0) {
-			random_schreier_generator_ith_orbit(orbit_no, 0 /* verbose_level */);
+			random_schreier_generator_ith_orbit(orbit_no,
+					0 /* verbose_level */);
 			p_gen = schreier_gen;
 			if (f_vvv) {
 				cout << "random Schreier generator from the orbit:" << endl;
@@ -2834,7 +2990,8 @@ void schreier::test_sv(action *A,
 			i = orbit_first[k] + j;
 			pt = orbit[i];
 			coset_rep_inv(i);
-			schreier_vector_coset_rep_inv(A, sv, hdl_strong_generators, pt, pt0, 
+			schreier_vector_coset_rep_inv(
+				A, sv, hdl_strong_generators, pt, pt0,
 				crep, Elt1, Elt2, Elt3, 
 				f_trivial_group, f_compact,
 				f_check_image, verbose_level - 4);
@@ -2855,7 +3012,8 @@ void schreier::test_sv(action *A,
 	FREE_INT(Elt3);
 }
 
-void schreier::write_to_memory_object(memory_object *m, INT verbose_level)
+void schreier::write_to_memory_object(
+		memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -2884,7 +3042,8 @@ void schreier::write_to_memory_object(memory_object *m, INT verbose_level)
 		}
 }
 
-void schreier::read_from_memory_object(memory_object *m, INT verbose_level)
+void schreier::read_from_memory_object(
+		memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, deg, dummy, a, version;
@@ -2904,7 +3063,8 @@ void schreier::read_from_memory_object(memory_object *m, INT verbose_level)
 		}
 	m->read_int(&nb_orbits);
 	if (deg != A->degree) {
-		cout << "schreier::read_from_memory_object deg != A->degree" << endl;
+		cout << "schreier::read_from_memory_object "
+				"deg != A->degree" << endl;
 		}
 	orbit_first = NEW_INT(nb_orbits);
 	orbit_len = NEW_INT(nb_orbits);
@@ -3025,7 +3185,8 @@ void schreier::read_from_file_binary(ifstream &fp, INT verbose_level)
 	//fp.read((char *) &deg, sizeof(INT));
 	fp.read((char *) &nb_orbits, sizeof(INT));
 	if (deg != A->degree) {
-		cout << "schreier::read_from_file_binary deg != A->degree" << endl;
+		cout << "schreier::read_from_file_binary "
+				"deg != A->degree" << endl;
 		}
 	orbit_first = NEW_INT(nb_orbits);
 	orbit_len = NEW_INT(nb_orbits);
@@ -3098,7 +3259,8 @@ void schreier::read_file_binary(const BYTE *fname, INT verbose_level)
 		}
 }
 
-void schreier::orbits_as_set_of_sets(set_of_sets *&S, INT verbose_level)
+void schreier::orbits_as_set_of_sets(
+		set_of_sets *&S, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Sz;
@@ -3130,7 +3292,8 @@ void schreier::orbits_as_set_of_sets(set_of_sets *&S, INT verbose_level)
 		}
 }
 
-void schreier::get_orbit_reps(INT *&Reps, INT &nb_reps, INT verbose_level)
+void schreier::get_orbit_reps(INT *&Reps,
+		INT &nb_reps, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a, f;
@@ -3230,11 +3393,14 @@ INT schreier::orbit_number(INT pt)
 			}
 		idx--;
 		}
-	if (orbit_first[idx] <= pos && pos < orbit_first[idx] + orbit_len[idx]) {
+	if (orbit_first[idx] <= pos &&
+			pos < orbit_first[idx] + orbit_len[idx]) {
 		return idx;
 		}
 	else {
-		cout << "schreier::orbit_number something is wrong, perhaps the orbit of the point has not yet been computed" << endl;
+		cout << "schreier::orbit_number something is wrong, "
+				"perhaps the orbit of the point has not yet "
+				"been computed" << endl;
 		exit(1);
 		}
 }
@@ -3267,7 +3433,8 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 	INT i, j, r, r0, a, b;
 
 	if (f_v) {
-		cout << "schreier::get_orbit_decomposition_scheme_of_graph" << endl;
+		cout << "schreier::get_orbit_decomposition_"
+				"scheme_of_graph" << endl;
 		}
 	Decomp_scheme = NEW_INT(nb_orbits * nb_orbits);
 	INT_vec_zero(Decomp_scheme, nb_orbits * nb_orbits);
@@ -3275,14 +3442,16 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 		f1 = orbit_first[I];
 		l1 = orbit_len[I];
 		if (FALSE) {
-			cout << "I = " << I << " f1 = " << f1 << " l1 = " << l1 << endl;
+			cout << "I = " << I << " f1 = " << f1
+					<< " l1 = " << l1 << endl;
 			}
 		for (J = 0; J < nb_orbits; J++) {
 			r0 = 0;
 			f2 = orbit_first[J];
 			l2 = orbit_len[J];
 			if (FALSE) {
-				cout << "J = " << J << " f2 = " << f2 << " l2 = " << l2 << endl;
+				cout << "J = " << J << " f2 = " << f2
+						<< " l2 = " << l2 << endl;
 				}
 			for (i = 0; i < l1; i++) {
 				a = orbit[f1 + i];
@@ -3298,7 +3467,8 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 					}
 				else {
 					if (r0 != r) {
-						cout << "schreier::get_orbit_decomposition_scheme_of_graph not tactical" << endl;
+						cout << "schreier::get_orbit_decomposition_"
+								"scheme_of_graph not tactical" << endl;
 						cout << "I=" << I << endl;
 						cout << "J=" << J << endl;
 						cout << "r0=" << r0 << endl;
@@ -3318,7 +3488,14 @@ void schreier::get_orbit_decomposition_scheme_of_graph(
 		INT_matrix_print(Decomp_scheme, nb_orbits, nb_orbits);
 		}
 	if (f_v) {
-		cout << "schreier::get_orbit_decomposition_scheme_of_graph done" << endl;
+		cout << "schreier::get_orbit_decomposition_"
+				"scheme_of_graph done" << endl;
 		}
 }
+
+void schreier::list_elements_as_permutations_vertically(ostream &ost)
+{
+	A->list_elements_as_permutations_vertically(&gens, ost);
+}
+
 
