@@ -5,14 +5,17 @@
 // moved here: June 28, 2014
 
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 INT upstep_work::upstep_subspace_action(INT verbose_level)
 // This routine is called from upstep_work::init_extension_node
 // It computes coset_table.
 // It is testing a set of size 'size'. 
 // The newly added point is in gen->S[size - 1]
-// The extension is initiated from node 'prev' and from extension 'prev_ex' 
+// The extension is initiated from node 'prev'
+// and from extension 'prev_ex'
 // The node 'prev' is at depth 'size' - 1 
 // returns FALSE if the set is not canonical
 // (provided f_indicate_not_canonicals is TRUE)
@@ -47,7 +50,9 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	
 	AG = new action_on_grassmannian;
 	
-	O_cur->store_set(gen, size - 1); // stores a set of size 'size' to gen->S
+
+	O_cur->store_set(gen, size - 1);
+		// stores a set of size 'size' to gen->S
 	if (f_v) {
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
@@ -113,7 +118,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		cout << "setting up grassmannian n=" << n
 				<< " k=" << k << " q=" << F->q << endl;
 		}
-	G.init(n, k, F, verbose_level - 1);
+	G.init(n, k, F, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"grassmann initialized" << endl;
@@ -139,10 +144,12 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		}
 	
 
-	A_on_hyperplanes.induced_action_on_grassmannian(gen->A2, 
+	A_on_hyperplanes.induced_action_on_grassmannian(
+		gen->A2,
 		AG, 
-		FALSE /* f_induce_action*/, NULL /*sims *old_G*/, 
-		0/*verbose_level - 3*/);
+		FALSE /* f_induce_action*/,
+		NULL /*sims *old_G*/,
+		verbose_level - 3);
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"after A_on_hyperplanes->induced_action_on_grassmannian"
@@ -163,14 +170,15 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	up_orbit.init(&A_on_hyperplanes);
 	up_orbit.init_generators(*H->SG);
 	if (f_vvv) {
-		cout << "generators:" << endl;
+		cout << "upstep_work::upstep_subspace_action generators for H:" << endl;
 		H->print_strong_generators(cout, TRUE);
 
 #if 1
 		cout << "generators in the action on hyperplanes:" << endl;
 		H->print_strong_generators_with_different_action_verbose(
 			cout,
-			&A_on_hyperplanes, verbose_level - 2);
+			&A_on_hyperplanes,
+			verbose_level - 2);
 #endif
 
 		}
@@ -181,7 +189,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		}
 	up_orbit.compute_point_orbit(
 			0 /* the initial hyperplane */,
-			0/*verbose_level*/);
+			verbose_level);
 		// computes the orbits of the group H
 		// up_orbit will be extended as soon 
 		// as new automorphisms are found
@@ -211,7 +219,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		}
 
 	if (f_vv) {
-		cout << "we will now loop over the " << degree
+		cout << "upstep_work::upstep_subspace_action we will now loop over the " << degree
 				<< " cosets of the hyperplane stabilizer:" << endl;
 		}
 
@@ -221,11 +229,16 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 
 	for (coset = 0; coset < degree; coset++) { 
 
+		if (f_vv) {
+			cout << "upstep_work::upstep_subspace_action coset "
+					<< coset << " / " << degree << endl;
+		}
 		idx = UF.ancestor(coset);
 		if (idx < coset) {
 			gen->nb_times_trace_was_saved++;
 			if (f_vv) {
-				cout << "coset " << coset << " is at " << idx
+				cout << "upstep_work::upstep_subspace_action coset "
+						<< coset << " / " << degree << " is at " << idx
 						<< " which has already been done, "
 						"so we save one trace" << endl;
 				}
@@ -235,7 +248,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		idx = up_orbit.orbit_inv[coset];
 		if (idx < up_orbit.orbit_len[0]) {
 			if (f_v) {
-				cout << "coset " << coset << " is at " << idx
+				cout << "upstep_work::upstep_subspace_action coset " << coset << " is at " << idx
 						<< " which is part of the current orbit, "
 						"so we save one trace" << endl;
 				}
@@ -249,9 +262,10 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			cout << endl;
 			}
 		if (f_vvv) {
-			cout << "unranking " << coset << ":" << endl;
+			cout << "upstep_work::upstep_subspace_action "
+					"unranking " << coset << ":" << endl;
 			}
-		G.unrank_INT(coset, verbose_level - 5);
+		G.unrank_INT(coset, 0 /*verbose_level - 5*/);
 		for (h = 0; h < k * n; h++) {
 			base_change_matrix[h] = G.M[h];
 			}
@@ -304,13 +318,17 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			cout << "upstep_work::upstep_subspace_action rk != n" << endl;
 			exit(1);
 			}
-		F->mult_matrix_matrix(base_change_matrix,
-				AG->GE->M, changed_space, n, n, big_n);
+		F->mult_matrix_matrix(
+				base_change_matrix,
+				AG->GE->M,
+				changed_space,
+				n, n, big_n);
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset << ":" << endl;
 			print_integer_matrix_width(cout,
-					changed_space, n, big_n, big_n, F->log10_of_q);
+					changed_space,
+					n, big_n, big_n, F->log10_of_q);
 			}
 
 		// initialize set[0] for the tracing
@@ -342,7 +360,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			cout << "upstep_work::upstep_subspace_action exchanged set: ";
 			INT_set_print(cout, gen->set[0], size);
 			cout << endl;
-			cout << "calling find_automorphism_by_tracing()" << endl;
+			cout << "upstep_work::upstep_subspace_action "
+					"calling find_automorphism_by_tracing" << endl;
 			}
 		
 #if 0		
@@ -357,8 +376,10 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		INT nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
 		
 
-		r = find_automorphism_by_tracing(final_node, final_ex, 
-				TRUE /* f_tolerant */, verbose_level - 1);
+		r = find_automorphism_by_tracing(
+				final_node, final_ex,
+				TRUE /* f_tolerant */,
+				verbose_level - 1);
 			// upstep_work_trace.C
 		
 		coset_table[nb_cosets_processed].coset = coset;
@@ -428,7 +449,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		else if (r == not_canonical) {
 			if (f_indicate_not_canonicals) {
 				if (f_vvv) {
-					cout << "not canonical" << endl;
+					cout << "upstep_work::upstep_subspace_action "
+							"not canonical" << endl;
 					}
 				return FALSE;
 				}
@@ -439,7 +461,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			}
 		else if (r == no_result_extension_not_found) {
 			if (f_vvv) {
-				cout << "no_result_extension_not_found" << endl;
+				cout << "upstep_work::upstep_subspace_action "
+						"no_result_extension_not_found" << endl;
 				}
 			cout << "upstep_work::upstep_subspace_action "
 					"fatal: no_result_extension_not_found" << endl;
@@ -447,12 +470,14 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			}
 		else if (r == no_result_fusion_node_installed) {
 			if (f_vvv) {
-				cout << "no_result_fusion_node_installed" << endl;
+				cout << "upstep_work::upstep_subspace_action "
+						"no_result_fusion_node_installed" << endl;
 				}
 			}
 		else if (r == no_result_fusion_node_already_installed) {
 			if (f_vvv) {
-				cout << "no_result_fusion_node_already_installed" << endl;
+				cout << "upstep_work::upstep_subspace_action "
+						"no_result_fusion_node_already_installed" << endl;
 				}
 			}
 		} // next coset
@@ -460,13 +485,15 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	
 	if (f_v) {
 		print_level_extension_info();
-		cout << "upstep orbit length for set ";
+		cout << "upstep_work::upstep_subspace_action "
+				"upstep orbit length for set ";
 		INT_set_print(cout, gen->S, size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 		}
 
 	if (f_vv) {
-		cout << "the final orbits on hyperplanes are:" << endl;		
+		cout << "upstep_work::upstep_subspace_action "
+				"the final orbits on hyperplanes are:" << endl;
 		up_orbit.print_and_list_orbits(cout);
 		}
 
@@ -484,11 +511,21 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 					"node " << cur << ":" << endl;
 			}
 #endif
+		if (f_vv) {
+			cout << "upstep_work::upstep_subspace_action "
+					"before H->S->transitive_extension_tolerant"
+					<< endl;
+		}
 		f_OK = H->S->transitive_extension_tolerant(
 				up_orbit, SG_extension,
 				tl_extension,
 				f_tolerant,
-				verbose_level - 8);
+				0 /*verbose_level - 8*/);
+		if (f_vv) {
+			cout << "upstep_work::upstep_subspace_action "
+					"after H->S->transitive_extension_tolerant"
+					<< endl;
+		}
 		if (!f_OK) {
 			cout << "upstep_work::upstep_subspace_action "
 					"overshooting the group order" << endl;
@@ -507,14 +544,19 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	FREE_INT(changed_space);
 	
 	if (f_vv) {
-		cout << "before freeing A_on_hyperplanes" << endl;
+		cout << "upstep_work::upstep_subspace_action "
+				"before freeing A_on_hyperplanes" << endl;
 		}
 	}
 
 	if (f_vv) {
-		cout << "before freeing the rest" << endl;
+		cout << "upstep_work::upstep_subspace_action "
+				"before freeing the rest" << endl;
 		}
 	}
+	if (f_v) {
+		cout << "upstep_work::upstep_subspace_action done" << endl;
+		}
 	return TRUE;
 }
 

@@ -6,7 +6,9 @@
 // moved here from generator.C: July 29, 2014
 
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 generator::generator()
 {
@@ -197,7 +199,8 @@ void generator::usage()
 	cout << "-v <n>" << endl;
 	cout << "  verbose level n" << endl;
 	cout << "-lex" << endl;
-	cout << "  use lex reduction (cannot be used in vector space setting)" << endl;
+	cout << "  use lex reduction (cannot be used in vector "
+			"space setting)" << endl;
 	cout << "-gv <n>" << endl;
 	cout << "  verbose level n for all group theory related things" << endl;
 	cout << "-w" << endl;
@@ -210,7 +213,8 @@ void generator::usage()
 	cout << "  use s as prefix for all output files" << endl;
 	cout << "-extend <f> <t> <r> <m> <s>" << endl;
 	cout << "  extend all partial solutions congruent" << endl;
-	cout << "  to <r> mod <m> from file <s> from level <f> to level <t>" << endl;
+	cout << "  to <r> mod <m> from file <s> from level <f> "
+			"to level <t>" << endl;
 	cout << "-x xmax" << endl;
 	cout << "   specifies horizontal size (default 1000)" << endl;
 	cout << "-y ymax" << endl;
@@ -231,17 +235,10 @@ void generator::usage()
 	cout << "   print only (no computation), to be used with -r" << endl;
 	cout << "-findgroup <order>" << endl;
 	cout << "   find group of order <order>" << endl;
-	cout << "-downstep_split <mod> <case>" << endl;
-	cout << "   Process downstep for all cases congruent <case> modulo <mod>" << endl;
-	cout << "-upstep_split <mod> <case>" << endl;
-	cout << "   Process upstep for all cases congruent <case> modulo <mod>" << endl;
-	cout << "-downstep_collate <mod>" << endl;
-	cout << "   Collates the data from the parallel downstep runs modulo <mod>" << endl;
-	cout << "-upstep_collate <mod>" << endl;
-	cout << "   Collates the data from the parallel downstep runs modulo <mod>" << endl;
 }
 
-void generator::read_arguments(int argc, const char **argv, INT verbose_level)
+void generator::read_arguments(int argc,
+		const char **argv, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -563,7 +560,8 @@ void generator::initialize(action *A_base, action *A_use,
 }
 
 
-void generator::initialize_with_starter(action *A_base, action *A_use, 
+void generator::initialize_with_starter(
+	action *A_base, action *A_use,
 	strong_generators *gens, 
 	INT depth, 
 	BYTE *path, 

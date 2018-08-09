@@ -3,7 +3,64 @@
 // Anton Betten
 // December 27, 2004
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
+
+oracle::oracle()
+{
+	null();
+}
+
+oracle::~oracle()
+{
+	freeself();
+}
+
+void oracle::null()
+{
+	nb_strong_generators = 0;
+	hdl_strong_generators = NULL;
+	tl = NULL;
+	nb_extensions = 0;
+	E = NULL;
+	sv = NULL;
+}
+
+void oracle::freeself()
+{
+	if (hdl_strong_generators) {
+#if 0
+		cout << "oracle::freeself() deleting hdl_strong_generators: ";
+		INT_vec_print(cout, hdl_strong_generators, nb_strong_generators);
+		cout << endl;
+		cout << "pointer = ";
+		print_pointer_hex(cout, hdl_strong_generators);
+		cout << endl;
+#endif
+		FREE_INT(hdl_strong_generators);
+		hdl_strong_generators = NULL;
+		//cout << "oracle::freeself() "
+		//"deleting hdl_strong_generators done" << endl;
+		}
+	if (tl) {
+		//cout << "oracle::freeself deleting tl" << endl;
+		FREE_INT(tl);
+		tl = NULL;
+		}
+	if (E) {
+		//cout << "oracle::freeself deleting E" << endl;
+		delete [] E;
+		E = NULL;
+		}
+	if (sv) {
+		//cout << "oracle::freeself deleting sv" << endl;
+		FREE_INT(sv);
+		sv = NULL;
+		}
+	//cout << "oracle::freeself finished" << endl;
+}
+
 
 void oracle::init_root_node(generator *gen, INT verbose_level)
 // copies gen->SG0 and gen->transversal_length
@@ -98,7 +155,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 			G, go_G, 
 			H, go_H, 
 			pt, pt_orbit_len, 
-			verbose_level - 3);
+			0 /*verbose_level - 3*/);
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
@@ -123,7 +180,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 			G, go_G, 
 			H, /*go_H, */
 			pt, pt_orbit_len, 
-			verbose_level - 3);
+			0 /*verbose_level - 3*/);
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
@@ -489,7 +546,7 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 				"before schreier_sims for stabilizer with "
 			<< Op.nb_strong_generators << " strong generators" << endl;
 		}
-	G.schreier_sims(verbose_level - 2);
+	G.schreier_sims(0 /*verbose_level - 2*/);
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
@@ -608,60 +665,6 @@ void oracle::get_stabilizer_generators(generator *gen,
 			Strong_gens->tl[i] = oracle::tl[i];
 			}
 		}
-}
-
-oracle::oracle()
-{
-	null();
-}
-
-oracle::~oracle()
-{
-	freeself();
-}
-
-void oracle::null()
-{
-	nb_strong_generators = 0;
-	hdl_strong_generators = NULL;
-	tl = NULL;
-	nb_extensions = 0;
-	E = NULL;
-	sv = NULL;
-}
-
-void oracle::freeself()
-{
-	if (hdl_strong_generators) {
-#if 0
-		cout << "oracle::freeself() deleting hdl_strong_generators: ";
-		INT_vec_print(cout, hdl_strong_generators, nb_strong_generators);
-		cout << endl;
-		cout << "pointer = ";
-		print_pointer_hex(cout, hdl_strong_generators);
-		cout << endl;
-#endif
-		FREE_INT(hdl_strong_generators);
-		hdl_strong_generators = NULL;
-		//cout << "oracle::freeself() "
-		//"deleting hdl_strong_generators done" << endl;
-		}
-	if (tl) {
-		//cout << "oracle::freeself() deleting tl" << endl;
-		FREE_INT(tl);
-		tl = NULL;
-		}
-	if (E) {
-		//cout << "oracle::freeself() deleting E" << endl;
-		delete [] E;
-		E = NULL;
-		}
-	if (sv) {
-		//cout << "oracle::freeself() deleting sv" << endl;
-		FREE_INT(sv);
-		sv = NULL;
-		}
-	//cout << "oracle::freeself() finished" << endl;
 }
 
 void oracle::oracle_depth_breadth_perm_and_inverse(

@@ -3,7 +3,9 @@
 // Anton Betten
 // December 29, 2003
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 
 INT generator::nb_orbits_at_level(INT level)
@@ -512,8 +514,10 @@ double generator::level_progress(INT lvl)
 
 
 
-void generator::count_automorphism_group_orders(INT lvl, INT &nb_agos, 
-	longinteger_object *&agos, INT *&multiplicities, INT verbose_level)
+void generator::count_automorphism_group_orders(
+	INT lvl, INT &nb_agos,
+	longinteger_object *&agos, INT *&multiplicities,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l, j, c, h, f_added;
@@ -1216,7 +1220,8 @@ void generator::orbit_element_unrank(INT depth,
 
 	if (f_v) {
 		cout << "generator::orbit_element_unrank depth=" << depth
-				<< " orbit_idx=" << orbit_idx << " rank=" << rank << endl;
+				<< " orbit_idx=" << orbit_idx
+				<< " rank=" << rank << endl;
 		}
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
@@ -1224,11 +1229,13 @@ void generator::orbit_element_unrank(INT depth,
 	the_set = NEW_INT(depth);
 	
 	O = &root[first_oracle_node_at_level[depth] + orbit_idx];
-	coset_unrank(depth, orbit_idx, rank, Elt1, 0/*verbose_level*/);
+	coset_unrank(depth, orbit_idx, rank, Elt1,
+			0/*verbose_level*/);
 
 	A->element_invert(Elt1, Elt2, 0);
 	O->store_set_to(this, depth - 1, the_set);
-	A2->map_a_set(the_set, set, depth, Elt2, 0/*verbose_level*/);
+	A2->map_a_set(the_set, set, depth, Elt2,
+			0/*verbose_level*/);
 
 	FREE_INT(the_set);
 	FREE_INT(Elt1);
@@ -1253,7 +1260,8 @@ void generator::orbit_element_rank(INT depth,
 
 
 	if (f_v) {
-		cout << "generator::orbit_element_rank depth=" << depth << " ";
+		cout << "generator::orbit_element_rank "
+				"depth=" << depth << " ";
 		INT_vec_print(cout, set, depth);
 		cout << endl;
 		}
@@ -1336,8 +1344,10 @@ void generator::coset_unrank(INT depth, INT orbit_idx,
 		cout << endl;
 		}
 	
-	O1->get_stabilizer(this, *G1, G_order, verbose_level - 2);
-	O2->get_stabilizer(this, *G2, U_order, verbose_level - 2);
+	O1->get_stabilizer(this,
+			*G1, G_order, verbose_level - 2);
+	O2->get_stabilizer(this,
+			*G2, U_order, verbose_level - 2);
 
 
 	A->coset_unrank(G1->S, G2->S, rank, Elt, verbose_level);
@@ -1417,7 +1427,7 @@ void generator::list_all_orbits_at_level(INT depth,
 			"at depth " << depth << ":" << endl;
 	for (i = 0; i < l; i++) {
 		cout << "generator::list_all_orbits_at_level listing orbit "
-				<< i << " / " << l << endl;
+			<< i << " / " << l << endl;
 		list_whole_orbit(depth, i, 
 			f_has_print_function, print_function, print_function_data, 
 			f_show_orbit_decomposition, f_show_stab,
@@ -1729,9 +1739,9 @@ void generator::map_to_canonical_k_subset(INT *the_set,
 		cout << "generator::map_to_canonical_k_subset "
 				"before trace_set" << endl;
 		}
-	local_idx = trace_set(subset, set_size, subset_size, 
+	local_idx = trace_set(
+		subset, set_size, subset_size,
 		canonical_subset, Elt1, 
-		//f_implicit_fusion, 
 		verbose_level - 3);
 
 	//idx = local_idx + f;
@@ -1824,8 +1834,10 @@ void generator::print_fusion_nodes(INT depth)
 		}
 }
 
-void generator::find_interesting_k_subsets(INT *the_set, INT n, INT k, 
-	INT *&interesting_sets, INT &nb_interesting_sets, INT &orbit_idx,
+void generator::find_interesting_k_subsets(
+	INT *the_set, INT n, INT k,
+	INT *&interesting_sets, INT &nb_interesting_sets,
+	INT &orbit_idx,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1907,7 +1919,8 @@ void generator::classify_k_subsets(INT *the_set, INT n, INT k,
 }
 
 void generator::trace_all_k_subsets(INT *the_set,
-		INT n, INT k, INT &nCk, INT *&isotype, INT verbose_level)
+		INT n, INT k, INT &nCk, INT *&isotype,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1921,7 +1934,8 @@ void generator::trace_all_k_subsets(INT *the_set,
 	nCk = INT_n_choose_k(n, k);
 	if (f_v) {
 		cout << "generator::trace_all_k_subsets "
-				"n = " << n << " k = " << k << " nCk = " << nCk << endl;
+				"n = " << n << " k = " << k
+				<< " nCk = " << nCk << endl;
 		}
 
 	Elt = NEW_INT(A->elt_size_in_INT);
@@ -1951,7 +1965,8 @@ void generator::trace_all_k_subsets(INT *the_set,
 		INT_vec_copy(subset, set[0], k);
 
 		if (FALSE /*f_v2*/) {
-			cout << "generator::trace_all_k_subsets corresponding to set ";
+			cout << "generator::trace_all_k_subsets "
+					"corresponding to set ";
 			INT_vec_print(cout, subset, k);
 			cout << endl;
 			}
@@ -1972,7 +1987,8 @@ void generator::trace_all_k_subsets(INT *the_set,
 				0 /*verbose_level - 3*/);
 			if (FALSE) {
 				cout << "generator::trace_all_k_subsets "
-						"after trace_set, local_idx = " << local_idx << endl;
+						"after trace_set, local_idx = "
+						<< local_idx << endl;
 				}
 			
 			if (FALSE /*f_vvv*/) {

@@ -8,7 +8,9 @@
 //
 //
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 orbit_node::orbit_node()
 {
@@ -42,7 +44,8 @@ void orbit_node::init(classification *C, INT orbit_index,
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
 	orbit_node::gens = gens;
-	INT_vec_copy(Rep, C->Rep + orbit_index * C->representation_sz, C->representation_sz);
+	INT_vec_copy(Rep, C->Rep + orbit_index * C->representation_sz,
+			C->representation_sz);
 }
 
 void orbit_node::write_file(ofstream &fp, INT verbose_level)

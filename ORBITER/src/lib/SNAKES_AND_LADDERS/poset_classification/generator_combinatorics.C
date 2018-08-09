@@ -6,9 +6,12 @@
 // July 18, 2014
 
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
-void generator::Plesken_matrix_up(INT depth, INT *&P, INT &N, INT verbose_level)
+void generator::Plesken_matrix_up(INT depth,
+		INT *&P, INT &N, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Nb;
@@ -48,7 +51,8 @@ void generator::Plesken_matrix_up(INT depth, INT *&P, INT &N, INT verbose_level)
 		}
 }
 
-void generator::Plesken_matrix_down(INT depth, INT *&P, INT &N, INT verbose_level)
+void generator::Plesken_matrix_down(INT depth,
+		INT *&P, INT &N, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Nb;
@@ -73,7 +77,8 @@ void generator::Plesken_matrix_down(INT depth, INT *&P, INT &N, INT verbose_leve
 	P = NEW_INT(N * N);
 	for (i = 0; i <= depth; i++) {
 		for (j = 0; j <= depth; j++) {
-			Plesken_submatrix_down(i, j, Pij, N1, N2, verbose_level - 1);
+			Plesken_submatrix_down(i, j,
+					Pij, N1, N2, verbose_level - 1);
 			for (a = 0; a < N1; a++) {
 				for (b = 0; b < N2; b++) {
 					cnt = Pij[a * N2 + b];
@@ -88,20 +93,23 @@ void generator::Plesken_matrix_down(INT depth, INT *&P, INT &N, INT verbose_leve
 		}
 }
 
-void generator::Plesken_submatrix_up(INT i, INT j, INT *&Pij, INT &N1, INT &N2, INT verbose_level)
+void generator::Plesken_submatrix_up(INT i, INT j,
+		INT *&Pij, INT &N1, INT &N2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b;
 
 	if (f_v) {
-		cout << "generator::Plesken_submatrix_up i=" << i << " j=" << j << endl;
+		cout << "generator::Plesken_submatrix_up "
+				"i=" << i << " j=" << j << endl;
 		}
 	N1 = nb_orbits_at_level(i);
 	N2 = nb_orbits_at_level(j);
 	Pij = NEW_INT(N1 * N2);
 	for (a = 0; a < N1; a++) {
 		for (b = 0; b < N2; b++) {
-			Pij[a * N2 + b] = count_incidences_up(i, a, j, b, verbose_level - 1);
+			Pij[a * N2 + b] = count_incidences_up(
+					i, a, j, b, verbose_level - 1);
 			}
 		}
 	if (f_v) {
@@ -109,20 +117,23 @@ void generator::Plesken_submatrix_up(INT i, INT j, INT *&Pij, INT &N1, INT &N2, 
 		}
 }
 
-void generator::Plesken_submatrix_down(INT i, INT j, INT *&Pij, INT &N1, INT &N2, INT verbose_level)
+void generator::Plesken_submatrix_down(INT i, INT j,
+		INT *&Pij, INT &N1, INT &N2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b;
 
 	if (f_v) {
-		cout << "generator::Plesken_submatrix_down i=" << i << " j=" << j << endl;
+		cout << "generator::Plesken_submatrix_down "
+				"i=" << i << " j=" << j << endl;
 		}
 	N1 = nb_orbits_at_level(i);
 	N2 = nb_orbits_at_level(j);
 	Pij = NEW_INT(N1 * N2);
 	for (a = 0; a < N1; a++) {
 		for (b = 0; b < N2; b++) {
-			Pij[a * N2 + b] = count_incidences_down(i, a, j, b, verbose_level - 1);
+			Pij[a * N2 + b] = count_incidences_down(
+					i, a, j, b, verbose_level - 1);
 			}
 		}
 	if (f_v) {
@@ -130,7 +141,8 @@ void generator::Plesken_submatrix_down(INT i, INT j, INT *&Pij, INT &N1, INT &N2
 		}
 }
 
-INT generator::count_incidences_up(INT lvl1, INT po1, INT lvl2, INT po2, INT verbose_level)
+INT generator::count_incidences_up(INT lvl1, INT po1,
+		INT lvl2, INT po2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -141,7 +153,9 @@ INT generator::count_incidences_up(INT lvl1, INT po1, INT lvl2, INT po2, INT ver
 	INT f_contained;
 
 	if (f_v) {
-		cout << "generator::count_incidences_up lvl1=" << lvl1 << " po1=" << po1 << " lvl2=" << lvl2 << " po2=" << po2 << endl;
+		cout << "generator::count_incidences_up "
+				"lvl1=" << lvl1 << " po1=" << po1
+				<< " lvl2=" << lvl2 << " po2=" << po2 << endl;
 		}
 	if (lvl1 > lvl2) {
 		return 0;
@@ -150,7 +164,8 @@ INT generator::count_incidences_up(INT lvl1, INT po1, INT lvl2, INT po2, INT ver
 	set1 = NEW_INT(lvl2 + 1);
 	set2 = NEW_INT(lvl2 + 1);
 
-	orbit_element_unrank(lvl1, po1, 0 /*el1 */, set1, 0 /* verbose_level */);
+	orbit_element_unrank(lvl1, po1, 0 /*el1 */,
+			set1, 0 /* verbose_level */);
 
 	ol = orbit_length_as_INT(po2, lvl2);
 
@@ -173,8 +188,10 @@ INT generator::count_incidences_up(INT lvl1, INT po1, INT lvl2, INT po2, INT ver
 			cout << endl;
 			}
 
-		f_contained = poset_structure_is_contained(set, lvl1, set2, lvl2, verbose_level - 2);
-		//f_contained = INT_vec_sort_and_test_if_contained(set, lvl1, set2, lvl2);
+		f_contained = poset_structure_is_contained(
+				set, lvl1, set2, lvl2, verbose_level - 2);
+		//f_contained = INT_vec_sort_and_test_if_contained(
+		// set, lvl1, set2, lvl2);
 		
 		if (f_vv) {
 			cout << "f_contained=" << f_contained << endl;
@@ -191,12 +208,16 @@ INT generator::count_incidences_up(INT lvl1, INT po1, INT lvl2, INT po2, INT ver
 	FREE_INT(set1);
 	FREE_INT(set2);
 	if (f_v) {
-		cout << "generator::count_incidences_up lvl1=" << lvl1 << " po1=" << po1 << " lvl2=" << lvl2 << " po2=" << po2 << " cnt=" << cnt << endl;
+		cout << "generator::count_incidences_up "
+				"lvl1=" << lvl1 << " po1=" << po1
+				<< " lvl2=" << lvl2 << " po2=" << po2
+				<< " cnt=" << cnt << endl;
 		}
 	return cnt;
 }
 
-INT generator::count_incidences_down(INT lvl1, INT po1, INT lvl2, INT po2, INT verbose_level)
+INT generator::count_incidences_down(
+		INT lvl1, INT po1, INT lvl2, INT po2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -207,7 +228,9 @@ INT generator::count_incidences_down(INT lvl1, INT po1, INT lvl2, INT po2, INT v
 	INT f_contained;
 
 	if (f_v) {
-		cout << "generator::count_incidences_down lvl1=" << lvl1 << " po1=" << po1 << " lvl2=" << lvl2 << " po2=" << po2 << endl;
+		cout << "generator::count_incidences_down "
+				"lvl1=" << lvl1 << " po1=" << po1
+				<< " lvl2=" << lvl2 << " po2=" << po2 << endl;
 		}
 	if (lvl1 > lvl2) {
 		return 0;
@@ -240,8 +263,10 @@ INT generator::count_incidences_down(INT lvl1, INT po1, INT lvl2, INT po2, INT v
 			}
 
 		
-		f_contained = poset_structure_is_contained(set1, lvl1, set, lvl2, verbose_level - 2);
-		//f_contained = INT_vec_sort_and_test_if_contained(set1, lvl1, set, lvl2);
+		f_contained = poset_structure_is_contained(
+				set1, lvl1, set, lvl2, verbose_level - 2);
+		//f_contained = INT_vec_sort_and_test_if_contained(
+		// set1, lvl1, set, lvl2);
 						
 		if (f_vv) {
 			cout << "f_contained=" << f_contained << endl;
@@ -257,12 +282,16 @@ INT generator::count_incidences_down(INT lvl1, INT po1, INT lvl2, INT po2, INT v
 	FREE_INT(set1);
 	FREE_INT(set2);
 	if (f_v) {
-		cout << "generator::count_incidences_down lvl1=" << lvl1 << " po1=" << po1 << " lvl2=" << lvl2 << " po2=" << po2 << " cnt=" << cnt << endl;
+		cout << "generator::count_incidences_down "
+				"lvl1=" << lvl1 << " po1=" << po1
+				<< " lvl2=" << lvl2 << " po2=" << po2
+				<< " cnt=" << cnt << endl;
 		}
 	return cnt;
 }
 
-void generator::Asup_to_Ainf(INT t, INT k, INT *M_sup, INT *M_inf, INT verbose_level)
+void generator::Asup_to_Ainf(INT t, INT k,
+		INT *M_sup, INT *M_inf, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_domain D;
@@ -289,7 +318,8 @@ void generator::Asup_to_Ainf(INT t, INT k, INT *M_sup, INT *M_inf, INT verbose_l
 	ol_t = new longinteger_object[Nt];
 	ol_k = new longinteger_object[Nk];
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf computing orbit lengths t-orbits" << endl;
+		cout << "generator::Asup_to_Ainf "
+				"computing orbit lengths t-orbits" << endl;
 		}
 	for (i = 0; i < Nt; i++) {
 		get_stabilizer_order(t, i, go_t[i]);
@@ -302,7 +332,8 @@ void generator::Asup_to_Ainf(INT t, INT k, INT *M_sup, INT *M_inf, INT verbose_l
 			}
 		}
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf computing orbit lengths k-orbits" << endl;
+		cout << "generator::Asup_to_Ainf "
+				"computing orbit lengths k-orbits" << endl;
 		}
 	for (i = 0; i < Nk; i++) {
 		get_stabilizer_order(k, i, go_k[i]);
@@ -324,8 +355,13 @@ void generator::Asup_to_Ainf(INT t, INT k, INT *M_sup, INT *M_inf, INT verbose_l
 			D.mult(ol_t[i], aa, bb);
 			D.integral_division(bb, ol_k[j], cc, rem, 0);
 			if (!rem.is_zero()) {
-				cout << "generator::Asup_to_Ainf stabilizer order does not divide group order" << endl;
-				cout << "i=" << i << " j=" << j << " M_sup[i,j] = " << a << " ol_t[i]=" << ol_t[i] << " ol_k[j]=" << ol_k[j] << endl;
+				cout << "generator::Asup_to_Ainf "
+						"stabilizer order does not "
+						"divide group order" << endl;
+				cout << "i=" << i << " j=" << j
+						<< " M_sup[i,j] = " << a
+						<< " ol_t[i]=" << ol_t[i]
+						<< " ol_k[j]=" << ol_k[j] << endl;
 				exit(1);
 				}
 			c = cc.as_INT();
@@ -344,19 +380,22 @@ void generator::Asup_to_Ainf(INT t, INT k, INT *M_sup, INT *M_inf, INT verbose_l
 		}
 }
 
-void generator::test_for_multi_edge_in_classification_graph(INT depth, INT verbose_level)
+void generator::test_for_multi_edge_in_classification_graph(
+		INT depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, f, l, j, h1;
 
 	if (f_v) {
-		cout << "generator::test_for_multi_edge_in_classification_graph depth=" << depth << endl;
+		cout << "generator::test_for_multi_edge_in_classification_graph "
+				"depth=" << depth << endl;
 		}
 	for (i = 0; i <= depth; i++) {
 		f = first_oracle_node_at_level[i];
 		l = nb_orbits_at_level(i);
 		if (f_v) {
-			cout << "generator::test_for_multi_edge_in_classification_graph level=" << i << " with " << l << " nodes" << endl;
+			cout << "generator::test_for_multi_edge_in_classification_graph "
+					"level=" << i << " with " << l << " nodes" << endl;
 			}
 		for (j = 0; j < l; j++) {
 			oracle *O;
@@ -369,9 +408,14 @@ void generator::test_for_multi_edge_in_classification_graph(INT depth, INT verbo
 					continue;
 					}
 
-				//cout << "fusion (" << f + j << "/" << h1 << ") -> (" << E1->data1 << "/" << E1->data2 << ")" << endl;
+				//cout << "fusion (" << f + j << "/" << h1 << ") ->
+				// (" << E1->data1 << "/" << E1->data2 << ")" << endl;
 				if (E1->data1 == f + j) {
-					cout << "multiedge detected ! level " << i << " with " << l << " nodes, fusion (" << j << "/" << h1 << ") -> (" << E1->data1 - f << "/" << E1->data2 << ")" << endl;
+					cout << "multiedge detected ! level "
+							<< i << " with " << l << " nodes, fusion ("
+							<< j << "/" << h1 << ") -> ("
+							<< E1->data1 - f << "/"
+							<< E1->data2 << ")" << endl;
 					}
 
 #if 0
@@ -383,8 +427,12 @@ void generator::test_for_multi_edge_in_classification_graph(INT depth, INT verbo
 
 					if (E2->data1 == E1->data1 && E2->data2 == E1->data2) {
 						cout << "multiedge detected!" << endl;
-						cout << "fusion (" << f + j << "/" << h1 << ") -> (" << E1->data1 << "/" << E1->data2 << ")" << endl;
-						cout << "fusion (" << f + j << "/" << h2 << ") -> (" << E2->data1 << "/" << E2->data2 << ")" << endl;
+						cout << "fusion (" << f + j << "/" << h1
+								<< ") -> (" << E1->data1 << "/"
+								<< E1->data2 << ")" << endl;
+						cout << "fusion (" << f + j << "/" << h2
+								<< ") -> (" << E2->data1 << "/"
+								<< E2->data2 << ")" << endl;
 						}
 					}
 #endif
@@ -392,11 +440,13 @@ void generator::test_for_multi_edge_in_classification_graph(INT depth, INT verbo
 				}
 			}
 		if (f_v) {
-			cout << "generator::test_for_multi_edge_in_classification_graph level=" << i << " with " << l << " nodes done" << endl;
+			cout << "generator::test_for_multi_edge_in_classification_graph "
+					"level=" << i << " with " << l << " nodes done" << endl;
 			}
 		}
 	if (f_v) {
-		cout << "generator::test_for_multi_edge_in_classification_graph done" << endl;
+		cout << "generator::test_for_multi_edge_in_classification_graph "
+				"done" << endl;
 		}
 }
 

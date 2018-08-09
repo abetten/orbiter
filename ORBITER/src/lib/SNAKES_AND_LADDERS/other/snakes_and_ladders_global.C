@@ -4,11 +4,14 @@
 //
 // October 12, 2013
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 #define MY_OWN_BUFSIZE 1000000
 
-void read_orbit_rep_and_candidates_from_files_and_process(action *A, BYTE *prefix, 
+void read_orbit_rep_and_candidates_from_files_and_process(
+	action *A, BYTE *prefix,
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	void (*early_test_func_callback)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
@@ -52,7 +55,9 @@ void read_orbit_rep_and_candidates_from_files_and_process(action *A, BYTE *prefi
 		INT nb_candidates2;
 
 		if (f_vv) {
-			cout << "read_orbit_rep_and_candidates_from_files_and_process testing candidates at level " << h << " number of candidates = " << nb_candidates1 << endl;
+			cout << "read_orbit_rep_and_candidates_from_files_and_process "
+					"testing candidates at level " << h
+					<< " number of candidates = " << nb_candidates1 << endl;
 			}
 		candidates2 = NEW_INT(nb_candidates1);
 		
@@ -62,7 +67,11 @@ void read_orbit_rep_and_candidates_from_files_and_process(action *A, BYTE *prefi
 			early_test_func_callback_data, 0 /*verbose_level - 1*/);
 		
 		if (f_vv) {
-			cout << "read_orbit_rep_and_candidates_from_files_and_process number of candidates at level " << h + 1 << " reduced from " << nb_candidates1 << " to " << nb_candidates2 << " by " << nb_candidates1 - nb_candidates2 << endl;
+			cout << "read_orbit_rep_and_candidates_from_files_and_process "
+					"number of candidates at level " << h + 1
+					<< " reduced from " << nb_candidates1 << " to "
+					<< nb_candidates2 << " by "
+					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 	
 		INT_vec_copy(candidates2, candidates1, nb_candidates2);
@@ -75,7 +84,8 @@ void read_orbit_rep_and_candidates_from_files_and_process(action *A, BYTE *prefi
 	nb_candidates = nb_candidates1;
 	
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files_and_process done" << endl;
+		cout << "read_orbit_rep_and_candidates_from_files_and_process "
+				"done" << endl;
 		}
 }
 
@@ -100,7 +110,8 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 		cout << "read_candidates_for_one_orbit_from_file" << endl;
 		cout << "level=" << level
 				<< " orbit_at_level=" << orbit_at_level
-				<< " level_of_candidates_file=" << level_of_candidates_file << endl;
+				<< " level_of_candidates_file="
+				<< level_of_candidates_file << endl;
 	}
 
 	orbit_idx = find_orbit_index_in_data_file(prefix,
@@ -108,14 +119,17 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 			verbose_level);
 
 	if (f_v) {
-		cout << "read_candidates_for_one_orbit_from_file orbit_idx=" << orbit_idx << endl;
+		cout << "read_candidates_for_one_orbit_from_file "
+				"orbit_idx=" << orbit_idx << endl;
 	}
 
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files before generator_read_candidates_of_orbit" << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"before generator_read_candidates_of_orbit" << endl;
 		}
 	BYTE fname2[1000];
-	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix, level_of_candidates_file);
+	sprintf(fname2, "%s_lvl_%ld_candidates.bin",
+			prefix, level_of_candidates_file);
  	generator_read_candidates_of_orbit(fname2, orbit_idx,
 		candidates1, nb_candidates1, verbose_level - 1);
 
@@ -126,7 +140,9 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 		INT nb_candidates2;
 
 		if (f_v) {
-			cout << "read_orbit_rep_and_candidates_from_files_and_process testing candidates at level " << h << " number of candidates = " << nb_candidates1 << endl;
+			cout << "read_orbit_rep_and_candidates_from_files_"
+					"and_process testing candidates at level " << h
+					<< " number of candidates = " << nb_candidates1 << endl;
 			}
 		candidates2 = NEW_INT(nb_candidates1);
 
@@ -136,7 +152,11 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 			early_test_func_callback_data, 0 /*verbose_level - 1*/);
 
 		if (f_v) {
-			cout << "read_orbit_rep_and_candidates_from_files_and_process number of candidates at level " << h + 1 << " reduced from " << nb_candidates1 << " to " << nb_candidates2 << " by " << nb_candidates1 - nb_candidates2 << endl;
+			cout << "read_orbit_rep_and_candidates_from_files_"
+					"and_process number of candidates at level "
+					<< h + 1 << " reduced from " << nb_candidates1
+					<< " to " << nb_candidates2 << " by "
+					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 
 		INT_vec_copy(candidates2, candidates1, nb_candidates2);
@@ -191,10 +211,13 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	//Stab->group_order(stab_go);
 
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files Read starter " << orbit_at_level << " / " << nb_cases << " : ";
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"Read starter " << orbit_at_level << " / "
+				<< nb_cases << " : ";
 		INT_vec_print(cout, starter, starter_sz);
 		cout << endl;
-		//cout << "read_orbit_rep_and_candidates_from_files Group order=" << stab_go << endl;
+		//cout << "read_orbit_rep_and_candidates_from_files "
+		//"Group order=" << stab_go << endl;
 		}
 
 	if (level == level_of_candidates_file) {
@@ -202,7 +225,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 		}
 	else {
 		// level_of_candidates_file < level
-		// Now, we need to find out the orbit representative at level_of_candidates_file
+		// Now, we need to find out the orbit representative
+		// at level_of_candidates_file
 		// that matches with the prefix of starter
 		// so that we can retrieve it's set of candidates.
 		// Once we have the candidates for the prefix, we run it through the 
@@ -211,7 +235,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 
 #if 0
 		if (file_size(fname3) <= 0) {
-			cout << "read_orbit_rep_and_candidates_from_files file " << fname3 << " does not exist" << endl;
+			cout << "read_orbit_rep_and_candidates_from_files "
+					"file " << fname3 << " does not exist" << endl;
 			exit(1);
 			}
 		ifstream f(fname3);
@@ -233,7 +258,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 			//cout << "Read line " << cnt << "='" << buf << "'" << endl;
 			str_len = strlen(buf);
 			if (str_len == 0) {
-				cout << "read_orbit_rep_and_candidates_from_files str_len == 0" << endl;
+				cout << "read_orbit_rep_and_candidates_from_files "
+						"str_len == 0" << endl;
 				exit(1);
 				}
 		
@@ -250,7 +276,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 			if (a != level_of_candidates_file) {
 				cout << "a != level_of_candidates_file" << endl;
 				cout << "a=" << a << endl;
-				cout << "level_of_candidates_file=" << level_of_candidates_file << endl;
+				cout << "level_of_candidates_file="
+						<< level_of_candidates_file << endl;
 				exit(1);
 				}
 			for (i = 0; i < len; i++) {
@@ -272,41 +299,51 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 			}
 		FREE_INT(S);
 #else
-		orbit_at_candidate_level = find_orbit_index_in_data_file(prefix,
+		orbit_at_candidate_level =
+				find_orbit_index_in_data_file(prefix,
 				level_of_candidates_file, starter,
 				verbose_level);
 #endif
 		}
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files Found starter, orbit_at_candidate_level=" << orbit_at_candidate_level << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"Found starter, orbit_at_candidate_level="
+				<< orbit_at_candidate_level << endl;
 		}
 	
 
 	// read the set of candidates from the binary file:
 
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files before generator_read_candidates_of_orbit" << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"before generator_read_candidates_of_orbit" << endl;
 		}
 	BYTE fname2[1000];
-	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix, level_of_candidates_file);
+	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix,
+			level_of_candidates_file);
  	generator_read_candidates_of_orbit(fname2, orbit_at_candidate_level, 
 		candidates, nb_candidates, verbose_level - 1);
 
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files  generator_read_candidates_of_orbit done" << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"generator_read_candidates_of_orbit done" << endl;
 		}
 
 
 	if (candidates == NULL) {
-		cout << "read_orbit_rep_and_candidates_from_files cound not read the candidates" << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"cound not read the candidates" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files Found " << nb_candidates << " candidates at level " << level_of_candidates_file << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"Found " << nb_candidates << " candidates at level "
+				<< level_of_candidates_file << endl;
 		}
 	}
 	if (f_v) {
-		cout << "read_orbit_rep_and_candidates_from_files done" << endl;
+		cout << "read_orbit_rep_and_candidates_from_files "
+				"done" << endl;
 		}
 }
 
@@ -325,7 +362,8 @@ INT find_orbit_index_in_data_file(const BYTE *prefix,
 	sprintf(fname, "%s_lvl_%ld", prefix, level_of_candidates_file);
 
 	if (file_size(fname) <= 0) {
-		cout << "find_orbit_index_in_data_file file " << fname << " does not exist" << endl;
+		cout << "find_orbit_index_in_data_file file "
+				<< fname << " does not exist" << endl;
 		exit(1);
 		}
 	ifstream f(fname);
@@ -350,7 +388,8 @@ INT find_orbit_index_in_data_file(const BYTE *prefix,
 		//cout << "Read line " << cnt << "='" << buf << "'" << endl;
 		str_len = strlen(buf);
 		if (str_len == 0) {
-			cout << "read_orbit_rep_and_candidates_from_files str_len == 0" << endl;
+			cout << "read_orbit_rep_and_candidates_from_files "
+					"str_len == 0" << endl;
 			exit(1);
 			}
 
@@ -367,7 +406,8 @@ INT find_orbit_index_in_data_file(const BYTE *prefix,
 		if (a != level_of_candidates_file) {
 			cout << "a != level_of_candidates_file" << endl;
 			cout << "a=" << a << endl;
-			cout << "level_of_candidates_file=" << level_of_candidates_file << endl;
+			cout << "level_of_candidates_file="
+					<< level_of_candidates_file << endl;
 			exit(1);
 			}
 		for (i = 0; i < len; i++) {
@@ -405,7 +445,8 @@ void compute_orbits_on_subsets(generator *&gen,
 		INT *good_candidates, INT &nb_good_candidates, 
 		void *data, INT verbose_level),
 	void *early_test_func_data, 
-	INT (*candidate_incremental_check_func)(INT len, INT *S, void *data, INT verbose_level), 
+	INT (*candidate_incremental_check_func)(INT len,
+			INT *S, void *data, INT verbose_level),
 	void *candidate_incremental_check_data, 
 	INT verbose_level)
 {
@@ -419,7 +460,8 @@ void compute_orbits_on_subsets(generator *&gen,
 	
 
 	if (f_v) {
-		cout << "compute_orbits_on_subsets verbose_level=" << verbose_level << endl;
+		cout << "compute_orbits_on_subsets "
+				"verbose_level=" << verbose_level << endl;
 		}
 	gen = new generator;
 	
@@ -500,7 +542,8 @@ void orbits_on_k_sets(action *A1, action *A2,
 		cout << "orbits_on_k_sets: done with orbits_on_k_sets_compute" << endl;
 		}
 
-	Gen->get_orbit_representatives(k, nb_orbits, orbit_reps, verbose_level);
+	Gen->get_orbit_representatives(k, nb_orbits,
+			orbit_reps, verbose_level);
 	
 #if 0
 	nb_orbits = Gen->nb_orbits_at_level(k);
@@ -511,7 +554,8 @@ void orbits_on_k_sets(action *A1, action *A2,
 #endif
 
 	if (f_v) {
-		cout << "orbits_on_k_sets: we found " << nb_orbits << " orbits on " << k << "-sets" << endl;
+		cout << "orbits_on_k_sets: we found "
+				<< nb_orbits << " orbits on " << k << "-sets" << endl;
 		}
 
 	delete Gen;
@@ -651,101 +695,10 @@ INT trace_result_is_no_result(trace_result r)
 }
 
 
-#if 0
-void oracle_downstep_call_back_clique_found(clique_finder *CF, INT verbose_level)
-{
-	//INT f_v = (verbose_level >= 1);
-	//cout << "extending.C: call_back_clique_found" << endl;
-	//cout << "CF->call_back_clique_found_data=" << CF->call_back_clique_found_data << endl;
 
-	clique_finder_interface *CFI = (clique_finder_interface *) CF->call_back_clique_found_data;
-
-#if 0
-	if (CFI->node == 50) {
-		cout << "oracle_downstep_call_back_clique_found before (*CFI->call_back_clique_found) " << endl;
-		CFI->gen->root[49].print_extensions(cout);
-		}
-#endif
-
-	return (*CFI->call_back_clique_found)(CF, verbose_level);
-
-	//extending *E = (extending *) CF->call_back_clique_found_data;
-	//E->CF = CF;
-	//return E->clique_found(CF->current_clique, verbose_level);
-}
-
-void oracle_downstep_call_back_add_point(clique_finder *CF, 
-	INT current_clique_size, INT *current_clique, 
-	INT pt, INT verbose_level)
-{
-	clique_finder_interface *CFI = (clique_finder_interface *) CF->call_back_clique_found_data;
-
-	//INT f_v = (verbose_level >= 1);
-	//extending *E = (extending *) CF->call_back_clique_found_data;
-	//E->add_point(pt, current_clique_size, current_clique, verbose_level);
-	(*CFI->call_back_add_point)(CF, current_clique_size, current_clique, 
-		pt, verbose_level);
-}
-
-void oracle_downstep_call_back_delete_point(clique_finder *CF, 
-	INT current_clique_size, INT *current_clique, 
-	INT pt, INT verbose_level)
-{
-	clique_finder_interface *CFI = (clique_finder_interface *) CF->call_back_clique_found_data;
-
-	//INT f_v = (verbose_level >= 1);
-	//extending *E = (extending *) CF->call_back_clique_found_data;
-	//E->delete_point(pt, current_clique_size, current_clique, verbose_level);
-	(*CFI->call_back_delete_point)(CF, current_clique_size, current_clique, 
-		pt, verbose_level);
-}
-
-INT oracle_downstep_call_back_find_candidates(clique_finder *CF, 
-	INT current_clique_size, INT *current_clique, 
-	INT nb_pts, INT &reduced_nb_pts, 
-	INT *pt_list, INT *pt_list_inv, 
-	INT *candidates, INT verbose_level)
-{
-	clique_finder_interface *CFI = (clique_finder_interface *) CF->call_back_clique_found_data;
-	INT ret;
-	
-#if 0
-	if (CFI->node == 50) {
-		cout << "oracle_downstep_call_back_clique_found before (*CFI->call_back_find_candidates) " << endl;
-		CFI->gen->root[49].print_extensions(cout);
-		}
-#endif
-
-	ret = (*CFI->call_back_find_candidates)(CF, 
-		current_clique_size, current_clique, 
-		nb_pts, reduced_nb_pts, 
-		pt_list, pt_list_inv,
-		candidates, verbose_level);
-
-	
-#if 0
-	if (CFI->node == 50) {
-		cout << "ret=" << ret;
-		cout << "candidates:" << endl;
-		INT_vec_print(cout, candidates, ret);
-		cout << endl;
-		cout << "oracle_downstep_call_back_clique_found after (*CFI->call_back_find_candidates) " << endl;
-		CFI->gen->root[49].print_extensions(cout);
-		}
-#endif
-
-	return ret;
-	//INT f_v = (verbose_level >= 1);
-	//extending *E = (extending *) CF->call_back_clique_found_data;
-	//INT ret;
-	
-	//ret = E->find_candidates(current_clique_size, current_clique, nb_pts, pts, candidates, verbose_level);
-	
-	//return ret;
-}
-#endif
-
-void wedge_product_export_magma(generator *Gen, INT n, INT q, INT vector_space_dimension, INT level, INT verbose_level)
+void wedge_product_export_magma(generator *Gen,
+		INT n, INT q, INT vector_space_dimension,
+		INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -879,7 +832,8 @@ void wedge_product_export_magma(generator *Gen, INT n, INT q, INT vector_space_d
 	for (i = 0; i < len; i++) {
 		O = Gen->root + fst + i;
 	
-		f << "// orbit rep " << i << " has " << O->nb_strong_generators << " strong generators";
+		f << "// orbit rep " << i << " has "
+				<< O->nb_strong_generators << " strong generators";
 		if (O->nb_strong_generators) {
 			f << ", transversal lengths: ";
 			INT_vec_print(f, O->tl, Gen->A->base_len);
@@ -926,8 +880,9 @@ void wedge_product_export_magma(generator *Gen, INT n, INT q, INT vector_space_d
 			}
 		} // next i
 
-         f << endl << 
-"T := [sub<GL(n, q) | [&cat (s): s in S[i]]> : i in [1..#S]];" << endl << endl;
+         f << endl << "T := [sub<GL(n, q) | [&cat (s): "
+        		 "s in S[i]]> : i in [1..#S]];"
+        		 << endl << endl;
 	} // file f
 
 	FREE_INT(the_set);
@@ -935,7 +890,8 @@ void wedge_product_export_magma(generator *Gen, INT n, INT q, INT vector_space_d
 	FREE_INT(Elt);
 
 	if (f_v) {
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 	if (f_v) {
 		cout << "wedge_product_export_magma done" << endl;

@@ -6,7 +6,9 @@
 // July 19, 2014
 
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 INT generator::compute_orbits(INT from_level, INT to_level, 
 	INT f_write_candidate_file, 
@@ -83,7 +85,8 @@ INT generator::main(INT t0,
 	INT f_use_invariant_subset_if_available, 
 	INT f_debug, 
 	INT verbose_level)
-// f_use_invariant_subset_if_available is an option that affects the downstep.
+// f_use_invariant_subset_if_available
+// is an option that affects the downstep.
 // if FALSE, the orbits of the stabilizer on all points are computed. 
 // if TRUE, the orbits of the stabilizer on the set of points that were 
 // possible in the previous level are computed only 

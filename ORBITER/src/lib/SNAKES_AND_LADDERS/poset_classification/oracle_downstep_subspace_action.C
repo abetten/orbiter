@@ -3,7 +3,9 @@
 // Anton Betten
 // Jan 21, 2010
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 void oracle::setup_factor_space_action_light(
 	generator *gen,

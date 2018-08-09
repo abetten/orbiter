@@ -187,31 +187,31 @@ MODULES= \
 		ACTION/induced_actions/action_on_subgroups.o \
 		ACTION/induced_actions/action_on_wedge_product.o \
 		ACTION/induced_actions/product_action.o \
-		SNAKES_AND_LADDERS/classification.o \
-		SNAKES_AND_LADDERS/compute_stabilizer.o \
-		SNAKES_AND_LADDERS/extension.o \
-		SNAKES_AND_LADDERS/flag_orbit_node.o \
-		SNAKES_AND_LADDERS/flag_orbits.o \
-		SNAKES_AND_LADDERS/generator.o \
-		SNAKES_AND_LADDERS/generator_classify.o \
-		SNAKES_AND_LADDERS/generator_combinatorics.o \
-		SNAKES_AND_LADDERS/generator_draw.o \
-		SNAKES_AND_LADDERS/generator_init.o \
-		SNAKES_AND_LADDERS/generator_io.o \
-		SNAKES_AND_LADDERS/generator_trace.o \
-		SNAKES_AND_LADDERS/oracle.o \
-		SNAKES_AND_LADDERS/oracle_downstep.o \
-		SNAKES_AND_LADDERS/oracle_downstep_subspace_action.o \
-		SNAKES_AND_LADDERS/oracle_io.o \
-		SNAKES_AND_LADDERS/oracle_upstep.o \
-		SNAKES_AND_LADDERS/oracle_upstep_subspace_action.o \
-		SNAKES_AND_LADDERS/orbit_node.o \
-		SNAKES_AND_LADDERS/recognize.o \
-		SNAKES_AND_LADDERS/set_stabilizer_compute.o \
-		SNAKES_AND_LADDERS/snakes_and_ladders_global.o \
-		SNAKES_AND_LADDERS/upstep_work.o \
-		SNAKES_AND_LADDERS/upstep_work_subspace_action.o \
-		SNAKES_AND_LADDERS/upstep_work_trace.o \
+		SNAKES_AND_LADDERS/classify/classification.o \
+		SNAKES_AND_LADDERS/classify/flag_orbit_node.o \
+		SNAKES_AND_LADDERS/classify/flag_orbits.o \
+		SNAKES_AND_LADDERS/classify/orbit_node.o \
+		SNAKES_AND_LADDERS/other/snakes_and_ladders_global.o \
+		SNAKES_AND_LADDERS/poset_classification/extension.o \
+		SNAKES_AND_LADDERS/poset_classification/generator.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_classify.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_combinatorics.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_draw.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_init.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_io.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_recognize.o \
+		SNAKES_AND_LADDERS/poset_classification/generator_trace.o \
+		SNAKES_AND_LADDERS/poset_classification/oracle.o \
+		SNAKES_AND_LADDERS/poset_classification/oracle_downstep.o \
+		SNAKES_AND_LADDERS/poset_classification/oracle_downstep_subspace_action.o \
+		SNAKES_AND_LADDERS/poset_classification/oracle_io.o \
+		SNAKES_AND_LADDERS/poset_classification/oracle_upstep.o \
+		SNAKES_AND_LADDERS/poset_classification/oracle_upstep_subspace_action.o \
+		SNAKES_AND_LADDERS/poset_classification/upstep_work.o \
+		SNAKES_AND_LADDERS/poset_classification/upstep_work_subspace_action.o \
+		SNAKES_AND_LADDERS/poset_classification/upstep_work_trace.o \
+		SNAKES_AND_LADDERS/set_stabilizer/compute_stabilizer.o \
+		SNAKES_AND_LADDERS/set_stabilizer/set_stabilizer_compute.o \
 		DISCRETA/base.o \
 		DISCRETA/bitmatrix.o \
 		DISCRETA/bt_key.o \

@@ -3,7 +3,9 @@
 // Anton Betten
 // moved out of generator.C  November 14, 2007
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 #include "math.h"
 
 #define MAX_NODES_FOR_TREEFILE 25000
@@ -15,19 +17,25 @@ static void print_table_top(ofstream &fp, INT f_permutation_degree_is_small);
 static void print_table_bottom(ofstream &fp);
 static void print_set_special(ofstream &fp, INT *set, INT sz);
 
-void generator::write_treefile_and_draw_tree(BYTE *fname_base, INT lvl, INT xmax, INT ymax, INT rad, INT f_embedded, INT verbose_level)
+void generator::write_treefile_and_draw_tree(
+		BYTE *fname_base, INT lvl, INT xmax, INT ymax,
+		INT rad, INT f_embedded,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::write_treefile_and_draw_tree verbose_level=" << verbose_level << endl;
+		cout << "generator::write_treefile_and_draw_tree "
+				"verbose_level=" << verbose_level << endl;
 		}
 	if (write_treefile(fname_base, lvl, verbose_level)) {
 #if 0
 		if (f_v) {
-			cout << "generator::write_treefile_and_draw_tree before draw_tree" << endl;
+			cout << "generator::write_treefile_and_draw_tree "
+					"before draw_tree" << endl;
 			}
-		draw_tree(fname_base, lvl, xmax, ymax, rad, f_embedded, verbose_level);
+		draw_tree(fname_base, lvl, xmax, ymax, rad, f_embedded,
+				verbose_level);
 #endif
 		}
 	if (f_v) {
@@ -35,7 +43,8 @@ void generator::write_treefile_and_draw_tree(BYTE *fname_base, INT lvl, INT xmax
 		}
 }
 
-INT generator::write_treefile(BYTE *fname_base, INT lvl, INT verbose_level)
+INT generator::write_treefile(BYTE *fname_base,
+		INT lvl, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -50,7 +59,8 @@ INT generator::write_treefile(BYTE *fname_base, INT lvl, INT verbose_level)
 	if  (first_oracle_node_at_level[lvl + 1] < MAX_NODES_FOR_TREEFILE) {
 		{
 		if (f_vv) {
-			cout << "generator::write_treefile writing treefile " << fname1 << endl;
+			cout << "generator::write_treefile "
+					"writing treefile " << fname1 << endl;
 			}
 		ofstream f(fname1);
 		
@@ -62,17 +72,20 @@ INT generator::write_treefile(BYTE *fname_base, INT lvl, INT verbose_level)
 		else {
 			level = 0;
 			}
-		for (i = first_oracle_node_at_level[level]; i < first_oracle_node_at_level[level + 1]; i++) {
+		for (i = first_oracle_node_at_level[level];
+				i < first_oracle_node_at_level[level + 1]; i++) {
 			if (f_vv) {
 				cout << "generator::write_treefile node " << i << ":" << endl;
 				}
-			log_nodes_for_treefile(level, i, f, TRUE /* f_recurse */, verbose_level);
+			log_nodes_for_treefile(level, i, f,
+					TRUE /* f_recurse */, verbose_level);
 			}
 			
 		f << "-1 " << first_oracle_node_at_level[lvl + 1] << endl;
 		}
 		if (f_vv) {
-			cout << "written file " << fname1 << " of size " << file_size(fname1) << endl;
+			cout << "written file " << fname1
+					<< " of size " << file_size(fname1) << endl;
 			}
 		if (f_v) {
 			cout << "generator::write_treefile done" << endl;
@@ -80,16 +93,19 @@ INT generator::write_treefile(BYTE *fname_base, INT lvl, INT verbose_level)
 		return TRUE;
 		}
 	else {
-		cout << "generator::write_treefile too many nodes, you may increase MAX_NODES_FOR_TREEFILE if you wish" << endl;
+		cout << "generator::write_treefile too many nodes, "
+				"you may increase MAX_NODES_FOR_TREEFILE if you wish" << endl;
 		cout << "MAX_NODES_FOR_TREEFILE=" << MAX_NODES_FOR_TREEFILE << endl;
-		cout << "first_oracle_node_at_level[lvl + 1]=" << first_oracle_node_at_level[lvl + 1] << endl;
+		cout << "first_oracle_node_at_level[lvl + 1]="
+				<< first_oracle_node_at_level[lvl + 1] << endl;
 		cout << "lvl=" << lvl << endl;
 		return FALSE;
 		}
 }
 
 void generator::draw_tree(BYTE *fname_base, INT lvl, 
-	INT xmax, INT ymax, INT rad, INT f_embedded, INT f_sideways, INT verbose_level)
+	INT xmax, INT ymax, INT rad, INT f_embedded,
+	INT f_sideways, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -121,13 +137,20 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			
 		nb_nodes = T.nb_nodes;
 		if (f_vv) {
-			cout << "generator::draw_tree read treefile " << fname1 << " with " << nb_nodes << " nodes" << endl;
-			cout << "generator::draw_tree first_oracle_node_at_level[lvl + 1] " << first_oracle_node_at_level[lvl + 1] << " nodes" << endl;
+			cout << "generator::draw_tree read treefile "
+					<< fname1 << " with " << nb_nodes
+					<< " nodes" << endl;
+			cout << "generator::draw_tree first_oracle_node_at_"
+					"level[lvl + 1] "
+					<< first_oracle_node_at_level[lvl + 1]
+					<< " nodes" << endl;
 			}
 		if (nb_nodes != first_oracle_node_at_level[lvl + 1]) {
-			cout << "generator::draw_tree nb_nodes != first_oracle_node_at_level[lvl + 1]" << endl;
+			cout << "generator::draw_tree nb_nodes != first_oracle_"
+					"node_at_level[lvl + 1]" << endl;
 			cout << "nb_nodes=" << nb_nodes << endl;
-			cout << "first_oracle_node_at_level[lvl + 1]=" << first_oracle_node_at_level[lvl + 1] << endl;
+			cout << "first_oracle_node_at_level[lvl + 1]="
+					<< first_oracle_node_at_level[lvl + 1] << endl;
 			exit(1);
 			}
 		if (nb_nodes > 100) {
@@ -159,12 +182,14 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			}
 		
 		if (f_vv) {	
-			cout << "generator::draw_tree calling oracle_depth_breadth_perm_and_inverse" << endl;
+			cout << "generator::draw_tree calling oracle_depth_"
+					"breadth_perm_and_inverse" << endl;
 			}
 		oracle_depth_breadth_perm_and_inverse(lvl /* max_depth */, 
 			perm, perm_inv, verbose_level);
 		if (FALSE) {
-			cout << "generator::draw_tree depth_breadth_perm_and_inverse:" << endl;
+			cout << "generator::draw_tree depth_breadth_perm_"
+					"and_inverse:" << endl;
 			for (i = 0; i < nb_nodes; i++) {
 				cout << i << " : (" 
 					<< perm[i] << "," 
@@ -173,26 +198,33 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			}
 		
 		if (f_vv) {	
-			cout << "generator::draw_tree before draw_tree_low_level" << endl;
+			cout << "generator::draw_tree "
+					"before draw_tree_low_level" << endl;
 			}
 		draw_tree_low_level(fname, nb_nodes, 
 			coord_xyw, perm_inv, perm, 
-			f_draw_points, f_draw_extension_points, f_draw_aut_group_order, 
-			xmax, ymax, rad, f_embedded, f_sideways, 0 /*verbose_level - 2*/);
+			f_draw_points, f_draw_extension_points,
+			f_draw_aut_group_order,
+			xmax, ymax, rad, f_embedded, f_sideways,
+			0 /*verbose_level - 2*/);
 			
 		FREE_INT(coord_xyw);
 		FREE_INT(perm);
 		FREE_INT(perm_inv);
 		}
 	else {
-		cout << "generator::draw_tree the file " << fname1 << " does not exist, cannot draw the tree" << endl;
+		cout << "generator::draw_tree the file " << fname1
+				<< " does not exist, cannot draw the tree" << endl;
 		}
 }
 
 void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes, 
 	INT *coord_xyw, INT *perm, INT *perm_inv, 
-	INT f_draw_points, INT f_draw_extension_points, INT f_draw_aut_group_order, 
-	INT xmax, INT ymax, INT rad, INT f_embedded, INT f_sideways, INT verbose_level)
+	INT f_draw_points, INT f_draw_extension_points,
+	INT f_draw_aut_group_order,
+	INT xmax, INT ymax, INT rad, INT f_embedded,
+	INT f_sideways,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT x_min = 0, x_max = 10000;
@@ -210,7 +242,9 @@ void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes,
 		ymax = 3000;
 	sprintf(fname_full, "%s.mp", fname);
 	if (f_v) {
-		cout << "generator::draw_tree_low_level xmax = " << xmax << " ymax = " << ymax << " fname=" << fname_full << endl;
+		cout << "generator::draw_tree_low_level "
+				"xmax = " << xmax << " ymax = " << ymax
+				<< " fname=" << fname_full << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	{
@@ -225,7 +259,8 @@ void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes,
 	//cout << "xmax/ymax = " << xmax << " / " << ymax << endl;
 #endif
 	mp_graphics G;
-	G.setup(fname, x_min, y_min, x_max, y_max, xmax, ymax, f_embedded, f_sideways, scale, line_width);
+	G.setup(fname, x_min, y_min, x_max, y_max, xmax, ymax,
+			f_embedded, f_sideways, scale, line_width);
 	//G.frame(0.05);
 	
 	//G.header();
@@ -243,14 +278,18 @@ void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes,
 	G.finish(cout, verbose_level);
 	}
 	if (f_v) {
-		cout << "generator::draw_tree_low_level written file " << fname_full << " of size " << file_size(fname_full) << endl;
+		cout << "generator::draw_tree_low_level "
+				"written file " << fname_full
+				<< " of size " << file_size(fname_full) << endl;
 		}
 	
 }
 
-void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes, 
+void generator::draw_tree_low_level1(mp_graphics &G,
+	INT nb_nodes,
 	INT *coords, INT *perm, INT *perm_inv, 
-	INT f_draw_points, INT f_draw_extension_points, INT f_draw_aut_group_order, 
+	INT f_draw_points, INT f_draw_extension_points,
+	INT f_draw_aut_group_order,
 	INT radius, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -308,7 +347,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 		for (j = 0; j < nb_e; j++) {
 			Nb_e = root[j].nb_extensions;
 			if (f_vv) {
-				cout << "draw_tree_low_level1: i=" << i << " j=" << j << " nb_e=" << nb_e << 
+				cout << "draw_tree_low_level1: i=" << i
+						<< " j=" << j << " nb_e=" << nb_e <<
 					" Nb_e=" << Nb_e << endl;
 				cout << "root[i].E[j].type=" << root[i].E[j].type << endl;
 				}
@@ -329,7 +369,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 				pt = root[i].E[j].pt;
 				nxt = root[i].E[j].data;
 				if (f_vv) {
-					cout << "extension node: pt=" << pt << " nxt=" << nxt << endl;
+					cout << "extension node: pt=" << pt
+							<< " nxt=" << nxt << endl;
 					}
 				if (nxt >= 0) {
 					Qx[0] = Px[perm[i]];
@@ -338,8 +379,10 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 					Qx[1] = Px[perm[nxt]];
 					Qy[1] = Py[perm[nxt]];
 					if (FALSE) {
-						cout << "Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
-						cout << "Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
+						cout << "Qx[0]=" << Qx[0]
+								<< " Qy[0]=" << Qy[0] << endl;
+						cout << "Qx[1]=" << Qx[1]
+								<< " Qy[1]=" << Qy[1] << endl;
 						}
 				
 					if (f_draw_points) {
@@ -351,8 +394,10 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 						Qy[1] += y_offset2;
 						}
 					if (FALSE) {
-						cout << "Qx[0]=" << Qx[0] << " Qy[0]=" << Qy[0] << endl;
-						cout << "Qx[1]=" << Qx[1] << " Qy[1]=" << Qy[1] << endl;
+						cout << "Qx[0]=" << Qx[0]
+							<< " Qy[0]=" << Qy[0] << endl;
+						cout << "Qx[1]=" << Qx[1]
+							<< " Qy[1]=" << Qy[1] << endl;
 						}
 				
 					G.polygon2(Qx, Qy, 0, 1);
@@ -373,7 +418,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 					root[i].store_set_to(this, depth - 1, set0);
 					set0[depth] = pt;
 					if (f_vvv) {
-						cout << "fusion node i=" << i << " j=" << j << " set = ";
+						cout << "fusion node i=" << i
+								<< " j=" << j << " set = ";
 						INT_set_print(set0, depth + 1);
 						cout << endl;
 						}
@@ -382,7 +428,7 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 	
 					A2->map_a_set(set0, set1, depth + 1, Elt1, 0);
 
-					INT_vec_heapsort(set1, depth + 1); // INT_vec_sort(depth + 1, set1);
+					INT_vec_heapsort(set1, depth + 1);
 				
 					if (f_vvv) {
 						cout << "mapping the set to = ";
@@ -390,7 +436,9 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 						cout << endl;
 						}
 
-					hdl2 = find_oracle_node_for_set(depth + 1, set1, FALSE /* f_tolerant */, 0 /* verbose_level */);
+					hdl2 = find_oracle_node_for_set(depth + 1, set1,
+							FALSE /* f_tolerant */,
+							0 /* verbose_level */);
 					if (hdl2 >= 0) {
 						if (f_vvv) {
 							cout << "which is node " << hdl2 << endl;
@@ -504,7 +552,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 			root[i].addl->G->group_order(go);
 			go.print_to_string(str);
 			sprintf(str2, "$%s$", str);
-			G.aligned_text_with_offset(Px, Py, perm[i], x_offset, y_offset, "", str2);
+			G.aligned_text_with_offset(Px, Py, perm[i],
+					x_offset, y_offset, "", str2);
 			}
 		}
 #endif
@@ -536,7 +585,8 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 				y = Py[perm[i]] - y_offset2;
 				if (f_draw_extension_points) {
 					G.circle_text(x, y, rad, str);
-					//G.aligned_text_with_offset(Px, Py, perm[i], x_offset, y_offset, "", "$48$");
+					//G.aligned_text_with_offset(Px, Py,
+					// perm[i], x_offset, y_offset, "", "$48$");
 					}
 				else {
 					G.circle(x, y, rad);
@@ -552,17 +602,22 @@ void generator::draw_tree_low_level1(mp_graphics &G, INT nb_nodes,
 	FREE_INT(Qy);
 }
 
-void generator::draw_poset_full(const BYTE *fname_base, INT depth, INT data, INT f_embedded, INT f_sideways, double x_stretch, INT verbose_level)
+void generator::draw_poset_full(const BYTE *fname_base,
+		INT depth, INT data, INT f_embedded, INT f_sideways,
+		double x_stretch,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	layered_graph *LG;
 
 	if (f_v) {
-		cout << "generator::draw_poset_full fname_base=" << fname_base << " data=" << data << endl;
+		cout << "generator::draw_poset_full "
+				"fname_base=" << fname_base << " data=" << data << endl;
 		}
 	make_full_poset_graph(depth, LG, data, x_stretch, verbose_level);
 	if (f_v) {
-		cout << "generator::draw_poset_full after make_full_poset_graph" << endl;
+		cout << "generator::draw_poset_full "
+				"after make_full_poset_graph" << endl;
 		}
 
 	BYTE fname_base1[1000];
@@ -586,12 +641,14 @@ void generator::draw_poset_full(const BYTE *fname_base, INT depth, INT data, INT
 	
 	LG->write_file(fname1, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "generator::draw_poset_full after LG->write_file" << endl;
+		cout << "generator::draw_poset_full "
+				"after LG->write_file" << endl;
 		}
 
 	layered_graph_draw_options O;
 
-	O.init(xmax, ymax, x_max, y_max, rad, f_circle, f_corners, f_nodes_empty, 
+	O.init(xmax, ymax, x_max, y_max, rad,
+			f_circle, f_corners, f_nodes_empty,
 		FALSE, 0, NULL, 
 		FALSE, NULL, 
 		FALSE, NULL, 
@@ -603,7 +660,8 @@ void generator::draw_poset_full(const BYTE *fname_base, INT depth, INT data, INT
 	LG->draw_with_options(fname_base1, &O, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset_full after LG->draw" << endl;
+		cout << "generator::draw_poset_full "
+				"after LG->draw" << endl;
 		}
 
 	delete LG;
@@ -613,7 +671,9 @@ void generator::draw_poset_full(const BYTE *fname_base, INT depth, INT data, INT
 		}
 }
 
-void generator::draw_poset(const BYTE *fname_base, INT depth, INT data, INT f_embedded, INT f_sideways, INT verbose_level)
+void generator::draw_poset(const BYTE *fname_base,
+		INT depth, INT data, INT f_embedded, INT f_sideways,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	layered_graph *LG1;
@@ -627,23 +687,32 @@ void generator::draw_poset(const BYTE *fname_base, INT depth, INT data, INT f_em
 
 
 	if (f_v) {
-		cout << "generator::draw_poset before make_auxiliary_graph" << endl;
+		cout << "generator::draw_poset "
+				"before make_auxiliary_graph" << endl;
 		}
-	make_auxiliary_graph(depth, LG1, data, 0 /*verbose_level - 1*/);
+	make_auxiliary_graph(depth, LG1, data,
+			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset before make_graph" << endl;
+		cout << "generator::draw_poset "
+				"before make_graph" << endl;
 		}
-	make_graph(depth, LG2, data, FALSE /* f_tree */, 0 /*verbose_level - 1*/);
+	make_graph(depth, LG2, data, FALSE /* f_tree */,
+			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset before make_graph" << endl;
+		cout << "generator::draw_poset "
+				"before make_graph" << endl;
 		}
-	make_graph(depth, LG3, data, TRUE /* f_tree */, 0 /*verbose_level - 1*/);
+	make_graph(depth, LG3, data, TRUE /* f_tree */,
+			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset before make_poset_graph_detailed" << endl;
+		cout << "generator::draw_poset "
+				"before make_poset_graph_detailed" << endl;
 		}
-	make_poset_graph_detailed(LG4, data, depth, 0 /*verbose_level - 1*/);
+	make_poset_graph_detailed(LG4, data, depth,
+			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset after make_poset_graph_detailed" << endl;
+		cout << "generator::draw_poset "
+				"after make_poset_graph_detailed" << endl;
 		}
 
 	BYTE fname_base1[1000];
@@ -685,7 +754,8 @@ void generator::draw_poset(const BYTE *fname_base, INT depth, INT data, INT f_em
 	
 	layered_graph_draw_options O;
 
-	O.init(xmax, ymax, x_max, y_max, rad, f_circle, f_corners, f_nodes_empty, 
+	O.init(xmax, ymax, x_max, y_max, rad,
+		f_circle, f_corners, f_nodes_empty,
 		FALSE, 0, NULL, 
 		FALSE, NULL, 
 		FALSE, NULL, 
@@ -695,28 +765,35 @@ void generator::draw_poset(const BYTE *fname_base, INT depth, INT data, INT f_em
 		scale, line_width);
 	
 	LG1->write_file(fname1, 0 /*verbose_level*/);
-	LG1->draw_with_options(fname_base1, &O, 0 /* verbose_level */);
+	LG1->draw_with_options(fname_base1, &O,
+			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset writing file " << fname2 << endl;
+		cout << "generator::draw_poset "
+				"writing file " << fname2 << endl;
 		}
 
 	LG2->write_file(fname2, 0 /*verbose_level*/);
-	LG2->draw_with_options(fname_base2, &O, 0 /* verbose_level */);
+	LG2->draw_with_options(fname_base2, &O,
+			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset writing file " << fname3 << endl;
+		cout << "generator::draw_poset "
+				"writing file " << fname3 << endl;
 		}
 
 	LG3->write_file(fname3, 0 /*verbose_level*/);
-	LG3->draw_with_options(fname_base3, &O, 0 /* verbose_level */);
+	LG3->draw_with_options(fname_base3, &O,
+			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset writing file " << fname4 << endl;
+		cout << "generator::draw_poset "
+				"writing file " << fname4 << endl;
 		}
 
 	LG4->write_file(fname4, 0 /*verbose_level*/);
-	LG4->draw_with_options(fname_base4, &O, 0 /* verbose_level */);
+	LG4->draw_with_options(fname_base4, &O,
+			0 /* verbose_level */);
 
 	delete LG1;
 	delete LG2;
@@ -728,7 +805,10 @@ void generator::draw_poset(const BYTE *fname_base, INT depth, INT data, INT f_em
 		}
 }
 
-void generator::draw_level_graph(const BYTE *fname_base, INT depth, INT data, INT level, INT f_embedded, INT f_sideways, INT verbose_level)
+void generator::draw_level_graph(const BYTE *fname_base,
+		INT depth, INT data, INT level,
+		INT f_embedded, INT f_sideways,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	layered_graph *LG;
@@ -757,12 +837,14 @@ void generator::draw_level_graph(const BYTE *fname_base, INT depth, INT data, IN
 	double scale = .45;
 	double line_width = 1.5;
 
-	sprintf(fname_base1, "%s_lvl_%ld_bipartite_lvl_%ld", fname_base, depth, level);
+	sprintf(fname_base1, "%s_lvl_%ld_bipartite_lvl_%ld",
+			fname_base, depth, level);
 	sprintf(fname, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	layered_graph_draw_options O;
 
-	O.init(xmax, ymax, x_max, y_max, rad, f_circle, f_corners, f_nodes_empty, 
+	O.init(xmax, ymax, x_max, y_max, rad,
+		f_circle, f_corners, f_nodes_empty,
 		FALSE, 0, NULL, 
 		FALSE, NULL, 
 		FALSE, NULL, 
@@ -781,7 +863,9 @@ void generator::draw_level_graph(const BYTE *fname_base, INT depth, INT data, IN
 }
 
 
-void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, double x_stretch, INT verbose_level)
+void generator::make_full_poset_graph(
+		INT depth, layered_graph *&LG,
+		INT data1, double x_stretch, INT verbose_level)
 // Draws the full poset: each element of each orbit is drawn.
 // The orbits are indicated by grouping the elements closer together.
 // Uses INT_vec_sort_and_test_if_contained to test containment relation.
@@ -825,7 +909,8 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 		for (j = 0; j < Nb_orbits[i]; j++) {
 			Orbit_len[i][j] = orbit_length_as_INT(j, i);
 			Nb_elements[i] += Orbit_len[i][j];
-			Fst_element_per_orbit[i][j + 1] = Fst_element_per_orbit[i][j] + Orbit_len[i][j];
+			Fst_element_per_orbit[i][j + 1] =
+					Fst_element_per_orbit[i][j] + Orbit_len[i][j];
 			}
 		Fst[i + 1] = Fst[i] + Nb_elements[i];
 		}
@@ -833,33 +918,43 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 	LG->add_data1(data1, 0/*verbose_level*/);
 
 	if (f_v) {
-		cout << "generator::make_full_poset_graph before LG->init" << endl;	
+		cout << "generator::make_full_poset_graph "
+				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb_elements=" << Nb_elements << endl;
 		}
 	LG->init(nb_layers, Nb_elements, "", verbose_level);
 
 	if (f_v) {
-		cout << "generator::make_full_poset_graph after LG->init" << endl;
+		cout << "generator::make_full_poset_graph "
+				"after LG->init" << endl;
 		}
 	if (f_v) {
-		cout << "generator::make_full_poset_graph before LG->place_with_grouping" << endl;
+		cout << "generator::make_full_poset_graph "
+				"before LG->place_with_grouping" << endl;
 		}
 	LG->place_with_grouping(Orbit_len, Nb_orbits, x_stretch, verbose_level);
 	//LG->place(verbose_level);
 	if (f_v) {
-		cout << "generator::make_full_poset_graph after LG->place" << endl;
+		cout << "generator::make_full_poset_graph "
+				"after LG->place" << endl;
 		}
 
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " / " << depth << endl;
+			cout << "generator::make_full_poset_graph "
+					"adding edges lvl=" << lvl << " / " << depth << endl;
 			}
 		//f = 0;
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " po=" << po << " / " << nb_orbits_at_level(lvl) << " Fst_element_per_orbit[lvl][po]=" << Fst_element_per_orbit[lvl][po] << endl;
+				cout << "generator::make_full_poset_graph "
+						"adding edges lvl=" << lvl
+						<< " po=" << po << " / "
+						<< nb_orbits_at_level(lvl)
+						<< " Fst_element_per_orbit[lvl][po]="
+						<< Fst_element_per_orbit[lvl][po] << endl;
 				}
 
 			ol1 = Orbit_len[lvl][po];
@@ -876,7 +971,9 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 			for (so = 0; so < root[n1].nb_extensions; so++) {
 
 				if (f_vv) {
-					cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << endl;
+					cout << "generator::make_full_poset_graph "
+							"adding edges lvl=" << lvl
+							<< " po=" << po << " so=" << so << endl;
 					}
 
 
@@ -894,11 +991,13 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 					INT n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
-					//cout << "fusion (" << n1 << "/" << so << ") -> (" << n0 << "/" << so0 << ")" << endl;
+					//cout << "fusion (" << n1 << "/" << so << ") "
+					//"-> (" << n0 << "/" << so0 << ")" << endl;
 					extension *E0;
 					E0 = root[n0].E + so0;
 					if (E0->type != EXTENSION_TYPE_EXTENSION) {
-						cout << "warning: fusion node does not point to extension node" << endl;
+						cout << "warning: fusion node does not point "
+								"to extension node" << endl;
 						cout << "type = ";
 						print_extension_type(cout, E0->type);
 						cout << endl;
@@ -912,14 +1011,18 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 
 
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << " downorbits = ";
+				cout << "generator::make_full_poset_graph adding edges "
+						"lvl=" << lvl << " po=" << po
+						<< " so=" << so << " downorbits = ";
 				INT_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 				}
 
 			INT_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << " unique downorbits = ";
+				cout << "generator::make_full_poset_graph adding edges "
+						"lvl=" << lvl << " po=" << po
+						<< " so=" << so << " unique downorbits = ";
 				INT_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 				}
@@ -929,13 +1032,24 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 				po2 = n2 - first_oracle_node_at_level[lvl + 1];
 				ol2 = Orbit_len[lvl + 1][po2];
 				if (f_vv) {
-					cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << " downorbit = " << h << " / " << nb_down_orbits << " n1=" << n1 << " n2=" << n2 << " po2=" << po2 << " ol1=" << ol1 << " ol2=" << ol2 << " Fst_element_per_orbit[lvl][po]=" << Fst_element_per_orbit[lvl][po] << " Fst_element_per_orbit[lvl + 1][po2]=" << Fst_element_per_orbit[lvl + 1][po2] << endl;
+					cout << "generator::make_full_poset_graph "
+							"adding edges lvl=" << lvl << " po=" << po
+							<< " so=" << so << " downorbit = " << h
+							<< " / " << nb_down_orbits << " n1=" << n1
+							<< " n2=" << n2 << " po2=" << po2
+							<< " ol1=" << ol1 << " ol2=" << ol2
+							<< " Fst_element_per_orbit[lvl][po]="
+							<< Fst_element_per_orbit[lvl][po]
+							<< " Fst_element_per_orbit[lvl + 1][po2]="
+							<< Fst_element_per_orbit[lvl + 1][po2] << endl;
 					}
 				for (el1 = 0; el1 < ol1; el1++) {
 					if (f_vv) {
-						cout << "unrank " << lvl << ", " << po << ", " << el1 << endl;
+						cout << "unrank " << lvl << ", " << po
+								<< ", " << el1 << endl;
 						}
-					orbit_element_unrank(lvl, po, el1, set1, 0 /* verbose_level */);
+					orbit_element_unrank(lvl, po, el1, set1,
+							0 /* verbose_level */);
 					if (f_vv) {
 						cout << "set1=";
 						INT_vec_print(cout, set1, lvl);
@@ -945,9 +1059,11 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 
 					for (el2 = 0; el2 < ol2; el2++) {
 						if (f_vv) {
-							cout << "unrank " << lvl + 1 << ", " << po2 << ", " << el2 << endl;
+							cout << "unrank " << lvl + 1 << ", "
+									<< po2 << ", " << el2 << endl;
 							}
-						orbit_element_unrank(lvl + 1, po2, el2, set2, 0 /* verbose_level */);
+						orbit_element_unrank(lvl + 1, po2, el2, set2,
+								0 /* verbose_level */);
 						if (f_vv) {
 							cout << "set2=";
 							INT_vec_print(cout, set2, lvl + 1);
@@ -955,7 +1071,15 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 							}
 
 						if (f_vv) {
-							cout << "generator::make_full_poset_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << " downorbit = " << h << " / " << nb_down_orbits << " n1=" << n1 << " n2=" << n2 << " po2=" << po2 << " ol1=" << ol1 << " ol2=" << ol2 << " el1=" << el1 << " el2=" << el2 << endl;
+							cout << "generator::make_full_poset_graph "
+									"adding edges lvl=" << lvl
+									<< " po=" << po << " so=" << so
+									<< " downorbit = " << h << " / "
+									<< nb_down_orbits << " n1=" << n1
+									<< " n2=" << n2 << " po2=" << po2
+									<< " ol1=" << ol1 << " ol2=" << ol2
+									<< " el1=" << el1 << " el2=" << el2
+									<< endl;
 							cout << "set1=";
 							INT_vec_print(cout, set1, lvl);
 							cout << endl;
@@ -967,16 +1091,22 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 
 						INT_vec_copy(set1, set, lvl);
 
-						//f_contained = INT_vec_sort_and_test_if_contained(set, lvl, set2, lvl + 1);
-						f_contained = poset_structure_is_contained(set, lvl, set2, lvl + 1, 0 /* verbose_level*/);
+						//f_contained = INT_vec_sort_and_test_if_contained(
+						// set, lvl, set2, lvl + 1);
+						f_contained = poset_structure_is_contained(
+								set, lvl, set2, lvl + 1,
+								0 /* verbose_level*/);
 						
 
 						if (f_contained) {
 							if (f_vv) {
 								cout << "is contained" << endl;
 								}
-							LG->add_edge(lvl, Fst_element_per_orbit[lvl][po] + el1, 
-								lvl + 1, Fst_element_per_orbit[lvl + 1][po2] + el2, 0 /*verbose_level*/);
+							LG->add_edge(lvl,
+								Fst_element_per_orbit[lvl][po] + el1,
+								lvl + 1,
+								Fst_element_per_orbit[lvl + 1][po2] + el2,
+								0 /*verbose_level*/);
 							}
 						else {
 							if (f_vv) {
@@ -997,11 +1127,14 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 
 
 	if (f_vv) {
-		cout << "generator::make_full_poset_graph now making vertex labels" << endl;
+		cout << "generator::make_full_poset_graph "
+				"now making vertex labels" << endl;
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_full_poset_graph now making vertex labels lvl " << lvl << " / " << depth << endl;
+			cout << "generator::make_full_poset_graph "
+					"now making vertex labels lvl " << lvl
+					<< " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
@@ -1010,22 +1143,31 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 			n1 = first_oracle_node_at_level[lvl] + po;
 
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph now making vertex labels lvl " << lvl << " / " << depth << " po=" << po << " / " << nb_orbits_at_level(lvl) << " ol1=" << ol1 << endl;
+				cout << "generator::make_full_poset_graph "
+						"now making vertex labels lvl " << lvl
+						<< " / " << depth << " po=" << po << " / "
+						<< nb_orbits_at_level(lvl)
+						<< " ol1=" << ol1 << endl;
 				}
 
 			for (el1 = 0; el1 < ol1; el1++) {
 
 				if (f_vv) {
-					cout << "unrank " << lvl << ", " << po << ", " << el1 << endl;
+					cout << "unrank " << lvl << ", "
+							<< po << ", " << el1 << endl;
 					}
-				orbit_element_unrank(lvl, po, el1, set1, 0 /* verbose_level */);
+				orbit_element_unrank(lvl, po, el1, set1,
+						0 /* verbose_level */);
 				if (f_vv) {
 					cout << "set1=";
 					INT_vec_print(cout, set1, lvl);
 					cout << endl;
 					}
 
-				LG->add_node_vec_data(lvl, Fst_element_per_orbit[lvl][po] + el1, set1, lvl, 0 /* verbose_level */);
+				LG->add_node_vec_data(lvl,
+						Fst_element_per_orbit[lvl][po] + el1,
+						set1, lvl,
+						0 /* verbose_level */);
 				}
 
 
@@ -1053,7 +1195,8 @@ void generator::make_full_poset_graph(INT depth, layered_graph *&LG, INT data1, 
 		}
 }
 
-void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, INT verbose_level)
+void generator::make_auxiliary_graph(INT depth,
+		layered_graph *&LG, INT data1, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1101,13 +1244,16 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 		}
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_auxiliary_graph adding edges lvl=" << lvl << " / " << depth << endl;
+			cout << "generator::make_auxiliary_graph adding edges "
+					"lvl=" << lvl << " / " << depth << endl;
 			}
 		f = 0;
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (f_v3) {
-				cout << "generator::make_auxiliary_graph adding edges lvl=" << lvl << " po=" << po << " / " << nb_orbits_at_level(lvl) << endl;
+				cout << "generator::make_auxiliary_graph "
+						"adding edges lvl=" << lvl << " po=" << po
+						<< " / " << nb_orbits_at_level(lvl) << endl;
 				}
 
 			//
@@ -1115,9 +1261,13 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (f_v4) {
-					cout << "generator::make_auxiliary_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << endl;
+					cout << "generator::make_auxiliary_graph adding edges "
+							"lvl=" << lvl << " po=" << po
+							<< " so=" << so << endl;
 					}
-				LG->add_edge(2 * lvl, po, 2 * lvl + 1, f + so, verbose_level - 4);
+				LG->add_edge(2 * lvl, po, 2 * lvl + 1, f + so,
+						verbose_level - 4);
+
 				extension *E = root[n].E + so;
 				if (E->type == EXTENSION_TYPE_EXTENSION) {
 					if (f_v4) {
@@ -1127,7 +1277,9 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 					if (f_v4) {
 						cout << "n1=" << n1 << endl;
 						}
-					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2, n1 - first_oracle_node_at_level[lvl + 1], verbose_level - 4);
+					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
+							n1 - first_oracle_node_at_level[lvl + 1],
+							verbose_level - 4);
 					}
 				else if (E->type == EXTENSION_TYPE_FUSION) {
 					if (f_v4) {
@@ -1139,12 +1291,14 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 					n0 = E->data1;
 					so0 = E->data2;
 					if (f_v4) {
-						cout << "fusion (" << n << "/" << so << ") -> (" << n0 << "/" << so0 << ")" << endl;
+						cout << "fusion (" << n << "/" << so << ") -> ("
+								<< n0 << "/" << so0 << ")" << endl;
 						}
 					extension *E0;
 					E0 = root[n0].E + so0;
 					if (E0->type != EXTENSION_TYPE_EXTENSION) {
-						cout << "warning: fusion node does not point to extension node" << endl;
+						cout << "warning: fusion node does not point "
+								"to extension node" << endl;
 						cout << "type = ";
 						print_extension_type(cout, E0->type);
 						cout << endl;
@@ -1152,33 +1306,43 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 						}
 					n1 = E0->data;
 					if (f_v4) {
-						cout << "n1=" << n1 << " first_oracle_node_at_level[lvl + 1] = " << first_oracle_node_at_level[lvl + 1] << endl;
+						cout << "n1=" << n1
+								<< " first_oracle_node_at_level[lvl + 1] = "
+								<< first_oracle_node_at_level[lvl + 1] << endl;
 						}
-					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2, n1 - first_oracle_node_at_level[lvl + 1], verbose_level - 4);
+					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
+							n1 - first_oracle_node_at_level[lvl + 1],
+							verbose_level - 4);
 					}
 				}
 			
 			f += root[n].nb_extensions;
 			}
 		if (f_vv) {
-			cout << "generator::make_auxiliary_graph after LG->add_edge (1)" << endl;
+			cout << "generator::make_auxiliary_graph "
+					"after LG->add_edge (1)" << endl;
 			}
 		}
 
 
 	if (f_vv) {
-		cout << "generator::make_auxiliary_graph now making vertex labels" << endl;
+		cout << "generator::make_auxiliary_graph "
+				"now making vertex labels" << endl;
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		f = 0;
 		if (f_vv) {
-			cout << "generator::make_auxiliary_graph now making vertex labels lvl " << lvl << " / " << depth << endl;
+			cout << "generator::make_auxiliary_graph now making vertex "
+					"labels lvl " << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 
 			if (f_v3) {
-				cout << "generator::make_auxiliary_graph now making vertex labels lvl " << lvl << " / " << depth << " po=" << po << " / " << nb_orbits_at_level(lvl) << endl;
+				cout << "generator::make_auxiliary_graph "
+						"now making vertex labels lvl " << lvl << " / "
+						<< depth << " po=" << po << " / "
+						<< nb_orbits_at_level(lvl) << endl;
 				}
 
 
@@ -1190,10 +1354,14 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			LG->add_text(2 * lvl + 0, po, text, 0/*verbose_level*/);
-			LG->add_node_data1(2 * lvl + 0, po, root[n].pt, 0/*verbose_level*/);
+			LG->add_node_data1(2 * lvl + 0, po, root[n].pt,
+					0/*verbose_level*/);
 			if (lvl) {
-				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1), 0/*verbose_level*/);
-				LG->add_node_data3(2 * lvl + 0, po, root[n].prev - first_oracle_node_at_level[lvl - 1], 0/*verbose_level*/);
+				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
+						0/*verbose_level*/);
+				LG->add_node_data3(2 * lvl + 0, po,
+						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						0/*verbose_level*/);
 				}
 			else {
 				LG->add_node_data2(2 * lvl + 0, po, -1, 0/*verbose_level*/);
@@ -1217,7 +1385,8 @@ void generator::make_auxiliary_graph(INT depth, layered_graph *&LG, INT data1, I
 		}
 }
 
-void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree, INT verbose_level)
+void generator::make_graph(INT depth,
+		layered_graph *&LG, INT data1, INT f_tree, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
@@ -1264,12 +1433,15 @@ void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree,
 		}
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_v) {
-			cout << "generator::make_graph adding edges lvl=" << lvl << " / " << depth << endl;
+			cout << "generator::make_graph adding edges "
+					"lvl=" << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (FALSE /*f_v*/) {
-				cout << "generator::make_graph adding edges lvl=" << lvl << " po=" << po << " / " << nb_orbits_at_level(lvl) << endl;
+				cout << "generator::make_graph adding edges "
+						"lvl=" << lvl << " po=" << po << " / "
+						<< nb_orbits_at_level(lvl) << endl;
 				}
 
 			//
@@ -1277,15 +1449,20 @@ void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree,
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (FALSE /*f_v*/) {
-					cout << "generator::make_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << endl;
+					cout << "generator::make_graph adding edges "
+							"lvl=" << lvl << " po=" << po
+							<< " so=" << so << endl;
 					}
-				//LG->add_edge(2 * lvl, po, 2 * lvl + 1, f + so, 0 /*verbose_level*/);
+				//LG->add_edge(2 * lvl, po, 2 * lvl + 1,
+				//f + so, 0 /*verbose_level*/);
 				extension *E = root[n].E + so;
 				if (E->type == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
 					n1 = E->data;
 					//cout << "n1=" << n1 << endl;
-					LG->add_edge(lvl, po, lvl + 1, n1 - first_oracle_node_at_level[lvl + 1], 0 /*verbose_level*/);
+					LG->add_edge(lvl, po, lvl + 1,
+							n1 - first_oracle_node_at_level[lvl + 1],
+							0 /*verbose_level*/);
 					}
 
 				if (!f_tree) {
@@ -1296,19 +1473,25 @@ void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree,
 					INT n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
-					//cout << "fusion (" << n << "/" << so << ") -> (" << n0 << "/" << so0 << ")" << endl;
+					//cout << "fusion (" << n << "/" << so << ") -> ("
+					//<< n0 << "/" << so0 << ")" << endl;
 					extension *E0;
 					E0 = root[n0].E + so0;
 					if (E0->type != EXTENSION_TYPE_EXTENSION) {
-						cout << "warning: fusion node does not point to extension node" << endl;
+						cout << "warning: fusion node does not point to "
+								"extension node" << endl;
 						cout << "type = ";
 						print_extension_type(cout, E0->type);
 						cout << endl;
 						exit(1);
 						}
 					n1 = E0->data;
-					//cout << "n1=" << n1 << " first_oracle_node_at_level[lvl + 1] = " << first_oracle_node_at_level[lvl + 1] << endl;
-					LG->add_edge(lvl, po, lvl + 1, n1 - first_oracle_node_at_level[lvl + 1], 0 /*verbose_level*/);
+					//cout << "n1=" << n1
+					//<< " first_oracle_node_at_level[lvl + 1] = "
+					//<< first_oracle_node_at_level[lvl + 1] << endl;
+					LG->add_edge(lvl, po, lvl + 1,
+							n1 - first_oracle_node_at_level[lvl + 1],
+							0 /*verbose_level*/);
 					}
 					}
 				}
@@ -1325,13 +1508,16 @@ void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree,
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_graph now making vertex labels lvl " << lvl << " / " << depth << endl;
+			cout << "generator::make_graph now making vertex labels "
+					"lvl " << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 
 			if (f_vv) {
-				cout << "generator::make_graph now making vertex labels lvl " << lvl << " / " << depth << " po=" << po << " / " << nb_orbits_at_level(lvl) << endl;
+				cout << "generator::make_graph now making vertex "
+						"labels lvl " << lvl << " / " << depth << " po="
+						<< po << " / " << nb_orbits_at_level(lvl) << endl;
 				}
 
 
@@ -1359,7 +1545,9 @@ void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree,
 #endif
 			if (lvl) {
 				LG->add_node_data2(lvl, po, lvl - 1, 0/*verbose_level*/);
-				LG->add_node_data3(lvl, po, root[n].prev - first_oracle_node_at_level[lvl - 1], 0/*verbose_level*/);
+				LG->add_node_data3(lvl, po,
+						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						0/*verbose_level*/);
 				}
 			else {
 				LG->add_node_data2(lvl, po, -1, 0/*verbose_level*/);
@@ -1376,7 +1564,8 @@ void generator::make_graph(INT depth, layered_graph *&LG, INT data1, INT f_tree,
 		}
 }
 
-void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT level, INT verbose_level)
+void generator::make_level_graph(INT depth,
+		layered_graph *&LG, INT data1, INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1390,7 +1579,8 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 	INT *the_set2;
 
 	if (f_v) {
-		cout << "generator::make_level_graph verbose_level=" << verbose_level << endl;
+		cout << "generator::make_level_graph "
+				"verbose_level=" << verbose_level << endl;
 		}
 
 	//print_fusion_nodes(depth);
@@ -1433,7 +1623,9 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 	for (po = 0; po < nb_orbits_at_level(level); po++) {
 
 		if (f_vv) {
-			cout << "generator::make_level_graph adding edges level=" << level << " po=" << po << " / " << nb_orbits_at_level(level) << endl;
+			cout << "generator::make_level_graph adding edges "
+					"level=" << level << " po=" << po << " / "
+					<< nb_orbits_at_level(level) << endl;
 			}
 
 		//
@@ -1441,7 +1633,9 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 		for (so = 0; so < root[n].nb_extensions; so++) {
 
 			if (FALSE /*f_v*/) {
-				cout << "generator::make_level_graph adding edges lvl=" << lvl << " po=" << po << " so=" << so << endl;
+				cout << "generator::make_level_graph "
+						"adding edges lvl=" << lvl << " po="
+						<< po << " so=" << so << endl;
 				}
 			LG->add_edge(0, po, 1, f + so, 0 /*verbose_level*/);
 			LG->add_edge(1, f + so, 2, f + so, 0 /*verbose_level*/);
@@ -1450,7 +1644,9 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 				//cout << "extension node" << endl;
 				n1 = E->data;
 				//cout << "n1=" << n1 << endl;
-				LG->add_edge(2, f + so, 3, n1 - first_oracle_node_at_level[level + 1], 0 /*verbose_level*/);
+				LG->add_edge(2, f + so, 3,
+						n1 - first_oracle_node_at_level[level + 1],
+						0 /*verbose_level*/);
 				}
 			else if (E->type == EXTENSION_TYPE_FUSION) {
 				//cout << "fusion node" << endl;
@@ -1459,19 +1655,25 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 				INT n0, so0;
 				n0 = E->data1;
 				so0 = E->data2;
-				//cout << "fusion (" << n << "/" << so << ") -> (" << n0 << "/" << so0 << ")" << endl;
+				//cout << "fusion (" << n << "/" << so
+				//<< ") -> (" << n0 << "/" << so0 << ")" << endl;
 				extension *E0;
 				E0 = root[n0].E + so0;
 				if (E0->type != EXTENSION_TYPE_EXTENSION) {
-					cout << "warning: fusion node does not point to extension node" << endl;
+					cout << "warning: fusion node does not point to "
+							"extension node" << endl;
 					cout << "type = ";
 					print_extension_type(cout, E0->type);
 					cout << endl;
 					exit(1);
 					}
 				n1 = E0->data;
-				//cout << "n1=" << n1 << " first_oracle_node_at_level[lvl + 1] = " << first_oracle_node_at_level[lvl + 1] << endl;
-				LG->add_edge(2, f + so, 3, n1 - first_oracle_node_at_level[level + 1], 0 /*verbose_level*/);
+				//cout << "n1=" << n1
+				//<< " first_oracle_node_at_level[lvl + 1] = "
+				//<< first_oracle_node_at_level[lvl + 1] << endl;
+				LG->add_edge(2, f + so, 3,
+						n1 - first_oracle_node_at_level[level + 1],
+						0 /*verbose_level*/);
 				}
 			}
 			
@@ -1488,7 +1690,9 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 	for (lvl = level; lvl <= level + 1; lvl++) {
 		f = 0;
 		if (f_vv) {
-			cout << "generator::make_level_graph now making vertex labels lvl " << lvl << " / " << depth << endl;
+			cout << "generator::make_level_graph "
+					"now making vertex labels lvl " << lvl
+					<< " / " << depth << endl;
 			}
 
 		if (lvl == level) {
@@ -1502,7 +1706,10 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 
 
 			if (f_vv) {
-				cout << "generator::make_level_graph now making vertex labels lvl " << lvl << " / " << depth << " po=" << po << " / " << nb_orbits_at_level(lvl) << endl;
+				cout << "generator::make_level_graph "
+						"now making vertex labels lvl " << lvl
+						<< " / " << depth << " po=" << po << " / "
+						<< nb_orbits_at_level(lvl) << endl;
 				}
 
 
@@ -1520,8 +1727,11 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 			LG->add_node_vec_data(l, po, the_set, lvl, 0 /* verbose_level */);
 #if 0
 			if (lvl) {
-				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1), 0/*verbose_level*/);
-				LG->add_node_data3(2 * lvl + 0, po, root[n].prev - first_oracle_node_at_level[lvl - 1], 0/*verbose_level*/);
+				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
+						0/*verbose_level*/);
+				LG->add_node_data3(2 * lvl + 0, po,
+						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						0/*verbose_level*/);
 				}
 			else {
 				LG->add_node_data2(2 * lvl + 0, po, -1, 0/*verbose_level*/);
@@ -1540,20 +1750,26 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 					
 					//get_set_by_level(lvl, po, the_set);
 					the_set[lvl] = E->pt;
-					LG->add_node_vec_data(l + 1, f + so, the_set, lvl + 1, 0 /* verbose_level */);
-					LG->set_distinguished_element_index(l + 1, f + so, lvl, 0 /* verbose_level */);
+					LG->add_node_vec_data(l + 1, f + so, the_set, lvl + 1,
+							0 /* verbose_level */);
+					LG->set_distinguished_element_index(l + 1, f + so, lvl,
+							0 /* verbose_level */);
 
 
 					if (E->type == EXTENSION_TYPE_EXTENSION) {
 						the_set[lvl] = E->pt;
-						LG->add_node_vec_data(l + 2, f + so, the_set, lvl + 1, 0 /* verbose_level */);
-						LG->set_distinguished_element_index(l + 2, f + so, lvl, 0 /* verbose_level */);
+						LG->add_node_vec_data(l + 2, f + so, the_set, lvl + 1,
+								0 /* verbose_level */);
+						LG->set_distinguished_element_index(l + 2, f + so, lvl,
+								0 /* verbose_level */);
 						}
 					else if (E->type == EXTENSION_TYPE_FUSION) {
 						A->element_retrieve(E->data, Elt1, 0);
 						A2->map_a_set(the_set, the_set2, lvl + 1, Elt1, 0);
-						LG->add_node_vec_data(l + 2, f + so, the_set2, lvl + 1, 0 /* verbose_level */);
-						LG->set_distinguished_element_index(l + 2, f + so, lvl, 0 /* verbose_level */);
+						LG->add_node_vec_data(l + 2, f + so, the_set2, lvl + 1,
+								0 /* verbose_level */);
+						LG->set_distinguished_element_index(l + 2, f + so, lvl,
+								0 /* verbose_level */);
 						}
 					}
 				f += root[n].nb_extensions;
@@ -1570,7 +1786,8 @@ void generator::make_level_graph(INT depth, layered_graph *&LG, INT data1, INT l
 		}
 }
 
-void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max_depth, INT verbose_level)
+void generator::make_poset_graph_detailed(layered_graph *&LG,
+		INT data1, INT max_depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1583,7 +1800,8 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 	INT *the_set2;
 
 	if (f_v) {
-		cout << "generator::make_poset_graph_detailed verbose_level=" << verbose_level << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"verbose_level=" << verbose_level << endl;
 		cout << "max_depth=" << max_depth << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		}
@@ -1609,7 +1827,8 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 
 	LG = new layered_graph;
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed before LG->init" << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
 		INT_vec_print(cout, Nb, nb_layers);
@@ -1618,38 +1837,47 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed after LG->init" << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"after LG->init" << endl;
 		}
 	for (i = 0; i < nb_layers; i++) {
 		if ((i % 3) == 0) {
-			LG->set_radius_factor_for_all_nodes_at_level(i, 5. /* radius_factor */, 0 /* verbose_level */);
+			LG->set_radius_factor_for_all_nodes_at_level(
+					i, 5. /* radius_factor */, 0 /* verbose_level */);
 			}
 		else {
 			// .9 means we don't draw a label at that node
-			//LG->set_radius_factor_for_all_nodes_at_level(i, .9 /* radius_factor */, 0 /* verbose_level */);
-			LG->set_radius_factor_for_all_nodes_at_level(i, 4 /* radius_factor */, 0 /* verbose_level */);
+			//LG->set_radius_factor_for_all_nodes_at_level(
+			// i, .9 /* radius_factor */, 0 /* verbose_level */);
+			LG->set_radius_factor_for_all_nodes_at_level(
+					i, 4 /* radius_factor */, 0 /* verbose_level */);
 			}
 		}
 	
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed after LG->place" << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"after LG->place" << endl;
 		}
 
 
 
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed adding edges" << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"adding edges" << endl;
 		}
 	for (L = 0; L < max_depth; L++) {
 		if (f_vv) {
-			cout << "generator::make_poset_graph_detailed adding edges at level " << L << endl;
+			cout << "generator::make_poset_graph_detailed "
+					"adding edges at level " << L << endl;
 			}
 		f = 0;
 		for (po = 0; po < nb_orbits_at_level(L); po++) {
 
 			if (f_vv) {
-				cout << "generator::make_poset_graph_detailed adding edges level=" << L << " po=" << po << " / " << nb_orbits_at_level(L) << endl;
+				cout << "generator::make_poset_graph_detailed "
+						"adding edges level=" << L << " po=" << po
+						<< " / " << nb_orbits_at_level(L) << endl;
 				}
 
 			//
@@ -1657,16 +1885,22 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (FALSE /*f_v*/) {
-					cout << "generator::make_poset_graph_detailed adding edges level=" << L << " po=" << po << " so=" << so << endl;
+					cout << "generator::make_poset_graph_detailed "
+							"adding edges level=" << L << " po=" << po
+							<< " so=" << so << endl;
 					}
-				LG->add_edge(L * 3 + 0, po, L * 3 + 1, f + so, 0 /*verbose_level*/);
-				LG->add_edge(L * 3 + 1, f + so, L * 3 + 2, f + so, 0 /*verbose_level*/);
+				LG->add_edge(L * 3 + 0, po,
+						L * 3 + 1, f + so, 0 /*verbose_level*/);
+				LG->add_edge(L * 3 + 1, f + so,
+						L * 3 + 2, f + so, 0 /*verbose_level*/);
 				extension *E = root[n].E + so;
 				if (E->type == EXTENSION_TYPE_EXTENSION) {
 					//cout << "extension node" << endl;
 					n1 = E->data;
 					//cout << "n1=" << n1 << endl;
-					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3, n1 - first_oracle_node_at_level[L + 1], 0 /*verbose_level*/);
+					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
+							n1 - first_oracle_node_at_level[L + 1],
+							0 /*verbose_level*/);
 					}
 				else if (E->type == EXTENSION_TYPE_FUSION) {
 					//cout << "fusion node" << endl;
@@ -1675,47 +1909,61 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 					INT n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
-					//cout << "fusion (" << n << "/" << so << ") -> (" << n0 << "/" << so0 << ")" << endl;
+					//cout << "fusion (" << n << "/" << so
+					//<< ") -> (" << n0 << "/" << so0 << ")" << endl;
 					extension *E0;
 					E0 = root[n0].E + so0;
 					if (E0->type != EXTENSION_TYPE_EXTENSION) {
-						cout << "warning: fusion node does not point to extension node" << endl;
+						cout << "warning: fusion node does not point to "
+								"extension node" << endl;
 						cout << "type = ";
 						print_extension_type(cout, E0->type);
 						cout << endl;
 						exit(1);
 						}
 					n1 = E0->data;
-					//cout << "n1=" << n1 << " first_oracle_node_at_level[lvl + 1] = " << first_oracle_node_at_level[lvl + 1] << endl;
-					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3, n1 - first_oracle_node_at_level[L + 1], 0 /*verbose_level*/);
+					//cout << "n1=" << n1
+					//<< " first_oracle_node_at_level[lvl + 1] = "
+					//<< first_oracle_node_at_level[lvl + 1] << endl;
+					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
+							n1 - first_oracle_node_at_level[L + 1],
+							0 /*verbose_level*/);
 					}
 				}
 			
 			f += root[n].nb_extensions;
 			}
 		if (f_vv) {
-			cout << "generator::make_poset_graph_detailed after LG->add_edge" << endl;
+			cout << "generator::make_poset_graph_detailed "
+					"after LG->add_edge" << endl;
 			}
 		} // next L
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed adding edges done" << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"adding edges done" << endl;
 		}
 
 
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed now making vertex labels" << endl;
+		cout << "generator::make_poset_graph_detailed "
+				"now making vertex labels" << endl;
 		}
 	for (L = 0; L <= max_depth; L++) {
 		f = 0;
 		if (f_vv) {
-			cout << "generator::make_poset_graph_detailed now making vertex labels level " << L << " / " << max_depth << endl;
+			cout << "generator::make_poset_graph_detailed "
+					"now making vertex labels level " << L
+					<< " / " << max_depth << endl;
 			}
 
 		for (po = 0; po < nb_orbits_at_level(L); po++) {
 
 
 			if (f_vv) {
-				cout << "generator::make_poset_graph_detailed now making vertex labels level " << L << " / " << max_depth << " po=" << po << " / " << nb_orbits_at_level(L) << endl;
+				cout << "generator::make_poset_graph_detailed "
+						"now making vertex labels level " << L
+						<< " / " << max_depth << " po=" << po
+						<< " / " << nb_orbits_at_level(L) << endl;
 				}
 
 
@@ -1735,8 +1983,11 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 			LG->add_node_vec_data(3 * L, po, the_set, L, 0 /* verbose_level */);
 #if 0
 			if (lvl) {
-				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1), 0/*verbose_level*/);
-				LG->add_node_data3(2 * lvl + 0, po, root[n].prev - first_oracle_node_at_level[lvl - 1], 0/*verbose_level*/);
+				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
+						0/*verbose_level*/);
+				LG->add_node_data3(2 * lvl + 0, po,
+						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						0/*verbose_level*/);
 				}
 			else {
 				LG->add_node_data2(2 * lvl + 0, po, -1, 0/*verbose_level*/);
@@ -1747,7 +1998,11 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 			if (L < max_depth) {
 				for (so = 0; so < root[n].nb_extensions; so++) {
 					if (f_vv) {
-						cout << "generator::make_poset_graph_detailed now making vertex labels level " << L << " / " << max_depth << " po=" << po << " / " << nb_orbits_at_level(L) << " so=" << so << endl;
+						cout << "generator::make_poset_graph_detailed "
+								"now making vertex labels level " << L
+								<< " / " << max_depth << " po=" << po
+								<< " / " << nb_orbits_at_level(L)
+								<< " so=" << so << endl;
 						}
 					extension *E = root[n].E + so;
 					len = E->orbit_len;
@@ -1758,20 +2013,26 @@ void generator::make_poset_graph_detailed(layered_graph *&LG, INT data1, INT max
 					
 					//get_set_by_level(lvl, po, the_set);
 					the_set[L] = E->pt;
-					LG->add_node_vec_data(3 * L + 1, f + so, the_set, L + 1, 0 /* verbose_level */);
-					LG->set_distinguished_element_index(3 * L + 1, f + so, L, 0 /* verbose_level */);
+					LG->add_node_vec_data(3 * L + 1, f + so, the_set,
+							L + 1, 0 /* verbose_level */);
+					LG->set_distinguished_element_index(3 * L + 1,
+							f + so, L, 0 /* verbose_level */);
 
 
 					if (E->type == EXTENSION_TYPE_EXTENSION) {
 						the_set[L] = E->pt;
-						LG->add_node_vec_data(3 * L + 2, f + so, the_set, L + 1, 0 /* verbose_level */);
-						LG->set_distinguished_element_index(3 * L + 2, f + so, L, 0 /* verbose_level */);
+						LG->add_node_vec_data(3 * L + 2, f + so,
+								the_set, L + 1, 0 /* verbose_level */);
+						LG->set_distinguished_element_index(3 * L + 2,
+								f + so, L, 0 /* verbose_level */);
 						}
 					else if (E->type == EXTENSION_TYPE_FUSION) {
 						A->element_retrieve(E->data, Elt1, 0);
 						A2->map_a_set(the_set, the_set2, L + 1, Elt1, 0);
-						LG->add_node_vec_data(3 * L + 2, f + so, the_set2, L + 1, 0 /* verbose_level */);
-						LG->set_distinguished_element_index(3 * L + 2, f + so, L, 0 /* verbose_level */);
+						LG->add_node_vec_data(3 * L + 2, f + so,
+								the_set2, L + 1, 0 /* verbose_level */);
+						LG->set_distinguished_element_index(3 * L + 2,
+								f + so, L, 0 /* verbose_level */);
 						}
 					}
 				f += root[n].nb_extensions;
@@ -1815,7 +2076,8 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 		cnt = 0;
 		for (lvl = 0; lvl <= depth; lvl++) {
 			if (f_v) {
-				cout << "generator::print_data_structure_tex adding edges lvl=" << lvl << " / " << depth << endl;
+				cout << "generator::print_data_structure_tex "
+						"adding edges lvl=" << lvl << " / " << depth << endl;
 				}
 			f = 0;
 			for (po = 0; po < nb_orbits_at_level(lvl); po++, cnt++) {
@@ -1870,7 +2132,8 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 
 		for (lvl = 0; lvl < depth; lvl++) {
 			if (f_v) {
-				cout << "generator::print_data_structure_tex adding edges lvl=" << lvl << " / " << depth << endl;
+				cout << "generator::print_data_structure_tex "
+						"adding edges lvl=" << lvl << " / " << depth << endl;
 				}
 			f = 0;
 			for (po = 0; po < nb_orbits_at_level(lvl); po++) {
@@ -1895,7 +2158,9 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 						cnt = 0;
 						}
 					if (FALSE /*f_v*/) {
-						cout << "generator::print_data_structure_tex adding edges lvl=" << lvl << " po=" << po << " so=" << so << endl;
+						cout << "generator::print_data_structure_tex "
+								"adding edges lvl=" << lvl << " po="
+								<< po << " so=" << so << endl;
 						}
 					extension *E = root[n].E + so;
 					ol = E->orbit_len;
@@ -1944,18 +2209,22 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 						INT n0, so0;
 						n0 = E->data1;
 						so0 = E->data2;
-						//cout << "fusion (" << n << "/" << so << ") -> (" << n0 << "/" << so0 << ")" << endl;
+						//cout << "fusion (" << n << "/" << so
+						//<< ") -> (" << n0 << "/" << so0 << ")" << endl;
 						extension *E0;
 						E0 = root[n0].E + so0;
 						if (E0->type != EXTENSION_TYPE_EXTENSION) {
-							cout << "warning: fusion node does not point to extension node" << endl;
+							cout << "warning: fusion node does not point "
+									"to extension node" << endl;
 							cout << "type = ";
 							print_extension_type(cout, E0->type);
 							cout << endl;
 							exit(1);
 							}
 						n1 = E0->data;
-						//cout << "n1=" << n1 << " first_oracle_node_at_level[lvl + 1] = " << first_oracle_node_at_level[lvl + 1] << endl;
+						//cout << "n1=" << n1
+						//<< " first_oracle_node_at_level[lvl + 1] = "
+						//<< first_oracle_node_at_level[lvl + 1] << endl;
 
 
 
