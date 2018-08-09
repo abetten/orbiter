@@ -395,8 +395,7 @@ void linear_set::construct_semifield(INT orbit_for_W, INT verbose_level)
 
 		transporter = NEW_INT(T->gen->A->elt_size_in_INT);
 
-		recognize(
-			T->gen, 
+		T->gen->recognize(
 			spread_elements_numeric, nb_components, 
 			transporter, f_implicit_fusion, 
 			final_node, 0 /*verbose_level*/);

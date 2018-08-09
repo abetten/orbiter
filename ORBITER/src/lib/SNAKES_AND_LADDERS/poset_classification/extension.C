@@ -3,7 +3,9 @@
 // Anton Betten
 // Dec 19, 2011
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 extension::extension()
 {

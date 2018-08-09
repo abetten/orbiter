@@ -3,8 +3,9 @@
 // Anton Betten
 // Jan 25, 2010
 
-#include "orbiter.h"
-
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 	generator *gen,

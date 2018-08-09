@@ -6,7 +6,9 @@
 // renamed from io.C into oracle_io.C Aug 24, 2011
 
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 void oracle::read_memory_object(action *A, memory_object *m, INT &nb_group_elements, INT verbose_level)
 {

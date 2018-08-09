@@ -5,7 +5,9 @@
 //
 // this is the downstep for action on subsets only
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 void oracle::downstep(generator *gen, 
 	INT lvl, 

@@ -45,20 +45,24 @@ set_stabilizer_compute::~set_stabilizer_compute()
 		}
 	if (gen) {
 		if (f_v) {
-			cout << "set_stabilizer_compute::~set_stabilizer_compute before freeing gen" << endl;
+			cout << "set_stabilizer_compute::~set_stabilizer_compute "
+					"before freeing gen" << endl;
 			}
 		delete gen;
 		if (f_v) {
-			cout << "set_stabilizer_compute::~set_stabilizer_compute after freeing gen" << endl;
+			cout << "set_stabilizer_compute::~set_stabilizer_compute "
+					"after freeing gen" << endl;
 			}
 		gen = NULL;
 		}
 	if (f_v) {
-		cout << "set_stabilizer_compute::~set_stabilizer_compute done" << endl;
+		cout << "set_stabilizer_compute::~set_stabilizer_compute "
+				"done" << endl;
 		}
 }
 
-void set_stabilizer_compute::init(action *A, INT *set, INT size, INT verbose_level)
+void set_stabilizer_compute::init(action *A,
+		INT *set, INT size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -66,24 +70,30 @@ void set_stabilizer_compute::init(action *A, INT *set, INT size, INT verbose_lev
 
 	if (f_v) {
 		A->group_order(go);
-		cout << "set_stabilizer_compute::init group of degree " << A->degree 
-			<< " and order " << go << ", set of size " << size << endl;
+		cout << "set_stabilizer_compute::init "
+				"group of degree " << A->degree
+			<< " and order " << go
+			<< ", set of size " << size << endl;
 		}
 	
 	if (!test_if_set_with_return_value(set, size)) {
-		cout << "set_stabilizer_compute::init the set is not a set" << endl;
+		cout << "set_stabilizer_compute::init "
+				"the set is not a set" << endl;
 		exit(1);
 		}
 	if (!A->f_has_strong_generators) {
-		cout << "set_stabilizer_compute::init action has no strong generators" << endl;
+		cout << "set_stabilizer_compute::init "
+				"action has no strong generators" << endl;
 		cout << "the action is " << endl;
 		A->print_info();
 		exit(1);
 		}
-	init_with_strong_generators(A, A, A->Strong_gens, set, size, verbose_level);
+	init_with_strong_generators(A, A,
+			A->Strong_gens, set, size, verbose_level);
 }
 
-void set_stabilizer_compute::init_with_strong_generators(action *A, action *A0, 
+void set_stabilizer_compute::init_with_strong_generators(
+	action *A, action *A0,
 	strong_generators *Strong_gens, 
 	INT *set, INT size, INT verbose_level)
 {
@@ -100,7 +110,8 @@ void set_stabilizer_compute::init_with_strong_generators(action *A, action *A0,
 	
 	if (f_v) {
 		Strong_gens->group_order(go);
-		cout << "set_stabilizer_compute::init_with_strong_generators group of degree " << A->degree 
+		cout << "set_stabilizer_compute::init_with_strong_generators "
+				"group of degree " << A->degree
 			<< " and order " << go << ", set of size " << size << endl;
 		}
 	
@@ -125,17 +136,23 @@ void set_stabilizer_compute::init_with_strong_generators(action *A, action *A0,
 		cout << endl;
 		}
 	if (FALSE /*f_vv*/) {
-		cout << "set_stabilizer_compute::init_with_strong_generators  the_set:" << endl;
-		cout << "t : the_set : the_set_sorted : the_set_sorting_perm : the_set_sorting_perm_inv" << endl;
+		cout << "set_stabilizer_compute::init_with_strong_generators  "
+				"the_set:" << endl;
+		cout << "t : the_set : the_set_sorted : the_set_sorting_perm : "
+				"the_set_sorting_perm_inv" << endl;
 		for (t = 0; t < set_size; t++) {
-			cout << setw(4) << t << " : " << setw(4) << the_set[t] << " : " << setw(4) << the_set_sorted[t] << " : " << setw(4) << the_set_sorting_perm[t] << " : " << setw(4) << the_set_sorting_perm_inv[t] << endl;
+			cout << setw(4) << t << " : " << setw(4) << the_set[t]
+				<< " : " << setw(4) << the_set_sorted[t] << " : "
+				<< setw(4) << the_set_sorting_perm[t] << " : "
+				<< setw(4) << the_set_sorting_perm_inv[t] << endl;
 			}
 		}
 
 	gen->depth = set_size;
 	
 	if (f_vv) {
-		cout << "set_stabilizer_compute::init_with_strong_generators calling gen->init:" << endl;
+		cout << "set_stabilizer_compute::init_with_strong_generators "
+				"calling gen->init:" << endl;
 		}
 	gen->init(A0, A2, Strong_gens, gen->depth /* sz */, verbose_level - 2);
 
@@ -143,7 +160,8 @@ void set_stabilizer_compute::init_with_strong_generators(action *A, action *A0,
 	//	this /* check_conditions_data */);
 
 	if (f_vv) {
-		cout << "set_stabilizer_compute::init_with_strong_generators gen->init finished" << endl;
+		cout << "set_stabilizer_compute::init_with_strong_generators "
+				"gen->init finished" << endl;
 		}
 
 #if 0
@@ -158,17 +176,21 @@ void set_stabilizer_compute::init_with_strong_generators(action *A, action *A0,
 	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
 
 	if (f_vv) {
-		cout << "set_stabilizer_compute::init_with_strong_generators calling init_root_node:" << endl;
+		cout << "set_stabilizer_compute::init_with_strong_generators "
+				"calling init_root_node:" << endl;
 		}
 
 	gen->init_root_node(verbose_level - 1);
 
 	if (f_vv) {
-		cout << "set_stabilizer_compute::init_with_strong_generators init_root_node finished" << endl;
+		cout << "set_stabilizer_compute::init_with_strong_generators "
+				"init_root_node finished" << endl;
 		}
 }
 
-void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_nodes, strong_generators *&Aut_gens, INT verbose_level)
+void set_stabilizer_compute::compute_set_stabilizer(INT t0,
+		INT &nb_backtrack_nodes, strong_generators *&Aut_gens,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -188,7 +210,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 	INT f_debug = FALSE;
 	
 	if (f_v) {
-		cout << "set_stabilizer_compute::compute_set_stabilizer depth = " << gen->depth << endl;
+		cout << "set_stabilizer_compute::compute_set_stabilizer "
+				"depth = " << gen->depth << endl;
 		}
 
 	INT *frequency = NULL; // [nb_orbits]
@@ -201,12 +224,15 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 	for (lvl = depth_completed; lvl <= gen->depth; lvl++) {
 
 		if (f_v) {
-			cout << "set_stabilizer_compute::compute_set_stabilizer: computing frequencies of " << lvl << "-set orbits in the set" << endl;
+			cout << "set_stabilizer_compute::compute_set_stabilizer: "
+					"computing frequencies of " << lvl << "-set orbits in the set" << endl;
 			}
 		
-		compute_frequencies(lvl, frequency, nb_orbits, orbit_idx_of_subset, n_choose_k, 0 /*verbose_level - 1*/);
+		compute_frequencies(lvl, frequency, nb_orbits,
+				orbit_idx_of_subset, n_choose_k, 0 /*verbose_level - 1*/);
 		if (f_v) {
-			cout << "set_stabilizer_compute::compute_set_stabilizer: computing frequencies of " << lvl << "-set orbits finished" << endl;
+			cout << "set_stabilizer_compute::compute_set_stabilizer: "
+					"computing frequencies of " << lvl << "-set orbits finished" << endl;
 			}
 		if (f_vv) {
 			print_frequencies(lvl, frequency, nb_orbits);
@@ -216,7 +242,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 			frequency, nb_orbits, orbit_idx_of_subset, 
 			counter, n_choose_k, Aut_gens, verbose_level)) {
 			nb_backtrack_nodes += overall_backtrack_nodes;
-			cout << "set_stabilizer_compute::compute_set_stabilizer stabilizer has been computed" << endl;
+			cout << "set_stabilizer_compute::compute_set_stabilizer "
+					"stabilizer has been computed" << endl;
 			return;
 			}
 		
@@ -225,7 +252,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 			}
 			
 		if (f_v) {
-			cout << "set_stabilizer_compute::compute_set_stabilizer: calling extend_level " << lvl << endl;
+			cout << "set_stabilizer_compute::compute_set_stabilizer: "
+					"calling extend_level " << lvl << endl;
 			}
 
 		gen->extend_level(lvl, /* lvl,*/ 
@@ -255,7 +283,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 		
 		} // next lvl
 	if (f_v) {
-		cout << "set_stabilizer_compute::compute_set_stabilizer level " << lvl << " reached" << endl;
+		cout << "set_stabilizer_compute::compute_set_stabilizer "
+				"level " << lvl << " reached" << endl;
 		}
 	INT f, idx = -1, nd;
 	
@@ -265,7 +294,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 				idx = i;
 				}
 			else {
-				cout << "set_stabilizer_compute::compute_set_stabilizer error, two entries in frequency are non zero at level " << lvl << endl;
+				cout << "set_stabilizer_compute::compute_set_stabilizer "
+						"error, two entries in frequency are non zero at level " << lvl << endl;
 				exit(1);
 				}
 			}
@@ -273,7 +303,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 	f = gen->first_oracle_node_at_level[lvl];
 	nd = f + idx;
 	if (f_v) {
-		cout << "the set is isomorphic to orbit " << idx << " i.e. node = " << nd << endl;
+		cout << "the set is isomorphic to orbit " << idx
+				<< " i.e. node = " << nd << endl;
 		}
 
 	group G;
@@ -310,7 +341,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 	
 	
 	G.init(gen->A);
-	G.init_strong_generators_by_hdl(O->nb_strong_generators, O->hdl_strong_generators, O->tl, FALSE);
+	G.init_strong_generators_by_hdl(O->nb_strong_generators,
+			O->hdl_strong_generators, O->tl, FALSE);
 	G.schreier_sims(0);
 	G.group_order(go);
 
@@ -377,7 +409,8 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0, INT &nb_backtrack_no
 	FREE_INT(Elt3);
 }
 
-void set_stabilizer_compute::print_frequencies(INT lvl, INT *frequency, INT nb_orbits)
+void set_stabilizer_compute::print_frequencies(
+		INT lvl, INT *frequency, INT nb_orbits)
 {
 	INT i, f;
 
@@ -394,10 +427,14 @@ void set_stabilizer_compute::print_frequencies(INT lvl, INT *frequency, INT nb_o
 			O = &gen->root[f + i];
 
 			G.init(gen->A);
-			G.init_strong_generators_by_hdl(O->nb_strong_generators, O->hdl_strong_generators, O->tl, FALSE);
+			G.init_strong_generators_by_hdl(
+					O->nb_strong_generators,
+					O->hdl_strong_generators,
+					O->tl, FALSE);
 			G.schreier_sims(0);
 			G.group_order(go);
-			cout << setw(4) << i << " : " << setw(10) << frequency[i] << setw(20) << go << endl;
+			cout << setw(4) << i << " : " << setw(10)
+					<< frequency[i] << setw(20) << go << endl;
 			}
 		}
 	else {
@@ -413,7 +450,8 @@ void set_stabilizer_compute::print_frequencies(INT lvl, INT *frequency, INT nb_o
 
 INT set_stabilizer_compute::handle_frequencies(INT lvl, 
 	INT *frequency, INT nb_orbits, INT *orbit_idx_of_subset, 
-	INT &counter, INT n_choose_k, strong_generators *&Aut_gens, INT verbose_level)
+	INT &counter, INT n_choose_k, strong_generators *&Aut_gens,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);

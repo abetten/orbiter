@@ -113,8 +113,11 @@ void compute_stabilizer::freeself()
 		}
 }
 
-void compute_stabilizer::init(INT *the_set, INT set_size, generator *gen, action *A, action *A2, 
-	INT level, INT interesting_orbit, INT nb_interesting_subsets, INT *interesting_subsets, INT verbose_level)
+void compute_stabilizer::init(INT *the_set,
+	INT set_size, generator *gen, action *A, action *A2,
+	INT level, INT interesting_orbit,
+	INT nb_interesting_subsets, INT *interesting_subsets,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -190,8 +193,12 @@ void compute_stabilizer::init(INT *the_set, INT set_size, generator *gen, action
 	main_loop(verbose_level);
 	if (f_v) {
 		cout << "compute_stabilizer::init after main_loop" << endl;
-		cout << "compute_stabilizer::init backtrack_nodes_first_time = " << backtrack_nodes_first_time << endl;
-		cout << "compute_stabilizer::init backtrack_nodes_total_in_loop = " << backtrack_nodes_total_in_loop << endl;
+		cout << "compute_stabilizer::init "
+				"backtrack_nodes_first_time = "
+				<< backtrack_nodes_first_time << endl;
+		cout << "compute_stabilizer::init "
+				"backtrack_nodes_total_in_loop = "
+				<< backtrack_nodes_total_in_loop << endl;
 		}
 	
 	if (f_v) {
@@ -224,11 +231,14 @@ void compute_stabilizer::compute_orbits(INT verbose_level)
 	INT i, j, k, f, l, ii, jj, a;
 	
 	if (f_v) {
-		cout << "compute_stabilizer::compute_orbits computing orbits on points" << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"computing orbits on points" << endl;
 		}
 	Stab_orbits = Strong_gens_G->orbits_on_points_schreier(A2, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "compute_stabilizer::compute_orbits computing orbits on points done, we found " << Stab_orbits->nb_orbits << " orbits" << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"computing orbits on points done, we found "
+				<< Stab_orbits->nb_orbits << " orbits" << endl;
 		}
 	
 	nb_orbits = Stab_orbits->nb_orbits;
@@ -238,13 +248,15 @@ void compute_stabilizer::compute_orbits(INT verbose_level)
 
 
 	if (f_v) {
-		cout << "compute_stabilizer::compute_orbits mapping the first subset to its canonical form" << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"mapping the first subset to its canonical form" << endl;
 		}
 
 	map_the_first_set(0 /* cnt */, verbose_level);
 		// reduced_set1 has size set_size - level (=reduced_set_size)
 		// compute orbit_count1[] for reduced_set1[].
-		// orbit_count1[i] is the number of points from reduced_set1[] contained in orbit i
+		// orbit_count1[i] is the number of points from
+		// reduced_set1[] contained in orbit i
 
 
 
@@ -267,7 +279,8 @@ void compute_stabilizer::compute_orbits(INT verbose_level)
 			cout << i << "^" << orbit_count1[i] << " ";
 			}
 		cout << endl;
-		cout << "compute_stabilizer::compute_orbits nb_interesting_points = " << nb_interesting_points << endl;
+		cout << "compute_stabilizer::compute_orbits "
+				"nb_interesting_points = " << nb_interesting_points << endl;
 		}
 
 	interesting_orbits = NEW_INT(nb_interesting_orbits);

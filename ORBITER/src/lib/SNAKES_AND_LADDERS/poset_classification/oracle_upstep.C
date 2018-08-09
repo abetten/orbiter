@@ -4,7 +4,9 @@
 // December 27, 2004
 // July 23, 2007
 
-#include "orbiter.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 INT oracle::apply_fusion_element(generator *gen, 
 	INT lvl, INT current_node, 
@@ -39,7 +41,8 @@ INT oracle::apply_fusion_element(generator *gen,
 		INT_vec_print(cout, gen->set[lvl + 1], len + 1);
 		cout << endl;
 		}
-	gen->A2->map_a_set(gen->set[lvl + 1],
+	gen->A2->map_a_set(
+			gen->set[lvl + 1],
 			set /* gen->S0 */, len + 1,
 			gen->Elt1, 0);
 	if (f_v) {
@@ -48,7 +51,8 @@ INT oracle::apply_fusion_element(generator *gen,
 		cout << endl;
 		}
 
-	gen->A2->element_mult(gen->transporter->ith(lvl + 1),
+	gen->A2->element_mult(
+			gen->transporter->ith(lvl + 1),
 			gen->Elt1, gen->Elt2, 0);
 	if (f_v) {
 		INT_vec_print(cout, gen->set[lvl + 1], len + 1);
@@ -122,7 +126,9 @@ void oracle::install_fusion_node(generator *gen,
 	INT hdl, cmp;	
 	
 	if (f_v) {
-		cout << "oracle::install_fusion_node lvl=" << lvl 
+		cout << "oracle::install_fusion_node "
+				" verbose_level = " << verbose_level <<
+				"lvl=" << lvl
 			<< " node=" << node 
 			<< " current_node=" << current_node 
 			<< " my_node=" << my_node 
@@ -146,7 +152,8 @@ void oracle::install_fusion_node(generator *gen,
 		cout << "we will now install a fusion node at node " << node 
 			<< " , extension " << current_extension << endl;
 		}
-	gen->A->element_invert(gen->transporter->ith(lvl + 1),
+	gen->A->element_invert(
+			gen->transporter->ith(lvl + 1),
 			gen->Elt1, FALSE);
 	if (f_v) {
 		cout << "oracle::install_fusion_node: fusion element:" << endl;
@@ -164,9 +171,9 @@ void oracle::install_fusion_node(generator *gen,
 	E[current_extension].data1 = my_node;
 	E[current_extension].data2 = my_extension;
 	if (f_v) {
-		cout << "FUSION NODE at lvl " << lvl << " node=" << current_node
-				<< " / " << current_extension << " pt=" << pt0
-				<< " hdl=" << hdl << " to="
+		cout << "FUSION NODE at lvl " << lvl << " node/extension=" << current_node
+				<< "/" << current_extension << " pt=" << pt0
+				<< " hdl=" << hdl << " to node/extension="
 				<< E[current_extension].data1 /*my_node*/
 				<< "/" << E[current_extension].data2 /*my_extension*/
 				<< " : ";
