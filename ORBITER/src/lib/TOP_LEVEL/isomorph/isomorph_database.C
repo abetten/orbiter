@@ -340,14 +340,16 @@ INT isomorph::find_extension_search_interval(INT *set,
 		}
 	if (i == len) {
 		return FALSE;
-		//cout << "isomorph::find_extension_search_interval did not find extension" << endl;
+		//cout << "isomorph::find_extension_search_interval "
+		//"did not find extension" << endl;
 		//exit(1);
 		}
 	idx = id;
 	return TRUE;
 }
 
-INT isomorph::find_extension_easy_old(INT *set, INT case_nb, INT &idx, INT verbose_level)
+INT isomorph::find_extension_easy_old(INT *set,
+		INT case_nb, INT &idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT first, len, ret;
@@ -363,16 +365,19 @@ INT isomorph::find_extension_easy_old(INT *set, INT case_nb, INT &idx, INT verbo
 		first, len, idx, FALSE, 0, FALSE, verbose_level);
 	if (f_v) {
 		if (ret) {
-			cout << "isomorph::find_extension_easy_old solution found at idx=" << idx << endl;
+			cout << "isomorph::find_extension_easy_old "
+					"solution found at idx=" << idx << endl;
 			}
 		else {
-			cout << "isomorph::find_extension_easy_old solution not found" << endl;
+			cout << "isomorph::find_extension_easy_old "
+					"solution not found" << endl;
 			}
 		}
 	return ret;
 }
 
-INT isomorph::find_extension_easy_new(INT *set, INT case_nb, INT &idx, INT verbose_level)
+INT isomorph::find_extension_easy_new(INT *set,
+		INT case_nb, INT &idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = FALSE; // (verbose_level >= 2);
@@ -389,13 +394,15 @@ INT isomorph::find_extension_easy_new(INT *set, INT case_nb, INT &idx, INT verbo
 	h = INT_vec_hash_after_sorting(set, size);
 
 
-	f_found = INT_vec_search_first_occurence(hash_vs_id_hash, N, h, first);
+	f_found = INT_vec_search_first_occurence(hash_vs_id_hash,
+			N, h, first);
 
 	if (!f_found) {
 		ret = FALSE;
 		goto finish;
 		}
-	f_found = INT_vec_search_first_occurence(hash_vs_id_hash, N, h + 1, idx2);
+	f_found = INT_vec_search_first_occurence(hash_vs_id_hash,
+			N, h + 1, idx2);
 	len = idx2 - first;
 #if 0
 
@@ -409,7 +416,8 @@ INT isomorph::find_extension_easy_new(INT *set, INT case_nb, INT &idx, INT verbo
 	//INT u1 = h + 1;
 	INT first, last, len;
 	INT f_found1, f_found2;
-	f_found1 = B4.search_INT4_INT4(case_nb, h, first, 0 /*verbose_level */);
+	f_found1 = B4.search_INT4_INT4(case_nb, h, first,
+			0 /*verbose_level */);
 
 #if 0
 	B4.search_interval_INT4_INT4(l0, u0, 
@@ -440,17 +448,20 @@ finish:
 
 	if (f_v) {
 		if (ret) {
-			cout << "isomorph::find_extension_easy_new solution found at idx=" << idx << endl;
+			cout << "isomorph::find_extension_easy_new "
+					"solution found at idx=" << idx << endl;
 			}
 		else {
-			cout << "isomorph::find_extension_easy_new solution not found" << endl;
+			cout << "isomorph::find_extension_easy_new "
+					"solution not found" << endl;
 			}
 		}
 	return ret;
 	
 }
 
-INT isomorph::open_database_and_identify_object(INT *set, INT *transporter, 
+INT isomorph::open_database_and_identify_object(INT *set,
+	INT *transporter,
 	INT f_implicit_fusion, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -468,13 +479,16 @@ INT isomorph::open_database_and_identify_object(INT *set, INT *transporter,
 		f_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
 	
 	if (f_failure_to_find_point) {
-		cout << "isomorph::open_database_and_identify_object: f_failure_to_find_point" << endl;
+		cout << "isomorph::open_database_and_identify_object: "
+				"f_failure_to_find_point" << endl;
 		r = -1;
  		}
 
 	else {
 		if (f_v) {
-			cout << "isomorph::open_database_and_identify_object: object identified as belonging to isomorphism class " << r << endl;
+			cout << "isomorph::open_database_and_identify_object: "
+					"object identified as belonging to isomorphism class "
+					<< r << endl;
 			}
 		}
 
@@ -530,12 +544,13 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	//BYTE *elt;
 	
 	if (f_v) {
-		cout << "isomorph::create_level_database level = " << level << endl;
+		cout << "isomorph::create_level_database "
+				"level = " << level << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	
 	f = gen->first_oracle_node_at_level[level];
-	nb_nodes = gen->nb_orbits_at_level(level); //first_oracle_node_at_level[level + 1] - f;
+	nb_nodes = gen->nb_orbits_at_level(level);
 
 	if (f_vv) {
 		cout << "f=" << f << endl;
@@ -561,7 +576,9 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 		O = &gen->root[I];
 		O->store_set_to(gen, level - 1, set1);
 		if (f_v && ((i % print_mod) == 0)) {
-			cout << "isomorph::create_level_database level " << level << " i=" << i << " / " << nb_nodes << " set=";
+			cout << "isomorph::create_level_database level "
+					<< level << " i=" << i << " / " << nb_nodes
+					<< " set=";
 			INT_vec_print(cout, set1, level);
 			cout << endl;
 			}
@@ -651,11 +668,13 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 					}
 	
 	
-				J = gen->find_oracle_node_for_set(level + 1, set2, FALSE /* f_tolerant */, 0);
+				J = gen->find_oracle_node_for_set(level + 1,
+						set2, FALSE /* f_tolerant */, 0);
 				v.m_ii(idx++, J);
 				}
 			else {
-				cout << "unknown type " << O->E[j].type << " i=" << i << " j=" << j << endl;
+				cout << "unknown type " << O->E[j].type
+						<< " i=" << i << " j=" << j << endl;
 				exit(1);
 				}
 			}
@@ -663,14 +682,17 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 		INT len_mem, h, idx1;
 		BYTE *mem;
 		if (idx != len - 1) {
-			cout << "idx != len - 1, idx=" << idx << " len=" << len << " i=" << i << " j=" << j << endl;
+			cout << "idx != len - 1, idx=" << idx << " len=" << len
+					<< " i=" << i << " j=" << j << endl;
 			exit(1);
 			}
-		len_mem = (O->nb_strong_generators + nb_fusion) * gen->A->coded_elt_size_in_char;
+		len_mem = (O->nb_strong_generators + nb_fusion) *
+				gen->A->coded_elt_size_in_char;
 		mem = new BYTE[len_mem];
 		idx1 = 0;
 		for (j = 0; j < O->nb_strong_generators; j++) {
-			gen->A->element_retrieve(O->hdl_strong_generators[j], gen->Elt1, FALSE);
+			gen->A->element_retrieve(O->hdl_strong_generators[j],
+					gen->Elt1, FALSE);
 			gen->A->element_pack(gen->Elt1, elt, FALSE);
 			for (h = 0; h < gen->A->coded_elt_size_in_char; h++) {
 				mem[idx1++] = elt[h];
@@ -686,7 +708,8 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 				}
 			}
 		if (idx1 != len_mem) {
-			cout << "idx1 != len_mem idx=" << idx << " len_mem=" << len_mem << " i=" << i << " j=" << j << endl;
+			cout << "idx1 != len_mem idx=" << idx << " len_mem=" << len_mem
+					<< " i=" << i << " j=" << j << endl;
 			exit(1);
 			}
 		memory M;
@@ -696,15 +719,19 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 #else
 		v.m_ii(idx++, cnt);
 		for (j = 0; j < O->nb_strong_generators; j++) {
-			gen->A->element_retrieve(O->hdl_strong_generators[j], gen->Elt1, FALSE);
-			gen->A->element_write_file_fp(gen->Elt1, fp, 0/* verbose_level*/);
+			gen->A->element_retrieve(
+					O->hdl_strong_generators[j], gen->Elt1,
+					FALSE);
+			gen->A->element_write_file_fp(gen->Elt1, fp,
+					0/* verbose_level*/);
 			cnt++;
 			}
 		for (j = 0; j < O->nb_extensions; j++) {
 			if (O->E[j].type == 1)
 				continue;
 			gen->A->element_retrieve(O->E[j].data, gen->Elt1, FALSE);
-			gen->A->element_write_file_fp(gen->Elt1, fp, 0/* verbose_level*/);
+			gen->A->element_write_file_fp(gen->Elt1, fp,
+					0/* verbose_level*/);
 			cnt++;
 			}
 		if (idx != len) {
@@ -719,7 +746,8 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 			cout << "object " << i << " / " << nb_nodes << " added : ";
 			INT sz;
 			sz = v.csf();
-			cout << "size on file = " << sz << ", group element counter = " << cnt << endl;
+			cout << "size on file = " << sz << ", group element "
+					"counter = " << cnt << endl;
 			}
 		}
 
@@ -727,17 +755,21 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	D.close(0/*verbose_level - 1*/);
 	fclose(fp);
 	if (f_v) {
-		cout << "number of group elements in " << fname_db_level_ge << " is " << cnt << endl;
+		cout << "number of group elements in " << fname_db_level_ge
+				<< " is " << cnt << endl;
 		cout << "file size is " << file_size(fname_db_level_ge) << endl;
-		cout << "gen->A->coded_elt_size_in_char=" << gen->A->coded_elt_size_in_char << endl;
+		cout << "gen->A->coded_elt_size_in_char="
+				<< gen->A->coded_elt_size_in_char << endl;
 		}
 	
 	//FREE_BYTE(elt);
 	
 }
 
-void isomorph::load_strong_generators(INT cur_level, INT cur_node_local, 
-	vector_ge &gens, longinteger_object &go, INT verbose_level)
+void isomorph::load_strong_generators(INT cur_level,
+		INT cur_node_local,
+	vector_ge &gens, longinteger_object &go,
+	INT verbose_level)
 // Called from compute_stabilizer and from orbit_representative
 {
 	INT f_v = (verbose_level >= 1);
@@ -745,16 +777,20 @@ void isomorph::load_strong_generators(INT cur_level, INT cur_node_local,
 	INT f_v5 = (verbose_level >= 5);
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators cur_level=" << cur_level << " cur_node_local=" << cur_node_local << endl;
+		cout << "isomorph::load_strong_generators "
+				"cur_level=" << cur_level << " cur_node_local="
+				<< cur_node_local << endl;
 		}
 	if (f_use_database_for_starter) {
 		if (f_vv) {
-			cout << "isomorph::load_strong_generators using database" << endl;
+			cout << "isomorph::load_strong_generators "
+					"using database" << endl;
 			}
 		load_strong_generators_database(cur_level, cur_node_local, 
 			gens, go, verbose_level);
 		if (f_v5) {
-			cout << "isomorph::load_strong_generators found the following strong generators:" << endl;
+			cout << "isomorph::load_strong_generators "
+					"found the following strong generators:" << endl;
 			gens.print(cout);
 			}
 		}
@@ -764,7 +800,8 @@ void isomorph::load_strong_generators(INT cur_level, INT cur_node_local,
 		}
 }
 
-void isomorph::load_strong_generators_oracle(INT cur_level, INT cur_node_local, 
+void isomorph::load_strong_generators_oracle(INT cur_level,
+	INT cur_node_local,
 	vector_ge &gens, longinteger_object &go, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -774,7 +811,9 @@ void isomorph::load_strong_generators_oracle(INT cur_level, INT cur_node_local,
 	longinteger_domain Dom;
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_oracle cur_level=" << cur_level << " cur_node_local=" << cur_node_local << endl;
+		cout << "isomorph::load_strong_generators_oracle "
+				"cur_level=" << cur_level << " cur_node_local="
+				<< cur_node_local << endl;
 		}
 
 	node = gen->first_oracle_node_at_level[cur_level] + cur_node_local;
@@ -794,15 +833,20 @@ void isomorph::load_strong_generators_oracle(INT cur_level, INT cur_node_local,
 	gens.init(gen->A);
 	gens.allocate(O->nb_strong_generators);
 	for (i = 0; i < O->nb_strong_generators; i++) {
-		gen->A->element_retrieve(O->hdl_strong_generators[i], gens.ith(i), FALSE);
+		gen->A->element_retrieve(
+				O->hdl_strong_generators[i],
+				gens.ith(i), FALSE);
 		}
 finish:
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_oracle cur_level=" << cur_level << " cur_node_local=" << cur_node_local << " done" << endl;
+		cout << "isomorph::load_strong_generators_oracle "
+				"cur_level=" << cur_level << " cur_node_local="
+				<< cur_node_local << " done" << endl;
 		}
 }
 
-void isomorph::load_strong_generators_database(INT cur_level, INT cur_node_local, 
+void isomorph::load_strong_generators_database(INT cur_level,
+		INT cur_node_local,
 	vector_ge &gens, longinteger_object &go, INT verbose_level)
 // Reads node cur_node (global index) from database D through btree 0
 // Reads generators from file fp_ge
@@ -819,7 +863,9 @@ void isomorph::load_strong_generators_database(INT cur_level, INT cur_node_local
 
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_database cur_level=" << cur_level << " cur_node_local=" << cur_node_local << endl;
+		cout << "isomorph::load_strong_generators_database "
+				"cur_level=" << cur_level << " cur_node_local="
+				<< cur_node_local << endl;
 		}
 
 	prepare_database_access(cur_level, verbose_level);
@@ -828,12 +874,15 @@ void isomorph::load_strong_generators_database(INT cur_level, INT cur_node_local
 	
 	//cur_node_local = cur_node - first_node;
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_database loading object " << cur_node_local << endl;
+		cout << "isomorph::load_strong_generators_database "
+				"loading object " << cur_node_local << endl;
 		}
-	DB_level->ith_object(cur_node_local, 0/* btree_idx*/, v, 0 /*MINIMUM(1, verbose_level - 2)*/);
+	DB_level->ith_object(cur_node_local, 0/* btree_idx*/, v,
+			0 /*MINIMUM(1, verbose_level - 2)*/);
 	
 	if (f_vvv) {
-		cout << "isomorph::load_strong_generators_database v=" << v << endl;
+		cout << "isomorph::load_strong_generators_database "
+				"v=" << v << endl;
 		}
 	for (i = 0; i < cur_level; i++) {
 		set[i] = v.s_ii(2 + i);
@@ -848,7 +897,8 @@ void isomorph::load_strong_generators_database(INT cur_level, INT cur_node_local
 	pos = 2 + cur_level;
 	nb_strong_generators = v.s_ii(pos++);
 	if (f_vv) {
-		cout << "isomorph::load_strong_generators_database nb_strong_generators=" << nb_strong_generators << endl;
+		cout << "isomorph::load_strong_generators_database "
+				"nb_strong_generators=" << nb_strong_generators << endl;
 		}
 	if (nb_strong_generators == 0) {
 		gens.init(gen->A);
@@ -865,7 +915,8 @@ void isomorph::load_strong_generators_database(INT cur_level, INT cur_node_local
 	pos = v.s_l() - 1;
 	ref = v.s_ii(pos++);
 	if (f_vv) {
-		cout << "isomorph::load_strong_generators_database ref = " << ref << endl;
+		cout << "isomorph::load_strong_generators_database "
+				"ref = " << ref << endl;
 		}
 
 	gens.init(gen->A);
@@ -879,7 +930,9 @@ finish:
 	FREE_INT(tmp_ELT);
 
 	if (f_v) {
-		cout << "isomorph::load_strong_generators_database cur_level=" << cur_level << " cur_node_local=" << cur_node_local << " done" << endl;
+		cout << "isomorph::load_strong_generators_database "
+				"cur_level=" << cur_level << " cur_node_local="
+				<< cur_node_local << " done" << endl;
 		}
 	
 }

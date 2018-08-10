@@ -310,6 +310,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 	
 	if (lvl == len) {
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"calling handle_last_level" << endl;
 			}
@@ -321,6 +322,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			final_node, final_ex, 
 			verbose_level);
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"after handle_last_level" << endl;
 			}
@@ -333,6 +335,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 		INT next_node;
 		
 		if (f_v4) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_"
 					"tracing_recursion at ";
 			cout << "(" << current_node
@@ -344,6 +347,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			current_extension, len, f_tolerant, verbose_level - 6);
 		
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_"
 					"tracing_recursion lvl "
 					<< lvl << " at ";
@@ -357,6 +361,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			return no_result_extension_not_found;
 			}
 		if (f_v5) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_"
 					"tracing_recursion at ";
 			cout << "(" << current_node << "/"
@@ -366,6 +371,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			}
 		if (next_node < path[lvl + 1]) {
 			if (f_v) {
+				print_level_extension_coset_info();
 				cout << "upstep_work::find_automorphism_by_"
 						"tracing_recursion lvl " << lvl
 						<< " not canonical" << endl;
@@ -403,6 +409,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			}
 		next_node = O->E[current_extension].data;
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_"
 					"tracing_recursion at ";
 			cout << "(" << current_node << "/" << current_extension << ")";
@@ -418,6 +425,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			lvl + 1, next_node, final_node, final_ex,
 			f_tolerant, verbose_level);
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"after find_automorphism_by_tracing_recursion" << endl;
 			}
@@ -452,6 +460,7 @@ trace_result upstep_work::handle_last_level(
 	oracle *O = &gen->root[current_node];
 
 	if (f_v) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::handle_last_level lvl=" << lvl 
 			<< " node=" << O->node 
 			<< " current_node=" << current_node 
@@ -461,6 +470,7 @@ trace_result upstep_work::handle_last_level(
 		}
 	if (current_node < path[size - 1]) {
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level "
 					"current_node=" << current_node
 				<< " < " << path[size - 1]
@@ -471,12 +481,14 @@ trace_result upstep_work::handle_last_level(
 	//my_current_node = gen->root[my_node].E[my_extension].data;
 	my_current_node = cur;
 	if (f_v) {
+		print_level_extension_coset_info();
 		cout << "oracle::handle_last_level "
 				"my_current_node=" << my_current_node << endl;
 		}
 	
 	if (O->E[current_extension].type == EXTENSION_TYPE_UNPROCESSED) {
 		if (f_vv) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level "
 					"calling install_fusion_node at ";
 			cout << "(" << current_node << "/"
@@ -491,6 +503,7 @@ trace_result upstep_work::handle_last_level(
 			verbose_level - 2);
 
 		if (f_vv) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level "
 					"after install_fusion_node at ";
 			cout << "(" << current_node << "/"
@@ -498,11 +511,13 @@ trace_result upstep_work::handle_last_level(
 			}
 
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "install fusion node (" << current_node
 					<< "/" << current_extension << ") -> ("
 					<< prev << "/" << prev_ex << ")" << endl;
 			}
 		if (f_vv) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level "
 					"install_fusion_node at ";
 			cout << "(" << current_node << "/"
@@ -517,6 +532,7 @@ trace_result upstep_work::handle_last_level(
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_FUSION) {
 		if (f_vv) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level at ";
 			cout << "(" << current_node << "/" << current_extension
 					<< ") fusion node already installed, "
@@ -530,6 +546,7 @@ trace_result upstep_work::handle_last_level(
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_PROCESSING) {
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::handle_last_level: at ";
 			cout << "(" << current_node << "/"
 					<< current_extension << ")";
@@ -548,6 +565,7 @@ trace_result upstep_work::handle_last_level(
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_EXTENSION) {
 #if 1
+		print_level_extension_coset_info();
 		cout << "upstep_work::handle_last_level: at";
 		cout << "(" << current_node << "/"
 				<< current_extension << ")";
@@ -569,6 +587,7 @@ trace_result upstep_work::handle_last_level(
 #endif
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_NOT_CANONICAL) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::handle_last_level "
 				"reached EXTENSION_TYPE_NOT_CANONICAL, "
 				"returning not_canonical" << endl;
@@ -591,11 +610,13 @@ trace_result upstep_work::start_over(
 	INT f_vv = (verbose_level >= 2);
 
 	if (f_v) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::start_over" << endl;
 	}
 	// this is needed if implicit fusion nodes are used:
 	if (lvl == size - 1) {
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "oracle::start_over lvl == size - 1, "
 					"so we return not_canonical" << endl;
 			}
@@ -618,16 +639,19 @@ trace_result upstep_work::start_over(
 
 	trace_result r;
 	if (f_v) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::start_over "
 				"before find_automorphism_by_tracing_recursion" << endl;
 	}
 	r = find_automorphism_by_tracing_recursion(
 		0, 0, final_node, final_ex, f_tolerant, verbose_level);
 	if (f_v) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::start_over "
 				"after find_automorphism_by_tracing_recursion" << endl;
 	}
 	if (f_v) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::start_over done" << endl;
 	}
 	return r;

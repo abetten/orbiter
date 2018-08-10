@@ -230,7 +230,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	for (coset = 0; coset < degree; coset++) { 
 
 		if (f_vv) {
-			cout << "upstep_work::upstep_subspace_action coset "
+			print_level_extension_info();
+			cout << " upstep_work::upstep_subspace_action coset "
 					<< coset << " / " << degree << endl;
 		}
 		idx = UF.ancestor(coset);
@@ -374,13 +375,28 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		INT nb_times_mult_called0 = gen->A->nb_times_mult_called;
 		INT nb_times_invert_called0 = gen->A->nb_times_invert_called;
 		INT nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
+
 		
+		if (f_vv) {
+			print_level_extension_info();
+			cout << " upstep_work::upstep_subspace_action coset "
+					<< coset << " / " << degree
+					<< " before find_automorphism_by_tracing " << endl;
+		}
 
 		r = find_automorphism_by_tracing(
 				final_node, final_ex,
 				TRUE /* f_tolerant */,
 				verbose_level - 1);
 			// upstep_work_trace.C
+
+		if (f_vv) {
+			print_level_extension_info();
+			cout << " upstep_work::upstep_subspace_action coset "
+					<< coset << " / " << degree
+					<< " after find_automorphism_by_tracing " << endl;
+		}
+
 		
 		coset_table[nb_cosets_processed].coset = coset;
 		coset_table[nb_cosets_processed].type = r;
