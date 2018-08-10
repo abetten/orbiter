@@ -3158,10 +3158,10 @@ INT finite_field::compare_subspaces_ranked_with_unrank_function(
 		cout << "finite_field::compare_subspaces_ranked_"
 				"with_unrank_function" << endl;
 		cout << "set1: ";
-		INT_vec_print(cout, set1, size);
+		::INT_vec_print(cout, set1, size);
 		cout << endl;
 		cout << "set2: ";
-		INT_vec_print(cout, set2, size);
+		::INT_vec_print(cout, set2, size);
 		cout << endl;
 		}
 	M1 = NEW_INT(size * vector_space_dimension);
@@ -3204,7 +3204,7 @@ INT finite_field::compare_subspaces_ranked_with_unrank_function(
 				log10_of_q);
 		cout << "rank1=" << rk1 << endl;
 		cout << "base_cols1: ";
-		INT_vec_print(cout, base_cols1, rk1);
+		::INT_vec_print(cout, base_cols1, rk1);
 		cout << endl;
 		cout << "matrix2:" << endl;
 		print_integer_matrix_width(cout, M2, size,
@@ -3212,7 +3212,7 @@ INT finite_field::compare_subspaces_ranked_with_unrank_function(
 				log10_of_q);
 		cout << "rank2=" << rk2 << endl;
 		cout << "base_cols2: ";
-		INT_vec_print(cout, base_cols2, rk2);
+		::INT_vec_print(cout, base_cols2, rk2);
 		cout << endl;
 		}
 	if (rk1 != rk2) {

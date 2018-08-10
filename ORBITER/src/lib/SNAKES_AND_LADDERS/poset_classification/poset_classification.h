@@ -717,6 +717,12 @@ public:
 	void init_root_node(generator *gen, INT verbose_level);
 		// copies gen->SG0 and gen->tl into the oracle 
 		// structure using store_strong_generators
+	void init_extension_node_prepare_G(generator *gen,
+		INT prev, INT prev_ex, INT size, group &G,
+		longinteger_object &go_G,
+		INT verbose_level);
+		// sets up the group G using the strong
+		// generators that are stored
 	void init_extension_node_prepare_H(generator *gen, 
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
@@ -725,24 +731,20 @@ public:
 		INT verbose_level);
 		// sets up the group H which is the stabilizer 
 		// of the point pt in G
-	void compute_point_stabilizer_in_subspace_setting(generator *gen, 
+	void compute_point_stabilizer_in_subspace_setting(
+		generator *gen,
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
 		group &H, longinteger_object &go_H, 
 		INT pt, INT pt_orbit_len, 
 		INT verbose_level);
-	void compute_point_stabilizer_in_standard_setting(generator *gen, 
+	void compute_point_stabilizer_in_standard_setting(
+		generator *gen,
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
 		group &H, /* longinteger_object &go_H, */
 		INT pt, INT pt_orbit_len, 
 		INT verbose_level);
-	void init_extension_node_prepare_G(generator *gen, 
-		INT prev, INT prev_ex, INT size, group &G, 
-		longinteger_object &go_G, 
-		INT verbose_level);
-		// sets up the group G using the strong 
-		// generators that are stored
 	INT get_level(generator *gen);
 	INT get_node_in_level(generator *gen);
 	INT get_nb_of_live_points();
@@ -992,11 +994,6 @@ public:
 		// calls test_point_using_check_functions
 		// eliminates bad orbits from the Schreier data structure, 
 		// does not eliminate implicit fusion orbits
-	void check_orbits_using_cliques(generator *gen, 
-		schreier &Schreier, action &AR, 
-		INT f_using_invariant_subset, 
-		INT lvl, 
-		INT verbose_level);
 	INT test_point_using_check_functions(generator *gen, 
 		INT lvl, INT rep, INT *the_set, 
 		INT verbose_level);

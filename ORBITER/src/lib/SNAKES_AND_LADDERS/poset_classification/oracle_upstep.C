@@ -152,9 +152,19 @@ void oracle::install_fusion_node(generator *gen,
 		cout << "we will now install a fusion node at node " << node 
 			<< " , extension " << current_extension << endl;
 		}
+	if (f_v) {
+		cout << "oracle::install_fusion_node" << endl;
+		cout << "transporter[lvl + 1]=" << endl;
+		gen->A->element_print_quick(gen->transporter->ith(lvl + 1), cout);
+	}
 	gen->A->element_invert(
 			gen->transporter->ith(lvl + 1),
 			gen->Elt1, FALSE);
+	if (f_v) {
+		cout << "oracle::install_fusion_node" << endl;
+		cout << "transporter[lvl + 1]^-1=Elt1=" << endl;
+		gen->A->element_print_quick(gen->Elt1, cout);
+	}
 	if (f_v) {
 		cout << "oracle::install_fusion_node: fusion element:" << endl;
 		if (gen->f_allowed_to_show_group_elements) {
@@ -198,7 +208,8 @@ void oracle::install_fusion_node(generator *gen,
 			
 #if 0
 	if (node == my_node || f_v) {
-		cout << "fusion element stored in Node " << node
+		cout << "oracle::install_fusion_node "
+				"fusion element stored in Node " << node
 				<< ", extension " << current_extension
 				<< " my_node = " << my_node << endl;
 		gen->A->element_print_verbose(gen->Elt1, cout);
@@ -214,7 +225,20 @@ void oracle::install_fusion_node(generator *gen,
 		}
 #endif
 
+	if (f_v) {
+		cout << "oracle::install_fusion_node set1=";
+		INT_vec_print(cout, gen->set1, lvl + 1);
+		cout << endl;
+		cout << "Elt1=" << endl;
+		gen->A->element_print_quick(gen->Elt1, cout);
+		cout << "before map_a_set" << endl;
+	}
 	gen->A2->map_a_set(gen->set1, gen->set3, lvl + 1, gen->Elt1, 0);
+	if (f_v) {
+		cout << "oracle::install_fusion_node after map_a_set set3=";
+		INT_vec_print(cout, gen->set3, lvl + 1);
+		cout << endl;
+	}
 
 	if (gen->f_on_subspaces) {
 		cmp = gen->F->compare_subspaces_ranked_with_unrank_function(
@@ -246,8 +270,6 @@ void oracle::install_fusion_node(generator *gen,
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->set3[i]);
-				//(*gen->unrank_point_func)(v,
-				// gen->set3[i], gen->rank_point_data);
 				INT_vec_print(cout, v, gen->vector_space_dimension);
 				cout << endl;
 				}
@@ -255,8 +277,6 @@ void oracle::install_fusion_node(generator *gen,
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->set0[i]);
-				//(*gen->unrank_point_func)(v, gen->set0[i],
-				// gen->rank_point_data);
 				INT_vec_print(cout, v, gen->vector_space_dimension);
 				cout << endl;
 				}

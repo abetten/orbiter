@@ -24,19 +24,11 @@ enum trace_result {
 	no_result_fusion_node_already_installed
 };
 
-
 enum find_isomorphism_result { 
 	fi_found_isomorphism, 
 	fi_not_isomorphic, 
 	fi_no_result 
 };
-
-
-
-
-
-
-
 
 #include "./classify/classify.h"
 #include "./other/other.h"

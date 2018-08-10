@@ -96,7 +96,8 @@ void oracle::downstep(generator *gen,
 			INT f_has_point_labels = FALSE;
 			INT *point_labels = NULL;
 			
-			sprintf(label, "%sschreier_tree_node_%ld_%ld", gen->schreier_tree_prefix, node, i);
+			sprintf(label, "%sschreier_tree_node_%ld_%ld",
+					gen->schreier_tree_prefix, node, i);
 
 			if (f_using_invariant_subset) {
 				f_has_point_labels = TRUE;
@@ -112,14 +113,16 @@ void oracle::downstep(generator *gen,
 			}
 		
 		BYTE label_data[1000];
-		sprintf(label_data, "%sschreier_data_node_%ld.tex", gen->schreier_tree_prefix, node);
+		sprintf(label_data, "%sschreier_data_node_%ld.tex",
+				gen->schreier_tree_prefix, node);
 		Schreier.latex(label_data);
 		}
 #endif
 
 	
 	if (f_v) {
-		cout << "oracle::downstep before downstep_orbit_test_and_schreier_vector" << endl;
+		cout << "oracle::downstep before downstep_orbit_test_and_"
+				"schreier_vector" << endl;
 		}
 	downstep_orbit_test_and_schreier_vector(
 		gen, Schreier, AR, 
@@ -131,12 +134,14 @@ void oracle::downstep(generator *gen,
 		good_orbits1, nb_points1, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "oracle::downstep after downstep_orbit_test_and_schreier_vector" << endl;
+		cout << "oracle::downstep after downstep_orbit_test_and_"
+				"schreier_vector" << endl;
 		}
 
 #if 0
 	if (node == 50) {
-		cout << "oracle::downstep after downstep_orbit_test_and_schreier_vector" << endl;
+		cout << "oracle::downstep after downstep_orbit_test_and_"
+				"schreier_vector" << endl;
 		gen->root[49].print_extensions(cout);
 		}
 #endif
@@ -162,35 +167,6 @@ void oracle::downstep(generator *gen,
 #endif
 
 
-
-#if 0
-	if (gen->CFI && lvl >= gen->CFI->clique_level && !f_node_is_dead_because_of_clique_testing) {
-
-
-		if (f_v) {
-			gen->print_level_info(lvl + 1, node);
-			cout << " : calling check_orbits_using_cliques" << endl;
-			}
-		INT nb_orb1, nb_orb2;
-	
-		nb_orb1 = Schreier.nb_orbits;
-		check_orbits_using_cliques(gen, Schreier, AR, 
-			f_using_invariant_subset, lvl, verbose_level);
-		nb_orb2 = Schreier.nb_orbits;
-
-		if (f_v) {
-			gen->print_level_info(lvl + 1, node);
-			cout << " : eliminating " << nb_orb1 - nb_orb2 << " orbits" << endl;
-			}
-		}
-#endif
-
-#if 0
-	if (node == 50) {
-		cout << "oracle::downstep after check_orbits_using_cliques" << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
 	
 	if (f_vvv) {
 		gen->print_level_info(lvl + 1, node);
@@ -208,7 +184,8 @@ void oracle::downstep(generator *gen,
 		}
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << " : after test_orbits and find_extensions, we have " << nb_extensions << " extensions" << endl;
+		cout << " : after test_orbits and find_extensions, we have "
+				<< nb_extensions << " extensions" << endl;
 		}
 
 	if (f_vvv) {
@@ -219,7 +196,9 @@ void oracle::downstep(generator *gen,
 	
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << " : found " << nb_extensions << " extensions (out of " << nb_orbits << " orbits) with " << nb_extension_points() << " points " << endl;
+		cout << " : found " << nb_extensions << " extensions (out of "
+				<< nb_orbits << " orbits) with "
+				<< nb_extension_points() << " points " << endl;
 		}
 	if (f_v) {
 		cout << "oracle::downstep done" << endl;
@@ -248,7 +227,8 @@ void oracle::compute_schreier_vector(generator *gen,
 	action AR;
 
 	if (f_v) {
-		cout << "oracle::compute_schreier_vector: computing Schreier vector" << endl;
+		cout << "oracle::compute_schreier_vector: "
+				"computing Schreier vector" << endl;
 		}	
 	
 	if (nb_strong_generators == 0) {
@@ -262,7 +242,9 @@ void oracle::compute_schreier_vector(generator *gen,
 		Schreier.print_generators();
 		}
 	
-	if (lvl && gen->root[prev].sv) {
+	if (lvl &&
+		gen->root[prev].sv) {
+
 		INT *osv = gen->root[prev].sv;
 		INT n = osv[0];
 		INT *subset = osv + 1;
@@ -274,17 +256,22 @@ void oracle::compute_schreier_vector(generator *gen,
 			n, subset, 
 			candidates, nb_candidates, 
 			verbose_level);
+
 		AR.induced_action_by_restriction(*gen->A2, 
 			FALSE /*f_induce_action*/, NULL /*sims *old_G*/, 
-			nb_candidates, candidates, verbose_level - 2);
+			nb_candidates, candidates,
+			verbose_level - 2);
+
 		//if (f_vv) {
 		//	cout << "calling orbits_on_invariant_subset_fast" << endl;
 		//	}
-		//Schreier.orbits_on_invariant_subset_fast(n, subset, verbose_level);
+		//Schreier.orbits_on_invariant_subset_fast(
+		// n, subset, verbose_level);
 		Schreier.init(&AR);
 #if 0
 		if (f_vv) {
-			cout << "the stabilizer has " << Schreier.nb_orbits << " orbits on the live point" << endl;
+			cout << "the stabilizer has " << Schreier.nb_orbits
+					<< " orbits on the live point" << endl;
 			}
 #endif
 		}
@@ -308,7 +295,8 @@ void oracle::compute_schreier_vector(generator *gen,
 			verbose_level);
 		AR.induced_action_by_restriction(*gen->A2, 
 			FALSE /*f_induce_action*/, NULL /*sims *old_G*/, 
-			nb_candidates, candidates, verbose_level - 2);
+			nb_candidates, candidates,
+			verbose_level - 2);
 		//if (f_vv) {
 		//	cout << "calling orbits_on_invariant_subset_fast" << endl;
 		//	}
@@ -317,7 +305,8 @@ void oracle::compute_schreier_vector(generator *gen,
 		FREE_INT(subset);
 #if 0
 		if (f_vv) {
-			cout << "the stabilizer has " << Schreier.nb_orbits << " orbits on the live point" << endl;
+			cout << "the stabilizer has " << Schreier.nb_orbits
+					<< " orbits on the live point" << endl;
 			}
 #endif
 		}
@@ -327,7 +316,8 @@ void oracle::compute_schreier_vector(generator *gen,
 			// here was a mistake, it was gen->A
 			// A. Betten, Dec 17, 2011 !!!
 		}
-	Schreier.init_generators_by_hdl(nb_strong_generators, hdl_strong_generators, verbose_level - 1);
+	Schreier.init_generators_by_hdl(nb_strong_generators,
+			hdl_strong_generators, verbose_level - 1);
 	if (f_vv) {
 		cout << "calling compute_all_point_orbits" << endl;
 		}
@@ -338,26 +328,33 @@ void oracle::compute_schreier_vector(generator *gen,
 		Schreier.compute_all_point_orbits(FALSE);
 		}
 	if (f_vv) {
-		cout << "the stabilizer has " << Schreier.nb_orbits << " orbits overall" << endl;
+		cout << "the stabilizer has " << Schreier.nb_orbits
+				<< " orbits overall" << endl;
 		}
 	
 	check_orbits(gen, Schreier, AR, f_using_invariant_subset, 
-		lvl, f_use_incremental_test_func_if_available, verbose_level - 2);
+		lvl, f_use_incremental_test_func_if_available,
+		verbose_level - 2);
 		// here was a mistake, 
-		// f_use_incremental_test_func_if_available was f_using_invariant_subset
+		// f_use_incremental_test_func_if_available
+		// was f_using_invariant_subset
 		// A. Betten, Dec 17, 2011 !!!
 	
 	if (f_v) {
-		cout << "the stabilizer has " << Schreier.nb_orbits << " good orbits with " 
+		cout << "the stabilizer has " << Schreier.nb_orbits
+			<< " good orbits with "
 			<< Schreier.sum_up_orbit_lengths() << " points" << endl;
 		}
 
 	if (f_v) {
-		cout << "oracle::compute_schreier_vector: calling get_schreier_vector" << endl;
+		cout << "oracle::compute_schreier_vector: "
+				"calling get_schreier_vector" << endl;
 		}	
 
-	Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
-	//Schreier.test_sv(gen->A, hdl_strong_generators, sv, f_compact, verbose_level);
+	Schreier.get_schreier_vector(sv,
+			f_trivial_group, f_compact);
+	//Schreier.test_sv(gen->A, hdl_strong_generators,
+	// sv, f_compact, verbose_level);
 
 	if (f_using_invariant_subset) {
 		relabel_schreier_vector(AR, verbose_level - 1);
@@ -367,7 +364,8 @@ void oracle::compute_schreier_vector(generator *gen,
 		FREE_INT(candidates);
 		}
 	if (f_v) {
-		cout << "oracle::compute_schreier_vector: Schreier vector computed" << endl;
+		cout << "oracle::compute_schreier_vector: "
+				"Schreier vector has been computed" << endl;
 		}	
 }
 
@@ -375,9 +373,9 @@ void oracle::compute_schreier_vector(generator *gen,
 
 
 
-// ####################################################################################
+// #############################################################################
 // first level under downstep:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -422,7 +420,8 @@ void oracle::downstep_orbits(
 	if (f_use_invariant_subset_if_available) {
 		if (lvl == 0) {
 			if (f_v) {
-				cout << "oracle::downstep_orbits we are trying to find an invariant subset" << endl;
+				cout << "oracle::downstep_orbits we are trying "
+						"to find an invariant subset" << endl;
 				}
 			}
 		f_using_invariant_subset = downstep_get_invariant_subset(
@@ -437,7 +436,8 @@ void oracle::downstep_orbits(
 		}
 	else {
 		if (lvl == 0) {
-			cout << "oracle::downstep_orbits we are NOT using an invariant subset" << endl;
+			cout << "oracle::downstep_orbits we are NOT using "
+					"an invariant subset" << endl;
 			}
 		}
 	
@@ -445,7 +445,8 @@ void oracle::downstep_orbits(
 
 		if (f_v) {
 			gen->print_level_info(lvl + 1, node);
-			cout << " : we are using an invariant subset : live points at the predecessor node: number=" << n;
+			cout << " : we are using an invariant subset : "
+					"live points at the predecessor node: number=" << n;
 			if (f_v4) {
 				cout << " : ";
 				INT_vec_print(cout, subset, n);
@@ -464,7 +465,8 @@ void oracle::downstep_orbits(
 
 		if (f_v) {
 			gen->print_level_info(lvl + 1, node);
-			cout << " : live points after downstep_apply_early_test: number=" << nb_candidates;
+			cout << " : live points after downstep_apply_early_test: "
+					"number=" << nb_candidates;
 			if (f_v4) {
 				cout << " : ";
 				INT_vec_print(cout, candidates, nb_candidates);
@@ -496,14 +498,17 @@ void oracle::downstep_orbits(
 
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << " : initializing generators. There are " << nb_strong_generators  << " strong generators" << endl;
+		cout << " : initializing generators. There are "
+				<< nb_strong_generators  << " strong generators" << endl;
 		}
 
 
-	Schreier.init_generators_by_hdl(nb_strong_generators, hdl_strong_generators, verbose_level - 1);
+	Schreier.init_generators_by_hdl(nb_strong_generators,
+			hdl_strong_generators, verbose_level - 1);
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << " : calling Schreier.compute_all_point_orbits for a set of size " << Schreier.A->degree << endl;
+		cout << " : calling Schreier.compute_all_point_orbits "
+				"for a set of size " << Schreier.A->degree << endl;
 		}
 
 
@@ -514,7 +519,8 @@ void oracle::downstep_orbits(
 		}
 
 
-	//Schreier.compute_all_point_orbits_with_preferred_labels(n, subset, verbose_level - 4);
+	//Schreier.compute_all_point_orbits_with_preferred_labels(
+	// n, subset, verbose_level - 4);
 	if (lvl == 0) {
 		Schreier.compute_all_point_orbits(verbose_level);
 		}
@@ -534,12 +540,14 @@ void oracle::downstep_orbits(
 				Schreier, AR, lvl, 
 				f_using_invariant_subset, 
 				f_print_orbits, 
-				gen->downstep_orbits_print_max_orbits, gen->downstep_orbits_print_max_points_per_orbit);
+				gen->downstep_orbits_print_max_orbits,
+				gen->downstep_orbits_print_max_points_per_orbit);
 			}
 		}
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << "oracle::downstep_orbits: we found " << Schreier.nb_orbits << " orbits" << endl;
+		cout << "oracle::downstep_orbits: we found "
+				<< Schreier.nb_orbits << " orbits" << endl;
 		}
 	if (f_using_invariant_subset && f_subset_is_allocated) {
 		FREE_INT(subset);
@@ -581,9 +589,11 @@ void oracle::downstep_orbit_test_and_schreier_vector(
 		cout << "oracle::downstep_orbit_test_and_schreier_vector" << endl;
 		}
 	if (f_use_invariant_subset_if_available) {
-		check_orbits_wrapper(gen, Schreier, AR, f_using_invariant_subset, 
+		check_orbits_wrapper(gen, Schreier,
+			AR, f_using_invariant_subset,
 			lvl, nb_good_orbits, nb_points, 
-			f_using_invariant_subset /*f_use_incremental_test_func_if_available*/, 
+			f_using_invariant_subset
+			/*f_use_incremental_test_func_if_available*/,
 			verbose_level - 1);
 
 		if (f_v) {
@@ -631,7 +641,8 @@ void oracle::downstep_orbit_test_and_schreier_vector(
 			cout << " : after creating Schreier vector." << endl;
 			}
 
-		check_orbits_wrapper(gen, Schreier, AR, f_using_invariant_subset, 
+		check_orbits_wrapper(gen,
+			Schreier, AR, f_using_invariant_subset,
 			lvl, nb_good_orbits, nb_points, 
 			FALSE /*f_use_incremental_test_func_if_available*/, 
 			verbose_level - 1);
@@ -653,7 +664,8 @@ void oracle::downstep_orbit_test_and_schreier_vector(
 }
 
 void oracle::downstep_implicit_fusion(
-	generator *gen, schreier &Schreier, action &AR, INT f_using_invariant_subset,
+	generator *gen, schreier &Schreier, action &AR,
+	INT f_using_invariant_subset,
 	INT lvl, 
 	INT f_implicit_fusion, 
 	INT good_orbits1, INT nb_points1, 
@@ -678,7 +690,8 @@ void oracle::downstep_implicit_fusion(
 			}
 
 		test_orbits_for_implicit_fusion(gen, 
-			Schreier, AR, f_using_invariant_subset, lvl, 
+			Schreier, AR,
+			f_using_invariant_subset, lvl,
 			verbose_level - 3);
 
 		good_orbits2 = Schreier.nb_orbits;
@@ -686,10 +699,13 @@ void oracle::downstep_implicit_fusion(
 
 		if (f_vv) {
 			gen->print_level_info(lvl + 1, node);
-			cout << " : after eliminating implicit fusion nodes: the stabilizer has " << good_orbits2 << " good orbits with " 
+			cout << " : after eliminating implicit fusion nodes: "
+				"the stabilizer has " << good_orbits2
+				<< " good orbits with "
 				<< nb_points2 << " points" << endl;
 			cout << "we have eliminated " << good_orbits1 - good_orbits2 
-				<< " implicit fusion orbits with " << nb_points1 - nb_points2 << " points" << endl;
+				<< " implicit fusion orbits with "
+				<< nb_points1 - nb_points2 << " points" << endl;
 			}
 		}
 	else {
@@ -723,7 +739,8 @@ void oracle::find_extensions(generator *gen,
 		}
 	
 	if (f_v) {
-		cout << "oracle::find_extensions computing all possible extensions (out of " << O.nb_orbits << " orbits)" << endl;
+		cout << "oracle::find_extensions computing all possible "
+				"extensions (out of " << O.nb_orbits << " orbits)" << endl;
 		}
 	if (f_vv) {
 		cout << "the stabilizer orbits are:" << endl;
@@ -783,7 +800,8 @@ void oracle::find_extensions(generator *gen,
 				}
 			if (ii < lvl) {
 				if (f_vv) {
-					cout << "orbit " << k << " is in the set so we skip" << endl;
+					cout << "orbit " << k << " is in the set "
+							"so we skip" << endl;
 					}
 				continue;
 				}
@@ -812,7 +830,9 @@ void oracle::find_extensions(generator *gen,
 	
 
 	if (f_vv) {
-		cout << "found " << nb_extensions << " extensions with " << nb_extension_points() << " points (out of " << O.nb_orbits << " orbits)" << endl;
+		cout << "found " << nb_extensions << " extensions with "
+				<< nb_extension_points() << " points (out of "
+				<< O.nb_orbits << " orbits)" << endl;
 		}
 #if 0
 	if (node == 49) {
@@ -835,9 +855,9 @@ void oracle::find_extensions(generator *gen,
 
 
 
-// ####################################################################################
+// #############################################################################
 // second level under downstep:
-// ####################################################################################
+// #############################################################################
 
 
 INT oracle::downstep_get_invariant_subset(
@@ -862,7 +882,8 @@ INT oracle::downstep_get_invariant_subset(
 	if (gen->f_starter && lvl == gen->starter_size) {
 		if (f_vv) {
 			gen->print_level_info(lvl + 1, node);
-			cout << "oracle::downstep_get_invariant_subset Getting live points for the starter" << endl;
+			cout << "oracle::downstep_get_invariant_subset "
+					"Getting live points for the starter" << endl;
 			}
 		n = gen->starter_nb_live_points;
 		subset = gen->starter_live_points;
@@ -871,7 +892,8 @@ INT oracle::downstep_get_invariant_subset(
 		goto the_end;
 		}
 	else if (lvl == 0 && gen->f_has_invariant_subset_for_root_node) {
-		cout << "oracle::downstep_get_invariant_subset root node has an invariant subset of size " << n << endl;
+		cout << "oracle::downstep_get_invariant_subset "
+				"root node has an invariant subset of size " << n << endl;
 		subset = gen->invariant_subset_for_root_node;
 		n = gen->invariant_subset_for_root_node_size;
 		f_subset_is_allocated = FALSE;
@@ -893,7 +915,8 @@ INT oracle::downstep_get_invariant_subset(
 		
 		if (f_vv) {
 			gen->print_level_info(lvl + 1, node);
-			cout << "oracle::downstep_get_invariant_subset Getting live points from previous level" << endl;
+			cout << "oracle::downstep_get_invariant_subset "
+					"Getting live points from previous level" << endl;
 			}
 		INT *osv = gen->root[prev].sv;
 		n = osv[0];
@@ -905,7 +928,9 @@ INT oracle::downstep_get_invariant_subset(
 	else if (lvl) {
 		if (f_vv) {
 			gen->print_level_info(lvl + 1, node);
-			cout << "oracle::downstep_get_invariant_subset Getting live points from previous level using orbit calculations" << endl;
+			cout << "oracle::downstep_get_invariant_subset "
+					"Getting live points from previous level "
+					"using orbit calculations" << endl;
 			}
 		oracle *O = &gen->root[prev];
 		INT i, j, l, len, pt, cur_length, a;
@@ -938,7 +963,8 @@ INT oracle::downstep_get_invariant_subset(
 					O->hdl_strong_generators, verbose_level - 1);
 				S.compute_point_orbit(pt, 0/*verbose_level*/);
 				if (S.orbit_len[0] != l) {
-					cout << "oracle::downstep_get_invariant_subset fatal: S.orbit_len[0] != l" << endl;
+					cout << "oracle::downstep_get_invariant_subset "
+							"fatal: S.orbit_len[0] != l" << endl;
 					exit(1);
 					}
 				for (j = 0; j < S.orbit_len[0]; j++) {
@@ -947,7 +973,8 @@ INT oracle::downstep_get_invariant_subset(
 					}
 				}
 			if (cur_length != len) {
-				cout << "oracle::downstep_get_invariant_subset fatal: cur_length != len" << endl;
+				cout << "oracle::downstep_get_invariant_subset "
+						"fatal: cur_length != len" << endl;
 				exit(1);
 				}
 			}
@@ -1002,15 +1029,18 @@ void oracle::downstep_apply_early_test(
 		
 	if (f_vv) {
 		gen->print_level_info(lvl + 1, node);
-		cout << " : downstep_apply_early_test number of live points = " << n << endl;
+		cout << " : downstep_apply_early_test "
+				"number of live points = " << n << endl;
 		}
 	the_set = NEW_INT(lvl + 1);
-		// we add one more so that the early test function can use the_set 
+		// we add one more so that the early test
+		// function can use the_set
 		// for its own testing purposes
 	store_set_to(gen, lvl - 1, the_set);
 	if (f_vv) {
 		gen->print_level_info(lvl + 1, node);
-		cout << " : downstep_apply_early_test number of live points = " << n << endl;
+		cout << " : downstep_apply_early_test "
+				"number of live points = " << n << endl;
 		}
 
 	if (f_vv) {
@@ -1027,12 +1057,15 @@ void oracle::downstep_apply_early_test(
 			nb_candidates = n;
 			}
 		else {
-			//cout << "oracle::downstep_apply_early_test  not gen->f_early_test_func" << endl;
+			//cout << "oracle::downstep_apply_early_test
+			// not gen->f_early_test_func" << endl;
 			//exit(1);
 			INT rep; 
 
 			if (f_vv) {
-				cout << "oracle::downstep_apply_early_test not gen->f_early_test_func, using the check functions instead" << endl;
+				cout << "oracle::downstep_apply_early_test "
+						"not gen->f_early_test_func, using the check "
+						"functions instead" << endl;
 				}
 			nb_candidates = 0;
 			for (i = 0; i < n; i++) {
@@ -1048,11 +1081,13 @@ void oracle::downstep_apply_early_test(
 		}
 	else {
 		(*gen->early_test_func)(the_set, lvl, subset, n, 
-			candidates, nb_candidates, gen->early_test_func_data, verbose_level - 1);
+			candidates, nb_candidates,
+			gen->early_test_func_data, verbose_level - 1);
 		}
 	
 	if (f_v) {
-		cout << "oracle::downstep_apply_early_test nb_candidates=" << nb_candidates << endl;
+		cout << "oracle::downstep_apply_early_test "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 	if (FALSE && f_vv) {
 		cout << "candidates: ";
@@ -1081,23 +1116,30 @@ void oracle::check_orbits_wrapper(generator *gen,
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "oracle::check_orbits_wrapper calling check_orbits f_use_incremental_test_func_if_available=" << f_use_incremental_test_func_if_available << endl;
+		cout << "oracle::check_orbits_wrapper "
+				"calling check_orbits f_use_incremental_test_func_"
+				"if_available="
+				<< f_use_incremental_test_func_if_available << endl;
 		}
 
-	check_orbits(gen, Schreier, AR, f_using_invariant_subset, lvl, f_use_incremental_test_func_if_available, verbose_level - 3);
+	check_orbits(gen, Schreier, AR, f_using_invariant_subset,
+			lvl, f_use_incremental_test_func_if_available,
+			verbose_level - 3);
 
 
 	nb_good_orbits1 = Schreier.nb_orbits;
 	nb_points1 = Schreier.sum_up_orbit_lengths();
 	
 	if (f_v) {
-		cout << "the stabilizer has " << nb_good_orbits1 << " good orbits with " 
+		cout << "the stabilizer has " << nb_good_orbits1
+			<< " good orbits with "
 			<< nb_points1 << " points" << endl;
 		}
 
 }
 
-void oracle::create_schreier_vector_wrapper(INT f_create_schreier_vector, INT f_compact, 
+void oracle::create_schreier_vector_wrapper(
+	INT f_create_schreier_vector, INT f_compact,
 	schreier &Schreier, INT verbose_level)
 // calls Schreier.get_schreier_vector
 {
@@ -1116,7 +1158,8 @@ void oracle::create_schreier_vector_wrapper(INT f_create_schreier_vector, INT f_
 			f_trivial_group = FALSE;
 			}
 		Schreier.get_schreier_vector(sv, f_trivial_group, f_compact);
-		//Schreier.test_sv(gen->A, hdl_strong_generators, sv, f_trivial_group, f_compact, verbose_level);
+		//Schreier.test_sv(gen->A, hdl_strong_generators,
+		// sv, f_trivial_group, f_compact, verbose_level);
 		}
 	else {
 		sv = NULL;
@@ -1127,7 +1170,8 @@ void oracle::test_orbits_for_implicit_fusion(generator *gen,
 	schreier &Schreier, action &AR, INT f_using_invariant_subset, 
 	INT lvl, INT verbose_level)
 // called from downstep_implicit_fusion
-// eliminates implicit fusion orbits from the Schreier data structure, 
+// eliminates implicit fusion orbits
+// from the Schreier data structure,
 {
 	//verbose_level = 8;
 	INT f_v = (verbose_level >= 1);
@@ -1145,7 +1189,8 @@ void oracle::test_orbits_for_implicit_fusion(generator *gen,
 	
 	L = Schreier.nb_orbits;
 	if (f_v) {
-		cout << "test_orbits_for_implicit_fusion: testing " << L << " orbits" << endl;
+		cout << "test_orbits_for_implicit_fusion: "
+				"testing " << L << " orbits" << endl;
 		}
 	for (k = 0; k < L; k++) {
 		fst = Schreier.orbit_first[k];
@@ -1177,7 +1222,9 @@ void oracle::test_orbits_for_implicit_fusion(generator *gen,
 		}
 	Schreier.nb_orbits = u;
 	if (f_v) {
-		cout << "test_orbits_for_implicit_fusion: orbit testing finished: " << u << " orbits out of " << L << " accepted" << endl; 
+		cout << "test_orbits_for_implicit_fusion: orbit testing '"
+				"finished: " << u << " orbits out of "
+				<< L << " accepted" << endl;
 		}
 	if (f_vvv) {
 		cout << "the good orbits are:" << endl;
@@ -1189,7 +1236,8 @@ void oracle::test_orbits_for_implicit_fusion(generator *gen,
 			if (f_using_invariant_subset) {
 				rep = ABR->points[rep];
 				}
-			cout << setw(5) << k << " : " << setw(5) << rep << " : " << setw(5) << len << endl;
+			cout << setw(5) << k << " : " << setw(5)
+					<< rep << " : " << setw(5) << len << endl;
 			}
 		}
 	
@@ -1214,9 +1262,9 @@ void oracle::check_orbits(generator *gen,
 	INT f_use_incremental_test_func_if_available, 
 	INT verbose_level)
 // called from compute_schreier_vector 
-// and check_orbits_wrapper (which is called from downstep_orbit_test_and_schreier_vector)
+// and check_orbits_wrapper (which is called
+// from downstep_orbit_test_and_schreier_vector)
 // calls test_point_using_check_functions
-
 // eliminates bad orbits from the Schreier data structure, 
 // does not eliminate implicit fusion orbits
 {
@@ -1233,8 +1281,10 @@ void oracle::check_orbits(generator *gen,
 	
 	if (f_v) {
 		cout << "oracle::check_orbits" << endl;
-		cout << "f_use_incremental_test_func_if_available=" << f_use_incremental_test_func_if_available << endl;
-		cout << "f_using_invariant_subset=" << f_using_invariant_subset << endl;
+		cout << "f_use_incremental_test_func_if_available="
+				<< f_use_incremental_test_func_if_available << endl;
+		cout << "f_using_invariant_subset="
+				<< f_using_invariant_subset << endl;
 		}
 	store_set(gen, lvl - 1);
 	
@@ -1264,7 +1314,8 @@ void oracle::check_orbits(generator *gen,
 		f_accept = TRUE;
 		if (j == lvl) {
 			if (f_vv) {
-				cout << "oracle::check_orbits calling test_point_using_check_functions" << endl;
+				cout << "oracle::check_orbits calling test_point_"
+						"using_check_functions" << endl;
 				}
 			f_accept = test_point_using_check_functions(gen, 
 				lvl, rep, gen->S, 
@@ -1273,7 +1324,8 @@ void oracle::check_orbits(generator *gen,
 		if (f_accept) {
 			if (f_vv) {
 				cout << "orbit " << k << " of point " << rep 
-					<< " of length " << len << " is accepted as orbit " << u << endl;
+					<< " of length " << len
+					<< " is accepted as orbit " << u << endl;
 				}
 			}
 		else {
@@ -1290,7 +1342,8 @@ void oracle::check_orbits(generator *gen,
 		}
 	Schreier.nb_orbits = u;
 	if (f_v) {
-		cout << "check_orbits: orbit testing finished: " << u << " orbits out of " << L << " accepted" << endl; 
+		cout << "check_orbits: orbit testing finished: " << u
+				<< " orbits out of " << L << " accepted" << endl;
 		}
 	if (f_vvv) {
 		cout << "the good orbits are:" << endl;
@@ -1309,191 +1362,15 @@ void oracle::check_orbits(generator *gen,
 	
 }
 
-#if 0
-void oracle::check_orbits_using_cliques(generator *gen, 
-	schreier &Schreier, action &AR, INT f_using_invariant_subset, 
-	INT lvl, 
-	INT verbose_level)
-// called from compute_schreier_vector
-// calls test_point_using_check_functions
-
-// eliminates bad orbits from the Schreier data structure, 
-// does not eliminate implicit fusion orbits
-{
-	//verbose_level = 2;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT i, k, j, u, L, a, nb;
-	INT fst, len, rep;
-	action_by_restriction *ABR;
-	INT *points, nb_points;
-	INT *points2, nb_points2;
-	INT *f_accept;
-
-	if (f_v) {
-		cout << "oracle::check_orbits_using_cliques" << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		}
-	if (f_using_invariant_subset) {
-		ABR = AR.G.ABR;
-		}
-	
-	if (f_v) {
-		cout << "oracle::check_orbits_using_cliques" << endl;
-		cout << "f_using_invariant_subset=" << f_using_invariant_subset << endl;
-		}
-	
-	L = Schreier.nb_orbits;
-#if 0
-	if (f_v) {
-		cout << "check_orbits_using_cliques: testing " << L << " orbits" << endl;
-		}
-#endif
-	nb_points = 0;
-	for (k = 0; k < L; k++) {
-		len = Schreier.orbit_len[k];
-		nb_points += len;
-		}
-	if (f_v) {
-		cout << "check_orbits_using_cliques: testing " << L << " orbits containing " << nb_points << " points" << endl;
-		}
-	points = NEW_INT(nb_points);
-	points2 = NEW_INT(nb_points);
-	
-	nb = 0;
-	for (k = 0; k < L; k++) {
-		fst = Schreier.orbit_first[k];
-		len = Schreier.orbit_len[k];
-		for (j = 0; j < len; j++) {
-			a = Schreier.orbit[fst + j];
-			if (f_using_invariant_subset) {
-				a = ABR->points[a];
-				}
-			points[nb++] = a;
-			}
-		}
-	if (nb != nb_points) {
-		cout << "check_orbits_using_cliques nb != nb_points" << endl;
-		exit(1);
-		}
-
-	f_accept = NEW_INT(L);
-	u = 0;
-	for (k = 0; k < L; k++) {
-		fst = Schreier.orbit_first[k];
-		len = Schreier.orbit_len[k];
-		rep = Schreier.orbit[fst];
-		if (f_using_invariant_subset) {
-			rep = ABR->points[rep];
-			}
-
-		store_set(gen, lvl - 1); // stores to gen->S
-		gen->S[lvl] = rep;
-
-		nb_points2 = 0;
-		for (i = 0; i < nb_points; i++) {
-			a = points[i];
-			if (test_point_using_check_functions(gen, 
-				lvl + 1, a, gen->S, 
-				verbose_level - 4)) {
-				points2[nb_points2++] = a;
-				}
-			}
-		if (f_v) {
-			cout << "check_orbits_using_cliques: orbit " << k << " selected, reducing point set from " << nb_points << " to " << nb_points2 << endl;
-			}
-
-		f_accept[k] = clique_test_with_colors(gen, lvl, 
-			gen->CFI, 
-			gen->S /* starter */, lvl + 1 /* starter_size */, 
-			points2, nb_points2, 
-			verbose_level - 3);
-
-				
-		if (f_accept[k]) {
-			if (f_vv) {
-				cout << "clique_test_with_colors: orbit " << k << " / " << L << " of point " << rep 
-					<< " of length " << len << " is accepted as orbit " << u << endl;
-				}
-			u++;
-			}
-		else {
-			if (f_vv) {
-				cout << "clique_test_with_colors: orbit " << k << " / " << L << " of point " << rep 
-					<< " of length " << len << " is not accepted" << endl;
-				}
-			}
-
-
-#if 0
-		if (node == 50) {
-			cout << "clique_test_with_colors after orbit " << k << endl;
-			gen->root[49].print_extensions(cout);
-			}
-#endif
-
-		} // next k
-
-
-	if (f_v) {
-		cout << "check_orbits_using_cliques: orbit testing finished: " << u << " orbits out of " << L << " accepted" << endl; 
-		cout << "i : orbit length : representative : f_accept" << endl;
-		for (k = 0; k < Schreier.nb_orbits; k++) {
-			fst = Schreier.orbit_first[k];
-			len = Schreier.orbit_len[k];
-			rep = Schreier.orbit[fst];
-			if (f_using_invariant_subset) {
-				rep = ABR->points[rep];
-				}
-			cout << setw(5) << k << " : " 
-				<< setw(5) << len << " : " 
-				<< setw(5) << rep << " : " 
-				<< f_accept[k] << endl;
-			} // next k
-		}
-	u = 0;
-	for (k = 0; k < Schreier.nb_orbits; k++) {
-		if (f_accept[k]) {
-			fst = Schreier.orbit_first[k];
-			len = Schreier.orbit_len[k];
-			Schreier.orbit_first[u] = fst;
-			Schreier.orbit_len[u] = len;
-			u++;
-			}
-		}
-	if (f_v) {
-		cout << "check_orbits_using_cliques eliminated " << Schreier.nb_orbits - u << " orbits" << endl;
-		}
-	Schreier.nb_orbits = u;
-	if (f_v) {
-		cout << "the good orbits are:" << endl;
-		cout << "i : orbit length : representative" << endl;
-		for (k = 0; k < Schreier.nb_orbits; k++) {
-			fst = Schreier.orbit_first[k];
-			len = Schreier.orbit_len[k];
-			rep = Schreier.orbit[fst];
-			if (f_using_invariant_subset) {
-				rep = ABR->points[rep];
-				}
-			cout << setw(5) << k << " : " 
-				<< setw(5) << len << " : "
-				<< setw(5) << rep << " : " 
-				<< endl;
-			} // next k
-		}
-	FREE_INT(points);
-	FREE_INT(points2);
-}
-#endif
-
 
 INT oracle::test_point_using_check_functions(generator *gen, 
 	INT lvl, INT rep, INT *the_set, 
 	INT verbose_level)
 // called by check_orbits and downstep_apply_early_test 
-// Calls gen->check_the_set_incrementally (if gen->f_candidate_incremental_check_func).
-// Otherwise, calls gen->check_the_set (if gen->f_candidate_check_func).
+// Calls gen->check_the_set_incrementally
+// (if gen->f_candidate_incremental_check_func).
+// Otherwise, calls gen->check_the_set
+// (if gen->f_candidate_check_func).
 // Otherwise accepts any point.
 {
 	INT f_v = (verbose_level >= 1);
@@ -1506,10 +1383,12 @@ INT oracle::test_point_using_check_functions(generator *gen,
 		}
 	if (gen->f_candidate_incremental_check_func) {
 		if (f_vv) {
-			cout << "checking point " << rep << " incrementally" << endl;
+			cout << "checking point " << rep
+					<< " incrementally" << endl;
 			}
 		the_set[lvl] = rep;
-		if (gen->check_the_set_incrementally(lvl + 1, the_set, verbose_level - 2)) {
+		if (gen->check_the_set_incrementally(lvl + 1,
+				the_set, verbose_level - 2)) {
 			}
 		else {
 			f_accept = FALSE;
@@ -1536,8 +1415,10 @@ INT oracle::test_point_using_check_functions(generator *gen,
 }
 
 void oracle::relabel_schreier_vector(action &AR, INT verbose_level)
-// called from compute_schreier_vector, downstep_orbit_test_and_schreier_vector
-// Replaces the points in the arrays pts[] and prev[] by the corresponding
+// called from compute_schreier_vector,
+// downstep_orbit_test_and_schreier_vector
+// Replaces the points in the arrays pts[]
+// and prev[] by the corresponding
 // point in ABR.points[]. Does not sort. 
 {
 	INT f_v = (verbose_level >= 1);
@@ -1592,7 +1473,9 @@ void oracle::downstep_orbits_print(generator *gen,
 	INT h, rep;
 	action_by_restriction *ABR = NULL;
 	
-	cout << "h : orbit_len[h] : points[rep[h]] : orbit (if size is less than " << max_points_per_orbit << ")" << endl;
+	cout << "h : orbit_len[h] : points[rep[h]] : "
+			"orbit (if size is less than "
+			<< max_points_per_orbit << ")" << endl;
 	if (Schreier.nb_orbits <= max_orbits) {
 		if (f_using_invariant_subset) {
 			ABR = AR.G.ABR;
@@ -1610,7 +1493,8 @@ void oracle::downstep_orbits_print(generator *gen,
 				if (Schreier.orbit_len[h] <= max_points_per_orbit) {
 					cout << " : ";
 					if (f_using_invariant_subset) {
-						Schreier.print_orbit_through_labels(cout, h, ABR->points);
+						Schreier.print_orbit_through_labels(
+								cout, h, ABR->points);
 						}
 					else {
 						Schreier.print_orbit(h);
@@ -1632,280 +1516,10 @@ void oracle::downstep_orbits_print(generator *gen,
 			}
 		}
 	else {
-		cout << "Too many orbits to print: we have " << Schreier.nb_orbits << " orbits" << endl;
+		cout << "Too many orbits to print: we have "
+				<< Schreier.nb_orbits << " orbits" << endl;
 		}
 }
-
-#if 0
-INT oracle::clique_test_with_colors(generator *gen, INT lvl, 
-	clique_finder_interface *CFI, 
-	INT *starter, INT starter_size, 
-	INT *candidates, INT nb_candidates, 
-	INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT *reduced_point_set;
-	INT reduced_point_set_size;
-	INT i, a, b;
-	INT ret = TRUE;
-
-	if (f_v) {
-		gen->print_level_info(lvl + 1, node);
-		cout << "clique_test_with_colors" << endl;
-		cout << "verbose_level = " << verbose_level << endl;
-		}
-			
-	reduced_point_set = NEW_INT(nb_candidates);
-	reduced_point_set_size = 0;
-
-	b = starter[starter_size - 1];
-	for (i = 0; i < nb_candidates; i++) {
-		a = candidates[i];
-		if (TRUE /*a > b*/) {
-			reduced_point_set[reduced_point_set_size++] = a;
-			}
-		}
-
-	if (f_v) {
-		cout << "before clique_test reducing the size of the point set from " 
-			<< nb_candidates << " to " << reduced_point_set_size << endl;
-		}
-
-	if (!CFI->f_clique_setup_func) {
-		cout << "!gen->f_clique_setup_func" << endl;
-		exit(1);
-		}
-	if (!(*CFI->clique_setup_func)(starter, starter_size, 
-		reduced_point_set, reduced_point_set_size, 
-		gen->depth, 
-		CFI->clique_data, 
-		CFI->clique_data_local, verbose_level)) {
-		if (f_v) {
-			gen->print_level_info(lvl + 1, node);
-			cout << " : gen->clique_setup_func returns FALSE"  << endl; 
-			}
-		ret = FALSE;
-		}
-
-#if 0
-	if (node == 50) {
-		cout << "clique_test_with_colors after CFI->clique_setup_func " << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
-
-			
-	if (nb_candidates && !clique_test(CFI, gen, lvl, 
-		starter, starter_size, 
-		reduced_point_set, reduced_point_set_size, 
-		verbose_level - 1)) {
-		if (f_v) {
-			gen->print_level_info(lvl + 1, node);
-			cout << " : clique_test returns FALSE"  << endl; 
-			}
-		ret = FALSE;
-		}
-
-#if 0
-	if (node == 50) {
-		cout << "clique_test_with_colors after clique_test " << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
-
-	FREE_INT(reduced_point_set);
-
-	(*CFI->clique_cleanup_func)(CFI->clique_data, CFI->clique_data_local, verbose_level);
-
-#if 0
-	if (node == 50) {
-		cout << "clique_test_with_colors after CFI->clique_cleanup_func " << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
-
-	if (f_v) {
-		cout << "clique_test_with_colors returns " << ret << endl;
-		}
-	return ret;
-}
-
-INT oracle::clique_test(
-	clique_finder_interface *CFI, 
-	generator *gen, 
-	INT lvl, 
-	INT *starter, INT starter_size, 
-	INT *points, INT nb_points, 
-	INT verbose_level)
-// we have a set of size lvl that we want to extend to gen->depth
-// We return TRUE is this is possible based on pairwise testing,
-// FALSE if not.
-// We are mostly interested eliminating sets for which this procedure 
-// returns FALSE.
-{
-#if 0
-	if (node == 50) {
-		verbose_level += 3;
-		}
-#endif
-
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 1);
-	clique_finder *CF;
-	INT *adjacency;
-	INT N, i, j, k;
-	INT search_steps;
-	INT decision_steps;
-	//INT nb_sol;
-
-	if (f_v) {
-		cout << "oracle::clique_test" << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		}
-	CF = new clique_finder;
-	INT clique_size = gen->depth - starter_size;
-	INT f_maxdepth = FALSE;
-	INT maxdepth = 0;
-	BYTE label[1000];
-	INT nb;
-
-	CFI->gen = gen;
-	CFI->node = node;
-	
-	
-	
-	if (f_v) {
-		cout << "oracle::clique_test clique_size=" << clique_size << endl;
-		}
-
-	label[0] = 0;
-	for (i = 0; i < starter_size; i++) {
-		sprintf(label + strlen(label), "%ld", starter[i]);
-		if (i < starter_size - 1) {
-			strcat(label, "_");
-			}
-		}
-
-	N = (nb_points * (nb_points - 1)) >> 1;
-	adjacency = NEW_INT(N);
-
-	for (i = 0; i < nb_points; i++) {
-		starter[starter_size] = points[i];
-		for (j = i + 1; j < nb_points; j++) {
-			k = ij2k(i, j, nb_points);
-			if (test_point_using_check_functions(gen, 
-				starter_size + 1, points[j], starter, 
-				0)) {
-				adjacency[k] = TRUE;
-				}
-			else {
-				adjacency[k] = FALSE;
-				}
-			}
-		}
-	nb = 0;
-	for (i = 0; i < N; i++) {
-		if (adjacency[i]) {
-			nb++;
-			}
-		}
-	if (f_vv) {
-		for (i = 0; i < nb_points; i++) {
-			for (j = 0; j < nb_points; j++) {
-				if (j <= i) {
-					cout << ".";
-					}
-				else {
-					k = ij2k(i, j, nb_points);
-					cout << adjacency[k];
-					}
-				}
-			cout << endl;
-			}
-		}
-	cout << "oracle::clique_test: edge density " << (double) nb / (double) N << endl;
-	
-	INT print_interval = 0; // not used in clique_finder
-
-#if 0
-	if (node == 50) {
-		cout << "clique_test before CF->init " << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
-	
-	CF->init(label, nb_points, 
-		clique_size /*target_depth*/, 
-		TRUE, adjacency, 
-		FALSE, NULL, 
-		print_interval, 
-		f_maxdepth, maxdepth, 
-		FALSE /* f_store_solutions */, 
-		verbose_level - 2);
-
-#if 0
-	if (node == 50) {
-		cout << "clique_test after CF->init " << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
-
- 	if (f_v) {
-		cout << "after CF->init" << endl;
-		}
-
-	CF->call_back_clique_found = oracle_downstep_call_back_clique_found; //CFI->call_back_clique_found;
-	CF->call_back_add_point = oracle_downstep_call_back_add_point; // CFI->call_back_add_point;
-	CF->call_back_delete_point = oracle_downstep_call_back_delete_point; // CFI->call_back_delete_point;
-	CF->call_back_find_candidates = oracle_downstep_call_back_find_candidates; // CFI->call_back_find_candidates;
-	CF->call_back_is_adjacent = NULL; //call_back_is_adjacent;
-
-	//CF->call_back_after_reduction = call_back_after_reduction;
-	CF->call_back_after_reduction = NULL;
-	
-	CF->call_back_clique_found_data = CFI; // CFI->clique_data_local;
-	
-
-	if (f_v) {
-		cout << "before CF->backtrack_search" << endl;
-		}
-
-	INT ret;
-	//CF->backtrack_search(0, 0);
-	ret = CF->solve_decision_problem(0, 0);
-
-#if 0
-	if (node == 50) {
-		cout << "clique_test after backtrack_search " << endl;
-		gen->root[49].print_extensions(cout);
-		}
-#endif
-
-	
-	search_steps = CF->counter;
-	decision_steps = CF->decision_step_counter;
-	//nb_sol = CF->nb_sol;
-	
-	if (f_v) {
-		cout << "oracle::clique_test we found ret= " << ret << ", decided upon with " 
-			<< search_steps << " backtrack steps with " << decision_steps << " decision steps" << endl;
-		}
-
-
-	delete CF;
-	FREE_INT(adjacency);
-	return ret;
-#if 0
-	if (nb_sol) {
-		return TRUE;
-		}
-	else {
-		return FALSE;
-		}
-#endif
-}
-
-#endif
 
 
 

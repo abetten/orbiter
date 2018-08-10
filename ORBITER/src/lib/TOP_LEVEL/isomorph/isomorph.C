@@ -120,14 +120,16 @@ void isomorph::free()
 #endif
 
 	if (f_v) {
-		cout << "isomorph::free before deleting stabilizer_recreated" << endl;
+		cout << "isomorph::free "
+				"before deleting stabilizer_recreated" << endl;
 		}
 	if (stabilizer_recreated) {
 		delete stabilizer_recreated;
 		stabilizer_recreated = NULL;
 		}
 	if (f_v) {
-		cout << "isomorph::free before deleting DB_sol" << endl;
+		cout << "isomorph::free "
+				"before deleting DB_sol" << endl;
 		}
 	if (DB_sol) {
 		freeobject(DB_sol);
@@ -283,7 +285,8 @@ void isomorph::init(const BYTE *prefix,
 		cout << "A=" << A->label << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
-		cout << "f_use_database_for_starter=" << f_use_database_for_starter << endl;
+		cout << "f_use_database_for_starter="
+				<< f_use_database_for_starter << endl;
 		cout << "f_implicit_fusion=" << f_implicit_fusion << endl;
 		}
 
@@ -322,7 +325,8 @@ void isomorph::init(const BYTE *prefix,
 	sprintf(fname_db5, "%ssolutions_d.idx", prefix);
 
 	sprintf(event_out_fname, "%sevent.txt", prefix);
-	sprintf(fname_orbits_of_stabilizer_csv, "%sorbits_of_stabilizer.csv", prefix);
+	sprintf(fname_orbits_of_stabilizer_csv,
+			"%sorbits_of_stabilizer.csv", prefix);
 	sprintf(prefix_invariants, "%sINVARIANTS/", prefix);
 	sprintf(prefix_tex, "%sTEX/", prefix);
 	sprintf(cmd, "mkdir %s", prefix);
@@ -426,12 +430,14 @@ void isomorph::list_solutions_by_starter()
 	for (i = 0; i < nb_starter; i++) {
 		f = solution_first[i];
 		l = solution_len[i];
-		cout << "starter " << i << " solutions from=" << f << " len=" << l << endl;
+		cout << "starter " << i << " solutions from="
+				<< f << " len=" << l << endl;
 		pos = f;
 		while (pos < f + l) {
 			fst = orbit_fst[j];
 			len = orbit_len[j];
-			cout << "orbit " << j << " from=" << fst << " len=" << len << endl;
+			cout << "orbit " << j << " from=" << fst
+					<< " len=" << len << endl;
 			for (u = 0; u < len; u++) {
 				idx = fst + u;
 				id = orbit_perm[idx];
@@ -440,7 +446,8 @@ void isomorph::list_solutions_by_starter()
 					data2[h] = data[h];
 					}
 				INT_vec_heapsort(data2, size);
-				cout << i << " : " << j << " : " << idx << " : " << id << endl;
+				cout << i << " : " << j << " : "
+						<< idx << " : " << id << endl;
 				INT_vec_print(cout, data, size);
 				cout << endl;
 				INT_vec_print(cout, data2, size);
@@ -466,7 +473,8 @@ void isomorph::list_solutions_by_orbit()
 	for (i = 0; i < nb_orbits; i++) {
 		f = orbit_fst[i];
 		l = orbit_len[i];
-		cout << "orbit " << i << " from=" << f << " len=" << l << endl;
+		cout << "orbit " << i << " from=" << f
+				<< " len=" << l << endl;
 		for (j = 0; j < l; j++) {
 			idx = f + j;
 			id = orbit_perm[idx];
@@ -497,7 +505,8 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 
 	if (f_v) {
 		cout << "isomorph::orbits_of_stabilizer" << endl;
-		cout << "number of starters = nb_starter = " << nb_starter << endl;
+		cout << "number of starters = nb_starter = "
+				<< nb_starter << endl;
 		cout << "number of solutions (= N) = " << N << endl;
 		cout << "action A_base=";
 		A_base->print_info();
@@ -536,7 +545,8 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 	orbit_fst[0] = 0;
 	for (i = 0; i < nb_starter; i++) {
 		if (f_v) {
-			cout << "isomorph::orbits_of_stabilizer case i=" << i << " / " << nb_starter << endl;
+			cout << "isomorph::orbits_of_stabilizer case "
+					"i=" << i << " / " << nb_starter << endl;
 			}
 
 		starter_orbit_fst[i] = nb_orbits;
@@ -552,23 +562,32 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 			i, 
 			gens, go, verbose_level - 2);
 		if (f_v5) {
-			cout << "isomorph::orbits_of_stabilizer after load_strong_generators" << endl;
-			cout << "isomorph::orbits_of_stabilizer The stabilizer is a group of order " << go << " with " << gens.len << " strong generators" << endl;
+			cout << "isomorph::orbits_of_stabilizer "
+					"after load_strong_generators" << endl;
+			cout << "isomorph::orbits_of_stabilizer "
+					"The stabilizer is a group of order "
+					<< go << " with " << gens.len
+					<< " strong generators" << endl;
 			gens.print_with_given_action(cout, A_base);
 			}
 		
 		f = solution_first[i];
 		l = solution_len[i];
 		if (f_v && ((i % 5000) == 0)) {
-			cout << "isomorph::orbits_of_stabilizer Case " << i << " / " << nb_starter << endl;
+			cout << "isomorph::orbits_of_stabilizer Case " << i
+					<< " / " << nb_starter << endl;
 			}
 		if (f_vv) {
-			cout << "isomorph::orbits_of_stabilizer nb_orbits = " << nb_orbits << endl;
-			cout << "isomorph::orbits_of_stabilizer case " << i << " starts at " << f << " with " << l << " solutions" << endl;
+			cout << "isomorph::orbits_of_stabilizer nb_orbits = "
+					<< nb_orbits << endl;
+			cout << "isomorph::orbits_of_stabilizer case " << i
+					<< " starts at " << f << " with " << l
+					<< " solutions" << endl;
 			}
 		if (gens.len == 0 /*O->nb_strong_generators == 0*/) {
 			if (f_vv) {
-				cout << "isomorph::orbits_of_stabilizer the stabilizer is trivial" << endl;
+				cout << "isomorph::orbits_of_stabilizer "
+						"the stabilizer is trivial" << endl;
 				}
 			for (j = 0; j < l; j++) {
 				orbit_len[nb_orbits] = 1;
@@ -577,32 +596,43 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 				orbit_perm[f + j] = f + j;
 				orbit_perm_inv[f + j] = f + j;
 				nb_orbits++;
-				orbit_fst[nb_orbits] = orbit_fst[nb_orbits - 1] + orbit_len[nb_orbits - 1];
+				orbit_fst[nb_orbits] =
+						orbit_fst[nb_orbits - 1] +
+						orbit_len[nb_orbits - 1];
 				starter_nb_orbits[i]++;
 				}
 			}
 		else {
 			if (f_vv) {
-				cout << "isomorph::orbits_of_stabilizer the stabilizer is non trivial" << endl;
+				cout << "isomorph::orbits_of_stabilizer "
+						"the stabilizer is non trivial" << endl;
 				}
 			if (solution_len[i] != 0) {
 				if (f_vv) {
-					cout << "isomorph::orbits_of_stabilizer before orbits_of_stabilizer_case" << endl;
+					cout << "isomorph::orbits_of_stabilizer "
+							"before orbits_of_stabilizer_case" << endl;
 					}
 				orbits_of_stabilizer_case(i, gens, verbose_level - 2);
 				if (f_vv) {
-					cout << "isomorph::orbits_of_stabilizer after orbits_of_stabilizer_case" << endl;
-					cout << "isomorph::orbits_of_stabilizer the " << l << " solutions in case " << i << " fall into " << nb_orbits - nb_orbits_prev << " orbits" << endl;
+					cout << "isomorph::orbits_of_stabilizer "
+							"after orbits_of_stabilizer_case" << endl;
+					cout << "isomorph::orbits_of_stabilizer "
+							"the " << l << " solutions in case " << i
+							<< " fall into " << nb_orbits - nb_orbits_prev
+							<< " orbits" << endl;
 					}
 				starter_nb_orbits[i] = nb_orbits - nb_orbits_prev;
 				}
 			}
 		if (f_v) {
-			cout << "isomorph::orbits_of_stabilizer Case " << i << " / " << nb_starter << " finished, we found " << nb_orbits - nb_orbits_prev << " orbits : ";
+			cout << "isomorph::orbits_of_stabilizer Case " << i
+					<< " / " << nb_starter << " finished, we found "
+					<< nb_orbits - nb_orbits_prev << " orbits : ";
 			if (nb_orbits - nb_orbits_prev) {
 				classify C;
 
-				C.init(orbit_len + nb_orbits_prev, nb_orbits - nb_orbits_prev, FALSE, 0);
+				C.init(orbit_len + nb_orbits_prev,
+						nb_orbits - nb_orbits_prev, FALSE, 0);
 				C.print_naked(TRUE /* f_backwards */);
 				cout << endl;
 				}
@@ -611,7 +641,8 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 				}
 			}
 		if (FALSE && f_vvvv) {
-			cout << "i : orbit_perm : orbit_number : schreier_vector : schreier_prev" << endl;
+			cout << "i : orbit_perm : orbit_number : schreier_vector : "
+					"schreier_prev" << endl;
 			for (j = 0; j < l; j++) {
 				cout << f + j << " : " 
 					<< orbit_perm[f + j] << " : " 
@@ -621,13 +652,17 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 				}
 			cout << "j : orbit_fst : orbit_len" << endl;
 			for (j = nb_orbits_prev; j < nb_orbits; j++) {
-				cout << j << " : " << orbit_fst[j] << " : " << orbit_len[j] << endl;
+				cout << j << " : " << orbit_fst[j] << " : "
+						<< orbit_len[j] << endl;
 				}
 			cout << j << " : " << orbit_fst[j] << endl;
 			if (orbit_fst[nb_orbits] != solution_first[i + 1]) {
-				cout << "orbit_fst[nb_orbits] != solution_first[i + 1]" << endl;
-				cout << "orbit_fst[nb_orbits]=" << orbit_fst[nb_orbits] << endl;
-				cout << "solution_first[i + 1]=" << solution_first[i + 1] << endl;
+				cout << "orbit_fst[nb_orbits] != "
+						"solution_first[i + 1]" << endl;
+				cout << "orbit_fst[nb_orbits]="
+						<< orbit_fst[nb_orbits] << endl;
+				cout << "solution_first[i + 1]="
+						<< solution_first[i + 1] << endl;
 				exit(1);
 				}
 			}			
@@ -646,7 +681,9 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 	close_level_database(verbose_level);
 
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer Case " << i << " / " << nb_starter << " finished, we found " << nb_orbits << " orbits : ";
+		cout << "isomorph::orbits_of_stabilizer Case " << i << " / "
+				<< nb_starter << " finished, we found " << nb_orbits
+				<< " orbits : ";
 		classify C;
 
 		C.init(orbit_len, nb_orbits, FALSE, 0);
@@ -671,7 +708,8 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 				<< setw(9) << orbit_len[i] << endl;
 			}
 		cout << "N=" << N << endl;
-		cout << "i : orbit_number[i] : orbit_perm[i] : schreier_vector[i] : schreier_prev[i]" << endl;
+		cout << "i : orbit_number[i] : orbit_perm[i] : schreier_vector[i] : "
+				"schreier_prev[i]" << endl;
 		for (i = 0; i < N; i++) {
 			cout << setw(9) << i << " " 
 				<< setw(9) << orbit_number[i] << " "
@@ -688,7 +726,8 @@ void isomorph::orbits_of_stabilizer(INT verbose_level)
 	
 }
 
-void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verbose_level)
+void isomorph::orbits_of_stabilizer_case(INT the_case,
+		vector_ge &gens, INT verbose_level)
 {
 	Vector v;
 	//oracle *O;
@@ -698,15 +737,18 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 	INT j, f, l, k, ff, ll;
 	
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer_case " << the_case << " / " << nb_starter << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				<< the_case << " / " << nb_starter << endl;
 		}
 	
 	//O = &gen->root[gen->first_oracle_node_at_level[level] + the_case];
 	f = solution_first[the_case];
 	l = solution_len[the_case];
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer_case solution_first[the_case] = " << f << endl;
-		cout << "isomorph::orbits_of_stabilizer_case solution_len[the_case] = " << l << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"solution_first[the_case] = " << f << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"solution_len[the_case] = " << l << endl;
 		}
 
 	longinteger_object S_go;
@@ -723,7 +765,8 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 			
 		
 	if (f_vv) {
-		cout << "isomorph::orbits_of_stabilizer_case generators as permutations (skipped)" << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"generators as permutations (skipped)" << endl;
 		//gens.print_as_permutation(cout);
 		}	
 	S->init(A_base);
@@ -731,7 +774,8 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 	S->compute_base_orbits(0 /*verbose_level - 2*/);
 	S->group_order(S_go);
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer_case The starter has a stabilizer of order " << S_go << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"The starter has a stabilizer of order " << S_go << endl;
 		}
 			
 	for (j = 0; j < l; j++) {
@@ -751,26 +795,31 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 		}
 	
 	if (f_vv) {
-		cout << "isomorph::orbits_of_stabilizer_case computing induced action" << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"computing induced action" << endl;
 		}
 			
 	AA->induced_action_on_sets(*A, S, //K, 
-		l, size, sets, FALSE /*TRUE*/ /* A Betten 1/26/13*/, verbose_level /*- 2*/);
+		l, size, sets, FALSE /*TRUE*/ /* A Betten 1/26/13*/,
+		verbose_level /*- 2*/);
 
 	if (f_vv) {
-		cout << "isomorph::orbits_of_stabilizer_case computing induced action finished" << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"computing induced action finished" << endl;
 		}
 		
 #if 0	
 	AA->group_order(AA_go);
 	AA->Kernel->group_order(K_go);
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer_case orbit " << nb_orbits << " induced action has order " << AA_go << ", kernel has order " << K_go << endl;
+		cout << "isomorph::orbits_of_stabilizer_case orbit "
+				<< nb_orbits << " induced action has order " << AA_go << ", kernel has order " << K_go << endl;
 		}
 #endif
 	
 	if (f_vv) {
-		cout << "isomorph::orbits_of_stabilizer_case induced action computed" << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"induced action computed" << endl;
 		cout << "generators:" << endl;
 		for (k = 0; k < gens.len; k++) {
 			cout << k << " : ";
@@ -780,13 +829,15 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 		}
 	
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer_case computing point orbits" << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"computing point orbits" << endl;
 		}
 	AA->compute_all_point_orbits(*Schreier, gens, verbose_level - 4);
 	//AA->all_point_orbits(*Schreier, verbose_level - 2);
 			
 	if (f_v) {
-		cout << "isomorph::orbits_of_stabilizer_case Point orbits computed" << endl;
+		cout << "isomorph::orbits_of_stabilizer_case "
+				"Point orbits computed" << endl;
 		}
 	if (f_v4) {
 		Schreier->print_tables(cout, TRUE);
@@ -796,17 +847,21 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 		p = Schreier->orbit[k];
 		prev = Schreier->prev[k];
 		hdl = Schreier->label[k];
-		//cout << "coset " << k << " point p=" << p << " prev=" << prev << " label " << hdl << endl;
+		//cout << "coset " << k << " point p=" << p
+		// << " prev=" << prev << " label " << hdl << endl;
 		if (prev != -1) {
-			//A->element_retrieve(O->hdl_strong_generators[hdl], A->Elt1, FALSE);
+			//A->element_retrieve(O->hdl_strong_generators[hdl],
+			// A->Elt1, FALSE);
 			b = AA->element_image_of(prev, gens.ith(hdl), FALSE);
 			//cout << "image of " << prev << " results in =" << b << endl;
 			if (b != p) {
 				cout << "b != p" << endl;
 				exit(1);
 				}
-			if (!A->check_if_transporter_for_set(gens.ith(hdl), size, 
-				sets + prev * size, sets + p * size, verbose_level - 2)) {
+			if (!A->check_if_transporter_for_set(
+					gens.ith(hdl), size,
+				sets + prev * size, sets + p * size,
+				verbose_level - 2)) {
 				exit(1);
 				}
 			}
@@ -819,12 +874,14 @@ void isomorph::orbits_of_stabilizer_case(INT the_case, vector_ge &gens, INT verb
 			orbit_number[f + ff + h] = nb_orbits;
 			orbit_perm[f + ff + h] = p;
 			orbit_perm_inv[p] = f + ff + h;
-			schreier_vector[f + ff + h] = Schreier->label[ff + h];
+			schreier_vector[f + ff + h] =
+					Schreier->label[ff + h];
 			if (h == 0) {
 				schreier_prev[f + ff + h] = -1;
 				}
 			else {
-				schreier_prev[f + ff + h] = f + Schreier->prev[ff + h];
+				schreier_prev[f + ff + h] =
+						f + Schreier->prev[ff + h];
 				}
 			}
 		orbit_len[nb_orbits] = ll;
@@ -867,22 +924,27 @@ void isomorph::orbit_representative(INT i, INT &i0,
 	c = starter_number[i];
 	//O = &gen->root[gen->first_oracle_node_at_level[level] + c];
 	if (f_v) {
-		cout << "isomorph::orbit_representative before load_strong_generators" << endl;
+		cout << "isomorph::orbit_representative "
+				"before load_strong_generators" << endl;
 		}
 	load_strong_generators(level, c, 
 		gens, go, verbose_level);
 	if (f_v) {
-		cout << "isomorph::orbit_representative after load_strong_generators" << endl;
+		cout << "isomorph::orbit_representative "
+				"after load_strong_generators" << endl;
 		}
 	A->element_one(transporter, FALSE);
 	if (f_vv) {
-		cout << "isomorph::orbit_representative i=" << i << endl;
+		cout << "isomorph::orbit_representative "
+				"i=" << i << endl;
 		}
 	while (TRUE) {
 		i_loc = orbit_perm_inv[i];
 		p = schreier_prev[i_loc];
 		if (f_vv) {
-			cout << "isomorph::orbit_representative i=" << i << " i_loc=" << i_loc << " p=" << p << endl;
+			cout << "isomorph::orbit_representative "
+					"i=" << i << " i_loc=" << i_loc
+					<< " p=" << p << endl;
 			}
 		if (p == -1) {
 			i0 = i;
@@ -899,7 +961,9 @@ void isomorph::orbit_representative(INT i, INT &i0,
 		i = p;
 		}
 	if (f_v) {
-		cout << "isomorph::orbit_representative The representative of solution " << i << " is " << i0 << " in orbit " << orbit << endl;
+		cout << "isomorph::orbit_representative "
+				"The representative of solution " << i << " is "
+				<< i0 << " in orbit " << orbit << endl;
 		}
 }
 
@@ -924,13 +988,15 @@ void isomorph::test_orbit_representative(INT verbose_level)
 	
 		load_solution(r, data1);
 
-		orbit_representative(r, r0, orbit, transporter, verbose_level);
+		orbit_representative(r, r0, orbit,
+				transporter, verbose_level);
 		if (r != r0) {
 			cout << "k=" << k << " r=" << r << " r0=" << r0 << endl;
 			}
 			
 		load_solution(r0, data2);
-		if (!A->check_if_transporter_for_set(transporter, size, data1, data2, verbose_level)) {
+		if (!A->check_if_transporter_for_set(transporter,
+				size, data1, data2, verbose_level)) {
 			exit(1);
 			}
 		}
@@ -972,7 +1038,9 @@ void isomorph::test_identify_solution(INT verbose_level)
 			}
 
 		INT f_failure_to_find_point;
-		r0 = identify_solution(data2, transporter, f_use_implicit_fusion, f_failure_to_find_point, verbose_level - 2);
+		r0 = identify_solution(data2, transporter,
+				f_use_implicit_fusion, f_failure_to_find_point,
+				verbose_level - 2);
 		
 		if (f_failure_to_find_point) {
 			cout << "f_failure_to_find_point" << endl;
@@ -982,8 +1050,10 @@ void isomorph::test_identify_solution(INT verbose_level)
 			id0 = orbit_perm[orbit_fst[r0]];
 			
 			load_solution(id0, data1);
-			if (!A->check_if_transporter_for_set(transporter, size, data2, data1, verbose_level)) {
-				cout << "test_identify_solution, check fails, stop" << endl;
+			if (!A->check_if_transporter_for_set(transporter,
+					size, data2, data1, verbose_level)) {
+				cout << "test_identify_solution, "
+						"check fails, stop" << endl;
 				exit(1);
 				}
 			}
@@ -993,7 +1063,8 @@ void isomorph::test_identify_solution(INT verbose_level)
 	FREE_INT(transporter);
 }
 
-void isomorph::compute_stabilizer(sims *&Stab, INT verbose_level)
+void isomorph::compute_stabilizer(sims *&Stab,
+		INT verbose_level)
 // Called from do_iso_test
 {
 	INT f_v = (verbose_level >= 1);
@@ -1012,7 +1083,8 @@ void isomorph::compute_stabilizer(sims *&Stab, INT verbose_level)
 	//longinteger_domain DO;
 
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer iso_node " << iso_nodes << endl;
+		cout << "isomorph::compute_stabilizer "
+				"iso_node " << iso_nodes << endl;
 		}
 	
 	first = orbit_fst[orbit_no];
@@ -1023,13 +1095,16 @@ void isomorph::compute_stabilizer(sims *&Stab, INT verbose_level)
 	orb_no = orbit_no - first_orbit_this_case;
 	
 	if (f_vv) {
-		cout << "isomorph::compute_stabilizer orbit_no=" << orbit_no << " starting at " << first << " case number " << c 
+		cout << "isomorph::compute_stabilizer "
+				"orbit_no=" << orbit_no << " starting at "
+				<< first << " case number " << c
 			<< " first_orbit_this_case=" << first_orbit_this_case 
 			<< " local orbit number " << orb_no << endl;
 		}
 	
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer f=" << f << " l=" << l << endl;
+		cout << "isomorph::compute_stabilizer "
+				"f=" << f << " l=" << l << endl;
 		}
 
 	S = new sims;
@@ -1051,8 +1126,11 @@ void isomorph::compute_stabilizer(sims *&Stab, INT verbose_level)
 		go.create(1);
 #endif
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer orbit_no=" << orbit_no << " after load_strong_generators" << endl;
-		cout << "isomorph::compute_stabilizer Stabilizer of starter has order " << go << endl;
+		cout << "isomorph::compute_stabilizer "
+				"orbit_no=" << orbit_no
+				<< " after load_strong_generators" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"Stabilizer of starter has order " << go << endl;
 		}
 
 	
@@ -1061,25 +1139,30 @@ void isomorph::compute_stabilizer(sims *&Stab, INT verbose_level)
 	S->compute_base_orbits(0/*verbose_level - 4*/);
 	
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer The action in the stabilizer sims object is:" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"The action in the stabilizer sims object is:" << endl;
 		S->A->print_info();
 		}
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer loading " << l 
+		cout << "isomorph::compute_stabilizer "
+				"loading " << l
 			<< " solutions associated to starter " << c 
-			<< " (representative of isomorphism type " << orbit_no << ")" << endl;
+			<< " (representative of isomorphism type "
+			<< orbit_no << ")" << endl;
 		}
 	for (j = 0; j < l; j++) {
 		load_solution(f + j, sets + j * size);
 		INT_vec_heapsort(sets + j * size, size);
 		}
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer The " << l << " solutions are:" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"The " << l << " solutions are:" << endl;
 		if (l < 20) {
 			INT_matrix_print(sets, l, size);
 			}
 		else {
-			cout << "isomorph::compute_stabilizer Too big to print, we print only 20" << endl;
+			cout << "isomorph::compute_stabilizer "
+					"Too big to print, we print only 20" << endl;
 			INT_matrix_print(sets, 20, size);
 			}
 		}
@@ -1094,41 +1177,58 @@ void isomorph::compute_stabilizer(sims *&Stab, INT verbose_level)
 #endif
 
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer computing induced action" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"computing induced action" << endl;
 		}
 			
-	AA->induced_action_on_sets(*A, S, l, size, sets, TRUE, verbose_level - 2);
+	AA->induced_action_on_sets(*A, S, l, size,
+			sets, TRUE, verbose_level - 2);
 	
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer computing induced action done" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"computing induced action done" << endl;
 		}
 	AA->group_order(AA_go);
 	AA->Kernel->group_order(K_go);
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer induced action has order " << AA_go << endl;
-		cout << "isomorph::compute_stabilizer induced action has a kernel of order " << K_go << endl;
+		cout << "isomorph::compute_stabilizer "
+				"induced action has order " << AA_go << endl;
+		cout << "isomorph::compute_stabilizer "
+				"induced action has a kernel of order " << K_go << endl;
 		}
 
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer computing all point orbits" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"computing all point orbits" << endl;
 		}
 			
-	AA->compute_all_point_orbits(*Schreier, *gens, 0/*verbose_level - 2*/);
+	AA->compute_all_point_orbits(*Schreier, *gens,
+			0/*verbose_level - 2*/);
 
 
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer orbit " << orbit_no << " found " << Schreier->nb_orbits << " orbits" << endl;
+		cout << "isomorph::compute_stabilizer orbit "
+				<< orbit_no << " found " << Schreier->nb_orbits
+				<< " orbits" << endl;
 		}
 	
-	//Schreier->point_stabilizer(AA, AA_go, stab, orb_no, verbose_level - 2);
-	Schreier->point_stabilizer(A_base, go, Stab, orb_no, 0 /*verbose_level - 2*/);
+	//Schreier->point_stabilizer(AA, AA_go, stab,
+	// orb_no, verbose_level - 2);
+	Schreier->point_stabilizer(A_base, go, Stab,
+			orb_no, 0 /*verbose_level - 2*/);
 	Stab->group_order(so);
 
 	if (f_v) {
-		cout << "isomorph::compute_stabilizer starter set has stabilizer of order " << go << endl;
-		cout << "isomorph::compute_stabilizer orbit " << orb_no << " has length " << Schreier->orbit_len[orb_no] << endl;
-		cout << "isomorph::compute_stabilizer new stabilizer has order " << so << endl;
-		cout << "isomorph::compute_stabilizer orbit_no=" << orbit_no << " finished" << endl;
+		cout << "isomorph::compute_stabilizer "
+				"starter set has stabilizer of order "
+				<< go << endl;
+		cout << "isomorph::compute_stabilizer "
+				"orbit " << orb_no << " has length "
+				<< Schreier->orbit_len[orb_no] << endl;
+		cout << "isomorph::compute_stabilizer "
+				"new stabilizer has order " << so << endl;
+		cout << "isomorph::compute_stabilizer "
+				"orbit_no=" << orbit_no << " finished" << endl;
 		}
 
 	delete S;
@@ -1229,7 +1329,8 @@ void isomorph::test_edges(INT verbose_level)
 	load_solution(id2, data2);
 	close_solution_database(verbose_level - 1);
 	
-	if (!A->check_if_transporter_for_set(Elt2, size, data1, data2, verbose_level)) {
+	if (!A->check_if_transporter_for_set(Elt2,
+			size, data1, data2, verbose_level)) {
 		cout << "does not map data1 to data2" << endl;
 		exit(1);
 		}
@@ -1258,7 +1359,8 @@ void isomorph::test_edges(INT verbose_level)
 	
 }
 
-INT isomorph::test_edge(INT n1, INT *subset1, INT *transporter, INT verbose_level)
+INT isomorph::test_edge(INT n1,
+		INT *subset1, INT *transporter, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -1281,7 +1383,8 @@ INT isomorph::test_edge(INT n1, INT *subset1, INT *transporter, INT verbose_leve
 	
 	load_solution(id, data1);
 		
-	rearrange_subset(size, level, data1, subset1, data2, verbose_level - 1);
+	rearrange_subset(size, level, data1,
+			subset1, data2, verbose_level - 1);
 		
 	INT f_failure_to_find_point;
 
@@ -1296,7 +1399,8 @@ INT isomorph::test_edge(INT n1, INT *subset1, INT *transporter, INT verbose_leve
 		id0 = orbit_perm[orbit_fst[r0]];
 			
 		load_solution(id0, data1);
-		if (!A->check_if_transporter_for_set(transporter, size, data2, data1, verbose_level)) {
+		if (!A->check_if_transporter_for_set(
+				transporter, size, data2, data1, verbose_level)) {
 			cout << "test_identify_solution, check fails, stop" << endl;	
 			exit(1);
 			}
@@ -1306,125 +1410,6 @@ INT isomorph::test_edge(INT n1, INT *subset1, INT *transporter, INT verbose_leve
 	return r0;
 }
 
-#if 0
-void isomorph::read_data_file(INT f_recompute_schreier, 
-	INT verbose_level)
-// Reads the data for starters.
-// First, it reads the data file whose name is fname_data_file,
-// which contains the data up to level - 1
-// and sets depth_completed to one level less, which is level - 2.
-// Then, the bottom two levels are read from the level databases 
-// through the object database D.
-// In this step, it calls init_DB_level.
-{
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i;
-	
-	if (f_v) {
-		cout << "isomorph::read_data_file: reading file " << fname_data_file << endl;
-		}
-	depth_completed = 0;
-	
-	generator_read_data_file(gen, 
-		depth_completed, 
-		fname_data_file, 
-		verbose_level);
-		// in DISCRETA/snakesandladders.C
-		// fname_data_file correspond to the data file level - 1 
-	
-	//  reads up to level - 1 
-	// (because this is the one which has the downstep info for level - 2)
-	
-	// ignore level - 1
-	depth_completed--;
-	
-	
-	if (f_v) {
-		cout << "isomorph::read_data_file: after reading file " << fname_data_file << endl;
-		cout << "depth_completed = " << depth_completed << ", level = " << level << endl;
-		}
-
-	if (f_recompute_schreier) {
-		if (f_v) {
-			cout << "isomorph::read_data_file recomputing Schreier vectors" << endl;
-			}
-		gen->recreate_schreier_vectors_up_to_level(
-			level - 2, 
-			TRUE /* f_compact */, 
-			MINIMUM(verbose_level, 1));
-		}
-
-	// and now, initialize gen->first_oracle_node_at_level[i + 1]
-	// for i = depth_completed + 1, ..., level
-	// We find out how many nodes there are from the length of the btree structure
-
-	if (f_v) {
-		cout << "isomorph::read_data_file: reading the number of nodes at each level from the level database" << endl;
-		}
-	for (i = depth_completed + 1; i <= level; i++) {
-		database D;
-		Vector v;
-		INT f, nb_nodes;
-		
-		if (f_v) {
-			cout << "isomorph::read_data_file: level " << i << endl;
-			}
-		init_DB_level(D, i, verbose_level - 1);
-		D.open(verbose_level - 3);
-		nb_nodes = D.btree_access_i(0).length(verbose_level - 3);
-		if (f_v) {
-			cout << "nb_nodes = " << nb_nodes << " (from the btree)" << endl;
-			cout << "Now loading object 0" << endl;
-			}
-		
-		D.ith_object(0, 0/* btree_idx*/, v, verbose_level - 1);
-		if (f_v) {
-			cout << "Object 0 is " << endl;
-			cout << v << endl;
-			}
-		f = v.s_ii(0);
-		if (f_v) {
-			cout << "f=" << f << " nb_nodes=" << nb_nodes << endl;
-			}
-		if (f != gen->first_oracle_node_at_level[i]) {
-			cout << "f != gen->first_oracle_node_at_level[i]" << endl;
-			cout << "f=" << f << endl;
-			cout << "gen->first_oracle_node_at_level[i]=" << gen->first_oracle_node_at_level[i] << endl;
-			cout << "i=" << i << endl;
-			exit(1);
-			}
-
-		D.close(verbose_level - 3);
-
-		gen->first_oracle_node_at_level[i + 1] = f + nb_nodes;
-		if (f_v) {
-			cout << "gen->first_oracle_node_at_level[" << i + 1 << "]=" << gen->first_oracle_node_at_level[i + 1] << endl;
-			}
-		}
-	nb_starter = gen->first_oracle_node_at_level[level + 1] - gen->first_oracle_node_at_level[level];
-	if (f_v) {
-		cout << "isomorph::read_data_file: nb_starter = " << nb_starter << endl;
-		}
-#if 0
-	if (depth_completed != level) {
-		BYTE fname_base[1000];
-		
-		cout << "warning: depth_completed = " << depth_completed << ", level = " << level << endl;
-		//exit(1);
-		generator_read_level_file(gen, level, fname_level_file, verbose_level);
-		cout << "after generator_read_level_file" << endl;
-		sprintf(fname_base, "BLT_%ld", q);
-		generator_write_level_file_binary(gen, level, fname_base, verbose_level);
-		}
-#endif
-
-	if (f_v) {
-		cout << "read_data_file done, depth_completed = " << depth_completed << endl;
-		}
-
-}
-#endif
 
 
 void isomorph::read_data_files_for_starter(INT level, 
@@ -1456,25 +1441,32 @@ void isomorph::read_data_files_for_starter(INT level,
 		i0 = 0;
 		}
 	if (f_v) {
-		cout << "isomorph::read_data_files_for_starter i0=" << i0 << endl;
+		cout << "isomorph::read_data_files_for_starter "
+				"i0=" << i0 << endl;
 		}
 	for (i = i0; i < level; i++) {
 		if (f_v) {
-			cout << "reading data file for level " << i << " with prefix " << fname_base_b << endl;
+			cout << "reading data file for level "
+					<< i << " with prefix " << fname_base_b << endl;
 			}
-		gen->read_level_file_binary(i, fname_base_b, MINIMUM(1, verbose_level - 1));
+		gen->read_level_file_binary(i, fname_base_b,
+				MINIMUM(1, verbose_level - 1));
 		}
 
 	if (f_v) {
-		cout << "reading data file for level " << level << " with prefix " << fname_base_a << endl;
+		cout << "reading data file for level " << level
+				<< " with prefix " << fname_base_a << endl;
 		}
-	gen->read_level_file_binary(level, fname_base_a, MINIMUM(1, verbose_level - 1));
+	gen->read_level_file_binary(level, fname_base_a,
+			MINIMUM(1, verbose_level - 1));
 
 	compute_nb_starter(level, verbose_level);
-	//nb_starter = gen->first_oracle_node_at_level[level + 1] - gen->first_oracle_node_at_level[level];
+	//nb_starter = gen->first_oracle_node_at_level[level + 1] -
+	// gen->first_oracle_node_at_level[level];
 
 	if (f_v) {
-		cout << "isomorph::read_data_files_for_starter finished, number of starters = " << nb_starter << endl;
+		cout << "isomorph::read_data_files_for_starter finished, "
+				"number of starters = " << nb_starter << endl;
 		}
 }
 
@@ -1483,9 +1475,11 @@ void isomorph::compute_nb_starter(INT level, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 
 	nb_starter = gen->nb_orbits_at_level(level);
-		//gen->first_oracle_node_at_level[level + 1] - gen->first_oracle_node_at_level[level];
+		//gen->first_oracle_node_at_level[level + 1] -
+		// gen->first_oracle_node_at_level[level];
 	if (f_v) {
-		cout << "isomorph::compute_nb_starter finished, number of starters = " << nb_starter << endl;
+		cout << "isomorph::compute_nb_starter finished, "
+				"number of starters = " << nb_starter << endl;
 		}
 
 }
@@ -1546,7 +1540,8 @@ void isomorph::test_hash(INT verbose_level)
 }
 
 
-void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_object *&Ago_induced, INT verbose_level)
+void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
+		longinteger_object *&Ago_induced, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1563,7 +1558,8 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_obj
 
 	for (h = 0; h < Reps->count; h++) {
 		if (f_vv) {
-			cout << "isomorph::compute_Ago_Ago_induced orbit " << h << " / " << Reps->count << endl;
+			cout << "isomorph::compute_Ago_Ago_induced orbit "
+					<< h << " / " << Reps->count << endl;
 			}
 		rep = Reps->rep[h];
 		first = orbit_fst[rep];
@@ -1579,7 +1575,8 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_obj
 		//f << "Stabilizer has order $";
 		//go.print_not_scientific(f);
 		if (f_vvv) {
-			cout << "isomorph::compute_Ago_Ago_induced computing induced action on the set (in data)" << endl;
+			cout << "isomorph::compute_Ago_Ago_induced computing "
+					"induced action on the set (in data)" << endl;
 			}
 		induced_action_on_set_basic(Stab, data, 0 /*verbose_level*/);
 		
@@ -1594,7 +1591,8 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago, longinteger_obj
 }
 
 void isomorph::init_high_level(action *A, generator *gen, 
-	INT size, BYTE *prefix_classify, BYTE *prefix, INT level, INT verbose_level)
+	INT size, BYTE *prefix_classify, BYTE *prefix, INT level,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1622,13 +1620,16 @@ void isomorph::init_high_level(action *A, generator *gen,
 	
 
 	if (f_v) {
-		cout << "isomorph::init_high_level before read_data_files_for_starter" << endl;
+		cout << "isomorph::init_high_level "
+				"before read_data_files_for_starter" << endl;
 		}
 
-	read_data_files_for_starter(level, prefix_classify, verbose_level);
+	read_data_files_for_starter(level,
+			prefix_classify, verbose_level);
 
 	if (f_v) {
-		cout << "isomorph::init_high_level before init_solution" << endl;
+		cout << "isomorph::init_high_level "
+				"before init_solution" << endl;
 		}
 
 	init_solution(verbose_level);
@@ -1639,12 +1640,14 @@ void isomorph::init_high_level(action *A, generator *gen,
 	depth_completed = level /*- 2*/;
 
 	if (f_v) {
-		cout << "isomorph::init_high_level before iso_test_init" << endl;
+		cout << "isomorph::init_high_level "
+				"before iso_test_init" << endl;
 		}
 	iso_test_init(verbose_level);
 
 	if (f_v) {
-		cout << "isomorph::init_high_level before Reps->load" << endl;
+		cout << "isomorph::init_high_level "
+				"before Reps->load" << endl;
 		}
 	Reps->load(verbose_level);
 

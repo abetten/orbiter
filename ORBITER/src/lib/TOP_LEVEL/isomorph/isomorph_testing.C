@@ -52,11 +52,13 @@ void isomorph::iso_test_init2(INT verbose_level)
 	transporter = NEW_INT(A->elt_size_in_INT);
 	
 	if (f_v) {
-		cout << "isomorph::iso_test_init2 before INT_n_choose_k" << endl;
+		cout << "isomorph::iso_test_init2 "
+				"before INT_n_choose_k" << endl;
 		}
 	NCK = INT_n_choose_k(size, level);
 	if (f_v) {
-		cout << "isomorph::iso_test_init2 after INT_n_choose_k" << endl;
+		cout << "isomorph::iso_test_init2 "
+				"after INT_n_choose_k" << endl;
 		}
 
 
@@ -65,7 +67,8 @@ void isomorph::iso_test_init2(INT verbose_level)
 		}
 }
 
-void isomorph::probe(INT flag_orbit, INT subset_rk, INT f_implicit_fusion, INT verbose_level)
+void isomorph::probe(INT flag_orbit, INT subset_rk,
+		INT f_implicit_fusion, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	sims *Stab;
@@ -74,14 +77,17 @@ void isomorph::probe(INT flag_orbit, INT subset_rk, INT f_implicit_fusion, INT v
 	INT i, id;
 
 	if (f_v) {
-		cout << "isomorph::probe for flag orbit " << flag_orbit << " and subset " << subset_rk << endl;
+		cout << "isomorph::probe for flag orbit " << flag_orbit
+				<< " and subset " << subset_rk << endl;
 		}
 	
 	setup_and_open_solution_database(verbose_level - 1);
 	setup_and_open_level_database(MINIMUM(1, verbose_level - 1));
 
 	if (f_v) {
-		cout << "isomorph::probe for flag orbit " << flag_orbit << " and subset " << subset_rk << " before compute_stabilizer" << endl;
+		cout << "isomorph::probe for flag orbit " << flag_orbit
+				<< " and subset " << subset_rk
+				<< " before compute_stabilizer" << endl;
 		}
 	iso_nodes = 0;
 	orbit_no = flag_orbit;
@@ -91,7 +97,9 @@ void isomorph::probe(INT flag_orbit, INT subset_rk, INT f_implicit_fusion, INT v
 	Stab->group_order(go);
 	
 	if (f_v) {
-		cout << "isomorph::probe for flag orbit " << flag_orbit << " and subset " << subset_rk << ", known stab order " << go << endl;
+		cout << "isomorph::probe for flag orbit " << flag_orbit
+				<< " and subset " << subset_rk
+				<< ", known stab order " << go << endl;
 		}
 	
 	
@@ -105,12 +113,14 @@ void isomorph::probe(INT flag_orbit, INT subset_rk, INT f_implicit_fusion, INT v
 		}
 	
 	if (f_v) {
-		cout << "isomorph::probe calling induced_action_on_set" << endl;
+		cout << "isomorph::probe calling "
+				"induced_action_on_set" << endl;
 		}
 	induced_action_on_set(Stab, data, verbose_level - 2);
 
 	if (f_v) {
-		cout << "isomorph::probe induced_action_on_set finished" << endl;
+		cout << "isomorph::probe induced_action_on_set "
+				"finished" << endl;
 		}
 	
 
@@ -121,13 +131,15 @@ void isomorph::probe(INT flag_orbit, INT subset_rk, INT f_implicit_fusion, INT v
 	unrank_k_subset(subset_rk, subset, size, level);
 
 	if (f_v) {
-		cout << "isomorph::probe the subset with rank " << subset_rk  << " is ";
+		cout << "isomorph::probe the subset with rank "
+				<< subset_rk  << " is ";
 		INT_vec_print(cout, subset, level);
 		cout << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
 		}
-	rearrange_subset(size, level, data, subset, rearranged_set, verbose_level - 3);
+	rearrange_subset(size, level, data,
+			subset, rearranged_set, verbose_level - 3);
 		// in GALOIS/sorting.C
 		
 	
@@ -203,11 +215,13 @@ void isomorph::isomorph_testing(INT t0,
 	iso_nodes = 0;
 	
 	if (f_v) {
-		cout << "isomorph::isomorph_testing nb_orbits=" << nb_orbits << endl;
+		cout << "isomorph::isomorph_testing nb_orbits="
+				<< nb_orbits << endl;
 		}
 	for (orbit_no = 0; orbit_no < nb_orbits; orbit_no++) {
 		if (f_v4) {
-			cout << "isomorph::isomorph_testing orbit_no=" << orbit_no << " fusion=" << Reps->fusion[orbit_no] << endl;
+			cout << "isomorph::isomorph_testing orbit_no=" << orbit_no
+					<< " fusion=" << Reps->fusion[orbit_no] << endl;
 			}
 		if (Reps->fusion[orbit_no] == -2) {
 			
@@ -217,7 +231,8 @@ void isomorph::isomorph_testing(INT t0,
 			Reps->rep[Reps->count] = orbit_no;
 			Reps->fusion[orbit_no] = orbit_no;
 			
-			*fp_event_out << "BEGIN isomorphism type " << Reps->count  << endl;
+			*fp_event_out << "BEGIN isomorphism type "
+					<< Reps->count  << endl;
 			*fp_event_out << "O " << orbit_no << endl;
 			
 			if (f_play_back) {
@@ -237,7 +252,8 @@ void isomorph::isomorph_testing(INT t0,
 
 
 			Reps->stab[Reps->count] = Stab;
-			*fp_event_out << "END isomorphism type " << Reps->count << endl;
+			*fp_event_out << "END isomorphism type "
+					<< Reps->count << endl;
 			Reps->count++;
 			}
 		//break;
@@ -253,7 +269,8 @@ void isomorph::isomorph_testing(INT t0,
 
 	*fp_event_out << "-1" << endl;
 	delete fp_event_out;
-	cout << "Written file " << event_out_fname << " of size " << file_size(event_out_fname) << endl;
+	cout << "Written file " << event_out_fname << " of size "
+			<< file_size(event_out_fname) << endl;
 	
 	cout << "We found " << Reps->count << " isomorphism types" << endl;
 
@@ -361,17 +378,20 @@ void isomorph::write_classification_graph(INT verbose_level)
 	
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
-		cout << "isomorph::write_classification_graph after LG->init" << endl;
+		cout << "isomorph::write_classification_graph "
+				"after LG->init" << endl;
 		}
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "isomorph::write_classification_graph after LG->place" << endl;
+		cout << "isomorph::write_classification_graph "
+				"after LG->place" << endl;
 		}
 
 	// make the first set of edges (upper part)
 
 	if (f_vv) {
-		cout << "isomorph::write_classification_graph making the first set of edges" << endl;
+		cout << "isomorph::write_classification_graph "
+				"making the first set of edges" << endl;
 		}
 
 	for (i = 0; i < nb_starter; i++) {
@@ -379,7 +399,8 @@ void isomorph::write_classification_graph(INT verbose_level)
 		l = starter_nb_orbits[i];
 		if (f_vv) {
 			if (l) {
-				cout << "starter orbit " << i << " f=" << f << " l=" << l << endl;
+				cout << "starter orbit " << i << " f=" << f
+						<< " l=" << l << endl;
 				}
 			}
 		for (j = 0; j < l; j++) {
@@ -391,7 +412,8 @@ void isomorph::write_classification_graph(INT verbose_level)
 	// make the second set of edges (lower part)
 
 	if (f_vv) {
-		cout << "isomorph::write_classification_graph making the second set of edges" << endl;
+		cout << "isomorph::write_classification_graph "
+				"making the second set of edges" << endl;
 		}
 
 	INT *down_link;
@@ -411,7 +433,9 @@ void isomorph::write_classification_graph(INT verbose_level)
 	sprintf(fname, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "isomorph::write_classification_graph Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "isomorph::write_classification_graph "
+				"Written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 
 
@@ -468,7 +492,8 @@ void isomorph::decomposition_matrix(INT verbose_level)
 }
 
 
-void isomorph::compute_down_link(INT *&down_link, INT verbose_level)
+void isomorph::compute_down_link(INT *&down_link,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -539,9 +564,12 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 	Stab->group_order(go);
 	
 	if (f_v) {
-		cout << "isomorph::do_iso_test for isomorphism type " << Reps->count 
-			<< " which is represented by flag orbit " << orbit_no << ", known stab order " << go 
-			<< " orbit_fst=" << orbit_fst[orbit_no] << " orbit_len=" << orbit_len[orbit_no] << " " << endl;
+		cout << "isomorph::do_iso_test for isomorphism type "
+				<< Reps->count
+			<< " which is represented by flag orbit " << orbit_no
+			<< ", known stab order " << go
+			<< " orbit_fst=" << orbit_fst[orbit_no] << " orbit_len="
+			<< orbit_len[orbit_no] << " " << endl;
 		}
 	
 	id = orbit_perm[orbit_fst[orbit_no]];
@@ -554,12 +582,14 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 		}
 	
 	if (f_vv) {
-		cout << "isomorph::do_iso_test calling induced_action_on_set" << endl;
+		cout << "isomorph::do_iso_test "
+				"calling induced_action_on_set" << endl;
 		}
 	induced_action_on_set(Stab, data, verbose_level - 2);
 
 	if (f_vv) {
-		cout << "isomorph::do_iso_test induced_action_on_set finished" << endl;
+		cout << "isomorph::do_iso_test "
+				"induced_action_on_set finished" << endl;
 		}
 	
 
@@ -606,7 +636,8 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 		iso_nodes++;
 
 		if (f_v3) {
-			cout << "isomorph::do_iso_test before process_rearranged_set" << endl;
+			cout << "isomorph::do_iso_test "
+					"before process_rearranged_set" << endl;
 			}
 
 #if 0
@@ -633,14 +664,16 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 			}
 		}
 	if (f_v) {
-		cout << "isomorph::do_iso_test cnt_minimal=" << cnt_minimal << endl;
+		cout << "isomorph::do_iso_test "
+				"cnt_minimal=" << cnt_minimal << endl;
 		}
 
 	print_statistics_iso_test(t0, Stab);
 
 	Stab->group_order(go);
 	if (f_v) {
-		cout << "isomorph::do_iso_test the full stabilizer has order " << go << endl;
+		cout << "isomorph::do_iso_test "
+				"the full stabilizer has order " << go << endl;
 		}	
 
 	close_level_database(verbose_level - 1);
@@ -689,7 +722,8 @@ INT isomorph::next_subset(INT t0,
 		
 	if (!f_is_minimal) {
 	
-		//cout << "next subset at backtrack_level=" << backtrack_level << endl;
+		//cout << "next subset at backtrack_level="
+		//<< backtrack_level << endl;
 		if (!next_k_subset(subset, size, level)) {
 			// in GALOIS/combinatorics.C
 
@@ -725,7 +759,8 @@ INT isomorph::next_subset(INT t0,
 		//AA->print_vector_as_permutation(Stab->gens);
 		}
 	
-	rearrange_subset(size, level, data, subset, rearranged_set, verbose_level - 3);
+	rearrange_subset(size, level, data,
+		subset, rearranged_set, verbose_level - 3);
 		// in GALOIS/sorting.C
 		
 	
@@ -738,7 +773,8 @@ INT isomorph::next_subset(INT t0,
 	return TRUE;
 }
 
-void isomorph::process_rearranged_set(sims *Stab, INT *data, 
+void isomorph::process_rearranged_set(
+	sims *Stab, INT *data,
 	INT f_implicit_fusion, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -751,26 +787,34 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 	INT f_found;
 	
 	if (f_v) {
-		cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank << endl;
+		cout << "isomorph::process_rearranged_set "
+				"flag orbit " << orbit_no << " subset "
+				<< subset_rank << endl;
 		//cout << "verbose_level=" << verbose_level << endl;
 		//cout << "before identify_solution" << endl;
 		}
 	
 	INT f_failure_to_find_point;
 
-	f_found = identify_solution_relaxed(rearranged_set, transporter, 
-		f_implicit_fusion, orbit_no0, f_failure_to_find_point, verbose_level - 2);
+	f_found = identify_solution_relaxed(
+		rearranged_set, transporter,
+		f_implicit_fusion, orbit_no0, f_failure_to_find_point,
+		verbose_level - 2);
 
 	if (f_failure_to_find_point) {
 		if (f_vv) {
-			cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank << " : f_failure_to_find_point" << endl;
+			cout << "isomorph::process_rearranged_set flag orbit "
+					<< orbit_no << " subset " << subset_rank
+					<< " : f_failure_to_find_point" << endl;
 			}
 		return;
 		}	
 	if (!f_found) {
 #if 0
 		if (TRUE /*f_vv*/) {
-			cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank << " : not found" << endl;
+			cout << "isomorph::process_rearranged_set flag orbit "
+					<< orbit_no << " subset " << subset_rank
+					<< " : not found" << endl;
 			cout << "Original set: ";
 			INT_vec_print(cout, data, size);
 			cout << endl;
@@ -784,8 +828,10 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 			INT_vec_print(cout, rearranged_set, size);
 			cout << endl;
 			INT_vec_copy(rearranged_set_save, rearranged_set, size);
-			f_found = identify_solution_relaxed(rearranged_set, transporter, 
-				f_implicit_fusion, orbit_no0, f_failure_to_find_point, verbose_level + 10);
+			f_found = identify_solution_relaxed(
+				rearranged_set, transporter,
+				f_implicit_fusion, orbit_no0, f_failure_to_find_point,
+				verbose_level + 10);
 			cout << "f_found=" << f_found << endl;
 			}
 		exit(1);
@@ -793,8 +839,10 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 		return;
 		}
 	if (f_v) {
-		cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank << endl;
-		cout << "after identify_solution, needs to be joined with flag orbit = " << orbit_no0 << endl;
+		cout << "isomorph::process_rearranged_set flag orbit " << orbit_no
+				<< " subset " << subset_rank << endl;
+		cout << "after identify_solution, needs to be joined with "
+				"flag orbit = " << orbit_no0 << endl;
 		}
 
 	id0 = orbit_perm[orbit_fst[orbit_no0]];
@@ -818,15 +866,19 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 
 	if (orbit_no0 == orbit_no) {
 		if (f_v) {
-			cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank <<  " automorphism" << endl;
+			cout << "isomorph::process_rearranged_set flag orbit "
+					<< orbit_no << " subset " << subset_rank
+					<<  " automorphism" << endl;
 			//A->element_print(transporter, cout);
 			}
 			
 		if (handle_automorphism(data, Stab, transporter, 
 			verbose_level - 2)) {
 			Stab->group_order(new_go);
-			*fp_event_out << "A " << orbit_no << " " << subset_rank << " " << new_go << endl;
-			cout << "event: A " << orbit_no << " " << subset_rank << " " << new_go << endl;
+			*fp_event_out << "A " << orbit_no << " " << subset_rank
+					<< " " << new_go << endl;
+			cout << "event: A " << orbit_no << " " << subset_rank
+					<< " " << new_go << endl;
 			}
 			
 
@@ -834,7 +886,9 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 	else if (Reps->fusion[orbit_no0] == -2) {
 		Reps->fusion[orbit_no0] = orbit_no;
 		if (f_v) {
-			cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank <<  " fusion" << endl;
+			cout << "isomorph::process_rearranged_set flag orbit "
+					<< orbit_no << " subset " << subset_rank
+					<<  " fusion" << endl;
 			}
 		A->element_invert(transporter, tmp_Elt, FALSE);
 		if (FALSE && f_v6) {
@@ -846,14 +900,18 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 			//cout << "hdl=" << hdl << endl;
 			}
 		Reps->handle[orbit_no0] = hdl;
-		*fp_event_out << "F " << orbit_no << " " << subset_rank << " " << orbit_no0 << endl;
+		*fp_event_out << "F " << orbit_no << " " << subset_rank
+				<< " " << orbit_no0 << endl;
 		if (f_v) {
-			cout << "event: F " << orbit_no << " " << subset_rank << " " << orbit_no0 << endl;
+			cout << "event: F " << orbit_no << " " << subset_rank
+					<< " " << orbit_no0 << endl;
 			}
 		}
 	else {
 		if (f_v) {
-			cout << "isomorph::process_rearranged_set flag orbit " << orbit_no << " subset " << subset_rank <<  " automorphism due to repeated fusion" << endl;
+			cout << "isomorph::process_rearranged_set flag orbit "
+					<< orbit_no << " subset " << subset_rank
+					<<  " automorphism due to repeated fusion" << endl;
 			}
 		if (Reps->fusion[orbit_no0] != orbit_no) {
 			cout << "COLLISION-ERROR!!!" << endl;
@@ -884,7 +942,8 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 			load_solution(orbit_perm[orbit_fst[original_orbit]], my_data0);
 		
 
-			cout << "i : data[i] : rearranged_set_save[i] : image under group element : data0[i]" << endl;
+			cout << "i : data[i] : rearranged_set_save[i] : image under "
+					"group element : data0[i]" << endl;
 			for (i = 0; i < size; i++) {
 				j = rearranged_set_save[i];
 				cout << setw(3) << i << " : " 
@@ -905,9 +964,11 @@ void isomorph::process_rearranged_set(sims *Stab, INT *data,
 		
 		if (handle_automorphism(data, Stab, tmp_Elt, verbose_level)) {
 			Stab->group_order(new_go);
-			*fp_event_out << "AF " << orbit_no << " " << subset_rank << " " << orbit_no0 << " " << new_go << endl;
+			*fp_event_out << "AF " << orbit_no << " " << subset_rank
+					<< " " << orbit_no0 << " " << new_go << endl;
 			if (f_v) {
-				cout << "event: AF " << orbit_no << " " << subset_rank << " " << orbit_no0 << " " << new_go << endl;
+				cout << "event: AF " << orbit_no << " " << subset_rank
+						<< " " << orbit_no0 << " " << new_go << endl;
 				}
 			}
 		}
@@ -995,7 +1056,8 @@ void isomorph::stabilizer_action_add_generator(INT *Elt, INT verbose_level)
 	
 	AA->group_order(stabilizer_group_order);
 	if (f_v) {
-		cout << "stabilizer_action_add_generator, group of order " << stabilizer_group_order << endl;
+		cout << "stabilizer_action_add_generator, group of order "
+				<< stabilizer_group_order << endl;
 		}
 
 	new_gens = NEW_PINT(stabilizer_nb_generators + 1);
@@ -1028,15 +1090,18 @@ void isomorph::stabilizer_action_add_generator(INT *Elt, INT verbose_level)
 
 	Elt1 = NEW_INT(AA_perm->elt_size_in_INT);
 
-	AA_perm->make_element(Elt1, stabilizer_generators[h], 0 /* verbose_level */);
-	AA_perm->element_move(Elt1, gens_perm->ith(len), 0 /* verbose_level */);
+	AA_perm->make_element(Elt1, stabilizer_generators[h],
+			0 /* verbose_level */);
+	AA_perm->element_move(Elt1, gens_perm->ith(len),
+			0 /* verbose_level */);
 	UF->add_generator(Elt1, 0 /* verbose_level */);
 	
 	nb = UF->count_ancestors_above(subset_rank);
 	N = AA_on_k_subsets->degree - subset_rank;
 	f = ((double)nb / (double)N) * 100;
 	if (f_v) {
-		cout << "stabilizer_action_add_generator: number of ancestors = " << nb << " / " << N << " (" << f << "%)" << endl;
+		cout << "stabilizer_action_add_generator: number of ancestors = "
+				<< nb << " / " << N << " (" << f << "%)" << endl;
 		}
 	if (f_v) {
 		cout << "isomorph::stabilizer_action_add_generator finished" << endl;
@@ -1081,7 +1146,8 @@ void isomorph::print_statistics_iso_test(INT t0, sims *Stab)
 	N = AA_on_k_subsets->degree - subset_rank;
 	f2 = ((double)nb / (double)N) * 100;
 #endif
-	cout << "ancestors left = " << nb << " / " << N << " (" << f1 << "%): ";
+	cout << "ancestors left = " << nb << " / " << N
+			<< " (" << f1 << "%): ";
 	INT_set_print(cout, subset, level);
 	cout << " current stabilizer order " << go 
 		<< " induced action order " << AA_go 
@@ -1090,7 +1156,8 @@ void isomorph::print_statistics_iso_test(INT t0, sims *Stab)
 		<< " nb_open=" << Reps->nb_open;
 
 	if (nb_times_make_set_smaller_called) {
-		cout << " nb_times_make_set_smaller_called=" << nb_times_make_set_smaller_called;
+		cout << " nb_times_make_set_smaller_called="
+				<< nb_times_make_set_smaller_called;
 		}
 		//<< " nb_is_minimal_called=" << nb_is_minimal_called 
 		//<< " nb_is_minimal=" << nb_is_minimal 
@@ -1100,7 +1167,8 @@ void isomorph::print_statistics_iso_test(INT t0, sims *Stab)
 }
 
 
-INT isomorph::identify(INT *set, INT f_implicit_fusion, INT verbose_level)
+INT isomorph::identify(INT *set, INT f_implicit_fusion,
+		INT verbose_level)
 // opens and closes the solution database and the level database.
 // Hence this function is slow.
 {
@@ -1125,7 +1193,8 @@ INT isomorph::identify(INT *set, INT f_implicit_fusion, INT verbose_level)
 	return idx;
 }
 
-INT isomorph::identify_database_is_open(INT *set, INT f_implicit_fusion, INT verbose_level)
+INT isomorph::identify_database_is_open(INT *set,
+		INT f_implicit_fusion, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1141,14 +1210,17 @@ INT isomorph::identify_database_is_open(INT *set, INT f_implicit_fusion, INT ver
 
 	INT f_failure_to_find_point;
 	
-	orbit_no0 = identify_solution(set, transporter, f_implicit_fusion, f_failure_to_find_point, verbose_level - 3);
+	orbit_no0 = identify_solution(set, transporter,
+			f_implicit_fusion, f_failure_to_find_point,
+			verbose_level - 3);
 
 	if (f_vv) {
 		cout << "identify_solution returns orbit_no0 = " << orbit_no0 << endl;
 		}
 
 	if (f_failure_to_find_point) {
-		cout << "isomorph::identify_database_is_open: f_failure_to_find_point" << endl;
+		cout << "isomorph::identify_database_is_open: "
+				"f_failure_to_find_point" << endl;
 		exit(1);
 		}
 	id0 = orbit_perm[orbit_fst[orbit_no0]];
@@ -1230,7 +1302,8 @@ INT isomorph::identify_database_is_open(INT *set, INT f_implicit_fusion, INT ver
 }
 
 
-void isomorph::induced_action_on_set_basic(sims *S, INT *set, INT verbose_level)
+void isomorph::induced_action_on_set_basic(sims *S,
+		INT *set, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1247,25 +1320,31 @@ void isomorph::induced_action_on_set_basic(sims *S, INT *set, INT verbose_level)
 	AA = new action;
 
 	if (f_vv) {
-		cout << "isomorph::induced_action_on_set_basic before induced_action_by_restriction" << endl;
+		cout << "isomorph::induced_action_on_set_basic "
+				"before induced_action_by_restriction" << endl;
 		}
 	AA->induced_action_by_restriction(*gen->A2, 
 		TRUE, S, size, set, 0/*verbose_level*/);
 	if (f_vv) {
-		cout << "isomorph::induced_action_on_set_basic after induced_action_by_restriction" << endl;
+		cout << "isomorph::induced_action_on_set_basic "
+				"after induced_action_by_restriction" << endl;
 		}
 	AA->group_order(go);
 	AA->Kernel->group_order(K_go);
 	if (f_vv) {
-		cout << "isomorph::induced_action_on_set_basic induced action by restriction: group order = " << go << endl;
-		cout << "isomorph::induced_action_on_set_basic kernel group order = " << K_go << endl;
+		cout << "isomorph::induced_action_on_set_basic "
+				"induced action by restriction: group order = "
+				<< go << endl;
+		cout << "isomorph::induced_action_on_set_basic "
+				"kernel group order = " << K_go << endl;
 		}
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set_basic done" << endl;
 		}
 }
 
-void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
+void isomorph::induced_action_on_set(
+		sims *S, INT *set, INT verbose_level)
 // Called by do_iso_test and print_isomorphism_types
 // Creates the induced action on the set from the given action.
 // The given action is gen->A2
@@ -1310,28 +1389,36 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 	
 	
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set before induced_action_by_restriction" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"before induced_action_by_restriction" << endl;
 		}
-	AA->induced_action_by_restriction(*gen->A2, TRUE, S, size, set, 0/*verbose_level*/);
+	AA->induced_action_by_restriction(*gen->A2,
+			TRUE, S, size, set, 0/*verbose_level*/);
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set after induced_action_by_restriction" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"after induced_action_by_restriction" << endl;
 		}
 	AA->group_order(go);
 	AA->Kernel->group_order(K_go);
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set induced action by restriction: group order = " << go << endl;
-		cout << "isomorph::induced_action_on_set kernel group order = " << K_go << endl;
+		cout << "isomorph::induced_action_on_set "
+				"induced action by restriction: group order = "
+				<< go << endl;
+		cout << "isomorph::induced_action_on_set "
+				"kernel group order = " << K_go << endl;
 		}
 	
 	if (f_vv) {
-		cout << "isomorph::induced_action_on_set induced action:" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"induced action:" << endl;
 		//AA->Sims->print_generators();
 		//AA->Sims->print_generators_as_permutations();
 		//AA->Sims->print_basic_orbits();
 	
 		longinteger_object go;
 		AA->Sims->group_order(go);
-		cout << "isomorph::induced_action_on_set AA->Sims go=" << go << endl;
+		cout << "isomorph::induced_action_on_set "
+				"AA->Sims go=" << go << endl;
 
 		//cout << "induced action, in the original action:" << endl;
 		//AA->Sims->print_generators_as_permutations_override_action(A);
@@ -1342,7 +1429,8 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 	//K->print_generators_as_permutations();
 
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set before init_permutation_group" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"before init_permutation_group" << endl;
 		}
 
 	AA_perm->init_permutation_group(size, 0/*verbose_level*/);
@@ -1352,17 +1440,21 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set before induced_action_on_k_subsets" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"before induced_action_on_k_subsets" << endl;
 		}
-	AA_on_k_subsets->induced_action_on_k_subsets(*AA_perm, level /* k */, 
+	AA_on_k_subsets->induced_action_on_k_subsets(
+		*AA_perm, level /* k */,
 		0/*verbose_level*/);
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set AA_on_k_subsets:" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"AA_on_k_subsets:" << endl;
 		AA_on_k_subsets->print_info();
 		}
 
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set creating gens_perm" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"creating gens_perm" << endl;
 		}
 
 	if (AA->Strong_gens == NULL) {
@@ -1389,7 +1481,8 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 
 	for (h = 0; h < len; h++) {
 		if (FALSE /*f_v*/) {
-			cout << "isomorph::induced_action_on_set generator " << h << " / " << len << ":" << endl;
+			cout << "isomorph::induced_action_on_set "
+					"generator " << h << " / " << len << ":" << endl;
 			}
 		for (i = 0; i < size; i++) {
 			j = AA->image_of(gens->ith(h), i);
@@ -1401,20 +1494,24 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 			cout << endl;
 			}
 		AA_perm->make_element(Elt1, data1, 0 /* verbose_level */);
-		AA_perm->element_move(Elt1, gens_perm->ith(h), 0 /* verbose_level */);
+		AA_perm->element_move(Elt1, gens_perm->ith(h),
+				0 /* verbose_level */);
 		}
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set created gens_perm" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"created gens_perm" << endl;
 		}
 
 	UF = new union_find;
 	UF->init(AA_on_k_subsets, verbose_level);
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set after UF->init" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"after UF->init" << endl;
 		}
 	UF->add_generators(gens_perm, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "isomorph::induced_action_on_set after UF->add_generators" << endl;
+		cout << "isomorph::induced_action_on_set "
+				"after UF->add_generators" << endl;
 		}
 	if (f_v) {
 		INT nb, N;
@@ -1422,7 +1519,8 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 		nb = UF->count_ancestors();
 		N = AA_on_k_subsets->degree;
 		f = ((double)nb / (double)N) * 100;
-		cout << "isomorph::induced_action_on_set number of ancestors = " << nb << " / " << N << " (" << f << "%)" << endl;
+		cout << "isomorph::induced_action_on_set number of ancestors = "
+				<< nb << " / " << N << " (" << f << "%)" << endl;
 		}
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set finished" << endl;
@@ -1434,7 +1532,8 @@ void isomorph::induced_action_on_set(sims *S, INT *set, INT verbose_level)
 	//delete K;
 }
 
-INT isomorph::handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_level)
+INT isomorph::handle_automorphism(INT *set, sims *Stab,
+		INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -1445,7 +1544,8 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_le
 	INT ret;
 	
 	if (f_v) {
-		cout << "isomorph::handle_automorphism orbit " << orbit_no << " subset " << subset_rank <<  endl;
+		cout << "isomorph::handle_automorphism orbit " << orbit_no
+				<< " subset " << subset_rank <<  endl;
 		}
 	Elt1 = handle_automorphism_Elt1;
 #if 0
@@ -1455,16 +1555,21 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_le
 #endif
 			
 	Stab->group_order(go);
-	if (Stab->strip_and_add(Elt, Elt1 /* residue */, 0/*verbose_level +4*//*- 2*/)) {
-		Stab->closure_group(2000 /* nb_times */, 0/*verbose_level*/);
+	if (Stab->strip_and_add(Elt, Elt1 /* residue */,
+			0/*verbose_level +4*//*- 2*/)) {
+		Stab->closure_group(2000 /* nb_times */,
+				0/*verbose_level*/);
 		Stab->group_order(go1);
 		if (f_v) {
-			cout << "isomorph::handle_automorphism orbit " << orbit_no << " subset " << subset_rank <<  " : ";
+			cout << "isomorph::handle_automorphism orbit " << orbit_no
+					<< " subset " << subset_rank <<  " : ";
 			cout << "the stabilizer has been extended, old order " 
 				<< go << " new group order " << go1 << endl;
 			}
 		if (f_v) {
-			cout << "isomorph::handle_automorphism orbit " << orbit_no << " subset " << subset_rank << "new automorphism:" << endl;
+			cout << "isomorph::handle_automorphism orbit " << orbit_no
+					<< " subset " << subset_rank
+					<< "new automorphism:" << endl;
 			A->element_print(Elt, cout);
 			}
 		//induced_action_on_set(Stab, set, verbose_level - 2);
@@ -1478,7 +1583,8 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_le
 			//cout << endl;
 			}
 		if (f_v6) {
-			cout << "isomorph::handle_automorphism orbit " << orbit_no << " subset " << subset_rank <<  " : ";
+			cout << "isomorph::handle_automorphism orbit " << orbit_no
+					<< " subset " << subset_rank <<  " : ";
 			cout << "current stabilizer:" << endl;
 			AA->print_vector(Stab->gens);
 			//AA->print_vector_as_permutation(Stab->gens);
@@ -1489,8 +1595,10 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_le
 		if (Stab->closure_group(200 /* nb_times */, 0/*verbose_level*/)) {
 			Stab->group_order(go1);
 			if (f_v) {
-				cout << "isomorph::handle_automorphism orbit " << orbit_no << " subset " << subset_rank <<  " : ";
-				cout << "the stabilizer has been extended during closure_group, old order " 
+				cout << "isomorph::handle_automorphism orbit " << orbit_no
+						<< " subset " << subset_rank <<  " : ";
+				cout << "the stabilizer has been extended during "
+						"closure_group, old order "
 					<< go << " new group order " << go1 << endl;
 				}
 			induced_action_on_set(Stab, set, 0/*verbose_level - 1*/);
@@ -1499,7 +1607,8 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab, INT *Elt, INT verbose_le
 		}
 	else {
 		if (f_vvv) {	
-			cout << "isomorph::handle_automorphism orbit " << orbit_no << " subset " << subset_rank <<  " : ";
+			cout << "isomorph::handle_automorphism orbit " << orbit_no
+					<< " subset " << subset_rank <<  " : ";
 			cout << "already known" << endl;
 			}
 		ret = FALSE;

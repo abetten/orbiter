@@ -6,9 +6,9 @@
 // July 19, 2014
 
 
-#include "GALOIS/galois.h"
-#include "ACTION/action.h"
-#include "SNAKES_AND_LADDERS/snakesandladders.h"
+#include "../../GALOIS/galois.h"
+#include "../../ACTION/action.h"
+#include "../../SNAKES_AND_LADDERS/snakesandladders.h"
 
 INT generator::compute_orbits(INT from_level, INT to_level, 
 	INT f_write_candidate_file, 

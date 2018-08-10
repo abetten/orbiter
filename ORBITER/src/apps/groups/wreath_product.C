@@ -271,19 +271,23 @@ void tensor_product::init(int argc, const char **argv,
 	INT *Elt1;
 	INT *Elt2;
 	INT *Elt3;
+	INT *Elt4;
 	INT *perm1;
 	INT *perm2;
 	INT *perm3;
 	INT *perm4;
+	INT *perm5;
 	INT cnt;
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt4 = NEW_INT(A->elt_size_in_INT);
 	perm1 = NEW_INT(A->degree);
 	perm2 = NEW_INT(A->degree);
 	perm3 = NEW_INT(A->degree);
 	perm4 = NEW_INT(A->degree);
+	perm5 = NEW_INT(A->degree);
 
 	for (cnt = 0; cnt < 10; cnt++) {
 		r1 = random_integer(SG->gens->len);
@@ -363,6 +367,74 @@ void tensor_product::init(int argc, const char **argv,
 	}
 
 	cout << "test 2 passed" << endl;
+
+
+
+	for (cnt = 0; cnt < 10; cnt++) {
+		r1 = random_integer(SG->gens->len);
+		r2 = random_integer(SG->gens->len);
+		cout << "r1=" << r1 << endl;
+		cout << "r2=" << r2 << endl;
+		A->element_move(SG->gens->ith(r1), Elt1, 0);
+		A->element_move(SG->gens->ith(r2), Elt2, 0);
+		cout << "Elt1 = " << endl;
+		A->element_print_quick(Elt1, cout);
+		A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm1, A->degree);
+		cout << endl;
+
+		cout << "Elt2 = " << endl;
+		A->element_print_quick(Elt2, cout);
+		A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+		cout << "as permutation: " << endl;
+		perm_print(cout, perm2, A->degree);
+		cout << endl;
+
+		A->element_mult(Elt1, Elt2, Elt3, 0);
+		cout << "Elt3 = " << endl;
+		A->element_print_quick(Elt3, cout);
+
+		A->element_invert(Elt3, Elt4, 0);
+		cout << "Elt4 = Elt3^-1 = " << endl;
+		A->element_print_quick(Elt4, cout);
+
+
+		A->element_as_permutation(Elt3, perm3, 0 /* verbose_level */);
+		cout << "as Elt3 as permutation: " << endl;
+		perm_print(cout, perm3, A->degree);
+		cout << endl;
+
+		A->element_as_permutation(Elt4, perm4, 0 /* verbose_level */);
+		cout << "as Elt4 as permutation: " << endl;
+		perm_print(cout, perm4, A->degree);
+		cout << endl;
+
+		perm_mult(perm3, perm4, perm5, A->degree);
+		cout << "perm3 * perm4= " << endl;
+		perm_print(cout, perm5, A->degree);
+		cout << endl;
+
+		for (i = 0; i < A->degree; i++) {
+			if (perm5[i] != i) {
+				cout << "test " << cnt << " failed; something is wrong" << endl;
+				exit(1);
+			}
+		}
+	}
+	cout << "test 3 passed" << endl;
+
+
+	FREE_INT(Elt1);
+	FREE_INT(Elt2);
+	FREE_INT(Elt3);
+	FREE_INT(Elt4);
+	FREE_INT(perm1);
+	FREE_INT(perm2);
+	FREE_INT(perm3);
+	FREE_INT(perm4);
+	FREE_INT(perm5);
+
 
 	Gen = new generator;
 
