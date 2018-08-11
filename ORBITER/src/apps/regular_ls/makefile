@@ -1,8 +1,8 @@
-SRC=../../../../ORBITER/SRC
+SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/LIB -I$(SRC)/LIB/DISCRETA
-LIB = $(SRC)/LIB/liborbiter.a
+CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
