@@ -30,7 +30,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 
 	if (gen->f_early_test_func) {
 		gen->root[node].setup_factor_space_action_light(gen,
-				AF, lvl, verbose_level - 2);
+				AF, lvl, verbose_level - 4);
 
 			// oracle_downstep_subspace_action.C
 
@@ -46,12 +46,12 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		gen->root[node].setup_factor_space_action(gen,
 			AF, A_factor_space, lvl,
 			FALSE /*f_compute_tables*/,
-			verbose_level - 2);
+			verbose_level - 4);
 		}
 
 	//projected_pt = AF.project(pt_to_trace, verbose_level - 2);
 	projected_pt = AF.project_onto_Gauss_reduced_vector(
-			pt_to_trace, verbose_level - 2);
+			pt_to_trace, verbose_level - 4);
 
 
 	//G.point_stabilizer_with_action(&A_factor_space,
@@ -71,7 +71,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		//pt0 = AF.preimage(projected_pt0, verbose_level - 2);
 		pt0 = AF.lexleast_element_in_coset(
 				projected_pt0,
-				verbose_level - 2);
+				verbose_level - 4);
 
 		if (f_v) {
 			cout << "oracle::representative_and_coset_rep_inv_subspace_"
@@ -101,7 +101,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 			f_trivial_group, 
 			TRUE /* f_compact */,
 			f_check_image, 
-			verbose_level - 1);
+			verbose_level - 4);
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
 		//cout << "Node " << node << " oracle::orbit_representative_and_"
 		//"coset_rep_inv_subspace_action schreier_vector_coset_"
@@ -109,7 +109,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		
 		//pt0 = AF.preimage(projected_pt0, verbose_level - 2);
 		pt0 = AF.lexleast_element_in_coset(
-				projected_pt0, verbose_level - 2);
+				projected_pt0, verbose_level - 4);
 
 		if (f_v) {
 			cout << "oracle::orbit_representative_and_coset_rep_inv_"

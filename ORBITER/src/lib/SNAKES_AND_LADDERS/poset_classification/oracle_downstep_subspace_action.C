@@ -143,7 +143,9 @@ void oracle::setup_factor_space_action_with_early_test(
 				<< endl;
 		}
 	A_factor_space.induced_action_on_factor_space(gen->A2, &AF, 
-		FALSE /*f_induce_action*/, NULL /* sims */, 0/*verbose_level - 3*/);
+		FALSE /*f_induce_action*/,
+		NULL /* sims */,
+		0/*verbose_level - 3*/);
 	if (f_vv) {
 		cout << "oracle::setup_factor_space_action_with_early_test "
 				"after A_factor_space.induced_action_on_factor_space"
@@ -237,6 +239,7 @@ void oracle::downstep_subspace_action(generator *gen,
 	INT f_use_invariant_subset_if_available, 
 	INT f_implicit_fusion, 
 	INT verbose_level)
+// called from generator::downstep
 {
 	//if (node == 0) {verbose_level += 20;
 	// cout << "oracle::downstep_subspace_action node 0 reached" << endl;}
@@ -529,13 +532,14 @@ void oracle::downstep_orbits_subspace_action(
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	//INT f_vvv = (verbose_level >= 3);
-	//INT f_v10 = (verbose_level >= 10);
+	INT f_v10 = (verbose_level >= 10);
 	action_on_factor_space *AF;
 
 	if (f_v) {
 		cout << "oracle::downstep_orbits_subspace_action" << endl;
 		gen->print_level_info(lvl + 1, node);
-		cout << "oracle::downstep_orbits_subspace_action" << endl;
+		cout << "oracle::downstep_orbits_subspace_action "
+				"verbose_level = " << verbose_level << endl;
 		}
 		
 	if (FALSE) {
@@ -616,8 +620,9 @@ void oracle::downstep_orbits_subspace_action(
 				cout << endl;
 			}
 		}
+	}
 
-
+	if (f_v10) {
 		cout << "Schreier structure generators:" << endl;
 		Schreier.list_elements_as_permutations_vertically(cout);
 
@@ -625,6 +630,7 @@ void oracle::downstep_orbits_subspace_action(
 		cout << "Schreier structure table:" << endl;
 		Schreier.print_tables(cout, FALSE/* f_with_cosetrep*/);
 
+		INT h;
 		BYTE fname[1000];
 		INT xmax = 2000000;
 		INT ymax = 1000000;

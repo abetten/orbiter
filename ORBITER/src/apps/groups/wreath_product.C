@@ -147,6 +147,10 @@ int main(int argc, const char **argv)
 	T = new tensor_product;
 
 	T->init(argc, argv, nb_factors, d, q, depth, verbose_level);
+
+
+	the_end_quietly(t0);
+
 }
 
 tensor_product::tensor_product()
@@ -265,6 +269,7 @@ void tensor_product::init(int argc, const char **argv,
 
 
 
+#if 0
 
 	cout << "testing..." << endl;
 	INT r1, r2;
@@ -425,6 +430,40 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "test 3 passed" << endl;
 
 
+	cout << "performing test 4:" << endl;
+
+	INT data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
+	A->make_element(Elt1, data, verbose_level);
+	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
+	cout << "as Elt1 as permutation: " << endl;
+	perm_print(cout, perm1, A->degree);
+	cout << endl;
+
+	A->element_invert(Elt1, Elt2, 0);
+	A->element_as_permutation(Elt2, perm2, 0 /* verbose_level */);
+	cout << "as Elt2 as permutation: " << endl;
+	perm_print(cout, perm2, A->degree);
+	cout << endl;
+
+
+	A->element_mult(Elt1, Elt2, Elt3, 0);
+	cout << "Elt3 = " << endl;
+	A->element_print_quick(Elt3, cout);
+
+	perm_mult(perm1, perm2, perm3, A->degree);
+	cout << "perm1 * perm2= " << endl;
+	perm_print(cout, perm3, A->degree);
+	cout << endl;
+
+	for (i = 0; i < A->degree; i++) {
+		if (perm3[i] != i) {
+			cout << "test 4 failed; something is wrong" << endl;
+			exit(1);
+		}
+	}
+
+	cout << "test 4 passed" << endl;
+
 	FREE_INT(Elt1);
 	FREE_INT(Elt2);
 	FREE_INT(Elt3);
@@ -434,6 +473,7 @@ void tensor_product::init(int argc, const char **argv,
 	FREE_INT(perm3);
 	FREE_INT(perm4);
 	FREE_INT(perm5);
+#endif
 
 
 	Gen = new generator;
@@ -510,11 +550,15 @@ void tensor_product::init(int argc, const char **argv,
 		cout << "A0=";
 		A0->print_info();
 		}
+
+
+	//Gen->f_allowed_to_show_group_elements = TRUE;
+
 	Gen->main(t0,
 		Gen->depth,
 		f_use_invariant_subset_if_available,
 		f_debug,
-		verbose_level + 20);
+		verbose_level);
 
 	if (f_v) {
 		cout << "tensor_product::init after Gen->main" << endl;

@@ -169,6 +169,8 @@ void oracle::install_fusion_node(
 		cout << "transporter[lvl + 1]=" << endl;
 		gen->A->element_print_quick(
 				gen->transporter->ith(lvl + 1), cout);
+		gen->A2->element_print_as_permutation_verbose(
+				gen->transporter->ith(lvl + 1), cout, 0);
 	}
 	gen->A->element_invert(
 			gen->transporter->ith(lvl + 1),
@@ -177,6 +179,8 @@ void oracle::install_fusion_node(
 		cout << "oracle::install_fusion_node" << endl;
 		cout << "transporter[lvl + 1]^-1=Elt1=" << endl;
 		gen->A->element_print_quick(gen->Elt1, cout);
+		gen->A2->element_print_as_permutation_verbose(
+				gen->Elt1, cout, 0);
 	}
 	if (f_v) {
 		cout << "oracle::install_fusion_node: fusion element:" << endl;
@@ -510,20 +514,17 @@ INT oracle::trace_next_point(generator *gen,
 			}
 		cout << "in action " << gen->A2->label << endl;
 		if (gen->f_allowed_to_show_group_elements)
-		gen->A2->element_print_as_permutation_verbose(cosetrep, cout, 0);
-		cout << endl;
+			gen->A2->element_print_as_permutation_verbose(
+					cosetrep, cout, 0);
+			cout << endl;
 		}
 	if (pt0 == the_point) {
 		if (f_vv) {
 			cout << "Since the image point is equal to the original point, "
-					"we apply no element and copy the set over:" << endl;
+					"we apply no element and copy the set "
+					"and the transporter over:" << endl;
 			}
 		INT_vec_copy(cur_set, next_set, size);
-#if 0
-		for (i = 0; i < size; i++) {
-			next_set[i] = cur_set[i];
-			}
-#endif
 		gen->A2->element_move(cur_transporter, next_transporter, FALSE);
 		}
 	else {
