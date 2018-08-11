@@ -354,9 +354,12 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"calling handle_last_level" << endl;
+			cout << "The element \\alpha is equal to " << endl;
+			gen->A2->element_print_quick(
+					gen->transporter->ith(lvl + 1), cout);
 			}
 		trace_result r;
-		r =  handle_last_level(
+		r = handle_last_level(
 			lvl,
 			current_node,
 			current_extension,
@@ -430,6 +433,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			}
 		
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"calling find_automorphism_by_tracing_recursion" << endl;
 			}
@@ -444,6 +448,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			verbose_level);
 
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"after find_automorphism_by_tracing_recursion" << endl;
 			}

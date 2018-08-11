@@ -484,6 +484,13 @@ void wreath_product::element_move(INT *A, INT *B, INT verbose_level)
 		cout << "wreath_product::element_move" << endl;
 	}
 	INT_vec_copy(A, B, elt_size_INT);
+
+#if 0
+	if (f_v) {
+		element_print_easy(B, cout);
+	}
+#endif
+
 	if (f_v) {
 		cout << "wreath_product::element_move done" << endl;
 	}
@@ -499,7 +506,7 @@ void wreath_product::element_invert(INT *A, INT *Av, INT verbose_level)
 	}
 	perm_inverse(A, Av, nb_factors);
 	for (f = 0; f < nb_factors; f++) {
-		g = Av[f];
+		g = A[f];
 		M->GL_invert(A + offset_i(f), Av + offset_i(g));
 	}
 	if (f_v) {

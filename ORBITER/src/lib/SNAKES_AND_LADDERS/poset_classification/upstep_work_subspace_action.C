@@ -168,7 +168,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	up_orbit.init(&A_on_hyperplanes);
 	up_orbit.init_generators(*H->SG);
 	if (f_vvv) {
-		cout << "upstep_work::upstep_subspace_action generators for H:" << endl;
+		cout << "upstep_work::upstep_subspace_action "
+				"generators for H:" << endl;
 		H->print_strong_generators(cout, TRUE);
 
 #if 1

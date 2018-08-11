@@ -88,6 +88,8 @@ int main(int argc, char **argv)
 		exit(1);
 		}	
 	do_it(epsilon, d, q, verbose_level);
+
+	the_end_quietly(t0);
 }
 
 void do_it(INT epsilon, INT n, INT q, INT verbose_level)
