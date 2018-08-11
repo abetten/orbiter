@@ -112,7 +112,8 @@ void flag_orbits::read_file(ifstream &fp, INT verbose_level)
 	Flag_orbit_node = new flag_orbit_node[nb_flag_orbits];
 	for (i = 0; i < nb_flag_orbits; i++) {
 		if (FALSE) {
-			cout << "flag_orbits::read_file node " << i << " / " << nb_flag_orbits << endl;
+			cout << "flag_orbits::read_file "
+					"node " << i << " / " << nb_flag_orbits << endl;
 			}
 		Flag_orbit_node[i].Flag_orbits = this;
 		Flag_orbit_node[i].flag_orbit_index = i;

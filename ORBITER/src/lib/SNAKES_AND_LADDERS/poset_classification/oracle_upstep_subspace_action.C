@@ -9,7 +9,8 @@
 
 void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 	generator *gen,
-	INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep, INT verbose_level)
+	INT lvl, INT pt_to_trace,
+	INT &pt0, INT *&cosetrep, INT verbose_level)
 // called by oracle::trace_next_point
 {
 	INT f_v = (verbose_level >= 1);
@@ -35,15 +36,17 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 
 
 #if 0
-		gen->root[node].setup_factor_space_action_with_early_test(gen, 
+		gen->root[node].setup_factor_space_action_with_early_test(
+			gen,
 			AF, A_factor_space, lvl, 
 			verbose_level - 2);
 #endif
 		}
 	else {
 		gen->root[node].setup_factor_space_action(gen,
-				AF, A_factor_space, lvl,
-			FALSE /*f_compute_tables*/, verbose_level - 2);
+			AF, A_factor_space, lvl,
+			FALSE /*f_compute_tables*/,
+			verbose_level - 2);
 		}
 
 	//projected_pt = AF.project(pt_to_trace, verbose_level - 2);
@@ -66,7 +69,9 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		
 
 		//pt0 = AF.preimage(projected_pt0, verbose_level - 2);
-		pt0 = AF.lexleast_element_in_coset(projected_pt0, verbose_level - 2);
+		pt0 = AF.lexleast_element_in_coset(
+				projected_pt0,
+				verbose_level - 2);
 
 		if (f_v) {
 			cout << "oracle::representative_and_coset_rep_inv_subspace_"
@@ -132,7 +137,8 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		exit(1);
 		}
 #if 0
-	projected_pt0 = A_factor_space.least_image_of_point_generators_by_handle(
+	projected_pt0 =
+			A_factor_space.least_image_of_point_generators_by_handle(
 		nb_strong_generators, 
 		hdl_strong_generators, 
 		projected_pt, 

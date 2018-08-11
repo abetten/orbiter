@@ -374,6 +374,8 @@ public:
 		INT *&Orbit_reps, INT verbose_level);
 	void unrank_point(INT *v, INT rk);
 	INT rank_point(INT *v);
+	void unrank_basis(INT *Basis, INT *S, INT len);
+	void rank_basis(INT *Basis, INT *S, INT len);
 	void generate_source_code(INT level, INT verbose_level);
 
 	// generator_init.C:

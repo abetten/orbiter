@@ -141,6 +141,7 @@ void upstep_work::handle_extension(INT &nb_fuse_cur,
 	INT type;
 
 	if (f_v) {
+		print_level_extension_info();
 		cout << "upstep_work::handle_extension verbose_level = "
 				<< verbose_level << endl;
 		cout << "prev=" << prev << " prev_ex=" << prev_ex << endl;
@@ -196,6 +197,7 @@ void upstep_work::handle_extension_fusion_type(INT verbose_level)
 	// fusion node, nothing to do
 	
 	if (f_v) {
+		print_level_extension_info();
 		cout << "upstep_work::handle_extension_fusion_type" << endl;
 		}		
 	if (f_vv) {
@@ -250,6 +252,7 @@ void upstep_work::handle_extension_unprocessed_type(INT verbose_level)
 	INT ret, type;
 	
 	if (f_v) {
+		print_level_extension_info();
 		cout << "upstep_work::handle_extension_unprocessed_type" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}

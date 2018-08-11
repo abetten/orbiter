@@ -41,7 +41,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	action_on_grassmannian *AG;
 	{
 	action A_on_hyperplanes;
-	INT big_n, n, k, rk, degree, i, h, idx;
+	INT big_n, n, k, rk, degree, idx;
 	INT *ambient_space;
 	INT *base_change_matrix;
 	INT *base_cols;
@@ -104,10 +104,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	embedding = NEW_INT(n);
 	changed_space = NEW_INT(n * big_n);
 	
-	for (i = 0; i < n; i++) {
-		gen->unrank_point(ambient_space + i * big_n,
-				gen->S[i]);
-		}
+	gen->unrank_basis(ambient_space, gen->S, n);
+
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"ambient space:" << endl;
@@ -219,7 +217,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		}
 
 	if (f_vv) {
-		cout << "upstep_work::upstep_subspace_action we will now loop over the " << degree
+		cout << "upstep_work::upstep_subspace_action "
+				"we will now loop over the " << degree
 				<< " cosets of the hyperplane stabilizer:" << endl;
 		}
 
@@ -242,44 +241,47 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 						<< coset << " / " << degree << " is at " << idx
 						<< " which has already been done, "
 						"so we save one trace" << endl;
-				}
-			continue;
 			}
+			continue;
+		}
 #if 0
 		idx = up_orbit.orbit_inv[coset];
 		if (idx < up_orbit.orbit_len[0]) {
 			if (f_v) {
-				cout << "upstep_work::upstep_subspace_action coset " << coset << " is at " << idx
+				cout << "upstep_work::upstep_subspace_action "
+						"coset " << coset << " is at " << idx
 						<< " which is part of the current orbit, "
 						"so we save one trace" << endl;
-				}
-			continue;
 			}
+			continue;
+		}
 #endif
 
 		// for all the previous (=old) points
 		if (f_vv) {
 			print_level_extension_coset_info();
 			cout << endl;
-			}
+		}
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
 					"unranking " << coset << ":" << endl;
-			}
+		}
 		G.unrank_INT(coset, 0 /*verbose_level - 5*/);
-		for (h = 0; h < k * n; h++) {
-			base_change_matrix[h] = G.M[h];
-			}
+		INT_vec_copy(G.M, base_change_matrix, k * n);
+
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
 					"base_change_matrix (hyperplane part) for coset "
 					<< coset << ":" << endl;
-			print_integer_matrix_width(cout, base_change_matrix,
+			print_integer_matrix_width(cout,
+					base_change_matrix,
 					k, n, n, F->log10_of_q);
 			}
 		rk = F->base_cols_and_embedding(
-				k, n, base_change_matrix,
-				base_cols, embedding,
+				k, n,
+				base_change_matrix,
+				base_cols,
+				embedding,
 				0/*verbose_level*/);
 		if (rk != k) {
 			cout << "rk != k" << endl;
@@ -292,15 +294,17 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			INT_vec_print(cout, embedding, n - rk);
 			cout << endl;
 			}
-		for (h = 0; h < n; h++) {
-			base_change_matrix[(n - 1) * n + h] = 0;
-			}
+
+		// fill the matrix up and make it invertible:
+		INT_vec_zero(base_change_matrix + (n - 1) * n, n);
 		base_change_matrix[(n - 1) * n + embedding[0]] = 1;
+
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action "
 					"extended base_change_matrix (hyperplane part) "
 					"for coset " << coset << ":" << endl;
-			print_integer_matrix_width(cout, base_change_matrix,
+			print_integer_matrix_width(cout,
+					base_change_matrix,
 					n, n, n, F->log10_of_q);
 			}
 		if (f_v5) {
@@ -316,7 +320,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 				base_change_matrix, base_cols, embedding,
 				0/*verbose_level*/);
 		if (rk != n) {
-			cout << "upstep_work::upstep_subspace_action rk != n" << endl;
+			cout << "upstep_work::upstep_subspace_action "
+					"rk != n" << endl;
 			exit(1);
 			}
 		F->mult_matrix_matrix(
@@ -334,15 +339,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 
 		// initialize set[0] for the tracing
 		// (keep gen->S as it is):
-		for (h = 0; h < n; h++) {
-			gen->set[0][h] = gen->rank_point(
-					changed_space + h * big_n);
-#if 0
-			gen->set[0][h] = (*gen->rank_point_func)(
-				changed_space + h * big_n,
-				gen->rank_point_data);
-#endif			
-			}
+		gen->rank_basis(changed_space, gen->set[0], n);
+
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset
@@ -389,6 +387,9 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 				TRUE /* f_tolerant */,
 				verbose_level - 1);
 			// upstep_work_trace.C
+			// gen->set[0] is the set we want to trace
+			// gen->transporter->ith(0) is the identity
+
 
 		if (f_vv) {
 			print_level_extension_info();
