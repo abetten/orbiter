@@ -65,7 +65,10 @@ void flag_orbit_node::init(flag_orbits *Flag_orbits, INT flag_orbit_index,
 	flag_orbit_node::downstep_secondary_orbit = downstep_secondary_orbit;
 	flag_orbit_node::downstep_orbit_len = downstep_orbit_len;
 	flag_orbit_node::f_long_orbit = FALSE;
-	INT_vec_copy(pt_representation, Flag_orbits->Pt + flag_orbit_index * Flag_orbits->pt_representation_sz, Flag_orbits->pt_representation_sz);
+	INT_vec_copy(pt_representation,
+			Flag_orbits->Pt +
+			flag_orbit_index * Flag_orbits->pt_representation_sz,
+			Flag_orbits->pt_representation_sz);
 	gens = Strong_gens;
 	if (f_v) {
 		cout << "flag_orbit_node::init done" << endl;
@@ -117,7 +120,8 @@ void flag_orbit_node::read_file(ifstream &fp, INT verbose_level)
 		}
 
 	if (FALSE) {
-		cout << "flag_orbit_node::read_file before gens->read_from_file_binary" << endl;
+		cout << "flag_orbit_node::read_file "
+				"before gens->read_from_file_binary" << endl;
 		}
 	gens = new strong_generators;
 	gens->read_from_file_binary(Flag_orbits->A, fp, verbose_level);

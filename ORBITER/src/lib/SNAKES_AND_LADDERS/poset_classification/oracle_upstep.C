@@ -10,7 +10,8 @@
 
 INT oracle::apply_fusion_element(generator *gen, 
 	INT lvl, INT current_node, 
-	INT current_extension, INT len, INT f_tolerant, INT verbose_level)
+	INT current_extension, INT len, INT f_tolerant,
+	INT verbose_level)
 // returns next_node
 {
 	INT f_v = (verbose_level >= 1);
@@ -24,7 +25,9 @@ INT oracle::apply_fusion_element(generator *gen,
 	set = NEW_INT(len + 1);
 	//set = gen->tmp_set_apply_fusion;
 
-	gen->A->element_retrieve(E[current_extension].data, gen->Elt1, 0);
+	gen->A->element_retrieve(
+			E[current_extension].data,
+			gen->Elt1, 0);
 		// A Betten March 18 2012, this was gen->A2 previously
 	
 	if (f_v) {
@@ -43,7 +46,8 @@ INT oracle::apply_fusion_element(generator *gen,
 		}
 	gen->A2->map_a_set(
 			gen->set[lvl + 1],
-			set /* gen->S0 */, len + 1,
+			set /* gen->S0 */,
+			len + 1,
 			gen->Elt1, 0);
 	if (f_v) {
 		cout << "oracle::apply_fusion_element the set becomes: ";
@@ -55,10 +59,12 @@ INT oracle::apply_fusion_element(generator *gen,
 			gen->transporter->ith(lvl + 1),
 			gen->Elt1, gen->Elt2, 0);
 	if (f_v) {
-		INT_vec_print(cout, gen->set[lvl + 1], len + 1);
+		INT_vec_print(cout,
+				gen->set[lvl + 1], len + 1);
 		cout << endl;
 		}
-	gen->A2->move(gen->Elt2, gen->transporter->ith(lvl + 1));
+	gen->A2->move(gen->Elt2,
+			gen->transporter->ith(lvl + 1));
 
 	if (gen->f_on_subspaces) {
 #if 0
@@ -82,7 +88,9 @@ INT oracle::apply_fusion_element(generator *gen,
 			}
 #endif
 		next_node = gen->find_node_for_subspace_by_rank(
-				set /* gen->S0 */, lvl + 1, verbose_level - 1);
+				set /* gen->S0 */,
+				lvl + 1,
+				verbose_level - 1);
 
 		INT_vec_copy(set, gen->set[lvl + 1], len + 1);
 		}
@@ -99,7 +107,9 @@ INT oracle::apply_fusion_element(generator *gen,
 			cout << endl;
 			}
 		next_node = gen->find_oracle_node_for_set(
-				lvl + 1, gen->set[lvl + 1], f_tolerant, 0);
+				lvl + 1,
+				gen->set[lvl + 1],
+				f_tolerant, 0);
 		}
 
 	FREE_INT(set);
@@ -111,7 +121,8 @@ INT oracle::apply_fusion_element(generator *gen,
 	return next_node;
 }
 
-void oracle::install_fusion_node(generator *gen, 
+void oracle::install_fusion_node(
+	generator *gen,
 	INT lvl, INT current_node, 
 	INT my_node, INT my_extension, INT my_coset, 
 	INT pt0, INT current_extension, 
@@ -139,12 +150,13 @@ void oracle::install_fusion_node(generator *gen,
 		}
 		
 	if (E[current_extension].pt != pt0) {
-		cout << "oracle::install_fusion_node E[current_extension].pt "
-				"!= pt0" << endl;
+		cout << "oracle::install_fusion_node "
+				"E[current_extension].pt != pt0" << endl;
 		exit(1);
 		}
 	if (current_node != node) {
-		cout << "oracle::install_fusion_node current_node != node" << endl;
+		cout << "oracle::install_fusion_node "
+				"current_node != node" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -155,7 +167,8 @@ void oracle::install_fusion_node(generator *gen,
 	if (f_v) {
 		cout << "oracle::install_fusion_node" << endl;
 		cout << "transporter[lvl + 1]=" << endl;
-		gen->A->element_print_quick(gen->transporter->ith(lvl + 1), cout);
+		gen->A->element_print_quick(
+				gen->transporter->ith(lvl + 1), cout);
 	}
 	gen->A->element_invert(
 			gen->transporter->ith(lvl + 1),
@@ -175,13 +188,16 @@ void oracle::install_fusion_node(generator *gen,
 		}
 	hdl = gen->A->element_store(gen->Elt1, FALSE);
 	//E[current_extension].type = EXTENSION_TYPE_FUSION;
-	gen->change_extension_type(lvl, current_node, current_extension,
-			EXTENSION_TYPE_FUSION, 0/* verbose_level*/);
+	gen->change_extension_type(lvl,
+			current_node, current_extension,
+			EXTENSION_TYPE_FUSION,
+			0/* verbose_level*/);
 	E[current_extension].data = hdl;
 	E[current_extension].data1 = my_node;
 	E[current_extension].data2 = my_extension;
 	if (f_v) {
-		cout << "FUSION NODE at lvl " << lvl << " node/extension=" << current_node
+		cout << "FUSION NODE at lvl " << lvl
+				<< " node/extension=" << current_node
 				<< "/" << current_extension << " pt=" << pt0
 				<< " hdl=" << hdl << " to node/extension="
 				<< E[current_extension].data1 /*my_node*/
@@ -233,7 +249,11 @@ void oracle::install_fusion_node(generator *gen,
 		gen->A->element_print_quick(gen->Elt1, cout);
 		cout << "before map_a_set" << endl;
 	}
-	gen->A2->map_a_set(gen->set1, gen->set3, lvl + 1, gen->Elt1, 0);
+	gen->A2->map_a_set(
+			gen->set1,
+			gen->set3,
+			lvl + 1,
+			gen->Elt1, 0);
 	if (f_v) {
 		cout << "oracle::install_fusion_node after map_a_set set3=";
 		INT_vec_print(cout, gen->set3, lvl + 1);
@@ -307,10 +327,17 @@ INT oracle::trace_next_point_wrapper(generator *gen,
 	if (f_v) {
 		cout << "oracle::trace_next_point_wrapper" << endl;
 		}
-	ret = trace_next_point(gen, lvl, current_node, len + 1, 
-		gen->set[lvl], gen->set[lvl + 1], 
-		gen->transporter->ith(lvl), gen->transporter->ith(lvl + 1), 
-		f_implicit_fusion, f_failure_to_find_point, verbose_level);
+	ret = trace_next_point(gen,
+		lvl,
+		current_node,
+		len + 1,
+		gen->set[lvl],
+		gen->set[lvl + 1],
+		gen->transporter->ith(lvl),
+		gen->transporter->ith(lvl + 1),
+		f_implicit_fusion,
+		f_failure_to_find_point,
+		verbose_level);
 	if (f_v) {
 		cout << "oracle::trace_next_point_wrapper done" << endl;
 		}
@@ -318,14 +345,19 @@ INT oracle::trace_next_point_wrapper(generator *gen,
 }
 
 INT oracle::trace_next_point_in_place(generator *gen, 
-	INT lvl, INT current_node, INT size, 
-	INT *cur_set, INT *tmp_set,
-	INT *cur_transporter, INT *tmp_transporter, 
-	INT f_implicit_fusion, INT &f_failure_to_find_point,
+	INT lvl,
+	INT current_node,
+	INT size,
+	INT *cur_set,
+	INT *tmp_set,
+	INT *cur_transporter,
+	INT *tmp_transporter,
+	INT f_implicit_fusion,
+	INT &f_failure_to_find_point,
 	INT verbose_level)
 // called by generator::trace_set_recursion
 {
-	INT ret, i;
+	INT ret;
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
@@ -333,18 +365,29 @@ INT oracle::trace_next_point_in_place(generator *gen,
 		cout << "oracle::trace_next_point_in_place "
 				"verbose_level = " << verbose_level << endl;
 		}
-	ret = trace_next_point(gen, lvl,
-			current_node, size, cur_set, tmp_set,
-		cur_transporter, tmp_transporter, f_implicit_fusion, 
-		f_failure_to_find_point, verbose_level);
+	ret = trace_next_point(gen,
+		lvl,
+		current_node,
+		size,
+		cur_set,
+		tmp_set,
+		cur_transporter,
+		tmp_transporter,
+		f_implicit_fusion,
+		f_failure_to_find_point,
+		verbose_level);
 	if (f_v) {
 		cout << "oracle::trace_next_point_in_place, "
 				"after trace_next_point" << endl;
 		}
+	INT_vec_copy(tmp_set, cur_set, size);
+#if 0
 	for (i = 0; i < size; i++) {
 		cur_set[i] = tmp_set[i];
 		}
-	gen->A->element_move(tmp_transporter, cur_transporter, 0);
+#endif
+	gen->A->element_move(tmp_transporter,
+			cur_transporter, 0);
 	if (f_v) {
 		cout << "oracle::trace_next_point_in_place done" << endl;
 		}
@@ -371,7 +414,8 @@ void oracle::trace_starter(generator *gen, INT size,
 	Elt = gen->starter_canonize_Elt;
 	
 	(*gen->starter_canonize)(cur_set, size, Elt, 
-		gen->starter_canonize_data, verbose_level - 1);
+		gen->starter_canonize_data,
+		verbose_level - 1);
 
 	if (f_vv) {
 		cout << "applying:" << endl;
@@ -382,10 +426,14 @@ void oracle::trace_starter(generator *gen, INT size,
 		}
 		
 	for (i = 0; i < size; i++) {
-		next_set[i] = gen->A2->element_image_of(cur_set[i], Elt, FALSE);
+		next_set[i] = gen->A2->element_image_of(
+				cur_set[i], Elt, FALSE);
 		}
 
-	gen->A->element_mult(cur_transporter, Elt, next_transporter, FALSE);
+	gen->A->element_mult(cur_transporter,
+			Elt,
+			next_transporter,
+			FALSE);
 
 	if (f_v) {
 		cout << "after canonize:" << endl;
@@ -430,15 +478,19 @@ INT oracle::trace_next_point(generator *gen,
 		}
 	
 	if (gen->f_on_subspaces) {
-		orbit_representative_and_coset_rep_inv_subspace_action(gen, lvl, 
-			the_point, pt0, cosetrep, verbose_level - 1);
+		orbit_representative_and_coset_rep_inv_subspace_action(
+			gen, lvl,
+			the_point, pt0, cosetrep,
+			verbose_level - 1);
 
 			// oracle_upstep_subspace_action.C
 
 		}
 	else {
-		if (!orbit_representative_and_coset_rep_inv(gen, lvl, 
-			the_point, pt0, cosetrep, 0 /*verbose_level - 1*/)) {
+		if (!orbit_representative_and_coset_rep_inv(
+			gen, lvl,
+			the_point, pt0, cosetrep,
+			0 /*verbose_level - 1*/)) {
 			if (f_v) {
 				cout << "oracle::trace_next_point orbit_representative_"
 						"and_coset_rep_inv returns FALSE, "
@@ -449,8 +501,10 @@ INT oracle::trace_next_point(generator *gen,
 			}
 		}
 	if (f_vv) {
-		cout << "oracle::trace_next_point lvl = " << lvl << " mapping "
-				<< the_point << "->" << pt0 << " under the element " << endl;
+		cout << "oracle::trace_next_point lvl = " << lvl
+				<< " mapping "
+				<< the_point << "->" << pt0
+				<< " under the element " << endl;
 		if (gen->f_allowed_to_show_group_elements) {
 			gen->A2->element_print_quick(cosetrep, cout);
 			}
@@ -464,9 +518,12 @@ INT oracle::trace_next_point(generator *gen,
 			cout << "Since the image point is equal to the original point, "
 					"we apply no element and copy the set over:" << endl;
 			}
+		INT_vec_copy(cur_set, next_set, size);
+#if 0
 		for (i = 0; i < size; i++) {
 			next_set[i] = cur_set[i];
 			}
+#endif
 		gen->A2->element_move(cur_transporter, next_transporter, FALSE);
 		}
 	else {
@@ -487,9 +544,12 @@ INT oracle::trace_next_point(generator *gen,
 			cout << endl;
 			}
 		
+		INT_vec_copy(cur_set, next_set, lvl);
+#if 0
 		for (i = 0; i < lvl; i++) {
 			next_set[i] = cur_set[i];
 			}
+#endif
 		next_set[lvl] = pt0;
 		for (i = lvl + 1; i < size; i++) {
 			next_set[i] = gen->A2->element_image_of(
@@ -556,7 +616,8 @@ INT oracle::trace_next_point(generator *gen,
 	if (f_implicit_fusion) {
 		// this is needed if implicit fusion nodes are used
 	
-		if (lvl > 0 && next_set[lvl] < next_set[lvl - 1]) {
+		if (lvl > 0 &&
+				next_set[lvl] < next_set[lvl - 1]) {
 			if (f_v) {
 				cout << "oracle::trace_next_point the set becomes "
 						"lexicographically less" << endl;
@@ -571,7 +632,8 @@ INT oracle::trace_next_point(generator *gen,
 		ret = TRUE;
 		}
 	if (f_v) {
-		cout << "oracle::trace_next_point lvl = " << lvl
+		cout << "oracle::trace_next_point "
+				"lvl = " << lvl
 				<< " done, ret=" << ret << endl;
 		}
 	return ret;
@@ -579,7 +641,8 @@ INT oracle::trace_next_point(generator *gen,
 
 INT oracle::orbit_representative_and_coset_rep_inv(
 	generator *gen,
-	INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep,
+	INT lvl, INT pt_to_trace,
+	INT &pt0, INT *&cosetrep,
 	INT verbose_level)
 // called by oracle::oracle::trace_next_point
 {
@@ -589,7 +652,8 @@ INT oracle::orbit_representative_and_coset_rep_inv(
 
 	if (f_v) {
 		cout << "oracle::orbit_representative_and_coset_rep_inv "
-				"lvl=" << lvl << " pt_to_trace=" << pt_to_trace << endl;
+				"lvl=" << lvl
+				<< " pt_to_trace=" << pt_to_trace << endl;
 		}
 	cosetrep = gen->Elt1;
 	if (nb_strong_generators == 0) {
@@ -616,7 +680,6 @@ INT oracle::orbit_representative_and_coset_rep_inv(
 			pt0, 
 			gen->Elt1, gen->Elt2, gen->Elt3, gen->Elt4, 
 			f_trivial_group, 
-			//TRUE /* f_compact */, 
 			f_check_image, 
 			f_allow_failure, 
 			verbose_level - 1)) {

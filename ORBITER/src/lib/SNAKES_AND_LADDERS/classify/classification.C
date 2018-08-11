@@ -51,7 +51,10 @@ void classification::init(action *A, action *A2,
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "classification::init group order = " << go << " representation_sz = " << representation_sz << " max_orbits = " << max_orbits << endl;
+		cout << "classification::init "
+				"group order = " << go
+				<< " representation_sz = " << representation_sz
+				<< " max_orbits = " << max_orbits << endl;
 		}
 	classification::A = A;
 	classification::A2 = A2;
@@ -65,7 +68,8 @@ void classification::init(action *A, action *A2,
 		}
 }
 
-set_and_stabilizer *classification::get_set_and_stabilizer(INT orbit_index, INT verbose_level)
+set_and_stabilizer *classification::get_set_and_stabilizer(
+		INT orbit_index, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	set_and_stabilizer *SaS;
@@ -79,7 +83,8 @@ set_and_stabilizer *classification::get_set_and_stabilizer(INT orbit_index, INT 
 	SaS = new set_and_stabilizer;
 
 	data = NEW_INT(representation_sz);
-	INT_vec_copy(Rep + orbit_index * representation_sz, data, representation_sz);
+	INT_vec_copy(Rep + orbit_index * representation_sz,
+			data, representation_sz);
 	
 	Strong_gens = Orbit[orbit_index].gens->create_copy();
 
@@ -141,7 +146,9 @@ void classification::print_latex(ostream &ost,
 			}
 		
 		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
-		INT_set_print_tex_for_inline_text(ost, Rep + i * representation_sz, representation_sz);
+		INT_set_print_tex_for_inline_text(ost,
+				Rep + i * representation_sz,
+				representation_sz);
 		ost << "_{";
 		go1.print_not_scientific(ost);
 		ost << "}$ orbit length $";

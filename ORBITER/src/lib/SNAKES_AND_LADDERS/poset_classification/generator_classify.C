@@ -6,9 +6,9 @@
 // July 19, 2014
 
 
-#include "../../GALOIS/galois.h"
-#include "../../ACTION/action.h"
-#include "../../SNAKES_AND_LADDERS/snakesandladders.h"
+#include "GALOIS/galois.h"
+#include "ACTION/action.h"
+#include "SNAKES_AND_LADDERS/snakesandladders.h"
 
 INT generator::compute_orbits(INT from_level, INT to_level, 
 	INT f_write_candidate_file, 
@@ -484,7 +484,8 @@ void generator::upstep(INT size,
 			print_progress(size + 1, progress);
 			}
 
-		if (f_v && ABS(progress - progress_last_time) > progress_epsilon) {
+		if (f_v &&
+				ABS(progress - progress_last_time) > progress_epsilon) {
 			f_print = TRUE;
 			progress_last_time = progress;
 			}
@@ -584,6 +585,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 		
 
 		if (f_vvv) {
+			print_level_info(size + 1, prev);
 			cout << "generator::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ":" << endl;
@@ -606,23 +608,26 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 		verbose_level_down = verbose_level - 4;
 
 		if (f_vvv) {
+			print_level_info(size + 1, prev);
 			cout << "generator::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": before Work.init" << endl;
 			}
+
 		Work.init(this, size, prev, prev_ex, cur, 
 			f_debug, 
 			f_lex, 
 			f_indicate_not_canonicals, fp, 
 			verbose_level_down);
+
 		if (f_vvv) {
+			print_level_info(size + 1, prev);
 			cout << "generator::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": after Work.init" << endl;
 			}
 		
-		//cout << "after Work.init" << endl;
-		
+
 
 		if (f_vvv) {
 			if ((prev_ex % Work.mod_for_printing) == 0 && prev_ex) {
@@ -631,6 +636,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 				}
 			}
 		if (f_vvv) {
+			print_level_info(size + 1, prev);
 			cout << "generator::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": before Work.handle_extension nb_ext_cur="
@@ -640,15 +646,19 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 			verbose_level_down);
 
 		if (f_vvv) {
+			print_level_info(size + 1, prev);
 			cout << "generator::extend_node after "
 					"Work.handle_extension" << endl;
 			}
 
 		
 		cur = Work.cur;
-		}
+
+		} // end of upstep_work Work
+
 
 		if (f_vvv) {
+			print_level_info(size + 1, prev);
 			cout << "generator::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ":" << endl;

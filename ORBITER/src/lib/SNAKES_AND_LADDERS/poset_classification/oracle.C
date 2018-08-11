@@ -69,7 +69,8 @@ void oracle::init_root_node(generator *gen, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "oracle::init_root_node() initializing root node" << endl;
+		cout << "oracle::init_root_node "
+				"initializing root node" << endl;
 		}
 	
 	freeself();
@@ -90,6 +91,76 @@ void oracle::init_root_node(generator *gen, INT verbose_level)
 		}
 	
 }
+
+void oracle::init_extension_node_prepare_G(generator *gen,
+	INT prev, INT prev_ex, INT size,
+	group &G, longinteger_object &go_G,
+	INT verbose_level)
+// sets up the group G using the strong generators that are stored
+{
+	INT f_v = (verbose_level >= 1);
+	INT f_vv = (verbose_level >= 2);
+	INT f_vvv = (verbose_level >= 3);
+
+	if (f_v) {
+		cout << "oracle::init_extension_node_prepare_G" << endl;
+		}
+	oracle &Op = gen->root[prev];
+
+	G.init(gen->A);
+	if (f_vv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "oracle::init_extension_node_prepare_G "
+				"calling init_strong_generators_by_hdl" << endl;
+		INT_vec_print(cout,
+				Op.hdl_strong_generators,
+				Op.nb_strong_generators);
+		cout << endl;
+		cout << "verbose_level=" << verbose_level << endl;
+		}
+	G.init_strong_generators_by_hdl(
+			Op.nb_strong_generators,
+			Op.hdl_strong_generators,
+			Op.tl, verbose_level - 1);
+	if (f_vvv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "oracle::init_extension_node_prepare_G "
+				"the strong generators are:" << endl;
+		G.print_strong_generators(cout,
+				FALSE /* f_print_as_permutation */);
+		}
+
+	if (f_vv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "oracle::init_extension_node_prepare_G "
+				"before schreier_sims for stabilizer with "
+			<< Op.nb_strong_generators << " strong generators" << endl;
+		}
+	G.schreier_sims(0 /*verbose_level - 2*/);
+	if (f_vv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "oracle::init_extension_node_prepare_G "
+				"after schreier_sims" << endl;
+		}
+
+	G.group_order(go_G);
+	if (f_vv) {
+		gen->print_level_extension_info(size, prev, prev_ex);
+		INT_vec_print(cout, gen->S, size);
+		cout << "_{" << go_G << "}, previous stabilizer "
+				"has been reconstructed" << endl;
+		}
+
+	if (f_v) {
+		cout << "oracle::init_extension_node_prepare_G done" << endl;
+		}
+
+}
+
 
 void oracle::init_extension_node_prepare_H(generator *gen, 
 	INT prev, INT prev_ex, INT size, 
@@ -497,75 +568,6 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 				"done" << endl;
 		}
 
-}
-
-void oracle::init_extension_node_prepare_G(generator *gen, 
-	INT prev, INT prev_ex, INT size,
-	group &G, longinteger_object &go_G,
-	INT verbose_level)
-// sets up the group G using the strong generators that are stored
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-
-	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_G" << endl;
-		}
-	oracle &Op = gen->root[prev];
-
-	G.init(gen->A);
-	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
-		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
-				"calling init_strong_generators_by_hdl" << endl;
-		INT_vec_print(cout,
-				Op.hdl_strong_generators,
-				Op.nb_strong_generators);
-		cout << endl;
-		cout << "verbose_level=" << verbose_level << endl;
-		}
-	G.init_strong_generators_by_hdl(
-			Op.nb_strong_generators,
-			Op.hdl_strong_generators,
-			Op.tl, verbose_level - 1);
-	if (f_vvv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
-		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
-				"the strong generators are:" << endl;
-		G.print_strong_generators(cout,
-				FALSE /* f_print_as_permutation */);
-		}
-
-	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
-		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
-				"before schreier_sims for stabilizer with "
-			<< Op.nb_strong_generators << " strong generators" << endl;
-		}
-	G.schreier_sims(0 /*verbose_level - 2*/);
-	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
-		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
-				"after schreier_sims" << endl;
-		}
-
-	G.group_order(go_G);
-	if (f_vv) {
-		gen->print_level_extension_info(size, prev, prev_ex);
-		INT_vec_print(cout, gen->S, size);
-		cout << "_{" << go_G << "}, previous stabilizer "
-				"has been reconstructed" << endl;
-		}
-	
-	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_G done" << endl;
-		}
-	
 }
 
 INT oracle::get_level(generator *gen)

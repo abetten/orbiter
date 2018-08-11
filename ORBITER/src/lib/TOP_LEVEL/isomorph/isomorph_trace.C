@@ -956,7 +956,8 @@ INT isomorph::handle_extension(
 	pt0 = canonical_set[cur_level];
 	
 	if (f_v) {
-		cout << "iso_node " << iso_nodes << " isomorph::handle_extension node ";
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::handle_extension node ";
 		print_node_global(cur_level, cur_node_global);
 		cout << " taking care of point " << pt0 << endl;
 		}

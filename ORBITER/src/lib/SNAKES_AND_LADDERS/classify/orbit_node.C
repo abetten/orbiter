@@ -37,7 +37,8 @@ void orbit_node::init(classification *C, INT orbit_index,
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "orbit_node::init orbit_index=" << orbit_index << " rep=";
+		cout << "orbit_node::init "
+				"orbit_index=" << orbit_index << " rep=";
 		INT_vec_print(cout, Rep, C->representation_sz);
 		cout << endl;
 		}

@@ -14,7 +14,8 @@ trace_result upstep_work::find_automorphism_by_tracing(
 // This routine is called from upstep
 // (upstep_work::upstep_subspace_action).
 // It in turn calls oracle::find_automorphism_by_tracing_recursion
-// It tries to compute an isomorphism of the set in set[0][0,...,len] 
+// It tries to compute an isomorphism
+// of the set in set[0][0,...,len]
 // (i.e. of size len+1) to the 
 // set in S[0,...,len] which sends set[0][len] to S[len].
 // Since set[0][0,...,len] is a permutation
@@ -140,20 +141,21 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 				<< O->prev << " pt=" << O->pt << endl;
 		INT_set_print(cout, gen->set[lvl], size);
 		cout << endl;
-		}
+	}
 	if (current_node < path[lvl]) {
+		print_level_extension_coset_info();
 		cout << "upstep_work::find_automorphism_by_tracing_recursion: "
 				"not canonical" << endl;
 		cout << "current_node=" << current_node << endl;
 		cout << "path[lvl]=" << path[lvl] << endl;
 		return not_canonical;
-		}
+	}
 	if (f_v4) {
 		if (gen->f_print_function) {
 			(*gen->print_function)(size,
 					gen->set[lvl], gen->print_function_data);
-			}
 		}
+	}
 	
 	if (f_debug) {
 		if (!O->check_node_and_set_consistency(gen,
@@ -166,40 +168,65 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			INT_set_print(cout, gen->set3, lvl);
 			cout << endl;
 			exit(1);
-			}
 		}
+	}
 	
 	if (lvl == 0 && gen->f_starter) {
-		INT *cur_set = gen->set[0];
-		INT *next_set = gen->set[0 + gen->starter_size];
+		INT *cur_set =
+				gen->set[0];
+		INT *next_set =
+				gen->set[0 + gen->starter_size];
 		INT *cur_transporter =
 				gen->transporter->ith(0);
 		INT *next_transporter =
 				gen->transporter->ith(0 + gen->starter_size);
 		
-		O->trace_starter(gen, size, 
-			cur_set, next_set,
-			cur_transporter, next_transporter, 
+		O->trace_starter(gen,
+			size,
+			cur_set,
+			next_set,
+			cur_transporter,
+			next_transporter,
 			0 /*verbose_level */);
+
 		if (f_v) {
+			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
 					"after trace_starter, calling find_automorphism_by_"
 					"tracing_recursion for node "
 					<< gen->starter_size << endl;
-			}
-		return find_automorphism_by_tracing_recursion(
-			gen->starter_size, gen->starter_size, final_node, final_ex, 
-			f_tolerant, verbose_level);
 		}
+		trace_result r;
+
+		r = find_automorphism_by_tracing_recursion(
+			gen->starter_size,
+			gen->starter_size,
+			final_node,
+			final_ex,
+			f_tolerant,
+			verbose_level);
+		if (f_v) {
+			print_level_extension_coset_info();
+			cout << "upstep_work::find_automorphism_by_tracing_recursion "
+					"after trace_starter, "
+					"after find_automorphism_by_tracing_recursion for node "
+					<< gen->starter_size << endl;
+		}
+		return r;
+	}
 	
 	if (f_v4) {
 		print_level_extension_coset_info();
 		cout << "upstep_work::find_automorphism_by_tracing_recursion "
 				"calling trace_next_point_wrapper" << endl;
 		}
-	if (!O->trace_next_point_wrapper(gen, 
-		lvl, current_node, len, 
-		f_implicit_fusion, f_failure_to_find_point,
+	if (!O->trace_next_point_wrapper(
+		gen,
+		lvl,
+		current_node,
+		len,
+		f_implicit_fusion,
+		f_failure_to_find_point,
 		verbose_level - 5)) {
 
 		// FALSE in trace_next_point_wrapper can
@@ -211,10 +238,22 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			cout << "upstep_work::find_automorphism_by_tracing_"
 					"recursion trace_next_point_wrapper returns FALSE, "
 					"starting over" << endl;
-			}
-		return start_over(
-			lvl, current_node, final_node, final_ex, 
-			f_tolerant, verbose_level);
+		}
+		trace_result r;
+
+		r = start_over(
+			lvl,
+			current_node,
+			final_node,
+			final_ex,
+			f_tolerant,
+			verbose_level);
+		if (f_v) {
+			print_level_extension_coset_info();
+			cout << "upstep_work::find_automorphism_by_tracing_"
+					"after start_over" << endl;
+		}
+		return r;
 		}
 
 	if (f_v4) {
@@ -231,7 +270,9 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 		}
 
 	pt0 = gen->set[lvl + 1][lvl];
-	current_extension = O->find_extension_from_point(gen, pt0, FALSE);
+	current_extension =
+			O->find_extension_from_point(
+					gen, pt0, FALSE);
 	
 	if (current_extension == -1) {
 
@@ -318,8 +359,10 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 		r =  handle_last_level(
 			lvl,
 			current_node,
-			current_extension, pt0,
-			final_node, final_ex, 
+			current_extension,
+			pt0,
+			final_node,
+			final_ex,
 			verbose_level);
 		if (f_v) {
 			print_level_extension_coset_info();
@@ -342,9 +385,14 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 					<< "/" << current_extension << ")";
 			cout << " fusion node " << O->node << endl;
 			}
-		next_node = O->apply_fusion_element(gen, 
-			lvl, current_node, 
-			current_extension, len, f_tolerant, verbose_level - 6);
+		next_node = O->apply_fusion_element(
+			gen,
+			lvl,
+			current_node,
+			current_extension,
+			len,
+			f_tolerant,
+			verbose_level - 6);
 		
 		if (f_v) {
 			print_level_extension_coset_info();
@@ -390,7 +438,8 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 		r = find_automorphism_by_tracing_recursion(
 			lvl + 1,
 			next_node,
-			final_node, final_ex,
+			final_node,
+			final_ex,
 			f_tolerant,
 			verbose_level);
 
@@ -422,8 +471,12 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			}
 		trace_result r;
 		r = find_automorphism_by_tracing_recursion(
-			lvl + 1, next_node, final_node, final_ex,
-			f_tolerant, verbose_level);
+			lvl + 1,
+			next_node,
+			final_node,
+			final_ex,
+			f_tolerant,
+			verbose_level);
 		if (f_v) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::find_automorphism_by_tracing_recursion "
@@ -495,11 +548,17 @@ trace_result upstep_work::handle_last_level(
 					<< current_extension << ")" << endl;
 			}
 
-		O->install_fusion_node(gen, 
-			lvl, current_node, 
-			prev, prev_ex, coset, 
-			pt0, current_extension, 
-			f_debug, f_implicit_fusion, 
+		O->install_fusion_node(
+			gen,
+			lvl,
+			current_node,
+			prev,
+			prev_ex,
+			coset,
+			pt0,
+			current_extension,
+			f_debug,
+			f_implicit_fusion,
 			verbose_level - 2);
 
 		if (f_vv) {
@@ -634,8 +693,10 @@ trace_result upstep_work::start_over(
 		INT_set_print(cout, gen->set[0], size);
 		cout << endl;
 		}
-	gen->A->element_move(gen->transporter->ith(lvl + 1), 
-		gen->transporter->ith(0), FALSE);
+	gen->A->element_move(
+		gen->transporter->ith(lvl + 1),
+		gen->transporter->ith(0),
+		FALSE);
 
 	trace_result r;
 	if (f_v) {
@@ -644,7 +705,12 @@ trace_result upstep_work::start_over(
 				"before find_automorphism_by_tracing_recursion" << endl;
 	}
 	r = find_automorphism_by_tracing_recursion(
-		0, 0, final_node, final_ex, f_tolerant, verbose_level);
+		0,
+		0,
+		final_node,
+		final_ex,
+		f_tolerant,
+		verbose_level);
 	if (f_v) {
 		print_level_extension_coset_info();
 		cout << "upstep_work::start_over "

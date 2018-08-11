@@ -2062,6 +2062,27 @@ INT generator::rank_point(INT *v)
 	return rk;
 }
 
+void generator::unrank_basis(INT *Basis, INT *S, INT len)
+{
+	INT i;
+
+	for (i = 0; i < len; i++) {
+		(*unrank_point_func)(Basis + i * vector_space_dimension,
+				S[i], rank_point_data);
+	}
+}
+
+void generator::rank_basis(INT *Basis, INT *S, INT len)
+{
+	INT i;
+
+	for (i = 0; i < len; i++) {
+		S[i] = (*rank_point_func)(Basis + i * vector_space_dimension,
+				rank_point_data);
+	}
+}
+
+
 void generator::generate_source_code(INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
