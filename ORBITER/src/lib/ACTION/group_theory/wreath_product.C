@@ -459,13 +459,9 @@ void wreath_product::element_mult(INT *A, INT *B, INT *AB,
 	if (f_v) {
 		cout << "wreath_product::element_mult" << endl;
 	}
-	//perm_inverse(A, tmp_perm1, nb_factors);
 	perm_mult(A, B, AB, nb_factors);
-	//perm_inverse(AB, tmp_perm2, nb_factors);
 	for (f = 0; f < nb_factors; f++) {
 		g = A[f];
-		//g = tmp_perm1[f];
-		//h = tmp_perm2[f];
 		M->GL_mult(A + offset_i(f),
 				B + offset_i(g),
 				AB + offset_i(f),
@@ -535,7 +531,7 @@ void wreath_product::apply_permutation(INT *Elt,
 		INT *v_in, INT *v_out, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT i, j; //, h, k, a;
+	INT i, j;
 
 	if (f_v) {
 		cout << "wreath_product::apply_permutation" << endl;
@@ -566,19 +562,6 @@ void wreath_product::apply_permutation(INT *Elt,
 		v_out[j] = v_in[i];
 	}
 
-#if 0
-	for (i = 0; i < dimension_of_tensor_action; i++) {
-		AG_element_unrank(q, index_set1, 1, nb_factors, i);
-		for (h = 0; h < nb_factors; h++) {
-			a = index_set1[h];
-			k = Elt[h];
-			//k = tmp_perm1[h];
-			index_set2[k] = a;
-		}
-		AG_element_rank(q, index_set2, 1, nb_factors, j);
-		v_out[j] = v_in[i];
-	}
-#endif
 	if (f_v) {
 		cout << "wreath_product::apply_permutation" << endl;
 

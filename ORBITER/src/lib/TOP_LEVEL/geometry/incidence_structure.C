@@ -60,7 +60,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		longinteger_object ago;
 		A->group_order(ago);
 		if (f_v) {
-			cout << "The automorphism group of the incidence structure has order " << ago << endl;
+			cout << "The automorphism group of the incidence "
+					"structure has order " << ago << endl;
 			//cout << "f_has_strong_generators=" << A->f_has_strong_generators << endl;
 			//cout << "A->degree=" << A->degree << endl;		
 			}
@@ -69,7 +70,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 	//N = Inc->nb_points() + Inc->nb_lines();
 	
 	if (f_v) {
-		cout << "extra.C: incidence_structure_compute_TDA_general initial partition:" << endl;
+		cout << "extra.C: incidence_structure_compute_TDA_general "
+				"initial partition:" << endl;
 		S.print_classes_points_and_lines(cout);
 		}
 	//ht0 = S.ht;
@@ -77,7 +79,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 
 	if (f_combined_action) {
 		if (f_vv) {
-			cout << "extra.C: incidence_structure_compute_TDA_general setting up schreier" << endl;
+			cout << "extra.C: incidence_structure_compute_TDA_general "
+					"setting up schreier" << endl;
 			}
 		schreier *Sch;
 		Sch = new schreier;
@@ -85,12 +88,14 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		Sch->initialize_tables();
 		Sch->init_generators(*generators);
 		if (f_vv) {
-			cout << "extra.C: incidence_structure_compute_TDA_general before compute_all_point_orbits" << endl;
+			cout << "extra.C: incidence_structure_compute_TDA_general "
+					"before compute_all_point_orbits" << endl;
 			}
 		Sch->compute_all_point_orbits(verbose_level + 3);
 		
 		if (f_v) {
-			cout << "found " << Sch->nb_orbits << " orbits on points and lines" << endl;
+			cout << "found " << Sch->nb_orbits << " orbits on points "
+					"and lines" << endl;
 			}
 		S.split_by_orbit_partition(Sch->nb_orbits, 
 			Sch->orbit_first, Sch->orbit_len, Sch->orbit,
@@ -108,7 +113,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		Sch_points->compute_all_point_orbits(0 /*verbose_level - 2*/);
 		
 		if (f_v) {
-			cout << "found " << Sch_points->nb_orbits << " orbits on points" << endl;
+			cout << "found " << Sch_points->nb_orbits
+					<< " orbits on points" << endl;
 			}
 		Sch_lines = new schreier;
 		Sch_lines->init(A_on_lines);
@@ -117,14 +123,17 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		Sch_lines->compute_all_point_orbits(0 /*verbose_level - 2*/);
 		
 		if (f_v) {
-			cout << "found " << Sch_lines->nb_orbits << " orbits on lines" << endl;
+			cout << "found " << Sch_lines->nb_orbits
+					<< " orbits on lines" << endl;
 			}
 		S.split_by_orbit_partition(Sch_points->nb_orbits, 
-			Sch_points->orbit_first, Sch_points->orbit_len, Sch_points->orbit,
+			Sch_points->orbit_first, Sch_points->orbit_len,
+			Sch_points->orbit,
 			0 /* offset */, 
 			verbose_level - 2);
 		S.split_by_orbit_partition(Sch_lines->nb_orbits, 
-			Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
+			Sch_lines->orbit_first, Sch_lines->orbit_len,
+			Sch_lines->orbit,
 			Inc->nb_points() /* offset */, 
 			verbose_level - 2);
 		delete Sch_points;
@@ -134,13 +143,16 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 
 
 	if (f_v) {
-		cout << "extra.C: incidence_structure_compute_TDA_general the decomposition schemes:" << endl;
+		cout << "extra.C: incidence_structure_compute_TDA_general "
+				"the decomposition schemes:" << endl;
 		//cout << S << endl;
 		Inc->get_and_print_decomposition_schemes(S);
 		Inc->get_and_print_decomposition_schemes_tex(S);
 		S.print_classes_points_and_lines(cout);
-		Inc->get_and_print_row_tactical_decomposition_scheme_tex(cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, S);
-		Inc->get_and_print_column_tactical_decomposition_scheme_tex(cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, S);
+		Inc->get_and_print_row_tactical_decomposition_scheme_tex(cout,
+				FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, S);
+		Inc->get_and_print_column_tactical_decomposition_scheme_tex(cout,
+				FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, S);
 		}
 
 
@@ -154,7 +166,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 		ofstream fp_scheme(fname_scheme);
 
 		if (f_include_group_order || f_include_tda_scheme) {
-			fp << "\\subsection*{The TDA at Height $" << S.ht << "$}" << endl;
+			fp << "\\subsection*{The TDA at Height $"
+					<< S.ht << "$}" << endl;
 			fp << "$\\begin{array}{c}" << endl;
 			if (f_pic) {
 				fp << "\\input " << fname_pic << endl;
@@ -183,9 +196,12 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			}
 		}
 		if (f_v) {
-			cout << "written file " << fname << " of size " << file_size(fname) << endl;
-			cout << "written file " << fname_pic << " of size " << file_size(fname_pic) << endl;
-			cout << "written file " << fname_scheme << " of size " << file_size(fname_scheme) << endl;
+			cout << "written file " << fname << " of size "
+					<< file_size(fname) << endl;
+			cout << "written file " << fname_pic << " of size "
+					<< file_size(fname_pic) << endl;
+			cout << "written file " << fname_scheme << " of size "
+					<< file_size(fname_scheme) << endl;
 			}
 		}
 
@@ -200,13 +216,15 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 
 	Inc->rearrange(Vi, nb_V, Bj, nb_B, R, X, S);
 	
-	Inc2->init_by_R_and_X(Inc->nb_points(), Inc->nb_lines(), R, X, Inc->max_r, verbose_level);
+	Inc2->init_by_R_and_X(Inc->nb_points(),
+			Inc->nb_lines(), R, X, Inc->max_r, verbose_level);
 		
 	if (f_write_tda_files) {
 		sprintf(fname, "%s_tda.inc", Inc->label);
 		Inc2->save_inc_file(fname);
 		if (f_v) {
-			cout << "written file " << fname << " of size " << file_size(fname) << endl;
+			cout << "written file " << fname << " of size "
+					<< file_size(fname) << endl;
 			}
 		}
 
@@ -227,7 +245,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			f = Sch->orbit_first[i];
 			l = Sch->orbit_len[i];
 			if (f_v) {
-				cout << "orbit " << i << " first=" << f << " length=" << l << endl;
+				cout << "orbit " << i << " first=" << f
+						<< " length=" << l << endl;
 				}
 			for (j = 0; j < l; j++) {
 				Set[j] = Sch->orbit[f + j];
@@ -243,10 +262,13 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			Sch->point_stabilizer(A, ago, Stab, i, verbose_level - 3);
 			Stab->group_order(go);
 		
-			cout << "Orbit " << i << ", the stabilizer of point " << Set[0] << " has order " << go << " and is generated by:" << endl;
+			cout << "Orbit " << i << ", the stabilizer of point " << Set[0]
+				<< " has order " << go << " and is generated by:" << endl;
 			if (go.as_INT() > 1) {
 				Stab->print_generators();
-				cout << "Orbit " << i << ", the stabilizer of point " << Set[0] << " has order " << go << " and is generated by:" << endl;
+				cout << "Orbit " << i << ", the stabilizer of point "
+					<< Set[0] << " has order " << go
+					<< " and is generated by:" << endl;
 				Stab->print_generators_tex(cout);
 				}
 			else {
@@ -302,7 +324,8 @@ void incidence_structure_compute_TDO_TDA(incidence_structure *Inc,
 	longinteger_object ago;
 	
 	if (f_vv) {
-		cout << "before create_automorphism_group_of_incidence_structure" << endl;
+		cout << "before create_automorphism_group_of_"
+				"incidence_structure" << endl;
 		}
 	A = create_automorphism_group_of_incidence_structure(
 			Inc, 
@@ -325,7 +348,8 @@ void incidence_structure_compute_TDO_TDA(incidence_structure *Inc,
 	delete A;
 }
 
-INT incidence_structure_find_blocking_set(incidence_structure *Inc, INT input_no, 
+INT incidence_structure_find_blocking_set(
+	incidence_structure *Inc, INT input_no,
 	INT *blocking_set, INT &blocking_set_size, 
 	INT blocking_set_starter_size, 
 	INT f_all_blocking_sets, 
@@ -339,15 +363,21 @@ INT incidence_structure_find_blocking_set(incidence_structure *Inc, INT input_no
 	
 
 	if (f_v) {
-		cout << "incidence_structure_find_blocking_set input_no=" << input_no << endl;
-		cout << "blocking_set_starter_size=" << blocking_set_starter_size << endl;
-		cout << "f_all_blocking_sets = " << f_all_blocking_sets << endl;
-		cout << "f_blocking_set_size_desired = " << f_blocking_set_size_desired << endl;
+		cout << "incidence_structure_find_blocking_set "
+				"input_no=" << input_no << endl;
+		cout << "blocking_set_starter_size="
+				<< blocking_set_starter_size << endl;
+		cout << "f_all_blocking_sets = "
+				<< f_all_blocking_sets << endl;
+		cout << "f_blocking_set_size_desired = "
+				<< f_blocking_set_size_desired << endl;
 		if (f_blocking_set_size_desired) {
-			cout << "blocking_set_size_desired = " << blocking_set_size_desired << endl;
+			cout << "blocking_set_size_desired = "
+					<< blocking_set_size_desired << endl;
 			}
 		if ((input_no % 500) == 0) {
-			cout << "incidence_structure_find_blocking_set input_no=" << input_no << endl;
+			cout << "incidence_structure_find_blocking_set "
+					"input_no=" << input_no << endl;
 			}
 		}
 
@@ -379,7 +409,9 @@ INT incidence_structure_find_blocking_set(incidence_structure *Inc, INT input_no
 		cout << "after find_partial_blocking_sets" << endl;
 		f = SBS.gen->first_oracle_node_at_level[depth];
 		nb_orbits = SBS.gen->first_oracle_node_at_level[depth + 1] - f;
-		cout << "incidence_structure_find_blocking_set: we found " << nb_orbits << " orbits on partial blocking sets of size " << depth << endl;
+		cout << "incidence_structure_find_blocking_set: "
+				"we found " << nb_orbits << " orbits on partial "
+						"blocking sets of size " << depth << endl;
 		}
 
 	f_OK = SBS.test_level(level, verbose_level - 1);
@@ -387,7 +419,8 @@ INT incidence_structure_find_blocking_set(incidence_structure *Inc, INT input_no
 		blocking_set_size = level;
 		}
 	else {
-		SBS.search_for_blocking_set(input_no, level, f_all_blocking_sets, verbose_level - 1);
+		SBS.search_for_blocking_set(input_no, level,
+				f_all_blocking_sets, verbose_level - 1);
 
 		if (SBS.nb_solutions) {
 			f_OK = TRUE;
@@ -399,7 +432,8 @@ INT incidence_structure_find_blocking_set(incidence_structure *Inc, INT input_no
 
 		}
 	if (f_v) {
-		cout << "incidence_structure_find_blocking_set found blocking set of size " << blocking_set_size << ":";
+		cout << "incidence_structure_find_blocking_set "
+				"found blocking set of size " << blocking_set_size << ":";
 		INT_vec_print(cout, SBS.blocking_set, blocking_set_size);
 		cout << endl;
 		}

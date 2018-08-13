@@ -1,8 +1,8 @@
-// wreath_product.C
+// direct_product.C
 //
 // Anton Betten
 //
-// August 4, 2018
+// August 12, 2018
 //
 //
 //
@@ -16,35 +16,40 @@ INT t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 int main(int argc, const char **argv);
-INT wreath_rank_point_func(INT *v, void *data);
-void wreath_unrank_point_func(INT *v, INT rk, void *data);
 
 
+typedef class direct_product_action direct_product_action;
 
-typedef class tensor_product tensor_product;
-
-class tensor_product {
+class direct_product_action {
 public:
 	int argc;
 	const char **argv;
-	INT nb_factors;
-	INT n;
-	INT q;
 
-	finite_field *F;
+	INT d1;
+	INT d2;
+	INT q1;
+	INT q2;
+
+	finite_field *F1;
+	finite_field *F2;
+
+	matrix_group *M1;
+	matrix_group *M2;
+	action *A1;
+	action *A2;
+
 	action *A;
 	action *A0;
 
 	strong_generators *SG;
 	longinteger_object go;
-	wreath_product *W;
+	direct_product *P;
 	generator *Gen;
-	INT vector_space_dimension;
 
-	tensor_product();
-	~tensor_product();
+	direct_product_action();
+	~direct_product_action();
 	void init(int argc, const char **argv,
-			INT nb_factors, INT n, INT q, INT depth,
+			INT d1, INT q1, INT d2, INT q2, INT depth,
 			INT verbose_level);
 };
 
@@ -56,10 +61,11 @@ void usage(int argc, const char **argv)
 {
 	cout << "usage: " << argv[0] << " [options]" << endl;
 	cout << "where options can be:" << endl;
-	cout << "-v <n>                   : verbose level n" << endl;
-	cout << "-nb_factors <nb_factors> : set number of factors" << endl;
-	cout << "-d <d>                   : set dimension d" << endl;
-	cout << "-q <q>                   : set field size q" << endl;
+	cout << "-v <v>                   : verbose level v" << endl;
+	cout << "-d1 <d1>                 : set dimension d1" << endl;
+	cout << "-q1 <q1>                 : set field size q1" << endl;
+	cout << "-d2 <d2>                 : set dimension d2" << endl;
+	cout << "-q2 <q2>                 : set field size q2" << endl;
 }
 
 
@@ -68,12 +74,14 @@ int main(int argc, const char **argv)
 {
 	INT i;
 	INT verbose_level = 0;
-	INT f_nb_factors = FALSE;
-	INT nb_factors = 0;
-	INT f_d = FALSE;
-	INT d = 0;
-	INT f_q = FALSE;
-	INT q = 0;
+	INT f_d1 = FALSE;
+	INT d1 = 0;
+	INT f_d2 = FALSE;
+	INT d2 = 0;
+	INT f_q1 = FALSE;
+	INT q1 = 0;
+	INT f_q2 = FALSE;
+	INT q2 = 0;
 	INT f_depth = FALSE;
 	INT depth = 0;
 
@@ -95,20 +103,25 @@ int main(int argc, const char **argv)
 			usage(argc, argv);
 			exit(1);
 			}
-		else if (strcmp(argv[i], "-nb_factors") == 0) {
-			f_nb_factors = TRUE;
-			nb_factors = atoi(argv[++i]);
-			cout << "-nb_factors " << nb_factors << endl;
+		else if (strcmp(argv[i], "-d1") == 0) {
+			f_d1 = TRUE;
+			d1 = atoi(argv[++i]);
+			cout << "-d1 " << d1 << endl;
 			}
-		else if (strcmp(argv[i], "-d") == 0) {
-			f_d = TRUE;
-			d = atoi(argv[++i]);
-			cout << "-d " << d << endl;
+		else if (strcmp(argv[i], "-d2") == 0) {
+			f_d2 = TRUE;
+			d2 = atoi(argv[++i]);
+			cout << "-d2 " << d2 << endl;
 			}
-		else if (strcmp(argv[i], "-q") == 0) {
-			f_q = TRUE;
-			q = atoi(argv[++i]);
-			cout << "-q " << q << endl;
+		else if (strcmp(argv[i], "-q1") == 0) {
+			f_q1 = TRUE;
+			q1 = atoi(argv[++i]);
+			cout << "-q1 " << q1 << endl;
+			}
+		else if (strcmp(argv[i], "-q2") == 0) {
+			f_q2 = TRUE;
+			q2 = atoi(argv[++i]);
+			cout << "-q2 " << q2 << endl;
 			}
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
@@ -116,18 +129,23 @@ int main(int argc, const char **argv)
 			cout << "-depth " << depth << endl;
 			}
 		}
-	if (!f_nb_factors) {
-		cout << "please use -nb_factors <nb_factors>" << endl;
+	if (!f_d1) {
+		cout << "please use -d1 <d1>" << endl;
 		usage(argc, argv);
 		exit(1);
 		}
-	if (!f_d) {
-		cout << "please use -d <d>" << endl;
+	if (!f_d2) {
+		cout << "please use -d2 <d2>" << endl;
 		usage(argc, argv);
 		exit(1);
 		}
-	if (!f_q) {
-		cout << "please use -q <q>" << endl;
+	if (!f_q1) {
+		cout << "please use -q1 <q1>" << endl;
+		usage(argc, argv);
+		exit(1);
+		}
+	if (!f_q2) {
+		cout << "please use -q2 <q2>" << endl;
 		usage(argc, argv);
 		exit(1);
 		}
@@ -141,83 +159,100 @@ int main(int argc, const char **argv)
 	//do_it(argc, argv, nb_factors, d, q, verbose_level);
 
 
-	tensor_product *T;
+	direct_product_action *T;
 
-	T = new tensor_product;
+	T = new direct_product_action;
 
-	T->init(argc, argv, nb_factors, d, q, depth, verbose_level);
+	T->init(argc, argv, d1, q1, d2, q2, depth, verbose_level);
 
 
 	the_end_quietly(t0);
 
 }
 
-tensor_product::tensor_product()
+direct_product_action::direct_product_action()
 {
 	argc= 0;
 	argv = NULL;
-	nb_factors = 0;
-	vector_space_dimension = 0;
-	n = 0;
-	q = 0;
+	d1 = 0;
+	d2 = 0;
+	q1 = 0;
+	q2 = 0;
+	M1 = NULL;
+	M2 = NULL;
+	A1 = NULL;
+	A2 = NULL;
 	SG = NULL;
-	F = NULL;
+	F1 = NULL;
+	F2 = NULL;
 	A = NULL;
 	A0 = NULL;
-	W = NULL;
+	P = NULL;
 	Gen = NULL;
 }
 
-tensor_product::~tensor_product()
+direct_product_action::~direct_product_action()
 {
 
 }
 
-void tensor_product::init(int argc, const char **argv,
-		INT nb_factors, INT n, INT q, INT depth,
+void direct_product_action::init(int argc, const char **argv,
+		INT d1, INT q1, INT d2, INT q2, INT depth,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT *v;
 	INT i, j, a;
 
 	if (f_v) {
-		cout << "tensor_product::init" << endl;
+		cout << "direct_product_action::init" << endl;
 	}
-	tensor_product::argc = argc;
-	tensor_product::argv = argv;
-	tensor_product::nb_factors = nb_factors;
-	tensor_product::n = n;
-	tensor_product::q = q;
+	direct_product_action::argc = argc;
+	direct_product_action::argv = argv;
+	direct_product_action::d1 = d1;
+	direct_product_action::d2 = d2;
+	direct_product_action::q1 = q1;
+	direct_product_action::q2 = q2;
 
 	A = new action;
+	A1 = new action;
+	A2 = new action;
 
-	v = NEW_INT(n);
 
 
-	F = new finite_field;
+	F1 = new finite_field;
+	F2 = new finite_field;
 
-	F->init(q, 0);
+	F1->init(q1, 0);
+	F2->init(q2, 0);
 
-	A->init_wreath_product_group_and_restrict(nb_factors, n,
-			F,
+	M1 = new matrix_group;
+	M2 = new matrix_group;
+
+
+	M1->init_affine_group(d1, F1,
+			FALSE /* f_semilinear */, A1, verbose_level);
+
+	M2->init_affine_group(d2, F2,
+			FALSE /* f_semilinear */, A2, verbose_level);
+
+	A->init_direct_product_group_and_restrict(M1, M2,
 			verbose_level);
-	cout << "tensor_product::init after "
-			"A->init_wreath_product_group_and_restrict" << endl;
+	cout << "direct_product_action::init after "
+			"A->init_direct_product_group_and_restrict" << endl;
 
 	if (!A->f_has_subaction) {
-		cout << "tensor_product::init action "
+		cout << "direct_product_action::init action "
 				"A does not have a subaction" << endl;
 		exit(1);
 	}
 	A0 = A->subaction;
 
-	W = A0->G.wreath_product_group;
+	P = A0->G.direct_product_group;
 
-	vector_space_dimension = W->dimension_of_tensor_action;
+	//vector_space_dimension = W->dimension_of_tensor_action;
 
 	if (!A0->f_has_strong_generators) {
-		cout << "tensor_product::init action A0 does not "
+		cout << "direct_product_action::init action A0 does not "
 				"have strong generators" << endl;
 		exit(1);
 		}
@@ -441,6 +476,7 @@ void tensor_product::init(int argc, const char **argv,
 	cout << "test 3 passed" << endl;
 
 
+#if 0
 	cout << "performing test 4:" << endl;
 
 	INT data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
@@ -474,6 +510,7 @@ void tensor_product::init(int argc, const char **argv,
 	}
 
 	cout << "test 4 passed" << endl;
+#endif
 
 	FREE_INT(Elt1);
 	FREE_INT(Elt2);
@@ -487,22 +524,24 @@ void tensor_product::init(int argc, const char **argv,
 #endif
 
 
+
+#if 1
 	Gen = new generator;
 
 	Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "wreath_%ld_%ld_%ld", nb_factors, n, q);
+	sprintf(Gen->fname_base, "direct_product_%ld_%ld", q1, q2);
 
 
 	Gen->depth = depth;
 
 	if (f_v) {
-		cout << "tensor_product::init before Gen->init" << endl;
+		cout << "direct_product_action::init before Gen->init" << endl;
 		}
 	Gen->init(A0, A, SG, Gen->depth /* sz */, verbose_level);
 	if (f_v) {
-		cout << "tensor_product::init after Gen->init" << endl;
+		cout << "direct_product_action::init after Gen->init" << endl;
 		}
 
 
@@ -520,13 +559,17 @@ void tensor_product::init(int argc, const char **argv,
 		//check_mindist_incremental,
 		//this /* candidate_check_data */);
 
+#if 0
 	Gen->init_vector_space_action(
 		vector_space_dimension,
 		F,
-		wreath_rank_point_func,
-		wreath_unrank_point_func,
+		direct_rank_point_func,
+		direct_unrank_point_func,
 		this,
 		verbose_level);
+#endif
+
+
 #if 0
 	Gen->f_print_function = TRUE;
 	Gen->print_function = print_set;
@@ -536,11 +579,11 @@ void tensor_product::init(int argc, const char **argv,
 	INT nb_oracle_nodes = 1000;
 
 	if (f_v) {
-		cout << "tensor_product::init before Gen->init_oracle" << endl;
+		cout << "direct_product_action::init before Gen->init_oracle" << endl;
 		}
 	Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
 	if (f_v) {
-		cout << "tensor_product::init calling Gen->init_root_node" << endl;
+		cout << "direct_product_action::init calling Gen->init_root_node" << endl;
 		}
 	Gen->root[0].init_root_node(Gen, verbose_level - 1);
 
@@ -555,7 +598,7 @@ void tensor_product::init(int argc, const char **argv,
 	INT t0 = os_ticks();
 
 	if (f_v) {
-		cout << "tensor_product::init before Gen->main" << endl;
+		cout << "direct_product_action::init before Gen->main" << endl;
 		cout << "A=";
 		A->print_info();
 		cout << "A0=";
@@ -572,29 +615,11 @@ void tensor_product::init(int argc, const char **argv,
 		verbose_level);
 
 	if (f_v) {
-		cout << "tensor_product::init after Gen->main" << endl;
+		cout << "direct_product_action::init after Gen->main" << endl;
 	}
-}
+#endif
 
 
-INT wreath_rank_point_func(INT *v, void *data)
-{
-	tensor_product *T;
-	INT rk;
-
-	T = (tensor_product *) data;
-	//AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
-	PG_element_rank_modified(*T->F, v, 1, T->vector_space_dimension, rk);
-	return rk;
-}
-
-void wreath_unrank_point_func(INT *v, INT rk, void *data)
-{
-	tensor_product *T;
-
-	T = (tensor_product *) data;
-	//AG_element_unrank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
-	PG_element_unrank_modified(*T->F, v, 1, T->vector_space_dimension, rk);
 }
 
 

@@ -72,7 +72,8 @@ void representatives::free()
 		}
 }
 
-void representatives::init(action *A, INT nb_objects, BYTE *prefix, INT verbose_level)
+void representatives::init(action *A,
+		INT nb_objects, BYTE *prefix, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -123,7 +124,8 @@ void representatives::write_fusion(INT verbose_level)
 	
 	for (i = 0; i < nb_objects; i++) {
 		if (fusion[i] == -2) {
-			cout << "representatives::write_fusion fusion[" << i << "] = -2" << endl;
+			cout << "representatives::write_fusion "
+					"fusion[" << i << "] = -2" << endl;
 			exit(1);
 			}
 		f1 << setw(5) << i << " " << setw(3) << fusion[i] << endl;
@@ -141,8 +143,10 @@ void representatives::write_fusion(INT verbose_level)
 	}
 	if (f_v) {
 		cout << "representatives::write_fusion finished" << endl;
-		cout << "written file " << fname_fusion << " of size " << file_size(fname_fusion) << endl;
-		cout << "written file " << fname_fusion_ge << " of size " << file_size(fname_fusion_ge) << endl;
+		cout << "written file " << fname_fusion << " of size "
+				<< file_size(fname_fusion) << endl;
+		cout << "written file " << fname_fusion_ge << " of size "
+				<< file_size(fname_fusion_ge) << endl;
 		}
 	
 }
@@ -154,29 +158,36 @@ void representatives::read_fusion(INT verbose_level)
 	INT a, b, i;
 
 	if (f_v) {
-		cout << "representatives::read_fusion nb_objects=" << nb_objects << endl;
+		cout << "representatives::read_fusion nb_objects="
+				<< nb_objects << endl;
 		}
 	if (f_v) {
-		cout << "representatives::read_fusion reading file " << fname_fusion << " of size " << file_size(fname_fusion) << endl;
+		cout << "representatives::read_fusion reading file "
+				<< fname_fusion << " of size "
+				<< file_size(fname_fusion) << endl;
 		}
 	{
 		ifstream f1(fname_fusion);
 		for (i = 0; i < nb_objects; i++) {
 			f1 >> a >> b;
 			if (a != i) {
-				cout << "representatives::read_fusion a != i" << endl;
+				cout << "representatives::read_fusion "
+						"a != i" << endl;
 				exit(1);
 				}
 			fusion[i] = b;
 			}
 		f1 >> a;
 		if (a != -1) {
-			cout << "representatives::read_fusion problem with end of file marker" << endl;
+			cout << "representatives::read_fusion problem with end "
+					"of file marker" << endl;
 			exit(1);
 			}
 	}
 	if (f_v) {
-		cout << "representatives::read_fusion reading file " << fname_fusion_ge << " of size " << file_size(fname_fusion_ge) << endl;
+		cout << "representatives::read_fusion reading file "
+				<< fname_fusion_ge << " of size "
+				<< file_size(fname_fusion_ge) << endl;
 		}
 	{
 		FILE *f2;
@@ -193,12 +204,14 @@ void representatives::read_fusion(INT verbose_level)
 		}
 }
 
-void representatives::write_representatives_and_stabilizers(INT verbose_level)
+void representatives::write_representatives_and_stabilizers(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "representatives::write_representatives_and_stabilizers" << endl;
+		cout << "representatives::write_representatives_"
+				"and_stabilizers" << endl;
 		}
 	{
 	ofstream f1(fname_rep);
@@ -222,7 +235,8 @@ void representatives::write_representatives_and_stabilizers(INT verbose_level)
 		Stab = stab[i];
 		Stab->group_order(go);
 
-		Stab->extract_strong_generators_in_order(SG, tl, 0 /* verbose_level */);
+		Stab->extract_strong_generators_in_order(
+				SG, tl, 0 /* verbose_level */);
 
 		f1 << setw(3) << i << " " 
 			<< setw(7) << rep[i] << " " 
@@ -237,7 +251,8 @@ void representatives::write_representatives_and_stabilizers(INT verbose_level)
 		
 		
 		for (j = 0; j < SG.len; j++) {
-			A->element_write_file_fp(SG.ith(j), f2, 0/* verbose_level*/);
+			A->element_write_file_fp(SG.ith(j), f2,
+					0/* verbose_level*/);
 			cnt++;
 			}
 		}
@@ -245,21 +260,27 @@ void representatives::write_representatives_and_stabilizers(INT verbose_level)
 	fclose(f2);
 	}
 	if (f_v) {
-		cout << "representatives::write_representatives_and_stabilizers finished" << endl;
-		cout << "written file " << fname_rep << " of size " << file_size(fname_rep) << endl;
-		cout << "written file " << fname_stabgens << " of size " << file_size(fname_stabgens) << endl;
+		cout << "representatives::write_representatives_and_"
+				"stabilizers finished" << endl;
+		cout << "written file " << fname_rep << " of size "
+				<< file_size(fname_rep) << endl;
+		cout << "written file " << fname_stabgens << " of size "
+				<< file_size(fname_stabgens) << endl;
 		}
 	
 }
 
-void representatives::read_representatives_and_stabilizers(INT verbose_level)
+void representatives::read_representatives_and_stabilizers(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE;//(verbose_level >=2);
 	
 	if (f_v) {
-		cout << "representatives::read_representatives_and_stabilizers" << endl;
-		cout << "reading files " << fname_rep << " and " << fname_stabgens << endl;
+		cout << "representatives::read_representatives_and_"
+				"stabilizers" << endl;
+		cout << "reading files " << fname_rep << " and "
+				<< fname_stabgens << endl;
 		}
 	{
 	ifstream f1(fname_rep);
@@ -270,13 +291,15 @@ void representatives::read_representatives_and_stabilizers(INT verbose_level)
 	
 	f1 >> count >> a;
 	if (a != A->base_len) {
-		cout << "representatives::read_representatives_and_stabilizers base_len does not match" << endl;
+		cout << "representatives::read_representatives_and_stabilizers "
+				"base_len does not match" << endl;
 		exit(1);
 		}
 	for (j = 0; j < A->base_len; j++) {
 		f1 >> a;
 		if (a != A->base[j]) {
-			cout << "representatives::read_representatives_and_stabilizers base point does not match" << endl;
+			cout << "representatives::read_representatives_and_stabilizers "
+					"base point does not match" << endl;
 			exit(1);
 			}
 		}
@@ -289,7 +312,8 @@ void representatives::read_representatives_and_stabilizers(INT verbose_level)
 		Stab = stab[i];
 		f1 >> a >> b >> c >> d >> e;
 		if (a != i) {
-			cout << "representatives::read_representatives_and_stabilizers a != i" << endl;
+			cout << "representatives::read_representatives_and_stabilizers "
+					"a != i" << endl;
 			exit(1);
 			}
 		rep[i] = b;
@@ -320,18 +344,21 @@ void representatives::read_representatives_and_stabilizers(INT verbose_level)
 		Stab->compute_base_orbits(0/*verbose_level - 5*/);
 		Stab->group_order(go);
 		if (f_v) {
-			cout << "representatives::read_representatives_and_stabilizers stabilizer " << i << " has order " << go << endl;
+			cout << "representatives::read_representatives_and_stabilizers "
+					"stabilizer " << i << " has order " << go << endl;
 			}
 		}
 	f1 >> a;
 	if (a != -1) {
-		cout << "representatives::read_representatives_and_stabilizers problems reading end of file marker" << endl;
+		cout << "representatives::read_representatives_and_stabilizers "
+				"problems reading end of file marker" << endl;
 		exit(1);
 		}
 	fclose(f2);
 	}
 	if (f_v) {
-		cout << "representatives::read_representatives_and_stabilizers finished" << endl;
+		cout << "representatives::read_representatives_and_stabilizers "
+				"finished" << endl;
 		}
 }
 
@@ -359,7 +386,8 @@ void representatives::load(INT verbose_level)
 	read_fusion(verbose_level - 1);
 	read_representatives_and_stabilizers(verbose_level - 1);
 	if (f_v) {
-		cout << "representatives::load done found " << count << " orbit representatives" << endl;
+		cout << "representatives::load done found " << count
+				<< " orbit representatives" << endl;
 		}
 }
 

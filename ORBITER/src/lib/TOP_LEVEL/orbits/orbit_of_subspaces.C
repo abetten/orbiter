@@ -58,9 +58,12 @@ void orbit_of_subspaces::init(action *A, action *A2, finite_field *F,
 	INT *subspace_by_rank, INT k, INT n, 
 	INT f_has_desired_pivots, INT *desired_pivots, 
 	INT f_has_rank_functions, void *rank_unrank_data, 
-	INT (*rank_vector_callback)(INT *v, INT n, void *data, INT verbose_level), 
-	void (*unrank_vector_callback)(INT rk, INT *v, INT n, void *data, INT verbose_level), 
-	void (*compute_image_of_vector_callback)(INT *v, INT *w, INT *Elt, void *data, INT verbose_level), 
+	INT (*rank_vector_callback)(INT *v, INT n,
+			void *data, INT verbose_level),
+	void (*unrank_vector_callback)(INT rk, INT *v, INT n,
+			void *data, INT verbose_level),
+	void (*compute_image_of_vector_callback)(INT *v, INT *w,
+			INT *Elt, void *data, INT verbose_level),
 	void *compute_image_of_vector_callback_data, 
 	vector_ge *gens, INT verbose_level)
 {
@@ -82,8 +85,10 @@ void orbit_of_subspaces::init(action *A, action *A2, finite_field *F,
 	orbit_of_subspaces::rank_unrank_data = rank_unrank_data;
 	orbit_of_subspaces::rank_vector_callback = rank_vector_callback;
 	orbit_of_subspaces::unrank_vector_callback = unrank_vector_callback;
-	orbit_of_subspaces::compute_image_of_vector_callback = compute_image_of_vector_callback;
-	orbit_of_subspaces::compute_image_of_vector_callback_data = compute_image_of_vector_callback_data;
+	orbit_of_subspaces::compute_image_of_vector_callback =
+			compute_image_of_vector_callback;
+	orbit_of_subspaces::compute_image_of_vector_callback_data =
+			compute_image_of_vector_callback_data;
 	kn = k * n;
 	sz = 1 + k + kn;
 	sz_for_compare = 1 + k + kn;
@@ -117,10 +122,12 @@ INT orbit_of_subspaces::rank_vector(INT *v, INT verbose_level)
 		cout << "orbit_of_subspaces::rank_vector" << endl;
 		}
 	if (!f_has_rank_functions) {
-		cout << "orbit_of_subspaces::rank_vector !f_has_rank_functions" << endl;
+		cout << "orbit_of_subspaces::rank_vector "
+				"!f_has_rank_functions" << endl;
 		exit(1);
 		}
-	r = (*rank_vector_callback)(v, n, rank_unrank_data, verbose_level - 1);
+	r = (*rank_vector_callback)(v, n,
+			rank_unrank_data, verbose_level - 1);
 	if (f_v) {
 		cout << "orbit_of_subspaces::rank_vector done" << endl;
 		}
@@ -135,10 +142,12 @@ void orbit_of_subspaces::unrank_vector(INT rk, INT *v, INT verbose_level)
 		cout << "orbit_of_subspaces::unrank_vector" << endl;
 		}
 	if (!f_has_rank_functions) {
-		cout << "orbit_of_subspaces::unrank_vector !f_has_rank_functions" << endl;
+		cout << "orbit_of_subspaces::unrank_vector "
+				"!f_has_rank_functions" << endl;
 		exit(1);
 		}
-	(*unrank_vector_callback)(rk, v, n, rank_unrank_data, verbose_level - 1);
+	(*unrank_vector_callback)(rk, v, n,
+			rank_unrank_data, verbose_level - 1);
 	if (f_v) {
 		cout << "orbit_of_subspaces::unrank_vector done" << endl;
 		}
@@ -161,7 +170,8 @@ void orbit_of_subspaces::rref(INT *subspace, INT verbose_level)
 			cout << endl;
 			}
 		F->Gauss_INT_with_given_pivots(subspace, 
-			FALSE /* f_special */, TRUE /* f_complete */, desired_pivots, k /* nb_pivots */, 
+			FALSE /* f_special */, TRUE /* f_complete */,
+			desired_pivots, k /* nb_pivots */,
 			k, n, 
 			0 /*verbose_level - 2*/);
 		if (f_vv) {
@@ -171,7 +181,8 @@ void orbit_of_subspaces::rref(INT *subspace, INT verbose_level)
 		}
 	else {
 		if (f_vv) {
-			cout << "orbit_of_subspaces::rref before Gauss_easy" << endl;
+			cout << "orbit_of_subspaces::rref "
+					"before Gauss_easy" << endl;
 			}
 		F->Gauss_easy(subspace, k, n);
 		}
@@ -180,7 +191,8 @@ void orbit_of_subspaces::rref(INT *subspace, INT verbose_level)
 		}
 }
 
-void orbit_of_subspaces::rref_and_rank_and_hash(INT *subspace, INT verbose_level)
+void orbit_of_subspaces::rref_and_rank_and_hash(
+		INT *subspace, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -190,11 +202,15 @@ void orbit_of_subspaces::rref_and_rank_and_hash(INT *subspace, INT verbose_level
 		}
 	rref(subspace + 1 + k, verbose_level - 1);
 	for (i = 0; i < k; i++) {
-		subspace[1 + i] = rank_vector(subspace + 1 + k + i * n, verbose_level - 2);
+		subspace[1 + i] =
+				rank_vector(subspace + 1 + k + i * n,
+						verbose_level - 2);
 #if 0
 		if (i >= 3) {
 			if (subspace[1 + i] < subspace[1 + i - 1]) {
-				cout << "orbit_of_subspaces::rref_and_rank_and_hash The subspace basis is not ordered increasingly, i=" << i << endl;
+				cout << "orbit_of_subspaces::rref_and_rank_and_hash "
+						"The subspace basis is not ordered increasingly, "
+						"i=" << i << endl;
 				INT_matrix_print(subspace + 1 + k, k, n);
 				for (INT j = 0; j <= i; j++) {
 					cout << "j=" << j << endl;
@@ -206,28 +222,33 @@ void orbit_of_subspaces::rref_and_rank_and_hash(INT *subspace, INT verbose_level
 			}
 #endif
 		}
-	subspace[0] = 0; // no hash value because we want the lex least orbit representative
+	subspace[0] = 0;
+		// no hash value because we want the
+		// lex least orbit representative
 		// INT_vec_hash(subspace + 1, k);
 	if (f_v) {
 		cout << "orbit_of_subspaces::rref_and_rank_and_hash done" << endl;
 		}
 }
 
-void orbit_of_subspaces::map_a_subspace(INT *subspace, INT *image_subspace, INT *Elt, INT verbose_level)
+void orbit_of_subspaces::map_a_subspace(INT *subspace,
+		INT *image_subspace, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbit_of_subspaces::map_a_subspace" << endl;
 		}
-	map_a_basis(subspace + 1 + k, image_subspace + 1 + k, Elt, verbose_level - 1);
+	map_a_basis(subspace + 1 + k,
+			image_subspace + 1 + k, Elt, verbose_level - 1);
 	rref_and_rank_and_hash(image_subspace, verbose_level - 2);
 	if (f_v) {
 		cout << "orbit_of_subspaces::map_a_subspace done" << endl;
 		}
 }
 
-void orbit_of_subspaces::map_a_basis(INT *basis, INT *image_basis, INT *Elt, INT verbose_level)
+void orbit_of_subspaces::map_a_basis(INT *basis,
+		INT *image_basis, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -236,7 +257,10 @@ void orbit_of_subspaces::map_a_basis(INT *basis, INT *image_basis, INT *Elt, INT
 		cout << "orbit_of_subspaces::map_a_basis" << endl;
 		}
 	for (i = 0; i < k; i++) {
-		(*compute_image_of_vector_callback)(basis + i * n, image_basis + i * n, Elt, compute_image_of_vector_callback_data, verbose_level - 2);
+		(*compute_image_of_vector_callback)(basis + i * n,
+				image_basis + i * n, Elt,
+				compute_image_of_vector_callback_data,
+				verbose_level - 2);
 		}
 	if (f_v) {
 		cout << "orbit_of_subspaces::map_a_basis done" << endl;
@@ -249,7 +273,8 @@ void orbit_of_subspaces::print_orbit()
 	INT *v;
 	
 	v = NEW_INT(n);
-	cout << "orbit_of_subspaces::print_orbit We found an orbit of length " << used_length << endl;
+	cout << "orbit_of_subspaces::print_orbit "
+			"We found an orbit of length " << used_length << endl;
 	for (i = 0; i < used_length; i++) {
 		cout << i << " : ";
 		INT_vec_print(cout, Subspaces[i] + 1, k);
@@ -300,7 +325,9 @@ void orbit_of_subspaces::compute(INT verbose_level)
 		if (f_v) {
 			cout << "subspace_by_rank[i]=" << subspace_by_rank[i] << endl;
 			}
-		unrank_vector(subspace_by_rank[i], Subspaces[0] + 1 + k + i * n, verbose_level - 2);
+		unrank_vector(subspace_by_rank[i],
+				Subspaces[0] + 1 + k + i * n,
+				verbose_level - 2);
 		
 		if (f_v) {
 			cout << "which equals";
@@ -319,7 +346,8 @@ void orbit_of_subspaces::compute(INT verbose_level)
 	Q_len = 1;
 	while (Q_len) {
 		if (f_vv) {
-			cout << "Q_len = " << Q_len << " : used_length=" << used_length << " : ";
+			cout << "Q_len = " << Q_len << " : used_length="
+					<< used_length << " : ";
 			INT_vec_print(cout, Q, Q_len);
 			cout << endl;
 			}
@@ -337,14 +365,18 @@ void orbit_of_subspaces::compute(INT verbose_level)
 				cout << "applying generator " << j << endl;
 				}
 
-			map_a_subspace(cur_basis, new_basis, gens->ith(j),  verbose_level - 1);
+			map_a_subspace(cur_basis, new_basis, gens->ith(j),
+					verbose_level - 1);
 
 			
 			if (search_data(new_basis, idx)) {
-			//if (vec_search((void **)Subspaces, orbit_of_subspaces_compare_func, (void *) (sz_for_compare), 
+			//if (vec_search((void **)Subspaces,
+				//orbit_of_subspaces_compare_func,
+				//(void *) (sz_for_compare),
 				//used_length, new_basis, idx, 0 /* verbose_level */)) {
 				if (f_vv) {
-					cout << "new subspace is already in the list, at position " << idx << endl;
+					cout << "new subspace is already in the list, "
+							"at position " << idx << endl;
 					}
 				}
 			else {
@@ -416,11 +448,13 @@ void orbit_of_subspaces::compute(INT verbose_level)
 					}
 				used_length++;
 				if ((used_length % 10000) == 0) {
-					cout << "orbit_of_subspaces::compute " << used_length << endl;
+					cout << "orbit_of_subspaces::compute "
+							<< used_length << endl;
 					}
 				Q[Q_len++] = idx;
 				if (f_vv) {
-					cout << "storing new subspace at position " << idx << endl;
+					cout << "storing new subspace at position "
+							<< idx << endl;
 					}
 
 #if 0
@@ -434,7 +468,8 @@ void orbit_of_subspaces::compute(INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "orbit_of_subspaces::compute found an orbit of length " << used_length << endl;
+		cout << "orbit_of_subspaces::compute found an orbit of length "
+				<< used_length << endl;
 		}
 
 
@@ -446,8 +481,10 @@ void orbit_of_subspaces::compute(INT verbose_level)
 		}
 }
 
-void orbit_of_subspaces::get_transporter(INT idx, INT *transporter, INT verbose_level)
-// transporter is an element which maps the orbit representative to the given subspace.
+void orbit_of_subspaces::get_transporter(INT idx,
+		INT *transporter, INT verbose_level)
+// transporter is an element which maps the orbit
+// representative to the given subspace.
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt1, *Elt2;
@@ -470,7 +507,8 @@ void orbit_of_subspaces::get_transporter(INT idx, INT *transporter, INT verbose_
 		idx0 = prev[idx1];
 		}
 	if (idx1 != position_of_original_subspace) {
-		cout << "orbit_of_subspaces::get_transporter idx1 != position_of_original_subspace" << endl;
+		cout << "orbit_of_subspaces::get_transporter "
+				"idx1 != position_of_original_subspace" << endl;
 		exit(1);
 		}
 	A->element_move(Elt1, transporter, 0);
@@ -483,7 +521,8 @@ void orbit_of_subspaces::get_transporter(INT idx, INT *transporter, INT verbose_
 }
 
 
-void orbit_of_subspaces::get_random_schreier_generator(INT *Elt, INT verbose_level)
+void orbit_of_subspaces::get_random_schreier_generator(
+		INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
@@ -531,19 +570,22 @@ void orbit_of_subspaces::get_random_schreier_generator(INT *Elt, INT verbose_lev
 			}
 		}
 	else {
-		cout << "orbit_of_subspaces::get_random_schreier_generator image space is not found in the orbit" << endl;
+		cout << "orbit_of_subspaces::get_random_schreier_generator "
+				"image space is not found in the orbit" << endl;
 		exit(1);
 		}
 	
 #if 0
-	if (vec_search((void **)Subspaces, orbit_of_subspaces_compare_func, (void *) (sz_for_compare), 
+	if (vec_search((void **)Subspaces,
+			orbit_of_subspaces_compare_func, (void *) (sz_for_compare),
 		used_length, new_basis, pt2, 0 /* verbose_level */)) {
 		if (f_vv) {
 			cout << "new subspace is at position " << pt2 << endl;
 			}
 		}
 	else {
-		cout << "orbit_of_subspaces::get_random_schreier_generator image space is not found in the orbit" << endl;
+		cout << "orbit_of_subspaces::get_random_schreier_generator "
+				"image space is not found in the orbit" << endl;
 		exit(1);
 		}
 #endif
@@ -555,19 +597,22 @@ void orbit_of_subspaces::get_random_schreier_generator(INT *Elt, INT verbose_lev
 	// test:
 	map_a_subspace(cur_basis, new_basis, E5, 0 /* verbose_level*/);
 	if (search_data(new_basis, pt3)) {
-	//if (vec_search((void **)Subspaces, orbit_of_subspaces_compare_func, (void *) (sz_for_compare), 
+	//if (vec_search((void **)Subspaces,
+		//orbit_of_subspaces_compare_func, (void *) (sz_for_compare),
 	//	used_length, new_basis, pt3, 0 /* verbose_level */)) {
 		if (f_vv) {
 			cout << "testing: new subspace is at position " << pt3 << endl;
 			}
 		}
 	else {
-		cout << "orbit_of_subspaces::get_random_schreier_generator (testing) image space is not found in the orbit" << endl;
+		cout << "orbit_of_subspaces::get_random_schreier_generator "
+				"(testing) image space is not found in the orbit" << endl;
 		exit(1);
 		}
 
 	if (pt3 != position_of_original_subspace) {
-		cout << "orbit_of_subspaces::get_random_schreier_generator pt3 != position_of_original_subspace" << endl;
+		cout << "orbit_of_subspaces::get_random_schreier_generator "
+				"pt3 != position_of_original_subspace" << endl;
 		exit(1);
 		}
 
@@ -584,19 +629,23 @@ void orbit_of_subspaces::get_random_schreier_generator(INT *Elt, INT verbose_lev
 	FREE_INT(cur_basis);
 	FREE_INT(new_basis);
 	if (f_v) {
-		cout << "orbit_of_subspaces::get_random_schreier_generator done" << endl;
+		cout << "orbit_of_subspaces::get_random_schreier_generator "
+				"done" << endl;
 		}
 }
 
-strong_generators *orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep(
-	longinteger_object &full_group_order, INT verbose_level)
+strong_generators
+*orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep(
+	longinteger_object &full_group_order,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	strong_generators *gens;
 	sims *Stab;
 
 	if (f_v) {
-		cout << "orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep" << endl;
+		cout << "orbit_of_subspaces::generators_for_stabilizer_"
+				"of_orbit_rep" << endl;
 		}
 
 	compute_stabilizer(A /* default_action */, full_group_order, 
@@ -606,7 +655,9 @@ strong_generators *orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep(
 
 	Stab->group_order(stab_order);
 	if (f_v) {
-		cout << "orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep found a stabilizer group of order " << stab_order << endl;
+		cout << "orbit_of_subspaces::generators_for_stabilizer_of_"
+				"orbit_rep found a stabilizer group of order "
+				<< stab_order << endl;
 		}
 	
 	gens = new strong_generators;
@@ -615,12 +666,14 @@ strong_generators *orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep(
 
 	delete Stab;
 	if (f_v) {
-		cout << "orbit_of_subspaces::generators_for_stabilizer_of_orbit_rep done" << endl;
+		cout << "orbit_of_subspaces::generators_for_stabilizer_of_"
+				"orbit_rep done" << endl;
 		}
 	return gens;
 }
 
-void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_object &go, 
+void orbit_of_subspaces::compute_stabilizer(action *default_action,
+	longinteger_object &go,
 	sims *&Stab, INT verbose_level)
 // this function allocates a sims structure into Stab.
 {
@@ -643,7 +696,9 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_
 	
 	
 	if (f_v) {
-		cout << "orbit_of_subspaces::compute_stabilizer computing stabilizer inside a group of order " << go << " in action ";
+		cout << "orbit_of_subspaces::compute_stabilizer computing "
+				"stabilizer inside a group of order " << go
+				<< " in action ";
 		default_action->print_info();
 		cout << endl;
 		}
@@ -652,11 +707,13 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_
 	len = used_length;
 	D.integral_division_by_INT(go, len, target_go, r);
 	if (r) {	
-		cout << "orbit_of_subspaces::compute_stabilizer orbit length does not divide group order" << endl;
+		cout << "orbit_of_subspaces::compute_stabilizer orbit length "
+				"does not divide group order" << endl;
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "orbit_of_subspaces::compute_stabilizer expecting group of order " << target_go << endl;
+		cout << "orbit_of_subspaces::compute_stabilizer expecting group "
+				"of order " << target_go << endl;
 		}
 	
 	Stab->init(default_action);
@@ -669,7 +726,8 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_
 		if (cnt % 2 || Stab->nb_gen[0] == 0) {
 			get_random_schreier_generator(E1, 0 /* verbose_level */);
 			if (f_vvv) {
-				cout << "orbit_of_subspaces::compute_stabilizer created random Schreier generator" << endl;
+				cout << "orbit_of_subspaces::compute_stabilizer created "
+						"random Schreier generator" << endl;
 				//default_action->element_print(E1, cout);
 				}
 			}
@@ -677,16 +735,19 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_
 			Stab->random_schreier_generator(0 /* verbose_level */);
 			A->element_move(Stab->schreier_gen, E1, 0);
 			if (f_v4) {
-				cout << "orbit_of_subspaces::compute_stabilizer created random schreier generator from sims" << endl;
+				cout << "orbit_of_subspaces::compute_stabilizer created "
+						"random schreier generator from sims" << endl;
 				//default_action->element_print(E1, cout);
 				}
 			}
 
 
 
-		if (Stab->strip(E1, residue, drop_out_level, image, 0 /*verbose_level - 3*/)) {
+		if (Stab->strip(E1, residue, drop_out_level, image,
+				0 /*verbose_level - 3*/)) {
 			if (f_vvv) {
-				cout << "orbit_of_subspaces::compute_stabilizer element strips through" << endl;
+				cout << "orbit_of_subspaces::compute_stabilizer "
+						"element strips through" << endl;
 				if (FALSE) {
 					cout << "residue:" << endl;
 					A->element_print(residue, cout);
@@ -698,18 +759,21 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_
 		else {
 			f_added = TRUE;
 			if (f_vvv) {
-				cout << "orbit_of_subspaces::compute_stabilizer element needs to be inserted at level = " 
+				cout << "orbit_of_subspaces::compute_stabilizer "
+						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
 				if (FALSE) {
 					A->element_print(residue, cout);
 					cout  << endl;
 					}
 				}
-			Stab->add_generator_at_level(residue, drop_out_level, verbose_level - 4);
+			Stab->add_generator_at_level(residue, drop_out_level,
+					verbose_level - 4);
 			}
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
-			cout << "iteration " << cnt << " the new group order is " << cur_go 
+			cout << "iteration " << cnt
+					<< " the new group order is " << cur_go
 				<< " expecting a group of order " << target_go << endl; 
 			}
 		cnt++;
@@ -724,7 +788,9 @@ void orbit_of_subspaces::compute_stabilizer(action *default_action, longinteger_
 
 INT orbit_of_subspaces::search_data(INT *data, INT &idx)
 {
-	if (vec_search((void **)Subspaces, orbit_of_subspaces_compare_func, (void *) (sz_for_compare), 
+	if (vec_search((void **)Subspaces,
+			orbit_of_subspaces_compare_func,
+			(void *) (sz_for_compare),
 		used_length, data, idx, 0 /* verbose_level */)) {
 		return TRUE;
 		}
@@ -734,7 +800,8 @@ INT orbit_of_subspaces::search_data(INT *data, INT &idx)
 }
 
 
-INT orbit_of_subspaces::search_data_raw(INT *data_raw, INT &idx, INT verbose_level)
+INT orbit_of_subspaces::search_data_raw(INT *data_raw,
+		INT &idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, ret;
@@ -747,7 +814,8 @@ INT orbit_of_subspaces::search_data_raw(INT *data_raw, INT &idx, INT verbose_lev
 	for (i = 0; i < k; i++) {
 
 		data_tmp[1 + i] = data_raw[i];
-		unrank_vector(data_raw[i], data_tmp + 1 + k + i * n, verbose_level - 2);
+		unrank_vector(data_raw[i],
+				data_tmp + 1 + k + i * n, verbose_level - 2);
 		}
 
 	if (f_v) {

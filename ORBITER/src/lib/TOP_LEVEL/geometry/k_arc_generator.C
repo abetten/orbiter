@@ -99,7 +99,8 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	//Gen->main(Gen->verbose_level);
 
 	if (f_v) {
-		cout << "k_arc_generator::init Classifying 6-arcs for q=" << F->q << endl;
+		cout << "k_arc_generator::init Classifying 6-arcs "
+				"for q=" << F->q << endl;
 		}
 	
 	Gen->compute_starter(verbose_level - 1);
@@ -108,7 +109,9 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	nb_orbits = Gen->gen->nb_orbits_at_level(sz);
 
 	if (f_v) {
-		cout << "k_arc_generator::init We found " << nb_orbits << " isomorphism types of (" << sz << "," << d << ")-arcs" << endl;
+		cout << "k_arc_generator::init We found " << nb_orbits
+				<< " isomorphism types of (" << sz << "," << d
+				<< ")-arcs" << endl;
 		}
 
 
@@ -129,7 +132,8 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	for (h = 0; h < nb_orbits; h++) {
 
 		if (f_v) {
-			cout << "k_arc_generator::init testing arc " << h << " / " << nb_orbits << endl;
+			cout << "k_arc_generator::init testing arc " << h
+					<< " / " << nb_orbits << endl;
 			}
 
 		
@@ -151,7 +155,9 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	FREE_INT(Arc);
 
 	if (f_v) {
-		cout << "We found " << nb_k_arcs << " isomorphism types of (" << sz << "," << d << ")-arcs, out of a total of " << nb_orbits << " isomorphism types of arcs" << endl;
+		cout << "We found " << nb_k_arcs << " isomorphism types of ("
+				<< sz << "," << d << ")-arcs, out of a total of "
+				<< nb_orbits << " isomorphism types of arcs" << endl;
 		}
 	
 
@@ -163,7 +169,8 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 
 }
 
-void k_arc_generator::compute_line_type(INT *set, INT len, INT verbose_level)
+void k_arc_generator::compute_line_type(INT *set, INT len,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, a, b;
@@ -173,7 +180,8 @@ void k_arc_generator::compute_line_type(INT *set, INT len, INT verbose_level)
 		}
 
 	if (P2->Lines_on_point == 0) {
-		cout << "k_arc_generator::compute_line_type P->Lines_on_point == 0" << endl;
+		cout << "k_arc_generator::compute_line_type "
+				"P->Lines_on_point == 0" << endl;
 		exit(1);
 		}
 	INT_vec_zero(line_type, P2->N_lines);

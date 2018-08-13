@@ -33,7 +33,8 @@ void object_in_projective_space_with_action::freeself()
 	null();
 }
 
-void object_in_projective_space_with_action::init(object_in_projective_space *OiP, 
+void object_in_projective_space_with_action::init(
+	object_in_projective_space *OiP,
 	strong_generators *Aut_gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

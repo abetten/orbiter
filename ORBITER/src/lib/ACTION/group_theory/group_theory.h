@@ -6,6 +6,82 @@
 // based on action.h which was started:  August 13, 2005
 
 
+// #############################################################################
+// direct_product.C:
+// #############################################################################
+
+class direct_product {
+
+public:
+	matrix_group *M1;
+	matrix_group *M2;
+	finite_field *F1;
+	finite_field *F2;
+	INT q1;
+	INT q2;
+
+	BYTE label[1000];
+	BYTE label_tex[1000];
+
+	INT degree_of_matrix_group1;
+	INT dimension_of_matrix_group1;
+	INT degree_of_matrix_group2;
+	INT dimension_of_matrix_group2;
+	INT degree_of_product_action;
+	INT degree_overall;
+	INT low_level_point_size;
+	INT make_element_size;
+	INT elt_size_INT;
+
+	INT *perm_offset_i;
+	INT *tmp_Elt1;
+
+	INT bits_per_digit1;
+	INT bits_per_digit2;
+
+	INT bits_per_elt;
+	INT char_per_elt;
+
+	UBYTE *elt1;
+
+	INT base_len_in_component1;
+	INT *base_for_component1;
+	INT *tl_for_component1;
+
+	INT base_len_in_component2;
+	INT *base_for_component2;
+	INT *tl_for_component2;
+
+	INT base_length;
+	INT *the_base;
+	INT *the_transversal_length;
+
+	page_storage *Elts;
+
+	direct_product();
+	~direct_product();
+	void null();
+	void freeself();
+	void init(matrix_group *M1, matrix_group *M2,
+			INT verbose_level);
+	INT element_image_of(INT *Elt, INT a, INT verbose_level);
+	void element_one(INT *Elt);
+	INT element_is_one(INT *Elt);
+	void element_mult(INT *A, INT *B, INT *AB, INT verbose_level);
+	void element_move(INT *A, INT *B, INT verbose_level);
+	void element_invert(INT *A, INT *Av, INT verbose_level);
+	INT offset_i(INT i);
+	void element_pack(INT *Elt, UBYTE *elt);
+	void element_unpack(UBYTE *elt, INT *Elt);
+	void put_digit(UBYTE *elt, INT f, INT i, INT d);
+	INT get_digit(UBYTE *elt, INT f, INT i);
+	void make_element(INT *Elt, INT *data, INT verbose_level);
+	void element_print_easy(INT *Elt, ostream &ost);
+	void compute_base_and_transversals(INT verbose_level);
+	void make_strong_generators_data(INT *&data,
+			INT &size, INT &nb_gens, INT verbose_level);
+};
+
 
 // #############################################################################
 // linear_group.C:
@@ -144,6 +220,7 @@ public:
 	INT elt_size_INT_half;
 	INT low_level_point_size; // added Jan 26, 2010
 		// = n, the size of the vectors on which we act
+	INT make_element_size;
 
 	BYTE label[1000];
 	BYTE label_tex[1000];

@@ -128,7 +128,8 @@ void code_generator::read_arguments(int argc, const char **argv)
 		exit(1);
 		}
 	if (!f_k && !f_nmk && !f_N) {
-		cout << "Please use option -k <k> or -nmk <nmk> for linear codes or -N <N> for nonlinear codes" << endl;
+		cout << "Please use option -k <k> or -nmk <nmk> "
+				"for linear codes or -N <N> for nonlinear codes" << endl;
 		exit(1);
 		}
 	if (f_nmk) {
@@ -246,11 +247,13 @@ void code_generator::init(int argc, const char **argv)
 
 
 	if (f_v) {
-		cout << "code_generator::init initializing finite field of order " << q << endl;
+		cout << "code_generator::init initializing "
+				"finite field of order " << q << endl;
 		}
 	F->init(q, 0);
 	if (f_v) {
-		cout << "code_generator::init initializing finite field of order " << q << " done" << endl;
+		cout << "code_generator::init initializing "
+				"finite field of order " << q << " done" << endl;
 		}
 
 
@@ -282,7 +285,8 @@ void code_generator::init(int argc, const char **argv)
 		nmk = n - k;
 
 		if (f_v) {
-			cout << "code_generator::init calling init_projective_group, dimension = " << nmk << endl;
+			cout << "code_generator::init calling "
+					"init_projective_group, dimension = " << nmk << endl;
 			}
 
 		v1 = NEW_INT(nmk);
@@ -294,7 +298,8 @@ void code_generator::init(int argc, const char **argv)
 			verbose_level - 2);
 	
 		if (f_v) {
-			cout << "code_generator::init finished with init_projective_group" << endl;
+			cout << "code_generator::init finished with "
+					"init_projective_group" << endl;
 			}
 
 		gen->depth = n;
@@ -320,7 +325,8 @@ void code_generator::init(int argc, const char **argv)
 		longinteger_object go;
 
 		L->Strong_gens->group_order(go);
-		cout << "created strong generators for a group of order " << go << endl;
+		cout << "created strong generators for a group of "
+				"order " << go << endl;
 		L->Strong_gens->print_generators();
 
 		A = L->A2;
@@ -337,8 +343,10 @@ void code_generator::init(int argc, const char **argv)
 	
 	
 	if (f_v) {
-		cout << "code_generator::init group set up, calling gen->init" << endl;
-		cout << "A->f_has_strong_generators=" << A->f_has_strong_generators << endl;
+		cout << "code_generator::init group set up, "
+				"calling gen->init" << endl;
+		cout << "A->f_has_strong_generators="
+				<< A->f_has_strong_generators << endl;
 		}
 	
 	gen->init(A, A, Strong_gens, gen->depth /* sz */, verbose_level);
@@ -346,19 +354,23 @@ void code_generator::init(int argc, const char **argv)
 
 #if 0
 	if (f_v) {
-		cout << "code_generator::init group set up, calling gen->init_check_func" << endl;
+		cout << "code_generator::init group set up, "
+				"calling gen->init_check_func" << endl;
 		}
 
 	gen->init_check_func(check_mindist, this /* candidate_check_data */);
 
 	if (f_v) {
-		cout << "code_generator::init group set up, calling gen->init_incremental_check_func" << endl;
+		cout << "code_generator::init group set up, "
+				"calling gen->init_incremental_check_func" << endl;
 		}
 
-	gen->init_incremental_check_func(check_mindist_incremental, this /* candidate_check_data */);
+	gen->init_incremental_check_func(check_mindist_incremental,
+			this /* candidate_check_data */);
 #endif
 	if (f_v) {
-		cout << "code_generator::init group set up, calling gen->init_early_test_func" << endl;
+		cout << "code_generator::init group set up, "
+				"calling gen->init_early_test_func" << endl;
 		}
 	gen->init_early_test_func(
 		check_mindist_early_test_func, 
@@ -370,7 +382,8 @@ void code_generator::init(int argc, const char **argv)
 
 #if 0
 	if (FALSE && gen->A->degree < 1000) {
-		cout << "the elements of PG(" << n - k - 1 << "," << F->q << ") are:" << endl;
+		cout << "the elements of PG(" << n - k - 1 << ","
+				<< F->q << ") are:" << endl;
 		display_all_PG_elements(n - k - 1, *F);
 		}
 #endif
@@ -383,13 +396,15 @@ void code_generator::init(int argc, const char **argv)
 	INT nb_oracle_nodes = ONE_MILLION;
 	
 	if (f_v) {
-		cout << "code_generator::init group set up, calling gen->init_oracle" << endl;
+		cout << "code_generator::init group set up, "
+				"calling gen->init_oracle" << endl;
 		}
 
 	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
 
 	if (f_v) {
-		cout << "code_generator::init group set up, calling gen->root[0].init_root_node" << endl;
+		cout << "code_generator::init group set up, "
+				"calling gen->root[0].init_root_node" << endl;
 		}
 
 	gen->root[0].init_root_node(gen, gen->verbose_level - 2);
@@ -462,8 +477,10 @@ void code_generator::print(INT len, INT *S)
 
 			FREE_INT(codewords);
 		
-			cout << "before F->compute_and_print_projective_weights" << endl;
-			F->compute_and_print_projective_weights(B, len, len - nmk);
+			cout << "before F->compute_and_print_"
+					"projective_weights" << endl;
+			F->compute_and_print_projective_weights(
+					B, len, len - nmk);
 			}
 		}
 	else if (f_nonlinear) {
@@ -596,7 +613,9 @@ void code_generator::early_test_func_by_using_group(
 		0/*verbose_level*/);
 
 	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group after Schreier.compute_all_orbits_on_invariant_subset, we found " 
+		cout << "code_generator::early_test_func_by_"
+				"using_group after Schreier.compute_all_orbits_"
+				"on_invariant_subset, we found "
 		<< Schreier.nb_orbits << " orbits" << endl;
 		}
 	nb_good_candidates = 0;
@@ -636,7 +655,9 @@ void code_generator::early_test_func_by_using_group(
 
 	INT_vec_heapsort(good_candidates, nb_good_candidates);
 	if (f_v) {
-		cout << "code_generator::early_test_func_by_using_group after Schreier.compute_all_orbits_on_invariant_subset, we found " 
+		cout << "code_generator::early_test_func_by_using_group "
+			"after Schreier.compute_all_orbits_on_invariant_subset, "
+			"we found "
 			<< nb_good_candidates << " good candidates in " 
 			<< nb_good_orbits << " good orbits" << endl;
 		}
@@ -649,14 +670,16 @@ INT code_generator::Hamming_distance(INT a, INT b)
 	INT i;
 
 	if (f_v) {
-		cout << "code_generator::Hamming_distance a=" << a << " b=" << b << endl;
+		cout << "code_generator::Hamming_distance "
+				"a=" << a << " b=" << b << endl;
 		}
 	if (f_nonlinear) {
 		if (q == 2) {
 			d = Hamming_distance_binary(a, b, n);
 			}
 		else {
-			cout << "code_generator::Hamming_distance f_nonlinear and q != 2" << endl;
+			cout << "code_generator::Hamming_distance "
+					"f_nonlinear and q != 2" << endl;
 			exit(1);
 			}
 		}
@@ -674,7 +697,8 @@ INT code_generator::Hamming_distance(INT a, INT b)
 			}
 		}
 	if (f_v) {
-		cout << "code_generator::Hamming_distance a=" << a << " b=" << b << " d=" << d << endl;
+		cout << "code_generator::Hamming_distance "
+				"a=" << a << " b=" << b << " d=" << d << endl;
 		}
 	return d;
 }
@@ -749,7 +773,8 @@ INT check_mindist(INT len, INT *S, void *data, INT verbose_level)
 			}
 		}
 	else {
-		cout << "check_mindist not yet implemented for nonlinear codes" << endl;
+		cout << "check_mindist not yet implemented "
+				"for nonlinear codes" << endl;
 		}
 
 	
@@ -764,7 +789,8 @@ INT check_mindist(INT len, INT *S, void *data, INT verbose_level)
 		}
 }
 
-INT check_mindist_incremental(INT len, INT *S, void *data, INT verbose_level)
+INT check_mindist_incremental(INT len, INT *S,
+		void *data, INT verbose_level)
 {
 	code_generator *cg = (code_generator *) data;
 	INT f_OK = TRUE;
@@ -782,7 +808,8 @@ INT check_mindist_incremental(INT len, INT *S, void *data, INT verbose_level)
 			}
 		}
 	else {
-		cout << "check_mindist_incremental not yet implemented for nonlinear codes" << endl;
+		cout << "check_mindist_incremental "
+				"not yet implemented for nonlinear codes" << endl;
 		}
 
 	

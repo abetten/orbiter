@@ -39,12 +39,14 @@ void elliptic_curve::freeself()
 }
 
 
-void elliptic_curve::init(finite_field *F, INT b, INT c, INT verbose_level)
+void elliptic_curve::init(finite_field *F, INT b, INT c,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "elliptic_curve::init q=" << F->q << " b=" << b << " c=" << c << endl;
+		cout << "elliptic_curve::init q=" << F->q
+				<< " b=" << b << " c=" << c << endl;
 		}
 	elliptic_curve::F = F;
 	q = F->q;
@@ -140,7 +142,8 @@ void elliptic_curve::compute_points(INT verbose_level)
 				if (y2 == y1) {
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
-						cout << "The number of points exceeds the bound" << endl;
+						cout << "The number of points "
+								"exceeds the bound" << endl;
 						exit(1);
 						}
 					}
@@ -151,12 +154,14 @@ void elliptic_curve::compute_points(INT verbose_level)
 						}
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
-						cout << "The number of points exceeds the bound" << endl;
+						cout << "The number of points "
+								"exceeds the bound" << endl;
 						exit(1);
 						}
 					add_point_to_table(x, y2, 1);
 					if (nb == bound) {
-						cout << "The number of points exceeds the bound" << endl;
+						cout << "The number of points "
+								"exceeds the bound" << endl;
 						exit(1);
 						}
 					}
@@ -175,7 +180,8 @@ void elliptic_curve::compute_points(INT verbose_level)
 						// DISCRETA/global.C
 
 					if (F->mult(y, y) != r) {
-						cout << "There is a problem with the square root" << endl;
+						cout << "There is a problem "
+								"with the square root" << endl;
 						exit(1);
 						}
 					y1 = y;
@@ -186,26 +192,32 @@ void elliptic_curve::compute_points(INT verbose_level)
 						}
 					add_point_to_table(x, y1, 1);
 					if (nb == bound) {
-						cout << "The number of points exceeds the bound" << endl;
+						cout << "The number of points "
+								"exceeds the bound" << endl;
 						exit(1);
 						}
 					add_point_to_table(x, y2, 1);
 					if (nb == bound) {
-						cout << "The number of points exceeds the bound" << endl;
+						cout << "The number of points "
+								"exceeds the bound" << endl;
 						exit(1);
 						}
-					//cout << nb++ << " : (" << x << "," << y << ",1)" << endl;
-					//cout << nb++ << " : (" << x << "," << F.negate(y) << ",1)" << endl;
+					//cout << nb++ << " : (" << x << ","
+					// << y << ",1)" << endl;
+					//cout << nb++ << " : (" << x << ","
+					// << F.negate(y) << ",1)" << endl;
 					}
 				}
 			else {
 				y = F->frobenius_power(r, e - 1);
 				add_point_to_table(x, y, 1);
 				if (nb == bound) {
-					cout << "The number of points exceeds the bound" << endl;
+					cout << "The number of points exceeds "
+							"the bound" << endl;
 					exit(1);
 					}
-				//cout << nb++ << " : (" << x << "," << y << ",1)" << endl;
+				//cout << nb++ << " : (" << x << ","
+				// << y << ",1)" << endl;
 				}
 #endif
 
@@ -220,7 +232,8 @@ void elliptic_curve::compute_points(INT verbose_level)
 
 
 	if (f_v) {
-		cout << "elliptic_curve::compute_points done, we found " << nb << " points" << endl;
+		cout << "elliptic_curve::compute_points done, "
+				"we found " << nb << " points" << endl;
 		}
 }
 
@@ -250,7 +263,8 @@ void elliptic_curve::print_points()
 	
 	cout << "i : point (x,y,x)" << endl;
 	for (i = 0; i < nb; i++) {
-		cout << setw(4) << i << " & " << T[i * 3 + 0] << "," << T[i * 3 + 1] << "," << T[i * 3 + 2] << "\\\\" << endl;
+		cout << setw(4) << i << " & " << T[i * 3 + 0] << ","
+				<< T[i * 3 + 1] << "," << T[i * 3 + 2] << "\\\\" << endl;
 		}
 }
 
@@ -330,7 +344,8 @@ void elliptic_curve::addition(
 		three = F->add(two, 1);
 		top = F->add(F->mult(three, F->mult(x1, x1)), b);
 		bottom = F->mult(two, x2);
-		a = F->inverse(bottom);  // this does not work in characteristic two !!!
+		a = F->inverse(bottom);
+			// this does not work in characteristic two !!!
 		m = F->mult(top, a);
 		}
 	else {
@@ -344,7 +359,9 @@ void elliptic_curve::addition(
 	z3 = 1;
 }
 
-void elliptic_curve::draw_grid(char *fname, INT xmax, INT ymax, INT f_with_points, INT verbose_level)
+void elliptic_curve::draw_grid(char *fname,
+		INT xmax, INT ymax, INT f_with_points,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT x_min = 0, x_max = 1000000;
@@ -359,7 +376,8 @@ void elliptic_curve::draw_grid(char *fname, INT xmax, INT ymax, INT f_with_point
 		}
 	sprintf(fname_full, "%s.mp", fname);
 	{
-	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname_full,
+			x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = xmax;
@@ -375,7 +393,8 @@ void elliptic_curve::draw_grid(char *fname, INT xmax, INT ymax, INT f_with_point
 	G.end_figure();
 	G.footer();
 	}
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size "
+			<< file_size(fname_full) << endl;
 	if (f_v) {
 		cout << "draw_grid done" << endl;
 		}
@@ -383,7 +402,8 @@ void elliptic_curve::draw_grid(char *fname, INT xmax, INT ymax, INT f_with_point
 }
 
 
-void elliptic_curve::draw_grid2(mp_graphics &G, INT f_with_points, INT verbose_level)
+void elliptic_curve::draw_grid2(mp_graphics &G,
+		INT f_with_points, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b;
@@ -422,12 +442,14 @@ void elliptic_curve::draw_grid2(mp_graphics &G, INT f_with_points, INT verbose_l
 
 
 	G.draw_axes_and_grid(
-		0., (double)(q - 1), 0., (double)(q - 1), x_stretch, y_stretch, 
+		0., (double)(q - 1), 0., (double)(q - 1),
+		x_stretch, y_stretch,
 		TRUE /* f_x_axis_at_y_min */, TRUE /* f_y_axis_at_x_min */, 
 		1 /* x_mod */, 1 /* y_mod */, 1, 1, 
 		-2. /* x_labels_offset */, -2. /* y_labels_offset */, 
 		0.5 /* x_tick_half_width */, 0.5 /* y_tick_half_width */, 
-		TRUE /* f_v_lines */, 1 /* subdivide_v */, TRUE /* f_h_lines */, 1 /* subdivide_h */);
+		TRUE /* f_v_lines */, 1 /* subdivide_v */,
+		TRUE /* f_h_lines */, 1 /* subdivide_h */);
 
 
 
@@ -447,7 +469,9 @@ void elliptic_curve::draw_grid2(mp_graphics &G, INT f_with_points, INT verbose_l
 			//get_ab(q, x1, x2, x3, a, b);
 			make_affine_point(x1, x2, x3, a, b, 0);
 
-			cout << "point " << h << " : " << x1 << ", " << x2 << ", " << x3 << " : " << a << ", " << b << endl;
+			cout << "point " << h << " : "
+					<< x1 << ", " << x2 << ", " << x3
+					<< " : " << a << ", " << b << endl;
 			
 			Dx[0] = a;
 			Dy[0] = b;
@@ -572,7 +596,8 @@ void elliptic_curve::draw_grid2(mp_graphics &G, INT f_with_points, INT verbose_l
 		}
 }
 
-void elliptic_curve::make_affine_point(INT x1, INT x2, INT x3, INT &a, INT &b, INT verbose_level)
+void elliptic_curve::make_affine_point(INT x1, INT x2, INT x3,
+		INT &a, INT &b, INT verbose_level)
 {
 	if (x3 == 0) {
 		a = q >> 1;
@@ -664,7 +689,8 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 			return i;
 			}
 		}
-	cout << "did not find point " << x1 << "," << x2 << "," << x3 << " in table" << endl;
+	cout << "did not find point "
+			<< x1 << "," << x2 << "," << x3 << " in table" << endl;
 	exit(1);
 }
 #endif
@@ -672,7 +698,8 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 //INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
 // This function finds the last occurence of the element a.
-// If a is not found, it returns in idx the position where it should be inserted if 
+// If a is not found, it returns in idx
+// the position where it should be inserted if
 // the vector is assumed to be in increasing order.
 
 {
@@ -681,7 +708,8 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 	INT f_v = FALSE;
 	
 	if (nb == 0) {
-		cout << "elliptic_curve::index_of_point nb == 0" << endl;
+		cout << "elliptic_curve::index_of_point "
+				"nb == 0" << endl;
 		exit(1);
 		}
 
@@ -724,10 +752,14 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 			}
 		//res = v[m] - a;
 		if (f_v) {
-			cout << "l=" << l << " r=" << r<< " m=" << m << " T[3 * m + 0]=" << T[3 * m + 0] << " T[3 * m + 1]=" << T[3 * m + 1] << " res=" << res << endl;
+			cout << "l=" << l << " r=" << r<< " m=" << m
+					<< " T[3 * m + 0]=" << T[3 * m + 0]
+					<< " T[3 * m + 1]=" << T[3 * m + 1]
+											 << " res=" << res << endl;
 			}
 		//cout << "search l=" << l << " m=" << m << " r=" 
-		//	<< r << "a=" << a << " v[m]=" << v[m] << " res=" << res << endl;
+		//	<< r << "a=" << a << " v[m]=" << v[m]
+		// << " res=" << res << endl;
 		// so, res is 
 		// positive if v[m] > a,
 		// zero if v[m] == a,
@@ -735,7 +767,8 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 		if (res <= 0) {
 			l = m + 1;
 			if (f_v) {
-				cout << "elliptic_curve::index_of_point moving to the right" << endl;
+				cout << "elliptic_curve::index_of_point "
+						"moving to the right" << endl;
 				}
 			if (res == 0) {
 				f_found = TRUE;
@@ -743,7 +776,8 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 			}
 		else {
 			if (f_v) {
-				cout << "elliptic_curve::index_of_point moving to the left" << endl;
+				cout << "elliptic_curve::index_of_point "
+						"moving to the left" << endl;
 				}
 			r = m;
 			}
@@ -751,7 +785,8 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 	// now: l == r; 
 	// and f_found is set accordingly */
 	if (!f_found) {
-		cout << "elliptic_curve::index_of_point did not find point" << endl;
+		cout << "elliptic_curve::index_of_point "
+				"did not find point" << endl;
 		cout << "x1=" << x1 << " x2=" << x2 << " x3=" << x3 << endl;
 		exit(1);
 		}
@@ -785,7 +820,9 @@ void elliptic_curve::print_all_powers(INT i)
 	j = i;
 	ord = 1;
 	while (j != 0) {
-		cout << ord << " & " << j << " & (" << T[3 * j + 0] << ", " << T[3 * j + 1] << ", " << T[3 * j + 2] << ")\\\\" << endl;
+		cout << ord << " & " << j << " & (" << T[3 * j + 0]
+			<< ", " << T[3 * j + 1] << ", " << T[3 * j + 2]
+			<< ")\\\\" << endl;
 		j = A[i * nb + j];
 		ord++;
 		}

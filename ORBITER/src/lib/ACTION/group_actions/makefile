@@ -14,6 +14,7 @@ MODULES = \
 	action_init.o \
 	backtrack.o \
 	interface.o \
+	interface_direct_product.o \
 	interface_matrix_group.o \
 	interface_perm_group.o \
 	interface_wreath_product.o

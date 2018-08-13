@@ -119,7 +119,8 @@ void isomorph::prepare_database_access(INT cur_level, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::prepare_database_access cur_level=" << cur_level << endl;
+		cout << "isomorph::prepare_database_access "
+				"cur_level=" << cur_level << endl;
 		}
 	if (cur_level == level - 1) {
 		//first_node = gen->first_oracle_node_at_level[level - 1];
@@ -132,7 +133,9 @@ void isomorph::prepare_database_access(INT cur_level, INT verbose_level)
 		fp_ge = fp_ge2;
 		}
 	else {
-		cout << "iso_node " << iso_nodes << " isomorph::prepare_database_access cur_level = " << cur_level << endl;
+		cout << "iso_node " << iso_nodes
+				<< " isomorph::prepare_database_access "
+						"cur_level = " << cur_level << endl;
 		exit(1);
 		}
 }
@@ -216,7 +219,9 @@ void isomorph::add_solution_to_database(INT *data,
 		v.m_ii(4 + j, data[1 + j]);
 		}
 	if (f_vvv || ((no % print_mod) == 0)) {
-		cout << "Solution no " << no << " / " << nb_solutions << " starter case " << data[0] << " nb " << nb << " id=" << id << " : " << v << " : " << endl;
+		cout << "Solution no " << no << " / " << nb_solutions
+				<< " starter case " << data[0] << " nb " << nb
+				<< " id=" << id << " : " << v << " : " << endl;
 		}
 		
 	DB_sol->add_object_return_datref(v, datref, 0/*verbose_level - 3*/);
@@ -247,7 +252,8 @@ void isomorph::load_solution(INT id, INT *data)
 		}
 }
 
-void isomorph::load_solution_by_btree(INT btree_idx, INT idx, INT &id, INT *data)
+void isomorph::load_solution_by_btree(
+		INT btree_idx, INT idx, INT &id, INT *data)
 {
 	//INT i;
 	Vector v;
@@ -265,7 +271,8 @@ void isomorph::load_solution_by_btree(INT btree_idx, INT idx, INT &id, INT *data
 
 
 
-INT isomorph::find_extension_easy(INT *set, INT case_nb, INT &idx, INT verbose_level)
+INT isomorph::find_extension_easy(
+		INT *set, INT case_nb, INT &idx, INT verbose_level)
 // case_nb is the starter that is associated with the given set.
 // We wish to find out if the set is a solution that has been stored 
 // with that starter. 
@@ -282,7 +289,8 @@ INT isomorph::find_extension_easy(INT *set, INT case_nb, INT &idx, INT verbose_l
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "isomorph::find_extension_easy case_nb=" << case_nb << endl;
+		cout << "isomorph::find_extension_easy "
+				"case_nb=" << case_nb << endl;
 		}
 #if 0
 	INT ret1, idx1;
@@ -300,7 +308,8 @@ INT isomorph::find_extension_easy(INT *set, INT case_nb, INT &idx, INT verbose_l
 		exit(1);
 		}
 	if (ret1 && (idx1 != idx2)) {
-		cout << "isomorph::find_extension_easy ret1 && (idx1 != idx2)" << endl;
+		cout << "isomorph::find_extension_easy "
+				"ret1 && (idx1 != idx2)" << endl;
 		exit(1);
 		}
 	idx = idx1;
@@ -428,7 +437,8 @@ INT isomorph::find_extension_easy_new(INT *set,
 	if (f_vv) {
 		cout << "f_found1=" << f_found1 << " first=" << first << endl;
 		}
-	f_found2 = B4.search_INT4_INT4(case_nb, h + 1, last, 0 /*verbose_level */);
+	f_found2 = B4.search_INT4_INT4(case_nb, h + 1, last,
+			0 /*verbose_level */);
 	if (f_vv) {
 		cout << "f_found2=" << f_found2 << " last=" << last << endl;
 		}
@@ -898,7 +908,8 @@ void isomorph::load_strong_generators_database(INT cur_level,
 	nb_strong_generators = v.s_ii(pos++);
 	if (f_vv) {
 		cout << "isomorph::load_strong_generators_database "
-				"nb_strong_generators=" << nb_strong_generators << endl;
+				"nb_strong_generators="
+				<< nb_strong_generators << endl;
 		}
 	if (nb_strong_generators == 0) {
 		gens.init(gen->A);
@@ -924,7 +935,8 @@ void isomorph::load_strong_generators_database(INT cur_level,
 
 	fseek(fp_ge, ref * gen->A->coded_elt_size_in_char, SEEK_SET);
 	for (i = 0; i < nb_strong_generators; i++) {
-		gen->A->element_read_file_fp(gens.ith(i), fp_ge, 0/* verbose_level*/);
+		gen->A->element_read_file_fp(gens.ith(i), fp_ge,
+				0/* verbose_level*/);
 		}
 finish:
 	FREE_INT(tmp_ELT);

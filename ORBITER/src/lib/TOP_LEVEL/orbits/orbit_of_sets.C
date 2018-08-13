@@ -40,7 +40,8 @@ void orbit_of_sets::freeself()
 	null();
 }
 
-void orbit_of_sets::init(action *A, action *A2, INT *set, INT sz, vector_ge *gens, INT verbose_level)
+void orbit_of_sets::init(action *A, action *A2,
+		INT *set, INT sz, vector_ge *gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -90,7 +91,8 @@ void orbit_of_sets::compute(INT verbose_level)
 	Q_len = 1;
 	while (Q_len) {
 		if (f_vv) {
-			cout << "Q_len = " << Q_len << " : used_length=" << used_length << " : ";
+			cout << "Q_len = " << Q_len << " : used_length="
+					<< used_length << " : ";
 			INT_vec_print(cout, Q, Q_len);
 			cout << endl;
 			}
@@ -106,13 +108,21 @@ void orbit_of_sets::compute(INT verbose_level)
 			if (f_vv) {
 				cout << "applying generator " << j << endl;
 				}
-			A2->map_a_set(cur_set, new_set + 1, sz, gens->ith(j), 0 /* verbose_level*/);
+			A2->map_a_set(cur_set, new_set + 1, sz, gens->ith(j),
+					0 /* verbose_level*/);
 			INT_vec_heapsort(new_set + 1, sz);
 			new_set[0] = INT_vec_hash(new_set + 1, sz);
-			if (vec_search((void **)Sets, orbit_of_sets_compare_func, (void *) (sz + 1), 
-				used_length, new_set, idx, 0 /* verbose_level */)) {
+			if (vec_search(
+					(void **)Sets,
+					orbit_of_sets_compare_func,
+					(void *) (sz + 1),
+					used_length,
+					new_set,
+					idx,
+					0 /* verbose_level */)) {
 				if (f_vv) {
-					cout << "new set is already in the list, at position " << idx << endl;
+					cout << "new set is already in the list, "
+							"at position " << idx << endl;
 					}
 				}
 			else {
@@ -178,7 +188,8 @@ void orbit_of_sets::compute(INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "orbit_of_sets::compute found an orbit of length " << used_length << endl;
+		cout << "orbit_of_sets::compute found an orbit of length "
+				<< used_length << endl;
 		}
 
 
@@ -188,7 +199,8 @@ void orbit_of_sets::compute(INT verbose_level)
 		}
 }
 
-void orbit_of_sets::get_table_of_orbits(INT *&Table, INT &orbit_length, INT &set_size, INT verbose_level)
+void orbit_of_sets::get_table_of_orbits(INT *&Table,
+		INT &orbit_length, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -196,7 +208,8 @@ void orbit_of_sets::get_table_of_orbits(INT *&Table, INT &orbit_length, INT &set
 	set_size = sz;
 	orbit_length = used_length;
 	if (f_v) {
-		cout << "orbit_of_sets::get_table_of_orbits orbit_length=" << orbit_length << endl;
+		cout << "orbit_of_sets::get_table_of_orbits orbit_length="
+				<< orbit_length << endl;
 		}
 	Table = NEW_INT(orbit_length * set_size);
 	for (i = 0; i < orbit_length; i++) {
