@@ -98,6 +98,10 @@ void matrix_group::init_projective_group(INT n,
 	matrix_group::GFq = F;
 	f_GFq_is_allocated = FALSE;
 	low_level_point_size = n;
+	make_element_size = n * n;
+	if (f_semilinear) {
+		make_element_size++;
+	}
 	f_kernel_is_diagonal_matrices = TRUE;
 	degree = nb_PG_elements(n - 1, F->q);
 
@@ -162,6 +166,10 @@ void matrix_group::init_affine_group(INT n,
 	low_level_point_size = n;
 	f_kernel_is_diagonal_matrices = FALSE;
 	degree = nb_AG_elements(n, F->q);
+	make_element_size = n * n + n;
+	if (f_semilinear) {
+		make_element_size++;
+	}
 
 	if (f_semilinear) {
 		sprintf(label, "AGGL_%ld_%ld", n, F->q);
@@ -223,6 +231,10 @@ void matrix_group::init_general_linear_group(INT n,
 	low_level_point_size = n;
 	f_kernel_is_diagonal_matrices = FALSE;
 	degree = nb_AG_elements(n, F->q);
+	make_element_size = n * n;
+	if (f_semilinear) {
+		make_element_size++;
+	}
 
 	if (f_semilinear) {
 		sprintf(label, "GGL_%ld_%ld", n, F->q);

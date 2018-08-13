@@ -1776,6 +1776,12 @@ void action::make_element(INT *Elt, INT *data, INT verbose_level)
 			}
 		G.wreath_product_group->make_element(Elt, data, verbose_level);
 		}
+	else if (type_G == direct_product_t) {
+		if (f_v) {
+			cout << "action::make_element direct_product_t" << endl;
+			}
+		G.direct_product_group->make_element(Elt, data, verbose_level);
+		}
 	else if (f_has_subaction) {
 		if (f_v) {
 			cout << "action::make_element subaction" << endl;

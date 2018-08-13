@@ -8,6 +8,204 @@
 #include <cstring>
 	// for memcpy
 
+void action::init_direct_product_group_and_restrict(
+		matrix_group *M1, matrix_group *M2, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	action *A_direct_product;
+	action *Adp;
+	direct_product *P;
+	INT *points;
+	INT nb_points;
+	INT i;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict" << endl;
+		cout << "M1=" << M1->label << endl;
+		cout << "M2=" << M2->label << endl;
+		}
+	A_direct_product = new action;
+	A_direct_product->init_direct_product_group(M1, M2, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict "
+				"after A_direct_product->init_direct_product_group" << endl;
+	}
+
+	P = A_direct_product->G.direct_product_group;
+	nb_points = P->degree_of_product_action;
+	points = NEW_INT(nb_points);
+	for (i = 0; i < nb_points; i++) {
+		points[i] = P->perm_offset_i[2] + i;
+	}
+
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict "
+				"before A_direct_product->restricted_action" << endl;
+	}
+	Adp = A_direct_product->restricted_action(points, nb_points,
+			verbose_level);
+	Adp->f_is_linear = FALSE;
+	if (f_v) {
+		cout << "action::init_direct_product_group_and_restrict "
+				"after A_direct_product->restricted_action" << endl;
+	}
+
+	memcpy(this, Adp, sizeof(action));
+	Adp->null();
+	delete Adp;
+}
+
+void action::init_direct_product_group(
+		matrix_group *M1, matrix_group *M2,
+		INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	direct_product *P;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group" << endl;
+		cout << "M1=" << M1->label << endl;
+		cout << "M2=" << M2->label << endl;
+		}
+
+	P = NEW_OBJECT(direct_product);
+
+
+
+	type_G = direct_product_t;
+	G.direct_product_group = P;
+	f_allocated = TRUE;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before P->init" << endl;
+		}
+	P->init(M1, M2, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after W->init_tensor_wreath_product" << endl;
+		}
+
+	f_is_linear = FALSE;
+	dimension = 0;
+
+
+	low_level_point_size = 0;
+	if (f_v) {
+		cout << "action::init_direct_product_group low_level_point_size="
+			<< low_level_point_size<< endl;
+		}
+	strcpy(label, P->label);
+	strcpy(label_tex, P->label_tex);
+	if (f_v) {
+		cout << "action::init_direct_product_group label=" << label << endl;
+		}
+
+	degree = P->degree_overall;
+	make_element_size = P->make_element_size;
+
+	init_function_pointers_direct_product_group();
+
+	elt_size_in_INT = P->elt_size_INT;
+	coded_elt_size_in_char = P->char_per_elt;
+	allocate_element_data();
+
+	strcpy(group_prefix, label);
+
+
+
+	degree = P->degree_overall;
+	if (f_v) {
+		cout << "action::init_direct_product_group degree=" << degree << endl;
+		}
+	base_len = P->base_length;
+	if (f_v) {
+		cout << "action::init_direct_product_group base_len=" << base_len << endl;
+		}
+
+	allocate_base_data(base_len);
+
+	INT_vec_copy(P->the_base, base, base_len);
+	INT_vec_copy(P->the_transversal_length, transversal_length, base_len);
+
+	INT *gens_data;
+	INT gens_size;
+	INT gens_nb;
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before W->make_strong_generators_data" << endl;
+		}
+	P->make_strong_generators_data(gens_data,
+			gens_size, gens_nb, verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after W->make_strong_generators_data" << endl;
+		}
+	Strong_gens = NEW_OBJECT(strong_generators);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before Strong_gens->init_from_data" << endl;
+		}
+	Strong_gens->init_from_data(this, gens_data, gens_nb, gens_size,
+			transversal_length, verbose_level - 1);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after Strong_gens->init_from_data" << endl;
+		}
+	f_has_strong_generators = TRUE;
+	FREE_INT(gens_data);
+
+	sims *S;
+
+	S = NEW_OBJECT(sims);
+
+	S->init(this);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before S->init_generators" << endl;
+		}
+	S->init_generators(*Strong_gens->gens, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after S->init_generators" << endl;
+		}
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before S->compute_base_orbits_known_length" << endl;
+		}
+	S->compute_base_orbits_known_length(transversal_length, verbose_level);
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after S->compute_base_orbits_known_length" << endl;
+		}
+
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"before init_sims" << endl;
+		}
+
+	init_sims(S, verbose_level);
+
+	if (f_v) {
+		cout << "action::init_direct_product_group "
+				"after init_sims" << endl;
+		}
+
+	if (f_v) {
+		cout << "action::init_direct_product_group, finished setting up "
+				<< group_prefix;
+		cout << ", a permutation group of degree " << degree << " ";
+		cout << "and of order ";
+		print_group_order(cout);
+		cout << endl;
+		//cout << "make_element_size=" << make_element_size << endl;
+		//cout << "base_len=" << base_len << endl;
+		//cout << "f_semilinear=" << f_semilinear << endl;
+		}
+}
+
 void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
 		finite_field *F, INT verbose_level)
 {
@@ -1304,7 +1502,7 @@ void action::init_function_pointers_wreath_product_group()
 	ptr_element_image_of = wreath_product_group_element_image_of;
 	ptr_element_image_of_low_level = wreath_product_group_element_image_of_low_level;
 	ptr_element_linear_entry_ij = wreath_product_group_element_linear_entry_ij;
-	ptr_element_linear_entry_frobenius = matrix_group_element_linear_entry_frobenius;
+	ptr_element_linear_entry_frobenius = wreath_product_group_element_linear_entry_frobenius;
 	ptr_element_one = wreath_product_group_element_one;
 	ptr_element_is_one = wreath_product_group_element_is_one;
 	ptr_element_unpack = wreath_product_group_element_unpack;
@@ -1324,6 +1522,33 @@ void action::init_function_pointers_wreath_product_group()
 	ptr_element_print_for_make_element = wreath_product_group_element_print_for_make_element;
 	ptr_element_print_for_make_element_no_commas = wreath_product_group_element_print_for_make_element_no_commas;
 	ptr_print_point = wreath_product_group_print_point;
+}
+
+void action::init_function_pointers_direct_product_group()
+{
+	ptr_element_image_of = direct_product_group_element_image_of;
+	ptr_element_image_of_low_level = direct_product_group_element_image_of_low_level;
+	ptr_element_linear_entry_ij = direct_product_group_element_linear_entry_ij;
+	ptr_element_linear_entry_frobenius = direct_product_group_element_linear_entry_frobenius;
+	ptr_element_one = direct_product_group_element_one;
+	ptr_element_is_one = direct_product_group_element_is_one;
+	ptr_element_unpack = direct_product_group_element_unpack;
+	ptr_element_pack = direct_product_group_element_pack;
+	ptr_element_retrieve = direct_product_group_element_retrieve;
+	ptr_element_store = direct_product_group_element_store;
+	ptr_element_mult = direct_product_group_element_mult;
+	ptr_element_invert = direct_product_group_element_invert;
+	ptr_element_transpose = direct_product_group_element_transpose;
+	ptr_element_move = direct_product_group_element_move;
+	ptr_element_dispose = direct_product_group_element_dispose;
+	ptr_element_print = direct_product_group_element_print;
+	ptr_element_print_quick = direct_product_group_element_print_quick;
+	ptr_element_print_latex = direct_product_group_element_print_latex;
+	ptr_element_print_verbose = direct_product_group_element_print_verbose;
+	ptr_element_code_for_make_element = direct_product_group_element_code_for_make_element;
+	ptr_element_print_for_make_element = direct_product_group_element_print_for_make_element;
+	ptr_element_print_for_make_element_no_commas = direct_product_group_element_print_for_make_element_no_commas;
+	ptr_print_point = direct_product_group_print_point;
 }
 
 void action::init_function_pointers_permutation_group()

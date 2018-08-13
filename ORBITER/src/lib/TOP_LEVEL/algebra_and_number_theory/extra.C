@@ -35,7 +35,9 @@ sims *create_sims_for_stabilizer(action *A,
 	strong_generators *Aut_gens;
 
 	STAB.init(A, set, set_size, verbose_level);
-	STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level - 1);
+	STAB.compute_set_stabilizer(t0,
+			nb_backtrack_nodes, Aut_gens,
+			verbose_level - 1);
 	
 	Stab = Aut_gens->create_sims(verbose_level - 1);
 	
@@ -44,7 +46,8 @@ sims *create_sims_for_stabilizer(action *A,
 	if (f_v) {
 		longinteger_object go;
 		Stab->group_order(go);
-		cout << "create_sims_for_stabilizer, found a group of order " << go << endl;
+		cout << "create_sims_for_stabilizer, "
+				"found a group of order " << go << endl;
 		}
 	return Stab;
 }
@@ -64,13 +67,16 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 		cout << "create_sims_for_stabilizer_with_input_group" << endl;
 		}
 
-	STAB.init_with_strong_generators(A, A0, Strong_gens, set, set_size, verbose_level);
+	STAB.init_with_strong_generators(A, A0, Strong_gens,
+			set, set_size, verbose_level);
 	if (f_v) {
-		cout << "create_sims_for_stabilizer_with_input_group after STAB.init_with_strong_generators" << endl;
+		cout << "create_sims_for_stabilizer_with_input_group "
+				"after STAB.init_with_strong_generators" << endl;
 		}
 
 	
-	STAB.compute_set_stabilizer(t0, nb_backtrack_nodes, Aut_gens, verbose_level - 1);
+	STAB.compute_set_stabilizer(t0, nb_backtrack_nodes,
+			Aut_gens, verbose_level - 1);
 
 	Stab = Aut_gens->create_sims(verbose_level - 1);
 	
@@ -78,13 +84,15 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 	delete Aut_gens;
 
 	if (f_v) {
-		cout << "create_sims_for_stabilizer_with_input_group after STAB.compute_set_stabilizer" << endl;
+		cout << "create_sims_for_stabilizer_with_input_group "
+				"after STAB.compute_set_stabilizer" << endl;
 		}
 	
 	if (f_v) {
 		longinteger_object go;
 		Stab->group_order(go);
-		cout << "create_sims_for_stabilizer_with_input_group, found a group of order " << go << endl;
+		cout << "create_sims_for_stabilizer_with_input_group, "
+				"found a group of order " << go << endl;
 		}
 	return Stab;
 }
@@ -132,10 +140,12 @@ void compute_lifts_new(
 		void *data, INT verbose_level), 
 	void *early_test_function_data,
 	INT f_has_solution_test_function, 
-	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level), 
+	INT (*solution_test_func)(exact_cover *EC,
+			INT *S, INT len, void *data, INT verbose_level),
 	void *solution_test_func_data,
 	INT f_has_late_cleanup_function, 
-	void (*late_cleanup_function)(exact_cover *EC, INT starter_case, INT verbose_level), 
+	void (*late_cleanup_function)(exact_cover *EC,
+			INT starter_case, INT verbose_level),
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -146,7 +156,8 @@ void compute_lifts_new(
 		cout << "compute_lifts_new base_fname=" << base_fname << endl;
 		cout << "compute_lifts_new input_prefix=" << input_prefix << endl;
 		cout << "compute_lifts_new output_prefix=" << output_prefix << endl;
-		cout << "compute_lifts_new solution_prefix=" << solution_prefix << endl;
+		cout << "compute_lifts_new solution_prefix="
+				<< solution_prefix << endl;
 		}
 
 

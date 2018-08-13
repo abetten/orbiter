@@ -142,11 +142,13 @@ void blt_set::init_basic(finite_field *F,
 
 	if (f_v) {
 		cout << "blt_set::init_basic" << endl;
-		cout << "blt_set::init_basic verbose_level = " << verbose_level << endl;
+		cout << "blt_set::init_basic "
+				"verbose_level = " << verbose_level << endl;
 		}
 
 	if (f_vv) {
-		cout << "blt_set::init_basic before read_arguments" << endl;
+		cout << "blt_set::init_basic "
+				"before read_arguments" << endl;
 		}
 
 	read_arguments(argc, argv);
@@ -162,7 +164,8 @@ void blt_set::init_basic(finite_field *F,
 
 	strcpy(starter_directory_name, input_prefix);
 	strcpy(prefix, base_fname);
-	sprintf(prefix_with_directory, "%s%s", starter_directory_name, base_fname);
+	sprintf(prefix_with_directory, "%s%s",
+			starter_directory_name, base_fname);
 	blt_set::starter_size = starter_size;
 
 	target_size = q + 1;
@@ -170,7 +173,8 @@ void blt_set::init_basic(finite_field *F,
 		
 
 	if (f_vv) {
-		cout << "blt_set::init_basic q=" << q << " target_size = " << target_size << endl;
+		cout << "blt_set::init_basic q=" << q
+				<< " target_size = " << target_size << endl;
 		}
 	
 	n = 0;
@@ -185,13 +189,15 @@ void blt_set::init_basic(finite_field *F,
 		if (f_override_n) {
 			n = override_n;
 			if (f_vv) {
-				cout << "blt_set::init_basic override value of n=" << n << endl;
+				cout << "blt_set::init_basic "
+						"override value of n=" << n << endl;
 				}
 			}
 		if (f_override_epsilon) {
 			epsilon = override_epsilon;
 			if (f_vv) {
-				cout << "blt_set::init_basic override value of epsilon=" << epsilon << endl;
+				cout << "blt_set::init_basic "
+						"override value of epsilon=" << epsilon << endl;
 				}
 			}
 		}
@@ -205,7 +211,8 @@ void blt_set::init_basic(finite_field *F,
 		f_semilinear = FALSE;
 		}
 	if (f_vv) {
-		cout << "blt_set::init_basic f_semilinear=" << f_semilinear << endl;
+		cout << "blt_set::init_basic "
+				"f_semilinear=" << f_semilinear << endl;
 		}
 	if (f_v) {
 		cout << "blt_set::init_basic finished" << endl;
@@ -222,13 +229,18 @@ void blt_set::init_group(INT verbose_level)
 		cout << "blt_set::init_group" << endl;
 		}
 	if (f_vv) {
-		cout << "blt_set::init_group epsilon=" << epsilon << endl;
-		cout << "blt_set::init_group n=" << n << endl;
-		cout << "blt_set::init_group q=" << q << endl;
-		cout << "blt_set::init_group f_semilinear=" << f_semilinear << endl;
+		cout << "blt_set::init_group "
+				"epsilon=" << epsilon << endl;
+		cout << "blt_set::init_group "
+				"n=" << n << endl;
+		cout << "blt_set::init_group "
+				"q=" << q << endl;
+		cout << "blt_set::init_group "
+				"f_semilinear=" << f_semilinear << endl;
 		}
 	if (f_vv) {
-		cout << "blt_set::init_group before A->init_orthogonal_group" << endl;
+		cout << "blt_set::init_group "
+				"before A->init_orthogonal_group" << endl;
 		}
 	A = new action;
 
@@ -239,16 +251,20 @@ void blt_set::init_group(INT verbose_level)
 		f_semilinear, f_basis, verbose_level - 1);
 	degree = A->degree;
 	if (f_vv) {
-		cout << "blt_set::init_group after A->init_orthogonal_group" << endl;
-		cout << "blt_set::init_group degree = " << degree << endl;
+		cout << "blt_set::init_group "
+				"after A->init_orthogonal_group" << endl;
+		cout << "blt_set::init_group "
+				"degree = " << degree << endl;
 		}
 	
 	if (f_vv) {
-		cout << "blt_set::init_group computing lex least base" << endl;
+		cout << "blt_set::init_group "
+				"computing lex least base" << endl;
 		}
 	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
 	if (f_vv) {
-		cout << "blt_set::init_group computing lex least base done" << endl;
+		cout << "blt_set::init_group "
+				"computing lex least base done" << endl;
 		cout << "blt_set::init_group base: ";
 		INT_vec_print(cout, A->base, A->base_len);
 		cout << endl;
@@ -260,23 +276,27 @@ void blt_set::init_group(INT verbose_level)
 	O = AO->O;
 
 	if (f_v) {
-		cout << "blt_set::init_group degree = " << A->degree << endl;
+		cout << "blt_set::init_group "
+				"degree = " << A->degree << endl;
 		}
 		
 	//init_orthogonal_hash(verbose_level);
 
 	if (A->degree < 200) {
 		if (f_v) {
-			cout << "blt_set::init_group before test_Orthogonal" << endl;
+			cout << "blt_set::init_group "
+					"before test_Orthogonal" << endl;
 			}
 		test_Orthogonal(epsilon, n - 1, q);
 		}
 	//A->Sims->print_all_group_elements();
 
 	if (FALSE) {
-		cout << "blt_set::init_group before A->Sims->print_all_transversal_elements" << endl;
+		cout << "blt_set::init_group before "
+				"A->Sims->print_all_transversal_elements" << endl;
 		A->Sims->print_all_transversal_elements();
-		cout << "blt_set::init_group after A->Sims->print_all_transversal_elements" << endl;
+		cout << "blt_set::init_group after "
+				"A->Sims->print_all_transversal_elements" << endl;
 		}
 
 
@@ -287,7 +307,8 @@ void blt_set::init_group(INT verbose_level)
 
 	
 	if (f_v) {
-		cout << "blt_set::init_group allocating Pts and Candidates" << endl;
+		cout << "blt_set::init_group "
+				"allocating Pts and Candidates" << endl;
 		}
 	//int Pts_size = target_size * n;
 	Pts = NEW_INT(target_size * n);
@@ -328,8 +349,10 @@ void blt_set::init_orthogonal(INT verbose_level)
 	O = new orthogonal;
 	O->init(epsilon, n, F, verbose_level - 3);
 	if (f_vv) {
-		cout << "created O^" << plus_minus_string(epsilon) << "(" << n << "," << q << ") with " 
-			<< O->nb_points << " points and " << O->nb_lines << " lines" << endl << endl;
+		cout << "created O^" << plus_minus_string(epsilon)
+				<< "(" << n << "," << q << ") with "
+			<< O->nb_points << " points and " << O->nb_lines
+			<< " lines" << endl << endl;
 		}
 
 	init_orthogonal_hash(verbose_level);
@@ -413,7 +436,8 @@ void blt_set::init2(INT verbose_level)
 	INT nb_oracle_nodes = ONE_MILLION;
 	
 	if (f_vv) {
-		cout << "blt_set::init2 calling init_oracle with " << nb_oracle_nodes << " nodes" << endl;
+		cout << "blt_set::init2 calling init_oracle with "
+				<< nb_oracle_nodes << " nodes" << endl;
 		}
 	
 	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
@@ -423,7 +447,8 @@ void blt_set::init2(INT verbose_level)
 		}
 	
 	//cout << "verbose_level = " << verbose_level << endl;
-	//cout << "verbose_level_group_theory = " << verbose_level_group_theory << endl;
+	//cout << "verbose_level_group_theory = "
+	//<< verbose_level_group_theory << endl;
 	
 	gen->root[0].init_root_node(gen, 0/*verbose_level - 2*/);
 	if (f_v) {
@@ -449,8 +474,10 @@ void blt_set::create_graphs(
 
 	if (f_v) {
 		cout << "blt_set::create_graphs" << endl;
-		cout << "blt_set::create_graphs starter_size = " << starter_size << endl;
-		cout << "blt_set::create_graphs f_lexorder_test=" << f_lexorder_test << endl;
+		cout << "blt_set::create_graphs "
+				"starter_size = " << starter_size << endl;
+		cout << "blt_set::create_graphs "
+				"f_lexorder_test=" << f_lexorder_test << endl;
 		}
 
 
@@ -473,12 +500,17 @@ void blt_set::create_graphs(
 
 
 	sprintf(fname, "%s_lvl_%ld", prefix_with_directory, starter_size);
-	sprintf(fname_list_of_cases, "%slist_of_cases_%s_%ld_%ld_%ld.txt", output_prefix, prefix, starter_size, orbit_at_level_r, orbit_at_level_m);
-	sprintf(fname_time, "%stime_%s_%ld_%ld_%ld.csv", output_prefix, prefix, starter_size, orbit_at_level_r, orbit_at_level_m);
+	sprintf(fname_list_of_cases, "%slist_of_cases_%s_%ld_%ld_%ld.txt",
+			output_prefix, prefix, starter_size,
+			orbit_at_level_r, orbit_at_level_m);
+	sprintf(fname_time, "%stime_%s_%ld_%ld_%ld.csv",
+			output_prefix, prefix, starter_size,
+			orbit_at_level_r, orbit_at_level_m);
 
 	nb_orbits = count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
-		cout << "blt_set::create_graphs There are " << nb_orbits << " starters" << endl;
+		cout << "blt_set::create_graphs There are "
+				<< nb_orbits << " starters" << endl;
 		}
 	if (nb_orbits < 0) {
 		cout << "Something is wrong, nb_orbits is negative" << endl;
@@ -497,7 +529,9 @@ void blt_set::create_graphs(
 			continue;
 			}
 		if (f_v3) {
-			cout << "blt_set::create_graphs creating graph associated with orbit " << orbit << " / " << nb_orbits << ":" << endl;
+			cout << "blt_set::create_graphs creating graph associated "
+					"with orbit " << orbit << " / " << nb_orbits
+					<< ":" << endl;
 			}
 
 		
@@ -534,25 +568,37 @@ void blt_set::create_graphs(
 		
 		if (f_vv) {
 			if (nb_vertices >= 0) {
-				cout << "blt_set::create_graphs creating graph associated with orbit " << orbit << " / " << nb_orbits << " with " << nb_vertices << " vertices created" << endl;
+				cout << "blt_set::create_graphs creating graph "
+						"associated with orbit " << orbit << " / "
+						<< nb_orbits << " with " << nb_vertices
+						<< " vertices created" << endl;
 				}
 			else {
-				cout << "blt_set::create_graphs creating graph associated with orbit " << orbit << " / " << nb_orbits << " is ruled out" << endl;
+				cout << "blt_set::create_graphs creating graph "
+						"associated with orbit " << orbit << " / "
+						<< nb_orbits << " is ruled out" << endl;
 				}
 			}
 		}
 
 	if (f_v) {
-		cout << "blt_set::create_graphs writing file " << fname_time << endl;
+		cout << "blt_set::create_graphs writing file "
+				<< fname_time << endl;
 		}
 	INT_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
-		cout << "blt_set::create_graphs Written file " << fname_time << " of size " << file_size(fname_time) << endl;
+		cout << "blt_set::create_graphs Written file "
+				<< fname_time << " of size "
+				<< file_size(fname_time) << endl;
 		}
 
-	write_set_to_file(fname_list_of_cases, list_of_cases, nb_of_cases, 0 /*verbose_level */);
+	write_set_to_file(fname_list_of_cases,
+			list_of_cases, nb_of_cases,
+			0 /*verbose_level */);
 	if (f_v) {
-		cout << "blt_set::create_graphs Written file " << fname_list_of_cases << " of size " << file_size(fname_list_of_cases) << endl;
+		cout << "blt_set::create_graphs Written file "
+				<< fname_list_of_cases << " of size "
+				<< file_size(fname_list_of_cases) << endl;
 		}
 
 	FREE_INT(Time);
@@ -576,7 +622,8 @@ void blt_set::create_graphs_list_of_cases(
 
 	if (f_v) {
 		cout << "blt_set::create_graphs_list_of_cases" << endl;
-		cout << "blt_set::create_graphs_list_of_cases case_label = " << case_label << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"case_label = " << case_label << endl;
 		}
 
 	
@@ -588,9 +635,12 @@ void blt_set::create_graphs_list_of_cases(
 
 	INT_vec_scan(list_of_cases_text, list_of_cases, nb_of_cases);
 	if (f_v) {
-		cout << "blt_set::create_graphs_list_of_cases nb_of_cases = " << nb_of_cases << endl;
-		cout << "blt_set::create_graphs_list_of_cases starter_size = " << starter_size << endl;
-		cout << "blt_set::create_graphs_list_of_cases f_lexorder_test=" << f_lexorder_test << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"nb_of_cases = " << nb_of_cases << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"starter_size = " << starter_size << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"f_lexorder_test=" << f_lexorder_test << endl;
 		}
 
 	BYTE fname[1000];
@@ -606,11 +656,13 @@ void blt_set::create_graphs_list_of_cases(
 
 
 	sprintf(fname, "%s_lvl_%ld", prefix_with_directory, starter_size);
-	sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt", output_prefix, case_label);
+	sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
+			output_prefix, case_label);
 
 	nb_orbits = count_number_of_orbits_in_file(fname, 0);
 	if (f_v) {
-		cout << "blt_set::create_graphs_list_of_cases There are " << nb_orbits << " starters" << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"There are " << nb_orbits << " starters" << endl;
 		}
 	if (nb_orbits < 0) {
 		cout << "Something is wrong, nb_orbits is negative" << endl;
@@ -624,7 +676,10 @@ void blt_set::create_graphs_list_of_cases(
 	for (c = 0; c < nb_of_cases; c++) {
 		orbit = list_of_cases[c];
 		if (f_v3) {
-			cout << "blt_set::create_graphs_list_of_cases case " << c << " / " << nb_of_cases << " creating graph associated with orbit " << orbit << " / " << nb_orbits << ":" << endl;
+			cout << "blt_set::create_graphs_list_of_cases case "
+					<< c << " / " << nb_of_cases << " creating graph "
+							"associated with orbit " << orbit << " / "
+							<< nb_orbits << ":" << endl;
 			}
 
 		
@@ -654,20 +709,34 @@ void blt_set::create_graphs_list_of_cases(
 			}
 		if (f_vv) {
 			if (nb_vertices >= 0) {
-				cout << "blt_set::create_graphs_list_of_cases case " << c << " / " << nb_of_cases << " creating graph associated with orbit " << orbit << " / " << nb_orbits << " with " << nb_vertices << " vertices created" << endl;
+				cout << "blt_set::create_graphs_list_of_cases "
+						"case " << c << " / " << nb_of_cases
+						<< " creating graph associated with orbit "
+						<< orbit << " / " << nb_orbits << " with "
+						<< nb_vertices << " vertices created" << endl;
 				}
 			else {
-				cout << "blt_set::create_graphs_list_of_cases case " << c << " / " << nb_of_cases << " creating graph associated with orbit " << orbit << " / " << nb_orbits << " is ruled out" << endl;
+				cout << "blt_set::create_graphs_list_of_cases "
+						"case " << c << " / " << nb_of_cases
+						<< " creating graph associated with orbit "
+						<< orbit << " / " << nb_orbits
+						<< " is ruled out" << endl;
 				}
 			}
 		}
 
-	write_set_to_file(fname_list_of_cases, list_of_cases_created, nb_of_cases_created, 0 /*verbose_level */);
+	write_set_to_file(fname_list_of_cases,
+			list_of_cases_created, nb_of_cases_created,
+			0 /*verbose_level */);
 	if (f_v) {
-		cout << "blt_set::create_graphs_list_of_cases Written file " << fname_list_of_cases << " of size " << file_size(fname_list_of_cases) << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"Written file " << fname_list_of_cases
+				<< " of size " << file_size(fname_list_of_cases) << endl;
 		}
 	if (f_v) {
-		cout << "blt_set::create_graphs_list_of_cases we created " << nb_of_cases_created << " / " << nb_of_cases << " cases" << endl;
+		cout << "blt_set::create_graphs_list_of_cases "
+				"we created " << nb_of_cases_created
+				<< " / " << nb_of_cases << " cases" << endl;
 		}
 
 	FREE_INT(list_of_cases_created);
@@ -692,9 +761,13 @@ INT blt_set::create_graph(
 
 	if (f_v) {
 		cout << "blt_set::create_graph" << endl;
-		cout << "blt_set::create_graph f_lexorder_test=" << f_lexorder_test << endl;
-		cout << "blt_set::create_graph orbit_at_level=" << orbit_at_level << endl;
-		cout << "blt_set::create_graph level_of_candidates_file=" << level_of_candidates_file << endl;
+		cout << "blt_set::create_graph "
+				"f_lexorder_test=" << f_lexorder_test << endl;
+		cout << "blt_set::create_graph "
+				"orbit_at_level=" << orbit_at_level << endl;
+		cout << "blt_set::create_graph "
+				"level_of_candidates_file="
+				<< level_of_candidates_file << endl;
 		}
 
 	CG = NULL;
@@ -713,7 +786,8 @@ INT blt_set::create_graph(
 
 	R = new orbit_rep;
 	if (f_v) {
-		cout << "blt_set::create_graph before R->init_from_file" << endl;
+		cout << "blt_set::create_graph before "
+				"R->init_from_file" << endl;
 		}
 	R->init_from_file(A, prefix_with_directory, 
 		starter_size, orbit_at_level, level_of_candidates_file, 
@@ -722,13 +796,16 @@ INT blt_set::create_graph(
 		verbose_level - 1
 		);
 	if (f_v) {
-		cout << "blt_set::create_graph after R->init_from_file" << endl;
+		cout << "blt_set::create_graph "
+				"after R->init_from_file" << endl;
 		}
 	nb = q + 1 - starter_size;
 
 
 	if (f_vv) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " Read starter : ";
+		cout << "blt_set::create_graph Case "
+				<< orbit_at_level << " / " << R->nb_cases
+				<< " Read starter : ";
 		INT_vec_print(cout, R->rep, starter_size);
 		cout << endl;
 		}
@@ -736,9 +813,16 @@ INT blt_set::create_graph(
 	max_starter = R->rep[starter_size - 1];
 
 	if (f_vv) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " max_starter=" << max_starter << endl;
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " Group order=" << R->stab_go << endl;
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " nb_candidates=" << R->nb_candidates << " at level " << starter_size << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " max_starter="
+				<< max_starter << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " Group order="
+				<< R->stab_go << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " nb_candidates="
+				<< R->nb_candidates << " at level "
+				<< starter_size << endl;
 		}
 
 
@@ -747,12 +831,18 @@ INT blt_set::create_graph(
 		INT nb_candidates2;
 	
 		if (f_v3) {
-			cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " Before lexorder_test" << endl;
+			cout << "blt_set::create_graph Case " << orbit_at_level
+					<< " / " << R->nb_cases << " Before lexorder_test" << endl;
 			}
-		A->lexorder_test(R->candidates, R->nb_candidates, nb_candidates2, 
+		A->lexorder_test(R->candidates,
+			R->nb_candidates, nb_candidates2,
 			R->Strong_gens->gens, max_starter, verbose_level - 3);
 		if (f_vv) {
-			cout << "blt_set::create_graph After lexorder_test nb_candidates=" << nb_candidates2 << " eliminated " << R->nb_candidates - nb_candidates2 << " candidates" << endl;
+			cout << "blt_set::create_graph "
+					"After lexorder_test nb_candidates="
+					<< nb_candidates2 << " eliminated "
+					<< R->nb_candidates - nb_candidates2
+					<< " candidates" << endl;
 			}
 		R->nb_candidates = nb_candidates2;
 		}
@@ -764,7 +854,10 @@ INT blt_set::create_graph(
 	//if (f_eliminate_graphs_if_possible) {
 		if (R->nb_candidates < nb) {
 			if (f_v) {
-				cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " nb_candidates < nb, the case is eliminated" << endl;
+				cout << "blt_set::create_graph "
+						"Case " << orbit_at_level << " / "
+						<< R->nb_cases << " nb_candidates < nb, "
+								"the case is eliminated" << endl;
 				}
 			delete R;
 			return FALSE;
@@ -781,10 +874,13 @@ INT blt_set::create_graph(
 	INT *lines_on_pt;
 	
 	lines_on_pt = NEW_INT(1 /*starter_size*/ * (q + 1));
-	O->lines_on_point_by_line_rank(R->rep[0], lines_on_pt, 0 /* verbose_level */);
+	O->lines_on_point_by_line_rank(
+			R->rep[0],
+			lines_on_pt, 0 /* verbose_level */);
 
 	if (f_v3) {
-		cout << "Case " << orbit_at_level << " Lines on partial BLT set:" << endl;
+		cout << "Case " << orbit_at_level
+				<< " Lines on partial BLT set:" << endl;
 		INT_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
 		}
 
@@ -804,7 +900,9 @@ INT blt_set::create_graph(
 
 	C.init(point_color, R->nb_candidates, FALSE, 0);
 	if (f_v3) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " point colors (1st classification): ";
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases
+				<< " point colors (1st classification): ";
 		C.print(FALSE /* f_reverse */);
 		cout << endl;
 		}
@@ -814,7 +912,9 @@ INT blt_set::create_graph(
 
 	C2.init(point_color, R->nb_candidates, TRUE, 0);
 	if (f_vv) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " point colors (2nd classification): ";
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases
+				<< " point colors (2nd classification): ";
 		C2.print(FALSE /* f_reverse */);
 		cout << endl;
 		}
@@ -832,7 +932,8 @@ INT blt_set::create_graph(
 		cout << "idx=" << idx << endl;
 		cout << "minimal_type=" << minimal_type << endl;
 		cout << "C.type_len[idx]=" << C.type_len[idx] << endl;
-		cout << "minimal_type_multiplicity=" << minimal_type_multiplicity << endl;
+		cout << "minimal_type_multiplicity="
+				<< minimal_type_multiplicity << endl;
 		exit(1);
 		}
 #endif
@@ -842,13 +943,20 @@ INT blt_set::create_graph(
 	minimal_type_multiplicity = C2.type_len[idx];
 
 	if (f_vv) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " minimal type is " << minimal_type << endl;
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " minimal_type_multiplicity " << minimal_type_multiplicity << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " minimal type is "
+				<< minimal_type << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " minimal_type_multiplicity "
+				<< minimal_type_multiplicity << endl;
 		}
 
 	if (f_eliminate_graphs_if_possible) {
 		if (minimal_type_multiplicity == 0) {
-			cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " Color class " << minimal_type << " is empty, the case is eliminated" << endl;
+			cout << "blt_set::create_graph Case " << orbit_at_level
+					<< " / " << R->nb_cases << " Color class "
+					<< minimal_type << " is empty, the case is "
+							"eliminated" << endl;
 			ret = FALSE;
 			goto finish;
 			}
@@ -857,7 +965,9 @@ INT blt_set::create_graph(
 
 
 	if (f_vv) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " Computing adjacency list, nb_points=" << R->nb_candidates << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " Computing adjacency list, "
+						"nb_points=" << R->nb_candidates << endl;
 		}
 
 	UBYTE *bitvector_adjacency;
@@ -870,8 +980,12 @@ INT blt_set::create_graph(
 		verbose_level - 2);
 
 	if (f_vv) {
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " Computing adjacency list done" << endl;
-		cout << "blt_set::create_graph Case " << orbit_at_level << " / " << R->nb_cases << " bitvector_length=" << bitvector_length << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " Computing adjacency "
+						"list done" << endl;
+		cout << "blt_set::create_graph Case " << orbit_at_level
+				<< " / " << R->nb_cases << " bitvector_length="
+				<< bitvector_length << endl;
 		}
 
 
@@ -890,7 +1004,8 @@ INT blt_set::create_graph(
 		CG->points[i] = R->candidates[i];
 		}
 	CG->init_user_data(R->rep, starter_size, verbose_level - 2);
-	sprintf(CG->fname_base, "graph_BLT_%ld_%ld_%ld", q, starter_size, orbit_at_level);
+	sprintf(CG->fname_base, "graph_BLT_%ld_%ld_%ld",
+			q, starter_size, orbit_at_level);
 		
 
 	if (f_v) {
@@ -910,9 +1025,12 @@ finish:
 
 
 
-void blt_set::compute_adjacency_list_fast(INT first_point_of_starter, 
+void blt_set::compute_adjacency_list_fast(
+	INT first_point_of_starter,
 	INT *points, INT nb_points, INT *point_color, 
-	UBYTE *&bitvector_adjacency, INT &bitvector_length_in_bits, INT &bitvector_length, 
+	UBYTE *&bitvector_adjacency,
+	INT &bitvector_length_in_bits,
+	INT &bitvector_length,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -943,15 +1061,18 @@ void blt_set::compute_adjacency_list_fast(INT first_point_of_starter,
 	form_value = NEW_INT(nb_points);
 	O->unrank_point(v1, 1, first_point_of_starter, 0);
 	if (f_v) {
-		cout << "blt_set::compute_adjacency_list_fast unranking points" << endl;
+		cout << "blt_set::compute_adjacency_list_fast "
+				"unranking points" << endl;
 		}
 	for (i = 0; i < nb_points; i++) {
 		O->unrank_point(Pts + i * 5, 1, points[i], 0);
-		form_value[i] = O->evaluate_bilinear_form(v1, Pts + i * 5, 1);
+		form_value[i] = O->evaluate_bilinear_form(
+				v1, Pts + i * 5, 1);
 		}
 
 	if (f_v) {
-		cout << "blt_set::compute_adjacency_list_fast computing adjacencies" << endl;
+		cout << "blt_set::compute_adjacency_list_fast "
+				"computing adjacencies" << endl;
 		}
 
 	cnt = 0;
@@ -971,7 +1092,10 @@ void blt_set::compute_adjacency_list_fast(INT first_point_of_starter,
 			k = ij2k(i, j, nb_points);
 		
 			if ((cnt & ((1 << 25) - 1)) == 0 && cnt) {
-				cout << "blt_set::compute_adjacency_list_fast nb_points=" << nb_points << " adjacency " << cnt << " / " << L << " i=" << i << " j=" << j << endl;
+				cout << "blt_set::compute_adjacency_list_fast "
+						"nb_points=" << nb_points << " adjacency "
+						<< cnt << " / " << L << " i=" << i
+						<< " j=" << j << endl;
 				}
 			c2 = point_color[j];
 			if (c1 == c2) {
@@ -1055,7 +1179,8 @@ void blt_set::compute_colors(INT orbit_at_level,
 		}
 	
 	pts_on_special_line = NEW_INT(q + 1);
-	O->points_on_line(p1, p2, pts_on_special_line, 0/*verbose_level*/);
+	O->points_on_line(p1, p2, pts_on_special_line,
+			0/*verbose_level*/);
 	
 	if (f_vv) {
 		cout << "pts_on_special_line:" << endl;
@@ -1071,7 +1196,8 @@ void blt_set::compute_colors(INT orbit_at_level,
 		pts_on_special_line[i] = pts_on_special_line[i + 1];
 		}
 	if (f_vv) {
-		cout << "pts_on_special_line without the first starter point:" << endl;
+		cout << "pts_on_special_line without the first "
+				"starter point:" << endl;
 		INT_vec_print(cout, pts_on_special_line, q);
 		cout << endl;
 		}
@@ -1158,7 +1284,8 @@ void blt_set::compute_colors(INT orbit_at_level,
 	for (i = 0; i < nb_candidates; i++) {
 		O->unrank_point(v3, 1, candidates[i], 0);
 		if (f_vv) {
-			cout << "candidate " << i << " / " << nb_candidates << " is " << candidates[i] << " = ";
+			cout << "candidate " << i << " / " << nb_candidates
+					<< " is " << candidates[i] << " = ";
 			INT_vec_print(cout, v3, 5);
 			cout << endl;
 			}
@@ -1228,23 +1355,28 @@ void blt_set::early_test_func(INT *S, INT len,
 		cout << "blt_set::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
-		cout << "candidate set of size " << nb_candidates << ":" << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
 		INT_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
-				O->unrank_point(v, 1, candidates[i], 0/*verbose_level - 4*/);
-				cout << "candidate " << i << "=" << candidates[i] << ": ";
+				O->unrank_point(v, 1, candidates[i],
+						0/*verbose_level - 4*/);
+				cout << "candidate " << i << "="
+						<< candidates[i] << ": ";
 				INT_vec_print(cout, v, 5);
 				cout << endl;
 				}
 			}
 		}
 	for (i = 0; i < len; i++) {
-		O->unrank_point(Pts + i * 5, 1, S[i], 0/*verbose_level - 4*/);
+		O->unrank_point(Pts + i * 5, 1,
+				S[i], 0/*verbose_level - 4*/);
 		}
 	for (i = 0; i < nb_candidates; i++) {
-		O->unrank_point(Candidates + i * 5, 1, candidates[i], 0/*verbose_level - 4*/);
+		O->unrank_point(Candidates + i * 5, 1, candidates[i],
+				0/*verbose_level - 4*/);
 		}
 	
 	two = O->F->add(1, 1);
@@ -1264,7 +1396,9 @@ void blt_set::early_test_func(INT *S, INT len,
 
 
 			if (f_vv) {
-				cout << "blt_set::early_test_func testing " << j << " / " << nb_candidates << endl;
+				cout << "blt_set::early_test_func "
+						"testing " << j << " / "
+						<< nb_candidates << endl;
 				}
 
 			v1 = Pts;
@@ -1334,13 +1468,15 @@ void blt_set::early_test_func(INT *S, INT len,
 					}
 				}
 			if (f_OK) {
-				good_candidates[nb_good_candidates++] = candidates[j];
+				good_candidates[nb_good_candidates++] =
+						candidates[j];
 				}
 			} // next j
 		} // else
 }
 
-INT blt_set::check_function_incremental(INT len, INT *S, INT verbose_level)
+INT blt_set::check_function_incremental(
+		INT len, INT *S, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a;
@@ -1352,7 +1488,8 @@ INT blt_set::check_function_incremental(INT len, INT *S, INT verbose_level)
 	INT fxy, fxz, fyz;
 		
 	if (f_v) {
-		cout << "blt_set::check_function_incremental checking set ";
+		cout << "blt_set::check_function_incremental "
+				"checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		}
@@ -1428,10 +1565,12 @@ INT blt_set::check_function_incremental(INT len, INT *S, INT verbose_level)
 }
 
 INT blt_set::pair_test(INT a, INT x, INT y, INT verbose_level)
-// We assume that a is an element of a set S of size at least two such that 
+// We assume that a is an element
+// of a set S of size at least two such that
 // S \cup \{ x \} is BLT and 
 // S \cup \{ y \} is BLT.
-// In order to test if S \cup \{ x, y \} is BLT, we only need to test 
+// In order to test if S \cup \{ x, y \}
+// is BLT, we only need to test
 // the triple \{ x,y,a\}
 {
 	INT v1[5], v2[5], v3[5];
@@ -1532,7 +1671,8 @@ INT blt_set::collinearity_test(INT *S, INT len, INT verbose_level)
 			f_OK = FALSE;
 			if (f_v) {
 				cout << "not OK; ";
-				cout << "{x,y}={" << x << "," << y << "} are collinear" << endl;
+				cout << "{x,y}={" << x << ","
+						<< y << "} are collinear" << endl;
 				INT_vec_print(cout, O->v1, n);
 				cout << endl;
 				INT_vec_print(cout, O->v2, n);

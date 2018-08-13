@@ -52,7 +52,8 @@ int main(int argc, const char **argv)
 		Gen.print_score_sequences(depth, verbose_level);
 		}
 
-	//Gen.gen->draw_poset(Gen.gen->fname_base, depth, Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
+	//Gen.gen->draw_poset(Gen.gen->fname_base, depth,
+	//Gen.n /* data1 */, f_embedded, Gen.gen->verbose_level);
 
 	if (Gen.f_draw_poset) {
 		Gen.gen->draw_poset(Gen.gen->fname_base, depth, 
@@ -93,7 +94,8 @@ int main(int argc, const char **argv)
 		
 		Gen.gen->list_all_orbits_at_level(Gen.gen->depth, 
 			FALSE, NULL, NULL, 
-			f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+			f_show_orbit_decomposition,
+			f_show_stab, f_save_stab, f_show_whole_orbit);
 		}
 
 	if (Gen.f_list_all) {
@@ -106,7 +108,8 @@ int main(int argc, const char **argv)
 		for (j = 0; j <= Gen.gen->depth; j++) {
 			Gen.gen->list_all_orbits_at_level(j, 
 				FALSE, NULL, NULL, 
-				f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
+				f_show_orbit_decomposition,
+				f_show_stab, f_save_stab, f_show_whole_orbit);
 			}
 		}
 
@@ -118,7 +121,10 @@ int main(int argc, const char **argv)
 		INT level;
 
 		for (level = 0; level <= Gen.gen->depth; level++) {
-			Gen.draw_graphs(level, Gen.scale, xmax_in, ymax_in, xmax, ymax, Gen.f_embedded, Gen.f_sideways, Gen.gen->verbose_level);
+			Gen.draw_graphs(level, Gen.scale,
+					xmax_in, ymax_in, xmax, ymax,
+					Gen.f_embedded, Gen.f_sideways,
+					Gen.gen->verbose_level);
 			}
 		}
 
@@ -128,15 +134,23 @@ int main(int argc, const char **argv)
 		INT xmax = 1000000;
 		INT ymax = 1000000;
 
-		Gen.draw_graphs(Gen.level, Gen.scale, xmax_in, ymax_in, xmax, ymax, Gen.f_embedded, Gen.f_sideways, Gen.gen->verbose_level);
+		Gen.draw_graphs(Gen.level, Gen.scale,
+				xmax_in, ymax_in, xmax, ymax,
+				Gen.f_embedded, Gen.f_sideways,
+				Gen.gen->verbose_level);
 		}
 
 	if (Gen.f_draw_level_graph) {
-		Gen.gen->draw_level_graph(Gen.gen->fname_base, Gen.gen->depth, Gen.n /* data1 */, Gen.level_graph_level, f_embedded, f_sideways, Gen.gen->verbose_level - 3);
+		Gen.gen->draw_level_graph(Gen.gen->fname_base,
+				Gen.gen->depth, Gen.n /* data1 */,
+				Gen.level_graph_level,
+				f_embedded, f_sideways,
+				Gen.gen->verbose_level - 3);
 		}
 
 	if (Gen.f_test_multi_edge) {
-		Gen.gen->test_for_multi_edge_in_classification_graph(depth, Gen.gen->verbose_level);
+		Gen.gen->test_for_multi_edge_in_classification_graph(
+				depth, Gen.gen->verbose_level);
 		}
 	if (Gen.f_identify) {
 		INT *transporter;
@@ -144,7 +158,8 @@ int main(int argc, const char **argv)
 		
 		transporter = NEW_INT(Gen.gen->A->elt_size_in_INT);
 		
-		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz, transporter, orbit_at_level, Gen.gen->verbose_level);
+		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
+				transporter, orbit_at_level, Gen.gen->verbose_level);
 
 		FREE_INT(transporter);
 		}

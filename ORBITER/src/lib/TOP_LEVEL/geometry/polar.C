@@ -50,7 +50,8 @@ polar::~polar()
 	if (Gen) {
 		delete Gen;
 		}
-	if (f_has_strong_generators && f_has_strong_generators_allocated) {
+	if (f_has_strong_generators
+		&& f_has_strong_generators_allocated) {
 		if (Strong_gens) {
 			delete Strong_gens;
 			}
@@ -74,7 +75,8 @@ void polar::init_group_by_base_images(
 	vector_ge gens;
 
 	if (f_v) {
-		cout << "polar::init_group, calling A->init_group_from_generators_by_base_images" << endl;
+		cout << "polar::init_group, calling "
+				"A->init_group_from_generators_by_base_images" << endl;
 		}
 	//SG = new vector_ge;
 	//tl = NEW_INT(A->base_len);
@@ -96,7 +98,8 @@ void polar::init_group(
 	vector_ge gens;
 
 	if (f_v) {
-		cout << "polar::init_group, calling A->init_group_from_generators" << endl;
+		cout << "polar::init_group, calling "
+				"A->init_group_from_generators" << endl;
 		}
 	//SG = new vector_ge;
 	//tl = NEW_INT(A->base_len);
@@ -109,7 +112,8 @@ void polar::init_group(
 	f_has_strong_generators_allocated = TRUE;
 }
 
-void polar::init(int argc, const char **argv, action *A, orthogonal *O, 
+void polar::init(int argc, const char **argv,
+	action *A, orthogonal *O,
 	INT epsilon, INT n, INT k, finite_field *F, 
 	INT depth, INT verbose_level)
 {
@@ -195,7 +199,8 @@ void polar::init2(INT verbose_level)
 			f_do_it_anyway_even_for_big_degree, 
 			f_print_cycles_of_length_one);
 		}
-	Gen->init(A, A, gens /* *gens, transversal_lengths */, Gen->depth /* sz */, verbose_level);
+	Gen->init(A, A, gens,
+			Gen->depth /* sz */, verbose_level);
 
 	Gen->init_check_func(
 		polar_callback_test_func, 
@@ -269,7 +274,8 @@ void polar::compute_orbits(INT t0, INT verbose_level)
 		nb_elements += Gen->orbit_length_as_INT(i, depth);
 		}
 	if (f_v) {
-		cout << "we found " << nb_orbits << " orbits containing " << nb_elements << " elements at depth " << depth << endl;
+		cout << "we found " << nb_orbits << " orbits containing "
+				<< nb_elements << " elements at depth " << depth << endl;
 		}
 }
 
@@ -361,10 +367,12 @@ void polar::compute_cosets(INT depth, INT orbit_idx, INT verbose_level)
 			}
 
 		for (i = 0; i < k; i++) {
-			A->element_image_of_low_level(M1 + i * n, M2 + i * n, Elt2, 0/* verbose_level*/);
+			A->element_image_of_low_level(M1 + i * n, M2 + i * n,
+					Elt2, 0/* verbose_level*/);
 			}
 		if (f_vv) {
-			cout << "basis of subspace that is the image under this element:" << endl;
+			cout << "basis of subspace that is the image "
+					"under this element:" << endl;
 			print_integer_matrix_width(cout, M2, k, n, n, F->log10_of_q);
 			}
 		for (i = 0; i < k * n; i++) {
@@ -377,8 +385,7 @@ void polar::compute_cosets(INT depth, INT orbit_idx, INT verbose_level)
 		
 		cc = Gen->coset_rank(depth, orbit_idx, Elt1, 0/*verbose_level*/);
 		if (cc != c) {
-			cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-			cout << "polar::compute_cosets" << endl;
+			cout << "error in polar::compute_cosets" << endl;
 			cout << "cc != c" << endl;
 			cout << "c=" << c << endl;
 			cout << "cc=" << cc << endl;
@@ -395,7 +402,8 @@ void polar::compute_cosets(INT depth, INT orbit_idx, INT verbose_level)
 }
 
 void polar::dual_polar_graph(INT depth, INT orbit_idx, 
-	longinteger_object *&Rank_table, INT &nb_maximals, INT verbose_level)
+	longinteger_object *&Rank_table, INT &nb_maximals,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -496,13 +504,15 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 
 
 		if (FALSE) {
-			cout << "Right coset " << c << " is represented by" << endl;
+			cout << "Right coset " << c
+					<< " is represented by" << endl;
 			Gen->A->element_print_quick(Elt2, cout);
 			cout << endl;
 			}
 
 		for (i = 0; i < k; i++) {
-			A->element_image_of_low_level(M1 + i * n, M2 + i * n, Elt2, 0/* verbose_level*/);
+			A->element_image_of_low_level(M1 + i * n,
+					M2 + i * n, Elt2, 0/* verbose_level*/);
 			}
 
 		F->Gauss_easy(M2, k, n);
@@ -546,7 +556,8 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 			for (i = 0; i < k * n; i++) {
 				MM[k * n + i] = M[c2][i];
 				}
-			rk = F->rank_of_rectangular_matrix(MM, 2 * k, n, 0 /* verbose_level*/);
+			rk = F->rank_of_rectangular_matrix(MM,
+					2 * k, n, 0 /* verbose_level*/);
 			//rk1 = rk - k;
 			//Adj[c1 * index_INT + c2] = rk1;
 			if (rk == k + 1) {
@@ -557,7 +568,8 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 
 	if (f_vv) {
 		cout << "adjacency matrix:" << endl;
-		print_integer_matrix_width(cout, Adj, index_INT, index_INT, index_INT, 1);
+		print_integer_matrix_width(cout, Adj,
+				index_INT, index_INT, index_INT, 1);
 		}
 
 	if (f_vv) {
@@ -602,8 +614,10 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 			}
 		}
 	if (f_vv) {
-		cout << "Incidence matrix:" << index_INT << " x " << nb_e << endl;
-		print_integer_matrix_width(cout, Inc, index_INT, nb_e, nb_e, 1);
+		cout << "Incidence matrix:" << index_INT
+				<< " x " << nb_e << endl;
+		print_integer_matrix_width(cout, Inc,
+				index_INT, nb_e, nb_e, 1);
 		}
 
 	{
@@ -622,7 +636,8 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 	f << -1 << endl;
 	}
 	if (f_v) {
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname << " of size "
+				<< file_size(fname) << endl;
 		}
 	}
 
@@ -664,7 +679,9 @@ void polar::show_stabilizer(INT depth, INT orbit_idx, INT verbose_level)
 	//Gen->get_stabilizer(gens, tl, depth, orbit_idx, verbose_level);
 
 	sims *S;
-	S = create_sims_from_generators_with_target_group_order_factorized(A, Strong_gens->gens, Strong_gens->tl, A->base_len, verbose_level);
+	S = create_sims_from_generators_with_target_group_order_factorized(
+		A, Strong_gens->gens, Strong_gens->tl, A->base_len,
+		verbose_level);
 	longinteger_object go;
 
 	S->group_order(go);	
@@ -704,7 +721,8 @@ void polar::get_maximals(INT depth, INT orbit_idx, INT verbose_level)
 	Gen->get_stabilizer(gens, tl, depth, orbit_idx, verbose_level);
 
 	sims *S;
-	S = create_sims_from_generators_with_target_group_order_factorized(A, gens, tl, A->base_len, verbose_level);
+	S = create_sims_from_generators_with_target_group_order_factorized(
+		A, gens, tl, A->base_len, verbose_level);
 	longinteger_object go;
 
 	S->group_order(go);	
@@ -731,7 +749,8 @@ void polar::compute_Kramer_Mesner_matrix(INT t, INT k, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "compute_Kramer_Mesner_matrix t=" << t << " k=" << k << ":" << endl;
+		cout << "compute_Kramer_Mesner_matrix t=" << t
+				<< " k=" << k << ":" << endl;
 		}
 
 	// compute Kramer Mesner matrices
@@ -741,7 +760,8 @@ void polar::compute_Kramer_Mesner_matrix(INT t, INT k, INT verbose_level)
 	V.m_l(k);
 	for (i = 0; i < k; i++) {
 		V[i].change_to_matrix();
-		calc_Kramer_Mesner_matrix_neighboring(Gen, i, V[i].as_matrix(), verbose_level - 2);
+		calc_Kramer_Mesner_matrix_neighboring(Gen, i,
+				V[i].as_matrix(), verbose_level - 2);
 		if (f_v) {
 			cout << "matrix level " << i << ":" << endl;
 			V[i].as_matrix().print(cout);
@@ -795,7 +815,8 @@ INT polar::test(INT *S, INT len, INT verbose_level)
 		f_OK = FALSE;
 		}
 	if (rk < n - len) {
-		cout << "polar::test rk < n - len, fatal. This should not happen" << endl;
+		cout << "polar::test rk < n - len, fatal. "
+				"This should not happen" << endl;
 		cout << "rk=" << rk << endl;
 		cout << "n=" << n << endl;
 		cout << "len=" << len << endl;
@@ -838,7 +859,8 @@ void polar::test_if_in_perp(INT *S, INT len,
 		O->unrank_point(tmp_M + 1 * n, 1, c, 0);
 		if (f_vv) {
 			cout << "candidate " << i << " = " << c << ":" << endl;
-			print_integer_matrix_width(cout, tmp_M, 2, n, n, F->log10_of_q);
+			print_integer_matrix_width(cout,
+					tmp_M, 2, n, n, F->log10_of_q);
 			}
 		f = O->evaluate_bilinear_form(tmp_M + 0 * n, tmp_M + 1 * n, 1);
 		if (f_vv) {
@@ -853,7 +875,8 @@ void polar::test_if_in_perp(INT *S, INT len,
 	if (f_v) {
 		cout << "polar::test_if_in_perp done for ";
 		INT_set_print(cout, S, len);
-		cout << "; # of candidates reduced from " << nb_candidates << " to " << nb_good_candidates << endl;
+		cout << "; # of candidates reduced from " << nb_candidates
+				<< " to " << nb_good_candidates << endl;
 		}
 	if (f_vv) {
 		cout << "good candidates: ";
@@ -978,7 +1001,8 @@ void polar::test_if_closed_under_cosets(INT *S, INT len,
 			} // next i
 		if (f_v) {
 			cout << "expanded candidate set:" << endl;
-			INT_vec_print(cout, candidates_expanded, nb_candidates_expanded);
+			INT_vec_print(cout,
+					candidates_expanded, nb_candidates_expanded);
 			cout << endl;
 			}
 		INT_vec_heapsort(candidates_expanded, nb_candidates_expanded);
@@ -1022,9 +1046,13 @@ void polar::test_if_closed_under_cosets(INT *S, INT len,
 					cout << endl;
 					}
 				d = O->rank_point(w, 1, 0);
-				if (!INT_vec_search(candidates_expanded, nb_candidates_expanded, d, idx)) {
+				if (!INT_vec_search(candidates_expanded,
+						nb_candidates_expanded, d, idx)) {
 					if (f_vv) {
-						cout << "polar::test_if_closed_under_cosets point " << c << " is ruled out, coset point " << d << " is not found j=" << j << " y=" << y << endl; 
+						cout << "polar::test_if_closed_under_cosets "
+								"point " << c << " is ruled out, "
+								"coset point " << d << " is not found "
+								"j=" << j << " y=" << y << endl;
 						}
 					f_OK = FALSE;
 					break;
@@ -1056,7 +1084,8 @@ void polar::test_if_closed_under_cosets(INT *S, INT len,
 	if (f_v) {
 		cout << "polar::test_if_closed_under_cosets for ";
 		INT_set_print(cout, S, len);
-		cout << "; # of candidates reduced from " << nb_candidates << " to " << nb_good_candidates << endl;
+		cout << "; # of candidates reduced from "
+			<< nb_candidates << " to " << nb_good_candidates << endl;
 		}
 	if (f_vv) {
 		cout << "good candidates: ";
@@ -1073,12 +1102,15 @@ void polar::test_if_closed_under_cosets(INT *S, INT len,
 }
 
 
-void polar::get_stabilizer(INT orbit_idx, group &G, longinteger_object &go_G)
+void polar::get_stabilizer(INT orbit_idx, group &G,
+		longinteger_object &go_G)
 {
-	Gen->root[first_node + orbit_idx].get_stabilizer(Gen, G, go_G, 0 /*verbose_level - 2*/);
+	Gen->root[first_node + orbit_idx].get_stabilizer(Gen,
+			G, go_G, 0 /*verbose_level - 2*/);
 }
 
-void polar::get_orbit_length(INT orbit_idx, longinteger_object &length)
+void polar::get_orbit_length(INT orbit_idx,
+		longinteger_object &length)
 {
 	Gen->orbit_length(orbit_idx, depth, length);
 }
@@ -1088,14 +1120,18 @@ INT polar::get_orbit_length_as_INT(INT orbit_idx)
 	return Gen->orbit_length_as_INT(orbit_idx, depth);
 }
 
-void polar::orbit_element_unrank(INT orbit_idx, INT rank, INT *set, INT verbose_level)
+void polar::orbit_element_unrank(INT orbit_idx,
+		INT rank, INT *set, INT verbose_level)
 {
-	return Gen->orbit_element_unrank(depth, orbit_idx, rank, set, verbose_level);
+	return Gen->orbit_element_unrank(depth,
+			orbit_idx, rank, set, verbose_level);
 }
 
-void polar::orbit_element_rank(INT &orbit_idx, INT &rank, INT *set, INT verbose_level)
+void polar::orbit_element_rank(INT &orbit_idx,
+		INT &rank, INT *set, INT verbose_level)
 {
-	return Gen->orbit_element_rank(depth, orbit_idx, rank, set, /*f_implicit_fusion,*/ verbose_level);
+	return Gen->orbit_element_rank(depth,
+			orbit_idx, rank, set, verbose_level);
 }
 
 void polar::unrank_point(INT *v, INT rk)
@@ -1108,7 +1144,8 @@ INT polar::rank_point(INT *v)
 	return O->rank_point(v, 1, 0);
 }
 
-void polar::list_whole_orbit(INT depth, INT orbit_idx, INT f_limit, INT limit)
+void polar::list_whole_orbit(INT depth,
+		INT orbit_idx, INT f_limit, INT limit)
 {
 	INT *set;
 	INT len, j, h, ii, jj;
@@ -1121,11 +1158,13 @@ void polar::list_whole_orbit(INT depth, INT orbit_idx, INT f_limit, INT limit)
 	M1 = NEW_INT(depth * n);
 	base_cols = NEW_INT(n);
 	get_stabilizer(orbit_idx, G, go_G);
-	cout << "the stabilizer of orbit rep " << orbit_idx << " has order " << go_G << endl;
+	cout << "the stabilizer of orbit rep " << orbit_idx
+			<< " has order " << go_G << endl;
 
 	len = get_orbit_length_as_INT(orbit_idx);
 		
-	cout << "the orbit length of orbit " << orbit_idx << " is " << len << endl;
+	cout << "the orbit length of orbit " << orbit_idx
+			<< " is " << len << endl;
 	for (j = 0; j < len; j++) {
 		//if (j != 2) continue;
 		
@@ -1163,11 +1202,13 @@ void polar::list_whole_orbit(INT depth, INT orbit_idx, INT f_limit, INT limit)
 		orbit_element_rank(ii, jj, set, 0/*verbose_level*/);
 		cout << setw(2) << ii << " : " << setw(4) << jj << endl;
 		if (ii != orbit_idx) {
-			cout << "polar::list_whole_orbit: fatal: ii != orbit_idx" << endl;
+			cout << "polar::list_whole_orbit: "
+					"fatal: ii != orbit_idx" << endl;
 			exit(1);
 			}
 		if (jj != j) {
-			cout << "polar::list_whole_orbit: fatal: jj != j" << endl;
+			cout << "polar::list_whole_orbit: "
+					"fatal: jj != j" << endl;
 			exit(1);
 			}
 		}
@@ -1177,9 +1218,9 @@ void polar::list_whole_orbit(INT depth, INT orbit_idx, INT f_limit, INT limit)
 }
 
 
-// ####################################################################################
+// #############################################################################
 // global functions:
-// ####################################################################################
+// #############################################################################
 
 INT polar_callback_rank_point_func(INT *v, void *data)
 {
@@ -1188,7 +1229,8 @@ INT polar_callback_rank_point_func(INT *v, void *data)
 	INT rk;
 	
 	rk = P->O->rank_point(v, 1, 0);
-	//PG_element_rank_modified(*gen->F, v, 1, gen->vector_space_dimension, rk);
+	//PG_element_rank_modified(*gen->F, v, 1,
+	// gen->vector_space_dimension, rk);
 	return rk;
 }
 
@@ -1198,10 +1240,12 @@ void polar_callback_unrank_point_func(INT *v, INT rk, void *data)
 	//generator *gen = P->Gen;
 	
 	P->O->unrank_point(v, 1, rk, 0);
-	//PG_element_unrank_modified(*gen->F, v, 1, gen->vector_space_dimension, rk);
+	//PG_element_unrank_modified(*gen->F, v, 1,
+	// gen->vector_space_dimension, rk);
 }
 
-INT polar_callback_test_func(INT len, INT *S, void *data, INT verbose_level)
+INT polar_callback_test_func(INT len, INT *S,
+		void *data, INT verbose_level)
 {
 	polar *P = (polar *) data;
 	INT f_OK = TRUE;

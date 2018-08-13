@@ -92,7 +92,9 @@ int main(int argc, const char **argv)
 	delete F;
 
 	}
-	cout << "Memory usage = " << os_memory_usage() <<  " Time = " << delta_time(t0) << " tps = " << os_ticks_per_second() << endl;
+	cout << "Memory usage = " << os_memory_usage()
+			<<  " Time = " << delta_time(t0)
+			<< " tps = " << os_ticks_per_second() << endl;
 	the_end(t0);
 	//the_end_quietly(t0);
 	

@@ -10,7 +10,8 @@
 
 #include "orbiter.h"
 
-void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verbose_level)
+void analyze_group(action *A, sims *S,
+		vector_ge *SG, vector_ge *gens2, INT verbose_level)
 {
 	INT *Elt1;
 	INT *Elt2;
@@ -73,13 +74,16 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 
 	FactorGroup = new factor_group;
 		
-	create_factor_group(A, S, goi, size_center, center, FactorGroup, verbose_level);
+	create_factor_group(A, S, goi, size_center, center,
+			FactorGroup, verbose_level);
 	
 	cout << "FactorGroup created" << endl;
-	cout << "Order of FactorGroup is " << FactorGroup->goi_factor_group << endl;
+	cout << "Order of FactorGroup is " <<
+			FactorGroup->goi_factor_group << endl;
 	
 
-	cout << "computing the regular representation of degree " << FactorGroup->goi_factor_group << ":" << endl;
+	cout << "computing the regular representation of degree "
+			<< FactorGroup->goi_factor_group << ":" << endl;
 	
 	
 	for (i = 0; i < SG->len; i++) {
@@ -130,7 +134,8 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 		cout << "generator " << i << ":" << endl;
 		A->print(cout, SGH1.ith(i));
 		//cout << "as permutation in FactorGroupConjugated:" << endl;
-		//FactorGroup->FactorGroupConjugated->print_as_permutation(cout, SGH1.ith(i));
+		//FactorGroup->FactorGroupConjugated->print_as_permutation(
+		// cout, SGH1.ith(i));
 		//cout << endl;
 		}
 	cout << endl << endl;
@@ -143,7 +148,8 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 	elts_H1 = new INT[size_H1];
 
 
-	FactorGroup->FactorGroup->Sims->element_ranks_subgroup(&H1, elts_H1, verbose_level);
+	FactorGroup->FactorGroup->Sims->element_ranks_subgroup(
+			&H1, elts_H1, verbose_level);
 	cout << "the ranks of elements in H1 are:" << endl;
 	INT_vec_print(cout, elts_H1, size_H1);
 	cout << endl;
@@ -174,7 +180,8 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 		ModH1->FactorGroupConjugated->print_as_permutation(cout, Elt1);
 		cout << endl;
 		cout << "in the factor group mod center" << endl;
-		FactorGroup->FactorGroupConjugated->print_as_permutation(cout, Elt1);
+		FactorGroup->FactorGroupConjugated->print_as_permutation(
+				cout, Elt1);
 		cout << endl;
 		}
 
@@ -189,13 +196,15 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 	H2.build_up_subgroup_random_process(&H1, 
 		choose_random_generator_derived_group, verbose_level - 1);
 	H2.group_order(goH2);
-	cout << "the second commutator subgroup has order " << goH2 << endl << endl;
+	cout << "the second commutator subgroup has order "
+			<< goH2 << endl << endl;
 	H2.extract_strong_generators_in_order(SGH2, tl2, verbose_level - 2);
 	for (i = 0; i < SGH2.len; i++) {
 		cout << "generator " << i << ":" << endl;
 		A->print(cout, SGH2.ith(i));
 		//cout << "as permutation in FactorGroupConjugated:" << endl;
-		//FactorGroup->FactorGroupConjugated->print_as_permutation(cout, SGH2.ith(i));
+		//FactorGroup->FactorGroupConjugated->print_as_permutation(
+		// cout, SGH2.ith(i));
 		//cout << endl;
 		
 		A->move(SGH2.ith(i), gens2->ith(nb_gens2));
@@ -242,18 +251,21 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 		ModH2->FactorGroupConjugated->print_as_permutation(cout, Elt1);
 		cout << endl;
 		//cout << "in the factor group mod center" << endl;
-		//FactorGroup->FactorGroupConjugated->print_as_permutation(cout, Elt1);
+		//FactorGroup->FactorGroupConjugated->print_as_permutation(
+		// cout, Elt1);
 		//cout << endl;
 		}
 	
 	vector_ge SG_F1, SG_F2;
 	
-	ModH2->FactorGroup->Sims->extract_strong_generators_in_order(SG_F2, tlF2, verbose_level - 2);
+	ModH2->FactorGroup->Sims->extract_strong_generators_in_order(
+			SG_F2, tlF2, verbose_level - 2);
 	for (i = 0; i < SG_F2.len; i++) {
 		cout << "generator " << i << " for ModH2:" << endl;
 		A->print(cout, SG_F2.ith(i));
 		//cout << "as permutation in FactorGroupConjugated:" << endl;
-		//FactorGroup->FactorGroupConjugated->print_as_permutation(cout, SGH2.ith(i));
+		//FactorGroup->FactorGroupConjugated->print_as_permutation(
+		// cout, SGH2.ith(i));
 		//cout << endl;
 		
 		A->move(SG_F2.ith(i), gens2->ith(nb_gens2));
@@ -264,12 +276,14 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 		}
 	cout << endl << endl;
 
-	ModH1->FactorGroup->Sims->extract_strong_generators_in_order(SG_F1, tlF1, verbose_level - 2);
+	ModH1->FactorGroup->Sims->extract_strong_generators_in_order(
+			SG_F1, tlF1, verbose_level - 2);
 	for (i = 0; i < SG_F1.len; i++) {
 		cout << "generator " << i << " for ModH1:" << endl;
 		A->print(cout, SG_F1.ith(i));
 		//cout << "as permutation in FactorGroupConjugated:" << endl;
-		//FactorGroup->FactorGroupConjugated->print_as_permutation(cout, SGH2.ith(i));
+		//FactorGroup->FactorGroupConjugated->print_as_permutation(
+		// cout, SGH2.ith(i));
 		//cout << endl;
 		
 		A->move(SG_F1.ith(i), gens2->ith(nb_gens2));
@@ -296,28 +310,34 @@ void analyze_group(action *A, sims *S, vector_ge *SG, vector_ge *gens2, INT verb
 	delete [] tlF2;
 }
 
-void compute_regular_representation(action *A, sims *S, vector_ge *SG, INT *&perm, INT verbose_level)
+void compute_regular_representation(action *A, sims *S,
+		vector_ge *SG, INT *&perm, INT verbose_level)
 {
 	longinteger_object go;
 	INT goi, i;
 	
 	S->group_order(go);
 	goi = go.as_INT();
-	cout << "computing the regular representation of degree " << go << ":" << endl;
+	cout << "computing the regular representation of degree "
+			<< go << ":" << endl;
 	perm = new INT[SG->len * goi];
 	
 	for (i = 0; i < SG->len; i++) {
-		S->regular_representation(SG->ith(i), perm + i * goi, verbose_level);
+		S->regular_representation(SG->ith(i),
+				perm + i * goi, verbose_level);
 		}
 	cout << endl;
 	for (i = 0; i < SG->len; i++) {
-		perm_print_offset(cout, perm + i * goi, goi, 1 /* offset */, 
-			FALSE /* f_cycle_length */, FALSE, 0, TRUE /* f_orbit_structure */);
+		perm_print_offset(cout,
+			perm + i * goi, goi, 1 /* offset */,
+			FALSE /* f_cycle_length */, FALSE, 0,
+			TRUE /* f_orbit_structure */);
 		cout << endl;
 		}
 }
 
-void presentation(action *A, sims *S, INT goi, vector_ge *gens, INT *primes, INT verbose_level)
+void presentation(action *A, sims *S, INT goi,
+		vector_ge *gens, INT *primes, INT verbose_level)
 {
 	INT *Elt1, *Elt2, *Elt3, *Elt4;
 	INT i, j, jj, k, l, a, b;
@@ -385,7 +405,8 @@ void presentation(action *A, sims *S, INT goi, vector_ge *gens, INT *primes, INT
 		}
 	cout << "i : word_list[i] : inverse_word_list[i]" << endl;
 	for (i = 0; i < goi; i++) {
-		cout << setw(5) << i << " : " << setw(5) << word_list[i] << " : " << setw(5) << inverse_word_list[i] << endl;
+		cout << setw(5) << i << " : " << setw(5) << word_list[i]
+			<< " : " << setw(5) << inverse_word_list[i] << endl;
 		}
 
 
@@ -399,7 +420,9 @@ void presentation(action *A, sims *S, INT goi, vector_ge *gens, INT *primes, INT
 		A->move(gens->ith(i), Elt1);
 		A->element_power_INT_in_place(Elt1, primes[i], 0);
 		a = S->element_rank_INT(Elt1);
-		cout << "generator " << i << " to the power " << primes[i] << " is elt " << a << " which is word " << inverse_word_list[a];
+		cout << "generator " << i << " to the power " << primes[i]
+			<< " is elt " << a << " which is word "
+			<< inverse_word_list[a];
 		j = inverse_word_list[a];
 		for (k = 0; k < l; k++) {
 			b = j % primes[k];
@@ -422,7 +445,8 @@ void presentation(action *A, sims *S, INT goi, vector_ge *gens, INT *primes, INT
 			A->mult(Elt3, Elt1, Elt4);
 			cout << "g_" << j << "^{g_" << i << "} =" << endl;
 			a = S->element_rank_INT(Elt4);
-			cout << "which is element " << a << " which is word " << inverse_word_list[a] << " = ";
+			cout << "which is element " << a << " which is word "
+				<< inverse_word_list[a] << " = ";
 			jj = inverse_word_list[a];
 			for (k = 0; k < l; k++) {
 				b = jj % primes[k];

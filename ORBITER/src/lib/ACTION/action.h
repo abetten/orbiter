@@ -52,6 +52,7 @@ typedef class subgroup *psubgroup;
 typedef class action_on_subgroups action_on_subgroups;
 typedef class orbit_transversal orbit_transversal;
 typedef class wreath_product wreath_product;
+typedef class direct_product direct_product;
 
 
 enum symmetry_group_type { 
@@ -59,6 +60,7 @@ enum symmetry_group_type {
 	matrix_group_t, 
 	perm_group_t, 
 	wreath_product_t,
+	direct_product_t,
 	action_on_sets_t,
 	action_on_subgroups_t,
 	action_on_k_subsets_t,
@@ -95,6 +97,7 @@ union symmetry_group {
 	matrix_group *matrix_grp;
 	perm_group *perm_grp;
 	wreath_product *wreath_product_group;
+	direct_product *direct_product_group;
 	action_on_sets *on_sets;
 	action_on_subgroups *on_subgroups;
 	action_on_k_subsets *on_k_subsets;

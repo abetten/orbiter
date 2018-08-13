@@ -5,7 +5,7 @@
 // started March 14, 2012
 //
 //
-// 
+// Hill cap and Buekenhout Metz unitals
 //
 //
 
@@ -57,7 +57,8 @@ void Hill_cap56(int argc, const char **argv,
 
 	A->init_orthogonal_group(epsilon, 
 		n, F, 
-		TRUE /* f_on_points */, FALSE /* f_on_lines */, FALSE /* f_on_points_and_lines */, 
+		TRUE /* f_on_points */, FALSE /* f_on_lines */,
+		FALSE /* f_on_points_and_lines */,
 		f_semilinear, TRUE /* f_basis */, 
 		0/*verbose_level*/);
 
@@ -101,7 +102,8 @@ void Hill_cap56(int argc, const char **argv,
 	P->compute_orbits(t0, verbose_level - 2);
 	
 	if (f_v) {
-		cout << "we found " << P->nb_orbits << " orbits at depth " << w << endl;
+		cout << "we found " << P->nb_orbits
+				<< " orbits at depth " << w << endl;
 		}
 	
 	//P.compute_cosets(w, 0, verbose_level);
@@ -128,7 +130,8 @@ void Hill_cap56(int argc, const char **argv,
 		}
 	Grass.init(n, w, F, 0 /*verbose_level*/);
 
-	cout << "there are " << nb_lines << " lines, generator matrices are:" << endl;
+	cout << "there are " << nb_lines
+			<< " lines, generator matrices are:" << endl;
 	for (i = 0; i < nb_lines; i++) {
 		Grass.unrank_longinteger(Rank_lines[i], 0/*verbose_level - 3*/);
 		cout << setw(5) << i << " : " << Rank_lines[i] << ":" << endl;
@@ -330,7 +333,8 @@ void Hill_cap56(int argc, const char **argv,
 	
 }
 
-void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz)
+void append_orbit_and_adjust_size(schreier *Orb,
+		INT idx, INT *set, INT &sz)
 // Used by Hill_cap56()
 {
 	INT f, i, len;
@@ -344,7 +348,8 @@ void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz)
 
 
 
-INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, INT set_sz, INT k, INT verbose_level)
+INT test_if_arc(finite_field *Fq, INT *pt_coords,
+		INT *set, INT set_sz, INT k, INT verbose_level)
 // Used by Hill_cap56()
 {
 	INT f_v = FALSE; //(verbose_level >= 1);
@@ -430,7 +435,9 @@ void create_Buekenhout_Metz(
 	
 
 	if (BM->f_Uab) {
-		BM->init_ovoid_Uab_even(BM->parameter_a, BM->parameter_b, verbose_level);
+		BM->init_ovoid_Uab_even(
+				BM->parameter_a, BM->parameter_b,
+				verbose_level);
 		}
 	else {
 		BM->init_ovoid(verbose_level);

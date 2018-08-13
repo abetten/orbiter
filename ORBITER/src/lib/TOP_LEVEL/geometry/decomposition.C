@@ -86,7 +86,8 @@ void decomposition_projective_space(INT k, finite_field *F,
 
 
 		if (f_v) {
-			cout << "decomposition_projective_space level " << level << " : partition stack after splitting:" << endl;
+			cout << "decomposition_projective_space level " << level
+					<< " : partition stack after splitting:" << endl;
 			Stack.print(cout);
 			cout << "i : part[i]" << endl;
 			for (i = 0; i < nb_subsets; i++) {
@@ -103,11 +104,14 @@ void decomposition_projective_space(INT k, finite_field *F,
 		TDO_depth = nb_pts + nb_lines;
 	
 		if (f_vv) {
-			cout << "decomposition_projective_space before compute_TDO" << endl;
+			cout << "decomposition_projective_space before "
+					"compute_TDO" << endl;
 			}
-		/*hash =*/ Inc.compute_TDO(Stack, ht0, TDO_depth, verbose_level + 2);
+		/*hash =*/ Inc.compute_TDO(Stack, ht0, TDO_depth,
+				verbose_level + 2);
 		if (f_vv) {
-			cout << "decomposition_projective_space after compute_TDO" << endl;
+			cout << "decomposition_projective_space after "
+					"compute_TDO" << endl;
 			}
 
 		if (FALSE) {

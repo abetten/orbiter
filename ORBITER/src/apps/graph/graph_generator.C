@@ -192,7 +192,8 @@ void graph_generator::read_arguments(int argc, const char **argv)
 			}
 		}
 	if (!f_n) {
-		cout << "please use option -n <n> to specify the number of vertices" << endl;
+		cout << "please use option -n <n> "
+				"to specify the number of vertices" << endl;
 		exit(1);
 		}
 }
@@ -218,7 +219,8 @@ void graph_generator::init(int argc, const char **argv)
 
 	if (f_tournament) {
 		if (f_v) {
-			cout << "graph_generator::init tournaments on " << n << " vertices" << endl;
+			cout << "graph_generator::init tournaments "
+					"on " << n << " vertices" << endl;
 			}
 		sprintf(prefix, "tournament_%ld", n);
 		if (f_no_superking) {
@@ -227,7 +229,8 @@ void graph_generator::init(int argc, const char **argv)
 		}
 	else {
 		if (f_v) {
-			cout << "graph_generator::init graphs on " << n << " vertices" << endl;
+			cout << "graph_generator::init graphs "
+					"on " << n << " vertices" << endl;
 			}
 		sprintf(prefix, "graph_%ld", n);
 		}
@@ -267,28 +270,36 @@ void graph_generator::init(int argc, const char **argv)
 		}
 
 	if (f_tournament) {
-		A_on_edges->induced_action_on_ordered_pairs(*A_base, A_base->Sims, verbose_level - 3);	
+		A_on_edges->induced_action_on_ordered_pairs(
+				*A_base, A_base->Sims, verbose_level - 3);
 		if (f_v) {
-			cout << "A_on_edges->induced_action_on_ordered_pairs done, created the following action:" << endl;
+			cout << "A_on_edges->induced_action_on_ordered_pairs "
+					"done, created the following action:" << endl;
 			A_on_edges->print_info();
-			cout << "generators for the symmetric group in the action on ordered_pairs are:" << endl;
+			cout << "generators for the symmetric group in the "
+					"action on ordered_pairs are:" << endl;
 			A_on_edges->Sims->print_generators();
 			}
 		}
 	else {
-		A_on_edges->induced_action_on_pairs(*A_base, A_base->Sims, verbose_level - 3);	
+		A_on_edges->induced_action_on_pairs(
+				*A_base, A_base->Sims, verbose_level - 3);
 		if (f_v) {
-			cout << "A_on_edges->induced_action_on_pairs done, created the following action:" << endl;
+			cout << "A_on_edges->induced_action_on_pairs done, "
+					"created the following action:" << endl;
 			A_on_edges->print_info();
-			cout << "generators for the symmetric group in the action on pairs are:" << endl;
+			cout << "generators for the symmetric group in the action "
+					"on pairs are:" << endl;
 			A_on_edges->Sims->print_generators();
 			}
 		}
 	A_on_edges->lex_least_base_in_place(verbose_level - 3);
 	if (f_v) {
-		cout << "After lex_least_base, we have the following action:" << endl;
+		cout << "After lex_least_base, we have the following "
+				"action:" << endl;
 		A_on_edges->print_info();
-		cout << "generators for the symmetric group in the induced action are:" << endl;
+		cout << "generators for the symmetric group in the "
+				"induced action are:" << endl;
 		A_on_edges->Sims->print_generators();
 		}
 
@@ -328,7 +339,8 @@ void graph_generator::init(int argc, const char **argv)
 	
 	
 	if (f_v) {
-		cout << "graph_generator::init target_depth = " << target_depth << endl;
+		cout << "graph_generator::init target_depth = "
+				<< target_depth << endl;
 		}
 
 	gen->initialize(A_base, A_on_edges,  
@@ -352,7 +364,8 @@ void graph_generator::init(int argc, const char **argv)
 
 }
 
-INT graph_generator::check_conditions(INT len, INT *S, INT verbose_level)
+INT graph_generator::check_conditions(INT len,
+		INT *S, INT verbose_level)
 {
 	//verbose_level = 2;
 
@@ -396,7 +409,8 @@ INT graph_generator::check_conditions(INT len, INT *S, INT verbose_level)
 		}
 }
 
-INT graph_generator::check_conditions_tournament(INT len, INT *S, INT verbose_level)
+INT graph_generator::check_conditions_tournament(
+		INT len, INT *S, INT verbose_level)
 {
 	//verbose_level = 2;
 
@@ -408,7 +422,8 @@ INT graph_generator::check_conditions_tournament(INT len, INT *S, INT verbose_le
 	INT *S_sorted;
 	
 	if (f_v) {
-		cout << "graph_generator::check_conditions_tournament checking set ";
+		cout << "graph_generator::check_conditions_tournament "
+				"checking set ";
 		print_set(cout, len, S);
 		}
 
@@ -425,7 +440,9 @@ INT graph_generator::check_conditions_tournament(INT len, INT *S, INT verbose_le
 		b = 2 * b2 + swap2;
 		if (INT_vec_search(S_sorted, len, b, idx)) {
 			if (f_vv) {
-				cout << "graph_generator::check_conditions_tournament elements " << a << " and " << b << " cannot both exist" << endl;
+				cout << "graph_generator::check_conditions_tournament "
+						"elements " << a << " and " << b
+						<< " cannot both exist" << endl;
 				}
 			f_OK = FALSE;
 			break;
@@ -477,7 +494,8 @@ INT graph_generator::check_conditions_tournament(INT len, INT *S, INT verbose_le
 }
 
 
-INT graph_generator::check_regularity(INT *S, INT len, INT verbose_level)
+INT graph_generator::check_regularity(
+		INT *S, INT len, INT verbose_level)
 {
 	INT f_OK;
 	INT f_v = (verbose_level >= 1);
@@ -505,7 +523,8 @@ INT graph_generator::compute_degree_sequence(INT *S, INT len)
 	INT h, a, i, j;
 	
 	if (f_tournament) {
-		cout << "graph_generator::compute_degree_sequence tournament is TRUE" << endl;
+		cout << "graph_generator::compute_degree_sequence "
+				"tournament is TRUE" << endl;
 		exit(1);
 		}
 	INT_vec_zero(degree_sequence, n);
@@ -524,7 +543,8 @@ INT graph_generator::compute_degree_sequence(INT *S, INT len)
 	return TRUE;
 }
 
-INT graph_generator::girth_check(INT *line, INT len, INT verbose_level)
+INT graph_generator::girth_check(INT *line, INT len,
+		INT verbose_level)
 {
 	INT f_OK = TRUE, i;
 	INT f_v = (verbose_level >= 1);
@@ -536,7 +556,8 @@ INT graph_generator::girth_check(INT *line, INT len, INT verbose_level)
 		cout << endl;
 		}
 	for (i = 0; i < n; i++) {
-		if (!girth_test_vertex(line, len, i, girth, verbose_level - 2)) {
+		if (!girth_test_vertex(line, len, i,
+				girth, verbose_level - 2)) {
 			f_OK = FALSE;
 			if (f_vv) {
 				cout << "girth check fails for vertex " << i << endl;
@@ -555,7 +576,9 @@ INT graph_generator::girth_check(INT *line, INT len, INT verbose_level)
 	return f_OK;
 }
 
-INT graph_generator::girth_test_vertex(INT *S, INT len, INT vertex, INT girth, INT verbose_level)
+INT graph_generator::girth_test_vertex(INT *S, INT len,
+		INT vertex, INT girth,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT l, i, cur = 0, a, b, da, db, g;
@@ -578,15 +601,19 @@ INT graph_generator::girth_test_vertex(INT *S, INT len, INT vertex, INT girth, I
 					g = da + 1 + db;
 					if (g < girth) {
 						if (f_v) {
-							cout << "found a cycle of length " << g << " < " << girth << endl;
-							cout << vertex << " - " << a << " - " << b << endl;
-							cout << da << " + " << 1 << " + " << db << endl;
+							cout << "found a cycle of length "
+									<< g << " < " << girth << endl;
+							cout << vertex << " - " << a
+									<< " - " << b << endl;
+							cout << da << " + " << 1
+									<< " + " << db << endl;
 							}
 						return FALSE;
 						}
 					else {
 						if (da + 1 < db) {
-							cout << "da + 1 < db, this should not happen" << endl;
+							cout << "da + 1 < db, this "
+									"should not happen" << endl;
 							cout << "vertex=" << vertex << endl;
 							cout << "a=" << a << endl;
 							cout << "b=" << b << endl;
@@ -674,7 +701,8 @@ void graph_generator::print(INT *S, INT len)
 	
 }
 
-void graph_generator::print_score_sequences(INT level, INT verbose_level)
+void graph_generator::print_score_sequences(
+		INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h, nb_orbits;
@@ -682,7 +710,8 @@ void graph_generator::print_score_sequences(INT level, INT verbose_level)
 	INT *score;
 
 	if (f_v) {
-		cout << "graph_generator::print_score_sequences level = " << level << endl;
+		cout << "graph_generator::print_score_sequences "
+				"level = " << level << endl;
 		}
 
 	set = NEW_INT(level);
@@ -716,7 +745,8 @@ void graph_generator::print_score_sequences(INT level, INT verbose_level)
 
 }
 
-void graph_generator::score_sequence(INT n, INT *set, INT sz, INT *score, INT verbose_level)
+void graph_generator::score_sequence(INT n,
+		INT *set, INT sz, INT *score, INT verbose_level)
 {
 	INT i, a, swap, a2, u, v;
 
@@ -743,8 +773,10 @@ void graph_generator::score_sequence(INT n, INT *set, INT sz, INT *score, INT ve
 }
 
 
-void graph_generator::draw_graphs(INT level, double scale, INT xmax_in, INT ymax_in, 
-	INT xmax, INT ymax, INT f_embedded, INT f_sideways, INT verbose_level)
+void graph_generator::draw_graphs(INT level,
+	double scale, INT xmax_in, INT ymax_in,
+	INT xmax, INT ymax, INT f_embedded, INT f_sideways,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h, i, nb_orbits;
@@ -752,7 +784,8 @@ void graph_generator::draw_graphs(INT level, double scale, INT xmax_in, INT ymax
 	INT *v;
 
 	if (f_v) {
-		cout << "graph_generator::draw_graphs level = " << level << endl;
+		cout << "graph_generator::draw_graphs "
+				"level = " << level << endl;
 		}
 
 	set = NEW_INT(level);
@@ -784,7 +817,8 @@ void graph_generator::draw_graphs(INT level, double scale, INT xmax_in, INT ymax
 
 		BYTE fname_full[1000];
 
-		sprintf(fname_full, "%s_rep_%ld_%ld.mp", gen->fname_base, level, h);
+		sprintf(fname_full, "%s_rep_%ld_%ld.mp",
+				gen->fname_base, level, h);
 		INT x_min = 0, x_max = xmax_in;
 		INT y_min = 0, y_max = ymax_in;
 		INT x, y, dx, dy;
@@ -794,7 +828,8 @@ void graph_generator::draw_graphs(INT level, double scale, INT xmax_in, INT ymax
 		dx = x;
 		dy = y;
 		{
-		mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+		mp_graphics G(fname_full,
+				x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 		G.out_xmin() = 0;
 		G.out_ymin() = 0;
 		G.out_xmax() = xmax;
@@ -819,7 +854,8 @@ void graph_generator::draw_graphs(INT level, double scale, INT xmax_in, INT ymax
 		G.end_figure();
 		G.footer();
 		}
-		cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+		cout << "written file " << fname_full
+				<< " of size " << file_size(fname_full) << endl;
 
 		delete Strong_gens;
 		}
@@ -828,9 +864,9 @@ void graph_generator::draw_graphs(INT level, double scale, INT xmax_in, INT ymax
 }
 
 
-// ##################################################################################################
+// #############################################################################
 // global functions
-// ##################################################################################################
+// #############################################################################
 
 
 INT check_conditions(INT len, INT *S, void *data, INT verbose_level)

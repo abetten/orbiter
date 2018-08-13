@@ -341,6 +341,9 @@ void action_print_symmetry_group_type(ostream &ost,
 	else if (a == wreath_product_t) {
 		ost << "wreath_product_t";
 		}
+	else if (a == direct_product_t) {
+		ost << "direct_product_t";
+		}
 	else if (a == action_on_sets_t) {
 		ost << "action_on_sets_t";
 		}

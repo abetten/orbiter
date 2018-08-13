@@ -78,14 +78,19 @@ int main(int argc, const char **argv)
 			create_graphs_r = atoi(argv[++i]);
 			create_graphs_m = atoi(argv[++i]);
 			create_graphs_level = atoi(argv[++i]);
-			cout << "-create_graphs " << " " << create_graphs_r << " " << create_graphs_m << " " << create_graphs_level << endl;
+			cout << "-create_graphs " << " " << create_graphs_r
+					<< " " << create_graphs_m << " "
+					<< create_graphs_level << endl;
 			}
 		else if (strcmp(argv[i], "-create_graphs_list_of_cases") == 0) {
 			f_create_graphs_list_of_cases = TRUE;
 			create_graphs_level = atoi(argv[++i]);
 			create_graphs_list_of_cases_prefix = argv[++i];
 			create_graphs_list_of_cases = argv[++i];
-			cout << "-create_graphs_list_of_cases " << " " << create_graphs_level << " " << create_graphs_list_of_cases_prefix << " " << create_graphs_list_of_cases << endl;
+			cout << "-create_graphs_list_of_cases " << " "
+					<< create_graphs_level << " "
+					<< create_graphs_list_of_cases_prefix
+					<< " " << create_graphs_list_of_cases << endl;
 			}
 		else if (strcmp(argv[i], "-Law71") == 0) {
 			f_Law71 = TRUE;
@@ -149,7 +154,8 @@ int main(int argc, const char **argv)
 		}
 	
 	if (f_v) {
-		cout << "init finished, calling main, schreier_depth = " << schreier_depth << endl;
+		cout << "init finished, calling main, "
+				"schreier_depth = " << schreier_depth << endl;
 		}
 
 
@@ -171,16 +177,20 @@ int main(int argc, const char **argv)
 			f_debug, 
 			Gen.gen->verbose_level);
 		cout << "Gen.gen->main returns depth=" << depth << endl;
-		//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
+		//Gen.gen->print_data_structure_tex(depth,
+		//Gen.gen->verbose_level);
 		if (f_draw_poset) {
-			Gen.gen->draw_poset(Gen.prefix_with_directory, ECA->starter_size, 0 /* data1 */, f_embedded, f_sideways, Gen.gen->verbose_level);
+			Gen.gen->draw_poset(Gen.prefix_with_directory,
+					ECA->starter_size, 0 /* data1 */,
+					f_embedded, f_sideways, Gen.gen->verbose_level);
 			}
 		if (f_list) {
 				{
 				spreadsheet *Sp;
 				Gen.gen->make_spreadsheet_of_orbit_reps(Sp, depth);
 				BYTE fname_csv[1000];
-				sprintf(fname_csv, "partial_BLT_sets_%ld_%ld.csv", q, depth);
+				sprintf(fname_csv, "partial_BLT_sets_%ld_%ld.csv",
+						q, depth);
 				Sp->save(fname_csv, verbose_level);
 				delete Sp;
 				}
@@ -224,7 +234,8 @@ int main(int argc, const char **argv)
 			exit(1);
 			}
 		Gen.create_graphs_list_of_cases(
-			create_graphs_list_of_cases_prefix, create_graphs_list_of_cases, 
+			create_graphs_list_of_cases_prefix,
+			create_graphs_list_of_cases,
 			create_graphs_level, 
 			ECA->output_prefix, 
 			ECA->f_lex, f_eliminate_graphs_if_possible, 

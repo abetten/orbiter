@@ -38,7 +38,8 @@ int main(int argc, const char **argv)
 	F = new finite_field;
 
 	if (Gen->f_poly) {
-		F->init_override_polynomial(Gen->q, Gen->poly, 0 /*verbose_level*/);
+		F->init_override_polynomial(Gen->q,
+				Gen->poly, 0 /*verbose_level*/);
 		}
 	else {
 		F->init(Gen->q, 0);
@@ -62,18 +63,22 @@ int main(int argc, const char **argv)
 				cout << "preparing level spreadsheet" << endl;
 				{
 				spreadsheet *Sp;
-				Gen->gen->make_spreadsheet_of_level_info(Sp, Gen->ECA->starter_size);
+				Gen->gen->make_spreadsheet_of_level_info(
+						Sp, Gen->ECA->starter_size);
 				BYTE fname_csv[1000];
-				sprintf(fname_csv, "arcs_%ld_%ld_level.csv", Gen->q, Gen->ECA->starter_size);
+				sprintf(fname_csv, "arcs_%ld_%ld_level.csv",
+						Gen->q, Gen->ECA->starter_size);
 				Sp->save(fname_csv, Gen->verbose_level);
 				delete Sp;
 				}
 				cout << "preparing orbit spreadsheet" << endl;
 				{
 				spreadsheet *Sp;
-				Gen->gen->make_spreadsheet_of_orbit_reps(Sp, Gen->ECA->starter_size);
+				Gen->gen->make_spreadsheet_of_orbit_reps(
+						Sp, Gen->ECA->starter_size);
 				BYTE fname_csv[1000];
-				sprintf(fname_csv, "arcs_%ld_%ld.csv", Gen->q, Gen->ECA->starter_size);
+				sprintf(fname_csv, "arcs_%ld_%ld.csv",
+						Gen->q, Gen->ECA->starter_size);
 				Sp->save(fname_csv, Gen->verbose_level);
 				delete Sp;
 				}
@@ -84,7 +89,9 @@ int main(int argc, const char **argv)
 	delete F;
 	
 	}
-	cout << "Memory usage = " << os_memory_usage() <<  " Time = " << delta_time(t0) << " tps = " << os_ticks_per_second() << endl;
+	cout << "Memory usage = " << os_memory_usage()
+			<<  " Time = " << delta_time(t0)
+			<< " tps = " << os_ticks_per_second() << endl;
 	the_end(t0);
 	//the_end_quietly(t0);
 }

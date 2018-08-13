@@ -134,7 +134,9 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	SG = A->Strong_gens;
 	SG->group_order(go);
 
-	cout << "The group " << A->label << " has order " << go << " and permutation degree " << A->degree << endl;
+	cout << "The group " << A->label << " has order "
+			<< go << " and permutation degree "
+			<< A->degree << endl;
 	cout << "The points on which the group acts are:" << endl;
 	for (i = 0; i < A->degree; i++) {
 		O->unrank_point(v, 1 /* stride */, i, 0 /* verbose_level */);
@@ -144,10 +146,12 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 		}
 	cout << "Generators are:" << endl;
 	for (i = 0; i < SG->gens->len; i++) {
-		cout << "generator " << i << " / " << SG->gens->len << " is: " << endl;
+		cout << "generator " << i << " / "
+				<< SG->gens->len << " is: " << endl;
 		A->element_print_quick(SG->gens->ith(i), cout);
 		cout << "as permutation: " << endl;
-		A->element_print_as_permutation(SG->gens->ith(i), cout);
+		A->element_print_as_permutation(
+				SG->gens->ith(i), cout);
 		cout << endl;
 		}
 	cout << "Generators are:" << endl;
@@ -159,7 +163,8 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	cout << SG->gens->len << " " << A->degree << endl;
 	for (i = 0; i < SG->gens->len; i++) {
 		for (j = 0; j < A->degree; j++) {
-			a = A->element_image_of(j, SG->gens->ith(i), 0 /* verbose_level */);
+			a = A->element_image_of(j,
+					SG->gens->ith(i), 0 /* verbose_level */);
 			cout << a << " ";
 			}
 		cout << endl;

@@ -116,7 +116,8 @@ void orbit_of_equations::print_orbit()
 {
 	INT i;
 	
-	cout << "orbit_of_equations::print_orbit We found an orbit of length " << used_length << endl;
+	cout << "orbit_of_equations::print_orbit We found an orbit of "
+			"length " << used_length << endl;
 	for (i = 0; i < used_length; i++) {
 		cout << i << " : ";
 		INT_vec_print(cout, Equations[i] + 1, nb_monomials);
@@ -168,7 +169,8 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 	Q_len = 1;
 	while (Q_len) {
 		if (f_vv) {
-			cout << "orbit_of_equations::compute_orbit  Q_len = " << Q_len << " : used_length=" << used_length << " : ";
+			cout << "orbit_of_equations::compute_orbit  Q_len = "
+					<< Q_len << " : used_length=" << used_length << " : ";
 			INT_vec_print(cout, Q, Q_len);
 			cout << endl;
 			}
@@ -183,20 +185,25 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 
 		for (j = 0; j < SG->gens->len; j++) {
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_orbit  applying generator " << j << endl;
+				cout << "orbit_of_equations::compute_orbit  "
+						"applying generator " << j << endl;
 				}
 
-			map_an_equation(cur_object, new_object, SG->gens->ith(j),  verbose_level - 4);
+			map_an_equation(cur_object, new_object,
+					SG->gens->ith(j),  verbose_level - 4);
 
 			
 			if (search_data(new_object, idx)) {
 				if (f_vvv) {
-					cout << "orbit_of_equations::compute_orbit new object is already in the list, at position " << idx << endl;
+					cout << "orbit_of_equations::compute_orbit "
+							"new object is already in the list, "
+							"at position " << idx << endl;
 					}
 				}
 			else {
 				if (f_vvv) {
-					cout << "orbit_of_equations::compute_orbit Found a new object : ";
+					cout << "orbit_of_equations::compute_orbit "
+							"Found a new object : ";
 					INT_vec_print(cout, new_object, sz);
 					cout << endl;
 					}
@@ -208,7 +215,8 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 					INT *label2;
 					INT *Q2;
 					if (f_vv) {
-						cout << "orbit_of_equations::compute_orbit reallocating to length " << al2 << endl;
+						cout << "orbit_of_equations::compute_orbit "
+								"reallocating to length " << al2 << endl;
 						}
 					Equations2 = NEW_PINT(al2);
 					prev2 = NEW_INT(al2);
@@ -263,11 +271,14 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 					}
 				used_length++;
 				if ((used_length % 10000) == 0) {
-					cout << "orbit_of_equations::compute_orbit  " << used_length << endl;
+					cout << "orbit_of_equations::compute_orbit  "
+							<< used_length << endl;
 					}
 				Q[Q_len++] = idx;
 				if (f_vvv) {
-					cout << "orbit_of_equations::compute_orbit  storing new equation at position " << idx << endl;
+					cout << "orbit_of_equations::compute_orbit  "
+							"storing new equation at position "
+							<< idx << endl;
 					}
 
 #if 0
@@ -281,7 +292,8 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "orbit_of_equations::compute_orbit found an orbit of length " << used_length << endl;
+		cout << "orbit_of_equations::compute_orbit found an orbit "
+				"of length " << used_length << endl;
 		}
 
 
@@ -293,7 +305,8 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 		}
 }
 
-void orbit_of_equations::get_transporter(INT idx, INT *transporter, INT verbose_level)
+void orbit_of_equations::get_transporter(INT idx,
+		INT *transporter, INT verbose_level)
 // transporter is an element which maps 
 // the orbit representative to the given subspace.
 {
@@ -318,7 +331,8 @@ void orbit_of_equations::get_transporter(INT idx, INT *transporter, INT verbose_
 		idx0 = prev[idx1];
 		}
 	if (idx1 != position_of_original_object) {
-		cout << "orbit_of_equations::get_transporter idx1 != position_of_original_object" << endl;
+		cout << "orbit_of_equations::get_transporter "
+				"idx1 != position_of_original_object" << endl;
 		exit(1);
 		}
 	A->element_move(Elt1, transporter, 0);
@@ -330,7 +344,8 @@ void orbit_of_equations::get_transporter(INT idx, INT *transporter, INT verbose_
 		}
 }
 
-void orbit_of_equations::get_random_schreier_generator(INT *Elt, INT verbose_level)
+void orbit_of_equations::get_random_schreier_generator(
+		INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
@@ -362,7 +377,8 @@ void orbit_of_equations::get_random_schreier_generator(INT *Elt, INT verbose_lev
 		cout << "r2=" << r2 << endl;
 		}
 	if (f_vv) {
-		cout << "random coset " << r1 << ", random generator " << r2 << endl;
+		cout << "random coset " << r1
+				<< ", random generator " << r2 << endl;
 		}
 	
 	A->element_mult(E1, SG->gens->ith(r2), E2, 0);
@@ -378,7 +394,8 @@ void orbit_of_equations::get_random_schreier_generator(INT *Elt, INT verbose_lev
 			}
 		}
 	else {
-		cout << "orbit_of_equations::get_random_schreier_generator image space is not found in the orbit" << endl;
+		cout << "orbit_of_equations::get_random_schreier_generator "
+				"image space is not found in the orbit" << endl;
 		exit(1);
 		}
 	
@@ -395,12 +412,14 @@ void orbit_of_equations::get_random_schreier_generator(INT *Elt, INT verbose_lev
 			}
 		}
 	else {
-		cout << "orbit_of_equations::get_random_schreier_generator (testing) image space is not found in the orbit" << endl;
+		cout << "orbit_of_equations::get_random_schreier_generator "
+				"(testing) image space is not found in the orbit" << endl;
 		exit(1);
 		}
 
 	if (pt3 != position_of_original_object) {
-		cout << "orbit_of_equations::get_random_schreier_generator pt3 != position_of_original_subspace" << endl;
+		cout << "orbit_of_equations::get_random_schreier_generator "
+				"pt3 != position_of_original_subspace" << endl;
 		exit(1);
 		}
 
@@ -417,7 +436,8 @@ void orbit_of_equations::get_random_schreier_generator(INT *Elt, INT verbose_lev
 	FREE_INT(cur_object);
 	FREE_INT(new_object);
 	if (f_v) {
-		cout << "orbit_of_equations::get_random_schreier_generator done" << endl;
+		cout << "orbit_of_equations::get_random_schreier_generator "
+				"done" << endl;
 		}
 }
 
@@ -445,7 +465,8 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 	
 	
 	if (f_v) {
-		cout << "orbit_of_equations::compute_stabilizer computing stabilizer inside a group of order " << go << " in action ";
+		cout << "orbit_of_equations::compute_stabilizer computing "
+				"stabilizer inside a group of order " << go << " in action ";
 		default_action->print_info();
 		cout << endl;
 		}
@@ -454,11 +475,13 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 	len = used_length;
 	D.integral_division_by_INT(go, len, target_go, r);
 	if (r) {	
-		cout << "orbit_of_equations::compute_stabilizer orbit length does not divide group order" << endl;
+		cout << "orbit_of_equations::compute_stabilizer orbit length "
+				"does not divide group order" << endl;
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "orbit_of_equations::compute_stabilizer expecting group of order " << target_go << endl;
+		cout << "orbit_of_equations::compute_stabilizer expecting "
+				"group of order " << target_go << endl;
 		}
 	
 	Stab->init(default_action);
@@ -471,7 +494,8 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		if (cnt % 2 || Stab->nb_gen[0] == 0) {
 			get_random_schreier_generator(E1, 0 /* verbose_level */);
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_stabilizer created random Schreier generator" << endl;
+				cout << "orbit_of_equations::compute_stabilizer "
+						"created random Schreier generator" << endl;
 				//default_action->element_print(E1, cout);
 				}
 			}
@@ -479,16 +503,20 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 			Stab->random_schreier_generator(0 /* verbose_level */);
 			A->element_move(Stab->schreier_gen, E1, 0);
 			if (f_v4) {
-				cout << "orbit_of_equations::compute_stabilizer created random schreier generator from sims" << endl;
+				cout << "orbit_of_equations::compute_stabilizer "
+						"created random schreier generator from sims"
+						<< endl;
 				//default_action->element_print(E1, cout);
 				}
 			}
 
 
 
-		if (Stab->strip(E1, residue, drop_out_level, image, 0 /*verbose_level - 3*/)) {
+		if (Stab->strip(E1, residue, drop_out_level, image,
+				0 /*verbose_level - 3*/)) {
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_stabilizer element strips through" << endl;
+				cout << "orbit_of_equations::compute_stabilizer "
+						"element strips through" << endl;
 				if (FALSE) {
 					cout << "residue:" << endl;
 					A->element_print(residue, cout);
@@ -500,18 +528,21 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		else {
 			f_added = TRUE;
 			if (f_vvv) {
-				cout << "orbit_of_equations::compute_stabilizer element needs to be inserted at level = " 
+				cout << "orbit_of_equations::compute_stabilizer "
+						"element needs to be inserted at level = "
 					<< drop_out_level << " with image " << image << endl;
 				if (FALSE) {
 					A->element_print(residue, cout);
 					cout  << endl;
 					}
 				}
-			Stab->add_generator_at_level(residue, drop_out_level, verbose_level - 4);
+			Stab->add_generator_at_level(residue, drop_out_level,
+					verbose_level - 4);
 			}
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
-			cout << "iteration " << cnt << " the new group order is " << cur_go 
+			cout << "iteration " << cnt
+				<< " the new group order is " << cur_go
 				<< " expecting a group of order " << target_go << endl; 
 			}
 		cnt++;
@@ -531,7 +562,8 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 	sims *Stab;
 
 	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep" << endl;
+		cout << "orbit_of_equations::generators_for_"
+				"stabilizer_of_orbit_rep" << endl;
 		}
 
 	compute_stabilizer(A /* default_action */, full_group_order, 
@@ -541,7 +573,9 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 
 	Stab->group_order(stab_order);
 	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep found a stabilizer group of order " << stab_order << endl;
+		cout << "orbit_of_equations::generators_for_stabilizer_"
+				"of_orbit_rep found a stabilizer group of order "
+				<< stab_order << endl;
 		}
 	
 	gens = new strong_generators;
@@ -550,7 +584,8 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 
 	delete Stab;
 	if (f_v) {
-		cout << "orbit_of_equations::generators_for_stabilizer_of_orbit_rep done" << endl;
+		cout << "orbit_of_equations::generators_for_stabilizer_of_"
+				"orbit_rep done" << endl;
 		}
 	return gens;
 }
@@ -559,7 +594,9 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 
 INT orbit_of_equations::search_data(INT *data, INT &idx)
 {
-	if (vec_search((void **)Equations, orbit_of_equations_compare_func, (void *) (sz_for_compare), 
+	if (vec_search((void **)Equations,
+			orbit_of_equations_compare_func,
+			(void *) (sz_for_compare),
 		used_length, data, idx, 0 /* verbose_level */)) {
 		return TRUE;
 		}
@@ -575,7 +612,8 @@ void orbit_of_equations::save_csv(const BYTE *fname, INT verbose_level)
 
 	Data = NEW_INT(used_length * nb_monomials);
 	for (i = 0; i < used_length; i++) {
-		INT_vec_copy(Equations[i] + 1, Data + i * nb_monomials, nb_monomials);
+		INT_vec_copy(Equations[i] + 1,
+				Data + i * nb_monomials, nb_monomials);
 		}
 	INT_matrix_write_csv(fname, Data, used_length, nb_monomials);
 }

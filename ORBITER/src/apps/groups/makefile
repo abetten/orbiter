@@ -9,9 +9,14 @@ LFLAGS = -lm
 
 
 
-all:  orthogonal_group.out \
-		wreath_product.out
+all:  \
+	direct_product.out \
+	orthogonal_group.out \
+	wreath_product.out
 
+
+direct_product.out:  direct_product.o;
+	$(DISCRETA_CPP)  direct_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 orthogonal_group.out:  orthogonal_group.o;
 	$(DISCRETA_CPP)  orthogonal_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

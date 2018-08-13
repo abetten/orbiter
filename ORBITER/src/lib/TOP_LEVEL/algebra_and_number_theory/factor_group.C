@@ -12,7 +12,8 @@
 
 
 void create_factor_group(action *A, sims *S, INT goi, 
-	INT size_subgroup, INT *subgroup, factor_group *F, INT verbose_level)
+	INT size_subgroup, INT *subgroup, factor_group *F,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt1;
@@ -56,9 +57,11 @@ void create_factor_group(action *A, sims *S, INT goi,
 	F->FactorGroupConjugated = new action;
 		
 	if (f_v) {
-		cout << "create_factor_group before induced_action_by_right_multiplication" << endl;
+		cout << "create_factor_group before induced_action_"
+				"by_right_multiplication" << endl;
 		}
-	F->ByRightMultiplication->induced_action_by_right_multiplication(FALSE /* f_basis */, S, S, FALSE, verbose_level);
+	F->ByRightMultiplication->induced_action_by_right_multiplication(
+			FALSE /* f_basis */, S, S, FALSE, verbose_level);
 
 #if 0
 	for (u = 0; u < SG->len; u++) {
@@ -97,8 +100,11 @@ void create_factor_group(action *A, sims *S, INT goi,
 	F->FactorGroup->Sims->group_order(go);
 	F->goi_factor_group = go.as_INT();
 	if (f_v) {
-		cout << "create_factor_group: goi_factor_group = " << F->goi_factor_group << ":" << endl;
-		cout << "create_factor_group: computing the regular representation of degree " << F->goi_factor_group << ":" << endl;
+		cout << "create_factor_group: goi_factor_group = "
+				<< F->goi_factor_group << ":" << endl;
+		cout << "create_factor_group: computing the regular "
+				"representation of degree " << F->goi_factor_group
+				<< ":" << endl;
 		}
 		
 #if 0
@@ -110,12 +116,15 @@ void create_factor_group(action *A, sims *S, INT goi,
 #endif
 
 	if (f_v) {
-		cout << "create_factor_group: before induced_action_by_right_multiplication:" << endl;
+		cout << "create_factor_group: before induced_action_by_"
+				"right_multiplication:" << endl;
 		}
-	F->FactorGroupConjugated->induced_action_by_right_multiplication(F->FactorGroup->Sims, 
+	F->FactorGroupConjugated->induced_action_by_right_multiplication(
+			F->FactorGroup->Sims,
 		F->FactorGroup->Sims, FALSE, verbose_level);
 	if (f_v) {
-		cout << "create_factor_group: after induced_action_by_right_multiplication:" << endl;
+		cout << "create_factor_group: after induced_action_by_"
+				"right_multiplication:" << endl;
 		}
 #endif
 

@@ -3279,8 +3279,10 @@ INT finite_field::Gauss_canonical_form_ranked(
 	M = NEW_INT(size * vector_space_dimension);
 	base_cols = NEW_INT(vector_space_dimension);
 	for (i = 0; i < size; i++) {
-		PG_element_unrank_modified(*this, M + i * vector_space_dimension, 
-			1, vector_space_dimension, set1[i]);
+		PG_element_unrank_modified(*this,
+			M + i * vector_space_dimension,
+			1, vector_space_dimension,
+			set1[i]);
 		}
 	if (f_v) {
 		cout << "matrix:" << endl;
@@ -3304,8 +3306,10 @@ INT finite_field::Gauss_canonical_form_ranked(
 		}
 
 	for (i = 0; i < rk; i++) {
-		PG_element_rank_modified(*this, M + i * vector_space_dimension, 
-			1, vector_space_dimension, set2[i]);
+		PG_element_rank_modified(*this,
+			M + i * vector_space_dimension,
+			1, vector_space_dimension,
+			set2[i]);
 		}
 
 
@@ -3643,7 +3647,8 @@ INT finite_field::is_contained_in_subspace(INT k,
 		INT_vec_print(cout, v, len);
 		cout << endl;
 		}
-	reduce_mod_subspace(k, len, basis, base_cols, v, verbose_level - 1);
+	reduce_mod_subspace(k, len, basis,
+			base_cols, v, verbose_level - 1);
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
 			if (f_v) {
@@ -3747,7 +3752,8 @@ void finite_field::codewords_affine(INT n, INT k,
 		}
 }
 
-void finite_field::code_projective_weight_enumerator(INT n, INT k, 
+void finite_field::code_projective_weight_enumerator(
+	INT n, INT k,
 	INT *code, // [k * n]
 	INT *weight_enumerator, // [n + 1]
 	INT verbose_level)
@@ -3816,7 +3822,8 @@ void finite_field::code_projective_weight_enumerator(INT n, INT k,
 	FREE_INT(word);
 }
 
-void finite_field::code_weight_enumerator(INT n, INT k, 
+void finite_field::code_weight_enumerator(
+	INT n, INT k,
 	INT *code, // [k * n]
 	INT *weight_enumerator, // [n + 1]
 	INT verbose_level)
@@ -3971,7 +3978,8 @@ void finite_field::code_weight_enumerator_fast(INT n, INT k,
 	//delete [] weights;
 }
 
-void finite_field::code_projective_weights(INT n, INT k, 
+void finite_field::code_projective_weights(
+	INT n, INT k,
 	INT *code, // [k * n]
 	INT *&weights, // will be allocated [N]
 	INT verbose_level)
@@ -4192,8 +4200,10 @@ INT finite_field::dependency(INT d,
 	f_null = (m == deg);
 	if (!f_null) {
 	
-		// search for an non-zero entry in row m starting in column m.
-		// permute that column into column m, change the col-permutation rho 
+		// search for an non-zero entry
+		// in row m starting in column m.
+		// permute that column into column m,
+		// change the col-permutation rho
 		j = m;
 		while ((A[m * deg + j] == 0) && (j < deg - 1)) {
 			j++;
@@ -4273,7 +4283,8 @@ void finite_field::order_ideal_generator(INT d,
 
 	while (!f_null) {
 	
-		// apply frobenius (the images are written in the columns): 
+		// apply frobenius
+		// (the images are written in the columns):
 		
 		mult_vector_from_the_right(Frobenius, v, v1, deg, deg);
 		INT_vec_copy(v1, v, deg);
@@ -4551,7 +4562,8 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 
 	if (f_v) {
 		cout << "finite_field::make_all_irreducible_polynomials_"
-				"of_degree_d there are " << cnt << " irreducible polynomials "
+				"of_degree_d there are " << cnt
+				<< " irreducible polynomials "
 				"of degree " << d << " over " << "F_" << q << endl;
 		}
 
@@ -4613,7 +4625,8 @@ INT finite_field::count_all_irreducible_polynomials_of_degree_d(
 	unipoly_object minpol;
 
 
-	FX.create_object_by_rank_string(m, poly, 0 /* verbose_level */);
+	FX.create_object_by_rank_string(m,
+			poly, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "finite_field::count_all_irreducible_polynomials_of_degree_d "

@@ -6,6 +6,7 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
+	direct_product.o \
 	linear_group.o \
 	linear_group_description.o \
 	matrix_group.o \
