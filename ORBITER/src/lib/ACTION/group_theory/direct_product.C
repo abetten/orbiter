@@ -415,6 +415,7 @@ void direct_product::element_unpack(UBYTE *elt, INT *Elt)
 	INT i;
 	INT *m;
 
+	//cout << "direct_product::element_unpack" << endl;
 	m = Elt + offset_i(0);
 	for (i = 0; i < M1->make_element_size; i++) {
 		m[i] = get_digit(elt, 0, i);
@@ -427,17 +428,24 @@ void direct_product::element_unpack(UBYTE *elt, INT *Elt)
 	}
 	M2->GL_invert_internal(m, m + M2->elt_size_INT_half,
 			0 /*verbose_level - 2*/);
+	//cout << "after direct_product::element_unpack: " << endl;
+	//element_print_easy(Elt, cout);
 }
 
 void direct_product::put_digit(UBYTE *elt, INT f, INT i, INT d)
 {
 	INT h0 = 0;
 	INT h, h1, a;
+	INT nb_bits = 0;
 
-	if (f == 1) {
+	if (f == 0) {
+		nb_bits = bits_per_digit1;
+	} else if (f == 1) {
 		h0 += M1->make_element_size * bits_per_digit1;
+		nb_bits = bits_per_digit2;
 	}
-	for (h = 0; h < bits_per_digit1; h++) {
+	h0 += i * nb_bits;
+	for (h = 0; h < nb_bits; h++) {
 		h1 = h0 + h;
 
 		if (d & 1) {
@@ -454,12 +462,17 @@ INT direct_product::get_digit(UBYTE *elt, INT f, INT i)
 {
 	INT h0 = 0;
 	INT h, h1, a, d;
+	INT nb_bits = 0;
 
-	if (f == 1) {
+	if (f == 0) {
+		nb_bits = bits_per_digit1;
+	} else if (f == 1) {
 		h0 += M1->make_element_size * bits_per_digit1;
+		nb_bits = bits_per_digit2;
 	}
+	h0 += i * nb_bits;
 	d = 0;
-	for (h = bits_per_digit2 - 1; h >= 0; h--) {
+	for (h = nb_bits - 1; h >= 0; h--) {
 		h1 = h0 + h;
 
 		a = bitvector_s_i(elt, h1);
@@ -501,15 +514,22 @@ void direct_product::element_print_easy(INT *Elt, ostream &ost)
 	INT f;
 
 	ost << "begin element of direct product: " << endl;
-	for (f = 0; f < 2; f++) {
-		ost << "component " << f << ":" << endl;
-		if (f == 0) {
-			M1->GL_print_easy(Elt + offset_i(f), ost);
-		} else {
-			M2->GL_print_easy(Elt + offset_i(f), ost);
+	if (M1->n == 1 && M2->n == 1) {
+		cout << "(" << Elt[0] << "," << Elt[1] << ","
+				<< Elt[4] << "," << Elt[5] << ")" << endl;
+	} else {
+		for (f = 0; f < 2; f++) {
+			ost << "component " << f << ":" << endl;
+			if (f == 0) {
+				M1->GL_print_easy(Elt + offset_i(f), ost);
+				cout << endl;
+			} else {
+				M2->GL_print_easy(Elt + offset_i(f), ost);
+				cout << endl;
+			}
 		}
 	}
-	ost << "end element of wreath product" << endl;
+	ost << "end element of direct product" << endl;
 }
 
 void direct_product::compute_base_and_transversals(INT verbose_level)

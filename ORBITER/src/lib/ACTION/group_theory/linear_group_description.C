@@ -53,7 +53,8 @@ void linear_group_description::freeself()
 	null();
 }
 
-INT linear_group_description::read_arguments(int argc, const char **argv, 
+INT linear_group_description::read_arguments(
+	int argc, const char **argv,
 	INT verbose_level)
 {
 	INT i;
@@ -234,7 +235,8 @@ INT linear_group_description::read_arguments(int argc, const char **argv,
 			f_subgroup_from_file = TRUE;
 			subgroup_fname = argv[++i];
 			subgroup_label = argv[++i];
-			cout << "-subgroup_from_file " << subgroup_fname << " " << subgroup_label << endl;
+			cout << "-subgroup_from_file " << subgroup_fname
+					<< " " << subgroup_label << endl;
 			}
 		else if (strcmp(argv[i], "-borel_subgroup_upper") == 0) {
 			f_borel_subgroup_upper = TRUE;
@@ -263,12 +265,14 @@ INT linear_group_description::read_arguments(int argc, const char **argv,
 			orthogonal_group_epsilon = 0;
 			cout << "-O" << endl;
 			}
-		else if (strcmp(argv[i], "-O+") == 0 || strcmp(argv[i], "-Oplus") == 0) {
+		else if (strcmp(argv[i], "-O+") == 0 ||
+				strcmp(argv[i], "-Oplus") == 0) {
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = 1;
 			cout << "-O+" << endl;
 			}
-		else if (strcmp(argv[i], "-O-") == 0 || strcmp(argv[i], "-Ominus") == 0) {
+		else if (strcmp(argv[i], "-O-") == 0 ||
+				strcmp(argv[i], "-Ominus") == 0) {
 			f_orthogonal_group = TRUE;
 			orthogonal_group_epsilon = -1;
 			cout << "-O-" << endl;

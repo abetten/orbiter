@@ -6,7 +6,8 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-void choose_random_generator_derived_group(sims *G, INT *Elt, INT verbose_level)
+void choose_random_generator_derived_group(sims *G,
+		INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -41,7 +42,8 @@ void choose_random_generator_derived_group(sims *G, INT *Elt, INT verbose_level)
 }
 
 void sims::build_up_subgroup_random_process(sims *G, 
-	void (*choose_random_generator_for_subgroup)(sims *G, INT *Elt, INT verbose_level), 
+	void (*choose_random_generator_for_subgroup)(sims *G,
+			INT *Elt, INT verbose_level),
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -60,8 +62,10 @@ void sims::build_up_subgroup_random_process(sims *G,
 	G->group_order(G_order);
 	group_order(go);
 	if (f_v) {
-		cout << "sims::build_up_subgroup_random_process(): old group order is " << G_order << endl;
-		cout << "the group is in action " << G->A->label << " with base_length = " << G->A->base_len 
+		cout << "sims::build_up_subgroup_random_process(): "
+				"old group order is " << G_order << endl;
+		cout << "the group is in action " << G->A->label
+				<< " with base_length = " << G->A->base_len
 			<< " and degree " << G->A->degree << endl;
 		cout << "the image action has base_length = " << GA->base_len 
 			<< " and degree " << GA->degree << endl;
@@ -76,7 +80,8 @@ void sims::build_up_subgroup_random_process(sims *G,
 			}
 #if 0
 		if (cnt > 1000) {
-			cout << "sims::build_up_group_random_process() cnt > 1000, something seems to be wrong" << endl;
+			cout << "sims::build_up_group_random_process "
+					"cnt > 1000, something seems to be wrong" << endl;
 			test_if_subgroup(G, 2);
 			exit(1);
 			}
@@ -99,9 +104,11 @@ void sims::build_up_subgroup_random_process(sims *G,
 			}
 		else if ((cnt % 2) == 1){
 			if (f_vvv) {
-				cout << "choosing random element in the group by which we extend" << endl;
+				cout << "choosing random element in the "
+						"group by which we extend" << endl;
 				}
-			(*choose_random_generator_for_subgroup)(G, GA->Elt1, verbose_level - 1);
+			(*choose_random_generator_for_subgroup)(G,
+					GA->Elt1, verbose_level - 1);
 			if (FALSE) {
 				cout << "random element chosen" << endl;
 				}
@@ -110,7 +117,8 @@ void sims::build_up_subgroup_random_process(sims *G,
 				cout << endl;
 				}
 			}
-		if (strip(GA->Elt1, GA->Elt2, drop_out_level, image, 0/*verbose_level*/)) {
+		if (strip(GA->Elt1, GA->Elt2, drop_out_level,
+				image, 0/*verbose_level*/)) {
 			if (f_vvv) {
 				cout << "element strips through" << endl;
 				if (FALSE) {
@@ -126,13 +134,15 @@ void sims::build_up_subgroup_random_process(sims *G,
 			f_added = TRUE;
 			if (f_v) {
 				cout << "element needs to be inserted at level = " 
-					<< drop_out_level << " with image " << image << endl;
+					<< drop_out_level << " with image "
+					<< image << endl;
 				if (TRUE) {
 					GA->element_print(GA->Elt2, cout);
 					cout  << endl;
 					}
 				}
-			add_generator_at_level(GA->Elt2, drop_out_level, 0/*verbose_level - 3*/);
+			add_generator_at_level(GA->Elt2,
+					drop_out_level, 0/*verbose_level - 3*/);
 			}
 		
 		group_order(go);
@@ -143,7 +153,8 @@ void sims::build_up_subgroup_random_process(sims *G,
 		cnt++;
 		}
 	if (f_v) {
-		cout << "sims::build_up_subgroup_random_process finished: found a group of order " << go << endl;
+		cout << "sims::build_up_subgroup_random_process "
+				"finished: found a group of order " << go << endl;
 		print_transversal_lengths();
 		}
 }

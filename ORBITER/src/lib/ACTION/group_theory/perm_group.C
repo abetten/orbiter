@@ -82,13 +82,15 @@ void perm_group::allocate()
 	Elts = new page_storage;
 }
 
-void perm_group::init_product_action(INT m, INT n, INT page_length_log, INT verbose_level)
+void perm_group::init_product_action(INT m, INT n,
+		INT page_length_log, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "perm_group::init_product_action() m=" << m << " n=" << n << endl;
+		cout << "perm_group::init_product_action() "
+				"m=" << m << " n=" << n << endl;
 		}
 	f_product_action = TRUE;
 	perm_group::m = m;
@@ -104,7 +106,8 @@ void perm_group::init_product_action(INT m, INT n, INT page_length_log, INT verb
 }
 
 	
-void perm_group::init(INT degree, INT page_length_log, INT verbose_level)
+void perm_group::init(INT degree,
+		INT page_length_log, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -144,29 +147,35 @@ void perm_group::init_data(INT page_length_log, INT verbose_level)
 
 	
 	if (f_vv) {
-		cout << "perm_group::init_data() calling Elts->init()" << endl;
+		cout << "perm_group::init_data() "
+				"calling Elts->init()" << endl;
 		}
-	Elts->init(char_per_elt /* entry_size */, page_length_log, verbose_level - 2);
+	Elts->init(char_per_elt /* entry_size */,
+			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
 
 
 	if (f_vv) {
-		cout << "perm_group::init_data() calling one()" << endl;
+		cout << "perm_group::init_data() "
+				"calling one()" << endl;
 		}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
-		cout << "perm_group::init_data() calling Elts->store()" << endl;
+		cout << "perm_group::init_data() "
+				"calling Elts->store()" << endl;
 		}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
-		cout << "identity element stored, hdl = " << hdl << endl;
+		cout << "identity element stored, "
+				"hdl = " << hdl << endl;
 		}
 	
 
 	if (f_vv) {
-		cout << "perm_group::init_data() finished" << endl;
+		cout << "perm_group::init_data() "
+				"finished" << endl;
 		}
 	
 	FREE_INT(tmp1);
@@ -205,28 +214,35 @@ void perm_group::init_with_base(INT degree,
 		cout << "base_len=" << A.base_len << endl;
 		}
 	if (f_vv) {
-		cout << "perm_group::init() calling Elts->init()" << endl;
+		cout << "perm_group::init() "
+				"calling Elts->init()" << endl;
 		}
-	Elts->init(char_per_elt /* entry_size */, page_length_log, verbose_level - 2);
-	//Elts->add_elt_print_function(perm_group_elt_print, (void *) this);
+	Elts->init(char_per_elt /* entry_size */,
+			page_length_log, verbose_level - 2);
+	//Elts->add_elt_print_function(
+	//perm_group_elt_print, (void *) this);
 
 
 	if (f_vv) {
-		cout << "perm_group::init() calling one()" << endl;
+		cout << "perm_group::init() "
+				"calling one()" << endl;
 		}
 	one(tmp1);
 	//print(tmp1, cout);
 	pack(tmp1, elt1);
 	if (f_vv) {
-		cout << "perm_group::init() calling Elts->store()" << endl;
+		cout << "perm_group::init() "
+				"calling Elts->store()" << endl;
 		}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
-		cout << "identity element stored, hdl = " << hdl << endl;
+		cout << "identity element stored, "
+				"hdl = " << hdl << endl;
 		}
 	
 	if (f_vv) {
-		cout << "perm_group::init() initializing base, and transversal_length" << endl;
+		cout << "perm_group::init() "
+				"initializing base, and transversal_length" << endl;
 		}
 	A.type_G = perm_group_t;
 	A.G.perm_grp = this;
@@ -265,7 +281,8 @@ void perm_group::init_with_base(INT degree,
 	FREE_INT(tmp3);
 }
 
-void perm_group::transversal_rep(INT i, INT j, INT *Elt, INT verbose_level)
+void perm_group::transversal_rep(INT i, INT j,
+		INT *Elt, INT verbose_level)
 {
 	INT j1, j2;
 	
@@ -301,7 +318,8 @@ void perm_group::mult(INT *A, INT *B, INT *AB)
 {
 	//cout << "in perm_group::mult()" << endl;
 	perm_mult(A, B, AB, degree);
-	//cout << "in perm_group::mult() finished with perm_mult" << endl;
+	//cout << "in perm_group::mult()
+	// finished with perm_mult" << endl;
 }
 
 void perm_group::copy(INT *A, INT *B)
@@ -368,7 +386,8 @@ void perm_group::print_for_make_element(INT *Elt, ostream &ost)
 		}
 }
 
-void perm_group::print_for_make_element_no_commas(INT *Elt, ostream &ost)
+void perm_group::print_for_make_element_no_commas(
+		INT *Elt, ostream &ost)
 {
 	INT i;
 	
@@ -394,7 +413,8 @@ void perm_group::print_with_action(action *A, INT *Elt, ostream &ost)
 					ost << "(x=" << bi << ") -> (x=" << a << ")" << endl;
 					}
 				else if (bi < m + n) {
-					ost << "(y=" << bi - m << ") -> (y=" << a - m << ")" << endl;
+					ost << "(y=" << bi - m
+							<< ") -> (y=" << a - m << ")" << endl;
 					}
 				else {
 					bi -= m + n;
@@ -417,7 +437,9 @@ void perm_group::print_with_action(action *A, INT *Elt, ostream &ost)
 		}
 	//perm_print(ost, Elt, degree);
 	ost << " : ";
-	perm_print_offset(ost, Elt, degree, 0 /* offset */, FALSE /* f_cycle_length */, FALSE, 0, FALSE /* f_orbit_structure */);
+	perm_print_offset(ost, Elt, degree, 0 /* offset */,
+			FALSE /* f_cycle_length */, FALSE, 0,
+			FALSE /* f_orbit_structure */);
 	ost << " : ";
 	perm_print_list_offset(ost, Elt, degree, 1);
 	ost << endl;
@@ -453,7 +475,8 @@ void perm_group::make_element(INT *Elt, INT *data, INT verbose_level)
 //#############################################################################
 
 
-void perm_group_find_strong_generators_at_level(INT level, INT degree, 
+void perm_group_find_strong_generators_at_level(
+	INT level, INT degree,
 	INT given_base_length, INT *given_base,
 	INT nb_gens, INT *gens, 
 	INT &nb_generators_found, INT *idx_generators_found)
@@ -474,7 +497,8 @@ void perm_group_find_strong_generators_at_level(INT level, INT degree,
 		}
 }
 
-void perm_group_generators_direct_product(INT degree1, INT degree2, INT &degree3, 
+void perm_group_generators_direct_product(
+	INT degree1, INT degree2, INT &degree3,
 	INT nb_gens1, INT nb_gens2, INT &nb_gens3, 
 	INT *gens1, INT *gens2, INT *&gens3, 
 	INT base_len1, INT base_len2, INT &base_len3, 
@@ -523,7 +547,8 @@ void perm_group_generators_direct_product(INT degree1, INT degree2, INT &degree3
 		}
 }
 
-void perm_group_generators_direct_product(INT nb_diagonal_elements,
+void perm_group_generators_direct_product(
+	INT nb_diagonal_elements,
 	INT degree1, INT degree2, INT &degree3, 
 	INT nb_gens1, INT nb_gens2, INT &nb_gens3, 
 	INT *gens1, INT *gens2, INT *&gens3, 
@@ -534,7 +559,8 @@ void perm_group_generators_direct_product(INT nb_diagonal_elements,
 	
 	offset = degree1 + degree2;
 	degree3 = offset + degree1 * degree2;
-	nb_gens3 = (nb_gens1 - nb_diagonal_elements) + (nb_gens2 - nb_diagonal_elements) 
+	nb_gens3 = (nb_gens1 - nb_diagonal_elements) +
+			(nb_gens2 - nb_diagonal_elements)
 		+ nb_diagonal_elements;
 	base_len3 = base_len1 + base_len2;
 	gens3 = NEW_INT(nb_gens3 * degree3);
@@ -574,17 +600,21 @@ void perm_group_generators_direct_product(INT nb_diagonal_elements,
 		}
 	for (u = 0; u < nb_diagonal_elements; u++, k++) {
 		for (i = 0; i < degree1; i++) {
-			ii = gens1[(nb_gens1 - nb_diagonal_elements + u) * degree1 + i];
+			ii = gens1[(nb_gens1 - nb_diagonal_elements + u)
+					   * degree1 + i];
 			gens3[k * degree3 + i] = ii;
 			}
 		for (j = 0; j < degree2; j++) {
-			jj = gens2[(nb_gens2 - nb_diagonal_elements + u) * degree2 + j];
+			jj = gens2[(nb_gens2 - nb_diagonal_elements + u)
+					   * degree2 + j];
 			gens3[k * degree3 + degree1 + j] = degree1 + jj;
 			}
 		for (i = 0; i < degree1; i++) {
-			ii = gens1[(nb_gens1 - nb_diagonal_elements + u) * degree1 + i];
+			ii = gens1[(nb_gens1 - nb_diagonal_elements + u)
+					   * degree1 + i];
 			for (j = 0; j < degree2; j++) {
-				jj = gens2[(nb_gens2 - nb_diagonal_elements + u) * degree2 + j];
+				jj = gens2[(nb_gens2 - nb_diagonal_elements + u)
+						   * degree2 + j];
 				gens3[k * degree3 + offset + i * degree2 + j] = 
 					offset + ii * degree2 + jj;
 				}
