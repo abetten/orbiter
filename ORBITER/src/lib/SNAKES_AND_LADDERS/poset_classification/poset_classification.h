@@ -274,10 +274,10 @@ public:
 	INT check_the_set(INT len, INT *S, INT verbose_level);
 	INT check_the_set_incrementally(INT len, INT *S, INT verbose_level);
 
-	void orbit_length(INT node, INT level, longinteger_object &len);
+	void orbit_length(INT orbit_at_level, INT level, longinteger_object &len);
 	void get_orbit_length_and_stabilizer_order(INT node, INT level, 
 		longinteger_object &stab_order, longinteger_object &len);
-	INT orbit_length_as_INT(INT node, INT level);
+	INT orbit_length_as_INT(INT orbit_at_level, INT level);
 	void print_representatives_at_level(INT lvl);
 	void print_lex_rank(INT *set, INT sz);
 	void print_problem_label();

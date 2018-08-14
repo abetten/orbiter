@@ -6,7 +6,8 @@
 #include "GALOIS/galois.h"
 #include "action.h"
 
-void sims::subgroup_make_characteristic_vector(sims *Sub, INT *C, INT verbose_level)
+void sims::subgroup_make_characteristic_vector(
+		sims *Sub, INT *C, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT go, go_sub;
@@ -26,7 +27,8 @@ void sims::subgroup_make_characteristic_vector(sims *Sub, INT *C, INT verbose_le
 		C[j] = TRUE;
 		}
 	if (f_v) {
-		cout << "The characteristic vector of the subgroup of order " << go_sub << " is:" << endl;
+		cout << "The characteristic vector of the "
+				"subgroup of order " << go_sub << " is:" << endl;
 		INT_vec_print_as_table(cout, C, go, 25);
 		}
 	if (f_v) {

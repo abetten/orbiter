@@ -11,7 +11,8 @@
 
 // global functions:
 
-sims *create_sims_from_generators_with_target_group_order_factorized(action *A, 
+sims *create_sims_from_generators_with_target_group_order_factorized(
+	action *A,
 	vector_ge *gens, INT *tl, INT len, INT verbose_level)
 {
 	longinteger_object go;
@@ -22,18 +23,22 @@ sims *create_sims_from_generators_with_target_group_order_factorized(action *A,
 		gens, TRUE /* f_target_go */, go, verbose_level);
 }
 
-sims *create_sims_from_generators_with_target_group_order_INT(action *A, 
+sims *create_sims_from_generators_with_target_group_order_INT(
+	action *A,
 	vector_ge *gens, INT target_go, INT verbose_level)
 {
 	longinteger_object tgo;
 
 	tgo.create(target_go);
-	return create_sims_from_generators_with_target_group_order(A, gens, tgo, verbose_level);
+	return create_sims_from_generators_with_target_group_order(
+			A, gens, tgo, verbose_level);
 	
 }
 
-sims *create_sims_from_generators_with_target_group_order(action *A, 
-	vector_ge *gens, longinteger_object &target_go, INT verbose_level)
+sims *create_sims_from_generators_with_target_group_order(
+	action *A,
+	vector_ge *gens, longinteger_object &target_go,
+	INT verbose_level)
 {
 	return create_sims_from_generators_randomized(A, 
 		gens, TRUE /* f_target_go */, target_go, verbose_level);
@@ -63,15 +68,18 @@ sims *create_sims_from_generators_with_target_group_order(action *A,
 	
 	//ss->G->null();
 	
-	cout << "create_sims_from_generators_with_target_group_order before delete ss" << endl;
+	cout << "create_sims_from_generators_with_target_"
+			"group_order before delete ss" << endl;
 	delete ss;
-	cout << "create_sims_from_generators_with_target_group_order after delete ss" << endl;
+	cout << "create_sims_from_generators_with_target_"
+			"group_order after delete ss" << endl;
 
 	return S;
 #endif
 }
 
-sims *create_sims_from_generators_without_target_group_order(action *A, 
+sims *create_sims_from_generators_without_target_group_order(
+	action *A,
 	vector_ge *gens, INT verbose_level)
 {
 	longinteger_object dummy;
@@ -80,7 +88,8 @@ sims *create_sims_from_generators_without_target_group_order(action *A,
 		gens, FALSE /* f_target_go */, dummy, verbose_level);
 }
 
-sims *create_sims_from_single_generator_without_target_group_order(action *A, 
+sims *create_sims_from_single_generator_without_target_group_order(
+	action *A,
 	INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -89,7 +98,8 @@ sims *create_sims_from_single_generator_without_target_group_order(action *A,
 	longinteger_object dummy;
 	
 	if (f_v) {
-		cout << "create_sims_from_single_generator_without_target_group_order" << endl;
+		cout << "create_sims_from_single_generator_"
+				"without_target_group_order" << endl;
 		}
 	gens = new vector_ge;
 	gens->init_single(A, Elt);
@@ -99,13 +109,15 @@ sims *create_sims_from_single_generator_without_target_group_order(action *A,
 
 	delete gens;
 	if (f_v) {
-		cout << "create_sims_from_single_generator_without_target_group_order done" << endl;
+		cout << "create_sims_from_single_generator_"
+				"without_target_group_order done" << endl;
 		}
 	return S;
 }
 
 sims *create_sims_from_generators_randomized(action *A, 
-	vector_ge *gens, INT f_target_go, longinteger_object &target_go, INT verbose_level)
+	vector_ge *gens, INT f_target_go, longinteger_object &target_go,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//init(A);
@@ -143,17 +155,21 @@ sims *create_sims_from_generators_randomized(action *A,
 	
 	//ss->G->null();
 	
-	//cout << "create_sims_from_generators_randomized before delete ss" << endl;
+	//cout << "create_sims_from_generators_randomized
+	// before delete ss" << endl;
 	delete ss;
-	//cout << "create_sims_from_generators_randomized after delete ss" << endl;
+	//cout << "create_sims_from_generators_randomized
+	// after delete ss" << endl;
 
 	if (f_v) {
-		cout << "create_sims_from_generators_randomized done" << endl;
+		cout << "create_sims_from_generators_randomized "
+				"done" << endl;
 		}
 	return S;
 }
 
-sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_level)
+sims *create_sims_for_centralizer_of_matrix(
+		action *A, INT *Mtx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -167,7 +183,8 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 		}
 
 	if (A->type_G != matrix_group_t) {
-		cout << "create_sims_for_centralizer_of_matrix action not of type matrix_group" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"action not of type matrix_group" << endl;
 		exit(1);
 		}
 
@@ -179,7 +196,8 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 
 	if (M->C == NULL) {
 		if (f_v) {
-			cout << "create_sims_for_centralizer_of_matrix before M->init_gl_classes" << endl;
+			cout << "create_sims_for_centralizer_of_matrix "
+					"before M->init_gl_classes" << endl;
 			}
 		M->init_gl_classes(verbose_level - 2);
 		}
@@ -187,7 +205,8 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 	C = M->C;
 	
 	if (f_v) {
-		cout << "create_sims_for_centralizer_of_matrix d = " << d << " q = " << q << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"d = " << d << " q = " << q << endl;
 		cout << "Mtx=" << endl;
 		INT_matrix_print(Mtx, d, d);
 		}
@@ -203,14 +222,18 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 	C.make_classes(Reps, nb_classes, 0 /*verbose_level - 2*/);
 
 	if (f_v) {
-		cout << "create_sims_for_centralizer_of_matrix There are " << nb_classes << " conjugacy classes" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"There are " << nb_classes << " conjugacy classes" << endl;
 		}
 	if (f_vv) {
-		cout << "create_sims_for_centralizer_of_matrix The conjugacy classes are:" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"The conjugacy classes are:" << endl;
 		for (i = 0; i < nb_classes; i++) {
 			cout << "Class " << i << ":" << endl;
-			INT_matrix_print(Reps[i].type_coding.M, Reps[i].type_coding.m, Reps[i].type_coding.n);
-			cout << "Centralizer order = " << Reps[i].centralizer_order << endl;
+			INT_matrix_print(Reps[i].type_coding.M,
+					Reps[i].type_coding.m, Reps[i].type_coding.n);
+			cout << "Centralizer order = "
+					<< Reps[i].centralizer_order << endl;
 			}
 		}
 #endif
@@ -236,18 +259,23 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 			
 	Basis = NEW_INT(d * d);
 	if (f_v) {
-		cout << "create_sims_for_centralizer_of_matrix before generators_for_centralizer" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"before generators_for_centralizer" << endl;
 		}
-	C->generators_for_centralizer(Mtx, R1, Basis, Gens, nb_gens, nb_alloc, verbose_level - 2);
+	C->generators_for_centralizer(Mtx, R1, Basis, Gens,
+			nb_gens, nb_alloc, verbose_level - 2);
 
 	if (f_v) {
-		cout << "create_sims_for_centralizer_of_matrix Basis=" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"Basis=" << endl;
 		INT_matrix_print(Basis, d, d);
-		cout << "create_sims_for_centralizer_of_matrix We found " << nb_gens << " centralizing matrices" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"We found " << nb_gens << " centralizing matrices" << endl;
 		}
 
 	if (f_vv) {
-		cout << "create_sims_for_centralizer_of_matrix Gens=" << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"Gens=" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "Gen " << i << " / " << nb_gens << " is:" << endl;
 			INT_matrix_print(Gens[i], d, d);
@@ -255,7 +283,8 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 		}
 
 	for (i = 0; i < nb_gens; i++) {
-		if (!F->test_if_commute(Mtx, Gens[i], d, 0/*verbose_level*/)) {
+		if (!F->test_if_commute(Mtx, Gens[i], d,
+				0/*verbose_level*/)) {
 			cout << "The matrices do not commute" << endl;
 			cout << "Mtx=" << endl;
 			INT_matrix_print(Mtx, d, d);
@@ -268,16 +297,20 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 	//C.identify_matrix(Elt, R1, verbose_level);
 
 	if (f_v) {
-		cout << "The type of the matrix under consideration is:" << endl;
-		INT_matrix_print(R1->type_coding.M, R1->type_coding.m, R1->type_coding.n);
+		cout << "The type of the matrix under "
+				"consideration is:" << endl;
+		INT_matrix_print(R1->type_coding.M,
+				R1->type_coding.m, R1->type_coding.n);
 		}
 
 
 #if 0
-	class_rep = C.find_class_rep(Reps, nb_classes, R1, 0 /* verbose_level */);
+	class_rep = C.find_class_rep(Reps, nb_classes,
+			R1, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "The index of the class of the matrix is = " << class_rep << endl;
+		cout << "The index of the class of the "
+				"matrix is = " << class_rep << endl;
 		}
 #endif
 
@@ -310,13 +343,17 @@ sims *create_sims_for_centralizer_of_matrix(action *A, INT *Mtx, INT verbose_lev
 		cout << "after centralizer_order_Kung" << endl;
 		}
 
-	Cent = create_sims_from_generators_with_target_group_order(A, gens, 
-		centralizer_order /*Reps[class_rep].centralizer_order*/, 0 /* verbose_level */);
-	//Cent = create_sims_from_generators_without_target_group_order(A, gens, 0 /* verbose_level */);
+	Cent = create_sims_from_generators_with_target_group_order(
+			A, gens,
+		centralizer_order /*Reps[class_rep].centralizer_order*/,
+		0 /* verbose_level */);
+	//Cent = create_sims_from_generators_without_target_group_order(
+	// A, gens, 0 /* verbose_level */);
 	Cent->group_order(cent_go);
 
 	if (f_v) {
-		cout << "create_sims_for_centralizer_of_matrix The order of the centralizer is " << cent_go << endl;
+		cout << "create_sims_for_centralizer_of_matrix "
+				"The order of the centralizer is " << cent_go << endl;
 		}
 
 
