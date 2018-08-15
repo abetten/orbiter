@@ -157,6 +157,8 @@ public:
 	//ostream& print(ostream& ost);
 	ostream& print_quick(ostream& ost);
 	ostream& print_tex(ostream& ost);
+	void print_generators_tex(
+			longinteger_object &go, ostream &ost);
 	ostream& print_as_permutation(ostream& ost);
 	void allocate(INT length);
 	void reallocate(INT new_length);

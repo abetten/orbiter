@@ -1946,11 +1946,13 @@ INT evaluate_bilinear_form(finite_field &GFq, INT *u, INT *v, INT d, INT *Gram)
 }
 
 void Siegel_Transformation(finite_field &GFq, INT epsilon, INT k, 
-	INT form_c1, INT form_c2, INT form_c3, INT *M, INT *v, INT *u, INT verbose_level)
+	INT form_c1, INT form_c2, INT form_c3,
+	INT *M, INT *v, INT *u, INT verbose_level)
 // if u is singular and v \in \la u \ra^\perp, then
 // \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
 // is called the Siegel transform (see Taylor p. 148)
-// Here Q is the quadratic form and \beta is the corresponding bilinear form
+// Here Q is the quadratic form
+// and \beta is the corresponding bilinear form
 {
 	INT f_v = (verbose_level >= 1);
 	INT d = k + 1;
@@ -1968,8 +1970,10 @@ void Siegel_Transformation(finite_field &GFq, INT epsilon, INT k,
 		INT_vec_print(cout, u, d);
 		cout << endl;
 		}
-	Gram_matrix(GFq, epsilon, k, form_c1, form_c2, form_c3, Gram);
-	Qv = evaluate_quadratic_form(GFq, v, 1 /*stride*/, epsilon, k, form_c1, form_c2, form_c3);
+	Gram_matrix(GFq, epsilon, k,
+			form_c1, form_c2, form_c3, Gram);
+	Qv = evaluate_quadratic_form(GFq, v, 1 /*stride*/,
+			epsilon, k, form_c1, form_c2, form_c3);
 	if (f_v) {
 		cout << "Qv=" << Qv << endl;
 		}
@@ -2031,7 +2035,8 @@ void Siegel_Transformation(finite_field &GFq, INT epsilon, INT k,
 		for (j = 0; j < d; j++) {
 			c = u[j];
 			e = GFq.mult(b, c);
-			M[i * d + j] = GFq.add(M[i * d + j], GFq.mult(GFq.negate(e), Qv));
+			M[i * d + j] =
+					GFq.add(M[i * d + j], GFq.mult(GFq.negate(e), Qv));
 			}
 		}
 	if (f_v) {
@@ -2050,7 +2055,8 @@ void Siegel_Transformation(finite_field &GFq, INT epsilon, INT k,
 	FREE_INT(w);
 }
 
-void choose_anisotropic_form(finite_field &GFq, INT &c1, INT &c2, INT &c3, INT verbose_level)
+void choose_anisotropic_form(finite_field &GFq,
+		INT &c1, INT &c2, INT &c3, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	unipoly_domain FX(&GFq);

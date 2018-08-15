@@ -281,6 +281,25 @@ ostream& vector_ge::print_tex(ostream& ost)
 	return ost;
 }
 
+void vector_ge::print_generators_tex(
+		longinteger_object &go, ostream &ost)
+{
+	INT i;
+
+	ost << "Generators for a group of order " << go << ":" << endl;
+	ost << "$$" << endl;
+	for (i = 0; i < len; i++) {
+		//cout << "Generator " << i << " / " << gens->len
+		// << " is:" << endl;
+		A->element_print_latex(ith(i), ost);
+		if (((i + 1) % 4) == 0 && i < len - 1) {
+			ost << "$$" << endl;
+			ost << "$$" << endl;
+			}
+		}
+	ost << "$$" << endl;
+}
+
 ostream& vector_ge::print_as_permutation(ostream& ost)
 {
 	INT i;

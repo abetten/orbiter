@@ -7342,7 +7342,8 @@ void orthogonal::random_generator_for_orthogonal_group(
 		
 	if (r == 0) {
 		if (f_vv) {
-			cout << "orthogonal::random_generator_for_orthogonal_group choosing Siegel_transformation" << endl;
+			cout << "orthogonal::random_generator_for_orthogonal_group "
+					"choosing Siegel_transformation" << endl;
 			}
 		create_random_Siegel_transformation(Mtx, verbose_level /*- 2 */);
 		if (f_action_is_semilinear) {
@@ -7351,7 +7352,8 @@ void orthogonal::random_generator_for_orthogonal_group(
 		}
 	else if (r == 1) {
 		if (f_vv) {
-			cout << "orthogonal::random_generator_for_orthogonal_group choosing orthogonal reflection" << endl;
+			cout << "orthogonal::random_generator_for_orthogonal_group "
+					"choosing orthogonal reflection" << endl;
 			}
 
 		create_random_orthogonal_reflection(Mtx, verbose_level - 2);
@@ -7361,7 +7363,8 @@ void orthogonal::random_generator_for_orthogonal_group(
 		}
 	else if (r == 2) {
 		if (f_vv) {
-			cout << "orthogonal::random_generator_for_orthogonal_group choosing similarity" << endl;
+			cout << "orthogonal::random_generator_for_orthogonal_group "
+					"choosing similarity" << endl;
 			}
 		create_random_similarity(Mtx, verbose_level - 2);
 		if (f_action_is_semilinear) {
@@ -7370,17 +7373,20 @@ void orthogonal::random_generator_for_orthogonal_group(
 		}
 	else if (r == 3) {
 		if (f_vv) {
-			cout << "orthogonal::random_generator_for_orthogonal_group choosing random similarity" << endl;
+			cout << "orthogonal::random_generator_for_orthogonal_group "
+					"choosing random similarity" << endl;
 			}
 		create_random_semisimilarity(Mtx, verbose_level - 2);
 		}
 	if (f_v) {
-		cout << "orthogonal::random_generator_for_orthogonal_group done" << endl;
+		cout << "orthogonal::random_generator_for_orthogonal_group "
+				"done" << endl;
 		}
 }
 
 
-void orthogonal::create_random_Siegel_transformation(INT *Mtx, INT verbose_level)
+void orthogonal::create_random_Siegel_transformation(
+		INT *Mtx, INT verbose_level)
 // Only makes a n x n matrix. Does not put a semilinear component.
 {
 	INT f_v = (verbose_level >= 1);
@@ -7401,35 +7407,45 @@ void orthogonal::create_random_Siegel_transformation(INT *Mtx, INT verbose_level
 	nb_pts = nb_points; //nb_pts_Qepsilon(epsilon, d - 1, q);
 	nb_pts_affine = i_power_j(q, d);
 	if (f_v) {
-		cout << "orthogonal::create_random_Siegel_transformation q=" << q << endl;
-		cout << "orthogonal::create_random_Siegel_transformation d=" << d << endl;
-		cout << "orthogonal::create_random_Siegel_transformation Witt index k=" << k << endl;
-		cout << "orthogonal::create_random_Siegel_transformation nb_pts=" << nb_pts << endl;
-		cout << "orthogonal::create_random_Siegel_transformation nb_pts_affine=" << nb_pts_affine << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"q=" << q << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"d=" << d << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"Witt index k=" << k << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"nb_pts=" << nb_pts << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"nb_pts_affine=" << nb_pts_affine << endl;
 		}
 
 	rk_u = random_integer(nb_pts);
 	if (f_v) {
-		cout << "orthogonal::create_random_Siegel_transformation rk_u=" << rk_u << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"rk_u=" << rk_u << endl;
 		}
 	unrank_point(u, 1, rk_u, 0 /* verbose_level*/);
-	//Q_epsilon_unrank(*F, u, 1 /*stride*/, epsilon, d - 1, form_c1, form_c2, form_c3, rk_u);
+	//Q_epsilon_unrank(*F, u, 1 /*stride*/, epsilon, d - 1,
+	// form_c1, form_c2, form_c3, rk_u);
 			
 	while (TRUE) {
 		rk_v = random_integer(nb_pts_affine);
 		if (f_v) {
-			cout << "orthogonal::create_random_Siegel_transformation trying rk_v=" << rk_v << endl;
+			cout << "orthogonal::create_random_Siegel_transformation "
+					"trying rk_v=" << rk_v << endl;
 			}
 		AG_element_unrank(q, v, 1 /* stride */, d, rk_v);
 		alpha = ::evaluate_bilinear_form(*F, u, v, d, Gram_matrix);
 		if (alpha == 0) {
 			if (f_v) {
-				cout << "orthogonal::create_random_Siegel_transformation it works" << endl;
+				cout << "orthogonal::create_random_Siegel_transformation "
+						"it works" << endl;
 				}
 			break;
 			}
 		if (f_v) {
-			cout << "orthogonal::create_random_Siegel_transformation fail, try again" << endl;
+			cout << "orthogonal::create_random_Siegel_transformation "
+					"fail, try again" << endl;
 			}
 		}
 	if (f_vv) {
@@ -7441,12 +7457,26 @@ void orthogonal::create_random_Siegel_transformation(INT *Mtx, INT verbose_level
 		cout << endl;
 		}
 		
-	::Siegel_Transformation(*F, epsilon, d - 1, form_c1, form_c2, form_c3, Mtx, v, u, verbose_level - 1);
+	::Siegel_Transformation(*F, epsilon, d - 1,
+			form_c1, form_c2, form_c3,
+			Mtx, v, u, verbose_level - 1);
 
+	if (TRUE) {
+		cout << "form_c1=" << form_c1 << endl;
+		cout << "form_c2=" << form_c2 << endl;
+		cout << "form_c3=" << form_c3 << endl;
+		cout << "\\rho_{";
+		INT_vec_print(cout, u, d);
+		cout << ",";
+		INT_vec_print(cout, v, d);
+		cout << "}=" << endl;
+		INT_matrix_print(Mtx, d, d);
+	}
 	FREE_INT(u);
 	FREE_INT(v);
 	if (f_v) {
-		cout << "orthogonal::create_random_Siegel_transformation done" << endl;
+		cout << "orthogonal::create_random_Siegel_transformation "
+				"done" << endl;
 		}
 }
 
@@ -7501,7 +7531,9 @@ void orthogonal::create_random_semisimilarity(INT *Mtx, INT verbose_level)
 			Mtx[(d - 1) * d + d - 1] = x;
 			}
 		else if (EVEN(q)) {
-			cout << "orthogonal::create_random_semisimilarity semisimilarity for even characteristic and q != 4 not yet implemented" << endl;
+			cout << "orthogonal::create_random_semisimilarity "
+					"semisimilarity for even characteristic and "
+					"q != 4 not yet implemented" << endl;
 			exit(1);
 			}
 		else {
@@ -7511,7 +7543,9 @@ void orthogonal::create_random_semisimilarity(INT *Mtx, INT verbose_level)
 			c = F->frobenius_power(b, F->e - 1);
 			Mtx[d * d - 1] = c;
 			Mtx[d * d] = 1;
-			cout << "orthogonal::create_random_semisimilarity k=(p-1)/2=" << k << " a=prim elt=" << a << " b=a^k=" << b << " c=b^{p^{h-1}}=" << c << endl;
+			cout << "orthogonal::create_random_semisimilarity "
+					"k=(p-1)/2=" << k << " a=prim elt=" << a
+					<< " b=a^k=" << b << " c=b^{p^{h-1}}=" << c << endl;
 
 			}
 		}
@@ -7546,7 +7580,8 @@ void orthogonal::create_random_similarity(INT *Mtx, INT verbose_level)
 		}
 	r = random_integer(q - 1) + 1;
 	if (f_vv) {
-		cout << "orthogonal::create_random_similarity r=" << r << endl;
+		cout << "orthogonal::create_random_similarity "
+				"r=" << r << endl;
 		}
 	if (epsilon == 1) {
 		for (i = 0; i < d; i++) {
@@ -7558,7 +7593,8 @@ void orthogonal::create_random_similarity(INT *Mtx, INT verbose_level)
 	else if (epsilon == 0) {
 		r2 = F->mult(r, r);
 		if (f_vv) {
-			cout << "orthogonal::create_random_similarity r2=" << r2 << endl;
+			cout << "orthogonal::create_random_similarity "
+					"r2=" << r2 << endl;
 			}
 		Mtx[0 * d + 0] = r;
 		for (i = 1; i < d; i++) {
@@ -7582,7 +7618,8 @@ void orthogonal::create_random_similarity(INT *Mtx, INT verbose_level)
 		}
 }
 
-void orthogonal::create_random_orthogonal_reflection(INT *Mtx, INT verbose_level)
+void orthogonal::create_random_orthogonal_reflection(
+		INT *Mtx, INT verbose_level)
 // Only makes a n x n matrix. Does not put a semilinear component.
 {
 	INT f_v = (verbose_level >= 1);
@@ -7625,11 +7662,14 @@ void orthogonal::create_random_orthogonal_reflection(INT *Mtx, INT verbose_level
 	
 	F->transform_form_matrix(Mtx, Gram_matrix, new_Gram, d);
 	if (INT_vec_compare(Gram_matrix, new_Gram, d * d) != 0) {
-		cout << "create_random_orthogonal_reflection The Gram matrix is not preserved" << endl;
+		cout << "create_random_orthogonal_reflection "
+				"The Gram matrix is not preserved" << endl;
 		cout << "Gram matrix:" << endl;
-		print_integer_matrix_width(cout, Gram_matrix, d, d, d, F->log10_of_q);
+		print_integer_matrix_width(cout, Gram_matrix,
+				d, d, d, F->log10_of_q);
 		cout << "transformed Gram matrix:" << endl;
-		print_integer_matrix_width(cout, new_Gram, d, d, d, F->log10_of_q);
+		print_integer_matrix_width(cout, new_Gram,
+				d, d, d, F->log10_of_q);
 		exit(1);
 		}
 	FREE_INT(new_Gram);
@@ -7637,13 +7677,15 @@ void orthogonal::create_random_orthogonal_reflection(INT *Mtx, INT verbose_level
 	
 	FREE_INT(z);
 	if (f_v) {
-		cout << "orthogonal::create_random_orthogonal_reflection done" << endl;
+		cout << "orthogonal::create_random_orthogonal_reflection "
+				"done" << endl;
 		}
 	
 }
 
 
-void orthogonal::make_orthogonal_reflection(INT *M, INT *z, INT verbose_level)
+void orthogonal::make_orthogonal_reflection(
+		INT *M, INT *z, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -7680,12 +7722,15 @@ void orthogonal::make_Siegel_Transformation(INT *M, INT *v, INT *u,
 // if u is singular and v \in \la u \ra^\perp, then
 // \pho_{u,v}(x) := x + \beta(x,v) u - \beta(x,u) v - Q(v) \beta(x,u) u
 // is called the Siegel transform (see Taylor p. 148)
-// Here Q is the quadratic form and \beta is the corresponding bilinear form
+// Here Q is the quadratic form and \beta is
+// the corresponding bilinear form
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, Qv, e;
 	
-	Qv = ::evaluate_quadratic_form(*F, v, 1 /*stride*/, epsilon, n - 1, form_c1, form_c2, form_c3);
+	Qv = ::evaluate_quadratic_form(*F, v, 1 /*stride*/,
+			epsilon, n - 1,
+			form_c1, form_c2, form_c3);
 	F->identity_matrix(M, n);
 
 
@@ -7720,7 +7765,8 @@ void orthogonal::make_Siegel_Transformation(INT *M, INT *v, INT *u,
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			e = F->mult(ST_w[i], u[j]);
-			M[i * n + j] = F->add(M[i * n + j], F->mult(F->negate(e), Qv));
+			M[i * n + j] = F->add(M[i * n + j],
+					F->mult(F->negate(e), Qv));
 			}
 		}
 	if (f_v) {
@@ -7838,8 +7884,12 @@ INT orthogonal::triple_is_collinear(INT pt1, INT pt2, INT pt3)
 	unrank_point(T1, 1, pt1, verbose_level - 1);
 	unrank_point(T1 + n, 1, pt2, verbose_level - 1);
 	unrank_point(T1 + 2 * n, 1, pt3, verbose_level - 1);
-	rk = F->Gauss_INT(T1, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
-		FALSE /* f_P */, NULL, 3, n, 0, 0 /* verbose_level */);
+	rk = F->Gauss_INT(T1,
+			FALSE /* f_special */,
+			FALSE /* f_complete */,
+			base_cols,
+			FALSE /* f_P */, NULL, 3, n, 0,
+			0 /* verbose_level */);
 	FREE_INT(base_cols);
 	if (rk < 2) {
 		cout << "orthogonal::triple_is_collinear rk < 2" << endl;
@@ -7915,7 +7965,8 @@ void orthogonal::Gauss_step(INT *v1, INT *v2, INT len, INT idx)
 		}
 }
 
-void orthogonal::perp(INT pt, INT *Perp_without_pt, INT &sz, INT verbose_level)
+void orthogonal::perp(INT pt,
+		INT *Perp_without_pt, INT &sz, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -7925,7 +7976,8 @@ void orthogonal::perp(INT pt, INT *Perp_without_pt, INT &sz, INT verbose_level)
 		cout << "orthogonal::perp pt=" << pt << endl;
 		}
 	
-	lines_on_point_by_line_rank(pt, line_pencil, 0 /* verbose_level */);
+	lines_on_point_by_line_rank(pt, line_pencil,
+			0 /* verbose_level */);
 	if (f_vv) {
 		cout << "orthogonal::perp line_pencil=";
 		INT_vec_print(cout, line_pencil, alpha);
@@ -7933,11 +7985,13 @@ void orthogonal::perp(INT pt, INT *Perp_without_pt, INT &sz, INT verbose_level)
 		}
 
 	for (i = 0; i < alpha; i++) {
-		points_on_line_by_line_rank(line_pencil[i], Perp1 + i * (q + 1), 0 /* verbose_level */);
+		points_on_line_by_line_rank(line_pencil[i],
+				Perp1 + i * (q + 1), 0 /* verbose_level */);
 		}
 
 	if (f_vv) {
-		cout << "orthogonal::perp points collinear with pt " << pt << ":" << endl;
+		cout << "orthogonal::perp points collinear "
+				"with pt " << pt << ":" << endl;
 		INT_matrix_print(Perp1, alpha, q + 1);
 		}
 
@@ -7957,7 +8011,8 @@ void orthogonal::perp(INT pt, INT *Perp_without_pt, INT &sz, INT verbose_level)
 	sz = j;
 	INT_vec_heapsort(Perp1, sz);
 	if (f_v) {
-		cout << "orthogonal::perp after removing pt and sorting:" << endl;
+		cout << "orthogonal::perp after removing "
+				"pt and sorting:" << endl;
 		INT_vec_print(cout, Perp1, sz);
 		cout << endl;
 		cout << "sz=" << sz << endl;
@@ -7969,7 +8024,8 @@ void orthogonal::perp(INT pt, INT *Perp_without_pt, INT &sz, INT verbose_level)
 		} 
 }
 
-void orthogonal::perp_of_two_points(INT pt1, INT pt2, INT *Perp, INT &sz, INT verbose_level)
+void orthogonal::perp_of_two_points(INT pt1, INT pt2,
+		INT *Perp, INT &sz, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Perp1;
@@ -7978,7 +8034,8 @@ void orthogonal::perp_of_two_points(INT pt1, INT pt2, INT *Perp, INT &sz, INT ve
 	INT sz1, sz2;
 	
 	if (f_v) {
-		cout << "orthogonal::perp_of_two_points pt1=" << pt1 << " pt2=" << pt2 << endl;
+		cout << "orthogonal::perp_of_two_points "
+				"pt1=" << pt1 << " pt2=" << pt2 << endl;
 		}
 
 	Perp1 = NEW_INT(alpha * (q + 1));
@@ -7996,7 +8053,8 @@ void orthogonal::perp_of_two_points(INT pt1, INT pt2, INT *Perp, INT &sz, INT ve
 		} 
 }
 
-void orthogonal::perp_of_k_points(INT *pts, INT nb_pts, INT *&Perp, INT &sz, INT verbose_level)
+void orthogonal::perp_of_k_points(INT *pts, INT nb_pts,
+		INT *&Perp, INT &sz, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -8029,12 +8087,17 @@ void orthogonal::perp_of_k_points(INT *pts, INT nb_pts, INT *&Perp, INT &sz, INT
 	Perp_without_pt = NEW_PINT(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		if (f_v) {
-			cout << "orthogonal::perp_of_k_points computing perp of point " << i << " / " << nb_pts << ":" << endl;
+			cout << "orthogonal::perp_of_k_points "
+					"computing perp of point " << i
+					<< " / " << nb_pts << ":" << endl;
 			}
 		Perp_without_pt[i] = NEW_INT(sz0);
-		perp(pts[i], Perp_without_pt[i], perp_sz, 0 /* verbose_level */);
+		perp(pts[i], Perp_without_pt[i], perp_sz,
+				0 /* verbose_level */);
 		if (f_v) {
-			cout << "orthogonal::perp_of_k_points perp of pt " << i << " / " << nb_pts << " has size " << perp_sz << " and is equal to ";
+			cout << "orthogonal::perp_of_k_points perp of pt "
+					<< i << " / " << nb_pts << " has size "
+					<< perp_sz << " and is equal to ";
 			INT_vec_print_fully(cout, Perp_without_pt[i], perp_sz);
 			cout << endl;
 			}
@@ -8043,9 +8106,11 @@ void orthogonal::perp_of_k_points(INT *pts, INT nb_pts, INT *&Perp, INT &sz, INT
 			exit(1);
 			}
 		}
-	INT_vec_intersect(Perp_without_pt[0], perp_sz, Perp_without_pt[1], perp_sz, Intersection1, sz1);
+	INT_vec_intersect(Perp_without_pt[0], perp_sz,
+			Perp_without_pt[1], perp_sz, Intersection1, sz1);
 	if (f_v) {
-		cout << "orthogonal::perp_of_k_points intersection of P[0] and P[1] has size " << sz1 << " : ";
+		cout << "orthogonal::perp_of_k_points intersection of "
+				"P[0] and P[1] has size " << sz1 << " : ";
 		INT_vec_print_fully(cout, Intersection1, sz1);
 		cout << endl;
 		}
@@ -8053,10 +8118,12 @@ void orthogonal::perp_of_k_points(INT *pts, INT nb_pts, INT *&Perp, INT &sz, INT
 		if (f_v) {
 			cout << "intersecting with perp[" << i << "]" << endl;
 			}
-		INT_vec_intersect(Intersection1, sz1, Perp_without_pt[i], sz0, Intersection2, sz2);
+		INT_vec_intersect(Intersection1, sz1,
+				Perp_without_pt[i], sz0, Intersection2, sz2);
 
 		if (f_v) {
-			cout << "orthogonal::perp_of_k_points intersection with P[" << i << "] has size " << sz2 << " : ";
+			cout << "orthogonal::perp_of_k_points intersection "
+					"with P[" << i << "] has size " << sz2 << " : ";
 			INT_vec_print_fully(cout, Intersection2, sz2);
 			cout << endl;
 			}
