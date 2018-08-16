@@ -80,6 +80,11 @@ public:
 	void compute_base_and_transversals(INT verbose_level);
 	void make_strong_generators_data(INT *&data,
 			INT &size, INT &nb_gens, INT verbose_level);
+	void lift_generators(
+			strong_generators *SG1,
+			strong_generators *SG2,
+			action *A, strong_generators *&SG3,
+			INT verbose_level);
 };
 
 
@@ -327,6 +332,13 @@ public:
 		INT verbose_level);
 	void matrix_minor(INT *Elt, INT *Elt1, 
 		matrix_group *mtx1, INT f, INT verbose_level);
+	INT base_len(INT verbose_level);
+	void base_and_transversal_length(
+			INT base_len,
+			INT *base, INT *transversal_length,
+			INT verbose_level);
+	void strong_generators_low_level(INT *&data,
+			INT &size, INT &nb_gens, INT verbose_level);
 };
 
 

@@ -1584,6 +1584,74 @@ void projective_matrix_group_base_and_orbits(INT n,
 		}
 }
 
+void projective_matrix_group_base_and_transversal_length(INT n,
+	finite_field *F, INT f_semilinear,
+	INT base_len, INT degree,
+	INT *base, INT *transversal_length,
+	INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT f_vv = (verbose_level >= 2);
+	INT i;
+	INT q;
+
+
+	if (f_v) {
+		cout << "projective_matrix_group_base_and_transversal_length" << endl;
+		}
+	q = F->q;
+	for (i = 0; i < base_len; i++) {
+		base[i] = i;
+		}
+	if (f_semilinear) {
+		base[base_len - 1] = n + F->p;
+			// here was an error: the -1 was missing
+			// A.B. 11/11/05
+			// no that -1 needs to go
+			// A.B. 3/9/2006
+		}
+	//transversal_length[0] = nb_PG_elements(n - 1, q);
+	for (i = 0; i < n; i++) {
+		transversal_length[i] =
+				nb_PG_elements_not_in_subspace(n - 1, i - 1, q);
+		if (f_vv) {
+			cout << "projective_matrix_group_base_and_transversal_length "
+					"transversal " << i << " of length "
+					<< transversal_length[i] << endl;
+			}
+		}
+	if (q > 2) {
+		transversal_length[i] = nb_AG_elements(n - 1, q - 1);
+		if (f_vv) {
+			cout << "projective_matrix_group_base_and_transversal_length: "
+					"diagonal transversal " << i << " of length "
+					<< transversal_length[i] << endl;
+			}
+		i++;
+		}
+	if (f_semilinear) {
+		transversal_length[i] = F->e;
+		if (f_vv) {
+			cout << "projective_matrix_group_base_and_transversal_length: "
+					"frobenius transversal " << i << " of length "
+					<< transversal_length[i] << endl;
+			}
+		i++;
+		}
+	if (f_v) {
+		cout << "projective_matrix_group_base_and_transversal_length base: ";
+		INT_vec_print(cout, base, base_len);
+		cout << endl;
+		cout << "projective_matrix_group_base_and_transversal_length "
+				"transversal_length: ";
+		INT_vec_print(cout, transversal_length, base_len);
+		cout << endl;
+		}
+	if (f_v) {
+		cout << "projective_matrix_group_base_and_transversal_length done" << endl;
+		}
+}
+
 void affine_matrix_group_base_and_transversal_length(INT n, 
 	finite_field *F, INT f_semilinear, 
 	INT base_len, INT degree, 
