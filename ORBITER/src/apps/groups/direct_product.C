@@ -68,6 +68,7 @@ public:
 	generator *Gen;
 
 	// orbits on pairs:
+	INT f_subgroup;
 	INT *pair_orbit; // [V * V]
 	INT nb_orbits;
 	INT *transporter;
@@ -334,6 +335,7 @@ direct_product_action::direct_product_action()
 	Pairs = NULL;
 	Gen = NULL;
 
+	f_subgroup = FALSE;
 	pair_orbit = NULL;
 	nb_orbits = 0;
 	transporter = NULL;
@@ -487,6 +489,7 @@ void direct_product_action::init(int argc, const char **argv,
 	direct_product_action::q1 = q1;
 	direct_product_action::q2 = q2;
 	direct_product_action::group_label = group_label;
+	direct_product_action::f_subgroup = f_subgroup;
 
 	A = new action;
 	A1 = new action;
@@ -588,15 +591,22 @@ void direct_product_action::init(int argc, const char **argv,
 		cout << "please use -K <K> to specify K" << endl;
 		exit(1);
 	}
-	Xsize = q1; // = D = q1 = # of rows
-	Ysize = q2; // = C = q2 = # of cols
-
+	if (q1 == 1) {
+		Xsize = d1;
+		Ysize = d2;
+	} else {
+		Xsize = q1; // = D = q1 = # of rows
+		Ysize = q2; // = C = q2 = # of cols
+	}
 
 	V = Xsize * Ysize;
 
 	cout << "depth=" << depth << endl;
 	cout << "V=" << V << endl;
 	cout << "K=" << K << endl;
+	cout << "Xsize=" << Xsize << endl;
+	cout << "Ysize=" << Ysize << endl;
+	cout << "V=" << V << endl;
 
 	line = NEW_INT(K);
 	row_sum = NEW_INT(Xsize);
@@ -604,14 +614,6 @@ void direct_product_action::init(int argc, const char **argv,
 	live_points = NEW_INT(V);
 
 
-	b = (V * (V - 1)) / (K * (K - 1));
-
-	if (b * (K * (K - 1)) != (V * (V - 1))) {
-		cout << "integrality conditions violated" << endl;
-		exit(1);
-	}
-
-	cout << "b=" << b << endl;
 	cout << "DELANDTSHEER_DOYEN_X=" << DELANDTSHEER_DOYEN_X << endl;
 	cout << "DELANDTSHEER_DOYEN_Y=" << DELANDTSHEER_DOYEN_Y << endl;
 
@@ -619,24 +621,75 @@ void direct_product_action::init(int argc, const char **argv,
 	INT_vec_zero(col_sum, Ysize);
 
 
-	F1 = new finite_field;
-	F2 = new finite_field;
-
-	F1->init(q1, 0);
-	F2->init(q2, 0);
-
 	M1 = new matrix_group;
 	M2 = new matrix_group;
 
+	F1 = new finite_field;
+	F2 = new finite_field;
 
-	M1->init_affine_group(d1, F1,
-			FALSE /* f_semilinear */, A1, verbose_level);
 
-	M2->init_affine_group(d2, F2,
-			FALSE /* f_semilinear */, A2, verbose_level);
+
+	if (q1 == 1) {
+
+		F1->init(2, 0);
+		F2->init(2, 0);
+
+		cout << "initializing projective groups:" << endl;
+
+		A1->init_projective_group(d1, F1,
+				FALSE /* f_semilinear */, TRUE /* f_basis */,
+				verbose_level - 1);
+		M1 = A1->G.matrix_grp;
+
+		A2->init_projective_group(d2, F2,
+				FALSE /* f_semilinear */, TRUE /* f_basis */,
+				verbose_level - 1);
+		M2 = A1->G.matrix_grp;
+
+#if 0
+		M1->init_projective_group(d1, F1,
+				FALSE /* f_semilinear */, A1, verbose_level);
+
+		M2->init_projective_group(d2, F2,
+				FALSE /* f_semilinear */, A2, verbose_level);
+#endif
+		b = 0;
+
+	} else {
+
+
+
+		b = (V * (V - 1)) / (K * (K - 1));
+
+		if (b * (K * (K - 1)) != (V * (V - 1))) {
+			cout << "integrality conditions violated" << endl;
+			exit(1);
+		}
+
+		cout << "b=" << b << endl;
+
+
+
+		F1->init(q1, 0);
+		F2->init(q2, 0);
+
+
+
+		cout << "initializing affine groups:" << endl;
+
+		M1->init_affine_group(d1, F1,
+				FALSE /* f_semilinear */, A1, verbose_level);
+
+		M2->init_affine_group(d2, F2,
+				FALSE /* f_semilinear */, A2, verbose_level);
+	}
+
+	cout << "direct_product_action::init before "
+			"A->init_direct_product_group_and_restrict" << endl;
 
 	A->init_direct_product_group_and_restrict(M1, M2,
 			verbose_level);
+
 	cout << "direct_product_action::init after "
 			"A->init_direct_product_group_and_restrict" << endl;
 
@@ -651,18 +704,94 @@ void direct_product_action::init(int argc, const char **argv,
 
 	//vector_space_dimension = W->dimension_of_tensor_action;
 
-	if (!A0->f_has_strong_generators) {
-		cout << "direct_product_action::init action A0 does not "
-				"have strong generators" << endl;
-		exit(1);
+
+
+	if (q1 == 1) {
+
+		strong_generators *SG1;
+		strong_generators *SG2;
+		strong_generators *SG3;
+
+		SG1 = new strong_generators;
+		SG2 = new strong_generators;
+
+		if (f_v) {
+			cout << "before generators_for_the_monomial_group "
+					"action" << A1->label << endl;
+		}
+		SG1->generators_for_the_monomial_group(A1,
+			M1, verbose_level);
+		if (f_v) {
+			cout << "after generators_for_the_monomial_group "
+					"action" << A1->label << endl;
 		}
 
-	SG = A0->Strong_gens;
-	SG->group_order(go);
 
-	cout << "The group " << A->label << " has order " << go
-			<< " and permutation degree " << A->degree << endl;
+		if (f_v) {
+			cout << "before generators_for_the_monomial_group "
+					"action" << A2->label << endl;
+		}
+		SG2->generators_for_the_monomial_group(A2,
+			M2, verbose_level);
+		if (f_v) {
+			cout << "after generators_for_the_monomial_group "
+					"action" << A2->label << endl;
+		}
 
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"before lift_generators" << endl;
+		}
+		P->lift_generators(
+				SG1,
+				SG2,
+				A0, SG3,
+				verbose_level);
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"after lift_generators" << endl;
+		}
+
+		SG = SG3;
+		SG->group_order(go);
+
+		cout << "The group has order " << go << endl;
+
+		action *Ar;
+		INT *points;
+		INT nb_points;
+		INT h;
+
+		nb_points = d1 * d2;
+		points = NEW_INT(nb_points);
+		h = 0;
+		for (i = 0; i < d1; i++) {
+			for (j = 0; j < d2; j++) {
+				a = i * A2->degree + j;
+				points[h++] = a;
+			}
+		} // next i
+
+
+		Ar = A->restricted_action(points, nb_points,
+				verbose_level);
+
+		A = Ar;
+	} // if (q1 == 1)
+
+	else {
+		if (!A0->f_has_strong_generators) {
+			cout << "direct_product_action::init action A0 does not "
+					"have strong generators" << endl;
+			exit(1);
+			}
+
+		SG = A0->Strong_gens;
+		SG->group_order(go);
+
+		cout << "The group " << A->label << " has order " << go
+				<< " and permutation degree " << A->degree << endl;
+	}
 
 
 	cout << "Generators are:" << endl;
@@ -740,150 +869,120 @@ void direct_product_action::init(int argc, const char **argv,
 					"after Strong_gens->init_from_data_"
 					"with_target_go_ascii" << endl;
 			}
+		Pairs = new generator;
+
+		Pairs->read_arguments(argc, argv, 0);
+
+		//Pairs->prefix[0] = 0;
+		sprintf(Pairs->fname_base, "pairs_%s_%ld_%ld",
+				group_label, q1, q2);
+
+
+		Pairs->depth = 2;
+
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"before Pairs->init" << endl;
+			}
+		Pairs->init(A0, A, Strong_gens,
+				Pairs->depth /* sz */, verbose_level);
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"after Pairs->init" << endl;
+			}
+
+
+		INT nb_oracle_nodes = 1000;
+
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"before Pairs->init_oracle" << endl;
+			}
+		Pairs->init_oracle(nb_oracle_nodes, verbose_level - 1);
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"calling Pairs->init_root_node" << endl;
+			}
+		Pairs->root[0].init_root_node(Pairs, verbose_level - 1);
+
+		INT f_use_invariant_subset_if_available;
+		INT f_debug;
+
+		f_use_invariant_subset_if_available = TRUE;
+		f_debug = FALSE;
+
+		INT t0 = os_ticks();
+
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"before Pairs->main" << endl;
+			cout << "A=";
+			A->print_info();
+			cout << "A0=";
+			A0->print_info();
+			}
+
+
+		//Pairs->f_allowed_to_show_group_elements = TRUE;
+
+		Pairs->f_max_depth = FALSE;
+		Pairs->depth = 2;
+		Pairs->main(t0,
+			Pairs->depth /* schreier_depth */,
+			f_use_invariant_subset_if_available,
+			f_debug,
+			verbose_level);
+
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"after Pairs->main" << endl;
+		}
+
+
+		nb_orbits = Pairs->nb_orbits_at_level(2);
+
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"nb_orbits = "
+					<< nb_orbits << endl;
+		}
+
+		transporter = NEW_INT(A0->elt_size_in_INT);
+		tmp_Elt = NEW_INT(A0->elt_size_in_INT);
+
+		orbit_length = NEW_INT(nb_orbits);
+		orbit_covered = NEW_INT(nb_orbits);
+		orbit_covered_max = NEW_INT(nb_orbits);
+		orbits_covered = NEW_INT(K * K);
+
+		INT_vec_zero(orbit_covered, nb_orbits);
+
+		for (i = 0; i < nb_orbits; i++) {
+			orbit_length[i] = Pairs->orbit_length_as_INT(
+					i /* orbit_at_level*/, 2 /* level*/);
+			orbit_covered_max[i] = orbit_length[i] / b;
+			if (orbit_covered_max[i] * b != orbit_length[i]) {
+				cout << "integrality conditions violated (2)" << endl;
+				exit(1);
+			}
+		}
+		cout << "i : orbit_length[i] : orbit_covered_max[i]" << endl;
+		for (i = 0; i < nb_orbits; i++) {
+			cout << i << " : " << orbit_length[i]
+				<< " : " << orbit_covered_max[i] << endl;
+			}
+
+		compute_pair_orbit_table(verbose_level);
+		//write_pair_orbit_file(verbose_level);
+
 	} else {
-		cout << "please use -subgroup to specify a subgroup" << endl;
-		exit(1);
-	}
-#if 1
-	Pairs = new generator;
-
-	Pairs->read_arguments(argc, argv, 0);
-
-	//Pairs->prefix[0] = 0;
-	sprintf(Pairs->fname_base, "pairs_%s_%ld_%ld",
-			group_label, q1, q2);
-
-
-	Pairs->depth = 2;
-
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"before Pairs->init" << endl;
-		}
-	Pairs->init(A0, A, Strong_gens,
-			Pairs->depth /* sz */, verbose_level);
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"after Pairs->init" << endl;
-		}
-
-
-#if 0
-	Pairs->init_check_func(
-		subspace_orbits_test_func,
-		this /* candidate_check_data */);
-	Pairs->init_early_test_func(
-		linear_set_early_test_func,
-		this /*void *data */,
-		verbose_level);
-#endif
-
-	//Pairs->init_incremental_check_func(
-		//check_mindist_incremental,
-		//this /* candidate_check_data */);
-
-#if 0
-	Pairs->init_vector_space_action(
-		vector_space_dimension,
-		F,
-		direct_rank_point_func,
-		direct_unrank_point_func,
-		this,
-		verbose_level);
-#endif
-
-
-#if 0
-	Pairs->f_print_function = TRUE;
-	Pairs->print_function = print_set;
-	Pairs->print_function_data = this;
-#endif
-
-	INT nb_oracle_nodes = 1000;
-
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"before Pairs->init_oracle" << endl;
-		}
-	Pairs->init_oracle(nb_oracle_nodes, verbose_level - 1);
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"calling Pairs->init_root_node" << endl;
-		}
-	Pairs->root[0].init_root_node(Pairs, verbose_level - 1);
-
-	INT f_use_invariant_subset_if_available;
-	INT f_debug;
-
-	f_use_invariant_subset_if_available = TRUE;
-	f_debug = FALSE;
-
-	INT t0 = os_ticks();
-
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"before Pairs->main" << endl;
-		cout << "A=";
-		A->print_info();
-		cout << "A0=";
-		A0->print_info();
-		}
-
-
-	//Pairs->f_allowed_to_show_group_elements = TRUE;
-
-	Pairs->f_max_depth = FALSE;
-	Pairs->depth = 2;
-	Pairs->main(t0,
-		Pairs->depth /* schreier_depth */,
-		f_use_invariant_subset_if_available,
-		f_debug,
-		verbose_level);
-
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"after Pairs->main" << endl;
+		cout << "We don't have -subgroup, so orbits on pairs "
+				"are not computed" << endl;
+		//exit(1);
 	}
 
 
-	nb_orbits = Pairs->nb_orbits_at_level(2);
 
-	if (f_v) {
-		cout << "direct_product_action::init "
-				"nb_orbits = "
-				<< nb_orbits << endl;
-	}
-
-	transporter = NEW_INT(A0->elt_size_in_INT);
-	tmp_Elt = NEW_INT(A0->elt_size_in_INT);
-
-	orbit_length = NEW_INT(nb_orbits);
-	orbit_covered = NEW_INT(nb_orbits);
-	orbit_covered_max = NEW_INT(nb_orbits);
-	orbits_covered = NEW_INT(K * K);
-
-	INT_vec_zero(orbit_covered, nb_orbits);
-
-	for (i = 0; i < nb_orbits; i++) {
-		orbit_length[i] = Pairs->orbit_length_as_INT(
-				i /* orbit_at_level*/, 2 /* level*/);
-		orbit_covered_max[i] = orbit_length[i] / b;
-		if (orbit_covered_max[i] * b != orbit_length[i]) {
-			cout << "integrality conditions violated (2)" << endl;
-			exit(1);
-		}
-	}
-	cout << "i : orbit_length[i] : orbit_covered_max[i]" << endl;
-	for (i = 0; i < nb_orbits; i++) {
-		cout << i << " : " << orbit_length[i]
-			<< " : " << orbit_covered_max[i] << endl;
-		}
-
-	compute_pair_orbit_table(verbose_level);
-	//write_pair_orbit_file(verbose_level);
-
-
-#endif
 	f_row_used = NEW_INT(Xsize);
 	f_col_used = NEW_INT(Ysize);
 	row_idx = NEW_INT(Xsize);
@@ -1068,8 +1167,16 @@ void direct_product_action::init(int argc, const char **argv,
 		Gen->read_arguments(argc, argv, 0);
 
 		//Gen->prefix[0] = 0;
-		sprintf(Gen->fname_base, "design_%s_%ld_%ld",
-				group_label, q1, q2);
+
+		if (f_subgroup) {
+			sprintf(Gen->fname_base, "design_%s_%ld_%ld",
+					group_label, q1, q2);
+		}
+		else {
+			sprintf(Gen->fname_base, "design_no_group_%ld_%ld",
+					d1, d2);
+
+		}
 
 
 		Gen->depth = depth;
@@ -1088,7 +1195,7 @@ void direct_product_action::init(int argc, const char **argv,
 			(void *)this /* candidate_check_data */);
 
 
-		nb_oracle_nodes = 1000;
+		INT nb_oracle_nodes = 1000;
 
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -1101,8 +1208,8 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 		Gen->root[0].init_root_node(Gen, verbose_level - 1);
 
-		f_use_invariant_subset_if_available = TRUE;
-		f_debug = FALSE;
+		INT f_use_invariant_subset_if_available = TRUE;
+		INT f_debug = FALSE;
 
 		//t0 = os_ticks();
 
@@ -1124,12 +1231,21 @@ void direct_product_action::init(int argc, const char **argv,
 			Gen->depth /* schreier_depth */,
 			f_use_invariant_subset_if_available,
 			f_debug,
-			verbose_level);
+			verbose_level + 10);
 
 		if (f_v) {
 			cout << "direct_product_action::init "
 					"after Gen->main" << endl;
 		}
+
+
+		if (f_v) {
+			cout << "direct_product_action::init "
+					"before Gen->draw_poset" << endl;
+		}
+		Gen->draw_poset(Gen->fname_base, depth,
+				0 /* data1 */, TRUE /* f_embedded */, TRUE /* f_sideways */,
+				verbose_level);
 	} // else
 
 
@@ -1594,17 +1710,24 @@ INT direct_product_action::check_conditions(
 		cout << "direct_product_action::check_conditions "
 				"checking set ";
 		print_set(cout, len, S);
+		cout << endl;
 		//cout << "offset=" << offset << endl;
 		}
 
 	pt = S[len - 1];
 	if (INT_vec_search_linear(S, len - 1, pt, idx)) {
+		if (f_v) {
+			cout << "direct_product_action::check_conditions not OK, "
+					"repeat entry" << endl;
+		}
 		return FALSE;
 	}
-	if (!check_orbit_covering(S, len, verbose_level)) {
-		f_bad_orbit = TRUE;
-		f_OK = FALSE;
+	if (f_subgroup) {
+		if (!check_orbit_covering(S, len, verbose_level)) {
+			f_bad_orbit = TRUE;
+			f_OK = FALSE;
 		}
+	}
 
 	if (f_OK && !check_row_sums(S, len, verbose_level)) {
 		f_bad_row = TRUE;
@@ -1735,17 +1858,20 @@ INT direct_product_action::check_row_sums(INT *line,
 		}
 	if (f_v) {
 		if (!f_OK) {
-			cout << "row condition violated" << endl;
+			cout << "direct_product_action::check_row_sums "
+					"row condition violated" << endl;
 			if (f_vv) {
 				if (f_DD_problem) {
-					cout << "inner_pairs_in_rows = "
+					cout << "direct_product_action::check_row_sums "
+							"inner_pairs_in_rows = "
 						<< inner_pairs_in_rows
 						<< " > DELANDTSHEER_DOYEN_X = "
 						<< DELANDTSHEER_DOYEN_X
 						<< ", not OK" << endl;
 					}
 				else {
-					cout << "problem with row-type:" << endl;
+					cout << "direct_product_action::check_row_sums"
+							"problem with row-type:" << endl;
 					for (i = 1; i <= nb_row_types; i++) {
 						cout << row_type_cur[i] << " ";
 						}
@@ -1807,17 +1933,20 @@ INT direct_product_action::check_col_sums(INT *line,
 		}
 	if (f_v) {
 		if (!f_OK) {
-			cout << "col condition violated" << endl;
+			cout << "direct_product_action::check_col_sums "
+					"col condition violated" << endl;
 			if (f_vv) {
 				if (f_DD_problem) {
-					cout << "inner_pairs_in_cols = "
+					cout << "direct_product_action::check_col_sums "
+							"inner_pairs_in_cols = "
 						<< inner_pairs_in_cols
 						<< " > DELANDTSHEER_DOYEN_Y = "
 						<< DELANDTSHEER_DOYEN_Y
 						<< ", not OK" << endl;
 					}
 				else {
-					cout << "problem with col-type:" << endl;
+					cout << "direct_product_action::check_col_sums "
+							"problem with col-type:" << endl;
 					for (i = 1; i <= nb_col_types; i++) {
 						cout << col_type_cur[i] << " ";
 						}

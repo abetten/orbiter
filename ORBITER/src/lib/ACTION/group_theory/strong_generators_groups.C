@@ -313,10 +313,11 @@ void strong_generators::generators_for_the_monomial_group(action *A,
 	my_gens->allocate(nb_gens);
 	for (h = 0; h < nb_gens; h++) {
 
-		cout << "strong_generators::generators_for_the_"
-				"monomial_group generator " << h << " / "
-				<< nb_gens << ":" << endl;
-
+		if (f_v) {
+			cout << "strong_generators::generators_for_the_"
+					"monomial_group generator " << h << " / "
+					<< nb_gens << ":" << endl;
+		}
 		F->identity_matrix(data, n);
 		if (Mtx->f_affine) {
 			INT_vec_zero(data + n * n, n);
@@ -348,7 +349,16 @@ void strong_generators::generators_for_the_monomial_group(action *A,
 			data[n * n + a] = i_power_j(F->p, b);
 				// elements of a field basis of F_q over F_p
 			}
-		A->make_element(Elt1, data, 0 /*verbose_level - 1*/);
+		if (f_v) {
+			cout << "strong_generators::generators_for_the_"
+					"monomial_group generator " << h << " / "
+					<< nb_gens << ", before A->make_element" << endl;
+			cout << "data = ";
+			INT_vec_print(cout, data, Mtx->elt_size_INT_half);
+			cout << endl;
+			cout << "in action " << A->label << endl;
+		}
+		A->make_element(Elt1, data, verbose_level - 1);
 		if (f_vv) {
 			cout << "generator " << h << ":" << endl;
 			A->element_print_quick(Elt1, cout);

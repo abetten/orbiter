@@ -152,16 +152,12 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		cout << "direct_product::init "
 				"char_per_elt = " << char_per_elt << endl;
 	}
-	base_len_in_component1 = matrix_group_base_len_affine_group(
-			dimension_of_matrix_group1, q1,
-			M1->f_semilinear, verbose_level - 1);
+	base_len_in_component1 = M1->base_len(verbose_level);
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_len_in_component1 = " << base_len_in_component1 << endl;
 	}
-	base_len_in_component2 = matrix_group_base_len_affine_group(
-			dimension_of_matrix_group2, q2,
-			M2->f_semilinear, verbose_level - 1);
+	base_len_in_component2 = M2->base_len(verbose_level);
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_len_in_component1 = " << base_len_in_component1 << endl;
@@ -170,14 +166,11 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 	base_for_component1 = NEW_INT(base_len_in_component1);
 	tl_for_component1 = NEW_INT(base_len_in_component1);
-	affine_matrix_group_base_and_transversal_length(
-		dimension_of_matrix_group1,
-		F1, M1->f_semilinear,
-		base_len_in_component1, degree_of_matrix_group1,
-		base_for_component1, tl_for_component1,
-		verbose_level - 1);
 
-
+	M1->base_and_transversal_length(
+			base_len_in_component1,
+			base_for_component1, tl_for_component1,
+			verbose_level - 1);
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
@@ -192,12 +185,10 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 
 	base_for_component2 = NEW_INT(base_len_in_component2);
 	tl_for_component2 = NEW_INT(base_len_in_component2);
-	affine_matrix_group_base_and_transversal_length(
-		dimension_of_matrix_group2,
-		F2, M2->f_semilinear,
-		base_len_in_component2, degree_of_matrix_group2,
-		base_for_component2, tl_for_component2,
-		verbose_level - 1);
+	M2->base_and_transversal_length(
+			base_len_in_component2,
+			base_for_component2, tl_for_component2,
+			verbose_level - 1);
 
 	if (f_v) {
 		cout << "direct_product::init "
@@ -595,31 +586,10 @@ void direct_product::make_strong_generators_data(INT *&data,
 		cout << "direct_product::make_strong_generators_data "
 				"before strong_generators_for_general_linear_group" << endl;
 	}
-	strong_generators_for_affine_linear_group(
-			dimension_of_matrix_group1, F1,
-			M1->f_semilinear,
-			GL1_data, GL1_size, GL1_nb_gens,
-			verbose_level - 1);
-	strong_generators_for_affine_linear_group(
-			dimension_of_matrix_group2, F2,
-			M2->f_semilinear,
-			GL2_data, GL2_size, GL2_nb_gens,
-			verbose_level - 1);
-
-#if 0
-	strong_generators_for_general_linear_group(
-		dimension_of_matrix_group1, F1,
-		M1->f_semilinear,
-		GL1_data, GL1_size, GL1_nb_gens,
-		verbose_level - 1);
-		// in GALOIS/projective.C
-	strong_generators_for_general_linear_group(
-		dimension_of_matrix_group2, F2,
-		M2->f_semilinear,
-		GL2_data, GL2_size, GL2_nb_gens,
-		verbose_level - 1);
-		// in GALOIS/projective.C
-#endif
+	M1->strong_generators_low_level(
+			GL1_data, GL1_size, GL1_nb_gens, verbose_level - 1);
+	M2->strong_generators_low_level(
+			GL2_data, GL2_size, GL2_nb_gens, verbose_level - 1);
 
 	if (f_v) {
 		cout << "direct_product::make_strong_generators_data "
@@ -666,3 +636,66 @@ void direct_product::make_strong_generators_data(INT *&data,
 		cout << "direct_product::make_strong_generators_data done" << endl;
 	}
 }
+
+void direct_product::lift_generators(
+		strong_generators *SG1,
+		strong_generators *SG2,
+		action *A, strong_generators *&SG3,
+		INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	action *A1;
+	action *A2;
+	INT *Elt1;
+	INT *Elt2;
+	INT *Elt3;
+	vector_ge *gens;
+	INT i, len1, len2, len3;
+	longinteger_domain D;
+	longinteger_object go1, go2, go3;
+
+	if (f_v) {
+		cout << "direct_product::lift_generators" << endl;
+	}
+	A1 = SG1->A;
+	A2 = SG2->A;
+	len1 = SG1->gens->len;
+	len2 = SG2->gens->len;
+	len3 = len1 + len2;
+
+	gens = new vector_ge;
+	gens->init(A);
+	gens->allocate(len3);
+	Elt1 = NEW_INT(A1->elt_size_in_INT);
+	Elt2 = NEW_INT(A2->elt_size_in_INT);
+	Elt3 = NEW_INT(A->elt_size_in_INT);
+
+	A1->element_one(Elt1, 0 /* verbose_level */);
+	A2->element_one(Elt2, 0 /* verbose_level */);
+	for (i = 0; i < len1; i++) {
+		A1->element_move(SG1->gens->ith(i), Elt3, 0 /* verbose_level */);
+		A2->element_move(Elt2, Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
+		A->element_move(Elt3, gens->ith(i), 0);
+	}
+	for (i = 0; i < len2; i++) {
+		A1->element_move(Elt1, Elt3, 0 /* verbose_level */);
+		A2->element_move(SG2->gens->ith(i), Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
+		A->element_move(Elt3, gens->ith(len1 + i), 0);
+	}
+	if (f_v) {
+		cout << "direct_product::lift_generators the generators are:" << endl;
+		gens->print_quick(cout);
+	}
+	SG1->group_order(go1);
+	SG2->group_order(go2);
+	D.mult(go1, go2, go3);
+	generators_to_strong_generators(A,
+		TRUE /* f_target_go */, go3,
+		gens, SG3,
+		verbose_level);
+	delete gens;
+	if (f_v) {
+		cout << "direct_product::lift_generators done" << endl;
+	}
+}
+

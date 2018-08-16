@@ -52,17 +52,20 @@ void matrix_group::freeself()
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "matrix_group::freeself calling free_data" << endl;
+		cout << "matrix_group::freeself "
+				"calling free_data" << endl;
 		}
 	free_data(verbose_level);
 	if (f_v) {
-		cout << "matrix_group::freeself destroying Elts" << endl;
+		cout << "matrix_group::freeself "
+				"destroying Elts" << endl;
 		}
 	if (Elts) {
 		delete Elts;
 		}
 	if (f_v) {
-		cout << "matrix_group::freeself destroying GFq" << endl;
+		cout << "matrix_group::freeself "
+				"destroying GFq" << endl;
 		}
 	if (f_GFq_is_allocated) {
 		delete GFq;
@@ -72,7 +75,8 @@ void matrix_group::freeself()
 		}
 	null();
 	if (f_v) {
-		cout << "matrix_group::freeself finished" << endl;
+		cout << "matrix_group::freeself "
+				"finished" << endl;
 		}
 }
 
@@ -118,7 +122,8 @@ void matrix_group::init_projective_group(INT n,
 	compute_elt_size(verbose_level - 1);
 
 	if (f_v) {
-		cout << "matrix_group::init_projective_group elt_size_INT = " << elt_size_INT << endl;
+		cout << "matrix_group::init_projective_group "
+				"elt_size_INT = " << elt_size_INT << endl;
 		}
 	
 	allocate_data(verbose_level);
@@ -129,11 +134,13 @@ void matrix_group::init_projective_group(INT n,
 
 
 	if (f_vv) {
-		cout << "matrix_group::init_projective_group before init_base" << endl;
+		cout << "matrix_group::init_projective_group "
+				"before init_base" << endl;
 		}
 	init_base(A, verbose_level - 1);
 	if (f_vv) {
-		cout << "matrix_group::init_projective_group after init_base" << endl;
+		cout << "matrix_group::init_projective_group "
+				"after init_base" << endl;
 		}
 
 
@@ -141,7 +148,8 @@ void matrix_group::init_projective_group(INT n,
 
 
 	if (f_v) {
-		cout << "matrix_group::init_projective_group finished" << endl;
+		cout << "matrix_group::init_projective_group "
+				"finished" << endl;
 		}
 }
 
@@ -184,7 +192,8 @@ void matrix_group::init_affine_group(INT n,
 	compute_elt_size(verbose_level - 1);
 
 	if (f_v) {
-		cout << "matrix_group::init_affine_group elt_size_INT = " << elt_size_INT << endl;
+		cout << "matrix_group::init_affine_group "
+				"elt_size_INT = " << elt_size_INT << endl;
 		}
 	
 	allocate_data(verbose_level);
@@ -195,18 +204,21 @@ void matrix_group::init_affine_group(INT n,
 
 
 	if (f_vv) {
-		cout << "matrix_group::init_affine_group before init_base" << endl;
+		cout << "matrix_group::init_affine_group "
+				"before init_base" << endl;
 		}
 	init_base(A, verbose_level - 1);
 	if (f_vv) {
-		cout << "matrix_group::init_affine_group after init_base" << endl;
+		cout << "matrix_group::init_affine_group "
+				"after init_base" << endl;
 		}
 
 
 	//init_gl_classes(verbose_level - 1);
 
 	if (f_v) {
-		cout << "matrix_group::init_affine_group finished" << endl;
+		cout << "matrix_group::init_affine_group "
+				"finished" << endl;
 		}
 }
 
@@ -249,7 +261,8 @@ void matrix_group::init_general_linear_group(INT n,
 	compute_elt_size(verbose_level - 1);
 
 	if (f_v) {
-		cout << "matrix_group::init_general_linear_group elt_size_INT = " << elt_size_INT << endl;
+		cout << "matrix_group::init_general_linear_group "
+				"elt_size_INT = " << elt_size_INT << endl;
 		}
 	
 	allocate_data(verbose_level);
@@ -260,18 +273,21 @@ void matrix_group::init_general_linear_group(INT n,
 
 
 	if (f_vv) {
-		cout << "matrix_group::init_general_linear_group before init_base" << endl;
+		cout << "matrix_group::init_general_linear_group "
+				"before init_base" << endl;
 		}
 	init_base(A, verbose_level - 1);
 	if (f_vv) {
-		cout << "matrix_group::init_general_linear_group after init_base" << endl;
+		cout << "matrix_group::init_general_linear_group "
+				"after init_base" << endl;
 		}
 
 
 	//init_gl_classes(verbose_level - 1);
 
 	if (f_v) {
-		cout << "matrix_group::init_general_linear_group finished" << endl;
+		cout << "matrix_group::init_general_linear_group "
+				"finished" << endl;
 		}
 }
 
@@ -362,7 +378,8 @@ void matrix_group::free_data(INT verbose_level)
 		FREE_INT(v3);
 		}
 	if (f_v) {
-		cout << "matrix_group::free_data destroying elt1-3" << endl;
+		cout << "matrix_group::free_data "
+				"destroying elt1-3" << endl;
 		}
 	if (elt1) {
 		delete [] elt1;
@@ -374,7 +391,8 @@ void matrix_group::free_data(INT verbose_level)
 		delete [] elt3;
 		}
 	if (f_v) {
-		cout << "matrix_group::free_data destroying base_cols" << endl;
+		cout << "matrix_group::free_data "
+				"destroying base_cols" << endl;
 		}
 	if (base_cols) {
 		FREE_INT(base_cols);
@@ -385,7 +403,8 @@ void matrix_group::free_data(INT verbose_level)
 		}
 }
 
-void matrix_group::setup_page_storage(INT page_length_log, INT verbose_level)
+void matrix_group::setup_page_storage(
+		INT page_length_log, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 1);
@@ -395,25 +414,30 @@ void matrix_group::setup_page_storage(INT page_length_log, INT verbose_level)
 		cout << "matrix_group::setup_page_storage" << endl;
 		}
 	if (Elts) {
-		cout << "matrix_group::setup_page_storage Warning: Elts != NULL" << endl;
+		cout << "matrix_group::setup_page_storage "
+				"Warning: Elts != NULL" << endl;
 		delete Elts;
 		}
 	Elts = new page_storage;
 	
 	if (f_vv) {
-		cout << "matrix_group::setup_page_storage calling Elts->init()" << endl;
+		cout << "matrix_group::setup_page_storage "
+				"calling Elts->init()" << endl;
 		}
-	Elts->init(char_per_elt /* entry_size */, page_length_log, verbose_level - 2);
+	Elts->init(char_per_elt /* entry_size */,
+			page_length_log, verbose_level - 2);
 	//Elts->add_elt_print_function(elt_print, (void *) this);
 	
 	
 	if (f_vv) {
-		cout << "matrix_group::setup_page_storage calling GL_one()" << endl;
+		cout << "matrix_group::setup_page_storage "
+				"calling GL_one()" << endl;
 		}
 	GL_one(Elt1);
 	GL_pack(Elt1, elt1);
 	if (f_vv) {
-		cout << "matrix_group::setup_page_storage calling Elts->store()" << endl;
+		cout << "matrix_group::setup_page_storage "
+				"calling Elts->store()" << endl;
 		}
 	hdl = Elts->store(elt1);
 	if (f_vv) {
@@ -500,33 +524,40 @@ void matrix_group::init_base(action *A, INT verbose_level)
 		}
 	if (f_projective) {
 		if (f_vv) {
-			cout << "matrix_group::init_base before init_base_projective" << endl;
+			cout << "matrix_group::init_base "
+					"before init_base_projective" << endl;
 			}
 		init_base_projective(A, verbose_level - 2);
 		if (f_vv) {
-			cout << "matrix_group::init_base after init_base_projective" << endl;
+			cout << "matrix_group::init_base "
+					"after init_base_projective" << endl;
 			}
 		}
 	else if (f_affine) {
 		if (f_vv) {
-			cout << "matrix_group::init_base before init_base_affine" << endl;
+			cout << "matrix_group::init_base "
+					"before init_base_affine" << endl;
 			}
 		init_base_affine(A, verbose_level - 2);
 		if (f_vv) {
-			cout << "matrix_group::init_base after init_base_affine" << endl;
+			cout << "matrix_group::init_base "
+					"after init_base_affine" << endl;
 			}
 		}
 	else if (f_general_linear) {
 		if (f_vv) {
-			cout << "matrix_group::init_base before init_base_general_linear" << endl;
+			cout << "matrix_group::init_base "
+					"before init_base_general_linear" << endl;
 			}
 		init_base_general_linear(A, verbose_level - 2);
 		if (f_vv) {
-			cout << "matrix_group::init_base after init_base_general_linear" << endl;
+			cout << "matrix_group::init_base "
+					"after init_base_general_linear" << endl;
 			}
 		}
 	else {
-		cout << "matrix_group::init_base  group type unknown" << endl;
+		cout << "matrix_group::init_base  "
+				"group type unknown" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -534,30 +565,36 @@ void matrix_group::init_base(action *A, INT verbose_level)
 		}
 }
 
-void matrix_group::init_base_projective(action *A, INT verbose_level)
-// initializes base, base_len, degree, transversal_length, orbit, orbit_inv
+void matrix_group::init_base_projective(
+		action *A, INT verbose_level)
+// initializes base, base_len, degree,
+// transversal_length, orbit, orbit_inv
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 1);
 	INT q = GFq->q;
 	
 	if (f_v) {
-		cout << "matrix_group::init_base_projective verbose_level=" << verbose_level << endl;
+		cout << "matrix_group::init_base_projective "
+				"verbose_level=" << verbose_level << endl;
 		}
 	A->degree = degree;
 	if (f_vv) {
-		cout << "matrix_group::init_base_projective degree=" << degree << endl;
+		cout << "matrix_group::init_base_projective "
+				"degree=" << degree << endl;
 		}
 	A->base_len = matrix_group_base_len_projective_group(
 			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
-		cout << "matrix_group::init_base_projective base_len=" << A->base_len << endl;
+		cout << "matrix_group::init_base_projective "
+				"base_len=" << A->base_len << endl;
 		}
 
 	A->allocate_base_data(A->base_len);
 
 	if (f_vv) {
-		cout << "matrix_group::init_base_projective before projective_matrix_group_base_and_orbits" << endl;
+		cout << "matrix_group::init_base_projective "
+				"before projective_matrix_group_base_and_orbits" << endl;
 		}
 	projective_matrix_group_base_and_orbits(n, 
 		GFq, f_semilinear, 
@@ -579,22 +616,26 @@ void matrix_group::init_base_affine(action *A, INT verbose_level)
 	INT q = GFq->q;
 	
 	if (f_v) {
-		cout << "matrix_group::init_base_affine verbose_level=" << verbose_level << endl;
+		cout << "matrix_group::init_base_affine "
+				"verbose_level=" << verbose_level << endl;
 		}
 	A->degree = degree;
 	if (f_vv) {
-		cout << "matrix_group::init_base_affine degree=" << degree << endl;
+		cout << "matrix_group::init_base_affine degree="
+				<< degree << endl;
 		}
 	A->base_len = matrix_group_base_len_affine_group(
 			n, q, f_semilinear, verbose_level - 1);
 	if (f_vv) {
-		cout << "matrix_group::init_base_affine base_len=" << A->base_len << endl;
+		cout << "matrix_group::init_base_affine base_len="
+				<< A->base_len << endl;
 		}
 
 	A->allocate_base_data(A->base_len);
 
 	if (f_vv) {
-		cout << "matrix_group::init_base_affine before affine_matrix_group_base_and_orbits" << endl;
+		cout << "matrix_group::init_base_affine before "
+				"affine_matrix_group_base_and_orbits" << endl;
 		}
 	affine_matrix_group_base_and_transversal_length(n, 
 		GFq, f_semilinear, 
@@ -608,30 +649,35 @@ void matrix_group::init_base_affine(action *A, INT verbose_level)
 		}
 }
 
-void matrix_group::init_base_general_linear(action *A, INT verbose_level)
+void matrix_group::init_base_general_linear(
+		action *A, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 1);
 	INT q = GFq->q;
 	
 	if (f_v) {
-		cout << "matrix_group::init_base_general_linear verbose_level=" << verbose_level << endl;
+		cout << "matrix_group::init_base_general_linear "
+				"verbose_level=" << verbose_level << endl;
 		}
 	A->degree = degree;
 	if (f_vv) {
-		cout << "matrix_group::init_base_general_linear degree=" << degree << endl;
+		cout << "matrix_group::init_base_general_linear "
+				"degree=" << degree << endl;
 		}
 	A->base_len = matrix_group_base_len_general_linear_group(
 			n, q, f_semilinear, verbose_level - 1);
 	// in GALOIS/group_generators.C
 	if (f_vv) {
-		cout << "matrix_group::init_base_general_linear base_len=" << A->base_len << endl;
+		cout << "matrix_group::init_base_general_linear "
+				"base_len=" << A->base_len << endl;
 		}
 
 	A->allocate_base_data(A->base_len);
 
 	if (f_vv) {
-		cout << "matrix_group::init_base_general_linear before affine_matrix_group_base_and_orbits" << endl;
+		cout << "matrix_group::init_base_general_linear before "
+				"affine_matrix_group_base_and_orbits" << endl;
 		}
 	general_linear_matrix_group_base_and_transversal_length(n, 
 		GFq, f_semilinear, 
@@ -659,20 +705,24 @@ void matrix_group::init_gl_classes(INT verbose_level)
 	if (GFq->e == 1) {
 		// the following was added Dec 2, 2013:
 		if (f_v) {
-			cout << "matrix_group::init_gl_classes before init gl_classes n = "
+			cout << "matrix_group::init_gl_classes "
+					"before init gl_classes n = "
 					<< n << " before new gl_classes" << endl;
 			}
 		C = new gl_classes;
 		if (f_v) {
-			cout << "matrix_group::init_gl_classes after new gl_classes" << endl;
+			cout << "matrix_group::init_gl_classes "
+					"after new gl_classes" << endl;
 			}
 		C->init(n, GFq, verbose_level);
 		if (f_v) {
-			cout << "matrix_group::init_gl_classes after init gl_classes" << endl;
+			cout << "matrix_group::init_gl_classes "
+					"after init gl_classes" << endl;
 			}
 		}
 	else {
-		cout << "matrix_group::init_gl_classes the field is not a prime field" << endl;
+		cout << "matrix_group::init_gl_classes the field "
+				"is not a prime field" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -690,7 +740,8 @@ INT matrix_group::GL_element_entry_ij(INT *Elt, INT i, INT j)
 INT matrix_group::GL_element_entry_frobenius(INT *Elt)
 {
 	if (!f_semilinear) {
-		cout << "matrix_group::GL_element_entry_frobenius fatal: !f_semilinear" << endl;
+		cout << "matrix_group::GL_element_entry_frobenius "
+				"fatal: !f_semilinear" << endl;
 		exit(1);
 		}
 	if (f_projective) {
@@ -703,7 +754,8 @@ INT matrix_group::GL_element_entry_frobenius(INT *Elt)
 		return Elt[n * n];
 		}
 	else {
-		cout << "matrix_group::GL_element_entry_frobenius unknown group type" << endl;
+		cout << "matrix_group::GL_element_entry_frobenius "
+				"unknown group type" << endl;
 		exit(1);
 		}
 }
@@ -726,17 +778,20 @@ INT matrix_group::image_of_element(INT *Elt, INT a, INT verbose_level)
 		b = GL_image_of_AG_element(Elt, a, verbose_level - 1);
 		}
 	else {
-		cout << "matrix_group::image_of_element unknown group type" << endl;
+		cout << "matrix_group::image_of_element "
+				"unknown group type" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "matrix_group::image_of_element " << a << " maps to " << b << endl;
+		cout << "matrix_group::image_of_element " << a
+				<< " maps to " << b << endl;
 		}
 	return b;
 }
 
 
-INT matrix_group::GL_image_of_PG_element(INT *Elt, INT a, INT verbose_level)
+INT matrix_group::GL_image_of_PG_element(
+		INT *Elt, INT a, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT b;
@@ -756,7 +811,8 @@ INT matrix_group::GL_image_of_PG_element(INT *Elt, INT a, INT verbose_level)
 	return b;
 }
 
-INT matrix_group::GL_image_of_AG_element(INT *Elt, INT a, INT verbose_level)
+INT matrix_group::GL_image_of_AG_element(
+		INT *Elt, INT a, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT b;
@@ -783,26 +839,31 @@ void matrix_group::action_from_the_right_all_types(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "matrix_group::action_from_the_right_all_types" << endl;
+		cout << "matrix_group::action_from_the_right_"
+				"all_types" << endl;
 		}
 	if (f_projective) {
 		projective_action_from_the_right(v, A, vA, verbose_level - 1);
 		}
 	else if (f_affine) {
-		GFq->affine_action_from_the_right(f_semilinear, v, A, vA, n);
+		GFq->affine_action_from_the_right(f_semilinear,
+				v, A, vA, n);
 			// vA = (v * A)^{p^f} + b
 			// where b = A + n * n
 			// and f = A[n * n + n] if f_semilinear is TRUE
 		}
 	else if (f_general_linear) {
-		general_linear_action_from_the_right(v, A, vA, verbose_level - 1);
+		general_linear_action_from_the_right(v,
+				A, vA, verbose_level - 1);
 		}
 	else {
-		cout << "matrix_group::action_from_the_right_all_types unknown group type" << endl;
+		cout << "matrix_group::action_from_the_right_"
+				"all_types unknown group type" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "matrix_group::action_from_the_right_all_types done" << endl;
+		cout << "matrix_group::action_from_the_right_"
+				"all_types done" << endl;
 		}
 }
 
@@ -814,11 +875,14 @@ void matrix_group::projective_action_from_the_right(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "matrix_group::projective_action_from_the_right"  << endl;
+		cout << "matrix_group::projective_action_"
+				"from_the_right"  << endl;
 		}	
-	GFq->projective_action_from_the_right(f_semilinear, v, A, vA, n, verbose_level - 1);
+	GFq->projective_action_from_the_right(f_semilinear,
+			v, A, vA, n, verbose_level - 1);
 	if (f_v) {
-		cout << "matrix_group::projective_action_from_the_right done"  << endl;
+		cout << "matrix_group::projective_action_"
+				"from_the_right done"  << endl;
 		}	
 }
 
@@ -830,11 +894,14 @@ void matrix_group::general_linear_action_from_the_right(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "matrix_group::general_linear_action_from_the_right"  << endl;
+		cout << "matrix_group::general_linear_action_"
+				"from_the_right"  << endl;
 		}
-	GFq->general_linear_action_from_the_right(f_semilinear, v, A, vA, n, verbose_level - 1);
+	GFq->general_linear_action_from_the_right(f_semilinear,
+			v, A, vA, n, verbose_level - 1);
 	if (f_v) {
-		cout << "matrix_group::general_linear_action_from_the_right done"  << endl;
+		cout << "matrix_group::general_linear_action_"
+				"from_the_right done"  << endl;
 		}	
 }
 
@@ -910,7 +977,8 @@ INT matrix_group::GL_is_one(INT *Elt)
 	
 	//cout << "matrix_group::GL_is_one" << endl;
 	if (f_projective) {
-		if (!GFq->is_scalar_multiple_of_identity_matrix(Elt, n, c)) {
+		if (!GFq->is_scalar_multiple_of_identity_matrix(
+				Elt, n, c)) {
 			return FALSE;
 			}
 		if (f_semilinear) {
@@ -922,12 +990,14 @@ INT matrix_group::GL_is_one(INT *Elt)
 	else if (f_affine) {
 		//cout << "matrix_group::GL_is_one f_affine" << endl;
 		if (!GFq->is_identity_matrix(Elt, n)) {
-			//cout << "matrix_group::GL_is_one not the identity matrix" << endl;
+			//cout << "matrix_group::GL_is_one
+			// not the identity matrix" << endl;
 			//print_integer_matrix(cout, Elt, n, n);
 			return FALSE;
 			}
 		if (!GFq->is_zero_vector(Elt + n * n, n)) {
-			//cout << "matrix_group::GL_is_one not the zero vector" << endl;
+			//cout << "matrix_group::GL_is_one
+			// not the zero vector" << endl;
 			return FALSE;
 			}
 		if (f_semilinear) {
@@ -939,7 +1009,8 @@ INT matrix_group::GL_is_one(INT *Elt)
 	else if (f_general_linear) {
 		//cout << "matrix_group::GL_is_one f_general_linear" << endl;
 		if (!GFq->is_identity_matrix(Elt, n)) {
-			//cout << "matrix_group::GL_is_one not the identity matrix" << endl;
+			//cout << "matrix_group::GL_is_one
+			// not the identity matrix" << endl;
 			//print_integer_matrix(cout, Elt, n, n);
 			return FALSE;
 			}
@@ -964,20 +1035,25 @@ void matrix_group::GL_mult(INT *A, INT *B, INT *AB, INT verbose_level)
 		cout << "matrix_group::GL_mult" << endl;
 		}
 	if (f_v) {
-		cout << "matrix_group::GL_mult_verbose before GL_mult_internal (1)" << endl;
+		cout << "matrix_group::GL_mult_verbose "
+				"before GL_mult_internal (1)" << endl;
 		}
 	GL_mult_internal(A, B, AB, verbose_level - 1);
 	if (f_v) {
-		cout << "matrix_group::GL_mult_verbose before GL_mult_internal (2)" << endl;
+		cout << "matrix_group::GL_mult_verbose "
+				"before GL_mult_internal (2)" << endl;
 		}
-	GL_mult_internal(B + elt_size_INT_half, A + elt_size_INT_half, AB + elt_size_INT_half, verbose_level - 1);
+	GL_mult_internal(B + elt_size_INT_half,
+			A + elt_size_INT_half,
+			AB + elt_size_INT_half, verbose_level - 1);
 	if (f_v) {
 		cout << "matrix_group::GL_mult done" << endl;
 		}
 	
 }
 
-void matrix_group::GL_mult_internal(INT *A, INT *B, INT *AB, INT verbose_level)
+void matrix_group::GL_mult_internal(
+		INT *A, INT *B, INT *AB, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -988,14 +1064,16 @@ void matrix_group::GL_mult_internal(INT *A, INT *B, INT *AB, INT verbose_level)
 	if (f_projective) {
 		if (f_semilinear) {
 			if (f_v) {
-				cout << "matrix_group::GL_mult_internal before GFq->semilinear_matrix_mult" << endl;
+				cout << "matrix_group::GL_mult_internal "
+						"before GFq->semilinear_matrix_mult" << endl;
 				}
 			//GFq->semilinear_matrix_mult(A, B, AB, n);
 			GFq->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n);
 			}
 		else {
 			if (f_v) {
-				cout << "matrix_group::GL_mult_internal before GFq->mult_matrix_matrix" << endl;
+				cout << "matrix_group::GL_mult_internal "
+						"before GFq->mult_matrix_matrix" << endl;
 				}
 			GFq->mult_matrix_matrix(A, B, AB, n, n, n);
 			}
@@ -1003,13 +1081,15 @@ void matrix_group::GL_mult_internal(INT *A, INT *B, INT *AB, INT verbose_level)
 	else if (f_affine) {
 		if (f_semilinear) {
 			if (f_v) {
-				cout << "matrix_group::GL_mult_internal before GFq->semilinear_matrix_mult_affine" << endl;
+				cout << "matrix_group::GL_mult_internal "
+						"before GFq->semilinear_matrix_mult_affine" << endl;
 				}
 			GFq->semilinear_matrix_mult_affine(A, B, AB, n);
 			}
 		else {
 			if (f_v) {
-				cout << "matrix_group::GL_mult_internal before GFq->matrix_mult_affine" << endl;
+				cout << "matrix_group::GL_mult_internal "
+						"before GFq->matrix_mult_affine" << endl;
 				}
 			GFq->matrix_mult_affine(A, B, AB, n, verbose_level - 1);
 			}
@@ -1017,14 +1097,16 @@ void matrix_group::GL_mult_internal(INT *A, INT *B, INT *AB, INT verbose_level)
 	else if (f_general_linear) {
 		if (f_semilinear) {
 			if (f_v) {
-				cout << "matrix_group::GL_mult_internal before GFq->semilinear_matrix_mult" << endl;
+				cout << "matrix_group::GL_mult_internal "
+						"before GFq->semilinear_matrix_mult" << endl;
 				}
 			//GFq->semilinear_matrix_mult(A, B, AB, n);
 			GFq->semilinear_matrix_mult_memory_given(A, B, AB, tmp_M, n);
 			}
 		else {
 			if (f_v) {
-				cout << "matrix_group::GL_mult_internal before GFq->mult_matrix_matrix" << endl;
+				cout << "matrix_group::GL_mult_internal "
+						"before GFq->mult_matrix_matrix" << endl;
 				}
 			GFq->mult_matrix_matrix(A, B, AB, n, n, n);
 			}
@@ -1056,13 +1138,15 @@ void matrix_group::GL_transpose(INT *A, INT *At, INT verbose_level)
 		cout << "matrix_group::GL_transpose" << endl;
 		}
 	GL_transpose_internal(A, At, verbose_level);
-	GL_transpose_internal(A + elt_size_INT_half, At + elt_size_INT_half, verbose_level);
+	GL_transpose_internal(A + elt_size_INT_half,
+			At + elt_size_INT_half, verbose_level);
 	if (f_v) {
 		cout << "matrix_group::GL_transpose done" << endl;
 		}
 }
 
-void matrix_group::GL_transpose_internal(INT *A, INT *At, INT verbose_level)
+void matrix_group::GL_transpose_internal(
+		INT *A, INT *At, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -1070,7 +1154,8 @@ void matrix_group::GL_transpose_internal(INT *A, INT *At, INT verbose_level)
 		cout << "matrix_group::GL_transpose_internal" << endl;
 		}
 	if (f_affine) {
-		cout << "matrix_group::GL_transpose_internal not yet implemented for affine groups" << endl;
+		cout << "matrix_group::GL_transpose_internal "
+				"not yet implemented for affine groups" << endl;
 		exit(1);
 		}
 	GFq->transpose_matrix(A, At, n, n);
@@ -1099,47 +1184,60 @@ void matrix_group::GL_invert_internal(INT *A, INT *Ainv, INT verbose_level)
 	if (f_projective) {
 		if (f_semilinear) {
 			if (f_vv) {
-				cout << "matrix_group::GL_invert_internal calling GFq->semilinear_matrix_invert" << endl;
+				cout << "matrix_group::GL_invert_internal "
+						"calling GFq->semilinear_matrix_invert" << endl;
 				}
-			GFq->semilinear_matrix_invert(A, Elt4, base_cols, Ainv, n, verbose_level - 2);
+			GFq->semilinear_matrix_invert(A, Elt4,
+					base_cols, Ainv, n, verbose_level - 2);
 			}
 		else {
 			if (f_vv) {
-				cout << "matrix_group::GL_invert_internal calling GFq->matrix_invert" << endl;
+				cout << "matrix_group::GL_invert_internal "
+						"calling GFq->matrix_invert" << endl;
 				}
-			GFq->matrix_invert(A, Elt4, base_cols, Ainv, n, verbose_level - 2);
+			GFq->matrix_invert(A, Elt4,
+					base_cols, Ainv, n, verbose_level - 2);
 			}
 		}
 	else if (f_affine) {
 		if (f_semilinear) {
 			if (f_vv) {
-				cout << "matrix_group::semilinear_matrix_invert_affine calling GFq->semilinear_matrix_invert" << endl;
+				cout << "matrix_group::semilinear_matrix_invert_affine "
+						"calling GFq->semilinear_matrix_invert" << endl;
 				}
-			GFq->semilinear_matrix_invert_affine(A, Elt4, base_cols, Ainv, n, verbose_level - 2);
+			GFq->semilinear_matrix_invert_affine(A, Elt4,
+					base_cols, Ainv, n, verbose_level - 2);
 			}
 		else {
 			if (f_vv) {
-				cout << "matrix_group::matrix_invert_affine calling GFq->semilinear_matrix_invert" << endl;
+				cout << "matrix_group::matrix_invert_affine "
+						"calling GFq->semilinear_matrix_invert" << endl;
 				}
-			GFq->matrix_invert_affine(A, Elt4, base_cols, Ainv, n, verbose_level - 2);
+			GFq->matrix_invert_affine(A, Elt4,
+					base_cols, Ainv, n, verbose_level - 2);
 			}
 		}
 	else if (f_general_linear) {
 		if (f_semilinear) {
 			if (f_vv) {
-				cout << "matrix_group::GL_invert_internal calling GFq->semilinear_matrix_invert" << endl;
+				cout << "matrix_group::GL_invert_internal "
+						"calling GFq->semilinear_matrix_invert" << endl;
 				}
-			GFq->semilinear_matrix_invert(A, Elt4, base_cols, Ainv, n, verbose_level - 2);
+			GFq->semilinear_matrix_invert(A, Elt4,
+					base_cols, Ainv, n, verbose_level - 2);
 			}
 		else {
 			if (f_vv) {
-				cout << "matrix_group::GL_invert_internal calling GFq->matrix_invert" << endl;
+				cout << "matrix_group::GL_invert_internal "
+						"calling GFq->matrix_invert" << endl;
 				}
-			GFq->matrix_invert(A, Elt4, base_cols, Ainv, n, verbose_level - 2);
+			GFq->matrix_invert(A, Elt4,
+					base_cols, Ainv, n, verbose_level - 2);
 			}
 		}
 	else {
-		cout << "matrix_group::GL_invert_internal unknown group type" << endl;
+		cout << "matrix_group::GL_invert_internal "
+				"unknown group type" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -1290,7 +1388,8 @@ void matrix_group::GL_code_for_make_element(INT *Elt, INT *data)
 		}
 }
 
-void matrix_group::GL_print_for_make_element(INT *Elt, ostream &ost)
+void matrix_group::GL_print_for_make_element(
+		INT *Elt, ostream &ost)
 {
 	INT i, j, a;
 	int w;
@@ -1318,7 +1417,8 @@ void matrix_group::GL_print_for_make_element(INT *Elt, ostream &ost)
 		}
 }
 
-void matrix_group::GL_print_for_make_element_no_commas(INT *Elt, ostream &ost)
+void matrix_group::GL_print_for_make_element_no_commas(
+		INT *Elt, ostream &ost)
 {
 	INT i, j, a;
 	int w;
@@ -1395,7 +1495,8 @@ void matrix_group::GL_print_easy_normalized(INT *Elt, ostream &ost)
 			}
 		}
 	else {
-		cout << "matrix_group::GL_print_easy_normalized unknown group type" << endl;
+		cout << "matrix_group::GL_print_easy_normalized "
+				"unknown group type" << endl;
 		exit(1);
 		}
 
@@ -1569,7 +1670,8 @@ void matrix_group::put_digit(UBYTE *elt, INT i, INT j, INT d)
 	int h, h1, word, bit;
 	UBYTE mask;
 	
-	//cout << "put_digit() " << d << " bits_per_digit = " << bits_per_digit << endl;
+	//cout << "put_digit() " << d << " bits_per_digit = "
+	//		<< bits_per_digit << endl;
 	for (h = 0; h < bits_per_digit; h++) {
 		h1 = h0 + h;
 		word = h1 >> 3;
@@ -1615,7 +1717,8 @@ void matrix_group::put_digit_frobenius(UBYTE *elt, INT d)
 		}
 }
 
-void matrix_group::make_element(INT *Elt, INT *data, INT verbose_level)
+void matrix_group::make_element(INT *Elt,
+		INT *data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1639,11 +1742,13 @@ void matrix_group::make_element(INT *Elt, INT *data, INT verbose_level)
 		Elt[i] = a;
 		}
 	if (f_vv) {
-		cout << "matrix_group::make_element calling GL_invert_internal" << endl;
+		cout << "matrix_group::make_element "
+				"calling GL_invert_internal" << endl;
 		}
 	GL_invert_internal(Elt, Elt + elt_size_INT_half, verbose_level - 2);
 	if (f_vv) {
-		cout << "matrix_group::make_element created the following element" << endl;
+		cout << "matrix_group::make_element "
+				"created the following element" << endl;
 		GL_print_easy(Elt, cout);
 		cout << endl;
 		}
@@ -1673,13 +1778,15 @@ void matrix_group::make_GL_element(INT *Elt, INT *A, INT f)
 			}
 		}
 	else {
-		cout << "matrix_group::make_GL_element unknown group type" << endl;
+		cout << "matrix_group::make_GL_element "
+				"unknown group type" << endl;
 		exit(1);
 		}
 	GL_invert_internal(Elt, Elt + elt_size_INT_half, FALSE);
 }
 
-void matrix_group::orthogonal_group_random_generator(action *A, orthogonal *O, 
+void matrix_group::orthogonal_group_random_generator(
+	action *A, orthogonal *O,
 	INT f_siegel, 
 	INT f_reflection, 
 	INT f_similarity,
@@ -1703,7 +1810,8 @@ void matrix_group::orthogonal_group_random_generator(action *A, orthogonal *O,
 	Mtx = NEW_INT(n * n + 1);
 
 	if (f_v) {
-		cout << "matrix_group::orthogonal_group_random_generator before O->random_generator_for_orthogonal_group" << endl;
+		cout << "matrix_group::orthogonal_group_random_generator "
+				"before O->random_generator_for_orthogonal_group" << endl;
 		}
 	
 	O->random_generator_for_orthogonal_group(
@@ -1715,7 +1823,8 @@ void matrix_group::orthogonal_group_random_generator(action *A, orthogonal *O,
 		Mtx, verbose_level - 1);
 	
 	if (f_v) {
-		cout << "matrix_group::orthogonal_group_random_generator after O->random_generator_for_orthogonal_group" << endl;
+		cout << "matrix_group::orthogonal_group_random_generator "
+				"after O->random_generator_for_orthogonal_group" << endl;
 		cout << "Mtx=" << endl;
 		INT_matrix_print(Mtx, n, n);
 		}
@@ -1726,7 +1835,8 @@ void matrix_group::orthogonal_group_random_generator(action *A, orthogonal *O,
 
 
 	if (f_vvv) {
-		cout << "matrix_group::orthogonal_group_random_generator random generator:" << endl;
+		cout << "matrix_group::orthogonal_group_random_generator "
+				"random generator:" << endl;
 		A->element_print_quick(Elt, cout);
 		}
 }
@@ -1750,7 +1860,8 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 	S->group_order(go);
 	goi = go.as_INT();
 	if (f_v) {
-		cout << "matrix_group::matrices_without_eigenvector_one testing group of order " << goi << endl;
+		cout << "matrix_group::matrices_without_eigenvector_one "
+				"testing group of order " << goi << endl;
 		if (f_path_select) {
 			cout << "path[0] = " << select_value << endl;
 			}
@@ -1841,7 +1952,9 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 				double d;
 				
 				d = (double) rk / (double) goi * 100.;
-				cout << "The matrix " << rk << " / " << goi << " (" << d << "%) has no eigenvector one, cnt=" << cnt << endl;
+				cout << "The matrix " << rk << " / " << goi
+						<< " (" << d << "%) has no eigenvector one, "
+								"cnt=" << cnt << endl;
 				S->path_unrank_INT(rk);
 				cout << "path ";
 				INT_vec_print(cout, S->path, S->A->base_len);
@@ -1858,7 +1971,8 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 			}
 		}
 	if (f_v) {
-		cout << "We found " << cnt << " matrices without eigenvector one" << endl;
+		cout << "We found " << cnt << " matrices without "
+				"eigenvector one" << endl;
 		}
 	Sol = NEW_INT(cnt);
 	for (i = 0; i < cnt; i++) {
@@ -1871,12 +1985,14 @@ void matrix_group::matrices_without_eigenvector_one(sims *S,
 	FREE_INT(Mtx3);
 	FREE_INT(Mtx4);
 	if (f_v) {
-		cout << "matrix_group::matrices_without_eigenvector_one done, found this many matrices: " << cnt << endl;
+		cout << "matrix_group::matrices_without_eigenvector_one "
+				"done, found this many matrices: " << cnt << endl;
 		}
 }
 
 
-void matrix_group::matrix_minor(INT *Elt, INT *Elt1, matrix_group *mtx1, INT f, INT verbose_level)
+void matrix_group::matrix_minor(INT *Elt,
+		INT *Elt1, matrix_group *mtx1, INT f, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *data;
@@ -1900,5 +2016,100 @@ void matrix_group::matrix_minor(INT *Elt, INT *Elt1, matrix_group *mtx1, INT f, 
 		}
 }
 
+INT matrix_group::base_len(INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+	INT base_len;
 
 
+	if (f_v) {
+		cout << "matrix_group::base_len" << endl;
+		}
+	if (f_projective) {
+		base_len = matrix_group_base_len_projective_group(
+					n, GFq->q,
+					f_semilinear, verbose_level - 1);
+	} else if (f_affine) {
+		base_len = matrix_group_base_len_affine_group(
+					n, GFq->q,
+					f_semilinear, verbose_level - 1);
+	} else if (f_general_linear) {
+		base_len = matrix_group_base_len_general_linear_group(
+					n, GFq->q,
+					f_semilinear, verbose_level - 1);
+	} else {
+		cout << "matrix_group::base_len no type" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "matrix_group::base_len done" << endl;
+		}
+	return base_len;
+}
+
+void matrix_group::base_and_transversal_length(
+		INT base_len,
+		INT *base, INT *transversal_length,
+		INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+
+	if (f_v) {
+		cout << "matrix_group::base_and_transversal_length" << endl;
+		}
+	if (f_projective) {
+		projective_matrix_group_base_and_transversal_length(n,
+			GFq, f_semilinear,
+			base_len, degree,
+			base, transversal_length,
+			verbose_level);
+	} else if (f_affine) {
+		affine_matrix_group_base_and_transversal_length(n,
+			GFq, f_semilinear,
+			base_len, degree,
+			base, transversal_length,
+			verbose_level);
+	} else if (f_general_linear) {
+		general_linear_matrix_group_base_and_transversal_length(n,
+			GFq, f_semilinear,
+			base_len, degree,
+			base, transversal_length,
+			verbose_level);
+	}
+	if (f_v) {
+		cout << "matrix_group::base_and_transversal_length done" << endl;
+		}
+}
+
+void matrix_group::strong_generators_low_level(INT *&data,
+		INT &size, INT &nb_gens, INT verbose_level)
+{
+	INT f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "matrix_group::strong_generators_low_level" << endl;
+		}
+	if (f_projective) {
+		strong_generators_for_projective_linear_group(
+			n, GFq,
+			f_semilinear,
+			data, size, nb_gens,
+			verbose_level - 1);
+	} else if (f_affine) {
+		strong_generators_for_affine_linear_group(
+				n, GFq,
+				f_semilinear,
+				data, size, nb_gens,
+				verbose_level - 1);
+	} else if (f_general_linear) {
+		strong_generators_for_general_linear_group(
+			n, GFq,
+			f_semilinear,
+			data, size, nb_gens,
+			verbose_level);
+	}
+	if (f_v) {
+		cout << "matrix_group::strong_generators_low_level done" << endl;
+		}
+}

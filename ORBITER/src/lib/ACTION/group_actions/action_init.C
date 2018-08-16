@@ -83,7 +83,7 @@ void action::init_direct_product_group(
 	P->init(M1, M2, verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group "
-				"after W->init_tensor_wreath_product" << endl;
+				"after P->init" << endl;
 		}
 
 	f_is_linear = FALSE;

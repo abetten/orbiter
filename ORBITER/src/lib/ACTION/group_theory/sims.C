@@ -494,12 +494,14 @@ void sims::init_generator_depth_and_perm(INT verbose_level)
 	if (f_v) {
 		cout << "sims::init_generator_depth_and_perm" << endl;
 		cout << "gens.len=" << gens.len << endl;
+		cout << "action=" << A->label << endl;
 		}
 	if (my_base_len != A->base_len) {
 		cout << "sims::init_generator_depth_and_perm "
 				"my_base_len != A->base_len" << endl;
 		exit(1);
 		}
+
 	for (i = 0; i <= A->base_len; i++) {
 		nb_gen[i] = 0;
 		}

@@ -998,6 +998,11 @@ void projective_matrix_group_base_and_orbits(INT n,
 	INT *base, INT *transversal_length, 
 	INT **orbit, INT **orbit_inv, 
 	INT verbose_level);
+void projective_matrix_group_base_and_transversal_length(INT n,
+	finite_field *F, INT f_semilinear,
+	INT base_len, INT degree,
+	INT *base, INT *transversal_length,
+	INT verbose_level);
 void affine_matrix_group_base_and_transversal_length(INT n, 
 	finite_field *F, INT f_semilinear, 
 	INT base_len, INT degree, 
