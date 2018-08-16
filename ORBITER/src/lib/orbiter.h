@@ -9,10 +9,10 @@
 // TOP_LEVEL started: September 23, 2010
 // INCIDENCE deleted: July 27, 2018
 
-#include "GALOIS/galois.h"
-#include "ACTION/action.h"
-#include "SNAKES_AND_LADDERS/snakesandladders.h"
+#include "foundations/foundations.h"
+#include "groups_and_group_actions/groups_and_group_actions.h"
+#include "poset_classification/poset_classification.h"
 #include "DISCRETA/discreta.h"
-#include "TOP_LEVEL/top_level.h"
+#include "top_level/top_level.h"
 
 

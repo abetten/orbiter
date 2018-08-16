@@ -3,7 +3,7 @@
 // Anton Betten
 // February 7, 2018
 
-#include "GALOIS/galois.h"
+#include "orbiter.h"
 #include "math.h"
 
 
