@@ -1,8 +1,12 @@
-# orbiter
-classification of combinatorial objects
+Orbiter
+=======
+
+Classification of combinatorial objects
 
 
 Please see ORBITER/doc/orbiter.pdf 
+or
+./DOC_DOXYGEN/index.html
 
 Anton Betten
 March 18, 2016,
