@@ -1,0 +1,11 @@
+digraph "finite_field::semilinear_action_from_the_left"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node17897 [label="finite_field::semilinear\l_action_from_the_left",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node17897 -> Node17898 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17898 [label="finite_field::mult\l_vector_from_the_right",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a7a6de59441b867aac84f3f0c711a851a"];
+  Node17897 -> Node17899 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17899 [label="finite_field::vector\l_frobenius_power_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#ab56074024300775d943c7943d845df91"];
+}

@@ -1,0 +1,6 @@
+<map id="spreadsheet::find_by_column" name="spreadsheet::find_by_column">
+<area shape="rect" id="node2" href="$d8/d11/classspreadsheet.html#ab1449d4cae40dd8c52d92f7edf95433a" title="spreadsheet::print\l_table_sorted" alt="" coords="231,5,359,44"/>
+<area shape="rect" id="node3" href="$d8/d11/classspreadsheet.html#a1c8aeaa2284bf61c8ca2ca58ec04e73f" title="spreadsheet::remove_rows" alt="" coords="204,68,386,93"/>
+<area shape="rect" id="node4" href="$d8/d11/classspreadsheet.html#a7d63405ab5c5ac22c86449e5ca5d5be1" title="spreadsheet::remove\l_rows_where_field_is_empty" alt="" coords="198,117,392,156"/>
+<area shape="rect" id="node5" href="$d8/d11/classspreadsheet.html#a6da34f3003f060fbe97e8661b7ead5bc" title="spreadsheet::patch_with" alt="" coords="212,180,378,205"/>
+</map>

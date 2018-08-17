@@ -1,0 +1,15 @@
+digraph "INT_vec_count_number_of_nonzero_entries"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4715 [label="INT_vec_count_number\l_of_nonzero_entries",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4715 -> Node4716 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4716 [label="gl_classes::identify2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#a01f63c38f74a678752344f31fc3820bc"];
+  Node4716 -> Node4717 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4717 [label="gl_classes::identify\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e"];
+  Node4715 -> Node4718 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4718 [label="gl_classes::centralizer\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#a0469984583efc3d27c70fb32f45d71d8"];
+  Node4718 -> Node4719 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4719 [label="gl_classes::generators\l_for_centralizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c"];
+}

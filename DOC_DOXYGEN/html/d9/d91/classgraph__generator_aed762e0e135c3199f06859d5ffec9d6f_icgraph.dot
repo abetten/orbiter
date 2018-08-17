@@ -1,0 +1,13 @@
+digraph "graph_generator::compute_degree_sequence"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node37 [label="graph_generator::compute\l_degree_sequence",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node37 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="graph_generator::check\l_regularity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#a8606511db2ddfc8c067160cf4e89afab"];
+  Node38 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="graph_generator::check\l_conditions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#a0e74d900ad772c4f39500aa4eccbaee0"];
+  Node39 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="graph_generator::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#acd2ec07214d869173eb1c9ffb3ec0312"];
+}

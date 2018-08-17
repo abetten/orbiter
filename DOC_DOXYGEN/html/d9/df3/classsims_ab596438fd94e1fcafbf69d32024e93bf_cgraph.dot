@@ -1,0 +1,11 @@
+digraph "sims::freeself"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4627 [label="sims::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4627 -> Node4628 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4628 [label="sims::delete_images",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a5a4fd410f399c81c847052861e3bc3ff"];
+  Node4627 -> Node4629 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4629 [label="sims::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a47d4aacfa330b9a59d87fb6bf7529e08"];
+}

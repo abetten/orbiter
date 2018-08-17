@@ -1,0 +1,35 @@
+digraph "text_4pts"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node686 [label="text_4pts",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node686 -> Node687 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node687 [label="mp_graphics::aligned_text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a52ca0d0e39640fe15c6a8bd8633c9e5a"];
+  Node687 -> Node688 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node688 [label="mp_graphics::aligned\l_text_with_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a3b5a8558ee721bd8b9ed36e732317679"];
+  Node688 -> Node689 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node689 [label="mp_graphics::st_alignment",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ab897ac847368de2da4296c7f159cc5f9"];
+  Node689 -> Node690 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node690 [label="mp_graphics::st_alignment_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a9f7aa1c186791f69881ddbf590835f3e"];
+  Node688 -> Node691 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node691 [label="mp_graphics::text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ae92ece77cf1942bfee760d6cf854b74b"];
+  Node691 -> Node692 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node692 [label="mp_graphics::coords\l_min_max",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#afa0af74da2afd1d00b2eeb5e25b4f596"];
+  Node691 -> Node693 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node693 [label="mp_graphics::user2dev",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#af087f5f4b08c72f67f5e35cc312070fb"];
+  Node693 -> Node694 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node694 [label="transform_llur",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d29/draw_8_c.html#af38b139f64e19404b9a944c7188d4aff"];
+  Node691 -> Node695 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node695 [label="mp_graphics::text_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a3a8320de1e68f3c290e138355f05f8ae"];
+  Node691 -> Node696 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node696 [label="mp_graphics::text_mp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ad30aeb75639e84d876dade51faa50bee"];
+  Node691 -> Node697 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node697 [label="mp_graphics::text_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ac7e4333813701bcc76fc5eba7700bdbd"];
+  Node697 -> Node698 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node698 [label="mp_graphics::output\l_xy_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a640800bc67fec9ed441b27c71461e9c6"];
+  Node698 -> Node699 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node699 [label="mp_graphics::output\l_x_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a311d4fb1c32d1eb0faeee055bb8badee"];
+  Node698 -> Node700 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node700 [label="mp_graphics::output\l_y_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a0d6bddb89b4c58c82aa124dd003dda08"];
+}

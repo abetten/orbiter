@@ -1,0 +1,31 @@
+digraph "DlxAppendRowAndSolveRHS"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node112 [label="DlxAppendRowAndSolveRHS",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node112 -> Node113 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node113 [label="DlxTransposeAndSolveRHS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd4/solvers_8h.html#ae4b7ea72e7db2005606be60f7fd70b94"];
+  Node113 -> Node114 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node114 [label="diophant::solve_all\l_DLX_with_RHS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a6423b067628b3caa1a6d2063ee803fac"];
+  Node114 -> Node115 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node115 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dbc/solve__diophant_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node114 -> Node116 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node116 [label="exact_cover::compute\l_liftings_single_case_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d94/classexact__cover.html#ab111dd375f84d6f60ec7edeb2b18523e"];
+  Node116 -> Node117 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node117 [label="exact_cover::compute\l_liftings_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d94/classexact__cover.html#a1438b5e280f85abcabeb7f68eeabb72b"];
+  Node117 -> Node118 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node118 [label="compute_lifts_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#a7572cd3732ca8df324632282e9002dc4"];
+  Node117 -> Node119 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node119 [label="exact_cover_arguments\l::compute_lifts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dae/classexact__cover__arguments.html#ab0cdb09a17201c89aa9f83bd511dbbf7"];
+  Node119 -> Node120 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node120 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/df8/spread__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node119 -> Node121 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node121 [label="compute_lifts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#a82fe3b66a6f9d9075eb8847d7bfe556b"];
+  Node121 -> Node122 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node122 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node121 -> Node123 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node123 [label="arc_generator::main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a"];
+  Node113 -> Node124 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node124 [label="diophant::solve_all\l_DLX_with_RHS_and_callback",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#acdd512e26ee214803439e24f24fd9805"];
+}

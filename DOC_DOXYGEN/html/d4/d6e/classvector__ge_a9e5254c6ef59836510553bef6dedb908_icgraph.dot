@@ -1,0 +1,9 @@
+digraph "vector_ge::extract_subset_of_elements_by_rank_text_vector"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1118 [label="vector_ge::extract\l_subset_of_elements\l_by_rank_text_vector",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1118 -> Node1119 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1119 [label="strong_generators::\lswitch_to_subgroup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#ac08fd2bdfc8603376339c9590e43bdfb"];
+}

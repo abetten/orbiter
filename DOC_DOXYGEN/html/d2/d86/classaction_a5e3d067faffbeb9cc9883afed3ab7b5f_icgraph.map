@@ -1,0 +1,11 @@
+<map id="action::test_if_set_stabilizes" name="action::test_if_set_stabilizes">
+<area shape="rect" id="node2" href="$dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b" title="linear_set::do_compute\l_stabilizer" alt="" coords="178,5,338,44"/>
+<area shape="rect" id="node5" href="$dc/d09/classstrong__generators.html#ac38d27cd666ff5e47ccedd819de73209" title="strong_generators::\ltest_if_set_is_invariant\l_under_given_action" alt="" coords="180,68,337,120"/>
+<area shape="rect" id="node3" href="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b" title="linear_set::init_compute\l_stabilizer" alt="" coords="386,5,549,44"/>
+<area shape="rect" id="node4" href="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2" title="linear_set::compute\l_stabilizer_of_linear_set" alt="" coords="597,5,762,44"/>
+<area shape="rect" id="node6" href="$db/d28/classsurface__object__with__action.html#a65085da19618def3909b0f4bc27cba8a" title="surface_object_with\l_action::init" alt="" coords="398,75,537,113"/>
+<area shape="rect" id="node7" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="655,75,705,100"/>
+<area shape="rect" id="node8" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="597,124,763,163"/>
+<area shape="rect" id="node9" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="811,124,961,163"/>
+<area shape="rect" id="node10" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1009,131,1059,156"/>
+</map>

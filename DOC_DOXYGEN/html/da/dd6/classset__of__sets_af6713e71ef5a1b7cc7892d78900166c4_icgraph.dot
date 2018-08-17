@@ -1,0 +1,27 @@
+digraph "set_of_sets::get_eckardt_points"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node384 [label="set_of_sets::get_eckardt\l_points",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node384 -> Node385 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node385 [label="set_of_sets::number\l_of_eckardt_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#acf1d8689cc8ef9c4987d86c78be68302"];
+  Node385 -> Node386 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node386 [label="surface_classify_wedge\l::generate_source_code",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a4cb31d5e7747571177fbdedf79631fd9"];
+  Node386 -> Node387 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node387 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node384 -> Node388 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node388 [label="surface::create_surface_ab",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a9e0834d9fd3ea14957df1944ac40c847"];
+  Node388 -> Node389 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node389 [label="surface::create_surface\l_family_S",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a820199c4eab279fad1085a308550fa8f"];
+  Node389 -> Node390 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node390 [label="surface_create::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59"];
+  Node390 -> Node391 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node391 [label="surface_create::init\l_with_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2"];
+  Node390 -> Node392 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node392 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node392 -> Node393 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node393 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node388 -> Node394 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node394 [label="surface_classify_wedge\l::identify_Sa",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a8fdc22ea1850bd4da28ace84adb055a6"];
+}

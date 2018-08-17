@@ -1,0 +1,13 @@
+<map id="projective_space::create_Maruta_Hamada_arc" name="projective_space::create_Maruta_Hamada_arc">
+<area shape="rect" id="node2" href="$d7/d83/points_8_c.html#a8a498513b4415e1a4628a70fb6b26817" title="points" alt="" coords="276,105,332,131"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="485,153,590,179"/>
+<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95" title="PG_element_normalize\l_from_front" alt="" coords="457,203,618,241"/>
+<area shape="rect" id="node10" href="$d2/d17/classprojective__space.html#ae99e357b4a0ada3d5dcd07e13e65326a" title="projective_space::rank\l_point" alt="" coords="227,257,381,296"/>
+<area shape="rect" id="node11" href="$d2/d17/classprojective__space.html#a3cb7917af4c5f1590b660d4bf907e0fa" title="projective_space::unrank\l_point" alt="" coords="219,20,389,59"/>
+<area shape="rect" id="node12" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="245,320,363,345"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="485,55,590,80"/>
+<area shape="rect" id="node4" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="464,104,611,129"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="437,5,638,31"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="444,265,631,291"/>
+<area shape="rect" id="node9" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="686,265,847,291"/>
+</map>

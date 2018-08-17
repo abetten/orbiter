@@ -1,0 +1,16 @@
+digraph "discreta_base::eq"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11942 [label="discreta_base::eq",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node11942 -> Node11943 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11943 [label="is_trivial_clan",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a8884d267607e80d9798a5614f211a8c5"];
+  Node11942 -> Node11944 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11944 [label="Vector::print_word\l_nicely2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#ad8b224e83836e7b1fad7785853a4df79"];
+  Node11944 -> Node11945 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11945 [label="Vector::print_word\l_nicely",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#acf1a607f7a282a128ada9128465ce38f"];
+  Node11942 -> Node11946 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11946 [label="Vector::print_word\l_nicely_with_generator\l_labels",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#af999a68ef44d55c7c0e7a1eb7889fbba"];
+  Node11946 -> Node11945 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

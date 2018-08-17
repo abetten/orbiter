@@ -1,0 +1,9 @@
+digraph "oracle::get_nb_of_orbits_under_stabilizer"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5405 [label="oracle::get_nb_of_orbits\l_under_stabilizer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5405 -> Node5406 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5406 [label="sv_number_of_orbits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d9b/groups__and__group__actions_2data__structures_2data__structures_8h.html#ad976c1b3200f7425e559834ebd7fb067"];
+}

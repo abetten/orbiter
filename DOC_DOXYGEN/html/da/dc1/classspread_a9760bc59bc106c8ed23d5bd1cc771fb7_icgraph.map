@@ -1,0 +1,11 @@
+<map id="spread::unrank_subspace" name="spread::unrank_subspace">
+<area shape="rect" id="node2" href="$da/dc1/classspread.html#a0b2d2c643acc48cfea159a6d8c170280" title="spread::print_elements" alt="" coords="244,5,401,31"/>
+<area shape="rect" id="node3" href="$da/dc1/classspread.html#a3ec36a9401c1fb7a63575c5cce5f1567" title="spread::print_elements\l_and_points" alt="" coords="244,55,401,93"/>
+<area shape="rect" id="node4" href="$da/dc1/classspread.html#adbfcbebbb234d57e8a2d335aba4ac9e9" title="spread::early_test_func" alt="" coords="242,117,402,143"/>
+<area shape="rect" id="node5" href="$da/dc1/classspread.html#a29b18c7bc6187ef692f83ec66dbba17d" title="spread::check_function" alt="" coords="243,167,401,192"/>
+<area shape="rect" id="node9" href="$da/dc1/classspread.html#a4fc583df8f9bc80e796f0692c9ceb7e3" title="spread::check_function\l_incremental" alt="" coords="243,216,401,255"/>
+<area shape="rect" id="node10" href="$da/dc1/classspread.html#af2329f7f1e5d8b56b4a425672cc95f5d" title="spread::check_function_pair" alt="" coords="228,279,416,304"/>
+<area shape="rect" id="node6" href="$da/dc1/classspread.html#a469ad25d04d840d4f5b4046a3266d3b2" title="spread::make_spread" alt="" coords="464,139,615,164"/>
+<area shape="rect" id="node8" href="$da/dc1/classspread.html#a3dcf930f3e0d9ebdead688a37cddd967" title="spread::make_spread\l_from_q_clan" alt="" coords="464,188,615,227"/>
+<area shape="rect" id="node7" href="$da/dc1/classspread.html#a9f95558308c8dc53f5fa50a82ddacf0b" title="spread::write_spread\l_to_file" alt="" coords="663,160,808,199"/>
+</map>

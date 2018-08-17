@@ -1,0 +1,9 @@
+digraph "src/lib/foundations/statistics" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_22aca35e3ec12f68aff9c7ff7652d11f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="foundations" fontname="Helvetica", fontsize="10", URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"]
+  dir_ad4fde1a4780e3765021e54e2706f948 [shape=box, label="statistics", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_ad4fde1a4780e3765021e54e2706f948.html"];
+  }
+}

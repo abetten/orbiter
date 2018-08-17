@@ -1,0 +1,8 @@
+<map id="get_base_line" name="get_base_line">
+<area shape="rect" id="node2" href="$df/de4/projective_8_c.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="179,5,323,31"/>
+<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#ab4d187a9b89a64102b971201b789b653" title="print_integer_matrix" alt="" coords="181,55,321,80"/>
+<area shape="rect" id="node4" href="$d5/db4/io__and__os_8h.html#a1ed4962965eb4509c5699955af7bc0f0" title="INT_matrix_transpose" alt="" coords="175,104,327,129"/>
+<area shape="rect" id="node6" href="$df/de4/projective_8_c.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="158,153,344,179"/>
+<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#a2ffd557a40a6f134ebd1031a586d364d" title="INT_swap" alt="" coords="432,104,513,129"/>
+<area shape="rect" id="node7" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="392,153,553,179"/>
+</map>

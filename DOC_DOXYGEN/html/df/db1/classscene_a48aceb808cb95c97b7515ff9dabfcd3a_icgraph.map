@@ -1,0 +1,9 @@
+<map id="scene::distance_from_origin" name="scene::distance_from_origin">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a207ab8471e540d06a5de67d9d6142108" title="scene::line_extended" alt="" coords="201,61,349,87"/>
+<area shape="rect" id="node6" href="$df/db1/classscene.html#a901df7b449fb5ff7e8537591ce2d0934" title="scene::rescale" alt="" coords="221,117,329,143"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#ac7e207e5fe33cc2f3c163d46a5b2ee44" title="scene::map_a_point" alt="" coords="397,5,538,31"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a4146e2b4829edcc41af9adf68af7d774" title="scene::create_five\l_plus_one" alt="" coords="403,55,532,93"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#a6e267a2f290520e5011bc9d86faca156" title="scene::map_a_line" alt="" coords="586,5,719,31"/>
+<area shape="rect" id="node7" href="$df/db1/classscene.html#ad8bb3c8f8cea3cedd5952d34d67b91a0" title="scene::fourD_cube" alt="" coords="401,117,534,143"/>
+<area shape="rect" id="node8" href="$df/db1/classscene.html#a1200e448c2371ab44c612dcfd34c0eea" title="scene::hypercube" alt="" coords="404,167,531,192"/>
+</map>

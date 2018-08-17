@@ -1,0 +1,11 @@
+<map id="sims::print" name="sims::print">
+<area shape="rect" id="node2" href="$d9/df3/classsims.html#ab7549d6212df09ad5fdcc8b5edbe8806" title="sims::last_moved_base\l_point" alt="" coords="136,5,297,44"/>
+<area shape="rect" id="node3" href="$d9/df3/classsims.html#a2fc3bfc40a993e0a6902374465304c0c" title="sims::print_group_order" alt="" coords="135,68,298,93"/>
+<area shape="rect" id="node5" href="$d9/df3/classsims.html#a4630b82437f49635da45c5fc1953d919" title="sims::print_generator\l_depth_and_perm" alt="" coords="143,117,290,156"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#a49dfebd7ef9b23cb3c1264bc462f2233" title="sims::print_generators" alt="" coords="140,180,293,205"/>
+<area shape="rect" id="node9" href="$d9/df3/classsims.html#ab26955fba9bb5a6fe176b4f12d0a6c5a" title="sims::print_basic_orbits" alt="" coords="136,229,297,255"/>
+<area shape="rect" id="node4" href="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad" title="sims::group_order" alt="" coords="358,68,487,93"/>
+<area shape="rect" id="node7" href="$d2/d86/classaction.html#ae38c3ef3c1125213733d63c6fc3c40cd" title="action::element_print" alt="" coords="350,131,495,156"/>
+<area shape="rect" id="node8" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="372,180,473,205"/>
+<area shape="rect" id="node10" href="$d9/df3/classsims.html#ae777e80bb7cef4f757c701173f924a6d" title="sims::print_basic_orbit" alt="" coords="346,229,500,255"/>
+</map>

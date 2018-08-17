@@ -1,0 +1,29 @@
+digraph "perm_group::init_with_base"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node149 [label="perm_group::init_with_base",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node149 -> Node150 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node150 [label="perm_group::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a597c9991f5c1d8b16cc74bcd7003ee73"];
+  Node149 -> Node151 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node151 [label="page_storage::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a53d9d92efcff0000764402fcf7cef6e2"];
+  Node149 -> Node152 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node152 [label="perm_group::one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#ab959c8e4c528c27dfc8d4ac1919681ee"];
+  Node149 -> Node153 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node153 [label="perm_group::pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#aa4595f87262bd95ed5656704c9cfa164"];
+  Node149 -> Node154 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node154 [label="page_storage::store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a3d04ee0a97310a8211e223ccea1d2d3f"];
+  Node154 -> Node155 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node155 [label="page_storage::s_i_and\l_allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#aa43eb1ae49a6688771f7a89cbe2cd7bf"];
+  Node155 -> Node156 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node156 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node156 -> Node157 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node157 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node155 -> Node158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node158 [label="UBYTE_print_bitwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a920069ee78174f219534fed767865637"];
+  Node154 -> Node159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node159 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+  Node149 -> Node160 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node160 [label="print_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd1/blt_8h.html#a8c1a5fc71aea7ff31d181f0103196a24"];
+}

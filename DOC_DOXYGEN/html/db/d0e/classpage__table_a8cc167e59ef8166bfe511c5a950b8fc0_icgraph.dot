@@ -1,0 +1,12 @@
+digraph "page_table::print"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node29 [label="page_table::print",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node29 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="page_table::save_page",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#a9cfaa5c50aab8724164a3fa28055fc26"];
+  Node29 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="page_table::allocate_rec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#a45e2028ce5759778964466cd67d19a21"];
+  Node31 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

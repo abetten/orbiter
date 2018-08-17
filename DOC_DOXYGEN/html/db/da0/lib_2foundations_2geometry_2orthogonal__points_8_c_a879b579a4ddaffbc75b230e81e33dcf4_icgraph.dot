@@ -1,0 +1,47 @@
+digraph "count_N1"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node26 [label="count_N1",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node26 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="orthogonal::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#a8bd53ba30f34ac50889503f0f3ef6deb"];
+  Node27 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 -> Node28 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="surface::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a90570b0ca6ab02988159f2c40cb27308"];
+  Node28 -> Node29 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node28 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="surface_classify_wedge\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a"];
+  Node30 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node28 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node32 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node27 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="W3q::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d2c/class_w3q.html#a215fe070895a4915537fcb1bfba4f777"];
+  Node34 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="knarr::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de5/classknarr.html#a1e25f28aeec8f316cc0ce81eb89e670e"];
+  Node26 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="orthogonal::init_parabolic_odd",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#adeb14ce7821acee632e1a1ca3975a201"];
+  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="orthogonal::init_parabolic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#aef84a93f2f8973a3b5fc2d7d48b1d5ed"];
+  Node37 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 -> Node38 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="count_T1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#af42a0ed4f726c58cdeb601b55bddf0ce"];
+  Node38 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="orthogonal::init_parabolic_even",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#a495354fe027c383b4dd9ee3906dcde92"];
+  Node39 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="count_Sbar",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a6b49fc2deeb261dc894f2fbe34a05e79"];
+  Node40 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 -> Node41 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="count_S",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a9c6bd1c31d71d399cac8afa0713f56b9"];
+  Node41 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

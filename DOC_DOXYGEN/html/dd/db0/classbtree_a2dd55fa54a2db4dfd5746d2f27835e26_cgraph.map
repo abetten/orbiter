@@ -1,0 +1,12 @@
+<map id="btree::SavePage" name="btree::SavePage">
+<area shape="rect" id="node2" href="$dd/db0/classbtree.html#a192d74607f02ea8e0ad631d6e6fd6704" title="btree::f_open" alt="" coords="382,32,482,58"/>
+<area shape="rect" id="node6" href="$dd/db0/classbtree.html#a6a928fc93c93d8b5a83ad1ba699b453e" title="btree::buf_idx" alt="" coords="381,131,483,156"/>
+<area shape="rect" id="node7" href="$dd/db0/classbtree.html#a829c985973c7c164fda2d81398e13504" title="btree::file_seek" alt="" coords="186,32,298,58"/>
+<area shape="rect" id="node9" href="$dd/db0/classbtree.html#ae5d8a2538af6625ee95573329c8e991b" title="btree::file_write" alt="" coords="186,82,298,107"/>
+<area shape="rect" id="node10" href="$d9/d60/discreta_8h.html#a53208086adbea2817fe45f917410d9d0" title="page_table_pointer" alt="" coords="174,234,310,259"/>
+<area shape="rect" id="node11" href="$dd/db0/classbtree.html#abc6a6f309e4c61cb5a7f4c4a248d384d" title="btree::page_table_idx" alt="" coords="358,180,507,206"/>
+<area shape="rect" id="node3" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="600,58,684,83"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="555,107,729,132"/>
+<area shape="rect" id="node5" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="599,156,685,182"/>
+<area shape="rect" id="node8" href="$dd/db0/classbtree.html#af99e68df8c3674b7d77ed80a8bbcffac" title="btree::stream" alt="" coords="382,82,482,107"/>
+</map>

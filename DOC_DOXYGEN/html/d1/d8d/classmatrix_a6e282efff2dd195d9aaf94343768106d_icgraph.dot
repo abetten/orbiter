@@ -1,0 +1,15 @@
+digraph "matrix::incma_print_latex2"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node889 [label="matrix::incma_print\l_latex2",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node889 -> Node890 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node890 [label="matrix::incma_print\l_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a2f3ef897e502a22def6b90a7c02addf5"];
+  Node890 -> Node891 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node891 [label="geometry::print_incma\l_latex_picture",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ae0d174439d57d9bc0b0dd7ffe210b148"];
+  Node891 -> Node892 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node892 [label="geometry::print_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a1d45497d61d4dc8f7325156158b7e661"];
+  Node892 -> Node893 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node893 [label="geometry::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#af92f963887d22dd3437f585df929208d"];
+}

@@ -1,0 +1,25 @@
+<map id="action::init_function_pointers_direct_product_group" name="action::init_function_pointers_direct_product_group">
+<area shape="rect" id="node2" href="$dc/dd4/group__actions_8h.html#ab80b3d935244cfb8024a6fe22e011f03" title="direct_product_group\l_element_image_of" alt="" coords="290,5,437,44"/>
+<area shape="rect" id="node3" href="$dc/dd4/group__actions_8h.html#a3cf122d4ee299058f7fb2c20d125ae43" title="direct_product_group\l_element_image_of_low_level" alt="" coords="263,68,464,107"/>
+<area shape="rect" id="node4" href="$dc/dd4/group__actions_8h.html#a5b016430b40b501d1911db27cc9fbc7b" title="direct_product_group\l_element_linear_entry_ij" alt="" coords="280,131,447,169"/>
+<area shape="rect" id="node5" href="$dc/dd4/group__actions_8h.html#ae38ae77a36b813c7ad37fd0f3f133ca3" title="direct_product_group\l_element_linear_entry\l_frobenius" alt="" coords="287,193,440,245"/>
+<area shape="rect" id="node6" href="$dc/dd4/group__actions_8h.html#a9d3a10f7d72b341dc328b53958ef88bf" title="direct_product_group\l_element_one" alt="" coords="290,269,437,308"/>
+<area shape="rect" id="node7" href="$dc/dd4/group__actions_8h.html#a96fa80d7fb54d9d762250020e55fb408" title="direct_product_group\l_element_is_one" alt="" coords="290,332,437,371"/>
+<area shape="rect" id="node8" href="$dc/dd4/group__actions_8h.html#ab1b70aed984f6efb301acfa95bdf8596" title="direct_product_group\l_element_unpack" alt="" coords="290,395,437,433"/>
+<area shape="rect" id="node9" href="$dc/dd4/group__actions_8h.html#ac4b74393cd78daa11ad735b4401997bc" title="direct_product_group\l_element_pack" alt="" coords="290,457,437,496"/>
+<area shape="rect" id="node10" href="$dc/dd4/group__actions_8h.html#a9767bae6a0c7588caa9e003f266dd4e4" title="direct_product_group\l_element_retrieve" alt="" coords="290,520,437,559"/>
+<area shape="rect" id="node11" href="$dc/dd4/group__actions_8h.html#a95fd51fdc2716018f83479fcc16e0725" title="direct_product_group\l_element_store" alt="" coords="290,583,437,621"/>
+<area shape="rect" id="node12" href="$dc/dd4/group__actions_8h.html#a401f4d8904c024fb3031448a917c6f99" title="direct_product_group\l_element_mult" alt="" coords="290,645,437,684"/>
+<area shape="rect" id="node13" href="$dc/dd4/group__actions_8h.html#a60146da393a7f94ba89dce0abc96bdec" title="direct_product_group\l_element_invert" alt="" coords="290,708,437,747"/>
+<area shape="rect" id="node14" href="$dc/dd4/group__actions_8h.html#a4c65dfb78d37bd4d6d3302d468df8268" title="direct_product_group\l_element_transpose" alt="" coords="290,771,437,809"/>
+<area shape="rect" id="node15" href="$dc/dd4/group__actions_8h.html#acb6ec1bcbaa6160bd4d551abd31f2b30" title="direct_product_group\l_element_move" alt="" coords="290,833,437,872"/>
+<area shape="rect" id="node16" href="$dc/dd4/group__actions_8h.html#ac7ad495fb813deaf5810c43a6d07c5cd" title="direct_product_group\l_element_dispose" alt="" coords="290,896,437,935"/>
+<area shape="rect" id="node17" href="$dc/dd4/group__actions_8h.html#ab3192d60c48419051a5de301fabbf808" title="direct_product_group\l_element_print" alt="" coords="290,959,437,997"/>
+<area shape="rect" id="node18" href="$dc/dd4/group__actions_8h.html#aeb8a7d3427fb33ed4413808a45411fb2" title="direct_product_group\l_element_print_quick" alt="" coords="289,1021,437,1060"/>
+<area shape="rect" id="node19" href="$dc/dd4/group__actions_8h.html#ad2207bd474fd4968168a6ffbb5286e86" title="direct_product_group\l_element_print_latex" alt="" coords="290,1084,437,1123"/>
+<area shape="rect" id="node20" href="$dc/dd4/group__actions_8h.html#a156774c9d357b050b88dc5a5fa63e291" title="direct_product_group\l_element_print_verbose" alt="" coords="281,1147,445,1185"/>
+<area shape="rect" id="node21" href="$dc/dd4/group__actions_8h.html#adef24529e000462b0564bbe315e2e537" title="direct_product_group\l_element_code_for_make\l_element" alt="" coords="276,1209,451,1261"/>
+<area shape="rect" id="node22" href="$dc/dd4/group__actions_8h.html#aa65bf3ae81bd410f8f373d7195fae131" title="direct_product_group\l_element_print_for_make\l_element" alt="" coords="277,1285,450,1337"/>
+<area shape="rect" id="node23" href="$dc/dd4/group__actions_8h.html#ac0538595d07278a51266f2941637cdb3" title="direct_product_group\l_element_print_for_make\l_element_no_commas" alt="" coords="277,1361,450,1413"/>
+<area shape="rect" id="node24" href="$dc/dd4/group__actions_8h.html#ad9121e26d48501dab83ff8e5fe91d8d8" title="direct_product_group\l_print_point" alt="" coords="290,1437,437,1476"/>
+</map>

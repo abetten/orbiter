@@ -1,0 +1,47 @@
+digraph "strong_generators::orbit_of_one_point_schreier"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4064 [label="strong_generators::\lorbit_of_one_point_schreier",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4064 -> Node4065 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4065 [label="schreier::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a7443bebde2aa08acae16c0ff29c9abcf"];
+  Node4065 -> Node4066 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4066 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node4066 -> Node4067 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4067 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node4065 -> Node4068 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4068 [label="schreier::initialize\l_tables",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#acccc16670f88b14ddc69856cd5c0b36d"];
+  Node4068 -> Node4069 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4069 [label="perm_identity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#aebc54d3f9c31f253ae53e3eb3b386208"];
+  Node4065 -> Node4070 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4070 [label="schreier::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#aef6a65e2f39bd9e14c61139c4f97f4c3"];
+  Node4064 -> Node4068 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4064 -> Node4071 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4071 [label="schreier::init_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a04fd581636085a7414e1b5d1004e44e0"];
+  Node4071 -> Node4072 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4072 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node4064 -> Node4073 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4073 [label="schreier::compute_point\l_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a429138e463c8c25dddd8557340ed9edd"];
+  Node4073 -> Node4074 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4074 [label="schreier::swap_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a2ffcc9098873cfbd14eca34ab4827db7"];
+  Node4073 -> Node4075 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4075 [label="schreier::get_image",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a1fd2d08cb31c9e4357e124554ca2773f"];
+  Node4075 -> Node4076 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4076 [label="action::element_image_of",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d"];
+  Node4075 -> Node4072 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4073 -> Node4077 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4077 [label="schreier::print_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#ac30bbfe09706ff8ccaf27c2cf8074594"];
+  Node4073 -> Node4078 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4078 [label="schreier::coset_rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a7889b8702372092df4fd05150ee8fdda"];
+  Node4078 -> Node4072 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4078 -> Node4079 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4079 [label="action::element_mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3"];
+  Node4078 -> Node4080 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4080 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node4078 -> Node4081 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4081 [label="action::element_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a780a105daf04d6d1fe7e2f63b3c88e3b"];
+  Node4073 -> Node4082 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4082 [label="action::element_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae38c3ef3c1125213733d63c6fc3c40cd"];
+  Node4073 -> Node4076 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

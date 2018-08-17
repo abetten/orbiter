@@ -1,0 +1,8 @@
+<map id="surface_classify_wedge::identify" name="surface_classify_wedge::identify">
+<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="272,5,377,31"/>
+<area shape="rect" id="node3" href="$d7/d5c/classsurface__classify__wedge.html#a2b1d47a0781bd73da10d97c397d61da1" title="surface_classify_wedge\l::identify_surface_command_line" alt="" coords="216,55,432,93"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874" title="action::element_move" alt="" coords="248,117,400,143"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#aa4bd01e338497714586636751fcef436" title="action::element_invert" alt="" coords="248,167,400,192"/>
+<area shape="rect" id="node6" href="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3" title="action::element_mult" alt="" coords="252,216,397,241"/>
+<area shape="rect" id="node7" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="252,265,397,304"/>
+</map>

@@ -1,0 +1,20 @@
+<map id="action::make_canonical" name="action::make_canonical">
+<area shape="rect" id="node2" href="$d0/de6/projective__space__main_8_c.html#a5f0f6b71cd402c5b41240c420e533e60" title="canonical_form" alt="" coords="258,32,370,57"/>
+<area shape="rect" id="node6" href="$d8/d30/classcompute__stabilizer.html#a895df470da0ac14f812c3c4b6f2280b9" title="compute_stabilizer\l::restricted_action" alt="" coords="483,81,616,120"/>
+<area shape="rect" id="node17" href="$d8/d30/classcompute__stabilizer.html#aa33f9b1e4823afd5196eec36d3082084" title="compute_stabilizer\l::make_canonical_second_set" alt="" coords="214,141,415,180"/>
+<area shape="rect" id="node3" href="$d0/de6/projective__space__main_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="927,5,977,31"/>
+<area shape="rect" id="node4" href="$d0/de6/projective__space__main_8_c.html#a63a6b06bd2a9a9c50ed710271f4d5530" title="process_object" alt="" coords="494,32,605,57"/>
+<area shape="rect" id="node5" href="$d0/de6/projective__space__main_8_c.html#a32275eacc4bdda93b2b34c2a9217a088" title="classify_objects_using\l_nauty" alt="" coords="684,27,838,65"/>
+<area shape="rect" id="node7" href="$d8/d30/classcompute__stabilizer.html#a36a1729430f317a65559220a8206a7d7" title="compute_stabilizer\l::init" alt="" coords="886,112,1019,151"/>
+<area shape="rect" id="node8" href="$d8/dc6/classset__stabilizer__compute.html#a247c31bc3f19f22dadbfd7607cbaaa78" title="set_stabilizer_compute\l::handle_frequencies" alt="" coords="1067,112,1224,151"/>
+<area shape="rect" id="node9" href="$d8/dc6/classset__stabilizer__compute.html#ad4f92074322e98c7cd0ed5d4f8486b76" title="set_stabilizer_compute\l::compute_set_stabilizer" alt="" coords="1272,112,1437,151"/>
+<area shape="rect" id="node10" href="$db/d67/test__hyperoval_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1548,13,1599,39"/>
+<area shape="rect" id="node11" href="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652" title="conic" alt="" coords="1547,63,1600,88"/>
+<area shape="rect" id="node12" href="$dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b" title="linear_set::do_compute\l_stabilizer" alt="" coords="1493,112,1653,151"/>
+<area shape="rect" id="node15" href="$d0/d76/tl__algebra__and__number__theory_8h.html#af2c67d225072549409be710ac3cd30f8" title="create_sims_for_stabilizer" alt="" coords="1485,175,1662,200"/>
+<area shape="rect" id="node16" href="$d0/d76/tl__algebra__and__number__theory_8h.html#af5482567a8d6ba5c2fe593bf6f7f9a0f" title="create_sims_for_stabilizer\l_with_input_group" alt="" coords="1485,224,1662,263"/>
+<area shape="rect" id="node13" href="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b" title="linear_set::init_compute\l_stabilizer" alt="" coords="1710,112,1872,151"/>
+<area shape="rect" id="node14" href="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2" title="linear_set::compute\l_stabilizer_of_linear_set" alt="" coords="1920,112,2085,151"/>
+<area shape="rect" id="node18" href="$d8/d30/classcompute__stabilizer.html#a040fb5c6ad50133c5a16a35ed5b2ecc4" title="compute_stabilizer\l::main_loop_handle_case" alt="" coords="463,144,636,183"/>
+<area shape="rect" id="node19" href="$d8/d30/classcompute__stabilizer.html#ae8615a28e0494704450689b6ea0b7ca2" title="compute_stabilizer\l::main_loop" alt="" coords="695,143,827,181"/>
+</map>

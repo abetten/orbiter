@@ -1,0 +1,9 @@
+digraph "strong_generators::init_from_data_with_target_go"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2727 [label="strong_generators::\linit_from_data_with\l_target_go",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2727 -> Node2728 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2728 [label="strong_generators::\linit_from_data_with\l_target_go_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#aa6b5e7283747279143bd6f45d3ba854e"];
+}

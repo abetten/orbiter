@@ -1,0 +1,27 @@
+digraph "discreta_base::is_one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node13937 [label="discreta_base::is_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node13937 -> Node13938 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13938 [label="design_parameter::ancestor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6"];
+  Node13938 -> Node13939 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13939 [label="design_parameter_database\l_export_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7"];
+  Node13937 -> Node13940 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13940 [label="is_abelian",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#ac0291199b2706f0eb554ae24d2e7cefc"];
+  Node13937 -> Node13941 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13941 [label="unipoly::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a9dc0d295bea73d0c20562149f250cd97"];
+  Node13937 -> Node13942 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13942 [label="unipoly::is_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a1840dc8eb1a17b1764b108c96299738d"];
+  Node13937 -> Node13943 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13943 [label="unipoly::monic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a44fd80fcd3b9dc5b3d9f915761a8082d"];
+  Node13937 -> Node13944 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13944 [label="Vector::PG_element\l_normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a8cca2f9cb0336c06d2ab0b6f835ceb82"];
+  Node13944 -> Node13945 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13945 [label="Vector::PG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a0dedd5c9b487e5160589e2b312091246"];
+  Node13944 -> Node13946 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13946 [label="Vector::PG_element\l_rank_modified",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a7d29be1c56b7eb6711b79a25c1755290"];
+  Node13937 -> Node13945 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13937 -> Node13946 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

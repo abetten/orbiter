@@ -1,0 +1,9 @@
+digraph "spreadsheet::print_table_latex_all_columns"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node181 [label="spreadsheet::print\l_table_latex_all_columns",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node181 -> Node182 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node182 [label="spreadsheet::print\l_table_row_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/classspreadsheet.html#a87286eb1458e0f1a27fc1dcef52dd8fe"];
+}

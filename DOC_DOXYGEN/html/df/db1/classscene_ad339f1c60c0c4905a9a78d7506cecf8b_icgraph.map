@@ -1,0 +1,6 @@
+<map id="scene::plane" name="scene::plane">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a2be676bac5582560a0e34bdd540cd8aa" title="scene::plane_from_dual\l_coordinates" alt="" coords="152,5,315,44"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#ad523dbeb01305e7ace1835e8c89cd1a3" title="scene::plane_through\l_three_points" alt="" coords="159,68,308,107"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#a10ab17152c3ec183561918730006fdb6" title="scene::tritangent_planes" alt="" coords="150,131,317,156"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a4146e2b4829edcc41af9adf68af7d774" title="scene::create_five\l_plus_one" alt="" coords="169,180,298,219"/>
+</map>

@@ -1,0 +1,32 @@
+digraph "discreta_base::negate_to"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node14661 [label="discreta_base::negate_to",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node14661 -> Node14662 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14662 [label="discreta_base::negate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#aac1be1125008f8a93a3083cd1a43878d"];
+  Node14662 -> Node14663 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14663 [label="design_lambda_ijs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a89f8e89e9ddb69c6871c43b5253363f2"];
+  Node14663 -> Node14664 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14664 [label="design_lambda_ijs_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a77a457666b8a4a24f1208d257a53f3fb"];
+  Node14664 -> Node14665 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14665 [label="design_parameter_database\l_read_design_txt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ac12f39c2d57b543c801c36d26f237ac7"];
+  Node14663 -> Node14666 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14666 [label="design_parameter::complementary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a9025f18483dfe3f57eecfc6a603b7df1"];
+  Node14662 -> Node14667 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14667 [label="Catalan_nk_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/global_8_c.html#aad966cb2e1d574fc0e513d692c1f49c6"];
+  Node14662 -> Node14668 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14668 [label="integer::negate_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a1da2bd683bdef336057ef2b84d4b3978"];
+  Node14662 -> Node14669 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14669 [label="integer::m_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a4d312656ed6c31235e11ecb3f05df1f5"];
+  Node14669 -> Node14670 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14670 [label="integer::is_m_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a7585957656c1152035411e066a4f0053"];
+  Node14662 -> Node14671 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14671 [label="matrix::determinant",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a75adb25c9f8753f1b81eafe4464b272a"];
+  Node14671 -> Node14671 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14662 -> Node14672 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14672 [label="unipoly::Xnm1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a6804952878b88dc700e6532a5c9b1e6e"];
+  Node14661 -> Node14673 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14673 [label="unipoly::negate_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a2181196b44786790f58b72510620db97"];
+}

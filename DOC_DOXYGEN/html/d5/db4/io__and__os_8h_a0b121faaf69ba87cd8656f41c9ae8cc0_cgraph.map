@@ -1,0 +1,8 @@
+<map id="allocate_pvoid" name="allocate_pvoid">
+<area shape="rect" id="node2" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a6920a250c4e7a0770cdef39eb9bf20ad" title="add_to_registry" alt="" coords="160,31,273,56"/>
+<area shape="rect" id="node3" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a01e5fb20556471832a045ea75de89a78" title="registry_search" alt="" coords="333,5,445,31"/>
+<area shape="rect" id="node4" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a2b54b210ed9aae58085d1ef7fa3bcbff" title="registry_print_entry" alt="" coords="321,55,457,80"/>
+<area shape="rect" id="node5" href="$d5/db4/io__and__os_8h.html#a32add94de62a1d910cc0fc35ed90ab48" title="print_pointer_hex" alt="" coords="508,29,632,55"/>
+<area shape="rect" id="node7" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a0c81861cc8a6dd21364c89bb3ac8e82c" title="registry_print_type" alt="" coords="505,79,636,104"/>
+<area shape="rect" id="node6" href="$d4/d74/util_8_c.html#a36c64a828eefed0a0cfdd6186ec92c31" title="print_hex_digit" alt="" coords="684,29,792,55"/>
+</map>

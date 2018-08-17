@@ -1,0 +1,22 @@
+digraph "sims::group_order_INT"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5476 [label="sims::group_order_INT",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5476 -> Node5477 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5477 [label="sims::subgroup_make\l_characteristic_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a8abb8f266671da3862c8bc60294c23e8"];
+  Node5476 -> Node5478 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5478 [label="sims::normalizer_based\l_on_characteristic_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#af81961f706ea98f0afd845146274a394"];
+  Node5476 -> Node5479 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5479 [label="sims::order_structure\l_relative_to_subgroup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a50d22de4969a10d88c7e7eece0ea0e3c"];
+  Node5476 -> Node5480 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5480 [label="young::create_module",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d68/classyoung.html#a552fe75292286e49ee0d3f282ea03f8e"];
+  Node5480 -> Node5481 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5481 [label="do_it_for_sym_n",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#a7da1c84aee65e2c8fd4b83f0809835ad"];
+  Node5481 -> Node5482 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5482 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node5480 -> Node5483 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5483 [label="do_it_for_sym_4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#aed9b25712c762c878090038e97568d07"];
+  Node5483 -> Node5482 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

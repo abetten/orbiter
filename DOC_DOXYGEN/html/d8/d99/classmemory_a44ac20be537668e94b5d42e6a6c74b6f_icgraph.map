@@ -1,0 +1,9 @@
+<map id="memory::alloc" name="memory::alloc">
+<area shape="rect" id="node2" href="$d8/d99/classmemory.html#a616200900a07046cd6b0b86f12765909" title="memory::init" alt="" coords="178,5,272,31"/>
+<area shape="rect" id="node3" href="$d8/d99/classmemory.html#a8aaa32764cd9a497d57740b5cb47953b" title="memory::realloc" alt="" coords="167,55,283,80"/>
+<area shape="rect" id="node7" href="$d8/d99/classmemory.html#af8d8b6de66f74f406ee48bb5e3825bb8" title="memory::read_file" alt="" coords="161,104,289,129"/>
+<area shape="rect" id="node8" href="$d8/d99/classmemory.html#afadcbb4b0b076d7f9552a9102b467683" title="memory::compress" alt="" coords="158,153,292,179"/>
+<area shape="rect" id="node4" href="$d8/d99/classmemory.html#a2ad10d7a4707651f6b101d919f8402ed" title="memory::append" alt="" coords="340,55,462,80"/>
+<area shape="rect" id="node5" href="$d8/d99/classmemory.html#a3f1889e0a03fd3afbb15bc78084c6356" title="memory::write_char" alt="" coords="510,29,648,55"/>
+<area shape="rect" id="node6" href="$d8/d99/classmemory.html#ad2bea2174f3f88051d259aa8b293bb4d" title="memory::write_int" alt="" coords="516,79,642,104"/>
+</map>

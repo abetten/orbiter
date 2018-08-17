@@ -1,0 +1,9 @@
+digraph "hermitian::~hermitian"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="hermitian::~hermitian",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="hermitian::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d11/classhermitian.html#a03a8d7165fea9af79897a189d03103d7"];
+}

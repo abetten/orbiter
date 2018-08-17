@@ -1,0 +1,6 @@
+<map id="save_orbits_at_level" name="save_orbits_at_level">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="196,5,337,44"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#ad1f69adb27041311d2e7be96e39388d4" title="action::group_order" alt="" coords="198,68,335,93"/>
+<area shape="rect" id="node4" href="$d7/d73/classgenerator.html#a3012a80d862b42c848b84584389c8594" title="generator::get_set\l_by_level" alt="" coords="202,117,331,156"/>
+<area shape="rect" id="node5" href="$d7/d73/classgenerator.html#a8cea5411b42336694738530732ede540" title="generator::get_node_ij" alt="" coords="385,124,540,149"/>
+</map>

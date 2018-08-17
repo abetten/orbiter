@@ -1,0 +1,27 @@
+<map id="vector_ge::reallocate" name="vector_ge::reallocate">
+<area shape="rect" id="node2" href="$dc/db7/classarc__lifting.html#a30126f5ed4126d604c191aa4d1f7505a" title="arc_lifting::loop_over\l_trihedral_pairs" alt="" coords="208,119,352,157"/>
+<area shape="rect" id="node12" href="$dd/d23/classclassify__double__sixes.html#af69579aea0c34504ccfe37a4f9d992ef" title="classify_double_sixes\l::upstep" alt="" coords="205,181,355,220"/>
+<area shape="rect" id="node15" href="$d7/d5c/classsurface__classify__wedge.html#a917a77e18ede81788ba0550d3f55f639" title="surface_classify_wedge\l::upstep" alt="" coords="198,245,361,284"/>
+<area shape="rect" id="node17" href="$d3/d5f/classisomorph.html#ae91af86c9c82cf9c5c7ee24a60e59460" title="isomorph::stabilizer\l_action_add_generator" alt="" coords="201,309,359,348"/>
+<area shape="rect" id="node3" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="456,117,579,156"/>
+<area shape="rect" id="node4" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="735,180,838,205"/>
+<area shape="rect" id="node6" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="716,68,858,93"/>
+<area shape="rect" id="node10" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="704,117,870,156"/>
+<area shape="rect" id="node5" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1193,153,1243,179"/>
+<area shape="rect" id="node7" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="958,5,1092,44"/>
+<area shape="rect" id="node8" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="958,68,1092,93"/>
+<area shape="rect" id="node9" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1193,68,1243,93"/>
+<area shape="rect" id="node11" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="950,117,1100,156"/>
+<area shape="rect" id="node13" href="$dd/d23/classclassify__double__sixes.html#aa22b7c156d68376a603743c8b43a58ef" title="classify_double_sixes\l::classify" alt="" coords="442,180,592,219"/>
+<area shape="rect" id="node14" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="762,243,812,268"/>
+<area shape="rect" id="node16" href="$d7/d5c/classsurface__classify__wedge.html#a6b7ca70f2edff82c197221ee978a3641" title="surface_classify_wedge\l::classify_surfaces_from\l_double_sixes" alt="" coords="435,243,599,295"/>
+<area shape="rect" id="node18" href="$d3/d5f/classisomorph.html#a95e0ae39f992234f7cbeb6f1d57d82df" title="isomorph::handle_automorphism" alt="" coords="409,319,625,344"/>
+<area shape="rect" id="node19" href="$d3/d5f/classisomorph.html#a7767fd5f1da6dfd7f93810be99ba4ab6" title="isomorph::process_rearranged_set" alt="" coords="673,319,901,344"/>
+<area shape="rect" id="node20" href="$d3/d5f/classisomorph.html#a9cb6fed7b6ac639d886b117a1f454441" title="isomorph::probe" alt="" coords="966,293,1084,319"/>
+<area shape="rect" id="node21" href="$d3/d5f/classisomorph.html#a51fc3bf5cc3a99282a489b2df37ee24e" title="isomorph::do_iso_test" alt="" coords="949,343,1101,368"/>
+<area shape="rect" id="node22" href="$d3/d5f/classisomorph.html#ad7945ec94ba0ba16953482edfaa4da6e" title="isomorph::isomorph\l_testing" alt="" coords="1149,336,1287,375"/>
+<area shape="rect" id="node23" href="$d4/d7e/isomorph__global_8_c.html#a5a73cbe9f89c4727f086482ee2d238f9" title="isomorph_testing" alt="" coords="1335,343,1458,368"/>
+<area shape="rect" id="node24" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="1506,336,1653,375"/>
+<area shape="rect" id="node25" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1746,317,1796,343"/>
+<area shape="rect" id="node26" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="1701,367,1841,392"/>
+</map>

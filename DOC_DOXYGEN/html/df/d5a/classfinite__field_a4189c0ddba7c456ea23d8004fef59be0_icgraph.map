@@ -1,0 +1,10 @@
+<map id="finite_field::Gauss_INT_with_given_pivots" name="finite_field::Gauss_INT_with_given_pivots">
+<area shape="rect" id="node2" href="$d3/daf/classovoid__generator.html#a44d90a4751554076f432f35089a964c2" title="ovoid_generator::init" alt="" coords="216,5,358,31"/>
+<area shape="rect" id="node3" href="$d5/d64/classorbit__of__subspaces.html#a35f848711624544bf7d73df13b32152a" title="orbit_of_subspaces\l::rref" alt="" coords="219,55,356,93"/>
+<area shape="rect" id="node4" href="$d5/d64/classorbit__of__subspaces.html#a26de37849f6d21e531a9541245d766c1" title="orbit_of_subspaces\l::rref_and_rank_and_hash" alt="" coords="406,55,584,93"/>
+<area shape="rect" id="node5" href="$d5/d64/classorbit__of__subspaces.html#a2aa8610550666ef263bf0a0e21e37eba" title="orbit_of_subspaces\l::map_a_subspace" alt="" coords="632,83,769,121"/>
+<area shape="rect" id="node6" href="$d5/d64/classorbit__of__subspaces.html#a4db831667990a71f13394c7c4d83b6e6" title="orbit_of_subspaces\l::compute" alt="" coords="826,25,963,64"/>
+<area shape="rect" id="node7" href="$d5/d64/classorbit__of__subspaces.html#a3515f558abf49f6d5433709a9f83fd9f" title="orbit_of_subspaces\l::get_random_schreier\l_generator" alt="" coords="817,88,972,140"/>
+<area shape="rect" id="node8" href="$d5/d64/classorbit__of__subspaces.html#a417479ac6c67e0a70ccd873212f504a9" title="orbit_of_subspaces\l::compute_stabilizer" alt="" coords="1020,95,1160,133"/>
+<area shape="rect" id="node9" href="$d5/d64/classorbit__of__subspaces.html#a79caaec8e5a402678982e3eb29ca7053" title="orbit_of_subspaces\l::generators_for_stabilizer\l_of_orbit_rep" alt="" coords="1208,88,1383,140"/>
+</map>

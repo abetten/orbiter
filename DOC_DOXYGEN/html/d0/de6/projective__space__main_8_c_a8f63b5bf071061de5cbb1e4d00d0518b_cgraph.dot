@@ -1,0 +1,32 @@
+digraph "create_object_from_string"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node389 [label="create_object_from\l_string",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node389 -> Node390 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node390 [label="INT_vec_scan",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a9aa706d3f0c3bb83182eed9ab9747582"];
+  Node390 -> Node391 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node391 [label="INT_vec_scan_from_stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a7dc639ea3d5da900adb978c9322353a7"];
+  Node391 -> Node392 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node392 [label="atoi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac"];
+  Node391 -> Node393 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node393 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node389 -> Node394 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node394 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node389 -> Node395 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node395 [label="object_in_projective\l_space::init_point_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d08/classobject__in__projective__space.html#ae06b87acb715d13efec5f6dcea0908ca"];
+  Node395 -> Node396 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node396 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node389 -> Node397 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node397 [label="object_in_projective\l_space::init_line_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d08/classobject__in__projective__space.html#a910badf3915797f5a3c57e981231bed2"];
+  Node397 -> Node396 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node389 -> Node398 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node398 [label="object_in_projective\l_space::init_packing\l_from_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d08/classobject__in__projective__space.html#a085f606728855cecf404108ed051bec7"];
+  Node398 -> Node399 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node399 [label="set_of_sets::init_basic\l_constant_size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#a3d2bcfc5db1101cef8d5d436cca51182"];
+  Node398 -> Node396 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node398 -> Node400 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node400 [label="set_of_sets::print\l_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#a5439014d55aa760a4313ff7307fed5a6"];
+  Node400 -> Node394 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

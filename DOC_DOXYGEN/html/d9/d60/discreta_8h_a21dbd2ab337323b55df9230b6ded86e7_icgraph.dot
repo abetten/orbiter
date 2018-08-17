@@ -1,0 +1,15 @@
+digraph "N_choose_K"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node7218 [label="N_choose_K",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7218 -> Node7219 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7219 [label="design_lambda_ijs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a89f8e89e9ddb69c6871c43b5253363f2"];
+  Node7219 -> Node7220 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7220 [label="design_lambda_ijs_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a77a457666b8a4a24f1208d257a53f3fb"];
+  Node7220 -> Node7221 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7221 [label="design_parameter_database\l_read_design_txt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ac12f39c2d57b543c801c36d26f237ac7"];
+  Node7219 -> Node7222 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7222 [label="design_parameter::complementary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a9025f18483dfe3f57eecfc6a603b7df1"];
+}

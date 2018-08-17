@@ -1,0 +1,21 @@
+digraph "unipoly_domain::add"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node10 [label="unipoly_domain::add",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node10 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="unipoly_domain::minimum\l_polynomial_factorring",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a32acf71ba55156289a07290565ccb65c"];
+  Node10 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="unipoly_domain::minimum\l_polynomial_factorring\l_longinteger",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a2c953e21fad2df88627ac8a289f3a77b"];
+  Node10 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="unipoly_domain::determinant",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a460cfeb7de30e382da7f183b051e4a4f"];
+  Node13 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="unipoly_domain::characteristic\l_polynomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a8fc6545a5f52b768f6ebb2e3b3d57539"];
+  Node14 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="gl_classes::identify\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e"];
+  Node14 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="gl_classes::generators\l_for_centralizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c"];
+  Node14 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="gl_random_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#ad335f04bb0db45b0e9393ec76d0698f4"];
+}

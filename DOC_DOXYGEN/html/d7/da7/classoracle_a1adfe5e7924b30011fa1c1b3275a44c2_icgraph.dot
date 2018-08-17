@@ -1,0 +1,9 @@
+digraph "oracle::calc_size_on_file"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node64 [label="oracle::calc_size_on_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node64 -> Node65 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="generator::calc_size\l_on_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a1bd76c85ca19d820817c725ac71ed1b3"];
+}

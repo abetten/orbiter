@@ -1,0 +1,13 @@
+digraph "nb_PG_lines"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node7 [label="nb_PG_lines",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="matrix::PG_k_q_design",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#ae05463d97ecc8ea3654c45a399b872e2"];
+  Node7 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="permutation::induce\l_on_lines_of_PG_k_q",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a3e01585ffb15282fc45a3158c5ad0b76"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="vec_generators_induce\l_on_lines_of_PG_k_q",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#ab33fa2e167b2501e5761fee699b4c285"];
+}

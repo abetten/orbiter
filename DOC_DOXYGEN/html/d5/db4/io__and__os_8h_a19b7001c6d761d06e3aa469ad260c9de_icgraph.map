@@ -1,0 +1,19 @@
+<map id="parse_line" name="parse_line">
+<area shape="rect" id="node2" href="$d4/d74/util_8_c.html#a1612628db54b7daaa67b440f2343b240" title="parse_sets" alt="" coords="136,197,223,223"/>
+<area shape="rect" id="node3" href="$df/df4/collect_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="565,5,615,31"/>
+<area shape="rect" id="node4" href="$dc/dde/classorbiter__data__file.html#a5296d660c596cd3fce81a8f2d26d7d7f" title="orbiter_data_file::load" alt="" coords="284,319,434,344"/>
+<area shape="rect" id="node6" href="$d4/d74/util_8_c.html#aa4d6668fcc58f40de7a3b75adf1e8af0" title="read_and_parse_data_file" alt="" coords="271,92,447,117"/>
+<area shape="rect" id="node9" href="$d7/d73/classgenerator.html#a2f706a252cb52357a8c214972a50c994" title="generator::read_level_file" alt="" coords="504,55,676,80"/>
+<area shape="rect" id="node10" href="$d4/d74/util_8_c.html#aa82fe570ec44150c6df25516dc8b78c1" title="parse_sets_and_check\l_sizes_easy" alt="" coords="280,368,438,407"/>
+<area shape="rect" id="node11" href="$d4/d74/util_8_c.html#aeb8585c8a2e92cfdfbe73d8995800de8" title="read_and_parse_data\l_file_fancy" alt="" coords="283,256,435,295"/>
+<area shape="rect" id="node5" href="$df/de7/ovoid_2ovoid_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="565,552,615,577"/>
+<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#a031abbb55d1cba39a58b62fd49f1c755" title="do_test_diagonal_line" alt="" coords="514,104,665,129"/>
+<area shape="rect" id="node8" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="733,104,783,129"/>
+<area shape="rect" id="node12" href="$d0/dfc/transpose_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="565,341,615,367"/>
+<area shape="rect" id="node13" href="$d2/dd1/classdata__file.html#a34c1f9447c977e2e98958930853afaf0" title="data_file::read" alt="" coords="537,391,643,416"/>
+<area shape="rect" id="node14" href="$de/d2d/classorbit__transversal.html#af88293d7cc859b6202547d60a08c6b59" title="orbit_transversal::\lread_from_file" alt="" coords="526,440,653,479"/>
+<area shape="rect" id="node15" href="$d2/d86/classaction.html#a4959d3dd9b20c330b15c31ab6162cc2b" title="action::read_representatives" alt="" coords="495,503,685,528"/>
+<area shape="rect" id="node16" href="$d2/d86/classaction.html#a59ba2fa55080f6b1703141f60e0d3aad" title="action::read_representatives\l_and_strong_generators" alt="" coords="495,153,685,192"/>
+<area shape="rect" id="node17" href="$d2/d86/classaction.html#a04633f855952d34d7202126a895fd45b" title="action::read_file_and\l_print_representatives" alt="" coords="513,216,666,255"/>
+<area shape="rect" id="node18" href="$d2/d86/classaction.html#a7e22ee51c869b45d98ec93ec431389f5" title="action::read_set_and\l_stabilizer" alt="" coords="517,279,663,317"/>
+</map>

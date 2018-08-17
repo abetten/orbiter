@@ -1,0 +1,9 @@
+<map id="invert_mod_integer" name="invert_mod_integer">
+<area shape="rect" id="node2" href="$d0/de5/classinteger.html#a869091f0a0f35f5354c8c4a70250e8a9" title="integer::m_i" alt="" coords="406,5,497,31"/>
+<area shape="rect" id="node6" href="$d7/d71/classdiscreta__base.html#abbedc6f882b55fe0b98dec33da832f8e" title="discreta_base::power\l_int_mod" alt="" coords="189,53,337,92"/>
+<area shape="rect" id="node8" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="220,116,306,141"/>
+<area shape="rect" id="node3" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="567,32,717,57"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="765,7,958,32"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="822,56,902,81"/>
+<area shape="rect" id="node7" href="$d7/d71/classdiscreta__base.html#a6f5d6422a0040950415db30e39dafd19" title="discreta_base::one" alt="" coords="385,56,519,81"/>
+</map>

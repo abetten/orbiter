@@ -1,0 +1,10 @@
+<map id="generator::read_sv_level_file_binary2" name="generator::read_sv_level_file_binary2">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="190,5,331,44"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#a885df02c08251c103e985ef1d7159014" title="fread_INT4" alt="" coords="427,72,516,97"/>
+<area shape="rect" id="node4" href="$d7/da7/classoracle.html#a57d236ce4ae82f8b34c318a558db1a59" title="oracle::sv_read_file" alt="" coords="192,120,329,145"/>
+<area shape="rect" id="node5" href="$d7/da7/classoracle.html#aedc4bf96551d4db582078917fe15aae6" title="oracle::reconstruct\l_extensions_from_sv" alt="" coords="187,169,334,208"/>
+<area shape="rect" id="node6" href="$dc/d9b/groups__and__group__actions_2data__structures_2data__structures_8h.html#ad976c1b3200f7425e559834ebd7fb067" title="sv_number_of_orbits" alt="" coords="399,125,544,151"/>
+<area shape="rect" id="node7" href="$dc/d9b/groups__and__group__actions_2data__structures_2data__structures_8h.html#a4211d4550d8e1aef8ac05ed93068b990" title="schreier_vector_determine\l_depth_recursion" alt="" coords="382,227,561,265"/>
+<area shape="rect" id="node8" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="609,180,728,205"/>
+<area shape="rect" id="node9" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="616,233,720,259"/>
+</map>

@@ -1,0 +1,25 @@
+var classsurface__with__action =
+[
+    [ "surface_with_action", "d8/df9/classsurface__with__action.html#aa6d83ae08348e8b146997e47a92078e3", null ],
+    [ "~surface_with_action", "d8/df9/classsurface__with__action.html#acc971eeecd7a30c46d9e2ac48d2ec400", null ],
+    [ "arc_lifting_and_classify", "d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4", null ],
+    [ "create_double_six_from_five_lines_with_a_common_transversal", "d8/df9/classsurface__with__action.html#a870db90931112560e814493c70f768ab", null ],
+    [ "create_double_six_safely", "d8/df9/classsurface__with__action.html#a5d151dc90786f5466eb08dc1e2939170", null ],
+    [ "freeself", "d8/df9/classsurface__with__action.html#a51a00cbb190080e05ff446634023a454", null ],
+    [ "init", "d8/df9/classsurface__with__action.html#a8e716ca96b2dd1833dbbb0e3711b9435", null ],
+    [ "init_group", "d8/df9/classsurface__with__action.html#a8fc5e9fd211eaca0a5e4a922aa515d8b", null ],
+    [ "null", "d8/df9/classsurface__with__action.html#af5af15d7550135fbfb1d5211f69aa457", null ],
+    [ "A", "d8/df9/classsurface__with__action.html#a917c39611aca53009efb0cba5067de16", null ],
+    [ "A2", "d8/df9/classsurface__with__action.html#a3f56e203b7c502c7444cd3a25e43307f", null ],
+    [ "AonHPD_3_4", "d8/df9/classsurface__with__action.html#a7d9807f03ad5ae4f52d311daf339519b", null ],
+    [ "Classify_trihedral_pairs", "d8/df9/classsurface__with__action.html#aa3df02c272e3f7e0ea2ae774a335927a", null ],
+    [ "Elt1", "d8/df9/classsurface__with__action.html#a48da49b4e4eb51b1b23f5ac625dd772e", null ],
+    [ "F", "d8/df9/classsurface__with__action.html#ad9387d832b50fbcb93ca2cb84eec30a8", null ],
+    [ "f_semilinear", "d8/df9/classsurface__with__action.html#a292234b69668cc2b04a3748a07d655fa", null ],
+    [ "q", "d8/df9/classsurface__with__action.html#ad76c0d129cee128327c4eb84b0943255", null ],
+    [ "Recoordinatize", "d8/df9/classsurface__with__action.html#a93f3d279e1fd3cd90ea6f258fb9470b3", null ],
+    [ "regulus", "d8/df9/classsurface__with__action.html#a70d65bc43edf131db6952ed0685f120d", null ],
+    [ "regulus_size", "d8/df9/classsurface__with__action.html#a3144f026aaf3cda6976ee6a0f6922481", null ],
+    [ "S", "d8/df9/classsurface__with__action.html#aae9cc463b8b45bc730b746d2418c00a4", null ],
+    [ "Surf", "d8/df9/classsurface__with__action.html#a28f1189bfbd4aeca4a38ea6e8dffdecc", null ]
+];

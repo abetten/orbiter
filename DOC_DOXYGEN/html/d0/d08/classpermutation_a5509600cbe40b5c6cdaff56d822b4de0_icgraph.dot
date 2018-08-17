@@ -1,0 +1,13 @@
+digraph "permutation::cycle_type"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node691 [label="permutation::cycle_type",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node691 -> Node692 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node692 [label="permutation::nb_of\l_inversions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a5846c6cfd8d2d64f4cb906425744f73f"];
+  Node692 -> Node693 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node693 [label="permutation::signum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a51cfe6b579a1d45524f39096c22c4398"];
+  Node692 -> Node694 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node694 [label="permutation::is_even",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a7b410bb3cb56dfcb5e5f2976b1d1aa45"];
+}

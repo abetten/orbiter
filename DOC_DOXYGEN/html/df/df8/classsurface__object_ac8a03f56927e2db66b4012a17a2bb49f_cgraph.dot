@@ -1,0 +1,11 @@
+digraph "surface_object::print_general"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1889 [label="surface_object::print\l_general",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1889 -> Node1890 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1890 [label="classify::print_naked_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d43/classclassify.html#ad01a54dbdaa22d7a7c8e952850dcc3be"];
+  Node1890 -> Node1891 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1891 [label="classify::print_types\l_naked_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d43/classclassify.html#a36a3de15470d458d85e524ef94e8a826"];
+}

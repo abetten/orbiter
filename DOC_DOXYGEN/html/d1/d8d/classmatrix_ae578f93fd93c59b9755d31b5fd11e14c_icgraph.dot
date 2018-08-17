@@ -1,0 +1,9 @@
+digraph "matrix::multiply_vector_from_left"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1276 [label="matrix::multiply_vector\l_from_left",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1276 -> Node1277 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1277 [label="matrix::weight_enumerator\l_brute_force",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#aae7c9c7c3540c5818d2df52ab67f8a52"];
+}

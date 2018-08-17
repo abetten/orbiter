@@ -1,0 +1,28 @@
+digraph "generator::orbit_length"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node15480 [label="generator::orbit_length",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node15480 -> Node15481 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15481 [label="generator::get_stabilizer\l_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a2a03fc974c76e47e999f3abc99e6b81d"];
+  Node15481 -> Node15482 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15482 [label="longinteger_object\l::create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2"];
+  Node15482 -> Node15483 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15483 [label="longinteger_object\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1"];
+  Node15483 -> Node15484 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15484 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node15483 -> Node15485 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15485 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+  Node15483 -> Node15486 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15486 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node15482 -> Node15487 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15487 [label="INT_log10",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250"];
+  Node15482 -> Node15484 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15482 -> Node15485 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15482 -> Node15486 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15480 -> Node15488 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15488 [label="longinteger_object\l::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101"];
+  Node15488 -> Node15489 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15489 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+}

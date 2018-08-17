@@ -1,0 +1,22 @@
+<map id="generators_AGL1_x_AGL1_extended_twice" name="generators_AGL1_x_AGL1_extended_twice">
+<area shape="rect" id="node2" href="$d4/d95/group__generators_8_c.html#ab158fdf7b90aead2cc7bc6c6deed6fc4" title="generators_AGL1_x_AGL1\l_extended_once" alt="" coords="236,571,418,609"/>
+<area shape="rect" id="node12" href="$d2/d7c/combinatorics_8_c.html#a2c7eee1361109e8c5b94921589815194" title="perm_print" alt="" coords="1415,324,1500,349"/>
+<area shape="rect" id="node18" href="$d4/d95/group__generators_8_c.html#a3e0f2ae60353a1eefcbda26393c6eb50" title="generators_AGL1_x_AGL1\l_extension" alt="" coords="696,571,878,609"/>
+<area shape="rect" id="node20" href="$d4/d95/group__generators_8_c.html#a64f33575c72912c506ec9678fe465734" title="generators_concatenate" alt="" coords="474,192,639,217"/>
+<area shape="rect" id="node3" href="$d4/d95/group__generators_8_c.html#a59d9573735ad78a49493c5fdde859e31" title="generators_AGL1_x_AGL1" alt="" coords="466,349,648,375"/>
+<area shape="rect" id="node4" href="$d4/d95/group__generators_8_c.html#afc7c7c132fbdf09a3cf393f6b0221d04" title="generators_AGL1q" alt="" coords="720,216,854,241"/>
+<area shape="rect" id="node15" href="$d4/d95/group__generators_8_c.html#a07dada5c255d34b118ab08b5ea11fb7e" title="generators_direct_product" alt="" coords="698,400,875,425"/>
+<area shape="rect" id="node5" href="$d4/d95/group__generators_8_c.html#acb0fbc4831d1c95abdb7ee8c123f5d01" title="nb_generators_affine\l_translations" alt="" coords="953,209,1100,248"/>
+<area shape="rect" id="node6" href="$d4/d95/group__generators_8_c.html#ab41d403d6c8fc3ec20069d44189a5cce" title="generators_affine_translations" alt="" coords="926,55,1127,80"/>
+<area shape="rect" id="node14" href="$d4/d95/group__generators_8_c.html#ad1b5ceadf494f7bd695a204ae1a89dd3" title="AG_representation_one\l_dimensional" alt="" coords="1175,104,1338,143"/>
+<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#ab9de2574dd403dd453a0d35107f684f5" title="nb_AG_elements" alt="" coords="1395,5,1520,31"/>
+<area shape="rect" id="node9" href="$d4/d95/group__generators_8_c.html#a2dc31e911a639d9be60389fae43e8ebc" title="translation_in_AG" alt="" coords="1193,55,1320,80"/>
+<area shape="rect" id="node8" href="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5" title="i_power_j" alt="" coords="1601,5,1679,31"/>
+<area shape="rect" id="node10" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="1386,57,1529,83"/>
+<area shape="rect" id="node11" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="1393,109,1522,135"/>
+<area shape="rect" id="node13" href="$d2/d7c/combinatorics_8_c.html#ab87deef2ba9e4d2ce386a19eeaffecf3" title="perm_print_offset" alt="" coords="1577,324,1702,349"/>
+<area shape="rect" id="node16" href="$d2/d7c/combinatorics_8_c.html#aebc54d3f9c31f253ae53e3eb3b386208" title="perm_identity" alt="" coords="976,375,1077,400"/>
+<area shape="rect" id="node17" href="$d2/d7c/combinatorics_8_c.html#a190b971f1575d16687cc2254ac4ffd3d" title="perm_direct_product" alt="" coords="955,476,1098,501"/>
+<area shape="rect" id="node19" href="$d2/d7c/combinatorics_8_c.html#a24cac9508500dedcec9b83f31f18ec93" title="perm_raise" alt="" coords="982,628,1070,653"/>
+<area shape="rect" id="node21" href="$d2/d7c/combinatorics_8_c.html#a2207846dbffb0f9971b61ee1ee695f69" title="perm_move" alt="" coords="741,108,833,133"/>
+</map>

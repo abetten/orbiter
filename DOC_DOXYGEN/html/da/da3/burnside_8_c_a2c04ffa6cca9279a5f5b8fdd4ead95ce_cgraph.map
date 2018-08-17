@@ -1,0 +1,5 @@
+<map id="compute_omega" name="compute_omega">
+<area shape="rect" id="node2" href="$da/da3/burnside_8_c.html#a9cbadde1532d59b0e31bf016f74d0ad0" title="matrix_get_kernel" alt="" coords="180,5,307,31"/>
+<area shape="rect" id="node3" href="$da/da3/burnside_8_c.html#af7001691be9ad923c1c51aa461dae80a" title="double_matrix_print" alt="" coords="174,55,312,80"/>
+<area shape="rect" id="node4" href="$da/da3/burnside_8_c.html#a523fdfbce0a10cc290dd4ee035895ae0" title="double_abs" alt="" coords="198,104,288,129"/>
+</map>

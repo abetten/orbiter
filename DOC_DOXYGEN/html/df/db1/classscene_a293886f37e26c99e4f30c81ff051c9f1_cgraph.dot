@@ -1,0 +1,39 @@
+digraph "scene::draw_text"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node130 [label="scene::draw_text",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node130 -> Node131 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node131 [label="triangular_prism",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#a09c00ded4c934ce35a1686ab4e95d2e6"];
+  Node131 -> Node132 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node132 [label="double_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a7f044be354a33be9978da8d8fa8d3263"];
+  Node131 -> Node133 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node133 [label="double_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#aee0c436dfcfcb2f8a9b32f01ec90033a"];
+  Node131 -> Node134 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node134 [label="atan_xy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#ad8d538a1767a5e9414e9c862727e5cae"];
+  Node131 -> Node135 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node135 [label="rad2deg",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#ac668efd3c58b46cd7795ab39c4e445b6"];
+  Node131 -> Node136 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node136 [label="make_Rz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a8314265ad2a671058910a24f7195e30e"];
+  Node131 -> Node137 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node137 [label="print_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a44769c6c75db797fdd021a1896c24517"];
+  Node131 -> Node138 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node138 [label="mult_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a13e6af87c7d07ce32d1fbd8778a3d350"];
+  Node131 -> Node139 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node139 [label="make_Ry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a8e1fbe5a31eb2048a0f74cd871c5a350"];
+  Node131 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node140 [label="make_Rx",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a06ed6e830430dcce8d46032651ba3518"];
+  Node130 -> Node141 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node141 [label="make_unit_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#a28667aa4465cfaa03ff51b2e14862003"];
+  Node141 -> Node142 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node142 [label="distance_from_origin",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a50eb5f15bc224ba39b230108981e2763"];
+  Node141 -> Node143 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node143 [label="double_vec_scalar_multiple",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#aa29261af29e79594ff79aecd6dd9643a"];
+  Node130 -> Node144 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node144 [label="double_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#a7f044be354a33be9978da8d8fa8d3263"];
+  Node130 -> Node145 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node145 [label="output_double",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#a0d78928594686738975fd41e2603101f"];
+  Node130 -> Node146 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node146 [label="rad2deg",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#ac668efd3c58b46cd7795ab39c4e445b6"];
+}

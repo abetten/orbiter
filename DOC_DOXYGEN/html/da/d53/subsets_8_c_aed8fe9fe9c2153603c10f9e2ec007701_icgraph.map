@@ -1,0 +1,21 @@
+<map id="list" name="list">
+<area shape="rect" id="node2" href="$da/d53/subsets_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="154,107,204,132"/>
+<area shape="rect" id="node3" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ab7fe4718a7a2f2c8ceb6ce44e4d6ac4e" title="INT_vec_swap_points" alt="" coords="103,156,255,181"/>
+<area shape="rect" id="node14" href="$d5/db2/class_vector.html#a6f2e3fb3d4105af914aa29c9be232161" title="Vector::lehmercode2perm" alt="" coords="92,205,266,231"/>
+<area shape="rect" id="node15" href="$dc/db7/classarc__lifting.html#ac2ea90f2acf97c870a7f46f7b125b8b7" title="arc_lifting::print\l_isomorphism_types_of\l_trihedral_pairs" alt="" coords="98,256,260,308"/>
+<area shape="rect" id="node4" href="$dc/d82/classclique__finder.html#a633ef9cbc0d127bb38ac2fff74afdf91" title="clique_finder::swap\l_point" alt="" coords="314,148,449,187"/>
+<area shape="rect" id="node5" href="$dc/d82/classclique__finder.html#a94ab299b0915409a3bc1084186393e0a" title="clique_finder::backtrack\l_search" alt="" coords="500,84,661,123"/>
+<area shape="rect" id="node12" href="$dc/d82/classclique__finder.html#a56caf53f860dbbc0b13448b5982773e2" title="clique_finder::solve\l_decision_problem" alt="" coords="513,147,649,185"/>
+<area shape="rect" id="node13" href="$dc/d82/classclique__finder.html#acc978a5b3e9fcd0c8e4a9b08d49d94e0" title="clique_finder::backtrack\l_search_not_recursive" alt="" coords="500,209,661,248"/>
+<area shape="rect" id="node6" href="$dc/de2/classcolored__graph.html#ae25e8fa7873bb5a3409641c08ca95024" title="colored_graph::all\l_cliques_of_size_k_ignore\l_colors" alt="" coords="718,5,896,57"/>
+<area shape="rect" id="node8" href="$dc/de2/classcolored__graph.html#adac4d97375919b00495f7023be88d749" title="colored_graph::all\l_cliques_of_size_k_ignore\l_colors_and_write_solutions\l_to_file" alt="" coords="712,81,902,147"/>
+<area shape="rect" id="node10" href="$d3/d54/classrainbow__cliques.html#a38487c306d689486602968412f851b98" title="rainbow_cliques::search\l_with_additional_test\l_function" alt="" coords="725,180,889,232"/>
+<area shape="rect" id="node7" href="$d4/d71/all__rainbow__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1007,19,1057,44"/>
+<area shape="rect" id="node9" href="$d9/d9f/all__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1007,101,1057,127"/>
+<area shape="rect" id="node11" href="$d3/d54/classrainbow__cliques.html#a068ae8a136fca21b0e5bfe6d7605d3d6" title="rainbow_cliques::search" alt="" coords="950,193,1114,219"/>
+<area shape="rect" id="node16" href="$dc/db7/classarc__lifting.html#ae1609cb80720bc005f0fc3ea65150185" title="arc_lifting::print" alt="" coords="326,273,438,299"/>
+<area shape="rect" id="node17" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="755,275,858,300"/>
+<area shape="rect" id="node19" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="497,324,664,363"/>
+<area shape="rect" id="node18" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1007,303,1057,328"/>
+<area shape="rect" id="node20" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="732,324,882,363"/>
+</map>

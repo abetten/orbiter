@@ -1,0 +1,13 @@
+digraph "action_on_orthogonal::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1100 [label="action_on_orthogonal\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1100 -> Node1101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1101 [label="action_on_orthogonal\l::action_on_orthogonal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d87/classaction__on__orthogonal.html#ac70cbb19a66aae80abc5718840bdfb9b"];
+  Node1100 -> Node1102 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1102 [label="action_on_orthogonal\l::free",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d87/classaction__on__orthogonal.html#a44eaca6df9aa227c3f8263e08403aabf"];
+  Node1102 -> Node1103 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1103 [label="action_on_orthogonal\l::~action_on_orthogonal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d87/classaction__on__orthogonal.html#ae9176d81d0c10aae9bfa88e376cd65ea"];
+}

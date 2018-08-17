@@ -1,0 +1,13 @@
+digraph "unipoly_domain::characteristic_polynomial"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node88 [label="unipoly_domain::characteristic\l_polynomial",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node88 -> Node89 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node89 [label="gl_classes::identify\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e"];
+  Node88 -> Node90 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node90 [label="gl_classes::generators\l_for_centralizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c"];
+  Node88 -> Node91 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node91 [label="gl_random_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#ad335f04bb0db45b0e9393ec76d0698f4"];
+}

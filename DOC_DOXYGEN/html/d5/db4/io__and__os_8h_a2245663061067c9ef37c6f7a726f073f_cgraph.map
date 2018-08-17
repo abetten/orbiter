@@ -1,0 +1,10 @@
+<map id="povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle" name="povray_animation_rotate_around_origin_and_given_vector_by_a_given_angle">
+<area shape="rect" id="node2" href="$d5/d87/globals_8h.html#ab5eb2d6199ca4f75bc7e03f06206f7b0" title="orthogonal_transformation\l_from_point_to_basis_vector" alt="" coords="234,73,427,112"/>
+<area shape="rect" id="node9" href="$d5/d87/globals_8h.html#a0d78928594686738975fd41e2603101f" title="output_double" alt="" coords="277,136,383,161"/>
+<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#aee0c436dfcfcb2f8a9b32f01ec90033a" title="double_vec_copy" alt="" coords="475,5,600,31"/>
+<area shape="rect" id="node4" href="$d0/d22/numerics_8_c.html#ad05dc4eaa8cd1ba2d78c9e10179b708e" title="dot_product" alt="" coords="492,55,584,80"/>
+<area shape="rect" id="node5" href="$d0/d22/numerics_8_c.html#a0301cde930dce300506c1ae9f20000e4" title="cross_product" alt="" coords="485,104,590,129"/>
+<area shape="rect" id="node6" href="$d0/d22/numerics_8_c.html#a28667aa4465cfaa03ff51b2e14862003" title="make_unit_vector" alt="" coords="475,153,601,179"/>
+<area shape="rect" id="node7" href="$d0/d22/numerics_8_c.html#a50eb5f15bc224ba39b230108981e2763" title="distance_from_origin" alt="" coords="670,128,815,153"/>
+<area shape="rect" id="node8" href="$d0/d22/numerics_8_c.html#aa29261af29e79594ff79aecd6dd9643a" title="double_vec_scalar_multiple" alt="" coords="649,177,835,203"/>
+</map>

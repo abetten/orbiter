@@ -1,0 +1,11 @@
+<map id="finite_field::semilinear_matrix_mult_affine" name="finite_field::semilinear_matrix_mult_affine">
+<area shape="rect" id="node2" href="$de/dc5/algebra__and__number__theory_8h.html#ae753505dbf1e3a9adaaf2f0893dd8c6c" title="irem" alt="" coords="271,5,319,31"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="242,55,348,80"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#ab56074024300775d943c7943d845df91" title="finite_field::vector\l_frobenius_power_in_place" alt="" coords="203,104,387,143"/>
+<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a48517f15dfd7b21c37e0975855f1ada2" title="finite_field::mult\l_matrix" alt="" coords="238,167,352,205"/>
+<area shape="rect" id="node10" href="$df/d5a/classfinite__field.html#a23252c462d48cc21895de6fcc0cbb59f" title="finite_field::add_vector" alt="" coords="218,229,372,255"/>
+<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="437,149,548,175"/>
+<area shape="rect" id="node9" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="435,199,549,224"/>
+<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="597,125,741,151"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="605,175,733,200"/>
+</map>

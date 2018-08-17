@@ -1,0 +1,19 @@
+digraph "schreier_vector_coset_rep_inv1"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node52 [label="schreier_vector_coset\l_rep_inv1",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node52 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="schreier_vector_coset\l_rep_inv",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d7a/schreier__vector_8_c.html#ae8cfac11b7c6625bd3b00c73929fde6f"];
+  Node53 -> Node54 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="schreier::test_sv",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a3126deca325fbd23f1b7f03a1ef89dae"];
+  Node53 -> Node55 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="oracle::orbit_representative\l_and_coset_rep_inv_subspace_action",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a5a4d27cde89e99450305410536b51915"];
+  Node55 -> Node56 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="oracle::trace_next\l_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#ae86c3f9d4b95b5a6e88ee0959942ecde"];
+  Node56 -> Node57 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="oracle::trace_next\l_point_wrapper",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a33e1e9e4dde6fbecd7ae858576a7132f"];
+  Node56 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="oracle::trace_next\l_point_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a4dbea33418d5c0f550a960a5c83194a5"];
+}

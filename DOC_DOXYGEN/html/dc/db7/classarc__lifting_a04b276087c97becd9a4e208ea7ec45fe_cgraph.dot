@@ -1,0 +1,33 @@
+digraph "arc_lifting::find_trihedral_pairs"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node522 [label="arc_lifting::find_trihedral\l_pairs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node522 -> Node523 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node523 [label="surface::find_trihedral\l_pairs_from_collinear\l_triples_of_Eckardt_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#ae321c6ed8608a8e87d579fe1f5689f35"];
+  Node523 -> Node524 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node524 [label="INT_n_choose_k",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#aa74adc702e59feadb839f44c0aaec8f6"];
+  Node524 -> Node525 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node525 [label="longinteger_object\l::as_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e"];
+  Node523 -> Node526 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node526 [label="unrank_k_subset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a709dbec12f4da5bb02b9352d45a2c77d"];
+  Node526 -> Node525 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node523 -> Node527 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node527 [label="INT_vec_heapsort",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39"];
+  Node527 -> Node528 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node528 [label="heapsort_make_heap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb"];
+  Node528 -> Node529 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node529 [label="heapsort_sift_down",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b"];
+  Node529 -> Node530 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node530 [label="heapsort_swap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6"];
+  Node527 -> Node530 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node527 -> Node529 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node523 -> Node531 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node531 [label="rank_k_subset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a8ec9127fb82ee9dfa337c897c7060a57"];
+  Node531 -> Node525 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node523 -> Node532 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node532 [label="INT_vec_search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945"];
+  Node523 -> Node533 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node533 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+}

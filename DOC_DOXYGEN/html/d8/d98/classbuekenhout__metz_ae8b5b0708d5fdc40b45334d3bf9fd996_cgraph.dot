@@ -1,0 +1,9 @@
+digraph "buekenhout_metz::~buekenhout_metz"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="buekenhout_metz::~buekenhout_metz",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="buekenhout_metz::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d98/classbuekenhout__metz.html#a9af576e3e80d9d96934c763b7a5be154"];
+}

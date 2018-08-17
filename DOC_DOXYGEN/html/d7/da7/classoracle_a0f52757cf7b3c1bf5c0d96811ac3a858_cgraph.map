@@ -1,0 +1,20 @@
+<map id="oracle::print_extensions" name="oracle::print_extensions">
+<area shape="rect" id="node2" href="$d7/da7/classoracle.html#a022e34d01ca887785e17c9f3fb25193e" title="oracle::depth_of_node" alt="" coords="220,29,374,55"/>
+<area shape="rect" id="node3" href="$d7/da7/classoracle.html#a6ea212ee0158a6c6146d54f79ba0e9f3" title="oracle::print_extensions" alt="" coords="649,81,811,107"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#a8d13b4c518ed1591695e06071de2fe6c" title="action::compute_orbit\l_of_point_generators\l_by_handle" alt="" coords="223,416,372,468"/>
+<area shape="rect" id="node6" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="232,492,362,517"/>
+<area shape="rect" id="node10" href="$d7/da7/classoracle.html#af83a814a952e0948650850c980072a15" title="oracle::store_set_with\l_verbose_level" alt="" coords="222,541,373,580"/>
+<area shape="rect" id="node12" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="678,245,782,271"/>
+<area shape="rect" id="node13" href="$d2/d86/classaction.html#ad28f6f8810ffbad64c1490f78e51e2b1" title="action::element_retrieve" alt="" coords="215,604,379,629"/>
+<area shape="rect" id="node14" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="442,396,587,435"/>
+<area shape="rect" id="node15" href="$d2/d86/classaction.html#a600e542e5aeca2a46f18110e027947e0" title="action::map_a_set" alt="" coords="232,315,362,340"/>
+<area shape="rect" id="node17" href="$d7/d73/classgenerator.html#acdf58f4d0bdb6a88af63cdd5fb5d6bff" title="generator::find_oracle\l_node_for_set" alt="" coords="222,181,373,220"/>
+<area shape="rect" id="node4" href="$da/d10/other_8h.html#ab39242254c1c0bce13010118473d8c74" title="print_extension_type" alt="" coords="859,107,1004,132"/>
+<area shape="rect" id="node7" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="439,561,589,587"/>
+<area shape="rect" id="node8" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="662,511,799,536"/>
+<area shape="rect" id="node9" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="876,485,987,511"/>
+<area shape="rect" id="node11" href="$d7/da7/classoracle.html#abbf5fae543cb81c13c03282968faf9ad" title="oracle::store_set" alt="" coords="454,635,574,660"/>
+<area shape="rect" id="node16" href="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d" title="action::element_image_of" alt="" coords="427,347,601,372"/>
+<area shape="rect" id="node18" href="$d7/d73/classgenerator.html#aef74bcab80fb84791767d56f6cc1464f" title="generator::find_oracle\l_node_for_set_basic" alt="" coords="439,131,590,169"/>
+<area shape="rect" id="node19" href="$d7/da7/classoracle.html#aa6091b5a2260435d706a61ddc06ad1a4" title="oracle::find_extension\l_from_point" alt="" coords="655,183,806,221"/>
+</map>

@@ -1,0 +1,19 @@
+digraph "matrix_group_element_print_latex"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node7429 [label="matrix_group_element\l_print_latex",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7429 -> Node7430 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7430 [label="matrix_group::GL_print\l_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a3dee033516b0e1688aefe95a483d9d76"];
+  Node7430 -> Node7431 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7431 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node7430 -> Node7432 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7432 [label="PG_element_normalize\l_from_front",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95"];
+  Node7430 -> Node7433 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7433 [label="is_prime",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac98a0478ba82b9568613df1c8df7e3b8"];
+  Node7433 -> Node7434 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7434 [label="smallest_primedivisor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dda/number__theory_8_c.html#a89238384b70e5f0f19ac179ca88d468d"];
+  Node7430 -> Node7435 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7435 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+}

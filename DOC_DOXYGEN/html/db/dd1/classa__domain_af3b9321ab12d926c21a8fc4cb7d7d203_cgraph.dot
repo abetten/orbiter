@@ -1,0 +1,27 @@
+digraph "a_domain::Gauss_step"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node68 [label="a_domain::Gauss_step",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node68 -> Node69 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node69 [label="a_domain::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a7931dba1ff177d54e06217dc8191f58c"];
+  Node68 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="a_domain::offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a62f150e399aec130df913d65a7772ff3"];
+  Node68 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="a_domain::swap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a8bc23463db2935695424142fe9ae866b"];
+  Node68 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="a_domain::copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a0a6f28f247762f79caeca959f58440bc"];
+  Node68 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="a_domain::inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#aa5db8c2f149571c925fe7093ec2c87c6"];
+  Node68 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="a_domain::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ae587ea71187430b3cfe4868182cd37f5"];
+  Node74 -> Node75 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node75 [label="INT_mult_fractions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ad45987433ae2f19d3af9b98fc4418559"];
+  Node68 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node76 [label="a_domain::negate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a13f69fa177cc5e2066c216174bee4295"];
+  Node68 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="a_domain::add_apply",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ae0a23ffe3a8f1c79d2a32bda8dcf43ba"];
+  Node77 -> Node78 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="INT_add_fractions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a63dca96ff4af450258e99520cc36541c"];
+}

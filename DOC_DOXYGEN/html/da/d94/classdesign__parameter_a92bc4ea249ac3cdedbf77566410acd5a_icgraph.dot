@@ -1,0 +1,22 @@
+digraph "design_parameter::supplementary"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2054 [label="design_parameter::supplementary",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2054 -> Node2055 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2055 [label="design_parameter::supplementary\l_reduced_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#ace491a14da6337d02eb91fd090c72345"];
+  Node2054 -> Node2056 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2056 [label="design_parameter::supplementary\l_derived",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a17941dd86d09c510322cd0deee7e463f"];
+  Node2054 -> Node2057 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2057 [label="design_parameter::supplementary\l_residual",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a5bbeb7775c2bd761d50a7b32044d6963"];
+  Node2054 -> Node2058 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2058 [label="design_parameter::is\l_selfsupplementary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#ac0ad1bf4fb71b9eab055d18503c4a7ce"];
+  Node2058 -> Node2059 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2059 [label="design_parameter::text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a200510dc60483800cc6985b77d4ee50c"];
+  Node2059 -> Node2060 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2060 [label="design_parameter::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#ac9c431a5408809b0c229eacaa924781b"];
+  Node2054 -> Node2061 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2061 [label="design_parameter::lambda\l_of_supplementary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a377c987a2c470225466fd32a3e920f0a"];
+  Node2061 -> Node2059 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

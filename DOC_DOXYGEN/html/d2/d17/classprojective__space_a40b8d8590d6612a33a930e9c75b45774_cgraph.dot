@@ -1,0 +1,33 @@
+digraph "projective_space::make_incidence_structure_and_partition"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2471 [label="projective_space::make\l_incidence_structure_and\l_partition",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2471 -> Node2472 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2472 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node2471 -> Node2473 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2473 [label="incidence_structure\l::init_by_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a3f4fea622872e3e0f50698abca967561"];
+  Node2471 -> Node2474 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2474 [label="partitionstack::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a8ff49c4bd001383eb1f9f0d9bbb01c05"];
+  Node2471 -> Node2475 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2475 [label="partitionstack::subset\l_continguous",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a9a58475ddfa123b384ff187b290fa37c"];
+  Node2471 -> Node2476 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2476 [label="partitionstack::split_cell",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#aafceac783d21309e491df61254f41244"];
+  Node2471 -> Node2477 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2477 [label="partitionstack::sort\l_cells",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a6e2783ab6d6b06f37ac21ce529e219b6"];
+  Node2477 -> Node2478 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2478 [label="partitionstack::sort_cell",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#abb4d78049a6424e54e65a25c7d57dca2"];
+  Node2478 -> Node2479 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2479 [label="INT_vec_quicksort_increasingly",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a31ccee746bc644f58816c67bc3a0e237"];
+  Node2479 -> Node2480 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2480 [label="INT_vec_quicksort",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a06b413b423531ad098e9536031cc91ef"];
+  Node2479 -> Node2481 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2481 [label="compare_increasingly_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#aa182150f114c64f81fcefcbc6d292790"];
+  Node2477 -> Node2482 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2482 [label="partitionstack::check",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a30ab45463af6dbfc8e46314ff03624ae"];
+  Node2482 -> Node2483 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2483 [label="partitionstack::print_raw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a733493f93dd83b5cef67908fc42a4312"];
+  Node2482 -> Node2484 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2484 [label="partitionstack::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#aabacee6e58ddb0d6ee46a47f714edfbb"];
+}

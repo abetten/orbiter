@@ -1,0 +1,6 @@
+<map id="clique_finder::is_suspicous" name="clique_finder::is_suspicous">
+<area shape="rect" id="node2" href="$dc/d82/classclique__finder.html#a9e90371ec043309aabba9b7bd805fb51" title="clique_finder::print\l_suspicous_point_subset" alt="" coords="234,12,405,51"/>
+<area shape="rect" id="node3" href="$dc/d82/classclique__finder.html#acc978a5b3e9fcd0c8e4a9b08d49d94e0" title="clique_finder::backtrack\l_search_not_recursive" alt="" coords="453,12,614,51"/>
+<area shape="rect" id="node4" href="$d3/d54/classrainbow__cliques.html#a38487c306d689486602968412f851b98" title="rainbow_cliques::search\l_with_additional_test\l_function" alt="" coords="662,5,827,57"/>
+<area shape="rect" id="node5" href="$d3/d54/classrainbow__cliques.html#a068ae8a136fca21b0e5bfe6d7605d3d6" title="rainbow_cliques::search" alt="" coords="875,19,1039,44"/>
+</map>

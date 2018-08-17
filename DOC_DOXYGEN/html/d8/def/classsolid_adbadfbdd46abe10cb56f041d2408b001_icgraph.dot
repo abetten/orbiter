@@ -1,0 +1,15 @@
+digraph "solid::add_face_n"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node798 [label="solid::add_face_n",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node798 -> Node799 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node799 [label="solid::add_face3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a6875ab7d3238826f030bae684137f789"];
+  Node798 -> Node800 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node800 [label="solid::add_face4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ae0c74bc52056d190e54a60c78c1858a2"];
+  Node800 -> Node801 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node801 [label="solid::cube",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a308e6888759550da489397527ed89137"];
+  Node798 -> Node802 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node802 [label="solid::add_face5",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a56243f48f4573b2989154be1dca68713"];
+}

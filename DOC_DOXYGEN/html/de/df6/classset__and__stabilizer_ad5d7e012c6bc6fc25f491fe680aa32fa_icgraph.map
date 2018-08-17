@@ -1,0 +1,33 @@
+<map id="set_and_stabilizer::allocate_data" name="set_and_stabilizer::allocate_data">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#a23116270f27facfd48e4190a84e0ef20" title="generator::get_set\l_and_stabilizer" alt="" coords="182,327,312,365"/>
+<area shape="rect" id="node3" href="$da/df3/ferdinand_8_c.html#a322b57727d23cf5a0932f11c30ea18d9" title="ferdinand" alt="" coords="602,36,679,61"/>
+<area shape="rect" id="node5" href="$de/dae/classcayley__graph__search.html#a428879782c317f9a4f9524ea5d16072b" title="cayley_graph_search\l::write_file" alt="" coords="361,5,509,44"/>
+<area shape="rect" id="node6" href="$d9/d5f/example__fano__plane_8_c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="410,120,460,145"/>
+<area shape="rect" id="node7" href="$d5/d13/simeon_8_c.html#a36cf3f9cb484fa44da7a7dfcbe9385d0" title="do_simeon" alt="" coords="392,169,479,195"/>
+<area shape="rect" id="node9" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="989,337,1139,376"/>
+<area shape="rect" id="node11" href="$d7/d73/classgenerator.html#a927aa5ef3dbe7bfc7f3415bf005620ed" title="generator::generate\l_source_code" alt="" coords="366,219,504,257"/>
+<area shape="rect" id="node18" href="$d7/d73/classgenerator.html#a7869a4ccc807a96d18fa5d535e74cf1e" title="generator::identify\l_and_get_stabilizer" alt="" coords="367,548,504,587"/>
+<area shape="rect" id="node19" href="$dd/d23/classclassify__double__sixes.html#aed4b1460612fe2fd5b4e4611e83b2806" title="classify_double_sixes\l::downstep" alt="" coords="360,683,510,721"/>
+<area shape="rect" id="node22" href="$dd/d23/classclassify__double__sixes.html#a4211b29d5115343c52fef8a64d46a7c7" title="classify_double_sixes\l::print_five_plus_ones" alt="" coords="360,611,511,649"/>
+<area shape="rect" id="node24" href="$d1/d21/classclassify__trihedral__pairs.html#a5289f00a07639129c5264ba88508ca13" title="classify_trihedral\l_pairs::list_orbits\l_on_trihedra_type1" alt="" coords="787,384,924,436"/>
+<area shape="rect" id="node26" href="$d1/d21/classclassify__trihedral__pairs.html#a98826e788eb4eedfc615144211032633" title="classify_trihedral\l_pairs::list_orbits\l_on_trihedra_type2" alt="" coords="787,460,924,512"/>
+<area shape="rect" id="node27" href="$d1/d21/classclassify__trihedral__pairs.html#a3fe3880b4f1451c976300cba97be0bbf" title="classify_trihedral\l_pairs::downstep" alt="" coords="374,485,496,524"/>
+<area shape="rect" id="node32" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7382d61449608121f5ef1d4d1c69756c" title="six_arcs_not_on_a_conic\l::report_latex" alt="" coords="770,269,941,308"/>
+<area shape="rect" id="node4" href="$da/df3/ferdinand_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="830,36,881,61"/>
+<area shape="rect" id="node8" href="$d5/d13/simeon_8_c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="615,157,665,183"/>
+<area shape="rect" id="node10" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1187,411,1237,436"/>
+<area shape="rect" id="node12" href="$d4/d21/classarc__generator.html#aad1dcec3a1c302e743d574bd1ac857d9" title="arc_generator::compute\l_starter" alt="" coords="559,207,722,245"/>
+<area shape="rect" id="node13" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="785,108,926,133"/>
+<area shape="rect" id="node14" href="$d6/dd8/classk__arc__generator.html#a6036d9f52ede9f8ca681505626b5361d" title="k_arc_generator::init" alt="" coords="784,157,927,183"/>
+<area shape="rect" id="node16" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="770,207,941,245"/>
+<area shape="rect" id="node15" href="$d6/d01/k__arc__generator__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1039,157,1089,183"/>
+<area shape="rect" id="node17" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1187,276,1237,301"/>
+<area shape="rect" id="node20" href="$dd/d23/classclassify__double__sixes.html#aa22b7c156d68376a603743c8b43a58ef" title="classify_double_sixes\l::classify" alt="" coords="565,700,715,739"/>
+<area shape="rect" id="node21" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="830,644,881,669"/>
+<area shape="rect" id="node23" href="$d7/d5c/classsurface__classify__wedge.html#a5698763ece48d6f0a605527ca62429c5" title="surface_classify_wedge\l::latex_surfaces" alt="" coords="559,637,722,676"/>
+<area shape="rect" id="node25" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="1013,411,1116,436"/>
+<area shape="rect" id="node28" href="$d1/d21/classclassify__trihedral__pairs.html#a134e4c3042163c24bf57050f26e364e1" title="classify_trihedral\l_pairs::classify" alt="" coords="580,523,701,561"/>
+<area shape="rect" id="node29" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="785,536,926,561"/>
+<area shape="rect" id="node30" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="997,523,1131,561"/>
+<area shape="rect" id="node31" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="997,467,1131,492"/>
+</map>

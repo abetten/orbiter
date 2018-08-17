@@ -1,0 +1,11 @@
+<map id="group_selection::print" name="group_selection::print">
+<area shape="rect" id="node2" href="$d6/db0/classgroup__selection.html#a7d7efa588eae53bc12ab0cc6a45fad31" title="group_selection::type" alt="" coords="202,5,350,31"/>
+<area shape="rect" id="node6" href="$d6/db0/classgroup__selection.html#a9b9578c0fe171d6aef98a1cb6926c4ea" title="group_selection::val1" alt="" coords="203,55,350,80"/>
+<area shape="rect" id="node7" href="$d6/db0/classgroup__selection.html#a9354cad24b302f9faf3924cbb9f7947c" title="group_selection::val2" alt="" coords="203,104,350,129"/>
+<area shape="rect" id="node8" href="$d6/db0/classgroup__selection.html#a686cb0c6a3a040796b112b8007ea8223" title="group_selection::s" alt="" coords="211,153,341,179"/>
+<area shape="rect" id="node10" href="$d8/d99/classhollerith.html#af61fce2d06f211b25fe3838e4dfee77a" title="hollerith::s" alt="" coords="235,203,317,228"/>
+<area shape="rect" id="node3" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="446,104,530,129"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="401,5,575,31"/>
+<area shape="rect" id="node5" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="445,55,531,80"/>
+<area shape="rect" id="node9" href="$d7/d71/classdiscreta__base.html#a3e66f82711f314710107e2f29e589690" title="discreta_base::as_hollerith" alt="" coords="398,153,578,179"/>
+</map>

@@ -1,0 +1,9 @@
+digraph "sims::element_from_path_inv"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3213 [label="sims::element_from\l_path_inv",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3213 -> Node3214 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3214 [label="action::build_up_automorphism\l_group_from_aut_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#af291f2c50068aa2d656041f3f731d91b"];
+}

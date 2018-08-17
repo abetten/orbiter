@@ -1,0 +1,19 @@
+digraph "action_on_spread_set::compute_image_low_level"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node290 [label="action_on_spread_set\l::compute_image_low_level",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node290 -> Node291 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node291 [label="INT_matrix_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#afd4180a24bef3a2b584668a4eaf607ff"];
+  Node290 -> Node292 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node292 [label="action_on_spread_set\l::matrix_to_subspace",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classaction__on__spread__set.html#a288c7e842caf8b47b046cdc5fc2aca73"];
+  Node292 -> Node293 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node293 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node290 -> Node294 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node294 [label="action::element_image\l_of_low_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a45f6affc163c5034d1211f3cfa6db3a0"];
+  Node290 -> Node295 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node295 [label="action_on_spread_set\l::subspace_to_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classaction__on__spread__set.html#a0ebb18d5e01ccad6c67d75b5073e5326"];
+  Node295 -> Node296 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node296 [label="finite_field::Gauss_easy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a32761bf6c4a41f24b7193352127db8e7"];
+}

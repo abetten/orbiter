@@ -1,0 +1,12 @@
+digraph "induced_action_element_mult"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2045 [label="induced_action_element_mult",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2045 -> Node2046 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2046 [label="product_action::element_mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d74/classproduct__action.html#a9305e43d88bef0395674839dea1f8ea6"];
+  Node2046 -> Node2047 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2047 [label="action::element_mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3"];
+  Node2045 -> Node2047 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

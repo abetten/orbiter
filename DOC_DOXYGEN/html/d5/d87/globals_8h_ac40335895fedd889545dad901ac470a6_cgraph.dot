@@ -1,0 +1,38 @@
+digraph "test_unipoly2"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node639 [label="test_unipoly2",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node639 -> Node640 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node640 [label="finite_field::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c"];
+  Node639 -> Node641 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node641 [label="unipoly_domain::create\l_object_by_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a3311706a93102009d6d22c69f2f3902f"];
+  Node641 -> Node642 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node642 [label="INT_logq",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ad66b504457b1765dd3de6caa4953c204"];
+  Node639 -> Node643 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node643 [label="unipoly_domain::minimum\l_polynomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#ab80b3c8cfb24b3b4ce86ead7a5ebaa95"];
+  Node643 -> Node644 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node644 [label="finite_field::negate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31"];
+  Node644 -> Node645 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node645 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node644 -> Node646 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node646 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+  Node643 -> Node641 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node643 -> Node647 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node647 [label="unipoly_domain::print\l_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#ad73fd87ed54b67e1091ece74f80ff6d7"];
+  Node647 -> Node648 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node648 [label="current_printing_mode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#afcd81bfedce13a2f5f14361608e763f2"];
+  Node643 -> Node649 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node649 [label="unipoly_domain::assign",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a4742bf0f85fee30ab35fbc1188c39c1d"];
+  Node643 -> Node650 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node650 [label="unipoly_domain::power\l_coefficients",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a8405795cc24002166e516b3aaaf5d1e5"];
+  Node643 -> Node651 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node651 [label="unipoly_domain::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a0071f939bb75d6ee6a09c4029d3d34c1"];
+  Node651 -> Node652 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node652 [label="unipoly_domain::mult_mod",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a628113bead6a494ce25e7bac8d989c75"];
+  Node651 -> Node653 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node653 [label="unipoly_domain::mult_easy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a99f9557c655bdee8976512e0444b502a"];
+  Node643 -> Node654 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node654 [label="unipoly_domain::delete\l_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#ad46bf5ef8df170a76df6623be4260301"];
+}

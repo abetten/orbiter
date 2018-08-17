@@ -1,0 +1,15 @@
+digraph "canonical_form"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node142 [label="canonical_form",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node142 -> Node143 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node143 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node142 -> Node144 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node144 [label="process_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a63a6b06bd2a9a9c50ed710271f4d5530"];
+  Node144 -> Node142 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node144 -> Node145 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node145 [label="classify_objects_using\l_nauty",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a32275eacc4bdda93b2b34c2a9217a088"];
+  Node145 -> Node143 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

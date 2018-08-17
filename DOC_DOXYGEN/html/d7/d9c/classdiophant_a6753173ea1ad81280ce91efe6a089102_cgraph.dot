@@ -1,0 +1,13 @@
+digraph "diophant::join_problems"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node285 [label="diophant::join_problems",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node285 -> Node286 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node286 [label="diophant::open",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a182e2928400c2e7fc01f4155cec72b57"];
+  Node285 -> Node287 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node287 [label="diophant::Aij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#af86d3bf833485e2f2d7b4a19288fc698"];
+  Node285 -> Node288 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node288 [label="diophant::RHSi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#aa56efaa8e28e17c83f96ed409964b3e1"];
+}

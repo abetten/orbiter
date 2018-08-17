@@ -1,0 +1,19 @@
+digraph "surface_object::latex_trihedral_pair"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1696 [label="surface_object::latex\l_trihedral_pair",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1696 -> Node1697 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1697 [label="surface_object::latex\l_table_of_trihedral_pairs\l_and_clebsch_system",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/classsurface__object.html#a174ac7ffea380b2c2593fbe540da38c4"];
+  Node1696 -> Node1698 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1698 [label="surface_object::latex\l_table_of_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/classsurface__object.html#ae64b2ea950f99fb467960a0f2cbe7aa7"];
+  Node1698 -> Node1699 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1699 [label="surface_object::print\l_Steiner_and_Eckardt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/classsurface__object.html#af36e1817621bcc3f1d652d0adc6edece"];
+  Node1699 -> Node1700 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1700 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node1700 -> Node1701 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1701 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node1701 -> Node1702 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1702 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+}

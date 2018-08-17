@@ -1,0 +1,10 @@
+<map id="action_on_bricks::compute_image_permutation_action" name="action_on_bricks::compute_image_permutation_action">
+<area shape="rect" id="node2" href="$da/daf/classbrick__domain.html#a2a4035be65c27fa4eaafae8db1fdf314" title="brick_domain::unrank\l_coordinates" alt="" coords="239,5,388,44"/>
+<area shape="rect" id="node7" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="241,68,386,107"/>
+<area shape="rect" id="node8" href="$d2/d86/classaction.html#a094e1e6414725c771c91ea0e92342de6" title="action::image_of" alt="" coords="254,131,373,156"/>
+<area shape="rect" id="node9" href="$da/daf/classbrick__domain.html#a84f4df99770f492278a079177c09eaf3" title="brick_domain::rank\l_coordinates" alt="" coords="247,180,381,219"/>
+<area shape="rect" id="node3" href="$da/daf/classbrick__domain.html#ae77f9055d5c6100c195867679603a3c2" title="brick_domain::unrank" alt="" coords="436,12,585,37"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="455,124,566,149"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="633,99,776,124"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="640,148,769,173"/>
+</map>

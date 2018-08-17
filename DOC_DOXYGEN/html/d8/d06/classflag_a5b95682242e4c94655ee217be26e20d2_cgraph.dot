@@ -1,0 +1,9 @@
+digraph "flag::flag"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="flag::flag",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="flag::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d06/classflag.html#aca06508fba1f69355f26c2e4cfc1f9b7"];
+}

@@ -1,0 +1,29 @@
+digraph "page_table::allocate_rec"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4 [label="page_table::allocate_rec",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="page_table::reallocate\l_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#ae38b42623cb168c948dad1e3765714f1"];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="fill_char",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a0429f5462bfcfd509d83bc1f7ebfc818"];
+  Node4 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="page_storage::store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a3d04ee0a97310a8211e223ccea1d2d3f"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="page_storage::s_i_and\l_allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#aa43eb1ae49a6688771f7a89cbe2cd7bf"];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node8 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="UBYTE_print_bitwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a920069ee78174f219534fed767865637"];
+  Node7 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+  Node4 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="page_table::search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#a6a785ea8bdc6d346f1fce0181f76969c"];
+  Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="page_table::search\l_key_pair",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#ad382cc58d94dfe8edb98d11748c800b8"];
+  Node4 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="page_table::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#a8cc167e59ef8166bfe511c5a950b8fc0"];
+}

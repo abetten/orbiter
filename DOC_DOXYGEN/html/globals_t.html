@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('globals_t.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -65,715 +89,561 @@ $(function() {
 <div class="textblock">Here is a list of all file members with links to the files they belong to:</div>
 
 <h3><a id="index_t"></a>- t -</h3><ul>
-<li>T
-: <a class="el" href="pentomino__5x5_8_c.html#a2b44a927c3e8a68f69f9f943c32c696d">pentomino_5x5.C</a>
-</li>
 <li>t
-: <a class="el" href="alphabet_8_c.html#ac310d9181e916ba43604099aee272c71">alphabet.C</a>
-, <a class="el" href="alphabet2_8_c.html#ac310d9181e916ba43604099aee272c71">alphabet2.C</a>
+: <a class="el" href="d9/dc9/alphabet_8_c.html#ac310d9181e916ba43604099aee272c71">alphabet.C</a>
+, <a class="el" href="d9/d4b/alphabet2_8_c.html#ac310d9181e916ba43604099aee272c71">alphabet2.C</a>
+</li>
+<li>T
+: <a class="el" href="dc/d77/pentomino__5x5_8_c.html#a2b44a927c3e8a68f69f9f943c32c696d">pentomino_5x5.C</a>
 </li>
 <li>t0
-: <a class="el" href="arcs__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">arcs_main.C</a>
-, <a class="el" href="test__hyperoval_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test_hyperoval.C</a>
-, <a class="el" href="conic_8_c.html#a4268f4fe222ffb119218a0199f5e1904">conic.C</a>
-, <a class="el" href="graph_8h.html#a4268f4fe222ffb119218a0199f5e1904">graph.h</a>
-, <a class="el" href="tdo__refine__all_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_refine_all.C</a>
-, <a class="el" href="tdo__start_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_start.C</a>
-, <a class="el" href="make__design_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_design.C</a>
-, <a class="el" href="all__cliques_8_c.html#a4268f4fe222ffb119218a0199f5e1904">all_cliques.C</a>
-, <a class="el" href="all__cycles_8_c.html#a4268f4fe222ffb119218a0199f5e1904">all_cycles.C</a>
-, <a class="el" href="costas_8_c.html#a4268f4fe222ffb119218a0199f5e1904">costas.C</a>
-, <a class="el" href="_o_v_o_i_d_2ovoid_8_c.html#a4268f4fe222ffb119218a0199f5e1904">ovoid.C</a>
-, <a class="el" href="all__rainbow__cliques_8_c.html#a4268f4fe222ffb119218a0199f5e1904">all_rainbow_cliques.C</a>
-, <a class="el" href="_a_p_p_s_2_t_o_o_l_s_2colored__graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">colored_graph.C</a>
-, <a class="el" href="ovoid_8h.html#a4268f4fe222ffb119218a0199f5e1904">ovoid.h</a>
-, <a class="el" href="_a_p_p_s_2_t_o_o_l_s_2dlx_8_c.html#a4268f4fe222ffb119218a0199f5e1904">dlx.C</a>
-, <a class="el" href="draw__colored__graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">draw_colored_graph.C</a>
-, <a class="el" href="blt_8h.html#a4268f4fe222ffb119218a0199f5e1904">blt.h</a>
-, <a class="el" href="_a_p_p_s_2_c_o_m_b_i_n_a_t_o_r_i_c_s_2design_8_c.html#a4268f4fe222ffb119218a0199f5e1904">design.C</a>
-, <a class="el" href="analyze_8_c.html#a4268f4fe222ffb119218a0199f5e1904">analyze.C</a>
-, <a class="el" href="latex__table_8_c.html#a4268f4fe222ffb119218a0199f5e1904">latex_table.C</a>
-, <a class="el" href="layered__graph__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">layered_graph_main.C</a>
-, <a class="el" href="analyze__projective__code_8_c.html#a4268f4fe222ffb119218a0199f5e1904">analyze_projective_code.C</a>
-, <a class="el" href="plot__decomposition__matrix_8_c.html#a4268f4fe222ffb119218a0199f5e1904">plot_decomposition_matrix.C</a>
-, <a class="el" href="scheduler_8_c.html#a4268f4fe222ffb119218a0199f5e1904">scheduler.C</a>
-, <a class="el" href="field_8_c.html#a4268f4fe222ffb119218a0199f5e1904">field.C</a>
-, <a class="el" href="baer__subplane_8_c.html#a4268f4fe222ffb119218a0199f5e1904">baer_subplane.C</a>
-, <a class="el" href="solve__diophant_8_c.html#a4268f4fe222ffb119218a0199f5e1904">solve_diophant.C</a>
-, <a class="el" href="split_8_c.html#a4268f4fe222ffb119218a0199f5e1904">split.C</a>
-, <a class="el" href="cheat__sheet___p_g_8_c.html#a4268f4fe222ffb119218a0199f5e1904">cheat_sheet_PG.C</a>
-, <a class="el" href="translation__plane_8h.html#a4268f4fe222ffb119218a0199f5e1904">translation_plane.h</a>
-, <a class="el" href="translation__plane__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">translation_plane_main.C</a>
-, <a class="el" href="arcs__orderly_8_c.html#a4268f4fe222ffb119218a0199f5e1904">arcs_orderly.C</a>
-, <a class="el" href="blt__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">blt_main.C</a>
-, <a class="el" href="group__ring_8_c.html#a4268f4fe222ffb119218a0199f5e1904">group_ring.C</a>
-, <a class="el" href="determine__conic_8_c.html#a4268f4fe222ffb119218a0199f5e1904">determine_conic.C</a>
-, <a class="el" href="determine__quadric_8_c.html#a4268f4fe222ffb119218a0199f5e1904">determine_quadric.C</a>
-, <a class="el" href="had_8_c.html#a4268f4fe222ffb119218a0199f5e1904">had.C</a>
-, <a class="el" href="factor__space_8_c.html#a4268f4fe222ffb119218a0199f5e1904">factor_space.C</a>
-, <a class="el" href="hill_8_c.html#a4268f4fe222ffb119218a0199f5e1904">hill.C</a>
-, <a class="el" href="codes_8_c.html#a4268f4fe222ffb119218a0199f5e1904">codes.C</a>
-, <a class="el" href="hadamard_8_c.html#a4268f4fe222ffb119218a0199f5e1904">hadamard.C</a>
-, <a class="el" href="make__grassmannian_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_grassmannian.C</a>
-, <a class="el" href="make__group_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_group.C</a>
-, <a class="el" href="hamming_8_c.html#a4268f4fe222ffb119218a0199f5e1904">hamming.C</a>
-, <a class="el" href="make__something_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_something.C</a>
-, <a class="el" href="_p_r_o_j_e_c_t_i_v_e___s_p_a_c_e_2ovoid_8_c.html#a4268f4fe222ffb119218a0199f5e1904">ovoid.C</a>
-, <a class="el" href="k__arc__lifting_8_c.html#a4268f4fe222ffb119218a0199f5e1904">k_arc_lifting.C</a>
-, <a class="el" href="codes_8h.html#a4268f4fe222ffb119218a0199f5e1904">codes.h</a>
-, <a class="el" href="matrix__rank_8_c.html#a4268f4fe222ffb119218a0199f5e1904">matrix_rank.C</a>
-, <a class="el" href="plane__search_8_c.html#a4268f4fe222ffb119218a0199f5e1904">plane_search.C</a>
-, <a class="el" href="points_8_c.html#a4268f4fe222ffb119218a0199f5e1904">points.C</a>
-, <a class="el" href="sarnak_8_c.html#a4268f4fe222ffb119218a0199f5e1904">sarnak.C</a>
-, <a class="el" href="_a_p_p_s_2_p_r_o_j_e_c_t_i_v_e___s_p_a_c_e_2polar_8_c.html#a4268f4fe222ffb119218a0199f5e1904">polar.C</a>
-, <a class="el" href="process_8_c.html#a4268f4fe222ffb119218a0199f5e1904">process.C</a>
-, <a class="el" href="burnside_8_c.html#a4268f4fe222ffb119218a0199f5e1904">burnside.C</a>
-, <a class="el" href="shrikhande_8_c.html#a4268f4fe222ffb119218a0199f5e1904">shrikhande.C</a>
-, <a class="el" href="process___p_g_8_c.html#a4268f4fe222ffb119218a0199f5e1904">process_PG.C</a>
-, <a class="el" href="projective__space__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">projective_space_main.C</a>
-, <a class="el" href="tao_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tao.C</a>
-, <a class="el" href="test___p_g_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test_PG.C</a>
-, <a class="el" href="regular__ls_8_c.html#a4268f4fe222ffb119218a0199f5e1904">regular_ls.C</a>
-, <a class="el" href="test__arc_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test_arc.C</a>
-, <a class="el" href="cayley_8_c.html#a4268f4fe222ffb119218a0199f5e1904">cayley.C</a>
-, <a class="el" href="test_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test.C</a>
-, <a class="el" href="transpose_8_c.html#a4268f4fe222ffb119218a0199f5e1904">transpose.C</a>
-, <a class="el" href="_a_p_p_s_2_s_u_b_s_p_a_c_e___o_r_b_i_t_s_2desarguesian__spread_8_c.html#a4268f4fe222ffb119218a0199f5e1904">desarguesian_spread.C</a>
-, <a class="el" href="test2_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test2.C</a>
-, <a class="el" href="linear__set__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">linear_set_main.C</a>
-, <a class="el" href="subspace__orbits__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">subspace_orbits_main.C</a>
-, <a class="el" href="cayley__sym__n_8_c.html#a4268f4fe222ffb119218a0199f5e1904">cayley_sym_n.C</a>
-, <a class="el" href="winnie__li_8_c.html#a4268f4fe222ffb119218a0199f5e1904">winnie_li.C</a>
-, <a class="el" href="maxfit_8_c.html#a4268f4fe222ffb119218a0199f5e1904">maxfit.C</a>
-, <a class="el" href="_a_p_p_s_2_t_d_o_2packing_8_c.html#a4268f4fe222ffb119218a0199f5e1904">packing.C</a>
-, <a class="el" href="graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">graph.C</a>
-, <a class="el" href="tdo__can_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_can.C</a>
-, <a class="el" href="tdo__print_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_print.C</a>
+: <a class="el" href="d7/dd5/arcs__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">arcs_main.C</a>
+, <a class="el" href="dd/d36/test__arc_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test_arc.C</a>
+, <a class="el" href="da/d82/cayley_8_c.html#a4268f4fe222ffb119218a0199f5e1904">cayley.C</a>
+, <a class="el" href="d5/d56/winnie__li_8_c.html#a4268f4fe222ffb119218a0199f5e1904">winnie_li.C</a>
+, <a class="el" href="d5/dd7/apps_2subspace__orbits_2desarguesian__spread_8_c.html#a4268f4fe222ffb119218a0199f5e1904">desarguesian_spread.C</a>
+, <a class="el" href="de/d9a/linear__set__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">linear_set_main.C</a>
+, <a class="el" href="de/d2d/graph_2graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">graph.C</a>
+, <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">subspace_orbits_main.C</a>
+, <a class="el" href="d6/dc3/arc__lifting__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">arc_lifting_main.C</a>
+, <a class="el" href="d9/df3/cayley__sym__n_8_c.html#a4268f4fe222ffb119218a0199f5e1904">cayley_sym_n.C</a>
+, <a class="el" href="d6/df3/graph_8h.html#a4268f4fe222ffb119218a0199f5e1904">graph.h</a>
+, <a class="el" href="d2/dfa/create__surface__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">create_surface_main.C</a>
+, <a class="el" href="df/df8/surface__classify_8_c.html#a4268f4fe222ffb119218a0199f5e1904">surface_classify.C</a>
+, <a class="el" href="d1/d9d/apps_2groups_2direct__product_8_c.html#a4268f4fe222ffb119218a0199f5e1904">direct_product.C</a>
+, <a class="el" href="d3/d87/maxfit_8_c.html#a4268f4fe222ffb119218a0199f5e1904">maxfit.C</a>
+, <a class="el" href="d4/ddd/apps_2tdo_2packing_8_c.html#a4268f4fe222ffb119218a0199f5e1904">packing.C</a>
+, <a class="el" href="db/d67/test__hyperoval_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test_hyperoval.C</a>
+, <a class="el" href="d4/de8/conic_8_c.html#a4268f4fe222ffb119218a0199f5e1904">conic.C</a>
+, <a class="el" href="d1/d84/orthogonal__group_8_c.html#a4268f4fe222ffb119218a0199f5e1904">orthogonal_group.C</a>
+, <a class="el" href="d8/dfa/tdo__can_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_can.C</a>
+, <a class="el" href="d6/d0b/tdo__print_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_print.C</a>
+, <a class="el" href="de/d28/apps_2groups_2wreath__product_8_c.html#a4268f4fe222ffb119218a0199f5e1904">wreath_product.C</a>
+, <a class="el" href="d8/dd0/tdo__start_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tdo_start.C</a>
+, <a class="el" href="d9/d9f/all__cliques_8_c.html#a4268f4fe222ffb119218a0199f5e1904">all_cliques.C</a>
+, <a class="el" href="d6/d90/costas_8_c.html#a4268f4fe222ffb119218a0199f5e1904">costas.C</a>
+, <a class="el" href="d5/db0/make__design_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_design.C</a>
+, <a class="el" href="d9/dfa/all__cycles_8_c.html#a4268f4fe222ffb119218a0199f5e1904">all_cycles.C</a>
+, <a class="el" href="d4/d71/all__rainbow__cliques_8_c.html#a4268f4fe222ffb119218a0199f5e1904">all_rainbow_cliques.C</a>
+, <a class="el" href="df/de7/ovoid_2ovoid_8_c.html#a4268f4fe222ffb119218a0199f5e1904">ovoid.C</a>
+, <a class="el" href="df/df4/collect_8_c.html#a4268f4fe222ffb119218a0199f5e1904">collect.C</a>
+, <a class="el" href="d1/d0f/apps_2tools_2colored__graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">colored_graph.C</a>
+, <a class="el" href="d5/d9e/arcs__orderly_8_c.html#a4268f4fe222ffb119218a0199f5e1904">arcs_orderly.C</a>
+, <a class="el" href="d0/dd1/blt_8h.html#a4268f4fe222ffb119218a0199f5e1904">blt.h</a>
+, <a class="el" href="d9/dc2/apps_2combinatorics_2design_8_c.html#a4268f4fe222ffb119218a0199f5e1904">design.C</a>
+, <a class="el" href="d0/d60/ovoid_8h.html#a4268f4fe222ffb119218a0199f5e1904">ovoid.h</a>
+, <a class="el" href="dc/d87/concatenate__files_8_c.html#a4268f4fe222ffb119218a0199f5e1904">concatenate_files.C</a>
+, <a class="el" href="dc/dea/create__graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">create_graph.C</a>
+, <a class="el" href="da/d90/analyze_8_c.html#a4268f4fe222ffb119218a0199f5e1904">analyze.C</a>
+, <a class="el" href="df/da4/distribution_8_c.html#a4268f4fe222ffb119218a0199f5e1904">distribution.C</a>
+, <a class="el" href="dc/d57/apps_2tools_2dlx_8_c.html#a4268f4fe222ffb119218a0199f5e1904">dlx.C</a>
+, <a class="el" href="da/d6d/field_8_c.html#a4268f4fe222ffb119218a0199f5e1904">field.C</a>
+, <a class="el" href="dd/da1/analyze__projective__code_8_c.html#a4268f4fe222ffb119218a0199f5e1904">analyze_projective_code.C</a>
+, <a class="el" href="d2/dfa/draw__colored__graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">draw_colored_graph.C</a>
+, <a class="el" href="df/d6c/tools_2graph_8_c.html#a4268f4fe222ffb119218a0199f5e1904">graph.C</a>
+, <a class="el" href="d7/d86/baer__subplane_8_c.html#a4268f4fe222ffb119218a0199f5e1904">baer_subplane.C</a>
+, <a class="el" href="d2/d98/latex__table_8_c.html#a4268f4fe222ffb119218a0199f5e1904">latex_table.C</a>
+, <a class="el" href="da/d62/layered__graph__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">layered_graph_main.C</a>
+, <a class="el" href="d1/d5e/blt__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">blt_main.C</a>
+, <a class="el" href="d0/d87/group__ring_8_c.html#a4268f4fe222ffb119218a0199f5e1904">group_ring.C</a>
+, <a class="el" href="d6/dd8/cheat__sheet___p_g_8_c.html#a4268f4fe222ffb119218a0199f5e1904">cheat_sheet_PG.C</a>
+, <a class="el" href="d4/d98/missing__files_8_c.html#a4268f4fe222ffb119218a0199f5e1904">missing_files.C</a>
+, <a class="el" href="d6/d34/plot__decomposition__matrix_8_c.html#a4268f4fe222ffb119218a0199f5e1904">plot_decomposition_matrix.C</a>
+, <a class="el" href="de/d27/determine__conic_8_c.html#a4268f4fe222ffb119218a0199f5e1904">determine_conic.C</a>
+, <a class="el" href="dc/d2b/prepare__frames_8_c.html#a4268f4fe222ffb119218a0199f5e1904">prepare_frames.C</a>
+, <a class="el" href="da/d84/scheduler_8_c.html#a4268f4fe222ffb119218a0199f5e1904">scheduler.C</a>
+, <a class="el" href="d0/d4d/had_8_c.html#a4268f4fe222ffb119218a0199f5e1904">had.C</a>
+, <a class="el" href="d7/d9d/determine__quadric_8_c.html#a4268f4fe222ffb119218a0199f5e1904">determine_quadric.C</a>
+, <a class="el" href="dc/dbc/solve__diophant_8_c.html#a4268f4fe222ffb119218a0199f5e1904">solve_diophant.C</a>
+, <a class="el" href="d2/d70/split_8_c.html#a4268f4fe222ffb119218a0199f5e1904">split.C</a>
+, <a class="el" href="d9/db0/factor__space_8_c.html#a4268f4fe222ffb119218a0199f5e1904">factor_space.C</a>
+, <a class="el" href="d6/d01/k__arc__generator__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">k_arc_generator_main.C</a>
+, <a class="el" href="d7/d1c/create___b_l_t__set__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">create_BLT_set_main.C</a>
+, <a class="el" href="dd/d1d/hadamard_8_c.html#a4268f4fe222ffb119218a0199f5e1904">hadamard.C</a>
+, <a class="el" href="da/d28/hill_8_c.html#a4268f4fe222ffb119218a0199f5e1904">hill.C</a>
+, <a class="el" href="d9/d3a/make__grassmannian_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_grassmannian.C</a>
+, <a class="el" href="de/d10/hamming_8_c.html#a4268f4fe222ffb119218a0199f5e1904">hamming.C</a>
+, <a class="el" href="dd/d51/make__group_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_group.C</a>
+, <a class="el" href="d4/d6e/make__something_8_c.html#a4268f4fe222ffb119218a0199f5e1904">make_something.C</a>
+, <a class="el" href="d4/d4f/codes_8_c.html#a4268f4fe222ffb119218a0199f5e1904">codes.C</a>
+, <a class="el" href="d8/dc9/matrix__rank_8_c.html#a4268f4fe222ffb119218a0199f5e1904">matrix_rank.C</a>
+, <a class="el" href="d9/dbf/projective__space_2ovoid_8_c.html#a4268f4fe222ffb119218a0199f5e1904">ovoid.C</a>
+, <a class="el" href="dd/d07/plane__search_8_c.html#a4268f4fe222ffb119218a0199f5e1904">plane_search.C</a>
+, <a class="el" href="dd/d24/sarnak_8_c.html#a4268f4fe222ffb119218a0199f5e1904">sarnak.C</a>
+, <a class="el" href="d7/d83/points_8_c.html#a4268f4fe222ffb119218a0199f5e1904">points.C</a>
+, <a class="el" href="d5/d0d/apps_2projective__space_2polar_8_c.html#a4268f4fe222ffb119218a0199f5e1904">polar.C</a>
+, <a class="el" href="d2/dd6/k__arc__lifting_8_c.html#a4268f4fe222ffb119218a0199f5e1904">k_arc_lifting.C</a>
+, <a class="el" href="d2/d11/codes_8h.html#a4268f4fe222ffb119218a0199f5e1904">codes.h</a>
+, <a class="el" href="d0/d7a/shrikhande_8_c.html#a4268f4fe222ffb119218a0199f5e1904">shrikhande.C</a>
+, <a class="el" href="d0/d2f/process_8_c.html#a4268f4fe222ffb119218a0199f5e1904">process.C</a>
+, <a class="el" href="d7/d29/process___p_g_8_c.html#a4268f4fe222ffb119218a0199f5e1904">process_PG.C</a>
+, <a class="el" href="d7/db9/tao_8_c.html#a4268f4fe222ffb119218a0199f5e1904">tao.C</a>
+, <a class="el" href="d0/de6/projective__space__main_8_c.html#a4268f4fe222ffb119218a0199f5e1904">projective_space_main.C</a>
+, <a class="el" href="d0/d8c/test___p_g_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test_PG.C</a>
+, <a class="el" href="da/da3/burnside_8_c.html#a4268f4fe222ffb119218a0199f5e1904">burnside.C</a>
+, <a class="el" href="d5/d3f/test_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test.C</a>
+, <a class="el" href="db/d50/regular__ls_8_c.html#a4268f4fe222ffb119218a0199f5e1904">regular_ls.C</a>
+, <a class="el" href="d0/dfc/transpose_8_c.html#a4268f4fe222ffb119218a0199f5e1904">transpose.C</a>
+, <a class="el" href="de/ded/test2_8_c.html#a4268f4fe222ffb119218a0199f5e1904">test2.C</a>
+, <a class="el" href="dc/df8/spread__classify_8_c.html#a4268f4fe222ffb119218a0199f5e1904">spread_classify.C</a>
+, <a class="el" href="d1/d2f/apps_2spread_2spread__create_8_c.html#a4268f4fe222ffb119218a0199f5e1904">spread_create.C</a>
 </li>
 <li>t_EQ
-: <a class="el" href="galois_8h.html#a331aa0f3283349b42f6bab83e017cdc1a32786085ebc0a44724eef095d36bb4af">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a331aa0f3283349b42f6bab83e017cdc1a32786085ebc0a44724eef095d36bb4af">foundations.h</a>
 </li>
 <li>t_LE
-: <a class="el" href="galois_8h.html#a331aa0f3283349b42f6bab83e017cdc1a4cc8fbf607d283edd766f253fb636826">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a331aa0f3283349b42f6bab83e017cdc1a4cc8fbf607d283edd766f253fb636826">foundations.h</a>
 </li>
 <li>T_length
-: <a class="el" href="pentomino__5x5_8_c.html#a213196b18ba8cd4ab4798e2a99401fec">pentomino_5x5.C</a>
+: <a class="el" href="dc/d77/pentomino__5x5_8_c.html#a213196b18ba8cd4ab4798e2a99401fec">pentomino_5x5.C</a>
 </li>
 <li>t_LNS
-: <a class="el" href="galois_8h.html#a1378bcef7b3c9092ebf659c58bc85f21a64eceb0038908ba0f9c0a6e588eb1458">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a1378bcef7b3c9092ebf659c58bc85f21a64eceb0038908ba0f9c0a6e588eb1458">foundations.h</a>
 </li>
 <li>t_PAC
-: <a class="el" href="galois_8h.html#a1378bcef7b3c9092ebf659c58bc85f21ad27b8c06ccbde808cb714cf1dbddb9ed">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a1378bcef7b3c9092ebf659c58bc85f21ad27b8c06ccbde808cb714cf1dbddb9ed">foundations.h</a>
 </li>
 <li>t_PTS
-: <a class="el" href="galois_8h.html#a1378bcef7b3c9092ebf659c58bc85f21a3ac1d299aa5adb032ceecc0ec30c6905">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a1378bcef7b3c9092ebf659c58bc85f21a3ac1d299aa5adb032ceecc0ec30c6905">foundations.h</a>
 </li>
 <li>t_ZOR
-: <a class="el" href="galois_8h.html#a331aa0f3283349b42f6bab83e017cdc1adea072ca5c11ed354661edaa2fbbdc6a">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a331aa0f3283349b42f6bab83e017cdc1adea072ca5c11ed354661edaa2fbbdc6a">foundations.h</a>
 </li>
 <li>TABLE_BINOMIALS_MAX
-: <a class="el" href="longinteger__domain_8_c.html#aee728adc7a2080866e3b7d0f00fdcae5">longinteger_domain.C</a>
+: <a class="el" href="d6/d94/longinteger__domain_8_c.html#aee728adc7a2080866e3b7d0f00fdcae5">longinteger_domain.C</a>
 </li>
 <li>TABLE_Q_BINOMIALS_MAX
-: <a class="el" href="longinteger__domain_8_c.html#a5162461fd41bdf453d9e9f2539c87d8e">longinteger_domain.C</a>
+: <a class="el" href="d6/d94/longinteger__domain_8_c.html#a5162461fd41bdf453d9e9f2539c87d8e">longinteger_domain.C</a>
 </li>
 <li>TAKEBIT
-: <a class="el" href="nauty_8h.html#aa00d4388ad48907c85a2afc659794bef">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#aa00d4388ad48907c85a2afc659794bef">nauty.h</a>
 </li>
 <li>taken
-: <a class="el" href="alphabet_8_c.html#a9aed94c6128317cc3c8c3c51c7b248c8">alphabet.C</a>
-, <a class="el" href="alphabet2_8_c.html#a9aed94c6128317cc3c8c3c51c7b248c8">alphabet2.C</a>
+: <a class="el" href="d9/dc9/alphabet_8_c.html#a9aed94c6128317cc3c8c3c51c7b248c8">alphabet.C</a>
+, <a class="el" href="d9/d4b/alphabet2_8_c.html#a9aed94c6128317cc3c8c3c51c7b248c8">alphabet2.C</a>
 </li>
 <li>tan_grad()
-: <a class="el" href="draw_8_c.html#af91d2a89430df0035eb42a7976a13a07">draw.C</a>
-, <a class="el" href="galois_8h.html#af91d2a89430df0035eb42a7976a13a07">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#af91d2a89430df0035eb42a7976a13a07">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#af91d2a89430df0035eb42a7976a13a07">graphics.h</a>
 </li>
 <li>target_RHS
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#a1f0784113f26d82c71ea675c9ee3c54b">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a1f0784113f26d82c71ea675c9ee3c54b">dlx.C</a>
 </li>
 <li>target_sz
-: <a class="el" href="arcs__orderly_8_c.html#a026af034cfbbae0993242127feb33d5d">arcs_orderly.C</a>
+: <a class="el" href="d5/d9e/arcs__orderly_8_c.html#a026af034cfbbae0993242127feb33d5d">arcs_orderly.C</a>
 </li>
 <li>targetcell()
-: <a class="el" href="nautil_8c.html#a98cad095f286d7c23a18b6ed808bf456">nautil.c</a>
-, <a class="el" href="nauty_8h.html#a069f715efe98f797ff29b089ab43148e">nauty.h</a>
+: <a class="el" href="df/d37/naugraph_8c.html#ae87c580b346e8d4502b0793f8c49508c">naugraph.c</a>
+, <a class="el" href="d1/da0/nauty_8h.html#ac4ac9e5678c1ea23647f8f08c749dd2d">nauty.h</a>
 </li>
 <li>tcnode
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2nauty_8_c.html#a25a2b08a0b89983fe0cd385efff6a3fb">nauty.c</a>
+: <a class="el" href="d3/dbf/lib_2foundations_2graph__theory__nauty_2nauty_8_c.html#a25a2b08a0b89983fe0cd385efff6a3fb">nauty.c</a>
 </li>
 <li>tdo_data
-: <a class="el" href="incidence_8h.html#a0f06d5c083a839171b70d9995b2b5b7b">incidence.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a0f06d5c083a839171b70d9995b2b5b7b">foundations.h</a>
 </li>
 <li>TDO_refine_extend_upper_bounds()
-: <a class="el" href="incidence_8h.html#aae648b1115583e010b73fc87d3e816aa">incidence.h</a>
-, <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#aae648b1115583e010b73fc87d3e816aa">packing.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#aae648b1115583e010b73fc87d3e816aa">geometry.h</a>
+, <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#aae648b1115583e010b73fc87d3e816aa">packing.C</a>
 </li>
 <li>TDO_refine_init_upper_bounds()
-: <a class="el" href="incidence_8h.html#aa791bbb39837ada2d729b7e0dc022e7c">incidence.h</a>
-, <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#aa791bbb39837ada2d729b7e0dc022e7c">packing.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#aa791bbb39837ada2d729b7e0dc022e7c">geometry.h</a>
+, <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#aa791bbb39837ada2d729b7e0dc022e7c">packing.C</a>
 </li>
 <li>tdo_scheme
-: <a class="el" href="incidence_8h.html#af194b50443ebec7d5bbdaab913ca1fec">incidence.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#af194b50443ebec7d5bbdaab913ca1fec">foundations.h</a>
 </li>
 <li>tdo_scheme_get_col_class_length_fused()
-: <a class="el" href="geo__parameter_8_c.html#a55fef24fe261c2a1501bbfbf4c638d5b">geo_parameter.C</a>
-, <a class="el" href="incidence_8h.html#a55fef24fe261c2a1501bbfbf4c638d5b">incidence.h</a>
+: <a class="el" href="d0/d96/geo__parameter_8_c.html#a55fef24fe261c2a1501bbfbf4c638d5b">geo_parameter.C</a>
+, <a class="el" href="d4/d67/geometry_8h.html#a55fef24fe261c2a1501bbfbf4c638d5b">geometry.h</a>
 </li>
 <li>tdo_scheme_get_row_class_length_fused()
-: <a class="el" href="geo__parameter_8_c.html#abde647e006f2bca65e5445d00c7d641b">geo_parameter.C</a>
-, <a class="el" href="incidence_8h.html#abde647e006f2bca65e5445d00c7d641b">incidence.h</a>
+: <a class="el" href="d0/d96/geo__parameter_8_c.html#abde647e006f2bca65e5445d00c7d641b">geo_parameter.C</a>
+, <a class="el" href="d4/d67/geometry_8h.html#abde647e006f2bca65e5445d00c7d641b">geometry.h</a>
 </li>
 <li>TDO_upper_bound()
-: <a class="el" href="incidence_8h.html#acc6e45f60ffca06180f76832347064c8">incidence.h</a>
-, <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#acc6e45f60ffca06180f76832347064c8">packing.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#acc6e45f60ffca06180f76832347064c8">geometry.h</a>
+, <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#acc6e45f60ffca06180f76832347064c8">packing.C</a>
 </li>
 <li>TDO_upper_bound_internal()
-: <a class="el" href="incidence_8h.html#a76bad8729252228e27843d941502b66c">incidence.h</a>
-, <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#a76bad8729252228e27843d941502b66c">packing.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a76bad8729252228e27843d941502b66c">geometry.h</a>
+, <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#a76bad8729252228e27843d941502b66c">packing.C</a>
 </li>
 <li>TDO_upper_bound_source()
-: <a class="el" href="incidence_8h.html#aa3bee45160906a54c31f818bc6f172d9">incidence.h</a>
-, <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#aa3bee45160906a54c31f818bc6f172d9">packing.C</a>
+: <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#aa3bee45160906a54c31f818bc6f172d9">packing.C</a>
+, <a class="el" href="d4/d67/geometry_8h.html#aa3bee45160906a54c31f818bc6f172d9">geometry.h</a>
 </li>
 <li>TDO_upper_bounds_initial_data
-: <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#a59e445dde78bef3bfa6157f8d832cab7">packing.C</a>
+: <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#a59e445dde78bef3bfa6157f8d832cab7">packing.C</a>
 </li>
 <li>TDO_upper_bounds_table
-: <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#ad50561446b32573999be3a37ce386bec">packing.C</a>
+: <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#ad50561446b32573999be3a37ce386bec">packing.C</a>
 </li>
 <li>TDO_upper_bounds_table_source
-: <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#afd7f5b9597f90ba79fb2161c633e7559">packing.C</a>
+: <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#afd7f5b9597f90ba79fb2161c633e7559">packing.C</a>
 </li>
 <li>TDO_upper_bounds_v_max
-: <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#a67a55b1527ea85e07835542661e2520d">packing.C</a>
+: <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#a67a55b1527ea85e07835542661e2520d">packing.C</a>
 </li>
 <li>TDO_upper_bounds_v_max_init
-: <a class="el" href="_l_i_b_2_i_n_c_i_d_e_n_c_e_2packing_8_c.html#a02bf9f3f3d7cd41b31bdf2d325cf3242">packing.C</a>
+: <a class="el" href="de/d59/lib_2foundations_2geometry_2packing_8_c.html#a02bf9f3f3d7cd41b31bdf2d325cf3242">packing.C</a>
 </li>
-<li>tdo_write()
-: <a class="el" href="tdo__refine__all_8_c.html#aab667cbb1bb3e5e2eea359bee495c9df">tdo_refine_all.C</a>
+<li>tensor_product
+: <a class="el" href="de/d28/apps_2groups_2wreath__product_8_c.html#ac52001a2e61f4db7ade7d4049e6ed5ad">wreath_product.C</a>
 </li>
 <li>test()
-: <a class="el" href="costas_8_c.html#a19b6864eaeff2e2424ca297158651278">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#a19b6864eaeff2e2424ca297158651278">costas.C</a>
 </li>
 <li>test1()
-: <a class="el" href="test_8_c.html#a1440a7779ac56f47a3f355ce4a8c7da0">test.C</a>
-, <a class="el" href="test2_8_c.html#a1440a7779ac56f47a3f355ce4a8c7da0">test2.C</a>
-, <a class="el" href="factor__space_8_c.html#ae2a201e46836d85cb2c5579a837b641a">factor_space.C</a>
-, <a class="el" href="test___p_g_8_c.html#ae2a201e46836d85cb2c5579a837b641a">test_PG.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a1440a7779ac56f47a3f355ce4a8c7da0">test.C</a>
+, <a class="el" href="de/ded/test2_8_c.html#a1440a7779ac56f47a3f355ce4a8c7da0">test2.C</a>
+, <a class="el" href="d9/db0/factor__space_8_c.html#ae2a201e46836d85cb2c5579a837b641a">factor_space.C</a>
+, <a class="el" href="d0/d8c/test___p_g_8_c.html#ae2a201e46836d85cb2c5579a837b641a">test_PG.C</a>
 </li>
 <li>test2()
-: <a class="el" href="factor__space_8_c.html#a39d73a812e5fd8f1bc111e948368cb10">factor_space.C</a>
-, <a class="el" href="test_8_c.html#a0283886819c7c140a023582b7269e2d0">test.C</a>
-, <a class="el" href="test2_8_c.html#a0283886819c7c140a023582b7269e2d0">test2.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a0283886819c7c140a023582b7269e2d0">test.C</a>
+, <a class="el" href="de/ded/test2_8_c.html#a0283886819c7c140a023582b7269e2d0">test2.C</a>
+, <a class="el" href="d9/db0/factor__space_8_c.html#a39d73a812e5fd8f1bc111e948368cb10">factor_space.C</a>
 </li>
 <li>test3()
-: <a class="el" href="test2_8_c.html#a6d0455dd5c30adda100e95f0423c786e">test2.C</a>
+: <a class="el" href="de/ded/test2_8_c.html#a6d0455dd5c30adda100e95f0423c786e">test2.C</a>
 </li>
 <li>test4()
-: <a class="el" href="test2_8_c.html#a327d8cef466a7560ead5eb3995c0cbae">test2.C</a>
+: <a class="el" href="de/ded/test2_8_c.html#a327d8cef466a7560ead5eb3995c0cbae">test2.C</a>
 </li>
 <li>test5()
-: <a class="el" href="test2_8_c.html#a8e1be3038bbc558f32a409f076126c33">test2.C</a>
+: <a class="el" href="de/ded/test2_8_c.html#a8e1be3038bbc558f32a409f076126c33">test2.C</a>
 </li>
 <li>test6()
-: <a class="el" href="test2_8_c.html#a9725331980ffa46dc478f6728c4e57ce">test2.C</a>
+: <a class="el" href="de/ded/test2_8_c.html#a9725331980ffa46dc478f6728c4e57ce">test2.C</a>
 </li>
 <li>test_automorphism_group_of_graph_bitvec()
-: <a class="el" href="action_8h.html#a2e0b825af702a050bcceab8f5f4ae40d">action.h</a>
-, <a class="el" href="action__global_8_c.html#a2e0b825af702a050bcceab8f5f4ae40d">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#a2e0b825af702a050bcceab8f5f4ae40d">action_global.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#a2e0b825af702a050bcceab8f5f4ae40d">group_actions.h</a>
 </li>
 <li>test_color_distribution()
-: <a class="el" href="action_8h.html#a15d0bcd0cb76faa3afbc6db2fdbff365">action.h</a>
-, <a class="el" href="action__global_8_c.html#a15d0bcd0cb76faa3afbc6db2fdbff365">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#a15d0bcd0cb76faa3afbc6db2fdbff365">action_global.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#a15d0bcd0cb76faa3afbc6db2fdbff365">group_actions.h</a>
 </li>
 <li>test_dim_C_cap_Cperp_property()
-: <a class="el" href="subspace__orbits__main_8_c.html#abc1f3820a6262d17d9a173dff4e9e761">subspace_orbits_main.C</a>
+: <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#abc1f3820a6262d17d9a173dff4e9e761">subspace_orbits_main.C</a>
 </li>
 <li>test_func()
-: <a class="el" href="factor__space_8_c.html#aa1ee8ae45c352588de1960275c363e78">factor_space.C</a>
+: <a class="el" href="d9/db0/factor__space_8_c.html#aa1ee8ae45c352588de1960275c363e78">factor_space.C</a>
 </li>
 <li>test_function_for_arc()
-: <a class="el" href="simeon_8_c.html#aea48fbc94e3a6fcfdebca8e2ff571716">simeon.C</a>
+: <a class="el" href="d5/d13/simeon_8_c.html#aea48fbc94e3a6fcfdebca8e2ff571716">simeon.C</a>
 </li>
 <li>test_group()
-: <a class="el" href="analyze__q__designs_8_c.html#ad03444358d0b46e7aa4d88a806b44925">analyze_q_designs.C</a>
+: <a class="el" href="d8/d03/analyze__q__designs_8_c.html#ad03444358d0b46e7aa4d88a806b44925">analyze_q_designs.C</a>
 </li>
 <li>test_hall()
-: <a class="el" href="test_8_c.html#a757609870ae7ab0f1d0073415822d19f">test.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a757609870ae7ab0f1d0073415822d19f">test.C</a>
 </li>
 <li>test_hall_condition()
-: <a class="el" href="test_8_c.html#a2e410bb91b71d8206702da6fadaada8a">test.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a2e410bb91b71d8206702da6fadaada8a">test.C</a>
 </li>
 <li>test_hall_condition1()
-: <a class="el" href="test_8_c.html#a10e89b9a02e269d087b5f88777abf624">test.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a10e89b9a02e269d087b5f88777abf624">test.C</a>
 </li>
 <li>test_heisenberg()
-: <a class="el" href="tao_8_c.html#a87d0c5c3b1f228ddbc4f326d3b662c24">tao.C</a>
+: <a class="el" href="d7/db9/tao_8_c.html#a87d0c5c3b1f228ddbc4f326d3b662c24">tao.C</a>
 </li>
 <li>test_if_arc()
-: <a class="el" href="hill_8_c.html#a3601e3ab7b739f8a11e6ec0aaf194593">hill.C</a>
-, <a class="el" href="_t_o_p___l_e_v_e_l_2projective__space_8_c.html#a3601e3ab7b739f8a11e6ec0aaf194593">projective_space.C</a>
-, <a class="el" href="top__level_8h.html#a3601e3ab7b739f8a11e6ec0aaf194593">top_level.h</a>
+: <a class="el" href="da/d28/hill_8_c.html#a3601e3ab7b739f8a11e6ec0aaf194593">hill.C</a>
+, <a class="el" href="d6/de8/top__level_2geometry_2projective__space_8_c.html#a3601e3ab7b739f8a11e6ec0aaf194593">projective_space.C</a>
+, <a class="el" href="df/d74/tl__geometry_8h.html#a3601e3ab7b739f8a11e6ec0aaf194593">tl_geometry.h</a>
 </li>
 <li>test_if_interlocking_Ls()
-: <a class="el" href="pentomino__5x5_8_c.html#a7ff54cfce36f9eac43b5aaaabf2a0d71">pentomino_5x5.C</a>
+: <a class="el" href="dc/d77/pentomino__5x5_8_c.html#a7ff54cfce36f9eac43b5aaaabf2a0d71">pentomino_5x5.C</a>
 </li>
 <li>test_if_interlocking_Ps()
-: <a class="el" href="pentomino__5x5_8_c.html#a4cd6485acb185417e158c1167a3dcfad">pentomino_5x5.C</a>
+: <a class="el" href="dc/d77/pentomino__5x5_8_c.html#a4cd6485acb185417e158c1167a3dcfad">pentomino_5x5.C</a>
 </li>
 <li>test_if_set()
-: <a class="el" href="galois_8h.html#a1f79cdbca111fc3bd155123b0951ed46">galois.h</a>
-, <a class="el" href="sorting_8_c.html#a1f79cdbca111fc3bd155123b0951ed46">sorting.C</a>
+: <a class="el" href="d5/de2/foundations_2data__structures_2data__structures_8h.html#a1f79cdbca111fc3bd155123b0951ed46">data_structures.h</a>
+, <a class="el" href="d4/dd7/sorting_8_c.html#a1f79cdbca111fc3bd155123b0951ed46">sorting.C</a>
 </li>
 <li>test_if_set_with_return_value()
-: <a class="el" href="galois_8h.html#ac8840ecabde4103e50ef1a7a8245d913">galois.h</a>
-, <a class="el" href="sorting_8_c.html#ac8840ecabde4103e50ef1a7a8245d913">sorting.C</a>
+: <a class="el" href="d4/dd7/sorting_8_c.html#ac8840ecabde4103e50ef1a7a8245d913">sorting.C</a>
+, <a class="el" href="d5/de2/foundations_2data__structures_2data__structures_8h.html#ac8840ecabde4103e50ef1a7a8245d913">data_structures.h</a>
 </li>
 <li>test_if_sets_are_disjoint()
-: <a class="el" href="galois_8h.html#a8a84459af36d4841d1aeb8657d2d3dea">galois.h</a>
-, <a class="el" href="util_8_c.html#a8a84459af36d4841d1aeb8657d2d3dea">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a8a84459af36d4841d1aeb8657d2d3dea">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a8a84459af36d4841d1aeb8657d2d3dea">util.C</a>
 </li>
 <li>test_if_sets_are_equal()
-: <a class="el" href="galois_8h.html#abd9436caf35fc01dd96cb8435459a20f">galois.h</a>
-, <a class="el" href="sorting_8_c.html#abd9436caf35fc01dd96cb8435459a20f">sorting.C</a>
+: <a class="el" href="d5/de2/foundations_2data__structures_2data__structures_8h.html#abd9436caf35fc01dd96cb8435459a20f">data_structures.h</a>
+, <a class="el" href="d4/dd7/sorting_8_c.html#abd9436caf35fc01dd96cb8435459a20f">sorting.C</a>
 </li>
 <li>test_longinteger()
-: <a class="el" href="galois_8h.html#aded6998d4e49439df8f00e8312030c56">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#aded6998d4e49439df8f00e8312030c56">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#aded6998d4e49439df8f00e8312030c56">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#aded6998d4e49439df8f00e8312030c56">longinteger_domain.C</a>
 </li>
 <li>test_longinteger2()
-: <a class="el" href="galois_8h.html#a6312b79adc047bd18cf5835ffc327267">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#a6312b79adc047bd18cf5835ffc327267">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a6312b79adc047bd18cf5835ffc327267">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#a6312b79adc047bd18cf5835ffc327267">longinteger_domain.C</a>
 </li>
 <li>test_longinteger3()
-: <a class="el" href="galois_8h.html#a501b1cdc2073b478d7cdd87668f99954">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#a501b1cdc2073b478d7cdd87668f99954">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a501b1cdc2073b478d7cdd87668f99954">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#a501b1cdc2073b478d7cdd87668f99954">longinteger_domain.C</a>
 </li>
 <li>test_longinteger4()
-: <a class="el" href="galois_8h.html#a5aaf151e49107ec7885de182a0b4f1d6">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#a5aaf151e49107ec7885de182a0b4f1d6">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a5aaf151e49107ec7885de182a0b4f1d6">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#a5aaf151e49107ec7885de182a0b4f1d6">longinteger_domain.C</a>
 </li>
 <li>test_longinteger5()
-: <a class="el" href="galois_8h.html#a20cf6bab69aff33415743fe5200438cd">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#a20cf6bab69aff33415743fe5200438cd">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a20cf6bab69aff33415743fe5200438cd">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#a20cf6bab69aff33415743fe5200438cd">longinteger_domain.C</a>
 </li>
 <li>test_longinteger6()
-: <a class="el" href="galois_8h.html#ad78d3cbf43d68a8e869de5c4b9ec7270">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#ad78d3cbf43d68a8e869de5c4b9ec7270">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#ad78d3cbf43d68a8e869de5c4b9ec7270">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#ad78d3cbf43d68a8e869de5c4b9ec7270">longinteger_domain.C</a>
 </li>
 <li>test_longinteger7()
-: <a class="el" href="galois_8h.html#a7c9b08fdee098a02619ee54854b37402">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#a7c9b08fdee098a02619ee54854b37402">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a7c9b08fdee098a02619ee54854b37402">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#a7c9b08fdee098a02619ee54854b37402">longinteger_domain.C</a>
 </li>
 <li>test_longinteger8()
-: <a class="el" href="galois_8h.html#a326c3423e5bf4e9eb64017044b3b9c31">galois.h</a>
-, <a class="el" href="longinteger__domain_8_c.html#a326c3423e5bf4e9eb64017044b3b9c31">longinteger_domain.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a326c3423e5bf4e9eb64017044b3b9c31">algebra_and_number_theory.h</a>
+, <a class="el" href="d6/d94/longinteger__domain_8_c.html#a326c3423e5bf4e9eb64017044b3b9c31">longinteger_domain.C</a>
 </li>
 <li>test_matrix_group()
-: <a class="el" href="action_8h.html#af7f047db8a24b7dec2d3b6842dc3c0f1">action.h</a>
-, <a class="el" href="action__global_8_c.html#af7f047db8a24b7dec2d3b6842dc3c0f1">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#af7f047db8a24b7dec2d3b6842dc3c0f1">action_global.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#af7f047db8a24b7dec2d3b6842dc3c0f1">group_actions.h</a>
 </li>
 <li>test_Orthogonal()
-: <a class="el" href="galois_8h.html#a071f90f8a33649e2d4a8f5c9a401a4f4">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a071f90f8a33649e2d4a8f5c9a401a4f4">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a071f90f8a33649e2d4a8f5c9a401a4f4">geometry.h</a>
 </li>
 <li>test_orthogonal()
-: <a class="el" href="galois_8h.html#ac991de424f12f1e96291c9df540caf16">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#ac991de424f12f1e96291c9df540caf16">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#ac991de424f12f1e96291c9df540caf16">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ac991de424f12f1e96291c9df540caf16">orthogonal_points.C</a>
+</li>
+<li>test_Orthogonal()
+: <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a071f90f8a33649e2d4a8f5c9a401a4f4">orthogonal_points.C</a>
 </li>
 <li>test_page_storage()
-: <a class="el" href="action_8h.html#ab9be845ce39a334f6e2b360a93c2ed2a">action.h</a>
-, <a class="el" href="page__storage_8_c.html#ab9be845ce39a334f6e2b360a93c2ed2a">page_storage.C</a>
+: <a class="el" href="dc/d9b/groups__and__group__actions_2data__structures_2data__structures_8h.html#ab9be845ce39a334f6e2b360a93c2ed2a">data_structures.h</a>
+, <a class="el" href="db/d3c/page__storage_8_c.html#ab9be845ce39a334f6e2b360a93c2ed2a">page_storage.C</a>
 </li>
 <li>test_PG()
-: <a class="el" href="projective_8_c.html#a11bc40603c4324a9466d398a0812fe4f">projective.C</a>
-, <a class="el" href="galois_8h.html#a11bc40603c4324a9466d398a0812fe4f">galois.h</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a11bc40603c4324a9466d398a0812fe4f">geometry.h</a>
+, <a class="el" href="df/de4/projective_8_c.html#a11bc40603c4324a9466d398a0812fe4f">projective.C</a>
 </li>
 <li>test_recursion()
-: <a class="el" href="costas_8_c.html#a2874dd7912bd978eaf022da0b45e301b">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#a2874dd7912bd978eaf022da0b45e301b">costas.C</a>
 </li>
 <li>test_self_dual_self_polar()
-: <a class="el" href="action_8h.html#a3f906891bdb094c395ffad1a969e5a22">action.h</a>
-, <a class="el" href="action__global_8_c.html#a3f906891bdb094c395ffad1a969e5a22">action_global.C</a>
+: <a class="el" href="dc/dd4/group__actions_8h.html#a3f906891bdb094c395ffad1a969e5a22">group_actions.h</a>
+, <a class="el" href="d5/d90/action__global_8_c.html#a3f906891bdb094c395ffad1a969e5a22">action_global.C</a>
+</li>
+<li>test_typedefs()
+: <a class="el" href="d5/db4/io__and__os_8h.html#a70a4e53168fecd2e6f954be622b5f8c2">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a70a4e53168fecd2e6f954be622b5f8c2">util.C</a>
 </li>
 <li>test_unipoly()
-: <a class="el" href="galois_8h.html#a633245faf73ebcbc2f73276b03e0962b">galois.h</a>
-, <a class="el" href="galois__global_8_c.html#a633245faf73ebcbc2f73276b03e0962b">galois_global.C</a>
+: <a class="el" href="da/da9/galois__global_8_c.html#a633245faf73ebcbc2f73276b03e0962b">galois_global.C</a>
+, <a class="el" href="d5/d87/globals_8h.html#a633245faf73ebcbc2f73276b03e0962b">globals.h</a>
 </li>
 <li>test_unipoly2()
-: <a class="el" href="galois_8h.html#ac40335895fedd889545dad901ac470a6">galois.h</a>
-, <a class="el" href="galois__global_8_c.html#ac40335895fedd889545dad901ac470a6">galois_global.C</a>
+: <a class="el" href="da/da9/galois__global_8_c.html#ac40335895fedd889545dad901ac470a6">galois_global.C</a>
+, <a class="el" href="d5/d87/globals_8h.html#ac40335895fedd889545dad901ac470a6">globals.h</a>
 </li>
 <li>testcanlab()
-: <a class="el" href="naugraph_8c.html#a26989dc74c9feea512b841ad998eb154">naugraph.c</a>
-, <a class="el" href="nauty_8h.html#afa890c8516f0c87b95c78d3d1c9f613f">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#afa890c8516f0c87b95c78d3d1c9f613f">nauty.h</a>
+, <a class="el" href="df/d37/naugraph_8c.html#a26989dc74c9feea512b841ad998eb154">naugraph.c</a>
 </li>
-<li>tex_print_table()
-: <a class="el" href="tdo__refine__all_8_c.html#ab9daab59537326d47c7f3265550c2890">tdo_refine_all.C</a>
+<li>TESTP
+: <a class="el" href="db/d0d/foundations_2graph__theory__nauty_2schreier_8c.html#a0e1fcd97ab325af202965414e4304786">schreier.c</a>
 </li>
 <li>texable_string()
-: <a class="el" href="discreta_8h.html#ad922087122d64d76d195de415553e034">discreta.h</a>
-, <a class="el" href="global_8_c.html#ad922087122d64d76d195de415553e034">global.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#ad922087122d64d76d195de415553e034">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#ad922087122d64d76d195de415553e034">global.C</a>
 </li>
 <li>text_4pts()
-: <a class="el" href="draw_8_c.html#ac753312697ae56ef987f518aed6c610b">draw.C</a>
-, <a class="el" href="galois_8h.html#ac753312697ae56ef987f518aed6c610b">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#ac753312697ae56ef987f518aed6c610b">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#ac753312697ae56ef987f518aed6c610b">graphics.h</a>
 </li>
 <li>the_end()
-: <a class="el" href="discreta__global_8_c.html#a3ebbd3ccb665a9f78deaa7408577b60c">discreta_global.C</a>
-, <a class="el" href="discreta_8h.html#a3ebbd3ccb665a9f78deaa7408577b60c">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a3ebbd3ccb665a9f78deaa7408577b60c">discreta.h</a>
+, <a class="el" href="d3/dfb/discreta__global_8_c.html#a3ebbd3ccb665a9f78deaa7408577b60c">discreta_global.C</a>
 </li>
 <li>the_end_quietly()
-: <a class="el" href="discreta_8h.html#a4a9acf1e6b9ac9542ac082d98225981a">discreta.h</a>
-, <a class="el" href="discreta__global_8_c.html#a4a9acf1e6b9ac9542ac082d98225981a">discreta_global.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a4a9acf1e6b9ac9542ac082d98225981a">discreta.h</a>
+, <a class="el" href="d3/dfb/discreta__global_8_c.html#a4a9acf1e6b9ac9542ac082d98225981a">discreta_global.C</a>
 </li>
 <li>the_first_n_primes()
-: <a class="el" href="global_8_c.html#acbf8077f27bf6ca59b8818bfab1a93f6">global.C</a>
-, <a class="el" href="discreta_8h.html#acbf8077f27bf6ca59b8818bfab1a93f6">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#acbf8077f27bf6ca59b8818bfab1a93f6">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#acbf8077f27bf6ca59b8818bfab1a93f6">global.C</a>
 </li>
 <li>the_mindist
-: <a class="el" href="subspace__orbits__main_8_c.html#a24faf0bb98712f3e254328f8727ec1ca">subspace_orbits_main.C</a>
+: <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#a24faf0bb98712f3e254328f8727ec1ca">subspace_orbits_main.C</a>
 </li>
 <li>the_type
-: <a class="el" href="layered__graph__main_8_c.html#a50c726fea7d1aa6790e8e051d7d2ced3">layered_graph_main.C</a>
-, <a class="el" href="treedraw_8_c.html#a50c726fea7d1aa6790e8e051d7d2ced3">treedraw.C</a>
+: <a class="el" href="d7/d2a/treedraw_8_c.html#a50c726fea7d1aa6790e8e051d7d2ced3">treedraw.C</a>
+, <a class="el" href="da/d62/layered__graph__main_8_c.html#a50c726fea7d1aa6790e8e051d7d2ced3">layered_graph_main.C</a>
 </li>
 <li>time_check()
-: <a class="el" href="discreta_8h.html#a04d64356f0c7cb798e55daec998c527e">discreta.h</a>
-, <a class="el" href="global_8_c.html#a04d64356f0c7cb798e55daec998c527e">global.C</a>
-, <a class="el" href="galois_8h.html#a3e54f7e5a0326bf4b3de456ef318e9db">galois.h</a>
-, <a class="el" href="util_8_c.html#a3e54f7e5a0326bf4b3de456ef318e9db">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a3e54f7e5a0326bf4b3de456ef318e9db">io_and_os.h</a>
+, <a class="el" href="d9/d60/discreta_8h.html#a04d64356f0c7cb798e55daec998c527e">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#a04d64356f0c7cb798e55daec998c527e">global.C</a>
+, <a class="el" href="d4/d74/util_8_c.html#a3e54f7e5a0326bf4b3de456ef318e9db">util.C</a>
 </li>
 <li>time_check_delta()
-: <a class="el" href="discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1">discreta.h</a>
-, <a class="el" href="global_8_c.html#a89a8565e34c7dcbb97180cd6af7454a1">global.C</a>
-, <a class="el" href="galois_8h.html#aeb25eb3cbc89e1cd314f4a0fba55779b">galois.h</a>
-, <a class="el" href="util_8_c.html#aeb25eb3cbc89e1cd314f4a0fba55779b">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#aeb25eb3cbc89e1cd314f4a0fba55779b">io_and_os.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#a89a8565e34c7dcbb97180cd6af7454a1">global.C</a>
+, <a class="el" href="d4/d74/util_8_c.html#aeb25eb3cbc89e1cd314f4a0fba55779b">util.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1">discreta.h</a>
 </li>
 <li>TIMESWORDSIZE
-: <a class="el" href="nauty_8h.html#ae6e6da42f2354ac135a644be865328bd">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#ae6e6da42f2354ac135a644be865328bd">nauty.h</a>
+</li>
+<li>TLS_ATTR
+: <a class="el" href="d1/da0/nauty_8h.html#a3d1f123ac53511727202e2e1945556e0">nauty.h</a>
+</li>
+<li>TMP
+: <a class="el" href="db/d0d/foundations_2graph__theory__nauty_2schreier_8c.html#a589ba3dc5e20290a35fb1e626372ef61">schreier.c</a>
 </li>
 <li>tmpBF
-: <a class="el" href="btree_8_c.html#afd4515a2689560d6fcc14762a331ca77">btree.C</a>
-</li>
-<li>TP_2_2_make_element_size
-: <a class="el" href="data___t_p_8_c.html#aaf090b097442268f42fb61ad012082e3">data_TP.C</a>
-</li>
-<li>TP_2_2_nb_reps
-: <a class="el" href="data___t_p_8_c.html#ad47344e6eb9f88de6f6f38f282e1b224">data_TP.C</a>
-</li>
-<li>TP_2_2_reps
-: <a class="el" href="data___t_p_8_c.html#a1c16ca8ced8fc3396c0d6d200f3f454e">data_TP.C</a>
-</li>
-<li>TP_2_2_size
-: <a class="el" href="data___t_p_8_c.html#a4629d2938acdbdabfc38f102bde08029">data_TP.C</a>
-</li>
-<li>TP_2_2_stab_gens
-: <a class="el" href="data___t_p_8_c.html#afb87a7cda11196047b1b7b71cb6171dd">data_TP.C</a>
-</li>
-<li>TP_2_2_stab_gens_fst
-: <a class="el" href="data___t_p_8_c.html#ab4843e9a89c7cf8e59b795929970ef6c">data_TP.C</a>
-</li>
-<li>TP_2_2_stab_gens_len
-: <a class="el" href="data___t_p_8_c.html#a23057244dd993295cd3f2ef52cad9c96">data_TP.C</a>
-</li>
-<li>TP_2_2_stab_order
-: <a class="el" href="data___t_p_8_c.html#ac0071140d6dfbae6b1006efc3f3531b5">data_TP.C</a>
-</li>
-<li>TP_2_4_make_element_size
-: <a class="el" href="data___t_p_8_c.html#a613f4d347df8b34977e1bc073477a511">data_TP.C</a>
-</li>
-<li>TP_2_4_nb_reps
-: <a class="el" href="data___t_p_8_c.html#a2012d7ba53db0f099f2700a59a842abe">data_TP.C</a>
-</li>
-<li>TP_2_4_reps
-: <a class="el" href="data___t_p_8_c.html#ab6eae0904bc3a5c5bb88e267aaca5edb">data_TP.C</a>
-</li>
-<li>TP_2_4_size
-: <a class="el" href="data___t_p_8_c.html#aeab15dbc2a6b08bfbbbd35ee0fbd97bd">data_TP.C</a>
-</li>
-<li>TP_2_4_stab_gens
-: <a class="el" href="data___t_p_8_c.html#abbf55310fd83f1633af9e62829066a49">data_TP.C</a>
-</li>
-<li>TP_2_4_stab_gens_fst
-: <a class="el" href="data___t_p_8_c.html#a555203fbfe1502a253f171df48f84c39">data_TP.C</a>
-</li>
-<li>TP_2_4_stab_gens_len
-: <a class="el" href="data___t_p_8_c.html#ae39b0ee7960709928bf1abc83130ca70">data_TP.C</a>
-</li>
-<li>TP_2_4_stab_order
-: <a class="el" href="data___t_p_8_c.html#aea420279ddb20b57d44368d755514090">data_TP.C</a>
-</li>
-<li>TP_3_2_make_element_size
-: <a class="el" href="data___t_p_8_c.html#a5ec38f482c28f21c93a03fdd4ebcd947">data_TP.C</a>
-</li>
-<li>TP_3_2_nb_reps
-: <a class="el" href="data___t_p_8_c.html#af5889f3566f9910209bede7fb9f3c9fd">data_TP.C</a>
-</li>
-<li>TP_3_2_reps
-: <a class="el" href="data___t_p_8_c.html#af0696aeee01dda2d2be4a4d58a510a89">data_TP.C</a>
-</li>
-<li>TP_3_2_size
-: <a class="el" href="data___t_p_8_c.html#a6cd0258709bc873c68e7b65b2b644e88">data_TP.C</a>
-</li>
-<li>TP_3_2_stab_gens
-: <a class="el" href="data___t_p_8_c.html#a15831fd1dbce0424dab83e984bd92e4c">data_TP.C</a>
-</li>
-<li>TP_3_2_stab_gens_fst
-: <a class="el" href="data___t_p_8_c.html#a169fca260bd87f572eaf7bd0b5b77273">data_TP.C</a>
-</li>
-<li>TP_3_2_stab_gens_len
-: <a class="el" href="data___t_p_8_c.html#a04b972b67b0b70b97f46505a50e1d7cb">data_TP.C</a>
-</li>
-<li>TP_3_2_stab_order
-: <a class="el" href="data___t_p_8_c.html#a8e7e8ca819efee13b4e86a94c70385f7">data_TP.C</a>
-</li>
-<li>TP_3_3_make_element_size
-: <a class="el" href="data___t_p_8_c.html#a5155f38c4fd2c9ac216e5b6bc7be5e0b">data_TP.C</a>
-</li>
-<li>TP_3_3_nb_reps
-: <a class="el" href="data___t_p_8_c.html#af77231b8e5cb353aceb2d0f564e9f688">data_TP.C</a>
-</li>
-<li>TP_3_3_reps
-: <a class="el" href="data___t_p_8_c.html#aaad2ea58a0be1f1251dda2a7f36f0252">data_TP.C</a>
-</li>
-<li>TP_3_3_size
-: <a class="el" href="data___t_p_8_c.html#ab291acc74db90be1312d8d2599c3f6da">data_TP.C</a>
-</li>
-<li>TP_3_3_stab_gens
-: <a class="el" href="data___t_p_8_c.html#a17b60747aca0b7247865c05da29bba34">data_TP.C</a>
-</li>
-<li>TP_3_3_stab_gens_fst
-: <a class="el" href="data___t_p_8_c.html#a8b5230e07df51bd4f04f2ed8c7af0688">data_TP.C</a>
-</li>
-<li>TP_3_3_stab_gens_len
-: <a class="el" href="data___t_p_8_c.html#aaf7c3907e067e91a539a4e2bb5bab9e3">data_TP.C</a>
-</li>
-<li>TP_3_3_stab_order
-: <a class="el" href="data___t_p_8_c.html#aab42de0b63d72abfad2366b16dd3ee8c">data_TP.C</a>
-</li>
-<li>TP_4_2_make_element_size
-: <a class="el" href="data___t_p_8_c.html#aad364fe981e0086307dd12c201591ac5">data_TP.C</a>
-</li>
-<li>TP_4_2_nb_reps
-: <a class="el" href="data___t_p_8_c.html#a1ba796c7b1bb7db1c37ee7e5c2c2cd5a">data_TP.C</a>
-</li>
-<li>TP_4_2_reps
-: <a class="el" href="data___t_p_8_c.html#a63506b47eca1c0f658917cd592f9ad58">data_TP.C</a>
-</li>
-<li>TP_4_2_size
-: <a class="el" href="data___t_p_8_c.html#aef761f04f965ba6fddec7b0035453d7f">data_TP.C</a>
-</li>
-<li>TP_4_2_stab_gens
-: <a class="el" href="data___t_p_8_c.html#a0c53cfc6392e75a77be70b541e685f4c">data_TP.C</a>
-</li>
-<li>TP_4_2_stab_gens_fst
-: <a class="el" href="data___t_p_8_c.html#ad686ff31036d92cbc0b76f0d746c8bfa">data_TP.C</a>
-</li>
-<li>TP_4_2_stab_gens_len
-: <a class="el" href="data___t_p_8_c.html#a04a109f06d10d81cd5c54624196c8e55">data_TP.C</a>
-</li>
-<li>TP_4_2_stab_order
-: <a class="el" href="data___t_p_8_c.html#a47d68b3677b6e9482fea2ebb78ee3514">data_TP.C</a>
-</li>
-<li>TP_5_2_make_element_size
-: <a class="el" href="data___t_p_8_c.html#a4115255aba55db56fc7384d94282cc80">data_TP.C</a>
-</li>
-<li>TP_5_2_nb_reps
-: <a class="el" href="data___t_p_8_c.html#af608ea2c3a7c10d27abeada453ad6a3a">data_TP.C</a>
-</li>
-<li>TP_5_2_reps
-: <a class="el" href="data___t_p_8_c.html#a6a58b6005bf9547f21b78eac3b02e8f3">data_TP.C</a>
-</li>
-<li>TP_5_2_size
-: <a class="el" href="data___t_p_8_c.html#ad697eda381bd4db7c98115bdabf13e22">data_TP.C</a>
-</li>
-<li>TP_5_2_stab_gens
-: <a class="el" href="data___t_p_8_c.html#ae6d36ce9906e9d0367620549e740448b">data_TP.C</a>
-</li>
-<li>TP_5_2_stab_gens_fst
-: <a class="el" href="data___t_p_8_c.html#aee3e0e9fc80b34efe2bcbd0c6d3f9351">data_TP.C</a>
-</li>
-<li>TP_5_2_stab_gens_len
-: <a class="el" href="data___t_p_8_c.html#a74817cf5530b64bcb9deed4133b42898">data_TP.C</a>
-</li>
-<li>TP_5_2_stab_order
-: <a class="el" href="data___t_p_8_c.html#aa2ab4d4376369ac6dac042d3f99cd282">data_TP.C</a>
-</li>
-<li>TP_nb_reps()
-: <a class="el" href="galois_8h.html#a0d21ccdea3c7999c1a86c4a56bda754a">galois.h</a>
-, <a class="el" href="data_8_c.html#a0d21ccdea3c7999c1a86c4a56bda754a">data.C</a>
-</li>
-<li>TP_representative()
-: <a class="el" href="galois_8h.html#ac2c188533ce60013f49bbb56084448cd">galois.h</a>
-, <a class="el" href="data_8_c.html#ac2c188533ce60013f49bbb56084448cd">data.C</a>
-</li>
-<li>TP_stab_gens()
-: <a class="el" href="galois_8h.html#a90e876c188820cc19270147c8a3fe8de">galois.h</a>
-, <a class="el" href="data_8_c.html#a90e876c188820cc19270147c8a3fe8de">data.C</a>
+: <a class="el" href="d8/d5a/btree_8_c.html#afd4515a2689560d6fcc14762a331ca77">btree.C</a>
 </li>
 <li>trace_and_multiply()
-: <a class="el" href="discreta_8h.html#a32ca86f26c7256f02c6c48a577650f5b">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a32ca86f26c7256f02c6c48a577650f5b">discreta.h</a>
 </li>
 <li>trace_result
-: <a class="el" href="snakesandladders_8h.html#ac88defea077c05403847ed918e76bdde">snakesandladders.h</a>
+: <a class="el" href="da/d69/poset__classification_8h.html#ac88defea077c05403847ed918e76bdde">poset_classification.h</a>
 </li>
 <li>trace_result_as_text()
-: <a class="el" href="snakes__and__ladders__global_8_c.html#ad00475998a5aeb8d2b2b5d72a2e3206f">snakes_and_ladders_global.C</a>
-, <a class="el" href="snakesandladders_8h.html#ad00475998a5aeb8d2b2b5d72a2e3206f">snakesandladders.h</a>
+: <a class="el" href="d3/d35/snakes__and__ladders__global_8_c.html#ad00475998a5aeb8d2b2b5d72a2e3206f">snakes_and_ladders_global.C</a>
+, <a class="el" href="da/d10/other_8h.html#ad00475998a5aeb8d2b2b5d72a2e3206f">other.h</a>
 </li>
 <li>trace_result_is_no_result()
-: <a class="el" href="snakesandladders_8h.html#ade53714a0d6d8a8c2823da326c1b0c4b">snakesandladders.h</a>
-, <a class="el" href="snakes__and__ladders__global_8_c.html#ade53714a0d6d8a8c2823da326c1b0c4b">snakes_and_ladders_global.C</a>
+: <a class="el" href="d3/d35/snakes__and__ladders__global_8_c.html#ade53714a0d6d8a8c2823da326c1b0c4b">snakes_and_ladders_global.C</a>
+, <a class="el" href="da/d10/other_8h.html#ade53714a0d6d8a8c2823da326c1b0c4b">other.h</a>
 </li>
 <li>trace_schreier_vector()
-: <a class="el" href="discreta_8h.html#a144443a6d7a2b069204b18784ff082f5">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a144443a6d7a2b069204b18784ff082f5">discreta.h</a>
 </li>
 <li>transform_dist()
-: <a class="el" href="draw_8_c.html#af89c2846dfb8109ed5b64389d5c0c1c1">draw.C</a>
-, <a class="el" href="galois_8h.html#af89c2846dfb8109ed5b64389d5c0c1c1">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#af89c2846dfb8109ed5b64389d5c0c1c1">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#af89c2846dfb8109ed5b64389d5c0c1c1">graphics.h</a>
 </li>
 <li>transform_dist_x()
-: <a class="el" href="draw_8_c.html#ae3c6c150bc6ef27101af4a6eb7e5b33a">draw.C</a>
-, <a class="el" href="galois_8h.html#ae3c6c150bc6ef27101af4a6eb7e5b33a">galois.h</a>
+: <a class="el" href="d7/d04/graphics_8h.html#ae3c6c150bc6ef27101af4a6eb7e5b33a">graphics.h</a>
+, <a class="el" href="d9/d29/draw_8_c.html#ae3c6c150bc6ef27101af4a6eb7e5b33a">draw.C</a>
 </li>
 <li>transform_dist_y()
-: <a class="el" href="draw_8_c.html#ae46284a191040d40ad4dcdb22835dc41">draw.C</a>
-, <a class="el" href="galois_8h.html#ae46284a191040d40ad4dcdb22835dc41">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#ae46284a191040d40ad4dcdb22835dc41">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#ae46284a191040d40ad4dcdb22835dc41">graphics.h</a>
 </li>
 <li>transform_llur()
-: <a class="el" href="draw_8_c.html#af38b139f64e19404b9a944c7188d4aff">draw.C</a>
-, <a class="el" href="galois_8h.html#af38b139f64e19404b9a944c7188d4aff">galois.h</a>
+: <a class="el" href="d7/d04/graphics_8h.html#af38b139f64e19404b9a944c7188d4aff">graphics.h</a>
+, <a class="el" href="d9/d29/draw_8_c.html#af38b139f64e19404b9a944c7188d4aff">draw.C</a>
 </li>
 <li>transform_llur_double()
-: <a class="el" href="draw_8_c.html#aafa3dc4bd10b5c0c89fa354b0d87f865">draw.C</a>
-, <a class="el" href="galois_8h.html#aafa3dc4bd10b5c0c89fa354b0d87f865">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#aafa3dc4bd10b5c0c89fa354b0d87f865">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#aafa3dc4bd10b5c0c89fa354b0d87f865">graphics.h</a>
 </li>
 <li>translation_in_AG()
-: <a class="el" href="discreta_8h.html#ac805a17cf57e334b24457fab41a7da4d">discreta.h</a>
-, <a class="el" href="global_8_c.html#ac805a17cf57e334b24457fab41a7da4d">global.C</a>
-, <a class="el" href="group__generators_8_c.html#a2dc31e911a639d9be60389fae43e8ebc">group_generators.C</a>
-, <a class="el" href="galois_8h.html#a2dc31e911a639d9be60389fae43e8ebc">galois.h</a>
-</li>
-<li>translation_plane
-: <a class="el" href="top__level_8h.html#a2dba804d204f073f043383c497d71ff5">top_level.h</a>
-</li>
-<li>translation_plane_callback_make_quotients()
-: <a class="el" href="top__level_8h.html#a077995f3a0ac31008f68e08b9a735c96">top_level.h</a>
-, <a class="el" href="translation__plane2_8_c.html#a077995f3a0ac31008f68e08b9a735c96">translation_plane2.C</a>
-</li>
-<li>translation_plane_callback_report()
-: <a class="el" href="translation__plane2_8_c.html#aeff5feb3c1b948f39c229c9bd6afd267">translation_plane2.C</a>
-, <a class="el" href="top__level_8h.html#aeff5feb3c1b948f39c229c9bd6afd267">top_level.h</a>
-</li>
-<li>translation_plane_check_conditions()
-: <a class="el" href="translation__plane2_8_c.html#aed777cfdf2ecbf77f3fd004c391bc65f">translation_plane2.C</a>
-, <a class="el" href="top__level_8h.html#aed777cfdf2ecbf77f3fd004c391bc65f">top_level.h</a>
-</li>
-<li>translation_plane_check_function_callback()
-: <a class="el" href="top__level_8h.html#a801520ddddd2cf0584b339285d489b73">top_level.h</a>
-, <a class="el" href="translation__plane2_8_c.html#a801520ddddd2cf0584b339285d489b73">translation_plane2.C</a>
-</li>
-<li>translation_plane_check_function_incremental()
-: <a class="el" href="translation__plane_8_c.html#a5692db738216f93dd67071f96dc7b2bd">translation_plane.C</a>
-, <a class="el" href="top__level_8h.html#a5692db738216f93dd67071f96dc7b2bd">top_level.h</a>
-</li>
-<li>translation_plane_check_function_incremental_callback()
-: <a class="el" href="top__level_8h.html#aae790edc56ca12404a0fd196d3ea9590">top_level.h</a>
-, <a class="el" href="translation__plane2_8_c.html#aae790edc56ca12404a0fd196d3ea9590">translation_plane2.C</a>
-</li>
-<li>translation_plane_early_test_func_callback()
-: <a class="el" href="translation__plane2_8_c.html#a4c252150015dcf1e634fed722b6766be">translation_plane2.C</a>
-, <a class="el" href="top__level_8h.html#a4c252150015dcf1e634fed722b6766be">top_level.h</a>
-</li>
-<li>translation_plane_lifting_early_test_function()
-: <a class="el" href="top__level_8h.html#ace697f7b743aa75575a58166816a282d">top_level.h</a>
-, <a class="el" href="translation__plane_8_c.html#ace697f7b743aa75575a58166816a282d">translation_plane.C</a>
-</li>
-<li>translation_plane_lifting_prepare_function_new()
-: <a class="el" href="translation__plane_8_c.html#a9f6016446941b13afad657c3459ca1c6">translation_plane.C</a>
-, <a class="el" href="top__level_8h.html#a9f6016446941b13afad657c3459ca1c6">top_level.h</a>
+: <a class="el" href="d4/d95/group__generators_8_c.html#a2dc31e911a639d9be60389fae43e8ebc">group_generators.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#ac805a17cf57e334b24457fab41a7da4d">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#ac805a17cf57e334b24457fab41a7da4d">global.C</a>
+, <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a2dc31e911a639d9be60389fae43e8ebc">algebra_and_number_theory.h</a>
 </li>
 <li>translation_plane_via_andre_model
-: <a class="el" href="top__level_8h.html#a46bb0054e2a8d2c7040df9ab8445f9ab">top_level.h</a>
+: <a class="el" href="d8/d96/top__level_8h.html#a46bb0054e2a8d2c7040df9ab8445f9ab">top_level.h</a>
 </li>
 <li>translation_plane_via_andre_model_check_arc()
-: <a class="el" href="translation__plane__via__andre__model_8_c.html#ae2e2edd0437d24ac650e918ec58a7410">translation_plane_via_andre_model.C</a>
-, <a class="el" href="top__level_8h.html#ae2e2edd0437d24ac650e918ec58a7410">top_level.h</a>
+: <a class="el" href="df/d74/tl__geometry_8h.html#ae2e2edd0437d24ac650e918ec58a7410">tl_geometry.h</a>
+, <a class="el" href="d4/d8c/translation__plane__via__andre__model_8_c.html#ae2e2edd0437d24ac650e918ec58a7410">translation_plane_via_andre_model.C</a>
 </li>
 <li>translation_plane_via_andre_model_check_subplane()
-: <a class="el" href="translation__plane__via__andre__model_8_c.html#abf204a455a8698c7340fe92376031d50">translation_plane_via_andre_model.C</a>
-, <a class="el" href="top__level_8h.html#abf204a455a8698c7340fe92376031d50">top_level.h</a>
+: <a class="el" href="df/d74/tl__geometry_8h.html#abf204a455a8698c7340fe92376031d50">tl_geometry.h</a>
+, <a class="el" href="d4/d8c/translation__plane__via__andre__model_8_c.html#abf204a455a8698c7340fe92376031d50">translation_plane_via_andre_model.C</a>
+</li>
+<li>transpose_matrix_4x4()
+: <a class="el" href="d5/d87/globals_8h.html#ac52afc6baa07847b06879f30f5176a02">globals.h</a>
+, <a class="el" href="d0/d22/numerics_8_c.html#ac52afc6baa07847b06879f30f5176a02">numerics.C</a>
 </li>
 <li>transversal_for_orbit()
-: <a class="el" href="discreta_8h.html#a1f1bb96838f21f5e1c3a75aa9fbb998f">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a1f1bb96838f21f5e1c3a75aa9fbb998f">discreta.h</a>
 </li>
 <li>transversal_length
-: <a class="el" href="nauty_8h.html#a5bf01bb16be28d88eadec2175676737a">nauty.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2nauty_8_c.html#a5bf01bb16be28d88eadec2175676737a">nauty.c</a>
+: <a class="el" href="d1/da0/nauty_8h.html#a5bf01bb16be28d88eadec2175676737a">nauty.h</a>
+, <a class="el" href="d3/dbf/lib_2foundations_2graph__theory__nauty_2nauty_8_c.html#a5bf01bb16be28d88eadec2175676737a">nauty.c</a>
 </li>
 <li>tree
-: <a class="el" href="galois_8h.html#abd849bf3c4b547a43c7bf8a555573c40">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#abd849bf3c4b547a43c7bf8a555573c40">foundations.h</a>
 </li>
 <li>tree_node
-: <a class="el" href="galois_8h.html#a03bfec34f906fa4f71820a2575d88db3">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a03bfec34f906fa4f71820a2575d88db3">foundations.h</a>
 </li>
 <li>tree_node_calc_y_coordinate()
-: <a class="el" href="galois_8h.html#a90fd31502ff6159142ddb0a966be9015">galois.h</a>
-, <a class="el" href="tree__node_8_c.html#a90fd31502ff6159142ddb0a966be9015">tree_node.C</a>
+: <a class="el" href="dd/dbf/tree__node_8_c.html#a90fd31502ff6159142ddb0a966be9015">tree_node.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#a90fd31502ff6159142ddb0a966be9015">graphics.h</a>
 </li>
 <li>TREEPATHLEN
-: <a class="el" href="tree_8_c.html#afb3bebf245a71060f1fd00b2787f3d7d">tree.C</a>
+: <a class="el" href="d8/d0d/tree_8_c.html#afb3bebf245a71060f1fd00b2787f3d7d">tree.C</a>
+</li>
+<li>triangular_prism()
+: <a class="el" href="d5/d87/globals_8h.html#a09c00ded4c934ce35a1686ab4e95d2e6">globals.h</a>
+, <a class="el" href="d0/d22/numerics_8_c.html#a09c00ded4c934ce35a1686ab4e95d2e6">numerics.C</a>
 </li>
 <li>Trivial
-: <a class="el" href="discreta_8h.html#a9fbd019a849defc14910ae0a667c516ea6563e8fa07a931ff06e46e02ca46f39c">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a9fbd019a849defc14910ae0a667c516ea6563e8fa07a931ff06e46e02ca46f39c">discreta.h</a>
 </li>
 <li>TRUE
-: <a class="el" href="nauty_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d">nauty.h</a>
-, <a class="el" href="alphabet2_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">alphabet2.C</a>
-, <a class="el" href="galois_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d">galois.h</a>
-, <a class="el" href="partitions_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">partitions.C</a>
-, <a class="el" href="alphabet_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">alphabet.C</a>
-, <a class="el" href="lehmer_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">lehmer.c</a>
-, <a class="el" href="fibonacci_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">fibonacci.C</a>
+: <a class="el" href="d9/dc9/alphabet_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">alphabet.C</a>
+, <a class="el" href="d0/df7/partitions_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">partitions.C</a>
+, <a class="el" href="d5/da7/foundations_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d">foundations.h</a>
+, <a class="el" href="d9/d4b/alphabet2_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">alphabet2.C</a>
+, <a class="el" href="d0/d7f/lehmer_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d">lehmer.c</a>
+, <a class="el" href="d1/da0/nauty_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d">nauty.h</a>
+, <a class="el" href="d2/d32/fibonacci_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d">fibonacci.C</a>
 </li>
 <li>try_to_read_file()
-: <a class="el" href="galois_8h.html#a1097b6ad7e39d3771b7e6a2fcb9326e9">galois.h</a>
-, <a class="el" href="util_8_c.html#a1097b6ad7e39d3771b7e6a2fcb9326e9">util.C</a>
+: <a class="el" href="d4/d74/util_8_c.html#a1097b6ad7e39d3771b7e6a2fcb9326e9">util.C</a>
+, <a class="el" href="d5/db4/io__and__os_8h.html#a1097b6ad7e39d3771b7e6a2fcb9326e9">io_and_os.h</a>
 </li>
 <li>TSTRING
-: <a class="el" href="galois_8h.html#a5e6032dc8d687b35859e793851684c65">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a5e6032dc8d687b35859e793851684c65">foundations.h</a>
+, <a class="el" href="de/dc0/sajeeb_8h.html#a5e6032dc8d687b35859e793851684c65">sajeeb.h</a>
+</li>
+<li>TT
+: <a class="el" href="da/d48/naurng_8c.html#a08ca909b46b12e894320afaabce3056e">naurng.c</a>
 </li>
 <li>tt_field_reduction()
-: <a class="el" href="tensor_8_c.html#ae4e2c39ff1b745f764e7aa808ea809ed">tensor.C</a>
-, <a class="el" href="galois_8h.html#ae4e2c39ff1b745f764e7aa808ea809ed">galois.h</a>
+: <a class="el" href="d6/df5/coding__theory_8h.html#ae4e2c39ff1b745f764e7aa808ea809ed">coding_theory.h</a>
+, <a class="el" href="db/d1b/tensor_8_c.html#ae4e2c39ff1b745f764e7aa808ea809ed">tensor.C</a>
 </li>
 <li>tuple2_rank()
-: <a class="el" href="discreta_8h.html#af8f305151bfcd65674783ea6d567fc9f">discreta.h</a>
-, <a class="el" href="global_8_c.html#af8f305151bfcd65674783ea6d567fc9f">global.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#af8f305151bfcd65674783ea6d567fc9f">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#af8f305151bfcd65674783ea6d567fc9f">global.C</a>
 </li>
 <li>tuple2_unrank()
-: <a class="el" href="global_8_c.html#a6fb1497bb7e4bedd98cad36064580b1c">global.C</a>
-, <a class="el" href="discreta_8h.html#a6fb1497bb7e4bedd98cad36064580b1c">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a6fb1497bb7e4bedd98cad36064580b1c">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#a6fb1497bb7e4bedd98cad36064580b1c">global.C</a>
 </li>
 <li>turn_piece()
-: <a class="el" href="pentomino__5x5_8_c.html#afeaa9ad5370af3cec823a11a292bbf52">pentomino_5x5.C</a>
+: <a class="el" href="dc/d77/pentomino__5x5_8_c.html#afeaa9ad5370af3cec823a11a292bbf52">pentomino_5x5.C</a>
 </li>
 <li>twisted_tensor_product_codes()
-: <a class="el" href="galois_8h.html#adc92206fd9c137be57386b30cc834f7e">galois.h</a>
-, <a class="el" href="tensor_8_c.html#adc92206fd9c137be57386b30cc834f7e">tensor.C</a>
+: <a class="el" href="d6/df5/coding__theory_8h.html#adc92206fd9c137be57386b30cc834f7e">coding_theory.h</a>
+, <a class="el" href="db/d1b/tensor_8_c.html#adc92206fd9c137be57386b30cc834f7e">tensor.C</a>
 </li>
 <li>type
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#ad241c8005abf9f323e9fffec67f55abf">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#ad241c8005abf9f323e9fffec67f55abf">dlx.C</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -1,0 +1,11 @@
+digraph "vec_generators_GL_n_q_as_matrices"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11524 [label="vec_generators_GL_n\l_q_as_matrices",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node11524 -> Node11525 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11525 [label="vec_generators_SL_n\l_q_as_matrices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#aece7a22e0963ee87d325797900443bd2"];
+  Node11524 -> Node11526 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11526 [label="vec_generators_GL_n\l_q_projective_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#ae56b1d99562cb32203518575c689746d"];
+}

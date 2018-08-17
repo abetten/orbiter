@@ -1,0 +1,44 @@
+digraph "classify_trihedral_pairs::identify_three_planes"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1915 [label="classify_trihedral\l_pairs::identify_three\l_planes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1915 -> Node1916 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1916 [label="classify_trihedral\l_pairs::upstep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a4134a82fca1d3962311921731ce001eb"];
+  Node1916 -> Node1917 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1917 [label="classify_trihedral\l_pairs::classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a134e4c3042163c24bf57050f26e364e1"];
+  Node1917 -> Node1918 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1918 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node1917 -> Node1919 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1919 [label="surface_create::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59"];
+  Node1919 -> Node1920 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1920 [label="surface_create::init\l_with_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2"];
+  Node1919 -> Node1921 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1921 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node1921 -> Node1922 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1922 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node1915 -> Node1923 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1923 [label="classify_trihedral\l_pairs::identify_trihedral_pair",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a1a85f616b5043da9f7e585868b0d191d"];
+  Node1923 -> Node1924 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1924 [label="arc_lifting::loop_over\l_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#a30126f5ed4126d604c191aa4d1f7505a"];
+  Node1924 -> Node1925 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1925 [label="arc_lifting::create\l_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b"];
+  Node1925 -> Node1926 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1926 [label="lift_single_arc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b"];
+  Node1926 -> Node1918 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1925 -> Node1919 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1925 -> Node1927 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1927 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node1927 -> Node1928 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1928 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node1928 -> Node1918 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1923 -> Node1929 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1929 [label="arc_lifting::print\l_isomorphism_types_of\l_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#ac2ea90f2acf97c870a7f46f7b125b8b7"];
+  Node1929 -> Node1930 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1930 [label="arc_lifting::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#ae1609cb80720bc005f0fc3ea65150185"];
+  Node1930 -> Node1926 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1930 -> Node1927 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1923 -> Node1931 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1931 [label="classify_trihedral\l_pairs::identify_trihedral\l_pair_and_get_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a433489bad83d619b71a688e6a03a3210"];
+}

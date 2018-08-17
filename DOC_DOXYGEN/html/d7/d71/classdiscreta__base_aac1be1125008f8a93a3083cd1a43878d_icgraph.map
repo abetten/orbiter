@@ -1,0 +1,12 @@
+<map id="discreta_base::negate" name="discreta_base::negate">
+<area shape="rect" id="node2" href="$d9/d60/discreta_8h.html#a89f8e89e9ddb69c6871c43b5253363f2" title="design_lambda_ijs" alt="" coords="208,36,339,61"/>
+<area shape="rect" id="node6" href="$d3/d72/global_8_c.html#aad966cb2e1d574fc0e513d692c1f49c6" title="Catalan_nk_matrix" alt="" coords="207,85,340,111"/>
+<area shape="rect" id="node7" href="$d0/de5/classinteger.html#a1da2bd683bdef336057ef2b84d4b3978" title="integer::negate_to" alt="" coords="209,135,338,160"/>
+<area shape="rect" id="node8" href="$d0/de5/classinteger.html#a4d312656ed6c31235e11ecb3f05df1f5" title="integer::m_one" alt="" coords="218,184,329,209"/>
+<area shape="rect" id="node10" href="$d1/d8d/classmatrix.html#a75adb25c9f8753f1b81eafe4464b272a" title="matrix::determinant" alt="" coords="206,257,341,283"/>
+<area shape="rect" id="node11" href="$d1/d89/classunipoly.html#a6804952878b88dc700e6532a5c9b1e6e" title="unipoly::Xnm1" alt="" coords="221,307,327,332"/>
+<area shape="rect" id="node3" href="$d9/d60/discreta_8h.html#a77a457666b8a4a24f1208d257a53f3fb" title="design_lambda_ijs_matrix" alt="" coords="415,12,591,37"/>
+<area shape="rect" id="node5" href="$da/d94/classdesign__parameter.html#a9025f18483dfe3f57eecfc6a603b7df1" title="design_parameter::complementary" alt="" coords="389,61,617,87"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ac12f39c2d57b543c801c36d26f237ac7" title="design_parameter_database\l_read_design_txt" alt="" coords="665,5,856,44"/>
+<area shape="rect" id="node9" href="$d0/de5/classinteger.html#a7585957656c1152035411e066a4f0053" title="integer::is_m_one" alt="" coords="439,184,567,209"/>
+</map>

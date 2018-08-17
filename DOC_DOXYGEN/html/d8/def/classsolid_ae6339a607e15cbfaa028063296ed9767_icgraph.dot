@@ -1,0 +1,17 @@
+digraph "solid::find_faces_at_edge"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2524 [label="solid::find_faces_at_edge",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2524 -> Node2525 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2525 [label="solid::find_face_by\l_two_edges",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a83a357e708d7da429afe714dc40a5930"];
+  Node2525 -> Node2526 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2526 [label="solid::adjacency_list",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#af0ad596c4fd4b091118dd0d6e3e3bf67"];
+  Node2526 -> Node2527 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2527 [label="solid::dual",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757"];
+  Node2526 -> Node2528 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2528 [label="solid::cut_vertices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce"];
+  Node2526 -> Node2529 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2529 [label="solid::edge_midpoints",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc"];
+}

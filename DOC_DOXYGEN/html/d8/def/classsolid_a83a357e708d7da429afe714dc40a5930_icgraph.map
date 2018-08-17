@@ -1,0 +1,6 @@
+<map id="solid::find_face_by_two_edges" name="solid::find_face_by_two_edges">
+<area shape="rect" id="node2" href="$d8/def/classsolid.html#af0ad596c4fd4b091118dd0d6e3e3bf67" title="solid::adjacency_list" alt="" coords="185,55,325,80"/>
+<area shape="rect" id="node3" href="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757" title="solid::dual" alt="" coords="407,5,489,31"/>
+<area shape="rect" id="node4" href="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce" title="solid::cut_vertices" alt="" coords="385,55,512,80"/>
+<area shape="rect" id="node5" href="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc" title="solid::edge_midpoints" alt="" coords="373,104,523,129"/>
+</map>

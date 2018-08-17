@@ -1,0 +1,27 @@
+digraph "surface_object_with_action::print_automorphism_group"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1933 [label="surface_object_with\l_action::print_automorphism_group",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1933 -> Node1934 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1934 [label="strong_generators::\lgroup_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a91f453c2bfd6502b96f4b4eed16beb20"];
+  Node1933 -> Node1935 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1935 [label="schreier::print_and\l_list_orbits_sorted\l_by_length_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a8ea6634afbd63695d64bb0a4237f28d5"];
+  Node1935 -> Node1936 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1936 [label="schreier::print_and\l_list_orbits_sorted\l_by_length",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a28b773e6bc98fe2171eb77f2c73bcc4e"];
+  Node1933 -> Node1937 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1937 [label="schreier::get_orbit\l_decomposition_scheme\l_of_graph",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#afe5e69fc0b320432e9d93e94853b22d2"];
+  Node1937 -> Node1938 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1938 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node1937 -> Node1939 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1939 [label="INT_matrix_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#afd4180a24bef3a2b584668a4eaf607ff"];
+  Node1933 -> Node1940 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1940 [label="print_integer_matrix\l_tex_block_by_block",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#ad4f65d58518e9c514ec41796782c7bf0"];
+  Node1933 -> Node1941 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1941 [label="schreier::draw_forest",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#acedbf49fa6edce7059aa0f9a826abf44"];
+  Node1941 -> Node1942 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1942 [label="schreier::draw_tree",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#adfcf67422fdb99e36500206e794241c5"];
+  Node1933 -> Node1943 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1943 [label="INT_set_print_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#adad0666de5d38c0caa4769f9f4756c0b"];
+}

@@ -1,0 +1,19 @@
+digraph "allocate_BYTE"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18 [label="allocate_BYTE",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="add_to_registry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a6920a250c4e7a0770cdef39eb9bf20ad"];
+  Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="registry_search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a01e5fb20556471832a045ea75de89a78"];
+  Node19 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="registry_print_entry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a2b54b210ed9aae58085d1ef7fa3bcbff"];
+  Node21 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="print_pointer_hex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a32add94de62a1d910cc0fc35ed90ab48"];
+  Node22 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="print_hex_digit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a36c64a828eefed0a0cfdd6186ec92c31"];
+  Node21 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="registry_print_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a0c81861cc8a6dd21364c89bb3ac8e82c"];
+}

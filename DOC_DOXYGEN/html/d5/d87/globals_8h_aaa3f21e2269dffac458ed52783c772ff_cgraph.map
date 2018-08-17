@@ -1,0 +1,22 @@
+<map id="save_as_colored_graph_easy" name="save_as_colored_graph_easy">
+<area shape="rect" id="node2" href="$dc/de2/classcolored__graph.html#aa5e628053139148b42e5ea61698d3bae" title="colored_graph::init\l_adjacency_no_colors" alt="" coords="253,64,407,103"/>
+<area shape="rect" id="node9" href="$dc/de2/classcolored__graph.html#a562912fb7464addacd865057a1a48f75" title="colored_graph::save" alt="" coords="259,184,401,210"/>
+<area shape="rect" id="node21" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="295,234,364,259"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="872,8,977,34"/>
+<area shape="rect" id="node4" href="$dc/de2/classcolored__graph.html#a7dd89f3adcb0f1d70d4bb05be6400e73" title="colored_graph::init\l_adjacency" alt="" coords="460,64,591,103"/>
+<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042" title="ij2k" alt="" coords="690,22,731,47"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a31da55e2b26316d582cd322dc670b67b" title="bitvector_m_ii" alt="" coords="658,71,762,96"/>
+<area shape="rect" id="node7" href="$dc/de2/classcolored__graph.html#a4b917cdc9c6203a5a750c321e791bc7d" title="colored_graph::init" alt="" coords="645,120,776,146"/>
+<area shape="rect" id="node8" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="871,95,978,120"/>
+<area shape="rect" id="node10" href="$da/da9/galois__global_8_c.html#a1f2e1a9df5b1f9af96c9c1e08fbc98c7" title="save_colored_graph" alt="" coords="455,218,597,243"/>
+<area shape="rect" id="node11" href="$df/dbf/sajeeb_8_c.html#a2e1091b3187c01029a1a1453ce9e8639" title="fwrite_INT4" alt="" coords="666,194,755,219"/>
+<area shape="rect" id="node12" href="$d7/d83/points_8_c.html#a8a498513b4415e1a4628a70fb6b26817" title="points" alt="" coords="682,243,739,268"/>
+<area shape="rect" id="node20" href="$df/dbf/sajeeb_8_c.html#a3097dee262bebe614d11c8fc47e414d3" title="fwrite_UBYTEs" alt="" coords="654,292,766,318"/>
+<area shape="rect" id="node13" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="872,144,977,170"/>
+<area shape="rect" id="node14" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="851,194,998,219"/>
+<area shape="rect" id="node15" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="824,243,1025,268"/>
+<area shape="rect" id="node16" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="872,292,977,318"/>
+<area shape="rect" id="node17" href="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95" title="PG_element_normalize\l_from_front" alt="" coords="844,342,1005,380"/>
+<area shape="rect" id="node18" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="831,404,1018,430"/>
+<area shape="rect" id="node19" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="1073,404,1234,430"/>
+</map>

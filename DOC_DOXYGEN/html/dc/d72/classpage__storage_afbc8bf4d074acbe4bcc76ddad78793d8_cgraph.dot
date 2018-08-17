@@ -1,0 +1,11 @@
+digraph "page_storage::s_i_and_deallocate"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1203 [label="page_storage::s_i_and\l_deallocate",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1203 -> Node1204 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1204 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node1204 -> Node1205 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1205 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+}

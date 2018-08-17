@@ -1,0 +1,6 @@
+<map id="memory_object::init" name="memory_object::init">
+<area shape="rect" id="node2" href="$d8/d67/classmemory__object.html#a0768d510d8df4bed863435b637750185" title="memory_object::alloc" alt="" coords="190,5,338,31"/>
+<area shape="rect" id="node5" href="$d8/d67/classmemory__object.html#a8ab798c46f6f2c80176803d2fa930ba2" title="memory_object::s_i" alt="" coords="195,55,332,80"/>
+<area shape="rect" id="node3" href="$d8/d67/classmemory__object.html#aea989e6df86ed48049a2747df074b62a" title="memory_object::freeself" alt="" coords="386,5,549,31"/>
+<area shape="rect" id="node4" href="$d8/d67/classmemory__object.html#a9e538ffb790fddfebcf9557386af1e76" title="memory_object::null" alt="" coords="597,5,738,31"/>
+</map>

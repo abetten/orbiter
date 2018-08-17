@@ -1,0 +1,9 @@
+digraph "projective_space::print_line_set_numerical"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2970 [label="projective_space::print\l_line_set_numerical",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2970 -> Node2971 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2971 [label="spread::plane_intersection\l_type_of_klein_image",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dc1/classspread.html#af24965c92b11f083efef562901770e17"];
+}

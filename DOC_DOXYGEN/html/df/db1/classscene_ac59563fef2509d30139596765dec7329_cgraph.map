@@ -1,0 +1,12 @@
+<map id="scene::triangle" name="scene::triangle">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a5388dd7094fae8b0b0124555c6ab8abc" title="scene::point_as_intersection\l_of_two_lines" alt="" coords="161,153,352,192"/>
+<area shape="rect" id="node9" href="$df/db1/classscene.html#a41278ef1c25e6d3cf922f5dcf76718a9" title="scene::face3" alt="" coords="208,272,305,297"/>
+<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#aee0c436dfcfcb2f8a9b32f01ec90033a" title="double_vec_copy" alt="" coords="428,5,553,31"/>
+<area shape="rect" id="node4" href="$d5/d87/globals_8h.html#ab2c546a261942039d2847fcf1ce4b5ec" title="double_vec_subtract" alt="" coords="419,55,563,80"/>
+<area shape="rect" id="node5" href="$d5/d87/globals_8h.html#a5d5454f7ae047895ae3e511398f8604c" title="Null_space" alt="" coords="447,104,534,129"/>
+<area shape="rect" id="node6" href="$d5/d87/globals_8h.html#aa72b62268b311af7c4fb54504dadb476" title="double_vec_normalize\l_from_back" alt="" coords="413,153,568,192"/>
+<area shape="rect" id="node7" href="$d5/d87/globals_8h.html#ae702b1ec739eeb05a8fa7ccd23c39c9d" title="double_vec_normalize\l_to_minus_one_from_back" alt="" coords="400,216,582,255"/>
+<area shape="rect" id="node8" href="$df/db1/classscene.html#a786b60f97ad35f58f5e4ae1456d12e3b" title="scene::point" alt="" coords="444,279,537,304"/>
+<area shape="rect" id="node10" href="$df/db1/classscene.html#a72b31cd6b51a2bad1b5c3dcbcbaf12eb" title="scene::face" alt="" coords="446,328,536,353"/>
+<area shape="rect" id="node11" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="630,328,736,353"/>
+</map>

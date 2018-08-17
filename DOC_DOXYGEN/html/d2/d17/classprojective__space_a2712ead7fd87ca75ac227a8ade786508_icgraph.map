@@ -1,0 +1,11 @@
+<map id="projective_space::klein_correspondence" name="projective_space::klein_correspondence">
+<area shape="rect" id="node2" href="$d4/d67/geometry_8h.html#aa91902d79964fdd71e53be264387b285" title="do_Klein_correspondence" alt="" coords="210,5,387,31"/>
+<area shape="rect" id="node4" href="$d7/d99/classklein__correspondence.html#a561aa0d3a66d19a10f9945561a5880b5" title="klein_correspondence\l::plane_intersections" alt="" coords="223,55,374,93"/>
+<area shape="rect" id="node9" href="$d7/d08/classobject__in__projective__space.html#a5b8beb58d83a6c274b2b8bd2c4e176c1" title="object_in_projective\l_space::klein" alt="" coords="229,117,368,156"/>
+<area shape="rect" id="node10" href="$da/dc1/classspread.html#af24965c92b11f083efef562901770e17" title="spread::plane_intersection\l_type_of_klein_image" alt="" coords="210,180,387,219"/>
+<area shape="rect" id="node3" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="476,5,527,31"/>
+<area shape="rect" id="node5" href="$da/dc1/classspread.html#af3b0d52e28dec3d6b495e79fcee88a29" title="spread::save_klein\l_invariants" alt="" coords="435,55,568,93"/>
+<area shape="rect" id="node6" href="$da/dc1/classspread.html#a5deb643e8dd301ca92d96d409e85c6aa" title="spread::klein" alt="" coords="453,117,550,143"/>
+<area shape="rect" id="node7" href="$da/dc1/classspread.html#ac00cfa228f832076e6e5d81319828fa7" title="spread::print_isomorphism_type" alt="" coords="616,92,827,117"/>
+<area shape="rect" id="node8" href="$da/dc1/classspread.html#a543a79e4e7306af291584f53dacbfdd8" title="spread::report2" alt="" coords="665,141,777,167"/>
+</map>

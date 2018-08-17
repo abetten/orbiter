@@ -1,0 +1,16 @@
+<map id="oracle::downstep_subspace_action_print_orbits" name="oracle::downstep_subspace_action_print_orbits">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#aeef1b9fe6115b67be42d7cb3206fddd2" title="generator::print_level_info" alt="" coords="240,111,415,136"/>
+<area shape="rect" id="node9" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="276,167,380,192"/>
+<area shape="rect" id="node10" href="$d3/dd6/classschreier.html#a49b95cdd68410b614ed74dc7ddf72fe3" title="schreier::print_orbit\l_through_labels" alt="" coords="260,223,395,261"/>
+<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="512,5,582,31"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1" title="time_check_delta" alt="" coords="485,55,610,80"/>
+<area shape="rect" id="node7" href="$d7/d73/classgenerator.html#a06d3c064ba84ebe8db3537e6273f16c3" title="generator::print_problem\l_label" alt="" coords="463,104,631,143"/>
+<area shape="rect" id="node8" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="477,167,617,205"/>
+<area shape="rect" id="node5" href="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042" title="os_ticks_per_second" alt="" coords="681,31,827,56"/>
+<area shape="rect" id="node6" href="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba" title="os_ticks_to_dhms" alt="" coords="690,80,818,105"/>
+<area shape="rect" id="node11" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="482,229,612,255"/>
+<area shape="rect" id="node15" href="$df/dbf/sajeeb_8_c.html#aff2e5a86c89315b7cec22a5a77f94a25" title="INT_vec_print_fully" alt="" coords="479,279,615,304"/>
+<area shape="rect" id="node12" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="679,179,829,204"/>
+<area shape="rect" id="node13" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="877,229,1014,255"/>
+<area shape="rect" id="node14" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="1062,255,1174,280"/>
+</map>

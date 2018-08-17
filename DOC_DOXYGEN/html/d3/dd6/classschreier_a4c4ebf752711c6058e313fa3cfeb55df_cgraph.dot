@@ -1,0 +1,39 @@
+digraph "schreier::print_and_list_orbits_sorted_by_length"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4062 [label="schreier::print_and\l_list_orbits_sorted\l_by_length",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4062 -> Node4063 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4063 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node4062 -> Node4064 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4064 [label="INT_vec_sorting_permutation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a10768733e01e8c9ded3c886e6ddb671e"];
+  Node4064 -> Node4065 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4065 [label="quicksort_array",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a660db9b0f6bc8a01353f32f3e02638f6"];
+  Node4064 -> Node4066 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4066 [label="INT_compare_increasingly",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a53c48a8669e34ab2171690080d493f31"];
+  Node4064 -> Node4067 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4067 [label="INT_compare_decreasingly",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a41cf7fa2b53a8f12d60971a71ba96a66"];
+  Node4064 -> Node4068 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4068 [label="perm_inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#ab7f02d1e2e257e1118eae354ab16d447"];
+  Node4064 -> Node4069 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4069 [label="INT_vec_heapsort_with_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a9d838c341cd204ed79499960a8ed393d"];
+  Node4069 -> Node4070 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4070 [label="heapsort_make_heap\l_with_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a100d0747647500480fe5dc76ff98cee5"];
+  Node4070 -> Node4071 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4071 [label="heapsort_sift_down\l_with_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#ac7af225fae479a93d6957f79734ba2a6"];
+  Node4071 -> Node4072 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4072 [label="heapsort_swap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6"];
+  Node4069 -> Node4072 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4069 -> Node4071 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4062 -> Node4073 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4073 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node4062 -> Node4074 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4074 [label="schreier::print_and\l_list_orbit_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a6b87dc5584850a7397821f144c1598d6"];
+  Node4074 -> Node4075 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4075 [label="schreier::print_orbit_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a9a93cee225ebf0f971afb10255422158"];
+  Node4075 -> Node4076 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4076 [label="INT_set_print_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#adad0666de5d38c0caa4769f9f4756c0b"];
+  Node4062 -> Node4077 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4077 [label="schreier::print_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#ac30bbfe09706ff8ccaf27c2cf8074594"];
+}

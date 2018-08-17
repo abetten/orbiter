@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['table_5fbinomials_5fmax',['TABLE_BINOMIALS_MAX',['../longinteger__domain_8_c.html#aee728adc7a2080866e3b7d0f00fdcae5',1,'longinteger_domain.C']]],
-  ['table_5fq_5fbinomials_5fmax',['TABLE_Q_BINOMIALS_MAX',['../longinteger__domain_8_c.html#a5162461fd41bdf453d9e9f2539c87d8e',1,'longinteger_domain.C']]],
-  ['takebit',['TAKEBIT',['../nauty_8h.html#aa00d4388ad48907c85a2afc659794bef',1,'nauty.h']]],
-  ['timeswordsize',['TIMESWORDSIZE',['../nauty_8h.html#ae6e6da42f2354ac135a644be865328bd',1,'nauty.h']]],
-  ['treepathlen',['TREEPATHLEN',['../tree_8_c.html#afb3bebf245a71060f1fd00b2787f3d7d',1,'tree.C']]],
-  ['true',['TRUE',['../alphabet_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;alphabet.C'],['../alphabet2_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;alphabet2.C'],['../fibonacci_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;fibonacci.C'],['../lehmer_8c.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;lehmer.c'],['../partitions_8_c.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;partitions.C'],['../galois_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;galois.h'],['../nauty_8h.html#aa8cecfc5c5c054d2875c03e77b7be15d',1,'TRUE():&#160;nauty.h']]]
+  ['range_5fchecking',['RANGE_CHECKING',['../dc/d3e/vector__ge_8_c.html#aba8717f1e6e3fcf423083c7bab871bb5',1,'vector_ge.C']]],
+  ['ranreal',['RANREAL',['../dd/d84/naurng_8h.html#a1495bba32b538c00a3bc9c53b4bc9853',1,'naurng.h']]],
+  ['read_5fincidence_5fbufsize',['READ_INCIDENCE_BUFSIZE',['../d4/d74/util_8_c.html#a6129d973eb062efb833f4e58ef412fae',1,'util.C']]],
+  ['read_5fsgs_5fbuf_5fsize',['READ_SGS_BUF_SIZE',['../d9/d4e/sims_8_c.html#a2c6e5448fa4647b2a377572139b4bc89',1,'sims.C']]],
+  ['reallocs',['REALLOCS',['../d1/da0/nauty_8h.html#ab3e0c18216b2ef7b221ac3086d9643b3',1,'nauty.h']]],
+  ['registry_5fsize',['REGISTRY_SIZE',['../df/d84/foundations_2io__and__os_2memory_8_c.html#a56b4909adf7b15ea587d4f34bd639afa',1,'memory.C']]],
+  ['rng_5fquality',['RNG_QUALITY',['../da/d48/naurng_8c.html#a33df460b714a5622fe373324476a93ad',1,'naurng.c']]],
+  ['row',['ROW',['../d4/d67/geometry_8h.html#ac6f18a9e1d00b4637522b1b469a92021',1,'geometry.h']]]
 ];

@@ -1,0 +1,9 @@
+digraph "strong_generators::group_order_as_INT"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2177 [label="strong_generators::\lgroup_order_as_INT",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2177 -> Node2178 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2178 [label="longinteger_object\l::as_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e"];
+}

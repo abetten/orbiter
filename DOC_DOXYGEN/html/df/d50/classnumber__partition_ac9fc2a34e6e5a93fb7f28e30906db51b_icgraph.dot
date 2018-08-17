@@ -1,0 +1,21 @@
+digraph "number_partition::nb_parts"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1085 [label="number_partition::nb\l_parts",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1085 -> Node1086 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1086 [label="number_partition::first\l_into_k_parts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a5c27373cb7638344c463e32ed63e7e51"];
+  Node1085 -> Node1087 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1087 [label="number_partition::next\l_into_k_parts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a6067c3203b1dbaa8e77bca841132f442"];
+  Node1085 -> Node1088 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1088 [label="number_partition::first\l_into_at_most_k_parts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a36626dcbbaddba73cef7ff5c4521b325"];
+  Node1085 -> Node1089 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1089 [label="number_partition::next\l_into_at_most_k_parts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a5fe0dbb26444dd0f5a487dacb93e715b"];
+  Node1085 -> Node1090 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1090 [label="number_partition::conjugate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#aee718664947704f316f520a7abba52d8"];
+  Node1085 -> Node1091 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1091 [label="number_partition::type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a0f194ccc525edcb22249744c3b0c65cb"];
+  Node1091 -> Node1092 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1092 [label="number_partition::multinomial\l_ordered",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a0d92a28d0d047c698d1c1c8fb93a6608"];
+}

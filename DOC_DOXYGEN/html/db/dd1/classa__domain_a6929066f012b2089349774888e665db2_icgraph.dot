@@ -1,0 +1,15 @@
+digraph "a_domain::make_one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node150 [label="a_domain::make_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node150 -> Node151 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node151 [label="a_domain::power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ac4ce9e8dc4ce621fa15ec46c2cc2066d"];
+  Node150 -> Node152 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node152 [label="a_domain::make_identity\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ac0b9a2c9b835da684018c60ccb824d3e"];
+  Node152 -> Node153 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node153 [label="a_domain::matrix_invert",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#af55f171ad67c2b35e762f1ba51aaa4c4"];
+  Node153 -> Node154 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node154 [label="a_domain::matrix_inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a3746a74f1de058547dd1b55436faada1"];
+}

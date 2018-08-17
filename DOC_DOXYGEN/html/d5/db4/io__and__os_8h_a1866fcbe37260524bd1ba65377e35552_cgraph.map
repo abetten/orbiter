@@ -1,0 +1,7 @@
+<map id="compare_sets" name="compare_sets">
+<area shape="rect" id="node2" href="$d4/d74/util_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="170,7,277,32"/>
+<area shape="rect" id="node3" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="158,56,289,81"/>
+<area shape="rect" id="node4" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="337,5,487,31"/>
+<area shape="rect" id="node5" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="535,56,672,81"/>
+<area shape="rect" id="node6" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="720,81,832,107"/>
+</map>

@@ -1,0 +1,11 @@
+digraph "incidence_structure::init_partitionstack_trivial"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5235 [label="incidence_structure\l::init_partitionstack\l_trivial",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5235 -> Node5236 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5236 [label="incidence_structure\l::nb_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#aff5f6bfdc7470e73082ee6faacf0af64"];
+  Node5235 -> Node5237 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5237 [label="incidence_structure\l::nb_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a9ffac61340b2a03f31f1cc366d5a7b79"];
+}

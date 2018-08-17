@@ -1,0 +1,11 @@
+digraph "orbit_of_equations::get_transporter"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node235 [label="orbit_of_equations\l::get_transporter",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node235 -> Node236 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node236 [label="orbit_of_equations\l::get_random_schreier\l_generator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classorbit__of__equations.html#a7c047be29a86d0afa0278750182c4617"];
+  Node236 -> Node237 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node237 [label="orbit_of_equations\l::compute_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classorbit__of__equations.html#ae91b1fc7aaed29d4cd3ece65d39eb300"];
+}

@@ -1,0 +1,28 @@
+<map id="projective_space::print_set_numerical" name="projective_space::print_set_numerical">
+<area shape="rect" id="node2" href="$d4/d67/geometry_8h.html#a719f98ff45a1f8cbe0ff10a1954f0893" title="do_ideal" alt="" coords="268,112,340,137"/>
+<area shape="rect" id="node4" href="$d2/d17/classprojective__space.html#aaa6ad6d1120268b5abd1ac2c01150b76" title="projective_space::plane\l_intersection_type_slow" alt="" coords="223,33,386,72"/>
+<area shape="rect" id="node6" href="$d2/d17/classprojective__space.html#ac67be7eb594ae22dc8f1e5235f341d2d" title="projective_space::plane\l_intersection_type_fast" alt="" coords="224,245,385,284"/>
+<area shape="rect" id="node16" href="$da/dc1/classspread.html#af24965c92b11f083efef562901770e17" title="spread::plane_intersection\l_type_of_klein_image" alt="" coords="668,193,846,232"/>
+<area shape="rect" id="node18" href="$d2/d17/classprojective__space.html#af486b51daa10b4de0c8b50fb5c1c2ee7" title="projective_space::conic\l_type_randomized" alt="" coords="224,343,384,381"/>
+<area shape="rect" id="node22" href="$d2/d17/classprojective__space.html#af5a8dcbc4bbe1638c3037b949b3b3306" title="projective_space::conic_type" alt="" coords="208,468,401,493"/>
+<area shape="rect" id="node3" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="975,256,1025,281"/>
+<area shape="rect" id="node5" href="$d7/d08/classobject__in__projective__space.html#a5b8beb58d83a6c274b2b8bd2c4e176c1" title="object_in_projective\l_space::klein" alt="" coords="465,16,604,55"/>
+<area shape="rect" id="node7" href="$d7/d99/classklein__correspondence.html#a561aa0d3a66d19a10f9945561a5880b5" title="klein_correspondence\l::plane_intersections" alt="" coords="459,131,610,169"/>
+<area shape="rect" id="node12" href="$d2/d17/classprojective__space.html#ae4ac1e0ff5c8c72ddb504b8931a43e79" title="projective_space::plane\l_intersection_invariant" alt="" coords="454,371,615,409"/>
+<area shape="rect" id="node14" href="$d2/d17/classprojective__space.html#a56e1a6fec768ec2e052bf609872e229b" title="projective_space::plane\l_intersection_type" alt="" coords="454,245,615,284"/>
+<area shape="rect" id="node17" href="$d2/d17/classprojective__space.html#a22f16785983fa60d7c91051e54cd7e7b" title="projective_space::plane\l_intersections" alt="" coords="454,308,615,347"/>
+<area shape="rect" id="node8" href="$da/dc1/classspread.html#af3b0d52e28dec3d6b495e79fcee88a29" title="spread::save_klein\l_invariants" alt="" coords="691,131,824,169"/>
+<area shape="rect" id="node9" href="$da/dc1/classspread.html#a5deb643e8dd301ca92d96d409e85c6aa" title="spread::klein" alt="" coords="709,29,806,55"/>
+<area shape="rect" id="node10" href="$da/dc1/classspread.html#ac00cfa228f832076e6e5d81319828fa7" title="spread::print_isomorphism_type" alt="" coords="894,55,1105,80"/>
+<area shape="rect" id="node11" href="$da/dc1/classspread.html#a543a79e4e7306af291584f53dacbfdd8" title="spread::report2" alt="" coords="944,5,1056,31"/>
+<area shape="rect" id="node13" href="$d1/d3d/classblt__set.html#a6b19f88bd2b92ebfba7e7c362eb9065c" title="blt_set::report" alt="" coords="706,328,809,353"/>
+<area shape="rect" id="node15" href="$d4/d67/geometry_8h.html#a886f1d0c92a60be97721430f1b10b2ac" title="do_plane_type" alt="" coords="703,256,812,281"/>
+<area shape="rect" id="node19" href="$d2/d17/classprojective__space.html#a8f3472a2e9af4ac7874a5195ec6e0d58" title="projective_space::conic\l_intersection_type" alt="" coords="455,433,614,472"/>
+<area shape="rect" id="node20" href="$d7/d29/process___p_g_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="732,440,782,465"/>
+<area shape="rect" id="node21" href="$d4/d67/geometry_8h.html#a24883e05d0dde961023596ca7682a2ef" title="do_conic_type" alt="" coords="704,384,811,409"/>
+<area shape="rect" id="node23" href="$d4/d21/classarc__generator.html#a4ae2e25ba85a60fb2a90a7b4f52675f7" title="arc_generator::print" alt="" coords="466,496,603,521"/>
+<area shape="rect" id="node24" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="449,545,620,584"/>
+<area shape="rect" id="node25" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="683,517,832,556"/>
+<area shape="rect" id="node27" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="732,580,782,605"/>
+<area shape="rect" id="node26" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="975,524,1025,549"/>
+</map>

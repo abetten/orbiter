@@ -1,0 +1,17 @@
+digraph "time_check"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node16095 [label="time_check",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node16095 -> Node16096 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16096 [label="os_ticks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a3da6d2b09e35d569adb7101dffcb5224"];
+  Node16095 -> Node16097 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16097 [label="time_check_delta",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#aeb25eb3cbc89e1cd314f4a0fba55779b"];
+  Node16097 -> Node16098 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16098 [label="os_ticks_per_second",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a1b35e7a094dfde9db39ae352c9c17042"];
+  Node16097 -> Node16099 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16099 [label="os_ticks_to_dhms",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a0d715587fd9b8ab4e2bc822a2be313ba"];
+  Node16097 -> Node16100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16100 [label="print_elapsed_time",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a92d16200f8fa968b259ca347e3549244"];
+}

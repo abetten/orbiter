@@ -1,0 +1,11 @@
+digraph "group::init_strong_generators_empty_set"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1212 [label="group::init_strong\l_generators_empty_set",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1212 -> Node1213 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1213 [label="group::init_ascii_coding\l_to_sims",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#ac868c381717192f1a8f0ece1158a3cb5"];
+  Node1213 -> Node1214 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1214 [label="strong_generators::\linit_from_ascii_coding",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#affe2c3088c70cdb7b5b67b5d9a6b5375"];
+}

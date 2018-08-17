@@ -1,0 +1,13 @@
+digraph "surface_classify_wedge::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2205 [label="surface_classify_wedge\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2205 -> Node2206 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2206 [label="surface_classify_wedge\l::surface_classify_wedge",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a0b0a36d62045d315f7f26c7396a1cea4"];
+  Node2205 -> Node2207 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2207 [label="surface_classify_wedge\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#ad3036c5f2150519a3e575539f1e9b410"];
+  Node2207 -> Node2208 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2208 [label="surface_classify_wedge\l::~surface_classify_wedge",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a9d776a6c1f3cadb40a583b76a36f4369"];
+}

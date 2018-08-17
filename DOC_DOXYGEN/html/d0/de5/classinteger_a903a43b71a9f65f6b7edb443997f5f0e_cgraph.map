@@ -1,0 +1,10 @@
+<map id="integer::compare_with_euklidean" name="integer::compare_with_euklidean">
+<area shape="rect" id="node2" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="895,79,1045,104"/>
+<area shape="rect" id="node5" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="454,28,540,54"/>
+<area shape="rect" id="node6" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="206,79,345,104"/>
+<area shape="rect" id="node3" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1093,54,1286,79"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1150,103,1230,128"/>
+<area shape="rect" id="node7" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="393,130,601,155"/>
+<area shape="rect" id="node9" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="410,179,584,204"/>
+<area shape="rect" id="node8" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="649,130,847,155"/>
+</map>

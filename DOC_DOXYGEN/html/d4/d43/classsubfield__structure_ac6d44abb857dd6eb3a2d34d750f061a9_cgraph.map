@@ -1,0 +1,9 @@
+<map id="subfield_structure::init_with_given_basis" name="subfield_structure::init_with_given_basis">
+<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="224,5,328,31"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#a0e2f8717bd0d086af9450125be6e3144" title="finite_field::embed" alt="" coords="211,55,341,80"/>
+<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="554,131,697,156"/>
+<area shape="rect" id="node5" href="$d4/d43/classsubfield__structure.html#a0215597004a289fbfdf29d8e2643a725" title="subfield_structure\l::evaluate_over_Fq" alt="" coords="208,156,344,195"/>
+<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="392,156,506,181"/>
+<area shape="rect" id="node7" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="393,205,504,231"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="561,205,690,231"/>
+</map>

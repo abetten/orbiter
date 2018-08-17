@@ -1,0 +1,5 @@
+<map id="get_MOLm" name="get_MOLm">
+<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#a65de2085e42965a52469de420274c372" title="point_line::print_MOLS" alt="" coords="141,12,298,37"/>
+<area shape="rect" id="node3" href="$dd/def/classpoint__line.html#a121d61db202b5bbd07f33a148a2df735" title="point_line::coordinatize\l_plane" alt="" coords="346,5,503,44"/>
+<area shape="rect" id="node4" href="$dd/def/classpoint__line.html#a664189dde33698267c4c82b1ee3aa401" title="point_line::is_desarguesian\l_plane" alt="" coords="551,5,734,44"/>
+</map>

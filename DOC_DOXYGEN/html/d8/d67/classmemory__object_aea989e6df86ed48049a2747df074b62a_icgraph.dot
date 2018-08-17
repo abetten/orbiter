@@ -1,0 +1,31 @@
+digraph "memory_object::freeself"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node41 [label="memory_object::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node41 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="memory_object::~memory\l_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a9af084044507354ba7fcc5f28220a3a4"];
+  Node41 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="memory_object::alloc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a0768d510d8df4bed863435b637750185"];
+  Node43 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="memory_object::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#af3db8aaeacba976233f0f257a8678bdf"];
+  Node43 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="memory_object::realloc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a29ea5862bdfae31e11a5c1ccc121b594"];
+  Node45 -> Node46 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="memory_object::append",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#af27e1f0829bc6372b2a2632463bb267f"];
+  Node46 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="memory_object::write_char",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a1b2aafe9f159e3ca6384b7a8db0cc7cf"];
+  Node47 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="memory_object::write\l_string",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#ae4bf39b14c242094cc6f281c00aea9bc"];
+  Node46 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="memory_object::write\l_double",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a05ab03814bd373ee3edd0d897b437873"];
+  Node46 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="memory_object::write\l_int64",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#aace89309983982f60d83562b1a19401b"];
+  Node46 -> Node51 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="memory_object::write_int",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#ac64fbf0d109921cda07123999b0ac486"];
+  Node43 -> Node52 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="memory_object::read_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a19850b4ae2c5a995daec451a9725ebf1"];
+  Node43 -> Node53 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="memory_object::compress",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a19117ffce9e562d369adac83a51fc997"];
+}

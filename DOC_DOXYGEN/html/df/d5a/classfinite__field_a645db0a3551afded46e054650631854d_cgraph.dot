@@ -1,0 +1,19 @@
+digraph "finite_field::subfield_embedding_2dimensional"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18764 [label="finite_field::subfield\l_embedding_2dimensional",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18764 -> Node18765 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18765 [label="finite_field::embed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a0e2f8717bd0d086af9450125be6e3144"];
+  Node18764 -> Node18766 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18766 [label="finite_field::add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14"];
+  Node18766 -> Node18767 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18767 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node18766 -> Node18768 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18768 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+  Node18764 -> Node18769 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18769 [label="finite_field::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0"];
+  Node18764 -> Node18770 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18770 [label="finite_field::print\l_embedding",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a944b7927f6d22e63f5d8ec3f3255f564"];
+}

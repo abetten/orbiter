@@ -1,0 +1,13 @@
+digraph "opposite_under_folding_line"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node621 [label="opposite_under_folding_line",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node621 -> Node622 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node622 [label="compress1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d10/hamming_8_c.html#a356787ba08a6c14f9a76b3a4222d18fc"];
+  Node621 -> Node623 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node623 [label="invert",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d10/hamming_8_c.html#a62e41f114dbb38cabcfe808800b75839"];
+  Node621 -> Node624 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node624 [label="expand1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d10/hamming_8_c.html#a36f1646c24ad2598cc12104f90fceea1"];
+}

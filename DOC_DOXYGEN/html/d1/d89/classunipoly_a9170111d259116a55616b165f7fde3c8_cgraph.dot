@@ -1,0 +1,9 @@
+digraph "unipoly::is_irreducible"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1051 [label="unipoly::is_irreducible",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1051 -> Node1052 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1052 [label="unipoly::is_squarefree",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#ac7b4a759fa68858043e1ad2b91e060db"];
+}

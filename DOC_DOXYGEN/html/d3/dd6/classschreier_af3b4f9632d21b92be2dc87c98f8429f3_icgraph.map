@@ -1,0 +1,17 @@
+<map id="schreier::transporter_from_orbit_rep_to_point" name="schreier::transporter_from_orbit_rep_to_point">
+<area shape="rect" id="node2" href="$d3/dd6/classschreier.html#a63e4acebeefabb5a5dd6f4c2a60398f5" title="schreier::generators\l_for_stabilizer_of_arbitrary\l_point_and_transversal" alt="" coords="233,89,412,141"/>
+<area shape="rect" id="node12" href="$dc/d09/classstrong__generators.html#a79373238f3c6236b063333312b2564a8" title="strong_generators::\lmake_element_which_moves\l_a_point_from_A_to_B" alt="" coords="224,175,421,227"/>
+<area shape="rect" id="node3" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="492,92,615,131"/>
+<area shape="rect" id="node4" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="925,68,1028,93"/>
+<area shape="rect" id="node6" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="700,124,841,149"/>
+<area shape="rect" id="node10" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="687,7,854,45"/>
+<area shape="rect" id="node5" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1099,40,1149,65"/>
+<area shape="rect" id="node7" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="909,117,1043,156"/>
+<area shape="rect" id="node8" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="909,180,1043,205"/>
+<area shape="rect" id="node9" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1099,231,1149,256"/>
+<area shape="rect" id="node11" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="902,5,1051,44"/>
+<area shape="rect" id="node13" href="$db/d28/classsurface__object__with__action.html#a81b56bce88b110aa6b38cfd4dce46122" title="surface_object_with\l_action::compute_quartic" alt="" coords="469,212,639,251"/>
+<area shape="rect" id="node14" href="$db/d28/classsurface__object__with__action.html#a0143b698eb050332a79ed95f7d274ada" title="surface_object_with\l_action::quartic" alt="" coords="701,212,840,251"/>
+<area shape="rect" id="node15" href="$db/d28/classsurface__object__with__action.html#a7f42e37fc76dd9b6b113e35c2b886b36" title="surface_object_with\l_action::cheat_sheet\l_quartic_curve" alt="" coords="698,275,842,327"/>
+<area shape="rect" id="node16" href="$db/d28/classsurface__object__with__action.html#a13371a6bb26f27759adcc0f7292b12d2" title="surface_object_with\l_action::cheat_sheet" alt="" coords="904,281,1049,320"/>
+</map>

@@ -1,0 +1,34 @@
+digraph "geometry::f_col_decomp"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node427 [label="geometry::f_col_decomp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node427 -> Node428 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node428 [label="geometry::allocate\l_geometry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a243e84ff38207957ad5976020c19a033"];
+  Node428 -> Node429 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node429 [label="search_geo_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d4a/geometry_8_c.html#a11af609febe3a9db20d8236af36928c5"];
+  Node428 -> Node430 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node430 [label="matrix::save_as_geometry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#ae2ce1d7bc40998e94c67cc2336f47665"];
+  Node427 -> Node431 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node431 [label="geometry::print_incma\l_text_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a400fa93fa773518f7b55c454fa69ee78"];
+  Node431 -> Node432 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node432 [label="geometry::print_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a1d45497d61d4dc8f7325156158b7e661"];
+  Node432 -> Node433 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node433 [label="geometry::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#af92f963887d22dd3437f585df929208d"];
+  Node427 -> Node434 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node434 [label="geometry::print_incma\l_latex_picture",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ae0d174439d57d9bc0b0dd7ffe210b148"];
+  Node434 -> Node432 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node427 -> Node435 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node435 [label="geometry::print_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a8f5356989decb76fddb4926714240c0d"];
+  Node435 -> Node433 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node427 -> Node436 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node436 [label="geometry::scan_body",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a71bc2e3a3f4ca02e8518ab5518a4e0df"];
+  Node436 -> Node437 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node437 [label="geometry::scan",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ac6f757d1a8855800d3da3fa1e83e812d"];
+  Node436 -> Node429 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node427 -> Node438 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node438 [label="geometry::transpose",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ad7132289ee0bc683f8c00c6762bb5035"];
+  Node427 -> Node439 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node439 [label="geometry::calc_canon\l_nauty",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ada4d0bca80d2ad69300625167320dc5d"];
+}

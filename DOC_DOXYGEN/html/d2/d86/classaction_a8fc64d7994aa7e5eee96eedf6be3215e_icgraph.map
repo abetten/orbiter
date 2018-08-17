@@ -1,0 +1,22 @@
+<map id="action::compute_all_point_orbits" name="action::compute_all_point_orbits">
+<area shape="rect" id="node2" href="$d1/d3d/classblt__set.html#a6b19f88bd2b92ebfba7e7c362eb9065c" title="blt_set::report" alt="" coords="234,5,337,31"/>
+<area shape="rect" id="node3" href="$d9/d9f/all__cliques_8_c.html#aba62531e97173264c39afe2c7857af31" title="use_group" alt="" coords="244,55,328,80"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#a460cd7c4b648f59ce370386f4322e972" title="action::compute_stabilizer\l_orbits" alt="" coords="198,104,374,143"/>
+<area shape="rect" id="node6" href="$dc/dd4/group__actions_8h.html#a086044bfe52cde7a37005c35fd5581cc" title="create_orbits_on_subset\l_using_restricted_action" alt="" coords="202,167,369,205"/>
+<area shape="rect" id="node7" href="$dc/dd4/group__actions_8h.html#ac46a81a18b6269aa88c7434f22b0642b" title="create_orbits_on_sets\l_using_action_on_sets" alt="" coords="207,229,365,268"/>
+<area shape="rect" id="node8" href="$d4/d21/classarc__generator.html#a650f715bb3eec8fd1057e07e5b384f9a" title="arc_generator::report" alt="" coords="213,292,359,317"/>
+<area shape="rect" id="node9" href="$da/dc1/classspread.html#a543a79e4e7306af291584f53dacbfdd8" title="spread::report2" alt="" coords="480,371,591,396"/>
+<area shape="rect" id="node10" href="$da/dc1/classspread.html#abba98e1f22f9a1a00823774307f29bef" title="spread::cooperstein\l_thas_quotients" alt="" coords="217,456,355,495"/>
+<area shape="rect" id="node12" href="$da/dc1/classspread.html#a24795f879a815d7e4480a72395711aef" title="spread::orbit_info\l_short" alt="" coords="224,393,348,432"/>
+<area shape="rect" id="node13" href="$d3/d5f/classisomorph.html#abbcd12f6434585951a5532d0b2467a00" title="isomorph::print_isomorphism\l_types" alt="" coords="190,519,382,557"/>
+<area shape="rect" id="node20" href="$d3/d5f/classisomorph.html#a77563cca300ed45768afe24ce54d453a" title="isomorph::induced_action\l_on_set_and_kernel" alt="" coords="199,589,372,628"/>
+<area shape="rect" id="node4" href="$d9/d9f/all__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="510,55,561,80"/>
+<area shape="rect" id="node11" href="$da/dc1/classspread.html#a83ae27050bb13feeb7e897c0f9f06b21" title="spread::all_cooperstein\l_thas_quotients" alt="" coords="456,448,615,487"/>
+<area shape="rect" id="node14" href="$d4/d7e/isomorph__global_8_c.html#a5a73cbe9f89c4727f086482ee2d238f9" title="isomorph_testing" alt="" coords="715,512,838,537"/>
+<area shape="rect" id="node18" href="$d4/d7e/isomorph__global_8_c.html#ace3bb6ec719b02a35534309d4d3fe99a" title="isomorph_worker" alt="" coords="474,563,597,588"/>
+<area shape="rect" id="node15" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="911,556,1058,595"/>
+<area shape="rect" id="node16" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1151,537,1201,563"/>
+<area shape="rect" id="node17" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="1106,587,1246,612"/>
+<area shape="rect" id="node19" href="$d4/d7e/isomorph__global_8_c.html#a3613cea19158edd30958c4edecd97d53" title="isomorph_compute_down\l_orbits" alt="" coords="689,613,863,652"/>
+<area shape="rect" id="node21" href="$da/dc1/classspread.html#ac00cfa228f832076e6e5d81319828fa7" title="spread::print_isomorphism_type" alt="" coords="430,612,641,637"/>
+</map>

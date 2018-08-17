@@ -1,0 +1,19 @@
+<map id="frobenius_in_AG" name="frobenius_in_AG">
+<area shape="rect" id="node2" href="$de/d3b/classdomain.html#aa8dcedfd93e3a8db0069a08b9f0bfff7" title="domain::order_int" alt="" coords="400,225,526,250"/>
+<area shape="rect" id="node17" href="$de/d3b/classdomain.html#aca55200b8df1de0873984afa75da5633" title="domain::order_subfield_int" alt="" coords="174,174,352,200"/>
+<area shape="rect" id="node18" href="$d4/d67/geometry_8h.html#ab9de2574dd403dd453a0d35107f684f5" title="nb_AG_elements" alt="" coords="401,276,525,301"/>
+<area shape="rect" id="node3" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="574,126,713,152"/>
+<area shape="rect" id="node11" href="$d1/d89/classunipoly.html#ab2b9692ea17ce32c0c8f2cc246517e37" title="unipoly::degree" alt="" coords="587,226,699,252"/>
+<area shape="rect" id="node16" href="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5" title="i_power_j" alt="" coords="604,276,682,301"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="1263,52,1413,77"/>
+<area shape="rect" id="node7" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="761,52,969,77"/>
+<area shape="rect" id="node9" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="778,101,952,126"/>
+<area shape="rect" id="node10" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="822,150,908,176"/>
+<area shape="rect" id="node5" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1461,26,1654,52"/>
+<area shape="rect" id="node6" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1518,76,1597,101"/>
+<area shape="rect" id="node8" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="1017,52,1215,77"/>
+<area shape="rect" id="node12" href="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704" title="Vector::s_l" alt="" coords="823,200,907,225"/>
+<area shape="rect" id="node13" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="1074,250,1158,276"/>
+<area shape="rect" id="node14" href="$d1/d89/classunipoly.html#a7bff4146466929655bf2bcfd42c682cf" title="unipoly::is_zero" alt="" coords="808,301,922,326"/>
+<area shape="rect" id="node15" href="$d7/d71/classdiscreta__base.html#ac75f6bdc1ba1b406e26cf921adfd9864" title="discreta_base::is_zero" alt="" coords="1038,300,1193,325"/>
+</map>

@@ -1,0 +1,42 @@
+digraph "finite_field_domain_primitive_root"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node72 [label="finite_field_domain\l_primitive_root",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node72 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="is_finite_field_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#a77d0ace35941cfe84035c9a060972b2a"];
+  Node73 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="is_GFp_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#ab75527270302df466fc6f6e355775c13"];
+  Node74 -> Node75 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node75 [label="has_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#af7df1c554310c6214b2900bf6ca7ac81"];
+  Node74 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node76 [label="get_current_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#a80481fde3a59aaeeb648f8c5392269f7"];
+  Node73 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="is_GFq_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#af695b4599bda7a0400772172c9eeff64"];
+  Node77 -> Node75 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 -> Node78 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="finite_field_domain\l_order_int",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#a377eb55f39803977750d92e3eaf7af26"];
+  Node78 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 -> Node79 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 [label="primitive_root",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a0b6f7619d12ff2c4e60b852b820b0972"];
+  Node79 -> Node80 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node80 [label="order_mod_p",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dda/number__theory_8_c.html#aa38aa7e68ab81726a4462995135456b2"];
+  Node72 -> Node81 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node81 [label="integer::m_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a869091f0a0f35f5354c8c4a70250e8a9"];
+  Node81 -> Node82 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node82 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node82 -> Node83 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node82 -> Node84 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+  Node72 -> Node85 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node85 [label="discreta_base::order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a4ce6b54534e4882c48c051c03ac76e52"];
+  Node85 -> Node86 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="discreta_base::copyobject_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a33180628d9ced231267229b3564790f3"];
+  Node86 -> Node82 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 -> Node84 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

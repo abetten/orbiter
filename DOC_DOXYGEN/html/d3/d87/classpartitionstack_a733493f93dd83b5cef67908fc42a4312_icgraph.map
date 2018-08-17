@@ -1,0 +1,17 @@
+<map id="partitionstack::print_raw" name="partitionstack::print_raw">
+<area shape="rect" id="node2" href="$d3/d87/classpartitionstack.html#a30ab45463af6dbfc8e46314ff03624ae" title="partitionstack::check" alt="" coords="215,308,358,333"/>
+<area shape="rect" id="node3" href="$d3/d87/classpartitionstack.html#a6e2783ab6d6b06f37ac21ce529e219b6" title="partitionstack::sort\l_cells" alt="" coords="410,173,539,212"/>
+<area shape="rect" id="node13" href="$d3/d87/classpartitionstack.html#a7f8fd8ee23538d664e0ce22b10b41d33" title="partitionstack::split\l_cell_front_or_back" alt="" coords="406,399,543,437"/>
+<area shape="rect" id="node4" href="$d9/dc2/apps_2combinatorics_2design_8_c.html#a7d7aac893d68b4a25d1ab91b57ae2af1" title="design_properties" alt="" coords="628,5,756,31"/>
+<area shape="rect" id="node8" href="$d3/d2b/classdecomposition.html#a8589476ff85bb44acc19de00ffdf1b7f" title="decomposition::setup\l_default_partition" alt="" coords="618,55,766,93"/>
+<area shape="rect" id="node9" href="$d3/d2b/classdecomposition.html#acde2ae0342c89d2ba817ecdc98813cbe" title="decomposition::compute_TDO" alt="" coords="591,117,793,143"/>
+<area shape="rect" id="node10" href="$d2/d17/classprojective__space.html#a40b8d8590d6612a33a930e9c75b45774" title="projective_space::make\l_incidence_structure_and\l_partition" alt="" coords="605,167,779,219"/>
+<area shape="rect" id="node11" href="$d8/d13/classsinger__cycle.html#a817cbf613596d5db2cf5e926db8fa328" title="singer_cycle::init\l_lines" alt="" coords="632,243,752,281"/>
+<area shape="rect" id="node12" href="$d1/dcc/classtranslation__plane__via__andre__model.html#adb424599de168ade331979a9218ee07b" title="translation_plane_via\l_andre_model::init" alt="" coords="618,305,766,344"/>
+<area shape="rect" id="node5" href="$d9/dc2/apps_2combinatorics_2design_8_c.html#a5d0ddbe05228e631bc5fc469bc9ba6dd" title="design_from_PG_with\l_field" alt="" coords="841,87,993,125"/>
+<area shape="rect" id="node6" href="$d9/dc2/apps_2combinatorics_2design_8_c.html#aaac4564bcb168115351dacf8aefd1001" title="design_from_PG" alt="" coords="1041,93,1163,119"/>
+<area shape="rect" id="node7" href="$d9/dc2/apps_2combinatorics_2design_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1211,93,1261,119"/>
+<area shape="rect" id="node14" href="$d3/d87/classpartitionstack.html#a7d0e8c56b61126fcd12e936d9e6e575e" title="partitionstack::split\l_multiple_cells" alt="" coords="627,368,758,407"/>
+<area shape="rect" id="node15" href="$d3/d87/classpartitionstack.html#a64a83c8573dc01d3593ab3f0e21c4255" title="partitionstack::split\l_line_cell_front_or_back" alt="" coords="609,431,775,469"/>
+<area shape="rect" id="node16" href="$d3/d87/classpartitionstack.html#a1b761500b635cd05ca1c02666e288315" title="partitionstack::split_cell" alt="" coords="613,493,771,519"/>
+</map>

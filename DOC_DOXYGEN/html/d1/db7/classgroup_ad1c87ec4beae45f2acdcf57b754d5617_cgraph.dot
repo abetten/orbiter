@@ -1,0 +1,29 @@
+digraph "group::get_strong_generators"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node627 [label="group::get_strong_generators",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node627 -> Node628 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node628 [label="group::require_sims",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a657b3eaca7a2fd46ffb25589f06532d6"];
+  Node627 -> Node629 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node629 [label="group::delete_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a36c96bdf4428fdf236dfabab0f82b898"];
+  Node627 -> Node630 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node630 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node630 -> Node631 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node631 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node627 -> Node632 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node632 [label="sims::extract_strong\l_generators_in_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#aeaf4ae6bb916342a66470730af69923a"];
+  Node632 -> Node630 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node632 -> Node633 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node633 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node632 -> Node634 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node634 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node632 -> Node635 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node635 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node632 -> Node636 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node636 [label="vector_ge::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a0d260cce035c20b32d7989c50670aa8a"];
+  Node636 -> Node637 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node637 [label="action::element_print\l_quick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b"];
+  Node636 -> Node635 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

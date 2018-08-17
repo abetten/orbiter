@@ -1,0 +1,12 @@
+<map id="surface_object_with_action::compute_orbits_of_automorphism_group" name="surface_object_with_action::compute_orbits_of_automorphism_group">
+<area shape="rect" id="node2" href="$db/d28/classsurface__object__with__action.html#a310ce4189e50545dd67fa3652b8fd160" title="surface_object_with\l_action::init_equation" alt="" coords="227,68,374,107"/>
+<area shape="rect" id="node7" href="$db/d28/classsurface__object__with__action.html#a65085da19618def3909b0f4bc27cba8a" title="surface_object_with\l_action::init" alt="" coords="231,5,370,44"/>
+<area shape="rect" id="node8" href="$db/d28/classsurface__object__with__action.html#addc93dd533dbceb5c024c66ee1936d35" title="surface_object_with\l_action::init_surface\l_object" alt="" coords="230,131,370,183"/>
+<area shape="rect" id="node3" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="480,72,530,97"/>
+<area shape="rect" id="node4" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="422,8,589,47"/>
+<area shape="rect" id="node5" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="643,8,793,47"/>
+<area shape="rect" id="node6" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="847,15,898,40"/>
+<area shape="rect" id="node9" href="$d7/d5c/classsurface__classify__wedge.html#ad577d435c4726d0a35c10b2f8d4ed00c" title="surface_classify_wedge\l::report_surface" alt="" coords="424,137,587,176"/>
+<area shape="rect" id="node10" href="$d7/d5c/classsurface__classify__wedge.html#a5698763ece48d6f0a605527ca62429c5" title="surface_classify_wedge\l::latex_surfaces" alt="" coords="637,137,799,176"/>
+<area shape="rect" id="node11" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="847,144,898,169"/>
+</map>

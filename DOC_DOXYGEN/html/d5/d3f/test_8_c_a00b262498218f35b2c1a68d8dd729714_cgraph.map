@@ -1,0 +1,13 @@
+<map id="search_new_boy" name="search_new_boy">
+<area shape="rect" id="node2" href="$d1/d8d/classmatrix.html#afeb2e29600e68448b9d1130114b9606f" title="matrix::s_m" alt="" coords="175,8,266,33"/>
+<area shape="rect" id="node3" href="$d1/d8d/classmatrix.html#af8d3c35817af62a3c0097ddf64422d96" title="matrix::s_iji" alt="" coords="177,57,265,83"/>
+<area shape="rect" id="node4" href="$d1/d8d/classmatrix.html#ab36f1b3abd2df280224c50c9debb57df" title="matrix::s_ij" alt="" coords="341,32,426,57"/>
+<area shape="rect" id="node5" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="314,81,453,107"/>
+<area shape="rect" id="node6" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="1003,31,1153,56"/>
+<area shape="rect" id="node9" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="501,56,709,81"/>
+<area shape="rect" id="node11" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="518,105,692,131"/>
+<area shape="rect" id="node12" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="562,155,648,180"/>
+<area shape="rect" id="node7" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1201,5,1394,31"/>
+<area shape="rect" id="node8" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1258,55,1338,80"/>
+<area shape="rect" id="node10" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="757,56,955,81"/>
+</map>

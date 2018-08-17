@@ -1,0 +1,21 @@
+digraph "scan_permutation_from_stream"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node15977 [label="scan_permutation_from\l_stream",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node15977 -> Node15978 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15978 [label="scan_permutation_from\l_string",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a93f8c29fa198eae428b44a2dd0eb51bd"];
+  Node15978 -> Node15979 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15979 [label="cayley_graph_search\l::init_group_level_4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dae/classcayley__graph__search.html#a6593f90cd91bea8c23fe71acca05655e"];
+  Node15979 -> Node15980 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15980 [label="cayley_graph_search\l::init_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dae/classcayley__graph__search.html#adbce2e517a8ed979f53e8aeb043cf4ca"];
+  Node15980 -> Node15981 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15981 [label="cayley_graph_search\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dae/classcayley__graph__search.html#add9c6434abeaebac4a07bc03cb21672d"];
+  Node15981 -> Node15982 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15982 [label="ferdinand",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/df3/ferdinand_8_c.html#a322b57727d23cf5a0932f11c30ea18d9"];
+  Node15982 -> Node15983 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15983 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/df3/ferdinand_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node15978 -> Node15984 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15984 [label="INT_vector::init_permutation\l_from_string",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de0/class_i_n_t__vector.html#a73a03d4d965633ee099a7b66f3f78e35"];
+}

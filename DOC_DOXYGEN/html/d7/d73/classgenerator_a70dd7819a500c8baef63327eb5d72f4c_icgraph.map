@@ -1,0 +1,23 @@
+<map id="generator::make_graph" name="generator::make_graph">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#aa4f99c75a86701ba85e514a294efdf3a" title="generator::draw_poset" alt="" coords="213,229,368,255"/>
+<area shape="rect" id="node3" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="476,5,527,31"/>
+<area shape="rect" id="node4" href="$db/d37/classcode__generator.html#ab3cf3a306e4032c2b471ac95321c599f" title="code_generator::main" alt="" coords="426,55,577,80"/>
+<area shape="rect" id="node6" href="$de/dae/classcayley__graph__search.html#a4cf8a90752e018a281481ac80ad52c4b" title="cayley_graph_search\l::classify_subsets" alt="" coords="428,104,576,143"/>
+<area shape="rect" id="node9" href="$d2/dd8/classregular__ls__generator.html#aa38907741058694a73194b02ceb4a53d" title="regular_ls_generator\l::compute_starter" alt="" coords="429,167,574,205"/>
+<area shape="rect" id="node10" href="$dd/d86/classlinear__set.html#a9a5cd28cc81be7ee41002b2e3114c2cb" title="linear_set::read_data_file" alt="" coords="416,229,587,255"/>
+<area shape="rect" id="node11" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="855,299,1004,337"/>
+<area shape="rect" id="node13" href="$d9/d9f/all__cliques_8_c.html#aba62531e97173264c39afe2c7857af31" title="use_group" alt="" coords="459,331,544,356"/>
+<area shape="rect" id="node15" href="$d4/d21/classarc__generator.html#aad1dcec3a1c302e743d574bd1ac857d9" title="arc_generator::compute\l_starter" alt="" coords="420,408,583,447"/>
+<area shape="rect" id="node21" href="$dd/d23/classclassify__double__sixes.html#a2253fca143a0e8a3e39655eb05668ae9" title="classify_double_sixes\l::classify_partial_ovoids" alt="" coords="420,488,583,527"/>
+<area shape="rect" id="node5" href="$d4/d4f/codes_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="696,55,746,80"/>
+<area shape="rect" id="node7" href="$da/df3/ferdinand_8_c.html#a322b57727d23cf5a0932f11c30ea18d9" title="ferdinand" alt="" coords="683,111,759,136"/>
+<area shape="rect" id="node8" href="$da/df3/ferdinand_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="905,111,955,136"/>
+<area shape="rect" id="node12" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1052,305,1103,331"/>
+<area shape="rect" id="node14" href="$d9/d9f/all__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="696,331,746,356"/>
+<area shape="rect" id="node16" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="651,492,791,517"/>
+<area shape="rect" id="node17" href="$d6/dd8/classk__arc__generator.html#a6036d9f52ede9f8ca681505626b5361d" title="k_arc_generator::init" alt="" coords="650,443,792,468"/>
+<area shape="rect" id="node19" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="635,380,807,419"/>
+<area shape="rect" id="node18" href="$d6/d01/k__arc__generator__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="905,443,955,468"/>
+<area shape="rect" id="node20" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="905,387,955,412"/>
+<area shape="rect" id="node22" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="696,541,746,567"/>
+</map>

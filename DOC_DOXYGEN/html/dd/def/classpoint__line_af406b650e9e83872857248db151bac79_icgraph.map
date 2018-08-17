@@ -1,0 +1,10 @@
+<map id="point_line::plane_line_through_two_points" name="point_line::plane_line_through_two_points">
+<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#a664189dde33698267c4c82b1ee3aa401" title="point_line::is_desarguesian\l_plane" alt="" coords="420,17,603,56"/>
+<area shape="rect" id="node3" href="$dd/def/classpoint__line.html#a48c51e9ec6c9a7c80847ecb9feffc03c" title="point_line::init_projective\l_plane" alt="" coords="200,29,367,68"/>
+<area shape="rect" id="node4" href="$dd/def/classpoint__line.html#a5cef2c3e46d7e904c2b80539af03f0a3" title="point_line::plane_points\l_collinear" alt="" coords="203,155,364,193"/>
+<area shape="rect" id="node9" href="$dd/def/classpoint__line.html#a121d61db202b5bbd07f33a148a2df735" title="point_line::coordinatize\l_plane" alt="" coords="205,92,362,131"/>
+<area shape="rect" id="node5" href="$dd/def/classpoint__line.html#a112db572dd7ed8ef94f5bcf82240c410" title="point_line::plane_quadrangle\l_first_i" alt="" coords="415,125,608,164"/>
+<area shape="rect" id="node7" href="$dd/def/classpoint__line.html#a8a007873e6f93cb7bde36848ecaa50bf" title="point_line::plane_quadrangle\l_next_i" alt="" coords="656,183,848,221"/>
+<area shape="rect" id="node6" href="$dd/def/classpoint__line.html#a55b03935dbca4629616563978c88ba2c" title="point_line::plane_first\l_quadrangle" alt="" coords="679,120,826,159"/>
+<area shape="rect" id="node8" href="$dd/def/classpoint__line.html#a55a4dc7b433732a85d56f7370c534b90" title="point_line::plane_next\l_quadrangle" alt="" coords="896,183,1048,221"/>
+</map>

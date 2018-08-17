@@ -1,0 +1,17 @@
+<map id="projective_space::plane_intersection_type_basic" name="projective_space::plane_intersection_type_basic">
+<area shape="rect" id="node2" href="$d4/d67/geometry_8h.html#a794cf923c790d164c5ac454a2ea3ce66" title="do_plane_type_failsafe" alt="" coords="225,5,384,31"/>
+<area shape="rect" id="node4" href="$df/df8/classsurface__object.html#a7ad585c88d5c8278850d5f4c9281798c" title="surface_object::compute\l_plane_type_by_points" alt="" coords="221,55,388,93"/>
+<area shape="rect" id="node3" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="494,5,544,31"/>
+<area shape="rect" id="node5" href="$df/df8/classsurface__object.html#ad6c02c3c1432f8adfe49932041ce1b20" title="surface_object::compute\l_properties" alt="" coords="436,112,603,151"/>
+<area shape="rect" id="node13" href="$d7/d5c/classsurface__classify__wedge.html#ad577d435c4726d0a35c10b2f8d4ed00c" title="surface_classify_wedge\l::report_surface" alt="" coords="831,51,994,89"/>
+<area shape="rect" id="node6" href="$df/df8/classsurface__object.html#afd4f4d1accbf361897374bd18d571913" title="surface_object::init\l_equation" alt="" coords="651,171,783,209"/>
+<area shape="rect" id="node12" href="$df/df8/classsurface__object.html#ae51d9ac0a3853bc07908ac48ffa6e0d2" title="surface_object::init" alt="" coords="651,119,783,144"/>
+<area shape="rect" id="node7" href="$db/d28/classsurface__object__with__action.html#a310ce4189e50545dd67fa3652b8fd160" title="surface_object_with\l_action::init_equation" alt="" coords="839,176,986,215"/>
+<area shape="rect" id="node8" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1100,123,1150,148"/>
+<area shape="rect" id="node9" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="1042,173,1209,212"/>
+<area shape="rect" id="node10" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="1257,173,1406,212"/>
+<area shape="rect" id="node11" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1454,180,1504,205"/>
+<area shape="rect" id="node16" href="$db/d28/classsurface__object__with__action.html#a65085da19618def3909b0f4bc27cba8a" title="surface_object_with\l_action::init" alt="" coords="843,113,982,152"/>
+<area shape="rect" id="node14" href="$d7/d5c/classsurface__classify__wedge.html#a5698763ece48d6f0a605527ca62429c5" title="surface_classify_wedge\l::latex_surfaces" alt="" coords="1044,51,1207,89"/>
+<area shape="rect" id="node15" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1306,57,1357,83"/>
+</map>

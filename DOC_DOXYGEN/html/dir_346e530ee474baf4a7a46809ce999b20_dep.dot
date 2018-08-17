@@ -1,0 +1,9 @@
+digraph "src/lib/top_level/isomorph" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_f5c0bc76088c47026aa4f8933cdbac38 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="top_level" fontname="Helvetica", fontsize="10", URL="dir_f5c0bc76088c47026aa4f8933cdbac38.html"]
+  dir_346e530ee474baf4a7a46809ce999b20 [shape=box, label="isomorph", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_346e530ee474baf4a7a46809ce999b20.html"];
+  }
+}

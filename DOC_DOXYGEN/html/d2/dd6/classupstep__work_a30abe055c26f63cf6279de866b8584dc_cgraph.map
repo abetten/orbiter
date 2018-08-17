@@ -1,0 +1,9 @@
+<map id="upstep_work::print_level_extension_coset_info" name="upstep_work::print_level_extension_coset_info">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#a89c72f79f883c8b241c958c4c9107bc1" title="generator::print_level\l_extension_coset_info" alt="" coords="242,76,396,115"/>
+<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="493,5,563,31"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1" title="time_check_delta" alt="" coords="465,55,590,80"/>
+<area shape="rect" id="node7" href="$d7/d73/classgenerator.html#a06d3c064ba84ebe8db3537e6273f16c3" title="generator::print_problem\l_label" alt="" coords="444,104,612,143"/>
+<area shape="rect" id="node8" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="458,167,598,205"/>
+<area shape="rect" id="node5" href="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042" title="os_ticks_per_second" alt="" coords="660,31,806,56"/>
+<area shape="rect" id="node6" href="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba" title="os_ticks_to_dhms" alt="" coords="669,80,797,105"/>
+</map>

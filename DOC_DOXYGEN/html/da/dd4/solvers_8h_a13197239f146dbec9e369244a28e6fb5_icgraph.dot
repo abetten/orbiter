@@ -1,0 +1,21 @@
+digraph "diophant_solve_mckay"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node38 [label="diophant_solve_mckay",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node38 -> Node39 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="diophant_solve_first\l_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd4/solvers_8h.html#ac03e1a3fc0816caf0b6114281b46e142"];
+  Node39 -> Node40 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="tdo_data::solve_second\l_system",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d0d/classtdo__data.html#af722419adafb1c21a5f2a5b9fbadb0e3"];
+  Node40 -> Node41 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="tdo_data::solve_second\l_system_with_help",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d0d/classtdo__data.html#a3586a50dcb7a01843a2aa3a4f5a8c35d"];
+  Node38 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="diophant_solve_all\l_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd4/solvers_8h.html#ad4e4410d79cb10d555478dbf0036bd45"];
+  Node42 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="tdo_data::solve_second\l_system_omit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d0d/classtdo__data.html#a4feb5aa7d2fb44863579b0cf45502f44"];
+  Node42 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="solve_diophant",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd4/solvers_8h.html#af08eebddb0a897485d9a29558f6169b0"];
+  Node38 -> Node45 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="diophant_solve_once\l_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd4/solvers_8h.html#a07850fda568ec16903a61d033baffd9d"];
+}

@@ -1,0 +1,28 @@
+digraph "generator::recognize_start_over"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node19900 [label="generator::recognize\l_start_over",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node19900 -> Node19901 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19901 [label="generator::recognize\l_recursion",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#aaa01a7f679c27da5a9602b31c66d47ee"];
+  Node19901 -> Node19900 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19901 -> Node19902 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19902 [label="generator::recognize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#af66181ff25114246dbf149f92772cc85"];
+  Node19902 -> Node19903 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19903 [label="linear_set::construct\l_semifield",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#ab54b164771526ae8d687751aa2d1a9ce"];
+  Node19902 -> Node19904 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19904 [label="generator::identify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#ae60de24262d09d0dd8224b86e74040f6"];
+  Node19904 -> Node19905 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19905 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d2d/graph_2graph_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node19904 -> Node19906 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19906 [label="generator::identify\l_and_get_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a7869a4ccc807a96d18fa5d535e74cf1e"];
+  Node19904 -> Node19907 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19907 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node19907 -> Node19908 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19908 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node19908 -> Node19909 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19909 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node19902 -> Node19910 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19910 [label="generator::test_identify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#afe1191d7f525d0f1197ffc81c966c632"];
+}

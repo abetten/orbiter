@@ -1,0 +1,13 @@
+<map id="create_sims_from_generators_randomized" name="create_sims_from_generators_randomized">
+<area shape="rect" id="node2" href="$dc/d09/classstrong__generators.html#a504b7cefda70b646b2064f80784d7f8a" title="strong_generators::\lgenerators_for_the_monomial_group" alt="" coords="252,68,493,107"/>
+<area shape="rect" id="node11" href="$dc/d09/classstrong__generators.html#a560ff860f139f7f02f293fa7f5f01aff" title="strong_generators::\lgenerators_for_the_diagonal_group" alt="" coords="255,131,489,169"/>
+<area shape="rect" id="node3" href="$d3/d78/classdirect__product__action.html#aad40060e5821c011cccaa65a5c4df64f" title="direct_product_action\l::init" alt="" coords="541,5,689,44"/>
+<area shape="rect" id="node4" href="$df/d5a/classlinear__group.html#a7ef61a70f292d575f665da5d72077c8f" title="linear_group::init\l_monomial_group" alt="" coords="551,68,679,107"/>
+<area shape="rect" id="node5" href="$df/d5a/classlinear__group.html#a8119aa9b882192ab422b12614b259f28" title="linear_group::init" alt="" coords="737,107,857,132"/>
+<area shape="rect" id="node6" href="$db/d37/classcode__generator.html#acfaa1e8badf6f30255203f499b130af8" title="code_generator::init" alt="" coords="905,57,1044,83"/>
+<area shape="rect" id="node8" href="$d8/d03/analyze__q__designs_8_c.html#ad03444358d0b46e7aa4d88a806b44925" title="test_group" alt="" coords="933,107,1017,132"/>
+<area shape="rect" id="node10" href="$da/dd5/subspace__orbits__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="950,156,1000,181"/>
+<area shape="rect" id="node7" href="$d4/d4f/codes_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1092,57,1143,83"/>
+<area shape="rect" id="node9" href="$d8/d03/analyze__q__designs_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1092,107,1143,132"/>
+<area shape="rect" id="node12" href="$df/d5a/classlinear__group.html#aaeeb26cf2ee1891b04d8925ddd1c18dd" title="linear_group::init\l_diagonal_group" alt="" coords="555,131,675,169"/>
+</map>

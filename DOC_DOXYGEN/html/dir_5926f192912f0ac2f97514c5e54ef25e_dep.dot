@@ -1,0 +1,9 @@
+digraph "src/lib/foundations/data_structures" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_22aca35e3ec12f68aff9c7ff7652d11f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="foundations" fontname="Helvetica", fontsize="10", URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"]
+  dir_5926f192912f0ac2f97514c5e54ef25e [shape=box, label="data_structures", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_5926f192912f0ac2f97514c5e54ef25e.html"];
+  }
+}

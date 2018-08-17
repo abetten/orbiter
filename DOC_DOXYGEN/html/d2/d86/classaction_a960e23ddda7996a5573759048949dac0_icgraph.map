@@ -1,0 +1,8 @@
+<map id="action::element_power_INT_in_place" name="action::element_power_INT_in_place">
+<area shape="rect" id="node2" href="$d9/df3/classsims.html#a5813a13a4b5685f8bab7d248fb12cf57" title="sims::random_element\l_of_order" alt="" coords="212,5,368,44"/>
+<area shape="rect" id="node4" href="$d9/df3/classsims.html#a2747368b290225e639103bff8e32ffc9" title="sims::find_element\l_of_given_order_INT" alt="" coords="217,68,364,107"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#aaa2d4a5f8ebb39fab9149d99b4d38fbc" title="sims::find_element\l_of_prime_power_order" alt="" coords="209,131,372,169"/>
+<area shape="rect" id="node7" href="$d9/df3/classsims.html#addc6f348759a62efab9c5d5b58ad3f61" title="sims::sylow_subgroup" alt="" coords="425,165,577,191"/>
+<area shape="rect" id="node3" href="$d9/df3/classsims.html#af5aeca809be7c10df8493c1b9ef9e980" title="sims::random_elements\l_of_order" alt="" coords="420,5,583,44"/>
+<area shape="rect" id="node5" href="$d9/df3/classsims.html#a76b4729b133fb5d7e1edaffe98a6eb5a" title="sims::find_standard\l_generators_INT" alt="" coords="433,68,570,107"/>
+</map>

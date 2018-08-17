@@ -1,0 +1,15 @@
+digraph "longinteger_domain::power_int"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node604 [label="longinteger_domain\l::power_int",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node604 -> Node605 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node605 [label="longinteger_domain\l::create_qnm1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a8d4b3ebcbc9af0e6516be0bd2743f61d"];
+  Node605 -> Node606 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node606 [label="longinteger_domain\l::q_binomial_no_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a2e84c4789cedf65f616992c323a7f610"];
+  Node604 -> Node607 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node607 [label="longinteger_domain\l::hamming_bound_for_d",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a8286a3807d17fc93efa298fe34b5428b"];
+  Node604 -> Node608 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node608 [label="longinteger_domain\l::plotkin_bound_for_d",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#ad8c2e4994b290f8ddf97e431f613e9da"];
+}

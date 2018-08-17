@@ -1,0 +1,9 @@
+digraph "longinteger_domain::q_binomial"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node635 [label="longinteger_domain\l::q_binomial",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node635 -> Node636 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node636 [label="knarr::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de5/classknarr.html#a1e25f28aeec8f316cc0ce81eb89e670e"];
+}

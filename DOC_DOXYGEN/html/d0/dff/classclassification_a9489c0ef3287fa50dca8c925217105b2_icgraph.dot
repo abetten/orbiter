@@ -1,0 +1,13 @@
+digraph "classification::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node41 [label="classification::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node41 -> Node42 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="classification::classification",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dff/classclassification.html#a96cfefed3bbc9b8b61a44b9c6cc9e29a"];
+  Node41 -> Node43 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="classification::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dff/classclassification.html#ae3e04d2bc896aaf61cda2d5501407225"];
+  Node43 -> Node44 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="classification::~classification",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dff/classclassification.html#ac65a474682b7c3b8661585de8b8f8f8b"];
+}

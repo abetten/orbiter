@@ -1,0 +1,23 @@
+digraph "generator::get_set_and_stabilizer"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node8945 [label="generator::get_set\l_and_stabilizer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node8945 -> Node8946 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8946 [label="set_and_stabilizer\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/df6/classset__and__stabilizer.html#a9824acdea41591e8086e76aa8b2e4b53"];
+  Node8945 -> Node8947 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8947 [label="set_and_stabilizer\l::allocate_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/df6/classset__and__stabilizer.html#ad5d7e012c6bc6fc25f491fe680aa32fa"];
+  Node8945 -> Node8948 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8948 [label="generator::get_set\l_by_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a3012a80d862b42c848b84584389c8594"];
+  Node8948 -> Node8949 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8949 [label="generator::get_node_ij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a8cea5411b42336694738530732ede540"];
+  Node8945 -> Node8950 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8950 [label="generator::get_stabilizer\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a744da633f741e1aa27701fe9d203d564"];
+  Node8945 -> Node8951 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8951 [label="strong_generators::\lgroup_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a91f453c2bfd6502b96f4b4eed16beb20"];
+  Node8945 -> Node8952 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8952 [label="strong_generators::\lcreate_sims",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#afca700d50772a39eeb74239355ae67e1"];
+  Node8952 -> Node8953 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8953 [label="create_sims_from_generators\l_with_target_group_order\l_factorized",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d3a/group__theory_8h.html#a40f2df36e351d6e63bd2bb196cc5b430"];
+}

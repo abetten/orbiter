@@ -1,0 +1,13 @@
+digraph "finite_field::transpose_matrix_in_place"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node19668 [label="finite_field::transpose\l_matrix_in_place",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node19668 -> Node19669 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19669 [label="finite_field::builtin\l_transversal_rep_GLnq",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a65e29e1d5f070d2bb5cca74ead453a35"];
+  Node19668 -> Node19670 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19670 [label="finite_field::representing\l_matrix8_R",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#ac20b429a104a1516a46dd6eb2e0c207b"];
+  Node19668 -> Node19671 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19671 [label="finite_field::representing\l_matrix9_R",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a8d15d20bbe64970c34f927ca4ecd27ef"];
+}

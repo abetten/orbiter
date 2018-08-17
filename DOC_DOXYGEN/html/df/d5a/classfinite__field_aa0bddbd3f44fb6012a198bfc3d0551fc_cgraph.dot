@@ -1,0 +1,15 @@
+digraph "finite_field::print_tables"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node16523 [label="finite_field::print\l_tables",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node16523 -> Node16524 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16524 [label="finite_field::inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a69f2a12c01e70b7ce2d115c5221c9cdd"];
+  Node16523 -> Node16525 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16525 [label="finite_field::log_alpha",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a446a83ae0d281ddf44215626f0097305"];
+  Node16523 -> Node16526 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16526 [label="finite_field::frobenius\l_power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aec23e43aaefc0ed601cdfa3139496a92"];
+  Node16523 -> Node16527 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16527 [label="finite_field::alpha\l_power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aa1d31b58f7fe2798e20f74890ae29c51"];
+}

@@ -1,0 +1,13 @@
+digraph "action::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node31668 [label="action::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node31668 -> Node31669 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31669 [label="action::null_base_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a09d62a3dd408d1c0704b380b26f72fb0"];
+  Node31668 -> Node31670 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31670 [label="action::null_element_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a90cd98bea15f55a3c25cb9c6b68685df"];
+  Node31668 -> Node31671 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31671 [label="action::null_function\l_pointers",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a1359d74a665e82a098fba5c1c1249dde"];
+}

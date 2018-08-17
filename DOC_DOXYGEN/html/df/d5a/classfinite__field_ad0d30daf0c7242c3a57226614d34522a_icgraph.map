@@ -1,0 +1,20 @@
+<map id="finite_field::evaluate_conic_form" name="finite_field::evaluate_conic_form">
+<area shape="rect" id="node2" href="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652" title="conic" alt="" coords="493,5,545,31"/>
+<area shape="rect" id="node3" href="$d2/d17/classprojective__space.html#af4a32fbd4850227dd2dd12b095d4967f" title="projective_space::conic\l_points_brute_force" alt="" coords="209,55,369,93"/>
+<area shape="rect" id="node5" href="$d2/d17/classprojective__space.html#ac89e189c57d38120fd83fec078fd59e8" title="projective_space::conic\l_points" alt="" coords="209,117,369,156"/>
+<area shape="rect" id="node9" href="$d2/d17/classprojective__space.html#af486b51daa10b4de0c8b50fb5c1c2ee7" title="projective_space::conic\l_type_randomized" alt="" coords="209,191,369,229"/>
+<area shape="rect" id="node14" href="$d2/d17/classprojective__space.html#af5a8dcbc4bbe1638c3037b949b3b3306" title="projective_space::conic_type" alt="" coords="193,276,385,301"/>
+<area shape="rect" id="node4" href="$de/d27/determine__conic_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="494,59,544,84"/>
+<area shape="rect" id="node6" href="$da/d90/analyze_8_c.html#ae230005122bb89f7409f5937134b73bf" title="look_at_these_planes\l_longinteger" alt="" coords="443,157,595,196"/>
+<area shape="rect" id="node7" href="$d5/d87/globals_8h.html#a1f36b2be45a6576165929165abb56f1e" title="determine_conic" alt="" coords="459,108,579,133"/>
+<area shape="rect" id="node8" href="$d4/de8/conic_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="703,108,753,133"/>
+<area shape="rect" id="node10" href="$d2/d17/classprojective__space.html#a8f3472a2e9af4ac7874a5195ec6e0d58" title="projective_space::conic\l_intersection_type" alt="" coords="439,220,599,259"/>
+<area shape="rect" id="node11" href="$d7/d29/process___p_g_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="703,231,753,256"/>
+<area shape="rect" id="node12" href="$d4/d67/geometry_8h.html#a24883e05d0dde961023596ca7682a2ef" title="do_conic_type" alt="" coords="674,181,781,207"/>
+<area shape="rect" id="node13" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="850,181,901,207"/>
+<area shape="rect" id="node15" href="$d4/d21/classarc__generator.html#a4ae2e25ba85a60fb2a90a7b4f52675f7" title="arc_generator::print" alt="" coords="450,345,588,371"/>
+<area shape="rect" id="node16" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="433,283,605,321"/>
+<area shape="rect" id="node17" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="653,336,802,375"/>
+<area shape="rect" id="node19" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="703,287,753,312"/>
+<area shape="rect" id="node18" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="850,343,901,368"/>
+</map>

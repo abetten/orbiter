@@ -1,0 +1,9 @@
+<map id="number_partition::nb_parts" name="number_partition::nb_parts">
+<area shape="rect" id="node2" href="$df/d50/classnumber__partition.html#a5c27373cb7638344c463e32ed63e7e51" title="number_partition::first\l_into_k_parts" alt="" coords="215,5,365,44"/>
+<area shape="rect" id="node3" href="$df/d50/classnumber__partition.html#a6067c3203b1dbaa8e77bca841132f442" title="number_partition::next\l_into_k_parts" alt="" coords="213,68,367,107"/>
+<area shape="rect" id="node4" href="$df/d50/classnumber__partition.html#a36626dcbbaddba73cef7ff5c4521b325" title="number_partition::first\l_into_at_most_k_parts" alt="" coords="212,131,368,169"/>
+<area shape="rect" id="node5" href="$df/d50/classnumber__partition.html#a5fe0dbb26444dd0f5a487dacb93e715b" title="number_partition::next\l_into_at_most_k_parts" alt="" coords="212,193,368,232"/>
+<area shape="rect" id="node6" href="$df/d50/classnumber__partition.html#aee718664947704f316f520a7abba52d8" title="number_partition::conjugate" alt="" coords="197,256,384,281"/>
+<area shape="rect" id="node7" href="$df/d50/classnumber__partition.html#a0f194ccc525edcb22249744c3b0c65cb" title="number_partition::type" alt="" coords="213,305,367,331"/>
+<area shape="rect" id="node8" href="$df/d50/classnumber__partition.html#a0d92a28d0d047c698d1c1c8fb93a6608" title="number_partition::multinomial\l_ordered" alt="" coords="432,299,628,337"/>
+</map>

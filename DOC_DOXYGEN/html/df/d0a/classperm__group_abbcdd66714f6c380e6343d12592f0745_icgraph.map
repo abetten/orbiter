@@ -1,0 +1,7 @@
+<map id="perm_group::init_data" name="perm_group::init_data">
+<area shape="rect" id="node2" href="$df/d0a/classperm__group.html#aefb07e1e34c09ec498ca1ae072520b48" title="perm_group::init" alt="" coords="204,12,322,37"/>
+<area shape="rect" id="node3" href="$d8/dfa/classwreath__product.html#abab9a46886db102826e2ca2c1bfc39de" title="wreath_product::init\l_tensor_wreath_product" alt="" coords="370,5,535,44"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a29d8425b266eff98677406f084ee3f86" title="action::init_wreath\l_product_group" alt="" coords="583,5,712,44"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72" title="action::init_wreath\l_product_group_and_restrict" alt="" coords="760,5,952,44"/>
+<area shape="rect" id="node6" href="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3" title="tensor_product::init" alt="" coords="1000,12,1135,37"/>
+</map>

@@ -1,0 +1,13 @@
+digraph "matrix_group_element_pack"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node556 [label="matrix_group_element_pack",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node556 -> Node557 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node557 [label="matrix_group::GL_pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a5701f20e9b4a253ef8299c8122f8d926"];
+  Node557 -> Node558 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node558 [label="matrix_group::put_digit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#aa07f949aaf5a087c4fd021cff839524e"];
+  Node557 -> Node559 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node559 [label="matrix_group::put_digit\l_frobenius",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#ab7b1d90899c68cc3bc3ed214a7576153"];
+}

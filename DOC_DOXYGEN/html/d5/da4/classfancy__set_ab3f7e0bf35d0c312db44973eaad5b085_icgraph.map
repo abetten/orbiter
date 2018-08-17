@@ -1,0 +1,14 @@
+<map id="fancy_set::add_element" name="fancy_set::add_element">
+<area shape="rect" id="node2" href="$dc/de2/classcolored__graph.html#abea9e2c972a799ae17763b8faad9c37a" title="colored_graph::compute\l_neighborhood_subgraph" alt="" coords="230,5,403,44"/>
+<area shape="rect" id="node3" href="$dc/de2/classcolored__graph.html#a8f463f37779583b7d4fed1ac35097c2c" title="colored_graph::compute\l_neighborhood_subgraph\l_with_additional_test_function" alt="" coords="216,68,416,120"/>
+<area shape="rect" id="node4" href="$d5/da4/classfancy__set.html#a624a559634418acd3818f0a24f1ee404" title="fancy_set::add_elements" alt="" coords="231,144,401,169"/>
+<area shape="rect" id="node5" href="$d7/de5/classknarr.html#abb50a19df35495d508b0cb127d4eb908" title="knarr::points_and_lines" alt="" coords="237,193,396,219"/>
+<area shape="rect" id="node6" href="$dc/d36/classsearch__blocking__set.html#a40f8e6200ebf133284aef437dfc4204e" title="search_blocking_set\l::test_blocking_set" alt="" coords="245,243,388,281"/>
+<area shape="rect" id="node9" href="$dc/d36/classsearch__blocking__set.html#ae1ec331b4fa4715c79a22bac0a71f146" title="search_blocking_set\l::test_blocking_set\l_upper_bound_only" alt="" coords="245,305,388,357"/>
+<area shape="rect" id="node12" href="$dc/d36/classsearch__blocking__set.html#aea252e95af01eb415908fafbe1875a52" title="search_blocking_set\l::search_for_blocking_set" alt="" coords="464,376,637,415"/>
+<area shape="rect" id="node13" href="$dc/d36/classsearch__blocking__set.html#a3e93fae9b44b862b29070a42fa8c48ef" title="search_blocking_set\l::recursive_search_for\l_blocking_set" alt="" coords="240,433,393,485"/>
+<area shape="rect" id="node7" href="$dc/d36/classsearch__blocking__set.html#a438d1a418dc20c5ad05b533fa881729d" title="search_blocking_set\l::test_level" alt="" coords="705,247,848,285"/>
+<area shape="rect" id="node8" href="$df/d74/tl__geometry_8h.html#a8e3d42d0018f8a804b9686b1c4951186" title="incidence_structure\l_find_blocking_set" alt="" coords="916,312,1053,351"/>
+<area shape="rect" id="node10" href="$df/d74/tl__geometry_8h.html#a75b6c1cd4f88a79989267297a15820f8" title="callback_check_partial\l_blocking_set" alt="" coords="473,312,629,351"/>
+<area shape="rect" id="node11" href="$dc/d36/classsearch__blocking__set.html#ad3fdb3d356db75a02c406bc9d4e9e9b6" title="search_blocking_set\l::find_partial_blocking_sets" alt="" coords="685,312,868,351"/>
+</map>

@@ -1,0 +1,12 @@
+digraph "set_of_sets::init_from_adjacency_matrix"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node462 [label="set_of_sets::init_from\l_adjacency_matrix",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node462 -> Node463 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node463 [label="set_of_sets::init_simple",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#a0c90576a42f3cf82abb307fa8dd97162"];
+  Node463 -> Node464 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node464 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node462 -> Node464 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

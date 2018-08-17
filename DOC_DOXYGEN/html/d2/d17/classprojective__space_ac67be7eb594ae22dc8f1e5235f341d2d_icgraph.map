@@ -1,0 +1,14 @@
+<map id="projective_space::plane_intersection_type_fast" name="projective_space::plane_intersection_type_fast">
+<area shape="rect" id="node2" href="$d7/d99/classklein__correspondence.html#a561aa0d3a66d19a10f9945561a5880b5" title="klein_correspondence\l::plane_intersections" alt="" coords="220,47,371,85"/>
+<area shape="rect" id="node7" href="$d2/d17/classprojective__space.html#ae4ac1e0ff5c8c72ddb504b8931a43e79" title="projective_space::plane\l_intersection_invariant" alt="" coords="215,109,376,148"/>
+<area shape="rect" id="node9" href="$d2/d17/classprojective__space.html#a56e1a6fec768ec2e052bf609872e229b" title="projective_space::plane\l_intersection_type" alt="" coords="215,235,376,273"/>
+<area shape="rect" id="node13" href="$d2/d17/classprojective__space.html#a22f16785983fa60d7c91051e54cd7e7b" title="projective_space::plane\l_intersections" alt="" coords="215,172,376,211"/>
+<area shape="rect" id="node3" href="$da/dc1/classspread.html#af3b0d52e28dec3d6b495e79fcee88a29" title="spread::save_klein\l_invariants" alt="" coords="447,5,579,44"/>
+<area shape="rect" id="node4" href="$da/dc1/classspread.html#a5deb643e8dd301ca92d96d409e85c6aa" title="spread::klein" alt="" coords="465,68,562,93"/>
+<area shape="rect" id="node5" href="$da/dc1/classspread.html#ac00cfa228f832076e6e5d81319828fa7" title="spread::print_isomorphism_type" alt="" coords="650,44,861,69"/>
+<area shape="rect" id="node6" href="$da/dc1/classspread.html#a543a79e4e7306af291584f53dacbfdd8" title="spread::report2" alt="" coords="700,93,811,119"/>
+<area shape="rect" id="node8" href="$d1/d3d/classblt__set.html#a6b19f88bd2b92ebfba7e7c362eb9065c" title="blt_set::report" alt="" coords="462,132,564,157"/>
+<area shape="rect" id="node10" href="$d4/d67/geometry_8h.html#a886f1d0c92a60be97721430f1b10b2ac" title="do_plane_type" alt="" coords="459,196,567,221"/>
+<area shape="rect" id="node12" href="$da/dc1/classspread.html#af24965c92b11f083efef562901770e17" title="spread::plane_intersection\l_type_of_klein_image" alt="" coords="424,245,602,284"/>
+<area shape="rect" id="node11" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="730,196,781,221"/>
+</map>

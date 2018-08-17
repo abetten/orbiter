@@ -1,0 +1,31 @@
+<map id="rainbow_cliques::search_with_additional_test_function" name="rainbow_cliques::search_with_additional_test_function">
+<area shape="rect" id="node2" href="$dc/d82/classclique__finder.html#a08cf3fd0ec4186cc3d108928a9a27161" title="clique_finder::init" alt="" coords="242,5,363,31"/>
+<area shape="rect" id="node4" href="$df/dbf/sajeeb_8_c.html#a89374a6e88e7da1264c7e1b594ec3559" title="call_back_colored_graph\l_clique_found" alt="" coords="218,55,387,93"/>
+<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#adbbbaff1d90e06bf0b1b59cd1b0a596e" title="call_back_colored_graph\l_add_point" alt="" coords="218,117,387,156"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#ac29d571afa3e2eeb6e05793570c59f9c" title="call_back_colored_graph\l_delete_point" alt="" coords="218,180,387,219"/>
+<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#ac65506da6701dee30f21f03457d89987" title="call_back_colored_graph\l_find_candidates" alt="" coords="218,243,387,281"/>
+<area shape="rect" id="node8" href="$dc/d82/classclique__finder.html#a8ca9c5b2162ff6a95f00c329f33c60e0" title="clique_finder::init\l_restrictions" alt="" coords="242,305,363,344"/>
+<area shape="rect" id="node9" href="$dc/d82/classclique__finder.html#a1f0e664ae854fb4815b066f254431cfe" title="clique_finder::open\l_tree_file" alt="" coords="235,368,370,407"/>
+<area shape="rect" id="node10" href="$dc/d82/classclique__finder.html#a94ab299b0915409a3bc1084186393e0a" title="clique_finder::backtrack\l_search" alt="" coords="222,431,383,469"/>
+<area shape="rect" id="node26" href="$dc/d82/classclique__finder.html#acc978a5b3e9fcd0c8e4a9b08d49d94e0" title="clique_finder::backtrack\l_search_not_recursive" alt="" coords="222,493,383,532"/>
+<area shape="rect" id="node29" href="$dc/d82/classclique__finder.html#af6a7aae43d6a1a424f9e57786b490c6c" title="clique_finder::close\l_tree_file" alt="" coords="235,692,370,731"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="469,5,573,31"/>
+<area shape="rect" id="node11" href="$dc/d82/classclique__finder.html#a6824d3ea2049ef742dccfec9733ed1ec" title="clique_finder::log\l_position" alt="" coords="460,368,582,407"/>
+<area shape="rect" id="node14" href="$dc/d82/classclique__finder.html#ad903a4dbd2188ead349dafd8fa0ef677" title="clique_finder::write\l_entry_to_tree_file" alt="" coords="455,608,587,647"/>
+<area shape="rect" id="node15" href="$dc/d82/classclique__finder.html#a633ef9cbc0d127bb38ac2fff74afdf91" title="clique_finder::swap\l_point" alt="" coords="453,493,589,532"/>
+<area shape="rect" id="node17" href="$dc/d82/classclique__finder.html#aa7d5513917099f0382cca14b9848360f" title="clique_finder::is_adjacent" alt="" coords="659,211,831,236"/>
+<area shape="rect" id="node21" href="$dc/d82/classclique__finder.html#ad3f084a4d6dfad8cd283f57933d6490d" title="clique_finder::degree\l_of_point" alt="" coords="448,204,594,243"/>
+<area shape="rect" id="node22" href="$dc/d82/classclique__finder.html#aa700ea6605ea944583078acfc7ed63df" title="clique_finder::point\l_label" alt="" coords="678,689,811,728"/>
+<area shape="rect" id="node23" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="468,267,574,292"/>
+<area shape="rect" id="node24" href="$dc/d82/classclique__finder.html#aa4b011fdcab17998ca2fdd181a8f760f" title="clique_finder::log\l_position_and_choice" alt="" coords="446,431,596,469"/>
+<area shape="rect" id="node25" href="$dc/d82/classclique__finder.html#a850b257f0043aea4067ff9afbd554194" title="clique_finder::print_set" alt="" coords="443,671,599,696"/>
+<area shape="rect" id="node12" href="$dc/d82/classclique__finder.html#a56075f72456d19c09a041f8c1c1b9927" title="clique_finder::log\l_choice" alt="" coords="684,429,806,468"/>
+<area shape="rect" id="node13" href="$df/dbf/sajeeb_8_c.html#a97614645ec11df30e0e896367f91ffd9" title="INT_set_print" alt="" coords="694,377,795,403"/>
+<area shape="rect" id="node16" href="$df/dbf/sajeeb_8_c.html#ab7fe4718a7a2f2c8ceb6ce44e4d6ac4e" title="INT_vec_swap_points" alt="" coords="668,500,821,525"/>
+<area shape="rect" id="node18" href="$dc/d82/classclique__finder.html#acf6a483e2606040f80042b9de80e4b7b" title="clique_finder::s_ij" alt="" coords="883,211,1007,236"/>
+<area shape="rect" id="node19" href="$df/dbf/sajeeb_8_c.html#ac0135a3681a44df3fe7af1545676fbe2" title="bitvector_s_i" alt="" coords="1055,185,1152,211"/>
+<area shape="rect" id="node20" href="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042" title="ij2k" alt="" coords="1083,235,1124,260"/>
+<area shape="rect" id="node27" href="$dc/d82/classclique__finder.html#a9e90371ec043309aabba9b7bd805fb51" title="clique_finder::print\l_suspicous_point_subset" alt="" coords="435,772,606,811"/>
+<area shape="rect" id="node28" href="$dc/d82/classclique__finder.html#a82f559891be5667448d75ebc8aff0584" title="clique_finder::is_suspicous" alt="" coords="654,779,835,804"/>
+<area shape="rect" id="node30" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="486,835,556,860"/>
+</map>

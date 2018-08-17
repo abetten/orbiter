@@ -1,0 +1,13 @@
+digraph "create_automorphism_group_of_graph"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1026 [label="create_automorphism\l_group_of_graph",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1026 -> Node1027 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1027 [label="create_incidence_matrix\l_of_graph",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#af2bea5e561ad8cbbc2ba2ae332b2fdf6"];
+  Node1027 -> Node1028 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1028 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node1026 -> Node1029 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1029 [label="create_automorphism\l_group_of_incidence\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#ad2cce64aa207f848e71c9fe51b41a9ff"];
+}

@@ -1,0 +1,9 @@
+digraph "projective_space::unrank_lines"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3329 [label="projective_space::unrank\l_lines",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3329 -> Node3330 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3330 [label="projective_space::plane\l_equation_from_three_lines\l_in_three_space",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html#a173dd43f3b5720f46ab372c370f4687c"];
+}

@@ -1,0 +1,17 @@
+digraph "finite_field::display_T2"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2583 [label="finite_field::display_T2",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2583 -> Node2584 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2584 [label="finite_field::T2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a8266c2c6f6bda29855c2bb1e0b500841"];
+  Node2584 -> Node2585 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2585 [label="finite_field::frobenius\l_power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aec23e43aaefc0ed601cdfa3139496a92"];
+  Node2584 -> Node2586 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2586 [label="finite_field::add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14"];
+  Node2586 -> Node2587 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2587 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node2586 -> Node2588 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2588 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+}

@@ -1,0 +1,9 @@
+digraph "permutation::operator="
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1842 [label="permutation::operator=",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1842 -> Node1843 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1843 [label="discreta_base::copyobject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a68fac2b12cefae0bc4d1a41faf9bc862"];
+}

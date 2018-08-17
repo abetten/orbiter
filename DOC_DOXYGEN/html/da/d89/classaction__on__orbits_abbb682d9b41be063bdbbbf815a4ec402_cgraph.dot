@@ -1,0 +1,11 @@
+digraph "action_on_orbits::~action_on_orbits"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="action_on_orbits::\l~action_on_orbits",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="action_on_orbits::free",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d89/classaction__on__orbits.html#a2c481e0fc48bbd6e3c0d7dd4c16f44e2"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="action_on_orbits::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d89/classaction__on__orbits.html#a033e5a9fa0598c832a1e774497cbd00d"];
+}

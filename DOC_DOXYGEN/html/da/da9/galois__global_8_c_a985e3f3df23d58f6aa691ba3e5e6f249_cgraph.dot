@@ -1,0 +1,21 @@
+digraph "create_Levi_graph_from_incidence_matrix"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node26 [label="create_Levi_graph_from\l_incidence_matrix",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node26 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="ij2k",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042"];
+  Node26 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="bitvector_m_ii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a31da55e2b26316d582cd322dc670b67b"];
+  Node26 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="colored_graph::init\l_with_point_labels",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de2/classcolored__graph.html#a988d41f23300407c71570cb7ea06e593"];
+  Node29 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="colored_graph::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de2/classcolored__graph.html#a4b917cdc9c6203a5a750c321e791bc7d"];
+  Node30 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node30 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node29 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,34 @@
+digraph "surface::print_equation_tex"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4771 [label="surface::print_equation_tex",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4771 -> Node4772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4772 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node4771 -> Node4773 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4773 [label="surface_object::print\l_equation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/classsurface__object.html#a636657809582fe91c287bdf56c1b6cf3"];
+  Node4773 -> Node4774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4774 [label="surface_classify_wedge\l::report_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#ad577d435c4726d0a35c10b2f8d4ed00c"];
+  Node4774 -> Node4775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4775 [label="surface_classify_wedge\l::latex_surfaces",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a5698763ece48d6f0a605527ca62429c5"];
+  Node4775 -> Node4776 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4776 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node4773 -> Node4777 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4777 [label="surface_object_with\l_action::cheat_sheet",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d28/classsurface__object__with__action.html#a13371a6bb26f27759adcc0f7292b12d2"];
+  Node4777 -> Node4772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4771 -> Node4778 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4778 [label="arc_lifting::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#ae1609cb80720bc005f0fc3ea65150185"];
+  Node4778 -> Node4779 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4779 [label="lift_single_arc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b"];
+  Node4779 -> Node4780 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4780 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node4778 -> Node4781 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4781 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node4781 -> Node4782 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4782 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node4782 -> Node4780 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4771 -> Node4783 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4783 [label="surface_create::apply\l_transformations",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a880646331f352cb7112dbd4c56e5ac57"];
+  Node4783 -> Node4772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

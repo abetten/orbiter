@@ -1,9 +1,22 @@
 var searchData=
 [
-  ['get16bits',['get16bits',['../super__fast__hash_8_c.html#abc7d71657be8975a51684e41029b7964',1,'super_fast_hash.C']]],
-  ['graphrow',['GRAPHROW',['../nauty_8h.html#a00f9a5a6de9096244baaa39dde75a0f6',1,'nauty.h']]],
-  ['graphrow0',['GRAPHROW0',['../nauty_8h.html#aca3e3758a4ecf99c34fd0dd1b1131eca',1,'nauty.h']]],
-  ['graphrow1',['GRAPHROW1',['../nauty_8h.html#a1ba97aece2f83178532e8ac1ad3f6cb4',1,'nauty.h']]],
-  ['groupsize1',['groupsize1',['../nauty_8h.html#ad38824eb3621b48a348c4b919a0e93a9',1,'nauty.h']]],
-  ['groupsize2',['groupsize2',['../nauty_8h.html#a7a1bc1c196bfc7e8160d5c76587591c7',1,'nauty.h']]]
+  ['false',['FALSE',['../d9/dc9/alphabet_8_c.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;alphabet.C'],['../d9/d4b/alphabet2_8_c.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;alphabet2.C'],['../d2/d32/fibonacci_8_c.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;fibonacci.C'],['../d0/d7f/lehmer_8c.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;lehmer.c'],['../d0/df7/partitions_8_c.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;partitions.C'],['../de/dc0/sajeeb_8h.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;sajeeb.h'],['../d5/da7/foundations_8h.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;foundations.h'],['../d1/da0/nauty_8h.html#aa93f0eb578d23995850d61f7d61c55c1',1,'FALSE():&#160;nauty.h']]],
+  ['firstbit',['FIRSTBIT',['../d1/da0/nauty_8h.html#a4aec4c59fc492a10f6b76e26c847439b',1,'FIRSTBIT():&#160;nauty.h'],['../d1/da0/nauty_8h.html#a4aec4c59fc492a10f6b76e26c847439b',1,'FIRSTBIT():&#160;nauty.h']]],
+  ['firstbitnz',['FIRSTBITNZ',['../d1/da0/nauty_8h.html#a8acb3e52017f69d3398d7a427fed9bb8',1,'nauty.h']]],
+  ['flipelement',['FLIPELEMENT',['../d1/da0/nauty_8h.html#a9db963878ededac7bc8010613668448a',1,'nauty.h']]],
+  ['flipelement0',['FLIPELEMENT0',['../d1/da0/nauty_8h.html#a4a2c80b691a0f9da7f3a2ffabe8e67fe',1,'nauty.h']]],
+  ['flipelement1',['FLIPELEMENT1',['../d1/da0/nauty_8h.html#aac116ddd6f53c24bfc6bdab88f6b00d0',1,'nauty.h']]],
+  ['free_5fbyte',['FREE_BYTE',['../d5/da7/foundations_8h.html#a7408138dbce0ae15c83442c45a0fe625',1,'foundations.h']]],
+  ['free_5fint',['FREE_INT',['../d5/da7/foundations_8h.html#ab908e7aaea0ab6e8f741a5b5829e93b2',1,'FREE_INT():&#160;foundations.h'],['../d5/da7/foundations_8h.html#a41719c982e75c00943657333922d1741',1,'FREE_int():&#160;foundations.h']]],
+  ['free_5fobject',['FREE_OBJECT',['../d5/da7/foundations_8h.html#a8598f06298d6d4b1c6474b2ec24258fa',1,'foundations.h']]],
+  ['free_5fobjects',['FREE_OBJECTS',['../d5/da7/foundations_8h.html#a150aa4c02c6b91fafb761acecd650798',1,'foundations.h']]],
+  ['free_5fpbyte',['FREE_PBYTE',['../d5/da7/foundations_8h.html#a3a22ce8353df702a3cf0ed858efc5c19',1,'foundations.h']]],
+  ['free_5fpint',['FREE_pint',['../d5/da7/foundations_8h.html#aebc2e943afdc1603d3d9d36b263efa1a',1,'FREE_pint():&#160;foundations.h'],['../d5/da7/foundations_8h.html#a6af3060e3ed9a0278402b951bb8ed7f7',1,'FREE_PINT():&#160;foundations.h']]],
+  ['free_5fppint',['FREE_PPINT',['../d5/da7/foundations_8h.html#ae7cb600620f2801752997950828d949c',1,'foundations.h']]],
+  ['free_5fpvoid',['FREE_pvoid',['../d5/da7/foundations_8h.html#a9b7d0d7f7b338bfa4e5dbb2f0ffbb44d',1,'foundations.h']]],
+  ['free_5fubyte',['FREE_UBYTE',['../d5/da7/foundations_8h.html#aa5f1cb4cfd3fdee14c69a0c9dec23dfe',1,'foundations.h']]],
+  ['frees',['FREES',['../d1/da0/nauty_8h.html#a2651aa3283b2a8ec8c5268c5fc06f8e8',1,'nauty.h']]],
+  ['fuse_5ftype_5fdouble',['FUSE_TYPE_DOUBLE',['../d4/d67/geometry_8h.html#a7de8e47c51d00048b30b7b5fe880bcea',1,'geometry.h']]],
+  ['fuse_5ftype_5fnone',['FUSE_TYPE_NONE',['../d4/d67/geometry_8h.html#a3aa472e970b25b16ff1691b1a7b394fa',1,'geometry.h']]],
+  ['fuse_5ftype_5fsimple',['FUSE_TYPE_SIMPLE',['../d4/d67/geometry_8h.html#aecf1e611cf0e74030e733acb3af08c8a',1,'geometry.h']]]
 ];

@@ -1,0 +1,15 @@
+<map id="partitionstack::parent_at_height" name="partitionstack::parent_at_height">
+<area shape="rect" id="node2" href="$d3/d87/classpartitionstack.html#a13362337bacd51a6de12a305bcd08211" title="partitionstack::hash\l_column_refinement_info" alt="" coords="198,68,369,107"/>
+<area shape="rect" id="node10" href="$d3/d87/classpartitionstack.html#a878dad34f16a64fcd9ac6bef56b494e4" title="partitionstack::hash\l_row_refinement_info" alt="" coords="209,193,359,232"/>
+<area shape="rect" id="node13" href="$d3/d87/classpartitionstack.html#a3017cbe9d526ce0d99d44939eabf3cef" title="partitionstack::print\l_column_refinement_info" alt="" coords="198,5,369,44"/>
+<area shape="rect" id="node14" href="$d3/d87/classpartitionstack.html#a239ac35b37e27fa76927b9d1b542cc16" title="partitionstack::print\l_row_refinement_info" alt="" coords="209,131,359,169"/>
+<area shape="rect" id="node3" href="$d3/d87/classpartitionstack.html#a6a03122f333fff632293b8a4ebdd2803" title="partitionstack::refine\l_column_partition" alt="" coords="431,5,571,44"/>
+<area shape="rect" id="node5" href="$da/d8a/classincidence__structure.html#ac262f307c1531d67496129dc7890cda4" title="incidence_structure\l::refine_column_partition" alt="" coords="417,68,585,107"/>
+<area shape="rect" id="node4" href="$d3/d87/classpartitionstack.html#a40d83b004c2f2312d231de8bab671ebb" title="partitionstack::compute_TDO" alt="" coords="633,77,827,103"/>
+<area shape="rect" id="node6" href="$da/d8a/classincidence__structure.html#a6175accaa64033df34d722c594a8b827" title="incidence_structure\l::compute_TDO_step" alt="" coords="656,129,804,168"/>
+<area shape="rect" id="node7" href="$da/d8a/classincidence__structure.html#a617e41f176be4a8d522036666342f65e" title="incidence_structure\l::compute_TDO" alt="" coords="875,129,1012,168"/>
+<area shape="rect" id="node8" href="$df/d74/tl__geometry_8h.html#a82c6b40b3138e3e5bae2299d49680ac1" title="decomposition_projective\l_space" alt="" coords="1081,101,1253,140"/>
+<area shape="rect" id="node9" href="$d2/d17/classprojective__space.html#ae060ee525e7a974bce04d78be7f6dd51" title="projective_space::decomposition" alt="" coords="1060,164,1275,189"/>
+<area shape="rect" id="node11" href="$d3/d87/classpartitionstack.html#aa52dc8b86c34cf2455733e58e4f0e9e0" title="partitionstack::refine\l_row_partition" alt="" coords="431,131,571,169"/>
+<area shape="rect" id="node12" href="$da/d8a/classincidence__structure.html#a6e1419be9f59e69fd83b44e6b11905ea" title="incidence_structure\l::refine_row_partition" alt="" coords="428,193,574,232"/>
+</map>

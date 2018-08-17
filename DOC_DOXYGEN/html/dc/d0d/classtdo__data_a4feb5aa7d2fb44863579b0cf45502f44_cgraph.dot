@@ -1,0 +1,35 @@
+digraph "tdo_data::solve_second_system_omit"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node47 [label="tdo_data::solve_second\l_system_omit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node47 -> Node48 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="diophant::project",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#abf85557002f360c3e7cb70b546ab2cb3"];
+  Node48 -> Node49 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="diophant::is_zero_outside",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#af22b9d5ddcfea6e215892dc506eaaa82"];
+  Node49 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="diophant::Aij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#af86d3bf833485e2f2d7b4a19288fc698"];
+  Node48 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 -> Node51 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node51 [label="diophant::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a887f3ce883ac947ac177d50e727bf5e8"];
+  Node51 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node52 [label="diophant::print2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#af4b3684270925d0d766a3a0d3089e195"];
+  Node52 -> Node53 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 [label="diophant::print_eqn",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a94f356a90925f7a0d966f982a7c5a437"];
+  Node53 -> Node50 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node53 -> Node54 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node54 [label="diophant::Gij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a4d6f0cda44ebcbbf242e850ae6f6e611"];
+  Node53 -> Node55 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node55 [label="diophant::RHSi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#aa56efaa8e28e17c83f96ed409964b3e1"];
+  Node47 -> Node56 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node56 [label="diophant_solve_all\l_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#ad4e4410d79cb10d555478dbf0036bd45"];
+  Node56 -> Node57 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node57 [label="diophant_solve_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#a13197239f146dbec9e369244a28e6fb5"];
+  Node57 -> Node58 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="diophant_solve_mckay\l_override_minrhs_in_inequalities",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#ade26681e912db350f0d405ccdb340519"];
+  Node58 -> Node59 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node59 [label="mckay::tMCKAY::Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a04d009389cf387ded3ff067ff0f0588d"];
+  Node58 -> Node60 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node60 [label="mckay::tMCKAY::possolve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a1791dc846f3d51ac42c1afdd9b944864"];
+}

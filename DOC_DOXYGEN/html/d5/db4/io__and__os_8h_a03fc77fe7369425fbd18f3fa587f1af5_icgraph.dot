@@ -1,0 +1,45 @@
+digraph "count_number_of_orbits_in_file"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node827 [label="count_number_of_orbits\l_in_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node827 -> Node828 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node828 [label="blt_set::create_graphs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d3d/classblt__set.html#a3f1d4a8ed15875c47b327949f26a4533"];
+  Node827 -> Node829 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node829 [label="blt_set::create_graphs\l_list_of_cases",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d3d/classblt__set.html#a91ad531d4154bd887182dbd6121476f3"];
+  Node827 -> Node830 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node830 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d29/process___p_g_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node827 -> Node831 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node831 [label="count_number_of_objects\l_to_test",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a923a4bce2e1f307455c3d7333ea2e419"];
+  Node831 -> Node832 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node832 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node827 -> Node833 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node833 [label="set_of_sets::init_from\l_orbiter_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#a0659335f54a3b9109b4986483b53470b"];
+  Node833 -> Node834 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node834 [label="set_of_sets::init_from_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#af1a1e4d1f577a86ff3a89b70d0f08f16"];
+  Node834 -> Node835 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node835 [label="canonical_form",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a5f0f6b71cd402c5b41240c420e533e60"];
+  Node835 -> Node832 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node835 -> Node836 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node836 [label="process_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a63a6b06bd2a9a9c50ed710271f4d5530"];
+  Node836 -> Node835 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node836 -> Node837 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node837 [label="classify_objects_using\l_nauty",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a32275eacc4bdda93b2b34c2a9217a088"];
+  Node837 -> Node832 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node834 -> Node837 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node827 -> Node838 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node838 [label="exact_cover::init_basic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d94/classexact__cover.html#a188961cda99906946f33aea0bef3c6ce"];
+  Node838 -> Node839 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node839 [label="compute_lifts_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#a7572cd3732ca8df324632282e9002dc4"];
+  Node838 -> Node840 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node840 [label="exact_cover_arguments\l::compute_lifts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dae/classexact__cover__arguments.html#ab0cdb09a17201c89aa9f83bd511dbbf7"];
+  Node840 -> Node841 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node841 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/df8/spread__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node840 -> Node842 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node842 [label="compute_lifts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#a82fe3b66a6f9d9075eb8847d7bfe556b"];
+  Node842 -> Node843 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node843 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node842 -> Node844 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node844 [label="arc_generator::main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a"];
+}

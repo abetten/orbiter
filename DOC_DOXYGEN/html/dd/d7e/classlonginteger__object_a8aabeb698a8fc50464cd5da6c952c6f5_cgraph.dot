@@ -1,0 +1,9 @@
+digraph "longinteger_object::is_one_or_minus_one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2039 [label="longinteger_object\l::is_one_or_minus_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2039 -> Node2040 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2040 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+}

@@ -1,0 +1,15 @@
+digraph "solid::edge_i"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1965 [label="solid::edge_i",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1965 -> Node1966 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1966 [label="solid::edge",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a703b914bee212828ebb65d3d5313460e"];
+  Node1966 -> Node1967 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1967 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
+  Node1966 -> Node1968 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1968 [label="discreta_base::as_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a7bdd6cae39c380b128ee9e17e42cf020"];
+  Node1965 -> Node1967 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1965 -> Node1968 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

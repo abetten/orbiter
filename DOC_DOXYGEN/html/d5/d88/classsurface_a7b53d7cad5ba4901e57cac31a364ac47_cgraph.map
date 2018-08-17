@@ -1,0 +1,22 @@
+<map id="surface::init_collinear_Eckardt_triples" name="surface::init_collinear_Eckardt_triples">
+<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="224,5,330,31"/>
+<area shape="rect" id="node3" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="1054,56,1184,81"/>
+<area shape="rect" id="node7" href="$d2/d7c/combinatorics_8_c.html#a8ec9127fb82ee9dfa337c897c7060a57" title="rank_k_subset" alt="" coords="223,107,331,132"/>
+<area shape="rect" id="node9" href="$d5/db4/io__and__os_8h.html#ad39c343d865ff89a5aad3c689280ad09" title="print_integer_matrix\l_with_standard_labels" alt="" coords="200,156,354,195"/>
+<area shape="rect" id="node10" href="$d9/d43/classclassify.html#afc24c64267d646d1f83ea39a7c66bde3" title="classify::init" alt="" coords="232,219,322,244"/>
+<area shape="rect" id="node4" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="1260,45,1411,71"/>
+<area shape="rect" id="node5" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="1459,96,1596,121"/>
+<area shape="rect" id="node6" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="1644,172,1755,197"/>
+<area shape="rect" id="node8" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="402,107,532,145"/>
+<area shape="rect" id="node11" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad4176bee048e4f036f8b9d6dd986e0f9" title="INT_vec_classify" alt="" coords="406,219,528,244"/>
+<area shape="rect" id="node12" href="$d4/dd7/sorting_8_c.html#a1b3700c1d369b8a37593a1c2f31cc9d7" title="INT_vec_classify_with\l_arrays" alt="" coords="580,212,733,251"/>
+<area shape="rect" id="node13" href="$d4/dd7/sorting_8_c.html#a10768733e01e8c9ded3c886e6ddb671e" title="INT_vec_sorting_permutation" alt="" coords="781,204,978,229"/>
+<area shape="rect" id="node21" href="$d4/dd7/sorting_8_c.html#ad0b54ef8fcaf7cce5577c97d1edbf1f5" title="INT_vec_sorted_collect\l_types" alt="" coords="799,253,960,292"/>
+<area shape="rect" id="node14" href="$d4/dd7/sorting_8_c.html#a660db9b0f6bc8a01353f32f3e02638f6" title="quicksort_array" alt="" coords="1063,105,1175,131"/>
+<area shape="rect" id="node15" href="$d4/dd7/sorting_8_c.html#a53c48a8669e34ab2171690080d493f31" title="INT_compare_increasingly" alt="" coords="1029,155,1209,180"/>
+<area shape="rect" id="node16" href="$d4/dd7/sorting_8_c.html#a41cf7fa2b53a8f12d60971a71ba96a66" title="INT_compare_decreasingly" alt="" coords="1027,204,1211,229"/>
+<area shape="rect" id="node17" href="$d2/d7c/combinatorics_8_c.html#ab7f02d1e2e257e1118eae354ab16d447" title="perm_inverse" alt="" coords="1068,253,1170,279"/>
+<area shape="rect" id="node18" href="$d4/dd7/sorting_8_c.html#a9d838c341cd204ed79499960a8ed393d" title="INT_vec_heapsort_with_log" alt="" coords="1026,303,1212,328"/>
+<area shape="rect" id="node19" href="$d4/dd7/sorting_8_c.html#a100d0747647500480fe5dc76ff98cee5" title="heapsort_make_heap\l_with_log" alt="" coords="1260,248,1411,287"/>
+<area shape="rect" id="node20" href="$d4/dd7/sorting_8_c.html#ac7af225fae479a93d6957f79734ba2a6" title="heapsort_sift_down\l_with_log" alt="" coords="1459,248,1596,287"/>
+</map>

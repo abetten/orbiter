@@ -1,0 +1,18 @@
+<map id="surface::klein_to_wedge" name="surface::klein_to_wedge">
+<area shape="rect" id="node2" href="$d5/d88/classsurface.html#aea15853e991bf9a363abf647f8bcb70c" title="surface::line_to_wedge" alt="" coords="236,79,394,104"/>
+<area shape="rect" id="node13" href="$d5/d88/classsurface.html#a3c8c160b16bc586f45d0c23e6b2e3e00" title="surface::klein_to_wedge" alt="" coords="233,131,398,156"/>
+<area shape="rect" id="node14" href="$d5/d88/classsurface.html#a975f69ead008c4869721ae32f92d70d8" title="surface::klein_to_wedge_vec" alt="" coords="218,185,412,211"/>
+<area shape="rect" id="node3" href="$d5/d88/classsurface.html#a994181d5df6a966940ad798411f21fe8" title="surface::line_to_wedge_vec" alt="" coords="460,77,646,103"/>
+<area shape="rect" id="node4" href="$dd/d23/classclassify__double__sixes.html#aa78728c03ff9c37c26413c3d1ebac85a" title="classify_double_sixes\l::identify_five_plus_one" alt="" coords="694,69,855,108"/>
+<area shape="rect" id="node5" href="$dd/d23/classclassify__double__sixes.html#af69579aea0c34504ccfe37a4f9d992ef" title="classify_double_sixes\l::upstep" alt="" coords="909,5,1060,44"/>
+<area shape="rect" id="node8" href="$dd/d23/classclassify__double__sixes.html#a2f207ab7c9032711e982d16ff3ff753f" title="classify_double_sixes\l::identify_double_six" alt="" coords="909,68,1060,107"/>
+<area shape="rect" id="node11" href="$d7/d5c/classsurface__classify__wedge.html#a0ee820a0324434792bd5362b4606de80" title="surface_classify_wedge\l::identify_surface" alt="" coords="903,131,1066,169"/>
+<area shape="rect" id="node6" href="$dd/d23/classclassify__double__sixes.html#aa22b7c156d68376a603743c8b43a58ef" title="classify_double_sixes\l::classify" alt="" coords="1332,5,1482,44"/>
+<area shape="rect" id="node7" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1537,81,1587,107"/>
+<area shape="rect" id="node9" href="$d7/d5c/classsurface__classify__wedge.html#a917a77e18ede81788ba0550d3f55f639" title="surface_classify_wedge\l::upstep" alt="" coords="1114,68,1277,107"/>
+<area shape="rect" id="node10" href="$d7/d5c/classsurface__classify__wedge.html#a6b7ca70f2edff82c197221ee978a3641" title="surface_classify_wedge\l::classify_surfaces_from\l_double_sixes" alt="" coords="1325,68,1489,120"/>
+<area shape="rect" id="node12" href="$d7/d5c/classsurface__classify__wedge.html#a8fdc22ea1850bd4da28ace84adb055a6" title="surface_classify_wedge\l::identify_Sa" alt="" coords="1114,131,1277,169"/>
+<area shape="rect" id="node15" href="$dd/d23/classclassify__double__sixes.html#a675e241052c36c58063ddcfc06d209b2" title="classify_double_sixes\l::compute_neighbors" alt="" coords="478,189,628,228"/>
+<area shape="rect" id="node16" href="$dd/d23/classclassify__double__sixes.html#a8c5c41d5124b35379d626480ff225f7b" title="classify_double_sixes\l::init" alt="" coords="700,191,850,229"/>
+<area shape="rect" id="node17" href="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a" title="surface_classify_wedge\l::init" alt="" coords="1114,193,1277,232"/>
+</map>

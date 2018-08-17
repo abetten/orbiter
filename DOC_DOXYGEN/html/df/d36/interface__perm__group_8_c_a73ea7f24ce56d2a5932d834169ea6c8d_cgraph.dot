@@ -1,0 +1,9 @@
+digraph "perm_group_element_move"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node238 [label="perm_group_element_move",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node238 -> Node239 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node239 [label="perm_group::copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#aeb250cf88ebc1ac4ff44f207ecedbd53"];
+}

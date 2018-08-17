@@ -1,0 +1,31 @@
+digraph "surface_object_with_action::init_orbits_on_half_double_sixes"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1496 [label="surface_object_with\l_action::init_orbits\l_on_half_double_sixes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1496 -> Node1497 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1497 [label="surface_object_with\l_action::compute_orbits\l_of_automorphism_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d28/classsurface__object__with__action.html#a74fe6a01c7d28a4fd30e601824d62c27"];
+  Node1497 -> Node1498 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1498 [label="surface_object_with\l_action::init_equation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d28/classsurface__object__with__action.html#a310ce4189e50545dd67fa3652b8fd160"];
+  Node1498 -> Node1499 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1499 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node1498 -> Node1500 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1500 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node1500 -> Node1501 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1501 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node1501 -> Node1502 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1502 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node1497 -> Node1503 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1503 [label="surface_object_with\l_action::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d28/classsurface__object__with__action.html#a65085da19618def3909b0f4bc27cba8a"];
+  Node1503 -> Node1499 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1503 -> Node1500 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1497 -> Node1504 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1504 [label="surface_object_with\l_action::init_surface\l_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d28/classsurface__object__with__action.html#addc93dd533dbceb5c024c66ee1936d35"];
+  Node1504 -> Node1505 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1505 [label="surface_classify_wedge\l::report_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#ad577d435c4726d0a35c10b2f8d4ed00c"];
+  Node1505 -> Node1506 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1506 [label="surface_classify_wedge\l::latex_surfaces",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a5698763ece48d6f0a605527ca62429c5"];
+  Node1506 -> Node1507 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1507 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+}

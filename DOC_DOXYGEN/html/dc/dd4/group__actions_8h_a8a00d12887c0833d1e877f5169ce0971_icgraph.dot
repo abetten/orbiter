@@ -1,0 +1,15 @@
+digraph "wreath_product_group_element_mult"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node9402 [label="wreath_product_group\l_element_mult",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node9402 -> Node9403 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9403 [label="action::init_function\l_pointers_wreath_product_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a149d3bdc89556d74a4a20597f0cccdc0"];
+  Node9403 -> Node9404 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9404 [label="action::init_wreath\l_product_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a29d8425b266eff98677406f084ee3f86"];
+  Node9404 -> Node9405 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9405 [label="action::init_wreath\l_product_group_and_restrict",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72"];
+  Node9405 -> Node9406 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9406 [label="tensor_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3"];
+}

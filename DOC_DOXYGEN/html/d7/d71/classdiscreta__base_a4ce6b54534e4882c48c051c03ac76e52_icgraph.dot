@@ -1,0 +1,29 @@
+digraph "discreta_base::order"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node14877 [label="discreta_base::order",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node14877 -> Node14878 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14878 [label="finite_field_domain\l_primitive_root",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#a555c8e00dea5b275e2b31616e8fc1116"];
+  Node14878 -> Node14879 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14879 [label="vec_generators_GL_n\l_q_subgroup_as_matrices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a67390878e31e37836b12fa5d56e72394"];
+  Node14879 -> Node14880 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14880 [label="vec_generators_GL_n\l_q_as_matrices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a16af2db378d422175df1fdf70cb02806"];
+  Node14880 -> Node14881 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14881 [label="vec_generators_SL_n\l_q_as_matrices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#aece7a22e0963ee87d325797900443bd2"];
+  Node14880 -> Node14882 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14882 [label="vec_generators_GL_n\l_q_projective_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#ae56b1d99562cb32203518575c689746d"];
+  Node14879 -> Node14883 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14883 [label="vec_generators_GL_n\l_q_subgroup_affine_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#adc1a2bfe52c3047a066884771aa01321"];
+  Node14883 -> Node14884 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14884 [label="vec_generators_GL_n\l_q_affine_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a689108f410f773f0681e21a864097f16"];
+  Node14883 -> Node14885 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14885 [label="vec_generators_AGGL1q\l_subgroup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a93659c1c7a668dd6adf9f217c608e1f1"];
+  Node14878 -> Node14886 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14886 [label="vec_generators_q1_q2\l_au1bv1_au2bv2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#aee37285cfb5987a4fc1f5c7580865175"];
+  Node14886 -> Node14887 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14887 [label="vec_generators_q1_q2_aubv",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a0b5ce8828dd8a35cbfec4450f0d76edc"];
+  Node14877 -> Node14888 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14888 [label="Vector::get_element\l_orders",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#ac83f27123b1c43f3953b81de0392eae7"];
+}

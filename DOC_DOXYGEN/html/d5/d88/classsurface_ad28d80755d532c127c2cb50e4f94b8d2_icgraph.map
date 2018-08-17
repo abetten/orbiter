@@ -1,0 +1,10 @@
+<map id="surface::line_ai" name="surface::line_ai">
+<area shape="rect" id="node2" href="$d5/d88/classsurface.html#a07d7b3ebddf5c688ed650d0c20e452e2" title="surface::make_Tijk" alt="" coords="164,61,297,87"/>
+<area shape="rect" id="node3" href="$d5/d88/classsurface.html#ad5643c9ea75032122ba52e24d1fc23c4" title="surface::make_trihedral\l_pairs" alt="" coords="345,55,506,93"/>
+<area shape="rect" id="node4" href="$d5/d88/classsurface.html#a90570b0ca6ab02988159f2c40cb27308" title="surface::init" alt="" coords="554,61,643,87"/>
+<area shape="rect" id="node5" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="748,5,798,31"/>
+<area shape="rect" id="node6" href="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a" title="surface_classify_wedge\l::init" alt="" coords="691,55,854,93"/>
+<area shape="rect" id="node8" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="706,117,840,143"/>
+<area shape="rect" id="node7" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="902,61,952,87"/>
+<area shape="rect" id="node9" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="902,117,952,143"/>
+</map>

@@ -1,0 +1,11 @@
+digraph "finite_field::twice"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node19674 [label="finite_field::twice",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node19674 -> Node19675 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19675 [label="finite_field::representing\l_matrix9_R",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a8d15d20bbe64970c34f927ca4ecd27ef"];
+  Node19674 -> Node19676 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19676 [label="finite_field::representing\l_matrix9_U",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a71554021c854e73fbe656c96cfe48ede"];
+}

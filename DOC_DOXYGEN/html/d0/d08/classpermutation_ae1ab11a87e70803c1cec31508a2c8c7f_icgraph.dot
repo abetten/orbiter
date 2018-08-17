@@ -1,0 +1,11 @@
+digraph "permutation::convert_digit"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node521 [label="permutation::convert\l_digit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node521 -> Node522 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node522 [label="permutation::print\l_cycle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#abf779232815eb4c16286cf642d214b50"];
+  Node522 -> Node523 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node523 [label="permutation::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a3a4c219748ab79362fd440bea839c094"];
+}

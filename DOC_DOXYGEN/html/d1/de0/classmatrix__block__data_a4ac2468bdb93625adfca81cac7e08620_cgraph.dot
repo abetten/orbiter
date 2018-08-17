@@ -1,0 +1,11 @@
+digraph "matrix_block_data::~matrix_block_data"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="matrix_block_data::\l~matrix_block_data",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="matrix_block_data::\lfreeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de0/classmatrix__block__data.html#ae8df478b90bf9117a0edccdcb3c50c42"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="matrix_block_data::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de0/classmatrix__block__data.html#a97bb7f0f500960d73c595fd697f64fad"];
+}

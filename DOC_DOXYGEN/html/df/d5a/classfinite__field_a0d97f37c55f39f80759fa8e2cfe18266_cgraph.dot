@@ -1,0 +1,21 @@
+digraph "finite_field::count_all_irreducible_polynomials_of_degree_d"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2405 [label="finite_field::count\l_all_irreducible_polynomials\l_of_degree_d",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2405 -> Node2406 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2406 [label="i_power_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5"];
+  Node2405 -> Node2407 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2407 [label="factor_prime_power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#af87166fad1e9b91458c714e90f8cd399"];
+  Node2407 -> Node2408 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2408 [label="smallest_primedivisor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dda/number__theory_8_c.html#a89238384b70e5f0f19ac179ca88d468d"];
+  Node2405 -> Node2409 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2409 [label="get_primitive_polynomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a208ece81c99403683f588d02defd74a7"];
+  Node2409 -> Node2410 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2410 [label="INT_vec_search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945"];
+  Node2409 -> Node2411 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2411 [label="search_for_primitive\l_polynomial_of_given\l_degree",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/da9/galois__global_8_c.html#a5f70384bd08b74ef6f9e0f8663d0f286"];
+  Node2411 -> Node2412 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2412 [label="finite_field::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c"];
+}

@@ -1,0 +1,31 @@
+digraph "override_polynomial_subfield"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node12285 [label="override_polynomial\l_subfield",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node12285 -> Node12286 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12286 [label="init_orthogonal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d28/hill_8_c.html#abf695eb9f6a0c10d5aa0c0ce4b60ad6d"];
+  Node12286 -> Node12287 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12287 [label="Hill_cap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d28/hill_8_c.html#a7c2543fe497e681d4b492b16ea7f933e"];
+  Node12287 -> Node12288 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12288 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d28/hill_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node12285 -> Node12289 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12289 [label="unusual_model::setup2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#a00f7da705c24f863338828447abf7aae"];
+  Node12289 -> Node12290 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12290 [label="unusual_model::setup\l_sum_of_squares",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#ab330b51451b34a5291ee5707ef725eff"];
+  Node12289 -> Node12291 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12291 [label="unusual_model::setup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#adb517fd342dd2ed2d0cc117211ac1c0d"];
+  Node12291 -> Node12292 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12292 [label="create_Fisher_BLT_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ad970fc96c238a422a64338691f8b91cc"];
+  Node12292 -> Node12293 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12293 [label="create_BLT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a5a6f4081a90668e2e95f8e4886d241d9"];
+  Node12293 -> Node12294 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12294 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/make__something_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node12291 -> Node12295 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12295 [label="create_Linear_BLT_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a9a35af1dd478ad49c6922240bfff89dd"];
+  Node12295 -> Node12293 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12291 -> Node12296 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12296 [label="create_Mondello_BLT_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab6f68b0ad3b8ccc37d88073576930ea8"];
+  Node12296 -> Node12293 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,9 @@
+digraph "longinteger_object::assign_to"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node537 [label="longinteger_object\l::assign_to",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node537 -> Node538 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node538 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+}

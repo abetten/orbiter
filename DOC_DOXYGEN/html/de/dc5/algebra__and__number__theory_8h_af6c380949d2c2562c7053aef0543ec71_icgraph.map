@@ -1,0 +1,11 @@
+<map id="INT_log2" name="INT_log2">
+<area shape="rect" id="node2" href="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ac0501667678e59124c88842414489011" title="init_hash_table_parabolic" alt="" coords="129,55,301,80"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a8cf23c42f17766e6ae13094522b91f19" title="plane_invariant" alt="" coords="159,107,271,132"/>
+<area shape="rect" id="node6" href="$d3/ded/classmatrix__group.html#afb94f8d9997e7b6c93f595e576a9c6d6" title="matrix_group::compute\l_elt_size" alt="" coords="136,163,294,201"/>
+<area shape="rect" id="node3" href="$d1/d3d/classblt__set.html#ad8a73370e16f2adf30172c3159ca8a74" title="blt_set::init_orthogonal_hash" alt="" coords="349,5,541,31"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a0d33ca0ebe7467b984c3058520e02a0c" title="action::init_BLT" alt="" coords="389,55,501,80"/>
+<area shape="rect" id="node7" href="$d3/ded/classmatrix__group.html#a626286de5799c4c9e45216e735b1d233" title="matrix_group::init\l_projective_group" alt="" coords="382,104,509,143"/>
+<area shape="rect" id="node9" href="$d3/ded/classmatrix__group.html#aa278bd127d400940516c20bfe1f2f91e" title="matrix_group::init\l_affine_group" alt="" coords="383,167,507,205"/>
+<area shape="rect" id="node10" href="$d3/ded/classmatrix__group.html#a0aa3c4187d8504b88f9f0aa644b48b86" title="matrix_group::init\l_general_linear_group" alt="" coords="368,229,523,268"/>
+<area shape="rect" id="node8" href="$d3/d78/classdirect__product__action.html#aad40060e5821c011cccaa65a5c4df64f" title="direct_product_action\l::init" alt="" coords="589,136,738,175"/>
+</map>

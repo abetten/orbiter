@@ -1,0 +1,32 @@
+<map id="Gram_matrix" name="Gram_matrix">
+<area shape="rect" id="node2" href="$d1/d15/apps_2combinatorics_2orthogonal_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="209,5,259,31"/>
+<area shape="rect" id="node3" href="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a126317c4062c73932a8e94268c0205cb" title="Siegel_Transformation" alt="" coords="157,55,312,80"/>
+<area shape="rect" id="node6" href="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a2c6c42534b7915aacd84bb9725488fa9" title="orthogonal_Siegel_map\l_between_singular_points" alt="" coords="374,92,550,131"/>
+<area shape="rect" id="node8" href="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a6c7b16f839dc3e1ee95f61a37139c8a0" title="orthogonal_find_root" alt="" coords="162,156,306,181"/>
+<area shape="rect" id="node9" href="$d7/d83/points_8_c.html#a2a86a595e599aecd619f0046595252e4" title="orthogonal_points" alt="" coords="171,205,298,231"/>
+<area shape="rect" id="node11" href="$d2/d17/classprojective__space.html#ac89e189c57d38120fd83fec078fd59e8" title="projective_space::conic\l_points" alt="" coords="154,260,314,299"/>
+<area shape="rect" id="node17" href="$d2/d17/classprojective__space.html#a5466280662eb757e4361e5b91e9a3b0b" title="projective_space::find\l_tangent_lines_to_conic" alt="" coords="152,389,317,428"/>
+<area shape="rect" id="node4" href="$d1/d84/orthogonal__group_8_c.html#a9b56334a3d1e584953aa0af91765100c" title="do_it" alt="" coords="437,40,487,65"/>
+<area shape="rect" id="node5" href="$d1/d84/orthogonal__group_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="666,39,716,64"/>
+<area shape="rect" id="node7" href="$d7/daa/classorthogonal.html#a69dd8beb5401fd5f326ca6687296bc2f" title="orthogonal::Siegel\l_map_between_singular\l_points" alt="" coords="608,88,774,140"/>
+<area shape="rect" id="node10" href="$d7/d83/points_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="437,155,487,180"/>
+<area shape="rect" id="node12" href="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652" title="conic" alt="" coords="436,365,488,391"/>
+<area shape="rect" id="node13" href="$da/d90/analyze_8_c.html#ae230005122bb89f7409f5937134b73bf" title="look_at_these_planes\l_longinteger" alt="" coords="387,204,538,243"/>
+<area shape="rect" id="node14" href="$de/d27/determine__conic_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="437,267,487,292"/>
+<area shape="rect" id="node15" href="$d5/d87/globals_8h.html#a1f36b2be45a6576165929165abb56f1e" title="determine_conic" alt="" coords="403,316,522,341"/>
+<area shape="rect" id="node16" href="$d4/de8/conic_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="666,316,716,341"/>
+<area shape="rect" id="node18" href="$d2/d17/classprojective__space.html#a3b4fbef8fbbeee1af542b6f7c969ed79" title="projective_space::find\l_Eckardt_points_from_arc\l_not_on_conic" alt="" coords="374,491,551,543"/>
+<area shape="rect" id="node20" href="$d2/d17/classprojective__space.html#a0fc1d9c2df818d2ffa6750c2cb63c54c" title="projective_space::find\l_Eckardt_points_from_arc\l_not_on_conic_prepare_data" alt="" coords="365,415,560,467"/>
+<area shape="rect" id="node19" href="$d4/d21/classarc__generator.html#a4ae2e25ba85a60fb2a90a7b4f52675f7" title="arc_generator::print" alt="" coords="622,504,760,529"/>
+<area shape="rect" id="node21" href="$dc/db7/classarc__lifting.html#a70012c92bd78768f5c1c5d14f995147b" title="arc_lifting::find_Eckardt\l_points" alt="" coords="611,421,771,460"/>
+<area shape="rect" id="node22" href="$dc/db7/classarc__lifting.html#a11fc382addd05e0bbe8b0b44dcd4c55e" title="arc_lifting::init" alt="" coords="822,428,925,453"/>
+<area shape="rect" id="node23" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="973,421,1096,460"/>
+<area shape="rect" id="node24" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="1176,372,1279,397"/>
+<area shape="rect" id="node26" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="1157,491,1298,516"/>
+<area shape="rect" id="node30" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="1144,421,1311,460"/>
+<area shape="rect" id="node25" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1556,400,1606,425"/>
+<area shape="rect" id="node27" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="1366,484,1500,523"/>
+<area shape="rect" id="node28" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="1366,547,1500,572"/>
+<area shape="rect" id="node29" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1556,547,1606,572"/>
+<area shape="rect" id="node31" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="1359,421,1508,460"/>
+</map>

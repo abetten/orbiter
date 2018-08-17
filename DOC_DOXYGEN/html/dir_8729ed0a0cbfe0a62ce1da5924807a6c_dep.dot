@@ -1,0 +1,11 @@
+digraph "src/lib/groups_and_group_actions/data_structures" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_bd81d8b98708084983c5186f94beb61b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="groups_and_group_actions" fontname="Helvetica", fontsize="10", URL="dir_bd81d8b98708084983c5186f94beb61b.html"]
+  dir_8729ed0a0cbfe0a62ce1da5924807a6c [shape=box, label="data_structures", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_8729ed0a0cbfe0a62ce1da5924807a6c.html"];
+  }
+  dir_22aca35e3ec12f68aff9c7ff7652d11f [shape=box label="foundations" fillcolor="white" style="filled" color="red" URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"];
+  dir_8729ed0a0cbfe0a62ce1da5924807a6c->dir_22aca35e3ec12f68aff9c7ff7652d11f [headlabel="9", labeldistance=1.5 headhref="dir_000032_000008.html"];
+}

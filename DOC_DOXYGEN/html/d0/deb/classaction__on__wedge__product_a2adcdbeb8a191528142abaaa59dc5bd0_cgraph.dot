@@ -1,0 +1,9 @@
+digraph "action_on_wedge_product::unrank_point"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node716 [label="action_on_wedge_product\l::unrank_point",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node716 -> Node717 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node717 [label="PG_element_unrank_modified",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64"];
+}

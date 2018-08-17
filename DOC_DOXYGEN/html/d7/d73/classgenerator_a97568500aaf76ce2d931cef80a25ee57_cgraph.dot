@@ -1,0 +1,34 @@
+digraph "generator::compute_and_print_automorphism_group_orders"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node350 [label="generator::compute\l_and_print_automorphism\l_group_orders",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node350 -> Node351 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node351 [label="generator::count_automorphism\l_group_orders",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a24c0a9c37f0b2f68c29a9981edce482c"];
+  Node351 -> Node352 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node352 [label="generator::nb_orbits\l_at_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301"];
+  Node351 -> Node353 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node353 [label="generator::get_stabilizer\l_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a2a03fc974c76e47e999f3abc99e6b81d"];
+  Node353 -> Node354 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node354 [label="longinteger_object\l::create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2"];
+  Node354 -> Node355 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node355 [label="longinteger_object\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1"];
+  Node355 -> Node356 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node356 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node355 -> Node357 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node357 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+  Node355 -> Node358 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node358 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node354 -> Node359 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node359 [label="INT_log10",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250"];
+  Node354 -> Node356 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node354 -> Node357 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node354 -> Node358 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node351 -> Node360 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node360 [label="longinteger_object\l::swap_with",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ad5b3a13ab9dd9194219627600890aed5"];
+  Node360 -> Node357 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node350 -> Node361 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node361 [label="longinteger_object\l::assign_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a"];
+  Node361 -> Node356 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,11 @@
+digraph "linear_group_description::~linear_group_description"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="linear_group_description\l::~linear_group_description",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="linear_group_description\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dca/classlinear__group__description.html#af5a923253aad039c8cb00e2b9cab6906"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="linear_group_description\l::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dca/classlinear__group__description.html#a31fa0c221d785baa3c1880ec3d067acc"];
+}

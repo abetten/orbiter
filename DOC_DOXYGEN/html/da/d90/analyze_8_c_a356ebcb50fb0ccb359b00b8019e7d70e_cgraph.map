@@ -1,0 +1,7 @@
+<map id="do_switch" name="do_switch">
+<area shape="rect" id="node2" href="$d2/d17/classprojective__space.html#a3cb7917af4c5f1590b660d4bf907e0fa" title="projective_space::unrank\l_point" alt="" coords="134,5,304,44"/>
+<area shape="rect" id="node4" href="$d2/d17/classprojective__space.html#ae99e357b4a0ada3d5dcd07e13e65326a" title="projective_space::rank\l_point" alt="" coords="141,68,296,107"/>
+<area shape="rect" id="node3" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="352,12,553,37"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="359,75,546,100"/>
+<area shape="rect" id="node6" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="601,75,762,100"/>
+</map>

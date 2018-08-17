@@ -1,0 +1,7 @@
+<map id="unipoly_domain::create_object_by_rank_longinteger" name="unipoly_domain::create_object_by_rank_longinteger">
+<area shape="rect" id="node2" href="$da/d3c/classunipoly__domain.html#abbb4c71146629a9f1c08f764522f54ca" title="unipoly_domain::rank" alt="" coords="246,5,394,31"/>
+<area shape="rect" id="node3" href="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a" title="longinteger_object\l::assign_to" alt="" coords="255,55,385,93"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="255,117,385,156"/>
+<area shape="rect" id="node4" href="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="442,61,601,87"/>
+<area shape="rect" id="node6" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="456,117,587,156"/>
+</map>

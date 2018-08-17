@@ -1,0 +1,15 @@
+digraph "matrix::transpose"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2379 [label="matrix::transpose",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2379 -> Node2380 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2380 [label="geometry::transpose",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ad7132289ee0bc683f8c00c6762bb5035"];
+  Node2379 -> Node2381 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2381 [label="geometry::is_2design",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a31e12da96f9d6f9fd62330bdbc59236d"];
+  Node2379 -> Node2382 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2382 [label="matrix::Ainf2Asup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a7abdfef775e6f1e68856bbdb06004dce"];
+  Node2379 -> Node2383 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2383 [label="matrix::PG_k_q_design",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#ae05463d97ecc8ea3654c45a399b872e2"];
+}

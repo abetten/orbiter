@@ -1,0 +1,5 @@
+<map id="center_of_mass" name="center_of_mass">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a69714d3f4392e3a3de685f7276689e15" title="scene::point_center\l_of_mass" alt="" coords="170,37,307,76"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#a9815b1f5264343aa3527cbbb7a27b0ed" title="scene::point_center\l_of_mass_of_face" alt="" coords="355,5,493,44"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#ac4341cda674606ca051b1f42a13e203d" title="scene::point_center\l_of_mass_of_edge" alt="" coords="355,68,493,107"/>
+</map>

@@ -1,0 +1,36 @@
+digraph "geometry::print_incma_text_latex"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1284 [label="geometry::print_incma\l_text_latex",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1284 -> Node1285 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1285 [label="geometry::X",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a2eff9c42b83c90012092d49218237d9d"];
+  Node1285 -> Node1286 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1286 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
+  Node1285 -> Node1287 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1287 [label="discreta_base::as_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#ae4d7f56d917a4707b838fbffde6467ff"];
+  Node1284 -> Node1288 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1288 [label="matrix::incma_print\l_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a1eba80b1e47f3672e6880e7343eea8e4"];
+  Node1284 -> Node1289 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1289 [label="geometry::f_row_decomp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a149ccf1dac87cbced60547e9608bb42d"];
+  Node1289 -> Node1286 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1289 -> Node1290 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1290 [label="discreta_base::as_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26"];
+  Node1289 -> Node1291 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1291 [label="integer::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904"];
+  Node1284 -> Node1292 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1292 [label="geometry::row_decomp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a58652b4a0edda52732517a06d390882d"];
+  Node1292 -> Node1286 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1292 -> Node1293 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1293 [label="discreta_base::as_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a7bdd6cae39c380b128ee9e17e42cf020"];
+  Node1284 -> Node1294 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1294 [label="geometry::f_col_decomp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#ae0713575216fd4c562da43a469f5edcb"];
+  Node1294 -> Node1286 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1294 -> Node1290 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1294 -> Node1291 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1284 -> Node1295 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1295 [label="geometry::col_decomp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a12425a7d0cebea16e0d22c44e7fbe555"];
+  Node1295 -> Node1286 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1295 -> Node1293 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

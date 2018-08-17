@@ -1,0 +1,12 @@
+<map id="unipoly_domain::negate" name="unipoly_domain::negate">
+<area shape="rect" id="node2" href="$da/d3c/classunipoly__domain.html#a861279fd941d6bad64e6ec13279453af" title="unipoly_domain::Frobenius\l_matrix" alt="" coords="222,5,403,44"/>
+<area shape="rect" id="node5" href="$da/d3c/classunipoly__domain.html#a32acf71ba55156289a07290565ccb65c" title="unipoly_domain::minimum\l_polynomial_factorring" alt="" coords="224,68,401,107"/>
+<area shape="rect" id="node6" href="$da/d3c/classunipoly__domain.html#a2c953e21fad2df88627ac8a289f3a77b" title="unipoly_domain::minimum\l_polynomial_factorring\l_longinteger" alt="" coords="224,131,401,183"/>
+<area shape="rect" id="node7" href="$da/d3c/classunipoly__domain.html#a460cfeb7de30e382da7f183b051e4a4f" title="unipoly_domain::determinant" alt="" coords="216,207,409,232"/>
+<area shape="rect" id="node3" href="$da/d3c/classunipoly__domain.html#a560f4cc73e0badeba359203643fbc333" title="unipoly_domain::Berlekamp\l_matrix" alt="" coords="464,5,650,44"/>
+<area shape="rect" id="node4" href="$da/d3c/classunipoly__domain.html#aec4d9b55b51268d99ef6f6480d7282b5" title="unipoly_domain::is\l_irreducible" alt="" coords="717,5,849,44"/>
+<area shape="rect" id="node8" href="$da/d3c/classunipoly__domain.html#a8fc6545a5f52b768f6ebb2e3b3d57539" title="unipoly_domain::characteristic\l_polynomial" alt="" coords="457,200,657,239"/>
+<area shape="rect" id="node9" href="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e" title="gl_classes::identify\l_matrix" alt="" coords="716,137,849,176"/>
+<area shape="rect" id="node10" href="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c" title="gl_classes::generators\l_for_centralizer" alt="" coords="705,200,860,239"/>
+<area shape="rect" id="node11" href="$d5/d87/globals_8h.html#ad335f04bb0db45b0e9393ec76d0698f4" title="gl_random_matrix" alt="" coords="719,263,847,288"/>
+</map>

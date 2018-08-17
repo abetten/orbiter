@@ -1,0 +1,32 @@
+digraph "main"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6795 [label="main",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6795 -> Node6796 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6796 [label="atoi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac"];
+  Node6795 -> Node6797 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6797 [label="replace_extension_with",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#abd53d5ff0ef75e4cca858aae5d493dba"];
+  Node6795 -> Node6798 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6798 [label="read_set_from_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a5de87b15d6633e4d4c78b22051fc8968"];
+  Node6795 -> Node6799 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6799 [label="colored_graph_all_cliques\l_list_of_cases",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a8053b03db938425d1ef0544259d89676"];
+  Node6799 -> Node6800 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6800 [label="colored_graph::load",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de2/classcolored__graph.html#aa777bb4ea083ac13058d746d63c7f128"];
+  Node6800 -> Node6801 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6801 [label="file_size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50"];
+  Node6800 -> Node6802 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6802 [label="get_extension_if_present",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a737197cad3c39e9690cbc9931edcba6b"];
+  Node6800 -> Node6803 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6803 [label="chop_off_extension\l_if_present",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a9ca43842b56cb96c492a4b2d285a6864"];
+  Node6800 -> Node6804 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6804 [label="fread_INT4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a885df02c08251c103e985ef1d7159014"];
+  Node6800 -> Node6805 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6805 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node6800 -> Node6806 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6806 [label="fread_UBYTEs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ae19b6716e6272928adcd469b05632bdb"];
+  Node6799 -> Node6807 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6807 [label="colored_graph::all\l_rainbow_cliques",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de2/classcolored__graph.html#a62ecc5d052397b136d676a316f94ff10"];
+  Node6795 -> Node6801 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

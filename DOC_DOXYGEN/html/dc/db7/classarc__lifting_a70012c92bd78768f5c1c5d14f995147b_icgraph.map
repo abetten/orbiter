@@ -1,0 +1,12 @@
+<map id="arc_lifting::find_Eckardt_points" name="arc_lifting::find_Eckardt_points">
+<area shape="rect" id="node2" href="$dc/db7/classarc__lifting.html#a11fc382addd05e0bbe8b0b44dcd4c55e" title="arc_lifting::init" alt="" coords="213,61,316,87"/>
+<area shape="rect" id="node3" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="364,55,487,93"/>
+<area shape="rect" id="node4" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="567,5,670,31"/>
+<area shape="rect" id="node6" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="548,124,689,149"/>
+<area shape="rect" id="node10" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="535,55,702,93"/>
+<area shape="rect" id="node5" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="947,33,997,59"/>
+<area shape="rect" id="node7" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="757,117,891,156"/>
+<area shape="rect" id="node8" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="757,180,891,205"/>
+<area shape="rect" id="node9" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="947,180,997,205"/>
+<area shape="rect" id="node11" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="750,55,899,93"/>
+</map>

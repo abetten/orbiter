@@ -1,0 +1,13 @@
+digraph "discreta_base::unpack"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18518 [label="discreta_base::unpack",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18518 -> Node18519 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18519 [label="discreta_base::load\l_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a48d7769e2b58ee14dca23bff7bb24fc4"];
+  Node18519 -> Node18520 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18520 [label="discreta_base::load_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a73a86b4ef5ef9305667b05003ea1b32e"];
+  Node18518 -> Node18521 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18521 [label="database::get_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#af183761e73fedbd560d9545a36060efc"];
+}

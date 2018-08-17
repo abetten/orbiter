@@ -1,0 +1,9 @@
+digraph "Gram_matrix"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1299 [label="Gram_matrix",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1299 -> Node1300 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1300 [label="Witt_index",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ab3483ecb9859a6758f82b5327da50534"];
+}

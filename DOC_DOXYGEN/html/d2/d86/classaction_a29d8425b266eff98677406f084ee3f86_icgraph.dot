@@ -1,0 +1,11 @@
+digraph "action::init_wreath_product_group"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node29097 [label="action::init_wreath\l_product_group",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node29097 -> Node29098 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29098 [label="action::init_wreath\l_product_group_and_restrict",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72"];
+  Node29098 -> Node29099 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29099 [label="tensor_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3"];
+}

@@ -1,0 +1,12 @@
+<map id="longinteger_domain::matrix_product" name="longinteger_domain::matrix_product">
+<area shape="rect" id="node2" href="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35" title="longinteger_domain\l::mult" alt="" coords="207,137,345,176"/>
+<area shape="rect" id="node9" href="$d2/d7a/classlonginteger__domain.html#a2b9c10fbac79f7bbbbd65c7265cdc533" title="longinteger_domain::add" alt="" coords="192,312,360,337"/>
+<area shape="rect" id="node3" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="422,5,553,44"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344" title="longinteger_object\l::sign" alt="" coords="422,220,553,259"/>
+<area shape="rect" id="node6" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="616,313,771,339"/>
+<area shape="rect" id="node7" href="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="408,68,567,93"/>
+<area shape="rect" id="node8" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="615,369,772,395"/>
+<area shape="rect" id="node4" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="628,5,759,44"/>
+<area shape="rect" id="node10" href="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f" title="longinteger_domain\l::compare_unsigned" alt="" coords="416,335,559,373"/>
+<area shape="rect" id="node11" href="$d2/d7a/classlonginteger__domain.html#ae3c122c0ba79ac3bf90bf8dbdd245826" title="longinteger_domain\l::subtract_signless" alt="" coords="418,397,557,436"/>
+</map>

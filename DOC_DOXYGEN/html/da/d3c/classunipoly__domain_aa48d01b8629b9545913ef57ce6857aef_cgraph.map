@@ -1,0 +1,11 @@
+<map id="unipoly_domain::create_Dickson_polynomial" name="unipoly_domain::create_Dickson_polynomial">
+<area shape="rect" id="node2" href="$df/d5a/classfinite__field.html#abc5e4494690f56fb1523b4a956d38c8b" title="finite_field::Dickson\l_polynomial" alt="" coords="226,99,362,137"/>
+<area shape="rect" id="node10" href="$da/d3c/classunipoly__domain.html#afb7ee70ad99925f54d4d56bd27828dd2" title="unipoly_domain::degree" alt="" coords="213,161,376,187"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#a69f2a12c01e70b7ce2d115c5221c9cdd" title="finite_field::inverse" alt="" coords="424,5,556,31"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a0437871b8f775f0b2d589188d9ad7e61" title="finite_field::power" alt="" coords="428,55,553,80"/>
+<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="619,80,733,105"/>
+<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="435,205,546,231"/>
+<area shape="rect" id="node9" href="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31" title="finite_field::negate" alt="" coords="425,156,555,181"/>
+<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="604,205,748,231"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="611,156,740,181"/>
+</map>

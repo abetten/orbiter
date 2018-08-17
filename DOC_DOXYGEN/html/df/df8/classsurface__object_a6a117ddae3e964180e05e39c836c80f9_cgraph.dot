@@ -1,0 +1,41 @@
+digraph "surface_object::latex_trihedral_pair"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1703 [label="surface_object::latex\l_trihedral_pair",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1703 -> Node1704 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1704 [label="surface::print_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a3c3b2848519e60d214db736b4e397789"];
+  Node1704 -> Node1705 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1705 [label="k2ij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a94379148acec1c2aeedad1903aa0756a"];
+  Node1703 -> Node1706 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1706 [label="eckardt_point::latex\l_index_only",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#af8fdbe7105921bd80a717cbdaae00e87"];
+  Node1706 -> Node1705 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1703 -> Node1707 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1707 [label="grassmann::unrank_INT\l_here_and_compute_perp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#ab427dd9206f455a9e6abd6310cd007ed"];
+  Node1707 -> Node1708 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1708 [label="grassmann::unrank_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#a32079405b95a6da2ba1420567d762d64"];
+  Node1708 -> Node1709 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1709 [label="generalized_binomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8"];
+  Node1708 -> Node1710 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1710 [label="i_power_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5"];
+  Node1708 -> Node1711 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1711 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node1708 -> Node1712 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1712 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node1708 -> Node1708 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1708 -> Node1713 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1713 [label="INT_vec_complement",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a2a0a724647575fcd3090c763985eb81a"];
+  Node1708 -> Node1714 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1714 [label="print_integer_matrix\l_width",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f"];
+  Node1707 -> Node1715 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1715 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node1707 -> Node1716 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1716 [label="finite_field::RREF\l_and_kernel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#afdf51a97d36ccddcf8f9f969c3a10ed8"];
+  Node1703 -> Node1717 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1717 [label="PG_element_normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a5a4c3c1158bad6bab0d786c616bd0996"];
+  Node1703 -> Node1718 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1718 [label="homogeneous_polynomial\l_domain::print_equation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#a39fe7da58a442801d7c8be1121a57bfe"];
+  Node1718 -> Node1719 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1719 [label="homogeneous_polynomial\l_domain::print_monomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#aba45b13898b259a147e45bf92a622fd8"];
+}

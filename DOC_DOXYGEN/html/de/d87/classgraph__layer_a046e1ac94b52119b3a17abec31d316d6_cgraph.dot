@@ -1,0 +1,11 @@
+digraph "graph_layer::~graph_layer"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="graph_layer::~graph\l_layer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="graph_layer::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d87/classgraph__layer.html#af6d280f56bdec46e2650648fd597a127"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="graph_layer::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d87/classgraph__layer.html#acf0da08ee035ec4e75d754b9169700f2"];
+}

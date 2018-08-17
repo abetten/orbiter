@@ -1,0 +1,39 @@
+digraph "finite_field::subfield_embedding_2dimensional"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18771 [label="finite_field::subfield\l_embedding_2dimensional",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18771 -> Node18772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18772 [label="buekenhout_metz::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d98/classbuekenhout__metz.html#a9a784ac5ef293953fbf1c53419c6d02b"];
+  Node18772 -> Node18773 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18773 [label="create_Buekenhout_Metz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a78309855776389326c2be56b2c5c1f0c"];
+  Node18773 -> Node18774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18774 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/make__something_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node18771 -> Node18775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18775 [label="create_desarguesian\l_line_spread_in_PG_3_q",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a7d62d5ebe3c87e548f9e7bbd3eeebfac"];
+  Node18775 -> Node18774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18771 -> Node18776 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18776 [label="do_andre",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#af329680ba09fd32078ec87393b99187a"];
+  Node18776 -> Node18777 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18777 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node18771 -> Node18778 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18778 [label="unusual_model::setup2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#a00f7da705c24f863338828447abf7aae"];
+  Node18778 -> Node18779 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18779 [label="unusual_model::setup\l_sum_of_squares",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#ab330b51451b34a5291ee5707ef725eff"];
+  Node18778 -> Node18780 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18780 [label="unusual_model::setup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#adb517fd342dd2ed2d0cc117211ac1c0d"];
+  Node18780 -> Node18781 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18781 [label="create_Fisher_BLT_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ad970fc96c238a422a64338691f8b91cc"];
+  Node18781 -> Node18782 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18782 [label="create_BLT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a5a6f4081a90668e2e95f8e4886d241d9"];
+  Node18782 -> Node18774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18780 -> Node18783 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18783 [label="create_Linear_BLT_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a9a35af1dd478ad49c6922240bfff89dd"];
+  Node18783 -> Node18782 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18780 -> Node18784 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18784 [label="create_Mondello_BLT_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab6f68b0ad3b8ccc37d88073576930ea8"];
+  Node18784 -> Node18782 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18771 -> Node18785 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18785 [label="andre_preimage",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#a02f5cab8bad36069248da9307aba3625"];
+}

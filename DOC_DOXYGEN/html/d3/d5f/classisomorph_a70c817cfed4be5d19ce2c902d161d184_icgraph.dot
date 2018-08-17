@@ -1,0 +1,24 @@
+digraph "isomorph::get_statistics"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2772 [label="isomorph::get_statistics",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2772 -> Node2773 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2773 [label="isomorph::count_solutions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a894cb7cc3e1ce703af74cb8e7aade287"];
+  Node2773 -> Node2774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2774 [label="isomorph::init_cases\l_from_file_modulus_and\l_build_up_database",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a42c6ebeadb51263d8ae8c1bdaae3ebbd"];
+  Node2773 -> Node2775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2775 [label="isomorph::init_cases\l_from_file_mixed_modulus\l_and_build_up_database",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#acae208131143734575c088b5f50123f6"];
+  Node2773 -> Node2776 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2776 [label="isomorph_read_statistic\l_files",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#a78a6ee9d7dee4708fc721374bdebfa83"];
+  Node2776 -> Node2777 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2777 [label="isomorph_arguments\l::execute",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e"];
+  Node2777 -> Node2778 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2778 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node2777 -> Node2779 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2779 [label="arc_generator::main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a"];
+  Node2773 -> Node2780 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2780 [label="isomorph_read_solution\l_files",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#a697da824ab34db5c830530fb3c97df24"];
+  Node2780 -> Node2777 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,25 @@
+digraph "induced_action_element_store"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5747 [label="induced_action_element\l_store",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5747 -> Node5748 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5748 [label="product_action::element\l_store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d74/classproduct__action.html#af09e17711565cdfb825fa56a8ee06809"];
+  Node5748 -> Node5749 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5749 [label="action::element_pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a48a10a87c09b4b37c36eac1180884140"];
+  Node5748 -> Node5750 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5750 [label="page_storage::store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a3d04ee0a97310a8211e223ccea1d2d3f"];
+  Node5750 -> Node5751 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5751 [label="page_storage::s_i_and\l_allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#aa43eb1ae49a6688771f7a89cbe2cd7bf"];
+  Node5751 -> Node5752 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5752 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node5752 -> Node5753 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5753 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node5751 -> Node5754 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5754 [label="UBYTE_print_bitwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a920069ee78174f219534fed767865637"];
+  Node5750 -> Node5755 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5755 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+  Node5747 -> Node5756 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5756 [label="action::element_store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ab969a7009cc85c12f988a18a06b5db64"];
+}

@@ -1,0 +1,14 @@
+digraph "print_set"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4 [label="print_set",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="graph_generator::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#acd2ec07214d869173eb1c9ffb3ec0312"];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="graph_generator::check\l_conditions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#a0e74d900ad772c4f39500aa4eccbaee0"];
+  Node6 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="graph_generator::check\l_conditions_tournament",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#ab2d3a1fcd6641f5e9243b20cda46a65f"];
+}

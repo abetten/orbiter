@@ -1,0 +1,21 @@
+digraph "vector_ge::init_conjugate_svas_of"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2201 [label="vector_ge::init_conjugate\l_svas_of",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2201 -> Node2202 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2202 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node2202 -> Node2203 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2203 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node2201 -> Node2204 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2204 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node2201 -> Node2205 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2205 [label="action::invert",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#aa498723c58a9a8cf1da296044127a428"];
+  Node2201 -> Node2206 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2206 [label="action::element_mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3"];
+  Node2201 -> Node2207 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2207 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node2201 -> Node2208 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2208 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+}

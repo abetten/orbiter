@@ -1,0 +1,7 @@
+<map id="sims::delete_images" name="sims::delete_images">
+<area shape="rect" id="node2" href="$d9/df3/classsims.html#ab596438fd94e1fcafbf69d32024e93bf" title="sims::freeself" alt="" coords="208,5,308,31"/>
+<area shape="rect" id="node4" href="$d9/df3/classsims.html#a7fb1a9d3c6355c551f495d3d79e2303e" title="sims::init_images" alt="" coords="196,55,320,80"/>
+<area shape="rect" id="node3" href="$d9/df3/classsims.html#a7cc925349e00203fae2e4a54ca3788b3" title="sims::~sims" alt="" coords="394,5,486,31"/>
+<area shape="rect" id="node5" href="$d9/df3/classsims.html#a2917ebf2dc37af6cfa39310549994d98" title="sims::init_generators" alt="" coords="368,55,512,80"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#a116abb02245f99c0152d867e0e640c77" title="sims::init_generators\l_by_hdl" alt="" coords="368,104,512,143"/>
+</map>

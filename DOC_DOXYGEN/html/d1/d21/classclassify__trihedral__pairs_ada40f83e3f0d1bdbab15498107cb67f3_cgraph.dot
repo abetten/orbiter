@@ -1,0 +1,32 @@
+digraph "classify_trihedral_pairs::print_trihedral_pairs"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2242 [label="classify_trihedral\l_pairs::print_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2242 -> Node2243 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2243 [label="classification::print\l_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dff/classclassification.html#a593bfd98080643dfa0d3dc4893f2d7e3"];
+  Node2243 -> Node2244 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2244 [label="longinteger_object\l::print_not_scientific",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ab80ea5c103cf97de662da3f1c79b2dd4"];
+  Node2243 -> Node2245 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2245 [label="longinteger_object\l::create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2"];
+  Node2245 -> Node2246 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2246 [label="longinteger_object\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1"];
+  Node2246 -> Node2247 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2247 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node2246 -> Node2248 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2248 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+  Node2246 -> Node2249 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2249 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node2245 -> Node2250 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2250 [label="INT_log10",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250"];
+  Node2245 -> Node2247 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2245 -> Node2248 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2245 -> Node2249 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2243 -> Node2251 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2251 [label="strong_generators::\lgroup_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a91f453c2bfd6502b96f4b4eed16beb20"];
+  Node2243 -> Node2252 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2252 [label="INT_set_print_tex_for\l_inline_text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a62f32a6d98d6c04e4073ba362867fe52"];
+  Node2243 -> Node2253 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2253 [label="strong_generators::\lprint_generators_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a5ec5e1048119097985c01a56f427d873"];
+}

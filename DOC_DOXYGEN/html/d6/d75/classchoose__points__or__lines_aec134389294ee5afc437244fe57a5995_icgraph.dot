@@ -1,0 +1,13 @@
+digraph "choose_points_or_lines::free_representative"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1875 [label="choose_points_or_lines\l::free_representative",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1875 -> Node1876 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1876 [label="choose_points_or_lines\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d75/classchoose__points__or__lines.html#a9322a375bcb2fcc7b5c675b7dec14188"];
+  Node1876 -> Node1877 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1877 [label="choose_points_or_lines\l::~choose_points_or_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d75/classchoose__points__or__lines.html#a4065c741379ae9de19c1fb9c593a0404"];
+  Node1875 -> Node1878 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1878 [label="choose_points_or_lines\l::choose_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d75/classchoose__points__or__lines.html#a17def7dc2b9407b483d887fb24fab74d"];
+}

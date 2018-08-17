@@ -1,0 +1,14 @@
+<map id="unipoly::x" name="unipoly::x">
+<area shape="rect" id="node2" href="$d1/d89/classunipoly.html#ade3afe0b00b7ff45b9dbc5a15cacf59d" title="unipoly::unipoly" alt="" coords="367,46,481,71"/>
+<area shape="rect" id="node3" href="$d1/d89/classunipoly.html#a60f1ddf49bc3e91ad73d24b9fbb29460" title="unipoly::operator=" alt="" coords="157,46,286,71"/>
+<area shape="rect" id="node4" href="$d1/d89/classunipoly.html#aa856d320a499748a0f3345ab45e51910" title="unipoly::copyobject_to" alt="" coords="145,95,298,120"/>
+<area shape="rect" id="node5" href="$d1/d89/classunipoly.html#a9dc0d295bea73d0c20562149f250cd97" title="unipoly::print" alt="" coords="173,144,270,170"/>
+<area shape="rect" id="node6" href="$d1/d89/classunipoly.html#a95bf7f347a5630f0d3f9737ffe22a341" title="unipoly::mult_to" alt="" coords="164,194,279,219"/>
+<area shape="rect" id="node7" href="$d1/d89/classunipoly.html#abebdaf912a2b0e7c27470f4191d0e180" title="unipoly::add_to" alt="" coords="165,243,277,268"/>
+<area shape="rect" id="node8" href="$d1/d89/classunipoly.html#a2181196b44786790f58b72510620db97" title="unipoly::negate_to" alt="" coords="156,292,287,318"/>
+<area shape="rect" id="node9" href="$d1/d89/classunipoly.html#aeb794e4d6b10709ed6be7dae9826d705" title="unipoly::integral_division" alt="" coords="138,342,305,367"/>
+<area shape="rect" id="node11" href="$d1/d89/classunipoly.html#a14ae1863f2096e87f8115f5e8f727883" title="unipoly::get_an_irreducible\l_polynomial" alt="" coords="131,391,312,430"/>
+<area shape="rect" id="node12" href="$d1/d89/classunipoly.html#afb8c65d96c3c1afeb1e14120bd5942b8" title="unipoly::evaluate_at" alt="" coords="151,454,291,479"/>
+<area shape="rect" id="node13" href="$d1/d89/classunipoly.html#a38f30f53df7f4ff1506f2b41666ff39e" title="unipoly::normal_base" alt="" coords="147,503,295,528"/>
+<area shape="rect" id="node10" href="$d1/d89/classunipoly.html#a1fdf6f2da235edcf45fca433dea19370" title="unipoly::normalize" alt="" coords="360,342,488,367"/>
+</map>

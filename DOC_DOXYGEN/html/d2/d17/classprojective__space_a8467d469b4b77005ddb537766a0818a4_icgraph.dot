@@ -1,0 +1,9 @@
+digraph "projective_space::elliptic_curve_addition"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1053 [label="projective_space::elliptic\l_curve_addition",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1053 -> Node1054 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1054 [label="projective_space::elliptic\l_curve_addition_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html#adb3ed668723c9509c7033fdf92a5831b"];
+}

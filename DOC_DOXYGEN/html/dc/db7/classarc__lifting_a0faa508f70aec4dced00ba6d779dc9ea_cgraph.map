@@ -1,0 +1,22 @@
+<map id="arc_lifting::print_Eckardt_point_data" name="arc_lifting::print_Eckardt_point_data">
+<area shape="rect" id="node2" href="$dc/db7/classarc__lifting.html#aef93f2c48dbbdbc91a45c166394b2e45" title="arc_lifting::print\l_bisecants" alt="" coords="197,199,309,237"/>
+<area shape="rect" id="node19" href="$dc/db7/classarc__lifting.html#a56673f5d1a85379718d680a8577890ef" title="arc_lifting::print\l_intersections" alt="" coords="197,348,309,387"/>
+<area shape="rect" id="node21" href="$dc/db7/classarc__lifting.html#a78b48841fa29136a0ced29530d11165a" title="arc_lifting::print\l_conics" alt="" coords="197,285,309,324"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#a94379148acec1c2aeedad1903aa0756a" title="k2ij" alt="" coords="425,61,466,87"/>
+<area shape="rect" id="node4" href="$df/d02/classgrassmann.html#aac233f873cf4090359aab75e9604a573" title="grassmann::print_single\l_generator_matrix_tex" alt="" coords="364,111,527,149"/>
+<area shape="rect" id="node13" href="$df/d02/classgrassmann.html#ab427dd9206f455a9e6abd6310cd007ed" title="grassmann::unrank_INT\l_here_and_compute_perp" alt="" coords="357,173,534,212"/>
+<area shape="rect" id="node16" href="$d4/d67/geometry_8h.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="365,236,526,261"/>
+<area shape="rect" id="node17" href="$d2/da7/classhomogeneous__polynomial__domain.html#a39fe7da58a442801d7c8be1121a57bfe" title="homogeneous_polynomial\l_domain::print_equation" alt="" coords="357,285,534,324"/>
+<area shape="rect" id="node5" href="$df/d02/classgrassmann.html#a32079405b95a6da2ba1420567d762d64" title="grassmann::unrank_INT" alt="" coords="589,128,753,153"/>
+<area shape="rect" id="node12" href="$d5/db4/io__and__os_8h.html#aef00fc6ceb34669a3d92944906509bd1" title="print_integer_matrix_tex" alt="" coords="589,55,753,80"/>
+<area shape="rect" id="node6" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="809,5,957,31"/>
+<area shape="rect" id="node7" href="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5" title="i_power_j" alt="" coords="844,55,922,80"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="811,104,955,129"/>
+<area shape="rect" id="node9" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="831,153,935,179"/>
+<area shape="rect" id="node10" href="$d5/db4/io__and__os_8h.html#a2a0a724647575fcd3090c763985eb81a" title="INT_vec_complement" alt="" coords="807,203,958,228"/>
+<area shape="rect" id="node11" href="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f" title="print_integer_matrix\l_width" alt="" coords="813,252,953,291"/>
+<area shape="rect" id="node14" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="618,177,724,203"/>
+<area shape="rect" id="node15" href="$df/d5a/classfinite__field.html#afdf51a97d36ccddcf8f9f969c3a10ed8" title="finite_field::RREF\l_and_kernel" alt="" coords="608,227,734,265"/>
+<area shape="rect" id="node18" href="$d2/da7/classhomogeneous__polynomial__domain.html#aba45b13898b259a147e45bf92a622fd8" title="homogeneous_polynomial\l_domain::print_monomial" alt="" coords="582,289,759,328"/>
+<area shape="rect" id="node20" href="$d5/db4/io__and__os_8h.html#a49d65f43be040c00e2db8b0850c899cc" title="INT_matrix_print_with\l_labels_and_partition" alt="" coords="370,348,521,387"/>
+</map>

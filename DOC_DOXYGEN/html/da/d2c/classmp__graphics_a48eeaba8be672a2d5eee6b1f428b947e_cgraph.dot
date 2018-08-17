@@ -1,0 +1,9 @@
+digraph "mp_graphics::init"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3480 [label="mp_graphics::init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3480 -> Node3481 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3481 [label="get_fname_base",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a9f25fee3f57fa74a30296738b5ebee3d"];
+}

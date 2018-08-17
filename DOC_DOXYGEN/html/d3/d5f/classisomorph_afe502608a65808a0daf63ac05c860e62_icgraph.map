@@ -1,0 +1,11 @@
+<map id="isomorph::add_solutions_to_database" name="isomorph::add_solutions_to_database">
+<area shape="rect" id="node2" href="$d3/d5f/classisomorph.html#a729746a01bd45d55565d0a11cda9e9a3" title="isomorph::init_solutions" alt="" coords="226,16,387,41"/>
+<area shape="rect" id="node4" href="$d3/d5f/classisomorph.html#a65bc5ec528f741a1b01cdd606dfed579" title="isomorph::read_solutions\l_from_clique_finder_case\l_by_case" alt="" coords="219,68,393,120"/>
+<area shape="rect" id="node9" href="$d3/d5f/classisomorph.html#a14c4ac27b0d97d338e14ac0d183c5c64" title="isomorph::read_solutions\l_from_clique_finder" alt="" coords="221,144,391,183"/>
+<area shape="rect" id="node3" href="$d4/d7e/isomorph__global_8_c.html#a490bbe6199dc1e29d186b26834266e03" title="isomorph_init_solutions\l_from_memory" alt="" coords="446,5,606,44"/>
+<area shape="rect" id="node5" href="$d4/d7e/isomorph__global_8_c.html#a2a55ab4b2df6ae83f916cf01eccdf67c" title="isomorph_read_solution\l_files_from_clique_finder\l_case_by_case" alt="" coords="441,68,611,120"/>
+<area shape="rect" id="node6" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="659,109,805,148"/>
+<area shape="rect" id="node7" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="899,91,949,116"/>
+<area shape="rect" id="node8" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="853,140,994,165"/>
+<area shape="rect" id="node10" href="$d4/d7e/isomorph__global_8_c.html#ad8be067333430bfdd26c0a34549f4556" title="isomorph_read_solution\l_files_from_clique_finder" alt="" coords="441,144,611,183"/>
+</map>

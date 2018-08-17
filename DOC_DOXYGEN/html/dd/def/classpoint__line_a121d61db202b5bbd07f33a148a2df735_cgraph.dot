@@ -1,0 +1,21 @@
+digraph "point_line::coordinatize_plane"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="point_line::coordinatize\l_plane",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="point_line::plane_line\l_through_two_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/def/classpoint__line.html#af406b650e9e83872857248db151bac79"];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="point_line::plane_get\l_points_on_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/def/classpoint__line.html#a451a4fb9b352dbb34c64cecc1f1341f4"];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="point_line::plane_line\l_intersection",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/def/classpoint__line.html#a5be2add1c6769b010a0460db564e5393"];
+  Node0 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="point_line::plane_get\l_lines_through_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/def/classpoint__line.html#a658e08635a1479f58edc3f275ea9d28e"];
+  Node0 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="point_line::MOLSsxb",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/def/classpoint__line.html#ae4d23004dc4a9cd50b3ed317e1fb8009"];
+  Node0 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="point_line::print_MOLS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/def/classpoint__line.html#a65de2085e42965a52469de420274c372"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="get_MOLm",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d75/point__line_8_c.html#aaf6bc7deaefcdf4e19bbe121012735f9"];
+}

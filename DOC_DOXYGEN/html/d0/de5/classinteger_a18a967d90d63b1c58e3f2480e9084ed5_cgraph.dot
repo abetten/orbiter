@@ -1,0 +1,25 @@
+digraph "integer::one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1696 [label="integer::one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1696 -> Node1697 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1697 [label="is_GFp_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ab75527270302df466fc6f6e355775c13"];
+  Node1697 -> Node1698 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1698 [label="has_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#af7df1c554310c6214b2900bf6ca7ac81"];
+  Node1697 -> Node1699 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1699 [label="get_current_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d2f/domain_8_c.html#a80481fde3a59aaeeb648f8c5392269f7"];
+  Node1696 -> Node1700 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1700 [label="integer::m_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a869091f0a0f35f5354c8c4a70250e8a9"];
+  Node1700 -> Node1701 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1701 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node1701 -> Node1702 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1702 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node1701 -> Node1703 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1703 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+  Node1696 -> Node1704 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1704 [label="is_GFq_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#af695b4599bda7a0400772172c9eeff64"];
+  Node1704 -> Node1698 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1704 -> Node1699 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,18 @@
+<map id="classify_trihedral_pairs::identify_three_planes" name="classify_trihedral_pairs::identify_three_planes">
+<area shape="rect" id="node2" href="$d1/d21/classclassify__trihedral__pairs.html#a4134a82fca1d3962311921731ce001eb" title="classify_trihedral\l_pairs::upstep" alt="" coords="234,109,355,147"/>
+<area shape="rect" id="node9" href="$d1/d21/classclassify__trihedral__pairs.html#a1a85f616b5043da9f7e585868b0d191d" title="classify_trihedral\l_pairs::identify_trihedral_pair" alt="" coords="198,187,391,226"/>
+<area shape="rect" id="node3" href="$d1/d21/classclassify__trihedral__pairs.html#a134e4c3042163c24bf57050f26e364e1" title="classify_trihedral\l_pairs::classify" alt="" coords="655,93,775,131"/>
+<area shape="rect" id="node4" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1237,167,1287,193"/>
+<area shape="rect" id="node5" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="837,105,978,130"/>
+<area shape="rect" id="node6" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="1047,103,1181,142"/>
+<area shape="rect" id="node7" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="1047,54,1181,79"/>
+<area shape="rect" id="node8" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1237,54,1287,79"/>
+<area shape="rect" id="node10" href="$dc/db7/classarc__lifting.html#a30126f5ed4126d604c191aa4d1f7505a" title="arc_lifting::loop_over\l_trihedral_pairs" alt="" coords="450,150,594,189"/>
+<area shape="rect" id="node15" href="$dc/db7/classarc__lifting.html#ac2ea90f2acf97c870a7f46f7b125b8b7" title="arc_lifting::print\l_isomorphism_types_of\l_trihedral_pairs" alt="" coords="441,213,603,265"/>
+<area shape="rect" id="node17" href="$d1/d21/classclassify__trihedral__pairs.html#a433489bad83d619b71a688e6a03a3210" title="classify_trihedral\l_pairs::identify_trihedral\l_pair_and_get_stabilizer" alt="" coords="439,289,606,341"/>
+<area shape="rect" id="node11" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="654,159,776,198"/>
+<area shape="rect" id="node12" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="856,167,959,193"/>
+<area shape="rect" id="node13" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="824,217,991,255"/>
+<area shape="rect" id="node14" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="1039,218,1189,257"/>
+<area shape="rect" id="node16" href="$dc/db7/classarc__lifting.html#ae1609cb80720bc005f0fc3ea65150185" title="arc_lifting::print" alt="" coords="659,223,771,249"/>
+</map>

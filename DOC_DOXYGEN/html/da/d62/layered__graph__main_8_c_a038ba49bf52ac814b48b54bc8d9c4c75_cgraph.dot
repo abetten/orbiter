@@ -1,0 +1,47 @@
+digraph "draw_ending_callback"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node25 [label="draw_ending_callback",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node25 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 [label="mp_graphics::st_overwrite",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a130986688f4fe6d3b6de801b8c771f54"];
+  Node26 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="mp_graphics::st_overwrite_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a1928b1e403a6fe7a9498a38c91f37b29"];
+  Node25 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="INT_vec_search_linear",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad0aa35e081da3ba3cc8841bf086ba9aa"];
+  Node25 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="layered_graph::coordinates",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/db1/classlayered__graph.html#abbe593a1640471038ad4d5264416e19c"];
+  Node29 -> Node30 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="layered_graph::find\l_node_by_id",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/db1/classlayered__graph.html#a380a87fc8f87f526f71e13670fe5ef12"];
+  Node29 -> Node31 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="layered_graph::coordinates\l_direct",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/db1/classlayered__graph.html#a6941694e288f9fd022ccc54b04a77f5f"];
+  Node25 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="mp_graphics::aligned_text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a52ca0d0e39640fe15c6a8bd8633c9e5a"];
+  Node32 -> Node33 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="mp_graphics::aligned\l_text_with_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a3b5a8558ee721bd8b9ed36e732317679"];
+  Node33 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="mp_graphics::st_alignment",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ab897ac847368de2da4296c7f159cc5f9"];
+  Node34 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="mp_graphics::st_alignment_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a9f7aa1c186791f69881ddbf590835f3e"];
+  Node33 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="mp_graphics::text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ae92ece77cf1942bfee760d6cf854b74b"];
+  Node36 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="mp_graphics::coords\l_min_max",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#afa0af74da2afd1d00b2eeb5e25b4f596"];
+  Node36 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="mp_graphics::user2dev",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#af087f5f4b08c72f67f5e35cc312070fb"];
+  Node38 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="transform_llur",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d29/draw_8_c.html#af38b139f64e19404b9a944c7188d4aff"];
+  Node36 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="mp_graphics::text_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a3a8320de1e68f3c290e138355f05f8ae"];
+  Node36 -> Node41 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node41 [label="mp_graphics::text_mp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ad30aeb75639e84d876dade51faa50bee"];
+  Node36 -> Node42 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node42 [label="mp_graphics::text_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ac7e4333813701bcc76fc5eba7700bdbd"];
+  Node42 -> Node43 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node43 [label="mp_graphics::output\l_xy_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a640800bc67fec9ed441b27c71461e9c6"];
+  Node43 -> Node44 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node44 [label="mp_graphics::output\l_x_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a311d4fb1c32d1eb0faeee055bb8badee"];
+  Node43 -> Node45 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node45 [label="mp_graphics::output\l_y_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a0d6bddb89b4c58c82aa124dd003dda08"];
+}

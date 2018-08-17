@@ -1,0 +1,31 @@
+digraph "compute_stabilizer::map_the_second_set"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2966 [label="compute_stabilizer\l::map_the_second_set",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2966 -> Node2967 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2967 [label="compute_stabilizer\l::main_loop_handle_case",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d30/classcompute__stabilizer.html#a040fb5c6ad50133c5a16a35ed5b2ecc4"];
+  Node2967 -> Node2968 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2968 [label="compute_stabilizer\l::main_loop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d30/classcompute__stabilizer.html#ae8615a28e0494704450689b6ea0b7ca2"];
+  Node2968 -> Node2969 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2969 [label="compute_stabilizer\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d30/classcompute__stabilizer.html#a36a1729430f317a65559220a8206a7d7"];
+  Node2969 -> Node2970 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2970 [label="set_stabilizer_compute\l::handle_frequencies",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dc6/classset__stabilizer__compute.html#a247c31bc3f19f22dadbfd7607cbaaa78"];
+  Node2970 -> Node2971 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2971 [label="set_stabilizer_compute\l::compute_set_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dc6/classset__stabilizer__compute.html#ad4f92074322e98c7cd0ed5d4f8486b76"];
+  Node2971 -> Node2972 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2972 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d67/test__hyperoval_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node2971 -> Node2973 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2973 [label="conic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652"];
+  Node2971 -> Node2974 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2974 [label="linear_set::do_compute\l_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b"];
+  Node2974 -> Node2975 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2975 [label="linear_set::init_compute\l_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b"];
+  Node2975 -> Node2976 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2976 [label="linear_set::compute\l_stabilizer_of_linear_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2"];
+  Node2971 -> Node2977 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2977 [label="create_sims_for_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#af2c67d225072549409be710ac3cd30f8"];
+  Node2971 -> Node2978 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2978 [label="create_sims_for_stabilizer\l_with_input_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#af5482567a8d6ba5c2fe593bf6f7f9a0f"];
+}

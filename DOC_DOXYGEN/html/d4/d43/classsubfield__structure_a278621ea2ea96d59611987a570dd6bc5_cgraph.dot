@@ -1,0 +1,11 @@
+digraph "subfield_structure::~subfield_structure"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="subfield_structure\l::~subfield_structure",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="subfield_structure\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d43/classsubfield__structure.html#a6a9725c48929a32427696af14ef69440"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="subfield_structure\l::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d43/classsubfield__structure.html#a055260480ba8b8d9ec922824f57e7de2"];
+}

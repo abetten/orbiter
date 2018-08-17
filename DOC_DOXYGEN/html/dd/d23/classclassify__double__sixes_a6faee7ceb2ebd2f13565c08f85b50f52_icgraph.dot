@@ -1,0 +1,13 @@
+digraph "classify_double_sixes::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2681 [label="classify_double_sixes\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2681 -> Node2682 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2682 [label="classify_double_sixes\l::classify_double_sixes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#acf03fec019f68b7fde956f33a600ad3e"];
+  Node2681 -> Node2683 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2683 [label="classify_double_sixes\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a9ee9f5cd80985af9e0e0ddecbdf8fe08"];
+  Node2683 -> Node2684 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2684 [label="classify_double_sixes\l::~classify_double_sixes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#aa5c5fe670215546d6d78f627b9aa66a0"];
+}

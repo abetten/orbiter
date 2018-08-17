@@ -1,0 +1,9 @@
+digraph "diophant::init_RHS"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node248 [label="diophant::init_RHS",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node248 -> Node249 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node249 [label="diophant::RHSi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#aa56efaa8e28e17c83f96ed409964b3e1"];
+}

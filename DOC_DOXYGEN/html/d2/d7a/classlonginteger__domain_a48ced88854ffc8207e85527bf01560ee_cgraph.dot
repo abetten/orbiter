@@ -1,0 +1,42 @@
+digraph "longinteger_domain::logarithm_base_b"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node431 [label="longinteger_domain\l::logarithm_base_b",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node431 -> Node432 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node432 [label="longinteger_object\l::assign_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a"];
+  Node432 -> Node433 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node433 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node431 -> Node434 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node434 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+  Node431 -> Node435 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node435 [label="longinteger_object\l::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101"];
+  Node435 -> Node434 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node431 -> Node436 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node436 [label="longinteger_domain\l::integral_division\l_by_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a5184e0be0edaa5f5de9f332b033d66d1"];
+  Node436 -> Node437 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node437 [label="longinteger_domain\l::integral_division",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a1ecbac0518646945d9633a86844846aa"];
+  Node437 -> Node438 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node438 [label="longinteger_object\l::sign",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344"];
+  Node437 -> Node439 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node439 [label="longinteger_domain\l::compare",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a6780a80b91bf044dde737578b2e19a02"];
+  Node439 -> Node438 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node439 -> Node440 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node440 [label="longinteger_domain\l::compare_unsigned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f"];
+  Node440 -> Node441 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node441 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node440 -> Node442 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node442 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+  Node437 -> Node432 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node437 -> Node443 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node443 [label="longinteger_domain\l::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35"];
+  Node443 -> Node435 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node443 -> Node438 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node443 -> Node441 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node443 -> Node444 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node444 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node443 -> Node442 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node437 -> Node441 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node437 -> Node442 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

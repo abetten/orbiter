@@ -1,0 +1,13 @@
+digraph "surface_object::print_equation_in_trihedral_form"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1872 [label="surface_object::print\l_equation_in_trihedral_form",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1872 -> Node1873 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1873 [label="surface_object::print\l_equation_in_trihedral\l_form_equation_only",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/classsurface__object.html#ae570775863861dbf2127f755b9c886bd"];
+  Node1873 -> Node1874 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1874 [label="homogeneous_polynomial\l_domain::print_equation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#a39fe7da58a442801d7c8be1121a57bfe"];
+  Node1874 -> Node1875 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1875 [label="homogeneous_polynomial\l_domain::print_monomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#aba45b13898b259a147e45bf92a622fd8"];
+}

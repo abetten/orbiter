@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('globals_w.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,152 +90,271 @@ $(function() {
 
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>w
-: <a class="el" href="k__arc__lifting_8_c.html#a43740b328aa1f8189d7b7db0dbf7227c">k_arc_lifting.C</a>
-, <a class="el" href="alphabet_8_c.html#aac374e320caaadeca4874add33b62af2">alphabet.C</a>
-, <a class="el" href="alphabet2_8_c.html#aac374e320caaadeca4874add33b62af2">alphabet2.C</a>
+: <a class="el" href="d2/dd6/k__arc__lifting_8_c.html#a43740b328aa1f8189d7b7db0dbf7227c">k_arc_lifting.C</a>
+, <a class="el" href="d9/dc9/alphabet_8_c.html#aac374e320caaadeca4874add33b62af2">alphabet.C</a>
+, <a class="el" href="d9/d4b/alphabet2_8_c.html#aac374e320caaadeca4874add33b62af2">alphabet2.C</a>
 </li>
 <li>W3q
-: <a class="el" href="galois_8h.html#a4992f812e269734956ab8ac6fd9bf6dc">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a4992f812e269734956ab8ac6fd9bf6dc">foundations.h</a>
 </li>
 <li>wedge_product_export_magma()
-: <a class="el" href="snakes__and__ladders__global_8_c.html#a089361716c9d4ced5fd32c64584e8648">snakes_and_ladders_global.C</a>
-, <a class="el" href="snakesandladders_8h.html#a089361716c9d4ced5fd32c64584e8648">snakesandladders.h</a>
+: <a class="el" href="da/d10/other_8h.html#a089361716c9d4ced5fd32c64584e8648">other.h</a>
+, <a class="el" href="d3/d35/snakes__and__ladders__global_8_c.html#a089361716c9d4ced5fd32c64584e8648">snakes_and_ladders_global.C</a>
 </li>
 <li>welch()
-: <a class="el" href="costas_8_c.html#a1be7f35236ad96218a7433ee282d50a8">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#a1be7f35236ad96218a7433ee282d50a8">costas.C</a>
 </li>
 <li>Wilson()
-: <a class="el" href="test_8_c.html#a74d70c4515ad1bfa1f5dfd97aee72491">test.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a74d70c4515ad1bfa1f5dfd97aee72491">test.C</a>
 </li>
 <li>with_group_table
-: <a class="el" href="discreta_8h.html#a0c61b06958183d67e0d3971038f66e70ac09c6e641c34f232fea5cb5d43035489">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a0c61b06958183d67e0d3971038f66e70ac09c6e641c34f232fea5cb5d43035489">discreta.h</a>
 </li>
 <li>with_perm_group
-: <a class="el" href="discreta_8h.html#a0c61b06958183d67e0d3971038f66e70aaf0c0d3fc706c968d0d4ca41da64340d">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a0c61b06958183d67e0d3971038f66e70aaf0c0d3fc706c968d0d4ca41da64340d">discreta.h</a>
 </li>
 <li>Witt_index()
-: <a class="el" href="galois_8h.html#ab3483ecb9859a6758f82b5327da50534">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#ab3483ecb9859a6758f82b5327da50534">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#ab3483ecb9859a6758f82b5327da50534">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ab3483ecb9859a6758f82b5327da50534">orthogonal_points.C</a>
 </li>
 <li>WORDSIZE
-: <a class="el" href="nauty_8h.html#aaf3f5e6eaee07212584e981942f95268">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#aaf3f5e6eaee07212584e981942f95268">nauty.h</a>
 </li>
 <li>wreath_embedding()
-: <a class="el" href="discreta_8h.html#aa29d82e7082af21ca98bbd658b809bce">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#aa29d82e7082af21ca98bbd658b809bce">perm_group_gens.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#aa29d82e7082af21ca98bbd658b809bce">discreta.h</a>
+, <a class="el" href="d0/dd3/perm__group__gens_8_c.html#aa29d82e7082af21ca98bbd658b809bce">perm_group_gens.C</a>
 </li>
 <li>wreath_embedding_component()
-: <a class="el" href="discreta_8h.html#a42c6a1b7d30f5f22238fb4676b165162">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#a42c6a1b7d30f5f22238fb4676b165162">perm_group_gens.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a42c6a1b7d30f5f22238fb4676b165162">discreta.h</a>
+, <a class="el" href="d0/dd3/perm__group__gens_8_c.html#a42c6a1b7d30f5f22238fb4676b165162">perm_group_gens.C</a>
+</li>
+<li>wreath_product
+: <a class="el" href="d8/db2/groups__and__group__actions_8h.html#a1c601b151ac8b1bed695499c11b85129">groups_and_group_actions.h</a>
 </li>
 <li>Wreath_product
-: <a class="el" href="discreta_8h.html#a9fbd019a849defc14910ae0a667c516eae0f053434c3b224b9fb62ea05475e680">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a9fbd019a849defc14910ae0a667c516eae0f053434c3b224b9fb62ea05475e680">discreta.h</a>
+</li>
+<li>wreath_product_group_element_code_for_make_element()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a1f5e8146fde6e20c8206f2e0a03e3b61">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a1f5e8146fde6e20c8206f2e0a03e3b61">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_dispose()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a9136b8542f4b9a26e00a6d72261c8894">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a9136b8542f4b9a26e00a6d72261c8894">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_image_of()
+: <a class="el" href="dc/dd4/group__actions_8h.html#ab8e7cda0e3e86654f369d3a8667d639f">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#ab8e7cda0e3e86654f369d3a8667d639f">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_image_of_low_level()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a59bd3cf43190184647a028aa1413a8a3">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a59bd3cf43190184647a028aa1413a8a3">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_invert()
+: <a class="el" href="dc/dd4/group__actions_8h.html#ac950dd10101b7b5ffec17ef2e5b9f239">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#ac950dd10101b7b5ffec17ef2e5b9f239">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_is_one()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a43c7566c41aa7a56ee5540885285f926">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a43c7566c41aa7a56ee5540885285f926">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_linear_entry_frobenius()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a12001faf3956ec6df6d8ab2e7197bf50">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a12001faf3956ec6df6d8ab2e7197bf50">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_linear_entry_ij()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a9eec962f4e9988d0c78de5950cd153e1">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a9eec962f4e9988d0c78de5950cd153e1">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_move()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a6553d325b3d41bb32b6b3fae0a862ce9">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a6553d325b3d41bb32b6b3fae0a862ce9">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_mult()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a8a00d12887c0833d1e877f5169ce0971">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a8a00d12887c0833d1e877f5169ce0971">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_one()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a81422d384d05f80e1bab00a0847e0a2e">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a81422d384d05f80e1bab00a0847e0a2e">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_pack()
+: <a class="el" href="dc/dd4/group__actions_8h.html#aa22c4747eb4f16179dcffc3979f581e5">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#aa22c4747eb4f16179dcffc3979f581e5">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a17b20cc18b13f32e90f4cc5fb64daf44">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a17b20cc18b13f32e90f4cc5fb64daf44">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print_as_permutation()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a568044a7f70c1faf319b5ae0aabf00a2">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a568044a7f70c1faf319b5ae0aabf00a2">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print_for_make_element()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a13e1180a99102e25945a2529ad961d67">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a13e1180a99102e25945a2529ad961d67">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print_for_make_element_no_commas()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a92a09694c557a7c053bf0175eb219d4b">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a92a09694c557a7c053bf0175eb219d4b">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print_latex()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a6d4661e1ba4db85a11c3934ae5911a70">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a6d4661e1ba4db85a11c3934ae5911a70">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print_quick()
+: <a class="el" href="dc/dd4/group__actions_8h.html#ac15fe3f2b3cf296ca8fbdfe3c971b63b">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#ac15fe3f2b3cf296ca8fbdfe3c971b63b">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_print_verbose()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a7664deec40eceaffc44c72f39119796a">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a7664deec40eceaffc44c72f39119796a">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_retrieve()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a743bb8e8a8cdf4f44f6591c96636ac3f">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a743bb8e8a8cdf4f44f6591c96636ac3f">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_store()
+: <a class="el" href="dc/dd4/group__actions_8h.html#acbaacfb80dda5ce3de5603e5972b088f">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#acbaacfb80dda5ce3de5603e5972b088f">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_element_transpose()
+: <a class="el" href="da/d12/interface__wreath__product_8_c.html#a58fb7fa56b3619502e987337a9bfa934">interface_wreath_product.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#a58fb7fa56b3619502e987337a9bfa934">group_actions.h</a>
+</li>
+<li>wreath_product_group_element_unpack()
+: <a class="el" href="dc/dd4/group__actions_8h.html#a5b761be9d6bf8906e7932c791e09ce98">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#a5b761be9d6bf8906e7932c791e09ce98">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_group_print_point()
+: <a class="el" href="dc/dd4/group__actions_8h.html#aa968af12d472dfc9ce5e6e5ec50b9152">group_actions.h</a>
+, <a class="el" href="da/d12/interface__wreath__product_8_c.html#aa968af12d472dfc9ce5e6e5ec50b9152">interface_wreath_product.C</a>
+</li>
+<li>wreath_product_t
+: <a class="el" href="d8/db2/groups__and__group__actions_8h.html#a609fcdec33cc2d16c6c067d07931cba9a84c2d818b0599adb10f913c04749d98b">groups_and_group_actions.h</a>
+</li>
+<li>wreath_rank_point_func()
+: <a class="el" href="de/d28/apps_2groups_2wreath__product_8_c.html#a286498c648475b6522cd29a0324c4656">wreath_product.C</a>
+</li>
+<li>wreath_unrank_point_func()
+: <a class="el" href="de/d28/apps_2groups_2wreath__product_8_c.html#ae4b2a7da6fcfdcfca3dc6f7e4b94f77f">wreath_product.C</a>
 </li>
 <li>write_ascii_generators()
-: <a class="el" href="discreta_8h.html#a9040cc4a7622e0c950d09432d5111874">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a9040cc4a7622e0c950d09432d5111874">discreta.h</a>
 </li>
 <li>write_ascii_KM_matrices()
-: <a class="el" href="discreta_8h.html#a17c29e8903b8f7aae3ddc6a1a5a4d20b">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a17c29e8903b8f7aae3ddc6a1a5a4d20b">discreta.h</a>
 </li>
 <li>write_ascii_representatives()
-: <a class="el" href="discreta_8h.html#adfe3740ac3185027574b168f9ba18892">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#adfe3740ac3185027574b168f9ba18892">discreta.h</a>
 </li>
 <li>write_ascii_stabilizer_orders()
-: <a class="el" href="discreta_8h.html#a7afe55910ad813c86750536684ab9d04">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a7afe55910ad813c86750536684ab9d04">discreta.h</a>
 </li>
 <li>write_ascii_stabilizer_orders_k_sets()
-: <a class="el" href="discreta_8h.html#a931ee2c1e619cfb4d2ccf41b62f5da8a">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a931ee2c1e619cfb4d2ccf41b62f5da8a">discreta.h</a>
 </li>
 <li>write_col_scheme()
-: <a class="el" href="tdo__start_8_c.html#a76627809e5a8796dd8b8dcf513dc132d">tdo_start.C</a>
+: <a class="el" href="d8/dd0/tdo__start_8_c.html#a76627809e5a8796dd8b8dcf513dc132d">tdo_start.C</a>
 </li>
 <li>write_colored_graph()
-: <a class="el" href="galois_8h.html#ad8f46c04217ce06659cce8eef93df0b4">galois.h</a>
-, <a class="el" href="galois__global_8_c.html#ad8f46c04217ce06659cce8eef93df0b4">galois_global.C</a>
+: <a class="el" href="da/da9/galois__global_8_c.html#ad8f46c04217ce06659cce8eef93df0b4">galois_global.C</a>
+, <a class="el" href="d5/d87/globals_8h.html#ad8f46c04217ce06659cce8eef93df0b4">globals.h</a>
 </li>
 <li>write_exact_cover_problem_to_file()
-: <a class="el" href="galois_8h.html#a84b965a01175e11149550a13dd6a4d91">galois.h</a>
-, <a class="el" href="util_8_c.html#a84b965a01175e11149550a13dd6a4d91">util.C</a>
+: <a class="el" href="d4/d74/util_8_c.html#a84b965a01175e11149550a13dd6a4d91">util.C</a>
+, <a class="el" href="d5/db4/io__and__os_8h.html#a84b965a01175e11149550a13dd6a4d91">io_and_os.h</a>
 </li>
 <li>write_file_of_generators()
-: <a class="el" href="discreta_8h.html#a54e6e8eb88549e0cfefe641653e84715">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#a54e6e8eb88549e0cfefe641653e84715">perm_group_gens.C</a>
+: <a class="el" href="d0/dd3/perm__group__gens_8_c.html#a54e6e8eb88549e0cfefe641653e84715">perm_group_gens.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#a54e6e8eb88549e0cfefe641653e84715">discreta.h</a>
 </li>
 <li>write_file_of_generators_gap()
-: <a class="el" href="perm__group__gens_8_c.html#a75e679cabe7c7178aee2378f15d15e34">perm_group_gens.C</a>
-, <a class="el" href="discreta_8h.html#a75e679cabe7c7178aee2378f15d15e34">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a75e679cabe7c7178aee2378f15d15e34">discreta.h</a>
+, <a class="el" href="d0/dd3/perm__group__gens_8_c.html#a75e679cabe7c7178aee2378f15d15e34">perm_group_gens.C</a>
 </li>
 <li>write_file_of_generators_gap_group_label()
-: <a class="el" href="discreta_8h.html#ae58a2cfa50029df04a015a6c9e529ea9">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#ae58a2cfa50029df04a015a6c9e529ea9">perm_group_gens.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#ae58a2cfa50029df04a015a6c9e529ea9">discreta.h</a>
+, <a class="el" href="d0/dd3/perm__group__gens_8_c.html#ae58a2cfa50029df04a015a6c9e529ea9">perm_group_gens.C</a>
 </li>
 <li>write_file_of_generators_group_label()
-: <a class="el" href="discreta_8h.html#ae43736cf13bd458db457ffee9f2dc141">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#ae43736cf13bd458db457ffee9f2dc141">perm_group_gens.C</a>
+: <a class="el" href="d0/dd3/perm__group__gens_8_c.html#ae43736cf13bd458db457ffee9f2dc141">perm_group_gens.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#ae43736cf13bd458db457ffee9f2dc141">discreta.h</a>
 </li>
 <li>write_file_of_generators_xml()
-: <a class="el" href="discreta_8h.html#afdd96b23ffd162968dc51417edd6b516">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#afdd96b23ffd162968dc51417edd6b516">perm_group_gens.C</a>
+: <a class="el" href="d0/dd3/perm__group__gens_8_c.html#afdd96b23ffd162968dc51417edd6b516">perm_group_gens.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#afdd96b23ffd162968dc51417edd6b516">discreta.h</a>
 </li>
 <li>write_file_of_generators_xml_group_label()
-: <a class="el" href="perm__group__gens_8_c.html#a937affd15a6c49ebf8cd5118198fe5a4">perm_group_gens.C</a>
-, <a class="el" href="discreta_8h.html#a937affd15a6c49ebf8cd5118198fe5a4">discreta.h</a>
+: <a class="el" href="d0/dd3/perm__group__gens_8_c.html#a937affd15a6c49ebf8cd5118198fe5a4">perm_group_gens.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#a937affd15a6c49ebf8cd5118198fe5a4">discreta.h</a>
 </li>
 <li>write_generators()
-: <a class="el" href="discreta_8h.html#ae6b0a48acd164c33e2de0566005a940f">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#ae6b0a48acd164c33e2de0566005a940f">perm_group_gens.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#ae6b0a48acd164c33e2de0566005a940f">discreta.h</a>
+, <a class="el" href="d0/dd3/perm__group__gens_8_c.html#ae6b0a48acd164c33e2de0566005a940f">perm_group_gens.C</a>
 </li>
 <li>write_generators_gap()
-: <a class="el" href="discreta_8h.html#a4514cb772ccb0840095328820d9eaf5d">discreta.h</a>
-, <a class="el" href="perm__group__gens_8_c.html#a4514cb772ccb0840095328820d9eaf5d">perm_group_gens.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a4514cb772ccb0840095328820d9eaf5d">discreta.h</a>
+, <a class="el" href="d0/dd3/perm__group__gens_8_c.html#a4514cb772ccb0840095328820d9eaf5d">perm_group_gens.C</a>
 </li>
 <li>write_incidence_matrix_to_file()
-: <a class="el" href="galois_8h.html#a1883a8e4806f552ace65d33cbed63bc6">galois.h</a>
-, <a class="el" href="util_8_c.html#a1883a8e4806f552ace65d33cbed63bc6">util.C</a>
+: <a class="el" href="d4/d74/util_8_c.html#a1883a8e4806f552ace65d33cbed63bc6">util.C</a>
+, <a class="el" href="d5/db4/io__and__os_8h.html#a1883a8e4806f552ace65d33cbed63bc6">io_and_os.h</a>
 </li>
 <li>WRITE_INFO_ONLY_AT_END
-: <a class="el" href="btree_8_c.html#a7ef6ef015fbf83df3a2c4648844b5cda">btree.C</a>
+: <a class="el" href="d8/d5a/btree_8_c.html#a7ef6ef015fbf83df3a2c4648844b5cda">btree.C</a>
 </li>
 <li>write_KM_file()
-: <a class="el" href="discreta_8h.html#a32d1dd316c31b5f3df471e5f4f0b9cdb">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a32d1dd316c31b5f3df471e5f4f0b9cdb">discreta.h</a>
 </li>
 <li>write_KM_file2()
-: <a class="el" href="discreta_8h.html#a083b2fb456a01c66e09b802bf8ab7001">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a083b2fb456a01c66e09b802bf8ab7001">discreta.h</a>
 </li>
 <li>write_orbits_on_pairs_to_file()
-: <a class="el" href="discreta_8h.html#a946f22785d296eea2939df78925f54a2">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a946f22785d296eea2939df78925f54a2">discreta.h</a>
 </li>
 <li>write_row_scheme()
-: <a class="el" href="tdo__start_8_c.html#a9c96af0bbb14c77f93ad10189cc53f29">tdo_start.C</a>
+: <a class="el" href="d8/dd0/tdo__start_8_c.html#a9c96af0bbb14c77f93ad10189cc53f29">tdo_start.C</a>
 </li>
 <li>write_set_to_file()
-: <a class="el" href="galois_8h.html#a3d2767f53fed9a2dacf580e0b2d4b961">galois.h</a>
-, <a class="el" href="util_8_c.html#a3d2767f53fed9a2dacf580e0b2d4b961">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a3d2767f53fed9a2dacf580e0b2d4b961">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a3d2767f53fed9a2dacf580e0b2d4b961">util.C</a>
 </li>
 <li>write_set_to_file_as_INT4()
-: <a class="el" href="util_8_c.html#ad354043faa0d816b08db1bbd68c250cd">util.C</a>
-, <a class="el" href="galois_8h.html#ad354043faa0d816b08db1bbd68c250cd">galois.h</a>
+: <a class="el" href="d4/d74/util_8_c.html#ad354043faa0d816b08db1bbd68c250cd">util.C</a>
+, <a class="el" href="d5/db4/io__and__os_8h.html#ad354043faa0d816b08db1bbd68c250cd">io_and_os.h</a>
+</li>
+<li>write_set_to_file_as_INT8()
+: <a class="el" href="d5/db4/io__and__os_8h.html#a2eb835ee25a27cfe535d6c2d2cee32e3">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a2eb835ee25a27cfe535d6c2d2cee32e3">util.C</a>
 </li>
 <li>write_td_scheme()
-: <a class="el" href="tdo__start_8_c.html#ae68eed4359eef48868b4a4f207d203cd">tdo_start.C</a>
+: <a class="el" href="d8/dd0/tdo__start_8_c.html#ae68eed4359eef48868b4a4f207d203cd">tdo_start.C</a>
 </li>
 <li>write_tdo_line_type()
-: <a class="el" href="tdo__start_8_c.html#a3b504429db90c5c789b91ef9807e1e33">tdo_start.C</a>
+: <a class="el" href="d8/dd0/tdo__start_8_c.html#a3b504429db90c5c789b91ef9807e1e33">tdo_start.C</a>
 </li>
 <li>write_tree()
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#ac9de85ee7e49f43b2255f8164510f036">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#ac9de85ee7e49f43b2255f8164510f036">dlx.C</a>
+</li>
+<li>writegroupsize()
+: <a class="el" href="d8/dd4/nautil_8c.html#a1d8451e79cf0fadf55e4ec87a75a55ba">nautil.c</a>
+, <a class="el" href="d1/da0/nauty_8h.html#a68602ae25a831cef6c696174b16ecf38">nauty.h</a>
 </li>
 <li>writeperm()
-: <a class="el" href="nauty_8h.html#a3f96fedd45de255aa5c7917b363452d8">nauty.h</a>
-, <a class="el" href="nautil_8c.html#ad9a4afaf629b066127a741db41dddc92">nautil.c</a>
+: <a class="el" href="d1/da0/nauty_8h.html#ad0d430942a1ca4adbcd49caf48210571">nauty.h</a>
+, <a class="el" href="d8/dd4/nautil_8c.html#a21c7cc3b3711769a4a0aaa10f3ade1f6">nautil.c</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

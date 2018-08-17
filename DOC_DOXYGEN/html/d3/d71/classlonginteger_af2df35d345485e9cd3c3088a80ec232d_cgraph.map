@@ -1,0 +1,9 @@
+<map id="longinteger::allocate_internal" name="longinteger::allocate_internal">
+<area shape="rect" id="node2" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="383,29,533,55"/>
+<area shape="rect" id="node5" href="$d3/d71/classlonginteger.html#a40b25b8aed02337972489655293eda99" title="longinteger::allocate\l_empty" alt="" coords="194,128,335,167"/>
+<area shape="rect" id="node6" href="$d3/d71/classlonginteger.html#a33f5b6c545e97635cb71670f76ed1fb3" title="longinteger::s_sign" alt="" coords="391,81,524,107"/>
+<area shape="rect" id="node8" href="$d3/d71/classlonginteger.html#aa946d4c3bfd34bbfd0b811d5f5795f82" title="longinteger::s_p" alt="" coords="400,188,516,213"/>
+<area shape="rect" id="node3" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="581,5,774,31"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="638,55,718,80"/>
+<area shape="rect" id="node7" href="$d3/d71/classlonginteger.html#a5d414ae211f4e16abd932257351c74df" title="longinteger::s_len" alt="" coords="395,135,521,160"/>
+</map>

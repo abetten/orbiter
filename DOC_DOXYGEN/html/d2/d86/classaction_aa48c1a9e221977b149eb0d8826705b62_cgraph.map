@@ -1,0 +1,24 @@
+<map id="action::restricted_action" name="action::restricted_action">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#a6f89e493e5c5a32e5c3b8963d438ce86" title="action::print_info" alt="" coords="185,117,304,143"/>
+<area shape="rect" id="node7" href="$d2/d86/classaction.html#a108adb38ad362aeb55cf40b9de38bb16" title="action::action" alt="" coords="194,381,294,407"/>
+<area shape="rect" id="node12" href="$d1/d7e/classaction__by__restriction.html#af98e88c513afe51527082f11aac571f8" title="action_by_restriction\l::init" alt="" coords="172,515,316,553"/>
+<area shape="rect" id="node17" href="$d7/d83/points_8_c.html#a8a498513b4415e1a4628a70fb6b26817" title="points" alt="" coords="216,289,273,315"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#aed811766c7e64fe2c853df8b0b67aa6e" title="action::print_symmetry\l_group_type" alt="" coords="387,29,543,68"/>
+<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="413,141,517,167"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad" title="sims::group_order" alt="" coords="400,92,529,117"/>
+<area shape="rect" id="node4" href="$d5/d90/action__global_8_c.html#a03666b9440c4962148eba7905b9f843c" title="action_print_symmetry\l_group_type" alt="" coords="622,29,778,68"/>
+<area shape="rect" id="node8" href="$d2/d86/classaction.html#af05ce222a97a1eff5f692b9193dee125" title="action::null" alt="" coords="422,451,507,476"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a09d62a3dd408d1c0704b380b26f72fb0" title="action::null_base_data" alt="" coords="623,401,778,427"/>
+<area shape="rect" id="node10" href="$d2/d86/classaction.html#a90cd98bea15f55a3c25cb9c6b68685df" title="action::null_element_data" alt="" coords="614,451,787,476"/>
+<area shape="rect" id="node11" href="$d2/d86/classaction.html#a1359d74a665e82a098fba5c1c1249dde" title="action::null_function\l_pointers" alt="" coords="631,500,770,539"/>
+<area shape="rect" id="node13" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a9d838c341cd204ed79499960a8ed393d" title="INT_vec_heapsort_with_log" alt="" coords="372,589,558,615"/>
+<area shape="rect" id="node14" href="$d4/dd7/sorting_8_c.html#a100d0747647500480fe5dc76ff98cee5" title="heapsort_make_heap\l_with_log" alt="" coords="625,665,775,704"/>
+<area shape="rect" id="node15" href="$d4/dd7/sorting_8_c.html#ac7af225fae479a93d6957f79734ba2a6" title="heapsort_sift_down\l_with_log" alt="" coords="835,615,972,653"/>
+<area shape="rect" id="node16" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="1020,593,1132,619"/>
+<area shape="rect" id="node18" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="412,191,518,216"/>
+<area shape="rect" id="node19" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="391,240,538,265"/>
+<area shape="rect" id="node20" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="364,289,566,315"/>
+<area shape="rect" id="node21" href="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95" title="PG_element_normalize\l_from_front" alt="" coords="384,339,545,377"/>
+<area shape="rect" id="node22" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="372,401,558,427"/>
+<area shape="rect" id="node23" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="620,352,781,377"/>
+</map>

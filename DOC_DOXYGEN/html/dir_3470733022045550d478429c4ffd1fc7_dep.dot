@@ -1,0 +1,9 @@
+digraph "src/lib/foundations/combinatorics" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_22aca35e3ec12f68aff9c7ff7652d11f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="foundations" fontname="Helvetica", fontsize="10", URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"]
+  dir_3470733022045550d478429c4ffd1fc7 [shape=box, label="combinatorics", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3470733022045550d478429c4ffd1fc7.html"];
+  }
+}

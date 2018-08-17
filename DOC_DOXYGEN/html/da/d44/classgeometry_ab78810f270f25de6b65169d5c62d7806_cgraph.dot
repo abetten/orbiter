@@ -1,0 +1,43 @@
+digraph "geometry::print_inc_header"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1150 [label="geometry::print_inc\l_header",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1150 -> Node1151 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1151 [label="geometry::X",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a2eff9c42b83c90012092d49218237d9d"];
+  Node1151 -> Node1152 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1152 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
+  Node1151 -> Node1153 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1153 [label="discreta_base::as_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#ae4d7f56d917a4707b838fbffde6467ff"];
+  Node1150 -> Node1154 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1154 [label="matrix::s_m",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#afeb2e29600e68448b9d1130114b9606f"];
+  Node1150 -> Node1155 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1155 [label="matrix::s_n",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a35f5321a5615451fdc8be7b953f8ac8b"];
+  Node1150 -> Node1156 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1156 [label="geometry::f_incidence\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a05bd36071a53d68e1c4b0ba981c9cd34"];
+  Node1156 -> Node1152 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1156 -> Node1157 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1157 [label="discreta_base::as_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26"];
+  Node1156 -> Node1158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1158 [label="integer::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904"];
+  Node1150 -> Node1159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1159 [label="matrix::s_iji",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#af8d3c35817af62a3c0097ddf64422d96"];
+  Node1159 -> Node1160 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1160 [label="matrix::s_ij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#ab36f1b3abd2df280224c50c9debb57df"];
+  Node1159 -> Node1161 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1161 [label="discreta_base::s_i_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735"];
+  Node1161 -> Node1162 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1162 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node1162 -> Node1163 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1163 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node1162 -> Node1164 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1164 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+  Node1161 -> Node1165 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1165 [label="discreta_base::printobjectkindln",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559"];
+  Node1165 -> Node1166 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1166 [label="discreta_base::printobjectkind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231"];
+  Node1166 -> Node1162 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1161 -> Node1157 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1161 -> Node1158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

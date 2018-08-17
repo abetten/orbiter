@@ -1,0 +1,22 @@
+<map id="finite_field::latex_matrix" name="finite_field::latex_matrix">
+<area shape="rect" id="node2" href="$dd/da1/analyze__projective__code_8_c.html#a9702741fe6417c83d726635bdebf3bcb" title="do_analyze_projective_code" alt="" coords="184,19,374,44"/>
+<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#a5abe354dacebaac936368223433c51c4" title="do_print_lines_in_PG" alt="" coords="450,55,599,80"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a43e2a63a1110672fe9fafbfe7af6f48d" title="do_print_points_on\l_grassmannian" alt="" coords="211,156,346,195"/>
+<area shape="rect" id="node7" href="$d2/d17/classprojective__space.html#a2712ead7fd87ca75ac227a8ade786508" title="projective_space::klein\l_correspondence" alt="" coords="201,268,357,307"/>
+<area shape="rect" id="node12" href="$da/dc1/classspread.html#ac00cfa228f832076e6e5d81319828fa7" title="spread::print_isomorphism_type" alt="" coords="842,376,1053,401"/>
+<area shape="rect" id="node16" href="$d2/d17/classprojective__space.html#a3de51df7c58c1f2575bdfbd383fb171e" title="projective_space::Pluecker\l_coordinates" alt="" coords="188,445,369,484"/>
+<area shape="rect" id="node20" href="$d2/d17/classprojective__space.html#a0460ef9dd2799f85fee962d142d20eea" title="projective_space::klein\l_correspondence_special_model" alt="" coords="170,508,387,547"/>
+<area shape="rect" id="node21" href="$da/dc1/classspread.html#a47f335e980e426c5a67e13ceca3f3e3c" title="spread::print" alt="" coords="231,571,327,596"/>
+<area shape="rect" id="node3" href="$dd/da1/analyze__projective__code_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="499,5,549,31"/>
+<area shape="rect" id="node5" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="702,105,752,131"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#aa91902d79964fdd71e53be264387b285" title="do_Klein_correspondence" alt="" coords="436,156,612,181"/>
+<area shape="rect" id="node9" href="$d7/d99/classklein__correspondence.html#a561aa0d3a66d19a10f9945561a5880b5" title="klein_correspondence\l::plane_intersections" alt="" coords="448,205,600,244"/>
+<area shape="rect" id="node14" href="$d7/d08/classobject__in__projective__space.html#a5b8beb58d83a6c274b2b8bd2c4e176c1" title="object_in_projective\l_space::klein" alt="" coords="455,268,594,307"/>
+<area shape="rect" id="node15" href="$da/dc1/classspread.html#af24965c92b11f083efef562901770e17" title="spread::plane_intersection\l_type_of_klein_image" alt="" coords="435,331,613,369"/>
+<area shape="rect" id="node10" href="$da/dc1/classspread.html#af3b0d52e28dec3d6b495e79fcee88a29" title="spread::save_klein\l_invariants" alt="" coords="661,205,794,244"/>
+<area shape="rect" id="node11" href="$da/dc1/classspread.html#a5deb643e8dd301ca92d96d409e85c6aa" title="spread::klein" alt="" coords="679,307,776,332"/>
+<area shape="rect" id="node13" href="$da/dc1/classspread.html#a543a79e4e7306af291584f53dacbfdd8" title="spread::report2" alt="" coords="891,307,1003,332"/>
+<area shape="rect" id="node17" href="$d2/d17/classprojective__space.html#a29d74f45865aaee58ab5cd50806d8baf" title="projective_space::cheat\l_sheet_subspaces" alt="" coords="443,445,605,484"/>
+<area shape="rect" id="node18" href="$d6/dd8/cheat__sheet___p_g_8_c.html#a11692793a59b9f0d2f21395f5609783d" title="cheat_sheet_PG" alt="" coords="667,452,788,477"/>
+<area shape="rect" id="node19" href="$d6/dd8/cheat__sheet___p_g_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="922,452,972,477"/>
+</map>

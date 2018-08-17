@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('functions_vars_g.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,254 +90,274 @@ $(function() {
 
 <h3><a id="index_g"></a>- g -</h3><ul>
 <li>G
-: <a class="el" href="classaction.html#addfe14227555f2a59914deda2382eeb8">action</a>
-, <a class="el" href="classaction__on__grassmannian.html#aa823614b80dec801f8582d20648418f0">action_on_grassmannian</a>
-, <a class="el" href="classcompute__stabilizer.html#a78b7fe2c050a875fd4a41c051a456a7a">compute_stabilizer</a>
-, <a class="el" href="classdiophant.html#a5ccf39f79396a12c1bb7de221f4f6900">diophant</a>
-, <a class="el" href="classgrassmann.html#af23859a453238145856f25be67e6e479">grassmann</a>
-, <a class="el" href="classgrassmann__embedded.html#a33ae25817c1a5b00e23c84af8495bb1e">grassmann_embedded</a>
-, <a class="el" href="classhjelmslev.html#af80aa3b9712664949795afb2fca4397a">hjelmslev</a>
-, <a class="el" href="structmindist.html#a0a348e6e77012fc5f35f8fc0575d131d">mindist</a>
-, <a class="el" href="classschreier__sims.html#a3172d6aff76da760b43ed9c8c14c1be4">schreier_sims</a>
-, <a class="el" href="classupstep__work.html#a227c1e78abbdbc7d69a3c341de6e016c">upstep_work</a>
+: <a class="el" href="d2/d86/classaction.html#addfe14227555f2a59914deda2382eeb8">action</a>
+, <a class="el" href="d9/ddf/classaction__on__grassmannian.html#aa823614b80dec801f8582d20648418f0">action_on_grassmannian</a>
+, <a class="el" href="d8/d30/classcompute__stabilizer.html#a78b7fe2c050a875fd4a41c051a456a7a">compute_stabilizer</a>
+, <a class="el" href="d7/d9c/classdiophant.html#a5ccf39f79396a12c1bb7de221f4f6900">diophant</a>
+, <a class="el" href="df/d02/classgrassmann.html#af23859a453238145856f25be67e6e479">grassmann</a>
+, <a class="el" href="d4/dda/classgrassmann__embedded.html#a33ae25817c1a5b00e23c84af8495bb1e">grassmann_embedded</a>
+, <a class="el" href="d3/d21/classhjelmslev.html#af80aa3b9712664949795afb2fca4397a">hjelmslev</a>
+, <a class="el" href="dc/dbe/structmindist.html#a0a348e6e77012fc5f35f8fc0575d131d">mindist</a>
+, <a class="el" href="d0/da8/classschreier__sims.html#a3172d6aff76da760b43ed9c8c14c1be4">schreier_sims</a>
+, <a class="el" href="d2/dd6/classupstep__work.html#a227c1e78abbdbc7d69a3c341de6e016c">upstep_work</a>
 </li>
 <li>G63
-: <a class="el" href="classknarr.html#ae64c7ca3aa8ef30547bd331d0c4b0738">knarr</a>
+: <a class="el" href="d7/de5/classknarr.html#ae64c7ca3aa8ef30547bd331d0c4b0738">knarr</a>
 </li>
 <li>G_order
-: <a class="el" href="classschreier__sims.html#a085fa53aa227628e0f4010ac7fc11f90">schreier_sims</a>
+: <a class="el" href="d0/da8/classschreier__sims.html#a085fa53aa227628e0f4010ac7fc11f90">schreier_sims</a>
 </li>
 <li>G_PGL_k_q
-: <a class="el" href="classaction__on__spread__set.html#a8699ddf7bb77424cafa67c0826077eb8">action_on_spread_set</a>
+: <a class="el" href="d2/d7a/classaction__on__spread__set.html#a8699ddf7bb77424cafa67c0826077eb8">action_on_spread_set</a>
 </li>
 <li>G_plane
-: <a class="el" href="classarc__lifting.html#aa00fecd3f1db05ae6f3c342a78fc14df">arc_lifting</a>
+: <a class="el" href="dc/db7/classarc__lifting.html#aa00fecd3f1db05ae6f3c342a78fc14df">arc_lifting</a>
 </li>
 <li>GA
-: <a class="el" href="classschreier__sims.html#a8474d2873bad522392cafaf40fd3ca90">schreier_sims</a>
+: <a class="el" href="d0/da8/classschreier__sims.html#a8474d2873bad522392cafaf40fd3ca90">schreier_sims</a>
 </li>
 <li>gamma
-: <a class="el" href="classorthogonal.html#a54d2f60e57378b0c917a65573d9e98aa">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a54d2f60e57378b0c917a65573d9e98aa">orthogonal</a>
 </li>
 <li>GE
-: <a class="el" href="classaction__on__grassmannian.html#ad6c03bb09128e9c1b41406383cd0fca5">action_on_grassmannian</a>
+: <a class="el" href="d9/ddf/classaction__on__grassmannian.html#ad6c03bb09128e9c1b41406383cd0fca5">action_on_grassmannian</a>
 </li>
 <li>gen
-: <a class="el" href="classarc__generator.html#a4a68dbd6f9297222d9dad467ec12289c">arc_generator</a>
-, <a class="el" href="classblt__set.html#a1a9d340a742e1b8c4f69500634e4053a">blt_set</a>
-, <a class="el" href="classcayley__graph__search.html#a8c3b96b035ca7ac16340363f5156f3e3">cayley_graph_search</a>
-, <a class="el" href="classchoose__points__or__lines.html#a642aa5b197976155d67c5b34c56d2fd9">choose_points_or_lines</a>
-, <a class="el" href="classcode__generator.html#ab95055151d199988c5cae2e7fe03068e">code_generator</a>
-, <a class="el" href="classcompute__stabilizer.html#a4ef30a6769e54a3dbe455afe8f0a2463">compute_stabilizer</a>
-, <a class="el" href="structdesign__data.html#a348dd91c0cd881cdf7916dd110753f5c">design_data</a>
-, <a class="el" href="classdifference__set__in__heisenberg__group.html#a33261922e06cdcdd6472f5d5fad24758">difference_set_in_heisenberg_group</a>
-, <a class="el" href="classgraph__generator.html#a2f216a3b5c31d333c1bf142ec45cf9b8">graph_generator</a>
-, <a class="el" href="classhadamard.html#aec73f1c3f54480fbeb3392a034584046">hadamard</a>
-, <a class="el" href="classisomorph.html#afb02cf301a3151bac0153761b5aefe85">isomorph</a>
-, <a class="el" href="classisomorph__arguments.html#a3d279de859c51e6c2868b2f624f93e8b">isomorph_arguments</a>
+: <a class="el" href="d4/d21/classarc__generator.html#a4a68dbd6f9297222d9dad467ec12289c">arc_generator</a>
+, <a class="el" href="d1/d3d/classblt__set.html#a1a9d340a742e1b8c4f69500634e4053a">blt_set</a>
+, <a class="el" href="de/dae/classcayley__graph__search.html#a8c3b96b035ca7ac16340363f5156f3e3">cayley_graph_search</a>
+, <a class="el" href="d6/d75/classchoose__points__or__lines.html#a642aa5b197976155d67c5b34c56d2fd9">choose_points_or_lines</a>
+, <a class="el" href="db/d37/classcode__generator.html#ab95055151d199988c5cae2e7fe03068e">code_generator</a>
+, <a class="el" href="d8/d30/classcompute__stabilizer.html#a4ef30a6769e54a3dbe455afe8f0a2463">compute_stabilizer</a>
+, <a class="el" href="d3/dbe/structdesign__data.html#a348dd91c0cd881cdf7916dd110753f5c">design_data</a>
+, <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#a33261922e06cdcdd6472f5d5fad24758">difference_set_in_heisenberg_group</a>
 </li>
 <li>Gen
-: <a class="el" href="classlinear__set.html#a2ad6a4dd287d060b4f7a8af6284e2981">linear_set</a>
+: <a class="el" href="d3/d78/classdirect__product__action.html#a23a8dd88fe38c963ce206725841842fa">direct_product_action</a>
 </li>
 <li>gen
-: <a class="el" href="classovoid__generator.html#ae46fae0fb0ad0e4162eb9529ef217d1b">ovoid_generator</a>
+: <a class="el" href="d9/d91/classgraph__generator.html#a2f216a3b5c31d333c1bf142ec45cf9b8">graph_generator</a>
+, <a class="el" href="d7/dbb/classhadamard.html#aec73f1c3f54480fbeb3392a034584046">hadamard</a>
+, <a class="el" href="d3/d5f/classisomorph.html#afb02cf301a3151bac0153761b5aefe85">isomorph</a>
+, <a class="el" href="d5/de4/classisomorph__arguments.html#a3d279de859c51e6c2868b2f624f93e8b">isomorph_arguments</a>
 </li>
 <li>Gen
-: <a class="el" href="classpolar.html#a765ba3e8f44219738acab2c53a606315">polar</a>
+: <a class="el" href="d6/dd8/classk__arc__generator.html#a4c2cea87c04398a9278cb82954011a38">k_arc_generator</a>
+, <a class="el" href="dd/d86/classlinear__set.html#a2ad6a4dd287d060b4f7a8af6284e2981">linear_set</a>
 </li>
 <li>gen
-: <a class="el" href="classregular__ls__generator.html#a2be2893f203cb7484f1f52abaf418533">regular_ls_generator</a>
-, <a class="el" href="classsearch__blocking__set.html#a7e80148330f7bcfd2001de92c1f5ca1a">search_blocking_set</a>
-, <a class="el" href="classset__stabilizer__compute.html#a3f37f5aa70190264741e4648cb85abfb">set_stabilizer_compute</a>
+: <a class="el" href="d3/daf/classovoid__generator.html#ae46fae0fb0ad0e4162eb9529ef217d1b">ovoid_generator</a>
 </li>
 <li>Gen
-: <a class="el" href="classsubspace__orbits.html#ad36f3c4b79988b75567f243ac9b8beb3">subspace_orbits</a>
+: <a class="el" href="da/d1c/classpolar.html#a765ba3e8f44219738acab2c53a606315">polar</a>
 </li>
 <li>gen
-: <a class="el" href="classtranslation__plane.html#a30accb6e33144752ecb2fccdb398c15e">translation_plane</a>
-, <a class="el" href="classupstep__work.html#a07dc71a04cd45e96bc4e82bd0c268adf">upstep_work</a>
+: <a class="el" href="d2/dd8/classregular__ls__generator.html#a2be2893f203cb7484f1f52abaf418533">regular_ls_generator</a>
+, <a class="el" href="dc/d36/classsearch__blocking__set.html#a7e80148330f7bcfd2001de92c1f5ca1a">search_blocking_set</a>
+, <a class="el" href="d8/dc6/classset__stabilizer__compute.html#a3f37f5aa70190264741e4648cb85abfb">set_stabilizer_compute</a>
+</li>
+<li>Gen
+: <a class="el" href="d8/de6/classsix__arcs__not__on__a__conic.html#ad92dc282541c47b0a556048d566684ed">six_arcs_not_on_a_conic</a>
+</li>
+<li>gen
+: <a class="el" href="da/dc1/classspread.html#ada017a8bc0cd14f130e55e24c49ffe7f">spread</a>
+</li>
+<li>Gen
+: <a class="el" href="d2/d9f/classsubspace__orbits.html#ad36f3c4b79988b75567f243ac9b8beb3">subspace_orbits</a>
+, <a class="el" href="dd/d3e/classtensor__product.html#a9ea3eee0b670bfa5a03682fd85683bc1">tensor_product</a>
+</li>
+<li>gen
+: <a class="el" href="d2/dd6/classupstep__work.html#a07dc71a04cd45e96bc4e82bd0c268adf">upstep_work</a>
 </li>
 <li>Gen2
-: <a class="el" href="classlinear__set.html#a59576bdbfcd381a2ab85b6a8d5447501">linear_set</a>
+: <a class="el" href="dd/d86/classlinear__set.html#a59576bdbfcd381a2ab85b6a8d5447501">linear_set</a>
 </li>
 <li>gen_depth
-: <a class="el" href="classsims.html#ad8fc021408c0dacd697f8bd9ea647456">sims</a>
+: <a class="el" href="d9/df3/classsims.html#ad8fc021408c0dacd697f8bd9ea647456">sims</a>
 </li>
 <li>gen_perm
-: <a class="el" href="classsims.html#a411c00c78023dd47f7dc3324ff21a6a4">sims</a>
+: <a class="el" href="d9/df3/classsims.html#a411c00c78023dd47f7dc3324ff21a6a4">sims</a>
 </li>
 <li>Gen_stab
-: <a class="el" href="classlinear__set.html#a5e381d70ffb046533f16eca547a4ad47">linear_set</a>
+: <a class="el" href="dd/d86/classlinear__set.html#a5e381d70ffb046533f16eca547a4ad47">linear_set</a>
 </li>
 <li>generators
-: <a class="el" href="classcayley__graph__search.html#a69453b8af06a9ba6647252d9bb61e878">cayley_graph_search</a>
+: <a class="el" href="de/dae/classcayley__graph__search.html#a69453b8af06a9ba6647252d9bb61e878">cayley_graph_search</a>
 </li>
 <li>gens
-: <a class="el" href="classcayley__graph__search.html#a4c7ac1ba447eb2468673d921069ef785">cayley_graph_search</a>
-, <a class="el" href="classdifference__set__in__heisenberg__group.html#af78b9de6b00cc711493c02b7d87f2130">difference_set_in_heisenberg_group</a>
-, <a class="el" href="classflag__orbit__node.html#ae58f2333912213e5d29f1f5b9a7b6c9f">flag_orbit_node</a>
-, <a class="el" href="classorbit__node.html#a8c7e073aa3d5cf44690dd518b0f9414d">orbit_node</a>
-, <a class="el" href="classorbit__of__sets.html#a20541d9a8d95cd3c60e667904823185b">orbit_of_sets</a>
-, <a class="el" href="classorbit__of__subspaces.html#a09196ea464155c8e295da66ca2dc68f2">orbit_of_subspaces</a>
-, <a class="el" href="classschreier.html#af3dfc4e56f55faa3981755aec24bde82">schreier</a>
-, <a class="el" href="classschreier__sims.html#a3cfa5bb6659aa4aa26079c6f30148570">schreier_sims</a>
-, <a class="el" href="classsims.html#ac1db131c547341a79a8955526bf8cdf6">sims</a>
-, <a class="el" href="classsinger__cycle.html#adcd7f7917c64a66ce8d26ea27d91e378">singer_cycle</a>
-, <a class="el" href="classstrong__generators.html#a7ef80c63fd292c3dd5ee61ffb93cafe6">strong_generators</a>
-, <a class="el" href="classsubgroup.html#a8210a28fdd7e9f648f8b7ea37b84ade5">subgroup</a>
+: <a class="el" href="de/dae/classcayley__graph__search.html#a4c7ac1ba447eb2468673d921069ef785">cayley_graph_search</a>
+, <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#af78b9de6b00cc711493c02b7d87f2130">difference_set_in_heisenberg_group</a>
+, <a class="el" href="df/dd1/classflag__orbit__node.html#ae58f2333912213e5d29f1f5b9a7b6c9f">flag_orbit_node</a>
+, <a class="el" href="de/df0/classorbit__node.html#a8c7e073aa3d5cf44690dd518b0f9414d">orbit_node</a>
+, <a class="el" href="d5/da0/classorbit__of__sets.html#a20541d9a8d95cd3c60e667904823185b">orbit_of_sets</a>
+, <a class="el" href="d5/d64/classorbit__of__subspaces.html#a09196ea464155c8e295da66ca2dc68f2">orbit_of_subspaces</a>
+, <a class="el" href="d3/dd6/classschreier.html#af3dfc4e56f55faa3981755aec24bde82">schreier</a>
+, <a class="el" href="d0/da8/classschreier__sims.html#a3cfa5bb6659aa4aa26079c6f30148570">schreier_sims</a>
+, <a class="el" href="d9/df3/classsims.html#ac1db131c547341a79a8955526bf8cdf6">sims</a>
+, <a class="el" href="d8/d13/classsinger__cycle.html#adcd7f7917c64a66ce8d26ea27d91e378">singer_cycle</a>
+, <a class="el" href="dc/d09/classstrong__generators.html#a7ef80c63fd292c3dd5ee61ffb93cafe6">strong_generators</a>
+, <a class="el" href="d0/d0a/classsubgroup.html#a8210a28fdd7e9f648f8b7ea37b84ade5">subgroup</a>
 </li>
 <li>gens1
-: <a class="el" href="classyoung.html#abf7a41998c8722217dee8aff5a7f56e9">young</a>
+: <a class="el" href="dd/d68/classyoung.html#abf7a41998c8722217dee8aff5a7f56e9">young</a>
 </li>
 <li>gens2
-: <a class="el" href="classrecoordinatize.html#a6cb9e68705fb7a9402426181820e0aff">recoordinatize</a>
-, <a class="el" href="classyoung.html#aefbc66e2577e6952604398b9cd5ac887">young</a>
+: <a class="el" href="d3/d3c/classrecoordinatize.html#a6cb9e68705fb7a9402426181820e0aff">recoordinatize</a>
+, <a class="el" href="dd/d68/classyoung.html#aefbc66e2577e6952604398b9cd5ac887">young</a>
 </li>
 <li>gens_inv
-: <a class="el" href="classschreier.html#afeb872288b800fb77995b615ffb2d394">schreier</a>
-, <a class="el" href="classsims.html#a41d51199993a167db302ab9d1a7253cb">sims</a>
+: <a class="el" href="d3/dd6/classschreier.html#afeb872288b800fb77995b615ffb2d394">schreier</a>
+, <a class="el" href="d9/df3/classsims.html#a41d51199993a167db302ab9d1a7253cb">sims</a>
 </li>
 <li>gens_perm
-: <a class="el" href="classisomorph.html#a007917da7736982c93f69b542b3bf2f2">isomorph</a>
-, <a class="el" href="classunion__find__on__k__subsets.html#a825d6f58d4089e1c5c069167be92664e">union_find_on_k_subsets</a>
+: <a class="el" href="d3/d5f/classisomorph.html#a007917da7736982c93f69b542b3bf2f2">isomorph</a>
+, <a class="el" href="d3/d1b/classunion__find__on__k__subsets.html#a825d6f58d4089e1c5c069167be92664e">union_find_on_k_subsets</a>
 </li>
 <li>gens_subgroup
-: <a class="el" href="classarc__lifting.html#a3111533ade30517e34a2115136c20e28">arc_lifting</a>
-, <a class="el" href="classcayley__graph__search.html#acf8d77311cb5c629656e3e58b6b5e453">cayley_graph_search</a>
+: <a class="el" href="dc/db7/classarc__lifting.html#a3111533ade30517e34a2115136c20e28">arc_lifting</a>
+, <a class="el" href="de/dae/classcayley__graph__search.html#acf8d77311cb5c629656e3e58b6b5e453">cayley_graph_search</a>
 </li>
 <li>gens_type1
-: <a class="el" href="classclassify__trihedral__pairs.html#a6f2ea3a06090e267bb190d3f415e59b3">classify_trihedral_pairs</a>
+: <a class="el" href="d1/d21/classclassify__trihedral__pairs.html#a6f2ea3a06090e267bb190d3f415e59b3">classify_trihedral_pairs</a>
 </li>
 <li>gens_type2
-: <a class="el" href="classclassify__trihedral__pairs.html#ac8093fed70c464ba30b78cd946098a58">classify_trihedral_pairs</a>
+: <a class="el" href="d1/d21/classclassify__trihedral__pairs.html#ac8093fed70c464ba30b78cd946098a58">classify_trihedral_pairs</a>
 </li>
 <li>getcanon
-: <a class="el" href="structoptionblk.html#aa27167e1870cb094a982790a9bcab8b9">optionblk</a>
+: <a class="el" href="d0/d57/structoptionstruct.html#a803c5f629113f56bf814d1507ca45ab3">optionstruct</a>
 </li>
 <li>GFq
-: <a class="el" href="classmatrix__group.html#a67deba9890a53e80110b2edd1a5508a3">matrix_group</a>
-, <a class="el" href="classrank__checker.html#a0478b884d4dd788e0240ffebe96b58b0">rank_checker</a>
+: <a class="el" href="d3/ded/classmatrix__group.html#a67deba9890a53e80110b2edd1a5508a3">matrix_group</a>
+, <a class="el" href="d8/d21/classrank__checker.html#a0478b884d4dd788e0240ffebe96b58b0">rank_checker</a>
 </li>
 <li>gfq
-: <a class="el" href="classunipoly__domain.html#a365f2b14c8163f46577c19660672f7d5">unipoly_domain</a>
+: <a class="el" href="da/d3c/classunipoly__domain.html#a365f2b14c8163f46577c19660672f7d5">unipoly_domain</a>
 </li>
 <li>girth
-: <a class="el" href="classgraph__generator.html#a84adfe0d962dde81a0beb82a600ae54e">graph_generator</a>
+: <a class="el" href="d9/d91/classgraph__generator.html#a84adfe0d962dde81a0beb82a600ae54e">graph_generator</a>
 </li>
 <li>given_base
-: <a class="el" href="classdifference__set__in__heisenberg__group.html#a6523456779343a16940e6645b23f0c09">difference_set_in_heisenberg_group</a>
+: <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#a6523456779343a16940e6645b23f0c09">difference_set_in_heisenberg_group</a>
 </li>
 <li>given_base_length
-: <a class="el" href="classdifference__set__in__heisenberg__group.html#aa582cfb44a2b5fb4f8fa75d8d174a1e5">difference_set_in_heisenberg_group</a>
+: <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#aa582cfb44a2b5fb4f8fa75d8d174a1e5">difference_set_in_heisenberg_group</a>
 </li>
 <li>global_line_width
-: <a class="el" href="classlayered__graph__draw__options.html#a87567e7c1df6663cc33706ae4e0fd5b6">layered_graph_draw_options</a>
+: <a class="el" href="d5/db5/classlayered__graph__draw__options.html#a87567e7c1df6663cc33706ae4e0fd5b6">layered_graph_draw_options</a>
 </li>
 <li>global_scale
-: <a class="el" href="classlayered__graph__draw__options.html#abdfbe480a6c3a45c084bc3832592e0f2">layered_graph_draw_options</a>
+: <a class="el" href="d5/db5/classlayered__graph__draw__options.html#abdfbe480a6c3a45c084bc3832592e0f2">layered_graph_draw_options</a>
 </li>
 <li>go
-: <a class="el" href="classcayley__graph__search.html#ac7037d660010aaeb8dd66f5f556832ea">cayley_graph_search</a>
-, <a class="el" href="classclassification.html#a386d68ab8ebe2cb336997d0d44711896">classification</a>
-, <a class="el" href="classclassify__double__sixes.html#a234ea8e8d4f48e9eafeadae2a0d6f328">classify_double_sixes</a>
-, <a class="el" href="structdesign__data.html#a9ecb271f64a4d1b2d42de3d13ffc106b">design_data</a>
-, <a class="el" href="classflag__orbit__node.html#a715bac0e6079651ee5e75d6ddcfcc89a">flag_orbit_node</a>
-, <a class="el" href="classgenerator.html#a52320c8f288e892987d7af3b89dad4a0">generator</a>
+: <a class="el" href="de/dae/classcayley__graph__search.html#ac7037d660010aaeb8dd66f5f556832ea">cayley_graph_search</a>
+, <a class="el" href="d0/dff/classclassification.html#a386d68ab8ebe2cb336997d0d44711896">classification</a>
+, <a class="el" href="dd/d23/classclassify__double__sixes.html#a234ea8e8d4f48e9eafeadae2a0d6f328">classify_double_sixes</a>
+, <a class="el" href="d3/dbe/structdesign__data.html#a9ecb271f64a4d1b2d42de3d13ffc106b">design_data</a>
+, <a class="el" href="d3/d78/classdirect__product__action.html#a89df33c986586116c674fde3e2ad2a6c">direct_product_action</a>
+, <a class="el" href="df/dd1/classflag__orbit__node.html#a715bac0e6079651ee5e75d6ddcfcc89a">flag_orbit_node</a>
+, <a class="el" href="d7/d73/classgenerator.html#a52320c8f288e892987d7af3b89dad4a0">generator</a>
 </li>
 <li>Go
-: <a class="el" href="classprojective__space.html#ae621b8c9021a20a04434d59eaabbb45f">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#ae621b8c9021a20a04434d59eaabbb45f">projective_space</a>
 </li>
 <li>go
-: <a class="el" href="classyoung.html#a61a29c4ab45286e92057f7f0a0f39c81">young</a>
+: <a class="el" href="dd/d3e/classtensor__product.html#ae5cb51f2ce49c0e2dd74cc59dd989fcc">tensor_product</a>
+, <a class="el" href="dd/d68/classyoung.html#a61a29c4ab45286e92057f7f0a0f39c81">young</a>
 </li>
 <li>go_G
-: <a class="el" href="classcompute__stabilizer.html#a568a1e3ff78cf6674f55f5bd8f1a377b">compute_stabilizer</a>
-, <a class="el" href="classupstep__work.html#afd80dc0ad4bf6b307310f24e5d204cb3">upstep_work</a>
+: <a class="el" href="d8/d30/classcompute__stabilizer.html#a568a1e3ff78cf6674f55f5bd8f1a377b">compute_stabilizer</a>
+, <a class="el" href="d2/dd6/classupstep__work.html#afd80dc0ad4bf6b307310f24e5d204cb3">upstep_work</a>
 </li>
 <li>go_H
-: <a class="el" href="classupstep__work.html#aef3d79257af28fe41d03c61c6345a560">upstep_work</a>
+: <a class="el" href="d2/dd6/classupstep__work.html#aef3d79257af28fe41d03c61c6345a560">upstep_work</a>
 </li>
 <li>go_subgroup
-: <a class="el" href="classcayley__graph__search.html#ad73718b72a7d16476982a18673d8831f">cayley_graph_search</a>
+: <a class="el" href="de/dae/classcayley__graph__search.html#ad73718b72a7d16476982a18673d8831f">cayley_graph_search</a>
 </li>
 <li>goi
-: <a class="el" href="classaction__by__conjugation.html#a3a66103ee90655df494f64aa449e33a3">action_by_conjugation</a>
-, <a class="el" href="classaction__by__right__multiplication.html#a1a494eebe67e491ada8973cc68a949ad">action_by_right_multiplication</a>
-, <a class="el" href="structfactor__group.html#acb086889a96be37c1856bb574d7b8053">factor_group</a>
-, <a class="el" href="classyoung.html#aebe27c292c6fefad43887f5213d78633">young</a>
+: <a class="el" href="d3/dda/classaction__by__conjugation.html#a3a66103ee90655df494f64aa449e33a3">action_by_conjugation</a>
+, <a class="el" href="d5/daa/classaction__by__right__multiplication.html#a1a494eebe67e491ada8973cc68a949ad">action_by_right_multiplication</a>
+, <a class="el" href="d9/d74/structfactor__group.html#acb086889a96be37c1856bb574d7b8053">factor_group</a>
+, <a class="el" href="dd/d68/classyoung.html#aebe27c292c6fefad43887f5213d78633">young</a>
 </li>
 <li>goi_factor_group
-: <a class="el" href="structfactor__group.html#a4a5eeba5ee926621990d04c4f4745853">factor_group</a>
+: <a class="el" href="d9/d74/structfactor__group.html#a4a5eeba5ee926621990d04c4f4745853">factor_group</a>
 </li>
 <li>good_points
-: <a class="el" href="classbuekenhout__metz.html#abcef63f911ba9949b615cc213217f998">buekenhout_metz</a>
+: <a class="el" href="d8/d98/classbuekenhout__metz.html#abcef63f911ba9949b615cc213217f998">buekenhout_metz</a>
 </li>
 <li>GP
-: <a class="el" href="classglobal__data.html#a5ef48edb254f338154c3aab7ab0fcbf1">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#a5ef48edb254f338154c3aab7ab0fcbf1">global_data</a>
 </li>
 <li>GP2
-: <a class="el" href="classglobal__data.html#ac5b33360014ce4f683056b5b6f1e6a69">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#ac5b33360014ce4f683056b5b6f1e6a69">global_data</a>
 </li>
 <li>Gr
-: <a class="el" href="classflag.html#a4e7e5cd2bcbab0651ec383cd6ee62f3d">flag</a>
-, <a class="el" href="classsurface.html#a0bdb5c013ada07156132dabaf8644d7c">surface</a>
+: <a class="el" href="d8/d06/classflag.html#a4e7e5cd2bcbab0651ec383cd6ee62f3d">flag</a>
+, <a class="el" href="d5/d88/classsurface.html#a0bdb5c013ada07156132dabaf8644d7c">surface</a>
 </li>
 <li>Gr3
-: <a class="el" href="classsurface.html#a9f6c0b80ab817e9869b8f64217a84121">surface</a>
+: <a class="el" href="d5/d88/classsurface.html#a9f6c0b80ab817e9869b8f64217a84121">surface</a>
 </li>
 <li>Gr62
-: <a class="el" href="classklein__correspondence.html#aba6845f3e0cb5cae63e03cc17f12d03f">klein_correspondence</a>
+: <a class="el" href="d7/d99/classklein__correspondence.html#aba6845f3e0cb5cae63e03cc17f12d03f">klein_correspondence</a>
 </li>
 <li>Gr63
-: <a class="el" href="classklein__correspondence.html#afcfb846fbc5b14fe6e840e21a3e3c4d1">klein_correspondence</a>
+: <a class="el" href="d7/d99/classklein__correspondence.html#afcfb846fbc5b14fe6e840e21a3e3c4d1">klein_correspondence</a>
 </li>
 <li>Gram
-: <a class="el" href="classunusual__model.html#a1d78fcee11a9655c006d91121ef2ac9b">unusual_model</a>
+: <a class="el" href="dc/d50/classunusual__model.html#a1d78fcee11a9655c006d91121ef2ac9b">unusual_model</a>
 </li>
 <li>Gram2
-: <a class="el" href="classorthogonal.html#a821c195ed910c0ddc7bf8124c21673cd">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a821c195ed910c0ddc7bf8124c21673cd">orthogonal</a>
 </li>
 <li>Gram_matrix
-: <a class="el" href="classorthogonal.html#ac9f89f8068557c6253c7cd44bd6c0922">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#ac9f89f8068557c6253c7cd44bd6c0922">orthogonal</a>
 </li>
 <li>graph
-: <a class="el" href="classrainbow__cliques.html#aca596736e48ace9524dc66e067d52884">rainbow_cliques</a>
+: <a class="el" href="d3/d54/classrainbow__cliques.html#ac4ed0b8abdb9348facb1a8319227590c">rainbow_cliques</a>
 </li>
 <li>Grass
-: <a class="el" href="classandre__construction.html#a7525b1c772f87092e310e0c91d73acf3">andre_construction</a>
-, <a class="el" href="classarc__generator.html#abf8df841e5de0cbab6f71e48add1baed">arc_generator</a>
-, <a class="el" href="classrecoordinatize.html#aba1ff907c0ca8f0dae8a92e899da87d9">recoordinatize</a>
-, <a class="el" href="classtranslation__plane.html#ace772ca565340660c7608be1b250f198">translation_plane</a>
+: <a class="el" href="d2/d32/classandre__construction.html#a7525b1c772f87092e310e0c91d73acf3">andre_construction</a>
+, <a class="el" href="d4/d21/classarc__generator.html#abf8df841e5de0cbab6f71e48add1baed">arc_generator</a>
+, <a class="el" href="d3/d3c/classrecoordinatize.html#aba1ff907c0ca8f0dae8a92e899da87d9">recoordinatize</a>
+, <a class="el" href="da/dc1/classspread.html#a1e4ad19dc1a37c62bd13a360e5270d6b">spread</a>
 </li>
 <li>Grass_lines
-: <a class="el" href="classprojective__space.html#ae5cdf860890e6974499ce4ea7ed8bb77">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#ae5cdf860890e6974499ce4ea7ed8bb77">projective_space</a>
 </li>
 <li>Grass_planes
-: <a class="el" href="classprojective__space.html#add29014e44ba3a4066dc0405de11a5ad">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#add29014e44ba3a4066dc0405de11a5ad">projective_space</a>
 </li>
 <li>group
-: <a class="el" href="classcayley__graph__search.html#a98874861fc14347c9ac8cce2019b3f84">cayley_graph_search</a>
+: <a class="el" href="de/dae/classcayley__graph__search.html#a98874861fc14347c9ac8cce2019b3f84">cayley_graph_search</a>
+</li>
+<li>group_label
+: <a class="el" href="d3/d78/classdirect__product__action.html#a94afde2ec3abe7875fde368b91cdbb4e">direct_product_action</a>
 </li>
 <li>group_order
-: <a class="el" href="classheisenberg.html#ae53b7d9155e9328b88ec79ecdd57b915">heisenberg</a>
-, <a class="el" href="classsubgroup.html#acb55a787275d4983e8a3f9ae5a1007fb">subgroup</a>
+: <a class="el" href="d0/d1d/classheisenberg.html#ae53b7d9155e9328b88ec79ecdd57b915">heisenberg</a>
+, <a class="el" href="d0/d0a/classsubgroup.html#acb55a787275d4983e8a3f9ae5a1007fb">subgroup</a>
 </li>
 <li>group_prefix
-: <a class="el" href="classaction.html#aa3b40d52c0ba26f94448ea44467a3331">action</a>
+: <a class="el" href="d2/d86/classaction.html#aa3b40d52c0ba26f94448ea44467a3331">action</a>
 </li>
 <li>grpsize1
-: <a class="el" href="structstatsblk.html#a7cc3aa4e6d190b1a56f35a529d2bf9be">statsblk</a>
+: <a class="el" href="d4/d0c/structstatsblk.html#a7cc3aa4e6d190b1a56f35a529d2bf9be">statsblk</a>
 </li>
 <li>grpsize2
-: <a class="el" href="structstatsblk.html#a627ae30348213b64304633b339248d40">statsblk</a>
+: <a class="el" href="d4/d0c/structstatsblk.html#a627ae30348213b64304633b339248d40">statsblk</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -1,0 +1,35 @@
+digraph "surface::init_Trihedral_to_Eckardt"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3153 [label="surface::init_Trihedral\l_to_Eckardt",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3153 -> Node3154 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3154 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node3153 -> Node3155 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3155 [label="surface::Eckardt_point\l_from_tritangent_plane",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a98178b6ac99b77aebc0d79a32d43df26"];
+  Node3155 -> Node3156 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3156 [label="INT_vec_heapsort",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39"];
+  Node3156 -> Node3157 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3157 [label="heapsort_make_heap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb"];
+  Node3157 -> Node3158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3158 [label="heapsort_sift_down",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b"];
+  Node3158 -> Node3159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3159 [label="heapsort_swap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6"];
+  Node3156 -> Node3159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3156 -> Node3158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3155 -> Node3160 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3160 [label="eckardt_point::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#a3ebf69b5c9ce60d4c8371ebe384bfb81"];
+  Node3155 -> Node3161 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3161 [label="eckardt_point::init3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#a44c0c0594e27651063031c618cc63343"];
+  Node3155 -> Node3162 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3162 [label="eckardt_point::rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#a8b195ee81c51b60b7a6ef5e69aab1d8d"];
+  Node3162 -> Node3163 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3163 [label="ordered_pair_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a01ef309e6a72450dca058893da5e039d"];
+  Node3163 -> Node3164 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3164 [label="ij2k",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042"];
+  Node3164 -> Node3165 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3165 [label="ij2k",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042"];
+  Node3153 -> Node3166 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3166 [label="print_integer_matrix\l_with_standard_labels",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#ad39c343d865ff89a5aad3c689280ad09"];
+}

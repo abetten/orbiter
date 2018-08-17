@@ -1,0 +1,32 @@
+digraph "desarguesian_spread::compute_intersection_type"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node25 [label="desarguesian_spread\l::compute_intersection_type",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node25 -> Node26 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 [label="desarguesian_spread\l::compute_shadow",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d86/classdesarguesian__spread.html#a2f95efc0417bea1d34a009bf675f2bf2"];
+  Node26 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="linear_set::classify\l_secondary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a5d7659de855e20e2fa8e41e7aedcb1fc"];
+  Node26 -> Node28 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="linear_set::compute\l_stabilizer_of_linear_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2"];
+  Node25 -> Node29 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="desarguesian_spread\l::compute_linear_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d86/classdesarguesian__spread.html#a3ae1799cf7300894df22685686584bac"];
+  Node29 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node30 [label="linear_set::do_compute\l_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b"];
+  Node30 -> Node31 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node31 [label="linear_set::init_compute\l_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b"];
+  Node31 -> Node28 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 -> Node32 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="linear_set::construct\l_semifield",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#ab54b164771526ae8d687751aa2d1a9ce"];
+  Node25 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="linear_set::compute\l_intersection_types\l_at_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#abcc3dd230b32c6923a756abab49f4c35"];
+  Node33 -> Node34 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="linear_set::calculate\l_intersections",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a6afc3349a7aa487d8f716ee7e7ad4b23"];
+  Node25 -> Node35 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="linear_set::do_classify\l_secondary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a47eb7f9995f3343abd3bdfbf9a9a9162"];
+  Node35 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="linear_set::init_secondary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a7bf8cd7805559b5762921687a7c1ed97"];
+  Node36 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 -> Node30 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

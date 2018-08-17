@@ -1,0 +1,8 @@
+<map id="orbits_point" name="orbits_point">
+<area shape="rect" id="node2" href="$d9/d29/draw_8_c.html#a20a270e8cc52b4a32cdd36bfa75d849e" title="orbits_draw_dot" alt="" coords="150,5,266,31"/>
+<area shape="rect" id="node3" href="$d9/d29/draw_8_c.html#aab67c26d29e82151142b788f15c5fe1e" title="orbits_draw_circle" alt="" coords="144,55,272,80"/>
+<area shape="rect" id="node4" href="$d9/d29/draw_8_c.html#ac3530544761e3a79ddef41ed599ea345" title="orbits_draw_line2" alt="" coords="145,104,271,129"/>
+<area shape="rect" id="node6" href="$d9/d29/draw_8_c.html#af0899d0353c41dee492de1e8925965f4" title="orbits_draw_line3" alt="" coords="145,153,271,179"/>
+<area shape="rect" id="node7" href="$d9/d29/draw_8_c.html#ac219f91f40350f9f7aef5ed9e9cf32e9" title="orbits_draw_line4" alt="" coords="145,203,271,228"/>
+<area shape="rect" id="node5" href="$d9/d29/draw_8_c.html#aeec0f332c0b0bc38273c1daac1cb85db" title="orbits_draw_box" alt="" coords="320,104,440,129"/>
+</map>

@@ -1,0 +1,38 @@
+digraph "diophant::open"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node362 [label="diophant::open",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node362 -> Node363 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node363 [label="blt_set::lifting_prepare\l_function_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d3d/classblt__set.html#a1314b7c0a3b78ba54c0f61a397d8afce"];
+  Node362 -> Node364 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node364 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d12/puzzle_8_c.html#a840291bc02cba5474a4cb46a9b9566fe"];
+  Node362 -> Node365 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node365 [label="regular_ls_generator\l::lifting_prepare_function_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd8/classregular__ls__generator.html#a5d4a720722a5db9aa0bb151b785db5e5"];
+  Node362 -> Node366 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node366 [label="diophant::join_problems",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a6753173ea1ad81280ce91efe6a089102"];
+  Node362 -> Node367 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node367 [label="diophant::init_problem\l_of_Steiner_type_with_RHS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#afec4aea287c456909705c5f09369ff63"];
+  Node367 -> Node368 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node368 [label="solve_diophant",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd4/solvers_8h.html#af08eebddb0a897485d9a29558f6169b0"];
+  Node362 -> Node369 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node369 [label="diophant::init_problem\l_of_Steiner_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#ae10252919a85d14368a327eb291d8f47"];
+  Node369 -> Node368 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node362 -> Node370 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node370 [label="diophant::init_clique\l_finding_problem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#ac84b2692cc489bb7f8c8270532887ac0"];
+  Node362 -> Node371 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node371 [label="diophant::read_compact\l_format",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a8cf43adfae9ea53b58c6388c50bcd368"];
+  Node371 -> Node372 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node372 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dbc/solve__diophant_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node362 -> Node373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node373 [label="diophant::read_general\l_format",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a1887f195bdb2f597aa7eedc55cb8a211"];
+  Node373 -> Node372 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node362 -> Node374 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node374 [label="diophant::read_xml",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a56bf6e90f2b106f051f0735bb118cec6"];
+  Node374 -> Node372 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node362 -> Node375 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node375 [label="arc_generator::lifting\l_prepare_function_new",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#a1078fb020754103ae2a648c146e32320"];
+  Node362 -> Node376 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node376 [label="spread_lifting::create\l_system",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de2/classspread__lifting.html#a389c7761cc6a956414db3a1d60c028f7"];
+}

@@ -1,0 +1,22 @@
+<map id="longinteger_domain::size_of_conjugacy_class_in_sym_n" name="longinteger_domain::size_of_conjugacy_class_in_sym_n">
+<area shape="rect" id="node2" href="$d2/d7a/classlonginteger__domain.html#a284865ee9a771a5600baf6337dbecc00" title="longinteger_domain\l::factorial" alt="" coords="204,173,343,212"/>
+<area shape="rect" id="node16" href="$d2/d7a/classlonginteger__domain.html#a02a15ae41f4c5a6144267a1bbdafe038" title="longinteger_domain\l::mult_integer_in_place" alt="" coords="194,111,353,149"/>
+<area shape="rect" id="node17" href="$d2/d7a/classlonginteger__domain.html#a76549e2ed11fd120ccb7d928b31d0ac7" title="longinteger_domain\l::integral_division_exact" alt="" coords="192,236,355,275"/>
+<area shape="rect" id="node3" href="$d2/d7a/classlonginteger__domain.html#a65d533a72b585214a10374b4a18eb713" title="longinteger_domain\l::multiply_up" alt="" coords="403,173,542,212"/>
+<area shape="rect" id="node4" href="$dd/d7e/classlonginteger__object.html#a42ab2cb2b99f33da5eacd84039fee701" title="longinteger_object::one" alt="" coords="590,401,750,427"/>
+<area shape="rect" id="node11" href="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35" title="longinteger_domain\l::mult" alt="" coords="798,111,936,149"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2" title="longinteger_object\l::create" alt="" coords="802,473,932,512"/>
+<area shape="rect" id="node6" href="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1" title="longinteger_object\l::freeself" alt="" coords="999,501,1129,540"/>
+<area shape="rect" id="node7" href="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="1192,665,1351,691"/>
+<area shape="rect" id="node8" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="1193,285,1350,311"/>
+<area shape="rect" id="node9" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="1193,451,1349,476"/>
+<area shape="rect" id="node10" href="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250" title="INT_log10" alt="" coords="1022,564,1105,589"/>
+<area shape="rect" id="node12" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="999,5,1129,44"/>
+<area shape="rect" id="node14" href="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344" title="longinteger_object\l::sign" alt="" coords="999,221,1129,260"/>
+<area shape="rect" id="node15" href="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="984,120,1144,145"/>
+<area shape="rect" id="node13" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="1206,5,1336,44"/>
+<area shape="rect" id="node18" href="$d2/d7a/classlonginteger__domain.html#a1ecbac0518646945d9633a86844846aa" title="longinteger_domain\l::integral_division" alt="" coords="601,236,739,275"/>
+<area shape="rect" id="node19" href="$d2/d7a/classlonginteger__domain.html#a6780a80b91bf044dde737578b2e19a02" title="longinteger_domain\l::compare" alt="" coords="798,279,936,317"/>
+<area shape="rect" id="node21" href="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a" title="longinteger_object\l::assign_to" alt="" coords="802,687,932,725"/>
+<area shape="rect" id="node20" href="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f" title="longinteger_domain\l::compare_unsigned" alt="" coords="993,336,1135,375"/>
+</map>

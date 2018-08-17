@@ -1,0 +1,24 @@
+digraph "action::create_sims"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2909 [label="action::create_sims",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2909 -> Node2910 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2910 [label="linear_group::init\l_PGL2q_OnConic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classlinear__group.html#a84c4d6e1849da4c6f8f096a1af2a8270"];
+  Node2910 -> Node2911 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2911 [label="linear_group::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classlinear__group.html#a8119aa9b882192ab422b12614b259f28"];
+  Node2911 -> Node2912 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2912 [label="code_generator::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d37/classcode__generator.html#acfaa1e8badf6f30255203f499b130af8"];
+  Node2912 -> Node2913 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2913 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d4f/codes_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node2911 -> Node2914 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2914 [label="test_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d03/analyze__q__designs_8_c.html#ad03444358d0b46e7aa4d88a806b44925"];
+  Node2914 -> Node2915 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2915 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d03/analyze__q__designs_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node2911 -> Node2916 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2916 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd5/subspace__orbits__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node2909 -> Node2917 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2917 [label="linear_group::init\l_wedge_action",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classlinear__group.html#a16a8a2a5fdc535f2263210ca7943119e"];
+  Node2917 -> Node2911 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

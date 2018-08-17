@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('globals_defs_f.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,78 +90,85 @@ $(function() {
 
 <h3><a id="index_f"></a>- f -</h3><ul>
 <li>FALSE
-: <a class="el" href="alphabet_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">alphabet.C</a>
-, <a class="el" href="alphabet2_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">alphabet2.C</a>
-, <a class="el" href="lehmer_8c.html#aa93f0eb578d23995850d61f7d61c55c1">lehmer.c</a>
-, <a class="el" href="partitions_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">partitions.C</a>
-, <a class="el" href="fibonacci_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">fibonacci.C</a>
-, <a class="el" href="galois_8h.html#aa93f0eb578d23995850d61f7d61c55c1">galois.h</a>
-, <a class="el" href="nauty_8h.html#aa93f0eb578d23995850d61f7d61c55c1">nauty.h</a>
+: <a class="el" href="d9/dc9/alphabet_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">alphabet.C</a>
+, <a class="el" href="d9/d4b/alphabet2_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">alphabet2.C</a>
+, <a class="el" href="d0/d7f/lehmer_8c.html#aa93f0eb578d23995850d61f7d61c55c1">lehmer.c</a>
+, <a class="el" href="d1/da0/nauty_8h.html#aa93f0eb578d23995850d61f7d61c55c1">nauty.h</a>
+, <a class="el" href="d0/df7/partitions_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">partitions.C</a>
+, <a class="el" href="d2/d32/fibonacci_8_c.html#aa93f0eb578d23995850d61f7d61c55c1">fibonacci.C</a>
+, <a class="el" href="de/dc0/sajeeb_8h.html#aa93f0eb578d23995850d61f7d61c55c1">sajeeb.h</a>
+, <a class="el" href="d5/da7/foundations_8h.html#aa93f0eb578d23995850d61f7d61c55c1">foundations.h</a>
 </li>
 <li>FIRSTBIT
-: <a class="el" href="nauty_8h.html#a4aec4c59fc492a10f6b76e26c847439b">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#a4aec4c59fc492a10f6b76e26c847439b">nauty.h</a>
+</li>
+<li>FIRSTBITNZ
+: <a class="el" href="d1/da0/nauty_8h.html#a8acb3e52017f69d3398d7a427fed9bb8">nauty.h</a>
 </li>
 <li>FLIPELEMENT
-: <a class="el" href="nauty_8h.html#a9db963878ededac7bc8010613668448a">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#a9db963878ededac7bc8010613668448a">nauty.h</a>
 </li>
 <li>FLIPELEMENT0
-: <a class="el" href="nauty_8h.html#a4a2c80b691a0f9da7f3a2ffabe8e67fe">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#a4a2c80b691a0f9da7f3a2ffabe8e67fe">nauty.h</a>
 </li>
 <li>FLIPELEMENT1
-: <a class="el" href="nauty_8h.html#aac116ddd6f53c24bfc6bdab88f6b00d0">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#aac116ddd6f53c24bfc6bdab88f6b00d0">nauty.h</a>
 </li>
 <li>FREE_BYTE
-: <a class="el" href="galois_8h.html#a7408138dbce0ae15c83442c45a0fe625">galois.h</a>
-</li>
-<li>FREE_int
-: <a class="el" href="galois_8h.html#a41719c982e75c00943657333922d1741">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a7408138dbce0ae15c83442c45a0fe625">foundations.h</a>
 </li>
 <li>FREE_INT
-: <a class="el" href="galois_8h.html#ab908e7aaea0ab6e8f741a5b5829e93b2">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#ab908e7aaea0ab6e8f741a5b5829e93b2">foundations.h</a>
+</li>
+<li>FREE_int
+: <a class="el" href="d5/da7/foundations_8h.html#a41719c982e75c00943657333922d1741">foundations.h</a>
 </li>
 <li>FREE_OBJECT
-: <a class="el" href="galois_8h.html#a8598f06298d6d4b1c6474b2ec24258fa">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a8598f06298d6d4b1c6474b2ec24258fa">foundations.h</a>
 </li>
 <li>FREE_OBJECTS
-: <a class="el" href="galois_8h.html#a150aa4c02c6b91fafb761acecd650798">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a150aa4c02c6b91fafb761acecd650798">foundations.h</a>
 </li>
 <li>FREE_PBYTE
-: <a class="el" href="galois_8h.html#a3a22ce8353df702a3cf0ed858efc5c19">galois.h</a>
-</li>
-<li>FREE_pint
-: <a class="el" href="galois_8h.html#aebc2e943afdc1603d3d9d36b263efa1a">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a3a22ce8353df702a3cf0ed858efc5c19">foundations.h</a>
 </li>
 <li>FREE_PINT
-: <a class="el" href="galois_8h.html#a6af3060e3ed9a0278402b951bb8ed7f7">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a6af3060e3ed9a0278402b951bb8ed7f7">foundations.h</a>
+</li>
+<li>FREE_pint
+: <a class="el" href="d5/da7/foundations_8h.html#aebc2e943afdc1603d3d9d36b263efa1a">foundations.h</a>
 </li>
 <li>FREE_PPINT
-: <a class="el" href="galois_8h.html#ae7cb600620f2801752997950828d949c">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#ae7cb600620f2801752997950828d949c">foundations.h</a>
 </li>
 <li>FREE_pvoid
-: <a class="el" href="galois_8h.html#a9b7d0d7f7b338bfa4e5dbb2f0ffbb44d">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#a9b7d0d7f7b338bfa4e5dbb2f0ffbb44d">foundations.h</a>
 </li>
 <li>FREE_UBYTE
-: <a class="el" href="galois_8h.html#aa5f1cb4cfd3fdee14c69a0c9dec23dfe">galois.h</a>
+: <a class="el" href="d5/da7/foundations_8h.html#aa5f1cb4cfd3fdee14c69a0c9dec23dfe">foundations.h</a>
 </li>
 <li>FREES
-: <a class="el" href="nauty_8h.html#a2651aa3283b2a8ec8c5268c5fc06f8e8">nauty.h</a>
+: <a class="el" href="d1/da0/nauty_8h.html#a2651aa3283b2a8ec8c5268c5fc06f8e8">nauty.h</a>
 </li>
 <li>FUSE_TYPE_DOUBLE
-: <a class="el" href="incidence_8h.html#a7de8e47c51d00048b30b7b5fe880bcea">incidence.h</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a7de8e47c51d00048b30b7b5fe880bcea">geometry.h</a>
 </li>
 <li>FUSE_TYPE_NONE
-: <a class="el" href="incidence_8h.html#a3aa472e970b25b16ff1691b1a7b394fa">incidence.h</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a3aa472e970b25b16ff1691b1a7b394fa">geometry.h</a>
 </li>
 <li>FUSE_TYPE_SIMPLE
-: <a class="el" href="incidence_8h.html#aecf1e611cf0e74030e733acb3af08c8a">incidence.h</a>
+: <a class="el" href="d4/d67/geometry_8h.html#aecf1e611cf0e74030e733acb3af08c8a">geometry.h</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

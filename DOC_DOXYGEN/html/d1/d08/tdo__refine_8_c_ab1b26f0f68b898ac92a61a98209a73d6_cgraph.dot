@@ -1,0 +1,13 @@
+digraph "distribution_reverse_sorting"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6 [label="distribution_reverse\l_sorting",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="quicksort_array",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a660db9b0f6bc8a01353f32f3e02638f6"];
+  Node6 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="compare_func_INT_vec\l_inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d08/tdo__refine_8_c.html#aeae33c96eccf9f071333b94bd44b7a33"];
+  Node6 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="compare_func_INT_vec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d08/tdo__refine_8_c.html#ae6bcc839277243c0461b66b59a5ed304"];
+}

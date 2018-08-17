@@ -1,0 +1,14 @@
+<map id="database::delete_files" name="database::delete_files">
+<area shape="rect" id="node2" href="$d8/d99/classhollerith.html#af51ae7b943056db367f3c205a5a1cc4b" title="hollerith::init" alt="" coords="245,19,337,44"/>
+<area shape="rect" id="node4" href="$d8/d99/classhollerith.html#af61fce2d06f211b25fe3838e4dfee77a" title="hollerith::s" alt="" coords="475,68,557,93"/>
+<area shape="rect" id="node5" href="$d8/d99/classhollerith.html#a778dd63885a4e3a4e2fb829165c32632" title="hollerith::append" alt="" coords="231,68,351,93"/>
+<area shape="rect" id="node6" href="$db/d72/classdatabase.html#a0d239d767658aca51abbea00148b8b2f" title="database::filename" alt="" coords="224,169,358,195"/>
+<area shape="rect" id="node9" href="$db/d72/classdatabase.html#a30109ba5488b06111439f887fc1ac499" title="database::btree_access" alt="" coords="434,319,597,344"/>
+<area shape="rect" id="node11" href="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704" title="Vector::s_l" alt="" coords="249,268,333,293"/>
+<area shape="rect" id="node12" href="$db/d72/classdatabase.html#a215047d1b32b8bd54f91a7bdca168eee" title="database::btree_access_i" alt="" coords="204,219,378,244"/>
+<area shape="rect" id="node3" href="$d8/d99/classhollerith.html#a240d1b30780c9e09323d0b3ad5e2d1f7" title="hollerith::freeself\l_hollerith" alt="" coords="456,5,575,44"/>
+<area shape="rect" id="node7" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="697,219,780,244"/>
+<area shape="rect" id="node8" href="$d7/d71/classdiscreta__base.html#a3e66f82711f314710107e2f29e589690" title="discreta_base::as_hollerith" alt="" coords="426,117,606,143"/>
+<area shape="rect" id="node10" href="$d7/d71/classdiscreta__base.html#a7bdd6cae39c380b128ee9e17e42cf020" title="discreta_base::as_vector" alt="" coords="654,319,823,344"/>
+<area shape="rect" id="node13" href="$d7/d71/classdiscreta__base.html#a78e76674cef2ec113c17989c11288778" title="discreta_base::as_btree" alt="" coords="434,269,597,295"/>
+</map>

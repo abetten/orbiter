@@ -1,0 +1,22 @@
+digraph "object_in_projective_space::init_packing_from_set"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node62 [label="object_in_projective\l_space::init_packing\l_from_set",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node62 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node63 [label="canonical_form",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a5f0f6b71cd402c5b41240c420e533e60"];
+  Node63 -> Node64 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node64 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node63 -> Node65 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="process_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a63a6b06bd2a9a9c50ed710271f4d5530"];
+  Node65 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node66 [label="classify_objects_using\l_nauty",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a32275eacc4bdda93b2b34c2a9217a088"];
+  Node66 -> Node64 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node62 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node62 -> Node67 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 [label="create_object_from\l_string",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de6/projective__space__main_8_c.html#a8f63b5bf071061de5cbb1e4d00d0518b"];
+  Node67 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

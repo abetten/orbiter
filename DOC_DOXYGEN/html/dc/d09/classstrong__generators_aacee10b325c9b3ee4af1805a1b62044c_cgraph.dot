@@ -1,0 +1,47 @@
+digraph "strong_generators::init_group_extension"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3188 [label="strong_generators::\linit_group_extension",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3188 -> Node3189 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3189 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node3189 -> Node3190 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3190 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node3188 -> Node3191 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3191 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node3188 -> Node3192 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3192 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node3188 -> Node3193 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3193 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node3188 -> Node3194 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3194 [label="vector_ge::print_quick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a07262bf7e62323977854b0884c85d549"];
+  Node3194 -> Node3195 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3195 [label="action::element_print\l_quick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b"];
+  Node3194 -> Node3193 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3188 -> Node3196 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3196 [label="action::print_info",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a6f89e493e5c5a32e5c3b8963d438ce86"];
+  Node3196 -> Node3197 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3197 [label="action::print_symmetry\l_group_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#aed811766c7e64fe2c853df8b0b67aa6e"];
+  Node3197 -> Node3198 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3198 [label="action_print_symmetry\l_group_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#a03666b9440c4962148eba7905b9f843c"];
+  Node3197 -> Node3197 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3196 -> Node3199 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3199 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node3196 -> Node3200 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3200 [label="sims::group_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad"];
+  Node3188 -> Node3201 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3201 [label="strong_generators::\lstrong_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a21fe01627384464cd600bd858acb6c40"];
+  Node3201 -> Node3202 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3202 [label="strong_generators::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a6c749e2b2e07381b291f76a3841334f0"];
+  Node3188 -> Node3203 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3203 [label="generators_to_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#aaa17f24fdab7065fbb11a06c513a4562"];
+  Node3188 -> Node3204 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3204 [label="strong_generators::\lprint_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#adccd259b435afd96d89cd664daa6c897"];
+  Node3204 -> Node3205 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3205 [label="strong_generators::\lgroup_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a91f453c2bfd6502b96f4b4eed16beb20"];
+  Node3204 -> Node3199 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3204 -> Node3206 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3206 [label="action::element_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae38c3ef3c1125213733d63c6fc3c40cd"];
+  Node3204 -> Node3193 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,13 @@
+<map id="longinteger::normalize_representation" name="longinteger::normalize_representation">
+<area shape="rect" id="node2" href="$d3/d71/classlonginteger.html#a46c003f48c7bb112056651dae89c8e72" title="longinteger::longinteger" alt="" coords="214,5,375,31"/>
+<area shape="rect" id="node3" href="$d3/d71/classlonginteger.html#ae894d5c96d74d0c19a09527956a14493" title="longinteger::copyobject_to" alt="" coords="206,55,383,80"/>
+<area shape="rect" id="node5" href="$d3/d71/classlonginteger.html#a1afdab43a82be7dfd40ff41da28735d2" title="longinteger::mult_to" alt="" coords="225,104,364,129"/>
+<area shape="rect" id="node7" href="$d3/d71/classlonginteger.html#a692f761cfc91770ca40ab5c2df4bd358" title="longinteger::integral\l_division" alt="" coords="225,153,364,192"/>
+<area shape="rect" id="node12" href="$d3/d71/classlonginteger.html#a1b5b30f8bc750d1304390f518e43aa0f" title="longinteger::square\l_root_floor" alt="" coords="227,216,362,255"/>
+<area shape="rect" id="node4" href="$d3/d71/classlonginteger.html#a30553f5083f01e86aae9e00630852617" title="longinteger::longinteger" alt="" coords="431,55,592,80"/>
+<area shape="rect" id="node6" href="$d0/de5/classinteger.html#a7f4f072c0d9c6b15660d80e81496dffc" title="integer::mult_to" alt="" coords="455,104,568,129"/>
+<area shape="rect" id="node8" href="$d3/d71/classlonginteger.html#a4c554e7aa704ace8b97448c6d27fd4bd" title="longinteger::modp" alt="" coords="447,153,575,179"/>
+<area shape="rect" id="node10" href="$d3/d71/classlonginteger.html#a2e791f6e15c1ef6f7cd2dd3bf0a6d4c1" title="longinteger::ny_p" alt="" coords="449,203,573,228"/>
+<area shape="rect" id="node11" href="$d3/d71/classlonginteger.html#ac4b65023c8de701153491d80577dfb9b" title="longinteger::divide\l_out_int" alt="" coords="446,252,576,291"/>
+<area shape="rect" id="node9" href="$d3/d72/global_8_c.html#a8b9a700cdc4cf3ca42c28e6435945ade" title="sqrt_mod" alt="" coords="640,153,716,179"/>
+</map>

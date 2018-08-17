@@ -1,0 +1,26 @@
+digraph "orthogonal::print_schemes"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node36881 [label="orthogonal::print_schemes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node36881 -> Node36882 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36882 [label="orthogonal::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#a8bd53ba30f34ac50889503f0f3ef6deb"];
+  Node36882 -> Node36882 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36882 -> Node36883 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36883 [label="surface::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a90570b0ca6ab02988159f2c40cb27308"];
+  Node36883 -> Node36884 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36884 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node36883 -> Node36885 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36885 [label="surface_classify_wedge\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a"];
+  Node36885 -> Node36886 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36886 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node36883 -> Node36887 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36887 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node36887 -> Node36888 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36888 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node36882 -> Node36889 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36889 [label="W3q::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d2c/class_w3q.html#a215fe070895a4915537fcb1bfba4f777"];
+  Node36889 -> Node36890 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36890 [label="knarr::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de5/classknarr.html#a1e25f28aeec8f316cc0ce81eb89e670e"];
+}

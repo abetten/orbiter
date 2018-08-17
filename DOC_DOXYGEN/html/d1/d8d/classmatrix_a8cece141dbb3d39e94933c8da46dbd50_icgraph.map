@@ -1,0 +1,16 @@
+<map id="matrix::m_iji" name="matrix::m_iji">
+<area shape="rect" id="node2" href="$d5/d3f/test_8_c.html#aff32612e997c6abf4b6f22b9185b0e67" title="get_random_matrix" alt="" coords="162,5,298,31"/>
+<area shape="rect" id="node4" href="$d5/d3f/test_8_c.html#a9068e33586261a19e71ea3cc6355e910" title="get_random_Hall_matrix" alt="" coords="147,55,313,80"/>
+<area shape="rect" id="node5" href="$d3/dfb/discreta__global_8_c.html#a71d19c0a0ff6e728c22fb07991564523" title="Mtk_sup_to_inf" alt="" coords="174,104,286,129"/>
+<area shape="rect" id="node7" href="$da/d44/classgeometry.html#a71bc2e3a3f4ca02e8518ab5518a4e0df" title="geometry::scan_body" alt="" coords="156,153,305,179"/>
+<area shape="rect" id="node10" href="$d1/d8d/classmatrix.html#adece30f74509652851c31e2d82e141e3" title="matrix::PG_design_point\l_vs_hyperplane" alt="" coords="147,203,314,241"/>
+<area shape="rect" id="node11" href="$d1/d8d/classmatrix.html#ae05463d97ecc8ea3654c45a399b872e2" title="matrix::PG_k_q_design" alt="" coords="150,265,310,291"/>
+<area shape="rect" id="node12" href="$d1/d8d/classmatrix.html#a5e3395e0dabdef2f693d463814577f5d" title="matrix::PG_point_unrank" alt="" coords="146,315,315,340"/>
+<area shape="rect" id="node15" href="$d1/d8d/classmatrix.html#ac1e0b45861b868e879cc00201f7d0706" title="matrix::AG_point_unrank" alt="" coords="146,364,315,389"/>
+<area shape="rect" id="node3" href="$d5/d3f/test_8_c.html#a757609870ae7ab0f1d0073415822d19f" title="test_hall" alt="" coords="407,24,478,49"/>
+<area shape="rect" id="node6" href="$da/d1c/classpolar.html#ad558a87988ec31179ccfde947e490381" title="polar::compute_Kramer\l_Mesner_matrix" alt="" coords="363,91,523,129"/>
+<area shape="rect" id="node8" href="$da/d44/classgeometry.html#ac6f757d1a8855800d3da3fa1e83e812d" title="geometry::scan" alt="" coords="387,153,499,179"/>
+<area shape="rect" id="node9" href="$d6/d4a/geometry_8_c.html#a11af609febe3a9db20d8236af36928c5" title="search_geo_file" alt="" coords="385,203,501,228"/>
+<area shape="rect" id="node13" href="$d0/d08/classpermutation.html#a3e01585ffb15282fc45a3158c5ad0b76" title="permutation::induce\l_on_lines_of_PG_k_q" alt="" coords="367,308,519,347"/>
+<area shape="rect" id="node14" href="$d0/dd3/perm__group__gens_8_c.html#ab33fa2e167b2501e5761fee699b4c285" title="vec_generators_induce\l_on_lines_of_PG_k_q" alt="" coords="571,308,731,347"/>
+</map>

@@ -1,0 +1,9 @@
+digraph "generator::print_statistic_on_callbacks_naked"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node19087 [label="generator::print_statistic\l_on_callbacks_naked",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node19087 -> Node19088 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19088 [label="generator::print_statistic\l_on_callbacks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#aaed300cc45b7045e96ff4a95265c9a61"];
+}

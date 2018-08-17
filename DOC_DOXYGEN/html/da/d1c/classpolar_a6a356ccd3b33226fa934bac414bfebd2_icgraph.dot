@@ -1,0 +1,13 @@
+digraph "polar::unrank_point"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4047 [label="polar::unrank_point",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4047 -> Node4048 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4048 [label="polar::compute_cosets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d1c/classpolar.html#a1fae83636607982bad299fd84380fc40"];
+  Node4047 -> Node4049 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4049 [label="polar::dual_polar_graph",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d1c/classpolar.html#a6e5e2b0d9d3447cac72cb82ce3d2e9e5"];
+  Node4047 -> Node4050 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4050 [label="polar::list_whole_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d1c/classpolar.html#a26f04b7c75e45604ab772931ed2916fd"];
+}

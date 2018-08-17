@@ -1,0 +1,13 @@
+digraph "memory::freeself_memory"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node235 [label="memory::freeself_memory",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node235 -> Node236 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node236 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node236 -> Node237 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node237 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node236 -> Node238 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node238 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+}

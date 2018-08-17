@@ -1,0 +1,19 @@
+<map id="projective_space_init_line_action" name="projective_space_init_line_action">
+<area shape="rect" id="node2" href="$d9/ddf/classaction__on__grassmannian.html#a2cf7eda6b88fa033fdc4486fa0508e84" title="action_on_grassmannian\l::init" alt="" coords="415,5,586,44"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a4dc271144a2899d2f94f88e52e4e538d" title="action::induced_action\l_on_grassmannian" alt="" coords="199,163,353,201"/>
+<area shape="rect" id="node14" href="$d2/d86/classaction.html#a6f89e493e5c5a32e5c3b8963d438ce86" title="action::print_info" alt="" coords="441,303,560,328"/>
+<area shape="rect" id="node3" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="650,12,806,37"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#a108adb38ad362aeb55cf40b9de38bb16" title="action::action" alt="" coords="451,68,550,93"/>
+<area shape="rect" id="node10" href="$df/d02/classgrassmann.html#a2e8cf7b9f203254493d7c2607c17d498" title="grassmann::init" alt="" coords="445,141,556,167"/>
+<area shape="rect" id="node12" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="435,191,566,229"/>
+<area shape="rect" id="node13" href="$d2/d86/classaction.html#adc5f98db8315bfd17fcd2fbb437d8f60" title="action::allocate_element_data" alt="" coords="401,253,600,279"/>
+<area shape="rect" id="node6" href="$d2/d86/classaction.html#af05ce222a97a1eff5f692b9193dee125" title="action::null" alt="" coords="685,68,771,93"/>
+<area shape="rect" id="node7" href="$d2/d86/classaction.html#a09d62a3dd408d1c0704b380b26f72fb0" title="action::null_base_data" alt="" coords="866,19,1020,44"/>
+<area shape="rect" id="node8" href="$d2/d86/classaction.html#a90cd98bea15f55a3c25cb9c6b68685df" title="action::null_element_data" alt="" coords="856,68,1030,93"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a1359d74a665e82a098fba5c1c1249dde" title="action::null_function\l_pointers" alt="" coords="873,117,1013,156"/>
+<area shape="rect" id="node11" href="$df/d02/classgrassmann.html#a252a85d3b74eb4fbd5771f4152a5f272" title="grassmann::grassmann" alt="" coords="648,141,808,167"/>
+<area shape="rect" id="node15" href="$d2/d86/classaction.html#aed811766c7e64fe2c853df8b0b67aa6e" title="action::print_symmetry\l_group_type" alt="" coords="650,240,806,279"/>
+<area shape="rect" id="node17" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="676,303,780,328"/>
+<area shape="rect" id="node18" href="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad" title="sims::group_order" alt="" coords="664,352,792,377"/>
+<area shape="rect" id="node16" href="$d5/d90/action__global_8_c.html#a03666b9440c4962148eba7905b9f843c" title="action_print_symmetry\l_group_type" alt="" coords="865,240,1021,279"/>
+</map>

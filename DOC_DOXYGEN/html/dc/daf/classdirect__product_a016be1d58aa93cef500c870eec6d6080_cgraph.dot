@@ -1,0 +1,15 @@
+digraph "direct_product::element_one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node68 [label="direct_product::element_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node68 -> Node69 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node69 [label="matrix_group::GL_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a00890c674cedb856ad2c358aedb25b21"];
+  Node69 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="matrix_group::GL_one\l_internal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a308f9c0bb3c627134bf6d63a5c0721e9"];
+  Node70 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="finite_field::identity\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a4688997f80b8721560bccec986c23413"];
+  Node68 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="direct_product::offset_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/daf/classdirect__product.html#a2ec3643bd7223e53c00451d1fe832f20"];
+}
