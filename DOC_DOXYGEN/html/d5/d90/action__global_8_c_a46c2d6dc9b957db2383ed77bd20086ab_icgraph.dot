@@ -1,9 +1,0 @@
-digraph "new_action_by_right_multiplication"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1425 [label="new_action_by_right\l_multiplication",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1425 -> Node1426 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1426 [label="strong_generators::\lgenerators_for_shallow\l_schreier_tree",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a5d093b23261ef710325614ad5c497dbc"];
-}

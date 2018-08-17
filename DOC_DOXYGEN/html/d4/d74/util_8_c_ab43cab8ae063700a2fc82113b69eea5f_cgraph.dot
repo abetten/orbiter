@@ -1,9 +1,0 @@
-digraph "s_scan_int"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7447 [label="s_scan_int",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7447 -> Node7448 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7448 [label="s_scan_token",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a8d1a4ad92d09138f7a1a7e389469ed45"];
-}

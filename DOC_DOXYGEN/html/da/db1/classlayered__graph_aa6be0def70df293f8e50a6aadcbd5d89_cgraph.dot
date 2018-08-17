@@ -1,9 +1,0 @@
-digraph "layered_graph::write_file"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node598 [label="layered_graph::write_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node598 -> Node599 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node599 [label="layered_graph::write\l_memory_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/db1/classlayered__graph.html#a9fd9630354f493941c8407da7c5e4a92"];
-}

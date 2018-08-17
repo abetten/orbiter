@@ -1,9 +1,0 @@
-digraph "INT_vec_print_types_naked_tex"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node6051 [label="INT_vec_print_types\l_naked_tex",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node6051 -> Node6052 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6052 [label="classify::print_file_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d43/classclassify.html#a10332f3ce5f2b7df7767d3c6b02aaa58"];
-}

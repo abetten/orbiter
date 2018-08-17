@@ -1,7 +1,0 @@
-<map id="matrix_group::init_base_projective" name="matrix_group::init_base_projective">
-<area shape="rect" id="node2" href="$d3/ded/classmatrix__group.html#a2b7f41b5e6f58257532c1e24312b89e2" title="matrix_group::init_base" alt="" coords="177,75,337,100"/>
-<area shape="rect" id="node3" href="$d3/ded/classmatrix__group.html#a626286de5799c4c9e45216e735b1d233" title="matrix_group::init\l_projective_group" alt="" coords="399,5,526,44"/>
-<area shape="rect" id="node5" href="$d3/ded/classmatrix__group.html#aa278bd127d400940516c20bfe1f2f91e" title="matrix_group::init\l_affine_group" alt="" coords="400,68,524,107"/>
-<area shape="rect" id="node6" href="$d3/ded/classmatrix__group.html#a0aa3c4187d8504b88f9f0aa644b48b86" title="matrix_group::init\l_general_linear_group" alt="" coords="385,131,540,169"/>
-<area shape="rect" id="node4" href="$d3/d78/classdirect__product__action.html#aad40060e5821c011cccaa65a5c4df64f" title="direct_product_action\l::init" alt="" coords="588,37,736,76"/>
-</map>

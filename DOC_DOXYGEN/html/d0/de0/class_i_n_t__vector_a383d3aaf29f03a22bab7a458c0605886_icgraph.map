@@ -1,8 +1,0 @@
-<map id="INT_vector::freeself" name="INT_vector::freeself">
-<area shape="rect" id="node2" href="$d0/de0/class_i_n_t__vector.html#a7e7d670c7149f6fb835e864be692f41d" title="INT_vector::~INT_vector" alt="" coords="191,5,358,31"/>
-<area shape="rect" id="node3" href="$d0/de0/class_i_n_t__vector.html#acb3a236562329d1e2752003de9e44ae6" title="INT_vector::allocate" alt="" coords="205,55,344,80"/>
-<area shape="rect" id="node4" href="$d0/de0/class_i_n_t__vector.html#a4d854da147ab1a8e8bb2940aa64bfd13" title="INT_vector::allocate\l_and_init" alt="" coords="205,104,344,143"/>
-<area shape="rect" id="node5" href="$d0/de0/class_i_n_t__vector.html#a73a03d4d965633ee099a7b66f3f78e35" title="INT_vector::init_permutation\l_from_string" alt="" coords="406,48,595,87"/>
-<area shape="rect" id="node6" href="$d0/de0/class_i_n_t__vector.html#ac39f7ae050d29ea8dadf2962c404aaba" title="INT_vector::read_ascii_file" alt="" coords="411,111,590,136"/>
-<area shape="rect" id="node7" href="$d0/de0/class_i_n_t__vector.html#a9dce169a497d15dcbf3f51726df20556" title="INT_vector::read_binary\l_file_INT4" alt="" coords="418,160,583,199"/>
-</map>

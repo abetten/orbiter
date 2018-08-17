@@ -1,9 +1,0 @@
-digraph "matrix::Asup2Ainf"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node139 [label="matrix::Asup2Ainf",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node139 -> Node140 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node140 [label="matrix::Ainf2Asup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a7abdfef775e6f1e68856bbdb06004dce"];
-}

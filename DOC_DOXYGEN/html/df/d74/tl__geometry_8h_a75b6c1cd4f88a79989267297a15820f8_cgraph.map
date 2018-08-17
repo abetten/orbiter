@@ -1,7 +1,0 @@
-<map id="callback_check_partial_blocking_set" name="callback_check_partial_blocking_set">
-<area shape="rect" id="node2" href="$d0/dd1/blt_8h.html#a8c1a5fc71aea7ff31d181f0103196a24" title="print_set" alt="" coords="445,5,517,31"/>
-<area shape="rect" id="node3" href="$dc/d36/classsearch__blocking__set.html#ae1ec331b4fa4715c79a22bac0a71f146" title="search_blocking_set\l::test_blocking_set\l_upper_bound_only" alt="" coords="209,48,352,100"/>
-<area shape="rect" id="node4" href="$d5/da4/classfancy__set.html#ab3f7e0bf35d0c312db44973eaad5b085" title="fancy_set::add_element" alt="" coords="400,61,563,87"/>
-<area shape="rect" id="node5" href="$d5/da4/classfancy__set.html#a629c5fdb14e3ad606632bb3d88013851" title="fancy_set::is_contained" alt="" coords="611,36,771,61"/>
-<area shape="rect" id="node6" href="$d5/da4/classfancy__set.html#abf9e1b0592f017be71ca410371b04754" title="fancy_set::swap" alt="" coords="632,85,749,111"/>
-</map>

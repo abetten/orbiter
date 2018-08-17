@@ -1,9 +1,0 @@
-digraph "classify_trihedral_pairs::classify_trihedral_pairs"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node0 [label="classify_trihedral\l_pairs::classify_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="classify_trihedral\l_pairs::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a53e32015beafedea45f4a695f7f13495"];
-}

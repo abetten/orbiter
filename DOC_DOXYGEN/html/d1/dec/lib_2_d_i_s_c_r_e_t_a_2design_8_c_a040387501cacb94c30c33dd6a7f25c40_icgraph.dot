@@ -1,9 +1,0 @@
-digraph "determine_restricted_number_of_designs_t"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1401 [label="determine_restricted\l_number_of_designs_t",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1401 -> Node1402 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1402 [label="design_parameter_database\l_export_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7"];
-}

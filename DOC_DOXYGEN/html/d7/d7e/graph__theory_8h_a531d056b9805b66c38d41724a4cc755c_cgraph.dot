@@ -1,9 +1,0 @@
-digraph "call_back_clique_found_using_file_output"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node2 [label="call_back_clique_found\l_using_file_output",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="file_output::write_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dc7/classfile__output.html#a22e94c8e7a9da6d3cea1f65b2e0a891c"];
-}

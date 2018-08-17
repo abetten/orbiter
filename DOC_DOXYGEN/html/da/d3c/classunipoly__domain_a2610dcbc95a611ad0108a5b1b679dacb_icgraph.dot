@@ -1,9 +1,0 @@
-digraph "unipoly_domain::order_ideal_generator"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node556 [label="unipoly_domain::order\l_ideal_generator",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node556 -> Node557 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node557 [label="unipoly_domain::compute\l_normal_basis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a799f3e7de9717b6c0b52dbc5305f3bf5"];
-}

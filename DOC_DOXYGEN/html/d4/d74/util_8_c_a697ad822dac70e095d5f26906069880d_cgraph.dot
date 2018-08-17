@@ -1,9 +1,0 @@
-digraph "double_vec_scan_from_stream"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node415 [label="double_vec_scan_from\l_stream",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node415 -> Node416 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node416 [label="double_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#aee0c436dfcfcb2f8a9b32f01ec90033a"];
-}

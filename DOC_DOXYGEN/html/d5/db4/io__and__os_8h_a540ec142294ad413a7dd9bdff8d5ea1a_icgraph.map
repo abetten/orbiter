@@ -1,9 +1,0 @@
-<map id="count_number_of_solutions_in_file" name="count_number_of_solutions_in_file">
-<area shape="rect" id="node2" href="$d4/d74/util_8_c.html#a726805e3f54c37940c365598b47c26d6" title="read_solutions_from_file" alt="" coords="238,25,405,51"/>
-<area shape="rect" id="node8" href="$d3/d5f/classisomorph.html#ab76ca306e180ca53e30d7edd66931d83" title="isomorph::count_solutions\l_from_clique_finder_case\l_by_case" alt="" coords="453,81,629,133"/>
-<area shape="rect" id="node3" href="$d3/d5f/classisomorph.html#a65bc5ec528f741a1b01cdd606dfed579" title="isomorph::read_solutions\l_from_clique_finder_case\l_by_case" alt="" coords="454,5,628,57"/>
-<area shape="rect" id="node4" href="$d4/d7e/isomorph__global_8_c.html#a2a55ab4b2df6ae83f916cf01eccdf67c" title="isomorph_read_solution\l_files_from_clique_finder\l_case_by_case" alt="" coords="677,44,847,96"/>
-<area shape="rect" id="node5" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="895,51,1041,89"/>
-<area shape="rect" id="node6" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1135,32,1185,57"/>
-<area shape="rect" id="node7" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="1089,81,1230,107"/>
-</map>

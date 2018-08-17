@@ -1,9 +1,0 @@
-<map id="point_line::coordinatize_plane" name="point_line::coordinatize_plane">
-<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#af406b650e9e83872857248db151bac79" title="point_line::plane_line\l_through_two_points" alt="" coords="216,5,363,44"/>
-<area shape="rect" id="node3" href="$dd/def/classpoint__line.html#a451a4fb9b352dbb34c64cecc1f1341f4" title="point_line::plane_get\l_points_on_line" alt="" coords="217,68,362,107"/>
-<area shape="rect" id="node4" href="$dd/def/classpoint__line.html#a5be2add1c6769b010a0460db564e5393" title="point_line::plane_line\l_intersection" alt="" coords="216,131,363,169"/>
-<area shape="rect" id="node5" href="$dd/def/classpoint__line.html#a658e08635a1479f58edc3f275ea9d28e" title="point_line::plane_get\l_lines_through_point" alt="" coords="217,193,362,232"/>
-<area shape="rect" id="node6" href="$dd/def/classpoint__line.html#ae4d23004dc4a9cd50b3ed317e1fb8009" title="point_line::MOLSsxb" alt="" coords="217,256,362,281"/>
-<area shape="rect" id="node7" href="$dd/def/classpoint__line.html#a65de2085e42965a52469de420274c372" title="point_line::print_MOLS" alt="" coords="211,305,368,331"/>
-<area shape="rect" id="node8" href="$d0/d75/point__line_8_c.html#aaf6bc7deaefcdf4e19bbe121012735f9" title="get_MOLm" alt="" coords="416,305,503,331"/>
-</map>

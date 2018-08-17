@@ -1,6 +1,0 @@
-<map id="spreadsheet::read_spreadsheet" name="spreadsheet::read_spreadsheet">
-<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="308,5,377,31"/>
-<area shape="rect" id="node3" href="$d8/d11/classspreadsheet.html#a679506767b79d3d4b53b416fbcb79b1c" title="spreadsheet::tokenize" alt="" coords="267,55,418,80"/>
-<area shape="rect" id="node5" href="$d8/d11/classspreadsheet.html#aa7ecb515e7ca85800342d643a72d8de6" title="spreadsheet::find_rows" alt="" coords="263,104,422,129"/>
-<area shape="rect" id="node4" href="$d5/db4/io__and__os_8h.html#aa57672d188543c5c2047842c5416e2fd" title="s_scan_token_comma\l_separated" alt="" coords="470,48,625,87"/>
-</map>

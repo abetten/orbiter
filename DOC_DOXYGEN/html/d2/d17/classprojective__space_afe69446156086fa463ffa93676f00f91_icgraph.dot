@@ -1,9 +1,0 @@
-digraph "projective_space::find_k_secant_lines"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1235 [label="projective_space::find\l_k_secant_lines",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1235 -> Node1236 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1236 [label="buekenhout_metz::compute\l_the_design",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d98/classbuekenhout__metz.html#a4256a0fe0a3ace089014a54f2cd6cab6"];
-}

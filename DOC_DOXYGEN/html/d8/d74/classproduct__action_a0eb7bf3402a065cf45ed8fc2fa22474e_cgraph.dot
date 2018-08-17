@@ -1,9 +1,0 @@
-digraph "product_action::element_print_latex"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1736 [label="product_action::element\l_print_latex",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1736 -> Node1737 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1737 [label="action::element_print\l_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a45872d8a9043eb99b8bfa4955b89f70a"];
-}

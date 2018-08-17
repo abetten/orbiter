@@ -1,9 +1,0 @@
-digraph "Vector::operator[]"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node3922 [label="Vector::operator[]",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3922 -> Node3923 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3923 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
-}

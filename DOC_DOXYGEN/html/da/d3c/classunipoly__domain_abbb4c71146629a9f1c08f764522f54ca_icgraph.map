@@ -1,8 +1,0 @@
-<map id="unipoly_domain::rank" name="unipoly_domain::rank">
-<area shape="rect" id="node2" href="$da/d3c/classunipoly__domain.html#ae0253c2cb878d008f01b59ec4a61a1a7" title="unipoly_domain::create\l_object_by_rank_longinteger" alt="" coords="201,38,394,77"/>
-<area shape="rect" id="node3" href="$da/d3c/classunipoly__domain.html#ae3243756144f89d8a0fbd48f9e1d7840" title="unipoly_domain::create\l_object_by_rank_string" alt="" coords="450,10,610,49"/>
-<area shape="rect" id="node5" href="$da/d3c/classunipoly__domain.html#a04097bd4234a2078e84f7474496a3e19" title="unipoly_domain::unrank\l_longinteger" alt="" coords="216,101,379,140"/>
-<area shape="rect" id="node6" href="$da/d3c/classunipoly__domain.html#a555bcddca6df95430fa098a5cc9fcd19" title="unipoly_domain::rank\l_longinteger" alt="" coords="224,164,372,202"/>
-<area shape="rect" id="node7" href="$da/d3c/classunipoly__domain.html#a32acf71ba55156289a07290565ccb65c" title="unipoly_domain::minimum\l_polynomial_factorring" alt="" coords="210,226,386,265"/>
-<area shape="rect" id="node4" href="$da/d3c/classunipoly__domain.html#a2c953e21fad2df88627ac8a289f3a77b" title="unipoly_domain::minimum\l_polynomial_factorring\l_longinteger" alt="" coords="442,101,618,153"/>
-</map>

@@ -1,9 +1,0 @@
-digraph "clique_finder::delinearize_adjacency_list"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node95 [label="clique_finder::delinearize\l_adjacency_list",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node95 -> Node96 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node96 [label="bitvector_s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac0135a3681a44df3fe7af1545676fbe2"];
-}

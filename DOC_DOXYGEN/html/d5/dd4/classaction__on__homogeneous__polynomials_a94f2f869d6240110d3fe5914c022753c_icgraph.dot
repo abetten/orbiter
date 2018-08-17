@@ -1,9 +1,0 @@
-digraph "action_on_homogeneous_polynomials::init_invariant_set_of_equations"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node563 [label="action_on_homogeneous\l_polynomials::init_invariant\l_set_of_equations",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node563 -> Node564 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node564 [label="action::induced_action\l_on_homogeneous_polynomials\l_given_by_equations",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a8f8df8dabfaa711297c20d44a2c1946a"];
-}

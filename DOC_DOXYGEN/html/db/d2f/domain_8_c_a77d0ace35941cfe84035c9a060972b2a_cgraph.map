@@ -1,6 +1,0 @@
-<map id="is_finite_field_domain" name="is_finite_field_domain">
-<area shape="rect" id="node2" href="$db/d2f/domain_8_c.html#ab75527270302df466fc6f6e355775c13" title="is_GFp_domain" alt="" coords="203,5,318,31"/>
-<area shape="rect" id="node5" href="$db/d2f/domain_8_c.html#af695b4599bda7a0400772172c9eeff64" title="is_GFq_domain" alt="" coords="203,55,318,80"/>
-<area shape="rect" id="node3" href="$db/d2f/domain_8_c.html#af7df1c554310c6214b2900bf6ca7ac81" title="has_domain" alt="" coords="389,5,483,31"/>
-<area shape="rect" id="node4" href="$db/d2f/domain_8_c.html#a80481fde3a59aaeeb648f8c5392269f7" title="get_current_domain" alt="" coords="366,55,506,80"/>
-</map>

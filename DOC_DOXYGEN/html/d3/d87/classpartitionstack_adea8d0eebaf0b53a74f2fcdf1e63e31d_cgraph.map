@@ -1,8 +1,0 @@
-<map id="partitionstack::print_class_point_or_line" name="partitionstack::print_class_point_or_line">
-<area shape="rect" id="node2" href="$d3/d87/classpartitionstack.html#a9dbd980faea7ce40bebd3cf4b843bc63" title="partitionstack::is\l_col_class" alt="" coords="203,19,320,57"/>
-<area shape="rect" id="node4" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="196,93,327,119"/>
-<area shape="rect" id="node3" href="$d3/d87/classpartitionstack.html#ad8497b40f1c327d3eb2fb2b993d88bb7" title="partitionstack::is\l_row_class" alt="" coords="391,5,508,44"/>
-<area shape="rect" id="node5" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="375,68,525,93"/>
-<area shape="rect" id="node6" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="573,119,710,144"/>
-<area shape="rect" id="node7" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="758,144,870,169"/>
-</map>

@@ -1,9 +1,0 @@
-digraph "strong_generators::init_generators_for_the_conjugate_group_aGav"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node3100 [label="strong_generators::\linit_generators_for\l_the_conjugate_group_aGav",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3100 -> Node3101 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3101 [label="strong_generators::\linit_point_stabilizer\l_of_arbitrary_point_through\l_schreier",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a51fbf5e2eeb7ad0c700315ccb4001781"];
-}

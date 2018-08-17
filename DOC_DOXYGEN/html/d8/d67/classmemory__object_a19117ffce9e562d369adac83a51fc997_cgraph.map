@@ -1,6 +1,0 @@
-<map id="memory_object::compress" name="memory_object::compress">
-<area shape="rect" id="node2" href="$d8/d67/classmemory__object.html#ae756f2f73b88d0150deb1d2b32b5d7a5" title="memory_object::multiplicity\l_of_character" alt="" coords="231,5,412,44"/>
-<area shape="rect" id="node3" href="$d8/d67/classmemory__object.html#a0768d510d8df4bed863435b637750185" title="memory_object::alloc" alt="" coords="248,68,395,93"/>
-<area shape="rect" id="node4" href="$d8/d67/classmemory__object.html#aea989e6df86ed48049a2747df074b62a" title="memory_object::freeself" alt="" coords="460,68,624,93"/>
-<area shape="rect" id="node5" href="$d8/d67/classmemory__object.html#a9e538ffb790fddfebcf9557386af1e76" title="memory_object::null" alt="" coords="672,68,813,93"/>
-</map>

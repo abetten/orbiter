@@ -1,8 +1,0 @@
-<map id="memory_object::write_int" name="memory_object::write_int">
-<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a55c0738dadea7a508621f4af1e9ff8f3" title="block_swap_bytes" alt="" coords="240,5,370,31"/>
-<area shape="rect" id="node3" href="$d8/d67/classmemory__object.html#af27e1f0829bc6372b2a2632463bb267f" title="memory_object::append" alt="" coords="223,55,387,80"/>
-<area shape="rect" id="node4" href="$d8/d67/classmemory__object.html#a29ea5862bdfae31e11a5c1ccc121b594" title="memory_object::realloc" alt="" coords="435,55,594,80"/>
-<area shape="rect" id="node5" href="$d8/d67/classmemory__object.html#a0768d510d8df4bed863435b637750185" title="memory_object::alloc" alt="" coords="642,55,790,80"/>
-<area shape="rect" id="node6" href="$d8/d67/classmemory__object.html#aea989e6df86ed48049a2747df074b62a" title="memory_object::freeself" alt="" coords="838,55,1001,80"/>
-<area shape="rect" id="node7" href="$d8/d67/classmemory__object.html#a9e538ffb790fddfebcf9557386af1e76" title="memory_object::null" alt="" coords="1049,55,1190,80"/>
-</map>

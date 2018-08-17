@@ -1,9 +1,0 @@
-digraph "draw_graph_to_file"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node32 [label="draw_graph_to_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node32 -> Node33 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node33 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d70/apps_2combinatorics_2nauty_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
-}

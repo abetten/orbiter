@@ -1,9 +1,0 @@
-<map id="scene::fourD_cube" name="scene::fourD_cube">
-<area shape="rect" id="node2" href="$df/db1/classscene.html#a786b60f97ad35f58f5e4ae1456d12e3b" title="scene::point" alt="" coords="228,12,322,37"/>
-<area shape="rect" id="node3" href="$df/db1/classscene.html#aa761f9085bfeefa291fc4e35b960875b" title="scene::fourD_cube_edges" alt="" coords="187,61,364,87"/>
-<area shape="rect" id="node6" href="$df/db1/classscene.html#a901df7b449fb5ff7e8537591ce2d0934" title="scene::rescale" alt="" coords="221,124,329,149"/>
-<area shape="rect" id="node4" href="$df/db1/classscene.html#a677ae83722aa5d740021e8cac56bab48" title="scene::edge" alt="" coords="458,5,552,31"/>
-<area shape="rect" id="node5" href="$df/db1/classscene.html#aaf5177df302c163136d51febef20e950" title="scene::distance_between\l_two_points" alt="" coords="419,55,590,93"/>
-<area shape="rect" id="node7" href="$df/db1/classscene.html#a48aceb808cb95c97b7515ff9dabfcd3a" title="scene::distance_from\l_origin" alt="" coords="430,117,579,156"/>
-<area shape="rect" id="node8" href="$d5/d87/globals_8h.html#aa29261af29e79594ff79aecd6dd9643a" title="double_vec_scalar_multiple" alt="" coords="412,180,597,205"/>
-</map>

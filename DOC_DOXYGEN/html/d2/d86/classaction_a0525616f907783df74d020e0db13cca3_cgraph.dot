@@ -1,9 +1,0 @@
-digraph "action::free_element_data"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node11524 [label="action::free_element_data",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node11524 -> Node11525 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node11525 [label="action::null_element_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a90cd98bea15f55a3c25cb9c6b68685df"];
-}

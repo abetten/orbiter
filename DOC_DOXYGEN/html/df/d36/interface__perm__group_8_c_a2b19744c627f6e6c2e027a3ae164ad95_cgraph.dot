@@ -1,9 +1,0 @@
-digraph "perm_group_element_print_for_make_element_no_commas"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node521 [label="perm_group_element\l_print_for_make_element\l_no_commas",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node521 -> Node522 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node522 [label="perm_group::print_for\l_make_element_no_commas",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a2150133c6dec78dbfc16edafff6eae6c"];
-}

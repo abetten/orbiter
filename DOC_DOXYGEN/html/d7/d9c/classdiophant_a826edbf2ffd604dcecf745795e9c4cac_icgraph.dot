@@ -1,9 +1,0 @@
-digraph "diophant::solve_next"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node795 [label="diophant::solve_next",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node795 -> Node796 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node796 [label="tdo_data::solve_first\l_system",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d0d/classtdo__data.html#aa62a57bd301396164352018141e4966e"];
-}

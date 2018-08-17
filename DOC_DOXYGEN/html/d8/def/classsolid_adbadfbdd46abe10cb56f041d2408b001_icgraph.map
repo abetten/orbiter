@@ -1,6 +1,0 @@
-<map id="solid::add_face_n" name="solid::add_face_n">
-<area shape="rect" id="node2" href="$d8/def/classsolid.html#a6875ab7d3238826f030bae684137f789" title="solid::add_face3" alt="" coords="179,5,298,31"/>
-<area shape="rect" id="node3" href="$d8/def/classsolid.html#ae0c74bc52056d190e54a60c78c1858a2" title="solid::add_face4" alt="" coords="179,55,298,80"/>
-<area shape="rect" id="node5" href="$d8/def/classsolid.html#a56243f48f4573b2989154be1dca68713" title="solid::add_face5" alt="" coords="179,104,298,129"/>
-<area shape="rect" id="node4" href="$d8/def/classsolid.html#a308e6888759550da489397527ed89137" title="solid::cube" alt="" coords="346,55,431,80"/>
-</map>

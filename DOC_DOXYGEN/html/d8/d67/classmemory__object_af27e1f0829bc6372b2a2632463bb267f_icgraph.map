@@ -1,7 +1,0 @@
-<map id="memory_object::append" name="memory_object::append">
-<area shape="rect" id="node2" href="$d8/d67/classmemory__object.html#a1b2aafe9f159e3ca6384b7a8db0cc7cf" title="memory_object::write_char" alt="" coords="218,12,399,37"/>
-<area shape="rect" id="node4" href="$d8/d67/classmemory__object.html#a05ab03814bd373ee3edd0d897b437873" title="memory_object::write\l_double" alt="" coords="234,61,382,100"/>
-<area shape="rect" id="node5" href="$d8/d67/classmemory__object.html#aace89309983982f60d83562b1a19401b" title="memory_object::write\l_int64" alt="" coords="234,124,382,163"/>
-<area shape="rect" id="node6" href="$d8/d67/classmemory__object.html#ac64fbf0d109921cda07123999b0ac486" title="memory_object::write_int" alt="" coords="224,187,393,212"/>
-<area shape="rect" id="node3" href="$d8/d67/classmemory__object.html#ae4bf39b14c242094cc6f281c00aea9bc" title="memory_object::write\l_string" alt="" coords="447,5,595,44"/>
-</map>

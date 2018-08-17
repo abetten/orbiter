@@ -1,7 +1,0 @@
-<map id="CreateMatrix" name="CreateMatrix">
-<area shape="rect" id="node2" href="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a8888f0dd45706c8fa1124581b18fa352" title="dataLeft" alt="" coords="167,5,236,31"/>
-<area shape="rect" id="node3" href="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a89f3d1856c52f00a6c8147b52a39ff8b" title="dataRight" alt="" coords="162,55,241,80"/>
-<area shape="rect" id="node4" href="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a3b4f22e3083f708496b036d8b327cde6" title="dataUp" alt="" coords="169,104,233,129"/>
-<area shape="rect" id="node5" href="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a70f89cf63f3fa3b87ce334e374754482" title="dataDown" alt="" coords="161,153,242,179"/>
-<area shape="rect" id="node6" href="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a8b8b7fc407e960da5142b9c448de514b" title="print_position" alt="" coords="151,203,252,228"/>
-</map>

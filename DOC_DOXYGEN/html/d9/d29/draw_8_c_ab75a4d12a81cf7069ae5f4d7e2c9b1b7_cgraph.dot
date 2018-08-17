@@ -1,9 +1,0 @@
-digraph "Line_through_points"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node303 [label="Line_through_points",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node303 -> Node304 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node304 [label="line_through_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d29/draw_8_c.html#a5ee4019c0d4a044589e3789747e09ab1"];
-}

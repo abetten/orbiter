@@ -1,6 +1,0 @@
-<map id="direct_product_action::find_pair_orbit" name="direct_product_action::find_pair_orbit">
-<area shape="rect" id="node2" href="$d3/d78/classdirect__product__action.html#a7e5177f85fcdbcdd3424afa4def7c059" title="direct_product_action\l::create_graph" alt="" coords="405,5,554,44"/>
-<area shape="rect" id="node3" href="$d3/d78/classdirect__product__action.html#a951b8044b9fd77e31ab10cdde9e9f668" title="direct_product_action\l::write_pair_orbit_file" alt="" coords="205,33,354,72"/>
-<area shape="rect" id="node4" href="$d3/d78/classdirect__product__action.html#add0bec2a4f338ddf6d72b5391aa85577" title="direct_product_action\l::check_orbit_covering" alt="" coords="202,96,357,135"/>
-<area shape="rect" id="node5" href="$d3/d78/classdirect__product__action.html#a3d89cd59c0ae48a4e277b69dee6ba2e1" title="direct_product_action\l::check_conditions" alt="" coords="405,96,554,135"/>
-</map>

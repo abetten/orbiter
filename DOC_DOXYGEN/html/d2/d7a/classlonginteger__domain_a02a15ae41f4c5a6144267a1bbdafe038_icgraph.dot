@@ -1,9 +1,0 @@
-digraph "longinteger_domain::mult_integer_in_place"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node536 [label="longinteger_domain\l::mult_integer_in_place",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node536 -> Node537 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node537 [label="longinteger_domain\l::size_of_conjugacy\l_class_in_sym_n",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#aa82a43461e68d34733b1d58cce5a5505"];
-}

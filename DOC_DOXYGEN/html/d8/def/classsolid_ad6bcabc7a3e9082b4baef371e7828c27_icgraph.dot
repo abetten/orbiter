@@ -1,9 +1,0 @@
-digraph "solid::determine_neighbours"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1470 [label="solid::determine_neighbours",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1470 -> Node1471 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1471 [label="solid::cube",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a308e6888759550da489397527ed89137"];
-}

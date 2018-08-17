@@ -1,5 +1,0 @@
-<map id="solid::adjacency_list" name="solid::adjacency_list">
-<area shape="rect" id="node2" href="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757" title="solid::dual" alt="" coords="228,5,309,31"/>
-<area shape="rect" id="node3" href="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce" title="solid::cut_vertices" alt="" coords="205,55,332,80"/>
-<area shape="rect" id="node4" href="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc" title="solid::edge_midpoints" alt="" coords="193,104,344,129"/>
-</map>

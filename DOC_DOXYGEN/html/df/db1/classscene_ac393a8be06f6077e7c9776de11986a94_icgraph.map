@@ -1,6 +1,0 @@
-<map id="scene::null" name="scene::null">
-<area shape="rect" id="node2" href="$df/db1/classscene.html#a31beecfc650064406d6142d8bb81236d" title="scene::scene" alt="" coords="142,5,242,31"/>
-<area shape="rect" id="node4" href="$df/db1/classscene.html#a8ee90e0e655ae967a1ae6be54b03ac44" title="scene::freeself" alt="" coords="138,55,246,80"/>
-<area shape="rect" id="node3" href="$df/db1/classscene.html#aa63bbdb5ffcd70f233e0a3219abb89f5" title="scene::transformed_copy" alt="" coords="294,5,465,31"/>
-<area shape="rect" id="node5" href="$df/db1/classscene.html#aa97c9c1f46aa44e63223a737fcdcb496" title="scene::~scene" alt="" coords="326,55,434,80"/>
-</map>

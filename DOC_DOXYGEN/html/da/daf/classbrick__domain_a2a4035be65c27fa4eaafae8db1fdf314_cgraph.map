@@ -1,6 +1,0 @@
-<map id="brick_domain::unrank_coordinates" name="brick_domain::unrank_coordinates">
-<area shape="rect" id="node2" href="$da/daf/classbrick__domain.html#ae77f9055d5c6100c195867679603a3c2" title="brick_domain::unrank" alt="" coords="202,5,351,31"/>
-<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="221,55,332,80"/>
-<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="399,29,543,55"/>
-<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="406,79,535,104"/>
-</map>

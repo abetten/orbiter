@@ -1,9 +1,0 @@
-digraph "direct_product::put_digit"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1092 [label="direct_product::put\l_digit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1092 -> Node1093 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1093 [label="direct_product::element_pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/daf/classdirect__product.html#ae3b703635886baa012262a1eb1810d85"];
-}

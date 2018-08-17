@@ -1,8 +1,0 @@
-<map id="schreier::draw_forest" name="schreier::draw_forest">
-<area shape="rect" id="node2" href="$db/d28/classsurface__object__with__action.html#a977372fbe9bc31650df3dac5cd9e2239" title="surface_object_with\l_action::print_automorphism_group" alt="" coords="199,37,430,76"/>
-<area shape="rect" id="node3" href="$db/d28/classsurface__object__with__action.html#a13371a6bb26f27759adcc0f7292b12d2" title="surface_object_with\l_action::cheat_sheet" alt="" coords="489,5,634,44"/>
-<area shape="rect" id="node5" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="478,68,645,107"/>
-<area shape="rect" id="node4" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="743,12,793,37"/>
-<area shape="rect" id="node6" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="693,68,842,107"/>
-<area shape="rect" id="node7" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="890,75,941,100"/>
-</map>

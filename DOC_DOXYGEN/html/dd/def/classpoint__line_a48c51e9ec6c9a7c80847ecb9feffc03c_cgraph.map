@@ -1,6 +1,0 @@
-<map id="point_line::init_projective_plane" name="point_line::init_projective_plane">
-<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#a451a4fb9b352dbb34c64cecc1f1341f4" title="point_line::plane_get\l_points_on_line" alt="" coords="222,5,366,44"/>
-<area shape="rect" id="node3" href="$dd/def/classpoint__line.html#af406b650e9e83872857248db151bac79" title="point_line::plane_line\l_through_two_points" alt="" coords="221,68,367,107"/>
-<area shape="rect" id="node4" href="$dd/def/classpoint__line.html#a658e08635a1479f58edc3f275ea9d28e" title="point_line::plane_get\l_lines_through_point" alt="" coords="221,131,367,169"/>
-<area shape="rect" id="node5" href="$dd/def/classpoint__line.html#a5be2add1c6769b010a0460db564e5393" title="point_line::plane_line\l_intersection" alt="" coords="221,193,367,232"/>
-</map>

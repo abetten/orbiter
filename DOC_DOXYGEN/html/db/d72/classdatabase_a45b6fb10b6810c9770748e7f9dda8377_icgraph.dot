@@ -1,9 +1,0 @@
-digraph "database::free_data_DB"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1607 [label="database::free_data_DB",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1607 -> Node1608 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1608 [label="database::delete_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a69f061ffa820d1926718dafad5f5513c"];
-}

@@ -1,6 +1,0 @@
-<map id="surface_object::print_line_intersection_graph" name="surface_object::print_line_intersection_graph">
-<area shape="rect" id="node2" href="$df/df8/classsurface__object.html#a559eff30b652887fdcfecb2f13f3718f" title="surface_object::print\l_adjacency_matrix" alt="" coords="231,5,372,44"/>
-<area shape="rect" id="node3" href="$df/df8/classsurface__object.html#a5bbd3a8c13107c326d8fda82374dbc4c" title="surface_object::print\l_adjacency_matrix_with\l_intersection_points" alt="" coords="220,68,384,120"/>
-<area shape="rect" id="node4" href="$df/df8/classsurface__object.html#abe0201b117e124fccff446f61b0faa47" title="surface_object::print\l_neighbor_sets" alt="" coords="231,144,372,183"/>
-<area shape="rect" id="node5" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad0aa35e081da3ba3cc8841bf086ba9aa" title="INT_vec_search_linear" alt="" coords="432,151,590,176"/>
-</map>

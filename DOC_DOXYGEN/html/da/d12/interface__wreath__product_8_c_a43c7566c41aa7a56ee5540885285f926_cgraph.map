@@ -1,8 +1,0 @@
-<map id="wreath_product_group_element_is_one" name="wreath_product_group_element_is_one">
-<area shape="rect" id="node2" href="$d8/dfa/classwreath__product.html#a41bb901fafa53d72335fcb29b95ad3b3" title="wreath_product::element\l_is_one" alt="" coords="208,61,376,100"/>
-<area shape="rect" id="node3" href="$df/d0a/classperm__group.html#ac219afd31a76964f8c49d5132e0f4348" title="perm_group::is_one" alt="" coords="436,5,576,31"/>
-<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#abbb33cc035f2e99b458376cf45936ccf" title="finite_field::is_scalar\l_multiple_of_identity\l_matrix" alt="" coords="434,55,577,107"/>
-<area shape="rect" id="node7" href="$d8/dfa/classwreath__product.html#a081d6eed767bdd84bc74e555815641c6" title="wreath_product::offset_i" alt="" coords="424,131,588,156"/>
-<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a8d51d751717cb9bc67209349fb44d1ec" title="finite_field::is_diagonal\l_matrix" alt="" coords="636,61,792,100"/>
-<area shape="rect" id="node6" href="$da/da9/galois__global_8_c.html#a702b940ed7e1940ba0643bae4e0cce89" title="is_diagonal_matrix" alt="" coords="840,68,972,93"/>
-</map>

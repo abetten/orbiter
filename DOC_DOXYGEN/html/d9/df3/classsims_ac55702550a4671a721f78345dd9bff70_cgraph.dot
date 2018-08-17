@@ -1,9 +1,0 @@
-digraph "sims::init_trivial_orbit"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node6518 [label="sims::init_trivial\l_orbit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node6518 -> Node6519 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6519 [label="sims::swap_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a3443b4bbfb5573864c29b627562819d2"];
-}

@@ -1,9 +1,0 @@
-digraph "projective_space::quadric_points_brute_force"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node3049 [label="projective_space::quadric\l_points_brute_force",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3049 -> Node3050 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3050 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9d/determine__quadric_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
-}

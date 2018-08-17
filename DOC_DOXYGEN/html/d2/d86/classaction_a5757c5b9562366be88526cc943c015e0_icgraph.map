@@ -1,7 +1,0 @@
-<map id="action::coset_rank" name="action::coset_rank">
-<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#aee00240c0ae71885dd9d23b5423c56d9" title="generator::coset_rank" alt="" coords="183,31,334,56"/>
-<area shape="rect" id="node3" href="$da/d1c/classpolar.html#a1fae83636607982bad299fd84380fc40" title="polar::compute_cosets" alt="" coords="404,5,560,31"/>
-<area shape="rect" id="node4" href="$d7/d73/classgenerator.html#a98e10a923dffa737fdb6ebc703d53fae" title="generator::orbit_element_rank" alt="" coords="382,55,582,80"/>
-<area shape="rect" id="node5" href="$da/d1c/classpolar.html#a70551ff23175b280b66bce27fe200275" title="polar::orbit_element_rank" alt="" coords="630,55,802,80"/>
-<area shape="rect" id="node6" href="$da/d1c/classpolar.html#a26f04b7c75e45604ab772931ed2916fd" title="polar::list_whole_orbit" alt="" coords="850,55,1001,80"/>
-</map>

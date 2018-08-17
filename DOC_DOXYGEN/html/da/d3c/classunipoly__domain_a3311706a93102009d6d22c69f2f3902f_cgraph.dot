@@ -1,9 +1,0 @@
-digraph "unipoly_domain::create_object_by_rank"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node140 [label="unipoly_domain::create\l_object_by_rank",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node140 -> Node141 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node141 [label="INT_logq",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ad66b504457b1765dd3de6caa4953c204"];
-}

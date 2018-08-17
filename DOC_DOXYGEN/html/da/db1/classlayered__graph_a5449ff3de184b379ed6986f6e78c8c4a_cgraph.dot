@@ -1,9 +1,0 @@
-digraph "layered_graph::place"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node489 [label="layered_graph::place",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node489 -> Node490 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node490 [label="graph_layer::place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d87/classgraph__layer.html#a24ae195b3ddbb86164b816db1ad2223a"];
-}

@@ -1,5 +1,0 @@
-<map id="memory::s_i" name="memory::s_i">
-<area shape="rect" id="node2" href="$d8/d99/classmemory.html#adca93ab84b9c609f5ee78b00ea7cac4d" title="memory::operator[]" alt="" coords="151,5,285,31"/>
-<area shape="rect" id="node3" href="$d8/d99/classmemory.html#a616200900a07046cd6b0b86f12765909" title="memory::init" alt="" coords="171,55,265,80"/>
-<area shape="rect" id="node4" href="$d8/d99/classmemory.html#aa9d91eb1dde81ccc9fc3b45c742cafc6" title="memory::write_mem" alt="" coords="147,104,289,129"/>
-</map>

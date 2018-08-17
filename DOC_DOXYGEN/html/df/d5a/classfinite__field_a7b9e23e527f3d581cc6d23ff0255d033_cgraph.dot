@@ -1,9 +1,0 @@
-digraph "finite_field::kernel_columns"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7806 [label="finite_field::kernel\l_columns",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7806 -> Node7807 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7807 [label="INT_vec_complement",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a2a0a724647575fcd3090c763985eb81a"];
-}

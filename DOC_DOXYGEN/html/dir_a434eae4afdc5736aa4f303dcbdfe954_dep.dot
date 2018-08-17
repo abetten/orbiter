@@ -1,9 +1,0 @@
-digraph "src/lib/foundations/io_and_os" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_22aca35e3ec12f68aff9c7ff7652d11f {
-    graph [ bgcolor="#ddddee", pencolor="black", label="foundations" fontname="Helvetica", fontsize="10", URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"]
-  dir_a434eae4afdc5736aa4f303dcbdfe954 [shape=box, label="io_and_os", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a434eae4afdc5736aa4f303dcbdfe954.html"];
-  }
-}

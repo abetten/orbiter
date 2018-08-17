@@ -1,9 +1,0 @@
-<map id="spread::report_stabilizer" name="spread::report_stabilizer">
-<area shape="rect" id="node2" href="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad" title="sims::group_order" alt="" coords="228,5,357,31"/>
-<area shape="rect" id="node3" href="$d2/d86/classaction.html#a45180e8a7fa109a1456a47e04c5ba4e9" title="action::find_fixed\l_points" alt="" coords="232,55,354,93"/>
-<area shape="rect" id="node5" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="242,117,344,143"/>
-<area shape="rect" id="node6" href="$d2/d86/classaction.html#a50046bf5383ee5febe5a882677626d34" title="action::element_order" alt="" coords="218,167,368,192"/>
-<area shape="rect" id="node8" href="$d2/d86/classaction.html#a45872d8a9043eb99b8bfa4955b89f70a" title="action::element_print\l_latex" alt="" coords="220,216,365,255"/>
-<area shape="rect" id="node4" href="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d" title="action::element_image_of" alt="" coords="416,61,590,87"/>
-<area shape="rect" id="node7" href="$d2/d86/classaction.html#add2dfd7b5222e51853d8f8dfd53eb95d" title="action::element_order\l_verbose" alt="" coords="428,160,578,199"/>
-</map>

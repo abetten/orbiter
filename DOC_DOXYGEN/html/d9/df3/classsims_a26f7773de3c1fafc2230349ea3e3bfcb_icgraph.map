@@ -1,9 +1,0 @@
-<map id="sims::group_order_INT" name="sims::group_order_INT">
-<area shape="rect" id="node2" href="$d9/df3/classsims.html#a8abb8f266671da3862c8bc60294c23e8" title="sims::subgroup_make\l_characteristic_vector" alt="" coords="222,5,374,44"/>
-<area shape="rect" id="node3" href="$d9/df3/classsims.html#af81961f706ea98f0afd845146274a394" title="sims::normalizer_based\l_on_characteristic_vector" alt="" coords="211,68,384,107"/>
-<area shape="rect" id="node4" href="$d9/df3/classsims.html#a50d22de4969a10d88c7e7eece0ea0e3c" title="sims::order_structure\l_relative_to_subgroup" alt="" coords="221,131,374,169"/>
-<area shape="rect" id="node5" href="$dd/d68/classyoung.html#a552fe75292286e49ee0d3f282ea03f8e" title="young::create_module" alt="" coords="221,193,374,219"/>
-<area shape="rect" id="node6" href="$d0/d87/group__ring_8_c.html#a7da1c84aee65e2c8fd4b83f0809835ad" title="do_it_for_sym_n" alt="" coords="432,168,552,193"/>
-<area shape="rect" id="node8" href="$d0/d87/group__ring_8_c.html#aed9b25712c762c878090038e97568d07" title="do_it_for_sym_4" alt="" coords="432,217,552,243"/>
-<area shape="rect" id="node7" href="$d0/d87/group__ring_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="600,193,650,219"/>
-</map>

@@ -1,9 +1,0 @@
-digraph "src/lib/poset_classification/set_stabilizer" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_36d0d98b85f6b4b768ba541b6da5206e {
-    graph [ bgcolor="#ddddee", pencolor="black", label="poset_classification" fontname="Helvetica", fontsize="10", URL="dir_36d0d98b85f6b4b768ba541b6da5206e.html"]
-  dir_a07f225762f17572b4e9fedbdb631730 [shape=box, label="set_stabilizer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a07f225762f17572b4e9fedbdb631730.html"];
-  }
-}

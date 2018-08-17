@@ -1,9 +1,0 @@
-digraph "grassmann::nb_points_covered"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node507 [label="grassmann::nb_points\l_covered",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node507 -> Node508 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node508 [label="grassmann::points_covered",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#a8c7859b717d4a34241d98a213e774ab1"];
-}

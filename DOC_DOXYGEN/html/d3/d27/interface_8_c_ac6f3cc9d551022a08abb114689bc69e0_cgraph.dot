@@ -1,9 +1,0 @@
-digraph "induced_action_element_linear_entry_frobenius"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1818 [label="induced_action_element\l_linear_entry_frobenius",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1818 -> Node1819 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1819 [label="action_on_wedge_product\l::element_entry_frobenius",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/deb/classaction__on__wedge__product.html#a2fff9c661f45e707fc0b69c5ecf67268"];
-}

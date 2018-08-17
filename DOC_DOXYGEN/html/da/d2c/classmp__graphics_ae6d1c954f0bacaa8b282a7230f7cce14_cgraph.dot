@@ -1,9 +1,0 @@
-digraph "mp_graphics::sf_color"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node6645 [label="mp_graphics::sf_color",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node6645 -> Node6646 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6646 [label="mp_graphics::sf_color_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a59c3f1bdd7dfc0ac8f3c42e414eb8d98"];
-}

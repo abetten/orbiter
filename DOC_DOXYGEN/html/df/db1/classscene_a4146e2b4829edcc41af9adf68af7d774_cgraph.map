@@ -1,6 +1,0 @@
-<map id="scene::create_five_plus_one" name="scene::create_five_plus_one">
-<area shape="rect" id="node2" href="$df/db1/classscene.html#ad339f1c60c0c4905a9a78d7506cecf8b" title="scene::plane" alt="" coords="208,5,305,31"/>
-<area shape="rect" id="node3" href="$df/db1/classscene.html#a207ab8471e540d06a5de67d9d6142108" title="scene::line_extended" alt="" coords="183,55,330,80"/>
-<area shape="rect" id="node4" href="$df/db1/classscene.html#a48aceb808cb95c97b7515ff9dabfcd3a" title="scene::distance_from\l_origin" alt="" coords="378,20,526,59"/>
-<area shape="rect" id="node5" href="$df/db1/classscene.html#ae5ae81564026e1011c550a383f7eb2a9" title="scene::line" alt="" coords="410,83,495,108"/>
-</map>

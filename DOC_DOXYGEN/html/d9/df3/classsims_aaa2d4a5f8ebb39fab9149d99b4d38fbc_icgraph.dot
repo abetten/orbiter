@@ -1,9 +1,0 @@
-digraph "sims::find_element_of_prime_power_order"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node4587 [label="sims::find_element\l_of_prime_power_order",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node4587 -> Node4588 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node4588 [label="sims::sylow_subgroup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#addc6f348759a62efab9c5d5b58ad3f61"];
-}

@@ -1,7 +1,0 @@
-<map id="draw_graph_with_distinguished_edge" name="draw_graph_with_distinguished_edge">
-<area shape="rect" id="node2" href="$da/d62/layered__graph__main_8_c.html#a48fa52122e4195a9e84162168e41b79d" title="draw_vertex_callback\l_graph" alt="" coords="299,72,448,111"/>
-<area shape="rect" id="node3" href="$da/d62/layered__graph__main_8_c.html#a12172e73c4ca6e742bcac2a0f48e3247" title="draw_vertex_callback" alt="" coords="496,79,646,104"/>
-<area shape="rect" id="node4" href="$da/d62/layered__graph__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="754,5,804,31"/>
-<area shape="rect" id="node5" href="$df/dbf/classtree__node.html#a7ccbb586fde19d382c05065d80501eca" title="tree_node::draw_edges" alt="" coords="698,79,860,104"/>
-<area shape="rect" id="node6" href="$df/dbf/classtree__node.html#a8eaf9ec1be67f5e8110b8b38fbe8a7ab" title="tree_node::draw_vertices" alt="" coords="694,152,865,177"/>
-</map>

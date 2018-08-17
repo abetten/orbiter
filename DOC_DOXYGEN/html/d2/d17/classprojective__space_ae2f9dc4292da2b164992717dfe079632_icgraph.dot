@@ -1,9 +1,0 @@
-digraph "projective_space::test_if_lines_are_disjoint_from_scratch"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node3228 [label="projective_space::test\l_if_lines_are_disjoint\l_from_scratch",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3228 -> Node3229 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3229 [label="projective_space::test\l_if_lines_are_disjoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html#a159c852080d3cb54bcf5b38b9d687137"];
-}
