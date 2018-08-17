@@ -1,9 +1,0 @@
-digraph "wreath_product::get_digit"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node497 [label="wreath_product::get\l_digit",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node497 -> Node498 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node498 [label="bitvector_s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac0135a3681a44df3fe7af1545676fbe2"];
-}

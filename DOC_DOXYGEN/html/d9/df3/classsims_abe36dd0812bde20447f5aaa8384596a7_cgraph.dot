@@ -1,9 +1,0 @@
-digraph "sims::initialize_table"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7051 [label="sims::initialize_table",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7051 -> Node7052 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7052 [label="perm_identity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#aebc54d3f9c31f253ae53e3eb3b386208"];
-}

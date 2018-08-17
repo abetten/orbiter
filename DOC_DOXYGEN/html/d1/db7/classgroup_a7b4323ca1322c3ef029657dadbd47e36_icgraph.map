@@ -1,6 +1,0 @@
-<map id="group::require_ascii_coding" name="group::require_ascii_coding">
-<area shape="rect" id="node2" href="$d1/db7/classgroup.html#aaf998199131855804b53c8fc917a187f" title="group::decode_ascii" alt="" coords="192,40,332,65"/>
-<area shape="rect" id="node3" href="$d1/db7/classgroup.html#ac868c381717192f1a8f0ece1158a3cb5" title="group::init_ascii_coding\l_to_sims" alt="" coords="386,5,547,44"/>
-<area shape="rect" id="node5" href="$d7/d73/classgenerator.html#a2f706a252cb52357a8c214972a50c994" title="generator::read_level_file" alt="" coords="380,68,552,93"/>
-<area shape="rect" id="node4" href="$dc/d09/classstrong__generators.html#affe2c3088c70cdb7b5b67b5d9a6b5375" title="strong_generators::\linit_from_ascii_coding" alt="" coords="600,5,754,44"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="generator_read_candidates_of_orbit" name="generator_read_candidates_of_orbit">
-<area shape="rect" id="node2" href="$d3/daf/classovoid__generator.html#ad231178badc9e58ed4a0d61f6f7adabc" title="ovoid_generator::make\l_graphs" alt="" coords="445,5,602,44"/>
-<area shape="rect" id="node3" href="$dd/d86/classlinear__set.html#a5d7659de855e20e2fa8e41e7aedcb1fc" title="linear_set::classify\l_secondary" alt="" coords="252,35,382,73"/>
-<area shape="rect" id="node4" href="$d3/d35/snakes__and__ladders__global_8_c.html#a4dfd921b277a61bcc52f3f11b311e0de" title="read_candidates_for\l_one_orbit_from_file" alt="" coords="246,97,388,136"/>
-<area shape="rect" id="node6" href="$d3/d35/snakes__and__ladders__global_8_c.html#ad582284e6f9858a4e5b4a68732169afc" title="read_orbit_rep_and\l_candidates_from_files" alt="" coords="238,161,396,200"/>
-<area shape="rect" id="node5" href="$d3/daf/classovoid__generator.html#a2954bc30f73d246408d8907307e18a42" title="ovoid_generator::make\l_one_graph" alt="" coords="445,95,602,133"/>
-<area shape="rect" id="node7" href="$d3/d35/snakes__and__ladders__global_8_c.html#ae0699dce825e1542730bc5ca5ff41cf9" title="read_orbit_rep_and\l_candidates_from_files\l_and_process" alt="" coords="444,157,603,209"/>
-<area shape="rect" id="node8" href="$de/d08/classorbit__rep.html#a71ecba59a0ff8b4be69e44f8a9e70aee" title="orbit_rep::init_from_file" alt="" coords="651,171,808,196"/>
-</map>

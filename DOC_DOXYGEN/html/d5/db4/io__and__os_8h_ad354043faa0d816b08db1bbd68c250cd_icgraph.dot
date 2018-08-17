@@ -1,9 +1,0 @@
-digraph "write_set_to_file_as_INT4"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node16424 [label="write_set_to_file_as_INT4",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node16424 -> Node16425 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node16425 [label="INT_vector::write_to\l_binary_file_INT4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de0/class_i_n_t__vector.html#ad831ab13ad11e98bd0e59a45b0930a99"];
-}

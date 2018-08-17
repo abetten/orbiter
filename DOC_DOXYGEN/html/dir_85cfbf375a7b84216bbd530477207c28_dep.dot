@@ -1,9 +1,0 @@
-digraph "src/lib/foundations/algebra_and_number_theory" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_22aca35e3ec12f68aff9c7ff7652d11f {
-    graph [ bgcolor="#ddddee", pencolor="black", label="foundations" fontname="Helvetica", fontsize="10", URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"]
-  dir_85cfbf375a7b84216bbd530477207c28 [shape=box, label="algebra_and_number_theory", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_85cfbf375a7b84216bbd530477207c28.html"];
-  }
-}

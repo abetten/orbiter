@@ -1,9 +1,0 @@
-digraph "mp_graphics::user2dev_dist_y"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node8405 [label="mp_graphics::user2dev\l_dist_y",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node8405 -> Node8406 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8406 [label="transform_dist_y",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d29/draw_8_c.html#ae46284a191040d40ad4dcdb22835dc41"];
-}

@@ -1,8 +1,0 @@
-<map id="set_of_sets::init_from_orbiter_file" name="set_of_sets::init_from_orbiter_file">
-<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a03fc77fe7369425fbd18f3fa587f1af5" title="count_number_of_orbits\l_in_file" alt="" coords="201,5,367,44"/>
-<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="232,68,336,93"/>
-<area shape="rect" id="node7" href="$d5/db4/io__and__os_8h.html#ab43cab8ae063700a2fc82113b69eea5f" title="s_scan_int" alt="" coords="415,116,500,141"/>
-<area shape="rect" id="node3" href="$d4/d74/util_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="422,12,492,37"/>
-<area shape="rect" id="node4" href="$d4/d74/util_8_c.html#ab43cab8ae063700a2fc82113b69eea5f" title="s_scan_int" alt="" coords="415,63,500,88"/>
-<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#a8d1a4ad92d09138f7a1a7e389469ed45" title="s_scan_token" alt="" coords="548,92,651,117"/>
-</map>

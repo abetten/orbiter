@@ -1,9 +1,0 @@
-digraph "oracle::log_current_node_with_candidates"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node6654 [label="oracle::log_current\l_node_with_candidates",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node6654 -> Node6655 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6655 [label="generator::write_lvl\l_file_with_candidates",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#af3de7a4ba5e1075faa23d47d4c31ca55"];
-}

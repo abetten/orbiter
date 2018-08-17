@@ -1,9 +1,0 @@
-<map id="colored_graph::null" name="colored_graph::null">
-<area shape="rect" id="node2" href="$dc/de2/classcolored__graph.html#a104bcd930e68c04e4786678923bfdca1" title="colored_graph::colored\l_graph" alt="" coords="188,103,346,141"/>
-<area shape="rect" id="node7" href="$dc/de2/classcolored__graph.html#a535b58df68ad6200bd6c8cde9bd09f57" title="colored_graph::freeself" alt="" coords="188,172,346,197"/>
-<area shape="rect" id="node3" href="$dc/de2/classcolored__graph.html#a0d2f69593524ce6a4d8b25975f484d27" title="colored_graph::sort\l_by_color_classes" alt="" coords="426,5,562,44"/>
-<area shape="rect" id="node5" href="$dc/de2/classcolored__graph.html#abea9e2c972a799ae17763b8faad9c37a" title="colored_graph::compute\l_neighborhood_subgraph" alt="" coords="407,68,580,107"/>
-<area shape="rect" id="node6" href="$dc/de2/classcolored__graph.html#a8f463f37779583b7d4fed1ac35097c2c" title="colored_graph::compute\l_neighborhood_subgraph\l_with_additional_test_function" alt="" coords="394,131,594,183"/>
-<area shape="rect" id="node4" href="$df/d6c/tools_2graph_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="642,12,692,37"/>
-<area shape="rect" id="node8" href="$dc/de2/classcolored__graph.html#a93ffac97a5f321e670478f0a44cc8b55" title="colored_graph::~colored\l_graph" alt="" coords="411,207,577,245"/>
-</map>

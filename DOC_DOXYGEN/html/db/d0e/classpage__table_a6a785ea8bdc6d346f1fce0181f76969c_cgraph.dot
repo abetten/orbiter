@@ -1,9 +1,0 @@
-digraph "page_table::search"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node51 [label="page_table::search",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node51 -> Node52 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node52 [label="page_table::search\l_key_pair",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d0e/classpage__table.html#ad382cc58d94dfe8edb98d11748c800b8"];
-}

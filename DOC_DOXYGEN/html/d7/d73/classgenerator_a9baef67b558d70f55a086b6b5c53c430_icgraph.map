@@ -1,6 +1,0 @@
-<map id="generator::init_root_node_invariant_subset" name="generator::init_root_node_invariant_subset">
-<area shape="rect" id="node2" href="$dd/d86/classlinear__set.html#a7bf8cd7805559b5762921687a7c1ed97" title="linear_set::init_secondary" alt="" coords="216,15,389,40"/>
-<area shape="rect" id="node4" href="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b" title="linear_set::init_compute\l_stabilizer" alt="" coords="221,65,384,104"/>
-<area shape="rect" id="node3" href="$dd/d86/classlinear__set.html#a5d7659de855e20e2fa8e41e7aedcb1fc" title="linear_set::classify\l_secondary" alt="" coords="454,5,584,44"/>
-<area shape="rect" id="node5" href="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2" title="linear_set::compute\l_stabilizer_of_linear_set" alt="" coords="437,68,602,107"/>
-</map>

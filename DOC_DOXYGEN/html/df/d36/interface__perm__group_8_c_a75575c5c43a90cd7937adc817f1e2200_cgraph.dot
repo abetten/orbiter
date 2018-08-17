@@ -1,9 +1,0 @@
-digraph "perm_group_element_is_one"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node192 [label="perm_group_element\l_is_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node192 -> Node193 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node193 [label="perm_group::is_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#ac219afd31a76964f8c49d5132e0f4348"];
-}

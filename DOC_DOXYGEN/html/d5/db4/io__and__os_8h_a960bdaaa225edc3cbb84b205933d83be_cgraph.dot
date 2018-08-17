@@ -1,9 +1,0 @@
-digraph "latex_head_easy_with_extras_in_the_praeamble"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node9673 [label="latex_head_easy_with\l_extras_in_the_praeamble",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node9673 -> Node9674 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node9674 [label="latex_head",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#ae873c602bd361c5218db5cecf1d348cd"];
-}

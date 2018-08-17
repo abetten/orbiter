@@ -1,9 +1,0 @@
-digraph "mp_graphics::polygon6"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node5710 [label="mp_graphics::polygon6",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node5710 -> Node5711 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5711 [label="mp_graphics::plot_curve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a2f288365e8ffc149570e25937e99003b"];
-}

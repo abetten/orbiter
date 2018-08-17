@@ -1,9 +1,0 @@
-digraph "PG2_line_rank"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node2782 [label="PG2_line_rank",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2782 -> Node2783 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2783 [label="PG2_line_on_point_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de4/projective_8_c.html#ae692d09e8b7648400eec1e5f0c74d885"];
-}

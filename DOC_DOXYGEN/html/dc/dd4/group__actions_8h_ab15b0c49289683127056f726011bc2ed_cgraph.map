@@ -1,8 +1,0 @@
-<map id="perm_group_element_mult" name="perm_group_element_mult">
-<area shape="rect" id="node2" href="$d2/d7c/combinatorics_8_c.html#a97254b51d3f118f7967df234114f2013" title="perm_print_list" alt="" coords="243,5,352,31"/>
-<area shape="rect" id="node3" href="$df/d0a/classperm__group.html#af23c8538a48ea66019b7c5a4223b9bea" title="perm_group::print" alt="" coords="234,55,361,80"/>
-<area shape="rect" id="node6" href="$df/d0a/classperm__group.html#aa36290ec8da34dd5c548e253089888c8" title="perm_group::mult" alt="" coords="234,104,360,129"/>
-<area shape="rect" id="node4" href="$d2/d7c/combinatorics_8_c.html#a2c7eee1361109e8c5b94921589815194" title="perm_print" alt="" coords="409,55,494,80"/>
-<area shape="rect" id="node5" href="$d2/d7c/combinatorics_8_c.html#ab87deef2ba9e4d2ce386a19eeaffecf3" title="perm_print_offset" alt="" coords="542,55,667,80"/>
-<area shape="rect" id="node7" href="$d2/d7c/combinatorics_8_c.html#af557c297c4f0847258f4dd5f3934c3f3" title="perm_mult" alt="" coords="409,104,493,129"/>
-</map>

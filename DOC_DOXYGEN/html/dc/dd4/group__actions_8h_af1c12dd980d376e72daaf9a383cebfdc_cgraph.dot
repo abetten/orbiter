@@ -1,9 +1,0 @@
-digraph "induced_action_element_code_for_make_element"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1554 [label="induced_action_element\l_code_for_make_element",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1554 -> Node1555 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1555 [label="action::element_code\l_for_make_element",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a26fc160074c8b4defaeb54b3b383cce6"];
-}

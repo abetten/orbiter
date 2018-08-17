@@ -1,9 +1,0 @@
-digraph "compute_stabilizer::null"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node2981 [label="compute_stabilizer\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2981 -> Node2982 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2982 [label="compute_stabilizer\l::compute_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d30/classcompute__stabilizer.html#a606d2292f1bc1b30b4fea2653fbb3d68"];
-}

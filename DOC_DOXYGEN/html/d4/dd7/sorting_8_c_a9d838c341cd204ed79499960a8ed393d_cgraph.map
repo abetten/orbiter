@@ -1,5 +1,0 @@
-<map id="INT_vec_heapsort_with_log" name="INT_vec_heapsort_with_log">
-<area shape="rect" id="node2" href="$d4/dd7/sorting_8_c.html#a100d0747647500480fe5dc76ff98cee5" title="heapsort_make_heap\l_with_log" alt="" coords="240,5,390,44"/>
-<area shape="rect" id="node3" href="$d4/dd7/sorting_8_c.html#ac7af225fae479a93d6957f79734ba2a6" title="heapsort_sift_down\l_with_log" alt="" coords="438,56,575,95"/>
-<area shape="rect" id="node4" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="623,92,735,117"/>
-</map>

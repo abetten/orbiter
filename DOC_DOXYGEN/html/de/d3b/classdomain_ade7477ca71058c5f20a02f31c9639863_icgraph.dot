@@ -1,9 +1,0 @@
-digraph "domain::type"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node242 [label="domain::type",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node242 -> Node243 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node243 [label="integer::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a8aef91d98e8edc8d895c1d6cfc35677b"];
-}

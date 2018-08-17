@@ -1,9 +1,0 @@
-digraph "classify_trihedral_pairs::freeself"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1865 [label="classify_trihedral\l_pairs::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1865 -> Node1866 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1866 [label="classify_trihedral\l_pairs::~classify_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a356342a8528414097f3bedbe4bef0212"];
-}

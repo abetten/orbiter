@@ -1,9 +1,0 @@
-digraph "klein_correspondence::klein_correspondence"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node0 [label="klein_correspondence\l::klein_correspondence",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1 [label="klein_correspondence\l::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d99/classklein__correspondence.html#a633b72e22929d30fc79cd6b8e6926e08"];
-}

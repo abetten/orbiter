@@ -1,9 +1,0 @@
-digraph "Krawtchouk"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node6719 [label="Krawtchouk",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node6719 -> Node6720 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node6720 [label="matrix::MacWilliamsTransform",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a6165884e70a04d1bd608f0321ec12040"];
-}

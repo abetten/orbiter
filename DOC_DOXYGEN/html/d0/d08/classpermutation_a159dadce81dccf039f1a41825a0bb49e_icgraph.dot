@@ -1,9 +1,0 @@
-digraph "permutation::induce3"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1184 [label="permutation::induce3",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1184 -> Node1185 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1185 [label="vec_induce3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#ad65b14ae1fbc7903f14e2c28c4d7294f"];
-}

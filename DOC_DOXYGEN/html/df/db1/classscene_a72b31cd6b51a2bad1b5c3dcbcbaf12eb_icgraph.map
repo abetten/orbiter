@@ -1,7 +1,0 @@
-<map id="scene::face" name="scene::face">
-<area shape="rect" id="node2" href="$df/db1/classscene.html#a41278ef1c25e6d3cf922f5dcf76718a9" title="scene::face3" alt="" coords="170,5,267,31"/>
-<area shape="rect" id="node4" href="$df/db1/classscene.html#a02ade332327852b8cfcfb3c36fc35599" title="scene::face4" alt="" coords="170,55,267,80"/>
-<area shape="rect" id="node5" href="$df/db1/classscene.html#ac035bac937ba6c1b542c53b4688b8c67" title="scene::face5" alt="" coords="170,104,267,129"/>
-<area shape="rect" id="node6" href="$df/db1/classscene.html#ae1bc1dbc895d216b4ed366b01f06a15d" title="scene::Dodecahedron\l_planes" alt="" coords="143,153,295,192"/>
-<area shape="rect" id="node3" href="$df/db1/classscene.html#ac59563fef2509d30139596765dec7329" title="scene::triangle" alt="" coords="343,5,451,31"/>
-</map>

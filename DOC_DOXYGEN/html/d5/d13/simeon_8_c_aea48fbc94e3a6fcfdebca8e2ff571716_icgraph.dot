@@ -1,9 +1,0 @@
-digraph "test_function_for_arc"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1777 [label="test_function_for_arc",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1777 -> Node1778 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1778 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d13/simeon_8_c.html#ae66f6b31b5ad750f1fe042a706a4e3d4"];
-}

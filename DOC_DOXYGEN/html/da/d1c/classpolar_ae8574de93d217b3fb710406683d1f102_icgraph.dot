@@ -1,9 +1,0 @@
-digraph "polar::get_orbit_length_as_INT"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node2115 [label="polar::get_orbit_length\l_as_INT",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node2115 -> Node2116 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2116 [label="polar::list_whole_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d1c/classpolar.html#a26f04b7c75e45604ab772931ed2916fd"];
-}

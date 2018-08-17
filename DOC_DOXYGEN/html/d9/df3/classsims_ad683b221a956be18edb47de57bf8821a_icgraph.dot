@@ -1,9 +1,0 @@
-digraph "sims::element_ranks_subgroup"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node3778 [label="sims::element_ranks\l_subgroup",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3778 -> Node3779 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3779 [label="analyze_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#acc445ef9d19e7fe78fbe1a057328958e"];
-}

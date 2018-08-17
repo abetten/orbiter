@@ -1,7 +1,0 @@
-<map id="action::create_sims" name="action::create_sims">
-<area shape="rect" id="node2" href="$dc/d09/classstrong__generators.html#afca700d50772a39eeb74239355ae67e1" title="strong_generators::\lcreate_sims" alt="" coords="190,16,326,55"/>
-<area shape="rect" id="node4" href="$d2/d86/classaction.html#a74656357e44267b594ede82318fe124c" title="action::init_sims" alt="" coords="200,81,316,107"/>
-<area shape="rect" id="node3" href="$d2/d3a/group__theory_8h.html#a40f2df36e351d6e63bd2bb196cc5b430" title="create_sims_from_generators\l_with_target_group_order\l_factorized" alt="" coords="374,5,573,57"/>
-<area shape="rect" id="node5" href="$d2/d86/classaction.html#a3af19dd4cf854ee26d53409cd4762d3f" title="action::init_base_from_sims" alt="" coords="380,81,567,107"/>
-<area shape="rect" id="node6" href="$dc/d09/classstrong__generators.html#a2b997decdab82e889c1151f29a846a66" title="strong_generators::\linit_from_sims" alt="" coords="405,131,542,169"/>
-</map>

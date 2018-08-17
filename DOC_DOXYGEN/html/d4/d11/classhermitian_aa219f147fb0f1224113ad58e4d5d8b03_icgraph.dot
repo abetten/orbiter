@@ -1,9 +1,0 @@
-digraph "hermitian::nb_points"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node225 [label="hermitian::nb_points",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node225 -> Node226 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node226 [label="hermitian::list_of\l_points_embedded_in_PG",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d11/classhermitian.html#aeca5f1aa7d9a4672724e496948172a8e"];
-}

@@ -1,9 +1,0 @@
-digraph "unusual_model::print_coordinates_detailed"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node380 [label="unusual_model::print\l_coordinates_detailed",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node380 -> Node381 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node381 [label="unusual_model::print\l_coordinates_detailed_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d50/classunusual__model.html#a42a0d371727666bc006fc29d804c8d56"];
-}

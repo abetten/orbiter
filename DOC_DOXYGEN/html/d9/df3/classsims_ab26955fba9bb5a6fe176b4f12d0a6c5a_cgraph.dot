@@ -1,9 +1,0 @@
-digraph "sims::print_basic_orbits"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node8622 [label="sims::print_basic_orbits",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node8622 -> Node8623 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node8623 [label="sims::print_basic_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#ae777e80bb7cef4f757c701173f924a6d"];
-}

@@ -1,9 +1,0 @@
-digraph "scene::freeself"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node195 [label="scene::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node195 -> Node196 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node196 [label="scene::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#ac393a8be06f6077e7c9776de11986a94"];
-}

@@ -1,9 +1,0 @@
-digraph "distance_euclidean"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node21 [label="distance_euclidean",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node21 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node22 [label="scene::euclidean_distance",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a590566efecb0166499f112c78e51b907"];
-}

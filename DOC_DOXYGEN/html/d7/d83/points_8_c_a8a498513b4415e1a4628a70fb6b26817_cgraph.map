@@ -1,9 +1,0 @@
-<map id="points" name="points">
-<area shape="rect" id="node2" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="158,5,264,31"/>
-<area shape="rect" id="node3" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="137,55,285,80"/>
-<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="110,104,312,129"/>
-<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="159,153,263,179"/>
-<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95" title="PG_element_normalize\l_from_front" alt="" coords="131,203,291,241"/>
-<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="118,265,304,291"/>
-<area shape="rect" id="node8" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="360,265,520,291"/>
-</map>

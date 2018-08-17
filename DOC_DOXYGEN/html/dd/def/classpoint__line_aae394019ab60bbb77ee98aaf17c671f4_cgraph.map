@@ -1,9 +1,0 @@
-<map id="point_line::identify_field_not_of_prime_order" name="point_line::identify_field_not_of_prime_order">
-<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#ae4d23004dc4a9cd50b3ed317e1fb8009" title="point_line::MOLSsxb" alt="" coords="230,5,375,31"/>
-<area shape="rect" id="node3" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="237,55,368,93"/>
-<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="250,117,355,143"/>
-<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="247,167,358,192"/>
-<area shape="rect" id="node8" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="246,216,359,241"/>
-<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="423,143,566,168"/>
-<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="430,192,559,217"/>
-</map>

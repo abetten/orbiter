@@ -1,9 +1,0 @@
-digraph "nb_primes"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7230 [label="nb_primes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7230 -> Node7231 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7231 [label="smallest_primedivisor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a89238384b70e5f0f19ac179ca88d468d"];
-}

@@ -1,8 +1,0 @@
-<map id="generator::usage" name="generator::usage">
-<area shape="rect" id="node2" href="$d0/d60/ovoid_8h.html#a4f6af65d82bb5ceda6c2bdbee492b8f8" title="usage" alt="" coords="175,61,233,87"/>
-<area shape="rect" id="node3" href="$d5/d3f/test_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="333,5,383,31"/>
-<area shape="rect" id="node4" href="$d9/d91/classgraph__generator.html#a4d4c4f3feccde9f3162bd342b0bf4800" title="graph_generator::read\l_arguments" alt="" coords="281,55,435,93"/>
-<area shape="rect" id="node6" href="$d3/daf/classovoid__generator.html#a85df34db52d1f49f1f9c60dfdbf87040" title="ovoid_generator::read\l_arguments" alt="" coords="282,117,434,156"/>
-<area shape="rect" id="node5" href="$d9/d91/classgraph__generator.html#acd2ec07214d869173eb1c9ffb3ec0312" title="graph_generator::init" alt="" coords="483,61,628,87"/>
-<area shape="rect" id="node7" href="$d3/daf/classovoid__generator.html#a44d90a4751554076f432f35089a964c2" title="ovoid_generator::init" alt="" coords="484,124,626,149"/>
-</map>

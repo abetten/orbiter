@@ -1,9 +1,0 @@
-digraph "search_blocking_set::test_level"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node933 [label="search_blocking_set\l::test_level",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node933 -> Node934 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node934 [label="incidence_structure\l_find_blocking_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a8e3d42d0018f8a804b9686b1c4951186"];
-}

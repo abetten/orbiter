@@ -1,8 +1,0 @@
-<map id="fancy_set::init" name="fancy_set::init">
-<area shape="rect" id="node2" href="$dc/de2/classcolored__graph.html#abea9e2c972a799ae17763b8faad9c37a" title="colored_graph::compute\l_neighborhood_subgraph" alt="" coords="170,5,343,44"/>
-<area shape="rect" id="node3" href="$dc/de2/classcolored__graph.html#a8f463f37779583b7d4fed1ac35097c2c" title="colored_graph::compute\l_neighborhood_subgraph\l_with_additional_test_function" alt="" coords="156,68,356,120"/>
-<area shape="rect" id="node4" href="$d5/da4/classfancy__set.html#a03b0a2b524e9ab493499c0f5f9fe4cfd" title="fancy_set::init_with_set" alt="" coords="177,144,336,169"/>
-<area shape="rect" id="node5" href="$d7/de5/classknarr.html#abb50a19df35495d508b0cb127d4eb908" title="knarr::points_and_lines" alt="" coords="177,193,336,219"/>
-<area shape="rect" id="node6" href="$dc/d36/classsearch__blocking__set.html#aac1efd7849b1b2597653d2a409144356" title="search_blocking_set\l::init" alt="" coords="185,243,328,281"/>
-<area shape="rect" id="node7" href="$df/d74/tl__geometry_8h.html#a8e3d42d0018f8a804b9686b1c4951186" title="incidence_structure\l_find_blocking_set" alt="" coords="404,243,541,281"/>
-</map>

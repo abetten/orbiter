@@ -1,6 +1,0 @@
-<map id="matrix::KX_module_apply" name="matrix::KX_module_apply">
-<area shape="rect" id="node2" href="$d7/d71/classdiscreta__base.html#a96f759b28f7c30bdfd95ac10f5972bd0" title="discreta_base::mult" alt="" coords="227,5,364,31"/>
-<area shape="rect" id="node3" href="$d5/db2/class_vector.html#aca9b00dbf2e6f2e09d664855eeeabe9c" title="Vector::mult_scalar" alt="" coords="228,55,362,80"/>
-<area shape="rect" id="node4" href="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704" title="Vector::s_l" alt="" coords="412,29,495,55"/>
-<area shape="rect" id="node5" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="412,79,495,104"/>
-</map>

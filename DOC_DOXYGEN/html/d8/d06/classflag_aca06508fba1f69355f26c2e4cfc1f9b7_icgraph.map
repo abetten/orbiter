@@ -1,9 +1,0 @@
-<map id="flag::null" name="flag::null">
-<area shape="rect" id="node2" href="$d8/d06/classflag.html#a5b95682242e4c94655ee217be26e20d2" title="flag::flag" alt="" coords="135,29,207,55"/>
-<area shape="rect" id="node7" href="$d8/d06/classflag.html#ade1fe610c12390f167cd1d3691a141c1" title="flag::freeself" alt="" coords="124,79,218,104"/>
-<area shape="rect" id="node3" href="$d8/d06/classflag.html#a25c6b69bd5cc648bba8bea35a3f88369" title="flag::init_recursion" alt="" coords="266,29,396,55"/>
-<area shape="rect" id="node4" href="$d8/d06/classflag.html#a1a6bdc10c3a544607a7a3a6672e3c773" title="flag::init" alt="" coords="444,29,511,55"/>
-<area shape="rect" id="node5" href="$dd/dc4/classaction__on__flags.html#aad56abe238e588bdc368c6396d3813dc" title="action_on_flags::init" alt="" coords="559,29,698,55"/>
-<area shape="rect" id="node6" href="$d2/d86/classaction.html#afb1ac2fda2a79462e38c133330982341" title="action::induced_action\l_on_flags" alt="" coords="746,23,900,61"/>
-<area shape="rect" id="node8" href="$d8/d06/classflag.html#a9149bfdf4e5ec69255d353088869e9a0" title="flag::~flag" alt="" coords="291,79,371,104"/>
-</map>

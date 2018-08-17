@@ -1,9 +1,0 @@
-<map id="action_on_flags::init" name="action_on_flags::init">
-<area shape="rect" id="node2" href="$d8/d06/classflag.html#a1a6bdc10c3a544607a7a3a6672e3c773" title="flag::init" alt="" coords="193,79,260,104"/>
-<area shape="rect" id="node3" href="$d8/d06/classflag.html#a25c6b69bd5cc648bba8bea35a3f88369" title="flag::init_recursion" alt="" coords="308,79,437,104"/>
-<area shape="rect" id="node4" href="$df/d02/classgrassmann.html#a2e8cf7b9f203254493d7c2607c17d498" title="grassmann::init" alt="" coords="503,29,615,55"/>
-<area shape="rect" id="node6" href="$d8/d06/classflag.html#a5b95682242e4c94655ee217be26e20d2" title="flag::flag" alt="" coords="523,79,595,104"/>
-<area shape="rect" id="node8" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="485,128,633,153"/>
-<area shape="rect" id="node5" href="$df/d02/classgrassmann.html#a252a85d3b74eb4fbd5771f4152a5f272" title="grassmann::grassmann" alt="" coords="681,29,841,55"/>
-<area shape="rect" id="node7" href="$d8/d06/classflag.html#aca06508fba1f69355f26c2e4cfc1f9b7" title="flag::null" alt="" coords="726,79,797,104"/>
-</map>

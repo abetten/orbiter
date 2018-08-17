@@ -1,7 +1,0 @@
-<map id="wreath_product::element_one" name="wreath_product::element_one">
-<area shape="rect" id="node2" href="$df/d0a/classperm__group.html#ab959c8e4c528c27dfc8d4ac1919681ee" title="perm_group::one" alt="" coords="271,5,394,31"/>
-<area shape="rect" id="node3" href="$d3/ded/classmatrix__group.html#a00890c674cedb856ad2c358aedb25b21" title="matrix_group::GL_one" alt="" coords="256,55,410,80"/>
-<area shape="rect" id="node6" href="$d8/dfa/classwreath__product.html#a081d6eed767bdd84bc74e555815641c6" title="wreath_product::offset_i" alt="" coords="251,104,414,129"/>
-<area shape="rect" id="node4" href="$d3/ded/classmatrix__group.html#a308f9c0bb3c627134bf6d63a5c0721e9" title="matrix_group::GL_one\l_internal" alt="" coords="462,48,616,87"/>
-<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a4688997f80b8721560bccec986c23413" title="finite_field::identity\l_matrix" alt="" coords="664,48,796,87"/>
-</map>

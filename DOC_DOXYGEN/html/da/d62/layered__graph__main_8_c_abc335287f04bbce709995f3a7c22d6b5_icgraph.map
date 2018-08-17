@@ -1,6 +1,0 @@
-<map id="draw_vertex_callback_standard" name="draw_vertex_callback_standard">
-<area shape="rect" id="node2" href="$da/d62/layered__graph__main_8_c.html#a12172e73c4ca6e742bcac2a0f48e3247" title="draw_vertex_callback" alt="" coords="203,79,352,104"/>
-<area shape="rect" id="node3" href="$da/d62/layered__graph__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="461,5,511,31"/>
-<area shape="rect" id="node4" href="$df/dbf/classtree__node.html#a7ccbb586fde19d382c05065d80501eca" title="tree_node::draw_edges" alt="" coords="405,79,567,104"/>
-<area shape="rect" id="node5" href="$df/dbf/classtree__node.html#a8eaf9ec1be67f5e8110b8b38fbe8a7ab" title="tree_node::draw_vertices" alt="" coords="400,152,571,177"/>
-</map>

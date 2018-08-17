@@ -1,6 +1,0 @@
-<map id="mult_matrix_4x4" name="mult_matrix_4x4">
-<area shape="rect" id="node2" href="$df/db1/classscene.html#a99c389879187f0b8192ab7cc7457e2ff" title="scene::transform_lines" alt="" coords="178,5,334,31"/>
-<area shape="rect" id="node4" href="$df/db1/classscene.html#a84221a022e79008c5d17628dc51ef093" title="scene::transform_points" alt="" coords="174,55,338,80"/>
-<area shape="rect" id="node5" href="$df/db1/classscene.html#aea161aafb38f1aa664b9c48ea5d0fa7d" title="scene::transform_planes" alt="" coords="172,104,340,129"/>
-<area shape="rect" id="node3" href="$df/db1/classscene.html#aa63bbdb5ffcd70f233e0a3219abb89f5" title="scene::transformed_copy" alt="" coords="388,55,559,80"/>
-</map>

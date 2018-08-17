@@ -1,9 +1,0 @@
-digraph "arc_lifting::print_dual_point_ranks"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1070 [label="arc_lifting::print\l_dual_point_ranks",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1070 -> Node1071 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1071 [label="print_integer_matrix\l_with_standard_labels",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#ad39c343d865ff89a5aad3c689280ad09"];
-}

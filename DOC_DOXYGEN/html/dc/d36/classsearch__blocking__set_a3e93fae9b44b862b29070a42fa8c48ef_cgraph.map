@@ -1,9 +1,0 @@
-<map id="search_blocking_set::recursive_search_for_blocking_set" name="search_blocking_set::recursive_search_for_blocking_set">
-<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="257,5,361,31"/>
-<area shape="rect" id="node3" href="$d5/da4/classfancy__set.html#a629c5fdb14e3ad606632bb3d88013851" title="fancy_set::is_contained" alt="" coords="460,107,620,132"/>
-<area shape="rect" id="node4" href="$dc/d36/classsearch__blocking__set.html#ac6fb0a4694346d742cf11919c6de8e6a" title="search_blocking_set\l::save_line_intersection_size" alt="" coords="213,205,405,244"/>
-<area shape="rect" id="node5" href="$d5/da4/classfancy__set.html#ab3f7e0bf35d0c312db44973eaad5b085" title="fancy_set::add_element" alt="" coords="228,107,391,132"/>
-<area shape="rect" id="node7" href="$d5/da4/classfancy__set.html#a8419fe420f1f042a27655921028eb2c5" title="fancy_set::delete_element" alt="" coords="221,156,398,181"/>
-<area shape="rect" id="node8" href="$dc/d36/classsearch__blocking__set.html#a3c0e544bb6b87094c33144f742a8d0c2" title="search_blocking_set\l::restore_line_intersection_size" alt="" coords="207,268,412,307"/>
-<area shape="rect" id="node6" href="$d5/da4/classfancy__set.html#abf9e1b0592f017be71ca410371b04754" title="fancy_set::swap" alt="" coords="482,156,599,181"/>
-</map>

@@ -1,9 +1,0 @@
-digraph "set_of_sets::extract_largest_sets"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node124 [label="set_of_sets::extract\l_largest_sets",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node124 -> Node125 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node125 [label="blt_set::report",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d3d/classblt__set.html#a6b19f88bd2b92ebfba7e7c362eb9065c"];
-}

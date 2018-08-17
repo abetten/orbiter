@@ -1,7 +1,0 @@
-<map id="generator::write_sv_level_file_binary" name="generator::write_sv_level_file_binary">
-<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#aee3610f6c181222f40c5ea0ad941ec2c" title="generator::write_sv\l_level_file_binary2" alt="" coords="188,63,323,101"/>
-<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="221,125,290,151"/>
-<area shape="rect" id="node3" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="371,5,511,44"/>
-<area shape="rect" id="node4" href="$df/dbf/sajeeb_8_c.html#a2e1091b3187c01029a1a1453ce9e8639" title="fwrite_INT4" alt="" coords="559,95,649,120"/>
-<area shape="rect" id="node5" href="$d7/da7/classoracle.html#a6d213afc98b633eb3893778c186eb95b" title="oracle::sv_write_file" alt="" coords="372,120,510,145"/>
-</map>

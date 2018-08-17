@@ -1,6 +1,0 @@
-<map id="matrix::is_one" name="matrix::is_one">
-<area shape="rect" id="node2" href="$d1/d8d/classmatrix.html#a99bed1e311402c77fa47ad8fea5ba8ce" title="matrix::PG_point_normalize" alt="" coords="158,5,344,31"/>
-<area shape="rect" id="node3" href="$d1/d8d/classmatrix.html#a482c95dbcf39d23ea96bca94e2a3f8cb" title="matrix::PG_point_rank" alt="" coords="392,31,545,56"/>
-<area shape="rect" id="node4" href="$d0/d08/classpermutation.html#a3e01585ffb15282fc45a3158c5ad0b76" title="permutation::induce\l_on_lines_of_PG_k_q" alt="" coords="593,24,746,63"/>
-<area shape="rect" id="node5" href="$d0/dd3/perm__group__gens_8_c.html#ab33fa2e167b2501e5761fee699b4c285" title="vec_generators_induce\l_on_lines_of_PG_k_q" alt="" coords="794,24,954,63"/>
-</map>

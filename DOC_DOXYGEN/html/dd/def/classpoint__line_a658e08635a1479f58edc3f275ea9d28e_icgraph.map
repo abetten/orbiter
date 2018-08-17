@@ -1,5 +1,0 @@
-<map id="point_line::plane_get_lines_through_point" name="point_line::plane_get_lines_through_point">
-<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#a48c51e9ec6c9a7c80847ecb9feffc03c" title="point_line::init_projective\l_plane" alt="" coords="198,5,366,44"/>
-<area shape="rect" id="node3" href="$dd/def/classpoint__line.html#a121d61db202b5bbd07f33a148a2df735" title="point_line::coordinatize\l_plane" alt="" coords="203,68,361,107"/>
-<area shape="rect" id="node4" href="$dd/def/classpoint__line.html#a664189dde33698267c4c82b1ee3aa401" title="point_line::is_desarguesian\l_plane" alt="" coords="414,68,597,107"/>
-</map>

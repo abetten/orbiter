@@ -1,7 +1,0 @@
-<map id="plane_through_three_points" name="plane_through_three_points">
-<area shape="rect" id="node2" href="$d0/d22/numerics_8_c.html#ab2c546a261942039d2847fcf1ce4b5ec" title="double_vec_subtract" alt="" coords="198,5,342,31"/>
-<area shape="rect" id="node3" href="$d0/d22/numerics_8_c.html#aeeeb01cbaf1e0fc5a69e1b885d62b8d3" title="print_system" alt="" coords="222,55,319,80"/>
-<area shape="rect" id="node4" href="$d0/d22/numerics_8_c.html#a0301cde930dce300506c1ae9f20000e4" title="cross_product" alt="" coords="218,104,323,129"/>
-<area shape="rect" id="node5" href="$d0/d22/numerics_8_c.html#a50eb5f15bc224ba39b230108981e2763" title="distance_from_origin" alt="" coords="198,153,343,179"/>
-<area shape="rect" id="node6" href="$d0/d22/numerics_8_c.html#ad05dc4eaa8cd1ba2d78c9e10179b708e" title="dot_product" alt="" coords="224,203,316,228"/>
-</map>

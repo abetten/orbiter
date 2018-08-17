@@ -1,9 +1,0 @@
-<map id="main" name="main">
-<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="122,5,192,31"/>
-<area shape="rect" id="node3" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="527,57,570,83"/>
-<area shape="rect" id="node4" href="$d5/db4/io__and__os_8h.html#a9aa706d3f0c3bb83182eed9ab9747582" title="INT_vec_scan" alt="" coords="104,107,210,132"/>
-<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="105,156,209,181"/>
-<area shape="rect" id="node8" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="122,205,192,231"/>
-<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#a7dc639ea3d5da900adb978c9322353a7" title="INT_vec_scan_from_stream" alt="" coords="258,107,447,132"/>
-<area shape="rect" id="node6" href="$d4/d74/util_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="495,107,601,132"/>
-</map>

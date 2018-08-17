@@ -1,9 +1,0 @@
-<map id="null_polarity_generator::create_next_candidate_set" name="null_polarity_generator::create_next_candidate_set">
-<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="267,5,374,31"/>
-<area shape="rect" id="node3" href="$df/db3/classnull__polarity__generator.html#a8a0397a06453c99aa2265c0d91262654" title="null_polarity_generator\l::dot_product" alt="" coords="242,55,399,93"/>
-<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="656,37,767,63"/>
-<area shape="rect" id="node7" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="654,87,768,112"/>
-<area shape="rect" id="node8" href="$df/d5a/classfinite__field.html#aeb74732fc0776cb87ec8419e5ea7ad97" title="finite_field::dot_product" alt="" coords="447,61,606,87"/>
-<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="816,12,960,37"/>
-<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="824,61,953,87"/>
-</map>

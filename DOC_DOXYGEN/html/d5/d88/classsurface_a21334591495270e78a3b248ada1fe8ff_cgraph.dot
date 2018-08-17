@@ -1,9 +1,0 @@
-digraph "surface::test_special_form_alpha_beta"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node5332 [label="surface::test_special\l_form_alpha_beta",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node5332 -> Node5333 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node5333 [label="INT_vec_is_constant\l_on_subset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a7536bf61db31b017af715b1dc756feb7"];
-}

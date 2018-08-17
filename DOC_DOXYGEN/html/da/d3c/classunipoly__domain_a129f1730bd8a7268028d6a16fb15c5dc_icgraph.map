@@ -1,9 +1,0 @@
-<map id="unipoly_domain::create_object_of_degree" name="unipoly_domain::create_object_of_degree">
-<area shape="rect" id="node2" href="$da/d3c/classunipoly__domain.html#a9309cff0210b5662113151229575bf4c" title="unipoly_domain::matrix\l_apply" alt="" coords="218,5,376,44"/>
-<area shape="rect" id="node3" href="$da/d3c/classunipoly__domain.html#a8fc6545a5f52b768f6ebb2e3b3d57539" title="unipoly_domain::characteristic\l_polynomial" alt="" coords="670,91,871,129"/>
-<area shape="rect" id="node7" href="$da/d3c/classunipoly__domain.html#afd83c955f660719b0214c5129885dd4f" title="unipoly_domain::deletion\l_matrix" alt="" coords="213,120,381,159"/>
-<area shape="rect" id="node4" href="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e" title="gl_classes::identify\l_matrix" alt="" coords="929,28,1063,67"/>
-<area shape="rect" id="node5" href="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c" title="gl_classes::generators\l_for_centralizer" alt="" coords="919,91,1073,129"/>
-<area shape="rect" id="node6" href="$d5/d87/globals_8h.html#ad335f04bb0db45b0e9393ec76d0698f4" title="gl_random_matrix" alt="" coords="932,153,1060,179"/>
-<area shape="rect" id="node8" href="$da/d3c/classunipoly__domain.html#a460cfeb7de30e382da7f183b051e4a4f" title="unipoly_domain::determinant" alt="" coords="429,123,622,148"/>
-</map>

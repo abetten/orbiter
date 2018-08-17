@@ -1,9 +1,0 @@
-digraph "set_add_element"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node3550 [label="set_add_element",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node3550 -> Node3551 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3551 [label="set_add_elements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d23/combinatorics_8h.html#a2b9c08811d5de04f3c97675bbcc85aa4"];
-}

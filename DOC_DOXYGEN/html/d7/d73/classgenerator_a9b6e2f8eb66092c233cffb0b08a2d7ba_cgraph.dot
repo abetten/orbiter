@@ -1,9 +1,0 @@
-digraph "generator::print_extensions_at_level"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node17860 [label="generator::print_extensions\l_at_level",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node17860 -> Node17861 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node17861 [label="generator::nb_orbits\l_at_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301"];
-}

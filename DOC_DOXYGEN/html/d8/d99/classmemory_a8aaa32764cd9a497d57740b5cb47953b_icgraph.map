@@ -1,5 +1,0 @@
-<map id="memory::realloc" name="memory::realloc">
-<area shape="rect" id="node2" href="$d8/d99/classmemory.html#a2ad10d7a4707651f6b101d919f8402ed" title="memory::append" alt="" coords="170,31,291,56"/>
-<area shape="rect" id="node3" href="$d8/d99/classmemory.html#a3f1889e0a03fd3afbb15bc78084c6356" title="memory::write_char" alt="" coords="339,5,477,31"/>
-<area shape="rect" id="node4" href="$d8/d99/classmemory.html#ad2bea2174f3f88051d259aa8b293bb4d" title="memory::write_int" alt="" coords="345,55,471,80"/>
-</map>

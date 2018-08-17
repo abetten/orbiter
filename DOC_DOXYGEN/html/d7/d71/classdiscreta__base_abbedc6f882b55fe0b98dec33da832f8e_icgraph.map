@@ -1,9 +1,0 @@
-<map id="discreta_base::power_int_mod" name="discreta_base::power_int_mod">
-<area shape="rect" id="node2" href="$d3/d72/global_8_c.html#a5091bb8cefac9687df1b02729a1432a2" title="invert_mod_integer" alt="" coords="201,5,337,31"/>
-<area shape="rect" id="node3" href="$d0/de5/classinteger.html#a9a991b285677b99b4879034e31648b7a" title="integer::invert_to" alt="" coords="403,7,524,32"/>
-<area shape="rect" id="node4" href="$d3/d72/global_8_c.html#acd861d9b44d7703f6f8bf7fd75b9afe6" title="sqrt_mod_involved" alt="" coords="203,107,336,132"/>
-<area shape="rect" id="node5" href="$d3/d72/global_8_c.html#a8b9a700cdc4cf3ca42c28e6435945ade" title="sqrt_mod" alt="" coords="425,57,502,83"/>
-<area shape="rect" id="node6" href="$d3/d72/global_8_c.html#ab1f4f7f57240dfae62fb2126547fa8e6" title="fine_tune" alt="" coords="425,107,501,132"/>
-<area shape="rect" id="node7" href="$d3/dea/classelliptic__curve.html#a07f848c282b8e731d9e99e9b358d5a9a" title="elliptic_curve::compute\l_points" alt="" coords="385,156,542,195"/>
-<area shape="rect" id="node8" href="$d3/dea/classelliptic__curve.html#a0146cb7d2585f1e15e49d77a7496190f" title="elliptic_curve::init" alt="" coords="590,163,713,188"/>
-</map>

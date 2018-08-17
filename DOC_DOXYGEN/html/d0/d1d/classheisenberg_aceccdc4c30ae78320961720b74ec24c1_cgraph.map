@@ -1,8 +1,0 @@
-<map id="heisenberg::element_negate" name="heisenberg::element_negate">
-<area shape="rect" id="node2" href="$df/d5a/classfinite__field.html#a148f75f023840286e0635b04d48bdef7" title="finite_field::negate\l_vector" alt="" coords="210,5,340,44"/>
-<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#aeb74732fc0776cb87ec8419e5ea7ad97" title="finite_field::dot_product" alt="" coords="195,68,355,93"/>
-<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="404,117,515,143"/>
-<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="403,68,517,93"/>
-<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="565,92,708,117"/>
-<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="572,141,701,167"/>
-</map>

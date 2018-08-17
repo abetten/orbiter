@@ -1,7 +1,0 @@
-<map id="point_line::MOLSsxb" name="point_line::MOLSsxb">
-<area shape="rect" id="node2" href="$dd/def/classpoint__line.html#a664189dde33698267c4c82b1ee3aa401" title="point_line::is_desarguesian\l_plane" alt="" coords="446,35,629,74"/>
-<area shape="rect" id="node3" href="$dd/def/classpoint__line.html#aae394019ab60bbb77ee98aaf17c671f4" title="point_line::identify\l_field_not_of_prime_order" alt="" coords="210,35,387,74"/>
-<area shape="rect" id="node4" href="$dd/def/classpoint__line.html#a121d61db202b5bbd07f33a148a2df735" title="point_line::coordinatize\l_plane" alt="" coords="219,98,377,136"/>
-<area shape="rect" id="node5" href="$dd/def/classpoint__line.html#a86d6a058b994f296c769ff01c985af2d" title="point_line::MOLSaddition" alt="" coords="213,160,383,186"/>
-<area shape="rect" id="node6" href="$dd/def/classpoint__line.html#a0779a8ab6911ee509bd1b947733cde3b" title="point_line::MOLSmultiplication" alt="" coords="198,210,398,235"/>
-</map>

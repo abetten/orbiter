@@ -1,7 +1,0 @@
-<map id="generators_symplectic_group::dot_product" name="generators_symplectic_group::dot_product">
-<area shape="rect" id="node2" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="217,55,328,80"/>
-<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="216,104,330,129"/>
-<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31" title="finite_field::negate" alt="" coords="208,5,338,31"/>
-<area shape="rect" id="node3" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="386,5,529,31"/>
-<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="393,55,522,80"/>
-</map>

@@ -1,9 +1,0 @@
-digraph "btree::AllocateRec"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node416 [label="btree::AllocateRec",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node416 -> Node417 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node417 [label="btree::Split",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/db0/classbtree.html#a5596bf9f5e2d58fd57683d58c2c267d4"];
-}

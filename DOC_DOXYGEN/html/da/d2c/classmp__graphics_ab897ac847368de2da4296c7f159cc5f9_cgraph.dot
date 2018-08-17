@@ -1,9 +1,0 @@
-digraph "mp_graphics::st_alignment"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7338 [label="mp_graphics::st_alignment",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7338 -> Node7339 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7339 [label="mp_graphics::st_alignment_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a9f7aa1c186791f69881ddbf590835f3e"];
-}

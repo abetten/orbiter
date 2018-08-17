@@ -1,9 +1,0 @@
-digraph "push_domain"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7854 [label="push_domain",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7854 -> Node7855 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7855 [label="with::with",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d10/classwith.html#a2542a5ac5af2d8c577d8b00d33adfa05"];
-}

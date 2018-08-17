@@ -1,7 +1,0 @@
-<map id="schreier_vector_coset_rep_inv" name="schreier_vector_coset_rep_inv">
-<area shape="rect" id="node2" href="$d3/dd6/classschreier.html#a3126deca325fbd23f1b7f03a1ef89dae" title="schreier::test_sv" alt="" coords="270,5,389,31"/>
-<area shape="rect" id="node3" href="$d7/da7/classoracle.html#a5a4d27cde89e99450305410536b51915" title="oracle::orbit_representative\l_and_coset_rep_inv_subspace_action" alt="" coords="205,55,454,93"/>
-<area shape="rect" id="node4" href="$d7/da7/classoracle.html#ae86c3f9d4b95b5a6e88ee0959942ecde" title="oracle::trace_next\l_point" alt="" coords="502,55,629,93"/>
-<area shape="rect" id="node5" href="$d7/da7/classoracle.html#a33e1e9e4dde6fbecd7ae858576a7132f" title="oracle::trace_next\l_point_wrapper" alt="" coords="677,23,805,61"/>
-<area shape="rect" id="node6" href="$d7/da7/classoracle.html#a4dbea33418d5c0f550a960a5c83194a5" title="oracle::trace_next\l_point_in_place" alt="" coords="677,85,805,124"/>
-</map>

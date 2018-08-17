@@ -1,9 +1,0 @@
-<map id="upstep_work::print_level_extension_info" name="upstep_work::print_level_extension_info">
-<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#aa771f96ac28c2c79e029e3d66b3b2942" title="generator::print_level\l_extension_info" alt="" coords="203,76,350,115"/>
-<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="446,5,516,31"/>
-<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1" title="time_check_delta" alt="" coords="419,55,544,80"/>
-<area shape="rect" id="node7" href="$d7/d73/classgenerator.html#a06d3c064ba84ebe8db3537e6273f16c3" title="generator::print_problem\l_label" alt="" coords="398,104,565,143"/>
-<area shape="rect" id="node8" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="411,167,552,205"/>
-<area shape="rect" id="node5" href="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042" title="os_ticks_per_second" alt="" coords="613,31,759,56"/>
-<area shape="rect" id="node6" href="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba" title="os_ticks_to_dhms" alt="" coords="622,80,750,105"/>
-</map>

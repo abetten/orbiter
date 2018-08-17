@@ -1,9 +1,0 @@
-digraph "incidence_structure_compute_tda"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1026 [label="incidence_structure\l_compute_tda",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1026 -> Node1027 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1027 [label="incidence_structure\l_compute_TDO_TDA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980"];
-}

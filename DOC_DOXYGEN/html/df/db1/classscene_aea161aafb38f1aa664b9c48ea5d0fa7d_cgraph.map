@@ -1,5 +1,0 @@
-<map id="scene::transform_planes" name="scene::transform_planes">
-<area shape="rect" id="node2" href="$d5/d87/globals_8h.html#ac52afc6baa07847b06879f30f5176a02" title="transpose_matrix_4x4" alt="" coords="221,5,373,31"/>
-<area shape="rect" id="node3" href="$d5/db4/io__and__os_8h.html#aee0c436dfcfcb2f8a9b32f01ec90033a" title="double_vec_copy" alt="" coords="234,55,359,80"/>
-<area shape="rect" id="node4" href="$d5/d87/globals_8h.html#a867c538f21dd263628a9d8e7ed7d7ef0" title="mult_matrix_4x4" alt="" coords="237,104,356,129"/>
-</map>

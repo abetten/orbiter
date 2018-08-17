@@ -1,8 +1,0 @@
-<map id="partitionstack::get_and_print_col_decomposition_scheme" name="partitionstack::get_and_print_col_decomposition_scheme">
-<area shape="rect" id="node2" href="$d3/d87/classpartitionstack.html#a3cd13923b18c41d37259ed943f331208" title="partitionstack::allocate\l_and_get_decomposition" alt="" coords="267,5,437,44"/>
-<area shape="rect" id="node5" href="$d3/d87/classpartitionstack.html#a43e2bcd2edd73c3598110ab5517e1373" title="partitionstack::get\l_col_decomposition_scheme" alt="" coords="256,68,449,107"/>
-<area shape="rect" id="node6" href="$d3/d87/classpartitionstack.html#a988c07dc47753333f43dfc393f86f3f7" title="partitionstack::print\l_decomposition_scheme" alt="" coords="268,131,437,169"/>
-<area shape="rect" id="node3" href="$d3/d87/classpartitionstack.html#a127a6965905c3f08c50ee09a100cb465" title="partitionstack::get\l_row_and_col_classes" alt="" coords="497,5,653,44"/>
-<area shape="rect" id="node4" href="$d3/d87/classpartitionstack.html#ad8497b40f1c327d3eb2fb2b993d88bb7" title="partitionstack::is\l_row_class" alt="" coords="701,5,818,44"/>
-<area shape="rect" id="node7" href="$d3/d87/classpartitionstack.html#ad5185008e6077511fc180402530e0cc7" title="partitionstack::is\l_descendant_of" alt="" coords="516,131,633,169"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="override_polynomial_extension_field" name="override_polynomial_extension_field">
-<area shape="rect" id="node2" href="$de/dc5/algebra__and__number__theory_8h.html#a44560c42df6f76a71d351200cbf1bd0e" title="is_prime_power" alt="" coords="220,5,336,31"/>
-<area shape="rect" id="node3" href="$de/dc5/algebra__and__number__theory_8h.html#a208ece81c99403683f588d02defd74a7" title="get_primitive_polynomial" alt="" coords="194,55,362,80"/>
-<area shape="rect" id="node4" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="426,23,544,48"/>
-<area shape="rect" id="node5" href="$da/da9/galois__global_8_c.html#a5f70384bd08b74ef6f9e0f8663d0f286" title="search_for_primitive\l_polynomial_of_given\l_degree" alt="" coords="410,72,560,124"/>
-<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="608,85,714,111"/>
-</map>

@@ -1,9 +1,0 @@
-digraph "make_generators_stabilizer_of_two_components"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1422 [label="make_generators_stabilizer\l_of_two_components",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1422 -> Node1423 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node1423 [label="strong_generators::\lgenerators_for_the_stabilizer\l_of_two_components",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#acd9ddc5b768e4cf3f2398383d5a8f3b2"];
-}

@@ -1,9 +1,0 @@
-<map id="integer::compare_with" name="integer::compare_with">
-<area shape="rect" id="node2" href="$d0/de5/classinteger.html#ab92500013b2342ab5c24355bc91bad64" title="integer::is_zero" alt="" coords="213,36,326,61"/>
-<area shape="rect" id="node7" href="$d0/de5/classinteger.html#acf8faabd4ed20f9580605714b5b73a5f" title="integer::is_one" alt="" coords="215,85,324,111"/>
-<area shape="rect" id="node8" href="$d0/de5/classinteger.html#a7585957656c1152035411e066a4f0053" title="integer::is_m_one" alt="" coords="206,135,333,160"/>
-<area shape="rect" id="node3" href="$da/d94/classdesign__parameter.html#a8f39a90927d51e3cb3772bc98c94d7d0" title="design_parameter::increased_t" alt="" coords="381,12,586,37"/>
-<area shape="rect" id="node6" href="$d0/de5/classinteger.html#a9a991b285677b99b4879034e31648b7a" title="integer::invert_to" alt="" coords="423,61,544,87"/>
-<area shape="rect" id="node4" href="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6" title="design_parameter::ancestor" alt="" coords="634,12,822,37"/>
-<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7" title="design_parameter_database\l_export_tex" alt="" coords="870,5,1061,44"/>
-</map>

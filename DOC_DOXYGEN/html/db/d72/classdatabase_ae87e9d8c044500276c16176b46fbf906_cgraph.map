@@ -1,7 +1,0 @@
-<map id="database::user2total" name="database::user2total">
-<area shape="rect" id="node2" href="$db/d72/classdatabase.html#a06a4fb255387e8bac32d98d365a90019" title="database::size_of_header" alt="" coords="195,29,370,55"/>
-<area shape="rect" id="node3" href="$db/d72/classdatabase.html#a9dce80d625548b03b8317641b674cd9b" title="database::file_type" alt="" coords="418,55,552,80"/>
-<area shape="rect" id="node4" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="645,5,728,31"/>
-<area shape="rect" id="node5" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="600,55,774,80"/>
-<area shape="rect" id="node6" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="643,104,730,129"/>
-</map>

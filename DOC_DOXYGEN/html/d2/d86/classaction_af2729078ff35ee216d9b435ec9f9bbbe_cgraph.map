@@ -1,6 +1,0 @@
-<map id="action::init_affine_grid_group" name="action::init_affine_grid_group">
-<area shape="rect" id="node2" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="206,5,312,31"/>
-<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#a512b4b21212d5567d74d54d669381a80" title="finite_field::affine\l_generators" alt="" coords="198,55,319,93"/>
-<area shape="rect" id="node4" href="$d2/d3a/group__theory_8h.html#a1b4c844b399483e8a1e355027eb3c044" title="perm_group_generators\l_direct_product" alt="" coords="177,117,341,156"/>
-<area shape="rect" id="node5" href="$d2/d86/classaction.html#a3a42b109a29b27228d934e00b9a2eec5" title="action::init_permutation\l_group_from_generators" alt="" coords="175,180,343,219"/>
-</map>

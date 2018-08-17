@@ -1,8 +1,0 @@
-<map id="make_unit_vector" name="make_unit_vector">
-<area shape="rect" id="node2" href="$d0/d22/numerics_8_c.html#ab5eb2d6199ca4f75bc7e03f06206f7b0" title="orthogonal_transformation\l_from_point_to_basis_vector" alt="" coords="180,49,372,88"/>
-<area shape="rect" id="node6" href="$df/db1/classscene.html#a293886f37e26c99e4f30c81ff051c9f1" title="scene::draw_text" alt="" coords="215,112,337,137"/>
-<area shape="rect" id="node7" href="$df/db1/classscene.html#a1200e448c2371ab44c612dcfd34c0eea" title="scene::hypercube" alt="" coords="213,161,339,187"/>
-<area shape="rect" id="node3" href="$d4/d74/util_8_c.html#a53d2d31f5064dd2959cd09f37455b4f3" title="povray_animation_rotate\l_around_origin_and_given\l_vector" alt="" coords="421,5,600,57"/>
-<area shape="rect" id="node4" href="$d4/d74/util_8_c.html#a2245663061067c9ef37c6f7a726f073f" title="povray_animation_rotate\l_around_origin_and_given\l_vector_by_a_given_angle" alt="" coords="420,81,601,133"/>
-<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#a3bba4ee5b9b9b1d17d6a4decac31797e" title="povray_rotate_111" alt="" coords="649,95,780,120"/>
-</map>

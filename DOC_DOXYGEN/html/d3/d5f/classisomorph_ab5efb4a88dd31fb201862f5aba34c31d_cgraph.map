@@ -1,8 +1,0 @@
-<map id="isomorph::count_solutions_from_clique_finder" name="isomorph::count_solutions_from_clique_finder">
-<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a551b74b17bbcfb45bfcf847820f87304" title="count_number_of_solutions\l_in_file_by_case" alt="" coords="230,41,415,80"/>
-<area shape="rect" id="node5" href="$d3/d5f/classisomorph.html#a93b1d8fa988ca12f5f231fc4420873b2" title="isomorph::init_starter\l_number" alt="" coords="249,104,395,143"/>
-<area shape="rect" id="node7" href="$d3/d5f/classisomorph.html#acb8172820825e122c6e785582be1440e" title="isomorph::write_solution\l_first_and_len" alt="" coords="240,167,405,205"/>
-<area shape="rect" id="node3" href="$d4/d74/util_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="480,5,550,31"/>
-<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="493,55,536,80"/>
-<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="463,111,567,136"/>
-</map>

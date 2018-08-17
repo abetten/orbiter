@@ -1,9 +1,0 @@
-digraph "oracle::print_extensions"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node7427 [label="oracle::print_extensions",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node7427 -> Node7428 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node7428 [label="print_extension_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d10/other_8h.html#ab39242254c1c0bce13010118473d8c74"];
-}
