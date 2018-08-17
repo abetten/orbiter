@@ -1,7 +1,7 @@
-#Orbiter
-========
+Orbiter
+=======
 
-Classification of combinatorial objects.
+A C++ class library devoted to the classification of combinatorial objects.
 
 
 Please see ORBITER/doc/orbiter.pdf 
