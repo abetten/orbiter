@@ -59,8 +59,8 @@ test2.out:  test2.o;
 test_group.out:  test_group.o;
 	$(DISCRETA_CPP)  test_group.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
-partitions.out: partitions.C
-	g++ partitions.C -o partitions.out
+partitions.out: partitions.o
+	$(DISCRETA_CPP) partitions.o -o partitions.out
 
 conic.out:  conic.o;
 	$(DISCRETA_CPP)  conic.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@

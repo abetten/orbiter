@@ -1,4 +1,4 @@
-// data.C
+// data.cpp
 //
 // Anton Betten
 //
@@ -21,46 +21,46 @@
 
 
 
-#include "./DATA/data_hyperovals.C"
+#include "./DATA/data_hyperovals.cpp"
 
-#include "./DATA/surface_4.C"
-#include "./DATA/surface_7.C"
-#include "./DATA/surface_8.C"
-#include "./DATA/surface_9.C"
-#include "./DATA/surface_11.C"
-#include "./DATA/surface_13.C"
-#include "./DATA/surface_16.C"
-#include "./DATA/surface_17.C"
-#include "./DATA/surface_19.C"
-#include "./DATA/surface_23.C"
-#include "./DATA/surface_25.C"
-#include "./DATA/surface_27.C"
-#include "./DATA/surface_29.C"
-#include "./DATA/surface_31.C"
-#include "./DATA/surface_32.C"
-#include "./DATA/surface_37.C"
-#include "./DATA/surface_41.C"
-#include "./DATA/surface_43.C"
-#include "./DATA/surface_47.C"
-#include "./DATA/surface_49.C"
-#include "./DATA/surface_53.C"
-#include "./DATA/surface_59.C"
-#include "./DATA/surface_61.C"
-#include "./DATA/surface_64.C"
-#include "./DATA/surface_67.C"
-#include "./DATA/surface_71.C"
-#include "./DATA/surface_73.C"
-#include "./DATA/surface_79.C"
-#include "./DATA/surface_81.C"
-#include "./DATA/surface_83.C"
-#include "./DATA/surface_89.C"
-#include "./DATA/surface_97.C"
+#include "./DATA/surface_4.cpp"
+#include "./DATA/surface_7.cpp"
+#include "./DATA/surface_8.cpp"
+#include "./DATA/surface_9.cpp"
+#include "./DATA/surface_11.cpp"
+#include "./DATA/surface_13.cpp"
+#include "./DATA/surface_16.cpp"
+#include "./DATA/surface_17.cpp"
+#include "./DATA/surface_19.cpp"
+#include "./DATA/surface_23.cpp"
+#include "./DATA/surface_25.cpp"
+#include "./DATA/surface_27.cpp"
+#include "./DATA/surface_29.cpp"
+#include "./DATA/surface_31.cpp"
+#include "./DATA/surface_32.cpp"
+#include "./DATA/surface_37.cpp"
+#include "./DATA/surface_41.cpp"
+#include "./DATA/surface_43.cpp"
+#include "./DATA/surface_47.cpp"
+#include "./DATA/surface_49.cpp"
+#include "./DATA/surface_53.cpp"
+#include "./DATA/surface_59.cpp"
+#include "./DATA/surface_61.cpp"
+#include "./DATA/surface_64.cpp"
+#include "./DATA/surface_67.cpp"
+#include "./DATA/surface_71.cpp"
+#include "./DATA/surface_73.cpp"
+#include "./DATA/surface_79.cpp"
+#include "./DATA/surface_81.cpp"
+#include "./DATA/surface_83.cpp"
+#include "./DATA/surface_89.cpp"
+#include "./DATA/surface_97.cpp"
 
-#include "./DATA/data_DH.C"
+#include "./DATA/data_DH.cpp"
 
-#include "./DATA/data_spreads.C"
+#include "./DATA/data_spreads.cpp"
 
-#include "./DATA/data_BLT.C"
+#include "./DATA/data_BLT.cpp"
 
 
 // ####################################################################################
@@ -2870,7 +2870,7 @@ void GlynnII_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_leve
 //Date: Tue, 30 Dec 2014 21:08:19 -0700
 //From: Tim Penttila 
 
-//To: "betten@math.colostate.edu" <betten@math.colostate.edu>
+//To: "betten@math.cppolostate.edu" <betten@math.cppolostate.edu>
 //Subject: RE: Oops
 //Parts/Attachments:
 //   1   OK    ~3 KB     Text
@@ -3404,7 +3404,7 @@ INT LunelliSce_evaluate_cubic2(finite_field *F, INT *v)
 }
 
 
-// formerly DISCRETA/extras.C
+// formerly DISCRETA/extras.cpp
 //
 // Anton Betten
 // Sept 17, 2010
