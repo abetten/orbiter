@@ -9,8 +9,8 @@ LFLAGS = -lm
 
 all: codes.out 
 
-codes.out:  codes.C code_generator.o ;
-	$(DISCRETA_CPP)  codes.C code_generator.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+codes.out:  codes.o code_generator.o ;
+	$(DISCRETA_CPP)  codes.o code_generator.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 
