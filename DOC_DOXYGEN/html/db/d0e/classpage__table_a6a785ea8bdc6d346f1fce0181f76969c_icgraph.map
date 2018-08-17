@@ -1,0 +1,5 @@
+<map id="page_table::search" name="page_table::search">
+<area shape="rect" id="node2" href="$db/d0e/classpage__table.html#a9cfaa5c50aab8724164a3fa28055fc26" title="page_table::save_page" alt="" coords="403,24,563,49"/>
+<area shape="rect" id="node3" href="$db/d0e/classpage__table.html#ac18edf8272923c6bbcff0f38a8527f26" title="page_table::load_page" alt="" coords="193,24,350,49"/>
+<area shape="rect" id="node4" href="$db/d0e/classpage__table.html#a45e2028ce5759778964466cd67d19a21" title="page_table::allocate_rec" alt="" coords="188,73,355,98"/>
+</map>

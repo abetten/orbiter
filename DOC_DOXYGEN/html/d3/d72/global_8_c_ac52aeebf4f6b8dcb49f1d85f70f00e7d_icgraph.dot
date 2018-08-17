@@ -1,0 +1,35 @@
+digraph "remainder_mod"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3786 [label="remainder_mod",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3786 -> Node3787 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3787 [label="integer::compare_with",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a20cc8d8d4913e9ee746c6758bbb2e62a"];
+  Node3787 -> Node3788 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3788 [label="integer::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#ab92500013b2342ab5c24355bc91bad64"];
+  Node3788 -> Node3789 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3789 [label="design_parameter::increased_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a8f39a90927d51e3cb3772bc98c94d7d0"];
+  Node3789 -> Node3790 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3790 [label="design_parameter::ancestor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6"];
+  Node3790 -> Node3791 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3791 [label="design_parameter_database\l_export_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7"];
+  Node3788 -> Node3792 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3792 [label="integer::invert_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a9a991b285677b99b4879034e31648b7a"];
+  Node3787 -> Node3793 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3793 [label="integer::is_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#acf8faabd4ed20f9580605714b5b73a5f"];
+  Node3787 -> Node3794 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3794 [label="integer::is_m_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a7585957656c1152035411e066a4f0053"];
+  Node3786 -> Node3795 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3795 [label="integer::mult_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a7f4f072c0d9c6b15660d80e81496dffc"];
+  Node3786 -> Node3796 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3796 [label="integer::add_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a3f6fe19fe4f2948364b1e75a6dfec47f"];
+  Node3786 -> Node3797 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3797 [label="integer::negate_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a1da2bd683bdef336057ef2b84d4b3978"];
+  Node3786 -> Node3798 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3798 [label="integer::homo_z",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#ab975244fc25d0a9b3d4ef5104e3fcd24"];
+  Node3786 -> Node3799 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3799 [label="integer::inc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a2fd161f380ea688219131ba9a8429509"];
+  Node3786 -> Node3800 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3800 [label="integer::dec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a6b744350afb55f82d25e55bb6b1027b2"];
+}

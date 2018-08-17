@@ -1,16 +1,19 @@
 var searchData=
 [
-  ['bitmask',['BITMASK',['../nauty_8h.html#aa611d8f7e5aa7a82486ee4fb0c64bc05',1,'nauty.h']]],
-  ['bitmatrix_5fcopy_5fverbose',['BITMATRIX_COPY_VERBOSE',['../bitmatrix_8_c.html#a15469a6492180896f938b0983270478d',1,'bitmatrix.C']]],
-  ['bits_5fof_5fint',['BITS_OF_INT',['../discreta_8h.html#adea11951022375fd06e5bbeeed4e4869',1,'discreta.h']]],
-  ['bitt',['BITT',['../nauty_8h.html#ab3df01e2aafba56f4ba7bc6cc92fee4b',1,'nauty.h']]],
-  ['blocktactical',['BLOCKTACTICAL',['../incidence_8h.html#a85e4beac6bae614779d615243144fd5e',1,'incidence.h']]],
-  ['btree_5fpage_5flength_5flog',['BTREE_PAGE_LENGTH_LOG',['../discreta_8h.html#a1c7f44db2fd387d844c532c50fe2a775',1,'discreta.h']]],
-  ['btreehalfpagesize',['BTREEHALFPAGESIZE',['../discreta_8h.html#a3565b4218c01750dbb17dbc0c7a9c708',1,'discreta.h']]],
-  ['btreemaxkeylen',['BTREEMAXKEYLEN',['../discreta_8h.html#a1cb18100b4320386e3e79566ab8ece17',1,'discreta.h']]],
-  ['btreemaxpagesize',['BTREEMAXPAGESIZE',['../discreta_8h.html#abe72dc49bd2230ce2515b8ef6e5ccf35',1,'discreta.h']]],
-  ['bufsize',['BUFSIZE',['../galois_8h.html#aeca034f67218340ecb2261a22c2f3dcd',1,'galois.h']]],
-  ['bufsize_5fread_5fsolution_5ffile',['BUFSIZE_READ_SOLUTION_FILE',['../util_8_c.html#a485440ee7c311b73148491eaaac84578',1,'util.C']]],
-  ['bufsize_5ftree',['BUFSIZE_TREE',['../tree_8_c.html#a8ba4d390e9de0ab81db984137af0172d',1,'tree.C']]],
-  ['bufsize_5fwassermann',['BUFSIZE_WASSERMANN',['../diophant_8_c.html#aa9cfffe01718f8328a3b5d39db098a80',1,'diophant.C']]]
+  ['abs',['ABS',['../d5/da7/foundations_8h.html#a996f7be338ccb40d1a2a5abc1ad61759',1,'foundations.h']]],
+  ['added_5fconditions',['ADDED_CONDITIONS',['../d9/dc9/alphabet_8_c.html#aa00aed9e058cf99dc60d3dd633377e4c',1,'alphabet.C']]],
+  ['addelement',['ADDELEMENT',['../d1/da0/nauty_8h.html#a9df1895bf722eb0ddfce8b23f59abab3',1,'nauty.h']]],
+  ['addelement0',['ADDELEMENT0',['../d1/da0/nauty_8h.html#a6b9a3f218eb6004f9d581f391956405b',1,'nauty.h']]],
+  ['addelement1',['ADDELEMENT1',['../d1/da0/nauty_8h.html#a85876029ac6ae10b2e672d3065a478cd',1,'nauty.h']]],
+  ['addonearc',['ADDONEARC',['../d1/da0/nauty_8h.html#a3bcc21139824ad3e19dd8d8fce5a6858',1,'nauty.h']]],
+  ['addonearc0',['ADDONEARC0',['../d1/da0/nauty_8h.html#a5973139b545ac5253d4c92000543bd8c',1,'nauty.h']]],
+  ['addonearc1',['ADDONEARC1',['../d1/da0/nauty_8h.html#a188ca1a0c6983dd618c2922e2918f8bb',1,'nauty.h']]],
+  ['addoneedge',['ADDONEEDGE',['../d1/da0/nauty_8h.html#a03680105b940feaeb000e4d62af53f07',1,'nauty.h']]],
+  ['addoneedge0',['ADDONEEDGE0',['../d1/da0/nauty_8h.html#aecf5a0b08a2c3099f845b3c46c0784ac',1,'nauty.h']]],
+  ['addoneedge1',['ADDONEEDGE1',['../d1/da0/nauty_8h.html#abe58a191359e39ca538cb9c8493d1b67',1,'nauty.h']]],
+  ['allbits',['ALLBITS',['../d1/da0/nauty_8h.html#aeef12456483291005b5a0a8e8d2c1256',1,'nauty.h']]],
+  ['allmask',['ALLMASK',['../d1/da0/nauty_8h.html#ab728fdf12885b023fa554f4460707295',1,'nauty.h']]],
+  ['allocs',['ALLOCS',['../d1/da0/nauty_8h.html#a96f835949c951674028bbe282961b5e3',1,'nauty.h']]],
+  ['ansiprot',['ANSIPROT',['../d1/da0/nauty_8h.html#ad50a4b95cc050002ff8669595921367b',1,'nauty.h']]],
+  ['auts_5fallocate_5fblock_5fsize',['AUTS_ALLOCATE_BLOCK_SIZE',['../d8/d9e/backtrack_8_c.html#a91161d46c219929445a06b9c9fc3f9fa',1,'backtrack.C']]]
 ];

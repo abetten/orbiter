@@ -1,0 +1,28 @@
+<map id="spread_lifting::init" name="spread_lifting::init">
+<area shape="rect" id="node2" href="$d7/de2/classspread__lifting.html#a2f0dea5c67b1c9d61a36974bd6610b9b" title="spread_lifting::compute\l_points_covered_by_starter" alt="" coords="178,371,364,409"/>
+<area shape="rect" id="node15" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="441,528,548,553"/>
+<area shape="rect" id="node21" href="$d7/de2/classspread__lifting.html#a4f3dcebeef7dc6e8494c9e020e817267" title="spread_lifting::prepare\l_free_points" alt="" coords="194,575,348,613"/>
+<area shape="rect" id="node26" href="$df/d94/classexact__cover.html#a5f11e25f122a6eecf845c5b6d5680de8" title="exact_cover::lexorder_test" alt="" coords="183,655,360,680"/>
+<area shape="rect" id="node3" href="$df/d02/classgrassmann.html#a32079405b95a6da2ba1420567d762d64" title="grassmann::unrank_INT" alt="" coords="412,276,577,301"/>
+<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="673,427,778,452"/>
+<area shape="rect" id="node10" href="$d4/d67/geometry_8h.html#afb8b46585460682f22fd782d18ca8f3f" title="all_PG_elements_in\l_subspace" alt="" coords="424,136,565,175"/>
+<area shape="rect" id="node16" href="$d5/db4/io__and__os_8h.html#afd4180a24bef3a2b584668a4eaf607ff" title="INT_matrix_print" alt="" coords="435,377,554,403"/>
+<area shape="rect" id="node17" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="429,479,560,504"/>
+<area shape="rect" id="node4" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="652,167,799,192"/>
+<area shape="rect" id="node5" href="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5" title="i_power_j" alt="" coords="686,216,765,241"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="654,328,797,353"/>
+<area shape="rect" id="node8" href="$d5/db4/io__and__os_8h.html#a2a0a724647575fcd3090c763985eb81a" title="INT_vec_complement" alt="" coords="650,377,801,403"/>
+<area shape="rect" id="node9" href="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f" title="print_integer_matrix\l_width" alt="" coords="656,265,795,304"/>
+<area shape="rect" id="node11" href="$df/de4/projective_8_c.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="625,5,826,31"/>
+<area shape="rect" id="node12" href="$df/d5a/classfinite__field.html#aad2078020fd058c71649f0a25a4c77cc" title="finite_field::mult\l_vector_from_the_left" alt="" coords="650,55,801,93"/>
+<area shape="rect" id="node13" href="$df/de4/projective_8_c.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="632,117,819,143"/>
+<area shape="rect" id="node14" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="895,117,1055,143"/>
+<area shape="rect" id="node18" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="650,579,801,604"/>
+<area shape="rect" id="node19" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="906,528,1043,553"/>
+<area shape="rect" id="node20" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="1124,503,1235,528"/>
+<area shape="rect" id="node22" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="435,577,554,603"/>
+<area shape="rect" id="node23" href="$da/dc1/classspread.html#a314de3fdc5aaf4e61c1cc89f8d5368ca" title="spread::print_points" alt="" coords="425,627,564,652"/>
+<area shape="rect" id="node24" href="$da/dc1/classspread.html#ac43616d90965959ae32781ab3bf5a229" title="spread::unrank_point" alt="" coords="652,628,799,653"/>
+<area shape="rect" id="node25" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="874,628,1076,653"/>
+<area shape="rect" id="node27" href="$d2/d86/classaction.html#a9ff38f81bf4d9e0d3dcb681eb8aa1998" title="action::lexorder_test" alt="" coords="424,676,565,701"/>
+</map>

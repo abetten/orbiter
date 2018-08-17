@@ -31,7 +31,7 @@ var menudata={children:[
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
 {text:"Class Index",url:"classes.html"},
-{text:"Class Hierarchy",url:"hierarchy.html"},
+{text:"Class Hierarchy",url:"inherits.html"},
 {text:"Class Members",url:"functions.html",children:[
 {text:"All",url:"functions.html",children:[
 {text:"_",url:"functions.html#index__"},
@@ -122,7 +122,8 @@ var menudata={children:[
 {text:"File List",url:"files.html"},
 {text:"File Members",url:"globals.html",children:[
 {text:"All",url:"globals.html",children:[
-{text:"a",url:"globals.html#index_a"},
+{text:"_",url:"globals.html#index__"},
+{text:"a",url:"globals_a.html#index_a"},
 {text:"b",url:"globals_b.html#index_b"},
 {text:"c",url:"globals_c.html#index_c"},
 {text:"d",url:"globals_d.html#index_d"},
@@ -247,7 +248,8 @@ var menudata={children:[
 {text:"v",url:"globals_eval.html#index_v"},
 {text:"w",url:"globals_eval.html#index_w"}]},
 {text:"Macros",url:"globals_defs.html",children:[
-{text:"a",url:"globals_defs.html#index_a"},
+{text:"_",url:"globals_defs.html#index__"},
+{text:"a",url:"globals_defs_a.html#index_a"},
 {text:"b",url:"globals_defs_b.html#index_b"},
 {text:"c",url:"globals_defs_c.html#index_c"},
 {text:"d",url:"globals_defs_d.html#index_d"},
@@ -256,6 +258,7 @@ var menudata={children:[
 {text:"g",url:"globals_defs_g.html#index_g"},
 {text:"h",url:"globals_defs_h.html#index_h"},
 {text:"i",url:"globals_defs_i.html#index_i"},
+{text:"k",url:"globals_defs_k.html#index_k"},
 {text:"l",url:"globals_defs_l.html#index_l"},
 {text:"m",url:"globals_defs_m.html#index_m"},
 {text:"n",url:"globals_defs_n.html#index_n"},

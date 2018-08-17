@@ -1,0 +1,13 @@
+digraph "diophant::print_eqn"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node431 [label="diophant::print_eqn",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node431 -> Node432 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node432 [label="diophant::Aij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#af86d3bf833485e2f2d7b4a19288fc698"];
+  Node431 -> Node433 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node433 [label="diophant::Gij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a4d6f0cda44ebcbbf242e850ae6f6e611"];
+  Node431 -> Node434 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node434 [label="diophant::RHSi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#aa56efaa8e28e17c83f96ed409964b3e1"];
+}

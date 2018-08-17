@@ -1,0 +1,5 @@
+<map id="action::is_one" name="action::is_one">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#aa95202fa29f7ac079cbbf1fa18bc2f28" title="action::element_has\l_order_two" alt="" coords="157,5,298,44"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#af23981c4ce591ca41b23133eb362186a" title="action::product_has\l_order_two" alt="" coords="158,68,296,107"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a92cfbcef9ad53841cffb3fdad0dd7ab8" title="action::product_has\l_order_three" alt="" coords="158,131,296,169"/>
+</map>

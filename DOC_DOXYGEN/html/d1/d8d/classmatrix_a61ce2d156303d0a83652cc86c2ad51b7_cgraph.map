@@ -1,0 +1,21 @@
+<map id="matrix::calc_hash_key" name="matrix::calc_hash_key">
+<area shape="rect" id="node2" href="$d7/d71/classdiscreta__base.html#afda42789f4ba04ba399623a6b9e206e3" title="discreta_base::inc" alt="" coords="874,47,1002,73"/>
+<area shape="rect" id="node6" href="$d9/d60/discreta_8h.html#a41da378679c384026d4b3cb2941236df" title="nb_primes" alt="" coords="230,74,314,99"/>
+<area shape="rect" id="node8" href="$d1/d8d/classmatrix.html#afeb2e29600e68448b9d1130114b9606f" title="matrix::s_m" alt="" coords="227,123,317,149"/>
+<area shape="rect" id="node9" href="$d1/d8d/classmatrix.html#a35f5321a5615451fdc8be7b953f8ac8b" title="matrix::s_n" alt="" coords="229,173,315,198"/>
+<area shape="rect" id="node10" href="$d1/d8d/classmatrix.html#af8d3c35817af62a3c0097ddf64422d96" title="matrix::s_iji" alt="" coords="228,222,316,247"/>
+<area shape="rect" id="node17" href="$d9/d60/discreta_8h.html#acbf8077f27bf6ca59b8818bfab1a93f6" title="the_first_n_primes" alt="" coords="207,271,338,297"/>
+<area shape="rect" id="node18" href="$d8/d99/classhollerith.html#af51ae7b943056db367f3c205a5a1cc4b" title="hollerith::init" alt="" coords="226,321,318,346"/>
+<area shape="rect" id="node3" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="1085,122,1235,147"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1283,97,1477,122"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1340,146,1420,171"/>
+<area shape="rect" id="node7" href="$de/dc5/algebra__and__number__theory_8h.html#a89238384b70e5f0f19ac179ca88d468d" title="smallest_primedivisor" alt="" coords="386,74,535,99"/>
+<area shape="rect" id="node11" href="$d1/d8d/classmatrix.html#ab36f1b3abd2df280224c50c9debb57df" title="matrix::s_ij" alt="" coords="418,173,503,198"/>
+<area shape="rect" id="node12" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="391,222,530,247"/>
+<area shape="rect" id="node13" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="583,173,791,198"/>
+<area shape="rect" id="node15" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="600,222,774,247"/>
+<area shape="rect" id="node16" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="644,271,730,297"/>
+<area shape="rect" id="node14" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="839,173,1037,198"/>
+<area shape="rect" id="node19" href="$d8/d99/classhollerith.html#a240d1b30780c9e09323d0b3ad5e2d1f7" title="hollerith::freeself\l_hollerith" alt="" coords="401,293,520,331"/>
+<area shape="rect" id="node20" href="$d8/d99/classhollerith.html#af61fce2d06f211b25fe3838e4dfee77a" title="hollerith::s" alt="" coords="419,355,501,381"/>
+</map>

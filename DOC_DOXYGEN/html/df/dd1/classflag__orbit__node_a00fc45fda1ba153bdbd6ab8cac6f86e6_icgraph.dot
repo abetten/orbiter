@@ -1,0 +1,9 @@
+digraph "flag_orbit_node::freeself"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node9 [label="flag_orbit_node::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="flag_orbit_node::~flag\l_orbit_node",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dd1/classflag__orbit__node.html#a1ca48d5cc7056ec169afb72bf29a1ee9"];
+}

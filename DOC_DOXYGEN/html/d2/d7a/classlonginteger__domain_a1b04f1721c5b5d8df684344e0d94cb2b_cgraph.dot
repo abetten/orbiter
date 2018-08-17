@@ -1,0 +1,15 @@
+digraph "longinteger_domain::random_number_less_than_n"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node672 [label="longinteger_domain\l::random_number_less\l_than_n",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node672 -> Node673 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node673 [label="random_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a509937846575424b1c8863e1bb96a766"];
+  Node672 -> Node674 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node674 [label="longinteger_domain\l::compare_unsigned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f"];
+  Node674 -> Node675 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node675 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node674 -> Node676 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node676 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+}

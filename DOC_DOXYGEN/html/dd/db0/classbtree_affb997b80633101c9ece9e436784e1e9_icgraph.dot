@@ -1,0 +1,9 @@
+digraph "btree::delete_ith"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node894 [label="btree::delete_ith",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node894 -> Node895 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node895 [label="database::delete_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a69f061ffa820d1926718dafad5f5513c"];
+}

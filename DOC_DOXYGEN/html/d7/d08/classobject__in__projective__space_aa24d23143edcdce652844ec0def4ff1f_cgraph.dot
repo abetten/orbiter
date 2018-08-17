@@ -1,0 +1,19 @@
+digraph "object_in_projective_space::init_packing_from_set_of_sets"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node68 [label="object_in_projective\l_space::init_packing\l_from_set_of_sets",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node68 -> Node69 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node69 [label="set_of_sets::copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#aebe21c52c36edd9b2439f3e0c9c3f333"];
+  Node69 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="set_of_sets::set_of_sets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#ad07d3908a5f6972e2defe4db643dcb1e"];
+  Node70 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="set_of_sets::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#a0781046b5156beb68e73fc3794df0b57"];
+  Node69 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="set_of_sets::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#a6801510e52b5d426350058ee0da5ed41"];
+  Node72 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="set_of_sets::init_basic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#ae9b4f064df3c95d1aaec58ca6eeeb0ed"];
+  Node72 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+}

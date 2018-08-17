@@ -1,0 +1,17 @@
+<map id="unipoly_domain::degree" name="unipoly_domain::degree">
+<area shape="rect" id="node2" href="$d6/dab/classgl__classes.html#ab79551e3f5bc66e8049de52bd685a4ef" title="gl_classes::factor\l_polynomial" alt="" coords="459,310,584,349"/>
+<area shape="rect" id="node5" href="$da/d3c/classunipoly__domain.html#aa48d01b8629b9545913ef57ce6857aef" title="unipoly_domain::create\l_Dickson_polynomial" alt="" coords="220,501,380,539"/>
+<area shape="rect" id="node6" href="$da/d3c/classunipoly__domain.html#a861279fd941d6bad64e6ec13279453af" title="unipoly_domain::Frobenius\l_matrix" alt="" coords="431,133,612,171"/>
+<area shape="rect" id="node7" href="$da/d3c/classunipoly__domain.html#a560f4cc73e0badeba359203643fbc333" title="unipoly_domain::Berlekamp\l_matrix" alt="" coords="660,75,846,114"/>
+<area shape="rect" id="node8" href="$da/d3c/classunipoly__domain.html#aec4d9b55b51268d99ef6f6480d7282b5" title="unipoly_domain::is\l_irreducible" alt="" coords="915,47,1047,86"/>
+<area shape="rect" id="node9" href="$da/d3c/classunipoly__domain.html#a22f73567ccec05778c3a67fd85c5e413" title="unipoly_domain::integral\l_division" alt="" coords="217,250,383,289"/>
+<area shape="rect" id="node11" href="$da/d3c/classunipoly__domain.html#a799f3e7de9717b6c0b52dbc5305f3bf5" title="unipoly_domain::compute\l_normal_basis" alt="" coords="894,378,1067,417"/>
+<area shape="rect" id="node12" href="$da/d3c/classunipoly__domain.html#a65da08a136c47386d06c140157b72809" title="unipoly_domain::take\l_away_all_factors_from_b" alt="" coords="665,138,842,177"/>
+<area shape="rect" id="node13" href="$da/d3c/classunipoly__domain.html#a9277064fdac095171cd7a0849a1b14e9" title="unipoly_domain::derive" alt="" coords="221,563,379,589"/>
+<area shape="rect" id="node14" href="$da/d3c/classunipoly__domain.html#a9309cff0210b5662113151229575bf4c" title="unipoly_domain::matrix\l_apply" alt="" coords="221,613,379,651"/>
+<area shape="rect" id="node15" href="$da/d3c/classunipoly__domain.html#a770579859bb43cdd52c8cf42169272cd" title="unipoly_domain::module\l_structure_apply" alt="" coords="439,378,605,417"/>
+<area shape="rect" id="node3" href="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e" title="gl_classes::identify\l_matrix" alt="" coords="687,315,820,354"/>
+<area shape="rect" id="node4" href="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c" title="gl_classes::generators\l_for_centralizer" alt="" coords="676,253,831,291"/>
+<area shape="rect" id="node10" href="$da/d3c/classunipoly__domain.html#ae08b2f84ea25a3b0f310edec6ad9cf66" title="unipoly_domain::integral\l_division_exact" alt="" coords="439,247,605,286"/>
+<area shape="rect" id="node16" href="$da/d3c/classunipoly__domain.html#a2610dcbc95a611ad0108a5b1b679dacb" title="unipoly_domain::order\l_ideal_generator" alt="" coords="677,378,830,417"/>
+</map>

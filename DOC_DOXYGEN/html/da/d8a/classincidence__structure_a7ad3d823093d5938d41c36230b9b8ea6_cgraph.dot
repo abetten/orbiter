@@ -1,0 +1,29 @@
+digraph "incidence_structure::latex_it"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5239 [label="incidence_structure\l::latex_it",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5239 -> Node5240 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5240 [label="incidence_structure\l::rearrange",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#ad692ab2f42456aeee575311c2cdbbdf9"];
+  Node5240 -> Node5241 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5241 [label="incidence_structure\l::nb_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#aff5f6bfdc7470e73082ee6faacf0af64"];
+  Node5240 -> Node5242 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5242 [label="incidence_structure\l::nb_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a9ffac61340b2a03f31f1cc366d5a7b79"];
+  Node5240 -> Node5243 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5243 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node5240 -> Node5244 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5244 [label="INT_vec_heapsort",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39"];
+  Node5244 -> Node5245 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5245 [label="heapsort_make_heap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb"];
+  Node5245 -> Node5246 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5246 [label="heapsort_sift_down",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b"];
+  Node5246 -> Node5247 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5247 [label="heapsort_swap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6"];
+  Node5244 -> Node5247 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5244 -> Node5246 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5239 -> Node5248 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5248 [label="incma_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d17/foundations_2geometry_2incidence__structure_8_c.html#a5e19d29c4a94cec3b8b0e147f42904f3"];
+  Node5239 -> Node5241 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5239 -> Node5242 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

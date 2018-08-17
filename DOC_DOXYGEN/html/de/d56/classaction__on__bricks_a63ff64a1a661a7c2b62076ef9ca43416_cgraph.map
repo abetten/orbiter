@@ -1,0 +1,15 @@
+<map id="action_on_bricks::compute_image_linear_action" name="action_on_bricks::compute_image_linear_action">
+<area shape="rect" id="node2" href="$da/daf/classbrick__domain.html#a2a4035be65c27fa4eaafae8db1fdf314" title="brick_domain::unrank\l_coordinates" alt="" coords="260,5,408,44"/>
+<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="282,68,386,93"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="241,391,427,416"/>
+<area shape="rect" id="node10" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="261,180,407,219"/>
+<area shape="rect" id="node11" href="$d2/d86/classaction.html#a094e1e6414725c771c91ea0e92342de6" title="action::image_of" alt="" coords="274,243,394,268"/>
+<area shape="rect" id="node12" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="233,292,435,317"/>
+<area shape="rect" id="node13" href="$d4/d67/geometry_8h.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="254,341,414,367"/>
+<area shape="rect" id="node14" href="$da/daf/classbrick__domain.html#a84f4df99770f492278a079177c09eaf3" title="brick_domain::rank\l_coordinates" alt="" coords="267,117,401,156"/>
+<area shape="rect" id="node3" href="$da/daf/classbrick__domain.html#ae77f9055d5c6100c195867679603a3c2" title="brick_domain::unrank" alt="" coords="489,12,637,37"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="508,92,619,117"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="691,68,835,93"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="699,117,828,143"/>
+<area shape="rect" id="node9" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="483,391,643,416"/>
+</map>

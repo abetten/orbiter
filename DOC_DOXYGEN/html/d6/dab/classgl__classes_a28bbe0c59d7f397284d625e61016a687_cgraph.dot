@@ -1,0 +1,17 @@
+digraph "gl_classes::centralizer_generators_block"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node33 [label="gl_classes::centralizer\l_generators_block",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node33 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node33 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="gl_classes::choose\l_basis_for_rational\l_normal_form_block",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#acb7c706b045d07bdbdb05b01acc3d105"];
+  Node33 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="gl_classes::choose\l_basis_for_rational\l_normal_form_coset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dab/classgl__classes.html#a0228b3ef9958351ac8f55d3ca5444f17"];
+  Node33 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="INT_matrix_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#afd4180a24bef3a2b584668a4eaf607ff"];
+  Node33 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+}

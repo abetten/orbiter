@@ -1,0 +1,5 @@
+<map id="action_on_orbits::compute_image" name="action_on_orbits::compute_image">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d" title="action::element_image_of" alt="" coords="231,5,405,31"/>
+<area shape="rect" id="node3" href="$d3/dd6/classschreier.html#a65ae0e0466545deba181b987c27feb58" title="schreier::orbit_number" alt="" coords="241,55,395,80"/>
+<area shape="rect" id="node4" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="453,55,571,80"/>
+</map>

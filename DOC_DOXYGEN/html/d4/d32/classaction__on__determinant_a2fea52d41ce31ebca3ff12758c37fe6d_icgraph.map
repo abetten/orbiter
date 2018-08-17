@@ -1,0 +1,11 @@
+<map id="action_on_determinant::init" name="action_on_determinant::init">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#aa6b9d3c2ded2cae185ee31f2200ad0b5" title="action::induced_action\l_on_determinant" alt="" coords="210,48,364,87"/>
+<area shape="rect" id="node3" href="$dc/d09/classstrong__generators.html#a78e9e4d012bb440194e2874c40ca9e29" title="strong_generators::\lspecial_subgroup" alt="" coords="412,48,549,87"/>
+<area shape="rect" id="node4" href="$dc/d09/classstrong__generators.html#ad47ecfb9c141b65ed6aca34231d5a0d2" title="strong_generators::\linit_linear_group_from\l_scratch" alt="" coords="597,41,751,93"/>
+<area shape="rect" id="node5" href="$df/d5a/classlinear__group.html#a8119aa9b882192ab422b12614b259f28" title="linear_group::init" alt="" coords="799,55,919,80"/>
+<area shape="rect" id="node6" href="$db/d37/classcode__generator.html#acfaa1e8badf6f30255203f499b130af8" title="code_generator::init" alt="" coords="967,5,1106,31"/>
+<area shape="rect" id="node8" href="$d8/d03/analyze__q__designs_8_c.html#ad03444358d0b46e7aa4d88a806b44925" title="test_group" alt="" coords="995,55,1079,80"/>
+<area shape="rect" id="node10" href="$da/dd5/subspace__orbits__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1012,104,1062,129"/>
+<area shape="rect" id="node7" href="$d4/d4f/codes_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1154,5,1205,31"/>
+<area shape="rect" id="node9" href="$d8/d03/analyze__q__designs_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1154,55,1205,80"/>
+</map>

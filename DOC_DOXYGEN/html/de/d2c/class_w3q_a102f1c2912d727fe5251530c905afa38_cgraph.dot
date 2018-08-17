@@ -1,0 +1,11 @@
+digraph "W3q::~W3q"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="W3q::~W3q",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="W3q::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d2c/class_w3q.html#a66437e3cf668d4de4a6661f444fd3d77"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="W3q::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d2c/class_w3q.html#a44efdd4625aa1a1c8f4e56a98aca8e3f"];
+}

@@ -1,0 +1,9 @@
+digraph "tdo_scheme::exit_partition_stack"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node33 [label="tdo_scheme::exit_partition\l_stack",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node33 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="tdo_scheme::free_partition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/dbc/classtdo__scheme.html#aea7a33fd0b9b11013f772f578f21c3fb"];
+}

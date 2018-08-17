@@ -1,0 +1,11 @@
+digraph "create_automorphism_group_of_incidence_structure"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1068 [label="create_automorphism\l_group_of_incidence\l_structure",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1068 -> Node1069 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1069 [label="incidence_structure\l_compute_TDO_TDA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980"];
+  Node1068 -> Node1070 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1070 [label="incidence_structure\l_find_blocking_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a8e3d42d0018f8a804b9686b1c4951186"];
+}

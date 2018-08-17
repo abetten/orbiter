@@ -1,0 +1,15 @@
+digraph "print_factorization"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node7828 [label="print_factorization",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7828 -> Node7829 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7829 [label="print_clan_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a46caf83aa0d557a42ac3710c7f5dc665"];
+  Node7829 -> Node7830 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7830 [label="print_clan_tex_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a6940852a56bea54b6b60aa35e5894664"];
+  Node7828 -> Node7831 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7831 [label="longinteger_domain\l::factor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a2224c4efabb173607589de9b5d91cad0"];
+  Node7828 -> Node7832 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7832 [label="analyze_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d76/tl__algebra__and__number__theory_8h.html#acc445ef9d19e7fe78fbe1a057328958e"];
+}

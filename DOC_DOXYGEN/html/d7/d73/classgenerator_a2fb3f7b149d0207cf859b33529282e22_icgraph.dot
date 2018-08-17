@@ -1,0 +1,33 @@
+digraph "generator::make_spreadsheet_of_orbit_reps"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node13966 [label="generator::make_spreadsheet\l_of_orbit_reps",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node13966 -> Node13967 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13967 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d11/codes_8h.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node13966 -> Node13968 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13968 [label="code_generator::main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d37/classcode__generator.html#ab3cf3a306e4032c2b471ac95321c599f"];
+  Node13968 -> Node13969 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13969 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d4f/codes_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node13966 -> Node13970 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13970 [label="arc_generator::compute\l_starter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#aad1dcec3a1c302e743d574bd1ac857d9"];
+  Node13970 -> Node13971 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13971 [label="arc_generator::main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a"];
+  Node13970 -> Node13972 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13972 [label="k_arc_generator::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dd8/classk__arc__generator.html#a6036d9f52ede9f8ca681505626b5361d"];
+  Node13972 -> Node13973 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13973 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d01/k__arc__generator__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node13970 -> Node13974 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13974 [label="six_arcs_not_on_a_conic\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a"];
+  Node13974 -> Node13975 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13975 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node13975 -> Node13976 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13976 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node13974 -> Node13977 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13977 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node13966 -> Node13978 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13978 [label="classify_double_sixes\l::classify_partial_ovoids",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a2253fca143a0e8a3e39655eb05668ae9"];
+  Node13978 -> Node13979 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13979 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+}

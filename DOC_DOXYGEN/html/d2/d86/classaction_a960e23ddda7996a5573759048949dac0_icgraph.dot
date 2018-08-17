@@ -1,0 +1,20 @@
+digraph "action::element_power_INT_in_place"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6933 [label="action::element_power\l_INT_in_place",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6933 -> Node6934 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6934 [label="sims::random_element\l_of_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a5813a13a4b5685f8bab7d248fb12cf57"];
+  Node6934 -> Node6935 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6935 [label="sims::random_elements\l_of_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#af5aeca809be7c10df8493c1b9ef9e980"];
+  Node6933 -> Node6936 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6936 [label="sims::find_element\l_of_given_order_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a2747368b290225e639103bff8e32ffc9"];
+  Node6936 -> Node6937 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6937 [label="sims::find_standard\l_generators_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a76b4729b133fb5d7e1edaffe98a6eb5a"];
+  Node6933 -> Node6938 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6938 [label="sims::find_element\l_of_prime_power_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#aaa2d4a5f8ebb39fab9149d99b4d38fbc"];
+  Node6938 -> Node6939 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6939 [label="sims::sylow_subgroup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#addc6f348759a62efab9c5d5b58ad3f61"];
+  Node6933 -> Node6939 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,36 @@
+<map id="choose_next_base_point_default_method" name="choose_next_base_point_default_method">
+<area shape="rect" id="node2" href="$d0/da8/classschreier__sims.html#a1423aec8f5f7f69d0518cd4e69e29b07" title="schreier_sims::create\l_group" alt="" coords="223,191,371,229"/>
+<area shape="rect" id="node12" href="$d9/df3/classsims.html#afde54d656304b5a92459615f2690ea64" title="sims::build_up_group\l_random_process" alt="" coords="223,297,371,336"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#a9ec9857e52b35c91c52964a1c5701128" title="action::create_orthogonal\l_group" alt="" coords="430,135,602,173"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a2cfe124956ed67d8b7a927bb44847cc2" title="action::init_orthogonal\l_group" alt="" coords="665,123,817,161"/>
+<area shape="rect" id="node5" href="$d1/d3d/classblt__set.html#a9e5aede3bbac6f5e1dd31a8965bba200" title="blt_set::init_group" alt="" coords="907,153,1033,179"/>
+<area shape="rect" id="node6" href="$d3/daf/classovoid__generator.html#a44d90a4751554076f432f35089a964c2" title="ovoid_generator::init" alt="" coords="899,203,1041,228"/>
+<area shape="rect" id="node7" href="$de/d97/classspread__create.html#ae3c6630d33160e48a584c21a4f4a6209" title="spread_create::init" alt="" coords="905,5,1036,31"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a0d33ca0ebe7467b984c3058520e02a0c" title="action::init_BLT" alt="" coords="914,55,1026,80"/>
+<area shape="rect" id="node10" href="$d4/d40/class_b_l_t__set__create.html#af2b5df080b8358d8fcd7e41d187e8d0b" title="BLT_set_create::init" alt="" coords="901,104,1040,129"/>
+<area shape="rect" id="node8" href="$d1/d2f/apps_2spread_2spread__create_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1180,5,1230,31"/>
+<area shape="rect" id="node11" href="$d7/d1c/create___b_l_t__set__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1180,104,1230,129"/>
+<area shape="rect" id="node13" href="$d2/d86/classaction.html#aabf5ea4227f124eac2badc5d5225e220" title="action::is_minimal\l_witness" alt="" coords="452,297,580,336"/>
+<area shape="rect" id="node20" href="$d8/d30/classcompute__stabilizer.html#a895df470da0ac14f812c3c4b6f2280b9" title="compute_stabilizer\l::restricted_action" alt="" coords="904,364,1036,403"/>
+<area shape="rect" id="node34" href="$d9/df3/classsims.html#a33747471a3e1ebdee59aff4edde62669" title="sims::build_up_group\l_random_process_no_kernel" alt="" coords="419,412,613,451"/>
+<area shape="rect" id="node35" href="$d9/df3/classsims.html#a20958fd83e43b33c009e873b9df2fa11" title="sims::extend_group\l_random_process_no_kernel" alt="" coords="419,235,613,273"/>
+<area shape="rect" id="node14" href="$d2/d86/classaction.html#a1905e4012d6352a0337f6ee25ef3a875" title="action::is_minimal" alt="" coords="678,259,805,284"/>
+<area shape="rect" id="node15" href="$d2/d86/classaction.html#ae20ff0b8d092d2eddf9b661fb8821fd2" title="action::make_canonical" alt="" coords="661,308,822,333"/>
+<area shape="rect" id="node16" href="$d0/de6/projective__space__main_8_c.html#a5f0f6b71cd402c5b41240c420e533e60" title="canonical_form" alt="" coords="914,252,1026,277"/>
+<area shape="rect" id="node31" href="$d8/d30/classcompute__stabilizer.html#aa33f9b1e4823afd5196eec36d3082084" title="compute_stabilizer\l::make_canonical_second_set" alt="" coords="870,301,1070,340"/>
+<area shape="rect" id="node17" href="$d0/de6/projective__space__main_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1583,223,1633,248"/>
+<area shape="rect" id="node18" href="$d0/de6/projective__space__main_8_c.html#a63a6b06bd2a9a9c50ed710271f4d5530" title="process_object" alt="" coords="1150,252,1261,277"/>
+<area shape="rect" id="node19" href="$d0/de6/projective__space__main_8_c.html#a32275eacc4bdda93b2b34c2a9217a088" title="classify_objects_using\l_nauty" alt="" coords="1340,244,1494,283"/>
+<area shape="rect" id="node21" href="$d8/d30/classcompute__stabilizer.html#a36a1729430f317a65559220a8206a7d7" title="compute_stabilizer\l::init" alt="" coords="1542,335,1674,373"/>
+<area shape="rect" id="node22" href="$d8/dc6/classset__stabilizer__compute.html#a247c31bc3f19f22dadbfd7607cbaaa78" title="set_stabilizer_compute\l::handle_frequencies" alt="" coords="1722,335,1880,373"/>
+<area shape="rect" id="node23" href="$d8/dc6/classset__stabilizer__compute.html#ad4f92074322e98c7cd0ed5d4f8486b76" title="set_stabilizer_compute\l::compute_set_stabilizer" alt="" coords="1928,335,2093,373"/>
+<area shape="rect" id="node24" href="$db/d67/test__hyperoval_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="2204,236,2254,261"/>
+<area shape="rect" id="node25" href="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652" title="conic" alt="" coords="2203,285,2255,311"/>
+<area shape="rect" id="node26" href="$dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b" title="linear_set::do_compute\l_stabilizer" alt="" coords="2149,335,2309,373"/>
+<area shape="rect" id="node29" href="$d0/d76/tl__algebra__and__number__theory_8h.html#af2c67d225072549409be710ac3cd30f8" title="create_sims_for_stabilizer" alt="" coords="2141,397,2317,423"/>
+<area shape="rect" id="node30" href="$d0/d76/tl__algebra__and__number__theory_8h.html#af5482567a8d6ba5c2fe593bf6f7f9a0f" title="create_sims_for_stabilizer\l_with_input_group" alt="" coords="2141,447,2317,485"/>
+<area shape="rect" id="node27" href="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b" title="linear_set::init_compute\l_stabilizer" alt="" coords="2365,335,2527,373"/>
+<area shape="rect" id="node28" href="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2" title="linear_set::compute\l_stabilizer_of_linear_set" alt="" coords="2575,335,2741,373"/>
+<area shape="rect" id="node32" href="$d8/d30/classcompute__stabilizer.html#a040fb5c6ad50133c5a16a35ed5b2ecc4" title="compute_stabilizer\l::main_loop_handle_case" alt="" coords="1118,304,1292,343"/>
+<area shape="rect" id="node33" href="$d8/d30/classcompute__stabilizer.html#ae8615a28e0494704450689b6ea0b7ca2" title="compute_stabilizer\l::main_loop" alt="" coords="1350,307,1483,345"/>
+</map>

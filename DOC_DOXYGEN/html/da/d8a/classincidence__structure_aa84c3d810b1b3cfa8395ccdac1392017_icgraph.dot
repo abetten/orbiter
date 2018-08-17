@@ -1,0 +1,11 @@
+digraph "incidence_structure::compute_TDO_safe_first"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node774 [label="incidence_structure\l::compute_TDO_safe_first",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node774 -> Node775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node775 [label="incidence_structure\l::compute_tdo_stepwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a91a7039b74c96b39bcd084b02181f191"];
+  Node775 -> Node776 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node776 [label="incidence_structure\l::do_tdo_high_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a8840e820448ad980279f244a90888b77"];
+}

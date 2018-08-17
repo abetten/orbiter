@@ -1,0 +1,41 @@
+digraph "surface::klein_to_wedge"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3194 [label="surface::klein_to_wedge",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3194 -> Node3195 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3195 [label="surface::line_to_wedge",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#aea15853e991bf9a363abf647f8bcb70c"];
+  Node3195 -> Node3196 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3196 [label="surface::line_to_wedge_vec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a994181d5df6a966940ad798411f21fe8"];
+  Node3196 -> Node3197 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3197 [label="classify_double_sixes\l::identify_five_plus_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#aa78728c03ff9c37c26413c3d1ebac85a"];
+  Node3197 -> Node3198 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3198 [label="classify_double_sixes\l::upstep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#af69579aea0c34504ccfe37a4f9d992ef"];
+  Node3198 -> Node3199 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3199 [label="classify_double_sixes\l::classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#aa22b7c156d68376a603743c8b43a58ef"];
+  Node3199 -> Node3200 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3200 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node3197 -> Node3201 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3201 [label="classify_double_sixes\l::identify_double_six",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a2f207ab7c9032711e982d16ff3ff753f"];
+  Node3201 -> Node3202 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3202 [label="surface_classify_wedge\l::upstep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a917a77e18ede81788ba0550d3f55f639"];
+  Node3202 -> Node3203 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3203 [label="surface_classify_wedge\l::classify_surfaces_from\l_double_sixes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a6b7ca70f2edff82c197221ee978a3641"];
+  Node3203 -> Node3200 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3197 -> Node3204 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3204 [label="surface_classify_wedge\l::identify_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a0ee820a0324434792bd5362b4606de80"];
+  Node3204 -> Node3205 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3205 [label="surface_classify_wedge\l::identify_Sa",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a8fdc22ea1850bd4da28ace84adb055a6"];
+  Node3194 -> Node3206 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3206 [label="surface::klein_to_wedge",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a3c8c160b16bc586f45d0c23e6b2e3e00"];
+  Node3194 -> Node3207 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3207 [label="surface::klein_to_wedge_vec",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a975f69ead008c4869721ae32f92d70d8"];
+  Node3207 -> Node3208 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3208 [label="classify_double_sixes\l::compute_neighbors",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a675e241052c36c58063ddcfc06d209b2"];
+  Node3208 -> Node3209 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3209 [label="classify_double_sixes\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a8c5c41d5124b35379d626480ff225f7b"];
+  Node3209 -> Node3210 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3210 [label="surface_classify_wedge\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a"];
+  Node3210 -> Node3200 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

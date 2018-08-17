@@ -1,0 +1,11 @@
+<map id="database::put_file_size" name="database::put_file_size">
+<area shape="rect" id="node2" href="$db/d72/classdatabase.html#a67ff377651f4ac089241ebff60e17ed6" title="database::file_seek" alt="" coords="211,5,347,31"/>
+<area shape="rect" id="node8" href="$db/d72/classdatabase.html#a8547ac1fa93cdcd8ec464cac1ec24c5d" title="database::file_size" alt="" coords="395,104,527,129"/>
+<area shape="rect" id="node9" href="$d5/db4/io__and__os_8h.html#a55c0738dadea7a508621f4af1e9ff8f3" title="block_swap_bytes" alt="" coords="214,156,344,181"/>
+<area shape="rect" id="node10" href="$db/d72/classdatabase.html#a42d32ba51ad8ccd2a0adfd1a147f6230" title="database::file_write" alt="" coords="211,55,347,80"/>
+<area shape="rect" id="node3" href="$db/d72/classdatabase.html#a2cac52c70b09d1a6771bddab2220b3e7" title="database::f_open" alt="" coords="399,55,523,80"/>
+<area shape="rect" id="node7" href="$db/d72/classdatabase.html#a8b91f87e7cd92b8207cbc48edde9d69e" title="database::stream" alt="" coords="399,5,523,31"/>
+<area shape="rect" id="node4" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="620,5,704,31"/>
+<area shape="rect" id="node5" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="575,55,749,80"/>
+<area shape="rect" id="node6" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="619,104,705,129"/>
+</map>

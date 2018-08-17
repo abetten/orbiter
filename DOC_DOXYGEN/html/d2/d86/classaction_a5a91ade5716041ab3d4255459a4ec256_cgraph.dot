@@ -1,0 +1,17 @@
+digraph "action::create_induced_action_on_ordered_pairs"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2770 [label="action::create_induced\l_action_on_ordered_pairs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2770 -> Node2771 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2771 [label="action::action",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a108adb38ad362aeb55cf40b9de38bb16"];
+  Node2771 -> Node2772 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2772 [label="action::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#af05ce222a97a1eff5f692b9193dee125"];
+  Node2772 -> Node2773 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2773 [label="action::null_base_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a09d62a3dd408d1c0704b380b26f72fb0"];
+  Node2772 -> Node2774 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2774 [label="action::null_element_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a90cd98bea15f55a3c25cb9c6b68685df"];
+  Node2772 -> Node2775 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2775 [label="action::null_function\l_pointers",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a1359d74a665e82a098fba5c1c1249dde"];
+}

@@ -1,0 +1,13 @@
+digraph "fancy_set::print"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node110 [label="fancy_set::print",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node110 -> Node111 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node111 [label="fancy_set::println",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da4/classfancy__set.html#a932ecf579a3a2ab3c09a394b48cd77b9"];
+  Node111 -> Node112 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node112 [label="fancy_set::init_with_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/da4/classfancy__set.html#a03b0a2b524e9ab493499c0f5f9fe4cfd"];
+  Node111 -> Node113 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node113 [label="knarr::points_and_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de5/classknarr.html#abb50a19df35495d508b0cb127d4eb908"];
+}

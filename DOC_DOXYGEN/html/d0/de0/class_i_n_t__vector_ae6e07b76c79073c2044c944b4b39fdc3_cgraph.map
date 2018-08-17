@@ -1,0 +1,7 @@
+<map id="INT_vector::sort_and_remove_duplicates" name="INT_vector::sort_and_remove_duplicates">
+<area shape="rect" id="node2" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a160a164cfbea821ced70043337e22d18" title="INT_vec_sort_and_remove\l_duplicates" alt="" coords="199,49,381,88"/>
+<area shape="rect" id="node3" href="$d4/dd7/sorting_8_c.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="429,56,560,81"/>
+<area shape="rect" id="node4" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="608,5,758,31"/>
+<area shape="rect" id="node5" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="806,56,943,81"/>
+<area shape="rect" id="node6" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="991,81,1103,107"/>
+</map>

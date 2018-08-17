@@ -1,0 +1,13 @@
+digraph "number_partition::first"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node395 [label="number_partition::first",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node395 -> Node396 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node396 [label="number_partition::number\l_partition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a5c08f2f2afd49281b54e799bd5fc3faa"];
+  Node395 -> Node397 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node397 [label="number_partition::first\l_into_k_parts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a5c27373cb7638344c463e32ed63e7e51"];
+  Node395 -> Node398 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node398 [label="number_partition::first\l_into_at_most_k_parts",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a36626dcbbaddba73cef7ff5c4521b325"];
+}

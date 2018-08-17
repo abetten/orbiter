@@ -1,0 +1,30 @@
+<map id="classify::print_naked_tex" name="classify::print_naked_tex">
+<area shape="rect" id="node2" href="$d1/d3d/classblt__set.html#a6b19f88bd2b92ebfba7e7c362eb9065c" title="blt_set::report" alt="" coords="259,28,362,54"/>
+<area shape="rect" id="node3" href="$d0/de6/projective__space__main_8_c.html#abc36e14ed82bd09be516755b5b717d68" title="compute_and_print_ago\l_distribution" alt="" coords="228,78,393,116"/>
+<area shape="rect" id="node8" href="$d0/de6/projective__space__main_8_c.html#ac64ecd71e4db92860ba230d89959dd8e" title="compute_and_print_ago\l_distribution_with_classes" alt="" coords="448,139,624,178"/>
+<area shape="rect" id="node9" href="$df/da4/distribution_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="285,215,335,240"/>
+<area shape="rect" id="node10" href="$df/df8/classsurface__object.html#a001a13b6ea34dbe559033af634203466" title="surface_object::enumerate\l_points" alt="" coords="221,264,400,303"/>
+<area shape="rect" id="node23" href="$df/df8/classsurface__object.html#adc569e1b86bec1e9eb1b13e08ae47c0d" title="surface_object::print\l_tritangent_planes" alt="" coords="672,351,814,390"/>
+<area shape="rect" id="node25" href="$df/df8/classsurface__object.html#ad948559b08ec6d88a0138d943c4ecd3f" title="surface_object::print\l_plane_type_by_points" alt="" coords="231,379,390,418"/>
+<area shape="rect" id="node26" href="$df/df8/classsurface__object.html#ac8a03f56927e2db66b4012a17a2bb49f" title="surface_object::print\l_general" alt="" coords="672,430,814,468"/>
+<area shape="rect" id="node27" href="$d4/d21/classarc__generator.html#a650f715bb3eec8fd1057e07e5b384f9a" title="arc_generator::report" alt="" coords="237,494,384,519"/>
+<area shape="rect" id="node28" href="$da/dc1/classspread.html#a543a79e4e7306af291584f53dacbfdd8" title="spread::report2" alt="" coords="480,572,592,598"/>
+<area shape="rect" id="node29" href="$da/dc1/classspread.html#a24795f879a815d7e4480a72395711aef" title="spread::orbit_info\l_short" alt="" coords="248,595,372,634"/>
+<area shape="rect" id="node4" href="$d0/de6/projective__space__main_8_c.html#a5f0f6b71cd402c5b41240c420e533e60" title="canonical_form" alt="" coords="480,26,592,51"/>
+<area shape="rect" id="node7" href="$d0/de6/projective__space__main_8_c.html#a32275eacc4bdda93b2b34c2a9217a088" title="classify_objects_using\l_nauty" alt="" coords="866,44,1020,83"/>
+<area shape="rect" id="node5" href="$d0/de6/projective__space__main_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1131,51,1181,76"/>
+<area shape="rect" id="node6" href="$d0/de6/projective__space__main_8_c.html#a63a6b06bd2a9a9c50ed710271f4d5530" title="process_object" alt="" coords="687,26,798,51"/>
+<area shape="rect" id="node11" href="$df/df8/classsurface__object.html#ad6c02c3c1432f8adfe49932041ce1b20" title="surface_object::compute\l_properties" alt="" coords="453,227,619,266"/>
+<area shape="rect" id="node19" href="$d7/d5c/classsurface__classify__wedge.html#ad577d435c4726d0a35c10b2f8d4ed00c" title="surface_classify_wedge\l::report_surface" alt="" coords="862,303,1024,342"/>
+<area shape="rect" id="node12" href="$df/df8/classsurface__object.html#afd4f4d1accbf361897374bd18d571913" title="surface_object::init\l_equation" alt="" coords="677,178,809,216"/>
+<area shape="rect" id="node18" href="$df/df8/classsurface__object.html#ae51d9ac0a3853bc07908ac48ffa6e0d2" title="surface_object::init" alt="" coords="677,240,809,266"/>
+<area shape="rect" id="node13" href="$db/d28/classsurface__object__with__action.html#a310ce4189e50545dd67fa3652b8fd160" title="surface_object_with\l_action::init_equation" alt="" coords="869,178,1017,216"/>
+<area shape="rect" id="node14" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1131,219,1181,244"/>
+<area shape="rect" id="node15" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="1072,268,1239,307"/>
+<area shape="rect" id="node16" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="1287,268,1437,307"/>
+<area shape="rect" id="node17" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1485,275,1535,300"/>
+<area shape="rect" id="node22" href="$db/d28/classsurface__object__with__action.html#a65085da19618def3909b0f4bc27cba8a" title="surface_object_with\l_action::init" alt="" coords="873,240,1013,279"/>
+<area shape="rect" id="node20" href="$d7/d5c/classsurface__classify__wedge.html#a5698763ece48d6f0a605527ca62429c5" title="surface_classify_wedge\l::latex_surfaces" alt="" coords="1074,331,1237,370"/>
+<area shape="rect" id="node21" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1337,338,1387,363"/>
+<area shape="rect" id="node24" href="$db/d28/classsurface__object__with__action.html#a13371a6bb26f27759adcc0f7292b12d2" title="surface_object_with\l_action::cheat_sheet" alt="" coords="871,418,1015,456"/>
+</map>

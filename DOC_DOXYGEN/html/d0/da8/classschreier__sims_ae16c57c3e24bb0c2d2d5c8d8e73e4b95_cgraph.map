@@ -1,0 +1,18 @@
+<map id="schreier_sims::interested_in_kernel" name="schreier_sims::interested_in_kernel">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#a6f89e493e5c5a32e5c3b8963d438ce86" title="action::print_info" alt="" coords="223,117,342,143"/>
+<area shape="rect" id="node7" href="$d9/df3/classsims.html#a02eb61ed14f75cfe4dc0770142c1bff0" title="sims::init" alt="" coords="246,212,319,237"/>
+<area shape="rect" id="node13" href="$d9/df3/classsims.html#a6a55a0a4e5124654f999933fd635334a" title="sims::init_trivial\l_group" alt="" coords="227,283,338,321"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#aed811766c7e64fe2c853df8b0b67aa6e" title="action::print_symmetry\l_group_type" alt="" coords="392,29,547,68"/>
+<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="417,92,522,117"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad" title="sims::group_order" alt="" coords="405,141,534,167"/>
+<area shape="rect" id="node4" href="$d5/d90/action__global_8_c.html#a03666b9440c4962148eba7905b9f843c" title="action_print_symmetry\l_group_type" alt="" coords="597,29,753,68"/>
+<area shape="rect" id="node8" href="$d9/df3/classsims.html#a1010f2dc330b7c5ae10128c0b7dcbefd" title="sims::init_without_base" alt="" coords="390,191,549,216"/>
+<area shape="rect" id="node11" href="$d9/df3/classsims.html#abe36dd0812bde20447f5aaa8384596a7" title="sims::initialize_table" alt="" coords="400,240,540,265"/>
+<area shape="rect" id="node9" href="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8" title="vector_ge::init" alt="" coords="623,191,727,216"/>
+<area shape="rect" id="node10" href="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452" title="vector_ge::freeself" alt="" coords="801,191,932,216"/>
+<area shape="rect" id="node12" href="$d2/d7c/combinatorics_8_c.html#aebc54d3f9c31f253ae53e3eb3b386208" title="perm_identity" alt="" coords="624,240,726,265"/>
+<area shape="rect" id="node14" href="$d9/df3/classsims.html#aa2a7908389727bdfa05d034e8d53a818" title="sims::init_generators" alt="" coords="397,289,542,315"/>
+<area shape="rect" id="node16" href="$d9/df3/classsims.html#ac55702550a4671a721f78345dd9bff70" title="sims::init_trivial\l_orbit" alt="" coords="414,339,525,377"/>
+<area shape="rect" id="node15" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="624,289,726,315"/>
+<area shape="rect" id="node17" href="$d9/df3/classsims.html#a3443b4bbfb5573864c29b627562819d2" title="sims::swap_points" alt="" coords="610,345,740,371"/>
+</map>

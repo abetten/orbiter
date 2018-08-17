@@ -1,0 +1,13 @@
+<map id="page_table::allocate_rec" name="page_table::allocate_rec">
+<area shape="rect" id="node2" href="$db/d0e/classpage__table.html#ae38b42623cb168c948dad1e3765714f1" title="page_table::reallocate\l_table" alt="" coords="220,5,373,44"/>
+<area shape="rect" id="node3" href="$d9/d60/discreta_8h.html#a0429f5462bfcfd509d83bc1f7ebfc818" title="fill_char" alt="" coords="263,68,330,93"/>
+<area shape="rect" id="node4" href="$dc/d72/classpage__storage.html#a3d04ee0a97310a8211e223ccea1d2d3f" title="page_storage::store" alt="" coords="226,117,366,143"/>
+<area shape="rect" id="node10" href="$db/d0e/classpage__table.html#a6a785ea8bdc6d346f1fce0181f76969c" title="page_table::search" alt="" coords="229,167,364,192"/>
+<area shape="rect" id="node12" href="$db/d0e/classpage__table.html#a8cc167e59ef8166bfe511c5a950b8fc0" title="page_table::print" alt="" coords="236,216,357,241"/>
+<area shape="rect" id="node5" href="$dc/d72/classpage__storage.html#aa43eb1ae49a6688771f7a89cbe2cd7bf" title="page_storage::s_i_and\l_allocate" alt="" coords="421,55,578,93"/>
+<area shape="rect" id="node9" href="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b" title="UBYTE_move" alt="" coords="446,117,552,143"/>
+<area shape="rect" id="node6" href="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633" title="page_storage::print" alt="" coords="631,37,767,63"/>
+<area shape="rect" id="node8" href="$d5/db4/io__and__os_8h.html#a920069ee78174f219534fed767865637" title="UBYTE_print_bitwise" alt="" coords="626,87,773,112"/>
+<area shape="rect" id="node7" href="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508" title="page_storage::print\l_storage_used" alt="" coords="821,31,957,69"/>
+<area shape="rect" id="node11" href="$db/d0e/classpage__table.html#ad382cc58d94dfe8edb98d11748c800b8" title="page_table::search\l_key_pair" alt="" coords="432,167,566,205"/>
+</map>

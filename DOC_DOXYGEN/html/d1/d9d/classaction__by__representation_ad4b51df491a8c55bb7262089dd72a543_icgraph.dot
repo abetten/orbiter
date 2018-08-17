@@ -1,0 +1,13 @@
+digraph "action_by_representation::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node473 [label="action_by_representation\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node473 -> Node474 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node474 [label="action_by_representation\l::action_by_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d9d/classaction__by__representation.html#aef60b4ecc561fafacb3bdeac5654c368"];
+  Node473 -> Node475 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node475 [label="action_by_representation\l::free",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d9d/classaction__by__representation.html#a5c15d8c83b57bf274020672890e1e1f3"];
+  Node475 -> Node476 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node476 [label="action_by_representation\l::~action_by_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d9d/classaction__by__representation.html#a29225e48aef1539cccf31a42137f74dc"];
+}

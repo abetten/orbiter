@@ -1,0 +1,5 @@
+<map id="memory::read_int" name="memory::read_int">
+<area shape="rect" id="node2" href="$d8/d99/classmemory.html#a24db8a00f6c8abfa6bb762264357cb22" title="memory::cur_pointer" alt="" coords="181,5,325,31"/>
+<area shape="rect" id="node3" href="$d8/d99/classmemory.html#a3312a01b206cef29ec0f85ee340002dd" title="memory::used_length" alt="" coords="178,55,328,80"/>
+<area shape="rect" id="node4" href="$d5/db4/io__and__os_8h.html#a55c0738dadea7a508621f4af1e9ff8f3" title="block_swap_bytes" alt="" coords="188,104,318,129"/>
+</map>

@@ -1,0 +1,16 @@
+<map id="action::element_is_one" name="action::element_is_one">
+<area shape="rect" id="node2" href="$d9/df3/classsims.html#a4d902cab732ddf9f60788dda85b0a775" title="sims::strip" alt="" coords="212,279,293,304"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="748,5,894,44"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874" title="action::element_move" alt="" coords="745,68,897,93"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d" title="action::element_image_of" alt="" coords="734,331,908,356"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#a388f523d4ec997fce4e9ede924de99b9" title="sims::coset_rep_inv" alt="" coords="344,204,483,229"/>
+<area shape="rect" id="node13" href="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3" title="action::element_mult" alt="" coords="749,380,893,405"/>
+<area shape="rect" id="node15" href="$d2/d86/classaction.html#ae38c3ef3c1125213733d63c6fc3c40cd" title="action::element_print" alt="" coords="341,431,486,456"/>
+<area shape="rect" id="node7" href="$d9/df3/classsims.html#a3d669dba4d005cd2399388f27f44cd04" title="sims::coset_rep" alt="" coords="553,228,667,253"/>
+<area shape="rect" id="node14" href="$d2/d86/classaction.html#aa4bd01e338497714586636751fcef436" title="action::element_invert" alt="" coords="534,179,686,204"/>
+<area shape="rect" id="node8" href="$d9/df3/classsims.html#a22a53a24eb86dcfe54cb3588776a4d96" title="sims::compute_coset\l_rep_path" alt="" coords="748,216,894,255"/>
+<area shape="rect" id="node10" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="977,279,1081,304"/>
+<area shape="rect" id="node11" href="$d2/d86/classaction.html#a780a105daf04d6d1fe7e2f63b3c88e3b" title="action::element_one" alt="" coords="750,117,892,143"/>
+<area shape="rect" id="node12" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="770,167,872,192"/>
+<area shape="rect" id="node9" href="$d9/df3/classsims.html#abfeb782bd253f1df5253486afb120f6f" title="sims::compute_coset\l_rep_depth" alt="" coords="956,216,1103,255"/>
+</map>

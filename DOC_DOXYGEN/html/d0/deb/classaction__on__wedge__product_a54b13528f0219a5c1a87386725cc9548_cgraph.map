@@ -1,0 +1,15 @@
+<map id="action_on_wedge_product::compute_image_INT" name="action_on_wedge_product::compute_image_INT">
+<area shape="rect" id="node2" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="238,55,439,80"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="531,5,635,31"/>
+<area shape="rect" id="node4" href="$d0/deb/classaction__on__wedge__product.html#a4db8aa51b8d6d7fcdacbf2947aa7e018" title="action_on_wedge_product\l::compute_image_INT_low_level" alt="" coords="231,156,446,195"/>
+<area shape="rect" id="node13" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="245,301,432,327"/>
+<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042" title="ij2k" alt="" coords="562,55,603,80"/>
+<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="727,188,841,213"/>
+<area shape="rect" id="node7" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="729,139,840,164"/>
+<area shape="rect" id="node10" href="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31" title="finite_field::negate" alt="" coords="720,237,849,263"/>
+<area shape="rect" id="node11" href="$d0/deb/classaction__on__wedge__product.html#aaa89748a3293672b739bd1321e606da7" title="action_on_wedge_product\l::element_entry_ijkl" alt="" coords="494,156,672,195"/>
+<area shape="rect" id="node12" href="$df/d5a/classfinite__field.html#aec23e43aaefc0ed601cdfa3139496a92" title="finite_field::frobenius\l_power" alt="" coords="511,321,655,360"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="897,152,1041,177"/>
+<area shape="rect" id="node9" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="905,213,1033,239"/>
+<area shape="rect" id="node14" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="502,384,663,409"/>
+</map>

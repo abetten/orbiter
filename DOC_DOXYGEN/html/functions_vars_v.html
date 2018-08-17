@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('functions_vars_v.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,120 +90,136 @@ $(function() {
 
 <h3><a id="index_v"></a>- v -</h3><ul>
 <li>v
-: <a class="el" href="classbuekenhout__metz.html#a09ac8f4d307630a5a096fc5472fbaf8d">buekenhout_metz</a>
-, <a class="el" href="classclassify__double__sixes.html#a6277ffb6b8cd6f5bbb43acbe1de86d85">classify_double_sixes</a>
-, <a class="el" href="structdesign__data.html#a067dd8092d3afae1bb9fd865b2993028">design_data</a>
-, <a class="el" href="classgenerators__symplectic__group.html#a668da4240cb4ae7b25210330bd20aa60">generators_symplectic_group</a>
+: <a class="el" href="d8/d98/classbuekenhout__metz.html#a09ac8f4d307630a5a096fc5472fbaf8d">buekenhout_metz</a>
+, <a class="el" href="dd/d23/classclassify__double__sixes.html#a6277ffb6b8cd6f5bbb43acbe1de86d85">classify_double_sixes</a>
+, <a class="el" href="d3/dbe/structdesign__data.html#a067dd8092d3afae1bb9fd865b2993028">design_data</a>
 </li>
 <li>V
-: <a class="el" href="classgeo__parameter.html#a253afaf1c892d8d280451e9ce53dd838">geo_parameter</a>
+: <a class="el" href="d3/d78/classdirect__product__action.html#a7ccf92a1ed3ab186389b9908fb0d777f">direct_product_action</a>
 </li>
 <li>v
-: <a class="el" href="classgeo__parameter.html#a9c47846907cf86b351f4139e57c1127a">geo_parameter</a>
-, <a class="el" href="classhadamard.html#a057eb008b50219f72710c974a53d08c3">hadamard</a>
-, <a class="el" href="classhjelmslev.html#aaca784320c476c0704c9ea375b02699e">hjelmslev</a>
-, <a class="el" href="classhomogeneous__polynomial__domain.html#ab0d1e093ed9589724a0a3e874ea92f51">homogeneous_polynomial_domain</a>
-, <a class="el" href="classisomorph.html#a8e256da8cb2bb103de34151550b519e2">isomorph</a>
-, <a class="el" href="classnull__polarity__generator.html#ab8eea1e6671ebd7ecdc7efaf08544cb3">null_polarity_generator</a>
-, <a class="el" href="classovoid__generator.html#a5984121d09288b597194e3f68b4accfa">ovoid_generator</a>
-, <a class="el" href="classprojective__space.html#a127fffa4c5b0ce4e440bfc09fed5c12d">projective_space</a>
-, <a class="el" href="classsubfield__structure.html#a0122c0ce66f4de729a23625e77fc0275">subfield_structure</a>
-, <a class="el" href="classsubspace__orbits.html#a1f790f3b9504f0924185e3407814ff89">subspace_orbits</a>
-, <a class="el" href="classsurface.html#a954b79421836692cdd415861d7b6398c">surface</a>
-, <a class="el" href="classyoung.html#a14a85fcb7a6636be06204ae5284ce248">young</a>
+: <a class="el" href="d7/dd9/classgenerators__symplectic__group.html#a668da4240cb4ae7b25210330bd20aa60">generators_symplectic_group</a>
+</li>
+<li>V
+: <a class="el" href="d9/d51/classgeo__parameter.html#a253afaf1c892d8d280451e9ce53dd838">geo_parameter</a>
+</li>
+<li>v
+: <a class="el" href="d9/d51/classgeo__parameter.html#a9c47846907cf86b351f4139e57c1127a">geo_parameter</a>
+, <a class="el" href="df/d02/classgrassmann.html#a642a6f096020a9e3462ac49531903c6e">grassmann</a>
+, <a class="el" href="d7/dbb/classhadamard.html#a057eb008b50219f72710c974a53d08c3">hadamard</a>
+, <a class="el" href="d3/d21/classhjelmslev.html#aaca784320c476c0704c9ea375b02699e">hjelmslev</a>
+, <a class="el" href="d2/da7/classhomogeneous__polynomial__domain.html#ab0d1e093ed9589724a0a3e874ea92f51">homogeneous_polynomial_domain</a>
+, <a class="el" href="d3/d5f/classisomorph.html#a8e256da8cb2bb103de34151550b519e2">isomorph</a>
+, <a class="el" href="df/db3/classnull__polarity__generator.html#ab8eea1e6671ebd7ecdc7efaf08544cb3">null_polarity_generator</a>
+, <a class="el" href="d3/daf/classovoid__generator.html#a5984121d09288b597194e3f68b4accfa">ovoid_generator</a>
+, <a class="el" href="d2/d17/classprojective__space.html#a127fffa4c5b0ce4e440bfc09fed5c12d">projective_space</a>
+, <a class="el" href="d4/d43/classsubfield__structure.html#a0122c0ce66f4de729a23625e77fc0275">subfield_structure</a>
+, <a class="el" href="d2/d9f/classsubspace__orbits.html#a1f790f3b9504f0924185e3407814ff89">subspace_orbits</a>
+, <a class="el" href="d5/d88/classsurface.html#a954b79421836692cdd415861d7b6398c">surface</a>
+, <a class="el" href="d8/dfa/classwreath__product.html#a956d202306c2ee0ddce43d9adc86272f">wreath_product</a>
+, <a class="el" href="dd/d68/classyoung.html#a14a85fcb7a6636be06204ae5284ce248">young</a>
 </li>
 <li>v1
-: <a class="el" href="classaction__by__representation.html#ad6c5755a9eb016ff6e6832fd495aa707">action_by_representation</a>
-, <a class="el" href="classaction__by__subfield__structure.html#a04a96354c4d74edd1ffe1083cb2f755d">action_by_subfield_structure</a>
-, <a class="el" href="classaction__on__cosets.html#a3caf8e52f0ff523982379b86da8d1db4">action_on_cosets</a>
-, <a class="el" href="classaction__on__homogeneous__polynomials.html#a6a992499b2d57e8bbab40437df4af43e">action_on_homogeneous_polynomials</a>
-, <a class="el" href="classaction__on__orthogonal.html#abc0927415c25432105f194e384aece84">action_on_orthogonal</a>
-, <a class="el" href="classclassify__double__sixes.html#a3cb1e8a7b241e93407587c78ad6062f9">classify_double_sixes</a>
-, <a class="el" href="classmatrix__group.html#ad15b042a324c3c17c312305a339acbaa">matrix_group</a>
-, <a class="el" href="classorthogonal.html#ac83d3c532cfb792b5bca01e38aa3aa53">orthogonal</a>
-, <a class="el" href="classregular__ls__generator.html#afed92ea43d113c07963c550a7ac187d3">regular_ls_generator</a>
+: <a class="el" href="d1/d9d/classaction__by__representation.html#ad6c5755a9eb016ff6e6832fd495aa707">action_by_representation</a>
+, <a class="el" href="dd/d67/classaction__by__subfield__structure.html#a04a96354c4d74edd1ffe1083cb2f755d">action_by_subfield_structure</a>
+, <a class="el" href="d3/d72/classaction__on__cosets.html#a3caf8e52f0ff523982379b86da8d1db4">action_on_cosets</a>
+, <a class="el" href="d5/dd4/classaction__on__homogeneous__polynomials.html#a6a992499b2d57e8bbab40437df4af43e">action_on_homogeneous_polynomials</a>
+, <a class="el" href="dc/d87/classaction__on__orthogonal.html#abc0927415c25432105f194e384aece84">action_on_orthogonal</a>
+, <a class="el" href="dd/d23/classclassify__double__sixes.html#a3cb1e8a7b241e93407587c78ad6062f9">classify_double_sixes</a>
+, <a class="el" href="db/d37/classcode__generator.html#a0b7e66770069a6c0e79ef7f34352cdfb">code_generator</a>
+, <a class="el" href="d3/ded/classmatrix__group.html#ad15b042a324c3c17c312305a339acbaa">matrix_group</a>
+, <a class="el" href="d7/daa/classorthogonal.html#ac83d3c532cfb792b5bca01e38aa3aa53">orthogonal</a>
+, <a class="el" href="d2/dd8/classregular__ls__generator.html#afed92ea43d113c07963c550a7ac187d3">regular_ls_generator</a>
 </li>
 <li>v2
-: <a class="el" href="classaction__by__representation.html#abdf1abec9353e42546298556cc44224c">action_by_representation</a>
-, <a class="el" href="classaction__by__subfield__structure.html#aed23a2e7ab7422fa672e81667608708a">action_by_subfield_structure</a>
-, <a class="el" href="classaction__on__cosets.html#ae29df941119f7e1046b45a9ccd54be0a">action_on_cosets</a>
-, <a class="el" href="classaction__on__homogeneous__polynomials.html#a7e128b7c55e7a71f9fa94fc29fa7b203">action_on_homogeneous_polynomials</a>
-, <a class="el" href="classaction__on__orthogonal.html#a728154367979b05d7757e12680f78971">action_on_orthogonal</a>
-, <a class="el" href="classgenerators__symplectic__group.html#a37c5df5b8e3a654804f04c8a4f89d19f">generators_symplectic_group</a>
-, <a class="el" href="classmatrix__group.html#a9f2bb6e87803452f172dbf86e2ac262d">matrix_group</a>
-, <a class="el" href="classorthogonal.html#a5473078f5d59fa9f04b780a6943d5075">orthogonal</a>
-, <a class="el" href="classsurface.html#a8cb014511d85b3faed9057b886965eba">surface</a>
+: <a class="el" href="d1/d9d/classaction__by__representation.html#abdf1abec9353e42546298556cc44224c">action_by_representation</a>
+, <a class="el" href="dd/d67/classaction__by__subfield__structure.html#aed23a2e7ab7422fa672e81667608708a">action_by_subfield_structure</a>
+, <a class="el" href="d3/d72/classaction__on__cosets.html#ae29df941119f7e1046b45a9ccd54be0a">action_on_cosets</a>
+, <a class="el" href="d5/dd4/classaction__on__homogeneous__polynomials.html#a7e128b7c55e7a71f9fa94fc29fa7b203">action_on_homogeneous_polynomials</a>
+, <a class="el" href="dc/d87/classaction__on__orthogonal.html#a728154367979b05d7757e12680f78971">action_on_orthogonal</a>
+, <a class="el" href="db/d37/classcode__generator.html#a2cedda5a0b9172734131656eb37e6f92">code_generator</a>
+, <a class="el" href="d7/dd9/classgenerators__symplectic__group.html#a37c5df5b8e3a654804f04c8a4f89d19f">generators_symplectic_group</a>
+, <a class="el" href="d3/ded/classmatrix__group.html#a9f2bb6e87803452f172dbf86e2ac262d">matrix_group</a>
+, <a class="el" href="d7/daa/classorthogonal.html#a5473078f5d59fa9f04b780a6943d5075">orthogonal</a>
+, <a class="el" href="d5/d88/classsurface.html#a8cb014511d85b3faed9057b886965eba">surface</a>
 </li>
 <li>v3
-: <a class="el" href="classaction__by__representation.html#a5295d18080c17544fb35473601217058">action_by_representation</a>
-, <a class="el" href="classaction__by__subfield__structure.html#a69d55c9171caef13df926f9121d7bb16">action_by_subfield_structure</a>
-, <a class="el" href="classaction__on__homogeneous__polynomials.html#aca3bb063166c047cc31367285efe4358">action_on_homogeneous_polynomials</a>
-, <a class="el" href="classmatrix__group.html#ab38d936ea3f79e0ec0cb1ab967227bf0">matrix_group</a>
-, <a class="el" href="classorthogonal.html#a1a729cd153c162002ae66e2121ed12c2">orthogonal</a>
+: <a class="el" href="d1/d9d/classaction__by__representation.html#a5295d18080c17544fb35473601217058">action_by_representation</a>
+, <a class="el" href="dd/d67/classaction__by__subfield__structure.html#a69d55c9171caef13df926f9121d7bb16">action_by_subfield_structure</a>
+, <a class="el" href="d5/dd4/classaction__on__homogeneous__polynomials.html#aca3bb063166c047cc31367285efe4358">action_on_homogeneous_polynomials</a>
+, <a class="el" href="d3/ded/classmatrix__group.html#ab38d936ea3f79e0ec0cb1ab967227bf0">matrix_group</a>
+, <a class="el" href="d7/daa/classorthogonal.html#a1a729cd153c162002ae66e2121ed12c2">orthogonal</a>
 </li>
 <li>v4
-: <a class="el" href="classorthogonal.html#aa5c3b1d619ab6e639be1bb46efb10da5">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#aa5c3b1d619ab6e639be1bb46efb10da5">orthogonal</a>
 </li>
 <li>v5
-: <a class="el" href="classknarr.html#a25c23ca6ab4ad793171b0a6f4b9e2d9b">knarr</a>
-, <a class="el" href="classorthogonal.html#a82e26221211154eeb2077eda57f0a160">orthogonal</a>
-, <a class="el" href="class_w3q.html#a77a4101e40ff9a9c1a73eb1d6bcbc9fc">W3q</a>
+: <a class="el" href="d7/de5/classknarr.html#a25c23ca6ab4ad793171b0a6f4b9e2d9b">knarr</a>
+, <a class="el" href="d7/daa/classorthogonal.html#a82e26221211154eeb2077eda57f0a160">orthogonal</a>
+, <a class="el" href="de/d2c/class_w3q.html#a77a4101e40ff9a9c1a73eb1d6bcbc9fc">W3q</a>
 </li>
 <li>v6
-: <a class="el" href="classknarr.html#a6761776cd4c16cd7c38c03d502e21a34">knarr</a>
+: <a class="el" href="d7/de5/classknarr.html#a6761776cd4c16cd7c38c03d502e21a34">knarr</a>
 </li>
 <li>v_neighbor5
-: <a class="el" href="classorthogonal.html#aef486436de57f23091f754b11ff755ce">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#aef486436de57f23091f754b11ff755ce">orthogonal</a>
 </li>
 <li>v_tmp
-: <a class="el" href="classorthogonal.html#af652a6c91d32215141727273c81a9396">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#af652a6c91d32215141727273c81a9396">orthogonal</a>
 </li>
 <li>v_tmp2
-: <a class="el" href="classorthogonal.html#a0165ea919f910f25409556ce0dcf674b">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a0165ea919f910f25409556ce0dcf674b">orthogonal</a>
 </li>
 <li>value
-: <a class="el" href="classtree__node.html#a16080347be28a0cfa223c05b52524720">tree_node</a>
+: <a class="el" href="df/dbf/classtree__node.html#a16080347be28a0cfa223c05b52524720">tree_node</a>
 </li>
 <li>var
-: <a class="el" href="structmckay_1_1term.html#a6224ff0313daeeaa16801bd522d28e2b">mckay::term</a>
+: <a class="el" href="db/d49/structmckay_1_1term.html#a6224ff0313daeeaa16801bd522d28e2b">mckay::term</a>
 </li>
 <li>Variables
-: <a class="el" href="classhomogeneous__polynomial__domain.html#abcc62c2d05dfa757b0ebf459fdc33b40">homogeneous_polynomial_domain</a>
+: <a class="el" href="d2/da7/classhomogeneous__polynomial__domain.html#abcc62c2d05dfa757b0ebf459fdc33b40">homogeneous_polynomial_domain</a>
+</li>
+<li>vec
+: <a class="el" href="d2/de3/structschreierlevel.html#a1b91b0393127809a972078c4482ceb39">schreierlevel</a>
 </li>
 <li>vec_data
-: <a class="el" href="classgraph__node.html#af0a96507b6309328b7ae359c8b701a84">graph_node</a>
+: <a class="el" href="d6/d21/classgraph__node.html#af0a96507b6309328b7ae359c8b701a84">graph_node</a>
 </li>
 <li>vec_data_len
-: <a class="el" href="classgraph__node.html#a4279670f0cb0028370ff96e7c29f79e6">graph_node</a>
+: <a class="el" href="d6/d21/classgraph__node.html#a4279670f0cb0028370ff96e7c29f79e6">graph_node</a>
 </li>
 <li>vector_data
-: <a class="el" href="classvector__hashing.html#a54bff0229c51a54d3b8be5a4e1601a75">vector_hashing</a>
+: <a class="el" href="d8/daa/classvector__hashing.html#a54bff0229c51a54d3b8be5a4e1601a75">vector_hashing</a>
 </li>
 <li>vector_pointer
-: <a class="el" href="union_o_b_j_e_c_t_s_e_l_f.html#adb09ccbb248b3eba1768158b272d0a2c">OBJECTSELF</a>
+: <a class="el" href="d0/dd9/union_o_b_j_e_c_t_s_e_l_f.html#adb09ccbb248b3eba1768158b272d0a2c">OBJECTSELF</a>
 </li>
 <li>vector_space_dimension
-: <a class="el" href="classgenerator.html#ae80aa53bf6e4d56b01c29e8f3c6fd241">generator</a>
-, <a class="el" href="classlinear__group.html#ae82156504b4041a90a3c7f759f2322ea">linear_group</a>
-, <a class="el" href="classlinear__set.html#a7acca31596dc61569c344fb076208163">linear_set</a>
+: <a class="el" href="d7/d73/classgenerator.html#ae80aa53bf6e4d56b01c29e8f3c6fd241">generator</a>
+, <a class="el" href="df/d5a/classlinear__group.html#ae82156504b4041a90a3c7f759f2322ea">linear_group</a>
+, <a class="el" href="dd/d86/classlinear__set.html#a7acca31596dc61569c344fb076208163">linear_set</a>
+, <a class="el" href="dd/d3e/classtensor__product.html#a44837b849a75ce42de8dd72e37b341a0">tensor_product</a>
 </li>
 <li>verbose_level
-: <a class="el" href="classarc__generator.html#a38cb55f50fe5c7965368f1ff8ea8b017">arc_generator</a>
-, <a class="el" href="classclique__finder.html#a0039c6c78005df91c2f78efdc1c8156f">clique_finder</a>
-, <a class="el" href="classcode__generator.html#a603e29bac4d2fb4de7237ac66405c9c1">code_generator</a>
-, <a class="el" href="classgenerator.html#a7fedc6488314cbc00dbfcc42d311e1ce">generator</a>
-, <a class="el" href="classglobal__data.html#aed30c4b3aca4044f8f6c77a1b8eec208">global_data</a>
+: <a class="el" href="d4/d21/classarc__generator.html#a38cb55f50fe5c7965368f1ff8ea8b017">arc_generator</a>
+, <a class="el" href="dc/d82/classclique__finder.html#a0039c6c78005df91c2f78efdc1c8156f">clique_finder</a>
+, <a class="el" href="db/d37/classcode__generator.html#a603e29bac4d2fb4de7237ac66405c9c1">code_generator</a>
+, <a class="el" href="d7/d73/classgenerator.html#a7fedc6488314cbc00dbfcc42d311e1ce">generator</a>
+, <a class="el" href="d2/ddf/classglobal__data.html#aed30c4b3aca4044f8f6c77a1b8eec208">global_data</a>
 </li>
 <li>verbose_level_group_theory
-: <a class="el" href="classgenerator.html#a566e9fd2934492df3e7afffe1b96a2a1">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#a566e9fd2934492df3e7afffe1b96a2a1">generator</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

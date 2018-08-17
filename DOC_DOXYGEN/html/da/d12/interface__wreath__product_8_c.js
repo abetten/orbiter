@@ -1,0 +1,27 @@
+var interface__wreath__product_8_c =
+[
+    [ "wreath_product_group_element_code_for_make_element", "da/d12/interface__wreath__product_8_c.html#a1f5e8146fde6e20c8206f2e0a03e3b61", null ],
+    [ "wreath_product_group_element_dispose", "da/d12/interface__wreath__product_8_c.html#a9136b8542f4b9a26e00a6d72261c8894", null ],
+    [ "wreath_product_group_element_image_of", "da/d12/interface__wreath__product_8_c.html#ab8e7cda0e3e86654f369d3a8667d639f", null ],
+    [ "wreath_product_group_element_image_of_low_level", "da/d12/interface__wreath__product_8_c.html#a59bd3cf43190184647a028aa1413a8a3", null ],
+    [ "wreath_product_group_element_invert", "da/d12/interface__wreath__product_8_c.html#ac950dd10101b7b5ffec17ef2e5b9f239", null ],
+    [ "wreath_product_group_element_is_one", "da/d12/interface__wreath__product_8_c.html#a43c7566c41aa7a56ee5540885285f926", null ],
+    [ "wreath_product_group_element_linear_entry_frobenius", "da/d12/interface__wreath__product_8_c.html#a12001faf3956ec6df6d8ab2e7197bf50", null ],
+    [ "wreath_product_group_element_linear_entry_ij", "da/d12/interface__wreath__product_8_c.html#a9eec962f4e9988d0c78de5950cd153e1", null ],
+    [ "wreath_product_group_element_move", "da/d12/interface__wreath__product_8_c.html#a6553d325b3d41bb32b6b3fae0a862ce9", null ],
+    [ "wreath_product_group_element_mult", "da/d12/interface__wreath__product_8_c.html#a8a00d12887c0833d1e877f5169ce0971", null ],
+    [ "wreath_product_group_element_one", "da/d12/interface__wreath__product_8_c.html#a81422d384d05f80e1bab00a0847e0a2e", null ],
+    [ "wreath_product_group_element_pack", "da/d12/interface__wreath__product_8_c.html#aa22c4747eb4f16179dcffc3979f581e5", null ],
+    [ "wreath_product_group_element_print", "da/d12/interface__wreath__product_8_c.html#a17b20cc18b13f32e90f4cc5fb64daf44", null ],
+    [ "wreath_product_group_element_print_as_permutation", "da/d12/interface__wreath__product_8_c.html#a568044a7f70c1faf319b5ae0aabf00a2", null ],
+    [ "wreath_product_group_element_print_for_make_element", "da/d12/interface__wreath__product_8_c.html#a13e1180a99102e25945a2529ad961d67", null ],
+    [ "wreath_product_group_element_print_for_make_element_no_commas", "da/d12/interface__wreath__product_8_c.html#a92a09694c557a7c053bf0175eb219d4b", null ],
+    [ "wreath_product_group_element_print_latex", "da/d12/interface__wreath__product_8_c.html#a6d4661e1ba4db85a11c3934ae5911a70", null ],
+    [ "wreath_product_group_element_print_quick", "da/d12/interface__wreath__product_8_c.html#ac15fe3f2b3cf296ca8fbdfe3c971b63b", null ],
+    [ "wreath_product_group_element_print_verbose", "da/d12/interface__wreath__product_8_c.html#a7664deec40eceaffc44c72f39119796a", null ],
+    [ "wreath_product_group_element_retrieve", "da/d12/interface__wreath__product_8_c.html#a743bb8e8a8cdf4f44f6591c96636ac3f", null ],
+    [ "wreath_product_group_element_store", "da/d12/interface__wreath__product_8_c.html#acbaacfb80dda5ce3de5603e5972b088f", null ],
+    [ "wreath_product_group_element_transpose", "da/d12/interface__wreath__product_8_c.html#a58fb7fa56b3619502e987337a9bfa934", null ],
+    [ "wreath_product_group_element_unpack", "da/d12/interface__wreath__product_8_c.html#a5b761be9d6bf8906e7932c791e09ce98", null ],
+    [ "wreath_product_group_print_point", "da/d12/interface__wreath__product_8_c.html#aa968af12d472dfc9ce5e6e5ec50b9152", null ]
+];

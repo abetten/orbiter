@@ -1,0 +1,13 @@
+digraph "vec_generators_affine_representation"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node10379 [label="vec_generators_affine\l_representation",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node10379 -> Node10380 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10380 [label="Vector::s_l",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704"];
+  Node10379 -> Node10381 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10381 [label="discreta_base::as_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#ae4d7f56d917a4707b838fbffde6467ff"];
+  Node10379 -> Node10382 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10382 [label="matrix::AG_rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a59a194ad8179725404d2b47a73070a88"];
+}

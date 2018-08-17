@@ -1,0 +1,31 @@
+digraph "decomposition::setup_default_partition"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node587 [label="decomposition::setup\l_default_partition",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node587 -> Node588 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node588 [label="incidence_structure\l::init_by_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a3f4fea622872e3e0f50698abca967561"];
+  Node587 -> Node589 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node589 [label="partitionstack::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a8ff49c4bd001383eb1f9f0d9bbb01c05"];
+  Node587 -> Node590 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node590 [label="partitionstack::subset\l_continguous",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a9a58475ddfa123b384ff187b290fa37c"];
+  Node587 -> Node591 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node591 [label="partitionstack::split_cell",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#aafceac783d21309e491df61254f41244"];
+  Node587 -> Node592 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node592 [label="partitionstack::sort\l_cells",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a6e2783ab6d6b06f37ac21ce529e219b6"];
+  Node592 -> Node593 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node593 [label="partitionstack::sort_cell",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#abb4d78049a6424e54e65a25c7d57dca2"];
+  Node593 -> Node594 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node594 [label="INT_vec_quicksort_increasingly",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a31ccee746bc644f58816c67bc3a0e237"];
+  Node594 -> Node595 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node595 [label="INT_vec_quicksort",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a06b413b423531ad098e9536031cc91ef"];
+  Node594 -> Node596 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node596 [label="compare_increasingly_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#aa182150f114c64f81fcefcbc6d292790"];
+  Node592 -> Node597 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node597 [label="partitionstack::check",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a30ab45463af6dbfc8e46314ff03624ae"];
+  Node597 -> Node598 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node598 [label="partitionstack::print_raw",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#a733493f93dd83b5cef67908fc42a4312"];
+  Node597 -> Node599 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node599 [label="partitionstack::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d87/classpartitionstack.html#aabacee6e58ddb0d6ee46a47f714edfbb"];
+}

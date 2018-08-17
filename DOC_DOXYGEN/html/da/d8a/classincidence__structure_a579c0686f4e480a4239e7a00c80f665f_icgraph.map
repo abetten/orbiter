@@ -1,0 +1,20 @@
+<map id="incidence_structure::get_and_print_column_tactical_decomposition_scheme_tex" name="incidence_structure::get_and_print_column_tactical_decomposition_scheme_tex">
+<area shape="rect" id="node2" href="$da/dd6/classset__of__sets.html#af6713e71ef5a1b7cc7892d78900166c4" title="set_of_sets::get_eckardt\l_points" alt="" coords="217,68,384,107"/>
+<area shape="rect" id="node13" href="$da/d8a/classincidence__structure.html#a91a7039b74c96b39bcd084b02181f191" title="incidence_structure\l::compute_tdo_stepwise" alt="" coords="218,131,383,169"/>
+<area shape="rect" id="node15" href="$df/d74/tl__geometry_8h.html#a21ab759f6e646f3fe703c17f39361448" title="incidence_structure\l_compute_TDA_general" alt="" coords="217,247,383,285"/>
+<area shape="rect" id="node18" href="$d8/d13/classsinger__cycle.html#a817cbf613596d5db2cf5e926db8fa328" title="singer_cycle::init\l_lines" alt="" coords="463,187,583,225"/>
+<area shape="rect" id="node19" href="$d1/dcc/classtranslation__plane__via__andre__model.html#adb424599de168ade331979a9218ee07b" title="translation_plane_via\l_andre_model::init" alt="" coords="449,312,597,351"/>
+<area shape="rect" id="node3" href="$da/dd6/classset__of__sets.html#acf1d8689cc8ef9c4987d86c78be68302" title="set_of_sets::number\l_of_eckardt_points" alt="" coords="452,8,594,47"/>
+<area shape="rect" id="node6" href="$d5/d88/classsurface.html#a9e0834d9fd3ea14957df1944ac40c847" title="surface::create_surface_ab" alt="" coords="432,75,614,100"/>
+<area shape="rect" id="node4" href="$d7/d5c/classsurface__classify__wedge.html#a4cb31d5e7747571177fbdedf79631fd9" title="surface_classify_wedge\l::generate_source_code" alt="" coords="662,5,828,44"/>
+<area shape="rect" id="node5" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="921,12,971,37"/>
+<area shape="rect" id="node7" href="$d5/d88/classsurface.html#a820199c4eab279fad1085a308550fa8f" title="surface::create_surface\l_family_S" alt="" coords="665,68,825,107"/>
+<area shape="rect" id="node12" href="$d7/d5c/classsurface__classify__wedge.html#a8fdc22ea1850bd4da28ace84adb055a6" title="surface_classify_wedge\l::identify_Sa" alt="" coords="664,131,827,169"/>
+<area shape="rect" id="node8" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="876,75,1017,100"/>
+<area shape="rect" id="node9" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="1065,40,1199,79"/>
+<area shape="rect" id="node10" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="1065,103,1199,128"/>
+<area shape="rect" id="node11" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1247,103,1297,128"/>
+<area shape="rect" id="node14" href="$da/d8a/classincidence__structure.html#a8840e820448ad980279f244a90888b77" title="incidence_structure\l::do_tdo_high_level" alt="" coords="455,124,592,163"/>
+<area shape="rect" id="node16" href="$df/d74/tl__geometry_8h.html#ab3a7584f120bbaf752a5bd831d3ebf72" title="incidence_structure\l_compute_tda" alt="" coords="455,249,592,288"/>
+<area shape="rect" id="node17" href="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980" title="incidence_structure\l_compute_TDO_TDA" alt="" coords="670,249,820,288"/>
+</map>

@@ -1,0 +1,9 @@
+digraph "unipoly_domain::is_squarefree"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node376 [label="unipoly_domain::is\l_squarefree",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node376 -> Node377 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node377 [label="unipoly_domain::is\l_irreducible",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#aec4d9b55b51268d99ef6f6480d7282b5"];
+}

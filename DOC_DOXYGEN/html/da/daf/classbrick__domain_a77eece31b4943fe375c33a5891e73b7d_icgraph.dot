@@ -1,0 +1,13 @@
+digraph "brick_domain::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node14 [label="brick_domain::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node14 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="brick_domain::brick\l_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/daf/classbrick__domain.html#ac26a11b2d605af091fe49ade4aea2c8e"];
+  Node14 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="brick_domain::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/daf/classbrick__domain.html#ae3198ccaf58d0db3a772cc427c31b278"];
+  Node16 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="brick_domain::~brick\l_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/daf/classbrick__domain.html#a27d9e7a77c9a49ea05c45911140fad63"];
+}

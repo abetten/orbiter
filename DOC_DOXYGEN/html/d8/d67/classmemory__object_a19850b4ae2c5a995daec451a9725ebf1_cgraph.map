@@ -1,0 +1,6 @@
+<map id="memory_object::read_file" name="memory_object::read_file">
+<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="263,5,333,31"/>
+<area shape="rect" id="node3" href="$d8/d67/classmemory__object.html#a0768d510d8df4bed863435b637750185" title="memory_object::alloc" alt="" coords="224,55,372,80"/>
+<area shape="rect" id="node4" href="$d8/d67/classmemory__object.html#aea989e6df86ed48049a2747df074b62a" title="memory_object::freeself" alt="" coords="420,55,583,80"/>
+<area shape="rect" id="node5" href="$d8/d67/classmemory__object.html#a9e538ffb790fddfebcf9557386af1e76" title="memory_object::null" alt="" coords="631,55,772,80"/>
+</map>

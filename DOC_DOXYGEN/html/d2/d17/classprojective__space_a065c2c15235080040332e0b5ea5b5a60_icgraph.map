@@ -1,0 +1,30 @@
+<map id="projective_space::arc_test" name="projective_space::arc_test">
+<area shape="rect" id="node2" href="$d2/d17/classprojective__space.html#ad37dfe343cac13cc6c90e1fabf77ce14" title="projective_space::determine\l_conic_in_plane" alt="" coords="230,236,418,275"/>
+<area shape="rect" id="node3" href="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652" title="conic" alt="" coords="537,5,589,31"/>
+<area shape="rect" id="node4" href="$da/d90/analyze_8_c.html#ae230005122bb89f7409f5937134b73bf" title="look_at_these_planes\l_longinteger" alt="" coords="488,55,639,93"/>
+<area shape="rect" id="node5" href="$de/d27/determine__conic_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="538,117,588,143"/>
+<area shape="rect" id="node6" href="$d2/d17/classprojective__space.html#ac91b6a0aba755991c572d8d00b4b8560" title="projective_space::compute\l_bisecants_and_conics" alt="" coords="473,167,653,205"/>
+<area shape="rect" id="node7" href="$d2/d17/classprojective__space.html#a3b4fbef8fbbeee1af542b6f7c969ed79" title="projective_space::find\l_Eckardt_points_from_arc\l_not_on_conic" alt="" coords="475,229,652,281"/>
+<area shape="rect" id="node9" href="$d2/d17/classprojective__space.html#a0fc1d9c2df818d2ffa6750c2cb63c54c" title="projective_space::find\l_Eckardt_points_from_arc\l_not_on_conic_prepare_data" alt="" coords="466,417,660,469"/>
+<area shape="rect" id="node21" href="$d2/d17/classprojective__space.html#af486b51daa10b4de0c8b50fb5c1c2ee7" title="projective_space::conic\l_type_randomized" alt="" coords="483,355,643,393"/>
+<area shape="rect" id="node26" href="$d2/d17/classprojective__space.html#af5a8dcbc4bbe1638c3037b949b3b3306" title="projective_space::conic_type" alt="" coords="467,305,659,331"/>
+<area shape="rect" id="node28" href="$d5/d87/globals_8h.html#a1f36b2be45a6576165929165abb56f1e" title="determine_conic" alt="" coords="503,493,623,519"/>
+<area shape="rect" id="node8" href="$d4/d21/classarc__generator.html#a4ae2e25ba85a60fb2a90a7b4f52675f7" title="arc_generator::print" alt="" coords="720,248,857,273"/>
+<area shape="rect" id="node10" href="$dc/db7/classarc__lifting.html#a70012c92bd78768f5c1c5d14f995147b" title="arc_lifting::find_Eckardt\l_points" alt="" coords="708,428,868,467"/>
+<area shape="rect" id="node11" href="$dc/db7/classarc__lifting.html#a11fc382addd05e0bbe8b0b44dcd4c55e" title="arc_lifting::init" alt="" coords="919,451,1021,476"/>
+<area shape="rect" id="node12" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="1072,444,1195,483"/>
+<area shape="rect" id="node13" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="1486,516,1589,541"/>
+<area shape="rect" id="node15" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="1258,451,1399,476"/>
+<area shape="rect" id="node19" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="1245,372,1412,411"/>
+<area shape="rect" id="node14" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1660,428,1710,453"/>
+<area shape="rect" id="node16" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="1470,453,1604,492"/>
+<area shape="rect" id="node17" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="1470,404,1604,429"/>
+<area shape="rect" id="node18" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1660,348,1710,373"/>
+<area shape="rect" id="node20" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="1462,341,1612,380"/>
+<area shape="rect" id="node22" href="$d2/d17/classprojective__space.html#a8f3472a2e9af4ac7874a5195ec6e0d58" title="projective_space::conic\l_intersection_type" alt="" coords="708,353,868,392"/>
+<area shape="rect" id="node23" href="$d7/d29/process___p_g_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="945,401,995,427"/>
+<area shape="rect" id="node24" href="$d4/d67/geometry_8h.html#a24883e05d0dde961023596ca7682a2ef" title="do_conic_type" alt="" coords="916,352,1024,377"/>
+<area shape="rect" id="node25" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1108,352,1158,377"/>
+<area shape="rect" id="node27" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="1243,295,1414,333"/>
+<area shape="rect" id="node29" href="$d4/de8/conic_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="763,493,814,519"/>
+</map>

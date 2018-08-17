@@ -1,0 +1,14 @@
+<map id="projective_space::determine_conic_in_plane" name="projective_space::determine_conic_in_plane">
+<area shape="rect" id="node2" href="$d2/d17/classprojective__space.html#a065c2c15235080040332e0b5ea5b5a60" title="projective_space::arc_test" alt="" coords="241,104,418,129"/>
+<area shape="rect" id="node3" href="$d2/d17/classprojective__space.html#a3cb7917af4c5f1590b660d4bf907e0fa" title="projective_space::unrank\l_point" alt="" coords="466,5,635,44"/>
+<area shape="rect" id="node10" href="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f" title="print_integer_matrix\l_width" alt="" coords="260,153,399,192"/>
+<area shape="rect" id="node11" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="273,216,387,241"/>
+<area shape="rect" id="node12" href="$df/d5a/classfinite__field.html#aba4950590e24a1ce323f292cf47b3307" title="finite_field::Gauss\l_simple" alt="" coords="266,265,393,304"/>
+<area shape="rect" id="node13" href="$df/d5a/classfinite__field.html#ac45780a927cee936df13d04d30d2d248" title="finite_field::matrix\l_get_kernel" alt="" coords="267,328,392,367"/>
+<area shape="rect" id="node5" href="$d2/d7c/combinatorics_8_c.html#aa74adc702e59feadb839f44c0aaec8f6" title="INT_n_choose_k" alt="" coords="489,68,612,93"/>
+<area shape="rect" id="node7" href="$d2/d7c/combinatorics_8_c.html#a709dbec12f4da5bb02b9352d45a2c77d" title="unrank_k_subset" alt="" coords="489,117,612,143"/>
+<area shape="rect" id="node8" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="497,167,604,192"/>
+<area shape="rect" id="node9" href="$df/d5a/classfinite__field.html#ab66d0dc9e1c186422ef4988283e41b6f" title="finite_field::rank\l_of_matrix" alt="" coords="493,216,608,255"/>
+<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="683,12,885,37"/>
+<area shape="rect" id="node6" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="719,85,849,124"/>
+</map>

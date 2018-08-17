@@ -1,0 +1,47 @@
+digraph "solid::y"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4770 [label="solid::y",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4770 -> Node4771 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4771 [label="solid::y_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a962e53cd90bf6f5bd8128ac940b2ffa9"];
+  Node4771 -> Node4772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4772 [label="solid::center",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ae58752f7dd02eda7e0bac1d69b551db2"];
+  Node4772 -> Node4773 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4773 [label="solid::dual",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757"];
+  Node4771 -> Node4774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4774 [label="solid::Ratio",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#aef1749a5d84c62c43d2d1196d4ebec08"];
+  Node4774 -> Node4775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4775 [label="solid::cut_vertices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce"];
+  Node4774 -> Node4776 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4776 [label="solid::edge_midpoints",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc"];
+  Node4771 -> Node4777 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4777 [label="solid::join_disjoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ac3c7868e3b650b7112309c7ad15a394c"];
+  Node4777 -> Node4778 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4778 [label="solid::direct_sum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a2045d572bdbd493c541c69624baeedbf"];
+  Node4777 -> Node4779 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4779 [label="solid::direct_product",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a8b4527c066bcebd2e6542fe158c607b0"];
+  Node4771 -> Node4780 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4780 [label="solid::scale",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a26c0fc360080e87361451aaec9faa98c"];
+  Node4771 -> Node4781 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4781 [label="solid::cube",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a308e6888759550da489397527ed89137"];
+  Node4771 -> Node4782 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4782 [label="solid::write_graphfile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ab21f3d7cb562fa9ce61b1a1cb2e5a411"];
+  Node4771 -> Node4783 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4783 [label="solid::write_solidfile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a60865c3210ff835fe2bd528f2396686d"];
+  Node4770 -> Node4784 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4784 [label="solid::init_V",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0b156ca77a137dc8aa94ab22d048e542"];
+  Node4784 -> Node4777 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4770 -> Node4785 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4785 [label="solid::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0afe4403778d31d092e2a66c13a9a365"];
+  Node4770 -> Node4772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4770 -> Node4774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4770 -> Node4775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4770 -> Node4776 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4770 -> Node4786 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4786 [label="solid::add_central\l_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#abec108e749250b1fbab7c8dcf98b96ae"];
+  Node4770 -> Node4781 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4770 -> Node4787 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4787 [label="solid::dodecahedron",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a514072d4dfd0f82ba24b0df1ac302d6f"];
+}

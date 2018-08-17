@@ -1,0 +1,9 @@
+digraph "a_domain::freeself"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node57 [label="a_domain::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node57 -> Node58 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node58 [label="a_domain::~a_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ab4aa2109781732d1c606c30c9f987016"];
+}

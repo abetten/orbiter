@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('globals_func_e.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,96 +90,111 @@ $(function() {
 
 <h3><a id="index_e"></a>- e -</h3><ul>
 <li>early_test_func_callback()
-: <a class="el" href="blt_8h.html#ac5b3d559ae4a7f04c7623f93300574ea">blt.h</a>
-, <a class="el" href="blt__set2_8_c.html#ac5b3d559ae4a7f04c7623f93300574ea">blt_set2.C</a>
+: <a class="el" href="d0/dd1/blt_8h.html#ac5b3d559ae4a7f04c7623f93300574ea">blt.h</a>
+, <a class="el" href="d1/d45/blt__set2_8_c.html#ac5b3d559ae4a7f04c7623f93300574ea">blt_set2.C</a>
 </li>
 <li>early_test_function()
-: <a class="el" href="hadamard_8_c.html#a31cd862d97914e4206b42d1c9a898353">hadamard.C</a>
+: <a class="el" href="dd/d1d/hadamard_8_c.html#a31cd862d97914e4206b42d1c9a898353">hadamard.C</a>
 </li>
 <li>early_test_function_cliques()
-: <a class="el" href="all__cliques_8_c.html#a09f78bde7f687bf1bae36dd883bb182a">all_cliques.C</a>
-, <a class="el" href="draw__colored__graph_8_c.html#a09f78bde7f687bf1bae36dd883bb182a">draw_colored_graph.C</a>
+: <a class="el" href="d9/d9f/all__cliques_8_c.html#a09f78bde7f687bf1bae36dd883bb182a">all_cliques.C</a>
+, <a class="el" href="d2/dfa/draw__colored__graph_8_c.html#a09f78bde7f687bf1bae36dd883bb182a">draw_colored_graph.C</a>
 </li>
 <li>early_test_function_cocliques()
-: <a class="el" href="all__cliques_8_c.html#a76a03ce559765dd64a7e21f553acb888">all_cliques.C</a>
-, <a class="el" href="draw__colored__graph_8_c.html#a76a03ce559765dd64a7e21f553acb888">draw_colored_graph.C</a>
+: <a class="el" href="d9/d9f/all__cliques_8_c.html#a76a03ce559765dd64a7e21f553acb888">all_cliques.C</a>
+, <a class="el" href="d2/dfa/draw__colored__graph_8_c.html#a76a03ce559765dd64a7e21f553acb888">draw_colored_graph.C</a>
 </li>
 <li>early_test_function_paths_and_cycles()
-: <a class="el" href="all__cycles_8_c.html#a9dc326fc68b8e7b14d426fb8ac969a65">all_cycles.C</a>
+: <a class="el" href="d9/dfa/all__cycles_8_c.html#a9dc326fc68b8e7b14d426fb8ac969a65">all_cycles.C</a>
 </li>
 <li>Eric()
-: <a class="el" href="test_8_c.html#a6ef9140cdb0e33ceaf40e9e448ae37a4">test.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a6ef9140cdb0e33ceaf40e9e448ae37a4">test.C</a>
 </li>
 <li>Euler()
-: <a class="el" href="discreta_8h.html#af15585e99628f28c0fe1efb1b15caf79">discreta.h</a>
-, <a class="el" href="global_8_c.html#af15585e99628f28c0fe1efb1b15caf79">global.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#af15585e99628f28c0fe1efb1b15caf79">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#af15585e99628f28c0fe1efb1b15caf79">global.C</a>
 </li>
 <li>euler_function()
-: <a class="el" href="galois_8h.html#aadadc930a0f4765940304423547b50d0">galois.h</a>
-, <a class="el" href="number__theory_8_c.html#aadadc930a0f4765940304423547b50d0">number_theory.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#aadadc930a0f4765940304423547b50d0">algebra_and_number_theory.h</a>
+, <a class="el" href="df/dda/number__theory_8_c.html#aadadc930a0f4765940304423547b50d0">number_theory.C</a>
 </li>
 <li>evaluate_bilinear_form()
-: <a class="el" href="galois_8h.html#ab6f6bfa144b4d2700e3ed27497d83d5f">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#ab6f6bfa144b4d2700e3ed27497d83d5f">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#ab6f6bfa144b4d2700e3ed27497d83d5f">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ab6f6bfa144b4d2700e3ed27497d83d5f">orthogonal_points.C</a>
 </li>
 <li>evaluate_cubic_form()
-: <a class="el" href="schlaefli_8_c.html#aba17c66e4dd2bd3648c8ff3f9395a2ab">schlaefli.C</a>
+: <a class="el" href="dc/d9d/schlaefli_8_c.html#aba17c66e4dd2bd3648c8ff3f9395a2ab">schlaefli.C</a>
 </li>
 <li>evaluate_hyperbolic_bilinear_form()
-: <a class="el" href="galois_8h.html#aec8efeb197c11049202f4ee8bbd1c9c1">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#aec8efeb197c11049202f4ee8bbd1c9c1">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#aec8efeb197c11049202f4ee8bbd1c9c1">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#aec8efeb197c11049202f4ee8bbd1c9c1">orthogonal_points.C</a>
 </li>
 <li>evaluate_hyperbolic_quadratic_form()
-: <a class="el" href="galois_8h.html#a5f2c422dc24d5720e7a1b36a794ba65a">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a5f2c422dc24d5720e7a1b36a794ba65a">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a5f2c422dc24d5720e7a1b36a794ba65a">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a5f2c422dc24d5720e7a1b36a794ba65a">orthogonal_points.C</a>
 </li>
 <li>evaluate_quadratic_form()
-: <a class="el" href="galois_8h.html#a4faa3ca9079fe60d4ad421506491ed6a">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a4faa3ca9079fe60d4ad421506491ed6a">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a4faa3ca9079fe60d4ad421506491ed6a">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a4faa3ca9079fe60d4ad421506491ed6a">orthogonal_points.C</a>
 </li>
 <li>expand1()
-: <a class="el" href="hamming_8_c.html#a36f1646c24ad2598cc12104f90fceea1">hamming.C</a>
+: <a class="el" href="de/d10/hamming_8_c.html#a36f1646c24ad2598cc12104f90fceea1">hamming.C</a>
 </li>
 <li>expand2()
-: <a class="el" href="hamming_8_c.html#a0c34324947fe1f4cd8548865892c12bc">hamming.C</a>
+: <a class="el" href="de/d10/hamming_8_c.html#a0c34324947fe1f4cd8548865892c12bc">hamming.C</a>
 </li>
 <li>expand3()
-: <a class="el" href="hamming_8_c.html#a965946cb0a131153ea37be3b465fa0f0">hamming.C</a>
+: <a class="el" href="de/d10/hamming_8_c.html#a965946cb0a131153ea37be3b465fa0f0">hamming.C</a>
+</li>
+<li>expandschreier()
+: <a class="el" href="d8/df1/schreier_8h.html#abc91cf85f76751447d3dd54ffc796cfd">schreier.h</a>
+, <a class="el" href="db/d0d/foundations_2graph__theory__nauty_2schreier_8c.html#adb80bf6eb4d8c70cb09373ba150f5cfe">schreier.c</a>
 </li>
 <li>export_gap()
-: <a class="el" href="make__something_8_c.html#a2df5ce810ead281d3e2c885149bcfb7c">make_something.C</a>
+: <a class="el" href="d4/d6e/make__something_8_c.html#a2df5ce810ead281d3e2c885149bcfb7c">make_something.C</a>
 </li>
 <li>export_magma()
-: <a class="el" href="make__something_8_c.html#a24d47d809bb1982155fab1fa6e86b7b6">make_something.C</a>
+: <a class="el" href="d4/d6e/make__something_8_c.html#a24d47d809bb1982155fab1fa6e86b7b6">make_something.C</a>
 </li>
 <li>extend()
-: <a class="el" href="arcs__orderly_8_c.html#addc6404f0f11185218b39a9df0e7a293">arcs_orderly.C</a>
+: <a class="el" href="d5/d9e/arcs__orderly_8_c.html#addc6404f0f11185218b39a9df0e7a293">arcs_orderly.C</a>
 </li>
 <li>extend_design_from_residual()
-: <a class="el" href="discreta_8h.html#a96bdfeb069d6dad6cadf391fb27b5c37">discreta.h</a>
-</li>
-<li>extended_gcd_INT()
-: <a class="el" href="number__theory_8_c.html#ab619b003cbe37e02dd9cf16854ef888e">number_theory.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a96bdfeb069d6dad6cadf391fb27b5c37">discreta.h</a>
 </li>
 <li>extended_gcd_int()
-: <a class="el" href="discreta_8h.html#a2e7045b211811679fbb89e61fa1df032">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a2e7045b211811679fbb89e61fa1df032">discreta.h</a>
 </li>
 <li>extended_gcd_INT()
-: <a class="el" href="galois_8h.html#ab619b003cbe37e02dd9cf16854ef888e">galois.h</a>
+: <a class="el" href="df/dda/number__theory_8_c.html#ab619b003cbe37e02dd9cf16854ef888e">number_theory.C</a>
 </li>
 <li>extended_gcd_int()
-: <a class="el" href="global_8_c.html#a2e7045b211811679fbb89e61fa1df032">global.C</a>
+: <a class="el" href="d3/d72/global_8_c.html#a2e7045b211811679fbb89e61fa1df032">global.C</a>
+</li>
+<li>extended_gcd_INT()
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#ab619b003cbe37e02dd9cf16854ef888e">algebra_and_number_theory.h</a>
+</li>
+<li>extra_autom()
+: <a class="el" href="d1/da0/nauty_8h.html#a01b7213c2aaac6df9791a6d00368fe2e">nauty.h</a>
+, <a class="el" href="d3/dbf/lib_2foundations_2graph__theory__nauty_2nauty_8_c.html#a3d8ad01a5c1fcce2f2869cb4ca737196">nauty.c</a>
+</li>
+<li>extra_level()
+: <a class="el" href="d3/dbf/lib_2foundations_2graph__theory__nauty_2nauty_8_c.html#ae10dba12b4b00c598b1934879e49718f">nauty.c</a>
+, <a class="el" href="d1/da0/nauty_8h.html#a94613bc215e97e8945e879c25a992b5b">nauty.h</a>
 </li>
 <li>extra_test_func()
-: <a class="el" href="subspace__orbits__main_8_c.html#ad2f7f94724afe202bba758e5e93330e4">subspace_orbits_main.C</a>
+: <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#ad2f7f94724afe202bba758e5e93330e4">subspace_orbits_main.C</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

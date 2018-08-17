@@ -1,0 +1,11 @@
+digraph "projective_space::cheat_sheet_line_intersection"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node83 [label="projective_space::cheat\l_sheet_line_intersection",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node83 -> Node84 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="cheat_sheet_PG",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dd8/cheat__sheet___p_g_8_c.html#a11692793a59b9f0d2f21395f5609783d"];
+  Node84 -> Node85 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node85 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dd8/cheat__sheet___p_g_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+}

@@ -1,0 +1,27 @@
+<map id="database::size_of_header" name="database::size_of_header">
+<area shape="rect" id="node2" href="$db/d72/classdatabase.html#a41d486156468426370c803bea3976cf1" title="database::create" alt="" coords="239,157,360,183"/>
+<area shape="rect" id="node18" href="$db/d72/classdatabase.html#ae87e9d8c044500276c16176b46fbf906" title="database::user2total" alt="" coords="228,221,370,247"/>
+<area shape="rect" id="node3" href="$d3/d5f/classisomorph.html#a810a22dfde3c43272107c743ec819b0e" title="isomorph::setup_and\l_create_solution_database" alt="" coords="1229,136,1410,175"/>
+<area shape="rect" id="node4" href="$d3/d5f/classisomorph.html#a729746a01bd45d55565d0a11cda9e9a3" title="isomorph::init_solutions" alt="" coords="1465,19,1625,44"/>
+<area shape="rect" id="node6" href="$d3/d5f/classisomorph.html#a65bc5ec528f741a1b01cdd606dfed579" title="isomorph::read_solutions\l_from_clique_finder_case\l_by_case" alt="" coords="1458,131,1632,183"/>
+<area shape="rect" id="node11" href="$d3/d5f/classisomorph.html#a14c4ac27b0d97d338e14ac0d183c5c64" title="isomorph::read_solutions\l_from_clique_finder" alt="" coords="1460,68,1630,107"/>
+<area shape="rect" id="node13" href="$d3/d5f/classisomorph.html#a40bea8f733a5855879f927fc73324384" title="isomorph::build_up\l_database" alt="" coords="1478,263,1612,301"/>
+<area shape="rect" id="node5" href="$d4/d7e/isomorph__global_8_c.html#a490bbe6199dc1e29d186b26834266e03" title="isomorph_init_solutions\l_from_memory" alt="" coords="1690,5,1851,44"/>
+<area shape="rect" id="node7" href="$d4/d7e/isomorph__global_8_c.html#a2a55ab4b2df6ae83f916cf01eccdf67c" title="isomorph_read_solution\l_files_from_clique_finder\l_case_by_case" alt="" coords="1686,131,1855,183"/>
+<area shape="rect" id="node8" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="1909,172,2055,211"/>
+<area shape="rect" id="node9" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="2149,153,2199,179"/>
+<area shape="rect" id="node10" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="2103,203,2244,228"/>
+<area shape="rect" id="node12" href="$d4/d7e/isomorph__global_8_c.html#ad8be067333430bfdd26c0a34549f4556" title="isomorph_read_solution\l_files_from_clique_finder" alt="" coords="1686,68,1855,107"/>
+<area shape="rect" id="node14" href="$d3/d5f/classisomorph.html#a42c6ebeadb51263d8ae8c1bdaae3ebbd" title="isomorph::init_cases\l_from_file_modulus_and\l_build_up_database" alt="" coords="1687,332,1854,384"/>
+<area shape="rect" id="node15" href="$d3/d5f/classisomorph.html#acae208131143734575c088b5f50123f6" title="isomorph::init_cases\l_from_file_mixed_modulus\l_and_build_up_database" alt="" coords="1680,408,1861,460"/>
+<area shape="rect" id="node16" href="$d4/d7e/isomorph__global_8_c.html#a78a6ee9d7dee4708fc721374bdebfa83" title="isomorph_read_statistic\l_files" alt="" coords="1689,269,1851,308"/>
+<area shape="rect" id="node17" href="$d4/d7e/isomorph__global_8_c.html#a697da824ab34db5c830530fb3c97df24" title="isomorph_read_solution\l_files" alt="" coords="1689,207,1852,245"/>
+<area shape="rect" id="node19" href="$db/d72/classdatabase.html#af183761e73fedbd560d9545a36060efc" title="database::get_object" alt="" coords="418,193,563,219"/>
+<area shape="rect" id="node20" href="$db/d72/classdatabase.html#a0f0ab218eb0f06da37f06906663db6eb" title="database::add_data\l_DB_standard" alt="" coords="421,243,560,281"/>
+<area shape="rect" id="node26" href="$db/d72/classdatabase.html#a31e32de1b8d81c97549b8c74ea678904" title="database::add_data\l_DB_compact" alt="" coords="421,305,560,344"/>
+<area shape="rect" id="node21" href="$db/d72/classdatabase.html#ab1a4122dfc06c6e79343fda437c05ed5" title="database::add_data_DB" alt="" coords="611,252,777,277"/>
+<area shape="rect" id="node22" href="$db/d72/classdatabase.html#a6b0c2e6ebb9938c57ce826647ed1ad40" title="database::add_object\l_return_datref" alt="" coords="825,245,973,284"/>
+<area shape="rect" id="node23" href="$db/d72/classdatabase.html#a880f60c1d94fff84d0db2b119361fbb6" title="database::add_object" alt="" coords="1027,196,1175,221"/>
+<area shape="rect" id="node24" href="$d3/d5f/classisomorph.html#a18fee606dcd59d50cee898770d01dbc8" title="isomorph::add_solution\l_to_database" alt="" coords="1021,245,1181,284"/>
+<area shape="rect" id="node25" href="$d3/d5f/classisomorph.html#afe502608a65808a0daf63ac05c860e62" title="isomorph::add_solutions\l_to_database" alt="" coords="1236,71,1402,109"/>
+</map>

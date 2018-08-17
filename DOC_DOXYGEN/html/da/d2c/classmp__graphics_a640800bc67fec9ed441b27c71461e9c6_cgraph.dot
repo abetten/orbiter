@@ -1,0 +1,11 @@
+digraph "mp_graphics::output_xy_tikz"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4701 [label="mp_graphics::output\l_xy_tikz",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4701 -> Node4702 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4702 [label="mp_graphics::output\l_x_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a311d4fb1c32d1eb0faeee055bb8badee"];
+  Node4701 -> Node4703 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4703 [label="mp_graphics::output\l_y_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a0d6bddb89b4c58c82aa124dd003dda08"];
+}

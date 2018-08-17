@@ -1,0 +1,13 @@
+<map id="create_object_from_string" name="create_object_from_string">
+<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a9aa706d3f0c3bb83182eed9ab9747582" title="INT_vec_scan" alt="" coords="211,29,317,55"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="625,187,729,212"/>
+<area shape="rect" id="node7" href="$d7/d08/classobject__in__projective__space.html#ae06b87acb715d13efec5f6dcea0908ca" title="object_in_projective\l_space::init_point_set" alt="" coords="189,131,339,169"/>
+<area shape="rect" id="node9" href="$d7/d08/classobject__in__projective__space.html#a910badf3915797f5a3c57e981231bed2" title="object_in_projective\l_space::init_line_set" alt="" coords="193,193,335,232"/>
+<area shape="rect" id="node10" href="$d7/d08/classobject__in__projective__space.html#a085f606728855cecf404108ed051bec7" title="object_in_projective\l_space::init_packing\l_from_set" alt="" coords="193,256,335,308"/>
+<area shape="rect" id="node3" href="$d4/d74/util_8_c.html#a7dc639ea3d5da900adb978c9322353a7" title="INT_vec_scan_from_stream" alt="" coords="387,29,576,55"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="656,5,699,31"/>
+<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="624,55,730,80"/>
+<area shape="rect" id="node8" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="428,175,535,200"/>
+<area shape="rect" id="node11" href="$da/dd6/classset__of__sets.html#a3d2bcfc5db1101cef8d5d436cca51182" title="set_of_sets::init_basic\l_constant_size" alt="" coords="405,224,558,263"/>
+<area shape="rect" id="node12" href="$da/dd6/classset__of__sets.html#a5439014d55aa760a4313ff7307fed5a6" title="set_of_sets::print\l_table" alt="" coords="420,287,543,325"/>
+</map>

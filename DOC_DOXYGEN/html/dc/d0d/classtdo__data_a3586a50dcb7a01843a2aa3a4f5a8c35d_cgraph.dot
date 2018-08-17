@@ -1,0 +1,37 @@
+digraph "tdo_data::solve_second_system_with_help"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node62 [label="tdo_data::solve_second\l_system_with_help",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node62 -> Node63 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node63 [label="tdo_data::solve_second\l_system_from_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d0d/classtdo__data.html#a4376152d0929301f23a86753dd948650"];
+  Node62 -> Node64 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node64 [label="tdo_data::solve_second\l_system",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d0d/classtdo__data.html#af722419adafb1c21a5f2a5b9fbadb0e3"];
+  Node64 -> Node65 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="diophant_solve_first\l_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#ac03e1a3fc0816caf0b6114281b46e142"];
+  Node65 -> Node66 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node66 [label="diophant_solve_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#a13197239f146dbec9e369244a28e6fb5"];
+  Node66 -> Node67 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node67 [label="diophant_solve_mckay\l_override_minrhs_in_inequalities",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#ade26681e912db350f0d405ccdb340519"];
+  Node67 -> Node68 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node68 [label="mckay::tMCKAY::Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a04d009389cf387ded3ff067ff0f0588d"];
+  Node67 -> Node69 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node69 [label="mckay::tMCKAY::possolve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a1791dc846f3d51ac42c1afdd9b944864"];
+  Node64 -> Node70 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node70 [label="diophant::solve_first\l_betten",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a81a7f992acc7e822a7843bdc28fbe36e"];
+  Node64 -> Node71 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node71 [label="diophant_solve_next\l_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#aeaf43346f76cbfe64ca21d3e8d9ed8fe"];
+  Node64 -> Node72 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node72 [label="diophant::solve_next\l_betten",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a016c6994359c98f5939305532dc60f89"];
+  Node72 -> Node73 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node73 [label="os_ticks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224"];
+  Node72 -> Node74 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node74 [label="os_ticks_per_second",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042"];
+  Node72 -> Node75 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node75 [label="diophant::print_x",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a0a0960d96500c35a1632c507925dbe6e"];
+  Node72 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node76 [label="diophant::j_nxt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#ab7edeaceecc124fb9595d34e2f10fd29"];
+  Node72 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="diophant::j_fst",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#aba2e20ceb103c3f0e00667a699c25fb5"];
+}

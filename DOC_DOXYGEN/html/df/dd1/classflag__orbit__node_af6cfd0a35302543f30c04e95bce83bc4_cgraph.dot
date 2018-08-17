@@ -1,0 +1,26 @@
+digraph "flag_orbit_node::read_file"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node31 [label="flag_orbit_node::read_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node31 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="action::element_read\l_from_file_binary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#abf2f35c0490a94c599c9472fb2c256eb"];
+  Node32 -> Node33 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="action::element_unpack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a02107279a3bdcf054008bd180dfaef10"];
+  Node31 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="strong_generators::\lread_from_file_binary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a2e0e07b3f0ac104178984a1ecf8d0328"];
+  Node34 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="strong_generators::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#ab7d37035d3b2ea516c4e989715f91ad5"];
+  Node34 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node36 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node34 -> Node38 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 [label="vector_ge::read_from\l_file_binary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a949c1af00a0b724a52e1806fdb6b55e1"];
+  Node38 -> Node39 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node39 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node38 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node38 -> Node40 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node40 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+}

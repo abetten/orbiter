@@ -1,0 +1,17 @@
+digraph "schreier_vector_coset_rep_inv"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node45 [label="schreier_vector_coset\l_rep_inv",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node45 -> Node46 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node46 [label="schreier::test_sv",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/dd6/classschreier.html#a3126deca325fbd23f1b7f03a1ef89dae"];
+  Node45 -> Node47 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node47 [label="oracle::orbit_representative\l_and_coset_rep_inv_subspace_action",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a5a4d27cde89e99450305410536b51915"];
+  Node47 -> Node48 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node48 [label="oracle::trace_next\l_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#ae86c3f9d4b95b5a6e88ee0959942ecde"];
+  Node48 -> Node49 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node49 [label="oracle::trace_next\l_point_wrapper",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a33e1e9e4dde6fbecd7ae858576a7132f"];
+  Node48 -> Node50 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node50 [label="oracle::trace_next\l_point_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a4dbea33418d5c0f550a960a5c83194a5"];
+}

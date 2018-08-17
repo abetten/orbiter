@@ -1,0 +1,11 @@
+digraph "write_generators"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3861 [label="write_generators",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3861 -> Node3862 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3862 [label="Vector::s_l",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704"];
+  Node3861 -> Node3863 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3863 [label="discreta_base::as_permutation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#aa4e72f36a82984239b12ae831e131098"];
+}

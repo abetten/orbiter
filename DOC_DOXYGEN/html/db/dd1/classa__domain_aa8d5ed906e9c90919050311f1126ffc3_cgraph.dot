@@ -1,0 +1,15 @@
+digraph "a_domain::get_image_and_kernel"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node85 [label="a_domain::get_image\l_and_kernel",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node85 -> Node86 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="a_domain::Gauss_echelon_form",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a155391ce053a94e6944573966511adb5"];
+  Node85 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node87 [label="a_domain::matrix_get\l_kernel_as_row_vectors",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ad95d4cf04a39f7e6b330eb591d188c5d"];
+  Node85 -> Node88 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node88 [label="a_domain::offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a62f150e399aec130df913d65a7772ff3"];
+  Node85 -> Node89 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node89 [label="a_domain::print_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a5d2acb9c01e71e0e925e954b17861d19"];
+}

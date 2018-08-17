@@ -1,0 +1,8 @@
+<map id="heisenberg::element_add" name="heisenberg::element_add">
+<area shape="rect" id="node2" href="$df/d5a/classfinite__field.html#a23252c462d48cc21895de6fcc0cbb59f" title="finite_field::add_vector" alt="" coords="227,5,382,31"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#aeb74732fc0776cb87ec8419e5ea7ad97" title="finite_field::dot_product" alt="" coords="225,55,384,80"/>
+<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="434,104,545,129"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="432,55,546,80"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="594,79,738,104"/>
+<area shape="rect" id="node7" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="602,128,731,153"/>
+</map>

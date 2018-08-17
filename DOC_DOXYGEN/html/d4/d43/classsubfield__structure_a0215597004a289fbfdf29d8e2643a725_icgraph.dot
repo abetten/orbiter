@@ -1,0 +1,23 @@
+digraph "subfield_structure::evaluate_over_Fq"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18 [label="subfield_structure\l::evaluate_over_Fq",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="subfield_structure\l::init_with_given_basis",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d43/classsubfield__structure.html#ac6d44abb857dd6eb3a2d34d750f061a9"];
+  Node19 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="subfield_structure\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d43/classsubfield__structure.html#a726b7657e56b87f2003a18392fa687a4"];
+  Node20 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="create_group_arcs8",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d9e/create__group_8_c.html#a9928eebe07667a19d9ac9409e0c9702c"];
+  Node21 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d9e/create__group_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node20 -> Node23 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="linear_set::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d86/classlinear__set.html#a7ab24e84423749047d5465cb15505475"];
+  Node20 -> Node24 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="action_by_subfield\l_structure::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d67/classaction__by__subfield__structure.html#a565b45607d3ebc3eaa0e910a6ce6a661"];
+  Node20 -> Node25 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="spread::HMO",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dc1/classspread.html#aac9d8a67802a3e23e66eb20e419c097b"];
+  Node18 -> Node26 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 [label="subfield_structure\l::print_embedding",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d43/classsubfield__structure.html#a5bcae8711147955f252614a1bf8d1eea"];
+}

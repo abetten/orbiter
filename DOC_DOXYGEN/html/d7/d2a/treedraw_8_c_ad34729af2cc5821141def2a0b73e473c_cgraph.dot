@@ -1,0 +1,35 @@
+digraph "draw_vertex_callback_placeholders"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node75 [label="draw_vertex_callback\l_placeholders",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node75 -> Node76 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node76 [label="mp_graphics::aligned_text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a52ca0d0e39640fe15c6a8bd8633c9e5a"];
+  Node76 -> Node77 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node77 [label="mp_graphics::aligned\l_text_with_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a3b5a8558ee721bd8b9ed36e732317679"];
+  Node77 -> Node78 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node78 [label="mp_graphics::st_alignment",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ab897ac847368de2da4296c7f159cc5f9"];
+  Node78 -> Node79 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node79 [label="mp_graphics::st_alignment_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a9f7aa1c186791f69881ddbf590835f3e"];
+  Node77 -> Node80 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node80 [label="mp_graphics::text",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ae92ece77cf1942bfee760d6cf854b74b"];
+  Node80 -> Node81 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node81 [label="mp_graphics::coords\l_min_max",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#afa0af74da2afd1d00b2eeb5e25b4f596"];
+  Node80 -> Node82 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node82 [label="mp_graphics::user2dev",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#af087f5f4b08c72f67f5e35cc312070fb"];
+  Node82 -> Node83 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node83 [label="transform_llur",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d29/draw_8_c.html#af38b139f64e19404b9a944c7188d4aff"];
+  Node80 -> Node84 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node84 [label="mp_graphics::text_log",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a3a8320de1e68f3c290e138355f05f8ae"];
+  Node80 -> Node85 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node85 [label="mp_graphics::text_mp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ad30aeb75639e84d876dade51faa50bee"];
+  Node80 -> Node86 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node86 [label="mp_graphics::text_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#ac7e4333813701bcc76fc5eba7700bdbd"];
+  Node86 -> Node87 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node87 [label="mp_graphics::output\l_xy_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a640800bc67fec9ed441b27c71461e9c6"];
+  Node87 -> Node88 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node88 [label="mp_graphics::output\l_x_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a311d4fb1c32d1eb0faeee055bb8badee"];
+  Node87 -> Node89 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node89 [label="mp_graphics::output\l_y_tikz",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d2c/classmp__graphics.html#a0d6bddb89b4c58c82aa124dd003dda08"];
+}

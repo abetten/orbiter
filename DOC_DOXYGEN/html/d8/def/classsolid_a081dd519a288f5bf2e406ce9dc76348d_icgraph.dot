@@ -1,0 +1,9 @@
+digraph "solid::induced_group_on_edges"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3038 [label="solid::induced_group\l_on_edges",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3038 -> Node3039 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3039 [label="solid::edge_midpoints",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc"];
+}

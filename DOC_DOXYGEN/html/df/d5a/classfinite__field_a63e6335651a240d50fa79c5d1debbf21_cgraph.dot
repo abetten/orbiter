@@ -1,0 +1,9 @@
+digraph "finite_field::print_indicator_square_nonsquare"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node16488 [label="finite_field::print\l_indicator_square_nonsquare",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node16488 -> Node16489 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16489 [label="finite_field::log_alpha",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a446a83ae0d281ddf44215626f0097305"];
+}

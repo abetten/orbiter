@@ -1,0 +1,37 @@
+<map id="longinteger_domain::factor" name="longinteger_domain::factor">
+<area shape="rect" id="node2" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="1303,43,1433,81"/>
+<area shape="rect" id="node4" href="$dd/d7e/classlonginteger__object.html#adeab597c8bb66f36eb085f046d1df656" title="longinteger_object\l::is_one" alt="" coords="604,5,734,44"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#a41da378679c384026d4b3cb2941236df" title="nb_primes" alt="" coords="228,596,312,621"/>
+<area shape="rect" id="node7" href="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a" title="longinteger_object\l::assign_to" alt="" coords="1076,247,1207,285"/>
+<area shape="rect" id="node9" href="$d2/d7a/classlonginteger__domain.html#a70d8dddc346b041c751a135e793a2689" title="longinteger_domain\l::smallest_primedivisor" alt="" coords="192,457,349,496"/>
+<area shape="rect" id="node13" href="$d2/d7a/classlonginteger__domain.html#a5184e0be0edaa5f5de9f332b033d66d1" title="longinteger_domain\l::integral_division\l_by_INT" alt="" coords="600,472,738,524"/>
+<area shape="rect" id="node24" href="$d9/d60/discreta_8h.html#aea15358271d4a02df8922f51f2a76113" title="print_factorization" alt="" coords="207,788,334,813"/>
+<area shape="rect" id="node3" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="1527,15,1657,53"/>
+<area shape="rect" id="node6" href="$de/dc5/algebra__and__number__theory_8h.html#a89238384b70e5f0f19ac179ca88d468d" title="smallest_primedivisor" alt="" coords="399,673,549,699"/>
+<area shape="rect" id="node8" href="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="1513,208,1672,233"/>
+<area shape="rect" id="node10" href="$d2/d7a/classlonginteger__domain.html#aea0d6d8108b4856bb183ef1a547a3ac5" title="longinteger_domain\l::is_even" alt="" coords="600,708,738,747"/>
+<area shape="rect" id="node12" href="$d2/d7a/classlonginteger__domain.html#ae0ade29af88bddc0c66af6a23970fe79" title="longinteger_domain\l::remainder_mod_INT" alt="" coords="399,457,550,496"/>
+<area shape="rect" id="node16" href="$d2/d7a/classlonginteger__domain.html#a6780a80b91bf044dde737578b2e19a02" title="longinteger_domain\l::compare" alt="" coords="1072,627,1211,665"/>
+<area shape="rect" id="node21" href="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2" title="longinteger_object\l::create" alt="" coords="1076,309,1207,348"/>
+<area shape="rect" id="node11" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="1514,636,1671,661"/>
+<area shape="rect" id="node14" href="$d2/d7a/classlonginteger__domain.html#a1ecbac0518646945d9633a86844846aa" title="longinteger_domain\l::integral_division" alt="" coords="821,508,960,547"/>
+<area shape="rect" id="node15" href="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344" title="longinteger_object\l::sign" alt="" coords="1303,627,1433,665"/>
+<area shape="rect" id="node18" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="1515,373,1670,399"/>
+<area shape="rect" id="node19" href="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35" title="longinteger_domain\l::mult" alt="" coords="1072,508,1211,547"/>
+<area shape="rect" id="node17" href="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f" title="longinteger_domain\l::compare_unsigned" alt="" coords="1297,689,1439,728"/>
+<area shape="rect" id="node20" href="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="1288,525,1448,551"/>
+<area shape="rect" id="node22" href="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1" title="longinteger_object\l::freeself" alt="" coords="1303,259,1433,297"/>
+<area shape="rect" id="node23" href="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250" title="INT_log10" alt="" coords="1327,157,1410,183"/>
+<area shape="rect" id="node25" href="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704" title="Vector::s_l" alt="" coords="432,863,516,888"/>
+<area shape="rect" id="node26" href="$d3/d72/global_8_c.html#afcd81bfedce13a2f5f14361608e763f2" title="current_printing_mode" alt="" coords="397,764,551,789"/>
+<area shape="rect" id="node27" href="$d5/db2/class_vector.html#a75d4942cc7b9794717b4846c10520db8" title="Vector::s_ii" alt="" coords="431,813,517,839"/>
+<area shape="rect" id="node28" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="627,813,711,839"/>
+<area shape="rect" id="node29" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="599,905,739,931"/>
+<area shape="rect" id="node30" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="1293,880,1443,905"/>
+<area shape="rect" id="node33" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="787,905,995,931"/>
+<area shape="rect" id="node35" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="804,955,978,980"/>
+<area shape="rect" id="node36" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="847,1004,934,1029"/>
+<area shape="rect" id="node31" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1496,855,1689,880"/>
+<area shape="rect" id="node32" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1552,904,1632,929"/>
+<area shape="rect" id="node34" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="1043,905,1240,931"/>
+</map>

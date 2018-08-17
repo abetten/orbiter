@@ -1,0 +1,11 @@
+digraph "compute_omega"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node165 [label="compute_omega",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node165 -> Node166 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node166 [label="do_it",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/da3/burnside_8_c.html#a6a1ed4d46bdb13e56112f47f0565c25b"];
+  Node166 -> Node167 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node167 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/da3/burnside_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+}

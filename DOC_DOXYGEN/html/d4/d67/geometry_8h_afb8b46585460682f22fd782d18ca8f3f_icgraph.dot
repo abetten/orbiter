@@ -1,0 +1,17 @@
+digraph "all_PG_elements_in_subspace"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2384 [label="all_PG_elements_in\l_subspace",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2384 -> Node2385 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2385 [label="spread::cooperstein\l_thas_quotients",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dc1/classspread.html#abba98e1f22f9a1a00823774307f29bef"];
+  Node2385 -> Node2386 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2386 [label="spread::all_cooperstein\l_thas_quotients",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dc1/classspread.html#a83ae27050bb13feeb7e897c0f9f06b21"];
+  Node2384 -> Node2387 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2387 [label="spread_lifting::compute\l_points_covered_by_starter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de2/classspread__lifting.html#a2f0dea5c67b1c9d61a36974bd6610b9b"];
+  Node2387 -> Node2388 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2388 [label="spread_lifting::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de2/classspread__lifting.html#a7ea5d1a50aa878daebd72c0b95cdc893"];
+  Node2384 -> Node2389 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2389 [label="spread_lifting::create\l_system",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/de2/classspread__lifting.html#a389c7761cc6a956414db3a1d60c028f7"];
+}

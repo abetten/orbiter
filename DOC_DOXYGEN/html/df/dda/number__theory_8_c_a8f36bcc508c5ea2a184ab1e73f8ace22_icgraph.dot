@@ -1,0 +1,21 @@
+digraph "sp_ge"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2898 [label="sp_ge",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2898 -> Node2899 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2899 [label="factor_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/global_8_c.html#ab7a2d5a4156f2d475fa1b257a3380ef6"];
+  Node2899 -> Node2900 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2900 [label="print_clan_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a46caf83aa0d557a42ac3710c7f5dc665"];
+  Node2900 -> Node2901 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2901 [label="print_clan_tex_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a6940852a56bea54b6b60aa35e5894664"];
+  Node2899 -> Node2902 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2902 [label="factor_if_prime_power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/global_8_c.html#ac66689a1831f1441ba096694995b5944"];
+  Node2899 -> Node2903 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2903 [label="Euler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/global_8_c.html#af15585e99628f28c0fe1efb1b15caf79"];
+  Node2899 -> Node2904 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2904 [label="Moebius",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/global_8_c.html#aafefa2cd6c3ce1547f5ab6c28456ca03"];
+  Node2899 -> Node2905 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2905 [label="unipoly::Phi",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a50f2edff215daebf54b1e010d99f630d"];
+}

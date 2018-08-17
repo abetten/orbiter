@@ -1,0 +1,15 @@
+digraph "group::~group"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="group::~group",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="group::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a43d679f29a588271c1eaeefe94bed282"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="group::delete_ascii\l_coding",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#aa71c4507467519fc564a6715fe7efdf5"];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="group::delete_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a36c96bdf4428fdf236dfabab0f82b898"];
+  Node4 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="group::delete_sims",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#accebe64da3d51160a974fad069a90eac"];
+}

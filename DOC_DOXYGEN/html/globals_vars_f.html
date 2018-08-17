@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('globals_vars_f.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,167 +90,173 @@ $(function() {
 
 <h3><a id="index_f"></a>- f -</h3><ul>
 <li>F
-: <a class="el" href="arcs__orderly_8_c.html#a21a61c535ff7d9d4b674461d3b19fffa">arcs_orderly.C</a>
-, <a class="el" href="k__arc__lifting_8_c.html#a21a61c535ff7d9d4b674461d3b19fffa">k_arc_lifting.C</a>
-, <a class="el" href="simeon_8_c.html#a21a61c535ff7d9d4b674461d3b19fffa">simeon.C</a>
+: <a class="el" href="d5/d9e/arcs__orderly_8_c.html#a21a61c535ff7d9d4b674461d3b19fffa">arcs_orderly.C</a>
+, <a class="el" href="d2/dd6/k__arc__lifting_8_c.html#a21a61c535ff7d9d4b674461d3b19fffa">k_arc_lifting.C</a>
+, <a class="el" href="d5/d13/simeon_8_c.html#a21a61c535ff7d9d4b674461d3b19fffa">simeon.C</a>
 </li>
 <li>f
-: <a class="el" href="alphabet_8_c.html#a362077c979b0bb65159c603270e40f70">alphabet.C</a>
+: <a class="el" href="d9/dc9/alphabet_8_c.html#a362077c979b0bb65159c603270e40f70">alphabet.C</a>
 </li>
 <li>F
-: <a class="el" href="fibonacci_8_c.html#ab78443a75edcfbbaa1be74fc5d94ec1d">fibonacci.C</a>
+: <a class="el" href="d2/d32/fibonacci_8_c.html#ab78443a75edcfbbaa1be74fc5d94ec1d">fibonacci.C</a>
 </li>
 <li>f
-: <a class="el" href="alphabet2_8_c.html#a362077c979b0bb65159c603270e40f70">alphabet2.C</a>
+: <a class="el" href="d9/d4b/alphabet2_8_c.html#a362077c979b0bb65159c603270e40f70">alphabet2.C</a>
 </li>
 <li>f_affine
-: <a class="el" href="simeon_8_c.html#af0d85ac2f9ec44c7401cbecbdc23a5a7">simeon.C</a>
+: <a class="el" href="d5/d13/simeon_8_c.html#af0d85ac2f9ec44c7401cbecbdc23a5a7">simeon.C</a>
 </li>
 <li>f_boxed
-: <a class="el" href="layered__graph__main_8_c.html#ac4df839ba041a5cc55dc1eb1633f806e">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#ac4df839ba041a5cc55dc1eb1633f806e">layered_graph_main.C</a>
 </li>
 <li>f_column_entry
-: <a class="el" href="plane__search_8_c.html#a99fd7ae04603bbe94eb60a0a1a630efe">plane_search.C</a>
+: <a class="el" href="dd/d07/plane__search_8_c.html#a99fd7ae04603bbe94eb60a0a1a630efe">plane_search.C</a>
 </li>
 <li>f_data1
-: <a class="el" href="layered__graph__main_8_c.html#aa6bfc6597ec8c1abaa6db57d8fa48d80">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#aa6bfc6597ec8c1abaa6db57d8fa48d80">layered_graph_main.C</a>
 </li>
 <li>f_doubly_even
-: <a class="el" href="subspace__orbits__main_8_c.html#a05f384e95d541f5e5dc58d360739ba99">subspace_orbits_main.C</a>
+: <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#a05f384e95d541f5e5dc58d360739ba99">subspace_orbits_main.C</a>
 </li>
 <li>f_general
-: <a class="el" href="simeon_8_c.html#acdff936645f55fa6d367c21b75128181">simeon.C</a>
+: <a class="el" href="d5/d13/simeon_8_c.html#acdff936645f55fa6d367c21b75128181">simeon.C</a>
 </li>
 <li>f_generator_orthogonal_reflection
-: <a class="el" href="action__global_8_c.html#af62154fb706a07f3006fbaea4211eba2">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#af62154fb706a07f3006fbaea4211eba2">action_global.C</a>
 </li>
 <li>f_generator_orthogonal_semisimilarity
-: <a class="el" href="action__global_8_c.html#a917102d3fb580f06c1c06fdd1719d848">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#a917102d3fb580f06c1c06fdd1719d848">action_global.C</a>
 </li>
 <li>f_generator_orthogonal_siegel
-: <a class="el" href="action__global_8_c.html#a8aed3d2cc8871b7dd3cb16d9f7867891">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#a8aed3d2cc8871b7dd3cb16d9f7867891">action_global.C</a>
 </li>
 <li>f_generator_orthogonal_similarity
-: <a class="el" href="action__global_8_c.html#abd8d2911451c9e5fa22b7766b676fc3d">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#abd8d2911451c9e5fa22b7766b676fc3d">action_global.C</a>
 </li>
 <li>f_go
-: <a class="el" href="clique__finder_8_c.html#ab941e77fa95ca4915294024f82a438cc">clique_finder.C</a>
+: <a class="el" href="de/d99/clique__finder_8_c.html#ab941e77fa95ca4915294024f82a438cc">clique_finder.C</a>
 </li>
 <li>f_graph_perm
-: <a class="el" href="treedraw_8_c.html#a11520bfff076f76482f7f88c0952cf44">treedraw.C</a>
+: <a class="el" href="d7/d2a/treedraw_8_c.html#a11520bfff076f76482f7f88c0952cf44">treedraw.C</a>
 </li>
 <li>f_has_callback_solution_found
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#acee106d30d80436cf2089f4845e6dd88">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#acee106d30d80436cf2089f4845e6dd88">dlx.C</a>
 </li>
 <li>f_has_RHS
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#a23aa336217bd6f169787e905aad67c95">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a23aa336217bd6f169787e905aad67c95">dlx.C</a>
 </li>
 <li>f_memory_debug
-: <a class="el" href="galois_8h.html#aa213e0d4b9b28f73e7ca292c19bad667">galois.h</a>
-, <a class="el" href="_g_a_l_o_i_s_2memory_8_c.html#aa213e0d4b9b28f73e7ca292c19bad667">memory.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#aa213e0d4b9b28f73e7ca292c19bad667">io_and_os.h</a>
+, <a class="el" href="df/d84/foundations_2io__and__os_2memory_8_c.html#aa213e0d4b9b28f73e7ca292c19bad667">memory.C</a>
 </li>
 <li>f_memory_debug_verbose
-: <a class="el" href="galois_8h.html#a4a84693fcfb1ac7dcd62bb1d017692a3">galois.h</a>
-, <a class="el" href="_g_a_l_o_i_s_2memory_8_c.html#a4a84693fcfb1ac7dcd62bb1d017692a3">memory.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a4a84693fcfb1ac7dcd62bb1d017692a3">io_and_os.h</a>
+, <a class="el" href="df/d84/foundations_2io__and__os_2memory_8_c.html#a4a84693fcfb1ac7dcd62bb1d017692a3">memory.C</a>
 </li>
 <li>f_mindist
-: <a class="el" href="subspace__orbits__main_8_c.html#ac060fcc9b6537aa4d448e179db5b865d">subspace_orbits_main.C</a>
+: <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#ac060fcc9b6537aa4d448e179db5b865d">subspace_orbits_main.C</a>
 </li>
 <li>f_multiple_circles
-: <a class="el" href="treedraw_8_c.html#adc52b5ce5deda7ac1ff764965e0b8a19">treedraw.C</a>
+: <a class="el" href="d7/d2a/treedraw_8_c.html#adc52b5ce5deda7ac1ff764965e0b8a19">treedraw.C</a>
 </li>
 <li>f_my_type
-: <a class="el" href="layered__graph__main_8_c.html#affeed53c6ad12f54f9677ffaedd00e34">layered_graph_main.C</a>
-, <a class="el" href="treedraw_8_c.html#affeed53c6ad12f54f9677ffaedd00e34">treedraw.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#affeed53c6ad12f54f9677ffaedd00e34">layered_graph_main.C</a>
+, <a class="el" href="d7/d2a/treedraw_8_c.html#affeed53c6ad12f54f9677ffaedd00e34">treedraw.C</a>
 </li>
 <li>f_nodes_empty
-: <a class="el" href="layered__graph__main_8_c.html#a066751d6910a84f6dccdbed0d72885e2">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#a066751d6910a84f6dccdbed0d72885e2">layered_graph_main.C</a>
 </li>
 <li>f_numbering_on
-: <a class="el" href="layered__graph__main_8_c.html#a1f59b1cedc9844e44fe4c372a96b00a2">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#a1f59b1cedc9844e44fe4c372a96b00a2">layered_graph_main.C</a>
 </li>
 <li>f_placeholder_labels
-: <a class="el" href="layered__graph__main_8_c.html#a03cb4076d4eba974e1d57d51c06861ae">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#a03cb4076d4eba974e1d57d51c06861ae">layered_graph_main.C</a>
 </li>
 <li>f_projective
-: <a class="el" href="simeon_8_c.html#aa700953930747c9c9ec1202f5f746a23">simeon.C</a>
+: <a class="el" href="d5/d13/simeon_8_c.html#aa700953930747c9c9ec1202f5f746a23">simeon.C</a>
 </li>
 <li>f_RootBF_free
-: <a class="el" href="btree_8_c.html#abd88cf614f93d973c7f3701df4a2eb1c">btree.C</a>
+: <a class="el" href="d8/d5a/btree_8_c.html#abd88cf614f93d973c7f3701df4a2eb1c">btree.C</a>
 </li>
 <li>f_scriptsize
-: <a class="el" href="layered__graph__main_8_c.html#ab4636498b3ad108447a762e8cc85f64d">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#ab4636498b3ad108447a762e8cc85f64d">layered_graph_main.C</a>
 </li>
 <li>f_select_layer
-: <a class="el" href="layered__graph__main_8_c.html#a7d4ccea5f5ae42b346148ff947c9f93e">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#a7d4ccea5f5ae42b346148ff947c9f93e">layered_graph_main.C</a>
 </li>
 <li>f_self_orthogonal
-: <a class="el" href="subspace__orbits__main_8_c.html#af989ab75217f623c729e478c457fc5e0">subspace_orbits_main.C</a>
+: <a class="el" href="da/dd5/subspace__orbits__main_8_c.html#af989ab75217f623c729e478c457fc5e0">subspace_orbits_main.C</a>
 </li>
 <li>f_semilinear
-: <a class="el" href="simeon_8_c.html#abe9d1351be10f92305ed7533cd3a3c08">simeon.C</a>
+: <a class="el" href="d5/d13/simeon_8_c.html#abe9d1351be10f92305ed7533cd3a3c08">simeon.C</a>
 </li>
 <li>f_special
-: <a class="el" href="simeon_8_c.html#a5c9bb19da4c942e41c1d5cfc81f4cfd7">simeon.C</a>
+: <a class="el" href="d5/d13/simeon_8_c.html#a5c9bb19da4c942e41c1d5cfc81f4cfd7">simeon.C</a>
 </li>
 <li>f_taken
-: <a class="el" href="costas_8_c.html#af911d7b84fa7e3294d6128c858a62492">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#af911d7b84fa7e3294d6128c858a62492">costas.C</a>
 </li>
 <li>f_text_underneath
-: <a class="el" href="layered__graph__main_8_c.html#af416c49caa39b3530286c3ee8caa96cc">layered_graph_main.C</a>
+: <a class="el" href="da/d62/layered__graph__main_8_c.html#af416c49caa39b3530286c3ee8caa96cc">layered_graph_main.C</a>
 </li>
 <li>f_type
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#af79a067973c29efef17dd46c94c7164f">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#af79a067973c29efef17dd46c94c7164f">dlx.C</a>
+</li>
+<li>filtercount
+: <a class="el" href="db/d0d/foundations_2graph__theory__nauty_2schreier_8c.html#a053a0f760ec990c31835788e08ba925e">schreier.c</a>
 </li>
 <li>finitefield_largest_degree_irreducible_polynomial
-: <a class="el" href="galois_8h.html#a0e4aff37b507acf16f8e6461be1fac67">galois.h</a>
-, <a class="el" href="finite__field__tables_8_c.html#a0e4aff37b507acf16f8e6461be1fac67">finite_field_tables.C</a>
+: <a class="el" href="d4/dbe/finite__field__tables_8_c.html#a0e4aff37b507acf16f8e6461be1fac67">finite_field_tables.C</a>
+, <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a0e4aff37b507acf16f8e6461be1fac67">algebra_and_number_theory.h</a>
 </li>
 <li>finitefield_nb_primes
-: <a class="el" href="finite__field__tables_8_c.html#abc07f79c0ab4221c5ca961123d02a550">finite_field_tables.C</a>
-, <a class="el" href="galois_8h.html#abc07f79c0ab4221c5ca961123d02a550">galois.h</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#abc07f79c0ab4221c5ca961123d02a550">algebra_and_number_theory.h</a>
+, <a class="el" href="d4/dbe/finite__field__tables_8_c.html#abc07f79c0ab4221c5ca961123d02a550">finite_field_tables.C</a>
 </li>
 <li>finitefield_primes
-: <a class="el" href="finite__field__tables_8_c.html#ab55bce60e8736e8250d0c8e47e118591">finite_field_tables.C</a>
-, <a class="el" href="galois_8h.html#ab55bce60e8736e8250d0c8e47e118591">galois.h</a>
+: <a class="el" href="d4/dbe/finite__field__tables_8_c.html#ab55bce60e8736e8250d0c8e47e118591">finite_field_tables.C</a>
+, <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#ab55bce60e8736e8250d0c8e47e118591">algebra_and_number_theory.h</a>
 </li>
 <li>finitefield_primitive_polynomial
-: <a class="el" href="galois_8h.html#ac83e19774cc0f841948d6ebdada63d04">galois.h</a>
-, <a class="el" href="finite__field__tables_8_c.html#ac83e19774cc0f841948d6ebdada63d04">finite_field_tables.C</a>
+: <a class="el" href="d4/dbe/finite__field__tables_8_c.html#ac83e19774cc0f841948d6ebdada63d04">finite_field_tables.C</a>
+, <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#ac83e19774cc0f841948d6ebdada63d04">algebra_and_number_theory.h</a>
 </li>
 <li>fname1
-: <a class="el" href="costas_8_c.html#ae0f4fbab08496423c202e63f926da01d">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#ae0f4fbab08496423c202e63f926da01d">costas.C</a>
 </li>
 <li>fname2
-: <a class="el" href="costas_8_c.html#a70ea09f3708149e1e32404af6c6fd7a8">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#a70ea09f3708149e1e32404af6c6fd7a8">costas.C</a>
 </li>
 <li>fp
-: <a class="el" href="k__arc__lifting_8_c.html#a67cc9fbd0817c2d140368e5ed1f2a44d">k_arc_lifting.C</a>
+: <a class="el" href="d2/dd6/k__arc__lifting_8_c.html#a67cc9fbd0817c2d140368e5ed1f2a44d">k_arc_lifting.C</a>
 </li>
 <li>fp1
-: <a class="el" href="costas_8_c.html#a468adb9c32db55e51620a8435be6cb89">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#a468adb9c32db55e51620a8435be6cb89">costas.C</a>
 </li>
 <li>fp2
-: <a class="el" href="costas_8_c.html#a4375226cd211c8f2324e15d58da08992">costas.C</a>
+: <a class="el" href="d6/d90/costas_8_c.html#a4375226cd211c8f2324e15d58da08992">costas.C</a>
 </li>
 <li>free_points
-: <a class="el" href="k__arc__lifting_8_c.html#a72d444ca510a16f63e425f03db1feb2d">k_arc_lifting.C</a>
+: <a class="el" href="d2/dd6/k__arc__lifting_8_c.html#a72d444ca510a16f63e425f03db1feb2d">k_arc_lifting.C</a>
 </li>
 <li>fstream_table
-: <a class="el" href="btree_8_c.html#a50c0eb84789d93e76c0499b6d3d9168e">btree.C</a>
-, <a class="el" href="discreta_8h.html#a50c0eb84789d93e76c0499b6d3d9168e">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#a50c0eb84789d93e76c0499b6d3d9168e">discreta.h</a>
+, <a class="el" href="d8/d5a/btree_8_c.html#a50c0eb84789d93e76c0499b6d3d9168e">btree.C</a>
 </li>
 <li>fstream_table_used
-: <a class="el" href="discreta_8h.html#acc826f47de728e135fe1aba12a72961d">discreta.h</a>
-, <a class="el" href="btree_8_c.html#acc826f47de728e135fe1aba12a72961d">btree.C</a>
+: <a class="el" href="d9/d60/discreta_8h.html#acc826f47de728e135fe1aba12a72961d">discreta.h</a>
+, <a class="el" href="d8/d5a/btree_8_c.html#acc826f47de728e135fe1aba12a72961d">btree.C</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

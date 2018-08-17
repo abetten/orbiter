@@ -1,0 +1,13 @@
+<map id="geometry::get_lexleast_X" name="geometry::get_lexleast_X">
+<area shape="rect" id="node2" href="$da/d44/classgeometry.html#a0695b0c3dc2a75a232631dfda609daf7" title="geometry::f_canonical\l_labelling_points" alt="" coords="225,5,377,44"/>
+<area shape="rect" id="node6" href="$da/d44/classgeometry.html#a48f58feb451efdf72ce2a5c3411b62c1" title="geometry::f_canonical\l_labelling_blocks" alt="" coords="225,68,377,107"/>
+<area shape="rect" id="node7" href="$da/d44/classgeometry.html#a2eff9c42b83c90012092d49218237d9d" title="geometry::X" alt="" coords="254,131,348,156"/>
+<area shape="rect" id="node9" href="$d1/d8d/classmatrix.html#a4bfbaa097eedb8b427169c593cbb40d0" title="matrix::apply_perms" alt="" coords="230,305,372,331"/>
+<area shape="rect" id="node10" href="$da/d44/classgeometry.html#ac426783bf96ded3a50f6746f521bdd31" title="geometry::canonical\l_labelling_points" alt="" coords="231,180,371,219"/>
+<area shape="rect" id="node12" href="$da/d44/classgeometry.html#a6d9453619be9ea76e6e63485594b301f" title="geometry::canonical\l_labelling_blocks" alt="" coords="231,243,371,281"/>
+<area shape="rect" id="node3" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="485,169,569,195"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="440,68,614,93"/>
+<area shape="rect" id="node5" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="483,16,570,41"/>
+<area shape="rect" id="node8" href="$d7/d71/classdiscreta__base.html#ae4d7f56d917a4707b838fbffde6467ff" title="discreta_base::as_matrix" alt="" coords="442,120,612,145"/>
+<area shape="rect" id="node11" href="$d7/d71/classdiscreta__base.html#aa4e72f36a82984239b12ae831e131098" title="discreta_base::as_permutation" alt="" coords="425,232,629,257"/>
+</map>

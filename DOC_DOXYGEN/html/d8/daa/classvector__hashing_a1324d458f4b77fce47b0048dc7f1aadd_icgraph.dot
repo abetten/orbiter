@@ -1,0 +1,13 @@
+digraph "vector_hashing::allocate"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5 [label="vector_hashing::allocate",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="init_hash_table_parabolic",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ac0501667678e59124c88842414489011"];
+  Node6 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="blt_set::init_orthogonal_hash",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d3d/classblt__set.html#ad8a73370e16f2adf30172c3159ca8a74"];
+  Node6 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="action::init_BLT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a0d33ca0ebe7467b984c3058520e02a0c"];
+}

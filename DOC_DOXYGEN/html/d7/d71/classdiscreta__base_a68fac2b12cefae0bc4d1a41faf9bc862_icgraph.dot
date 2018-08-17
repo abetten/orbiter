@@ -1,0 +1,45 @@
+digraph "discreta_base::copyobject"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11779 [label="discreta_base::copyobject",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node11779 -> Node11780 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11780 [label="discreta_base::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a4ccf158b3864d95b4e85fa471c748bae"];
+  Node11779 -> Node11781 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11781 [label="bitmatrix::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc8/classbitmatrix.html#ac7386ca418929a7d0a0fdf38b0cb99e4"];
+  Node11779 -> Node11782 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11782 [label="bt_key::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de5/classbt__key.html#a5258ebd54987d2152544e63a34c2bc2a"];
+  Node11779 -> Node11783 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11783 [label="btree::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/db0/classbtree.html#a2c95dcf64612ac0dd88b47f004dd84d9"];
+  Node11779 -> Node11784 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11784 [label="database::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a47f3f73586a1384925a89bcdaf14897a"];
+  Node11779 -> Node11785 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11785 [label="design_parameter::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#afd2b9a322632021e0e3893c386cfc196"];
+  Node11779 -> Node11786 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11786 [label="design_parameter_source\l::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d4b/classdesign__parameter__source.html#a92328345a02bb0028f77b5d4780d55d6"];
+  Node11779 -> Node11787 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11787 [label="geometry::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#af5b78aa94f8ef7f432fb1568187ef762"];
+  Node11779 -> Node11788 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11788 [label="group_selection::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/db0/classgroup__selection.html#abf861ab6bf4c061dd36775301c1e4f46"];
+  Node11779 -> Node11789 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11789 [label="hollerith::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d99/classhollerith.html#a29643fcee8fc15a9dffa8c8257428f0c"];
+  Node11779 -> Node11790 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11790 [label="integer::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a52f72e5f2da0f1617355e03a7202492f"];
+  Node11779 -> Node11791 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11791 [label="longinteger::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d71/classlonginteger.html#a73681df1cab8ee88c85617574939fd0c"];
+  Node11779 -> Node11792 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11792 [label="matrix::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a242b6281ca7b813d47d07bb474d10b8e"];
+  Node11779 -> Node11793 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11793 [label="memory::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d99/classmemory.html#a5550412426557d686fbf2df39e1dbb4c"];
+  Node11779 -> Node11794 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11794 [label="number_partition::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d50/classnumber__partition.html#a81b2d9c5c3f4b13e748c5a9bc01b54db"];
+  Node11779 -> Node11795 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11795 [label="permutation::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a7bc27f9f40363198e4f6b4c1d83ee3ba"];
+  Node11779 -> Node11796 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11796 [label="solid::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#aadc9b68f1704979feefa95bb74455ad5"];
+  Node11779 -> Node11797 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11797 [label="unipoly::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a60f1ddf49bc3e91ad73d24b9fbb29460"];
+  Node11779 -> Node11798 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11798 [label="Vector::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#adbfc00f9e11251e1ebc04af9bcaca95a"];
+}

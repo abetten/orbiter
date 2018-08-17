@@ -1,0 +1,19 @@
+digraph "allocate_pvoid"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node90 [label="allocate_pvoid",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node90 -> Node91 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node91 [label="add_to_registry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a6920a250c4e7a0770cdef39eb9bf20ad"];
+  Node91 -> Node92 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="registry_search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a01e5fb20556471832a045ea75de89a78"];
+  Node91 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="registry_print_entry",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a2b54b210ed9aae58085d1ef7fa3bcbff"];
+  Node93 -> Node94 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="print_pointer_hex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a32add94de62a1d910cc0fc35ed90ab48"];
+  Node94 -> Node95 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="print_hex_digit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#a36c64a828eefed0a0cfdd6186ec92c31"];
+  Node93 -> Node96 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="registry_print_type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d84/foundations_2io__and__os_2memory_8_c.html#a0c81861cc8a6dd21364c89bb3ac8e82c"];
+}

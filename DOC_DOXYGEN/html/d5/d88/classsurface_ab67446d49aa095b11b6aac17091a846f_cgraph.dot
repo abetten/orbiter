@@ -1,0 +1,36 @@
+digraph "surface::print_Steiner_and_Eckardt"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4845 [label="surface::print_Steiner\l_and_Eckardt",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4845 -> Node4846 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4846 [label="surface::latex_table\l_of_Eckardt_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#aacb80c9a1f6a77de3ab2bad12150c39a"];
+  Node4846 -> Node4847 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4847 [label="eckardt_point::three\l_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#a09d0d5e2bdd6f834aecb6a065c7b6ee7"];
+  Node4847 -> Node4848 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4848 [label="k2ij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a94379148acec1c2aeedad1903aa0756a"];
+  Node4846 -> Node4849 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4849 [label="eckardt_point::latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#a2aa137a6c9a1ed28d410f63858f42ccf"];
+  Node4849 -> Node4848 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4845 -> Node4850 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4850 [label="surface::latex_table\l_of_tritangent_planes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a36e371faec8bb246f04400307148744c"];
+  Node4850 -> Node4847 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4850 -> Node4851 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4851 [label="eckardt_point::latex\l_index_only",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2e/classeckardt__point.html#af8fdbe7105921bd80a717cbdaae00e87"];
+  Node4851 -> Node4848 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4845 -> Node4852 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4852 [label="surface::latex_table\l_of_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a4bf576800eeba169776d5c199a836cd4"];
+  Node4852 -> Node4853 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4853 [label="surface::latex_trihedral_pair",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#af05aa0ba4420eee9f859ac13010137ac"];
+  Node4853 -> Node4854 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4854 [label="surface::print_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a3c3b2848519e60d214db736b4e397789"];
+  Node4854 -> Node4848 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4853 -> Node4851 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4852 -> Node4855 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4855 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node4852 -> Node4856 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4856 [label="surface::print_trihedral\l_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a3af89c1a0ce86c3d68b5683493c7d919"];
+  Node4856 -> Node4857 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4857 [label="print_integer_matrix\l_with_standard_labels\l_and_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a0598d3925a117c7ceee6efff0753abb1"];
+}

@@ -1,0 +1,11 @@
+digraph "matrix::Ainf2Asup"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node124 [label="matrix::Ainf2Asup",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node124 -> Node125 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node125 [label="matrix::transpose",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a1d8064be96298b81e8e060f02b9cef3e"];
+  Node124 -> Node126 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node126 [label="matrix::Asup2Ainf",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a6ec12bab511dbb2f1426515819359390"];
+}

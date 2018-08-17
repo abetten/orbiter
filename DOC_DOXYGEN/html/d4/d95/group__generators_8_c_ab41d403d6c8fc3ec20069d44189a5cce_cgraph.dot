@@ -1,0 +1,22 @@
+digraph "generators_affine_translations"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node92 [label="generators_affine_translations",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node92 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node93 [label="nb_AG_elements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab9de2574dd403dd453a0d35107f684f5"];
+  Node93 -> Node94 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node94 [label="i_power_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5"];
+  Node92 -> Node95 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 [label="translation_in_AG",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d95/group__generators_8_c.html#a2dc31e911a639d9be60389fae43e8ebc"];
+  Node95 -> Node93 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node95 -> Node96 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node96 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node95 -> Node97 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node97 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+  Node95 -> Node98 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node98 [label="perm_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a2c7eee1361109e8c5b94921589815194"];
+  Node98 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node99 [label="perm_print_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#ab87deef2ba9e4d2ce386a19eeaffecf3"];
+}

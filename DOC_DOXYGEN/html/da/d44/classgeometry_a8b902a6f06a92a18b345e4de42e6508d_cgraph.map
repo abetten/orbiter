@@ -1,0 +1,22 @@
+<map id="geometry::print_inc" name="geometry::print_inc">
+<area shape="rect" id="node2" href="$da/d44/classgeometry.html#a2eff9c42b83c90012092d49218237d9d" title="geometry::X" alt="" coords="217,126,311,151"/>
+<area shape="rect" id="node5" href="$d1/d8d/classmatrix.html#afeb2e29600e68448b9d1130114b9606f" title="matrix::s_m" alt="" coords="219,337,309,362"/>
+<area shape="rect" id="node6" href="$d1/d8d/classmatrix.html#a35f5321a5615451fdc8be7b953f8ac8b" title="matrix::s_n" alt="" coords="221,386,307,411"/>
+<area shape="rect" id="node7" href="$da/d44/classgeometry.html#a47f809adc7a1158065da4dfae214f05f" title="geometry::number" alt="" coords="199,51,329,77"/>
+<area shape="rect" id="node10" href="$da/d44/classgeometry.html#a8be3ddf6aebe1e3c52b67cfe316e638f" title="geometry::label" alt="" coords="208,238,320,263"/>
+<area shape="rect" id="node12" href="$d8/d99/classhollerith.html#af61fce2d06f211b25fe3838e4dfee77a" title="hollerith::s" alt="" coords="223,435,305,461"/>
+<area shape="rect" id="node13" href="$da/d44/classgeometry.html#a05bd36071a53d68e1c4b0ba981c9cd34" title="geometry::f_incidence\l_matrix" alt="" coords="188,175,340,214"/>
+<area shape="rect" id="node14" href="$d1/d8d/classmatrix.html#af8d3c35817af62a3c0097ddf64422d96" title="matrix::s_iji" alt="" coords="220,287,308,313"/>
+<area shape="rect" id="node3" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="436,129,520,154"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#ae4d7f56d917a4707b838fbffde6467ff" title="discreta_base::as_matrix" alt="" coords="393,79,563,105"/>
+<area shape="rect" id="node8" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="633,179,807,205"/>
+<area shape="rect" id="node9" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="677,230,763,255"/>
+<area shape="rect" id="node11" href="$d7/d71/classdiscreta__base.html#a3e66f82711f314710107e2f29e589690" title="discreta_base::as_hollerith" alt="" coords="388,281,568,306"/>
+<area shape="rect" id="node15" href="$d1/d8d/classmatrix.html#ab36f1b3abd2df280224c50c9debb57df" title="matrix::s_ij" alt="" coords="435,379,520,405"/>
+<area shape="rect" id="node16" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="408,330,547,355"/>
+<area shape="rect" id="node17" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="1118,331,1268,357"/>
+<area shape="rect" id="node20" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="616,357,824,382"/>
+<area shape="rect" id="node18" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1316,306,1509,331"/>
+<area shape="rect" id="node19" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1373,355,1452,381"/>
+<area shape="rect" id="node21" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="872,357,1070,382"/>
+</map>

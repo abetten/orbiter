@@ -1,0 +1,14 @@
+digraph "src/lib/poset_classification/classify" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_36d0d98b85f6b4b768ba541b6da5206e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="poset_classification" fontname="Helvetica", fontsize="10", URL="dir_36d0d98b85f6b4b768ba541b6da5206e.html"]
+  dir_faa6e310e264cb23fe14bd23133527a7 [shape=box, label="classify", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_faa6e310e264cb23fe14bd23133527a7.html"];
+  }
+  dir_bd81d8b98708084983c5186f94beb61b [shape=box label="groups_and_group_actions" fillcolor="white" style="filled" color="red" URL="dir_bd81d8b98708084983c5186f94beb61b.html"];
+  dir_22aca35e3ec12f68aff9c7ff7652d11f [shape=box label="foundations" fillcolor="white" style="filled" color="red" URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"];
+  dir_bd81d8b98708084983c5186f94beb61b->dir_22aca35e3ec12f68aff9c7ff7652d11f [headlabel="58", labeldistance=1.5 headhref="dir_000014_000008.html"];
+  dir_faa6e310e264cb23fe14bd23133527a7->dir_bd81d8b98708084983c5186f94beb61b [headlabel="4", labeldistance=1.5 headhref="dir_000040_000014.html"];
+  dir_faa6e310e264cb23fe14bd23133527a7->dir_22aca35e3ec12f68aff9c7ff7652d11f [headlabel="4", labeldistance=1.5 headhref="dir_000040_000008.html"];
+}

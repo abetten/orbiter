@@ -1,0 +1,11 @@
+digraph "INT_matrix::s_m"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node35 [label="INT_matrix::s_m",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node35 -> Node36 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="gl_class_rep::compute\l_vector_coding",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5d/classgl__class__rep.html#ae202478be1618fdcc5e047b40a614973"];
+  Node36 -> Node37 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="gl_class_rep::centralizer\l_order_Kung",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5d/classgl__class__rep.html#abdc7ece2f243cf3d48d8e590f414e746"];
+}

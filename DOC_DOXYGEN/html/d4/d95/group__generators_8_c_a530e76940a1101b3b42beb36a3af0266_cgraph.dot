@@ -1,0 +1,21 @@
+digraph "generators_for_stabilizer_of_three_collinear_points_in_PGL4"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node257 [label="generators_for_stabilizer\l_of_three_collinear_points\l_in_PGL4",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node257 -> Node258 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node258 [label="finite_field::identity\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a4688997f80b8721560bccec986c23413"];
+  Node257 -> Node259 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node259 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node257 -> Node260 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node260 [label="finite_field::negate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31"];
+  Node260 -> Node261 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node261 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node260 -> Node262 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node262 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+  Node257 -> Node263 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node263 [label="finite_field::primitive_root",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a3ba0fb241fc4114b1e710f8a1f9c43f1"];
+  Node257 -> Node264 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node264 [label="i_power_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5"];
+}

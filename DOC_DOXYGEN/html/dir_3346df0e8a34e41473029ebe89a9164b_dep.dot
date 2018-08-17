@@ -1,0 +1,9 @@
+digraph "src/lib/foundations/coding_theory" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_22aca35e3ec12f68aff9c7ff7652d11f {
+    graph [ bgcolor="#ddddee", pencolor="black", label="foundations" fontname="Helvetica", fontsize="10", URL="dir_22aca35e3ec12f68aff9c7ff7652d11f.html"]
+  dir_3346df0e8a34e41473029ebe89a9164b [shape=box, label="coding_theory", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_3346df0e8a34e41473029ebe89a9164b.html"];
+  }
+}

@@ -1,0 +1,12 @@
+<map id="design_parameter_source::text012" name="design_parameter_source::text012">
+<area shape="rect" id="node2" href="$d8/d99/classhollerith.html#af51ae7b943056db367f3c205a5a1cc4b" title="hollerith::init" alt="" coords="271,27,364,52"/>
+<area shape="rect" id="node5" href="$df/d4b/classdesign__parameter__source.html#ae34592d2aebfff0766c1605cd4a896ba" title="design_parameter_source\l::comment" alt="" coords="230,125,406,164"/>
+<area shape="rect" id="node8" href="$d8/d99/classhollerith.html#a778dd63885a4e3a4e2fb829165c32632" title="hollerith::append" alt="" coords="258,76,378,101"/>
+<area shape="rect" id="node9" href="$df/d4b/classdesign__parameter__source.html#a8e9f2810222797d8cad1fc682bc447a3" title="design_parameter_source\l::rule" alt="" coords="230,195,406,233"/>
+<area shape="rect" id="node3" href="$d8/d99/classhollerith.html#a240d1b30780c9e09323d0b3ad5e2d1f7" title="hollerith::freeself\l_hollerith" alt="" coords="484,5,603,44"/>
+<area shape="rect" id="node4" href="$d8/d99/classhollerith.html#af61fce2d06f211b25fe3838e4dfee77a" title="hollerith::s" alt="" coords="503,68,585,93"/>
+<area shape="rect" id="node6" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="502,167,586,192"/>
+<area shape="rect" id="node7" href="$d7/d71/classdiscreta__base.html#a3e66f82711f314710107e2f29e589690" title="discreta_base::as_hollerith" alt="" coords="454,117,634,143"/>
+<area shape="rect" id="node10" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="457,216,631,241"/>
+<area shape="rect" id="node11" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="501,265,587,291"/>
+</map>

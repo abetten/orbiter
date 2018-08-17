@@ -1,0 +1,19 @@
+digraph "perm_group_element_mult"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node8256 [label="perm_group_element_mult",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node8256 -> Node8257 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8257 [label="perm_print_list",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a97254b51d3f118f7967df234114f2013"];
+  Node8256 -> Node8258 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8258 [label="perm_group::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#af23c8538a48ea66019b7c5a4223b9bea"];
+  Node8258 -> Node8259 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8259 [label="perm_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a2c7eee1361109e8c5b94921589815194"];
+  Node8259 -> Node8260 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8260 [label="perm_print_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#ab87deef2ba9e4d2ce386a19eeaffecf3"];
+  Node8256 -> Node8261 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8261 [label="perm_group::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#aa36290ec8da34dd5c548e253089888c8"];
+  Node8261 -> Node8262 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8262 [label="perm_mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#af557c297c4f0847258f4dd5f3934c3f3"];
+}

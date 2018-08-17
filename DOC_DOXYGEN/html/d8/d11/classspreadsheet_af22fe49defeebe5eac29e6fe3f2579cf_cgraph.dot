@@ -1,0 +1,11 @@
+digraph "spreadsheet::~spreadsheet"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="spreadsheet::~spreadsheet",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="spreadsheet::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/classspreadsheet.html#a33d573e9994adb36c53e6ff673db9766"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="spreadsheet::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/classspreadsheet.html#a69de03c34f8556d93388fe8c6233189c"];
+}

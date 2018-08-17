@@ -1,0 +1,23 @@
+<map id="projective_space::line_through_two_points" name="projective_space::line_through_two_points">
+<area shape="rect" id="node2" href="$d5/d13/simeon_8_c.html#a36cf3f9cb484fa44da7a7dfcbe9385d0" title="do_simeon" alt="" coords="257,5,344,31"/>
+<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#ae952cf1470f33232439be751e56a07b3" title="do_blocking_set_family_3" alt="" coords="213,104,388,129"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a031abbb55d1cba39a58b62fd49f1c755" title="do_test_diagonal_line" alt="" coords="225,55,376,80"/>
+<area shape="rect" id="node7" href="$d2/d17/classprojective__space.html#a3b4fbef8fbbeee1af542b6f7c969ed79" title="projective_space::find\l_Eckardt_points_from_arc\l_not_on_conic" alt="" coords="212,153,389,205"/>
+<area shape="rect" id="node9" href="$d2/d17/classprojective__space.html#a0fc1d9c2df818d2ffa6750c2cb63c54c" title="projective_space::find\l_Eckardt_points_from_arc\l_not_on_conic_prepare_data" alt="" coords="203,229,398,281"/>
+<area shape="rect" id="node21" href="$d2/d17/classprojective__space.html#ab4caadd4ae0323c37cc2f26cfb1194cc" title="projective_space::find\l_nucleus" alt="" coords="225,305,375,344"/>
+<area shape="rect" id="node22" href="$d2/d17/classprojective__space.html#ab4a3f0b9d0329a4ff74ac5f69d4910b9" title="projective_space::points\l_on_projective_triangle" alt="" coords="218,368,382,407"/>
+<area shape="rect" id="node3" href="$d5/d13/simeon_8_c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="501,5,551,31"/>
+<area shape="rect" id="node5" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="501,80,551,105"/>
+<area shape="rect" id="node8" href="$d4/d21/classarc__generator.html#a4ae2e25ba85a60fb2a90a7b4f52675f7" title="arc_generator::print" alt="" coords="457,167,595,192"/>
+<area shape="rect" id="node10" href="$dc/db7/classarc__lifting.html#a70012c92bd78768f5c1c5d14f995147b" title="arc_lifting::find_Eckardt\l_points" alt="" coords="446,236,606,275"/>
+<area shape="rect" id="node11" href="$dc/db7/classarc__lifting.html#a11fc382addd05e0bbe8b0b44dcd4c55e" title="arc_lifting::init" alt="" coords="654,243,756,268"/>
+<area shape="rect" id="node12" href="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b" title="arc_lifting::create\l_surface" alt="" coords="804,236,927,275"/>
+<area shape="rect" id="node13" href="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b" title="lift_single_arc" alt="" coords="1007,187,1110,212"/>
+<area shape="rect" id="node15" href="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59" title="surface_create::init2" alt="" coords="988,305,1129,331"/>
+<area shape="rect" id="node19" href="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4" title="surface_with_action\l::arc_lifting_and_classify" alt="" coords="975,236,1142,275"/>
+<area shape="rect" id="node14" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1387,215,1438,240"/>
+<area shape="rect" id="node16" href="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2" title="surface_create::init\l_with_data" alt="" coords="1198,299,1332,337"/>
+<area shape="rect" id="node17" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="1198,361,1332,387"/>
+<area shape="rect" id="node18" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1387,361,1438,387"/>
+<area shape="rect" id="node20" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="1190,236,1339,275"/>
+</map>

@@ -1,0 +1,28 @@
+digraph "incidence_structure::get_and_print_decomposition_schemes"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2532 [label="incidence_structure\l::get_and_print_decomposition\l_schemes",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2532 -> Node2533 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2533 [label="decomposition_projective\l_space",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a82c6b40b3138e3e5bae2299d49680ac1"];
+  Node2532 -> Node2534 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2534 [label="incidence_structure\l::compute_tdo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a74cfa0336bdb1b0d0eace43f330a2b0f"];
+  Node2534 -> Node2535 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2535 [label="incidence_structure\l::do_tdo_high_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a8840e820448ad980279f244a90888b77"];
+  Node2532 -> Node2536 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2536 [label="incidence_structure\l::compute_tdo_stepwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a91a7039b74c96b39bcd084b02181f191"];
+  Node2536 -> Node2535 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2532 -> Node2537 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2537 [label="incidence_structure\l_compute_TDA_general",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a21ab759f6e646f3fe703c17f39361448"];
+  Node2537 -> Node2538 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2538 [label="incidence_structure\l_compute_tda",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#ab3a7584f120bbaf752a5bd831d3ebf72"];
+  Node2538 -> Node2539 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2539 [label="incidence_structure\l_compute_TDO_TDA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980"];
+  Node2537 -> Node2540 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2540 [label="singer_cycle::init\l_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d13/classsinger__cycle.html#a817cbf613596d5db2cf5e926db8fa328"];
+  Node2537 -> Node2541 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2541 [label="translation_plane_via\l_andre_model::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/dcc/classtranslation__plane__via__andre__model.html#adb424599de168ade331979a9218ee07b"];
+  Node2532 -> Node2542 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2542 [label="projective_space::decomposition",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html#ae060ee525e7a974bce04d78be7f6dd51"];
+}

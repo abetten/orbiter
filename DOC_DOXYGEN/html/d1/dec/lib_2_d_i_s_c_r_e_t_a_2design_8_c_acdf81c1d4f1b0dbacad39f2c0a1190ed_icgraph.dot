@@ -1,0 +1,40 @@
+digraph "design_lambda_max"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node369 [label="design_lambda_max",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node369 -> Node370 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node370 [label="design_parameters_admissible",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a1fdc465f664d8b5b87cf6819dd1e6d11"];
+  Node370 -> Node371 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node371 [label="design_parameter::derived\l_inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#acbfce2a35f0c379d5888acdc8d74ae19"];
+  Node371 -> Node372 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node372 [label="design_parameter::ancestor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6"];
+  Node372 -> Node373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node373 [label="design_parameter_database\l_export_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7"];
+  Node370 -> Node374 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node374 [label="design_parameter::residual\l_inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a98630a1cdc565c3c826a2636a499c5f6"];
+  Node374 -> Node372 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node369 -> Node375 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node375 [label="design_lambda_max_half",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#accb093d81f75d5cd3d46f566bba28d6a"];
+  Node375 -> Node373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node375 -> Node376 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node376 [label="determine_restricted\l_number_of_designs_t_v",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a1f0a99cd9ed4f124762cf5224335b2b7"];
+  Node376 -> Node373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node376 -> Node377 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node377 [label="determine_restricted\l_number_of_designs_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a040387501cacb94c30c33dd6a7f25c40"];
+  Node377 -> Node373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node375 -> Node378 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node378 [label="design_parameter_database\l_clans",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a730cc0fd8e835bbaa467231eebffd74e"];
+  Node375 -> Node379 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node379 [label="design_parameter_database\l_clan_report",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a744595779bda605193b61d01d79ad981"];
+  Node369 -> Node380 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node380 [label="is_trivial_clan",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a8884d267607e80d9798a5614f211a8c5"];
+  Node369 -> Node381 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node381 [label="print_clan_tex_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a6940852a56bea54b6b60aa35e5894664"];
+  Node369 -> Node373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node369 -> Node376 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node369 -> Node379 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node369 -> Node382 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node382 [label="design_parameter::alltop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#ac91d8a483974702c826889aade83cd5f"];
+}

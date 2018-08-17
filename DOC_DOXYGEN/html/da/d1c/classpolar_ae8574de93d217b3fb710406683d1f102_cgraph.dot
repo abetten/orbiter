@@ -1,0 +1,34 @@
+digraph "polar::get_orbit_length_as_INT"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2102 [label="polar::get_orbit_length\l_as_INT",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2102 -> Node2103 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2103 [label="generator::orbit_length\l_as_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#aecb478b303fd91af6a914f541906da39"];
+  Node2103 -> Node2104 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2104 [label="generator::orbit_length",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a38a102d644c03c18ad901f1a815a7f6c"];
+  Node2104 -> Node2105 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2105 [label="generator::get_stabilizer\l_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a2a03fc974c76e47e999f3abc99e6b81d"];
+  Node2105 -> Node2106 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2106 [label="longinteger_object\l::create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2"];
+  Node2106 -> Node2107 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2107 [label="longinteger_object\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1"];
+  Node2107 -> Node2108 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2108 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node2107 -> Node2109 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2109 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+  Node2107 -> Node2110 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2110 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node2106 -> Node2111 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2111 [label="INT_log10",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250"];
+  Node2106 -> Node2108 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2106 -> Node2109 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2106 -> Node2110 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2104 -> Node2112 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2112 [label="longinteger_object\l::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101"];
+  Node2112 -> Node2113 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2113 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+  Node2103 -> Node2114 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2114 [label="longinteger_object\l::as_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e"];
+}

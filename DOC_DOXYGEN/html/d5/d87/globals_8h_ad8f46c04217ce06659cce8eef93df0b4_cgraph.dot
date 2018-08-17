@@ -1,0 +1,13 @@
+digraph "write_colored_graph"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node674 [label="write_colored_graph",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node674 -> Node675 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node675 [label="INT_log10",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250"];
+  Node674 -> Node676 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node676 [label="ij2k",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042"];
+  Node674 -> Node677 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node677 [label="bitvector_s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac0135a3681a44df3fe7af1545676fbe2"];
+}

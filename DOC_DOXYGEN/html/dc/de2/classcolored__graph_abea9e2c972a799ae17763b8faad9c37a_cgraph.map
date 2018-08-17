@@ -1,0 +1,17 @@
+<map id="colored_graph::compute_neighborhood_subgraph" name="colored_graph::compute_neighborhood_subgraph">
+<area shape="rect" id="node2" href="$dc/de2/classcolored__graph.html#a104bcd930e68c04e4786678923bfdca1" title="colored_graph::colored\l_graph" alt="" coords="239,5,396,44"/>
+<area shape="rect" id="node4" href="$d5/da4/classfancy__set.html#af3ef2500d80ad02c08887b352bc49fb8" title="fancy_set::init" alt="" coords="266,68,369,93"/>
+<area shape="rect" id="node5" href="$dc/de2/classcolored__graph.html#ac13cc7a798c3ee11bef01f01c8eab061" title="colored_graph::is_adjacent" alt="" coords="227,117,408,143"/>
+<area shape="rect" id="node8" href="$d5/da4/classfancy__set.html#ab3f7e0bf35d0c312db44973eaad5b085" title="fancy_set::add_element" alt="" coords="236,167,399,192"/>
+<area shape="rect" id="node11" href="$d5/da4/classfancy__set.html#aa757da529107b6f0397cafada1423712" title="fancy_set::sort" alt="" coords="263,216,371,241"/>
+<area shape="rect" id="node16" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="258,265,377,291"/>
+<area shape="rect" id="node3" href="$dc/de2/classcolored__graph.html#ac73b077b50e6439a617aec3f1f3fd864" title="colored_graph::null" alt="" coords="469,12,604,37"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042" title="ij2k" alt="" coords="516,68,557,93"/>
+<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#ac0135a3681a44df3fe7af1545676fbe2" title="bitvector_s_i" alt="" coords="488,117,585,143"/>
+<area shape="rect" id="node9" href="$d5/da4/classfancy__set.html#a629c5fdb14e3ad606632bb3d88013851" title="fancy_set::is_contained" alt="" coords="456,167,617,192"/>
+<area shape="rect" id="node10" href="$d5/da4/classfancy__set.html#abf9e1b0592f017be71ca410371b04754" title="fancy_set::swap" alt="" coords="478,216,595,241"/>
+<area shape="rect" id="node12" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39" title="INT_vec_heapsort" alt="" coords="471,265,602,291"/>
+<area shape="rect" id="node13" href="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb" title="heapsort_make_heap" alt="" coords="665,215,815,240"/>
+<area shape="rect" id="node14" href="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b" title="heapsort_sift_down" alt="" coords="863,265,1000,291"/>
+<area shape="rect" id="node15" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="1048,291,1160,316"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="surface::print_Steiner_and_Eckardt" name="surface::print_Steiner_and_Eckardt">
+<area shape="rect" id="node2" href="$d5/d88/classsurface.html#aacb80c9a1f6a77de3ab2bad12150c39a" title="surface::latex_table\l_of_Eckardt_points" alt="" coords="411,33,548,72"/>
+<area shape="rect" id="node6" href="$d5/d88/classsurface.html#a36e371faec8bb246f04400307148744c" title="surface::latex_table\l_of_tritangent_planes" alt="" coords="404,96,554,135"/>
+<area shape="rect" id="node8" href="$d5/d88/classsurface.html#a4bf576800eeba169776d5c199a836cd4" title="surface::latex_table\l_of_trihedral_pairs" alt="" coords="201,177,338,216"/>
+<area shape="rect" id="node3" href="$d6/d2e/classeckardt__point.html#a09d0d5e2bdd6f834aecb6a065c7b6ee7" title="eckardt_point::three\l_lines" alt="" coords="628,55,767,93"/>
+<area shape="rect" id="node5" href="$d6/d2e/classeckardt__point.html#a2aa137a6c9a1ed28d410f63858f42ccf" title="eckardt_point::latex" alt="" coords="629,5,766,31"/>
+<area shape="rect" id="node4" href="$df/dbf/sajeeb_8_c.html#a94379148acec1c2aeedad1903aa0756a" title="k2ij" alt="" coords="822,93,864,119"/>
+<area shape="rect" id="node7" href="$d6/d2e/classeckardt__point.html#af8fdbe7105921bd80a717cbdaae00e87" title="eckardt_point::latex\l_index_only" alt="" coords="629,117,766,156"/>
+<area shape="rect" id="node9" href="$d5/d88/classsurface.html#af05aa0ba4420eee9f859ac13010137ac" title="surface::latex_trihedral_pair" alt="" coords="386,159,572,184"/>
+<area shape="rect" id="node11" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="427,208,531,233"/>
+<area shape="rect" id="node12" href="$d5/d88/classsurface.html#a3af89c1a0ce86c3d68b5683493c7d919" title="surface::print_trihedral\l_pairs" alt="" coords="402,257,556,296"/>
+<area shape="rect" id="node10" href="$d5/d88/classsurface.html#a3c3b2848519e60d214db736b4e397789" title="surface::print_line" alt="" coords="634,180,761,205"/>
+<area shape="rect" id="node13" href="$d5/db4/io__and__os_8h.html#a0598d3925a117c7ceee6efff0753abb1" title="print_integer_matrix\l_with_standard_labels\l_and_offset" alt="" coords="620,251,774,303"/>
+</map>

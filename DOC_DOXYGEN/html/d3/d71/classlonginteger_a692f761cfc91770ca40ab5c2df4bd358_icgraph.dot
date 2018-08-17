@@ -1,0 +1,15 @@
+digraph "longinteger::integral_division"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node990 [label="longinteger::integral\l_division",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node990 -> Node991 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node991 [label="longinteger::modp",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d71/classlonginteger.html#a4c554e7aa704ace8b97448c6d27fd4bd"];
+  Node991 -> Node992 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node992 [label="sqrt_mod",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/global_8_c.html#a8b9a700cdc4cf3ca42c28e6435945ade"];
+  Node990 -> Node993 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node993 [label="longinteger::ny_p",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d71/classlonginteger.html#a2e791f6e15c1ef6f7cd2dd3bf0a6d4c1"];
+  Node990 -> Node994 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node994 [label="longinteger::divide\l_out_int",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d71/classlonginteger.html#ac4b65023c8de701153491d80577dfb9b"];
+}

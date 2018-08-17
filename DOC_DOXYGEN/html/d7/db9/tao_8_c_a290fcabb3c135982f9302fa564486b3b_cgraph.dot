@@ -1,0 +1,15 @@
+digraph "zuppo_list"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1185 [label="zuppo_list",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1185 -> Node1186 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1186 [label="longinteger_object\l::as_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e"];
+  Node1185 -> Node1187 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1187 [label="INT_vec_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f"];
+  Node1185 -> Node1188 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1188 [label="is_prime_power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a44560c42df6f76a71d351200cbf1bd0e"];
+  Node1185 -> Node1189 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1189 [label="gcd_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a438157ad8fc60459800716752c8941b5"];
+}

@@ -1,0 +1,22 @@
+digraph "invert_mod_integer"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2530 [label="invert_mod_integer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2530 -> Node2531 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2531 [label="integer::m_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a869091f0a0f35f5354c8c4a70250e8a9"];
+  Node2531 -> Node2532 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2532 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node2532 -> Node2533 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2533 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node2532 -> Node2534 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2534 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+  Node2530 -> Node2535 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2535 [label="discreta_base::power\l_int_mod",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#abbedc6f882b55fe0b98dec33da832f8e"];
+  Node2535 -> Node2536 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2536 [label="discreta_base::one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a6f5d6422a0040950415db30e39dafd19"];
+  Node2536 -> Node2532 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2530 -> Node2537 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2537 [label="integer::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904"];
+}

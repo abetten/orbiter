@@ -1,0 +1,34 @@
+digraph "action::print_as_permutation"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node32727 [label="action::print_as_permutation",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node32727 -> Node32728 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32728 [label="action::element_print\l_as_permutation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a2975618a8203187b688a67c947150bb8"];
+  Node32728 -> Node32729 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32729 [label="action::element_print\l_as_permutation_with\l_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#addd61d869434abaad431124a6d858396"];
+  Node32729 -> Node32730 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32730 [label="action::element_image_of",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d"];
+  Node32729 -> Node32731 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32731 [label="perm_print_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#ab87deef2ba9e4d2ce386a19eeaffecf3"];
+  Node32729 -> Node32732 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32732 [label="perm_print_cycles_sorted\l_by_length_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#a9d1f2e34879c04dbc45d08984a8066e3"];
+  Node32732 -> Node32733 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32733 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node32733 -> Node32734 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32734 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node32732 -> Node32735 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32735 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node32732 -> Node32736 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32736 [label="vector_ge::copy_in",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#ad02ebf2d4e8bbf095685aea921999145"];
+  Node32736 -> Node32737 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32737 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node32736 -> Node32738 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32738 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node32732 -> Node32739 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32739 [label="vector_ge::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a0d260cce035c20b32d7989c50670aa8a"];
+  Node32739 -> Node32740 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32740 [label="action::element_print\l_quick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b"];
+  Node32739 -> Node32737 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

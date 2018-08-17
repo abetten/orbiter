@@ -1,0 +1,37 @@
+digraph "DlxSearchRHS"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node354 [label="DlxSearchRHS",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node354 -> Node355 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node355 [label="write_tree",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#ac9de85ee7e49f43b2255f8164510f036"];
+  Node354 -> Node356 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node356 [label="print_if_necessary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#aa5b6ab0580fa410716625ff0da94d8c5"];
+  Node354 -> Node357 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node357 [label="IsDone",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a8d89b0913be6ba18a1abdd0c251cbdf2"];
+  Node357 -> Node358 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node358 [label="IsColumnNotDone",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#ade91df62267ccf3ec706530c9057167d"];
+  Node354 -> Node359 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node359 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node354 -> Node360 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node360 [label="process_solution",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a0644802c7498582c7ecdb3c18be9ac00"];
+  Node360 -> Node359 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node354 -> Node358 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node354 -> Node361 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node361 [label="get_column_header",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#afb1d61622a44d0089bc62efbb3ad9bd9"];
+  Node354 -> Node362 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node362 [label="ChooseColumnFancyRHS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#ae4457eb22022b816e8281ce9c66b177b"];
+  Node354 -> Node363 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node363 [label="ChooseColumnRHS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#af8cfa323dad8209f4cef07a2ef5434a9"];
+  Node354 -> Node364 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node364 [label="IsColumnDone",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a3007dba2b9acdbd54da58013207771eb"];
+  Node354 -> Node365 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node365 [label="Cover",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a779523d7d194ac8ee94af5f6c754a3f1"];
+  Node354 -> Node366 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node366 [label="count_nb_choices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#aea8d3299981a83f8368fca5775cc37f9"];
+  Node354 -> Node367 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node367 [label="DlxSearchRHS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#acea905e4026b82ace11f244c1c173af7"];
+  Node354 -> Node368 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node368 [label="UnCover",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#ae438e7c2e37e310d1981d3a7be44613d"];
+}

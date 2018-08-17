@@ -1,0 +1,13 @@
+<map id="Vector::hip1" name="Vector::hip1">
+<area shape="rect" id="node2" href="$d5/db2/class_vector.html#ad2dc082288f858d22a528832289e0704" title="Vector::s_l" alt="" coords="147,5,230,31"/>
+<area shape="rect" id="node3" href="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871" title="Vector::s_i" alt="" coords="307,107,391,132"/>
+<area shape="rect" id="node4" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="969,157,1119,183"/>
+<area shape="rect" id="node7" href="$d5/db2/class_vector.html#a75d4942cc7b9794717b4846c10520db8" title="Vector::s_ii" alt="" coords="145,157,232,183"/>
+<area shape="rect" id="node5" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1167,132,1360,157"/>
+<area shape="rect" id="node6" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1224,181,1304,207"/>
+<area shape="rect" id="node8" href="$d7/d71/classdiscreta__base.html#aadb92c01fbe69b3034b0214b33fbc735" title="discreta_base::s_i_i" alt="" coords="280,157,419,183"/>
+<area shape="rect" id="node9" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="467,208,675,233"/>
+<area shape="rect" id="node11" href="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26" title="discreta_base::as_integer" alt="" coords="484,257,658,283"/>
+<area shape="rect" id="node12" href="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904" title="integer::s_i" alt="" coords="528,107,614,132"/>
+<area shape="rect" id="node10" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="723,208,921,233"/>
+</map>

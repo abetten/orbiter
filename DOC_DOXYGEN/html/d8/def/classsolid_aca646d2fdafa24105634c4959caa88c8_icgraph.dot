@@ -1,0 +1,43 @@
+digraph "solid::nb_V"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3651 [label="solid::nb_V",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3651 -> Node3652 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3652 [label="solid::init_V",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0b156ca77a137dc8aa94ab22d048e542"];
+  Node3652 -> Node3653 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3653 [label="solid::join_disjoint",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ac3c7868e3b650b7112309c7ad15a394c"];
+  Node3653 -> Node3654 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3654 [label="solid::direct_sum",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a2045d572bdbd493c541c69624baeedbf"];
+  Node3653 -> Node3655 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3655 [label="solid::direct_product",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a8b4527c066bcebd2e6542fe158c607b0"];
+  Node3651 -> Node3656 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3656 [label="solid::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0afe4403778d31d092e2a66c13a9a365"];
+  Node3651 -> Node3657 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3657 [label="solid::standard_vertex\l_labels",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#abd47abc26a30fdb78e452b0a519b3076"];
+  Node3657 -> Node3655 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3657 -> Node3658 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3658 [label="solid::cube",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a308e6888759550da489397527ed89137"];
+  Node3657 -> Node3659 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3659 [label="solid::cube4D",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ab6c85f8f130a3f4409ce5fe5340fb852"];
+  Node3651 -> Node3660 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3660 [label="solid::dual",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757"];
+  Node3651 -> Node3661 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3661 [label="solid::cut_vertices",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce"];
+  Node3651 -> Node3662 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3662 [label="solid::edge_midpoints",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc"];
+  Node3651 -> Node3653 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3651 -> Node3663 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3663 [label="solid::scale",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a26c0fc360080e87361451aaec9faa98c"];
+  Node3651 -> Node3664 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3664 [label="solid::add_central\l_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#abec108e749250b1fbab7c8dcf98b96ae"];
+  Node3651 -> Node3658 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3651 -> Node3659 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3651 -> Node3665 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3665 [label="solid::dodecahedron",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a514072d4dfd0f82ba24b0df1ac302d6f"];
+  Node3651 -> Node3666 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3666 [label="solid::write_graphfile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#ab21f3d7cb562fa9ce61b1a1cb2e5a411"];
+  Node3651 -> Node3667 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3667 [label="solid::write_solidfile",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/def/classsolid.html#a60865c3210ff835fe2bd528f2396686d"];
+}

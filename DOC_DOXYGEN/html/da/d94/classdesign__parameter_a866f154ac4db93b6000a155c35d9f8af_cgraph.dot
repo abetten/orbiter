@@ -1,0 +1,40 @@
+digraph "design_parameter::trung_right_partner"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2324 [label="design_parameter::trung\l_right_partner",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2324 -> Node2325 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2325 [label="design_parameter::v",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a4fb1a94211c5a14072a459038b87a3ed"];
+  Node2325 -> Node2326 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2326 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
+  Node2325 -> Node2327 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2327 [label="discreta_base::as_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26"];
+  Node2325 -> Node2328 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2328 [label="integer::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904"];
+  Node2324 -> Node2329 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2329 [label="design_parameter::K",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a0960cd8a9ce482e57708344085b8d5ee"];
+  Node2329 -> Node2326 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2329 -> Node2327 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2329 -> Node2328 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2324 -> Node2330 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2330 [label="discreta_base::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a96f759b28f7c30bdfd95ac10f5972bd0"];
+  Node2324 -> Node2331 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2331 [label="design_parameter::lambda",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a53f496a4ef883ba3c06b500e48b238f5"];
+  Node2331 -> Node2326 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2324 -> Node2332 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2332 [label="design_parameter::t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#acf428913d279e62bcadc66b34303ece2"];
+  Node2332 -> Node2326 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2332 -> Node2327 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2332 -> Node2328 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2324 -> Node2333 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2333 [label="discreta_base::integral\l_division",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a92b3001ac35af9185b316c0d8f89070e"];
+  Node2333 -> Node2334 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2334 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node2334 -> Node2335 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2335 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node2334 -> Node2336 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2336 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+  Node2324 -> Node2337 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2337 [label="discreta_base::add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a209e98b4fef96cb922b3caa49cd70a79"];
+}

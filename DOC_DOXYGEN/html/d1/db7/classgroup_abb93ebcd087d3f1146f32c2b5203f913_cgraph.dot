@@ -1,0 +1,19 @@
+digraph "group::code_ascii"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node31 [label="group::code_ascii",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node31 -> Node32 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node32 [label="group::require_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#adfc3de74ab859ba6dba668b50efaf392"];
+  Node31 -> Node33 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node33 [label="code_INT4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a77bf7a59ce7634a3328237f863fd1251"];
+  Node33 -> Node34 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node34 [label="code_UBYTE",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#ab19ac74b5d294f8f631cf9280c38dfd6"];
+  Node31 -> Node35 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node35 [label="action::element_pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a48a10a87c09b4b37c36eac1180884140"];
+  Node31 -> Node36 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node36 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node31 -> Node37 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node37 [label="code_UBYTE",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#ab19ac74b5d294f8f631cf9280c38dfd6"];
+}

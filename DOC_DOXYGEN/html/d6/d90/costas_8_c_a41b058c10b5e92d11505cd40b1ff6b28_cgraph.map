@@ -1,0 +1,9 @@
+<map id="costas" name="costas">
+<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="113,5,218,31"/>
+<area shape="rect" id="node3" href="$d6/d90/costas_8_c.html#a9e6a01ce8b12a78ac13edd94a5c451a1" title="recursion" alt="" coords="127,55,203,80"/>
+<area shape="rect" id="node4" href="$d6/d90/costas_8_c.html#af674d0d89086cd0a1be0025dfe5ec16a" title="is_lexleast" alt="" coords="266,80,349,105"/>
+<area shape="rect" id="node5" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="433,29,537,55"/>
+<area shape="rect" id="node6" href="$d6/d90/costas_8_c.html#ab3d168af63cc369fc396300382735b31" title="perm_rotate_right" alt="" coords="422,79,548,104"/>
+<area shape="rect" id="node7" href="$d6/d90/costas_8_c.html#aebc6ed2ba3265d2e995ee19e0d2c6d2b" title="lex_compare" alt="" coords="436,128,534,153"/>
+<area shape="rect" id="node8" href="$d6/d90/costas_8_c.html#aba51fd6a02cb25246a19ad82943a1e28" title="perm_flip_at_vertical_axis" alt="" coords="397,177,573,203"/>
+</map>

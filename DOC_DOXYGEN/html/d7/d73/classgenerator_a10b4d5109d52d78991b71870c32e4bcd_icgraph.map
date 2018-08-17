@@ -1,0 +1,11 @@
+<map id="generator::get_orbit_representatives" name="generator::get_orbit_representatives">
+<area shape="rect" id="node2" href="$d3/d35/snakes__and__ladders__global_8_c.html#afe3d79116aa8b4d1a93d444a3a979b6e" title="orbits_on_k_sets" alt="" coords="191,55,313,80"/>
+<area shape="rect" id="node3" href="$d1/d3d/classblt__set.html#a6b19f88bd2b92ebfba7e7c362eb9065c" title="blt_set::report" alt="" coords="410,5,513,31"/>
+<area shape="rect" id="node4" href="$d1/d3d/classblt__set.html#af8f79fc4346244acfa0e2c2d23c36993" title="blt_set::subset_orbits" alt="" coords="387,55,535,80"/>
+<area shape="rect" id="node5" href="$d4/d7e/isomorph__global_8_c.html#a13519b3a5d3b5ceb26b4bec6736b0086" title="isomorph_compute_down\l_orbits_for_isomorphism_type" alt="" coords="361,104,561,143"/>
+<area shape="rect" id="node6" href="$d4/d7e/isomorph__global_8_c.html#a4edf4a833ce5638a3d58cfae1c702b37" title="isomorph_compute_down\l_orbits_worker" alt="" coords="609,104,783,143"/>
+<area shape="rect" id="node7" href="$d4/d7e/isomorph__global_8_c.html#a3613cea19158edd30958c4edecd97d53" title="isomorph_compute_down\l_orbits" alt="" coords="831,104,1005,143"/>
+<area shape="rect" id="node8" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="1053,104,1200,143"/>
+<area shape="rect" id="node9" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1293,85,1343,111"/>
+<area shape="rect" id="node10" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="1248,135,1388,160"/>
+</map>

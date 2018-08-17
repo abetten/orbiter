@@ -1,0 +1,13 @@
+digraph "memory_object::realloc"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node98 [label="memory_object::realloc",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node98 -> Node99 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node99 [label="memory_object::alloc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a0768d510d8df4bed863435b637750185"];
+  Node99 -> Node100 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node100 [label="memory_object::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#aea989e6df86ed48049a2747df074b62a"];
+  Node100 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="memory_object::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d67/classmemory__object.html#a9e538ffb790fddfebcf9557386af1e76"];
+}

@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('functions_vars_u.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,87 +90,92 @@ $(function() {
 
 <h3><a id="index_u"></a>- u -</h3><ul>
 <li>U
-: <a class="el" href="classbuekenhout__metz.html#a077f205b35b27aa568f44656fb4b07d9">buekenhout_metz</a>
+: <a class="el" href="d8/d98/classbuekenhout__metz.html#a077f205b35b27aa568f44656fb4b07d9">buekenhout_metz</a>
 </li>
 <li>u
-: <a class="el" href="classclassify__double__sixes.html#ad555915b27e96c0aee98a65bc67b4427">classify_double_sixes</a>
+: <a class="el" href="dd/d23/classclassify__double__sixes.html#ad555915b27e96c0aee98a65bc67b4427">classify_double_sixes</a>
 </li>
 <li>U
-: <a class="el" href="classcompute__stabilizer.html#a23c77f55b495ba15ee411ebc737ee29e">compute_stabilizer</a>
-, <a class="el" href="classdifference__set__in__heisenberg__group.html#ad19370f2be27e6066c49c5b3a5b7700b">difference_set_in_heisenberg_group</a>
+: <a class="el" href="d8/d30/classcompute__stabilizer.html#a23c77f55b495ba15ee411ebc737ee29e">compute_stabilizer</a>
+, <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#ad19370f2be27e6066c49c5b3a5b7700b">difference_set_in_heisenberg_group</a>
 </li>
 <li>u
-: <a class="el" href="classovoid__generator.html#aff25630d1357ebc734201c3964d0277d">ovoid_generator</a>
+: <a class="el" href="d3/daf/classovoid__generator.html#aff25630d1357ebc734201c3964d0277d">ovoid_generator</a>
+, <a class="el" href="d8/dfa/classwreath__product.html#aea45c2758f06429db93c6639d96dac3a">wreath_product</a>
 </li>
 <li>u1
-: <a class="el" href="classclassify__double__sixes.html#ae2b61434b32eacb383fea4c862f2811b">classify_double_sixes</a>
+: <a class="el" href="dd/d23/classclassify__double__sixes.html#ae2b61434b32eacb383fea4c862f2811b">classify_double_sixes</a>
 </li>
 <li>U_gens
-: <a class="el" href="classdifference__set__in__heisenberg__group.html#a45964808540871b4b0d55c78aa4ba652">difference_set_in_heisenberg_group</a>
+: <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#a45964808540871b4b0d55c78aa4ba652">difference_set_in_heisenberg_group</a>
 </li>
 <li>U_go
-: <a class="el" href="classdifference__set__in__heisenberg__group.html#a6f746010e0ba026b41fda9b6907b8397">difference_set_in_heisenberg_group</a>
+: <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#a6f746010e0ba026b41fda9b6907b8397">difference_set_in_heisenberg_group</a>
 </li>
 <li>UF
-: <a class="el" href="classisomorph.html#a963cf2760b76969c2439a83250847495">isomorph</a>
-, <a class="el" href="classunion__find__on__k__subsets.html#a421a75e48a66d5ef546503a6d55110a8">union_find_on_k_subsets</a>
+: <a class="el" href="d3/d5f/classisomorph.html#a963cf2760b76969c2439a83250847495">isomorph</a>
+, <a class="el" href="d3/d1b/classunion__find__on__k__subsets.html#a421a75e48a66d5ef546503a6d55110a8">union_find_on_k_subsets</a>
 </li>
 <li>underlying_set_size
-: <a class="el" href="classset__of__sets.html#a5af40b6f333f35f29c948c252043bfc0">set_of_sets</a>
+: <a class="el" href="da/dd6/classset__of__sets.html#a5af40b6f333f35f29c948c252043bfc0">set_of_sets</a>
 </li>
 <li>Unitangent_planes
-: <a class="el" href="classsurface__object.html#aaae7006183fe0337646f9419c0763674">surface_object</a>
+: <a class="el" href="df/df8/classsurface__object.html#aaae7006183fe0337646f9419c0763674">surface_object</a>
 </li>
 <li>Unitangent_planes_on_lines
-: <a class="el" href="classsurface__object.html#a8c481aad84aaad8ab805161a9d169429">surface_object</a>
+: <a class="el" href="df/df8/classsurface__object.html#a8c481aad84aaad8ab805161a9d169429">surface_object</a>
 </li>
 <li>unitcoeffs
-: <a class="el" href="classmckay_1_1t_m_c_k_a_y.html#a640367986232519161646d7fde5fa1d4">mckay::tMCKAY</a>
+: <a class="el" href="d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a640367986232519161646d7fde5fa1d4">mckay::tMCKAY</a>
 </li>
 <li>unrank_point
-: <a class="el" href="classaction__on__cosets.html#ac6479fd4aaa39cdbe6242e557c71560f">action_on_cosets</a>
+: <a class="el" href="d3/d72/classaction__on__cosets.html#ac6479fd4aaa39cdbe6242e557c71560f">action_on_cosets</a>
 </li>
 <li>unrank_point_func
-: <a class="el" href="classaction__on__factor__space.html#ae22a1e77aff9c3afbb2f0f49e48cd89b">action_on_factor_space</a>
-, <a class="el" href="classgenerator.html#ac82befb4c6d7c74c375257c25bb2baa8">generator</a>
+: <a class="el" href="d5/d25/classaction__on__factor__space.html#ae22a1e77aff9c3afbb2f0f49e48cd89b">action_on_factor_space</a>
+, <a class="el" href="d7/d73/classgenerator.html#ac82befb4c6d7c74c375257c25bb2baa8">generator</a>
 </li>
 <li>unrank_vector_callback
-: <a class="el" href="classorbit__of__subspaces.html#aae2846b7a00d83ecd3c7d176dc2a055a">orbit_of_subspaces</a>
+: <a class="el" href="d5/d64/classorbit__of__subspaces.html#aae2846b7a00d83ecd3c7d176dc2a055a">orbit_of_subspaces</a>
 </li>
 <li>unused
-: <a class="el" href="structbuffer.html#a30679a361b5a72146a3705d997655446">buffer</a>
+: <a class="el" href="dd/da2/structbuffer.html#a30679a361b5a72146a3705d997655446">buffer</a>
 </li>
 <li>Up
-: <a class="el" href="structdlx__node.html#a9093c5ee407cbfc878291ee64b72f530">dlx_node</a>
+: <a class="el" href="da/d66/structdlx__node.html#a9093c5ee407cbfc878291ee64b72f530">dlx_node</a>
 </li>
 <li>upstep_primary_orbit
-: <a class="el" href="classflag__orbit__node.html#a598f3e80579424fe7b1e6136aa8fc21f">flag_orbit_node</a>
+: <a class="el" href="df/dd1/classflag__orbit__node.html#a598f3e80579424fe7b1e6136aa8fc21f">flag_orbit_node</a>
 </li>
 <li>upstep_secondary_orbit
-: <a class="el" href="classflag__orbit__node.html#a2b0fd8872adb66ff81efb522d9d3f22e">flag_orbit_node</a>
+: <a class="el" href="df/dd1/classflag__orbit__node.html#a2b0fd8872adb66ff81efb522d9d3f22e">flag_orbit_node</a>
 </li>
 <li>used_length
-: <a class="el" href="classmemory__object.html#a7deeb1452089f3a16dfb9da259f3e4ae">memory_object</a>
-, <a class="el" href="classorbit__of__sets.html#a9acc3d48538bce4c7867fba8eee97b4a">orbit_of_sets</a>
-, <a class="el" href="classorbit__of__subspaces.html#a2fec07dcce03bbc9476faae26172ece3">orbit_of_subspaces</a>
+: <a class="el" href="d8/d67/classmemory__object.html#a7deeb1452089f3a16dfb9da259f3e4ae">memory_object</a>
+, <a class="el" href="dd/d23/classorbit__of__equations.html#a315ad91be8bd32b374d36b931dc4a45e">orbit_of_equations</a>
+, <a class="el" href="d5/da0/classorbit__of__sets.html#a9acc3d48538bce4c7867fba8eee97b4a">orbit_of_sets</a>
+, <a class="el" href="d5/d64/classorbit__of__subspaces.html#a2fec07dcce03bbc9476faae26172ece3">orbit_of_subspaces</a>
 </li>
 <li>user_data
-: <a class="el" href="classcolored__graph.html#ae8c2842fc5f7382948ec0cf0afd581e5">colored_graph</a>
-, <a class="el" href="classexact__cover.html#ac1543bac5197f35715ff30402385ae4b">exact_cover</a>
-, <a class="el" href="classexact__cover__arguments.html#ab54c23f93b0dc645a512765906ab68ef">exact_cover_arguments</a>
-, <a class="el" href="classfile__output.html#a7337cf9663a3cecb88dd03229a6356a6">file_output</a>
-, <a class="el" href="classrainbow__cliques.html#a97f8b8a5deca9becc327c69640f66ecc">rainbow_cliques</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#a2a52ecf224aba9ce2ddc37eea25f640b">colored_graph</a>
+, <a class="el" href="df/d94/classexact__cover.html#ac1543bac5197f35715ff30402385ae4b">exact_cover</a>
+, <a class="el" href="d3/dae/classexact__cover__arguments.html#ab54c23f93b0dc645a512765906ab68ef">exact_cover_arguments</a>
+, <a class="el" href="d8/dc7/classfile__output.html#a9a448b401219f14b314f5ff83957c452">file_output</a>
+, <a class="el" href="d3/d54/classrainbow__cliques.html#a3e172a0948ee469df302dc5bf83fc43c">rainbow_cliques</a>
 </li>
 <li>user_data_size
-: <a class="el" href="classcolored__graph.html#afc57ecc5e5d94a98904a8c7eb748a73f">colored_graph</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#afc57ecc5e5d94a98904a8c7eb748a73f">colored_graph</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

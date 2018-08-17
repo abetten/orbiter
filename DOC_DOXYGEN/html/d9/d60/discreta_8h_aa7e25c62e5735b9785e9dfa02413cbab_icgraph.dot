@@ -1,0 +1,13 @@
+digraph "vec_generators_frobenius_in_AG"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11211 [label="vec_generators_frobenius\l_in_AG",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node11211 -> Node11212 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11212 [label="vec_generators_GL_n\l_q_subgroup_affine_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#adc1a2bfe52c3047a066884771aa01321"];
+  Node11212 -> Node11213 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11213 [label="vec_generators_GL_n\l_q_affine_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a689108f410f773f0681e21a864097f16"];
+  Node11212 -> Node11214 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11214 [label="vec_generators_AGGL1q\l_subgroup",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#a93659c1c7a668dd6adf9f217c608e1f1"];
+}

@@ -1,0 +1,7 @@
+<map id="solid::neighbour_faces_ij" name="solid::neighbour_faces_ij">
+<area shape="rect" id="node2" href="$d8/def/classsolid.html#ad6bcabc7a3e9082b4baef371e7828c27" title="solid::determine_neighbours" alt="" coords="221,5,410,31"/>
+<area shape="rect" id="node4" href="$d8/def/classsolid.html#ac3c7868e3b650b7112309c7ad15a394c" title="solid::join_disjoint" alt="" coords="253,55,379,80"/>
+<area shape="rect" id="node3" href="$d8/def/classsolid.html#a308e6888759550da489397527ed89137" title="solid::cube" alt="" coords="486,5,571,31"/>
+<area shape="rect" id="node5" href="$d8/def/classsolid.html#a2045d572bdbd493c541c69624baeedbf" title="solid::direct_sum" alt="" coords="468,55,589,80"/>
+<area shape="rect" id="node6" href="$d8/def/classsolid.html#a8b4527c066bcebd2e6542fe158c607b0" title="solid::direct_product" alt="" coords="458,104,599,129"/>
+</map>

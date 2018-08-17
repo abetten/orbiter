@@ -1,0 +1,12 @@
+<map id="a_domain::Gauss_step" name="a_domain::Gauss_step">
+<area shape="rect" id="node2" href="$db/dd1/classa__domain.html#a7931dba1ff177d54e06217dc8191f58c" title="a_domain::is_zero" alt="" coords="221,5,351,31"/>
+<area shape="rect" id="node3" href="$db/dd1/classa__domain.html#a62f150e399aec130df913d65a7772ff3" title="a_domain::offset" alt="" coords="226,55,346,80"/>
+<area shape="rect" id="node4" href="$db/dd1/classa__domain.html#a8bc23463db2935695424142fe9ae866b" title="a_domain::swap" alt="" coords="227,104,345,129"/>
+<area shape="rect" id="node5" href="$db/dd1/classa__domain.html#a0a6f28f247762f79caeca959f58440bc" title="a_domain::copy" alt="" coords="228,153,344,179"/>
+<area shape="rect" id="node6" href="$db/dd1/classa__domain.html#aa5db8c2f149571c925fe7093ec2c87c6" title="a_domain::inverse" alt="" coords="221,203,351,228"/>
+<area shape="rect" id="node7" href="$db/dd1/classa__domain.html#ae587ea71187430b3cfe4868182cd37f5" title="a_domain::mult" alt="" coords="230,252,342,277"/>
+<area shape="rect" id="node9" href="$db/dd1/classa__domain.html#a13f69fa177cc5e2066c216174bee4295" title="a_domain::negate" alt="" coords="222,301,350,327"/>
+<area shape="rect" id="node10" href="$db/dd1/classa__domain.html#ae0a23ffe3a8f1c79d2a32bda8dcf43ba" title="a_domain::add_apply" alt="" coords="212,351,361,376"/>
+<area shape="rect" id="node8" href="$de/dc5/algebra__and__number__theory_8h.html#ad45987433ae2f19d3af9b98fc4418559" title="INT_mult_fractions" alt="" coords="409,252,542,277"/>
+<area shape="rect" id="node11" href="$de/dc5/algebra__and__number__theory_8h.html#a63dca96ff4af450258e99520cc36541c" title="INT_add_fractions" alt="" coords="410,351,540,376"/>
+</map>

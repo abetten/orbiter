@@ -1,0 +1,11 @@
+<map id="unipoly_domain::integral_division" name="unipoly_domain::integral_division">
+<area shape="rect" id="node2" href="$d6/dab/classgl__classes.html#ab79551e3f5bc66e8049de52bd685a4ef" title="gl_classes::factor\l_polynomial" alt="" coords="248,68,372,107"/>
+<area shape="rect" id="node5" href="$da/d3c/classunipoly__domain.html#a861279fd941d6bad64e6ec13279453af" title="unipoly_domain::Frobenius\l_matrix" alt="" coords="219,131,401,169"/>
+<area shape="rect" id="node8" href="$da/d3c/classunipoly__domain.html#ae08b2f84ea25a3b0f310edec6ad9cf66" title="unipoly_domain::integral\l_division_exact" alt="" coords="227,193,393,232"/>
+<area shape="rect" id="node3" href="$d6/dab/classgl__classes.html#af529d1d8ff5a52703c5ac1d70806092e" title="gl_classes::identify\l_matrix" alt="" coords="475,5,608,44"/>
+<area shape="rect" id="node4" href="$d6/dab/classgl__classes.html#aeac561e2a41981533eb0aee6f9d2080c" title="gl_classes::generators\l_for_centralizer" alt="" coords="464,68,619,107"/>
+<area shape="rect" id="node6" href="$da/d3c/classunipoly__domain.html#a560f4cc73e0badeba359203643fbc333" title="unipoly_domain::Berlekamp\l_matrix" alt="" coords="449,131,635,169"/>
+<area shape="rect" id="node7" href="$da/d3c/classunipoly__domain.html#aec4d9b55b51268d99ef6f6480d7282b5" title="unipoly_domain::is\l_irreducible" alt="" coords="703,131,835,169"/>
+<area shape="rect" id="node9" href="$da/d3c/classunipoly__domain.html#a799f3e7de9717b6c0b52dbc5305f3bf5" title="unipoly_domain::compute\l_normal_basis" alt="" coords="683,220,856,259"/>
+<area shape="rect" id="node10" href="$da/d3c/classunipoly__domain.html#a65da08a136c47386d06c140157b72809" title="unipoly_domain::take\l_away_all_factors_from_b" alt="" coords="453,248,630,287"/>
+</map>

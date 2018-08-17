@@ -1,0 +1,34 @@
+digraph "clique_finder::point_label"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node231 [label="clique_finder::point\l_label",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node231 -> Node232 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node232 [label="clique_finder::print_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d82/classclique__finder.html#a850b257f0043aea4067ff9afbd554194"];
+  Node232 -> Node233 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node233 [label="clique_finder::backtrack\l_search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d82/classclique__finder.html#a94ab299b0915409a3bc1084186393e0a"];
+  Node233 -> Node234 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node234 [label="colored_graph::all\l_cliques_of_size_k_ignore\l_colors",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de2/classcolored__graph.html#ae25e8fa7873bb5a3409641c08ca95024"];
+  Node234 -> Node235 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node235 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d71/all__rainbow__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node233 -> Node236 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node236 [label="colored_graph::all\l_cliques_of_size_k_ignore\l_colors_and_write_solutions\l_to_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/de2/classcolored__graph.html#adac4d97375919b00495f7023be88d749"];
+  Node236 -> Node237 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node237 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d9f/all__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node233 -> Node238 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node238 [label="rainbow_cliques::search\l_with_additional_test\l_function",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d54/classrainbow__cliques.html#a38487c306d689486602968412f851b98"];
+  Node238 -> Node239 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node239 [label="rainbow_cliques::search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d54/classrainbow__cliques.html#a068ae8a136fca21b0e5bfe6d7605d3d6"];
+  Node232 -> Node240 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node240 [label="clique_finder::solve\l_decision_problem",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d82/classclique__finder.html#a56caf53f860dbbc0b13448b5982773e2"];
+  Node232 -> Node241 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node241 [label="clique_finder::backtrack\l_search_not_recursive",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d82/classclique__finder.html#acc978a5b3e9fcd0c8e4a9b08d49d94e0"];
+  Node241 -> Node238 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node231 -> Node233 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node231 -> Node240 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node231 -> Node242 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node242 [label="clique_finder::print\l_suspicous_point_subset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d82/classclique__finder.html#a9e90371ec043309aabba9b7bd805fb51"];
+  Node242 -> Node241 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node231 -> Node241 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

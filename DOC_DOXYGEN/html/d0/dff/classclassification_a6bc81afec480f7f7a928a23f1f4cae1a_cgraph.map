@@ -1,0 +1,12 @@
+<map id="classification::read_file" name="classification::read_file">
+<area shape="rect" id="node2" href="$de/df0/classorbit__node.html#a25962200ff16e51b7189e516e92a81af" title="orbit_node::read_file" alt="" coords="209,55,352,80"/>
+<area shape="rect" id="node3" href="$dc/d09/classstrong__generators.html#a2e0e07b3f0ac104178984a1ecf8d0328" title="strong_generators::\lread_from_file_binary" alt="" coords="400,48,550,87"/>
+<area shape="rect" id="node4" href="$dc/d09/classstrong__generators.html#ab7d37035d3b2ea516c4e989715f91ad5" title="strong_generators::init" alt="" coords="598,5,752,31"/>
+<area shape="rect" id="node5" href="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8" title="vector_ge::init" alt="" coords="623,55,727,80"/>
+<area shape="rect" id="node7" href="$d4/d6e/classvector__ge.html#a949c1af00a0b724a52e1806fdb6b55e1" title="vector_ge::read_from\l_file_binary" alt="" coords="601,116,749,155"/>
+<area shape="rect" id="node6" href="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452" title="vector_ge::freeself" alt="" coords="807,41,938,67"/>
+<area shape="rect" id="node8" href="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae" title="vector_ge::allocate" alt="" coords="806,91,940,116"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#abf2f35c0490a94c599c9472fb2c256eb" title="action::element_read\l_from_file_binary" alt="" coords="800,140,946,179"/>
+<area shape="rect" id="node11" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="822,203,924,228"/>
+<area shape="rect" id="node10" href="$d2/d86/classaction.html#a02107279a3bdcf054008bd180dfaef10" title="action::element_unpack" alt="" coords="994,147,1156,172"/>
+</map>

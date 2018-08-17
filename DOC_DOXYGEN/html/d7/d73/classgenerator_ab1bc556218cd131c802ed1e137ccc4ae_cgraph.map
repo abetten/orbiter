@@ -1,0 +1,11 @@
+<map id="generator::print_progress" name="generator::print_progress">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#a8e49be9e3025fd11427847e34c77024a" title="generator::level_progress" alt="" coords="226,33,398,59"/>
+<area shape="rect" id="node3" href="$d7/d73/classgenerator.html#aeef1b9fe6115b67be42d7cb3206fddd2" title="generator::print_level_info" alt="" coords="224,83,400,108"/>
+<area shape="rect" id="node10" href="$d7/d73/classgenerator.html#a7440be7583571676c0cce394aae53fef" title="generator::print_progress\l_by_level" alt="" coords="227,132,398,171"/>
+<area shape="rect" id="node4" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="497,5,566,31"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1" title="time_check_delta" alt="" coords="469,55,594,80"/>
+<area shape="rect" id="node8" href="$d7/d73/classgenerator.html#a06d3c064ba84ebe8db3537e6273f16c3" title="generator::print_problem\l_label" alt="" coords="448,104,615,143"/>
+<area shape="rect" id="node9" href="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301" title="generator::nb_orbits\l_at_level" alt="" coords="461,167,602,205"/>
+<area shape="rect" id="node6" href="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042" title="os_ticks_per_second" alt="" coords="663,31,810,56"/>
+<area shape="rect" id="node7" href="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba" title="os_ticks_to_dhms" alt="" coords="673,80,801,105"/>
+</map>

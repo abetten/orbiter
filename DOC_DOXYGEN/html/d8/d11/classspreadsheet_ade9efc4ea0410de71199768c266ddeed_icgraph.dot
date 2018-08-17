@@ -1,0 +1,9 @@
+digraph "spreadsheet::get_double"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node91 [label="spreadsheet::get_double",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node91 -> Node92 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node92 [label="spreadsheet::get_value\l_double_or_NA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/classspreadsheet.html#ac443e18030dbf7274f0673e290018f45"];
+}

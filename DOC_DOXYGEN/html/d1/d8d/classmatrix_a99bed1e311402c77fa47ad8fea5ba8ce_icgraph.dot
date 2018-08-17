@@ -1,0 +1,13 @@
+digraph "matrix::PG_point_normalize"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1532 [label="matrix::PG_point_normalize",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1532 -> Node1533 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1533 [label="matrix::PG_point_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d8d/classmatrix.html#a482c95dbcf39d23ea96bca94e2a3f8cb"];
+  Node1533 -> Node1534 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1534 [label="permutation::induce\l_on_lines_of_PG_k_q",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/classpermutation.html#a3e01585ffb15282fc45a3158c5ad0b76"];
+  Node1534 -> Node1535 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1535 [label="vec_generators_induce\l_on_lines_of_PG_k_q",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dd3/perm__group__gens_8_c.html#ab33fa2e167b2501e5761fee699b4c285"];
+}

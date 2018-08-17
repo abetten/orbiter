@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('globals_func_o.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,251 +90,276 @@ $(function() {
 
 <h3><a id="index_o"></a>- o -</h3><ul>
 <li>O4_find_tangent_plane()
-: <a class="el" href="galois_8h.html#ad44a004f3a5ff15b3ac8f1fb6dc0c090">galois.h</a>
-, <a class="el" href="group__generators_8_c.html#ad44a004f3a5ff15b3ac8f1fb6dc0c090">group_generators.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#ad44a004f3a5ff15b3ac8f1fb6dc0c090">algebra_and_number_theory.h</a>
+, <a class="el" href="d4/d95/group__generators_8_c.html#ad44a004f3a5ff15b3ac8f1fb6dc0c090">group_generators.C</a>
 </li>
 <li>O4_grid_coordinates_rank()
-: <a class="el" href="group__generators_8_c.html#a26261eb7d9fbe56530e1d7805f51869c">group_generators.C</a>
-, <a class="el" href="galois_8h.html#a26261eb7d9fbe56530e1d7805f51869c">galois.h</a>
+: <a class="el" href="d4/d95/group__generators_8_c.html#a26261eb7d9fbe56530e1d7805f51869c">group_generators.C</a>
+, <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a26261eb7d9fbe56530e1d7805f51869c">algebra_and_number_theory.h</a>
 </li>
 <li>O4_grid_coordinates_unrank()
-: <a class="el" href="galois_8h.html#a5e8a182ab1a37c8b099619c13b52e3aa">galois.h</a>
-, <a class="el" href="group__generators_8_c.html#a5e8a182ab1a37c8b099619c13b52e3aa">group_generators.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a5e8a182ab1a37c8b099619c13b52e3aa">algebra_and_number_theory.h</a>
+, <a class="el" href="d4/d95/group__generators_8_c.html#a5e8a182ab1a37c8b099619c13b52e3aa">group_generators.C</a>
 </li>
 <li>O4_isomorphism_2to4()
-: <a class="el" href="group__generators_8_c.html#a0928b05ef61ff7466b42b6f3cc672a37">group_generators.C</a>
-, <a class="el" href="galois_8h.html#a0928b05ef61ff7466b42b6f3cc672a37">galois.h</a>
+: <a class="el" href="d4/d95/group__generators_8_c.html#a0928b05ef61ff7466b42b6f3cc672a37">group_generators.C</a>
+, <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a0928b05ef61ff7466b42b6f3cc672a37">algebra_and_number_theory.h</a>
 </li>
 <li>O4_isomorphism_2to4_embedded()
-: <a class="el" href="action_8h.html#aa6a3808993602713a701a20d3905ebe1">action.h</a>
-, <a class="el" href="action__global_8_c.html#aa6a3808993602713a701a20d3905ebe1">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#aa6a3808993602713a701a20d3905ebe1">action_global.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#aa6a3808993602713a701a20d3905ebe1">group_actions.h</a>
 </li>
 <li>O4_isomorphism_4to2()
-: <a class="el" href="galois_8h.html#a53847fa0202e69f87b2131f09fa1ff89">galois.h</a>
-, <a class="el" href="group__generators_8_c.html#a53847fa0202e69f87b2131f09fa1ff89">group_generators.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a53847fa0202e69f87b2131f09fa1ff89">algebra_and_number_theory.h</a>
+, <a class="el" href="d4/d95/group__generators_8_c.html#a53847fa0202e69f87b2131f09fa1ff89">group_generators.C</a>
 </li>
 <li>O4_to_O5()
-: <a class="el" href="action_8h.html#af20467afc2151efb154c3c86ae5e1e5a">action.h</a>
-, <a class="el" href="action__global_8_c.html#af20467afc2151efb154c3c86ae5e1e5a">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#af20467afc2151efb154c3c86ae5e1e5a">action_global.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#af20467afc2151efb154c3c86ae5e1e5a">group_actions.h</a>
 </li>
 <li>O5_to_O4()
-: <a class="el" href="action__global_8_c.html#a8c29abd2a0c84f711a3705625de27887">action_global.C</a>
-, <a class="el" href="action_8h.html#a8c29abd2a0c84f711a3705625de27887">action.h</a>
+: <a class="el" href="dc/dd4/group__actions_8h.html#a8c29abd2a0c84f711a3705625de27887">group_actions.h</a>
+, <a class="el" href="d5/d90/action__global_8_c.html#a8c29abd2a0c84f711a3705625de27887">action_global.C</a>
 </li>
 <li>OiPA_encode()
-: <a class="el" href="projective__space__main_8_c.html#a7ee717b278a36df7300440bf6de5fcdd">projective_space_main.C</a>
+: <a class="el" href="d0/de6/projective__space__main_8_c.html#a7ee717b278a36df7300440bf6de5fcdd">projective_space_main.C</a>
 </li>
 <li>OiPA_group_order()
-: <a class="el" href="projective__space__main_8_c.html#ad91b5a6d2b35b598a5df99ce37f85a10">projective_space_main.C</a>
+: <a class="el" href="d0/de6/projective__space__main_8_c.html#ad91b5a6d2b35b598a5df99ce37f85a10">projective_space_main.C</a>
 </li>
 <li>OKeefe_Penttila_32()
-: <a class="el" href="data_8_c.html#a30ac3b374e7cac53bd723d0826457ddf">data.C</a>
-, <a class="el" href="galois_8h.html#a30ac3b374e7cac53bd723d0826457ddf">galois.h</a>
+: <a class="el" href="d7/d94/data_8_c.html#a30ac3b374e7cac53bd723d0826457ddf">data.C</a>
+, <a class="el" href="d4/d67/geometry_8h.html#a30ac3b374e7cac53bd723d0826457ddf">geometry.h</a>
 </li>
 <li>on_circle_double()
-: <a class="el" href="draw_8_c.html#a77c6449b834be197cdf194bcf7d0a0fc">draw.C</a>
-, <a class="el" href="galois_8h.html#a77c6449b834be197cdf194bcf7d0a0fc">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#a77c6449b834be197cdf194bcf7d0a0fc">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#a77c6449b834be197cdf194bcf7d0a0fc">graphics.h</a>
 </li>
 <li>On_circle_int()
-: <a class="el" href="solid_8_c.html#a3bb3495d21ca355a81818dd6012881eb">solid.C</a>
+: <a class="el" href="d2/dfb/solid_8_c.html#a3bb3495d21ca355a81818dd6012881eb">solid.C</a>
 </li>
 <li>on_circle_int()
-: <a class="el" href="draw_8_c.html#a4c1cb8659cfd62a9742b3d12c6f5397f">draw.C</a>
-, <a class="el" href="galois_8h.html#a4c1cb8659cfd62a9742b3d12c6f5397f">galois.h</a>
+: <a class="el" href="d9/d29/draw_8_c.html#a4c1cb8659cfd62a9742b3d12c6f5397f">draw.C</a>
+, <a class="el" href="d7/d04/graphics_8h.html#a4c1cb8659cfd62a9742b3d12c6f5397f">graphics.h</a>
 </li>
 <li>one_by_one()
-: <a class="el" href="test_8_c.html#a98a5fef7ee4b4629f64f6f39cc3b14f3">test.C</a>
+: <a class="el" href="d5/d3f/test_8_c.html#a98a5fef7ee4b4629f64f6f39cc3b14f3">test.C</a>
 </li>
 <li>open_solution_file()
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#a1ab938d1414c2ce08a91cdc5d390a6ec">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a1ab938d1414c2ce08a91cdc5d390a6ec">dlx.C</a>
 </li>
 <li>open_tree_file()
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2dlx_8_c.html#a326744a7570a6f5993c62aae87647cbf">dlx.C</a>
+: <a class="el" href="d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a326744a7570a6f5993c62aae87647cbf">dlx.C</a>
 </li>
 <li>operator&lt;&lt;()
-: <a class="el" href="galois_8h.html#ad627dcdf45249dd7cf73ed97ae4cdcb0">galois.h</a>
-, <a class="el" href="longinteger__object_8_c.html#a2d75190c2a04177840e33e0f6dea097c">longinteger_object.C</a>
-, <a class="el" href="partitionstack_8_c.html#ad627dcdf45249dd7cf73ed97ae4cdcb0">partitionstack.C</a>
-, <a class="el" href="discreta_8h.html#a7ea8ce97e4d0d36b3da432d772a9a67b">discreta.h</a>
-, <a class="el" href="global_8_c.html#a639e8e03b2612dfa7dbce534edd2fb3d">global.C</a>
-, <a class="el" href="galois_8h.html#a2d75190c2a04177840e33e0f6dea097c">galois.h</a>
+: <a class="el" href="d5/de2/foundations_2data__structures_2data__structures_8h.html#ad627dcdf45249dd7cf73ed97ae4cdcb0">data_structures.h</a>
+, <a class="el" href="d0/d1b/partitionstack_8_c.html#ad627dcdf45249dd7cf73ed97ae4cdcb0">partitionstack.C</a>
+, <a class="el" href="d5/da7/foundations_8h.html#a2d75190c2a04177840e33e0f6dea097c">foundations.h</a>
+, <a class="el" href="d9/d60/discreta_8h.html#a7ea8ce97e4d0d36b3da432d772a9a67b">discreta.h</a>
+, <a class="el" href="d3/d72/global_8_c.html#a639e8e03b2612dfa7dbce534edd2fb3d">global.C</a>
+, <a class="el" href="df/d52/longinteger__object_8_c.html#a2d75190c2a04177840e33e0f6dea097c">longinteger_object.C</a>
 </li>
 <li>opposite_under_folding_line()
-: <a class="el" href="hamming_8_c.html#a12ee45b3d036f6dc56c7adcabbfaaef4">hamming.C</a>
+: <a class="el" href="de/d10/hamming_8_c.html#a12ee45b3d036f6dc56c7adcabbfaaef4">hamming.C</a>
 </li>
 <li>opposite_under_folding_plane()
-: <a class="el" href="hamming_8_c.html#a6c1af48f0629ffc685bc9c25f506e2ea">hamming.C</a>
+: <a class="el" href="de/d10/hamming_8_c.html#a6c1af48f0629ffc685bc9c25f506e2ea">hamming.C</a>
 </li>
 <li>opposite_under_folding_solid()
-: <a class="el" href="hamming_8_c.html#a362251ba8decbf55f4d6cddcde116c7a">hamming.C</a>
+: <a class="el" href="de/d10/hamming_8_c.html#a362251ba8decbf55f4d6cddcde116c7a">hamming.C</a>
 </li>
 <li>orbit_of_element()
-: <a class="el" href="discreta_8h.html#abca40f2a6c6dce97e7a2269b87e171d3">discreta.h</a>
+: <a class="el" href="d9/d60/discreta_8h.html#abca40f2a6c6dce97e7a2269b87e171d3">discreta.h</a>
+</li>
+<li>orbit_of_equations_compare_func()
+: <a class="el" href="dc/d3d/orbit__of__equations_8_c.html#a45369531a23f3b2a64b375ddbafb6e7f">orbit_of_equations.C</a>
+, <a class="el" href="d6/df1/orbits_8h.html#a45369531a23f3b2a64b375ddbafb6e7f">orbits.h</a>
 </li>
 <li>orbit_of_sets_compare_func()
-: <a class="el" href="orbit__of__sets_8_c.html#adc9a718593fa6560230718e1c24060a1">orbit_of_sets.C</a>
-, <a class="el" href="top__level_8h.html#adc9a718593fa6560230718e1c24060a1">top_level.h</a>
+: <a class="el" href="d3/d7e/orbit__of__sets_8_c.html#adc9a718593fa6560230718e1c24060a1">orbit_of_sets.C</a>
+, <a class="el" href="d6/df1/orbits_8h.html#adc9a718593fa6560230718e1c24060a1">orbits.h</a>
 </li>
 <li>orbit_of_subspaces_compare_func()
-: <a class="el" href="orbit__of__subspaces_8_c.html#a05ba8b7962f347724c63d56ea731d209">orbit_of_subspaces.C</a>
-, <a class="el" href="top__level_8h.html#a05ba8b7962f347724c63d56ea731d209">top_level.h</a>
+: <a class="el" href="de/d04/orbit__of__subspaces_8_c.html#a05ba8b7962f347724c63d56ea731d209">orbit_of_subspaces.C</a>
+, <a class="el" href="d6/df1/orbits_8h.html#a05ba8b7962f347724c63d56ea731d209">orbits.h</a>
 </li>
 <li>orbits_draw_box()
-: <a class="el" href="draw_8_c.html#aeec0f332c0b0bc38273c1daac1cb85db">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#aeec0f332c0b0bc38273c1daac1cb85db">draw.C</a>
 </li>
 <li>orbits_draw_circle()
-: <a class="el" href="draw_8_c.html#aab67c26d29e82151142b788f15c5fe1e">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#aab67c26d29e82151142b788f15c5fe1e">draw.C</a>
 </li>
 <li>orbits_draw_dot()
-: <a class="el" href="draw_8_c.html#a20a270e8cc52b4a32cdd36bfa75d849e">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#a20a270e8cc52b4a32cdd36bfa75d849e">draw.C</a>
 </li>
 <li>orbits_draw_line2()
-: <a class="el" href="draw_8_c.html#ac3530544761e3a79ddef41ed599ea345">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#ac3530544761e3a79ddef41ed599ea345">draw.C</a>
 </li>
 <li>orbits_draw_line3()
-: <a class="el" href="draw_8_c.html#af0899d0353c41dee492de1e8925965f4">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#af0899d0353c41dee492de1e8925965f4">draw.C</a>
 </li>
 <li>orbits_draw_line4()
-: <a class="el" href="draw_8_c.html#ac219f91f40350f9f7aef5ed9e9cf32e9">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#ac219f91f40350f9f7aef5ed9e9cf32e9">draw.C</a>
 </li>
 <li>orbits_on_k_sets()
-: <a class="el" href="snakes__and__ladders__global_8_c.html#afe3d79116aa8b4d1a93d444a3a979b6e">snakes_and_ladders_global.C</a>
-, <a class="el" href="snakesandladders_8h.html#afe3d79116aa8b4d1a93d444a3a979b6e">snakesandladders.h</a>
+: <a class="el" href="da/d10/other_8h.html#afe3d79116aa8b4d1a93d444a3a979b6e">other.h</a>
+, <a class="el" href="d3/d35/snakes__and__ladders__global_8_c.html#afe3d79116aa8b4d1a93d444a3a979b6e">snakes_and_ladders_global.C</a>
 </li>
 <li>orbits_on_k_sets_compute()
-: <a class="el" href="snakes__and__ladders__global_8_c.html#a96743526b15703539d544499276aaa71">snakes_and_ladders_global.C</a>
-, <a class="el" href="snakesandladders_8h.html#a96743526b15703539d544499276aaa71">snakesandladders.h</a>
+: <a class="el" href="da/d10/other_8h.html#a96743526b15703539d544499276aaa71">other.h</a>
+, <a class="el" href="d3/d35/snakes__and__ladders__global_8_c.html#a96743526b15703539d544499276aaa71">snakes_and_ladders_global.C</a>
 </li>
 <li>orbits_point()
-: <a class="el" href="draw_8_c.html#a2c437e67c2fe1c2693cccb961c9c185e">draw.C</a>
+: <a class="el" href="d9/d29/draw_8_c.html#a2c437e67c2fe1c2693cccb961c9c185e">draw.C</a>
 </li>
 <li>orbjoin()
-: <a class="el" href="nautil_8c.html#a17de24be4492f5542d87afd7aa5419ef">nautil.c</a>
-, <a class="el" href="nauty_8h.html#ac16db8d6e6f366114ca337a74407d3b5">nauty.h</a>
+: <a class="el" href="d8/dd4/nautil_8c.html#a4c40e99722cd72a28dadc158cbd430d1">nautil.c</a>
+, <a class="el" href="d1/da0/nauty_8h.html#aa434ac895796c75f214df5cf713311b1">nauty.h</a>
 </li>
 <li>order_Bn_group_factorized()
-: <a class="el" href="galois_8h.html#a841ba07ff99bf4d123c22f1cb3d7ef83">galois.h</a>
-, <a class="el" href="group__generators_8_c.html#a841ba07ff99bf4d123c22f1cb3d7ef83">group_generators.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#a841ba07ff99bf4d123c22f1cb3d7ef83">algebra_and_number_theory.h</a>
+, <a class="el" href="d4/d95/group__generators_8_c.html#a841ba07ff99bf4d123c22f1cb3d7ef83">group_generators.C</a>
 </li>
 <li>order_mod_p()
-: <a class="el" href="galois_8h.html#aa38aa7e68ab81726a4462995135456b2">galois.h</a>
-, <a class="el" href="number__theory_8_c.html#aa38aa7e68ab81726a4462995135456b2">number_theory.C</a>
+: <a class="el" href="de/dc5/algebra__and__number__theory_8h.html#aa38aa7e68ab81726a4462995135456b2">algebra_and_number_theory.h</a>
+, <a class="el" href="df/dda/number__theory_8_c.html#aa38aa7e68ab81726a4462995135456b2">number_theory.C</a>
 </li>
 <li>order_of_PGGL_n_q()
-: <a class="el" href="action_8h.html#ab6d0aa1331a5883ec22f07f131de9462">action.h</a>
-, <a class="el" href="action__global_8_c.html#ab6d0aa1331a5883ec22f07f131de9462">action_global.C</a>
+: <a class="el" href="d5/d90/action__global_8_c.html#ab6d0aa1331a5883ec22f07f131de9462">action_global.C</a>
+, <a class="el" href="dc/dd4/group__actions_8h.html#ab6d0aa1331a5883ec22f07f131de9462">group_actions.h</a>
 </li>
 <li>order_PO()
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a67d0556f5299eaab25b7d2d3f3e0519f">orthogonal_points.C</a>
-, <a class="el" href="galois_8h.html#a67d0556f5299eaab25b7d2d3f3e0519f">galois.h</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a67d0556f5299eaab25b7d2d3f3e0519f">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a67d0556f5299eaab25b7d2d3f3e0519f">orthogonal_points.C</a>
 </li>
 <li>order_PO_epsilon()
-: <a class="el" href="galois_8h.html#accb4a5b687f3a8d953d08f20dbd2259d">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#accb4a5b687f3a8d953d08f20dbd2259d">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#accb4a5b687f3a8d953d08f20dbd2259d">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#accb4a5b687f3a8d953d08f20dbd2259d">orthogonal_points.C</a>
 </li>
 <li>order_PO_minus()
-: <a class="el" href="galois_8h.html#a291cf918a191effbb110a631cbc63949">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a291cf918a191effbb110a631cbc63949">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a291cf918a191effbb110a631cbc63949">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a291cf918a191effbb110a631cbc63949">orthogonal_points.C</a>
 </li>
 <li>order_PO_parabolic()
-: <a class="el" href="galois_8h.html#ab3f777ac181e26bb1d335b81541e28d7">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#ab3f777ac181e26bb1d335b81541e28d7">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#ab3f777ac181e26bb1d335b81541e28d7">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ab3f777ac181e26bb1d335b81541e28d7">orthogonal_points.C</a>
 </li>
 <li>order_PO_plus()
-: <a class="el" href="galois_8h.html#a7b502d4e1c2313cc7ba4c78db024f99a">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a7b502d4e1c2313cc7ba4c78db024f99a">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a7b502d4e1c2313cc7ba4c78db024f99a">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a7b502d4e1c2313cc7ba4c78db024f99a">orthogonal_points.C</a>
 </li>
 <li>order_Pomega()
-: <a class="el" href="galois_8h.html#a5cb290576dfbbd2c7e860b2a934f65dc">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a8a75012f4c2c42c0d27dae7d7164de00">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a5cb290576dfbbd2c7e860b2a934f65dc">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a8a75012f4c2c42c0d27dae7d7164de00">orthogonal_points.C</a>
 </li>
 <li>order_POmega_epsilon()
-: <a class="el" href="galois_8h.html#ad142560d457a06003b118cf0008201e6">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a8ecfc1dff843761ef0e45b03572c09d0">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#ad142560d457a06003b118cf0008201e6">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a8ecfc1dff843761ef0e45b03572c09d0">orthogonal_points.C</a>
 </li>
 <li>order_Pomega_minus()
-: <a class="el" href="galois_8h.html#a8d4f57d774f93b76346247838640198d">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a8d4f57d774f93b76346247838640198d">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a8d4f57d774f93b76346247838640198d">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a8d4f57d774f93b76346247838640198d">orthogonal_points.C</a>
 </li>
 <li>order_Pomega_parabolic()
-: <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#ac63f711f1b5ae8a8d12f21150be953ef">orthogonal_points.C</a>
-, <a class="el" href="galois_8h.html#ac63f711f1b5ae8a8d12f21150be953ef">galois.h</a>
+: <a class="el" href="d4/d67/geometry_8h.html#ac63f711f1b5ae8a8d12f21150be953ef">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ac63f711f1b5ae8a8d12f21150be953ef">orthogonal_points.C</a>
 </li>
 <li>order_Pomega_plus()
-: <a class="el" href="galois_8h.html#a658e4ffeca0813abb89cab202a380ae0">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a658e4ffeca0813abb89cab202a380ae0">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a658e4ffeca0813abb89cab202a380ae0">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a658e4ffeca0813abb89cab202a380ae0">orthogonal_points.C</a>
 </li>
 <li>ordered_pair_rank()
-: <a class="el" href="combinatorics_8_c.html#a01ef309e6a72450dca058893da5e039d">combinatorics.C</a>
-, <a class="el" href="galois_8h.html#a01ef309e6a72450dca058893da5e039d">galois.h</a>
+: <a class="el" href="d2/d23/combinatorics_8h.html#a01ef309e6a72450dca058893da5e039d">combinatorics.h</a>
+, <a class="el" href="d2/d7c/combinatorics_8_c.html#a01ef309e6a72450dca058893da5e039d">combinatorics.C</a>
 </li>
 <li>ordered_pair_unrank()
-: <a class="el" href="galois_8h.html#a8c23cc3f9bdc826d14ad7e64c26a694f">galois.h</a>
-, <a class="el" href="combinatorics_8_c.html#a8c23cc3f9bdc826d14ad7e64c26a694f">combinatorics.C</a>
+: <a class="el" href="d2/d23/combinatorics_8h.html#a8c23cc3f9bdc826d14ad7e64c26a694f">combinatorics.h</a>
+, <a class="el" href="d2/d7c/combinatorics_8_c.html#a8c23cc3f9bdc826d14ad7e64c26a694f">combinatorics.C</a>
 </li>
 <li>orthogonal_find_root()
-: <a class="el" href="galois_8h.html#a6c7b16f839dc3e1ee95f61a37139c8a0">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a6c7b16f839dc3e1ee95f61a37139c8a0">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a6c7b16f839dc3e1ee95f61a37139c8a0">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a6c7b16f839dc3e1ee95f61a37139c8a0">orthogonal_points.C</a>
+</li>
+<li>orthogonal_lines()
+: <a class="el" href="d7/d83/points_8_c.html#a52ea49aac0593a84c977119b60fa7979">points.C</a>
+</li>
+<li>orthogonal_points()
+: <a class="el" href="d7/d83/points_8_c.html#a2a86a595e599aecd619f0046595252e4">points.C</a>
 </li>
 <li>orthogonal_points_free_global_data()
-: <a class="el" href="galois_8h.html#a9ff48c751a12182f1cc6ee384f80aa0b">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a9ff48c751a12182f1cc6ee384f80aa0b">orthogonal_points.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a9ff48c751a12182f1cc6ee384f80aa0b">geometry.h</a>
+, <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a9ff48c751a12182f1cc6ee384f80aa0b">orthogonal_points.C</a>
 </li>
 <li>orthogonal_Siegel_map_between_singular_points()
-: <a class="el" href="galois_8h.html#a2c6c42534b7915aacd84bb9725488fa9">galois.h</a>
-, <a class="el" href="_l_i_b_2_g_a_l_o_i_s_2orthogonal__points_8_c.html#a2c6c42534b7915aacd84bb9725488fa9">orthogonal_points.C</a>
+: <a class="el" href="db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a2c6c42534b7915aacd84bb9725488fa9">orthogonal_points.C</a>
+, <a class="el" href="d4/d67/geometry_8h.html#a2c6c42534b7915aacd84bb9725488fa9">geometry.h</a>
+</li>
+<li>orthogonal_transformation_from_point_to_basis_vector()
+: <a class="el" href="d5/d87/globals_8h.html#ab5eb2d6199ca4f75bc7e03f06206f7b0">globals.h</a>
+, <a class="el" href="d0/d22/numerics_8_c.html#ab5eb2d6199ca4f75bc7e03f06206f7b0">numerics.C</a>
 </li>
 <li>os_date_string()
-: <a class="el" href="galois_8h.html#a3b046740630541f8d792ecc63c030fd4">galois.h</a>
-, <a class="el" href="util_8_c.html#a3b046740630541f8d792ecc63c030fd4">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a3b046740630541f8d792ecc63c030fd4">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a3b046740630541f8d792ecc63c030fd4">util.C</a>
 </li>
 <li>os_memory_usage()
-: <a class="el" href="util_8_c.html#a5d6ab4b80c58e5d8bdb0fd1625709d0b">util.C</a>
-, <a class="el" href="galois_8h.html#a5d6ab4b80c58e5d8bdb0fd1625709d0b">galois.h</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a5d6ab4b80c58e5d8bdb0fd1625709d0b">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a5d6ab4b80c58e5d8bdb0fd1625709d0b">util.C</a>
 </li>
 <li>os_seconds_past_1970()
-: <a class="el" href="galois_8h.html#a43f9cdc7d266a857ddea7b92952494dc">galois.h</a>
-, <a class="el" href="util_8_c.html#a43f9cdc7d266a857ddea7b92952494dc">util.C</a>
+: <a class="el" href="d4/d74/util_8_c.html#a43f9cdc7d266a857ddea7b92952494dc">util.C</a>
+, <a class="el" href="d5/db4/io__and__os_8h.html#a43f9cdc7d266a857ddea7b92952494dc">io_and_os.h</a>
 </li>
 <li>os_ticks()
-: <a class="el" href="galois_8h.html#a3da6d2b09e35d569adb7101dffcb5224">galois.h</a>
-, <a class="el" href="util_8_c.html#a3da6d2b09e35d569adb7101dffcb5224">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a3da6d2b09e35d569adb7101dffcb5224">util.C</a>
 </li>
 <li>os_ticks_per_second()
-: <a class="el" href="galois_8h.html#a1b35e7a094dfde9db39ae352c9c17042">galois.h</a>
-, <a class="el" href="util_8_c.html#a1b35e7a094dfde9db39ae352c9c17042">util.C</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a1b35e7a094dfde9db39ae352c9c17042">util.C</a>
 </li>
 <li>os_ticks_system()
-: <a class="el" href="util_8_c.html#acff4709d0a21a2f5462713436eca5051">util.C</a>
-, <a class="el" href="galois_8h.html#acff4709d0a21a2f5462713436eca5051">galois.h</a>
+: <a class="el" href="d4/d74/util_8_c.html#acff4709d0a21a2f5462713436eca5051">util.C</a>
+, <a class="el" href="d5/db4/io__and__os_8h.html#acff4709d0a21a2f5462713436eca5051">io_and_os.h</a>
 </li>
 <li>os_ticks_to_dhms()
-: <a class="el" href="util_8_c.html#a0d715587fd9b8ab4e2bc822a2be313ba">util.C</a>
-, <a class="el" href="galois_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba">galois.h</a>
+: <a class="el" href="d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba">io_and_os.h</a>
+, <a class="el" href="d4/d74/util_8_c.html#a0d715587fd9b8ab4e2bc822a2be313ba">util.C</a>
+</li>
+<li>output_double()
+: <a class="el" href="d0/d22/numerics_8_c.html#a0d78928594686738975fd41e2603101f">numerics.C</a>
+, <a class="el" href="d5/d87/globals_8h.html#a0d78928594686738975fd41e2603101f">globals.h</a>
 </li>
 <li>output_texable_string()
-: <a class="el" href="global_8_c.html#a737bc3e2b6cb687ad975c30bb8cc9d75">global.C</a>
-, <a class="el" href="discreta_8h.html#a737bc3e2b6cb687ad975c30bb8cc9d75">discreta.h</a>
+: <a class="el" href="d3/d72/global_8_c.html#a737bc3e2b6cb687ad975c30bb8cc9d75">global.C</a>
+, <a class="el" href="d9/d60/discreta_8h.html#a737bc3e2b6cb687ad975c30bb8cc9d75">discreta.h</a>
 </li>
 <li>oval_polynomial()
-: <a class="el" href="projective_8_c.html#af28ff9535eb00a325309e1a15e7e2be7">projective.C</a>
-, <a class="el" href="galois_8h.html#af28ff9535eb00a325309e1a15e7e2be7">galois.h</a>
+: <a class="el" href="df/de4/projective_8_c.html#af28ff9535eb00a325309e1a15e7e2be7">projective.C</a>
+, <a class="el" href="d4/d67/geometry_8h.html#af28ff9535eb00a325309e1a15e7e2be7">geometry.h</a>
 </li>
 <li>override_polynomial_extension_field()
-: <a class="el" href="galois_8h.html#a8d54faeccf0beef3663b54e4087fd32b">galois.h</a>
-, <a class="el" href="data_8_c.html#a8d54faeccf0beef3663b54e4087fd32b">data.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a8d54faeccf0beef3663b54e4087fd32b">geometry.h</a>
+, <a class="el" href="d7/d94/data_8_c.html#a8d54faeccf0beef3663b54e4087fd32b">data.C</a>
 </li>
 <li>override_polynomial_subfield()
-: <a class="el" href="galois_8h.html#a6a2b390caa2cdeb26cdf9a3cf9816dee">galois.h</a>
-, <a class="el" href="data_8_c.html#a6a2b390caa2cdeb26cdf9a3cf9816dee">data.C</a>
+: <a class="el" href="d4/d67/geometry_8h.html#a6a2b390caa2cdeb26cdf9a3cf9816dee">geometry.h</a>
+, <a class="el" href="d7/d94/data_8_c.html#a6a2b390caa2cdeb26cdf9a3cf9816dee">data.C</a>
+</li>
+<li>ovoid_generator_early_test_func_callback()
+: <a class="el" href="d5/d9b/ovoid__generator_8_c.html#a0ef884c17f779e251fd13c6a14efcea0">ovoid_generator.C</a>
+, <a class="el" href="d0/d60/ovoid_8h.html#a0ef884c17f779e251fd13c6a14efcea0">ovoid.h</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -1,0 +1,46 @@
+digraph "incidence_structure::refine_column_partition_safe"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6707 [label="incidence_structure\l::refine_column_partition_safe",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6707 -> Node6708 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6708 [label="incidence_structure\l::compute_TDO_safe_next",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a7c315a348fc6bed0f8642767cc9cd7d1"];
+  Node6708 -> Node6709 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6709 [label="incidence_structure\l::compute_tdo_stepwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a91a7039b74c96b39bcd084b02181f191"];
+  Node6709 -> Node6710 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6710 [label="incidence_structure\l::do_tdo_high_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a8840e820448ad980279f244a90888b77"];
+  Node6707 -> Node6711 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6711 [label="incidence_structure\l::compute_TDO_safe",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#ab1409e71c4b6855e49edfd3526644202"];
+  Node6711 -> Node6712 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6712 [label="set_of_sets::get_eckardt\l_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#af6713e71ef5a1b7cc7892d78900166c4"];
+  Node6712 -> Node6713 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6713 [label="set_of_sets::number\l_of_eckardt_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html#acf1d8689cc8ef9c4987d86c78be68302"];
+  Node6713 -> Node6714 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6714 [label="surface_classify_wedge\l::generate_source_code",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a4cb31d5e7747571177fbdedf79631fd9"];
+  Node6714 -> Node6715 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6715 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node6712 -> Node6716 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6716 [label="surface::create_surface_ab",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a9e0834d9fd3ea14957df1944ac40c847"];
+  Node6716 -> Node6717 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6717 [label="surface::create_surface\l_family_S",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a820199c4eab279fad1085a308550fa8f"];
+  Node6717 -> Node6718 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6718 [label="surface_create::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59"];
+  Node6718 -> Node6719 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6719 [label="surface_create::init\l_with_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2"];
+  Node6718 -> Node6720 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6720 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node6720 -> Node6721 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6721 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node6716 -> Node6722 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6722 [label="surface_classify_wedge\l::identify_Sa",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a8fdc22ea1850bd4da28ace84adb055a6"];
+  Node6711 -> Node6723 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6723 [label="decomposition::compute_TDO",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d2b/classdecomposition.html#acde2ae0342c89d2ba817ecdc98813cbe"];
+  Node6711 -> Node6724 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6724 [label="incidence_structure\l::compute_tdo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a74cfa0336bdb1b0d0eace43f330a2b0f"];
+  Node6724 -> Node6710 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6711 -> Node6725 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6725 [label="incidence_structure\l_compute_TDO_TDA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980"];
+  Node6711 -> Node6726 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6726 [label="singer_cycle::init\l_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d13/classsinger__cycle.html#a817cbf613596d5db2cf5e926db8fa328"];
+}

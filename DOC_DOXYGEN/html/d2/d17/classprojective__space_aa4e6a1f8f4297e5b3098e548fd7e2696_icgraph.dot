@@ -1,0 +1,9 @@
+digraph "projective_space::plane_intersection_matrix_in_three_space"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2628 [label="projective_space::plane\l_intersection_matrix_in\l_three_space",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2628 -> Node2629 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2629 [label="surface::compute_external\l_lines_on_three_tritangent_planes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#ac7678771ed61c488809ea26825484bed"];
+}

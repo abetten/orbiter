@@ -1,0 +1,9 @@
+<map id="Vector::dec" name="Vector::dec">
+<area shape="rect" id="node2" href="$d8/def/classsolid.html#af0ad596c4fd4b091118dd0d6e3e3bf67" title="solid::adjacency_list" alt="" coords="150,80,290,105"/>
+<area shape="rect" id="node6" href="$d5/db2/class_vector.html#a91dbd1d04baeec1066d397e7668953e3" title="Vector::delete_element" alt="" coords="141,132,299,157"/>
+<area shape="rect" id="node3" href="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757" title="solid::dual" alt="" coords="386,5,467,31"/>
+<area shape="rect" id="node4" href="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce" title="solid::cut_vertices" alt="" coords="363,55,490,80"/>
+<area shape="rect" id="node5" href="$d8/def/classsolid.html#a00f043a4986f0eec6ed05c14d64919dc" title="solid::edge_midpoints" alt="" coords="351,104,502,129"/>
+<area shape="rect" id="node7" href="$d5/db2/class_vector.html#a075b82bb136a3fad137b9c8dfb1da4c9" title="Vector::get_and_delete\l_element" alt="" coords="347,153,506,192"/>
+<area shape="rect" id="node8" href="$d5/db2/class_vector.html#ad2f9bf9820e09ff09e3c99d1c983ab96" title="Vector::get_first_and\l_remove" alt="" coords="554,153,697,192"/>
+</map>

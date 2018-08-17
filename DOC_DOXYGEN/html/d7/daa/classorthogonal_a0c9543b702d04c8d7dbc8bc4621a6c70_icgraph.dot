@@ -1,0 +1,11 @@
+digraph "orthogonal::make_orthogonal_reflection"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11896 [label="orthogonal::make_orthogonal\l_reflection",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node11896 -> Node11897 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11897 [label="orthogonal::create\l_random_orthogonal_reflection",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#a8cf782be9d4f9ffd3dfcd485e374e879"];
+  Node11897 -> Node11898 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11898 [label="orthogonal::random\l_generator_for_orthogonal_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/daa/classorthogonal.html#a380946c3af4d3d83118c409a7aecfe3d"];
+}

@@ -1,0 +1,7 @@
+<map id="action::element_read_file" name="action::element_read_file">
+<area shape="rect" id="node2" href="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50" title="file_size" alt="" coords="262,5,331,31"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#a5cff4d93d067b68e4ecf2d8502d697bb" title="action::element_read\l_file_fp" alt="" coords="224,55,370,93"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a02107279a3bdcf054008bd180dfaef10" title="action::element_unpack" alt="" coords="418,12,580,37"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#ae38c3ef3c1125213733d63c6fc3c40cd" title="action::element_print" alt="" coords="426,61,571,87"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="446,111,551,136"/>
+</map>

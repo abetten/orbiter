@@ -1,0 +1,13 @@
+digraph "homogeneous_polynomial_domain::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node862 [label="homogeneous_polynomial\l_domain::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node862 -> Node863 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node863 [label="homogeneous_polynomial\l_domain::homogeneous_polynomial\l_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#a569c19fcf7d3e4bd65974fdc9eb93ec9"];
+  Node862 -> Node864 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node864 [label="homogeneous_polynomial\l_domain::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#a9b1f3d170e1c7ad782a719fabcd9c6f0"];
+  Node864 -> Node865 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node865 [label="homogeneous_polynomial\l_domain::~homogeneous\l_polynomial_domain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/da7/classhomogeneous__polynomial__domain.html#a99009c093637d18e6a89faa8e3e6e771"];
+}

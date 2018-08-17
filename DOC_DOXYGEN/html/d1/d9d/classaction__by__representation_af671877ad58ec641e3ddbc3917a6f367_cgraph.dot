@@ -1,0 +1,9 @@
+digraph "action_by_representation::init_action_on_conic"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node461 [label="action_by_representation\l::init_action_on_conic",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node461 -> Node462 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node462 [label="nb_PG_elements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ada56c56cb5c7b39553dc0391f2df1cee"];
+}

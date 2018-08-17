@@ -1,0 +1,20 @@
+<map id="projective_space::line_intersection_type" name="projective_space::line_intersection_type">
+<area shape="rect" id="node2" href="$d5/d9e/arcs__orderly_8_c.html#a7367bc544c290322bdbd4545388a27a8" title="do_arc_lifting" alt="" coords="231,29,331,55"/>
+<area shape="rect" id="node4" href="$d2/dd6/k__arc__lifting_8_c.html#aae70f58c3ef18694815b8f53b6ecbe05" title="user_callback_solution\l_found" alt="" coords="203,104,359,143"/>
+<area shape="rect" id="node9" href="$d5/d13/simeon_8_c.html#a36cf3f9cb484fa44da7a7dfcbe9385d0" title="do_simeon" alt="" coords="238,167,324,192"/>
+<area shape="rect" id="node11" href="$d4/d67/geometry_8h.html#a56d3becea533e33d94f5f83cf2f77d56" title="do_line_type" alt="" coords="233,216,329,241"/>
+<area shape="rect" id="node13" href="$d2/d17/classprojective__space.html#a2adc12b7ccc61af67d59406a8cb0cb31" title="projective_space::find\l_external_lines" alt="" coords="206,265,356,304"/>
+<area shape="rect" id="node14" href="$d2/d17/classprojective__space.html#aafad8f113cd484b5af556546c9159b8d" title="projective_space::find\l_tangent_lines" alt="" coords="206,328,356,367"/>
+<area shape="rect" id="node15" href="$d2/d17/classprojective__space.html#aeea055d57a5df64b2a2038c68f456d45" title="projective_space::find\l_secant_lines" alt="" coords="206,391,356,429"/>
+<area shape="rect" id="node16" href="$d2/d17/classprojective__space.html#afe69446156086fa463ffa93676f00f91" title="projective_space::find\l_k_secant_lines" alt="" coords="206,453,356,492"/>
+<area shape="rect" id="node18" href="$db/d28/classsurface__object__with__action.html#a0143b698eb050332a79ed95f7d274ada" title="surface_object_with\l_action::quartic" alt="" coords="211,516,351,555"/>
+<area shape="rect" id="node3" href="$d5/d9e/arcs__orderly_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="485,5,536,31"/>
+<area shape="rect" id="node5" href="$d2/dd6/k__arc__lifting_8_c.html#a9dd2186104f15f40ba5f5d415f4c2976" title="do_arc_lifting" alt="" coords="460,55,561,80"/>
+<area shape="rect" id="node8" href="$d7/d9c/classdiophant.html#acdd512e26ee214803439e24f24fd9805" title="diophant::solve_all\l_DLX_with_RHS_and_callback" alt="" coords="407,104,614,143"/>
+<area shape="rect" id="node6" href="$d2/dd6/k__arc__lifting_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="930,55,980,80"/>
+<area shape="rect" id="node7" href="$d2/dd6/k__arc__lifting_8_c.html#aede97f2af2307a758b06ad6506762b79" title="arc_lifting_from_classification_file" alt="" coords="662,80,882,105"/>
+<area shape="rect" id="node10" href="$d5/d13/simeon_8_c.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="main" alt="" coords="485,167,536,192"/>
+<area shape="rect" id="node12" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="485,216,536,241"/>
+<area shape="rect" id="node17" href="$d8/d98/classbuekenhout__metz.html#a4256a0fe0a3ace089014a54f2cd6cab6" title="buekenhout_metz::compute\l_the_design" alt="" coords="417,453,603,492"/>
+<area shape="rect" id="node19" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="485,523,536,548"/>
+</map>

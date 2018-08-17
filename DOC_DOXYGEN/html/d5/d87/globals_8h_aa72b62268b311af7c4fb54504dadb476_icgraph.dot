@@ -1,0 +1,22 @@
+digraph "double_vec_normalize_from_back"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node172 [label="double_vec_normalize\l_from_back",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node172 -> Node173 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node173 [label="scene::transform_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a99c389879187f0b8192ab7cc7457e2ff"];
+  Node173 -> Node174 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node174 [label="scene::transformed_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#aa63bbdb5ffcd70f233e0a3219abb89f5"];
+  Node172 -> Node175 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node175 [label="scene::transform_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a84221a022e79008c5d17628dc51ef093"];
+  Node175 -> Node174 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node172 -> Node176 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node176 [label="scene::point_as_intersection\l_of_two_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a5388dd7094fae8b0b0124555c6ab8abc"];
+  Node176 -> Node177 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node177 [label="scene::triangle",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#ac59563fef2509d30139596765dec7329"];
+  Node172 -> Node178 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node178 [label="scene::map_a_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#ac7e207e5fe33cc2f3c163d46a5b2ee44"];
+  Node178 -> Node179 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node179 [label="scene::map_a_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a6e267a2f290520e5011bc9d86faca156"];
+}

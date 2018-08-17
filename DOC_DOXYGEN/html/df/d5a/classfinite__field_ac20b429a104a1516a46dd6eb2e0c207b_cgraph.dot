@@ -1,0 +1,16 @@
+digraph "finite_field::representing_matrix8_R"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node17619 [label="finite_field::representing\l_matrix8_R",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node17619 -> Node17620 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17620 [label="finite_field::m_term",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a0c7e08b29cde397c66f462e40034d774"];
+  Node17620 -> Node17621 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17621 [label="finite_field::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0"];
+  Node17620 -> Node17622 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17622 [label="finite_field::power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a0437871b8f775f0b2d589188d9ad7e61"];
+  Node17622 -> Node17621 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17619 -> Node17623 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17623 [label="finite_field::transpose\l_matrix_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#ae526a204fb10eea7e5aeab947c89e9a0"];
+}

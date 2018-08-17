@@ -1,0 +1,11 @@
+digraph "clique_finder::close_tree_file"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node67 [label="clique_finder::close\l_tree_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node67 -> Node68 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node68 [label="rainbow_cliques::search\l_with_additional_test\l_function",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d54/classrainbow__cliques.html#a38487c306d689486602968412f851b98"];
+  Node68 -> Node69 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node69 [label="rainbow_cliques::search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d54/classrainbow__cliques.html#a068ae8a136fca21b0e5bfe6d7605d3d6"];
+}

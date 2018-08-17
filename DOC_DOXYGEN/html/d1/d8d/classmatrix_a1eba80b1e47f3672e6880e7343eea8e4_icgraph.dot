@@ -1,0 +1,13 @@
+digraph "matrix::incma_print_ascii"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node706 [label="matrix::incma_print\l_ascii",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node706 -> Node707 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node707 [label="geometry::print_incma\l_text_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a400fa93fa773518f7b55c454fa69ee78"];
+  Node707 -> Node708 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node708 [label="geometry::print_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a1d45497d61d4dc8f7325156158b7e661"];
+  Node708 -> Node709 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node709 [label="geometry::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#af92f963887d22dd3437f585df929208d"];
+}

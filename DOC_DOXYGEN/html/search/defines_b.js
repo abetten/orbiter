@@ -1,26 +1,9 @@
 var searchData=
 [
-  ['n',['N',['../fibonacci_8_c.html#a0240ac851181b84ac374872dc5434ee4',1,'N():&#160;fibonacci.C'],['../subsets_8_c.html#a0240ac851181b84ac374872dc5434ee4',1,'N():&#160;subsets.C'],['../_a_p_p_s_2_t_d_o_2packing_8_c.html#a0240ac851181b84ac374872dc5434ee4',1,'N():&#160;packing.C']]],
-  ['nauty_5finfinity',['NAUTY_INFINITY',['../nauty_8h.html#a9c2dd0ecd114df398f47a6073a6c1bc9',1,'nauty.h']]],
-  ['nautyrequired',['NAUTYREQUIRED',['../nauty_8h.html#ac6e792138dbea182f249432d31269930',1,'nauty.h']]],
-  ['nautyversion',['NAUTYVERSION',['../nauty_8h.html#a2eab327177bef75121fcbf5139266532',1,'nauty.h']]],
-  ['nautyversionid',['NAUTYVERSIONID',['../nauty_8h.html#af6044fc91087c251f937be9f5865ca0a',1,'nauty.h']]],
-  ['nb_5fextension_5ftypes',['NB_EXTENSION_TYPES',['../snakesandladders_8h.html#a787061fab42a5bdad612e08819e9dddc',1,'snakesandladders.h']]],
-  ['nb_5fpieces',['NB_PIECES',['../pentomino__5x5_8_c.html#a6af429f2b2d334f82c91c852413498f2',1,'pentomino_5x5.C']]],
-  ['new_5fbyte',['NEW_BYTE',['../galois_8h.html#a8896a8449b45f6f010fcfe3aed4c1906',1,'galois.h']]],
-  ['new_5fint',['NEW_int',['../galois_8h.html#a90fb657cef958b83df3f7a667de4a42a',1,'NEW_int():&#160;galois.h'],['../galois_8h.html#a5c8525feb14843a501b45900fbc3d2b9',1,'NEW_INT():&#160;galois.h']]],
-  ['new_5fobject',['NEW_OBJECT',['../galois_8h.html#a7c09c6ea2b0881fe7faeb1f8b72990ba',1,'galois.h']]],
-  ['new_5fobjects',['NEW_OBJECTS',['../galois_8h.html#aa7b9e080de4e702ec8614f71c1713112',1,'galois.h']]],
-  ['new_5fpbyte',['NEW_PBYTE',['../galois_8h.html#a85e529854aeacc0bf471b84aae78ca7f',1,'galois.h']]],
-  ['new_5fpint',['NEW_PINT',['../galois_8h.html#a4a8cefbefc78955c25d11d5c76eaba13',1,'NEW_PINT():&#160;galois.h'],['../galois_8h.html#a71be7a9f89c7c8f00c11501a28d10ba8',1,'NEW_pint():&#160;galois.h']]],
-  ['new_5fppint',['NEW_PPINT',['../galois_8h.html#a589b1a2100250054211a793266285f90',1,'galois.h']]],
-  ['new_5fpvoid',['NEW_pvoid',['../galois_8h.html#a74f4fb81399f4bfba5b7259fa8ee3e2c',1,'galois.h']]],
-  ['new_5fubyte',['NEW_UBYTE',['../galois_8h.html#a64affd8de4653c3c9af1d261e10504a2',1,'galois.h']]],
-  ['nilfunction',['NILFUNCTION',['../nauty_8h.html#a2fd90c871e82ef2b08769d371e5b570e',1,'nauty.h']]],
-  ['nilgraph',['NILGRAPH',['../nauty_8h.html#af2f4e69edc9686b3d5e5d333f1fb73e0',1,'nauty.h']]],
-  ['nilset',['NILSET',['../nauty_8h.html#a815f45ae640a52f36ff00669d77067b8',1,'nauty.h']]],
-  ['not_5fexisting_5ffunction',['NOT_EXISTING_FUNCTION',['../discreta_8h.html#a0fdf322ddc51606e61f9498bb27a909e',1,'discreta.h']]],
-  ['notsubset',['NOTSUBSET',['../nauty_8h.html#a7b56a6f6d719d21540583b3aa121f54b',1,'nauty.h']]],
-  ['ntoobig',['NTOOBIG',['../nauty_8h.html#ad5db2294037df609b7dc65f57d5b96f5',1,'nauty.h']]],
-  ['number_5fof_5fschemes',['NUMBER_OF_SCHEMES',['../incidence_8h.html#a27f25725c4772efe473058135daeba55',1,'incidence.h']]]
+  ['labelonly',['LABELONLY',['../d1/da0/nauty_8h.html#a982919d776615c28202aa710040d56c9',1,'nauty.h']]],
+  ['lambda',['LAMBDA',['../d4/d67/geometry_8h.html#a738607799d6938e1b15f463688029cd5',1,'geometry.h']]],
+  ['ll',['LL',['../da/d48/naurng_8c.html#a95785abe4b0b45944ceda91a5f419030',1,'naurng.c']]],
+  ['long_5flong_5fcounters',['LONG_LONG_COUNTERS',['../d1/da0/nauty_8h.html#a3b7940297c2b4d510ac4c5fc0c9fc238',1,'nauty.h']]],
+  ['longinteger_5fdigits_5ffor_5fdot',['LONGINTEGER_DIGITS_FOR_DOT',['../d9/d60/discreta_8h.html#af155ad8946555d8c598cce66ee71daef',1,'discreta.h']]],
+  ['longinteger_5fprint_5fdots',['LONGINTEGER_PRINT_DOTS',['../d9/d60/discreta_8h.html#ac5cf089e84c227c162e9a696cc7c200b',1,'discreta.h']]]
 ];

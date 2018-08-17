@@ -1,0 +1,19 @@
+digraph "partitionstack::print_tactical_decomposition_scheme_tex"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node823 [label="partitionstack::print\l_tactical_decomposition\l_scheme_tex",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node823 -> Node824 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node824 [label="incidence_structure\l::get_and_print_decomposition\l_schemes_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a2a9844501c86ee7588a64227cc6867e5"];
+  Node824 -> Node825 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node825 [label="incidence_structure\l_compute_TDA_general",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a21ab759f6e646f3fe703c17f39361448"];
+  Node825 -> Node826 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node826 [label="incidence_structure\l_compute_tda",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#ab3a7584f120bbaf752a5bd831d3ebf72"];
+  Node826 -> Node827 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node827 [label="incidence_structure\l_compute_TDO_TDA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980"];
+  Node825 -> Node828 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node828 [label="singer_cycle::init\l_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d13/classsinger__cycle.html#a817cbf613596d5db2cf5e926db8fa328"];
+  Node825 -> Node829 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node829 [label="translation_plane_via\l_andre_model::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/dcc/classtranslation__plane__via__andre__model.html#adb424599de168ade331979a9218ee07b"];
+}

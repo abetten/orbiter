@@ -1,0 +1,11 @@
+digraph "data_file::~data_file"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="data_file::~data_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="data_file::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/classdata__file.html#a01eb99b854156722d99419f407f1374d"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="data_file::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/classdata__file.html#a79d79d896f0392c516daf9d409f4aae9"];
+}

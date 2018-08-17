@@ -1,0 +1,28 @@
+<map id="sims::conjugate_by_rank" name="sims::conjugate_by_rank">
+<area shape="rect" id="node2" href="$d9/df3/classsims.html#a435d84bb7bf7292f14593b2a4344151f" title="sims::element_unrank_INT" alt="" coords="436,32,617,57"/>
+<area shape="rect" id="node12" href="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3" title="action::element_mult" alt="" coords="1098,158,1243,184"/>
+<area shape="rect" id="node15" href="$d2/d86/classaction.html#aa4bd01e338497714586636751fcef436" title="action::element_invert" alt="" coords="884,488,1035,513"/>
+<area shape="rect" id="node16" href="$d9/df3/classsims.html#a8ff29017c518c9ed459a7ea9eade2974" title="sims::element_rank_INT" alt="" coords="222,497,388,522"/>
+<area shape="rect" id="node3" href="$d9/df3/classsims.html#a8ae2ffa971c2aac809d83c18e4e91926" title="sims::path_unrank_INT" alt="" coords="671,32,830,57"/>
+<area shape="rect" id="node4" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="1333,313,1437,338"/>
+<area shape="rect" id="node5" href="$d9/df3/classsims.html#a4a9bc25b1b8e61ba34d6d3d9f9fb8ab8" title="sims::element_from_path" alt="" coords="665,285,836,310"/>
+<area shape="rect" id="node6" href="$d2/d86/classaction.html#a780a105daf04d6d1fe7e2f63b3c88e3b" title="action::element_one" alt="" coords="1100,285,1241,310"/>
+<area shape="rect" id="node7" href="$d9/df3/classsims.html#a3d669dba4d005cd2399388f27f44cd04" title="sims::coset_rep" alt="" coords="902,336,1017,361"/>
+<area shape="rect" id="node11" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="1098,498,1243,537"/>
+<area shape="rect" id="node13" href="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874" title="action::element_move" alt="" coords="1095,574,1246,600"/>
+<area shape="rect" id="node8" href="$d9/df3/classsims.html#a22a53a24eb86dcfe54cb3588776a4d96" title="sims::compute_coset\l_rep_path" alt="" coords="1097,334,1244,373"/>
+<area shape="rect" id="node10" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="1120,397,1221,422"/>
+<area shape="rect" id="node14" href="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d" title="action::element_image_of" alt="" coords="1083,690,1257,716"/>
+<area shape="rect" id="node9" href="$d9/df3/classsims.html#abfeb782bd253f1df5253486afb120f6f" title="sims::compute_coset\l_rep_depth" alt="" coords="1312,362,1458,401"/>
+<area shape="rect" id="node17" href="$d9/df3/classsims.html#a00fb332192d01becb17b6a059482fc8d" title="sims::element_rank" alt="" coords="458,614,595,640"/>
+<area shape="rect" id="node27" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="461,490,591,529"/>
+<area shape="rect" id="node18" href="$dd/d7e/classlonginteger__object.html#a6cdf946c2eb5e3e71ffb534716fa8a86" title="longinteger_object\l::zero" alt="" coords="685,877,815,916"/>
+<area shape="rect" id="node25" href="$d2/d86/classaction.html#ae38c3ef3c1125213733d63c6fc3c40cd" title="action::element_print" alt="" coords="678,589,823,614"/>
+<area shape="rect" id="node26" href="$d9/df3/classsims.html#a388f523d4ec997fce4e9ede924de99b9" title="sims::coset_rep_inv" alt="" coords="681,538,820,564"/>
+<area shape="rect" id="node19" href="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2" title="longinteger_object\l::create" alt="" coords="894,912,1025,950"/>
+<area shape="rect" id="node20" href="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1" title="longinteger_object\l::freeself" alt="" coords="1105,993,1236,1032"/>
+<area shape="rect" id="node21" href="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="1305,1028,1465,1053"/>
+<area shape="rect" id="node22" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="1307,857,1464,882"/>
+<area shape="rect" id="node23" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="1307,921,1463,946"/>
+<area shape="rect" id="node24" href="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250" title="INT_log10" alt="" coords="1129,944,1212,969"/>
+</map>

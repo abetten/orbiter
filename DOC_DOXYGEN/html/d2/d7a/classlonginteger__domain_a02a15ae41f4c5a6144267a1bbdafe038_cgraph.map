@@ -1,0 +1,9 @@
+<map id="longinteger_domain::mult_integer_in_place" name="longinteger_domain::mult_integer_in_place">
+<area shape="rect" id="node2" href="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35" title="longinteger_domain\l::mult" alt="" coords="213,124,351,163"/>
+<area shape="rect" id="node3" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="413,5,544,44"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344" title="longinteger_object\l::sign" alt="" coords="413,68,544,107"/>
+<area shape="rect" id="node6" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="401,131,556,156"/>
+<area shape="rect" id="node7" href="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="399,180,558,205"/>
+<area shape="rect" id="node8" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="400,229,557,255"/>
+<area shape="rect" id="node4" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="606,5,736,44"/>
+</map>

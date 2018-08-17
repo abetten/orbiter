@@ -1,0 +1,13 @@
+digraph "classify_trihedral_pairs::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2238 [label="classify_trihedral\l_pairs::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2238 -> Node2239 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2239 [label="classify_trihedral\l_pairs::classify_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a841688b6e1756306ce583b177058911e"];
+  Node2238 -> Node2240 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2240 [label="classify_trihedral\l_pairs::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a961a7d8228b1ab817d34b3e890186506"];
+  Node2240 -> Node2241 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2241 [label="classify_trihedral\l_pairs::~classify_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d21/classclassify__trihedral__pairs.html#a356342a8528414097f3bedbe4bef0212"];
+}

@@ -1,0 +1,29 @@
+digraph "group::group"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node19 [label="group::group",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="group::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a25f33ef4c9370d6cefa29b0c49f64a18"];
+  Node19 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="group::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a9f5de0500658e265332c7f62c0d3962d"];
+  Node21 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="group::init_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#aca8ce81c001eb5871118ed21676f3519"];
+  Node22 -> Node23 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node23 [label="group::delete_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/db7/classgroup.html#a36c96bdf4428fdf236dfabab0f82b898"];
+  Node22 -> Node24 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node24 -> Node25 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node22 -> Node26 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node22 -> Node27 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="vector_ge::copy_in",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#ad02ebf2d4e8bbf095685aea921999145"];
+  Node27 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node28 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node27 -> Node29 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node29 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node22 -> Node28 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

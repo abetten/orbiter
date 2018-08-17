@@ -1,0 +1,13 @@
+digraph "texable_string"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4172 [label="texable_string",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4172 -> Node4173 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4173 [label="geometry::print_head\l_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a1a65ce3ff3b89b6bb663aa9a559ada2a"];
+  Node4173 -> Node4174 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4174 [label="geometry::print_latex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#a1d45497d61d4dc8f7325156158b7e661"];
+  Node4174 -> Node4175 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4175 [label="geometry::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d44/classgeometry.html#af92f963887d22dd3437f585df929208d"];
+}

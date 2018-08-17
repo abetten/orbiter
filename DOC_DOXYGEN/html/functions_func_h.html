@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('functions_func_h.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,144 +90,150 @@ $(function() {
 
 <h3><a id="index_h"></a>- h -</h3><ul>
 <li>hadamard_product()
-: <a class="el" href="class_vector.html#a36312785f92e4dfb892cdb85c4444247">Vector</a>
+: <a class="el" href="d5/db2/class_vector.html#a36312785f92e4dfb892cdb85c4444247">Vector</a>
 </li>
 <li>hamming_bound_for_d()
-: <a class="el" href="classlonginteger__domain.html#a8286a3807d17fc93efa298fe34b5428b">longinteger_domain</a>
+: <a class="el" href="d2/d7a/classlonginteger__domain.html#a8286a3807d17fc93efa298fe34b5428b">longinteger_domain</a>
 </li>
 <li>Hamming_distance()
-: <a class="el" href="classcode__generator.html#a6ae1b16555e2126c58bba83c8fa3bb23">code_generator</a>
+: <a class="el" href="db/d37/classcode__generator.html#a6ae1b16555e2126c58bba83c8fa3bb23">code_generator</a>
 </li>
 <li>hamming_weight()
-: <a class="el" href="class_vector.html#a53a1b391aad5db6fe6af3b67781f87cf">Vector</a>
+: <a class="el" href="d5/db2/class_vector.html#a53a1b391aad5db6fe6af3b67781f87cf">Vector</a>
 </li>
 <li>handle_automorphism()
-: <a class="el" href="classisomorph.html#a95e0ae39f992234f7cbeb6f1d57d82df">isomorph</a>
+: <a class="el" href="d3/d5f/classisomorph.html#a95e0ae39f992234f7cbeb6f1d57d82df">isomorph</a>
 </li>
 <li>handle_event_files()
-: <a class="el" href="classisomorph.html#ad26de5e1bd7bae03d375163fd4c30775">isomorph</a>
+: <a class="el" href="d3/d5f/classisomorph.html#ad26de5e1bd7bae03d375163fd4c30775">isomorph</a>
 </li>
 <li>handle_extension()
-: <a class="el" href="classisomorph.html#add6e954f5b8fdcbd11c4743afb44531b">isomorph</a>
-, <a class="el" href="classupstep__work.html#ad8ba22a74e9884f92e11340b24e6a6d6">upstep_work</a>
+: <a class="el" href="d3/d5f/classisomorph.html#add6e954f5b8fdcbd11c4743afb44531b">isomorph</a>
+, <a class="el" href="d2/dd6/classupstep__work.html#ad8ba22a74e9884f92e11340b24e6a6d6">upstep_work</a>
 </li>
 <li>handle_extension_database()
-: <a class="el" href="classisomorph.html#ad98512c3c74bafd90d4d23cf048ebc2e">isomorph</a>
+: <a class="el" href="d3/d5f/classisomorph.html#ad98512c3c74bafd90d4d23cf048ebc2e">isomorph</a>
 </li>
 <li>handle_extension_fusion_type()
-: <a class="el" href="classupstep__work.html#a36d44fd802b8b56c9ae1d64485e5f396">upstep_work</a>
+: <a class="el" href="d2/dd6/classupstep__work.html#a36d44fd802b8b56c9ae1d64485e5f396">upstep_work</a>
 </li>
 <li>handle_extension_oracle()
-: <a class="el" href="classisomorph.html#acc99e89e75ae8f8ddf2d5d5160363c6e">isomorph</a>
+: <a class="el" href="d3/d5f/classisomorph.html#acc99e89e75ae8f8ddf2d5d5160363c6e">isomorph</a>
 </li>
 <li>handle_extension_unprocessed_type()
-: <a class="el" href="classupstep__work.html#a4687dfab87eb7d0646cb79008dd3d32d">upstep_work</a>
+: <a class="el" href="d2/dd6/classupstep__work.html#a4687dfab87eb7d0646cb79008dd3d32d">upstep_work</a>
 </li>
 <li>handle_frequencies()
-: <a class="el" href="classset__stabilizer__compute.html#a247c31bc3f19f22dadbfd7607cbaaa78">set_stabilizer_compute</a>
+: <a class="el" href="d8/dc6/classset__stabilizer__compute.html#a247c31bc3f19f22dadbfd7607cbaaa78">set_stabilizer_compute</a>
 </li>
 <li>handle_last_level()
-: <a class="el" href="classupstep__work.html#a5e4dd0050b47d8143df44a4364003daa">upstep_work</a>
+: <a class="el" href="d2/dd6/classupstep__work.html#a5e4dd0050b47d8143df44a4364003daa">upstep_work</a>
 </li>
 <li>has_constant_size_property()
-: <a class="el" href="classset__of__sets.html#a20446ba8c654822d460fd99c6cbabc09">set_of_sets</a>
+: <a class="el" href="da/dd6/classset__of__sets.html#a20446ba8c654822d460fd99c6cbabc09">set_of_sets</a>
 </li>
 <li>hash()
-: <a class="el" href="class_i_n_t__vector.html#a5316b2d7668325743b26ac18fcb550a2">INT_vector</a>
-, <a class="el" href="class_vector.html#a1eb7508c3c31d85829d0d8361526c770">Vector</a>
+: <a class="el" href="d0/de0/class_i_n_t__vector.html#a5316b2d7668325743b26ac18fcb550a2">INT_vector</a>
+, <a class="el" href="d5/db2/class_vector.html#a1eb7508c3c31d85829d0d8361526c770">Vector</a>
 </li>
 <li>hash_column_refinement_info()
-: <a class="el" href="classpartitionstack.html#a13362337bacd51a6de12a305bcd08211">partitionstack</a>
+: <a class="el" href="d3/d87/classpartitionstack.html#a13362337bacd51a6de12a305bcd08211">partitionstack</a>
 </li>
 <li>hash_row_refinement_info()
-: <a class="el" href="classpartitionstack.html#a878dad34f16a64fcd9ac6bef56b494e4">partitionstack</a>
+: <a class="el" href="d3/d87/classpartitionstack.html#a878dad34f16a64fcd9ac6bef56b494e4">partitionstack</a>
 </li>
 <li>header()
-: <a class="el" href="classmp__graphics.html#ad500b1cac8c75bf8a2f2ac78938c4e30">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#ad500b1cac8c75bf8a2f2ac78938c4e30">mp_graphics</a>
 </li>
 <li>header_log()
-: <a class="el" href="classmp__graphics.html#a001ad397d28bb3032a3201aac0896ce8">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#a001ad397d28bb3032a3201aac0896ce8">mp_graphics</a>
 </li>
 <li>header_mp()
-: <a class="el" href="classmp__graphics.html#ad08252e9be57fd9d484a80a1c3602969">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#ad08252e9be57fd9d484a80a1c3602969">mp_graphics</a>
 </li>
 <li>header_tikz()
-: <a class="el" href="classmp__graphics.html#a89a5fbf0e495443260399c1b6b3bb320">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#a89a5fbf0e495443260399c1b6b3bb320">mp_graphics</a>
 </li>
 <li>heisenberg()
-: <a class="el" href="classheisenberg.html#a3b84a07f0f518ca32ffb17c8114a3bb7">heisenberg</a>
+: <a class="el" href="d0/d1d/classheisenberg.html#a3b84a07f0f518ca32ffb17c8114a3bb7">heisenberg</a>
 </li>
 <li>hermitian()
-: <a class="el" href="classhermitian.html#a8b6624cdb109f4749b9b029a15e0de7d">hermitian</a>
+: <a class="el" href="d4/d11/classhermitian.html#a8b6624cdb109f4749b9b029a15e0de7d">hermitian</a>
 </li>
 <li>hip()
-: <a class="el" href="classmatrix.html#a820b8de607274302772f753e7585e9fa">matrix</a>
-, <a class="el" href="class_vector.html#a996f4e7f37126389c883537b063d583e">Vector</a>
+: <a class="el" href="d1/d8d/classmatrix.html#a820b8de607274302772f753e7585e9fa">matrix</a>
+, <a class="el" href="d5/db2/class_vector.html#a996f4e7f37126389c883537b063d583e">Vector</a>
 </li>
 <li>hip1()
-: <a class="el" href="classmatrix.html#a169cd51dd98562746f81dd0b075f3f6f">matrix</a>
-, <a class="el" href="class_vector.html#a5ce49604a9d0d59e42e4cbad25597334">Vector</a>
+: <a class="el" href="d1/d8d/classmatrix.html#a169cd51dd98562746f81dd0b075f3f6f">matrix</a>
+, <a class="el" href="d5/db2/class_vector.html#a5ce49604a9d0d59e42e4cbad25597334">Vector</a>
 </li>
 <li>hjelmslev()
-: <a class="el" href="classhjelmslev.html#a6207bcc3398cfd82b8a458577ca521d0">hjelmslev</a>
+: <a class="el" href="d3/d21/classhjelmslev.html#a6207bcc3398cfd82b8a458577ca521d0">hjelmslev</a>
 </li>
 <li>HMO()
-: <a class="el" href="classtranslation__plane.html#a6c47671a9c7d6829dcecaaa86dfcbe04">translation_plane</a>
+: <a class="el" href="da/dc1/classspread.html#aac9d8a67802a3e23e66eb20e419c097b">spread</a>
 </li>
 <li>hollerith()
-: <a class="el" href="classhollerith.html#a13144dcd320e47e22e7969297188154e">hollerith</a>
+: <a class="el" href="d8/d99/classhollerith.html#a13144dcd320e47e22e7969297188154e">hollerith</a>
 </li>
 <li>homo_z()
-: <a class="el" href="classdiscreta__base.html#a40e349b2d85c5c6dba9c015d16a0e801">discreta_base</a>
-, <a class="el" href="classinteger.html#ab975244fc25d0a9b3d4ef5104e3fcd24">integer</a>
-, <a class="el" href="classlonginteger.html#a986e829bf35eca2b9f24b1b3766d5677">longinteger</a>
+: <a class="el" href="d7/d71/classdiscreta__base.html#a40e349b2d85c5c6dba9c015d16a0e801">discreta_base</a>
+, <a class="el" href="d0/de5/classinteger.html#ab975244fc25d0a9b3d4ef5104e3fcd24">integer</a>
+, <a class="el" href="d3/d71/classlonginteger.html#a986e829bf35eca2b9f24b1b3766d5677">longinteger</a>
 </li>
 <li>homogeneous_polynomial_domain()
-: <a class="el" href="classhomogeneous__polynomial__domain.html#a569c19fcf7d3e4bd65974fdc9eb93ec9">homogeneous_polynomial_domain</a>
+: <a class="el" href="d2/da7/classhomogeneous__polynomial__domain.html#a569c19fcf7d3e4bd65974fdc9eb93ec9">homogeneous_polynomial_domain</a>
 </li>
 <li>housekeeping()
-: <a class="el" href="classgenerator.html#aaf2bd92e8f74eb9fbc3244a6dde6f78c">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#aaf2bd92e8f74eb9fbc3244a6dde6f78c">generator</a>
 </li>
 <li>housekeeping_no_data_file()
-: <a class="el" href="classgenerator.html#a6c09d8dc65abd5c79f3310e8293a56d8">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#a6c09d8dc65abd5c79f3310e8293a56d8">generator</a>
 </li>
 <li>hyperbolic_canonical_points_of_line()
-: <a class="el" href="classorthogonal.html#ac97ccc62702881408e916f099ec04a3e">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#ac97ccc62702881408e916f099ec04a3e">orthogonal</a>
 </li>
 <li>hyperbolic_decide_P1()
-: <a class="el" href="classorthogonal.html#a5029e837107b4b67481a4a26043f4443">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a5029e837107b4b67481a4a26043f4443">orthogonal</a>
 </li>
 <li>hyperbolic_decide_P2()
-: <a class="el" href="classorthogonal.html#ac4329f8055baf9d40e182af3955687f3">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#ac4329f8055baf9d40e182af3955687f3">orthogonal</a>
 </li>
 <li>hyperbolic_decide_P3()
-: <a class="el" href="classorthogonal.html#a02d20bb315f3f51e2e5fb4f9479f9f62">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a02d20bb315f3f51e2e5fb4f9479f9f62">orthogonal</a>
 </li>
 <li>hyperbolic_line_type_given_point_types()
-: <a class="el" href="classorthogonal.html#a15c1b4ccef6201476a9f7618e642eada">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a15c1b4ccef6201476a9f7618e642eada">orthogonal</a>
 </li>
 <li>hyperbolic_point_rk_to_type_and_index()
-: <a class="el" href="classorthogonal.html#aad0a2a87d54b571f0d6581dec4d59eab">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#aad0a2a87d54b571f0d6581dec4d59eab">orthogonal</a>
 </li>
 <li>hyperbolic_rank_line()
-: <a class="el" href="classorthogonal.html#a2810f9a6851f445b03fdbfe2a888e9f5">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a2810f9a6851f445b03fdbfe2a888e9f5">orthogonal</a>
 </li>
 <li>hyperbolic_type_and_index_to_point_rk()
-: <a class="el" href="classorthogonal.html#af31cd843ff2e6eb4fe1ba9c49e62d1b8">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#af31cd843ff2e6eb4fe1ba9c49e62d1b8">orthogonal</a>
 </li>
 <li>hyperbolic_unrank_line()
-: <a class="el" href="classorthogonal.html#a94952194cdcc478feb676e97e2e272f2">orthogonal</a>
+: <a class="el" href="d7/daa/classorthogonal.html#a94952194cdcc478feb676e97e2e272f2">orthogonal</a>
+</li>
+<li>hypercube()
+: <a class="el" href="df/db1/classscene.html#a1200e448c2371ab44c612dcfd34c0eea">scene</a>
 </li>
 <li>hyperplane_intersection_type_basic()
-: <a class="el" href="classprojective__space.html#ac2a88aaab23b53c01b5ca11f75356b11">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#ac2a88aaab23b53c01b5ca11f75356b11">projective_space</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

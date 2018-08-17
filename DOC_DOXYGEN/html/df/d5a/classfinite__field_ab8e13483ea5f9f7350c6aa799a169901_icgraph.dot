@@ -1,0 +1,9 @@
+digraph "finite_field::lexleast_canonical_form_ranked"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node7885 [label="finite_field::lexleast\l_canonical_form_ranked",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7885 -> Node7886 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7886 [label="oracle::apply_fusion\l_element",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a934dc7bfa4c5ad2086ce7c63de5ba536"];
+}

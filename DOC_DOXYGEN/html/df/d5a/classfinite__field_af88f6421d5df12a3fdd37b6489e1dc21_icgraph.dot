@@ -1,0 +1,9 @@
+digraph "finite_field::minus_one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node10055 [label="finite_field::minus_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node10055 -> Node10056 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10056 [label="finite_field::representing\l_matrix9b",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a29d9b64c0ebf1d89be62536d6a4366e6"];
+}

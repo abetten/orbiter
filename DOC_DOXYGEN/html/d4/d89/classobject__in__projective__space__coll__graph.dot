@@ -1,0 +1,21 @@
+digraph "object_in_projective_space"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="object_in_projective\l_space",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" C" ,fontname="Helvetica"];
+  Node2 [label="classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d43/classclassify.html"];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" P" ,fontname="Helvetica"];
+  Node3 [label="projective_space",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html"];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" Go" ,fontname="Helvetica"];
+  Node4 [label="longinteger_object",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html"];
+  Node5 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" F" ,fontname="Helvetica"];
+  Node5 [label="finite_field",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html"];
+  Node6 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" Grass_lines\nGrass_planes" ,fontname="Helvetica"];
+  Node6 [label="grassmann",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html"];
+  Node4 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" nCkq" ,fontname="Helvetica"];
+  Node6 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" G" ,fontname="Helvetica"];
+  Node5 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" F" ,fontname="Helvetica"];
+  Node7 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" SoS" ,fontname="Helvetica"];
+  Node7 [label="set_of_sets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/dd6/classset__of__sets.html"];
+}

@@ -1,0 +1,42 @@
+digraph "surface::substitute_semilinear"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node5293 [label="surface::substitute\l_semilinear",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node5293 -> Node5294 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5294 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node5293 -> Node5295 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5295 [label="arc_lifting::loop_over\l_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#a30126f5ed4126d604c191aa4d1f7505a"];
+  Node5295 -> Node5296 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5296 [label="arc_lifting::create\l_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b"];
+  Node5296 -> Node5297 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5297 [label="lift_single_arc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b"];
+  Node5297 -> Node5298 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5298 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node5296 -> Node5299 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5299 [label="surface_create::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59"];
+  Node5299 -> Node5300 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5300 [label="surface_create::init\l_with_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2"];
+  Node5299 -> Node5301 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5301 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node5301 -> Node5294 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5296 -> Node5302 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5302 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node5302 -> Node5303 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5303 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node5303 -> Node5298 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5293 -> Node5304 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5304 [label="arc_lifting::print\l_isomorphism_types_of\l_trihedral_pairs",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#ac2ea90f2acf97c870a7f46f7b125b8b7"];
+  Node5304 -> Node5305 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5305 [label="arc_lifting::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#ae1609cb80720bc005f0fc3ea65150185"];
+  Node5305 -> Node5297 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5305 -> Node5302 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5293 -> Node5306 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5306 [label="surface_classify_wedge\l::identify_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a0ee820a0324434792bd5362b4606de80"];
+  Node5306 -> Node5307 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5307 [label="surface_classify_wedge\l::identify_Sa",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a8fdc22ea1850bd4da28ace84adb055a6"];
+  Node5293 -> Node5308 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5308 [label="surface_create::apply\l_transformations",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a880646331f352cb7112dbd4c56e5ac57"];
+  Node5308 -> Node5294 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

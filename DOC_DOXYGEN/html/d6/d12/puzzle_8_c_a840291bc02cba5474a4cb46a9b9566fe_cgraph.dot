@@ -1,0 +1,21 @@
+digraph "main"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="main",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="diophant::open",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a182e2928400c2e7fc01f4155cec72b57"];
+  Node0 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="diophant::fill_coefficient\l_matrix_with",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#ad230bdbdc99c4b1e5b2973659739e72f"];
+  Node0 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="diophant::Aij",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#af86d3bf833485e2f2d7b4a19288fc698"];
+  Node0 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="diophant::save_in_compact\l_format",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a7119e1f2b15ffe94385227cf731b7e8e"];
+  Node4 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="diophant::count_non\l_zero_coefficients_in_row",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#a32575931589f47546ba7b7ef9fb99e68"];
+  Node5 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="file_size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a5c37cf5785204b6e9adf647dc14d0e50"];
+}

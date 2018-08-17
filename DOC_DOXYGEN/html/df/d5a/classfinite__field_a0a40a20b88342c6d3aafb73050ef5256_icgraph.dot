@@ -1,0 +1,25 @@
+digraph "finite_field::power_table"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node15329 [label="finite_field::power\l_table",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node15329 -> Node15330 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15330 [label="OKeefe_Penttila_32",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a30ac3b374e7cac53bd723d0826457ddf"];
+  Node15330 -> Node15331 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15331 [label="projective_space::create\l_OKeefe_Penttila_hyperoval_32",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html#a4d9a5bb0a19db29dfe77bb3f9f1b8df2"];
+  Node15331 -> Node15332 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15332 [label="create_hyperoval",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#aa0b78acc7f3d88e13dc991dbd9c37331"];
+  Node15332 -> Node15333 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15333 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/make__something_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node15329 -> Node15334 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15334 [label="Subiaco64_1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a81c9d625873c33beaca31140fa4f05a1"];
+  Node15334 -> Node15335 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15335 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d67/test__hyperoval_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node15329 -> Node15336 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15336 [label="Subiaco64_2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ad202720f26f6d2acbfa564b995e612ee"];
+  Node15336 -> Node15335 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15329 -> Node15337 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15337 [label="Adelaide64",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a8023439df602275a5ac0e2b51eb61523"];
+  Node15337 -> Node15335 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

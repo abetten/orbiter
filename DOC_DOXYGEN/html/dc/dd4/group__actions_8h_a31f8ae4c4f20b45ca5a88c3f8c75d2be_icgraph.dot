@@ -1,0 +1,32 @@
+digraph "set_stabilizer_in_projective_space"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node9265 [label="set_stabilizer_in_projective\l_space",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node9265 -> Node9266 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9266 [label="extend",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d9e/arcs__orderly_8_c.html#addc6404f0f11185218b39a9df0e7a293"];
+  Node9266 -> Node9267 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9267 [label="do_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d9e/arcs__orderly_8_c.html#a7367bc544c290322bdbd4545388a27a8"];
+  Node9267 -> Node9268 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9268 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d9e/arcs__orderly_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node9265 -> Node9269 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9269 [label="do_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd6/k__arc__lifting_8_c.html#a9dd2186104f15f40ba5f5d415f4c2976"];
+  Node9269 -> Node9270 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9270 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd6/k__arc__lifting_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node9269 -> Node9271 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9271 [label="arc_lifting_from_classification_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd6/k__arc__lifting_8_c.html#aede97f2af2307a758b06ad6506762b79"];
+  Node9271 -> Node9270 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9265 -> Node9272 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9272 [label="user_callback_solution\l_found",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd6/k__arc__lifting_8_c.html#aae70f58c3ef18694815b8f53b6ecbe05"];
+  Node9272 -> Node9269 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9272 -> Node9273 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9273 [label="diophant::solve_all\l_DLX_with_RHS_and_callback",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d9c/classdiophant.html#acdd512e26ee214803439e24f24fd9805"];
+  Node9265 -> Node9274 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9274 [label="search",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd6/k__arc__lifting_8_c.html#a732ccfe2d9eb7b0def86d4f1af46bd1c"];
+  Node9274 -> Node9269 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9265 -> Node9275 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9275 [label="do_canonical_form",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dd4/group__actions_8h.html#afb9f4a331a8a017ea3b8b7d9ed8dcc88"];
+  Node9275 -> Node9276 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9276 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+}

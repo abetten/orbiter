@@ -1,0 +1,12 @@
+<map id="vector_ge::extract_subset_of_elements_by_rank_text_vector" name="vector_ge::extract_subset_of_elements_by_rank_text_vector">
+<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a9aa706d3f0c3bb83182eed9ab9747582" title="INT_vec_scan" alt="" coords="223,29,329,55"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="224,79,328,104"/>
+<area shape="rect" id="node7" href="$d4/d6e/classvector__ge.html#a84d1cf9cccccb972ff761bd57eded556" title="vector_ge::extract\l_subset_of_elements\l_by_rank" alt="" coords="202,128,350,180"/>
+<area shape="rect" id="node3" href="$d4/d74/util_8_c.html#a7dc639ea3d5da900adb978c9322353a7" title="INT_vec_scan_from_stream" alt="" coords="398,29,587,55"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="667,5,710,31"/>
+<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="635,55,742,80"/>
+<area shape="rect" id="node8" href="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae" title="vector_ge::allocate" alt="" coords="426,81,559,107"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b" title="action::element_print\l_quick" alt="" coords="420,131,565,169"/>
+<area shape="rect" id="node10" href="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874" title="action::element_move" alt="" coords="417,193,569,219"/>
+<area shape="rect" id="node11" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="442,243,543,268"/>
+</map>

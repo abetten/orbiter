@@ -1,0 +1,13 @@
+digraph "INT_matrix::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node17 [label="INT_matrix::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node17 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="INT_matrix::INT_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dd1/class_i_n_t__matrix.html#af9f33540ce53964e21c63f272612ec6f"];
+  Node17 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="INT_matrix::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dd1/class_i_n_t__matrix.html#a7d7429023e6a92987b66c3450ef38944"];
+  Node19 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="INT_matrix::~INT_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dd1/class_i_n_t__matrix.html#a6896ec5fe1bbb5a13fd71d35bad8cdea"];
+}

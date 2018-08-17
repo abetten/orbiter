@@ -1,0 +1,13 @@
+digraph "action_by_restriction::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node460 [label="action_by_restriction\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node460 -> Node461 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node461 [label="action_by_restriction\l::action_by_restriction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d7e/classaction__by__restriction.html#a0f00372746ec06fde4350c2e4e20c8c1"];
+  Node460 -> Node462 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node462 [label="action_by_restriction\l::free",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d7e/classaction__by__restriction.html#a0635c562fbf754d8230ed1d8e5e32719"];
+  Node462 -> Node463 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node463 [label="action_by_restriction\l::~action_by_restriction",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d7e/classaction__by__restriction.html#a41b6e37425a151b509bffa1f36a96939"];
+}

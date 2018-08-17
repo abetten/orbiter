@@ -1,0 +1,15 @@
+<map id="homogeneous_polynomial_domain_swap_monomial" name="homogeneous_polynomial_domain_swap_monomial">
+<area shape="rect" id="node2" href="$d2/da7/classhomogeneous__polynomial__domain.html#af774250d5c1bd555c0ea55f2aaafad10" title="homogeneous_polynomial\l_domain::rearrange_monomials\l_by_partition_type" alt="" coords="230,47,440,99"/>
+<area shape="rect" id="node3" href="$d2/da7/classhomogeneous__polynomial__domain.html#a467ad10c570859dbcf637a43993ceb57" title="homogeneous_polynomial\l_domain::make_monomials" alt="" coords="488,53,672,92"/>
+<area shape="rect" id="node4" href="$d2/da7/classhomogeneous__polynomial__domain.html#ad7d4e08b895afb895147322732228d3a" title="homogeneous_polynomial\l_domain::init" alt="" coords="720,53,897,92"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a719f98ff45a1f8cbe0ff10a1954f0893" title="do_ideal" alt="" coords="990,8,1061,33"/>
+<area shape="rect" id="node7" href="$d5/d88/classsurface.html#a1f13f4c6bdc98d14920a2644a52f8bb6" title="surface::init_polynomial\l_domains" alt="" coords="945,111,1106,149"/>
+<area shape="rect" id="node14" href="$d5/d88/classsurface.html#a4bed81f2918efe941518ab28d9a695d2" title="surface::init_large\l_polynomial_domains" alt="" coords="1154,55,1304,93"/>
+<area shape="rect" id="node6" href="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1204,5,1254,31"/>
+<area shape="rect" id="node8" href="$d5/d88/classsurface.html#a90570b0ca6ab02988159f2c40cb27308" title="surface::init" alt="" coords="1184,117,1274,143"/>
+<area shape="rect" id="node9" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1409,111,1459,136"/>
+<area shape="rect" id="node10" href="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a" title="surface_classify_wedge\l::init" alt="" coords="1352,160,1515,199"/>
+<area shape="rect" id="node12" href="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06" title="surface_create::init" alt="" coords="1367,61,1501,87"/>
+<area shape="rect" id="node11" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1563,167,1613,192"/>
+<area shape="rect" id="node13" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1563,61,1613,87"/>
+</map>

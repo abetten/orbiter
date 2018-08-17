@@ -1,0 +1,18 @@
+<map id="matrix::m_mn_n" name="matrix::m_mn_n">
+<area shape="rect" id="node2" href="$d5/d3f/test_8_c.html#aff32612e997c6abf4b6f22b9185b0e67" title="get_random_matrix" alt="" coords="186,5,322,31"/>
+<area shape="rect" id="node4" href="$d5/d3f/test_8_c.html#a9068e33586261a19e71ea3cc6355e910" title="get_random_Hall_matrix" alt="" coords="171,55,337,80"/>
+<area shape="rect" id="node5" href="$d3/dfb/discreta__global_8_c.html#afeecbc8a2b22f56f2148e646622f0c1e" title="Mtk_from_MM" alt="" coords="201,104,307,129"/>
+<area shape="rect" id="node7" href="$d3/dfb/discreta__global_8_c.html#a71d19c0a0ff6e728c22fb07991564523" title="Mtk_sup_to_inf" alt="" coords="198,153,310,179"/>
+<area shape="rect" id="node9" href="$da/d44/classgeometry.html#a71bc2e3a3f4ca02e8518ab5518a4e0df" title="geometry::scan_body" alt="" coords="180,203,328,228"/>
+<area shape="rect" id="node12" href="$d3/d72/global_8_c.html#a62ffa2ad8cbaaf9dbb813890cea86a2f" title="Catalan_nk_star_matrix" alt="" coords="173,252,335,277"/>
+<area shape="rect" id="node14" href="$d1/d8d/classmatrix.html#adece30f74509652851c31e2d82e141e3" title="matrix::PG_design_point\l_vs_hyperplane" alt="" coords="170,301,338,340"/>
+<area shape="rect" id="node15" href="$d1/d8d/classmatrix.html#ae05463d97ecc8ea3654c45a399b872e2" title="matrix::PG_k_q_design" alt="" coords="174,364,334,389"/>
+<area shape="rect" id="node16" href="$d0/d08/classpermutation.html#a3e01585ffb15282fc45a3158c5ad0b76" title="permutation::induce\l_on_lines_of_PG_k_q" alt="" coords="178,413,330,452"/>
+<area shape="rect" id="node3" href="$d5/d3f/test_8_c.html#a757609870ae7ab0f1d0073415822d19f" title="test_hall" alt="" coords="438,17,509,43"/>
+<area shape="rect" id="node6" href="$d3/dfb/discreta__global_8_c.html#a549beed551d022bee89ffa9f959ec9fb" title="compute_Kramer_Mesner\l_matrix" alt="" coords="386,77,561,116"/>
+<area shape="rect" id="node8" href="$da/d1c/classpolar.html#ad558a87988ec31179ccfde947e490381" title="polar::compute_Kramer\l_Mesner_matrix" alt="" coords="393,140,554,179"/>
+<area shape="rect" id="node10" href="$da/d44/classgeometry.html#ac6f757d1a8855800d3da3fa1e83e812d" title="geometry::scan" alt="" coords="417,203,530,228"/>
+<area shape="rect" id="node11" href="$d6/d4a/geometry_8_c.html#a11af609febe3a9db20d8236af36928c5" title="search_geo_file" alt="" coords="416,252,531,277"/>
+<area shape="rect" id="node13" href="$d3/d72/global_8_c.html#aad966cb2e1d574fc0e513d692c1f49c6" title="Catalan_nk_matrix" alt="" coords="407,301,540,327"/>
+<area shape="rect" id="node17" href="$d0/dd3/perm__group__gens_8_c.html#ab33fa2e167b2501e5761fee699b4c285" title="vec_generators_induce\l_on_lines_of_PG_k_q" alt="" coords="393,413,553,452"/>
+</map>

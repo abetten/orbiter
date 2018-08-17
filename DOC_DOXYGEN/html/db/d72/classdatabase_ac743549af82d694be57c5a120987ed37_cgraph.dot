@@ -1,0 +1,20 @@
+digraph "database::file_read"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1091 [label="database::file_read",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1091 -> Node1092 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1092 [label="database::f_open",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a2cac52c70b09d1a6771bddab2220b3e7"];
+  Node1092 -> Node1093 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1093 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
+  Node1092 -> Node1094 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1094 [label="discreta_base::as_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26"];
+  Node1092 -> Node1095 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1095 [label="integer::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904"];
+  Node1091 -> Node1096 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1096 [label="database::stream",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a8b91f87e7cd92b8207cbc48edde9d69e"];
+  Node1096 -> Node1093 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1096 -> Node1094 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1096 -> Node1095 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

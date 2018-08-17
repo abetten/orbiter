@@ -1,0 +1,13 @@
+digraph "surface::print_trihedral_pair_in_dual_coordinates_in_GAP"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4869 [label="surface::print_trihedral\l_pair_in_dual_coordinates_in_GAP",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4869 -> Node4870 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4870 [label="projective_space::unrank\l_point",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d17/classprojective__space.html#a3cb7917af4c5f1590b660d4bf907e0fa"];
+  Node4870 -> Node4871 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4871 [label="PG_element_unrank_modified",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64"];
+  Node4869 -> Node4872 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4872 [label="INT_vec_print_GAP",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#ae2cc7aa118a0fc36468c296c4e7440f6"];
+}

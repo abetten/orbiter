@@ -1,0 +1,18 @@
+<map id="isomorph::setup_and_open_level_database" name="isomorph::setup_and_open_level_database">
+<area shape="rect" id="node2" href="$d3/d5f/classisomorph.html#a72bbdc12cca5a90045ef15d0b24075e6" title="isomorph::orbits_of\l_stabilizer" alt="" coords="229,5,364,44"/>
+<area shape="rect" id="node7" href="$d3/d5f/classisomorph.html#a5cee5468cc8cc68eac1f6131faedfab2" title="isomorph::init_high\l_level" alt="" coords="230,68,363,107"/>
+<area shape="rect" id="node8" href="$d3/d5f/classisomorph.html#aa4e387f26f609fc9379d2e01f6cc27d0" title="isomorph::open_database\l_and_identify_object" alt="" coords="209,131,384,169"/>
+<area shape="rect" id="node9" href="$d4/d7e/isomorph__global_8_c.html#ace3bb6ec719b02a35534309d4d3fe99a" title="isomorph_worker" alt="" coords="452,195,575,220"/>
+<area shape="rect" id="node11" href="$d3/d5f/classisomorph.html#a9cb6fed7b6ac639d886b117a1f454441" title="isomorph::probe" alt="" coords="238,245,355,271"/>
+<area shape="rect" id="node12" href="$d3/d5f/classisomorph.html#a51fc3bf5cc3a99282a489b2df37ee24e" title="isomorph::do_iso_test" alt="" coords="221,295,373,320"/>
+<area shape="rect" id="node15" href="$d3/d5f/classisomorph.html#a78ecf843b9f6ca1cfd666e222edd90ae" title="isomorph::identify" alt="" coords="234,344,360,369"/>
+<area shape="rect" id="node3" href="$d4/d7e/isomorph__global_8_c.html#a592f3efd31146c0802f59837055f904f" title="isomorph_compute_orbits" alt="" coords="643,51,817,76"/>
+<area shape="rect" id="node4" href="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e" title="isomorph_arguments\l::execute" alt="" coords="865,163,1012,201"/>
+<area shape="rect" id="node5" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1105,144,1155,169"/>
+<area shape="rect" id="node6" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="1060,193,1201,219"/>
+<area shape="rect" id="node10" href="$d4/d7e/isomorph__global_8_c.html#a3613cea19158edd30958c4edecd97d53" title="isomorph_compute_down\l_orbits" alt="" coords="643,191,817,229"/>
+<area shape="rect" id="node13" href="$d3/d5f/classisomorph.html#ad7945ec94ba0ba16953482edfaa4da6e" title="isomorph::isomorph\l_testing" alt="" coords="444,253,583,292"/>
+<area shape="rect" id="node14" href="$d4/d7e/isomorph__global_8_c.html#a5a73cbe9f89c4727f086482ee2d238f9" title="isomorph_testing" alt="" coords="668,256,791,281"/>
+<area shape="rect" id="node16" href="$d4/d7e/isomorph__global_8_c.html#aa0fe57c73d5668eee10a6022ada7f6a3" title="isomorph_identify" alt="" coords="451,335,576,360"/>
+<area shape="rect" id="node17" href="$d4/d7e/isomorph__global_8_c.html#a9fd19ea945561cf2a6bb5c72dd4b1cb2" title="isomorph_identify_table" alt="" coords="432,384,595,409"/>
+</map>

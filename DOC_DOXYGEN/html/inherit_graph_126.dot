@@ -1,0 +1,7 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="object_in_projective\l_space_with_action",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d35/classobject__in__projective__space__with__action.html"];
+}

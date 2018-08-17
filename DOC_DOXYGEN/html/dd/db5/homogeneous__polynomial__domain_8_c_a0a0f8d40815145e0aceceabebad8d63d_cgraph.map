@@ -1,0 +1,33 @@
+<map id="homogeneous_polynomial_domain_compare_monomial_with" name="homogeneous_polynomial_domain_compare_monomial_with">
+<area shape="rect" id="node2" href="$d2/da7/classhomogeneous__polynomial__domain.html#a05c5959cb62502954c9cf93a85b8c019" title="homogeneous_polynomial\l_domain::compare_monomials" alt="" coords="281,281,485,320"/>
+<area shape="rect" id="node3" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="533,263,637,288"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#a3ebbd3ccb665a9f78deaa7408577b60c" title="the_end" alt="" coords="550,312,620,337"/>
+<area shape="rect" id="node5" href="$d3/dfb/discreta__global_8_c.html#a6bd9eb050090f8cf1e92db88a459cc28" title="free_global_data" alt="" coords="700,68,821,93"/>
+<area shape="rect" id="node8" href="$d5/db4/io__and__os_8h.html#a8ad65cbe10865661e8bafd6be2164955" title="registry_dump" alt="" coords="708,192,813,217"/>
+<area shape="rect" id="node16" href="$d5/db4/io__and__os_8h.html#aa28c9ee8650332ad2d526d5eb4fae48e" title="registry_dump_sorted" alt="" coords="685,299,836,324"/>
+<area shape="rect" id="node25" href="$d9/d60/discreta_8h.html#a04d64356f0c7cb798e55daec998c527e" title="time_check" alt="" coords="716,364,805,389"/>
+<area shape="rect" id="node30" href="$d5/db4/io__and__os_8h.html#a5d6ab4b80c58e5d8bdb0fd1625709d0b" title="os_memory_usage" alt="" coords="693,413,828,439"/>
+<area shape="rect" id="node32" href="$d5/db4/io__and__os_8h.html#a57604af509e1d43e918fd38e5f4ee96f" title="INT_matrix_write_csv" alt="" coords="686,463,835,488"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a9ff48c751a12182f1cc6ee384f80aa0b" title="orthogonal_points_free\l_global_data" alt="" coords="902,5,1060,44"/>
+<area shape="rect" id="node7" href="$de/dc5/algebra__and__number__theory_8h.html#a6160ced6b3ffc2765c111f7d4f94ed42" title="longinteger_free_global_data" alt="" coords="884,68,1078,93"/>
+<area shape="rect" id="node9" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a2b54b210ed9aae58085d1ef7fa3bcbff" title="registry_print_entry" alt="" coords="913,117,1048,143"/>
+<area shape="rect" id="node13" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#abb7fc0eff582133f5bd8a7cbd78d742b" title="registry_entry_size" alt="" coords="914,216,1047,241"/>
+<area shape="rect" id="node15" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#ad0967d55a42071e28f50be4fbe7893bd" title="memory_watch_list_dump" alt="" coords="893,167,1069,192"/>
+<area shape="rect" id="node10" href="$d5/db4/io__and__os_8h.html#a32add94de62a1d910cc0fc35ed90ab48" title="print_pointer_hex" alt="" coords="1140,123,1264,148"/>
+<area shape="rect" id="node12" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a0c81861cc8a6dd21364c89bb3ac8e82c" title="registry_print_type" alt="" coords="1137,73,1268,99"/>
+<area shape="rect" id="node11" href="$d4/d74/util_8_c.html#a36c64a828eefed0a0cfdd6186ec92c31" title="print_hex_digit" alt="" coords="1342,123,1450,148"/>
+<area shape="rect" id="node14" href="$df/d84/foundations_2io__and__os_2memory_8_c.html#a1ebe71d1cd99d79db497355f608be044" title="registry_sizeof" alt="" coords="1148,176,1256,201"/>
+<area shape="rect" id="node17" href="$d5/db4/io__and__os_8h.html#a59b640c1f8b0040f26fa06b641191105" title="print_line_of_number\l_signs" alt="" coords="907,265,1054,304"/>
+<area shape="rect" id="node18" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a2af240488f5893071c88af35d9f06b6d" title="Heapsort" alt="" coords="943,328,1018,353"/>
+<area shape="rect" id="node19" href="$d4/dd7/sorting_8_c.html#ae2f81d9c1e532bee5c80dfae7cc45bcc" title="Heapsort_make_heap" alt="" coords="1126,328,1278,353"/>
+<area shape="rect" id="node20" href="$d4/dd7/sorting_8_c.html#a89625a5f8e99e9a76db45ad133b5a3f3" title="Heapsort_sift_down" alt="" coords="1326,277,1465,303"/>
+<area shape="rect" id="node21" href="$d4/dd7/sorting_8_c.html#a7d47ff5b6218622f072ca38a87900496" title="Heapsort_swap" alt="" coords="1522,259,1636,284"/>
+<area shape="rect" id="node22" href="$dc/d77/pentomino__5x5_8_c.html#af532ec92afffcb63cd1f1180e96642d4" title="compare_func" alt="" coords="1343,347,1449,372"/>
+<area shape="rect" id="node23" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ac1a17fca23fb4a338aef8547a4c2fded" title="INT_vec_compare" alt="" coords="1513,371,1644,396"/>
+<area shape="rect" id="node24" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="1526,321,1631,347"/>
+<area shape="rect" id="node26" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="946,377,1015,403"/>
+<area shape="rect" id="node27" href="$d3/d72/global_8_c.html#a89a8565e34c7dcbb97180cd6af7454a1" title="time_check_delta" alt="" coords="918,428,1043,453"/>
+<area shape="rect" id="node28" href="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042" title="os_ticks_per_second" alt="" coords="1129,479,1275,504"/>
+<area shape="rect" id="node29" href="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba" title="os_ticks_to_dhms" alt="" coords="1138,429,1266,455"/>
+<area shape="rect" id="node31" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="959,477,1002,503"/>
+</map>

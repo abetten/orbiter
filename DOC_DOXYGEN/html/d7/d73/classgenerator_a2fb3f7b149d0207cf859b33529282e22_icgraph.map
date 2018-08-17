@@ -1,0 +1,15 @@
+<map id="generator::make_spreadsheet_of_orbit_reps" name="generator::make_spreadsheet_of_orbit_reps">
+<area shape="rect" id="node2" href="$d2/d11/codes_8h.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="309,5,359,31"/>
+<area shape="rect" id="node3" href="$db/d37/classcode__generator.html#ab3cf3a306e4032c2b471ac95321c599f" title="code_generator::main" alt="" coords="258,55,410,80"/>
+<area shape="rect" id="node5" href="$d4/d21/classarc__generator.html#aad1dcec3a1c302e743d574bd1ac857d9" title="arc_generator::compute\l_starter" alt="" coords="253,104,415,143"/>
+<area shape="rect" id="node13" href="$dd/d23/classclassify__double__sixes.html#a2253fca143a0e8a3e39655eb05668ae9" title="classify_double_sixes\l::classify_partial_ovoids" alt="" coords="253,191,415,229"/>
+<area shape="rect" id="node4" href="$d4/d4f/codes_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="524,12,574,37"/>
+<area shape="rect" id="node6" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="479,61,620,87"/>
+<area shape="rect" id="node7" href="$d6/dd8/classk__arc__generator.html#a6036d9f52ede9f8ca681505626b5361d" title="k_arc_generator::init" alt="" coords="478,111,621,136"/>
+<area shape="rect" id="node9" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="463,160,635,199"/>
+<area shape="rect" id="node8" href="$d6/d01/k__arc__generator__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="733,111,783,136"/>
+<area shape="rect" id="node10" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="683,160,833,199"/>
+<area shape="rect" id="node12" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="733,223,783,248"/>
+<area shape="rect" id="node11" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="881,167,931,192"/>
+<area shape="rect" id="node14" href="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="524,223,574,248"/>
+</map>

@@ -1,0 +1,35 @@
+<map id="draw_density2_multiple_curves" name="draw_density2_multiple_curves">
+<area shape="rect" id="node2" href="$de/dea/plot_8_c.html#a3501e9cf5fa99d2f01228f6fa9deb69d" title="get_coord_log" alt="" coords="250,25,356,51"/>
+<area shape="rect" id="node3" href="$de/dea/plot_8_c.html#af4d988940317b2bed73e5b8e037510b4" title="get_coord" alt="" coords="263,75,343,100"/>
+<area shape="rect" id="node4" href="$da/d2c/classmp__graphics.html#a3684948a4acc33c084d0a613ff065575" title="mp_graphics::polygon3" alt="" coords="223,124,382,149"/>
+<area shape="rect" id="node20" href="$da/d2c/classmp__graphics.html#ad4052be9dec4eeef879dcc8ca6d85d71" title="mp_graphics::polygon2" alt="" coords="223,173,382,199"/>
+<area shape="rect" id="node21" href="$da/d2c/classmp__graphics.html#a5c2a62f1331cc9f598c4faa8d1116dca" title="mp_graphics::polygon5" alt="" coords="223,223,382,248"/>
+<area shape="rect" id="node22" href="$da/d2c/classmp__graphics.html#a52ca0d0e39640fe15c6a8bd8633c9e5a" title="mp_graphics::aligned_text" alt="" coords="214,272,391,297"/>
+<area shape="rect" id="node30" href="$da/d2c/classmp__graphics.html#a66dd75ae04c9254e760ea479ee66946c" title="mp_graphics::sl_udsty" alt="" coords="226,324,380,349"/>
+<area shape="rect" id="node32" href="$da/d2c/classmp__graphics.html#ac409a4e038d93b57dc977ceb3259e850" title="mp_graphics::sl_thickness" alt="" coords="214,375,392,400"/>
+<area shape="rect" id="node5" href="$da/d2c/classmp__graphics.html#a60729a478cad572ccb9df00b0f5988df" title="mp_graphics::polygon_idx" alt="" coords="459,161,635,187"/>
+<area shape="rect" id="node6" href="$da/d2c/classmp__graphics.html#aef990b1a5e84f4781ff613ce48fafe83" title="mp_graphics::polygon\l_idx_log" alt="" coords="717,92,869,131"/>
+<area shape="rect" id="node7" href="$da/d2c/classmp__graphics.html#ac67f20507b7b4f592e9ed90aaa1f472a" title="mp_graphics::polygon\l_or_bezier_idx" alt="" coords="717,155,869,193"/>
+<area shape="rect" id="node8" href="$da/d2c/classmp__graphics.html#ac1c736f6c02abd6df696eb949c3513ac" title="mp_graphics::polygon\l_or_bezier_idx_mp" alt="" coords="958,40,1110,79"/>
+<area shape="rect" id="node15" href="$da/d2c/classmp__graphics.html#ae266ecef91f4cd8a6fd4054b17354370" title="mp_graphics::polygon\l_or_bezier_idx_tikz" alt="" coords="958,155,1110,193"/>
+<area shape="rect" id="node9" href="$da/d2c/classmp__graphics.html#afa0af74da2afd1d00b2eeb5e25b4f596" title="mp_graphics::coords\l_min_max" alt="" coords="1193,99,1338,137"/>
+<area shape="rect" id="node10" href="$da/d2c/classmp__graphics.html#af087f5f4b08c72f67f5e35cc312070fb" title="mp_graphics::user2dev" alt="" coords="1186,211,1346,236"/>
+<area shape="rect" id="node12" href="$da/d2c/classmp__graphics.html#a564e7d2700489eed72ea865b3acc14db" title="mp_graphics::output\l_xy_metapost" alt="" coords="1195,36,1337,75"/>
+<area shape="rect" id="node11" href="$d9/d29/draw_8_c.html#af38b139f64e19404b9a944c7188d4aff" title="transform_llur" alt="" coords="1414,211,1517,236"/>
+<area shape="rect" id="node13" href="$da/d2c/classmp__graphics.html#aee38beb59e940946cbb575cde90b9cfe" title="mp_graphics::output\l_x_metapost" alt="" coords="1394,68,1537,107"/>
+<area shape="rect" id="node14" href="$da/d2c/classmp__graphics.html#a41c9d8463dc57fa97bb9a1e0577980b6" title="mp_graphics::output\l_y_metapost" alt="" coords="1394,5,1537,44"/>
+<area shape="rect" id="node16" href="$da/d2c/classmp__graphics.html#a55d0835caab08eaf3e409096bbb91d63" title="mp_graphics::color_tikz" alt="" coords="1185,161,1346,187"/>
+<area shape="rect" id="node17" href="$da/d2c/classmp__graphics.html#a640800bc67fec9ed441b27c71461e9c6" title="mp_graphics::output\l_xy_tikz" alt="" coords="1195,261,1337,300"/>
+<area shape="rect" id="node18" href="$da/d2c/classmp__graphics.html#a311d4fb1c32d1eb0faeee055bb8badee" title="mp_graphics::output\l_x_tikz" alt="" coords="1394,323,1537,361"/>
+<area shape="rect" id="node19" href="$da/d2c/classmp__graphics.html#a0d6bddb89b4c58c82aa124dd003dda08" title="mp_graphics::output\l_y_tikz" alt="" coords="1394,260,1537,299"/>
+<area shape="rect" id="node23" href="$da/d2c/classmp__graphics.html#a3b5a8558ee721bd8b9ed36e732317679" title="mp_graphics::aligned\l_text_with_offset" alt="" coords="473,263,621,301"/>
+<area shape="rect" id="node24" href="$da/d2c/classmp__graphics.html#ab897ac847368de2da4296c7f159cc5f9" title="mp_graphics::st_alignment" alt="" coords="702,368,883,393"/>
+<area shape="rect" id="node26" href="$da/d2c/classmp__graphics.html#ae92ece77cf1942bfee760d6cf854b74b" title="mp_graphics::text" alt="" coords="730,269,856,295"/>
+<area shape="rect" id="node25" href="$da/d2c/classmp__graphics.html#a9f7aa1c186791f69881ddbf590835f3e" title="mp_graphics::st_alignment_log" alt="" coords="931,417,1137,443"/>
+<area shape="rect" id="node27" href="$da/d2c/classmp__graphics.html#a3a8320de1e68f3c290e138355f05f8ae" title="mp_graphics::text_log" alt="" coords="958,319,1110,344"/>
+<area shape="rect" id="node28" href="$da/d2c/classmp__graphics.html#ad30aeb75639e84d876dade51faa50bee" title="mp_graphics::text_mp" alt="" coords="958,368,1110,393"/>
+<area shape="rect" id="node29" href="$da/d2c/classmp__graphics.html#ac7e4333813701bcc76fc5eba7700bdbd" title="mp_graphics::text_tikz" alt="" coords="957,269,1111,295"/>
+<area shape="rect" id="node31" href="$da/d2c/classmp__graphics.html#ab64e78e5ca3f7432533461c116d207c5" title="mp_graphics::sl_udsty_log" alt="" coords="457,325,637,351"/>
+<area shape="rect" id="node33" href="$da/d2c/classmp__graphics.html#ada686670b0e5c358f58c30b554822010" title="mp_graphics::line_thickness_mp" alt="" coords="440,424,654,449"/>
+<area shape="rect" id="node34" href="$da/d2c/classmp__graphics.html#a3356cadbf9e1ae81ae353c4014d5590a" title="mp_graphics::sl_thickness_log" alt="" coords="446,375,649,400"/>
+</map>

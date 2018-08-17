@@ -1,0 +1,9 @@
+digraph "action::induced_action_on_pairs"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node22562 [label="action::induced_action\l_on_pairs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node22562 -> Node22563 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22563 [label="graph_generator::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d91/classgraph__generator.html#acd2ec07214d869173eb1c9ffb3ec0312"];
+}

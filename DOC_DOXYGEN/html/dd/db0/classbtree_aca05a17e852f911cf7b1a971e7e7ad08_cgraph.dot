@@ -1,0 +1,42 @@
+digraph "btree::item_print"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2339 [label="btree::item_print",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2339 -> Node2340 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2340 [label="btree::key_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/db0/classbtree.html#a4d527d5afa4891a2fa69fc1a07c48627"];
+  Node2340 -> Node2341 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2341 [label="bt_key_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/db3/bt__key_8_c.html#a14b2a3662044cca4e54d45f271c947aa"];
+  Node2341 -> Node2342 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2342 [label="bt_key::type",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de5/classbt__key.html#ae788a415a20f75fe7160408a055bb33f"];
+  Node2342 -> Node2343 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2343 [label="Vector::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a1c4fe1752523df8119f70dd550244871"];
+  Node2342 -> Node2344 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2344 [label="discreta_base::as_integer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a00d7691eaf874fd283d942692fe8dd26"];
+  Node2342 -> Node2345 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2345 [label="integer::s_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#adf28e9f94d4c844adaa950deeb80b904"];
+  Node2341 -> Node2346 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2346 [label="bt_key::output_size",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de5/classbt__key.html#acb48f95d030f62c56051d0cd6e013394"];
+  Node2346 -> Node2343 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2346 -> Node2344 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2346 -> Node2345 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2341 -> Node2347 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2347 [label="bt_key_print_INT4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/db3/bt__key_8_c.html#ad752d162f10144228c321f41fb5b8bdd"];
+  Node2347 -> Node2348 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2348 [label="bt_key_get_INT4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/db3/bt__key_8_c.html#ae2728a8a265629876b486504625977fa"];
+  Node2341 -> Node2349 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2349 [label="bt_key_print_INT2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/db3/bt__key_8_c.html#a557e01620ef554044797f4e097ba0924"];
+  Node2349 -> Node2350 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2350 [label="bt_key_get_INT2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/db3/bt__key_8_c.html#a6a73c042fa4b7f530a244c4fc6c9e8f2"];
+  Node2341 -> Node2351 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2351 [label="bt_key::int_vec_len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de5/classbt__key.html#ac8e43906f79bacf330fa1726925b7e37"];
+  Node2351 -> Node2343 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2351 -> Node2344 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2351 -> Node2345 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2340 -> Node2352 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2352 [label="btree::key",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/db0/classbtree.html#abc561b2c60acc5a699637b7eb2549503"];
+  Node2352 -> Node2343 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2352 -> Node2353 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2353 [label="discreta_base::as_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a7bdd6cae39c380b128ee9e17e42cf020"];
+}

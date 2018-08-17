@@ -1,0 +1,9 @@
+digraph "longinteger_object::is_mone"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1895 [label="longinteger_object\l::is_mone",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1895 -> Node1896 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1896 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+}

@@ -1,0 +1,43 @@
+digraph "sims::point_stabilizer_with_action"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node8134 [label="sims::point_stabilizer\l_with_action",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node8134 -> Node8135 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8135 [label="sims::point_stabilizer\l_stabchain_with_action",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a3ab0527c4d7d0647f8f442f3cfb4c1be"];
+  Node8135 -> Node8136 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8136 [label="sims::group_order",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad"];
+  Node8135 -> Node8137 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8137 [label="action::element_print\l_as_permutation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a2975618a8203187b688a67c947150bb8"];
+  Node8137 -> Node8138 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8138 [label="action::element_print\l_as_permutation_with\l_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#addd61d869434abaad431124a6d858396"];
+  Node8138 -> Node8139 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8139 [label="action::element_image_of",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d"];
+  Node8138 -> Node8140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8140 [label="perm_print_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#ab87deef2ba9e4d2ce386a19eeaffecf3"];
+  Node8138 -> Node8141 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8141 [label="perm_print_cycles_sorted\l_by_length_offset",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#a9d1f2e34879c04dbc45d08984a8066e3"];
+  Node8141 -> Node8142 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8142 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node8142 -> Node8143 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8143 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node8141 -> Node8144 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8144 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node8141 -> Node8145 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8145 [label="vector_ge::copy_in",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#ad02ebf2d4e8bbf095685aea921999145"];
+  Node8145 -> Node8146 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8146 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+  Node8145 -> Node8147 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8147 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node8141 -> Node8148 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8148 [label="vector_ge::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a0d260cce035c20b32d7989c50670aa8a"];
+  Node8148 -> Node8149 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8149 [label="action::element_print\l_quick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b"];
+  Node8148 -> Node8146 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8135 -> Node8150 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8150 [label="longinteger_object\l::is_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#adeab597c8bb66f36eb085f046d1df656"];
+  Node8150 -> Node8151 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8151 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+  Node8135 -> Node8149 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

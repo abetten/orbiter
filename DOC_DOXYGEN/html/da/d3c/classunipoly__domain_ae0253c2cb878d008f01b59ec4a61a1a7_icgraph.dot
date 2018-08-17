@@ -1,0 +1,11 @@
+digraph "unipoly_domain::create_object_by_rank_longinteger"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node169 [label="unipoly_domain::create\l_object_by_rank_longinteger",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node169 -> Node170 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node170 [label="unipoly_domain::create\l_object_by_rank_string",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#ae3243756144f89d8a0fbd48f9e1d7840"];
+  Node169 -> Node171 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node171 [label="unipoly_domain::minimum\l_polynomial_factorring\l_longinteger",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d3c/classunipoly__domain.html#a2c953e21fad2df88627ac8a289f3a77b"];
+}

@@ -1,0 +1,19 @@
+digraph "generator::print_level_extension_info"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18032 [label="generator::print_level\l_extension_info",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18032 -> Node18033 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18033 [label="os_ticks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224"];
+  Node18032 -> Node18034 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18034 [label="time_check_delta",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a89a8565e34c7dcbb97180cd6af7454a1"];
+  Node18034 -> Node18035 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18035 [label="os_ticks_per_second",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042"];
+  Node18034 -> Node18036 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18036 [label="os_ticks_to_dhms",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba"];
+  Node18032 -> Node18037 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18037 [label="generator::print_problem\l_label",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a06d3c064ba84ebe8db3537e6273f16c3"];
+  Node18032 -> Node18038 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18038 [label="generator::nb_orbits\l_at_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a020f3d8378448310d044a4a24fadf301"];
+}

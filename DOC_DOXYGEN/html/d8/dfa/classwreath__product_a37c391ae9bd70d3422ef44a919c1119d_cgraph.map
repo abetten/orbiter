@@ -1,0 +1,18 @@
+<map id="wreath_product::element_image_of" name="wreath_product::element_image_of">
+<area shape="rect" id="node2" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="723,28,866,54"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#aad2078020fd058c71649f0a25a4c77cc" title="finite_field::mult\l_vector_from_the_left" alt="" coords="247,263,397,302"/>
+<area shape="rect" id="node4" href="$d8/dfa/classwreath__product.html#a081d6eed767bdd84bc74e555815641c6" title="wreath_product::offset_i" alt="" coords="491,303,654,328"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="730,146,859,171"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="221,492,423,518"/>
+<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="521,162,625,187"/>
+<area shape="rect" id="node8" href="$d8/dfa/classwreath__product.html#ab3962a2740db55b02ec44b4295ea979d" title="wreath_product::create\l_matrix" alt="" coords="243,378,401,416"/>
+<area shape="rect" id="node12" href="$d5/db4/io__and__os_8h.html#afd4180a24bef3a2b584668a4eaf607ff" title="INT_matrix_print" alt="" coords="513,464,633,490"/>
+<area shape="rect" id="node13" href="$d8/dfa/classwreath__product.html#acf0363d5dbb2ff7404269d0c806cad2e" title="wreath_product::apply\l_permutation" alt="" coords="246,98,398,136"/>
+<area shape="rect" id="node16" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="229,542,415,567"/>
+<area shape="rect" id="node9" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="519,352,626,378"/>
+<area shape="rect" id="node10" href="$df/d5a/classfinite__field.html#a07a0b166b3dce1d0f365db1112429758" title="finite_field::Kronecker\l_product_square_but_arbitrary" alt="" coords="471,402,675,440"/>
+<area shape="rect" id="node11" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="737,408,851,434"/>
+<area shape="rect" id="node14" href="$df/dbf/sajeeb_8_c.html#aa8c9c7977203577026080f546fe4980f" title="INT_vec_zero" alt="" coords="521,112,625,138"/>
+<area shape="rect" id="node15" href="$d8/dfa/classwreath__product.html#ab6dce53134f1c233721f615400e4e695" title="wreath_product::compute\l_induced_permutation" alt="" coords="487,50,659,88"/>
+<area shape="rect" id="node17" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="492,542,653,567"/>
+</map>

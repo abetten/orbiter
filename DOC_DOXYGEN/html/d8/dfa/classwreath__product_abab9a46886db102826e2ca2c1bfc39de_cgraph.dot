@@ -1,0 +1,44 @@
+digraph "wreath_product::init_tensor_wreath_product"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node500 [label="wreath_product::init\l_tensor_wreath_product",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node500 -> Node501 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node501 [label="perm_group::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#aefb07e1e34c09ec498ca1ae072520b48"];
+  Node501 -> Node502 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node502 [label="perm_group::init_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#abbcdd66714f6c380e6343d12592f0745"];
+  Node502 -> Node503 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node503 [label="perm_group::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a597c9991f5c1d8b16cc74bcd7003ee73"];
+  Node502 -> Node504 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node504 [label="page_storage::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a53d9d92efcff0000764402fcf7cef6e2"];
+  Node502 -> Node505 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node505 [label="perm_group::one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#ab959c8e4c528c27dfc8d4ac1919681ee"];
+  Node502 -> Node506 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node506 [label="perm_group::pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#aa4595f87262bd95ed5656704c9cfa164"];
+  Node502 -> Node507 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node507 [label="page_storage::store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a3d04ee0a97310a8211e223ccea1d2d3f"];
+  Node507 -> Node508 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node508 [label="page_storage::s_i_and\l_allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#aa43eb1ae49a6688771f7a89cbe2cd7bf"];
+  Node508 -> Node509 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node509 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node509 -> Node510 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node510 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node508 -> Node511 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node511 [label="UBYTE_print_bitwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a920069ee78174f219534fed767865637"];
+  Node507 -> Node512 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node512 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+  Node500 -> Node513 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node513 [label="i_power_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5"];
+  Node500 -> Node514 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node514 [label="matrix_group_base_len\l_general_linear_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a01b8e54f7c8c3ea523e6042228981013"];
+  Node500 -> Node515 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node515 [label="general_linear_matrix\l_group_base_and_transversal\l_length",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a7a47638d706bd9f4e88f50fa042da7bb"];
+  Node515 -> Node513 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node515 -> Node516 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node516 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node500 -> Node516 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node500 -> Node504 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node500 -> Node517 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node517 [label="wreath_product::compute\l_base_and_transversals",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dfa/classwreath__product.html#a655b4e2bf5166a188772b717466db185"];
+}

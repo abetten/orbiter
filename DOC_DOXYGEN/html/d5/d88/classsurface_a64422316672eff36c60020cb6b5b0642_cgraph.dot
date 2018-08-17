@@ -1,0 +1,47 @@
+digraph "surface::plane_from_three_lines"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4670 [label="surface::plane_from\l_three_lines",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4670 -> Node4671 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4671 [label="surface::unrank_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#abd11ba9db0eefe9502870877dab699c6"];
+  Node4671 -> Node4672 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4672 [label="grassmann::unrank_INT_here",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#aa51bb30ed0feb7ad87d500b76e0b3cbe"];
+  Node4672 -> Node4673 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4673 [label="grassmann::unrank_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#a32079405b95a6da2ba1420567d762d64"];
+  Node4673 -> Node4674 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4674 [label="generalized_binomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8"];
+  Node4673 -> Node4675 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4675 [label="i_power_j",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5"];
+  Node4673 -> Node4676 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4676 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node4673 -> Node4677 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4677 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node4673 -> Node4673 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4673 -> Node4678 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4678 [label="INT_vec_complement",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a2a0a724647575fcd3090c763985eb81a"];
+  Node4673 -> Node4679 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4679 [label="print_integer_matrix\l_width",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f"];
+  Node4672 -> Node4680 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4680 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node4670 -> Node4681 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4681 [label="finite_field::Gauss_easy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a32761bf6c4a41f24b7193352127db8e7"];
+  Node4670 -> Node4682 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4682 [label="surface::rank_plane",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#abb51d291297b29510b2a780b1ffc6cce"];
+  Node4682 -> Node4683 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4683 [label="grassmann::rank_INT_here",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#aaeab144aec85ec523f5a4d614a86d8d7"];
+  Node4683 -> Node4680 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4683 -> Node4684 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 [label="grassmann::rank_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d02/classgrassmann.html#a1fa95ce7ecebd48b04c7a0dc75491184"];
+  Node4684 -> Node4679 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 -> Node4685 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4685 [label="finite_field::Gauss_INT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#adb676d2e80341b53751326e3a58beb11"];
+  Node4684 -> Node4677 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 -> Node4678 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 -> Node4675 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 -> Node4674 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 -> Node4684 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4684 -> Node4686 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4686 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+}

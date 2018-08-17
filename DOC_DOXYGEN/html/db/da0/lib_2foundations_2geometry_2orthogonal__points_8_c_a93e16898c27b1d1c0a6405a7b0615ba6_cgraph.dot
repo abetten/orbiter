@@ -1,0 +1,14 @@
+digraph "nb_pts_N"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3157 [label="nb_pts_N",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3157 -> Node3158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3158 [label="nb_pts_S",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#a9bc3dec6e722644d182738102c3e04f3"];
+  Node3158 -> Node3157 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3158 -> Node3159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3159 [label="nb_pts_N1",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/da0/lib_2foundations_2geometry_2orthogonal__points_8_c.html#ae0f2e1c76523db67b4ec9629ccc35bc6"];
+  Node3159 -> Node3158 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3157 -> Node3159 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

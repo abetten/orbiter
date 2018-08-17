@@ -1,0 +1,7 @@
+<map id="line_centered" name="line_centered">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a99c389879187f0b8192ab7cc7457e2ff" title="scene::transform_lines" alt="" coords="155,5,310,31"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#aac8d95ae7f155ab1c880f49413238af6" title="scene::line_pt_and_dir" alt="" coords="155,55,310,80"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a10bc9ae28a740333df2a255ffa15056b" title="scene::line_through\l_two_points" alt="" coords="164,104,301,143"/>
+<area shape="rect" id="node6" href="$df/db1/classscene.html#a6e267a2f290520e5011bc9d86faca156" title="scene::map_a_line" alt="" coords="166,167,299,192"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#aa63bbdb5ffcd70f233e0a3219abb89f5" title="scene::transformed_copy" alt="" coords="358,5,529,31"/>
+</map>

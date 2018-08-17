@@ -1,0 +1,35 @@
+digraph "matrix_group_base_len_general_linear_group"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node293 [label="matrix_group_base_len\l_general_linear_group",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node293 -> Node294 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node294 [label="wreath_product::init\l_tensor_wreath_product",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dfa/classwreath__product.html#abab9a46886db102826e2ca2c1bfc39de"];
+  Node294 -> Node295 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node295 [label="action::init_wreath\l_product_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a29d8425b266eff98677406f084ee3f86"];
+  Node295 -> Node296 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node296 [label="action::init_wreath\l_product_group_and_restrict",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72"];
+  Node296 -> Node297 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node297 [label="tensor_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3"];
+  Node293 -> Node298 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node298 [label="matrix_group::init\l_base_general_linear",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#af2d84056c46dafaed6ecb1edc2463c19"];
+  Node298 -> Node299 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node299 [label="matrix_group::init_base",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a2b7f41b5e6f58257532c1e24312b89e2"];
+  Node299 -> Node300 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node300 [label="matrix_group::init\l_projective_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a626286de5799c4c9e45216e735b1d233"];
+  Node300 -> Node301 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node301 [label="direct_product_action\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d78/classdirect__product__action.html#aad40060e5821c011cccaa65a5c4df64f"];
+  Node299 -> Node302 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node302 [label="matrix_group::init\l_affine_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#aa278bd127d400940516c20bfe1f2f91e"];
+  Node302 -> Node301 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node299 -> Node303 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node303 [label="matrix_group::init\l_general_linear_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a0aa3c4187d8504b88f9f0aa644b48b86"];
+  Node293 -> Node304 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node304 [label="matrix_group::base_len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a3233c59109858d439800b44836309c7a"];
+  Node304 -> Node305 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node305 [label="direct_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/daf/classdirect__product.html#a589445fc716197ea3498c28b1d1802d0"];
+  Node304 -> Node306 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node306 [label="matrix_group::base\l_and_transversal_length",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a13f173c0312738464dbbfa0712d3e376"];
+  Node306 -> Node305 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

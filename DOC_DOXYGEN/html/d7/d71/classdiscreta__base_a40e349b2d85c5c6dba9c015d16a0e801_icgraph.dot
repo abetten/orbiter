@@ -1,0 +1,9 @@
+digraph "discreta_base::homo_z"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node13255 [label="discreta_base::homo_z",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node13255 -> Node13256 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13256 [label="unipoly::derive",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a52ae2730113a41ba434aa33d242ad2ae"];
+}

@@ -1,0 +1,40 @@
+digraph "longinteger_domain::create_qnm1"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node117 [label="longinteger_domain\l::create_qnm1",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node117 -> Node118 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node118 [label="longinteger_domain\l::power_int",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#adcc45b3b48746fa78c20881cd2553ab6"];
+  Node118 -> Node119 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node119 [label="longinteger_object\l::assign_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a"];
+  Node119 -> Node120 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node120 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node118 -> Node121 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node121 [label="longinteger_domain\l::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35"];
+  Node121 -> Node122 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node122 [label="longinteger_object\l::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101"];
+  Node122 -> Node123 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node123 [label="longinteger_object\l::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee"];
+  Node121 -> Node124 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node124 [label="longinteger_object\l::sign",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344"];
+  Node121 -> Node125 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node125 [label="longinteger_object::len",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1"];
+  Node121 -> Node126 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node126 [label="longinteger_print_digits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d"];
+  Node121 -> Node127 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node127 [label="longinteger_object::rep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2"];
+  Node117 -> Node128 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node128 [label="longinteger_domain::add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a2b9c10fbac79f7bbbbd65c7265cdc533"];
+  Node128 -> Node125 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node128 -> Node124 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node128 -> Node129 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node129 [label="longinteger_domain\l::compare_unsigned",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f"];
+  Node129 -> Node125 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node129 -> Node127 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node128 -> Node130 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node130 [label="longinteger_domain\l::subtract_signless",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#ae3c122c0ba79ac3bf90bf8dbdd245826"];
+  Node130 -> Node125 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node130 -> Node127 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node128 -> Node127 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

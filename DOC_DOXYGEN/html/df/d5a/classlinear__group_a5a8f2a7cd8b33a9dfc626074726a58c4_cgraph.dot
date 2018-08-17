@@ -1,0 +1,25 @@
+digraph "linear_group::init_orthogonal_group"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node928 [label="linear_group::init\l_orthogonal_group",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node928 -> Node929 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node929 [label="strong_generators::\lgenerators_for_the_orthogonal_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a7c3cfb8607758df9116cf33336ef151d"];
+  Node929 -> Node930 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node930 [label="generators_to_strong\l_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d90/action__global_8_c.html#aaa17f24fdab7065fbb11a06c513a4562"];
+  Node929 -> Node931 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node931 [label="strong_generators::\linit_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d09/classstrong__generators.html#a52fade445eb96d43f47e1772b1b1219e"];
+  Node931 -> Node932 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node932 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node931 -> Node933 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node933 [label="vector_ge::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8"];
+  Node933 -> Node934 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node934 [label="vector_ge::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452"];
+  Node931 -> Node935 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node935 [label="vector_ge::allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae"];
+  Node931 -> Node936 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node936 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+  Node931 -> Node937 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node937 [label="vector_ge::ith",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff"];
+}

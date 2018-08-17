@@ -1,0 +1,11 @@
+<map id="clique_finder::log_position" name="clique_finder::log_position">
+<area shape="rect" id="node2" href="$dc/d82/classclique__finder.html#a94ab299b0915409a3bc1084186393e0a" title="clique_finder::backtrack\l_search" alt="" coords="175,84,337,123"/>
+<area shape="rect" id="node9" href="$dc/d82/classclique__finder.html#a56caf53f860dbbc0b13448b5982773e2" title="clique_finder::solve\l_decision_problem" alt="" coords="188,147,324,185"/>
+<area shape="rect" id="node10" href="$dc/d82/classclique__finder.html#acc978a5b3e9fcd0c8e4a9b08d49d94e0" title="clique_finder::backtrack\l_search_not_recursive" alt="" coords="175,209,337,248"/>
+<area shape="rect" id="node3" href="$dc/de2/classcolored__graph.html#ae25e8fa7873bb5a3409641c08ca95024" title="colored_graph::all\l_cliques_of_size_k_ignore\l_colors" alt="" coords="390,5,569,57"/>
+<area shape="rect" id="node5" href="$dc/de2/classcolored__graph.html#adac4d97375919b00495f7023be88d749" title="colored_graph::all\l_cliques_of_size_k_ignore\l_colors_and_write_solutions\l_to_file" alt="" coords="385,81,574,147"/>
+<area shape="rect" id="node7" href="$d3/d54/classrainbow__cliques.html#a38487c306d689486602968412f851b98" title="rainbow_cliques::search\l_with_additional_test\l_function" alt="" coords="397,181,562,233"/>
+<area shape="rect" id="node4" href="$d4/d71/all__rainbow__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="680,19,730,44"/>
+<area shape="rect" id="node6" href="$d9/d9f/all__cliques_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="680,101,730,127"/>
+<area shape="rect" id="node8" href="$d3/d54/classrainbow__cliques.html#a068ae8a136fca21b0e5bfe6d7605d3d6" title="rainbow_cliques::search" alt="" coords="622,195,787,220"/>
+</map>

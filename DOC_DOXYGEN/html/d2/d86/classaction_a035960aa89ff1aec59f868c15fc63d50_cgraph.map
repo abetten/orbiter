@@ -1,0 +1,14 @@
+<map id="action::base_change_in_place" name="action::base_change_in_place">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#a27aa9e5940cc8e08da6727927d0798a8" title="action::free_base_data" alt="" coords="441,5,597,31"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a345fa8dfbb60c8a100ab4dd80a966b1b" title="action::allocate_base_data" alt="" coords="198,47,378,72"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#a74656357e44267b594ede82318fe124c" title="action::init_sims" alt="" coords="230,96,346,121"/>
+<area shape="rect" id="node8" href="$d2/d86/classaction.html#adb6285ff557ef0f7f832278a4115303f" title="action::compute_strong\l_generators_from_sims" alt="" coords="207,145,368,184"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a6f89e493e5c5a32e5c3b8963d438ce86" title="action::print_info" alt="" coords="228,225,347,251"/>
+<area shape="rect" id="node3" href="$d2/d86/classaction.html#a09d62a3dd408d1c0704b380b26f72fb0" title="action::null_base_data" alt="" coords="661,5,815,31"/>
+<area shape="rect" id="node6" href="$d2/d86/classaction.html#a3af19dd4cf854ee26d53409cd4762d3f" title="action::init_base_from_sims" alt="" coords="426,73,612,99"/>
+<area shape="rect" id="node7" href="$dc/d09/classstrong__generators.html#a2b997decdab82e889c1151f29a846a66" title="strong_generators::\linit_from_sims" alt="" coords="451,123,587,161"/>
+<area shape="rect" id="node10" href="$d2/d86/classaction.html#aed811766c7e64fe2c853df8b0b67aa6e" title="action::print_symmetry\l_group_type" alt="" coords="441,209,597,248"/>
+<area shape="rect" id="node12" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="467,272,571,297"/>
+<area shape="rect" id="node13" href="$d9/df3/classsims.html#aa442445175656570fa35febbe790efad" title="sims::group_order" alt="" coords="455,321,583,347"/>
+<area shape="rect" id="node11" href="$d5/d90/action__global_8_c.html#a03666b9440c4962148eba7905b9f843c" title="action_print_symmetry\l_group_type" alt="" coords="660,209,816,248"/>
+</map>

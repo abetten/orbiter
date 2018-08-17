@@ -9,6 +9,14 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -47,6 +55,22 @@ $(function() {
 /* @license-end */</script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('functions_func_d.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -66,406 +90,482 @@ $(function() {
 
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>data_file()
-: <a class="el" href="classdata__file.html#a5104475f879c0e5fdcc35f906cf77db0">data_file</a>
+: <a class="el" href="d2/dd1/classdata__file.html#a5104475f879c0e5fdcc35f906cf77db0">data_file</a>
 </li>
 <li>database()
-: <a class="el" href="classdatabase.html#a35ec480ed529a9d092a7ebc5472b767f">database</a>
+: <a class="el" href="db/d72/classdatabase.html#a35ec480ed529a9d092a7ebc5472b767f">database</a>
 </li>
 <li>ddb()
-: <a class="el" href="classgeometry.html#a7a47161530f508d7aeb853a090a6eef8">geometry</a>
+: <a class="el" href="da/d44/classgeometry.html#a7a47161530f508d7aeb853a090a6eef8">geometry</a>
 </li>
 <li>ddp()
-: <a class="el" href="classgeometry.html#ae00a20f0f75a511d639318673986028e">geometry</a>
+: <a class="el" href="da/d44/classgeometry.html#ae00a20f0f75a511d639318673986028e">geometry</a>
 </li>
 <li>dec()
-: <a class="el" href="classdiscreta__base.html#a11449a5cfa7dc5f5600e012517af6f0f">discreta_base</a>
-, <a class="el" href="classinteger.html#a6b744350afb55f82d25e55bb6b1027b2">integer</a>
-, <a class="el" href="classlonginteger.html#a99be1d0bdcae0dcce47d8d0a09612edf">longinteger</a>
-, <a class="el" href="class_vector.html#ac2c2f8a845000951b008bbe833be3fd4">Vector</a>
+: <a class="el" href="d7/d71/classdiscreta__base.html#a11449a5cfa7dc5f5600e012517af6f0f">discreta_base</a>
+, <a class="el" href="d0/de5/classinteger.html#a6b744350afb55f82d25e55bb6b1027b2">integer</a>
+, <a class="el" href="d3/d71/classlonginteger.html#a99be1d0bdcae0dcce47d8d0a09612edf">longinteger</a>
+, <a class="el" href="d5/db2/class_vector.html#ac2c2f8a845000951b008bbe833be3fd4">Vector</a>
 </li>
 <li>decode_ascii()
-: <a class="el" href="classgroup.html#aaf998199131855804b53c8fc917a187f">group</a>
+: <a class="el" href="d1/db7/classgroup.html#aaf998199131855804b53c8fc917a187f">group</a>
 </li>
 <li>decode_ascii_coding()
-: <a class="el" href="classstrong__generators.html#a5e609ccd692b77119281889456326701">strong_generators</a>
+: <a class="el" href="dc/d09/classstrong__generators.html#a5e609ccd692b77119281889456326701">strong_generators</a>
 </li>
 <li>decomposition()
-: <a class="el" href="classdecomposition.html#a7e381393157c79ff35fd735fb6f9d949">decomposition</a>
-, <a class="el" href="classprojective__space.html#ae060ee525e7a974bce04d78be7f6dd51">projective_space</a>
+: <a class="el" href="d3/d2b/classdecomposition.html#a7e381393157c79ff35fd735fb6f9d949">decomposition</a>
+, <a class="el" href="d2/d17/classprojective__space.html#ae060ee525e7a974bce04d78be7f6dd51">projective_space</a>
 </li>
 <li>decomposition_matrix()
-: <a class="el" href="classisomorph.html#a3278e4cd7b5270dd7d0501dbd95b66a0">isomorph</a>
+: <a class="el" href="d3/d5f/classisomorph.html#a3278e4cd7b5270dd7d0501dbd95b66a0">isomorph</a>
 </li>
 <li>decomposition_print_tex()
-: <a class="el" href="classincidence__structure.html#ada3fae9fd1819b36e6bfe18dedd01e6a">incidence_structure</a>
+: <a class="el" href="da/d8a/classincidence__structure.html#ada3fae9fd1819b36e6bfe18dedd01e6a">incidence_structure</a>
 </li>
 <li>decompress()
-: <a class="el" href="classmemory.html#a1b74745da801f22d42ea54e54b23c014">memory</a>
-, <a class="el" href="classmemory__object.html#af32137ad9fb4961041d6f83c67c5dea2">memory_object</a>
+: <a class="el" href="d8/d99/classmemory.html#a1b74745da801f22d42ea54e54b23c014">memory</a>
+, <a class="el" href="d8/d67/classmemory__object.html#af32137ad9fb4961041d6f83c67c5dea2">memory_object</a>
 </li>
 <li>decrement()
-: <a class="el" href="classlonginteger__object.html#a9c0e2494b9282e4263df3e130ab8f594">longinteger_object</a>
+: <a class="el" href="dd/d7e/classlonginteger__object.html#a9c0e2494b9282e4263df3e130ab8f594">longinteger_object</a>
 </li>
 <li>default_values()
-: <a class="el" href="classmp__graphics.html#a7d407ae5a4cc589826f44e307e654bab">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#a7d407ae5a4cc589826f44e307e654bab">mp_graphics</a>
 </li>
 <li>degree()
-: <a class="el" href="classunipoly.html#ab2b9692ea17ce32c0c8f2cc246517e37">unipoly</a>
-, <a class="el" href="classunipoly__domain.html#afb7ee70ad99925f54d4d56bd27828dd2">unipoly_domain</a>
+: <a class="el" href="d1/d89/classunipoly.html#ab2b9692ea17ce32c0c8f2cc246517e37">unipoly</a>
+, <a class="el" href="da/d3c/classunipoly__domain.html#afb7ee70ad99925f54d4d56bd27828dd2">unipoly_domain</a>
 </li>
 <li>degree_of_point()
-: <a class="el" href="classclique__finder.html#ad3f084a4d6dfad8cd283f57933d6490d">clique_finder</a>
+: <a class="el" href="dc/d82/classclique__finder.html#ad3f084a4d6dfad8cd283f57933d6490d">clique_finder</a>
 </li>
 <li>degree_of_point_statistic()
-: <a class="el" href="classclique__finder.html#a163ce0ea22a12c2eaf8eca32da314a1f">clique_finder</a>
+: <a class="el" href="dc/d82/classclique__finder.html#a163ce0ea22a12c2eaf8eca32da314a1f">clique_finder</a>
 </li>
 <li>Delete()
-: <a class="el" href="classbtree.html#a79bf3a5ba68348f79df3da7875b40228">btree</a>
+: <a class="el" href="dd/db0/classbtree.html#a79bf3a5ba68348f79df3da7875b40228">btree</a>
 </li>
 <li>delete_ascii_coding()
-: <a class="el" href="classgroup.html#aa71c4507467519fc564a6715fe7efdf5">group</a>
+: <a class="el" href="d1/db7/classgroup.html#aa71c4507467519fc564a6715fe7efdf5">group</a>
 </li>
 <li>delete_element()
-: <a class="el" href="classfancy__set.html#a8419fe420f1f042a27655921028eb2c5">fancy_set</a>
-, <a class="el" href="class_vector.html#a91dbd1d04baeec1066d397e7668953e3">Vector</a>
+: <a class="el" href="d5/da4/classfancy__set.html#a8419fe420f1f042a27655921028eb2c5">fancy_set</a>
+, <a class="el" href="d5/db2/class_vector.html#a91dbd1d04baeec1066d397e7668953e3">Vector</a>
 </li>
 <li>delete_elements()
-: <a class="el" href="classfancy__set.html#ad377d2ed9c7b0d0526bcb14b78f68b61">fancy_set</a>
+: <a class="el" href="d5/da4/classfancy__set.html#ad377d2ed9c7b0d0526bcb14b78f68b61">fancy_set</a>
 </li>
 <li>delete_equation()
-: <a class="el" href="classdiophant.html#a358275d27c4c84ec1314c0b2fa027f7e">diophant</a>
+: <a class="el" href="d7/d9c/classdiophant.html#a358275d27c4c84ec1314c0b2fa027f7e">diophant</a>
 </li>
 <li>delete_files()
-: <a class="el" href="classdatabase.html#a3cdd5549da793e4b4f44e175eabe050e">database</a>
+: <a class="el" href="db/d72/classdatabase.html#a3cdd5549da793e4b4f44e175eabe050e">database</a>
 </li>
 <li>delete_images()
-: <a class="el" href="classschreier.html#abdd236da6354b3a5a8e83532e41f7fc3">schreier</a>
-, <a class="el" href="classsims.html#a5a4fd410f399c81c847052861e3bc3ff">sims</a>
+: <a class="el" href="d3/dd6/classschreier.html#abdd236da6354b3a5a8e83532e41f7fc3">schreier</a>
+, <a class="el" href="d9/df3/classsims.html#a5a4fd410f399c81c847052861e3bc3ff">sims</a>
 </li>
 <li>delete_ith()
-: <a class="el" href="classbtree.html#affb997b80633101c9ece9e436784e1e9">btree</a>
+: <a class="el" href="dd/db0/classbtree.html#affb997b80633101c9ece9e436784e1e9">btree</a>
 </li>
 <li>delete_object()
-: <a class="el" href="classdatabase.html#a69f061ffa820d1926718dafad5f5513c">database</a>
-, <a class="el" href="classunipoly__domain.html#ad46bf5ef8df170a76df6623be4260301">unipoly_domain</a>
+: <a class="el" href="db/d72/classdatabase.html#a69f061ffa820d1926718dafad5f5513c">database</a>
+, <a class="el" href="da/d3c/classunipoly__domain.html#ad46bf5ef8df170a76df6623be4260301">unipoly_domain</a>
 </li>
 <li>delete_set_orbit()
-: <a class="el" href="classaction.html#a0b3e2e6836ed8ec81e3e74e167c3792b">action</a>
+: <a class="el" href="d2/d86/classaction.html#a0b3e2e6836ed8ec81e3e74e167c3792b">action</a>
 </li>
 <li>delete_sims()
-: <a class="el" href="classgroup.html#accebe64da3d51160a974fad069a90eac">group</a>
+: <a class="el" href="d1/db7/classgroup.html#accebe64da3d51160a974fad069a90eac">group</a>
 </li>
 <li>delete_strong_generators()
-: <a class="el" href="classgroup.html#a36c96bdf4428fdf236dfabab0f82b898">group</a>
+: <a class="el" href="d1/db7/classgroup.html#a36c96bdf4428fdf236dfabab0f82b898">group</a>
 </li>
 <li>deletion_matrix()
-: <a class="el" href="classunipoly__domain.html#afd83c955f660719b0214c5129885dd4f">unipoly_domain</a>
+: <a class="el" href="da/d3c/classunipoly__domain.html#afd83c955f660719b0214c5129885dd4f">unipoly_domain</a>
+</li>
+<li>delinearize_adjacency_list()
+: <a class="el" href="dc/d82/classclique__finder.html#a36fdb55ac89d6f883cfaa2c2cf642fb2">clique_finder</a>
 </li>
 <li>dependency()
-: <a class="el" href="classfinite__field.html#a8e84db9567bb0e1dfdb38c96a97948a8">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#a8e84db9567bb0e1dfdb38c96a97948a8">finite_field</a>
 </li>
 <li>depth_first_rank_recursion()
-: <a class="el" href="classgraph__node.html#a491dc88828723c779c98510c61428df0">graph_node</a>
+: <a class="el" href="d6/d21/classgraph__node.html#a491dc88828723c779c98510c61428df0">graph_node</a>
 </li>
 <li>depth_in_stab_chain()
-: <a class="el" href="classaction.html#a10b3912651ec1f73a5b1f2f4bc1f4fd2">action</a>
+: <a class="el" href="d2/d86/classaction.html#a10b3912651ec1f73a5b1f2f4bc1f4fd2">action</a>
 </li>
 <li>depth_in_tree()
-: <a class="el" href="classschreier.html#a1967bab729b91dfe70d514f820d13772">schreier</a>
+: <a class="el" href="d3/dd6/classschreier.html#a1967bab729b91dfe70d514f820d13772">schreier</a>
 </li>
 <li>depth_of_node()
-: <a class="el" href="classoracle.html#a022e34d01ca887785e17c9f3fb25193e">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#a022e34d01ca887785e17c9f3fb25193e">oracle</a>
 </li>
 <li>derive()
-: <a class="el" href="classunipoly.html#a52ae2730113a41ba434aa33d242ad2ae">unipoly</a>
-, <a class="el" href="classunipoly__domain.html#a9277064fdac095171cd7a0849a1b14e9">unipoly_domain</a>
+: <a class="el" href="d1/d89/classunipoly.html#a52ae2730113a41ba434aa33d242ad2ae">unipoly</a>
+, <a class="el" href="da/d3c/classunipoly__domain.html#a9277064fdac095171cd7a0849a1b14e9">unipoly_domain</a>
 </li>
 <li>derived()
-: <a class="el" href="classdesign__parameter.html#a72b457aff4b3747f90ed7fbda1941de0">design_parameter</a>
+: <a class="el" href="da/d94/classdesign__parameter.html#a72b457aff4b3747f90ed7fbda1941de0">design_parameter</a>
 </li>
 <li>derived_inverse()
-: <a class="el" href="classdesign__parameter.html#acbfce2a35f0c379d5888acdc8d74ae19">design_parameter</a>
+: <a class="el" href="da/d94/classdesign__parameter.html#acbfce2a35f0c379d5888acdc8d74ae19">design_parameter</a>
 </li>
 <li>desarguesian_spread()
-: <a class="el" href="classdesarguesian__spread.html#a1a661c494663456995aa2951cfca2753">desarguesian_spread</a>
+: <a class="el" href="d4/d86/classdesarguesian__spread.html#a1a661c494663456995aa2951cfca2753">desarguesian_spread</a>
 </li>
 <li>design_parameter()
-: <a class="el" href="classdesign__parameter.html#a1952bb71b52e00bcb579d3eafd809f05">design_parameter</a>
+: <a class="el" href="da/d94/classdesign__parameter.html#a1952bb71b52e00bcb579d3eafd809f05">design_parameter</a>
 </li>
 <li>design_parameter_source()
-: <a class="el" href="classdesign__parameter__source.html#a64aac686b9e422a471d0f26351fb2bf0">design_parameter_source</a>
+: <a class="el" href="df/d4b/classdesign__parameter__source.html#a64aac686b9e422a471d0f26351fb2bf0">design_parameter_source</a>
 </li>
 <li>det()
-: <a class="el" href="classmatrix.html#a364b1e3b29af6f6bd952448718d79467">matrix</a>
+: <a class="el" href="d1/d8d/classmatrix.html#a364b1e3b29af6f6bd952448718d79467">matrix</a>
 </li>
 <li>det_modify_input_matrix()
-: <a class="el" href="classmatrix.html#a94ca76d8c4919c9f1f20c362840aaf43">matrix</a>
+: <a class="el" href="d1/d8d/classmatrix.html#a94ca76d8c4919c9f1f20c362840aaf43">matrix</a>
 </li>
 <li>determinant()
-: <a class="el" href="classmatrix.html#a75adb25c9f8753f1b81eafe4464b272a">matrix</a>
-, <a class="el" href="classunipoly__domain.html#a460cfeb7de30e382da7f183b051e4a4f">unipoly_domain</a>
+: <a class="el" href="d1/d8d/classmatrix.html#a75adb25c9f8753f1b81eafe4464b272a">matrix</a>
+, <a class="el" href="da/d3c/classunipoly__domain.html#a460cfeb7de30e382da7f183b051e4a4f">unipoly_domain</a>
 </li>
 <li>determine_conic_in_plane()
-: <a class="el" href="classprojective__space.html#ad37dfe343cac13cc6c90e1fabf77ce14">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#ad37dfe343cac13cc6c90e1fabf77ce14">projective_space</a>
 </li>
 <li>determine_hermitian_form_in_plane()
-: <a class="el" href="classprojective__space.html#a20267bad9f354993ddc8b1c36220a874">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#a20267bad9f354993ddc8b1c36220a874">projective_space</a>
 </li>
 <li>determine_line_in_plane()
-: <a class="el" href="classprojective__space.html#ae7e8e26c331028d5996f7dc4b6a1d7b2">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#ae7e8e26c331028d5996f7dc4b6a1d7b2">projective_space</a>
 </li>
 <li>determine_neighbours()
-: <a class="el" href="classsolid.html#ad6bcabc7a3e9082b4baef371e7828c27">solid</a>
+: <a class="el" href="d8/def/classsolid.html#ad6bcabc7a3e9082b4baef371e7828c27">solid</a>
 </li>
 <li>determine_quadric_in_solid()
-: <a class="el" href="classprojective__space.html#ae8af1e9ad085a0bfb9233967b3a4a8a0">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#ae8af1e9ad085a0bfb9233967b3a4a8a0">projective_space</a>
 </li>
 <li>dev2user()
-: <a class="el" href="classmp__graphics.html#ad2f2f2f85200867d9ab52d1660e79bf1">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#ad2f2f2f85200867d9ab52d1660e79bf1">mp_graphics</a>
 </li>
 <li>diagonal_matrix()
-: <a class="el" href="classfinite__field.html#a6957896876c77d97c6cf06685652100a">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#a6957896876c77d97c6cf06685652100a">finite_field</a>
 </li>
 <li>Dickson_polynomial()
-: <a class="el" href="classfinite__field.html#abc5e4494690f56fb1523b4a956d38c8b">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#abc5e4494690f56fb1523b4a956d38c8b">finite_field</a>
 </li>
 <li>dimension_of_join()
-: <a class="el" href="classgrassmann.html#a9c98ddbb06e5cd89e97c6662172bf5c8">grassmann</a>
+: <a class="el" href="df/d02/classgrassmann.html#a9c98ddbb06e5cd89e97c6662172bf5c8">grassmann</a>
 </li>
 <li>diophant()
-: <a class="el" href="classdiophant.html#ae898c535557b30104376ebfb186b8c31">diophant</a>
+: <a class="el" href="d7/d9c/classdiophant.html#ae898c535557b30104376ebfb186b8c31">diophant</a>
 </li>
 <li>direct_product()
-: <a class="el" href="classsolid.html#a8b4527c066bcebd2e6542fe158c607b0">solid</a>
+: <a class="el" href="dc/daf/classdirect__product.html#a314547b6fb4f8db3b83db8f4203644dd">direct_product</a>
+, <a class="el" href="d8/def/classsolid.html#a8b4527c066bcebd2e6542fe158c607b0">solid</a>
+</li>
+<li>direct_product_action()
+: <a class="el" href="d3/d78/classdirect__product__action.html#ab34840fdaecd194e289fa177d841d33a">direct_product_action</a>
 </li>
 <li>direct_sum()
-: <a class="el" href="classsolid.html#a2045d572bdbd493c541c69624baeedbf">solid</a>
+: <a class="el" href="d8/def/classsolid.html#a2045d572bdbd493c541c69624baeedbf">solid</a>
 </li>
 <li>discreta_base()
-: <a class="el" href="classdiscreta__base.html#a52f72e02c11c566c8a8389b662b6c50c">discreta_base</a>
+: <a class="el" href="d7/d71/classdiscreta__base.html#a52f72e02c11c566c8a8389b662b6c50c">discreta_base</a>
 </li>
 <li>display_N2()
-: <a class="el" href="classfinite__field.html#ad66c70d4957af58f1ba0652bc8ece5f0">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#ad66c70d4957af58f1ba0652bc8ece5f0">finite_field</a>
 </li>
 <li>display_N3()
-: <a class="el" href="classfinite__field.html#a4fe5992dc30abce53c6a86d6e3a666a8">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#a4fe5992dc30abce53c6a86d6e3a666a8">finite_field</a>
 </li>
 <li>display_T2()
-: <a class="el" href="classfinite__field.html#a73592a477a519c7823666db81c18a5a9">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#a73592a477a519c7823666db81c18a5a9">finite_field</a>
 </li>
 <li>display_T3()
-: <a class="el" href="classfinite__field.html#a58abf6314463f2b93247a3c467a7bcd3">finite_field</a>
+: <a class="el" href="df/d5a/classfinite__field.html#a58abf6314463f2b93247a3c467a7bcd3">finite_field</a>
 </li>
 <li>dispose()
-: <a class="el" href="classaction.html#a1aed4d044abc871e19ed256581ce61e6">action</a>
-, <a class="el" href="classpage__storage.html#a10a87bab5f2aac2f4ddf3ebe84cf897a">page_storage</a>
+: <a class="el" href="d2/d86/classaction.html#a1aed4d044abc871e19ed256581ce61e6">action</a>
+, <a class="el" href="dc/d72/classpage__storage.html#a10a87bab5f2aac2f4ddf3ebe84cf897a">page_storage</a>
+</li>
+<li>distance_between_two_points()
+: <a class="el" href="df/db1/classscene.html#aaf5177df302c163136d51febef20e950">scene</a>
+</li>
+<li>distance_from_origin()
+: <a class="el" href="df/db1/classscene.html#a48aceb808cb95c97b7515ff9dabfcd3a">scene</a>
 </li>
 <li>divide()
-: <a class="el" href="classa__domain.html#a5e7a6749b6877ab116ee1fa86f7bc7a1">a_domain</a>
+: <a class="el" href="db/dd1/classa__domain.html#a5e7a6749b6877ab116ee1fa86f7bc7a1">a_domain</a>
 </li>
 <li>divide_by()
-: <a class="el" href="classdiscreta__base.html#aa3f9d43fab5e6240202fbd7c1f5e3e74">discreta_base</a>
+: <a class="el" href="d7/d71/classdiscreta__base.html#aa3f9d43fab5e6240202fbd7c1f5e3e74">discreta_base</a>
 </li>
 <li>divide_by_exact()
-: <a class="el" href="classdiscreta__base.html#a14ea31dd075b20644457db08319389ef">discreta_base</a>
+: <a class="el" href="d7/d71/classdiscreta__base.html#a14ea31dd075b20644457db08319389ef">discreta_base</a>
 </li>
 <li>divide_by_integer()
-: <a class="el" href="classa__domain.html#a24997924a25569b58e1d2fa8ba4391bc">a_domain</a>
+: <a class="el" href="db/dd1/classa__domain.html#a24997924a25569b58e1d2fa8ba4391bc">a_domain</a>
 </li>
 <li>divide_out_int()
-: <a class="el" href="classlonginteger.html#ac4b65023c8de701153491d80577dfb9b">longinteger</a>
+: <a class="el" href="d3/d71/classlonginteger.html#ac4b65023c8de701153491d80577dfb9b">longinteger</a>
 </li>
 <li>divideeqns()
-: <a class="el" href="classmckay_1_1t_m_c_k_a_y.html#a5083695703cb202b7c97f78990093316">mckay::tMCKAY</a>
+: <a class="el" href="d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a5083695703cb202b7c97f78990093316">mckay::tMCKAY</a>
 </li>
 <li>do_all_column_refinements()
-: <a class="el" href="classglobal__data.html#a0ee86ce10416cfcf668c2461a2beb394">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#a0ee86ce10416cfcf668c2461a2beb394">global_data</a>
 </li>
 <li>do_all_row_refinements()
-: <a class="el" href="classglobal__data.html#ad9fc379d1c496c7ceea899c2132a62c1">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#ad9fc379d1c496c7ceea899c2132a62c1">global_data</a>
 </li>
 <li>do_classify()
-: <a class="el" href="classlinear__set.html#a3eb2dbce7fa8b71901dfc12f288ddd0c">linear_set</a>
+: <a class="el" href="dd/d86/classlinear__set.html#a3eb2dbce7fa8b71901dfc12f288ddd0c">linear_set</a>
 </li>
 <li>do_classify_secondary()
-: <a class="el" href="classlinear__set.html#a47eb7f9995f3343abd3bdfbf9a9a9162">linear_set</a>
+: <a class="el" href="dd/d86/classlinear__set.html#a47eb7f9995f3343abd3bdfbf9a9a9162">linear_set</a>
 </li>
 <li>do_col_refinement()
-: <a class="el" href="classglobal__data.html#a4709794d5bd963b69a2fbdb0f4f69f95">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#a4709794d5bd963b69a2fbdb0f4f69f95">global_data</a>
 </li>
 <li>do_column_refinement()
-: <a class="el" href="classglobal__data.html#ab720d7fecd03c537fba49b15ec1298e7">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#ab720d7fecd03c537fba49b15ec1298e7">global_data</a>
 </li>
 <li>do_compute_stabilizer()
-: <a class="el" href="classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b">linear_set</a>
+: <a class="el" href="dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b">linear_set</a>
 </li>
 <li>do_iso_test()
-: <a class="el" href="classisomorph.html#a51fc3bf5cc3a99282a489b2df37ee24e">isomorph</a>
+: <a class="el" href="d3/d5f/classisomorph.html#a51fc3bf5cc3a99282a489b2df37ee24e">isomorph</a>
 </li>
 <li>do_it()
-: <a class="el" href="classglobal__data.html#aa78a1e32894e05dd89133596873bdfbc">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#aa78a1e32894e05dd89133596873bdfbc">global_data</a>
 </li>
 <li>do_n2q3()
-: <a class="el" href="classdifference__set__in__heisenberg__group.html#aca82ff116dd5d17cfbb311e809b6d023">difference_set_in_heisenberg_group</a>
+: <a class="el" href="de/d8a/classdifference__set__in__heisenberg__group.html#aca82ff116dd5d17cfbb311e809b6d023">difference_set_in_heisenberg_group</a>
 </li>
 <li>do_recoordinatize()
-: <a class="el" href="classrecoordinatize.html#ae667d36625d30c780af10da96e26ab04">recoordinatize</a>
+: <a class="el" href="d3/d3c/classrecoordinatize.html#ae667d36625d30c780af10da96e26ab04">recoordinatize</a>
 </li>
 <li>do_row_refinement()
-: <a class="el" href="classglobal__data.html#a016fc0ad22fea3c280e898c589c8c785">global_data</a>
+: <a class="el" href="d2/ddf/classglobal__data.html#aacbe3a029d0989a8c379b5679fec3f27">global_data</a>
 </li>
 <li>do_tdo_high_level()
-: <a class="el" href="classincidence__structure.html#a8840e820448ad980279f244a90888b77">incidence_structure</a>
+: <a class="el" href="da/d8a/classincidence__structure.html#a8840e820448ad980279f244a90888b77">incidence_structure</a>
 </li>
 <li>do_union()
-: <a class="el" href="classunion__find.html#a7c57b5cf10387d978dc5c46c0e5f5f91">union_find</a>
+: <a class="el" href="d1/dfb/classunion__find.html#a7c57b5cf10387d978dc5c46c0e5f5f91">union_find</a>
 </li>
 <li>dodecahedron()
-: <a class="el" href="classsolid.html#a514072d4dfd0f82ba24b0df1ac302d6f">solid</a>
+: <a class="el" href="d8/def/classsolid.html#a514072d4dfd0f82ba24b0df1ac302d6f">solid</a>
+</li>
+<li>Dodecahedron_edges()
+: <a class="el" href="df/db1/classscene.html#ab99993460bc5447b2246c71dd7ff04e5">scene</a>
+</li>
+<li>Dodecahedron_planes()
+: <a class="el" href="df/db1/classscene.html#ae1bc1dbc895d216b4ed366b01f06a15d">scene</a>
+</li>
+<li>Dodecahedron_points()
+: <a class="el" href="df/db1/classscene.html#a8864b0d456e0d14ad2c7fdc09b03e998">scene</a>
 </li>
 <li>domain()
-: <a class="el" href="classdomain.html#a570464e8e5808cd168f95cd7495cccd1">domain</a>
+: <a class="el" href="de/d3b/classdomain.html#a570464e8e5808cd168f95cd7495cccd1">domain</a>
 </li>
 <li>dot_product()
-: <a class="el" href="classfinite__field.html#aeb74732fc0776cb87ec8419e5ea7ad97">finite_field</a>
-, <a class="el" href="classgenerators__symplectic__group.html#afcbcf5c147d2a3d7041358befe08db1d">generators_symplectic_group</a>
-, <a class="el" href="classnull__polarity__generator.html#a8a0397a06453c99aa2265c0d91262654">null_polarity_generator</a>
+: <a class="el" href="df/d5a/classfinite__field.html#aeb74732fc0776cb87ec8419e5ea7ad97">finite_field</a>
+, <a class="el" href="d7/dd9/classgenerators__symplectic__group.html#afcbcf5c147d2a3d7041358befe08db1d">generators_symplectic_group</a>
+, <a class="el" href="df/db3/classnull__polarity__generator.html#a8a0397a06453c99aa2265c0d91262654">null_polarity_generator</a>
 </li>
 <li>downstep()
-: <a class="el" href="classclassify__double__sixes.html#aed4b1460612fe2fd5b4e4611e83b2806">classify_double_sixes</a>
-, <a class="el" href="classclassify__trihedral__pairs.html#a3fe3880b4f1451c976300cba97be0bbf">classify_trihedral_pairs</a>
-, <a class="el" href="classgenerator.html#ad90bc284af0b5f5beae960a0bd7a5b43">generator</a>
-, <a class="el" href="classoracle.html#a4fbc6710b45e5af5c2fb5bc3aa6d3bb1">oracle</a>
-, <a class="el" href="classsurface__classify__wedge.html#a4e2e87827c96bfb48e9aea0e246a6445">surface_classify_wedge</a>
+: <a class="el" href="dd/d23/classclassify__double__sixes.html#aed4b1460612fe2fd5b4e4611e83b2806">classify_double_sixes</a>
+, <a class="el" href="d1/d21/classclassify__trihedral__pairs.html#a3fe3880b4f1451c976300cba97be0bbf">classify_trihedral_pairs</a>
+, <a class="el" href="d7/d73/classgenerator.html#ad90bc284af0b5f5beae960a0bd7a5b43">generator</a>
+, <a class="el" href="d7/da7/classoracle.html#a4fbc6710b45e5af5c2fb5bc3aa6d3bb1">oracle</a>
+, <a class="el" href="d7/d5c/classsurface__classify__wedge.html#a4e2e87827c96bfb48e9aea0e246a6445">surface_classify_wedge</a>
 </li>
 <li>downstep_apply_early_test()
-: <a class="el" href="classoracle.html#ac774d80f30c7e58e1e87c891ca3ec814">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#ac774d80f30c7e58e1e87c891ca3ec814">oracle</a>
 </li>
 <li>downstep_get_invariant_subset()
-: <a class="el" href="classoracle.html#ae2540e94ee617a407069f976739cfd71">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#ae2540e94ee617a407069f976739cfd71">oracle</a>
 </li>
 <li>downstep_implicit_fusion()
-: <a class="el" href="classoracle.html#ae005e5c6d24107f3ca3462ffb94e379e">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#ae005e5c6d24107f3ca3462ffb94e379e">oracle</a>
 </li>
 <li>downstep_orbit_test_and_schreier_vector()
-: <a class="el" href="classoracle.html#a140c3df3ca2f645e364b5cd644c088ab">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#a140c3df3ca2f645e364b5cd644c088ab">oracle</a>
 </li>
 <li>downstep_orbits()
-: <a class="el" href="classoracle.html#a65ea623f3a7b2e3dba4e29638207bc53">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#a65ea623f3a7b2e3dba4e29638207bc53">oracle</a>
 </li>
 <li>downstep_orbits_print()
-: <a class="el" href="classoracle.html#a7c267cd92618aacf63d6fb3d8730df33">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#a7c267cd92618aacf63d6fb3d8730df33">oracle</a>
 </li>
 <li>downstep_orbits_subspace_action()
-: <a class="el" href="classoracle.html#adcf946d772e92646c47cf264764d85a6">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#adcf946d772e92646c47cf264764d85a6">oracle</a>
 </li>
 <li>downstep_subspace_action()
-: <a class="el" href="classoracle.html#a26f568b84b1ca2c24f619278ac88c407">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#a26f568b84b1ca2c24f619278ac88c407">oracle</a>
 </li>
 <li>downstep_subspace_action_print_orbits()
-: <a class="el" href="classoracle.html#aa23545cebae0fe4f46a689641c775c92">oracle</a>
+: <a class="el" href="d7/da7/classoracle.html#aa23545cebae0fe4f46a689641c775c92">oracle</a>
 </li>
 <li>draw()
-: <a class="el" href="classcolored__graph.html#ac5fd42765545792be5d4533b782e3320">colored_graph</a>
-, <a class="el" href="classtree.html#acfd7967aacb5c1e3faa2ad39b019dd68">tree</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#ac5fd42765545792be5d4533b782e3320">colored_graph</a>
+, <a class="el" href="d4/d4d/classtree.html#acfd7967aacb5c1e3faa2ad39b019dd68">tree</a>
 </li>
 <li>draw_axes_and_grid()
-: <a class="el" href="classmp__graphics.html#a50758b934912d486ff6e5fcbef74a1d0">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#a50758b934912d486ff6e5fcbef74a1d0">mp_graphics</a>
+</li>
+<li>draw_cubic_with_selection()
+: <a class="el" href="df/db1/classscene.html#aebeae8f1e55e8cd895ba2e205bf56e16">scene</a>
 </li>
 <li>draw_edges()
-: <a class="el" href="classtree__node.html#a7ccbb586fde19d382c05065d80501eca">tree_node</a>
+: <a class="el" href="df/dbf/classtree__node.html#a7ccbb586fde19d382c05065d80501eca">tree_node</a>
+</li>
+<li>draw_edges_with_selection()
+: <a class="el" href="df/db1/classscene.html#ab9d0a2f2bf8b62dd760bba2e10310ae1">scene</a>
+</li>
+<li>draw_face()
+: <a class="el" href="df/db1/classscene.html#a9eda6a9de48435c9f5d574b31108394b">scene</a>
+</li>
+<li>draw_faces_with_selection()
+: <a class="el" href="df/db1/classscene.html#a8e6c75f38d638049667fadaa7b1ccae5">scene</a>
+</li>
+<li>draw_forest()
+: <a class="el" href="d3/dd6/classschreier.html#acedbf49fa6edce7059aa0f9a826abf44">schreier</a>
 </li>
 <li>draw_graphs()
-: <a class="el" href="classgraph__generator.html#aa07ad014571c0dbd09b93ccb99eb648e">graph_generator</a>
+: <a class="el" href="d9/d91/classgraph__generator.html#aa07ad014571c0dbd09b93ccb99eb648e">graph_generator</a>
 </li>
 <li>draw_grid()
-: <a class="el" href="classelliptic__curve.html#afa9d40e1a626257ad802bdb5a157ad0a">elliptic_curve</a>
+: <a class="el" href="d3/dea/classelliptic__curve.html#afa9d40e1a626257ad802bdb5a157ad0a">elliptic_curve</a>
 </li>
 <li>draw_grid2()
-: <a class="el" href="classelliptic__curve.html#a20f858541aed9bfaabdf69b10f18cdbe">elliptic_curve</a>
+: <a class="el" href="d3/dea/classelliptic__curve.html#a20f858541aed9bfaabdf69b10f18cdbe">elliptic_curve</a>
 </li>
 <li>draw_it()
-: <a class="el" href="classcolored__graph.html#a127bc92b3de713dda9f14651dad2fd57">colored_graph</a>
-, <a class="el" href="classdiophant.html#a2d767259ba2547eb19000e02a0035f08">diophant</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#a127bc92b3de713dda9f14651dad2fd57">colored_graph</a>
+, <a class="el" href="d7/d9c/classdiophant.html#a2d767259ba2547eb19000e02a0035f08">diophant</a>
 </li>
 <li>draw_level_graph()
-: <a class="el" href="classgenerator.html#a6bbc7b7aafea55ff8e202efc43ab263c">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#a6bbc7b7aafea55ff8e202efc43ab263c">generator</a>
 </li>
 <li>draw_Levi()
-: <a class="el" href="classcolored__graph.html#a5c5ee5bee29d724887a32f6f43ca24ff">colored_graph</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#ae5b5f25fff97c55c55522d11ff1942bc">colored_graph</a>
+</li>
+<li>draw_line_with_selection()
+: <a class="el" href="df/db1/classscene.html#a71a1f3698df72aea4e08d75238eb9e65">scene</a>
+</li>
+<li>draw_lines_ai()
+: <a class="el" href="df/db1/classscene.html#af047046ee2c28dbd7629e7c17109284d">scene</a>
+</li>
+<li>draw_lines_ai_with_selection()
+: <a class="el" href="df/db1/classscene.html#a63b7fdeb5183d882598c6614b95df6ad">scene</a>
+</li>
+<li>draw_lines_bj()
+: <a class="el" href="df/db1/classscene.html#a51de9f69f450d42fbe558663e2ef5222">scene</a>
+</li>
+<li>draw_lines_bj_with_selection()
+: <a class="el" href="df/db1/classscene.html#a0b87d887781e997eb64dd82e6e302e37">scene</a>
+</li>
+<li>draw_lines_cij()
+: <a class="el" href="df/db1/classscene.html#a1af69e6c140b4b5c650092831b4cfa0b">scene</a>
+</li>
+<li>draw_lines_cij_with_selection()
+: <a class="el" href="df/db1/classscene.html#ac552ac295355e426ebaa2bbcf4527c95">scene</a>
+</li>
+<li>draw_lines_with_selection()
+: <a class="el" href="df/db1/classscene.html#a923ba79407852202bbb95971e467fca4">scene</a>
 </li>
 <li>draw_on_circle()
-: <a class="el" href="classcolored__graph.html#a1d55e0555a9def288aad59156b1e64db">colored_graph</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#af5b7af38772c569cc0d6ab1d7c1fe20b">colored_graph</a>
 </li>
 <li>draw_on_circle_2()
-: <a class="el" href="classcolored__graph.html#af6dd79e0c699432153b1a8cb60f5afad">colored_graph</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#a5491c0aa5ba7e60fb694fe7fbbc5ce8a">colored_graph</a>
 </li>
 <li>draw_partitioned()
-: <a class="el" href="classcolored__graph.html#a244dcd80d20f6eeddd537a48a1541f96">colored_graph</a>
-, <a class="el" href="classdiophant.html#aea00280a322e4ad069a8de1e483790d0">diophant</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#a244dcd80d20f6eeddd537a48a1541f96">colored_graph</a>
+, <a class="el" href="d7/d9c/classdiophant.html#aea00280a322e4ad069a8de1e483790d0">diophant</a>
+</li>
+<li>draw_planes_with_selection()
+: <a class="el" href="df/db1/classscene.html#a9f60ba53ea554ed11324b90a5fd97815">scene</a>
 </li>
 <li>draw_point_set_in_plane()
-: <a class="el" href="classprojective__space.html#af7dec07dbcf71124f145629e719454f0">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#af7dec07dbcf71124f145629e719454f0">projective_space</a>
+</li>
+<li>draw_points_with_selection()
+: <a class="el" href="df/db1/classscene.html#a86cbdee59cbee8e91b4a3fb3b2d8b1c5">scene</a>
 </li>
 <li>draw_polar_grid()
-: <a class="el" href="classmp__graphics.html#a6fddb7e055dd8099413f41489342fcff">mp_graphics</a>
+: <a class="el" href="da/d2c/classmp__graphics.html#a6fddb7e055dd8099413f41489342fcff">mp_graphics</a>
 </li>
 <li>draw_poset()
-: <a class="el" href="classgenerator.html#aa4f99c75a86701ba85e514a294efdf3a">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#aa4f99c75a86701ba85e514a294efdf3a">generator</a>
 </li>
 <li>draw_poset_full()
-: <a class="el" href="classgenerator.html#a6f7f90e50993905db31342536ac59d8c">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#a6f7f90e50993905db31342536ac59d8c">generator</a>
+</li>
+<li>draw_quadric_with_selection()
+: <a class="el" href="df/db1/classscene.html#af77811a3eb8042e574d2bac0b2d1e2e0">scene</a>
 </li>
 <li>draw_sideways()
-: <a class="el" href="classtree__node.html#a9b2f0bf6523c86a1fe755f6186180adb">tree_node</a>
+: <a class="el" href="df/dbf/classtree__node.html#a9b2f0bf6523c86a1fe755f6186180adb">tree_node</a>
 </li>
 <li>draw_solutions()
-: <a class="el" href="classdiophant.html#a8e989d6326b38c47975378c4004b3f5f">diophant</a>
+: <a class="el" href="d7/d9c/classdiophant.html#a8e989d6326b38c47975378c4004b3f5f">diophant</a>
+</li>
+<li>draw_text()
+: <a class="el" href="df/db1/classscene.html#a293886f37e26c99e4f30c81ff051c9f1">scene</a>
 </li>
 <li>draw_tree()
-: <a class="el" href="classgenerator.html#ae3d68e3de8f4a5decdaef2d8008cd4a6">generator</a>
-, <a class="el" href="classschreier.html#a999055bc6d08109060d71d9811240891">schreier</a>
+: <a class="el" href="d7/d73/classgenerator.html#ae3d68e3de8f4a5decdaef2d8008cd4a6">generator</a>
+, <a class="el" href="d3/dd6/classschreier.html#adfcf67422fdb99e36500206e794241c5">schreier</a>
 </li>
 <li>draw_tree2()
-: <a class="el" href="classschreier.html#a14e8c3fab2da3d45f1602daf0ca2b3f0">schreier</a>
+: <a class="el" href="d3/dd6/classschreier.html#a8c800f0653986e81e6e93585368f0348">schreier</a>
 </li>
 <li>draw_tree_low_level()
-: <a class="el" href="classgenerator.html#a7ec4c0902ecfc19049792b60526ae446">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#a7ec4c0902ecfc19049792b60526ae446">generator</a>
 </li>
 <li>draw_tree_low_level1()
-: <a class="el" href="classgenerator.html#a05c91a8f773c25fbad2e806201d5f0d3">generator</a>
+: <a class="el" href="d7/d73/classgenerator.html#a05c91a8f773c25fbad2e806201d5f0d3">generator</a>
 </li>
 <li>draw_vertices()
-: <a class="el" href="classtree__node.html#a8eaf9ec1be67f5e8110b8b38fbe8a7ab">tree_node</a>
+: <a class="el" href="df/dbf/classtree__node.html#a8eaf9ec1be67f5e8110b8b38fbe8a7ab">tree_node</a>
 </li>
 <li>draw_with_a_given_partition()
-: <a class="el" href="classcolored__graph.html#a258eaac656baacbcbc064a933f7f11b0">colored_graph</a>
+: <a class="el" href="dc/de2/classcolored__graph.html#a258eaac656baacbcbc064a933f7f11b0">colored_graph</a>
 </li>
 <li>draw_with_options()
-: <a class="el" href="classlayered__graph.html#a4c76e40c6cf5bfb2ab2df20c33e846bc">layered_graph</a>
+: <a class="el" href="da/db1/classlayered__graph.html#a4c76e40c6cf5bfb2ab2df20c33e846bc">layered_graph</a>
 </li>
 <li>dual()
-: <a class="el" href="classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757">solid</a>
+: <a class="el" href="d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757">solid</a>
 </li>
 <li>dual_polar_graph()
-: <a class="el" href="classpolar.html#a6e5e2b0d9d3447cac72cb82ce3d2e9e5">polar</a>
+: <a class="el" href="da/d1c/classpolar.html#a6e5e2b0d9d3447cac72cb82ce3d2e9e5">polar</a>
 </li>
 <li>dual_rank_of_plane_in_three_space()
-: <a class="el" href="classprojective__space.html#aec560e1265b1b700f47c369c4df07c7c">projective_space</a>
+: <a class="el" href="d2/d17/classprojective__space.html#aec560e1265b1b700f47c369c4df07c7c">projective_space</a>
 </li>
 <li>dualize()
-: <a class="el" href="classset__of__sets.html#adc842e32ff036a78e0b86e68f92759e1">set_of_sets</a>
+: <a class="el" href="da/dd6/classset__of__sets.html#adc842e32ff036a78e0b86e68f92759e1">set_of_sets</a>
 </li>
 <li>dynamic_memory()
-: <a class="el" href="classdynamic__memory.html#ad37bcd764ef366feb34bcb48192ef4d4">dynamic_memory</a>
+: <a class="el" href="df/db6/classdynamic__memory.html#ad37bcd764ef366feb34bcb48192ef4d4">dynamic_memory</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.14
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
+  </ul>
+</div>
 </body>
 </html>

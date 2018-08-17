@@ -1,0 +1,17 @@
+digraph "Vector::sort_with_logging"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6593 [label="Vector::sort_with_logging",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6593 -> Node6594 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6594 [label="database::search_INT4\l_multi_dimensional",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a43a31b0e56d1401185a452a6686666aa"];
+  Node6594 -> Node6595 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6595 [label="database::search_INT4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#aeda62e67888923cd968674ec2ed08007"];
+  Node6594 -> Node6596 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6596 [label="database::search_INT4\l_2dimensional",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a10e70413e55aca54a2fe1b02066e3947"];
+  Node6593 -> Node6597 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6597 [label="Vector::sort_with_fellow",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db2/class_vector.html#a689bf0a0797099e26f9b40d07cfd1b9c"];
+  Node6593 -> Node6598 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6598 [label="intersection_of_vectors",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/dd8/vector_8_c.html#ac712c3886c120c8d2b85ace0de698008"];
+}

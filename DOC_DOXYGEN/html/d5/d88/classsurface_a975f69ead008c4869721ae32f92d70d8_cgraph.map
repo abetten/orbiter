@@ -1,0 +1,6 @@
+<map id="surface::klein_to_wedge_vec" name="surface::klein_to_wedge_vec">
+<area shape="rect" id="node2" href="$d5/d88/classsurface.html#afe0396f2f4912d7b975c3c7f4bc5853b" title="surface::klein_to_wedge" alt="" coords="247,31,412,56"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31" title="finite_field::negate" alt="" coords="460,31,589,56"/>
+<area shape="rect" id="node4" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="637,5,781,31"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="645,55,774,80"/>
+</map>

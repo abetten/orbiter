@@ -1,0 +1,23 @@
+<map id="dataLeft" name="dataLeft">
+<area shape="rect" id="node2" href="$d9/d5e/lib_2foundations_2solvers_2dlx_8_c.html#a89ddc9af8630a87164d84a96b956e67a" title="CreateMatrix" alt="" coords="123,81,221,107"/>
+<area shape="rect" id="node3" href="$da/dd4/solvers_8h.html#a6b99be040ac8cf9a8f879df4b43027d1" title="DlxSolve" alt="" coords="302,55,376,80"/>
+<area shape="rect" id="node9" href="$da/dd4/solvers_8h.html#aec13478e5d66be625ce3d4683e338d18" title="DlxSolve_with_RHS" alt="" coords="269,105,409,131"/>
+<area shape="rect" id="node4" href="$da/dd4/solvers_8h.html#a97c7622b60d10dfea1a968ef4252e0d8" title="DlxAppendRowAndSolve" alt="" coords="471,55,642,80"/>
+<area shape="rect" id="node5" href="$da/dd4/solvers_8h.html#a000422ca8994e7b327aaa5d5dca6b0a3" title="DlxTest" alt="" coords="774,5,839,31"/>
+<area shape="rect" id="node6" href="$da/dd4/solvers_8h.html#ab1bd224eee5c0b12ff44a71f7f536dd2" title="DlxTransposeAppendAndSolve" alt="" coords="704,55,910,80"/>
+<area shape="rect" id="node7" href="$d7/d9c/classdiophant.html#aeddc759e377a9c710e03935cc463059d" title="diophant::solve_all_DLX" alt="" coords="978,53,1144,79"/>
+<area shape="rect" id="node8" href="$da/dd4/solvers_8h.html#af08eebddb0a897485d9a29558f6169b0" title="solve_diophant" alt="" coords="1245,53,1356,79"/>
+<area shape="rect" id="node10" href="$da/dd4/solvers_8h.html#a799f4f346746fa1a5cc1367db9495f20" title="DlxAppendRowAndSolveRHS" alt="" coords="457,107,656,132"/>
+<area shape="rect" id="node11" href="$da/dd4/solvers_8h.html#ae4b7ea72e7db2005606be60f7fd70b94" title="DlxTransposeAndSolveRHS" alt="" coords="713,109,901,135"/>
+<area shape="rect" id="node12" href="$d7/d9c/classdiophant.html#a6423b067628b3caa1a6d2063ee803fac" title="diophant::solve_all\l_DLX_with_RHS" alt="" coords="995,103,1127,141"/>
+<area shape="rect" id="node22" href="$d7/d9c/classdiophant.html#acdd512e26ee214803439e24f24fd9805" title="diophant::solve_all\l_DLX_with_RHS_and_callback" alt="" coords="958,165,1164,204"/>
+<area shape="rect" id="node13" href="$dc/dbc/solve__diophant_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1275,105,1326,131"/>
+<area shape="rect" id="node14" href="$df/d94/classexact__cover.html#ab111dd375f84d6f60ec7edeb2b18523e" title="exact_cover::compute\l_liftings_single_case_new" alt="" coords="1212,155,1389,193"/>
+<area shape="rect" id="node15" href="$df/d94/classexact__cover.html#a1438b5e280f85abcabeb7f68eeabb72b" title="exact_cover::compute\l_liftings_new" alt="" coords="1437,155,1588,193"/>
+<area shape="rect" id="node16" href="$d0/d76/tl__algebra__and__number__theory_8h.html#a7572cd3732ca8df324632282e9002dc4" title="compute_lifts_new" alt="" coords="1652,133,1784,159"/>
+<area shape="rect" id="node17" href="$d3/dae/classexact__cover__arguments.html#ab0cdb09a17201c89aa9f83bd511dbbf7" title="exact_cover_arguments\l::compute_lifts" alt="" coords="1636,183,1800,221"/>
+<area shape="rect" id="node18" href="$dc/df8/spread__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="1873,164,1923,189"/>
+<area shape="rect" id="node19" href="$d0/d76/tl__algebra__and__number__theory_8h.html#a82fe3b66a6f9d9075eb8847d7bfe556b" title="compute_lifts" alt="" coords="1848,213,1948,239"/>
+<area shape="rect" id="node20" href="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="2041,188,2091,213"/>
+<area shape="rect" id="node21" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="1996,237,2137,263"/>
+</map>

@@ -1,0 +1,22 @@
+digraph "PG_element_modified_not_in_subspace_perm"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node12334 [label="PG_element_modified\l_not_in_subspace_perm",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node12334 -> Node12335 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12335 [label="projective_matrix_group\l_base_and_orbits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d95/group__generators_8_c.html#a71480fe79b972a0fad3641522f529b9d"];
+  Node12335 -> Node12336 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12336 [label="matrix_group::init\l_base_projective",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a49cfcd22180b66ca629a9d55a82cd126"];
+  Node12336 -> Node12337 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12337 [label="matrix_group::init_base",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a2b7f41b5e6f58257532c1e24312b89e2"];
+  Node12337 -> Node12338 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12338 [label="matrix_group::init\l_projective_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a626286de5799c4c9e45216e735b1d233"];
+  Node12338 -> Node12339 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12339 [label="direct_product_action\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d78/classdirect__product__action.html#aad40060e5821c011cccaa65a5c4df64f"];
+  Node12337 -> Node12340 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12340 [label="matrix_group::init\l_affine_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#aa278bd127d400940516c20bfe1f2f91e"];
+  Node12340 -> Node12339 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12337 -> Node12341 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12341 [label="matrix_group::init\l_general_linear_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a0aa3c4187d8504b88f9f0aa644b48b86"];
+}

@@ -1,0 +1,13 @@
+<map id="generator::orbit_length_as_INT" name="generator::orbit_length_as_INT">
+<area shape="rect" id="node2" href="$d7/d73/classgenerator.html#a38a102d644c03c18ad901f1a815a7f6c" title="generator::orbit_length" alt="" coords="209,131,364,156"/>
+<area shape="rect" id="node12" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="221,180,352,219"/>
+<area shape="rect" id="node3" href="$d7/d73/classgenerator.html#a2a03fc974c76e47e999f3abc99e6b81d" title="generator::get_stabilizer\l_order" alt="" coords="412,92,577,131"/>
+<area shape="rect" id="node10" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="429,155,560,193"/>
+<area shape="rect" id="node4" href="$dd/d7e/classlonginteger__object.html#a95d2eebc60849c3963a49298b1f498c2" title="longinteger_object\l::create" alt="" coords="625,92,755,131"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#a06450f8c4795d81da6d680830ef958a1" title="longinteger_object\l::freeself" alt="" coords="803,92,933,131"/>
+<area shape="rect" id="node6" href="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="981,5,1141,31"/>
+<area shape="rect" id="node7" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="982,84,1139,109"/>
+<area shape="rect" id="node8" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="983,137,1139,163"/>
+<area shape="rect" id="node9" href="$de/dc5/algebra__and__number__theory_8h.html#a98bc0a6c562370a355165d2538dac250" title="INT_log10" alt="" coords="827,207,910,232"/>
+<area shape="rect" id="node11" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="625,155,755,193"/>
+</map>

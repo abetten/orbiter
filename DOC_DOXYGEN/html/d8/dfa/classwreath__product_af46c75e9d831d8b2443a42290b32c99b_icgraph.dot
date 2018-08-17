@@ -1,0 +1,20 @@
+digraph "wreath_product::element_pack"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node153 [label="wreath_product::element_pack",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node153 -> Node154 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node154 [label="wreath_product_group\l_element_pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d12/interface__wreath__product_8_c.html#aa22c4747eb4f16179dcffc3979f581e5"];
+  Node154 -> Node155 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node155 [label="action::init_function\l_pointers_wreath_product_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a149d3bdc89556d74a4a20597f0cccdc0"];
+  Node155 -> Node156 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node156 [label="action::init_wreath\l_product_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a29d8425b266eff98677406f084ee3f86"];
+  Node156 -> Node157 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node157 [label="action::init_wreath\l_product_group_and_restrict",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72"];
+  Node157 -> Node158 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node158 [label="tensor_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3"];
+  Node153 -> Node159 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node159 [label="wreath_product_group\l_element_store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d12/interface__wreath__product_8_c.html#acbaacfb80dda5ce3de5603e5972b088f"];
+  Node159 -> Node155 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

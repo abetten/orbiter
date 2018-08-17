@@ -1,0 +1,40 @@
+digraph "try_to_read_file"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node7852 [label="try_to_read_file",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node7852 -> Node7853 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7853 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df4/collect_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node7852 -> Node7854 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7854 [label="orbiter_data_file::load",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dde/classorbiter__data__file.html#a5296d660c596cd3fce81a8f2d26d7d7f"];
+  Node7854 -> Node7855 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7855 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de7/ovoid_2ovoid_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node7852 -> Node7856 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7856 [label="read_and_parse_data_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#aa4d6668fcc58f40de7a3b75adf1e8af0"];
+  Node7856 -> Node7853 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7856 -> Node7857 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7857 [label="do_test_diagonal_line",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a031abbb55d1cba39a58b62fd49f1c755"];
+  Node7857 -> Node7858 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7858 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d2f/process_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node7856 -> Node7859 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7859 [label="generator::read_level_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d73/classgenerator.html#a2f706a252cb52357a8c214972a50c994"];
+  Node7852 -> Node7860 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7860 [label="read_and_parse_data\l_file_fancy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d74/util_8_c.html#aeb8585c8a2e92cfdfbe73d8995800de8"];
+  Node7860 -> Node7861 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7861 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/dfc/transpose_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node7860 -> Node7862 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7862 [label="data_file::read",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dd1/classdata__file.html#a34c1f9447c977e2e98958930853afaf0"];
+  Node7860 -> Node7857 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7860 -> Node7863 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7863 [label="orbit_transversal::\lread_from_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d2d/classorbit__transversal.html#af88293d7cc859b6202547d60a08c6b59"];
+  Node7860 -> Node7864 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7864 [label="action::read_representatives",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a4959d3dd9b20c330b15c31ab6162cc2b"];
+  Node7860 -> Node7865 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7865 [label="action::read_representatives\l_and_strong_generators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a59ba2fa55080f6b1703141f60e0d3aad"];
+  Node7860 -> Node7866 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7866 [label="action::read_file_and\l_print_representatives",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a04633f855952d34d7202126a895fd45b"];
+  Node7860 -> Node7867 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7867 [label="action::read_set_and\l_stabilizer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a7e22ee51c869b45d98ec93ec431389f5"];
+  Node7852 -> Node7859 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

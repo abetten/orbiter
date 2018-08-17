@@ -1,0 +1,32 @@
+<map id="look_at_these_planes" name="look_at_these_planes">
+<area shape="rect" id="node2" href="$df/d02/classgrassmann.html#a32079405b95a6da2ba1420567d762d64" title="grassmann::unrank_INT" alt="" coords="217,136,381,161"/>
+<area shape="rect" id="node6" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="483,185,587,210"/>
+<area shape="rect" id="node8" href="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f" title="print_integer_matrix\l_width" alt="" coords="466,234,605,273"/>
+<area shape="rect" id="node9" href="$d2/d17/classprojective__space.html#a3cb7917af4c5f1590b660d4bf907e0fa" title="projective_space::unrank\l_point" alt="" coords="451,512,620,550"/>
+<area shape="rect" id="node11" href="$df/d5a/classfinite__field.html#a32761bf6c4a41f24b7193352127db8e7" title="finite_field::Gauss_easy" alt="" coords="218,496,381,521"/>
+<area shape="rect" id="node12" href="$d2/d17/classprojective__space.html#aebfbb6d02bd979dc902c65a1d826b7f8" title="projective_space::print_set" alt="" coords="209,394,389,420"/>
+<area shape="rect" id="node18" href="$df/d5a/classfinite__field.html#aba4950590e24a1ce323f292cf47b3307" title="finite_field::Gauss\l_simple" alt="" coords="236,545,363,584"/>
+<area shape="rect" id="node19" href="$df/d5a/classfinite__field.html#a544f968b15eb1f702097f41e01db256a" title="finite_field::reduce\l_mod_subspace_and_get\l_coefficient_vector" alt="" coords="212,304,387,356"/>
+<area shape="rect" id="node26" href="$d2/d17/classprojective__space.html#ae99e357b4a0ada3d5dcd07e13e65326a" title="projective_space::rank\l_point" alt="" coords="222,608,377,646"/>
+<area shape="rect" id="node29" href="$d2/d17/classprojective__space.html#a398b73262a1b45e1e8e786afea64a7ec" title="projective_space::line\l_intersection_type_collected" alt="" coords="204,670,394,709"/>
+<area shape="rect" id="node30" href="$da/d90/analyze_8_c.html#a0152278e7cacd5b2bb5750a6f717386e" title="look_at_pairs" alt="" coords="249,733,350,758"/>
+<area shape="rect" id="node3" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="462,86,609,112"/>
+<area shape="rect" id="node4" href="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5" title="i_power_j" alt="" coords="496,136,574,161"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="926,270,1070,296"/>
+<area shape="rect" id="node7" href="$d5/db4/io__and__os_8h.html#a2a0a724647575fcd3090c763985eb81a" title="INT_vec_complement" alt="" coords="460,37,611,62"/>
+<area shape="rect" id="node10" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="677,518,878,544"/>
+<area shape="rect" id="node13" href="$df/d5a/classfinite__field.html#a9c33a61dedc197e37b014b6f8dc07f06" title="finite_field::INT_vec\l_print" alt="" coords="708,369,847,408"/>
+<area shape="rect" id="node17" href="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95" title="PG_element_normalize\l_from_front" alt="" coords="455,449,616,488"/>
+<area shape="rect" id="node14" href="$df/d5a/classfinite__field.html#ab7d1f59c043d7696b8b47c92d0fedad5" title="finite_field::print\l_element" alt="" coords="941,369,1055,408"/>
+<area shape="rect" id="node15" href="$df/d5a/classfinite__field.html#aa0180c961aa4a0a8934cb4dc82e38a4d" title="finite_field::print\l_element_with_symbol" alt="" coords="1118,369,1275,408"/>
+<area shape="rect" id="node16" href="$df/d5a/classfinite__field.html#a446a83ae0d281ddf44215626f0097305" title="finite_field::log_alpha" alt="" coords="1323,376,1469,401"/>
+<area shape="rect" id="node20" href="$df/d5a/classfinite__field.html#a888228cd0bdf000bd4d44cf4d1ad62ce" title="finite_field::Gauss_step" alt="" coords="455,297,615,322"/>
+<area shape="rect" id="node21" href="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31" title="finite_field::negate" alt="" coords="713,320,842,345"/>
+<area shape="rect" id="node23" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="720,172,834,197"/>
+<area shape="rect" id="node24" href="$df/d5a/classfinite__field.html#a69f2a12c01e70b7ce2d115c5221c9cdd" title="finite_field::inverse" alt="" coords="711,221,843,246"/>
+<area shape="rect" id="node25" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="722,270,833,296"/>
+<area shape="rect" id="node22" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="933,320,1062,345"/>
+<area shape="rect" id="node27" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="442,614,629,640"/>
+<area shape="rect" id="node28" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="697,614,858,640"/>
+<area shape="rect" id="node31" href="$df/dbf/sajeeb_8_c.html#a68a0fe85ad4b80a9220cb33f9c4c0042" title="ij2k" alt="" coords="515,733,556,758"/>
+</map>

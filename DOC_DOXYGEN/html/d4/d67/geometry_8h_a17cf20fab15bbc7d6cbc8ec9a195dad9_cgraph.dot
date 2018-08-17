@@ -1,0 +1,15 @@
+digraph "display_all_PG_elements"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3818 [label="display_all_PG_elements",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3818 -> Node3819 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3819 [label="nb_PG_elements",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de4/projective_8_c.html#ada56c56cb5c7b39553dc0391f2df1cee"];
+  Node3818 -> Node3820 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3820 [label="PG_element_unrank_modified",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de4/projective_8_c.html#a83ae9b605d496f6a90345303f6efae64"];
+  Node3818 -> Node3821 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3821 [label="PG_element_rank_modified",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de4/projective_8_c.html#a9cd1a8bf5b88a038e33862f6c2c3dd36"];
+  Node3821 -> Node3822 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3822 [label="PG_element_normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996"];
+}

@@ -1,0 +1,9 @@
+<map id="double_vec_normalize_from_back" name="double_vec_normalize_from_back">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a99c389879187f0b8192ab7cc7457e2ff" title="scene::transform_lines" alt="" coords="226,5,381,31"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#a84221a022e79008c5d17628dc51ef093" title="scene::transform_points" alt="" coords="221,55,385,80"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a5388dd7094fae8b0b0124555c6ab8abc" title="scene::point_as_intersection\l_of_two_lines" alt="" coords="208,104,398,143"/>
+<area shape="rect" id="node7" href="$df/db1/classscene.html#ac7e207e5fe33cc2f3c163d46a5b2ee44" title="scene::map_a_point" alt="" coords="233,167,374,192"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#aa63bbdb5ffcd70f233e0a3219abb89f5" title="scene::transformed_copy" alt="" coords="446,31,617,56"/>
+<area shape="rect" id="node6" href="$df/db1/classscene.html#ac59563fef2509d30139596765dec7329" title="scene::triangle" alt="" coords="478,111,586,136"/>
+<area shape="rect" id="node8" href="$df/db1/classscene.html#a6e267a2f290520e5011bc9d86faca156" title="scene::map_a_line" alt="" coords="465,167,599,192"/>
+</map>

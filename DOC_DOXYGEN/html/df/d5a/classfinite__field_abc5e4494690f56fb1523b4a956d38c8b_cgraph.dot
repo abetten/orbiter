@@ -1,0 +1,24 @@
+digraph "finite_field::Dickson_polynomial"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2563 [label="finite_field::Dickson\l_polynomial",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2563 -> Node2564 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2564 [label="finite_field::inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a69f2a12c01e70b7ce2d115c5221c9cdd"];
+  Node2563 -> Node2565 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2565 [label="finite_field::power",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a0437871b8f775f0b2d589188d9ad7e61"];
+  Node2565 -> Node2566 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2566 [label="finite_field::mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0"];
+  Node2563 -> Node2566 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2563 -> Node2567 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2567 [label="finite_field::add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14"];
+  Node2567 -> Node2568 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2568 [label="AG_element_unrank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885"];
+  Node2567 -> Node2569 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2569 [label="AG_element_rank",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17"];
+  Node2563 -> Node2570 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2570 [label="finite_field::negate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aa9d798298f25d4a9262b5bc5f1733e31"];
+  Node2570 -> Node2568 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2570 -> Node2569 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

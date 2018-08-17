@@ -1,0 +1,26 @@
+<map id="double_vec_copy" name="double_vec_copy">
+<area shape="rect" id="node2" href="$d0/d22/numerics_8_c.html#a09c00ded4c934ce35a1686ab4e95d2e6" title="triangular_prism" alt="" coords="216,101,333,127"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#a9eda6a9de48435c9f5d574b31108394b" title="scene::draw_face" alt="" coords="446,49,572,75"/>
+<area shape="rect" id="node6" href="$d0/d22/numerics_8_c.html#aed48f71e62e98267cb44d96a2f5786c9" title="general_prism" alt="" coords="222,52,328,77"/>
+<area shape="rect" id="node7" href="$d0/d22/numerics_8_c.html#ab5eb2d6199ca4f75bc7e03f06206f7b0" title="orthogonal_transformation\l_from_point_to_basis_vector" alt="" coords="178,151,371,189"/>
+<area shape="rect" id="node11" href="$df/db1/classscene.html#a99c389879187f0b8192ab7cc7457e2ff" title="scene::transform_lines" alt="" coords="197,213,352,239"/>
+<area shape="rect" id="node13" href="$df/db1/classscene.html#a84221a022e79008c5d17628dc51ef093" title="scene::transform_points" alt="" coords="193,263,357,288"/>
+<area shape="rect" id="node14" href="$df/db1/classscene.html#aea161aafb38f1aa664b9c48ea5d0fa7d" title="scene::transform_planes" alt="" coords="191,312,358,337"/>
+<area shape="rect" id="node15" href="$df/db1/classscene.html#abe440a08a336317a36ed3249035a09f4" title="scene::transform_quadrics" alt="" coords="186,361,364,387"/>
+<area shape="rect" id="node16" href="$df/db1/classscene.html#a622e43f83a6f4114aa14d9eb5eafc954" title="scene::transform_cubics" alt="" coords="192,411,358,436"/>
+<area shape="rect" id="node17" href="$df/db1/classscene.html#a10bc9ae28a740333df2a255ffa15056b" title="scene::line_through\l_two_points" alt="" coords="206,460,344,499"/>
+<area shape="rect" id="node18" href="$df/db1/classscene.html#a5388dd7094fae8b0b0124555c6ab8abc" title="scene::point_as_intersection\l_of_two_lines" alt="" coords="180,523,370,561"/>
+<area shape="rect" id="node20" href="$df/db1/classscene.html#ad523dbeb01305e7ace1835e8c89cd1a3" title="scene::plane_through\l_three_points" alt="" coords="200,585,350,624"/>
+<area shape="rect" id="node21" href="$df/db1/classscene.html#aca9cd7feab41db8ceb41cd2dd848bda0" title="scene::quadric_through\l_three_lines" alt="" coords="194,648,355,687"/>
+<area shape="rect" id="node22" href="$df/db1/classscene.html#a6e267a2f290520e5011bc9d86faca156" title="scene::map_a_line" alt="" coords="443,737,576,763"/>
+<area shape="rect" id="node23" href="$df/db1/classscene.html#ac7e207e5fe33cc2f3c163d46a5b2ee44" title="scene::map_a_point" alt="" coords="204,763,345,788"/>
+<area shape="rect" id="node24" href="$d4/d74/util_8_c.html#a697ad822dac70e095d5f26906069880d" title="double_vec_scan_from\l_stream" alt="" coords="195,812,354,851"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a293886f37e26c99e4f30c81ff051c9f1" title="scene::draw_text" alt="" coords="448,99,570,124"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#a8e6c75f38d638049667fadaa7b1ccae5" title="scene::draw_faces_with\l_selection" alt="" coords="648,43,811,81"/>
+<area shape="rect" id="node8" href="$d4/d74/util_8_c.html#a53d2d31f5064dd2959cd09f37455b4f3" title="povray_animation_rotate\l_around_origin_and_given\l_vector" alt="" coords="420,148,599,200"/>
+<area shape="rect" id="node9" href="$d4/d74/util_8_c.html#a2245663061067c9ef37c6f7a726f073f" title="povray_animation_rotate\l_around_origin_and_given\l_vector_by_a_given_angle" alt="" coords="419,224,600,276"/>
+<area shape="rect" id="node10" href="$d4/d74/util_8_c.html#a3bba4ee5b9b9b1d17d6a4decac31797e" title="povray_rotate_111" alt="" coords="664,237,795,263"/>
+<area shape="rect" id="node12" href="$df/db1/classscene.html#aa63bbdb5ffcd70f233e0a3219abb89f5" title="scene::transformed_copy" alt="" coords="424,312,595,337"/>
+<area shape="rect" id="node19" href="$df/db1/classscene.html#ac59563fef2509d30139596765dec7329" title="scene::triangle" alt="" coords="455,529,563,555"/>
+<area shape="rect" id="node25" href="$d4/d74/util_8_c.html#a31ec307236a2ca8190bcb8e9637b132b" title="double_vec_scan" alt="" coords="447,819,572,844"/>
+</map>

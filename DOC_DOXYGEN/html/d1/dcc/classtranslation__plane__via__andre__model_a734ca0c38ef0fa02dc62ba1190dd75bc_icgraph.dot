@@ -1,0 +1,9 @@
+digraph "translation_plane_via_andre_model::freeself"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1996 [label="translation_plane_via\l_andre_model::freeself",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1996 -> Node1997 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1997 [label="translation_plane_via\l_andre_model::~translation\l_plane_via_andre_model",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/dcc/classtranslation__plane__via__andre__model.html#a73f07f56788e247084cb6ace667f0ca3"];
+}

@@ -1,0 +1,9 @@
+digraph "unusual_model::print_2x2"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node340 [label="unusual_model::print_2x2",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node340 -> Node341 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node341 [label="finite_field::log_alpha",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a446a83ae0d281ddf44215626f0097305"];
+}

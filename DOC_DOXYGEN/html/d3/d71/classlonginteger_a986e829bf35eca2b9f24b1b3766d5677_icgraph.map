@@ -1,0 +1,26 @@
+<map id="longinteger::homo_z" name="longinteger::homo_z">
+<area shape="rect" id="node2" href="$d3/d72/global_8_c.html#a8b9a700cdc4cf3ca42c28e6435945ade" title="sqrt_mod" alt="" coords="660,371,737,396"/>
+<area shape="rect" id="node3" href="$d0/de5/classinteger.html#a7f4f072c0d9c6b15660d80e81496dffc" title="integer::mult_to" alt="" coords="441,5,554,31"/>
+<area shape="rect" id="node4" href="$d0/de5/classinteger.html#a3f6fe19fe4f2948364b1e75a6dfec47f" title="integer::add_to" alt="" coords="442,56,553,81"/>
+<area shape="rect" id="node5" href="$d3/d71/classlonginteger.html#aaa504bac9b133d50b5ac50768f97db9d" title="longinteger::compare_with" alt="" coords="195,205,373,231"/>
+<area shape="rect" id="node19" href="$d3/d71/classlonginteger.html#a1afdab43a82be7dfd40ff41da28735d2" title="longinteger::mult_to" alt="" coords="215,55,354,80"/>
+<area shape="rect" id="node20" href="$d3/d71/classlonginteger.html#a457c74224b83d9fbfc904a391baab7ed" title="longinteger::add_to" alt="" coords="217,156,352,181"/>
+<area shape="rect" id="node21" href="$d3/d71/classlonginteger.html#a71b27b9c767c0da8964151323810f315" title="longinteger::compare\l_with_euklidean" alt="" coords="211,403,358,441"/>
+<area shape="rect" id="node22" href="$d3/d71/classlonginteger.html#a692f761cfc91770ca40ab5c2df4bd358" title="longinteger::integral\l_division" alt="" coords="215,465,354,504"/>
+<area shape="rect" id="node6" href="$d0/de5/classinteger.html#a20cc8d8d4913e9ee746c6758bbb2e62a" title="integer::compare_with" alt="" coords="421,105,574,131"/>
+<area shape="rect" id="node14" href="$d3/d71/classlonginteger.html#aa40fbd6c28e40a7a19cb29b8999afbc0" title="longinteger::is_zero" alt="" coords="429,204,566,229"/>
+<area shape="rect" id="node16" href="$d3/d71/classlonginteger.html#a1b5b30f8bc750d1304390f518e43aa0f" title="longinteger::square\l_root_floor" alt="" coords="631,283,766,321"/>
+<area shape="rect" id="node17" href="$d3/d71/classlonginteger.html#a2e169e4ac876ac8694af28468fdfd060" title="longinteger::is_one" alt="" coords="430,253,564,279"/>
+<area shape="rect" id="node18" href="$d3/d71/classlonginteger.html#aa47d6521fc1dc8058d9eaa516caefabe" title="longinteger::is_m_one" alt="" coords="421,155,574,180"/>
+<area shape="rect" id="node7" href="$d0/de5/classinteger.html#ab92500013b2342ab5c24355bc91bad64" title="integer::is_zero" alt="" coords="643,56,755,81"/>
+<area shape="rect" id="node12" href="$d0/de5/classinteger.html#acf8faabd4ed20f9580605714b5b73a5f" title="integer::is_one" alt="" coords="644,105,753,131"/>
+<area shape="rect" id="node13" href="$d0/de5/classinteger.html#a7585957656c1152035411e066a4f0053" title="integer::is_m_one" alt="" coords="635,155,762,180"/>
+<area shape="rect" id="node8" href="$da/d94/classdesign__parameter.html#a8f39a90927d51e3cb3772bc98c94d7d0" title="design_parameter::increased_t" alt="" coords="824,32,1029,57"/>
+<area shape="rect" id="node11" href="$d0/de5/classinteger.html#a9a991b285677b99b4879034e31648b7a" title="integer::invert_to" alt="" coords="866,81,987,107"/>
+<area shape="rect" id="node9" href="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6" title="design_parameter::ancestor" alt="" coords="1077,32,1264,57"/>
+<area shape="rect" id="node10" href="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7" title="design_parameter_database\l_export_tex" alt="" coords="1312,25,1503,64"/>
+<area shape="rect" id="node15" href="$d3/d71/classlonginteger.html#a1de6a5663bb80562dee0e6ca1a808ff1" title="longinteger::negate_to" alt="" coords="622,204,776,229"/>
+<area shape="rect" id="node23" href="$d3/d71/classlonginteger.html#a4c554e7aa704ace8b97448c6d27fd4bd" title="longinteger::modp" alt="" coords="433,411,562,436"/>
+<area shape="rect" id="node24" href="$d3/d71/classlonginteger.html#a2e791f6e15c1ef6f7cd2dd3bf0a6d4c1" title="longinteger::ny_p" alt="" coords="436,469,559,495"/>
+<area shape="rect" id="node25" href="$d3/d71/classlonginteger.html#ac4b65023c8de701153491d80577dfb9b" title="longinteger::divide\l_out_int" alt="" coords="433,519,562,557"/>
+</map>

@@ -1,0 +1,27 @@
+var interface__direct__product_8_c =
+[
+    [ "direct_product_group_element_code_for_make_element", "df/d05/interface__direct__product_8_c.html#adef24529e000462b0564bbe315e2e537", null ],
+    [ "direct_product_group_element_dispose", "df/d05/interface__direct__product_8_c.html#ac7ad495fb813deaf5810c43a6d07c5cd", null ],
+    [ "direct_product_group_element_image_of", "df/d05/interface__direct__product_8_c.html#ab80b3d935244cfb8024a6fe22e011f03", null ],
+    [ "direct_product_group_element_image_of_low_level", "df/d05/interface__direct__product_8_c.html#a3cf122d4ee299058f7fb2c20d125ae43", null ],
+    [ "direct_product_group_element_invert", "df/d05/interface__direct__product_8_c.html#a60146da393a7f94ba89dce0abc96bdec", null ],
+    [ "direct_product_group_element_is_one", "df/d05/interface__direct__product_8_c.html#a96fa80d7fb54d9d762250020e55fb408", null ],
+    [ "direct_product_group_element_linear_entry_frobenius", "df/d05/interface__direct__product_8_c.html#ae38ae77a36b813c7ad37fd0f3f133ca3", null ],
+    [ "direct_product_group_element_linear_entry_ij", "df/d05/interface__direct__product_8_c.html#a5b016430b40b501d1911db27cc9fbc7b", null ],
+    [ "direct_product_group_element_move", "df/d05/interface__direct__product_8_c.html#acb6ec1bcbaa6160bd4d551abd31f2b30", null ],
+    [ "direct_product_group_element_mult", "df/d05/interface__direct__product_8_c.html#a401f4d8904c024fb3031448a917c6f99", null ],
+    [ "direct_product_group_element_one", "df/d05/interface__direct__product_8_c.html#a9d3a10f7d72b341dc328b53958ef88bf", null ],
+    [ "direct_product_group_element_pack", "df/d05/interface__direct__product_8_c.html#ac4b74393cd78daa11ad735b4401997bc", null ],
+    [ "direct_product_group_element_print", "df/d05/interface__direct__product_8_c.html#ab3192d60c48419051a5de301fabbf808", null ],
+    [ "direct_product_group_element_print_as_permutation", "df/d05/interface__direct__product_8_c.html#a1503664127b4ecadf6be022d20b87a01", null ],
+    [ "direct_product_group_element_print_for_make_element", "df/d05/interface__direct__product_8_c.html#aa65bf3ae81bd410f8f373d7195fae131", null ],
+    [ "direct_product_group_element_print_for_make_element_no_commas", "df/d05/interface__direct__product_8_c.html#ac0538595d07278a51266f2941637cdb3", null ],
+    [ "direct_product_group_element_print_latex", "df/d05/interface__direct__product_8_c.html#ad2207bd474fd4968168a6ffbb5286e86", null ],
+    [ "direct_product_group_element_print_quick", "df/d05/interface__direct__product_8_c.html#aeb8a7d3427fb33ed4413808a45411fb2", null ],
+    [ "direct_product_group_element_print_verbose", "df/d05/interface__direct__product_8_c.html#a156774c9d357b050b88dc5a5fa63e291", null ],
+    [ "direct_product_group_element_retrieve", "df/d05/interface__direct__product_8_c.html#a9767bae6a0c7588caa9e003f266dd4e4", null ],
+    [ "direct_product_group_element_store", "df/d05/interface__direct__product_8_c.html#a95fd51fdc2716018f83479fcc16e0725", null ],
+    [ "direct_product_group_element_transpose", "df/d05/interface__direct__product_8_c.html#a4c65dfb78d37bd4d6d3302d468df8268", null ],
+    [ "direct_product_group_element_unpack", "df/d05/interface__direct__product_8_c.html#ab1b70aed984f6efb301acfa95bdf8596", null ],
+    [ "direct_product_group_print_point", "df/d05/interface__direct__product_8_c.html#ad9121e26d48501dab83ff8e5fe91d8d8", null ]
+];

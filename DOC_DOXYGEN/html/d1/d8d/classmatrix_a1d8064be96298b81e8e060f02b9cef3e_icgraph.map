@@ -1,0 +1,6 @@
+<map id="matrix::transpose" name="matrix::transpose">
+<area shape="rect" id="node2" href="$da/d44/classgeometry.html#ad7132289ee0bc683f8c00c6762bb5035" title="geometry::transpose" alt="" coords="185,5,328,31"/>
+<area shape="rect" id="node3" href="$da/d44/classgeometry.html#a31e12da96f9d6f9fd62330bdbc59236d" title="geometry::is_2design" alt="" coords="183,55,331,80"/>
+<area shape="rect" id="node4" href="$d1/d8d/classmatrix.html#a7abdfef775e6f1e68856bbdb06004dce" title="matrix::Ainf2Asup" alt="" coords="194,104,320,129"/>
+<area shape="rect" id="node5" href="$d1/d8d/classmatrix.html#ae05463d97ecc8ea3654c45a399b872e2" title="matrix::PG_k_q_design" alt="" coords="177,153,337,179"/>
+</map>

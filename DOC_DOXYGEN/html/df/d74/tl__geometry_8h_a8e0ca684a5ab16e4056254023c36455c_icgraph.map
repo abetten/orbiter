@@ -1,0 +1,12 @@
+<map id="arc_print" name="arc_print">
+<area shape="rect" id="node2" href="$d4/d21/classarc__generator.html#ae175493a687aa4780d6444d445a46db3" title="arc_generator::prepare\l_generator" alt="" coords="127,56,284,95"/>
+<area shape="rect" id="node10" href="$d4/d21/classarc__generator.html#aad1dcec3a1c302e743d574bd1ac857d9" title="arc_generator::compute\l_starter" alt="" coords="332,113,495,152"/>
+<area shape="rect" id="node3" href="$d4/d21/classarc__generator.html#ae614e18e9c641d67069fa27d48245cde" title="arc_generator::init" alt="" coords="349,64,478,89"/>
+<area shape="rect" id="node4" href="$d6/dd8/classk__arc__generator.html#a6036d9f52ede9f8ca681505626b5361d" title="k_arc_generator::init" alt="" coords="558,120,700,145"/>
+<area shape="rect" id="node6" href="$d8/de6/classsix__arcs__not__on__a__conic.html#a7a4d5cf8a098488729934cfa8a70944a" title="six_arcs_not_on_a_conic\l::init" alt="" coords="543,57,715,96"/>
+<area shape="rect" id="node5" href="$d6/d01/k__arc__generator__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="813,120,863,145"/>
+<area shape="rect" id="node7" href="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c" title="classify_arcs_and_do\l_arc_lifting" alt="" coords="763,5,913,44"/>
+<area shape="rect" id="node9" href="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="813,68,863,93"/>
+<area shape="rect" id="node8" href="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52" title="main" alt="" coords="961,12,1011,37"/>
+<area shape="rect" id="node11" href="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a" title="arc_generator::main" alt="" coords="559,169,699,195"/>
+</map>

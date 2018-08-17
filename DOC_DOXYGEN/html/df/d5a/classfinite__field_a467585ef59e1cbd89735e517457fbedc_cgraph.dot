@@ -1,0 +1,9 @@
+digraph "finite_field::create_alpha_table_prime_field"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2471 [label="finite_field::create\l_alpha_table_prime_field",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2471 -> Node2472 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2472 [label="finite_field::primitive_root",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a3ba0fb241fc4114b1e710f8a1f9c43f1"];
+}

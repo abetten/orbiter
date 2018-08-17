@@ -1,0 +1,21 @@
+digraph "integer::compare_with"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node224 [label="integer::compare_with",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node224 -> Node225 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node225 [label="integer::is_zero",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#ab92500013b2342ab5c24355bc91bad64"];
+  Node225 -> Node226 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node226 [label="design_parameter::increased_t",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#a8f39a90927d51e3cb3772bc98c94d7d0"];
+  Node226 -> Node227 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node227 [label="design_parameter::ancestor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6"];
+  Node227 -> Node228 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node228 [label="design_parameter_database\l_export_tex",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7"];
+  Node225 -> Node229 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node229 [label="integer::invert_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a9a991b285677b99b4879034e31648b7a"];
+  Node224 -> Node230 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node230 [label="integer::is_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#acf8faabd4ed20f9580605714b5b73a5f"];
+  Node224 -> Node231 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node231 [label="integer::is_m_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de5/classinteger.html#a7585957656c1152035411e066a4f0053"];
+}

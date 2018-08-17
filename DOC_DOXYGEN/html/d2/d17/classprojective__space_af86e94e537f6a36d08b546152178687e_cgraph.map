@@ -1,0 +1,17 @@
+<map id="projective_space::quadric_points_brute_force" name="projective_space::quadric_points_brute_force">
+<area shape="rect" id="node2" href="$d2/d17/classprojective__space.html#a3cb7917af4c5f1590b660d4bf907e0fa" title="projective_space::unrank\l_point" alt="" coords="236,5,405,44"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a45884a0fc7244d9080460ebbb703c6f1" title="finite_field::evaluate\l_quadric_form_in_PG_three" alt="" coords="226,315,415,353"/>
+<area shape="rect" id="node10" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="511,61,616,87"/>
+<area shape="rect" id="node11" href="$d7/d83/points_8_c.html#a8a498513b4415e1a4628a70fb6b26817" title="points" alt="" coords="292,120,349,145"/>
+<area shape="rect" id="node3" href="$d4/d67/geometry_8h.html#a83ae9b605d496f6a90345303f6efae64" title="PG_element_unrank_modified" alt="" coords="463,12,664,37"/>
+<area shape="rect" id="node5" href="$df/d5a/classfinite__field.html#ada2d8411665cb720cf2bf78ba41a2f1d" title="finite_field::product3" alt="" coords="493,321,634,347"/>
+<area shape="rect" id="node7" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="508,371,619,396"/>
+<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="735,321,849,347"/>
+<area shape="rect" id="node8" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="721,371,864,396"/>
+<area shape="rect" id="node9" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="728,420,857,445"/>
+<area shape="rect" id="node12" href="$df/d5a/classfinite__field.html#a13e75e8165b27464935b50368ee8313c" title="finite_field::init" alt="" coords="511,111,616,136"/>
+<area shape="rect" id="node13" href="$d2/d7c/combinatorics_8_c.html#a24762dc22e45175d18ec1ec1d2556ae8" title="generalized_binomial" alt="" coords="490,160,637,185"/>
+<area shape="rect" id="node14" href="$d4/d67/geometry_8h.html#af675caf5f9975573455c8d93cb56bf95" title="PG_element_normalize\l_from_front" alt="" coords="483,209,644,248"/>
+<area shape="rect" id="node15" href="$d4/d67/geometry_8h.html#a9cd1a8bf5b88a038e33862f6c2c3dd36" title="PG_element_rank_modified" alt="" coords="470,272,657,297"/>
+<area shape="rect" id="node16" href="$df/de4/projective_8_c.html#a5a4c3c1158bad6bab0d786c616bd0996" title="PG_element_normalize" alt="" coords="712,272,873,297"/>
+</map>

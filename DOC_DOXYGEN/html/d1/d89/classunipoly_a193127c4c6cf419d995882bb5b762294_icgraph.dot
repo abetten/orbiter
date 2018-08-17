@@ -1,0 +1,32 @@
+digraph "unipoly::x"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2763 [label="unipoly::x",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2763 -> Node2764 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2764 [label="unipoly::unipoly",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#ade3afe0b00b7ff45b9dbc5a15cacf59d"];
+  Node2763 -> Node2765 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2765 [label="unipoly::operator=",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a60f1ddf49bc3e91ad73d24b9fbb29460"];
+  Node2763 -> Node2766 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2766 [label="unipoly::copyobject_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#aa856d320a499748a0f3345ab45e51910"];
+  Node2766 -> Node2764 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2763 -> Node2767 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2767 [label="unipoly::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a9dc0d295bea73d0c20562149f250cd97"];
+  Node2763 -> Node2768 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2768 [label="unipoly::mult_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a95bf7f347a5630f0d3f9737ffe22a341"];
+  Node2763 -> Node2769 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2769 [label="unipoly::add_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#abebdaf912a2b0e7c27470f4191d0e180"];
+  Node2763 -> Node2770 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2770 [label="unipoly::negate_to",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a2181196b44786790f58b72510620db97"];
+  Node2763 -> Node2771 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2771 [label="unipoly::integral_division",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#aeb794e4d6b10709ed6be7dae9826d705"];
+  Node2771 -> Node2772 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2772 [label="unipoly::normalize",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a1fdf6f2da235edcf45fca433dea19370"];
+  Node2763 -> Node2773 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2773 [label="unipoly::get_an_irreducible\l_polynomial",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a14ae1863f2096e87f8115f5e8f727883"];
+  Node2763 -> Node2774 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2774 [label="unipoly::evaluate_at",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#afb8c65d96c3c1afeb1e14120bd5942b8"];
+  Node2763 -> Node2775 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2775 [label="unipoly::normal_base",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d89/classunipoly.html#a38f30f53df7f4ff1506f2b41666ff39e"];
+}

@@ -1,0 +1,9 @@
+digraph "unipoly_domain::minimum_polynomial"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node415 [label="unipoly_domain::minimum\l_polynomial",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node415 -> Node416 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node416 [label="test_unipoly2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#ac40335895fedd889545dad901ac470a6"];
+}

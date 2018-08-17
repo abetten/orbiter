@@ -1,0 +1,25 @@
+<map id="itoa" name="itoa">
+<area shape="rect" id="node2" href="$d8/d99/classhollerith.html#a5df988b4cf3eb66b5645115abeab5782" title="hollerith::append_i" alt="" coords="96,324,226,349"/>
+<area shape="rect" id="node3" href="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7" title="design_parameter_database\l_export_tex" alt="" coords="511,13,702,52"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#a1442ba1f4ad290900b44b23f0830748e" title="prepare_link" alt="" coords="321,61,416,87"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#a744595779bda605193b61d01d79ad981" title="design_parameter_database\l_clan_report" alt="" coords="511,84,702,123"/>
+<area shape="rect" id="node6" href="$df/d4b/classdesign__parameter__source.html#afa19c645725011722b75da5dee8b0945" title="design_parameter_source\l::text012_extended" alt="" coords="280,163,456,201"/>
+<area shape="rect" id="node11" href="$d0/dd3/perm__group__gens_8_c.html#af41c889a65ee026d1939647e26904adb" title="vec_generators_A5_in_PSL" alt="" coords="274,225,462,251"/>
+<area shape="rect" id="node12" href="$d0/dd3/perm__group__gens_8_c.html#ad85c37ec8824d1e7eabc836ff3dbad23" title="vec_generators_S4_in_PSL" alt="" coords="274,275,462,300"/>
+<area shape="rect" id="node13" href="$d0/dd3/perm__group__gens_8_c.html#ac70761795da8630f4939bc3e00707d79" title="vec_generators_q1_q2" alt="" coords="289,324,447,349"/>
+<area shape="rect" id="node14" href="$d0/dd3/perm__group__gens_8_c.html#a0b5ce8828dd8a35cbfec4450f0d76edc" title="vec_generators_q1_q2_aubv" alt="" coords="510,404,704,429"/>
+<area shape="rect" id="node15" href="$d0/dd3/perm__group__gens_8_c.html#aee37285cfb5987a4fc1f5c7580865175" title="vec_generators_q1_q2\l_au1bv1_au2bv2" alt="" coords="289,425,447,464"/>
+<area shape="rect" id="node16" href="$d0/dd3/perm__group__gens_8_c.html#a93659c1c7a668dd6adf9f217c608e1f1" title="vec_generators_AGGL1q\l_subgroup" alt="" coords="282,488,454,527"/>
+<area shape="rect" id="node17" href="$d0/d08/classpermutation.html#ae1ab11a87e70803c1cec31508a2c8c7f" title="permutation::convert\l_digit" alt="" coords="297,551,440,589"/>
+<area shape="rect" id="node20" href="$d8/def/classsolid.html#abd47abc26a30fdb78e452b0a519b3076" title="solid::standard_vertex\l_labels" alt="" coords="292,613,444,652"/>
+<area shape="rect" id="node24" href="$d8/def/classsolid.html#abec108e749250b1fbab7c8dcf98b96ae" title="solid::add_central\l_point" alt="" coords="305,676,431,715"/>
+<area shape="rect" id="node7" href="$df/d4b/classdesign__parameter__source.html#a729d62efa57d73e420470d47902c4bf2" title="design_parameter_source\l::text2" alt="" coords="519,163,695,201"/>
+<area shape="rect" id="node8" href="$da/d94/classdesign__parameter.html#a200510dc60483800cc6985b77d4ee50c" title="design_parameter::text" alt="" coords="761,141,919,167"/>
+<area shape="rect" id="node10" href="$df/d4b/classdesign__parameter__source.html#a5e22836b470986f95bfcb322dfc37e82" title="design_parameter_source\l::print2" alt="" coords="752,191,928,229"/>
+<area shape="rect" id="node9" href="$da/d94/classdesign__parameter.html#ac9c431a5408809b0c229eacaa924781b" title="design_parameter::print" alt="" coords="976,141,1138,167"/>
+<area shape="rect" id="node18" href="$d0/d08/classpermutation.html#abf779232815eb4c16286cf642d214b50" title="permutation::print\l_cycle" alt="" coords="544,529,669,568"/>
+<area shape="rect" id="node19" href="$d0/d08/classpermutation.html#a3a4c219748ab79362fd440bea839c094" title="permutation::print" alt="" coords="777,536,903,561"/>
+<area shape="rect" id="node21" href="$d8/def/classsolid.html#a8b4527c066bcebd2e6542fe158c607b0" title="solid::direct_product" alt="" coords="537,592,677,617"/>
+<area shape="rect" id="node22" href="$d8/def/classsolid.html#a308e6888759550da489397527ed89137" title="solid::cube" alt="" coords="564,641,649,667"/>
+<area shape="rect" id="node23" href="$d8/def/classsolid.html#ab6c85f8f130a3f4409ce5fe5340fb852" title="solid::cube4D" alt="" coords="556,691,658,716"/>
+</map>

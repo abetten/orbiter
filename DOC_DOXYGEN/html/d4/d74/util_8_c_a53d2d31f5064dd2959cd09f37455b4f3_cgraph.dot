@@ -1,0 +1,23 @@
+digraph "povray_animation_rotate_around_origin_and_given_vector"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4802 [label="povray_animation_rotate\l_around_origin_and_given\l_vector",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4802 -> Node4803 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4803 [label="orthogonal_transformation\l_from_point_to_basis_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#ab5eb2d6199ca4f75bc7e03f06206f7b0"];
+  Node4803 -> Node4804 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4804 [label="double_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#aee0c436dfcfcb2f8a9b32f01ec90033a"];
+  Node4803 -> Node4805 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4805 [label="dot_product",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#ad05dc4eaa8cd1ba2d78c9e10179b708e"];
+  Node4803 -> Node4806 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4806 [label="cross_product",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a0301cde930dce300506c1ae9f20000e4"];
+  Node4803 -> Node4807 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4807 [label="make_unit_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a28667aa4465cfaa03ff51b2e14862003"];
+  Node4807 -> Node4808 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4808 [label="distance_from_origin",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#a50eb5f15bc224ba39b230108981e2763"];
+  Node4807 -> Node4809 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4809 [label="double_vec_scalar_multiple",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d22/numerics_8_c.html#aa29261af29e79594ff79aecd6dd9643a"];
+  Node4802 -> Node4810 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4810 [label="output_double",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d87/globals_8h.html#a0d78928594686738975fd41e2603101f"];
+}

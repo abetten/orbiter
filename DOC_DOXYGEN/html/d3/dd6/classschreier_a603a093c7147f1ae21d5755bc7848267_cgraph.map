@@ -1,0 +1,11 @@
+<map id="schreier::read_from_file_binary" name="schreier::read_from_file_binary">
+<area shape="rect" id="node2" href="$d3/dd6/classschreier.html#aef6a65e2f39bd9e14c61139c4f97f4c3" title="schreier::init2" alt="" coords="214,5,315,31"/>
+<area shape="rect" id="node3" href="$d2/d7c/combinatorics_8_c.html#ab7f02d1e2e257e1118eae354ab16d447" title="perm_inverse" alt="" coords="213,55,315,80"/>
+<area shape="rect" id="node4" href="$d4/d6e/classvector__ge.html#afe1d6befd1f1501e6be34afbaa9d30a8" title="vector_ge::init" alt="" coords="212,104,316,129"/>
+<area shape="rect" id="node6" href="$d4/d6e/classvector__ge.html#a949c1af00a0b724a52e1806fdb6b55e1" title="vector_ge::read_from\l_file_binary" alt="" coords="190,165,338,204"/>
+<area shape="rect" id="node5" href="$d4/d6e/classvector__ge.html#aa002e4b715cc73a9b8b367d29700b452" title="vector_ge::freeself" alt="" coords="394,91,525,116"/>
+<area shape="rect" id="node7" href="$d4/d6e/classvector__ge.html#a35b062a9201b30f0a87bf87702d243ae" title="vector_ge::allocate" alt="" coords="393,140,526,165"/>
+<area shape="rect" id="node8" href="$d2/d86/classaction.html#abf2f35c0490a94c599c9472fb2c256eb" title="action::element_read\l_from_file_binary" alt="" coords="386,189,532,228"/>
+<area shape="rect" id="node10" href="$d4/d6e/classvector__ge.html#a1ff002e8b746a9beb119d57dcd4a15ff" title="vector_ge::ith" alt="" coords="409,252,510,277"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a02107279a3bdcf054008bd180dfaef10" title="action::element_unpack" alt="" coords="580,196,742,221"/>
+</map>

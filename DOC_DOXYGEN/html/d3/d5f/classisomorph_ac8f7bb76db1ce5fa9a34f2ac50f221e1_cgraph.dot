@@ -1,0 +1,35 @@
+digraph "isomorph::apply_fusion_element_oracle"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node381 [label="isomorph::apply_fusion\l_element_oracle",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node381 -> Node382 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node382 [label="isomorph::print_node\l_global",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#ac62bed8edc25b5b50cc4f275f94c8470"];
+  Node381 -> Node383 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node383 [label="action::element_retrieve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ad28f6f8810ffbad64c1490f78e51e2b1"];
+  Node381 -> Node384 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node384 [label="action::map_a_set",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a600e542e5aeca2a46f18110e027947e0"];
+  Node384 -> Node385 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node385 [label="action::element_print\l_quick",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a4844680cf6750396f76494a28655265b"];
+  Node384 -> Node386 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node386 [label="INT_vec_print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe"];
+  Node384 -> Node387 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node387 [label="action::element_image_of",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae09559d4537a048fc860f8a74a31393d"];
+  Node381 -> Node388 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node388 [label="INT_vec_heapsort",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a3590ad9987f801fbfc94634300182f39"];
+  Node388 -> Node389 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node389 [label="heapsort_make_heap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a42f24453d7d77eeb1338ebd1a13cfdbb"];
+  Node389 -> Node390 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node390 [label="heapsort_sift_down",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a65cbb1a6a3f01f511673705437ddc18b"];
+  Node390 -> Node391 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node391 [label="heapsort_swap",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6"];
+  Node388 -> Node391 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node388 -> Node390 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node381 -> Node392 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node392 [label="action::element_mult",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#ae9e36b2cae1f0f7bd7144097fa9a34b3"];
+  Node381 -> Node393 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node393 [label="INT_vec_copy",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075"];
+  Node381 -> Node394 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node394 [label="action::element_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a550947491bbb534d3d7951f50198a874"];
+}

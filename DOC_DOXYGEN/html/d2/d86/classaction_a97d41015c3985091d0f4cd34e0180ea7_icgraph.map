@@ -1,0 +1,33 @@
+<map id="action::mult" name="action::mult">
+<area shape="rect" id="node2" href="$d2/d86/classaction.html#a960e23ddda7996a5573759048949dac0" title="action::element_power\l_INT_in_place" alt="" coords="165,120,321,159"/>
+<area shape="rect" id="node6" href="$d9/df3/classsims.html#a76b4729b133fb5d7e1edaffe98a6eb5a" title="sims::find_standard\l_generators_INT" alt="" coords="626,212,763,251"/>
+<area shape="rect" id="node9" href="$d2/d86/classaction.html#a2865dfcc24da629c84dd37e121793101" title="action::word_in_ab" alt="" coords="177,297,310,323"/>
+<area shape="rect" id="node10" href="$d9/df3/classsims.html#ae5fdcadcb51929b4f5c02347384d8b8d" title="sims::conjugate" alt="" coords="186,399,300,424"/>
+<area shape="rect" id="node11" href="$d8/d30/classcompute__stabilizer.html#a895df470da0ac14f812c3c4b6f2280b9" title="compute_stabilizer\l::restricted_action" alt="" coords="412,367,544,405"/>
+<area shape="rect" id="node23" href="$d9/df3/classsims.html#ac445ae3fa3933272cbc36a711a1de17f" title="sims::regular_representation" alt="" coords="148,448,338,473"/>
+<area shape="rect" id="node24" href="$d9/df3/classsims.html#a55ca54637b837b2c84ca79851d857429" title="sims::all_cosets" alt="" coords="185,497,301,523"/>
+<area shape="rect" id="node25" href="$d9/df3/classsims.html#aac8aa3cabbbd4180db8c647156d0f7d4" title="sims::evaluate_word_INT" alt="" coords="157,547,329,572"/>
+<area shape="rect" id="node26" href="$d8/d30/classcompute__stabilizer.html#aa33f9b1e4823afd5196eec36d3082084" title="compute_stabilizer\l::make_canonical_second_set" alt="" coords="143,596,344,635"/>
+<area shape="rect" id="node29" href="$d3/d5f/classisomorph.html#a4a5d04d07ac8c2a994fa174f156dea73" title="isomorph::identify\l_database_is_open" alt="" coords="174,659,312,697"/>
+<area shape="rect" id="node3" href="$d9/df3/classsims.html#a5813a13a4b5685f8bab7d248fb12cf57" title="sims::random_element\l_of_order" alt="" coords="400,5,556,44"/>
+<area shape="rect" id="node5" href="$d9/df3/classsims.html#a2747368b290225e639103bff8e32ffc9" title="sims::find_element\l_of_given_order_INT" alt="" coords="405,183,551,221"/>
+<area shape="rect" id="node7" href="$d9/df3/classsims.html#aaa2d4a5f8ebb39fab9149d99b4d38fbc" title="sims::find_element\l_of_prime_power_order" alt="" coords="397,120,560,159"/>
+<area shape="rect" id="node8" href="$d9/df3/classsims.html#addc6f348759a62efab9c5d5b58ad3f61" title="sims::sylow_subgroup" alt="" coords="618,99,771,124"/>
+<area shape="rect" id="node4" href="$d9/df3/classsims.html#af5aeca809be7c10df8493c1b9ef9e980" title="sims::random_elements\l_of_order" alt="" coords="613,5,776,44"/>
+<area shape="rect" id="node22" href="$d6/d75/classchoose__points__or__lines.html#a17def7dc2b9407b483d887fb24fab74d" title="choose_points_or_lines\l::choose_orbit" alt="" coords="397,429,559,468"/>
+<area shape="rect" id="node12" href="$d8/d30/classcompute__stabilizer.html#a36a1729430f317a65559220a8206a7d7" title="compute_stabilizer\l::init" alt="" coords="824,448,956,487"/>
+<area shape="rect" id="node13" href="$d8/dc6/classset__stabilizer__compute.html#a247c31bc3f19f22dadbfd7607cbaaa78" title="set_stabilizer_compute\l::handle_frequencies" alt="" coords="1004,448,1162,487"/>
+<area shape="rect" id="node14" href="$d8/dc6/classset__stabilizer__compute.html#ad4f92074322e98c7cd0ed5d4f8486b76" title="set_stabilizer_compute\l::compute_set_stabilizer" alt="" coords="1210,448,1375,487"/>
+<area shape="rect" id="node15" href="$db/d67/test__hyperoval_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1486,349,1536,375"/>
+<area shape="rect" id="node16" href="$d4/de8/conic_8_c.html#a96def9474b981a9d5831a9b48d85d652" title="conic" alt="" coords="1485,399,1537,424"/>
+<area shape="rect" id="node17" href="$dd/d86/classlinear__set.html#ae8f58ded28fb5370f4459cca42b7463b" title="linear_set::do_compute\l_stabilizer" alt="" coords="1431,448,1591,487"/>
+<area shape="rect" id="node20" href="$d0/d76/tl__algebra__and__number__theory_8h.html#af2c67d225072549409be710ac3cd30f8" title="create_sims_for_stabilizer" alt="" coords="1423,511,1599,536"/>
+<area shape="rect" id="node21" href="$d0/d76/tl__algebra__and__number__theory_8h.html#af5482567a8d6ba5c2fe593bf6f7f9a0f" title="create_sims_for_stabilizer\l_with_input_group" alt="" coords="1423,560,1599,599"/>
+<area shape="rect" id="node18" href="$dd/d86/classlinear__set.html#a0cc3eaec1896fdc977b62e94623b055b" title="linear_set::init_compute\l_stabilizer" alt="" coords="1647,448,1809,487"/>
+<area shape="rect" id="node19" href="$dd/d86/classlinear__set.html#a098a133edfbaae0fd347a69c50bdbee2" title="linear_set::compute\l_stabilizer_of_linear_set" alt="" coords="1857,448,2023,487"/>
+<area shape="rect" id="node27" href="$d8/d30/classcompute__stabilizer.html#a040fb5c6ad50133c5a16a35ed5b2ecc4" title="compute_stabilizer\l::main_loop_handle_case" alt="" coords="392,531,565,569"/>
+<area shape="rect" id="node28" href="$d8/d30/classcompute__stabilizer.html#ae8615a28e0494704450689b6ea0b7ca2" title="compute_stabilizer\l::main_loop" alt="" coords="628,493,761,532"/>
+<area shape="rect" id="node30" href="$d3/d5f/classisomorph.html#a78ecf843b9f6ca1cfd666e222edd90ae" title="isomorph::identify" alt="" coords="415,665,541,691"/>
+<area shape="rect" id="node31" href="$d4/d7e/isomorph__global_8_c.html#aa0fe57c73d5668eee10a6022ada7f6a3" title="isomorph_identify" alt="" coords="631,689,757,715"/>
+<area shape="rect" id="node32" href="$d4/d7e/isomorph__global_8_c.html#a9fd19ea945561cf2a6bb5c72dd4b1cb2" title="isomorph_identify_table" alt="" coords="613,640,775,665"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="matrix_group_element_is_one" name="matrix_group_element_is_one">
+<area shape="rect" id="node2" href="$d3/ded/classmatrix__group.html#a6eb30d67f571079f670f5850eba5cd4a" title="matrix_group::GL_is_one" alt="" coords="207,88,378,113"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#abbb33cc035f2e99b458376cf45936ccf" title="finite_field::is_scalar\l_multiple_of_identity\l_matrix" alt="" coords="429,5,572,57"/>
+<area shape="rect" id="node6" href="$df/d5a/classfinite__field.html#abf9e4cb7b3f7fef89fa676a5feb84ecd" title="finite_field::is_identity\l_matrix" alt="" coords="426,81,574,120"/>
+<area shape="rect" id="node7" href="$df/d5a/classfinite__field.html#aa9676221df4c50dd63e758bb77a12e80" title="finite_field::is_zero\l_vector" alt="" coords="435,144,566,183"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a8d51d751717cb9bc67209349fb44d1ec" title="finite_field::is_diagonal\l_matrix" alt="" coords="622,12,779,51"/>
+<area shape="rect" id="node5" href="$da/da9/galois__global_8_c.html#a702b940ed7e1940ba0643bae4e0cce89" title="is_diagonal_matrix" alt="" coords="827,19,959,44"/>
+</map>

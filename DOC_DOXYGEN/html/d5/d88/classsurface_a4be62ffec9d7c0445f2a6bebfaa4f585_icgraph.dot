@@ -1,0 +1,19 @@
+digraph "surface::print_polynomial_domains"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4832 [label="surface::print_polynomial\l_domains",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4832 -> Node4833 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4833 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node4833 -> Node4834 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4834 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node4832 -> Node4835 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4835 [label="arc_lifting::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#ae1609cb80720bc005f0fc3ea65150185"];
+  Node4835 -> Node4836 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4836 [label="lift_single_arc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b"];
+  Node4836 -> Node4834 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4835 -> Node4837 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4837 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node4837 -> Node4833 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

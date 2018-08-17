@@ -1,0 +1,11 @@
+digraph "action_on_cosets::~action_on_cosets"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3 [label="action_on_cosets::\l~action_on_cosets",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="action_on_cosets::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/classaction__on__cosets.html#a6a02c260572535d8e49d4fafedcae303"];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="action_on_cosets::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d72/classaction__on__cosets.html#a8c475128972507cfccef674332ee9942"];
+}

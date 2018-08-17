@@ -1,0 +1,42 @@
+digraph "database::file_create"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1022 [label="database::file_create",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1022 -> Node1023 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1023 [label="database::create",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d72/classdatabase.html#a41d486156468426370c803bea3976cf1"];
+  Node1023 -> Node1024 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1024 [label="isomorph::setup_and\l_create_solution_database",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a810a22dfde3c43272107c743ec819b0e"];
+  Node1024 -> Node1025 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1025 [label="isomorph::init_solutions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a729746a01bd45d55565d0a11cda9e9a3"];
+  Node1025 -> Node1026 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1026 [label="isomorph_init_solutions\l_from_memory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#a490bbe6199dc1e29d186b26834266e03"];
+  Node1024 -> Node1027 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1027 [label="isomorph::read_solutions\l_from_clique_finder_case\l_by_case",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a65bc5ec528f741a1b01cdd606dfed579"];
+  Node1027 -> Node1028 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1028 [label="isomorph_read_solution\l_files_from_clique_finder\l_case_by_case",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#a2a55ab4b2df6ae83f916cf01eccdf67c"];
+  Node1028 -> Node1029 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1029 [label="isomorph_arguments\l::execute",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de4/classisomorph__arguments.html#aa85e472d14906abdd5672dc66027583e"];
+  Node1029 -> Node1030 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1030 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/d5e/blt__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node1029 -> Node1031 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1031 [label="arc_generator::main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d21/classarc__generator.html#ad80140b51b165dad1fe6ab232be7829a"];
+  Node1024 -> Node1032 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1032 [label="isomorph::read_solutions\l_from_clique_finder",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a14c4ac27b0d97d338e14ac0d183c5c64"];
+  Node1032 -> Node1033 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1033 [label="isomorph_read_solution\l_files_from_clique_finder",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#ad8be067333430bfdd26c0a34549f4556"];
+  Node1033 -> Node1029 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1024 -> Node1034 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1034 [label="isomorph::build_up\l_database",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a40bea8f733a5855879f927fc73324384"];
+  Node1034 -> Node1035 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1035 [label="isomorph::init_cases\l_from_file_modulus_and\l_build_up_database",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#a42c6ebeadb51263d8ae8c1bdaae3ebbd"];
+  Node1034 -> Node1036 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1036 [label="isomorph::init_cases\l_from_file_mixed_modulus\l_and_build_up_database",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/d5f/classisomorph.html#acae208131143734575c088b5f50123f6"];
+  Node1034 -> Node1037 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1037 [label="isomorph_read_statistic\l_files",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#a78a6ee9d7dee4708fc721374bdebfa83"];
+  Node1037 -> Node1029 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1034 -> Node1038 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1038 [label="isomorph_read_solution\l_files",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d7e/isomorph__global_8_c.html#a697da824ab34db5c830530fb3c97df24"];
+  Node1038 -> Node1029 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

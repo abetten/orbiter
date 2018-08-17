@@ -1,0 +1,9 @@
+<map id="scene::line" name="scene::line">
+<area shape="rect" id="node2" href="$df/db1/classscene.html#a207ab8471e540d06a5de67d9d6142108" title="scene::line_extended" alt="" coords="138,33,286,59"/>
+<area shape="rect" id="node6" href="$df/db1/classscene.html#a268314d52d2ef0794e618ffbeeade33b" title="scene::lines_a" alt="" coords="159,83,265,108"/>
+<area shape="rect" id="node7" href="$df/db1/classscene.html#a847f2c7d37da70b1d633d3085c503eca" title="scene::lines_b" alt="" coords="159,132,265,157"/>
+<area shape="rect" id="node8" href="$df/db1/classscene.html#a1a3969a0a428b60436ee3c4809f32de8" title="scene::lines_cij" alt="" coords="156,181,268,207"/>
+<area shape="rect" id="node3" href="$df/db1/classscene.html#ac7e207e5fe33cc2f3c163d46a5b2ee44" title="scene::map_a_point" alt="" coords="334,5,475,31"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a4146e2b4829edcc41af9adf68af7d774" title="scene::create_five\l_plus_one" alt="" coords="340,55,469,93"/>
+<area shape="rect" id="node4" href="$df/db1/classscene.html#a6e267a2f290520e5011bc9d86faca156" title="scene::map_a_line" alt="" coords="523,5,656,31"/>
+</map>

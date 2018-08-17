@@ -1,0 +1,27 @@
+var data__hyperovals_8_c =
+[
+    [ "arcs_16_18_make_element_size", "d2/d91/data__hyperovals_8_c.html#ac3422767c6027da27b351b259b0fd00f", null ],
+    [ "arcs_16_18_nb_reps", "d2/d91/data__hyperovals_8_c.html#a71de31b2b031359e9dc748f8ffa0613e", null ],
+    [ "arcs_16_18_reps", "d2/d91/data__hyperovals_8_c.html#a582766518ac36ef31274b15f9a3f41bd", null ],
+    [ "arcs_16_18_size", "d2/d91/data__hyperovals_8_c.html#ae3995856eaa98577c99a31e5ce34eaf9", null ],
+    [ "arcs_16_18_stab_gens", "d2/d91/data__hyperovals_8_c.html#aa7153565dd8f8939c4ba08174e981ea4", null ],
+    [ "arcs_16_18_stab_gens_fst", "d2/d91/data__hyperovals_8_c.html#a3324a863b82983f162ecf7af92f4b6a7", null ],
+    [ "arcs_16_18_stab_gens_len", "d2/d91/data__hyperovals_8_c.html#a720478c24590f3892d36563e5574a30f", null ],
+    [ "arcs_16_18_stab_order", "d2/d91/data__hyperovals_8_c.html#a9ccc6fe66ced70ae50d20d56d840eaa4", null ],
+    [ "arcs_32_34_make_element_size", "d2/d91/data__hyperovals_8_c.html#a63ed210f5f021e63aa1f1f234d8c18e8", null ],
+    [ "arcs_32_34_nb_reps", "d2/d91/data__hyperovals_8_c.html#a5d89b4aa5f2b3b95e9ae8940ebf22732", null ],
+    [ "arcs_32_34_reps", "d2/d91/data__hyperovals_8_c.html#ae07cc15a2ce2ebf83e514a321d62af1c", null ],
+    [ "arcs_32_34_size", "d2/d91/data__hyperovals_8_c.html#aa12028300d866f9eb4c728c9a245812a", null ],
+    [ "arcs_32_34_stab_gens", "d2/d91/data__hyperovals_8_c.html#a25e6977c31325692de292c8b8c9d3fbe", null ],
+    [ "arcs_32_34_stab_gens_fst", "d2/d91/data__hyperovals_8_c.html#a58232aa603daa8dfb0c7892e1ab44d8d", null ],
+    [ "arcs_32_34_stab_gens_len", "d2/d91/data__hyperovals_8_c.html#a82240131adba4ec9aa22000030583016", null ],
+    [ "arcs_32_34_stab_order", "d2/d91/data__hyperovals_8_c.html#a5226b7819bfacf2566e64ac339439e4e", null ],
+    [ "arcs_8_10_make_element_size", "d2/d91/data__hyperovals_8_c.html#a3443a028d7f8d56926e990bfadca9b1f", null ],
+    [ "arcs_8_10_nb_reps", "d2/d91/data__hyperovals_8_c.html#ac7e1e85c10ffd4ed68d47b56d966ac38", null ],
+    [ "arcs_8_10_reps", "d2/d91/data__hyperovals_8_c.html#ab01a06bcabd15406ed515fbdba3575f2", null ],
+    [ "arcs_8_10_size", "d2/d91/data__hyperovals_8_c.html#ad2504de4540a02e2228c11f9f09ecff2", null ],
+    [ "arcs_8_10_stab_gens", "d2/d91/data__hyperovals_8_c.html#a84065ef6fdffbcab9742051cb05b98f5", null ],
+    [ "arcs_8_10_stab_gens_fst", "d2/d91/data__hyperovals_8_c.html#a72ddb5957398b41b3350ccedaab8c962", null ],
+    [ "arcs_8_10_stab_gens_len", "d2/d91/data__hyperovals_8_c.html#a1cd43d636a0f559f0945e767d3b791ef", null ],
+    [ "arcs_8_10_stab_order", "d2/d91/data__hyperovals_8_c.html#a3625e610fe2b56d333d0e4137606c9c1", null ]
+];

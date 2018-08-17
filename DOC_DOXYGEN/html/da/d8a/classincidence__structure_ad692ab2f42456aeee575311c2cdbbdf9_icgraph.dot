@@ -1,0 +1,27 @@
+digraph "incidence_structure::rearrange"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6368 [label="incidence_structure\l::rearrange",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6368 -> Node6369 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6369 [label="incidence_structure\l::latex_it",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a7ad3d823093d5938d41c36230b9b8ea6"];
+  Node6369 -> Node6370 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6370 [label="incidence_structure\l::compute_tdo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a74cfa0336bdb1b0d0eace43f330a2b0f"];
+  Node6370 -> Node6371 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6371 [label="incidence_structure\l::do_tdo_high_level",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a8840e820448ad980279f244a90888b77"];
+  Node6369 -> Node6372 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6372 [label="incidence_structure\l::compute_tdo_stepwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d8a/classincidence__structure.html#a91a7039b74c96b39bcd084b02181f191"];
+  Node6372 -> Node6371 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6369 -> Node6373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6373 [label="incidence_structure\l_compute_TDA_general",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a21ab759f6e646f3fe703c17f39361448"];
+  Node6373 -> Node6374 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6374 [label="incidence_structure\l_compute_tda",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#ab3a7584f120bbaf752a5bd831d3ebf72"];
+  Node6374 -> Node6375 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6375 [label="incidence_structure\l_compute_TDO_TDA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d74/tl__geometry_8h.html#a63d0e7a207e173b92c0e560df4d8e980"];
+  Node6373 -> Node6376 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6376 [label="singer_cycle::init\l_lines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d13/classsinger__cycle.html#a817cbf613596d5db2cf5e926db8fa328"];
+  Node6373 -> Node6377 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6377 [label="translation_plane_via\l_andre_model::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/dcc/classtranslation__plane__via__andre__model.html#adb424599de168ade331979a9218ee07b"];
+  Node6368 -> Node6373 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

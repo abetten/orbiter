@@ -1,0 +1,13 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#a3da6d2b09e35d569adb7101dffcb5224" title="os_ticks" alt="" coords="397,105,466,131"/>
+<area shape="rect" id="node3" href="$d2/ddf/classglobal__data.html#a70f4890d19c2d48c7c1f4c4f29ff1a63" title="global_data::read_arguments" alt="" coords="104,55,298,80"/>
+<area shape="rect" id="node6" href="$d2/ddf/classglobal__data.html#abc6a1a7965a5dc2f8819f78aca590e84" title="global_data::main_loop" alt="" coords="121,205,281,231"/>
+<area shape="rect" id="node9" href="$d9/d60/discreta_8h.html#a04d64356f0c7cb798e55daec998c527e" title="time_check" alt="" coords="157,156,245,181"/>
+<area shape="rect" id="node4" href="$d1/d08/tdo__refine_8_c.html#ae5ad5cbeccaedc03a48d3c7eaa803e79" title="print_usage" alt="" coords="386,5,477,31"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="410,55,453,80"/>
+<area shape="rect" id="node7" href="$df/dbf/sajeeb_8_c.html#a737197cad3c39e9690cbc9931edcba6b" title="get_extension_if_present" alt="" coords="346,205,517,231"/>
+<area shape="rect" id="node8" href="$df/dbf/sajeeb_8_c.html#a9ca43842b56cb96c492a4b2d285a6864" title="chop_off_extension\l_if_present" alt="" coords="363,255,500,293"/>
+<area shape="rect" id="node10" href="$d3/d72/global_8_c.html#a89a8565e34c7dcbb97180cd6af7454a1" title="time_check_delta" alt="" coords="369,156,494,181"/>
+<area shape="rect" id="node11" href="$d5/db4/io__and__os_8h.html#a1b35e7a094dfde9db39ae352c9c17042" title="os_ticks_per_second" alt="" coords="565,131,711,156"/>
+<area shape="rect" id="node12" href="$d5/db4/io__and__os_8h.html#a0d715587fd9b8ab4e2bc822a2be313ba" title="os_ticks_to_dhms" alt="" coords="574,180,702,205"/>
+</map>

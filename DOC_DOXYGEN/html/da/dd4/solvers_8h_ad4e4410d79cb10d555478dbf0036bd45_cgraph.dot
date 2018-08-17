@@ -1,0 +1,15 @@
+digraph "diophant_solve_all_mckay"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node18 [label="diophant_solve_all\l_mckay",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node18 -> Node19 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="diophant_solve_mckay",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#a13197239f146dbec9e369244a28e6fb5"];
+  Node19 -> Node20 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="diophant_solve_mckay\l_override_minrhs_in_inequalities",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dfe/diophant_8_c.html#ade26681e912db350f0d405ccdb340519"];
+  Node20 -> Node21 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="mckay::tMCKAY::Init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a04d009389cf387ded3ff067ff0f0588d"];
+  Node20 -> Node22 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="mckay::tMCKAY::possolve",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/ddf/classmckay_1_1t_m_c_k_a_y.html#a1791dc846f3d51ac42c1afdd9b944864"];
+}

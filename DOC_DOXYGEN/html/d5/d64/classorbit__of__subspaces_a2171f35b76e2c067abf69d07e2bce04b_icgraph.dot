@@ -1,0 +1,13 @@
+digraph "orbit_of_subspaces::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node211 [label="orbit_of_subspaces\l::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node211 -> Node212 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node212 [label="orbit_of_subspaces\l::orbit_of_subspaces",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d64/classorbit__of__subspaces.html#a8480d53da3072fc761793a3e775d3c95"];
+  Node211 -> Node213 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node213 [label="orbit_of_subspaces\l::freeself",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d64/classorbit__of__subspaces.html#a3157117462ce7ecbf8bf7eba61998f5a"];
+  Node213 -> Node214 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node214 [label="orbit_of_subspaces\l::~orbit_of_subspaces",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d64/classorbit__of__subspaces.html#aee7b7cb69f335a267c62a543761ceaa2"];
+}

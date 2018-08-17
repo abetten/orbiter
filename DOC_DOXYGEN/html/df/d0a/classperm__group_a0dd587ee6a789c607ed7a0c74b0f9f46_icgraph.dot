@@ -1,0 +1,13 @@
+digraph "perm_group::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node623 [label="perm_group::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node623 -> Node624 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node624 [label="perm_group::perm_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a7c2f0ad47542ce415fc3d23c9d382911"];
+  Node623 -> Node625 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node625 [label="perm_group::free",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a07c6076d33cda4233128ace0cb4dcb19"];
+  Node625 -> Node626 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node626 [label="perm_group::~perm_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a7f2df62d0b24cbdb2ee4cfca3bb8d21f"];
+}

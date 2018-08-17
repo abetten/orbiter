@@ -1,0 +1,9 @@
+digraph "finite_field::compare_subspaces_ranked_with_unrank_function"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1993 [label="finite_field::compare\l_subspaces_ranked_with\l_unrank_function",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1993 -> Node1994 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1994 [label="oracle::install_fusion_node",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/da7/classoracle.html#a8375f717ccaea657f03f4d03fa68a9a2"];
+}

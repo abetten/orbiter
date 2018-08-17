@@ -1,0 +1,8 @@
+<map id="null_polarity_generator::dot_product" name="null_polarity_generator::dot_product">
+<area shape="rect" id="node2" href="$df/db3/classnull__polarity__generator.html#ae1281c1e326a3329dfcb01622f00a703" title="null_polarity_generator\l::create_first_candidate_set" alt="" coords="212,5,397,44"/>
+<area shape="rect" id="node4" href="$df/db3/classnull__polarity__generator.html#af4928299fd924e288b2639b6ad95a755" title="null_polarity_generator\l::create_next_candidate_set" alt="" coords="210,83,399,121"/>
+<area shape="rect" id="node3" href="$df/db3/classnull__polarity__generator.html#acb3572953351234f30a9a73debb27646" title="null_polarity_generator\l::init" alt="" coords="672,48,829,87"/>
+<area shape="rect" id="node5" href="$df/db3/classnull__polarity__generator.html#a20fe959b6b3327157126eb4468bf028b" title="null_polarity_generator\l::count_strong_generators" alt="" coords="447,48,624,87"/>
+<area shape="rect" id="node6" href="$df/db3/classnull__polarity__generator.html#a666d587704898cfe3a38b24af1a7052c" title="null_polarity_generator\l::get_strong_generators" alt="" coords="454,111,617,149"/>
+<area shape="rect" id="node7" href="$df/db3/classnull__polarity__generator.html#aff7586e34e067de18575680e72ac9833" title="null_polarity_generator\l::backtrack_search" alt="" coords="457,173,614,212"/>
+</map>

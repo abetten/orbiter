@@ -1,0 +1,16 @@
+digraph "page_storage::check_free_list"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node11 [label="page_storage::check\l_free_list",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="page_storage::s_i_and\l_allocation_bit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a5cd93495561a44c9c4bea8b8eef184cf"];
+  Node12 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node11 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node15 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+}

@@ -1,0 +1,19 @@
+digraph "surface::make_trihedral_pairs"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node3840 [label="surface::make_trihedral\l_pairs",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node3840 -> Node3841 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3841 [label="surface::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d88/classsurface.html#a90570b0ca6ab02988159f2c40cb27308"];
+  Node3841 -> Node3842 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3842 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node3841 -> Node3843 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3843 [label="surface_classify_wedge\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a"];
+  Node3843 -> Node3844 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3844 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node3841 -> Node3845 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3845 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node3845 -> Node3846 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3846 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+}

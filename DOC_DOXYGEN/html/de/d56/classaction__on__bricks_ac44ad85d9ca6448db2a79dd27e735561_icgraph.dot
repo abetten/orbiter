@@ -1,0 +1,13 @@
+digraph "action_on_bricks::null"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node692 [label="action_on_bricks::null",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node692 -> Node693 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node693 [label="action_on_bricks::action\l_on_bricks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d56/classaction__on__bricks.html#acbeed145cd7dde787b46f853ad6a2756"];
+  Node692 -> Node694 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node694 [label="action_on_bricks::free",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d56/classaction__on__bricks.html#aa9e87a7771150f4d46ba95e09134a8c2"];
+  Node694 -> Node695 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node695 [label="action_on_bricks::\l~action_on_bricks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/d56/classaction__on__bricks.html#ae1d204d0f2f7a75083d4bd1d95f64274"];
+}

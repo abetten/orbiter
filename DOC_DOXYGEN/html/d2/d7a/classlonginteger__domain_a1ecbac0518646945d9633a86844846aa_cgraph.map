@@ -1,0 +1,13 @@
+<map id="longinteger_domain::integral_division" name="longinteger_domain::integral_division">
+<area shape="rect" id="node2" href="$dd/d7e/classlonginteger__object.html#ab69549d0bd669e44d776f14ab1a0a344" title="longinteger_object\l::sign" alt="" coords="393,170,523,208"/>
+<area shape="rect" id="node3" href="$d2/d7a/classlonginteger__domain.html#a6780a80b91bf044dde737578b2e19a02" title="longinteger_domain\l::compare" alt="" coords="192,120,330,159"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#a0bfeae35be8a6fd44ed7f76413596ab1" title="longinteger_object::len" alt="" coords="586,114,742,139"/>
+<area shape="rect" id="node6" href="$dd/d7e/classlonginteger__object.html#a3ecaf12738cc721d281c416503f241e2" title="longinteger_object::rep" alt="" coords="585,398,742,423"/>
+<area shape="rect" id="node7" href="$dd/d7e/classlonginteger__object.html#a891b9d0947bfce181245ab5cffe9482a" title="longinteger_object\l::assign_to" alt="" coords="196,58,326,96"/>
+<area shape="rect" id="node9" href="$d2/d7a/classlonginteger__domain.html#add02b012364cf88ba81d81930b284c35" title="longinteger_domain\l::mult" alt="" coords="192,260,330,299"/>
+<area shape="rect" id="node4" href="$d2/d7a/classlonginteger__domain.html#ad4328779ebda00cbf85f5bddcc1a125f" title="longinteger_domain\l::compare_unsigned" alt="" coords="387,107,529,146"/>
+<area shape="rect" id="node8" href="$de/dc5/algebra__and__number__theory_8h.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="378,58,537,83"/>
+<area shape="rect" id="node10" href="$dd/d7e/classlonginteger__object.html#a0946732d08e5180a00480f4c40667101" title="longinteger_object\l::is_zero" alt="" coords="393,284,523,323"/>
+<area shape="rect" id="node12" href="$d6/d94/longinteger__domain_8_c.html#ac2bac7b12f5b6440b8dad275cd7a157d" title="longinteger_print_digits" alt="" coords="378,347,537,372"/>
+<area shape="rect" id="node11" href="$dd/d7e/classlonginteger__object.html#ae27040d862a5624e98fc9582daa889ee" title="longinteger_object\l::normalize" alt="" coords="599,284,729,323"/>
+</map>

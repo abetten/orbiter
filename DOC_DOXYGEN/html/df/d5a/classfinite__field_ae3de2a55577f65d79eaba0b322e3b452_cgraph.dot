@@ -1,0 +1,13 @@
+digraph "finite_field::affine_action_from_the_right"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1349 [label="finite_field::affine\l_action_from_the_right",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1349 -> Node1350 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1350 [label="finite_field::mult\l_vector_from_the_left",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#aad2078020fd058c71649f0a25a4c77cc"];
+  Node1349 -> Node1351 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1351 [label="finite_field::vector\l_frobenius_power_in_place",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#ab56074024300775d943c7943d845df91"];
+  Node1349 -> Node1352 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1352 [label="finite_field::add_vector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a23252c462d48cc21895de6fcc0cbb59f"];
+}

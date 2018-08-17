@@ -1,0 +1,9 @@
+digraph "discreta_base::load_ascii"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node14015 [label="discreta_base::load\l_ascii",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node14015 -> Node14016 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14016 [label="discreta_base::load_file",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a73a86b4ef5ef9305667b05003ea1b32e"];
+}

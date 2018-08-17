@@ -1,0 +1,7 @@
+<map id="surface::print_clebsch_P" name="surface::print_clebsch_P">
+<area shape="rect" id="node2" href="$d5/d88/classsurface.html#a38b901facf5122e9676375891edc34ff" title="surface::print_clebsch\l_P_matrix_only" alt="" coords="234,5,385,44"/>
+<area shape="rect" id="node4" href="$d2/da7/classhomogeneous__polynomial__domain.html#aba45b13898b259a147e45bf92a622fd8" title="homogeneous_polynomial\l_domain::print_monomial" alt="" coords="671,63,848,101"/>
+<area shape="rect" id="node5" href="$d2/da7/classhomogeneous__polynomial__domain.html#a48399203c734feffa753041881d4e68b" title="homogeneous_polynomial\l_domain::is_zero" alt="" coords="221,120,398,159"/>
+<area shape="rect" id="node6" href="$d2/da7/classhomogeneous__polynomial__domain.html#a380597c635c722d4577cabce701bf55f" title="homogeneous_polynomial\l_domain::print_equation\l_with_line_breaks_tex" alt="" coords="446,145,623,197"/>
+<area shape="rect" id="node3" href="$d2/da7/classhomogeneous__polynomial__domain.html#a39fe7da58a442801d7c8be1121a57bfe" title="homogeneous_polynomial\l_domain::print_equation" alt="" coords="446,5,623,44"/>
+</map>

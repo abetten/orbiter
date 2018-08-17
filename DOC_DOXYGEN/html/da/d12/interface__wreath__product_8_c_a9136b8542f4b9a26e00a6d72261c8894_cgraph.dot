@@ -1,0 +1,17 @@
+digraph "wreath_product_group_element_dispose"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node6 [label="wreath_product_group\l_element_dispose",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node6 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="page_storage::dispose",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a10a87bab5f2aac2f4ddf3ebe84cf897a"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="page_storage::s_i_and\l_deallocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#afbc8bf4d074acbe4bcc76ddad78793d8"];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node7 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+}

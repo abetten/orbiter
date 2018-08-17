@@ -1,0 +1,13 @@
+<map id="calc_delta_lambda" name="calc_delta_lambda">
+<area shape="rect" id="node2" href="$d9/d60/discreta_8h.html#a1fdc465f664d8b5b87cf6819dd1e6d11" title="design_parameters_admissible" alt="" coords="186,75,392,100"/>
+<area shape="rect" id="node5" href="$d9/d60/discreta_8h.html#a075808c1cf57d126d15a0d7794716de7" title="design_parameter_database\l_export_tex" alt="" coords="906,97,1097,136"/>
+<area shape="rect" id="node7" href="$d9/d60/discreta_8h.html#a8884d267607e80d9798a5614f211a8c5" title="is_trivial_clan" alt="" coords="238,183,339,208"/>
+<area shape="rect" id="node8" href="$d9/d60/discreta_8h.html#a6940852a56bea54b6b60aa35e5894664" title="print_clan_tex_INT" alt="" coords="222,232,355,257"/>
+<area shape="rect" id="node9" href="$d9/d60/discreta_8h.html#aa3e7989b3999eb0f31ce47006cb1f3b5" title="is_ancestor" alt="" coords="244,305,334,331"/>
+<area shape="rect" id="node10" href="$d9/d60/discreta_8h.html#aa17c812e1fe73f8846110a29fe89304f" title="calc_derinv" alt="" coords="244,355,333,380"/>
+<area shape="rect" id="node12" href="$d9/d60/discreta_8h.html#a744595779bda605193b61d01d79ad981" title="design_parameter_database\l_clan_report" alt="" coords="193,404,384,443"/>
+<area shape="rect" id="node3" href="$da/d94/classdesign__parameter.html#acbfce2a35f0c379d5888acdc8d74ae19" title="design_parameter::derived\l_inverse" alt="" coords="441,5,621,44"/>
+<area shape="rect" id="node6" href="$da/d94/classdesign__parameter.html#a98630a1cdc565c3c826a2636a499c5f6" title="design_parameter::residual\l_inverse" alt="" coords="440,68,623,107"/>
+<area shape="rect" id="node4" href="$da/d94/classdesign__parameter.html#abd616d2e29cde6f3e797abab001af0c6" title="design_parameter::ancestor" alt="" coords="671,75,858,100"/>
+<area shape="rect" id="node11" href="$d9/d60/discreta_8h.html#aa0f966d433afa5fb9e50fd20c832838c" title="is_ancestor" alt="" coords="486,355,576,380"/>
+</map>

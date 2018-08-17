@@ -1,0 +1,15 @@
+digraph "wreath_product::compute_base_and_transversals"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node23 [label="wreath_product::compute\l_base_and_transversals",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node23 -> Node24 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node24 [label="wreath_product::init\l_tensor_wreath_product",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dfa/classwreath__product.html#abab9a46886db102826e2ca2c1bfc39de"];
+  Node24 -> Node25 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node25 [label="action::init_wreath\l_product_group",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a29d8425b266eff98677406f084ee3f86"];
+  Node25 -> Node26 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node26 [label="action::init_wreath\l_product_group_and_restrict",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72"];
+  Node26 -> Node27 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node27 [label="tensor_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3"];
+}

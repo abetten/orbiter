@@ -1,0 +1,9 @@
+digraph "subspace_orbits::print_one_solution"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node2144 [label="subspace_orbits::print\l_one_solution",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2144 -> Node2145 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2145 [label="subspace_orbits::print\l_all_solutions",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d9f/classsubspace__orbits.html#ab3b725a940c2efd222746887c266d9de"];
+}

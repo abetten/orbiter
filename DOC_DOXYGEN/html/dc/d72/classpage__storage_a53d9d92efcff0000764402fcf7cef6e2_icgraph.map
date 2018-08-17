@@ -1,0 +1,19 @@
+<map id="page_storage::init" name="page_storage::init">
+<area shape="rect" id="node2" href="$dc/daf/classdirect__product.html#a589445fc716197ea3498c28b1d1802d0" title="direct_product::init" alt="" coords="208,19,338,44"/>
+<area shape="rect" id="node3" href="$d8/dfa/classwreath__product.html#abab9a46886db102826e2ca2c1bfc39de" title="wreath_product::init\l_tensor_wreath_product" alt="" coords="617,249,782,288"/>
+<area shape="rect" id="node7" href="$db/d0e/classpage__table.html#a046f41976c1bb69534449e719ef7168a" title="page_table::init" alt="" coords="217,131,329,156"/>
+<area shape="rect" id="node8" href="$db/d3c/page__storage_8_c.html#ab9be845ce39a334f6e2b360a93c2ed2a" title="test_page_storage" alt="" coords="207,180,339,205"/>
+<area shape="rect" id="node9" href="$d3/ded/classmatrix__group.html#a9752a39a870f8053562d65f9bac110a0" title="matrix_group::setup\l_page_storage" alt="" coords="204,68,343,107"/>
+<area shape="rect" id="node14" href="$df/d0a/classperm__group.html#abbcdd66714f6c380e6343d12592f0745" title="perm_group::init_data" alt="" coords="198,281,349,307"/>
+<area shape="rect" id="node16" href="$df/d0a/classperm__group.html#aa02263e401019788ab97480d11590f9a" title="perm_group::init_with_base" alt="" coords="181,331,366,356"/>
+<area shape="rect" id="node17" href="$d8/d74/classproduct__action.html#a3a84ca69f8b7e903eac0dd787cfa1cf9" title="product_action::init" alt="" coords="207,380,340,405"/>
+<area shape="rect" id="node4" href="$d2/d86/classaction.html#a29d8425b266eff98677406f084ee3f86" title="action::init_wreath\l_product_group" alt="" coords="830,249,959,288"/>
+<area shape="rect" id="node5" href="$d2/d86/classaction.html#a5ea78557093c987967e7b8162fabbf72" title="action::init_wreath\l_product_group_and_restrict" alt="" coords="1007,249,1198,288"/>
+<area shape="rect" id="node6" href="$dd/d3e/classtensor__product.html#a2a8ac905e80dd9bb7339c9506c3521d3" title="tensor_product::init" alt="" coords="1246,256,1381,281"/>
+<area shape="rect" id="node10" href="$d3/ded/classmatrix__group.html#a626286de5799c4c9e45216e735b1d233" title="matrix_group::init\l_projective_group" alt="" coords="428,5,555,44"/>
+<area shape="rect" id="node12" href="$d3/ded/classmatrix__group.html#aa278bd127d400940516c20bfe1f2f91e" title="matrix_group::init\l_affine_group" alt="" coords="429,68,553,107"/>
+<area shape="rect" id="node13" href="$d3/ded/classmatrix__group.html#a0aa3c4187d8504b88f9f0aa644b48b86" title="matrix_group::init\l_general_linear_group" alt="" coords="414,131,569,169"/>
+<area shape="rect" id="node11" href="$d3/d78/classdirect__product__action.html#aad40060e5821c011cccaa65a5c4df64f" title="direct_product_action\l::init" alt="" coords="625,37,774,76"/>
+<area shape="rect" id="node15" href="$df/d0a/classperm__group.html#aefb07e1e34c09ec498ca1ae072520b48" title="perm_group::init" alt="" coords="432,281,550,307"/>
+<area shape="rect" id="node18" href="$d2/d86/classaction.html#a35c717fb546189c007a89bb7b133e2f6" title="action::setup_product\l_action" alt="" coords="417,373,566,412"/>
+</map>

@@ -1,0 +1,15 @@
+digraph "sims::reallocate_base"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node10035 [label="sims::reallocate_base",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node10035 -> Node10036 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10036 [label="sims::initialize_table",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#abe36dd0812bde20447f5aaa8384596a7"];
+  Node10036 -> Node10037 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10037 [label="perm_identity",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#aebc54d3f9c31f253ae53e3eb3b386208"];
+  Node10035 -> Node10038 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10038 [label="sims::init_trivial\l_orbit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#ac55702550a4671a721f78345dd9bff70"];
+  Node10038 -> Node10039 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10039 [label="sims::swap_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/df3/classsims.html#a3443b4bbfb5573864c29b627562819d2"];
+}

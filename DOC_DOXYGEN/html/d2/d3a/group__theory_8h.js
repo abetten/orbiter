@@ -1,0 +1,26 @@
+var group__theory_8h =
+[
+    [ "direct_product", "dc/daf/classdirect__product.html", "dc/daf/classdirect__product" ],
+    [ "linear_group", "df/d5a/classlinear__group.html", "df/d5a/classlinear__group" ],
+    [ "linear_group_description", "d9/dca/classlinear__group__description.html", "d9/dca/classlinear__group__description" ],
+    [ "matrix_group", "d3/ded/classmatrix__group.html", "d3/ded/classmatrix__group" ],
+    [ "perm_group", "df/d0a/classperm__group.html", "df/d0a/classperm__group" ],
+    [ "schreier", "d3/dd6/classschreier.html", "d3/dd6/classschreier" ],
+    [ "schreier_sims", "d0/da8/classschreier__sims.html", "d0/da8/classschreier__sims" ],
+    [ "sims", "d9/df3/classsims.html", "d9/df3/classsims" ],
+    [ "strong_generators", "dc/d09/classstrong__generators.html", "dc/d09/classstrong__generators" ],
+    [ "subgroup", "d0/d0a/classsubgroup.html", "d0/d0a/classsubgroup" ],
+    [ "wreath_product", "d8/dfa/classwreath__product.html", "d8/dfa/classwreath__product" ],
+    [ "choose_random_generator_derived_group", "d2/d3a/group__theory_8h.html#a5b8d821b5043492735a34157796367e9", null ],
+    [ "create_sims_for_centralizer_of_matrix", "d2/d3a/group__theory_8h.html#a006a14df436fe3af018855660134d585", null ],
+    [ "create_sims_from_generators_randomized", "d2/d3a/group__theory_8h.html#a7cd5415a9a6008da180e405ec41a351f", null ],
+    [ "create_sims_from_generators_with_target_group_order", "d2/d3a/group__theory_8h.html#ad6f0d6c8d1993d509920e0e16dbfb2f2", null ],
+    [ "create_sims_from_generators_with_target_group_order_factorized", "d2/d3a/group__theory_8h.html#a40f2df36e351d6e63bd2bb196cc5b430", null ],
+    [ "create_sims_from_generators_with_target_group_order_INT", "d2/d3a/group__theory_8h.html#a4e7d0b5c218eb15f66a0714069168efb", null ],
+    [ "create_sims_from_generators_without_target_group_order", "d2/d3a/group__theory_8h.html#af359c353cea00073083650b1ff856598", null ],
+    [ "create_sims_from_single_generator_without_target_group_order", "d2/d3a/group__theory_8h.html#a2f7faebe9dedd4ac121609786af7df02", null ],
+    [ "perm_group_find_strong_generators_at_level", "d2/d3a/group__theory_8h.html#a36a4c7f2a6d8ae4aad3de61254ca38c3", null ],
+    [ "perm_group_generators_direct_product", "d2/d3a/group__theory_8h.html#a1b4c844b399483e8a1e355027eb3c044", null ],
+    [ "strong_generators_array_read_from_file", "d2/d3a/group__theory_8h.html#a10b970b6d450a63a62107002484aaf2e", null ],
+    [ "strong_generators_array_write_file", "d2/d3a/group__theory_8h.html#a05972d528ab7056885299e2d37354dd0", null ]
+];

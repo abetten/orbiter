@@ -1,0 +1,15 @@
+digraph "scene::plane"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node299 [label="scene::plane",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node299 -> Node300 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node300 [label="scene::plane_from_dual\l_coordinates",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a2be676bac5582560a0e34bdd540cd8aa"];
+  Node299 -> Node301 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node301 [label="scene::plane_through\l_three_points",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#ad523dbeb01305e7ace1835e8c89cd1a3"];
+  Node299 -> Node302 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node302 [label="scene::tritangent_planes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a10ab17152c3ec183561918730006fdb6"];
+  Node299 -> Node303 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node303 [label="scene::create_five\l_plus_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/db1/classscene.html#a4146e2b4829edcc41af9adf68af7d774"];
+}

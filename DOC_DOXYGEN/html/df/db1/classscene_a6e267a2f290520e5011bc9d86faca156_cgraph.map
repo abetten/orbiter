@@ -1,0 +1,16 @@
+<map id="scene::map_a_line" name="scene::map_a_line">
+<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#aee0c436dfcfcb2f8a9b32f01ec90033a" title="double_vec_copy" alt="" coords="391,5,516,31"/>
+<area shape="rect" id="node3" href="$d5/d87/globals_8h.html#a8af5a8216c2ab9cadc59f3ea9a42bdcb" title="line_centered" alt="" coords="207,383,308,408"/>
+<area shape="rect" id="node5" href="$df/db1/classscene.html#a786b60f97ad35f58f5e4ae1456d12e3b" title="scene::point" alt="" coords="606,364,699,389"/>
+<area shape="rect" id="node6" href="$df/db1/classscene.html#ac7e207e5fe33cc2f3c163d46a5b2ee44" title="scene::map_a_point" alt="" coords="187,167,328,192"/>
+<area shape="rect" id="node4" href="$d0/d22/numerics_8_c.html#a7f044be354a33be9978da8d8fa8d3263" title="double_vec_print" alt="" coords="392,383,515,408"/>
+<area shape="rect" id="node7" href="$d5/d87/globals_8h.html#aeeeb01cbaf1e0fc5a69e1b885d62b8d3" title="print_system" alt="" coords="604,216,701,241"/>
+<area shape="rect" id="node8" href="$d5/d87/globals_8h.html#a5d5454f7ae047895ae3e511398f8604c" title="Null_space" alt="" coords="410,55,497,80"/>
+<area shape="rect" id="node9" href="$d5/d87/globals_8h.html#aa72b62268b311af7c4fb54504dadb476" title="double_vec_normalize\l_from_back" alt="" coords="376,104,531,143"/>
+<area shape="rect" id="node10" href="$df/db1/classscene.html#a207ab8471e540d06a5de67d9d6142108" title="scene::line_extended" alt="" coords="380,167,527,192"/>
+<area shape="rect" id="node13" href="$df/db1/classscene.html#a5f01de8cb1899fba6a91cc014c5fc68d" title="scene::intersect_line\l_and_plane" alt="" coords="382,268,525,307"/>
+<area shape="rect" id="node11" href="$df/db1/classscene.html#a48aceb808cb95c97b7515ff9dabfcd3a" title="scene::distance_from\l_origin" alt="" coords="579,104,727,143"/>
+<area shape="rect" id="node12" href="$df/db1/classscene.html#ae5ae81564026e1011c550a383f7eb2a9" title="scene::line" alt="" coords="610,167,695,192"/>
+<area shape="rect" id="node14" href="$d5/db4/io__and__os_8h.html#a509937846575424b1c8863e1bb96a766" title="random_integer" alt="" coords="595,265,710,291"/>
+<area shape="rect" id="node15" href="$d5/d87/globals_8h.html#a91f2cabc387fb419dd4377d2a27d6189" title="Gauss_elimination" alt="" coords="587,315,718,340"/>
+</map>

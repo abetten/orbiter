@@ -1,0 +1,13 @@
+digraph "discreta_base::integral_division"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node13350 [label="discreta_base::integral\l_division",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node13350 -> Node13351 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13351 [label="discreta_base::s_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157"];
+  Node13351 -> Node13352 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13352 [label="discreta_base::s_virtual_kind",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb"];
+  Node13351 -> Node13353 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13353 [label="kind_ascii",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf"];
+}

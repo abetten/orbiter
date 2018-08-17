@@ -1,0 +1,9 @@
+digraph "page_storage::print"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node129 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node129 -> Node130 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node130 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+}

@@ -1,0 +1,12 @@
+<map id="get_character" name="get_character">
+<area shape="rect" id="node2" href="$d0/d08/classpermutation.html#a826e0fbc7234cbbff949d3e31a863d0a" title="permutation::scan" alt="" coords="173,5,301,31"/>
+<area shape="rect" id="node4" href="$d4/d74/util_8_c.html#adf84ccaf0a1fda4496d2f60a33c53b88" title="scan_permutation_from\l_stream" alt="" coords="156,55,318,93"/>
+<area shape="rect" id="node3" href="$d0/d08/classpermutation.html#a7074b329f809b23ba083e1a74b90bd03" title="permutation::sscan" alt="" coords="379,5,513,31"/>
+<area shape="rect" id="node5" href="$d4/d74/util_8_c.html#a93f8c29fa198eae428b44a2dd0eb51bd" title="scan_permutation_from\l_string" alt="" coords="366,55,527,93"/>
+<area shape="rect" id="node6" href="$de/dae/classcayley__graph__search.html#a6593f90cd91bea8c23fe71acca05655e" title="cayley_graph_search\l::init_group_level_4" alt="" coords="595,23,743,61"/>
+<area shape="rect" id="node11" href="$d0/de0/class_i_n_t__vector.html#a73a03d4d965633ee099a7b66f3f78e35" title="INT_vector::init_permutation\l_from_string" alt="" coords="575,85,764,124"/>
+<area shape="rect" id="node7" href="$de/dae/classcayley__graph__search.html#adbce2e517a8ed979f53e8aeb043cf4ca" title="cayley_graph_search\l::init_group" alt="" coords="812,23,960,61"/>
+<area shape="rect" id="node8" href="$de/dae/classcayley__graph__search.html#add9c6434abeaebac4a07bc03cb21672d" title="cayley_graph_search\l::init" alt="" coords="1008,23,1156,61"/>
+<area shape="rect" id="node9" href="$da/df3/ferdinand_8_c.html#a322b57727d23cf5a0932f11c30ea18d9" title="ferdinand" alt="" coords="1204,29,1281,55"/>
+<area shape="rect" id="node10" href="$da/df3/ferdinand_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="1329,29,1379,55"/>
+</map>

@@ -1,0 +1,13 @@
+digraph "OBJECTSELF"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="OBJECTSELF",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" vector_pointer\nmatrix_pointer" ,fontname="Helvetica"];
+  Node2 [label="discreta_base",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d71/classdiscreta__base.html"];
+  Node1 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" self" ,fontname="Helvetica"];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" longinteger_rep" ,fontname="Helvetica"];
+  Node3 [label="longinteger_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d35/structlonginteger__representation.html"];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" bitmatrix_rep" ,fontname="Helvetica"];
+  Node4 [label="bitmatrix_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da0/structbitmatrix__representation.html"];
+}

@@ -1,0 +1,10 @@
+<map id="action_by_restriction::init_from_sv" name="action_by_restriction::init_from_sv">
+<area shape="rect" id="node2" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#ad103ef2316a1f671bdb68fd9cd9ba945" title="INT_vec_search" alt="" coords="458,11,577,36"/>
+<area shape="rect" id="node3" href="$dc/d9b/groups__and__group__actions_2data__structures_2data__structures_8h.html#a4211d4550d8e1aef8ac05ed93068b990" title="schreier_vector_determine\l_depth_recursion" alt="" coords="197,32,376,71"/>
+<area shape="rect" id="node4" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="465,79,570,104"/>
+<area shape="rect" id="node5" href="$d1/d7e/classaction__by__restriction.html#af98e88c513afe51527082f11aac571f8" title="action_by_restriction\l::init" alt="" coords="215,147,358,185"/>
+<area shape="rect" id="node6" href="$d5/de2/foundations_2data__structures_2data__structures_8h.html#a9d838c341cd204ed79499960a8ed393d" title="INT_vec_heapsort_with_log" alt="" coords="424,153,611,179"/>
+<area shape="rect" id="node7" href="$d4/dd7/sorting_8_c.html#a100d0747647500480fe5dc76ff98cee5" title="heapsort_make_heap\l_with_log" alt="" coords="659,89,809,128"/>
+<area shape="rect" id="node8" href="$d4/dd7/sorting_8_c.html#ac7af225fae479a93d6957f79734ba2a6" title="heapsort_sift_down\l_with_log" alt="" coords="857,140,994,179"/>
+<area shape="rect" id="node9" href="$d4/dd7/sorting_8_c.html#a8f048362e6065297b19b6975bcbbfcc6" title="heapsort_swap" alt="" coords="1042,176,1154,201"/>
+</map>

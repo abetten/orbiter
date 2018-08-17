@@ -1,0 +1,26 @@
+digraph "arc_lifting::lift_prepare"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node679 [label="arc_lifting::lift_prepare",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node679 -> Node680 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node680 [label="arc_lifting::create\l_surface",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/db7/classarc__lifting.html#a2b1fd46281de9ff3fef00fc122d39b2b"];
+  Node680 -> Node681 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node681 [label="lift_single_arc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a0bdc148f70112959722a40cf9758d54b"];
+  Node681 -> Node682 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node682 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node680 -> Node683 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node683 [label="surface_create::init2",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a0d600640f7dd62d5a6c36443effdab59"];
+  Node683 -> Node684 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node684 [label="surface_create::init\l_with_data",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#a9226f687139676532adb1aa971fbade2"];
+  Node683 -> Node685 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node685 [label="surface_create::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/da4/classsurface__create.html#ab0db5c12825f778e3caf8aa4da02eb06"];
+  Node685 -> Node686 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node686 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/dfa/create__surface__main_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node680 -> Node687 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node687 [label="surface_with_action\l::arc_lifting_and_classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/df9/classsurface__with__action.html#a62a3948f830c59e09ef94937650a07a4"];
+  Node687 -> Node688 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node688 [label="classify_arcs_and_do\l_arc_lifting",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/dc3/arc__lifting__main_8_c.html#afdd7be16f16b8c71e9a72fe5f6a0b59c"];
+  Node688 -> Node682 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

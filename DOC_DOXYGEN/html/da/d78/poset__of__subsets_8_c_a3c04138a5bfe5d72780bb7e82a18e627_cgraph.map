@@ -1,0 +1,24 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$d9/d60/discreta_8h.html#ad0ac71cbcb495289e474437d6b7d7fac" title="atoi" alt="" coords="165,265,208,291"/>
+<area shape="rect" id="node3" href="$da/d78/poset__of__subsets_8_c.html#a9dc920908674ae38d5c24d78f5566e34" title="make_subset_lattice" alt="" coords="115,315,258,340"/>
+<area shape="rect" id="node22" href="$da/db1/classlayered__graph.html#aa6be0def70df293f8e50a6aadcbd5d89" title="layered_graph::write_file" alt="" coords="104,497,270,523"/>
+<area shape="rect" id="node4" href="$d2/d7c/combinatorics_8_c.html#aa74adc702e59feadb839f44c0aaec8f6" title="INT_n_choose_k" alt="" coords="344,167,466,192"/>
+<area shape="rect" id="node6" href="$da/db1/classlayered__graph.html#a008a6f2cb68387f41f8bf01cf5c0c957" title="layered_graph::add\l_data1" alt="" coords="337,104,473,143"/>
+<area shape="rect" id="node7" href="$da/db1/classlayered__graph.html#a3d3422898f1e8d31eb937fcc460dbac2" title="layered_graph::init" alt="" coords="339,265,470,291"/>
+<area shape="rect" id="node9" href="$da/db1/classlayered__graph.html#a5449ff3de184b379ed6986f6e78c8c4a" title="layered_graph::place" alt="" coords="332,315,478,340"/>
+<area shape="rect" id="node11" href="$d2/d7c/combinatorics_8_c.html#a709dbec12f4da5bb02b9352d45a2c77d" title="unrank_k_subset" alt="" coords="343,216,466,241"/>
+<area shape="rect" id="node12" href="$da/db1/classlayered__graph.html#a8385de4bc26e9dd88066e55d3cb9bd4b" title="layered_graph::add\l_node_data1" alt="" coords="337,463,473,501"/>
+<area shape="rect" id="node14" href="$df/dbf/sajeeb_8_c.html#a79a5901af0b47dd0d694109543c027fe" title="INT_vec_print" alt="" coords="353,364,457,389"/>
+<area shape="rect" id="node15" href="$de/dc5/algebra__and__number__theory_8h.html#a39b321523e8957d701618bb5cac542b5" title="i_power_j" alt="" coords="366,413,444,439"/>
+<area shape="rect" id="node16" href="$da/db1/classlayered__graph.html#aa9c738e91c1bbd546c39e6a32ff05c83" title="layered_graph::add_text" alt="" coords="322,575,487,600"/>
+<area shape="rect" id="node18" href="$df/dbf/sajeeb_8_c.html#ac2d875e27e009af6ec04d17254d11075" title="INT_vec_copy" alt="" coords="352,525,458,551"/>
+<area shape="rect" id="node19" href="$d2/d7c/combinatorics_8_c.html#a8ec9127fb82ee9dfa337c897c7060a57" title="rank_k_subset" alt="" coords="351,55,459,80"/>
+<area shape="rect" id="node20" href="$da/db1/classlayered__graph.html#a018a287d904e5be8d95cf9a5b358f838" title="layered_graph::add_edge" alt="" coords="318,5,491,31"/>
+<area shape="rect" id="node5" href="$dd/d7e/classlonginteger__object.html#afb992d4679a6741acc63c8bcba27971e" title="longinteger_object\l::as_INT" alt="" coords="565,160,695,199"/>
+<area shape="rect" id="node8" href="$de/d87/classgraph__layer.html#a4b3e02d2069fb0127514a3d9ce000ff0" title="graph_layer::init" alt="" coords="572,265,688,291"/>
+<area shape="rect" id="node10" href="$de/d87/classgraph__layer.html#a24ae195b3ddbb86164b816db1ad2223a" title="graph_layer::place" alt="" coords="565,315,696,340"/>
+<area shape="rect" id="node13" href="$d6/d21/classgraph__node.html#a3ee49a31f1c714ad2695575c3c81c450" title="graph_node::add_data1" alt="" coords="549,469,712,495"/>
+<area shape="rect" id="node17" href="$d6/d21/classgraph__node.html#af21adc4e54d53c060db9470669ca8e3f" title="graph_node::add_text" alt="" coords="555,575,706,600"/>
+<area shape="rect" id="node21" href="$d6/d21/classgraph__node.html#a22cf1ed1de6059f37be3e8f778cbba09" title="graph_node::add_neighbor" alt="" coords="539,5,721,31"/>
+<area shape="rect" id="node23" href="$da/db1/classlayered__graph.html#a9fd9630354f493941c8407da7c5e4a92" title="layered_graph::write\l_memory_object" alt="" coords="334,624,476,663"/>
+</map>

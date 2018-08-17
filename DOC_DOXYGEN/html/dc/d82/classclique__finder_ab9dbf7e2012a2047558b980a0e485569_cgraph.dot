@@ -1,0 +1,9 @@
+digraph "clique_finder::free"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node100 [label="clique_finder::free",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node100 -> Node101 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node101 [label="clique_finder::null",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d82/classclique__finder.html#af88651ad5d235f543c65f70004de44e3"];
+}

@@ -1,0 +1,11 @@
+digraph "projective_matrix_group_base_and_transversal_length"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node4344 [label="projective_matrix_group\l_base_and_transversal\l_length",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node4344 -> Node4345 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4345 [label="matrix_group::base\l_and_transversal_length",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a13f173c0312738464dbbfa0712d3e376"];
+  Node4345 -> Node4346 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4346 [label="direct_product::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/daf/classdirect__product.html#a589445fc716197ea3498c28b1d1802d0"];
+}

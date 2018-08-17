@@ -1,0 +1,4 @@
+<map id="memory::write_mem" name="memory::write_mem">
+<area shape="rect" id="node2" href="$d8/d99/classmemory.html#a3312a01b206cef29ec0f85ee340002dd" title="memory::used_length" alt="" coords="195,5,345,31"/>
+<area shape="rect" id="node3" href="$d8/d99/classmemory.html#a3b1cda7c761e823c258e4c7a13794012" title="memory::s_i" alt="" coords="223,55,317,80"/>
+</map>

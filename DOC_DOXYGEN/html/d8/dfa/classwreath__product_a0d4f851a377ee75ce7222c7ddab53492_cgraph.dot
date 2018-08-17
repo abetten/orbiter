@@ -1,0 +1,17 @@
+digraph "wreath_product::element_one"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node137 [label="wreath_product::element_one",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node137 -> Node138 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node138 [label="perm_group::one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#ab959c8e4c528c27dfc8d4ac1919681ee"];
+  Node137 -> Node139 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node139 [label="matrix_group::GL_one",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a00890c674cedb856ad2c358aedb25b21"];
+  Node139 -> Node140 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node140 [label="matrix_group::GL_one\l_internal",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d3/ded/classmatrix__group.html#a308f9c0bb3c627134bf6d63a5c0721e9"];
+  Node140 -> Node141 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node141 [label="finite_field::identity\l_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d5a/classfinite__field.html#a4688997f80b8721560bccec986c23413"];
+  Node137 -> Node142 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node142 [label="wreath_product::offset_i",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dfa/classwreath__product.html#a081d6eed767bdd84bc74e555815641c6"];
+}

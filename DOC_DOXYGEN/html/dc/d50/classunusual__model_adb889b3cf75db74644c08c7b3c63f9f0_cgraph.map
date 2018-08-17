@@ -1,0 +1,9 @@
+<map id="unusual_model::transform_matrix_unusual_to_usual" name="unusual_model::transform_matrix_unusual_to_usual">
+<area shape="rect" id="node2" href="$d5/db4/io__and__os_8h.html#aa78f3e73fc2179251bd15adbcc31573f" title="print_integer_matrix\l_width" alt="" coords="234,5,374,44"/>
+<area shape="rect" id="node3" href="$df/d5a/classfinite__field.html#a48517f15dfd7b21c37e0975855f1ada2" title="finite_field::mult\l_matrix" alt="" coords="247,68,361,107"/>
+<area shape="rect" id="node8" href="$df/d5a/classfinite__field.html#ada37d61256296777bbc4104bdcf87116" title="finite_field::transpose\l_matrix" alt="" coords="230,131,378,169"/>
+<area shape="rect" id="node4" href="$df/d5a/classfinite__field.html#a8f12328a27500f3c7be0c849ebbc9d14" title="finite_field::add" alt="" coords="427,51,538,76"/>
+<area shape="rect" id="node7" href="$df/d5a/classfinite__field.html#a24fb5917aa6d4d656fd855b7f44a13b0" title="finite_field::mult" alt="" coords="426,100,540,125"/>
+<area shape="rect" id="node5" href="$d4/d67/geometry_8h.html#a4a33b86c87b2879b97cfa1327abe2885" title="AG_element_unrank" alt="" coords="588,27,731,52"/>
+<area shape="rect" id="node6" href="$d4/d67/geometry_8h.html#ab2ac908d07dd8038fd996e26bdc75c17" title="AG_element_rank" alt="" coords="595,76,724,101"/>
+</map>

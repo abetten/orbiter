@@ -1,0 +1,7 @@
+<map id="solid::group_generators_i" name="solid::group_generators_i">
+<area shape="rect" id="node2" href="$d8/def/classsolid.html#a0147bd21fc7bfed44a10f3b5eca66757" title="solid::dual" alt="" coords="255,5,337,31"/>
+<area shape="rect" id="node3" href="$d8/def/classsolid.html#a286d7bb090878dfbdc2fcd0dcf4739ce" title="solid::cut_vertices" alt="" coords="232,55,359,80"/>
+<area shape="rect" id="node4" href="$d8/def/classsolid.html#ad40cf6e9d27be77f0a01528442e04682" title="solid::tetrahedron" alt="" coords="234,104,358,129"/>
+<area shape="rect" id="node5" href="$d8/def/classsolid.html#a308e6888759550da489397527ed89137" title="solid::cube" alt="" coords="253,153,338,179"/>
+<area shape="rect" id="node6" href="$d8/def/classsolid.html#a514072d4dfd0f82ba24b0df1ac302d6f" title="solid::dodecahedron" alt="" coords="225,203,367,228"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="matrix::compare_with" name="matrix::compare_with">
+<area shape="rect" id="node2" href="$d7/d71/classdiscreta__base.html#a8a830025c74adbbc3362418a7c2ba157" title="discreta_base::s_kind" alt="" coords="946,181,1096,206"/>
+<area shape="rect" id="node5" href="$d7/d71/classdiscreta__base.html#ae4d7f56d917a4707b838fbffde6467ff" title="discreta_base::as_matrix" alt="" coords="214,34,384,60"/>
+<area shape="rect" id="node6" href="$d1/d8d/classmatrix.html#afeb2e29600e68448b9d1130114b9606f" title="matrix::s_m" alt="" coords="254,84,344,109"/>
+<area shape="rect" id="node7" href="$d1/d8d/classmatrix.html#a35f5321a5615451fdc8be7b953f8ac8b" title="matrix::s_n" alt="" coords="255,133,342,158"/>
+<area shape="rect" id="node8" href="$d1/d8d/classmatrix.html#ab36f1b3abd2df280224c50c9debb57df" title="matrix::s_ij" alt="" coords="256,182,341,208"/>
+<area shape="rect" id="node9" href="$d7/d71/classdiscreta__base.html#a3818444c4301d0b7ed47c3b850ea6c60" title="discreta_base::compare_with" alt="" coords="201,232,396,257"/>
+<area shape="rect" id="node3" href="$d7/d71/classdiscreta__base.html#a52778a6d6943a468be083d0785d418fb" title="discreta_base::s_virtual_kind" alt="" coords="1144,156,1338,181"/>
+<area shape="rect" id="node4" href="$d9/d60/discreta_8h.html#ad0ce825a9f29bc6cec27e1b64cfe27bf" title="kind_ascii" alt="" coords="1201,205,1281,230"/>
+<area shape="rect" id="node10" href="$d7/d71/classdiscreta__base.html#a677ccc8f392ebedde05e453f8cf59559" title="discreta_base::printobjectkindln" alt="" coords="444,232,652,257"/>
+<area shape="rect" id="node11" href="$d7/d71/classdiscreta__base.html#aa75a1314aa706909b029664944904231" title="discreta_base::printobjectkind" alt="" coords="700,232,898,257"/>
+</map>

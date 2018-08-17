@@ -1,0 +1,15 @@
+digraph "longinteger_domain::is_even"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node414 [label="longinteger_domain\l::is_even",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node414 -> Node415 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node415 [label="longinteger_domain\l::is_odd",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#abd590f5ed3717eb81b5a8d9194f9edba"];
+  Node414 -> Node416 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node416 [label="longinteger_domain\l::smallest_primedivisor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a70d8dddc346b041c751a135e793a2689"];
+  Node416 -> Node417 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node417 [label="longinteger_domain\l::factor_into_longintegers",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#aba5c9b9b4a3286551fb3bc5e102e2b63"];
+  Node416 -> Node418 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node418 [label="longinteger_domain\l::factor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7a/classlonginteger__domain.html#a2224c4efabb173607589de9b5d91cad0"];
+}

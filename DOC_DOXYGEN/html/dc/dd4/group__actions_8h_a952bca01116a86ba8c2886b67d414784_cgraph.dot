@@ -1,0 +1,25 @@
+digraph "perm_group_element_store"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node8687 [label="perm_group_element\l_store",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node8687 -> Node8688 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8688 [label="perm_group::invert",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#a265d46b10e634cdb35f478a6f353bd1b"];
+  Node8688 -> Node8689 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8689 [label="perm_inverse",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d7c/combinatorics_8_c.html#ab7f02d1e2e257e1118eae354ab16d447"];
+  Node8687 -> Node8690 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8690 [label="perm_group::pack",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d0a/classperm__group.html#aa4595f87262bd95ed5656704c9cfa164"];
+  Node8687 -> Node8691 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8691 [label="page_storage::store",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a3d04ee0a97310a8211e223ccea1d2d3f"];
+  Node8691 -> Node8692 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8692 [label="page_storage::s_i_and\l_allocate",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#aa43eb1ae49a6688771f7a89cbe2cd7bf"];
+  Node8692 -> Node8693 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8693 [label="page_storage::print",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a61e349f7431f6e16328bcfbc7e1d5633"];
+  Node8693 -> Node8694 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8694 [label="page_storage::print\l_storage_used",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d72/classpage__storage.html#a719dd1f54fd300fbc94ca2b750ed4508"];
+  Node8692 -> Node8695 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8695 [label="UBYTE_print_bitwise",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db4/io__and__os_8h.html#a920069ee78174f219534fed767865637"];
+  Node8691 -> Node8696 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8696 [label="UBYTE_move",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d60/discreta_8h.html#ae0491e6776a8371ca5387826b752780b"];
+}

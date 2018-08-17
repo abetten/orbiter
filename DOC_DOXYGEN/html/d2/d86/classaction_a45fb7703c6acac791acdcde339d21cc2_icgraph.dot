@@ -1,0 +1,22 @@
+digraph "action::induced_action_by_conjugation"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node12936 [label="action::induced_action\l_by_conjugation",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node12936 -> Node12937 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12937 [label="do_it",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/da3/burnside_8_c.html#a6a1ed4d46bdb13e56112f47f0565c25b"];
+  Node12937 -> Node12938 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12938 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/da3/burnside_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node12936 -> Node12939 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12939 [label="compute_conjugacy_classes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/dd4/group__actions_8h.html#a3a3f311d8e19e481707b3e54dbb35066"];
+  Node12939 -> Node12940 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12940 [label="young::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d68/classyoung.html#abbcd21425b16be0635f5ede77c0cdc28"];
+  Node12940 -> Node12941 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12941 [label="do_it_for_sym_n",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#a7da1c84aee65e2c8fd4b83f0809835ad"];
+  Node12941 -> Node12942 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12942 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node12940 -> Node12943 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12943 [label="do_it_for_sym_4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#aed9b25712c762c878090038e97568d07"];
+  Node12943 -> Node12942 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

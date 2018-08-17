@@ -1,0 +1,29 @@
+digraph "INT_add_fractions"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1444 [label="INT_add_fractions",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node1444 -> Node1445 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1445 [label="a_domain::add",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a837c1a316f72a0ab7741314c048a9233"];
+  Node1444 -> Node1446 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1446 [label="a_domain::add_apply",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ae0a23ffe3a8f1c79d2a32bda8dcf43ba"];
+  Node1446 -> Node1447 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1447 [label="a_domain::Gauss_step",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#af3b9321ab12d926c21a8fc4cb7d7d203"];
+  Node1447 -> Node1448 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1448 [label="young::create_representations",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d68/classyoung.html#ac8179e6c679636e61f6effd72e392a15"];
+  Node1448 -> Node1449 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1449 [label="do_it_for_sym_n",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#a7da1c84aee65e2c8fd4b83f0809835ad"];
+  Node1449 -> Node1450 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1450 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#a3c04138a5bfe5d72780bb7e82a18e627"];
+  Node1448 -> Node1451 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1451 [label="do_it_for_sym_4",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d87/group__ring_8_c.html#aed9b25712c762c878090038e97568d07"];
+  Node1451 -> Node1450 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1447 -> Node1452 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1452 [label="young::create_representation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d68/classyoung.html#ad6c7168dc7b9afc75701b9563b24a0a5"];
+  Node1446 -> Node1453 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1453 [label="a_domain::mult_matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#ab04b3597b7c8f411ea790f431dfe9a85"];
+  Node1453 -> Node1454 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1454 [label="a_domain::mult_matrix3",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dd1/classa__domain.html#a80da652b55ad7d4a7897d412f3720016"];
+  Node1453 -> Node1452 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

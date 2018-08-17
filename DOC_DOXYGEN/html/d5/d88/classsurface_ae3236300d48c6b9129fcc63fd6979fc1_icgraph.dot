@@ -1,0 +1,24 @@
+digraph "surface::compute_rank_of_any_four"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node556 [label="surface::compute_rank\l_of_any_four",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node556 -> Node557 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node557 [label="classify_double_sixes\l::partial_ovoid_test",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a9535ae3adb2856d9a819b204b5fcdd51"];
+  Node557 -> Node558 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node558 [label="callback_partial_ovoid_test",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/de0/top__level__global_8_c.html#a727820f93ffbddb54e384905b4661761"];
+  Node558 -> Node559 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node559 [label="classify_double_sixes\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#a8c5c41d5124b35379d626480ff225f7b"];
+  Node559 -> Node560 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node560 [label="surface_classify_wedge\l::init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d5c/classsurface__classify__wedge.html#a43302106663b307aa8274a5112a7010a"];
+  Node560 -> Node561 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node561 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/df8/surface__classify_8_c.html#a217dbf8b442f20279ea00b898af96f52"];
+  Node557 -> Node562 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node562 [label="classify_double_sixes\l::test_orbits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#abbdf82332e2bd681f4afb1b21fa85bed"];
+  Node562 -> Node563 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node563 [label="classify_double_sixes\l::downstep",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#aed4b1460612fe2fd5b4e4611e83b2806"];
+  Node563 -> Node564 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node564 [label="classify_double_sixes\l::classify",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d23/classclassify__double__sixes.html#aa22b7c156d68376a603743c8b43a58ef"];
+  Node564 -> Node561 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}
