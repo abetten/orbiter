@@ -11,7 +11,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 
 void create_graph_from_file(layered_graph *&LG, INT f_grouping, double x_stretch, const BYTE *fname);

@@ -1,11 +1,9 @@
 SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
-
-
 
 
 all:  subspace_orbits_main.out \
@@ -13,15 +11,16 @@ all:  subspace_orbits_main.out \
 	desarguesian_spread.out 
 
 desarguesian_spread.out:  desarguesian_spread.o;
-	$(DISCRETA_CPP)  desarguesian_spread.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+	$(DISCRETA_CPP)  desarguesian_spread.o \
+		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 subspace_orbits_main.out:  subspace_orbits_main.o;
-	$(DISCRETA_CPP)  subspace_orbits_main.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+	$(DISCRETA_CPP)  subspace_orbits_main.o \
+		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 linear_set_main.out:  linear_set_main.o linear_set.o linear_set2.o ;
-	$(DISCRETA_CPP) linear_set_main.o linear_set.o linear_set2.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+	$(DISCRETA_CPP) linear_set_main.o linear_set.o linear_set2.o \
+		$(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 clean:
 	- rm *.o *.a *.out *~

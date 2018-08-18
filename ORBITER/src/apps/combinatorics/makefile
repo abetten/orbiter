@@ -1,17 +1,24 @@
 SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
 
 
-all: test.out test2.out \
+all: test.out \
+		test2.out \
 		partitions.out \
-		conic.out hamming.out lehmer.out sarnak.out winnie_li.out \
-		field.out design.out change_1_dollar.out \
+		conic.out \
+		hamming.out \
+		lehmer.out \
+		sarnak.out \
+		winnie_li.out \
+		field.out \
+		design.out \
+		change_1_dollar.out \
 		puzzle.out \
 		pentomino_5x5.out \
 		poset_of_subsets.out \
@@ -195,8 +202,6 @@ costas.out:  costas.o;
 
 clean:
 	- rm *.o *.a *.out *~
-
-#%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 
 

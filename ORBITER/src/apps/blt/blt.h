@@ -5,9 +5,6 @@
 // started 8/13/2006
 //
 
-#include "discreta.h"
-
-
 typedef class blt_set blt_set;
 
 
@@ -19,9 +16,9 @@ extern INT t0; // the system time when the program started
 
 
 
-// ##################################################################################################
+// #############################################################################
 // blt_set.C
-// ##################################################################################################
+// #############################################################################
 
 
 
@@ -112,7 +109,8 @@ public:
 		INT verbose_level);
 	void compute_adjacency_list_fast(INT first_point_of_starter, 
 		INT *points, INT nb_points, INT *point_color, 
-		UBYTE *&bitvector_adjacency, INT &bitvector_length_in_bits, INT &bitvector_length, 
+		UBYTE *&bitvector_adjacency,
+		INT &bitvector_length_in_bits, INT &bitvector_length,
 		INT verbose_level);
 	void early_test_func(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
@@ -120,10 +118,12 @@ public:
 		INT verbose_level);
 	INT check_function_incremental(INT len, INT *S, INT verbose_level);
 	INT pair_test(INT a, INT x, INT y, INT verbose_level);
-		// We assume that a is an element of a set S of size at least two such that 
+		// We assume that a is an element of a set S
+		// of size at least two such that
 		// S \cup \{ x \} is BLT and 
 		// S \cup \{ y \} is BLT.
-		// In order to test of S \cup \{ x, y \} is BLT, we only need to test 
+		// In order to test of S \cup \{ x, y \}
+		// is BLT, we only need to test
 		// the triple \{ x,y,a\}
 	INT check_conditions(INT len, INT *S, INT verbose_level);
 	INT collinearity_test(INT *S, INT len, INT verbose_level);
@@ -134,7 +134,8 @@ public:
 		INT *&free_pts, INT *&free_pt_idx, INT &nb_free_pts, 
 		INT verbose_level);
 	void lifting_prepare_function_new(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
+		INT *candidates, INT nb_candidates,
+		strong_generators *Strong_gens,
 		diophant *&Dio, INT *&col_labels, 
 		INT &f_ruled_out, 
 		INT verbose_level);
@@ -155,7 +156,8 @@ void early_test_func_callback(INT *S, INT len,
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	void *data, INT verbose_level);
-INT check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level);
+INT check_function_incremental_callback(INT len, INT *S,
+		void *data, INT verbose_level);
 void callback_report(isomorph *Iso, void *data, INT verbose_level);
 void callback_subset_orbits(isomorph *Iso, void *data, INT verbose_level);
 

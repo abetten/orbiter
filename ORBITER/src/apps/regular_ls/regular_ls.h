@@ -1,7 +1,6 @@
 // regular_ls.h
 // 
 
-#include "discreta.h"
 
 
 typedef class regular_ls_generator regular_ls_generator;

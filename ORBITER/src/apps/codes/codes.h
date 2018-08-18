@@ -5,8 +5,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
-
 
 typedef class code_generator code_generator;
 

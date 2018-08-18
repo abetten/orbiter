@@ -9,7 +9,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 
 // global data:

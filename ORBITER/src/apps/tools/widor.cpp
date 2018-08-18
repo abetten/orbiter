@@ -6,7 +6,6 @@
 // started:  May 6, 2008
 
 #include "orbiter.h"
-#include "discreta.h"
 
 
 int main(int argc, char **argv)

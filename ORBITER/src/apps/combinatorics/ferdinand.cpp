@@ -9,8 +9,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
-
 
 
 typedef class cayley_graph_search cayley_graph_search;

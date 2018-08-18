@@ -7,7 +7,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 
 int main(int argc, char **argv)

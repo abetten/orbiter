@@ -1,12 +1,9 @@
 SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
-
-
-
 
 
 all:  \
@@ -26,12 +23,7 @@ wreath_product.out:  wreath_product.o;
 	$(DISCRETA_CPP)  wreath_product.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
 
 clean:
 	- rm *.o *.out *~
-
-
-
 

@@ -1,7 +1,7 @@
 SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
@@ -115,12 +115,6 @@ simeon.out:  simeon.o ;
 
 export_data.out:  export_data.o ;
 	$(DISCRETA_CPP)  export_data.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
-
-
-
-
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
 
 clean:
 	- rm *.o *.a *.out *~

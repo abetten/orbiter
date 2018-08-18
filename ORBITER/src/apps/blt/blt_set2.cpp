@@ -11,8 +11,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
-
 #include "blt.h"
 
 void blt_set::find_free_points(INT *S, INT S_sz, 

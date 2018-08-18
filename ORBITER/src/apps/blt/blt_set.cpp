@@ -11,8 +11,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
-
 #include "blt.h"
 
 void blt_set::read_arguments(int argc, const char **argv)

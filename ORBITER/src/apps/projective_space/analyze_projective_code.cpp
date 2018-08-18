@@ -10,7 +10,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 #define MY_MAX_SET_SIZE 2000
 

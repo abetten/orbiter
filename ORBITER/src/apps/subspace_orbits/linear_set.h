@@ -8,7 +8,6 @@
 //
 
 #include <orbiter.h>
-#include <discreta.h>
 
 
 typedef class linear_set linear_set;
