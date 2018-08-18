@@ -15,15 +15,16 @@ MODULES = \
 	generator_io.o \
 	generator_recognize.o \
 	generator_trace.o \
-	oracle.o \
-	oracle_downstep.o \
-	oracle_downstep_subspace_action.o \
-	oracle_io.o \
-	oracle_upstep.o \
-	oracle_upstep_subspace_action.o \
+	poset_orbit_node.o \
+	poset_orbit_node_downstep.o \
+	poset_orbit_node_downstep_subspace_action.o \
+	poset_orbit_node_io.o \
+	poset_orbit_node_upstep.o \
+	poset_orbit_node_upstep_subspace_action.o \
 	upstep_work.o \
 	upstep_work_subspace_action.o \
 	upstep_work_trace.o
+
 
 
 

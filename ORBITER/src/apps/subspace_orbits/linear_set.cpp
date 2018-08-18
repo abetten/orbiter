@@ -381,12 +381,12 @@ void linear_set::init(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_nodes = 1000;
 	
 	if (f_v) {
-		cout << "linear_set::init before Gen->init_oracle" << endl;
+		cout << "linear_set::init before Gen->init_poset_orbit_node" << endl;
 		}
-	Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "linear_set::init calling Gen->init_root_node" << endl;
 		}
@@ -927,12 +927,12 @@ void linear_set::init_secondary(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_nodes = 1000;
 	
 	if (f_v) {
-		cout << "linear_set::init_secondary before Gen2->init_oracle" << endl;
+		cout << "linear_set::init_secondary before Gen2->init_poset_orbit_node" << endl;
 		}
-	Gen2->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen2->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "linear_set::init_secondary calling Gen2->init_root_node" << endl;
 		}
@@ -1299,12 +1299,12 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_nodes = 1000;
 	
 	if (f_v) {
-		cout << "linear_set::init_compute_stabilizer before Gen_stab->init_oracle" << endl;
+		cout << "linear_set::init_compute_stabilizer before Gen_stab->init_poset_orbit_node" << endl;
 		}
-	Gen_stab->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen_stab->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "linear_set::init_compute_stabilizer calling Gen_stab->init_root_node" << endl;
 		}

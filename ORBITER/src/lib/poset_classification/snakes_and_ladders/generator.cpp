@@ -12,8 +12,8 @@ INT generator::nb_orbits_at_level(INT level)
 {
 	INT f, l;
 
-	f = first_oracle_node_at_level[level];
-	l = first_oracle_node_at_level[level + 1] - f;
+	f = first_poset_orbit_node_at_level[level];
+	l = first_poset_orbit_node_at_level[level + 1] - f;
 	return l;
 }
 
@@ -21,7 +21,7 @@ INT generator::nb_flag_orbits_up_at_level(INT level)
 {
 	INT f, l, i, F;
 
-	f = first_oracle_node_at_level[level];
+	f = first_poset_orbit_node_at_level[level];
 	l = nb_orbits_at_level(level);
 	F = 0;
 	for (i = 0; i < l; i++) {
@@ -30,11 +30,11 @@ INT generator::nb_flag_orbits_up_at_level(INT level)
 	return F;
 }
 
-oracle *generator::get_node_ij(INT level, INT node)
+poset_orbit_node *generator::get_node_ij(INT level, INT node)
 {
 	INT f;
 
-	f = first_oracle_node_at_level[level];
+	f = first_poset_orbit_node_at_level[level];
 	return root + f + node;
 }
 
@@ -125,7 +125,7 @@ void generator::print_progress_by_extension(INT size,
 		<< root[prev].nb_extensions << " with "
 		<< nb_ext_cur << " new orbits and " 
 		<< nb_fuse_cur << " fusion nodes. We now have " 
-		<< cur - first_oracle_node_at_level[size + 1] 
+		<< cur - first_poset_orbit_node_at_level[size + 1]
 		<< " nodes at level " << size + 1;
 		cout << ", ";
 	print_progress(size + 1, progress);
@@ -144,7 +144,7 @@ void generator::print_progress(INT size,
 	cout << " **** Upstep finished with " 
 		<< nb_ext_cur << " new orbits and " 
 		<< nb_fuse_cur << " fusion nodes. We now have " 
-		<< cur - first_oracle_node_at_level[size + 1] 
+		<< cur - first_poset_orbit_node_at_level[size + 1]
 		<< " nodes at level " << size + 1;
 		cout << ", ";
 	print_progress(size + 1, progress);
@@ -193,7 +193,7 @@ void generator::print_orbit_numbers(INT depth)
 	for (j = 0; j <= depth; j++) {
 		cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
 		}
-	cout << "total: " << first_oracle_node_at_level[depth + 1] << endl;
+	cout << "total: " << first_poset_orbit_node_at_level[depth + 1] << endl;
 	//gen->print_statistic_on_callbacks();
 	compute_and_print_automorphism_group_orders(depth, cout);
 }
@@ -241,7 +241,7 @@ set_and_stabilizer *generator::get_set_and_stabilizer(
 void generator::get_set_by_level(INT level, INT node, INT *set)
 {
 	INT size;
-	oracle *O;
+	poset_orbit_node *O;
 	
 	O = get_node_ij(level, node);
 	//n = first_oracle_node_at_level[level] + node;
@@ -265,7 +265,7 @@ void generator::get_set(INT level, INT orbit, INT *set, INT &size)
 {
 	INT node;
 
-	node = first_oracle_node_at_level[level] + orbit;
+	node = first_poset_orbit_node_at_level[level] + orbit;
 	size = root[node].depth_of_node(this);
 	root[node].store_set_to(this, size - 1, set);
 }
@@ -279,7 +279,7 @@ void generator::print_set_verbose(INT level, INT orbit)
 {
 	INT node;
 
-	node = first_oracle_node_at_level[level] + orbit;
+	node = first_poset_orbit_node_at_level[level] + orbit;
 	root[node].print_set_verbose(this);
 }
 
@@ -292,11 +292,11 @@ void generator::print_set(INT level, INT orbit)
 {
 	INT node;
 
-	node = first_oracle_node_at_level[level] + orbit;
+	node = first_poset_orbit_node_at_level[level] + orbit;
 	root[node].print_set(this);
 }
 
-INT generator::find_oracle_node_for_set(INT len,
+INT generator::find_poset_orbit_node_for_set(INT len,
 		INT *set, INT f_tolerant, INT verbose_level)
 // finds the node that represents s_0,...,s_{len - 1}
 {
@@ -304,14 +304,14 @@ INT generator::find_oracle_node_for_set(INT len,
 	INT ret;
 	
 	if (f_v) {
-		cout << "generator::find_oracle_node_for_set ";
+		cout << "generator::find_poset_orbit_node_for_set ";
 		INT_vec_print(cout, set, len);
 		cout << endl;
 		}
 	if (f_starter) {
 		INT i, j, h;
 		if (len < starter_size) {
-			cout << "generator::find_oracle_node_for_set "
+			cout << "generator::find_poset_orbit_node_for_set "
 					"len < starter_size" << endl;
 			cout << "len=" << len << endl;
 			exit(1);
@@ -328,7 +328,7 @@ INT generator::find_oracle_node_for_set(INT len,
 					}
 				}
 			if (j == len) {
-				cout << "generator::find_oracle_node_for_set "
+				cout << "generator::find_poset_orbit_node_for_set "
 						"did not find " << i << "-th element "
 						"of the starter" << endl;
 				}
@@ -339,19 +339,19 @@ INT generator::find_oracle_node_for_set(INT len,
 			}
 		INT from = starter_size;
 		INT node = starter_size;
-		ret = find_oracle_node_for_set_basic(from,
+		ret = find_poset_orbit_node_for_set_basic(from,
 				node, len, set, f_tolerant, verbose_level);
 		}
 	else {
 		INT from = 0;
 		INT node = 0;
-		ret = find_oracle_node_for_set_basic(from,
+		ret = find_poset_orbit_node_for_set_basic(from,
 				node, len, set, f_tolerant, verbose_level);
 		}
 	if (ret == -1) {
 		if (f_tolerant) {
 			if (f_v) {
-				cout << "generator::find_oracle_node_for_set ";
+				cout << "generator::find_poset_orbit_node_for_set ";
 				INT_vec_print(cout, set, len);
 				cout << " extension not found, "
 						"we are tolerant, returnning -1" << endl;
@@ -359,7 +359,7 @@ INT generator::find_oracle_node_for_set(INT len,
 			return -1;
 			}
 		else {
-			cout << "generator::find_oracle_node_for_set "
+			cout << "generator::find_poset_orbit_node_for_set "
 					"we should not be here" << endl;
 			exit(1);
 			}
@@ -368,7 +368,7 @@ INT generator::find_oracle_node_for_set(INT len,
 	
 }
 
-INT generator::find_oracle_node_for_set_basic(INT from,
+INT generator::find_poset_orbit_node_for_set_basic(INT from,
 		INT node, INT len, INT *set, INT f_tolerant,
 		INT verbose_level)
 {
@@ -377,7 +377,7 @@ INT generator::find_oracle_node_for_set_basic(INT from,
 	INT f_vv = (verbose_level >= 1);
 
 	if (f_vv) {
-		cout << "generator::find_oracle_node_for_set_basic "
+		cout << "generator::find_poset_orbit_node_for_set_basic "
 				"looking for set ";
 		INT_vec_print(cout, set, len);
 		cout << endl;
@@ -395,19 +395,19 @@ INT generator::find_oracle_node_for_set_basic(INT from,
 		j = root[node].find_extension_from_point(this, pt, FALSE);
 		if (j == -1) {
 			if (f_v) {
-				cout << "generator::find_oracle_node_for_set_basic "
+				cout << "generator::find_poset_orbit_node_for_set_basic "
 						"depth " << i << " no extension for point "
 						<< pt << " found" << endl;
 				}
 			if (f_tolerant) {
 				if (f_v) {
-					cout << "generator::find_oracle_node_for_set_basic "
+					cout << "generator::find_poset_orbit_node_for_set_basic "
 							"since we are tolerant, we return -1" << endl;
 					}
 				return -1;
 				}
 			else {
-				cout << "generator::find_oracle_node_for_set_basic "
+				cout << "generator::find_poset_orbit_node_for_set_basic "
 						"failure in find_extension_from_point" << endl;
 				INT_vec_print(cout, set, len);
 				cout << endl;
@@ -420,20 +420,20 @@ INT generator::find_oracle_node_for_set_basic(INT from,
 				}
 			}
 		if (root[node].E[j].pt != pt) {
-			cout << "generator::find_oracle_node_for_set() "
+			cout << "generator::find_poset_orbit_node_for_set() "
 					"root[node].E[j].pt != pt" << endl;
 			exit(1);
 			}
 		if (root[node].E[j].type != EXTENSION_TYPE_EXTENSION && 
 			root[node].E[j].type != EXTENSION_TYPE_PROCESSING) {
-			cout << "generator::find_oracle_node_for_set() "
+			cout << "generator::find_poset_orbit_node_for_set() "
 					"root[node].E[j].type != "
 					"EXTENSION_TYPE_EXTENSION" << endl;
 			cout << "root[node].E[j].type="
 					<< root[node].E[j].type << " = ";
 			print_extension_type(cout, root[node].E[j].type);
 			cout << endl;
-			cout << "generator::find_oracle_node_for_set_basic "
+			cout << "generator::find_poset_orbit_node_for_set_basic "
 					"looking for set ";
 			INT_vec_print(cout, set, len);
 			cout << endl;
@@ -456,7 +456,7 @@ INT generator::find_oracle_node_for_set_basic(INT from,
 	return node;
 }
 
-void generator::oracle_depth_breadth_perm_and_inverse(INT max_depth, 
+void generator::poset_orbit_node_depth_breadth_perm_and_inverse(INT max_depth,
 	INT *&perm, INT *&perm_inv, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -464,13 +464,13 @@ void generator::oracle_depth_breadth_perm_and_inverse(INT max_depth,
 	INT N;
 
 	if (f_v) {
-		cout << "generator::oracle_depth_breadth_perm_and_inverse" << endl;
+		cout << "generator::poset_orbit_node_depth_breadth_perm_and_inverse" << endl;
 		cout << "max_depth = " << max_depth << endl;
 		}
 
-	N = first_oracle_node_at_level[max_depth + 1];
+	N = first_poset_orbit_node_at_level[max_depth + 1];
 	if (f_v) {
-		cout << "N = first_oracle_node_at_level[max_depth + 1] = "
+		cout << "N = first_poset_orbit_node_at_level[max_depth + 1] = "
 				<< N << endl;
 		}
 	
@@ -478,9 +478,9 @@ void generator::oracle_depth_breadth_perm_and_inverse(INT max_depth,
 	perm_inv = NEW_INT(N);
 	
 	if (f_v) {
-		cout << "calling root->oracle_depth_breadth_perm_and_inverse" << endl;
+		cout << "calling root->poset_orbit_node_depth_breadth_perm_and_inverse" << endl;
 		}
-	root->oracle_depth_breadth_perm_and_inverse(this,
+	root->poset_orbit_node_depth_breadth_perm_and_inverse(this,
 			max_depth, idx, 0, 0, perm, perm_inv);
 	
 }
@@ -490,8 +490,8 @@ INT generator::count_extension_nodes_at_level(INT lvl)
 	INT prev;
 
 	nb_extension_nodes_at_level_total[lvl] = 0;
-	for (prev = first_oracle_node_at_level[lvl]; 
-			prev < first_oracle_node_at_level[lvl + 1]; prev++) {
+	for (prev = first_poset_orbit_node_at_level[lvl];
+			prev < first_poset_orbit_node_at_level[lvl + 1]; prev++) {
 			
 		nb_extension_nodes_at_level_total[lvl] +=
 				root[prev].nb_extensions;
@@ -755,7 +755,7 @@ void generator::print_representatives_at_level(INT lvl)
 {
 	INT i, f, l;
 	
-	f = first_oracle_node_at_level[lvl];
+	f = first_poset_orbit_node_at_level[lvl];
 	l = nb_orbits_at_level(lvl);
 	cout << "The " << l << " representatives at level "
 			<< lvl << " are:" << endl;
@@ -801,7 +801,7 @@ void generator::print_level_info(INT i, INT prev)
 	time_check_delta(cout, dt);
 	print_problem_label();
 	cout << " : Level " << i - 1 << " Node " << prev << " = " 
-		<< prev - first_oracle_node_at_level[i - 1] 
+		<< prev - first_poset_orbit_node_at_level[i - 1]
 		<< " / " 
 		<< nb_orbits_at_level(i - 1)
 		<< " : ";
@@ -821,7 +821,7 @@ void generator::print_level_extension_info(INT i,
 	print_problem_label();
 #endif
 	cout << "Level " << i - 1 << " Node " << prev << " = " 
-		<< prev - first_oracle_node_at_level[i - 1] 
+		<< prev - first_poset_orbit_node_at_level[i - 1]
 		<< " / " 
 		<< nb_orbits_at_level(i - 1)
 		<< " Extension " << cur_extension 
@@ -844,7 +844,7 @@ void generator::print_level_extension_coset_info(INT i,
 	print_problem_label();
 #endif
 	cout << "Level " << i - 1 << " Node " << prev << " = " 
-		<< prev - first_oracle_node_at_level[i - 1] 
+		<< prev - first_poset_orbit_node_at_level[i - 1]
 		<< " / " 
 		<< nb_orbits_at_level(i - 1)
 		<< " Extension " << cur_extension 
@@ -882,8 +882,8 @@ void generator::recreate_schreier_vectors_at_level(INT i,
 	INT f_recreate_extensions = FALSE;
 	INT f_dont_keep_sv = FALSE;
 
-	f = first_oracle_node_at_level[i];
-	cur = first_oracle_node_at_level[i + 1];
+	f = first_poset_orbit_node_at_level[i];
+	cur = first_poset_orbit_node_at_level[i + 1];
 	l = cur - f;
 
 	if (f_v) {
@@ -963,8 +963,8 @@ void generator::print_tree()
 	INT i;
 	
 	cout << "generator::print_tree nb_oracle_nodes_used="
-			<< nb_oracle_nodes_used << endl;
-	for (i = 0; i < nb_oracle_nodes_used; i++) {
+			<< nb_poset_orbit_nodes_used << endl;
+	for (i = 0; i < nb_poset_orbit_nodes_used; i++) {
 		print_node(i);
 		}
 }
@@ -977,17 +977,17 @@ void generator::get_table_of_nodes(INT *&Table,
 	
 	if (f_v) {
 		cout << "generator::get_table_of_nodes "
-				"nb_oracle_nodes_used=" << nb_oracle_nodes_used << endl;
+				"nb_oracle_nodes_used=" << nb_poset_orbit_nodes_used << endl;
 		}
-	nb_rows = nb_oracle_nodes_used;
+	nb_rows = nb_poset_orbit_nodes_used;
 	nb_cols = 6;
-	Table = NEW_INT(nb_oracle_nodes_used * nb_cols);
+	Table = NEW_INT(nb_poset_orbit_nodes_used * nb_cols);
 		
-	for (i = 0; i < nb_oracle_nodes_used; i++) {
+	for (i = 0; i < nb_poset_orbit_nodes_used; i++) {
 
 		if (f_v) {
 			cout << "generator::get_table_of_nodes node " << i
-					<< " / " << nb_oracle_nodes_used << endl;
+					<< " / " << nb_poset_orbit_nodes_used << endl;
 			}
 
 		Table[i * nb_cols + 0] = root[i].get_level(this);
@@ -1021,7 +1021,7 @@ INT generator::count_live_points(INT level,
 	if (f_v) {
 		cout << "generator::count_live_points" << endl;
 		}
-	node = first_oracle_node_at_level[level] + node_local;
+	node = first_poset_orbit_node_at_level[level] + node_local;
 	if (root[node].sv == NULL) {
 		root[node].compute_schreier_vector(this, 
 			level, f_compact, verbose_level - 2);
@@ -1059,7 +1059,7 @@ void generator::find_automorphism_group_of_order(INT level, INT order)
 	
 	nb_nodes = nb_orbits_at_level(level);
 	for (i = 0; i < nb_nodes; i++) {
-		node = first_oracle_node_at_level[level] + i;
+		node = first_poset_orbit_node_at_level[level] + i;
 		if (root[node].nb_strong_generators == 0) {
 			ago.create(1);
 			}
@@ -1071,7 +1071,7 @@ void generator::find_automorphism_group_of_order(INT level, INT order)
 					<< order << endl;
 			cout << "the node is # " << i << " at level "
 					<< level << endl;
-			get_set(first_oracle_node_at_level[level] + i,
+			get_set(first_poset_orbit_node_at_level[level] + i,
 					set, level);
 			INT_vec_print(cout, set, level);
 			cout << endl;
@@ -1101,10 +1101,10 @@ void generator::find_automorphism_group_of_order(INT level, INT order)
 void generator::get_stabilizer_order(INT level,
 		INT orbit_at_level, longinteger_object &go)
 {
-	oracle *O;
+	poset_orbit_node *O;
 	INT nd;
 
-	nd = first_oracle_node_at_level[level] + orbit_at_level;
+	nd = first_poset_orbit_node_at_level[level] + orbit_at_level;
 	O = root + nd;
 
 	if (O->nb_strong_generators == 0) {
@@ -1122,7 +1122,7 @@ void generator::get_stabilizer_group(group *&G,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	oracle *O;
+	poset_orbit_node *O;
 	INT node;
 
 	if (f_v) {
@@ -1130,7 +1130,7 @@ void generator::get_stabilizer_group(group *&G,
 				<< " orbit_at_level=" << orbit_at_level << endl;
 		}
 	G = new group;
-	node = first_oracle_node_at_level[level] + orbit_at_level;
+	node = first_poset_orbit_node_at_level[level] + orbit_at_level;
 	O = root + node;
 
 	G->init(A);
@@ -1215,7 +1215,7 @@ void generator::orbit_element_unrank(INT depth,
 	INT *Elt1;
 	INT *Elt2;
 	INT *the_set;
-	oracle *O;
+	poset_orbit_node *O;
 
 
 	if (f_v) {
@@ -1228,7 +1228,7 @@ void generator::orbit_element_unrank(INT depth,
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	the_set = NEW_INT(depth);
 	
-	O = &root[first_oracle_node_at_level[depth] + orbit_idx];
+	O = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
 	coset_unrank(depth, orbit_idx, rank, Elt1,
 			0/*verbose_level*/);
 
@@ -1314,7 +1314,7 @@ void generator::coset_unrank(INT depth, INT orbit_idx,
 	group *G1, *G2;
 	INT *Elt_gk;
 	longinteger_object G_order, U_order;
-	oracle *O1, *O2;
+	poset_orbit_node *O1, *O2;
 
 	if (f_v) {
 		cout << "generator::coset_unrank depth=" << depth
@@ -1326,7 +1326,7 @@ void generator::coset_unrank(INT depth, INT orbit_idx,
 		}
 
 	O1 = &root[0];
-	O2 = &root[first_oracle_node_at_level[depth] + orbit_idx];
+	O2 = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
 
 
 	
@@ -1368,7 +1368,7 @@ INT generator::coset_rank(INT depth, INT orbit_idx,
 	group *G1, *G2;
 	INT *Elt_gk;
 	longinteger_object G_order, U_order;
-	oracle *O1, *O2;
+	poset_orbit_node *O1, *O2;
 
 	if (f_v) {
 		cout << "generator::coset_rank depth=" << depth
@@ -1380,7 +1380,7 @@ INT generator::coset_rank(INT depth, INT orbit_idx,
 		}
 
 	O1 = &root[0];
-	O2 = &root[first_oracle_node_at_level[depth] + orbit_idx];
+	O2 = &root[first_poset_orbit_node_at_level[depth] + orbit_idx];
 
 
 	
@@ -1549,7 +1549,7 @@ void generator::print_schreier_vector(INT depth,
 
 
 	cout << "orbit " << orbit_idx << " / " << nb_orbits_at_level(depth)
-			<< " (=node " << first_oracle_node_at_level[depth] + orbit_idx
+			<< " (=node " << first_poset_orbit_node_at_level[depth] + orbit_idx
 			<< ") at depth " << depth << " has length " << Len << " : ";
 
 	get_set_by_level(depth, orbit_idx, set);
@@ -1561,7 +1561,7 @@ void generator::print_schreier_vector(INT depth,
 	INT *sv;
 
 
-	sv = root[first_oracle_node_at_level[depth] + orbit_idx].sv;
+	sv = root[first_poset_orbit_node_at_level[depth] + orbit_idx].sv;
 
 	if (sv == NULL) {
 		cout << "No schreier vector available" << endl;
@@ -1594,7 +1594,7 @@ void generator::list_whole_orbit(INT depth, INT orbit_idx,
 
 	cout << "generator::list_whole_orbit orbit " << orbit_idx
 			<< " / " << nb_orbits_at_level(depth) << " (=node "
-			<< first_oracle_node_at_level[depth] + orbit_idx
+			<< first_poset_orbit_node_at_level[depth] + orbit_idx
 			<< ") at depth " << depth << " has length " << Len << " : ";
 
 	get_set_by_level(depth, orbit_idx, set);
@@ -1670,10 +1670,10 @@ void generator::print_extensions_at_level(ostream &ost, INT lvl)
 {
 	INT i, node;
 	INT fst, len;
-	oracle *O;
+	poset_orbit_node *O;
 	
 	ost << "extensions at level " << lvl << ":" << endl;
-	fst = first_oracle_node_at_level[lvl];
+	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
 	ost << "there are " << len << " nodes at level " << lvl << ":" << endl;
 	for (i = 0; i < len; i++) {
@@ -1782,13 +1782,13 @@ void generator::get_representative_of_subset_orbit(
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT fst, node, sz;
-	oracle *O;
+	poset_orbit_node *O;
 
 	if (f_v) {
 		cout << "generator::get_representative_of_subset_orbit "
 				"verbose_level=" << verbose_level << endl;
 		}
-	fst = first_oracle_node_at_level[size];
+	fst = first_poset_orbit_node_at_level[size];
 	node = fst + local_orbit_no;
 	if (f_vv) {
 		cout << "generator::get_representative_of_subset_orbit "
@@ -1815,10 +1815,10 @@ void generator::print_fusion_nodes(INT depth)
 	INT i, f, l, j, h;
 
 	for (i = 0; i <= depth; i++) {
-		f = first_oracle_node_at_level[i];
+		f = first_poset_orbit_node_at_level[i];
 		l = nb_orbits_at_level(i);
 		for (j = 0; j < l; j++) {
-			oracle *O;
+			poset_orbit_node *O;
 
 			O = &root[f + j];
 			for (h = 0; h < O->nb_extensions; h++) {

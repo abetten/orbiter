@@ -548,7 +548,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	INT f_vv = FALSE;//(verbose_level >= 2);
 	//INT f_vvv = (verbose_level >= 3);
 	INT f, nb_nodes, I, J, i, j, idx, print_mod = 1;
-	oracle *O;
+	poset_orbit_node *O;
 	INT set1[1000];
 	INT set2[1000];
 	//BYTE *elt;
@@ -559,7 +559,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	
-	f = gen->first_oracle_node_at_level[level];
+	f = gen->first_poset_orbit_node_at_level[level];
 	nb_nodes = gen->nb_orbits_at_level(level);
 
 	if (f_vv) {
@@ -678,7 +678,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 					}
 	
 	
-				J = gen->find_oracle_node_for_set(level + 1,
+				J = gen->find_poset_orbit_node_for_set(level + 1,
 						set2, FALSE /* f_tolerant */, 0);
 				v.m_ii(idx++, J);
 				}
@@ -815,7 +815,7 @@ void isomorph::load_strong_generators_oracle(INT cur_level,
 	vector_ge &gens, longinteger_object &go, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	oracle *O;
+	poset_orbit_node *O;
 	INT *tl;
 	INT i, node;
 	longinteger_domain Dom;
@@ -826,7 +826,7 @@ void isomorph::load_strong_generators_oracle(INT cur_level,
 				<< cur_node_local << endl;
 		}
 
-	node = gen->first_oracle_node_at_level[cur_level] + cur_node_local;
+	node = gen->first_poset_orbit_node_at_level[cur_level] + cur_node_local;
 	O = &gen->root[node];
 	if (O->nb_strong_generators == 0) {
 		gens.init(gen->A);

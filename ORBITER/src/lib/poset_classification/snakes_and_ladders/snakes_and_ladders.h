@@ -34,7 +34,7 @@ public:
 		// because it is not canonical
 	INT data;
 		// if EXTENSION_TYPE_EXTENSION: a handle to the next 
-		//  oracle node
+		//  poset_orbit_node
 		// if EXTENSION_TYPE_FUSION: a handle to a fusion element
 	INT data1;
 		// if EXTENSION_TYPE_FUSION: node to which we are fusing
@@ -79,7 +79,7 @@ public:
 	INT *Elt5;
 	
 	INT *tmp_set_apply_fusion;
-		// used in oracle_upstep.C oracle::apply_fusion_element
+		// used in poset_orbit_upstep.C poset_orbit_node::apply_fusion_element
 
 	INT *tmp_find_node_for_subspace_by_rank1;
 		// [vector_space_dimension] used in generator_trace.C: 
@@ -114,15 +114,15 @@ public:
 
 	
 	
-	// the following is maintained by init_oracle / exit_oracle:
-	INT nb_oracle_nodes_used;
-	INT nb_oracle_nodes_allocated;
-	INT oracle_nodes_increment;
-	INT oracle_nodes_increment_last;
+	// the following is maintained by init_poset_orbit_node / exit_poset_orbit_node:
+	INT nb_poset_orbit_nodes_used;
+	INT nb_poset_orbit_nodes_allocated;
+	INT poset_orbit_nodes_increment;
+	INT poset_orbit_nodes_increment_last;
 	
-	oracle *root;
+	poset_orbit_node *root;
 	
-	INT *first_oracle_node_at_level;
+	INT *first_poset_orbit_node_at_level;
 	INT *set0; // [sz + 1] temporary storage
 	INT *set1; // [sz + 1] temporary storage
 	INT *set3; // [sz + 1] temporary storage
@@ -234,7 +234,7 @@ public:
 	// generator.C:
 	INT nb_orbits_at_level(INT level);
 	INT nb_flag_orbits_up_at_level(INT level);
-	oracle *get_node_ij(INT level, INT node);
+	poset_orbit_node *get_node_ij(INT level, INT node);
 	INT poset_structure_is_contained(INT *set1, INT sz1, 
 		INT *set2, INT sz2, INT verbose_level);
 	void print_progress_by_extension(INT size, INT cur, 
@@ -256,12 +256,12 @@ public:
 	void print_set(INT node);
 	void print_set(INT level, INT orbit);
 	
-	INT find_oracle_node_for_set(INT len, INT *set, 
+	INT find_poset_orbit_node_for_set(INT len, INT *set, 
 		INT f_tolerant, INT verbose_level);
-	INT find_oracle_node_for_set_basic(INT from, 
+	INT find_poset_orbit_node_for_set_basic(INT from, 
 		INT node, INT len, INT *set, INT f_tolerant, 
 		INT verbose_level);
-	void oracle_depth_breadth_perm_and_inverse(INT max_depth, 
+	void poset_orbit_node_depth_breadth_perm_and_inverse(INT max_depth, 
 		INT *&perm, INT *&perm_inv, INT verbose_level);
 	INT count_extension_nodes_at_level(INT lvl);
 	double level_progress(INT lvl);
@@ -412,8 +412,8 @@ public:
 		INT *invariant_subset, INT invariant_subset_size, 
 		INT verbose_level);
 	void init_root_node(INT verbose_level);
-	void init_oracle(INT nb_oracle_nodes, INT verbose_level);
-	void exit_oracle();
+	void init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_level);
+	void exit_poset_orbit_node();
 	void reallocate();
 	void reallocate_to(INT new_number_of_nodes, INT verbose_level);
 	void init_check_func(
@@ -666,7 +666,7 @@ public:
 		INT size, INT f_implicit_fusion,
 		INT lvl, INT current_node,
 		INT &final_node, INT verbose_level);
-	// Called from oracle::find_automorphism_by_tracing_recursion
+	// Called from poset_orbit_node::find_automorphism_by_tracing_recursion
 	// when trace_next_point returns FALSE
 	// This can happen only if f_implicit_fusion is TRUE
 	void recognize_recursion(
@@ -691,12 +691,12 @@ void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
 
 
 // #############################################################################
-// oracle.C, oracle_io.C, oracle_upstep.C, oracle_upstep_subspace_action.C, 
-// oracle_downstep.C, oracle_downstep_subspace_action.C:
+// poset_orbit_node.C, poset_orbit_node_io.C, poset_orbit_node_upstep.C, poset_orbit_node_upstep_subspace_action.C, 
+// poset_orbit_node_downstep.C, poset_orbit_node_downstep_subspace_action.C:
 // #############################################################################
 
 
-class oracle {
+class poset_orbit_node {
 public:
 	INT node;
 	INT prev;
@@ -711,13 +711,13 @@ public:
 	
 	INT *sv;
 	
-	// oracle.C:
-	oracle();
-	~oracle();
+	// poset_orbit_node.C:
+	poset_orbit_node();
+	~poset_orbit_node();
 	void null();
 	void freeself();
 	void init_root_node(generator *gen, INT verbose_level);
-		// copies gen->SG0 and gen->tl into the oracle 
+		// copies gen->SG0 and gen->tl into the poset_orbit_node 
 		// structure using store_strong_generators
 	void init_extension_node_prepare_G(generator *gen,
 		INT prev, INT prev_ex, INT size, group &G,
@@ -758,7 +758,7 @@ public:
 	void get_stabilizer_generators(generator *gen, 
 		strong_generators *&Strong_gens, 
 		INT verbose_level);
-	void oracle_depth_breadth_perm_and_inverse(generator *gen, 
+	void poset_orbit_node_depth_breadth_perm_and_inverse(generator *gen, 
 		INT max_depth, 
 		INT &idx, INT hdl, INT cur_depth, INT *perm, INT *perm_inv);
 	INT find_extension_from_point(generator *gen, INT pt, 
@@ -792,7 +792,7 @@ public:
 	void reconstruct_extensions_from_sv(generator *gen, 
 		INT verbose_level);
 
-	// in oracle_io.C:
+	// in poset_orbit_node_io.C:
 	void read_memory_object(action *A, memory_object *m, 
 		INT &nb_group_elements, INT verbose_level);
 	void write_memory_object(action *A, memory_object *m, 
@@ -806,7 +806,7 @@ public:
 	INT calc_size_on_file(action *A, INT verbose_level);
 
 
-	// oracle_upstep.C:
+	// poset_orbit_node_upstep.C:
 	INT apply_fusion_element(generator *gen, 
 		INT lvl, INT current_node, 
 		INT current_extension, INT len, INT f_tolerant, 
@@ -818,7 +818,7 @@ public:
 		INT pt0, INT current_extension, 
 		INT f_debug, INT f_implicit_fusion, 
 		INT verbose_level);
-		// Called from oracle::handle_last_level
+		// Called from poset_orbit_node::handle_last_level
 	INT trace_next_point_wrapper(generator *gen, INT lvl, 
 		INT current_node, 
 		INT len, INT f_implicit_fusion, INT &f_failure_to_find_point, 
@@ -848,26 +848,26 @@ public:
 		INT *cur_transporter, INT *next_transporter, 
 		INT f_implicit_fusion, INT &f_failure_to_find_point, 
 		INT verbose_level);
-		// Called by oracle::trace_next_point_wrapper 
-		// and by oracle::trace_next_point_in_place
+		// Called by poset_orbit_node::trace_next_point_wrapper 
+		// and by poset_orbit_node::trace_next_point_in_place
 		// returns FALSE only if f_implicit_fusion is TRUE and
 		// the set becomes lexcographically less 
 	INT orbit_representative_and_coset_rep_inv(generator *gen, 
 		INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep, 
 		INT verbose_level);
-		// called by oracle::trace_next_point
+		// called by poset_orbit_node::trace_next_point
 		// FALSE means the point to trace was not found. 
 		// This can happen if nodes were eliminated due to clique_test
 
-	// oracle_upstep_subspace_action.C:
+	// poset_orbit_node_upstep_subspace_action.C:
 	void orbit_representative_and_coset_rep_inv_subspace_action(
 		generator *gen, 
 		INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep, 
 		INT verbose_level);
-		// called by oracle::trace_next_point
+		// called by poset_orbit_node::trace_next_point
 		
 
-	// oracle_downstep.C
+	// poset_orbit_node_downstep.C
 	// top level functions:
 	void downstep(generator *gen, 
 		INT lvl, 
@@ -1015,7 +1015,7 @@ public:
 		INT max_orbits, INT max_points_per_orbit);
 
 
-	// oracle_downstep_subspace_action.C
+	// poset_orbit_node_downstep_subspace_action.C
 	void setup_factor_space_action_light(generator *gen, 
 		action_on_factor_space &AF, 
 		INT lvl, INT verbose_level);
@@ -1054,7 +1054,7 @@ public:
 };
 
 
-// oracle_downstep_subspace_action.C:
+// poset_orbit_node_downstep_subspace_action.C:
 void schreier_vector_relabel_points(INT *sv, action_on_factor_space *AF, 
 	INT f_compact, INT f_trivial_group, INT verbose_level);
 
@@ -1106,8 +1106,8 @@ public:
 
 
 	
-	oracle *O_prev;
-	oracle *O_cur;
+	poset_orbit_node *O_prev;
+	poset_orbit_node *O_cur;
 
 	group *G;
 	group *H;	
@@ -1144,7 +1144,7 @@ public:
 		// Handles the extension 'cur_ex' in node 'prev'.
 		// We are extending a set of size 'size' 
 		// to a set of size 'size' + 1. 
-		// Calls oracle::init_extension_node for the 
+		// Calls poset_orbit_node::init_extension_node for the 
 		// new node that is (possibly) created
 	void handle_extension_fusion_type(INT verbose_level);
 		// called from upstep_work::handle_extension
@@ -1164,7 +1164,7 @@ public:
 		// of a previous node (prev) at depth size - 1 
 		// with respect to a given point (pt).
 		// This function is to be called for the next 
-		// free oracle node which will 
+		// free poset_orbit_node node which will 
 		// become the descendant of the previous node (prev).
 		// the extension node corresponds to the point pt. 
 		// returns FALSE if the set is not canonical 

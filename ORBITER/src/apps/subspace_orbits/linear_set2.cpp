@@ -406,7 +406,7 @@ void linear_set::construct_semifield(INT orbit_for_W, INT verbose_level)
 		INT orbit_at_lvl;
 
 		lvl = order + 1;
-		orbit_at_lvl = final_node - T->gen->first_oracle_node_at_level[lvl];
+		orbit_at_lvl = final_node - T->gen->first_poset_orbit_node_at_level[lvl];
 
 		T->gen->get_stabilizer_order(lvl, orbit_at_lvl, go);
 

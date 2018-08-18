@@ -203,12 +203,12 @@ MODULES= \
 		poset_classification/snakes_and_ladders/generator_io.o \
 		poset_classification/snakes_and_ladders/generator_recognize.o \
 		poset_classification/snakes_and_ladders/generator_trace.o \
-		poset_classification/snakes_and_ladders/oracle.o \
-		poset_classification/snakes_and_ladders/oracle_downstep.o \
-		poset_classification/snakes_and_ladders/oracle_downstep_subspace_action.o \
-		poset_classification/snakes_and_ladders/oracle_io.o \
-		poset_classification/snakes_and_ladders/oracle_upstep.o \
-		poset_classification/snakes_and_ladders/oracle_upstep_subspace_action.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node_downstep.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node_downstep_subspace_action.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node_io.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node_upstep.o \
+		poset_classification/snakes_and_ladders/poset_orbit_node_upstep_subspace_action.o \
 		poset_classification/snakes_and_ladders/upstep_work.o \
 		poset_classification/snakes_and_ladders/upstep_work_subspace_action.o \
 		poset_classification/snakes_and_ladders/upstep_work_trace.o \

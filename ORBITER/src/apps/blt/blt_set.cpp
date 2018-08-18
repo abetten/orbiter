@@ -431,14 +431,14 @@ void blt_set::init2(INT verbose_level)
 	gen->print_function_data = (void *) this;
 	
 	
-	INT nb_oracle_nodes = ONE_MILLION;
+	INT nb_nodes = ONE_MILLION;
 	
 	if (f_vv) {
-		cout << "blt_set::init2 calling init_oracle with "
-				<< nb_oracle_nodes << " nodes" << endl;
+		cout << "blt_set::init2 calling init_poset_orbit_node with "
+				<< nb_nodes << " nodes" << endl;
 		}
 	
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_vv) {
 		cout << "blt_set::init2 after init_root_node" << endl;

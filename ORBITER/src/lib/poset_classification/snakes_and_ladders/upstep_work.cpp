@@ -132,7 +132,7 @@ void upstep_work::handle_extension(INT &nb_fuse_cur,
 //
 // Handles the extension 'cur_ex' in node 'prev'.
 // We are extending a set of size 'size' to a set of size 'size' + 1. 
-// Calls oracle::init_extension_node for the new node
+// Calls poset_orbit_node::init_extension_node for the new node
 // that is (possibly) created
 {
 	INT f_v = (verbose_level >= 1);
@@ -341,7 +341,7 @@ INT upstep_work::init_extension_node(INT verbose_level)
 // of a previous node (prev) at depth size - 1 
 // with respect to a given point (pt).
 // This function is to be called for the next
-// free oracle node which will
+// free poset_orbit_node which will
 // become the descendant of the previous node (prev).
 // the extension node corresponds to the point pt. 
 // returns FALSE if the set is not canonical
@@ -433,7 +433,7 @@ INT upstep_work::init_extension_node(INT verbose_level)
 	O_cur->init_extension_node_prepare_G(gen, 
 		prev, prev_ex, size, *G, go_G, 
 		verbose_level - 4);
-		// oracle.C
+		// poset_orbit_node.C
 	if (f_v) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_set_print(cout, gen->S, size);
@@ -478,7 +478,7 @@ INT upstep_work::init_extension_node(INT verbose_level)
 		*H, go_H, 
 		pt, pt_orbit_len, 
 		verbose_level - 4);
-		// in oracle.C
+		// in poset_orbit_node.C
 
 
 #if 0

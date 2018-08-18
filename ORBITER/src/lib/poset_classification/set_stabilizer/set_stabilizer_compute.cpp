@@ -171,9 +171,9 @@ void set_stabilizer_compute::init_with_strong_generators(
 #endif
 	gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
 
-	INT nb_oracle_nodes = ONE_MILLION;
+	INT nb_poset_orbit_nodes = ONE_MILLION;
 	
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 
 	if (f_vv) {
 		cout << "set_stabilizer_compute::init_with_strong_generators "
@@ -300,7 +300,7 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0,
 				}
 			}
 		}
-	f = gen->first_oracle_node_at_level[lvl];
+	f = gen->first_poset_orbit_node_at_level[lvl];
 	nd = f + idx;
 	if (f_v) {
 		cout << "the set is isomorphic to orbit " << idx
@@ -308,7 +308,7 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0,
 		}
 
 	group G;
-	oracle *O;
+	poset_orbit_node *O;
 	longinteger_object go, go1;
 	INT *Elt1, *Elt2, *Elt3;
 	
@@ -416,11 +416,11 @@ void set_stabilizer_compute::print_frequencies(
 
 	cout << "orbit i : frequency[i] : stab order" << endl;
 
-	f = gen->first_oracle_node_at_level[lvl];
+	f = gen->first_poset_orbit_node_at_level[lvl];
 
 	if (nb_orbits < 50) {
 		for (i = 0; i < nb_orbits; i++) {
-			oracle *O;
+			poset_orbit_node *O;
 			group G;
 			longinteger_object go;
 

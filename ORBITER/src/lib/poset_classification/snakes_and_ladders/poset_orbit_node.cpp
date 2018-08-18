@@ -1,4 +1,4 @@
-// oracle.C
+// poset_orbit_node.C
 //
 // Anton Betten
 // December 27, 2004
@@ -7,17 +7,17 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-oracle::oracle()
+poset_orbit_node::poset_orbit_node()
 {
 	null();
 }
 
-oracle::~oracle()
+poset_orbit_node::~poset_orbit_node()
 {
 	freeself();
 }
 
-void oracle::null()
+void poset_orbit_node::null()
 {
 	nb_strong_generators = 0;
 	hdl_strong_generators = NULL;
@@ -27,11 +27,11 @@ void oracle::null()
 	sv = NULL;
 }
 
-void oracle::freeself()
+void poset_orbit_node::freeself()
 {
 	if (hdl_strong_generators) {
 #if 0
-		cout << "oracle::freeself() deleting hdl_strong_generators: ";
+		cout << "poset_orbit_node::freeself() deleting hdl_strong_generators: ";
 		INT_vec_print(cout, hdl_strong_generators, nb_strong_generators);
 		cout << endl;
 		cout << "pointer = ";
@@ -40,36 +40,36 @@ void oracle::freeself()
 #endif
 		FREE_INT(hdl_strong_generators);
 		hdl_strong_generators = NULL;
-		//cout << "oracle::freeself() "
+		//cout << "poset_orbit_node::freeself() "
 		//"deleting hdl_strong_generators done" << endl;
 		}
 	if (tl) {
-		//cout << "oracle::freeself deleting tl" << endl;
+		//cout << "poset_orbit_node::freeself deleting tl" << endl;
 		FREE_INT(tl);
 		tl = NULL;
 		}
 	if (E) {
-		//cout << "oracle::freeself deleting E" << endl;
+		//cout << "poset_orbit_node::freeself deleting E" << endl;
 		delete [] E;
 		E = NULL;
 		}
 	if (sv) {
-		//cout << "oracle::freeself deleting sv" << endl;
+		//cout << "poset_orbit_node::freeself deleting sv" << endl;
 		FREE_INT(sv);
 		sv = NULL;
 		}
-	//cout << "oracle::freeself finished" << endl;
+	//cout << "poset_orbit_node::freeself finished" << endl;
 }
 
 
-void oracle::init_root_node(generator *gen, INT verbose_level)
+void poset_orbit_node::init_root_node(generator *gen, INT verbose_level)
 // copies gen->SG0 and gen->transversal_length
-// into the oracle structure using store_strong_generators
+// into the poset_orbit_node structure using store_strong_generators
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "oracle::init_root_node "
+		cout << "poset_orbit_node::init_root_node "
 				"initializing root node" << endl;
 		}
 	
@@ -81,18 +81,18 @@ void oracle::init_root_node(generator *gen, INT verbose_level)
 	
 
 	if (f_v) {
-		cout << "storing strong generators" << endl;
+		cout << "poset_orbit_node::init_root_node storing strong generators" << endl;
 		}
 	store_strong_generators(gen, gen->Strong_gens);
-		// stores the strong generators into the oracle structure, 
+		// stores the strong generators into the poset_orbit_node structure,
 		// copies transversal_length into tl
 	if (f_v) {
-		cout << "init_root_node done" << endl;
+		cout << "poset_orbit_node::init_root_node done" << endl;
 		}
 	
 }
 
-void oracle::init_extension_node_prepare_G(generator *gen,
+void poset_orbit_node::init_extension_node_prepare_G(generator *gen,
 	INT prev, INT prev_ex, INT size,
 	group &G, longinteger_object &go_G,
 	INT verbose_level)
@@ -103,15 +103,15 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 	INT f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_G" << endl;
+		cout << "poset_orbit_node::init_extension_node_prepare_G" << endl;
 		}
-	oracle &Op = gen->root[prev];
+	poset_orbit_node &Op = gen->root[prev];
 
 	G.init(gen->A);
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
+		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"calling init_strong_generators_by_hdl" << endl;
 		INT_vec_print(cout,
 				Op.hdl_strong_generators,
@@ -126,7 +126,7 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
+		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"the strong generators are:" << endl;
 		G.print_strong_generators(cout,
 				FALSE /* f_print_as_permutation */);
@@ -135,7 +135,7 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
+		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"before schreier_sims for stabilizer with "
 			<< Op.nb_strong_generators << " strong generators" << endl;
 		}
@@ -143,7 +143,7 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_G "
+		cout << "poset_orbit_node::init_extension_node_prepare_G "
 				"after schreier_sims" << endl;
 		}
 
@@ -156,13 +156,13 @@ void oracle::init_extension_node_prepare_G(generator *gen,
 		}
 
 	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_G done" << endl;
+		cout << "poset_orbit_node::init_extension_node_prepare_G done" << endl;
 		}
 
 }
 
 
-void oracle::init_extension_node_prepare_H(generator *gen, 
+void poset_orbit_node::init_extension_node_prepare_H(generator *gen,
 	INT prev, INT prev_ex, INT size, 
 	group &G, longinteger_object &go_G, 
 	group &H, longinteger_object &go_H, 
@@ -179,11 +179,11 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 #if 0	
 	H.init(gen->A);
 	
-	oracle *Op = &gen->root[prev];
+	poset_orbit_node *Op = &gen->root[prev];
 #endif
 
 	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_H, "
+		cout << "poset_orbit_node::init_extension_node_prepare_H, "
 				"verbose_level = " << verbose_level << endl;
 		}
 
@@ -191,7 +191,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H "
+		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"computing stabilizer of point " << pt
 			<< " (of index " << pt_orbit_len
 			<< " in a group of order " << go_G;
@@ -207,7 +207,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H "
+		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"computing stabilizer of point " << pt
 				<< " in group of order " << go_G << endl;
 		}
@@ -217,7 +217,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H "
+			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"before compute_point_stabilizer_in_subspace_setting"
 					<< endl;
 			}
@@ -230,7 +230,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H "
+			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"after compute_point_stabilizer_in_subspace_setting"
 					<< endl;
 			}
@@ -242,7 +242,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H "
+			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"before compute_point_stabilizer_in_standard_setting"
 					<< endl;
 			}
@@ -255,7 +255,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		if (f_vv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
 			INT_vec_print(cout, gen->S, size);
-			cout << "oracle::init_extension_node_prepare_H "
+			cout << "poset_orbit_node::init_extension_node_prepare_H "
 					"after compute_point_stabilizer_in_standard_setting"
 					<< endl;
 			}
@@ -265,14 +265,14 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << "oracle::init_extension_node_prepare_H "
+		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"calling schreier_sims for point stabilizer" << endl;
 		}
 	H.schreier_sims(0);
 
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << "oracle::init_extension_node_prepare_H "
+		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"after schreier_sims for point stabilizer" << endl;
 		}
 	
@@ -287,7 +287,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H "
+		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"point stabilizer has order ";
 		H.print_group_order(cout);
 		//cout << endl;
@@ -297,7 +297,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (q.as_INT() != pt_orbit_len) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H: "
+		cout << "poset_orbit_node::init_extension_node_prepare_H: "
 				"fatal: q != pt_orbit_len" << endl;
 		cout << "q = " << q.as_INT() << endl;
 		cout << "pt_orbit_len = " << pt_orbit_len << endl;
@@ -306,7 +306,7 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 	if (f_vv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
 		INT_vec_print(cout, gen->S, size);
-		cout << "oracle::init_extension_node_prepare_H "
+		cout << "poset_orbit_node::init_extension_node_prepare_H "
 				"point stabilizer is generated by:" << endl;
 		INT f_print_as_permutation = FALSE;
 		if (/*f_v10 &&*/ gen->A2->degree < 100) {
@@ -316,11 +316,11 @@ void oracle::init_extension_node_prepare_H(generator *gen,
 		}
 
 	if (f_v) {
-		cout << "oracle::init_extension_node_prepare_H done" << endl;
+		cout << "poset_orbit_node::init_extension_node_prepare_H done" << endl;
 		}
 }
 
-void oracle::compute_point_stabilizer_in_subspace_setting(
+void poset_orbit_node::compute_point_stabilizer_in_subspace_setting(
 	generator *gen,
 	INT prev, INT prev_ex, INT size, 
 	group &G, longinteger_object &go_G, 
@@ -334,13 +334,13 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_subspace_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting, "
 				"verbose_level = " << verbose_level << endl;
 		}
 
 	H.init(gen->A);
 	
-	oracle *Op = &gen->root[prev];
+	poset_orbit_node *Op = &gen->root[prev];
 
 
 
@@ -352,7 +352,7 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 		INT i;
 		
 		if (f_v) {
-			cout << "oracle::compute_point_stabilizer_in_subspace_setting, "
+			cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting, "
 					"with early test function, before Op->setup_factor_space_"
 					"action_with_early_test" << endl;
 			}
@@ -360,14 +360,14 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 			AF, A_factor_space, size - 1, 
 			verbose_level - 4);
 		if (f_v) {
-			cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+			cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					"after Op->setup_factor_space_action_with_early_test"
 					<< endl;
 			}
 		for (i = 0; i < AF.nb_cosets; i++) {
 			if (AF.preimage(i, 0) == pt) {
 				if (f_vv) {
-					cout << "oracle::compute_point_stabilizer_in_subspace_"
+					cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_"
 							"setting: point pt=" << pt
 							<< " is coset " << i << endl;
 					}
@@ -375,7 +375,7 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 				}
 			}
 		if (i == AF.nb_cosets) {
-			cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+			cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 					"fatal: could not find the coset corresponding "
 					"to point " << pt << endl;
 			exit(1);
@@ -387,7 +387,7 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 		
 		if (f_vvv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
-			cout << " oracle::compute_point_stabilizer_in_subspace_setting, "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting, "
 					"without early test function,  setting up factor "
 					"space action:" << endl;
 			}
@@ -403,17 +403,17 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << " oracle::compute_point_stabilizer_in_subspace_setting "
+		cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				" pt=" << pt << " projected_pt=" << projected_pt << endl;
 		}
 	if (projected_pt == -1) {
-		cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				"fatal: projected_pt == -1" << endl;
 		exit(1);
 		}
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << " oracle::compute_point_stabilizer_in_subspace_setting "
+		cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				"calling G.point_stabilizer_with_action" << endl;
 		}
 	G.point_stabilizer_with_action(
@@ -423,18 +423,18 @@ void oracle::compute_point_stabilizer_in_subspace_setting(
 			verbose_level - 4);
 	if (f_vvv) {
 		gen->print_level_extension_info(size, prev, prev_ex);
-		cout << " oracle::compute_point_stabilizer_in_subspace_setting "
+		cout << " poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				"G.point_stabilizer_with_action done" << endl;
 		}
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_subspace_setting "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_subspace_setting "
 				"done" << endl;
 		}
 
 }
 
-void oracle::compute_point_stabilizer_in_standard_setting(generator *gen, 
+void poset_orbit_node::compute_point_stabilizer_in_standard_setting(generator *gen,
 	INT prev, INT prev_ex, INT size, 
 	group &G, longinteger_object &go_G, 
 	group &H, /*longinteger_object &go_H, */
@@ -451,31 +451,31 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 
 	D.integral_division_by_INT(go_G, pt_orbit_len, go_H, r);
 	if (r != 0) {
-		cout << "oracle::compute_point_stabilizer_in_standard_setting "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"r != 0" << endl;
 		exit(1);
 		}
 
 	H.init(gen->A);
 	
-	oracle *Op = &gen->root[prev];
+	poset_orbit_node *Op = &gen->root[prev];
 
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"verbose_level = " << verbose_level << endl;
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"go_G = " << go_G << endl;
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"pt_orbit_len = " << pt_orbit_len << endl;
-		cout << "oracle::compute_point_stabilizer_in_standard_setting, "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting, "
 				"go_H = " << go_H << endl;
 		}
 
 	if (Op->sv) {
 		if (f_vvv) {
 			gen->print_level_extension_info(size, prev, prev_ex);
-			cout << " oracle::compute_point_stabilizer_in_standard_setting "
+			cout << " poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 					"setting up restricted action from the previous "
 					"schreier vector:" << endl;
 			}
@@ -487,7 +487,7 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_"
 						"setting calling AR.induced_action_by_restriction_"
 						"on_orbit_with_schreier_vector" << endl;
 				}
@@ -500,13 +500,13 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 				verbose_level - 1);
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_"
 						"setting created action of degree "
 						<< AR.degree << endl;
 				}
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_"
 						"setting calling G.point_stabilizer_with_action"
 						<< endl;
 				}
@@ -514,7 +514,7 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 					H, 0 /*pt */, verbose_level - 3);
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_"
 						"setting after G.point_stabilizer_with_action"
 						<< endl;
 				}
@@ -523,7 +523,7 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 			H.group_order(go_H1);
 			longinteger_domain D;
 			if (D.compare(go_H, go_H1) != 0) {
-				cout << "oracle::compute_point_stabilizer_in_standard_"
+				cout << "poset_orbit_node::compute_point_stabilizer_in_standard_"
 						"setting go_H is incorrect" << endl;
 				cout << "go_H=" << go_H << endl;
 				cout << "go_H1=" << go_H1 << endl;
@@ -532,7 +532,7 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 			
 			if (f_vvv) {
 				gen->print_level_extension_info(size, prev, prev_ex);
-				cout << " oracle::compute_point_stabilizer_in_standard_"
+				cout << " poset_orbit_node::compute_point_stabilizer_in_standard_"
 						"setting G.point_stabilizer_with_action done"
 						<< endl;
 				}
@@ -564,13 +564,13 @@ void oracle::compute_point_stabilizer_in_standard_setting(generator *gen,
 		}
 
 	if (f_v) {
-		cout << "oracle::compute_point_stabilizer_in_standard_setting "
+		cout << "poset_orbit_node::compute_point_stabilizer_in_standard_setting "
 				"done" << endl;
 		}
 
 }
 
-INT oracle::get_level(generator *gen)
+INT poset_orbit_node::get_level(generator *gen)
 {
 	INT l;
 
@@ -578,16 +578,16 @@ INT oracle::get_level(generator *gen)
 	return l;
 }
 
-INT oracle::get_node_in_level(generator *gen)
+INT poset_orbit_node::get_node_in_level(generator *gen)
 {
 	INT l, n;
 
 	l = depth_of_node(gen);
-	n = node - gen->first_oracle_node_at_level[l];
+	n = node - gen->first_poset_orbit_node_at_level[l];
 	return n;
 }
 
-INT oracle::get_nb_of_live_points()
+INT poset_orbit_node::get_nb_of_live_points()
 {
 	INT n;
 	
@@ -598,7 +598,7 @@ INT oracle::get_nb_of_live_points()
 	return n;
 }
 
-INT oracle::get_nb_of_orbits_under_stabilizer()
+INT poset_orbit_node::get_nb_of_orbits_under_stabilizer()
 {
 	INT nb;
 	
@@ -609,7 +609,7 @@ INT oracle::get_nb_of_orbits_under_stabilizer()
 	return nb;
 }
 
-void oracle::get_stabilizer_order(generator *gen,
+void poset_orbit_node::get_stabilizer_order(generator *gen,
 		longinteger_object &go)
 {
 	strong_generators *Strong_gens;
@@ -619,7 +619,7 @@ void oracle::get_stabilizer_order(generator *gen,
 	Strong_gens->group_order(go);
 }
 
-void oracle::get_stabilizer(generator *gen, 
+void poset_orbit_node::get_stabilizer(generator *gen,
 	group &G, longinteger_object &go_G, 
 	INT verbose_level)
 {
@@ -629,19 +629,19 @@ void oracle::get_stabilizer(generator *gen,
 	G.init_strong_generators_by_hdl(
 			nb_strong_generators, hdl_strong_generators, tl, 0);
 	if (f_v) {
-		cout << "oracle::get_stabilizer calling "
+		cout << "poset_orbit_node::get_stabilizer calling "
 				"schreier_sims for stabilizer with "
 			<< nb_strong_generators << " strong generators" << endl;
 		}
 	G.schreier_sims(verbose_level - 3);
 	G.group_order(go_G);
 	if (f_v) {
-		cout << "oracle::get_stabilizer stabilizer has order "
+		cout << "poset_orbit_node::get_stabilizer stabilizer has order "
 				<< go_G << endl;
 		}
 }
 
-void oracle::get_stabilizer_generators(generator *gen, 
+void poset_orbit_node::get_stabilizer_generators(generator *gen,
 	strong_generators *&Strong_gens, 
 	INT verbose_level)
 {
@@ -649,8 +649,8 @@ void oracle::get_stabilizer_generators(generator *gen,
 	INT i;
 	
 	if (f_v) {
-		cout << "oracle::get_stabilizer_generators" << endl;
-		cout << "oracle::get_stabilizer_generators "
+		cout << "poset_orbit_node::get_stabilizer_generators" << endl;
+		cout << "poset_orbit_node::get_stabilizer_generators "
 				"nb_strong_generators=" << nb_strong_generators << endl;
 		}
 	Strong_gens = new strong_generators;
@@ -664,12 +664,12 @@ void oracle::get_stabilizer_generators(generator *gen,
 		}
 	else {
 		for (i = 0; i < gen->A->base_len; i++) {
-			Strong_gens->tl[i] = oracle::tl[i];
+			Strong_gens->tl[i] = poset_orbit_node::tl[i];
 			}
 		}
 }
 
-void oracle::oracle_depth_breadth_perm_and_inverse(
+void poset_orbit_node::poset_orbit_node_depth_breadth_perm_and_inverse(
 	generator *gen, INT max_depth,
 	INT &idx, INT hdl, INT cur_depth,
 	INT *perm, INT *perm_inv)
@@ -685,14 +685,14 @@ void oracle::oracle_depth_breadth_perm_and_inverse(
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			nxt = E[i].data;
 			if (nxt >= 0) {
-				gen->root[nxt].oracle_depth_breadth_perm_and_inverse(gen, 
+				gen->root[nxt].poset_orbit_node_depth_breadth_perm_and_inverse(gen,
 					max_depth, idx, nxt, cur_depth + 1, perm, perm_inv);
 				}
 			}
 		}
 }
 
-INT oracle::find_extension_from_point(generator *gen,
+INT poset_orbit_node::find_extension_from_point(generator *gen,
 		INT pt, INT verbose_level)
 // a -1 means not found
 {
@@ -708,7 +708,7 @@ INT oracle::find_extension_from_point(generator *gen,
 	return i;
 }
 
-void oracle::print_extensions(ostream &ost)
+void poset_orbit_node::print_extensions(ostream &ost)
 {
 	INT i;
 	
@@ -742,7 +742,7 @@ void oracle::print_extensions(ostream &ost)
 	cout << "done with node " << node << endl;
 }
 
-void oracle::store_strong_generators(generator *gen,
+void poset_orbit_node::store_strong_generators(generator *gen,
 		strong_generators *Strong_gens)
 {
 	INT i;
@@ -769,7 +769,7 @@ void oracle::store_strong_generators(generator *gen,
 		}
 }
 
-void oracle::log_current_node_without_group(generator *gen,
+void poset_orbit_node::log_current_node_without_group(generator *gen,
 		INT s, ostream &f, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -777,13 +777,13 @@ void oracle::log_current_node_without_group(generator *gen,
 	INT i;
 
 	if (f_v) {
-		cout << "oracle::log_current_node_without_group" << endl;
+		cout << "poset_orbit_node::log_current_node_without_group" << endl;
 		}
 	store_set_to(gen, s - 1, gen->set0);
 	
 	if (f_v) {
 		f << "# ***** orbit ***** " <<
-				node - gen->first_oracle_node_at_level[s] << " "<< endl;
+				node - gen->first_poset_orbit_node_at_level[s] << " "<< endl;
 		}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
@@ -804,7 +804,7 @@ void oracle::log_current_node_without_group(generator *gen,
 #endif
 }
 
-void oracle::log_current_node(generator *gen,
+void poset_orbit_node::log_current_node(generator *gen,
 		INT s, ostream &f, INT f_with_stabilizer_generators,
 		INT verbose_level)
 {
@@ -813,18 +813,18 @@ void oracle::log_current_node(generator *gen,
 	INT i;
 
 	if (f_v) {
-		cout << "oracle::log_current_node node="
+		cout << "poset_orbit_node::log_current_node node="
 				<< node << " s=" << s << endl;
 		}
 	store_set_to(gen, s - 1, gen->set0);
 	if (f_v) {
-		cout << "oracle::log_current_node node="
+		cout << "poset_orbit_node::log_current_node node="
 				<< node << " after store_set_to" << endl;
 		}
 	
 	if (f_v) {
 		f << "# ***** orbit ***** "
-				<< node - gen->first_oracle_node_at_level[s] << " "<< endl;
+				<< node - gen->first_poset_orbit_node_at_level[s] << " "<< endl;
 		}
 	f << s << " ";
 	for (i = 0; i < s; i++) {
@@ -834,7 +834,7 @@ void oracle::log_current_node(generator *gen,
 	if (nb_strong_generators == 0) {
 		f << " 1" << endl;
 		if (f_v) {
-			cout << "oracle::log_current_node "
+			cout << "poset_orbit_node::log_current_node "
 					"node=" << node << " done" << endl;
 			}
 		return;
@@ -842,7 +842,7 @@ void oracle::log_current_node(generator *gen,
 
 
 	if (f_v) {
-		cout << "oracle::log_current_node "
+		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " creating group" << endl;
 		}
 
@@ -854,7 +854,7 @@ void oracle::log_current_node(generator *gen,
 
 #if 0
 	if (node == 26) {
-		cout << "oracle::log_current_node node=26 with "
+		cout << "poset_orbit_node::log_current_node node=26 with "
 				<< nb_strong_generators << " strong generators" << endl;
 		strong_generators *Strong_gens;
 
@@ -873,21 +873,21 @@ void oracle::log_current_node(generator *gen,
 #endif
 
 	if (f_v) {
-		cout << "oracle::log_current_node "
+		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " before schreier_sims" << endl;
 		}
 	G.schreier_sims(0);
 	if (f_v) {
-		cout << "oracle::log_current_node "
+		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " after schreier_sims" << endl;
 		}
 	G.group_order(go);
 	if (f_v) {
-		cout << "oracle::log_current_node "
+		cout << "poset_orbit_node::log_current_node "
 				"node=" << node << " group order = " << go << endl;
 		}
 	//if (f_v) {
-		//cout << "oracle::log_current_node() "
+		//cout << "poset_orbit_node::log_current_node() "
 		//"stabilizer of order " << go << " reconstructed" << endl;
 		//}
 	if (go.is_one()) {
@@ -925,7 +925,7 @@ void oracle::log_current_node(generator *gen,
 		
 		if (!go.is_one()) {
 			if (f_v) {
-				cout << "oracle::log_current_node "
+				cout << "poset_orbit_node::log_current_node "
 						"node=" << node << " printing generators" << endl;
 				}
 			G.require_strong_generators();
@@ -956,7 +956,7 @@ void oracle::log_current_node(generator *gen,
 #endif
 }
 
-void oracle::log_current_node_after_applying_group_element(
+void poset_orbit_node::log_current_node_after_applying_group_element(
 		generator *gen, INT s, ostream &f, INT hdl,
 		INT verbose_level)
 {
@@ -985,7 +985,7 @@ void oracle::log_current_node_after_applying_group_element(
 	
 	if (f_v) {
 		f << "# ***** orbit ***** "
-				<< node - gen->first_oracle_node_at_level[s]
+				<< node - gen->first_poset_orbit_node_at_level[s]
 				<< " " << endl;
 		}
 	f << s << " ";
@@ -1002,7 +1002,7 @@ void oracle::log_current_node_after_applying_group_element(
 	G.schreier_sims(0);
 	G.group_order(go);
 	//if (f_v) {
-		//cout << "oracle::log_current_node() "
+		//cout << "poset_orbit_node::log_current_node() "
 		//"stabilizer of order " << go << " reconstructed" << endl;
 		//}
 	if (go.is_one()) {
@@ -1043,7 +1043,7 @@ void oracle::log_current_node_after_applying_group_element(
 	FREE_INT(Elt2);
 }
 
-void oracle::log_current_node_with_candidates(
+void poset_orbit_node::log_current_node_with_candidates(
 		generator *gen, INT lvl, ostream &f, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
@@ -1068,7 +1068,7 @@ void oracle::log_current_node_with_candidates(
 		lvl, 
 		n, subset, f_subset_is_allocated, 
 		verbose_level)) {
-		cout << "oracle::log_current_node_with_candidates "
+		cout << "poset_orbit_node::log_current_node_with_candidates "
 				"downstep_get_invariant_subset returns FALSE" << endl;
 		exit(1);
 		}
@@ -1090,7 +1090,7 @@ void oracle::log_current_node_with_candidates(
 }
 
 
-INT oracle::depth_of_node(generator *gen)
+INT poset_orbit_node::depth_of_node(generator *gen)
 {
 	if (prev == -1) {
 		return 0;
@@ -1100,7 +1100,7 @@ INT oracle::depth_of_node(generator *gen)
 		}
 }
 
-void oracle::store_set(generator *gen, INT i)
+void poset_orbit_node::store_set(generator *gen, INT i)
 // stores a set of size i + 1 to gen->S[]
 {
 	if (i < 0)
@@ -1115,14 +1115,14 @@ void oracle::store_set(generator *gen, INT i)
 		}
 }
 
-void oracle::store_set_with_verbose_level(
+void poset_orbit_node::store_set_with_verbose_level(
 		generator *gen, INT i, INT verbose_level)
 // stores a set of size i + 1 to gen->S[]
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "oracle::store_set_with_verbose_level "
+		cout << "poset_orbit_node::store_set_with_verbose_level "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << " i=" << i << endl;
 		}
@@ -1138,7 +1138,7 @@ void oracle::store_set_with_verbose_level(
 		}
 }
 
-void oracle::store_set_to(generator *gen, INT i, INT *to)
+void poset_orbit_node::store_set_to(generator *gen, INT i, INT *to)
 // stores a set of size i + 1 to 'to'
 {
 	if (i < 0)
@@ -1153,12 +1153,12 @@ void oracle::store_set_to(generator *gen, INT i, INT *to)
 		}
 }
 
-void oracle::store_set_to(generator *gen, INT *to)
+void poset_orbit_node::store_set_to(generator *gen, INT *to)
 {
 	store_set_to(gen, depth_of_node(gen), to);
 }
 
-INT oracle::check_node_and_set_consistency(
+INT poset_orbit_node::check_node_and_set_consistency(
 		generator *gen, INT i, INT *set)
 {
 	if (i < 0)
@@ -1178,12 +1178,12 @@ INT oracle::check_node_and_set_consistency(
 	return TRUE;
 }
 
-void oracle::print_set_verbose(generator *gen)
+void poset_orbit_node::print_set_verbose(generator *gen)
 {
 	INT depth;
 	INT *set;
 
-	//cout << "oracle::print_set_verbose" << endl;
+	//cout << "poset_orbit_node::print_set_verbose" << endl;
 	depth = depth_of_node(gen);
 	print_set(gen);
 	cout << endl;
@@ -1196,10 +1196,10 @@ void oracle::print_set_verbose(generator *gen)
 				set /* gen->S0 */, gen->print_function_data);
 		}
 	FREE_INT(set);
-	//cout << "oracle::print_set_verbose done" << endl;
+	//cout << "poset_orbit_node::print_set_verbose done" << endl;
 }
 
-void oracle::print_set(generator *gen)
+void poset_orbit_node::print_set(generator *gen)
 {
 	INT depth, size, i;
 	longinteger_object go;
@@ -1207,7 +1207,7 @@ void oracle::print_set(generator *gen)
 	INT *set;
 	
 	depth = depth_of_node(gen);
-	//cout << "oracle::print_set depth = " << depth << endl;
+	//cout << "poset_orbit_node::print_set depth = " << depth << endl;
 	size = depth;
 	set = NEW_INT(size);
 	store_set_to(gen, depth - 1, set /*gen->S0*/);
@@ -1231,7 +1231,7 @@ void oracle::print_set(generator *gen)
 	FREE_INT(set);
 }
 
-void oracle::print_node(generator *gen)
+void poset_orbit_node::print_node(generator *gen)
 {
 	INT depth;
 	INT *set;
@@ -1266,7 +1266,7 @@ void oracle::print_node(generator *gen)
 		len = gen->A->compute_orbit_of_point_generators_by_handle(
 			nb_strong_generators, hdl_strong_generators, E[i].pt, orbit, 0);
 		if (len != E[i].orbit_len) {
-			cout << "oracle::print_node len != E[i].orbit_len" << endl;
+			cout << "poset_orbit_node::print_node len != E[i].orbit_len" << endl;
 			cout << "len = " << len << endl;
 			cout << "E[i].orbit_len = " << E[i].orbit_len << endl;
 			}
@@ -1290,7 +1290,7 @@ void oracle::print_node(generator *gen)
 			// INT_vec_sort(depth + 1, gen->set[0]);
 			//cout << " = ";
 			//INT_vec_print(cout, gen->set[0], depth + 1);
-			node2 = gen->find_oracle_node_for_set(
+			node2 = gen->find_poset_orbit_node_for_set(
 					depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
 			//cout << node2;
 			cout << "fusion to node " << node2;
@@ -1306,14 +1306,14 @@ void oracle::print_node(generator *gen)
 #endif	
 }
 
-void oracle::print_extensions(generator *gen)
+void poset_orbit_node::print_extensions(generator *gen)
 {
 	//INT i, depth, /*node2,*/ len;
 	INT depth;
 	INT *orbit;
 	
 	depth = depth_of_node(gen);
-	cout << "oracle::print_extensions node=" << node
+	cout << "poset_orbit_node::print_extensions node=" << node
 			<< " at depth " << depth
 			<< " degree=" << gen->A2->degree << endl;
 	print_extensions(cout);
@@ -1343,7 +1343,7 @@ void oracle::print_extensions(generator *gen)
 				E[i].pt, orbit, 0);
 			cout << "orbit of length " << len << endl;
 			if (len != E[i].orbit_len) {
-				cout << "oracle::print_extensions len != E[i].orbit_len" << endl;
+				cout << "poset_orbit_node::print_extensions len != E[i].orbit_len" << endl;
 				cout << "len = " << len << endl;
 				cout << "E[i].orbit_len = " << E[i].orbit_len << endl;
 				}
@@ -1375,7 +1375,7 @@ void oracle::print_extensions(generator *gen)
 			cout << " = " << endl;
 			INT_vec_print(cout, gen->set[0], depth + 1);
 			cout << endl;
-			node2 = gen->find_oracle_node_for_set(
+			node2 = gen->find_poset_orbit_node_for_set(
 					depth + 1, gen->set[0], 0 /* f_tolerant */, 0);
 			cout << "Which is node " << node2 << endl;
 			cout << "fusion to node " << node2 << endl;
@@ -1396,7 +1396,7 @@ void oracle::print_extensions(generator *gen)
 	FREE_INT(orbit);	
 }
 
-void oracle::reconstruct_extensions_from_sv(
+void poset_orbit_node::reconstruct_extensions_from_sv(
 		generator *gen, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1410,7 +1410,7 @@ void oracle::reconstruct_extensions_from_sv(
 
 
 	if (f_v) {
-		cout << "oracle::reconstruct_extensions_from_sv" << endl;
+		cout << "poset_orbit_node::reconstruct_extensions_from_sv" << endl;
 		}
 	n = sv[0];
 	nb = sv_number_of_orbits(sv);
@@ -1449,7 +1449,7 @@ void oracle::reconstruct_extensions_from_sv(
 	for (i = 0; i < n; i++) {
 		a = ancestor[i];
 		if (!INT_vec_search(orbit_reps, nb, a, idx)) {
-			cout << "oracle::reconstruct_extensions_from_sv "
+			cout << "poset_orbit_node::reconstruct_extensions_from_sv "
 					"did not find orbit rep" << endl;
 			exit(1);
 			}

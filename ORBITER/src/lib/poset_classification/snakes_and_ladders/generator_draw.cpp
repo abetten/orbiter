@@ -56,7 +56,7 @@ INT generator::write_treefile(BYTE *fname_base,
 		}
 	sprintf(fname1, "%s_%ld.tree", fname_base, lvl);
 	
-	if  (first_oracle_node_at_level[lvl + 1] < MAX_NODES_FOR_TREEFILE) {
+	if  (first_poset_orbit_node_at_level[lvl + 1] < MAX_NODES_FOR_TREEFILE) {
 		{
 		if (f_vv) {
 			cout << "generator::write_treefile "
@@ -72,8 +72,8 @@ INT generator::write_treefile(BYTE *fname_base,
 		else {
 			level = 0;
 			}
-		for (i = first_oracle_node_at_level[level];
-				i < first_oracle_node_at_level[level + 1]; i++) {
+		for (i = first_poset_orbit_node_at_level[level];
+				i < first_poset_orbit_node_at_level[level + 1]; i++) {
 			if (f_vv) {
 				cout << "generator::write_treefile node " << i << ":" << endl;
 				}
@@ -81,7 +81,7 @@ INT generator::write_treefile(BYTE *fname_base,
 					TRUE /* f_recurse */, verbose_level);
 			}
 			
-		f << "-1 " << first_oracle_node_at_level[lvl + 1] << endl;
+		f << "-1 " << first_poset_orbit_node_at_level[lvl + 1] << endl;
 		}
 		if (f_vv) {
 			cout << "written file " << fname1
@@ -97,7 +97,7 @@ INT generator::write_treefile(BYTE *fname_base,
 				"you may increase MAX_NODES_FOR_TREEFILE if you wish" << endl;
 		cout << "MAX_NODES_FOR_TREEFILE=" << MAX_NODES_FOR_TREEFILE << endl;
 		cout << "first_oracle_node_at_level[lvl + 1]="
-				<< first_oracle_node_at_level[lvl + 1] << endl;
+				<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 		cout << "lvl=" << lvl << endl;
 		return FALSE;
 		}
@@ -142,15 +142,15 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 					<< " nodes" << endl;
 			cout << "generator::draw_tree first_oracle_node_at_"
 					"level[lvl + 1] "
-					<< first_oracle_node_at_level[lvl + 1]
+					<< first_poset_orbit_node_at_level[lvl + 1]
 					<< " nodes" << endl;
 			}
-		if (nb_nodes != first_oracle_node_at_level[lvl + 1]) {
+		if (nb_nodes != first_poset_orbit_node_at_level[lvl + 1]) {
 			cout << "generator::draw_tree nb_nodes != first_oracle_"
 					"node_at_level[lvl + 1]" << endl;
 			cout << "nb_nodes=" << nb_nodes << endl;
 			cout << "first_oracle_node_at_level[lvl + 1]="
-					<< first_oracle_node_at_level[lvl + 1] << endl;
+					<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 			exit(1);
 			}
 		if (nb_nodes > 100) {
@@ -185,7 +185,7 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			cout << "generator::draw_tree calling oracle_depth_"
 					"breadth_perm_and_inverse" << endl;
 			}
-		oracle_depth_breadth_perm_and_inverse(lvl /* max_depth */, 
+		poset_orbit_node_depth_breadth_perm_and_inverse(lvl /* max_depth */,
 			perm, perm_inv, verbose_level);
 		if (FALSE) {
 			cout << "generator::draw_tree depth_breadth_perm_"
@@ -436,7 +436,7 @@ void generator::draw_tree_low_level1(mp_graphics &G,
 						cout << endl;
 						}
 
-					hdl2 = find_oracle_node_for_set(depth + 1, set1,
+					hdl2 = find_poset_orbit_node_for_set(depth + 1, set1,
 							FALSE /* f_tolerant */,
 							0 /* verbose_level */);
 					if (hdl2 >= 0) {
@@ -959,7 +959,7 @@ void generator::make_full_poset_graph(
 
 			ol1 = Orbit_len[lvl][po];
 			//
-			n1 = first_oracle_node_at_level[lvl] + po;
+			n1 = first_poset_orbit_node_at_level[lvl] + po;
 
 
 			INT *Down_orbits;
@@ -1029,7 +1029,7 @@ void generator::make_full_poset_graph(
 
 			for (h = 0; h < nb_down_orbits; h++) {
 				n2 = Down_orbits[h];
-				po2 = n2 - first_oracle_node_at_level[lvl + 1];
+				po2 = n2 - first_poset_orbit_node_at_level[lvl + 1];
 				ol2 = Orbit_len[lvl + 1][po2];
 				if (f_vv) {
 					cout << "generator::make_full_poset_graph "
@@ -1140,7 +1140,7 @@ void generator::make_full_poset_graph(
 
 			ol1 = Orbit_len[lvl][po];
 			//
-			n1 = first_oracle_node_at_level[lvl] + po;
+			n1 = first_poset_orbit_node_at_level[lvl] + po;
 
 			if (f_vv) {
 				cout << "generator::make_full_poset_graph "
@@ -1257,7 +1257,7 @@ void generator::make_auxiliary_graph(INT depth,
 				}
 
 			//
-			n = first_oracle_node_at_level[lvl] + po;
+			n = first_poset_orbit_node_at_level[lvl] + po;
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (f_v4) {
@@ -1278,7 +1278,7 @@ void generator::make_auxiliary_graph(INT depth,
 						cout << "n1=" << n1 << endl;
 						}
 					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
-							n1 - first_oracle_node_at_level[lvl + 1],
+							n1 - first_poset_orbit_node_at_level[lvl + 1],
 							verbose_level - 4);
 					}
 				else if (E->type == EXTENSION_TYPE_FUSION) {
@@ -1308,10 +1308,10 @@ void generator::make_auxiliary_graph(INT depth,
 					if (f_v4) {
 						cout << "n1=" << n1
 								<< " first_oracle_node_at_level[lvl + 1] = "
-								<< first_oracle_node_at_level[lvl + 1] << endl;
+								<< first_poset_orbit_node_at_level[lvl + 1] << endl;
 						}
 					LG->add_edge(2 * lvl + 1, f + so, 2 * lvl + 2,
-							n1 - first_oracle_node_at_level[lvl + 1],
+							n1 - first_poset_orbit_node_at_level[lvl + 1],
 							verbose_level - 4);
 					}
 				}
@@ -1350,7 +1350,7 @@ void generator::make_auxiliary_graph(INT depth,
 			longinteger_object go, go1;
 			INT n, so, len, r;
 			
-			n = first_oracle_node_at_level[lvl] + po;
+			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			LG->add_text(2 * lvl + 0, po, text, 0/*verbose_level*/);
@@ -1360,7 +1360,7 @@ void generator::make_auxiliary_graph(INT depth,
 				LG->add_node_data2(2 * lvl + 0, po, 2 * (lvl - 1),
 						0/*verbose_level*/);
 				LG->add_node_data3(2 * lvl + 0, po,
-						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						root[n].prev - first_poset_orbit_node_at_level[lvl - 1],
 						0/*verbose_level*/);
 				}
 			else {
@@ -1445,7 +1445,7 @@ void generator::make_graph(INT depth,
 				}
 
 			//
-			n = first_oracle_node_at_level[lvl] + po;
+			n = first_poset_orbit_node_at_level[lvl] + po;
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (FALSE /*f_v*/) {
@@ -1461,7 +1461,7 @@ void generator::make_graph(INT depth,
 					n1 = E->data;
 					//cout << "n1=" << n1 << endl;
 					LG->add_edge(lvl, po, lvl + 1,
-							n1 - first_oracle_node_at_level[lvl + 1],
+							n1 - first_poset_orbit_node_at_level[lvl + 1],
 							0 /*verbose_level*/);
 					}
 
@@ -1490,7 +1490,7 @@ void generator::make_graph(INT depth,
 					//<< " first_oracle_node_at_level[lvl + 1] = "
 					//<< first_oracle_node_at_level[lvl + 1] << endl;
 					LG->add_edge(lvl, po, lvl + 1,
-							n1 - first_oracle_node_at_level[lvl + 1],
+							n1 - first_poset_orbit_node_at_level[lvl + 1],
 							0 /*verbose_level*/);
 					}
 					}
@@ -1525,7 +1525,7 @@ void generator::make_graph(INT depth,
 			longinteger_object go, go1;
 			INT n;
 			
-			n = first_oracle_node_at_level[lvl] + po;
+			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			LG->add_text(lvl, po, text, 0/*verbose_level*/);
@@ -1546,7 +1546,7 @@ void generator::make_graph(INT depth,
 			if (lvl) {
 				LG->add_node_data2(lvl, po, lvl - 1, 0/*verbose_level*/);
 				LG->add_node_data3(lvl, po,
-						root[n].prev - first_oracle_node_at_level[lvl - 1],
+						root[n].prev - first_poset_orbit_node_at_level[lvl - 1],
 						0/*verbose_level*/);
 				}
 			else {
@@ -1629,7 +1629,7 @@ void generator::make_level_graph(INT depth,
 			}
 
 		//
-		n = first_oracle_node_at_level[level] + po;
+		n = first_poset_orbit_node_at_level[level] + po;
 		for (so = 0; so < root[n].nb_extensions; so++) {
 
 			if (FALSE /*f_v*/) {
@@ -1645,7 +1645,7 @@ void generator::make_level_graph(INT depth,
 				n1 = E->data;
 				//cout << "n1=" << n1 << endl;
 				LG->add_edge(2, f + so, 3,
-						n1 - first_oracle_node_at_level[level + 1],
+						n1 - first_poset_orbit_node_at_level[level + 1],
 						0 /*verbose_level*/);
 				}
 			else if (E->type == EXTENSION_TYPE_FUSION) {
@@ -1672,7 +1672,7 @@ void generator::make_level_graph(INT depth,
 				//<< " first_oracle_node_at_level[lvl + 1] = "
 				//<< first_oracle_node_at_level[lvl + 1] << endl;
 				LG->add_edge(2, f + so, 3,
-						n1 - first_oracle_node_at_level[level + 1],
+						n1 - first_poset_orbit_node_at_level[level + 1],
 						0 /*verbose_level*/);
 				}
 			}
@@ -1717,7 +1717,7 @@ void generator::make_level_graph(INT depth,
 			longinteger_object go, go1;
 			INT n, so, len, r;
 			
-			n = first_oracle_node_at_level[lvl] + po;
+			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
 			go.print_to_string(text);
 			LG->add_text(l, po, text, 0/*verbose_level*/);
@@ -1881,7 +1881,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 				}
 
 			//
-			n = first_oracle_node_at_level[L] + po;
+			n = first_poset_orbit_node_at_level[L] + po;
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (FALSE /*f_v*/) {
@@ -1899,7 +1899,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 					n1 = E->data;
 					//cout << "n1=" << n1 << endl;
 					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
-							n1 - first_oracle_node_at_level[L + 1],
+							n1 - first_poset_orbit_node_at_level[L + 1],
 							0 /*verbose_level*/);
 					}
 				else if (E->type == EXTENSION_TYPE_FUSION) {
@@ -1926,7 +1926,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 					//<< " first_oracle_node_at_level[lvl + 1] = "
 					//<< first_oracle_node_at_level[lvl + 1] << endl;
 					LG->add_edge(L * 3 + 2, f + so, L * 3 + 3,
-							n1 - first_oracle_node_at_level[L + 1],
+							n1 - first_poset_orbit_node_at_level[L + 1],
 							0 /*verbose_level*/);
 					}
 				}
@@ -1971,7 +1971,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 			longinteger_object go, go1;
 			INT n, so, len, r;
 			
-			n = first_oracle_node_at_level[L] + po;
+			n = first_poset_orbit_node_at_level[L] + po;
 			get_stabilizer_order(L, po, go);
 			go.print_to_string(text);
 			LG->add_text(3 * L, po, text, 0/*verbose_level*/);
@@ -2091,12 +2091,12 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 					print_table1_top(fp);
 					cnt = 0;
 					}
-				n = first_oracle_node_at_level[lvl] + po;
+				n = first_poset_orbit_node_at_level[lvl] + po;
 				
 				BYTE text[1000];
 				longinteger_object go, go1;
 			
-				n = first_oracle_node_at_level[lvl] + po;
+				n = first_poset_orbit_node_at_level[lvl] + po;
 				get_stabilizer_order(lvl, po, go);
 				go.print_to_string(text);
 
@@ -2138,12 +2138,12 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 			f = 0;
 			for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
-				n = first_oracle_node_at_level[lvl] + po;
+				n = first_poset_orbit_node_at_level[lvl] + po;
 
 				longinteger_object go, go1;
 				INT ol, r, hdl;
 			
-				n = first_oracle_node_at_level[lvl] + po;
+				n = first_poset_orbit_node_at_level[lvl] + po;
 				get_stabilizer_order(lvl, po, go);
 
 

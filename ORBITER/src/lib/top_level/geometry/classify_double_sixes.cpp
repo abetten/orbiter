@@ -227,13 +227,13 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 	Five_plus_one->depth = 5;
 	strcpy(Five_plus_one->fname_base, fname_base);
 
-	INT nb_oracle_nodes = ONE_MILLION;
+	INT nb_poset_orbit_nodes = ONE_MILLION;
 	
 	if (f_v) {
-		cout << "classify_double_sixes::init calling init_oracle with " << nb_oracle_nodes << " nodes" << endl;
+		cout << "classify_double_sixes::init calling init_poset_orbit_node with " << nb_poset_orbit_nodes << " nodes" << endl;
 		}
 	
-	Five_plus_one->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Five_plus_one->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 
 	if (f_v) {
 		cout << "classify_double_sixes::init after calling init_root_node" << endl;

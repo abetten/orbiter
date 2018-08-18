@@ -35,7 +35,7 @@ void generator::housekeeping(INT i,
 		for (j = 0; j <= i; j++) {
 			cout << j << " : " << nb_orbits_at_level(j) << " orbits" << endl;
 			}
-		cout << "total: " << first_oracle_node_at_level[i + 1] << endl;
+		cout << "total: " << first_poset_orbit_node_at_level[i + 1] << endl;
 		//print_statistic_on_callbacks();
 		compute_and_print_automorphism_group_orders(i, cout);
 		//registry_dump_sorted();
@@ -121,7 +121,7 @@ void generator::housekeeping(INT i,
 
 	if (f_Log) {
 		INT verbose_level = 1;
-		INT f = first_oracle_node_at_level[i];
+		INT f = first_poset_orbit_node_at_level[i];
 		INT len = nb_orbits_at_level(i);
 		print_problem_label();
 		cout << "There are " << len
@@ -136,7 +136,7 @@ void generator::housekeeping(INT i,
 		INT ii;
 
 		for (ii = 0; ii <= sz; ii++) {
-			INT f = first_oracle_node_at_level[ii];
+			INT f = first_poset_orbit_node_at_level[ii];
 			INT len = nb_orbits_at_level(ii);
 			print_problem_label();
 			cout << "There are " << len
@@ -195,7 +195,7 @@ void generator::housekeeping_no_data_file(INT i,
 			cout << j << " : " << nb_orbits_at_level(j)
 					<< " orbits" << endl;
 			}
-		cout << "total: " << first_oracle_node_at_level[i + 1] << endl;
+		cout << "total: " << first_poset_orbit_node_at_level[i + 1] << endl;
 		compute_and_print_automorphism_group_orders(i, cout);
 		}
 
@@ -312,7 +312,7 @@ void generator::read_sv_level_file_binary2(INT level, FILE *fp,
 	INT f_v = (verbose_level >= 1);
 	INT4 I;
 	
-	f = first_oracle_node_at_level[level];
+	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "generator::read_sv_level_file_binary2 "
@@ -379,7 +379,7 @@ void generator::write_sv_level_file_binary2(INT level, FILE *fp,
 	INT f, i, nb_nodes;
 	INT f_v = (verbose_level >= 1);
 	
-	f = first_oracle_node_at_level[level];
+	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "generator::write_sv_level_file_binary2 "
@@ -480,7 +480,7 @@ void generator::read_level_file_binary2(
 	if (f_v) {
 		cout << "generator::read_level_file_binary2" << endl;
 		}
-	f = first_oracle_node_at_level[level];
+	f = first_poset_orbit_node_at_level[level];
 	nb_group_elements = 0;
 	I = fread_INT4(fp);
 	if (I != 1) {
@@ -501,16 +501,16 @@ void generator::read_level_file_binary2(
 		cout << "generator::read_level_file_binary, "
 				"nb_nodes = " << nb_nodes << endl;
 		}
-	first_oracle_node_at_level[level + 1] = f + nb_nodes;
+	first_poset_orbit_node_at_level[level + 1] = f + nb_nodes;
 	
 	if (f_v) {
 		cout << "generator::read_level_file_binary2 "
 				"f + nb_nodes = " << f + nb_nodes << endl;
 		cout << "generator::read_level_file_binary2 "
-				"nb_oracle_nodes_allocated = "
-			<< nb_oracle_nodes_allocated << endl;
+				"nb_poset_orbit_nodes_allocated = "
+			<< nb_poset_orbit_nodes_allocated << endl;
 		}
-	if (f + nb_nodes > nb_oracle_nodes_allocated) {
+	if (f + nb_nodes > nb_poset_orbit_nodes_allocated) {
 		reallocate_to(f + nb_nodes, verbose_level - 2);
 		}
 	for (i = 0; i < nb_nodes; i++) {
@@ -548,7 +548,7 @@ void generator::write_level_file_binary2(
 	INT f, i, nb_nodes;
 	INT f_v = FALSE;//(verbose_level >= 1);
 	
-	f = first_oracle_node_at_level[level];
+	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
 		cout << "generator::write_level_file_binary2 "
@@ -582,7 +582,7 @@ INT generator::calc_size_on_file(INT depth_completed,
 		cout << "generator::calc_size_on_file "
 				"depth_completed=" << depth_completed << endl;
 		}
-	nb_nodes = first_oracle_node_at_level[depth_completed + 1];
+	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
 	s += 3 * 4;
 	for (i = 0; i <= depth_completed + 1; i++) {
 		s += 4;
@@ -626,7 +626,7 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base,
 	INT *Cand;
 	INT i, j, node, nb, pos;
 
-	fst = first_oracle_node_at_level[lvl];
+	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
 	if (f_v) {
 		cout << "generator::write_candidates_binary_using_sv "
@@ -772,7 +772,7 @@ void generator::read_level_file(INT level,
 	INT nb_cases;
 	INT nb_nodes, first_at_level;
 	INT i, I, J;
-	oracle *O;
+	poset_orbit_node *O;
 	
 	if (f_v) {
 		cout << "generator::read_level_file "
@@ -808,17 +808,17 @@ void generator::read_level_file(INT level,
 		// in GALOIS/util.C
 #endif
 
-	first_at_level = first_oracle_node_at_level[level];
+	first_at_level = first_poset_orbit_node_at_level[level];
 	nb_nodes = first_at_level + nb_cases;
 	
-	if (nb_nodes > nb_oracle_nodes_allocated) {
+	if (nb_nodes > nb_poset_orbit_nodes_allocated) {
 		if (f_vv) {
 			cout << "generator::read_level_file "
 					"reallocating to " << nb_nodes << " nodes" << endl;
 			}
 		reallocate_to(nb_nodes, verbose_level - 1);
 		}
-	first_oracle_node_at_level[level + 1] = nb_nodes;
+	first_poset_orbit_node_at_level[level + 1] = nb_nodes;
 	for (i = 0; i < nb_cases; i++) {
 		I = first_at_level + i;
 		O = &root[I];
@@ -827,7 +827,7 @@ void generator::read_level_file(INT level,
 		INT_vec_print(cout, sets[i], level);
 		cout << endl;
 		
-		J = find_oracle_node_for_set(level - 1,
+		J = find_poset_orbit_node_for_set(level - 1,
 				sets[i], FALSE /* f_tolerant */,
 				0/*verbose_level*/);
 		cout << "J=" << J << endl;
@@ -1059,12 +1059,12 @@ void generator::read_memory_object(INT &depth_completed,
 	//G->init_oracle(nb_nodes);
 
 #if 1
-	if (nb_nodes > nb_oracle_nodes_allocated) {
+	if (nb_nodes > nb_poset_orbit_nodes_allocated) {
 		reallocate_to(nb_nodes, verbose_level - 1);
 		}
 #endif
 	for (i = 0; i <= depth_completed + 1; i++) {
-		m->read_int(&first_oracle_node_at_level[i]);
+		m->read_int(&first_poset_orbit_node_at_level[i]);
 		}
 	for (i = 0; i < nb_nodes; i++) {
 		if ((f_v && ((i % 1000) == 0)) || f_vv) {
@@ -1083,7 +1083,7 @@ void generator::read_memory_object(INT &depth_completed,
 				"could not read MAGIC_SYNC, file is corrupt" << endl;
 		exit(1);
 		}
-	nb_oracle_nodes_used = nb_nodes;
+	nb_poset_orbit_nodes_used = nb_nodes;
 	if (f_v) {
 		cout << "generator::read_memory_object finished ";
 		cout << "depth_completed=" << depth_completed 
@@ -1099,7 +1099,7 @@ void generator::write_memory_object(INT depth_completed,
 	INT f_v = (verbose_level >= 1);
 	INT i, nb_nodes;
 	
-	nb_nodes = first_oracle_node_at_level[depth_completed + 1];
+	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
 	if (f_v) {
 		cout << "generator::write_memory_object "
 				<< nb_nodes << " nodes" << endl;
@@ -1109,7 +1109,7 @@ void generator::write_memory_object(INT depth_completed,
 	m->write_int(depth_completed);
 	m->write_int(nb_nodes);
 	for (i = 0; i <= depth_completed + 1; i++) {
-		m->write_int(first_oracle_node_at_level[i]);
+		m->write_int(first_poset_orbit_node_at_level[i]);
 		}
 	for (i = 0; i < nb_nodes; i++) {
 		root[i].write_memory_object(A, m,
@@ -1153,14 +1153,14 @@ void generator::write_lvl_file_with_candidates(
 	INT cur;
 	
 	//f << "# " << lvl << endl; 
-	for (cur = first_oracle_node_at_level[lvl]; 
-		cur < first_oracle_node_at_level[lvl + 1]; cur++) {
+	for (cur = first_poset_orbit_node_at_level[lvl];
+		cur < first_poset_orbit_node_at_level[lvl + 1]; cur++) {
 		root[cur].log_current_node_with_candidates(
 				this, lvl, f, verbose_level - 2);
 		}
-	f << "-1 " << first_oracle_node_at_level[lvl + 1]
-				- first_oracle_node_at_level[lvl]
-		<< " " << first_oracle_node_at_level[lvl] << " in ";
+	f << "-1 " << first_poset_orbit_node_at_level[lvl + 1]
+				- first_poset_orbit_node_at_level[lvl]
+		<< " " << first_poset_orbit_node_at_level[lvl] << " in ";
 	time_check(f, t0);
 	f << endl;
 	f << "# in action " << A->label << endl;
@@ -1185,7 +1185,7 @@ void generator::write_lvl_file(BYTE *fname_base,
 	INT i, fst, len;
 	
 
-	fst = first_oracle_node_at_level[lvl];
+	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
 
 	f << "# " << lvl << endl; 
@@ -1195,7 +1195,7 @@ void generator::write_lvl_file(BYTE *fname_base,
 				f_long_version);
 		}
 	f << "-1 " << len << " "
-			<< first_oracle_node_at_level[lvl] << " in ";
+			<< first_poset_orbit_node_at_level[lvl] << " in ";
 	time_check(f, t0);
 	compute_and_print_automorphism_group_orders(lvl, f);
 	f << endl;
@@ -1216,7 +1216,7 @@ void generator::write_lvl(ostream &f, INT lvl, INT t0,
 	INT fst, len;
 
 
-	fst = first_oracle_node_at_level[lvl];
+	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
 	
 	f << "# " << lvl << endl; 
@@ -1224,7 +1224,7 @@ void generator::write_lvl(ostream &f, INT lvl, INT t0,
 		root[fst + i].log_current_node(this, lvl, f,
 				f_with_stabilizer_generators, f_long_version);
 		}
-	f << "-1 " << len << " " << first_oracle_node_at_level[lvl]
+	f << "-1 " << len << " " << first_poset_orbit_node_at_level[lvl]
 		<< " in ";
 	time_check(f, t0);
 	f << endl;
@@ -1238,7 +1238,7 @@ void generator::log_nodes_for_treefile(INT cur, INT depth,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, next;
-	oracle *node = &root[cur];
+	poset_orbit_node *node = &root[cur];
 		
 
 	if (f_v) {
@@ -1272,7 +1272,7 @@ void generator::Log_nodes(INT cur, INT depth,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, next;
-	oracle *node = &root[cur];
+	poset_orbit_node *node = &root[cur];
 		
 
 	if (f_v) {
@@ -1382,7 +1382,7 @@ void generator::make_spreadsheet_of_orbit_reps(
 	INT schreier_vector_length;
 	INT *rep;
 	BYTE str[1000];
-	oracle *O;
+	poset_orbit_node *O;
 
 	Nb_orbits = 0;
 	for (level = 0; level <= max_depth; level++) {
@@ -1399,7 +1399,7 @@ void generator::make_spreadsheet_of_orbit_reps(
 
 	first = 0;
 	for (level = 0; level <= max_depth; level++) {
-		first = first_oracle_node_at_level[level];
+		first = first_poset_orbit_node_at_level[level];
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 			sprintf(str, "%ld", level);
@@ -1500,7 +1500,7 @@ void generator::make_spreadsheet_of_level_info(
 		schreier_vector_length_sum, schreier_vector_length_total;
 	INT *rep;
 	BYTE str[1000];
-	oracle *O;
+	poset_orbit_node *O;
 
 
 	nb_rows = max_depth + 2; // one extra row for totals

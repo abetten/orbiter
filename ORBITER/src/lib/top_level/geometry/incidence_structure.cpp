@@ -407,8 +407,8 @@ INT incidence_structure_find_blocking_set(
 		INT f, nb_orbits;
 		
 		cout << "after find_partial_blocking_sets" << endl;
-		f = SBS.gen->first_oracle_node_at_level[depth];
-		nb_orbits = SBS.gen->first_oracle_node_at_level[depth + 1] - f;
+		f = SBS.gen->first_poset_orbit_node_at_level[depth];
+		nb_orbits = SBS.gen->first_poset_orbit_node_at_level[depth + 1] - f;
 		cout << "incidence_structure_find_blocking_set: "
 				"we found " << nb_orbits << " orbits on partial "
 						"blocking sets of size " << depth << endl;

@@ -732,7 +732,7 @@ void isomorph_testing(
 	if (f_v) {
 		for (i = 0; i <= level + 1; i++) {
 			cout << "gen->first_oracle_node_at_level[" << i << "]="
-					<< gen->first_oracle_node_at_level[i] << endl;
+					<< gen->first_poset_orbit_node_at_level[i] << endl;
 			}
 		cout << "Iso.depth_completed=" << Iso.depth_completed << endl;
 		}

@@ -449,7 +449,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 #if 0
 			if (A_on_hyperplanes.element_image_of(coset,
 					aut, FALSE) != 0) {
-				cout << "oracle::upstep_subspace_action fatal: "
+				cout << "upstep_work::upstep_subspace_action fatal: "
 						"automorphism does not map " << coset
 						<< " to 0 as it should" << endl;
 				exit(1);

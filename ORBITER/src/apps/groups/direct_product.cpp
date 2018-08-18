@@ -892,13 +892,13 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 
 
-		INT nb_oracle_nodes = 1000;
+		INT nb_nodes = 1000;
 
 		if (f_v) {
 			cout << "direct_product_action::init "
-					"before Pairs->init_oracle" << endl;
+					"before Pairs->init_poset_orbit_node" << endl;
 			}
-		Pairs->init_oracle(nb_oracle_nodes, verbose_level - 1);
+		Pairs->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 		if (f_v) {
 			cout << "direct_product_action::init "
 					"calling Pairs->init_root_node" << endl;
@@ -1195,13 +1195,13 @@ void direct_product_action::init(int argc, const char **argv,
 			(void *)this /* candidate_check_data */);
 
 
-		INT nb_oracle_nodes = 1000;
+		INT nb_nodes = 1000;
 
 		if (f_v) {
 			cout << "direct_product_action::init "
-					"before Gen->init_oracle" << endl;
+					"before Gen->init_poset_orbit_node" << endl;
 			}
-		Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+		Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 		if (f_v) {
 			cout << "direct_product_action::init "
 					"calling Pairs->init_root_node" << endl;
@@ -1632,7 +1632,7 @@ void direct_product_action::write_pair_orbit_file(INT verbose_level)
 	ofstream f(fname);
 	f << nb_orbits << endl;
 	for (i = 0; i < nb_orbits; i++) {
-		n = Pairs->first_oracle_node_at_level[2] + i;
+		n = Pairs->first_poset_orbit_node_at_level[2] + i;
 		Pairs->get_set(n, set, size);
 		if (size != 2) {
 			cout << "direct_product_action::write_pair_orbit_file "

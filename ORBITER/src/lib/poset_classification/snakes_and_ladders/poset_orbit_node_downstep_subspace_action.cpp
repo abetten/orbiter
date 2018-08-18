@@ -1,4 +1,4 @@
-// oracle_downstep_subspace_action.C
+// poset_orbit_node_downstep_subspace_action.C
 //
 // Anton Betten
 // Jan 21, 2010
@@ -7,7 +7,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void oracle::setup_factor_space_action_light(
+void poset_orbit_node::setup_factor_space_action_light(
 	generator *gen,
 	action_on_factor_space &AF, 
 	INT lvl, INT verbose_level)
@@ -16,9 +16,9 @@ void oracle::setup_factor_space_action_light(
 	INT *the_set;
 		
 	if (f_v) {
-		cout << "oracle::setup_factor_space_action_light "
+		cout << "poset_orbit_node::setup_factor_space_action_light "
 				"lvl=" << lvl << endl;
-		cout << "oracle::setup_factor_space_action_light "
+		cout << "poset_orbit_node::setup_factor_space_action_light "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
 		}
@@ -37,7 +37,7 @@ void oracle::setup_factor_space_action_light(
 	FREE_INT(the_set);
 }
 
-void oracle::setup_factor_space_action_with_early_test(
+void poset_orbit_node::setup_factor_space_action_with_early_test(
 	generator *gen,
 	action_on_factor_space &AF, action &A_factor_space, 
 	INT lvl, INT verbose_level)
@@ -49,12 +49,12 @@ void oracle::setup_factor_space_action_with_early_test(
 	INT n, i;
 		
 	if (f_v) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"lvl=" << lvl << endl;
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"A2->degree=" << gen->A2->degree << endl;
 		}
 	the_set = NEW_INT(lvl + 1);
@@ -68,7 +68,7 @@ void oracle::setup_factor_space_action_with_early_test(
 	
 	if (lvl) {
 		if (f_vv) {
-			cout << "oracle::setup_factor_space_action_with_early_test "
+			cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 					"retrieving candidate set from Schreier vector "
 					"of node " << prev << endl;
 			}
@@ -93,7 +93,7 @@ void oracle::setup_factor_space_action_with_early_test(
 	candidates = NEW_INT(gen->A2->degree);
 
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"calling early_test_func, degree = " << gen->A2->degree
 				<< " n = " << n << endl;
 		}
@@ -103,7 +103,7 @@ void oracle::setup_factor_space_action_with_early_test(
 		gen->early_test_func_data,
 		verbose_level - 2);
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"after early_test_func, degree = " << gen->A2->degree
 				<< " n = " << n
 				<< " nb_candidates=" << nb_candidates << endl;
@@ -113,7 +113,7 @@ void oracle::setup_factor_space_action_with_early_test(
 		}
 
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"before AF.init_by_rank_table_mode" << endl;
 		}
 	AF.init_by_rank_table_mode(
@@ -127,7 +127,7 @@ void oracle::setup_factor_space_action_with_early_test(
 		gen->rank_point_data, 
 		verbose_level - 3);
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"after AF.init_by_rank_table_mode" << endl;
 		}
 	
@@ -138,7 +138,7 @@ void oracle::setup_factor_space_action_with_early_test(
 		}
 		
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"before A_factor_space.induced_action_on_factor_space"
 				<< endl;
 		}
@@ -147,27 +147,27 @@ void oracle::setup_factor_space_action_with_early_test(
 		NULL /* sims */,
 		0/*verbose_level - 3*/);
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"after A_factor_space.induced_action_on_factor_space"
 				<< endl;
 		}
 
 	if (f_v) {
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"lvl=" << lvl << endl;
-		cout << "oracle::setup_factor_space_action_with_early_test "
+		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << " done" << endl;
 		}
 }
 
-void oracle::setup_factor_space_action(generator *gen, 
+void poset_orbit_node::setup_factor_space_action(generator *gen,
 	action_on_factor_space &AF, action &A_factor_space, 
 	INT lvl, INT f_compute_tables, INT verbose_level)
-// called from oracle::init_extension_node, 
-// oracle::orbit_representative_and_coset_rep_inv_subspace_action
-// (in oracle_upstep_subspace_action)
-// oracle::downstep_subspace_action
+// called from poset_orbit_node::init_extension_node,
+// poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action
+// (in poset_orbit_node_upstep_subspace_action)
+// poset_orbit_node::downstep_subspace_action
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -177,9 +177,9 @@ void oracle::setup_factor_space_action(generator *gen,
 	INT i;
 
 	if (f_v) {
-		cout << "oracle::setup_factor_space_action "
+		cout << "poset_orbit_node::setup_factor_space_action "
 				"lvl=" << lvl << endl;
-		cout << "oracle::setup_factor_space_action "
+		cout << "poset_orbit_node::setup_factor_space_action "
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
 		cout << "f_compute_tables=" << f_compute_tables << endl;
@@ -192,7 +192,7 @@ void oracle::setup_factor_space_action(generator *gen,
 		cout << "the set: ";
 		INT_vec_print(cout, the_set, lvl);
 		cout << endl;
-		cout << "oracle::setup_factor_space_action "
+		cout << "poset_orbit_node::setup_factor_space_action "
 				"initializing action_on_factor_space "
 				"dimension=" << gen->vector_space_dimension << endl;
 		}
@@ -214,7 +214,7 @@ void oracle::setup_factor_space_action(generator *gen,
 		AF.list_all_elements();
 		}
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action "
+		cout << "poset_orbit_node::setup_factor_space_action "
 				"before A_factor_space->induced_action_on_factor_space"
 				<< endl;
 		}
@@ -224,7 +224,7 @@ void oracle::setup_factor_space_action(generator *gen,
 		NULL /* sims */,
 		0/*verbose_level - 3*/);
 	if (f_vv) {
-		cout << "oracle::setup_factor_space_action "
+		cout << "poset_orbit_node::setup_factor_space_action "
 				"after A_factor_space->induced_action_on_factor_space"
 				<< endl;
 		}
@@ -233,7 +233,7 @@ void oracle::setup_factor_space_action(generator *gen,
 	FREE_INT(coordinates);
 }
 
-void oracle::downstep_subspace_action(generator *gen, 
+void poset_orbit_node::downstep_subspace_action(generator *gen,
 	INT lvl, 
 	INT f_create_schreier_vector, INT f_compact, 
 	INT f_use_invariant_subset_if_available, 
@@ -242,7 +242,7 @@ void oracle::downstep_subspace_action(generator *gen,
 // called from generator::downstep
 {
 	//if (node == 0) {verbose_level += 20;
-	// cout << "oracle::downstep_subspace_action node 0 reached" << endl;}
+	// cout << "poset_orbit_node::downstep_subspace_action node 0 reached" << endl;}
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
@@ -256,7 +256,7 @@ void oracle::downstep_subspace_action(generator *gen,
 
 
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action" << endl;
+		cout << "poset_orbit_node::downstep_subspace_action" << endl;
 		}
 	store_set(gen, lvl - 1); // stores a set of size lvl to gen->S
 	
@@ -308,7 +308,7 @@ void oracle::downstep_subspace_action(generator *gen,
 	if (gen->f_early_test_func) {
 
 		if (f_v) {
-			cout << "oracle::downstep_subspace_action "
+			cout << "poset_orbit_node::downstep_subspace_action "
 					"before setup_factor_space_action_with_early_test"
 					<< endl;
 			}
@@ -317,7 +317,7 @@ void oracle::downstep_subspace_action(generator *gen,
 			lvl, verbose_level - 2);
 
 		if (f_v) {
-			cout << "oracle::downstep_subspace_action "
+			cout << "poset_orbit_node::downstep_subspace_action "
 					"after setup_factor_space_action_with_early_test"
 					<< endl;
 			}
@@ -325,7 +325,7 @@ void oracle::downstep_subspace_action(generator *gen,
 		}
 	else {
 		if (f_v) {
-			cout << "oracle::downstep_subspace_action "
+			cout << "poset_orbit_node::downstep_subspace_action "
 					"before setup_factor_space_action" << endl;
 			}
 		setup_factor_space_action(gen,
@@ -333,14 +333,14 @@ void oracle::downstep_subspace_action(generator *gen,
 				TRUE /*f_compute_tables*/,
 				verbose_level - 7);
 		if (f_v) {
-			cout << "oracle::downstep_subspace_action "
+			cout << "poset_orbit_node::downstep_subspace_action "
 					"after setup_factor_space_action" << endl;
 			}
 		}
 	
 	
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"before Schreier.init" << endl;
 		}
 
@@ -351,7 +351,7 @@ void oracle::downstep_subspace_action(generator *gen,
 
 
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"before Schreier.init_generators_by_hdl" << endl;
 		}
 	Schreier->init_generators_by_hdl(
@@ -360,7 +360,7 @@ void oracle::downstep_subspace_action(generator *gen,
 			verbose_level - 1);
 
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"before downstep_orbits_subspace_action" << endl;
 		}
 	downstep_orbits_subspace_action(
@@ -375,13 +375,13 @@ void oracle::downstep_subspace_action(generator *gen,
 
 	nb_orbits = Schreier->nb_orbits;
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"after downstep_orbits_subspace_action "
 				"nb_orbits=" << nb_orbits << endl;
 		}
 	
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"before create_schreier_vector_wrapper_subspace_action "
 				<< endl;
 		}
@@ -392,7 +392,7 @@ void oracle::downstep_subspace_action(generator *gen,
 		A_factor_space, AF, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"after create_schreier_vector_wrapper_subspace_action "
 				<< endl;
 		}
@@ -422,7 +422,7 @@ void oracle::downstep_subspace_action(generator *gen,
 		cout << " : calling find_extensions_subspace_action" << endl;
 		}
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"before find_extensions_subspace_action" << endl;
 		}
 	find_extensions_subspace_action(
@@ -431,7 +431,7 @@ void oracle::downstep_subspace_action(generator *gen,
 		lvl, f_implicit_fusion,
 		verbose_level - 1);
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"after find_extensions_subspace_action" << endl;
 		}
 	if (f_v4) {
@@ -455,7 +455,7 @@ void oracle::downstep_subspace_action(generator *gen,
 			verbose_level);
 		}
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action "
+		cout << "poset_orbit_node::downstep_subspace_action "
 				"before deleting things" << endl;
 		}
 	delete Strong_gens;
@@ -463,12 +463,12 @@ void oracle::downstep_subspace_action(generator *gen,
 	delete A_factor_space;
 	delete AF;
 	if (f_v) {
-		cout << "oracle::downstep_subspace_action done" << endl;
+		cout << "poset_orbit_node::downstep_subspace_action done" << endl;
 		}
 
 }
 
-void oracle::downstep_subspace_action_print_orbits(
+void poset_orbit_node::downstep_subspace_action_print_orbits(
 	generator *gen, schreier &Schreier, 
 	INT lvl, 
 	INT f_print_orbits, 
@@ -477,9 +477,9 @@ void oracle::downstep_subspace_action_print_orbits(
 	INT h, first, len, rep;
 	action_on_factor_space *AF;
 	
-	cout << "oracle::downstep_subspace_action_print_orbits" << endl;
+	cout << "poset_orbit_node::downstep_subspace_action_print_orbits" << endl;
 	gen->print_level_info(lvl + 1, node);
-	cout << "oracle::downstep_subspace_action_print_orbits: "
+	cout << "poset_orbit_node::downstep_subspace_action_print_orbits: "
 			"The " << Schreier.nb_orbits
 			<< " orbits are:" << endl;
 	
@@ -519,10 +519,10 @@ void oracle::downstep_subspace_action_print_orbits(
 			}
 		cout << endl;
 		}
-	cout << "oracle::downstep_subspace_action_print_orbits done" << endl;
+	cout << "poset_orbit_node::downstep_subspace_action_print_orbits done" << endl;
 }
 
-void oracle::downstep_orbits_subspace_action(
+void poset_orbit_node::downstep_orbits_subspace_action(
 	generator *gen, schreier &Schreier, 
 	INT lvl, 
 	INT f_use_invariant_subset_if_available, 
@@ -536,9 +536,9 @@ void oracle::downstep_orbits_subspace_action(
 	action_on_factor_space *AF;
 
 	if (f_v) {
-		cout << "oracle::downstep_orbits_subspace_action" << endl;
+		cout << "poset_orbit_node::downstep_orbits_subspace_action" << endl;
 		gen->print_level_info(lvl + 1, node);
-		cout << "oracle::downstep_orbits_subspace_action "
+		cout << "poset_orbit_node::downstep_orbits_subspace_action "
 				"verbose_level = " << verbose_level << endl;
 		}
 		
@@ -560,7 +560,7 @@ void oracle::downstep_orbits_subspace_action(
 
 	if (f_vv) {
 		gen->print_level_info(lvl + 1, node);
-		cout << "oracle::downstep_orbits_subspace_action: "
+		cout << "poset_orbit_node::downstep_orbits_subspace_action: "
 				"The " << Schreier.nb_orbits
 				<< " orbits are:" << endl;
 		INT h;
@@ -667,15 +667,15 @@ void oracle::downstep_orbits_subspace_action(
 #endif
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
-		cout << "oracle::downstep_orbits: "
+		cout << "poset_orbit_node::downstep_orbits: "
 				"we found " << Schreier.nb_orbits << " orbits" << endl;
 		}
 	if (f_v) {
-		cout << "oracle::downstep_orbits_subspace_action done" << endl;
+		cout << "poset_orbit_node::downstep_orbits_subspace_action done" << endl;
 		}
 }
 
-void oracle::find_extensions_subspace_action(
+void poset_orbit_node::find_extensions_subspace_action(
 	generator *gen, schreier &O,
 	action *A_factor_space, action_on_factor_space *AF, 
 	INT lvl, INT f_implicit_fusion, INT verbose_level)
@@ -689,9 +689,9 @@ void oracle::find_extensions_subspace_action(
 	INT h, k, fst, /*len,*/ pt, pt1;
 	
 	if (f_v) {
-		cout << "oracle::find_extensions_subspace_action" << endl;
+		cout << "poset_orbit_node::find_extensions_subspace_action" << endl;
 		gen->print_level_info(lvl + 1, node);
-		cout << "oracle::find_extensions_subspace_action "
+		cout << "poset_orbit_node::find_extensions_subspace_action "
 				"computing all possible extensions (out of "
 				<< O.nb_orbits << " orbits)" << endl;
 		}
@@ -726,18 +726,18 @@ void oracle::find_extensions_subspace_action(
 		if (f_implicit_fusion) {
 			// use implicit fusion nodes
 			if (lvl) {
-				if (pt <= oracle::pt) {
+				if (pt <= poset_orbit_node::pt) {
 					if (f_vv) {
-						cout << "oracle::find_extensions_subspace_action "
+						cout << "poset_orbit_node::find_extensions_subspace_action "
 							"orbit " << k << " is not accepted because "
 							<< "we use implicit fusion nodes and " 
 							<< pt << " is less than " 
-							<< oracle::pt << endl;
+							<< poset_orbit_node::pt << endl;
 						}
 					continue;
 					}
 				if (f_vv) {
-					cout << "oracle::find_extensions_subspace_action "
+					cout << "poset_orbit_node::find_extensions_subspace_action "
 							"orbit " << k << " is accepted" << endl;
 					}
 				}
@@ -752,13 +752,13 @@ void oracle::find_extensions_subspace_action(
 				}
 			if (ii < lvl) {
 				if (f_vv) {
-					cout << "oracle::find_extensions_subspace_action "
+					cout << "poset_orbit_node::find_extensions_subspace_action "
 						"orbit " << k << " is in the set so we skip" << endl;
 					}
 				continue;
 				}
 			if (f_vv) {
-				cout << "oracle::find_extensions_subspace_action "
+				cout << "poset_orbit_node::find_extensions_subspace_action "
 					"orbit " << k << " is accepted" << endl;
 				}
 			}
@@ -785,7 +785,7 @@ void oracle::find_extensions_subspace_action(
 #endif
 
 	if (f_v) {
-		cout << "oracle::find_extensions_subspace_action "
+		cout << "poset_orbit_node::find_extensions_subspace_action "
 				"found " << nb_extensions << " extensions with "
 				<< nb_extension_points << " points (out of "
 				<< O.nb_orbits << " orbits)" << endl;
@@ -799,7 +799,7 @@ void oracle::find_extensions_subspace_action(
 		}
 }
 
-void oracle::create_schreier_vector_wrapper_subspace_action(
+void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 	INT f_create_schreier_vector, INT f_compact, 
 	schreier &Schreier, 
 	action *A_factor_space, action_on_factor_space *AF, 
@@ -809,7 +809,7 @@ void oracle::create_schreier_vector_wrapper_subspace_action(
 	INT f_vv = (verbose_level >= 10);
 	
 	if (f_v) {
-		cout << "oracle::create_schreier_vector_wrapper_subspace_action"
+		cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action"
 				<< endl;
 		}
 	if (/*nb_strong_generators &&*/ f_create_schreier_vector) {
@@ -834,14 +834,14 @@ void oracle::create_schreier_vector_wrapper_subspace_action(
 			cout << endl;
 			}
 		if (f_v) {
-			cout << "oracle::create_schreier_vector_wrapper_subspace_action "
+			cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action "
 					"changing point labels:" << endl;
 			}
 		schreier_vector_relabel_points(sv, AF,
 				f_compact, f_trivial_group,
 				verbose_level - 4);
 		if (f_v) {
-			cout << "oracle::create_schreier_vector_wrapper_subspace_action "
+			cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action "
 					"changing point labels done" << endl;
 			}
 		if (f_vv) {
@@ -854,7 +854,7 @@ void oracle::create_schreier_vector_wrapper_subspace_action(
 		sv = NULL;
 		}
 	if (f_v) {
-		cout << "oracle::create_schreier_vector_wrapper_subspace_action "
+		cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action "
 				"done" << endl;
 		}
 }

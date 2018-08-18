@@ -227,12 +227,12 @@ void polar::init2(INT verbose_level)
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
-		cout << "Gen->init_oracle" << endl;
+		cout << "Gen->init_poset_orbit_node" << endl;
 		}
-	Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "calling Gen->init_root_node" << endl;
 		}
@@ -265,8 +265,8 @@ void polar::compute_orbits(INT t0, INT verbose_level)
 	if (f_v) {
 		cout << "done with generator_main" << endl;
 		}
-	first_node = Gen->first_oracle_node_at_level[depth];
-	nb_orbits = Gen->first_oracle_node_at_level[depth + 1] - first_node;
+	first_node = Gen->first_poset_orbit_node_at_level[depth];
+	nb_orbits = Gen->first_poset_orbit_node_at_level[depth + 1] - first_node;
 
 	INT i;
 	nb_elements = 0;
@@ -292,7 +292,7 @@ void polar::compute_cosets(INT depth, INT orbit_idx, INT verbose_level)
 	INT *Elt1, *Elt2;
 	longinteger_domain D;
 	longinteger_object go1, go2, index, rem, Rank;
-	oracle *O2;
+	poset_orbit_node *O2;
 
 	if (f_v) {
 		cout << "polar::compute_cosets" << endl;
@@ -304,7 +304,7 @@ void polar::compute_cosets(INT depth, INT orbit_idx, INT verbose_level)
 	M1 = NEW_INT(k * n);
 	M2 = NEW_INT(k * n);
 	
-	node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
+	node2 = Gen->first_poset_orbit_node_at_level[depth] + orbit_idx;
 	O2 = &Gen->root[node2];
 
 	Gen->stabilizer_order(0, go1);
@@ -415,7 +415,7 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 	INT *Elt1, *Elt2;
 	longinteger_domain D;
 	longinteger_object go1, go2, index, rem, Rank;
-	oracle *O2;
+	poset_orbit_node *O2;
 	INT *Adj;
 	INT **M;
 	INT witt;
@@ -432,7 +432,7 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 
 	witt = Witt_index(epsilon, n - 1);
 		
-	node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
+	node2 = Gen->first_poset_orbit_node_at_level[depth] + orbit_idx;
 	O2 = &Gen->root[node2];
 
 	Gen->stabilizer_order(0, go1);

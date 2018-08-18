@@ -151,7 +151,7 @@ void compute_stabilizer::init(INT *the_set,
 
 	
 	reduced_set_size = set_size - level;
-	first_at_level = gen->first_oracle_node_at_level[level];
+	first_at_level = gen->first_poset_orbit_node_at_level[level];
 
 	allocate1();
 
