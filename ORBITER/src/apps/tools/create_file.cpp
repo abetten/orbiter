@@ -7,7 +7,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 #define MAX_LINES 1000
 

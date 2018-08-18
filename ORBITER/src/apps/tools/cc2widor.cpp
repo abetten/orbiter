@@ -6,7 +6,6 @@
 // started:  June 29, 2008
 
 #include "orbiter.h"
-#include "discreta.h"
 
 void convert(ifstream &f, ofstream &g, int f_simple);
 
@@ -149,7 +148,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				s_flag[i] = 0;
 				}
 			s_type[v - 1] = 1;
-			s_flag[v - 1] = 0; //s_flag_opt_zahl; /* ursprünglicher Wert FTFF (JS 120100) */
+			s_flag[v - 1] = 0; //s_flag_opt_zahl; /* ursprï¿½nglicher Wert FTFF (JS 120100) */
 			
 			r_type = new INT[v + 1];
 			r_from = new INT[v + 1];

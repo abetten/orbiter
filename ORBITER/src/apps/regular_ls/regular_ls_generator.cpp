@@ -4,8 +4,6 @@
 // Jan 1, 2013
 
 #include "orbiter.h"
-#include "discreta.h"
-
 #include "regular_ls.h"
 
 void regular_ls_generator::init_basic(int argc, const char **argv, 

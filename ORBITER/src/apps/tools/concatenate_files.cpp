@@ -7,7 +7,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 INT t0;
 

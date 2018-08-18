@@ -8,8 +8,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
-
 #include "regular_ls.h"
 
 

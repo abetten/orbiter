@@ -1,13 +1,9 @@
 SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/lib 
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
-
-
-
-
 
 all: all_cliques.out \
 	all_cycles.out \
@@ -144,9 +140,4 @@ create_graph.out:  create_graph.o ;
 
 clean:
 	- rm *.o *.a *.out *~
-
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
-
-
 

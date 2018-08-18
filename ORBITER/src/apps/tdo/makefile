@@ -1,19 +1,17 @@
 SRC=../../../../ORBITER/src
 DISCRETA_CPP = /usr/bin/g++
 DISCRETA_CC = /usr/bin/gcc
-CPPFLAGS = -Wall -I$(SRC)/lib -I$(SRC)/lib/DISCRETA
+CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
 
-
-
-
-	
-
-all:  maxfit.out packing.out tdo_can.out tdo_start.out tdo_refine.out tdo_print.out 
-
-#tdo_refine_all.out 
+all:  maxfit.out \
+		packing.out \
+		tdo_can.out \
+		tdo_start.out \
+		tdo_refine.out \
+		tdo_print.out 
 
 maxfit.out:  maxfit.o ;
 	$(DISCRETA_CPP)  maxfit.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
@@ -37,14 +35,5 @@ tdo_print.out:  tdo_print.o ;
 	$(DISCRETA_CPP)  tdo_print.o  $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
-
-
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
-
 clean:
 	- rm *.o *.out *~
-
-
-
-

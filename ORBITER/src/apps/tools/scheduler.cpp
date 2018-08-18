@@ -7,7 +7,6 @@
 //
 
 #include "orbiter.h"
-#include "discreta.h"
 
 #define MY_BUFSIZE ONE_MILLION
 
