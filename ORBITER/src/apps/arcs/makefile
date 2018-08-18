@@ -40,7 +40,7 @@ arcs_orderly.out:  arcs_orderly.o;
 
 
 
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+#%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 
 clean:

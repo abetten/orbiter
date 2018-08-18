@@ -196,7 +196,7 @@ costas.out:  costas.o;
 clean:
 	- rm *.o *.a *.out *~
 
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+#%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 
 

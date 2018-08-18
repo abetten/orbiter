@@ -279,9 +279,9 @@ public:
 	void projective_point_unrank(INT n, INT *v, INT rk);
 	INT projective_point_rank(INT n, INT *v);
 
-	// #####################################################################
+	// #########################################################################
 	// finite_field_linear_algebra.C:
-	// #####################################################################
+	// #########################################################################
 
 	void copy_matrix(INT *A, INT *B, INT ma, INT na);
 	void reverse_matrix(INT *A, INT *B, INT ma, INT na);
@@ -634,9 +634,9 @@ public:
 		INT *&gens, INT &nb_gens, INT &data_size, 
 		INT &group_order, INT verbose_level);
 
-	// #####################################################################
+	// #########################################################################
 	// finite_field_representations.C:
-	// #####################################################################
+	// #########################################################################
 
 	void representing_matrix8_R(INT *A, 
 		INT q, INT a, INT b, INT c, INT d);
