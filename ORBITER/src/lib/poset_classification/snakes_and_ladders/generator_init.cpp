@@ -48,9 +48,9 @@ void generator::null()
 	set = NULL;
 	
 	
-	nb_oracle_nodes_used = 0;
+	nb_poset_orbit_nodes_used = 0;
 	root = NULL;
-	first_oracle_node_at_level = NULL;
+	first_poset_orbit_node_at_level = NULL;
 	set0 = NULL;
 	set1 = NULL;
 	set3 = NULL;
@@ -178,7 +178,7 @@ void generator::freeself()
 	if (f_v) {
 		cout << "generator::freeself  before exit_oracle" << endl;
 		}
-	exit_oracle();
+	exit_poset_orbit_node();
 	if (f_v) {
 		cout << "generator::freeself  after exit_oracle" << endl;
 		}
@@ -496,8 +496,8 @@ void generator::init(action *A, action *A2,
 		set[i] = NEW_INT(sz);
 		}
 		
-	nb_oracle_nodes_used = 0;
-	nb_oracle_nodes_allocated = 0;
+	nb_poset_orbit_nodes_used = 0;
+	nb_poset_orbit_nodes_allocated = 0;
 
 	nb_times_image_of_called0 = A->nb_times_image_of_called;
 	nb_times_mult_called0 = A->nb_times_mult_called;
@@ -546,9 +546,9 @@ void generator::initialize(action *A_base, action *A_use,
 	INT nb_oracle_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "generator::initialize calling gen->init_oracle" << endl;
+		cout << "generator::initialize calling gen->init_poset_orbit_node" << endl;
 		}
-	init_oracle(nb_oracle_nodes, verbose_level - 1);
+	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
 	if (f_vv) {
 		cout << "generator::initialize calling gen->init_root_node" << endl;
 		}
@@ -623,9 +623,9 @@ void generator::initialize_with_starter(
 	
 	if (f_vv) {
 		cout << "generator::initialize_with_starter "
-				"calling gen->init_oracle" << endl;
+				"calling gen->init_poset_orbit_node" << endl;
 		}
-	init_oracle(nb_oracle_nodes, verbose_level - 1);
+	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
 	if (f_vv) {
 		cout << "generator::initialize_with_starter "
 				"calling gen->init_root_node" << endl;
@@ -668,7 +668,7 @@ void generator::init_root_node(INT verbose_level)
 	if (f_starter) {
 		INT i;
 		
-		first_oracle_node_at_level[0] = 0;
+		first_poset_orbit_node_at_level[0] = 0;
 		root[0].freeself();
 		root[0].node = 0;
 		root[0].prev = -1;
@@ -685,8 +685,8 @@ void generator::init_root_node(INT verbose_level)
 				cout << "generator::init_root_node initializing "
 						"node at level " << i << endl;
 				}
-			first_oracle_node_at_level[i + 1] =
-					first_oracle_node_at_level[i] + 1;
+			first_poset_orbit_node_at_level[i + 1] =
+					first_poset_orbit_node_at_level[i] + 1;
 			root[i].E = new extension[1];
 			root[i].nb_extensions = 1;
 			root[i].E[0].type = EXTENSION_TYPE_EXTENSION;
@@ -704,13 +704,13 @@ void generator::init_root_node(INT verbose_level)
 			}
 		root[starter_size].store_strong_generators(
 				this, starter_strong_gens);
-		first_oracle_node_at_level[starter_size + 1] =
+		first_poset_orbit_node_at_level[starter_size + 1] =
 				starter_size + 1;
 		if (f_vv) {
 			cout << "i : first_oracle_node_at_level[i]" << endl;
 			for (i = 0; i <= starter_size + 1; i++) {
 				cout << i << " : "
-						<< first_oracle_node_at_level[i] << endl;
+						<< first_poset_orbit_node_at_level[i] << endl;
 				}
 			}
 		}
@@ -722,25 +722,25 @@ void generator::init_root_node(INT verbose_level)
 		}
 }
 
-void generator::init_oracle(INT nb_oracle_nodes, INT verbose_level)
+void generator::init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
 
 	if (f_v) {
-		cout << "generator::init_oracle" << endl;
+		cout << "generator::init_poset_orbit_node" << endl;
 		}
-	root = new oracle[nb_oracle_nodes];
-	for (i = 0; i < nb_oracle_nodes; i++) {
+	root = new poset_orbit_node[nb_poset_orbit_nodes];
+	for (i = 0; i < nb_poset_orbit_nodes; i++) {
 		root[i].node = i;
 		}
-	nb_oracle_nodes_allocated = nb_oracle_nodes;
-	nb_oracle_nodes_used = 0;
-	oracle_nodes_increment = nb_oracle_nodes;
-	oracle_nodes_increment_last = nb_oracle_nodes;
-	first_oracle_node_at_level = NEW_INT(sz + 2);
-	first_oracle_node_at_level[0] = 0;
-	first_oracle_node_at_level[1] = 1;
+	nb_poset_orbit_nodes_allocated = nb_poset_orbit_nodes;
+	nb_poset_orbit_nodes_used = 0;
+	poset_orbit_nodes_increment = nb_poset_orbit_nodes;
+	poset_orbit_nodes_increment_last = nb_poset_orbit_nodes;
+	first_poset_orbit_node_at_level = NEW_INT(sz + 2);
+	first_poset_orbit_node_at_level[0] = 0;
+	first_poset_orbit_node_at_level[1] = 1;
 	set0 = NEW_INT(sz + 1);
 	set1 = NEW_INT(sz + 1);
 	set3 = NEW_INT(sz + 1);
@@ -760,7 +760,7 @@ void generator::init_oracle(INT nb_oracle_nodes, INT verbose_level)
 }
 
 
-void generator::exit_oracle()
+void generator::exit_poset_orbit_node()
 {
 	if (root) {
 		delete [] root;
@@ -778,9 +778,9 @@ void generator::exit_oracle()
 		FREE_INT(set3);
 		set3 = NULL;
 		}
-	if (first_oracle_node_at_level) {
-		FREE_INT(first_oracle_node_at_level);
-		first_oracle_node_at_level = NULL;
+	if (first_poset_orbit_node_at_level) {
+		FREE_INT(first_poset_orbit_node_at_level);
+		first_poset_orbit_node_at_level = NULL;
 		}
 
 	if (nb_extension_nodes_at_level_total) {
@@ -806,12 +806,12 @@ void generator::reallocate()
 	INT increment_new;
 	INT verbose_level = 0;
 	
-	increment_new = oracle_nodes_increment +
-			oracle_nodes_increment_last;
-	reallocate_to(nb_oracle_nodes_allocated +
-			oracle_nodes_increment, verbose_level - 1);
-	oracle_nodes_increment_last = oracle_nodes_increment;
-	oracle_nodes_increment = increment_new;
+	increment_new = poset_orbit_nodes_increment +
+			poset_orbit_nodes_increment_last;
+	reallocate_to(nb_poset_orbit_nodes_allocated +
+			poset_orbit_nodes_increment, verbose_level - 1);
+	poset_orbit_nodes_increment_last = poset_orbit_nodes_increment;
+	poset_orbit_nodes_increment = increment_new;
 	
 }
 
@@ -820,29 +820,29 @@ void generator::reallocate_to(INT new_number_of_nodes,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
-	oracle *new_root;
+	poset_orbit_node *new_root;
 	
 	if (f_v) {
 		cout << "generator::reallocate_to" << endl;
 		}
-	if (new_number_of_nodes < nb_oracle_nodes_allocated) {
+	if (new_number_of_nodes < nb_poset_orbit_nodes_allocated) {
 		cout << "generator::reallocate_to new_number_of_nodes < "
 				"nb_oracle_nodes_allocated" << endl;
 		exit(1);
 		}
 	if (f_v) {
 		cout << "generator::reallocate_to from "
-				<< nb_oracle_nodes_allocated
+				<< nb_poset_orbit_nodes_allocated
 				<< " to " << new_number_of_nodes << endl;
 		}
-	new_root = new oracle[new_number_of_nodes];
-	for (i = 0; i < nb_oracle_nodes_allocated; i++) {
+	new_root = new poset_orbit_node[new_number_of_nodes];
+	for (i = 0; i < nb_poset_orbit_nodes_allocated; i++) {
 		new_root[i] = root[i];
 		root[i].null();
 		}
 	delete [] root;
 	root = new_root;
-	nb_oracle_nodes_allocated = new_number_of_nodes;
+	nb_poset_orbit_nodes_allocated = new_number_of_nodes;
 	if (f_v) {
 		cout << "generator::reallocate_to done" << endl;
 		}

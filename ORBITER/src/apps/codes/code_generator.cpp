@@ -393,14 +393,14 @@ void code_generator::init(int argc, const char **argv)
 	gen->print_function_data = this;
 	
 
-	INT nb_oracle_nodes = ONE_MILLION;
+	INT nb_nodes = ONE_MILLION;
 	
 	if (f_v) {
 		cout << "code_generator::init group set up, "
-				"calling gen->init_oracle" << endl;
+				"calling gen->init_poset_orbit_node" << endl;
 		}
 
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_v) {
 		cout << "code_generator::init group set up, "
@@ -587,11 +587,11 @@ void code_generator::early_test_func_by_using_group(
 		}
 
 	INT i, j, node, f, l, pt, nb_good_orbits;
-	oracle *O;
+	poset_orbit_node *O;
 	INT f_orbit_is_good;
 	INT s, a;
 
-	node = gen->find_oracle_node_for_set(len, S, 
+	node = gen->find_poset_orbit_node_for_set(len, S,
 		FALSE /* f_tolerant */, 0);
 	O = gen->root + node;
 

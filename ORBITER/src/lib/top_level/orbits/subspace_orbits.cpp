@@ -186,13 +186,13 @@ void subspace_orbits::init_group(INT verbose_level)
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
 		cout << "subspace_orbits->init_group "
-				"before Gen->init_oracle" << endl;
+				"before Gen->init_poset_orbit_node" << endl;
 		}
-	Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "subspace_orbits->init_group "
 				"calling Gen->init_root_node" << endl;
@@ -784,7 +784,7 @@ void subspace_orbits::print_set(INT len, INT *S)
 			//f_implicit_fusion, 
 			0 /*verbose_level - 3*/);
 
-		global_idx = Gen->first_oracle_node_at_level[n - k] + local_idx;
+		global_idx = Gen->first_poset_orbit_node_at_level[n - k] + local_idx;
 		cout << "after Gen->trace_set" << endl;
 		cout << "local_idx = " << local_idx << endl;
 		cout << "global_idx = " << global_idx << endl;

@@ -17,7 +17,6 @@ clean:
 	- rm *.o *.a *~
 
 
-#%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 
 

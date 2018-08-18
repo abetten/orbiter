@@ -203,12 +203,12 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_poset_orbit_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init_oracle" << endl;
+		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init_poset_orbit_node" << endl;
 		}
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits " << label << " calling gen->init_root_node" << endl;
 		}
@@ -235,8 +235,8 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 	if (f_vv) {
 		cout << "choose_points_or_lines::compute_orbits " << label << " done with generator_main" << endl;
 		}
-	f = gen->first_oracle_node_at_level[nb_points_or_lines];
-	nb_orbits = gen->first_oracle_node_at_level[nb_points_or_lines + 1] - f;
+	f = gen->first_poset_orbit_node_at_level[nb_points_or_lines];
+	nb_orbits = gen->first_poset_orbit_node_at_level[nb_points_or_lines + 1] - f;
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits " << label << " we found " << nb_orbits << " orbits on " << nb_points_or_lines;
 		if (f_choose_lines) {
@@ -258,7 +258,7 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 	INT f_changed;
 	INT *the_favorite_representative;
 	group *G;
-	oracle *O;
+	poset_orbit_node *O;
 	
 	f_hit_favorite = FALSE;
 	if (f_v) {
@@ -269,7 +269,7 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 	free_representative();
 
 
-	f = gen->first_oracle_node_at_level[nb_points_or_lines];
+	f = gen->first_poset_orbit_node_at_level[nb_points_or_lines];
 	nd = f + orbit_no;
 	
 	longinteger_object go;

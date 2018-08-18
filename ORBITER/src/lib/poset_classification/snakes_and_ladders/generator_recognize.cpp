@@ -81,7 +81,7 @@ void generator::recognize_recursion(
 	INT node;
 
 
-	node = current_node - first_oracle_node_at_level[lvl];
+	node = current_node - first_poset_orbit_node_at_level[lvl];
 	
 
 	if (f_v) {
@@ -100,7 +100,7 @@ void generator::recognize_recursion(
 		return;
 		}
 
-	oracle *O;
+	poset_orbit_node *O;
 
 	O = &root[current_node];
 	if (f_vvv) {

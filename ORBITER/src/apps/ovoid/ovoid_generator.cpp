@@ -255,14 +255,14 @@ void ovoid_generator::init(int argc, const char **argv,
 		}
 	
 	
-	INT nb_oracle_nodes = ONE_MILLION;
+	INT nb_nodes = ONE_MILLION;
 	
 	if (f_v) {
-		cout << "calling init_oracle with "
-				<< nb_oracle_nodes << " nodes" << endl;
+		cout << "calling init_poset_orbit_node with "
+				<< nb_nodes << " nodes" << endl;
 		}
 	
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 
 	if (f_v) {
 		cout << "after calling init_root_node" << endl;

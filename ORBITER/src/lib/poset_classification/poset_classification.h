@@ -6,7 +6,7 @@
 
 
 typedef class generator generator;
-typedef class oracle oracle;
+typedef class poset_orbit_node poset_orbit_node;
 typedef class extension extension;
 typedef class set_stabilizer_compute set_stabilizer_compute;
 typedef class upstep_work upstep_work;

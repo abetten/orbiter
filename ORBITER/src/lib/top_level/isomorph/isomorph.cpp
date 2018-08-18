@@ -1488,7 +1488,7 @@ void isomorph::print_node_local(INT level, INT node_local)
 {
 	INT n;
 
-	n = gen->first_oracle_node_at_level[level] + node_local;
+	n = gen->first_poset_orbit_node_at_level[level] + node_local;
 	cout << n << "=" << level << "/" << node_local;
 }
 
@@ -1496,7 +1496,7 @@ void isomorph::print_node_global(INT level, INT node_global)
 {
 	INT node_local;
 
-	node_local = node_global - gen->first_oracle_node_at_level[level];
+	node_local = node_global - gen->first_poset_orbit_node_at_level[level];
 	cout << node_global << "=" << level << "/" << node_local;
 }
 

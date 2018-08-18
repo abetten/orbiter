@@ -164,12 +164,12 @@ void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_leve
 	gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
-		cout << "find_partial_blocking_sets calling gen->init_oracle" << endl;
+		cout << "find_partial_blocking_sets calling gen->init_poset_orbit_node" << endl;
 		}
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "find_partial_blocking_sets calling gen->init_root_node" << endl;
 		}
@@ -207,8 +207,8 @@ INT search_blocking_set::test_level(INT depth, INT verbose_level)
 	if (f_v) {
 		cout << "search_blocking_set::test_level: testing all partial blocking sets at level " << depth << endl;
 		}
-	f = gen->first_oracle_node_at_level[depth];
-	nb_orbits = gen->first_oracle_node_at_level[depth + 1] - f;
+	f = gen->first_poset_orbit_node_at_level[depth];
+	nb_orbits = gen->first_poset_orbit_node_at_level[depth + 1] - f;
 	if (f_v) {
 		cout << "search_blocking_set::test_level: we found " << nb_orbits << " orbits on partial blocking sets of size " << depth << endl;
 		}
@@ -418,8 +418,8 @@ void search_blocking_set::search_for_blocking_set(INT input_no, INT level, INT f
 		f_find_only_one = TRUE;
 		}
 
-	f = gen->first_oracle_node_at_level[level];
-	nb_orbits = gen->first_oracle_node_at_level[level + 1] - f;
+	f = gen->first_poset_orbit_node_at_level[level];
+	nb_orbits = gen->first_poset_orbit_node_at_level[level + 1] - f;
 	if (f_v) {
 		cout << "search_blocking_set::search_for_blocking_set: we found " << nb_orbits << " orbits on partial blocking sets of size" << level << endl;
 		}

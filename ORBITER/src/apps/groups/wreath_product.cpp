@@ -533,12 +533,12 @@ void tensor_product::init(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_nodes = 1000;
 
 	if (f_v) {
-		cout << "tensor_product::init before Gen->init_oracle" << endl;
+		cout << "tensor_product::init before Gen->init_poset_orbit_node" << endl;
 		}
-	Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen->init_poset_orbit_node(nb_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "tensor_product::init calling Gen->init_root_node" << endl;
 		}

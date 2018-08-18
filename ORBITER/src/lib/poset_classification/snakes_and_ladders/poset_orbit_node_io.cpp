@@ -1,4 +1,4 @@
-// oracle_io.C
+// poset_orbit_node_io.C
 //
 // Anton Betten
 // moved here from DISCRETA/snakesandladders.C
@@ -10,7 +10,9 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void oracle::read_memory_object(action *A, memory_object *m, INT &nb_group_elements, INT verbose_level)
+void poset_orbit_node::read_memory_object(
+		action *A, memory_object *m, INT &nb_group_elements,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -19,14 +21,15 @@ void oracle::read_memory_object(action *A, memory_object *m, INT &nb_group_eleme
 	Elt = NEW_INT(A->elt_size_in_INT);
 	m->read_int(&node);
 	if (f_v) {
-		cout << "oracle::read_memory_object node " << node << endl;
+		cout << "poset_orbit_node::read_memory_object node " << node << endl;
 		cout << "cur_pointer=" << m->cur_pointer << endl;
 		}
 	m->read_int(&prev);
 	m->read_int(&pt);
 	m->read_int(&nb_strong_generators);
 	if (f_v) {
-		cout << "oracle::read_memory_object nb_strong_generators " << nb_strong_generators << endl;
+		cout << "poset_orbit_node::read_memory_object "
+				"nb_strong_generators " << nb_strong_generators << endl;
 		}
 	if (nb_strong_generators) {
 		hdl_strong_generators = NEW_INT(nb_strong_generators);
@@ -46,7 +49,8 @@ void oracle::read_memory_object(action *A, memory_object *m, INT &nb_group_eleme
 		}
 	m->read_int(&nb_extensions);
 	if (f_v) {
-		cout << "oracle::read_memory_object nb_extensions " << nb_extensions << endl;
+		cout << "poset_orbit_node::read_memory_object nb_extensions "
+				<< nb_extensions << endl;
 		cout << "cur_pointer=" << m->cur_pointer << endl;
 		}
 	E = new extension[nb_extensions];
@@ -55,23 +59,23 @@ void oracle::read_memory_object(action *A, memory_object *m, INT &nb_group_eleme
 		}
 	for (i = 0; i < nb_extensions; i++) {
 		if (f_v) {
-			cout << "oracle::read_memory_object extension " << i << endl;
+			cout << "poset_orbit_node::read_memory_object extension " << i << endl;
 			}
 		m->read_int(&E[i].pt);
 		if (f_v) {
-			cout << "oracle::read_memory_object pt = " << E[i].pt << endl;
+			cout << "poset_orbit_node::read_memory_object pt = " << E[i].pt << endl;
 			}
 		m->read_int(&E[i].orbit_len);
 		if (f_v) {
-			cout << "oracle::read_memory_object pt = " << E[i].orbit_len << endl;
+			cout << "poset_orbit_node::read_memory_object pt = " << E[i].orbit_len << endl;
 			}
 		m->read_int(&E[i].type);
 		if (f_v) {
-			cout << "oracle::read_memory_object type = " << E[i].type << endl;
+			cout << "poset_orbit_node::read_memory_object type = " << E[i].type << endl;
 			}
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			m->read_int(&E[i].data); // next oracle node
+			m->read_int(&E[i].data); // next poset_orbit_node
 			}
 		else if (E[i].type == EXTENSION_TYPE_FUSION) {
 			// fusion node
@@ -82,17 +86,21 @@ void oracle::read_memory_object(action *A, memory_object *m, INT &nb_group_eleme
 			nb_group_elements++;
 			}
 		else {
-			cout << "oracle::read_memory_object type " << E[i].type << " is illegal" << endl;
+			cout << "poset_orbit_node::read_memory_object type "
+					<< E[i].type << " is illegal" << endl;
 			exit(1);
 			}
 		}
 	FREE_INT(Elt);
 	if (f_v) {
-		cout << "oracle::read_memory_object node " << node << " finished" << endl;
+		cout << "poset_orbit_node::read_memory_object node "
+				<< node << " finished" << endl;
 		}
 }
 
-void oracle::write_memory_object(action *A, memory_object *m, INT &nb_group_elements, INT verbose_level)
+void poset_orbit_node::write_memory_object(
+		action *A, memory_object *m, INT &nb_group_elements,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -100,7 +108,7 @@ void oracle::write_memory_object(action *A, memory_object *m, INT &nb_group_elem
 	
 	Elt = NEW_INT(A->elt_size_in_INT);
 	if (f_v) {
-		cout << "oracle::write_memory_object node " << node << endl;
+		cout << "poset_orbit_node::write_memory_object node " << node << endl;
 		cout << "used_length=" << m->used_length << endl;
 		}
 	m->write_int(node);
@@ -139,11 +147,12 @@ void oracle::write_memory_object(action *A, memory_object *m, INT &nb_group_elem
 		m->write_int(E[i].orbit_len);
 		m->write_int(E[i].type);
 		if (f_v) {
-			cout << i << " : " << E[i].pt << " : " << E[i].orbit_len << " : " << E[i].type << endl;
+			cout << i << " : " << E[i].pt << " : "
+					<< E[i].orbit_len << " : " << E[i].type << endl;
 			}
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			// extension node
-			m->write_int(E[i].data); // next oracle node
+			m->write_int(E[i].data); // next poset_orbit_node
 			if (f_v) {
 				cout << "extension node, data=" << E[i].data << endl;
 				}
@@ -160,18 +169,20 @@ void oracle::write_memory_object(action *A, memory_object *m, INT &nb_group_elem
 			nb_group_elements++;
 			}
 		else {
-			cout << "oracle_write_memory: type " << E[i].type << " is illegal" << endl;
+			cout << "poset_orbit_node::write_memory: type "
+						<< E[i].type << " is illegal" << endl;
 			exit(1);
 			}
 		}
 	FREE_INT(Elt);
 	if (f_v) {
-		cout << "oracle::write_memory_object node " << node << " finished" << endl;
+		cout << "poset_orbit_node::write_memory_object node "
+				<< node << " finished" << endl;
 		}
 }
 
 
-void oracle::sv_read_file(FILE *fp, INT verbose_level)
+void poset_orbit_node::sv_read_file(FILE *fp, INT verbose_level)
 {
 	INT i, n, len;
 	INT4 I;
@@ -179,12 +190,13 @@ void oracle::sv_read_file(FILE *fp, INT verbose_level)
 	INT f_trivial_group;
 	
 	if (f_v) {
-		cout << "oracle::sv_read_file node " << node << endl;
+		cout << "poset_orbit_node::sv_read_file node " << node << endl;
 		}
 	I = fread_INT4(fp);
 	if (I == 0) {
 		sv = NULL;
-		cout << "oracle::sv_read_file node " << node << ", sv = NULL, no schreier vector" << endl;
+		cout << "poset_orbit_node::sv_read_file node " << node
+				<< ", sv = NULL, no schreier vector" << endl;
 		return;
 		}
 	f_trivial_group = fread_INT4(fp);
@@ -205,21 +217,22 @@ void oracle::sv_read_file(FILE *fp, INT verbose_level)
 		osv[1 + i] = fread_INT4(fp);
 		}
 	sv = osv;
-	cout << "oracle::sv_read_file node " << node << " read sv with " << n << " live points" << endl;
+	cout << "poset_orbit_node::sv_read_file node " << node
+			<< " read sv with " << n << " live points" << endl;
 	
 	if (f_v) {
-		cout << "oracle::sv_read_file node " << node << " finished" << endl;
+		cout << "poset_orbit_node::sv_read_file node " << node << " finished" << endl;
 		}
 }
 
-void oracle::sv_write_file(FILE *fp, INT verbose_level)
+void poset_orbit_node::sv_write_file(FILE *fp, INT verbose_level)
 {
 	INT i, len;
 	INT f_v = (verbose_level >= 1);
 	INT f_trivial_group;
 	
 	if (f_v) {
-		cout << "oracle::sv_write_file node " << node << endl;
+		cout << "poset_orbit_node::sv_write_file node " << node << endl;
 		}
 	if (sv == NULL) {
 		fwrite_INT4(fp, 0);
@@ -248,11 +261,14 @@ void oracle::sv_write_file(FILE *fp, INT verbose_level)
 		}
 	
 	if (f_v) {
-		cout << "oracle::sv_write_file node " << node << " finished" << endl;
+		cout << "poset_orbit_node::sv_write_file node "
+				<< node << " finished" << endl;
 		}
 }
 
-void oracle::read_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose_level)
+void poset_orbit_node::read_file(action *A,
+		FILE *fp, INT &nb_group_elements,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -262,7 +278,7 @@ void oracle::read_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose_
 	Elt = NEW_INT(A->elt_size_in_INT);
 	node = fread_INT4(fp);
 	if (f_v) {
-		cout << "oracle_read_file node " << node << endl;
+		cout << "poset_orbit_node::read_file node " << node << endl;
 		}
 	prev = fread_INT4(fp);
 	pt = fread_INT4(fp);
@@ -305,7 +321,7 @@ void oracle::read_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose_
 		}
 	for (i = 0; i < nb_extensions; i++) {
 		if (f_vv) {
-			cout << "oracle_read_file extension " << i << endl;
+			cout << "poset_orbit_node::read_file extension " << i << endl;
 			}
 		E[i].pt = fread_INT4(fp);
 		if (f_vv) {
@@ -322,7 +338,7 @@ void oracle::read_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose_
 		if (E[i].type == EXTENSION_TYPE_EXTENSION) {
 			// extension node
 			E[i].data = fread_INT4(fp);
-			// next oracle node
+			// next poset_orbit_node
 			}
 		else if (E[i].type == EXTENSION_TYPE_FUSION) {
 			// fusion node
@@ -336,17 +352,21 @@ void oracle::read_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose_
 			nb_group_elements++;
 			}
 		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {
-			cout << "oracle_read_file: type EXTENSION_TYPE_PROCESSING is illegal" << endl;
+			cout << "poset_orbit_node::read_file: "
+					"type EXTENSION_TYPE_PROCESSING is illegal" << endl;
 			exit(1);
 			}
 		}
 	FREE_INT(Elt);
 	if (f_v) {
-		cout << "oracle_read_file node " << node << " finished" << endl;
+		cout << "poset_orbit_node::read_file node "
+				<< node << " finished" << endl;
 		}
 }
 
-void oracle::write_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose_level)
+void poset_orbit_node::write_file(action *A,
+		FILE *fp, INT &nb_group_elements,
+		INT verbose_level)
 {
 	INT i;
 	INT *Elt;
@@ -355,7 +375,7 @@ void oracle::write_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose
 	
 	Elt = NEW_INT(A->elt_size_in_INT);
 	if (f_v) {
-		cout << "oracle_write_file node " << node << endl;
+		cout << "poset_orbit_node::write_file node " << node << endl;
 		}
 	fwrite_INT4(fp, node);
 	fwrite_INT4(fp, prev);
@@ -411,17 +431,19 @@ void oracle::write_file(action *A, FILE *fp, INT &nb_group_elements, INT verbose
 			nb_group_elements++;
 			}
 		else if (E[i].type == EXTENSION_TYPE_PROCESSING) {
-			cout << "oracle_write_file: type EXTENSION_TYPE_PROCESSING is illegal" << endl;
+			cout << "poset_orbit_node::write_file: "
+					"type EXTENSION_TYPE_PROCESSING is illegal" << endl;
 			exit(1);
 			}
 		}
 	FREE_INT(Elt);
 	if (f_v) {
-		cout << "oracle_write_file node " << node << " finished" << endl;
+		cout << "poset_orbit_node::write_file node "
+				<< node << " finished" << endl;
 		}
 }
 
-INT oracle::calc_size_on_file(action *A, INT verbose_level)
+INT poset_orbit_node::calc_size_on_file(action *A, INT verbose_level)
 {
 	INT i, s = 0;
 	s += 4 * 4; // node, prev, pt, nb_strong_generators

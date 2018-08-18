@@ -391,14 +391,14 @@ void generator::test_for_multi_edge_in_classification_graph(
 				"depth=" << depth << endl;
 		}
 	for (i = 0; i <= depth; i++) {
-		f = first_oracle_node_at_level[i];
+		f = first_poset_orbit_node_at_level[i];
 		l = nb_orbits_at_level(i);
 		if (f_v) {
 			cout << "generator::test_for_multi_edge_in_classification_graph "
 					"level=" << i << " with " << l << " nodes" << endl;
 			}
 		for (j = 0; j < l; j++) {
-			oracle *O;
+			poset_orbit_node *O;
 
 			O = &root[f + j];
 			for (h1 = 0; h1 < O->nb_extensions; h1++) {

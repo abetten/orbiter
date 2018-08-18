@@ -149,7 +149,7 @@ void generator::identify(INT *data, INT sz,
 
 	longinteger_object go;
 
-	orbit_at_level = final_node - first_oracle_node_at_level[sz];
+	orbit_at_level = final_node - first_poset_orbit_node_at_level[sz];
 	get_stabilizer_order(sz, orbit_at_level, go);
 
 	if (f_v) {
@@ -226,7 +226,7 @@ void generator::test_identify(INT level, INT nb_times,
 		recognize(set2, level, transporter, f_implicit_fusion,
 			final_node, verbose_level);
 		
-		r2 = final_node - first_oracle_node_at_level[level];
+		r2 = final_node - first_poset_orbit_node_at_level[level];
 		if (r2 != r) {
 			cout << "recognition fails" << endl;
 			exit(1);
@@ -342,7 +342,7 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 {
 	INT f_v = (verbose_level >= 1);
 	INT next_node;
-	oracle *O;
+	poset_orbit_node *O;
 
 	O = &root[current_node];
 
@@ -402,7 +402,7 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 			cout << endl;
 			}
 
-		next_node = find_oracle_node_for_set(level + 1 /*size*/,
+		next_node = find_poset_orbit_node_for_set(level + 1 /*size*/,
 				set_out, f_tolerant, 0);
 		// changed A Betten 2/19/2011
 
@@ -434,7 +434,7 @@ INT generator::trace_set_recursion(
 	INT f_v = (verbose_level >= 1);
 	INT pt, pt0, current_extension, i, t, next_node;
 	INT f_failure_to_find_point;
-	oracle *O = &root[cur_node];
+	poset_orbit_node *O = &root[cur_node];
 	
 	if (f_v) {
 		cout << "generator::trace_set_recursion "
@@ -635,7 +635,7 @@ INT generator::trace_set(INT *set, INT size, INT level,
 		FALSE /*f_tolerant*/, 
 		verbose_level);
 
-	case_nb = n - first_oracle_node_at_level[level];
+	case_nb = n - first_poset_orbit_node_at_level[level];
 
 	if (case_nb < 0) {
 		cout << "generator::trace_set, "
@@ -684,7 +684,7 @@ INT generator::find_node_for_subspace_by_rank(
 		}
 	node = 0;
 	for (i = 0; i < len; i++) {
-		oracle *O;
+		poset_orbit_node *O;
 
 		O = &root[node];
 		for (j = 0; j < O->nb_extensions; j++) {

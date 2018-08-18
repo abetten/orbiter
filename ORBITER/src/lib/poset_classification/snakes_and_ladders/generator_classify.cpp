@@ -64,8 +64,8 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 		if (nb_nodes == 0) {
 			INT j;
 			for (j = level + 2; j <= to_level + 1; j++) {
-				first_oracle_node_at_level[j] =
-						first_oracle_node_at_level[j - 1];
+				first_poset_orbit_node_at_level[j] =
+						first_poset_orbit_node_at_level[j - 1];
 				}
 			return level;
 			}	
@@ -232,8 +232,8 @@ INT generator::main(INT t0,
 		if (nb_nodes == 0) {
 			INT j;
 			for (j = i + 2; j <= target_depth + 1; j++) {
-				first_oracle_node_at_level[j] =
-						first_oracle_node_at_level[j - 1];
+				first_poset_orbit_node_at_level[j] =
+						first_poset_orbit_node_at_level[j - 1];
 				}
 			return i + 1;
 			}	
@@ -328,8 +328,8 @@ void generator::downstep(INT size,
 	INT f_print = f_v;
 	double progress;
 
-	f = first_oracle_node_at_level[size];
-	cur = first_oracle_node_at_level[size + 1];
+	f = first_poset_orbit_node_at_level[size];
+	cur = first_poset_orbit_node_at_level[size + 1];
 	l = cur - f;
 
 	if (f_v) {
@@ -418,8 +418,8 @@ void generator::upstep(INT size,
 	
 
 
-	f = first_oracle_node_at_level[size];
-	cur = first_oracle_node_at_level[size + 1];
+	f = first_poset_orbit_node_at_level[size];
+	cur = first_poset_orbit_node_at_level[size + 1];
 	l = cur - f;
 
 	progress_last_time = 0;
@@ -495,8 +495,8 @@ void generator::upstep(INT size,
 
 		}
 
-	first_oracle_node_at_level[size + 2] = cur;
-	nb_oracle_nodes_used = cur;
+	first_poset_orbit_node_at_level[size + 2] = cur;
+	nb_poset_orbit_nodes_used = cur;
 
 
 
@@ -525,19 +525,19 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 		}
 	
 	while (cur + root[prev].nb_extensions + 10 >=
-			nb_oracle_nodes_allocated) {
+			nb_poset_orbit_nodes_allocated) {
 		print_level_info(size + 1, prev);
 		if (f_v) {
 			cout << "generator::extend_node running out of nodes" << endl;
 			cout << "cur = " << cur << endl;
 			cout << "allocated nodes = "
-					<< nb_oracle_nodes_allocated << endl;
+					<< nb_poset_orbit_nodes_allocated << endl;
 			cout << "reallocating" << endl;
 			}
 		reallocate();
 		if (f_v) {
 			cout << "allocated nodes = "
-					<< nb_oracle_nodes_allocated << endl;
+					<< nb_poset_orbit_nodes_allocated << endl;
 			}
 		}
 			

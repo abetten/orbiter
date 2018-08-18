@@ -13,7 +13,7 @@ trace_result upstep_work::find_automorphism_by_tracing(
 	INT verbose_level)
 // This routine is called from upstep
 // (upstep_work::upstep_subspace_action).
-// It in turn calls oracle::find_automorphism_by_tracing_recursion
+// It in turn calls poset_orbit_node::find_automorphism_by_tracing_recursion
 // It tries to compute an isomorphism
 // of the set in set[0][0,...,len]
 // (i.e. of size len+1) to the 
@@ -127,7 +127,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 	INT len = size - 1;
 	INT f_failure_to_find_point;
 	
-	oracle *O;
+	poset_orbit_node *O;
 
 	O = &gen->root[current_node];
 	if (f_vvv) {
@@ -508,14 +508,14 @@ trace_result upstep_work::handle_last_level(
 	INT current_extension, INT pt0,
 	INT &final_node, INT &final_ex,  
 	INT verbose_level)
-// called from oracle::find_automorphism_by_tracing_recursion
+// called from poset_orbit_node::find_automorphism_by_tracing_recursion
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	//INT next_node;
 	INT my_current_node;
 
-	oracle *O = &gen->root[current_node];
+	poset_orbit_node *O = &gen->root[current_node];
 
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -540,7 +540,7 @@ trace_result upstep_work::handle_last_level(
 	my_current_node = cur;
 	if (f_v) {
 		print_level_extension_coset_info();
-		cout << "oracle::handle_last_level "
+		cout << "upstep_work::handle_last_level "
 				"my_current_node=" << my_current_node << endl;
 		}
 	
@@ -666,7 +666,7 @@ trace_result upstep_work::start_over(
 	INT lvl, INT current_node, 
 	INT &final_node, INT &final_ex,
 	INT f_tolerant, INT verbose_level)
-// Called from oracle::find_automorphism_by_tracing_recursion
+// Called from poset_orbit_node::find_automorphism_by_tracing_recursion
 // when trace_next_point returns FALSE
 // This can happen only if f_implicit_fusion is TRUE
 {
@@ -681,7 +681,7 @@ trace_result upstep_work::start_over(
 	if (lvl == size - 1) {
 		if (f_v) {
 			print_level_extension_coset_info();
-			cout << "oracle::start_over lvl == size - 1, "
+			cout << "upstep_work::start_over lvl == size - 1, "
 					"so we return not_canonical" << endl;
 			}
 		final_node = current_node;

@@ -451,7 +451,7 @@ void compute_orbits_on_subsets(generator *&gen,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	INT nb_oracle_nodes = 1000;
+	INT nb_poset_orbit_nodes = 1000;
 	INT schreier_depth = target_depth;
 	INT f_use_invariant_subset_if_available = TRUE;
 	//INT f_implicit_fusion = FALSE;
@@ -499,7 +499,7 @@ void compute_orbits_on_subsets(generator *&gen,
 			candidate_incremental_check_data);
 		}
 
-	gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	gen->init_root_node(verbose_level - 1);
 
 	gen->main(t0, 
@@ -516,8 +516,8 @@ void compute_orbits_on_subsets(generator *&gen,
 		cout << "depth : number of orbits" << endl;
 		}
 	for (i = 0; i < target_depth + 1; i++) {
-		fst = gen->first_oracle_node_at_level[i];
-		len = gen->first_oracle_node_at_level[i + 1] - fst;
+		fst = gen->first_poset_orbit_node_at_level[i];
+		len = gen->first_poset_orbit_node_at_level[i + 1] - fst;
 		if (f_v) {
 			cout << i << " : " << len << endl;
 			}
@@ -603,12 +603,12 @@ generator *orbits_on_k_sets_compute(action *A1, action *A2,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	INT nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
 		cout << "orbits_on_k_sets calling Gen->init_oracle" << endl;
 		}
-	Gen->init_oracle(nb_oracle_nodes, verbose_level - 1);
+	Gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 	if (f_v) {
 		cout << "orbits_on_k_sets calling Gen->init_root_node" << endl;
 		}
@@ -721,13 +721,13 @@ void wedge_product_export_magma(generator *Gen,
 	v = NEW_INT(vector_space_dimension);
 	Elt = NEW_INT(Gen->A->elt_size_in_INT);
 	
-	fst = Gen->first_oracle_node_at_level[level];
-	len = Gen->first_oracle_node_at_level[level + 1] - fst;
+	fst = Gen->first_poset_orbit_node_at_level[level];
+	len = Gen->first_poset_orbit_node_at_level[level + 1] - fst;
 	if (f_v) {
 		cout << "exporting to magma" << endl;
 		cout << "fst=" << fst << " len=" << len << endl;
 		}
-	oracle *O;
+	poset_orbit_node *O;
 	BYTE fname[1000];
 
 	sprintf(fname, "Wedge_n%ld_q%ld_d%ld.magma", n, q, level);

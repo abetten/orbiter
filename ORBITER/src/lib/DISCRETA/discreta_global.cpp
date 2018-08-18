@@ -47,15 +47,15 @@ void calc_Kramer_Mesner_matrix_neighboring(generator *gen,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE;//(verbose_level >= 2);
 	INT f1, f2, f3, l1, l2, i, j, k, I, J, len;
-	oracle *O;
+	poset_orbit_node *O;
 	
 	if (f_v) {
 		cout << "calc_Kramer_Mesner_matrix_neighboring level=" << level << endl;
 		}
 
-	f1 = gen->first_oracle_node_at_level[level];
-	f2 = gen->first_oracle_node_at_level[level + 1];
-	f3 = gen->first_oracle_node_at_level[level + 2];
+	f1 = gen->first_poset_orbit_node_at_level[level];
+	f2 = gen->first_poset_orbit_node_at_level[level + 1];
+	f3 = gen->first_poset_orbit_node_at_level[level + 2];
 	l1 = gen->nb_orbits_at_level(level); //f2 - f1;
 	l2 = gen->nb_orbits_at_level(level + 1); //f3 - f2;
 
@@ -92,7 +92,7 @@ void calc_Kramer_Mesner_matrix_neighboring(generator *gen,
 				len = O->E[k].orbit_len;
 
 				INT I1, ext1;
-				oracle *O1;
+				poset_orbit_node *O1;
 				
 				I1 = O->E[k].data1;
 				ext1 = O->E[k].data2;

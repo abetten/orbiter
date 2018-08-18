@@ -1,4 +1,4 @@
-// oracle_upstep_subspace_action.C
+// poset_orbit_node_upstep_subspace_action.C
 //
 // Anton Betten
 // Jan 25, 2010
@@ -7,7 +7,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
+void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	generator *gen,
 	INT lvl, INT pt_to_trace,
 	INT &pt0, INT *&cosetrep, INT verbose_level)
@@ -20,7 +20,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 	INT f_check_image = FALSE;
 
 	if (f_v) {
-		cout << "oracle::orbit_representative_and_coset_"
+		cout << "poset_orbit_node::orbit_representative_and_coset_"
 				"rep_inv_subspace_action" << endl;
 		cout << "node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
@@ -32,7 +32,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		gen->root[node].setup_factor_space_action_light(gen,
 				AF, lvl, verbose_level - 4);
 
-			// oracle_downstep_subspace_action.C
+			// poset_orbit_node_downstep_subspace_action.C
 
 
 #if 0
@@ -58,7 +58,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 	// H, projected_pt, 0);
 
 	if (f_v) {
-		cout << "oracle::representative_and_coset_rep_inv_subspace_action "
+		cout << "poset_orbit_node::representative_and_coset_rep_inv_subspace_action "
 				"lvl=" << lvl << " pt_to_trace=" << pt_to_trace
 				<< " projects onto " << projected_pt << endl;
 		}
@@ -74,7 +74,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 				verbose_level - 4);
 
 		if (f_v) {
-			cout << "oracle::representative_and_coset_rep_inv_subspace_"
+			cout << "poset_orbit_node::representative_and_coset_rep_inv_subspace_"
 					"action lvl=" << lvl << " stabilizer is trivial, "
 					"projected_pt0=" << projected_pt0
 					<< " pt0=" << pt0 << endl;
@@ -88,7 +88,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 			f_trivial_group = FALSE;
 		else 
 			f_trivial_group = TRUE;
-		//cout << "Node " << node << " oracle::orbit_representative_and_"
+		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv_subspace_action calling schreier_vector_"
 		//"coset_rep_inv" << endl;
 		schreier_vector_coset_rep_inv(
@@ -103,7 +103,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 			f_check_image, 
 			verbose_level - 4);
 		// gen->Elt1 contains the element that maps pt_to_trace to pt0
-		//cout << "Node " << node << " oracle::orbit_representative_and_"
+		//cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 		//"coset_rep_inv_subspace_action schreier_vector_coset_"
 		//"rep_inv done" << endl;
 		
@@ -112,7 +112,7 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 				projected_pt0, verbose_level - 4);
 
 		if (f_v) {
-			cout << "oracle::orbit_representative_and_coset_rep_inv_"
+			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 					"subspace_action with schreier vector: "
 					"pt_to_trace=" << pt_to_trace
 				<< " projected_pt0=" << projected_pt0
@@ -121,13 +121,13 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		INT a;
 		a = gen->A2->element_image_of(pt_to_trace, gen->Elt1, 0);
 		if (f_v) {
-			cout << "oracle::orbit_representative_and_coset_rep_inv_"
+			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 					"subspace_action " << pt_to_trace << "->" << a << endl;
 			}
 		return;
 		}
 	else {
-		cout << "Node " << node << " oracle::orbit_representative_and_"
+		cout << "Node " << node << " poset_orbit_node::orbit_representative_and_"
 				"coset_rep_inv_subspace_action sv not "
 				"available (fatal)" << endl;
 		cout << "node=" << node << " prev=" << prev
@@ -146,14 +146,14 @@ void oracle::orbit_representative_and_coset_rep_inv_subspace_action(
 		verbose_level - 1);
 	pt0 = AF.preimage(projected_pt0, verbose_level - 2);
 	if (f_v) {
-		cout << "oracle::orbit_representative_and_coset_rep_inv "
+		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
 				"pt_to_trace=" << pt_to_trace
 			<< " projected_pt0=" << projected_pt0
 			<< " preimage=" << pt0 << endl;
 		}
 	//return;
 	if (f_v) {
-		cout << "oracle::orbit_representative_and_coset_rep_inv_"
+		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"
 				"subspace_action done" << endl;
 		}
 #endif

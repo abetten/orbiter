@@ -336,7 +336,7 @@ INT isomorph::trace_set(INT *canonical_set, INT *transporter,
 			}
 		return -1;
 		}
-	case_nb = n - gen->first_oracle_node_at_level[level];
+	case_nb = n - gen->first_poset_orbit_node_at_level[level];
 	
 	if (f_v) {
 		cout << "iso_node " << iso_nodes
@@ -390,7 +390,7 @@ void isomorph::make_set_smaller(INT case_nb_local,
 		cout << endl;
 		}
 	nb_times_make_set_smaller_called++;
-	n = gen->first_oracle_node_at_level[level] + case_nb_local;
+	n = gen->first_poset_orbit_node_at_level[level] + case_nb_local;
 	if (f_vv) {
 		cout << "iso_node " << iso_nodes
 				<< " make_set_smaller_database case_nb_local = "
@@ -702,7 +702,7 @@ INT isomorph::trace_next_point(INT cur_level,
 			cout << "cur_level <= depth_completed, using oracle" << endl;
 			}
 		
-		oracle *O = &gen->root[cur_node_global];
+		poset_orbit_node *O = &gen->root[cur_node_global];
 		ret = O->trace_next_point_in_place(gen, 
 			cur_level, cur_node_global, size, 
 			canonical_set, trace_set_recursion_tmp_set1,
@@ -796,7 +796,7 @@ INT isomorph::trace_next_point_database(
 	
 	cur_node_local =
 			cur_node_global -
-			gen->first_oracle_node_at_level[cur_level];
+			gen->first_poset_orbit_node_at_level[cur_level];
 	DB_level->ith_object(cur_node_local,
 			0/* btree_idx*/, *v,
 			verbose_level - 2);
@@ -1141,7 +1141,7 @@ INT isomorph::handle_extension_database(INT cur_level,
 			INT_vec_print(cout, canonical_set, size);
 			cout << endl;
 			}
-		next_node_global = gen->find_oracle_node_for_set(cur_level + 1,
+		next_node_global = gen->find_poset_orbit_node_for_set(cur_level + 1,
 				canonical_set, FALSE /*f_tolerant*/, 0);
 		if (f_vv) {
 			cout << "isomorph::handle_extension_database iso_node "
@@ -1175,7 +1175,7 @@ INT isomorph::handle_extension_oracle(INT cur_level,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	oracle *O = &gen->root[cur_node_global];
+	poset_orbit_node *O = &gen->root[cur_node_global];
 	INT pt0, current_extension, t, d, next_node_global;
 	
 	f_failure_to_find_point = FALSE;
@@ -1288,7 +1288,7 @@ INT isomorph::handle_extension_oracle(INT cur_level,
 					"iso_node " << iso_nodes
 					<< " before gen->find_oracle_node_for_set" << endl;
 			}
-		next_node_global = gen->find_oracle_node_for_set(
+		next_node_global = gen->find_poset_orbit_node_for_set(
 				cur_level + 1, canonical_set, FALSE /*f_tolerant*/,
 				verbose_level);
 		if (f_vv) {
@@ -1387,7 +1387,7 @@ void isomorph::apply_fusion_element_oracle(
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	oracle *O = &gen->root[cur_node_global];
+	poset_orbit_node *O = &gen->root[cur_node_global];
 
 	if (f_v) {
 		cout << "iso_node " << iso_nodes

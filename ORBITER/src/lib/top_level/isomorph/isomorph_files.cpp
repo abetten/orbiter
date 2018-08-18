@@ -2277,7 +2277,7 @@ void isomorph::read_everything_including_classification(
 	if (f_v) {
 		for (i = 0; i <= level + 1; i++) {
 			cout << "gen->first_oracle_node_at_level[" << i
-					<< "]=" << gen->first_oracle_node_at_level[i] << endl;
+					<< "]=" << gen->first_poset_orbit_node_at_level[i] << endl;
 			}
 		cout << "depth_completed=" << depth_completed << endl;
 		}
