@@ -33,7 +33,7 @@ clean:
 	- rm *.o *.a *~
 
 
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
+#%.o: %.C %.c %.cpp; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 
 
