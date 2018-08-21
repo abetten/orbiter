@@ -114,7 +114,8 @@ public:
 
 	
 	
-	// the following is maintained by init_poset_orbit_node / exit_poset_orbit_node:
+	// the following is maintained
+	// by init_poset_orbit_node / exit_poset_orbit_node:
 	INT nb_poset_orbit_nodes_used;
 	INT nb_poset_orbit_nodes_allocated;
 	INT poset_orbit_nodes_increment;
@@ -691,7 +692,8 @@ void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
 
 
 // #############################################################################
-// poset_orbit_node.C, poset_orbit_node_io.C, poset_orbit_node_upstep.C, poset_orbit_node_upstep_subspace_action.C, 
+// poset_orbit_node.C, poset_orbit_node_io.C, poset_orbit_node_upstep.C,
+// poset_orbit_node_upstep_subspace_action.C,
 // poset_orbit_node_downstep.C, poset_orbit_node_downstep_subspace_action.C:
 // #############################################################################
 

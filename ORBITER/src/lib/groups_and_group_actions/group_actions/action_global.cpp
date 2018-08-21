@@ -152,7 +152,8 @@ void create_linear_group(sims *&S, action *&A,
 
 		if (f_v) {
 			cout << "action_global.C create_linear_group "
-					"computing intersection with special linear group" << endl;
+					"computing intersection with "
+					"special linear group" << endl;
 			}
 
 
@@ -176,7 +177,8 @@ void create_linear_group(sims *&S, action *&A,
 		SG = new strong_generators;
 		if (f_v) {
 			cout << "action_global.C creating strong generators "
-					"for the kernel n the action on the determinant" << endl;
+					"for the kernel n the action "
+					"on the determinant" << endl;
 			}
 		
 		SG->init_from_sims(A_on_det.Kernel, 0 /* verbose_level */);

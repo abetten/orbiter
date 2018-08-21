@@ -633,7 +633,8 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 		partitionstack &S, INT verbose_level);
 	void get_orbit_partition(partitionstack &S, 
 		INT verbose_level);
-	strong_generators *generators_for_stabilizer_of_arbitrary_point_and_transversal(
+	strong_generators
+	*generators_for_stabilizer_of_arbitrary_point_and_transversal(
 		action *default_action, 
 		longinteger_object &full_group_order, 
 		INT pt, vector_ge *&cosets, INT verbose_level);

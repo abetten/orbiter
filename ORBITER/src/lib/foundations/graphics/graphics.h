@@ -319,8 +319,14 @@ public:
 	void text(INT x, INT y, const char *p);
 	void circle(INT x, INT y, INT rad);
 	void circle_text(INT x, INT y, INT rad, const char *text);
+#if 0
 	void polygon_or_bezier_idx(INT *Px, INT *Py, INT *Idx, INT n, 
 		const char *symbol, INT f_cycle);
+#endif
+	void polygon_idx2(INT *Px, INT *Py, INT *Idx, INT n,
+			INT f_cycle);
+	void bezier_idx2(INT *Px, INT *Py, INT *Idx, INT n,
+			INT f_cycle);
 	void fill_idx(INT *Px, INT *Py, INT *Idx, INT n, 
 		const char *symbol, INT f_cycle);
 
@@ -358,8 +364,14 @@ public:
 	void end_figure_mp();
 	void circle_mp(INT x, INT y, INT rad);
 	void output_circle_text_mp(INT x, INT y, INT idx, const char *text);
+#if 0
 	void polygon_or_bezier_idx_mp(INT *Px, INT *Py, INT *Idx, 
 		INT n, const char *symbol, INT f_cycle);
+#endif
+	void polygon_idx_mp(INT *Px, INT *Py,
+			INT *Idx, INT n, INT f_cycle);
+	void bezier_idx_mp(INT *Px, INT *Py,
+			INT *Idx, INT n, INT f_cycle);
 	void color_tikz(ofstream &fp, INT color);
 	void fill_idx_mp(INT *Px, INT *Py, INT *Idx, INT n, 
 		const char *symbol, INT f_cycle);
@@ -378,8 +390,14 @@ public:
 	void circle_tikz(INT x, INT y, INT rad);
 	void output_circle_text_tikz(INT x, INT y, INT idx, INT rad, 
 		const char *text);
+#if 0
 	void polygon_or_bezier_idx_tikz(INT *Px, INT *Py, INT *Idx, INT n, 
 		const char *symbol, INT f_cycle);
+#endif
+	void polygon_idx_tikz(INT *Px, INT *Py,
+			INT *Idx, INT n, INT f_cycle);
+	void bezier_idx_tikz(INT *Px, INT *Py,
+			INT *Idx, INT n, INT f_cycle);
 	void fill_idx_tikz(ofstream &fp, INT *Px, INT *Py, INT *Idx, INT n, 
 		const char *symbol, INT f_cycle);
 	void output_xy_tikz(INT x, INT y);
