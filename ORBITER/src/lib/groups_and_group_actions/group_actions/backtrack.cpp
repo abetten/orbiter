@@ -35,7 +35,8 @@ struct action_is_minimal_data {
 };
 
 void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D);
-INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbose_level);
+INT action_is_minimal_recursion(action_is_minimal_data *D,
+		INT depth, INT verbose_level);
 
 void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D)
 {
@@ -53,7 +54,8 @@ void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D)
 	D.nb_auts_allocated = nb_auts_allocated2;
 }
 
-INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbose_level)
+INT action_is_minimal_recursion(action_is_minimal_data *D,
+		INT depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -69,9 +71,11 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 	current_set = D->the_set + depth * D->size;
 	next_set = D->the_set + (depth + 1) * D->size;
 	if (f_vv || ((D->backtrack_node % 10000) == 0)) {
-		cout << "action_is_minimal_recursion NODE " << D->backtrack_node << " depth = " << depth << " : ";
+		cout << "action_is_minimal_recursion NODE "
+				<< D->backtrack_node << " depth = " << depth << " : ";
 		for (i = 0; i < depth; i++) {
-			cout << i << ":" << D->current_choice[i] << "/" << D->nb_choices[i] << " ";
+			cout << i << ":" << D->current_choice[i]
+				<< "/" << D->nb_choices[i] << " ";
 			}
 		cout << endl;
 		}
@@ -102,11 +106,13 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 				}
 #endif
 			if (f_v) {
-				cout << "automorphism " << D->nb_auts << " first_moved = " << D->first_moved 
+				cout << "automorphism " << D->nb_auts
+					<< " first_moved = " << D->first_moved
 					<< " choice: ";
 				INT_vec_print(cout, D->current_choice, A->base_len);
 				cout << " points: ";
-				INT_vec_print(cout, D->aut_data + D->nb_auts * A->base_len, A->base_len);
+				INT_vec_print(cout, D->aut_data +
+						D->nb_auts * A->base_len, A->base_len);
 				cout << endl;
 				}
 			for (i = 0; i < A->base_len; i++) {
@@ -116,9 +122,11 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 					//Sims->orbit_inv[i][aut_data[h * base_len + i]];
 				}
 			A->Sims->element_from_path_inv(D->transporter_witness);
-			if (!A->check_if_transporter_for_set(D->transporter_witness, D->size, 
+			if (!A->check_if_transporter_for_set(
+					D->transporter_witness, D->size,
 				D->the_set, D->the_set, verbose_level)) {
-				cout << "action_is_minimal_recursion: error while checking automorphism" << endl;
+				cout << "action_is_minimal_recursion: "
+						"error while checking automorphism" << endl;
 				exit(1);
 				}
 			if (f_v && D->first_moved < A->base_len) {
@@ -144,7 +152,8 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 	base_point = A->base[depth];
 	if (f_vv) {
 		cout << "depth = " << depth << " : ";
-		cout << "transversal_length=" << transversal_length << " base_point=" << base_point << endl;
+		cout << "transversal_length=" << transversal_length
+				<< " base_point=" << base_point << endl;
 		}
 	if (f_vvv) {
 		INT_vec_print(cout, current_set, D->size);
@@ -157,7 +166,8 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 		
 		base_point = A->orbit[depth][0];
 		image_point = A->orbit[depth][i];
-		if (D->is_minimal_base_point[depth] && INT_vec_search(current_set, D->size, base_point, idx)) {
+		if (D->is_minimal_base_point[depth] &&
+				INT_vec_search(current_set, D->size, base_point, idx)) {
 			if (INT_vec_search(current_set, D->size, image_point, idx)) {
 				f_accept = TRUE;
 				}
@@ -166,30 +176,41 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 			f_accept = TRUE;
 			}
 		if (f_accept) {
-			D->choices[depth * A->degree + D->nb_choices[depth]] = image_point;
+			D->choices[depth * A->degree +
+					   D->nb_choices[depth]] = image_point;
 			D->nb_choices[depth]++;
 			if (f_vvv) {
-				cout << "coset " << i << " image_point = " << image_point << " added, D->nb_choices[depth]=" << D->nb_choices[depth] << endl;
+				cout << "coset " << i << " image_point = "
+						<< image_point << " added, "
+						"D->nb_choices[depth]="
+						<< D->nb_choices[depth] << endl;
 				}
 			}
 		else {
 			if (f_vvv) {
-				cout << "coset " << i << " image_point = " << image_point << " skipped, D->nb_choices[depth]=" << D->nb_choices[depth] << endl;
+				cout << "coset " << i << " image_point = "
+						<< image_point << " skipped, "
+						"D->nb_choices[depth]="
+						<< D->nb_choices[depth] << endl;
 				}
 			}
 		}
 	if (f_vv) {
 		cout << "choice set of size " << D->nb_choices[depth] << " : ";
-		INT_vec_print(cout, D->choices + depth * A->degree, D->nb_choices[depth]);
+		INT_vec_print(cout, D->choices + depth * A->degree,
+				D->nb_choices[depth]);
 		cout << endl;
 		}
 	
-	for (D->current_choice[depth] = 0; D->current_choice[depth] < D->nb_choices[depth]; D->current_choice[depth]++) {
+	for (D->current_choice[depth] = 0;
+			D->current_choice[depth] < D->nb_choices[depth];
+			D->current_choice[depth]++) {
 		if (D->current_choice[depth]) {
 			if (D->first_moved < depth && D->f_automorphism_seen) {
 				if (f_vv) {
 					cout << "returning from level " << depth 
-						<< " because current_choice = " << D->current_choice[depth] 
+						<< " because current_choice = "
+						<< D->current_choice[depth]
 						<< " and first_moved = " << D->first_moved << endl;
 					}
 				return TRUE;
@@ -201,11 +222,14 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 				D->f_automorphism_seen = FALSE;
 				}
 			}
-		image_point = D->choices[depth * A->degree + D->current_choice[depth]];
+		image_point = D->choices[depth * A->degree +
+								 D->current_choice[depth]];
 		coset = A->Sims->orbit_inv[depth][image_point];
 		if (f_vv) {
 			cout << "depth = " << depth;
-			cout << " choice " << D->current_choice[depth] << " image_point=" << image_point << " coset=" << coset << endl;
+			cout << " choice " << D->current_choice[depth]
+				<< " image_point=" << image_point
+				<< " coset=" << coset << endl;
 			}
 		if (f_vvv) {
 			INT_vec_print(cout, current_set, D->size);
@@ -240,8 +264,10 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 		
 		if (f_vv) {
 			cout << "NODE " << setw(5) << D->backtrack_node << " depth ";
-			cout << setw(2) << depth << " current_choice " << D->current_choice[depth];
-			cout << " image_point=" << image_point << " coset=" << coset << endl;
+			cout << setw(2) << depth << " current_choice "
+					<< D->current_choice[depth];
+			cout << " image_point=" << image_point
+					<< " coset=" << coset << endl;
 			//cout << " next_set = ";
 			//INT_vec_print(cout, next_set, D->size);
 			//cout << endl;
@@ -249,7 +275,8 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 		
 		if (cmp < 0) {
 			if (f_v) {
-				cout << "the current set is less than the original set, so the original set was not minimal" << endl;
+				cout << "the current set is less than the original set, "
+						"so the original set was not minimal" << endl;
 				INT_vec_print(cout, next_set, D->size);
 				cout << endl;
 				}
@@ -262,9 +289,11 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 				}
 			A->Sims->element_from_path_inv(D->transporter_witness);
 			
-			if (!A->check_if_transporter_for_set(D->transporter_witness, D->size, 
+			if (!A->check_if_transporter_for_set(
+					D->transporter_witness, D->size,
 				D->the_set, D->witness, verbose_level)) {
-				cout << "action_is_minimal_recursion: error in check_if_transporter_for_set for witness" << endl;
+				cout << "action_is_minimal_recursion: error in "
+						"check_if_transporter_for_set for witness" << endl;
 				exit(1);
 				}
 
@@ -274,7 +303,8 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 		if (f_vv) {
 			cout << "depth = " << depth << " finished" << endl;
 			//INT_vec_print(cout, current_set, D->size);
-			//cout << " : choice " << D->current_choice[depth] << " finished, return value = " << ret << endl;
+			//cout << " : choice " << D->current_choice[depth]
+			// << " finished, return value = " << ret << endl;
 			}
 		if (!ret) {
 			return FALSE;
@@ -289,7 +319,7 @@ INT action_is_minimal_recursion(action_is_minimal_data *D, INT depth, INT verbos
 	return TRUE;
 }
 
-INT action::is_minimal(/*action *default_action,*/ INT size, INT *set, 
+INT action::is_minimal(INT size, INT *set,
 	INT &backtrack_level, INT verbose_level)
 {
 	INT *witness;
@@ -301,7 +331,7 @@ INT action::is_minimal(/*action *default_action,*/ INT size, INT *set,
 	witness = NEW_INT(size);
 	transporter_witness = NEW_INT(elt_size_in_INT);
 	
-	ret = is_minimal_witness(/*default_action,*/ size, set, backtrack_level, 
+	ret = is_minimal_witness(size, set, backtrack_level,
 		witness, transporter_witness, backtrack_nodes, 
 		f_get_automorphism_group, Aut, 
 		verbose_level);
@@ -311,7 +341,7 @@ INT action::is_minimal(/*action *default_action,*/ INT size, INT *set,
 	return ret;
 }
 
-void action::make_canonical(/*action *default_action,*/ INT size, INT *set, 
+void action::make_canonical(INT size, INT *set,
 	INT *canonical_set, INT *transporter, 
 	INT &total_backtrack_nodes, 
 	INT f_get_automorphism_group, sims *Aut,
@@ -357,7 +387,8 @@ void action::make_canonical(/*action *default_action,*/ INT size, INT *set,
 		cnt++;
 		//if (cnt == 4) verbose_level += 10;
 		if (f_v) {
-			cout << "action::make_canonical iteration " << cnt << " before is_minimal_witness" << endl;
+			cout << "action::make_canonical iteration "
+						<< cnt << " before is_minimal_witness" << endl;
 			}
 		if (is_minimal_witness(/*default_action,*/ size, set1, 
 			backtrack_level, set2, Elt2, 
@@ -366,8 +397,10 @@ void action::make_canonical(/*action *default_action,*/ INT size, INT *set,
 			0 /*verbose_level - 1*/)) {
 			total_backtrack_nodes += backtrack_nodes;
 			if (f_v) {
-				cout << "action::make_canonical: is minimal, after iteration " << cnt << " with " 
-					<< backtrack_nodes << " backtrack nodes, total:" << total_backtrack_nodes << endl;
+				cout << "action::make_canonical: is minimal, "
+						"after iteration " << cnt << " with "
+					<< backtrack_nodes << " backtrack nodes, total:"
+					<< total_backtrack_nodes << endl;
 				}
 			break;
 			}
@@ -379,7 +412,8 @@ void action::make_canonical(/*action *default_action,*/ INT size, INT *set,
 				INT_vec_print(cout, set2, size);
 				}
 			cout << " with " 
-				<< backtrack_nodes << " backtrack nodes, total:" << total_backtrack_nodes << endl;
+				<< backtrack_nodes << " backtrack nodes, total:"
+				<< total_backtrack_nodes << endl;
 			}
 		INT_vec_copy(set2, set1, size);
 		element_mult(Elt1, Elt2, Elt3, 0);
@@ -389,11 +423,14 @@ void action::make_canonical(/*action *default_action,*/ INT size, INT *set,
 	INT_vec_copy(set1, canonical_set, size);
 	element_move(Elt1, transporter, FALSE);
 	
-	if (!check_if_transporter_for_set(transporter, size, set, canonical_set, verbose_level - 3)) {
+	if (!check_if_transporter_for_set(transporter,
+			size, set, canonical_set, verbose_level - 3)) {
 		exit(1);
 		}
 	if (f_v) {
-		cout << "action::make_canonical succeeds in " << cnt << " iterations, total_backtrack_nodes=" << total_backtrack_nodes << endl;
+		cout << "action::make_canonical succeeds in " << cnt
+				<< " iterations, total_backtrack_nodes="
+				<< total_backtrack_nodes << endl;
 		longinteger_object go;
 		Aut->group_order(go);
 		cout << "the automorphism group has order " << go << endl;
@@ -412,7 +449,7 @@ void action::make_canonical(/*action *default_action,*/ INT size, INT *set,
 	//exit(1);
 }
 
-INT action::is_minimal_witness(/*action *default_action,*/ INT size, INT *set, 
+INT action::is_minimal_witness(INT size, INT *set,
 	INT &backtrack_level, INT *witness, INT *transporter_witness, 
 	INT &backtrack_nodes, 
 	INT f_get_automorphism_group, sims &Aut,
@@ -439,14 +476,15 @@ INT action::is_minimal_witness(/*action *default_action,*/ INT size, INT *set,
 	
 	backtrack_nodes = 0;
 	backtrack_level = size - 1;
-	//cout << "action::is_minimal_witness backtrack_level = size - 1 = " << backtrack_level << endl;
+	//cout << "action::is_minimal_witness backtrack_level = "
+	//"size - 1 = " << backtrack_level << endl;
 
 	if (f_vvvv) {
 		cout << "current base is ";
 		print_base();
 		cout << "doing base change" << endl;
 		}
-	A.base_change(this, /*default_action,*/ size, set, MINIMUM(1, verbose_level - 4));
+	A.base_change(this, size, set, MINIMUM(1, verbose_level - 4));
 	//A.eliminate_redundant_base_points(verbose_level - 4); 
 	// !!! A Betten July 10, 2014
 	if (f_vv) {
@@ -521,7 +559,8 @@ INT action::is_minimal_witness(/*action *default_action,*/ INT size, INT *set,
 #if 0
 		if (b != set[i]) {
 			cout << i << "-th base point is " << b 
-				<< " different from i-th point in the set " << set[i] << endl;
+				<< " different from i-th point in the set "
+				<< set[i] << endl;
 			exit(1);
 			}
 #endif
@@ -560,11 +599,13 @@ INT action::is_minimal_witness(/*action *default_action,*/ INT size, INT *set,
 						}
 					}
 				if (k == size) {
-					//cout << "action::is_minimal_witness did not find base point" << endl;
+					//cout << "action::is_minimal_witness "
+					// "did not find base point" << endl;
 					//exit(1);
 					}
 				backtrack_level = k;
-				//cout << "action::is_minimal_witness backtrack_level = k = " << backtrack_level << endl;
+				//cout << "action::is_minimal_witness backtrack_level "
+				//"= k = " << backtrack_level << endl;
 				ret = FALSE;
 				goto finish;
 				}
@@ -597,11 +638,14 @@ INT action::is_minimal_witness(/*action *default_action,*/ INT size, INT *set,
 		}
 	
 	if (f_vv) {
-		cout << "action::is_minimal_witness calling action_is_minimal_recursion" << endl;
+		cout << "action::is_minimal_witness calling "
+				"action_is_minimal_recursion" << endl;
 		}
-	ret = action_is_minimal_recursion(&D, 0 /* depth */, verbose_level /* -3 */);
+	ret = action_is_minimal_recursion(&D,
+			0 /* depth */, verbose_level /* -3 */);
 	if (f_vv) {
-		cout << "action::is_minimal_witness action_is_minimal_recursion returns " << ret << endl;
+		cout << "action::is_minimal_witness "
+				"action_is_minimal_recursion returns " << ret << endl;
 		}
 	backtrack_nodes = D.backtrack_node;
 finish:
@@ -643,11 +687,13 @@ finish:
 		if (f_vv) {
 			cout << "building up automorphism group" << endl;
 			}
-		A.build_up_automorphism_group_from_aut_data(D.nb_auts, D.aut_data, 
+		A.build_up_automorphism_group_from_aut_data(
+				D.nb_auts, D.aut_data,
 			Aut2, verbose_level - 3);
 		Aut2.group_order(go2);
 		if (f_v) {
-			cout << "automorphism group in changed base has order " << go2 << endl;
+			cout << "automorphism group in changed base "
+					"has order " << go2 << endl;
 			}
 		
 		Aut.init(this);
