@@ -9,73 +9,186 @@
 // action.C:
 // #############################################################################
 
+//! The class action implements a permutation group in a fixed action.
+/*! The class action provides a unified interface to a permutation group.
+ * A permutation group in Orbiter always acts on the set {0,...,degree-1},
+ * where degree is the degree stored in the action class.
+ * The primary goal of this class is to provide the functionality for
+ * group actions. Many different types of group actions are supported.
+ * The way in which a group action is realized is by means of the following
+ * two components:
+ *
+ * symmetry_group G
+ * symmetry_group_type type_G
+ *
+ * The type is an enumeration type which specifies the type of group action.
+ * The component G is a union consisting of all possible pointer types
+ * to objects of action type. Depending on the type of group action, type_G
+ * is set and G holds a pointer to the specific class implementing this type
+ * of action. There are the atomic types of group action and there are the
+ * induced action types. At present, there are exactly two atomic types.
+ * One is matrix_group, which represents a matrix group over a finite field.
+ * The other one is perm_group, which represents a abstract permutation group.
+ * An abstract permutation group is a group where the elements are given
+ * as list of images in the form of a vector.
+ * We distinguish between matrix groups and abstract permutation group because
+ * the elements of a matrix group are given by matrices (possibly plus
+ * a vector, and possibly plus a field automorphism). The elements
+ * of a matrix group are not stored as permutations.
+ * Because of this, a matrix group can be more efficient than the corresponding
+ * isomorphic abstract permutation group. For instance, group multiplication
+ * for matrix group elements is matrix multiplication. Group multiplication
+ * for abstract permutation groups is composition of the list of images.
+ * Matrix group multiplication seems faster than composing lists of images,
+ * at least asymptotically.
+ *
+ * Optionally, the class action also serves as a means to represent a group by
+ * means of a stabilizer chain (sims chain). This proves to be a bit tricky
+ * because the class sims (implementing a sims chain) requires an action object
+ * to get going. This is a kind of chicken-and-egg problem. The action needs
+ * a sims, and the sims needs an action. The solution is to have a bit
+ * of replication of code. The action class has its own tiny implementation of
+ * a stabilizer chain. This allows a group to be set up in action without the
+ * need for a sims object. It is helpful that we know a stabilizer chain
+ * for the projective linear groups, so we can set up the tiny version
+ * of a sims chain in action without using a sims object. The
+ * problem of setting up a group arises within the various init
+ * function in the action class. The functionality for known stabilizer chains
+ * is pushed down in the foundations library, in order to keep the
+ * mathematics for stabilizer chains away from the implementation of the
+ * stabilizer chains and action classes. The action of the projective group
+ * on the set of points of projective space is called the natural action.
+ *
+ *
+ * In most cases of induced actions, it is not a good idea to
+ * replace the natural action by the induced action. The problem with
+ * actions for the purposes of representing groups as sims chains
+ * is the following. A sims chain is efficient only if the maximal
+ * degree of the basic actions (the actions in the stabilizer chain)
+ * is small. For the basic action of projective groups, this contition
+ * is usually met. For most induced actions, the maximal degree is
+ * large because the action has an even larger degree than the
+ * original basic action. For this reason, it is not advisable to represent
+ * a group in any of the induced actions. This means that we will carry
+ * two actions around at the same time. The first action is the basic action
+ * which represents the group in the natural action. The second action is
+ * the induced action which we desire in our particular application.
+ * This action will be use for the purposes of the group action only.
+ * It will not be used for a stabilizer chain for the group.
+ * The poset classification algorithm takes two actions as input.
+ * The first action will be used to represent groups or subgroups.
+ * The second action is the action on the poset of interest.
+ *
+ *
+ */
 class action {
 public:
 
 
-	// the symmetry group is a permutation group
+	/** the symmetry group is a permutation group
+	 *
+	 */
 	INT f_allocated;
-	symmetry_group_type type_G;
-	symmetry_group G;
 	
+	/** the type of group */
+	symmetry_group_type type_G;
+
+	/** a pointer to the implementation of the group.
+	 * symmetry_group is a union of pointer types.
+	 */
+	symmetry_group G;
+
+
+	/** Whether the group has a subaction.
+	 * For instance, induced actions have subactions. */
 	INT f_has_subaction;
 	INT f_subaction_is_allocated;
-	action *subaction;
 	
+	/** the subaction */
+	action *subaction;
+
+
+	/** whether the group has a strong generators */
 	INT f_has_strong_generators;
+
+	/** strong generating set for the group */
 	strong_generators *Strong_gens;
 
-	INT degree; // the size of the set we act on
+	/** the size of the set we act on */
+	INT degree;
 
-	INT f_is_linear; // is it a linear action
+
+	/** whether the action is linear (including semilinear) */
+	INT f_is_linear;
 		// matrix_group_t, 
 		// action_on_wedge_product_t, 
 		// action_by_representation_t
-	INT dimension; // if f_is_linear
 	
-	INT f_has_base; // set to TRUE in allocate_base_data()
+	/** the dimension if we are linear */
+	INT dimension;
+
+
+	/** whether we have a base (b_0,\ldots,b_{l-1}) */
+	INT f_has_base;
+
+	/** the length of the base */
 	INT base_len;
-		// the length of the base 
-		// (b_0,\ldots,b_{l-1})
+
+
+
+	/** the base (b_0,\ldots,b_{l-1}) */
 	INT *base;
-		// the base (b_0,\ldots,b_{l-1})
+
+
+
+	/** the length of the orbit  of $G^{(i)}$ on $b_i$ */
 	INT *transversal_length;
-		// the length of the orbit 
-		// of $G^{(i)}$ on $b_i$
+
+	/** the orbit of  b_i */
 	INT **orbit;
+
+	/** the inverse orbit of  b_i */
 	INT **orbit_inv;
+
+	/** how many INT's we need to store one group element */
 	INT elt_size_in_INT;
-		// how many INT's do we need 
-		// to store one group element
+
+	/** how many BYTE's (=char's) do we need
+	 * to store a group element in the compressed form */
 	INT coded_elt_size_in_char;
-		// how many BYTE's (=char's) do we need 
-		// to store a group element packed
+
 	
+	/** the number of INT's that are needed to
+	 * make an element of this group
+	 * using the make_element function */
 	INT make_element_size;
-		// the number of INT's that are needed to
-		// make an element of this group 
-		// using the make_element function
+
+
+	/** the number of INT's that are needed to
+	 * represent a point in low-level format
+	 * (input and output in element_image_of_low_level
+	 * point to that many INT's) */
 	INT low_level_point_size;
-		// the number of INT's that are needed to 
-		// represent a point in low-level format
-		// (input and output in element_image_of_low_level 
-		// point to that many INT's)
 	
+#if 0
 	INT f_has_transversal_reps;
 	INT **transversal_reps;
 		// [base_len][transversal_length * elt_size_in_INT]
+#endif
 	
 	INT f_has_sims;
+	/** sims chain for the group */
 	sims *Sims;
 	
 	// this is new 1/1/2009:
 	INT f_has_kernel;
+	/** kernel of the action */
 	sims *Kernel;
 	
 	INT f_group_order_is_small;
 	INT *path;
 	
-	// function pointers for group actions
+	/** function pointers for group actions */
 	INT (*ptr_element_image_of)(action &A, INT a, void *elt, 
 		INT verbose_level);
 	void (*ptr_element_image_of_low_level)(action &A, 
@@ -120,6 +233,7 @@ public:
 	void (*ptr_element_print_for_make_element_no_commas)(action &A, 
 		void *elt, ostream &ost);
 	
+	/** counters for how often a function has been called */
 	INT nb_times_image_of_called;
 	INT nb_times_image_of_low_level_called;
 	INT nb_times_unpack_called;
@@ -131,6 +245,7 @@ public:
 
 
 
+	/** temporary elements */
 	INT *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
 	INT *eltrk1, *eltrk2, *eltrk3, *elt_mult_apply;
 	UBYTE *elt1;
@@ -140,9 +255,13 @@ public:
 		// element_read_from_memory_object
 
 	
+	/** a label for the group which can be used in filenames */
 	BYTE group_prefix[1000];
-	// new 1/1/2009:
+
+	/** a fancy label for the group */
 	BYTE label[1000];
+
+	/** a fancy label for the group for latex */
 	BYTE label_tex[1000];
 
 
@@ -183,11 +302,13 @@ public:
 	void compute_all_point_orbits(schreier &S, 
 		vector_ge &gens, INT verbose_level);
 	
+	/** the index of the first moved base point */
 	INT depth_in_stab_chain(INT *Elt);
-		// the index of the first moved base point
+
+
+		/** all strong generators that
+		 * leave base points 0,..., depth - 1 fix */
 	void strong_generators_at_depth(INT depth, vector_ge &gen);
-		// all strong generators that 
-		// leave base points 0,..., depth - 1 fix
 	void compute_point_stabilizer_chain(vector_ge &gen, 
 		sims *S, INT *sequence, INT len, 
 		INT verbose_level);
@@ -335,33 +456,62 @@ public:
 		// generator::orbit_element_rank
 
 	// action_init.C:
+	/** Create the direct product group M1 x M2 in product action
+	 * and restrict the action to the grid. */
 	void init_direct_product_group_and_restrict(
 			matrix_group *M1, matrix_group *M2, INT verbose_level);
+
+	/** Create the direct product group M1 x M2 in product action */
 	void init_direct_product_group(
 			matrix_group *M1, matrix_group *M2,
 			INT verbose_level);
+
+	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
+	 * in wreath product action
+	 * and restrict the action to the tensor space. */
 	void init_wreath_product_group_and_restrict(INT nb_factors, INT n,
 			finite_field *F, INT verbose_level);
+
+	/** Create the wreath product group AGL(n,q) wreath Sym(nb_factors)
+	 * in wreath product action
+	 */
 	void init_wreath_product_group(INT nb_factors, INT n, finite_field *F,
 		INT verbose_level);
+
+	/** Create the orthogonal group O(5,q) */
 	void init_BLT(finite_field *F, INT f_basis, 
 		INT f_init_hash_table, INT verbose_level);
+
+
+	/** Create a group from generators */
 	void init_group_from_strong_generators(vector_ge *gens, sims *K, 
 		INT given_base_length, INT *given_base,
 		INT verbose_level);
+
+
+	/** Create the orthogonal group O^epsilon(n,q) */
 	void init_orthogonal_group(INT epsilon, 
 		INT n, finite_field *F, 
 		INT f_on_points, INT f_on_lines, 
 		INT f_on_points_and_lines, 
 		INT f_semilinear, 
 		INT f_basis, INT verbose_level);
+
+	/** Create the projective special linear group PSL */
 	void init_projective_special_group(INT n, finite_field *F, 
 		INT f_semilinear, INT f_basis, INT verbose_level);
+
+	/** Create the projective linear (or semilinear) group PGL (or PGGL)*/
 	void init_projective_group(INT n, finite_field *F, 
 		INT f_semilinear, INT f_basis, INT verbose_level);
+
+
+	/** Create the affine group AGL(n,q) */
 	void init_affine_group(INT n, finite_field *F, 
 		INT f_semilinear, 
 		INT f_basis, INT verbose_level);
+
+	/** Create the general linear group GL(n,q) */
 	void init_general_linear_group(INT n, finite_field *F, 
 		INT f_semilinear, INT f_basis, INT verbose_level);
 	void setup_linear_group_from_strong_generators(matrix_group *M, 
@@ -374,10 +524,17 @@ public:
 		INT nb_gens, INT *gens, 
 		INT given_base_length, INT *given_base,
 		INT verbose_level);
+
+	/** Create the affine group AGL(n,q) as abstract permutation group,
+	 * not as matrix group */
 	void init_affine_group(INT n, INT q, INT f_translations, 
 		INT f_semilinear, INT frobenius_power, 
 		INT f_multiplication, 
 		INT multiplication_order, INT verbose_level);
+
+	/** Create the product of two affine groups AGL(n,q)
+	 * as abstract permutation groups in product action,
+	 * not as matrix group */
 	void init_affine_grid_group(INT q1, INT q2, 
 		INT f_translations1, INT f_translations2, 
 		INT f_semilinear1, INT frobenius_power1, 
@@ -386,7 +543,12 @@ public:
 		INT f_multiplication2, INT multiplication_order2, 
 		INT f_diagonal, 
 		INT verbose_level);
+
+	/** Create the symmetric group of degree degree
+	 * as abstract permutation group */
 	void init_symmetric_group(INT degree, INT verbose_level);
+
+
 	void null_function_pointers();
 	void init_function_pointers_matrix_group();
 	void init_function_pointers_wreath_product_group();
@@ -402,8 +564,12 @@ public:
 		INT verbose_level);
 	
 	// action_induce.C:
+
+	/** Create the induced action on lines in PG(n-1,q)
+	 * using an action_on_grassmannian object */
 	void init_action_on_lines(action *A, finite_field *F, 
 		INT n, INT verbose_level);
+
 	void induced_action_by_representation_on_conic(action *A_old, 
 		INT f_induce_action, sims *old_G, 
 		INT verbose_level);

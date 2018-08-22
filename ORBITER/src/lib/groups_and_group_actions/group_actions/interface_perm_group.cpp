@@ -118,6 +118,8 @@ void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_leve
 	if (f_v) {
 		cout << "perm_group_element_retrieve() hdl = " << hdl << endl;
 		}
+
+#if 0
 	if (FALSE /* A.f_group_order_is_small */) {
 			//cout << "Eltrk1=" << G.Eltrk1 << endl;
 			//cout << "Eltrk2=" << G.Eltrk2 << endl;
@@ -150,9 +152,10 @@ void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_leve
 		
 		}
 	else {
+#endif
 		p_elt = G.Elts->s_i(hdl);
 		G.unpack(p_elt, Elt);
-		}
+		//}
 	if (f_v) {
 		G.print(Elt, cout);
 		}
@@ -168,6 +171,7 @@ INT perm_group_element_store(action &A, void *elt, INT verbose_level)
 	if (f_v) {
 		cout << "perm_group_element_store()" << endl;
 		}
+#if 0
 	if (FALSE /* A.f_group_order_is_small */) {
 		INT i, j, bi, jj, l;
 		INT a;
@@ -220,9 +224,10 @@ INT perm_group_element_store(action &A, void *elt, INT verbose_level)
 		hdl = a;
 		}
 	else {
+#endif
 		G.pack(Elt, G.elt1);
 		hdl = G.Elts->store(G.elt1);
-		}
+		//}
 	if (f_v) {
 		cout << "hdl = " << hdl << endl;
 		}
