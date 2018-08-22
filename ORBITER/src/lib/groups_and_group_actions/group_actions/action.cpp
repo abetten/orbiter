@@ -38,7 +38,7 @@ void action::null()
 
 	null_base_data();
 
-	transversal_reps = NULL;
+	//transversal_reps = NULL;
 
 	null_element_data();
 
@@ -49,7 +49,7 @@ void action::null()
 	elt_size_in_INT = 0;
 	coded_elt_size_in_char = 0;
 	group_prefix[0] = 0;
-	f_has_transversal_reps = FALSE;
+	//f_has_transversal_reps = FALSE;
 	f_group_order_is_small = FALSE;
 	make_element_size = 0;
 	low_level_point_size = 0;
@@ -75,7 +75,7 @@ void action::null()
 
 void action::freeself()
 {
-	INT i;
+	//INT i;
 	INT f_v = FALSE;
 	INT f_vv = FALSE;
 
@@ -267,6 +267,7 @@ void action::freeself()
 		cout << "after free_base_data" << endl;
 		}
 	
+#if 0
 	if (f_has_transversal_reps) {
 		if (f_v) {
 			cout << "we are freeing the transversal reps" << endl;
@@ -277,6 +278,7 @@ void action::freeself()
 		FREE_PINT(transversal_reps);
 		f_has_transversal_reps = FALSE;
 		}
+#endif
 	
 	if (f_v) {
 		cout << "after freeing transversal reps" << endl;
