@@ -455,6 +455,9 @@ void free_finite_field_domain(domain *dom, INT f_v);
 typedef struct longinteger_representation LONGINTEGER_REPRESENTATION;
 typedef struct bitmatrix_representation BITMATRIX_REPRESENTATION;
 
+//! DISCRETA internal class
+
+
 typedef union {
 	INT integer_value;
 	char *char_pointer;
@@ -465,11 +468,17 @@ typedef union {
 	BITMATRIX_REPRESENTATION *bitmatrix_rep;
 } OBJECTSELF;
 
+//! DISCRETA internal class to represent long integers
+
+
 struct longinteger_representation {
 	INT sign;
 	INT len;
 	char p[1];
 };
+
+//! DISCRETA internal class to represent bitmatrices
+
 
 struct bitmatrix_representation {
 	INT m;
@@ -480,6 +489,12 @@ struct bitmatrix_representation {
 
 
 // public class definitions:
+
+
+//! DISCRETA base class. All DISCRETA classes are derived from this class
+
+
+
 
 class discreta_base
 {
@@ -697,6 +712,9 @@ class discreta_base
 };
 
 
+//! DISCRETA class to serialize data structures
+
+
 class memory: public discreta_base
 {
 	public:
@@ -737,6 +755,10 @@ class memory: public discreta_base
 	
 };
 
+
+//! DISCRETA string class
+
+
 class hollerith: public discreta_base
 {
 	public:
@@ -772,6 +794,10 @@ class hollerith: public discreta_base
 	void get_extension_if_present(BYTE *ext);
 	void get_current_date();
 };
+
+//! DISCRETA integer class
+
+
 
 class integer: public discreta_base
 {
@@ -824,6 +850,13 @@ class integer: public discreta_base
 
 #define LONGINTEGER_PRINT_DOTS
 #define LONGINTEGER_DIGITS_FOR_DOT 6
+
+
+
+//! DISCRETA  class for integers of arbitrary magnitude
+
+
+
 
 class longinteger: public discreta_base
 {
@@ -889,6 +922,11 @@ class longinteger: public discreta_base
 
 	INT Lucas_test_Mersenne(INT m, INT f_v);
 };
+
+
+//! DISCRETA vector class for vectors of DISCRETA objects
+
+
 
 
 class Vector: public discreta_base
@@ -1066,6 +1104,10 @@ void merge_with_value(Vector &idx1, Vector &idx2, Vector &idx3,
 void intersection_of_vectors(Vector& V, Vector& v);
 
 
+//! DISCRETA permutation class
+
+
+
 class permutation: public Vector
 {
 	public:
@@ -1143,6 +1185,9 @@ class permutation: public Vector
 void signum_map(discreta_base & x, discreta_base &d);
 //char get_character(istream & is, INT f_v);
 
+//! DISCRETA utility class for matrix access
+
+
 
 
 class matrix_access {
@@ -1151,6 +1196,9 @@ public:
 	matrix *p;
 	discreta_base & operator [] (INT j);
 };
+
+//! DISCRETA matrix class
+
 
 
 class matrix: public discreta_base
@@ -1351,6 +1399,10 @@ class matrix: public discreta_base
 void determinant_map(discreta_base & x, discreta_base &d);
 INT nb_PG_lines(INT n, INT q);
 
+//! DISCRETA bitmatrix class
+
+
+
 
 class bitmatrix: public discreta_base
 {
@@ -1398,6 +1450,9 @@ class bitmatrix: public discreta_base
 	void read_mem(memory & M, INT debug_depth);
 	INT csf();
 };
+
+//! DISCRETA class for poynomials in one variable
+
 
 
 class unipoly: public Vector
@@ -1469,6 +1524,10 @@ void place_lattice(Vector& nl, Vector& orbit_size,
 #define PARTITION_TYPE_VECTOR 0
 #define PARTITION_TYPE_EXPONENT 1
 
+//! DISCRETA class for partitions of an integer
+
+
+
 class number_partition: public Vector 
 {
 	public:
@@ -1517,6 +1576,10 @@ INT first_passport(Vector &pass, INT n, INT k);
 INT next_passport(Vector &pass, INT n, INT k);
 INT first_passport_i(Vector &pass, INT n, INT k, INT i, INT & S);
 INT next_passport_i(Vector &pass, INT n, INT k, INT i, INT & S);
+
+//! DISCRETA class for incidence matrices
+
+
 
 class geometry: public Vector
 {
@@ -1610,6 +1673,10 @@ void geo_canon_with_initial_decomposition_and_ddp_ddb(
 	INT f_v, INT f_vv);
 
 
+//! DISCRETA class for influencing arithmetic operations
+
+
+
 
 class domain {
 	private:
@@ -1634,6 +1701,11 @@ class domain {
 };
 
 
+//! DISCRETA class related to class domain
+
+
+
+
 class with {
 	private:
 	public:
@@ -1642,12 +1714,21 @@ class with {
 	~with();
 };
 
+
+//! DISCRETA  class related to printing of objects
+
+
+
 class printing_mode {
 	private:
 	public:
 	printing_mode(enum printing_mode_enum printing_mode);
 	~printing_mode();
 };
+
+//! DISCRETA class to choose a group from the command line or from a UI
+
+
 
 class group_selection: public Vector
 {
@@ -1763,6 +1844,9 @@ void vec_generators_AGGL1q_subgroup(INT q, INT subgroup_index,
 	INT f_special, INT f_frobenius, INT f_translations, INT f_v);
 //void vec_generators_cycle_index(Vector &gen, Vector &C, INT f_v);
 void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, INT p, INT f_modified, INT f_v);
+
+
+//! DISCRETA class for polyhedra
 
 
 
@@ -1888,6 +1972,12 @@ extern char *discreta_copyright_text;
 
 typedef struct design_data DESIGN_DATA;
 
+
+//! DISCRETA class for Kramer Mesner type problems
+
+
+
+
 struct design_data {
 	BYTE *KM_fname;
 	INT v, t, k;
@@ -1967,6 +2057,9 @@ void permutation_element_print(void *elt, void *data, ostream &ost);
 
 
 
+//! DISCRETA class for databases
+
+
 
 class bt_key: public Vector  
 {
@@ -2021,11 +2114,18 @@ void bt_key_get_INT2(BYTE **key, INT2 &i);
 //#define BTREEMAXKEYLEN 48
 //#define BTREEMAXKEYLEN 512
 
+
+//! DISCRETA auxiliary class related to the class database
+
+
 typedef struct keycarrier {
 	BYTE c[BTREEMAXKEYLEN];
 } KEYCARRIER;
 
 typedef KEYCARRIER KEYTYPE;
+
+//! DISCRETA auxiliary class related to the class database
+
 
 typedef struct datatype {
 	UINT4 datref;
@@ -2038,6 +2138,11 @@ typedef struct datatype {
 
 #define DB_FILE_TYPE_STANDARD 1
 #define DB_FILE_TYPE_COMPACT 2
+
+
+//! DISCRETA class for a database
+
+
 
 class database: public Vector  
 {
@@ -2141,12 +2246,20 @@ class database: public Vector
  * Der letzte freie Block hat NIL als Nachfolger.
  * Dateigroesse = (AllocRec + 1) * sizeof(PageTyp) */
 
+
+//! DISCRETA auxiliary class related to the class database
+
+
 typedef struct itemtyp {
 	KEYTYPE Key;
 	DATATYPE Data;
 	INT4 Childs; // Anzahl der Nachfolger ueber Ref
 	INT4 Ref;
 } ItemTyp;
+
+
+//! DISCRETA auxiliary class related to the class database
+
 
 typedef struct pagetyp {
 	INT4 AllocRec;
@@ -2161,12 +2274,21 @@ typedef struct pagetyp {
  *                   Ref/Childs verwendet. */
 } PageTyp;
 
+
+//! DISCRETA auxiliary class related to the class database
+
+
 typedef struct buffer {
 	INT4 PageNum;
 	INT4 unused;
 	PageTyp Page;
 	long align;
 } Buffer;
+
+
+//! DISCRETA class for a database
+
+
 
 class btree: public Vector 
 {
@@ -2324,6 +2446,8 @@ void root_buf_free(INT i);
 
 typedef struct btree_page_registry_key_pair btree_page_registry_key_pair;
 
+//! DISCRETA internal class related to class database
+
 struct btree_page_registry_key_pair {
 	INT x;
 	INT idx;
@@ -2331,8 +2455,16 @@ struct btree_page_registry_key_pair {
 };
 
 
+//! DISCRETA internal class related to class database
+
 typedef class page_table page_table;
+
 typedef page_table *ppage_table;
+
+
+//! DISCRETA class for bulk storage
+
+
 
 class page_table {
 public:
@@ -2365,6 +2497,9 @@ void page_table_free(INT idx, INT verbose_level);
 page_table *page_table_pointer(INT slot);
 
 
+
+
+//! DISCRETA class for the design parameters database
 
 
 
@@ -2452,6 +2587,11 @@ void orbits_in_product_action_extended_twice(INT q1, INT q2, INT u1, INT v1, INT
 	INT f_cycle_index, INT f_cycle_index_on_pairs, INT f_v, INT f_vv);
 void extract_subgroup(INT q1, INT q2, INT u1, INT v1, INT f_cycle_index);
 #endif
+
+
+//! DISCRETA class for design parameters
+
+
 
 class design_parameter: public Vector 
 {

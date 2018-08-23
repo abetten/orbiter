@@ -12,6 +12,9 @@
 
 typedef class job_table job_table;
 
+//! job table for the scheduler app for parallel processing
+
+
 class job_table {
 
 public:

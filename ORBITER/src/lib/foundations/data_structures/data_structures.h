@@ -12,6 +12,8 @@
 // INT_vector.C:
 // #############################################################################
 
+//! vector on INTs
+
 class INT_vector {
 public:
 
@@ -54,6 +56,9 @@ public:
 // data_file.C:
 // #############################################################################
 
+//! to read files of classifications from the poset classification algorithm
+
+
 class data_file {
 	
 	public:
@@ -81,6 +86,9 @@ class data_file {
 // #############################################################################
 // fancy_set.C:
 // #############################################################################
+
+//! to store a subset of size k of a set of size n
+
 
 class fancy_set {
 	
@@ -124,6 +132,10 @@ class fancy_set {
 
 
 ostream& operator<<(ostream& ost, partitionstack& p);
+
+
+//! Leon type partitionstack class
+
 
 class partitionstack {
 	public:
@@ -308,6 +320,9 @@ class partitionstack {
 // #############################################################################
 // set_of_sets.C:
 // #############################################################################
+
+//! to store a set of sets
+
 
 class set_of_sets {
 
@@ -531,6 +546,9 @@ void find_points_by_multiplicity(INT *data, INT data_sz, INT multiplicity,
 // spreadsheet.C:
 // #############################################################################
 
+//! for reading and writing of csv files
+
+
 class spreadsheet {
 
 public:
@@ -612,6 +630,9 @@ uint32_t SuperFastHash (const char * data, int len);
 // #############################################################################
 // vector_hashing.C:
 // #############################################################################
+
+//! hash tables
+
 
 class vector_hashing {
 

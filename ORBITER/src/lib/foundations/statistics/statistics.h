@@ -11,6 +11,11 @@
 // classify.C:
 // #############################################################################
 
+
+//! a statistical analysis of vectors of INTs
+
+
+
 class classify {
 
 public:

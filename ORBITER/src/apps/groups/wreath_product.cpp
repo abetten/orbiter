@@ -23,6 +23,9 @@ void wreath_unrank_point_func(INT *v, INT rk, void *data);
 
 typedef class tensor_product tensor_product;
 
+//! class for the app wreath_product
+
+
 class tensor_product {
 public:
 	int argc;

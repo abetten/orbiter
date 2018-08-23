@@ -48,17 +48,6 @@ io_and_os2 :  ; cd io_and_os; $(MAKE)
 solvers2 :  ; cd solvers; $(MAKE)
 statistics2 :  ; cd statistics; $(MAKE)
 
-
-
-
-
-
-
-
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
-
-
 clean:
 	cd algebra_and_number_theory; $(MAKE) clean
 	cd coding_theory; $(MAKE) clean

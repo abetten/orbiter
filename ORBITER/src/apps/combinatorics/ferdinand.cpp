@@ -13,6 +13,9 @@
 
 typedef class cayley_graph_search cayley_graph_search;
 
+//! for a problem of Ferdinand Ihringer
+
+
 class cayley_graph_search {
 
 public:

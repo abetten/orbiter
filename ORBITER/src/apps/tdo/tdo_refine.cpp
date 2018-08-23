@@ -65,9 +65,11 @@ void print_usage()
 	cout << "   Use McKay solver for solving the second system" << endl;
 }
 
-typedef class global_data global_data;
+typedef class tdo_parameter_calculation tdo_parameter_calculation;
 
-class global_data {
+//! main class for tdo_refine to refine the parameters of a linear space
+
+class tdo_parameter_calculation {
 	public:
 	
 INT t0;
@@ -140,11 +142,11 @@ INT t0;
 
 int main(int argc, char **argv)
 {
-	global_data *G;
+	tdo_parameter_calculation *G;
 	
 	cout << version << endl;
 	
-	G = new global_data;
+	G = new tdo_parameter_calculation;
 	
 	G->t0 = os_ticks();
 	
@@ -186,7 +188,7 @@ int main(int argc, char **argv)
 	cout << endl;
 }
 
-void global_data::read_arguments(int argc, char **argv)
+void tdo_parameter_calculation::read_arguments(int argc, char **argv)
 {
 	INT i;
 	
@@ -283,7 +285,7 @@ void global_data::read_arguments(int argc, char **argv)
 	fname_in = argv[argc - 1];
 }
 
-void global_data::main_loop()
+void tdo_parameter_calculation::main_loop()
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -356,7 +358,7 @@ void global_data::main_loop()
 	}
 }
 
-void global_data::do_it(ofstream &g, INT verbose_level)
+void tdo_parameter_calculation::do_it(ofstream &g, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -409,7 +411,7 @@ void global_data::do_it(ofstream &g, INT verbose_level)
 
 }
 
-void global_data::do_row_refinement(ofstream &g, tdo_scheme &G, 
+void tdo_parameter_calculation::do_row_refinement(ofstream &g, tdo_scheme &G, 
 	partitionstack &P, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -468,7 +470,7 @@ void global_data::do_row_refinement(ofstream &g, tdo_scheme &G,
 		}
 }
 
-void global_data::do_col_refinement(ofstream &g, tdo_scheme &G, 
+void tdo_parameter_calculation::do_col_refinement(ofstream &g, tdo_scheme &G, 
 	partitionstack &P, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -529,7 +531,7 @@ void global_data::do_col_refinement(ofstream &g, tdo_scheme &G,
 		}
 }
 
-void global_data::do_all_row_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
+void tdo_parameter_calculation::do_all_row_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
 	INT *point_types, INT nb_point_types, INT point_type_len, 
 	INT *distributions, INT nb_distributions, INT &nb_tactical, 
 	INT verbose_level)
@@ -559,7 +561,7 @@ void global_data::do_all_row_refinements(BYTE *label_in, ofstream &g, tdo_scheme
 			
 }
 
-void global_data::do_all_column_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
+void tdo_parameter_calculation::do_all_column_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
 	INT *line_types, INT nb_line_types, INT line_type_len, 
 	INT *distributions, INT nb_distributions, INT &nb_tactical, 
 	INT verbose_level)
@@ -576,7 +578,7 @@ void global_data::do_all_column_refinements(BYTE *label_in, ofstream &g, tdo_sch
 			
 	for (t = 0; t < nb_distributions; t++) {
 		
-		//cout << "global_data::do_all_column_refinements t=" << t << endl;
+		//cout << "tdo_parameter_calculation::do_all_column_refinements t=" << t << endl;
 		if (do_column_refinement(t, label_in, g, G, line_types, nb_line_types, 
 			line_type_len, distributions, nb_distributions, 
 			verbose_level - 5))
@@ -591,7 +593,7 @@ void global_data::do_all_column_refinements(BYTE *label_in, ofstream &g, tdo_sch
 }
 
 
-INT global_data::do_row_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
+INT tdo_parameter_calculation::do_row_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
 	INT *point_types, INT nb_point_types, INT point_type_len, 
 	INT *distributions, INT nb_distributions, INT verbose_level)
 // returns TRUE or FALSE depending on whether the 
@@ -763,7 +765,7 @@ INT global_data::do_row_refinement(INT t, BYTE *label_in, ofstream &g, tdo_schem
 	return f_tactical;
 }
 
-INT global_data::do_column_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
+INT tdo_parameter_calculation::do_column_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
 	INT *line_types, INT nb_line_types, INT line_type_len, 
 	INT *distributions, INT nb_distributions, INT verbose_level)
 // returns TRUE or FALSE depending on whether the 

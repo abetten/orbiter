@@ -93,6 +93,10 @@ enum representation_type {
 	representation_type_PSL2_on_conic
 }; 
 
+
+//! internal class related to action
+
+
 union symmetry_group {
 	matrix_group *matrix_grp;
 	perm_group *perm_grp;
@@ -126,6 +130,9 @@ union symmetry_group {
 // #############################################################################
 // vector_ge.C:
 // #############################################################################
+
+//! vector of group elements
+
 
 class vector_ge {
 

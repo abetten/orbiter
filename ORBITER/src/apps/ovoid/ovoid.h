@@ -29,6 +29,9 @@ INT callback_check_conditions(INT len, INT *S, void *data, INT verbose_level);
 // #############################################################################
 
 
+//! classification of ovoids in orthogonal spaces
+
+
 class ovoid_generator {
 
 public:

@@ -12,16 +12,13 @@ MODULES = \
 	isomorph_files.o \
 	isomorph_global.o \
 	isomorph_testing.o \
-	isomorph_trace.o
+	isomorph_trace.o \
+	representatives.o
 
 
 all : $(MODULES)
 
 clean:
 	- rm *.o *.a *~
-
-
-#%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
 
 

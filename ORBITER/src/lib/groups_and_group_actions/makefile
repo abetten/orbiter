@@ -23,10 +23,6 @@ group_theory2 :  ; cd group_theory; $(MAKE)
 induced_actions2 :  ; cd induced_actions; $(MAKE)
 
 
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
-
-
 clean:
 	cd data_structures; $(MAKE) clean
 	cd group_actions; $(MAKE) clean

@@ -9,6 +9,12 @@
 
 typedef class hadamard hadamard;
 
+
+//! Classification of Hadamard matrices
+
+
+
+
 class hadamard {
 
 public:

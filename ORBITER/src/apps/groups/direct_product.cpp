@@ -23,6 +23,9 @@ INT design_search_check_conditions(INT len, INT *S,
 
 typedef class direct_product_action direct_product_action;
 
+//! searching for line transitive point imprimitive designs preserving a grid structure on points
+
+
 class direct_product_action {
 public:
 	int argc;

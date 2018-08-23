@@ -9,6 +9,11 @@
 // action_by_conjugation.C:
 // #############################################################################
 
+
+//! action by conjugation on the elements of a given group
+
+
+
 class action_by_conjugation {
 public:
 	sims *Base_group;
@@ -32,6 +37,10 @@ public:
 // #############################################################################
 // action_by_representation.C:
 // #############################################################################
+
+
+//! the action of PSL(2,q) on a conic (the only type implemented so far)
+
 
 class action_by_representation {
 public:
@@ -64,6 +73,12 @@ public:
 // action_by_restriction.C:
 // #############################################################################
 
+
+//! restricted action on an invariant subset
+
+
+
+
 class action_by_restriction {
 public:
 	INT nb_points;
@@ -84,6 +99,10 @@ public:
 // #############################################################################
 // action_by_right_multiplication.C:
 // #############################################################################
+
+//! action on a the set of elements of a group by right multiplication
+
+
 
 class action_by_right_multiplication {
 public:
@@ -106,6 +125,9 @@ public:
 // #############################################################################
 // action_by_subfield_structure.C:
 // #############################################################################
+
+//! action on the vector space arising from a field over a subfield
+
 
 class action_by_subfield_structure {
 public:
@@ -151,6 +173,9 @@ public:
 // action_on_andre.C:
 // #############################################################################
 
+//! action on the elements of a projective plane constructed via Andre / Bruck / Bose
+
+
 class action_on_andre {
 public:
 
@@ -183,6 +208,9 @@ public:
 // action_on_bricks.C:
 // #############################################################################
 
+//! related to a problem of Neal Sloan
+
+
 class action_on_bricks {
 public:
 
@@ -208,6 +236,9 @@ public:
 // #############################################################################
 // action_on_cosets.C:
 // #############################################################################
+
+//! action on the cosets of a subgroup by right multiplication
+
 
 class action_on_cosets {
 public:
@@ -255,6 +286,9 @@ public:
 // action_on_determinant.C:
 // #############################################################################
 
+//! action on the determinant of a group of matrices (used to compute the subgroup PSL)
+
+
 class action_on_determinant {
 public:
 	matrix_group *M;
@@ -277,6 +311,9 @@ public:
 // #############################################################################
 // action_on_factor_space.C:
 // #############################################################################
+
+//! induced action on the factor space of a vector space modulo a subspace
+
 
 class action_on_factor_space {
 public:
@@ -402,6 +439,10 @@ public:
 // action_on_flags.C:
 // #############################################################################
 
+
+//! action on flags
+
+
 class action_on_flags {
 public:
 	action *A;
@@ -427,6 +468,9 @@ public:
 // #############################################################################
 // action_on_grassmannian.C:
 // #############################################################################
+
+//! action on the grassmannian (subspaces of a fixed dimension of a vectors space)
+
 
 class action_on_grassmannian {
 public:
@@ -474,6 +518,10 @@ public:
 // action_on_homogeneous_polynomials.C:
 // #############################################################################
 
+
+//! induced action on the set of homogeneous polynomials over a finite field
+
+
 class action_on_homogeneous_polynomials {
 public:
 	INT n; // M->n
@@ -515,6 +563,9 @@ public:
 // action_on_k_subsets.C:
 // #############################################################################
 
+//! induced action on k-subsets of a set of size n
+
+
 class action_on_k_subsets {
 public:
 	action *A;
@@ -535,6 +586,10 @@ public:
 // action_on_orbits.C:
 // #############################################################################
 
+//! induced action on the set of orbits (usually by the normalizer)
+
+
+
 class action_on_orbits {
 public:
 	action *A;
@@ -554,6 +609,10 @@ public:
 // #############################################################################
 // action_on_orthogonal.C:
 // #############################################################################
+
+
+//! action on the orthogonal geometry
+
 
 class action_on_orthogonal {
 public:
@@ -585,6 +644,11 @@ public:
 // action_on_sets.C:
 // #############################################################################
 
+
+//! induced action on a given set of sets.
+
+
+
 class action_on_sets {
 public:
 	INT nb_sets;
@@ -614,6 +678,9 @@ INT action_on_sets_compare_inverted(void *a, void *b, void *data);
 // action_on_sign.C:
 // #############################################################################
 
+//! action on the sign function of a permutation group (to compute the even subgroup)
+
+
 class action_on_sign {
 public:
 	action *A;
@@ -632,6 +699,10 @@ public:
 // #############################################################################
 // action_on_spread_set.C:
 // #############################################################################
+
+
+//! induced action on a spread set via the associated spread
+
 
 class action_on_spread_set {
 public:
@@ -675,6 +746,9 @@ public:
 // action_on_subgroups.C:
 // #############################################################################
 
+//! induced action on subgroups of a group
+
+
 class action_on_subgroups {
 public:
 	
@@ -706,6 +780,10 @@ INT action_on_subgroups_compare_inverted(void *a, void *b, void *data);
 // #############################################################################
 // action_on_wedge_product.C:
 // #############################################################################
+
+
+//! the wedge product action on exterior square of a vector space
+
 
 class action_on_wedge_product {
 public:
@@ -747,6 +825,9 @@ public:
 // #############################################################################
 // product_action.C:
 // #############################################################################
+
+//! the product action of two group actions
+
 
 class product_action {
 public:

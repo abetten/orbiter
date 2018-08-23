@@ -9,6 +9,9 @@
 
 typedef struct mindist MINDIST;
 
+//! internal class for the algorithm to compute the minimum distance of a linear code
+
+
 struct mindist {
 	int f_v, f_vv, f_vvv;
 	int k, n, d, q;

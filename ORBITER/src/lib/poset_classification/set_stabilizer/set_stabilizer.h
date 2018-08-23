@@ -12,6 +12,10 @@
 // set_stabilizer_compute.C:
 // #############################################################################
 
+
+//! wrapper to compute the set stabilizer with the class compute_stabilizer
+
+
 class set_stabilizer_compute {
 
 public:
@@ -54,6 +58,8 @@ public:
 // #############################################################################
 // compute_stabilizer.C:
 // #############################################################################
+
+//! wrapper to compute the set stabilizer using the poset classification algorithm
 
 class compute_stabilizer {
 

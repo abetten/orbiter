@@ -16,6 +16,11 @@ int main(int argc, const char **argv);
 // code_generator:
 // #############################################################################
 
+
+//! classification of optimal linear codes over Fq
+
+
+
 class code_generator {
 
 public:

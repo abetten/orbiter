@@ -10,6 +10,10 @@
 // orbit_of_equations.C
 // #############################################################################
 
+
+//! Schreier tree for action on homogeneous equations
+
+
 class orbit_of_equations {
 public:
 	action *A;
@@ -61,6 +65,11 @@ INT orbit_of_equations_compare_func(void *a, void *b, void *data);
 // orbit_of_sets.C
 // #############################################################################
 
+
+//! Schreier tree for action on subsets
+
+
+
 class orbit_of_sets {
 public:
 	action *A;
@@ -90,6 +99,12 @@ INT orbit_of_sets_compare_func(void *a, void *b, void *data);
 // #############################################################################
 // orbit_of_subspaces.C
 // #############################################################################
+
+
+
+//! Schreier tree for action on subspaces
+
+
 
 class orbit_of_subspaces {
 public:
@@ -170,6 +185,10 @@ INT orbit_of_subspaces_compare_func(void *a, void *b, void *data);
 // orbit_rep.C
 // #############################################################################
 
+
+//! to hold one orbit after reading files from Orbiters poset classification
+
+
 class orbit_rep {
 public:
 	BYTE prefix[1000];
@@ -209,6 +228,8 @@ public:
 	
 };
 
+
+#if 0
 // #############################################################################
 // representatives.C
 // #############################################################################
@@ -274,10 +295,14 @@ public:
 	void calc_fusion_statistics();
 	void print_fusion_statistics();
 };
+#endif
 
 // #############################################################################
 // subspace_orbits.C
 // #############################################################################
+
+//! poset classification for orbits on subspaces
+
 
 
 class subspace_orbits {

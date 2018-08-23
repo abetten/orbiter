@@ -26,6 +26,11 @@
 typedef struct dlx_node dlx_node;
 typedef struct dlx_node *pdlx_node;
 
+
+//! internal class for the dancing links exact cover algorithm
+
+
+
 struct dlx_node {
     
     dlx_node * Header;

@@ -11,6 +11,9 @@
 // clique_finder.C
 // #############################################################################
 
+//! A class that can be used to find cliques in graphs
+
+
 
 class clique_finder {
 public:
@@ -161,6 +164,9 @@ void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz,
 // #############################################################################
 // colored_graph.C
 // #############################################################################
+
+
+//! a graph with a vertex coloring
 
 
 class colored_graph {
@@ -363,6 +369,11 @@ INT colored_graph_all_rainbow_cliques_nonrecursive(const BYTE *fname,
 // graph_layer.C
 // #############################################################################
 
+
+//! part of the data structure layered_graph
+
+
+
 class graph_layer {
 public:
 	INT id_of_first_node;
@@ -385,6 +396,9 @@ public:
 // #############################################################################
 // graph_node.C
 // #############################################################################
+
+//! part of the data structure layered_graph
+
 
 class graph_node {
 public:
@@ -450,6 +464,10 @@ public:
 // layered_graph.C
 // #############################################################################
 
+
+//! a data structure to store partially ordered sets
+
+
 class layered_graph {
 public:
 	INT nb_layers;
@@ -499,6 +517,8 @@ public:
 // #############################################################################
 // layered_graph_draw_options.C
 // #############################################################################
+
+//! options for drawing an object of type layered_graph
 
 class layered_graph_draw_options {
 public:
@@ -567,6 +587,12 @@ public:
 // #############################################################################
 // rainbow_cliques.C
 // #############################################################################
+
+
+
+//! to search for rainbow cliques in graphs
+
+
 
 
 class rainbow_cliques {

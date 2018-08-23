@@ -8,27 +8,14 @@
 // galois started:  August 12, 2005
 
 
-// #################################################################################
-// dynamic_memory.C:
-// #################################################################################
 
-
-
-class dynamic_memory {
-public:
-	INT *ptr;
-	INT size_allocated;
-	INT size_used;
-	dynamic_memory();
-	~dynamic_memory();
-	void allocate();
-	void reallocate(INT required_size, INT f_copy_over);
-};
 
 // #############################################################################
 // file_output.C:
 // #############################################################################
 
+
+//! a wrapper class for an ofstream which allows to store extra data
 
 class file_output {
 public:
@@ -100,6 +87,8 @@ void free_PINT_all(INT **p, INT nb);
 // memory_object.C:
 // #############################################################################
 
+//! can be used for serialization
+
 
 
 
@@ -138,9 +127,13 @@ public:
 	void decompress(INT verbose_level);
 };
 
-// #################################################################################
+// #############################################################################
 // orbiter_data_file.C:
-// #################################################################################
+// #############################################################################
+
+
+
+//! a class to read output files from orbiters poset classification
 
 
 

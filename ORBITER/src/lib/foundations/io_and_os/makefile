@@ -6,7 +6,6 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	dynamic_memory.o \
 	file_output.o \
 	memory.o \
 	memory_object.o \
@@ -19,8 +18,6 @@ all : $(MODULES)
 clean:
 	- rm *.o *.a *~
 
-
-#%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
 
 
 

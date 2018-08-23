@@ -10,6 +10,8 @@
 // BLT_set_create.C:
 // #############################################################################
 
+//! to create a BLT-set from a known construction
+
 
 
 class BLT_set_create {
@@ -50,6 +52,8 @@ public:
 // BLT_set_create_description.C:
 // #############################################################################
 
+//! to describe a BLT set with a known construction from the command line
+
 
 
 class BLT_set_create_description {
@@ -76,6 +80,8 @@ public:
 // #############################################################################
 // arc_generator.C
 // #############################################################################
+
+//! poset classification for arcs in desarguesian projective planes
 
 
 class arc_generator {
@@ -213,6 +219,8 @@ void arc_print(INT len, INT *S, void *data);
 // #############################################################################
 // arc_lifting.C:
 // #############################################################################
+
+//! creates a cubic surface from a 6-arc in a plane
 
 
 class arc_lifting {
@@ -357,6 +365,9 @@ public:
 // choose_points_or_lines.C:
 // #############################################################################
 
+//! to classify objects in projective planes
+
+
 class choose_points_or_lines {
 
 public:
@@ -440,6 +451,8 @@ public:
 // #############################################################################
 // classify_double_sixes.C:
 // #############################################################################
+
+//! to classify double sixes in PG(3,q)
 
 
 class classify_double_sixes {
@@ -580,6 +593,9 @@ public:
 // #############################################################################
 
 
+//! to classify double triplets in PG(3,q)
+
+
 class classify_trihedral_pairs {
 
 public:
@@ -703,6 +719,9 @@ INT incidence_structure_find_blocking_set(incidence_structure *Inc,
 // k_arc_generator.C:
 // #############################################################################
 
+//! to classify k-arcs in the projective plane PG(2,q)
+
+
 
 class k_arc_generator {
 
@@ -740,6 +759,9 @@ public:
 // #############################################################################
 
 
+//! to represent an object in projective space
+
+
 class object_in_projective_space_with_action {
 
 public:
@@ -763,6 +785,8 @@ public:
 // #############################################################################
 
 	
+//! the orthogonal geometry as a polar space
+
 
 class polar {
 public:
@@ -870,6 +894,9 @@ void create_Buekenhout_Metz(
 // recoordinatize.C
 // #############################################################################
 
+//! utility class to classify spreads
+
+
 class recoordinatize {
 public:
 	INT n;
@@ -935,6 +962,8 @@ public:
 // search_blocking_set.C:
 // #############################################################################
 
+//! to classify blocking sets in projective planes
+
 
 
 class search_blocking_set {
@@ -989,6 +1018,9 @@ INT callback_check_partial_blocking_set(INT len, INT *S,
 // singer_cycle.C
 // #############################################################################
 
+//! the Singer cycle in PG(n-1,q)
+
+
 class singer_cycle {
 public:	
 	finite_field *F;
@@ -1025,6 +1057,8 @@ public:
 // #############################################################################
 // six_arcs_not_on_a_conic.C:
 // #############################################################################
+
+//! to classify six-arcs not on a conic in PG(2,q)
 
 
 class six_arcs_not_on_a_conic {
@@ -1063,6 +1097,9 @@ public:
 #define SPREAD_OF_TYPE_LAW_PENTTILA 5
 #define SPREAD_OF_TYPE_DICKSON_KANTOR 6
 #define SPREAD_OF_TYPE_HUDSON 7
+
+
+//! to classify spreads of PG(k-1,q) in PG(n-1,q) where n=2*k
 
 
 class spread {
@@ -1254,6 +1291,8 @@ void spread_callback_make_quotients(isomorph *Iso, void *data,
 // spread_create.C:
 // #############################################################################
 
+//! to create a known spread
+
 
 
 class spread_create {
@@ -1296,6 +1335,8 @@ public:
 // spread_create_description.C:
 // #############################################################################
 
+//! to describe the construction of a known spread from the command line
+
 
 
 class spread_create_description {
@@ -1324,6 +1365,9 @@ public:
 // #############################################################################
 // spread_lifting.C
 // #############################################################################
+
+//! create spreads from smaller spreads
+
 
 class spread_lifting {
 public:
@@ -1383,6 +1427,9 @@ public:
 // #############################################################################
 // surface_classify_wedge.C
 // #############################################################################
+
+//! to classify cubic surfaces using double sixes as substructures
+
 
 class surface_classify_wedge {
 public:
@@ -1474,6 +1521,8 @@ public:
 // #############################################################################
 
 
+//! to create a cubic surface from a known construction
+
 
 class surface_create {
 
@@ -1524,6 +1573,8 @@ public:
 // #############################################################################
 
 
+//! to describe a known construction of a cubic surface from the command line
+
 
 class surface_create_description {
 
@@ -1553,6 +1604,9 @@ public:
 // #############################################################################
 // surface_object_with_action.C:
 // #############################################################################
+
+
+//! an instance of a cubic surface together with its stabilizer
 
 
 class surface_object_with_action {
@@ -1632,6 +1686,9 @@ public:
 // surface_with_action.C:
 // #############################################################################
 
+//! cubic surfaces in projective space with automorphism group
+
+
 
 class surface_with_action {
 
@@ -1686,6 +1743,9 @@ public:
 // #############################################################################
 // translation_plane_via_andre_model.C
 // #############################################################################
+
+//! a translation plane created via Andre / Bruck / Bose
+
 
 
 class translation_plane_via_andre_model {

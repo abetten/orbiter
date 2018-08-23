@@ -11,6 +11,8 @@
 
 typedef struct action_is_minimal_data action_is_minimal_data;
 
+//! internal class for is_minimal backtracking used by class action
+
 struct action_is_minimal_data {
 	action *A;
 	INT backtrack_node;

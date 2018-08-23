@@ -25,6 +25,11 @@ void presentation(action *A, sims *S, INT goi, vector_ge *gens,
 
 // needs sqrt_mod_involved from DISCRETA/global.C
 
+
+//! represents a fixed elliptic curve in Weierstrass form
+
+
+
 class elliptic_curve {
 
 public:
@@ -120,6 +125,8 @@ void compute_lifts_new(
 // #############################################################################
 
 
+//! auxiliary class for create_factor_group, which is used in analyze_group.cpp
+
 struct factor_group {
 	INT goi;
 	action *A;
@@ -148,6 +155,10 @@ INT callback_partial_ovoid_test(INT len, INT *S, void *data, INT verbose_level);
 // #############################################################################
 // young.C
 // #############################################################################
+
+
+//! The Young representations of the symmetric group
+
 
 class young {
 public:

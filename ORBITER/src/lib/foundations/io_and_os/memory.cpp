@@ -187,6 +187,9 @@ void registry_dump()
 
 typedef struct registry_key_pair registry_key_pair;
 
+//! internal class for memory debugging
+
+
 struct registry_key_pair {
 	const BYTE *file;
 	INT line;
