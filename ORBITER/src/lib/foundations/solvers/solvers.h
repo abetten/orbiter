@@ -12,6 +12,9 @@
 // #############################################################################
 
 
+//! for diophantine systems of equations (i.e., linear systems over the integers)
+
+
 
 class diophant {
 public:
@@ -255,6 +258,10 @@ void DlxSearchRHS(INT k, INT verbose_level);
 // #############################################################################
 // mckay.C: solver for systems of diophantine equations
 // #############################################################################
+
+
+//! a solver for systems of diophantine equations
+
 
 namespace mckay {
 	// we use the MCKAY algorithm for now...

@@ -12,6 +12,8 @@ extern INT t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 
+//! classification of graphs and tournaments
+
 
 
 class graph_generator {

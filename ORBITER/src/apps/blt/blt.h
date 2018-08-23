@@ -20,6 +20,8 @@ extern INT t0; // the system time when the program started
 // blt_set.C
 // #############################################################################
 
+//! classification of BLT-sets
+
 
 
 class blt_set {

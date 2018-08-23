@@ -14,6 +14,9 @@
 // classification.C:
 // #############################################################################
 
+//! a poset classification data structure
+
+
 class classification {
 public:
 	action *A; // do not free
@@ -44,6 +47,9 @@ public:
 // flag_orbits.C:
 // #############################################################################
 
+//! related to the class classification
+
+
 class flag_orbits {
 public:
 	action *A; // do not free
@@ -71,6 +77,9 @@ public:
 // #############################################################################
 // flag_orbit_node.C:
 // #############################################################################
+
+//! related to the class flag_orbits
+
 
 class flag_orbit_node {
 public:
@@ -107,6 +116,8 @@ public:
 // #############################################################################
 // orbit_node.C:
 // #############################################################################
+
+//! related to the class classification
 
 class orbit_node {
 public:

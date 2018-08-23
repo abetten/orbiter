@@ -295,6 +295,9 @@ with::~with()
 
 typedef struct ff_memory FF_MEMORY;
 
+//! DISCRETA auxilliary class for class domain
+
+
 struct ff_memory {
 	INT q, p, f;
 	domain *d1;

@@ -10,6 +10,8 @@
 // direct_product.C:
 // #############################################################################
 
+//! the direct product of two matrix groups in product action
+
 class direct_product {
 
 public:
@@ -88,6 +90,8 @@ public:
 };
 
 
+//! used to create a linear group from command line arguments
+
 // #############################################################################
 // linear_group.C:
 // #############################################################################
@@ -136,6 +140,9 @@ public:
 		const BYTE *subgroup_fname, const BYTE *subgroup_label, 
 		INT verbose_level);
 };
+
+//! description of a linear group from the command line
+
 
 // #############################################################################
 // linear_group_description.C:
@@ -186,9 +193,12 @@ public:
 		INT verbose_level);
 };
 
+
 // #############################################################################
 // matrix_group.C:
 // #############################################################################
+
+//! A linear group implemented as matrices
 
 class matrix_group {
 
@@ -346,6 +356,8 @@ public:
 // perm_group.C:
 // #############################################################################
 
+//! An abstract permutation group
+
 class perm_group {
 
 public:
@@ -420,6 +432,7 @@ void perm_group_generators_direct_product(INT nb_diagonal_elements,
 // schreier.C:
 // #############################################################################
 
+//! Schreier trees for orbits on points
 
 class schreier {
 
@@ -683,6 +696,9 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 // schreier_sims.C:
 // #############################################################################
 
+
+//! Schreier Sims algorithm
+
 class schreier_sims {
 
 public:
@@ -765,6 +781,8 @@ public:
 // #############################################################################
 // sims.C:
 // #############################################################################
+
+//! A stabilizer chain for a permutation group
 
 class sims {
 
@@ -1148,6 +1166,7 @@ sims *create_sims_for_centralizer_of_matrix(action *A,
 // strong_generators.C:
 // #############################################################################
 
+//! a strong generating set for a permutation group with group order
 
 class strong_generators {
 public:
@@ -1371,6 +1390,8 @@ void strong_generators_array_read_from_file(const BYTE *fname,
 // subgroup.C:
 // #############################################################################
 
+//! list a subgroup of a group by storing the element indices
+
 class subgroup {
 public:
 	INT *Elements;
@@ -1393,6 +1414,8 @@ public:
 // #############################################################################
 // wreath_product.C:
 // #############################################################################
+
+//! the wreath product group  AGL(d,q) wreath Sym(n)
 
 class wreath_product {
 

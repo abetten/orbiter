@@ -14,6 +14,8 @@
 // isomorph_files.C
 // #############################################################################
 
+//! hybrid algorithm to classify combinatorial bjects
+
 
 class isomorph {
 public:
@@ -665,6 +667,9 @@ public:
 // isomorph_arguments.C
 // #############################################################################
 
+//! a helper class for isomorph
+
+
 class isomorph_arguments {
 public:
 	INT f_init_has_been_called;
@@ -731,6 +736,8 @@ public:
 	void execute(INT verbose_level);
 
 };
+
+//! auxiliary class to pass case specific data to the function isomorph_worker
 
 struct isomorph_worker_data {
 	INT *the_set;
@@ -832,5 +839,6 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, 
 	ostream &fp, INT selection_size, INT *selection, 
 	INT verbose_level);
+
 
 

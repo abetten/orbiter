@@ -288,7 +288,6 @@ typedef class heisenberg heisenberg;
 typedef class desarguesian_spread desarguesian_spread;
 typedef class classify_bitvectors classify_bitvectors;
 typedef class object_in_projective_space object_in_projective_space;
-typedef class dynamic_memory dynamic_memory;
 typedef class point_line point_line;
 typedef struct plane_data PLANE_DATA;
 typedef class tdo_scheme tdo_scheme;
@@ -369,6 +368,10 @@ typedef enum diophant_equation_type diophant_equation_type;
 // INT_matrix.C:
 // #############################################################################
 
+
+//! a class to represent matrices over INT
+
+
 class INT_matrix {
 public:
 
@@ -396,6 +399,9 @@ public:
 // #############################################################################
 
 extern INT longinteger_f_print_scientific;
+
+//! a class to represent aritrary precision integers
+
 
 class longinteger_object {
 

@@ -10,6 +10,12 @@
 // group.C:
 // #############################################################################
 
+
+//! a container data structure for groups
+
+
+
+
 class group {
 
 public:
@@ -75,6 +81,9 @@ public:
 // orbit_transversal.C:
 // #############################################################################
 
+//! a container data structure for a poset classification from Orbiter output
+
+
 class orbit_transversal {
 
 public:
@@ -95,6 +104,10 @@ public:
 // #############################################################################
 // page_storage.C:
 // #############################################################################
+
+//! a data structure to store group elements in compressed form
+
+
 
 class page_storage {
 
@@ -147,6 +160,10 @@ void test_page_storage(INT f_v);
 // #############################################################################
 // projective_space_with_action.C:
 // #############################################################################
+
+
+//! projective space PG(n,q) with automorphism group PGGL(n+1,q)
+
 
 
 class projective_space_with_action {
@@ -246,6 +263,11 @@ INT schreier_vector_determine_depth_recursion(INT n, INT *pts, INT *prev,
 // set_and_stabilizer.C:
 // #############################################################################
 
+
+//! a set and its known set stabilizer
+
+
+
 class set_and_stabilizer {
 
 public:
@@ -297,6 +319,10 @@ public:
 // #############################################################################
 
 
+//! a union find data structure (used in the poset classification)
+
+
+
 
 class union_find {
 
@@ -322,6 +348,8 @@ public:
 // #############################################################################
 // union_find_on_k_subsets.C:
 // #############################################################################
+
+//! a union find data structure (used in the poset classification)
 
 
 

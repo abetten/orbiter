@@ -11,6 +11,8 @@
 // brick_domain.C:
 // #############################################################################
 
+//! for a problem of Neil Sloane
+
 class brick_domain {
 
 public:
@@ -39,6 +41,7 @@ void brick_test(INT q, INT verbose_level);
 // classify_bitvectors.C:
 // #############################################################################
 
+//! stores the canonical form of 0/1 matrices for the purposes of classification
 
 class classify_bitvectors {
 public:

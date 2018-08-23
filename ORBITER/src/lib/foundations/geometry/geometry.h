@@ -12,6 +12,9 @@
 // andre_construction.C:
 // #############################################################################
 
+//! Andre / Bruck / Bose construction of a translation plane from a spread
+
+
 class andre_construction {
 public:
 	INT order; // = q^k
@@ -54,6 +57,10 @@ public:
 // andre_construction_point_element.C:
 // #############################################################################
 
+
+//! related to class andre_construction
+
+
 class andre_construction_point_element {
 public:
 	andre_construction *Andre;
@@ -78,6 +85,9 @@ public:
 // #############################################################################
 // andre_construction_line_element.C:
 // #############################################################################
+
+
+//! related to class andre_construction
 
 
 class andre_construction_line_element {
@@ -109,6 +119,9 @@ public:
 // #############################################################################
 // buekenhout_metz.C:
 // #############################################################################
+
+//! Buekenhout Metz unitals
+
 
 class buekenhout_metz {
 public:
@@ -317,6 +330,10 @@ void create_Law_71_BLT_set(orthogonal *O, INT *set, INT verbose_level);
 // decomposition.C:
 // #############################################################################
 
+
+//! decomposition of an incidence matrix
+
+
 class decomposition {
 
 public:
@@ -368,6 +385,10 @@ public:
 // #############################################################################
 // desarguesian_spread.C:
 // #############################################################################
+
+
+//! the desarguesian spread
+
 
 
 class desarguesian_spread {
@@ -426,6 +447,9 @@ public:
 // eckardt_point.C
 // #############################################################################
 
+//! Eckardt point on a cubic surface using the Schlaefli labeling
+
+
 class eckardt_point {
 
 public:
@@ -457,6 +481,9 @@ public:
 // #############################################################################
 // flag.C:
 // #############################################################################
+
+//! a maximal chain of subspaces
+
 
 class flag {
 public:
@@ -513,6 +540,10 @@ public:
 #define FUSE_TYPE_DOUBLE 2
 //#define FUSE_TYPE_MULTI 3
 //#define FUSE_TYPE_TDO 4
+
+//! input parameters for TDO-process
+
+
 
 class geo_parameter {
 public:
@@ -735,6 +766,9 @@ void do_find_Eckardt_points_from_arc(INT n, finite_field *F,
 // grassmann.C:
 // #############################################################################
 
+//! to rank and unrank subspaces of a fixed dimension in F_q^n
+
+
 class grassmann {
 public:
 	INT n, k, q;
@@ -790,6 +824,9 @@ public:
 // grassmann_embedded.C:
 // #############################################################################
 
+//! subspaces with a fixed embedding
+
+
 class grassmann_embedded {
 public:
 	INT big_n, n, k, q;
@@ -829,6 +866,9 @@ public:
 // #############################################################################
 // hermitian.C:
 // #############################################################################
+
+//! hermitian space
+
 
 class hermitian {
 
@@ -878,6 +918,9 @@ public:
 // hjelmslev.C:
 // #############################################################################
 
+//! Hjelmslev geometry
+
+
 class hjelmslev {
 public:
 	INT n, k, q;
@@ -923,6 +966,9 @@ void int_k2ij(INT k, INT & i, INT & j, INT n);
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_MATRIX 1
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_ORTHOGONAL 2
 #define INCIDENCE_STRUCTURE_REALIZATION_BY_HJELMSLEV 3
+
+//! an incidence structure interface for many different types of geometries
+
 
 class incidence_structure {
 	public:
@@ -1185,6 +1231,9 @@ void incma_latex_override_unit_length_drop();
 // #############################################################################
 
 
+//! the Klein correspondence between lines in PG(3,q) and points on the Klein quadric
+
+
 class klein_correspondence {
 public:
 
@@ -1225,6 +1274,9 @@ public:
 // #############################################################################
 // knarr.C:
 // #############################################################################
+
+//! the Knarr construction of a GQ from a BLT-set
+
 
 
 class knarr {
@@ -1272,6 +1324,10 @@ public:
 // #############################################################################
 // object_in_projective_space.C:
 // #############################################################################
+
+
+//! a geometric object in projective space (points, lines or packings)
+
 
 
 class object_in_projective_space {
@@ -1340,6 +1396,9 @@ public:
 // #############################################################################
 // orthogonal.C:
 // #############################################################################
+
+//! an orthogonal geometry O^epsilon(n,q)
+
 
 class orthogonal {
 
@@ -1906,13 +1965,16 @@ INT packing_number_via_maxfit(INT n, INT k);
 // point_line.C:
 // #################################################################################
 
-
+//! auxiliary class for the class point_line
 
 
 struct plane_data {
 	INT *points_on_lines; // [nb_pts * (plane_order + 1)]
 	INT *line_through_two_points; // [nb_pts * nb_pts]
 };
+
+
+//! a data structure for general projective planes, including nodesarguesian ones
 
 
 class point_line {
@@ -2107,6 +2169,9 @@ void display_table_of_projective_points(ostream &ost, finite_field *F,
 // #############################################################################
 // projective_space.C:
 // #############################################################################
+
+//! a projective space PG(n,q) of dimension n over Fq
+
 
 class projective_space {
 
@@ -2389,6 +2454,9 @@ public:
 // #############################################################################
 // surface.C
 // #############################################################################
+
+//! cubic surfaces in PG(3,q) with 27 lines
+
 
 class surface {
 
@@ -2779,6 +2847,9 @@ public:
 // surface_object.C
 // #############################################################################
 
+//! a particular cubic surface in PG(3,q), given by its equation
+
+
 class surface_object {
 
 public:
@@ -2952,6 +3023,7 @@ public:
 // tdo_data.C: TDO parameter refinement
 // #################################################################################
 
+//! a class related to the class tdo_scheme
 
 class tdo_data {
 public:
@@ -3007,13 +3079,17 @@ public:
 #define EXTRA_ROW 3
 #define EXTRA_COL 4
 
+
+//! internal class related to tdo_data
+
+
 struct solution_file_data {
 	INT nb_solution_files;
 	INT system_no[MAX_SOLUTION_FILE];
 	BYTE *solution_file[MAX_SOLUTION_FILE];
 };
 
-
+//! a TDO scheme captures the combinatorics of a decomposed incidence structure
 
 class tdo_scheme {
 
@@ -3264,6 +3340,8 @@ public:
 // unusual.C:
 // #############################################################################
 
+//! Penttila's unusual model to create BLT-sets
+
 
 class unusual_model {
 public:
@@ -3343,6 +3421,8 @@ public:
 // #############################################################################
 // W3q.C:
 // #############################################################################
+
+//! a W(3,q) generalized quadrangle
 
 
 class W3q {

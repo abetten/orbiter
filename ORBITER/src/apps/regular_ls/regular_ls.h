@@ -5,6 +5,12 @@
 
 typedef class regular_ls_generator regular_ls_generator;
 
+
+//! classification of regular linear spaces
+
+
+
+
 class regular_ls_generator {
 
 public:

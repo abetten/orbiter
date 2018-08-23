@@ -61,6 +61,10 @@ int main(int argc, char **argv)
 
 typedef class difference_set_in_heisenberg_group difference_set_in_heisenberg_group;
 
+
+//! class related to a problem of Tao
+
+
 class difference_set_in_heisenberg_group {
 
 public:

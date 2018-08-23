@@ -121,7 +121,6 @@ MODULES= \
 		foundations/graphics/scene.o \
 		foundations/graphics/tree.o \
 		foundations/graphics/tree_node.o \
-		foundations/io_and_os/dynamic_memory.o \
 		foundations/io_and_os/file_output.o \
 		foundations/io_and_os/memory.o \
 		foundations/io_and_os/memory_object.o \
@@ -280,11 +279,11 @@ MODULES= \
 		top_level/isomorph/isomorph_global.o \
 		top_level/isomorph/isomorph_testing.o \
 		top_level/isomorph/isomorph_trace.o \
+		top_level/isomorph/representatives.o \
 		top_level/orbits/orbit_of_equations.o \
 		top_level/orbits/orbit_of_sets.o \
 		top_level/orbits/orbit_of_subspaces.o \
 		top_level/orbits/orbit_rep.o \
-		top_level/orbits/representatives.o \
 		top_level/orbits/subspace_orbits.o \
 		top_level/solver/exact_cover.o \
 		top_level/solver/exact_cover_arguments.o

@@ -16,6 +16,10 @@ enum domain_kind {
 	not_applicable, domain_the_integers, domain_integer_fractions
 };
 
+
+//! related to the computation of Young representations
+
+
 class a_domain {
 public:
 	domain_kind kind;
@@ -111,6 +115,8 @@ public:
 // #############################################################################
 // finite_field.C:
 // #############################################################################
+
+//! a finite field Fq
 
 class finite_field {
 
@@ -684,6 +690,11 @@ const BYTE *get_primitive_polynomial(INT p, INT e, INT verbose_level);
 // finite_ring.C:
 // #############################################################################
 
+
+//! finite chain rings
+
+
+
 class finite_ring {
 
 	INT *add_table; // [q * q]
@@ -730,6 +741,9 @@ public:
 // #############################################################################
 
 
+//! Auxilliary class to construct generators of the symplectic group
+
+
 class generators_symplectic_group {
 public:
 
@@ -771,6 +785,8 @@ public:
 // #############################################################################
 // gl_classes.C:
 // #############################################################################
+
+//! conjugacy classes in GL(n,q)
 
 class gl_classes {
 public:
@@ -856,6 +872,7 @@ public:
 
 };
 
+//! To represent a conjugacy class of matrices in GL(n,q)
 
 class gl_class_rep {
 public:
@@ -874,6 +891,7 @@ public:
 		INT verbose_level);
 };
 
+//! auxiliary class for conjugacy classes in GL(n,q)
 
 class matrix_block_data {
 public:
@@ -1044,6 +1062,9 @@ void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F,
 // heisenberg.C
 // #############################################################################
 
+//! The Heisenberg group of n x n matrices
+
+
 class heisenberg {
 
 public:
@@ -1079,6 +1100,8 @@ public:
 // #############################################################################
 // homogeneous_polynomial_domain.C
 // #############################################################################
+
+//! Homogeneous polynomials in n variables over a finite field
 
 
 class homogeneous_polynomial_domain {
@@ -1171,6 +1194,8 @@ void homogeneous_polynomial_domain_swap_monomial(void *data,
 // #############################################################################
 // longinteger_domain.C:
 // #############################################################################
+
+//! Domain to compute with objects of type longinteger
 
 class longinteger_domain {
 
@@ -1316,6 +1341,8 @@ void longinteger_print_digits(BYTE *rep, INT len);
 // norm_tables.C:
 // #############################################################################
 
+//! tables for the norm map in a finite field
+
 class norm_tables {
 public:
 	INT *norm_table;
@@ -1336,6 +1363,8 @@ public:
 // #############################################################################
 // null_polarity_generator.C:
 // #############################################################################
+
+//! internal class to compute generators for the group of null polarities
 
 class null_polarity_generator {
 public:
@@ -1425,6 +1454,8 @@ void INT_mult_fractions(INT at, INT ab, INT bt, INT bb,
 // #############################################################################
 
 
+//! used to check that any d-1 columns are linearly independent
+
 
 class rank_checker {
 
@@ -1453,6 +1484,7 @@ public:
 // subfield_structure.C:
 // #############################################################################
 
+//! a finite field as a vector space over a subfield
 
 class subfield_structure {
 public:
@@ -1506,6 +1538,8 @@ public:
 // #############################################################################
 // unipoly_domain.C:
 // #############################################################################
+
+//! domain to compute with polynomials in one variable over a finite field
 
 class unipoly_domain {
 public:

@@ -14,8 +14,3 @@ all : $(MODULES)
 
 clean:
 	- rm *.o *.a *~
-
-
-
-
-

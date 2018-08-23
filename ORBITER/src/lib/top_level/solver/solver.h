@@ -10,6 +10,10 @@
 // exact_cover.C
 // #############################################################################
 
+
+//! wrapper class for exact cover problems arising with the lifting of combinatorial objects
+
+
 class exact_cover {
 public:
 
@@ -132,6 +136,9 @@ public:
 // #############################################################################
 // exact_cover_arguments.C:
 // #############################################################################
+
+
+//! command line arguments to control the lifting via exact cover
 
 
 

@@ -97,6 +97,7 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 // mp_graphics.C:
 // #############################################################################
 
+//! a class to help with drawing elements in a 2D grid fashion
 
 struct grid_frame {
 	INT f_matrix_notation;
@@ -107,6 +108,10 @@ struct grid_frame {
 	double dx;
 	double dy;
 };
+
+
+//! a general 2D graphical output interface (metapost, tikz, postscript)
+
 
 class mp_graphics {
 
@@ -485,6 +490,9 @@ void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3,
 // scene.C:
 // #############################################################################
 
+//! a collection of 3D geometry objects
+
+
 
 class scene {
 public:
@@ -693,6 +701,10 @@ public:
 // tree.C:
 // #############################################################################
 
+
+//! a data structure for trees
+
+
 class tree {
 
 public:
@@ -728,6 +740,10 @@ public:
 // #############################################################################
 // tree_node.C:
 // #############################################################################
+
+
+//! part of the data structure tree
+
 
 class tree_node {
 

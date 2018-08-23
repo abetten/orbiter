@@ -20,6 +20,11 @@
 #define EXTENSION_TYPE_PROCESSING 3
 #define EXTENSION_TYPE_NOT_CANONICAL 4
 
+
+//! a class representing a flag orbit
+
+
+
 class extension {
 
 public:
@@ -50,6 +55,9 @@ public:
 // #############################################################################
 // generator.C
 // #############################################################################
+
+//! the poset classification algorithm (Snakes and Ladders)
+
 
 class generator {
 
@@ -698,6 +706,10 @@ void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
 // #############################################################################
 
 
+//! a class representing one poset orbit, related to the class generator
+
+
+
 class poset_orbit_node {
 public:
 	INT node;
@@ -1067,7 +1079,10 @@ void schreier_vector_relabel_points(INT *sv, action_on_factor_space *AF,
 // upstep_work.C:
 // #############################################################################
 
+
 typedef struct coset_table_entry coset_table_entry;
+
+//! a helper class for the poset classification algorithm
 
 struct coset_table_entry {
 	INT coset;
@@ -1083,6 +1098,10 @@ struct coset_table_entry {
 	INT nb_times_invert_called;
 	INT nb_times_retrieve_called;
 };
+
+
+//! a helper class for the poset classification algorithm
+
 
 class upstep_work {
 public:

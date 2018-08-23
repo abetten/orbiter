@@ -23,10 +23,6 @@ snakes_and_ladders2 :  ; cd snakes_and_ladders; $(MAKE)
 set_stabilizer2 :  ; cd set_stabilizer; $(MAKE)
 
 
-%.o: %.C %.c; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
-
-
 clean:
 	cd classify; $(MAKE) clean
 	cd other; $(MAKE) clean
