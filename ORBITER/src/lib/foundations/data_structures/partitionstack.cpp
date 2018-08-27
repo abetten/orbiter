@@ -1940,7 +1940,7 @@ INT partitionstack::refine_column_partition(orthogonal &O, INT ht0, INT verbose_
 				   data, depth, 0 /*radix*/, FALSE);
 		}
 	if (f_vv) {
-		cout << "after sorting, with " << ht - ht0 << " new classes" << endl;
+		cout << "after sorting, with " << ht - ht0 << " n e w classes" << endl;
 		cout << *this << endl;
 		}
 
@@ -2044,7 +2044,7 @@ INT partitionstack::refine_row_partition(orthogonal &O, INT ht0, INT verbose_lev
 				   data, depth, 0 /*radix*/, FALSE);
 		}
 	if (f_vv) {
-		cout << "after sorting, with " << ht - ht0 << " new classes" << endl;
+		cout << "after sorting, with " << ht - ht0 << " n e w classes" << endl;
 		cout << *this << endl;
 		}
 
@@ -2163,7 +2163,7 @@ void partitionstack::print_column_refinement_info(INT ht0, INT *data, INT depth)
 		cout << "no splitting" << endl;
 		}
 	else {
-		cout << "the " << ht - ht0 << " new col parts that were split off are:" << endl;
+		cout << "the " << ht - ht0 << " n e w col parts that were split off are:" << endl;
 		for (cell = ht0; cell < ht; cell++) {
 			ancestor = parent_at_height(ht0, cell);
 			first = startCell[cell];
@@ -2198,7 +2198,7 @@ void partitionstack::print_row_refinement_info(INT ht0, INT *data, INT depth)
 		cout << "no splitting" << endl;
 		}
 	else {
-		cout << "the " << ht - ht0 << " new row parts that were split off are:" << endl;
+		cout << "the " << ht - ht0 << " n e w row parts that were split off are:" << endl;
 		for (cell = ht0; cell < ht; cell++) {
 			ancestor = parent_at_height(ht0, cell);
 			first = startCell[cell];
@@ -2383,7 +2383,7 @@ void partitionstack::split_by_orbit_partition(INT nb_orbits,
 			// we need to split the cell:
 			if (f_v) {
 				cout << "orbit " << i << " of length=" << l << " is split off from cell " << cell_idx 
-					<< " to form a new cell C_{" << ht << "}, so " 
+					<< " to form a n e w cell C_{" << ht << "}, so "
 					<< cell_size << " = " << cell_size - l << " + " << l << endl;
 				}
 			split_cell(Set, l, 0 /*verbose_level*/);

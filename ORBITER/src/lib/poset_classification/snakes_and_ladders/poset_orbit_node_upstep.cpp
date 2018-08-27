@@ -594,7 +594,7 @@ INT poset_orbit_node::trace_next_point(generator *gen,
 					next_set, gen->print_function_data);
 			}
 		if (gen->f_allowed_to_show_group_elements && f_v10) {
-			cout << "poset_orbit_node::trace_next_point the new "
+			cout << "poset_orbit_node::trace_next_point the n e w "
 					"transporter is" << endl;
 			gen->A2->element_print_quick(next_transporter, cout);
 			gen->A2->element_print_as_permutation(

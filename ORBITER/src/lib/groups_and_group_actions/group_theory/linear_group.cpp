@@ -56,7 +56,7 @@ void linear_group::init(
 
 
 	
-	initial_strong_gens = new strong_generators;
+	initial_strong_gens = NEW_OBJECT(strong_generators);
 
 	if (f_v) {
 		cout << "linear_group::init before "
@@ -147,11 +147,11 @@ void linear_group::init(
 		cout << "linear_group::init creating induced action "
 				"on k-subspaces for k="
 				<< description->on_k_subspaces_k << endl;
-		AG = new action_on_grassmannian;
+		AG = NEW_OBJECT(action_on_grassmannian);
 		
-		Grass = new grassmann;
+		Grass = NEW_OBJECT(grassmann);
 
-		A3 = new action;
+		A3 = NEW_OBJECT(action);
 
 
 		Grass->init(n,
@@ -201,7 +201,7 @@ void linear_group::init_PGL2q_OnConic(BYTE *prefix,
 		//A_linear->create_sims(verbose_level);
 		exit(1);
 		}
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	A2->induced_action_by_representation_on_conic(A_linear, 
 		FALSE /* f_induce_action */, NULL, 
 		verbose_level);
@@ -247,7 +247,7 @@ void linear_group::init_wedge_action(BYTE *prefix,
 		//>create_sims(verbose_level);
 		exit(1);
 		}
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	action_on_wedge_product *AW;
 
 	
@@ -257,7 +257,7 @@ void linear_group::init_wedge_action(BYTE *prefix,
 		cout << "linear_group::init_wedge_action "
 				"before induced_wedge_action:" << endl;
 		}
-	AW = new action_on_wedge_product;
+	AW = NEW_OBJECT(action_on_wedge_product);
 
 	AW->init(*A_linear, verbose_level);
 	
@@ -303,7 +303,7 @@ void linear_group::init_monomial_group(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_monomial_group(A_linear, 
 		Mtx, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -336,7 +336,7 @@ void linear_group::init_diagonal_group(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_diagonal_group(A_linear, 
 		Mtx, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -369,7 +369,7 @@ void linear_group::init_singer_group(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_singer_cycle(
 			A_linear, Mtx, singer_power, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -404,7 +404,7 @@ void linear_group::init_null_polarity_group(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_null_polarity_group(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -438,7 +438,7 @@ void linear_group::init_borel_subgroup_upper(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_borel_subgroup_upper(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -471,7 +471,7 @@ void linear_group::init_identity_subgroup(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_identity_subgroup(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -504,7 +504,7 @@ void linear_group::init_symplectic_group(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_symplectic_group(
 			A_linear, Mtx, verbose_level - 1);
 	f_has_strong_generators = TRUE;
@@ -542,7 +542,7 @@ void linear_group::init_subfield_structure_action(
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->field_reduction(A_linear,
 			n, s, F, verbose_level - 1);
 	//lift_generators_to_subfield_structure(A_linear,
@@ -578,7 +578,7 @@ void linear_group::init_orthogonal_group(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->generators_for_the_orthogonal_group(A_linear, 
 		F, n, 
 		epsilon, 
@@ -632,7 +632,7 @@ void linear_group::init_subgroup_from_file(BYTE *prefix,
 	vector_space_dimension = n;
 	q = input_q;
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_from_file "
 				"reading generators from file " << subgroup_fname << endl;

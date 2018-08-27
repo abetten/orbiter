@@ -46,6 +46,10 @@ public:
 
 class mem_object_registry {
 public:
+	INT f_automatic_dump;
+	INT automatic_dump_interval;
+	BYTE automatic_dump_fname_mask[1000];
+
 	INT nb_entries_allocated;
 	INT nb_entries_used;
 	mem_object_registry_entry *entries;
@@ -62,7 +66,13 @@ public:
 	mem_object_registry();
 	~mem_object_registry();
 	void init(INT verbose_level);
+	void set_automatic_dump(
+			INT automatic_dump_interval, const BYTE *fname_mask,
+			INT verbose_level);
+	void automatic_dump();
+	void manual_dump();
 	void dump();
+	void dump_to_csv_file(const BYTE *fname);
 	int *allocate_int(INT n, const char *file, int line);
 	void free_int(int *p, const char *file, int line);
 	int **allocate_pint(INT n, const char *file, int line);
@@ -110,9 +120,10 @@ public:
 	mem_object_registry_entry();
 	~mem_object_registry_entry();
 	void null();
-	void print_type();
+	void print_type(ostream &ost);
 	int size_of();
 	void print(INT line);
+	void print_csv(ostream &ost, INT line);
 };
 
 extern int f_memory_debug;

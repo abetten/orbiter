@@ -71,7 +71,7 @@ void orbit_node::read_file(ifstream &fp, INT verbose_level)
 	if (f_v) {
 		cout << "orbit_node::read_file" << endl;
 		}
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 	gens->read_from_file_binary(C->A, fp, 0 /* verbose_level */);
 
 	if (f_v) {

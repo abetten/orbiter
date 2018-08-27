@@ -99,13 +99,13 @@ void wreath_product::freeself()
 		FREE_INT(induced_perm);
 	}
 	if (P) {
-		delete P;
+		FREE_OBJECT(P);
 	}
 	if (elt1) {
 		FREE_UBYTE(elt1);
 	}
 	if (Elts) {
-		delete Elts;
+		FREE_OBJECT(Elts);
 	}
 	if (base_for_component) {
 		FREE_INT(base_for_component);
@@ -152,7 +152,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	F = M->GFq;
 	q = F->q;
 
-	P = new perm_group;
+	P = NEW_OBJECT(perm_group);
 	P->init(nb_factors, 10 /* page_length_log */, 0 /* verbose_level */);
 
 	sprintf(label, "%s_wreath_Sym%ld", M->label, nb_factors);
@@ -248,7 +248,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << endl;
 	}
 
-	Elts = new page_storage;
+	Elts = NEW_OBJECT(page_storage);
 	Elts->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 

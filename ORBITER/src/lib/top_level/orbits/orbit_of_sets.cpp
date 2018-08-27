@@ -121,13 +121,13 @@ void orbit_of_sets::compute(INT verbose_level)
 					idx,
 					0 /* verbose_level */)) {
 				if (f_vv) {
-					cout << "new set is already in the list, "
+					cout << "n e w set is already in the list, "
 							"at position " << idx << endl;
 					}
 				}
 			else {
 				if (f_vv) {
-					cout << "Found a new set : ";
+					cout << "Found a n e w set : ";
 					INT_vec_print(cout, new_set, sz + 1);
 					cout << endl;
 					}

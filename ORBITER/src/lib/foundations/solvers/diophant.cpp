@@ -12,69 +12,6 @@ void (*diophant_user_callback_solution_found)(INT *sol,
 	INT len, INT nb_sol, void *data) = NULL;
 
 
-INT dophant::cntr_new = 0;
-INT dophant::cntr_objects = 0;
-INT dophant::f_debug_memory = FALSE;
-
-void *dophant::operator new(size_t bytes)
-{
-	cntr_new++;
-	cntr_objects++;
-	if (f_debug_memory) {
-		cout << "dophant::operator new bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void *dophant::operator new[](size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(dophant);
-	cntr_new++;
-	cntr_objects += n;
-	if (f_debug_memory) {
-		cout << "dophant::operator new[] n=" << n 
-			<< " bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	return malloc(bytes);
-}
-
-void dophant::operator delete(void *ptr, size_t bytes)
-{
-	if (f_debug_memory) {
-		cout << "dophant::operator delete bytes=" << bytes 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects--;
-	return free(ptr);
-}
-
-void dophant::operator delete[](void *ptr, size_t bytes)
-{
-	INT n;
-	
-	n = bytes / sizeof(dophant);
-	if (f_debug_memory) {
-		cout << "dophant::operator delete[] n=" << n 
-			<< " cntr_new=" << cntr_new 
-			<< " cntr_objects=" << cntr_objects 
-			<< endl;
-		}
-	cntr_new--;
-	cntr_objects -= n;
-	return free(ptr);
-}
-
 diophant::diophant()
 {
 	null();
@@ -126,7 +63,7 @@ void diophant::freeself()
 		FREE_INT(RHS1);
 		}
 	if (type) {
-		delete [] type;
+		FREE_OBJECT(type);
 		}
 	if (eqn_label) {
 		for (i = 0; i < m; i++) {
@@ -155,7 +92,7 @@ void diophant::open(INT m, INT n)
 	x_max = NEW_INT(n);
 	RHS = NEW_INT(m);
 	RHS1 = NEW_INT(m);
-	type = new diophant_equation_type[m];
+	type = NEW_OBJECTS(diophant_equation_type, m);
 	eqn_label = NEW_PBYTE(m);
 	X = NEW_INT(n);
 	Y = NEW_INT(m);
@@ -988,7 +925,7 @@ INT diophant::solve_all_DLX_with_RHS(INT f_write_tree, const BYTE *fname_tree, I
 		}
 	f_has_type = TRUE;
 	my_RHS = NEW_INT(m);
-	my_type = new diophant_equation_type[m];
+	my_type = NEW_OBJECTS(diophant_equation_type, m);
 	for (i = 0; i < m; i++) {
 		my_RHS[i] = RHS[i];
 		my_type[i] = type[i];
@@ -1013,7 +950,7 @@ INT diophant::solve_all_DLX_with_RHS(INT f_write_tree, const BYTE *fname_tree, I
 	nb_steps_betten = nb_backtrack;
 	FREE_INT(Inc);
 	FREE_INT(my_RHS);
-	delete [] my_type;
+	FREE_OBJECTS(my_type);
 	if (f_v) {
 		cout << "diophant::solve_all_DLX_with_RHS done found " << _resultanz << " solutions with " << nb_backtrack << " backtrack steps" << endl;
 		}
@@ -1057,7 +994,7 @@ INT diophant::solve_all_DLX_with_RHS_and_callback(INT f_write_tree, const BYTE *
 		}
 	f_has_type = TRUE;
 	my_RHS = NEW_INT(m);
-	my_type = new diophant_equation_type[m];
+	my_type = NEW_OBJECTS(diophant_equation_type, m);
 	//my_f_le = NEW_INT(m);
 	for (i = 0; i < m; i++) {
 		my_RHS[i] = RHS[i];
@@ -1084,7 +1021,7 @@ INT diophant::solve_all_DLX_with_RHS_and_callback(INT f_write_tree, const BYTE *
 	nb_steps_betten = nb_backtrack;
 	FREE_INT(Inc);
 	FREE_INT(my_RHS);
-	delete [] my_type;
+	FREE_OBJECTS(my_type);
 	if (f_v) {
 		cout << "diophant::solve_all_DLX_with_RHS done found " << _resultanz << " solutions with " << nb_backtrack << " backtrack steps" << endl;
 		}
@@ -2077,7 +2014,7 @@ void diophant::save_as_Levi_graph(const BYTE *fname, INT verbose_level)
 		cout << "diophant::save_as_Levi_graph after create_Levi_graph_from_coefficient_matrix" << endl;
 		}
 	CG->save(fname, verbose_level);
-	delete CG;
+	FREE_OBJECT(CG);
 	}
 
 	if (f_v) {
@@ -2846,7 +2783,7 @@ void diophant::append_equation()
 	AA = NEW_INT(m1 * n);
 	R = NEW_INT(m1);
 	R1 = NEW_INT(m1);
-	type1 = new diophant_equation_type[m1];
+	type1 = NEW_OBJECTS(diophant_equation_type, m1);
 	L = NEW_PBYTE(m1);
 	Y1 = NEW_INT(m1);
 	
@@ -2864,7 +2801,7 @@ void diophant::append_equation()
 	FREE_INT(A);
 	FREE_INT(RHS);
 	FREE_INT(RHS1);
-	delete [] type;
+	FREE_OBJECTS(type);
 	FREE_PBYTE(eqn_label);
 	FREE_INT(Y);
 
@@ -3110,7 +3047,7 @@ INT diophant::test_solution(INT *sol, INT len, INT verbose_level)
 		get_columns(sol, len, S, 0 /* verbose_level */);
 		S->print_table();
 
-		delete S;
+		FREE_OBJECT(S);
 		}
 	INT_vec_zero(Y, m);
 	INT_vec_zero(X, n);
@@ -3174,7 +3111,7 @@ void diophant::get_columns(INT *col, INT nb_col, set_of_sets *&S, INT verbose_le
 	if (f_v) {
 		cout << "diophant::get_columns" << endl;
 		}
-	S = new set_of_sets;
+	S = NEW_OBJECT(set_of_sets);
 
 	S->init_simple(m, nb_col, 0 /* verbose_level */);
 	for (h = 0; h < nb_col; h++) {
@@ -3345,7 +3282,7 @@ void diophant::make_clique_graph(colored_graph *&CG, INT verbose_level)
 	make_clique_graph_adjacency_matrix(Adj, verbose_level - 1);
 
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	CG->init_no_colors(n, Adj, TRUE, verbose_level - 1);
 	
@@ -3368,7 +3305,7 @@ void diophant::make_clique_graph_and_save(const BYTE *clique_graph_fname, INT ve
 	make_clique_graph(CG, verbose_level - 1);
 	CG->save(clique_graph_fname, verbose_level - 1);
 
-	delete CG;
+	FREE_OBJECT(CG);
 	if (f_v) {
 		cout << "diophant::make_clique_graph_and_save done" << endl;
 		}
@@ -3673,7 +3610,7 @@ void solve_diophant(INT *Inc, INT nb_rows, INT nb_cols, INT nb_needed,
 		cout << "f_DLX=" << f_DLX << endl;
 		//INT_matrix_print(Inc, nb_rows, nb_cols);
 		}
-	Dio = new diophant;
+	Dio = NEW_OBJECT(diophant);
 
 	if (f_has_Rhs) {
 		Dio->init_problem_of_Steiner_type_with_RHS(nb_rows, 
@@ -3725,7 +3662,7 @@ void solve_diophant(INT *Inc, INT nb_rows, INT nb_cols, INT nb_needed,
 	else {
 		Solutions = NULL;
 		}
-	delete Dio;
+	FREE_OBJECT(Dio);
 	INT t1 = os_ticks();
 	dt = t1 - t0;
 	if (f_v) {

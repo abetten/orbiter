@@ -346,6 +346,8 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define FREE_OBJECT(p) delete [] p
 #endif
 
+
+
 enum object_in_projective_space_type {
 	t_PTS, // points
 	t_LNS, // lines

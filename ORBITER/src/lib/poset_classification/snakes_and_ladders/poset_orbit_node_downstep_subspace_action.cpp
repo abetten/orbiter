@@ -261,9 +261,9 @@ void poset_orbit_node::downstep_subspace_action(generator *gen,
 	store_set(gen, lvl - 1); // stores a set of size lvl to gen->S
 	
 
-	Schreier = new schreier;
-	AF = new action_on_factor_space;
-	A_factor_space = new action;
+	Schreier = NEW_OBJECT(schreier);
+	AF = NEW_OBJECT(action_on_factor_space);
+	A_factor_space = NEW_OBJECT(action);
 	
 	if (f_v) {
 		gen->print_level_info(lvl + 1, node);
@@ -458,10 +458,10 @@ void poset_orbit_node::downstep_subspace_action(generator *gen,
 		cout << "poset_orbit_node::downstep_subspace_action "
 				"before deleting things" << endl;
 		}
-	delete Strong_gens;
-	delete Schreier;
-	delete A_factor_space;
-	delete AF;
+	FREE_OBJECT(Strong_gens);
+	FREE_OBJECT(Schreier);
+	FREE_OBJECT(A_factor_space);
+	FREE_OBJECT(AF);
 	if (f_v) {
 		cout << "poset_orbit_node::downstep_subspace_action done" << endl;
 		}
@@ -705,7 +705,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 			}
 		}
 	nb_extensions = 0;
-	E = new extension[O.nb_orbits];
+	E = NEW_OBJECTS(extension, O.nb_orbits);
 
 	store_set(gen, lvl - 1);
 
@@ -776,12 +776,12 @@ void poset_orbit_node::find_extensions_subspace_action(
 	extension *E2 = E;
 	INT nb_extension_points = 0;
 	
-	E = new extension[nb_extensions];
+	E = NEW_OBJECTS(extension, nb_extensions);
 	for (k = 0; k < nb_extensions; k++) {
 		E[k] = E2[k]; 
 		nb_extension_points += E[k].orbit_len;
 		}
-	delete [] E2;
+	FREE_OBJECTS(E2);
 #endif
 
 	if (f_v) {
@@ -1038,7 +1038,7 @@ void schreier_vector_relabel_points(INT *sv,
 		new_sv_label[i] = label[pos];
 		}
 	if (f_vv) {
-		cout << "old / new schreier vector:" << endl;
+		cout << "old / n e w schreier vector:" << endl;
 		cout << "i : pts[i] : prev[i] : label[i] :: i : "
 				"new_sv_pts[i] : new_sv_prev[i] : "
 				"new_sv_label[i] " << endl;
@@ -1093,7 +1093,7 @@ void schreier_vector_relabel_points(INT *sv,
 		FREE_INT(old_orbit_reps);
 		}
 	if (f_v) {
-		cout << "new schreier vector created" << endl;
+		cout << "n e w schreier vector created" << endl;
 		cout << "schreier_vector_relabel_points done" << endl;
 		}
 }

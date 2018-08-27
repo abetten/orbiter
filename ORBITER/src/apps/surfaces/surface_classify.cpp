@@ -40,8 +40,9 @@ int main(int argc, const char **argv)
 	INT q;
 	INT f_draw_poset = FALSE;
 	INT f_draw_poset_full = FALSE;
-	
-	
+	INT f_automatic_memory_dump = FALSE;
+	INT automatic_dump_interval = 0;
+	const BYTE *automatic_dump_mask = NULL;
 
 
 	INT i;
@@ -90,6 +91,12 @@ int main(int argc, const char **argv)
 			memory_debug_verbose_level = atoi(argv[++i]);
 			cout << "-memory_debug_verbose_level " << memory_debug_verbose_level << endl;
 			}
+		else if (strcmp(argv[i], "-automatic_memory_dump") == 0) {
+			f_automatic_memory_dump = TRUE;
+			automatic_dump_interval = atoi(argv[++i]);
+			automatic_dump_mask = argv[++i];
+			cout << "-automatic_memory_dump " << automatic_dump_interval << " " << automatic_dump_mask << endl;
+			}
 		}
 
 
@@ -101,6 +108,12 @@ int main(int argc, const char **argv)
 		cout << "please use option -linear ..." << endl;
 		exit(1);
 		}
+
+	if (f_automatic_memory_dump) {
+		global_mem_object_registry.set_automatic_dump(
+				automatic_dump_interval, automatic_dump_mask,
+				verbose_level);
+	}
 
 	INT f_v = (verbose_level >= 1);
 	
@@ -468,6 +481,7 @@ int main(int argc, const char **argv)
 	if (f_memory_debug) {
 		//registry_dump_sorted_by_size();
 		global_mem_object_registry.dump();
+		global_mem_object_registry.manual_dump();
 	}
 
 

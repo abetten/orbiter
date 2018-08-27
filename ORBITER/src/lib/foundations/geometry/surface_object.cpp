@@ -46,10 +46,10 @@ void surface_object::freeself()
 		FREE_INT(Pts_not_on_lines);
 		}
 	if (pts_on_lines) {
-		delete pts_on_lines;
+		FREE_OBJECT(pts_on_lines);
 		}
 	if (lines_on_point) {
-		delete lines_on_point;
+		FREE_OBJECT(lines_on_point);
 		}
 	if (f_v) {
 		cout << "surface_object::freeself 2" << endl;
@@ -61,13 +61,13 @@ void surface_object::freeself()
 		FREE_INT(plane_type_by_lines);
 		}
 	if (C_plane_type_by_points) {
-		delete C_plane_type_by_points;
+		FREE_OBJECT(C_plane_type_by_points);
 		}
 	if (Type_pts_on_lines) {
-		delete Type_pts_on_lines;
+		FREE_OBJECT(Type_pts_on_lines);
 		}
 	if (Type_lines_on_point) {
-		delete Type_lines_on_point;
+		FREE_OBJECT(Type_lines_on_point);
 		}
 	if (Tritangent_planes) {
 		FREE_INT(Tritangent_planes);
@@ -97,7 +97,7 @@ void surface_object::freeself()
 		cout << "surface_object::freeself 5" << endl;
 		}
 	if (Type_iso_tritangent_planes) {
-		delete Type_iso_tritangent_planes;
+		FREE_OBJECT(Type_iso_tritangent_planes);
 		}
 	if (f_v) {
 		cout << "surface_object::freeself 6" << endl;
@@ -133,7 +133,7 @@ void surface_object::freeself()
 		FREE_INT(Adj_line_intersection_graph);
 		}
 	if (Line_neighbors) {
-		delete Line_neighbors;
+		FREE_OBJECT(Line_neighbors);
 		}
 	if (Line_intersection_pt) {
 		FREE_INT(Line_intersection_pt);
@@ -433,7 +433,7 @@ void surface_object::find_double_six_and_rearrange_lines(INT *Lines,
 
 	Surf->compute_adjacency_matrix_of_line_intersection_graph(Adj, Lines0, 27, 0 /* verbose_level */);
 
-	line_intersections = new set_of_sets;
+	line_intersections = NEW_OBJECT(set_of_sets);
 
 	line_intersections->init_from_adjacency_matrix(27, Adj, 0 /* verbose_level */);
 
@@ -494,7 +494,7 @@ void surface_object::find_double_six_and_rearrange_lines(INT *Lines,
 
 	FREE_INT(Adj);
 	FREE_INT(Starter_Table);
-	delete line_intersections;
+	FREE_OBJECT(line_intersections);
 	
 	if (f_v) {
 		cout << "surface_object::find_double_six_and_rearrange_lines done" << endl;
@@ -549,7 +549,7 @@ void surface_object::enumerate_points(INT verbose_level)
 		pts_on_lines->print_table();
 		}
 
-	Type_pts_on_lines = new classify;
+	Type_pts_on_lines = NEW_OBJECT(classify);
 	Type_pts_on_lines->init(pts_on_lines->Set_size, 
 		pts_on_lines->nb_sets, FALSE, 0);
 	if (f_v) {
@@ -564,7 +564,7 @@ void surface_object::enumerate_points(INT verbose_level)
 		lines_on_point->print_table();
 		}
 
-	Type_lines_on_point = new classify;
+	Type_lines_on_point = NEW_OBJECT(classify);
 	Type_lines_on_point->init(lines_on_point->Set_size, 
 		lines_on_point->nb_sets, FALSE, 0);
 	if (f_v) {
@@ -675,7 +675,7 @@ void surface_object::compute_adjacency_matrix_of_line_intersection_graph(
 		cout << "surface_object::compute_adjacency_matrix_of_line_intersection_graph after Surf->compute_adjacency_matrix_of_line_intersection_graph" << endl;
 		}
 
-	Line_neighbors = new set_of_sets;
+	Line_neighbors = NEW_OBJECT(set_of_sets);
 	Line_neighbors->init_from_adjacency_matrix(27, 
 		Adj_line_intersection_graph, 0 /* verbose_level*/);
 	
@@ -714,7 +714,7 @@ void surface_object::compute_plane_type_by_points(INT verbose_level)
 		plane_type_by_points, 0 /* verbose_level */);
 
 	
-	C_plane_type_by_points = new classify;
+	C_plane_type_by_points = NEW_OBJECT(classify);
 
 	C_plane_type_by_points->init(plane_type_by_points, nb_planes, FALSE, 0);
 	if (f_v) {
@@ -803,7 +803,7 @@ void surface_object::compute_tritangent_planes(INT verbose_level)
 			three_lines, 0 /* verbose_level */);
 		}
 
-	Type_iso_tritangent_planes = new classify;
+	Type_iso_tritangent_planes = NEW_OBJECT(classify);
 	Type_iso_tritangent_planes->init(iso_type_of_tritangent_plane, 
 		nb_tritangent_planes, FALSE, 0);
 	if (f_v) {

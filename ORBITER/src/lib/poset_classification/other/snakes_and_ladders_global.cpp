@@ -463,7 +463,7 @@ void compute_orbits_on_subsets(generator *&gen,
 		cout << "compute_orbits_on_subsets "
 				"verbose_level=" << verbose_level << endl;
 		}
-	gen = new generator;
+	gen = NEW_OBJECT(generator);
 	
 
 	gen->f_W = f_W;
@@ -558,7 +558,7 @@ void orbits_on_k_sets(action *A1, action *A2,
 				<< nb_orbits << " orbits on " << k << "-sets" << endl;
 		}
 
-	delete Gen;
+	FREE_OBJECT(Gen);
 	if (f_v) {
 		cout << "orbits_on_k_sets done" << endl;
 		}
@@ -576,7 +576,7 @@ generator *orbits_on_k_sets_compute(action *A1, action *A2,
 	if (f_v) {
 		cout << "orbits_on_k_sets_compute" << endl;
 		}
-	Gen = new generator;
+	Gen = NEW_OBJECT(generator);
 
 	sprintf(Gen->fname_base, "orbits_on_k_sets");
 	

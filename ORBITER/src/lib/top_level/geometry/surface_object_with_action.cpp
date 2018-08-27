@@ -54,57 +54,58 @@ void surface_object_with_action::null()
 void surface_object_with_action::freeself()
 {
 	if (A_on_points) {
-		delete A_on_points;
+		FREE_OBJECT(A_on_points);
 		}
 	if (A_on_Eckardt_points) {
-		delete A_on_Eckardt_points;
+		FREE_OBJECT(A_on_Eckardt_points);
 		}
 	if (A_on_Double_points) {
-		delete A_on_Double_points;
+		FREE_OBJECT(A_on_Double_points);
 		}
 	if (A_on_the_lines) {
-		delete A_on_the_lines;
+		FREE_OBJECT(A_on_the_lines);
 		}
 	if (A_single_sixes) {
-		delete A_single_sixes;
+		FREE_OBJECT(A_single_sixes);
 		}
 	if (A_on_tritangent_planes) {
-		delete A_on_tritangent_planes;
+		FREE_OBJECT(A_on_tritangent_planes);
 		}
 	if (A_on_trihedral_pairs) {
-		delete A_on_trihedral_pairs;
+		FREE_OBJECT(A_on_trihedral_pairs);
 		}
 	if (A_on_pts_not_on_lines) {
-		delete A_on_pts_not_on_lines;
+		FREE_OBJECT(A_on_pts_not_on_lines);
 		}
 	if (Orbits_on_points) {
-		delete Orbits_on_points;
+		FREE_OBJECT(Orbits_on_points);
 		}
 	if (Orbits_on_Eckardt_points) {
-		delete Orbits_on_Eckardt_points;
+		FREE_OBJECT(Orbits_on_Eckardt_points);
 		}
 	if (Orbits_on_Double_points) {
-		delete Orbits_on_Double_points;
+		FREE_OBJECT(Orbits_on_Double_points);
 		}
 	if (Orbits_on_lines) {
-		delete Orbits_on_lines;
+		FREE_OBJECT(Orbits_on_lines);
 		}
 	if (Orbits_on_single_sixes) {
-		delete Orbits_on_single_sixes;
+		FREE_OBJECT(Orbits_on_single_sixes);
 		}
 	if (Orbits_on_tritangent_planes) {
-		delete Orbits_on_tritangent_planes;
+		FREE_OBJECT(Orbits_on_tritangent_planes);
 		}
 	if (Orbits_on_trihedral_pairs) {
-		delete Orbits_on_trihedral_pairs;
+		FREE_OBJECT(Orbits_on_trihedral_pairs);
 		}
 	if (Orbits_on_points_not_on_lines) {
-		delete Orbits_on_points_not_on_lines;
+		FREE_OBJECT(Orbits_on_points_not_on_lines);
 		}
 	null();
 }
 
-INT surface_object_with_action::init_equation(surface_with_action *Surf_A, INT *eqn, 
+INT surface_object_with_action::init_equation(
+	surface_with_action *Surf_A, INT *eqn,
 	strong_generators *Aut_gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -118,26 +119,31 @@ INT surface_object_with_action::init_equation(surface_with_action *Surf_A, INT *
 	F = Surf->F;
 	q = F->q;
 
-	SO = new surface_object;
+	SO = NEW_OBJECT(surface_object);
 	if (f_v) {
-		cout << "surface_object_with_action::init_equation before SO->init_equation" << endl;
+		cout << "surface_object_with_action::init_equation "
+				"before SO->init_equation" << endl;
 		}
 	if (!SO->init_equation(Surf_A->Surf, eqn, verbose_level)) {
-		cout << "surface_object_with_action::init_equation the surface does not have 27 lines" << endl;
+		cout << "surface_object_with_action::init_equation "
+				"the surface does not have 27 lines" << endl;
 		return FALSE;
 		}
 	if (f_v) {
-		cout << "surface_object_with_action::init_equation after SO->init_equation" << endl;
+		cout << "surface_object_with_action::init_equation "
+				"after SO->init_equation" << endl;
 		}
 
 	surface_object_with_action::Aut_gens = Aut_gens;
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_equation before compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init_equation "
+				"before compute_orbits_of_automorphism_group" << endl;
 		}
 	compute_orbits_of_automorphism_group(verbose_level);
 	if (f_v) {
-		cout << "surface_object_with_action::init_equation after compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init_equation "
+				"after compute_orbits_of_automorphism_group" << endl;
 		}
 
 	if (f_v) {
@@ -150,7 +156,8 @@ INT surface_object_with_action::init_equation(surface_with_action *Surf_A, INT *
 
 void surface_object_with_action::init(surface_with_action *Surf_A, 
 	INT *Lines, INT *eqn, 
-	strong_generators *Aut_gens, INT f_find_double_six_and_rearrange_lines, 
+	strong_generators *Aut_gens,
+	INT f_find_double_six_and_rearrange_lines,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -164,32 +171,40 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 	F = Surf->F;
 	q = F->q;
 
-	SO = new surface_object;
+	SO = NEW_OBJECT(surface_object);
 	if (f_v) {
-		cout << "surface_object_with_action::init before SO->init" << endl;
+		cout << "surface_object_with_action::init "
+				"before SO->init" << endl;
 		}
-	SO->init(Surf_A->Surf, Lines, eqn, f_find_double_six_and_rearrange_lines, verbose_level);
+	SO->init(Surf_A->Surf, Lines, eqn,
+			f_find_double_six_and_rearrange_lines, verbose_level);
 	if (f_v) {
-		cout << "surface_object_with_action::init after SO->init" << endl;
+		cout << "surface_object_with_action::init "
+				"after SO->init" << endl;
 		}
 
 
 	surface_object_with_action::Aut_gens = Aut_gens;
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object testing Aut_gens" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"testing Aut_gens" << endl;
 		}
-	Aut_gens->test_if_set_is_invariant_under_given_action(Surf_A->A2, Lines, 27, verbose_level);
+	Aut_gens->test_if_set_is_invariant_under_given_action(
+			Surf_A->A2, Lines, 27, verbose_level);
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object testing Aut_gens done" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"testing Aut_gens done" << endl;
 		}
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object before compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"before compute_orbits_of_automorphism_group" << endl;
 		}
 	compute_orbits_of_automorphism_group(verbose_level);
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object after compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"after compute_orbits_of_automorphism_group" << endl;
 		}
 
 	if (f_v) {
@@ -198,7 +213,8 @@ void surface_object_with_action::init(surface_with_action *Surf_A,
 }
 
 
-void surface_object_with_action::init_surface_object(surface_with_action *Surf_A, surface_object *SO, 
+void surface_object_with_action::init_surface_object(
+	surface_with_action *Surf_A, surface_object *SO,
 	strong_generators *Aut_gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -217,30 +233,36 @@ void surface_object_with_action::init_surface_object(surface_with_action *Surf_A
 	
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object before compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"before compute_orbits_of_automorphism_group" << endl;
 		}
 	compute_orbits_of_automorphism_group(verbose_level);
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object after compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"after compute_orbits_of_automorphism_group" << endl;
 		}
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_surface_object done" << endl;
+		cout << "surface_object_with_action::init_surface_object "
+				"done" << endl;
 		}
 }
 
-void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbose_level)
+void surface_object_with_action::compute_orbits_of_automorphism_group(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group" << endl;
 		}
 
 	// orbits on points:
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on points" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on points" << endl;
 		}
 	init_orbits_on_points(verbose_level - 1);
 
@@ -248,7 +270,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on Eckardt points:
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on Eckardt points" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on Eckardt points" << endl;
 		}
 	init_orbits_on_Eckardt_points(verbose_level - 1);
 
@@ -256,7 +279,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on Double points:
 	
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on double points" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on double points" << endl;
 		}
 	init_orbits_on_Double_points(verbose_level - 1);
 
@@ -264,7 +288,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on lines:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on lines" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on lines" << endl;
 		}
 	init_orbits_on_lines(verbose_level);
 
@@ -272,7 +297,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on half double sixes:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on half double sixes" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on half double sixes" << endl;
 		}
 	init_orbits_on_half_double_sixes(verbose_level);
 
@@ -281,7 +307,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on tritangent planes:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on tritangent planes" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on tritangent planes" << endl;
 		}
 	init_orbits_on_tritangent_planes(verbose_level);
 
@@ -289,7 +316,8 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on trihedral pairs:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on trihedral pairs" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on trihedral pairs" << endl;
 		}
 	init_orbits_on_trihedral_pairs(verbose_level);
 
@@ -298,58 +326,71 @@ void surface_object_with_action::compute_orbits_of_automorphism_group(INT verbos
 	// orbits on points not on lines:
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group orbits on points not on lines" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group orbits on points not on lines" << endl;
 		}
 	init_orbits_on_points_not_on_lines(verbose_level);
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::compute_orbits_of_automorphism_group done" << endl;
+		cout << "surface_object_with_action::compute_orbits_of_"
+				"automorphism_group done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_points(INT verbose_level)
+void surface_object_with_action::init_orbits_on_points(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_points" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_points" << endl;
 		}
 
 	if (f_v) {
-		cout << "surface_object_with_action action on points:" << endl;
+		cout << "surface_object_with_action action "
+				"on points:" << endl;
 		}
-	A_on_points = Surf_A->A->restricted_action(SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
+	A_on_points = Surf_A->A->restricted_action(
+			SO->Pts, SO->nb_pts, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "surface_object_with_action action on points done" << endl;
+		cout << "surface_object_with_action action "
+				"on points done" << endl;
 		}
 
 
 	if (f_v) {
 		cout << "computing orbits on points:" << endl;
 		}
-	Orbits_on_points = Aut_gens->orbits_on_points_schreier(A_on_points, 0 /*verbose_level*/);
+	Orbits_on_points = Aut_gens->orbits_on_points_schreier(
+			A_on_points, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_points->nb_orbits << " orbits on points" << endl;
+		cout << "We found " << Orbits_on_points->nb_orbits
+				<< " orbits on points" << endl;
 		}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_points done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_points done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_Eckardt_points(INT verbose_level)
+void surface_object_with_action::init_orbits_on_Eckardt_points(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_Eckardt_points" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_Eckardt_points" << endl;
 		}
 
 	if (f_v) {
 		cout << "creating action on Eckardt points:" << endl;
 		}
-	A_on_Eckardt_points = Surf_A->A->restricted_action(SO->Eckardt_points, SO->nb_Eckardt_points, 0 /*verbose_level*/);
+	A_on_Eckardt_points = Surf_A->A->restricted_action(
+			SO->Eckardt_points, SO->nb_Eckardt_points, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Eckardt points done" << endl;
 		}
@@ -358,28 +399,35 @@ void surface_object_with_action::init_orbits_on_Eckardt_points(INT verbose_level
 	if (f_v) {
 		cout << "computing orbits on Eckardt points:" << endl;
 		}
-	Orbits_on_Eckardt_points = Aut_gens->orbits_on_points_schreier(A_on_Eckardt_points, 0 /*verbose_level*/);
+	Orbits_on_Eckardt_points = Aut_gens->orbits_on_points_schreier(
+			A_on_Eckardt_points, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_Eckardt_points->nb_orbits << " orbits on Eckardt points" << endl;
+		cout << "We found " << Orbits_on_Eckardt_points->nb_orbits
+				<< " orbits on Eckardt points" << endl;
 		}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_Eckardt_points done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_Eckardt_points done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_Double_points(INT verbose_level)
+void surface_object_with_action::init_orbits_on_Double_points(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_Double_points" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_Double_points" << endl;
 		}
 
 	if (f_v) {
 		cout << "creating action on Double points:" << endl;
 		}
-	A_on_Double_points = Surf_A->A->restricted_action(SO->Double_points, SO->nb_Double_points, 0 /*verbose_level*/);
+	A_on_Double_points = Surf_A->A->restricted_action(
+			SO->Double_points, SO->nb_Double_points,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on Double points done" << endl;
 		}
@@ -388,17 +436,21 @@ void surface_object_with_action::init_orbits_on_Double_points(INT verbose_level)
 	if (f_v) {
 		cout << "computing orbits on Double points:" << endl;
 		}
-	Orbits_on_Double_points = Aut_gens->orbits_on_points_schreier(A_on_Double_points, 0 /*verbose_level*/);
+	Orbits_on_Double_points = Aut_gens->orbits_on_points_schreier(
+			A_on_Double_points, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_Double_points->nb_orbits << " orbits on Double points" << endl;
+		cout << "We found " << Orbits_on_Double_points->nb_orbits
+				<< " orbits on Double points" << endl;
 		}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_Double_points done" << endl;
+		cout << "surface_object_with_action::init_orbits_on_"
+				"Double_points done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_lines(INT verbose_level)
+void surface_object_with_action::init_orbits_on_lines(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -407,38 +459,47 @@ void surface_object_with_action::init_orbits_on_lines(INT verbose_level)
 		}
 
 	if (f_v) {
-		cout << "creating restricted action on the lines:" << endl;
+		cout << "creating restricted action "
+				"on the lines:" << endl;
 		}
-	A_on_the_lines = Surf_A->A2->restricted_action(SO->Lines, 27, 0 /*verbose_level*/);
+	A_on_the_lines = Surf_A->A2->restricted_action(
+			SO->Lines, 27, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "creating restricted action on the lines done" << endl;
+		cout << "creating restricted action "
+				"on the lines done" << endl;
 		}
 
 	if (f_v) {
 		cout << "computing orbits on lines:" << endl;
 		}
-	Orbits_on_lines = Aut_gens->orbits_on_points_schreier(A_on_the_lines, 0 /*verbose_level*/);
+	Orbits_on_lines = Aut_gens->orbits_on_points_schreier(
+			A_on_the_lines, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_lines->nb_orbits << " orbits on lines" << endl;
+		cout << "We found " << Orbits_on_lines->nb_orbits
+				<< " orbits on lines" << endl;
 		}
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_lines done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_lines done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_half_double_sixes(INT verbose_level)
+void surface_object_with_action::init_orbits_on_half_double_sixes(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_half_double_sixes" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_half_double_sixes" << endl;
 		}
 
 	if (f_v) {
 		cout << "creating action on half double sixes:" << endl;
 		}
-	A_single_sixes = A_on_the_lines->create_induced_action_on_sets(72, 6, Surf->Double_six, 0 /*verbose_level*/);
+	A_single_sixes = A_on_the_lines->create_induced_action_on_sets(
+			72, 6, Surf->Double_six, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on half double sixes done" << endl;
 		}
@@ -447,108 +508,137 @@ void surface_object_with_action::init_orbits_on_half_double_sixes(INT verbose_le
 	if (f_v) {
 		cout << "computing orbits on single sixes:" << endl;
 		}
-	Orbits_on_single_sixes = Aut_gens->orbits_on_points_schreier(A_single_sixes, 0 /*verbose_level*/);
+	Orbits_on_single_sixes = Aut_gens->orbits_on_points_schreier(
+			A_single_sixes, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "computing orbits on single sixes done" << endl;
 		}
 	if (f_v) {
-		cout << "We found " << Orbits_on_single_sixes->nb_orbits << " orbits on single sixes" << endl;
+		cout << "We found " << Orbits_on_single_sixes->nb_orbits
+				<< " orbits on single sixes" << endl;
 		}
 
 	//nb_orbits_on_single_sixes = Orbits_on_single_sixes->nb_orbits;
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_half_double_sixes done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_half_double_sixes done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_tritangent_planes(INT verbose_level)
+void surface_object_with_action::init_orbits_on_tritangent_planes(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_tritangent_planes" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_tritangent_planes" << endl;
 		}
 
 	if (f_v) {
 		cout << "creating action on tritangent planes:" << endl;
-		cout << "SO->nb_tritangent_planes = " << SO->nb_tritangent_planes << endl;
+		cout << "SO->nb_tritangent_planes = "
+				<< SO->nb_tritangent_planes << endl;
 		}
-	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(SO->nb_tritangent_planes, 3, SO->Lines_in_tritangent_plane, 0 /*verbose_level*/);
+	A_on_tritangent_planes = A_on_the_lines->create_induced_action_on_sets(
+			SO->nb_tritangent_planes, 3,
+			SO->Lines_in_tritangent_plane, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on tritangent planes done" << endl;
 		}
 
-	Orbits_on_tritangent_planes = Aut_gens->orbits_on_points_schreier(A_on_tritangent_planes, 0 /*verbose_level*/);
+	Orbits_on_tritangent_planes = Aut_gens->orbits_on_points_schreier(
+			A_on_tritangent_planes, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_tritangent_planes->nb_orbits << " orbits on the set of " << SO->nb_tritangent_planes << " tritangent planes" << endl;
+		cout << "We found " << Orbits_on_tritangent_planes->nb_orbits
+				<< " orbits on the set of " << SO->nb_tritangent_planes
+				<< " tritangent planes" << endl;
 		}
 
 	Orbits_on_tritangent_planes->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_tritangent_planes done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_tritangent_planes done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_trihedral_pairs(INT verbose_level)
+void surface_object_with_action::init_orbits_on_trihedral_pairs(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_trihedral_pairs" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_trihedral_pairs" << endl;
 		}
 
 	if (f_v) {
 		cout << "creating action on trihedral pairs:" << endl;
 		}
-	A_on_trihedral_pairs = A_on_tritangent_planes->create_induced_action_on_sets(120, 6, SO->Trihedral_pairs_as_tritangent_planes, 0 /*verbose_level*/);
+	A_on_trihedral_pairs =
+			A_on_tritangent_planes->create_induced_action_on_sets(
+					120, 6, SO->Trihedral_pairs_as_tritangent_planes,
+					0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action on trihedral pairs created" << endl;
 		}
 
-	Orbits_on_trihedral_pairs = Aut_gens->orbits_on_points_schreier(A_on_trihedral_pairs, 0 /*verbose_level*/);
+	Orbits_on_trihedral_pairs = Aut_gens->orbits_on_points_schreier(
+			A_on_trihedral_pairs, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_trihedral_pairs->nb_orbits << " orbits on trihedral pairs" << endl;
+		cout << "We found " << Orbits_on_trihedral_pairs->nb_orbits
+				<< " orbits on trihedral pairs" << endl;
 		}
 
 	Orbits_on_trihedral_pairs->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_trihedral_pairs done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_trihedral_pairs done" << endl;
 		}
 }
 
-void surface_object_with_action::init_orbits_on_points_not_on_lines(INT verbose_level)
+void surface_object_with_action::init_orbits_on_points_not_on_lines(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_points_not_on_lines" << endl;
 		}
 
 	if (f_v) {
 		cout << "creating action on points not on lines:" << endl;
 		}
-	A_on_pts_not_on_lines = Surf_A->A->restricted_action(SO->Pts_not_on_lines, SO->nb_pts_not_on_lines, 0 /*verbose_level*/);
+	A_on_pts_not_on_lines = Surf_A->A->restricted_action(
+			SO->Pts_not_on_lines, SO->nb_pts_not_on_lines,
+			0 /*verbose_level*/);
 	if (f_v) {
 		cout << "creating action on points not on lines done" << endl;
 		}
 
-	Orbits_on_points_not_on_lines = Aut_gens->orbits_on_points_schreier(A_on_pts_not_on_lines,  0 /*verbose_level*/);
+	Orbits_on_points_not_on_lines =
+			Aut_gens->orbits_on_points_schreier(
+					A_on_pts_not_on_lines,  0 /*verbose_level*/);
 	if (f_v) {
-		cout << "We found " << Orbits_on_points_not_on_lines->nb_orbits << " orbits on points not on lines" << endl;
+		cout << "We found " << Orbits_on_points_not_on_lines->nb_orbits
+				<< " orbits on points not on lines" << endl;
 		}
 
 	Orbits_on_points_not_on_lines->print_and_list_orbits(cout);
 
 	if (f_v) {
-		cout << "surface_object_with_action::init_orbits_on_points_not_on_lines done" << endl;
+		cout << "surface_object_with_action::init_orbits_"
+				"on_points_not_on_lines done" << endl;
 		}
 }
 
 
-void surface_object_with_action::print_automorphism_group(ostream &ost, 
+void surface_object_with_action::print_automorphism_group(
+	ostream &ost,
 	INT f_print_orbits, const BYTE *fname_mask)
 {
 	longinteger_object go;
@@ -560,42 +650,39 @@ void surface_object_with_action::print_automorphism_group(ostream &ost,
 	ost << "The automorphism group has order " << go << endl;
 	ost << "\\bigskip" << endl;
 	ost << "\\subsection*{Orbits on points}" << endl;
-	//Orbits_on_points->print_and_list_orbits_and_stabilizer_sorted_by_length(ost, TRUE, Surf_A->A, go);
+	//Orbits_on_points->print_and_list_orbits_and_
+	//stabilizer_sorted_by_length(ost, TRUE, Surf_A->A, go);
 	Orbits_on_points->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on Eckardt points}" << endl;
 	Orbits_on_Eckardt_points->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on Double points}" << endl;
 	Orbits_on_Double_points->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on points not on lines}" << endl;
 	//Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
 	Orbits_on_points_not_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 
 	ost << "\\subsection*{Orbits on lines}" << endl;
 	Orbits_on_lines->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	INT *Decomp_scheme;
 	INT nb;
 	INT block_width = 10;
 	nb = Orbits_on_lines->nb_orbits;
-	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(SO->Adj_line_intersection_graph, 27, Decomp_scheme, 1 /*verbose_level*/);
+	Orbits_on_lines->get_orbit_decomposition_scheme_of_graph(
+			SO->Adj_line_intersection_graph, 27, Decomp_scheme,
+			0 /*verbose_level*/);
 	ost << "\\subsection*{Decomposition scheme of line intersection graph}" << endl;
 	ost << "Decomposition scheme of line intersection graph:" << endl;
-	print_integer_matrix_tex_block_by_block(ost, Decomp_scheme, nb, nb, block_width);
+	print_integer_matrix_tex_block_by_block(ost,
+			Decomp_scheme, nb, nb, block_width);
 	
 
 	ost << "\\subsection*{Orbits on single sixes}" << endl;
 	Orbits_on_single_sixes->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	if (f_print_orbits) {
 
@@ -627,7 +714,9 @@ void surface_object_with_action::print_automorphism_group(ostream &ost,
 			ost << "" << endl; 
 			ost << "\\bigskip" << endl; 
 			ost << "" << endl; 
-			ost << "Orbit " << i << " consisting of the following " << Orbits_on_single_sixes->orbit_len[i] << " half double sixes:" << endl; 
+			ost << "Orbit " << i << " consisting of the following "
+					<< Orbits_on_single_sixes->orbit_len[i]
+					<< " half double sixes:" << endl;
 			ost << "$$" << endl;
 			INT_set_print_tex(ost, 
 				Orbits_on_single_sixes->orbit + 
@@ -647,11 +736,9 @@ void surface_object_with_action::print_automorphism_group(ostream &ost,
 	
 	ost << "\\subsection*{Orbits on tritangent planes}" << endl;
 	Orbits_on_tritangent_planes->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 	ost << "\\subsection*{Orbits on trihedral pairs}" << endl;
 	Orbits_on_trihedral_pairs->print_and_list_orbits_sorted_by_length_tex(ost);
-		//print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elements(ost, TRUE, Surf_A->A, Aut_gens);
 
 }
 
@@ -668,11 +755,13 @@ void surface_object_with_action::compute_quartic(INT pt_orbit,
 		}
 	
 	if (Orbits_on_points_not_on_lines == NULL) {
-		cout << "surface_object_with_action::compute_quartic Orbits_on_points_not_on_lines has not been computed" << endl;
+		cout << "surface_object_with_action::compute_quartic "
+				"Orbits_on_points_not_on_lines has not been computed" << endl;
 		exit(1);
 		}
 	if (pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits) {
-		cout << "surface_object_with_action::compute_quartic pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits" << endl;
+		cout << "surface_object_with_action::compute_quartic "
+				"pt_orbit >= Orbits_on_points_not_on_lines->nb_orbits" << endl;
 		exit(1);
 		}
 	INT v[4];
@@ -687,16 +776,22 @@ void surface_object_with_action::compute_quartic(INT pt_orbit,
 	i = Orbits_on_points_not_on_lines->orbit[0];
 	pt_A = SO->Pts_not_on_lines[i];
 
-	cout << "surface_object_with_action::compute_quartic pt_A = " << pt_A << " pt_B=" << pt_B << endl;
+	cout << "surface_object_with_action::compute_quartic "
+			"pt_A = " << pt_A << " pt_B=" << pt_B << endl;
 	
-	Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(Surf_A->A, 
+	Surf_A->A->Strong_gens->make_element_which_moves_a_point_from_A_to_B(
+		Surf_A->A,
 		pt_A, pt_B, transporter, verbose_level);
 
-	cout << "surface_object_with_action::compute_quartic transporter element=" << endl;
+	cout << "surface_object_with_action::compute_quartic "
+			"transporter element=" << endl;
 	Surf_A->A->element_print_quick(transporter, cout);
 	
-	Surf_A->AonHPD_3_4->compute_image_INT_low_level(transporter, equation /*INT *input*/, equation_nice /* INT *output */, verbose_level);
-	cout << "surface_object_with_action::compute_quartic equation_nice=" << endl;
+	Surf_A->AonHPD_3_4->compute_image_INT_low_level(
+			transporter, equation /*INT *input*/,
+			equation_nice /* INT *output */, verbose_level);
+	cout << "surface_object_with_action::compute_quartic "
+			"equation_nice=" << endl;
 	Surf->Poly3_4->print_equation(cout, equation_nice);
 	cout << endl;
 
@@ -708,7 +803,8 @@ void surface_object_with_action::compute_quartic(INT pt_orbit,
 }
 
 
-void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
+void surface_object_with_action::quartic(
+		ostream &ost, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT *Elt;
@@ -730,14 +826,20 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	transporter = NEW_INT(Surf_A->A->elt_size_in_INT);
 
-	cout << "surface_object_with_action::quartic The surface has points not on lines, we are computing the quartic" << endl;
-	compute_quartic(0 /* pt_orbit */, pt_A, pt_B, transporter, SO->eqn, equation_nice, verbose_level);
+	cout << "surface_object_with_action::quartic "
+			"The surface has points not on lines, "
+			"we are computing the quartic" << endl;
+	compute_quartic(0 /* pt_orbit */, pt_A, pt_B,
+			transporter, SO->eqn, equation_nice, verbose_level);
 
-	cout << "surface_object_with_action::quartic equation_nice=" << endl;
+	cout << "surface_object_with_action::quartic "
+			"equation_nice=" << endl;
 	Surf->Poly3_4->print_equation(cout, equation_nice);
 	cout << endl;
 	
-	ost << "An equivalent surface containing the point (1,0,0,0) on no line of the surface is obtained by applying the transformation" << endl;
+	ost << "An equivalent surface containing the point (1,0,0,0) "
+			"on no line of the surface is obtained by applying "
+			"the transformation" << endl;
 	ost << "$$" << endl;
 	Surf_A->A->element_print_latex(transporter, ost);
 	ost << "$$" << endl;
@@ -748,7 +850,8 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	ost << "The transformed surface is" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	Surf->Poly3_4->print_equation_with_line_breaks_tex(ost, equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly3_4->print_equation_with_line_breaks_tex(ost,
+			equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -756,12 +859,16 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	INT *f2;
 	INT *f3;
 	
-	cout << "surface_object_with_action::quartic before Surf->split_nice_equation" << endl;
-	Surf->split_nice_equation(equation_nice, f1, f2, f3, 0 /* verbose_level */);
-	cout << "surface_object_with_action::quartic after Surf->split_nice_equation" << endl;
+	cout << "surface_object_with_action::quartic "
+			"before Surf->split_nice_equation" << endl;
+	Surf->split_nice_equation(equation_nice, f1, f2, f3,
+			0 /* verbose_level */);
+	cout << "surface_object_with_action::quartic "
+			"after Surf->split_nice_equation" << endl;
 
 
-	cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) + x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
+	cout << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
+			"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
 	cout << "f1=" << endl;
 	Surf->Poly1_x123->print_equation(cout, f1);
 	cout << endl;
@@ -774,13 +881,16 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	ost << "\\begin{align*}" << endl;
 	ost << "f_1 = & ";
-	Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost, f1, 8 /* nb_terms_per_line */, "\\\\\n");
+	Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost,
+			f1, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "f_2 = & ";
-	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost, f2, 8 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+			f2, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << "\\\\" << endl;
 	ost << "f_3 = & ";
-	Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost, f3, 8 /* nb_terms_per_line */, "\\\\\n");
+	Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost,
+			f3, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -791,12 +901,15 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	Pts_on_surface = NEW_INT(nb_pts_on_surface);
 
 	
-	cout << "surface_object_with_action::quartic before Surf_A->A->map_a_set_and_reorder" << endl;
-	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface, nb_pts_on_surface, transporter, 0 /* verbose_level */);
+	cout << "surface_object_with_action::quartic "
+			"before Surf_A->A->map_a_set_and_reorder" << endl;
+	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface,
+			nb_pts_on_surface, transporter, 0 /* verbose_level */);
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		Surf->unrank_point(v, Pts_on_surface[i]);
 		if (Surf->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
-			cout << "the transformed point does not satisfy the transformed equation" << endl;
+			cout << "the transformed point does not satisfy "
+					"the transformed equation" << endl;
 			exit(1);
 			}
 		}
@@ -804,7 +917,8 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		Surf->unrank_point(v, Pts_on_surface[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_surface[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_on_surface[i] << "}=";
 		INT_vec_print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 		}
@@ -812,9 +926,11 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	for (i = 0; i < nb_pts_on_surface; i++) {
 	
-		a = Surf->Poly3_4->evaluate_at_a_point_by_rank(equation_nice, Pts_on_surface[i]);
+		a = Surf->Poly3_4->evaluate_at_a_point_by_rank(
+				equation_nice, Pts_on_surface[i]);
 		if (a) {
-			cout << "error, the transformed point " << i << " does not lie on the transformed surface" << endl;
+			cout << "error, the transformed point " << i
+					<< " does not lie on the transformed surface" << endl;
 			exit(1);
 			}
 		}
@@ -831,23 +947,30 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	curve = NEW_INT(Surf->Poly4_x123->nb_monomials);
 	poly1 = NEW_INT(Surf->Poly4_x123->nb_monomials);
 	poly2 = NEW_INT(Surf->Poly4_x123->nb_monomials);
-	Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1, 0 /* verbose_level */);
-	Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2, 0 /* verbose_level */);
+	Surf->multiply_Poly2_3_times_Poly2_3(f2, f2, poly1,
+			0 /* verbose_level */);
+	Surf->multiply_Poly1_3_times_Poly3_3(f1, f3, poly2,
+			0 /* verbose_level */);
 	two = F->add(1, 1);
 	four = F->add(two, two);
 	mfour = F->negate(four);
-	F->scalar_multiply_vector_in_place(mfour, poly2, Surf->Poly4_x123->nb_monomials);
+	F->scalar_multiply_vector_in_place(mfour, poly2,
+			Surf->Poly4_x123->nb_monomials);
 	F->add_vector(poly1, poly2, curve, Surf->Poly4_x123->nb_monomials);
 	
 	INT *tangent_quadric;
 
-	cout << "surface_object_with_action::quartic before Surf->assemble_tangent_quadric" << endl;
-	Surf->assemble_tangent_quadric(f1, f2, f3, tangent_quadric, verbose_level);
+	cout << "surface_object_with_action::quartic before "
+			"Surf->assemble_tangent_quadric" << endl;
+	Surf->assemble_tangent_quadric(f1, f2, f3,
+			tangent_quadric, verbose_level);
 
 	ost << "The tangent quadric is given as" << endl;
 	ost << "\\begin{align*}" << endl;
-	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) = {\\rm \\bf v}(";
-	Surf->Poly2_4->print_equation_with_line_breaks_tex(ost, tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
+	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) "
+			"= {\\rm \\bf v}(";
+	Surf->Poly2_4->print_equation_with_line_breaks_tex(
+			ost, tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -856,18 +979,24 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	
 	Pts_on_tangent_quadric = NEW_INT(Surf->P->N_points);
 	
-	cout << "surface_object_with_action::quartic before Surf->Poly2_4->enumerate_points" << endl;
-	Surf->Poly2_4->enumerate_points(tangent_quadric, Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 0 /* verbose_level */);
-	cout << "We found " << nb_pts_on_tangent_quadric << " points on the tangent quadric." << endl;
+	cout << "surface_object_with_action::quartic "
+			"before Surf->Poly2_4->enumerate_points" << endl;
+	Surf->Poly2_4->enumerate_points(tangent_quadric,
+			Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
+			0 /* verbose_level */);
+	cout << "We found " << nb_pts_on_tangent_quadric
+			<< " points on the tangent quadric." << endl;
 
-	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric << " points.\\\\" << endl;
+	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
+			<< " points.\\\\" << endl;
 
 	INT_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
 		Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_tangent_quadric[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_on_tangent_quadric[i] << "}=";
 		INT_vec_print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 		}
@@ -878,7 +1007,8 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	
 	line_type = NEW_INT(Surf->P->N_lines);
 
-	Surf->P->line_intersection_type(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, line_type, verbose_level);
+	Surf->P->line_intersection_type(Pts_on_tangent_quadric,
+			nb_pts_on_tangent_quadric, line_type, verbose_level);
 
 
 	INT *type_collected;
@@ -891,7 +1021,6 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 		}
 
 
-	//Surf->P->line_intersection_type_collected(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, type_collected, verbose_level);
 
 
 	ost << "The line type of the tangent quadric is:" << endl;
@@ -912,7 +1041,8 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	INT nb_class_pts;
 
 	C.init(line_type, Surf->P->N_lines, FALSE, 0);
-	C.get_class_by_value(Class_pts, nb_class_pts, q + 1 /* value */, 0 /* verbose_level */);
+	C.get_class_by_value(Class_pts, nb_class_pts,
+			q + 1 /* value */, 0 /* verbose_level */);
 	
 
 
@@ -924,7 +1054,8 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 		Pts_intersection, nb_pts_intersection);
 
 
-	ost << "The tangent quadric intersects the cubic surface in " << nb_pts_intersection << " points." << endl;
+	ost << "The tangent quadric intersects the cubic surface in "
+			<< nb_pts_intersection << " points." << endl;
 
 	
 	ost << "The intersection points are:\\\\" << endl;
@@ -942,7 +1073,8 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	ost << "The quartic curve is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_4 = & {\\rm \\bf v}(";
-	Surf->Poly4_x123->print_equation_with_line_breaks_tex(ost, curve, 10 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly4_x123->print_equation_with_line_breaks_tex(ost,
+			curve, 10 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -954,15 +1086,20 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	Pts_on_curve = NEW_INT(Surf->P2->N_points);
 
-	cout << "surface_object_with_action::quartic before Surf->Poly4_x123->enumerate_points" << endl;
-	Surf->Poly4_x123->enumerate_points(curve, Pts_on_curve, sz_curve, 0 /* verbose_level */);
-	cout << "We found " << sz_curve << " points on the quartic quadric." << endl;
+	cout << "surface_object_with_action::quartic before "
+			"Surf->Poly4_x123->enumerate_points" << endl;
+	Surf->Poly4_x123->enumerate_points(curve, Pts_on_curve,
+			sz_curve, 0 /* verbose_level */);
+	cout << "We found " << sz_curve
+			<< " points on the quartic quadric." << endl;
 
-	ost << "The " << sz_curve << " points on the quartic curve are:\\\\" << endl;
+	ost << "The " << sz_curve
+			<< " points on the quartic curve are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < sz_curve; i++) {
 		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_curve[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_on_curve[i] << "}=";
 		INT_vec_print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
 		}
@@ -996,11 +1133,15 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 	INT r;
 	INT *Kernel;
 	
-	Kernel = NEW_INT(Surf->Poly4_x123->nb_monomials * Surf->Poly4_x123->nb_monomials);
-	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve, sz_curve, r, Kernel, verbose_level);
+	Kernel = NEW_INT(Surf->Poly4_x123->nb_monomials
+				* Surf->Poly4_x123->nb_monomials);
+	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve,
+			sz_curve, r, Kernel, verbose_level);
 	cout << "r=" << r << endl;
-	ost << "The quartics have " << Surf->Poly4_x123->nb_monomials << " terms.\\\\" << endl;
-	ost << "The kernel has dimension " << Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
+	ost << "The quartics have "
+			<< Surf->Poly4_x123->nb_monomials << " terms.\\\\" << endl;
+	ost << "The kernel has dimension "
+			<< Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
 #endif
 
 
@@ -1012,21 +1153,25 @@ void surface_object_with_action::quartic(ostream &ost, INT verbose_level)
 
 	gens_copy = Aut_gens->create_copy();
 
-	moved_surface = new set_and_stabilizer;
+	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
 	cout << "creating moved_surface" << endl;
-	moved_surface->init_everything(Surf_A->A, Surf_A->A, SO->Pts, SO->nb_pts, 
+	moved_surface->init_everything(Surf_A->A,
+		Surf_A->A, SO->Pts, SO->nb_pts,
 		gens_copy, 0 /*verbose_level */);
 
 	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
 
 	cout << "before apply_to_self" << endl;
-	moved_surface->apply_to_self(transporter, 0 /* verbose_level */);
+	moved_surface->apply_to_self(transporter,
+			0 /* verbose_level */);
 
 	cout << "before moved_surface->Strong_gens->point_stabilizer" << endl;
-	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(0 /*INT pt */, verbose_level);
+	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
+			0 /*INT pt */, verbose_level);
 	
-	ost << "The stabilizer of $P0$ and the moved surface is the following group:\\\\" << endl;
+	ost << "The stabilizer of $P0$ and the moved surface "
+			"is the following group:\\\\" << endl;
 	stab_gens_P0->print_generators_tex(ost);
 			
 }
@@ -1043,64 +1188,75 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		cout << "surface_object_with_action::cheat_sheet" << endl;
 		}
 	
-	cout << "surface_object_with_action::cheat_sheet before New_clebsch->init_surface_equation_given" << endl;
+	cout << "surface_object_with_action::cheat_sheet "
+			"before New_clebsch->init_surface_equation_given" << endl;
 
 
 
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_equation" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_equation" << endl;
 		}
 	SO->print_equation(ost);
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet after SO->print_equation" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"after SO->print_equation" << endl;
 		}
 
 
 	longinteger_object ago;
 	Aut_gens->group_order(ago);
-	ost << "The automorphism group has order " << ago << "\\\\" << endl;
+	ost << "The automorphism group has order "
+			<< ago << "\\\\" << endl;
 	ost << "The automorphism group is:\\\\" << endl;
 	if (f_v) {
-		cout << "cheat_sheet before Aut_gens->print_generators_tex" << endl;
+		cout << "cheat_sheet before Aut_gens->"
+				"print_generators_tex" << endl;
 		}
 	Aut_gens->print_generators_tex(ost);
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_general" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_general" << endl;
 		}
 	SO->print_general(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_lines" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_lines" << endl;
 		}
 	SO->print_lines(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_points" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_points" << endl;
 		}
 	SO->print_points(ost);
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_lines_with_points_on_them" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_lines_with_points_on_them" << endl;
 		}
 	SO->print_lines_with_points_on_them(ost);
 
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_line_intersection_graph" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_line_intersection_graph" << endl;
 		}
 	SO->print_line_intersection_graph(ost);
 
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_tritangent_planes" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_tritangent_planes" << endl;
 		}
 	SO->print_tritangent_planes(ost);
 
@@ -1108,29 +1264,34 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	//SO->print_planes_in_trihedral_pairs(ost);
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_generalized_quadrangle" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_generalized_quadrangle" << endl;
 		}
 	SO->print_generalized_quadrangle(ost);
 
 	
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_double sixes" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_double sixes" << endl;
 		}
 	SO->print_double_sixes(ost);
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before SO->print_trihedral_pairs" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before SO->print_trihedral_pairs" << endl;
 		}
 	SO->print_trihedral_pairs(ost);
 
-	//SO->latex_table_of_trihedral_pairs_and_clebsch_system(*Clebsch->ost, AL->T_idx, AL->nb_T);
+	//SO->latex_table_of_trihedral_pairs_and_clebsch_system(
+	//*Clebsch->ost, AL->T_idx, AL->nb_T);
 
 
 
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet before print_automorphism_group" << endl;
+		cout << "surface_object_with_action::cheat_sheet "
+				"before print_automorphism_group" << endl;
 		}
 	print_automorphism_group(ost, 
 		f_print_orbits, fname_mask);
@@ -1140,18 +1301,21 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	if (SO->nb_pts_not_on_lines) {
 		
 		if (f_v) {
-			cout << "surface_object_with_action::cheat_sheet before cheat_sheet_quartic_curve" << endl;
+			cout << "surface_object_with_action::cheat_sheet "
+					"before cheat_sheet_quartic_curve" << endl;
 			}
 		cheat_sheet_quartic_curve(ost, 
 			label_txt, label_tex, verbose_level);
 		if (f_v) {
-			cout << "surface_object_with_action::cheat_sheet after cheat_sheet_quartic_curve" << endl;
+			cout << "surface_object_with_action::cheat_sheet "
+					"after cheat_sheet_quartic_curve" << endl;
 			}
 
 		}
 #endif
 
-	ost << "\\clearpage\\subsection*{The Elements of the Automorphism Group}" << endl;
+	ost << "\\clearpage\\subsection*{The Elements of "
+			"the Automorphism Group}" << endl;
 	Aut_gens->print_elements_latex_ost(ost);
 
 	ost << "\\clearpage\\subsection*{The Group Table}" << endl;
@@ -1162,7 +1326,8 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	if (go < 50) {
 		INT *Table;
 		Aut_gens->create_group_table(Table, go, verbose_level - 1);
-		print_integer_matrix_tex_block_by_block(ost, Table, go, go, block_width);
+		print_integer_matrix_tex_block_by_block(ost,
+				Table, go, go, block_width);
 		FREE_INT(Table);
 		}
 	else {
@@ -1173,9 +1338,11 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	BYTE magma_fname[1000];
 
 	sprintf(magma_fname, "%s_group.magma", label_txt);
-	Aut_gens->export_permutation_group_to_magma(magma_fname, verbose_level - 2);
+	Aut_gens->export_permutation_group_to_magma(
+			magma_fname, verbose_level - 2);
 	if (f_v) {
-		cout << "written file " << magma_fname << " of size " << file_size(magma_fname) << endl;
+		cout << "written file " << magma_fname << " of size "
+				<< file_size(magma_fname) << endl;
 		}
 
 	ost << "\\clearpage\\subsection*{Magma Export}" << endl;
@@ -1191,7 +1358,8 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 			break;
 			}
 	
-		//cout << "count_number_of_orbits_in_file reading line, nb_sol = " << nb_sol << endl;
+		//cout << "count_number_of_orbits_in_file reading
+		//line, nb_sol = " << nb_sol << endl;
 		fp1.getline(line, 100000, '\n');
 		ost << line << endl;
 		}
@@ -1206,13 +1374,16 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 }
 
 
-void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost, 
-	const BYTE *label_txt, const BYTE *label_tex, INT verbose_level)
+void surface_object_with_action::cheat_sheet_quartic_curve(
+	ostream &ost,
+	const BYTE *label_txt, const BYTE *label_tex,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet_quartic_curve" << endl;
+		cout << "surface_object_with_action::"
+				"cheat_sheet_quartic_curve" << endl;
 		}
 	
 
@@ -1244,35 +1415,47 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 
 	transporter = NEW_INT(Surf_A->A->elt_size_in_INT);
 
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve The surface has points not on lines, we are computing the quartic" << endl;
-	compute_quartic(0 /* pt_orbit */, pt_A, pt_B, transporter, SO->eqn, equation_nice, verbose_level);
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"The surface has points not on lines, we are computing "
+			"the quartic" << endl;
+	compute_quartic(0 /* pt_orbit */, pt_A, pt_B, transporter,
+			SO->eqn, equation_nice, verbose_level);
 
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve equation_nice=" << endl;
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"equation_nice=" << endl;
 	Surf->Poly3_4->print_equation(cout, equation_nice);
 	cout << endl;
 	
-	ost << "An equivalent surface containing the point (1,0,0,0) on no line of the surface is obtained by applying the transformation" << endl;
+	ost << "An equivalent surface containing the point (1,0,0,0) "
+			"on no line of the surface is obtained by applying "
+			"the transformation" << endl;
 	ost << "$$" << endl;
 	Surf_A->A->element_print_latex(transporter, ost);
 	ost << "$$" << endl;
-	ost << "Which moves $P_{" << pt_A << "}$ to $P_{" << pt_B << "}$." << endl;
+	ost << "Which moves $P_{" << pt_A << "}$ to $P_{"
+			<< pt_B << "}$." << endl;
 	ost << endl;
 	ost << "\\bigskip" << endl;
 	ost << endl;
 	ost << "The transformed surface is" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal F}^3 &={\\bf \\rm v}(" << endl;
-	Surf->Poly3_4->print_equation_with_line_breaks_tex(ost, equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly3_4->print_equation_with_line_breaks_tex(ost,
+			equation_nice, 9 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")" << endl;
 	ost << "\\end{align*}" << endl;
 
 	
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve before Surf->split_nice_equation" << endl;
-	Surf->split_nice_equation(equation_nice, f1, f2, f3, 0 /* verbose_level */);
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve after Surf->split_nice_equation" << endl;
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"before Surf->split_nice_equation" << endl;
+	Surf->split_nice_equation(equation_nice, f1, f2, f3,
+			0 /* verbose_level */);
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"after Surf->split_nice_equation" << endl;
 
 
-	ost << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) + x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
+	ost << "The equation is of the form $x_0^2f_1(x_1,x_2,x_3) "
+			"+ x_0f_2(x_1,x_2,x_3) + f_3(x_1,x_2,x_3)$, where" << endl;
 	cout << "f1=" << endl;
 	Surf->Poly1_x123->print_equation(cout, f1);
 	cout << endl;
@@ -1285,13 +1468,16 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 
 	ost << "\\begin{align*}" << endl;
 	ost << "f_1 = & ";
-	Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost, f1, 8 /* nb_terms_per_line */, "\\\\\n");
+	Surf->Poly1_x123->print_equation_with_line_breaks_tex(ost,
+			f1, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "f_2 = & ";
-	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost, f2, 8 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+			f2, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << "\\\\" << endl;
 	ost << "f_3 = & ";
-	Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost, f3, 8 /* nb_terms_per_line */, "\\\\\n");
+	Surf->Poly3_x123->print_equation_with_line_breaks_tex(ost,
+			f3, 8 /* nb_terms_per_line */, "\\\\\n");
 	ost << "\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -1300,12 +1486,15 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	Pts_on_surface = NEW_INT(nb_pts_on_surface);
 
 	
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve before Surf_A->A->map_a_set_and_reorder" << endl;
-	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface, nb_pts_on_surface, transporter, 0 /* verbose_level */);
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"before Surf_A->A->map_a_set_and_reorder" << endl;
+	Surf_A->A->map_a_set_and_reorder(SO->Pts, Pts_on_surface,
+			nb_pts_on_surface, transporter, 0 /* verbose_level */);
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		Surf->unrank_point(v, Pts_on_surface[i]);
 		if (Surf->Poly3_4->evaluate_at_a_point(equation_nice, v)) {
-			cout << "the transformed point does not satisfy the transformed equation" << endl;
+			cout << "the transformed point does not satisfy "
+					"the transformed equation" << endl;
 			exit(1);
 			}
 		}
@@ -1313,7 +1502,8 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_surface; i++) {
 		Surf->unrank_point(v, Pts_on_surface[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_surface[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_on_surface[i] << "}=";
 		INT_vec_print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 		}
@@ -1330,34 +1520,44 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	two = F->add(1, 1);
 	four = F->add(two, two);
 	mfour = F->negate(four);
-	F->scalar_multiply_vector_in_place(mfour, poly2, Surf->Poly4_x123->nb_monomials);
-	F->add_vector(poly1, poly2, curve, Surf->Poly4_x123->nb_monomials);
+	F->scalar_multiply_vector_in_place(mfour, poly2,
+			Surf->Poly4_x123->nb_monomials);
+	F->add_vector(poly1, poly2, curve,
+			Surf->Poly4_x123->nb_monomials);
 	
 
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve before Surf->assemble_tangent_quadric" << endl;
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"before Surf->assemble_tangent_quadric" << endl;
 	Surf->assemble_tangent_quadric(f1, f2, f3, tangent_quadric, verbose_level);
 
 	ost << "The tangent quadric is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_2 = & {\\rm \\bf v}(2x_0 \\cdot f_1 + f_2) = {\\rm \\bf v}(";
-	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost, tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly2_x123->print_equation_with_line_breaks_tex(ost,
+			tangent_quadric, 8 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 	
 	Pts_on_tangent_quadric = NEW_INT(Surf->P->N_points);
 	
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve before Surf->Poly2_4->enumerate_points" << endl;
-	Surf->Poly2_4->enumerate_points(tangent_quadric, Pts_on_tangent_quadric, nb_pts_on_tangent_quadric, 0 /* verbose_level */);
-	cout << "We found " << nb_pts_on_tangent_quadric << " points on the tangent quadric." << endl;
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"before Surf->Poly2_4->enumerate_points" << endl;
+	Surf->Poly2_4->enumerate_points(tangent_quadric,
+			Pts_on_tangent_quadric, nb_pts_on_tangent_quadric,
+			0 /* verbose_level */);
+	cout << "We found " << nb_pts_on_tangent_quadric
+			<< " points on the tangent quadric." << endl;
 
-	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric << " points.\\\\" << endl;
+	ost << "The tangent quadric has " << nb_pts_on_tangent_quadric
+			<< " points.\\\\" << endl;
 
 	INT_vec_heapsort(Pts_on_tangent_quadric, nb_pts_on_tangent_quadric);
 	ost << "The points on the tangent quadric are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_on_tangent_quadric; i++) {
 		Surf->unrank_point(v, Pts_on_tangent_quadric[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_tangent_quadric[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_on_tangent_quadric[i] << "}=";
 		INT_vec_print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 		}
@@ -1372,14 +1572,16 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 		Pts_intersection, nb_pts_intersection);
 
 
-	ost << "The tangent quadric intersects the cubic surface in " << nb_pts_intersection << " points." << endl;
+	ost << "The tangent quadric intersects the cubic surface in "
+			<< nb_pts_intersection << " points." << endl;
 
 	
 	ost << "The intersection points are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < nb_pts_intersection; i++) {
 		Surf->unrank_point(v, Pts_intersection[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_intersection[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_intersection[i] << "}=";
 		INT_vec_print_fully(ost, v, 4);
 		ost << "$\\\\" << endl;
 		}
@@ -1390,7 +1592,8 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	ost << "The quartic curve is given as" << endl;
 	ost << "\\begin{align*}" << endl;
 	ost << "{\\cal C}_4 = & {\\rm \\bf v}(";
-	Surf->Poly4_x123->print_equation_with_line_breaks_tex(ost, curve, 10 /* nb_terms_per_line */, "\\\\\n&");
+	Surf->Poly4_x123->print_equation_with_line_breaks_tex(
+			ost, curve, 10 /* nb_terms_per_line */, "\\\\\n&");
 	ost << ")\\\\" << endl;
 	ost << "\\end{align*}" << endl;
 
@@ -1400,15 +1603,20 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 
 	Pts_on_curve = NEW_INT(Surf->P2->N_points);
 
-	cout << "surface_object_with_action::cheat_sheet_quartic_curve before Surf->Poly4_x123->enumerate_points" << endl;
-	Surf->Poly4_x123->enumerate_points(curve, Pts_on_curve, sz_curve, 0 /* verbose_level */);
-	cout << "We found " << sz_curve << " points on the quartic quadric." << endl;
+	cout << "surface_object_with_action::cheat_sheet_quartic_curve "
+			"before Surf->Poly4_x123->enumerate_points" << endl;
+	Surf->Poly4_x123->enumerate_points(curve,
+			Pts_on_curve, sz_curve, 0 /* verbose_level */);
+	cout << "We found " << sz_curve << " points on "
+			"the quartic quadric." << endl;
 
-	ost << "The " << sz_curve << " points on the quartic curve are:\\\\" << endl;
+	ost << "The " << sz_curve << " points on the "
+			"quartic curve are:\\\\" << endl;
 	ost << "\\begin{multicols}{2}" << endl;
 	for (i = 0; i < sz_curve; i++) {
 		Surf->P2->unrank_point(v, Pts_on_curve[i]);
-		ost << i << " : $P_{" << i << "} = P_{" << Pts_on_curve[i] << "}=";
+		ost << i << " : $P_{" << i << "} = P_{"
+				<< Pts_on_curve[i] << "}=";
 		INT_vec_print_fully(ost, v, 3);
 		ost << "$\\\\" << endl;
 		}
@@ -1440,11 +1648,15 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	INT r;
 	INT *Kernel;
 	
-	Kernel = NEW_INT(Surf->Poly4_x123->nb_monomials * Surf->Poly4_x123->nb_monomials);
-	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve, sz_curve, r, Kernel, verbose_level);
+	Kernel = NEW_INT(Surf->Poly4_x123->nb_monomials *
+			Surf->Poly4_x123->nb_monomials);
+	Surf->Poly4_x123->vanishing_ideal(Pts_on_curve,
+			sz_curve, r, Kernel, verbose_level);
 	cout << "r=" << r << endl;
-	ost << "The quartics have " << Surf->Poly4_x123->nb_monomials << " terms.\\\\" << endl;
-	ost << "The kernel has dimension " << Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
+	ost << "The quartics have " << Surf->Poly4_x123->nb_monomials
+			<< " terms.\\\\" << endl;
+	ost << "The kernel has dimension "
+			<< Surf->Poly4_x123->nb_monomials - r << " .\\\\" << endl;
 	FREE_INT(Kernel);
 #endif
 
@@ -1454,21 +1666,26 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	gens_copy = Aut_gens->create_copy();
 	//gens_copy = New_clebsch->SaS->Strong_gens->create_copy();
 
-	moved_surface = new set_and_stabilizer;
+	moved_surface = NEW_OBJECT(set_and_stabilizer);
 
 	cout << "creating moved_surface" << endl;
-	moved_surface->init_everything(Surf_A->A, Surf_A->A, SO->Pts, SO->nb_pts, 
+	moved_surface->init_everything(Surf_A->A,
+		Surf_A->A, SO->Pts, SO->nb_pts,
 		gens_copy, 0 /*verbose_level */);
 
 	//stab_gens_moved_surface = SaS->Strong_gens->create_copy();
 
 	cout << "before apply_to_self" << endl;
-	moved_surface->apply_to_self(transporter, 0 /* verbose_level */);
+	moved_surface->apply_to_self(transporter,
+			0 /* verbose_level */);
 
-	cout << "before moved_surface->Strong_gens->point_stabilizer" << endl;
-	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(0 /*INT pt */, verbose_level);
+	cout << "before moved_surface->Strong_gens->point_stabilizer"
+			<< endl;
+	stab_gens_P0 = moved_surface->Strong_gens->point_stabilizer(
+			0 /*INT pt */, verbose_level);
 	
-	ost << "The stabilizer of $P0$ and the moved surface is the following group:\\\\" << endl;
+	ost << "The stabilizer of $P0$ and the moved surface is "
+			"the following group:\\\\" << endl;
 	stab_gens_P0->print_generators_tex(ost);
 
 	FREE_INT(transporter);
@@ -1483,13 +1700,14 @@ void surface_object_with_action::cheat_sheet_quartic_curve(ostream &ost,
 	FREE_INT(Pts_on_tangent_quadric);
 	FREE_INT(Pts_intersection);
 	FREE_INT(Pts_on_curve);
-	delete gens_copy;
-	delete moved_surface;
-	delete stab_gens_P0;
+	FREE_OBJECT(gens_copy);
+	FREE_OBJECT(moved_surface);
+	FREE_OBJECT(stab_gens_P0);
 
 
 	if (f_v) {
-		cout << "surface_object_with_action::cheat_sheet_quartic_curve" << endl;
+		cout << "surface_object_with_action::cheat_sheet_"
+				"quartic_curve" << endl;
 		}
 }
 

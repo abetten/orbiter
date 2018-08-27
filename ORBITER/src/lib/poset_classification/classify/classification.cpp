@@ -36,7 +36,7 @@ void classification::null()
 void classification::freeself()
 {
 	if (Orbit) {
-		delete [] Orbit;
+		FREE_OBJECTS(Orbit);
 		}
 	if (Rep) {
 		FREE_INT(Rep);
@@ -61,7 +61,7 @@ void classification::init(action *A, action *A2,
 	go.assign_to(classification::go);
 	classification::max_orbits = max_orbits;
 	classification::representation_sz = representation_sz;
-	Orbit = new orbit_node[max_orbits];
+	Orbit = NEW_OBJECTS(orbit_node, max_orbits);
 	Rep = NEW_INT(max_orbits * representation_sz);
 	if (f_v) {
 		cout << "classification::init done" << endl;
@@ -80,15 +80,27 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 		cout << "classification::get_set_and_stabilizer" << endl;
 		}
 
-	SaS = new set_and_stabilizer;
+	SaS = NEW_OBJECT(set_and_stabilizer);
 
 	data = NEW_INT(representation_sz);
-	INT_vec_copy(Rep + orbit_index * representation_sz,
+	INT_vec_copy(
+			Rep + orbit_index * representation_sz,
 			data, representation_sz);
 	
+	if (f_v) {
+		cout << "classification::get_set_and_stabilizer "
+				"before Orbit[orbit_index].gens->create_copy" << endl;
+		}
+
 	Strong_gens = Orbit[orbit_index].gens->create_copy();
 
-	SaS->init_everything(A, A2, data, representation_sz, 
+	if (f_v) {
+		cout << "classification::get_set_and_stabilizer "
+				"before SaS->init_everything" << endl;
+		}
+
+	SaS->init_everything(
+		A, A2, data, representation_sz,
 		Strong_gens, 0 /* verbose_level */);
 
 	if (f_v) {
@@ -206,7 +218,7 @@ void classification::read_file(ifstream &fp, INT verbose_level)
 		}
 	
 	max_orbits = nb_orbits;
-	Orbit = new orbit_node[nb_orbits];
+	Orbit = NEW_OBJECTS(orbit_node, nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		Orbit[i].C = this;
 		Orbit[i].orbit_index = i;

@@ -180,7 +180,7 @@ public:
 	/** sims chain for the group */
 	sims *Sims;
 	
-	// this is new 1/1/2009:
+	// this is n e w 1/1/2009:
 	INT f_has_kernel;
 	/** kernel of the action */
 	sims *Kernel;

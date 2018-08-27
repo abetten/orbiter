@@ -29,7 +29,7 @@ void six_arcs_not_on_a_conic::null()
 void six_arcs_not_on_a_conic::freeself()
 {
 	if (Gen) {
-		delete Gen;
+		FREE_OBJECT(Gen);
 		}
 	if (Not_on_conic_idx) {
 		FREE_INT(Not_on_conic_idx);
@@ -54,15 +54,15 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	sprintf(base_fname, "arcs_%ld", F->q);
 
 	
-	Gen = new arc_generator;
+	Gen = NEW_OBJECT(arc_generator);
 
 	Gen->f_poly = FALSE;
 
 	Gen->d = 2; // we will classify two-arcs
 
 
-	Gen->ECA = new exact_cover_arguments;
-	Gen->IA = new isomorph_arguments;
+	Gen->ECA = NEW_OBJECT(exact_cover_arguments);
+	Gen->IA = NEW_OBJECT(isomorph_arguments);
 
 	Gen->ECA->f_has_solution_prefix = TRUE;
 	Gen->ECA->solution_prefix = "";
@@ -71,7 +71,8 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	Gen->ECA->base_fname = base_fname;
 	
 	if (f_v) {
-		cout << "six_arcs_not_on_a_conic::init before Gen->init" << endl;
+		cout << "six_arcs_not_on_a_conic::init "
+				"before Gen->init" << endl;
 		}
 	Gen->init(F, 
 		"" /* Gen->ECA->input_prefix */, 
@@ -80,7 +81,8 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 		argc, argv, 
 		verbose_level - 2);
 	if (f_v) {
-		cout << "six_arcs_not_on_a_conic::init after Gen->init" << endl;
+		cout << "six_arcs_not_on_a_conic::init "
+				"after Gen->init" << endl;
 		}
 
 
@@ -101,7 +103,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
 				"We found " << nb_orbits << " isomorphism types "
-						"of 6-arcs" << endl;
+				"of 6-arcs" << endl;
 		}
 
 
@@ -217,7 +219,7 @@ void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
 
-		delete R;
+		FREE_OBJECT(R);
 	}
 	ost << "The overall number of 6-arcs not on a conic "
 			"in $\\PG(2," << F->q << ")$ is: " << Ol << "\\\\" << endl;

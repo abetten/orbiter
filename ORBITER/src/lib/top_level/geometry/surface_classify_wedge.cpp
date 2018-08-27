@@ -52,10 +52,10 @@ void surface_classify_wedge::null()
 void surface_classify_wedge::freeself()
 {
 	if (Surf) {
-		delete Surf;
+		FREE_OBJECT(Surf);
 		}
 	if (Surf_A) {
-		delete Surf_A;
+		FREE_OBJECT(Surf_A);
 		}
 
 	if (Elt0) {
@@ -72,46 +72,17 @@ void surface_classify_wedge::freeself()
 		}
 
 	if (Flag_orbits) {
-		delete Flag_orbits;
+		FREE_OBJECTS(Flag_orbits);
 		}
 	if (Surfaces) {
-		delete Surfaces;
+		FREE_OBJECTS(Surfaces);
 		}
 
 	if (Classify_double_sixes) {
-		delete Classify_double_sixes;
+		FREE_OBJECT(Classify_double_sixes);
 		}
 	null();
 }
-
-#if 0
-void surface_classify_wedge::allocate_data()
-{
-	The_surface = new p_surface_data[Classify_double_sixes->nb];
-	is_isomorphic_to = NEW_INT(Classify_double_sixes->len);
-	Orb = NEW_INT(Classify_double_sixes->nb);
-
-
-	Isomorphisms = new vector_ge;
-	Isomorphisms->init(A);
-	Isomorphisms->allocate(Classify_double_sixes->nb);
-}
-
-void surface_classify_wedge::free_data()
-{
-	INT i;
-	
-	
-	FREE_INT(is_isomorphic_to);
-	FREE_INT(Orb);
-	for (i = 0; i < nb_iso; i++) {
-		delete The_surface[i];
-		}
-	delete [] The_surface;
-
-	delete Isomorphisms;
-}
-#endif
 
 void surface_classify_wedge::read_arguments(int argc, const char **argv, 
 	INT verbose_level)
@@ -186,14 +157,14 @@ void surface_classify_wedge::init(finite_field *F, linear_group *LG,
 	if (f_v) {
 		cout << "surface_classify_wedge::init before Surf->init" << endl;
 		}
-	Surf = new surface;
+	Surf = NEW_OBJECT(surface);
 	Surf->init(F, verbose_level - 1);
 	if (f_v) {
 		cout << "surface_classify_wedge::init after Surf->init" << endl;
 		}
 
 
-	Surf_A = new surface_with_action;
+	Surf_A = NEW_OBJECT(surface_with_action);
 
 	if (is_prime(q)) {
 		f_semilinear = FALSE;
@@ -218,7 +189,7 @@ void surface_classify_wedge::init(finite_field *F, linear_group *LG,
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	Elt3 = NEW_INT(A->elt_size_in_INT);
 
-	Classify_double_sixes = new classify_double_sixes;
+	Classify_double_sixes = NEW_OBJECT(classify_double_sixes);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::init before Classify_double_sixes->init" << endl;
@@ -269,13 +240,14 @@ void surface_classify_wedge::classify_surfaces_from_double_sixes(INT verbose_lev
 void surface_classify_wedge::downstep(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
+	INT f_vv = (verbose_level >= 2);
 	INT i, nb_orbits, nb_flag_orbits;
 
 	if (f_v) {
 		cout << "surface_classify_wedge::downstep" << endl;
 		}
 	nb_orbits = Classify_double_sixes->Double_sixes->nb_orbits;
-	Flag_orbits = new flag_orbits;
+	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->init(A, A2, nb_orbits /* nb_primary_orbits_lower */, 
 		27 /* pt_representation_sz */, nb_orbits /* nb_flag_orbits */, 
 		verbose_level);
@@ -295,7 +267,8 @@ void surface_classify_wedge::downstep(INT verbose_level)
 		longinteger_object go;
 		INT Lines[27];
 
-		R = Classify_double_sixes->Double_sixes->get_set_and_stabilizer(i /* orbit_index */, 0 /* verbose_level */);
+		R = Classify_double_sixes->Double_sixes->get_set_and_stabilizer(
+				i /* orbit_index */, 0 /* verbose_level */);
 
 		//gen->orbit_length(i /* node */, 3 /* level */, ol);
 
@@ -303,23 +276,48 @@ void surface_classify_wedge::downstep(INT verbose_level)
 
 		INT_vec_copy(R->data, Lines, 12);
 
-		if (f_v) {
-			cout << "surface_classify_wedge::downstep before create_the_fifteen_other_lines" << endl;
+		if (f_vv) {
+			cout << "surface_classify_wedge::downstep "
+					"before create_the_fifteen_other_lines" << endl;
 			}
 
-		Surf->create_the_fifteen_other_lines(Lines /* double_six */, Lines + 12 /* fifteen_other_lines */, 0 /* verbose_level */);
+		Surf->create_the_fifteen_other_lines(
+				Lines /* double_six */,
+				Lines + 12 /* fifteen_other_lines */,
+				verbose_level - 4);
+		if (f_vv) {
+			cout << "surface_classify_wedge::downstep "
+					"after create_the_fifteen_other_lines" << endl;
+			}
 
-		Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(Flag_orbits, nb_flag_orbits /* flag_orbit_index */, 
-			i /* downstep_primary_orbit */, 0 /* downstep_secondary_orbit */, 
-			1 /* downstep_orbit_len */, FALSE /* f_long_orbit */, 
-			Lines /* INT *pt_representation */, R->Strong_gens, 
+
+		if (f_vv) {
+			cout << "surface_classify_wedge::downstep "
+					"before Flag_orbit_node[].init" << endl;
+			}
+
+		Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(
+			Flag_orbits,
+			nb_flag_orbits /* flag_orbit_index */,
+			i /* downstep_primary_orbit */,
+			0 /* downstep_secondary_orbit */,
+			1 /* downstep_orbit_len */,
+			FALSE /* f_long_orbit */,
+			Lines /* INT *pt_representation */,
+			R->Strong_gens,
 			verbose_level - 2);
+
+		if (f_vv) {
+			cout << "surface_classify_wedge::downstep "
+					"after Flag_orbit_node[].init" << endl;
+			}
+
 		R->Strong_gens = NULL;
 
 		nb_flag_orbits++;
 
 
-		delete R;
+		FREE_OBJECT(R);
 		}
 
 	Flag_orbits->nb_flag_orbits = nb_flag_orbits;
@@ -346,7 +344,7 @@ void surface_classify_wedge::upstep(INT verbose_level)
 	INT_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Surfaces = new classification;
+	Surfaces = NEW_OBJECT(classification);
 
 	longinteger_object go;
 	A->group_order(go);
@@ -363,12 +361,18 @@ void surface_classify_wedge::upstep(INT verbose_level)
 			continue;
 			}
 
-		progress = ((double)nb_processed * 100. ) / (double) Flag_orbits->nb_flag_orbits;
+		progress = ((double)nb_processed * 100. ) /
+					(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining new orbit " << Flag_orbits->nb_primary_orbits_upper << " from flag orbit " << f << " / " << Flag_orbits->nb_flag_orbits << " progress=" << progress << "%" << endl;
+			cout << "Defining n e w orbit "
+					<< Flag_orbits->nb_primary_orbits_upper
+					<< " from flag orbit " << f << " / "
+					<< Flag_orbits->nb_flag_orbits
+					<< " progress=" << progress << "%" << endl;
 			}
-		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit = Flag_orbits->nb_primary_orbits_upper;
+		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit =
+				Flag_orbits->nb_primary_orbits_upper;
 		
 
 		if (Flag_orbits->pt_representation_sz != 27) {
@@ -388,7 +392,7 @@ void surface_classify_wedge::upstep(INT verbose_level)
 		vector_ge *coset_reps;
 		INT nb_coset_reps;
 		
-		coset_reps = new vector_ge;
+		coset_reps = NEW_OBJECT(vector_ge);
 		coset_reps->init(Surf_A->A);
 		coset_reps->allocate(36);
 
@@ -412,7 +416,8 @@ void surface_classify_wedge::upstep(INT verbose_level)
 		for (i = 0; i < 36; i++) {
 			
 			if (f_v) {
-				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits << ", upstep i=" << i << " / 36" << endl;
+				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+						<< ", upstep i=" << i << " / 36" << endl;
 				}
 			INT f2;
 
@@ -423,7 +428,8 @@ void surface_classify_wedge::upstep(INT verbose_level)
 				double_six[j] = Lines[Surf->Double_six[i * 12 + j]];
 				}
 			if (f_v) {
-				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits << ", upstep i=" << i << " / 36 double_six=";
+				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+						<< ", upstep i=" << i << " / 36 double_six=";
 				INT_vec_print(cout, double_six, 12);
 				cout << endl;
 				}
@@ -432,7 +438,9 @@ void surface_classify_wedge::upstep(INT verbose_level)
 				Elt1 /* transporter */, f2, verbose_level);
 
 			if (f_v) {
-				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits << ", upstep " << i << " / 36, double six is isomorphic to orbit " << f2 << endl;
+				cout << "f=" << f << " / " << Flag_orbits->nb_flag_orbits
+						<< ", upstep " << i << " / 36, double six is "
+								"isomorphic to orbit " << f2 << endl;
 				}
 
 			
@@ -447,21 +455,27 @@ void surface_classify_wedge::upstep(INT verbose_level)
 				}
 			else {
 				if (f_v) {
-					cout << "We are identifying flag orbit " << f2 << " with flag orbit " << f << endl;
+					cout << "We are identifying flag orbit " << f2
+							<< " with flag orbit " << f << endl;
 					}
 				if (!f_processed[f2]) {
-					Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit = Flag_orbits->nb_primary_orbits_upper;
+					Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
+						= Flag_orbits->nb_primary_orbits_upper;
 					Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
 					Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
-					Flag_orbits->Flag_orbit_node[f2].fusion_elt = NEW_INT(A->elt_size_in_INT);
-					A->element_invert(Elt1, Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
+					Flag_orbits->Flag_orbit_node[f2].fusion_elt
+						= NEW_INT(A->elt_size_in_INT);
+					A->element_invert(Elt1,
+							Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
 					f_processed[f2] = TRUE;
 					nb_processed++;
 					}
 				else {
-					cout << "Flag orbit " << f2 << " has already been identified with flag orbit " << f << endl;
+					cout << "Flag orbit " << f2 << " has already been "
+							"identified with flag orbit " << f << endl;
 					if (Flag_orbits->Flag_orbit_node[f2].fusion_with != f) {
-						cout << "Flag_orbits->Flag_orbit_node[f2].fusion_with != f" << endl;
+						cout << "Flag_orbits->Flag_orbit_node[f2]."
+								"fusion_with != f" << endl;
 						exit(1);
 						}
 					}
@@ -478,16 +492,19 @@ void surface_classify_wedge::upstep(INT verbose_level)
 		longinteger_object ago;
 		
 		if (f_v) {
-			cout << "surface_classify_wedge::upstep Extending the group by a factor of " << nb_coset_reps << endl;
+			cout << "surface_classify_wedge::upstep Extending the "
+					"group by a factor of " << nb_coset_reps << endl;
 			}
-		Aut_gens = new strong_generators;
-		Aut_gens->init_group_extension(S, coset_reps, nb_coset_reps, verbose_level - 2);
+		Aut_gens = NEW_OBJECT(strong_generators);
+		Aut_gens->init_group_extension(S, coset_reps,
+				nb_coset_reps, verbose_level - 2);
 
 		Aut_gens->group_order(ago);
 
 
 		if (f_v) {
-			cout << "the double six has a stabilizer of order " << ago << endl;
+			cout << "the double six has a stabilizer of order "
+					<< ago << endl;
 			cout << "The double six stabilizer is:" << endl;
 			Aut_gens->print_generators_tex(cout);
 			}
@@ -495,13 +512,13 @@ void surface_classify_wedge::upstep(INT verbose_level)
 
 
 
-		Surfaces->Orbit[Flag_orbits->nb_primary_orbits_upper].init(Surfaces, 
+		Surfaces->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
+			Surfaces,
 			Flag_orbits->nb_primary_orbits_upper, 
 			Aut_gens, Lines, verbose_level);
 
-		delete coset_reps;
-		//delete Aut_gens;
-		delete S;
+		FREE_OBJECT(coset_reps);
+		FREE_OBJECT(S);
 		
 		f_processed[f] = TRUE;
 		nb_processed++;
@@ -512,14 +529,18 @@ void surface_classify_wedge::upstep(INT verbose_level)
 	if (nb_processed != Flag_orbits->nb_flag_orbits) {
 		cout << "nb_processed != Flag_orbits->nb_flag_orbits" << endl;
 		cout << "nb_processed = " << nb_processed << endl;
-		cout << "Flag_orbits->nb_flag_orbits = " << Flag_orbits->nb_flag_orbits << endl;
+		cout << "Flag_orbits->nb_flag_orbits = "
+				<< Flag_orbits->nb_flag_orbits << endl;
 		exit(1);
 		}
 
 	Surfaces->nb_orbits = Flag_orbits->nb_primary_orbits_upper;
 	
 	if (f_v) {
-		cout << "We found " << Surfaces->nb_orbits << " orbits of surfaces from " << Flag_orbits->nb_flag_orbits << " double sixes" << endl;
+		cout << "We found " << Surfaces->nb_orbits
+				<< " orbits of surfaces from "
+				<< Flag_orbits->nb_flag_orbits
+				<< " double sixes" << endl;
 		}
 	
 	FREE_INT(f_processed);
@@ -530,7 +551,8 @@ void surface_classify_wedge::upstep(INT verbose_level)
 		}
 }
 
-void surface_classify_wedge::write_file(ofstream &fp, INT verbose_level)
+void surface_classify_wedge::write_file(
+		ofstream &fp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -548,7 +570,8 @@ void surface_classify_wedge::write_file(ofstream &fp, INT verbose_level)
 		}
 }
 
-void surface_classify_wedge::read_file(ifstream &fp, INT verbose_level)
+void surface_classify_wedge::read_file(
+		ifstream &fp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q1;
@@ -562,12 +585,12 @@ void surface_classify_wedge::read_file(ifstream &fp, INT verbose_level)
 		exit(1);
 		}
 
-	Flag_orbits = new flag_orbits;
+	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->A = A;
 	Flag_orbits->A2 = A;
 	Flag_orbits->read_file(fp, verbose_level);
 
-	Surfaces = new classification;
+	Surfaces = NEW_OBJECT(classification);
 	Surfaces->A = A;
 	Surfaces->A2 = A2;
 
@@ -610,11 +633,11 @@ void surface_classify_wedge::classify_surfaces(INT verbose_level)
 		}
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		orb = Orb[iso_type];
-		cout << "iso type " << iso_type << " is orbit " << orb << endl;		
+		cout << "iso type " << iso_type << " is orbit " << orb << endl;
 		}
 	cout << "We found " << nb_iso << " isomorphism types of surfaces" << endl;
 
-	
+
 	if (f_v) {
 		cout << "surface_classify_wedge::classify_surfaces done" << endl;
 		}
@@ -627,7 +650,7 @@ void surface_classify_wedge::do_classify_surfaces(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT orb, iso_type;
-	
+
 	if (f_v) {
 		cout << "surface_classify_wedge::do_classify_surfaces" << endl;
 		}
@@ -641,7 +664,7 @@ void surface_classify_wedge::do_classify_surfaces(INT verbose_level)
 	for (orb = 0; orb < Classify_double_sixes->nb; orb++) {
 
 		cout << "orb=" << orb << " is_isomorphic_to[orb]=" << is_isomorphic_to[orb] << endl;
-		
+
 		if (is_isomorphic_to[orb] >= 0) {
 			if (f_v) {
 				cout << "surface_classify_wedge::do_classify_surfaces orbit " << orb << " / " << Classify_double_sixes->nb << " is isomorphic to " << is_isomorphic_to[orb] << ", skipping" << endl;
@@ -657,7 +680,7 @@ void surface_classify_wedge::do_classify_surfaces(INT verbose_level)
 
 
 
-		iso_type++;		
+		iso_type++;
 		}
 	nb_iso = iso_type;
 	if (f_v) {
@@ -666,13 +689,13 @@ void surface_classify_wedge::do_classify_surfaces(INT verbose_level)
 
 	spreadsheet *Sp;
 
-	Classify_double_sixes->make_spreadsheet_of_fiveplusone_configurations(Sp, 
+	Classify_double_sixes->make_spreadsheet_of_fiveplusone_configurations(Sp,
 #if 0
-		TRUE /*f_with_fusion */, is_isomorphic_to /* INT *Fusion */, Isomorphisms, 
+		TRUE /*f_with_fusion */, is_isomorphic_to /* INT *Fusion */, Isomorphisms,
 #endif
 		verbose_level);
 
-	delete Sp;
+	FREE_OBJECT(Sp);
 
 #if 0
 	{
@@ -695,14 +718,14 @@ INT surface_classify_wedge::new_surface(INT orb, INT iso_type, INT verbose_level
 {
 	INT f_v = (verbose_level >= 1);
 	INT idx;
-	
+
 	if (f_v) {
 		cout << "surface_classify_wedge::new_surface" << endl;
 		}
-	
+
 
 	if (f_v) {
-		cout << "surface_classify_wedge::new_surface new isomorphism type " << iso_type << " is defined via orbit " << orb << " / " << Classify_double_sixes->nb << ":" << endl;
+		cout << "surface_classify_wedge::new_surface n e w isomorphism type " << iso_type << " is defined via orbit " << orb << " / " << Classify_double_sixes->nb << ":" << endl;
 		}
 
 	idx = Classify_double_sixes->Idx[orb];
@@ -713,17 +736,17 @@ INT surface_classify_wedge::new_surface(INT orb, INT iso_type, INT verbose_level
 
 	surface_data *D;
 
-	D = new surface_data;
+	D = NEW_OBJECT(surface_data);
 
 	if (!D->init(this, orb, iso_type, verbose_level)) {
 		cout << "this surface is bad, skipping" << endl;
 		is_isomorphic_to[orb] = -2;
-		delete D;
+		FREE_OBJECT(D);
 		return FALSE;
 		}
 
 	cout << "surface with iso_type = " << iso_type << " has been defined" << endl;
-	
+
 
 	The_surface[iso_type] = D;
 
@@ -738,7 +761,7 @@ INT surface_classify_wedge::new_surface(INT orb, INT iso_type, INT verbose_level
 void surface_classify_wedge::store_isomorphism(INT *Elt, INT orb, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	
+
 	if (f_v) {
 		cout << "surface_classify_wedge::store_isomorphism" << endl;
 		}
@@ -752,7 +775,7 @@ void surface_classify_wedge::store_isomorphism(INT *Elt, INT orb, INT verbose_le
 void surface_classify_wedge::store_identity(INT orb, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	
+
 	if (f_v) {
 		cout << "surface_classify_wedge::store_identity" << endl;
 		}
@@ -777,7 +800,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 		}
 	sprintf(fname, "%s.C", fname_base);
 	prefix = fname_base;
-	
+
 	{
 	ofstream f(fname);
 
@@ -799,7 +822,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 		//rep = The_surface[iso_type]->coeff;
 
 		f << "\t\"";
-		
+
 		The_surface[iso_type]->ago.print_not_scientific(f);
 		f << "\"," << endl;
 		}
@@ -841,7 +864,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 	f << "};" << endl;
 
 	f << "INT " << prefix << "_make_element_size = " << A->make_element_size << ";" << endl;
-	
+
 	{
 	INT *stab_gens_first;
 	INT *stab_gens_len;
@@ -868,7 +891,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 			}
 		}
 	f << "};" << endl;
-	
+
 	f << "INT " << prefix << "_stab_gens_len[] = { ";
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		f << stab_gens_len[iso_type];
@@ -885,7 +908,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 	f << "INT " << prefix << "_stab_gens[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		INT j;
-		
+
 		for (j = 0; j < stab_gens_len[iso_type]; j++) {
 			if (f_vv) {
 				cout << "surface_classify_wedge::generate_source_code before extract_strong_generators_in_order generator " << j << " / " << stab_gens_len[iso_type] << endl;
@@ -897,7 +920,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 		}
 	f << "};" << endl;
 
-	
+
 	FREE_INT(stab_gens_first);
 	FREE_INT(stab_gens_len);
 	}
@@ -934,7 +957,7 @@ void surface_classify_wedge::print_surface(set_and_stabilizer *SaS, INT verbose_
 		}
 }
 
-void surface_classify_wedge::starter_configurations_which_are_involved(INT iso_type, 
+void surface_classify_wedge::starter_configurations_which_are_involved(INT iso_type,
 	INT *&Starter_configuration_idx, INT &nb_starter_conf, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -944,7 +967,7 @@ void surface_classify_wedge::starter_configurations_which_are_involved(INT iso_t
 	if (f_v) {
 		cout << "surface_classify_wedge::starter_configurations_which_are_involved" << endl;
 		}
-	
+
 	k = 5;
 
 	nb_orbits = Classify_double_sixes->Five_plus_one->nb_orbits_at_level(k);
@@ -995,8 +1018,8 @@ void surface_classify_wedge::derived_arcs(INT verbose_level)
 		}
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		cout << "surface " << iso_type << " / " << nb_iso << ":" << endl;
-		
-		starter_configurations_which_are_involved(iso_type, 
+
+		starter_configurations_which_are_involved(iso_type,
 			Starter_configuration_idx, nb_starter_conf, verbose_level);
 
 		cout << "There are " << nb_starter_conf << " starter configurations which are involved: " << endl;
@@ -1013,7 +1036,7 @@ void surface_classify_wedge::derived_arcs(INT verbose_level)
 			cout << endl;
 			INT_vec_apply(S, Classify_double_sixes->Neighbor_to_line, S2, 5);
 			S2[5] = Classify_double_sixes->pt0_line;
-			
+
 			four_lines[0] = S2[0];
 			four_lines[1] = S2[1];
 			four_lines[2] = S2[2];
@@ -1043,7 +1066,7 @@ void surface_classify_wedge::derived_arcs(INT verbose_level)
 			lines_skew3[0] = S2[0]; // a_1
 			lines_skew3[1] = b5;
 			lines_skew3[2] = S2[5]; // b_6
-			
+
 			Surf->lines_meet3_and_skew3(lines_meet3, lines_skew3, lines, nb_lines, 0 /* verbose_level */);
 			//Surf->perp_of_three_lines(three_lines, perp, perp_sz, 0 /* verbose_level */);
 
@@ -1061,7 +1084,7 @@ void surface_classify_wedge::derived_arcs(INT verbose_level)
 			lines_skew3[0] = S2[1]; // a_2
 			lines_skew3[1] = b5;
 			lines_skew3[2] = S2[5]; // b6
-			
+
 			Surf->lines_meet3_and_skew3(lines_meet3, lines_skew3, lines, nb_lines, 0 /* verbose_level */);
 			//Surf->perp_of_three_lines(three_lines, perp, perp_sz, 0 /* verbose_level */);
 
@@ -1111,7 +1134,7 @@ void surface_classify_wedge::derived_arcs(INT verbose_level)
 				INT_vec_print(cout, v, 3);
 				cout << " \\\\" << endl;
 				}
-			
+
 			}
 
 		FREE_INT(Starter_configuration_idx);
@@ -1480,7 +1503,7 @@ void surface_classify_wedge::identify_surface(INT *coeff_of_given_surface,
 	INT *Starter_Table;
 	INT nb_starter;
 
-	line_intersections = new set_of_sets;
+	line_intersections = NEW_OBJECT(set_of_sets);
 
 	line_intersections->init_from_adjacency_matrix(nb_lines, Adj, 0 /* verbose_level */);
 
@@ -1727,7 +1750,7 @@ void surface_classify_wedge::identify_surface(INT *coeff_of_given_surface,
 
 	
 
-	delete line_intersections;
+	FREE_OBJECT(line_intersections);
 	FREE_INT(Starter_Table);
 	FREE_INT(Adj);
 	FREE_INT(Points);
@@ -1813,7 +1836,7 @@ void surface_classify_wedge::report_surface(ostream &ost, INT orbit_index, INT v
 		}
 	surface_object *SO;
 
-	SO = new surface_object;
+	SO = NEW_OBJECT(surface_object);
 	SO->init(Surf, Lines, equation, TRUE /*f_find_double_six_and_rearrange_lines*/, verbose_level);
 
 	if (f_v) {
@@ -1838,7 +1861,7 @@ void surface_classify_wedge::report_surface(ostream &ost, INT orbit_index, INT v
 
 	surface_object_with_action *SOA;
 
-	SOA = new surface_object_with_action;
+	SOA = NEW_OBJECT(surface_object_with_action);
 
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface before SOA->init" << endl;
@@ -1896,9 +1919,9 @@ void surface_classify_wedge::report_surface(ostream &ost, INT orbit_index, INT v
 		}
 	//SOA->quartic(ost,  verbose_level);
 
-	delete SOA;
-	delete SO;
-	delete SaS;
+	FREE_OBJECT(SOA);
+	FREE_OBJECT(SO);
+	FREE_OBJECT(SaS);
 	
 	if (f_v) {
 		cout << "surface_classify_wedge::report_surface orbit_index = " << orbit_index << " done" << endl;
@@ -1959,7 +1982,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 			}
 		f << endl;
 
-		delete SaS;
+		FREE_OBJECT(SaS);
 
 		}
 	f << "};" << endl;
@@ -2030,9 +2053,9 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 			}
 
 	
-		delete pts_on_lines;
+		FREE_OBJECT(pts_on_lines);
 		FREE_INT(Pts);
-		delete SaS;
+		FREE_OBJECT(SaS);
 		}
 	f << "};" << endl;
 
@@ -2078,7 +2101,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 			}
 		f << endl;
 
-		delete SaS;
+		FREE_OBJECT(SaS);
 		}
 	f << "};" << endl;
 

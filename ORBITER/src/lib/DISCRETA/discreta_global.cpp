@@ -324,7 +324,7 @@ void matrix_to_diophant(matrix& M, diophant *&D, INT verbose_level)
 	INT nb_cols;
 	INT i, j;
 
-	D = new diophant;
+	D = NEW_OBJECT(diophant);
 
 	nb_rows = M.s_m();
 	nb_cols = M.s_n();

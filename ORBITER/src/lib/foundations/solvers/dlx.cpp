@@ -452,13 +452,13 @@ void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *t
 	current_row_save = NEW_INT(sum_rhs);
 
 	if (f_has_type) {
-		::type = new diophant_equation_type[nCol];
+		::type = NEW_OBJECTS(diophant_equation_type, nCol);
 		for (i = 0; i < nCol; i++) {
 			::type[i] = type[i];
 			}
 		}
 	else {
-		::type = new diophant_equation_type[nCol];
+		::type = NEW_OBJECTS(diophant_equation_type, nCol);
 		for (i = 0; i < nCol; i++) {
 			::type[i] = t_EQ;
 			}
@@ -491,7 +491,7 @@ void Delete_RHS()
 		current_row_save = NULL;
 		}
 	if (f_type) {
-		delete [] type;
+		FREE_OBJECTS(type);
 		type = NULL;
 		}
 }

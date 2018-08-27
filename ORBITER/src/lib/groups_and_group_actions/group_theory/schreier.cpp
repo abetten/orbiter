@@ -402,12 +402,12 @@ void schreier::print_and_list_orbits_and_stabilizer(ostream &ost,
 				<< orbit[orbit_first[i]] << " is:" << endl;
 		point_stabilizer(default_action, go, Stab, i, 0 /* verbose_level */);
 
-		SG = new strong_generators;
+		SG = NEW_OBJECT(strong_generators);
 
 		SG->init_from_sims(Stab, 0 /* verbose_level*/);
 		SG->print_generators_ost(ost);
-		delete SG;
-		delete Stab;
+		FREE_OBJECT(SG);
+		FREE_OBJECT(Stab);
 		}
 	ost << endl;
 }
@@ -466,7 +466,7 @@ void schreier::print_and_list_orbit_and_stabilizer_tex(INT i,
 	
 	gens->print_generators_tex(ost);
 
-	delete gens;
+	FREE_OBJECT(gens);
 }
 
 void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
@@ -514,7 +514,7 @@ void schreier::print_and_list_orbit_and_stabilizer_with_list_of_elements_tex(
 
 		}
 
-	delete gens_stab;
+	FREE_OBJECT(gens_stab);
 }
 
 void schreier::print_and_list_orbits_sorted_by_length_tex(
@@ -1371,7 +1371,7 @@ void schreier::extend_orbit(INT *elt, INT verbose_level)
 			if (next_pt_loc < total)
 				continue;
 			if (FALSE) {
-				cout << "schreier::extend_orbit new pt "
+				cout << "schreier::extend_orbit n e w pt "
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 				}
@@ -1669,7 +1669,7 @@ void schreier::compute_point_orbit(INT pt, INT verbose_level)
 			if (next_pt_loc < total)
 				continue;
 			if (f_vv) {
-				cout << "schreier::compute_point_orbit new pt "
+				cout << "schreier::compute_point_orbit n e w pt "
 						<< next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 				}
@@ -2658,7 +2658,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 				"arbitrary_point_and_transversal" << endl;
 		}
 	
-	cosets = new vector_ge;
+	cosets = NEW_OBJECT(vector_ge);
 	cosets->init(A);
 	transporter = NEW_INT(A->elt_size_in_INT);
 	transporter1 = NEW_INT(A->elt_size_in_INT);
@@ -2682,7 +2682,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 		exit(1);
 		}
 	
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 
 	
 	if (f_v) {
@@ -2721,7 +2721,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point_and_tr
 		cout << "schreier::generators_for_stabilizer_"
 				"of_arbitrary_point_and_transversal done" << endl;
 		}
-	delete gens0;
+	FREE_OBJECT(gens0);
 	return gens;
 }
 
@@ -2758,7 +2758,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 		exit(1);
 		}
 	
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 
 	
 	if (f_v) {
@@ -2780,7 +2780,7 @@ strong_generators *schreier::generators_for_stabilizer_of_arbitrary_point(
 		cout << "schreier::generators_for_stabilizer_"
 				"of_arbitrary_point done" << endl;
 		}
-	delete gens0;
+	FREE_OBJECT(gens0);
 	return gens;
 }
 
@@ -2812,11 +2812,11 @@ strong_generators *schreier::generators_for_stabilizer_of_orbit_rep(
 				"of order " << stab_order << endl;
 		}
 	
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 	gens->init(A);
 	gens->init_from_sims(Stab, verbose_level);
 
-	delete Stab;
+	FREE_OBJECT(Stab);
 	if (f_v) {
 		cout << "schreier::generators_for_stabilizer_"
 				"of_orbit_rep done" << endl;
@@ -2830,7 +2830,7 @@ void schreier::point_stabilizer(action *default_action,
 	INT verbose_level)
 // this function allocates a sims structure into Stab.
 {
-	Stab = new sims;
+	Stab = NEW_OBJECT(sims);
 	longinteger_object cur_go, target_go;
 	longinteger_domain D;
 	INT len, r, cnt = 0, f_added, *p_gen, drop_out_level, image;
@@ -2917,7 +2917,7 @@ void schreier::point_stabilizer(action *default_action,
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
 			cout << "iteration " << cnt
-				<< " the new group order is " << cur_go
+				<< " the n e w group order is " << cur_go
 				<< " expecting a group of order "
 				<< target_go << endl;
 			}
@@ -3269,7 +3269,7 @@ void schreier::orbits_as_set_of_sets(
 	if (f_v) {
 		cout << "schreier::orbits_as_set_of_sets" << endl;
 		}
-	S = new set_of_sets;
+	S = NEW_OBJECT(set_of_sets);
 	Sz = NEW_INT(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		l = orbit_len[i];

@@ -169,7 +169,7 @@ void generator::freeself()
 		cout << "generator::freeself deleting transporter and set[]" << endl;
 		}
 	if (transporter) {
-		delete transporter;
+		FREE_OBJECT(transporter);
 		for (i = 0; i <= sz; i++) {
 			FREE_INT(set[i]);			
 			}
@@ -486,7 +486,7 @@ void generator::init(action *A, action *A2,
 	Elt4 = Elt_memory + 3 * A->elt_size_in_INT;
 	Elt5 = Elt_memory + 4 * A->elt_size_in_INT;
 	
-	transporter = new vector_ge;
+	transporter = NEW_OBJECT(vector_ge);
 	transporter->init(A);
 	transporter->allocate(sz + 1);
 	A->element_one(transporter->ith(0), FALSE);
@@ -687,7 +687,7 @@ void generator::init_root_node(INT verbose_level)
 				}
 			first_poset_orbit_node_at_level[i + 1] =
 					first_poset_orbit_node_at_level[i] + 1;
-			root[i].E = new extension[1];
+			root[i].E = NEW_OBJECTS(extension, 1);
 			root[i].nb_extensions = 1;
 			root[i].E[0].type = EXTENSION_TYPE_EXTENSION;
 			root[i].E[0].data = i + 1;
@@ -730,7 +730,7 @@ void generator::init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_leve
 	if (f_v) {
 		cout << "generator::init_poset_orbit_node" << endl;
 		}
-	root = new poset_orbit_node[nb_poset_orbit_nodes];
+	root = NEW_OBJECTS(poset_orbit_node, nb_poset_orbit_nodes);
 	for (i = 0; i < nb_poset_orbit_nodes; i++) {
 		root[i].node = i;
 		}
@@ -763,7 +763,7 @@ void generator::init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_leve
 void generator::exit_poset_orbit_node()
 {
 	if (root) {
-		delete [] root;
+		FREE_OBJECTS(root);
 		root = NULL;
 		}
 	if (set0) {
@@ -835,12 +835,12 @@ void generator::reallocate_to(INT new_number_of_nodes,
 				<< nb_poset_orbit_nodes_allocated
 				<< " to " << new_number_of_nodes << endl;
 		}
-	new_root = new poset_orbit_node[new_number_of_nodes];
+	new_root = NEW_OBJECTS(poset_orbit_node, new_number_of_nodes);
 	for (i = 0; i < nb_poset_orbit_nodes_allocated; i++) {
 		new_root[i] = root[i];
 		root[i].null();
 		}
-	delete [] root;
+	FREE_OBJECTS(root);
 	root = new_root;
 	nb_poset_orbit_nodes_allocated = new_number_of_nodes;
 	if (f_v) {

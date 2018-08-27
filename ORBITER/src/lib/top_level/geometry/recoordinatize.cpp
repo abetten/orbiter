@@ -47,10 +47,10 @@ void recoordinatize::freeself()
 		FREE_INT(Elt);
 		}
 	if (A0) {
-		delete A0;
+		FREE_OBJECT(A0);
 		}
 	if (gens2) {
-		delete gens2;
+		FREE_OBJECT(gens2);
 		}
 	
 	if (live_points) {
@@ -59,9 +59,11 @@ void recoordinatize::freeself()
 	null();
 }
 
-void recoordinatize::init(INT n, INT k, finite_field *F, grassmann *Grass, action *A, action *A2, 
+void recoordinatize::init(INT n, INT k,
+	finite_field *F, grassmann *Grass, action *A, action *A2,
 	INT f_projective, INT f_semilinear, 
-	INT (*check_function_incremental)(INT len, INT *S, void *data, INT verbose_level), 
+	INT (*check_function_incremental)(INT len,
+			INT *S, void *data, INT verbose_level),
 	void *check_function_incremental_data, 
 	INT verbose_level)
 {
@@ -80,8 +82,10 @@ void recoordinatize::init(INT n, INT k, finite_field *F, grassmann *Grass, actio
 	recoordinatize::n = n;
 	recoordinatize::f_projective = f_projective;
 	recoordinatize::f_semilinear = f_semilinear;
-	recoordinatize::check_function_incremental = check_function_incremental;
-	recoordinatize::check_function_incremental_data = check_function_incremental_data;
+	recoordinatize::check_function_incremental
+		= check_function_incremental;
+	recoordinatize::check_function_incremental_data
+		= check_function_incremental_data;
 	nCkq = generalized_binomial(n, k, q);
 	
 
@@ -101,7 +105,8 @@ void recoordinatize::init(INT n, INT k, finite_field *F, grassmann *Grass, actio
 		}
 }
 
-void recoordinatize::do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level)
+void recoordinatize::do_recoordinatize(
+		INT i1, INT i2, INT i3, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE;//(verbose_level >= 3);
@@ -109,25 +114,29 @@ void recoordinatize::do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level
 	INT j1, j2, j3;
 
 	if (f_v) {
-		cout << "translation_plane::recoordinatize " << i1 << "," << i2 << "," << i3 << endl;
+		cout << "translation_plane::recoordinatize "
+				<< i1 << "," << i2 << "," << i3 << endl;
 		}
 	Grass->unrank_INT_here(M, i1, 0 /*verbose_level - 4*/);
 	Grass->unrank_INT_here(M + k * n, i2, 0 /*verbose_level - 4*/);
 	Grass->unrank_INT_here(M + 2 * k * n, i3, 0 /*verbose_level - 4*/);
 	if (f_vv) {
 		cout << "M:" << endl;
-		print_integer_matrix_width(cout, M, 3 * k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				M, 3 * k, n, n, F->log10_of_q + 1);
 		}
 	INT_vec_copy(M, AA, n * n);
 	F->matrix_inverse(AA, AAv, n, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "AAv:" << endl;
-		print_integer_matrix_width(cout, AAv, n, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				AAv, n, n, n, F->log10_of_q + 1);
 		}
 	F->mult_matrix_matrix(M, AAv, N, 3 * k, n, n);
 	if (f_vv) {
 		cout << "N:" << endl;
-		print_integer_matrix_width(cout, N, 3 * k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				N, 3 * k, n, n, F->log10_of_q + 1);
 		}
 
 	for (i = 0; i < k; i++) {
@@ -137,12 +146,14 @@ void recoordinatize::do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level
 		}
 	if (f_vv) {
 		cout << "TT:" << endl;
-		print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				TT, k, k, k, F->log10_of_q + 1);
 		}
 	F->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
-		print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				TTv, k, k, k, F->log10_of_q + 1);
 		}
 
 	INT_vec_zero(B, n * n);
@@ -158,12 +169,14 @@ void recoordinatize::do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level
 		}
 	if (f_vv) {
 		cout << "TT:" << endl;
-		print_integer_matrix_width(cout, TT, k, k, k, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				TT, k, k, k, F->log10_of_q + 1);
 		}
 	F->matrix_inverse(TT, TTv, k, 0 /*verbose_level - 1*/);
 	if (f_vv) {
 		cout << "TTv:" << endl;
-		print_integer_matrix_width(cout, TTv, k, k, k, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				TTv, k, k, k, F->log10_of_q + 1);
 		}
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
@@ -172,20 +185,23 @@ void recoordinatize::do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level
 		}
 	if (f_vv) {
 		cout << "B:" << endl;
-		print_integer_matrix_width(cout, B, n, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				B, n, n, n, F->log10_of_q + 1);
 		}
 
 	
 	F->mult_matrix_matrix(AAv, B, C, n, n, n);
 	if (f_vv) {
 		cout << "C:" << endl;
-		print_integer_matrix_width(cout, C, n, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				C, n, n, n, F->log10_of_q + 1);
 		}
 	
 	F->mult_matrix_matrix(M, C, M1, 3 * k, n, n);
 	if (f_vv) {
 		cout << "M1:" << endl;
-		print_integer_matrix_width(cout, M1, 3 * k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				M1, 3 * k, n, n, F->log10_of_q + 1);
 		}
 	j1 = Grass->rank_INT_here(M1, 0 /*verbose_level - 4*/);
 	j2 = Grass->rank_INT_here(M1 + k * n, 0 /*verbose_level - 4*/);
@@ -196,7 +212,8 @@ void recoordinatize::do_recoordinatize(INT i1, INT i2, INT i3, INT verbose_level
 	
 	A->make_element(Elt, C, 0);
 	if (f_vv) {
-		cout << "translation_plane::recoordinatize transporter:" << endl;
+		cout << "translation_plane::recoordinatize "
+				"transporter:" << endl;
 		A->element_print(Elt, cout);
 		}
 	if (f_v) {
@@ -219,7 +236,8 @@ void recoordinatize::compute_starter(INT *&S, INT &size,
 
 	
 
-	make_first_three(starter_j1, starter_j2, starter_j3, verbose_level - 1);
+	make_first_three(starter_j1, starter_j2, starter_j3,
+			verbose_level - 1);
 
 	// initialize S with the vector (j1,j2,j3):
 	size = 3;
@@ -231,22 +249,26 @@ void recoordinatize::compute_starter(INT *&S, INT &size,
 
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter before stabilizer_of_first_three" << endl;
+		cout << "recoordinatize::compute_starter "
+				"before stabilizer_of_first_three" << endl;
 		}
 	stabilizer_of_first_three(Strong_gens, verbose_level - 1);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter after stabilizer_of_first_three" << endl;
+		cout << "recoordinatize::compute_starter "
+				"after stabilizer_of_first_three" << endl;
 		}
 
 
 
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter before compute_live_points" << endl;
+		cout << "recoordinatize::compute_starter "
+				"before compute_live_points" << endl;
 		}
 	compute_live_points(verbose_level - 1);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter after compute_live_points" << endl;
+		cout << "recoordinatize::compute_starter "
+				"after compute_live_points" << endl;
 		}
 
 
@@ -257,7 +279,8 @@ void recoordinatize::compute_starter(INT *&S, INT &size,
 	
 }
 
-void recoordinatize::stabilizer_of_first_three(strong_generators *&Strong_gens, INT verbose_level)
+void recoordinatize::stabilizer_of_first_three(
+	strong_generators *&Strong_gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_domain D;
@@ -269,14 +292,15 @@ void recoordinatize::stabilizer_of_first_three(strong_generators *&Strong_gens, 
 		cout << "recoordinatize::stabilizer_of_first_three" << endl;
 		}
 
-	A0 = new action;	
-	A0_linear = new action;	
-	gens2 = new vector_ge;
+	A0 = NEW_OBJECT(action);
+	A0_linear = NEW_OBJECT(action);
+	gens2 = NEW_OBJECT(vector_ge);
 
 
 	
 	if (f_v) {
-		cout << "recoordinatize::compute_starter before  A0->init_matrix_group" << endl;
+		cout << "recoordinatize::compute_starter "
+				"before  A0->init_matrix_group" << endl;
 		}
 	A0->init_projective_group(k, F, 
 		f_semilinear, 
@@ -284,7 +308,8 @@ void recoordinatize::stabilizer_of_first_three(strong_generators *&Strong_gens, 
 		
 	A0->group_order(target_go);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter target_go=" << target_go 
+		cout << "recoordinatize::compute_starter "
+				"target_go=" << target_go
 			<< " = order of PGGL(" << k << "," << q << ")" << endl;
 		cout << "action A0 created: ";
 		A0->print_info();
@@ -296,7 +321,9 @@ void recoordinatize::stabilizer_of_first_three(strong_generators *&Strong_gens, 
 		
 	A0_linear->group_order(go_linear);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter order of PGL(" << k << "," << q << ") is " << go_linear << endl;
+		cout << "recoordinatize::compute_starter "
+				"order of PGL(" << k << "," << q << ") is "
+			<< go_linear << endl;
 		cout << "action A0_linear created: ";
 		A0_linear->print_info();
 		}
@@ -307,7 +334,8 @@ void recoordinatize::stabilizer_of_first_three(strong_generators *&Strong_gens, 
 	six.create(6);
 	D.mult(target_go, six, target_go2);
 	if (f_v) {
-		cout << "recoordinatize::compute_starter target_go2=" << target_go2 
+		cout << "recoordinatize::compute_starter "
+				"target_go2=" << target_go2
 			<< " = target_go times 6" << endl;
 		}
 	
@@ -317,15 +345,20 @@ void recoordinatize::stabilizer_of_first_three(strong_generators *&Strong_gens, 
 
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter before make_generators_stabilizer_of_three_components" << endl;
+		cout << "recoordinatize::compute_starter "
+				"before make_generators_stabilizer_of_"
+				"three_components" << endl;
 		}
 
-	make_generators_stabilizer_of_three_components(A /* A_PGL_n_q */, A0 /* A_PGL_k_q */, 
+	make_generators_stabilizer_of_three_components(
+		A /* A_PGL_n_q */,
+		A0 /* A_PGL_k_q */,
 		k, gens2, verbose_level - 1);
 		// in ACTION/action_global.C
 
 	if (f_v) {
-		cout << "recoordinatize::compute_starter before generators_to_strong_generators" << endl;
+		cout << "recoordinatize::compute_starter "
+				"before generators_to_strong_generators" << endl;
 		}
 
 
@@ -368,9 +401,12 @@ void recoordinatize::compute_live_points(INT verbose_level)
 			sprintf(fname, "live_points.txt");
 			}	
 		if (file_size(fname) > 1) {
-			cout << "reading live points from file " << fname << endl;
-			read_set_from_file(fname, live_points, nb_live_points, verbose_level);
-			cout << "reading live points from file " << fname << " done" << endl;
+			cout << "reading live points from file "
+					<< fname << endl;
+			read_set_from_file(fname,
+					live_points, nb_live_points, verbose_level);
+			cout << "reading live points from file "
+					<< fname << " done" << endl;
 			return;
 			}
 
@@ -378,7 +414,9 @@ void recoordinatize::compute_live_points(INT verbose_level)
 
 	
 		if (f_v) {
-			cout << "recoordinatize::compute_live_points checking all " << gos * Fq->q << " elements in GL(" << k << "," << q << ")" << endl;
+			cout << "recoordinatize::compute_live_points "
+					"checking all " << gos * Fq->q
+					<< " elements in GL(" << k << "," << q << ")" << endl;
 			cout << "order of PGL(" << k << "," << q << ")=" << gos << endl;
 			}
 
@@ -390,7 +428,8 @@ void recoordinatize::compute_live_points(INT verbose_level)
 
 #if 0
 
-		Mtx->matrices_without_eigenvector_one(A0_linear->Sims, live_points, nb_live_points, 
+		Mtx->matrices_without_eigenvector_one(
+			A0_linear->Sims, live_points, nb_live_points,
 			f_path_select, select_value, verbose_level);
 		// ToDo: need to change the ranks from matrices to subspaces !!!
 #else
@@ -399,18 +438,25 @@ void recoordinatize::compute_live_points(INT verbose_level)
 	sprintf(fname, "live_points.txt");
 
 	if (file_size(fname) > 1) {
-		cout << "recoordinatize::compute_live_points reading live points from file " << fname << endl;
-		read_set_from_file(fname, live_points, nb_live_points, verbose_level);
-		cout << "recoordinatize::compute_live_points we found " << nb_live_points << " live points" << endl;
+		cout << "recoordinatize::compute_live_points "
+				"reading live points from file " << fname << endl;
+		read_set_from_file(fname,
+				live_points, nb_live_points, verbose_level);
+		cout << "recoordinatize::compute_live_points "
+				"we found " << nb_live_points << " live points" << endl;
 		return;
 		}
 	else {
-		cout << "recoordinatize::compute_live_points beforwe compute_live_points_low_level" << endl;
-		compute_live_points_low_level(live_points, nb_live_points, verbose_level - 1);
+		cout << "recoordinatize::compute_live_points "
+				"befor we compute_live_points_low_level" << endl;
+		compute_live_points_low_level(
+				live_points, nb_live_points, verbose_level - 1);
 
-		write_set_to_file(fname, live_points, nb_live_points, verbose_level);
+		write_set_to_file(fname,
+				live_points, nb_live_points, verbose_level);
 		if (f_v) {
-			cout << "recoordinatize::compute_live_points written file " << fname << endl;
+			cout << "recoordinatize::compute_live_points "
+					"written file " << fname << endl;
 			}
 		}
 
@@ -425,20 +471,25 @@ void recoordinatize::compute_live_points(INT verbose_level)
 		}
 	else {
 		if (f_v) {
-			cout << "recoordinatize::compute_live_points before Mtx->matrices_without_eigenvector_one" << endl;
+			cout << "recoordinatize::compute_live_points "
+					"before Mtx->matrices_without_eigenvector_one" << endl;
 			}
-		Mtx->matrices_without_eigenvector_one(A0_linear->Sims, live_points, nb_live_points, 
+		Mtx->matrices_without_eigenvector_one(
+			A0_linear->Sims, live_points, nb_live_points,
 			FALSE /* f_path_select */, 0 /*select_value*/, verbose_level);
 
 		if (f_v) {
-			cout << "recoordinatize::compute_live_points after Mtx->matrices_without_eigenvector_one" << endl;
+			cout << "recoordinatize::compute_live_points "
+					"after Mtx->matrices_without_eigenvector_one" << endl;
 			}
 
 		INT_vec_heapsort(live_points, nb_live_points);
 
-		write_set_to_file(fname, live_points, nb_live_points, verbose_level);
+		write_set_to_file(fname,
+				live_points, nb_live_points, verbose_level);
 		if (f_v) {
-			cout << "recoordinatize::compute_live_points written file " << fname << endl;
+			cout << "recoordinatize::compute_live_points "
+					"written file " << fname << endl;
 			}
 		}
 

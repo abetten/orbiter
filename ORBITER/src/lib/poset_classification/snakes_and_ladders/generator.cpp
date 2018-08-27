@@ -123,7 +123,7 @@ void generator::print_progress_by_extension(INT size,
 	print_level_info(size + 1, prev);
 	cout << " **** Upstep extension " << cur_ex << " / "
 		<< root[prev].nb_extensions << " with "
-		<< nb_ext_cur << " new orbits and " 
+		<< nb_ext_cur << " n e w orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have " 
 		<< cur - first_poset_orbit_node_at_level[size + 1]
 		<< " nodes at level " << size + 1;
@@ -142,7 +142,7 @@ void generator::print_progress(INT size,
 		
 	print_level_info(size + 1, prev);
 	cout << " **** Upstep finished with " 
-		<< nb_ext_cur << " new orbits and " 
+		<< nb_ext_cur << " n e w orbits and "
 		<< nb_fuse_cur << " fusion nodes. We now have " 
 		<< cur - first_poset_orbit_node_at_level[size + 1]
 		<< " nodes at level " << size + 1;
@@ -224,7 +224,7 @@ set_and_stabilizer *generator::get_set_and_stabilizer(
 	if (f_v) {
 		cout << "generator::get_set_and_stabilizer" << endl;
 		}
-	SaS = new set_and_stabilizer;
+	SaS = NEW_OBJECT(set_and_stabilizer);
 	SaS->init(A, A2, 0 /*verbose_level */);
 	SaS->allocate_data(level, 0 /* verbose_level */);
 	get_set_by_level(level, orbit_at_level, SaS->data);
@@ -450,7 +450,7 @@ INT generator::find_poset_orbit_node_for_set_basic(INT from,
 		node = root[node].E[j].data;
 		if (f_v) {
 			cout << "depth " << i << " extension " << j
-					<< " new node " << node << endl;
+					<< " n e w node " << node << endl;
 			}
 		}
 	return node;
@@ -548,7 +548,7 @@ void generator::count_automorphism_group_orders(
 				else {
 					tmp_agos = agos;
 					tmp_multiplicities = multiplicities;
-					agos = new longinteger_object[nb_agos + 1];
+					agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
 					multiplicities = NEW_INT(nb_agos + 1);
 					for (h = 0; h < j; h++) {
 						tmp_agos[h].swap_with(agos[h]);
@@ -562,7 +562,7 @@ void generator::count_automorphism_group_orders(
 						}
 					nb_agos++;
 					if (tmp_agos) {
-						delete [] tmp_agos;
+						FREE_OBJECTS(tmp_agos);
 						FREE_INT(tmp_multiplicities);
 						}
 					}
@@ -574,7 +574,7 @@ void generator::count_automorphism_group_orders(
 			// add at the end (including the case that the list is empty)
 			tmp_agos = agos;
 			tmp_multiplicities = multiplicities;
-			agos = new longinteger_object[nb_agos + 1];
+			agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
 			multiplicities = NEW_INT(nb_agos + 1);
 			for (h = 0; h < nb_agos; h++) {
 				tmp_agos[h].swap_with(agos[h]);
@@ -584,7 +584,7 @@ void generator::count_automorphism_group_orders(
 			multiplicities[nb_agos] = 1;
 			nb_agos++;
 			if (tmp_agos) {
-				delete [] tmp_agos;
+				FREE_OBJECTS(tmp_agos);
 				FREE_INT(tmp_multiplicities);
 				}
 			}
@@ -633,7 +633,7 @@ void generator::compute_and_print_automorphism_group_orders(
 		}
 	ost << ") average is " << Q << " + " << r << " / " << N << endl;
 	if (nb_agos) {
-		delete [] agos;
+		FREE_OBJECTS(agos);
 		FREE_INT(multiplicities);
 		}
 
@@ -1093,7 +1093,7 @@ void generator::find_automorphism_group_of_order(INT level, INT order)
 				A->element_print_as_permutation(
 						Strong_gens->gens->ith(j), cout);
 				}
-			delete Strong_gens;
+			FREE_OBJECT(Strong_gens);
 			}
 		}
 }
@@ -1129,7 +1129,7 @@ void generator::get_stabilizer_group(group *&G,
 		cout << "generator::get_stabilizer_group level=" << level
 				<< " orbit_at_level=" << orbit_at_level << endl;
 		}
-	G = new group;
+	G = NEW_OBJECT(group);
 	node = first_poset_orbit_node_at_level[level] + orbit_at_level;
 	O = root + node;
 
@@ -1161,10 +1161,10 @@ void generator::get_stabilizer_generators(strong_generators *&gens,
 
 	get_stabilizer_group(G, level, orbit_at_level, verbose_level - 1);
 
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 
 	gens->init_from_sims(G->S, 0 /* verbose_level */);
-	delete G;
+	FREE_OBJECT(G);
 	if (f_v) {
 		cout << "generator::get_stabilizer_generators level=" << level
 				<< " orbit_at_level=" << orbit_at_level << " done" << endl;
@@ -1330,8 +1330,8 @@ void generator::coset_unrank(INT depth, INT orbit_idx,
 
 
 	
-	G1 = new group;
-	G2 = new group;
+	G1 = NEW_OBJECT(group);
+	G2 = NEW_OBJECT(group);
 	the_set = NEW_INT(depth);
 	Elt_gk = NEW_INT(A->elt_size_in_INT);
 	
@@ -1352,8 +1352,8 @@ void generator::coset_unrank(INT depth, INT orbit_idx,
 
 	A->coset_unrank(G1->S, G2->S, rank, Elt, verbose_level);
 
-	delete G1;
-	delete G2;
+	FREE_OBJECT(G1);
+	FREE_OBJECT(G2);
 	FREE_INT(the_set);
 	FREE_INT(Elt_gk);
 
@@ -1384,8 +1384,8 @@ INT generator::coset_rank(INT depth, INT orbit_idx,
 
 
 	
-	G1 = new group;
-	G2 = new group;
+	G1 = NEW_OBJECT(group);
+	G2 = NEW_OBJECT(group);
 	the_set = NEW_INT(depth);
 	Elt_gk = NEW_INT(A->elt_size_in_INT);
 	
@@ -1404,8 +1404,8 @@ INT generator::coset_rank(INT depth, INT orbit_idx,
 
 	rank = A->coset_rank(G1->S, G2->S, Elt, verbose_level);
 
-	delete G1;
-	delete G2;
+	FREE_OBJECT(G1);
+	FREE_OBJECT(G2);
 	FREE_INT(the_set);
 	FREE_INT(Elt_gk);
 	
@@ -1663,7 +1663,7 @@ void generator::list_whole_orbit(INT depth, INT orbit_idx,
 		}
 
 	FREE_INT(set);
-	delete Strong_gens;
+	FREE_OBJECT(Strong_gens);
 }
 
 void generator::print_extensions_at_level(ostream &ost, INT lvl)
@@ -1885,7 +1885,7 @@ void generator::find_interesting_k_subsets(
 		cout << endl;
 		}
 
-	delete C;
+	FREE_OBJECT(C);
 	
 	if (f_v) {
 		cout << "generator::find_interesting_k_subsets "
@@ -1908,7 +1908,7 @@ void generator::classify_k_subsets(INT *the_set, INT n, INT k,
 	
 	trace_all_k_subsets(the_set, n, k, nCk, isotype, verbose_level);
 	
-	C = new classify;
+	C = NEW_OBJECT(classify);
 
 	C->init(isotype, nCk, FALSE, 0);
 
@@ -2139,7 +2139,7 @@ void generator::generate_source_code(INT level, INT verbose_level)
 		SaS->target_go.print_not_scientific(fp);
 		fp << "\"," << endl;
 
-		delete SaS;
+		FREE_OBJECT(SaS);
 		}
 	fp << "};" << endl;
 
@@ -2182,7 +2182,7 @@ void generator::generate_source_code(INT level, INT verbose_level)
 			fp << endl;
 			}
 
-		delete SaS;
+		FREE_OBJECT(SaS);
 
 		}
 	fp << "};" << endl;

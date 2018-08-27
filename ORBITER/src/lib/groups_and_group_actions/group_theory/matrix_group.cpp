@@ -61,17 +61,17 @@ void matrix_group::freeself()
 				"destroying Elts" << endl;
 		}
 	if (Elts) {
-		delete Elts;
+		FREE_OBJECT(Elts);
 		}
 	if (f_v) {
 		cout << "matrix_group::freeself "
 				"destroying GFq" << endl;
 		}
 	if (f_GFq_is_allocated) {
-		delete GFq;
+		FREE_OBJECT(GFq);
 		}
 	if (C) {
-		delete C;
+		FREE_OBJECT(C);
 		}
 	null();
 	if (f_v) {
@@ -312,9 +312,9 @@ void matrix_group::allocate_data(INT verbose_level)
 	v1 = NEW_INT(2 * n);
 	v2 = NEW_INT(2 * n);
 	v3 = NEW_INT(2 * n);
-	elt1 = new UBYTE[char_per_elt];
-	elt2 = new UBYTE[char_per_elt];
-	elt3 = new UBYTE[char_per_elt];
+	elt1 = NEW_UBYTE(char_per_elt);
+	elt2 = NEW_UBYTE(char_per_elt);
+	elt3 = NEW_UBYTE(char_per_elt);
 	base_cols = NEW_INT(n);
 	
 	if (f_v) {
@@ -382,13 +382,13 @@ void matrix_group::free_data(INT verbose_level)
 				"destroying elt1-3" << endl;
 		}
 	if (elt1) {
-		delete [] elt1;
+		FREE_UBYTE(elt1);
 		}
 	if (elt2) {
-		delete [] elt2;
+		FREE_UBYTE(elt2);
 		}
 	if (elt3) {
-		delete [] elt3;
+		FREE_UBYTE(elt3);
 		}
 	if (f_v) {
 		cout << "matrix_group::free_data "
@@ -416,9 +416,9 @@ void matrix_group::setup_page_storage(
 	if (Elts) {
 		cout << "matrix_group::setup_page_storage "
 				"Warning: Elts != NULL" << endl;
-		delete Elts;
+		FREE_OBJECT(Elts);
 		}
-	Elts = new page_storage;
+	Elts = NEW_OBJECT(page_storage);
 	
 	if (f_vv) {
 		cout << "matrix_group::setup_page_storage "
@@ -707,12 +707,12 @@ void matrix_group::init_gl_classes(INT verbose_level)
 		if (f_v) {
 			cout << "matrix_group::init_gl_classes "
 					"before init gl_classes n = "
-					<< n << " before new gl_classes" << endl;
+					<< n << " before NEW_OBJECT gl_classes" << endl;
 			}
-		C = new gl_classes;
+		C = NEW_OBJECT(gl_classes);
 		if (f_v) {
 			cout << "matrix_group::init_gl_classes "
-					"after new gl_classes" << endl;
+					"after NEW_OBJECT gl_classes" << endl;
 			}
 		C->init(n, GFq, verbose_level);
 		if (f_v) {

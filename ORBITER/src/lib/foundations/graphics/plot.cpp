@@ -839,8 +839,8 @@ void projective_plane_draw_grid2(mp_graphics &G, INT q,
 	INT N = 1000;
 
 
-	Px = new INT[N];
-	Py = new INT[N];
+	Px = NEW_INT(N);
+	Py = NEW_INT(N);
 	Dx = new double[N];
 	Dy = new double[N];
 

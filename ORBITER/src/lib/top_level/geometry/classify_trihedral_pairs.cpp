@@ -40,22 +40,22 @@ void classify_trihedral_pairs::null()
 void classify_trihedral_pairs::freeself()
 {
 	if (gens_type1) {
-		delete gens_type1;
+		FREE_OBJECT(gens_type1);
 		}
 	if (gens_type2) {
-		delete gens_type2;
+		FREE_OBJECT(gens_type2);
 		}
 	if (orbits_on_trihedra_type1) {
-		delete orbits_on_trihedra_type1;
+		FREE_OBJECT(orbits_on_trihedra_type1);
 		}
 	if (orbits_on_trihedra_type2) {
-		delete orbits_on_trihedra_type2;
+		FREE_OBJECT(orbits_on_trihedra_type2);
 		}
 	if (Flag_orbits) {
-		delete Flag_orbits;
+		FREE_OBJECT(Flag_orbits);
 		}
 	if (Trihedral_pairs) {
-		delete Trihedral_pairs;
+		FREE_OBJECT(Trihedral_pairs);
 		}
 	null();
 }
@@ -75,11 +75,11 @@ void classify_trihedral_pairs::init(surface_with_action *Surf_A,
 	Surf = Surf_A->Surf;
 	
 	
-	gens_type1 = new strong_generators;
+	gens_type1 = NEW_OBJECT(strong_generators);
 	gens_type1->generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 		A,
 		A->G.matrix_grp, verbose_level - 1);
-	gens_type2 = new strong_generators;
+	gens_type2 = NEW_OBJECT(strong_generators);
 	gens_type2->generators_for_stabilizer_of_triangle_in_PGL4(A, 
 		A->G.matrix_grp, verbose_level - 1);
 
@@ -230,7 +230,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type1(
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
 
-		delete R;
+		FREE_OBJECT(R);
 		}
 
 	ost << "The overall number of double triplets of type 1 "
@@ -290,7 +290,7 @@ void classify_trihedral_pairs::list_orbits_on_trihedra_type2(
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
 
-		delete R;
+		FREE_OBJECT(R);
 		}
 
 	ost << "The overall number of double triplets of type 2 "
@@ -745,7 +745,7 @@ void classify_trihedral_pairs::downstep(INT verbose_level)
 	if (f_v) {
 		cout << "classify_trihedral_pairs::downstep" << endl;
 		}
-	Flag_orbits = new flag_orbits;
+	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->init(A, A, 2 /* nb_primary_orbits_lower */, 
 		3 /* pt_representation_sz */,
 		nb_orbits_ordered_total /* nb_flag_orbits */,
@@ -779,7 +779,7 @@ void classify_trihedral_pairs::downstep(INT verbose_level)
 			R->Strong_gens,
 			verbose_level - 2);
 		R->Strong_gens = NULL;
-		delete R;
+		FREE_OBJECT(R);
 		if (f_v) {
 			cout << "flag orbit " << i << " / "
 					<< nb_orbits_ordered_total << " is type 1 orbit "
@@ -815,7 +815,7 @@ void classify_trihedral_pairs::downstep(INT verbose_level)
 			R->Strong_gens,
 			verbose_level - 2);
 		R->Strong_gens = NULL;
-		delete R;
+		FREE_OBJECT(R);
 		if (f_v) {
 			cout << "flag orbit " << nb_orbits_type1 +  i
 					<< " / " << nb_orbits_ordered_total
@@ -861,7 +861,7 @@ void classify_trihedral_pairs::upstep(INT verbose_level)
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	Elt3 = NEW_INT(A->elt_size_in_INT);
 	
-	Trihedral_pairs = new classification;
+	Trihedral_pairs = NEW_OBJECT(classification);
 
 	longinteger_object go;
 	A->group_order(go);
@@ -882,7 +882,7 @@ void classify_trihedral_pairs::upstep(INT verbose_level)
 				(double) nb_orbits_ordered_total;
 
 		if (f_v) {
-			cout << "Defining new orbit "
+			cout << "Defining n e w orbit "
 					<< Flag_orbits->nb_primary_orbits_upper
 					<< " from flag orbit " << f << " / "
 					<< nb_orbits_ordered_total
@@ -987,7 +987,6 @@ void classify_trihedral_pairs::upstep(INT verbose_level)
 			Flag_orbits->nb_primary_orbits_upper, 
 			S, Rep, verbose_level);
 
-		//delete S;
 		
 		f_processed[f] = TRUE;
 		nb_processed++;
@@ -1061,7 +1060,7 @@ strong_generators
 		}
 
 	strong_generators *gens;
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 
 	
 	if (f_v) {

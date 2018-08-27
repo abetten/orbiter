@@ -400,7 +400,7 @@ void clique_finder::init_suspicous_points(INT nb, INT *point_list)
 			point_is_suspicous[i] = TRUE;
 			}
 		}
-	delete [] point_list_ordered;
+	FREE_INT(point_list_ordered);
 }
 
 void clique_finder::print_suspicous_points()

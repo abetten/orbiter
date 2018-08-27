@@ -67,46 +67,46 @@ void mem_object_registry_entry::null()
 }
 
 
-void mem_object_registry_entry::print_type()
+void mem_object_registry_entry::print_type(ostream &ost)
 {
 	if (object_type == POINTER_TYPE_INVALID) {
-		cout << "invalid entry";
+		ost << "invalid entry";
 		}
 	if (object_type == POINTER_TYPE_SMALLINT) {
-		cout << "int";
+		ost << "int";
 		}
 	else if (object_type == POINTER_TYPE_SMALLPINT) {
-		cout << "pint";
+		ost << "pint";
 		}
 	else if (object_type == POINTER_TYPE_INT) {
-		cout << "INT";
+		ost << "INT";
 		}
 	else if (object_type == POINTER_TYPE_PINT) {
-		cout << "PINT";
+		ost << "PINT";
 		}
 	else if (object_type == POINTER_TYPE_PPINT) {
-		cout << "PPINT";
+		ost << "PPINT";
 		}
 	else if (object_type == POINTER_TYPE_BYTE) {
-		cout << "BYTE";
+		ost << "BYTE";
 		}
 	else if (object_type == POINTER_TYPE_UBYTE) {
-		cout << "UBYTE";
+		ost << "UBYTE";
 		}
 	else if (object_type == POINTER_TYPE_PBYTE) {
-		cout << "PBYTE";
+		ost << "PBYTE";
 		}
 	else if (object_type == POINTER_TYPE_PVOID) {
-		cout << "pvoid";
+		ost << "pvoid";
 		}
 	else if (object_type == POINTER_TYPE_OBJECT) {
-		cout << "OBJECT";
+		ost << "OBJECT";
 		}
 	else if (object_type == POINTER_TYPE_OBJECTS) {
-		cout << "OBJECTS";
+		ost << "OBJECTS";
 		}
 	else {
-		cout << "unknown" << endl;
+		ost << "unknown" << endl;
 		}
 }
 
@@ -163,13 +163,31 @@ void mem_object_registry_entry::print(INT line)
 	print_pointer_hex(cout, pointer);
 	cout << " : " << time_stamp << " : ";
 
-	print_type();
+	print_type(cout);
 
 	cout << " : "
 		<< object_n << " : "
 		<< object_size_of << " : "
 		<< source_file << " : "
 		<< source_line << " : "
+		<< endl;
+
+}
+
+
+void mem_object_registry_entry::print_csv(ostream &ost, INT line)
+{
+	ost << line << ",";
+	print_pointer_hex(ost, pointer);
+	ost << "," << time_stamp << ",";
+
+	print_type(ost);
+
+	ost << ","
+		<< object_n << ","
+		<< object_size_of << ","
+		<< source_file << ","
+		<< source_line << ","
 		<< endl;
 
 }
@@ -184,6 +202,11 @@ void mem_object_registry_entry::print(INT line)
 mem_object_registry::mem_object_registry()
 {
 	INT verbose_level = 1;
+
+	f_automatic_dump = FALSE;
+	automatic_dump_interval = 0;
+	automatic_dump_fname_mask[0] = 0;
+
 	entries = NULL;
 	nb_allocate_total = 0;
 	nb_delete_total = 0;
@@ -196,7 +219,6 @@ mem_object_registry::~mem_object_registry()
 	delete [] entries;
 	entries = NULL;
 }
-
 
 void mem_object_registry::init(INT verbose_level)
 {
@@ -230,6 +252,55 @@ void mem_object_registry::init(INT verbose_level)
 	}
 }
 
+
+void mem_object_registry::set_automatic_dump(
+		INT automatic_dump_interval, const BYTE *fname_mask,
+		INT verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::set_automatic_dump" << endl;
+	}
+	f_automatic_dump = TRUE;
+	mem_object_registry::automatic_dump_interval = automatic_dump_interval;
+	strcpy(automatic_dump_fname_mask, fname_mask);
+}
+
+void mem_object_registry::automatic_dump()
+{
+	if (!f_automatic_dump) {
+		return;
+	}
+	if ((cur_time % automatic_dump_interval) != 0) {
+		return;
+	}
+	BYTE fname[1000];
+	INT a;
+
+	a = cur_time / automatic_dump_interval;
+
+	cout << "automatic memory dump " << a << endl;
+	sprintf(fname, automatic_dump_fname_mask, a);
+
+	dump_to_csv_file(fname);
+}
+
+void mem_object_registry::manual_dump()
+{
+	if (!f_automatic_dump) {
+		return;
+	}
+	BYTE fname[1000];
+	INT a;
+
+	a = cur_time / automatic_dump_interval + 1;
+
+	sprintf(fname, automatic_dump_fname_mask, a);
+
+	dump_to_csv_file(fname);
+}
+
 void mem_object_registry::dump()
 {
 	INT i, s, sz;
@@ -251,6 +322,36 @@ void mem_object_registry::dump()
 			"order of the value of the pointer" << endl;
 	for (i = 0; i < nb_entries_used; i++) {
 		entries[i].print(i);
+	}
+}
+
+void mem_object_registry::dump_to_csv_file(const BYTE *fname)
+{
+	INT i, s, sz;
+
+
+	{
+		ofstream fp(fname);
+
+
+		//cout << "memory registry:" << endl;
+
+		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,File,LineInFile" << endl;
+		sz = 0;
+		for (i = 0; i < nb_entries_used; i++) {
+			s = entries[i].size_of();
+			sz += s;
+		}
+
+		for (i = 0; i < nb_entries_used; i++) {
+			entries[i].print_csv(fp, i);
+		}
+		fp << "END" << endl;
+		fp << "nb_entries_used=" << nb_entries_used << endl;
+		fp << "nb_allocate_total=" << nb_allocate_total << endl;
+		fp << "nb_delete_total=" << nb_delete_total << endl;
+		fp << "cur_time=" << cur_time << endl;
+		fp << "total allocation size in BYTE=" << sz << endl;
 	}
 }
 
@@ -772,8 +873,16 @@ void mem_object_registry::add_to_registry(void *pointer,
 	nb_allocate_total++;
 	if (search(pointer, idx)) {
 		cout << "mem_object_registry::add_to_registry pointer p is "
-				"already n the registry, something is wrong" << endl;
-		exit(1);
+				"already in the registry, something is wrong" << endl;
+		cout << "source_file = " << source_file << endl;
+		cout << "source_line = " << source_line << endl;
+		cout << "object_type = " << object_type << endl;
+		cout << "object_n = " << object_n << endl;
+		cout << "object_size_of = " << object_size_of << endl;
+		cout << "the previous object is:" << endl;
+		entries[idx].print(idx);
+		cout << "ignoring the problem" << endl;
+		//exit(1);
 	}
 	insert_at(idx);
 	entries[idx].time_stamp = cur_time;
@@ -785,6 +894,7 @@ void mem_object_registry::add_to_registry(void *pointer,
 	entries[idx].source_line = source_line;
 
 
+	automatic_dump();
 	cur_time++;
 
 	if (f_v) {
@@ -812,6 +922,8 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 		}
 	entries[nb_entries_used - 1].null();
 	nb_entries_used--;
+
+	automatic_dump();
 	cur_time++;
 	if (f_v) {
 		cout << "mem_object_registry::delete_from_registry done, there are "

@@ -46,17 +46,12 @@ void action_on_grassmannian::free()
 			}
 		FREE_INT(M2);
 		}
-#if 0
-	if (G) {
-		delete G;
-		}
-#endif
 	if (GE) {
 		if (f_v) {
 			cout << "action_on_grassmannian::free "
 					"before free GE" << endl;
 			}
-		delete GE;
+		FREE_OBJECT(GE);
 		}
 	if (subspace_basis) {
 		if (f_v) {
@@ -148,7 +143,7 @@ void action_on_grassmannian::init_embedding(INT big_n,
 		}
 	action_on_grassmannian::big_n = big_n;
 	f_embedding = TRUE;
-	GE = new grassmann_embedded;
+	GE = NEW_OBJECT(grassmann_embedded);
 	GE->init(big_n, n, G, ambient_space, verbose_level);
 	subspace_basis = NEW_INT(n * big_n);
 	subspace_basis2 = NEW_INT(n * big_n);

@@ -414,8 +414,13 @@ void costas(INT n, INT verbose_level)
 		}
 	sprintf(fname1, "costas_%ld.txt", n);
 	sprintf(fname2, "costas_%ld_lexleast.txt", n);
-	fp1 = new ofstream(fname1);
-	fp2 = new ofstream(fname2);
+
+	{
+	ofstream Fp1(fname1);
+	ofstream Fp2(fname2);
+
+	fp1 = &Fp1;
+	fp2 = &Fp2;
 	C = NEW_INT(n * n);
 	INT_vec_zero(C, n * n);
 	A = NEW_INT(n);
@@ -439,11 +444,9 @@ void costas(INT n, INT verbose_level)
 	cout << "nb_sol = " << nb_sol << endl;
 	cout << "nb_sol_lexleast = " << nb_sol_lexleast << endl;
 
-	*fp1 << "-1 " << nb_sol << endl;
-	*fp2 << "-1 " << nb_sol_lexleast << endl;
-
-	delete fp1;
-	delete fp2;
+	Fp1 << "-1 " << nb_sol << endl;
+	Fp2 << "-1 " << nb_sol_lexleast << endl;
+	}
 	
 	FREE_INT(C);
 	FREE_INT(A);

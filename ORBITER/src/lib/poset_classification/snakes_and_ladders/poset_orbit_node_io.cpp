@@ -53,7 +53,7 @@ void poset_orbit_node::read_memory_object(
 				<< nb_extensions << endl;
 		cout << "cur_pointer=" << m->cur_pointer << endl;
 		}
-	E = new extension[nb_extensions];
+	E = NEW_OBJECTS(extension, nb_extensions);
 	if (f_v) {
 		cout << "E allocated" << endl;
 		}
@@ -315,7 +315,7 @@ void poset_orbit_node::read_file(action *A,
 	if (f_vv) {
 		cout << "nb_extensions " << nb_extensions << endl;
 		}
-	E = new extension[nb_extensions];
+	E = NEW_OBJECTS(extension, nb_extensions);
 	if (f_vv) {
 		cout << "E allocated" << endl;
 		}

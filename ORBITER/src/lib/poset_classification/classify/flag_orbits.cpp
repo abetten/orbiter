@@ -37,7 +37,7 @@ void flag_orbits::null()
 void flag_orbits::freeself()
 {
 	if (Flag_orbit_node) {
-		delete [] Flag_orbit_node;
+		FREE_OBJECTS(Flag_orbit_node);
 		}
 	if (Pt) {
 		FREE_INT(Pt);
@@ -61,7 +61,7 @@ void flag_orbits::init(action *A, action *A2,
 	flag_orbits::pt_representation_sz = pt_representation_sz;
 	flag_orbits::nb_flag_orbits = nb_flag_orbits;
 	Pt = NEW_INT(nb_flag_orbits * pt_representation_sz);
-	Flag_orbit_node = new flag_orbit_node[nb_flag_orbits];
+	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	if (f_v) {
 		cout << "flag_orbits::init done" << endl;
 		}
@@ -109,7 +109,7 @@ void flag_orbits::read_file(ifstream &fp, INT verbose_level)
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
 		fp.read((char *) &Pt[i], sizeof(INT));
 		}
-	Flag_orbit_node = new flag_orbit_node[nb_flag_orbits];
+	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {
 		if (FALSE) {
 			cout << "flag_orbits::read_file "

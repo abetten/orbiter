@@ -63,9 +63,9 @@
 #include "./DATA/data_BLT.cpp"
 
 
-// ####################################################################################
+// #############################################################################
 // Cubic surfaces:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -170,7 +170,8 @@ INT cubic_surface_nb_reps(INT q)
 		nb = surface_97_nb_reps;
 		}
 	else {
-		cout << "cubic_surface_nb_reps q=" << q << " I don't have information for this case" << endl;
+		cout << "cubic_surface_nb_reps q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	return nb;
@@ -341,22 +342,26 @@ INT *cubic_surface_representative(INT q, INT i)
 		sz = surface_97_size;
 		}
 	else {
-		cout << "cubic_surface_representative q=" << q << " I don't have information for this case" << endl;
+		cout << "cubic_surface_representative q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_representative q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "cubic_surface_representative q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_representative q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "cubic_surface_representative q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	p += i * sz;
 	return p;
 }
 
-void cubic_surface_stab_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void cubic_surface_stab_gens(INT q, INT i,
+		INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
@@ -619,15 +624,18 @@ void cubic_surface_stab_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_s
 		stab_order = surface_97_stab_order[i];
 		}
 	else {
-		cout << "cubic_surface_stab_gens q=" << q << " I don't have information for this field order" << endl;
+		cout << "cubic_surface_stab_gens q=" << q
+				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_stab_gens q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "cubic_surface_stab_gens q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_stab_gens q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "cubic_surface_stab_gens q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	nb_gens = l;
@@ -800,15 +808,18 @@ INT cubic_surface_nb_Eckardt_points(INT q, INT i)
 		//sz = surface_97_size;
 		}
 	else {
-		cout << "cubic_surface_nb_Eckardt_points q=" << q << " I don't have information for this case" << endl;
+		cout << "cubic_surface_nb_Eckardt_points q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_nb_Eckardt_points q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_nb_Eckardt_points q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "cubic_surface_nb_Eckardt_points q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	return p[i];
@@ -980,15 +991,18 @@ INT *cubic_surface_single_six(INT q, INT i)
 		//sz = surface_97_size;
 		}
 	else {
-		cout << "cubic_surface_single_six q=" << q << " I don't have information for this case" << endl;
+		cout << "cubic_surface_single_six q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_single_six q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "cubic_surface_single_six q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_single_six q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "cubic_surface_single_six q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	return p + i * 6;
@@ -1159,15 +1173,18 @@ INT *cubic_surface_Lines(INT q, INT i)
 		//sz = surface_97_size;
 		}
 	else {
-		cout << "cubic_surface_Lines q=" << q << " I don't have information for this case" << endl;
+		cout << "cubic_surface_Lines q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "cubic_surface_Lines q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "cubic_surface_Lines q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "cubic_surface_Lines q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "cubic_surface_Lines q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	return p + i * 27;
@@ -1175,9 +1192,9 @@ INT *cubic_surface_Lines(INT q, INT i)
 
 
 
-// ####################################################################################
+// #############################################################################
 // Hyperovals:
-// ####################################################################################
+// #############################################################################
 
 
 INT hyperoval_nb_reps(INT q)
@@ -1194,7 +1211,8 @@ INT hyperoval_nb_reps(INT q)
 		nb = arcs_32_34_nb_reps;
 		}
 	else {
-		cout << "hyperoval_nb_reps q=" << q << " I don't have information for this case" << endl;
+		cout << "hyperoval_nb_reps q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	return nb;
@@ -1220,22 +1238,26 @@ INT *hyperoval_representative(INT q, INT i)
 		sz = arcs_32_34_size;
 		}
 	else {
-		cout << "hyperovals_representative q=" << q << " I don't have information for this case" << endl;
+		cout << "hyperovals_representative q=" << q
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "hyperoval_representative q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "hyperoval_representative q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "hyperoval_representative q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "hyperoval_representative q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	p += i * sz;
 	return p;
 }
 
-void hyperoval_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void hyperoval_gens(INT q, INT i,
+		INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
@@ -1266,15 +1288,18 @@ void hyperoval_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_size, cons
 		stab_order = arcs_32_34_stab_order[i];
 		}
 	else {
-		cout << "hyperoval_representative q=" << q << " I don't have information for this field order" << endl;
+		cout << "hyperoval_representative q=" << q
+				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "hyperoval_representative q=" << q << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "hyperoval_representative q=" << q << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "hyperoval_representative q=" << q << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "hyperoval_representative q=" << q << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	nb_gens = l;
@@ -1285,9 +1310,9 @@ void hyperoval_gens(INT q, INT i, INT *&data, INT &nb_gens, INT &data_size, cons
 
 
 
-// ####################################################################################
+// #############################################################################
 // Dual hyperovals:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -1303,7 +1328,8 @@ INT DH_nb_reps(INT k, INT n)
 		nb = DH_4_8_nb_reps;
 		}
 	else {
-		cout << "DH_nb_reps k=" << k << " n=" << n << " I don't have information for this case" << endl;
+		cout << "DH_nb_reps k=" << k << " n=" << n
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	return nb;
@@ -1324,22 +1350,26 @@ INT *DH_representative(INT k, INT n, INT i)
 		sz = DH_4_8_size;
 		}
 	else {
-		cout << "DH_representative k=" << k << " n=" << n << " I don't have information for this case" << endl;
+		cout << "DH_representative k=" << k << " n=" << n
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	p += i * sz;
 	return p;
 }
 
-void DH_stab_gens(INT k, INT n, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void DH_stab_gens(INT k, INT n, INT i,
+		INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
@@ -1362,15 +1392,18 @@ void DH_stab_gens(INT k, INT n, INT i, INT *&data, INT &nb_gens, INT &data_size,
 		stab_order = DH_4_8_stab_order[i];
 		}
 	else {
-		cout << "DH_representative k=" << k << " n=" << n << " I don't have information for this field order" << endl;
+		cout << "DH_representative k=" << k << " n=" << n
+				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "DH_representative k=" << k << " n=" << n << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "DH_representative k=" << k << " n=" << n << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	nb_gens = l;
@@ -1382,9 +1415,9 @@ void DH_stab_gens(INT k, INT n, INT i, INT *&data, INT &nb_gens, INT &data_size,
 
 
 
-// ####################################################################################
+// #############################################################################
 // Spreads:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -1412,7 +1445,8 @@ INT Spread_nb_reps(INT q, INT k)
 		nb = Spreads_3_3_nb_reps;
 		}
 	else {
-		cout << "Spread_nb_reps q=" << q << " k=" << k << " I don't have information for this case" << endl;
+		cout << "Spread_nb_reps q=" << q << " k=" << k
+				<< " I don't have information for this case" << endl;
 		exit(1);
 		}
 	return nb;
@@ -1455,22 +1489,26 @@ INT *Spread_representative(INT q, INT k, INT i, INT &sz)
 		sz = Spreads_3_3_size;
 		}
 	else {
-		cout << "Spread_representative q=" << q << " k=" << k << " I don't have information for this field order" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k
+				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	p += i * sz;
 	return p;
 }
 
-void Spread_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void Spread_stab_gens(INT q, INT k, INT i,
+		INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
@@ -1525,15 +1563,18 @@ void Spread_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_s
 		stab_order = Spreads_3_3_stab_order[i];
 		}
 	else {
-		cout << "Spread_representative q=" << q << " k=" << k << " I don't have information for this field order" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k
+				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (i < 0) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (i >= nb) {
-		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i << " but I have only " << nb << " representatives" << endl;
+		cout << "Spread_representative q=" << q << " k=" << k << " i=" << i
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	nb_gens = l;
@@ -1542,9 +1583,9 @@ void Spread_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, INT &data_s
 }
 
 
-// ####################################################################################
+// #############################################################################
 // BLT sets:
-// ####################################################################################
+// #############################################################################
 
 
 
@@ -1623,7 +1664,8 @@ INT BLT_nb_reps(INT q)
 		nb = BLT_71_nb_reps;
 		}
 	else {
-		cout << "BLT_nb_reps q=" << q << " I don't have information for this order" << endl;
+		cout << "BLT_nb_reps q=" << q
+				<< " I don't have information for this order" << endl;
 		exit(1);
 		}
 	return nb;
@@ -1750,22 +1792,26 @@ INT *BLT_representative(INT q, INT no)
 		sz = BLT_71_size;
 		}
 	else {
-		cout << "BLT_representative q=" << q << " I don't have information for this field order" << endl;
+		cout << "BLT_representative q=" << q
+				<< " I don't have information for this field order" << endl;
 		exit(1);
 		}
 	if (no < 0) {
-		cout << "BLT_representative q=" << q << " no=" << no << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "BLT_representative q=" << q << " no=" << no
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (no >= nb) {
-		cout << "BLT_representative q=" << q << " no=" << no << " but I have only " << nb << " representatives" << endl;
+		cout << "BLT_representative q=" << q << " no=" << no
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	p += no * sz;
 	return p;
 }
 
-void BLT_stab_gens(INT q, INT no, INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
+void BLT_stab_gens(INT q, INT no,
+		INT *&data, INT &nb_gens, INT &data_size, const BYTE *&stab_order)
 {
 	INT *Reps;
 	INT nb, make_element_size;
@@ -1956,15 +2002,18 @@ void BLT_stab_gens(INT q, INT no, INT *&data, INT &nb_gens, INT &data_size, cons
 		stab_order = BLT_71_stab_order[no];
 		}
 	else {
-		cout << "BLT_representative q=" << q << " I don't have information for this field order" << endl;
+		cout << "BLT_representative q=" << q << " I don't have "
+				"information for this field order" << endl;
 		exit(1);
 		}
 	if (no < 0) {
-		cout << "BLT_representative q=" << q << " no=" << no << " but i must be at least 0 (numbering starts at 0)" << endl;
+		cout << "BLT_representative q=" << q << " no=" << no
+				<< " but i must be at least 0 (numbering starts at 0)" << endl;
 		exit(1);
 		}
 	if (no >= nb) {
-		cout << "BLT_representative q=" << q << " no=" << no << " but I have only " << nb << " representatives" << endl;
+		cout << "BLT_representative q=" << q << " no=" << no
+				<< " but I have only " << nb << " representatives" << endl;
 		exit(1);
 		}
 	nb_gens = l;
@@ -1981,7 +2030,8 @@ const BYTE *override_polynomial_subfield(INT q)
 	INT p, h;
 	
 	if (!is_prime_power(q, p, h)) {
-		cout << "override_polynomial_subfield q is not a prime power" << endl;
+		cout << "override_polynomial_subfield "
+				"q is not a prime power" << endl;
 		exit(1);
 		}
 	if (h == 1) {
@@ -2009,7 +2059,8 @@ const BYTE *override_polynomial_subfield(INT q)
 		override_poly = "200";
 		}
 	if (override_poly == NULL) {
-		cout << "override_polynomial_subfield, do not have a polynomial for q=" << q << endl;
+		cout << "override_polynomial_subfield, "
+				"do not have a polynomial for q=" << q << endl;
 		
 		INT verbose_level = 2;
 		finite_field f, F;
@@ -2022,7 +2073,8 @@ const BYTE *override_polynomial_subfield(INT q)
 		if (f.e > 1) {
 			F.init(qq, 1);
 			f.init(q, 3);
-			cout << "need to choose the generator polynomial for the field" << endl;
+			cout << "need to choose the generator "
+					"polynomial for the field" << endl;
 			F.compute_subfields(verbose_level);
 			//exit(1);
 			}
@@ -2069,7 +2121,8 @@ const BYTE *override_polynomial_extension_field(INT q)
 		override_poly = "15985";
 		}
 	if (override_poly == NULL) {
-		cout << "override_polynomial_extension_field, do not have a polynomial for q=" << q << endl;
+		cout << "override_polynomial_extension_field, "
+				"do not have a polynomial for q=" << q << endl;
 		exit(1);
 		}
 	return override_poly;
@@ -2079,7 +2132,8 @@ const BYTE *override_polynomial_extension_field(INT q)
 	if (q == 9) {
 		BYTE *override_poly_Q = "110"; // X^{4} + X^{3} + 2
 		BYTE *override_poly_q = "17"; // X^2 - X - 1 = X^2 +2X + 2 = 2 + 2*3 + 9 = 17
-		//finite_field::init_override_polynomial() GF(81) = GF(3^4), polynomial = X^{4} + X^{3} + 2 = 110
+		//finite_field::init_override_polynomial
+		// GF(81) = GF(3^4), polynomial = X^{4} + X^{3} + 2 = 110
 		//subfields of F_{81}:
 		//subfield 3^2 : subgroup_index = 10
 		//0 : 0 : 1 : 1
@@ -2158,7 +2212,8 @@ const BYTE *override_polynomial_extension_field(INT q)
 		}
 #endif
 
-void create_Fisher_BLT_set(INT *Fisher_BLT, INT q, const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
+void create_Fisher_BLT_set(INT *Fisher_BLT,
+		INT q, const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -2169,7 +2224,8 @@ void create_Fisher_BLT_set(INT *Fisher_BLT, INT q, const BYTE *poly_q, const BYT
 	
 }
 
-void create_Linear_BLT_set(INT *BLT, INT q, const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
+void create_Linear_BLT_set(INT *BLT, INT q,
+		const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -2180,7 +2236,8 @@ void create_Linear_BLT_set(INT *BLT, INT q, const BYTE *poly_q, const BYTE *poly
 	
 }
 
-void create_Mondello_BLT_set(INT *BLT, INT q, const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
+void create_Mondello_BLT_set(INT *BLT, INT q,
+		const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -2197,11 +2254,13 @@ void print_quadratic_form_list_coded(INT form_nb_terms,
 	INT k;
 	
 	for (k = 0; k < form_nb_terms; k++) {
-		cout << "i=" << form_i[k] << " j=" << form_j[k] << " coeff=" << form_coeff[k] << endl;
+		cout << "i=" << form_i[k] << " j=" << form_j[k]
+			<< " coeff=" << form_coeff[k] << endl;
 		}
 }
 
-void make_Gram_matrix_from_list_coded_quadratic_form(INT n, finite_field &F, 
+void make_Gram_matrix_from_list_coded_quadratic_form(
+	INT n, finite_field &F,
 	INT nb_terms, INT *form_i, INT *form_j, INT *form_coeff, INT *Gram)
 {
 	INT k, i, j, c;
@@ -2223,7 +2282,9 @@ void make_Gram_matrix_from_list_coded_quadratic_form(INT n, finite_field &F,
 		}
 }
 
-void add_term(INT n, finite_field &F, INT &nb_terms, INT *form_i, INT *form_j, INT *form_coeff, INT *Gram, 
+void add_term(INT n, finite_field &F,
+	INT &nb_terms, INT *form_i, INT *form_j, INT *form_coeff,
+	INT *Gram,
 	INT i, INT j, INT coeff)
 {
 	form_i[nb_terms] = i;
@@ -2239,7 +2300,8 @@ void add_term(INT n, finite_field &F, INT &nb_terms, INT *form_i, INT *form_j, I
 	nb_terms++;
 }
 
-void create_BLT_point(finite_field *F, INT *v5, INT a, INT b, INT c, INT verbose_level)
+void create_BLT_point(finite_field *F,
+		INT *v5, INT a, INT b, INT c, INT verbose_level)
 // creates the point (-b/2,-c,a,-(b^2/4-ac),1) 
 // check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 // b^2/4 + (-c)*a + -(b^2/4-ac)
@@ -2266,7 +2328,8 @@ void create_BLT_point(finite_field *F, INT *v5, INT a, INT b, INT c, INT verbose
 	v0 = F->mult(minus_one, F->mult(b, half));
 	v1 = F->mult(minus_one, c);
 	v2 = a;
-	v3 = F->mult(minus_one, F->add(F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
+	v3 = F->mult(minus_one, F->add(
+			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
 	v4 = 1;
 	INT_vec_init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
@@ -2275,7 +2338,8 @@ void create_BLT_point(finite_field *F, INT *v5, INT a, INT b, INT c, INT verbose
 
 }
 
-void create_FTWKB_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_FTWKB_BLT_set(orthogonal *O,
+		INT *set, INT verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
@@ -2302,7 +2366,8 @@ void create_FTWKB_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		b = F->mult(3, F->power(i, 2));
 		c = F->mult(3, F->power(i, 3));
 		if (f_vv) {
-			cout << "i=" << i << " a=" << a << " b=" << b << " c=" << c << endl;
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
 			}
 		create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
@@ -2359,7 +2424,8 @@ void create_K1_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		b = 0;
 		c = F->mult(minus_one, F->mult(m, F->power(i, exponent)));
 		if (f_vv) {
-			cout << "i=" << i << " a=" << a << " b=" << b << " c=" << c << endl;
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
 			}
 		create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
@@ -2418,7 +2484,8 @@ void create_K2_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		b = F->mult(five, F->power(i, 3));
 		c = F->mult(five, F->power(i, 5));
 		if (f_vv) {
-			cout << "i=" << i << " a=" << a << " b=" << b << " c=" << c << endl;
+			cout << "i=" << i << " a=" << a
+					<< " b=" << b << " c=" << c << endl;
 			}
 		create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
@@ -2448,7 +2515,8 @@ void create_K2_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		}
 }
 
-void create_LP_37_72_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_LP_37_72_BLT_set(orthogonal *O,
+		INT *set, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2685,7 +2753,8 @@ void create_LP_37_4b_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		}
 }
 
-void Segre_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level)
+void Segre_hyperoval(finite_field *F,
+		INT *&Pts, INT &nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q = F->q;
@@ -2733,7 +2802,8 @@ void Segre_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level)
 }
 
 
-void GlynnI_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level)
+void GlynnI_hyperoval(finite_field *F,
+		INT *&Pts, INT &nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q = F->q;
@@ -2763,7 +2833,8 @@ void GlynnI_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level
 		exit(1);
 		}
 
-	cout << "GlynnI_hyperoval sigma = " << sigma << " gamma = " << gamma << endl;
+	cout << "GlynnI_hyperoval sigma = " << sigma
+			<< " gamma = " << gamma << endl;
 	//Gamma = i_power_j(2, gamma);
 	Sigma = i_power_j(2, sigma);
 
@@ -2799,7 +2870,8 @@ void GlynnI_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level
 		}
 }
 
-void GlynnII_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level)
+void GlynnII_hyperoval(finite_field *F,
+		INT *&Pts, INT &nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q = F->q;
@@ -3013,11 +3085,13 @@ void Adelaide_hyperoval(subfield_structure *S, INT *&Pts, INT &nb_pts, INT verbo
 }
 
 
-// following Payne, Penttila, Pinneri: Isomorphisms Between Subiaco q-Clan Geometries, 
+// following Payne, Penttila, Pinneri:
+// Isomorphisms Between Subiaco q-Clan Geometries,
 // Bull. Belg. Math. Soc. 2 (1995) 197-222.
 // formula (53)
 
-void Subiaco_oval(finite_field *F, INT *&Pts, INT &nb_pts, INT f_short, INT verbose_level)
+void Subiaco_oval(finite_field *F,
+		INT *&Pts, INT &nb_pts, INT f_short, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q = F->q;
@@ -3065,7 +3139,8 @@ void Subiaco_oval(finite_field *F, INT *&Pts, INT &nb_pts, INT f_short, INT verb
 			top = F->add3(t3, t2, F->mult(omega2, t));
 			}
 		if (FALSE) {
-			cout << "t=" << t << " top=" << top << " bottom=" << bottom << endl;
+			cout << "t=" << t << " top=" << top
+					<< " bottom=" << bottom << endl;
 			}
 		a = F->mult(top, F->inverse(bottom));
 		if (f_short) {
@@ -3099,7 +3174,8 @@ void Subiaco_oval(finite_field *F, INT *&Pts, INT &nb_pts, INT f_short, INT verb
 // email 12/27/2014
 //The o-polynomial of the Subiaco hyperoval is
 
-//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3 + d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
+//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3
+// + d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
 
 //where d has absolute trace 1.
 
@@ -3109,7 +3185,8 @@ void Subiaco_oval(finite_field *F, INT *&Pts, INT &nb_pts, INT f_short, INT verb
 //absolute trace of 1/d is 1 not d...
 
 
-void Subiaco_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_level)
+void Subiaco_hyperoval(finite_field *F,
+		INT *&Pts, INT &nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT q = F->q;
@@ -3154,7 +3231,8 @@ void Subiaco_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_leve
 
 		bottom = F->add3(t4, F->mult(d2, t2), 1);
 
-		//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3 + d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
+		//t^{1/2}+(d^2t^4 + d^2(1+d+d^2)t^3 +
+		// d^2(1+d+d^2)t^2 + d^2t)/(t^4+d^2t^2+1)
 
 		top1 = F->mult(d2,t4);
 		top2 = F->mult3(d2, one_d_d2, t3);
@@ -3163,7 +3241,8 @@ void Subiaco_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_leve
 		top = F->add4(top1, top2, top3, top4);
 
 		if (f_v) {
-			cout << "t=" << t << " top=" << top << " bottom=" << bottom << endl;
+			cout << "t=" << t << " top=" << top
+					<< " bottom=" << bottom << endl;
 			}
 		a = F->mult(top, F->inverse(bottom));
 		h = F->add(a, sqrt_t);
@@ -3194,14 +3273,17 @@ void Subiaco_hyperoval(finite_field *F, INT *&Pts, INT &nb_pts, INT verbose_leve
 
 
 // From Bill Cherowitzo's web page:
-// In 1991, O'Keefe and Penttila [OKPe92] by means of a detailed investigation 
-// of the divisibility properties of the orders of automorphism groups 
-// of hypothetical hyperovals in this plane, discovered a new hyperoval. 
+// In 1991, O'Keefe and Penttila [OKPe92]
+// by means of a detailed investigation
+// of the divisibility properties of the orders
+// of automorphism groups
+// of hypothetical hyperovals in this plane,
+// discovered a n e w hyperoval.
 // Its o-polynomial is given by:
 
-//f(x) = x4 + x16 + x28 + ß11(x6 + x10 + x14 + x18 + x22 + x26) 
-// + ß20(x8 + x20) + ß6(x12 + x24),
-//where ß is a primitive root of GF(32) satisfying ß5 = ß2 + 1. 
+//f(x) = x4 + x16 + x28 + beta*11(x6 + x10 + x14 + x18 + x22 + x26)
+// + beta*20(x8 + x20) + beta*6(x12 + x24),
+//where ß is a primitive root of GF(32) satisfying beta^5 = beta^2 + 1.
 //The full automorphism group of this hyperoval has order 3.
 
 INT OKeefe_Penttila_32(finite_field *F, INT t)
@@ -3215,7 +3297,8 @@ INT OKeefe_Penttila_32(finite_field *F, INT t)
 	
 	F->power_table(t, t_powers, 31);
 	a = F->add3(t_powers[4], t_powers[16], t_powers[28]);
-	b = F->add6(t_powers[6], t_powers[10], t_powers[14], t_powers[18], t_powers[22], t_powers[26]);
+	b = F->add6(t_powers[6], t_powers[10], t_powers[14],
+			t_powers[18], t_powers[22], t_powers[26]);
 	c = F->add(t_powers[8], t_powers[20]);
 	d = F->add(t_powers[12], t_powers[24]);
 
@@ -3245,11 +3328,15 @@ INT Subiaco64_1(finite_field *F, INT t)
 	t_powers = NEW_INT(65);
 	
 	F->power_table(t, t_powers, 65);
-	a = F->add6(t_powers[8], t_powers[12], t_powers[20], t_powers[22], t_powers[42], t_powers[52]);
-	b = F->add6(t_powers[4], t_powers[10], t_powers[14], t_powers[16], t_powers[30], t_powers[38]);
-	c = F->add6(t_powers[44], t_powers[48], t_powers[54], t_powers[56], t_powers[58], t_powers[60]);
+	a = F->add6(t_powers[8], t_powers[12], t_powers[20],
+			t_powers[22], t_powers[42], t_powers[52]);
+	b = F->add6(t_powers[4], t_powers[10], t_powers[14],
+			t_powers[16], t_powers[30], t_powers[38]);
+	c = F->add6(t_powers[44], t_powers[48], t_powers[54],
+			t_powers[56], t_powers[58], t_powers[60]);
 	b = F->add3(b, c, t_powers[62]);
-	c = F->add7(t_powers[2], t_powers[6], t_powers[26], t_powers[28], t_powers[32], t_powers[36], t_powers[40]);
+	c = F->add7(t_powers[2], t_powers[6], t_powers[26],
+			t_powers[28], t_powers[32], t_powers[36], t_powers[40]);
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);
 	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
@@ -3268,11 +3355,15 @@ INT Subiaco64_2(finite_field *F, INT t)
 	
 	F->power_table(t, t_powers, 65);
 	a = F->add3(t_powers[24], t_powers[30], t_powers[62]);
-	b = F->add6(t_powers[4], t_powers[8], t_powers[10], t_powers[14], t_powers[16], t_powers[34]);
-	c = F->add6(t_powers[38], t_powers[40], t_powers[44], t_powers[46], t_powers[52], t_powers[54]);
+	b = F->add6(t_powers[4], t_powers[8], t_powers[10],
+			t_powers[14], t_powers[16], t_powers[34]);
+	c = F->add6(t_powers[38], t_powers[40], t_powers[44],
+			t_powers[46], t_powers[52], t_powers[54]);
 	b = F->add4(b, c, t_powers[58], t_powers[60]);
-	c = F->add5(t_powers[6], t_powers[12], t_powers[18], t_powers[20], t_powers[26]);
-	d = F->add5(t_powers[32], t_powers[36], t_powers[42], t_powers[48], t_powers[50]);
+	c = F->add5(t_powers[6], t_powers[12], t_powers[18],
+			t_powers[20], t_powers[26]);
+	d = F->add5(t_powers[32], t_powers[36], t_powers[42],
+			t_powers[48], t_powers[50]);
 	c = F->add(c, d);
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);
@@ -3290,9 +3381,12 @@ INT Adelaide64(finite_field *F, INT t)
 	t_powers = NEW_INT(65);
 	
 	F->power_table(t, t_powers, 65);
-	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34], t_powers[42], t_powers[48], t_powers[62]);
-	b = F->add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28], t_powers[30], t_powers[32], t_powers[40], t_powers[58]);
-	c = F->add8(t_powers[10], t_powers[18], t_powers[24], t_powers[36], t_powers[44], t_powers[50], t_powers[52], t_powers[60]);
+	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
+			t_powers[42], t_powers[48], t_powers[62]);
+	b = F->add8(t_powers[6], t_powers[16], t_powers[26], t_powers[28],
+			t_powers[30], t_powers[32], t_powers[40], t_powers[58]);
+	c = F->add8(t_powers[10], t_powers[18], t_powers[24], t_powers[36],
+			t_powers[44], t_powers[50], t_powers[52], t_powers[60]);
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);
 	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
@@ -3461,7 +3555,8 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			cout << " : "; // << endl;
 			}
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-		rk = O->F->Gauss_INT(Mtx, f_special, f_complete, base_col, FALSE, NULL, level, n, n, 0);
+		rk = O->F->Gauss_INT(Mtx, f_special, f_complete,
+				base_col, FALSE, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "after Gauss, rank = " << rk << endl;
 			print_integer_matrix_width(cout, Mtx, level, n, n, 3);
@@ -3478,7 +3573,8 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			break;
 			}
 		}
-	INT *Hash_sorted, *sorting_perm, *sorting_perm_inv, nb_types, *type_first, *type_len;
+	INT *Hash_sorted, *sorting_perm, *sorting_perm_inv,
+		nb_types, *type_first, *type_len;
 	
 	INT_vec_classify(n_choose_k, Hash, Hash_sorted, 
 		sorting_perm, sorting_perm_inv, 
@@ -3518,13 +3614,20 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 	nb_planes = type_len2[nb_types2 - 1];
 	if (f_v) {
 		if (nb_planes == 1) {
-			cout << "there is a unique plane that appears " << type_len_sorted[f] << " times among the 3-sets of points" << endl;
+			cout << "there is a unique plane that appears "
+					<< type_len_sorted[f]
+					<< " times among the 3-sets of points" << endl;
 			}
 		else {
-			cout << "there are " << nb_planes << " planes that each appear " << type_len_sorted[f] << " times among the 3-sets of points" << endl;
+			cout << "there are " << nb_planes
+					<< " planes that each appear "
+					<< type_len_sorted[f]
+					<< " times among the 3-sets of points" << endl;
 			for (i = 0; i < nb_planes; i++) {
 				j = sorting_perm_inv2[f + i];
-				cout << "The " << i << "-th plane, which is " << j << ", appears " << type_len_sorted[f + i] << " times" << endl;
+				cout << "The " << i << "-th plane, which is " << j
+						<< ", appears " << type_len_sorted[f + i]
+						<< " times" << endl;
 				}
 			}
 		}
@@ -3586,7 +3689,8 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 					Block_size++;
 					}
 				}
-			rk = O->F->Gauss_INT(Mtx, f_special, f_complete, base_col, FALSE, NULL, level, n, n, 0);
+			rk = O->F->Gauss_INT(Mtx, f_special,
+					f_complete, base_col, FALSE, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "after Gauss, rank = " << rk << endl;
 				print_integer_matrix_width(cout, Mtx, level, n, n, 3);
@@ -3610,9 +3714,11 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			}
 		}
 	if (f_vv) {
-		cout << "Incidence structure between points and high frequency planes:" << endl;
+		cout << "Incidence structure between points "
+				"and high frequency planes:" << endl;
 		if (nb_planes < 30) {
-			print_integer_matrix_width(cout, Blocks, nb_planes, Block_size, Block_size, 3);
+			print_integer_matrix_width(cout, Blocks,
+					nb_planes, Block_size, Block_size, 3);
 			}
 		}
 	
@@ -3636,7 +3742,8 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 		}
 	if (f_vv) {
 		cout << "Incidence matrix:" << endl;
-		print_integer_matrix_width(cout, Incma, size, nb_planes, nb_planes, 1);
+		print_integer_matrix_width(cout, Incma,
+				size, nb_planes, nb_planes, 1);
 		}
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < nb_planes; j++) {
@@ -3667,7 +3774,8 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 		}
 	if (f_v) {
 		cout << "I^\\top * I = " << endl;
-		print_integer_matrix_width(cout, ItI, nb_planes, nb_planes, nb_planes, 3);
+		print_integer_matrix_width(cout, ItI,
+				nb_planes, nb_planes, nb_planes, 3);
 		}
 	
 	intersection_matrix = NEW_INT(nb_planes * nb_planes);
@@ -3692,9 +3800,11 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			fp << endl;
 			}
 		fp << -1 << endl;
-		fp << "# Incidence structure between points and high frequency planes:" << endl;
+		fp << "# Incidence structure between points "
+				"and high frequency planes:" << endl;
 		fp << l << " " << Block_size << endl;
-		print_integer_matrix_width(fp, Blocks, nb_planes, Block_size, Block_size, 3);
+		print_integer_matrix_width(fp,
+				Blocks, nb_planes, Block_size, Block_size, 3);
 		fp << -1 << endl;
 		
 	}
@@ -3730,12 +3840,15 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 
 
 
-void create_Law_71_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_Law_71_BLT_set(orthogonal *O,
+		INT *set, INT verbose_level)
 // This example can be found in Maska Law's thesis on page 115.
-// Maska Law: Flocks, generalised quadrangles and translatrion planes from BLT-sets,
+// Maska Law: Flocks, generalised quadrangles
+// and translatrion planes from BLT-sets,
 // The University of Western Australia, 2003.
 // Note the coordinates here are different (for an unknown reason).
-// Law suggests to construct an infinite family starting form the subgroup A_4 of 
+// Law suggests to construct an infinite family
+// starting form the subgroup A_4 of
 // the stabilizer of the Fisher/Thas/Walker/Kantor examples.
 {
 	INT f_v = (verbose_level >= 1);

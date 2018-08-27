@@ -304,7 +304,7 @@ action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	sprintf(A->group_prefix, "%s_on_%ld_subspaces", label, k);
 	sprintf(A->label, "%s_on_%ld_subspaces", label, k);
@@ -326,7 +326,7 @@ action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
 
 	grassmann *Gr;
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	Gr->init(M->n, k, M->GFq, verbose_level);
 	AG->init(*this, Gr, verbose_level);
 	A->type_G = action_on_grassmannian_t;
@@ -1016,7 +1016,7 @@ action *action::create_induced_action_on_sets(
 	if (f_v) {
 		cout << "action::create_induced_action_on_sets" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	if (f_v) {
 		cout << "action::create_induced_action_on_sets "
 				"before A->induced_action_on_sets" << endl;
@@ -1129,7 +1129,7 @@ action *action::create_induced_action_on_subgroups(sims *S,
 	if (f_v) {
 		cout << "action::create_induced_action_on_subgroups" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->induced_action_on_subgroups(this, S, 
 		nb_subgroups, group_order, Subgroups, 
 		0 /* verbose_level*/);
@@ -1293,7 +1293,7 @@ action *action::restricted_action(
 		cout << "nb_points = " << nb_points << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	sprintf(A->group_prefix, "%s_res%ld",
 			label, nb_points);
 	sprintf(A->label, "%s_res%ld",
@@ -1455,7 +1455,7 @@ action *action::create_induced_action_on_ordered_pairs(INT verbose_level)
 	if (f_v) {
 		cout << "action::create_induced_action_on_ordered_pairs" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->induced_action_on_ordered_pairs(*this,
 			NULL, 0 /* verbose_level*/);
 	if (f_v) {
@@ -1856,7 +1856,7 @@ void action::induced_action_on_homogeneous_polynomials(
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	OnHP = new action_on_homogeneous_polynomials;
+	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
 	sprintf(group_prefix, "%s_HP_%ld_%ld", A->label, HPD->n, HPD->degree);
 	sprintf(label, "%s_HP_%ld_%ld", A->label, HPD->n, HPD->degree);
 	sprintf(label_tex, "%s HP %ld %ld", A->label_tex, HPD->n, HPD->degree);
@@ -1936,7 +1936,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	OnHP = new action_on_homogeneous_polynomials;
+	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
 	sprintf(group_prefix, "%s_HP_%ld_%ld_eqn%ld",
 			A->label, HPD->n, HPD->degree, nb_equations);
 	sprintf(label, "%s_HP_%ld_%ld_eqn%ld",
@@ -2409,12 +2409,12 @@ INT action::test_if_lex_least_base(INT verbose_level)
 						"returns FALSE" << endl;
 				cout << "base[i]=" << base[i] << endl;
 				cout << "AA->base[i]=" << AA->base[i] << endl;
-				delete AA;
+				FREE_OBJECT(AA);
 				return FALSE;
 				}
 			}
 		}
-	delete AA;
+	FREE_OBJECT(AA);
 	return TRUE;
 }
 
@@ -2464,13 +2464,13 @@ void action::base_change_in_place(INT size, INT *set, INT verbose_level)
 	if (f_has_sims) {
 		if (f_v5) {
 			cout << "action::base_change_in_place "
-					"before delete Sims" << endl;
+					"before FREE_OBJECT Sims" << endl;
 			cout << "Sims=" << Sims << endl;
 			}
-		delete Sims;
+		FREE_OBJECT(Sims);
 		if (f_v5) {
 			cout << "action::base_change_in_place "
-					"after delete Sims" << endl;
+					"after FREE_OBJECT Sims" << endl;
 			}
 		Sims = NULL;
 		f_has_sims = FALSE;
@@ -2490,7 +2490,7 @@ void action::base_change_in_place(INT size, INT *set, INT verbose_level)
 
 	if (f_has_strong_generators) {
 		f_has_strong_generators = FALSE;
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
 		}
 
@@ -2498,11 +2498,11 @@ void action::base_change_in_place(INT size, INT *set, INT verbose_level)
 	A->Sims = NULL;
 	
 	if (f_v5) {
-		cout << "action::base_change_in_place before delete A" << endl;
+		cout << "action::base_change_in_place before FREE_OBJECT(A)" << endl;
 		}
-	delete A;
+	FREE_OBJECT(A);
 	if (f_v5) {
-		cout << "action::base_change_in_place after delete A" << endl;
+		cout << "action::base_change_in_place after FREE_OBJECT(A)" << endl;
 		}
 
 	compute_strong_generators_from_sims(verbose_level - 3);

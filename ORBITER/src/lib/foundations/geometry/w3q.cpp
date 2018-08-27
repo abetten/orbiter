@@ -36,10 +36,10 @@ void W3q::null()
 void W3q::freeself()
 {
 	if (P3) {
-		delete P3;
+		FREE_OBJECT(P3);
 		}
 	if (Q4) {
-		delete Q4;
+		FREE_OBJECT(Q4);
 		}
 	if (Basis) {
 		FREE_INT(Basis);
@@ -69,8 +69,8 @@ void W3q::init(finite_field *F, INT verbose_level)
 	if (f_v) {
 		cout << "W3q::init" << endl;
 		}
-	P3 = new projective_space;
-	Q4 = new orthogonal;
+	P3 = NEW_OBJECT(projective_space);
+	Q4 = NEW_OBJECT(orthogonal);
 	Basis = NEW_INT(2 * 4);
 	
 	P3->init(3, F, 

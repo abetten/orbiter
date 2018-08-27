@@ -24,7 +24,7 @@ void action::init_direct_product_group_and_restrict(
 		cout << "M1=" << M1->label << endl;
 		cout << "M2=" << M2->label << endl;
 		}
-	A_direct_product = new action;
+	A_direct_product = NEW_OBJECT(action);
 	A_direct_product->init_direct_product_group(M1, M2, verbose_level);
 	if (f_v) {
 		cout << "action::init_direct_product_group_and_restrict "
@@ -222,7 +222,7 @@ void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
 		cout << "nb_factors=" << nb_factors
 				<< " n=" << n << " q=" << F->q << endl;
 		}
-	A_wreath = new action;
+	A_wreath = NEW_OBJECT(action);
 	A_wreath->init_wreath_product_group(nb_factors, n, F, verbose_level);
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict "
@@ -250,7 +250,7 @@ void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
 
 	memcpy(this, Awr, sizeof(action));
 	Awr->null();
-	delete Awr;
+	FREE_OBJECT(Awr);
 }
 
 
@@ -438,7 +438,7 @@ void action::init_orthogonal_group(INT epsilon,
 		cout << "action::init_orthogonal_group "
 				"verbose_level=" << verbose_level << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group "
 				"before A->init_projective_group" << endl;
@@ -446,7 +446,7 @@ void action::init_orthogonal_group(INT epsilon,
 	A->init_projective_group(n, F, f_semilinear,
 			TRUE /* f_basis */, verbose_level - 2);
 
-	O = new orthogonal;
+	O = NEW_OBJECT(orthogonal);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group before O->init" << endl;
 		}
@@ -455,7 +455,7 @@ void action::init_orthogonal_group(INT epsilon,
 		cout << "action::init_orthogonal_group after O->init" << endl;
 		}
 
-	AO = new action_on_orthogonal;
+	AO = NEW_OBJECT(action_on_orthogonal);
 	if (f_vv) {
 		cout << "action::init_orthogonal_group before AO->init" << endl;
 		}
@@ -742,7 +742,7 @@ void action::init_projective_special_group(
 		strong_generators *gens;
 		sims *Sims2;
 		
-		gens = new strong_generators;
+		gens = NEW_OBJECT(strong_generators);
 		
 		if (f_v) {
 			cout << "action::init_projective_special_group "
@@ -762,7 +762,7 @@ void action::init_projective_special_group(
 		
 		Sims2 = gens->create_sims(verbose_level - 1);
 
-		delete gens;
+		FREE_OBJECT(gens);
 		init_sims(Sims2, verbose_level);
 	}
 
@@ -1229,7 +1229,7 @@ void action::init_permutation_group_from_generators(INT degree,
 	vector_ge *generators;
 	strong_generators *Strong_gens;
 
-	generators = new vector_ge;
+	generators = NEW_OBJECT(vector_ge);
 	generators->init(this);
 	generators->allocate(nb_gens);
 	for (i = 0; i < nb_gens; i++) {
@@ -1273,8 +1273,8 @@ void action::init_permutation_group_from_generators(INT degree,
 		}
 
 
-	delete generators;
-	delete Strong_gens;
+	FREE_OBJECT(generators);
+	FREE_OBJECT(Strong_gens);
 
 	if (f_v) {
 		print_info();

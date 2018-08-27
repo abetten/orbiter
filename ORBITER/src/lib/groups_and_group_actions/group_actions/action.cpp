@@ -294,7 +294,7 @@ void action::freeself()
 		if (f_v) {
 			cout << "we are freeing strong generators" << endl;
 			}
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
 		//FREE_OBJECT(strong_generators); //delete strong_generators;
 		//FREE_INT(tl);
@@ -690,7 +690,7 @@ void action::init_sims(sims *G, INT verbose_level)
 				<< " base_len = " << base_len << endl;
 		}
 	if (f_has_sims) {
-		delete Sims;
+		FREE_OBJECT(Sims);
 		Sims = NULL;
 		f_has_sims = FALSE;
 		}
@@ -709,7 +709,7 @@ void action::init_sims(sims *G, INT verbose_level)
 	init_base_from_sims(G, verbose_level);
 
 	f_has_strong_generators = TRUE;
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(G, 0);
 	
 	if (f_v) {
@@ -955,7 +955,7 @@ INT action::element_order_if_divisor_of(void *elt, INT o)
 		if (len == 1)
 			continue;
 		if (o && (o % len)) {
-			delete [] have_seen;
+			FREE_INT(have_seen);
 			return 0;
 			}
 		g = gcd_INT(len, order);
@@ -1247,7 +1247,6 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 			//cout << "orbit partition at level " << i << ":" << endl;
 			cout << *S;
 			}
-		//delete Schreier;
 
 		}
 	if (f_v) {
@@ -1412,9 +1411,9 @@ void action::compute_set_orbit(vector_ge &gens,
 			if (j < nb_sets) {
 				continue;
 				}
-			// new set found:
+			// n e w set found:
 			if (f_v) {
-				cout << "new set " << nb_sets << ":";
+				cout << "n e w set " << nb_sets << ":";
 				INT_vec_print(cout, image_set, size);
 				cout << endl;
 				}
@@ -1559,11 +1558,11 @@ void action::compute_strong_generators_from_sims(INT verbose_level)
 		exit(1);
 		}
 	if (f_has_strong_generators) {
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
 		f_has_strong_generators = FALSE;
 		}
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(Sims, verbose_level - 2);
 	f_has_strong_generators = TRUE;
 	if (f_v) {
@@ -1843,7 +1842,7 @@ void action::build_up_automorphism_group_from_aut_data(
 			S.group_order(go);
 			if (f_v) {
 				cout << "generator " << h
-						<< " added, new group order " << go << endl;
+						<< " added, n e w group order " << go << endl;
 				S.print_transversal_lengths();
 				S.print_transversals_short();
 				}
@@ -1985,7 +1984,7 @@ void action::init_group_from_generators(
 		cout << "did not reach target group order, continuing" << endl;
 		}
 
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
 
 	FREE_INT(Elt);
@@ -2062,7 +2061,7 @@ void action::init_group_from_generators_by_base_images(
 		cout << "did not reach target group order, continuing" << endl;
 		}
 
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
 
 	FREE_INT(Elt);
@@ -2610,7 +2609,7 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 	stab->group_order(go);
 
 	
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(stab, 0);
 
 	if (f_vv) {
@@ -2619,7 +2618,7 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 
 	FREE_OBJECT(G);
 	if (f_vv) {
-		cout << "action::read_set_and_stabilizer after delete G" << endl;
+		cout << "action::read_set_and_stabilizer after  FREE_OBJECT  G" << endl;
 		}
 	free_data_fancy(nb_cases, 
 		Set_sizes, Sets, 
@@ -2756,7 +2755,7 @@ void action::compute_orbits_on_points(schreier *&Sch,
 	if (f_v) {
 		cout << "action::compute_orbits_on_points" << endl;
 		}
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 	Sch->init(this);
 	Sch->init_generators(*gens);
 	Sch->compute_all_point_orbits(verbose_level);
@@ -2781,7 +2780,7 @@ void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no,
 		}
 	DH_stab_gens(k, n, no, data, nb_gens, data_size, stab_order);
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(this);
 	gens->allocate(nb_gens);
 	if (f_vv) {
@@ -2814,7 +2813,7 @@ void action::stabilizer_of_translation_plane_representative(
 		}
 	Spread_stab_gens(q, k, no, data, nb_gens, data_size, stab_order);
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(this);
 	gens->allocate(nb_gens);
 	if (f_vv) {
@@ -2850,10 +2849,10 @@ void action::normalizer_using_MAGMA(const BYTE *prefix,
 	strong_generators *G_gen;
 	strong_generators *H_gen;
 
-	G_gen = new strong_generators;
+	G_gen = NEW_OBJECT(strong_generators);
 	G_gen->init_from_sims(G, 0 /* verbose_level */);
 
-	H_gen = new strong_generators;
+	H_gen = NEW_OBJECT(strong_generators);
 	H_gen->init_from_sims(H, 0 /* verbose_level */);
 
 	n = degree;
@@ -2911,7 +2910,7 @@ void action::conjugacy_classes_using_MAGMA(const BYTE *prefix,
 
 	strong_generators *G_gen;
 
-	G_gen = new strong_generators;
+	G_gen = NEW_OBJECT(strong_generators);
 	G_gen->init_from_sims(G, 0 /* verbose_level */);
 
 	n = degree;
@@ -2942,7 +2941,7 @@ void action::conjugacy_classes_using_MAGMA(const BYTE *prefix,
 
 	cout << "command ConjugacyClasses in MAGMA has finished" << endl;
 	
-	delete G_gen;
+	FREE_OBJECT(G_gen);
 	
 	if (f_v) {
 		cout << "action::conjugacy_classes_using_MAGMA done" << endl;
@@ -2967,7 +2966,7 @@ void action::centralizer_using_MAGMA(const BYTE *prefix,
 
 	strong_generators *G_gen;
 
-	G_gen = new strong_generators;
+	G_gen = NEW_OBJECT(strong_generators);
 	G_gen->init_from_sims(G, 0 /* verbose_level */);
 
 	n = degree;
@@ -3006,7 +3005,7 @@ void action::centralizer_using_MAGMA(const BYTE *prefix,
 
 	cout << "command centralizer in MAGMA has finished" << endl;
 	
-	delete G_gen;
+	FREE_OBJECT(G_gen);
 	
 	if (f_v) {
 		cout << "action::centralizer_using_MAGMA done" << endl;
@@ -3066,7 +3065,7 @@ void action::point_stabilizer_any_point(INT &pt,
 		cout << "action::point_stabilizer_any_point computing "
 				"strong generators for the point stabilizer:" << endl;
 		}
-	stab_gens = new strong_generators;
+	stab_gens = NEW_OBJECT(strong_generators);
 	stab_gens->init_from_sims(Stab, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point strong generators "
@@ -3134,7 +3133,7 @@ void action::point_stabilizer_any_point_with_given_group(
 				"computing strong generators for the point stabilizer:"
 				<< endl;
 		}
-	stab_gens = new strong_generators;
+	stab_gens = NEW_OBJECT(strong_generators);
 	stab_gens->init_from_sims(Stab, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point_with_given_group "

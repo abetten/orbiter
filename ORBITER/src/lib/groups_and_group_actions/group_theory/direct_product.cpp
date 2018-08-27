@@ -59,7 +59,7 @@ void direct_product::freeself()
 		FREE_UBYTE(elt1);
 	}
 	if (Elts) {
-		delete Elts;
+		FREE_OBJECT(Elts);
 	}
 	if (base_for_component1) {
 		FREE_INT(base_for_component1);
@@ -201,7 +201,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		cout << endl;
 	}
 
-	Elts = new page_storage;
+	Elts = NEW_OBJECT(page_storage);
 	Elts->init(char_per_elt /* entry_size */,
 			10 /* page_length_log */, verbose_level);
 
@@ -663,7 +663,7 @@ void direct_product::lift_generators(
 	len2 = SG2->gens->len;
 	len3 = len1 + len2;
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(len3);
 	Elt1 = NEW_INT(A1->elt_size_in_INT);
@@ -674,12 +674,14 @@ void direct_product::lift_generators(
 	A2->element_one(Elt2, 0 /* verbose_level */);
 	for (i = 0; i < len1; i++) {
 		A1->element_move(SG1->gens->ith(i), Elt3, 0 /* verbose_level */);
-		A2->element_move(Elt2, Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
+		A2->element_move(Elt2,
+				Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
 		A->element_move(Elt3, gens->ith(i), 0);
 	}
 	for (i = 0; i < len2; i++) {
 		A1->element_move(Elt1, Elt3, 0 /* verbose_level */);
-		A2->element_move(SG2->gens->ith(i), Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
+		A2->element_move(SG2->gens->ith(i),
+				Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
 		A->element_move(Elt3, gens->ith(len1 + i), 0);
 	}
 	if (f_v) {
@@ -693,7 +695,7 @@ void direct_product::lift_generators(
 		TRUE /* f_target_go */, go3,
 		gens, SG3,
 		verbose_level);
-	delete gens;
+	FREE_OBJECT(gens);
 	if (f_v) {
 		cout << "direct_product::lift_generators done" << endl;
 	}

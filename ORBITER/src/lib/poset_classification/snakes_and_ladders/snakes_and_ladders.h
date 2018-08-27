@@ -1166,7 +1166,7 @@ public:
 		// We are extending a set of size 'size' 
 		// to a set of size 'size' + 1. 
 		// Calls poset_orbit_node::init_extension_node for the 
-		// new node that is (possibly) created
+		// n e w node that is (possibly) created
 	void handle_extension_fusion_type(INT verbose_level);
 		// called from upstep_work::handle_extension
 		// Handles the extension 'cur_ex' in node 'prev'.
@@ -1180,7 +1180,7 @@ public:
 		// then changes the type of the extension to 
 		// EXTENSION_TYPE_EXTENSION
 
-		// Establishes a new node at depth 'size' 
+		// Establishes a n e w node at depth 'size'
 		// (i.e., a set of size 'size') as an extension 
 		// of a previous node (prev) at depth size - 1 
 		// with respect to a given point (pt).

@@ -434,7 +434,7 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			l++;
 			continue;
 			}
-		// work on a new cycle, starting at position l: 
+		// work on a n e w cycle, starting at position l:
 		first = l;
 		//cout << "set_of_sets::init_cycle_structure cyle
 		//starting with " << first << endl;

@@ -32,10 +32,10 @@ void product_action::null()
 void product_action::free()
 {
 	if (A1) {
-		delete [] A1;
+		FREE_OBJECT(A1);
 		}
 	if (A2) {
-		delete [] A2;
+		FREE_OBJECT(A2);
 		}
 	if (Elt1)
 		FREE_INT(Elt1);
@@ -44,11 +44,11 @@ void product_action::free()
 	if (Elt3)
 		FREE_INT(Elt3);
 	if (elt1)
-		delete [] elt1;
+		FREE_UBYTE(elt1);
 	if (elt2)
-		delete [] elt2;
+		FREE_UBYTE(elt1);
 	if (elt3)
-		delete [] elt3;
+		FREE_UBYTE(elt1);
 	null();
 }
 
@@ -75,12 +75,12 @@ void product_action::init(action *A1, action *A2, INT f_use_projections, INT ver
 	Elt1 = NEW_INT(elt_size_in_INT);
 	Elt2 = NEW_INT(elt_size_in_INT);
 	Elt3 = NEW_INT(elt_size_in_INT);
-	elt1 = new UBYTE[coded_elt_size_in_char];
-	elt2 = new UBYTE[coded_elt_size_in_char];
-	elt3 = new UBYTE[coded_elt_size_in_char];
+	elt1 = NEW_UBYTE(coded_elt_size_in_char);
+	elt2 = NEW_UBYTE(coded_elt_size_in_char);
+	elt3 = NEW_UBYTE(coded_elt_size_in_char);
 
 
-	Elts = new page_storage;
+	Elts = NEW_OBJECT(page_storage);
 	if (f_vv) {
 		cout << "matrix_group::init_linear() calling Elts->init()" << endl;
 		}

@@ -1182,7 +1182,7 @@ INT incidence_structure::refine_column_partition(
 	if (f_vv) {
 		cout << "incidence_structure::refine_column_partition "
 				"after sorting, with " << PStack.ht - ht0
-				<< " new classes" << endl;
+				<< " n e w classes" << endl;
 		cout << PStack << endl;
 		}
 
@@ -1296,7 +1296,7 @@ INT incidence_structure::refine_row_partition(
 	if (f_vv) {
 		cout << "incidence_structure::refine_row_partition "
 				"after sorting, with " << PStack.ht - ht0
-				<< " new classes" << endl;
+				<< " n e w classes" << endl;
 		cout << PStack << endl;
 		}
 

@@ -54,8 +54,9 @@ void perm_group::free()
 	if (elt3)
 		FREE_UBYTE(elt3);
 	//cout << "perm_group::free before Elts" << endl;
-	if (Elts)
-		delete Elts;
+	if (Elts) {
+		FREE_OBJECT(Elts);
+	}
 	if (Eltrk1)
 		FREE_INT(Eltrk1);
 	if (Eltrk2)
@@ -79,7 +80,7 @@ void perm_group::allocate()
 	Eltrk2 = NEW_INT(elt_size_INT);
 	Eltrk3 = NEW_INT(elt_size_INT);
 
-	Elts = new page_storage;
+	Elts = NEW_OBJECT(page_storage);
 }
 
 void perm_group::init_product_action(INT m, INT n,

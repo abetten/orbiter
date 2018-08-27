@@ -162,10 +162,10 @@ void difference_set_in_heisenberg_group::init(INT n, INT q, INT verbose_level)
 	difference_set_in_heisenberg_group::n = n;
 	difference_set_in_heisenberg_group::q = q;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
-	H = new heisenberg;
+	H = NEW_OBJECT(heisenberg);
 	H->init(F, n, verbose_level);
 
 	cout << "group order = " << H->group_order << endl;
@@ -237,7 +237,7 @@ void difference_set_in_heisenberg_group::init(INT n, INT q, INT verbose_level)
 		}
 #endif
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 
 	cout << "creating holomorph" << endl;
@@ -313,11 +313,11 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 	cout << endl;
 
 
-	U_gens = new vector_ge;
+	U_gens = NEW_OBJECT(vector_ge);
 	U_gens->init_single(A, E1);
 	
 	Aut = Aut_gens->create_sims(verbose_level);
-	U = new sims;
+	U = NEW_OBJECT(sims);
 
 	cout << "The group U" << endl;
 	U = create_sims_from_generators_without_target_group_order(A, 
@@ -327,7 +327,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 
 	
 	
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 	Sch->init(A);
 	Sch->init_generators(*U_gens);
 	Sch->compute_all_point_orbits(0 /*verbose_level*/);
@@ -347,7 +347,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 
 
 	
-	N = new action;
+	N = NEW_OBJECT(action);
 	longinteger_object n_go;
 
 	n_go.create(N_go);
@@ -364,7 +364,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 	rk_E1 = N->Sims->element_rank_INT(E1);
 	cout << "rk_E1 = " << rk_E1 << endl;
 
-	N_on_orbits = new action;
+	N_on_orbits = NEW_OBJECT(action);
 	
 	cout << "creating action on orbits:" << endl;
 	N_on_orbits->induced_action_on_orbits(N, Sch, TRUE /* f_play_it_safe */, 
@@ -578,10 +578,10 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		cout << endl;
 
 
-		O_gens = new vector_ge;
+		O_gens = NEW_OBJECT(vector_ge);
 		O_gens->init_double(A, Elt1, Elt2);
 	
-		O = new sims;
+		O = NEW_OBJECT(sims);
 
 		cout << "The group O" << endl;
 		O = create_sims_from_generators_without_target_group_order(A, 
@@ -595,7 +595,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 
 	
 	
-		Sch1 = new schreier;
+		Sch1 = NEW_OBJECT(schreier);
 		Sch1->init(N_on_orbits);
 		Sch1->init_generators(*O_gens);
 		Sch1->compute_all_point_orbits(0 /*verbose_level*/);
@@ -1140,7 +1140,7 @@ void test_heisenberg(INT n, INT q, INT verbose_level)
 {
 	difference_set_in_heisenberg_group *DS;
 
-	DS = new difference_set_in_heisenberg_group;
+	DS = NEW_OBJECT(difference_set_in_heisenberg_group);
 	
 	DS->init(n, q, verbose_level);
 
@@ -1157,14 +1157,6 @@ void test_heisenberg(INT n, INT q, INT verbose_level)
 
 	DS->do_n2q3(verbose_level);
 
-#if 0
-	FREE_INT(E1);
-	delete A;
-	FREE_INT(Table);
-	FREE_INT(gens);
-	delete H;
-	delete F;
-#endif
 	
 }
 
@@ -1282,7 +1274,7 @@ void dimino(sims *S,
 				continue;
 				}
 			if (f_vv) {
-				cout << "new coset rep" << endl;
+				cout << "n e w coset rep" << endl;
 				}
 			new_coset_rep = c;
 			
@@ -1298,7 +1290,7 @@ void dimino(sims *S,
 			}
 		}
 	if (f_vv) {
-		cout << "dimino, the new group has order " << group_sz << endl;
+		cout << "dimino, the n e w group has order " << group_sz << endl;
 		}
 	
 	if (f_v) {

@@ -64,7 +64,7 @@ action *create_automorphism_group_from_group_table(
 
 	action *A;
 	
-	A = new action;
+	A = NEW_OBJECT(action);
 
 
 	cout << "creating holomorph" << endl;
@@ -104,7 +104,7 @@ void create_linear_group(sims *&S, action *&A,
 				"m=" << m << " q=" << F->q << endl;
 		}
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	if (f_projective) {
 		if (f_v) {
@@ -174,7 +174,7 @@ void create_linear_group(sims *&S, action *&A,
 
 		strong_generators *SG;
 
-		SG = new strong_generators;
+		SG = NEW_OBJECT(strong_generators);
 		if (f_v) {
 			cout << "action_global.C creating strong generators "
 					"for the kernel n the action "
@@ -183,7 +183,7 @@ void create_linear_group(sims *&S, action *&A,
 		
 		SG->init_from_sims(A_on_det.Kernel, 0 /* verbose_level */);
 		S = SG->create_sims(0 /* verbose_level */);
-		delete SG;
+		FREE_OBJECT(SG);
 		}
 	else {
 
@@ -229,7 +229,7 @@ action *create_induced_action_by_restriction(action *A,
 	if (f_v) {
 		cout << "create_induced_action_by_restriction" << endl;
 		}
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	A2->induced_action_by_restriction(*A,
 			f_induce,  S, size, set, verbose_level - 1);
 	if (f_v) {
@@ -248,7 +248,7 @@ action *create_induced_action_on_sets(action *A,
 	if (f_v) {
 		cout << "create_induced_action_on_sets" << endl;
 		}
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_sets(*A,
 			S, nb_sets, set_size, sets, f_induce, verbose_level - 1);
 	if (f_v) {
@@ -272,7 +272,7 @@ void create_orbits_on_subset_using_restricted_action(
 		}
 	A_by_restriction = create_induced_action_by_restriction(A,
 			S, size, set, f_induce, verbose_level - 1);
-	Orbits = new schreier;
+	Orbits = NEW_OBJECT(schreier);
 
 	A_by_restriction->compute_all_point_orbits(*Orbits,
 			S->gens, verbose_level - 2);
@@ -296,7 +296,7 @@ void create_orbits_on_sets_using_action_on_sets(
 		}
 	A_on_sets = create_induced_action_on_sets(A,
 			S, nb_sets, set_size, sets, f_induce, verbose_level - 1);
-	Orbits = new schreier;
+	Orbits = NEW_OBJECT(schreier);
 
 	A_on_sets->compute_all_point_orbits(*Orbits, S->gens, verbose_level - 2);
 	if (f_v) {
@@ -317,7 +317,7 @@ action *new_action_by_right_multiplication(
 	if (f_v) {
 		cout << "new_action_by_right_multiplication" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->induced_action_by_right_multiplication(FALSE /* f_basis */,
 		NULL /* sims *old_G */,
 		group_we_act_on, f_transfer_ownership /* f_ownership */,
@@ -760,10 +760,10 @@ void generators_to_strong_generators(action *A,
 				"after create_sims_from_generators_randomized" << endl;
 		}
 
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(S, 0);
 
-	delete S;
+	FREE_OBJECT(S);
 
 	if (f_v) {
 		cout << "generators_to_strong_generators done" << endl;
@@ -784,7 +784,7 @@ void compute_generators_GL_n_q(INT *&Gens,
 	if (f_v) {
 		cout << "compute_generators_GL_n_q" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	A->init_projective_group(n, F,
 			FALSE /* f_semilinear */,
@@ -820,7 +820,7 @@ void compute_generators_GL_n_q(INT *&Gens,
 			}
 		
 		}
-	delete A;
+	FREE_OBJECT(A);
 	if (f_v) {
 		cout << "compute_generators_GL_n_q done" << endl;
 		}
@@ -833,8 +833,8 @@ void order_of_PGGL_n_q(longinteger_object &go,
 	action *A;
 	finite_field *F;
 
-	F = new finite_field;
-	A = new action;
+	F = NEW_OBJECT(finite_field);
+	A = NEW_OBJECT(action);
 
 	F->init(q, 0);
 	A->init_projective_group(n, F, 
@@ -842,8 +842,8 @@ void order_of_PGGL_n_q(longinteger_object &go,
 		TRUE /* f_basis */, verbose_level - 2);
 	A->group_order(go);
 	
-	delete F;
-	delete A;
+	FREE_OBJECT(F);
+	FREE_OBJECT(A);
 }
 
 
@@ -919,10 +919,10 @@ void test_matrix_group(INT k, INT q, INT f_semilinear, INT verbose_level)
 	finite_field *F;
 	INT f_basis = TRUE;
 	
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	A.init_projective_group(k, F, f_semilinear, f_basis, verbose_level);
-	delete F;
+	FREE_OBJECT(F);
 }
 
 void lift_generators(vector_ge *gens_in, vector_ge *&gens_out, 
@@ -945,7 +945,7 @@ void lift_generators(vector_ge *gens_in, vector_ge *&gens_out,
 
 	m = n / S->s;
 
-	gens_out = new vector_ge;
+	gens_out = NEW_OBJECT(vector_ge);
 
 	Eltq = NEW_INT(Aq->elt_size_in_INT);
 	Mtx = NEW_INT(n * n);
@@ -1005,7 +1005,7 @@ void retract_generators(vector_ge *gens_in,
 
 	m = n / S->s;
 
-	gens_out = new vector_ge;
+	gens_out = NEW_OBJECT(vector_ge);
 
 	EltQ = NEW_INT(AQ->elt_size_in_INT);
 	Mtx = NEW_INT(m * m);
@@ -1153,7 +1153,7 @@ void lift_generators_to_subfield_structure(
 		}
 
 
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 
 	Strong_gens->init_from_sims(Sims, 0 /* verbose_level */);
 	if (f_vv) {
@@ -1163,8 +1163,8 @@ void lift_generators_to_subfield_structure(
 		}
 
 
-	delete gens1;
-	delete Sims;
+	FREE_OBJECT(gens1);
+	FREE_OBJECT(Sims);
 	if (f_v) {
 		cout << "lift_generators_to_subfield_structure done" << endl;
 		}
@@ -1461,7 +1461,7 @@ action *create_automorphism_group_of_graph_with_partition_and_labeling(
 	action *A;
 
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	ago.create(Ago);
 
@@ -1592,7 +1592,7 @@ action *create_automorphism_group_of_graph(
 
 
 	ago.create(Ago);
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "create_automorphism_group_of_graph "
@@ -1678,7 +1678,7 @@ action *create_automorphism_group_and_canonical_labeling_of_graph(
 	action *A;
 	longinteger_object ago;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	ago.create(Ago);
 	A->init_permutation_group_from_generators(n, 
@@ -1903,7 +1903,7 @@ action *create_automorphism_group_of_incidence_structure_low_level(
 	longinteger_object ago;
 
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	ago.create(Ago);
 	A->init_permutation_group_from_generators(m + n, 
@@ -2247,7 +2247,7 @@ void add_configuration_graph(ofstream &g,
 	
 	FREE_INT(joining_table);
 	FREE_INT(M1);
-	delete A;
+	FREE_OBJECT(A);
 }
 
 // O4_model:
@@ -2866,7 +2866,7 @@ sims *set_stabilizer_in_projective_space(
 				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
 		//FREE_INT(Incma);
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 
 	if (f_vv) {
@@ -2956,7 +2956,7 @@ sims *set_stabilizer_in_projective_space(
 				Incma_out, nb_rows, nb_cols, TRUE, labeling,
 				verbose_level);
 		CG->save(fname_bin, verbose_level);
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 
 	canonical_pt = -1;
@@ -2992,7 +2992,7 @@ sims *set_stabilizer_in_projective_space(
 	longinteger_object ago;
 
 
-	A_perm = new action;
+	A_perm = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "set_stabilizer_in_projective_space "
@@ -3036,7 +3036,7 @@ sims *set_stabilizer_in_projective_space(
 	gens = A_perm->Strong_gens->gens;
 	//gens = A->strong_generators;
 
-	gens1 = new vector_ge;
+	gens1 = NEW_OBJECT(vector_ge);
 	gens1->init(A_linear);
 	gens1->allocate(gens->len);
 	
@@ -3165,11 +3165,10 @@ sims *set_stabilizer_in_projective_space(
 	FREE_INT(Incma);
 	FREE_INT(partition);
 	FREE_INT(labeling);
-	delete A_perm;
-	delete gens1;
+	FREE_OBJECT(A_perm);
+	FREE_OBJECT(gens1);
 	FREE_INT(Mtx);
 	FREE_INT(Elt1);
-	//delete A_linear;
 
 	if (f_v) {
 		cout << "set_stabilizer_in_projective_space done" << endl;
@@ -3364,15 +3363,15 @@ void color_preserving_subgroup(action *A,
 		cout << endl;
 		}
 	
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(sz);
 	for (h = 0; h < sz; h++) {
 		S->element_unrank_INT(Subgrp[h], gens->ith(h));
 		}
 	
-	Subgroup = new sims;
-	K = new sims;
+	Subgroup = NEW_OBJECT(sims);
+	K = NEW_OBJECT(sims);
 	Go.create(sz);
 	Subgroup->init(A);
 	K->init(A);
@@ -3387,8 +3386,8 @@ void color_preserving_subgroup(action *A,
 
 	FREE_INT(Elt);
 	FREE_INT(Subgrp);
-	delete gens;
-	delete K;
+	FREE_OBJECT(gens);
+	FREE_OBJECT(K);
 
 	if (f_v) {
 		cout << "color_preserving_subgroup done" << endl;
@@ -3458,7 +3457,7 @@ void compute_conjugacy_classes(sims *S,
 	if (f_v) {
 		cout << "compute_conjugacy_classes" << endl;
 		}
-	Aconj = new action;
+	Aconj = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "Creating action by conjugation" << endl;
@@ -3474,12 +3473,12 @@ void compute_conjugacy_classes(sims *S,
 	ABC = Aconj->G.ABC;
 
 
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 
 	Sch->init(Aconj);
 
 
-	SG = new strong_generators;
+	SG = NEW_OBJECT(strong_generators);
 
 	SG->init_from_sims(S, 0);
 	
@@ -3616,7 +3615,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	if (degree > 500) {
 		f_big = TRUE;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	
 	A->init_permutation_group(degree, 0/*verbose_level*/);
 	Gens.init(A);
@@ -3733,7 +3732,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	FREE_INT(type_first);
 	FREE_INT(type_len);
 	
-	delete A;
+	FREE_OBJECT(A);
 }
 
 
@@ -3750,7 +3749,7 @@ void do_canonical_form(INT n, finite_field *F,
 		cout << "do_canonical_form" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_canonical_form before P->init" << endl;
@@ -3767,7 +3766,7 @@ void do_canonical_form(INT n, finite_field *F,
 	sims *Stab;
 	action *A_linear;
 
-	A_linear = new action;
+	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(n + 1, F, f_semilinear, 
 			TRUE /* f_basis */, verbose_level);
 
@@ -3782,9 +3781,9 @@ void do_canonical_form(INT n, finite_field *F,
 		verbose_level);
 	//P->draw_point_set_in_plane(fname_base, set, set_size,
 	// TRUE /*f_with_points*/, 0 /* verbose_level */);
-	delete Stab;
-	delete A_linear;
-	delete P;
+	FREE_OBJECT(Stab);
+	FREE_OBJECT(A_linear);
+	FREE_OBJECT(P);
 
 	if (f_v) {
 		cout << "do_canonical_form done" << endl;
@@ -3803,7 +3802,7 @@ void create_action_and_compute_orbits_on_equations(
 		cout << "create_action_and_compute_orbits_on_equations" << endl;
 		}
 
-	A_on_equations = new action;
+	A_on_equations = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "creating the induced action on the equations:" << endl;

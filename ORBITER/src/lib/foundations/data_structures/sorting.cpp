@@ -210,7 +210,7 @@ void INT_vec_insert_and_reallocate_if_necessary(INT *&vec, INT &used_length, INT
 		vec[idx] = a;
 		used_length++;
 		if (FALSE) {
-			cout << "element " << a << " has been added to the list at position " << idx << " new length = " << used_length << endl;
+			cout << "element " << a << " has been added to the list at position " << idx << " n e w length = " << used_length << endl;
 			}
 		if (f_v) {
 			if ((used_length & (1024 - 1)) == 0) {
@@ -249,7 +249,7 @@ void INT_vec_append_and_reallocate_if_necessary(INT *&vec, INT &used_length, INT
 	vec[used_length] = a;
 	used_length++;
 	if (FALSE) {
-		cout << "element " << a << " has been appended to the list at position " << used_length - 1 << " new length = " << used_length << endl;
+		cout << "element " << a << " has been appended to the list at position " << used_length - 1 << " n e w length = " << used_length << endl;
 		}
 	if (f_v) {
 		if ((used_length & (1024 - 1)) == 0) {
