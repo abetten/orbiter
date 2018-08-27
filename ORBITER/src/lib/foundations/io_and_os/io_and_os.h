@@ -71,6 +71,7 @@ public:
 			INT verbose_level);
 	void automatic_dump();
 	void manual_dump();
+	void manual_dump_with_file_name(const BYTE *fname);
 	void dump();
 	void dump_to_csv_file(const BYTE *fname);
 	int *allocate_int(INT n, const char *file, int line);
@@ -89,6 +90,8 @@ public:
 	void free_UBYTE(UBYTE *p, const char *file, int line);
 	BYTE **allocate_PBYTE(INT n, const char *file, int line);
 	void free_PBYTE(BYTE **p, const char *file, int line);
+	UBYTE **allocate_PUBYTE(INT n, const char *file, int line);
+	void free_PUBYTE(UBYTE **p, const char *file, int line);
 	void **allocate_pvoid(INT n, const char *file, int line);
 	void free_pvoid(void **p, const char *file, int line);
 	void *allocate_OBJECTS(void *p, INT n, INT size_of, const char *file, int line);
