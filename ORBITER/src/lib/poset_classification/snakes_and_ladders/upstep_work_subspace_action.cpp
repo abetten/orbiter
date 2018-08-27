@@ -48,7 +48,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	INT *embedding;
 	INT *changed_space;
 	
-	AG = new action_on_grassmannian;
+	AG = NEW_OBJECT(action_on_grassmannian);
 	
 
 	O_cur->store_set(gen, size - 1);
@@ -191,7 +191,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			verbose_level);
 		// computes the orbits of the group H
 		// up_orbit will be extended as soon 
-		// as new automorphisms are found
+		// as n e w automorphisms are found
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "
 				"computing initial orbits of hyperplane action done"
@@ -223,7 +223,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 				<< " cosets of the hyperplane stabilizer:" << endl;
 		}
 
-	coset_table = new coset_table_entry[degree];
+	coset_table = NEW_OBJECTS(coset_table_entry, degree);
 	nb_cosets = degree;
 	nb_cosets_processed = 0;
 
@@ -460,7 +460,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			up_orbit.extend_orbit(aut, verbose_level - 8);
 			if (f_vv) {
 				cout << "upstep_work::upstep_subspace_action "
-						"new orbit length upstep = "
+						"n e w orbit length upstep = "
 						<< up_orbit.orbit_len[0] << endl;
 				}
 			}

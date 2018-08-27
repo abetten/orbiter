@@ -54,7 +54,8 @@ classify::~classify()
 	//cout << "~classify() finished" << endl;
 }
 
-void classify::init(INT *data, INT data_length, INT f_second, INT verbose_level)
+void classify::init(INT *data,
+		INT data_length, INT f_second, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -100,7 +101,8 @@ INT classify::class_of(INT pt_idx)
 			return i;
 			}
 		}
-	cout << "classify::class_of() cannot find the class containing " << pt_idx << endl;
+	cout << "classify::class_of cannot find the class "
+			"containing " << pt_idx << endl;
 	exit(1);
 }
 
@@ -191,7 +193,8 @@ void classify::print_naked_tex(ostream &ost, INT f_backwards)
 		}
 }
 
-void classify::print_types_naked_tex(ostream &ost, INT f_backwards, INT *the_vec_sorted, 
+void classify::print_types_naked_tex(
+	ostream &ost, INT f_backwards, INT *the_vec_sorted,
 	INT nb_types, INT *type_first, INT *type_len)
 {
 	INT i, f, l, a;
@@ -268,7 +271,8 @@ double classify::average_of_non_zero_values()
 	return s / (double) L;
 }
 
-void classify::get_data_by_multiplicity(INT *&Pts, INT &nb_pts, INT multiplicity, INT verbose_level)
+void classify::get_data_by_multiplicity(
+		INT *&Pts, INT &nb_pts, INT multiplicity, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -295,7 +299,8 @@ void classify::get_data_by_multiplicity(INT *&Pts, INT &nb_pts, INT multiplicity
 		}
 }
 
-void classify::get_class_by_value(INT *&Pts, INT &nb_pts, INT value, INT verbose_level)
+void classify::get_class_by_value(
+		INT *&Pts, INT &nb_pts, INT value, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -318,11 +323,13 @@ void classify::get_class_by_value(INT *&Pts, INT &nb_pts, INT value, INT verbose
 		}
 	Pts = NEW_INT(1);
 	nb_pts = 0;
-	//cout << "classify::get_class_by_value did not find the value" << endl;
+	//cout << "classify::get_class_by_value
+	//ßdid not find the value" << endl;
 	//exit(1);
 }
 
-set_of_sets *classify::get_set_partition_and_types(INT *&types, INT &nb_types, INT verbose_level)
+set_of_sets *classify::get_set_partition_and_types(
+		INT *&types, INT &nb_types, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	set_of_sets *SoS;
@@ -332,8 +339,9 @@ set_of_sets *classify::get_set_partition_and_types(INT *&types, INT &nb_types, I
 		cout << "classify::get_set_partition_and_types" << endl;
 		}
 
-	SoS = new set_of_sets;
-	SoS->init_basic(data_length /* underlying_set_size */, classify::nb_types, type_len, 0 /* verbose_level */);
+	SoS = NEW_OBJECT(set_of_sets);
+	SoS->init_basic(data_length /* underlying_set_size */,
+			classify::nb_types, type_len, 0 /* verbose_level */);
 	nb_types = classify::nb_types;
 	types = NEW_INT(nb_types);
 	for (i = 0; i < nb_types; i++) {

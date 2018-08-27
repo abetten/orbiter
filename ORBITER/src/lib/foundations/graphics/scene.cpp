@@ -115,7 +115,7 @@ scene *scene::transformed_copy(double *A4, double *A4_inv,
 		cout << "scene::transformed_copy" << endl;
 		}
 
-	S = new scene;
+	S = NEW_OBJECT(scene);
 	S->init(verbose_level);
 	
 	transform_lines(S, A4, A4_inv, rad, verbose_level);

@@ -313,10 +313,10 @@ void generator::Asup_to_Ainf(INT t, INT k,
 	if (f_v) {
 		cout << "generator::Asup_to_Ainf go=" << go << endl;
 		}
-	go_t = new longinteger_object[Nt];
-	go_k = new longinteger_object[Nk];
-	ol_t = new longinteger_object[Nt];
-	ol_k = new longinteger_object[Nk];
+	go_t = NEW_OBJECTS(longinteger_object, Nt);
+	go_k = NEW_OBJECTS(longinteger_object, Nk);
+	ol_t = NEW_OBJECTS(longinteger_object, Nt);
+	ol_k = NEW_OBJECTS(longinteger_object, Nk);
 	if (f_v) {
 		cout << "generator::Asup_to_Ainf "
 				"computing orbit lengths t-orbits" << endl;
@@ -371,10 +371,10 @@ void generator::Asup_to_Ainf(INT t, INT k,
 	if (f_v) {
 		cout << "generator::Asup_to_Ainf computing Ainf done" << endl;
 		}
-	delete [] go_t;
-	delete [] go_k;
-	delete [] ol_t;
-	delete [] ol_k;
+	FREE_OBJECTS(go_t);
+	FREE_OBJECTS(go_k);
+	FREE_OBJECTS(ol_t);
+	FREE_OBJECTS(ol_k);
 	if (f_v) {
 		cout << "generator::Asup_to_Ainf done" << endl;
 		}

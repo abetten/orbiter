@@ -61,8 +61,8 @@ int main(int argc, const char **argv)
 	exact_cover_arguments *ECA = NULL;
 	isomorph_arguments *IA = NULL;
 
-	ECA = new exact_cover_arguments;
-	IA = new isomorph_arguments;
+	ECA = NEW_OBJECT(exact_cover_arguments);
+	IA = NEW_OBJECT(isomorph_arguments);
 
 
 
@@ -243,7 +243,7 @@ int main(int argc, const char **argv)
 	finite_field *F;
 	spread T;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init_override_polynomial(q, poly, 0 /* verbose_level */);
 

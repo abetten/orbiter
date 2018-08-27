@@ -38,21 +38,22 @@ void orbit_rep::freeself()
 		FREE_INT(rep);
 		}
 	if (Stab) {
-		delete Stab;
+		FREE_OBJECT(Stab);
 		}
 	if (Strong_gens) {
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		}
 	if (candidates) {
 		FREE_INT(candidates);
 		}
 	if (stab_go) {
-		delete stab_go;
+		FREE_OBJECT(stab_go);
 		}
 	null();
 }
 
-void orbit_rep::init_from_file(action *A, BYTE *prefix, 
+void orbit_rep::init_from_file(
+	action *A, BYTE *prefix,
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	void (*early_test_func_callback)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
@@ -90,13 +91,13 @@ void orbit_rep::init_from_file(action *A, BYTE *prefix,
 		verbose_level - 1);
 		// SNAKES_AND_LADDERS/snakes_and_ladders_global.C
 	
-	stab_go = new longinteger_object;
+	stab_go = NEW_OBJECT(longinteger_object);
 	Stab->group_order(*stab_go);
 
 	if (f_v) {
 		cout << "orbit_rep::init_from_file orbit_at_level="
 				<< orbit_at_level << " done, "
-						"stabilizer order = " << *stab_go << endl;
+				"stabilizer order = " << *stab_go << endl;
 		}
 
 }

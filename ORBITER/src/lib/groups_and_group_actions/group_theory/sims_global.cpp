@@ -42,40 +42,6 @@ sims *create_sims_from_generators_with_target_group_order(
 {
 	return create_sims_from_generators_randomized(A, 
 		gens, TRUE /* f_target_go */, target_go, verbose_level);
-#if 0
-	//init(A);
-	//init_trivial_group(0);
-	//freeself();
-	sims *S;
-	
-	schreier_sims *ss;
-
-	ss = new schreier_sims;
-	
-	ss->init(A, verbose_level - 1);
-
-	//ss->interested_in_kernel(A_subaction, verbose_level - 1);
-	
-	ss->init_target_group_order(target_go, verbose_level - 1);
-	
-	ss->init_generators(gens, verbose_level);
-	
-	ss->create_group(verbose_level - 1);
-
-	S = ss->G;
-	ss->G = NULL;
-	//*this = *ss->G;
-	
-	//ss->G->null();
-	
-	cout << "create_sims_from_generators_with_target_"
-			"group_order before delete ss" << endl;
-	delete ss;
-	cout << "create_sims_from_generators_with_target_"
-			"group_order after delete ss" << endl;
-
-	return S;
-#endif
 }
 
 sims *create_sims_from_generators_without_target_group_order(
@@ -101,13 +67,13 @@ sims *create_sims_from_single_generator_without_target_group_order(
 		cout << "create_sims_from_single_generator_"
 				"without_target_group_order" << endl;
 		}
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init_single(A, Elt);
 	
 	S = create_sims_from_generators_randomized(A, 
 		gens, FALSE /* f_target_go */, dummy, verbose_level);
 
-	delete gens;
+	FREE_OBJECT(gens);
 	if (f_v) {
 		cout << "create_sims_from_single_generator_"
 				"without_target_group_order done" << endl;
@@ -135,7 +101,7 @@ sims *create_sims_from_generators_randomized(action *A,
 	
 	schreier_sims *ss;
 
-	ss = new schreier_sims;
+	ss = NEW_OBJECT(schreier_sims);
 	
 	ss->init(A, verbose_level - 1);
 
@@ -156,10 +122,10 @@ sims *create_sims_from_generators_randomized(action *A,
 	//ss->G->null();
 	
 	//cout << "create_sims_from_generators_randomized
-	// before delete ss" << endl;
-	delete ss;
+	// before FREE_OBJECT ss" << endl;
+	FREE_OBJECT(ss);
 	//cout << "create_sims_from_generators_randomized
-	// after delete ss" << endl;
+	// after FREE_OBJECT ss" << endl;
 
 	if (f_v) {
 		cout << "create_sims_from_generators_randomized "
@@ -247,7 +213,7 @@ sims *create_sims_for_centralizer_of_matrix(
 
 	gl_class_rep *R1;
 
-	R1 = new gl_class_rep;
+	R1 = NEW_OBJECT(gl_class_rep);
 
 	INT *Basis;
 	INT **Gens;
@@ -321,8 +287,8 @@ sims *create_sims_for_centralizer_of_matrix(
 	longinteger_object centralizer_order, cent_go;
 	INT *Elt1;
 		
-	gens = new vector_ge;
-	SG = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
+	SG = NEW_OBJECT(vector_ge);
 	tl = NEW_INT(A->base_len);
 	gens->init(A);
 	gens->allocate(nb_gens);
@@ -364,14 +330,13 @@ sims *create_sims_for_centralizer_of_matrix(
 		}
 	FREE_PINT(Gens);
 
-	delete R1;
-	delete gens;
-	delete SG;
+	FREE_OBJECT(R1);
+	FREE_OBJECT(gens);
+	FREE_OBJECT(SG);
 	FREE_INT(tl);
 	FREE_INT(Elt1);
 	FREE_INT(Elt);
 	FREE_INT(Basis);
-	//delete [] Reps;
 
 	if (f_v) {
 		cout << "create_sims_for_centralizer_of_matrix done" << endl;

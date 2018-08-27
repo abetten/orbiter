@@ -32,7 +32,7 @@ void layered_graph::null()
 void layered_graph::freeself()
 {
 	if (L) {
-		delete [] L;
+		FREE_OBJECTS(L);
 		}
 	null();
 }
@@ -48,7 +48,7 @@ void layered_graph::init(INT nb_layers, INT *Nb_nodes_layer,
 		}
 	layered_graph::nb_layers = nb_layers;
 	strcpy(layered_graph::fname_base, fname_base);
-	L = new graph_layer[nb_layers];
+	L = NEW_OBJECTS(graph_layer, nb_layers);
 	id_of_first_node = 0;
 	for (i = 0; i < nb_layers; i++) {
 		if (f_v) {
@@ -908,7 +908,7 @@ void layered_graph::read_memory_object(
 	//cout << "layered_graph::read_memory_object
 	// data1=" << data1 << endl;
 	
-	L = new graph_layer[nb_layers];
+	L = NEW_OBJECTS(graph_layer, nb_layers);
 
 	for (i = 0; i < nb_layers; i++) {
 		L[i].read_memory_object(m, verbose_level - 1);

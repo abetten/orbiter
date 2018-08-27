@@ -31,10 +31,10 @@ void set_and_stabilizer::freeself()
 		FREE_INT(data);
 		}
 	if (Strong_gens) {
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		}
 	if (Stab) {
-		delete Stab;
+		FREE_OBJECT(Stab);
 		}
 	null();
 };
@@ -53,7 +53,8 @@ void set_and_stabilizer::init(action *A, action *A2, INT verbose_level)
 		}
 }
 
-void set_and_stabilizer::init_everything(action *A, action *A2, INT *Set, INT set_sz, 
+void set_and_stabilizer::init_everything(
+	action *A, action *A2, INT *Set, INT set_sz,
 	strong_generators *gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -82,7 +83,7 @@ set_and_stabilizer *set_and_stabilizer::create_copy(INT verbose_level)
 		cout << "set_and_stabilizer::create_copy" << endl;
 		}
 
-	SaS = new set_and_stabilizer;
+	SaS = NEW_OBJECT(set_and_stabilizer);
 	SaS->A = A;
 	SaS->A2 = A2;
 	SaS->data = NEW_INT(sz);
@@ -90,7 +91,7 @@ set_and_stabilizer *set_and_stabilizer::create_copy(INT verbose_level)
 	SaS->sz = sz;
 	target_go.assign_to(SaS->target_go);
 
-	SaS->Strong_gens = new strong_generators;
+	SaS->Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_copy(SaS->Strong_gens, 0 /* verbose_level*/);
 	SaS->Stab = SaS->Strong_gens->create_sims(verbose_level);
 	
@@ -141,7 +142,7 @@ void set_and_stabilizer::init_stab_from_data(INT *data_gens,
 		}
 	vector_ge *gens;
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	target_go.create_from_base_10_string(ascii_target_go);
 
@@ -163,14 +164,15 @@ void set_and_stabilizer::init_stab_from_data(INT *data_gens,
 	
 	Stab = Strong_gens->create_sims(verbose_level);
 
-	delete gens;
+	FREE_OBJECT(gens);
 	
 	if (f_v) {
 		cout << "set_and_stabilizer::init_stab_from_data done" << endl;
 		}
 }
 
-void set_and_stabilizer::init_stab_from_file(const BYTE *fname_gens, 
+void set_and_stabilizer::init_stab_from_file(
+	const BYTE *fname_gens,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -182,7 +184,9 @@ void set_and_stabilizer::init_stab_from_file(const BYTE *fname_gens,
 		}
 
 	if (file_size(fname_gens) <= 0) {
-		cout << "set_and_stabilizer::init_stab_from_file the file " << fname_gens << " does not exist or is empty" << endl;
+		cout << "set_and_stabilizer::init_stab_from_file "
+				"the file " << fname_gens
+				<< " does not exist or is empty" << endl;
 		exit(1);
 		}
 
@@ -202,7 +206,7 @@ void set_and_stabilizer::init_stab_from_file(const BYTE *fname_gens,
 	data = NEW_INT(A->make_element_size);
 
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 
 
@@ -229,7 +233,7 @@ void set_and_stabilizer::init_stab_from_file(const BYTE *fname_gens,
 	
 	Stab = Strong_gens->create_sims(verbose_level);
 
-	delete gens;
+	FREE_OBJECT(gens);
 	
 	if (f_v) {
 		cout << "set_and_stabilizer::init_stab_from_file done" << endl;
@@ -257,49 +261,6 @@ void set_and_stabilizer::print_generators_tex(ostream &ost)
 	Strong_gens->print_generators_tex();
 }
 
-#if 0
-set_and_stabilizer *set_and_stabilizer::apply(INT *Elt, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	set_and_stabilizer *SaS;
-	INT i;
-	vector_ge *gens;
-
-	if (f_v) {
-		cout << "set_and_stabilizer::apply" << endl;
-		}
-
-	SaS = new set_and_stabilizer;
-	SaS->init(A, A2, verbose_level);
-	SaS->init_data(data, sz, 0 /* verbose_level */);
-	A2->map_a_set(data, SaS->data, sz, Elt, 0 /* verbose_level */);
-	target_go.assign_to(SaS->target_go);
-	gens = new vector_ge;
-	gens->init(A);
-	gens->allocate(Strong_gens->gens->len);
-	for (i = 0; i < Strong_gens->gens->len; i++) {
-		A->element_conjugate_bvab(Strong_gens->gens->ith(i), Elt, gens->ith(i), 0 /* verbose_level */);
-
-		if (!A2->check_if_in_set_stabilizer(gens->ith(i), SaS->sz, SaS->data, 0 /*verbose_level*/)) {
-			cout << "conjugate element does not stabilize the set" << endl;
-			}
-		}
-	generators_to_strong_generators(A, 
-		TRUE /* f_target_go */, target_go, 
-		gens, SaS->Strong_gens, 
-		0 /*verbose_level*/);
-
-
-	SaS->Stab = SaS->Strong_gens->create_sims(verbose_level);
-
-	delete gens;
-	
-	if (f_v) {
-		cout << "set_and_stabilizer::apply done" << endl;
-		}
-	return SaS;
-}
-#endif
 void set_and_stabilizer::apply_to_self(INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -319,51 +280,41 @@ void set_and_stabilizer::apply_to_self(INT *Elt, INT verbose_level)
 	data2 = NEW_INT(sz);
 	A2->map_a_set(data, data2, sz, Elt, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "set_and_stabilizer::apply_to_self mapping the set under action " << A2->label << ":" << endl;
+		cout << "set_and_stabilizer::apply_to_self "
+				"mapping the set under action " << A2->label << ":" << endl;
 		for (i = 0; i < sz; i++) {
 			cout << i << " : " << data[i] << " : " << data2[i] << endl;
 			}
 		}
 
-#if 0
-	gens = new vector_ge;
-	gens->init(A);
-	gens->allocate(Strong_gens->gens->len);
-	for (i = 0; i < Strong_gens->gens->len; i++) {
-		if (f_v) {
-			cout << "conjugating generator " << i << " / " << Strong_gens->gens->len << endl;
-			}
-		A->element_conjugate_bvab(Strong_gens->gens->ith(i), Elt, gens->ith(i), 0 /* verbose_level */);
-
-		if (!A2->check_if_in_set_stabilizer(gens->ith(i), sz, data2, 0 /*verbose_level*/)) {
-			cout << "set_and_stabilizer::apply_to_self conjugate element does not stabilize the set" << endl;
-			}
-		}
-#else
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	if (f_v) {
-		cout << "set_and_stabilizer::apply_to_self before conjugating generators" << endl;
+		cout << "set_and_stabilizer::apply_to_self "
+				"before conjugating generators" << endl;
 		}
-	gens->init_conjugate_svas_of(Strong_gens->gens, Elt, 0 /* verbose_level */);
+	gens->init_conjugate_svas_of(Strong_gens->gens, Elt,
+			0 /* verbose_level */);
 	if (f_v) {
-		cout << "set_and_stabilizer::apply_to_self before testing the new generators" << endl;
+		cout << "set_and_stabilizer::apply_to_self "
+				"before testing the n e w generators" << endl;
 		}
 	for (i = 0; i < Strong_gens->gens->len; i++) {
-		if (!A2->check_if_in_set_stabilizer(gens->ith(i), sz, data2, 0 /*verbose_level*/)) {
-			cout << "set_and_stabilizer::apply_to_self conjugate element does not stabilize the set" << endl;
+		if (!A2->check_if_in_set_stabilizer(
+				gens->ith(i), sz, data2, 0 /*verbose_level*/)) {
+			cout << "set_and_stabilizer::apply_to_self "
+					"conjugate element does not stabilize the set" << endl;
 			}
 		}
-#endif
 	generators_to_strong_generators(A, 
 		TRUE /* f_target_go */, target_go, 
 		gens, sg, 
 		0 /*verbose_level*/);
 	INT_vec_copy(data2, data, sz);
-	delete gens;
-	delete Strong_gens;
+	FREE_OBJECT(gens);
+	FREE_OBJECT(Strong_gens);
 	Strong_gens = sg;
 	if (Stab) {
-		delete Stab;
+		FREE_OBJECT(Stab);
 		Stab = Strong_gens->create_sims(verbose_level);
 		}
 	FREE_INT(data2);
@@ -501,62 +452,73 @@ void set_and_stabilizer::rearrange_by_orbits(INT *&orbit_first, INT *&orbit_leng
 		}
 	INT_vec_copy(data2, data, sz);
 
-	delete Orb;
-	delete A_on_set;
+	FREE_OBJECT(Orb);
+	FREE_OBJECT(A_on_set);
 
 	if (f_v) {
 		cout << "set_and_stabilizer::rearrange_by_orbits done" << endl;
 		}
 }
 
-action *set_and_stabilizer::create_restricted_action_on_the_set(INT verbose_level)
+action *set_and_stabilizer::create_restricted_action_on_the_set(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "set_and_stabilizer::create_restricted_action_on_the_set" << endl;
+		cout << "set_and_stabilizer::create_restricted_"
+				"action_on_the_set" << endl;
 		}
 	
 	action *A_on_set;
 
 			
 	if (f_v) {
-		cout << "set_and_stabilizer::create_restricted_action_on_the_set creating restricted action on the set" << endl;
+		cout << "set_and_stabilizer::create_restricted_"
+				"action_on_the_set creating restricted "
+				"action on the set" << endl;
 		}
 	A_on_set = A2->restricted_action(data, sz, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
 	if (f_v) {
-		cout << "set_and_stabilizer::create_restricted_action_on_the_set creating restricted action on the set done" << endl;
+		cout << "set_and_stabilizer::create_restricted_"
+				"action_on_the_set creating restricted "
+				"action on the set done" << endl;
 		}
 
 	return A_on_set;
 }
 
-void set_and_stabilizer::print_restricted_action_on_the_set(INT verbose_level)
+void set_and_stabilizer::print_restricted_action_on_the_set(
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "set_and_stabilizer::print_restricted_action_on_the_set" << endl;
+		cout << "set_and_stabilizer::print_restricted_"
+				"action_on_the_set" << endl;
 		}
 	
 	action *A_on_set;
 
 			
 	if (f_v) {
-		cout << "set_and_stabilizer::print_restricted_action_on_the_set creating restricted action on the set" << endl;
+		cout << "set_and_stabilizer::print_restricted_action_"
+				"on_the_set creating restricted action on the set" << endl;
 		}
 	A_on_set = A2->restricted_action(data, sz, verbose_level);
 	
 	Strong_gens->print_with_given_action(cout, A_on_set);
 	
 	if (f_v) {
-		cout << "set_and_stabilizer::print_restricted_action_on_the_set creating restricted action on the set done" << endl;
+		cout << "set_and_stabilizer::print_restricted_action_"
+				"on_the_set creating restricted action "
+				"on the set done" << endl;
 		}
 
-	delete A_on_set;
+	FREE_OBJECT(A_on_set);
 }
 
 void set_and_stabilizer::test_if_group_acts(INT verbose_level)
@@ -572,7 +534,9 @@ void set_and_stabilizer::test_if_group_acts(INT verbose_level)
 		}
 }
 
-void set_and_stabilizer::init_surface(surface *Surf, action *A, action *A2, INT q, INT no, INT verbose_level)
+void set_and_stabilizer::init_surface(surface *Surf,
+		action *A, action *A2, INT q, INT no,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -593,21 +557,30 @@ void set_and_stabilizer::init_surface(surface *Surf, action *A, action *A2, INT 
 	
 	starter_configuration = cubic_surface_single_six(q, no);
 	if (f_v) {
-		cout << "set_and_stabilizer::init_surface before create_double_six_from_five_lines_with_a_common_transversal ";
+		cout << "set_and_stabilizer::init_surface "
+				"before create_double_six_from_five_lines_"
+				"with_a_common_transversal ";
 		}
-	if (Surf->create_double_six_from_five_lines_with_a_common_transversal(starter_configuration + 1, double_six, verbose_level)) {
-		cout << "set_and_stabilizer::init_surface The starter configuration is good, a double six has been computed:" << endl;
+	if (Surf->create_double_six_from_five_lines_with_a_common_transversal(
+			starter_configuration + 1,
+			double_six, verbose_level)) {
+		cout << "set_and_stabilizer::init_surface "
+				"The starter configuration is good, a double "
+				"six has been computed:" << endl;
 		INT_matrix_print(double_six, 2, 6);
 		}
 	else {
-		cout << "set_and_stabilizer::init_surface The starter configuration is bad, there is no double six" << endl;
+		cout << "set_and_stabilizer::init_surface "
+				"The starter configuration is bad, there is "
+				"no double six" << endl;
 		exit(1);
 		}
 	nb_lines = 27;
 	Lines = NEW_INT(nb_lines);
 	Lines_wedge = NEW_INT(nb_lines);
 	INT_vec_copy(double_six, Lines, 12);
-	Surf->create_remaining_fifteen_lines(double_six, Lines + 12, 0 /* verbose_level */);
+	Surf->create_remaining_fifteen_lines(
+			double_six, Lines + 12, 0 /* verbose_level */);
 
 	//Surf->line_to_wedge_vec(Lines, Lines_wedge, nb_lines);
 
@@ -622,8 +595,8 @@ void set_and_stabilizer::init_surface(surface *Surf, action *A, action *A2, INT 
 #endif
 
 
-	//nb_E = cubic_surface_nb_Eckardt_points(q, j);
-	cubic_surface_stab_gens(q, no, data, nb_gens, data_size, stab_order);
+	cubic_surface_stab_gens(q, no,
+			data, nb_gens, data_size, stab_order);
 
 
 	init(A, A2, verbose_level);

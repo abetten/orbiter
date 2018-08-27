@@ -43,12 +43,13 @@ void flag_orbit_node::freeself()
 		FREE_INT(fusion_elt);
 		}
 	if (gens) {
-		delete gens;
+		FREE_OBJECT(gens);
 		}
 	null();
 }
 
-void flag_orbit_node::init(flag_orbits *Flag_orbits, INT flag_orbit_index, 
+void flag_orbit_node::init(
+	flag_orbits *Flag_orbits, INT flag_orbit_index,
 	INT downstep_primary_orbit, INT downstep_secondary_orbit, 
 	INT downstep_orbit_len, INT f_long_orbit, 
 	INT *pt_representation, strong_generators *Strong_gens, 
@@ -123,7 +124,7 @@ void flag_orbit_node::read_file(ifstream &fp, INT verbose_level)
 		cout << "flag_orbit_node::read_file "
 				"before gens->read_from_file_binary" << endl;
 		}
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 	gens->read_from_file_binary(Flag_orbits->A, fp, verbose_level);
 
 	if (f_v) {

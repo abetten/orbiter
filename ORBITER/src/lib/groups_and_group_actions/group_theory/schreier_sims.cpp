@@ -55,11 +55,11 @@ void schreier_sims::freeself()
 		Elt1 = NULL;
 		}
 	if (G) {
-		delete G;
+		FREE_OBJECT(G);
 		G = NULL;
 		}
 	if (K) {
-		delete K;
+		FREE_OBJECT(K);
 		K = NULL;
 		}
 }
@@ -76,7 +76,7 @@ void schreier_sims::init(action *A, INT verbose_level)
 	Elt1 = NEW_INT(GA->elt_size_in_INT);
 	Elt2 = NEW_INT(GA->elt_size_in_INT);
 	Elt3 = NEW_INT(GA->elt_size_in_INT);
-	G = new sims;
+	G = NEW_OBJECT(sims);
 	//cout << "schreier_sims::init sims object " << G
 	// << " with action " << GA << "=" << GA->label << endl;
 	G->init(GA);
@@ -94,7 +94,7 @@ void schreier_sims::interested_in_kernel(action *KA,
 		KA->print_info();
 		}
 	schreier_sims::KA = KA;
-	K = new sims;
+	K = NEW_OBJECT(sims);
 	K->init(KA);
 	K->init_trivial_group(0);
 	f_interested_in_kernel = TRUE;
@@ -508,7 +508,7 @@ void schreier_sims::create_group(INT verbose_level)
 				else {
 					if (f_vvv) {
 						cout << "schreier_sims::create_group: "
-								"choosing new base point " << b << endl;
+								"choosing n e w base point " << b << endl;
 						}
 					old_base_len = GA->base_len;
 					GA->reallocate_base(b);
@@ -521,8 +521,8 @@ void schreier_sims::create_group(INT verbose_level)
 						}
 					if (f_vv) {
 						cout << "schreier_sims::create_group: "
-								"new base point " << b
-							<< " chosen, new base has length "
+								"n e w base point " << b
+							<< " chosen, n e w base has length "
 							<< GA->base_len << endl;
 						cout << "schreier_sims::create_group: "
 								"calling add_generator_at_level" << endl;
@@ -565,7 +565,7 @@ void schreier_sims::create_group(INT verbose_level)
 
 		if ((f_v && f_added) || f_vv) {
 			cout << "schreier_sims::create_group: "
-					"new group order is ";
+					"n e w group order is ";
 			print_group_orders();
 			}
 		iteration++;
@@ -602,7 +602,7 @@ void schreier_sims::create_group(INT verbose_level)
 		cout << "schreier_sims::create_group finished:";
 		print_group_orders();
 
-		cout << "the new action has base ";
+		cout << "the n e w action has base ";
 		INT_vec_print(cout, GA->base, GA->base_len);
 		cout << " of length " << GA->base_len  << endl;
 		}

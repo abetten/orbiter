@@ -51,7 +51,7 @@ subspace_orbits::~subspace_orbits()
 		FREE_INT(weights);
 		}
 	if (Gen) {
-		delete Gen;
+		FREE_OBJECT(Gen);
 		}
 }
 
@@ -85,7 +85,7 @@ void subspace_orbits::init(int argc, const char **argv,
 	v = NEW_INT(n);
 	w = NEW_INT(n);
 	weights = NEW_INT(n + 1);
-	Gen = new generator;
+	Gen = NEW_OBJECT(generator);
 
 	if (f_v) {
 		cout << "subspace_orbits::init "
@@ -441,7 +441,7 @@ void subspace_orbits::Kramer_Mesner_matrix(INT t, INT k,
 
 	FREE_INT(Len);
 	cout << "closing diophant:" << endl;
-	delete D;
+	FREE_OBJECT(D);
 	
 	
 #if 0
@@ -569,7 +569,7 @@ void subspace_orbits::print_one_solution(
 
 	set = NEW_INT(k);
 	M = NEW_INT(k * Gen->vector_space_dimension);
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	Gr->init(Gen->vector_space_dimension, k, Gen->F,
 			0/*verbose_level - 10*/);
 
@@ -610,7 +610,7 @@ void subspace_orbits::print_one_solution(
 			}
 		}
 
-	delete Gr;
+	FREE_OBJECT(Gr);
 	FREE_INT(M);
 	FREE_INT(set);
 }

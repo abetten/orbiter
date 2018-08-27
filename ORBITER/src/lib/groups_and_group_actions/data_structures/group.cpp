@@ -105,7 +105,7 @@ void group::init_strong_generators_empty_set()
 	
 	delete_strong_generators();
 	
-	group::SG = new vector_ge;
+	group::SG = NEW_OBJECT(vector_ge);
 	group::SG->init(A);
 	group::SG->allocate(0);
 	group::tl = NEW_INT(A->base_len);
@@ -121,7 +121,7 @@ void group::init_strong_generators(vector_ge &SG, INT *tl)
 	
 	delete_strong_generators();
 	
-	group::SG = new vector_ge;
+	group::SG = NEW_OBJECT(vector_ge);
 	group::SG->init(A);
 	group::SG->allocate(SG.len);
 	for (i = 0; i < SG.len; i++) {
@@ -161,7 +161,7 @@ void group::init_strong_generators_by_hdl(INT nb_gen,
 				"after delete_strong_generators" << endl;
 	}
 	
-	SG = new vector_ge;
+	SG = NEW_OBJECT(vector_ge);
 	SG->init(A);
 	SG->allocate(nb_gen);
 	if (f_v) {
@@ -199,7 +199,7 @@ void group::init_strong_generators_by_hdl(INT nb_gen,
 void group::delete_strong_generators()
 {
 	if (f_has_strong_generators) {
-		delete SG;
+		FREE_OBJECT(SG);
 		FREE_INT(tl);
 		SG = NULL;
 		tl = NULL;
@@ -211,7 +211,7 @@ void group::delete_sims()
 {
 	if (f_has_sims) {
 		if (S) {
-			delete S;
+			FREE_OBJECT(S);
 			S = NULL;
 		}
 		f_has_sims = FALSE;
@@ -345,7 +345,7 @@ void group::decode_ascii(INT verbose_level)
 		exit(1);
 		}
 	delete_strong_generators();
-	SG = new vector_ge;
+	SG = NEW_OBJECT(vector_ge);
 	SG->init(A);
 	SG->allocate(nbsg);
 	base1 = NEW_INT(A->base_len);
@@ -403,7 +403,7 @@ void group::schreier_sims(INT verbose_level)
 	if (f_v) {
 		cout << "group::schreier_sims after delete_sims" << endl;
 		}
-	S = new sims;
+	S = NEW_OBJECT(sims);
 	if (FALSE) {
 		cout << "group::schreier_sims calling S->init(A)" << endl;
 		}
@@ -444,7 +444,7 @@ void group::get_strong_generators(INT verbose_level)
 {
 	require_sims();
 	delete_strong_generators();
-	SG = new vector_ge;
+	SG = NEW_OBJECT(vector_ge);
 	SG->init(A);
 	tl = NEW_INT(A->base_len);
 	S->extract_strong_generators_in_order(*SG, tl, verbose_level - 1);

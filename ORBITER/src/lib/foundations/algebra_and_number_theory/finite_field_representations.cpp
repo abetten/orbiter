@@ -600,7 +600,7 @@ void finite_field::representing_matrix9b(INT *A, INT beta)
 	for (i = 0; i < 81; i++)
 		A[i] = 0;
 	
-	// changed to new base:
+	// changed to n e w base:
 	// attention, now transposed!
 	A[0 * 9 + 0] = 1;
 	A[1 * 9 + 1] = 1;
@@ -615,7 +615,7 @@ void finite_field::representing_matrix9b(INT *A, INT beta)
 	A[8 * 9 + 7] = delta;
 	A[8 * 9 + 8] = minus_one;
 #if 0
-	// changed to new base:
+	// changed to n e w base:
 	A[0 * 9 + 0] = 1;
 	A[1 * 9 + 1] = 1;
 	A[2 * 9 + 2] = 1;

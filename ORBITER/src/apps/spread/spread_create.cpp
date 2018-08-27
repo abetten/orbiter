@@ -37,7 +37,7 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-description") == 0) {
 			f_description = TRUE;
-			Descr = new spread_create_description;
+			Descr = NEW_OBJECT(spread_create_description);
 			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level) - 1;
 
 			cout << "-description" << endl;
@@ -62,7 +62,7 @@ int main(int argc, const char **argv)
 
 	spread_create *SC;
 
-	SC = new spread_create;
+	SC = NEW_OBJECT(spread_create);
 
 	cout << "before SC->init" << endl;
 	SC->init(Descr, verbose_level);
@@ -126,7 +126,7 @@ int main(int argc, const char **argv)
 
 	FREE_INT(Elt2);
 
-	delete SC;
+	FREE_OBJECT(SC);
 
 	the_end(t0);
 	//the_end_quietly(t0);

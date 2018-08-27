@@ -436,8 +436,8 @@ void mp_graphics::draw_polar_grid(double r_max,
 	sl_thickness(100);	
 	//G.sf_color(1);
 	//G.sf_interior(10);
-	Px = new INT[N];
-	Py = new INT[N];
+	Px = NEW_INT(N);
+	Py = NEW_INT(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
@@ -488,8 +488,8 @@ void mp_graphics::draw_axes_and_grid(
 	sl_thickness(100);	
 	//sf_color(1);
 	//sf_interior(10);
-	Px = new INT[N];
-	Py = new INT[N];
+	Px = NEW_INT(N);
+	Py = NEW_INT(N);
 	Dx = new double[N];
 	Dy = new double[N];
 

@@ -95,10 +95,10 @@ void classify_double_sixes::freeself()
 		FREE_INT(Po);
 		}
 	if (Flag_orbits) {
-		delete Flag_orbits;
+		FREE_OBJECT(Flag_orbits);
 		}
 	if (Double_sixes) {
-		delete Double_sixes;
+		FREE_OBJECT(Double_sixes);
 		}
 	null();
 }
@@ -158,7 +158,7 @@ void classify_double_sixes::init(
 		}
 
 
-	SG_line_stab = new strong_generators;
+	SG_line_stab = NEW_OBJECT(strong_generators);
 	SG_line_stab->generators_for_parabolic_subgroup(A, 
 		A->G.matrix_grp, 2, verbose_level - 1);
 
@@ -177,7 +177,7 @@ void classify_double_sixes::init(
 	{
 	spreadsheet *Sp;
 	make_spreadsheet_of_neighbors(Sp, 0 /* verbose_level */);
-	delete Sp;
+	FREE_OBJECT(Sp);
 	}
 	if (f_v) {
 		cout << "classify_double_sixes::init after compute_neighbors "
@@ -196,7 +196,7 @@ void classify_double_sixes::init(
 				"computing restricted action on neighbors" << endl;
 		}
 
-	A_on_neighbors = new action;
+	A_on_neighbors = NEW_OBJECT(action);
 	A_on_neighbors->induced_action_by_restriction(*A2, 
 		FALSE /* f_induce_action */, NULL, 
 		nb_neighbors, Neighbors, 
@@ -208,7 +208,7 @@ void classify_double_sixes::init(
 		}
 
 
-	Five_plus_one = new generator;
+	Five_plus_one = NEW_OBJECT(generator);
 	Five_plus_one->read_arguments(argc, argv, 0);
 
 
@@ -430,7 +430,7 @@ void classify_double_sixes::classify_partial_ovoids(
 		BYTE fname_csv[1000];
 		sprintf(fname_csv, "fiveplusone_%ld.csv", q);
 		Sp->save(fname_csv, verbose_level);
-		delete Sp;
+		FREE_OBJECT(Sp);
 		}
 		}
 	if (f_v) {
@@ -795,7 +795,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 #endif
 
 
-	Sp = new spreadsheet;
+	Sp = NEW_OBJECT(spreadsheet);
 #if 0
 	if (f_with_fusion) {
 		Sp->init_empty_table(nb + 1, 7);
@@ -952,7 +952,7 @@ void classify_double_sixes::downstep(INT verbose_level)
 
 	nb_orbits = Five_plus_one->nb_orbits_at_level(5);
 	
-	Flag_orbits = new flag_orbits;
+	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->init(A, A2, nb_orbits /* nb_primary_orbits_lower */, 
 		5 + 6 + 12 /* pt_representation_sz */, nb, 
 		verbose_level);
@@ -1048,7 +1048,7 @@ void classify_double_sixes::downstep(INT verbose_level)
 			}
 
 
-		delete R;
+		FREE_OBJECT(R);
 		}
 
 	Flag_orbits->nb_flag_orbits = nb_flag_orbits;
@@ -1087,7 +1087,7 @@ void classify_double_sixes::upstep(INT verbose_level)
 	INT_vec_zero(f_processed, Flag_orbits->nb_flag_orbits);
 	nb_processed = 0;
 
-	Double_sixes = new classification;
+	Double_sixes = NEW_OBJECT(classification);
 
 	longinteger_object go;
 	A->group_order(go);
@@ -1118,7 +1118,7 @@ void classify_double_sixes::upstep(INT verbose_level)
 				(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining new orbit "
+			cout << "Defining n e w orbit "
 				<< Flag_orbits->nb_primary_orbits_upper
 				<< " from flag orbit " << f << " / "
 				<< Flag_orbits->nb_flag_orbits
@@ -1145,7 +1145,7 @@ void classify_double_sixes::upstep(INT verbose_level)
 		vector_ge *coset_reps;
 		INT nb_coset_reps;
 		
-		coset_reps = new vector_ge;
+		coset_reps = NEW_OBJECT(vector_ge);
 		coset_reps->init(Surf_A->A);
 		coset_reps->allocate(12);
 
@@ -1288,7 +1288,7 @@ void classify_double_sixes::upstep(INT verbose_level)
 					"Extending the group by a factor of "
 					<< nb_coset_reps << endl;
 			}
-		Aut_gens = new strong_generators;
+		Aut_gens = NEW_OBJECT(strong_generators);
 		Aut_gens->init_group_extension(S,
 				coset_reps, nb_coset_reps, verbose_level - 2);
 		if (f_v) {
@@ -1316,9 +1316,8 @@ void classify_double_sixes::upstep(INT verbose_level)
 			Flag_orbits->nb_primary_orbits_upper, 
 			Aut_gens, dataset + 11, verbose_level);
 
-		delete coset_reps;
-		//delete Aut_gens;
-		delete S;
+		FREE_OBJECT(coset_reps);
+		FREE_OBJECT(S);
 		
 		f_processed[f] = TRUE;
 		nb_processed++;
@@ -1415,7 +1414,7 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 		ol.print_not_scientific(ost);
 		ost << "$\\\\" << endl;
 
-		delete R;
+		FREE_OBJECT(R);
 		}
 
 	ost << "The overall number of five plus one configurations "
@@ -1574,12 +1573,12 @@ void classify_double_sixes::read_file(ifstream &fp, INT verbose_level)
 		}
 
 
-	Flag_orbits = new flag_orbits;
+	Flag_orbits = NEW_OBJECT(flag_orbits);
 	Flag_orbits->A = A;
 	Flag_orbits->A2 = A;
 	Flag_orbits->read_file(fp, verbose_level);
 
-	Double_sixes = new classification;
+	Double_sixes = NEW_OBJECT(classification);
 	Double_sixes->A = A;
 	Double_sixes->A2 = A2;
 

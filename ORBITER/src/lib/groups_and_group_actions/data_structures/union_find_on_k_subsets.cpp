@@ -19,22 +19,22 @@ union_find_on_k_subsets::~union_find_on_k_subsets()
 void union_find_on_k_subsets::freeself()
 {
 	if (Ar) {
-		delete Ar;
+		FREE_OBJECT(Ar);
 		}
 	if (Ar_perm) {
-		delete Ar_perm;
+		FREE_OBJECT(Ar_perm);
 		}
 	if (Ark) {
-		delete Ark;
+		FREE_OBJECT(Ark);
 		}
 	if (Arkr) {
-		delete Arkr;
+		FREE_OBJECT(Arkr);
 		}
 	if (gens_perm) {
-		delete gens_perm;
+		FREE_OBJECT(gens_perm);
 		}
 	if (UF) {
-		delete UF;
+		FREE_OBJECT(UF);
 		}
 	null();
 }
@@ -53,9 +53,11 @@ void union_find_on_k_subsets::null()
 	
 }
 
-void union_find_on_k_subsets::init(action *A_original, sims *S, 
+void union_find_on_k_subsets::init(
+	action *A_original, sims *S,
 	INT *set, INT set_sz, INT k, 
-	INT *interesting_k_subsets, INT nb_interesting_k_subsets, 
+	INT *interesting_k_subsets,
+	INT nb_interesting_k_subsets,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -74,38 +76,48 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 	union_find_on_k_subsets::set = set;
 	union_find_on_k_subsets::set_sz = set_sz;
 	union_find_on_k_subsets::k = k;
-	union_find_on_k_subsets::interesting_k_subsets = interesting_k_subsets;
-	union_find_on_k_subsets::nb_interesting_k_subsets = nb_interesting_k_subsets;
+	union_find_on_k_subsets::interesting_k_subsets
+		= interesting_k_subsets;
+	union_find_on_k_subsets::nb_interesting_k_subsets
+		= nb_interesting_k_subsets;
 
-	Ar = new action;
-	Ar_perm = new action;
-	Ark = new action;
-	Arkr = new action;
+	Ar = NEW_OBJECT(action);
+	Ar_perm = NEW_OBJECT(action);
+	Ark = NEW_OBJECT(action);
+	Arkr = NEW_OBJECT(action);
 	
 	
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init before induced_action_by_restriction" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"before induced_action_by_restriction" << endl;
 		}
-	Ar->induced_action_by_restriction(*A_original, TRUE, S, set_sz, set, 0/*verbose_level*/);
+	Ar->induced_action_by_restriction(*A_original,
+			TRUE, S, set_sz, set, 0/*verbose_level*/);
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init after induced_action_by_restriction" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"after induced_action_by_restriction" << endl;
 		}
 	Ar->group_order(go);
 	Ar->Kernel->group_order(K_go);
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init induced action by restriction: group order = " << go << endl;
-		cout << "union_find_on_k_subsets::init kernel group order = " << K_go << endl;
+		cout << "union_find_on_k_subsets::init "
+				"induced action by restriction: "
+				"group order = " << go << endl;
+		cout << "union_find_on_k_subsets::init "
+				"kernel group order = " << K_go << endl;
 		}
 	
 	if (f_vv) {
-		cout << "union_find_on_k_subsets::init induced action:" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"induced action:" << endl;
 		//Ar->Sims->print_generators();
 		//Ar->Sims->print_generators_as_permutations();
 		//Ar->Sims->print_basic_orbits();
 	
 		longinteger_object go;
 		Ar->Sims->group_order(go);
-		cout << "union_find_on_k_subsets::init Ar->Sims go=" << go << endl;
+		cout << "union_find_on_k_subsets::init "
+				"Ar->Sims go=" << go << endl;
 
 		//cout << "induced action, in the original action:" << endl;
 		//AA->Sims->print_generators_as_permutations_override_action(A);
@@ -116,7 +128,8 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 	//K->print_generators_as_permutations();
 
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init before init_permutation_group" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"before init_permutation_group" << endl;
 		}
 
 	Ar_perm->init_permutation_group(set_sz, 0/*verbose_level*/);
@@ -126,7 +139,8 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 		}
 	
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init before induced_action_on_k_subsets" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"before induced_action_on_k_subsets" << endl;
 		}
 	Ark->induced_action_on_k_subsets(*Ar_perm, k, 0/*verbose_level*/);
 	if (f_v) {
@@ -135,18 +149,23 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 		}
 
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init before induced_action_by_restriction, creating Arkr" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"before induced_action_by_restriction, "
+				"creating Arkr" << endl;
 		}
 	Arkr->induced_action_by_restriction(*Ark, FALSE, NULL, 
 		nb_interesting_k_subsets, interesting_k_subsets, 
 		0/*verbose_level*/);
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init after induced_action_by_restriction, Arkr has been created" << endl;
+		cout << "union_find_on_k_subsets::init after "
+				"induced_action_by_restriction, Arkr "
+				"has been created" << endl;
 		}
 
 
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init creating gens_perm" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"creating gens_perm" << endl;
 		}
 
 	if (Ar->Strong_gens == NULL) {
@@ -157,7 +176,7 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 	vector_ge *gens = Ar->Strong_gens->gens;
 
 	len = gens->len;
-	gens_perm = new vector_ge;
+	gens_perm = NEW_OBJECT(vector_ge);
 
 	gens_perm->init(Ar_perm);
 	gens_perm->allocate(len);
@@ -168,7 +187,8 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 
 	for (h = 0; h < len; h++) {
 		if (FALSE /*f_v*/) {
-			cout << "union_find_on_k_subsets::init generator " << h << " / " << len << ":" << endl;
+			cout << "union_find_on_k_subsets::init "
+					"generator " << h << " / " << len << ":" << endl;
 			}
 		for (i = 0; i < set_sz; i++) {
 			j = Ar->image_of(gens->ith(h), i);
@@ -180,20 +200,24 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 			cout << endl;
 			}
 		Ar_perm->make_element(Elt1, data1, 0 /* verbose_level */);
-		Ar_perm->element_move(Elt1, gens_perm->ith(h), 0 /* verbose_level */);
+		Ar_perm->element_move(Elt1,
+				gens_perm->ith(h), 0 /* verbose_level */);
 		}
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init created gens_perm" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"created gens_perm" << endl;
 		}
 
-	UF = new union_find;
+	UF = NEW_OBJECT(union_find);
 	UF->init(Arkr, verbose_level);
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init after UF->init" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"after UF->init" << endl;
 		}
 	UF->add_generators(gens_perm, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "union_find_on_k_subsets::init after UF->add_generators" << endl;
+		cout << "union_find_on_k_subsets::init "
+				"after UF->add_generators" << endl;
 		}
 	if (f_v) {
 		INT nb, N;
@@ -201,7 +225,9 @@ void union_find_on_k_subsets::init(action *A_original, sims *S,
 		nb = UF->count_ancestors();
 		N = Arkr->degree;
 		f = ((double)nb / (double)N) * 100;
-		cout << "union_find_on_k_subsets::init number of ancestors = " << nb << " / " << N << " (" << f << "%)" << endl;
+		cout << "union_find_on_k_subsets::init number of "
+				"ancestors = " << nb << " / " << N << " ("
+				<< f << "%)" << endl;
 		}
 	if (f_v) {
 		cout << "union_find_on_k_subsets::init finished" << endl;

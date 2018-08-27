@@ -914,7 +914,7 @@ void generator::make_full_poset_graph(
 			}
 		Fst[i + 1] = Fst[i] + Nb_elements[i];
 		}
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	LG->add_data1(data1, 0/*verbose_level*/);
 
 	if (f_v) {
@@ -1229,7 +1229,7 @@ void generator::make_auxiliary_graph(INT depth,
 		}
 	Nb[2 * depth] = nb_orbits_at_level(depth);
 	
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
 		cout << "generator::make_auxiliary_graph before LG->init" << endl;
 		}
@@ -1418,7 +1418,7 @@ void generator::make_graph(INT depth,
 	the_set = NEW_INT(depth);
 
 	
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
 		cout << "generator::make_graph before LG->init" << endl;
 		}
@@ -1602,7 +1602,7 @@ void generator::make_level_graph(INT depth,
 	Nb[2] = nb_middle;
 	Nb[3] = nb_orbits_at_level(level + 1);
 
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
 		cout << "generator::make_level_graph before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
@@ -1825,7 +1825,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 		}
 	Nb[max_depth * 3 + 0] = nb_orbits_at_level(max_depth);
 
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
 		cout << "generator::make_poset_graph_detailed "
 				"before LG->init" << endl;

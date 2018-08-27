@@ -36,22 +36,22 @@ void surface::freeself()
 		FREE_INT(w2);
 		}
 	if (P) {
-		delete P;
+		FREE_OBJECT(P);
 		}
 	if (P2) {
-		delete P2;
+		FREE_OBJECT(P2);
 		}
 	if (Gr) {
-		delete Gr;
+		FREE_OBJECT(Gr);
 		}
 	if (Gr3) {
-		delete Gr3;
+		FREE_OBJECT(Gr3);
 		}
 	if (O) {
-		delete O;
+		FREE_OBJECT(O);
 		}
 	if (Klein) {
-		delete Klein;
+		FREE_OBJECT(Klein);
 		}
 	if (Sets) {
 		FREE_INT(Sets);
@@ -130,16 +130,16 @@ void surface::freeself()
 		FREE_INT(Trihedral_pairs_col_sets);
 		}
 	if (f_v) {
-		cout << "before delete Classify_trihedral_pairs_row_values;" << endl;
+		cout << "before FREE_OBJECT Classify_trihedral_pairs_row_values;" << endl;
 		}
 	if (Classify_trihedral_pairs_row_values) {
-		delete Classify_trihedral_pairs_row_values;
+		FREE_OBJECT(Classify_trihedral_pairs_row_values);
 		}
 	if (Classify_trihedral_pairs_col_values) {
-		delete Classify_trihedral_pairs_col_values;
+		FREE_OBJECT(Classify_trihedral_pairs_col_values);
 		}
 	if (Eckardt_points) {
-		delete [] Eckardt_points;
+		FREE_OBJECTS(Eckardt_points);
 		}
 	if (Trihedral_to_Eckardt) {
 		FREE_INT(Trihedral_to_Eckardt);
@@ -148,37 +148,37 @@ void surface::freeself()
 		FREE_INT(collinear_Eckardt_triples_rank);
 		}
 	if (Classify_collinear_Eckardt_triples) {
-		delete Classify_collinear_Eckardt_triples;
+		FREE_OBJECT(Classify_collinear_Eckardt_triples);
 		}
 	if (Poly1) {
-		delete Poly1;
+		FREE_OBJECT(Poly1);
 		}
 	if (Poly2) {
-		delete Poly2;
+		FREE_OBJECT(Poly2);
 		}
 	if (Poly3) {
-		delete Poly3;
+		FREE_OBJECT(Poly3);
 		}
 	if (Poly1_x123) {
-		delete Poly1_x123;
+		FREE_OBJECT(Poly1_x123);
 		}
 	if (Poly2_x123) {
-		delete Poly2_x123;
+		FREE_OBJECT(Poly2_x123);
 		}
 	if (Poly3_x123) {
-		delete Poly3_x123;
+		FREE_OBJECT(Poly3_x123);
 		}
 	if (Poly4_x123) {
-		delete Poly4_x123;
+		FREE_OBJECT(Poly4_x123);
 		}
 	if (Poly1_4) {
-		delete Poly1_4;
+		FREE_OBJECT(Poly1_4);
 		}
 	if (Poly2_4) {
-		delete Poly2_4;
+		FREE_OBJECT(Poly2_4);
 		}
 	if (Poly3_4) {
-		delete Poly3_4;
+		FREE_OBJECT(Poly3_4);
 		}
 	if (Double_six) {
 		FREE_INT(Double_six);
@@ -212,16 +212,16 @@ void surface::freeself()
 		}
 	if (f_has_large_polynomial_domains) {
 		if (Poly2_27) {
-			delete Poly2_27;
+			FREE_OBJECT(Poly2_27);
 			}
 		if (Poly4_27) {
-			delete Poly4_27;
+			FREE_OBJECT(Poly4_27);
 			}
 		if (Poly6_27) {
-			delete Poly6_27;
+			FREE_OBJECT(Poly6_27);
 			}
 		if (Poly3_24) {
-			delete Poly3_24;
+			FREE_OBJECT(Poly3_24);
 			}
 		}
 	if (Clebsch_Pij) {
@@ -332,7 +332,7 @@ void surface::init(finite_field *F, INT verbose_level)
 	v2 = NEW_INT(6);
 	w2 = NEW_INT(6);
 	
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "surface::init before P->init" << endl;
 		}
@@ -343,7 +343,7 @@ void surface::init(finite_field *F, INT verbose_level)
 		cout << "surface::init after P->init" << endl;
 		}
 
-	P2 = new projective_space;
+	P2 = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "surface::init before P2->init" << endl;
 		}
@@ -354,27 +354,27 @@ void surface::init(finite_field *F, INT verbose_level)
 		cout << "surface::init after P2->init" << endl;
 		}
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, 2, F, 0 /* verbose_level */);
 	nb_lines_PG_3 = Gr->nCkq.as_INT();
 	if (f_v) {
 		cout << "surface::init nb_lines_PG_3 = " << nb_lines_PG_3 << endl;
 		}
 
-	Gr3 = new grassmann;
+	Gr3 = NEW_OBJECT(grassmann);
 	Gr3->init(4, 3, F, 0 /* verbose_level*/);
 
 
 	if (f_v) {
 		cout << "surface::init initializing orthogonal" << endl;
 		}
-	O = new orthogonal;
+	O = NEW_OBJECT(orthogonal);
 	O->init(1 /* epsilon */, 6 /* n */, F, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "surface::init initializing orthogonal done" << endl;
 		}
 
-	Klein = new klein_correspondence;
+	Klein = NEW_OBJECT(klein_correspondence);
 
 	if (f_v) {
 		cout << "surface::init initializing Klein correspondence" << endl;
@@ -486,22 +486,29 @@ void surface::init_polynomial_domains(INT verbose_level)
 	if (f_v) {
 		cout << "surface::init_polynomial_domains" << endl;
 		}
-	Poly1 = new homogeneous_polynomial_domain;
-	Poly2 = new homogeneous_polynomial_domain;
-	Poly3 = new homogeneous_polynomial_domain;
+	Poly1 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly2 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3 = NEW_OBJECT(homogeneous_polynomial_domain);
 
-	Poly1->init(F, 3 /* nb_vars */, 1 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly2->init(F, 3 /* nb_vars */, 2 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly3->init(F, 3 /* nb_vars */, 3 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly1->init(F, 3 /* nb_vars */, 1 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly2->init(F, 3 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly3->init(F, 3 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
 
-	Poly1_x123 = new homogeneous_polynomial_domain;
-	Poly2_x123 = new homogeneous_polynomial_domain;
-	Poly3_x123 = new homogeneous_polynomial_domain;
-	Poly4_x123 = new homogeneous_polynomial_domain;
-	Poly1_x123->init(F, 3 /* nb_vars */, 1 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly2_x123->init(F, 3 /* nb_vars */, 2 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly3_x123->init(F, 3 /* nb_vars */, 3 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly4_x123->init(F, 3 /* nb_vars */, 4 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly1_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly2_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4_x123 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1_x123->init(F, 3 /* nb_vars */, 1 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly2_x123->init(F, 3 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly3_x123->init(F, 3 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly4_x123->init(F, 3 /* nb_vars */, 4 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
 
 
 	label_variables_3(Poly1, 0 /* verbose_level */);
@@ -513,12 +520,15 @@ void surface::init_polynomial_domains(INT verbose_level)
 	label_variables_x123(Poly3_x123, 0 /* verbose_level */);
 	label_variables_x123(Poly4_x123, 0 /* verbose_level */);
 
-	Poly1_4 = new homogeneous_polynomial_domain;
-	Poly2_4 = new homogeneous_polynomial_domain;
-	Poly3_4 = new homogeneous_polynomial_domain;
-	Poly1_4->init(F, 4 /* nb_vars */, 1 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly2_4->init(F, 4 /* nb_vars */, 2 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly3_4->init(F, 4 /* nb_vars */, 3 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly1_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly2_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3_4 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly1_4->init(F, 4 /* nb_vars */, 1 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly2_4->init(F, 4 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly3_4->init(F, 4 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
 
 	label_variables_4(Poly1_4, 0 /* verbose_level */);
 	label_variables_4(Poly2_4, 0 /* verbose_level */);
@@ -542,15 +552,19 @@ void surface::init_large_polynomial_domains(INT verbose_level)
 		cout << "surface::init_large_polynomial_domains" << endl;
 		}
 	f_has_large_polynomial_domains = TRUE;
-	Poly2_27 = new homogeneous_polynomial_domain;
-	Poly4_27 = new homogeneous_polynomial_domain;
-	Poly6_27 = new homogeneous_polynomial_domain;
-	Poly3_24 = new homogeneous_polynomial_domain;
+	Poly2_27 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly4_27 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly6_27 = NEW_OBJECT(homogeneous_polynomial_domain);
+	Poly3_24 = NEW_OBJECT(homogeneous_polynomial_domain);
 
-	Poly2_27->init(F, 27 /* nb_vars */, 2 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly4_27->init(F, 27 /* nb_vars */, 4 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly6_27->init(F, 27 /* nb_vars */, 6 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
-	Poly3_24->init(F, 24 /* nb_vars */, 3 /* degree */, FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly2_27->init(F, 27 /* nb_vars */, 2 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly4_27->init(F, 27 /* nb_vars */, 4 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly6_27->init(F, 27 /* nb_vars */, 6 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
+	Poly3_24->init(F, 24 /* nb_vars */, 3 /* degree */,
+			FALSE /* f_init_incidence_structure */, verbose_level);
 
 	nb_monomials2 = Poly2_27->nb_monomials;
 	nb_monomials4 = Poly4_27->nb_monomials;
@@ -2016,7 +2030,7 @@ void surface::compute_points_on_lines(
 	if (f_v) {
 		cout << "surface::compute_points_on_lines" << endl;
 		}
-	pts_on_lines = new set_of_sets;
+	pts_on_lines = NEW_OBJECT(set_of_sets);
 	pts_on_lines->init_basic_constant_size(nb_points_on_surface, 
 		nb_lines, q + 1, 0 /* verbose_level */);
 	Surf_pt_coords = NEW_INT(nb_points_on_surface * 4);
@@ -2805,8 +2819,8 @@ INT surface::create_surface_ab(INT a, INT b, INT *Lines,
 	FREE_INT(Pts);
 	FREE_INT(Intersection_pt);
 	FREE_INT(Intersection_pt_idx);
-	delete pts_on_lines;
-	delete lines_on_pt;
+	FREE_OBJECT(pts_on_lines);
+	FREE_OBJECT(lines_on_pt);
 	if (f_v) {
 		cout << "surface::create_surface_ab done" << endl;
 		}
@@ -3129,7 +3143,7 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 		strcpy(Text_klein[i], str);
 		}
 
-	Sp = new spreadsheet;
+	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_lines + 1, 7);
 	Sp->fill_column_with_row_index(0, "Idx");
 	Sp->fill_column_with_INT(1, Wedge_rk, "Wedge_rk");
@@ -3167,7 +3181,7 @@ void surface::save_lines_in_three_kinds(const BYTE *fname_csv,
 		Lines_wedge, Lines, Lines_klein, nb_lines, 0 /* verbose_level */);
 
 	Sp->save(fname_csv, 0 /*verbose_level*/);
-	delete Sp;
+	FREE_OBJECT(Sp);
 }
 
 INT surface::line_ai(INT i)
@@ -3577,7 +3591,7 @@ void surface::process_trihedral_pairs(INT verbose_level)
 		//print_integer_matrix_with_standard_labels(cout, Trihedral_pairs_col_sets, 120, 3, TRUE /* f_tex */);
 		}
 
-	Classify_trihedral_pairs_row_values = new classify;
+	Classify_trihedral_pairs_row_values = NEW_OBJECT(classify);
 	Classify_trihedral_pairs_row_values->init(
 		Trihedral_pairs_row_sets, 120 * 3, FALSE, 0);
 
@@ -3590,7 +3604,7 @@ void surface::process_trihedral_pairs(INT verbose_level)
 		//cout << endl;
 		}
 
-	Classify_trihedral_pairs_col_values = new classify;
+	Classify_trihedral_pairs_col_values = NEW_OBJECT(classify);
 	Classify_trihedral_pairs_col_values->init(Trihedral_pairs_col_sets, 
 		120 * 3, FALSE, 0);
 
@@ -3668,7 +3682,7 @@ void surface::make_Eckardt_points(INT verbose_level)
 		cout << "surface::make_Eckardt_points" << endl;
 		}
 	nb_Eckardt_points = 45;
-	Eckardt_points = new eckardt_point [nb_Eckardt_points];
+	Eckardt_points = NEW_OBJECTS(eckardt_point, nb_Eckardt_points);
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].init_by_rank(i);
 		}
@@ -3807,7 +3821,7 @@ void surface::init_collinear_Eckardt_triples(INT verbose_level)
 			FALSE /* f_tex */);
 		}
 
-	Classify_collinear_Eckardt_triples = new classify;
+	Classify_collinear_Eckardt_triples = NEW_OBJECT(classify);
 	Classify_collinear_Eckardt_triples->init(
 		collinear_Eckardt_triples_rank, nb_collinear_Eckardt_triples, 
 		FALSE, 0);
@@ -4792,7 +4806,7 @@ void surface::rearrange_lines_according_to_double_six(INT *Lines,
 	INT *Starter_Table;
 	INT nb_starter;
 
-	line_intersections = new set_of_sets;
+	line_intersections = NEW_OBJECT(set_of_sets);
 
 	if (f_v) {
 		cout << "surface::rearrange_lines_according_to_double_six before line_intersections->init_from_adjacency_matrix" << endl;
@@ -4829,7 +4843,7 @@ void surface::rearrange_lines_according_to_double_six(INT *Lines,
 
 	FREE_INT(Adj);
 	FREE_INT(Starter_Table);
-	delete line_intersections;
+	FREE_OBJECT(line_intersections);
 	if (f_v) {
 		cout << "surface::rearrange_lines_according_to_double_six done" << endl;
 		}
@@ -5249,7 +5263,7 @@ void surface::create_surface(INT f_iso, INT iso, INT f_S, INT a, INT f_equation,
 		INT eqn[20];
 
 		build_cubic_surface_from_lines(27, Lines, eqn, 0 /* verbose_level */);
-		SO = new surface_object;
+		SO = NEW_OBJECT(surface_object);
 
 		if (f_v) {
 			cout << "surface::create_surface f_has_trihedral_pair before SO->init" << endl;
@@ -5281,11 +5295,11 @@ void surface::create_surface(INT f_iso, INT iso, INT f_S, INT a, INT f_equation,
 		
 
 		if (f_v) {
-			cout << "surface::create_surface before delete SO" << endl;
+			cout << "surface::create_surface before FREE_OBJECT SO" << endl;
 			}
-		delete SO;
+		FREE_OBJECT(SO);
 		if (f_v) {
-			cout << "surface::create_surface after delete SO" << endl;
+			cout << "surface::create_surface after FREE_OBJECT SO" << endl;
 			}
 		
 		INT New_lines[27];
@@ -5302,7 +5316,7 @@ void surface::create_surface(INT f_iso, INT iso, INT f_S, INT a, INT f_equation,
 		INT_vec_copy(New_lines, Lines, 27);
 
 		if (f_v) {
-			cout << "surface::create_surface f_has_trihedral_pair  The new lines are:" << endl;
+			cout << "surface::create_surface f_has_trihedral_pair  The n e w lines are:" << endl;
 			INT_vec_print(cout, Lines, 27);
 			cout << endl;
 			}

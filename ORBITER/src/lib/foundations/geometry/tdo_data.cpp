@@ -44,11 +44,11 @@ void tdo_data::free()
 		types_first2 = NULL;
 		}
 	if (D1) {
-		delete D1;
+		FREE_OBJECT(D1);
 		D1 = NULL;
 		}
 	if (D2) {
-		delete D2;
+		FREE_OBJECT(D2);
 		D2 = NULL;
 		}
 }
@@ -60,8 +60,8 @@ void tdo_data::allocate(INT R)
 	only_one_type = NEW_INT(R);
 	multiple_types = NEW_INT(R);
 	types_first2 = NEW_INT(R);
-	D1 = new diophant;
-	D2 = new diophant;
+	D1 = NEW_OBJECT(diophant);
+	D2 = NEW_OBJECT(diophant);
 }
 
 INT tdo_data::solve_first_system(INT verbose_level, 

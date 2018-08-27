@@ -32,25 +32,25 @@ upstep_work::~upstep_work()
 	if (G) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
-					"before delete G" << endl;
+					"before FREE_OBJECT(G)" << endl;
 			}
-		delete G;
+		FREE_OBJECT(G);
 		G = NULL;
 		}
 	if (H) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
-					"before delete H" << endl;
+					"before FREE_OBJECT(H)" << endl;
 			}
-		delete H;
+		FREE_OBJECT(H);
 		H = NULL;
 		}
 	if (coset_table) {
 		if (f_v) {
 			cout << "upstep_work::~upstep_work "
-					"before delete coset_table" << endl;
+					"before FREE_OBJECT(coset_table)" << endl;
 			}
-		delete [] coset_table;
+		FREE_OBJECTS(coset_table);
 		coset_table = NULL;
 		}
 	if (path) {
@@ -132,7 +132,7 @@ void upstep_work::handle_extension(INT &nb_fuse_cur,
 //
 // Handles the extension 'cur_ex' in node 'prev'.
 // We are extending a set of size 'size' to a set of size 'size' + 1. 
-// Calls poset_orbit_node::init_extension_node for the new node
+// Calls poset_orbit_node::init_extension_node for the n e w node
 // that is (possibly) created
 {
 	INT f_v = (verbose_level >= 1);
@@ -270,7 +270,7 @@ void upstep_work::handle_extension_unprocessed_type(INT verbose_level)
 		exit(1);
 		}
 				
-	// process the node and create a new set orbit at level size + 1:
+	// process the node and create a n e w set orbit at level size + 1:
 				
 	pt_orbit_len = O_prev->E[prev_ex].orbit_len;
 
@@ -336,7 +336,7 @@ INT upstep_work::init_extension_node(INT verbose_level)
 // depending on the type of action
 // then changes the type of the extension to EXTENSION_TYPE_EXTENSION
 //
-// Establishes a new node at depth 'size'
+// Establishes a n e w node at depth 'size'
 // (i.e., a set of size 'size') as an extension
 // of a previous node (prev) at depth size - 1 
 // with respect to a given point (pt).
@@ -420,8 +420,8 @@ INT upstep_work::init_extension_node(INT verbose_level)
 				"H is already allocated" << endl;
 		exit(1);
 		}
-	G = new group;
-	H = new group;
+	G = NEW_OBJECT(group);
+	H = NEW_OBJECT(group);
 	
 
 	if (f_v) {
@@ -578,7 +578,7 @@ INT upstep_work::init_extension_node(INT verbose_level)
 
 	strong_generators *Strong_gens;
 
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(H->S, 0);
 
 #if 0
@@ -598,7 +598,7 @@ INT upstep_work::init_extension_node(INT verbose_level)
 #endif
 
 	O_cur->store_strong_generators(gen, Strong_gens);
-	delete Strong_gens;
+	FREE_OBJECT(Strong_gens);
 	
 
 	if (f_v) {
@@ -678,7 +678,7 @@ INT upstep_work::upstep_for_sets(INT verbose_level)
 	up_orbit.compute_point_orbit(size - 1 /*pt*/, 0);
 		// the orbits of the group H
 		// up_orbit will be extended as soon 
-		// as new automorphisms are found
+		// as n e w automorphisms are found
 
 
 
@@ -708,7 +708,7 @@ INT upstep_work::upstep_for_sets(INT verbose_level)
 		}
 	nb_cosets = size;
 	nb_cosets_processed = 0;
-	coset_table = new coset_table_entry[nb_cosets];
+	coset_table = NEW_OBJECTS(coset_table_entry, nb_cosets);
 	
 	for (coset = 0; coset < size - 1; coset++) { 
 		if (f_v) {
@@ -823,7 +823,7 @@ INT upstep_work::upstep_for_sets(INT verbose_level)
 			UF.add_generator(aut, 0 /*verbose_level - 5*/);
 			up_orbit.extend_orbit(aut, verbose_level - 5);
 			if (f_vvv) {
-				cout << "upstep_work::upstep_for_sets new orbit length "
+				cout << "upstep_work::upstep_for_sets n e w orbit length "
 						"upstep = " << up_orbit.orbit_len[0] << endl;
 				}
 			}

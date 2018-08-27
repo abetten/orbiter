@@ -115,7 +115,7 @@ void rainbow_cliques::search_with_additional_test_function(
 		f_color_satisfied[i] = FALSE;
 		}
 
-	CF = new clique_finder;
+	CF = NEW_OBJECT(clique_finder);
 
 	target_depth = graph->nb_colors;
 	
@@ -210,7 +210,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	dt = t1 - t0;
 
 
-	delete CF;
+	FREE_OBJECT(CF);
 	FREE_INT(f_color_satisfied);
 	FREE_INT(color_chosen_at_depth);
 	FREE_INT(color_frequency);

@@ -234,7 +234,7 @@ colored_graph *colored_graph::sort_by_color_classes(INT verbose_level)
 
 	colored_graph *CG;
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency(nb_points, nb_colors, 
 		Color, A, 0 /* verbose_level */);
 	CG->init_user_data(user_data, user_data_size,
@@ -762,7 +762,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 		cout << "colored_graph::all_cliques_of_size_k_"
 				"ignore_colors" << endl;
 		}
-	CF = new clique_finder;
+	CF = NEW_OBJECT(clique_finder);
 
 	CF->init("", nb_points, 
 		target_depth, 
@@ -778,7 +778,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 	nb_sol = CF->nb_sol;
 	decision_step_counter = CF->decision_step_counter;
 
-	delete CF;
+	FREE_OBJECT(CF);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_"
 				"ignore_colors done" << endl;
@@ -806,11 +806,11 @@ colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 			cout << endl;
 			}
 		}
-	CF = new clique_finder;
+	CF = NEW_OBJECT(clique_finder);
 
 
 	file_output *FO;
-	FO = new file_output;
+	FO = NEW_OBJECT(file_output);
 	FO->open(fname, CF, verbose_level);
 
 	CF->call_back_clique_found =
@@ -845,8 +845,8 @@ colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 
 	FO->write_EOF(nb_sol, 0 /* verbose_level*/);
 	
-	delete FO;
-	delete CF;
+	FREE_OBJECT(FO);
+	FREE_OBJECT(CF);
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_"
 				"colors_and_write_solutions_to_file done" << endl;
@@ -868,7 +868,7 @@ void colored_graph::all_rainbow_cliques(ofstream *fp,
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques" << endl;
 		}
-	R = new rainbow_cliques;
+	R = NEW_OBJECT(rainbow_cliques);
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques "
 				"before R->search" << endl;
@@ -884,7 +884,7 @@ void colored_graph::all_rainbow_cliques(ofstream *fp,
 		cout << "colored_graph::all_rainbow_cliques "
 				"after R->search" << endl;
 		}
-	delete R;
+	FREE_OBJECT(R);
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques "
 				"done" << endl;
@@ -918,7 +918,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 		cout << "colored_graph::all_rainbow_cliques_with_additional_"
 				"test_function" << endl;
 		}
-	R = new rainbow_cliques;
+	R = NEW_OBJECT(rainbow_cliques);
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques_with_additional_"
 				"test_function before R->search_with_additional_"
@@ -941,7 +941,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 				"test_function after R->search_with_additional_"
 				"test_function" << endl;
 		}
-	delete R;
+	FREE_OBJECT(R);
 	if (f_v) {
 		cout << "colored_graph::all_rainbow_cliques_with_additional_"
 				"test_function done" << endl;
@@ -1372,9 +1372,9 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 		cout << "The graph has " << nb_points << " vertices and "
 				<< nb_colors << " colors" << endl;
 		}
-	S = new colored_graph;
-	vertex_subset = new fancy_set;
-	color_subset = new fancy_set;
+	S = NEW_OBJECT(colored_graph);
+	vertex_subset = NEW_OBJECT(fancy_set);
+	color_subset = NEW_OBJECT(fancy_set);
 	color_in_graph = NEW_INT(nb_points);
 	color_in_subgraph = NEW_INT(nb_points);
 
@@ -1464,9 +1464,9 @@ colored_graph
 		cout << "The graph has " << nb_points << " vertices and "
 				<< nb_colors << " colors" << endl;
 		}
-	S = new colored_graph;
-	vertex_subset = new fancy_set;
-	color_subset = new fancy_set;
+	S = NEW_OBJECT(colored_graph);
+	vertex_subset = NEW_OBJECT(fancy_set);
+	color_subset = NEW_OBJECT(fancy_set);
 	color_in_graph = NEW_INT(nb_points);
 	color_in_subgraph = NEW_INT(nb_points);
 
@@ -2199,7 +2199,7 @@ INT colored_graph::rainbow_cliques_nonrecursive(
 			if (f_vv) {
 				cout << "nb_backtrack=" << nb_backtrack_nodes
 						<< " depth=" << depth
-						<< ", initializing new level" << endl;
+						<< ", initializing n e w level" << endl;
 				}
 			// clump by adjacency:
 			if (depth) {
@@ -2582,7 +2582,7 @@ void colored_graph_all_cliques_list_of_cases(
 		colored_graph *CG;
 
 
-		CG = new colored_graph;
+		CG = NEW_OBJECT(colored_graph);
 
 		c = list_of_cases[i];
 		if (f_v) {
@@ -2621,7 +2621,7 @@ void colored_graph_all_cliques_list_of_cases(
 		Nb_sol += nb_sol;
 		Dt += dt;
 		
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 	fp << -1 << " " << Nb_sol << " " << Search_steps 
 				<< " " << Decision_steps << " " << Dt << endl;
@@ -2664,7 +2664,7 @@ void colored_graph_all_cliques_list_of_files(
 		const BYTE *fname;
 
 
-		CG = new colored_graph;
+		CG = NEW_OBJECT(colored_graph);
 
 		c = Case_number[i];
 		fname = Case_fname[i];
@@ -2706,7 +2706,7 @@ void colored_graph_all_cliques_list_of_files(
 		Nb_sol += nb_sol;
 		Dt += dt;
 		
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 	fp << -1 << " " << Nb_sol << " " << Search_steps 
 				<< " " << Decision_steps << " " << Dt << endl;

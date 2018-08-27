@@ -94,8 +94,6 @@ ovoid_generator::~ovoid_generator()
 	
 	if (f_v) {
 		cout << "ovoid_generator::~ovoid_generator "
-				"after delete A" << endl;
-		cout << "ovoid_generator::~ovoid_generator "
 				"finished" << endl;
 		}
 	

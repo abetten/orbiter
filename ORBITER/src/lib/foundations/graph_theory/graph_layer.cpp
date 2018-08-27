@@ -28,7 +28,7 @@ void graph_layer::null()
 void graph_layer::freeself()
 {
 	if (Nodes) {
-		delete [] Nodes;
+		FREE_OBJECTS(Nodes);
 		}
 	null();
 }
@@ -40,7 +40,7 @@ void graph_layer::init(INT nb_nodes,
 
 	graph_layer::id_of_first_node = id_of_first_node;
 	graph_layer::nb_nodes = nb_nodes;
-	Nodes = new graph_node[nb_nodes];
+	Nodes = NEW_OBJECTS(graph_node, nb_nodes);
 	id = id_of_first_node;
 	for (i = 0; i < nb_nodes; i++) {
 		Nodes[i].id =id;
@@ -154,7 +154,7 @@ void graph_layer::read_memory_object(
 	m->read_int(&nb_nodes);
 	m->read_int(&id_of_first_node);
 
-	Nodes = new graph_node[nb_nodes];
+	Nodes = NEW_OBJECTS(graph_node, nb_nodes);
 
 	for (i = 0; i < nb_nodes; i++) {
 		Nodes[i].read_memory_object(m, verbose_level - 1);

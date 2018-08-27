@@ -862,7 +862,7 @@ void generator::read_level_file(INT level,
 		
 			strong_generators *Strong_gens;
 
-			Strong_gens = new strong_generators;
+			Strong_gens = NEW_OBJECT(strong_generators);
 			Strong_gens->init_from_sims(Aut.S, 0);
 
 #if 0
@@ -875,7 +875,7 @@ void generator::read_level_file(INT level,
 			O->store_strong_generators(this, Strong_gens);
 			cout << "strong generators stored" << endl;
 
-			delete Strong_gens;
+			FREE_OBJECT(Strong_gens);
 			}
 		else {
 			//cout << "trivial group" << endl;
@@ -921,7 +921,7 @@ void generator::read_data_file(INT &depth_completed,
 		cout << "generator::read_data_file before m->alloc" << endl;
 		}
 
-	m = new memory_object;
+	m = NEW_OBJECT(memory_object);
 	m->alloc(size, 0);
 
 	if (f_v) {
@@ -956,7 +956,7 @@ void generator::read_data_file(INT &depth_completed,
 				"after generator_read_memory" << endl;
 		}
 
-	delete m;
+	FREE_OBJECT(m);
 	if (f_v) {
 		cout << "generator::read_data_file done" <<endl;
 		}
@@ -991,7 +991,7 @@ void generator::write_data_file(INT depth_completed,
 		cout << "the size is very big" << endl;
 		}
 	
-	m = new memory_object;
+	m = NEW_OBJECT(memory_object);
 	m->alloc(size0, 0);
 	m->used_length = 0;
 
@@ -1009,7 +1009,7 @@ void generator::write_data_file(INT depth_completed,
 	
 	fclose(fp);
 
-	delete m;
+	FREE_OBJECT(m);
 	
 	if (f_v) {
 		cout << "generator::write_data_file finished written file " 
@@ -1432,7 +1432,7 @@ void generator::make_spreadsheet_of_orbit_reps(
 			strcpy(Text_schreier_vector_length[first + i], str);
 			}
 		}
-	Sp = new spreadsheet;
+	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, (const BYTE **)
@@ -1603,7 +1603,7 @@ void generator::make_spreadsheet_of_level_info(
 	strcpy(Text_binomial[level], str);
 
 
-	Sp = new spreadsheet;
+	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_rows + 1, 6);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, (const BYTE **)
@@ -1673,7 +1673,7 @@ void generator::write_file(ofstream &fp,
 		cout << "the size is very big" << endl;
 		}
 	
-	m = new memory_object;
+	m = NEW_OBJECT(memory_object);
 	m->alloc(size0, 0);
 	m->used_length = 0;
 
@@ -1688,7 +1688,7 @@ void generator::write_file(ofstream &fp,
 	fp.write((char *) &size, sizeof(INT));
 	fp.write(m->char_pointer, size);
 	
-	delete m;
+	FREE_OBJECT(m);
 	
 	if (f_v) {
 		cout << "generator::write_file done" << endl;
@@ -1715,7 +1715,7 @@ void generator::read_file(ifstream &fp,
 		cout << "generator::read_file size = " << size << endl;
 		}
 	
-	m = new memory_object;
+	m = NEW_OBJECT(memory_object);
 
 	m->alloc(size, 0);
 	m->used_length = 0;
@@ -1737,7 +1737,7 @@ void generator::read_file(ifstream &fp,
 				"after generator_read_memory" << endl;
 		}
 
-	delete m;
+	FREE_OBJECT(m);
 	
 	if (f_v) {
 		cout << "generator::read_file done, "

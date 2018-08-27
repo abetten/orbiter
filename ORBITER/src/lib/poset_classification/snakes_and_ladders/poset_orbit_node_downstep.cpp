@@ -754,7 +754,7 @@ void poset_orbit_node::find_extensions(generator *gen,
 			cout << k << " : " << O.orbit_len[k] << " : " << rep << endl;
 			}
 		}
-	E = new extension[O.nb_orbits];
+	E = NEW_OBJECTS(extension, O.nb_orbits);
 
 	store_set(gen, lvl - 1);
 

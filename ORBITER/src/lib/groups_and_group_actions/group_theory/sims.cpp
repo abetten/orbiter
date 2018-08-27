@@ -1848,7 +1848,7 @@ void sims::extend_base_orbit(INT new_gen_idx, INT lvl,
 				continue;
 			if (f_vvv) {
 				cout << "sims::extend_base_orbit "
-						"new pt " << next_pt << " reached from "
+						"n e w pt " << next_pt << " reached from "
 						<< cur_pt << " under generator "
 						<< i << endl;
 				}
@@ -1925,7 +1925,7 @@ void sims::compute_base_orbit(INT lvl, INT verbose_level)
 			if (next_pt_loc < orbit_len[lvl])
 				continue;
 			if (FALSE) {
-				cout << "new pt " << next_pt << " reached from "
+				cout << "n e w pt " << next_pt << " reached from "
 						<< cur_pt << " under generator "
 						<< i << endl;
 				}
@@ -2025,7 +2025,7 @@ void sims::compute_base_orbit_known_length(INT lvl,
 				continue;
 			if (FALSE) {
 				cout << "sims::compute_base_orbit_known_length "
-						"new pt " << next_pt << " reached from "
+						"n e w pt " << next_pt << " reached from "
 						<< cur_pt << " under generator " << i << endl;
 				}
 			swap_points(lvl, orbit_len[lvl], next_pt_loc);
@@ -2159,7 +2159,7 @@ INT sims::transitive_extension_tolerant(schreier &O,
 	if (f_v) {
 		cout << "sims::transitive_extension_tolerant "
 				"group order " << go << ", orbit length "
-				<< orbit_len << ", new group order " << ego << endl;
+				<< orbit_len << ", n e w group order " << ego << endl;
 		}
 	group_order(cur_ego);
 	
@@ -2276,7 +2276,7 @@ void sims::transitive_extension_using_coset_representatives(
 		cout << "sims::transitive_extension_using_coset_"
 				"representatives group order " << go
 				<< ", orbit length " << orbit_len
-				<< ", new group order " << ego << endl;
+				<< ", n e w group order " << ego << endl;
 		}
 	group_order(cur_ego);
 	
@@ -2366,7 +2366,7 @@ void sims::transitive_extension_using_generators(
 	if (f_v) {
 		cout << "sims::transitive_extension_using_generators "
 				"group order " << go << ", subgroup_index "
-				<< subgroup_index << ", new group order " << ego << endl;
+				<< subgroup_index << ", n e w group order " << ego << endl;
 		}
 	group_order(cur_ego);
 	
@@ -2788,12 +2788,12 @@ INT sims::strip_and_add(INT *elt, INT *residue, INT verbose_level)
 	// !!! this was add_generator_at_level previously
 	
 	if (FALSE) {
-		cout << "new set of generators:" << endl;
+		cout << "n e w set of generators:" << endl;
 		gens.print(cout);
 		gens.print_as_permutation(cout);
 		}
 	if (f_v) {
-		cout << "sims::strip_and_add finished, new group order is ";
+		cout << "sims::strip_and_add finished, n e w group order is ";
 		print_group_order(cout);
 		cout << endl;
 		}
@@ -3115,7 +3115,7 @@ void sims::random_schreier_generator(INT verbose_level)
 
 #if 0
 		cout << "sims::random_schreier_generator "
-				"fatal: new pt " << pt2 << " reached from "
+				"fatal: n e w pt " << pt2 << " reached from "
 				<< pt << " under generator " << i << endl;
 		print(TRUE);
 		cout << "level = " << i << endl;
@@ -3370,7 +3370,7 @@ void sims::conjugate(action *A,
 		
 		group_order(go);
 		if ((f_v && f_added) || f_vv) {
-			cout << "new group order is " << go << endl;
+			cout << "n e w group order is " << go << endl;
 			}
 		if (f_vv) {
 			print_transversal_lengths();
@@ -3388,7 +3388,7 @@ void sims::conjugate(action *A,
 			if (TRUE) {
 				cout << "sims::conjugate overshooting the expected "
 						"group after " << cnt << " iterations" << endl;
-				cout << "new group order is " << go
+				cout << "n e w group order is " << go
 						<< " target_go=" << target_go << endl;
 				}
 			if (f_overshooting_OK)
@@ -3701,7 +3701,7 @@ void sims::build_up_group_random_process(sims *K,
 				else {
 					if (f_vvv) {
 						cout << "sims::build_up_group_random_process: "
-								"choosing new base point " << b << endl;
+								"choosing n e w base point " << b << endl;
 						}
 					old_base_len = GA->base_len;
 					GA->reallocate_base(b);
@@ -3714,8 +3714,8 @@ void sims::build_up_group_random_process(sims *K,
 						}
 					if (f_vv) {
 						cout << "sims::build_up_group_random_process: "
-								"new base point " << b
-							<< " chosen, new base has length "
+								"n e w base point " << b
+							<< " chosen, n e w base has length "
 							<< GA->base_len << endl;
 						cout << "sims::build_up_group_random_process: "
 								"calling add_generator_at_level" << endl;
@@ -3783,7 +3783,7 @@ void sims::build_up_group_random_process(sims *K,
 		D.mult(G_order, K_order, KG_order);
 		if (f_v /* (f_v && f_added) || f_vv */) {
 			cout << "sims::build_up_group_random_process: "
-					"new group order is " << KG_order
+					"n e w group order is " << KG_order
 				<< " = " << G_order << " * " << K_order << endl;
 			}
 		if (f_vv) {
@@ -3813,7 +3813,7 @@ void sims::build_up_group_random_process(sims *K,
 				cout << "sims::build_up_group_random_process "
 						"overshooting the expected group after "
 						<< cnt << " iterations" << endl;
-				cout << "new group order is " << KG_order 
+				cout << "n e w group order is " << KG_order
 					<< " = " << G_order << " * " << K_order << endl;
 				}
 			//break;
@@ -3825,7 +3825,7 @@ void sims::build_up_group_random_process(sims *K,
 				"found a group of order " << KG_order
 			<< " = " << G_order << " * " << K_order << endl;
 		if (f_vvv) {
-			cout << "the new action has base_length = "
+			cout << "the n e w action has base_length = "
 				<< GA->base_len
 				<< " and degree " << GA->degree << endl;
 			print_transversal_lengths();
@@ -4015,7 +4015,7 @@ void sims::build_up_group_from_generators(sims *K,
 					else {
 						if (f_vv) {
 							cout << "action::induced_action: "
-									"choosing new base point "
+									"choosing n e w base point "
 									<< b << endl;
 							}
 						old_base_len = GA->base_len;
@@ -4028,8 +4028,8 @@ void sims::build_up_group_from_generators(sims *K,
 							//cout << "after reallocate_base 2" << endl;
 							}
 						if (f_v) {
-							cout << "new base point " << b 
-								<< " chosen, new base has length "
+							cout << "n e w base point " << b
+								<< " chosen, n e w base has length "
 								<< GA->base_len << endl;
 							cout << "calling add_generator_at_level" << endl;
 							}
@@ -4099,7 +4099,7 @@ void sims::build_up_group_from_generators(sims *K,
 					cout << "sims::build_up_group_from_generators "
 							"overshooting the expected group after "
 							<< cnt << " iterations" << endl;
-					cout << "new group order is " << KG_order 
+					cout << "n e w group order is " << KG_order
 						<< " = " << G_order << " * " << K_order << endl;
 					}
 				//break;
@@ -4127,7 +4127,7 @@ void sims::build_up_group_from_generators(sims *K,
 		cout << "sims::build_up_group_from_generators finished: "
 				"found a group of order " << KG_order
 			<< " = " << G_order << " * " << K_order << endl;
-		cout << "the new action has base_length = " << GA->base_len 
+		cout << "the n e w action has base_length = " << GA->base_len
 			<< " and degree " << GA->degree << endl;
 		print_transversal_lengths();
 
@@ -4205,13 +4205,13 @@ INT sims::closure_group(INT nb_times, INT verbose_level)
 			if (f_vv) {
 				cout << "closure_group: iteration " << i
 						<< " the group has been extended, old order "
-					<< go << " new group order " << go1 << endl;
+					<< go << " n e w group order " << go1 << endl;
 				print_transversal_lengths();
 				}
 			if (f_v3) {
 				cout << "original element:" << endl;
 				A->element_print_quick(schreier_gen, cout);
-				cout << "new generator:" << endl;
+				cout << "n e w generator:" << endl;
 				A->element_print_quick(Elt2, cout);
 				}
 			f_extended = TRUE;

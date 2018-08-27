@@ -255,7 +255,7 @@ void save_as_colored_graph_easy(const BYTE *fname_base,
 
 	colored_graph *CG;
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(n, Adj, 0 /*verbose_level*/);
 
 	CG->save(fname, verbose_level);
@@ -947,7 +947,7 @@ void determine_conic(INT q, const BYTE *override_poly,
 		}
 	F.init_override_polynomial(q, override_poly, verbose_level);
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	if (f_vv) {
 		cout << "determine_conic before P->init" << endl;
 		}
@@ -984,7 +984,7 @@ void determine_conic(INT q, const BYTE *override_poly,
 			cout << endl;
 			}
 		}
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void compute_decomposition_of_graph_wrt_partition(
@@ -1066,7 +1066,7 @@ void create_Levi_graph_from_incidence_matrix(
 	if (f_v) {
 		cout << "create_Levi_graph_from_incidence_matrix" << endl;
 		}
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	N = nb_rows + nb_cols;
 	L = (N * (N - 1)) >> 1;

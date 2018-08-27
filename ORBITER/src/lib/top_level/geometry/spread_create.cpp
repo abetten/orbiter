@@ -34,13 +34,13 @@ void spread_create::null()
 void spread_create::freeself()
 {
 	if (F) {
-		delete F;
+		FREE_OBJECT(F);
 		}
 	if (set) {
 		FREE_INT(set);
 		}
 	if (Sg) {
-		delete Sg;
+		FREE_OBJECT(Sg);
 		}
 	null();
 }
@@ -68,7 +68,7 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 		cout << "spread_create::init q = " << q << endl;
 		cout << "spread_create::init k = " << k << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	
 
@@ -81,11 +81,12 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 		}
 
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 #if 0
 	if (f_v) {
-		cout << "spread_create::init before A->init_orthogonal_group" << endl;
+		cout << "spread_create::init "
+				"before A->init_orthogonal_group" << endl;
 		}
 	A->init_orthogonal_group(0 /* epsilon */, 5 /* n */, F, 
 		TRUE /* f_on_points */, 
@@ -94,19 +95,25 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 		f_semilinear, TRUE /* f_basis */, verbose_level - 1);
 	degree = A->degree;
 
-	cout << "A->make_element_size = " << A->make_element_size << endl;
+	cout << "A->make_element_size = "
+			<< A->make_element_size << endl;
 	if (f_v) {
-		cout << "BLT_set_create::init after A->init_orthogonal_group" << endl;
-		cout << "BLT_set_create::init degree = " << degree << endl;
+		cout << "BLT_set_create::init "
+				"after A->init_orthogonal_group" << endl;
+		cout << "BLT_set_create::init "
+				"degree = " << degree << endl;
 		}
 	
 	if (f_v) {
-		cout << "BLT_set_create::init computing lex least base" << endl;
+		cout << "BLT_set_create::init "
+				"computing lex least base" << endl;
 		}
 	A->lex_least_base_in_place(0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "BLT_set_create::init computing lex least base done" << endl;
-		cout << "BLT_set_create::init base: ";
+		cout << "BLT_set_create::init "
+				"computing lex least base done" << endl;
+		cout << "BLT_set_create::init "
+				"base: ";
 		INT_vec_print(cout, A->base, A->base_len);
 		cout << endl;
 		}
@@ -122,7 +129,9 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 	
 	if (Descr->f_family) {
 		if (f_v) {
-			cout << "spread_create::init before Surf->create_surface_family family_name=" << Descr->family_name << endl;
+			cout << "spread_create::init "
+					"before Surf->create_surface_family "
+					"family_name=" << Descr->family_name << endl;
 			}
 
 
@@ -133,7 +142,8 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 	else if (Descr->f_by_coefficients) {
 
 		if (f_v) {
-			cout << "surface_create::init surface is given by the coefficients" << endl;
+			cout << "surface_create::init "
+					"surface is given by the coefficients" << endl;
 			}
 
 		INT *surface_coeffs;
@@ -142,7 +152,8 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 	
 		INT_vec_scan(Descr->coefficients_text, surface_coeffs, nb_coeffs);
 		if (ODD(nb_coeffs)) {
-			cout << "surface_create::init number of surface coefficients must be even" << endl;
+			cout << "surface_create::init "
+					"number of surface coefficients must be even" << endl;
 			exit(1);
 			}
 		INT_vec_zero(coeffs, 20);
@@ -151,11 +162,13 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 			a = surface_coeffs[2 * i + 0];
 			b = surface_coeffs[2 * i + 1];
 			if (a < 0 || a >= q) {
-				cout << "surface_create::init coefficient out of range" << endl;
+				cout << "surface_create::init "
+						"coefficient out of range" << endl;
 				exit(1);
 				}
 			if (b < 0 || b >= 20) {
-				cout << "surface_create::init variable index out of range" << endl;
+				cout << "surface_create::init "
+						"variable index out of range" << endl;
 				exit(1);
 				}
 			coeffs[b] = a;
@@ -171,13 +184,15 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 	else if (Descr->f_catalogue) {
 
 		if (f_v) {
-			cout << "spread_create::init spread from catalogue" << endl;
+			cout << "spread_create::init "
+					"spread from catalogue" << endl;
 			}
 		INT nb_iso;
 
 		nb_iso = Spread_nb_reps(q, k);
 		if (Descr->iso >= nb_iso) {
-			cout << "spread_create::init iso >= nb_iso, this spread does not exist" << endl;
+			cout << "spread_create::init "
+					"iso >= nb_iso, this spread does not exist" << endl;
 			exit(1);
 			}
 
@@ -187,10 +202,11 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 		set = NEW_INT(sz);
 		INT_vec_copy(rep, set, sz);
 
-		Sg = new strong_generators;
+		Sg = NEW_OBJECT(strong_generators);
 
 		if (f_v) {
-			cout << "spread_create::init before Sg->BLT_set_from_catalogue_stabilizer" << endl;
+			cout << "spread_create::init "
+					"before Sg->BLT_set_from_catalogue_stabilizer" << endl;
 			}
 
 		Sg->stabilizer_of_spread_from_catalogue(A, 
@@ -198,15 +214,20 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 			verbose_level);
 		f_has_group = TRUE;
 
-		sprintf(prefix, "catalogue_q%ld_k%ld_%ld", q, k, Descr->iso);
-		sprintf(label_txt, "catalogue_q%ld_k%ld_%ld", q, k, Descr->iso);
-		sprintf(label_tex, "catalogue\\_q%ld\\_k%ld\\_%ld", q, k, Descr->iso);
+		sprintf(prefix, "catalogue_q%ld_k%ld_%ld",
+				q, k, Descr->iso);
+		sprintf(label_txt, "catalogue_q%ld_k%ld_%ld",
+				q, k, Descr->iso);
+		sprintf(label_tex, "catalogue\\_q%ld\\_k%ld\\_%ld",
+				q, k, Descr->iso);
 		if (f_v) {
-			cout << "BLT_set_create::init after Sg->BLT_set_from_catalogue_stabilizer" << endl;
+			cout << "BLT_set_create::init "
+					"after Sg->BLT_set_from_catalogue_stabilizer" << endl;
 			}
 		}
 	else {
-		cout << "spread_create::init we do not recognize the type of spread" << endl;
+		cout << "spread_create::init we do not "
+				"recognize the type of spread" << endl;
 		exit(1);
 		}
 
@@ -229,8 +250,10 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 		}
 }
 
-void spread_create::apply_transformations(const BYTE **transform_coeffs, 
-	INT *f_inverse_transform, INT nb_transform, INT verbose_level)
+void spread_create::apply_transformations(
+	const BYTE **transform_coeffs,
+	INT *f_inverse_transform, INT nb_transform,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 #if 0
@@ -265,13 +288,17 @@ void spread_create::apply_transformations(const BYTE **transform_coeffs,
 		INT coeffs_out[20];
 	
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations applying transformation " << h << " / " << nb_transform << ":" << endl;
+			cout << "BLT_set_create::apply_transformations "
+					"applying transformation " << h << " / "
+					<< nb_transform << ":" << endl;
 			}
 		
 		INT_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
 
 		if (sz != desired_sz) {
-			cout << "BLT_set_create::apply_transformations need exactly " << desired_sz << " coefficients for the transformation" << endl;
+			cout << "BLT_set_create::apply_transformations "
+					"need exactly " << desired_sz
+					<< " coefficients for the transformation" << endl;
 			cout << "transform_coeffs[h]=" << transform_coeffs[h] << endl;
 			cout << "sz=" << sz << endl;
 			exit(1);
@@ -289,12 +316,14 @@ void spread_create::apply_transformations(const BYTE **transform_coeffs,
 		A->element_invert(Elt2, Elt3, 0 /*verbose_level*/);
 
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations applying the transformation given by:" << endl;
+			cout << "BLT_set_create::apply_transformations "
+					"applying the transformation given by:" << endl;
 			cout << "$$" << endl;
 			A->print_quick(cout, Elt2);
 			cout << endl;
 			cout << "$$" << endl;
-			cout << "BLT_set_create::apply_transformations The inverse is:" << endl;
+			cout << "BLT_set_create::apply_transformations "
+					"The inverse is:" << endl;
 			cout << "$$" << endl;
 			A->print_quick(cout, Elt3);
 			cout << endl;
@@ -305,14 +334,17 @@ void spread_create::apply_transformations(const BYTE **transform_coeffs,
 		if (f_semilinear) {
 			INT n = 4;
 			
-			Surf->substitute_semilinear(coeffs, coeffs_out, TRUE, Elt2[n * n], Elt3, verbose_level);
+			Surf->substitute_semilinear(coeffs, coeffs_out,
+					TRUE, Elt2[n * n], Elt3, verbose_level);
 			}
 		else {
-			Surf->substitute_semilinear(coeffs, coeffs_out, FALSE, 0, Elt3, verbose_level);
+			Surf->substitute_semilinear(coeffs, coeffs_out,
+					FALSE, 0, Elt3, verbose_level);
 			}
 	
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations The equation of the transformed surface is:" << endl;
+			cout << "BLT_set_create::apply_transformations "
+					"The equation of the transformed surface is:" << endl;
 			cout << "$$" << endl;
 			Surf->print_equation_tex(cout, coeffs_out);
 			cout << endl;
@@ -323,12 +355,15 @@ void spread_create::apply_transformations(const BYTE **transform_coeffs,
 
 		strong_generators *SG2;
 		
-		SG2 = new strong_generators;
+		SG2 = NEW_OBJECT(strong_generators);
 		if (f_v) {
-			cout << "BLT_set_create::apply_transformations before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
+			cout << "BLT_set_create::apply_transformations "
+					"before SG2->init_generators_for_the_"
+					"conjugate_group_avGa" << endl;
 			}
-		SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
-		delete Sg;
+		SG2->init_generators_for_the_conjugate_group_avGa(
+				Sg, Elt2, verbose_level);
+		FREE_OBJECT(Sg);
 		Sg = SG2;
 
 		FREE_INT(transformation_coeffs);

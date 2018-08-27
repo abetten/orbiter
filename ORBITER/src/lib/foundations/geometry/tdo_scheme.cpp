@@ -88,7 +88,7 @@ tdo_scheme::~tdo_scheme()
 		the_extra_col_scheme_cur = NULL;
 		}
 	if (P) {
-		delete P;
+		FREE_OBJECT(P);
 		P = NULL;
 		}
 }
@@ -263,7 +263,7 @@ void tdo_scheme::init_partition_stack(INT verbose_level)
 		cout << endl;
 		}
 	
-	P = new partitionstack;
+	P = NEW_OBJECT(partitionstack);
 	P->allocate(m + n, 0 /* verbose_level */);
 	//PB.init_partition_backtrack_basic(m, n, verbose_level - 10);
 	if (f_vvv) {
@@ -2988,7 +2988,7 @@ INT tdo_scheme::tdo_columns_setup_first_system(INT verbose_level,
 		for (J = 0; J < nb_vars; J++) 
 			T.D1->A[I * nb_vars + J] = 0;
 	
-	// the m equalities that come from the fact that the new type 
+	// the m equalities that come from the fact that the n e w type
 	// is a partition of the old type.
 	
 	// we are in the r-th column class (r is given)
@@ -3477,7 +3477,7 @@ INT tdo_scheme::td3_refine_rows(INT verbose_level, INT f_once,
 	
 	point_types_allocated = 100;
 	nb_point_types = 0;
-	point_types = new INT[point_types_allocated * l2];
+	point_types = NEW_INT(point_types_allocated * l2);
 	point_type_len = l2;
 	
 	T.nb_only_one_type = 0;
@@ -3493,7 +3493,7 @@ INT tdo_scheme::td3_refine_rows(INT verbose_level, INT f_once,
 			T, r, P, 
 			nb_vars, nb_eqns, 
 			point_types, nb_point_types)) {
-			delete [] point_types;
+			FREE_INT(point_types);
 			return FALSE;
 			}
 		
@@ -3504,7 +3504,7 @@ INT tdo_scheme::td3_refine_rows(INT verbose_level, INT f_once,
 			cout << "r = " << r << ", found " << nb_sol << " refined point types" << endl;
 			}
 		if (nb_sol == 0) {
-			delete [] point_types;
+			FREE_INT(point_types);
 			return FALSE;
 			}
 		
@@ -3537,14 +3537,14 @@ INT tdo_scheme::td3_refine_rows(INT verbose_level, INT f_once,
 		T, 
 		nb_vars, Nb_vars, Nb_eqns, 
 		point_types, nb_point_types)) {
-		delete [] point_types;
+		FREE_INT(point_types);
 		return FALSE;
 		}
 	
 	if (Nb_vars == 0) {
 		INT h, r, u;
 		
-		distributions = new INT[1 * nb_point_types];
+		distributions = NEW_INT(1 * nb_point_types);
 		nb_distributions = 0;
 		for (h = 0; h < T.nb_only_one_type; h++) {
 			r = T.only_one_type[h];
@@ -3908,7 +3908,7 @@ INT tdo_scheme::td3_refine_columns(INT verbose_level, INT f_once,
 	
 	line_types_allocated = 100;
 	nb_line_types = 0;
-	line_types = new INT[line_types_allocated * l2];
+	line_types = NEW_INT(line_types_allocated * l2);
 	line_type_len = l2;
 	
 	T.nb_only_one_type = 0;
@@ -3924,7 +3924,7 @@ INT tdo_scheme::td3_refine_columns(INT verbose_level, INT f_once,
 			T, r, P, 
 			nb_vars, nb_eqns, 
 			line_types, nb_line_types)) {
-			delete [] line_types;
+			FREE_INT(line_types);
 			return FALSE;
 			}
 		
@@ -3935,7 +3935,7 @@ INT tdo_scheme::td3_refine_columns(INT verbose_level, INT f_once,
 			cout << "r = " << r << ", found " << nb_sol << " refine line types" << endl;
 			}
 		if (nb_sol == 0) {
-			delete [] line_types;
+			FREE_INT(line_types);
 			return FALSE;
 			}
 		
@@ -3968,7 +3968,7 @@ INT tdo_scheme::td3_refine_columns(INT verbose_level, INT f_once,
 		T, 
 		nb_vars, Nb_vars, Nb_eqns,
 		line_types, nb_line_types)) {
-		delete [] line_types;
+		FREE_INT(line_types);
 		return FALSE;
 		}
 

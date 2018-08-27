@@ -50,7 +50,7 @@ void poset_orbit_node::freeself()
 		}
 	if (E) {
 		//cout << "poset_orbit_node::freeself deleting E" << endl;
-		delete [] E;
+		FREE_OBJECTS(E);
 		E = NULL;
 		}
 	if (sv) {
@@ -653,7 +653,7 @@ void poset_orbit_node::get_stabilizer_generators(generator *gen,
 		cout << "poset_orbit_node::get_stabilizer_generators "
 				"nb_strong_generators=" << nb_strong_generators << endl;
 		}
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_by_hdl(gen->A,
 			hdl_strong_generators, nb_strong_generators, 0);
 	//gens.init_by_hdl(gen->A, hdl_strong_generators, nb_strong_generators);
@@ -853,12 +853,12 @@ void poset_orbit_node::log_current_node(generator *gen,
 				<< nb_strong_generators << " strong generators" << endl;
 		strong_generators *Strong_gens;
 
-		Strong_gens = new strong_generators;
+		Strong_gens = NEW_OBJECT(strong_generators);
 		Strong_gens->init_by_hdl(gen->A,
 				hdl_strong_generators,
 				nb_strong_generators, verbose_level);
 		Strong_gens->print_generators();
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		cout << "tl=" << endl;
 		INT_vec_print(cout, tl, gen->A->base_len);
 		cout << endl;
@@ -1429,7 +1429,7 @@ void poset_orbit_node::reconstruct_extensions_from_sv(
 		}
 	
 	nb_extensions = nb;
-	E = new extension[nb];
+	E = NEW_OBJECTS(extension, nb);
 	for (i = 0; i < nb; i++) {
 		E[i].orbit_len = 0;
 		E[i].type = EXTENSION_TYPE_UNPROCESSED;

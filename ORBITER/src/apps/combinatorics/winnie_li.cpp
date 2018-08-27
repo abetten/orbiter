@@ -63,7 +63,7 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 	INT *Adj;
 	
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level - 1);
 	p = F->p;
 
@@ -124,7 +124,7 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(q, Adj, verbose_level);
 
 	if (f_index) {
@@ -140,10 +140,10 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 
 
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(Adj);
 	FREE_INT(N1);
-	delete F;
+	FREE_OBJECT(F);
 
 
 }

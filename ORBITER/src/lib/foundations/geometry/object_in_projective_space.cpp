@@ -738,7 +738,7 @@ void object_in_projective_space::klein(INT verbose_level)
 			}
 #endif
 		}
-	cout << "before delete [] R;" << endl;
+	cout << "before FREE_OBJECTS(R);" << endl;
 	FREE_OBJECTS(R);
 	cout << "before FREE_INT(Pts_on_plane[i]);" << endl;
 	for (i = 0; i < nb_planes; i++) {

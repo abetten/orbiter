@@ -49,7 +49,7 @@ void sims::normalizer_based_on_characteristic_vector(INT *C_sub,
 		cout << "sims::normalizer_based_on_characteristic_vector" << endl;
 		}
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(nb_gens);
 	for (j = 0; j < nb_gens; j++) {
@@ -77,7 +77,7 @@ void sims::normalizer_based_on_characteristic_vector(INT *C_sub,
 			N_go++;
 			}
 		}
-	delete gens;
+	FREE_OBJECT(gens);
 	if (f_v) {
 		cout << "sims::normalizer_based_on_characteristic_vector done" << endl;
 		}
