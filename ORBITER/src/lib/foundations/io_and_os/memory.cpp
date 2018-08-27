@@ -10,7 +10,6 @@
 #include "foundations.h"
 
 #define REGISTRY_SIZE 1000
-//#define REGISTRY_SIZE (10 * ONE_MILLION)
 #define POINTER_TYPE_INVALID 0
 #define POINTER_TYPE_SMALLINT 1
 #define POINTER_TYPE_SMALLPINT 2
@@ -20,9 +19,10 @@
 #define POINTER_TYPE_BYTE 6
 #define POINTER_TYPE_UBYTE 7
 #define POINTER_TYPE_PBYTE 8
-#define POINTER_TYPE_PVOID 9
-#define POINTER_TYPE_OBJECT 10
-#define POINTER_TYPE_OBJECTS 11
+#define POINTER_TYPE_PUBYTE 9
+#define POINTER_TYPE_PVOID 10
+#define POINTER_TYPE_OBJECT 11
+#define POINTER_TYPE_OBJECTS 12
 
 
 
@@ -30,20 +30,6 @@ int f_memory_debug = FALSE;
 int memory_debug_verbose_level = 0;
 mem_object_registry global_mem_object_registry;
 
-
-#if 0
-int f_memory_debug = FALSE;
-int f_memory_debug_verbose = FALSE;
-INT memory_count_allocate = 0;
-int registry_size = 0;
-void *registry_pointer[REGISTRY_SIZE];
-int registry_type[REGISTRY_SIZE];
-int registry_n[REGISTRY_SIZE];
-int registry_size_of[REGISTRY_SIZE];
-	// needed for objects of type class
-const char *registry_file[REGISTRY_SIZE];
-int registry_line[REGISTRY_SIZE];
-#endif
 
 mem_object_registry_entry::mem_object_registry_entry()
 {
@@ -96,6 +82,9 @@ void mem_object_registry_entry::print_type(ostream &ost)
 	else if (object_type == POINTER_TYPE_PBYTE) {
 		ost << "PBYTE";
 		}
+	else if (object_type == POINTER_TYPE_PUBYTE) {
+		ost << "PUBYTE";
+		}
 	else if (object_type == POINTER_TYPE_PVOID) {
 		ost << "pvoid";
 		}
@@ -141,6 +130,9 @@ int mem_object_registry_entry::size_of()
 	else if (object_type == POINTER_TYPE_PBYTE) {
 		return sizeof(BYTE *) * object_n;
 		}
+	else if (object_type == POINTER_TYPE_PUBYTE) {
+		return sizeof(UBYTE *) * object_n;
+		}
 	else if (object_type == POINTER_TYPE_PVOID) {
 		return sizeof(pvoid) * object_n;
 		}
@@ -169,8 +161,7 @@ void mem_object_registry_entry::print(INT line)
 		<< object_n << " : "
 		<< object_size_of << " : "
 		<< source_file << " : "
-		<< source_line << " : "
-		<< endl;
+		<< source_line << endl;
 
 }
 
@@ -187,8 +178,7 @@ void mem_object_registry_entry::print_csv(ostream &ost, INT line)
 		<< object_n << ","
 		<< object_size_of << ","
 		<< source_file << ","
-		<< source_line << ","
-		<< endl;
+		<< source_line << endl;
 
 }
 
@@ -298,6 +288,14 @@ void mem_object_registry::manual_dump()
 
 	sprintf(fname, automatic_dump_fname_mask, a);
 
+	dump_to_csv_file(fname);
+}
+
+void mem_object_registry::manual_dump_with_file_name(const BYTE *fname)
+{
+	if (!f_automatic_dump) {
+		return;
+	}
 	dump_to_csv_file(fname);
 }
 
@@ -665,6 +663,46 @@ void mem_object_registry::free_PBYTE(BYTE **p, const char *file, int line)
 	}
 	if (p == NULL) {
 		cout << "mem_object_registry::free_PBYTE "
+				"NULL pointer, ignoring" << endl;
+		cout << "p=" << p << " file=" << file
+				<< " line=" << line << endl;
+		return;
+		}
+	if (f_memory_debug) {
+		delete_from_registry(p, memory_debug_verbose_level - 1);
+	}
+	delete [] p;
+}
+
+UBYTE **mem_object_registry::allocate_PUBYTE(INT n, const char *file, int line)
+{
+	int f_v = (memory_debug_verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate_PUBYTE PUBYTE[n], "
+				"n=" << n << " file=" << file << " line=" << line << endl;
+	}
+	UBYTE **p;
+	p = new PUBYTE[n];
+	if (f_memory_debug) {
+		add_to_registry(p /* pointer */,
+				POINTER_TYPE_PUBYTE, (int) n, sizeof(BYTE *),
+				file, line,
+				memory_debug_verbose_level - 1);
+		}
+	return p;
+}
+
+void mem_object_registry::free_PUBYTE(UBYTE **p, const char *file, int line)
+{
+	int f_v = (memory_debug_verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::free_PUBYTE PUBYTE[n], "
+				" file=" << file << " line=" << line << endl;
+	}
+	if (p == NULL) {
+		cout << "mem_object_registry::free_PUBYTE "
 				"NULL pointer, ignoring" << endl;
 		cout << "p=" << p << " file=" << file
 				<< " line=" << line << endl;

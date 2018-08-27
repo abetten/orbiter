@@ -25,6 +25,10 @@ int main(int argc, const char **argv)
 
 	//start_memory_debug();
 	
+	INT f_memory_dump_at_end = FALSE;
+	const BYTE *memory_dump_at_end_fname = NULL;
+
+
 	{
 	finite_field *F;
 	linear_group_description *Descr;
@@ -43,6 +47,8 @@ int main(int argc, const char **argv)
 	INT f_automatic_memory_dump = FALSE;
 	INT automatic_dump_interval = 0;
 	const BYTE *automatic_dump_mask = NULL;
+	INT f_memory_dump_at_peak = FALSE;
+	const BYTE *memory_dump_at_peak_fname = NULL;
 
 
 	INT i;
@@ -96,6 +102,16 @@ int main(int argc, const char **argv)
 			automatic_dump_interval = atoi(argv[++i]);
 			automatic_dump_mask = argv[++i];
 			cout << "-automatic_memory_dump " << automatic_dump_interval << " " << automatic_dump_mask << endl;
+			}
+		else if (strcmp(argv[i], "-memory_dump_at_peak") == 0) {
+			f_memory_dump_at_peak = TRUE;
+			memory_dump_at_peak_fname = argv[++i];
+			cout << "-memory_dump_at_peak " << memory_dump_at_peak_fname << endl;
+			}
+		else if (strcmp(argv[i], "-memory_dump_at_end") == 0) {
+			f_memory_dump_at_end = TRUE;
+			memory_dump_at_end_fname = argv[++i];
+			cout << "-memory_dump_at_end " << memory_dump_at_end_fname << endl;
 			}
 		}
 
@@ -478,10 +494,11 @@ int main(int argc, const char **argv)
 
 
 
-	if (f_memory_debug) {
-		//registry_dump_sorted_by_size();
-		global_mem_object_registry.dump();
-		global_mem_object_registry.manual_dump();
+	//registry_dump_sorted_by_size();
+	//global_mem_object_registry.dump();
+
+	if (f_memory_dump_at_peak) {
+		global_mem_object_registry.manual_dump_with_file_name(memory_dump_at_peak_fname);
 	}
 
 
@@ -492,6 +509,9 @@ int main(int argc, const char **argv)
 	the_end(t0);
 	//the_end_quietly(t0);
 	cout << "classify_surfaces, after the_end" << endl;
+	if (f_memory_dump_at_end) {
+		global_mem_object_registry.manual_dump_with_file_name(memory_dump_at_end_fname);
+	}
 }
 
 

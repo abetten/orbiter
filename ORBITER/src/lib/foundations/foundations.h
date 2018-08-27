@@ -308,6 +308,7 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_BYTE(n) global_mem_object_registry.allocate_BYTE(n, __FILE__, __LINE__)
 #define NEW_UBYTE(n) global_mem_object_registry.allocate_UBYTE(n, __FILE__, __LINE__)
 #define NEW_PBYTE(n) global_mem_object_registry.allocate_PBYTE(n, __FILE__, __LINE__)
+#define NEW_PUBYTE(n) global_mem_object_registry.allocate_PUBYTE(n, __FILE__, __LINE__)
 #define NEW_pvoid(n) global_mem_object_registry.allocate_pvoid(n, __FILE__, __LINE__)
 #define NEW_OBJECT(type) (type *)global_mem_object_registry.allocate_OBJECT(new type, sizeof(type), __FILE__, __LINE__)
 #define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), __FILE__, __LINE__)
@@ -319,9 +320,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define FREE_BYTE(p) global_mem_object_registry.free_BYTE(p, __FILE__, __LINE__)
 #define FREE_UBYTE(p) global_mem_object_registry.free_UBYTE(p, __FILE__, __LINE__)
 #define FREE_PBYTE(p) global_mem_object_registry.free_PBYTE(p, __FILE__, __LINE__)
+#define FREE_PUBYTE(p) global_mem_object_registry.free_PUBYTE(p, __FILE__, __LINE__)
 #define FREE_pvoid(p) global_mem_object_registry.free_pvoid(p, __FILE__, __LINE__)
-#define FREE_OBJECT(p) global_mem_object_registry.free_OBJECT(p, __FILE__, __LINE__); delete p
-#define FREE_OBJECTS(p) global_mem_object_registry.free_OBJECTS(p, __FILE__, __LINE__); delete [] p
+#define FREE_OBJECT(p) {global_mem_object_registry.free_OBJECT(p, __FILE__, __LINE__); delete p;}
+#define FREE_OBJECTS(p) {global_mem_object_registry.free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
 #else
 #define NEW_int(n) new int[n]
 #define NEW_pint(n) new pint[n]
@@ -331,8 +333,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_BYTE(n) new BYTE[n]
 #define NEW_UBYTE(n) new UBYTE[n]
 #define NEW_PBYTE(n) new PBYTE[n]
+#define NEW_PUBYTE(n) new PUBYTE[n]
 #define NEW_pvoid(n) new pvoid[n]
-//#define NEW_CLASS(n, type) new type[n]
+#define NEW_OBJECT(type) new type
+#define NEW_OBJECTS(type, n) new type[n]
 #define FREE_int(p) delete [] p
 #define FREE_pint(p) delete [] p
 #define FREE_INT(p) delete [] p
@@ -341,9 +345,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define FREE_BYTE(p) delete [] p
 #define FREE_UBYTE(p) delete [] p
 #define FREE_PBYTE(p) delete [] p
+#define FREE_PUBYTE(p) delete [] p
 #define FREE_pvoid(p) delete [] p
-//#define FREE_CLASS(p) delete [] p
-#define FREE_OBJECT(p) delete [] p
+#define FREE_OBJECT(p) delete p
+#define FREE_OBJECTS(p) delete [] p
 #endif
 
 
