@@ -212,7 +212,7 @@ void blt_set::lifting_prepare_function_new(
 
 
 
-	Dio = new diophant;
+	Dio = NEW_OBJECT(diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->sum = nb_needed;
 
@@ -346,8 +346,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 	longinteger_object *Ago, *Ago_induced;
 
-	Ago = new longinteger_object[Iso.Reps->count];
-	Ago_induced = new longinteger_object[Iso.Reps->count];
+	Ago = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
+	Ago_induced = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
 
 
 	for (h = 0; h < Iso.Reps->count; h++) {
@@ -401,7 +401,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	//INT f_semilinear = TRUE;
 	INT set_size = q + 1;
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "before P->init" << endl;
@@ -422,7 +422,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		cout << "after P->init" << endl;
 		}
 
-	G = new grassmann;
+	G = NEW_OBJECT(grassmann);
 
 	G->init(5, 3, F, 0 /*verbose_level - 2*/);
 
@@ -431,12 +431,12 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	INT **Sos2_idx;
 	INT **Sos3_idx;
 
-	Sos = new set_of_sets[Iso.Reps->count];
-	Sos2 = new set_of_sets[Iso.Reps->count];
-	Sos3 = new set_of_sets[Iso.Reps->count];
-	D2 = new decomposition[Iso.Reps->count];
-	D3 = new decomposition[Iso.Reps->count];
-	R = new plonginteger_object[Iso.Reps->count];
+	Sos = NEW_OBJECTS(set_of_sets, Iso.Reps->count);
+	Sos2 = NEW_OBJECTS(set_of_sets, Iso.Reps->count);
+	Sos3 = NEW_OBJECTS(set_of_sets, Iso.Reps->count);
+	D2 = NEW_OBJECTS(decomposition, Iso.Reps->count);
+	D3 = NEW_OBJECTS(decomposition, Iso.Reps->count);
+	R = NEW_OBJECTS(longinteger_object *, Iso.Reps->count);
 	Sos2_idx = NEW_PINT(Iso.Reps->count);
 	Sos3_idx = NEW_PINT(Iso.Reps->count);
 
@@ -705,7 +705,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		//vector_ge SG;
 		//INT *tl;
 			
-		Strong_gens = new strong_generators;
+		Strong_gens = NEW_OBJECT(strong_generators);
 		//tl = NEW_INT(Iso.AA->base_len);
 		Strong_gens->init_from_sims(Iso.AA->Sims, 0);
 		//Iso.AA->Sims->extract_strong_generators_in_order(
@@ -717,7 +717,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 				<< nb_orbits << ".\\\\" << endl;
 		FREE_INT(orbit_reps);
 		//FREE_INT(tl);
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		}
 
 		schreier Orb;
@@ -834,10 +834,10 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 	latex_foot(f);
 	//FREE_INT(Rk_of_span);
-	delete G;
-	delete P;
-	delete [] Ago;
-	delete [] Ago_induced;
+	FREE_OBJECT(G);
+	FREE_OBJECT(P);
+	FREE_OBJECTS(Ago);
+	FREE_OBJECTS(Ago_induced);
 	}
 
 	cout << "Written file " << fname << " of size "
@@ -959,7 +959,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 		//INT *tl;
 		strong_generators *Strong_gens;
 		
-		Strong_gens = new strong_generators;
+		Strong_gens = NEW_OBJECT(strong_generators);
 		Strong_gens->init_from_sims(Iso.AA->Sims, 0);
 		//tl = NEW_INT(Iso.AA->base_len);
 		//Iso.AA->Sims->extract_strong_generators_in_order(
@@ -1041,7 +1041,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 		FREE_INT(transporter);
 		FREE_INT(orbit_reps);
 		//FREE_INT(tl);
-		delete Strong_gens;
+		FREE_OBJECT(Strong_gens);
 		}
 
 		}

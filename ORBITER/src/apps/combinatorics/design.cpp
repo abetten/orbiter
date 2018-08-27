@@ -70,12 +70,12 @@ void design_from_PG(INT PG_n, INT PG_q, INT verbose_level)
 	if (f_v) {
 		cout << "design_from_PG" << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(PG_q, verbose_level);
 
 	design_from_PG_with_field(PG_n, F, verbose_level);
 	
-	delete F;
+	FREE_OBJECT(F);
 }
 
 void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level)
@@ -88,7 +88,7 @@ void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level)
 		}
 
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	P->init(PG_n, F, 
 		TRUE /* f_init_incidence_structure */, 
@@ -104,8 +104,8 @@ void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level)
 	design_properties(Incidence, verbose_level);
 
 	
-	delete Stack;
-	delete Incidence;
+	FREE_OBJECT(Stack);
+	FREE_OBJECT(Incidence);
 	
 	if (f_v) {
 		cout << "design_from_PG_with_field done" << endl;
@@ -152,7 +152,7 @@ void do_it(const BYTE *fname, INT verbose_level)
 
 
 
-	Incidence = new incidence_structure;
+	Incidence = NEW_OBJECT(incidence_structure);
 	Incidence->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
 
 
@@ -160,7 +160,7 @@ void do_it(const BYTE *fname, INT verbose_level)
 
 
 	FREE_INT(Inc);
-	delete Incidence;
+	FREE_OBJECT(Incidence);
 }
 
 
@@ -175,7 +175,7 @@ void design_properties(incidence_structure *Incidence, INT verbose_level)
 	INT nb_blocks = Incidence->nb_cols;
 
 		
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);

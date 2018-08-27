@@ -113,7 +113,8 @@ BYTE *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT ver
 }
 
 
-void search_for_primitive_polynomials(INT p_min, INT p_max, INT n_min, INT n_max, INT verbose_level)
+void search_for_primitive_polynomials(
+		INT p_min, INT p_max, INT n_min, INT n_max, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT d, p;
@@ -123,7 +124,9 @@ void search_for_primitive_polynomials(INT p_min, INT p_max, INT n_min, INT n_max
 
 	
 	if (f_v) {
-		cout << "search_for_primitive_polynomials p_min=" << p_min << " p_max=" << p_max << " n_min=" << n_min << " n_max=" << n_max << endl;
+		cout << "search_for_primitive_polynomials "
+				"p_min=" << p_min << " p_max=" << p_max
+				<< " n_min=" << n_min << " n_max=" << n_max << endl;
 		}
 	for (p = p_min; p <= p_max; p++) {
 		if (!is_prime(p)) {
@@ -160,7 +163,8 @@ void search_for_primitive_polynomials(INT p_min, INT p_max, INT n_min, INT n_max
 }
 
 
-void make_linear_irreducible_polynomials(INT q, INT &nb, INT *&table, INT verbose_level)
+void make_linear_irreducible_polynomials(INT q, INT &nb,
+		INT *&table, INT verbose_level)
 {
 	INT i;
 	
@@ -237,7 +241,8 @@ void gl_random_matrix(INT k, INT q, INT verbose_level)
 
 }
 
-void save_as_colored_graph_easy(const BYTE *fname_base, INT n, INT *Adj, INT verbose_level)
+void save_as_colored_graph_easy(const BYTE *fname_base,
+		INT n, INT *Adj, INT verbose_level)
 {
 	BYTE fname[1000];
 	INT f_v = (verbose_level >= 1);
@@ -256,11 +261,13 @@ void save_as_colored_graph_easy(const BYTE *fname_base, INT n, INT *Adj, INT ver
 	CG->save(fname, verbose_level);
 
 	if (f_v) {
-		cout << "save_as_colored_graph_easy Written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "save_as_colored_graph_easy Written file "
+				<< fname << " of size " << file_size(fname) << endl;
 		}
 }
 
-void save_colored_graph(const BYTE *fname, INT nb_vertices, INT nb_colors, 
+void save_colored_graph(const BYTE *fname,
+	INT nb_vertices, INT nb_colors,
 	INT *points, INT *point_color, 
 	INT *data, INT data_sz, 
 	UBYTE *bitvector_adjacency, INT bitvector_length,
@@ -308,7 +315,8 @@ void save_colored_graph(const BYTE *fname, INT nb_vertices, INT nb_colors,
 }
 
 
-void load_colored_graph(const BYTE *fname, INT &nb_vertices, INT &nb_colors, 
+void load_colored_graph(const BYTE *fname,
+	INT &nb_vertices, INT &nb_colors,
 	INT *&vertex_labels, INT *&vertex_colors, 
 	INT *&user_data, INT &user_data_size, 
 	UBYTE *&bitvector_adjacency, INT &bitvector_length,
@@ -326,7 +334,8 @@ void load_colored_graph(const BYTE *fname, INT &nb_vertices, INT &nb_colors,
 	nb_vertices = fread_INT4(fp);
 	nb_colors = fread_INT4(fp);
 	if (f_v) {
-		cout << "load_colored_graph nb_vertices=" << nb_vertices << " nb_colors=" << nb_colors << endl;
+		cout << "load_colored_graph nb_vertices=" << nb_vertices
+			<< " nb_colors=" << nb_colors << endl;
 		}
 
 
@@ -335,7 +344,8 @@ void load_colored_graph(const BYTE *fname, INT &nb_vertices, INT &nb_colors,
 	bitvector_length = (L + 7) >> 3;
 
 	if (f_v) {
-		cout << "load_colored_graph user_data_size=" << user_data_size << endl;
+		cout << "load_colored_graph user_data_size="
+				<< user_data_size << endl;
 		}
 	user_data_size = fread_INT4(fp);
 	user_data = NEW_INT(user_data_size);
@@ -392,7 +402,8 @@ INT is_diagonal_matrix(INT *A, INT n)
 INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk, 
 	INT *&colors, INT &nb_colors, INT verbose_level)
 // color_graph[n * n]
-// added Dec 22, 2010. Originally in BLT_ANALYZE/analyze_plane_invariant.C
+// added Dec 22, 2010.
+//Originally in BLT_ANALYZE/analyze_plane_invariant.C
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -459,15 +470,22 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 								continue;
 							if (M[v * n + w] != colors[j])
 								continue;
-							//cout << "i=" << i << " j=" << j << " k=" << k << " u=" << u << " v=" << v << " w=" << w << " increasing pijk" << endl;
+							//cout << "i=" << i << " j=" << j << " k=" << k
+							//<< " u=" << u << " v=" << v << " w=" << w
+							//<< " increasing pijk" << endl;
 							pijk1++;
 							} // next w
-						//cout << "i=" << i << " j=" << j << " k=" << k << " u=" << u << " v=" << v << " pijk1=" << pijk1 << endl;
+						//cout << "i=" << i << " j=" << j << " k=" << k
+						//<< " u=" << u << " v=" << v
+						//<< " pijk1=" << pijk1 << endl;
 						if (pijk == -1) {
 							pijk = pijk1;
 							u0 = u;
 							v0 = v;
-							//cout << "u=" << u << " v=" << v << " p_{" << i << "," << j << "," << k << "}=" << Pijk[i * C * C + j * C + k] << endl;
+							//cout << "u=" << u << " v=" << v
+							//<< " p_{" << i << "," << j << ","
+							//<< k << "}="
+							//<< Pijk[i * C * C + j * C + k] << endl;
 							}
 						else {
 							if (pijk1 != pijk) {
@@ -512,7 +530,8 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 			k = Pijk[2 * C * C + 2 * C + 0]; // p220;
 			lambda = Pijk[2 * C * C + 2 * C + 2]; // p222;
 			mu = Pijk[2 * C * C + 2 * C + 1]; // p221;
-			cout << "it is an srg(" << n << "," << k << "," << lambda << "," << mu << ")" << endl;
+			cout << "it is an srg(" << n << "," << k << ","
+					<< lambda << "," << mu << ")" << endl;
 			}
 
 
@@ -605,10 +624,12 @@ void write_colored_graph(ofstream &ost, BYTE *label,
 				aij = bitvector_s_i(bitvector_adjacency, h);
 				}
 			else if (f_has_is_adjacent_callback) {
-				aij = (*is_adjacent_callback)(i, j, is_adjacent_callback_data);
+				aij = (*is_adjacent_callback)(i, j,
+					is_adjacent_callback_data);
 				}
 			else {
-				cout << "write_colored_graph cannot determine adjacency" << endl;
+				cout << "write_colored_graph cannot "
+						"determine adjacency" << endl;
 				}
 
 			if (aij) {
@@ -644,10 +665,12 @@ void write_colored_graph(ofstream &ost, BYTE *label,
 				aij = bitvector_s_i(bitvector_adjacency, h);
 				}
 			else if (f_has_is_adjacent_callback) {
-				aij = (*is_adjacent_callback)(i, j, is_adjacent_callback_data);
+				aij = (*is_adjacent_callback)(i, j,
+						is_adjacent_callback_data);
 				}
 			else {
-				cout << "write_colored_graph cannot determine adjacency" << endl;
+				cout << "write_colored_graph cannot "
+						"determine adjacency" << endl;
 				}
 			if (aij) {
 				ost << setw(w) << j + point_offset << " ";
@@ -666,7 +689,8 @@ void write_colored_graph(ofstream &ost, BYTE *label,
 				if (point_color[i] == j)
 					d++;
 				}
-			ost << setw(w) << j + point_offset << " " << setw(w) << d << " ";
+			ost << setw(w) << j + point_offset << " "
+					<< setw(w) << d << " ";
 			for (i = 0; i < nb_points; i++) {
 				if (point_color[i] == j)
 					ost << setw(w) << i + point_offset << " ";
@@ -700,7 +724,8 @@ int str2int(string &str)
 	return res;
 }
 
-void print_longinteger_after_multiplying(ostream &ost, INT *factors, INT len)
+void print_longinteger_after_multiplying(
+		ostream &ost, INT *factors, INT len)
 {
 	longinteger_domain D;
 	longinteger_object a;
@@ -786,15 +811,19 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 
 		if (v[2] == 0) {
 
-			// we are dealing with a point on the line at infinity.
+			// we are dealing with a point on the
+			// line at infinity.
 			// Such a point corresponds to a line of the spread. 
-			// We create the line and then create all q + 1 points on that line.
+			// We create the line and then create all
+			// q + 1 points on that line.
 			
 			if (f_vv) {
 				cout << endl;
 				}
-			// w1[4] is the GF(q)-vector corresponding to the GF(q^2)-vector v[2]
-			// w2[4] is the GF(q)-vector corresponding to the GF(q^2)-vector v[2] * alpha
+			// w1[4] is the GF(q)-vector corresponding
+			// to the GF(q^2)-vector v[2]
+			// w2[4] is the GF(q)-vector corresponding
+			// to the GF(q^2)-vector v[2] * alpha
 			// where v[2] runs through the points of PG(1,q^2). 
 			// That way, w1[4] and w2[4] are a GF(q)-basis for the 
 			// 2-dimensional subspace v[2] (when viewed over GF(q)), 
@@ -820,9 +849,11 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 				cout << endl;
 				}
 			
-			// now we create all points on the line spanned by w1[4] and w2[4]:
+			// now we create all points on the line
+			// spanned by w1[4] and w2[4]:
 			// There are q + 1 of these points.
-			// We make sure that the coordinate vectors have a zero in the last spot.
+			// We make sure that the coordinate vectors
+			// have a zero in the last spot.
 			
 			for (h = 0; h < q + 1; h++) {
 				PG_element_unrank_modified(*Fq, v2, 1, 2, h);
@@ -832,7 +863,8 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 					cout << " : ";
 					}
 				for (k = 0; k < 4; k++) {
-					w3[k] = Fq->add(Fq->mult(v2[0], w1[k]), Fq->mult(v2[1], w2[k]));
+					w3[k] = Fq->add(Fq->mult(v2[0], w1[k]),
+							Fq->mult(v2[1], w2[k]));
 					}
 				w3[4] = 0;
 				if (f_vv) {
@@ -849,7 +881,8 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		else {
 
 			// we are dealing with an affine point:
-			// We make sure that the coordinate vector has a zero in the last spot.
+			// We make sure that the coordinate vector
+			// has a zero in the last spot.
 
 
 			for (h = 0; h < 2; h++) {
@@ -891,7 +924,8 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		}
 }
 
-void determine_conic(INT q, const BYTE *override_poly, INT *input_pts, INT nb_pts, INT verbose_level)
+void determine_conic(INT q, const BYTE *override_poly,
+		INT *input_pts, INT nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -924,7 +958,8 @@ void determine_conic(INT q, const BYTE *override_poly, INT *input_pts, INT nb_pt
 	if (f_vv) {
 		cout << "determine_conic after P->init" << endl;
 		}
-	P->determine_conic_in_plane(input_pts, nb_pts, six_coeffs, verbose_level - 2);
+	P->determine_conic_in_plane(input_pts, nb_pts,
+			six_coeffs, verbose_level - 2);
 
 	if (f_v) {
 		cout << "determine_conic the six coefficients are ";
@@ -936,7 +971,8 @@ void determine_conic(INT q, const BYTE *override_poly, INT *input_pts, INT nb_pt
 	INT nb_points;
 	//INT v[3];
 	
-	P->conic_points(input_pts, six_coeffs, points, nb_points, verbose_level - 2);
+	P->conic_points(input_pts, six_coeffs,
+			points, nb_points, verbose_level - 2);
 	if (f_v) {
 		cout << "the " << nb_points << " conic points are: ";
 		INT_vec_print(cout, points, nb_points);
@@ -951,8 +987,10 @@ void determine_conic(INT q, const BYTE *override_poly, INT *input_pts, INT nb_pt
 	delete P;
 }
 
-void compute_decomposition_of_graph_wrt_partition(INT *Adj, INT N, 
-	INT *first, INT *len, INT nb_parts, INT *&R, INT verbose_level)
+void compute_decomposition_of_graph_wrt_partition(
+	INT *Adj, INT N,
+	INT *first, INT *len, INT nb_parts, INT *&R,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT I, J, i, j, f1, l1, f2, l2, r0 = 0, r;
@@ -987,7 +1025,8 @@ void compute_decomposition_of_graph_wrt_partition(INT *Adj, INT N,
 					}
 				else {
 					if (r0 != r) {
-						cout << "compute_decomposition_of_graph_wrt_partition not tactical" << endl;
+						cout << "compute_decomposition_of_graph_"
+							"wrt_partition not tactical" << endl;
 						cout << "I=" << I << endl;
 						cout << "J=" << J << endl;
 						cout << "r0=" << r0 << endl;
@@ -1013,8 +1052,10 @@ void INT_vec_print_classified(INT *v, INT len)
 	cout << endl;
 }
 
-void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, INT *M, INT nb_rows, INT nb_cols, 
-	INT f_point_labels, INT *point_labels, INT verbose_level)
+void create_Levi_graph_from_incidence_matrix(
+	colored_graph *&CG, INT *M, INT nb_rows, INT nb_cols,
+	INT f_point_labels, INT *point_labels,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	UBYTE *bitvector_adjacency;
@@ -1051,12 +1092,14 @@ void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, INT *M, INT nb_
 
 	if (f_point_labels) {
 		CG->init_with_point_labels(N, 1 /* nb_colors */, 
-			NULL /*point_color*/, bitvector_adjacency, TRUE, point_labels, verbose_level - 2);
+			NULL /*point_color*/, bitvector_adjacency,
+			TRUE, point_labels, verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
 		}
 	else {
 		CG->init(N, 1 /* nb_colors */, 
-			NULL /*point_color*/, bitvector_adjacency, TRUE, verbose_level - 2);
+			NULL /*point_color*/, bitvector_adjacency,
+			TRUE, verbose_level - 2);
 			// the adjacency becomes part of the colored_graph object
 		}
 

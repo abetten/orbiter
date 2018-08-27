@@ -236,7 +236,7 @@ void welch(INT q, INT verbose_level)
 	A1 = NEW_INT(n);
 	A2 = NEW_INT(n);
 	A3 = NEW_INT(n);
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	for (lambda = 1; lambda < q; lambda++) {
@@ -325,7 +325,7 @@ void Lempel_Golomb(INT q, INT verbose_level)
 	A1 = NEW_INT(n);
 	A2 = NEW_INT(n);
 	A3 = NEW_INT(n);
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	for (k1 = 1; k1 < q; k1++) {
@@ -396,7 +396,7 @@ void Lempel_Golomb(INT q, INT verbose_level)
 			}
 		}
 
-	delete F;
+	FREE_OBJECT(F);
 	FREE_INT(A);
 	FREE_INT(B);
 	FREE_INT(A1);

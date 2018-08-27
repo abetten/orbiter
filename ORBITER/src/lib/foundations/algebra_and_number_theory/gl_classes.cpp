@@ -784,7 +784,7 @@ loop1:
 				<< " conjugacy classes" << endl;
 		}
 
-	R = new gl_class_rep[nb_classes];
+	R = NEW_OBJECTS(gl_class_rep, nb_classes);
 
 	sum.create(0);
 
@@ -1017,7 +1017,7 @@ void gl_classes::identify2(INT *Mtx, unipoly_object &poly,
 
 	matrix_block_data *Data;
 
-	Data = new matrix_block_data[nb_irreds];
+	Data = NEW_OBJECTS(matrix_block_data, nb_irreds);
 
 
 	if (f_v) {
@@ -1349,7 +1349,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 
 			INT_matrix *Forbidden_subspace;
 		
-			Forbidden_subspace = new INT_matrix;
+			Forbidden_subspace = NEW_OBJECT(INT_matrix);
 
 			Forbidden_subspace->allocate(k, b - B0);
 
@@ -1368,7 +1368,7 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 			else {
 				INT_matrix *Dummy_subspace;
 					
-				Dummy_subspace = new INT_matrix;
+				Dummy_subspace = NEW_OBJECT(INT_matrix);
 
 				Dummy_subspace->allocate(k, 0);
 					
@@ -1377,9 +1377,9 @@ void gl_classes::choose_basis_for_rational_normal_form_block(
 						verbose_level - 1);
 
 
-				delete Dummy_subspace;
+				FREE_OBJECT(Dummy_subspace);
 				}
-			delete Forbidden_subspace;
+			FREE_OBJECT(Forbidden_subspace);
 				
 			if (f_v) {
 				cout << "chosing vector v=";
@@ -1626,7 +1626,7 @@ void gl_classes::centralizer_generators(INT *Mtx,
 
 	matrix_block_data *Data;
 
-	Data = new matrix_block_data[nb_irreds];
+	Data = NEW_OBJECTS(matrix_block_data, nb_irreds);
 
 
 	if (f_v) {
@@ -1679,7 +1679,7 @@ void gl_classes::centralizer_generators(INT *Mtx,
 		} // next h
 
 	
-	delete [] Data;
+	FREE_OBJECTS(Data);
 
 	FREE_INT(Irreds);
 
@@ -1846,7 +1846,7 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(
 
 			INT_matrix *Forbidden_subspace;
 		
-			Forbidden_subspace = new INT_matrix;
+			Forbidden_subspace = NEW_OBJECT(INT_matrix);
 
 			Forbidden_subspace->allocate(k, b - B0);
 
@@ -1874,7 +1874,7 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(
 			else {
 				INT_matrix *Dummy_subspace;
 					
-				Dummy_subspace = new INT_matrix;
+				Dummy_subspace = NEW_OBJECT(INT_matrix);
 
 				Dummy_subspace->allocate(k, 0);
 					
@@ -1894,9 +1894,9 @@ INT gl_classes::choose_basis_for_rational_normal_form_coset(
 					}
 
 
-				delete Dummy_subspace;
+				FREE_OBJECT(Dummy_subspace);
 				}
-			delete Forbidden_subspace;
+			FREE_OBJECT(Forbidden_subspace);
 			
 
 			if (ret == FALSE) {
@@ -2175,7 +2175,7 @@ void matrix_block_data::null()
 void matrix_block_data::freeself()
 {
 	if (K) {
-		delete [] K;
+		FREE_OBJECTS(K);
 		}
 	if (dual_part) {
 		FREE_INT(dual_part);
@@ -2188,7 +2188,7 @@ void matrix_block_data::freeself()
 
 void matrix_block_data::allocate(INT k)
 {
-	K = new INT_matrix[k];
+	K = NEW_OBJECTS(INT_matrix, k);
 	dual_part = NEW_INT(k);
 	part = NEW_INT(k);
 }

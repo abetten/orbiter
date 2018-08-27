@@ -90,7 +90,7 @@ void do_it(INT n, INT verbose_level)
 
 	a_domain *D;
 
-	D = new a_domain;
+	D = NEW_OBJECT(a_domain);
 	D->init_integer_fractions(verbose_level);
 
 
@@ -100,7 +100,7 @@ void do_it(INT n, INT verbose_level)
 	INT *Elt;
 	INT i, j;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
@@ -122,7 +122,7 @@ void do_it(INT n, INT verbose_level)
 
 	action *Aconj;
 
-	Aconj = new action;
+	Aconj = NEW_OBJECT(action);
 
 	cout << "Creating action by conjugation" << endl;
 	
@@ -138,12 +138,12 @@ void do_it(INT n, INT verbose_level)
 	schreier *Sch;
 	strong_generators *SG;
 
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 
 	Sch->init(Aconj);
 
 
-	SG = new strong_generators;
+	SG = NEW_OBJECT(strong_generators);
 
 	SG->init_from_sims(S, 0);
 	
@@ -381,13 +381,13 @@ void do_it(INT n, INT verbose_level)
 
 
 	FREE_INT(N);
-	delete SG;
-	delete Sch;
-	delete Aconj;
+	FREE_OBJECT(SG);
+	FREE_OBJECT(Sch);
+	FREE_OBJECT(Aconj);
 
 	FREE_INT(Elt);
-	delete A;
-	delete D;
+	FREE_OBJECT(A);
+	FREE_OBJECT(D);
 }
 
 void create_matrix(matrix &M, INT i, INT *S, INT nb_classes, 
@@ -637,36 +637,7 @@ void compute_omega(a_domain *D, INT *N0, INT nb_classes, INT *Mu, INT nb_mu, INT
 		FREE_INT(b);
 		FREE_INT(c);
 
-#if 0
-		INT kernel_m, kernel_n;
-		double a, b;
-		double *kernel;
-		
-		kernel = new double[nb_classes * nb_classes];
-		matrix_get_kernel(M, nb_classes, nb_classes, base_cols, rk, 
-			kernel_m, kernel_n, kernel);
 
-		if (f_vv) {
-			cout << "the kernel is:" << endl;
-			double_matrix_print(kernel, nb_classes, 1);
-			}
-
-		a = kernel[0];
-		if (double_abs(a) < 0.000001) {
-			cout << "The first entry of the eigenvector is zero" << endl;
-			exit(1);
-			}
-		b = 1. / a;
-		for (i = 0; i < nb_classes; i++) {
-			kernel[i] *= b;
-			}
-
-		for (i = 0; i < nb_classes; i++) {
-			Omega[i * nb_classes + h] = kernel[i];
-			}
-
-		delete [] kernel;
-#endif
 
 
 		}

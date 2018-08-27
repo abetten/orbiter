@@ -317,10 +317,14 @@ void tdo_parameter_calculation::main_loop()
 			cout << "eof reached" << endl;
 			break;
 			}
+
+#if 0
 		if (cnt && (cnt % 1000) == 0) {
 			cout << cnt << endl;
 			registry_dump();
 			}
+#endif
+
 		if (!GP.input_mode_stack(f, 0 /*verbose_level - 1*/)) {
 			//cout << "GP.input_mode_stack returns FALSE" << endl;
 			break;

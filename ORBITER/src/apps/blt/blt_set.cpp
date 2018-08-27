@@ -152,7 +152,7 @@ void blt_set::init_basic(finite_field *F,
 	read_arguments(argc, argv);
 
 
-	gen = new generator;
+	gen = NEW_OBJECT(generator);
 	gen->read_arguments(argc, argv, 0);
 	
 
@@ -240,7 +240,7 @@ void blt_set::init_group(INT verbose_level)
 		cout << "blt_set::init_group "
 				"before A->init_orthogonal_group" << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	A->init_orthogonal_group(epsilon, n, F, 
 		TRUE /* f_on_points */, 
@@ -327,43 +327,6 @@ void blt_set::init_group(INT verbose_level)
 		}
 }
 
-#if 0
-void blt_set::init_orthogonal(INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	
-	if (f_v) {
-		cout << "blt_set::init_orthogonal" << endl;
-		}
-	if (f_vv) {
-		cout << "epsilon=" << epsilon << endl;
-		cout << "n=" << n << endl;
-		cout << "q=" << q << endl;
-		cout << "f_semilinear=" << f_semilinear << endl;
-		}
-
-	f_orthogonal_allocated = TRUE;
-	O = new orthogonal;
-	O->init(epsilon, n, F, verbose_level - 3);
-	if (f_vv) {
-		cout << "created O^" << plus_minus_string(epsilon)
-				<< "(" << n << "," << q << ") with "
-			<< O->nb_points << " points and " << O->nb_lines
-			<< " lines" << endl << endl;
-		}
-
-	init_orthogonal_hash(verbose_level);
-
-	if (f_vv) {
-		O->F->print(FALSE);
-		}
-
-	if (f_v) {
-		cout << "blt_set::init_orthogonal finished" << endl;
-		}
-}
-#endif
 
 void blt_set::init_orthogonal_hash(INT verbose_level)
 {
@@ -782,7 +745,7 @@ INT blt_set::create_graph(
 	nb_vertices = 0;
 
 
-	R = new orbit_rep;
+	R = NEW_OBJECT(orbit_rep);
 	if (f_v) {
 		cout << "blt_set::create_graph before "
 				"R->init_from_file" << endl;
@@ -857,7 +820,7 @@ INT blt_set::create_graph(
 						<< R->nb_cases << " nb_candidates < nb, "
 								"the case is eliminated" << endl;
 				}
-			delete R;
+			FREE_OBJECT(R);
 			return FALSE;
 			}
 		//}
@@ -991,7 +954,7 @@ INT blt_set::create_graph(
 		cout << "blt_set::create_graph creating colored_graph" << endl;
 		}
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	CG->init(R->nb_candidates /* nb_points */, nb_colors, 
 		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
@@ -1017,7 +980,7 @@ INT blt_set::create_graph(
 	ret = TRUE;
 
 finish:
-	delete R;
+	FREE_OBJECT(R);
 	return ret;
 }
 

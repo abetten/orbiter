@@ -103,7 +103,8 @@ void classify_double_sixes::freeself()
 	null();
 }
 
-void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG, 
+void classify_double_sixes::init(
+	surface_with_action *Surf_A, linear_group *LG,
 	int argc, const char **argv, 
 	INT verbose_level)
 {
@@ -132,7 +133,8 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 	A2 = LG->A2;
 
 	if (A2->type_G != action_on_wedge_product_t) {
-		cout << "classify_double_sixes::init group must act in wedge action" << endl;
+		cout << "classify_double_sixes::init group must "
+				"act in wedge action" << endl;
 		exit(1);
 		}
 
@@ -151,7 +153,8 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 
 
 	if (f_v) {
-		cout << "classify_double_sixes::init before SG_line_stab->generators_for_parabolic_subgroup" << endl;
+		cout << "classify_double_sixes::init before "
+				"SG_line_stab->generators_for_parabolic_subgroup" << endl;
 		}
 
 
@@ -160,13 +163,15 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 		A->G.matrix_grp, 2, verbose_level - 1);
 
 	if (f_v) {
-		cout << "classify_double_sixes::init after SG_line_stab->generators_for_parabolic_subgroup" << endl;
+		cout << "classify_double_sixes::init after "
+				"SG_line_stab->generators_for_parabolic_subgroup" << endl;
 		}
 
 
 
 	if (f_v) {
-		cout << "classify_double_sixes::init before compute_neighbors" << endl;
+		cout << "classify_double_sixes::init "
+				"before compute_neighbors" << endl;
 		}
 	compute_neighbors(verbose_level - 1);
 	{
@@ -175,7 +180,8 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 	delete Sp;
 	}
 	if (f_v) {
-		cout << "classify_double_sixes::init after compute_neighbors nb_neighbors = " << nb_neighbors << endl;
+		cout << "classify_double_sixes::init after compute_neighbors "
+				"nb_neighbors = " << nb_neighbors << endl;
 		cout << "Neighbors=";
 		INT_vec_print(cout, Neighbors, nb_neighbors);
 		cout << endl;
@@ -186,7 +192,8 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 
 
 	if (f_v) {
-		cout << "classify_double_sixes::init computing restricted action on neighbors" << endl;
+		cout << "classify_double_sixes::init "
+				"computing restricted action on neighbors" << endl;
 		}
 
 	A_on_neighbors = new action;
@@ -196,7 +203,8 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 		0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "classify_double_sixes::init restricted action on neighbors has been computed" << endl;
+		cout << "classify_double_sixes::init "
+				"restricted action on neighbors has been computed" << endl;
 		}
 
 
@@ -205,12 +213,14 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 
 
 
-	cout << "classify_double_sixes::init before Five_plus_one->init" << endl;
+	cout << "classify_double_sixes::init "
+			"before Five_plus_one->init" << endl;
 	Five_plus_one->init(A, A_on_neighbors, 
 		SG_line_stab,
 		5 /* sz */, 
 		verbose_level - 1 + 5);
-	cout << "classify_double_sixes::init after Five_plus_one->init" << endl;
+	cout << "classify_double_sixes::init "
+			"after Five_plus_one->init" << endl;
 
 
 	Five_plus_one->init_check_func(callback_partial_ovoid_test, 
@@ -230,16 +240,21 @@ void classify_double_sixes::init(surface_with_action *Surf_A, linear_group *LG,
 	INT nb_poset_orbit_nodes = ONE_MILLION;
 	
 	if (f_v) {
-		cout << "classify_double_sixes::init calling init_poset_orbit_node with " << nb_poset_orbit_nodes << " nodes" << endl;
+		cout << "classify_double_sixes::init calling "
+				"init_poset_orbit_node with " << nb_poset_orbit_nodes
+				<< " nodes" << endl;
 		}
 	
-	Five_plus_one->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
+	Five_plus_one->init_poset_orbit_node(
+			nb_poset_orbit_nodes, verbose_level - 1);
 
 	if (f_v) {
-		cout << "classify_double_sixes::init after calling init_root_node" << endl;
+		cout << "classify_double_sixes::init "
+				"after calling init_root_node" << endl;
 		}
 	
-	Five_plus_one->root[0].init_root_node(Five_plus_one, Five_plus_one->verbose_level);
+	Five_plus_one->root[0].init_root_node(Five_plus_one,
+			Five_plus_one->verbose_level);
 
 	if (f_v) {
 		cout << "classify_double_sixes::init done" << endl;
@@ -258,7 +273,8 @@ void classify_double_sixes::compute_neighbors(INT verbose_level)
 
 	nb_neighbors = (q + 1) * q * (q + 1);
 	if (f_v) {
-		cout << "classify_double_sixes::compute_neighbors nb_neighbors = " << nb_neighbors << endl;
+		cout << "classify_double_sixes::compute_neighbors "
+				"nb_neighbors = " << nb_neighbors << endl;
 		}
 	Neighbors = NEW_INT(nb_neighbors);
 	Neighbor_to_line = NEW_INT(nb_neighbors);
@@ -272,17 +288,20 @@ void classify_double_sixes::compute_neighbors(INT verbose_level)
 	Surf->O->perp(0, Neighbors, sz, 0 /* verbose_level*/);
 	
 	if (sz != nb_neighbors) {
-		cout << "classify_double_sixes::compute_neighbors sz != nb_neighbors" << endl;
+		cout << "classify_double_sixes::compute_neighbors "
+				"sz != nb_neighbors" << endl;
 		exit(1);
 		}
-	cout << "classify_double_sixes::compute_neighbors nb_neighbors = " << nb_neighbors << endl;
+	cout << "classify_double_sixes::compute_neighbors "
+			"nb_neighbors = " << nb_neighbors << endl;
 	
 	Line_to_neighbor = NEW_INT(Surf->nb_lines_PG_3);
 	for (i = 0; i < Surf->nb_lines_PG_3; i++) {
 		Line_to_neighbor[i] = -1;
 		}
 
-	// Convert Neighbors from points on the Klein quadric to wedge points:
+	// Convert Neighbors from points
+	// on the Klein quadric to wedge points:
 	Surf->klein_to_wedge_vec(Neighbors, Neighbors, nb_neighbors);
 
 	// Sort the set Neighbors:
@@ -304,7 +323,9 @@ void classify_double_sixes::compute_neighbors(INT verbose_level)
 		Line_to_neighbor[c] = i;
 		}
 
-	INT_vec_apply(Neighbor_to_line, Surf->Klein->Line_to_point_on_quadric, Neighbor_to_klein, nb_neighbors);
+	INT_vec_apply(Neighbor_to_line,
+			Surf->Klein->Line_to_point_on_quadric,
+			Neighbor_to_klein, nb_neighbors);
 
 
 
@@ -313,7 +334,8 @@ void classify_double_sixes::compute_neighbors(INT verbose_level)
 		}
 }
 
-void classify_double_sixes::make_spreadsheet_of_neighbors(spreadsheet *&Sp, INT verbose_level)
+void classify_double_sixes::make_spreadsheet_of_neighbors(
+	spreadsheet *&Sp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	BYTE fname_csv[1000];
@@ -326,7 +348,8 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(spreadsheet *&Sp, INT 
 	
 
 	Surf->make_spreadsheet_of_lines_in_three_kinds(Sp, 
-		Neighbors, Neighbor_to_line, Neighbor_to_klein, nb_neighbors, 0 /* verbose_level */);
+		Neighbors, Neighbor_to_line,
+		Neighbor_to_klein, nb_neighbors, 0 /* verbose_level */);
 
 	cout << "before Sp->save " << fname_csv << endl;
 	Sp->save(fname_csv, verbose_level);
@@ -337,11 +360,13 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(spreadsheet *&Sp, INT 
 
 
 	if (f_v) {
-		cout << "classify_double_sixes::make_spreadsheet_of_neighbors done" << endl;
+		cout << "classify_double_sixes::make_spreadsheet_"
+				"of_neighbors done" << endl;
 		}
 }
 
-void classify_double_sixes::classify_partial_ovoids(INT f_draw_poset, 
+void classify_double_sixes::classify_partial_ovoids(
+	INT f_draw_poset,
 	INT f_draw_poset_full, 
 	INT verbose_level)
 {
@@ -356,13 +381,15 @@ void classify_double_sixes::classify_partial_ovoids(INT f_draw_poset,
 		cout << "classify_double_sixes::classify_partial_ovoids" << endl;
 		}
 	if (f_v) {
-		cout << "classify_double_sixes::classify_partial_ovoids nb_neighbors = " << nb_neighbors << endl;
+		cout << "classify_double_sixes::classify_partial_ovoids "
+				"nb_neighbors = " << nb_neighbors << endl;
 		cout << "Neighbors=";
 		INT_vec_print(cout, Neighbors, nb_neighbors);
 		cout << endl;
 		}
 	if (f_v) {
-		cout << "classify_double_sixes::classify_partial_ovoids classifying starter" << endl;
+		cout << "classify_double_sixes::classify_partial_ovoids "
+				"classifying starter" << endl;
 		}
 	Five_plus_one->main(t0, 
 		schreier_depth, 
@@ -370,21 +397,30 @@ void classify_double_sixes::classify_partial_ovoids(INT f_draw_poset,
 		f_debug, 
 		verbose_level + 3);
 	if (f_v) {
-		cout << "classify_double_sixes::classify_partial_ovoids classifying starter done" << endl;
+		cout << "classify_double_sixes::classify_partial_ovoids "
+				"classifying starter done" << endl;
 		}
 	
 	if (f_draw_poset) {
 		{
 		BYTE fname_poset[1000];
 		sprintf(fname_poset, "fiveplusone_q%ld", q);
-		Five_plus_one->draw_poset(fname_poset, 5 /*depth*/, 0 /* data1 */, TRUE /* f_embedded */, FALSE /* f_sideways */, 0 /* verbose_level */);
+		Five_plus_one->draw_poset(fname_poset,
+				5 /*depth*/, 0 /* data1 */,
+				TRUE /* f_embedded */,
+				FALSE /* f_sideways */,
+				0 /* verbose_level */);
 		}
 		}
 	if (f_draw_poset_full) {
 		{
 		BYTE fname_poset[1000];
 		sprintf(fname_poset, "fiveplusone_q%ld", q);
-		Five_plus_one->draw_poset(fname_poset, 5 /*depth*/, 0 /* data1 */, TRUE /* f_embedded */, FALSE /* f_sideways */, 0 /* verbose_level */);
+		Five_plus_one->draw_poset(fname_poset,
+				5 /*depth*/, 0 /* data1 */,
+				TRUE /* f_embedded */,
+				FALSE /* f_sideways */,
+				0 /* verbose_level */);
 		}
 		}
 	if (q < 20) {
@@ -404,9 +440,11 @@ void classify_double_sixes::classify_partial_ovoids(INT f_draw_poset,
 
 
 
-INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level)
+INT classify_double_sixes::partial_ovoid_test(
+		INT *S, INT len, INT verbose_level)
 // Make sure that the set of lines is pairwise disjoint.
-// No other tests are performed (as these other tests would be expensive).
+// No other tests are performed
+// (as these other tests would be expensive).
 {
 	//verbose_level = 2;
 	INT i, x, y;
@@ -425,7 +463,8 @@ INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level
 		for (i = 0; i < len; i++) {
 			AW->unrank_point(u, Neighbors[S[i]]);
 			Surf->wedge_to_klein(u, u1);
-			cout << i << " : " << S[i] << " : " << Neighbors[S[i]] << " : ";
+			cout << i << " : " << S[i]
+				<< " : " << Neighbors[S[i]] << " : ";
 			cout << " wedge: ";
 			INT_vec_print(cout, u, 6);
 			cout << " klein: ";
@@ -448,7 +487,8 @@ INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level
 			f_OK = FALSE;
 			if (f_vv) {
 				cout << "not OK; ";
-				cout << "{x,y}={" << x << "," << y << "} are collinear" << endl;
+				cout << "{x,y}={" << x << "," << y
+					<< "} are collinear" << endl;
 				INT_vec_print(cout, u1, 6);
 				cout << endl;
 				INT_vec_print(cout, v1, 6);
@@ -471,7 +511,9 @@ INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level
 			a = S[i];
 			lines[i] = Neighbor_to_line[a];
 			}
-		if (!Surf->compute_rank_of_any_four(Rk, nb_subsets, lines, len, 0 /* verbose_level */)) {
+		if (!Surf->compute_rank_of_any_four(Rk,
+			nb_subsets, lines, len,
+			0 /* verbose_level */)) {
 			f_OK = FALSE;
 			}
 		if (f_v) {
@@ -496,7 +538,9 @@ INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level
 			lines[i] = Neighbor_to_line[a];
 			}
 
-		if (!Surf->compute_transversals_of_any_four(Trans, nb_subsets, lines, len, 0 /* verbose_level */)) {
+		if (!Surf->compute_transversals_of_any_four(
+			Trans, nb_subsets, lines, len,
+			0 /* verbose_level */)) {
 			f_OK = FALSE;
 			}
 		if (f_v) {
@@ -569,7 +613,9 @@ INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level
 			Gr->print_set(S2, len + 1);
 			}
 
-		r = Surf->compute_system_in_RREF(len + 1, S2, 0 /*verbose_level*/);
+		r = Surf->compute_system_in_RREF(
+				len + 1, S2,
+				0 /*verbose_level*/);
 		if (r < 4 + 3 * len) {
 			f_OK = FALSE;
 			}
@@ -578,10 +624,12 @@ INT classify_double_sixes::partial_ovoid_test(INT *S, INT len, INT verbose_level
 	
 	if (f_v) {
 		if (!f_OK) {
-			cout << "classify_double_sixes::partial_ovoid_test fails" << endl;
+			cout << "classify_double_sixes::partial_ovoid_test "
+					"fails" << endl;
 			}
 		else {
-			cout << "classify_double_sixes::partial_ovoid_test is OK" << endl;
+			cout << "classify_double_sixes::partial_ovoid_test "
+					"is OK" << endl;
 			}
 		}
 	return f_OK;
@@ -602,13 +650,15 @@ void classify_double_sixes::test_orbits(INT verbose_level)
 	len = Five_plus_one->nb_orbits_at_level(5);
 
 	if (f_v) {
-		cout << "classify_double_sixes::test_orbits testing " << len << " orbits of 5-sets of lines:" << endl;
+		cout << "classify_double_sixes::test_orbits testing "
+				<< len << " orbits of 5-sets of lines:" << endl;
 		}
 	nb = 0;
 	Idx = NEW_INT(len);
 	for (i = 0; i < len; i++) {
 		if (f_vv || ((i % 1000) == 0)) {
-			cout << "classify_double_sixes::test_orbits orbit " << i << " / " << len << ":" << endl;
+			cout << "classify_double_sixes::test_orbits orbit "
+				<< i << " / " << len << ":" << endl;
 			}
 		Five_plus_one->get_set_by_level(5, i, S);
 		if (f_vv) {
@@ -619,11 +669,15 @@ void classify_double_sixes::test_orbits(INT verbose_level)
 
 		if (partial_ovoid_test(S, 5, 0 /*verbose_level - 2*/)) {
 			if (f_vv) {
-				cout << "classify_double_sixes::test_orbits orbit " << i << " / " << len << " passes the partial_ovoid_test" << endl;
+				cout << "classify_double_sixes::test_orbits "
+						"orbit " << i << " / " << len
+						<< " passes the partial_ovoid_test" << endl;
 				}
 			}
 		else {
-			cout << "classify_double_sixes::test_orbits Does not pass the surface test, this should not happen" << endl;
+			cout << "classify_double_sixes::test_orbits Does "
+					"not pass the surface test, this should "
+					"not happen" << endl;
 			exit(1);
 			}
 
@@ -644,7 +698,8 @@ void classify_double_sixes::test_orbits(INT verbose_level)
 
 		r = Surf->compute_system_in_RREF(6, S2, 0 /*verbose_level*/);
 		if (f_vv) {
-			cout << "classify_double_sixes::test_orbits orbit " << i << " / " << len << " has rank = " << r << endl;
+			cout << "classify_double_sixes::test_orbits orbit "
+					<< i << " / " << len << " has rank = " << r << endl;
 			}
 		if (r == 19) {
 			Idx[nb++] = i;
@@ -652,7 +707,9 @@ void classify_double_sixes::test_orbits(INT verbose_level)
 		}
 
 	if (f_v) {
-		cout << "classify_double_sixes::test_orbits we found " << nb << " / " << len << " orbits where the rank is 19" << endl;
+		cout << "classify_double_sixes::test_orbits we found "
+				<< nb << " / " << len
+				<< " orbits where the rank is 19" << endl;
 		cout << "Idx=";
 		INT_vec_print(cout, Idx, nb);
 		cout << endl;
@@ -662,8 +719,8 @@ void classify_double_sixes::test_orbits(INT verbose_level)
 		}
 }
 
-void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(spreadsheet *&Sp, 
-	/*INT f_with_fusion, INT *Fusion, vector_ge *transporter,*/ 
+void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
+	spreadsheet *&Sp,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -683,7 +740,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(sprea
 	
 
 	if (f_v) {
-		cout << "classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations" << endl;
+		cout << "classify_double_sixes::make_spreadsheet_"
+				"of_fiveplusone_configurations" << endl;
 		}
 	sprintf(fname_csv, "fiveplusone19_%ld.csv", q);
 
@@ -776,7 +834,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(sprea
 	FREE_PBYTE(Transporter);
 	FREE_INT(data);
 	if (f_v) {
-		cout << "classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations done" << endl;
+		cout << "classify_double_sixes::make_spreadsheet_"
+				"of_fiveplusone_configurations done" << endl;
 		}
 }
 
@@ -798,7 +857,8 @@ void classify_double_sixes::identify_five_plus_one(INT *five_lines, INT transver
 	Surf->line_to_wedge_vec(five_lines, W1, 5);
 
 
-	A->make_element_which_moves_a_line_in_PG3q(Surf->Gr, transversal_line, Elt0, 0 /* verbose_level */);
+	A->make_element_which_moves_a_line_in_PG3q(
+		Surf->Gr, transversal_line, Elt0, 0 /* verbose_level */);
 
 
 	A2->map_a_set(W1, W2, 5, Elt0, 0 /* verbose_level */);
@@ -806,19 +866,23 @@ void classify_double_sixes::identify_five_plus_one(INT *five_lines, INT transver
 	INT_vec_search_vec(Neighbors, nb_neighbors, W2, 5, N1);
 
 	if (f_v) {
-		cout << "classify_double_sixes::identify_five_plus_one tracing the set ";
+		cout << "classify_double_sixes::identify_five_plus_one "
+				"tracing the set ";
 		INT_vec_print(cout, N1, 5);
 		cout << endl;
 		}
-	orbit_index = Five_plus_one->trace_set(N1, 5, 5, five_lines_out_as_neighbors, Elt1, 0 /* verbose_level */);
+	orbit_index = Five_plus_one->trace_set(N1, 5, 5,
+			five_lines_out_as_neighbors, Elt1, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "classify_double_sixes::identify_five_plus_one orbit_index = " << orbit_index << endl;
+		cout << "classify_double_sixes::identify_five_plus_one "
+				"orbit_index = " << orbit_index << endl;
 		}
 
 	
 	A->element_mult(Elt0, Elt1, transporter, 0);
 	if (f_v) {
-		cout << "classify_double_sixes::identify_five_plus_one done" << endl;
+		cout << "classify_double_sixes::identify_five_plus_one "
+				"done" << endl;
 		}
 }
 
@@ -837,7 +901,10 @@ void classify_double_sixes::classify(INT verbose_level)
 	downstep(verbose_level);
 	if (f_v) {
 		cout << "classify_double_sixes::classify after downstep" << endl;
-		cout << "we found " << Flag_orbits->nb_flag_orbits << " flag orbits out of " << Five_plus_one->nb_orbits_at_level(5) << " orbits" << endl;
+		cout << "we found " << Flag_orbits->nb_flag_orbits
+				<< " flag orbits out of "
+				<< Five_plus_one->nb_orbits_at_level(5)
+				<< " orbits" << endl;
 		}
 
 	if (f_v) {
@@ -846,7 +913,10 @@ void classify_double_sixes::classify(INT verbose_level)
 	upstep(verbose_level);
 	if (f_v) {
 		cout << "classify_double_sixes::classify after upstep" << endl;
-		cout << "we found " << Double_sixes->nb_orbits << " double sixes out of " << Flag_orbits->nb_flag_orbits << " flag orbits" << endl;
+		cout << "we found " << Double_sixes->nb_orbits
+				<< " double sixes out of "
+				<< Flag_orbits->nb_flag_orbits
+				<< " flag orbits" << endl;
 		}
 
 	if (f_v) {
@@ -866,11 +936,13 @@ void classify_double_sixes::downstep(INT verbose_level)
 		}
 
 	if (f_v) {
-		cout << "classify_double_sixes::downstep before test_orbits" << endl;
+		cout << "classify_double_sixes::downstep "
+				"before test_orbits" << endl;
 		}
 	test_orbits(verbose_level - 1);
 	if (f_v) {
-		cout << "classify_double_sixes::downstep after test_orbits" << endl;
+		cout << "classify_double_sixes::downstep "
+				"after test_orbits" << endl;
 		cout << "Idx=";
 		INT_vec_print(cout, Idx, nb);
 		cout << endl;
@@ -886,7 +958,8 @@ void classify_double_sixes::downstep(INT verbose_level)
 		verbose_level);
 
 	if (f_v) {
-		cout << "classify_double_sixes::downstep initializing flag orbits" << endl;
+		cout << "classify_double_sixes::downstep "
+				"initializing flag orbits" << endl;
 		}
 
 	nb_flag_orbits = 0;
@@ -894,7 +967,9 @@ void classify_double_sixes::downstep(INT verbose_level)
 
 		i = Idx[f];
 		if (f_v) {
-			cout << "orbit " << f << " / " << nb << " with rank = 19 is orbit " << i << " / " << nb_orbits << endl;
+			cout << "orbit " << f << " / " << nb
+					<< " with rank = 19 is orbit "
+					<< i << " / " << nb_orbits << endl;
 			}
 
 		set_and_stabilizer *R;
@@ -902,7 +977,9 @@ void classify_double_sixes::downstep(INT verbose_level)
 		longinteger_object go;
 		INT dataset[23];
 
-		R = Five_plus_one->get_set_and_stabilizer(5 /* level */, i /* orbit_at_level */, 0 /* verbose_level */);
+		R = Five_plus_one->get_set_and_stabilizer(
+				5 /* level */, i /* orbit_at_level */,
+				0 /* verbose_level */);
 
 		Five_plus_one->orbit_length(i /* node */, 5 /* level */, ol);
 
@@ -922,38 +999,51 @@ void classify_double_sixes::downstep(INT verbose_level)
 			}
 
 		if (f_vv) {
-			cout << "classify_double_sixes::downstep before create_double_six_from_five_lines_with_a_common_transversal" << endl;
+			cout << "classify_double_sixes::downstep before "
+					"create_double_six_from_five_lines_with_"
+					"a_common_transversal" << endl;
 			}
 
-		c = Surf_A->create_double_six_from_five_lines_with_a_common_transversal(dataset + 5, pt0_line, double_six, 0 /*verbose_level*/);
-		//c = Surf_A->create_double_six_safely(dataset + 5, pt0_line, double_six, verbose_level);
-		//c = Surf->create_double_six_from_five_lines_with_a_common_transversal(dataset + 5, double_six, 0 /*verbose_level*/);
+		c = Surf_A->create_double_six_from_five_lines_with_a_common_transversal(
+				dataset + 5, pt0_line, double_six,
+				0 /*verbose_level*/);
 		
 		if (c) {
 
 			if (f_vv) {
-				cout << "The starter configuration is good, a double six has been computed:" << endl;
+				cout << "The starter configuration is good, "
+						"a double six has been computed:" << endl;
 				INT_matrix_print(double_six, 2, 6);
 				}
 
 			INT_vec_copy(double_six, dataset + 11, 12);
 
 
-			Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(Flag_orbits, nb_flag_orbits /* flag_orbit_index */, 
-				i /* downstep_primary_orbit */, 0 /* downstep_secondary_orbit */, 
-				ol.as_INT() /* downstep_orbit_len */, FALSE /* f_long_orbit */, 
-				dataset /* INT *pt_representation */, R->Strong_gens, 
+			Flag_orbits->Flag_orbit_node[nb_flag_orbits].init(
+				Flag_orbits,
+				nb_flag_orbits /* flag_orbit_index */,
+				i /* downstep_primary_orbit */,
+				0 /* downstep_secondary_orbit */,
+				ol.as_INT() /* downstep_orbit_len */,
+				FALSE /* f_long_orbit */,
+				dataset /* INT *pt_representation */,
+				R->Strong_gens,
 				verbose_level - 2);
 			R->Strong_gens = NULL;
 
 			if (f_vv) {
-				cout << "orbit " << f << " / " << nb << " with rank = 19 is orbit " << i << " / " << nb_orbits << ", stab order " << go << endl;
+				cout << "orbit " << f << " / " << nb
+					<< " with rank = 19 is orbit " << i
+					<< " / " << nb_orbits << ", stab order "
+					<< go << endl;
 				}
 			nb_flag_orbits++;
 			}
 		else {
 			if (f_vv) {
-				cout << "orbit " << f << " / " << nb << " with rank = 19 does not yield a double six, skipping" << endl;
+				cout << "orbit " << f << " / " << nb
+						<< " with rank = 19 does not yield a "
+								"double six, skipping" << endl;
 				}
 			}
 
@@ -969,10 +1059,13 @@ void classify_double_sixes::downstep(INT verbose_level)
 		Po[f] = Flag_orbits->Flag_orbit_node[f].downstep_primary_orbit;
 		}
 	if (f_v) {
-		cout << "classify_double_sixes::downstep we found " << nb_flag_orbits << " flag orbits out of " << nb_orbits << " orbits" << endl;
+		cout << "classify_double_sixes::downstep we found "
+			<< nb_flag_orbits << " flag orbits out of "
+			<< nb_orbits << " orbits" << endl;
 		}
 	if (f_v) {
-		cout << "classify_double_sixes::downstep initializing flag orbits done" << endl;
+		cout << "classify_double_sixes::downstep "
+				"initializing flag orbits done" << endl;
 		}
 }
 
@@ -999,7 +1092,9 @@ void classify_double_sixes::upstep(INT verbose_level)
 	longinteger_object go;
 	A->group_order(go);
 
-	Double_sixes->init(A, A2, Flag_orbits->nb_flag_orbits, 12, go, verbose_level);
+	Double_sixes->init(A, A2,
+			Flag_orbits->nb_flag_orbits, 12, go,
+			verbose_level);
 
 
 	if (f_v) {
@@ -1019,12 +1114,18 @@ void classify_double_sixes::upstep(INT verbose_level)
 			continue;
 			}
 
-		progress = ((double)nb_processed * 100. ) / (double) Flag_orbits->nb_flag_orbits;
+		progress = ((double)nb_processed * 100. ) /
+				(double) Flag_orbits->nb_flag_orbits;
 
 		if (f_v) {
-			cout << "Defining new orbit " << Flag_orbits->nb_primary_orbits_upper << " from flag orbit " << f << " / " << Flag_orbits->nb_flag_orbits << " progress=" << progress << "%" << endl;
+			cout << "Defining new orbit "
+				<< Flag_orbits->nb_primary_orbits_upper
+				<< " from flag orbit " << f << " / "
+				<< Flag_orbits->nb_flag_orbits
+				<< " progress=" << progress << "%" << endl;
 			}
-		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit = Flag_orbits->nb_primary_orbits_upper;
+		Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit
+			= Flag_orbits->nb_primary_orbits_upper;
 		
 
 		if (Flag_orbits->pt_representation_sz != 23) {
@@ -1093,7 +1194,8 @@ void classify_double_sixes::upstep(INT verbose_level)
 				//INT_vec_apply(five_lines, Line_to_neighbor, five_lines_in_wedge, 5);
 				
 				if (f_v) {
-					cout << "transversal_line = " << transversal_line << " five_lines=";
+					cout << "transversal_line = "
+							<< transversal_line << " five_lines=";
 					INT_vec_print(cout, five_lines, 5);
 					cout << endl;
 					}
@@ -1106,16 +1208,20 @@ void classify_double_sixes::upstep(INT verbose_level)
 					A->element_print_quick(Elt3, cout);
 					}
 
-				if (!INT_vec_search(Po, Flag_orbits->nb_flag_orbits, orbit_index, f2)) {
-					cout << "cannot find orbit " << orbit_index << " in Po" << endl;
+				if (!INT_vec_search(Po, Flag_orbits->nb_flag_orbits,
+						orbit_index, f2)) {
+					cout << "cannot find orbit " << orbit_index
+							<< " in Po" << endl;
 					cout << "Po=";
 					INT_vec_print(cout, Po, Flag_orbits->nb_flag_orbits);
 					cout << endl;
 					exit(1);
 					}
 
-				if (Flag_orbits->Flag_orbit_node[f2].downstep_primary_orbit != orbit_index) {
-					cout << "Flag_orbits->Flag_orbit_node[f2].downstep_primary_orbit != orbit_index" << endl;
+				if (Flag_orbits->Flag_orbit_node[f2].downstep_primary_orbit
+						!= orbit_index) {
+					cout << "Flag_orbits->Flag_orbit_node[f2].downstep_"
+							"primary_orbit != orbit_index" << endl;
 					exit(1);
 					}
 
@@ -1126,31 +1232,42 @@ void classify_double_sixes::upstep(INT verbose_level)
 		
 				if (f2 == f) {
 					if (f_v) {
-						cout << "We found an automorphism of the double six:" << endl;
+						cout << "We found an automorphism of "
+								"the double six:" << endl;
 						A->element_print_quick(Elt3, cout);
 						cout << endl;
 						}
 					A->element_move(Elt3, coset_reps->ith(nb_coset_reps), 0);
 					nb_coset_reps++;
-					//S->add_single_generator(Elt3, 2 /* group_index */, verbose_level - 2);
+					//S->add_single_generator(Elt3,
+					//2 /* group_index */, verbose_level - 2);
 					}
 				else {
 					if (f_v) {
-						cout << "We are identifying flag orbit " << f2 << " with flag orbit " << f << endl;
+						cout << "We are identifying flag orbit "
+								<< f2 << " with flag orbit " << f << endl;
 						}
 					if (!f_processed[f2]) {
-						Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit = Flag_orbits->nb_primary_orbits_upper;
-						Flag_orbits->Flag_orbit_node[f2].f_fusion_node = TRUE;
-						Flag_orbits->Flag_orbit_node[f2].fusion_with = f;
-						Flag_orbits->Flag_orbit_node[f2].fusion_elt = NEW_INT(A->elt_size_in_INT);
-						A->element_invert(Elt3, Flag_orbits->Flag_orbit_node[f2].fusion_elt, 0);
+						Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit
+							= Flag_orbits->nb_primary_orbits_upper;
+						Flag_orbits->Flag_orbit_node[f2].f_fusion_node
+							= TRUE;
+						Flag_orbits->Flag_orbit_node[f2].fusion_with
+							= f;
+						Flag_orbits->Flag_orbit_node[f2].fusion_elt
+							= NEW_INT(A->elt_size_in_INT);
+						A->element_invert(Elt3,
+								Flag_orbits->Flag_orbit_node[f2].fusion_elt,
+								0);
 						f_processed[f2] = TRUE;
 						nb_processed++;
 						}
 					else {
-						cout << "Flag orbit " << f2 << " has already been identified with flag orbit " << f << endl;
+						cout << "Flag orbit " << f2 << " has already been "
+								"identified with flag orbit " << f << endl;
 						if (Flag_orbits->Flag_orbit_node[f2].fusion_with != f) {
-							cout << "Flag_orbits->Flag_orbit_node[f2].fusion_with != f" << endl;
+							cout << "Flag_orbits->Flag_orbit_node[f2]."
+									"fusion_with != f" << endl;
 							exit(1);
 							}
 						}
@@ -1167,16 +1284,26 @@ void classify_double_sixes::upstep(INT verbose_level)
 		longinteger_object ago;
 		
 		if (f_v) {
-			cout << "classify_double_sixes::upstep Extending the group by a factor of " << nb_coset_reps << endl;
+			cout << "classify_double_sixes::upstep "
+					"Extending the group by a factor of "
+					<< nb_coset_reps << endl;
 			}
 		Aut_gens = new strong_generators;
-		Aut_gens->init_group_extension(S, coset_reps, nb_coset_reps, verbose_level - 2);
+		Aut_gens->init_group_extension(S,
+				coset_reps, nb_coset_reps, verbose_level - 2);
+		if (f_v) {
+			cout << "classify_double_sixes::upstep "
+					"Aut_gens tl = ";
+			INT_vec_print(cout, Aut_gens->tl, Aut_gens->A->base_len);
+			cout << endl;
+			}
 
 		Aut_gens->group_order(ago);
 
 
 		if (f_v) {
-			cout << "the double six has a stabilizer of order " << ago << endl;
+			cout << "the double six has a stabilizer of order "
+					<< ago << endl;
 			cout << "The double six stabilizer is:" << endl;
 			Aut_gens->print_generators_tex(cout);
 			}
@@ -1184,7 +1311,8 @@ void classify_double_sixes::upstep(INT verbose_level)
 
 
 
-		Double_sixes->Orbit[Flag_orbits->nb_primary_orbits_upper].init(Double_sixes, 
+		Double_sixes->Orbit[Flag_orbits->nb_primary_orbits_upper].init(
+			Double_sixes,
 			Flag_orbits->nb_primary_orbits_upper, 
 			Aut_gens, dataset + 11, verbose_level);
 
@@ -1201,14 +1329,16 @@ void classify_double_sixes::upstep(INT verbose_level)
 	if (nb_processed != Flag_orbits->nb_flag_orbits) {
 		cout << "nb_processed != Flag_orbits->nb_flag_orbits" << endl;
 		cout << "nb_processed = " << nb_processed << endl;
-		cout << "Flag_orbits->nb_flag_orbits = " << Flag_orbits->nb_flag_orbits << endl;
+		cout << "Flag_orbits->nb_flag_orbits = "
+				<< Flag_orbits->nb_flag_orbits << endl;
 		exit(1);
 		}
 
 	Double_sixes->nb_orbits = Flag_orbits->nb_primary_orbits_upper;
 	
 	if (f_v) {
-		cout << "We found " << Flag_orbits->nb_primary_orbits_upper << " orbits of double sixes" << endl;
+		cout << "We found " << Flag_orbits->nb_primary_orbits_upper
+				<< " orbits of double sixes" << endl;
 		}
 	
 	FREE_INT(f_processed);
@@ -1226,7 +1356,8 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 	l = Five_plus_one->nb_orbits_at_level(5);
 
 	//ost << "\\clearpage" << endl;
-	ost << "\\subsection*{Classification of $5+1$ Configurations in $\\PG(3," << q << ")$}" << endl;
+	ost << "\\subsection*{Classification of $5+1$ Configurations "
+			"in $\\PG(3," << q << ")$}" << endl;
 
 
 
@@ -1249,12 +1380,16 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 
 	ost << "The group has " 
 		<< l 
-		<< " orbits on five plus one configurations in $\\PG(3," << q << ").$" << endl << endl;
+		<< " orbits on five plus one configurations in $\\PG(3,"
+		<< q << ").$" << endl << endl;
 
-	ost << "Of these, " << nb << " impose 19 conditions." << endl << endl;
+	ost << "Of these, " << nb << " impose 19 conditions."
+			<< endl << endl;
 
 
-	ost << "Of these, " << Flag_orbits->nb_flag_orbits << " are associated with double sixes. They are:" << endl << endl;
+	ost << "Of these, " << Flag_orbits->nb_flag_orbits
+			<< " are associated with double sixes. "
+				"They are:" << endl << endl;
 
 
 	for (f = 0; f < Flag_orbits->nb_flag_orbits; f++) {
@@ -1264,11 +1399,17 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 
 		set_and_stabilizer *R;
 
-		R = Five_plus_one->get_set_and_stabilizer(5 /* level */, i /* orbit_at_level */, 0 /* verbose_level */);
-		Five_plus_one->orbit_length(i /* node */, 5 /* level */, ol);
+		R = Five_plus_one->get_set_and_stabilizer(
+				5 /* level */,
+				i /* orbit_at_level */,
+				0 /* verbose_level */);
+		Five_plus_one->orbit_length(
+				i /* node */,
+				5 /* level */, ol);
 		D.add_in_place(Ol, ol);
 		
-		ost << "$" << f << " / " << Flag_orbits->nb_flag_orbits << "$ is orbit $" << i << " / " << l << "$ $" << endl;
+		ost << "$" << f << " / " << Flag_orbits->nb_flag_orbits
+				<< "$ is orbit $" << i << " / " << l << "$ $" << endl;
 		R->print_set_tex(ost);
 		ost << "$ orbit length $";
 		ol.print_not_scientific(ost);
@@ -1277,7 +1418,9 @@ void classify_double_sixes::print_five_plus_ones(ostream &ost)
 		delete R;
 		}
 
-	ost << "The overall number of five plus one configurations associated with double sixes in $\\PG(3," << q << ")$ is: " << Ol << "\\\\" << endl;
+	ost << "The overall number of five plus one configurations "
+			"associated with double sixes in $\\PG(3," << q
+			<< ")$ is: " << Ol << "\\\\" << endl;
 
 
 	//Double_sixes->print_latex(ost, "Classification of Double Sixes");
@@ -1303,7 +1446,9 @@ void classify_double_sixes::identify_double_six(INT *double_six,
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	
 	if (f_v) {
-		cout << "classify_double_sixes::identify_double_six identifying the five lines a_1,...,a_5 with transversal b_6" << endl;
+		cout << "classify_double_sixes::identify_double_six "
+				"identifying the five lines a_1,...,a_5 "
+				"with transversal b_6" << endl;
 		}
 	transversal_line = double_six[11];
 	INT_vec_copy(double_six, five_lines, 5);
@@ -1320,7 +1465,8 @@ void classify_double_sixes::identify_double_six(INT *double_six,
 
 	
 	if (!INT_vec_search(Po, Flag_orbits->nb_flag_orbits, po, f)) {
-		cout << "classify_double_sixes::identify_double_six did not find po in Po" << endl;
+		cout << "classify_double_sixes::identify_double_six "
+				"did not find po in Po" << endl;
 		exit(1);
 		}
 	
@@ -1329,9 +1475,11 @@ void classify_double_sixes::identify_double_six(INT *double_six,
 		}
 
 	if (Flag_orbits->Flag_orbit_node[f].f_fusion_node) {
-		A->element_mult(Elt1, Flag_orbits->Flag_orbit_node[f].fusion_elt, Elt2, 0);
+		A->element_mult(Elt1,
+				Flag_orbits->Flag_orbit_node[f].fusion_elt, Elt2, 0);
 		f2 = Flag_orbits->Flag_orbit_node[f].fusion_with;
-		orbit_index = Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit;
+		orbit_index =
+				Flag_orbits->Flag_orbit_node[f2].upstep_primary_orbit;
 		}
 	else {
 		f2 = -1;
@@ -1339,7 +1487,9 @@ void classify_double_sixes::identify_double_six(INT *double_six,
 		orbit_index = Flag_orbits->Flag_orbit_node[f].upstep_primary_orbit;
 		}
 	if (f_v) {
-		cout << "classify_double_sixes::identify_double_six f=" << f << " f2=" << f2 << " orbit_index=" << orbit_index << endl;
+		cout << "classify_double_sixes::identify_double_six "
+				"f=" << f << " f2=" << f2 << " orbit_index="
+				<< orbit_index << endl;
 		}
 	A->element_move(Elt2, transporter, 0);
 	if (f_vv) {
@@ -1415,9 +1565,11 @@ void classify_double_sixes::read_file(ifstream &fp, INT verbose_level)
 
 	INT depth_completed;
 
-	Five_plus_one->read_file(fp, depth_completed, verbose_level);
+	Five_plus_one->read_file(fp,
+			depth_completed, verbose_level);
 	if (depth_completed != 5) {
-		cout << "classify_double_sixes::read_file depth_completed != 5" << endl;
+		cout << "classify_double_sixes::read_file "
+				"depth_completed != 5" << endl;
 		exit(1);
 		}
 
@@ -1436,7 +1588,8 @@ void classify_double_sixes::read_file(ifstream &fp, INT verbose_level)
 	Double_sixes->read_file(fp, verbose_level);
 
 	if (f_v) {
-		cout << "classify_double_sixes::read_file finished" << endl;
+		cout << "classify_double_sixes::read_file "
+				"finished" << endl;
 		}
 }
 

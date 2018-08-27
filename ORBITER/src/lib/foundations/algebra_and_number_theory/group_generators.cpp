@@ -1224,9 +1224,9 @@ void O4_find_tangent_plane(finite_field &F,
 	INT *complement;
 	INT nb_complement = 0;
 	
-	secants1 = new INT[size * size];
-	secants2 = new INT[size * size];
-	complement = new INT[size * size];
+	secants1 = NEW_INT(size * size);
+	secants2 = NEW_INT(size * size);
+	complement = NEW_INT(size * size);
 	for (x = 0; x < size; x++) {
 		for (y = 0; y < size; y++) {
 			z = x * size + y;
@@ -1338,7 +1338,7 @@ void O4_find_tangent_plane(finite_field &F,
 	cout << endl;
 
 	INT *T;
-	T = new INT[4 * nb_complement];
+	T = NEW_INT(4 * nb_complement);
 
 	for (h = 0; h < nb_complement; h++) {
 		z = complement[h];
@@ -1371,10 +1371,10 @@ void O4_find_tangent_plane(finite_field &F,
 	for (i = 0; i < 12; i++) {
 		tangent_plane[i] = T[i];
 		}
-	delete [] secants1;
-	delete [] secants2;
-	delete [] complement;
-	delete [] T;
+	FREE_INT(secants1);
+	FREE_INT(secants2);
+	FREE_INT(complement);
+	FREE_INT(T);
 	
 #if 0
 	for (h = 0; h < nb_secants; h++) {

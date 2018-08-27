@@ -101,7 +101,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	INT p, h, i, j, a;
 	INT *v;
 	
-	A = new action;
+	A = NEW_OBJECT(action);
 	is_prime_power(q, p, h);
 	if (h > 1)
 		f_semilinear = TRUE;
@@ -111,7 +111,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	v = NEW_INT(n);
 
 	
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init(q, 0);
 
@@ -186,7 +186,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	sprintf(fname_tree, "O_%ld_%ld_%ld_tree", epsilon, n, q);
 	sprintf(fname_report, "O_%ld_%ld_%ld_report.tex", epsilon, n, q);
 
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 
 	cout << "computing orbits on points:" << endl;
 	A->all_point_orbits(*Sch, verbose_level);
@@ -246,12 +246,12 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 		INT_matrix_print(Mtx, 6, 25);
 
 		vector_ge *gens;
-		gens = new vector_ge;
+		gens = NEW_OBJECT(vector_ge);
 		gens->init_from_data(A, Mtx,
 				6 /* nb_elements */, 25 /* elt_size */, verbose_level);
 		gens->print(cout);
 		schreier *Sch2;
-		Sch2 = new schreier;
+		Sch2 = NEW_OBJECT(schreier);
 
 		cout << "computing orbits on points:" << endl;
 		Sch2->init(A);
@@ -286,8 +286,8 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 
 	}
 	FREE_INT(v);
-	delete A;
-	delete F;
+	FREE_OBJECT(A);
+	FREE_OBJECT(F);
 }
 
 

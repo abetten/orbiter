@@ -340,7 +340,7 @@ void isomorph_read_solution_files(
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
 		
-	registry_dump_sorted_by_size();
+	//registry_dump_sorted_by_size();
 		
 	Iso.build_up_database(nb_files, fname, 
 		f_has_final_test_function,
@@ -504,7 +504,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
 		
-	registry_dump_sorted_by_size();
+	//registry_dump_sorted_by_size();
 		
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_finder_"
@@ -596,7 +596,7 @@ void isomorph_read_solution_files_from_clique_finder(
 			// now we know Iso.N, the number of solutions
 			// from the clique finder
 		
-	registry_dump_sorted_by_size();
+	//registry_dump_sorted_by_size();
 		
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_finder "
@@ -1218,9 +1218,12 @@ void isomorph_compute_down_orbits_worker(
 		nb_orbits += cnt_orbits;
 		nb_special_orbits += cnt_special_orbits;
 
+#if 0
 		if (orbit && ((orbit % 100) == 0)) {
 			registry_dump_sorted();
 			}
+#endif
+
 		}
 
 	INT_matrix_write_csv("Nb_down_orbits.csv",

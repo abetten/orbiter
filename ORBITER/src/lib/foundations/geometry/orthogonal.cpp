@@ -1302,7 +1302,7 @@ void orthogonal::init(INT epsilon, INT n, finite_field *F, INT verbose_level)
 	lines_on_point_coords2 = NEW_INT(alpha * n);
 
 	if (m > 1) {
-		subspace = new orthogonal;
+		subspace = NEW_OBJECT(orthogonal);
 		if (f_v) {
 			cout << "initializing subspace" << endl;
 			}
@@ -8141,7 +8141,11 @@ void orthogonal::perp_of_k_points(INT *pts, INT nb_pts,
 
 
 	FREE_INT(Intersection1);
-	free_PINT_all(Perp_without_pt, nb_pts);
+	for (i = 0; i < nb_pts; i++) {
+		FREE_INT(Perp_without_pt[i]);
+	}
+	FREE_PINT(Perp_without_pt);
+	//free_PINT_all(Perp_without_pt, nb_pts);
 
 
 	if (f_v) {

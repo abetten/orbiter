@@ -60,7 +60,7 @@ void classify_bitvectors::freeself()
 		FREE_INT(type_of);
 		}
 	if (C_type_of) {
-		delete C_type_of;
+		FREE_OBJECT(C_type_of);
 		}
 	if (perm) {
 		FREE_INT(perm);
@@ -97,7 +97,8 @@ void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
 		}
 }
 
-INT classify_bitvectors::add(UBYTE *data, void *extra_data, INT verbose_level)
+INT classify_bitvectors::add(UBYTE *data,
+		void *extra_data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT idx, i, ret;
@@ -112,7 +113,8 @@ INT classify_bitvectors::add(UBYTE *data, void *extra_data, INT verbose_level)
 		cout << "N=" << N << endl;
 		exit(1);
 		}
-	if (vec_search((void **) Type_data, compare_func_for_bitvectors, (void *) this, 
+	if (vec_search((void **) Type_data,
+			compare_func_for_bitvectors, (void *) this,
 		nb_types, data, idx, 0 /*verbose_level */)) {
 		type_of[n] = idx;
 		Type_mult[idx]++;
@@ -154,7 +156,7 @@ void classify_bitvectors::finalize(INT verbose_level)
 	if (f_v) {
 		cout << "classify_bitvectors::finalize" << endl;
 		}
-	C_type_of = new classify;
+	C_type_of = NEW_OBJECT(classify);
 
 	C_type_of->init(type_of, N, FALSE, 0);
 
@@ -198,8 +200,10 @@ void classify_bitvectors::print_reps()
 }
 
 void classify_bitvectors::save(const BYTE *prefix, 
-	void (*encode_function)(void *extra_data, INT *&encoding, INT &encoding_sz, void *global_data),
-	void (*get_group_order_or_NULL)(void *extra_data, longinteger_object &go, void *global_data), 
+	void (*encode_function)(void *extra_data,
+			INT *&encoding, INT &encoding_sz, void *global_data),
+	void (*get_group_order_or_NULL)(void *extra_data,
+			longinteger_object &go, void *global_data),
 	void *global_data, 
 	INT verbose_level)
 {
@@ -225,7 +229,8 @@ void classify_bitvectors::save(const BYTE *prefix,
 
 
 	if (f_v) {
-		cout << "classify_bitvectors::save writing file " << fname_txt << endl;
+		cout << "classify_bitvectors::save writing file "
+				<< fname_txt << endl;
 		}
 	{
 	ofstream fp(fname_txt);
@@ -238,11 +243,16 @@ void classify_bitvectors::save(const BYTE *prefix,
 		INT encoding_sz;
 
 		if (f_v) {
-			cout << "classify_bitvectors::save " << i << " / " << nb_types << " j=" << j << " before encode_function" << endl;
+			cout << "classify_bitvectors::save " << i << " / "
+					<< nb_types << " j=" << j
+					<< " before encode_function" << endl;
 			}
-		(*encode_function)(Type_extra_data[j], encoding, encoding_sz, global_data);
+		(*encode_function)(Type_extra_data[j],
+				encoding, encoding_sz, global_data);
 		if (f_v) {
-			cout << "classify_bitvectors::save " << i << " / " << nb_types << " encoding_sz=" << encoding_sz << endl;
+			cout << "classify_bitvectors::save " << i
+					<< " / " << nb_types
+					<< " encoding_sz=" << encoding_sz << endl;
 			}
 		fp << encoding_sz;
 		for (h = 0; h < encoding_sz; h++) {
@@ -251,7 +261,8 @@ void classify_bitvectors::save(const BYTE *prefix,
 		if (get_group_order_or_NULL) {
 			longinteger_object go;
 			
-			(*get_group_order_or_NULL)(Type_extra_data[j], go, global_data);
+			(*get_group_order_or_NULL)(Type_extra_data[j],
+					go, global_data);
 			fp << " ";
 			go.print_not_scientific(fp);
 			}
@@ -273,21 +284,26 @@ void classify_bitvectors::save(const BYTE *prefix,
 	fp << "-1 " << nb_types << " " << N << endl;
 	}
 	if (f_v) {
-		cout << "classify_bitvectors::save Written file " << fname_txt 
+		cout << "classify_bitvectors::save Written "
+				"file " << fname_txt
 			<< " of size " << file_size(fname_txt) 
-			<< " with " << nb_types << " orbit representatives obtained from " 
+			<< " with " << nb_types
+			<< " orbit representatives obtained from "
 			<< N << " candidates, encoding size = " << sz << endl;
 		}
 
 	if (f_v) {
-		cout << "classify_bitvectors::save writing file " << fname_csv << endl;
+		cout << "classify_bitvectors::save writing "
+				"file " << fname_csv << endl;
 		}
 	INT_matrix_write_csv(fname_csv, Reps, nb_types, sz);
 
 	if (f_v) {
-		cout << "classify_bitvectors::save Written file " << fname_csv 
+		cout << "classify_bitvectors::save "
+				"Written file " << fname_csv
 			<< " of size " << file_size(fname_csv) 
-			<< " with " << nb_types << " orbit representatives obtained from " 
+			<< " with " << nb_types
+			<< " orbit representatives obtained from "
 			<< N << " candidates, encoding size = " << sz << endl;
 		}
 

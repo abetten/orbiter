@@ -104,7 +104,7 @@ void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbos
 	//cout << "draw_grid q=" << q << endl;
 	sprintf(fname_full, "%s.mp", fname);
 	//{
-	G = new mp_graphics;
+	G = NEW_OBJECT(mp_graphics);
 	G->init(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G->out_xmin() = 0;
 	G->out_ymin() = 0;
@@ -128,7 +128,7 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 	sprintf(fname_full, "%s.mp", fname);
 	G->end_figure();
 	G->footer();
-	delete G;
+	FREE_OBJECT(G);
 	
 	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
 	
@@ -191,7 +191,7 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 
 	finite_field *Fq;
 
-	Fq = new finite_field;
+	Fq = NEW_OBJECT(finite_field);
 
 	Fq->init(q, 0);
 
@@ -230,7 +230,7 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 		G.nice_circle(Px[0], Py[0], rad);
 		}
 
-	delete Fq;
+	FREE_OBJECT(Fq);
 
 
 

@@ -761,11 +761,6 @@ void poset_orbit_node::store_strong_generators(generator *gen,
 							Strong_gens->gens->ith(i), FALSE);
 			}
 		INT_vec_copy(Strong_gens->tl, tl, gen->A->base_len);
-#if 0
-		for (i = 0; i < gen->A->base_len; i++) {
-			tl[i] = Strong_gens->tl[i];
-			}
-#endif
 		}
 }
 
@@ -1226,7 +1221,7 @@ void poset_orbit_node::print_set(generator *gen)
 		cout << " = " << go << "}";
 		}
 
-	gen->print_lex_rank(set, size);
+	//gen->print_lex_rank(set, size);
 	
 	FREE_INT(set);
 }
@@ -1322,7 +1317,7 @@ void poset_orbit_node::print_extensions(generator *gen)
 	if (nb_extensions >= 10) {
 		cout << "too many to print "
 				"(nb_extensions=" << nb_extensions << ")" << endl;
-		return;
+		goto the_end;
 		}
 
 #if 0
@@ -1393,6 +1388,7 @@ void poset_orbit_node::print_extensions(generator *gen)
 		}
 #endif
 
+the_end:
 	FREE_INT(orbit);	
 }
 

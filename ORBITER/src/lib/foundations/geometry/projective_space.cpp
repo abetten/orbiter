@@ -763,7 +763,7 @@ void projective_space::make_incidence_structure_and_partition(
 		cout << "N_points=" << N_points << endl;
 		cout << "N_lines=" << N_lines << endl;
 		}
-	Inc = new incidence_structure;
+	Inc = NEW_OBJECT(incidence_structure);
 
 	
 	if (f_v) {
@@ -795,7 +795,7 @@ void projective_space::make_incidence_structure_and_partition(
 	FREE_INT(M);
 
 
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(N_points + N_lines, 0 /* verbose_level */);
 	Stack->subset_continguous(N_points, N_lines);
 	Stack->split_cell(0 /* verbose_level */);
@@ -1821,7 +1821,7 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic(
 
 
 	nb_E = nb_B_pts + nb_E2;
-	E = new eckardt_point[nb_E];
+	E = NEW_OBJECTS(eckardt_point, nb_E);
 	for (i = 0; i < nb_B_pts; i++) {
 		E[i].len = 3;
 		E[i].pt = B_pts[i];
@@ -2092,7 +2092,7 @@ void projective_space::find_Eckardt_points_from_arc_not_on_conic_prepare_data(
 		}
 
 	nb_E = nb_B_pts + nb_E2;
-	E = new eckardt_point[nb_E];
+	E = NEW_OBJECTS(eckardt_point, nb_E);
 	for (i = 0; i < nb_B_pts; i++) {
 		E[i].len = 3;
 		E[i].pt = B_pts[i];
@@ -3366,7 +3366,7 @@ void projective_space::plane_intersection_type_basic(
 	d = n + 1;
 	M1 = NEW_INT(4 * d);
 	M2 = NEW_INT(4 * d);
-	G = new grassmann;
+	G = NEW_OBJECT(grassmann);
 
 	G->init(d, 3, F, 0 /* verbose_level */);
 
@@ -3398,7 +3398,7 @@ void projective_space::plane_intersection_type_basic(
 		} // next rk
 	FREE_INT(M1);
 	FREE_INT(M2);
-	delete G;
+	FREE_OBJECT(G);
 }
 
 void projective_space::hyperplane_intersection_type_basic(
@@ -3416,7 +3416,7 @@ void projective_space::hyperplane_intersection_type_basic(
 		}
 	d = n + 1;
 	M = NEW_INT(4 * d);
-	G = new grassmann;
+	G = NEW_OBJECT(grassmann);
 
 	G->init(d, d - 1, F, 0 /* verbose_level */);
 
@@ -3427,13 +3427,6 @@ void projective_space::hyperplane_intersection_type_basic(
 		G->unrank_INT(rk, 0 /* verbose_level */);
 		for (h = 0; h < set_size; h++) {
 			INT_vec_copy(G->M, M, (d - 1) * d);
-#if 0
-			for (i = 0; i < d - 1; i++) {
-				for (j = 0; j < d; j++) {
-					M[i * d + j] = G->M[i * d + j];
-					}
-				}
-#endif
 			unrank_point(M + (d - 1) * d, set[h]);
 			if (F->rank_of_rectangular_matrix(M, d, d, 0 /*verbose_level*/) == d - 1) {
 				type[rk]++;
@@ -3441,7 +3434,7 @@ void projective_space::hyperplane_intersection_type_basic(
 			} // next h
 		} // next rk
 	FREE_INT(M);
-	delete G;
+	FREE_OBJECT(G);
 }
 
 
@@ -4370,7 +4363,7 @@ void projective_space::plane_intersection_invariant(
 		}
 	FREE_PINT(Pts_on_plane);
 	FREE_INT(nb_pts_on_plane);
-	delete [] R;
+	FREE_OBJECTS(R);
 }
 
 void projective_space::plane_intersection_type(
@@ -4430,7 +4423,7 @@ void projective_space::plane_intersection_type(
 		}
 	FREE_PINT(Pts_on_plane);
 	FREE_INT(nb_pts_on_plane);
-	delete [] R;
+	FREE_OBJECTS(R);
 
 }
 
@@ -4493,7 +4486,8 @@ void projective_space::plane_intersection_type_slow(
 		print_set_numerical(set, set_size);
 		}
 	if (!test_if_set_with_return_value(set, set_size)) {
-		cout << "projective_space::plane_intersection_type_slow the input set if not a set" << endl;
+		cout << "projective_space::plane_intersection_type_slow "
+				"the input set if not a set" << endl;
 		exit(1);
 		}
 	d = n + 1;
@@ -4503,7 +4497,7 @@ void projective_space::plane_intersection_type_slow(
 		cout << "N_planes=" << N_planes << endl;
 		}
 	// allocate data that is returned:
-	R = new longinteger_object[N_planes];
+	R = NEW_OBJECTS(longinteger_object, N_planes);
 	Pts_on_plane = NEW_PINT(N_planes);
 	nb_pts_on_plane = NEW_INT(N_planes);
 
@@ -4516,7 +4510,8 @@ void projective_space::plane_intersection_type_slow(
 		unrank_point(Coords + i * d, set[i]);
 		}
 	if (f_vv) {
-		cout << "projective_space::plane_intersection_type_slow Coords:" << endl;
+		cout << "projective_space::plane_intersection_type_slow "
+				"Coords:" << endl;
 		INT_matrix_print(Coords, set_size, d);
 		}
 
@@ -4525,7 +4520,8 @@ void projective_space::plane_intersection_type_slow(
 
 		if (N_planes > 1000000) {
 			if ((rk % 250000) == 0) {
-				cout << "projective_space::plane_intersection_type_slow " << rk << " / " << N_planes << endl;
+				cout << "projective_space::plane_intersection_type_slow "
+						<< rk << " / " << N_planes << endl;
 				}
 			}
 		G->unrank_INT(rk, 0 /* verbose_level */);
@@ -4551,7 +4547,8 @@ void projective_space::plane_intersection_type_slow(
 				Basis[3 * d + i] = Coords[u * d + i];
 				}
 #endif
-			r = F->rank_of_rectangular_matrix(Basis, 4, d, 0 /* verbose_level */);
+			r = F->rank_of_rectangular_matrix(Basis,
+					4, d, 0 /* verbose_level */);
 			if (r < 4) {
 				pts_on_plane[nb++] = u;
 				}
@@ -4569,7 +4566,8 @@ void projective_space::plane_intersection_type_slow(
 	FREE_INT(Basis_save);
 	FREE_INT(Coords);
 	if (f_v) {
-		cout << "projective_space::plane_intersection_type_slow done" << endl;
+		cout << "projective_space::plane_intersection_type_slow "
+				"done" << endl;
 		}
 }
 
@@ -4605,7 +4603,8 @@ void projective_space::plane_intersection_type_fast(
 		}
 
 	if (!test_if_set_with_return_value(set, set_size)) {
-		cout << "projective_space::plane_intersection_type_fast the input set if not a set" << endl;
+		cout << "projective_space::plane_intersection_type_fast "
+				"the input set if not a set" << endl;
 		exit(1);
 		}
 	d = n + 1;
@@ -4618,7 +4617,7 @@ void projective_space::plane_intersection_type_fast(
 		}
 	
 	// allocate data that is returned:
-	R = new longinteger_object[N];
+	R = NEW_OBJECTS(longinteger_object, N);
 	Pts_on_plane = NEW_PINT(N);
 	nb_pts_on_plane = NEW_INT(N);
 
@@ -4636,7 +4635,8 @@ void projective_space::plane_intersection_type_fast(
 		unrank_point(Coords + i * d, set[i]);
 		}
 	if (f_vv) {
-		cout << "projective_space::plane_intersection_type_fast Coords:" << endl;
+		cout << "projective_space::plane_intersection_type_fast "
+				"Coords:" << endl;
 		INT_matrix_print(Coords, set_size, d);
 		}
 
@@ -4675,7 +4675,8 @@ void projective_space::plane_intersection_type_fast(
 		r = F->rank_of_rectangular_matrix(Basis, 3, d, 0 /* verbose_level */);
 		if (r < 3) {
 			if (TRUE || f_v) {
-				cout << "projective_space::plane_intersection_type_fast not independent, skip" << endl;
+				cout << "projective_space::plane_intersection_type_fast "
+						"not independent, skip" << endl;
 				cout << "subset: ";
 				INT_vec_print(cout, subset, 3);
 				cout << endl;
@@ -4698,7 +4699,9 @@ void projective_space::plane_intersection_type_fast(
 		if (longinteger_vec_search(R, len, plane_rk, idx)) {
 			//rank_idx[rk] = idx;
 			// this case should never happen:
-			cout << "projective_space::plane_intersection_type_fast longinteger_vec_search(R, len, plane_rk, idx) is TRUE" << endl;
+			cout << "projective_space::plane_intersection_type_fast "
+					"longinteger_vec_search(R, len, plane_rk, idx) "
+					"is TRUE" << endl;
 			exit(1);
 			}
 		else {
@@ -4707,11 +4710,13 @@ void projective_space::plane_intersection_type_fast(
 				}
 			pts_on_plane = NEW_INT(set_size);
 			//if (f_v3) {
-				//cout << "after allocating pts_on_plane, plane_rk=" << plane_rk << endl;
+				//cout << "after allocating pts_on_plane,
+				//plane_rk=" << plane_rk << endl;
 				//}
 
 			plane_rk.assign_to(aa);
-			G->unrank_longinteger_here(Basis_save, aa, 0 /* verbose_level */);
+			G->unrank_longinteger_here(Basis_save, aa,
+					0 /* verbose_level */);
 #if 0
 			for (j = 0; j < 3 * d; j++) {
 				Basis_save[j] = G->M[j];
@@ -4734,9 +4739,11 @@ void projective_space::plane_intersection_type_fast(
 				for (i = 0; i < 3 * d; i++) {
 					test[3 * d + i] = Basis_save[i];
 					}
-				r1 = F->rank_of_rectangular_matrix(test, 6, d, 0 /* verbose_level */);
+				r1 = F->rank_of_rectangular_matrix(test,
+						6, d, 0 /* verbose_level */);
 				if (r1 != 3) {
-					cout << "projective_space::plane_intersection_type_fast r1 != 3" << endl;
+					cout << "projective_space::plane_intersection_"
+							"type_fast r1 != 3" << endl;
 					cout << "r1=" << r1 << endl;
 					cout << "Basis:" << endl;
 					INT_matrix_print(Basis, 3, d);
@@ -4785,7 +4792,8 @@ void projective_space::plane_intersection_type_fast(
 					cout << "Basis and point:" << endl;
 					INT_matrix_print(Basis, 4, d);
 					}	
-				r = F->rank_of_rectangular_matrix(Basis, 4, d, 0 /* verbose_level */);
+				r = F->rank_of_rectangular_matrix(Basis,
+						4, d, 0 /* verbose_level */);
 				if (r == 3) {
 					pts_on_plane[l++] = h;
 					if (f_v3) {
@@ -4799,7 +4807,8 @@ void projective_space::plane_intersection_type_fast(
 					}
 				}
 			if (f_v) {
-				cout << "We found an " << l << "-plane, its rank is " << plane_rk << endl;
+				cout << "We found an " << l << "-plane, "
+						"its rank is " << plane_rk << endl;
 				cout << "The ranks of points on that plane are : ";
 				INT_vec_print(cout, pts_on_plane, l);
 				cout << endl;
@@ -4847,7 +4856,9 @@ void projective_space::plane_intersection_type_fast(
 						rank_idx[rr] = idx;
 						}
 					else if (rank_idx[rr] != idx) {
-						cout << "projective_space::plane_intersection_type_fast f_subset_done[rr] && rank_idx[rr] >= 0 && rank_idx[rr] != idx" << endl;
+						cout << "projective_space::plane_intersection_"
+							"type_fast f_subset_done[rr] && "
+							"rank_idx[rr] >= 0 && rank_idx[rr] != idx" << endl;
 						exit(1);
 						}
 					}
@@ -4876,9 +4887,11 @@ void projective_space::klein_correspondence(
 	projective_space *P5, 
 	INT *set_in, INT set_size, INT *set_out, 
 	INT verbose_level)
-// Computes the Pluecker coordinates for a line in PG(3,q) in the following order:
+// Computes the Pluecker coordinates
+// for a line in PG(3,q) in the following order:
 // (x_1,x_2,x_3,x_4,x_5,x_6) = 
-// (Pluecker_12, Pluecker_34, Pluecker_13, Pluecker_42, Pluecker_14, Pluecker_23)
+// (Pluecker_12, Pluecker_34, Pluecker_13,
+//    Pluecker_42, Pluecker_14, Pluecker_23)
 // satisfying the quadratic form x_1x_2 + x_3x_4 + x_5x_6 = 0
 {
 	INT f_v = (verbose_level >= 1);
@@ -5266,7 +5279,7 @@ void projective_space::cheat_sheet_subspaces(
 		f_need_comma = TRUE;
 		}
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n1, k1, F, 0 /*verbose_level*/);
 
 
@@ -5274,7 +5287,9 @@ void projective_space::cheat_sheet_subspaces(
 	nb_k_subspaces = generalized_binomial(n1, k1, q);
 
 
-	f << "PG$(" << n << ", " << q << ")$ has " << nb_k_subspaces << " $" << k << "$-subspaces:\\\\" << endl;
+	f << "PG$(" << n << ", " << q << ")$ has "
+			<< nb_k_subspaces << " $" << k
+			<< "$-subspaces:\\\\" << endl;
 	f << "\\begin{multicols}{5}" << endl;
 	for (u = 0; u < nb_k_subspaces; u++) {
 		Gr->unrank_INT(u, 0 /* verbose_level*/);
@@ -5311,7 +5326,7 @@ void projective_space::cheat_sheet_subspaces(
 
 	f << "\\clearpage" << endl << endl;
 
-	delete Gr;
+	FREE_OBJECT(Gr);
 	FREE_INT(v);
 
 	if (f_v) {
@@ -5410,7 +5425,8 @@ void projective_space::conic_type_randomized(INT nb_times,
 		cout << "projective_space::conic_type_randomized" << endl;
 		}
 	if (n != 2) {
-		cout << "projective_space::conic_type_randomized n != 2" << endl;
+		cout << "projective_space::conic_type_randomized "
+				"n != 2" << endl;
 		exit(1);
 		}
 	if (f_vv) {
@@ -5418,7 +5434,8 @@ void projective_space::conic_type_randomized(INT nb_times,
 		}
 
 	if (!test_if_set_with_return_value(set, set_size)) {
-		cout << "projective_space::conic_type_randomized the input set if not a set" << endl;
+		cout << "projective_space::conic_type_randomized "
+				"the input set if not a set" << endl;
 		exit(1);
 		}
 	//d = n + 1;
@@ -5431,7 +5448,6 @@ void projective_space::conic_type_randomized(INT nb_times,
 	
 	// allocate data that is returned:
 	allocation_length = 1024;
-	//R = new longinteger_object[allocation_length];
 	Pts_on_conic = NEW_PINT(allocation_length);
 	nb_pts_on_conic = NEW_INT(allocation_length);
 
@@ -5448,7 +5464,8 @@ void projective_space::conic_type_randomized(INT nb_times,
 			}
 
 		for (i = 0; i < len; i++) {
-			if (INT_vec_is_subset_of(subset, 5, Pts_on_conic[i], nb_pts_on_conic[i])) {
+			if (INT_vec_is_subset_of(subset, 5,
+					Pts_on_conic[i], nb_pts_on_conic[i])) {
 
 #if 0
 				cout << "The set ";
@@ -5595,11 +5612,9 @@ void projective_space::conic_type_randomized(INT nb_times,
 					INT new_allocation_length = allocation_length + 1024;
 
 
-					//longinteger_object *R1;
 					INT **Pts_on_conic1;
 					INT *nb_pts_on_conic1;
 					
-					//R1 = new longinteger_object[new_allocation_length];
 					Pts_on_conic1 = NEW_PINT(new_allocation_length);
 					nb_pts_on_conic1 = NEW_INT(new_allocation_length);
 					for (i = 0; i < len; i++) {
@@ -5607,10 +5622,8 @@ void projective_space::conic_type_randomized(INT nb_times,
 						Pts_on_conic1[i] = Pts_on_conic[i];
 						nb_pts_on_conic1[i] = nb_pts_on_conic[i];
 						}
-					//delete [] R;
 					FREE_PINT(Pts_on_conic);
 					FREE_INT(nb_pts_on_conic);
-					//R = R1;
 					Pts_on_conic = Pts_on_conic1;
 					nb_pts_on_conic = nb_pts_on_conic1;
 					allocation_length = new_allocation_length;
@@ -5694,7 +5707,7 @@ void projective_space::conic_intersection_type(
 		}
 
 	if (f_save_largest_sets) {
-		largest_sets = new set_of_sets;
+		largest_sets = NEW_OBJECT(set_of_sets);
 		t = C.nb_types - 1;
 		f = C.type_first[t];
 		l = C.type_len[t];
@@ -5710,7 +5723,6 @@ void projective_space::conic_intersection_type(
 		}
 	FREE_PINT(Pts_on_conic);
 	FREE_INT(nb_pts_on_conic);
-	//delete [] R;
 
 }
 
@@ -5758,7 +5770,6 @@ void projective_space::conic_type(
 	
 	// allocate data that is returned:
 	allocation_length = 1024;
-	//R = new longinteger_object[allocation_length];
 	Pts_on_conic = NEW_PINT(allocation_length);
 	nb_pts_on_conic = NEW_INT(allocation_length);
 
@@ -5918,11 +5929,9 @@ void projective_space::conic_type(
 					INT new_allocation_length = allocation_length + 1024;
 
 
-					//longinteger_object *R1;
 					INT **Pts_on_conic1;
 					INT *nb_pts_on_conic1;
 					
-					//R1 = new longinteger_object[new_allocation_length];
 					Pts_on_conic1 = NEW_PINT(new_allocation_length);
 					nb_pts_on_conic1 = NEW_INT(new_allocation_length);
 					for (i = 0; i < len; i++) {
@@ -5930,10 +5939,8 @@ void projective_space::conic_type(
 						Pts_on_conic1[i] = Pts_on_conic[i];
 						nb_pts_on_conic1[i] = nb_pts_on_conic[i];
 						}
-					//delete [] R;
 					FREE_PINT(Pts_on_conic);
 					FREE_INT(nb_pts_on_conic);
-					//R = R1;
 					Pts_on_conic = Pts_on_conic1;
 					nb_pts_on_conic = nb_pts_on_conic1;
 					allocation_length = new_allocation_length;
@@ -6715,7 +6722,7 @@ void projective_space::decomposition(
 			Mtx[i * nb_lines + j] = is_incident(i, j);
 			}
 		}
-	Inc = new incidence_structure;
+	Inc = NEW_OBJECT(incidence_structure);
 	Inc->init_by_matrix(nb_pts, nb_lines, Mtx, verbose_level - 2);
 
 
@@ -6723,7 +6730,7 @@ void projective_space::decomposition(
 
 	INT /*ht0,*/ c, l;
 
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(nb_pts + nb_lines, 0);
 	Stack->subset_continguous(Inc->nb_points(), Inc->nb_lines());
 	Stack->split_cell(0);

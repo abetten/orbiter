@@ -1810,11 +1810,41 @@ void strong_generators::write_to_file_binary(
 	if (f_v) {
 		cout << "strong_generators::write_to_file_binary" << endl;
 		}
+
+	if (!A->f_has_base) {
+		cout << "strong_generators::write_to_file_binary "
+				"!A->f_has_base" << endl;
+		exit(1);
+	}
+	if (f_v) {
+		cout << "strong_generators::write_to_file_binary "
+				"A->base_len=" << A->base_len << endl;
+		}
 	fp.write((char *) &A->base_len, sizeof(INT));
+
+	if (tl == NULL) {
+		cout << "strong_generators::write_to_file_binary tl == NULL" << endl;
+		exit(1);
+	}
 	for (i = 0; i < A->base_len; i++) {
+		if (f_v) {
+			cout << "strong_generators::write_to_file_binary "
+					"before writing tl[" << i << "]" << endl;
+			}
 		fp.write((char *) &tl[i], sizeof(INT));
 		}
+	if (f_v) {
+		cout << "strong_generators::write_to_file_binary "
+				"before gens->write_to_file_binary" << endl;
+		}
 	gens->write_to_file_binary(fp, verbose_level - 1);
+	if (f_v) {
+		cout << "strong_generators::write_to_file_binary "
+				"after gens->write_to_file_binary" << endl;
+		}
+	if (f_v) {
+		cout << "strong_generators::write_to_file_binary done" << endl;
+		}
 }
 
 void strong_generators::read_from_file_binary(

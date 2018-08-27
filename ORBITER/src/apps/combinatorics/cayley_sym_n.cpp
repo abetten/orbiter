@@ -125,7 +125,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 		}
 
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_symmetric_group(deg, 0 /*verbose_level*/);
 	A->group_order(go);
 
@@ -146,7 +146,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 		longinteger_domain D;
 
 		
-		G_gens = new vector_ge;
+		G_gens = NEW_OBJECT(vector_ge);
 		
 		order_Bn_group_factorized(n, factors, nb_factors);
 
@@ -166,7 +166,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 			TRUE /* f_target_go */, target_go, 
 			G_gens, SG, verbose_level - 3);
 		
-		delete G_gens;
+		FREE_OBJECT(G_gens);
 		FREE_INT(perms);
 		FREE_INT(factors);
 		}
@@ -184,7 +184,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 	goi = G_go.as_INT();
 	
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 
 	gens->init(A);
 	gens->allocate(nb_gens);
@@ -280,7 +280,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 
 	//delete CG;
 	FREE_INT(Adj);
-	delete gens;
+	FREE_OBJECT(gens);
 	FREE_INT(v);
 }
 

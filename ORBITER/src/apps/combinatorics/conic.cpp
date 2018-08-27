@@ -157,7 +157,7 @@ void LunelliSce(INT verbose_level)
 	//F.init(q), verbose_level - 2);
 	F.init_override_polynomial(q, override_poly, verbose_level);
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	cout << "before P->init" << endl;
 	P->init(n - 1, &F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -165,7 +165,7 @@ void LunelliSce(INT verbose_level)
 
 	cout << "after P->init" << endl;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_general_linear_group(n, &F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
 	
 	
@@ -222,14 +222,14 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	//F.init(q), verbose_level - 2);
 	F.init_override_polynomial(q, override_poly, verbose_level);
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	cout << "before P->init" << endl;
 	P->init(n - 1, &F, 
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level/*MINIMUM(2, verbose_level)*/);
 
 	cout << "after P->init" << endl;
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_general_linear_group(n, &F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
 	
 	INT variety[100];
@@ -314,7 +314,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		Stab->group_order(go);
 		cout << "computing stabilizer of conic done, found a group of order " << go << endl;
 
-		delete Stab;
+		FREE_OBJECT(Stab);
 		}
 	else {
 		Aut_gens = NULL;
@@ -338,7 +338,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		}
 	}
 		
-	delete Aut_gens;
+	FREE_OBJECT(Aut_gens);
 	return;
 	
 	P->find_tangent_lines_to_conic(six_coeffs, 
@@ -512,9 +512,9 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		A2->element_print_as_permutation(Aut_gens->gens->ith(i), cout);
 		A2r.element_print_as_permutation(Aut_gens->gens->ith(i), cout);
 		}
-	delete Aut_gens;
-	delete Stab;
-	delete A2;
+	FREE_OBJECT(Aut_gens);
+	FREE_OBJECT(Stab);
+	FREE_OBJECT(A2);
 	}
 }
 
@@ -615,7 +615,7 @@ void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbos
 	//cout << "draw_grid q=" << q << endl;
 	sprintf(fname_full, "%s.mp", fname);
 	//{
-	G = new mp_graphics;
+	G = NEW_OBJECT(mp_graphics);
 	G->init(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G->out_xmin() = 0;
 	G->out_ymin() = 0;
@@ -639,7 +639,7 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 	sprintf(fname_full, "%s.mp", fname);
 	G->end_figure();
 	G->footer();
-	delete G;
+	FREE_OBJECT(G);
 	
 	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
 	

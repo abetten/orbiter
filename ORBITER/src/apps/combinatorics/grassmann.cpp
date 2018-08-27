@@ -68,11 +68,11 @@ int main(int argc, char **argv)
 		}
 	
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level);
 
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, k, F, verbose_level);
 
 	N = generalized_binomial(n, k, q);
@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
 	sprintf(fname, "grassmann_graph_%ld_%ld_%ld_%ld.colored_graph", n, k, q, r);
@@ -117,12 +117,12 @@ int main(int argc, char **argv)
 
 	
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(M1);
 	FREE_INT(M2);
 	FREE_INT(M);
-	delete Gr;
-	delete F;
+	FREE_OBJECT(Gr);
+	FREE_OBJECT(F);
 }
 
 

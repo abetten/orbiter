@@ -13,6 +13,9 @@
 
 grassmann::grassmann()
 {
+	n = 0;
+	k = 0;
+	q = 0;
 	F = NULL;
 	base_cols = NULL;
 	coset = NULL;
@@ -48,7 +51,7 @@ grassmann::~grassmann()
 		}
 	//cout << "grassmann::~grassmann 4" << endl;
 	if (G) {
-		delete G;
+		FREE_OBJECT(G);
 		}
 }
 
@@ -67,18 +70,20 @@ void grassmann::init(INT n, INT k, finite_field *F, INT verbose_level)
 	
 
 	if (f_v) {
-		cout << "grassmann::init n=" << n << " k=" << k << " q=" << q << endl;
+		cout << "grassmann::init n=" << n
+				<< " k=" << k << " q=" << q << endl;
 		}
 
 
 	base_cols = NEW_INT(n);
 	coset = NEW_INT(n);
-	M = NEW_INT(n * n); // changed to n * n to allow for embedded subspaces. 
+	M = NEW_INT(n * n);
+		// changed to n * n to allow for embedded subspaces.
 	M2 = NEW_INT(n * n);
 	v = NEW_INT(n);
 	w = NEW_INT(n);
 	if (k > 1) {
-		G = new grassmann;
+		G = NEW_OBJECT(grassmann);
 		G->init(n - 1, k - 1, F, verbose_level);
 		}
 	else {
@@ -94,7 +99,8 @@ INT grassmann::nb_of_subspaces(INT verbose_level)
 	return nb;
 }
 
-void grassmann::print_single_generator_matrix_tex(ostream &ost, INT a)
+void grassmann::print_single_generator_matrix_tex(
+		ostream &ost, INT a)
 {
 	unrank_INT(a, 0 /*verbose_level*/);
 	print_integer_matrix_tex(ost, M, k, n);
@@ -105,9 +111,11 @@ void grassmann::print_set(INT *v, INT len)
 	INT i;
 	
 	for (i = 0; i < len; i++) {
-		cout << "subspace " << i << " / " << len << " is " << v[i] << ":" << endl;
+		cout << "subspace " << i << " / " << len
+				<< " is " << v[i] << ":" << endl;
 		unrank_INT(v[i], 0 /*verbose_level*/);
-		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout, M,
+				k, n, n, F->log10_of_q + 1);
 		}
 }
 
@@ -116,11 +124,13 @@ void grassmann::print_set_tex(ostream &ost, INT *v, INT len)
 	INT i;
 	
 	for (i = 0; i < len; i++) {
-		ost << "subspace " << i << " / " << len << " is " << v[i] << ":\\\\" << endl;
+		ost << "subspace " << i << " / " << len << " is "
+				<< v[i] << ":\\\\" << endl;
 		unrank_INT(v[i], 0 /*verbose_level*/);
 		ost << "$$" << endl;
 		ost << "\\left[" << endl;
-		//print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		//print_integer_matrix_width(cout,
+		// M, k, n, n, F->log10_of_q + 1);
 		print_integer_matrix_tex(ost, M, k, n);
 		ost << "\\right]" << endl;
 		ost << "$$" << endl;
@@ -137,12 +147,8 @@ INT grassmann::nb_points_covered(INT verbose_level)
 
 void grassmann::points_covered(INT *the_points, INT verbose_level)
 {
-	//INT *v;
-	//INT *w;
 	INT i, nb, a;
 
-	//v = NEW_INT(k);
-	//w = NEW_INT(n);
 	nb = nb_points_covered(0 /* verbose_level*/);
 	for (i = 0; i < nb; i++) {
 		PG_element_unrank_modified(*F, v, 1, k, i);
@@ -150,8 +156,6 @@ void grassmann::points_covered(INT *the_points, INT verbose_level)
 		PG_element_rank_modified(*F, w, 1, n, a);
 		the_points[i] = a;
 		}
-	//FREE_INT(v);
-	//FREE_INT(w);
 }
 
 void grassmann::unrank_INT_here(INT *Mtx, INT rk, INT verbose_level)
@@ -230,7 +234,8 @@ void grassmann::unrank_INT(INT rk, INT verbose_level)
 	while (h < n) {
 		a = generalized_binomial(n - h - 1, k - 1, q);
 		if (f_v) {
-			cout << "[" << n - h - 1 << " choose " << k - 1 << "]_" << q << " = " << a << endl;
+			cout << "[" << n - h - 1 << " choose " << k - 1
+					<< "]_" << q << " = " << a << endl;
 			}
 		nb_free_cols = n - h - 1 - (k - 1);
 		Q = i_power_j(q, nb_free_cols);
@@ -259,7 +264,8 @@ void grassmann::unrank_INT(INT rk, INT verbose_level)
 	
 	// now h has been determined
 	if (f_v) {
-		cout << "grassmann::unrank_INT " << rk << " h=" << h << " nb_free_cols=" << nb_free_cols << endl;
+		cout << "grassmann::unrank_INT " << rk << " h=" << h
+				<< " nb_free_cols=" << nb_free_cols << endl;
 		}
 	base_cols[0] = h;
 	M[h] = 1;
@@ -268,7 +274,8 @@ void grassmann::unrank_INT(INT rk, INT verbose_level)
 	b = r / a;
 	c = r % a;
 	if (f_v) {
-		cout << "r=" << r << " coset " << b << " subspace rank " << c << endl;
+		cout << "r=" << r << " coset " << b
+				<< " subspace rank " << c << endl;
 		}
 	
 	// unrank the coset:
@@ -290,7 +297,8 @@ void grassmann::unrank_INT(INT rk, INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "grassmann::unrank_INT calling INT_vec_complement n=" << n << " k=" << k << " : ";
+		cout << "grassmann::unrank_INT calling "
+				"INT_vec_complement n=" << n << " k=" << k << " : ";
 		INT_vec_print(cout, base_cols, k);
 		cout << endl;
 		}
@@ -347,17 +355,21 @@ INT grassmann::rank_INT(INT verbose_level)
 	r = 0;
 	if (f_v) {
 		cout << "rank_INT " << endl;
-		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				M, k, n, n, F->log10_of_q + 1);
 		}
 	if (k == 0) {
 		return 0;
 		}
-	k1 = F->Gauss_INT(M, FALSE /*f_special */, TRUE /* f_complete */, base_cols, 
-		FALSE /* f_P */, NULL, k, n, n, 0 /* verbose_level */);
+	k1 = F->Gauss_INT(M, FALSE /*f_special */,
+		TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL, k, n, n,
+		0 /* verbose_level */);
 	
 	if (f_v) {
 		cout << "after Gauss:" << endl;
-		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				M, k, n, n, F->log10_of_q + 1);
 		}
 	if (k1 != k) {
 		cout << "error, does not have full rank" << endl;
@@ -371,7 +383,8 @@ INT grassmann::rank_INT(INT verbose_level)
 	
 
 	if (f_v) {
-		cout << "calling INT_vec_complement n=" << n << " k=" << k << " : ";
+		cout << "calling INT_vec_complement n=" << n
+				<< " k=" << k << " : ";
 		INT_vec_print(cout, base_cols, k);
 		cout << endl;
 		}
@@ -394,7 +407,8 @@ INT grassmann::rank_INT(INT verbose_level)
 	
 	// now h has been determined
 	if (f_v) {
-		cout << "rank h=" << h << " nb_free_cols=" << nb_free_cols << " r=" << r << endl;
+		cout << "rank h=" << h << " nb_free_cols="
+				<< nb_free_cols << " r=" << r << endl;
 		}
 
 	// copy the subspace (rows i=1,..,k-1):
@@ -443,28 +457,34 @@ INT grassmann::rank_INT(INT verbose_level)
 		}
 
 		
-	// compose the rank from the coset number b and the rank c of the subspace:
+	// compose the rank from the coset number b
+	// and the rank c of the subspace:
 	r += b * a + c;	
 	if (f_v) {
-		cout << "b * a + c = " << b << " * " << a << " + " << c << endl;
-		cout << "r=" << r << " coset " << b << " subspace rank " << c << endl;
+		cout << "b * a + c = " << b << " * "
+				<< a << " + " << c << endl;
+		cout << "r=" << r << " coset " << b
+				<< " subspace rank " << c << endl;
 		}
 	return r;
 }
 
-void grassmann::unrank_longinteger_here(INT *Mtx, longinteger_object &rk, INT verbose_level)
+void grassmann::unrank_longinteger_here(INT *Mtx,
+		longinteger_object &rk, INT verbose_level)
 {
 	unrank_longinteger(rk, verbose_level);
 	INT_vec_copy(M, Mtx, k * n);
 }
 
-void grassmann::rank_longinteger_here(INT *Mtx, longinteger_object &rk, INT verbose_level)
+void grassmann::rank_longinteger_here(INT *Mtx,
+		longinteger_object &rk, INT verbose_level)
 {
 	INT_vec_copy(Mtx, M, k * n);
 	rank_longinteger(rk, verbose_level);
 }
 
-void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
+void grassmann::unrank_longinteger(
+		longinteger_object &rk, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object r, r1, a, A, mA, Q, b, c;
@@ -489,7 +509,8 @@ void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
 	while (h < n) {
 		D.q_binomial(a, n - h - 1, k - 1, q, 0);
 		if (f_v) {
-			cout << "[" << n - h - 1 << " choose " << k - 1 << "]_" << q << " = " << a << endl;
+			cout << "[" << n - h - 1 << " choose " << k - 1
+					<< "]_" << q << " = " << a << endl;
 			}
 		nb_free_cols = n - h - 1 - (k - 1);
 		Q.create_i_power_j(q, nb_free_cols);
@@ -512,7 +533,8 @@ void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
 	
 	// now h has been determined
 	if (f_v) {
-		cout << "grassmann::unrank_longinteger " << rk << " h=" << h << " nb_free_cols=" << nb_free_cols << endl;
+		cout << "grassmann::unrank_longinteger " << rk
+				<< " h=" << h << " nb_free_cols=" << nb_free_cols << endl;
 		}
 	base_cols[0] = h;
 	M[h] = 1;
@@ -522,7 +544,8 @@ void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
 	//b = r / a;
 	//c = r % a;
 	if (f_v) {
-		cout << "r=" << r << " coset " << b << " subspace rank " << c << endl;
+		cout << "r=" << r << " coset " << b
+				<< " subspace rank " << c << endl;
 		}
 	
 	// unrank the coset:
@@ -544,7 +567,8 @@ void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "grassmann::unrank_longinteger calling INT_vec_complement n=" << n << " k=" << k << " : ";
+		cout << "grassmann::unrank_longinteger calling "
+				"INT_vec_complement n=" << n << " k=" << k << " : ";
 		INT_vec_print(cout, base_cols, k);
 		cout << endl;
 		}
@@ -579,7 +603,8 @@ void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
 			}
 		}
 	if (f_v) {
-		cout << "unrank_longinteger " << rk << ", we found the matrix" << endl;
+		cout << "unrank_longinteger " << rk
+				<< ", we found the matrix" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		cout << "grassmann::unrank_longinteger base_cols = ";
 		INT_vec_print(cout, base_cols, k);
@@ -593,7 +618,8 @@ void grassmann::unrank_longinteger(longinteger_object &rk, INT verbose_level)
 		}
 }
 
-void grassmann::rank_longinteger(longinteger_object &r, INT verbose_level)
+void grassmann::rank_longinteger(longinteger_object &r,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object r1, a, A, Q, b, c, tmp1, tmp2;
@@ -608,12 +634,15 @@ void grassmann::rank_longinteger(longinteger_object &r, INT verbose_level)
 	if (k == 0) {
 		return;
 		}
-	k1 = F->Gauss_INT(M, FALSE /*f_special */, TRUE /* f_complete */, base_cols, 
-		FALSE /* f_P */, NULL, k, n, n, 0 /* verbose_level */);
+	k1 = F->Gauss_INT(M, FALSE /*f_special */,
+		TRUE /* f_complete */, base_cols,
+		FALSE /* f_P */, NULL, k, n, n,
+		0 /* verbose_level */);
 	
 	if (f_v) {
 		cout << "after Gauss:" << endl;
-		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
+		print_integer_matrix_width(cout,
+				M, k, n, n, F->log10_of_q + 1);
 		}
 	if (k1 != k) {
 		cout << "error, does not have full rank" << endl;
@@ -642,11 +671,14 @@ void grassmann::rank_longinteger(longinteger_object &r, INT verbose_level)
 		nb_free_cols = n - h - 1 - (k - 1);
 		Q.create_i_power_j(q, nb_free_cols);
 		if (f_v) {
-			cout << "create_i_power_j q=" << q << " nb_free_cols=" << nb_free_cols << " yields " << Q << endl;
+			cout << "create_i_power_j q=" << q
+					<< " nb_free_cols=" << nb_free_cols
+					<< " yields " << Q << endl;
 			}
 		D.q_binomial(a, n - h - 1, k - 1, q, 0);
 		if (f_v) {
-			cout << "q_binomial [" << n - h - 1 << "," << k - 1 << "]_" << q << " = " << a << endl;
+			cout << "q_binomial [" << n - h - 1 << "," << k - 1
+					<< "]_" << q << " = " << a << endl;
 			}
 		D.mult(a, Q, A);
 		D.add(r, A, r1);
@@ -655,12 +687,15 @@ void grassmann::rank_longinteger(longinteger_object &r, INT verbose_level)
 	nb_free_cols = n - h - 1 - (k - 1);
 	D.q_binomial(a, n - h - 1, k - 1, q, 0);
 	if (f_v) {
-		cout << "q_binomial [" << n - h - 1 << "," << k - 1 << "]_" << q << " = " << a << endl;
+		cout << "q_binomial [" << n - h - 1 << "," << k - 1
+				<< "]_" << q << " = " << a << endl;
 		}
 	
 	// now h has been determined
 	if (f_v) {
-		cout << "grassmann::rank_longinteger h=" << h << " nb_free_cols=" << nb_free_cols << " r=" << r << endl;
+		cout << "grassmann::rank_longinteger h=" << h
+				<< " nb_free_cols=" << nb_free_cols
+				<< " r=" << r << endl;
 		}
 
 	// copy the subspace (rows i=1,..,k-1):
@@ -717,9 +752,11 @@ void grassmann::rank_longinteger(longinteger_object &r, INT verbose_level)
 		}
 
 		
-	// compose the rank from the coset number b and the rank c of the subspace:
+	// compose the rank from the coset number b
+	// and the rank c of the subspace:
 	if (f_v) {
-		cout << "computing r:=" << r << " + " << b << " * " << a << " + " << c << endl;
+		cout << "computing r:=" << r << " + " << b
+				<< " * " << a << " + " << c << endl;
 		}
 	D.mult(b, a, tmp1);
 	if (f_v) {
@@ -733,7 +770,8 @@ void grassmann::rank_longinteger(longinteger_object &r, INT verbose_level)
 	r.swap_with(r1);
 	//r += b * a + c;	
 	if (f_v) {
-		cout << "r=" << r << " coset " << b << " subspace rank " << c << endl;
+		cout << "r=" << r << " coset " << b
+				<< " subspace rank " << c << endl;
 		}
 }
 
@@ -760,7 +798,8 @@ INT grassmann::dimension_of_join(INT rk1, INT rk2, INT verbose_level)
 	return r;
 }
 
-void grassmann::unrank_INT_here_and_extend_basis(INT *Mtx, INT rk, INT verbose_level)
+void grassmann::unrank_INT_here_and_extend_basis(
+		INT *Mtx, INT rk, INT verbose_level)
 // Mtx must be n x n
 {
 	INT f_v = (verbose_level >= 1);
@@ -775,7 +814,8 @@ void grassmann::unrank_INT_here_and_extend_basis(INT *Mtx, INT rk, INT verbose_l
 	INT_vec_copy(M, Mtx, k * n);
 	base_cols = NEW_INT(n);
 	embedding = base_cols + k;
-	r = F->base_cols_and_embedding(k, n, Mtx, base_cols, embedding, 0/*verbose_level*/);
+	r = F->base_cols_and_embedding(k, n, Mtx,
+			base_cols, embedding, 0/*verbose_level*/);
 	if (r != k) {
 		cout << "r != k" << endl;
 		exit(1);
@@ -791,7 +831,8 @@ void grassmann::unrank_INT_here_and_extend_basis(INT *Mtx, INT rk, INT verbose_l
 		}
 }
 
-void grassmann::unrank_INT_here_and_compute_perp(INT *Mtx, INT rk, INT verbose_level)
+void grassmann::unrank_INT_here_and_compute_perp(
+		INT *Mtx, INT rk, INT verbose_level)
 // Mtx must be n x n
 {
 	INT f_v = (verbose_level >= 1);
@@ -818,7 +859,8 @@ void grassmann::unrank_INT_here_and_compute_perp(INT *Mtx, INT rk, INT verbose_l
 		}
 }
 
-void grassmann::line_regulus_in_PG_3_q(INT *&regulus, INT &regulus_size, INT verbose_level)
+void grassmann::line_regulus_in_PG_3_q(
+		INT *&regulus, INT &regulus_size, INT verbose_level)
 // the equation of the hyperboloid is x_0x_3-x_1x_2 = 0
 {
 	INT f_v = (verbose_level >= 1);
@@ -862,7 +904,8 @@ void grassmann::line_regulus_in_PG_3_q(INT *&regulus, INT &regulus_size, INT ver
 			}
 		
 		if (f_v3) {
-			cout << "grassmann::line_regulus_in_PG_3_q regulus element " << u << ":" << endl;
+			cout << "grassmann::line_regulus_in_PG_3_q "
+					"regulus element " << u << ":" << endl;
 			INT_matrix_print(M, 2, 4);
 			}
 		regulus[u] = rank_INT_here(M, 0);
@@ -878,7 +921,9 @@ void grassmann::line_regulus_in_PG_3_q(INT *&regulus, INT &regulus_size, INT ver
 		}
 }
 
-void grassmann::compute_dual_spread(INT *spread, INT *dual_spread, INT spread_size, INT verbose_level)
+void grassmann::compute_dual_spread(
+		INT *spread, INT *dual_spread, INT spread_size,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 5);
@@ -903,7 +948,8 @@ void grassmann::compute_dual_spread(INT *spread, INT *dual_spread, INT spread_si
 		a = spread[i];
 		unrank_INT_here(Basis, a, 0/*verbose_level - 4*/);
 		if (f_vv) {
-			cout << i << "-th Line has rank " << a << " and is generated by" << endl;
+			cout << i << "-th Line has rank " << a
+					<< " and is generated by" << endl;
 			INT_matrix_print(Basis, k, n);
 			}
 		F->perp_standard(n, k, Basis, 0 /*verbose_level*/);
@@ -913,7 +959,8 @@ void grassmann::compute_dual_spread(INT *spread, INT *dual_spread, INT spread_si
 			}
 		b = rank_INT_here(Basis + k * n, 0/*verbose_level - 4*/);
 		if (f_vv) {
-			cout << i << "-th Line dual has rank " << b << " and is generated by" << endl;
+			cout << i << "-th Line dual has rank " << b
+					<< " and is generated by" << endl;
 			INT_matrix_print(Basis + k * n, k, n);
 			}
 		dual_spread[i] = b;

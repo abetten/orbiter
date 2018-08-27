@@ -94,11 +94,11 @@ void do_it(INT p, INT q, INT verbose_level)
 	INT f_semilinear = FALSE;
 	INT f_basis = TRUE;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	//F->init_override_polynomial(q, override_poly, verbose_level);
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	
 	if (l == 1) {
 		f_special = TRUE;
@@ -230,7 +230,7 @@ void do_it(INT p, INT q, INT verbose_level)
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 	Elt3 = NEW_INT(A->elt_size_in_INT);
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(nb_A4);
 	
@@ -359,7 +359,7 @@ void do_it(INT p, INT q, INT verbose_level)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
 	sprintf(fname, "Sarnak_%ld_%ld.colored_graph", p, q);
@@ -367,14 +367,14 @@ void do_it(INT p, INT q, INT verbose_level)
 	CG->save(fname, verbose_level);
 
 
-	delete CG;
-	delete gens;
-	delete A;
+	FREE_OBJECT(CG);
+	FREE_OBJECT(gens);
+	FREE_OBJECT(A);
 	FREE_INT(A4);
 	FREE_INT(Elt1);
 	FREE_INT(Elt2);
 	FREE_INT(Elt3);
-	delete F;
+	FREE_OBJECT(F);
 
 }
 

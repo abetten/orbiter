@@ -297,7 +297,7 @@ int main(int argc, const char **argv)
 #endif
 	
 	the_end(t0);
-	cout << "memory_count_allocate=" << memory_count_allocate << endl;
+	//cout << "memory_count_allocate=" << memory_count_allocate << endl;
 }
 
 

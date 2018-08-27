@@ -535,6 +535,9 @@ INT rank_k_subset(INT *set, INT n, INT k)
 	longinteger_object a, b;
 	longinteger_domain D;
 	
+	if (k == 0) { // added Aug 25, 2018
+		return 0;
+	}
 	j = 0;
 	for (i = 0; i < n; i++) {
 		if (set[j] > i) {
@@ -557,6 +560,9 @@ void unrank_k_subset(INT rk, INT *set, INT n, INT k)
 	longinteger_object a, b;
 	longinteger_domain D;
 	
+	if (k == 0) { // added Aug 25, 2018
+		return;
+	}
 	j = 0;
 	for (i = 0; i < n; i++) {
 		D.binomial(a, n - i - 1, k - j - 1, FALSE);
@@ -1102,7 +1108,7 @@ void perm_print_offset(ostream &ost, INT *a, INT n, INT offset, INT f_cycle_leng
 			l++;
 			continue;
 			}
-		// work on a new cycle, starting at position l: 
+		// work on a next cycle, starting at position l:
 		first = l;
 		//cout << "perm_print_offset cyle starting with " << first << endl;
 		l1 = l;
@@ -1203,7 +1209,7 @@ INT perm_order(INT *a, INT n)
 			l++;
 			continue;
 			}
-		// work on a new cycle, starting at position l: 
+		// work on a next cycle, starting at position l:
 		first = l;
 		l1 = l;
 		len = 1;

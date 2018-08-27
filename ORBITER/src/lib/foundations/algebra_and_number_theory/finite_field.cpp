@@ -647,59 +647,6 @@ void finite_field::create_tables_extension_field(INT verbose_level)
 	if (f_v) {
 		cout << "finite_field::create_tables_extension_field finished" << endl;
 		}
-
-#if 0
-
-	INT i, j, k;
-	
-	finite_field GFp;
-	GFp.init(p, FALSE, FALSE);
-
-	unipoly_domain FX(&GFp);
-	unipoly_object m, c;
-
-	unipoly_object *elts = new unipoly_object[q];
-
-
-	FX.create_object_by_rank_string(m, polynomial);
-	unipoly_domain Fq(&GFp, m);
-
-	Fq.create_object_by_rank(c, e);
-
-	for (i = 0; i < q; i++) {
-		Fq.create_object_by_rank(elts[i], i);
-		}
-	for (i = 0; i < q; i++) {
-		for (j = 0; j < q; j++) {
-			Fq.add(elts[i], elts[j], c);
-			k = Fq.rank(c);
-			add_table[i * q + j] = k;
-			if (k == 0)
-				negate_table[i] = j;
-			}
-		}
-	for (i = 0; i < q; i++) {
-		for (j = 0; j < q; j++) {
-			if (i == 0 || j == 0) {
-				mult_table[i * q + j] = 0;
-				continue;
-				}
-			Fq.mult_mod(elts[i], elts[j], c);
-			k = Fq.rank(c);
-			mult_table[i * q + j] = k;
-			if (k == 1)
-				inv_table[i] = j;
-			}
-		}	
-
-	inv_table[0] = -999999999;
-	for (i = 0; i < q; i++) {
-		Fq.delete_object(elts[i]);
-		}
-	delete [] elts;
-	Fq.delete_object(c);
-	FX.delete_object(m);
-#endif
 }
 
 void finite_field::print(INT f_add_mult_table)

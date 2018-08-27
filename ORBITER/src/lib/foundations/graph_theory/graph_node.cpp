@@ -139,7 +139,8 @@ void graph_node::add_data3(INT data)
 	data3 = data;
 }
 
-void graph_node::write_memory_object(memory_object *m, INT verbose_level)
+void graph_node::write_memory_object(
+		memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -177,11 +178,14 @@ void graph_node::write_memory_object(memory_object *m, INT verbose_level)
 	m->write_double(x_coordinate);
 	m->write_double(radius_factor);
 	if (f_v) {
-		cout << "graph_node::write_memory_object finished, data size (in bytes) = " << m->used_length << endl;
+		cout << "graph_node::write_memory_object "
+				"finished, data size (in bytes) = "
+				<< m->used_length << endl;
 		}
 }
 
-void graph_node::read_memory_object(memory_object *m, INT verbose_level)
+void graph_node::read_memory_object(
+		memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -264,13 +268,15 @@ INT graph_node::find_parent(layered_graph *G, INT verbose_level)
 			return id;
 			}
 		}
-	cout << "graph_node::find_parent did not find a parent node" << endl;
+	cout << "graph_node::find_parent did not find "
+			"a parent node" << endl;
 	cout << "layer = " << layer << endl;
 	cout << "id = " << id << endl;
 	exit(1);
 }
 
-void graph_node::register_child(layered_graph *G, INT id_child, INT verbose_level)
+void graph_node::register_child(layered_graph *G,
+		INT id_child, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT l, n;
@@ -297,7 +303,8 @@ void graph_node::register_child(layered_graph *G, INT id_child, INT verbose_leve
 		}
 }
 
-void graph_node::place_x_based_on_tree(layered_graph *G, double left, double right, INT verbose_level)
+void graph_node::place_x_based_on_tree(layered_graph *G,
+		double left, double right, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, w, w0, w1;
@@ -313,7 +320,8 @@ void graph_node::place_x_based_on_tree(layered_graph *G, double left, double rig
 	w = weight_of_subtree;
 	width = right - left;
 	dx = (double) width / (double) (w - 1);
-		// the node itself counts for the weight, so we subtract one
+		// the node itself counts for the
+		// weight, so we subtract one
 	w0 = 0;
 	
 	for (i = 0; i < nb_children; i++) {
@@ -324,7 +332,8 @@ void graph_node::place_x_based_on_tree(layered_graph *G, double left, double rig
 		lft = left + (double)w0 * dx;
 		rgt = left + ((double)(w0 + w1)) * dx;
 	
-		G->L[l].Nodes[n].place_x_based_on_tree(G, lft, rgt, verbose_level);
+		G->L[l].Nodes[n].place_x_based_on_tree(G,
+				lft, rgt, verbose_level);
 		w0 += w1;
 		}
 
@@ -334,7 +343,8 @@ void graph_node::place_x_based_on_tree(layered_graph *G, double left, double rig
 		}
 }
 
-void graph_node::depth_first_rank_recursion(layered_graph *G, INT &r, INT verbose_level)
+void graph_node::depth_first_rank_recursion(
+		layered_graph *G, INT &r, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, id_child, l, n;

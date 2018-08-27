@@ -37,7 +37,7 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-description") == 0) {
 			f_description = TRUE;
-			Descr = new BLT_set_create_description;
+			Descr = NEW_OBJECT(BLT_set_create_description);
 			i += Descr->read_arguments(argc - (i - 1),
 					argv + i, verbose_level) - 1;
 
@@ -66,7 +66,7 @@ int main(int argc, const char **argv)
 	BLT_set_create *BC;
 	//INT j;
 
-	BC = new BLT_set_create;
+	BC = NEW_OBJECT(BLT_set_create);
 
 	cout << "before BC->init" << endl;
 	BC->init(Descr, verbose_level);
@@ -138,7 +138,7 @@ int main(int argc, const char **argv)
 
 	FREE_INT(Elt2);
 
-	delete BC;
+	FREE_OBJECT(BC);
 
 	the_end(t0);
 	//the_end_quietly(t0);

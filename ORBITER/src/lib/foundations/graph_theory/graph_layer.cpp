@@ -33,7 +33,8 @@ void graph_layer::freeself()
 	null();
 }
 
-void graph_layer::init(INT nb_nodes, INT id_of_first_node, INT verbose_level)
+void graph_layer::init(INT nb_nodes,
+		INT id_of_first_node, INT verbose_level)
 {
 	INT i, id;
 
@@ -62,7 +63,9 @@ void graph_layer::place(INT verbose_level)
 	
 }
 
-void graph_layer::place_with_grouping(INT *group_size, INT nb_groups, double x_stretch, INT verbose_level)
+void graph_layer::place_with_grouping(
+		INT *group_size, INT nb_groups,
+		double x_stretch, INT verbose_level)
 // x_stretch is less than 1.
 {
 	INT f_v = (verbose_level >= 1);
@@ -72,7 +75,8 @@ void graph_layer::place_with_grouping(INT *group_size, INT nb_groups, double x_s
 	INT i, j, nb_elements;
 
 	if (f_v) {
-		cout << "graph_layer::place_with_grouping nb_groups=" << nb_groups << endl;
+		cout << "graph_layer::place_with_grouping "
+				"nb_groups=" << nb_groups << endl;
 		}
 	group_start = NEW_INT(nb_groups + 1);
 	group_dx = new double[nb_groups + 1];
@@ -86,11 +90,13 @@ void graph_layer::place_with_grouping(INT *group_size, INT nb_groups, double x_s
 		group_dx[j] = group_size[j] / (double) nb_elements;
 		}
 	for (j = 0; j < nb_groups; j++) {
-		group_x[j] = (double) group_start[j] / (double) nb_elements + (double) group_dx[j] * .5;
+		group_x[j] = (double) group_start[j] / (double) nb_elements
+				+ (double) group_dx[j] * .5;
 		}
 	for (j = 0; j < nb_groups; j++) {
 		if (f_v) {
-			cout << "j=" << j << " / " << nb_groups << " group_size[j]=" << group_size[j] << endl;
+			cout << "j=" << j << " / " << nb_groups
+					<< " group_size[j]=" << group_size[j] << endl;
 			}
 		for (i = 0; i < group_size[j]; i++) {
 			if (FALSE) {
@@ -110,13 +116,15 @@ void graph_layer::place_with_grouping(INT *group_size, INT nb_groups, double x_s
 		}
 }
 
-void graph_layer::write_memory_object(memory_object *m, INT verbose_level)
+void graph_layer::write_memory_object(
+		memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
 	
 	if (f_v) {
-		cout << "graph_layer::write_memory_object " << nb_nodes << " nodes" << endl;
+		cout << "graph_layer::write_memory_object "
+				<< nb_nodes << " nodes" << endl;
 		}
 	m->write_int(id_of_first_node);
 	m->write_int(nb_nodes);
@@ -126,11 +134,13 @@ void graph_layer::write_memory_object(memory_object *m, INT verbose_level)
 		}
 	m->write_double(y_coordinate);
 	if (f_v) {
-		cout << "graph_layer::write_memory_object finished, data size (in bytes) = " << m->used_length << endl;
+		cout << "graph_layer::write_memory_object finished, "
+				"data size (in bytes) = " << m->used_length << endl;
 		}
 }
 
-void graph_layer::read_memory_object(memory_object *m, INT verbose_level)
+void graph_layer::read_memory_object(
+		memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;

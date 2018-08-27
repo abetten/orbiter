@@ -146,7 +146,7 @@ int main(int argc, const char **argv)
 
 	tensor_product *T;
 
-	T = new tensor_product;
+	T = NEW_OBJECT(tensor_product);
 
 	T->init(argc, argv, nb_factors, d, q, depth, verbose_level);
 
@@ -193,12 +193,12 @@ void tensor_product::init(int argc, const char **argv,
 	tensor_product::n = n;
 	tensor_product::q = q;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	v = NEW_INT(n);
 
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init(q, 0);
 
@@ -490,7 +490,7 @@ void tensor_product::init(int argc, const char **argv,
 #endif
 
 
-	Gen = new generator;
+	Gen = NEW_OBJECT(generator);
 
 	Gen->read_arguments(argc, argv, 0);
 

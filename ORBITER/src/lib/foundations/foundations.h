@@ -295,33 +295,33 @@ typedef class tdo_data tdo_data;
 typedef struct solution_file_data solution_file_data;
 typedef class geo_parameter geo_parameter;
 typedef class scene scene;
+typedef class mem_object_registry mem_object_registry;
+typedef class mem_object_registry_entry mem_object_registry_entry;
 
 
 #ifdef MEMORY_DEBUG
-#define NEW_int(n) allocate_int(n, __FILE__, __LINE__)
-#define NEW_pint(n) allocate_pint(n, __FILE__, __LINE__)
-#define NEW_INT(n) allocate_INT(n, __FILE__, __LINE__)
-#define NEW_PINT(n) allocate_PINT(n, __FILE__, __LINE__)
-#define NEW_PPINT(n) allocate_PPINT(n, __FILE__, __LINE__)
-#define NEW_BYTE(n) allocate_BYTE(n, __FILE__, __LINE__)
-#define NEW_UBYTE(n) allocate_UBYTE(n, __FILE__, __LINE__)
-#define NEW_PBYTE(n) allocate_PBYTE(n, __FILE__, __LINE__)
-#define NEW_pvoid(n) allocate_pvoid(n, __FILE__, __LINE__)
-//#define NEW_CLASS(type, n) (type *)allocate_OBJECT(new type[n], n, sizeof(type), __FILE__, __LINE__)
-#define NEW_OBJECT(type) (type *)allocate_OBJECT(new type, sizeof(type), __FILE__, __LINE__)
-#define NEW_OBJECTS(type, n) (type *)allocate_OBJECTS(new type[n], n, sizeof(type), __FILE__, __LINE__)
-#define FREE_int(p) free_int(p, __FILE__, __LINE__)
-#define FREE_pint(p) free_pint(p, __FILE__, __LINE__)
-#define FREE_INT(p) free_INT(p, __FILE__, __LINE__)
-#define FREE_PINT(p) free_PINT(p, __FILE__, __LINE__)
-#define FREE_PPINT(p) free_PPINT(p, __FILE__, __LINE__)
-#define FREE_BYTE(p) free_BYTE(p, __FILE__, __LINE__)
-#define FREE_UBYTE(p) free_UBYTE(p, __FILE__, __LINE__)
-#define FREE_PBYTE(p) free_PBYTE(p, __FILE__, __LINE__)
-#define FREE_pvoid(p) free_pvoid(p, __FILE__, __LINE__)
-//#define FREE_CLASS(p) free_OBJECT(p, __FILE__, __LINE__); delete [] p
-#define FREE_OBJECT(p) free_OBJECT(p, __FILE__, __LINE__); delete p
-#define FREE_OBJECTS(p) free_OBJECTS(p, __FILE__, __LINE__); delete [] p
+#define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
+#define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
+#define NEW_INT(n) global_mem_object_registry.allocate_INT(n, __FILE__, __LINE__)
+#define NEW_PINT(n) global_mem_object_registry.allocate_PINT(n, __FILE__, __LINE__)
+#define NEW_PPINT(n) global_mem_object_registry.allocate_PPINT(n, __FILE__, __LINE__)
+#define NEW_BYTE(n) global_mem_object_registry.allocate_BYTE(n, __FILE__, __LINE__)
+#define NEW_UBYTE(n) global_mem_object_registry.allocate_UBYTE(n, __FILE__, __LINE__)
+#define NEW_PBYTE(n) global_mem_object_registry.allocate_PBYTE(n, __FILE__, __LINE__)
+#define NEW_pvoid(n) global_mem_object_registry.allocate_pvoid(n, __FILE__, __LINE__)
+#define NEW_OBJECT(type) (type *)global_mem_object_registry.allocate_OBJECT(new type, sizeof(type), __FILE__, __LINE__)
+#define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), __FILE__, __LINE__)
+#define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
+#define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
+#define FREE_INT(p) global_mem_object_registry.free_INT(p, __FILE__, __LINE__)
+#define FREE_PINT(p) global_mem_object_registry.free_PINT(p, __FILE__, __LINE__)
+#define FREE_PPINT(p) global_mem_object_registry.free_PPINT(p, __FILE__, __LINE__)
+#define FREE_BYTE(p) global_mem_object_registry.free_BYTE(p, __FILE__, __LINE__)
+#define FREE_UBYTE(p) global_mem_object_registry.free_UBYTE(p, __FILE__, __LINE__)
+#define FREE_PBYTE(p) global_mem_object_registry.free_PBYTE(p, __FILE__, __LINE__)
+#define FREE_pvoid(p) global_mem_object_registry.free_pvoid(p, __FILE__, __LINE__)
+#define FREE_OBJECT(p) global_mem_object_registry.free_OBJECT(p, __FILE__, __LINE__); delete p
+#define FREE_OBJECTS(p) global_mem_object_registry.free_OBJECTS(p, __FILE__, __LINE__); delete [] p
 #else
 #define NEW_int(n) new int[n]
 #define NEW_pint(n) new pint[n]
@@ -332,7 +332,7 @@ typedef class scene scene;
 #define NEW_UBYTE(n) new UBYTE[n]
 #define NEW_PBYTE(n) new PBYTE[n]
 #define NEW_pvoid(n) new pvoid[n]
-#define NEW_CLASS(n, type) new type[n]
+//#define NEW_CLASS(n, type) new type[n]
 #define FREE_int(p) delete [] p
 #define FREE_pint(p) delete [] p
 #define FREE_INT(p) delete [] p

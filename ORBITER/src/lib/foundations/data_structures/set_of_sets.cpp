@@ -45,7 +45,7 @@ set_of_sets *set_of_sets::copy()
 {
 	set_of_sets *SoS;
 
-	SoS = new set_of_sets;
+	SoS = NEW_OBJECT(set_of_sets);
 
 	SoS->init(underlying_set_size, nb_sets, Sets, Set_size, 0 /*verbose_level */);
 	return SoS;
@@ -355,21 +355,24 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			l++;
 			continue;
 			}
-		// work on a new cycle, starting at position l: 
+		// work on a next cycle, starting at position l:
 		first = l;
-		//cout << "set_of_sets::init_cycle_structure cyle starting with " << first << endl;
+		//cout << "set_of_sets::init_cycle_structure cyle
+		//starting with " << first << endl;
 		l1 = l;
 		len = 1;
 		while (TRUE) {
 			if (l1 >= n) {
-				cout << "set_of_sets::init_cycle_structure cyle starting with " << first << endl;
+				cout << "set_of_sets::init_cycle_structure cyle "
+						"starting with " << first << endl;
 				cout << "l1 = " << l1 << " >= n" << endl;
 				exit(1);
 				}
 			have_seen[l1] = TRUE;
 			next = perm[l1];
 			if (next >= n) {
-				cout << "set_of_sets::init_cycle_structure next = " << next << " >= n = " << n << endl;
+				cout << "set_of_sets::init_cycle_structure next = "
+						<< next << " >= n = " << n << endl;
 				// print_list(ost);
 				exit(1);
 				}
@@ -377,7 +380,8 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 				break;
 				}
 			if (have_seen[next]) {
-				cout << "set_of_sets::init_cycle_structure have_seen[next]" << endl; 
+				cout << "set_of_sets::init_cycle_structure "
+						"have_seen[next]" << endl;
 				cout << "first=" << first << endl;
 				cout << "len=" << len << endl;
 				cout << "l1=" << l1 << endl;
@@ -390,7 +394,8 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			l1 = next;
 			len++;
 			}
-		//cout << "set_of_sets::init_cycle_structure cyle starting with " << first << " has length " << len << endl;
+		//cout << "set_of_sets::init_cycle_structure cyle starting
+		//with " << first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		orbit_length[nb_orbits++] = len;
 #if 0
@@ -407,16 +412,19 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			l1 = next;
 			}
 		ost << ")"; //  << endl;
-		//cout << "set_of_sets::init_cycle_structure done printing cycle" << endl;
+		//cout << "set_of_sets::init_cycle_structure
+		//done printing cycle" << endl;
 #endif
 		}
 	if (f_v) {
-		cout << "set_of_sets::init_cycle_structure we found the following cycle structure:";
+		cout << "set_of_sets::init_cycle_structure we found "
+				"the following cycle structure:";
 		INT_vec_print(cout, orbit_length, nb_orbits);
 		cout << endl;
 		}
 
-	init_basic(n /* underlying_set_size */, nb_orbits, orbit_length, 0 /* verbose_level */);
+	init_basic(n /* underlying_set_size */,
+			nb_orbits, orbit_length, 0 /* verbose_level */);
 
 	INT_vec_zero(have_seen, n);
 
@@ -428,19 +436,22 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			}
 		// work on a new cycle, starting at position l: 
 		first = l;
-		//cout << "set_of_sets::init_cycle_structure cyle starting with " << first << endl;
+		//cout << "set_of_sets::init_cycle_structure cyle
+		//starting with " << first << endl;
 		l1 = l;
 		len = 1;
 		while (TRUE) {
 			if (l1 >= n) {
-				cout << "set_of_sets::init_cycle_structure cyle starting with " << first << endl;
+				cout << "set_of_sets::init_cycle_structure cyle "
+						"starting with " << first << endl;
 				cout << "l1 = " << l1 << " >= n" << endl;
 				exit(1);
 				}
 			have_seen[l1] = TRUE;
 			next = perm[l1];
 			if (next >= n) {
-				cout << "set_of_sets::init_cycle_structure next = " << next << " >= n = " << n << endl;
+				cout << "set_of_sets::init_cycle_structure next = "
+						<< next << " >= n = " << n << endl;
 				// print_list(ost);
 				exit(1);
 				}
@@ -448,7 +459,8 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 				break;
 				}
 			if (have_seen[next]) {
-				cout << "set_of_sets::init_cycle_structure have_seen[next]" << endl; 
+				cout << "set_of_sets::init_cycle_structure "
+						"have_seen[next]" << endl;
 				cout << "first=" << first << endl;
 				cout << "len=" << len << endl;
 				cout << "l1=" << l1 << endl;
@@ -461,11 +473,14 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			l1 = next;
 			len++;
 			}
-		//cout << "set_of_sets::init_cycle_structure cyle starting with " << first << " has length " << len << endl;
+		//cout << "set_of_sets::init_cycle_structure cyle starting
+		//with " << first << " has length " << len << endl;
 		//cout << "nb_orbits=" << nb_orbits << endl;
 		orbit_length2[nb_orbits2] = len;
 		if (orbit_length2[nb_orbits2] != orbit_length[nb_orbits2]) {
-			cout << "set_of_sets::init_cycle_structure orbit_length2[nb_orbits2] != orbit_length[nb_orbits2]" << endl;
+			cout << "set_of_sets::init_cycle_structure "
+					"orbit_length2[nb_orbits2] != "
+					"orbit_length[nb_orbits2]" << endl;
 			exit(1);
 			}
 
@@ -481,14 +496,17 @@ void set_of_sets::init_cycle_structure(INT *perm, INT n, INT verbose_level)
 			l1 = next;
 			}
 		if (c != orbit_length2[nb_orbits2]) {
-			cout << "set_of_sets::init_cycle_structure c != orbit_length2[nb_orbits2]" << endl;
+			cout << "set_of_sets::init_cycle_structure c != "
+					"orbit_length2[nb_orbits2]" << endl;
 			exit(1);
 			}
-		//cout << "set_of_sets::init_cycle_structure done with cycle" << endl;
+		//cout << "set_of_sets::init_cycle_structure
+		//done with cycle" << endl;
 		nb_orbits2++;
 		}
 	if (nb_orbits2 != nb_orbits) {
-		cout << "set_of_sets::init_cycle_structure nb_orbits2 != nb_orbits" << endl;
+		cout << "set_of_sets::init_cycle_structure "
+				"nb_orbits2 != nb_orbits" << endl;
 		exit(1);
 		}
 	
@@ -570,8 +588,9 @@ void set_of_sets::dualize(set_of_sets *&S, INT verbose_level)
 	if (f_v) {
 		cout << "set_of_sets::dualize" << endl;
 		}
-	S = new set_of_sets;
-	S->init_basic_constant_size(nb_sets, underlying_set_size, nb_sets, verbose_level - 1);
+	S = NEW_OBJECT(set_of_sets);
+	S->init_basic_constant_size(nb_sets,
+			underlying_set_size, nb_sets, verbose_level - 1);
 	INT_vec_zero(S->Set_size, underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = 0; j < Set_size[i]; j++) {
@@ -586,7 +605,8 @@ void set_of_sets::dualize(set_of_sets *&S, INT verbose_level)
 		}
 }
 
-void set_of_sets::remove_sets_of_given_size(INT k, set_of_sets &S, INT *&Idx, INT verbose_level)
+void set_of_sets::remove_sets_of_given_size(INT k,
+		set_of_sets &S, INT *&Idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -616,12 +636,14 @@ void set_of_sets::remove_sets_of_given_size(INT k, set_of_sets &S, INT *&Idx, IN
 			}
 		}
 	if (a != l) {
-		cout << "set_of_sets::remove_sets_of_given_size a != l" << endl;
+		cout << "set_of_sets::remove_sets_of_given_size "
+				"a != l" << endl;
 		}
 	
 }
 
-void set_of_sets::extract_largest_sets(set_of_sets &S, INT *&Idx, INT verbose_level)
+void set_of_sets::extract_largest_sets(
+		set_of_sets &S, INT *&Idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -671,7 +693,8 @@ void set_of_sets::intersection_matrix(
 		}
 	C.init(Set_size, nb_sets, f_second, 0);
 	if (FALSE /*f_v*/) {
-		cout << "set_of_sets::intersection_matrix plane-intersection type: ";
+		cout << "set_of_sets::intersection_matrix "
+				"plane-intersection type: ";
 		C.print(FALSE /* f_backwards*/);
 		}
 
@@ -716,39 +739,46 @@ void set_of_sets::intersection_matrix(
 		}
 	if (FALSE /*f_vv*/) {
 		cout << "Incidence matrix:" << endl;
-		print_integer_matrix_width(cout, Incma, underlying_set_size, nb_big_sets, nb_big_sets, 1);
+		print_integer_matrix_width(cout, Incma,
+				underlying_set_size, nb_big_sets, nb_big_sets, 1);
 		}
 	for (i = 0; i < underlying_set_size; i++) {
 		for (j = 0; j < underlying_set_size; j++) {
 			a = 0;
 			for (u = 0; u < nb_big_sets; u++) {
-				a += Incma[i * nb_big_sets + u] * Incma_t[u * underlying_set_size + j];
+				a += Incma[i * nb_big_sets + u] *
+						Incma_t[u * underlying_set_size + j];
 				}
 			IIt[i * underlying_set_size + j] = a;
 			}
 		}
 	if (FALSE /*f_vv*/) {
 		cout << "I * I^\\top = " << endl;
-		print_integer_matrix_width(cout, IIt, underlying_set_size, underlying_set_size, underlying_set_size, 2);
+		print_integer_matrix_width(cout, IIt,
+				underlying_set_size, underlying_set_size,
+				underlying_set_size, 2);
 		}
 	for (i = 0; i < nb_big_sets; i++) {
 		for (j = 0; j < nb_big_sets; j++) {
 			a = 0;
 			for (u = 0; u < underlying_set_size; u++) {
-				a += Incma[u * nb_big_sets + i] * Incma[u * nb_big_sets + j];
+				a += Incma[u * nb_big_sets + i] *
+						Incma[u * nb_big_sets + j];
 				}
 			ItI[i * nb_big_sets + j] = a;
 			}
 		}
 	if (FALSE /*f_v*/) {
 		cout << "I^\\top * I = " << endl;
-		print_integer_matrix_width(cout, ItI, nb_big_sets, nb_big_sets, nb_big_sets, 3);
+		print_integer_matrix_width(cout, ItI,
+				nb_big_sets, nb_big_sets, nb_big_sets, 3);
 		}
 	
 	intersection_matrix = NEW_INT(nb_big_sets * nb_big_sets);
 	for (i = 0; i < nb_big_sets; i++) {
 		for (j = 0; j < nb_big_sets; j++) {
-			intersection_matrix[i * nb_big_sets + j] = ItI[i * nb_big_sets + j];
+			intersection_matrix[i * nb_big_sets + j] =
+					ItI[i * nb_big_sets + j];
 			}
 		}
 
@@ -761,7 +791,8 @@ void set_of_sets::intersection_matrix(
 		}
 }
 
-void set_of_sets::compute_incidence_matrix(INT *&Inc, INT &m, INT &n, INT verbose_level)
+void set_of_sets::compute_incidence_matrix(
+		INT *&Inc, INT &m, INT &n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, h;
@@ -781,7 +812,8 @@ void set_of_sets::compute_incidence_matrix(INT *&Inc, INT &m, INT &n, INT verbos
 		}
 }
 
-void set_of_sets::compute_and_print_tdo_row_scheme(ofstream &file, INT verbose_level)
+void set_of_sets::compute_and_print_tdo_row_scheme(
+		ofstream &file, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Inc;
@@ -814,9 +846,9 @@ void set_of_sets::compute_and_print_tdo_row_scheme(ofstream &file, INT verbose_l
 	INT set_size = underlying_set_size;
 	INT nb_blocks = nb_sets;
 
-	I = new incidence_structure;
+	I = NEW_OBJECT(incidence_structure);
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
@@ -825,17 +857,19 @@ void set_of_sets::compute_and_print_tdo_row_scheme(ofstream &file, INT verbose_l
 	I->compute_TDO_safe(*Stack, depth, verbose_level - 2);
 		
 	I->get_and_print_row_tactical_decomposition_scheme_tex(
-		file, FALSE /* f_enter_math */, FALSE /* f_print_subscripts */, *Stack);
+		file, FALSE /* f_enter_math */,
+		FALSE /* f_print_subscripts */, *Stack);
 
 	FREE_INT(Inc);
-	delete I;
-	delete Stack;
+	FREE_OBJECT(I);
+	FREE_OBJECT(Stack);
 	if (f_v) {
 		cout << "set_of_sets::compute_and_print_tdo_row_scheme done" << endl;
 		}
 }
 
-void set_of_sets::compute_and_print_tdo_col_scheme(ofstream &file, INT verbose_level)
+void set_of_sets::compute_and_print_tdo_col_scheme(
+		ofstream &file, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Inc;
@@ -868,9 +902,9 @@ void set_of_sets::compute_and_print_tdo_col_scheme(ofstream &file, INT verbose_l
 	INT set_size = underlying_set_size;
 	INT nb_blocks = nb_sets;
 
-	I = new incidence_structure;
+	I = NEW_OBJECT(incidence_structure);
 	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
@@ -879,17 +913,19 @@ void set_of_sets::compute_and_print_tdo_col_scheme(ofstream &file, INT verbose_l
 	I->compute_TDO_safe(*Stack, depth, verbose_level - 2);
 		
 	I->get_and_print_column_tactical_decomposition_scheme_tex(
-		file, FALSE /* f_enter_math */, FALSE /* f_print_subscripts */, *Stack);
+		file, FALSE /* f_enter_math */,
+		FALSE /* f_print_subscripts */, *Stack);
 
 	FREE_INT(Inc);
-	delete I;
-	delete Stack;
+	FREE_OBJECT(I);
+	FREE_OBJECT(Stack);
 	if (f_v) {
 		cout << "set_of_sets::compute_and_print_tdo_col_scheme done" << endl;
 		}
 }
 
-void set_of_sets::init_decomposition(decomposition *&D, INT verbose_level)
+void set_of_sets::init_decomposition(
+		decomposition *&D, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Inc;
@@ -900,9 +936,10 @@ void set_of_sets::init_decomposition(decomposition *&D, INT verbose_level)
 		}
 	compute_incidence_matrix(Inc, m, n, verbose_level - 2);
 
-	D = new decomposition;
+	D = NEW_OBJECT(decomposition);
 
-	D->init_incidence_matrix(underlying_set_size, nb_sets, Inc, verbose_level - 1);
+	D->init_incidence_matrix(underlying_set_size,
+			nb_sets, Inc, verbose_level - 1);
 
 	FREE_INT(Inc);
 
@@ -911,7 +948,8 @@ void set_of_sets::init_decomposition(decomposition *&D, INT verbose_level)
 		}
 }
 
-void set_of_sets::compute_tdo_decomposition(decomposition &D, INT verbose_level)
+void set_of_sets::compute_tdo_decomposition(
+		decomposition &D, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Inc;
@@ -927,7 +965,8 @@ void set_of_sets::compute_tdo_decomposition(decomposition &D, INT verbose_level)
 	compute_incidence_matrix(Inc, m, n, verbose_level - 2);
 
 	if (f_v) {
-		cout << "set_of_sets::compute_tdo_decomposition after compute_incidence_matrix" << endl;
+		cout << "set_of_sets::compute_tdo_decomposition "
+				"after compute_incidence_matrix" << endl;
 		cout << "underlying_set_size=" << underlying_set_size << endl;
 		cout << "nb_sets=" << nb_sets << endl;
 		}
@@ -938,43 +977,26 @@ void set_of_sets::compute_tdo_decomposition(decomposition &D, INT verbose_level)
 
 
 	if (f_v) {
-		cout << "set_of_sets::compute_tdo_decomposition before D.init_incidence_matrix" << endl;
+		cout << "set_of_sets::compute_tdo_decomposition "
+				"before D.init_incidence_matrix" << endl;
 		}
-	D.init_incidence_matrix(underlying_set_size, nb_sets, Inc, verbose_level - 1);
+	D.init_incidence_matrix(underlying_set_size,
+			nb_sets, Inc, verbose_level - 1);
 	FREE_INT(Inc);
 
 
 	if (f_v) {
-		cout << "set_of_sets::compute_tdo_decomposition before D.setup_default_partition" << endl;
+		cout << "set_of_sets::compute_tdo_decomposition "
+				"before D.setup_default_partition" << endl;
 		}
 	D.setup_default_partition(verbose_level);
 
 	if (f_v) {
-		cout << "set_of_sets::compute_tdo_decomposition before D.compute_TDO" << endl;
+		cout << "set_of_sets::compute_tdo_decomposition "
+				"before D.compute_TDO" << endl;
 		}
 	D.compute_TDO(INT_MAX, verbose_level);
 
-#if 0
-	INT set_size = underlying_set_size;
-	INT nb_blocks = nb_sets;
-
-	I = new incidence_structure;
-	I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
-	Stack = new partitionstack;
-	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(set_size, nb_blocks);
-	Stack->split_cell(0 /* verbose_level */);
-	Stack->sort_cells();
-
-	I->compute_TDO_safe(*Stack, depth, verbose_level - 2);
-		
-	I->get_and_print_row_tactical_decomposition_scheme_tex(
-		file, FALSE /* f_enter_math */, *Stack);
-
-	FREE_INT(Inc);
-	delete I;
-	delete Stack;
-#endif
 	if (f_v) {
 		cout << "set_of_sets::compute_tdo_scheme done" << endl;
 		}
@@ -1012,7 +1034,8 @@ void set_of_sets::sort_all(INT verbose_level)
 		}
 }
 
-void set_of_sets::all_pairwise_intersections(set_of_sets *&Intersections, INT verbose_level)
+void set_of_sets::all_pairwise_intersections(
+		set_of_sets *&Intersections, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT N, i, j, k;
@@ -1025,14 +1048,16 @@ void set_of_sets::all_pairwise_intersections(set_of_sets *&Intersections, INT ve
 	N = INT_n_choose_k(nb_sets, 2);
 
 
-	Intersections = new set_of_sets;
-	Intersections->init_simple(underlying_set_size, N, verbose_level - 1);
+	Intersections = NEW_OBJECT(set_of_sets);
+	Intersections->init_simple(underlying_set_size,
+			N, verbose_level - 1);
 
 	v = NEW_INT(underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
 			k = ij2k(i, j, nb_sets);	
-			INT_vec_intersect_sorted_vectors(Sets[i], Set_size[i], Sets[j], Set_size[j], v, l);
+			INT_vec_intersect_sorted_vectors(
+					Sets[i], Set_size[i], Sets[j], Set_size[j], v, l);
 			Intersections->Sets[k] = NEW_INT(l);
 			INT_vec_copy(v, Intersections->Sets[k], l);
 			Intersections->Set_size[k] = l;
@@ -1064,7 +1089,8 @@ void set_of_sets::pairwise_intersection_matrix(INT *&M, INT verbose_level)
 	v = NEW_INT(underlying_set_size);
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
-			INT_vec_intersect_sorted_vectors(Sets[i], Set_size[i], Sets[j], Set_size[j], v, l);
+			INT_vec_intersect_sorted_vectors(Sets[i],
+					Set_size[i], Sets[j], Set_size[j], v, l);
 			M[i * nb_sets + j] = l;
 			M[j * nb_sets + i] = l;
 			}
@@ -1077,7 +1103,8 @@ void set_of_sets::pairwise_intersection_matrix(INT *&M, INT verbose_level)
 		}
 }
 
-void set_of_sets::all_triple_intersections(set_of_sets *&Intersections, INT verbose_level)
+void set_of_sets::all_triple_intersections(
+		set_of_sets *&Intersections, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT N, i, j, k, h;
@@ -1091,7 +1118,7 @@ void set_of_sets::all_triple_intersections(set_of_sets *&Intersections, INT verb
 	N = INT_n_choose_k(nb_sets, 3);
 
 
-	Intersections = new set_of_sets;
+	Intersections = NEW_OBJECT(set_of_sets);
 	Intersections->init_simple(underlying_set_size, N, verbose_level - 1);
 
 	v = NEW_INT(underlying_set_size);
@@ -1099,12 +1126,14 @@ void set_of_sets::all_triple_intersections(set_of_sets *&Intersections, INT verb
 	for (i = 0; i < nb_sets; i++) {
 		for (j = i + 1; j < nb_sets; j++) {
 
-			INT_vec_intersect_sorted_vectors(Sets[i], Set_size[i], Sets[j], Set_size[j], v, l1);
+			INT_vec_intersect_sorted_vectors(Sets[i],
+					Set_size[i], Sets[j], Set_size[j], v, l1);
 
 			for (k = j + 1; k < nb_sets; k++) {
 			
 				h = ijk2h(i, j, k, nb_sets);	
-				INT_vec_intersect_sorted_vectors(v, l1, Sets[k], Set_size[k], w, l2);
+				INT_vec_intersect_sorted_vectors(v, l1,
+						Sets[k], Set_size[k], w, l2);
 				Intersections->Sets[h] = NEW_INT(l2);
 				INT_vec_copy(w, Intersections->Sets[h], l2);
 				Intersections->Set_size[h] = l2;
@@ -1148,7 +1177,8 @@ INT set_of_sets::largest_set_size()
 	return s;
 }
 
-void set_of_sets::save_csv(const BYTE *fname, INT f_make_heading, INT verbose_level)
+void set_of_sets::save_csv(const BYTE *fname,
+		INT f_make_heading, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	spreadsheet *Sp;
@@ -1156,23 +1186,26 @@ void set_of_sets::save_csv(const BYTE *fname, INT f_make_heading, INT verbose_le
 	if (f_v) {
 		cout << "set_of_sets::save_csv" << endl;
 		}
-	Sp = new spreadsheet;
+	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_set_of_sets(this, f_make_heading);
 	Sp->save(fname, verbose_level);
 	if (f_v) {
-		cout << "set_of_sets::save_csv before delete spreadsheet" << endl;
+		cout << "set_of_sets::save_csv "
+				"before delete spreadsheet" << endl;
 		}
-	delete Sp;
+	FREE_OBJECT(Sp);
 	if (f_v) {
 		cout << "set_of_sets::save_csv done" << endl;
 		}
 }
 
-INT set_of_sets::find_common_element_in_two_sets(INT idx1, INT idx2, INT &common_elt)
+INT set_of_sets::find_common_element_in_two_sets(
+		INT idx1, INT idx2, INT &common_elt)
 {
 	INT pos1, pos2;
 	
-	if (INT_vecs_find_common_element(Sets[idx1], Set_size[idx1], Sets[idx2], Set_size[idx2], pos1, pos2)) {
+	if (INT_vecs_find_common_element(Sets[idx1],
+			Set_size[idx1], Sets[idx2], Set_size[idx2], pos1, pos2)) {
 		common_elt = Sets[idx1][pos1];
 		return TRUE;
 		}
@@ -1196,9 +1229,12 @@ void set_of_sets::sort_big(INT verbose_level)
 		set_of_sets_swap_func, NULL);
 }
 
-void set_of_sets::compute_orbits(INT &nb_orbits, INT *&orbit, INT *&orbit_inv, 
+void set_of_sets::compute_orbits(INT &nb_orbits,
+	INT *&orbit, INT *&orbit_inv,
 	INT *&orbit_first, INT *&orbit_len, 
-	void (*compute_image_function)(set_of_sets *S, void *compute_image_data, INT elt_idx, INT gen_idx, INT &idx_of_image, INT verbose_level), 
+	void (*compute_image_function)(set_of_sets *S,
+			void *compute_image_data, INT elt_idx,
+			INT gen_idx, INT &idx_of_image, INT verbose_level),
 	void *compute_image_data, 
 	INT nb_gens, 
 	INT verbose_level)
@@ -1225,12 +1261,15 @@ void set_of_sets::compute_orbits(INT &nb_orbits, INT *&orbit, INT *&orbit_inv,
 		orbit_first[nb_orbits] = cur;
 		orbit_len[nb_orbits] = 1;
 		if (f_v) {
-			cout << "set_of_sets::compute_orbits New orbit " << nb_orbits << " is orbit of " << orbit[cur] << endl;
+			cout << "set_of_sets::compute_orbits "
+					"New orbit " << nb_orbits
+					<< " is orbit of " << orbit[cur] << endl;
 			}
 		while (cur < l) {
 			a = orbit[cur];
 			for (g = 0; g < nb_gens; g++) {
-				(*compute_image_function)(this, compute_image_data, a, g, b, verbose_level - 2);
+				(*compute_image_function)(this,
+						compute_image_data, a, g, b, verbose_level - 2);
 				if (f_vv) {
 					cout << a << " -" << g << "-> " << b << endl;
 					}
@@ -1261,7 +1300,8 @@ void set_of_sets::compute_orbits(INT &nb_orbits, INT *&orbit, INT *&orbit_inv,
 		nb_orbits++;
 		}
 	if (f_v) {
-		cout << "set_of_sets::compute_orbits we found " << nb_orbits << " orbits" << endl;
+		cout << "set_of_sets::compute_orbits "
+				"we found " << nb_orbits << " orbits" << endl;
 		}
 
 	if (f_v) {
@@ -1286,7 +1326,8 @@ INT set_of_sets::number_of_eckardt_points(INT verbose_level)
 	return nb_E;
 }
 
-void set_of_sets::get_eckardt_points(INT *&E, INT &nb_E, INT verbose_level)
+void set_of_sets::get_eckardt_points(
+		INT *&E, INT &nb_E, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1297,16 +1338,18 @@ void set_of_sets::get_eckardt_points(INT *&E, INT &nb_E, INT verbose_level)
 	incidence_structure *IS;
 	partitionstack *PStack;
 
-	IS = new incidence_structure;
+	IS = NEW_OBJECT(incidence_structure);
 
 	IS->init_by_set_of_sets(this, FALSE);
 
-	PStack = new partitionstack;
+	PStack = NEW_OBJECT(partitionstack);
 	PStack->allocate(nb_sets + underlying_set_size, 0 /* verbose_level */);
 	PStack->subset_continguous(nb_sets, underlying_set_size);
 	PStack->split_cell(0 /* verbose_level */);
 	
-	IS->compute_TDO_safe(*PStack, 1 /*nb_lines + nb_points_on_surface*/ /* depth */, 0 /* verbose_level */);
+	IS->compute_TDO_safe(*PStack,
+			1 /*nb_lines + nb_points_on_surface*/ /* depth */,
+			0 /* verbose_level */);
 
 #if 0
 	{
@@ -1385,8 +1428,8 @@ void set_of_sets::get_eckardt_points(INT *&E, INT &nb_E, INT verbose_level)
 	FREE_INT(col_classes);
 	FREE_INT(col_class_inv);
 	FREE_INT(col_scheme);
-	delete PStack;
-	delete IS;
+	FREE_OBJECT(PStack);
+	FREE_OBJECT(IS);
 
 	if (f_v) {
 		cout << "set_of_sets::get_eckardt_points done" << endl;
@@ -1394,9 +1437,9 @@ void set_of_sets::get_eckardt_points(INT *&E, INT &nb_E, INT verbose_level)
 }
 
 
-// ##################################################################################################
+// #############################################################################
 // global functions:
-// ##################################################################################################
+// #############################################################################
 
 
 INT set_of_sets_compare_func(void *data, INT i, INT j, void *extra_data)
@@ -1405,7 +1448,8 @@ INT set_of_sets_compare_func(void *data, INT i, INT j, void *extra_data)
 	INT c;
 
 	if (S->Set_size[i] != S->Set_size[j]) {
-		cout << "set_of_sets_compare_func sets must have the same size" << endl;
+		cout << "set_of_sets_compare_func sets "
+				"must have the same size" << endl;
 		exit(1);
 		}
 	c = INT_vec_compare(S->Sets[i], S->Sets[j], S->Set_size[i]);
@@ -1418,7 +1462,8 @@ void set_of_sets_swap_func(void *data, INT i, INT j, void *extra_data)
 	INT *p;
 
 	if (S->Set_size[i] != S->Set_size[j]) {
-		cout << "set_of_sets_swap_func sets must have the same size" << endl;
+		cout << "set_of_sets_swap_func sets "
+				"must have the same size" << endl;
 		exit(1);
 		}
 	p = S->Sets[i];

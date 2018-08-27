@@ -82,14 +82,14 @@ int main(int argc, char **argv)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
 	sprintf(fname, "Johnson_%ld_%ld_%ld.colored_graph", n, k, s);
 
 	CG->save(fname, verbose_level);
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(Adj);
 	FREE_INT(set1);
 	FREE_INT(set2);

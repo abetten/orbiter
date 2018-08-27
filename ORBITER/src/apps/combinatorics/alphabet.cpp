@@ -91,7 +91,7 @@ void step1()
 			}
 
 #ifdef ADDED_CONDITIONS
-		// adding a new condition: d < r
+		// adding the condition: d < r
 		if (d > r) {
 			continue;
 			}

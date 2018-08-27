@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 	if (f_v) {
 		cout << "creating finite field:" << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0 /*verbose_level*/);
 
 
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 		}
 
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "before P->init" << endl;
@@ -191,8 +191,8 @@ int main(int argc, char **argv)
 		do_arc_lifting(P, k, NULL, 0, sz, verbose_level);
 		}
 
-	delete P;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(F);
 
 	the_end(t0);
 }
@@ -225,7 +225,7 @@ void do_arc_lifting(projective_space *P, INT k,
 	else {
 		f_semilinear = TRUE;
 		}
-	A_linear = new action;
+	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(P->n + 1, F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
 	
 
@@ -294,7 +294,7 @@ void extend(INT arc_size)
 	
 	strong_generators *gens;
 
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 
 	
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
@@ -309,9 +309,9 @@ void extend(INT arc_size)
 			cout << "The flag orbit is not canonical, reject" << endl;
 			cout << "canonical_pt=" << canonical_pt << endl;
 			cout << "Arc[arc_size - 1]=" << Arc[arc_size - 1] << endl;
-			delete Sch;
-			delete gens;
-			delete Stab;
+			FREE_OBJECT(Sch);
+			FREE_OBJECT(gens);
+			FREE_OBJECT(Stab);
 			return;
 			}
 		else {
@@ -367,9 +367,9 @@ void extend(INT arc_size)
 
 	if (arc_size == target_sz) {
 		cout << "extend, arc_size == target_sz" << endl;
-		delete Sch;
-		delete gens;
-		delete Stab;
+		FREE_OBJECT(Sch);
+		FREE_OBJECT(gens);
+		FREE_OBJECT(Stab);
 		return;
 		}
 
@@ -401,8 +401,8 @@ void extend(INT arc_size)
 		}
 
 	
-	delete Sch;
-	delete gens;
-	delete Stab;
+	FREE_OBJECT(Sch);
+	FREE_OBJECT(gens);
+	FREE_OBJECT(Stab);
 }
 

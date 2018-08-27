@@ -99,11 +99,11 @@ void knarr::freeself()
 	//cout << "freeing things 1" << endl;
 	
 	if (type_i_points) {
-		delete type_i_points;
-		delete type_ii_points;
-		delete type_iii_points;
-		delete type_a_lines;
-		delete type_b_lines;
+		FREE_OBJECT(type_i_points);
+		FREE_OBJECT(type_ii_points);
+		FREE_OBJECT(type_iii_points);
+		FREE_OBJECT(type_a_lines);
+		FREE_OBJECT(type_b_lines);
 		}
 	if (type_a_line_BLT_idx) {
 		FREE_INT(type_a_line_BLT_idx);
@@ -112,9 +112,9 @@ void knarr::freeself()
 	//cout << "freeing things 2" << endl;
 	
 	if (W) {
-		delete W;
-		delete P5;
-		delete G63;
+		FREE_OBJECT(W);
+		FREE_OBJECT(P5);
+		FREE_OBJECT(G63);
 		}
 	null();
 }
@@ -137,8 +137,8 @@ void knarr::init(finite_field *F, INT BLT_no, INT verbose_level)
 			}
 		}
 
-	W = new W3q;
-	P5 = new projective_space;
+	W = NEW_OBJECT(W3q);
+	P5 = NEW_OBJECT(projective_space);
 
 	W->init(F, verbose_level - 1);
 	P5->init(5, F, 
@@ -150,7 +150,7 @@ void knarr::init(finite_field *F, INT BLT_no, INT verbose_level)
 		cout << "P5->nb_lines=" << P5->N_lines << endl;
 		}
 
-	G63 = new grassmann;
+	G63 = NEW_OBJECT(grassmann);
 	G63->init(6, 3, F, verbose_level - 2);
 
 	D.q_binomial(six_choose_three_q, 6, 3, q, 0);
@@ -176,7 +176,8 @@ void knarr::init(finite_field *F, INT BLT_no, INT verbose_level)
 		cout << "the BLT-set of lines is:" << endl;
 		for (i = 0; i < q + 1; i++) {
 			a = BLT_line_idx[i];
-			cout << setw(4) << i << " : " << setw(4) << a << " : " << setw(5) << W->Lines[a] << ":" << endl;
+			cout << setw(4) << i << " : " << setw(4) << a << " : "
+					<< setw(5) << W->Lines[a] << ":" << endl;
 			W->P3->unrank_line(Basis, W->Lines[a]);
 			print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
 			cout << endl;
@@ -199,11 +200,11 @@ void knarr::points_and_lines(INT verbose_level)
 		cout << "knarr::points_and_lines" << endl;
 		}
 	
-	type_i_points = new fancy_set;
-	type_ii_points = new fancy_set;
-	type_iii_points = new fancy_set;
-	type_a_lines = new fancy_set;
-	type_b_lines = new fancy_set;
+	type_i_points = NEW_OBJECT(fancy_set);
+	type_ii_points = NEW_OBJECT(fancy_set);
+	type_iii_points = NEW_OBJECT(fancy_set);
+	type_a_lines = NEW_OBJECT(fancy_set);
+	type_b_lines = NEW_OBJECT(fancy_set);
 
 
 
@@ -225,10 +226,12 @@ void knarr::points_and_lines(INT verbose_level)
 		}
 
 	if (f_vv) {
-		cout << "We found " << type_i_points->k << " type i points" << endl;
+		cout << "We found " << type_i_points->k
+				<< " type i points" << endl;
 		}
 	if (f_vvv) {
-		cout << "The " << type_i_points->k << " type i points are:" << endl;
+		cout << "The " << type_i_points->k
+				<< " type i points are:" << endl;
 		type_i_points->println();
 		}
 	
@@ -247,8 +250,10 @@ void knarr::points_and_lines(INT verbose_level)
 		a = BLT_line_idx[h];
 		W->P3->unrank_line(Basis, W->Lines[a]);
 		if (f_vvv) {
-			cout << "BLT line " << h << " which is " << W->Lines[a] << endl;
-			print_integer_matrix_width(cout, Basis, 2, 4, 4, F->log10_of_q);
+			cout << "BLT line " << h << " which is "
+					<< W->Lines[a] << endl;
+			print_integer_matrix_width(cout, Basis, 2, 4, 4,
+					F->log10_of_q);
 			cout << endl;
 			}
 
@@ -266,7 +271,8 @@ void knarr::points_and_lines(INT verbose_level)
 			}
 		if (f_v4) {
 			cout << "embedded:" << endl;
-			print_integer_matrix_width(cout, Basis2, 3, 6, 6, F->log10_of_q);
+			print_integer_matrix_width(cout, Basis2, 3, 6, 6,
+					F->log10_of_q);
 			cout << endl;
 			}
 
@@ -275,7 +281,8 @@ void knarr::points_and_lines(INT verbose_level)
 			}
 		i = G63->rank_INT(0);
 		if (f_v4) {
-			cout << "This plane has rank " << i << " and will be added as type b line" << endl;
+			cout << "This plane has rank " << i
+					<< " and will be added as type b line" << endl;
 			}
 		type_b_lines->add_element(i);
 
@@ -284,8 +291,8 @@ void knarr::points_and_lines(INT verbose_level)
 		grassmann_embedded *Gre;
 
 		
-		G32 = new grassmann;
-		Gre = new grassmann_embedded;
+		G32 = NEW_OBJECT(grassmann);
+		Gre = NEW_OBJECT(grassmann_embedded);
 		G32->init(3, 2, F, verbose_level - 3);
 		Gre->init(6, 3, G32, Basis2, verbose_level - 3);
 
@@ -297,7 +304,8 @@ void knarr::points_and_lines(INT verbose_level)
 			j = P5->Grass_lines->rank_INT(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
-				print_integer_matrix_width(cout, subspace_basis, 2, 6, 6, F->log10_of_q);
+				print_integer_matrix_width(cout, subspace_basis,
+						2, 6, 6, F->log10_of_q);
 				cout << "and has rank " << j << endl;
 				}
 			INT_vec_zero(subspace_basis + 2 * 6, 6);
@@ -310,30 +318,36 @@ void knarr::points_and_lines(INT verbose_level)
 			rk = F->Gauss_easy(subspace_basis, 3, 6);
 			if (rk <= 2) {
 				if (f_v4) {
-					cout << "This subspace contains P, so it is not interesting" << endl;
+					cout << "This subspace contains P, "
+							"so it is not interesting" << endl;
 					}
 				continue;
 				}
 			if (f_v4) {
-				cout << "This subspace does not contain P, so it is interesting. Adding line " << j << endl;
+				cout << "This subspace does not contain P, "
+						"so it is interesting. Adding line " << j << endl;
 				}
 			type_ii_points->add_element(j);
 			}
 
-		delete G32;
-		delete Gre;
+		FREE_OBJECT(G32);
+		FREE_OBJECT(Gre);
 
 		} // next h
 
 	if (f_vv) {
-		cout << "We found " << type_ii_points->k << " type ii points." << endl;
-		cout << "We found " << type_b_lines->k << " type b lines." << endl;
+		cout << "We found " << type_ii_points->k
+				<< " type ii points." << endl;
+		cout << "We found " << type_b_lines->k
+				<< " type b lines." << endl;
 		}
 	if (f_vvv) {
-		cout << "The " << type_ii_points->k << " type ii points are:" << endl;
+		cout << "The " << type_ii_points->k
+				<< " type ii points are:" << endl;
 		type_ii_points->println();
 
-		cout << "The " << type_b_lines->k << " type b lines are:" << endl;
+		cout << "The " << type_b_lines->k
+				<< " type b lines are:" << endl;
 		type_b_lines->println();
 		}
 	
@@ -352,7 +366,8 @@ void knarr::points_and_lines(INT verbose_level)
 			Basis[h] = G63->M[h];
 			}
 		if (f_v4) {
-			cout << "Subspace i=" << i << " / " << six_choose_three_q_INT << endl;
+			cout << "Subspace i=" << i << " / "
+					<< six_choose_three_q_INT << endl;
 			print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
 			cout << endl;
 			}
@@ -392,12 +407,14 @@ void knarr::points_and_lines(INT verbose_level)
 				}
 			}
 		//cout << "Basis Pperp:" << endl;
-		//print_integer_matrix_width(cout, Basis_Pperp, 5, 6, 6, F->log10_of_q);
+		//print_integer_matrix_width(cout, Basis_Pperp,
+		//5, 6, 6, F->log10_of_q);
 		//cout << endl;
 
 
 		F->intersect_subspaces(6, 5, Basis_Pperp, 3, Basis, 
-			dim_intersection, Basis_intersection, 0 /* verbose_level */);
+			dim_intersection, Basis_intersection,
+			0 /* verbose_level */);
 
 		
 		if (dim_intersection != 2) {
@@ -405,7 +422,8 @@ void knarr::points_and_lines(INT verbose_level)
 			}
 
 		// now we figure out if this line belongs top a BLT-plane.
-		// Simply add P to the basis and rank to determine which plane it would be.
+		// Simply add P to the basis and rank to
+		// determine which plane it would be.
 		// Then check and see if this plane is a BLT-plane.
 
 		Basis_intersection[2 * 6 + 0] = 1;
@@ -425,27 +443,33 @@ void knarr::points_and_lines(INT verbose_level)
 
 
 			if (f_v4) {
-				cout << "Subspace i=" << i << " is totally isotropic and does not contain P." << endl;
+				cout << "Subspace i=" << i << " is totally "
+						"isotropic and does not contain P." << endl;
 				print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
 				cout << endl;
 
 
 				cout << "dim_intersection=" << dim_intersection << endl;
 				cout << "Intersection:" << endl;
-				print_integer_matrix_width(cout, Basis_intersection, dim_intersection, 6, 6, F->log10_of_q);
+				print_integer_matrix_width(cout,
+						Basis_intersection, dim_intersection,
+						6, 6, F->log10_of_q);
 				cout << endl;
 			
 				cout << "Added P" << endl;
 
 				cout << "looking at" << endl;
-				print_integer_matrix_width(cout, Basis_intersection, 3, 6, 6, F->log10_of_q);
+				print_integer_matrix_width(cout,
+						Basis_intersection, 3, 6, 6,
+						F->log10_of_q);
 				cout << endl;
 			
 				cout << "This plane has rank " << j << endl;
 
 
 				cout << "This plane is contained in the BLT-set" << endl;
-				cout << "The plane of rank " << i << " and will be added as type a line" << endl;
+				cout << "The plane of rank " << i
+						<< " and will be added as type a line" << endl;
 				}			
 
 			type_a_line_BLT_idx[type_a_lines->k] = type_b_lines->set_inv[j];
@@ -453,7 +477,8 @@ void knarr::points_and_lines(INT verbose_level)
 			} // if 
 		else {
 			if (f_v4) {
-				cout << "not type_b_lines->is_contained(j), we ignore this subspace" << endl;
+				cout << "not type_b_lines->is_contained(j), "
+						"we ignore this subspace" << endl;
 				}
 			}
 
@@ -464,10 +489,12 @@ void knarr::points_and_lines(INT verbose_level)
 
 
 	if (f_vv) {
-		cout << "We found " << type_a_lines->k << " type a) lines." << endl;
+		cout << "We found " << type_a_lines->k
+				<< " type a) lines." << endl;
 		}
 	if (f_vvv) {
-		cout << "The " << type_a_lines->k << " type a) lines are:" << endl;
+		cout << "The " << type_a_lines->k
+				<< " type a) lines are:" << endl;
 		type_a_lines->println();
 		}
 
@@ -487,8 +514,11 @@ void knarr::points_and_lines(INT verbose_level)
 				for (hh = 0; hh < 3 * 6; hh++) {
 					Basis[hh] = G63->M[hh];
 					}
-				cout << "cnt = " << cnt << " Subspace i=" << i << " is totally isotropic and does not contain P." << endl;
-				print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
+				cout << "cnt = " << cnt << " Subspace i=" << i
+						<< " is totally isotropic and does "
+								"not contain P." << endl;
+				print_integer_matrix_width(cout, Basis,
+						3, 6, 6, F->log10_of_q);
 				cout << endl;
 				cnt++;
 				}
@@ -497,7 +527,8 @@ void knarr::points_and_lines(INT verbose_level)
 
 }
 
-void knarr::incidence_matrix(INT *&Inc, INT &nb_points, INT &nb_lines, INT verbose_level)
+void knarr::incidence_matrix(INT *&Inc,
+		INT &nb_points, INT &nb_lines, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -565,7 +596,8 @@ void knarr::incidence_matrix(INT *&Inc, INT &nb_points, INT &nb_lines, INT verbo
 				cout << "I=" << I << " i=" << i;
 				cout << " a=" << a << " row=" << row << endl;
 				cout << "Basis_U:" << endl;
-				print_integer_matrix_width(cout, Basis_U, dim_U, 6, 6, F->log10_of_q);
+				print_integer_matrix_width(cout,
+						Basis_U, dim_U, 6, 6, F->log10_of_q);
 				cout << endl;
 				}
 			
@@ -602,11 +634,13 @@ void knarr::incidence_matrix(INT *&Inc, INT &nb_points, INT &nb_lines, INT verbo
 						cout << "J=" << J << " j=" << j; 
 						cout << " b=" << b << " col=" << col << endl;
 						cout << "Basis_V:" << endl;
-						print_integer_matrix_width(cout, Basis_V, dim_V, 6, 6, F->log10_of_q);
+						print_integer_matrix_width(cout,
+								Basis_V, dim_V, 6, 6, F->log10_of_q);
 						cout << endl;
 						}
 
-					c = F->is_subspace(6, dim_U, Basis_U, dim_V, Basis_V, 0 /*verbose_level*/);
+					c = F->is_subspace(6, dim_U,
+							Basis_U, dim_V, Basis_V, 0 /*verbose_level*/);
 					if (c) {
 						Inc[row * nb_lines + col] = 1;
 						}
@@ -619,14 +653,17 @@ void knarr::incidence_matrix(INT *&Inc, INT &nb_points, INT &nb_lines, INT verbo
 
 #if 0
 	cout << "The incidence matrix is" << endl;
-	print_integer_matrix_width(cout, Inc, nb_points, nb_lines, nb_lines, 1);
+	print_integer_matrix_width(cout, Inc,
+			nb_points, nb_lines, nb_lines, 1);
 	cout << endl;
 
 	BYTE fname[1000];
 
 	sprintf(fname, "GQ_Knarr_BLT_%ld_%ld.inc", q, BLT_no);
-	write_incidence_matrix_to_file(fname, Inc, nb_points, nb_lines, verbose_level);
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	write_incidence_matrix_to_file(fname, Inc,
+			nb_points, nb_lines, verbose_level);
+	cout << "Written file " << fname
+			<< " of size " << file_size(fname) << endl;
 #endif
 
 	FREE_INT(Basis_U);

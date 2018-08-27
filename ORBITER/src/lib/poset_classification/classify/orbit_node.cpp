@@ -45,7 +45,8 @@ void orbit_node::init(classification *C, INT orbit_index,
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
 	orbit_node::gens = gens;
-	INT_vec_copy(Rep, C->Rep + orbit_index * C->representation_sz,
+	INT_vec_copy(Rep,
+			C->Rep + orbit_index * C->representation_sz,
 			C->representation_sz);
 }
 

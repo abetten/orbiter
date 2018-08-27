@@ -38,7 +38,7 @@ void andre_construction::null()
 void andre_construction::freeself()
 {
 	if (Grass) {
-		delete Grass;
+		FREE_OBJECT(Grass);
 		}
 	if (spread_elements_numeric) {
 		FREE_INT(spread_elements_numeric);
@@ -85,7 +85,7 @@ void andre_construction::init(finite_field *F, INT k, INT *spread_elements_numer
 		cout << "andre_construction::init N=" << N << endl;
 		}
 	
-	Grass = new grassmann;
+	Grass = NEW_OBJECT(grassmann);
 	Grass->init(n, k, F, verbose_level);
 
 	if (f_v) {

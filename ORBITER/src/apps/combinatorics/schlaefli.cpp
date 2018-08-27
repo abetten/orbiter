@@ -43,10 +43,10 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level);
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	Gr->init(n, k, F, verbose_level);
 
 	M1 = NEW_INT(k * n);
@@ -98,21 +98,21 @@ int main(int argc, char **argv)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(sz, Adj, verbose_level);
 
 	sprintf(fname, "Schlaefli_%ld.colored_graph", q);
 
 	CG->save(fname, verbose_level);
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(List);
 	FREE_INT(Adj);
 	FREE_INT(M1);
 	FREE_INT(M2);
 	FREE_INT(M);
-	delete Gr;
-	delete F;
+	FREE_OBJECT(Gr);
+	FREE_OBJECT(F);
 }
 
 INT evaluate_cubic_form(finite_field *F, INT *v)

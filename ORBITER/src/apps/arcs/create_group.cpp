@@ -78,7 +78,7 @@ void create_group_arcs8(INT q, INT verbose_level)
 	sims *S;
 	set_and_stabilizer *SaS;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	//F->init(q, verbose_level);
 	F->init_override_polynomial(q, "11", verbose_level);
@@ -91,7 +91,7 @@ void create_group_arcs8(INT q, INT verbose_level)
 		verbose_level);
 	cout << "creating linear group done" << endl;
 		
-	SaS = new set_and_stabilizer;
+	SaS = NEW_OBJECT(set_and_stabilizer);
 
 
 	SaS->init(A, A, verbose_level);
@@ -168,14 +168,14 @@ void create_group_arcs8(INT q, INT verbose_level)
 	Q = q * q * q;
 	cout << "Q = " << Q << endl;
 	
-	FQ = new finite_field;
+	FQ = NEW_OBJECT(finite_field);
 	FQ->init(Q, 0);
 	
 	if (f_v) {
 		cout << "linear_set::init creating subfield structure" << endl;
 		}
 
-	Sub = new subfield_structure;
+	Sub = NEW_OBJECT(subfield_structure);
 
 	Sub->init(FQ, F, verbose_level);
 	if (f_v) {
@@ -226,7 +226,7 @@ void create_group_arcs8(INT q, INT verbose_level)
 	cout << "embedded element:" << endl;
 	AQ->element_print(Elt2, cout);
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(AQ);
 	gens->allocate(2);
 	AQ->element_move(Elt1, gens->ith(0), 0);

@@ -50,7 +50,7 @@ int main(int argc, const char **argv)
 
 		sprintf(fname, "%s_lvl_%ld", Gen.prefix_with_directory, level);
 
-		ODF = new orbiter_data_file;
+		ODF = NEW_OBJECT(orbiter_data_file);
 		ODF->load(fname, verbose_level);
 		cout << "found " << ODF->nb_cases
 				<< " orbits at level " << level << endl;
@@ -121,7 +121,7 @@ int main(int argc, const char **argv)
 				strong_generators *SG;
 				longinteger_object go;
 
-				SG = new strong_generators;
+				SG = NEW_OBJECT(strong_generators);
 				SG->init(Gen.A);
 				SG->decode_ascii_coding(ODF->Aut_ascii[i],
 						0 /* verbose_level */);
@@ -148,7 +148,7 @@ int main(int argc, const char **argv)
 					}
 				cout << "]);" << endl;
 				cout << "group order " << go << endl;
-				delete SG;
+				FREE_OBJECT(SG);
 			}
 
 #if 0
@@ -177,7 +177,7 @@ int main(int argc, const char **argv)
 			}
 #endif
 			} // end for i
-		delete ODF;
+		FREE_OBJECT(ODF);
 		}
 	else {
 		Gen.gen->main(t0, 

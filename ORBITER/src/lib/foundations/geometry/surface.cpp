@@ -386,30 +386,90 @@ void surface::init(finite_field *F, INT verbose_level)
 
 
 
+	if (f_v) {
+		cout << "surface::init before init_polynomial_domains" << endl;
+		}
 	init_polynomial_domains(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_polynomial_domains" << endl;
+		}
 
 	//init_large_polynomial_domains(verbose_level);
 
+	if (f_v) {
+		cout << "surface::init before init_system" << endl;
+		}
 	init_system(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_system" << endl;
+		}
 
 
+	if (f_v) {
+		cout << "surface::init before init_line_data" << endl;
+		}
 	init_line_data(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_line_data" << endl;
+		}
 
+	if (f_v) {
+		cout << "surface::init before make_trihedral_pairs" << endl;
+		}
 	make_trihedral_pairs(Trihedral_pairs, 
 		Trihedral_pair_labels, nb_trihedral_pairs, 
 		verbose_level);
+	if (f_v) {
+		cout << "surface::init after make_trihedral_pairs" << endl;
+		}
 	
+	if (f_v) {
+		cout << "surface::init before process_trihedral_pairs" << endl;
+		}
 	process_trihedral_pairs(verbose_level);
+	if (f_v) {
+		cout << "surface::init after process_trihedral_pairs" << endl;
+		}
 
+	if (f_v) {
+		cout << "surface::init before make_Eckardt_points" << endl;
+		}
 	make_Eckardt_points(verbose_level);
+	if (f_v) {
+		cout << "surface::init after make_Eckardt_points" << endl;
+		}
 
+	if (f_v) {
+		cout << "surface::init before init_Trihedral_to_Eckardt" << endl;
+		}
 	init_Trihedral_to_Eckardt(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_Trihedral_to_Eckardt" << endl;
+		}
 
+	if (f_v) {
+		cout << "surface::init before init_collinear_Eckardt_triples" << endl;
+		}
 	init_collinear_Eckardt_triples(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_collinear_Eckardt_triples" << endl;
+		}
 
+	if (f_v) {
+		cout << "surface::init before init_double_sixes" << endl;
+		}
 	init_double_sixes(verbose_level);
+	if (f_v) {
+		cout << "surface::init after init_double_sixes" << endl;
+		}
 
+	if (f_v) {
+		cout << "surface::init before create_half_double_sixes" << endl;
+		}
 	create_half_double_sixes(verbose_level);
+	if (f_v) {
+		cout << "surface::init after create_half_double_sixes" << endl;
+		}
 
 	//clebsch_cubics(verbose_level);
 
@@ -1559,7 +1619,11 @@ INT surface::create_double_six_from_five_lines_with_a_common_transversal(
 	FREE_INT(Perp_opp);
 
 finish:
-	free_PINT_all(Perp, nb_subsets);
+	for (i = 0; i < nb_subsets; i++) {
+		FREE_INT(Perp[i]);
+	}
+	FREE_PINT(Perp);
+	//free_PINT_all(Perp, nb_subsets);
 	FREE_INT(Perp_sz);
 
 	if (f_v) {
@@ -1713,14 +1777,49 @@ INT surface::create_double_six_from_six_disjoint_lines(INT *single_six,
 
 	ret = TRUE;
 free_it:
-	free_PINT_all(Perp_without_pt, 6);
-	free_PINT_all(I2, six2);
+	for (i = 0; i < 6; i++) {
+		FREE_INT(Perp_without_pt[i]);
+	}
+	FREE_PINT(Perp_without_pt);
+	//free_PINT_all(Perp_without_pt, 6);
+
+
+
+	for (i = 0; i < six2; i++) {
+		FREE_INT(I2[i]);
+	}
+	FREE_PINT(I2);
+	//free_PINT_all(I2, six2);
+
 	FREE_INT(I2_sz);
-	free_PINT_all(I3, six3);
+
+
+	for (i = 0; i < six3; i++) {
+		FREE_INT(I3[i]);
+	}
+	FREE_PINT(I3);
+	//free_PINT_all(I3, six3);
+
 	FREE_INT(I3_sz);
-	free_PINT_all(I4, six4);
+
+
+	for (i = 0; i < six4; i++) {
+		FREE_INT(I4[i]);
+	}
+	FREE_PINT(I4);
+
+	//free_PINT_all(I4, six4);
+
 	FREE_INT(I4_sz);
-	free_PINT_all(I5, six5);
+
+
+	for (i = 0; i < six5; i++) {
+		FREE_INT(I5[i]);
+	}
+	FREE_PINT(I5);
+
+	//free_PINT_all(I5, six5);
+
 	FREE_INT(I5_sz);
 
 	
@@ -3021,8 +3120,11 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Klein_rk[i];
-		O->unrank_point(v, 1, a, 0 /* verbose_level*/);
-		INT_vec_print_to_str(str, v, 6);
+		O->unrank_point(w, 1, a, 0 /* verbose_level*/);
+			// error corrected: w was v which was v[4], so too short.
+			// Aug 25, 2018
+		INT_vec_print_to_str(str, w, 6);
+			// w was v, error corrected
 		Text_klein[i] = NEW_BYTE(strlen(str) + 1);
 		strcpy(Text_klein[i], str);
 		}

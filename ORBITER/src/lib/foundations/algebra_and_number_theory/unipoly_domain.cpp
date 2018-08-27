@@ -1968,7 +1968,7 @@ void unipoly_domain::get_a_primitive_polynomial(unipoly_object &m,
 			assign(x, m);
 			delete_object(x);
 			//cout << "deleting primes" << endl;
-			delete [] primes;
+			FREE_OBJECTS(primes);
 			//cout << "deleting exponents" << endl;
 			FREE_INT(exponents);
 			return;
@@ -2184,16 +2184,19 @@ void unipoly_domain::minimum_polynomial(unipoly_object &a,
 		cout << "unipoly_domain::minimum_polynomial" << endl;
 		}
 	if (f_factorring) {
-		cout << "unipoly_domain::minimum_polynomial does not work for factorring" << endl;
+		cout << "unipoly_domain::minimum_polynomial "
+				"does not work for factorring" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial alpha = " << alpha << endl;
+		cout << "unipoly_domain::minimum_polynomial "
+				"alpha = " << alpha << endl;
 		}
 	q = gfq->q;
 	m_alpha = gfq->negate(alpha);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial m_alpha = " << m_alpha << endl;
+		cout << "unipoly_domain::minimum_polynomial "
+				"m_alpha = " << m_alpha << endl;
 		}
 	create_object_by_rank(u, q + m_alpha);
 	create_object_by_rank(v, 0);
@@ -2208,7 +2211,8 @@ void unipoly_domain::minimum_polynomial(unipoly_object &a,
 	cnt = 0;
 	while (TRUE) {
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial Iteration " << cnt;
+			cout << "unipoly_domain::minimum_polynomial "
+					"Iteration " << cnt;
 			cout << "u=";
 			print_object(u, cout);
 			cout << endl;
@@ -2240,14 +2244,17 @@ void unipoly_domain::minimum_polynomial(unipoly_object &a,
 		}
 
 	if (f_vv) {
-		cout << "unipoly_domain::minimum_polynomial Iteration " << cnt << " done";
+		cout << "unipoly_domain::minimum_polynomial "
+				"Iteration " << cnt << " done";
 		cout << "u=";
 		print_object(u, cout);
 		cout << endl;
 		}
 	assign(u, a);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial the minimum polynomial of " << alpha << " over GF(" << p << ") is ";
+		cout << "unipoly_domain::minimum_polynomial "
+				"the minimum polynomial of " << alpha
+				<< " over GF(" << p << ") is ";
 		print_object(a, cout);
 		cout << endl;
 		}
@@ -2259,20 +2266,23 @@ void unipoly_domain::minimum_polynomial(unipoly_object &a,
 		}
 }
 
-INT unipoly_domain::minimum_polynomial_factorring(INT alpha, INT p, INT verbose_level)
+INT unipoly_domain::minimum_polynomial_factorring(
+		INT alpha, INT p, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT rk, r;
 	
 	if (!f_factorring) {
-		cout << "unipoly_domain::minimum_polynomial_factorring() must be a factorring" << endl;
+		cout << "unipoly_domain::minimum_polynomial_factorring "
+				"must be a factorring" << endl;
 		exit(1);
 		}
 	if (f_vv) {
 		cout << "factor_degree = " << factor_degree << endl;
 		}
-	unipoly_object *coeffs = new unipoly_object [factor_degree + 1];
+	unipoly_object *coeffs =
+			NEW_OBJECTS(unipoly_object, factor_degree + 1);
 	unipoly_object b, c, d;
 	INT a0, ai, i, j;
 
@@ -2289,7 +2299,8 @@ INT unipoly_domain::minimum_polynomial_factorring(INT alpha, INT p, INT verbose_
 	create_object_by_rank(c, 0);
 	create_object_by_rank(d, 0);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_factorring() minimum polynomial of ";
+		cout << "unipoly_domain::minimum_polynomial_factorring "
+				"minimum polynomial of ";
 		print_object(b, cout);
 		cout << " = " << alpha << endl;
 		}
@@ -2327,7 +2338,8 @@ INT unipoly_domain::minimum_polynomial_factorring(INT alpha, INT p, INT verbose_
 			break;
 		
 		if (i == factor_degree) {
-			cout << "unipoly_domain::minimum_polynomial_factorring() i == factor_degree && ai != a0" << endl;
+			cout << "unipoly_domain::minimum_polynomial_factorring "
+					"i == factor_degree && ai != a0" << endl;
 			exit(1);
 			}
 		
@@ -2361,7 +2373,8 @@ INT unipoly_domain::minimum_polynomial_factorring(INT alpha, INT p, INT verbose_
 		rk += r;
 		}
 	if (f_v) {
-		cout << "the rank of this polynomial over GF(" << p << ") is " << rk << endl;
+		cout << "the rank of this polynomial over "
+				"GF(" << p << ") is " << rk << endl;
 		}
 	for (j = 0; j <= factor_degree; j++) {
 		delete_object(coeffs[j]);
@@ -2380,13 +2393,14 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	INT f_vv = (verbose_level >= 2);
 	
 	if (!f_factorring) {
-		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger() must be a factorring" << endl;
+		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
+				"must be a factorring" << endl;
 		exit(1);
 		}
 	if (f_vv) {
 		cout << "factor_degree = " << factor_degree << endl;
 		}
-	unipoly_object *coeffs = new unipoly_object [factor_degree + 1];
+	unipoly_object *coeffs = NEW_OBJECTS(unipoly_object, factor_degree + 1);
 	unipoly_object b, c, d;
 	INT i, j;
 
@@ -2403,7 +2417,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	create_object_by_rank(c, 0);
 	create_object_by_rank(d, 0);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger() minimum polynomial of ";
+		cout << "unipoly_domain::minimum_polynomial_factorring_longinteger "
+				"minimum polynomial of ";
 		print_object(b, cout);
 		cout << " = " << alpha << endl;
 		}
@@ -2445,7 +2460,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 			break;
 		
 		if (i == factor_degree) {
-			cout << "unipoly_domain::minimum_polynomial_factorring_longinteger() i == factor_degree && ai != a0" << endl;
+			cout << "unipoly_domain::minimum_polynomial_factorring_"
+					"longinteger i == factor_degree && ai != a0" << endl;
 			exit(1);
 			}
 		
@@ -2483,7 +2499,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 		D.add(rk1, r, rk);
 		}
 	if (f_v) {
-		cout << "the rank of this polynomial over GF(" << p << ") is " << rk << endl;
+		cout << "the rank of this polynomial over "
+				"GF(" << p << ") is " << rk << endl;
 		}
 	for (j = 0; j <= factor_degree; j++) {
 		delete_object(coeffs[j]);
@@ -2494,7 +2511,8 @@ void unipoly_domain::minimum_polynomial_factorring_longinteger(
 	rk.assign_to(rk_minpoly);
 }
 
-void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n, 
+void unipoly_domain::BCH_generator_polynomial(
+	unipoly_object &g, INT n,
 	INT designed_distance, INT &bose_distance, 
 	INT &transversal_length, INT *&transversal, 
 	longinteger_object *&rank_of_irreducibles, 
@@ -2509,7 +2527,9 @@ void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n,
 	longinteger_domain D;
 	
 	if (f_v) {
-		cout << "unipoly_domain::BCH_generator_polynomial() n=" << n << " designed_distance=" << designed_distance << " p=" << p << endl;
+		cout << "unipoly_domain::BCH_generator_polynomial "
+				"n=" << n << " designed_distance="
+				<< designed_distance << " p=" << p << endl;
 		}
 	e = order_mod_p(p, n);
 	q.create(p);
@@ -2521,30 +2541,36 @@ void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n,
 	D.integral_division_by_INT(qm1, n, b, r);
 	//b = (q - 1) / n;
 	if (r != 0) {
-		cout << "unipoly_domain::BCH_generator_polynomial() r != 0" << endl;
+		cout << "unipoly_domain::BCH_generator_polynomial "
+				"r != 0" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "GF(" << q << ") = GF(" << p << "^" << e << ") has " << n << "-th roots of unity" << endl;
+		cout << "GF(" << q << ") = GF(" << p << "^" << e
+				<< ") has " << n << "-th roots of unity" << endl;
 		if (b.is_one()) {
 			cout << "this is a primitive BCH code" << endl;
 			}
 		else {
 			cout << "we take as " << n 
-			<< "-th root \\beta = \\alpha^" << b << ", where \\alpha is a primitive element of the field" << endl;
+			<< "-th root \\beta = \\alpha^" << b << ", where "
+				"\\alpha is a primitive element of the field" << endl;
 			}
 		}
 
 	unipoly_object m, M, h1, h2;
 		
-	create_object_by_rank_string(m, get_primitive_polynomial(p, e, 0), verbose_level - 2);
-	create_object_by_rank_string(M, get_primitive_polynomial(p, e, 0), verbose_level - 2);
+	create_object_by_rank_string(m,
+			get_primitive_polynomial(p, e, 0), verbose_level - 2);
+	create_object_by_rank_string(M,
+			get_primitive_polynomial(p, e, 0), verbose_level - 2);
 	create_object_by_rank(g, 1);
 	create_object_by_rank(h1, 0);
 	create_object_by_rank(h2, 0);
 	
 	if (f_vv) {
-		cout << "choosing the following irreducible and primitive polynomial:" << endl;
+		cout << "choosing the following irreducible "
+				"and primitive polynomial:" << endl;
 		print_object(m, cout); cout << endl;
 		}
 
@@ -2591,12 +2617,13 @@ void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n,
 
 #if 0
 	if (1 + designed_distance - 2 >= q - 1) {
-		cout << "unipoly_domain::BCH_generator_polynomial() 1 + designed_distance - 2 >= q - 1" << endl;
+		cout << "unipoly_domain::BCH_generator_polynomial "
+				"1 + designed_distance - 2 >= q - 1" << endl;
 		exit(1);
 		}
 #endif
 
-	longinteger_object *beta_rk_table = new longinteger_object[n];
+	longinteger_object *beta_rk_table = NEW_OBJECTS(longinteger_object, n);
 	longinteger_object ai, bi;
 
 
@@ -2647,7 +2674,8 @@ void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n,
 		
 		transversal[transversal_length++] = i;
 		if (f_vv || f_v) {
-			cout << "orbit of conjugate elements (in powers of \\beta):" << endl;
+			cout << "orbit of conjugate elements "
+					"(in powers of \\beta):" << endl;
 			cout << "{ ";
 			}
 		ai.assign_to(bi);
@@ -2713,15 +2741,18 @@ void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n,
 		cout << "}" << endl;
 		}
 
-	rank_of_irreducibles = new longinteger_object[transversal_length];
+	rank_of_irreducibles = NEW_OBJECTS(
+			longinteger_object, transversal_length);
 
 	for (i = 0; i < transversal_length; i++) {
 		
 		// minimum_polynomial(h1, ai, p, f_vv);
-		Fq.minimum_polynomial_factorring_longinteger(beta_rk_table[transversal[i]], rk, p, f_vv);
+		Fq.minimum_polynomial_factorring_longinteger(
+				beta_rk_table[transversal[i]], rk, p, f_vv);
 		create_object_by_rank_longinteger(h1, rk, verbose_level - 2);
 		if (f_vv) {
-			cout << "minimal polynomial of \\beta^" << transversal[i] << " is ";
+			cout << "minimal polynomial of \\beta^"
+					<< transversal[i] << " is ";
 			print_object(h1, cout);
 			cout << " of rank " << rk << endl;
 			}
@@ -2736,17 +2767,20 @@ void unipoly_domain::BCH_generator_polynomial(unipoly_object &g, INT n,
 	delete_object(h1);
 	delete_object(h2);
 	delete_object(m);
-	delete [] beta_rk_table;
+	FREE_OBJECTS(beta_rk_table);
 	FREE_INT(chosen);
 	//delete [] transversal;
 	if (f_v) {
-		cout << "BCH(" << n << "," << p << "," << designed_distance << ") = ";
+		cout << "BCH(" << n << "," << p << ","
+				<< designed_distance << ") = ";
 		print_object(g, cout);
 		cout << " bose_distance = " << bose_distance << endl;
 		}
 }
 
-void unipoly_domain::compute_generator_matrix(unipoly_object a, INT *&genma, INT n, INT &k, INT verbose_level)
+void unipoly_domain::compute_generator_matrix(
+		unipoly_object a, INT *&genma, INT n, INT &k,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *r = (INT *) a;
@@ -2757,7 +2791,8 @@ void unipoly_domain::compute_generator_matrix(unipoly_object a, INT *&genma, INT
 	
 	k = n - d;
 	if (k < 0) {
-		cout << "unipoly_domain::compute_generator_matrix() k < 0" << endl;
+		cout << "unipoly_domain::compute_generator_matrix "
+				"k < 0" << endl;
 		exit(1);
 		}
 	genma = NEW_INT(k * n);
@@ -2776,7 +2811,8 @@ void unipoly_domain::compute_generator_matrix(unipoly_object a, INT *&genma, INT
 		}
 }
 
-void unipoly_domain::print_vector_of_polynomials(unipoly_object *sigma, INT deg)
+void unipoly_domain::print_vector_of_polynomials(
+		unipoly_object *sigma, INT deg)
 {
 	INT i;
 
@@ -2787,8 +2823,10 @@ void unipoly_domain::print_vector_of_polynomials(unipoly_object *sigma, INT deg)
 		}
 }
 
-void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipoly_object m, 
-	unipoly_object &minpol, INT d, INT *Frobenius, INT verbose_level)
+void unipoly_domain::minimum_polynomial_extension_field(
+	unipoly_object &g, unipoly_object m,
+	unipoly_object &minpol, INT d, INT *Frobenius,
+	INT verbose_level)
 // Lueneburg~\cite{Lueneburg87a}, p. 112.
 {
 	INT f_v = (verbose_level >= 1);
@@ -2797,12 +2835,13 @@ void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipo
 	unipoly_object mm, h, h2, *sigma;
 
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_extension_field of ";
+		cout << "unipoly_domain::minimum_polynomial_"
+				"extension_field of ";
 		print_object(g, cout);
 		cout << endl;
 		}	
 	deg = d;
-	sigma = new unipoly_object[deg + 2];
+	sigma = NEW_OBJECTS(unipoly_object, deg + 2);
 	for (i = 0; i < deg + 2; i++) {
 		if (i == 0) {
 			create_object_by_rank(sigma[i], 1);
@@ -2818,7 +2857,8 @@ void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipo
 	assign(m, mm);
 	negate(mm);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_extension_field we are working modulo - (";
+		cout << "unipoly_domain::minimum_polynomial_"
+				"extension_field we are working modulo - (";
 		print_object(mm, cout);
 		cout << ")" << endl;
 		}	
@@ -2830,7 +2870,8 @@ void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipo
 		i++;
 
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " : g = ";
+			cout << "unipoly_domain::minimum_polynomial_"
+					"extension_field i = " << i << " : g = ";
 			print_object(g, cout);
 			cout << endl;
 			cout << "sigma=" << endl;
@@ -2838,62 +2879,89 @@ void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipo
 			}	
 
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " before matrix_apply" << endl;
+			cout << "unipoly_domain::minimum_polynomial_"
+					"extension_field i = " << i
+					<< " before matrix_apply" << endl;
 			}
 		matrix_apply(g, Frobenius, deg, verbose_level - 2);
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " after matrix_apply" << endl;
+			cout << "unipoly_domain::minimum_polynomial_"
+					"extension_field i = " << i
+					<< " after matrix_apply" << endl;
 			}
 
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " : g=";
+			cout << "unipoly_domain::minimum_polynomial_"
+					"extension_field i = " << i << " : g=";
 			print_object(g, cout);
 			cout << endl;
 			}	
 		
 		
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " before mult_mod" << endl;
+			cout << "unipoly_domain::minimum_polynomial_"
+					"extension_field i = " << i
+					<< " before mult_mod" << endl;
 			}
-		mult_mod(g, sigma[i - 1], sigma[i], degree(mm), ((INT *)mm) + 1, verbose_level - 2);
+		mult_mod(g, sigma[i - 1], sigma[i],
+				degree(mm), ((INT *)mm) + 1,
+				verbose_level - 2);
 		if (f_vv) {
-			cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " after mult_mod" << endl;
+			cout << "unipoly_domain::minimum_polynomial_"
+					"extension_field i = " << i
+					<< " after mult_mod" << endl;
 			cout << "sigma=" << endl;
 			print_vector_of_polynomials(sigma, deg);
 			}
 
 		for (j = i - 1; j >= 1; j--) {
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << endl;
 				}
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " before mult_mod" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " before mult_mod" << endl;
 				}
 			mult_mod(g, sigma[j - 1], h, degree(mm), ((INT *)mm) + 1, 0);
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " after mult_mod" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " after mult_mod" << endl;
 				cout << "sigma=" << endl;
 				print_vector_of_polynomials(sigma, deg);
 				}
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " before add" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " before add" << endl;
 				}
 			add(sigma[j], h, h2);
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " after add" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " after add" << endl;
 				}
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " before assign" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " before assign" << endl;
 				cout << "sigma=" << endl;
 				print_vector_of_polynomials(sigma, deg);
 				}
 			assign(h2, sigma[j]);
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " after assign" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " after assign" << endl;
 				}
 
 			if (f_vv) {
-				cout << "unipoly_domain::minimum_polynomial_extension_field i = " << i << " j = " << j << " iteration finished" << endl;
+				cout << "unipoly_domain::minimum_polynomial_"
+						"extension_field i = " << i << " j = "
+						<< j << " iteration finished" << endl;
 				}
 			}
 		for (k = i; k >= 0; k--) {
@@ -2911,18 +2979,21 @@ void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipo
 		((INT *) minpol)[1 + j] = ((INT *)sigma[i - j])[1 + 0];
 		}
 	for (j = 0; j <= i; j += 2) {
-		((INT *) minpol)[1 + j] = gfq->negate(((INT *) minpol)[1 + j]);
+		((INT *) minpol)[1 + j] = gfq->negate(
+				((INT *) minpol)[1 + j]);
 		}
 	make_monic(minpol);
 	if (f_vv) {
-		cout << "unipoly_domain::minimum_polynomial_extension_field after make_monic";
+		cout << "unipoly_domain::minimum_polynomial_"
+				"extension_field after make_monic";
 		cout << "minpol=";
 		print_object(minpol, cout);
 		cout << endl;
 		}
 
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_extension_field minpol is ";
+		cout << "unipoly_domain::minimum_polynomial_"
+				"extension_field minpol is ";
 		print_object(minpol, cout);
 		cout << endl;
 		}	
@@ -2933,14 +3004,17 @@ void unipoly_domain::minimum_polynomial_extension_field(unipoly_object &g, unipo
 	for (i = 0; i < deg + 2; i++) {
 		delete_object(sigma[i]);
 		}
-	delete [] sigma;
+	FREE_OBJECTS(sigma);
 	if (f_v) {
-		cout << "unipoly_domain::minimum_polynomial_extension_field done" << endl;
+		cout << "unipoly_domain::minimum_polynomial_"
+				"extension_field done" << endl;
 		}	
 
 }
 
-void unipoly_domain::characteristic_polynomial(INT *Mtx, INT k, unipoly_object &char_poly, INT verbose_level)
+void unipoly_domain::characteristic_polynomial(
+		INT *Mtx, INT k, unipoly_object &char_poly,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2955,7 +3029,7 @@ void unipoly_domain::characteristic_polynomial(INT *Mtx, INT k, unipoly_object &
 		INT_matrix_print(Mtx, k, k);
 		}
 	m_one = gfq->negate(1);
-	M = new unipoly_object[k * k];
+	M = NEW_OBJECTS(unipoly_object, k * k);
 	for (i = 0; i < k; i++) {
 		for (j = 0; j < k; j++) {
 			a = Mtx[i * k + j];
@@ -2984,7 +3058,7 @@ void unipoly_domain::characteristic_polynomial(INT *Mtx, INT k, unipoly_object &
 			delete_object(M[i * k + j]);
 			}
 		}
-	delete [] M;
+	FREE_OBJECTS(M);
 	if (f_v) {
 		cout << "unipoly_domain::characteristic_polynomial done" << endl;
 		}
@@ -3005,7 +3079,10 @@ void unipoly_domain::print_matrix(unipoly_object *M, INT k)
 		}
 }
 
-void unipoly_domain::determinant(unipoly_object *M, INT k, unipoly_object &p, INT verbose_level)
+void unipoly_domain::determinant(
+		unipoly_object *M,
+		INT k, unipoly_object &p,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -3025,11 +3102,16 @@ void unipoly_domain::determinant(unipoly_object *M, INT k, unipoly_object &p, IN
 	for (i = 0; i < k; i++) {
 		unipoly_object *N;
 		
-		deletion_matrix(M, k, i /* delete_row */, 0 /* delete_column */, N, 0 /*verbose_level - 2*/);
+		deletion_matrix(M, k,
+				i /* delete_row */,
+				0 /* delete_column */,
+				N,
+				0 /*verbose_level - 2*/);
 
 		determinant(N, k - 1, p1, verbose_level - 2);
 		if (f_v) {
-			cout << "unipoly_domain::determinant deletion of row " << i << " leads to determinant ";
+			cout << "unipoly_domain::determinant "
+					"deletion of row " << i << " leads to determinant ";
 			print_object(p1, cout);
 			cout << endl;
 			}
@@ -3047,7 +3129,7 @@ void unipoly_domain::determinant(unipoly_object *M, INT k, unipoly_object &p, IN
 		for (j = 0; j < (k - 1) * (k - 1); j++) {
 			delete_object(N[j]);
 			}
-		delete [] N;
+		FREE_OBJECTS(N);
 		}
 
 	delete_object(p1);
@@ -3055,13 +3137,16 @@ void unipoly_domain::determinant(unipoly_object *M, INT k, unipoly_object &p, IN
 	delete_object(p3);
 }
 
-void unipoly_domain::deletion_matrix(unipoly_object *M, INT k, INT delete_row, INT delete_column, unipoly_object *&N, INT verbose_level)
+void unipoly_domain::deletion_matrix(unipoly_object *M,
+		INT k, INT delete_row, INT delete_column,
+		unipoly_object *&N,
+		INT verbose_level)
 {
 	INT k1;
 	INT i, j, ii, jj;
 
 	k1 = k - 1;
-	N = new unipoly_object[k1 * k1];
+	N = NEW_OBJECTS(unipoly_object, k1 * k1);
 	for (i = 0; i < k1 * k1; i++) {
 		create_object_of_degree(N[i], 0);
 		}

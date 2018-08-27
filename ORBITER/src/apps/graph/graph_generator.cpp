@@ -48,18 +48,31 @@ graph_generator::graph_generator()
 	f_draw_full_poset = FALSE;
 	f_plesken = FALSE;
 	f_identify = FALSE;
+
+	regularity = 0;
+	girth = 0;
+	n = 0;
+	depth = 0;
+	level_graph_level = 0;
+	n2 = 0;
+	level = 0;
+	identify_data_sz = 0;
 }
 
 graph_generator::~graph_generator()
 {
-	if (A_base)
-		delete A_base;
-	if (A_on_edges)
-		delete A_on_edges;
-	if (gen)
-		delete gen;
-	if (adjacency)
+	if (A_base) {
+		FREE_OBJECT(A_base);
+	}
+	if (A_on_edges) {
+		FREE_OBJECT(A_on_edges);
+	}
+	if (gen) {
+		FREE_OBJECT(gen);
+	}
+	if (adjacency) {
 		FREE_INT(adjacency);
+	}
 	if (degree_sequence) {
 		FREE_INT(degree_sequence);
 		}
@@ -204,9 +217,9 @@ void graph_generator::init(int argc, const char **argv)
 	INT target_depth;
 	BYTE prefix[1000];
 	
-	A_base = new action;
-	A_on_edges = new action;
-	gen = new generator;
+	A_base = NEW_OBJECT(action);
+	A_on_edges = NEW_OBJECT(action);
+	gen = NEW_OBJECT(generator);
 	
 	read_arguments(argc, argv);
 	

@@ -30,8 +30,8 @@ int main(int argc, const char **argv)
 	exact_cover_arguments *ECA = NULL;
 	isomorph_arguments *IA = NULL;
 
-	ECA = new exact_cover_arguments;
-	IA = new isomorph_arguments;
+	ECA = NEW_OBJECT(exact_cover_arguments);
+	IA = NEW_OBJECT(isomorph_arguments);
 	
 
 	t0 = os_ticks();
@@ -139,9 +139,12 @@ int main(int argc, const char **argv)
 
 
 	}
+
+#if 0
 	if (f_memory_debug) {
 		registry_dump_sorted();
 		}
+#endif
 
 	the_end(t0);
 	//the_end_quietly(t0);

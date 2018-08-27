@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 		cout << "q must be congruent to 1 modulo 4" << endl;
 		}
 	
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level);
 
 	f_is_square = NEW_INT(q);
@@ -69,16 +69,16 @@ int main(int argc, char **argv)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(q, Adj, verbose_level);
 
 	sprintf(fname, "Paley_%ld.colored_graph", q);
 
 	CG->save(fname, verbose_level);
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(Adj);
 	FREE_INT(f_is_square);
-	delete F;
+	FREE_OBJECT(F);
 }
 

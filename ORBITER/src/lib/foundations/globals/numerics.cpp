@@ -83,7 +83,8 @@ INT Gauss_elimination(double *A, INT m, INT n,
 		for (k = i; k < m; k++) {
 			if (ABS(A[k * n + j]) > EPSILON) {
 				if (f_vv) {
-					cout << "i=" << i << " pivot found in " << k << "," << j << endl;
+					cout << "i=" << i << " pivot found in "
+						<< k << "," << j << endl;
 					}
 				// pivot element found: 
 				if (k != i) {
@@ -105,7 +106,8 @@ INT Gauss_elimination(double *A, INT m, INT n,
 			}
 		
 		if (f_vv) {
-			cout << "row " << i << " pivot in row " << k << " colum " << j << endl;
+			cout << "row " << i << " pivot in row " << k
+				<< " colum " << j << endl;
 			}
 		
 		base_cols[i] = j;
@@ -119,7 +121,8 @@ INT Gauss_elimination(double *A, INT m, INT n,
 			}
 		pivot_inv = 1. / pivot;
 		if (f_vv) {
-			cout << "pivot=" << pivot << " pivot_inv=" << pivot_inv << endl;
+			cout << "pivot=" << pivot << " pivot_inv="
+				<< pivot_inv << endl;
 			}
 		// make pivot to 1: 
 		for (jj = j; jj < n; jj++) {
@@ -457,7 +460,8 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 
 
 	if (f_vv) {
-		cout << "next, we make the y-coordinate of the first point disappear by turning around the z-axis:" << endl;
+		cout << "next, we make the y-coordinate of the first point "
+			"disappear by turning around the z-axis:" << endl;
 		}
 	phi = atan_xy(P2[0], P2[1]); // (x, y)
 	if (f_vv) {
@@ -472,7 +476,8 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 	mult_matrix(P2, Rz, P4);
 	mult_matrix(P3, Rz, P5);
 	if (f_vv) {
-		cout << "after rotation Rz by an angle of -1 * " << rad2deg(phi) << ":" << endl;
+		cout << "after rotation Rz by an angle of -1 * "
+				<< rad2deg(phi) << ":" << endl;
 		cout << "P4=";
 		double_vec_print(cout, P4, 3);
 		cout << endl;
@@ -481,13 +486,15 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 		cout << endl;
 		}
 	if (ABS(P4[1]) > EPS) {
-		cout << "something is wrong in step 1, the y-coordinate is too big" << endl;
+		cout << "something is wrong in step 1, "
+				"the y-coordinate is too big" << endl;
 		return FALSE;
 		}
 
 
 	if (f_vv) {
-		cout << "next, we make the z-coordinate of the first point disappear by turning around the y-axis:" << endl;
+		cout << "next, we make the z-coordinate of the "
+			"first point disappear by turning around the y-axis:" << endl;
 		}
 	psi = atan_xy(P4[0], P4[2]); // (x,z)
 	if (f_vv) {
@@ -503,7 +510,8 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 	mult_matrix(P4, Ry, P6);
 	mult_matrix(P5, Ry, P7);
 	if (f_vv) {
-		cout << "after rotation Ry by an angle of " << rad2deg(psi) << ":" << endl;
+		cout << "after rotation Ry by an angle of "
+				<< rad2deg(psi) << ":" << endl;
 		cout << "P6=";
 		double_vec_print(cout, P6, 3);
 		cout << endl;
@@ -512,12 +520,15 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 		cout << endl;
 		}
 	if (ABS(P6[2]) > EPS) {
-		cout << "something is wrong in step 2, the z-coordinate is too big" << endl;
+		cout << "something is wrong in step 2, "
+				"the z-coordinate is too big" << endl;
 		return FALSE;
 		}
 
 	if (f_vv) {
-		cout << "next, we move the plane determined by the second point into the xz plane by turning around the x-axis:" << endl;
+		cout << "next, we move the plane determined by the second "
+			"point into the xz plane by turning around the x-axis:"
+				<< endl;
 		}
 	chi = atan_xy(P7[2], P7[1]); // (z,y)
 	if (f_vv) {
@@ -533,7 +544,8 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 	mult_matrix(P6, Rx, P8);
 	mult_matrix(P7, Rx, P9);
 	if (f_vv) {
-		cout << "after rotation Rx by an angle of " << rad2deg(chi) << ":" << endl;
+		cout << "after rotation Rx by an angle of "
+				<< rad2deg(chi) << ":" << endl;
 		cout << "P8=";
 		double_vec_print(cout, P8, 3);
 		cout << endl;
@@ -542,7 +554,8 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 		cout << endl;
 		}
 	if (ABS(P9[1]) > EPS) {
-		cout << "something is wrong in step 3, the y-coordinate is too big" << endl;
+		cout << "something is wrong in step 3, "
+				"the y-coordinate is too big" << endl;
 		return FALSE;
 		}
 
@@ -638,7 +651,8 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 
 
 	if (f_vv) {
-		cout << "next, we make the y-coordinate of the first point disappear by turning around the z-axis:" << endl;
+		cout << "next, we make the y-coordinate of the first point "
+			"disappear by turning around the z-axis:" << endl;
 		}
 	phi = atan_xy(P2[0], P2[1]); // (x, y)
 	if (f_vv) {
@@ -656,7 +670,8 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 		mult_matrix(Moved_pts1 + h * 3, Rz, Moved_pts2 + h * 3);
 		}
 	if (f_vv) {
-		cout << "after rotation Rz by an angle of -1 * " << rad2deg(phi) << ":" << endl;
+		cout << "after rotation Rz by an angle of -1 * "
+				<< rad2deg(phi) << ":" << endl;
 		cout << "P4=";
 		double_vec_print(cout, P4, 3);
 		cout << endl;
@@ -665,13 +680,15 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 		cout << endl;
 		}
 	if (ABS(P4[1]) > EPS) {
-		cout << "something is wrong in step 1, the y-coordinate is too big" << endl;
+		cout << "something is wrong in step 1, the y-coordinate "
+				"is too big" << endl;
 		return FALSE;
 		}
 
 
 	if (f_vv) {
-		cout << "next, we make the z-coordinate of the first point disappear by turning around the y-axis:" << endl;
+		cout << "next, we make the z-coordinate of the first "
+				"point disappear by turning around the y-axis:" << endl;
 		}
 	psi = atan_xy(P4[0], P4[2]); // (x,z)
 	if (f_vv) {
@@ -690,7 +707,8 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 		mult_matrix(Moved_pts2 + h * 3, Ry, Moved_pts3 + h * 3);
 		}
 	if (f_vv) {
-		cout << "after rotation Ry by an angle of " << rad2deg(psi) << ":" << endl;
+		cout << "after rotation Ry by an angle of "
+				<< rad2deg(psi) << ":" << endl;
 		cout << "P6=";
 		double_vec_print(cout, P6, 3);
 		cout << endl;
@@ -699,12 +717,15 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 		cout << endl;
 		}
 	if (ABS(P6[2]) > EPS) {
-		cout << "something is wrong in step 2, the z-coordinate is too big" << endl;
+		cout << "something is wrong in step 2, the z-coordinate "
+				"is too big" << endl;
 		return FALSE;
 		}
 
 	if (f_vv) {
-		cout << "next, we move the plane determined by the second point into the xz plane by turning around the x-axis:" << endl;
+		cout << "next, we move the plane determined by the second "
+			"point into the xz plane by turning around the x-axis:"
+				<< endl;
 		}
 	chi = atan_xy(P7[2], P7[1]); // (z,y)
 	if (f_vv) {
@@ -733,7 +754,8 @@ INT general_prism(double *Pts, INT nb_pts, double *Pts_xy,
 		cout << endl;
 		}
 	if (ABS(P9[1]) > EPS) {
-		cout << "something is wrong in step 3, the y-coordinate is too big" << endl;
+		cout << "something is wrong in step 3, the y-coordinate "
+				"is too big" << endl;
 		return FALSE;
 		}
 
@@ -1016,7 +1038,8 @@ void orthogonal_transformation_from_point_to_basis_vector(
 	double d, a;
 
 	if (f_v) {
-		cout << "orthogonal_transformation_from_point_to_basis_vector" << endl;
+		cout << "orthogonal_transformation_from_point_"
+				"to_basis_vector" << endl;
 		}
 	double_vec_copy(from, Av, 3);
 	a = 0.;
@@ -1045,21 +1068,25 @@ void orthogonal_transformation_from_point_to_basis_vector(
 		}
 	Av[3 + i1] = -Av[i0];
 	Av[3 + i0] = Av[i1];
-	// now the dot product of the first row and the secon row is zero.
+	// now the dot product of the first row and
+	// the secon row is zero.
 	d = dot_product(Av, Av + 3, 3);
 	if (ABS(d) > 0.01) {
-		cout << "dot product between first and second row of Av is not zero" << endl;
+		cout << "dot product between first and second "
+				"row of Av is not zero" << endl;
 		exit(1);
 		}
 	cross_product(Av, Av + 3, Av + 6);
 	d = dot_product(Av, Av + 6, 3);
 	if (ABS(d) > 0.01) {
-		cout << "dot product between first and third row of Av is not zero" << endl;
+		cout << "dot product between first and third "
+				"row of Av is not zero" << endl;
 		exit(1);
 		}
 	d = dot_product(Av + 3, Av + 6, 3);
 	if (ABS(d) > 0.01) {
-		cout << "dot product between second and third row of Av is not zero" << endl;
+		cout << "dot product between second and third "
+				"row of Av is not zero" << endl;
 		exit(1);
 		}
 	make_unit_vector(Av, 3);
@@ -1075,7 +1102,8 @@ void orthogonal_transformation_from_point_to_basis_vector(
 		}
 
 	if (f_v) {
-		cout << "orthogonal_transformation_from_point_to_basis_vector done" << endl;
+		cout << "orthogonal_transformation_from_point_"
+				"to_basis_vector done" << endl;
 		}
 }
 
@@ -1115,7 +1143,8 @@ void transpose_matrix_4x4(double *A, double *At)
 		}
 }
 
-void substitute_quadric_linear(double *coeff_in, double *coeff_out, 
+void substitute_quadric_linear(
+	double *coeff_in, double *coeff_out,
 	double *A4_inv, INT verbose_level)
 // uses povray ordering of monomials
 // 1: x^2
@@ -1190,7 +1219,8 @@ void substitute_quadric_linear(double *coeff_in, double *coeff_out,
 			}
 		
 		V = Variables + h * degree;
-			// a list of the indices of the variables which appear in the monomial
+			// a list of the indices of the variables
+			// which appear in the monomial
 			// (possibly with repeats)
 			// Example: the monomial x_0^3 becomes 0,0,0
 
@@ -1201,7 +1231,8 @@ void substitute_quadric_linear(double *coeff_in, double *coeff_out,
 		for (a = 0; a < nb_affine; a++) {
 
 			AG_element_unrank(n /* q */, A, 1, degree, a);
-				// sequence of length degree over the alphabet  0,...,n-1.
+				// sequence of length degree
+				// over the alphabet  0,...,n-1.
 			b = 1.;
 			for (j = 0; j < degree; j++) {
 				//factors[j] = Mtx_inv[V[j] * n + A[j]];
@@ -1457,11 +1488,13 @@ void matrix_double_inverse(double *A, double *Av, INT n,
 	rk = Gauss_elimination(M, n, two_n, base_cols, 
 		TRUE /* f_complete */, 0 /* verbose_level */);
 	if (rk < n) {
-		cout << "matrix_double_inverse the matrix is not invertible" << endl;
+		cout << "matrix_double_inverse the matrix "
+				"is not invertible" << endl;
 		exit(1);
 		}
 	if (base_cols[n - 1] != n - 1) {
-		cout << "matrix_double_inverse the matrix is not invertible" << endl;
+		cout << "matrix_double_inverse the matrix "
+				"is not invertible" << endl;
 		exit(1);
 		}
 	for (i = 0; i < n; i++) {

@@ -38,50 +38,91 @@ public:
 // memory.C:
 // #############################################################################
 
+
+
+//! maintains a registry of allocated memory
+
+
+
+class mem_object_registry {
+public:
+	INT nb_entries_allocated;
+	INT nb_entries_used;
+	mem_object_registry_entry *entries;
+		// entries are sorted by
+		// the value of the pointer
+
+	INT nb_allocate_total;
+		// total number of allocations
+	INT nb_delete_total;
+		// total number of deletions
+	INT cur_time;
+		// increments with every allocate and every delete
+
+	mem_object_registry();
+	~mem_object_registry();
+	void init(INT verbose_level);
+	void dump();
+	int *allocate_int(INT n, const char *file, int line);
+	void free_int(int *p, const char *file, int line);
+	int **allocate_pint(INT n, const char *file, int line);
+	void free_pint(int **p, const char *file, int line);
+	INT *allocate_INT(INT n, const char *file, int line);
+	void free_INT(INT *p, const char *file, int line);
+	INT **allocate_PINT(INT n, const char *file, int line);
+	void free_PINT(INT **p, const char *file, int line);
+	INT ***allocate_PPINT(INT n, const char *file, int line);
+	void free_PPINT(INT ***p, const char *file, int line);
+	BYTE *allocate_BYTE(INT n, const char *file, int line);
+	void free_BYTE(BYTE *p, const char *file, int line);
+	UBYTE *allocate_UBYTE(INT n, const char *file, int line);
+	void free_UBYTE(UBYTE *p, const char *file, int line);
+	BYTE **allocate_PBYTE(INT n, const char *file, int line);
+	void free_PBYTE(BYTE **p, const char *file, int line);
+	void **allocate_pvoid(INT n, const char *file, int line);
+	void free_pvoid(void **p, const char *file, int line);
+	void *allocate_OBJECTS(void *p, INT n, INT size_of, const char *file, int line);
+	void free_OBJECTS(void *p, const char *file, int line);
+	void *allocate_OBJECT(void *p, INT size_of, const char *file, int line);
+	void free_OBJECT(void *p, const char *file, int line);
+	int search(void *p, int &idx);
+	void insert_at(int idx);
+	void add_to_registry(void *pointer,
+			int object_type, int object_n, int object_size_of,
+			const char *source_file, int source_line,
+			int verbose_level);
+	void delete_from_registry(void *pointer, int verbose_level);
+};
+
+//! a class related to mem_object_registry
+
+
+class mem_object_registry_entry {
+public:
+	int time_stamp;
+	void *pointer;
+	int object_type;
+	int object_n;
+	int object_size_of;
+		// needed for objects of type class
+	const char *source_file;
+	int source_line;
+	mem_object_registry_entry();
+	~mem_object_registry_entry();
+	void null();
+	void print_type();
+	int size_of();
+	void print(INT line);
+};
+
 extern int f_memory_debug;
-extern int f_memory_debug_verbose;
-extern INT memory_count_allocate;
+extern int memory_debug_verbose_level;
+extern mem_object_registry global_mem_object_registry;
+
 void start_memory_debug();
 void stop_memory_debug();
-void memory_watch_list_add_pointer(void *p);
-void memory_watch_list_delete_pointer(INT idx);
-void add_to_registry(void *p, int pointer_type, int size, int size_of, 
-	const char *file, int line);
-INT delete_from_registry(void *p);
-void memory_watch_list_dump();
-void registry_dump();
-void registry_dump_sorted();
-void registry_dump_sorted_by_size();
-INT registry_entry_size(INT i);
-void registry_print_entry(INT i);
-INT registry_sizeof(INT t);
-void registry_print_type(INT t);
-int registry_search(int len, void *p, int &idx);
-int memory_watch_list_search(int len, void *p, int &idx);
-int *allocate_int(INT n, const char *file, int line);
-void free_int(int *p, const char *file, int line);
-pint *allocate_pint(INT n, const char *file, int line);
-void free_pint(pint *p, const char *file, int line);
-INT *allocate_INT(INT n, const char *file, int line);
-void free_INT(INT *p, const char *file, int line);
-INT **allocate_PINT(INT n, const char *file, int line);
-void free_PINT(INT **p, const char *file, int line);
-INT ***allocate_PPINT(INT n, const char *file, int line);
-void free_PPINT(INT ***p, const char *file, int line);
-BYTE *allocate_BYTE(INT n, const char *file, int line);
-void free_BYTE(BYTE *p, const char *file, int line);
-UBYTE *allocate_UBYTE(INT n, const char *file, int line);
-void free_UBYTE(UBYTE *p, const char *file, int line);
-BYTE **allocate_PBYTE(INT n, const char *file, int line);
-void free_PBYTE(BYTE **p, const char *file, int line);
-void **allocate_pvoid(INT n, const char *file, int line);
-void free_pvoid(void **p, const char *file, int line);
-void *allocate_OBJECT(void *p, int size_of, const char *file, int line);
-void free_OBJECT(void *p, const char *file, int line);
-void *allocate_OBJECTS(void *p, INT n, 
-	int size_of, const char *file, int line);
-void free_OBJECTS(void *p, const char *file, int line);
-void free_PINT_all(INT **p, INT nb);
+
+
 
 // #############################################################################
 // memory_object.C:

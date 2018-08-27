@@ -213,8 +213,6 @@ void geo_parameter::convert_single_to_stack(INT verbose_level)
 		}
 	nb_parts = 0;
 	nb_entries = 0;
-	//part = new int[nb_parts];
-	//entries = new int[4 * nb_entries];
 	append_to_part(v + b);
 	append_to_part(v);
 	sum = V[0];

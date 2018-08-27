@@ -118,14 +118,14 @@ int main(int argc, char **argv)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
 	sprintf(fname, "Sequences_%ld_%ld_%ld.colored_graph", n, q, d);
 
 	CG->save(fname, verbose_level);
 
-	delete CG;
+	FREE_OBJECT(CG);
 
 
 
@@ -198,14 +198,14 @@ int main(int argc, char **argv)
 		colored_graph *CG;
 		BYTE fname[1000];
 
-		CG = new colored_graph;
+		CG = NEW_OBJECT(colored_graph);
 		CG->init_adjacency_no_colors(sz, Adj2, verbose_level);
 
 		sprintf(fname, "Sequences_%ld_%ld_%ld_set_%ld.colored_graph", n, q, d, sz);
 
 		CG->save(fname, verbose_level);
 
-		delete CG;
+		FREE_OBJECT(CG);
 
 
 		}
