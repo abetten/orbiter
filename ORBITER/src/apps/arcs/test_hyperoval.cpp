@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 		strong_generators *Aut_gens;
 		//INT t0 = os_ticks();
 	
-		A = new action;
+		A = NEW_OBJECT(action);
 
 		cout << "before init_projective_group" << endl;
 		A->init_projective_group(3, &Fq, 
@@ -194,8 +194,8 @@ int main(int argc, char **argv)
 		cout << "strong generators:" << endl;
 		Aut_gens->print_generators();
 	
-		delete Aut_gens;
-		delete Stab;
+		FREE_OBJECT(Aut_gens);
+		FREE_OBJECT(Stab);
 		}
 
 

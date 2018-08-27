@@ -208,7 +208,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	INT *color;
 
 	color = NEW_INT(N);
@@ -222,13 +222,13 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 
 
 	FREE_INT(color);
-	delete CG;
+	FREE_OBJECT(CG);
 	}
 
 
 
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	if (f_v) {
 		cout << "initializing colored graph" << endl;

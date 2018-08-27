@@ -612,9 +612,11 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 
 	while (TRUE) {
 
+#if 0
 		if ((iso_nodes % 500000) == 0) {
 			registry_dump_sorted();
 			}
+#endif
 
 		if ((iso_nodes % print_mod) == 0 && !f_continue) {
 			print_statistics_iso_test(t0, Stab);

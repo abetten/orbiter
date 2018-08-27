@@ -36,10 +36,10 @@ void flag::null()
 void flag::freeself()
 {
 	if (Gr) {
-		delete Gr;
+		FREE_OBJECT(Gr);
 		}
 	if (Flag) {
-		delete Flag;
+		FREE_OBJECT(Flag);
 		}
 	if (M) {
 		FREE_INT(M);
@@ -65,12 +65,15 @@ void flag::freeself()
 	null();
 }
 
-void flag::init(INT n, INT *type, INT type_len, finite_field *F, INT verbose_level)
+void flag::init(INT n,
+		INT *type, INT type_len, finite_field *F,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "flag::init type_len = " << type_len << " idx=" << idx << endl;
+		cout << "flag::init type_len = "
+				<< type_len << " idx=" << idx << endl;
 		}
 	init_recursion(n, type, type_len, type_len - 1, F, verbose_level);
 	if (f_v) {
@@ -78,13 +81,16 @@ void flag::init(INT n, INT *type, INT type_len, finite_field *F, INT verbose_lev
 		}
 }
 
-void flag::init_recursion(INT n, INT *type, INT type_len, INT idx, finite_field *F, INT verbose_level)
+void flag::init_recursion(INT n,
+		INT *type, INT type_len, INT idx, finite_field *F,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
 
 	if (f_v) {
-		cout << "flag::init_recursion type_len = " << type_len << " idx=" << idx << endl;
+		cout << "flag::init_recursion type_len = "
+				<< type_len << " idx=" << idx << endl;
 		}
 	flag::F = F;
 	flag::n = n;
@@ -92,7 +98,7 @@ void flag::init_recursion(INT n, INT *type, INT type_len, INT idx, finite_field 
 	flag::type_len = type_len;
 	flag::idx = idx;
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 	K = 0;
 	for (i = 0; i < type_len; i++) {
 		K += type[i];
@@ -111,7 +117,9 @@ void flag::init_recursion(INT n, INT *type, INT type_len, INT idx, finite_field 
 		}
 	Gr->init(s2, s1, F, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "flag::init type_len = " << type_len << " s0=" << s0 << " s1=" << s1 << " s2=" << s2 << " k=" << k << " K=" << K << endl;
+		cout << "flag::init type_len = " << type_len << " s0=" << s0
+			<< " s1=" << s1 << " s2=" << s2 << " k=" << k
+			<< " K=" << K << endl;
 		}
 	M = NEW_INT(K * n);
 	M_Gauss = NEW_INT(K * n);
@@ -122,7 +130,7 @@ void flag::init_recursion(INT n, INT *type, INT type_len, INT idx, finite_field 
 	M3 = NEW_INT(n * n);
 
 	if (idx > 0) {	
-		Flag = new flag;
+		Flag = NEW_OBJECT(flag);
 	
 		Flag->init_recursion(n, type, type_len, idx - 1, F, verbose_level);
 		}
@@ -138,11 +146,13 @@ void flag::init_recursion(INT n, INT *type, INT type_len, INT idx, finite_field 
 	N1 = generalized_binomial(s2, s1, F->q);
 	N = N0 * N1;
 	if (f_v) {
-		cout << "flag::init_recursion type_len = " << type_len << " N0=" << N0 << " N1=" << N1 << " N=" << N << endl;
+		cout << "flag::init_recursion type_len = " << type_len
+				<< " N0=" << N0 << " N1=" << N1 << " N=" << N << endl;
 		}
 
 	if (f_v) {
-		cout << "flag::init_recursion type_len = " << type_len << " done" << endl;
+		cout << "flag::init_recursion type_len = " << type_len
+				<< " done" << endl;
 		}
 }
 
@@ -163,7 +173,8 @@ void flag::unrank(INT rk, INT *subspace, INT verbose_level)
 	b = rk % N0;
 	a = rk / N0;
 	if (f_v) {
-		cout << "flag::unrank idx=" << idx << " rk=" << rk << " a=" << a << " b=" << b << endl;
+		cout << "flag::unrank idx=" << idx << " rk=" << rk
+				<< " a=" << a << " b=" << b << endl;
 		}
 
 	Gr->unrank_embedded_subspace_INT(a, 0 /*verbose_level*/);
@@ -185,7 +196,8 @@ void flag::unrank_recursion(INT rk, INT *subspace, INT verbose_level)
 	INT a, b;
 
 	if (f_v) {
-		cout << "flag::unrank_recursion idx=" << idx << " rk=" << rk << endl;
+		cout << "flag::unrank_recursion idx=" << idx
+				<< " rk=" << rk << endl;
 		}
 	if (f_v) {
 		cout << "flag::unrank_recursion subspace=" << endl;
@@ -196,7 +208,8 @@ void flag::unrank_recursion(INT rk, INT *subspace, INT verbose_level)
 	a = rk / N0;
 
 	if (f_v) {
-		cout << "flag::unrank_recursion idx=" << idx << " rk=" << rk << " a=" << a << " b=" << b << endl;
+		cout << "flag::unrank_recursion idx=" << idx
+				<< " rk=" << rk << " a=" << a << " b=" << b << endl;
 		}
 
 	Gr->unrank_embedded_subspace_INT(a, 0 /*verbose_level*/);
@@ -204,7 +217,8 @@ void flag::unrank_recursion(INT rk, INT *subspace, INT verbose_level)
 	// now Gr->M is s2 x s2
 
 	if (f_v) {
-		cout << "flag::unrank_recursion after unrank " << a << ":" << endl;
+		cout << "flag::unrank_recursion after unrank "
+				<< a << ":" << endl;
 		INT_matrix_print(Gr->M, s2, n);
 		}
 
@@ -212,7 +226,8 @@ void flag::unrank_recursion(INT rk, INT *subspace, INT verbose_level)
 	INT_vec_copy(subspace + s2 * n, M + s2 * n, (K - s2) * n);
 
 	if (f_v) {
-		cout << "flag::unrank_recursion idx=" << idx << " after mult, subspace=:" << endl;
+		cout << "flag::unrank_recursion idx=" << idx
+				<< " after mult, subspace=:" << endl;
 		INT_matrix_print(M, K, n);
 		}
 
@@ -262,12 +277,14 @@ INT flag::rank(INT *input_subspace, INT verbose_level)
 		}
 	rk = a * N0 + b;
 	if (f_v) {
-		cout << "flag::rank idx=" << idx << " rk=" << rk << " a=" << a << " b=" << b << endl;
+		cout << "flag::rank idx=" << idx << " rk=" << rk
+				<< " a=" << a << " b=" << b << endl;
 		}
 	return rk;
 }
 
-INT flag::rank_recursion(INT *input_subspace, INT *big_space, INT verbose_level)
+INT flag::rank_recursion(INT *input_subspace,
+		INT *big_space, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b, rk, r, i, j;
@@ -286,8 +303,12 @@ INT flag::rank_recursion(INT *input_subspace, INT *big_space, INT verbose_level)
 	INT_vec_copy(big_space, M, s2 * n);
 	INT_vec_copy(big_space, M_Gauss, s2 * n);
 	F->identity_matrix(transform, s2);
-	r = F->Gauss_INT(M_Gauss, FALSE /*f_special*/, TRUE/* f_complete*/, base_cols, 
-		TRUE /* f_P */, transform, s2, n, s2 /* Pn */, 0/*INT verbose_level*/);
+	r = F->Gauss_INT(M_Gauss,
+		FALSE /*f_special*/,
+		TRUE/* f_complete*/, base_cols,
+		TRUE /* f_P */, transform, s2, n,
+		s2 /* Pn */,
+		0/*INT verbose_level*/);
 	if (r != s2) {
 		cout << "flag::rank_recursion r != s2" << endl;
 		cout << "r=" << r << endl;
@@ -313,7 +334,8 @@ INT flag::rank_recursion(INT *input_subspace, INT *big_space, INT verbose_level)
 	F->mult_matrix_matrix(M1, transform, M2, s1, s2, s2);
 
 	// now M2 is s1 x s2
-	// M2 is the coefficient matrix that defines the given subspace input_subspace 
+	// M2 is the coefficient matrix that defines
+	// the given subspace input_subspace
 	// in terms of the big space big_space
 	// this means: M2 * big_space = input_subspace
 	if (f_v) {
@@ -322,13 +344,16 @@ INT flag::rank_recursion(INT *input_subspace, INT *big_space, INT verbose_level)
 		}
 
 	for (i = 0; i < s1; i++) {
-		F->mult_vector_from_the_left(M2 + i * s2, M, M3, s2, n);
+		F->mult_vector_from_the_left(M2 + i * s2,
+				M, M3, s2, n);
 		if (f_v) {
 			cout << "flag::rank_recursion i=" << i << " M3=" << endl;
-			print_integer_matrix_width(cout, M3, 1, n, n, F->log10_of_q);
+			print_integer_matrix_width(cout,
+					M3, 1, n, n, F->log10_of_q);
 			}
 		if (INT_vec_compare(input_subspace + i * n, M3, n)) {
-			cout << "flag::rank_recursion fatal: the i-th vector is not in the space" << endl;
+			cout << "flag::rank_recursion fatal: "
+					"the i-th vector is not in the space" << endl;
 			cout << "i=" << i << endl;
 			exit(1);
 			}
@@ -341,7 +366,8 @@ INT flag::rank_recursion(INT *input_subspace, INT *big_space, INT verbose_level)
 
 	if (f_v) {
 		cout << "flag::rank_recursion coefficient matrix:" << endl;
-		print_integer_matrix_width(cout, Gr->M, s1, s2, s2, F->log10_of_q);
+		print_integer_matrix_width(cout,
+				Gr->M, s1, s2, s2, F->log10_of_q);
 		}
 	a = Gr->rank_INT(verbose_level);
 	if (f_v) {
@@ -369,7 +395,8 @@ INT flag::rank_recursion(INT *input_subspace, INT *big_space, INT verbose_level)
 		}
 	rk = a * N0 + b;
 	if (f_v) {
-		cout << "flag::rank_recursion idx=" << idx << " a=" << a << " b=" << b << " rk=" << rk << endl;
+		cout << "flag::rank_recursion idx=" << idx
+				<< " a=" << a << " b=" << b << " rk=" << rk << endl;
 		}
 	return rk;
 }

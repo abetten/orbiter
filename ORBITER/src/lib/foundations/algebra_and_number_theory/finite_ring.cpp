@@ -47,7 +47,7 @@ void finite_ring::freeself()
 		FREE_INT(inv_table);
 		}
 	if (Fp) {
-		delete Fp;
+		FREE_OBJECT(Fp);
 		}
 	null();
 }
@@ -85,7 +85,7 @@ void finite_ring::init(INT q, INT verbose_level)
 				}
 			}
 		}
-	Fp = new finite_field;
+	Fp = NEW_OBJECT(finite_field);
 	Fp->init(p, verbose_level);
 }
 
@@ -164,7 +164,8 @@ INT finite_ring::inverse(INT i)
 		exit(1);
 		}
 	if (!f_is_unit_table[i]) {
-		cout << "finite_ring::inverse() i = " << i << " is not a unit" << endl;
+		cout << "finite_ring::inverse() i = " << i
+				<< " is not a unit" << endl;
 		exit(1);
 		}
 	return inv_table[i];

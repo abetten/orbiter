@@ -27,13 +27,13 @@ void do_Klein_correspondence(INT n, finite_field *F,
 		exit(1);
 		}
 	
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
-	P5 = new projective_space;
+	P5 = NEW_OBJECT(projective_space);
 	
 	P5->init(5, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -46,8 +46,8 @@ void do_Klein_correspondence(INT n, finite_field *F,
 		set_in, set_size, the_set_out, verbose_level);
 
 
-	delete P;
-	delete P5;
+	FREE_OBJECT(P);
+	FREE_OBJECT(P5);
 }
 
 void do_m_subspace_type(INT n, finite_field *F, INT m, 
@@ -67,7 +67,7 @@ void do_m_subspace_type(INT n, finite_field *F, INT m,
 		cout << "We will now compute the m_subspace type" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_m_subspace_type before P->init" << endl;
@@ -123,7 +123,7 @@ void do_m_subspace_type(INT n, finite_field *F, INT m,
 		//INT *basis;
 		grassmann *G;
 		
-		G = new grassmann;
+		G = NEW_OBJECT(grassmann);
 
 		G->init(d, m + 1, F, 0 /* verbose_level */);
 
@@ -170,7 +170,7 @@ void do_m_subspace_type(INT n, finite_field *F, INT m,
 			}
 		FREE_INT(S);
 		//FREE_INT(basis);
-		delete G;
+		FREE_OBJECT(G);
 #if 0
 		cout << "i : intersection number of plane i" << endl;
 		for (i = 0; i < N_planes; i++) {
@@ -181,7 +181,7 @@ void do_m_subspace_type(INT n, finite_field *F, INT m,
 
 	FREE_INT(v);
 	FREE_INT(intersection_numbers);
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_m_subspace_type_fast(INT n, finite_field *F, INT m, 
@@ -206,7 +206,7 @@ void do_m_subspace_type_fast(INT n, finite_field *F, INT m,
 		cout << "We will now compute the m_subspace type" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_m_subspace_type_fast before P->init" << endl;
@@ -228,7 +228,7 @@ void do_m_subspace_type_fast(INT n, finite_field *F, INT m,
 		cout << "do_m_subspace_type_fast N = " << N << endl;
 		}
 
-	G = new grassmann;
+	G = NEW_OBJECT(grassmann);
 
 	G->init(n + 1, m + 1, F, 0 /* verbose_level */);
 
@@ -273,11 +273,6 @@ void do_m_subspace_type_fast(INT n, finite_field *F, INT m,
 	//INT *basis;
 	//grassmann *G;
 		
-	//G = new grassmann;
-
-	//G->init(d, m + 1, q, F, 0 /* verbose_level */);
-
-	//basis = NEW_INT((m + 1) * d);
 	S = NEW_INT(N);
 	intersection_size = C.nb_types - 1;
 
@@ -398,11 +393,11 @@ void do_m_subspace_type_fast(INT n, finite_field *F, INT m,
 	FREE_INT(Blocks);
 	FREE_INT(S);
 	//FREE_INT(basis);
-	delete G;
+	FREE_OBJECT(G);
 
 
 	FREE_INT(v);
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_line_type(INT n, finite_field *F, 
@@ -421,7 +416,7 @@ void do_line_type(INT n, finite_field *F,
 		cout << "We will now compute the line type" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_line_type before P->init" << endl;
@@ -533,7 +528,7 @@ void do_line_type(INT n, finite_field *F,
 
 	FREE_INT(v);
 	FREE_INT(intersection_numbers);
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_plane_type(INT n, finite_field *F, 
@@ -551,7 +546,7 @@ void do_plane_type(INT n, finite_field *F,
 		cout << "We will now compute the plane type" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_plane_type before P->init" << endl;
@@ -565,7 +560,7 @@ void do_plane_type(INT n, finite_field *F,
 		cout << "do_plane_type after P->init" << endl;
 		}
 
-	G = new grassmann;
+	G = NEW_OBJECT(grassmann);
 
 	G->init(n + 1, 3, F, 0 /*verbose_level - 2*/);
 
@@ -575,8 +570,8 @@ void do_plane_type(INT n, finite_field *F,
 		verbose_level - 2);
 
 	//FREE_INT(intersection_type);
-	delete G;
-	delete P;
+	FREE_OBJECT(G);
+	FREE_OBJECT(P);
 }
 
 void do_plane_type_failsafe(INT n, finite_field *F, 
@@ -593,7 +588,7 @@ void do_plane_type_failsafe(INT n, finite_field *F,
 		cout << "We will now compute the plane type" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_plane_type_failsafe before P->init" << endl;
@@ -623,7 +618,7 @@ void do_plane_type_failsafe(INT n, finite_field *F,
 	C.print(FALSE /*f_backwards*/);
 
 	FREE_INT(type);
-	delete P;
+	FREE_OBJECT(P);
 	if (f_v) {
 		cout << "do_plane_type_failsafe done" << endl;
 		}
@@ -644,7 +639,7 @@ void do_conic_type(INT n, finite_field *F, INT f_randomized, INT nb_times,
 		cout << "We will now compute the plane type" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_conic_type before P->init" << endl;
@@ -665,7 +660,7 @@ void do_conic_type(INT n, finite_field *F, INT f_randomized, INT nb_times,
 		f_save_largest_sets, largest_sets, 
 		verbose_level - 2);
 
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_test_diagonal_line(INT n, finite_field *F, 
@@ -693,7 +688,7 @@ void do_test_diagonal_line(INT n, finite_field *F,
 		cout << "do_test_diagonal_line we need set_size == q + 2" << endl;
 		exit(1);
 		}
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -853,7 +848,7 @@ void do_test_diagonal_line(INT n, finite_field *F,
 		}
 	cout << "So, there are " << l0 << " external diagonal orbits  and " << l2 << " secant diagonal orbits" << endl;
 
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_andre(finite_field *FQ, finite_field *Fq, 
@@ -875,8 +870,8 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 	if (f_v) {
 		cout << "do_andre for a set of size " << set_size_in << endl;
 		}
-	P2 = new projective_space;
-	P4 = new projective_space;
+	P2 = NEW_OBJECT(projective_space);
+	P4 = NEW_OBJECT(projective_space);
 
 	
 	P2->init(2, FQ, 
@@ -1044,8 +1039,8 @@ void do_andre(finite_field *FQ, finite_field *Fq,
 			}
 		}
 
-	delete P2;
-	delete P4;
+	FREE_OBJECT(P2);
+	FREE_OBJECT(P4);
 	FREE_INT(v);
 	FREE_INT(w1);
 	FREE_INT(w2);
@@ -1065,7 +1060,7 @@ void do_print_lines_in_PG(INT n, finite_field *F,
 	INT f_elements_exponential = TRUE;
 	const BYTE *symbol_for_print = "\\alpha";
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1079,7 +1074,7 @@ void do_print_lines_in_PG(INT n, finite_field *F,
 			symbol_for_print, P->Grass_lines->M, 2, d);
 		cout << endl;
 		}
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_print_points_in_PG(INT n, finite_field *F, 
@@ -1092,7 +1087,7 @@ void do_print_points_in_PG(INT n, finite_field *F,
 	const BYTE *symbol_for_print = "\\alpha";
 	INT *v;
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1109,7 +1104,7 @@ void do_print_points_in_PG(INT n, finite_field *F,
 		cout << endl;
 		}
 	FREE_INT(v);
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_print_points_in_orthogonal_space(INT epsilon, INT n, finite_field *F, 
@@ -1122,7 +1117,7 @@ void do_print_points_in_orthogonal_space(INT epsilon, INT n, finite_field *F,
 	INT *v;
 	orthogonal *O;
 
-	O = new orthogonal;
+	O = NEW_OBJECT(orthogonal);
 	
 	O->init(epsilon, d, F, verbose_level - 1);
 	F = O->F;
@@ -1142,7 +1137,7 @@ void do_print_points_in_orthogonal_space(INT epsilon, INT n, finite_field *F,
 		cout << "\\\\" << endl;
 		}
 	FREE_INT(v);
-	delete O;
+	FREE_OBJECT(O);
 }
 
 void do_print_points_on_grassmannian(INT n, INT k, finite_field *F, 
@@ -1155,8 +1150,8 @@ void do_print_points_on_grassmannian(INT n, INT k, finite_field *F,
 	INT f_elements_exponential = TRUE;
 	const BYTE *symbol_for_print = "\\alpha";
 
-	P = new projective_space;
-	Grass = new grassmann;
+	P = NEW_OBJECT(projective_space);
+	Grass = NEW_OBJECT(grassmann);
 	
 	//N = generalized_binomial(n + 1, k + 1, q);
 	//r = generalized_binomial(k + 1, 1, q);
@@ -1175,8 +1170,8 @@ void do_print_points_on_grassmannian(INT n, INT k, finite_field *F,
 			symbol_for_print, Grass->M, k + 1, d);
 		cout << endl;
 		}
-	delete P;
-	delete Grass;
+	FREE_OBJECT(P);
+	FREE_OBJECT(Grass);
 }
 
 void do_embed_orthogonal(INT epsilon, INT n, finite_field *F, 
@@ -1192,7 +1187,7 @@ void do_embed_orthogonal(INT epsilon, INT n, finite_field *F,
 	if (f_v) {
 		cout << "do_embed_orthogonal" << endl;
 		}
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1213,7 +1208,7 @@ void do_embed_orthogonal(INT epsilon, INT n, finite_field *F,
 		}
 
 	FREE_INT(v);
-	delete P;
+	FREE_OBJECT(P);
 
 }
 
@@ -1230,8 +1225,8 @@ void do_embed_points(INT n, finite_field *F,
 	if (f_v) {
 		cout << "do_embed_points" << endl;
 		}
-	P1 = new projective_space;
-	P2 = new projective_space;
+	P1 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(projective_space);
 	
 	P1->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1272,7 +1267,7 @@ void do_draw_points_in_plane(finite_field *F,
 		cout << "do_draw_points_in_plane" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_draw_points_in_plane before P->init" << endl;
@@ -1287,7 +1282,7 @@ void do_draw_points_in_plane(finite_field *F,
 		}
 
 	P->draw_point_set_in_plane(fname_base, set, set_size, TRUE /*f_with_points*/, f_point_labels, f_embedded, f_sideways, rad, 0 /* verbose_level */);
-	delete P;
+	FREE_OBJECT(P);
 
 	if (f_v) {
 		cout << "do_draw_points_in_plane done" << endl;
@@ -1312,7 +1307,7 @@ void do_ideal(INT n, finite_field *F,
 		cout << "do_ideal" << endl;
 		}
 
-	HPD = new homogeneous_polynomial_domain;
+	HPD = NEW_OBJECT(homogeneous_polynomial_domain);
 
 	HPD->init(F, n + 1, degree, FALSE /* f_init_incidence_structure */, verbose_level);
 
@@ -1357,7 +1352,7 @@ void do_ideal(INT n, finite_field *F,
 		cout << " We found " << nb_pts << " points on this curve" << endl;
 		}
 
-	delete HPD;
+	FREE_OBJECT(HPD);
 	FREE_INT(Kernel);
 	FREE_INT(Pts);
 	FREE_INT(w1);
@@ -1384,7 +1379,7 @@ void do_move_line_in_PG(INT n, finite_field *F,
 		cout << "do_move_line_in_PG" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_move_line_in_PG before P->init" << endl;
@@ -1408,7 +1403,7 @@ void do_move_line_in_PG(INT n, finite_field *F,
 	INT len, pos;
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 	Sch->init(A);
 	Sch->init_generators(*P->A2->Strong_gens->gens);
 	Sch->initialize_tables();
@@ -1442,9 +1437,9 @@ void do_move_line_in_PG(INT n, finite_field *F,
 		b = A_pts->element_image_of(a, Elt1, 0);
 		the_set_out[i] = b;
 		}
-	delete Sch;
+	FREE_OBJECT(Sch);
 	FREE_INT(Elt1);
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void do_group_in_PG(INT n, finite_field *F, 
@@ -1461,7 +1456,7 @@ void do_group_in_PG(INT n, finite_field *F,
 		cout << "do_group_in_PG computing group" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_group_in_PG before P->init" << endl;
@@ -1522,7 +1517,7 @@ void do_group_in_PG(INT n, finite_field *F,
 		}
 
 	delete S;
-	delete P;
+	FREE_OBJECT(P);
 }
 
 #endif
@@ -1566,7 +1561,7 @@ void do_find_Eckardt_points_from_arc(INT n, finite_field *F,
 		cout << "do_find_Eckardt_points_from_arc" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	if (f_v) {
 		cout << "do_find_Eckardt_points_from_arc before P->init" << endl;
@@ -1583,7 +1578,7 @@ void do_find_Eckardt_points_from_arc(INT n, finite_field *F,
 	surface *S;
 
 
-	S = new surface;
+	S = NEW_OBJECT(surface);
 	S->init(F, verbose_level);
 
 
@@ -1681,7 +1676,7 @@ void do_find_Eckardt_points_from_arc(INT n, finite_field *F,
 
 
 	delete S;
-	delete P;
+	FREE_OBJECT(P);
 	if (f_v) {
 		cout << "do_find_Eckardt_points_from_arc done" << endl;
 		}

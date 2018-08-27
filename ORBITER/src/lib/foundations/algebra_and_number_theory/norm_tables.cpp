@@ -24,31 +24,31 @@ norm_tables::norm_tables()
 norm_tables::~norm_tables()
 {
 	if (norm_table) {
-		delete [] norm_table;
+		FREE_INT(norm_table);
 		norm_table = NULL;
 		}
 	if (norm_table_sorted) {
-		delete [] norm_table_sorted;
+		FREE_INT(norm_table_sorted);
 		norm_table_sorted = NULL;
 		}
 	if (sorting_perm) {
-		delete [] sorting_perm;
+		FREE_INT(sorting_perm);
 		sorting_perm = NULL;
 		}
 	if (sorting_perm_inv) {
-		delete [] sorting_perm_inv;
+		FREE_INT(sorting_perm_inv);
 		sorting_perm_inv = NULL;
 		}
 	if (type_first) {
-		delete [] type_first;
+		FREE_INT(type_first);
 		type_first = NULL;
 		}
 	if (type_len) {
-		delete [] type_len;
+		FREE_INT(type_len);
 		type_len = NULL;
 		}
 	if (the_type) {
-		delete [] the_type;
+		FREE_INT(the_type);
 		the_type = NULL;
 		}
 }
@@ -58,7 +58,7 @@ void norm_tables::init(unusual_model &U, INT verbose_level)
 	INT qq = U.F.q;
 	INT i, f, l, j, a, b, c, jj;
 	
-	norm_table = new INT[qq];
+	norm_table = NEW_INT(qq);
 	for (i = 1; i < qq; i++) {
 		norm_table[i - 1] = U.N2(i);
 		}
@@ -68,7 +68,7 @@ void norm_tables::init(unusual_model &U, INT verbose_level)
 		nb_types, type_first, type_len);
 	
 	//cout << "nb_types=" << NT.nb_types << endl;
-	the_type = new INT[nb_types];
+	the_type = NEW_INT(nb_types);
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = type_len[i];

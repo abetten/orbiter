@@ -38,7 +38,7 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-description") == 0) {
 			f_description = TRUE;
-			Descr = new surface_create_description;
+			Descr = NEW_OBJECT(surface_create_description);
 			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level) - 1;
 
 			cout << "-description" << endl;
@@ -68,7 +68,7 @@ int main(int argc, const char **argv)
 	surface_create *SC;
 	INT j;
 
-	SC = new surface_create;
+	SC = NEW_OBJECT(surface_create);
 
 	cout << "before SC->init" << endl;
 	SC->init(Descr, verbose_level);
@@ -145,7 +145,7 @@ int main(int argc, const char **argv)
 		
 		surface_object_with_action *SoA;
 
-		SoA = new surface_object_with_action;
+		SoA = NEW_OBJECT(surface_object_with_action);
 
 		if (SC->f_has_lines) {
 			cout << "creating surface using the known lines (which are arranged with respect to a double six):" << endl;
@@ -165,7 +165,7 @@ int main(int argc, const char **argv)
 		six_arcs_not_on_a_conic *Six_arcs;
 		INT *transporter;
 
-		Six_arcs = new six_arcs_not_on_a_conic;
+		Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 	
 
 		// classify six arcs not on a conic:
@@ -347,8 +347,8 @@ int main(int argc, const char **argv)
 
 
 
-		delete SoA;
-		delete Six_arcs;
+		FREE_OBJECT(SoA);
+		FREE_OBJECT(Six_arcs);
 		FREE_INT(transporter);
 
 
@@ -358,7 +358,7 @@ int main(int argc, const char **argv)
 
 	FREE_INT(Elt2);
 
-	delete SC;
+	FREE_OBJECT(SC);
 
 	the_end(t0);
 	//the_end_quietly(t0);

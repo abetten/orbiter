@@ -289,7 +289,7 @@ int main(int argc, const char **argv)
 
 	direct_product_action *T;
 
-	T = new direct_product_action;
+	T = NEW_OBJECT(direct_product_action);
 
 	T->init(argc, argv, d1, q1, d2, q2,
 			f_subgroup, subgroup_gens_text, subgroup_order_text, group_label,
@@ -494,9 +494,9 @@ void direct_product_action::init(int argc, const char **argv,
 	direct_product_action::group_label = group_label;
 	direct_product_action::f_subgroup = f_subgroup;
 
-	A = new action;
-	A1 = new action;
-	A2 = new action;
+	A = NEW_OBJECT(action);
+	A1 = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(action);
 
 	nb_mask_tests = 0;
 
@@ -624,11 +624,11 @@ void direct_product_action::init(int argc, const char **argv,
 	INT_vec_zero(col_sum, Ysize);
 
 
-	M1 = new matrix_group;
-	M2 = new matrix_group;
+	M1 = NEW_OBJECT(matrix_group);
+	M2 = NEW_OBJECT(matrix_group);
 
-	F1 = new finite_field;
-	F2 = new finite_field;
+	F1 = NEW_OBJECT(finite_field);
+	F2 = NEW_OBJECT(finite_field);
 
 
 
@@ -715,8 +715,8 @@ void direct_product_action::init(int argc, const char **argv,
 		strong_generators *SG2;
 		strong_generators *SG3;
 
-		SG1 = new strong_generators;
-		SG2 = new strong_generators;
+		SG1 = NEW_OBJECT(strong_generators);
+		SG2 = NEW_OBJECT(strong_generators);
 
 		if (f_v) {
 			cout << "before generators_for_the_monomial_group "
@@ -872,7 +872,7 @@ void direct_product_action::init(int argc, const char **argv,
 					"after Strong_gens->init_from_data_"
 					"with_target_go_ascii" << endl;
 			}
-		Pairs = new generator;
+		Pairs = NEW_OBJECT(generator);
 
 		Pairs->read_arguments(argc, argv, 0);
 
@@ -1011,7 +1011,7 @@ void direct_product_action::init(int argc, const char **argv,
 
 		sprintf(fname, "design_%s_%ld_%ld_lvl_%ld", group_label, q1, q2, level);
 
-		ODF = new orbiter_data_file;
+		ODF = NEW_OBJECT(orbiter_data_file);
 		ODF->load(fname, verbose_level);
 		cout << "found " << ODF->nb_cases
 				<< " orbits at level " << level << endl;
@@ -1165,7 +1165,7 @@ void direct_product_action::init(int argc, const char **argv,
 	} else {
 
 
-		Gen = new generator;
+		Gen = NEW_OBJECT(generator);
 
 		Gen->read_arguments(argc, argv, 0);
 

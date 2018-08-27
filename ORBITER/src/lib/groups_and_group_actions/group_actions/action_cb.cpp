@@ -538,6 +538,11 @@ void action::element_write_to_file_binary(INT *Elt, ofstream &fp, INT verbose_le
 	if (f_v) {
 		cout << "action::element_write_to_file_binary" << endl;
 		}
+	if (coded_elt_size_in_char == 0) {
+		cout << "action::element_write_to_file_binary "
+				"coded_elt_size_in_char == 0" << endl;
+		exit(1);
+	}
 	elt = NEW_BYTE(coded_elt_size_in_char);
 
 	element_pack(Elt, elt, FALSE);

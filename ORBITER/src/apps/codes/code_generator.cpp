@@ -204,10 +204,10 @@ void code_generator::null()
 void code_generator::freeself()
 {
 	if (A) {
-		delete A;
+		FREE_OBJECT(A);
 		}
 	if (F) {
-		delete F;
+		FREE_OBJECT(F);
 		}
 	if (v1) {
 		FREE_INT(v1);
@@ -216,22 +216,22 @@ void code_generator::freeself()
 		FREE_INT(v2);
 		}
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		}
 	if (description) {
-		delete description;
+		FREE_OBJECT(description);
 		}
 	if (L) {
-		delete L;
+		FREE_OBJECT(L);
 		}
 	null();
 }
 
 void code_generator::init(int argc, const char **argv)
 {
-	F = new finite_field;
-	A = new action;
-	gen = new generator;
+	F = NEW_OBJECT(finite_field);
+	A = NEW_OBJECT(action);
+	gen = NEW_OBJECT(generator);
 	INT f_basis = TRUE;
 	
 
@@ -309,8 +309,8 @@ void code_generator::init(int argc, const char **argv)
 	else if (f_nonlinear) {
 
 
-		description = new linear_group_description;
-		L = new linear_group;
+		description = NEW_OBJECT(linear_group_description);
+		L = NEW_OBJECT(linear_group);
 		description->null();
 		description->f_affine = TRUE;
 		description->n = n;

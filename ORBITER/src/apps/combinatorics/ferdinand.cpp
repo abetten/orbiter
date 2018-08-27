@@ -165,7 +165,7 @@ void ferdinand(INT level, INT group, INT subgroup,
 
 	cayley_graph_search *Cayley;
 
-	Cayley = new cayley_graph_search;
+	Cayley = NEW_OBJECT(cayley_graph_search);
 
 
 
@@ -272,7 +272,7 @@ void ferdinand(INT level, INT group, INT subgroup,
 
 		colored_graph *CG;
 
-		CG = new colored_graph;
+		CG = NEW_OBJECT(colored_graph);
 
 		CG->init_adjacency(go /* nb_points*/, 2 /* nb_colors */, 
 			Cayley->f_subgroup /*colors*/, Adj, 0 /* verbose_level*/);
@@ -282,7 +282,7 @@ void ferdinand(INT level, INT group, INT subgroup,
 		sprintf(fname, "F_%ld_%ld_%ld.bin", go, create_graph_level, connection_element);
 		CG->save(fname, verbose_level);
 
-		delete CG;
+		FREE_OBJECT(CG);
 		FREE_INT(Adj_list);
 		FREE_INT(Adj);
 		FREE_INT(Additional_neighbor);
@@ -532,7 +532,7 @@ void cayley_graph_search::init_group2(INT verbose_level)
 
 #if 1
 
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	A2->induced_action_by_right_multiplication(FALSE /* f_basis */, S, 
 		S /* Base_group */, FALSE /* f_ownership */, verbose_level);
 #endif
@@ -557,7 +557,7 @@ void cayley_graph_search::init_group_level_3(INT verbose_level)
 	data_size = degree;
 
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_permutation_group(degree, verbose_level);
 
 
@@ -565,7 +565,7 @@ void cayley_graph_search::init_group_level_3(INT verbose_level)
 	Elt2 = NEW_INT(A->elt_size_in_INT);
 
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 
 	if (group == 1) {
@@ -610,7 +610,7 @@ void cayley_graph_search::init_group_level_4(INT verbose_level)
 
 	INT i, j;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 
 	if (group == 2) {
@@ -637,7 +637,7 @@ void cayley_graph_search::init_group_level_4(INT verbose_level)
 	else if (group == 4) {
 		INT q = 2;
 
-		F = new finite_field;
+		F = NEW_OBJECT(finite_field);
 		F->init(q, 0);
 		A->init_affine_group(4, F, 
 			FALSE /* f_semilinear */, 
@@ -654,8 +654,8 @@ void cayley_graph_search::init_group_level_4(INT verbose_level)
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
 	Elt2 = NEW_INT(A->elt_size_in_INT);
-	gens = new vector_ge;
-	gens_subgroup = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
+	gens_subgroup = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens_subgroup->init(A);
 
@@ -865,7 +865,7 @@ void cayley_graph_search::init_group_level_5(INT verbose_level)
 
 	INT i;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 
 	if (group == 1) {
@@ -880,7 +880,7 @@ void cayley_graph_search::init_group_level_5(INT verbose_level)
 	if (group == 1) {
 		INT q = 2;
 
-		F = new finite_field;
+		F = NEW_OBJECT(finite_field);
 		F->init(q, 0);
 		A->init_affine_group(5, F, 
 			FALSE /* f_semilinear */, 
@@ -897,8 +897,8 @@ void cayley_graph_search::init_group_level_5(INT verbose_level)
 
 	Elt1 = NEW_INT(A->elt_size_in_INT);
 	Elt2 = NEW_INT(A->elt_size_in_INT);
-	gens = new vector_ge;
-	gens_subgroup = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
+	gens_subgroup = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens_subgroup->init(A);
 

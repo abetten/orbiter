@@ -1208,7 +1208,7 @@ INT finite_field::base_cols_and_embedding(INT m, INT n, INT *A,
 		cout << "matrix A:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, log10_of_q);
 		}
-	B = new INT[m * n];
+	B = NEW_INT(m * n);
 	INT_vec_copy(A, B, m * n);
 	rk = Gauss_simple(B, m, n, base_cols, verbose_level - 3);
 	j = 0;
@@ -1234,7 +1234,7 @@ INT finite_field::base_cols_and_embedding(INT m, INT n, INT *A,
 		INT_vec_print(cout, embedding, n - rk);
 		cout << endl;
 		}
-	delete [] B;
+	FREE_INT(B);
 	return rk;
 }
 
@@ -3844,8 +3844,8 @@ void finite_field::code_weight_enumerator(
 	if (f_v) {
 		cout << N << " messages" << endl;
 		}
-	msg = new INT[k];
-	word = new INT[n];
+	msg = NEW_INT(k);
+	word = NEW_INT(n);
 
 	INT_vec_zero(weight_enumerator, n + 1);
 	
@@ -3888,8 +3888,8 @@ void finite_field::code_weight_enumerator(
 		}
 
 
-	delete [] msg;
-	delete [] word;
+	FREE_INT(msg);
+	FREE_INT(word);
 }
 
 
@@ -3901,7 +3901,6 @@ void finite_field::code_weight_enumerator_fast(INT n, INT k,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT N, h, wt, i;
-	//INT *weights;
 	INT *msg;
 	INT *word;
 	INT t0, t1, dt;
@@ -3915,9 +3914,8 @@ void finite_field::code_weight_enumerator_fast(INT n, INT k,
 	if (f_v) {
 		cout << N << " projective messages" << endl;
 		}
-	msg = new INT[k];
-	word = new INT[n];
-	//weights = new INT[n + 1];
+	msg = NEW_INT(k);
+	word = NEW_INT(n);
 
 
 	INT_vec_zero(weight_enumerator, n + 1);
@@ -3973,9 +3971,8 @@ void finite_field::code_weight_enumerator_fast(INT n, INT k,
 		}
 
 
-	delete [] msg;
-	delete [] word;
-	//delete [] weights;
+	FREE_INT(msg);
+	FREE_INT(word);
 }
 
 void finite_field::code_projective_weights(
@@ -4001,8 +3998,8 @@ void finite_field::code_projective_weights(
 		cout << N << " projective messages" << endl;
 		}
 	weights = NEW_INT(N);
-	msg = new INT[k];
-	word = new INT[n];
+	msg = NEW_INT(k);
+	word = NEW_INT(n);
 	
 	for (h = 0; h < N; h++) {
 		if ((h % ONE_MILLION) == 0) {
@@ -4028,8 +4025,8 @@ void finite_field::code_projective_weights(
 		}
 
 
-	delete [] msg;
-	delete [] word;
+	FREE_INT(msg);
+	FREE_INT(word);
 }
 
 INT finite_field::is_subspace(INT d, INT dim_U,

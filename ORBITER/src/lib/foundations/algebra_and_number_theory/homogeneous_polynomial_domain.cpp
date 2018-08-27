@@ -65,7 +65,7 @@ void homogeneous_polynomial_domain::freeself()
 		FREE_INT(my_affine);
 		}
 	if (P) {
-		delete P;
+		FREE_OBJECT(P);
 		}
 	if (base_cols) {
 		FREE_INT(base_cols);
@@ -128,7 +128,7 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 
 
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init before P->init" << endl;
 		}
@@ -159,7 +159,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 
 	diophant *D;
 
-	D = new diophant;
+	D = NEW_OBJECT(diophant);
 
 	D->open(1, n);
 	D->fill_coefficient_matrix_with(1);
@@ -193,7 +193,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 		exit(1);
 		}
 
-	delete D;
+	FREE_OBJECT(D);
 	
 
 

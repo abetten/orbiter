@@ -65,9 +65,9 @@ int main(int argc, char **argv)
 
 	n = d - 1; // projective dimension
 
-	v = new INT[d];
-	v2 = new INT[d];
-	Gram = new INT[d * d];
+	v = NEW_INT(d);
+	v2 = NEW_INT(d);
+	Gram = NEW_INT(d * d);
 	
 	cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
 	
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 	
 	cout << "number of points = " << N << endl;
 	
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	
 	F->init(q, verbose_level - 1);
 	F->print(TRUE);
@@ -141,19 +141,19 @@ int main(int argc, char **argv)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
 	sprintf(fname, "O_%ld_%ld_%ld.colored_graph", epsilon, d, q);
 
 	CG->save(fname, verbose_level);
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(Adj);
 	FREE_INT(v);
 	FREE_INT(v2);
 	FREE_INT(Gram);
-	delete F;
+	FREE_OBJECT(F);
 }
 
 

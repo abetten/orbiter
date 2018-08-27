@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init(q, 0);
 
@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 	count(n, k, F, verbose_level);
 
 
-	delete F;
+	FREE_OBJECT(F);
 	
 	the_end(t0);
 }

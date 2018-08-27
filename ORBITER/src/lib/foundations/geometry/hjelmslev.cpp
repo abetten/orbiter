@@ -34,7 +34,7 @@ void hjelmslev::null()
 void hjelmslev::freeself()
 {
 	if (G) {
-		delete G;
+		FREE_OBJECT(G);
 		}
 	if (Mtx) {
 		FREE_INT(Mtx);
@@ -62,7 +62,7 @@ void hjelmslev::init(finite_ring *R, INT n, INT k, INT verbose_level)
 	if (f_v) {
 		cout << "hjelmslev::init n_choose_k_p = " << n_choose_k_p << endl;
 		}
-	G = new grassmann;
+	G = NEW_OBJECT(grassmann);
 	G->init(n, k, R->Fp, verbose_level);
 	Mtx = NEW_INT(k * n);
 	base_cols = NEW_INT(n);

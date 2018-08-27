@@ -67,8 +67,8 @@ int main(int argc, const char **argv)
 	k_arc_generator *K;
 
 	cout << "before creating the finite field" << endl;
-	F = new finite_field;
-	P2 = new projective_space;
+	F = NEW_OBJECT(finite_field);
+	P2 = NEW_OBJECT(projective_space);
 
 
 	F->init(q, 0);
@@ -79,7 +79,7 @@ int main(int argc, const char **argv)
 
 	
 
-	K = new k_arc_generator;
+	K = NEW_OBJECT(k_arc_generator);
 
 	K->init(F, P2, 
 		d, sz, 
@@ -87,9 +87,9 @@ int main(int argc, const char **argv)
 		verbose_level);
 
 
-	delete K;
-	delete P2;
-	delete F;
+	FREE_OBJECT(K);
+	FREE_OBJECT(P2);
+	FREE_OBJECT(F);
 
 	}
 	cout << "Memory usage = " << os_memory_usage()

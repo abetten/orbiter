@@ -6,9 +6,12 @@
 #include "orbiter.h"
 
 void canonical_form(INT *Adj, INT *Adj2, INT n, INT nb_edges, INT *edges2, 
-	INT *labeling, action *&A, action *&A2, schreier *&Sch, INT verbose_level);
-void make_graph_fname(BYTE *fname_full, BYTE *fname_full_tex, INT n, INT *set, INT sz);
-void draw_graph_to_file(const BYTE *fname, INT n, INT *set, INT sz, double scale, INT f_embedded, INT f_sideways);
+	INT *labeling, action *&A, action *&A2, schreier *&Sch,
+	INT verbose_level);
+void make_graph_fname(BYTE *fname_full,
+		BYTE *fname_full_tex, INT n, INT *set, INT sz);
+void draw_graph_to_file(const BYTE *fname, INT n,
+		INT *set, INT sz, double scale, INT f_embedded, INT f_sideways);
 
 int main(int argc, char **argv)
 {
@@ -91,7 +94,8 @@ int main(int argc, char **argv)
 		action *A2;
 		schreier *Sch;
 
-		canonical_form(Adj, Adj2, n, nb_edges, edges2, labeling, A, A2, Sch, verbose_level);
+		canonical_form(Adj, Adj2, n, nb_edges,
+				edges2, labeling, A, A2, Sch, verbose_level);
 
 		cout << "canonical form: " << endl;
 		INT_vec_print(cout, edges2, nb_edges);
@@ -128,9 +132,11 @@ int main(int argc, char **argv)
 			INT_set_print_tex(fp, set, sz);
 
 			make_graph_fname(fname1, fname1_tex, n, set, sz);
-			draw_graph_to_file(fname1, n, set, sz, scale, f_embedded, f_sideways);
+			draw_graph_to_file(fname1, n, set, sz,
+					scale, f_embedded, f_sideways);
 			
-			fp << " & \\mbox{ \\input GRAPHICS/G4/" << fname1_tex << " } ";
+			fp << " & \\mbox{ \\input GRAPHICS/G4/"
+					<< fname1_tex << " } ";
 			for (h = 0; h < sz; h++) {
 				e = set[h];
 				k2ij(e, i, j, n);
@@ -145,7 +151,8 @@ int main(int argc, char **argv)
 			INT f, l, a;
 
 
-			canonical_form(Adj, Adj2, n, sz, edges2, labeling, A, A2, Sch, verbose_level);
+			canonical_form(Adj, Adj2, n, sz,
+					edges2, labeling, A, A2, Sch, verbose_level);
 			fp << " & ";
 			fp << "[";
 			for (h = 0; h < n; h++) {
@@ -158,8 +165,10 @@ int main(int argc, char **argv)
 			fp << " & ";
 			INT_set_print_tex(fp, edges2, sz);
 			make_graph_fname(fname2, fname2_tex, n, edges2, sz);
-			draw_graph_to_file(fname2, n, edges2, sz, scale, f_embedded, f_sideways);
-			fp << " & \\mbox{ \\input GRAPHICS/G4/" << fname2_tex << " } ";
+			draw_graph_to_file(fname2, n,
+					edges2, sz, scale, f_embedded, f_sideways);
+			fp << " & \\mbox{ \\input GRAPHICS/G4/"
+					<< fname2_tex << " } ";
 			fp << " & $";
 			for (h = 0; h < Sch->nb_orbits; h++) {
 				f = Sch->orbit_first[h];
@@ -187,7 +196,8 @@ int main(int argc, char **argv)
 		fp << "\\end{tabular}" << endl;
 
 		}
-		cout << "written file " << fname << " of size " << file_size(fname) << endl;
+		cout << "written file " << fname << " of size "
+				<< file_size(fname) << endl;
 
 		FREE_INT(set);
 		}
@@ -198,14 +208,17 @@ int main(int argc, char **argv)
 	FREE_INT(labeling);
 }
 
-void canonical_form(INT *Adj, INT *Adj2, INT n, INT nb_edges, INT *edges2, 
-	INT *labeling, action *&A, action *&A2, schreier *&Sch, INT verbose_level)
+void canonical_form(INT *Adj, INT *Adj2,
+	INT n, INT nb_edges, INT *edges2,
+	INT *labeling, action *&A, action *&A2,
+	schreier *&Sch, INT verbose_level)
 {
 	//action *A;
 	INT i, j, ii, jj, e, nb_e;
 	
 
-	A = create_automorphism_group_and_canonical_labeling_of_graph(Adj, n, labeling, verbose_level);
+	A = create_automorphism_group_and_canonical_labeling_of_graph(
+			Adj, n, labeling, verbose_level);
 	for (i = 0; i < n; i++) {
 		ii = labeling[i];
 		for (j = 0; j < n; j++) {
@@ -236,13 +249,13 @@ void canonical_form(INT *Adj, INT *Adj2, INT n, INT nb_edges, INT *edges2,
 	A->Strong_gens->print_generators();
 	//action *A2;
 
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_k_subsets(*A, 2, verbose_level);
 
 	//schreier *S;
 
 	cout << "computing orbits on edges:" << endl;
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 	A2->compute_all_point_orbits(*Sch, 
 		*A->Strong_gens->gens, verbose_level);
 	cout << "found " << Sch->nb_orbits << " orbits on edges" << endl;
@@ -252,7 +265,8 @@ void canonical_form(INT *Adj, INT *Adj2, INT n, INT nb_edges, INT *edges2,
 }
 
 
-void make_graph_fname(BYTE *fname_full, BYTE *fname_full_tex, INT n, INT *set, INT sz)
+void make_graph_fname(BYTE *fname_full,
+		BYTE *fname_full_tex, INT n, INT *set, INT sz)
 {
 	INT i;
 	
@@ -265,7 +279,9 @@ void make_graph_fname(BYTE *fname_full, BYTE *fname_full_tex, INT n, INT *set, I
 	sprintf(fname_full_tex + strlen(fname_full_tex), ".tex");
 }
 
-void draw_graph_to_file(const BYTE *fname, INT n, INT *set, INT sz, double scale, INT f_embedded, INT f_sideways)
+void draw_graph_to_file(const BYTE *fname,
+		INT n, INT *set, INT sz, double scale,
+		INT f_embedded, INT f_sideways)
 {
 	INT x_min = 0, x_max = 1000000;
 	INT y_min = 0, y_max = 1000000;
@@ -276,7 +292,8 @@ void draw_graph_to_file(const BYTE *fname, INT n, INT *set, INT sz, double scale
 	dx = x;
 	dy = y;
 	{
-	mp_graphics G(fname, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
+	mp_graphics G(fname, x_min, y_min, x_max, y_max,
+			f_embedded, f_sideways);
 	G.out_xmin() = 0;
 	G.out_ymin() = 0;
 	G.out_xmax() = 1000000;
@@ -296,7 +313,8 @@ void draw_graph_to_file(const BYTE *fname, INT n, INT *set, INT sz, double scale
 	G.end_figure();
 	G.footer();
 	}
-	cout << "written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "written file " << fname << " of size "
+			<< file_size(fname) << endl;
 }
 
 

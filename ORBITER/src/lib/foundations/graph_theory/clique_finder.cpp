@@ -15,7 +15,8 @@
 
 #undef SUSPICOUS
 
-void clique_finder::open_tree_file(const BYTE *fname_base, INT f_decision_nodes_only)
+void clique_finder::open_tree_file(const BYTE *fname_base,
+		INT f_decision_nodes_only)
 {
 	f_write_tree = TRUE;
 	clique_finder::f_decision_nodes_only = f_decision_nodes_only;
@@ -29,7 +30,8 @@ void clique_finder::close_tree_file()
 	*fp_tree << -1 << endl;
 	fp_tree->close();
 	delete fp_tree;
-	cout << "written file " << fname_tree << " of size " << file_size(fname_tree) << endl;
+	cout << "written file " << fname_tree << " of size "
+			<< file_size(fname_tree) << endl;
 }
 
 void clique_finder::init(const BYTE *label, INT n, 
@@ -63,7 +65,8 @@ void clique_finder::init(const BYTE *label, INT n,
 	row_by_row_adjacency_matrix = NULL;
 	
 	if (f_v) {
-		cout << "clique_finder::init " << label << " n=" << n << " target_depth=" << target_depth << endl;
+		cout << "clique_finder::init " << label << " n=" << n
+				<< " target_depth=" << target_depth << endl;
 		cout << "f_has_adj_list=" << f_has_adj_list << endl;
 		cout << "f_has_bitvector=" << f_has_bitvector << endl;
 		}
@@ -137,7 +140,8 @@ void clique_finder::delinearize_adjacency_list(INT verbose_level)
 				aij = adj_list_coded[k];
 				}
 			else {
-				cout << "clique_finder::delinearize_adjacency_list we don't have bitvector or adjacency list" << endl;
+				cout << "clique_finder::delinearize_adjacency_list "
+						"we don't have bitvector or adjacency list" << endl;
 				exit(1);
 				}
 			if (aij) {
@@ -166,18 +170,21 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 	bitmatrix_n = n;
 	size = bitmatrix_m * bitmatrix_N;
 	if (f_v) {
-		cout << "clique_finder::allocate_bitmatrix allocating BITMATRIX of size " << size << endl;
+		cout << "clique_finder::allocate_bitmatrix "
+				"allocating BITMATRIX of size " << size << endl;
 		}
 	bitmatrix_adjacency = NEW_UBYTE(size);
 	f_has_bitmatrix = TRUE;
 
 	if (f_v) {
-		cout << "clique_finder::allocate_bitmatrix adjacency matrix allocated" << endl;
+		cout << "clique_finder::allocate_bitmatrix "
+				"adjacency matrix allocated" << endl;
 		}
 
 
 	if (f_v) {
-		cout << "clique_finder::allocate_bitmatrix initializing adjacency matrix:" << endl;
+		cout << "clique_finder::allocate_bitmatrix "
+				"initializing adjacency matrix:" << endl;
 		}
 
 
@@ -217,7 +224,8 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 		}
 }
 
-void clique_finder::init_restrictions(INT *restrictions, INT verbose_level)
+void clique_finder::init_restrictions(INT *restrictions,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h, i, r, m;
@@ -233,13 +241,15 @@ void clique_finder::init_restrictions(INT *restrictions, INT verbose_level)
 		r = restrictions[h * 3 + 1];
 		m = restrictions[h * 3 + 2];
 		if (i >= target_depth) {
-			cout << "clique_finder::init_restrictions i >= target_depth" << endl;
+			cout << "clique_finder::init_restrictions "
+					"i >= target_depth" << endl;
 			exit(1);
 			}
 		f_level_mod[i] = TRUE;
 		level_r[i] = r;
 		level_m[i] = m;
-		cout << "clique_finder::init_restrictions level " << i << " congruent " << r << " mod " << m << endl;
+		cout << "clique_finder::init_restrictions level "
+				<< i << " congruent " << r << " mod " << m << endl;
 		}
 	if (f_v) {
 		cout << "clique_finder::init_restrictions done" << endl;
@@ -452,7 +462,8 @@ void clique_finder::print_suspicous_point_subset(INT size, INT *set)
 	cout << ")";
 }
 
-void clique_finder::log_position_and_choice(INT depth, INT counter_save, INT counter)
+void clique_finder::log_position_and_choice(INT depth,
+		INT counter_save, INT counter)
 {
 #if 0
 	cout << label << " counter " << counter_save;
@@ -461,7 +472,8 @@ void clique_finder::log_position_and_choice(INT depth, INT counter_save, INT cou
 		}
 	cout << " depth " << depth;
 	//cout << " ";
-	cout << " : " << current_choice[depth] << " / " << nb_candidates[depth];
+	cout << " : " << current_choice[depth]
+			<< " / " << nb_candidates[depth];
 #endif
 	cout << "node " << counter << " at depth " << depth << " : ";
 	log_choice(depth + 1);
@@ -472,7 +484,8 @@ void clique_finder::log_position_and_choice(INT depth, INT counter_save, INT cou
 		}
 }
 
-void clique_finder::log_position(INT depth, INT counter_save, INT counter)
+void clique_finder::log_position(INT depth,
+	INT counter_save, INT counter)
 {
 #if 0
 	cout << label << " counter " << counter_save;
@@ -496,7 +509,9 @@ void clique_finder::log_choice(INT depth)
 
 	cout << "choice ";
 	for (i = 0; i < depth; i++) {
-		cout << i << ": " << current_choice[i] << "/" << nb_candidates[i] << "(" << nb_points[i] << ")";
+		cout << i << ": " << current_choice[i]
+			<< "/" << nb_candidates[i] << "("
+			<< nb_points[i] << ")";
 		if (i < depth - 1)
 			cout << ", ";
 		}
@@ -521,7 +536,8 @@ void clique_finder::swap_point(INT idx1, INT idx2)
 #endif
 }
 
-void clique_finder::degree_of_point_statistic(INT depth, INT nb_points, INT verbose_level)
+void clique_finder::degree_of_point_statistic(INT depth,
+		INT nb_points, INT verbose_level)
 {
 	INT *D;
 	INT i;
@@ -570,7 +586,8 @@ INT clique_finder::degree_of_point_verbose(INT i, INT nb_points)
 		ptj = pt_list[j];
 		if (is_suspicous(pti) && is_suspicous(ptj)) {
 			if (!is_adjacent(pti, ptj)) {
-				cout << "the suspicous points " << pti << " and " << ptj << " are not adjacent" << endl;
+				cout << "the suspicous points " << pti
+					<< " and " << ptj << " are not adjacent" << endl;
 				exit(1);
 				}
 			}
@@ -626,7 +643,8 @@ INT clique_finder::is_adjacent(INT depth, INT i, INT j)
 	return a;
 }
 
-void clique_finder::write_entry_to_tree_file(INT depth, INT verbose_level)
+void clique_finder::write_entry_to_tree_file(INT depth,
+		INT verbose_level)
 {
 	INT i;
 	
@@ -683,11 +701,13 @@ void clique_finder::m_iji(INT i, INT j, INT a)
 	n = bitmatrix_n;
 	//N = bitmatrix_N;
 	if (i < 0 || i >= m) {
-		cout << "clique_finder::m_iji() addressing error, i = " << i << ", m = " << m << endl;
+		cout << "clique_finder::m_iji() addressing error, i = "
+				<< i << ", m = " << m << endl;
 		exit(1);		
 		}
 	if (j < 0 || j >= n) {
-		cout << "clique_finder::m_iji() addressing error, j = " << j << ", n = " << n << endl;
+		cout << "clique_finder::m_iji() addressing error, j = "
+				<< j << ", n = " << n << endl;
 		exit(1);		
 		}
 
@@ -713,11 +733,13 @@ INT clique_finder::s_ij(INT i, INT j)
 	INT k, aij;
 	
 	if ( i < 0 || i >= n ) {
-		cout << "clique_finder::s_ij() addressing error, i = " << i << ", n = " << n << endl;
+		cout << "clique_finder::s_ij() addressing error, i = "
+				<< i << ", n = " << n << endl;
 		exit(1);	
 		}
 	if ( j < 0 || j >= n ) {
-		cout << "clique_finder::s_ij() addressing error, j = " << j << ", n = " << n << endl;
+		cout << "clique_finder::s_ij() addressing error, j = "
+				<< j << ", n = " << n << endl;
 		exit(1);	
 		}
 	if (i == j) {
@@ -799,7 +821,8 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 		// We found a clique:
 
 		if (f_v) {
-			cout << "clique_finder::backtrack_search depth == target_depth" << endl;
+			cout << "clique_finder::backtrack_search "
+					"depth == target_depth" << endl;
 			}
 		if (f_store_solutions) {
 			//cout << "storing solution" << endl;
@@ -814,12 +837,14 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 			}
 		nb_sol++;
 		
-		//cout << "clique_finder::backtrack_search before call_back_clique_found" << endl;
+		//cout << "clique_finder::backtrack_search before
+		//call_back_clique_found" << endl;
 		if (call_back_clique_found) {
 			//cout << "calling call_back_clique_found" << endl;
 			(*call_back_clique_found)(this, verbose_level);
 			}
-		//cout << "solution " << nb_sol << ", found a clique of size target_depth" << endl;
+		//cout << "solution " << nb_sol << ", found a clique
+		//of size target_depth" << endl;
 		//cout << "clique";
 		//INT_set_print(cout, current_clique, depth);
 		//cout << " depth = " << depth << endl;
@@ -845,10 +870,14 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 
 	if (f_v && depth) {
 		log_position(depth, counter_save, counter);
-		cout << " : # active points from previous level is " << nb_old << endl;
-		//cout << " : previous lvl_pt_list[" << depth - 1 << "] of size " << nb_old << " : " << endl;
-		////INT_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
-		//print_point_set(depth, counter_save, counter, nb_old, lvl_pt_list[depth - 1]);
+		cout << " : # active points from previous level is "
+				<< nb_old << endl;
+		//cout << " : previous lvl_pt_list[" << depth - 1
+		//<< "] of size " << nb_old << " : " << endl;
+		////INT_vec_print(cout, lvl_pt_list[depth - 1],
+		//lvl_nb_points[depth - 1]);
+		//print_point_set(depth, counter_save, counter,
+		//nb_old, lvl_pt_list[depth - 1]);
 		//cout << endl;
 		}
 #endif
@@ -856,7 +885,8 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 	// first pass:
 	// if depth > 0 and we are not using call_back_find_candidates, 
 	// we apply the lexicographical ordering test.
-	// the points are required to be greater than the previous point in the clique.
+	// the points are required to be greater than
+	// the previous point in the clique.
 	// this also eliminates the point 
 	// that was added to the clique in the previous step from pt_list.
 	
@@ -942,8 +972,10 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 					point_is_suspicous[pt_list[i]]) {
 					log_position(depth, counter_save, counter);
 					cout << " : pass " << pass 
-						<< ": suspicous point " << point_label(pt_list[i]) << " eliminated, d=" << d 
-						<< " is less than target_depth - depth - 1 = " << target_depth - depth - 1 << endl;;
+						<< ": suspicous point " << point_label(pt_list[i])
+						<< " eliminated, d=" << d
+						<< " is less than target_depth - depth - 1 = "
+						<< target_depth - depth - 1 << endl;;
 					degree_of_point_verbose(i, nb_old);
 					}
 				}
@@ -966,7 +998,8 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 	
 	if (f_v) {
 		log_position(depth, counter_save, counter);
-		cout << "after " << pass << " passes: nb_points = " << nb_new << endl;
+		cout << "after " << pass << " passes: nb_points = "
+				<< nb_new << endl;
 		}
 	
 
@@ -975,7 +1008,8 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 			log_position(depth, counter_save, counter);
 			cout << " before call_back_after_reduction" << endl;
 			}
-		(*call_back_after_reduction)(this, depth, nb_points[depth], verbose_level);
+		(*call_back_after_reduction)(this, depth,
+				nb_points[depth], verbose_level);
 		if (f_v) {
 			log_position(depth, counter_save, counter);
 			cout << " after call_back_after_reduction" << endl;
@@ -1001,7 +1035,8 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 
 		if (f_v) {
 			log_position(depth, counter_save, counter);
-			cout << " after call_back_find_candidates nb_candidates=" << nb_candidates[depth] << endl;
+			cout << " after call_back_find_candidates nb_candidates="
+					<< nb_candidates[depth] << endl;
 			}
 		// The set of candidates is stored in 
 		// candidates + depth * n.
@@ -1034,18 +1069,22 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 
 	// added Dec 2014:
 	if (f_has_print_current_choice_function) {
-		(*call_back_print_current_choice)(this, depth, print_current_choice_data, verbose_level);
+		(*call_back_print_current_choice)(this, depth,
+				print_current_choice_data, verbose_level);
 		}
 	
 	// Now we are ready to go in the backtrack search.
 	// We'll try each of the points in candidates one by one:
 
-	for (current_choice[depth] = 0; current_choice[depth] < nb_candidates[depth]; current_choice[depth]++, level_counter[depth]++) {
+	for (current_choice[depth] = 0;
+			current_choice[depth] < nb_candidates[depth];
+			current_choice[depth]++, level_counter[depth]++) {
 
 
 		if (f_v) {
 			log_position(depth, counter_save, counter);
-			cout << " choice " << current_choice[depth] << " / " << nb_candidates[depth] << endl;
+			cout << " choice " << current_choice[depth] << " / "
+					<< nb_candidates[depth] << endl;
 			}
 
 		f_go = TRUE;  // Whether we want to go in the recursion.
@@ -1088,7 +1127,8 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 				cout << " : considering clique ";
 				print_set(depth + 1, current_clique);
 				//INT_set_print(cout, current_clique, depth);
-				cout << " depth = " << depth << " nb_old=" << nb_old << endl;
+				cout << " depth = " << depth << " nb_old="
+						<< nb_old << endl;
 				f_go = TRUE;
 				}
 			else {
@@ -1163,11 +1203,13 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 
 	if (depth == target_depth) {
 		nb_sol++;
-		//cout << "clique_finder::backtrack_search before call_back_clique_found" << endl;
+		//cout << "clique_finder::backtrack_search before
+		//call_back_clique_found" << endl;
 		if (call_back_clique_found) {
 			(*call_back_clique_found)(this, verbose_level);
 			}
-		//cout << "solution " << nb_sol << ", found a clique of size target_depth" << endl;
+		//cout << "solution " << nb_sol << ", found a clique
+		//of size target_depth" << endl;
 		//cout << "clique";
 		//INT_set_print(cout, current_clique, depth);
 		//cout << " depth = " << depth << endl;
@@ -1193,10 +1235,14 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 
 	if (f_v && depth) {
 		log_position(depth, counter_save, counter);
-		cout << " : # active points from previous level is " << nb_old << endl;
-		//cout << " : previous lvl_pt_list[" << depth - 1 << "] of size " << nb_old << " : " << endl;
-		////INT_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
-		//print_point_set(depth, counter_save, counter, nb_old, lvl_pt_list[depth - 1]);
+		cout << " : # active points from previous level is "
+				<< nb_old << endl;
+		//cout << " : previous lvl_pt_list[" << depth - 1
+		//<< "] of size " << nb_old << " : " << endl;
+		////INT_vec_print(cout, lvl_pt_list[depth - 1],
+		// lvl_nb_points[depth - 1]);
+		//print_point_set(depth, counter_save, counter,
+		//nb_old, lvl_pt_list[depth - 1]);
 		//cout << endl;
 		}
 #endif
@@ -1204,7 +1250,8 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 	// first pass:
 	// if depth > 0 and we are not using call_back_find_candidates, 
 	// we apply the lexicographical ordering test.
-	// the points are required to be greater than the previous point in the clique.
+	// the points are required to be greater than the
+	// previous point in the clique.
 	// this also eliminates the point 
 	// that was added to the clique in the previous step from pt_list.
 	
@@ -1272,8 +1319,11 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 					point_is_suspicous[pt_list[i]]) {
 					log_position(depth, counter_save, counter);
 					cout << " : pass " << pass 
-						<< ": suspicous point " << point_label(pt_list[i]) << " eliminated, d=" << d 
-						<< " is less than target_depth - depth - 1 = " << target_depth - depth - 1 << endl;;
+						<< ": suspicous point "
+						<< point_label(pt_list[i])
+						<< " eliminated, d=" << d
+						<< " is less than target_depth - depth - 1 = "
+						<< target_depth - depth - 1 << endl;;
 					degree_of_point_verbose(i, nb_old);
 					}
 				}
@@ -1296,12 +1346,14 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 	
 	if (f_v) {
 		log_position(depth, counter_save, counter);
-		cout << "after " << pass << " passes: nb_points = " << nb_new << endl;
+		cout << "after " << pass << " passes: "
+				"nb_points = " << nb_new << endl;
 		}
 	
 
 	if (call_back_after_reduction) {
-		(*call_back_after_reduction)(this, depth, nb_points[depth], verbose_level);
+		(*call_back_after_reduction)(this, depth,
+				nb_points[depth], verbose_level);
 		}
 
 
@@ -1342,7 +1394,9 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 
 
 
-	for (current_choice[depth] = 0; current_choice[depth] < nb_candidates[depth]; current_choice[depth]++, level_counter[depth]++) {
+	for (current_choice[depth] = 0;
+			current_choice[depth] < nb_candidates[depth];
+			current_choice[depth]++, level_counter[depth]++) {
 
 		pt = candidates[depth * n + current_choice[depth]];
 
@@ -1373,7 +1427,8 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 				cout << " : considering clique ";
 				print_set(depth + 1, current_clique);
 				//INT_set_print(cout, current_clique, depth);
-				cout << " depth = " << depth << " nb_old=" << nb_old << endl;
+				cout << " depth = " << depth << " nb_old="
+						<< nb_old << endl;
 				f_go = TRUE;
 				}
 			else {
@@ -1412,7 +1467,8 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 	return FALSE;
 }
 
-void clique_finder::get_solutions(INT *&Sol, INT &nb_solutions, INT &clique_sz, INT verbose_level)
+void clique_finder::get_solutions(INT *&Sol,
+		INT &nb_solutions, INT &clique_sz, INT verbose_level)
 {
 	INT i, j;
 	
@@ -1428,7 +1484,9 @@ void clique_finder::get_solutions(INT *&Sol, INT &nb_solutions, INT &clique_sz, 
 		}
 }
 
-void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz, INT *&Sol, INT &nb_sol, INT verbose_level)
+void all_cliques_of_given_size(INT *Adj,
+		INT nb_pts, INT clique_sz, INT *&Sol, INT &nb_sol,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *adj_list_coded;
@@ -1446,7 +1504,8 @@ void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz, INT *&Sol, I
 	n2 = (nb_pts * (nb_pts - 1)) >> 1;
 	adj_list_coded = NEW_INT(n2);
 	h = 0;
-	cout << "all_cliques_of_given_size: computing adj_list_coded" << endl;
+	cout << "all_cliques_of_given_size: "
+			"computing adj_list_coded" << endl;
 	for (i = 0; i < nb_pts; i++) {
 		for (j = i + 1; j < nb_pts; j++) {
 			adj_list_coded[h++] = Adj[i * nb_pts + j];
@@ -1470,7 +1529,8 @@ void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz, INT *&Sol, I
 	C->backtrack_search(0 /* depth */, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "all_cliques_of_given_size done with search, we found " << C->nb_sol << " solutions" << endl;
+		cout << "all_cliques_of_given_size done with search, "
+				"we found " << C->nb_sol << " solutions" << endl;
 		}
 
 	INT sz;
@@ -1528,7 +1588,8 @@ entrance_point:
 		// We found a clique:
 
 		if (f_v) {
-			cout << "clique_finder::backtrack_search depth == target_depth" << endl;
+			cout << "clique_finder::backtrack_search "
+					"depth == target_depth" << endl;
 			}
 		if (f_store_solutions) {
 			//cout << "storing solution" << endl;
@@ -1543,12 +1604,14 @@ entrance_point:
 			}
 		nb_sol++;
 		
-		//cout << "clique_finder::backtrack_search before call_back_clique_found" << endl;
+		//cout << "clique_finder::backtrack_search
+		// before call_back_clique_found" << endl;
 		if (call_back_clique_found) {
 			//cout << "calling call_back_clique_found" << endl;
 			(*call_back_clique_found)(this, verbose_level);
 			}
-		//cout << "solution " << nb_sol << ", found a clique of size target_depth" << endl;
+		//cout << "solution " << nb_sol << ", found a clique
+		// of size target_depth" << endl;
 		//cout << "clique";
 		//INT_set_print(cout, current_clique, depth);
 		//cout << " depth = " << depth << endl;
@@ -1574,10 +1637,14 @@ entrance_point:
 
 	if (f_v && depth) {
 		log_position(depth, counter_save, counter);
-		cout << " : # active points from previous level is " << nb_old << endl;
-		//cout << " : previous lvl_pt_list[" << depth - 1 << "] of size " << nb_old << " : " << endl;
-		////INT_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
-		//print_point_set(depth, counter_save, counter, nb_old, lvl_pt_list[depth - 1]);
+		cout << " : # active points from previous level is "
+				<< nb_old << endl;
+		//cout << " : previous lvl_pt_list[" << depth - 1
+		// << "] of size " << nb_old << " : " << endl;
+		////INT_vec_print(cout, lvl_pt_list[depth - 1],
+		// lvl_nb_points[depth - 1]);
+		//print_point_set(depth, counter_save, counter,
+		// nb_old, lvl_pt_list[depth - 1]);
 		//cout << endl;
 		}
 #endif
@@ -1585,7 +1652,8 @@ entrance_point:
 	// first pass:
 	// if depth > 0 and we are not using call_back_find_candidates, 
 	// we apply the lexicographical ordering test.
-	// the points are required to be greater than the previous point in the clique.
+	// the points are required to be greater than the
+	// previous point in the clique.
 	// this also eliminates the point 
 	// that was added to the clique in the previous step from pt_list.
 	
@@ -1671,8 +1739,11 @@ entrance_point:
 					point_is_suspicous[pt_list[i]]) {
 					log_position(depth, counter_save, counter);
 					cout << " : pass " << pass 
-						<< ": suspicous point " << point_label(pt_list[i]) << " eliminated, d=" << d 
-						<< " is less than target_depth - depth - 1 = " << target_depth - depth - 1 << endl;;
+						<< ": suspicous point "
+						<< point_label(pt_list[i])
+						<< " eliminated, d=" << d
+						<< " is less than target_depth - depth - 1 = "
+						<< target_depth - depth - 1 << endl;;
 					degree_of_point_verbose(i, nb_old);
 					}
 				}
@@ -1695,7 +1766,8 @@ entrance_point:
 	
 	if (f_v) {
 		log_position(depth, counter_save[depth], counter);
-		cout << "after " << pass[depth] << " passes: nb_points = " << nb_new[depth] << endl;
+		cout << "after " << pass[depth] << " passes: "
+				"nb_points = " << nb_new[depth] << endl;
 		}
 	
 
@@ -1704,7 +1776,8 @@ entrance_point:
 			log_position(depth, counter_save[depth], counter);
 			cout << " before call_back_after_reduction" << endl;
 			}
-		(*call_back_after_reduction)(this, depth, nb_points[depth], verbose_level);
+		(*call_back_after_reduction)(this, depth,
+				nb_points[depth], verbose_level);
 		if (f_v) {
 			log_position(depth, counter_save[depth], counter);
 			cout << " after call_back_after_reduction" << endl;
@@ -1730,7 +1803,8 @@ entrance_point:
 
 		if (f_v) {
 			log_position(depth, counter_save[depth], counter);
-			cout << " after call_back_find_candidates nb_candidates=" << nb_candidates[depth] << endl;
+			cout << " after call_back_find_candidates "
+					"nb_candidates=" << nb_candidates[depth] << endl;
 			}
 		// The set of candidates is stored in 
 		// candidates + depth * n.
@@ -1755,7 +1829,8 @@ entrance_point:
 		// If we don't have a find_candidates callback, 
 		// we take all the points into consideration:
 
-		INT_vec_copy(pt_list, candidates + depth * n, nb_points[depth]);
+		INT_vec_copy(pt_list, candidates + depth * n,
+				nb_points[depth]);
 		nb_candidates[depth] = nb_points[depth];
 		}
 	}
@@ -1763,18 +1838,22 @@ entrance_point:
 
 	// added Dec 2014:
 	if (f_has_print_current_choice_function) {
-		(*call_back_print_current_choice)(this, depth, print_current_choice_data, verbose_level);
+		(*call_back_print_current_choice)(this, depth,
+				print_current_choice_data, verbose_level);
 		}
 	
 	// Now we are ready to go in the backtrack search.
 	// We'll try each of the points in candidates one by one:
 
-	for (current_choice[depth] = 0; current_choice[depth] < nb_candidates[depth]; current_choice[depth]++, level_counter[depth]++) {
+	for (current_choice[depth] = 0;
+			current_choice[depth] < nb_candidates[depth];
+			current_choice[depth]++, level_counter[depth]++) {
 
 
 		if (f_v) {
 			log_position(depth, counter_save[depth], counter);
-			cout << " choice " << current_choice[depth] << " / " << nb_candidates[depth] << endl;
+			cout << " choice " << current_choice[depth]
+				<< " / " << nb_candidates[depth] << endl;
 			}
 
 		f_go[depth] = TRUE;  // Whether we want to go in the recursion.

@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	if (f_v) {
 		cout << "creating finite field:" << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, verbose_level);
 
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 		}
 
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "before P->init" << endl;
@@ -147,8 +147,8 @@ int main(int argc, char **argv)
 		FREE_INT(Coord);
 		}
 
-	delete P;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(F);
 
 	the_end(t0);
 }

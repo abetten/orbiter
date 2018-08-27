@@ -477,8 +477,8 @@ void mp_graphics::draw_axes_and_grid(
 {
 	double *Dx, *Dy;
 	INT *Px, *Py;
-	double dx = ONE_MILLION * 50 * x_stretch;
-	double dy = ONE_MILLION * 50 * y_stretch;
+	double dx = x_stretch;//ONE_MILLION * 50 * x_stretch;
+	double dy = y_stretch;//ONE_MILLION * 50 * y_stretch;
 	INT N = 1000;
 	INT n;
 	INT i, j, h;

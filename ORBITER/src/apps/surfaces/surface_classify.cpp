@@ -53,7 +53,7 @@ int main(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-linear") == 0) {
 			f_linear = TRUE;
-			Descr = new linear_group_description;
+			Descr = NEW_OBJECT(linear_group_description);
 			i += Descr->read_arguments(argc - (i - 1), argv + i, verbose_level);
 
 			cout << "-linear" << endl;
@@ -82,7 +82,20 @@ int main(int argc, const char **argv)
 			f_draw_poset_full = TRUE;
 			cout << "-draw_poset_full" << endl;
 			}
+		else if (strcmp(argv[i], "-memory_debug") == 0) {
+			f_memory_debug = TRUE;
+			cout << "-memory_debug" << endl;
+			}
+		else if (strcmp(argv[i], "-memory_debug_verbose_level") == 0) {
+			memory_debug_verbose_level = atoi(argv[++i]);
+			cout << "-memory_debug_verbose_level " << memory_debug_verbose_level << endl;
+			}
 		}
+
+
+
+	//f_memory_debug = TRUE;
+	//f_memory_debug_verbose = TRUE;
 
 	if (!f_linear) {
 		cout << "please use option -linear ..." << endl;
@@ -92,7 +105,7 @@ int main(int argc, const char **argv)
 	INT f_v = (verbose_level >= 1);
 	
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(Descr->input_q, 0);
 
 	Descr->F = F;
@@ -100,7 +113,7 @@ int main(int argc, const char **argv)
 	
 
 
-	LG = new linear_group;
+	LG = NEW_OBJECT(linear_group);
 	if (f_v) {
 		cout << "surface_classify before LG->init, creating the group" << endl;
 		}
@@ -113,7 +126,7 @@ int main(int argc, const char **argv)
 
 	surface_classify_wedge *SCW;
 
-	SCW = new surface_classify_wedge;
+	SCW = NEW_OBJECT(surface_classify_wedge);
 
 	if (f_v) {
 		cout << "surface_classify before SCW->init" << endl;
@@ -449,6 +462,13 @@ int main(int argc, const char **argv)
 		cout << "surface_classify after SCW->derived_arcs" << endl;
 		}
 #endif
+
+
+
+	if (f_memory_debug) {
+		//registry_dump_sorted_by_size();
+		global_mem_object_registry.dump();
+	}
 
 
 

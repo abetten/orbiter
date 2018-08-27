@@ -53,7 +53,7 @@ void do_it(INT verbose_level)
 	INT i, j, h;
 	INT nb_G, nb_S;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
@@ -63,7 +63,7 @@ void do_it(INT verbose_level)
 
 	nb_G = 2;
 	nb_S = 6;
-	gens_G = new vector_ge;
+	gens_G = NEW_OBJECT(vector_ge);
 	gens_G->init(A);
 	gens_G->allocate(nb_G);
 
@@ -215,7 +215,7 @@ void do_it(INT verbose_level)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
 	sprintf(fname, "Shrikhande.colored_graph");
@@ -225,12 +225,12 @@ void do_it(INT verbose_level)
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
 
 
-	delete CG;
+	FREE_OBJECT(CG);
 	FREE_INT(Adj);
 	FREE_INT(Elt1);
 	FREE_INT(Elt2);
 	FREE_INT(v);
-	delete gens_G;
+	FREE_OBJECT(gens_G);
 	for (i = 0; i < nb_S; i++) {
 		FREE_INT(Elt_S[i]);
 		}

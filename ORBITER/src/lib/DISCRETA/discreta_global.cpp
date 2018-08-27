@@ -17,8 +17,8 @@ void the_end(INT t0)
 	if (f_memory_debug) {
 		cout << "freeing global data" << endl;
 		free_global_data();
-		registry_dump();
-		registry_dump_sorted();
+		//registry_dump();
+		//registry_dump_sorted();
 		}
 	time_check(cout, t0);
 	cout << endl;

@@ -79,7 +79,7 @@ int main(void)
 
 	diophant *D;
 
-	D = new diophant;
+	D = NEW_OBJECT(diophant);
 
 	D->open(nb_eqns, nb_vars);
 	D->fill_coefficient_matrix_with(0);
@@ -102,7 +102,7 @@ int main(void)
 	set_of_sets *L;
 	INT l;
 
-	L = new set_of_sets;
+	L = NEW_OBJECT(set_of_sets);
 	L->init_basic_constant_size(nb_vars, 
 		nb_sol, sol_length, 0 /* verbose_level */);
 
@@ -299,7 +299,7 @@ int main(void)
 			}
 		}
 #endif
-	delete D;
+	FREE_OBJECT(D);
 }
 
 INT has_interlocking_Ps(INT *set)

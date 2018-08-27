@@ -195,7 +195,7 @@ int main(int argc, char **argv)
 	if (f_v) {
 		cout << "creating finite field:" << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, verbose_level);
 
 
@@ -204,7 +204,7 @@ int main(int argc, char **argv)
 		}
 
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "before P->init" << endl;
@@ -428,7 +428,7 @@ void arc_lifting_from_classification_file(const BYTE *classification_fname,
 		f_semilinear = TRUE;
 		}
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_projective_group(3, F, f_semilinear, f_basis, 0 /*verbose_level*/);
 
 	if (f_v) {
@@ -441,7 +441,7 @@ void arc_lifting_from_classification_file(const BYTE *classification_fname,
 		}
 	orbit_transversal *T;
 
-	T = new orbit_transversal;
+	T = NEW_OBJECT(orbit_transversal);
 	T->read_from_file(A, A, classification_fname, verbose_level - 1);
 
 	if (f_v) {
@@ -630,7 +630,7 @@ void do_arc_lifting(projective_space *P, INT k,
 	else {
 		f_semilinear = TRUE;
 		}
-	A_linear = new action;
+	A_linear = NEW_OBJECT(action);
 	A_linear->init_projective_group(P->n + 1, F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
 	
 
@@ -699,7 +699,7 @@ void do_arc_lifting(projective_space *P, INT k,
 	
 	INT h;
 	
-	D = new diophant;
+	D = NEW_OBJECT(diophant);
 	D->open(P->N_lines + 1, nb_free_points);
 	D->f_x_max = TRUE;
 	for (j = 0; j < nb_free_points; j++) {
@@ -1049,8 +1049,8 @@ void do_arc_lifting(projective_space *P, INT k,
 #endif
 	
 
-	delete D;
-	delete A_linear;
+	FREE_OBJECT(D);
+	FREE_OBJECT(A_linear);
 	FREE_INT(type_collected);
 	FREE_INT(Coord);
 

@@ -106,7 +106,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	longinteger_object go;
 	INT goi;
 
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
@@ -124,7 +124,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	generators_dihedral_group(n, nb_G, perms, verbose_level);
 
 
-	gens_G = new vector_ge;
+	gens_G = NEW_OBJECT(vector_ge);
 	gens_G->init(A);
 	gens_G->allocate(nb_G);
 
@@ -166,7 +166,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	nb_S = 2 * (phi_n + phi_n_over_d);
 
 
-	gens_S = new vector_ge;
+	gens_S = NEW_OBJECT(vector_ge);
 	gens_S->init(A);
 	gens_S->allocate(nb_S);
 
@@ -248,7 +248,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
 	sprintf(fname, "Cayley_D_%ld_%ld.colored_graph", n, d);
@@ -256,7 +256,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	CG->save(fname, verbose_level);
 
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
-	delete CG;
+	FREE_OBJECT(CG);
 	}
 
 
@@ -276,7 +276,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	colored_graph *CG;
 	BYTE fname[1000];
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
 	sprintf(fname, "Cayley_D_%ld_%ld_complement.colored_graph", n, d);
@@ -284,17 +284,17 @@ void do_D1(INT n, INT d, INT verbose_level)
 	CG->save(fname, verbose_level);
 
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
-	delete CG;
+	FREE_OBJECT(CG);
 	}
 
 	FREE_INT(Adj);
 	FREE_INT(Elt1);
 	FREE_INT(Elt2);
 
-	delete G;
-	delete gens_G;
-	delete gens_S;
-	delete A;
+	FREE_OBJECT(G);
+	FREE_OBJECT(gens_G);
+	FREE_OBJECT(gens_S);
+	FREE_OBJECT(A);
 	FREE_INT(perms);
 	FREE_INT(Rn);
 	FREE_INT(Rn_over_d);

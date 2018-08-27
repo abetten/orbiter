@@ -134,7 +134,7 @@ void do_it_for_sym_n(INT n, INT verbose_level)
 {
 	young *Y;
 
-	Y = new young;
+	Y = NEW_OBJECT(young);
 
 	Y->init(n, verbose_level);
 
@@ -265,7 +265,7 @@ void do_it_for_sym_n(INT n, INT verbose_level)
 	FREE_INT(Base);
 	FREE_INT(Base_inv);
 	cout << "before freeing Y" << endl;
-	delete Y;
+	FREE_OBJECT(Y);
 	cout << "before freeing elt1" << endl;
 	FREE_INT(elt1);
 	FREE_INT(elt2);
@@ -281,7 +281,7 @@ void do_it_for_sym_4(INT n, INT verbose_level)
 {
 	young *Y;
 
-	Y = new young;
+	Y = NEW_OBJECT(young);
 
 	Y->init(n, verbose_level);
 
@@ -421,7 +421,7 @@ void do_it_for_sym_4(INT n, INT verbose_level)
 	FREE_INT(Base);
 	FREE_INT(Base_inv);
 	cout << "before freeing Y" << endl;
-	delete Y;
+	FREE_OBJECT(Y);
 	cout << "before freeing elt1" << endl;
 	FREE_INT(elt1);
 	FREE_INT(elt2);

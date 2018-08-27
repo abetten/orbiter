@@ -24,8 +24,8 @@ void do_cone_over(INT n, finite_field *F,
 	if (f_v) {
 		cout << "do_cone_over" << endl;
 		}
-	P1 = new projective_space;
-	P2 = new projective_space;
+	P1 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(projective_space);
 	
 	P1->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -68,9 +68,8 @@ void do_cone_over(INT n, finite_field *F,
 		}
 
 	FREE_INT(v);
-	delete P1;
-	delete P2;
-
+	FREE_OBJECT(P1);
+	FREE_OBJECT(P2);
 }
 
 void do_blocking_set_family_3(INT n, finite_field *F, 
@@ -95,7 +94,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 		cout << "do_blocking_set_family_3 we need set_size == q + 2" << endl;
 		exit(1);
 		}
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -113,7 +112,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 
 	fancy_set *S;
 
-	S = new fancy_set;
+	S = NEW_OBJECT(fancy_set);
 
 	S->init(P->N_lines, 0);
 	S->k = 0;
@@ -284,7 +283,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 	
 	
 	
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void create_hyperoval(finite_field *F, 
@@ -301,7 +300,7 @@ void create_hyperoval(finite_field *F,
 	INT q = F->q;
 
 	d = n + 1;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "create_hyperoval" << endl;
@@ -362,7 +361,7 @@ void create_hyperoval(finite_field *F,
 		exit(1);
 		}
 
-	delete P;
+	FREE_OBJECT(P);
 	FREE_INT(v);
 	//FREE_INT(L);
 }
@@ -395,7 +394,7 @@ void create_subiaco_oval(finite_field *F,
 		projective_space *P;
 
 		v = NEW_INT(d);
-		P = new projective_space;
+		P = NEW_OBJECT(projective_space);
 
 	
 		P->init(n, F, 
@@ -411,7 +410,7 @@ void create_subiaco_oval(finite_field *F,
 				}
 			}
 		FREE_INT(v);
-		delete P;
+		FREE_OBJECT(P);
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
@@ -443,7 +442,7 @@ void create_subiaco_hyperoval(finite_field *F,
 		projective_space *P;
 
 		v = NEW_INT(d);
-		P = new projective_space;
+		P = NEW_OBJECT(projective_space);
 
 	
 		P->init(n, F, 
@@ -459,7 +458,7 @@ void create_subiaco_hyperoval(finite_field *F,
 				}
 			}
 		FREE_INT(v);
-		delete P;
+		FREE_OBJECT(P);
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
@@ -492,7 +491,7 @@ void create_adelaide_hyperoval(subfield_structure *S,
 		projective_space *P;
 
 		v = NEW_INT(d);
-		P = new projective_space;
+		P = NEW_OBJECT(projective_space);
 
 	
 		P->init(n, F, 
@@ -508,7 +507,7 @@ void create_adelaide_hyperoval(subfield_structure *S,
 				}
 			}
 		FREE_INT(v);
-		delete P;
+		FREE_OBJECT(P);
 		}
 
 	if (!test_if_set_with_return_value(Pts, nb_pts)) {
@@ -531,7 +530,7 @@ void create_ovoid(finite_field *F,
 	INT q = F->q;
 
 	d = n + 1;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	
 	P->init(n, F, 
@@ -574,7 +573,7 @@ void create_ovoid(finite_field *F,
 	sprintf(fname, "ovoid_%ld.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
-	delete P;
+	FREE_OBJECT(P);
 	FREE_INT(v);
 	FREE_INT(w);
 	//FREE_INT(L);
@@ -593,7 +592,7 @@ void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq,
 	INT i, j, a, b, index, f_is_in_subfield;
 
 	//Q = q * q;
-	P2 = new projective_space;
+	P2 = NEW_OBJECT(projective_space);
 
 	P2->init(n, FQ, 
 		FALSE /* f_init_incidence_structure */, 
@@ -646,7 +645,7 @@ void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq,
 
 	FREE_INT(v);
 	//FREE_INT(S);
-	delete P2;
+	FREE_OBJECT(P2);
 }
 
 
@@ -713,7 +712,7 @@ void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k,
 
 	FREE_INT(v);
 	//FREE_INT(L);
-	delete F;
+	//delete F;
 }
 
 void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq, 
@@ -739,7 +738,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 	if (f_v) {
 		cout << "create_BLT" << endl;
 		}
-	O = new orthogonal;
+	O = NEW_OBJECT(orthogonal);
 	if (f_v) {
 		cout << "create_BLT before O->init" << endl;
 		}
@@ -820,7 +819,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 	FREE_INT(Pts1);
 	FREE_INT(v);
 	//FREE_INT(L);
-	delete O;
+	FREE_OBJECT(O);
 #endif
 }
 
@@ -887,7 +886,7 @@ void create_hermitian(INT n, finite_field *F,
 	INT *v;
 	hermitian *H;
 
-	H = new hermitian;
+	H = NEW_OBJECT(hermitian);
 	H->init(F, d, verbose_level - 1);
 
 	nb_pts = H->cnt_Sbar[d];
@@ -924,7 +923,7 @@ void create_hermitian(INT n, finite_field *F,
 
 
 	FREE_INT(v);
-	delete H;
+	FREE_OBJECT(H);
 	//FREE_INT(L);
 }
 
@@ -942,7 +941,7 @@ void create_twisted_cubic(finite_field *F,
 	INT q = F->q;
 
 	d = n + 1;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	
 	P->init(n, F, 
@@ -986,7 +985,7 @@ void create_twisted_cubic(finite_field *F,
 	sprintf(fname, "twisted_cubic_%ld.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
-	delete P;
+	FREE_OBJECT(P);
 	FREE_INT(v);
 	//FREE_INT(L);
 }
@@ -1028,7 +1027,7 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 		}
 	
 	d = m;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	
 	P->init(d - 1, Fq, 
@@ -1084,7 +1083,7 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
-	delete P;
+	FREE_OBJECT(P);
 	FREE_INT(v);
 	FREE_INT(H_subfield);
 }
@@ -1100,7 +1099,7 @@ void create_unital_XXq_YZq_ZYq(finite_field *F,
 	INT *v;
 
 	d = n + 1;
-	P2 = new projective_space;
+	P2 = NEW_OBJECT(projective_space);
 
 	
 	P2->init(2, F, 
@@ -1130,7 +1129,7 @@ void create_unital_XXq_YZq_ZYq(finite_field *F,
 
 	sprintf(fname, "unital_XXq_YZq_ZYq_Q%ld.txt", F->q);
 
-	delete P2;
+	FREE_OBJECT(P2);
 	FREE_INT(v);
 }
 
@@ -1152,8 +1151,8 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 	INT *embedding;
 	INT *pair_embedding;
 
-	P1 = new projective_space;
-	P3 = new projective_space;
+	P1 = NEW_OBJECT(projective_space);
+	P3 = NEW_OBJECT(projective_space);
 
 	if (Q != FQ->q) {
 		cout << "create_desarguesian_line_spread_in_PG_3_q Q != FQ->q" << endl;
@@ -1300,8 +1299,8 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 		sprintf(fname, "desarguesian_line_spread_in_PG_3_%ld.txt", q);
 		}
 
-	delete P1;
-	delete P3;
+	FREE_OBJECT(P1);
+	FREE_OBJECT(P3);
 	FREE_INT(w1);
 	FREE_INT(w2);
 	FREE_INT(v2);
@@ -1324,7 +1323,7 @@ void create_whole_space(INT n, finite_field *F,
 		cout << "create_whole_space" << endl;
 		}
 	//d = n + 1;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	
 	P->init(n, F, 
@@ -1339,7 +1338,7 @@ void create_whole_space(INT n, finite_field *F,
 
 	sprintf(fname, "whole_space_PG_%ld_%ld.txt", n, F->q);
 	
-	delete P;
+	FREE_OBJECT(P);
 }
 
 void create_hyperplane(INT n, finite_field *F, 
@@ -1357,7 +1356,7 @@ void create_hyperplane(INT n, finite_field *F,
 		cout << "create_hyperplane pt=" << pt << endl;
 		}
 	d = n + 1;
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 	v1 = NEW_INT(d);
 	v2 = NEW_INT(d);
 	
@@ -1384,7 +1383,7 @@ void create_hyperplane(INT n, finite_field *F,
 
 	sprintf(fname, "hyperplane_PG_%ld_%ld_pt%ld.txt", n, F->q, pt);
 	
-	delete P;
+	FREE_OBJECT(P);
 	FREE_INT(v1);
 	FREE_INT(v2);
 }
@@ -1411,9 +1410,9 @@ void create_segre_variety(finite_field *F, INT a, INT b,
 	if (f_v) {
 		cout << "d=" << d << " (vector space dimension)" << endl;
 		}
-	P1 = new projective_space;
-	P2 = new projective_space;
-	P3 = new projective_space;
+	P1 = NEW_OBJECT(projective_space);
+	P2 = NEW_OBJECT(projective_space);
+	P3 = NEW_OBJECT(projective_space);
 	v1 = NEW_INT(a + 1);
 	v2 = NEW_INT(b + 1);
 	v3 = NEW_INT(d);
@@ -1450,9 +1449,9 @@ void create_segre_variety(finite_field *F, INT a, INT b,
 
 	sprintf(fname, "segre_variety_%ld_%ld_%ld.txt", a, b, F->q);
 	
-	delete P1;
-	delete P2;
-	delete P3;
+	FREE_OBJECT(P1);
+	FREE_OBJECT(P2);
+	FREE_OBJECT(P3);
 	FREE_INT(v1);
 	FREE_INT(v2);
 	FREE_INT(v3);
@@ -1469,7 +1468,7 @@ void create_Maruta_Hamada_arc(finite_field *F,
 	if (f_v) {
 		cout << "create_Maruta_Hamada_arc" << endl;
 		}
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	P->init(2, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1483,7 +1482,7 @@ void create_Maruta_Hamada_arc(finite_field *F,
 
 	sprintf(fname, "Maruta_Hamada_arc2_q%ld.txt", F->q);
 	
-	delete P;
+	FREE_OBJECT(P);
 	//FREE_INT(Pts);
 }
 

@@ -816,7 +816,7 @@ static void binomial_with_table(longinteger_object &a, INT n, INT k)
 	// reallocate table if necessary:
 	if (n >= tab_binomials_size) {
 		//cout << "binomial_with_table() reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_binomials2 = new longinteger_object[(n + 1) * (n + 1)];
+		longinteger_object *tab_binomials2 = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
 				tab_binomials[i * tab_binomials_size + j].swap_with(tab_binomials2[i * (n + 1) + j]);
@@ -827,8 +827,9 @@ static void binomial_with_table(longinteger_object &a, INT n, INT k)
 				tab_binomials2[i * (n + 1) + j].create(0);
 				}
 			}
-		if (tab_binomials)
-			delete [] tab_binomials;
+		if (tab_binomials) {
+			FREE_OBJECTS(tab_binomials);
+		}
 		tab_binomials = tab_binomials2;
 		tab_binomials_size = n + 1;
 #if 0
@@ -981,7 +982,7 @@ static void q_binomial_with_table(longinteger_object &a,
 			tab_q_binomials_q = q;
 			}
 		//cout << "binomial_with_table() reallocating table to size " << n + 1 << endl;
-		longinteger_object *tab_q_binomials2 = new longinteger_object[(n + 1) * (n + 1)];
+		longinteger_object *tab_q_binomials2 = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
 		for (i = 0; i < tab_q_binomials_size; i++) {
 			for (j = 0; j <= i; j++) {
 				tab_q_binomials[i * tab_q_binomials_size + j].swap_with(tab_q_binomials2[i * (n + 1) + j]);
@@ -993,7 +994,7 @@ static void q_binomial_with_table(longinteger_object &a,
 				}
 			}
 		if (tab_q_binomials) {
-			delete [] tab_q_binomials;
+			FREE_OBJECTS(tab_q_binomials);
 			}
 		tab_q_binomials = tab_q_binomials2;
 		tab_q_binomials_size = n + 1;
@@ -1124,7 +1125,7 @@ static void krawtchouk_with_table(longinteger_object &a,
 	if (kx >= tab_krawtchouk_size) {
 		kx++;
 		//cout << "krawtchouk_with_table() reallocating table to size " << kx << endl;
-		longinteger_object *tab_krawtchouk2 = new longinteger_object[kx * kx];
+		longinteger_object *tab_krawtchouk2 = NEW_OBJECTS(longinteger_object, kx * kx);
 		INT *tab_krawtchouk_entry_computed2 = NEW_INT(kx * kx);
 		for (i = 0; i < kx; i++) {
 			for (j = 0; j < kx; j++) {
@@ -1139,7 +1140,7 @@ static void krawtchouk_with_table(longinteger_object &a,
 				}
 			}
 		if (tab_krawtchouk) {
-			delete [] tab_krawtchouk;
+			FREE_OBJECTS(tab_krawtchouk);
 			}
 		if (tab_krawtchouk_entry_computed) {
 			FREE_INT(tab_krawtchouk_entry_computed);
@@ -1347,7 +1348,7 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 		}
 	if (a.is_one()) {
 		nb_primes = 0;
-		primes = new longinteger_object[1];
+		primes = NEW_OBJECTS(longinteger_object, 1);
 		exponents = NEW_INT(1);
 		return;
 		}
@@ -1357,7 +1358,7 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 		p = n.as_INT();
 		}
 	pp.create(p);
-	primes = new longinteger_object[1];
+	primes = NEW_OBJECTS(longinteger_object, 1);
 	exponents = NEW_INT(1);
 	nb_primes = 1;
 	pp.assign_to(primes[0]);
@@ -1383,13 +1384,13 @@ void longinteger_domain::factor_into_longintegers(longinteger_object &a,
 			pp.create(p);
 			}
 		else {
-			longinteger_object *pr = new longinteger_object [nb_primes + 1];
+			longinteger_object *pr = NEW_OBJECTS(longinteger_object, nb_primes + 1);
 			INT *ex = NEW_INT(nb_primes + 1);
 			for (i = 0; i < nb_primes; i++) {
 				primes[i].assign_to(pr[i]);
 				ex[i] = exponents[i];
 				}
-			delete [] primes;
+			FREE_OBJECTS(primes);
 			FREE_INT(exponents);
 			primes = pr;
 			exponents = ex;
@@ -2400,7 +2401,7 @@ void mac_williams_equations(longinteger_object *&M, INT n, INT k, INT q)
 	longinteger_domain D;
 	INT i, j;
 	
-	M = new longinteger_object [(n + 1) * (n + 1)];
+	M = NEW_OBJECTS(longinteger_object, (n + 1) * (n + 1));
 	
 	for (i = 0; i <= n; i++) {
 		for (j = 0; j <= n; j++) {
@@ -2424,8 +2425,8 @@ void determine_weight_enumerator()
 	
 	D.matrix_print_tex(cout, M, n + 1, n + 1);
 	
-	A1 = new longinteger_object[n + 1];
-	A2 = new longinteger_object[n + 1];
+	A1 = NEW_OBJECTS(longinteger_object, n + 1);
+	A2 = NEW_OBJECTS(longinteger_object, n + 1);
 	for (i = 0; i <= n; i++) {
 		A1[i].create(0);
 		}
@@ -2442,9 +2443,9 @@ void determine_weight_enumerator()
 
 	D.matrix_print_tex(cout, A2, n + 1, 1);
 	
-	delete [] M;
-	delete [] A1;
-	delete [] A2;
+	FREE_OBJECTS(M);
+	FREE_OBJECTS(A1);
+	FREE_OBJECTS(A2);
 }
 
 void longinteger_collect_setup(INT &nb_agos, longinteger_object *&agos, INT *&multiplicities)
@@ -2457,7 +2458,7 @@ void longinteger_collect_setup(INT &nb_agos, longinteger_object *&agos, INT *&mu
 void longinteger_collect_free(INT &nb_agos, longinteger_object *&agos, INT *&multiplicities)
 {
 	if (nb_agos) {
-		delete [] agos;
+		FREE_OBJECTS(agos);
 		FREE_INT(multiplicities);
 		}
 }
@@ -2480,7 +2481,7 @@ void longinteger_collect_add(INT &nb_agos, longinteger_object *&agos, INT *&mult
 			else {
 				tmp_agos = agos;
 				tmp_multiplicities = multiplicities;
-				agos = new longinteger_object[nb_agos + 1];
+				agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
 				multiplicities = NEW_INT(nb_agos + 1);
 				for (h = 0; h < j; h++) {
 					tmp_agos[h].swap_with(agos[h]);
@@ -2494,7 +2495,7 @@ void longinteger_collect_add(INT &nb_agos, longinteger_object *&agos, INT *&mult
 					}
 				nb_agos++;
 				if (tmp_agos) {
-					delete [] tmp_agos;
+					FREE_OBJECTS(tmp_agos);
 					FREE_INT(tmp_multiplicities);
 					}
 				}
@@ -2506,7 +2507,7 @@ void longinteger_collect_add(INT &nb_agos, longinteger_object *&agos, INT *&mult
 		// add at the end (including the case that the list is empty)
 		tmp_agos = agos;
 		tmp_multiplicities = multiplicities;
-		agos = new longinteger_object[nb_agos + 1];
+		agos = NEW_OBJECTS(longinteger_object, nb_agos + 1);
 		multiplicities = NEW_INT(nb_agos + 1);
 		for (h = 0; h < nb_agos; h++) {
 			tmp_agos[h].swap_with(agos[h]);
@@ -2516,7 +2517,7 @@ void longinteger_collect_add(INT &nb_agos, longinteger_object *&agos, INT *&mult
 		multiplicities[nb_agos] = 1;
 		nb_agos++;
 		if (tmp_agos) {
-			delete [] tmp_agos;
+			FREE_OBJECTS(tmp_agos);
 			FREE_INT(tmp_multiplicities);
 			}
 		}
@@ -2547,12 +2548,12 @@ void longinteger_collect_print(ostream &ost, INT &nb_agos, longinteger_object *&
 void longinteger_free_global_data()
 {
 	if (tab_binomials) {
-		delete [] tab_binomials;
+		FREE_OBJECTS(tab_binomials);
 		tab_binomials = NULL;
 		tab_binomials_size = 0;
 		}
 	if (tab_q_binomials) {
-		delete [] tab_q_binomials;
+		FREE_OBJECTS(tab_q_binomials);
 		tab_q_binomials = NULL;
 		tab_q_binomials_size = 0;
 		}

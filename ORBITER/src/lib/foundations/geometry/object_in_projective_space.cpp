@@ -37,10 +37,10 @@ void object_in_projective_space::freeself()
 		FREE_INT(set);
 		}
 	if (SoS) {
-		delete SoS;
+		FREE_OBJECT(SoS);
 		}
 	if (C) {
-		delete C;
+		FREE_OBJECT(C);
 		}
 	null();
 }
@@ -134,7 +134,7 @@ void object_in_projective_space::init_packing_from_set(projective_space *P, INT 
 		cout << "object_in_projective_space::init_packing_from_set sz != size_of_packing * size_of_spread" << endl;
 		exit(1);
 		}
-	SoS = new set_of_sets;
+	SoS = NEW_OBJECT(set_of_sets);
 
 	SoS->init_basic_constant_size(P->N_lines, 
 		size_of_packing /* nb_sets */, 
@@ -195,7 +195,7 @@ void object_in_projective_space::init_packing_from_spread_table(projective_space
 		cout << "object_in_projective_space::init_packing_from_spread_table spread_size != size_of_spread" << endl;
 		exit(1);
 		}
-	SoS = new set_of_sets;
+	SoS = NEW_OBJECT(set_of_sets);
 
 	SoS->init_basic_constant_size(P->N_lines, 
 		size_of_packing /* nb_sets */, 
@@ -253,7 +253,7 @@ void object_in_projective_space::encode_point_set(INT *&Incma, INT &nb_rows, INT
 	INT i, j;
 	INT f_vvv = (verbose_level >= 3);
 	
-	C = new classify;
+	C = NEW_OBJECT(classify);
 
 	C->init(set, sz, TRUE, 0);
 	if (C->second_nb_types > 1) {
@@ -516,13 +516,13 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		exit(1);
 		}
 
-	Inc = new incidence_structure;
+	Inc = NEW_OBJECT(incidence_structure);
 	Inc->init_by_matrix(nb_rows, nb_cols, Incma, verbose_level - 2);
 
 
 
 
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(nb_rows + nb_cols, 0);
 	Stack->subset_continguous(Inc->nb_points(), Inc->nb_lines());
 	Stack->split_cell(0);
@@ -685,7 +685,7 @@ void object_in_projective_space::klein(INT verbose_level)
 
 
 
-	P5 = new projective_space;
+	P5 = NEW_OBJECT(projective_space);
 	
 	P5->init(5, P->F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -707,7 +707,7 @@ void object_in_projective_space::klein(INT verbose_level)
 
 	
 
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 
 	Gr->init(6, 3, P->F, 0 /* verbose_level */);
 
@@ -739,7 +739,7 @@ void object_in_projective_space::klein(INT verbose_level)
 #endif
 		}
 	cout << "before delete [] R;" << endl;
-	delete [] R;
+	FREE_OBJECTS(R);
 	cout << "before FREE_INT(Pts_on_plane[i]);" << endl;
 	for (i = 0; i < nb_planes; i++) {
 		FREE_INT(Pts_on_plane[i]);
@@ -752,8 +752,8 @@ void object_in_projective_space::klein(INT verbose_level)
 	
 	
 	FREE_INT(pts_klein);
-	delete P5;
-	delete Gr;
+	FREE_OBJECT(P5);
+	FREE_OBJECT(Gr);
 	if (f_v) {
 		cout << "object_in_projective_space::klein done" << endl;
 		}

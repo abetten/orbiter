@@ -60,7 +60,8 @@ void colored_graph::freeself()
 	if (f_ownership_of_bitvec) {
 		if (bitvector_adjacency) {
 			if (f_v) {
-				cout << "colored_graph::freeself bitvector_adjacency" << endl;
+				cout << "colored_graph::freeself "
+						"bitvector_adjacency" << endl;
 				}
 			FREE_UBYTE(bitvector_adjacency);
 			}
@@ -86,7 +87,8 @@ void colored_graph::compute_edges(INT verbose_level)
 		cout << "colored_graph::compute_edges" << endl;
 		}
 	if (f_has_list_of_edges) {
-		cout << "colored_graph::compute_edges f_has_list_of_edges" << endl;
+		cout << "colored_graph::compute_edges "
+				"f_has_list_of_edges" << endl;
 		exit(1);
 		}
 	nb = 0;
@@ -108,13 +110,15 @@ void colored_graph::compute_edges(INT verbose_level)
 			}
 		}
 	if (nb_edges != nb) {
-		cout << "colored_graph::compute_edges nb_edges != nb" << endl;
+		cout << "colored_graph::compute_edges "
+				"nb_edges != nb" << endl;
 		exit(1);
 		}
 
 	f_has_list_of_edges = TRUE;
 	if (f_v) {
-		cout << "colored_graph::compute_edges done" << endl;
+		cout << "colored_graph::compute_edges "
+				"done" << endl;
 		}
 }
 
@@ -233,7 +237,8 @@ colored_graph *colored_graph::sort_by_color_classes(INT verbose_level)
 	CG = new colored_graph;
 	CG->init_adjacency(nb_points, nb_colors, 
 		Color, A, 0 /* verbose_level */);
-	CG->init_user_data(user_data, user_data_size, 0 /* verbose_level */);
+	CG->init_user_data(user_data, user_data_size,
+			0 /* verbose_level */);
 	INT_vec_copy(Pts, CG->points, nb_points);
 	FREE_INT(A);	
 	FREE_INT(Color);	
@@ -259,7 +264,8 @@ void colored_graph::print()
 {
 	INT i;
 	
-	cout << "colored graph with " << nb_points << " points and " << nb_colors << " colors" << endl;
+	cout << "colored graph with " << nb_points << " points and "
+			<< nb_colors << " colors" << endl;
 
 #if 0
 	cout << "i : point_label[i] : point_color[i]" << endl;
@@ -344,7 +350,8 @@ void colored_graph::print_points_and_colors()
 {
 	INT i;
 	
-	cout << "colored graph with " << nb_points << " points and " << nb_colors << " colors" << endl;
+	cout << "colored graph with " << nb_points << " points and "
+			<< nb_colors << " colors" << endl;
 
 	cout << "i : points[i] : point_color[i]" << endl;
 	for (i = 0; i < nb_points; i++) {
@@ -464,7 +471,8 @@ void colored_graph::init(INT nb_points, INT nb_colors,
 
 }
 
-void colored_graph::init_no_colors(INT nb_points, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+void colored_graph::init_no_colors(INT nb_points,
+	UBYTE *bitvec, INT f_ownership_of_bitvec,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -527,7 +535,8 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 
 }
 
-void colored_graph::init_adjacency_upper_triangle(INT nb_points, INT nb_colors, 
+void colored_graph::init_adjacency_upper_triangle(
+	INT nb_points, INT nb_colors,
 	INT *colors, INT *Adj, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -568,7 +577,8 @@ void colored_graph::init_adjacency_upper_triangle(INT nb_points, INT nb_colors,
 
 }
 
-void colored_graph::init_adjacency_no_colors(INT nb_points, INT *Adj, INT verbose_level)
+void colored_graph::init_adjacency_no_colors(INT nb_points,
+	INT *Adj, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *vertex_colors;
@@ -589,7 +599,8 @@ void colored_graph::init_adjacency_no_colors(INT nb_points, INT *Adj, INT verbos
 		}
 }
 
-void colored_graph::init_user_data(INT *data, INT data_size, INT verbose_level)
+void colored_graph::init_user_data(INT *data,
+	INT data_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT i;
@@ -641,12 +652,14 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 	INT i;
 	
 	if (file_size(fname) <= 0) {
-		cout << "colored_graph::load file is empty or does not exist" << endl;
+		cout << "colored_graph::load file is empty or "
+				"does not exist" << endl;
 		exit(1);
 		}
 	
 	if (f_v) {
-		cout << "colored_graph::load Reading file " << fname << " of size " << file_size(fname) << endl;
+		cout << "colored_graph::load Reading file " << fname
+				<< " of size " << file_size(fname) << endl;
 		}
 
 
@@ -663,7 +676,8 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 	nb_colors = fread_INT4(fp);
 
 	if (f_v) {
-		cout << "colored_graph::load the graph has " << nb_points << " points and " << nb_colors << " colors" << endl;
+		cout << "colored_graph::load the graph has " << nb_points
+				<< " points and " << nb_colors << " colors" << endl;
 		}
 
 	L = (nb_points * (nb_points - 1)) >> 1;
@@ -730,19 +744,23 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 #endif
 
 	if (f_v) {
-		cout << "colored_graph::load Read file " << fname << " of size " << file_size(fname) << endl;
+		cout << "colored_graph::load Read file " << fname
+				<< " of size " << file_size(fname) << endl;
 		}
 }
 
-void colored_graph::all_cliques_of_size_k_ignore_colors(INT target_depth, 
-	INT &nb_sol, INT &decision_step_counter, INT verbose_level)
+void colored_graph::all_cliques_of_size_k_ignore_colors(
+	INT target_depth,
+	INT &nb_sol, INT &decision_step_counter,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	clique_finder *CF;
 	INT print_interval = 10000000;
 
 	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors" << endl;
+		cout << "colored_graph::all_cliques_of_size_k_"
+				"ignore_colors" << endl;
 		}
 	CF = new clique_finder;
 
@@ -762,11 +780,14 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(INT target_depth,
 
 	delete CF;
 	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors done" << endl;
+		cout << "colored_graph::all_cliques_of_size_k_"
+				"ignore_colors done" << endl;
 		}
 }
 
-void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(INT target_depth, 
+void
+colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
+	INT target_depth,
 	const BYTE *fname, 
 	INT f_restrictions, INT *restrictions, 
 	INT &nb_sol, INT &decision_step_counter, 
@@ -777,7 +798,8 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 	INT print_interval = 1000000;
 
 	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file " << fname << endl;
+		cout << "colored_graph::all_cliques_of_size_k_ignore_colors_"
+				"and_write_solutions_to_file " << fname << endl;
 		if (f_restrictions) {
 			cout << "with restrictions: ";
 			INT_vec_print(cout, restrictions, 3);
@@ -791,7 +813,8 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 	FO = new file_output;
 	FO->open(fname, CF, verbose_level);
 
-	CF->call_back_clique_found = call_back_clique_found_using_file_output;
+	CF->call_back_clique_found =
+			call_back_clique_found_using_file_output;
 	CF->call_back_clique_found_data1 = FO;
 	CF->call_back_clique_found_data2 = this;
 
@@ -806,7 +829,9 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 
 	if (f_restrictions) {
 		if (f_v) {
-			cout << "colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file before init_restrictions" << endl;
+			cout << "colored_graph::all_cliques_of_size_k_ignore_"
+					"colors_and_write_solutions_to_file "
+					"before init_restrictions" << endl;
 			}
 		CF->init_restrictions(restrictions, verbose_level - 2);
 		}
@@ -823,11 +848,13 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 	delete FO;
 	delete CF;
 	if (f_v) {
-		cout << "colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file done" << endl;
+		cout << "colored_graph::all_cliques_of_size_k_ignore_"
+				"colors_and_write_solutions_to_file done" << endl;
 		}
 }
 
-void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw, 
+void colored_graph::all_rainbow_cliques(ofstream *fp,
+	INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
 	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
@@ -843,7 +870,8 @@ void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw,
 		}
 	R = new rainbow_cliques;
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques before R->search" << endl;
+		cout << "colored_graph::all_rainbow_cliques "
+				"before R->search" << endl;
 		}
 	R->search(this, fp, f_output_solution_raw, 
 		f_maxdepth, maxdepth, 
@@ -853,21 +881,25 @@ void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw,
 		search_steps, decision_steps, nb_sol, dt, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques after R->search" << endl;
+		cout << "colored_graph::all_rainbow_cliques "
+				"after R->search" << endl;
 		}
 	delete R;
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques done" << endl;
+		cout << "colored_graph::all_rainbow_cliques "
+				"done" << endl;
 		}
 }
 
-void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *fp, INT f_output_solution_raw, 
+void colored_graph::all_rainbow_cliques_with_additional_test_function(
+	ofstream *fp, INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
 	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
 	INT print_interval, 
 	INT f_has_additional_test_function,
-	void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 
+	void (*call_back_additional_test_function)(
+		rainbow_cliques *R, void *user_data,
 		INT current_clique_size, INT *current_clique, 
 		INT nb_pts, INT &reduced_nb_pts, 
 		INT *pt_list, INT *pt_list_inv, 
@@ -883,11 +915,14 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *
 	rainbow_cliques *R;
 
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function" << endl;
+		cout << "colored_graph::all_rainbow_cliques_with_additional_"
+				"test_function" << endl;
 		}
 	R = new rainbow_cliques;
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function before R->search_with_additional_test_function" << endl;
+		cout << "colored_graph::all_rainbow_cliques_with_additional_"
+				"test_function before R->search_with_additional_"
+				"test_function" << endl;
 		}
 	R->search_with_additional_test_function(this, fp, f_output_solution_raw, 
 		f_maxdepth, maxdepth, 
@@ -902,11 +937,14 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *
 		search_steps, decision_steps, nb_sol, dt, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function after R->search_with_additional_test_function" << endl;
+		cout << "colored_graph::all_rainbow_cliques_with_additional_"
+				"test_function after R->search_with_additional_"
+				"test_function" << endl;
 		}
 	delete R;
 	if (f_v) {
-		cout << "colored_graph::all_rainbow_cliques_with_additional_test_function done" << endl;
+		cout << "colored_graph::all_rainbow_cliques_with_additional_"
+				"test_function done" << endl;
 		}
 }
 
@@ -937,7 +975,8 @@ void colored_graph::draw_on_circle(char *fname,
 
 	G.finish(cout, TRUE);
 	}
-	cout << "written file " << fname_full << " of size " << file_size(fname_full) << endl;
+	cout << "written file " << fname_full << " of size "
+			<< file_size(fname_full) << endl;
 	
 }
 
@@ -962,8 +1001,10 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels,
 		rad2 = radius;
 		}
 	for (i = 0; i < n; i++) {
-		on_circle_int(Px, Py, i, ((INT)(90. + (double)i * phi)) % 360, rad1);
-		//cout << "i=" << i << " Px=" << Px[i] << " Py=" << Py[i] << endl;
+		on_circle_int(Px, Py, i,
+				((INT)(90. + (double)i * phi)) % 360, rad1);
+		//cout << "i=" << i << " Px=" << Px[i]
+		// << " Py=" << Py[i] << endl;
 		}
 
 	if (f_labels) {
@@ -972,8 +1013,10 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels,
 		rad_big = (INT)((double)rad1 * 1.1);
 		cout << "rad_big=" << rad_big << endl;
 		for (i = 0; i < n; i++) {
-			on_circle_int(Px1, Py1, i, ((INT)(90. + (double)i * phi)) % 360, rad_big);
-			//cout << "i=" << i << " Px=" << Px[i] << " Py=" << Py[i] << endl;
+			on_circle_int(Px1, Py1, i,
+					((INT)(90. + (double)i * phi)) % 360, rad_big);
+			//cout << "i=" << i << " Px=" << Px[i]
+			// << " Py=" << Py[i] << endl;
 			}
 		}
 	for (i = 0; i < n; i++) {
@@ -1099,7 +1142,8 @@ void colored_graph::draw_Levi(const BYTE *fname,
 
 
 	if (m + n != nb_points) {
-		cout << "colored_graph::draw_Levi m + n != nb_points" << endl;
+		cout << "colored_graph::draw_Levi "
+				"m + n != nb_points" << endl;
 		cout << "m = " << m << endl;
 		cout << "n = " << n << endl;
 		cout << "nb_points = " << nb_points << endl;
@@ -1139,7 +1183,8 @@ void colored_graph::draw_Levi(const BYTE *fname,
 	
 	draw_bitmatrix(fname, f_dots, 
 		//FALSE, 0, NULL, 0, NULL, 
-		f_partition, nb_row_parts, row_part_first, nb_col_parts, col_part_first, 
+		f_partition, nb_row_parts, row_part_first,
+			nb_col_parts, col_part_first,
 		f_row_grid, f_col_grid, 
 		TRUE /* f_bitmatrix */, D, NULL, 
 		m, n, 
@@ -1158,7 +1203,8 @@ void colored_graph::draw_Levi(const BYTE *fname,
 		}
 }
 
-void colored_graph::draw_with_a_given_partition(const BYTE *fname, 
+void colored_graph::draw_with_a_given_partition(
+	const BYTE *fname,
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 	INT *parts, INT nb_parts, 
 	double scale, double line_width, 
@@ -1188,7 +1234,8 @@ void colored_graph::draw_with_a_given_partition(const BYTE *fname,
 
 	len = (nb_vertices * nb_vertices + 7) >> 3;
 	if (f_v) {
-		cout << "colored_graph::draw_with_a_given_partition len = " << len << endl;
+		cout << "colored_graph::draw_with_a_given_partition "
+				"len = " << len << endl;
 		}
 	D = NEW_UBYTE(len);
 	for (i = 0; i < len; i++) {
@@ -1258,7 +1305,8 @@ void colored_graph::draw_partitioned(const BYTE *fname,
 
 	C.init(point_color, nb_vertices, FALSE, 0);
 	if (f_v) {
-		cout << "colored_graph::draw_partitioned we found " << C.nb_types << " classes" << endl;
+		cout << "colored_graph::draw_partitioned we found "
+				<< C.nb_types << " classes" << endl;
 		}
 	
 	
@@ -1303,8 +1351,10 @@ void colored_graph::draw_partitioned(const BYTE *fname,
 		}
 }
 
-colored_graph *colored_graph::compute_neighborhood_subgraph(INT pt, 
-	fancy_set *&vertex_subset, fancy_set *&color_subset, INT verbose_level)
+colored_graph *colored_graph::compute_neighborhood_subgraph(
+	INT pt,
+	fancy_set *&vertex_subset, fancy_set *&color_subset,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	colored_graph *S;
@@ -1315,10 +1365,12 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(INT pt,
 	UBYTE *bitvec;
 
 	if (f_v) {
-		cout << "colored_graph::compute_neighborhood_subgraph of point " << pt << endl;
+		cout << "colored_graph::compute_neighborhood_subgraph "
+				"of point " << pt << endl;
 		}
 	if (f_v) {
-		cout << "The graph has " << nb_points << " vertices and " << nb_colors << " colors" << endl;
+		cout << "The graph has " << nb_points << " vertices and "
+				<< nb_colors << " colors" << endl;
 		}
 	S = new colored_graph;
 	vertex_subset = new fancy_set;
@@ -1347,7 +1399,9 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(INT pt,
 	color_subset->sort();
 
 	if (f_v) {
-		cout << "The subgraph has " << nb_points_subgraph << " vertices and " << color_subset->k << " colors" << endl;
+		cout << "The subgraph has " << nb_points_subgraph
+				<< " vertices and " << color_subset->k
+				<< " colors" << endl;
 		}
 
 	for (i = 0; i < nb_points_subgraph; i++) {
@@ -1365,7 +1419,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(INT pt,
 	for (i = 0; i < len; i++) {
 		bitvec[i] = 0;
 		}
-	S->init(nb_points_subgraph, color_subset->k, color_in_subgraph, bitvec, TRUE, verbose_level);
+	S->init(nb_points_subgraph, color_subset->k,
+			color_in_subgraph, bitvec, TRUE, verbose_level);
 	for (i = 0; i < nb_points_subgraph; i++) {
 		ii = vertex_subset->set[i];
 		for (j = i + 1; j < nb_points_subgraph; j++) {
@@ -1384,9 +1439,12 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(INT pt,
 	return S;
 }
 
-colored_graph *colored_graph::compute_neighborhood_subgraph_with_additional_test_function(INT pt, 
+colored_graph
+*colored_graph::compute_neighborhood_subgraph_with_additional_test_function(
+	INT pt,
 	fancy_set *&vertex_subset, fancy_set *&color_subset, 
-	INT (*test_function)(colored_graph *CG, INT test_point, INT pt, void *test_function_data, INT verbose_level),
+	INT (*test_function)(colored_graph *CG, INT test_point,
+			INT pt, void *test_function_data, INT verbose_level),
 	void *test_function_data, 
 	INT verbose_level)
 {
@@ -1399,10 +1457,12 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_with_additional_test
 	UBYTE *bitvec;
 
 	if (f_v) {
-		cout << "colored_graph::compute_neighborhood_subgraph_with_additional_test_function of point " << pt << endl;
+		cout << "colored_graph::compute_neighborhood_subgraph_with_"
+				"additional_test_function of point " << pt << endl;
 		}
 	if (f_v) {
-		cout << "The graph has " << nb_points << " vertices and " << nb_colors << " colors" << endl;
+		cout << "The graph has " << nb_points << " vertices and "
+				<< nb_colors << " colors" << endl;
 		}
 	S = new colored_graph;
 	vertex_subset = new fancy_set;
@@ -1419,7 +1479,8 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_with_additional_test
 			}
 		if (is_adjacent(i, pt)) {
 
-			if ((*test_function)(this, i, pt, test_function_data, 0 /*verbose_level*/)) {
+			if ((*test_function)(this, i, pt, test_function_data,
+					0 /*verbose_level*/)) {
 				c = point_color[i];
 				color_in_graph[vertex_subset->k] = c;
 				vertex_subset->add_element(i);
@@ -1434,12 +1495,15 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_with_additional_test
 	color_subset->sort();
 
 	if (f_v) {
-		cout << "The subgraph has " << nb_points_subgraph << " vertices and " << color_subset->k << " colors" << endl;
+		cout << "The subgraph has " << nb_points_subgraph
+				<< " vertices and " << color_subset->k
+				<< " colors" << endl;
 		}
 
 	for (i = 0; i < nb_points_subgraph; i++) {
 		c = color_in_graph[i];
-		if (!INT_vec_search(color_subset->set, color_subset->k, c, idx)) {
+		if (!INT_vec_search(color_subset->set,
+				color_subset->k, c, idx)) {
 			cout << "error, did not find color" << endl;
 			exit(1);
 			}
@@ -1452,7 +1516,9 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_with_additional_test
 	for (i = 0; i < len; i++) {
 		bitvec[i] = 0;
 		}
-	S->init(nb_points_subgraph, color_subset->k, color_in_subgraph, bitvec, TRUE, verbose_level);
+	S->init(nb_points_subgraph, color_subset->k,
+			color_in_subgraph, bitvec, TRUE,
+			verbose_level);
 	for (i = 0; i < nb_points_subgraph; i++) {
 		ii = vertex_subset->set[i];
 		for (j = i + 1; j < nb_points_subgraph; j++) {
@@ -1466,13 +1532,15 @@ colored_graph *colored_graph::compute_neighborhood_subgraph_with_additional_test
 	FREE_INT(color_in_graph);
 	FREE_INT(color_in_subgraph);
 	if (f_v) {
-		cout << "colored_graph::compute_neighborhood_subgraph_with_additional_test_function done" << endl;
+		cout << "colored_graph::compute_neighborhood_subgraph_"
+				"with_additional_test_function done" << endl;
 		}
 	return S;
 }
 
 
-void colored_graph::export_to_magma(const BYTE *fname, INT verbose_level)
+void colored_graph::export_to_magma(
+		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1523,14 +1591,16 @@ void colored_graph::export_to_magma(const BYTE *fname, INT verbose_level)
 
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_magma" << endl;
 		}
 }
 
-void colored_graph::export_to_maple(const BYTE *fname, INT verbose_level)
+void colored_graph::export_to_maple(
+		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, h;
@@ -1587,14 +1657,16 @@ void colored_graph::export_to_maple(const BYTE *fname, INT verbose_level)
 
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_maple" << endl;
 		}
 }
 
-void colored_graph::export_to_file(const BYTE *fname, INT verbose_level)
+void colored_graph::export_to_file(
+		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1633,14 +1705,16 @@ void colored_graph::export_to_file(const BYTE *fname, INT verbose_level)
 
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
 		}
 }
 
-void colored_graph::export_to_text(const BYTE *fname, INT verbose_level)
+void colored_graph::export_to_text(
+		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1679,14 +1753,16 @@ void colored_graph::export_to_text(const BYTE *fname, INT verbose_level)
 
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_text" << endl;
 		}
 }
 
-void colored_graph::export_laplacian_to_file(const BYTE *fname, INT verbose_level)
+void colored_graph::export_laplacian_to_file(
+		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, d;
@@ -1739,14 +1815,16 @@ void colored_graph::export_laplacian_to_file(const BYTE *fname, INT verbose_leve
 
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_laplacian_to_file" << endl;
 		}
 }
 
-void colored_graph::export_to_file_matlab(const BYTE *fname, INT verbose_level)
+void colored_graph::export_to_file_matlab(
+		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1785,7 +1863,8 @@ void colored_graph::export_to_file_matlab(const BYTE *fname, INT verbose_level)
 
 
 	}
-	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
+	cout << "Written file " << fname << " of size "
+			<< file_size(fname) << endl;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -1793,7 +1872,8 @@ void colored_graph::export_to_file_matlab(const BYTE *fname, INT verbose_level)
 }
 
 
-void colored_graph::early_test_func_for_clique_search(INT *S, INT len, 
+void colored_graph::early_test_func_for_clique_search(
+	INT *S, INT len,
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	INT verbose_level)
@@ -1803,10 +1883,12 @@ void colored_graph::early_test_func_for_clique_search(INT *S, INT len,
 	INT j, a, pt;
 
 	if (f_v) {
-		cout << "colored_graph::early_test_func_for_clique_search checking set ";
+		cout << "colored_graph::early_test_func_for_clique_"
+				"search checking set ";
 		print_set(cout, len, S);
 		cout << endl;
-		cout << "candidate set of size " << nb_candidates << ":" << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
 		INT_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
@@ -1829,7 +1911,8 @@ void colored_graph::early_test_func_for_clique_search(INT *S, INT len,
 	
 }
 
-void colored_graph::early_test_func_for_coclique_search(INT *S, INT len, 
+void colored_graph::early_test_func_for_coclique_search(
+	INT *S, INT len,
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	INT verbose_level)
@@ -1839,10 +1922,12 @@ void colored_graph::early_test_func_for_coclique_search(INT *S, INT len,
 	INT j, a, pt;
 
 	if (f_v) {
-		cout << "colored_graph::early_test_func_for_coclique_search checking set ";
+		cout << "colored_graph::early_test_func_for_"
+				"coclique_search checking set ";
 		print_set(cout, len, S);
 		cout << endl;
-		cout << "candidate set of size " << nb_candidates << ":" << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
 		INT_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
@@ -1865,7 +1950,8 @@ void colored_graph::early_test_func_for_coclique_search(INT *S, INT len,
 	
 }
 
-void colored_graph::early_test_func_for_path_and_cycle_search(INT *S, INT len, 
+void colored_graph::early_test_func_for_path_and_cycle_search(
+	INT *S, INT len,
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
 	INT verbose_level)
@@ -1876,10 +1962,12 @@ void colored_graph::early_test_func_for_path_and_cycle_search(INT *S, INT len,
 	INT *v;
 
 	if (f_v) {
-		cout << "colored_graph::early_test_func_for_path_and_cycle_search checking set ";
+		cout << "colored_graph::early_test_func_for_path_and_"
+				"cycle_search checking set ";
 		print_set(cout, len, S);
 		cout << endl;
-		cout << "candidate set of size " << nb_candidates << ":" << endl;
+		cout << "candidate set of size "
+				<< nb_candidates << ":" << endl;
 		INT_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
@@ -1916,7 +2004,8 @@ void colored_graph::early_test_func_for_path_and_cycle_search(INT *S, INT len,
 	FREE_INT(v);
 }
 
-INT colored_graph::is_cycle(INT nb_e, INT *edges, INT verbose_level)
+INT colored_graph::is_cycle(INT nb_e, INT *edges,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a, b, x, y;
@@ -1990,7 +2079,8 @@ void colored_graph::draw_it(const BYTE *fname_base,
 		f_partition, 0, NULL, 0, NULL, 
 		f_row_grid, f_col_grid, 
 		f_bitmatrix, bitvec, NULL, 
-		nb_points, nb_points, xmax_in, ymax_in, xmax_out, ymax_out, 
+		nb_points, nb_points,
+		xmax_in, ymax_in, xmax_out, ymax_out,
 		scale, line_width, 
 		FALSE, NULL);
 		// in draw.C
@@ -2003,7 +2093,8 @@ void colored_graph::draw_it(const BYTE *fname_base,
 
 
 
-INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes, 
+INT colored_graph::rainbow_cliques_nonrecursive(
+	INT &nb_backtrack_nodes,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -2072,7 +2163,8 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 #endif
 
 		if (f_vv) {
-			cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth 
+			cout << "nb_backtrack=" << nb_backtrack_nodes
+					<< " depth=" << depth
 			<< " : cc=";
 			INT_vec_print(cout, cc, depth);
 			cout << " : start=";
@@ -2085,7 +2177,8 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 			INT_vec_print(cout, choice, depth + 1);
 			cout << endl;
 			cout << "live_pts=";
-			INT_vec_print_fully(cout, live_pts + start[depth], end[depth] - start[depth]);
+			INT_vec_print_fully(cout, live_pts + start[depth],
+					end[depth] - start[depth]);
 			cout << endl;
 			cout << "live points (full) = ";
 			INT_vec_print_fully(cout, live_pts, nb_points);
@@ -2104,7 +2197,9 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 		if (min_color[depth] == -1) {
 
 			if (f_vv) {
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", initializing new level" << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth
+						<< ", initializing new level" << endl;
 				}
 			// clump by adjacency:
 			if (depth) {
@@ -2130,11 +2225,16 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 				}
 
 			if (f_vv) {
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", after clump by adjacency end[" << depth + 1 << "]=" << end[depth + 1] << endl;
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth;
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth << ", after clump "
+						"by adjacency end[" << depth + 1
+						<< "]=" << end[depth + 1] << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth;
 				cout << endl;
 				cout << "live points = ";
-				INT_vec_print_fully(cout, live_pts + start[depth], end[depth + 1] - start[depth]);
+				INT_vec_print_fully(cout, live_pts + start[depth],
+						end[depth + 1] - start[depth]);
 				cout << endl;
 				cout << "live points (full) = ";
 				INT_vec_print_fully(cout, live_pts, nb_points);
@@ -2159,10 +2259,12 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 					}
 				}
 			if (f_vv) {
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", cf = ";
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth << ", cf = ";
 				INT_vec_print(cout, cf, nb_colors);
 				cout << endl;
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", cs = ";
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth << ", cs = ";
 				INT_vec_print(cout, cs, nb_colors);
 				cout << endl;
 				}
@@ -2188,12 +2290,21 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 			choice[depth] = 0;
 
 			if (f_vv) {
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", after clump by color class start[" << depth + 1 << "]=" << start[depth + 1] << endl;
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", min color = " << c0 << endl;
-				cout << "min color class " << min_color[depth] << " of size " << start[depth + 1] - start[depth] << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth
+						<< ", after clump by color class start["
+						<< depth + 1 << "]=" << start[depth + 1]
+													  << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth << ", min color = "
+						<< c0 << endl;
+				cout << "min color class " << min_color[depth]
+						<< " of size "
+						<< start[depth + 1] - start[depth] << endl;
 				//cout << "starts at start[depth]= " << start[depth] << endl;
 				//cout << "ends at start[depth+1]= " << start[depth+1] << endl;
-				INT_vec_print_fully(cout, live_pts + start[depth], start[depth + 1] - start[depth]);
+				INT_vec_print_fully(cout, live_pts + start[depth],
+						start[depth + 1] - start[depth]);
 				cout << endl;
 				}
 
@@ -2212,20 +2323,29 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 		if (start[depth + 1] - start[depth]) {
 			if (j < start[depth + 1] - start[depth]) {
 				if (f_vv) {
-					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", j < start[depth + 1] - start[depth]" << endl;
+					cout << "nb_backtrack=" << nb_backtrack_nodes
+							<< " depth=" << depth
+							<< ", j < start[depth + 1] - start[depth]"
+							<< endl;
 					}
 				if (j) {
 					a = cc[depth];
 					c = point_color[a];
-					cs[c] = FALSE; // this can be dropped since all points have the same color
+					cs[c] = FALSE;
+						// this can be dropped since
+						// all points have the same color
 					if (f_vv) {
-						cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", dropping point " << a << " of color " << c << endl;
+						cout << "nb_backtrack=" << nb_backtrack_nodes
+								<< " depth=" << depth << ", dropping point "
+								<< a << " of color " << c << endl;
 						}
 					}
 				a = live_pts[start[depth] + j];
 				c = point_color[a];
 				if (f_vv) {
-					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", adding point " << a << " of color " << c << endl;
+					cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth << ", adding point "
+						<< a << " of color " << c << endl;
 					}
 
 				cs[c] = TRUE;
@@ -2242,9 +2362,11 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 					&& cc[4] == 948
 					//&& cc[5] == 7816
 					) {
-					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << " at checkpoint" << endl;
+					cout << "nb_backtrack=" << nb_backtrack_nodes
+							<< " depth=" << depth << " at checkpoint" << endl;
 					cout << "live points = ";
-					INT_vec_print_fully(cout, live_pts + start[depth], end[depth + 1] - start[depth]);
+					INT_vec_print_fully(cout, live_pts + start[depth],
+							end[depth + 1] - start[depth]);
 					cout << endl;
 					cout << "live points (full) = ";
 					INT_vec_print_fully(cout, live_pts, nb_points);
@@ -2263,10 +2385,15 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 					cout << "cs=";
 					INT_vec_print(cout, cs, nb_colors);
 					cout << endl;
-					cout << "min color class " << min_color[depth] << " of size " << start[depth + 1] - start[depth] << endl;
-					//cout << "starts at start[depth]= " << start[depth] << endl;
-					//cout << "ends at start[depth+1]= " << start[depth+1] << endl;
-					INT_vec_print_fully(cout, live_pts + start[depth], start[depth + 1] - start[depth]);
+					cout << "min color class " << min_color[depth]
+						<< " of size " << start[depth + 1] - start[depth]
+						<< endl;
+					//cout << "starts at start[depth]= "
+					// << start[depth] << endl;
+					//cout << "ends at start[depth+1]= "
+					// << start[depth+1] << endl;
+					INT_vec_print_fully(cout, live_pts + start[depth],
+						start[depth + 1] - start[depth]);
 					cout << endl;
 
 					//exit(1);
@@ -2279,12 +2406,16 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 				}
 			else {
 				if (f_vv) {
-					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", j not < start[depth + 1] - start[depth]" << endl;
+					cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth
+						<< ", j not < start[depth + 1] - start[depth]" << endl;
 					}
 				a = cc[depth];
 				c = point_color[a];
 				if (f_vv) {
-					cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", dropping point " << a << " of color " << c << endl;
+					cout << "nb_backtrack=" << nb_backtrack_nodes
+						<< " depth=" << depth << ", dropping point "
+						<< a << " of color " << c << endl;
 					}
 				cs[c] = FALSE;
 				min_color[depth] = -1;
@@ -2294,7 +2425,9 @@ INT colored_graph::rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes,
 			}
 		else {
 			if (f_vv) {
-				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth=" << depth << ", minimum color class is empty, backtracking" << endl;
+				cout << "nb_backtrack=" << nb_backtrack_nodes << " depth="
+					<< depth << ", minimum color class is empty, "
+					"backtracking" << endl;
 				}
 			// we could not go in, so we don't have to clean up anything
 			min_color[depth] = -1;
@@ -2388,7 +2521,8 @@ void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw,
 	ofstream fp(fname_sol);
 
 	if (f_v) {
-		cout << "colored_graph_all_cliques before CG.all_rainbow_cliques" << endl;
+		cout << "colored_graph_all_cliques "
+				"before CG.all_rainbow_cliques" << endl;
 		}
 	CG.all_rainbow_cliques(&fp, f_output_solution_raw, 
 		f_maxdepth, maxdepth, 
@@ -2398,7 +2532,8 @@ void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw,
 		search_steps, decision_steps, nb_sol, dt, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "colored_graph_all_cliques after CG.all_rainbow_cliques" << endl;
+		cout << "colored_graph_all_cliques "
+				"after CG.all_rainbow_cliques" << endl;
 		}
 	fp << -1 << " " << nb_sol << " " << search_steps 
 		<< " " << decision_steps << " " << dt << endl;
@@ -2412,7 +2547,8 @@ void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw,
 		}
 }
 
-void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, INT f_output_solution_raw, 
+void colored_graph_all_cliques_list_of_cases(
+	INT *list_of_cases, INT nb_cases, INT f_output_solution_raw,
 	const BYTE *fname_template, 
 	const BYTE *fname_sol, const BYTE *fname_stats, 
 	INT f_split, INT split_r, INT split_m, 
@@ -2435,7 +2571,8 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 	ofstream fp(fname_sol);
 	ofstream fp_stats(fname_stats);
 	
-	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,decision_steps,dt" << endl;
+	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,"
+			"decision_steps,dt" << endl;
 	for (i = 0; i < nb_cases; i++) {
 
 
@@ -2449,7 +2586,8 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 
 		c = list_of_cases[i];
 		if (f_v) {
-			cout << "colored_graph_all_cliques_list_of_cases case " << i << " / " << nb_cases << " which is " << c << endl;
+			cout << "colored_graph_all_cliques_list_of_cases case "
+				<< i << " / " << nb_cases << " which is " << c << endl;
 			}
 		sprintf(fname_tmp, fname_template, c);
 		if (f_prefix) {
@@ -2468,13 +2606,16 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 		CG->all_rainbow_cliques(&fp, f_output_solution_raw, 
 			f_maxdepth, maxdepth, 
 			FALSE /* f_restrictions */, NULL /* restrictions */, 
-			FALSE /* f_tree */, FALSE /* f_decision_nodes_only */, NULL /* fname_tree */,
+			FALSE /* f_tree */, FALSE /* f_decision_nodes_only */,
+			NULL /* fname_tree */,
 			print_interval, 
 			search_steps, decision_steps, nb_sol, dt, 
 			verbose_level - 1);
 		fp << "# end case " << c << " " << nb_sol << " " << search_steps 
 				<< " " << decision_steps << " " << dt << endl;
-		fp_stats << i << "," << c << "," << nb_sol << "," << CG->nb_points << "," << search_steps << "," << decision_steps << "," << dt << endl;
+		fp_stats << i << "," << c << "," << nb_sol << ","
+				<< CG->nb_points << "," << search_steps << ","
+				<< decision_steps << "," << dt << endl;
 		Search_steps += search_steps;
 		Decision_steps += decision_steps;
 		Nb_sol += nb_sol;
@@ -2487,11 +2628,13 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 	fp_stats << "END" << endl;
 	}
 	if (f_v) {
-		cout << "colored_graph_all_cliques_list_of_cases done Nb_sol=" << Nb_sol << endl;
+		cout << "colored_graph_all_cliques_list_of_cases "
+				"done Nb_sol=" << Nb_sol << endl;
 		}
 }
 
-void colored_graph_all_cliques_list_of_files(INT nb_cases, 
+void colored_graph_all_cliques_list_of_files(
+	INT nb_cases,
 	INT *Case_number, const BYTE **Case_fname, 
 	INT f_output_solution_raw, 
 	const BYTE *fname_sol, const BYTE *fname_stats, 
@@ -2512,7 +2655,8 @@ void colored_graph_all_cliques_list_of_files(INT nb_cases,
 	ofstream fp(fname_sol);
 	ofstream fp_stats(fname_stats);
 	
-	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,decision_steps,dt" << endl;
+	fp_stats << "i,Case,Nb_sol,Nb_vertices,search_steps,"
+			"decision_steps,dt" << endl;
 	for (i = 0; i < nb_cases; i++) {
 
 
@@ -2526,11 +2670,14 @@ void colored_graph_all_cliques_list_of_files(INT nb_cases,
 		fname = Case_fname[i];
 		
 		if (f_v) {
-			cout << "colored_graph_all_cliques_list_of_files case " << i << " / " << nb_cases << " which is " << c << " in file " << fname << endl;
+			cout << "colored_graph_all_cliques_list_of_files case "
+				<< i << " / " << nb_cases << " which is " << c
+				<< " in file " << fname << endl;
 			}
 
 		if (file_size(fname) <= 0) {
-			cout << "colored_graph_all_cliques_list_of_files file " << fname << " does not exist" << endl;
+			cout << "colored_graph_all_cliques_list_of_files file "
+				<< fname << " does not exist" << endl;
 			exit(1);
 			}
 		CG->load(fname, verbose_level - 2);
@@ -2543,13 +2690,17 @@ void colored_graph_all_cliques_list_of_files(INT nb_cases,
 		CG->all_rainbow_cliques(&fp, f_output_solution_raw, 
 			f_maxdepth, maxdepth, 
 			FALSE /* f_restrictions */, NULL /* restrictions */, 
-			FALSE /* f_tree */, FALSE /* f_decision_nodes_only */, NULL /* fname_tree */,
+			FALSE /* f_tree */, FALSE /* f_decision_nodes_only */,
+			NULL /* fname_tree */,
 			print_interval, 
 			search_steps, decision_steps, nb_sol, dt, 
 			verbose_level - 1);
-		fp << "# end case " << c << " " << nb_sol << " " << search_steps 
+		fp << "# end case " << c << " " << nb_sol << " "
+				<< search_steps
 				<< " " << decision_steps << " " << dt << endl;
-		fp_stats << i << "," << c << "," << nb_sol << "," << CG->nb_points << "," << search_steps << "," << decision_steps << "," << dt << endl;
+		fp_stats << i << "," << c << "," << nb_sol << ","
+				<< CG->nb_points << "," << search_steps << ","
+				<< decision_steps << "," << dt << endl;
 		Search_steps += search_steps;
 		Decision_steps += decision_steps;
 		Nb_sol += nb_sol;
@@ -2562,12 +2713,14 @@ void colored_graph_all_cliques_list_of_files(INT nb_cases,
 	fp_stats << "END" << endl;
 	}
 	if (f_v) {
-		cout << "colored_graph_all_cliques_list_of_files done Nb_sol=" << Nb_sol << endl;
+		cout << "colored_graph_all_cliques_list_of_files "
+				"done Nb_sol=" << Nb_sol << endl;
 		}
 }
 
 
-void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_level)
+void call_back_clique_found_using_file_output(
+	clique_finder *CF, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 
@@ -2590,11 +2743,13 @@ void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_lev
 		*FO->fp << endl;
 		}
 	else {
-		FO->write_line(CF->target_depth, CF->current_clique, verbose_level);
+		FO->write_line(CF->target_depth,
+				CF->current_clique, verbose_level);
 		}
 }
 
-INT colored_graph_all_rainbow_cliques_nonrecursive(const BYTE *fname, 
+INT colored_graph_all_rainbow_cliques_nonrecursive(
+	const BYTE *fname,
 	INT &nb_backtrack_nodes, 
 	INT verbose_level)
 {
@@ -2603,19 +2758,23 @@ INT colored_graph_all_rainbow_cliques_nonrecursive(const BYTE *fname,
 	INT nb_sol;
 	
 	if (f_v) {
-		cout << "colored_graph_all_rainbow_cliques_nonrecursive" << endl;
+		cout << "colored_graph_all_rainbow_cliques_"
+				"nonrecursive" << endl;
 		}
 	CG.load(fname, verbose_level - 1);
 	//CG.print();
 
 	{
 	if (f_v) {
-		cout << "colored_graph_all_cliques before CG.all_rainbow_cliques" << endl;
+		cout << "colored_graph_all_cliques "
+				"before CG.all_rainbow_cliques" << endl;
 		}
-	nb_sol = CG.rainbow_cliques_nonrecursive(nb_backtrack_nodes, verbose_level - 1);
+	nb_sol = CG.rainbow_cliques_nonrecursive(
+			nb_backtrack_nodes, verbose_level - 1);
 	}
 	if (f_v) {
-		cout << "colored_graph_all_rainbow_cliques_nonrecursive done" << endl;
+		cout << "colored_graph_all_rainbow_cliques_"
+				"nonrecursive done" << endl;
 		}
 	return nb_sol;
 }

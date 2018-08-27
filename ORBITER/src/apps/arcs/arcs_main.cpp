@@ -27,7 +27,7 @@ int main(int argc, const char **argv)
 	finite_field *F;
 
 	
-	Gen = new arc_generator;
+	Gen = NEW_OBJECT(arc_generator);
 
 	cout << argv[0] << endl;
 	cout << "before Gen->read_arguments" << endl;
@@ -35,7 +35,7 @@ int main(int argc, const char **argv)
 	
 
 	cout << "before creating the finite field" << endl;
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	if (Gen->f_poly) {
 		F->init_override_polynomial(Gen->q,
@@ -85,8 +85,8 @@ int main(int argc, const char **argv)
 				cout << "preparing orbit spreadsheet done" << endl;
 			}
 	
-	delete Gen;
-	delete F;
+	FREE_OBJECT(Gen);
+	FREE_OBJECT(F);
 	
 	}
 	cout << "Memory usage = " << os_memory_usage()

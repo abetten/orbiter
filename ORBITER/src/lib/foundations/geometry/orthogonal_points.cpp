@@ -293,7 +293,7 @@ void init_hash_table_parabolic(finite_field &GFq, INT k, INT verbose_level)
 		}
 	
 	ln2q = INT_log2(q);
-	Hash_table_parabolic = new vector_hashing;
+	Hash_table_parabolic = NEW_OBJECT(vector_hashing);
 	Hash_table_parabolic_q = q;
 	Hash_table_parabolic_k = k;
 	n = k + 1;
@@ -2061,7 +2061,6 @@ void choose_anisotropic_form(finite_field &GFq,
 	INT f_v = (verbose_level >= 1);
 	unipoly_domain FX(&GFq);
 	unipoly_object m;
-	//unipoly_object *elts = new unipoly_object[q];
 	
 	if (f_v) {
 		cout << "choose_anisotropic_form over GF(" << GFq.q << ")" << endl;
@@ -2073,7 +2072,9 @@ void choose_anisotropic_form(finite_field &GFq,
 		c3 = GFq.negate(primitive_element(GFq));
 		}
 	else {
-		FX.create_object_by_rank_string(m, get_primitive_polynomial(GFq.q, 2, 0), verbose_level);
+		FX.create_object_by_rank_string(m,
+				get_primitive_polynomial(GFq.q, 2, 0),
+				verbose_level);
 	
 		//FX.create_object_by_rank_string(m, get_primitive_polynomial(GFq.p, 2 * GFq.e, 0), verbose_level);
 	
@@ -2082,13 +2083,11 @@ void choose_anisotropic_form(finite_field &GFq,
 			FX.print_object(m, cout); cout << endl;
 			}
 		
-#if 1
 		INT *rep = (INT *) m;
 		INT *coeff = rep + 1;
 		c1 = coeff[2];
 		c2 = coeff[1];
 		c3 = coeff[0];
-#endif
 		}
 
 #if 0

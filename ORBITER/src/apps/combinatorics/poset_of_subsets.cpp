@@ -88,7 +88,7 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 	set1 = NEW_INT(n);
 	set2 = NEW_INT(n);
 
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
 		cout << "generator::make_graph before LG->init" << endl;
 		}

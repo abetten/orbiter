@@ -93,16 +93,20 @@ void decomposition::setup_default_partition(INT verbose_level)
 	if (f_v) {
 		cout << "decomposition::setup_default_partition" << endl;
 		}
-	I = new incidence_structure;
+	I = NEW_OBJECT(incidence_structure);
 	if (f_v) {
-		cout << "decomposition::setup_default_partition before I->init_by_matrix" << endl;
+		cout << "decomposition::setup_default_partition "
+				"before I->init_by_matrix" << endl;
 		}
-	I->init_by_matrix(nb_points, nb_blocks, Inc, 0 /* verbose_level */);
+	I->init_by_matrix(nb_points, nb_blocks,
+			Inc, 0 /* verbose_level */);
 	if (f_v) {
-		cout << "decomposition::setup_default_partition after I->init_by_matrix" << endl;
+		cout << "decomposition::setup_default_partition "
+				"after I->init_by_matrix" << endl;
 		}
-	Stack = new partitionstack;
-	Stack->allocate(nb_points + nb_blocks, 0 /* verbose_level */);
+	Stack = NEW_OBJECT(partitionstack);
+	Stack->allocate(nb_points + nb_blocks,
+			0 /* verbose_level */);
 	Stack->subset_continguous(nb_points, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
@@ -121,41 +125,16 @@ void decomposition::compute_TDO(INT max_depth, INT verbose_level)
 		cout << "decomposition::compute_TDO" << endl;
 		}
 
-#if 0
-	I = new incidence_structure;
-	if (f_v) {
-		cout << "decomposition::compute_TDO before I->init_by_matrix" << endl;
-		}
-	I->init_by_matrix(nb_points, nb_blocks, Inc, 0 /* verbose_level */);
-	if (f_v) {
-		cout << "decomposition::compute_TDO after I->init_by_matrix" << endl;
-		}
-	Stack = new partitionstack;
-	Stack->allocate(nb_points + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(nb_points, nb_blocks);
-	Stack->split_cell(0 /* verbose_level */);
-	Stack->sort_cells();
-#endif
-
-
-#if 0
-	INT set_size = underlying_set_size;
-	INT nb_blocks = nb_sets;
-
-	Stack = new partitionstack;
-	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
-	Stack->subset_continguous(set_size, nb_blocks);
-	Stack->split_cell(0 /* verbose_level */);
-	Stack->sort_cells();
-#endif
 
 
 	if (f_v) {
-		cout << "decomposition::compute_TDO before I->compute_TDO_safe" << endl;
+		cout << "decomposition::compute_TDO "
+				"before I->compute_TDO_safe" << endl;
 		}
 	I->compute_TDO_safe(*Stack, max_depth, verbose_level /*- 2 */);
 	if (f_v) {
-		cout << "decomposition::compute_TDO after I->compute_TDO_safe" << endl;
+		cout << "decomposition::compute_TDO "
+				"after I->compute_TDO_safe" << endl;
 		}
 
 	Stack->allocate_and_get_decomposition(
@@ -178,7 +157,8 @@ void decomposition::get_row_scheme(INT verbose_level)
 		cout << "decomposition::get_row_scheme" << endl;
 		}
 	if (!f_has_decomposition) {
-		cout << "decomposition::get_row_scheme !f_has_decomposition" << endl;
+		cout << "decomposition::get_row_scheme "
+				"!f_has_decomposition" << endl;
 		exit(1);
 		}
 	f_has_row_scheme = TRUE;
@@ -200,7 +180,8 @@ void decomposition::get_col_scheme(INT verbose_level)
 		cout << "decomposition::get_col_scheme" << endl;
 		}
 	if (!f_has_decomposition) {
-		cout << "decomposition::get_col_scheme !f_has_decomposition" << endl;
+		cout << "decomposition::get_col_scheme "
+				"!f_has_decomposition" << endl;
 		exit(1);
 		}
 	f_has_col_scheme = TRUE;
@@ -214,8 +195,10 @@ void decomposition::get_col_scheme(INT verbose_level)
 		}
 }
 
-void decomposition::print_row_decomposition_tex(ostream &ost, 
-	INT f_enter_math, INT f_print_subscripts, INT verbose_level)
+void decomposition::print_row_decomposition_tex(
+	ostream &ost,
+	INT f_enter_math, INT f_print_subscripts,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -223,19 +206,23 @@ void decomposition::print_row_decomposition_tex(ostream &ost,
 		cout << "decomposition::print_row_decomposition_tex" << endl;
 		}
 	if (!f_has_row_scheme) {
-		cout << "decomposition::print_row_decomposition_tex !f_has_row_scheme" << endl;
+		cout << "decomposition::print_row_decomposition_tex "
+				"!f_has_row_scheme" << endl;
 		exit(1);
 		}
 	//I->get_and_print_row_tactical_decomposition_scheme_tex(
 	//	file, FALSE /* f_enter_math */, *Stack);
-	Stack->print_row_tactical_decomposition_scheme_tex(ost, f_enter_math, 
+	Stack->print_row_tactical_decomposition_scheme_tex(
+		ost, f_enter_math,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes, 
 		row_scheme, f_print_subscripts);
 }
 
-void decomposition::print_column_decomposition_tex(ostream &ost, 
-	INT f_enter_math, INT f_print_subscripts, INT verbose_level)
+void decomposition::print_column_decomposition_tex(
+	ostream &ost,
+	INT f_enter_math, INT f_print_subscripts,
+	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -244,7 +231,8 @@ void decomposition::print_column_decomposition_tex(ostream &ost,
 		}
 	//I->get_and_print_column_tactical_decomposition_scheme_tex(
 	//	file, FALSE /* f_enter_math */, *Stack);
-	Stack->print_column_tactical_decomposition_scheme_tex(ost, f_enter_math, 
+	Stack->print_column_tactical_decomposition_scheme_tex(
+		ost, f_enter_math,
 		row_classes, nb_row_classes,
 		col_classes, nb_col_classes, 
 		col_scheme, f_print_subscripts);

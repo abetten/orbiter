@@ -28,7 +28,8 @@ void rainbow_cliques::freeself()
 	null();
 }
 
-void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
+void rainbow_cliques::search(colored_graph *graph,
+	ofstream *fp_sol, INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
 	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
@@ -44,7 +45,8 @@ void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, INT f_outpu
 		cout << "rainbow_cliques::search" << endl;
 		}
 
-	search_with_additional_test_function(graph, fp_sol, f_output_solution_raw, 
+	search_with_additional_test_function(graph,
+		fp_sol, f_output_solution_raw,
 		f_maxdepth, maxdepth,
 		f_restrictions, restrictions,
 		f_tree, f_decision_nodes_only, fname_tree,  
@@ -63,13 +65,15 @@ void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, INT f_outpu
 }
 
 void rainbow_cliques::search_with_additional_test_function(
-	colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
+	colored_graph *graph,
+	ofstream *fp_sol, INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions,
 	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
 	INT print_interval, 
 	INT f_has_additional_test_function,
-	void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 
+	void (*call_back_additional_test_function)(
+		rainbow_cliques *R, void *user_data,
 		INT current_clique_size, INT *current_clique, 
 		INT nb_pts, INT &reduced_nb_pts, 
 		INT *pt_list, INT *pt_list_inv, 
@@ -86,14 +90,16 @@ void rainbow_cliques::search_with_additional_test_function(
 	INT i;
 	
 	if (f_v) {
-		cout << "rainbow_cliques::search_with_additional_test_function" << endl;
+		cout << "rainbow_cliques::search_with_additional_"
+				"test_function" << endl;
 		}
 
 	rainbow_cliques::f_output_solution_raw = f_output_solution_raw;
 
 	if (f_has_additional_test_function) {
 		rainbow_cliques::f_has_additional_test_function = TRUE;
-		rainbow_cliques::call_back_additional_test_function = call_back_additional_test_function;
+		rainbow_cliques::call_back_additional_test_function =
+				call_back_additional_test_function;
 		rainbow_cliques::user_data = user_data;
 		}
 	else {
@@ -142,7 +148,8 @@ void rainbow_cliques::search_with_additional_test_function(
 	
 	if (f_restrictions) {
 		if (f_v) {
-			cout << "rainbow_cliques::search_with_additional_test_function before init_restrictions" << endl;
+			cout << "rainbow_cliques::search_with_additional_"
+					"test_function before init_restrictions" << endl;
 			}
 		CF->init_restrictions(restrictions, verbose_level - 2);
 		}
@@ -156,7 +163,8 @@ void rainbow_cliques::search_with_additional_test_function(
 	t0 = os_ticks();
 
 	if (f_vv) {
-		cout << "rainbow_cliques::search now we start the rainbow clique finder process" << endl;
+		cout << "rainbow_cliques::search now we start the "
+				"rainbow clique finder process" << endl;
 		}
 
 #if 1
@@ -165,22 +173,26 @@ void rainbow_cliques::search_with_additional_test_function(
 
 #else
 	if (f_vv) {
-		cout << "rainbow_cliques::search before CF->backtrack_search_not_recursive" << endl;
+		cout << "rainbow_cliques::search before "
+				"CF->backtrack_search_not_recursive" << endl;
 		}
 	CF->backtrack_search_not_recursive(verbose_level - 2);
 	if (f_vv) {
-		cout << "rainbow_cliques::search after CF->backtrack_search_not_recursive" << endl;
+		cout << "rainbow_cliques::search after "
+				"CF->backtrack_search_not_recursive" << endl;
 		}
 #endif
 
 	if (f_vv) {
-		cout << "rainbow_cliques::search done with finding all rainbow cliques" << endl;
+		cout << "rainbow_cliques::search done with "
+				"finding all rainbow cliques" << endl;
 		}
 
 	if (f_v) {
 		cout << "depth : level_counter" << endl;
 		for (i = 0; i < CF->target_depth; i++) {
-			cout << setw(3) << i << " : " << setw(6) << CF->level_counter[i] << endl;
+			cout << setw(3) << i << " : " << setw(6)
+					<< CF->level_counter[i] << endl;
 			}
 		}
 
@@ -224,7 +236,8 @@ INT rainbow_cliques::find_candidates(
 	INT c, i, j, c0, c0_freq, pt;
 	
 	if (f_v) {
-		cout << "rainbow_cliques::find_candidates nb_pts = " << nb_pts << endl;
+		cout << "rainbow_cliques::find_candidates "
+				"nb_pts = " << nb_pts << endl;
 		}
 	reduced_nb_pts = nb_pts;
 
@@ -236,12 +249,14 @@ INT rainbow_cliques::find_candidates(
 	for (i = 0; i < nb_pts; i++) {
 		pt = pt_list[i];
 		if (pt >= graph->nb_points) {
-			cout << "rainbow_cliques::find_candidates pt >= nb_points" << endl;
+			cout << "rainbow_cliques::find_candidates "
+					"pt >= nb_points" << endl;
 			exit(1);
 			}
 		c = graph->point_color[pt];
 		if (c >= graph->nb_colors) {
-			cout << "rainbow_cliques::find_candidates c >= nb_colors" << endl;
+			cout << "rainbow_cliques::find_candidates "
+					"c >= nb_colors" << endl;
 			exit(1);
 			}
 		color_frequency[c]++;
@@ -258,7 +273,9 @@ INT rainbow_cliques::find_candidates(
 	for (c = 0; c < graph->nb_colors; c++) {
 		if (f_color_satisfied[c]) {
 			if (color_frequency[c]) {
-				cout << "rainbow_cliques::find_candidates satisfied color appears with positive frequency" << endl;
+				cout << "rainbow_cliques::find_candidates "
+						"satisfied color appears with positive "
+						"frequency" << endl;
 				cout << "current clique:";
 				INT_vec_print(cout, current_clique, current_clique_size);
 				cout << endl;
@@ -281,10 +298,13 @@ INT rainbow_cliques::find_candidates(
 			}
 		}
 	if (f_v) {
-		cout << "rainbow_cliques::find_candidates minimal color is " << c0 << " with frequency " << c0_freq << endl;
+		cout << "rainbow_cliques::find_candidates "
+				"minimal color is " << c0 << " with frequency "
+				<< c0_freq << endl;
 		}
 
-	// And now we collect the points with color c0 in the array candidates:
+	// And now we collect the points with color c0
+	// in the array candidates:
 	j = 0;
 	for (i = 0; i < nb_pts; i++) {
 		c = graph->point_color[pt_list[i]];
@@ -293,7 +313,8 @@ INT rainbow_cliques::find_candidates(
 			}
 		}
 	if (j != c0_freq) {
-		cout << "rainbow_cliques::find_candidates j != c0_freq" << endl;
+		cout << "rainbow_cliques::find_candidates "
+				"j != c0_freq" << endl;
 		exit(1);
 		}
 
@@ -304,7 +325,8 @@ INT rainbow_cliques::find_candidates(
 	return c0_freq;
 }
 
-void rainbow_cliques::clique_found(INT *current_clique, INT verbose_level)
+void rainbow_cliques::clique_found(
+		INT *current_clique, INT verbose_level)
 {
 	INT i;
 	
@@ -314,7 +336,8 @@ void rainbow_cliques::clique_found(INT *current_clique, INT verbose_level)
 	*fp_sol << endl;
 }
 
-void rainbow_cliques::clique_found_record_in_original_labels(INT *current_clique, INT verbose_level)
+void rainbow_cliques::clique_found_record_in_original_labels(
+		INT *current_clique, INT verbose_level)
 {
 	INT i;
 	
@@ -329,13 +352,15 @@ void rainbow_cliques::clique_found_record_in_original_labels(INT *current_clique
 }
 
 
-void call_back_colored_graph_clique_found(clique_finder *CF, INT verbose_level)
+void call_back_colored_graph_clique_found(
+		clique_finder *CF, INT verbose_level)
 {
 	INT f_v = FALSE; //(verbose_level >= 1);
 
 	//cout << "call_back_colored_graph_clique_found" << endl;
 	
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
+	rainbow_cliques *R = (rainbow_cliques *)
+			CF->call_back_clique_found_data1;
 
 	if (f_v) {
 		INT i, pt, c;
@@ -346,14 +371,16 @@ void call_back_colored_graph_clique_found(clique_finder *CF, INT verbose_level)
 		for (i = 0; i < CF->target_depth; i++) {
 			pt = CF->current_clique[i];
 			c = R->graph->point_color[pt];
-			cout << i << " : " << pt << " : " << c << " : " << R->f_color_satisfied[c] << endl;
+			cout << i << " : " << pt << " : " << c << " : "
+					<< R->f_color_satisfied[c] << endl;
 			}
 		}
 	if (R->f_output_solution_raw) {
 		R->clique_found(CF->current_clique, verbose_level);
 		}
 	else {
-		R->clique_found_record_in_original_labels(CF->current_clique, verbose_level);
+		R->clique_found_record_in_original_labels(
+				CF->current_clique, verbose_level);
 		}
 }
 
@@ -362,20 +389,26 @@ void call_back_colored_graph_add_point(clique_finder *CF,
 	INT pt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
+	rainbow_cliques *R = (rainbow_cliques *)
+			CF->call_back_clique_found_data1;
 	INT c;
 	
 	c = R->graph->point_color[pt];
 	if (R->f_color_satisfied[c]) {
-		cout << "call_back_colored_graph_add_point color already satisfied" << endl;
+		cout << "call_back_colored_graph_add_point "
+				"color already satisfied" << endl;
 		exit(1);
 		}
 	if (c != R->color_chosen_at_depth[current_clique_size]) {
-		cout << "call_back_colored_graph_add_point c != color_chosen_at_depth[current_clique_size]" << endl;
+		cout << "call_back_colored_graph_add_point "
+				"c != color_chosen_at_depth[current_clique_size]" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "call_back_colored_graph_add_point add_point " << pt << " at depth " << current_clique_size << " color=" << c << endl;
+		cout << "call_back_colored_graph_add_point "
+				"add_point " << pt << " at depth "
+				<< current_clique_size
+				<< " color=" << c << endl;
 		}
 	R->f_color_satisfied[c] = TRUE;
 }
@@ -385,17 +418,21 @@ void call_back_colored_graph_delete_point(clique_finder *CF,
 	INT pt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
+	rainbow_cliques *R = (rainbow_cliques *)
+			CF->call_back_clique_found_data1;
 	INT c;
 	
 	c = R->graph->point_color[pt];
 	if (!R->f_color_satisfied[c]) {
-		cout << "call_back_colored_graph_delete_point color not satisfied" << endl;
+		cout << "call_back_colored_graph_delete_point "
+				"color not satisfied" << endl;
 		exit(1);
 		}
 	R->f_color_satisfied[c] = FALSE;
 	if (f_v) {
-		cout << "call_back_colored_graph_delete_point delete_point " << pt << " at depth " << current_clique_size << " color=" << c << endl;
+		cout << "call_back_colored_graph_delete_point "
+				"delete_point " << pt << " at depth "
+				<< current_clique_size << " color=" << c << endl;
 		}
 }
 
@@ -407,7 +444,8 @@ INT call_back_colored_graph_find_candidates(clique_finder *CF,
 {
 	//verbose_level = 1;
 	INT f_v = (verbose_level >= 1);
-	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data1;
+	rainbow_cliques *R = (rainbow_cliques *)
+			CF->call_back_clique_found_data1;
 	INT ret;
 
 	if (R->f_has_additional_test_function) {
@@ -415,7 +453,8 @@ INT call_back_colored_graph_find_candidates(clique_finder *CF,
 		INT tmp_nb_points;
 
 		if (f_v) {
-			cout << "call_back_colored_graph_find_candidates before call_back_additional_test_function" << endl;
+			cout << "call_back_colored_graph_find_candidates "
+					"before call_back_additional_test_function" << endl;
 			}
 		(*R->call_back_additional_test_function)(R, R->user_data, 
 			current_clique_size, current_clique, 
@@ -426,20 +465,24 @@ INT call_back_colored_graph_find_candidates(clique_finder *CF,
 		nb_pts = tmp_nb_points;
 
 		if (f_v) {
-			cout << "call_back_colored_graph_find_candidates after call_back_additional_test_function nb_pts = " << nb_pts << endl;
+			cout << "call_back_colored_graph_find_candidates "
+					"after call_back_additional_test_function "
+					"nb_pts = " << nb_pts << endl;
 			}
 
 		}
 	
 	if (f_v) {
-		cout << "call_back_colored_graph_find_candidates before R->find_candidates" << endl;
+		cout << "call_back_colored_graph_find_candidates "
+				"before R->find_candidates" << endl;
 		}
 	ret = R->find_candidates(current_clique_size, current_clique, 
 			nb_pts, reduced_nb_pts, 
 			pt_list, pt_list_inv, 
 			candidates, verbose_level);
 	if (f_v) {
-		cout << "call_back_colored_graph_find_candidates after R->find_candidates" << endl;
+		cout << "call_back_colored_graph_find_candidates "
+				"after R->find_candidates" << endl;
 		}
 	
 	return ret;

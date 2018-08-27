@@ -62,13 +62,13 @@ ovoid_generator::~ovoid_generator()
 		cout << "ovoid_generator::~ovoid_generator" << endl;
 		}
 	if (A) {
-		delete A;
+		FREE_OBJECT(A);
 		}
 	if (F) {
-		delete F;
+		FREE_OBJECT(F);
 		}
 	if (K) {
-		delete K;
+		FREE_OBJECT(K);
 	}
 	if (u) {
 		FREE_INT(u);
@@ -107,9 +107,9 @@ void ovoid_generator::init(int argc, const char **argv,
 	INT f_semilinear;
 	INT f_basis = TRUE;
 
-	F = new finite_field;
-	A = new action;
-	gen = new generator;
+	F = NEW_OBJECT(finite_field);
+	A = NEW_OBJECT(action);
+	gen = NEW_OBJECT(generator);
 
 	read_arguments(argc, argv, verbose_level);
 
@@ -275,7 +275,7 @@ void ovoid_generator::init(int argc, const char **argv,
 		if (f_v) {
 			cout << "allocating Klein correspondence" << endl;
 			}
-		K = new klein_correspondence;
+		K = NEW_OBJECT(klein_correspondence);
 
 		if (f_v) {
 			cout << "before K->init" << endl;
@@ -671,7 +671,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 			strong_generators *SG;
 			longinteger_object go;
 
-			SG = new strong_generators;
+			SG = NEW_OBJECT(strong_generators);
 			SG->init(A);
 			SG->decode_ascii_coding(
 					ODF->Aut_ascii[orbit_idx], 0 /* verbose_level */);
@@ -730,7 +730,7 @@ void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 			//CG->print_points_and_colors();
 		}
 
-		delete CG;
+		FREE_OBJECT(CG);
 		FREE_INT(candidates);
 
 	}
@@ -790,7 +790,7 @@ void ovoid_generator::make_one_graph(orbiter_data_file *ODF,
 		strong_generators *SG;
 		longinteger_object go;
 
-		SG = new strong_generators;
+		SG = NEW_OBJECT(strong_generators);
 		SG->init(A);
 		SG->decode_ascii_coding(ODF->Aut_ascii[orbit_idx],
 				0 /* verbose_level */);
@@ -931,7 +931,7 @@ void ovoid_generator::create_graph(orbiter_data_file *ODF,
 		nb_colors_used = nb_colors;
 	}
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	CG->init(nb_points, nb_colors_used,
 		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
