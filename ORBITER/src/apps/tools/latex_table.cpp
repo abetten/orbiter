@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	spreadsheet *S;
 	INT *f_col_select;
 
-	S = new spreadsheet;
+	S = NEW_OBJECT(spreadsheet);
 
 	cout << "Reading table " << fname << endl;
 	S->read_spreadsheet(fname, verbose_level);

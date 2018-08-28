@@ -48,10 +48,41 @@ void mem_object_registry_entry::null()
 	object_type = POINTER_TYPE_INVALID;
 	object_n = 0;
 	object_size_of = 0;
+	extra_type_info = NULL;
 	source_file = NULL;
 	source_line = 0;
 }
 
+void mem_object_registry_entry::set_type_from_string(BYTE *str)
+{
+	if (strcmp(str, "int") == 0) {
+		object_type = POINTER_TYPE_SMALLINT;
+	} else if (strcmp(str, "pint") == 0) {
+		object_type = POINTER_TYPE_SMALLPINT;
+	} else if (strcmp(str, "INT") == 0) {
+		object_type = POINTER_TYPE_INT;
+	} else if (strcmp(str, "PINT") == 0) {
+		object_type = POINTER_TYPE_PINT;
+	} else if (strcmp(str, "PPINT") == 0) {
+		object_type = POINTER_TYPE_PPINT;
+	} else if (strcmp(str, "BYTE") == 0) {
+		object_type = POINTER_TYPE_BYTE;
+	} else if (strcmp(str, "UBYTE") == 0) {
+		object_type = POINTER_TYPE_UBYTE;
+	} else if (strcmp(str, "PBYTE") == 0) {
+		object_type = POINTER_TYPE_PBYTE;
+	} else if (strcmp(str, "PUBYTE") == 0) {
+		object_type = POINTER_TYPE_PUBYTE;
+	} else if (strcmp(str, "pvoid") == 0) {
+		object_type = POINTER_TYPE_PVOID;
+	} else if (strcmp(str, "OBJECT") == 0) {
+		object_type = POINTER_TYPE_OBJECT;
+	} else if (strcmp(str, "OBJECTS") == 0) {
+		object_type = POINTER_TYPE_OBJECTS;
+	} else {
+		object_type = POINTER_TYPE_INVALID;
+	}
+}
 
 void mem_object_registry_entry::print_type(ostream &ost)
 {
@@ -160,6 +191,7 @@ void mem_object_registry_entry::print(INT line)
 	cout << " : "
 		<< object_n << " : "
 		<< object_size_of << " : "
+		<< extra_type_info << " : "
 		<< source_file << " : "
 		<< source_line << endl;
 
@@ -177,6 +209,7 @@ void mem_object_registry_entry::print_csv(ostream &ost, INT line)
 	ost << ","
 		<< object_n << ","
 		<< object_size_of << ","
+		<< extra_type_info << ","
 		<< source_file << ","
 		<< source_line << endl;
 
@@ -241,6 +274,35 @@ void mem_object_registry::init(INT verbose_level)
 		cout << "mem_object_registry::init done" << endl;
 	}
 }
+
+void mem_object_registry::allocate(INT N, INT verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate" << endl;
+	}
+
+	nb_entries_allocated = N;
+	nb_entries_used = 0;
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate trying to allocate "
+				<< nb_entries_allocated << " entries" << endl;
+	}
+
+	entries = new mem_object_registry_entry[nb_entries_allocated];
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate allocation successful" << endl;
+	}
+
+
+	if (f_v) {
+		cout << "mem_object_registry::allocate done" << endl;
+	}
+}
+
 
 
 void mem_object_registry::set_automatic_dump(
@@ -334,7 +396,7 @@ void mem_object_registry::dump_to_csv_file(const BYTE *fname)
 
 		//cout << "memory registry:" << endl;
 
-		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,File,LineInFile" << endl;
+		fp << "Line,Pointer,Timestamp,Type,N,Sizeof,ExtraTypeInfo,File,LineInFile" << endl;
 		sz = 0;
 		for (i = 0; i < nb_entries_used; i++) {
 			s = entries[i].size_of();
@@ -367,7 +429,7 @@ int *mem_object_registry::allocate_int(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_SMALLINT, (int) n, sizeof(int),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -407,7 +469,7 @@ int **mem_object_registry::allocate_pint(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_SMALLPINT, (int) n, sizeof(int *),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -447,7 +509,7 @@ INT *mem_object_registry::allocate_INT(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_INT, (int) n, sizeof(INT),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -487,7 +549,7 @@ INT **mem_object_registry::allocate_PINT(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PINT, (int) n, sizeof(INT *),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -527,7 +589,7 @@ INT ***mem_object_registry::allocate_PPINT(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PPINT, (int) n, sizeof(INT **),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -567,7 +629,7 @@ BYTE *mem_object_registry::allocate_BYTE(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_BYTE, (int) n, sizeof(BYTE),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -607,7 +669,7 @@ UBYTE *mem_object_registry::allocate_UBYTE(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_UBYTE, (int) n, sizeof(UBYTE),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -647,7 +709,7 @@ BYTE **mem_object_registry::allocate_PBYTE(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PBYTE, (int) n, sizeof(BYTE *),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -687,7 +749,7 @@ UBYTE **mem_object_registry::allocate_PUBYTE(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PUBYTE, (int) n, sizeof(BYTE *),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -727,7 +789,7 @@ void **mem_object_registry::allocate_pvoid(INT n, const char *file, int line)
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_PVOID, (int) n, sizeof(void *),
-				file, line,
+				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -754,7 +816,8 @@ void mem_object_registry::free_pvoid(void **p, const char *file, int line)
 	delete [] p;
 }
 
-void *mem_object_registry::allocate_OBJECTS(void *p, INT n, INT size_of, const char *file, int line)
+void *mem_object_registry::allocate_OBJECTS(void *p, INT n, INT size_of,
+		const char *extra_type_info, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -765,7 +828,7 @@ void *mem_object_registry::allocate_OBJECTS(void *p, INT n, INT size_of, const c
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_OBJECTS, (int) n, size_of,
-				file, line,
+				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -792,7 +855,8 @@ void mem_object_registry::free_OBJECTS(void *p, const char *file, int line)
 	//delete [] p;
 }
 
-void *mem_object_registry::allocate_OBJECT(void *p, INT size_of, const char *file, int line)
+void *mem_object_registry::allocate_OBJECT(void *p, INT size_of,
+		const char *extra_type_info, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
@@ -803,7 +867,7 @@ void *mem_object_registry::allocate_OBJECT(void *p, INT size_of, const char *fil
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
 				POINTER_TYPE_OBJECT, (int) 1, size_of,
-				file, line,
+				extra_type_info, file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
@@ -899,6 +963,7 @@ void mem_object_registry::insert_at(int idx)
 
 void mem_object_registry::add_to_registry(void *pointer,
 		int object_type, int object_n, int object_size_of,
+		const char *extra_type_info,
 		const char *source_file, int source_line,
 		int verbose_level)
 {
@@ -912,6 +977,7 @@ void mem_object_registry::add_to_registry(void *pointer,
 	if (search(pointer, idx)) {
 		cout << "mem_object_registry::add_to_registry pointer p is "
 				"already in the registry, something is wrong" << endl;
+		cout << "extra_type_info = " << extra_type_info << endl;
 		cout << "source_file = " << source_file << endl;
 		cout << "source_line = " << source_line << endl;
 		cout << "object_type = " << object_type << endl;
@@ -928,6 +994,7 @@ void mem_object_registry::add_to_registry(void *pointer,
 	entries[idx].object_type = object_type;
 	entries[idx].object_n = object_n;
 	entries[idx].object_size_of = object_size_of;
+	entries[idx].extra_type_info = extra_type_info;
 	entries[idx].source_file = source_file;
 	entries[idx].source_line = source_line;
 
