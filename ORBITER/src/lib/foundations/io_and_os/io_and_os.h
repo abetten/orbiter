@@ -66,6 +66,7 @@ public:
 	mem_object_registry();
 	~mem_object_registry();
 	void init(INT verbose_level);
+	void allocate(INT N, INT verbose_level);
 	void set_automatic_dump(
 			INT automatic_dump_interval, const BYTE *fname_mask,
 			INT verbose_level);
@@ -94,14 +95,17 @@ public:
 	void free_PUBYTE(UBYTE **p, const char *file, int line);
 	void **allocate_pvoid(INT n, const char *file, int line);
 	void free_pvoid(void **p, const char *file, int line);
-	void *allocate_OBJECTS(void *p, INT n, INT size_of, const char *file, int line);
+	void *allocate_OBJECTS(void *p, INT n, INT size_of,
+			const char *extra_type_info, const char *file, int line);
 	void free_OBJECTS(void *p, const char *file, int line);
-	void *allocate_OBJECT(void *p, INT size_of, const char *file, int line);
+	void *allocate_OBJECT(void *p, INT size_of,
+			const char *extra_type_info, const char *file, int line);
 	void free_OBJECT(void *p, const char *file, int line);
 	int search(void *p, int &idx);
 	void insert_at(int idx);
 	void add_to_registry(void *pointer,
 			int object_type, int object_n, int object_size_of,
+			const char *extra_type_info,
 			const char *source_file, int source_line,
 			int verbose_level);
 	void delete_from_registry(void *pointer, int verbose_level);
@@ -118,11 +122,13 @@ public:
 	int object_n;
 	int object_size_of;
 		// needed for objects of type class
+	const char *extra_type_info;
 	const char *source_file;
 	int source_line;
 	mem_object_registry_entry();
 	~mem_object_registry_entry();
 	void null();
+	void set_type_from_string(BYTE *str);
 	void print_type(ostream &ost);
 	int size_of();
 	void print(INT line);

@@ -36,6 +36,7 @@ all: all_cliques.out \
 	concatenate_files.out \
 	graph.out \
 	collect.out \
+	memory_usage.out \
 	create_graph.out 
 
 
@@ -135,6 +136,9 @@ collect.out:  collect.o ;
 
 create_graph.out:  create_graph.o ;
 	$(DISCRETA_CPP)  create_graph.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
+
+memory_usage.out:  memory_usage.o ;
+	$(DISCRETA_CPP)  memory_usage.o $(CPPFLAGS) $(LIB) $(LFLAGS) -o $@
 
 
 

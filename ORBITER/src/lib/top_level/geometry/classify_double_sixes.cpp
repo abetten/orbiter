@@ -237,7 +237,7 @@ void classify_double_sixes::init(
 	Five_plus_one->depth = 5;
 	strcpy(Five_plus_one->fname_base, fname_base);
 
-	INT nb_poset_orbit_nodes = ONE_MILLION;
+	INT nb_poset_orbit_nodes = 100; //ONE_MILLION;
 	
 	if (f_v) {
 		cout << "classify_double_sixes::init calling "
