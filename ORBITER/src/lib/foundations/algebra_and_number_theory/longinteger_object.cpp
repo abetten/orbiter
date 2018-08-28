@@ -63,7 +63,8 @@ void longinteger_object::create(INT i)
 		}
 	l = (int) INT_log10(i);
 	if (f_v) {
-		cout << "longinteger_object::create i=" << i << " log =  " << l << endl;
+		cout << "longinteger_object::create "
+				"i=" << i << " log =  " << l << endl;
 		}
 	r = NEW_BYTE(l);
 	j = 0;
@@ -74,7 +75,8 @@ void longinteger_object::create(INT i)
 		j++;
 		}
 	if (f_v) {
-		cout << "longinteger_object::create i=" << ii << " created ";
+		cout << "longinteger_object::create "
+				"i=" << ii << " created ";
 		longinteger_print_digits(rep(), len());
 		cout << " with j=" << j << " digits" << endl;
 		}
@@ -124,7 +126,8 @@ void longinteger_object::create_power_minus_one(INT a, INT e)
 	FREE_INT(factors);
 }
 
-void longinteger_object::create_from_base_b_representation(INT b, INT *rep, INT len)
+void longinteger_object::create_from_base_b_representation(
+		INT b, INT *rep, INT len)
 {
 	longinteger_domain D;
 	longinteger_object x, y, z, bb;
@@ -140,7 +143,8 @@ void longinteger_object::create_from_base_b_representation(INT b, INT *rep, INT 
 	x.assign_to(*this);
 }
 
-void longinteger_object::create_from_base_10_string(const BYTE *str, INT verbose_level)
+void longinteger_object::create_from_base_10_string(
+		const BYTE *str, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_domain D;
@@ -156,7 +160,8 @@ void longinteger_object::create_from_base_10_string(const BYTE *str, INT verbose
 		D.add(z, y, x);
 		}
 	if (f_v) {
-		cout << "longinteger_object::create_from_base_10_string() str = " << str << endl;
+		cout << "longinteger_object::create_from_base_10_string "
+				"str = " << str << endl;
 		cout << "object = " << x << endl;
 		}
 	x.assign_to(*this);
@@ -187,7 +192,8 @@ void longinteger_object::assign_to(longinteger_object &b)
 	INT f_v = FALSE;
 	
 	if (f_v) {
-		cout << "longinteger_object::assign_to before b.freeself()" << endl;
+		cout << "longinteger_object::assign_to "
+				"before b.freeself" << endl;
 		if (b.rep()) {
 			cout << "this is what we free: ";
 			longinteger_print_digits(b.rep(), b.len());
@@ -196,7 +202,8 @@ void longinteger_object::assign_to(longinteger_object &b)
 		}
 	b.freeself();
 	if (f_v) {
-		cout << "longinteger_object::assign_to after b.freeself()" << endl;
+		cout << "longinteger_object::assign_to "
+				"after b.freeself" << endl;
 		}
 	b.sgn = sgn;
 	b.l = l;
@@ -250,7 +257,8 @@ ostream& longinteger_object::print(ostream& ost)
 
 				c1 = '0' + r[l - 1];
 				c2 = '0' + r[l - 2];
-				ost << " = " << c1 << "." << c2 << " x 10^" << l - 1;
+				ost << " = " << c1 << "." << c2
+						<< " x 10^" << l - 1;
 				}
 			}
 		}
@@ -450,11 +458,11 @@ void longinteger_object::create_i_power_j(INT i, INT j)
 
 ostream& operator<<(ostream& ost, longinteger_object& p)
 {
-	// cout << "operator<< starting\n";
+	// cout << "operator<< starting" << endl;
 	p.print(ost);
-	// cout << "operator<< finished\n";
+	// cout << "operator<< finished" << endl;
 	return ost;
-};
+}
 
 INT longinteger_object::compare_with_INT(INT a)
 {

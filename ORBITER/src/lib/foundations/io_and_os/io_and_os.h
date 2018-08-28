@@ -109,6 +109,10 @@ public:
 			const char *source_file, int source_line,
 			int verbose_level);
 	void delete_from_registry(void *pointer, int verbose_level);
+	void sort_by_size(int verbose_level);
+	void sort_by_location_and_get_frequency(int verbose_level);
+	void sort_by_type(int verbose_level);
+	void sort_by_location(int verbose_level);
 };
 
 //! a class related to mem_object_registry
@@ -125,6 +129,7 @@ public:
 	const char *extra_type_info;
 	const char *source_file;
 	int source_line;
+
 	mem_object_registry_entry();
 	~mem_object_registry_entry();
 	void null();

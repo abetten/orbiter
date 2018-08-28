@@ -38,10 +38,9 @@ int main(int argc, char **argv)
 			}
 		else if (strcmp(argv[i], "-file_mask") == 0) {
 			f_file_mask = TRUE;
-			i++;
 			range_first = atoi(argv[++i]);
 			range_len = atoi(argv[++i]);
-			fname_mask = argv[i];
+			fname_mask = argv[++i];
 			cout << "-file_mask " << range_first << " " << range_len
 					<< " " << fname_mask << endl;
 			}
@@ -74,13 +73,19 @@ int main(int argc, char **argv)
 			sprintf(fname, fname_mask, range_first + i);
 			fnames[h] = NEW_BYTE(strlen(fname) + 1);
 			strcpy(fnames[h], fname);
+			cout << "created file name " << h << " as " << fnames[h] << endl;
 			h++;
 		}
-		for (i = 0; i < nb_extra_files; i++) {
-			fnames[h] = NEW_BYTE(strlen(extra_files[i]) + 1);
-			strcpy(fnames[h], extra_files[i]);
-			h++;
-		}
+	}
+	for (i = 0; i < nb_extra_files; i++) {
+		fnames[h] = NEW_BYTE(strlen(extra_files[i]) + 1);
+		strcpy(fnames[h], extra_files[i]);
+		cout << "created file name " << h << " as " << fnames[h] << endl;
+		h++;
+	}
+	if (h != nb_files) {
+		cout << "h != nb_files" << endl;
+		exit(1);
 	}
 
 	INT idx;
@@ -89,6 +94,7 @@ int main(int argc, char **argv)
 	M = (mem_object_registry **) NEW_pvoid(nb_files);
 	for (idx = 0; idx < nb_files; idx++) {
 
+		cout << "file " << idx << " / " << nb_files << " is " << fnames[idx] << ":" << endl;
 		spreadsheet *S;
 		BYTE *p;
 		INT N, a;
@@ -134,7 +140,31 @@ int main(int argc, char **argv)
 			M[idx]->entries[i].source_line = S->get_INT(i + 1, 8);
 			}
 		M[idx]->nb_entries_used = N;
-		M[idx]->dump();
+		//M[idx]->dump();
+
+		cout << "sorting by size:" << endl;
+		M[idx]->sort_by_size(verbose_level);
+
+		strcpy(fname, fnames[idx]);
+		chop_off_extension(fname);
+		strcat(fname, "_by_size.csv");
+		cout << "writing file " << fname << endl;
+		M[idx]->dump_to_csv_file(fname);
+
+
+		cout << "sorting by type:" << endl;
+		M[idx]->sort_by_type(verbose_level);
+
+		strcpy(fname, fnames[idx]);
+		chop_off_extension(fname);
+		strcat(fname, "_by_type.csv");
+		cout << "writing file " << fname << endl;
+		M[idx]->dump_to_csv_file(fname);
+
+
+		cout << "file " << idx << " / " << nb_files << " is " << fnames[idx] << ":" << endl;
+		cout << "usage by location:" << endl;
+		M[idx]->sort_by_location_and_get_frequency(verbose_level);
 	}
 
 
