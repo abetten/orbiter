@@ -273,89 +273,11 @@ int main(int argc, const char **argv)
 		cout << "surface_classify writing cheat sheet on double sixes done" << endl;
 		}
 
+
 	if (f_double_sixes_only) {
+		cout << "f_double_sixes_only is true so we terminate now."
 		exit(0);
 		}
-
-#if 0
-	INT coeff_in[20] = 
-		{ 0, 0, 0, 0, 12, 0, 0, 12, 0, 0, 0, 0, 9, 0, 0, 10, 10, 6, 0, 0};
-		//{0, 0, 0, 0, 12, 0, 0, 12, 0, 0, 0, 0, 9, 0, 0, 10, 10, 6, 0, 0};//= 12X^2Y + 12XY^2 + 9Z^2W + 10ZW^2 + 10YZW + 6XZW
-		//{1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0};
-	INT coeff_target[20] = 
-		{  0, 0, 0, 0, 9, 0, 0, 1, 0, 0, 0, 0, 5, 0, 0, 9, 9, 6, 11, 9 };
-	
-	INT coeff_out[20];
-
-#if 0
-	INT Mtx[16] = 
-		{
-0,2,0,0,
-1,0,0,0,
-0,0,1,0,
-0,0,0,1
-#if 0
- 8,  7,  1,  2, 
-12,  2,  4,  3, 
- 4,  2,  3,  1, 
- 2,  8,  5,  4 
-#endif
-		};
-#endif
-
-	INT Iso1[16] = {
- 6, 11, 11, 12, 
- 2, 11,  2,  0, 
- 1,  4, 12,  0, 
- 8,  0,  8,  4, 
-		};
-	INT Iso2[16] = {
-12,  9, 10, 12, 
-11,  2, 11,  0, 
- 6,  3,  5,  0, 
- 9, 10,  9,  3, 
-		};
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
-	INT *Elt_v;
-
-	Elt1 = NEW_INT(SCW->A->elt_size_in_INT);
-	Elt2 = NEW_INT(SCW->A->elt_size_in_INT);
-	Elt3 = NEW_INT(SCW->A->elt_size_in_INT);
-	Elt4 = NEW_INT(SCW->A->elt_size_in_INT);
-	Elt_v = NEW_INT(SCW->A->elt_size_in_INT);
-
-	PG_element_normalize_from_front(*SCW->F, coeff_target, 1, SCW->Surf->nb_monomials);
-
-
-	SCW->A->make_element(Elt1, Iso1, 0);
-	SCW->A->make_element(Elt2, Iso2, 0);
-	SCW->A->element_invert(Elt2, Elt3, 0);
-	SCW->A->element_mult(Elt1, Elt3, Elt4, 0);
-	SCW->A->element_invert(Elt4, Elt_v, 0);
-	SCW->Surf->substitute_linear(coeff_in, coeff_out, Elt_v, 0 /* verbose_level */);
-	cout << "Elt4:" << endl;
-	INT_matrix_print(Elt4, 4, 4);
-	cout << "Elt_v:" << endl;
-	SCW->A->element_print_quick(Elt_v, cout);
-	
-	cout << "coeff_in :" << endl;
-	INT_vec_print(cout, coeff_in, 20);
-	cout << endl;
-
-	PG_element_normalize_from_front(*SCW->F, coeff_out, 1, SCW->Surf->nb_monomials);
-
-	cout << "coeff_out :" << endl;
-	INT_vec_print(cout, coeff_out, 20);
-	cout << endl;
-	cout << "coeff_target :" << endl;
-	INT_vec_print(cout, coeff_out, 20);
-	cout << endl;
-	exit(1);
-#endif
-	
 
 
 	if (f_read_surfaces) {
@@ -383,6 +305,8 @@ int main(int argc, const char **argv)
 
 		}
 	else {
+
+		cout << "surface_classify classifying surfaces" << endl;
 
 		if (f_v) {
 			cout << "surface_classify before SCW->classify_surfaces_from_double_sixes" << endl;

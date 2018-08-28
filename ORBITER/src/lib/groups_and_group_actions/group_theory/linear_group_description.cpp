@@ -61,9 +61,12 @@ INT linear_group_description::read_arguments(
 
 	cout << "linear_group_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {
+
+#if 0
 		if (argv[i][0] != '-') {
 			continue;
 			}
+#endif
 
 		// the general linear groups:
 		// GL, GGL, SL, SSL
@@ -278,9 +281,13 @@ INT linear_group_description::read_arguments(
 			cout << "-O-" << endl;
 			}
 		else if (strcmp(argv[i], "-end") == 0) {
+			cout << "-end" << endl;
 			return i;
 			}
-		} // next i
+		else {
+			cout << "linear_group_description::read_arguments unrecognized option " << argv[i] << endl;
+		}
+	} // next i
 	cout << "linear_group_description::read_arguments done" << endl;
 	return i;
 }

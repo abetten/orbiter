@@ -30,6 +30,9 @@ int f_memory_debug = FALSE;
 int memory_debug_verbose_level = 0;
 mem_object_registry global_mem_object_registry;
 
+static INT registry_key_pair_compare_by_size(void *K1v, void *K2v);
+static INT registry_key_pair_compare_by_type(void *K1v, void *K2v);
+static INT registry_key_pair_compare_by_location(void *K1v, void *K2v);
 
 mem_object_registry_entry::mem_object_registry_entry()
 {
@@ -1035,6 +1038,166 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 				<< nb_entries_used << " entries in the registry" << endl;
 	}
 }
+void mem_object_registry::sort_by_size(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_size" << endl;
+	}
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_size before Heapsort" << endl;
+	}
+	Heapsort(entries, nb_entries_used,
+		sizeof(mem_object_registry_entry),
+		registry_key_pair_compare_by_size);
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_size after Heapsort" << endl;
+	}
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_size done" << endl;
+	}
+
+}
+
+void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+	int i;
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
+	}
+
+	sort_by_location(verbose_level - 1);
+
+	INT nb_types;
+	INT *type_first;
+	INT *type_len;
+	INT c, f, l;
+
+	type_first = new INT[nb_entries_used]; // use sytem memory
+	type_len = new INT[nb_entries_used];
+
+
+	nb_types = 0;
+	type_first[0] = 0;
+	type_len[0] = 1;
+	for (i = 1; i < nb_entries_used; i++) {
+		c = registry_key_pair_compare_by_size(entries + i, entries + (i - 1));
+		if (c == 0) {
+			type_len[nb_types]++;
+			}
+		else {
+			type_first[nb_types + 1] =
+					type_first[nb_types] + type_len[nb_types];
+			nb_types++;
+			type_len[nb_types] = 1;
+			}
+		}
+	nb_types++;
+	cout << "we have " << nb_types
+			<< " different allocation locations:" << endl;
+
+	INT t, j, sz, s;
+	INT *frequency;
+	INT *perm;
+	INT *perm_inv;
+
+	frequency = new INT[nb_types];
+	perm = new INT[nb_types];
+	perm_inv = new INT[nb_types];
+	for (i = 0; i < nb_types; i++) {
+		frequency[i] = type_len[i];
+		}
+	INT_vec_sorting_permutation(frequency, nb_types,
+			perm, perm_inv, FALSE /* f_increasingly */);
+
+	for (t = nb_types - 1; t >= 0; t--) {
+		i = perm_inv[t];
+
+		f = type_first[i];
+		l = type_len[i];
+
+		sz = 0;
+		for (j = 0; j < l; j++) {
+			s = entries[f + j].size_of();
+			sz += s;
+		}
+
+		//idx = entries[f].user_data;
+		cout << l << " times file "
+				<< entries[f].source_file << " line "
+				<< entries[f].source_line
+				<< " object type ";
+		entries[f].print_type(cout);
+		if (entries[f].object_type == POINTER_TYPE_OBJECT ||
+				entries[f].object_type == POINTER_TYPE_OBJECTS) {
+			cout << " = " << entries[f].extra_type_info;
+		}
+		cout << " for a total of " << sz << " char" << endl;
+		}
+
+	delete [] type_first;
+	delete [] type_len;
+	delete [] frequency;
+	delete [] perm;
+	delete [] perm_inv;
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
+	}
+}
+
+void mem_object_registry::sort_by_type(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_type" << endl;
+	}
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_type before Heapsort" << endl;
+	}
+	Heapsort(entries, nb_entries_used,
+		sizeof(mem_object_registry_entry),
+		registry_key_pair_compare_by_type);
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_type after Heapsort" << endl;
+	}
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_type done" << endl;
+	}
+
+}
+
+void mem_object_registry::sort_by_location(int verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_location" << endl;
+	}
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_location before Heapsort" << endl;
+	}
+	Heapsort(entries, nb_entries_used,
+		sizeof(mem_object_registry_entry),
+		registry_key_pair_compare_by_location);
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_location after Heapsort" << endl;
+	}
+
+	if (f_v) {
+		cout << "mem_object_registry::sort_by_location done" << endl;
+	}
+
+}
 
 void start_memory_debug()
 {
@@ -1047,6 +1210,70 @@ void stop_memory_debug()
 	f_memory_debug = FALSE;
 	cout << "memory debugging stopped" << endl;
 }
+
+static INT registry_key_pair_compare_by_size(void *K1v, void *K2v)
+{
+	INT s1, s2, c;
+	mem_object_registry_entry *K1, *K2;
+
+	K1 = (mem_object_registry_entry *) K1v;
+	K2 = (mem_object_registry_entry *) K2v;
+	s1 = K1->size_of();
+	s2 = K2->size_of();
+	c = s2 - s1;
+	return c;
+}
+
+static INT registry_key_pair_compare_by_type(void *K1v, void *K2v)
+{
+	INT t1, t2, l1, l2, c;
+	mem_object_registry_entry *K1, *K2;
+
+	K1 = (mem_object_registry_entry *) K1v;
+	K2 = (mem_object_registry_entry *) K2v;
+	t1 = K1->object_type;
+	t2 = K2->object_type;
+	c = t2 - t1;
+	if (c) {
+		return c;
+	}
+	//new the two entries have the same type
+	if (t1 == POINTER_TYPE_OBJECTS || t1 == POINTER_TYPE_OBJECT) {
+		c = strcmp(K1->extra_type_info, K2->extra_type_info);
+		if (c) {
+			return c;
+		}
+	}
+	c = strcmp(K1->source_file, K2->source_file);
+	if (c) {
+		return c;
+	}
+	l1 = K1->source_line;
+	l2 = K2->source_line;
+	c = l2 - l1;
+	return c;
+}
+
+static INT registry_key_pair_compare_by_location(void *K1v, void *K2v)
+{
+	INT l1, l2, c;
+	mem_object_registry_entry *K1, *K2;
+
+	K1 = (mem_object_registry_entry *) K1v;
+	K2 = (mem_object_registry_entry *) K2v;
+	c = strcmp(K1->source_file, K2->source_file);
+	if (c) {
+		return c;
+	}
+	l1 = K1->source_line;
+	l2 = K2->source_line;
+	c = l2 - l1;
+	return c;
+}
+
+
+
+
 
 #if 0
 #define MEMORY_WATCH_LIST_LENGTH 1000 
