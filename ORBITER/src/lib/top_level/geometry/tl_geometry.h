@@ -143,7 +143,7 @@ public:
 	INT *line_type; // [P2->N_lines]
 
 		
-	generator *gen;
+	poset_classification *gen;
 
 	
 
@@ -398,7 +398,7 @@ public:
 
 
 	INT (*check_function)(INT len, INT *S, void *data, INT verbose_level);
-	generator *gen;
+	poset_classification *gen;
 
 	INT nb_orbits;
 	INT current_orbit;
@@ -532,7 +532,7 @@ public:
 	action *A_on_neighbors; 
 		// restricted action A2 on the set Neighbors[]
 
-	generator *Five_plus_one;
+	poset_classification *Five_plus_one;
 		// orbits on five-plus-one configurations
 
 
@@ -610,8 +610,8 @@ public:
 	strong_generators *gens_type1;
 	strong_generators *gens_type2;
 
-	generator *orbits_on_trihedra_type1;
-	generator *orbits_on_trihedra_type2;
+	poset_classification *orbits_on_trihedra_type1;
+	poset_classification *orbits_on_trihedra_type2;
 
 	INT nb_orbits_type1;
 	INT nb_orbits_type2;
@@ -809,7 +809,7 @@ public:
 	INT *tmp_M; // [n * n]
 	INT *base_cols; // [n]
 
-	generator *Gen;
+	poset_classification *Gen;
 
 	INT schreier_depth;
 	INT f_use_invariant_subset_if_available;
@@ -970,7 +970,7 @@ class search_blocking_set {
 public:
 	incidence_structure *Inc; // do not free
 	action *A; // do not free
-	generator *gen;
+	poset_classification *gen;
 
 	fancy_set *Line_intersections; // [Inc->nb_cols]
 	INT *blocking_set;
@@ -1160,7 +1160,7 @@ public:
 	INT *tmp_M4;
 
 
-	generator *gen; // allocated in init()
+	poset_classification *gen; // allocated in init()
 
 
 	singer_cycle *Sing;
@@ -1778,7 +1778,7 @@ public:
 	incidence_structure *Inc;
 	partitionstack *Stack;
 
-	generator *arcs;
+	poset_classification *arcs;
 
 	translation_plane_via_andre_model();
 	~translation_plane_via_andre_model();

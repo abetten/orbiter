@@ -58,7 +58,7 @@ public:
 	strong_generators *Strong_gens;
 	action *A; // PGL(n - k, q) if f_linear
 
-	generator *gen;
+	poset_classification *gen;
 			
 
 	INT f_irreducibility_test;

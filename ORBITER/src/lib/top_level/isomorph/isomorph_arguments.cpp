@@ -141,7 +141,8 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 }
 
 
-void isomorph_arguments::init(action *A, action *A2, generator *gen, 
+void isomorph_arguments::init(action *A, action *A2,
+	poset_classification *gen,
 	INT target_size, const BYTE *prefix_with_directory, exact_cover_arguments *ECA, 
 	void (*callback_report)(isomorph *Iso, void *data, INT verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, INT verbose_level), 

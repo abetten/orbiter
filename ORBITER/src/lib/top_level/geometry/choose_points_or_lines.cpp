@@ -173,7 +173,7 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 		delete gen;
 		}
 	
-	gen = new generator;
+	gen = new poset_classification;
 
 	sprintf(gen->fname_base, "%s", label);
 	

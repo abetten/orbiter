@@ -2697,7 +2697,7 @@ void prepare_2_orbits_in_product_action(char *group_label,
 void free_global_data();
 void the_end(INT t0);
 void the_end_quietly(INT t0);
-void calc_Kramer_Mesner_matrix_neighboring(generator *gen, 
+void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 	INT level, matrix &M, INT verbose_level);
 // we assume that we don't use implicit fusion nodes
 void Mtk_from_MM(Vector & MM, matrix & Mtk, INT t, INT k, 
@@ -2706,9 +2706,9 @@ void Mtk_via_Mtr_Mrk(INT t, INT r, INT k, INT f_subspaces, INT q,
 	matrix & Mtr, matrix & Mrk, matrix & Mtk, INT verbose_level);
 // Computes $M_{tk}$ via a recursion formula:
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
-void Mtk_sup_to_inf(generator *gen, 
+void Mtk_sup_to_inf(poset_classification *gen,
 	INT t, INT k, matrix & Mtk_sup, matrix & Mtk_inf, INT verbose_level);
-void compute_Kramer_Mesner_matrix(generator *gen, 
+void compute_Kramer_Mesner_matrix(poset_classification *gen,
 	INT t, INT k, matrix &M, INT f_subspaces, INT q, INT verbose_level);
 void matrix_to_diophant(matrix& M, diophant *&D, INT verbose_level);
 

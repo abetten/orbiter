@@ -157,7 +157,7 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 	tmp_M3 = NEW_INT(n * n);
 	tmp_M4 = NEW_INT(n * n);
 	
-	gen = new generator;
+	gen = new poset_classification;
 	gen->read_arguments(argc, argv, 1);
 
 

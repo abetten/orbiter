@@ -208,7 +208,7 @@ void classify_double_sixes::init(
 		}
 
 
-	Five_plus_one = NEW_OBJECT(generator);
+	Five_plus_one = NEW_OBJECT(poset_classification);
 	Five_plus_one->read_arguments(argc, argv, 0);
 
 

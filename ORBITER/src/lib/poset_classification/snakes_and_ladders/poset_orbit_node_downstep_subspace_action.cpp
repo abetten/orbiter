@@ -8,7 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 void poset_orbit_node::setup_factor_space_action_light(
-	generator *gen,
+	poset_classification *gen,
 	action_on_factor_space &AF, 
 	INT lvl, INT verbose_level)
 {
@@ -38,7 +38,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 }
 
 void poset_orbit_node::setup_factor_space_action_with_early_test(
-	generator *gen,
+	poset_classification *gen,
 	action_on_factor_space &AF, action &A_factor_space, 
 	INT lvl, INT verbose_level)
 {
@@ -161,7 +161,8 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 		}
 }
 
-void poset_orbit_node::setup_factor_space_action(generator *gen,
+void poset_orbit_node::setup_factor_space_action(
+	poset_classification *gen,
 	action_on_factor_space &AF, action &A_factor_space, 
 	INT lvl, INT f_compute_tables, INT verbose_level)
 // called from poset_orbit_node::init_extension_node,
@@ -233,7 +234,8 @@ void poset_orbit_node::setup_factor_space_action(generator *gen,
 	FREE_INT(coordinates);
 }
 
-void poset_orbit_node::downstep_subspace_action(generator *gen,
+void poset_orbit_node::downstep_subspace_action(
+	poset_classification *gen,
 	INT lvl, 
 	INT f_create_schreier_vector, INT f_compact, 
 	INT f_use_invariant_subset_if_available, 
@@ -469,7 +471,7 @@ void poset_orbit_node::downstep_subspace_action(generator *gen,
 }
 
 void poset_orbit_node::downstep_subspace_action_print_orbits(
-	generator *gen, schreier &Schreier, 
+	poset_classification *gen, schreier &Schreier,
 	INT lvl, 
 	INT f_print_orbits, 
 	INT verbose_level)
@@ -523,7 +525,7 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 }
 
 void poset_orbit_node::downstep_orbits_subspace_action(
-	generator *gen, schreier &Schreier, 
+	poset_classification *gen, schreier &Schreier,
 	INT lvl, 
 	INT f_use_invariant_subset_if_available, 
 	INT &f_using_invariant_subset, 
@@ -676,7 +678,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 }
 
 void poset_orbit_node::find_extensions_subspace_action(
-	generator *gen, schreier &O,
+	poset_classification *gen, schreier &O,
 	action *A_factor_space, action_on_factor_space *AF, 
 	INT lvl, INT f_implicit_fusion, INT verbose_level)
 // prepares all extension nodes and marks them as unprocessed.

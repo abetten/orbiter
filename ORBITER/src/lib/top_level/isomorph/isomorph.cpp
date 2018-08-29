@@ -270,7 +270,7 @@ void isomorph::free_tmp_data()
 }
 
 void isomorph::init(const BYTE *prefix, 
-	action *A_base, action *A, generator *gen, 
+	action *A_base, action *A, poset_classification *gen,
 	INT size, INT level, 
 	INT f_use_database_for_starter, 
 	INT f_implicit_fusion, INT verbose_level)
@@ -1590,7 +1590,7 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
 
 }
 
-void isomorph::init_high_level(action *A, generator *gen, 
+void isomorph::init_high_level(action *A, poset_classification *gen,
 	INT size, BYTE *prefix_classify, BYTE *prefix, INT level,
 	INT verbose_level)
 {

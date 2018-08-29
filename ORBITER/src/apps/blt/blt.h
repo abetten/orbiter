@@ -39,7 +39,7 @@ public:
 	BYTE prefix_with_directory[1000];
 	INT starter_size;
 	
-	generator *gen;
+	poset_classification *gen;
 	action *A;
 	INT degree;
 		

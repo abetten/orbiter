@@ -41,7 +41,7 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	wreath_product *W;
-	generator *Gen;
+	poset_classification *Gen;
 	INT vector_space_dimension;
 
 	tensor_product();
@@ -490,7 +490,7 @@ void tensor_product::init(int argc, const char **argv,
 #endif
 
 
-	Gen = NEW_OBJECT(generator);
+	Gen = NEW_OBJECT(poset_classification);
 
 	Gen->read_arguments(argc, argv, 0);
 

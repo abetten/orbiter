@@ -83,6 +83,7 @@ INT irem(INT a, INT m)
 
 INT gcd_INT(INT m, INT n)
 {
+#if 0
 	longinteger_domain D;
 	longinteger_object M, N, G, U, V;
 
@@ -91,9 +92,15 @@ INT gcd_INT(INT m, INT n)
 	N.create(n);
 	D.extended_gcd(M, N, G, U, V, 0);
 	return G.as_INT();
-#if 0
+#else
 	INT r, s;
 	
+	if (m < 0) {
+		m *= -1;
+	}
+	if (n < 0) {
+		n *= -1;
+	}
 	if (n > m) {
 		r = m;
 		m = n;
@@ -149,7 +156,7 @@ INT order_mod_p(INT a, INT p)
 	INT o, b;
 	
 	if (a < 0) {
-		cout << "order_mod_p() a < 0" << endl;
+		cout << "order_mod_p a < 0" << endl;
 		exit(1);
 		}
 	a %= p;
@@ -172,7 +179,7 @@ INT INT_log2(INT n)
 {	INT i;
 	
 	if (n <= 0) {
-		cout << "INT_log2(): n <= 0" << endl;
+		cout << "INT_log2 n <= 0" << endl;
 		exit(1);
 		}
 	for (i = 0; n > 0; i++) {
@@ -187,7 +194,7 @@ INT INT_log10(INT n)
 	INT j;
 	
 	if (n <= 0) {
-		cout << "INT_log10(): n <= 0" << endl;
+		cout << "INT_log10 n <= 0" << endl;
 		cout << "n = " << n << endl;
 		exit(1);
 		}
@@ -204,7 +211,7 @@ INT INT_logq(INT n, INT q)
 {	INT i;
 	
 	if (n < 0) {
-		cout << "INT_logq(): n < 0" << endl;
+		cout << "INT_logq n < 0" << endl;
 		exit(1);
 		}
 	i = 0;
@@ -407,7 +414,7 @@ INT factor_INT(INT a, INT *&primes, INT *&exponents)
 void factor_prime_power(INT q, INT &p, INT &e)
 {
 	if (q == 1) {
-		cout << "factor_prime_power() q is one" << endl;
+		cout << "factor_prime_power q is one" << endl;
 		exit(1);
 		}
 	p = smallest_primedivisor(q);
@@ -415,7 +422,7 @@ void factor_prime_power(INT q, INT &p, INT &e)
 	e = 1;
 	while (q != 1) {
 		if ((q % p) != 0) {
-			cout << "factor_prime_power() q is not a prime power" << endl;
+			cout << "factor_prime_power q is not a prime power" << endl;
 			exit(1);
 			}
 		q /= p;
@@ -480,12 +487,12 @@ INT Jacobi(INT a, INT m, INT verbose_level)
 		 * ABS(r1) == 1.
 		 * Jacobi(a, m) = r1 * Jacobi(a1, m1) und ggT(a1, m1) == 1. */
 		if (a1 == 0) {
-			cout << "Jacobi() a1 == 0" << endl;
+			cout << "Jacobi a1 == 0" << endl;
 			exit(1);
 			}
 		a1 = a1 % m1;
 		if (f_v) {
-			cout << "Jacobi() = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << "Jacobi = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
 			}
 #if 0
 		a1 = NormRemainder(a1, m1);
@@ -523,17 +530,17 @@ INT Jacobi(INT a, INT m, INT verbose_level)
 		m1 = a1;
 		a1 = t;
 		if (f_v) {
-			cout << "Jacobi() = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
+			cout << "Jacobi = " << r1 << " * Jacobi(" << a1 << ", " << m1 << ")" << endl;
 			}
 		}
 	if (a1 == 1) {
 		return r1;
 		}
 	if (a1 <= 0) {
-		cout << "Jacobi() a1 == -1 || a1 == 0" << endl;
+		cout << "Jacobi a1 == -1 || a1 == 0" << endl;
 		exit(1);
 		}
-	cout << "Jacobi() wrong termination\n";
+	cout << "Jacobi wrong termination" << endl;
 	exit(1);
 }
 
@@ -714,7 +721,7 @@ INT Jacobi_with_key_in_latex(ostream &ost, INT a, INT m, INT verbose_level)
 		cout << "Jacobi() a1 == -1 || a1 == 0" << endl;
 		exit(1);
 		}
-	cout << "Jacobi() wrong termination\n";
+	cout << "Jacobi() wrong termination" << endl;
 	exit(1);
 }
 
@@ -728,7 +735,7 @@ INT ny2(INT x, INT &x1)
 	
 	n1 = 0;
 	if (xx == 0) {
-		cout << "ny2() x == 0" << endl;
+		cout << "ny2 x == 0" << endl;
 		exit(1);
 		}
 	if (xx < 0) {
@@ -756,7 +763,7 @@ INT ny_p(INT n, INT p)
 	INT ny_p;
 	
 	if (n == 0) {
-		cout << "ny_p() n == 0" << endl;
+		cout << "ny_p n == 0" << endl;
 		exit(1);
 		}
 	if (n < 0)
@@ -781,7 +788,7 @@ INT sqrt_mod_simple(INT a, INT p)
 		if ((x * x) % p == a1)
 			return x;
 		}
-	cout << "sqrt_mod_simple() a not a quadratic residue" << endl;
+	cout << "sqrt_mod_simple a not a quadratic residue" << endl;
 	cout << "a = " << a << " p=" << p << endl;
 	exit(1);
 }
@@ -799,7 +806,8 @@ void print_factorization(INT nb_primes, INT *primes, INT *exponents)
 		}
 }
 
-void print_longfactorization(INT nb_primes, longinteger_object *primes, INT *exponents)
+void print_longfactorization(INT nb_primes,
+		longinteger_object *primes, INT *exponents)
 {
 	INT i;
 	
@@ -837,7 +845,9 @@ INT euler_function(INT n)
 	return k;
 }
 
-void INT_add_fractions(INT at, INT ab, INT bt, INT bb, INT &ct, INT &cb, INT verbose_level)
+void INT_add_fractions(INT at, INT ab,
+		INT bt, INT bb, INT &ct, INT &cb,
+		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT g, a1, b1;
@@ -867,11 +877,15 @@ void INT_add_fractions(INT at, INT ab, INT bt, INT bb, INT &ct, INT &cb, INT ver
 		cb /= g;
 		}
 	if (f_v) {
-		cout << "INT_add_fractions " << at <<  "/" << ab << " + " << bt << "/" << bb << " = " << ct << "/" << cb << endl;
+		cout << "INT_add_fractions " << at <<  "/"
+				<< ab << " + " << bt << "/" << bb << " = "
+				<< ct << "/" << cb << endl;
 		}
 }
 
-void INT_mult_fractions(INT at, INT ab, INT bt, INT bb, INT &ct, INT &cb, INT verbose_level)
+void INT_mult_fractions(INT at, INT ab,
+		INT bt, INT bb, INT &ct, INT &cb,
+		INT verbose_level)
 {
 	INT g;
 	

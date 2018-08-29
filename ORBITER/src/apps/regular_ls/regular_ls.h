@@ -32,7 +32,7 @@ public:
 	INT m2;
 	INT *v1; // [k]
 	
-	generator *gen;
+	poset_classification *gen;
 	action *A;
 	action *A2;
 	action_on_k_subsets *Aonk; // only a pointer, do not free

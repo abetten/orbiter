@@ -85,7 +85,7 @@ void subspace_orbits::init(int argc, const char **argv,
 	v = NEW_INT(n);
 	w = NEW_INT(n);
 	weights = NEW_INT(n + 1);
-	Gen = NEW_OBJECT(generator);
+	Gen = NEW_OBJECT(poset_classification);
 
 	if (f_v) {
 		cout << "subspace_orbits::init "
@@ -1007,7 +1007,7 @@ INT subspace_orbits::test_if_self_orthogonal(
 INT subspace_orbits_rank_point_func(INT *v, void *data)
 {
 	subspace_orbits *G;
-	generator *gen;
+	poset_classification *gen;
 	INT rk;
 	
 	G = (subspace_orbits *) data;
@@ -1020,7 +1020,7 @@ INT subspace_orbits_rank_point_func(INT *v, void *data)
 void subspace_orbits_unrank_point_func(INT *v, INT rk, void *data)
 {
 	subspace_orbits *G;
-	generator *gen;
+	poset_classification *gen;
 	
 	G = (subspace_orbits *) data;
 	gen = G->Gen;

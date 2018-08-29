@@ -52,7 +52,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 INT find_orbit_index_in_data_file(const BYTE *prefix,
 		INT level_of_candidates_file, INT *starter,
 		INT verbose_level);
-void compute_orbits_on_subsets(generator *&gen, 
+void compute_orbits_on_subsets(poset_classification *&gen,
 	INT target_depth,
 	const BYTE *prefix, 
 	INT f_W, INT f_w,
@@ -70,13 +70,13 @@ void compute_orbits_on_subsets(generator *&gen,
 void orbits_on_k_sets(action *A1, action *A2, 
 	strong_generators *Strong_gens, 
 	INT k, INT *&orbit_reps, INT &nb_orbits, INT verbose_level);
-generator *orbits_on_k_sets_compute(action *A1, action *A2, 
+poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	strong_generators *Strong_gens, 
 	INT k, INT verbose_level);
 void print_extension_type(ostream &ost, INT t);
 const BYTE *trace_result_as_text(trace_result r);
 INT trace_result_is_no_result(trace_result r);
-void wedge_product_export_magma(generator *Gen, INT n, INT q, 
+void wedge_product_export_magma(poset_classification *Gen, INT n, INT q,
 	INT vector_space_dimension, INT level, INT verbose_level);
 
 

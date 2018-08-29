@@ -1,4 +1,4 @@
-// generator_recognize.C
+// poset_classification_recognize.C
 //
 // Anton Betten
 //
@@ -8,7 +8,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void generator::recognize_start_over(
+void poset_classification::recognize_start_over(
 	INT size, INT f_implicit_fusion, 
 	INT lvl, INT current_node, 
 	INT &final_node, INT verbose_level)
@@ -20,12 +20,12 @@ void generator::recognize_start_over(
 	INT f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "generator::recognize_start_over" << endl;
+		cout << "poset_classification::recognize_start_over" << endl;
 		}
 	// this is needed if implicit fusion nodes are used:
 	if (lvl == size - 1) {
 		if (f_v) {
-			cout << "generator::recognize_start_over "
+			cout << "poset_classification::recognize_start_over "
 					"lvl == size - 1" << endl;
 			}
 		final_node = current_node;
@@ -45,7 +45,7 @@ void generator::recognize_start_over(
 		transporter->ith(lvl + 1),
 		transporter->ith(0), FALSE);
 	if (f_v) {
-		cout << "generator::recognize_start_over "
+		cout << "poset_classification::recognize_start_over "
 				"before recognize_recursion" << endl;
 		}
 	recognize_recursion(
@@ -53,15 +53,15 @@ void generator::recognize_start_over(
 		0, 0, final_node,
 		verbose_level);
 	if (f_v) {
-		cout << "generator::recognize_start_over "
+		cout << "poset_classification::recognize_start_over "
 				"after recognize_recursion" << endl;
 		}
 	if (f_v) {
-		cout << "generator::recognize_start_over done" << endl;
+		cout << "poset_classification::recognize_start_over done" << endl;
 		}
 }
 
-void generator::recognize_recursion(
+void poset_classification::recognize_recursion(
 	INT size, INT f_implicit_fusion, 
 	INT lvl, INT current_node, INT &final_node, 
 	INT verbose_level)
@@ -85,14 +85,14 @@ void generator::recognize_recursion(
 	
 
 	if (f_v) {
-		cout << "generator::recognize_recursion at ";
+		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node  << ")" << endl;
 		}
 
 
 	if (lvl == size) {
 		if (f_v) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node  << ") "
 					"lvl == size, terminating" << endl;
 			}
@@ -104,7 +104,7 @@ void generator::recognize_recursion(
 
 	O = &root[current_node];
 	if (f_vvv) {
-		cout << "generator::recognize_recursion"
+		cout << "poset_classification::recognize_recursion"
 			<< " lvl = " << lvl 
 			<< " current_node = " << current_node 
 			<< " verbose_level = " << verbose_level 
@@ -149,7 +149,7 @@ void generator::recognize_recursion(
 			cur_transporter, next_transporter, 
 			0 /*verbose_level */);
 		if (f_v) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << ") after trace_starter, "
 					"calling recognize_recursion" << endl;
 			}
@@ -159,7 +159,7 @@ void generator::recognize_recursion(
 			verbose_level);
 
 		if (f_v) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << ") "
 					"after recognize_recursion" << endl;
 			}
@@ -168,7 +168,7 @@ void generator::recognize_recursion(
 		}
 	
 	if (f_v) {
-		cout << "generator::recognize_recursion at ";
+		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << ") "
 				"before O->trace_next_point_wrapper" << endl;
 		}
@@ -182,7 +182,7 @@ void generator::recognize_recursion(
 		
 		
 		if (f_v) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node
 					<< ") O->trace_next_point_wrapper "
 							"returns FALSE, starting over" << endl;
@@ -194,27 +194,27 @@ void generator::recognize_recursion(
 			lvl, current_node, final_node, 
 			verbose_level);
 		if (f_v) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << ") "
 					"O->trace_next_point_wrapper returns FALSE, after over" << endl;
 			}
 		}
 
 	if (f_v) {
-		cout << "generator::recognize_recursion at ";
+		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << ") after "
 				"O->trace_next_point_wrapper" << endl;
 		}
 	
 	if (f_failure_to_find_point) {
-		cout << "generator::recognize_recursion failure to find point" << endl;
+		cout << "poset_classification::recognize_recursion failure to find point" << endl;
 		exit(1);
 		}
 
 	pt0 = set[lvl + 1][lvl];
 
 	if (f_v) {
-		cout << "generator::recognize_recursion at ";
+		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << ") trying to find "
 				"extension for point pt0=" << pt0 << endl;
 		}
@@ -225,16 +225,16 @@ void generator::recognize_recursion(
 	current_extension = O->find_extension_from_point(this, pt0, FALSE);
 	
 	if (f_v) {
-		cout << "generator::recognize_recursion at ";
+		cout << "poset_classification::recognize_recursion at ";
 		cout << "(" << lvl << "/" << node << "/" << current_extension
 				<< ") current_extension=" << current_extension << endl;
 		}
 	if (current_extension == -1) {
 
-		cout << "generator::recognize_recursion failure in "
+		cout << "poset_classification::recognize_recursion failure in "
 				"find_extension_from_point" << endl;
 		
-		cout << "generator::recognize_recursion "
+		cout << "poset_classification::recognize_recursion "
 				"the original set is" << endl;
 		INT_set_print(cout, set[0], size);
 		cout << endl;
@@ -242,7 +242,7 @@ void generator::recognize_recursion(
 			//(*gen->print_function)(cout, size, gen->set[0],
 			//gen->print_function_data);
 			//}
-		cout << "generator::recognize_recursion "
+		cout << "poset_classification::recognize_recursion "
 				"the current set is" << endl;
 		INT_set_print(cout, set[lvl + 1], size);
 		cout << endl;
@@ -250,15 +250,15 @@ void generator::recognize_recursion(
 			//(*print_function)(cout, size, set[lvl + 1],
 			//print_function_data);
 			//}
-		cout << "generator::recognize_recursion "
+		cout << "poset_classification::recognize_recursion "
 				"the node corresponds to" << endl;
 		O->store_set_to(this, lvl - 1, set3);
 		INT_set_print(cout, set3, lvl);
 		cout << endl;
 
-		cout << "generator::recognize_recursion "
+		cout << "poset_classification::recognize_recursion "
 				"lvl = " << lvl << endl;
-		cout << "generator::recognize_recursion "
+		cout << "poset_classification::recognize_recursion "
 				"current_node = " << current_node << endl;
 
 		exit(1);
@@ -268,7 +268,7 @@ void generator::recognize_recursion(
 
 
 	if (f_v5) {
-		cout << "generator::recognize_recursion point " << pt0
+		cout << "poset_classification::recognize_recursion point " << pt0
 				<< " is extension no " << current_extension << endl;
 		}
 	if (f_allowed_to_show_group_elements && f_v4) {
@@ -287,7 +287,7 @@ void generator::recognize_recursion(
 		INT next_node;
 		
 		if (f_v4) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " fusion node " << O->node << endl;
@@ -298,18 +298,18 @@ void generator::recognize_recursion(
 			FALSE /* f_tolerant */, verbose_level - 6);
 		
 		if (f_v) {
-			cout << "generator::recognize_recursion lvl " << lvl << " at ";
+			cout << "poset_classification::recognize_recursion lvl " << lvl << " at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " fusion from " << O->node << " to "
 					<< next_node << endl;
 			}
 		if (next_node == -1) {
-			cout << "generator::recognize_recursion next_node == -1" << endl;
+			cout << "poset_classification::recognize_recursion next_node == -1" << endl;
 			exit(1);
 			}
 		if (f_v5) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " after apply_fusion_element, "
@@ -318,7 +318,7 @@ void generator::recognize_recursion(
 #if 0
 		if (next_node < path[lvl + 1]) {
 			if (f_v) {
-				cout << "generator::recognize_recursion lvl "
+				cout << "poset_classification::recognize_recursion lvl "
 						<< lvl << " not canonical" << endl;
 				cout << "next_node=" << next_node << endl;
 				//cout << "path[lvl + 1]=" << path[lvl + 1] << endl;
@@ -341,12 +341,12 @@ void generator::recognize_recursion(
 		INT next_node;
 		
 		if (f_v4) {
-			cout << "generator::recognize_recursion "
+			cout << "poset_classification::recognize_recursion "
 					"extension node" << endl;
 			}
 		next_node = O->E[current_extension].data;
 		if (f_v) {
-			cout << "generator::recognize_recursion at ";
+			cout << "poset_classification::recognize_recursion at ";
 			cout << "(" << lvl << "/" << node << "/"
 					<< current_extension << ")";
 			cout << " extension from " << O->node << " to "
@@ -361,20 +361,20 @@ void generator::recognize_recursion(
 		return;
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_UNPROCESSED) {
-		cout << "generator::recognize_recursion unprocessed node, "
+		cout << "poset_classification::recognize_recursion unprocessed node, "
 				"this should not happen" << endl;
 		exit(1);
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_PROCESSING) {
-		cout << "generator::recognize_recursion processing node, "
+		cout << "poset_classification::recognize_recursion processing node, "
 				"this should not happen" << endl;
 		exit(1);
 		}
-	cout << "generator::recognize_recursion unknown type of extension" << endl;
+	cout << "poset_classification::recognize_recursion unknown type of extension" << endl;
 	exit(1);
 }
 
-void generator::recognize(
+void poset_classification::recognize(
 	INT *the_set, INT size, INT *transporter,
 	INT f_implicit_fusion,
 	INT &final_node, INT verbose_level)
@@ -402,7 +402,7 @@ void generator::recognize(
 	INT f_vvv = (verbose_level >= 3);
 	
 	if (f_vvv) {
-		cout << "generator::recognize" << endl;
+		cout << "poset_classification::recognize" << endl;
 		}
 	// put in default values just in case we are doing a 
 	// tolerant search and do not have a final result
@@ -410,7 +410,7 @@ void generator::recognize(
 	
 	INT_vec_copy(the_set, set[0], size);
 
-	A->element_one(generator::transporter->ith(0), 0);
+	A->element_one(poset_classification::transporter->ith(0), 0);
 
 	if (f_vv) {
 		INT_vec_print(cout, set[0], size);
@@ -421,7 +421,7 @@ void generator::recognize(
 			}
 		}
 	if (size > sz) {
-		cout << "generator::recognize size > sz" << endl;
+		cout << "poset_classification::recognize size > sz" << endl;
 		cout << "size=" << size << endl;
 		cout << "gen->sz=" << sz << endl;
 		exit(1);
@@ -439,16 +439,16 @@ void generator::recognize(
 		verbose_level);
 
 	if (f_v) {
-		cout << "generator::recognize after recognize_recursion, "
+		cout << "poset_classification::recognize after recognize_recursion, "
 				"copying transporter" << endl;
 		}
 
 
-	A->element_move(generator::transporter->ith(size), transporter, 0);
+	A->element_move(poset_classification::transporter->ith(size), transporter, 0);
 
 
 	if (f_v) {
-		cout << "generator::recognize done" << endl;
+		cout << "poset_classification::recognize done" << endl;
 		}
 }
 

@@ -1,8 +1,8 @@
-// generator_combinatorics.C
+// poset_classification_combinatorics.C
 //
 // Anton Betten
 //
-// moved here from generator.C
+// moved here from poset_classification.C
 // July 18, 2014
 
 
@@ -10,7 +10,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void generator::Plesken_matrix_up(INT depth,
+void poset_classification::Plesken_matrix_up(INT depth,
 		INT *&P, INT &N, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -22,7 +22,7 @@ void generator::Plesken_matrix_up(INT depth,
 	INT a, b, cnt;
 
 	if (f_v) {
-		cout << "generator::Plesken_matrix_up" << endl;
+		cout << "poset_classification::Plesken_matrix_up" << endl;
 		}
 	N = 0;
 	Nb = NEW_INT(depth + 1);
@@ -47,11 +47,11 @@ void generator::Plesken_matrix_up(INT depth,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Plesken_matrix_up done" << endl;
+		cout << "poset_classification::Plesken_matrix_up done" << endl;
 		}
 }
 
-void generator::Plesken_matrix_down(INT depth,
+void poset_classification::Plesken_matrix_down(INT depth,
 		INT *&P, INT &N, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -63,7 +63,7 @@ void generator::Plesken_matrix_down(INT depth,
 	INT a, b, cnt;
 
 	if (f_v) {
-		cout << "generator::Plesken_matrix_down" << endl;
+		cout << "poset_classification::Plesken_matrix_down" << endl;
 		}
 	N = 0;
 	Nb = NEW_INT(depth + 1);
@@ -89,18 +89,18 @@ void generator::Plesken_matrix_down(INT depth,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Plesken_matrix_down done" << endl;
+		cout << "poset_classification::Plesken_matrix_down done" << endl;
 		}
 }
 
-void generator::Plesken_submatrix_up(INT i, INT j,
+void poset_classification::Plesken_submatrix_up(INT i, INT j,
 		INT *&Pij, INT &N1, INT &N2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b;
 
 	if (f_v) {
-		cout << "generator::Plesken_submatrix_up "
+		cout << "poset_classification::Plesken_submatrix_up "
 				"i=" << i << " j=" << j << endl;
 		}
 	N1 = nb_orbits_at_level(i);
@@ -113,18 +113,18 @@ void generator::Plesken_submatrix_up(INT i, INT j,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Plesken_submatrix_up done" << endl;
+		cout << "poset_classification::Plesken_submatrix_up done" << endl;
 		}
 }
 
-void generator::Plesken_submatrix_down(INT i, INT j,
+void poset_classification::Plesken_submatrix_down(INT i, INT j,
 		INT *&Pij, INT &N1, INT &N2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT a, b;
 
 	if (f_v) {
-		cout << "generator::Plesken_submatrix_down "
+		cout << "poset_classification::Plesken_submatrix_down "
 				"i=" << i << " j=" << j << endl;
 		}
 	N1 = nb_orbits_at_level(i);
@@ -137,11 +137,11 @@ void generator::Plesken_submatrix_down(INT i, INT j,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Plesken_submatrix_down done" << endl;
+		cout << "poset_classification::Plesken_submatrix_down done" << endl;
 		}
 }
 
-INT generator::count_incidences_up(INT lvl1, INT po1,
+INT poset_classification::count_incidences_up(INT lvl1, INT po1,
 		INT lvl2, INT po2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -153,7 +153,7 @@ INT generator::count_incidences_up(INT lvl1, INT po1,
 	INT f_contained;
 
 	if (f_v) {
-		cout << "generator::count_incidences_up "
+		cout << "poset_classification::count_incidences_up "
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2 << endl;
 		}
@@ -208,7 +208,7 @@ INT generator::count_incidences_up(INT lvl1, INT po1,
 	FREE_INT(set1);
 	FREE_INT(set2);
 	if (f_v) {
-		cout << "generator::count_incidences_up "
+		cout << "poset_classification::count_incidences_up "
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2
 				<< " cnt=" << cnt << endl;
@@ -216,7 +216,7 @@ INT generator::count_incidences_up(INT lvl1, INT po1,
 	return cnt;
 }
 
-INT generator::count_incidences_down(
+INT poset_classification::count_incidences_down(
 		INT lvl1, INT po1, INT lvl2, INT po2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -228,7 +228,7 @@ INT generator::count_incidences_down(
 	INT f_contained;
 
 	if (f_v) {
-		cout << "generator::count_incidences_down "
+		cout << "poset_classification::count_incidences_down "
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2 << endl;
 		}
@@ -282,7 +282,7 @@ INT generator::count_incidences_down(
 	FREE_INT(set1);
 	FREE_INT(set2);
 	if (f_v) {
-		cout << "generator::count_incidences_down "
+		cout << "poset_classification::count_incidences_down "
 				"lvl1=" << lvl1 << " po1=" << po1
 				<< " lvl2=" << lvl2 << " po2=" << po2
 				<< " cnt=" << cnt << endl;
@@ -290,7 +290,7 @@ INT generator::count_incidences_down(
 	return cnt;
 }
 
-void generator::Asup_to_Ainf(INT t, INT k,
+void poset_classification::Asup_to_Ainf(INT t, INT k,
 		INT *M_sup, INT *M_inf, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -305,20 +305,20 @@ void generator::Asup_to_Ainf(INT t, INT k,
 	INT i, j, a, c;
 	
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf" << endl;
+		cout << "poset_classification::Asup_to_Ainf" << endl;
 		}
 	Nt = nb_orbits_at_level(t);
 	Nk = nb_orbits_at_level(k);
 	get_stabilizer_order(0, 0, go);
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf go=" << go << endl;
+		cout << "poset_classification::Asup_to_Ainf go=" << go << endl;
 		}
 	go_t = NEW_OBJECTS(longinteger_object, Nt);
 	go_k = NEW_OBJECTS(longinteger_object, Nk);
 	ol_t = NEW_OBJECTS(longinteger_object, Nt);
 	ol_k = NEW_OBJECTS(longinteger_object, Nk);
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf "
+		cout << "poset_classification::Asup_to_Ainf "
 				"computing orbit lengths t-orbits" << endl;
 		}
 	for (i = 0; i < Nt; i++) {
@@ -332,7 +332,7 @@ void generator::Asup_to_Ainf(INT t, INT k,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf "
+		cout << "poset_classification::Asup_to_Ainf "
 				"computing orbit lengths k-orbits" << endl;
 		}
 	for (i = 0; i < Nk; i++) {
@@ -346,7 +346,7 @@ void generator::Asup_to_Ainf(INT t, INT k,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf computing Ainf" << endl;
+		cout << "poset_classification::Asup_to_Ainf computing Ainf" << endl;
 		}
 	for (i = 0; i < Nt; i++) {
 		for (j = 0; j < Nk; j++) {
@@ -355,7 +355,7 @@ void generator::Asup_to_Ainf(INT t, INT k,
 			D.mult(ol_t[i], aa, bb);
 			D.integral_division(bb, ol_k[j], cc, rem, 0);
 			if (!rem.is_zero()) {
-				cout << "generator::Asup_to_Ainf "
+				cout << "poset_classification::Asup_to_Ainf "
 						"stabilizer order does not "
 						"divide group order" << endl;
 				cout << "i=" << i << " j=" << j
@@ -369,32 +369,32 @@ void generator::Asup_to_Ainf(INT t, INT k,
 			}
 		}
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf computing Ainf done" << endl;
+		cout << "poset_classification::Asup_to_Ainf computing Ainf done" << endl;
 		}
 	FREE_OBJECTS(go_t);
 	FREE_OBJECTS(go_k);
 	FREE_OBJECTS(ol_t);
 	FREE_OBJECTS(ol_k);
 	if (f_v) {
-		cout << "generator::Asup_to_Ainf done" << endl;
+		cout << "poset_classification::Asup_to_Ainf done" << endl;
 		}
 }
 
-void generator::test_for_multi_edge_in_classification_graph(
+void poset_classification::test_for_multi_edge_in_classification_graph(
 		INT depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, f, l, j, h1;
 
 	if (f_v) {
-		cout << "generator::test_for_multi_edge_in_classification_graph "
+		cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 				"depth=" << depth << endl;
 		}
 	for (i = 0; i <= depth; i++) {
 		f = first_poset_orbit_node_at_level[i];
 		l = nb_orbits_at_level(i);
 		if (f_v) {
-			cout << "generator::test_for_multi_edge_in_classification_graph "
+			cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 					"level=" << i << " with " << l << " nodes" << endl;
 			}
 		for (j = 0; j < l; j++) {
@@ -440,12 +440,12 @@ void generator::test_for_multi_edge_in_classification_graph(
 				}
 			}
 		if (f_v) {
-			cout << "generator::test_for_multi_edge_in_classification_graph "
+			cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 					"level=" << i << " with " << l << " nodes done" << endl;
 			}
 		}
 	if (f_v) {
-		cout << "generator::test_for_multi_edge_in_classification_graph "
+		cout << "poset_classification::test_for_multi_edge_in_classification_graph "
 				"done" << endl;
 		}
 }

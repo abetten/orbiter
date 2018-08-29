@@ -28,7 +28,7 @@ public:
 
 	INT *v;
 	
-	generator *gen;
+	poset_classification *gen;
 	INT nb_orbits;
 
 	void init(INT n, INT f_draw, INT verbose_level, INT verbose_level_clique);

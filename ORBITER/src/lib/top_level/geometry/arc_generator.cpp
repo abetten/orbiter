@@ -369,7 +369,7 @@ void arc_generator::prepare_generator(INT verbose_level)
 		cout << "arc_generator::prepare_generator starter_size = " << starter_size << endl;
 		}
 
-	gen = new generator;
+	gen = new poset_classification;
 
 
 	gen->read_arguments(argc, argv, 0);

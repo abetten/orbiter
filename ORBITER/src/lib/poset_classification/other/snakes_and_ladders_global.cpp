@@ -130,7 +130,8 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 	BYTE fname2[1000];
 	sprintf(fname2, "%s_lvl_%ld_candidates.bin",
 			prefix, level_of_candidates_file);
- 	generator_read_candidates_of_orbit(fname2, orbit_idx,
+	poset_classification_read_candidates_of_orbit(
+		fname2, orbit_idx,
 		candidates1, nb_candidates1, verbose_level - 1);
 
 
@@ -321,7 +322,8 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	BYTE fname2[1000];
 	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix,
 			level_of_candidates_file);
- 	generator_read_candidates_of_orbit(fname2, orbit_at_candidate_level, 
+	poset_classification_read_candidates_of_orbit(
+		fname2, orbit_at_candidate_level,
 		candidates, nb_candidates, verbose_level - 1);
 
 	if (f_v) {
@@ -434,7 +436,7 @@ INT find_orbit_index_in_data_file(const BYTE *prefix,
 	return orbit_idx;
 }
 
-void compute_orbits_on_subsets(generator *&gen, 
+void compute_orbits_on_subsets(poset_classification *&gen,
 	INT target_depth,
 	const BYTE *prefix, 
 	INT f_W, INT f_w,
@@ -463,7 +465,7 @@ void compute_orbits_on_subsets(generator *&gen,
 		cout << "compute_orbits_on_subsets "
 				"verbose_level=" << verbose_level << endl;
 		}
-	gen = NEW_OBJECT(generator);
+	gen = NEW_OBJECT(poset_classification);
 	
 
 	gen->f_W = f_W;
@@ -529,7 +531,7 @@ void orbits_on_k_sets(action *A1, action *A2,
 	INT k, INT *&orbit_reps, INT &nb_orbits, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	generator *Gen;
+	poset_classification *Gen;
 
 	if (f_v) {
 		cout << "orbits_on_k_sets" << endl;
@@ -564,19 +566,19 @@ void orbits_on_k_sets(action *A1, action *A2,
 		}
 }
 
-generator *orbits_on_k_sets_compute(action *A1, action *A2, 
+poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	strong_generators *Strong_gens, 
 	INT k, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
-	generator *Gen;
+	poset_classification *Gen;
 	
 
 	if (f_v) {
 		cout << "orbits_on_k_sets_compute" << endl;
 		}
-	Gen = NEW_OBJECT(generator);
+	Gen = NEW_OBJECT(poset_classification);
 
 	sprintf(Gen->fname_base, "orbits_on_k_sets");
 	
@@ -696,7 +698,7 @@ INT trace_result_is_no_result(trace_result r)
 
 
 
-void wedge_product_export_magma(generator *Gen,
+void wedge_product_export_magma(poset_classification *Gen,
 		INT n, INT q, INT vector_space_dimension,
 		INT level, INT verbose_level)
 {

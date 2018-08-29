@@ -257,7 +257,7 @@ public:
 	INT *w; // [n]
 	INT *weights; // [n + 1]
 
-	generator *Gen;
+	poset_classification *Gen;
 
 	INT schreier_depth;
 	INT f_use_invariant_subset_if_available;

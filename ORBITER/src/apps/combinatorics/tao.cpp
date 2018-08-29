@@ -135,7 +135,7 @@ public:
 	INT nb_short_orbits;
 	INT nb_long_orbits;
 
-	generator *gen;
+	poset_classification *gen;
 
 
 

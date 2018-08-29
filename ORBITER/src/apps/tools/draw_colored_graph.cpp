@@ -594,7 +594,7 @@ int main(int argc, char **argv)
 
 		
 		BYTE prefix[1000];
-		generator *gen;
+		poset_classification *gen;
 		INT nb_orbits, depth;
 		
 

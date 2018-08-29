@@ -29,7 +29,7 @@ public:
 	INT *the_set_sorting_perm;
 	INT *the_set_sorting_perm_inv;
 
-	generator *gen;
+	poset_classification *gen;
 
 	INT overall_backtrack_nodes;
 
@@ -70,7 +70,7 @@ public:
 
 	action *A;
 	action *A2;
-	generator *gen;
+	poset_classification *gen;
 
 	action *A_on_the_set;
 	
@@ -149,7 +149,7 @@ public:
 	~compute_stabilizer();
 	void null();
 	void freeself();
-	void init(INT *the_set, INT set_size, generator *gen, 
+	void init(INT *the_set, INT set_size, poset_classification *gen,
 		action *A, action *A2, 
 		INT level, INT interesting_orbit, INT frequency, 
 		INT *subset_ranks, INT verbose_level);

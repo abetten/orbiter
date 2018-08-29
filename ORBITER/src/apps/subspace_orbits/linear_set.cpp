@@ -336,7 +336,7 @@ void linear_set::init(int argc, const char **argv,
 		}	
 
 
-	Gen = new generator;
+	Gen = new poset_classification;
 
 	Gen->read_arguments(argc, argv, 0);
 
@@ -871,7 +871,7 @@ void linear_set::init_secondary(int argc, const char **argv,
 	secondary_candidates = candidates;
 	secondary_nb_candidates = nb_candidates;
 
-	Gen2 = new generator;
+	Gen2 = new poset_classification;
 
 	Gen2->read_arguments(argc, argv, 0);
 
@@ -1243,7 +1243,7 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 		cout << "linear_set::init_compute_stabilizer" << endl;
 		}
 
-	Gen_stab = new generator;
+	Gen_stab = new poset_classification;
 
 	Gen_stab->read_arguments(argc, argv, 0);
 

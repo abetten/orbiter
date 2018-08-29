@@ -40,7 +40,7 @@ void the_end_quietly(INT t0)
 	cout << endl;
 }
 
-void calc_Kramer_Mesner_matrix_neighboring(generator *gen, 
+void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 	INT level, matrix &M, INT verbose_level)
 // we assume that we don't use implicit fusion nodes
 {
@@ -226,7 +226,7 @@ void Mtk_via_Mtr_Mrk(INT t, INT r, INT k, INT f_subspaces, INT q,
 		}
 }
 
-void Mtk_sup_to_inf(generator *gen, 
+void Mtk_sup_to_inf(poset_classification *gen,
 	INT t, INT k, matrix & Mtk_sup, matrix & Mtk_inf, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -275,7 +275,7 @@ void Mtk_sup_to_inf(generator *gen,
 	
 }
 
-void compute_Kramer_Mesner_matrix(generator *gen, 
+void compute_Kramer_Mesner_matrix(poset_classification *gen,
 	INT t, INT k, matrix &Mtk, INT f_subspaces, INT q, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -308,8 +308,10 @@ void compute_Kramer_Mesner_matrix(generator *gen,
 	//Mtk.print(cout);
 
 	if (f_v) {
+		INT m = Mtk.s_m();
+		INT n = Mtk.s_n();
 		cout << "compute_Kramer_Mesner_matrix t=" << t << " k=" << k << " done" << endl;
-		cout << "compute_Kramer_Mesner_matrix the matrix has size " << Mtk.s_m() << " x " << Mtk.s_n() << endl;
+		cout << "compute_Kramer_Mesner_matrix the matrix has size " << m << " x " << n << endl;
 		}
 }
 

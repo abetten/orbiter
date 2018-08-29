@@ -1,14 +1,14 @@
-// generator_trace.C
+// poset_classification_trace.C
 //
 // Anton Betten
 //
-// moved out of generator.C: Jan 21, 2010
+// moved out of poset_classification.C: Jan 21, 2010
 
 #include "foundations/foundations.h"
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-INT generator::find_isomorphism(
+INT poset_classification::find_isomorphism(
 		INT *set1, INT *set2, INT sz,
 		INT *transporter, INT &orbit_idx,
 		INT verbose_level)
@@ -24,7 +24,7 @@ INT generator::find_isomorphism(
 	INT ret;
 
 	if (f_v) {
-		cout << "generator::find_isomorphism" << endl;
+		cout << "poset_classification::find_isomorphism" << endl;
 		}
 	
 	set1_canonical = NEW_INT(sz);
@@ -59,12 +59,12 @@ INT generator::find_isomorphism(
 	FREE_INT(Elt3);
 
 	if (f_v) {
-		cout << "generator::find_isomorphism done" << endl;
+		cout << "poset_classification::find_isomorphism done" << endl;
 		}
 	return ret;
 }
 
-set_and_stabilizer *generator::identify_and_get_stabilizer(
+set_and_stabilizer *poset_classification::identify_and_get_stabilizer(
 		INT *set, INT sz, INT *transporter,
 		INT &orbit_at_level,
 		INT verbose_level)
@@ -75,10 +75,10 @@ set_and_stabilizer *generator::identify_and_get_stabilizer(
 	INT *Elt;
 
 	if (f_v) {
-		cout << "generator::identify_and_get_stabilizer" << endl;
+		cout << "poset_classification::identify_and_get_stabilizer" << endl;
 		}
 	if (f_v) {
-		cout << "generator::identify_and_get_stabilizer "
+		cout << "poset_classification::identify_and_get_stabilizer "
 				"identifying the set ";
 		INT_vec_print(cout, set, sz);
 		cout << endl;
@@ -93,30 +93,30 @@ set_and_stabilizer *generator::identify_and_get_stabilizer(
 	SaS->apply_to_self(Elt, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::identify_and_get_stabilizer "
+		cout << "poset_classification::identify_and_get_stabilizer "
 				"input set=";
 		INT_vec_print(cout, set, sz);
 		cout << endl;
-		cout << "generator::identify_and_get_stabilizer "
+		cout << "poset_classification::identify_and_get_stabilizer "
 				"SaS->set=";
 		INT_vec_print(cout, SaS->data, SaS->sz);
 		cout << endl;
 		}
 	if (compare_sets(set, SaS->data, sz, SaS->sz)) {
-		cout << "generator::identify_and_get_stabilizer "
+		cout << "poset_classification::identify_and_get_stabilizer "
 				"the sets do not agree" << endl;
 		exit(1);
 		}
 	
 	FREE_INT(Elt);
 	if (f_v) {
-		cout << "generator::identify_and_get_stabilizer "
+		cout << "poset_classification::identify_and_get_stabilizer "
 				"done" << endl;
 		}
 	return SaS;
 }
 
-void generator::identify(INT *data, INT sz,
+void poset_classification::identify(INT *data, INT sz,
 		INT *transporter, INT &orbit_at_level,
 		INT verbose_level)
 {
@@ -126,16 +126,16 @@ void generator::identify(INT *data, INT sz,
 	INT final_node;
 
 	if (f_v) {
-		cout << "generator::identify" << endl;
+		cout << "poset_classification::identify" << endl;
 		}
 	if (f_v) {
-		cout << "generator::identify identifying the set ";
+		cout << "poset_classification::identify identifying the set ";
 		INT_vec_print(cout, data, sz);
 		cout << endl;
 		}
 
 	if (f_v) {
-		cout << "generator::identify before recognize" << endl;
+		cout << "poset_classification::identify before recognize" << endl;
 		}
 
 	recognize(data, sz,
@@ -144,7 +144,7 @@ void generator::identify(INT *data, INT sz,
 		verbose_level);
 
 	if (f_v) {
-		cout << "generator::identify after recognize" << endl;
+		cout << "poset_classification::identify after recognize" << endl;
 		}
 
 	longinteger_object go;
@@ -153,23 +153,23 @@ void generator::identify(INT *data, INT sz,
 	get_stabilizer_order(sz, orbit_at_level, go);
 
 	if (f_v) {
-		cout << "generator::identify trace returns "
+		cout << "poset_classification::identify trace returns "
 				"final_node = " << final_node << " which is "
 						"isomorphism type " << orbit_at_level
 						<< " with ago=" << go << endl;
 		}
 	if (f_v) {
-		cout << "generator::identify transporter:" << endl;
+		cout << "poset_classification::identify transporter:" << endl;
 		A->element_print_quick(transporter, cout);
 		}
 
 	if (f_v) {
-		cout << "generator::identify done" << endl;
+		cout << "poset_classification::identify done" << endl;
 		}
 
 }
 
-void generator::test_identify(INT level, INT nb_times,
+void poset_classification::test_identify(INT level, INT nb_times,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -185,7 +185,7 @@ void generator::test_identify(INT level, INT nb_times,
 	longinteger_object go;
 
 	if (f_v) {
-		cout << "generator::test_identify, "
+		cout << "poset_classification::test_identify, "
 				"level = " << level
 				<< " nb_times = " << nb_times << endl;
 		}
@@ -242,14 +242,14 @@ void generator::test_identify(INT level, INT nb_times,
 	FREE_INT(set1);
 	FREE_INT(set2);
 	if (f_v) {
-		cout << "generator::test_identify done" << endl;
+		cout << "poset_classification::test_identify done" << endl;
 		}
 }
 
 
 
 #if 1
-void generator::generator_apply_fusion_element_no_transporter(
+void poset_classification::poset_classification_apply_fusion_element_no_transporter(
 	INT cur_level, INT size, INT cur_node, INT cur_ex, 
 	INT *set_in, INT *set_out, 
 	INT verbose_level)
@@ -261,7 +261,7 @@ void generator::generator_apply_fusion_element_no_transporter(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element_"
+		cout << "poset_classification::poset_classification_apply_fusion_element_"
 				"no_transporter" << endl;
 		}
 
@@ -270,7 +270,7 @@ void generator::generator_apply_fusion_element_no_transporter(
 	set_tmp = NEW_INT(size);
 	A->element_one(Elt1, 0);
 
-	generator_apply_fusion_element(cur_level, size, cur_node, cur_ex, 
+	poset_classification_apply_fusion_element(cur_level, size, cur_node, cur_ex, 
 		set_in, set_out, set_tmp, 
 		Elt1, Elt2, 
 		TRUE /* f_tolerant */, 
@@ -280,7 +280,7 @@ void generator::generator_apply_fusion_element_no_transporter(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element_"
+		cout << "poset_classification::poset_classification_apply_fusion_element_"
 				"no_transporter" << endl;
 		}
 	A->element_retrieve(
@@ -298,14 +298,14 @@ void generator::generator_apply_fusion_element_no_transporter(
 	FREE_INT(set_tmp);
 
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element_"
+		cout << "poset_classification::poset_classification_apply_fusion_element_"
 				"no_transporter done" << endl;
 		}
 }
 #endif
 
 #if 0
-void generator::generator_apply_fusion_element(
+void poset_classification::poset_classification_apply_fusion_element(
 		INT cur_level, INT cur_node, INT size, INT level,
 	INT current_extension, 
 	INT *canonical_set, INT *tmp_set, 
@@ -332,7 +332,7 @@ void generator::generator_apply_fusion_element(
 }
 #endif
 
-INT generator::generator_apply_fusion_element(INT level, INT size, 
+INT poset_classification::poset_classification_apply_fusion_element(INT level, INT size, 
 	INT current_node, INT current_extension, 
 	INT *set_in, INT *set_out, INT *set_tmp, 
 	INT *transporter_in, INT *transporter_out, 
@@ -347,7 +347,7 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 	O = &root[current_node];
 
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element "
+		cout << "poset_classification::poset_classification_apply_fusion_element "
 				"current_node=" << current_node
 				<< " current_extension=" << current_extension << endl;
 		cout << "level=" << level << endl;		
@@ -359,7 +359,7 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 	A2->element_retrieve(O->E[current_extension].data, Elt1, 0);
 	
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element "
+		cout << "poset_classification::poset_classification_apply_fusion_element "
 				"applying fusion element" << endl;
 		A2->element_print_quick(Elt1, cout);
 		cout << "in action " << A2->label << ":" << endl;
@@ -370,7 +370,7 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 		}
 	A2->map_a_set(set_in, set_tmp, size, Elt1, 0);
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element "
+		cout << "poset_classification::poset_classification_apply_fusion_element "
 				"the set becomes: ";
 		INT_vec_print(cout, set_tmp, size);
 		cout << endl;
@@ -392,11 +392,11 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 		INT_vec_heapsort(set_tmp, level + 1);
 		INT_vec_copy(set_tmp, set_out, size);
 		if (f_v) {
-			cout << "generator::generator_apply_fusion_element "
+			cout << "poset_classification::poset_classification_apply_fusion_element "
 					"after sorting: ";
 			}
 		if (f_v) {
-			cout << "generator::generator_apply_fusion_element "
+			cout << "poset_classification::poset_classification_apply_fusion_element "
 					"calling find_oracle_node_for_set: ";
 			INT_vec_print(cout, set_out, size);
 			cout << endl;
@@ -408,7 +408,7 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 
 		}
 	if (f_v) {
-		cout << "generator::generator_apply_fusion_element from ";
+		cout << "poset_classification::poset_classification_apply_fusion_element from ";
 		INT_vec_print(cout, set_in, size);
 		cout << " to ";
 		INT_vec_print(cout, set_out, size);
@@ -419,15 +419,15 @@ INT generator::generator_apply_fusion_element(INT level, INT size,
 }
 
 
-INT generator::trace_set_recursion(
+INT poset_classification::trace_set_recursion(
 	INT cur_level, INT cur_node,
 	INT size, INT level,
 	INT *canonical_set, INT *tmp_set1, INT *tmp_set2, 
 	INT *Elt_transporter, INT *tmp_Elt1, 
 	INT f_tolerant, 
 	INT verbose_level)
-// called by generator::trace_set
-// returns the node in the generator
+// called by poset_classification::trace_set
+// returns the node in the poset_classification
 // that corresponds to the canonical_set
 // or -1 if f_tolerant and the node could not be found
 {
@@ -437,7 +437,7 @@ INT generator::trace_set_recursion(
 	poset_orbit_node *O = &root[cur_node];
 	
 	if (f_v) {
-		cout << "generator::trace_set_recursion "
+		cout << "poset_classification::trace_set_recursion "
 				"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : ";
 		INT_vec_print(cout, canonical_set, size);
@@ -456,7 +456,7 @@ INT generator::trace_set_recursion(
 		verbose_level - 1)) {
 		
 		if (f_v) {
-			cout << "generator::trace_set_recursion "
+			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
 			cout << "O->trace_next_point_in_place returns FALSE, "
@@ -477,13 +477,13 @@ INT generator::trace_set_recursion(
 		}
 
 	if (f_failure_to_find_point) {
-		cout << "generator::trace_set_recursion: "
+		cout << "poset_classification::trace_set_recursion: "
 				"f_failure_to_find_point" << endl;
 		exit(1);
 		}
 	pt0 = canonical_set[cur_level];
 	if (f_v) {
-		cout << "generator::trace_set_recursion "
+		cout << "poset_classification::trace_set_recursion "
 				"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : ";
 		INT_vec_print(cout, canonical_set, size);
@@ -494,7 +494,7 @@ INT generator::trace_set_recursion(
 			this, pt0, FALSE);
 
 	if (current_extension < 0) {
-		cout << "generator::trace_set_recursion: "
+		cout << "poset_classification::trace_set_recursion: "
 				"did not find point" << endl;
 		exit(1);
 		}
@@ -503,7 +503,7 @@ INT generator::trace_set_recursion(
 		// extension node
 		next_node = O->E[current_extension].data;
 		if (f_v) {
-			cout << "generator::trace_set_recursion "
+			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
 			INT_vec_print(cout, canonical_set, size);
@@ -525,25 +525,25 @@ INT generator::trace_set_recursion(
 		// fusion node
 
 		if (f_v) {
-			cout << "generator::trace_set_recursion "
+			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			cout << "before generator_apply_fusion_element" << endl;
+			cout << "before poset_classification_apply_fusion_element" << endl;
 			}
-		next_node = generator_apply_fusion_element(cur_level, size, 
+		next_node = poset_classification_apply_fusion_element(cur_level, size, 
 			cur_node, current_extension, 
 			canonical_set, tmp_set1, tmp_set2, 
 			Elt_transporter, tmp_Elt1, 
 			f_tolerant, 
 			verbose_level);
 		if (f_v) {
-			cout << "generator::trace_set_recursion "
+			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : ";
-			cout << "after generator_apply_fusion_element" << endl;
+			cout << "after poset_classification_apply_fusion_element" << endl;
 			}
 		if (f_v) {
-			cout << "generator::trace_set_recursion "
+			cout << "poset_classification::trace_set_recursion "
 					"cur_level = " << cur_level
 				<< " cur_node = " << cur_node << " : " 
 				<< " current_extension = " << current_extension 
@@ -557,7 +557,7 @@ INT generator::trace_set_recursion(
 
 		if (next_node == -1) { // can only happen if f_tolerant is TRUE
 			if (f_v) {
-				cout << "generator::trace_set_recursion "
+				cout << "poset_classification::trace_set_recursion "
 						"cur_level = " << cur_level
 					<< " cur_node = " << cur_node << " : " 
 					<< " current_extension = " << current_extension 
@@ -593,12 +593,12 @@ INT generator::trace_set_recursion(
 			f_implicit_fusion, verbose_level);
 #endif
 		}
-	cout << "generator::trace_set_recursion "
+	cout << "poset_classification::trace_set_recursion "
 			"unknown type " << t << endl;
 	exit(1);
 }
 
-INT generator::trace_set(INT *set, INT size, INT level, 
+INT poset_classification::trace_set(INT *set, INT size, INT level, 
 	INT *canonical_set, INT *Elt_transporter, 
 	INT verbose_level)
 // called by map_set_to_set_BLT in orbits.C
@@ -614,7 +614,7 @@ INT generator::trace_set(INT *set, INT size, INT level,
 	tmp_Elt = NEW_INT(A->elt_size_in_INT);
 
 	if (f_v) {
-		cout << "generator::trace_set" << endl;
+		cout << "poset_classification::trace_set" << endl;
 		cout << "tracing set ";
 		INT_vec_print(cout, set, size);	
 		cout << endl;
@@ -638,7 +638,7 @@ INT generator::trace_set(INT *set, INT size, INT level,
 	case_nb = n - first_poset_orbit_node_at_level[level];
 
 	if (case_nb < 0) {
-		cout << "generator::trace_set, "
+		cout << "poset_classification::trace_set, "
 				"case_nb < 0, case_nb = " << case_nb << endl;
 		exit(1);
 		}
@@ -648,7 +648,7 @@ INT generator::trace_set(INT *set, INT size, INT level,
 	return case_nb;
 }
 
-INT generator::find_node_for_subspace_by_rank(
+INT poset_classification::find_node_for_subspace_by_rank(
 		INT *set, INT len, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -659,7 +659,7 @@ INT generator::find_node_for_subspace_by_rank(
 	INT rk, node, i, j, pt;
 
 	if (f_v) {
-		cout << "generator::find_node_for_subspace_by_rank for set ";
+		cout << "poset_classification::find_node_for_subspace_by_rank for set ";
 		INT_vec_print(cout, set, len);
 		cout << endl;
 		}
@@ -678,7 +678,7 @@ INT generator::find_node_for_subspace_by_rank(
 			basis, len, vector_space_dimension,
 			base_cols, 0 /* verbose_level */);
 	if (rk != len) {
-		cout << "generator::find_node_for_subspace_by_rank "
+		cout << "poset_classification::find_node_for_subspace_by_rank "
 				"rk != len" << endl;
 		exit(1);
 		}
@@ -699,7 +699,7 @@ INT generator::find_node_for_subspace_by_rank(
 				continue;
 				}
 			if (f_vv) {
-				cout << "generator::find_node_for_subspace_by_rank "
+				cout << "poset_classification::find_node_for_subspace_by_rank "
 						"at node " << node << " extension " << j
 						<< " with point " << pt << " to node "
 						<< O->E[j].data << endl;
@@ -709,14 +709,14 @@ INT generator::find_node_for_subspace_by_rank(
 			break;
 			}
 		if (j == O->nb_extensions) {
-			cout << "generator::find_node_for_subspace_by_rank "
+			cout << "poset_classification::find_node_for_subspace_by_rank "
 					"at node " << node << " fatal, "
 							"could not find extension" << endl;
 			exit(1);
 			}
 		}
 	if (f_v) {
-		cout << "generator::find_node_for_subspace_by_rank "
+		cout << "poset_classification::find_node_for_subspace_by_rank "
 				"the canonical set is ";
 		INT_vec_print(cout, set, len);
 		cout << " at node " << node << endl;

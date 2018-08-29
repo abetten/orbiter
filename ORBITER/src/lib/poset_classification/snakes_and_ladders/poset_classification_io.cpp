@@ -1,16 +1,16 @@
-// generator_io.C
+// poset_classification_io.C
 //
 // Anton Betten
 // moved here from DISCRETA/snakesandladders.C
 // December 27, 2008
-// renamed from io.C to generator_io.C Aug 24, 2011
+// renamed from io.C to poset_classification_io.C Aug 24, 2011
 
 
 #include "foundations/foundations.h"
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void generator::housekeeping(INT i,
+void poset_classification::housekeeping(INT i,
 		INT f_write_files, INT t0, INT verbose_level)
 {
 	INT j, nb_nodes;
@@ -19,11 +19,11 @@ void generator::housekeeping(INT i,
 	INT f_embedded = TRUE;
 	
 	if (f_v) {
-		cout << "generator::housekeeping "
+		cout << "poset_classification::housekeeping "
 				"level=" << i << endl;
-		cout << "generator::housekeeping "
+		cout << "poset_classification::housekeeping "
 				"verbose_level=" << verbose_level << endl;
-		cout << "generator::housekeeping "
+		cout << "poset_classification::housekeeping "
 				"fname_base=" << fname_base << endl;
 		}
 	nb_nodes = nb_orbits_at_level(i);
@@ -61,14 +61,14 @@ void generator::housekeeping(INT i,
 		BYTE my_fname_base[1000];
 		
 		if (f_v) {
-			cout << "generator_housekeeping writing files" << endl;
+			cout << "poset_classification_housekeeping writing files" << endl;
 			}
 #if 1
 		sprintf(my_fname_base, "%sa", fname_base);
 		if (f_v) {
-			cout << "generator_housekeeping "
+			cout << "poset_classification_housekeeping "
 					"my_fname_base=" << my_fname_base << endl;
-			cout << "generator_housekeeping "
+			cout << "poset_classification_housekeeping "
 					"before write_level_file_binary" << endl;
 			}
 		write_level_file_binary(i, my_fname_base,
@@ -76,17 +76,17 @@ void generator::housekeeping(INT i,
 		if (i) {		
 			sprintf(my_fname_base, "%sb", fname_base);
 			if (f_v) {
-				cout << "generator_housekeeping "
+				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
-				cout << "generator_housekeeping "
+				cout << "poset_classification_housekeeping "
 						"before write_level_file_binary" << endl;
 				}
 			write_level_file_binary(i - 1,
 					my_fname_base, 0/*verbose_level*/);
 			if (f_v) {
-				cout << "generator_housekeeping "
+				cout << "poset_classification_housekeeping "
 						"my_fname_base=" << my_fname_base << endl;
-				cout << "generator_housekeeping "
+				cout << "poset_classification_housekeeping "
 						"before write_sv_level_file_binary" << endl;
 				}
 			write_sv_level_file_binary(i - 1, my_fname_base, 
@@ -94,27 +94,27 @@ void generator::housekeeping(INT i,
 			}
 #endif
 		if (f_v) {
-			cout << "generator_housekeeping "
+			cout << "poset_classification_housekeeping "
 					"before write_lvl_file" << endl;
 			}
 		write_lvl_file(fname_base, i, t0,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
 		if (f_v) {
-			cout << "generator_housekeeping "
-					"before generator::write_data_file" << endl;
+			cout << "poset_classification_housekeeping "
+					"before poset_classification::write_data_file" << endl;
 			}
-		generator::write_data_file(i /* depth_completed */,
+		poset_classification::write_data_file(i /* depth_completed */,
 				fname_base, 0);
 
 		if (f_v) {
-			cout << "generator::housekeeping "
+			cout << "poset_classification::housekeeping "
 					"writing files done" << endl;
 			}
 		}
 	else {
 		if (f_v) {
-			cout << "generator_housekeeping "
+			cout << "poset_classification_housekeeping "
 					"not writing files" << endl;
 			}
 		}
@@ -149,33 +149,33 @@ void generator::housekeeping(INT i,
 
 	if (f_T || (f_t && i == sz)) {
 		if (f_v) {
-			cout << "generator::housekeeping "
+			cout << "poset_classification::housekeeping "
 					"before write_treefile_and_draw_tree" << endl;
 			}
 
 		write_treefile_and_draw_tree(fname_base, i, 
 			xmax, ymax, radius, f_embedded, 0 /*verbose_level - 1*/);
-			// in generator_draw.C
+			// in poset_classification_draw.C
 
 		if (f_v) {
-			cout << "generator::housekeeping "
+			cout << "poset_classification::housekeeping "
 					"after write_treefile_and_draw_tree" << endl;
 			}
 		}
 	else {
 		if (f_v) {
-			cout << "generator_housekeeping "
+			cout << "poset_classification_housekeeping "
 					"not writing tree" << endl;
 			}
 		}
 
 	if (f_v) {
-		cout << "generator::housekeeping done" << endl;
+		cout << "poset_classification::housekeeping done" << endl;
 		}
 }
 
 
-void generator::housekeeping_no_data_file(INT i,
+void poset_classification::housekeeping_no_data_file(INT i,
 		INT t0, INT verbose_level)
 {
 	INT j;
@@ -183,7 +183,7 @@ void generator::housekeeping_no_data_file(INT i,
 	INT f_embedded = TRUE;
 	
 	if (f_v) {
-		cout << "generator::housekeeping_no_data_file "
+		cout << "poset_classification::housekeeping_no_data_file "
 				"verbose_level=" << verbose_level << endl;
 		}
 	if (f_v) {
@@ -214,7 +214,7 @@ void generator::housekeeping_no_data_file(INT i,
 				FALSE /* f_with_strong_generators */,
 				FALSE /* f_long_version */, 0);
 		
-		//generator_write_data_file(gen,
+		//poset_classification_write_data_file(gen,
 		// i /* depth_completed */, gen->fname_base, 0);
 
 		}
@@ -224,11 +224,11 @@ void generator::housekeeping_no_data_file(INT i,
 			xmax, ymax, radius, f_embedded, verbose_level - 1);
 		}
 	if (f_v) {
-		cout << "generator::housekeeping_no_data_file done" << endl;
+		cout << "poset_classification::housekeeping_no_data_file done" << endl;
 		}
 }
 
-INT generator::test_sv_level_file_binary(INT level, BYTE *fname_base)
+INT poset_classification::test_sv_level_file_binary(INT level, BYTE *fname_base)
 {
 	BYTE fname[1000];
 	
@@ -239,7 +239,7 @@ INT generator::test_sv_level_file_binary(INT level, BYTE *fname_base)
 		return FALSE;
 }
 
-void generator::read_sv_level_file_binary(
+void poset_classification::read_sv_level_file_binary(
 	INT level, BYTE *fname_base,
 	INT f_split, INT split_mod, INT split_case, 
 	INT f_recreate_extensions, INT f_dont_keep_sv, 
@@ -251,7 +251,7 @@ void generator::read_sv_level_file_binary(
 	sprintf(fname, "%s_lvl_%ld_sv.data", fname_base, level);
 	
 	if (f_v) {
-		cout << "generator::read_sv_level_file_binary "
+		cout << "poset_classification::read_sv_level_file_binary "
 				"reading file " << fname << " of size "
 				<< file_size(fname) << endl;
 		}
@@ -270,7 +270,7 @@ void generator::read_sv_level_file_binary(
 
 }
 
-void generator::write_sv_level_file_binary(
+void poset_classification::write_sv_level_file_binary(
 	INT level, BYTE *fname_base,
 	INT f_split, INT split_mod, INT split_case, 
 	INT verbose_level)
@@ -281,7 +281,7 @@ void generator::write_sv_level_file_binary(
 	sprintf(fname, "%s_lvl_%ld_sv.data", fname_base, level);
 	
 	if (f_v) {
-		cout << "generator::write_sv_level_file_binary "
+		cout << "poset_classification::write_sv_level_file_binary "
 				"fname = " << fname << endl;
 		}
 
@@ -297,13 +297,13 @@ void generator::write_sv_level_file_binary(
 	fclose(fp);
 
 	if (f_v) {
-		cout << "generator::write_sv_level_file_binary "
+		cout << "poset_classification::write_sv_level_file_binary "
 			"finished written file "
 			<< fname << " of size " << file_size(fname) << endl;
 		}
 }
 
-void generator::read_sv_level_file_binary2(INT level, FILE *fp, 
+void poset_classification::read_sv_level_file_binary2(INT level, FILE *fp, 
 	INT f_split, INT split_mod, INT split_case, 
 	INT f_recreate_extensions, INT f_dont_keep_sv, 
 	INT verbose_level)
@@ -315,7 +315,7 @@ void generator::read_sv_level_file_binary2(INT level, FILE *fp,
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
-		cout << "generator::read_sv_level_file_binary2 "
+		cout << "poset_classification::read_sv_level_file_binary2 "
 				<< nb_nodes << " nodes" << endl;
 		cout << "f_recreate_extensions="
 				<< f_recreate_extensions << endl;
@@ -328,19 +328,19 @@ void generator::read_sv_level_file_binary2(INT level, FILE *fp,
 	// version number of this file format
 	I = fread_INT4(fp);
 	if (I != 1) { 
-		cout << "generator::read_sv_level_file_binary2: "
+		cout << "poset_classification::read_sv_level_file_binary2: "
 				"unknown file version" << endl;
 		exit(1);
 		}
 	I = fread_INT4(fp);
 	if (I != level) {
-		cout << "generator::read_sv_level_file_binary2: "
+		cout << "poset_classification::read_sv_level_file_binary2: "
 				"level does not match" << endl;
 		exit(1);
 		}
 	I = fread_INT4(fp);
 	if (I != nb_nodes) {
-		cout << "generator::read_sv_level_file_binary2: "
+		cout << "poset_classification::read_sv_level_file_binary2: "
 				"nb_nodes does not match" << endl;
 		exit(1);
 		}
@@ -361,18 +361,18 @@ void generator::read_sv_level_file_binary2(INT level, FILE *fp,
 		}
 	I = fread_INT4(fp);
 	if (I != MAGIC_SYNC) {
-		cout << "generator::read_sv_level_file_binary2: "
+		cout << "poset_classification::read_sv_level_file_binary2: "
 				"MAGIC_SYNC does not match" << endl;
 		exit(1);
 		}
 	// a check to see if the file is not corrupt
 	if (f_v) {
-		cout << "generator::read_sv_level_file_binary2 "
+		cout << "poset_classification::read_sv_level_file_binary2 "
 				"finished" << endl;
 		}
 }
 
-void generator::write_sv_level_file_binary2(INT level, FILE *fp, 
+void poset_classification::write_sv_level_file_binary2(INT level, FILE *fp, 
 	INT f_split, INT split_mod, INT split_case, 
 	INT verbose_level)
 {
@@ -382,7 +382,7 @@ void generator::write_sv_level_file_binary2(INT level, FILE *fp,
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
-		cout << "generator::write_sv_level_file_binary2 "
+		cout << "poset_classification::write_sv_level_file_binary2 "
 				<< nb_nodes << " nodes" << endl;
 		}
 	// version number of this file format
@@ -399,11 +399,11 @@ void generator::write_sv_level_file_binary2(INT level, FILE *fp,
 	fwrite_INT4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
 	if (f_v) {
-		cout << "generator::write_sv_level_file_binary2 finished" << endl;
+		cout << "poset_classification::write_sv_level_file_binary2 finished" << endl;
 		}
 }
 
-void generator::read_level_file_binary(INT level,
+void poset_classification::read_level_file_binary(INT level,
 		BYTE *fname_base, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -413,13 +413,13 @@ void generator::read_level_file_binary(INT level,
 	sprintf(fname, "%s_lvl_%ld.data", fname_base, level);
 	
 	if (f_v) {
-		cout << "generator::read_level_file_binary "
+		cout << "poset_classification::read_level_file_binary "
 				"reading file " << fname << " of size "
 				<< file_size(fname) << endl;
 		}
 
 	if (file_size(fname) < 0) {
-		cout << "generator::read_level_file_binary "
+		cout << "poset_classification::read_level_file_binary "
 				"probems while reading file " << fname << endl;
 		exit(1);
 		}
@@ -436,7 +436,7 @@ void generator::read_level_file_binary(INT level,
 
 }
 
-void generator::write_level_file_binary(INT level,
+void poset_classification::write_level_file_binary(INT level,
 		BYTE *fname_base, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -446,7 +446,7 @@ void generator::write_level_file_binary(INT level,
 	sprintf(fname, "%s_lvl_%ld.data", fname_base, level);
 	
 	if (f_v) {
-		cout << "generator::write_level_file_binary "
+		cout << "poset_classification::write_level_file_binary "
 				"fname = " << fname << endl;
 		}
 
@@ -461,14 +461,14 @@ void generator::write_level_file_binary(INT level,
 	fclose(fp);
 
 	if (f_v) {
-		cout << "generator::write_level_file_binary "
+		cout << "poset_classification::write_level_file_binary "
 				"finished written file "
 			<< fname << " of size " << file_size(fname) 
 			<< " nb_group_elements=" << nb_group_elements << endl;
 		}
 }
 
-void generator::read_level_file_binary2(
+void poset_classification::read_level_file_binary2(
 	INT level, FILE *fp,
 	INT &nb_group_elements, INT verbose_level)
 {
@@ -478,35 +478,35 @@ void generator::read_level_file_binary2(
 	INT4 I;
 	
 	if (f_v) {
-		cout << "generator::read_level_file_binary2" << endl;
+		cout << "poset_classification::read_level_file_binary2" << endl;
 		}
 	f = first_poset_orbit_node_at_level[level];
 	nb_group_elements = 0;
 	I = fread_INT4(fp);
 	if (I != 1) {
-		cout << "generator::read_level_file_binary2 "
+		cout << "poset_classification::read_level_file_binary2 "
 				"version = " << I << " unknown" << endl;
 		exit(1);
 		}
 
 	I = fread_INT4(fp);
 	if (I != level) {
-		cout << "generator::read_level_file_binary2 "
+		cout << "poset_classification::read_level_file_binary2 "
 				"level = " << I << " should be " << level << endl;
 		exit(1);
 		}
 
 	nb_nodes = fread_INT4(fp);
 	if (f_v) {
-		cout << "generator::read_level_file_binary, "
+		cout << "poset_classification::read_level_file_binary, "
 				"nb_nodes = " << nb_nodes << endl;
 		}
 	first_poset_orbit_node_at_level[level + 1] = f + nb_nodes;
 	
 	if (f_v) {
-		cout << "generator::read_level_file_binary2 "
+		cout << "poset_classification::read_level_file_binary2 "
 				"f + nb_nodes = " << f + nb_nodes << endl;
-		cout << "generator::read_level_file_binary2 "
+		cout << "poset_classification::read_level_file_binary2 "
 				"nb_poset_orbit_nodes_allocated = "
 			<< nb_poset_orbit_nodes_allocated << endl;
 		}
@@ -525,14 +525,14 @@ void generator::read_level_file_binary2(
 		}
 	magic_sync = fread_INT4(fp);
 	if (magic_sync != MAGIC_SYNC) {
-		cout << "generator::read_level_file_binary2 "
+		cout << "poset_classification::read_level_file_binary2 "
 				"could not read MAGIC_SYNC, file is corrupt" << endl;
 		cout << "MAGIC_SYNC=" << MAGIC_SYNC << endl;
 		cout << "we read   =" << magic_sync << endl;		
 		exit(1);
 		}
 	if (f_v) {
-		cout << "generator::read_level_file_binary2 "
+		cout << "poset_classification::read_level_file_binary2 "
 				"finished ";
 		cout << "level=" << level 
 			<< ", with " << nb_nodes << " nodes" 
@@ -541,7 +541,7 @@ void generator::read_level_file_binary2(
 		}
 }
 
-void generator::write_level_file_binary2(
+void poset_classification::write_level_file_binary2(
 	INT level, FILE *fp,
 	INT &nb_group_elements, INT verbose_level)
 {
@@ -551,7 +551,7 @@ void generator::write_level_file_binary2(
 	f = first_poset_orbit_node_at_level[level];
 	nb_nodes = nb_orbits_at_level(level);
 	if (f_v) {
-		cout << "generator::write_level_file_binary2 "
+		cout << "poset_classification::write_level_file_binary2 "
 				<< nb_nodes << " nodes" << endl;
 		}
 	nb_group_elements = 0;
@@ -566,12 +566,12 @@ void generator::write_level_file_binary2(
 	fwrite_INT4(fp, MAGIC_SYNC);
 	// a check to see if the file is not corrupt
 	if (f_v) {
-		cout << "generator::write_level_file_binary2 "
+		cout << "poset_classification::write_level_file_binary2 "
 				"finished" << endl;
 		}
 }
 
-INT generator::calc_size_on_file(INT depth_completed,
+INT poset_classification::calc_size_on_file(INT depth_completed,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -579,7 +579,7 @@ INT generator::calc_size_on_file(INT depth_completed,
 	INT nb_nodes;
 	
 	if (f_v) {
-		cout << "generator::calc_size_on_file "
+		cout << "poset_classification::calc_size_on_file "
 				"depth_completed=" << depth_completed << endl;
 		}
 	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
@@ -592,20 +592,20 @@ INT generator::calc_size_on_file(INT depth_completed,
 		}
 	s += 4; // MAGIC_SYNC
 	if (f_v) {
-		cout << "generator::calc_size_on_file "
+		cout << "poset_classification::calc_size_on_file "
 				"depth_completed=" << depth_completed
 				<< " s=" << s << endl;
 		}
 	return s;
 }
 
-void generator::make_fname_candidates_file_default(
+void poset_classification::make_fname_candidates_file_default(
 		BYTE *fname, INT level)
 {
 	sprintf(fname, "%s_lvl_%ld_candidates.bin", fname_base, level);
 }
 
-void generator::write_candidates_binary_using_sv(BYTE *fname_base,
+void poset_classification::write_candidates_binary_using_sv(BYTE *fname_base,
 		INT lvl, INT t0, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -613,7 +613,7 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base,
 	BYTE fname1[1000];
 	
 	if (f_v) {
-		cout << "generator::write_candidates_binary_using_sv "
+		cout << "poset_classification::write_candidates_binary_using_sv "
 				"lvl=" << lvl << " fname_base=" << fname_base << endl;
 		}
 	sprintf(fname1, "%s_lvl_%ld_candidates.bin", fname_base, lvl);
@@ -629,9 +629,9 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base,
 	fst = first_poset_orbit_node_at_level[lvl];
 	len = nb_orbits_at_level(lvl);
 	if (f_v) {
-		cout << "generator::write_candidates_binary_using_sv "
+		cout << "poset_classification::write_candidates_binary_using_sv "
 				"first node at level " << lvl << " is " << fst << endl;
-		cout << "generator::write_candidates_binary_using_sv "
+		cout << "poset_classification::write_candidates_binary_using_sv "
 				"number of nodes at level " << lvl << " is " << len << endl;
 		}
 	nb_cand = NEW_INT(len);
@@ -641,20 +641,20 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base,
 		INT *osv = root[node].sv;
 
 		if (f_vv) {
-			cout << "generator::write_candidates_binary_using_sv "
+			cout << "poset_classification::write_candidates_binary_using_sv "
 					"node " << i << " / " << len << endl;
 			}
 		if (osv == NULL) {
-			cout << "generator::write_candidates_binary_using_sv "
+			cout << "poset_classification::write_candidates_binary_using_sv "
 					"osv == NULL, we don't have a Schreier vector; "
 					"maybe set -schreier_depth <depth>" << endl;
 			exit(1);
 			}
 		nb = osv[0];
 		if (FALSE) {
-			cout << "generator::write_candidates_binary_using_sv "
+			cout << "poset_classification::write_candidates_binary_using_sv "
 					"i=" << i << endl;
-			cout << "generator::write_candidates_binary_using_sv "
+			cout << "poset_classification::write_candidates_binary_using_sv "
 					"nb=" << nb << endl;
 			}
 		subset = osv + 1;
@@ -662,7 +662,7 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base,
 		total_nb_cand += nb;
 		}
 	if (f_vv) {
-		cout << "generator::write_candidates_binary_using_sv "
+		cout << "poset_classification::write_candidates_binary_using_sv "
 				"total_nb_cand=" << total_nb_cand << endl;
 		}
 	Cand = NEW_INT(total_nb_cand);
@@ -705,7 +705,7 @@ void generator::write_candidates_binary_using_sv(BYTE *fname_base,
 		}
 }
 
-void generator_read_candidates_of_orbit(
+void poset_classification_read_candidates_of_orbit(
 	const BYTE *fname, INT orbit_at_level,
 	INT *&candidates, INT &nb_candidates, INT verbose_level)
 {
@@ -716,13 +716,13 @@ void generator_read_candidates_of_orbit(
 
 
 	if (f_v) {
-		cout << "generator_read_candidates_of_orbit" << endl;
+		cout << "poset_classification_read_candidates_of_orbit" << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		cout << "orbit_at_level=" << orbit_at_level << endl;
 		}
 	
 	if (file_size(fname) <= 0) {
-		cout << "generator_read_candidates_of_orbit file "
+		cout << "poset_classification_read_candidates_of_orbit file "
 				<< fname << " does not exist" << endl;
 		exit(1);
 		}
@@ -731,7 +731,7 @@ void generator_read_candidates_of_orbit(
 
 	nb = fread_INT4(fp);
 	if (orbit_at_level >= nb) {
-		cout << "generator_read_candidates_of_orbit "
+		cout << "poset_classification_read_candidates_of_orbit "
 				"orbit_at_level >= nb" << endl;
 		cout << "orbit_at_level=" << orbit_at_level << endl;
 		cout << "nb=" << nb << endl;
@@ -757,11 +757,11 @@ void generator_read_candidates_of_orbit(
 		}
 	fclose(fp);
 	if (f_v) {
-		cout << "generator_read_candidates_of_orbit done" << endl;
+		cout << "poset_classification_read_candidates_of_orbit done" << endl;
 		}
 }
 
-void generator::read_level_file(INT level,
+void poset_classification::read_level_file(INT level,
 		BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -775,7 +775,7 @@ void generator::read_level_file(INT level,
 	poset_orbit_node *O;
 	
 	if (f_v) {
-		cout << "generator::read_level_file "
+		cout << "poset_classification::read_level_file "
 				"fname=" << fname << endl;
 		}
 	
@@ -787,22 +787,22 @@ void generator::read_level_file(INT level,
 
 	if (try_to_read_file(fname, nb_cases, data)) {
 		if (f_v) {
-			cout << "generator::read_level_file read "
+			cout << "poset_classification::read_level_file read "
 					"file " << fname << " nb_cases = " << nb_cases << endl;
 			}
 		}
 	else {
-		cout << "generator::read_level_file "
+		cout << "poset_classification::read_level_file "
 				"couldn't read file " << fname << endl;
 		exit(1);
 		}
 
 	if (f_vv) {
-		cout << "generator::read_level_file parsing" << endl;
+		cout << "poset_classification::read_level_file parsing" << endl;
 		}
 	parse_sets(nb_cases, data, set_sizes, sets);
 	if (f_vv) {
-		cout << "generator::read_level_file "
+		cout << "poset_classification::read_level_file "
 				"parsing finished" << endl;
 		}
 		// in GALOIS/util.C
@@ -813,7 +813,7 @@ void generator::read_level_file(INT level,
 	
 	if (nb_nodes > nb_poset_orbit_nodes_allocated) {
 		if (f_vv) {
-			cout << "generator::read_level_file "
+			cout << "poset_classification::read_level_file "
 					"reallocating to " << nb_nodes << " nodes" << endl;
 			}
 		reallocate_to(nb_nodes, verbose_level - 1);
@@ -852,7 +852,7 @@ void generator::read_level_file(INT level,
 		
 			Aut.decode_ascii(FALSE);
 		
-			// now strong generators are available
+			// now strong poset_classifications are available
 		
 			Aut.schreier_sims(0);
 		
@@ -873,7 +873,7 @@ void generator::read_level_file(INT level,
 			cout << endl;
 #endif
 			O->store_strong_generators(this, Strong_gens);
-			cout << "strong generators stored" << endl;
+			cout << "strong poset_classifications stored" << endl;
 
 			FREE_OBJECT(Strong_gens);
 			}
@@ -887,12 +887,12 @@ void generator::read_level_file(INT level,
 		}
 	delete [] set_sizes;
 	if (f_v) {
-		cout << "generator::read_level_file "
+		cout << "poset_classification::read_level_file "
 				"fname=" << fname << " done" << endl;
 		}
 }
 
-void generator::read_data_file(INT &depth_completed,
+void poset_classification::read_data_file(INT &depth_completed,
 		const BYTE *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -902,7 +902,7 @@ void generator::read_data_file(INT &depth_completed,
 	
 	
 	if (f_v) {
-		cout << "generator::read_data_file "
+		cout << "poset_classification::read_data_file "
 				"fname = " << fname << endl;
 		cout << "A->elt_size_in_INT = "
 				<< A->elt_size_in_INT << endl;
@@ -918,14 +918,14 @@ void generator::read_data_file(INT &depth_completed,
 		exit(1);
 		}
 	if (f_v) {
-		cout << "generator::read_data_file before m->alloc" << endl;
+		cout << "poset_classification::read_data_file before m->alloc" << endl;
 		}
 
 	m = NEW_OBJECT(memory_object);
 	m->alloc(size, 0);
 
 	if (f_v) {
-		cout << "generator::read_data_file after m->alloc" << endl;
+		cout << "poset_classification::read_data_file after m->alloc" << endl;
 		}
 	
 	m->used_length = 0;
@@ -939,31 +939,31 @@ void generator::read_data_file(INT &depth_completed,
 	fclose(fp);
 
 	if (f_v) {
-		cout << "generator::read_data_file after fread" << endl;
+		cout << "poset_classification::read_data_file after fread" << endl;
 		}
 
 	m->used_length = size;
 	m->cur_pointer = 0;
 
 	if (f_v) {
-		cout << "generator::read_data_file "
-				"before generator_read_memory" << endl;
+		cout << "poset_classification::read_data_file "
+				"before poset_classification_read_memory" << endl;
 		}
 	read_memory_object(depth_completed, m,
 			nb_group_elements, verbose_level - 2);
 	if (f_v) {
-		cout << "generator::read_data_file "
-				"after generator_read_memory" << endl;
+		cout << "poset_classification::read_data_file "
+				"after poset_classification_read_memory" << endl;
 		}
 
 	FREE_OBJECT(m);
 	if (f_v) {
-		cout << "generator::read_data_file done" <<endl;
+		cout << "poset_classification::read_data_file done" <<endl;
 		}
 	
 }
 
-void generator::write_data_file(INT depth_completed,
+void poset_classification::write_data_file(INT depth_completed,
 		const BYTE *fname_base, INT verbose_level)
 {
 	memory_object *m;
@@ -975,7 +975,7 @@ void generator::write_data_file(INT depth_completed,
 	sprintf(fname, "%s_%ld.data", fname_base, depth_completed);
 	
 	if (f_v) {
-		cout << "generator::write_data_file fname = " << fname << endl;
+		cout << "poset_classification::write_data_file fname = " << fname << endl;
 		cout << "A->elt_size_in_INT = " << A->elt_size_in_INT << endl;
 		cout << "A->coded_elt_size_in_char = "
 				<< A->coded_elt_size_in_char << endl;
@@ -986,7 +986,7 @@ void generator::write_data_file(INT depth_completed,
 		}
 	
 	if (size0 > 100 * ONE_MILLION) {
-		cout << "generator::write_data_file file=" << fname << endl;
+		cout << "poset_classification::write_data_file file=" << fname << endl;
 		cout << "size on file = " << size0 << endl;
 		cout << "the size is very big" << endl;
 		}
@@ -1012,13 +1012,13 @@ void generator::write_data_file(INT depth_completed,
 	FREE_OBJECT(m);
 	
 	if (f_v) {
-		cout << "generator::write_data_file finished written file " 
+		cout << "poset_classification::write_data_file finished written file " 
 			<< fname << " of size " << file_size(fname) 
 			<< " nb_group_elements=" << nb_group_elements << endl;
 		}
 }
 
-void generator::read_memory_object(INT &depth_completed,
+void poset_classification::read_memory_object(INT &depth_completed,
 		memory_object *m, INT &nb_group_elements,
 		INT verbose_level)
 {
@@ -1028,31 +1028,31 @@ void generator::read_memory_object(INT &depth_completed,
 	
 	//nb_nodes = first_oracle_node_at_level[depth_completed + 1];
 	if (f_v) {
-		cout << "generator::read_memory_object, "
+		cout << "poset_classification::read_memory_object, "
 				"data size (in bytes) = " << m->used_length << endl;
 		}
 	nb_group_elements = 0;
 	m->read_int(&version);
 	if (version != 1) {
-		cout << "generator::read_memory_object "
+		cout << "poset_classification::read_memory_object "
 				"version = " << version << " unknown" << endl;
 		exit(1);
 		}
 	m->read_int(&depth_completed);
 	if (f_v) {
-		cout << "generator::read_memory_object "
+		cout << "poset_classification::read_memory_object "
 				"depth_completed = " << depth_completed << endl;
 		}
 
 	if (depth_completed > sz) {
-		cout << "generator::read_memory_object "
+		cout << "poset_classification::read_memory_object "
 				"depth_completed > sz" << endl;
 		exit(1);
 		}
 
 	m->read_int(&nb_nodes);
 	if (f_v) {
-		cout << "generator::read_memory_object "
+		cout << "poset_classification::read_memory_object "
 				"nb_nodes = " << nb_nodes << endl;
 		}
 
@@ -1074,18 +1074,18 @@ void generator::read_memory_object(INT &depth_completed,
 				nb_group_elements, verbose_level - 1);
 		}
 	if (f_v) {
-		cout << "generator::read_memory_object "
+		cout << "poset_classification::read_memory_object "
 				"reading nodes completed" << endl;
 		}
 	m->read_int(&magic_sync);
 	if (magic_sync != MAGIC_SYNC) {
-		cout << "generator::read_memory_object "
+		cout << "poset_classification::read_memory_object "
 				"could not read MAGIC_SYNC, file is corrupt" << endl;
 		exit(1);
 		}
 	nb_poset_orbit_nodes_used = nb_nodes;
 	if (f_v) {
-		cout << "generator::read_memory_object finished ";
+		cout << "poset_classification::read_memory_object finished ";
 		cout << "depth_completed=" << depth_completed 
 			<< ", with " << nb_nodes << " nodes" 
 			<< " and " << nb_group_elements << " group elements"
@@ -1093,7 +1093,7 @@ void generator::read_memory_object(INT &depth_completed,
 		}
 }
 
-void generator::write_memory_object(INT depth_completed,
+void poset_classification::write_memory_object(INT depth_completed,
 		memory_object *m, INT &nb_group_elements, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1101,7 +1101,7 @@ void generator::write_memory_object(INT depth_completed,
 	
 	nb_nodes = first_poset_orbit_node_at_level[depth_completed + 1];
 	if (f_v) {
-		cout << "generator::write_memory_object "
+		cout << "poset_classification::write_memory_object "
 				<< nb_nodes << " nodes" << endl;
 		}
 	nb_group_elements = 0;
@@ -1117,30 +1117,30 @@ void generator::write_memory_object(INT depth_completed,
 		}
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
 	if (f_v) {
-		cout << "generator::write_memory_object "
+		cout << "poset_classification::write_memory_object "
 				"finished, data size (in bytes) = "
 				<< m->used_length << endl;
 		}
 }
 
-void generator::recover(const BYTE *recover_fname,
+void poset_classification::recover(const BYTE *recover_fname,
 		INT &depth_completed, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::recover "
+		cout << "poset_classification::recover "
 				"recovering from file " << recover_fname << endl;
 		}
 	read_data_file(depth_completed, recover_fname, verbose_level);
 	if (f_v) {
-		cout << "generator::recover "
+		cout << "poset_classification::recover "
 				"recovering finished, "
 				"depth_completed = " << depth_completed << endl;
 		}
 }
 
-void generator::write_lvl_file_with_candidates(
+void poset_classification::write_lvl_file_with_candidates(
 		BYTE *fname_base, INT lvl, INT t0,
 		INT verbose_level)
 {
@@ -1172,8 +1172,8 @@ void generator::write_lvl_file_with_candidates(
 }
 
 
-void generator::write_lvl_file(BYTE *fname_base,
-		INT lvl, INT t0, INT f_with_stabilizer_generators,
+void poset_classification::write_lvl_file(BYTE *fname_base,
+		INT lvl, INT t0, INT f_with_stabilizer_poset_classifications,
 		INT f_long_version,
 		INT verbose_level)
 {
@@ -1191,7 +1191,7 @@ void generator::write_lvl_file(BYTE *fname_base,
 	f << "# " << lvl << endl; 
 	for (i = 0; i < len; i++) {
 		root[fst + i].log_current_node(this,
-				lvl, f, f_with_stabilizer_generators,
+				lvl, f, f_with_stabilizer_poset_classifications,
 				f_long_version);
 		}
 	f << "-1 " << len << " "
@@ -1207,8 +1207,8 @@ void generator::write_lvl_file(BYTE *fname_base,
 		}
 }
 
-void generator::write_lvl(ostream &f, INT lvl, INT t0,
-		INT f_with_stabilizer_generators, INT f_long_version,
+void poset_classification::write_lvl(ostream &f, INT lvl, INT t0,
+		INT f_with_stabilizer_poset_classifications, INT f_long_version,
 		INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
@@ -1222,7 +1222,7 @@ void generator::write_lvl(ostream &f, INT lvl, INT t0,
 	f << "# " << lvl << endl; 
 	for (i = 0; i < len; i++) {
 		root[fst + i].log_current_node(this, lvl, f,
-				f_with_stabilizer_generators, f_long_version);
+				f_with_stabilizer_poset_classifications, f_long_version);
 		}
 	f << "-1 " << len << " " << first_poset_orbit_node_at_level[lvl]
 		<< " in ";
@@ -1233,7 +1233,7 @@ void generator::write_lvl(ostream &f, INT lvl, INT t0,
 	f << "# in action " << A->label << endl;
 }
 
-void generator::log_nodes_for_treefile(INT cur, INT depth,
+void poset_classification::log_nodes_for_treefile(INT cur, INT depth,
 		ostream &f, INT f_recurse, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1242,7 +1242,7 @@ void generator::log_nodes_for_treefile(INT cur, INT depth,
 		
 
 	if (f_v) {
-		cout << "generator::log_nodes_for_treefile "
+		cout << "poset_classification::log_nodes_for_treefile "
 				"cur=" << cur << endl;
 		}
 	if (f_starter && cur < starter_size) {
@@ -1266,7 +1266,7 @@ void generator::log_nodes_for_treefile(INT cur, INT depth,
 		}
 }
 
-void generator::Log_nodes(INT cur, INT depth,
+void poset_classification::Log_nodes(INT cur, INT depth,
 		ostream &f, INT f_recurse,
 		INT verbose_level)
 {
@@ -1291,10 +1291,10 @@ void generator::Log_nodes(INT cur, INT depth,
 		//f << endl;	
 		
 		f << "with " << node->nb_strong_generators
-				<< " strong generators:" << endl;
+				<< " strong poset_classifications:" << endl;
 		if (f_v) {
 			cout << "Log_nodes cur=" << cur
-					<< " printing strong generators" << endl;
+					<< " printing strong poset_classifications" << endl;
 			}
 		for (i = 0; i < node->nb_strong_generators; i++) {
 			A->element_retrieve(node->hdl_strong_generators[i], Elt1, 0);
@@ -1352,7 +1352,7 @@ void generator::Log_nodes(INT cur, INT depth,
 		}
 }
 
-void generator::log_current_node(ostream &f, INT size)
+void poset_classification::log_current_node(ostream &f, INT size)
 {
 	//longinteger_object go;
 	INT i;
@@ -1368,7 +1368,7 @@ void generator::log_current_node(ostream &f, INT size)
 
 
 
-void generator::make_spreadsheet_of_orbit_reps(
+void poset_classification::make_spreadsheet_of_orbit_reps(
 		spreadsheet *&Sp, INT max_depth)
 {
 	INT Nb_orbits, nb_orbits, i, level, first;
@@ -1482,7 +1482,7 @@ void generator::make_spreadsheet_of_orbit_reps(
 	
 }
 
-void generator::make_spreadsheet_of_level_info(
+void poset_classification::make_spreadsheet_of_level_info(
 		spreadsheet *&Sp, INT max_depth)
 {
 	INT nb_rows, Nb_orbits, nb_orbits, i, level;
@@ -1557,7 +1557,7 @@ void generator::make_spreadsheet_of_level_info(
 
 			}
 
-		//cout << "generator::make_spreadsheet_of_level_info
+		//cout << "poset_classification::make_spreadsheet_of_level_info
 		// computing binomial coeffcient" << endl;
 		D.binomial(a, A2->degree, level, FALSE);
 
@@ -1649,7 +1649,7 @@ void generator::make_spreadsheet_of_level_info(
 	
 }
 
-void generator::write_file(ofstream &fp,
+void poset_classification::write_file(ofstream &fp,
 		INT depth_completed, INT verbose_level)
 {
 	memory_object *m;
@@ -1659,7 +1659,7 @@ void generator::write_file(ofstream &fp,
 	
 	
 	if (f_v) {
-		cout << "generator::write_file "
+		cout << "poset_classification::write_file "
 				"depth_completed=" << depth_completed << endl;
 		}
 	size0 = calc_size_on_file(depth_completed, 0 /*verbose_level*/);
@@ -1668,7 +1668,7 @@ void generator::write_file(ofstream &fp,
 		}
 	
 	if (size0 > 100 * ONE_MILLION) {
-		cout << "generator::write_file" << endl;
+		cout << "poset_classification::write_file" << endl;
 		cout << "size on file = " << size0 << endl;
 		cout << "the size is very big" << endl;
 		}
@@ -1691,11 +1691,11 @@ void generator::write_file(ofstream &fp,
 	FREE_OBJECT(m);
 	
 	if (f_v) {
-		cout << "generator::write_file done" << endl;
+		cout << "poset_classification::write_file done" << endl;
 		}
 }
 
-void generator::read_file(ifstream &fp,
+void poset_classification::read_file(ifstream &fp,
 		INT &depth_completed, INT verbose_level)
 {
 	memory_object *m;
@@ -1704,7 +1704,7 @@ void generator::read_file(ifstream &fp,
 	INT nb_group_elements;
 	
 	if (f_v) {
-		cout << "generator::read_file" << endl;
+		cout << "poset_classification::read_file" << endl;
 		}
 
 
@@ -1712,7 +1712,7 @@ void generator::read_file(ifstream &fp,
 	fp.read((char *) &size, sizeof(INT));
 
 	if (f_v) {
-		cout << "generator::read_file size = " << size << endl;
+		cout << "poset_classification::read_file size = " << size << endl;
 		}
 	
 	m = NEW_OBJECT(memory_object);
@@ -1727,20 +1727,20 @@ void generator::read_file(ifstream &fp,
 	m->cur_pointer = 0;
 
 	if (f_v) {
-		cout << "generator::read_file "
-				"before generator_read_memory" << endl;
+		cout << "poset_classification::read_file "
+				"before poset_classification_read_memory" << endl;
 		}
 	read_memory_object(depth_completed, m,
 			nb_group_elements, 0 /*verbose_level - 2*/);
 	if (f_v) {
-		cout << "generator::read_file "
-				"after generator_read_memory" << endl;
+		cout << "poset_classification::read_file "
+				"after poset_classification_read_memory" << endl;
 		}
 
 	FREE_OBJECT(m);
 	
 	if (f_v) {
-		cout << "generator::read_file done, "
+		cout << "poset_classification::read_file done, "
 				"depth_completed=" << depth_completed << endl;
 		}
 }

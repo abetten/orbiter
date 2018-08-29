@@ -219,7 +219,7 @@ void graph_generator::init(int argc, const char **argv)
 	
 	A_base = NEW_OBJECT(action);
 	A_on_edges = NEW_OBJECT(action);
-	gen = NEW_OBJECT(generator);
+	gen = NEW_OBJECT(poset_classification);
 	
 	read_arguments(argc, argv);
 	
