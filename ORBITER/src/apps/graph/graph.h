@@ -20,7 +20,7 @@ class graph_generator {
 
 public:
 
-	generator *gen;
+	poset_classification *gen;
 
 	action *A_base; // symmetric group on n vertices
 	action *A_on_edges; // action on pairs

@@ -1,26 +1,26 @@
-// generator_init.C
+// poset_classification_init.C
 //
 // Anton Betten
 // December 29, 2003
 //
-// moved here from generator.C: July 29, 2014
+// moved here from poset_classification.C: July 29, 2014
 
 
 #include "foundations/foundations.h"
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-generator::generator()
+poset_classification::poset_classification()
 {
 	null();
 }
 
-generator::~generator()
+poset_classification::~poset_classification()
 {
 	freeself();
 }
 
-void generator::null()
+void poset_classification::null()
 {
 	problem_label[0] = 0;
 	
@@ -131,13 +131,13 @@ void generator::null()
 	t0 = os_ticks();
 }
 
-void generator::freeself()
+void poset_classification::freeself()
 {
 	INT i;
 	INT f_v = FALSE;
 	
 	if (f_v) {
-		cout << "generator::freeself" << endl;
+		cout << "poset_classification::freeself" << endl;
 		}
 	if (Elt_memory) {
 		FREE_INT(Elt_memory);
@@ -147,7 +147,7 @@ void generator::freeself()
 	
 
 	if (f_v) {
-		cout << "generator::freeself deleting S" << endl;
+		cout << "poset_classification::freeself deleting S" << endl;
 		}
 	if (S) {
 		FREE_INT(S);
@@ -166,7 +166,7 @@ void generator::freeself()
 		}
 
 	if (f_v) {
-		cout << "generator::freeself deleting transporter and set[]" << endl;
+		cout << "poset_classification::freeself deleting transporter and set[]" << endl;
 		}
 	if (transporter) {
 		FREE_OBJECT(transporter);
@@ -176,11 +176,11 @@ void generator::freeself()
 		FREE_PINT(set);
 		}
 	if (f_v) {
-		cout << "generator::freeself  before exit_oracle" << endl;
+		cout << "poset_classification::freeself  before exit_oracle" << endl;
 		}
 	exit_poset_orbit_node();
 	if (f_v) {
-		cout << "generator::freeself  after exit_oracle" << endl;
+		cout << "poset_classification::freeself  after exit_oracle" << endl;
 		}
 	if (tmp_v1) {
 		FREE_INT(tmp_v1);
@@ -188,14 +188,14 @@ void generator::freeself()
 
 
 	if (f_v) {
-		cout << "generator::freeself done" << endl;
+		cout << "poset_classification::freeself done" << endl;
 		}
 	null();
 }
 
-void generator::usage()
+void poset_classification::usage()
 {
-	cout << "generator options:" << endl;
+	cout << "poset_classification options:" << endl;
 	cout << "-v <n>" << endl;
 	cout << "  verbose level n" << endl;
 	cout << "-lex" << endl;
@@ -237,7 +237,7 @@ void generator::usage()
 	cout << "   find group of order <order>" << endl;
 }
 
-void generator::read_arguments(int argc,
+void poset_classification::read_arguments(int argc,
 		const char **argv, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -246,9 +246,9 @@ void generator::read_arguments(int argc,
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			i++;
-			generator::verbose_level = atoi(argv[i]);
+			poset_classification::verbose_level = atoi(argv[i]);
 			if (f_v) {
-				cout << "-v " << generator::verbose_level << endl;
+				cout << "-v " << poset_classification::verbose_level << endl;
 				}
 			}
 		else if (strcmp(argv[i], "-gv") == 0) {
@@ -399,7 +399,7 @@ void generator::read_arguments(int argc,
 		}
 }
 
-void generator::init(action *A, action *A2, 
+void poset_classification::init(action *A, action *A2, 
 	strong_generators *gens, 
 	INT sz, INT verbose_level)
 {
@@ -409,26 +409,26 @@ void generator::init(action *A, action *A2,
 	INT i;
 	
 	if (f_v) {
-		cout << "generator::init" << endl;
+		cout << "poset_classification::init" << endl;
 		}
 	
-	generator::A = A;
-	generator::A2 = A2;
-	generator::sz = sz;
+	poset_classification::A = A;
+	poset_classification::A2 = A2;
+	poset_classification::sz = sz;
 
 	if (A == NULL) {
-		cout << "generator::init A == NULL" << endl;
+		cout << "poset_classification::init A == NULL" << endl;
 		exit(1);
 		}
 	if (A2 == NULL) {
-		cout << "generator::init A2 == NULL" << endl;
+		cout << "poset_classification::init A2 == NULL" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "generator::init sz = " << sz << endl;
-		cout << "generator::init A->degree=" << A->degree << endl;
-		cout << "generator::init A2->degree=" << A2->degree << endl;
-		cout << "generator::init sz = " << sz << endl;
+		cout << "poset_classification::init sz = " << sz << endl;
+		cout << "poset_classification::init A->degree=" << A->degree << endl;
+		cout << "poset_classification::init A2->degree=" << A2->degree << endl;
+		cout << "poset_classification::init sz = " << sz << endl;
 		}
 	t0 = os_ticks();
 
@@ -436,28 +436,28 @@ void generator::init(action *A, action *A2,
 
 	
 	if (f_vv) {
-		cout << "generator::init action A:" << endl;
+		cout << "poset_classification::init action A:" << endl;
 		A->print_info();
-		cout << "generator::init action A2:" << endl;
+		cout << "poset_classification::init action A2:" << endl;
 		A2->print_info();
 		}
 
 
 	if (f_v) {
-		cout << "generator::init computing group order" << endl;
+		cout << "poset_classification::init computing group order" << endl;
 		}
 
 	gens->group_order(go);
 
 
 	if (f_v) {
-		cout << "generator::init group order is ";
+		cout << "poset_classification::init group order is ";
 		cout << go << endl;
 		}
 	
 	
 	if (f_v) {
-		cout << "generator::init sz = " << sz << endl;
+		cout << "poset_classification::init sz = " << sz << endl;
 		}
 	
 	Strong_gens = gens;
@@ -465,7 +465,7 @@ void generator::init(action *A, action *A2,
 
 
 	if (f_vv) {
-		cout << "generator::init allocating S of size " << sz << endl;
+		cout << "poset_classification::init allocating S of size " << sz << endl;
 		}
 	S = NEW_INT(sz);
 	for (i = 0; i < sz; i++) {
@@ -475,7 +475,7 @@ void generator::init(action *A, action *A2,
 	tmp_set_apply_fusion = NEW_INT(sz);
 
 	if (f_vv) {
-		cout << "generator::init allocating Elt_memory" << endl;
+		cout << "poset_classification::init allocating Elt_memory" << endl;
 		}
 
 
@@ -506,12 +506,12 @@ void generator::init(action *A, action *A2,
 	nb_times_store_called0 = A->nb_times_store_called;
 
 	if (f_v) {
-		cout << "generator::init done" << endl;
+		cout << "poset_classification::init done" << endl;
 		}
 }
 
 
-void generator::initialize(action *A_base, action *A_use, 
+void poset_classification::initialize(action *A_base, action *A_use, 
 	strong_generators *gens, 
 	INT depth, 
 	const BYTE *path, const BYTE *prefix, INT verbose_level)
@@ -520,15 +520,15 @@ void generator::initialize(action *A_base, action *A_use,
 	INT f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "generator::initialize" << endl;
-		cout << "generator::initialize depth = " << depth << endl;
+		cout << "poset_classification::initialize" << endl;
+		cout << "poset_classification::initialize depth = " << depth << endl;
 		}
 
-	strcpy(generator::path, path);
-	strcpy(generator::prefix, prefix);
+	strcpy(poset_classification::path, path);
+	strcpy(poset_classification::prefix, prefix);
 	sprintf(fname_base, "%s%s", path, prefix);
 
-	generator::depth = depth;
+	poset_classification::depth = depth;
 	downstep_orbits_print_max_orbits = 50;
 	downstep_orbits_print_max_points_per_orbit = INT_MAX;
 	
@@ -537,7 +537,7 @@ void generator::initialize(action *A_base, action *A_use,
 	//f_allowed_to_show_group_elements = TRUE;
 
 	if (f_vv) {
-		cout << "generator::initialize calling gen->init" << endl;
+		cout << "poset_classification::initialize calling gen->init" << endl;
 		}
 	init(A_base, A_use, 
 		gens, 
@@ -546,21 +546,21 @@ void generator::initialize(action *A_base, action *A_use,
 	INT nb_oracle_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "generator::initialize calling gen->init_poset_orbit_node" << endl;
+		cout << "poset_classification::initialize calling gen->init_poset_orbit_node" << endl;
 		}
 	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
 	if (f_vv) {
-		cout << "generator::initialize calling gen->init_root_node" << endl;
+		cout << "poset_classification::initialize calling gen->init_root_node" << endl;
 		}
 	init_root_node(verbose_level - 1);
 
 	if (f_v) {
-		cout << "generator::initialize done" << endl;
+		cout << "poset_classification::initialize done" << endl;
 		}
 }
 
 
-void generator::initialize_with_starter(
+void poset_classification::initialize_with_starter(
 	action *A_base, action *A_use,
 	strong_generators *gens, 
 	INT depth, 
@@ -580,15 +580,15 @@ void generator::initialize_with_starter(
 	INT f_vv = (verbose_level >= 2);
 
 	if (f_v) {
-		cout << "generator::initialize_with_starter" << endl;
+		cout << "poset_classification::initialize_with_starter" << endl;
 		}
 
-	strcpy(generator::path, path);
-	strcpy(generator::prefix, prefix);
+	strcpy(poset_classification::path, path);
+	strcpy(poset_classification::prefix, prefix);
 	sprintf(fname_base, "%s%s", path, prefix);
 
 
-	generator::depth = depth;
+	poset_classification::depth = depth;
 	downstep_orbits_print_max_orbits = 50;
 	downstep_orbits_print_max_points_per_orbit = INT_MAX;
 	
@@ -597,7 +597,7 @@ void generator::initialize_with_starter(
 	//f_allowed_to_show_group_elements = TRUE;
 
 	if (f_vv) {
-		cout << "generator::initialize_with_starter "
+		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init" << endl;
 		}
 	init(A_base, A_use, 
@@ -607,7 +607,7 @@ void generator::initialize_with_starter(
 	
 
 	if (f_vv) {
-		cout << "generator::initialize_with_starter "
+		cout << "poset_classification::initialize_with_starter "
 				"calling init_starter" << endl;
 		}
 	init_starter(starter_size, 
@@ -622,48 +622,48 @@ void generator::initialize_with_starter(
 	INT nb_oracle_nodes = 1000;
 	
 	if (f_vv) {
-		cout << "generator::initialize_with_starter "
+		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init_poset_orbit_node" << endl;
 		}
 	init_poset_orbit_node(nb_oracle_nodes, verbose_level - 1);
 	if (f_vv) {
-		cout << "generator::initialize_with_starter "
+		cout << "poset_classification::initialize_with_starter "
 				"calling gen->init_root_node" << endl;
 		}
 	init_root_node(verbose_level);
 
 	if (f_v) {
-		cout << "generator::initialize_with_starter done" << endl;
+		cout << "poset_classification::initialize_with_starter done" << endl;
 		}
 }
 
-void generator::init_root_node_invariant_subset(
+void poset_classification::init_root_node_invariant_subset(
 	INT *invariant_subset, INT invariant_subset_size,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
 	if (f_v) {
-		cout << "generator::init_root_node_invariant_subset" << endl;
+		cout << "poset_classification::init_root_node_invariant_subset" << endl;
 		}
 	f_has_invariant_subset_for_root_node = TRUE;
 	invariant_subset_for_root_node = invariant_subset;
 	invariant_subset_for_root_node_size = invariant_subset_size;
 	if (f_v) {
-		cout << "generator::init_root_node_invariant_subset "
+		cout << "poset_classification::init_root_node_invariant_subset "
 				"installed invariant subset of size "
 				<< invariant_subset_size << endl;
 		}
 }
 
 
-void generator::init_root_node(INT verbose_level)
+void poset_classification::init_root_node(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
-		cout << "generator::init_root_node" << endl;
+		cout << "poset_classification::init_root_node" << endl;
 		}
 	if (f_starter) {
 		INT i;
@@ -682,7 +682,7 @@ void generator::init_root_node(INT verbose_level)
 			nb_unprocessed_nodes_at_level[i] = 0;
 			
 			if (f_vv) {
-				cout << "generator::init_root_node initializing "
+				cout << "poset_classification::init_root_node initializing "
 						"node at level " << i << endl;
 				}
 			first_poset_orbit_node_at_level[i + 1] =
@@ -699,8 +699,8 @@ void generator::init_root_node(INT verbose_level)
 			root[i + 1].sv = NULL;
 			}
 		if (f_vv) {
-			cout << "generator::init_root_node "
-					"storing strong generators" << endl;
+			cout << "poset_classification::init_root_node "
+					"storing strong poset_classifications" << endl;
 			}
 		root[starter_size].store_strong_generators(
 				this, starter_strong_gens);
@@ -718,17 +718,17 @@ void generator::init_root_node(INT verbose_level)
 		root[0].init_root_node(this, verbose_level - 1);
 		}
 	if (f_v) {
-		cout << "generator::init_root_node done" << endl;
+		cout << "poset_classification::init_root_node done" << endl;
 		}
 }
 
-void generator::init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_level)
+void poset_classification::init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
 
 	if (f_v) {
-		cout << "generator::init_poset_orbit_node" << endl;
+		cout << "poset_classification::init_poset_orbit_node" << endl;
 		}
 	root = NEW_OBJECTS(poset_orbit_node, nb_poset_orbit_nodes);
 	for (i = 0; i < nb_poset_orbit_nodes; i++) {
@@ -755,12 +755,12 @@ void generator::init_poset_orbit_node(INT nb_poset_orbit_nodes, INT verbose_leve
 		nb_unprocessed_nodes_at_level[i] = 0;
 		}
 	if (f_v) {
-		cout << "generator::init_oracle done" << endl;
+		cout << "poset_classification::init_oracle done" << endl;
 		}
 }
 
 
-void generator::exit_poset_orbit_node()
+void poset_classification::exit_poset_orbit_node()
 {
 	if (root) {
 		FREE_OBJECTS(root);
@@ -801,7 +801,7 @@ void generator::exit_poset_orbit_node()
 		}
 }
 
-void generator::reallocate()
+void poset_classification::reallocate()
 {
 	INT increment_new;
 	INT verbose_level = 0;
@@ -815,7 +815,7 @@ void generator::reallocate()
 	
 }
 
-void generator::reallocate_to(INT new_number_of_nodes,
+void poset_classification::reallocate_to(INT new_number_of_nodes,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -823,15 +823,15 @@ void generator::reallocate_to(INT new_number_of_nodes,
 	poset_orbit_node *new_root;
 	
 	if (f_v) {
-		cout << "generator::reallocate_to" << endl;
+		cout << "poset_classification::reallocate_to" << endl;
 		}
 	if (new_number_of_nodes < nb_poset_orbit_nodes_allocated) {
-		cout << "generator::reallocate_to new_number_of_nodes < "
+		cout << "poset_classification::reallocate_to new_number_of_nodes < "
 				"nb_oracle_nodes_allocated" << endl;
 		exit(1);
 		}
 	if (f_v) {
-		cout << "generator::reallocate_to from "
+		cout << "poset_classification::reallocate_to from "
 				<< nb_poset_orbit_nodes_allocated
 				<< " to " << new_number_of_nodes << endl;
 		}
@@ -844,34 +844,34 @@ void generator::reallocate_to(INT new_number_of_nodes,
 	root = new_root;
 	nb_poset_orbit_nodes_allocated = new_number_of_nodes;
 	if (f_v) {
-		cout << "generator::reallocate_to done" << endl;
+		cout << "poset_classification::reallocate_to done" << endl;
 		}
 }
 
 
-void generator::init_check_func(
+void poset_classification::init_check_func(
 	INT (*candidate_check_func)(INT len, INT *S,
 			void *data, INT verbose_level),
 	void *candidate_check_data)
 {
 	f_candidate_check_func = TRUE;
-	generator::candidate_check_func = candidate_check_func;
-	generator::candidate_check_data = candidate_check_data;
+	poset_classification::candidate_check_func = candidate_check_func;
+	poset_classification::candidate_check_data = candidate_check_data;
 }
 
-void generator::init_incremental_check_func(
+void poset_classification::init_incremental_check_func(
 	INT (*candidate_incremental_check_func)(INT len,
 			INT *S, void *data, INT verbose_level),
 	void *candidate_incremental_check_data)
 {
 	f_candidate_incremental_check_func = TRUE;
-	generator::candidate_incremental_check_func =
+	poset_classification::candidate_incremental_check_func =
 			candidate_incremental_check_func;
-	generator::candidate_incremental_check_data =
+	poset_classification::candidate_incremental_check_data =
 			candidate_incremental_check_data;
 }
 
-void generator::init_starter(INT starter_size, 
+void poset_classification::init_starter(INT starter_size, 
 	INT *starter, 
 	strong_generators *starter_strong_gens, 
 	INT *starter_live_points, 
@@ -886,24 +886,24 @@ void generator::init_starter(INT starter_size,
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::init_starter starter: ";
+		cout << "poset_classification::init_starter starter: ";
 		INT_vec_print(cout, starter, starter_size);
 		cout << " with " << starter_strong_gens->gens->len
-			<< " strong generators and "
+			<< " strong poset_classifications and "
 			<< starter_nb_live_points << " live points" << endl;
 		}
 	f_starter = TRUE;
-	generator::starter_size = starter_size;
-	generator::starter = starter;
-	generator::starter_strong_gens = starter_strong_gens; 
-	generator::starter_live_points = starter_live_points;
-	generator::starter_nb_live_points = starter_nb_live_points;
-	generator::starter_canonize_data = starter_canonize_data;
-	generator::starter_canonize = starter_canonize;
+	poset_classification::starter_size = starter_size;
+	poset_classification::starter = starter;
+	poset_classification::starter_strong_gens = starter_strong_gens; 
+	poset_classification::starter_live_points = starter_live_points;
+	poset_classification::starter_nb_live_points = starter_nb_live_points;
+	poset_classification::starter_canonize_data = starter_canonize_data;
+	poset_classification::starter_canonize = starter_canonize;
 	starter_canonize_Elt = NEW_INT(A->elt_size_in_INT);
 }
 
-void generator::init_vector_space_action(INT vector_space_dimension, 
+void poset_classification::init_vector_space_action(INT vector_space_dimension, 
 	finite_field *F, 
 	INT (*rank_point_func)(INT *v, void *data), 
 	void (*unrank_point_func)(INT *v, INT rk, void *data),
@@ -913,16 +913,16 @@ void generator::init_vector_space_action(INT vector_space_dimension,
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::init_vector_space_action "
+		cout << "poset_classification::init_vector_space_action "
 				"vector_space_dimension="
 				<< vector_space_dimension << endl;
 		}
 	f_on_subspaces = TRUE;
-	generator::vector_space_dimension = vector_space_dimension;
-	generator::F = F;
-	generator::rank_point_func = rank_point_func;
-	generator::unrank_point_func = unrank_point_func;
-	generator::rank_point_data = data;
+	poset_classification::vector_space_dimension = vector_space_dimension;
+	poset_classification::F = F;
+	poset_classification::rank_point_func = rank_point_func;
+	poset_classification::unrank_point_func = unrank_point_func;
+	poset_classification::rank_point_data = data;
 
 	tmp_find_node_for_subspace_by_rank1 =
 			NEW_INT(vector_space_dimension);
@@ -934,7 +934,7 @@ void generator::init_vector_space_action(INT vector_space_dimension,
 			NEW_INT(vector_space_dimension);
 }
 
-void generator::init_early_test_func(
+void poset_classification::init_early_test_func(
 	void (*early_test_func)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
 		INT *good_candidates, INT &nb_good_candidates, 
@@ -945,10 +945,10 @@ void generator::init_early_test_func(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::init_early_test_func" << endl;
+		cout << "poset_classification::init_early_test_func" << endl;
 		}
 	f_early_test_func = TRUE;
-	generator::early_test_func = early_test_func;
+	poset_classification::early_test_func = early_test_func;
 	early_test_func_data = data;
 }
 

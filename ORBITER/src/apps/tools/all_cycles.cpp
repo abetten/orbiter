@@ -14,9 +14,9 @@
 
 INT t0; // the system time when the program started
 
-void select_cycles(colored_graph *CG, generator *gen, INT level, INT &nb_selected_orbits, INT *&orbits);
-void print_orbits_at_level(generator *gen, INT level, INT verbose_level);
-void print_selected_orbits_at_level(generator *gen, INT level, 
+void select_cycles(colored_graph *CG, poset_classification *gen, INT level, INT &nb_selected_orbits, INT *&orbits);
+void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level);
+void print_selected_orbits_at_level(poset_classification *gen, INT level,
 	INT nb_selected_orbits, INT *orbits, INT verbose_level);
 void early_test_function_paths_and_cycles(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
@@ -144,7 +144,7 @@ int main(int argc, char **argv)
 
 	
 	BYTE prefix[1000];
-	generator *gen;
+	poset_classification *gen;
 	
 
 
@@ -196,7 +196,7 @@ int main(int argc, char **argv)
 
 }
 
-void select_cycles(colored_graph *CG, generator *gen, INT level, INT &nb_selected_orbits, INT *&orbits)
+void select_cycles(colored_graph *CG, poset_classification *gen, INT level, INT &nb_selected_orbits, INT *&orbits)
 {
 	INT *set;
 	INT i, nb_orbits;
@@ -218,7 +218,7 @@ void select_cycles(colored_graph *CG, generator *gen, INT level, INT &nb_selecte
 	FREE_INT(set);
 }
 
-void print_orbits_at_level(generator *gen, INT level, INT verbose_level)
+void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level)
 {
 	INT *set;
 	longinteger_object go, ol, ago;
@@ -255,7 +255,7 @@ void print_orbits_at_level(generator *gen, INT level, INT verbose_level)
 	FREE_INT(set);
 }
 
-void print_selected_orbits_at_level(generator *gen, INT level, 
+void print_selected_orbits_at_level(poset_classification *gen, INT level,
 	INT nb_selected_orbits, INT *orbits, INT verbose_level)
 {
 	INT *set;

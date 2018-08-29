@@ -5,7 +5,7 @@
 // started:  September 20, 2007
 
 
-typedef class generator generator;
+typedef class poset_classification poset_classification;
 typedef class poset_orbit_node poset_orbit_node;
 typedef class extension extension;
 typedef class set_stabilizer_compute set_stabilizer_compute;

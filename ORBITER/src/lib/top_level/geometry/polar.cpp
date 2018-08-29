@@ -145,7 +145,7 @@ void polar::init(int argc, const char **argv,
 
 	tmp_M = new INT[n * n];
 	base_cols = new INT[n];
-	Gen = new generator;
+	Gen = new poset_classification;
 
 	Gen->read_arguments(argc, argv, 0);
 

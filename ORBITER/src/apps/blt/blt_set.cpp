@@ -152,7 +152,7 @@ void blt_set::init_basic(finite_field *F,
 	read_arguments(argc, argv);
 
 
-	gen = NEW_OBJECT(generator);
+	gen = NEW_OBJECT(poset_classification);
 	gen->read_arguments(argc, argv, 0);
 	
 

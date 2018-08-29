@@ -7,14 +7,14 @@ LFLAGS = -lm
 
 MODULES = \
 	extension.o \
-	generator.o \
-	generator_classify.o \
-	generator_combinatorics.o \
-	generator_draw.o \
-	generator_init.o \
-	generator_io.o \
-	generator_recognize.o \
-	generator_trace.o \
+	poset_classification.o \
+	poset_classification_classify.o \
+	poset_classification_combinatorics.o \
+	poset_classification_draw.o \
+	poset_classification_init.o \
+	poset_classification_io.o \
+	poset_classification_recognize.o \
+	poset_classification_trace.o \
 	poset_orbit_node.o \
 	poset_orbit_node_downstep.o \
 	poset_orbit_node_downstep_subspace_action.o \

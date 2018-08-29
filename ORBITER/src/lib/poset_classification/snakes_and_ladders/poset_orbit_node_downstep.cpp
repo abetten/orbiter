@@ -9,7 +9,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void poset_orbit_node::downstep(generator *gen,
+void poset_orbit_node::downstep(poset_classification *gen,
 	INT lvl, 
 	INT f_create_schreier_vector, INT f_compact, 
 	INT f_use_invariant_subset_if_available, 
@@ -207,7 +207,7 @@ void poset_orbit_node::downstep(generator *gen,
 }
 
 
-void poset_orbit_node::compute_schreier_vector(generator *gen,
+void poset_orbit_node::compute_schreier_vector(poset_classification *gen,
 	INT lvl, INT f_compact, INT verbose_level)
 // called from generator::recreate_schreier_vectors_at_level
 // and from generator::count_live_points
@@ -380,7 +380,7 @@ void poset_orbit_node::compute_schreier_vector(generator *gen,
 
 
 void poset_orbit_node::downstep_orbits(
-	generator *gen, schreier &Schreier, action &AR, 
+	poset_classification *gen, schreier &Schreier, action &AR,
 	INT lvl, 
 	INT f_use_invariant_subset_if_available, 
 	INT &f_using_invariant_subset, 
@@ -558,7 +558,7 @@ void poset_orbit_node::downstep_orbits(
 }
 
 void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
-	generator *gen, schreier &Schreier, action &AR, 
+	poset_classification *gen, schreier &Schreier, action &AR,
 	INT lvl, 
 	INT f_use_invariant_subset_if_available, 
 	INT f_using_invariant_subset,
@@ -664,7 +664,7 @@ void poset_orbit_node::downstep_orbit_test_and_schreier_vector(
 }
 
 void poset_orbit_node::downstep_implicit_fusion(
-	generator *gen, schreier &Schreier, action &AR,
+	poset_classification *gen, schreier &Schreier, action &AR,
 	INT f_using_invariant_subset,
 	INT lvl, 
 	INT f_implicit_fusion, 
@@ -717,7 +717,7 @@ void poset_orbit_node::downstep_implicit_fusion(
 }
 
 
-void poset_orbit_node::find_extensions(generator *gen,
+void poset_orbit_node::find_extensions(poset_classification *gen,
 	schreier &O, action &AR, INT f_using_invariant_subset, 
 	INT lvl, 
 	INT verbose_level)
@@ -861,7 +861,7 @@ void poset_orbit_node::find_extensions(generator *gen,
 
 
 INT poset_orbit_node::downstep_get_invariant_subset(
-	generator *gen, 
+		poset_classification *gen,
 	INT lvl, 
 	INT &n, INT *&subset, INT &f_subset_is_allocated, 
 	INT verbose_level)
@@ -997,7 +997,7 @@ the_end:
 }
 
 void poset_orbit_node::downstep_apply_early_test(
-	generator *gen, 
+	poset_classification *gen,
 	INT lvl, 
 	INT n, INT *subset, 
 	INT *candidates, INT &nb_candidates, 
@@ -1102,7 +1102,8 @@ void poset_orbit_node::downstep_apply_early_test(
 	FREE_INT(the_set);
 }
 
-void poset_orbit_node::check_orbits_wrapper(generator *gen,
+void poset_orbit_node::check_orbits_wrapper(
+	poset_classification *gen,
 	schreier &Schreier, action &AR, INT f_using_invariant_subset, 
 	INT lvl, 
 	INT &nb_good_orbits1, INT &nb_points1, 
@@ -1166,7 +1167,8 @@ void poset_orbit_node::create_schreier_vector_wrapper(
 		}
 }
 
-void poset_orbit_node::test_orbits_for_implicit_fusion(generator *gen,
+void poset_orbit_node::test_orbits_for_implicit_fusion(
+	poset_classification *gen,
 	schreier &Schreier, action &AR, INT f_using_invariant_subset, 
 	INT lvl, INT verbose_level)
 // called from downstep_implicit_fusion
@@ -1256,7 +1258,7 @@ INT poset_orbit_node::nb_extension_points()
 	
 }
 
-void poset_orbit_node::check_orbits(generator *gen,
+void poset_orbit_node::check_orbits(poset_classification *gen,
 	schreier &Schreier, action &AR, INT f_using_invariant_subset, 
 	INT lvl, 
 	INT f_use_incremental_test_func_if_available, 
@@ -1363,7 +1365,8 @@ void poset_orbit_node::check_orbits(generator *gen,
 }
 
 
-INT poset_orbit_node::test_point_using_check_functions(generator *gen,
+INT poset_orbit_node::test_point_using_check_functions(
+	poset_classification *gen,
 	INT lvl, INT rep, INT *the_set, 
 	INT verbose_level)
 // called by check_orbits and downstep_apply_early_test 
@@ -1414,7 +1417,8 @@ INT poset_orbit_node::test_point_using_check_functions(generator *gen,
 	return f_accept;
 }
 
-void poset_orbit_node::relabel_schreier_vector(action &AR, INT verbose_level)
+void poset_orbit_node::relabel_schreier_vector(
+	action &AR, INT verbose_level)
 // called from compute_schreier_vector,
 // downstep_orbit_test_and_schreier_vector
 // Replaces the points in the arrays pts[]
@@ -1462,7 +1466,8 @@ void poset_orbit_node::relabel_schreier_vector(action &AR, INT verbose_level)
 }
 
 
-void poset_orbit_node::downstep_orbits_print(generator *gen,
+void poset_orbit_node::downstep_orbits_print(
+	poset_classification *gen,
 	schreier &Schreier, action &AR, 
 	INT lvl, 
 	INT f_using_invariant_subset, INT f_print_orbits, 

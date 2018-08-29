@@ -129,7 +129,7 @@ void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_leve
 		cout << "search_blocking_set::find_partial_blocking_sets" << endl;
 		}
 	
-	gen = new generator;
+	gen = new poset_classification;
 	
 
 	sprintf(gen->fname_base, "blocking_set");

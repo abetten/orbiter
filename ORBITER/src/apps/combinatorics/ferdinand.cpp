@@ -64,7 +64,7 @@ public:
 	longinteger_object Aut_order;
 	action *Aut;
 	action *A2;
-	generator *gen;
+	poset_classification *gen;
 
 
 	void init(INT level, INT group, INT subgroup, INT verbose_level);

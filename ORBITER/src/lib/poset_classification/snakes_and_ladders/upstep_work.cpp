@@ -66,7 +66,7 @@ upstep_work::~upstep_work()
 		}
 }
 
-void upstep_work::init(generator *gen, 
+void upstep_work::init(poset_classification *gen, 
 	INT size,
 	INT prev,
 	INT prev_ex,
@@ -76,7 +76,7 @@ void upstep_work::init(generator *gen,
 	INT f_indicate_not_canonicals, 
 	FILE *fp, 
 	INT verbose_level)
-// called from generator::extend_node
+// called from poset_classification::extend_node
 {
 	//verbose_level = 1;
 	INT f_v = (verbose_level >= 1);
@@ -126,7 +126,7 @@ void upstep_work::init(generator *gen,
 
 void upstep_work::handle_extension(INT &nb_fuse_cur,
 		INT &nb_ext_cur, INT verbose_level)
-// called from generator::extend_node
+// called from poset_classification::extend_node
 // Calls handle_extension_fusion_type 
 // or handle_extension_unprocessed_type
 //

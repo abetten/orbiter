@@ -45,7 +45,7 @@ public:
 	action *Aq;
 	action *AQ;
 	action *A_PGLQ;
-	generator *Gen;
+	poset_classification *Gen;
 	INT vector_space_dimension; // = n
 	strong_generators *Strong_gens;
 	desarguesian_spread *D;
@@ -67,8 +67,8 @@ public:
 	INT *secondary_candidates;
 	INT secondary_nb_candidates;
 	INT secondary_schreier_depth;
-	generator *Gen_stab;
-	generator *Gen2;
+	poset_classification *Gen_stab;
+	poset_classification *Gen2;
 	INT *is_allowed;
 
 	linear_set();

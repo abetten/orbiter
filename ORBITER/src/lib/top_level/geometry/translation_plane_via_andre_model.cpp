@@ -385,7 +385,7 @@ void translation_plane_via_andre_model::classify_arcs(const BYTE *prefix, INT de
 		cout << "translation_plane_via_andre_model::classify_arcs" << endl;
 		}
 
-	arcs = new generator;
+	arcs = new poset_classification;
 
 	//gen->read_arguments(argc, argv, 0);
 
@@ -480,7 +480,7 @@ void translation_plane_via_andre_model::classify_subplanes(const BYTE *prefix, I
 		cout << "translation_plane_via_andre_model::classify_subplanes" << endl;
 		}
 
-	arcs = new generator;
+	arcs = new poset_classification;
 
 	//gen->read_arguments(argc, argv, 0);
 

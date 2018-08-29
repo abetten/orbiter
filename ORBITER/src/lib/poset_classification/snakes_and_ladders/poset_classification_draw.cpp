@@ -1,7 +1,7 @@
-// generator_draw.C
+// poset_classification_draw.C
 //
 // Anton Betten
-// moved out of generator.C  November 14, 2007
+// moved out of poset_classification.C  November 14, 2007
 
 #include "foundations/foundations.h"
 #include "groups_and_group_actions/groups_and_group_actions.h"
@@ -17,7 +17,7 @@ static void print_table_top(ofstream &fp, INT f_permutation_degree_is_small);
 static void print_table_bottom(ofstream &fp);
 static void print_set_special(ofstream &fp, INT *set, INT sz);
 
-void generator::write_treefile_and_draw_tree(
+void poset_classification::write_treefile_and_draw_tree(
 		BYTE *fname_base, INT lvl, INT xmax, INT ymax,
 		INT rad, INT f_embedded,
 		INT verbose_level)
@@ -25,13 +25,13 @@ void generator::write_treefile_and_draw_tree(
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "generator::write_treefile_and_draw_tree "
+		cout << "poset_classification::write_treefile_and_draw_tree "
 				"verbose_level=" << verbose_level << endl;
 		}
 	if (write_treefile(fname_base, lvl, verbose_level)) {
 #if 0
 		if (f_v) {
-			cout << "generator::write_treefile_and_draw_tree "
+			cout << "poset_classification::write_treefile_and_draw_tree "
 					"before draw_tree" << endl;
 			}
 		draw_tree(fname_base, lvl, xmax, ymax, rad, f_embedded,
@@ -39,11 +39,11 @@ void generator::write_treefile_and_draw_tree(
 #endif
 		}
 	if (f_v) {
-		cout << "generator::write_treefile_and_draw_tree done" << endl;
+		cout << "poset_classification::write_treefile_and_draw_tree done" << endl;
 		}
 }
 
-INT generator::write_treefile(BYTE *fname_base,
+INT poset_classification::write_treefile(BYTE *fname_base,
 		INT lvl, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -52,14 +52,14 @@ INT generator::write_treefile(BYTE *fname_base,
 	INT i, level;
 		
 	if (f_v) {
-		cout << "generator::write_treefile" << endl;
+		cout << "poset_classification::write_treefile" << endl;
 		}
 	sprintf(fname1, "%s_%ld.tree", fname_base, lvl);
 	
 	if  (first_poset_orbit_node_at_level[lvl + 1] < MAX_NODES_FOR_TREEFILE) {
 		{
 		if (f_vv) {
-			cout << "generator::write_treefile "
+			cout << "poset_classification::write_treefile "
 					"writing treefile " << fname1 << endl;
 			}
 		ofstream f(fname1);
@@ -75,7 +75,7 @@ INT generator::write_treefile(BYTE *fname_base,
 		for (i = first_poset_orbit_node_at_level[level];
 				i < first_poset_orbit_node_at_level[level + 1]; i++) {
 			if (f_vv) {
-				cout << "generator::write_treefile node " << i << ":" << endl;
+				cout << "poset_classification::write_treefile node " << i << ":" << endl;
 				}
 			log_nodes_for_treefile(level, i, f,
 					TRUE /* f_recurse */, verbose_level);
@@ -88,12 +88,12 @@ INT generator::write_treefile(BYTE *fname_base,
 					<< " of size " << file_size(fname1) << endl;
 			}
 		if (f_v) {
-			cout << "generator::write_treefile done" << endl;
+			cout << "poset_classification::write_treefile done" << endl;
 			}
 		return TRUE;
 		}
 	else {
-		cout << "generator::write_treefile too many nodes, "
+		cout << "poset_classification::write_treefile too many nodes, "
 				"you may increase MAX_NODES_FOR_TREEFILE if you wish" << endl;
 		cout << "MAX_NODES_FOR_TREEFILE=" << MAX_NODES_FOR_TREEFILE << endl;
 		cout << "first_oracle_node_at_level[lvl + 1]="
@@ -103,7 +103,7 @@ INT generator::write_treefile(BYTE *fname_base,
 		}
 }
 
-void generator::draw_tree(BYTE *fname_base, INT lvl, 
+void poset_classification::draw_tree(BYTE *fname_base, INT lvl, 
 	INT xmax, INT ymax, INT rad, INT f_embedded,
 	INT f_sideways, INT verbose_level)
 {
@@ -124,7 +124,7 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 	INT f_draw_aut_group_order = FALSE;
 
 	if (f_v) {
-		cout << "generator::draw_tree" << endl;
+		cout << "poset_classification::draw_tree" << endl;
 		}
 	sprintf(fname, "%s_%ld", fname_base, lvl);
 	sprintf(fname1, "%s_%ld.tree", fname_base, lvl);
@@ -137,16 +137,16 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			
 		nb_nodes = T.nb_nodes;
 		if (f_vv) {
-			cout << "generator::draw_tree read treefile "
+			cout << "poset_classification::draw_tree read treefile "
 					<< fname1 << " with " << nb_nodes
 					<< " nodes" << endl;
-			cout << "generator::draw_tree first_oracle_node_at_"
+			cout << "poset_classification::draw_tree first_oracle_node_at_"
 					"level[lvl + 1] "
 					<< first_poset_orbit_node_at_level[lvl + 1]
 					<< " nodes" << endl;
 			}
 		if (nb_nodes != first_poset_orbit_node_at_level[lvl + 1]) {
-			cout << "generator::draw_tree nb_nodes != first_oracle_"
+			cout << "poset_classification::draw_tree nb_nodes != first_oracle_"
 					"node_at_level[lvl + 1]" << endl;
 			cout << "nb_nodes=" << nb_nodes << endl;
 			cout << "first_oracle_node_at_level[lvl + 1]="
@@ -161,7 +161,7 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 		coord_xyw = NEW_INT(3 * nb_nodes);
 			
 		if (f_vv) {
-			cout << "generator::draw_tree calling get_coordinates" << endl;
+			cout << "poset_classification::draw_tree calling get_coordinates" << endl;
 			}
 		T.root->get_coordinates_and_width(idx, coord_xyw);
 
@@ -172,7 +172,7 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 #endif
 
 		if (FALSE) {
-			cout << "generator::draw_tree coord_xyw:" << endl;
+			cout << "poset_classification::draw_tree coord_xyw:" << endl;
 			for (i = 0; i < nb_nodes; i++) {
 				cout << i << " : (" 
 					<< coord_xyw[i * 3 + 0] << ","
@@ -182,13 +182,13 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			}
 		
 		if (f_vv) {	
-			cout << "generator::draw_tree calling oracle_depth_"
+			cout << "poset_classification::draw_tree calling oracle_depth_"
 					"breadth_perm_and_inverse" << endl;
 			}
 		poset_orbit_node_depth_breadth_perm_and_inverse(lvl /* max_depth */,
 			perm, perm_inv, verbose_level);
 		if (FALSE) {
-			cout << "generator::draw_tree depth_breadth_perm_"
+			cout << "poset_classification::draw_tree depth_breadth_perm_"
 					"and_inverse:" << endl;
 			for (i = 0; i < nb_nodes; i++) {
 				cout << i << " : (" 
@@ -198,7 +198,7 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 			}
 		
 		if (f_vv) {	
-			cout << "generator::draw_tree "
+			cout << "poset_classification::draw_tree "
 					"before draw_tree_low_level" << endl;
 			}
 		draw_tree_low_level(fname, nb_nodes, 
@@ -213,12 +213,12 @@ void generator::draw_tree(BYTE *fname_base, INT lvl,
 		FREE_INT(perm_inv);
 		}
 	else {
-		cout << "generator::draw_tree the file " << fname1
+		cout << "poset_classification::draw_tree the file " << fname1
 				<< " does not exist, cannot draw the tree" << endl;
 		}
 }
 
-void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes, 
+void poset_classification::draw_tree_low_level(BYTE *fname, INT nb_nodes, 
 	INT *coord_xyw, INT *perm, INT *perm_inv, 
 	INT f_draw_points, INT f_draw_extension_points,
 	INT f_draw_aut_group_order,
@@ -242,7 +242,7 @@ void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes,
 		ymax = 3000;
 	sprintf(fname_full, "%s.mp", fname);
 	if (f_v) {
-		cout << "generator::draw_tree_low_level "
+		cout << "poset_classification::draw_tree_low_level "
 				"xmax = " << xmax << " ymax = " << ymax
 				<< " fname=" << fname_full << endl;
 		cout << "verbose_level=" << verbose_level << endl;
@@ -278,14 +278,14 @@ void generator::draw_tree_low_level(BYTE *fname, INT nb_nodes,
 	G.finish(cout, verbose_level);
 	}
 	if (f_v) {
-		cout << "generator::draw_tree_low_level "
+		cout << "poset_classification::draw_tree_low_level "
 				"written file " << fname_full
 				<< " of size " << file_size(fname_full) << endl;
 		}
 	
 }
 
-void generator::draw_tree_low_level1(mp_graphics &G,
+void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	INT nb_nodes,
 	INT *coords, INT *perm, INT *perm_inv, 
 	INT f_draw_points, INT f_draw_extension_points,
@@ -602,7 +602,7 @@ void generator::draw_tree_low_level1(mp_graphics &G,
 	FREE_INT(Qy);
 }
 
-void generator::draw_poset_full(const BYTE *fname_base,
+void poset_classification::draw_poset_full(const BYTE *fname_base,
 		INT depth, INT data, INT f_embedded, INT f_sideways,
 		double x_stretch,
 		INT verbose_level)
@@ -611,12 +611,12 @@ void generator::draw_poset_full(const BYTE *fname_base,
 	layered_graph *LG;
 
 	if (f_v) {
-		cout << "generator::draw_poset_full "
+		cout << "poset_classification::draw_poset_full "
 				"fname_base=" << fname_base << " data=" << data << endl;
 		}
 	make_full_poset_graph(depth, LG, data, x_stretch, verbose_level);
 	if (f_v) {
-		cout << "generator::draw_poset_full "
+		cout << "poset_classification::draw_poset_full "
 				"after make_full_poset_graph" << endl;
 		}
 
@@ -641,7 +641,7 @@ void generator::draw_poset_full(const BYTE *fname_base,
 	
 	LG->write_file(fname1, 0 /*verbose_level*/);
 	if (f_v) {
-		cout << "generator::draw_poset_full "
+		cout << "poset_classification::draw_poset_full "
 				"after LG->write_file" << endl;
 		}
 
@@ -660,18 +660,18 @@ void generator::draw_poset_full(const BYTE *fname_base,
 	LG->draw_with_options(fname_base1, &O, 0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset_full "
+		cout << "poset_classification::draw_poset_full "
 				"after LG->draw" << endl;
 		}
 
 	delete LG;
 	
 	if (f_v) {
-		cout << "generator::draw_poset_full done" << endl;
+		cout << "poset_classification::draw_poset_full done" << endl;
 		}
 }
 
-void generator::draw_poset(const BYTE *fname_base,
+void poset_classification::draw_poset(const BYTE *fname_base,
 		INT depth, INT data, INT f_embedded, INT f_sideways,
 		INT verbose_level)
 {
@@ -682,36 +682,36 @@ void generator::draw_poset(const BYTE *fname_base,
 	layered_graph *LG4;
 
 	if (f_v) {
-		cout << "generator::draw_poset data=" << data << endl;
+		cout << "poset_classification::draw_poset data=" << data << endl;
 		}
 
 
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"before make_auxiliary_graph" << endl;
 		}
 	make_auxiliary_graph(depth, LG1, data,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"before make_graph" << endl;
 		}
 	make_graph(depth, LG2, data, FALSE /* f_tree */,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"before make_graph" << endl;
 		}
 	make_graph(depth, LG3, data, TRUE /* f_tree */,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"before make_poset_graph_detailed" << endl;
 		}
 	make_poset_graph_detailed(LG4, data, depth,
 			0 /*verbose_level - 1*/);
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"after make_poset_graph_detailed" << endl;
 		}
 
@@ -747,7 +747,7 @@ void generator::draw_poset(const BYTE *fname_base,
 	sprintf(fname4, "%s.layered_graph", fname_base4);
 
 	if (f_v) {
-		cout << "generator::draw_poset writing file " << fname1 << endl;
+		cout << "poset_classification::draw_poset writing file " << fname1 << endl;
 		}
 
 
@@ -769,7 +769,7 @@ void generator::draw_poset(const BYTE *fname_base,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"writing file " << fname2 << endl;
 		}
 
@@ -778,7 +778,7 @@ void generator::draw_poset(const BYTE *fname_base,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"writing file " << fname3 << endl;
 		}
 
@@ -787,7 +787,7 @@ void generator::draw_poset(const BYTE *fname_base,
 			0 /* verbose_level */);
 
 	if (f_v) {
-		cout << "generator::draw_poset "
+		cout << "poset_classification::draw_poset "
 				"writing file " << fname4 << endl;
 		}
 
@@ -801,11 +801,11 @@ void generator::draw_poset(const BYTE *fname_base,
 	delete LG4;
 	
 	if (f_v) {
-		cout << "generator::draw_poset done" << endl;
+		cout << "poset_classification::draw_poset done" << endl;
 		}
 }
 
-void generator::draw_level_graph(const BYTE *fname_base,
+void poset_classification::draw_level_graph(const BYTE *fname_base,
 		INT depth, INT data, INT level,
 		INT f_embedded, INT f_sideways,
 		INT verbose_level)
@@ -814,7 +814,7 @@ void generator::draw_level_graph(const BYTE *fname_base,
 	layered_graph *LG;
 
 	if (f_v) {
-		cout << "generator::draw_level_graph data=" << data << endl;
+		cout << "poset_classification::draw_level_graph data=" << data << endl;
 		}
 
 
@@ -858,12 +858,12 @@ void generator::draw_level_graph(const BYTE *fname_base,
 	delete LG;
 
 	if (f_v) {
-		cout << "generator::draw_level_graph done" << endl;
+		cout << "poset_classification::draw_level_graph done" << endl;
 		}
 }
 
 
-void generator::make_full_poset_graph(
+void poset_classification::make_full_poset_graph(
 		INT depth, layered_graph *&LG,
 		INT data1, double x_stretch, INT verbose_level)
 // Draws the full poset: each element of each orbit is drawn.
@@ -887,7 +887,7 @@ void generator::make_full_poset_graph(
 	//longinteger_domain D;
 
 	if (f_v) {
-		cout << "generator::make_full_poset_graph" << endl;
+		cout << "poset_classification::make_full_poset_graph" << endl;
 		}
 	set = NEW_INT(depth + 1);
 	set1 = NEW_INT(depth + 1);
@@ -918,7 +918,7 @@ void generator::make_full_poset_graph(
 	LG->add_data1(data1, 0/*verbose_level*/);
 
 	if (f_v) {
-		cout << "generator::make_full_poset_graph "
+		cout << "poset_classification::make_full_poset_graph "
 				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb_elements=" << Nb_elements << endl;
@@ -926,30 +926,30 @@ void generator::make_full_poset_graph(
 	LG->init(nb_layers, Nb_elements, "", verbose_level);
 
 	if (f_v) {
-		cout << "generator::make_full_poset_graph "
+		cout << "poset_classification::make_full_poset_graph "
 				"after LG->init" << endl;
 		}
 	if (f_v) {
-		cout << "generator::make_full_poset_graph "
+		cout << "poset_classification::make_full_poset_graph "
 				"before LG->place_with_grouping" << endl;
 		}
 	LG->place_with_grouping(Orbit_len, Nb_orbits, x_stretch, verbose_level);
 	//LG->place(verbose_level);
 	if (f_v) {
-		cout << "generator::make_full_poset_graph "
+		cout << "poset_classification::make_full_poset_graph "
 				"after LG->place" << endl;
 		}
 
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_full_poset_graph "
+			cout << "poset_classification::make_full_poset_graph "
 					"adding edges lvl=" << lvl << " / " << depth << endl;
 			}
 		//f = 0;
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph "
+				cout << "poset_classification::make_full_poset_graph "
 						"adding edges lvl=" << lvl
 						<< " po=" << po << " / "
 						<< nb_orbits_at_level(lvl)
@@ -971,7 +971,7 @@ void generator::make_full_poset_graph(
 			for (so = 0; so < root[n1].nb_extensions; so++) {
 
 				if (f_vv) {
-					cout << "generator::make_full_poset_graph "
+					cout << "poset_classification::make_full_poset_graph "
 							"adding edges lvl=" << lvl
 							<< " po=" << po << " so=" << so << endl;
 					}
@@ -1011,7 +1011,7 @@ void generator::make_full_poset_graph(
 
 
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph adding edges "
+				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " downorbits = ";
 				INT_vec_print(cout, Down_orbits, nb_down_orbits);
@@ -1020,7 +1020,7 @@ void generator::make_full_poset_graph(
 
 			INT_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph adding edges "
+				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " unique downorbits = ";
 				INT_vec_print(cout, Down_orbits, nb_down_orbits);
@@ -1032,7 +1032,7 @@ void generator::make_full_poset_graph(
 				po2 = n2 - first_poset_orbit_node_at_level[lvl + 1];
 				ol2 = Orbit_len[lvl + 1][po2];
 				if (f_vv) {
-					cout << "generator::make_full_poset_graph "
+					cout << "poset_classification::make_full_poset_graph "
 							"adding edges lvl=" << lvl << " po=" << po
 							<< " so=" << so << " downorbit = " << h
 							<< " / " << nb_down_orbits << " n1=" << n1
@@ -1071,7 +1071,7 @@ void generator::make_full_poset_graph(
 							}
 
 						if (f_vv) {
-							cout << "generator::make_full_poset_graph "
+							cout << "poset_classification::make_full_poset_graph "
 									"adding edges lvl=" << lvl
 									<< " po=" << po << " so=" << so
 									<< " downorbit = " << h << " / "
@@ -1127,12 +1127,12 @@ void generator::make_full_poset_graph(
 
 
 	if (f_vv) {
-		cout << "generator::make_full_poset_graph "
+		cout << "poset_classification::make_full_poset_graph "
 				"now making vertex labels" << endl;
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_full_poset_graph "
+			cout << "poset_classification::make_full_poset_graph "
 					"now making vertex labels lvl " << lvl
 					<< " / " << depth << endl;
 			}
@@ -1143,7 +1143,7 @@ void generator::make_full_poset_graph(
 			n1 = first_poset_orbit_node_at_level[lvl] + po;
 
 			if (f_vv) {
-				cout << "generator::make_full_poset_graph "
+				cout << "poset_classification::make_full_poset_graph "
 						"now making vertex labels lvl " << lvl
 						<< " / " << depth << " po=" << po << " / "
 						<< nb_orbits_at_level(lvl)
@@ -1191,11 +1191,11 @@ void generator::make_full_poset_graph(
 		}
 	FREE_PINT(Orbit_len);
 	if (f_v) {
-		cout << "generator::make_full_poset_graph done" << endl;
+		cout << "poset_classification::make_full_poset_graph done" << endl;
 		}
 }
 
-void generator::make_auxiliary_graph(INT depth,
+void poset_classification::make_auxiliary_graph(INT depth,
 		layered_graph *&LG, INT data1, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1209,7 +1209,7 @@ void generator::make_auxiliary_graph(INT depth,
 	longinteger_domain D;
 
 	if (f_v) {
-		cout << "generator::make_auxiliary_graph" << endl;
+		cout << "poset_classification::make_auxiliary_graph" << endl;
 		}
 
 	//print_fusion_nodes(depth);
@@ -1231,27 +1231,27 @@ void generator::make_auxiliary_graph(INT depth,
 	
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
-		cout << "generator::make_auxiliary_graph before LG->init" << endl;
+		cout << "poset_classification::make_auxiliary_graph before LG->init" << endl;
 		}
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level - 1);
 	if (f_vv) {
-		cout << "generator::make_auxiliary_graph after LG->init" << endl;
+		cout << "poset_classification::make_auxiliary_graph after LG->init" << endl;
 		}
 	LG->place(verbose_level - 1);
 	if (f_vv) {
-		cout << "generator::make_auxiliary_graph after LG->place" << endl;
+		cout << "poset_classification::make_auxiliary_graph after LG->place" << endl;
 		}
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_auxiliary_graph adding edges "
+			cout << "poset_classification::make_auxiliary_graph adding edges "
 					"lvl=" << lvl << " / " << depth << endl;
 			}
 		f = 0;
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (f_v3) {
-				cout << "generator::make_auxiliary_graph "
+				cout << "poset_classification::make_auxiliary_graph "
 						"adding edges lvl=" << lvl << " po=" << po
 						<< " / " << nb_orbits_at_level(lvl) << endl;
 				}
@@ -1261,7 +1261,7 @@ void generator::make_auxiliary_graph(INT depth,
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (f_v4) {
-					cout << "generator::make_auxiliary_graph adding edges "
+					cout << "poset_classification::make_auxiliary_graph adding edges "
 							"lvl=" << lvl << " po=" << po
 							<< " so=" << so << endl;
 					}
@@ -1319,27 +1319,27 @@ void generator::make_auxiliary_graph(INT depth,
 			f += root[n].nb_extensions;
 			}
 		if (f_vv) {
-			cout << "generator::make_auxiliary_graph "
+			cout << "poset_classification::make_auxiliary_graph "
 					"after LG->add_edge (1)" << endl;
 			}
 		}
 
 
 	if (f_vv) {
-		cout << "generator::make_auxiliary_graph "
+		cout << "poset_classification::make_auxiliary_graph "
 				"now making vertex labels" << endl;
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		f = 0;
 		if (f_vv) {
-			cout << "generator::make_auxiliary_graph now making vertex "
+			cout << "poset_classification::make_auxiliary_graph now making vertex "
 					"labels lvl " << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 
 			if (f_v3) {
-				cout << "generator::make_auxiliary_graph "
+				cout << "poset_classification::make_auxiliary_graph "
 						"now making vertex labels lvl " << lvl << " / "
 						<< depth << " po=" << po << " / "
 						<< nb_orbits_at_level(lvl) << endl;
@@ -1381,11 +1381,11 @@ void generator::make_auxiliary_graph(INT depth,
 	FREE_INT(Fst);
 	
 	if (f_v) {
-		cout << "generator::make_auxiliary_graph done" << endl;
+		cout << "poset_classification::make_auxiliary_graph done" << endl;
 		}
 }
 
-void generator::make_graph(INT depth,
+void poset_classification::make_graph(INT depth,
 		layered_graph *&LG, INT data1, INT f_tree, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1398,7 +1398,7 @@ void generator::make_graph(INT depth,
 	//longinteger_domain D;
 
 	if (f_v) {
-		cout << "generator::make_graph f_tree=" << f_tree << endl;
+		cout << "poset_classification::make_graph f_tree=" << f_tree << endl;
 		}
 
 	//print_fusion_nodes(depth);
@@ -1420,26 +1420,26 @@ void generator::make_graph(INT depth,
 	
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
-		cout << "generator::make_graph before LG->init" << endl;
+		cout << "poset_classification::make_graph before LG->init" << endl;
 		}
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
-		cout << "generator::make_graph after LG->init" << endl;
+		cout << "poset_classification::make_graph after LG->init" << endl;
 		}
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "generator::make_graph after LG->place" << endl;
+		cout << "poset_classification::make_graph after LG->place" << endl;
 		}
 	for (lvl = 0; lvl < depth; lvl++) {
 		if (f_v) {
-			cout << "generator::make_graph adding edges "
+			cout << "poset_classification::make_graph adding edges "
 					"lvl=" << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 			if (FALSE /*f_v*/) {
-				cout << "generator::make_graph adding edges "
+				cout << "poset_classification::make_graph adding edges "
 						"lvl=" << lvl << " po=" << po << " / "
 						<< nb_orbits_at_level(lvl) << endl;
 				}
@@ -1449,7 +1449,7 @@ void generator::make_graph(INT depth,
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (FALSE /*f_v*/) {
-					cout << "generator::make_graph adding edges "
+					cout << "poset_classification::make_graph adding edges "
 							"lvl=" << lvl << " po=" << po
 							<< " so=" << so << endl;
 					}
@@ -1498,24 +1498,24 @@ void generator::make_graph(INT depth,
 			
 			}
 		if (f_vv) {
-			cout << "generator::make_graph after LG->add_edge (1)" << endl;
+			cout << "poset_classification::make_graph after LG->add_edge (1)" << endl;
 			}
 		}
 
 
 	if (f_vv) {
-		cout << "generator::make_graph now making vertex labels" << endl;
+		cout << "poset_classification::make_graph now making vertex labels" << endl;
 		}
 	for (lvl = 0; lvl <= depth; lvl++) {
 		if (f_vv) {
-			cout << "generator::make_graph now making vertex labels "
+			cout << "poset_classification::make_graph now making vertex labels "
 					"lvl " << lvl << " / " << depth << endl;
 			}
 		for (po = 0; po < nb_orbits_at_level(lvl); po++) {
 
 
 			if (f_vv) {
-				cout << "generator::make_graph now making vertex "
+				cout << "poset_classification::make_graph now making vertex "
 						"labels lvl " << lvl << " / " << depth << " po="
 						<< po << " / " << nb_orbits_at_level(lvl) << endl;
 				}
@@ -1560,11 +1560,11 @@ void generator::make_graph(INT depth,
 	FREE_INT(the_set);
 	
 	if (f_v) {
-		cout << "generator::make_graph done" << endl;
+		cout << "poset_classification::make_graph done" << endl;
 		}
 }
 
-void generator::make_level_graph(INT depth,
+void poset_classification::make_level_graph(INT depth,
 		layered_graph *&LG, INT data1, INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1579,7 +1579,7 @@ void generator::make_level_graph(INT depth,
 	INT *the_set2;
 
 	if (f_v) {
-		cout << "generator::make_level_graph "
+		cout << "poset_classification::make_level_graph "
 				"verbose_level=" << verbose_level << endl;
 		}
 
@@ -1604,7 +1604,7 @@ void generator::make_level_graph(INT depth,
 
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
-		cout << "generator::make_level_graph before LG->init" << endl;
+		cout << "poset_classification::make_level_graph before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
 		INT_vec_print(cout, Nb, 4);
@@ -1613,17 +1613,17 @@ void generator::make_level_graph(INT depth,
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
-		cout << "generator::make_level_graph after LG->init" << endl;
+		cout << "poset_classification::make_level_graph after LG->init" << endl;
 		}
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "generator::make_level_graph after LG->place" << endl;
+		cout << "poset_classification::make_level_graph after LG->place" << endl;
 		}
 	f = 0;
 	for (po = 0; po < nb_orbits_at_level(level); po++) {
 
 		if (f_vv) {
-			cout << "generator::make_level_graph adding edges "
+			cout << "poset_classification::make_level_graph adding edges "
 					"level=" << level << " po=" << po << " / "
 					<< nb_orbits_at_level(level) << endl;
 			}
@@ -1633,7 +1633,7 @@ void generator::make_level_graph(INT depth,
 		for (so = 0; so < root[n].nb_extensions; so++) {
 
 			if (FALSE /*f_v*/) {
-				cout << "generator::make_level_graph "
+				cout << "poset_classification::make_level_graph "
 						"adding edges lvl=" << lvl << " po="
 						<< po << " so=" << so << endl;
 				}
@@ -1680,17 +1680,17 @@ void generator::make_level_graph(INT depth,
 		f += root[n].nb_extensions;
 		}
 	if (f_vv) {
-		cout << "generator::make_level_graph after LG->add_edge" << endl;
+		cout << "poset_classification::make_level_graph after LG->add_edge" << endl;
 		}
 
 
 	if (f_vv) {
-		cout << "generator::make_level_graph now making vertex labels" << endl;
+		cout << "poset_classification::make_level_graph now making vertex labels" << endl;
 		}
 	for (lvl = level; lvl <= level + 1; lvl++) {
 		f = 0;
 		if (f_vv) {
-			cout << "generator::make_level_graph "
+			cout << "poset_classification::make_level_graph "
 					"now making vertex labels lvl " << lvl
 					<< " / " << depth << endl;
 			}
@@ -1706,7 +1706,7 @@ void generator::make_level_graph(INT depth,
 
 
 			if (f_vv) {
-				cout << "generator::make_level_graph "
+				cout << "poset_classification::make_level_graph "
 						"now making vertex labels lvl " << lvl
 						<< " / " << depth << " po=" << po << " / "
 						<< nb_orbits_at_level(lvl) << endl;
@@ -1782,11 +1782,11 @@ void generator::make_level_graph(INT depth,
 	FREE_INT(Fst);
 	
 	if (f_v) {
-		cout << "generator::make_level_graph done" << endl;
+		cout << "poset_classification::make_level_graph done" << endl;
 		}
 }
 
-void generator::make_poset_graph_detailed(layered_graph *&LG,
+void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 		INT data1, INT max_depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1800,7 +1800,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 	INT *the_set2;
 
 	if (f_v) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"verbose_level=" << verbose_level << endl;
 		cout << "max_depth=" << max_depth << endl;
 		cout << "nb_layers=" << nb_layers << endl;
@@ -1827,7 +1827,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
@@ -1837,7 +1837,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 	LG->add_data1(data1, 0/*verbose_level*/);
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"after LG->init" << endl;
 		}
 	for (i = 0; i < nb_layers; i++) {
@@ -1856,26 +1856,26 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 	
 	LG->place(verbose_level);
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"after LG->place" << endl;
 		}
 
 
 
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"adding edges" << endl;
 		}
 	for (L = 0; L < max_depth; L++) {
 		if (f_vv) {
-			cout << "generator::make_poset_graph_detailed "
+			cout << "poset_classification::make_poset_graph_detailed "
 					"adding edges at level " << L << endl;
 			}
 		f = 0;
 		for (po = 0; po < nb_orbits_at_level(L); po++) {
 
 			if (f_vv) {
-				cout << "generator::make_poset_graph_detailed "
+				cout << "poset_classification::make_poset_graph_detailed "
 						"adding edges level=" << L << " po=" << po
 						<< " / " << nb_orbits_at_level(L) << endl;
 				}
@@ -1885,7 +1885,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 			for (so = 0; so < root[n].nb_extensions; so++) {
 
 				if (FALSE /*f_v*/) {
-					cout << "generator::make_poset_graph_detailed "
+					cout << "poset_classification::make_poset_graph_detailed "
 							"adding edges level=" << L << " po=" << po
 							<< " so=" << so << endl;
 					}
@@ -1934,24 +1934,24 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 			f += root[n].nb_extensions;
 			}
 		if (f_vv) {
-			cout << "generator::make_poset_graph_detailed "
+			cout << "poset_classification::make_poset_graph_detailed "
 					"after LG->add_edge" << endl;
 			}
 		} // next L
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"adding edges done" << endl;
 		}
 
 
 	if (f_vv) {
-		cout << "generator::make_poset_graph_detailed "
+		cout << "poset_classification::make_poset_graph_detailed "
 				"now making vertex labels" << endl;
 		}
 	for (L = 0; L <= max_depth; L++) {
 		f = 0;
 		if (f_vv) {
-			cout << "generator::make_poset_graph_detailed "
+			cout << "poset_classification::make_poset_graph_detailed "
 					"now making vertex labels level " << L
 					<< " / " << max_depth << endl;
 			}
@@ -1960,7 +1960,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 
 
 			if (f_vv) {
-				cout << "generator::make_poset_graph_detailed "
+				cout << "poset_classification::make_poset_graph_detailed "
 						"now making vertex labels level " << L
 						<< " / " << max_depth << " po=" << po
 						<< " / " << nb_orbits_at_level(L) << endl;
@@ -1998,7 +1998,7 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 			if (L < max_depth) {
 				for (so = 0; so < root[n].nb_extensions; so++) {
 					if (f_vv) {
-						cout << "generator::make_poset_graph_detailed "
+						cout << "poset_classification::make_poset_graph_detailed "
 								"now making vertex labels level " << L
 								<< " / " << max_depth << " po=" << po
 								<< " / " << nb_orbits_at_level(L)
@@ -2045,12 +2045,12 @@ void generator::make_poset_graph_detailed(layered_graph *&LG,
 	FREE_INT(Nb_middle);
 	
 	if (f_v) {
-		cout << "generator::make_poset_graph_detailed done" << endl;
+		cout << "poset_classification::make_poset_graph_detailed done" << endl;
 		}
 }
 
 
-void generator::print_data_structure_tex(INT depth, INT verbose_level)
+void poset_classification::print_data_structure_tex(INT depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = FALSE; //(verbose_level >= 2);
@@ -2061,7 +2061,7 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 	longinteger_domain D;
 
 	if (f_v) {
-		cout << "generator::print_data_structure_tex" << endl;
+		cout << "poset_classification::print_data_structure_tex" << endl;
 		}
 	sprintf(fname_base1, "%s_data_lvl_%ld", fname_base, depth);
 	sprintf(fname, "%s.tex", fname_base1);
@@ -2076,7 +2076,7 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 		cnt = 0;
 		for (lvl = 0; lvl <= depth; lvl++) {
 			if (f_v) {
-				cout << "generator::print_data_structure_tex "
+				cout << "poset_classification::print_data_structure_tex "
 						"adding edges lvl=" << lvl << " / " << depth << endl;
 				}
 			f = 0;
@@ -2132,7 +2132,7 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 
 		for (lvl = 0; lvl < depth; lvl++) {
 			if (f_v) {
-				cout << "generator::print_data_structure_tex "
+				cout << "poset_classification::print_data_structure_tex "
 						"adding edges lvl=" << lvl << " / " << depth << endl;
 				}
 			f = 0;
@@ -2158,7 +2158,7 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 						cnt = 0;
 						}
 					if (FALSE /*f_v*/) {
-						cout << "generator::print_data_structure_tex "
+						cout << "poset_classification::print_data_structure_tex "
 								"adding edges lvl=" << lvl << " po="
 								<< po << " so=" << so << endl;
 						}
@@ -2285,7 +2285,7 @@ void generator::print_data_structure_tex(INT depth, INT verbose_level)
 	}
 	FREE_INT(set);
 	if (f_v) {
-		cout << "generator::print_data_structure_tex done" << endl;
+		cout << "poset_classification::print_data_structure_tex done" << endl;
 		}
 }
 

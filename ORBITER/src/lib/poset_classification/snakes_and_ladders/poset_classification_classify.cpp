@@ -1,8 +1,8 @@
-// generator_classify.C
+// poset_classification_classify.C
 //
 // Anton Betten
 //
-// moved here from generator.C
+// moved here from poset_classification.C
 // July 19, 2014
 
 
@@ -10,7 +10,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-INT generator::compute_orbits(INT from_level, INT to_level, 
+INT poset_classification::compute_orbits(INT from_level, INT to_level, 
 	INT f_write_candidate_file, 
 	INT verbose_level)
 // returns TRUE if there is at least one orbit at level to_level,
@@ -26,7 +26,7 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 
 
 	if (f_v) {
-		cout << "generator::compute_orbits from "
+		cout << "poset_classification::compute_orbits from "
 				<< from_level << " to " << to_level << endl;
 		cout << "f_lex=" << f_lex << endl;
 		cout << "f_write_candidate_file="
@@ -38,7 +38,7 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 	for (level = from_level; level < to_level; level++) {
 
 		if (f_v) {
-			cout << "generator::compute_orbits: ";
+			cout << "poset_classification::compute_orbits: ";
 			print_problem_label();
 			cout << " calling extend_level " << level << endl;
 			}
@@ -74,13 +74,13 @@ INT generator::compute_orbits(INT from_level, INT to_level,
 
 	
 	if (f_v) {
-		cout << "generator::compute_orbits from "
+		cout << "poset_classification::compute_orbits from "
 				<< from_level << " to " << to_level << " done" << endl;
 		}
 	return to_level;
 }
 
-INT generator::main(INT t0, 
+INT poset_classification::main(INT t0, 
 	INT schreier_depth, 
 	INT f_use_invariant_subset_if_available, 
 	INT f_debug, 
@@ -104,8 +104,8 @@ INT generator::main(INT t0,
 	INT f_embedded = TRUE;
 	
 	if (f_v) {
-		cout << "generator::main" << endl;
-		cout << "generator::main ";
+		cout << "poset_classification::main" << endl;
+		cout << "poset_classification::main ";
 		print_problem_label();
 		cout << " depth = " << depth << endl;
 		cout << "f_W = " << f_W << endl;
@@ -114,7 +114,7 @@ INT generator::main(INT t0,
 		}
 	if (f_recover) {
 		if (f_v) {
-			cout << "generator::main: recovering from file "
+			cout << "poset_classification::main: recovering from file "
 					<< recover_fname << endl;
 			}
 
@@ -132,7 +132,7 @@ INT generator::main(INT t0,
 		
 		if (f_v) {
 			cout << "depth_completed = " << depth_completed << endl;
-			cout << "generator::main: recreating schreier vectors "
+			cout << "poset_classification::main: recreating schreier vectors "
 					"to depth " << depth_completed - 1 << endl;
 			}
 	
@@ -161,7 +161,7 @@ INT generator::main(INT t0,
 		target_depth = depth;
 		}
 	if (f_v) {
-		cout << "generator::main target_depth=" << target_depth << endl;
+		cout << "poset_classification::main target_depth=" << target_depth << endl;
 		}
 	
 	for (i = depth_completed; i < target_depth; i++) {
@@ -178,7 +178,7 @@ INT generator::main(INT t0,
 			}
 #endif
 		if (f_v) {
-			cout << "generator::main: ";
+			cout << "poset_classification::main: ";
 			print_problem_label();
 			cout << " calling extend_level " << i
 					<< " f_write_candidate_file="
@@ -240,12 +240,12 @@ INT generator::main(INT t0,
 			
 		} // next i
 	if (f_v) {
-		cout << "generator::main done" << endl;
+		cout << "poset_classification::main done" << endl;
 		}
 	return i;
 }
 
-void generator::extend_level(INT size,
+void poset_classification::extend_level(INT size,
 	INT f_create_schreier_vector, 
 	INT f_compact, 
 	INT f_use_invariant_subset_if_available, 
@@ -262,9 +262,9 @@ void generator::extend_level(INT size,
 				"##############################################" << endl;
 		print_problem_label();
 		cout << endl;
-		cout << "generator::extend_level constructing nodes at depth "
+		cout << "poset_classification::extend_level constructing nodes at depth "
 				<< size + 1 << endl;
-		cout << "generator::extend_level from "
+		cout << "poset_classification::extend_level from "
 				<< nb_orbits_at_level(size)
 				<< " nodes at depth " << size << endl;
 		//cout << "f_create_schreier_vector="
@@ -282,7 +282,7 @@ void generator::extend_level(INT size,
 	//l = cur - f;
 
 	if (f_v) {
-		cout << "generator::extend_level " << size
+		cout << "poset_classification::extend_level " << size
 				<< " calling downstep" << endl;
 		}
 	downstep(size, f_create_schreier_vector, f_compact, 
@@ -290,12 +290,12 @@ void generator::extend_level(INT size,
 		//f_implicit_fusion, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "generator::extend_level after downstep" << endl;
+		cout << "poset_classification::extend_level after downstep" << endl;
 		}
 
 	if (f_write_candidate_file) {
 		if (f_v) {
-			cout << "generator::extend_level size = " << size
+			cout << "poset_classification::extend_level size = " << size
 					<< " before write_candidates_binary_using_sv" << endl;
 			}
 		write_candidates_binary_using_sv(fname_base,
@@ -303,19 +303,19 @@ void generator::extend_level(INT size,
 		}
 
 	if (f_v) {
-		cout << "generator::extend_level calling upstep" << endl;
+		cout << "poset_classification::extend_level calling upstep" << endl;
 		}
 	upstep(size, 
 		f_debug, 
 		verbose_level - 1);
 	if (f_v) {
-		cout << "generator::extend_level after upstep" << endl;
+		cout << "poset_classification::extend_level after upstep" << endl;
 		}
 
 
 }
 
-void generator::downstep(INT size, 
+void poset_classification::downstep(INT size, 
 	INT f_create_schreier_vector, INT f_compact, 
 	INT f_use_invariant_subset_if_available, 
 	INT verbose_level)
@@ -399,7 +399,7 @@ void generator::downstep(INT size,
 		
 }
 
-void generator::upstep(INT size, 
+void poset_classification::upstep(INT size, 
 	INT f_debug, 
 	INT verbose_level)
 // calls extend_node
@@ -412,7 +412,7 @@ void generator::upstep(INT size,
 	INT f_print = f_v;
 
 	if (f_v) {
-		cout << "generator::upstep" << endl;
+		cout << "poset_classification::upstep" << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
 	
@@ -442,7 +442,7 @@ void generator::upstep(INT size,
 	for (u = 0; u < l; u++) {
 
 		if (f_v4) {
-			cout << "generator::upstep case " << u << " / " << l << endl;
+			cout << "poset_classification::upstep case " << u << " / " << l << endl;
 			}
 		prev = f + u;
 			
@@ -455,7 +455,7 @@ void generator::upstep(INT size,
 
 #if 1
 		if (f_v4) {
-			cout << "generator::upstep before extend_node" << endl;
+			cout << "poset_classification::upstep before extend_node" << endl;
 			print_extensions_at_level(cout, size);
 			}
 #endif
@@ -468,7 +468,7 @@ void generator::upstep(INT size,
 
 #if 1
 		if (f_v4) {
-			cout << "generator::upstep after extend_node, size="
+			cout << "poset_classification::upstep after extend_node, size="
 					<< size << endl;
 			}
 #endif
@@ -503,12 +503,12 @@ void generator::upstep(INT size,
 
 }
 
-void generator::extend_node(INT size, INT prev, INT &cur, 
+void poset_classification::extend_node(INT size, INT prev, INT &cur, 
 	INT f_debug, 
 	INT f_indicate_not_canonicals, 
 	FILE *fp, 
 	INT verbose_level)
-// called by generator::upstep
+// called by poset_classification::upstep
 // Uses an upstep_work structure to handle the work.
 // Calls upstep_work::handle_extension
 {
@@ -520,7 +520,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 	INT verbose_level_down;
 
 	if (f_v4) {
-		cout << "generator::extend_node prev=" << prev
+		cout << "poset_classification::extend_node prev=" << prev
 				<< " cur=" << cur << endl;
 		}
 	
@@ -528,7 +528,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 			nb_poset_orbit_nodes_allocated) {
 		print_level_info(size + 1, prev);
 		if (f_v) {
-			cout << "generator::extend_node running out of nodes" << endl;
+			cout << "poset_classification::extend_node running out of nodes" << endl;
 			cout << "cur = " << cur << endl;
 			cout << "allocated nodes = "
 					<< nb_poset_orbit_nodes_allocated << endl;
@@ -586,7 +586,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 
 		if (f_vvv) {
 			print_level_info(size + 1, prev);
-			cout << "generator::extend_node working on extension "
+			cout << "poset_classification::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ":" << endl;
 			}
@@ -598,7 +598,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 
 #if 0
 		if (FALSE /*prev == 32 && prev_ex == 3*/) { 
-			cout << "generator::extend_node we are at node (32,3)" << endl;
+			cout << "poset_classification::extend_node we are at node (32,3)" << endl;
 			verbose_level_down = verbose_level + 20; 
 			}
 		else {
@@ -609,7 +609,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 
 		if (f_vvv) {
 			print_level_info(size + 1, prev);
-			cout << "generator::extend_node working on extension "
+			cout << "poset_classification::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": before Work.init" << endl;
 			}
@@ -622,7 +622,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 
 		if (f_vvv) {
 			print_level_info(size + 1, prev);
-			cout << "generator::extend_node working on extension "
+			cout << "poset_classification::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": after Work.init" << endl;
 			}
@@ -637,7 +637,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 			}
 		if (f_vvv) {
 			print_level_info(size + 1, prev);
-			cout << "generator::extend_node working on extension "
+			cout << "poset_classification::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ": before Work.handle_extension nb_ext_cur="
 					<< nb_ext_cur << endl;
@@ -647,7 +647,7 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 
 		if (f_vvv) {
 			print_level_info(size + 1, prev);
-			cout << "generator::extend_node after "
+			cout << "poset_classification::extend_node after "
 					"Work.handle_extension" << endl;
 			}
 
@@ -659,10 +659,10 @@ void generator::extend_node(INT size, INT prev, INT &cur,
 
 		if (f_vvv) {
 			print_level_info(size + 1, prev);
-			cout << "generator::extend_node working on extension "
+			cout << "poset_classification::extend_node working on extension "
 					<< prev_ex << " / " << root[prev].nb_extensions
 					<< ":" << endl;
-			cout << "generator::extend_node after freeing Work" << endl;
+			cout << "poset_classification::extend_node after freeing Work" << endl;
 			}
 
 		}

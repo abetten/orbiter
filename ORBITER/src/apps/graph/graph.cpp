@@ -196,7 +196,7 @@ void usage(int argc, const char **argv)
 	cout << "-tournament" << endl;
 	cout << "   Classify tournaments instead" << endl;
 
-	generator gen;
+	poset_classification gen;
 	
 	gen.usage();
 

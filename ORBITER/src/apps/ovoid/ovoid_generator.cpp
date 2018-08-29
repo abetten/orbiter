@@ -107,7 +107,7 @@ void ovoid_generator::init(int argc, const char **argv,
 
 	F = NEW_OBJECT(finite_field);
 	A = NEW_OBJECT(action);
-	gen = NEW_OBJECT(generator);
+	gen = NEW_OBJECT(poset_classification);
 
 	read_arguments(argc, argv, verbose_level);
 

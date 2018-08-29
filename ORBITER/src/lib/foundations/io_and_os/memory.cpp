@@ -237,13 +237,19 @@ mem_object_registry::mem_object_registry()
 	nb_allocate_total = 0;
 	nb_delete_total = 0;
 	cur_time = 0;
+
+	f_ignore_duplicates = FALSE;
+	f_accumulate = FALSE;
+
 	init(verbose_level);
 }
 
 mem_object_registry::~mem_object_registry()
 {
-	delete [] entries;
-	entries = NULL;
+	if (entries) {
+		delete [] entries;
+		entries = NULL;
+	}
 }
 
 void mem_object_registry::init(INT verbose_level)
@@ -261,6 +267,9 @@ void mem_object_registry::init(INT verbose_level)
 	nb_delete_total = 0;
 	cur_time = 0;
 
+	f_ignore_duplicates = FALSE;
+	f_accumulate = FALSE;
+
 	if (f_v) {
 		cout << "mem_object_registry::init trying to allocate "
 				<< nb_entries_allocated << " entries" << endl;
@@ -276,6 +285,17 @@ void mem_object_registry::init(INT verbose_level)
 	if (f_v) {
 		cout << "mem_object_registry::init done" << endl;
 	}
+}
+
+void mem_object_registry::accumulate_and_ignore_duplicates(INT verbose_level)
+{
+	int f_v = (verbose_level >= 1);
+
+	if (f_v) {
+		cout << "mem_object_registry::accumulate_and_ignore_duplicates" << endl;
+	}
+	f_accumulate = TRUE;
+	f_ignore_duplicates = TRUE;
 }
 
 void mem_object_registry::allocate(INT N, INT verbose_level)
@@ -358,9 +378,6 @@ void mem_object_registry::manual_dump()
 
 void mem_object_registry::manual_dump_with_file_name(const BYTE *fname)
 {
-	if (!f_automatic_dump) {
-		return;
-	}
 	dump_to_csv_file(fname);
 }
 
@@ -978,18 +995,22 @@ void mem_object_registry::add_to_registry(void *pointer,
 	}
 	nb_allocate_total++;
 	if (search(pointer, idx)) {
-		cout << "mem_object_registry::add_to_registry pointer p is "
-				"already in the registry, something is wrong" << endl;
-		cout << "extra_type_info = " << extra_type_info << endl;
-		cout << "source_file = " << source_file << endl;
-		cout << "source_line = " << source_line << endl;
-		cout << "object_type = " << object_type << endl;
-		cout << "object_n = " << object_n << endl;
-		cout << "object_size_of = " << object_size_of << endl;
-		cout << "the previous object is:" << endl;
-		entries[idx].print(idx);
-		cout << "ignoring the problem" << endl;
-		//exit(1);
+		if (f_ignore_duplicates) {
+
+		} else {
+			cout << "mem_object_registry::add_to_registry pointer p is "
+					"already in the registry, something is wrong" << endl;
+			cout << "extra_type_info = " << extra_type_info << endl;
+			cout << "source_file = " << source_file << endl;
+			cout << "source_line = " << source_line << endl;
+			cout << "object_type = " << object_type << endl;
+			cout << "object_n = " << object_n << endl;
+			cout << "object_size_of = " << object_size_of << endl;
+			cout << "the previous object is:" << endl;
+			entries[idx].print(idx);
+			cout << "ignoring the problem" << endl;
+			//exit(1);
+		}
 	}
 	insert_at(idx);
 	entries[idx].time_stamp = cur_time;
@@ -1020,17 +1041,21 @@ void mem_object_registry::delete_from_registry(void *pointer, int verbose_level)
 		cout << "mem_object_registry::delete_from_registry" << endl;
 	}
 	nb_delete_total++;
-	if (!search(pointer, idx)) {
-		cout << "mem_object_registry::delete_from_registry pointer is "
-				"not in registry, something is wrong; ignoring" << endl;
-		//exit(1);
-	}
-	for (i = idx + 1; i < nb_entries_used; i++) {
-		entries[i - 1] = entries[i];
-		}
-	entries[nb_entries_used - 1].null();
-	nb_entries_used--;
 
+	if (f_accumulate) {
+		// do not delete entries so we can see all allocations
+	} else {
+		if (!search(pointer, idx)) {
+			cout << "mem_object_registry::delete_from_registry pointer is "
+					"not in registry, something is wrong; ignoring" << endl;
+			//exit(1);
+		}
+		for (i = idx + 1; i < nb_entries_used; i++) {
+			entries[i - 1] = entries[i];
+			}
+		entries[nb_entries_used - 1].null();
+		nb_entries_used--;
+	}
 	automatic_dump();
 	cur_time++;
 	if (f_v) {
@@ -1078,7 +1103,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 	INT *type_len;
 	INT c, f, l;
 
-	type_first = new INT[nb_entries_used]; // use sytem memory
+	type_first = new INT[nb_entries_used]; // use system memory
 	type_len = new INT[nb_entries_used];
 
 
@@ -1086,7 +1111,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 	type_first[0] = 0;
 	type_len[0] = 1;
 	for (i = 1; i < nb_entries_used; i++) {
-		c = registry_key_pair_compare_by_size(entries + i, entries + (i - 1));
+		c = registry_key_pair_compare_by_location(entries + i, entries + (i - 1));
 		if (c == 0) {
 			type_len[nb_types]++;
 			}
@@ -1102,16 +1127,16 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 			<< " different allocation locations:" << endl;
 
 	INT t, j, sz, s;
-	INT *frequency;
 	INT *perm;
 	INT *perm_inv;
+	INT *frequency;
 
-	frequency = new INT[nb_types];
-	perm = new INT[nb_types];
+	perm = new INT[nb_types]; // use system memory
 	perm_inv = new INT[nb_types];
-	for (i = 0; i < nb_types; i++) {
-		frequency[i] = type_len[i];
-		}
+	frequency = new INT[nb_types];
+
+	INT_vec_copy(type_len, frequency, nb_types);
+
 	INT_vec_sorting_permutation(frequency, nb_types,
 			perm, perm_inv, FALSE /* f_increasingly */);
 
@@ -1142,7 +1167,6 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 
 	delete [] type_first;
 	delete [] type_len;
-	delete [] frequency;
 	delete [] perm;
 	delete [] perm_inv;
 

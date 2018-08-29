@@ -20,7 +20,7 @@ void regular_ls_generator::init_basic(int argc, const char **argv,
 
 	regular_ls_generator::starter_size = starter_size;
 
-	gen = new generator;
+	gen = new poset_classification;
 	
 	if (f_vv) {
 		cout << "regular_ls_generator::init_basic before read_arguments" << endl;

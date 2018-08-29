@@ -114,7 +114,7 @@ void compute_stabilizer::freeself()
 }
 
 void compute_stabilizer::init(INT *the_set,
-	INT set_size, generator *gen, action *A, action *A2,
+	INT set_size, poset_classification *gen, action *A, action *A2,
 	INT level, INT interesting_orbit,
 	INT nb_interesting_subsets, INT *interesting_subsets,
 	INT verbose_level)

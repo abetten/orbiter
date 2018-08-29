@@ -221,7 +221,7 @@ void usage(int argc, const char **argv)
 	cout << "   Use the polynomial m to create the field GF(q) "
 			"(m is a number)" << endl;
 
-	generator gen;
+	poset_classification gen;
 	
 	gen.usage();
 

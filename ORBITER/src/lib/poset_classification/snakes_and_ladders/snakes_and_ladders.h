@@ -53,13 +53,13 @@ public:
 
 
 // #############################################################################
-// generator.C
+// poset_classification.C
 // #############################################################################
 
 //! the poset classification algorithm (Snakes and Ladders)
 
 
-class generator {
+class poset_classification {
 
 public:
 	INT t0;
@@ -90,13 +90,13 @@ public:
 		// used in poset_orbit_upstep.C poset_orbit_node::apply_fusion_element
 
 	INT *tmp_find_node_for_subspace_by_rank1;
-		// [vector_space_dimension] used in generator_trace.C: 
+		// [vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
 	INT *tmp_find_node_for_subspace_by_rank2;
-		// [sz * vector_space_dimension] used in generator_trace.C: 
+		// [sz * vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
 	INT *tmp_find_node_for_subspace_by_rank3;
-		// [vector_space_dimension] used in generator_trace.C: 
+		// [vector_space_dimension] used in poset_classification_trace.C: 
 		// find_node_for_subspace_by_rank
 
 	INT f_candidate_check_func;
@@ -240,7 +240,7 @@ public:
 
 
 
-	// generator.C:
+	// poset_classification.C:
 	INT nb_orbits_at_level(INT level);
 	INT nb_flag_orbits_up_at_level(INT level);
 	poset_orbit_node *get_node_ij(INT level, INT node);
@@ -310,7 +310,7 @@ public:
 		longinteger_object &go);
 	void get_stabilizer_group(group *&G,  
 		INT level, INT orbit_at_level, INT verbose_level);
-	void get_stabilizer_generators(strong_generators *&gens,  
+	void get_stabilizer_generators(strong_generators *&gens,
 		INT level, INT orbit_at_level, INT verbose_level);
 	void change_extension_type(INT level, INT node, INT cur_ext, 
 		INT type, INT verbose_level);
@@ -387,9 +387,9 @@ public:
 	void rank_basis(INT *Basis, INT *S, INT len);
 	void generate_source_code(INT level, INT verbose_level);
 
-	// generator_init.C:
-	generator();
-	~generator();
+	// poset_classification_init.C:
+	poset_classification();
+	~poset_classification();
 	void null();
 	void freeself();
 	void usage();
@@ -458,7 +458,7 @@ public:
 		void *data,  
 		INT verbose_level);
 
-	// generator_classify.C
+	// poset_classification_classify.C
 	INT compute_orbits(INT from_level, INT to_level, 
 		INT f_write_candidate_file, 
 		INT verbose_level);
@@ -500,13 +500,13 @@ public:
 		INT f_debug, 
 		INT f_indicate_not_canonicals, FILE *fp,
 		INT verbose_level);
-		// called by generator::upstep
+		// called by poset_classification::upstep
 		// Uses an upstep_work structure to handle the work.
 		// Calls upstep_work::handle_extension
 
 
 
-	// generator_combinatorics.C:
+	// poset_classification_combinatorics.C:
 	void Plesken_matrix_up(INT depth, 
 		INT *&P, INT &N, INT verbose_level);
 	void Plesken_matrix_down(INT depth, 
@@ -525,7 +525,7 @@ public:
 		INT depth, INT verbose_level);
 
 
-	// generator_trace.C:
+	// poset_classification_trace.C:
 	INT find_isomorphism(INT *set1, INT *set2, INT sz, 
 		INT *transporter, INT &orbit_idx, INT verbose_level);
 	set_and_stabilizer *identify_and_get_stabilizer(
@@ -535,11 +535,11 @@ public:
 	void identify(INT *data, INT sz, INT *transporter, 
 		INT &orbit_at_level, INT verbose_level);
 	void test_identify(INT level, INT nb_times, INT verbose_level);
-	void generator_apply_fusion_element_no_transporter(
+	void poset_classification_apply_fusion_element_no_transporter(
 		INT cur_level, INT size, INT cur_node, INT cur_ex, 
 		INT *set_in, INT *set_out, 
 		INT verbose_level);
-	INT generator_apply_fusion_element(INT level, INT size, 
+	INT poset_classification_apply_fusion_element(INT level, INT size, 
 		INT current_node, INT current_extension, 
 		INT *set_in, INT *set_out, INT *set_tmp, 
 		INT *transporter_in, INT *transporter_out, 
@@ -551,8 +551,8 @@ public:
 		INT *Elt_transporter, INT *tmp_Elt1, 
 		INT f_tolerant, 
 		INT verbose_level);
-		// called by generator::trace_set
-		// returns the node in the generator that corresponds 
+		// called by poset_classification::trace_set
+		// returns the node in the poset_classification that corresponds 
 		// to the canonical_set
 		// or -1 if f_tolerant and the node could not be found
 	INT trace_set(INT *set, INT size, INT level, 
@@ -562,7 +562,7 @@ public:
 	INT find_node_for_subspace_by_rank(INT *set, INT len, 
 		INT verbose_level);
 	
-	// generator_draw.C:
+	// poset_classification_draw.C:
 	void write_treefile_and_draw_tree(BYTE *fname_base, 
 		INT lvl, INT xmax, INT ymax, INT rad, 
 		INT f_embedded, INT verbose_level);
@@ -606,7 +606,7 @@ public:
 		INT data1, INT max_depth, INT verbose_level);
 
 
-	// in generator_io.C:
+	// in poset_classification_io.C:
 	void housekeeping(INT i, INT f_write_files, INT t0, 
 		INT verbose_level);
 	void housekeeping_no_data_file(INT i, INT t0, INT verbose_level);
@@ -651,10 +651,10 @@ public:
 	void write_lvl_file_with_candidates(BYTE *fname_base, 
 		INT lvl, INT t0, INT verbose_level);
 	void write_lvl_file(BYTE *fname_base, INT lvl, 
-		INT t0, INT f_with_stabilizer_generators, INT f_long_version, 
+		INT t0, INT f_with_stabilizer_poset_classifications, INT f_long_version, 
 		INT verbose_level);
 	void write_lvl(ostream &f, INT lvl, INT t0, 
-		INT f_with_stabilizer_generators, INT f_long_version, 
+		INT f_with_stabilizer_poset_classifications, INT f_long_version, 
 		INT verbose_level);
 	void log_nodes_for_treefile(INT cur, INT depth, 
 		ostream &f, INT f_recurse, INT verbose_level);
@@ -670,7 +670,7 @@ public:
 	void read_file(ifstream &fp, INT &depth_completed, 
 		INT verbose_level);
 
-	// generator_recognize.C:
+	// poset_classification_recognize.C:
 	void recognize_start_over(
 		INT size, INT f_implicit_fusion,
 		INT lvl, INT current_node,
@@ -692,8 +692,9 @@ public:
 
 };
 
-// in generator_io.C:
-void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
+// in poset_classification_io.C:
+void poset_classification_read_candidates_of_orbit(
+	const BYTE *fname, INT orbit_at_level,
 	INT *&candidates, INT &nb_candidates, INT verbose_level);
 
 
@@ -706,7 +707,7 @@ void generator_read_candidates_of_orbit(const BYTE *fname, INT orbit_at_level,
 // #############################################################################
 
 
-//! a class representing one poset orbit, related to the class generator
+//! a class representing one poset orbit, related to the class poset_classification
 
 
 
@@ -730,16 +731,16 @@ public:
 	~poset_orbit_node();
 	void null();
 	void freeself();
-	void init_root_node(generator *gen, INT verbose_level);
+	void init_root_node(poset_classification *gen, INT verbose_level);
 		// copies gen->SG0 and gen->tl into the poset_orbit_node 
 		// structure using store_strong_generators
-	void init_extension_node_prepare_G(generator *gen,
+	void init_extension_node_prepare_G(poset_classification *gen,
 		INT prev, INT prev_ex, INT size, group &G,
 		longinteger_object &go_G,
 		INT verbose_level);
 		// sets up the group G using the strong
-		// generators that are stored
-	void init_extension_node_prepare_H(generator *gen, 
+		// poset_classifications that are stored
+	void init_extension_node_prepare_H(poset_classification *gen, 
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
 		group &H, longinteger_object &go_H, 
@@ -748,62 +749,62 @@ public:
 		// sets up the group H which is the stabilizer 
 		// of the point pt in G
 	void compute_point_stabilizer_in_subspace_setting(
-		generator *gen,
+		poset_classification *gen,
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
 		group &H, longinteger_object &go_H, 
 		INT pt, INT pt_orbit_len, 
 		INT verbose_level);
 	void compute_point_stabilizer_in_standard_setting(
-		generator *gen,
+		poset_classification *gen,
 		INT prev, INT prev_ex, INT size, 
 		group &G, longinteger_object &go_G, 
 		group &H, /* longinteger_object &go_H, */
 		INT pt, INT pt_orbit_len, 
 		INT verbose_level);
-	INT get_level(generator *gen);
-	INT get_node_in_level(generator *gen);
+	INT get_level(poset_classification *gen);
+	INT get_node_in_level(poset_classification *gen);
 	INT get_nb_of_live_points();
 	INT get_nb_of_orbits_under_stabilizer();
-	void get_stabilizer_order(generator *gen, longinteger_object &go);
-	void get_stabilizer(generator *gen, 
+	void get_stabilizer_order(poset_classification *gen, longinteger_object &go);
+	void get_stabilizer(poset_classification *gen, 
 		group &G, longinteger_object &go_G, 
 		INT verbose_level);
-	void get_stabilizer_generators(generator *gen, 
+	void get_stabilizer_generators(poset_classification *gen,
 		strong_generators *&Strong_gens, 
 		INT verbose_level);
-	void poset_orbit_node_depth_breadth_perm_and_inverse(generator *gen, 
+	void poset_orbit_node_depth_breadth_perm_and_inverse(poset_classification *gen, 
 		INT max_depth, 
 		INT &idx, INT hdl, INT cur_depth, INT *perm, INT *perm_inv);
-	INT find_extension_from_point(generator *gen, INT pt, 
+	INT find_extension_from_point(poset_classification *gen, INT pt, 
 		INT verbose_level);
 	void print_extensions(ostream &ost);
-	void store_strong_generators(generator *gen, 
+	void store_strong_generators(poset_classification *gen, 
 		strong_generators *Strong_gens);
-	void log_current_node_without_group(generator *gen, 
+	void log_current_node_without_group(poset_classification *gen, 
 		INT s, ostream &f, INT verbose_level);
-	void log_current_node(generator *gen, INT s, 
-		ostream &f, INT f_with_stabilizer_generators, 
+	void log_current_node(poset_classification *gen, INT s, 
+		ostream &f, INT f_with_stabilizer_poset_classifications, 
 		INT verbose_level);
 	void log_current_node_after_applying_group_element(
-		generator *gen, INT s, ostream &f, INT hdl, 
+		poset_classification *gen, INT s, ostream &f, INT hdl, 
 		INT verbose_level);
-	void log_current_node_with_candidates(generator *gen, 
+	void log_current_node_with_candidates(poset_classification *gen, 
 		INT lvl, ostream &f, INT verbose_level);
-	INT depth_of_node(generator *gen);
-	void store_set(generator *gen, INT i);
+	INT depth_of_node(poset_classification *gen);
+	void store_set(poset_classification *gen, INT i);
 		// stores a set of size i + 1 to gen->S
-	void store_set_with_verbose_level(generator *gen, INT i, 
+	void store_set_with_verbose_level(poset_classification *gen, INT i, 
 		INT verbose_level);
 	// stores a set of size i + 1 to gen->S[]
-	void store_set_to(generator *gen, INT i, INT *to);
-	void store_set_to(generator *gen, INT *to);
-	INT check_node_and_set_consistency(generator *gen, INT i, INT *set);
-	void print_set_verbose(generator *gen);
-	void print_set(generator *gen);
-	void print_node(generator *gen);
-	void print_extensions(generator *gen);
-	void reconstruct_extensions_from_sv(generator *gen, 
+	void store_set_to(poset_classification *gen, INT i, INT *to);
+	void store_set_to(poset_classification *gen, INT *to);
+	INT check_node_and_set_consistency(poset_classification *gen, INT i, INT *set);
+	void print_set_verbose(poset_classification *gen);
+	void print_set(poset_classification *gen);
+	void print_node(poset_classification *gen);
+	void print_extensions(poset_classification *gen);
+	void reconstruct_extensions_from_sv(poset_classification *gen, 
 		INT verbose_level);
 
 	// in poset_orbit_node_io.C:
@@ -821,19 +822,19 @@ public:
 
 
 	// poset_orbit_node_upstep.C:
-	INT apply_fusion_element(generator *gen, 
+	INT apply_fusion_element(poset_classification *gen, 
 		INT lvl, INT current_node, 
 		INT current_extension, INT len, INT f_tolerant, 
 		INT verbose_level);
 		// returns next_node
-	void install_fusion_node(generator *gen, 
+	void install_fusion_node(poset_classification *gen, 
 		INT lvl, INT current_node, 
 		INT my_node, INT my_extension, INT my_coset, 
 		INT pt0, INT current_extension, 
 		INT f_debug, INT f_implicit_fusion, 
 		INT verbose_level);
 		// Called from poset_orbit_node::handle_last_level
-	INT trace_next_point_wrapper(generator *gen, INT lvl, 
+	INT trace_next_point_wrapper(poset_classification *gen, INT lvl, 
 		INT current_node, 
 		INT len, INT f_implicit_fusion, INT &f_failure_to_find_point, 
 		INT verbose_level);
@@ -845,18 +846,18 @@ public:
 		// returns FALSE if we are using implicit fusion nodes 
 		// and the set becomes lexicographically
 		// less than before, in which case trace has to be restarted.
-	INT trace_next_point_in_place(generator *gen, 
+	INT trace_next_point_in_place(poset_classification *gen, 
 		INT lvl, INT current_node, INT size, 
 		INT *cur_set, INT *tmp_set,
 		INT *cur_transporter, INT *tmp_transporter, 
 		INT f_implicit_fusion, INT &f_failure_to_find_point, 
 		INT verbose_level);
-		// called by generator::trace_set_recursion
-	void trace_starter(generator *gen, INT size, 
+		// called by poset_classification::trace_set_recursion
+	void trace_starter(poset_classification *gen, INT size, 
 		INT *cur_set, INT *next_set,
 		INT *cur_transporter, INT *next_transporter, 
 		INT verbose_level);
-	INT trace_next_point(generator *gen, 
+	INT trace_next_point(poset_classification *gen, 
 		INT lvl, INT current_node, INT size, 
 		INT *cur_set, INT *next_set,
 		INT *cur_transporter, INT *next_transporter, 
@@ -866,7 +867,7 @@ public:
 		// and by poset_orbit_node::trace_next_point_in_place
 		// returns FALSE only if f_implicit_fusion is TRUE and
 		// the set becomes lexcographically less 
-	INT orbit_representative_and_coset_rep_inv(generator *gen, 
+	INT orbit_representative_and_coset_rep_inv(poset_classification *gen, 
 		INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep, 
 		INT verbose_level);
 		// called by poset_orbit_node::trace_next_point
@@ -875,7 +876,7 @@ public:
 
 	// poset_orbit_node_upstep_subspace_action.C:
 	void orbit_representative_and_coset_rep_inv_subspace_action(
-		generator *gen, 
+		poset_classification *gen, 
 		INT lvl, INT pt_to_trace, INT &pt0, INT *&cosetrep, 
 		INT verbose_level);
 		// called by poset_orbit_node::trace_next_point
@@ -883,27 +884,27 @@ public:
 
 	// poset_orbit_node_downstep.C
 	// top level functions:
-	void downstep(generator *gen, 
+	void downstep(poset_classification *gen, 
 		INT lvl, 
 		INT f_create_schreier_vector, INT f_compact, 
 		INT f_use_invariant_subset_if_available, 
 		INT f_implicit_fusion, 
 		INT verbose_level);
-		// Called from generator::downstep if we are acting on sets 
+		// Called from poset_classification::downstep if we are acting on sets 
 		// (i.e., not on subspaces).
 		// Calls downstep_orbits, 
 		// downstep_orbit
-	void compute_schreier_vector(generator *gen, 
+	void compute_schreier_vector(poset_classification *gen, 
 		INT lvl, INT f_compact, INT verbose_level);
-		// called from generator::recreate_schreier_vectors_at_level
-		// and from generator::count_live_points
+		// called from poset_classification::recreate_schreier_vectors_at_level
+		// and from poset_classification::count_live_points
 		// calls downstep_apply_early_test
 		// and check_orbits
 		// and Schreier.get_schreier_vector
 
 		// 1st level under downstep:
 	void downstep_orbits(
-		generator *gen, schreier &Schreier, action &AR, 
+		poset_classification *gen, schreier &Schreier, action &AR, 
 		INT lvl, 
 		INT f_use_invariant_subset_if_available, 
 		INT &f_using_invariant_subset, 
@@ -922,7 +923,7 @@ public:
 		// Schreier.compute_all_point_orbits
 		// and possibly printed using downstep_orbits_print
 	void downstep_orbit_test_and_schreier_vector(
-		generator *gen, schreier &Schreier, action &AR, 
+		poset_classification *gen, schreier &Schreier, action &AR, 
 		INT lvl, 
 		INT f_use_invariant_subset_if_available, 
 		INT f_using_invariant_subset,
@@ -935,7 +936,7 @@ public:
 		// create_schreier_vector_wrapper
 		// The order in which these two functions are called matters.
 	void downstep_implicit_fusion(
-		generator *gen, schreier &Schreier, action &AR, 
+		poset_classification *gen, schreier &Schreier, action &AR, 
 		INT f_using_invariant_subset,
 		INT lvl, 
 		INT f_implicit_fusion, 
@@ -944,7 +945,7 @@ public:
 		// called from downstep, 
 		// once downstep_orbit_test_and_schreier_vector is done
 		// calls test_orbits_for_implicit_fusion
-	void find_extensions(generator *gen, 
+	void find_extensions(poset_classification *gen, 
 		schreier &O, action &AR, INT f_using_invariant_subset, 
 		INT lvl, 
 		INT verbose_level);
@@ -956,14 +957,14 @@ public:
 
 		// second level under downstep:
 	INT downstep_get_invariant_subset(
-		generator *gen, 
+		poset_classification *gen, 
 		INT lvl, 
 		INT &n, INT *&subset, INT &f_subset_is_allocated, 
 		INT verbose_level);
 		// called from downstep_orbits
 		// Gets the live points at the present node.
 	void downstep_apply_early_test(
-		generator *gen, 
+		poset_classification *gen, 
 		INT lvl, 
 		INT n, INT *subset, 
 		INT *candidates, INT &nb_candidates, 
@@ -972,7 +973,7 @@ public:
 		// calls the callback early test function if available
 		// and calls test_point_using_check_functions otherwise
 
-	void check_orbits_wrapper(generator *gen, 
+	void check_orbits_wrapper(poset_classification *gen, 
 		schreier &Schreier, action &AR, INT f_using_invariant_subset, 
 		INT lvl, 
 		INT &nb_good_orbits1, INT &nb_points1, 
@@ -989,7 +990,7 @@ public:
 		// called from downstep_orbit_test_and_schreier_vector
 		// calls Schreier.get_schreier_vector
 
-	void test_orbits_for_implicit_fusion(generator *gen, 
+	void test_orbits_for_implicit_fusion(poset_classification *gen, 
 		schreier &Schreier, action &AR, 
 		INT f_using_invariant_subset, 
 		INT lvl, INT verbose_level);
@@ -998,7 +999,7 @@ public:
 		// Schreier data structure, 
 	INT nb_extension_points();
 		// sums up the lengths of orbits in all extensions
-	void check_orbits(generator *gen, 
+	void check_orbits(poset_classification *gen, 
 		schreier &Schreier, action &AR, 
 		INT f_using_invariant_subset, 
 		INT lvl, 
@@ -1010,7 +1011,7 @@ public:
 		// calls test_point_using_check_functions
 		// eliminates bad orbits from the Schreier data structure, 
 		// does not eliminate implicit fusion orbits
-	INT test_point_using_check_functions(generator *gen, 
+	INT test_point_using_check_functions(poset_classification *gen, 
 		INT lvl, INT rep, INT *the_set, 
 		INT verbose_level);
 		// called by check_orbits and downstep_apply_early_test 
@@ -1022,7 +1023,7 @@ public:
 	void relabel_schreier_vector(action &AR, INT verbose_level);
 		// called from compute_schreier_vector, 
 		// downstep_orbit_test_and_schreier_vector
-	void downstep_orbits_print(generator *gen, 
+	void downstep_orbits_print(poset_classification *gen, 
 		schreier &Schreier, action &AR, 
 		INT lvl, 
 		INT f_using_invariant_subset, INT f_print_orbits, 
@@ -1030,34 +1031,34 @@ public:
 
 
 	// poset_orbit_node_downstep_subspace_action.C
-	void setup_factor_space_action_light(generator *gen, 
+	void setup_factor_space_action_light(poset_classification *gen, 
 		action_on_factor_space &AF, 
 		INT lvl, INT verbose_level);
-	void setup_factor_space_action_with_early_test(generator *gen, 
+	void setup_factor_space_action_with_early_test(poset_classification *gen, 
 		action_on_factor_space &AF, action &A_factor_space, 
 		INT lvl, INT verbose_level);
-	void setup_factor_space_action(generator *gen, 
+	void setup_factor_space_action(poset_classification *gen, 
 		action_on_factor_space &AF, action &A_factor_space, 
 		INT lvl, INT f_compute_tables, 
 		INT verbose_level);
 	void downstep_subspace_action_print_orbits(
-		generator *gen, schreier &Schreier, 
+		poset_classification *gen, schreier &Schreier, 
 		INT lvl, 
 		INT f_print_orbits, 
 		INT verbose_level);
-	void downstep_subspace_action(generator *gen, 
+	void downstep_subspace_action(poset_classification *gen, 
 		INT lvl, 
 		INT f_create_schreier_vector, INT f_compact, 
 		INT f_use_invariant_subset_if_available, 
 		INT f_implicit_fusion, 
 		INT verbose_level);
 	void downstep_orbits_subspace_action(
-		generator *gen, schreier &Schreier, 
+		poset_classification *gen, schreier &Schreier, 
 		INT lvl, 
 		INT f_use_invariant_subset_if_available, 
 		INT &f_using_invariant_subset, 
 		INT verbose_level);
-	void find_extensions_subspace_action(generator *gen, schreier &O, 
+	void find_extensions_subspace_action(poset_classification *gen, schreier &O, 
 		action *A_factor_space, action_on_factor_space *AF, 
 		INT lvl, INT f_implicit_fusion, INT verbose_level);
 	void create_schreier_vector_wrapper_subspace_action(
@@ -1105,7 +1106,7 @@ struct coset_table_entry {
 
 class upstep_work {
 public:
-	generator *gen;
+	poset_classification *gen;
 	INT size;
 	INT prev;
 	INT prev_ex;
@@ -1145,7 +1146,7 @@ public:
 
 	upstep_work();
 	~upstep_work();
-	void init(generator *gen, 
+	void init(poset_classification *gen, 
 		INT size,
 		INT prev,
 		INT prev_ex,
@@ -1155,10 +1156,10 @@ public:
 		INT f_indicate_not_canonicals, 
 		FILE *fp, 
 		INT verbose_level);
-		// called from generator::extend_node
+		// called from poset_classification::extend_node
 	void handle_extension(INT &nb_fuse_cur, INT &nb_ext_cur, 
 		INT verbose_level);
-		// called from generator::extend_node
+		// called from poset_classification::extend_node
 		// Calls handle_extension_fusion_type 
 		// or handle_extension_unprocessed_type
 		//

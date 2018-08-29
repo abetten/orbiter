@@ -8,7 +8,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-INT poset_orbit_node::apply_fusion_element(generator *gen,
+INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 	INT lvl, INT current_node, 
 	INT current_extension, INT len, INT f_tolerant,
 	INT verbose_level)
@@ -122,7 +122,7 @@ INT poset_orbit_node::apply_fusion_element(generator *gen,
 }
 
 void poset_orbit_node::install_fusion_node(
-	generator *gen,
+	poset_classification *gen,
 	INT lvl, INT current_node, 
 	INT my_node, INT my_extension, INT my_coset, 
 	INT pt0, INT current_extension, 
@@ -311,7 +311,7 @@ void poset_orbit_node::install_fusion_node(
 		}
 }
 
-INT poset_orbit_node::trace_next_point_wrapper(generator *gen,
+INT poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
 	INT lvl, INT current_node,
 	INT len, INT f_implicit_fusion,
 	INT &f_failure_to_find_point,
@@ -348,7 +348,7 @@ INT poset_orbit_node::trace_next_point_wrapper(generator *gen,
 	return ret;
 }
 
-INT poset_orbit_node::trace_next_point_in_place(generator *gen,
+INT poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
 	INT lvl,
 	INT current_node,
 	INT size,
@@ -359,7 +359,7 @@ INT poset_orbit_node::trace_next_point_in_place(generator *gen,
 	INT f_implicit_fusion,
 	INT &f_failure_to_find_point,
 	INT verbose_level)
-// called by generator::trace_set_recursion
+// called by poset_classification::trace_set_recursion
 {
 	INT ret;
 	INT f_v = (verbose_level >= 1);
@@ -393,7 +393,7 @@ INT poset_orbit_node::trace_next_point_in_place(generator *gen,
 	return ret;
 }
 
-void poset_orbit_node::trace_starter(generator *gen, INT size,
+void poset_orbit_node::trace_starter(poset_classification *gen, INT size,
 	INT *cur_set, INT *next_set,
 	INT *cur_transporter, INT *next_transporter, 
 	INT verbose_level)
@@ -445,7 +445,7 @@ void poset_orbit_node::trace_starter(generator *gen, INT size,
 }
 
 
-INT poset_orbit_node::trace_next_point(generator *gen,
+INT poset_orbit_node::trace_next_point(poset_classification *gen,
 	INT lvl, INT current_node, INT size, 
 	INT *cur_set, INT *next_set,
 	INT *cur_transporter, INT *next_transporter, 
@@ -631,7 +631,7 @@ INT poset_orbit_node::trace_next_point(generator *gen,
 }
 
 INT poset_orbit_node::orbit_representative_and_coset_rep_inv(
-	generator *gen,
+	poset_classification *gen,
 	INT lvl, INT pt_to_trace,
 	INT &pt0, INT *&cosetrep,
 	INT verbose_level)

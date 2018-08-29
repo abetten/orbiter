@@ -63,9 +63,15 @@ public:
 	INT cur_time;
 		// increments with every allocate and every delete
 
+	INT f_ignore_duplicates;
+		// do not complain about duplicate entries
+	INT f_accumulate;
+		// do not remove entries when deleting memory
+
 	mem_object_registry();
 	~mem_object_registry();
 	void init(INT verbose_level);
+	void accumulate_and_ignore_duplicates(INT verbose_level);
 	void allocate(INT N, INT verbose_level);
 	void set_automatic_dump(
 			INT automatic_dump_interval, const BYTE *fname_mask,

@@ -11,7 +11,7 @@
 
 void isomorph_read_statistic_files(
 	action *A_base, action *A,
-	generator *gen,
+	poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix, INT level,
 	const BYTE **fname, INT nb_files,
@@ -218,7 +218,7 @@ void isomorph_read_statistic_files(
 }
 
 void isomorph_build_db(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	INT verbose_level)
@@ -273,7 +273,7 @@ void isomorph_build_db(
 }
 
 void isomorph_read_solution_files(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	const BYTE **fname, INT nb_files, 
@@ -356,7 +356,7 @@ void isomorph_read_solution_files(
 }
 
 void isomorph_init_solutions_from_memory(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	INT **Solutions, INT *Nb_sol, INT verbose_level)
@@ -435,7 +435,7 @@ void isomorph_init_solutions_from_memory(
 }
 
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
-		action *A_base, action *A, generator *gen,
+		action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT *list_of_cases, INT nb_files, INT verbose_level)
 {
@@ -531,7 +531,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 }
 
 void isomorph_read_solution_files_from_clique_finder(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT nb_files, INT verbose_level)
 {
@@ -621,7 +621,7 @@ void isomorph_read_solution_files_from_clique_finder(
 }
 
 void isomorph_compute_orbits(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level, INT verbose_level)
 {
@@ -670,7 +670,7 @@ void isomorph_compute_orbits(
 
 
 void isomorph_testing(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	INT f_play_back, const BYTE *old_event_file,
@@ -824,7 +824,7 @@ void isomorph_testing(
 }
 
 void isomorph_classification_graph(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	INT verbose_level)
@@ -883,7 +883,7 @@ void isomorph_classification_graph(
 
 
 void isomorph_identify(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	INT identify_nb_files, const BYTE **fname, INT *Iso_type, 
@@ -985,7 +985,7 @@ void isomorph_identify(
 }
 
 void isomorph_identify_table(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify,
 	const BYTE *prefix_iso, INT level,
 	INT nb_rows, INT *Table, INT *Iso_type, 
@@ -1086,7 +1086,7 @@ void isomorph_identify_table(
 }
 
 void isomorph_worker(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, 
 	void (*work_callback)(isomorph *Iso, void *data, INT verbose_level), 
 	void *work_data, 
@@ -1152,7 +1152,7 @@ void isomorph_worker(
 }
 
 void isomorph_compute_down_orbits(
-	action *A_base, action *A, generator *gen,
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, const BYTE *prefix, 
 	void *data, 
 	INT level, INT verbose_level)

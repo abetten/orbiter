@@ -30,7 +30,7 @@ void do_simeon(set_and_stabilizer *SaS);
 	INT *Elt;
 	INT *v;
 	schreier *Sch;
-	generator *Gen;
+	poset_classification *Gen;
 	projective_space *P;
 
 	action *A2; // action on the lines
@@ -275,7 +275,7 @@ void do_simeon(set_and_stabilizer *SaS)
 
 
 	INT target_depth = 5;
-	generator *Gen2;
+	poset_classification *Gen2;
 
 	compute_orbits_on_subsets(Gen2, 
 		target_depth,

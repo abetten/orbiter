@@ -108,7 +108,7 @@ public:
 		// do not free
 
 
-	generator *gen;
+	poset_classification *gen;
 		// do not free
 
 
@@ -300,7 +300,7 @@ public:
 	void allocate_tmp_data();
 	void free_tmp_data();
 	void init(const BYTE *prefix, 
-		action *A_base, action *A, generator *gen, 
+		action *A_base, action *A, poset_classification *gen,
 		INT size, INT level, 
 		INT f_use_database_for_starter, 
 		INT f_implicit_fusion, INT verbose_level);
@@ -338,7 +338,7 @@ public:
 	void test_hash(INT verbose_level);
 	void compute_Ago_Ago_induced(longinteger_object *&Ago, 
 		longinteger_object *&Ago_induced, INT verbose_level);
-	void init_high_level(action *A, generator *gen, 
+	void init_high_level(action *A, poset_classification *gen,
 		INT size, BYTE *prefix_classify, BYTE *prefix, 
 		INT level, INT verbose_level);
 	
@@ -702,7 +702,7 @@ public:
 
 	action *A;
 	action *A2;
-	generator *gen;
+	poset_classification *gen;
 	INT target_size;
 	const BYTE *prefix_with_directory;
 	exact_cover_arguments *ECA;
@@ -724,7 +724,7 @@ public:
 	void freeself();
 	void read_arguments(int argc, const char **argv, 
 		INT verbose_level);
-	void init(action *A, action *A2, generator *gen, 
+	void init(action *A, action *A2, poset_classification *gen,
 		INT target_size, const BYTE *prefix_with_directory, 
 		exact_cover_arguments *ECA, 
 		void (*callback_report)(isomorph *Iso, void *data, 
@@ -753,16 +753,16 @@ struct isomorph_worker_data {
 // #############################################################################
 
 void isomorph_read_statistic_files(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix, INT level, 
 	const BYTE **fname, INT nb_files, INT verbose_level);
 void isomorph_build_db(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, INT verbose_level);
 void isomorph_read_solution_files(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT nb_files, 
@@ -772,56 +772,57 @@ void isomorph_read_solution_files(action *A_base,
 	void *final_test_data, 
 	INT verbose_level);
 void isomorph_init_solutions_from_memory(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	INT **Solutions, INT *Nb_sol, INT verbose_level);
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
-	action *A_base, action *A, generator *gen, 
+	action *A_base, action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT *list_of_cases, 
 	INT nb_files, INT verbose_level);
 void isomorph_read_solution_files_from_clique_finder(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	const BYTE **fname, INT nb_files, INT verbose_level);
 void isomorph_compute_orbits(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, INT verbose_level);
 void isomorph_testing(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	INT f_play_back, const BYTE *old_event_file, 
 	INT print_mod, INT verbose_level);
 void isomorph_classification_graph(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	INT verbose_level);
 void isomorph_identify(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	INT identify_nb_files, const BYTE **fname, INT *Iso_type, 
 	INT f_save, INT verbose_level);
 void isomorph_identify_table(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, 
 	const BYTE *prefix_iso, INT level, 
 	INT nb_rows, INT *Table, INT *Iso_type, 
 	INT verbose_level);
 	// Table[nb_rows * size]
-void isomorph_worker(action *A_base, action *A, generator *gen, 
+void isomorph_worker(action *A_base, action *A,
+	poset_classification *gen,
 	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, 
 	void (*work_callback)(isomorph *Iso, void *data, INT verbose_level), 
 	void *work_data, 
 	INT level, INT verbose_level);
 void isomorph_compute_down_orbits(action *A_base, 
-	action *A, generator *gen, 
+	action *A, poset_classification *gen,
 	INT size, const BYTE *prefix_classify, const BYTE *prefix, 
 	void *data, 
 	INT level, INT verbose_level);

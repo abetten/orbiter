@@ -11,6 +11,7 @@ all: ;
 	cd spread; $(MAKE) all
 	cd subspace_orbits; $(MAKE) all
 	cd surfaces; $(MAKE) all
+	cd test; $(MAKE) all
 	cd tdo; $(MAKE) all
 	cd tools; $(MAKE) all
 
@@ -27,6 +28,7 @@ clean: ;
 	cd spread; $(MAKE) clean
 	cd subspace_orbits; $(MAKE) clean
 	cd surfaces; $(MAKE) clean
+	cd test; $(MAKE) clean
 	cd tdo; $(MAKE) clean
 	cd tools; $(MAKE) clean
 

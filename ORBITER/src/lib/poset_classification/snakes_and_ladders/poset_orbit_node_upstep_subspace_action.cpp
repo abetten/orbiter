@@ -8,7 +8,7 @@
 #include "poset_classification/poset_classification.h"
 
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
-	generator *gen,
+	poset_classification *gen,
 	INT lvl, INT pt_to_trace,
 	INT &pt0, INT *&cosetrep, INT verbose_level)
 // called by oracle::trace_next_point

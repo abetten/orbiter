@@ -18,8 +18,8 @@ void use_group(const BYTE *fname, colored_graph *CG,
 	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
 	INT f_sideways, INT nb_print_level, INT *print_level, 
 	INT verbose_level);
-void print_orbits_at_level(generator *gen, INT level, INT verbose_level);
-void save_orbits_at_level(const BYTE *fname, generator *gen, INT level, INT verbose_level);
+void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level);
+void save_orbits_at_level(const BYTE *fname, poset_classification *gen, INT level, INT verbose_level);
 void early_test_function_cliques(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
@@ -214,7 +214,7 @@ void use_group(const BYTE *fname, colored_graph *CG,
 
 
 	BYTE prefix[1000];
-	generator *gen;
+	poset_classification *gen;
 	INT nb_orbits, depth;
 
 	if (f_all_cliques) {
@@ -305,7 +305,7 @@ void use_group(const BYTE *fname, colored_graph *CG,
 	delete Aut;
 }
 
-void print_orbits_at_level(generator *gen, INT level, INT verbose_level)
+void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level)
 {
 	INT *set;
 	longinteger_object go, ol, ago;
@@ -342,7 +342,8 @@ void print_orbits_at_level(generator *gen, INT level, INT verbose_level)
 	FREE_INT(set);
 }
 
-void save_orbits_at_level(const BYTE *fname, generator *gen, INT level, INT verbose_level)
+void save_orbits_at_level(const BYTE *fname,
+		poset_classification *gen, INT level, INT verbose_level)
 {
 	INT *set;
 	//longinteger_object go, ol, ago;

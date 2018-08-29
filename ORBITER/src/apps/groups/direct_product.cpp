@@ -67,8 +67,8 @@ public:
 	strong_generators *SG;
 	longinteger_object go;
 	direct_product *P;
-	generator *Pairs;
-	generator *Gen;
+	poset_classification *Pairs;
+	poset_classification *Gen;
 
 	// orbits on pairs:
 	INT f_subgroup;
@@ -872,7 +872,7 @@ void direct_product_action::init(int argc, const char **argv,
 					"after Strong_gens->init_from_data_"
 					"with_target_go_ascii" << endl;
 			}
-		Pairs = NEW_OBJECT(generator);
+		Pairs = NEW_OBJECT(poset_classification);
 
 		Pairs->read_arguments(argc, argv, 0);
 
@@ -1165,7 +1165,7 @@ void direct_product_action::init(int argc, const char **argv,
 	} else {
 
 
-		Gen = NEW_OBJECT(generator);
+		Gen = NEW_OBJECT(poset_classification);
 
 		Gen->read_arguments(argc, argv, 0);
 

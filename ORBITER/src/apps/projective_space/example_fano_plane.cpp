@@ -65,7 +65,7 @@ int main()
 
 	Sch->print_and_list_orbits(cout);
 	
-	generator *Gen;
+	poset_classification *Gen;
 
 	Gen = orbits_on_k_sets_compute(A, A, 
 		A->Strong_gens, 

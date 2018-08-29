@@ -104,7 +104,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 	
 	set_stabilizer_compute::A = A0;
 	set_stabilizer_compute::A2 = A;
-	gen = new generator;
+	gen = new poset_classification;
 	
 	set_stabilizer_compute::set_size = size;
 	

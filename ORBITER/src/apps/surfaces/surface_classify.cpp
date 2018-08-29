@@ -113,7 +113,11 @@ int main(int argc, const char **argv)
 			memory_dump_at_end_fname = argv[++i];
 			cout << "-memory_dump_at_end " << memory_dump_at_end_fname << endl;
 			}
+		else if (strcmp(argv[i], "-memory_dump_cumulative") == 0) {
+			global_mem_object_registry.accumulate_and_ignore_duplicates(verbose_level);
+			cout << "-memory_dump_cumulative" << endl;
 		}
+	}
 
 
 
@@ -275,7 +279,7 @@ int main(int argc, const char **argv)
 
 
 	if (f_double_sixes_only) {
-		cout << "f_double_sixes_only is true so we terminate now."
+		cout << "f_double_sixes_only is true so we terminate now." << endl;
 		exit(0);
 		}
 
