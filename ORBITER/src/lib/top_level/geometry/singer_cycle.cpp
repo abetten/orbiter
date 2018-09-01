@@ -169,7 +169,7 @@ void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbo
 		}
 	Elt = NEW_INT(A->elt_size_in_INT);
 	A->make_element(Elt, Singer_matrix, verbose_level);
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(1);
 	A->element_move(Elt, gens->ith(0), 0);
@@ -199,7 +199,7 @@ void singer_cycle::init_lines(INT verbose_level)
 
 	v = NEW_INT(n);
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	P->init(n - 1, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -253,7 +253,7 @@ void singer_cycle::init_lines(INT verbose_level)
 
 
 
-	Sch = new schreier;
+	Sch = NEW_OBJECT(schreier);
 	Sch->init(A2);
 	Sch->initialize_tables();
 	Sch->init_single_generator(Elt);
@@ -332,14 +332,14 @@ void singer_cycle::init_lines(INT verbose_level)
 	INT f_pic = FALSE;
 	INT f_include_tda_scheme = FALSE;
 	
-	Inc = new incidence_structure;
+	Inc = NEW_OBJECT(incidence_structure);
 	
 	Inc->init_by_matrix_as_bitvector(P->N_points, P->N_lines, P->incidence_bitvec, 0);
 
 	INT set_size = P->N_points;
 	INT nb_blocks = P->N_lines;
 		
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
@@ -378,8 +378,8 @@ void singer_cycle::init_lines(INT verbose_level)
 	Inc->get_and_print_column_tactical_decomposition_scheme_tex(cout, FALSE /* f_enter_math */, *Stack);
 #endif
 
-	delete Inc;
-	delete Stack;
+	FREE_OBJECT(Inc);
+	FREE_OBJECT(Stack);
 	
 	FREE_INT(line);
 	FREE_INT(v);

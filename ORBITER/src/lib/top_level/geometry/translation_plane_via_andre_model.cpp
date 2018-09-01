@@ -41,10 +41,10 @@ void translation_plane_via_andre_model::null()
 void translation_plane_via_andre_model::freeself()
 {
 	if (Andre) {
-		delete Andre;
+		FREE_OBJECT(Andre);
 		}
 	if (Line) {
-		delete Line;
+		FREE_OBJECT(Line);
 		}
 	if (Incma) {
 		FREE_INT(Incma);
@@ -59,25 +59,25 @@ void translation_plane_via_andre_model::freeself()
 		FREE_INT(Line_intersection);
 		}
 	if (An) {
-		delete An;
+		FREE_OBJECT(An);
 		}
 	if (An1) {
-		delete An1;
+		FREE_OBJECT(An1);
 		}
 	if (OnAndre) {
-		delete OnAndre;
+		FREE_OBJECT(OnAndre);
 		}
 	if (strong_gens) {
-		delete strong_gens;
+		FREE_OBJECT(strong_gens);
 		}
 	if (Inc) {
-		delete Inc;
+		FREE_OBJECT(Inc);
 		}
 	if (Stack) {
-		delete Stack;
+		FREE_OBJECT(Stack);
 		}
 	if (arcs) {
-		delete arcs;
+		FREE_OBJECT(arcs);
 		}
 	null();
 }
@@ -110,7 +110,7 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 	n1 = n + 1;
 	k1 = k + 1;
 	
-	Andre = new andre_construction;
+	Andre = NEW_OBJECT(andre_construction);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init spread_elements_numeric:" << endl;
@@ -130,7 +130,7 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 
 
 
-	Line = new andre_construction_line_element;
+	Line = NEW_OBJECT(andre_construction_line_element);
 	Incma = NEW_INT(N * N);
 	pts_on_line = NEW_INT(Andre->spread_size);
 
@@ -267,7 +267,7 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 	INT nb_cols = N;
 	
 
-	Inc = new incidence_structure;
+	Inc = NEW_OBJECT(incidence_structure);
 
 	Inc->init_by_matrix(nb_rows, nb_cols, Incma, verbose_level - 2);
 	if (f_v) {
@@ -287,13 +287,13 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init initializing action An" << endl;
 		}
-	An = new action;
+	An = NEW_OBJECT(action);
 	An->init_projective_group(n, F, f_semilinear, f_basis, 0 /* verbose_level */);
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::init initializing action An1" << endl;
 		}
-	An1 = new action;
+	An1 = NEW_OBJECT(action);
 	An1->init_projective_group(n1, F, f_semilinear, f_basis, 0 /*verbose_level */);
 
 
@@ -302,11 +302,11 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 		}
 
 
-	OnAndre = new action;
+	OnAndre = NEW_OBJECT(action);
 	OnAndre->induced_action_on_andre(An, An1, Andre, verbose_level);
 
 
-	strong_gens = new strong_generators;
+	strong_gens = NEW_OBJECT(strong_generators);
 
 
 	if (f_v) {
@@ -336,7 +336,7 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 	INT set_size = nb_rows;
 	INT nb_blocks = nb_cols;
 		
-	Stack = new partitionstack;
+	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 	Stack->subset_continguous(set_size, nb_blocks);
 	Stack->split_cell(0 /* verbose_level */);
@@ -385,7 +385,7 @@ void translation_plane_via_andre_model::classify_arcs(const BYTE *prefix, INT de
 		cout << "translation_plane_via_andre_model::classify_arcs" << endl;
 		}
 
-	arcs = new poset_classification;
+	arcs = NEW_OBJECT(poset_classification);
 
 	//gen->read_arguments(argc, argv, 0);
 
@@ -480,7 +480,7 @@ void translation_plane_via_andre_model::classify_subplanes(const BYTE *prefix, I
 		cout << "translation_plane_via_andre_model::classify_subplanes" << endl;
 		}
 
-	arcs = new poset_classification;
+	arcs = NEW_OBJECT(poset_classification);
 
 	//gen->read_arguments(argc, argv, 0);
 

@@ -196,14 +196,14 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 			if (search_data(new_object, idx)) {
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
-							"new object is already in the list, "
+							"n e w object is already in the list, "
 							"at position " << idx << endl;
 					}
 				}
 			else {
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
-							"Found a new object : ";
+							"Found a n e w object : ";
 					INT_vec_print(cout, new_object, sz);
 					cout << endl;
 					}
@@ -277,7 +277,7 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 				Q[Q_len++] = idx;
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit  "
-							"storing new equation at position "
+							"storing n e w equation at position "
 							<< idx << endl;
 					}
 
@@ -390,7 +390,7 @@ void orbit_of_equations::get_random_schreier_generator(
 
 	if (search_data(new_object, pt2)) {
 		if (f_vv) {
-			cout << "new object is at position " << pt2 << endl;
+			cout << "n e w object is at position " << pt2 << endl;
 			}
 		}
 	else {
@@ -408,7 +408,7 @@ void orbit_of_equations::get_random_schreier_generator(
 	map_an_equation(cur_object, new_object, E5, 0 /* verbose_level*/);
 	if (search_data(new_object, pt3)) {
 		if (f_vv) {
-			cout << "testing: new object is at position " << pt3 << endl;
+			cout << "testing: n e w object is at position " << pt3 << endl;
 			}
 		}
 	else {
@@ -456,7 +456,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		cout << "orbit_of_equations::compute_stabilizer" << endl;
 		}
 
-	Stab = new sims;
+	Stab = NEW_OBJECT(sims);
 	longinteger_object cur_go, target_go;
 	longinteger_domain D;
 	INT len, r, cnt = 0, f_added, drop_out_level, image;
@@ -542,7 +542,7 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		Stab->group_order(cur_go);
 		if ((f_vv && f_added) || f_vvv) {
 			cout << "iteration " << cnt
-				<< " the new group order is " << cur_go
+				<< " the n e w group order is " << cur_go
 				<< " expecting a group of order " << target_go << endl; 
 			}
 		cnt++;
@@ -578,16 +578,16 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 				<< stab_order << endl;
 		}
 	
-	gens = new strong_generators;
+	gens = NEW_OBJECT(strong_generators);
 	gens->init(A);
 	gens->init_from_sims(Stab, verbose_level);
 
-	delete Stab;
+	FREE_OBJECT(Stab);
 	if (f_v) {
 		cout << "orbit_of_equations::generators_for_stabilizer_of_"
 				"orbit_rep done" << endl;
 		}
-	return gens;
+	FREE_OBJECT(gens);
 }
 
 

@@ -3,6 +3,7 @@ ORBITER/nbproject/
 *.out
 *.o
 *~
+*.dSYM
 orbiter.tar.gz
 
 

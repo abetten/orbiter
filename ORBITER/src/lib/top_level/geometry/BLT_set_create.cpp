@@ -62,7 +62,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, INT verbose_level)
 	if (f_v) {
 		cout << "BLT_set_create::init q = " << q << endl;
 		}
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 	
 
@@ -75,7 +75,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, INT verbose_level)
 		}
 
 
-	A = new action;
+	A = NEW_OBJECT(action);
 
 	if (f_v) {
 		cout << "BLT_set_create::init before A->init_orthogonal_group" << endl;
@@ -124,7 +124,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, INT verbose_level)
 			}
 		f_has_lines = TRUE;
 
-		Sg = new strong_generators;
+		Sg = NEW_OBJECT(strong_generators);
 		//Sg->init(Surf_A->A, verbose_level);
 		if (f_v) {
 			cout << "surface_create::init before Sg->generators_for_the_stabilizer_of_the_cubic_surface" << endl;
@@ -201,7 +201,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, INT verbose_level)
 		set = NEW_INT(q + 1);
 		INT_vec_copy(BLT_representative(q, Descr->iso), set, q + 1);
 
-		Sg = new strong_generators;
+		Sg = NEW_OBJECT(strong_generators);
 
 		if (f_v) {
 			cout << "BLT_set_create::init before Sg->BLT_set_from_catalogue_stabilizer" << endl;
@@ -337,12 +337,12 @@ void BLT_set_create::apply_transformations(const BYTE **transform_coeffs,
 
 		strong_generators *SG2;
 		
-		SG2 = new strong_generators;
+		SG2 = NEW_OBJECT(strong_generators);
 		if (f_v) {
 			cout << "BLT_set_create::apply_transformations before SG2->init_generators_for_the_conjugate_group_avGa" << endl;
 			}
 		SG2->init_generators_for_the_conjugate_group_avGa(Sg, Elt2, verbose_level);
-		delete Sg;
+		FREE_OBJECT(Sg);
 		Sg = SG2;
 
 		FREE_INT(transformation_coeffs);

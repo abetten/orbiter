@@ -174,7 +174,7 @@ void orbit_of_sets::compute(INT verbose_level)
 					}
 				Q[Q_len++] = idx;
 				if (f_vv) {
-					cout << "storing new set at position " << idx << endl;
+					cout << "storing n e w set at position " << idx << endl;
 					}
 
 #if 0

@@ -75,7 +75,7 @@ public:
 	action *A_on_the_set;
 	
 	sims *Stab;
-	longinteger_object stab_order, new_stab_order;
+	longinteger_object stab_order, n_e_w_stab_order;
 	INT nb_times_orbit_count_does_not_match_up;
 	INT backtrack_nodes_first_time;
 	INT backtrack_nodes_total_in_loop;
@@ -93,11 +93,11 @@ public:
 	// maintained by null1, allocate1, free1:
 	INT *reduced_set1; // [set_size]
 	INT *reduced_set2; // [set_size]
-	INT *reduced_set1_new_labels; // [set_size]
-	INT *reduced_set2_new_labels; // [set_size]
+	INT *reduced_set1_n_e_w_labels; // [set_size]
+	INT *reduced_set2_n_e_w_labels; // [set_size]
 	INT *canonical_set1; // [set_size]
 	INT *canonical_set2; // [set_size]
-	INT *elt1, *Elt1, *Elt1_inv, *new_automorphism, *Elt4;
+	INT *elt1, *Elt1, *Elt1_inv, *n_e_w_automorphism, *Elt4;
 	INT *elt2, *Elt2;
 
 

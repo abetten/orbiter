@@ -59,26 +59,26 @@ void arc_generator::null()
 void arc_generator::freeself()
 {
 	if (ECA) {
-		delete ECA;
+		FREE_OBJECT(ECA);
 		}
 	if (IA) {
-		delete IA;
+		FREE_OBJECT(IA);
 		}
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		}
 	
 	if (Grass) {
-		delete Grass;
+		FREE_OBJECT(Grass);
 		}
 	if (A) {
-		delete A;
+		FREE_OBJECT(A);
 		}
 	if (A_on_lines) {
-		delete A_on_lines;
+		FREE_OBJECT(A_on_lines);
 		}
 	if (P) {
-		delete P;
+		FREE_OBJECT(P);
 		}
 	if (line_type) {
 		FREE_INT(line_type);
@@ -91,8 +91,8 @@ void arc_generator::read_arguments(int argc, const char **argv)
 	INT i;
 	INT f_q = FALSE;
 
-	ECA = new exact_cover_arguments;
-	IA = new isomorph_arguments;
+	ECA = NEW_OBJECT(exact_cover_arguments);
+	IA = NEW_OBJECT(isomorph_arguments);
 
 	for (i = 1; i < argc; i++) {
 		
@@ -266,9 +266,9 @@ void arc_generator::init(finite_field *F,
 
 	arc_generator::starter_size = starter_size;
 	
-	A = new action;
-	A_on_lines = new action;
-	AG = new action_on_grassmannian;
+	A = NEW_OBJECT(action);
+	A_on_lines = NEW_OBJECT(action);
+	AG = NEW_OBJECT(action_on_grassmannian);
 
 	
 
@@ -301,7 +301,7 @@ void arc_generator::init(finite_field *F,
 	if (f_v) {
 		cout << "arc_generator::init creating action on lines" << endl;
 		}
-	Grass = new grassmann;
+	Grass = NEW_OBJECT(grassmann);
 
 	Grass->init(n + 1 /*n*/, 2 /*k*/, F, verbose_level - 2);
 	AG->init(*A, Grass, verbose_level - 2);
@@ -322,7 +322,7 @@ void arc_generator::init(finite_field *F,
 		}
 
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	if (f_v) {
 		cout << "arc_generator::init before P->init" << endl;
@@ -369,7 +369,7 @@ void arc_generator::prepare_generator(INT verbose_level)
 		cout << "arc_generator::prepare_generator starter_size = " << starter_size << endl;
 		}
 
-	gen = new poset_classification;
+	gen = NEW_OBJECT(poset_classification);
 
 
 	gen->read_arguments(argc, argv, 0);
@@ -522,7 +522,7 @@ void arc_generator::compute_starter(INT verbose_level)
 		BYTE fname_csv[1000];
 		sprintf(fname_csv, "orbits_%ld.csv", depth);
 		Sp->save(fname_csv, verbose_level);
-		delete Sp;
+		FREE_OBJECT(Sp);
 		}
 
 
@@ -697,39 +697,6 @@ void arc_generator::print(INT len, INT *S)
 
 
 
-#if 0
-		if (len1 == 0 && len == 6) {
-
-			eckardt_point *E;
-			INT nb_E;
-			INT s, t, i, j;
-	
-			P->find_Eckardt_points_from_arc_not_on_conic(S, E, nb_E, verbose_level);
-			cout << "We found " << nb_E << " Eckardt points" << endl;
-
-			for (s = 0; s < nb_E; s++) {
-				cout << s << " / " << nb_E << " : ";
-				if (E[s].len == 3) {
-					cout << "E_{";
-					for (t = 0; t < 3; t++) {
-						k2ij(E[s].index[t], i, j, 6);
-						cout << i + 1 << j + 1;
-						if (t < 2) {
-							cout << ",";
-							}
-						}
-					cout << "} B-pt=" << E[s].pt << endl;
-					}
-				else {
-					cout << "E_{" << E[s].index[0] + 1 << E[s].index[1] + 1 << "}" << endl;
-					}
-				}
-
-			cout << "We found " << nb_E << " Eckardt points" << endl;
-
-			delete [] E;
-			}
-#endif
 
 
 		for (i = 0; i < len1; i++) {
@@ -929,7 +896,7 @@ void arc_generator::lifting_prepare_function_new(exact_cover *E, INT starter_cas
 	nb_rows = nb_tangent_lines + nb_external_lines;
 	nb_cols = nb_candidates;
 
-	Dio = new diophant;
+	Dio = NEW_OBJECT(diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->sum = nb_needed;
 
@@ -1057,8 +1024,8 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 	longinteger_object *Ago, *Ago_induced;
 	INT *Ago_INT;
 
-	Ago = new longinteger_object[Iso.Reps->count];
-	Ago_induced = new longinteger_object[Iso.Reps->count];
+	Ago = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
+	Ago_induced = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
 	Ago_INT = NEW_INT(Iso.Reps->count);
 
 
@@ -1323,8 +1290,8 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 	latex_foot(f);
 	
 	FREE_INT(Ago_INT);
-	delete [] Ago;
-	delete [] Ago_induced;
+	FREE_OBJECTS(Ago);
+	FREE_OBJECTS(Ago_induced);
 	}
 
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
@@ -1345,8 +1312,8 @@ void arc_generator::report_decompositions(isomorph &Iso, ofstream &f, INT orbit,
 	INT *Mtx;
 	INT i, j, h;
 
-	Inc = new incidence_structure;
-	gens = new strong_generators;
+	Inc = NEW_OBJECT(incidence_structure);
+	gens = NEW_OBJECT(strong_generators);
 
 	Stab = Iso.Reps->stab[orbit];
 	gens->init_from_sims(Stab, 0 /* verbose_level */);
@@ -1402,7 +1369,7 @@ void arc_generator::report_decompositions(isomorph &Iso, ofstream &f, INT orbit,
 	{
 		schreier *Sch_points;
 		schreier *Sch_lines;
-		Sch_points = new schreier;
+		Sch_points = NEW_OBJECT(schreier);
 		Sch_points->init(A /*A_on_points*/);
 		Sch_points->initialize_tables();
 		Sch_points->init_generators(*gens->gens /* *generators */);
@@ -1411,7 +1378,7 @@ void arc_generator::report_decompositions(isomorph &Iso, ofstream &f, INT orbit,
 		if (f_v) {
 			cout << "found " << Sch_points->nb_orbits << " orbits on points" << endl;
 			}
-		Sch_lines = new schreier;
+		Sch_lines = NEW_OBJECT(schreier);
 		Sch_lines->init(A_on_lines);
 		Sch_lines->initialize_tables();
 		Sch_lines->init_generators(*gens->gens /* *generators */);
@@ -1428,8 +1395,8 @@ void arc_generator::report_decompositions(isomorph &Iso, ofstream &f, INT orbit,
 			Sch_lines->orbit_first, Sch_lines->orbit_len, Sch_lines->orbit,
 			Inc->nb_points() /* offset */, 
 			verbose_level - 2);
-		delete Sch_points;
-		delete Sch_lines;
+		FREE_OBJECT(Sch_points);
+		FREE_OBJECT(Sch_lines);
 	}
 
 	if (S.ht < 50) {
@@ -1441,8 +1408,8 @@ void arc_generator::report_decompositions(isomorph &Iso, ofstream &f, INT orbit,
 		}
 
 	FREE_INT(Mtx);
-	delete gens;
-	delete Inc;
+	FREE_OBJECT(gens);
+	FREE_OBJECT(Inc);
 }
 
 void arc_generator::report_stabilizer(isomorph &Iso, ofstream &f, INT orbit, INT verbose_level)

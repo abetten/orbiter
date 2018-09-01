@@ -63,15 +63,15 @@ void test1(INT n, INT q, INT verbose_level)
 	finite_field *F;
 	projective_space *P;
 
-	F = new finite_field;
-	P = new projective_space;
+	F = NEW_OBJECT(finite_field);
+	P = NEW_OBJECT(projective_space);
 
 	F->init(q, 0);
 	P->init(n, F, 
 		TRUE /* f_init_incidence_structure */, 
 		verbose_level);
 
-	delete P;
-	delete F;
+	FREE_OBJECT(P);
+	FREE_OBJECT(F);
 }
 

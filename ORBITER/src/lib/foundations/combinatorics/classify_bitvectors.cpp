@@ -42,13 +42,13 @@ void classify_bitvectors::freeself()
 		for (i = 0; i < nb_types; i++) {
 			FREE_UBYTE(Type_data[i]);
 			}
-		delete [] Type_data;
+		FREE_PUBYTE(Type_data);
 		}
 	if (Type_extra_data) {
 		for (i = 0; i < nb_types; i++) {
 			//FREE_UBYTE(Type_data[i]);
 			}
-		delete [] Type_extra_data;
+		FREE_pvoid(Type_extra_data);
 		}
 	if (Type_rep) {
 		FREE_INT(Type_rep);
@@ -79,8 +79,8 @@ void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
 		}
 	classify_bitvectors::N = N;
 	classify_bitvectors::rep_len = rep_len;
-	Type_data = new PUBYTE [N];
-	Type_extra_data = new pvoid [N];
+	Type_data = NEW_PUBYTE(N);
+	Type_extra_data = NEW_pvoid(N);
 	Type_rep = NEW_INT(N);
 	Type_mult = NEW_INT(N);
 	type_of = NEW_INT(N);

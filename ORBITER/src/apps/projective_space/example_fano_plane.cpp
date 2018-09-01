@@ -29,7 +29,7 @@ int main()
 		
 	v = NEW_INT(d);
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	create_linear_group(S, A, 
@@ -90,6 +90,6 @@ int main()
 		}
 
 	
-	
+	FREE_OBJECT(F);
 }
 

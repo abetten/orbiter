@@ -53,7 +53,7 @@ void choose_points_or_lines::freeself()
 		FREE_INT(transporter_inv);
 		}
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		}
 	free_representative();
 	null();
@@ -80,24 +80,16 @@ void choose_points_or_lines::free_representative()
 		FREE_INT(representative);
 		}
 	if (stab_order) {
-		delete stab_order;
+		FREE_OBJECT(stab_order);
 		}
 	if (Stab_Strong_gens) {
-		delete Stab_Strong_gens;
+		FREE_OBJECT(Stab_Strong_gens);
 		}
-#if 0
-	if (stab_gens) {
-		delete stab_gens;
-		}
-	if (stab_tl) {
-		FREE_INT(stab_tl);
-		}
-#endif
 	if (f_v) {
 		cout << "choose_points_or_lines::free_representative freeing stab" << endl;
 		}
 	if (stab) {
-		delete stab;
+		FREE_OBJECT(stab);
 		}
 	null_representative();
 }
@@ -146,18 +138,10 @@ void choose_points_or_lines::compute_orbits_from_sims(sims *G, INT verbose_level
 	if (f_v) {
 		cout << "choose_points_or_lines::compute_orbits_from_sims " << label << endl;
 		}
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(G, verbose_level - 2);
 	compute_orbits(Strong_gens, verbose_level);
-	delete Strong_gens;
-#if 0
-	gens =  new vector_ge;
-	tl = NEW_INT(G->A->base_len);
-	G->extract_strong_generators_in_order(*gens, tl, verbose_level - 2);
-	compute_orbits(gens, tl, verbose_level);
-	FREE_INT(tl);
-	delete gens;
-#endif
+	FREE_OBJECT(Strong_gens);
 }
 
 void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vector_ge *gens, INT *tl */, INT verbose_level)
@@ -170,10 +154,10 @@ void choose_points_or_lines::compute_orbits(strong_generators *Strong_gens /*vec
 		}
 	
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		}
 	
-	gen = new poset_classification;
+	gen = NEW_OBJECT(poset_classification);
 
 	sprintf(gen->fname_base, "%s", label);
 	
@@ -274,7 +258,7 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 	
 	longinteger_object go;
 	
-	G = new group;
+	G = NEW_OBJECT(group);
 	representative = NEW_INT(nb_points_or_lines);
 	the_favorite_representative = NEW_INT(nb_points_or_lines);
 	
@@ -339,10 +323,8 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 		cout << "stabilizer of the chosen set has order " << go << endl;
 		}
 	
-	stab_order = new longinteger_object;
-	Stab_Strong_gens = new strong_generators;
-	//stab_gens = new vector_ge;
-	//stab_tl = NEW_INT(A->base_len);
+	stab_order = NEW_OBJECT(longinteger_object);
+	Stab_Strong_gens = NEW_OBJECT(strong_generators);
 
 	if (f_changed) {
 		
@@ -352,7 +334,7 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 		if (f_vvv) {
 			cout << "computing NewStab (because we changed)" << endl;
 			}
-		NewStab = new sims;
+		NewStab = NEW_OBJECT(sims);
 		NewStab->init(A);
 		NewStab->init_trivial_group(0/*verbose_level - 1*/);
 		//NewStab->group_order(stab_order);
@@ -366,7 +348,7 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 		//NewStab->extract_strong_generators_in_order(*stab_gens, stab_tl, 0/*verbose_level*/);
 		NewStab->group_order(*stab_order);
 
-		delete NewStab;
+		FREE_OBJECT(NewStab);
 		}
 	else {
 		Stab_Strong_gens->init_from_sims(G->S, 0);
@@ -410,7 +392,7 @@ void choose_points_or_lines::choose_orbit(INT orbit_no, INT &f_hit_favorite, INT
 	
 
 
-	delete G;
+	FREE_OBJECT(G);
 	FREE_INT(the_favorite_representative);
 	
 }

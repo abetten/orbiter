@@ -2837,6 +2837,11 @@ sims *set_stabilizer_in_projective_space(
 		Incma[P->N_points * nb_cols + P->N_lines + j] = 1;
 		}
 
+	if (f_vvv) {
+		cout << "set_stabilizer_in_projective_space Incma:" << endl;
+		INT_matrix_print(Incma, nb_rows, nb_cols);
+	}
+
 	if (f_save_incma_in_and_out) {
 		if (f_vv) {
 			cout << "Incma in:" << endl;
@@ -2930,6 +2935,13 @@ sims *set_stabilizer_in_projective_space(
 			Incma_out[i * nb_cols + j] = Incma[ii * nb_cols + jj];
 			}
 		}
+
+
+	if (f_vvv) {
+		cout << "set_stabilizer_in_projective_space Incma_out:" << endl;
+		INT_matrix_print(Incma_out, nb_rows, nb_cols);
+	}
+
 	if (f_save_incma_in_and_out) {
 		if (f_vv) {
 			cout << "Incma Out:" << endl;
@@ -2960,30 +2972,34 @@ sims *set_stabilizer_in_projective_space(
 		}
 
 	canonical_pt = -1;
-	if (C.second_nb_types == 1) {
-		for (i = 0; i < P->N_points; i++) {
-			if (Incma[i * nb_cols + P->N_lines + 0] == 1) {
-				ii = labeling[i];
-				canonical_pt = ii;
-				break;
+	if (set_size) {
+		if (C.second_nb_types == 1) {
+			for (i = 0; i < P->N_points; i++) {
+				if (Incma[i * nb_cols + P->N_lines + 0] == 1) {
+					ii = labeling[i];
+					canonical_pt = ii;
+					break;
 				}
 			}
 		}
-	else {
-		// cannot compute the canonical point
+		else {
+			// cannot compute the canonical point
 		}
-	if (canonical_set_or_NULL) {
-		h = 0;
-		for (i = 0; i < P->N_points; i++) {
-			if (Incma_out[i * nb_cols + P->N_lines + 0] == 1) {
-				canonical_set_or_NULL[h++] = labeling[i];
+		if (canonical_set_or_NULL) {
+			h = 0;
+			for (i = 0; i < P->N_points; i++) {
+				if (Incma_out[i * nb_cols + P->N_lines + 0] == 1) {
+					canonical_set_or_NULL[h++] = labeling[i];
 				}
 			}
-		if (h != set_size) {
-			cout << "set_stabilizer_in_projective_space h != set_size" << endl;
-			exit(1);
+			if (h != set_size) {
+				cout << "set_stabilizer_in_projective_space h != set_size" << endl;
+				cout << "h=" << h << endl;
+				cout << "set_size=" << set_size << endl;
+				exit(1);
 			}
 		}
+	}
 
 
 	FREE_INT(Incma_out);

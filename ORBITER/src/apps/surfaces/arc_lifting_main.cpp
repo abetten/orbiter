@@ -85,6 +85,8 @@ int main(int argc, const char **argv)
 		f_semilinear = TRUE;
 		}
 
+
+#if 0
 	if (f_v) {
 		cout << "before Surf->init_large_polynomial_domains" << endl;
 		}
@@ -92,6 +94,7 @@ int main(int argc, const char **argv)
 	if (f_v) {
 		cout << "after Surf->init_large_polynomial_domains" << endl;
 		}
+#endif
 
 
 	if (f_v) {

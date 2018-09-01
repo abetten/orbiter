@@ -651,10 +651,10 @@ public:
 	void write_lvl_file_with_candidates(BYTE *fname_base, 
 		INT lvl, INT t0, INT verbose_level);
 	void write_lvl_file(BYTE *fname_base, INT lvl, 
-		INT t0, INT f_with_stabilizer_poset_classifications, INT f_long_version, 
+		INT t0, INT f_with_stabilizer_generators, INT f_long_version,
 		INT verbose_level);
 	void write_lvl(ostream &f, INT lvl, INT t0, 
-		INT f_with_stabilizer_poset_classifications, INT f_long_version, 
+		INT f_with_stabilizer_generators, INT f_long_version,
 		INT verbose_level);
 	void log_nodes_for_treefile(INT cur, INT depth, 
 		ostream &f, INT f_recurse, INT verbose_level);

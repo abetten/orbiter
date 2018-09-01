@@ -69,7 +69,7 @@ void isomorph_read_statistic_files(
 	INT case_nb, nb_sol, nb_backtrack, nb_col, dt, dt_in_sec;
 	INT *Stats;
 
-	S = new spreadsheet[nb_files];
+	S = NEW_OBJECTS(spreadsheet, nb_files);
 	for (i = 0; i < nb_files; i++) {
 		cout << "reading file " << fname[i] << ":" << endl;
 		S[i].read_spreadsheet(fname[i], 0 /* verbose_level */);
@@ -189,7 +189,7 @@ void isomorph_read_statistic_files(
 
 	
 
-	delete [] S;
+	FREE_OBJECTS(S);
 #if 0
 	if (f_v) {
 		cout << "isomorph_read_statistic_files "
@@ -1299,7 +1299,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		}
 
 
-	Strong_gens = new strong_generators;
+	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(Stab, verbose_level - 2);
 	
 
@@ -1452,7 +1452,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		FREE_INT(transporter);
 		FREE_INT(orbit_reps);
 	}
-	delete Strong_gens;
+	FREE_OBJECT(Strong_gens);
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
@@ -1582,7 +1582,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		INT *tl;
 		INT j;
 
-		gens = new vector_ge;
+		gens = NEW_OBJECT(vector_ge);
 		tl = NEW_INT(Iso.A_base->base_len);
 		
 		if (f_vv) {
@@ -1610,7 +1610,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 			}
 
 		FREE_INT(tl);
-		delete gens;
+		FREE_OBJECT(gens);
 		}
 	fp << "};" << endl;
 	fp << "INT " << prefix << "_stab_gens_fst[] = { ";

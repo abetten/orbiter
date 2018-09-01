@@ -83,7 +83,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 					"setting up schreier" << endl;
 			}
 		schreier *Sch;
-		Sch = new schreier;
+		Sch = NEW_OBJECT(schreier);
 		Sch->init(A);
 		Sch->initialize_tables();
 		Sch->init_generators(*generators);
@@ -101,12 +101,12 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			Sch->orbit_first, Sch->orbit_len, Sch->orbit,
 			0 /* offset */, 
 			verbose_level - 2);
-		delete Sch;
+		FREE_OBJECT(Sch);
 		}
 	else {
 		schreier *Sch_points;
 		schreier *Sch_lines;
-		Sch_points = new schreier;
+		Sch_points = NEW_OBJECT(schreier);
 		Sch_points->init(A_on_points);
 		Sch_points->initialize_tables();
 		Sch_points->init_generators(*generators);
@@ -116,7 +116,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			cout << "found " << Sch_points->nb_orbits
 					<< " orbits on points" << endl;
 			}
-		Sch_lines = new schreier;
+		Sch_lines = NEW_OBJECT(schreier);
 		Sch_lines->init(A_on_lines);
 		Sch_lines->initialize_tables();
 		Sch_lines->init_generators(*generators);
@@ -136,8 +136,8 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			Sch_lines->orbit,
 			Inc->nb_points() /* offset */, 
 			verbose_level - 2);
-		delete Sch_points;
-		delete Sch_lines;
+		FREE_OBJECT(Sch_points);
+		FREE_OBJECT(Sch_lines);
 		}
 
 
@@ -212,7 +212,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 	INT *X;
 	incidence_structure *Inc2;
 
-	Inc2 = new incidence_structure;
+	Inc2 = NEW_OBJECT(incidence_structure);
 
 	Inc->rearrange(Vi, nb_V, Bj, nb_B, R, X, S);
 	
@@ -228,7 +228,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 			}
 		}
 
-	delete Inc2;
+	FREE_OBJECT(Inc2);
 	FREE_INT(Vi);
 	FREE_INT(Bj);
 	FREE_INT(R);
@@ -275,7 +275,7 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 				cout << "The empty set" << endl;
 				}
 
-			delete Stab;
+			FREE_OBJECT(Stab);
 			}
 		}
 #endif
@@ -345,7 +345,7 @@ void incidence_structure_compute_TDO_TDA(incidence_structure *Inc,
 		verbose_level - 3);
 
 	TDA_ht = S.ht;
-	delete A;
+	FREE_OBJECT(A);
 }
 
 INT incidence_structure_find_blocking_set(
@@ -442,7 +442,7 @@ INT incidence_structure_find_blocking_set(
 		}
 	
 
-	delete A;
+	FREE_OBJECT(A);
 	
 	return f_OK;
 }

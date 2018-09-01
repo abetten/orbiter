@@ -130,7 +130,7 @@ public:
 		// Used in isomorph_testing:
 		// The flag orbit we are currently testing.
 		// In the end, this will become the representative of a 
-		// new isomorphism type
+		// n e w isomorphism type
 
 	INT *orbit_fst;
 		// [nb_orbits + 1]
@@ -387,7 +387,7 @@ public:
 	// The given action is gen->A2
 	// The induced action is computed to AA
 	// The set is in set[].
-	// Allocates a new union_find data structure and initializes it 
+	// Allocates a n e w union_find data structure and initializes it
 	// using the generators in S.
 	// Calls action::induced_action_by_restriction()
 	INT handle_automorphism(INT *set, 

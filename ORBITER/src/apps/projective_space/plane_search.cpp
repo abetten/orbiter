@@ -62,7 +62,7 @@ void plane_search(INT q, INT verbose_level)
 	INT i;
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level);
 	
 	M = NEW_INT(q * q);

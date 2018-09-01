@@ -1,4 +1,4 @@
-// oracle_upstep.C
+// poset_orbit_node_upstep.C
 //
 // Anton Betten
 // December 27, 2004
@@ -22,8 +22,8 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 		cout << "poset_orbit_node::apply_fusion_element" << endl;
 		}
 
-	set = NEW_INT(len + 1);
-	//set = gen->tmp_set_apply_fusion;
+	//set = NEW_INT(len + 1); // this call should be eliminated
+	set = gen->tmp_set_apply_fusion;
 
 	gen->A->element_retrieve(
 			E[current_extension].data,
@@ -46,12 +46,12 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 		}
 	gen->A2->map_a_set(
 			gen->set[lvl + 1],
-			set /* gen->S0 */,
+			set,
 			len + 1,
 			gen->Elt1, 0);
 	if (f_v) {
 		cout << "poset_orbit_node::apply_fusion_element the set becomes: ";
-		INT_vec_print(cout, set /* gen->S0 */, len + 1);
+		INT_vec_print(cout, set, len + 1);
 		cout << endl;
 		}
 
@@ -67,35 +67,15 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 			gen->transporter->ith(lvl + 1));
 
 	if (gen->f_on_subspaces) {
-#if 0
-		//rk = gen->F->Gauss_canonical_form_ranked(gen->S0,
-		// gen->set[lvl + 1], lvl + 1,
-		//	gen->vector_space_dimension, verbose_level);
-		rk = gen->F->lexleast_canonical_form_ranked(gen->S0,
-			gen->set[lvl + 1], lvl + 1,
-			gen->vector_space_dimension, verbose_level - 2);
-		if (f_v) {
-			cout << "after lexleast_canonical_form_ranked" << endl;
-			}
-		for (ii = lvl + 1; ii < len + 1; ii++) {
-			gen->set[lvl + 1][ii] = gen->S0[ii];
-			}
-		//INT_vec_heapsort(gen->set[lvl + 1], lvl + 1);
-		// INT_vec_sort(lvl + 1, gen->S0);
-		if (f_v) {
-			cout << "poset_orbit_node::apply_fusion_element "
-					"after lexleast_canonical_form_ranked: ";
-			}
-#endif
 		next_node = gen->find_node_for_subspace_by_rank(
-				set /* gen->S0 */,
+				set,
 				lvl + 1,
 				verbose_level - 1);
 
 		INT_vec_copy(set, gen->set[lvl + 1], len + 1);
 		}
 	else {
-		INT_vec_heapsort(set /* gen->S0 */, lvl + 1);
+		INT_vec_heapsort(set, lvl + 1);
 		INT_vec_copy(set, gen->set[lvl + 1], len + 1);
 		if (f_v) {
 			cout << "poset_orbit_node::apply_fusion_element after sorting: ";
@@ -112,7 +92,7 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 				f_tolerant, 0);
 		}
 
-	FREE_INT(set);
+	//FREE_INT(set);
 	if (f_v) {
 		cout << "oracle::apply_fusion_element the set ";
 		INT_vec_print(cout, gen->set[lvl + 1], lvl + 1);

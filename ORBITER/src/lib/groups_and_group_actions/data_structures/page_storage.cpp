@@ -27,9 +27,9 @@ page_storage::~page_storage()
 			//cout << "deleting page" << i << " done" << endl;
 			}
 		//cout << "deleting pages" << endl;
-		delete [] pages;
+		FREE_PUBYTE(pages);
 		//cout << "deleting allocation_tables" << endl;
-		delete [] allocation_tables;
+		FREE_PUBYTE(allocation_tables);
 		pages = NULL;
 		allocation_tables = NULL;
 		}
@@ -113,8 +113,8 @@ void page_storage::init(INT entry_size,
 				<< allocation_table_length << endl;
 		cout << "allocating pages / allocation_tables" << endl;
 		}
-	pages = new PUBYTE[page_ptr_oversize];
-	allocation_tables = new PUBYTE[page_ptr_oversize];
+	pages = NEW_PUBYTE(page_ptr_oversize);
+	allocation_tables = NEW_PUBYTE(page_ptr_oversize);
 	
 	page_ptr_allocated = page_ptr_oversize;
 	page_ptr_used = 1;
@@ -442,15 +442,15 @@ INT page_storage::store(UBYTE *elt)
 					<< (overall_length >> page_length_log) << endl;
 			if (page_ptr_used == page_ptr_allocated) {
 				UBYTE **pages1 =
-						new PUBYTE[page_ptr_used + page_ptr_oversize];
+						NEW_PUBYTE(page_ptr_used + page_ptr_oversize);
 				UBYTE **allocation_tables1 =
-						new PUBYTE[page_ptr_used + page_ptr_oversize];
+						NEW_PUBYTE(page_ptr_used + page_ptr_oversize);
 				for (i = 0; i < page_ptr_used; i++) {
 					pages1[i] = pages[i];
 					allocation_tables1[i] = allocation_tables[i];
 					}
-				delete [] pages;
-				delete [] allocation_tables;
+				FREE_PUBYTE(pages);
+				FREE_PUBYTE(allocation_tables);
 				pages = pages1;
 				allocation_tables = allocation_tables1;
 				page_ptr_allocated += page_ptr_oversize;

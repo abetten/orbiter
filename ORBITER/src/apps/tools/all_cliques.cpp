@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 		}
 	colored_graph *CG;
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	CG->load(fname, verbose_level);
 
@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 		}
 
 
-	delete CG;
+	FREE_OBJECT(CG);
 
 	the_end(t0);
 	//the_end_quietly(t0);
@@ -184,7 +184,7 @@ void use_group(const BYTE *fname, colored_graph *CG,
 	action *Aut_on_points;
 	INT *points;
 
-	Aut_on_points = new action;
+	Aut_on_points = NEW_OBJECT(action);
 	points = NEW_INT(CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
 		points[i] = i;
@@ -301,8 +301,8 @@ void use_group(const BYTE *fname, colored_graph *CG,
 
 	FREE_INT(Adj);
 	FREE_INT(points);
-	delete Aut_on_points;
-	delete Aut;
+	FREE_OBJECT(Aut_on_points);
+	FREE_OBJECT(Aut);
 }
 
 void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level)

@@ -1173,7 +1173,7 @@ void poset_classification::write_lvl_file_with_candidates(
 
 
 void poset_classification::write_lvl_file(BYTE *fname_base,
-		INT lvl, INT t0, INT f_with_stabilizer_poset_classifications,
+		INT lvl, INT t0, INT f_with_stabilizer_generators,
 		INT f_long_version,
 		INT verbose_level)
 {
@@ -1191,7 +1191,7 @@ void poset_classification::write_lvl_file(BYTE *fname_base,
 	f << "# " << lvl << endl; 
 	for (i = 0; i < len; i++) {
 		root[fst + i].log_current_node(this,
-				lvl, f, f_with_stabilizer_poset_classifications,
+				lvl, f, f_with_stabilizer_generators,
 				f_long_version);
 		}
 	f << "-1 " << len << " "
@@ -1208,7 +1208,7 @@ void poset_classification::write_lvl_file(BYTE *fname_base,
 }
 
 void poset_classification::write_lvl(ostream &f, INT lvl, INT t0,
-		INT f_with_stabilizer_poset_classifications, INT f_long_version,
+		INT f_with_stabilizer_generators, INT f_long_version,
 		INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
@@ -1222,7 +1222,7 @@ void poset_classification::write_lvl(ostream &f, INT lvl, INT t0,
 	f << "# " << lvl << endl; 
 	for (i = 0; i < len; i++) {
 		root[fst + i].log_current_node(this, lvl, f,
-				f_with_stabilizer_poset_classifications, f_long_version);
+				f_with_stabilizer_generators, f_long_version);
 		}
 	f << "-1 " << len << " " << first_poset_orbit_node_at_level[lvl]
 		<< " in ";

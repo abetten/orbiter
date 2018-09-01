@@ -54,28 +54,28 @@ void spread::null()
 void spread::freeself()
 {
 	if (A) {
-		delete A;
+		FREE_OBJECT(A);
 		}
 	if (A2) {
-		delete A2;
+		FREE_OBJECT(A2);
 		}
 #if 0
 	if (AG) {
-		delete AG;
+		FREE_OBJECT(AG);
 		}
 #endif
 	if (Grass) {
-		delete Grass;
+		FREE_OBJECT(Grass);
 		}
 
 	if (R) {
-		delete R;
+		FREE_OBJECT(R);
 		}
 	if (Starter) {
 		FREE_INT(Starter);
 		}
 	if (Starter_Strong_gens) {
-		delete Starter_Strong_gens;
+		FREE_OBJECT(Starter_Strong_gens);
 		}
 	if (tmp_M1) {
 		FREE_INT(tmp_M1);
@@ -92,13 +92,13 @@ void spread::freeself()
 
 	
 	if (Sing) {
-		delete Sing;
+		FREE_OBJECT(Sing);
 		}
 	if (O) {
-		delete O;
+		FREE_OBJECT(O);
 		}
 	if (Klein) {
-		delete Klein;
+		FREE_OBJECT(Klein);
 		}
 	if (Data1) {
 		FREE_INT(Data1);
@@ -157,7 +157,7 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 	tmp_M3 = NEW_INT(n * n);
 	tmp_M4 = NEW_INT(n * n);
 	
-	gen = new poset_classification;
+	gen = NEW_OBJECT(poset_classification);
 	gen->read_arguments(argc, argv, 1);
 
 
@@ -179,9 +179,9 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 		}
 
 
-	A = new action;
-	A2 = new action;
-	AG = new action_on_grassmannian;
+	A = NEW_OBJECT(action);
+	A2 = NEW_OBJECT(action);
+	AG = NEW_OBJECT(action_on_grassmannian);
 
 
 	if (f_v) {
@@ -205,7 +205,7 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 
 
 
-	Grass = new grassmann;
+	Grass = NEW_OBJECT(grassmann);
 	Grass->init(n, k, F, 0 /*MINIMUM(verbose_level - 1, 1)*/);
 	
 	nCkq = generalized_binomial(n, k, q);
@@ -307,7 +307,7 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 		if (f_v) {
 			cout << "spread::init before recoordinatize::init" << endl;
 			}
-		R = new recoordinatize;
+		R = NEW_OBJECT(recoordinatize);
 		R->init(n, k, F, Grass, A, A2, 
 			f_projective, f_semilinear, 
 			spread_check_function_incremental, (void *) this, 
@@ -351,7 +351,7 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 
 #if 0
 	if (k == 2 && is_prime(q)) {
-		Sing = new singer_cycle;
+		Sing = NEW_OBJECT(singer_cycle);
 		if (f_v) {
 			cout << "spread::init before singer_cycle::init" << endl;
 			}
@@ -365,8 +365,8 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 		if (f_v) {
 			cout << "spread::init k = 2, initializing klein correspondence" << endl;
 			}
-		Klein = new klein_correspondence;
-		O = new orthogonal;
+		Klein = NEW_OBJECT(klein_correspondence);
+		O = NEW_OBJECT(orthogonal);
 		
 		O->init(1 /* epsilon */, 6, F, 0 /* verbose_level*/);
 		Klein->init(F, O, 0 /* verbose_level */);
@@ -940,7 +940,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 
 	spread_lifting *SL;
 
-	SL = new spread_lifting;
+	SL = NEW_OBJECT(spread_lifting);
 
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new before SL->init" << endl;
@@ -996,7 +996,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 
 	colored_graph *CG;
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new before CG->init_with_point_labels" << endl;
@@ -1017,12 +1017,12 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 		cout << "Written file " << fname_clique_graph << " of size " << file_size(fname_clique_graph) << endl;
 		}
 
-	delete CG;
+	FREE_OBJECT(CG);
 
 	col_labels = SL->col_labels;
 	SL->col_labels = NULL;
 
-	delete SL;
+	FREE_OBJECT(SL);
 	//FREE_UBYTE(Adj);
 	FREE_INT(col_color);
 	

@@ -22,7 +22,7 @@ void isomorph::iso_test_init(INT verbose_level)
 	iso_test_init2(verbose_level);
 
 
-	Reps = new representatives;
+	Reps = NEW_OBJECT(representatives);
 
 	Reps->init(gen->A, nb_orbits, prefix, verbose_level);
 
@@ -374,7 +374,7 @@ void isomorph::write_classification_graph(INT verbose_level)
 
 
 
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	
 	LG->init(nb_layers, Nb, "", verbose_level);
 	if (f_vv) {
@@ -440,7 +440,7 @@ void isomorph::write_classification_graph(INT verbose_level)
 
 
 	FREE_INT(down_link);
-	delete LG;
+	FREE_OBJECT(LG);
 	if (f_v) {
 		cout << "isomorph::write_classification_graph done" << endl;
 		}
@@ -926,10 +926,10 @@ void isomorph::process_rearranged_set(
 			A->element_retrieve(Reps->handle[orbit_no0], Elt1, FALSE);
 			cout << "old transporter inverse:" << endl;
 			A->element_print(Elt1, cout);
-			cout << "new transporter:" << endl;
+			cout << "n e w transporter:" << endl;
 			A->element_print(transporter, cout);
 			A->element_mult(transporter, Elt1, tmp_Elt, FALSE);
-			cout << "new transporter times old transporter inverse:" << endl;
+			cout << "n e w transporter times old transporter inverse:" << endl;
 			A->element_print(tmp_Elt, cout);
 			cout << "subset: ";
 			INT_vec_print(cout, subset, level);
@@ -1315,11 +1315,11 @@ void isomorph::induced_action_on_set_basic(sims *S,
 		cout << "isomorph::induced_action_on_set_basic" << endl;
 		}
 	if (AA) {
-		delete AA;
+		FREE_OBJECT(AA);
 		AA = NULL;
 		}
 
-	AA = new action;
+	AA = NEW_OBJECT(action);
 
 	if (f_vv) {
 		cout << "isomorph::induced_action_on_set_basic "
@@ -1352,7 +1352,7 @@ void isomorph::induced_action_on_set(
 // The given action is gen->A2
 // The induced action is computed to AA
 // The set is in set[].
-// Allocates a new union_find data structure and initializes it 
+// Allocates a n e w union_find data structure and initializes it
 // using the generators in S.
 // Calls action::induced_action_by_restriction()
 {
@@ -1365,29 +1365,28 @@ void isomorph::induced_action_on_set(
 		cout << "isomorph::induced_action_on_set" << endl;
 		}
 	if (gens_perm) {
-		delete gens_perm;
+		FREE_OBJECT(gens_perm);
 		gens_perm = NULL;
 		}
 	if (AA) {
-		delete AA;
+		FREE_OBJECT(AA);
 		AA = NULL;
 		}
 	if (AA_perm) {
-		delete AA_perm;
+		FREE_OBJECT(AA_perm);
 		AA_perm = NULL;
 		}
 	if (AA_on_k_subsets) {
-		delete AA_on_k_subsets;
+		FREE_OBJECT(AA_on_k_subsets);
 		AA_on_k_subsets = NULL;
 		}
 	if (UF) {
-		delete UF;
+		FREE_OBJECT(UF);
 		UF = NULL;
 		}
-	//K = new sims;
-	AA = new action;
-	AA_perm = new action;
-	AA_on_k_subsets = new action;
+	AA = NEW_OBJECT(action);
+	AA_perm = NEW_OBJECT(action);
+	AA_on_k_subsets = NEW_OBJECT(action);
 	
 	
 	if (f_v) {
@@ -1472,7 +1471,7 @@ void isomorph::induced_action_on_set(
 	INT *Elt1;
 
 	len = gens->len;
-	gens_perm = new vector_ge;
+	gens_perm = NEW_OBJECT(vector_ge);
 
 	gens_perm->init(AA_perm);
 	gens_perm->allocate(len);
@@ -1504,7 +1503,7 @@ void isomorph::induced_action_on_set(
 				"created gens_perm" << endl;
 		}
 
-	UF = new union_find;
+	UF = NEW_OBJECT(union_find);
 	UF->init(AA_on_k_subsets, verbose_level);
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set "
@@ -1531,7 +1530,6 @@ void isomorph::induced_action_on_set(
 	FREE_INT(data1);
 	FREE_INT(data2);
 	FREE_INT(Elt1);
-	//delete K;
 }
 
 INT isomorph::handle_automorphism(INT *set, sims *Stab,
@@ -1566,12 +1564,12 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab,
 			cout << "isomorph::handle_automorphism orbit " << orbit_no
 					<< " subset " << subset_rank <<  " : ";
 			cout << "the stabilizer has been extended, old order " 
-				<< go << " new group order " << go1 << endl;
+				<< go << " n e w group order " << go1 << endl;
 			}
 		if (f_v) {
 			cout << "isomorph::handle_automorphism orbit " << orbit_no
 					<< " subset " << subset_rank
-					<< "new automorphism:" << endl;
+					<< "n e w automorphism:" << endl;
 			A->element_print(Elt, cout);
 			}
 		//induced_action_on_set(Stab, set, verbose_level - 2);
@@ -1601,7 +1599,7 @@ INT isomorph::handle_automorphism(INT *set, sims *Stab,
 						<< " subset " << subset_rank <<  " : ";
 				cout << "the stabilizer has been extended during "
 						"closure_group, old order "
-					<< go << " new group order " << go1 << endl;
+					<< go << " n e w group order " << go1 << endl;
 				}
 			induced_action_on_set(Stab, set, 0/*verbose_level - 1*/);
 			}

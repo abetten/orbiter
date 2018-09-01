@@ -197,167 +197,6 @@ void spread::print_isomorphism_type(isomorph *Iso,
 }
 
 
-#if 0
-void spread::klein_plane_intersections(INT *data, INT data_size, 
-	longinteger_object *&R,
-	INT **&Pts_on_plane, 
-	INT *&nb_pts_on_plane, 
-	INT &nb_planes, 
-	INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	projective_space *P3;
-	projective_space *P5;
-	INT i, j, a, b, c, e;
-	INT *pi, *pj;
-	INT N;
-	INT d = 6;
-	//INT f_semilinear = TRUE;
-	INT *v;
-	INT *the_set_out;
-	INT set_size;
-	INT *coords; // [set_size * 6]
-	grassmann *Gr;
-
-	if (f_v) {
-		cout << "spread::klein_plane_intersections" << endl;
-		}
-	set_size = data_size;
-	P3 = new projective_space;
-	
-	P3->init(3, F, 
-		FALSE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
-
-	P5 = new projective_space;
-	
-	P5->init(5, F, 
-		TRUE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
-
-	the_set_out = NEW_INT(set_size);
-	
-	P3->klein_correspondence(P5, 
-		data, set_size, the_set_out, 0/*verbose_level*/);
-
-
-
-	if (f_v) {
-		cout << "spread::klein_plane_intersections after P3->klein_correspondence" << endl;
-		}
-	coords = NEW_INT(set_size * 6);
-	for (i = 0; i < set_size; i++) {
-		P5->unrank_point(coords + i * 6, the_set_out[i]);
-		}
-	if (FALSE && f_v) {
-		cout << "The points are:" << endl;
-		INT_matrix_print(coords, set_size, 6);
-		}
-
-#if 0
-	BYTE fname_klein[1000];
-
-	sprintf(fname_klein, "klein_q%ld_%ld.txt", q, iso_cnt);
-	{
-
-		ofstream f(fname_klein);
-		f << set_size << endl;
-		for (i = 0; i < set_size; i++) {
-			pi = coords + i * 6;
-			for (j = 0; j < 6; j++) {
-				f << pi[j] << " ";
-				}
-			f << endl;
-			}
-		
-	}
-	cout << "Written file " << fname_klein << " of size " << file_size(fname_klein) << endl;
-#endif
-
-	for (i = 0; i < set_size; i++) {
-		pi = coords + i * 6;
-		for (j = i + 1; j < set_size; j++) {
-			pj = coords + j * 6;
-			a = F->mult(pi[0], pj[1]);
-			b = F->mult(pi[1], pj[0]);
-			e = F->add(a, b);
-			a = F->mult(pi[2], pj[3]);
-			b = F->mult(pi[3], pj[2]);
-			c = F->add(a, b);
-			e = F->add(e, c);
-			a = F->mult(pi[4], pj[5]);
-			b = F->mult(pi[5], pj[4]);
-			c = F->add(a, b);
-			e = F->add(e, c);
-			if (e == 0) {
-				cout << "not an ovoid, i=" << i << " j=" << j << " form value=" << e << endl;
-				cout << "pi=";
-				INT_vec_print(cout, pi, 6);
-				cout << endl;
-				cout << "pj=";
-				INT_vec_print(cout, pj, 6);
-				cout << endl;
-				exit(1);
-				}
-			}
-		}
-	if (f_v) {
-		cout << "spread::klein_plane_intersections The Klein-image forms an ovoid." << endl;
-		}
-	
-	v = NEW_INT(d);
-
-	N = P5->nb_rk_k_subspaces_as_INT(3);
-	if (f_v) {
-		cout << "spread::klein_plane_intersections N = " << N << endl;
-		}
-
-	
-
-	Gr = new grassmann;
-
-	Gr->init(6, 3, F, 0 /* verbose_level */);
-
-	if (f_v) {
-		cout << "spread::klein_plane_intersections before plane_intersection_type_fast" << endl;
-		}
-	P5->plane_intersection_type_fast(Gr, the_set_out, set_size, 
-		R, Pts_on_plane, nb_pts_on_plane, nb_planes, 
-		verbose_level - 3);
-
-
-	if (f_v) {
-		cout << "spread::klein_plane_intersections: We found " << nb_planes << " planes." << endl;
-#if 1
-		for (i = 0; i < nb_planes; i++) {
-			cout << setw(3) << i << " : " << R[i] 
-				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			INT_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
-			cout << endl; 
-			}
-#endif
-		}
-
-#if 0
-	delete [] R;
-	for (i = 0; i < nb_planes; i++) {
-		FREE_INT(Pts_on_plane[i]);
-		}
-	FREE_PINT(Pts_on_plane);
-	FREE_INT(nb_pts_on_plane);
-#endif
-	FREE_INT(the_set_out);
-	delete Gr;
-	delete P3;
-	delete P5;
-	FREE_INT(v);
-	FREE_INT(coords);
-	if (f_v) {
-		cout << "spread::klein_plane_intersections done" << endl;
-		}
-}
-#endif
-
 void spread::save_klein_invariants(BYTE *prefix, 
 	INT iso_cnt, 
 	INT *data, INT data_size, INT verbose_level)
@@ -448,21 +287,12 @@ void spread::klein(ofstream &ost,
 	INT set_size = data_size;
 	INT a, i, j, h;
 	
-#if 0
-	klein_plane_intersections(data, data_size, 
-		R,
-		Pts_on_plane, 
-		nb_pts_on_plane, 
-		nb_planes, 
-		verbose_level);
-#else
 	Klein->plane_intersections(data, data_size, 
 		R,
 		Pts_on_plane, 
 		nb_pts_on_plane, 
 		nb_planes, 
 		verbose_level);
-#endif
 
 	classify C;
 	INT f_second = FALSE;
