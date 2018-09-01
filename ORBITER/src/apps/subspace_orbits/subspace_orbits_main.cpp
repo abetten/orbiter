@@ -182,7 +182,7 @@ int main(int argc, const char **argv)
 		
 		}
 
-	Descr = new linear_group_description;
+	Descr = NEW_OBJECT(linear_group_description);
 	Descr->read_arguments(argc, argv, verbose_level);
 
 	if (!f_depth) {
@@ -196,13 +196,13 @@ int main(int argc, const char **argv)
 	linear_group *LG;
 	subspace_orbits *SubOrb;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 
 	F->init_override_polynomial(Descr->input_q, override_poly, 0);
 	Descr->F = F;
 
 
-	LG = new linear_group;
+	LG = NEW_OBJECT(linear_group);
 
 	cout << "before LG->init, creating the group" << endl;
 
@@ -212,7 +212,7 @@ int main(int argc, const char **argv)
 
 
 
-	SubOrb = new subspace_orbits;
+	SubOrb = NEW_OBJECT(subspace_orbits);
 
 	SubOrb->init(argc, argv, 
 		LG, depth, 
@@ -371,10 +371,10 @@ int main(int argc, const char **argv)
 	INT_matrix_write_csv_with_labels(exec_log_fname, M, 1, 3, column_labels);
 	cout << "Written file " << exec_log_fname << " of size " << file_size(exec_log_fname) << endl;
 
-	delete LG;
-	delete Descr;
-	delete SubOrb;
-	delete F;
+	FREE_OBJECT(LG);
+	FREE_OBJECT(Descr);
+	FREE_OBJECT(SubOrb);
+	FREE_OBJECT(F);
 	
 	
 	the_end(t0);

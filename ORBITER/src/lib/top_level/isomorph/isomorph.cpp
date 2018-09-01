@@ -99,14 +99,14 @@ void isomorph::free()
 		cout << "isomorph::free before deleting A" << endl;
 		}
 	if (A) {
-		delete A;
+		FREE_OBJECT(A);
 		}
 #endif
 	if (f_v) {
 		cout << "isomorph::free before deleting AA" << endl;
 		}
 	if (AA) {
-		delete AA;
+		FREE_OBJECT(AA);
 		AA = NULL;
 		}
 #if 0
@@ -114,7 +114,7 @@ void isomorph::free()
 		cout << "isomorph::free before deleting gen" << endl;
 		}
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		gen = NULL;
 		}
 #endif
@@ -759,9 +759,9 @@ void isomorph::orbits_of_stabilizer_case(INT the_case,
 	INT h, p, prev, b, hdl;
 			
 	sets = NEW_INT(l * size);
-	S = new sims;
-	AA = new action;
-	Schreier = new schreier;
+	S = NEW_OBJECT(sims);
+	AA = NEW_OBJECT(action);
+	Schreier = NEW_OBJECT(schreier);
 			
 		
 	if (f_vv) {
@@ -890,9 +890,9 @@ void isomorph::orbits_of_stabilizer_case(INT the_case,
 		}
 			
 	FREE_INT(sets);
-	delete S;
-	delete AA;
-	delete Schreier;
+	FREE_OBJECT(S);
+	FREE_OBJECT(AA);
+	FREE_OBJECT(Schreier);
 	
 }
 
@@ -1107,10 +1107,10 @@ void isomorph::compute_stabilizer(sims *&Stab,
 				"f=" << f << " l=" << l << endl;
 		}
 
-	S = new sims;
-	AA = new action;
-	gens = new vector_ge;
-	Schreier = new schreier;
+	S = NEW_OBJECT(sims);
+	AA = NEW_OBJECT(action);
+	gens = NEW_OBJECT(vector_ge);
+	Schreier = NEW_OBJECT(schreier);
 	sets = NEW_INT(l * size);
 
 	prepare_database_access(level, verbose_level);
@@ -1226,15 +1226,15 @@ void isomorph::compute_stabilizer(sims *&Stab,
 				"orbit " << orb_no << " has length "
 				<< Schreier->orbit_len[orb_no] << endl;
 		cout << "isomorph::compute_stabilizer "
-				"new stabilizer has order " << so << endl;
+				"n e w stabilizer has order " << so << endl;
 		cout << "isomorph::compute_stabilizer "
 				"orbit_no=" << orbit_no << " finished" << endl;
 		}
 
-	delete S;
-	delete AA;
-	delete gens;
-	delete Schreier;
+	FREE_OBJECT(S);
+	FREE_OBJECT(AA);
+	FREE_OBJECT(gens);
+	FREE_OBJECT(Schreier);
 	FREE_INT(sets);
 }
 
@@ -1259,7 +1259,7 @@ void isomorph::test_compute_stabilizer(INT verbose_level)
 		
 		compute_stabilizer(Stab, verbose_level);
 		
-		delete Stab;
+		FREE_OBJECT(Stab);
 		}
 	
 	close_solution_database(verbose_level - 1);
@@ -1552,8 +1552,8 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
 	if (f_v) {
 		cout << "isomorph::compute_Ago_Ago_induced" << endl;
 		}
-	Ago = new longinteger_object[Reps->count];
-	Ago_induced = new longinteger_object[Reps->count];
+	Ago = NEW_OBJECTS(longinteger_object, Reps->count);
+	Ago_induced = NEW_OBJECTS(longinteger_object, Reps->count);
 
 
 	for (h = 0; h < Reps->count; h++) {

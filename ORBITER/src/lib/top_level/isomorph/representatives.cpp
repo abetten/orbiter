@@ -47,7 +47,7 @@ void representatives::free()
 	if (stab) {
 		for (i = 0; i < count; i++) {
 			if (stab[i]) {
-				delete stab[i];
+				FREE_OBJECT(stab[i]);
 				stab[i] = NULL;
 				}
 			}
@@ -308,7 +308,7 @@ void representatives::read_representatives_and_stabilizers(
 		longinteger_object go;
 		vector_ge gens;
 		
-		stab[i] = new sims;
+		stab[i] = NEW_OBJECT(sims);
 		Stab = stab[i];
 		f1 >> a >> b >> c >> d >> e;
 		if (a != i) {

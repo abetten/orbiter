@@ -48,7 +48,7 @@ set_stabilizer_compute::~set_stabilizer_compute()
 			cout << "set_stabilizer_compute::~set_stabilizer_compute "
 					"before freeing gen" << endl;
 			}
-		delete gen;
+		FREE_OBJECT(gen);
 		if (f_v) {
 			cout << "set_stabilizer_compute::~set_stabilizer_compute "
 					"after freeing gen" << endl;
@@ -104,7 +104,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 	
 	set_stabilizer_compute::A = A0;
 	set_stabilizer_compute::A2 = A;
-	gen = new poset_classification;
+	gen = NEW_OBJECT(poset_classification);
 	
 	set_stabilizer_compute::set_size = size;
 	
@@ -561,12 +561,12 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 
 		compute_stabilizer *CS;
 
-		CS = new compute_stabilizer;
+		CS = NEW_OBJECT(compute_stabilizer);
 
 		CS->init(the_set, set_size, gen, A, A2, lvl, orb_idx, nb_interesting_subsets, interesting_subsets, verbose_level);
 
 		
-		Aut_gens = new strong_generators;
+		Aut_gens = NEW_OBJECT(strong_generators);
 
 		Aut_gens->init_from_sims(CS->Stab, verbose_level);
 
@@ -577,7 +577,7 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 			}
 
 
-		delete CS;
+		FREE_OBJECT(CS);
 
 		//overall_backtrack_nodes += CS->nodes;
 

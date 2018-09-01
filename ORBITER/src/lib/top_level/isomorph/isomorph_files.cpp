@@ -543,7 +543,7 @@ void isomorph::add_solutions_to_database(INT *Solutions,
 		cout << "isomorph::add_solutions_to_database "
 				"case " << the_case << " done, added "
 				<< nb_solutions << " solutions; "
-						"new database length is " << no << endl;
+						"n e w database length is " << no << endl;
 		}
 }
 
@@ -748,7 +748,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 		cout << "isomorph::init_cases_from_file_modulus_"
 				"and_build_up_database modulus = " << modulus << endl;
 		}
-	fname = new PBYTE[modulus];
+	fname = NEW_PBYTE(modulus);
 	if (f_v) {
 		cout << "creating file names" << endl;
 		}
@@ -763,7 +763,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 			}
 		//sprintf(file_name, "extend_BLT_41_lvl_%ld_%ld_42_%ld_1024.txt",
 		//level, level, i);
-		fname[i] = new BYTE[strlen(file_name) + 1];
+		fname[i] = NEW_BYTE(strlen(file_name) + 1);
 		strcpy(fname[i], file_name);
 		}
 	if (f_vv) {
@@ -794,9 +794,9 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 		cout << "deleting file names" << endl;
 		}
 	for (i = 0; i < modulus; i++) {
-		delete [] fname[i];
+		FREE_BYTE(fname[i]);
 		}
-	delete [] fname;
+	FREE_PBYTE(fname);
 }
 
 void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
@@ -835,7 +835,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		cout << "number of files is " << nb_files << endl;
 		}
 	
-	fname = new PBYTE[nb_files];
+	fname = NEW_PBYTE(nb_files);
 	if (f_v) {
 		cout << "creating file names" << endl;
 		}
@@ -851,7 +851,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 					prefix, level, u, bs);
 			//sprintf(file_name, "extend_BLT_41_lvl_%ld_%ld_42_%ld_1024.txt",
 			// level, level, i);
-			fname[j] = new BYTE[strlen(file_name) + 1];
+			fname[j] = NEW_BYTE(strlen(file_name) + 1);
 			strcpy(fname[j], file_name);
 			j++;
 			}
@@ -888,9 +888,9 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		cout << "deleting file names" << endl;
 		}
 	for (i = 0; i < nb_files; i++) {
-		delete [] fname[i];
+		FREE_BYTE(fname[i]);
 		}
-	delete [] fname;
+	FREE_PBYTE(fname);
 }
 
 void isomorph::count_solutions(INT nb_files, const BYTE **fname, 

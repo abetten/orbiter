@@ -698,7 +698,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 			}
 		len_mem = (O->nb_strong_generators + nb_fusion) *
 				gen->A->coded_elt_size_in_char;
-		mem = new BYTE[len_mem];
+		mem = NEW_BYTE(len_mem);
 		idx1 = 0;
 		for (j = 0; j < O->nb_strong_generators; j++) {
 			gen->A->element_retrieve(O->hdl_strong_generators[j],

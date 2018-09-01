@@ -465,17 +465,19 @@ void poset_classification::init(action *A, action *A2,
 
 
 	if (f_vv) {
-		cout << "poset_classification::init allocating S of size " << sz << endl;
+		cout << "poset_classification::init "
+				"allocating S of size " << sz << endl;
 		}
 	S = NEW_INT(sz);
 	for (i = 0; i < sz; i++) {
 		S[i] = i;
 		}
 
-	tmp_set_apply_fusion = NEW_INT(sz);
+	tmp_set_apply_fusion = NEW_INT(sz + 1);
 
 	if (f_vv) {
-		cout << "poset_classification::init allocating Elt_memory" << endl;
+		cout << "poset_classification::init "
+				"allocating Elt_memory" << endl;
 		}
 
 
@@ -495,6 +497,7 @@ void poset_classification::init(action *A, action *A2,
 	for (i = 0; i <= sz; i++) {
 		set[i] = NEW_INT(sz);
 		}
+
 		
 	nb_poset_orbit_nodes_used = 0;
 	nb_poset_orbit_nodes_allocated = 0;

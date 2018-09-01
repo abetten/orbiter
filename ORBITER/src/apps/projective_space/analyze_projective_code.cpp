@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 
 	finite_field *F;
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init_override_polynomial(q, poly, 0);
 
 	if (f_file) {
@@ -94,6 +94,7 @@ int main(int argc, char **argv)
 
 	do_analyze_projective_code(n, F, the_set, set_size, verbose_level);
 
+	FREE_OBJECT(F);
 	the_end(t0);
 }
 
@@ -117,7 +118,7 @@ void do_analyze_projective_code(INT n, finite_field *F,
 		cout << "in PG(" << n << "," << q << ")" << endl;
 		}
 
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	P->init(n, F, 
 		//f_with_group, 
@@ -165,7 +166,7 @@ void do_analyze_projective_code(INT n, finite_field *F,
 	cout << "projective weights: ";
 	C.print(FALSE /*f_backwards*/);
 
-	delete P;
+	FREE_OBJECT(P);
 }
 
 

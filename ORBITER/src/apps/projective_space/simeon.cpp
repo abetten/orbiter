@@ -46,7 +46,7 @@ int main()
 		
 	v = NEW_INT(n + 1);
 
-	F = new finite_field;
+	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	create_linear_group(S, A, 
@@ -84,7 +84,7 @@ int main()
 
 	Sch->print_and_list_orbits(cout);
 	
-	P = new projective_space;
+	P = NEW_OBJECT(projective_space);
 
 	P->init(n /* n */, F /* finite_field *F*/, 
 		TRUE /* f_init_incidence_structure */, 

@@ -49,10 +49,10 @@ void search_blocking_set::freeself()
 	INT i;
 	
 	if (Line_intersections) {
-		delete [] Line_intersections;
+		FREE_OBJECTS(Line_intersections);
 		}
 	if (gen) {
-		delete gen;
+		FREE_OBJECT(gen);
 		}
 	if (blocking_set) {
 		FREE_INT(blocking_set);
@@ -61,7 +61,7 @@ void search_blocking_set::freeself()
 		FREE_INT(sz);
 		}
 	if (active_set) {
-		delete active_set;
+		FREE_OBJECT(active_set);
 		}
 	if (sz_active_set) {
 		FREE_INT(sz_active_set);
@@ -104,7 +104,7 @@ void search_blocking_set::init(incidence_structure *Inc, action *A, INT verbose_
 	search_blocking_set::Inc = Inc;
 	search_blocking_set::A = A;
 
-	Line_intersections = new fancy_set[Inc->nb_cols];
+	Line_intersections = NEW_OBJECTS(fancy_set, Inc->nb_cols);
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].init(Inc->nb_rows, 0);
 		}
@@ -112,7 +112,7 @@ void search_blocking_set::init(incidence_structure *Inc, action *A, INT verbose_
 	blocking_set = NEW_INT(Inc->nb_rows);
 	sz = NEW_INT(Inc->nb_cols);
 
-	active_set = new fancy_set;
+	active_set = NEW_OBJECT(fancy_set);
 	active_set->init(Inc->nb_rows, 0);
 	sz_active_set = NEW_INT(Inc->nb_cols + 1);
 }
@@ -129,7 +129,7 @@ void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_leve
 		cout << "search_blocking_set::find_partial_blocking_sets" << endl;
 		}
 	
-	gen = new poset_classification;
+	gen = NEW_OBJECT(poset_classification);
 	
 
 	sprintf(gen->fname_base, "blocking_set");

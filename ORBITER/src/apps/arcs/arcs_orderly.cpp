@@ -22,13 +22,18 @@ INT t0; // the system time when the program started
 	INT *line_type; // [P->N_lines]
 	INT *Line_type; // [target_sz * P->N_lines]
 	INT *Nb_total; // [target_sz + 1]
+	INT *Nb_canonical; // [target_sz + 1]
 	INT *Nb_complete; // [target_sz + 1]
+	INT *Nb_orbits; // [target_sz + 1]
+	INT *Cur_orbit; // [target_sz + 1]
+	INT *canonical_set;
+	INT cnt;
 
 
 int main(int argc, char **argv);
 void do_arc_lifting(projective_space *P, INT k, 
 	INT *arc, INT arc_sz, INT target_sz, INT verbose_level);
-void extend(INT arc_size);
+void extend(INT arc_size, INT verbose_level);
 
 int main(int argc, char **argv)
 {
@@ -200,7 +205,7 @@ int main(int argc, char **argv)
 void do_arc_lifting(projective_space *P, INT k, 
 	INT *arc, INT arc_sz, INT target_sz, INT verbose_level)
 {
-	INT /*d,*/ i;
+	INT i;
 
 	
 	::target_sz = target_sz;
@@ -209,13 +214,18 @@ void do_arc_lifting(projective_space *P, INT k,
 	INT_vec_copy(arc, Arc, arc_sz);
 
 	cout << "do_arc_lifting" << endl;
-	//d = P->n + 1;
 	F = P->F;
 	
 	Nb_total = NEW_INT(target_sz + 1);
+	Nb_canonical = NEW_INT(target_sz + 1);
 	Nb_complete = NEW_INT(target_sz + 1);
+	Nb_orbits = NEW_INT(target_sz + 1);
+	Cur_orbit = NEW_INT(target_sz + 1);
 	INT_vec_zero(Nb_total, target_sz + 1);
+	INT_vec_zero(Nb_canonical, target_sz + 1);
 	INT_vec_zero(Nb_complete, target_sz + 1);
+	INT_vec_zero(Nb_orbits, target_sz + 1);
+	INT_vec_zero(Cur_orbit, target_sz + 1);
 	
 	INT f_semilinear;
 
@@ -226,7 +236,8 @@ void do_arc_lifting(projective_space *P, INT k,
 		f_semilinear = TRUE;
 		}
 	A_linear = NEW_OBJECT(action);
-	A_linear->init_projective_group(P->n + 1, F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
+	A_linear->init_projective_group(P->n + 1,
+			F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
 	
 
 	Idx_table = NEW_INT(target_sz * P->N_points);
@@ -246,17 +257,30 @@ void do_arc_lifting(projective_space *P, INT k,
 		}
 #endif
 
-	extend(arc_sz);
+	canonical_set = NEW_INT(P->N_points);
+
+
+	cnt = -1;
+	extend(arc_sz, verbose_level);
+
+	FREE_INT(canonical_set);
 
 	for (i = 0; i <= target_sz; i++) {
-		cout << setw(5) << i << " : " << setw(5) << Nb_complete[i] << " : " << setw(5) << Nb_total[i] << endl;
+		cout << setw(5) << i
+			<< " : " << setw(5) << Nb_canonical[i]
+			<< " : " << setw(5) << Nb_total[i]
+			<< " : " << setw(5) << Nb_complete[i]
+			<< endl;
 		}
+	cout << "number of search nodes = " << cnt << endl;
 
 }
 
 
-void extend(INT arc_size)
+void extend(INT arc_size, INT verbose_level)
 {
+	INT f_v = (verbose_level >= 1);
+	INT f_vv = (verbose_level >= 2);
 	sims *Stab;
 	longinteger_object go;
 	INT i, pt, nb, orb, h, idx, line, f;
@@ -264,31 +288,39 @@ void extend(INT arc_size)
 	INT *line_type_after;
 	INT *Idx;
 	INT canonical_pt;
-	INT *canonical_set;
 
-	cout << "level " << arc_size << " Arc=";
-	INT_vec_print(cout, Arc, arc_size);
-	cout << endl;
+	cnt++;
+	if (f_v) {
+		cout << "Node " << cnt << " level " << arc_size << " : ";
+		for (i = 0; i < arc_size; i++) {
+			cout << Cur_orbit[i] << "/" << Nb_orbits[i] << " ";
+		}
+		cout << "; Arc=";
+		INT_vec_print(cout, Arc, arc_size);
+		cout << endl;
+	}
 
 	Idx = Idx_table + arc_size * P->N_points;
 	
 	Nb_total[arc_size]++;
 
-	canonical_set = NEW_INT(arc_size);
 	
-	cout << "computing stabilizer of the arc:" << endl;
+	if (f_vv) {
+		cout << "computing stabilizer of the arc:" << endl;
+	}
 	Stab = set_stabilizer_in_projective_space(
 		A_linear, P, 
 		Arc, arc_size, canonical_pt, canonical_set, 
 		FALSE, NULL, 
 		verbose_level - 2);
 		// in ACTION/action_global.C
-	cout << "The stabilizer of the arc has been computed" << endl;
-	Stab->group_order(go);
-	cout << "It is a group of order " << go << endl;
-	cout << "canonical_pt = " << canonical_pt << endl;
-
-	FREE_INT(canonical_set);
+	if (f_v) {
+		cout << "Node " << cnt << " level " << arc_size
+			<< " The stabilizer of the arc has been computed" << endl;
+		Stab->group_order(go);
+		cout << "It is a group of order " << go << endl;
+		cout << "canonical_pt = " << canonical_pt << endl;
+	}
 	
 	//exit(1);
 	
@@ -306,16 +338,21 @@ void extend(INT arc_size)
 
 	if (arc_size > arc_sz) {
 		if (Sch->orbit_representative(Arc[arc_size - 1]) != Sch->orbit_representative(canonical_pt)) {
-			cout << "The flag orbit is not canonical, reject" << endl;
-			cout << "canonical_pt=" << canonical_pt << endl;
-			cout << "Arc[arc_size - 1]=" << Arc[arc_size - 1] << endl;
+			if (f_vv) {
+				cout << "The flag orbit is not canonical, reject" << endl;
+				cout << "canonical_pt=" << canonical_pt << endl;
+				cout << "Arc[arc_size - 1]=" << Arc[arc_size - 1] << endl;
+			}
 			FREE_OBJECT(Sch);
 			FREE_OBJECT(gens);
 			FREE_OBJECT(Stab);
 			return;
 			}
 		else {
-			cout << "The flag orbit is canonical, accept" << endl;
+			if (f_vv) {
+				cout << "The flag orbit is canonical, accept" << endl;
+			}
+			Nb_canonical[arc_size]++;
 			}
 
 		}
@@ -333,40 +370,54 @@ void extend(INT arc_size)
 	for (orb = 0; orb < Sch->nb_orbits; orb++) {
 		f = Sch->orbit_first[orb];
 		pt = Sch->orbit[f];
-		cout << "testing orbit " << orb << " / " << Sch->nb_orbits << " pt=" << pt << " ";
+		if (f_vv) {
+			cout << "Node " << cnt << " level " << arc_size << " testing orbit " << orb
+					<< " / " << Sch->nb_orbits << " pt=" << pt << " ";
+		}
 		if (INT_vec_search(Arc, arc_size, pt, idx)) {
-			cout << "fail (already in the set)" << endl;
-			continue;
+			if (f_vv) {
+				cout << "fail (already in the set)" << endl;
 			}
+			continue;
+		}
 
 		
 		INT_vec_copy(line_type_before, line_type_after, P->N_lines);
+
 		for (i = 0; i < F->q + 1; i++) {
 			line = P->Lines_on_point[pt * P->k + i];
 			line_type_after[line]++;
 			if (line_type_after[line] > k) {
 				break;
-				}
 			}
+		}
 		if (i == F->q + 1) {
-			cout << "is OK" << endl;
+			if (f_vv) {
+				cout << "is OK" << endl;
+			}
 			Idx[nb++] = orb;
-			}
+		}
 		else {
-			cout << "fail (line type)" << endl;
+			if (f_vv) {
+				cout << "fail (line type)" << endl;
 			}
+		}
 
 
 		
-		}
+	} // next orb
 
 	if (nb == 0) {
-		cout << "The arc is complete" << endl;
-		Nb_complete[arc_size]++;
+		if (f_vv) {
+			cout << "The arc is complete" << endl;
 		}
+		Nb_complete[arc_size]++;
+	}
 
 	if (arc_size == target_sz) {
-		cout << "extend, arc_size == target_sz" << endl;
+		if (f_vv) {
+			cout << "extend, arc_size == target_sz" << endl;
+		}
 		FREE_OBJECT(Sch);
 		FREE_OBJECT(gens);
 		FREE_OBJECT(Stab);
@@ -377,8 +428,17 @@ void extend(INT arc_size)
 
 
 	if (nb) {
+		if (arc_size == 0 && P->N_lines == 273 && nb == 273) {
+			nb = 1;
+			cout << "overriding the value of nb to 1." << endl;
+		}
+		Nb_orbits[arc_size] = nb;
 		for (h = 0; h < nb; h++) {
-			cout << "level " << arc_size << " orbit " << h << " / " << nb << endl;
+			Cur_orbit[arc_size] = h;
+			if (f_vv) {
+				cout << "Node " << cnt << " level "
+						<< arc_size << " orbit " << h << " / " << nb << endl;
+			}
 			orb = Idx[h];
 			f = Sch->orbit_first[orb];
 			pt = Sch->orbit[f];
@@ -390,19 +450,33 @@ void extend(INT arc_size)
 				line = P->Lines_on_point[pt * P->k + i];
 				line_type_after[line]++;
 				if (line_type_after[line] > k) {
-					cout << "line_type_after[line] > k" << endl;
+					cout << "fatal: line_type_after[line] > k" << endl;
 					exit(1);
-					}
 				}
+			} // next i
+			if (f_vv) {
+				classify C;
 
-
-			extend(arc_size + 1);
+				C.init(line_type_after, P->N_lines, FALSE, 0);
+				cout << "Node " << cnt << " level " << arc_size << " orbit " << h << " / " << nb << " : ";
+				cout << "line type: ";
+				C.print(TRUE /*f_backwards*/);
+				cout << endl;
 			}
-		}
 
-	
+
+			extend(arc_size + 1, verbose_level);
+		} // next h
+	}
+
+	if (f_v) {
+		cout << "Node " << cnt << " level " << arc_size << " before FREE" << endl;
+	}
 	FREE_OBJECT(Sch);
 	FREE_OBJECT(gens);
 	FREE_OBJECT(Stab);
+	if (f_v) {
+		cout << "Node " << cnt << " level " << arc_size << " after FREE" << endl;
+	}
 }
 
