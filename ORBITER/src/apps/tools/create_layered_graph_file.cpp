@@ -62,15 +62,17 @@ int main(int argc, const char **argv)
 	
 	LG->write_file(fname_out, 0 /*verbose_level*/);
 
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out << " of size "
+			<< file_size(fname_out) << endl;
 
 	delete LG;
 }
 
 
-void create_graph_from_file(layered_graph *&LG, INT f_grouping, double x_stretch, const BYTE *fname)
+void create_graph_from_file(layered_graph *&LG,
+		INT f_grouping, double x_stretch, const BYTE *fname)
 {
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	INT nb_layer;
 	INT *Nb;
 	INT *Nb_orbits;
@@ -123,9 +125,11 @@ void create_graph_from_file(layered_graph *&LG, INT f_grouping, double x_stretch
 		c++;
 		}
 	if (f_grouping) {
-		LG->place_with_grouping(Orbit_length, Nb_orbits, x_stretch, 0 /*verbose_level*/);
+		LG->place_with_grouping(Orbit_length,
+				Nb_orbits, x_stretch, 0 /*verbose_level*/);
 		}
-	cout << "created a graph with " << nb_v << " vertices and " << c << " edges" << endl;
+	cout << "created a graph with " << nb_v
+			<< " vertices and " << c << " edges" << endl;
 	
 }
 

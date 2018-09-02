@@ -203,7 +203,7 @@ int main(int argc, char **argv)
 
 	diophant *Dio;
 
-	Dio = new diophant;
+	Dio = NEW_OBJECT(diophant);
 
 	if (f_v) {
 		cout << "reading file " << fname << endl;
@@ -292,7 +292,7 @@ int main(int argc, char **argv)
 		CG->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, scale, line_width);
 
 		
-		delete CG;
+		FREE_OBJECT(CG);
 		}
 
 #if 0
@@ -382,7 +382,7 @@ int main(int argc, char **argv)
 		}
 
 	
-	delete Dio;
+	FREE_OBJECT(Dio);
 
 
 	cout << "solve_diophant.out is done" << endl;

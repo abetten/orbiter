@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 	INT idx, len, j, t;
 	INT *Data;
 	
-	S = new spreadsheet;
+	S = NEW_OBJECT(spreadsheet);
 	
 
 
@@ -99,9 +99,10 @@ int main(int argc, char **argv)
 		INT *Data2;
 		classify *C2;
 		
-		C2 = new classify [C.nb_types];
+		C2 = NEW_OBJECTS(classify, C.nb_types);
 		idx2 = S->find_by_column(secondary_column);
-		cout << "secondary distribution for column " << secondary_column << " idx2=" << idx2 << endl;
+		cout << "secondary distribution for column "
+				<< secondary_column << " idx2=" << idx2 << endl;
 		for (i = 0; i < C.nb_types; i++) {
 			cout << "type " << i << " / " << C.nb_types << ":" << endl;
 			f = C.type_first[i];
@@ -139,7 +140,7 @@ int main(int argc, char **argv)
 		
 		}
 
-	delete S;
+	FREE_OBJECT(S);
 }
 
 

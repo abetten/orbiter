@@ -20,7 +20,7 @@ void regular_ls_generator::init_basic(int argc, const char **argv,
 
 	regular_ls_generator::starter_size = starter_size;
 
-	gen = new poset_classification;
+	gen = NEW_OBJECT(poset_classification);
 	
 	if (f_vv) {
 		cout << "regular_ls_generator::init_basic before read_arguments" << endl;
@@ -158,7 +158,7 @@ void regular_ls_generator::init_group(INT verbose_level)
 	if (f_v) {
 		cout << "regular_ls_generator::init_group creating symmetric group of degree " << m << endl;
 		}
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_symmetric_group(m /* degree */, 0 /* verbose_level - 2*/);
 	
 
@@ -180,7 +180,7 @@ void regular_ls_generator::init_action_on_k_subsets(INT k, INT verbose_level)
 	if (f_v) {
 		cout << "regular_ls_generator::init_action_on_k_subsets creating action on k-subsets for k=" << k << endl;
 		}
-	A2 = new action;
+	A2 = NEW_OBJECT(action);
 	A2->induced_action_on_k_subsets(*A, k, verbose_level - 2);
 
 	Aonk = A2->G.on_k_subsets;
@@ -541,8 +541,10 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 		}
 
 	if (f_vv) {
-		cout << "regular_ls_generator::lifting_prepare_function_new after lexorder test" << endl;
-		cout << "regular_ls_generator::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
+		cout << "regular_ls_generator::lifting_prepare_function_new "
+				"after lexorder test" << endl;
+		cout << "regular_ls_generator::lifting_prepare_function_new "
+				"nb_candidates=" << nb_candidates << endl;
 		}
 
 	// compute the incidence matrix between
@@ -555,7 +557,7 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 	nb_rows = nb_open_rows + nb_open_pairs;
 	nb_cols = nb_candidates;
 
-	Dio = new diophant;
+	Dio = NEW_OBJECT(diophant);
 	Dio->open(nb_rows, nb_cols);
 	Dio->sum = nb_needed;
 
@@ -581,7 +583,8 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 		for (h1 = 0; h1 < k; h1++) {
 
 			if (row_sum[v1[h1]] == r) {
-				cout << "regular_ls_generator::lifting_prepare_function_new row_sum[v1[h1]] == onr" << endl;
+				cout << "regular_ls_generator::lifting_prepare_"
+						"function_new row_sum[v1[h1]] == onr" << endl;
 				exit(1);
 				}
 			idx = open_row_idx[v1[h1]];
@@ -590,7 +593,8 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 			for (h2 = h1 + 1; h2 < k; h2++) {
 				p = ij2k(v1[h1], v1[h2], m);
 				if (pairs[p]) {
-					cout << "regular_ls_generator::lifting_prepare_function_new pairs[p]" << endl;
+					cout << "regular_ls_generator::lifting_prepare_"
+							"function_new pairs[p]" << endl;
 					exit(1);
 					}
 				idx = open_pair_idx[p];
@@ -603,7 +607,8 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 
 	
 	if (f_v) {
-		cout << "regular_ls_generator::lifting_prepare_function_new done" << endl;
+		cout << "regular_ls_generator::lifting_prepare_function_new "
+				"done" << endl;
 		}
 }
 
@@ -611,9 +616,9 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 
 
 
-// ####################################################################################
+// #############################################################################
 // global functions:
-// ####################################################################################
+// #############################################################################
 
 
 

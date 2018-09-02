@@ -222,7 +222,7 @@ int main(int argc, char **argv)
 		}
 	colored_graph *CG;
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	CG->load(fname, verbose_level);
 
@@ -350,9 +350,9 @@ int main(int argc, char **argv)
 		//cout << "All the elements in the stabilizer are:" << endl;
 		//Stab->print_all_group_elements_as_permutations();
 		
-		delete stab_gens;
-		delete Stab;
-		delete Sch;
+		FREE_OBJECT(stab_gens);
+		FREE_OBJECT(Stab);
+		FREE_OBJECT(Sch);
 		FREE_INT(Adj);
 		}
 
@@ -489,7 +489,7 @@ int main(int argc, char **argv)
 		colored_graph *CG_basis;
 
 		coeffs = NEW_INT(expand_power_nb_graphs + 2);
-		CG_basis = new colored_graph[expand_power_nb_graphs];
+		CG_basis = NEW_OBJECTS(colored_graph, expand_power_nb_graphs);
 		INT_vec_zero(coeffs, expand_power_nb_graphs);
 		coeffs[expand_power_nb_graphs] = c;
 		coeffs[expand_power_nb_graphs + 1] = diag;
@@ -579,7 +579,7 @@ int main(int argc, char **argv)
 		action *Aut_on_points;
 		INT *points;
 		
-		Aut_on_points = new action;
+		Aut_on_points = NEW_OBJECT(action);
 		points = NEW_INT(CG->nb_points);
 		for (i = 0; i < CG->nb_points; i++) {
 			points[i] = i;
@@ -680,8 +680,8 @@ int main(int argc, char **argv)
 		FREE_INT(set);
 		FREE_INT(Adj);
 		FREE_INT(points);
-		delete Aut;
-		delete Aut_on_points;
+		FREE_OBJECT(Aut);
+		FREE_OBJECT(Aut_on_points);
 
 
 		
@@ -694,7 +694,7 @@ int main(int argc, char **argv)
 		
 		}
 	
-	delete CG;
+	FREE_OBJECT(CG);
 
 	cout << "draw_colored_graph.out is done" << endl;
 	the_end(t0);

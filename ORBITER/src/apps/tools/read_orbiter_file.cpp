@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 	if (file_size(candidates_fname) > 0) {
 		f_has_candidates = TRUE;
 	}
-	ODF = new orbiter_data_file;
+	ODF = NEW_OBJECT(orbiter_data_file);
 	ODF->load(fname, verbose_level);
 	if (ODF->nb_cases == 0) {
 		cout << "The file is empty" << endl;
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 
 	spreadsheet *Sp;
 	
-	Sp = new spreadsheet;
+	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_orbits + 1, 5);
 	Sp->fill_column_with_row_index(0, "Line");
 	Sp->fill_column_with_text(1, (const BYTE **) Text_level, "Level");

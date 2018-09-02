@@ -169,27 +169,6 @@ public:
 	INT *f_is_tangent_line;
 	INT *f_is_Baer;
 
-#if 0
-	// compute_automorphism_group
-	action *A;
-	longinteger_object ago, ago2;
-	sims *S;
-	vector_ge *gens;
-	INT *tl;
-	BYTE fname_stab[1000];
-
-	// compute_orbits:
-	INT f_prefered_line_reps;
-	INT *prefered_line_reps;
-	INT nb_prefered_line_reps;
-	schreier *Orb;
-	schreier *Orb2;
-
-	
-	// investigate_line_orbit:
-	sims *Stab;
-	choose_points_or_lines *C;
-#endif
 
 	// the block that we choose:
 	INT nb_good_points;
@@ -209,11 +188,6 @@ public:
 	void create_unital_tex(INT verbose_level);
 	void create_unital_Uab_tex(INT verbose_level);
 	void compute_the_design(INT verbose_level);
-#if 0
-	void compute_automorphism_group(INT verbose_level);
-	void compute_orbits(INT verbose_level);
-	void investigate_line_orbit(INT h, INT verbose_level);
-#endif
 	void write_unital_to_file();
 	void get_name(BYTE *name);
 
@@ -521,9 +495,9 @@ public:
 	INT rank_recursion(INT *subspace, INT *big_space, INT verbose_level);
 };
 
-// #################################################################################
+// #############################################################################
 // geo_parameter.C:
-// #################################################################################
+// #############################################################################
 
 
 #define MODE_UNDEFINED 0
@@ -607,9 +581,12 @@ public:
 	void print_schemes();
 };
 
-void INT_vec_classify(INT *v, INT len, INT *class_first, INT *class_len, INT &nb_classes);
-INT tdo_scheme_get_row_class_length_fused(tdo_scheme &G, INT h, INT class_first, INT class_len);
-INT tdo_scheme_get_col_class_length_fused(tdo_scheme &G, INT h, INT class_first, INT class_len);
+void INT_vec_classify(INT *v, INT len,
+		INT *class_first, INT *class_len, INT &nb_classes);
+INT tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
+		INT h, INT class_first, INT class_len);
+INT tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
+		INT h, INT class_first, INT class_len);
 
 
 
@@ -941,9 +918,9 @@ public:
 	INT rank_INT(INT *M, INT verbose_level);
 };
 
-// #################################################################################
+// #############################################################################
 // inc_gen_global.C:
-// #################################################################################
+// #############################################################################
 
 INT ijk_rank(INT i, INT j, INT k, INT n);
 void ijk_unrank(INT &i, INT &j, INT &k, INT n, INT rk);
@@ -1941,9 +1918,9 @@ INT orthogonal_find_root(INT rk2,
 void orthogonal_points_free_global_data();
 
 
-// #################################################################################
+// #############################################################################
 // packing.C: packing numbers and maxfit numbers
-// #################################################################################
+// #############################################################################
 
 INT &TDO_upper_bound(INT i, INT j);
 INT &TDO_upper_bound_internal(INT i, INT j);
@@ -1961,9 +1938,9 @@ void maxfit_table_compute();
 INT packing_number_via_maxfit(INT n, INT k);
 
 
-// #################################################################################
+// #############################################################################
 // point_line.C:
-// #################################################################################
+// #############################################################################
 
 //! auxiliary class for the class point_line
 
@@ -1980,7 +1957,6 @@ struct plane_data {
 class point_line {
 	
 public:
-	//partition_backtrack *PB;
 	partitionstack *P;
 	
 	INT m, n;
@@ -2028,7 +2004,8 @@ public:
 	INT quad_I, quad_O, quad_X, quad_Y, quad_C;
 	INT *pt_labels;  // [m]
 	INT *points;  // [m]
-		// pt_labels and points are mutually inverse permutations of {0,1,...,m-1}
+		// pt_labels and points are mutually
+		// inverse permutations of {0,1,...,m-1}
 		// the affine point (x,y) is labeled as x * plane_order + y
 
 	INT *pts_on_line_x_eq_y;  // [plane_order + 1];
@@ -2074,13 +2051,19 @@ public:
 		INT row_cell, INT row_cell_pt, INT col_cell);
 	INT count_CR_representative(partitionstack &P, 
 		INT col_cell, INT col_cell_pt, INT row_cell);
-	INT count_pairs_RRC(partitionstack &P, INT row_cell1, INT row_cell2, INT col_cell);
-	INT count_pairs_CCR(partitionstack &P, INT col_cell1, INT col_cell2, INT row_cell);
-	INT count_pairs_RRC_representative(partitionstack &P, INT row_cell1, INT row_cell_pt, INT row_cell2, INT col_cell);
-		// returns the number of joinings from a point of row_cell1 to elements of row_cell2 within col_cell
+	INT count_pairs_RRC(partitionstack &P,
+			INT row_cell1, INT row_cell2, INT col_cell);
+	INT count_pairs_CCR(partitionstack &P,
+			INT col_cell1, INT col_cell2, INT row_cell);
+	INT count_pairs_RRC_representative(partitionstack &P,
+			INT row_cell1, INT row_cell_pt, INT row_cell2, INT col_cell);
+		// returns the number of joinings from a point of
+		// row_cell1 to elements of row_cell2 within col_cell
 		// if that number exists, -1 otherwise
-	INT count_pairs_CCR_representative(partitionstack &P, INT col_cell1, INT col_cell_pt, INT col_cell2, INT row_cell);
-		// returns the number of joinings from a point of col_cell1 to elements of col_cell2 within row_cell
+	INT count_pairs_CCR_representative(partitionstack &P,
+			INT col_cell1, INT col_cell_pt, INT col_cell2, INT row_cell);
+		// returns the number of joinings from a point of
+		// col_cell1 to elements of col_cell2 within row_cell
 		// if that number exists, -1 otherwise
 
 };
@@ -3019,9 +3002,9 @@ public:
 };
 
 
-// #################################################################################
+// #############################################################################
 // tdo_data.C: TDO parameter refinement
-// #################################################################################
+// #############################################################################
 
 //! a class related to the class tdo_scheme
 
@@ -3042,7 +3025,8 @@ public:
 	void free();
 	void allocate(INT R);
 	INT solve_first_system(INT verbose_level, 
-		INT *&line_types, INT &nb_line_types, INT &line_types_allocated);
+		INT *&line_types, INT &nb_line_types,
+		INT &line_types_allocated);
 	void solve_second_system_omit(INT verbose_level,
 		INT *classes_len, 
 		INT *&line_types, INT &nb_line_types, 
@@ -3057,17 +3041,19 @@ public:
 	void solve_second_system_from_file(INT verbose_level,
 		INT *classes_len, INT f_scale, INT scaling,
 		INT *&line_types, INT &nb_line_types, 
-		INT *&distributions, INT &nb_distributions, BYTE *solution_file_name);
-	void solve_second_system(INT verbose_level, INT f_use_mckay_solver, INT f_once,
+		INT *&distributions, INT &nb_distributions,
+		BYTE *solution_file_name);
+	void solve_second_system(INT verbose_level,
+		INT f_use_mckay_solver, INT f_once,
 		INT *classes_len, INT f_scale, INT scaling,
 		INT *&line_types, INT &nb_line_types, 
 		INT *&distributions, INT &nb_distributions);
 };
 
 
-// #################################################################################
+// #############################################################################
 // tdo_scheme.C:
-// #################################################################################
+// #############################################################################
 
 
 #define MAX_SOLUTION_FILE 100
@@ -3143,10 +3129,13 @@ public:
 	tdo_scheme();
 	~tdo_scheme();
 	
-	void init_part_and_entries(INT *part, INT *entries, INT verbose_level);
-	void init_part_and_entries_INT(INT *part, INT *entries, INT verbose_level);
+	void init_part_and_entries(
+			INT *part, INT *entries, INT verbose_level);
+	void init_part_and_entries_INT(
+			INT *part, INT *entries, INT verbose_level);
 	void init_TDO(INT *Part, INT *Entries,
-		INT Row_level, INT Col_level, INT Extra_row_level, INT Extra_col_level,
+		INT Row_level, INT Col_level,
+		INT Extra_row_level, INT Extra_col_level,
 		INT Lambda_level, INT verbose_level);
 	void exit_TDO();
 	void init_partition_stack(INT verbose_level);
@@ -3160,8 +3149,10 @@ public:
 	void print_all_schemes();
 	void print_scheme(INT h, INT f_v);
 	void print_scheme_tex(ostream &ost, INT h);
-	void print_scheme_tex_fancy(ostream &ost, INT h, INT f_label, BYTE *label);
-	void compute_whether_first_inc_must_be_moved(INT *f_first_inc_must_be_moved, INT verbose_level);
+	void print_scheme_tex_fancy(ostream &ost,
+			INT h, INT f_label, BYTE *label);
+	void compute_whether_first_inc_must_be_moved(
+			INT *f_first_inc_must_be_moved, INT verbose_level);
 	INT count_nb_inc_from_row_scheme(INT verbose_level);
 	INT count_nb_inc_from_extra_row_scheme(INT verbose_level);
 
@@ -3185,7 +3176,9 @@ public:
 		INT *&distributions, INT &nb_distributions, 
 		INT &cnt_second_system, solution_file_data *Sol, 
 		INT f_omit1, INT omit1, INT f_omit2, INT omit2, 
-		INT f_use_packing_numbers, INT f_dual_is_linear_space, INT f_do_the_geometric_test);
+		INT f_use_packing_numbers,
+		INT f_dual_is_linear_space,
+		INT f_do_the_geometric_test);
 	INT refine_rows_easy(int verbose_level, 
 		INT *&point_types, INT &nb_point_types, INT &point_type_len, 
 		INT *&distributions, INT &nb_distributions, 
@@ -3205,7 +3198,9 @@ public:
 		INT *&point_types, INT &nb_point_types);
 	INT tdo_rows_setup_second_system(INT verbose_level, 
 		tdo_data &T, partitionstack &P, 
-		INT f_omit, INT omit, INT f_use_packing_numbers, INT f_dual_is_linear_space, 
+		INT f_omit, INT omit,
+		INT f_use_packing_numbers,
+		INT f_dual_is_linear_space,
 		INT *&point_types, INT &nb_point_types);
 	INT tdo_rows_setup_second_system_eqns_joining(INT verbose_level, 
 		tdo_data &T, partitionstack &P, 
@@ -3231,7 +3226,8 @@ public:
 		INT f_D1_upper_bound_x0, INT D1_upper_bound_x0, 
 		INT f_use_mckay_solver, 
 		INT f_use_packing_numbers);
-	INT refine_cols_hard(partitionstack &P, INT verbose_level, INT f_once,
+	INT refine_cols_hard(partitionstack &P,
+		INT verbose_level, INT f_once,
 		INT *&line_types, INT &nb_line_types, INT &line_type_len,  
 		INT *&distributions, INT &nb_distributions, 
 		INT &cnt_second_system, solution_file_data *Sol, 
@@ -3239,7 +3235,8 @@ public:
 		INT f_D1_upper_bound_x0, INT D1_upper_bound_x0, 
 		INT f_use_mckay_solver, 
 		INT f_use_packing_numbers);
-	void column_refinement_L1_L2(partitionstack &P, INT f_omit, INT omit, 
+	void column_refinement_L1_L2(partitionstack &P,
+		INT f_omit, INT omit,
 		INT &L1, INT &L2, INT verbose_level);
 	INT tdo_columns_setup_first_system(INT verbose_level, 
 		tdo_data &T, INT r, partitionstack &P, 
@@ -3315,7 +3312,8 @@ public:
 		tdo_data &T, 
 		INT nb_vars, INT Nb_vars, 
 		INT *&line_types, INT &nb_line_types, INT eqn_offset);
-	INT td3_columns_lambda2_joining_pairs_from_different_classes(INT verbose_level,
+	INT td3_columns_lambda2_joining_pairs_from_different_classes(
+		INT verbose_level,
 		INT lambda3, INT block_size, INT lambda2,
 		tdo_data &T, 
 		INT nb_vars, INT Nb_vars, 
