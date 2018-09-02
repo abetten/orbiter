@@ -208,7 +208,7 @@ int main(int argc, const char **argv)
 
 	layered_graph *LG;
 
-	LG = new layered_graph;
+	LG = NEW_OBJECT(layered_graph);
 	if (file_size(fname) <= 0) {
 		cout << "file " << fname << " does not exist" << endl;
 		exit(1);
@@ -228,7 +228,7 @@ int main(int argc, const char **argv)
 		LG->place_with_y_stretch(y_stretch, verbose_level - 1);
 		}
 	if (f_spanning_tree) {
-		// create new x coordinates
+		// create n e w x coordinates
 		LG->create_spanning_tree(TRUE /* f_place_x */, verbose_level);
 		}
 	if (f_numbering_on) {
@@ -262,7 +262,7 @@ int main(int argc, const char **argv)
 
 
 
-	delete LG;
+	FREE_OBJECT(LG);
 
 
 }

@@ -5,6 +5,8 @@ CPPFLAGS = -Wall -I$(SRC)/lib
 LIB = $(SRC)/lib/liborbiter.a
 LFLAGS = -lm
 
+#.PRECIOUS: %.o
+
 all: all_cliques.out \
 	all_cycles.out \
 	all_rainbow_cliques.out \
@@ -42,9 +44,7 @@ all: all_cliques.out \
 
 
 #%.o: %.C %.cpp; $(DISCRETA_CPP) $(CPPFLAGS) -c  -o $@ $<
-
-#.PRECIOUS: *.o
-
+#
 #%.out: %.o; 
 #	@echo "------------------------------------------------------------------"
 #	@echo -n "$<"

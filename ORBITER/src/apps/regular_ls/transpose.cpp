@@ -51,7 +51,8 @@ int main(int argc, const char **argv)
 			r = atoi(argv[++i]);
 			b = atoi(argv[++i]);
 			k = atoi(argv[++i]);
-			cout << "-parameters " << v << " " << r << " " << b << " " << k << endl;
+			cout << "-parameters " << v << " " << r
+					<< " " << b << " " << k << endl;
 			}
 
 		}
@@ -113,7 +114,8 @@ int main(int argc, const char **argv)
 		Casenumbers, 
 		verbose_level - 2);
 
-	cout << "Read " << nb_cases << " orbits from file " << fname_in << endl;
+	cout << "Read " << nb_cases << " orbits from file "
+			<< fname_in << endl;
 
 	points = NEW_INT(b);
 	nb_points = b;
@@ -128,7 +130,7 @@ int main(int argc, const char **argv)
 	v2 = NEW_INT(r);
 	New_sets = NEW_PINT(nb_cases);
 	
-	Ab = new action;
+	Ab = NEW_OBJECT(action);
 	Ab->init_symmetric_group(b /* degree */, verbose_level);
 	
 
@@ -144,9 +146,11 @@ int main(int argc, const char **argv)
 		longinteger_object ago1, ago2, ago3, ago4;
 		longinteger_domain D;
 
-		ago1.create_from_base_10_string(Ago_ascii[h], 0 /* verbose_level */);
+		ago1.create_from_base_10_string(Ago_ascii[h],
+				0 /* verbose_level */);
 		if (f_v) {
-			cout << "orbit " << h << " / " << nb_cases << " with ago = " << ago1 << ":" << endl;
+			cout << "orbit " << h << " / " << nb_cases
+					<< " with ago = " << ago1 << ":" << endl;
 			}
 		if (Set_sizes[h] != b) {
 			cout << "Set_sizes[h] != b" << endl;
@@ -243,14 +247,15 @@ int main(int argc, const char **argv)
 		At->Sims->group_order(ago2);
 
 		if (D.compare(ago1, ago2)) {
-			cout << "Group orders differ: ago1=" << ago1 << " ago2=" << ago2 << endl;
+			cout << "Group orders differ: ago1=" << ago1
+					<< " ago2=" << ago2 << endl;
 			exit(1);
 			}
 		
 		action *Ar;
 		INT f_induce_action = TRUE;
 		
-		Ar = new action;
+		Ar = NEW_OBJECT(action);
 
 
 		Ar->induced_action_by_restriction(*At, 
@@ -258,7 +263,8 @@ int main(int argc, const char **argv)
 			nb_points, points, verbose_level);
 		Ar->Sims->group_order(ago3);
 		if (D.compare(ago1, ago3)) {
-			cout << "Group orders differ: ago1=" << ago1 << " ago3=" << ago3 << endl;
+			cout << "Group orders differ: ago1=" << ago1
+					<< " ago3=" << ago3 << endl;
 			exit(1);
 			}
 
@@ -291,11 +297,11 @@ int main(int argc, const char **argv)
 
 		G.init(Ab);
 		G.init_strong_generators(SG2, tl2);
-		//G.init_strong_generators_by_hdl(nb_strong_generators, hdl_strong_generators, tl, FALSE);
 		G.schreier_sims(0);
 		G.group_order(ago4);
 		if (D.compare(ago1, ago4)) {
-			cout << "Group orders differ: ago1=" << ago1 << " ago4=" << ago4 << endl;
+			cout << "Group orders differ: ago1=" << ago1
+					<< " ago4=" << ago4 << endl;
 			exit(1);
 			}
 		if (ago4.is_one()) {
@@ -311,17 +317,18 @@ int main(int argc, const char **argv)
 			}
 		FREE_INT(tl);
 		FREE_INT(tl2);
-		delete Stab2;
+		FREE_OBJECT(Stab2);
 		}
 
 		
-		delete At;
-		delete Ar;
+		FREE_OBJECT(At);
+		FREE_OBJECT(Ar);
 		}
 
 	fp << -1 << endl;
 	}
-	cout << "Written file " << fname_out << " of size " << file_size(fname_out) << endl;
+	cout << "Written file " << fname_out << " of size "
+			<< file_size(fname_out) << endl;
 	
 	the_end(t0);
 	//the_end_quietly(t0);
