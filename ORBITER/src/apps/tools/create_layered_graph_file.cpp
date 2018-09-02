@@ -5,7 +5,8 @@
 //
 //
 // 
-// creates a layered graph file from a text file which was created by DISCRETA/sgls2.C
+// creates a layered graph file from a text file
+// which was created by DISCRETA/sgls2.C
 // for an example, see the bottom of this file.
 //
 //
@@ -13,7 +14,8 @@
 #include "orbiter.h"
 
 
-void create_graph_from_file(layered_graph *&LG, INT f_grouping, double x_stretch, const BYTE *fname);
+void create_graph_from_file(layered_graph *&LG,
+		INT f_grouping, double x_stretch, const BYTE *fname);
 
 
 int main(int argc, const char **argv)

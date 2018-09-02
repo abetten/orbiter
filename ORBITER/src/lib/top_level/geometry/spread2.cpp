@@ -361,9 +361,9 @@ void spread::klein(ofstream &ost,
 		incidence_structure *I;
 		partitionstack *Stack;
 		
-		I = new incidence_structure;
+		I = NEW_OBJECT(incidence_structure);
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
-		Stack = new partitionstack;
+		Stack = NEW_OBJECT(partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 		Stack->subset_continguous(set_size, nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
@@ -377,8 +377,8 @@ void spread::klein(ofstream &ost,
 			I->latex_it(fp_pic, *Stack);
 			ost << "\\\\" << endl;
 		}
-		delete Stack;
-		delete I;
+		FREE_OBJECT(Stack);
+		FREE_OBJECT(I);
 		}
 
 	// compute TDO:
@@ -387,9 +387,9 @@ void spread::klein(ofstream &ost,
 		partitionstack *Stack;
 		INT depth = INT_MAX;
 		
-		I = new incidence_structure;
+		I = NEW_OBJECT(incidence_structure);
 		I->init_by_matrix(set_size, nb_blocks, Inc, 0 /* verbose_level */);
-		Stack = new partitionstack;
+		Stack = NEW_OBJECT(partitionstack);
 		Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
 		Stack->subset_continguous(set_size, nb_blocks);
 		Stack->split_cell(0 /* verbose_level */);
@@ -453,13 +453,13 @@ void spread::klein(ofstream &ost,
 		ost2 << "\\input " << fname_col_scheme << endl;
 		ost2 << "\\]" << endl;
 #endif
-		delete Stack;
-		delete I;
+		FREE_OBJECT(Stack);
+		FREE_OBJECT(I);
 	}
 
 	FREE_INT(Inc);
 	
-	delete [] R;
+	FREE_OBJECTS(R);
 	for (i = 0; i < nb_planes; i++) {
 		FREE_INT(Pts_on_plane[i]);
 		}
@@ -470,142 +470,6 @@ void spread::klein(ofstream &ost,
 		cout << "spread::klein done" << endl;
 		}
 }
-
-#if 0
-void spread::test_plane_intersection_type_of_klein_image(
-	const BYTE *fname, INT verbose_level)
-{
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	projective_space *P3;
-	projective_space *P5;
-	grassmann *Gr;
-	INT *intersection_type;
-	INT highest_intersection_number;
-	INT *data;
-	INT size;
-
-	if (f_v) {
-		cout << "spread::test_plane_intersection_type_of_klein_image" << endl;
-		}
-	P3 = new projective_space;
-	
-	P3->init(3, F, 
-		FALSE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
-	//F = P->F;
-
-	P5 = new projective_space;
-	
-	P5->init(5, F, 
-		TRUE /* f_init_incidence_structure */, 
-		0 /* verbose_level - 2 */);
-
-	Gr = new grassmann;
-
-	Gr->init(6, 3, F, 0 /* verbose_level */);
-
-#if 0
-	INT a, i, cnt;
-	size = order + 1;
-	data = NEW_INT(size);
-	{
-		ifstream f(fname);
-
-		cnt = 0;
-		while (TRUE) {
-			f >> a;
-			if (a == -1) {
-				break;
-				}
-			for (i = 0; i < size; i++) {
-				f >> data[i];
-				}
-			
-			if (f_vv) {
-				cout << "cnt=" << cnt << " : ";
-				INT_vec_print(cout, data, size);
-				cout << endl;
-				}
-			
-			plane_intersection_type_of_klein_image(P3, P5, Gr, data, size, 
-				intersection_type, highest_intersection_number, 
-				verbose_level - 2);
-			
-			cout << cnt << " : ";
-			INT_vec_print(cout, intersection_type, highest_intersection_number + 1);
-			cout << endl;
-
-
-			FREE_INT(intersection_type);
-			cnt++;
-			} // while
-
-	}
-	FREE_INT(data);
-#else
-	read_set_from_file(fname, data, size, verbose_level);
-
-#if 0
-	if (size != order + 1) {
-		cout << "size != order + 1" << endl;
-		exit(1);
-		}
-#endif
-
-	plane_intersection_type_of_klein_image(P3, P5, Gr, data, size, 
-		intersection_type, highest_intersection_number, 
-		verbose_level - 2);
-			
-	INT_vec_print(cout, intersection_type, highest_intersection_number + 1);
-	cout << endl;
-
-
-	INT *points;
-	INT i, j, a, b;
-
-	points = NEW_INT(size * (q + 1));
-	for (i = 0; i < size; i++) {
-		a = data[i];
-		if (!P3->Lines) {
-			cout << "!P3->Lines" << endl;
-			exit(1);
-			}
-		for (j = 0; j < q + 1; j++) {
-			b = P3->Lines[a * P3->k + j];
-			points[i * P3->k + j] = b;
-			}
-		}
-
-	if (FALSE) {
-		cout << "points:" << endl;
-		INT_matrix_print(points, size, q + 1);
-		cout << endl;
-		}
-
-	if (size == order + 1) {
-		cout << "Testing spread property" << endl;
-		INT_vec_heapsort(points, size * (q + 1));
-		for (i = 0; i < P3->N_points; i++) {
-			if (points[i] != i) {
-				cout << "Not a spread" << endl;
-				cout << "points[" << i << "]=" << points[i] << endl;
-				exit(1);
-				}
-			}
-		}
-
-
-	FREE_INT(intersection_type);
-	FREE_INT(data);
-#endif
-
-
-	delete P3;
-	delete P5;
-	delete Gr;
-}
-#endif
 
 void spread::plane_intersection_type_of_klein_image(
 	projective_space *P3, 
@@ -1664,8 +1528,8 @@ void spread::HMO(const BYTE *fname, INT verbose_level)
 	subfield_structure *Sub;
 
 	q2 = q * q;
-	Fq2 = new finite_field;
-	Sub = new subfield_structure;
+	Fq2 = NEW_OBJECT(finite_field);
+	Sub = NEW_OBJECT(subfield_structure);
 	Fq2->init(q2, verbose_level);
 	Sub->init(Fq2, F, verbose_level);
 	for (i = 0; i < q * q; i++) {
@@ -1704,7 +1568,7 @@ void spread::HMO(const BYTE *fname, INT verbose_level)
 	INT *Data2;
 	INT Sz;
 
-	Gq2 = new grassmann;
+	Gq2 = NEW_OBJECT(grassmann);
 	Gq2->init(n, k, Fq2, verbose_level);
 
 	Sz = q2 * q2 + 1;
@@ -1750,9 +1614,9 @@ void spread::HMO(const BYTE *fname, INT verbose_level)
 	write_set_to_file(fname2, Data2, Sz, verbose_level);
 	
 	FREE_INT(Data2);
-	delete Gq2;
-	delete Fq2;
-	delete Sub;
+	FREE_OBJECT(Gq2);
+	FREE_OBJECT(Fq2);
+	FREE_OBJECT(Sub);
 	FREE_INT(data);
 	FREE_INT(G);
 	FREE_INT(H);
@@ -1879,8 +1743,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 	longinteger_object *Ago, *Ago_induced;
 	INT *Ago_INT;
 
-	Ago = new longinteger_object[Iso.Reps->count];
-	Ago_induced = new longinteger_object[Iso.Reps->count];
+	Ago = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
+	Ago_induced = NEW_OBJECTS(longinteger_object, Iso.Reps->count);
 	Ago_INT = NEW_INT(Iso.Reps->count);
 
 
@@ -2185,7 +2049,7 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 			longinteger_object go1, gok;
 
 			set = NEW_INT(len);
-			A1 = new action;
+			A1 = NEW_OBJECT(action);
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
 				}
@@ -2200,7 +2064,7 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 			f << go1 << " & " << gok << "\\\\" << endl;
 
 			FREE_INT(set);
-			delete A1;
+			FREE_OBJECT(A1);
 			}
 		f << "\\hline" << endl;
 		f << "\\end{array}" << endl;
@@ -2222,8 +2086,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 			longinteger_object go1, gok;
 
 			set = NEW_INT(len);
-			A1 = new action;
-			gens = new vector_ge;
+			A1 = NEW_OBJECT(action);
+			gens = NEW_OBJECT(vector_ge);
 			tl = NEW_INT(Iso.A_base->base_len);
 			for (j = 0; j < len; j++) {
 				set[j] = data[Orb.orbit[fst + j]];
@@ -2249,8 +2113,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 				}
 			
 			FREE_INT(set);
-			delete A1;
-			delete gens;
+			FREE_OBJECT(A1);
+			FREE_OBJECT(gens);
 			FREE_INT(tl);
 			}
 
@@ -2272,8 +2136,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 	latex_foot(f);
 	
 	FREE_INT(Ago_INT);
-	delete [] Ago;
-	delete [] Ago_induced;
+	FREE_OBJECTS(Ago);
+	FREE_OBJECTS(Ago_induced);
 	}
 
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
@@ -2382,7 +2246,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, INT h, INT &
 	vec2 = NEW_INT(n);
 	Pts = NEW_PINT(order + 1);
 	List = NEW_INT(order);
-	Gr = new grassmann;
+	Gr = NEW_OBJECT(grassmann);
 
 	Gr->init(n - 1, k, F, 0 /* verbose_level */);
 	for (i = 0; i < order + 1; i++) {
@@ -2490,7 +2354,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, INT h, INT &
 		}
 	FREE_PINT(Pts);
 	FREE_INT(List);
-	delete Gr;
+	FREE_OBJECT(Gr);
 	if (f_v ) {
 		cout << "spread::cooperstein_thas_quotients done" << endl;
 		}
@@ -2617,7 +2481,8 @@ INT spread_check_function_callback(INT len, INT *S, void *data, INT verbose_leve
 	return f_OK;
 }
 
-INT spread_check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level)
+INT spread_check_function_incremental_callback(
+		INT len, INT *S, void *data, INT verbose_level)
 {
 	spread *T = (spread *) data;
 	INT f_OK;

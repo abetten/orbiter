@@ -32,10 +32,10 @@ void Hill_cap56(int argc, const char **argv,
 	q = 3;
 	w = Witt_index(epsilon, n - 1);
 	
-	P = new polar;
-	A = new action;
-	An = new action;
-	F = new finite_field;
+	P = NEW_OBJECT(polar);
+	A = NEW_OBJECT(action);
+	An = NEW_OBJECT(action);
+	F = NEW_OBJECT(finite_field);
 
 	F->init(q, 0);
 	if (f_v) {
@@ -168,7 +168,7 @@ void Hill_cap56(int argc, const char **argv,
 	if (f_v) {
 		cout << "Hill_cap computing orbits on points" << endl;
 		}
-	Orb = new schreier;
+	Orb = NEW_OBJECT(schreier);
 	Orb->init(P->A);
 	Orb->init_single_generator(Elt);
 	Orb->compute_all_point_orbits(verbose_level - 2);
@@ -428,7 +428,7 @@ void create_Buekenhout_Metz(
 		}
 
 	
-	BM = new buekenhout_metz;
+	BM = NEW_OBJECT(buekenhout_metz);
 
 	BM->init(Fq, FQ, 
 		f_Uab, parameter_a, parameter_b, f_classical, verbose_level);
@@ -473,7 +473,7 @@ void create_Buekenhout_Metz(
 	BM->get_name(fname + strlen(fname));
 	strcat(fname, ".txt");
 
-	delete BM;
+	FREE_OBJECT(BM);
 
 }
 

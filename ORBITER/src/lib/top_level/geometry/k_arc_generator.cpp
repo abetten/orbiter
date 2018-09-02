@@ -32,7 +32,7 @@ void k_arc_generator::null()
 void k_arc_generator::freeself()
 {
 	if (Gen) {
-		delete Gen;
+		FREE_OBJECT(Gen);
 		}
 	if (line_type) {
 		FREE_INT(line_type);
@@ -64,15 +64,15 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	sprintf(base_fname, "arcs_q%ld_d%ld", F->q, d);
 
 	
-	Gen = new arc_generator;
+	Gen = NEW_OBJECT(arc_generator);
 
 	Gen->f_poly = FALSE;
 
 	Gen->d = d; // we will classify d-arcs
 
 
-	Gen->ECA = new exact_cover_arguments;
-	Gen->IA = new isomorph_arguments;
+	Gen->ECA = NEW_OBJECT(exact_cover_arguments);
+	Gen->IA = NEW_OBJECT(isomorph_arguments);
 
 	Gen->ECA->f_has_solution_prefix = TRUE;
 	Gen->ECA->solution_prefix = "";

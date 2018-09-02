@@ -355,10 +355,10 @@ int main(int argc, const char **argv)
 			T.gen->A->element_print_quick(transporter, cout);
 
 			FREE_INT(data);
-			}
+		}
 
 		FREE_INT(transporter);
-		}
+	}
 	else if (f_test_identify) {
 		cout << "spread_classify.C f_test_identify" << endl;
 		
@@ -367,7 +367,7 @@ int main(int argc, const char **argv)
 		cout << "spread_classify.C classifying translation planes done" << endl;
 
 		T.gen->test_identify(identify_level, identify_nb_times, verbose_level);
-		}
+	}
 
 
 	if (ECA->f_lift) {
@@ -387,7 +387,7 @@ int main(int argc, const char **argv)
 
 		if (f_v) {
 			cout << "spread_classify.C before ECA->compute_lifts" << endl;
-			}
+		}
 
 
 		ECA->compute_lifts(verbose_level);
@@ -395,11 +395,11 @@ int main(int argc, const char **argv)
 	
 		if (f_v) {
 			cout << "spread_classify.C after ECA->compute_lifts" << endl;
-			}
-
-
-
 		}
+
+
+
+	}
 
 	cout << "spread_classify.C before IA->execute" << endl;
 	IA->execute(verbose_level);
@@ -408,10 +408,10 @@ int main(int argc, const char **argv)
 
 	if (f_print_spread) {
 		T.read_and_print_spread(fname_print_spread, verbose_level);
-		}
+	}
 	else if (f_HMO) {
 		T.HMO(fname_HMO, verbose_level);
-		}
+	}
 
 
 	if (f_print_representatives) {
@@ -421,7 +421,7 @@ int main(int argc, const char **argv)
 		BYTE fname[1000];
 		
 		cout << "spread_classify.C printing orbit representatives at level " << representatives_size << endl;
-		R = new orbit_rep;
+		R = NEW_OBJECT(orbit_rep);
 		M = NEW_INT(T.k * T.n);
 
 		sprintf(fname, "%s_lvl_%ld", representatives_fname, representatives_size);
@@ -440,15 +440,16 @@ int main(int argc, const char **argv)
 	
 			for (i = 0; i < representatives_size; i++) {
 				cout << R->rep[i] << " ";
-				}
+			}
 			cout << endl;
 			for (i = 0; i < representatives_size; i++) {
 				cout << R->rep[i] << " = " << endl;
 				T.Grass->unrank_INT_here(M, R->rep[i], 0/*verbose_level - 4*/);
 				INT_matrix_print(M, T.k, T.n);
-				}
 			}
 		}
+		FREE_OBJECT(R);
+	}
 
 
 

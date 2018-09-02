@@ -117,7 +117,7 @@ void elliptic_curve::compute_points(INT verbose_level)
 	
 
 
-	T = new INT[bound * 3];
+	T = NEW_INT(bound * 3);
 	nb = 0;
 
 
@@ -423,8 +423,8 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 	INT N = 1000;
 
 
-	Px = new INT[N];
-	Py = new INT[N];
+	Px = NEW_INT(N);
+	Py = NEW_INT(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
@@ -584,8 +584,8 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 #endif
 
 
-	delete [] Px;
-	delete [] Py;
+	FREE_INT(Px);
+	FREE_INT(Py);
 	delete [] Dx;
 	delete [] Dy;
 
@@ -637,7 +637,7 @@ void elliptic_curve::compute_addition_table(INT verbose_level)
 		cout << "elliptic_curve::compute_addition_table" << endl;
 		}
 	
-	A = new INT[nb * nb];
+	A = NEW_INT(nb * nb);
 	for (i = 0; i < nb; i++) {
 		x1 = T[3 * i + 0];
 		x2 = T[3 * i + 1];

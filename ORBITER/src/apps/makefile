@@ -1,4 +1,4 @@
-all: ;
+all: 
 	cd arcs; $(MAKE) all
 	cd blt; $(MAKE) all
 	cd codes; $(MAKE) all
@@ -15,7 +15,7 @@ all: ;
 	cd tdo; $(MAKE) all
 	cd tools; $(MAKE) all
 
-clean: ;
+clean: 
 	cd arcs; $(MAKE) clean
 	cd blt; $(MAKE) clean
 	cd codes; $(MAKE) clean

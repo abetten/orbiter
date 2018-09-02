@@ -22,7 +22,7 @@ void create_factor_group(action *A, sims *S, INT goi,
 	if (f_v) {
 		cout << "create_factor_group" << endl;
 		}
-	Elt1 = new INT[A->elt_size_in_INT];
+	Elt1 = NEW_INT(A->elt_size_in_INT);
 	
 	F->goi = goi;
 	F->A = A;
@@ -30,7 +30,7 @@ void create_factor_group(action *A, sims *S, INT goi,
 	F->size_subgroup = size_subgroup;
 	F->subgroup = subgroup;
 	
-	F->all_cosets = new INT[goi];
+	F->all_cosets = NEW_INT(goi);
 	
 	
 	if (f_v) {
@@ -52,9 +52,9 @@ void create_factor_group(action *A, sims *S, INT goi,
 	S->all_cosets(subgroup, size_subgroup, F->all_cosets, verbose_level);
 	F->nb_cosets = goi / size_subgroup;
 	
-	F->ByRightMultiplication = new action;
-	F->FactorGroup = new action;
-	F->FactorGroupConjugated = new action;
+	F->ByRightMultiplication = NEW_OBJECT(action);
+	F->FactorGroup = NEW_OBJECT(action);
+	F->FactorGroupConjugated = NEW_OBJECT(action);
 		
 	if (f_v) {
 		cout << "create_factor_group before induced_action_"
@@ -129,6 +129,6 @@ void create_factor_group(action *A, sims *S, INT goi,
 #endif
 
 
-	delete [] Elt1;
+	FREE_INT(Elt1);
 }
 

@@ -31,38 +31,20 @@ polar::polar()
 
 polar::~polar()
 {
-#if 0
-	if (A) {
-		delete A;
-		}
-#endif
-#if 0
-	if (AG) {
-		delete AG;
-		}
-#endif
 	if (tmp_M) {
-		delete [] tmp_M;
+		FREE_INT(tmp_M);
 		}
 	if (base_cols) {
-		delete [] base_cols;
+		FREE_INT(base_cols);
 		}
 	if (Gen) {
-		delete Gen;
+		FREE_OBJECT(Gen);
 		}
 	if (f_has_strong_generators
 		&& f_has_strong_generators_allocated) {
 		if (Strong_gens) {
-			delete Strong_gens;
+			FREE_OBJECT(Strong_gens);
 			}
-#if 0
-		if (SG) {
-			delete SG;
-			}
-		if (tl) {
-			FREE_INT(tl);
-			}
-#endif
 		}
 }
 
@@ -78,8 +60,6 @@ void polar::init_group_by_base_images(
 		cout << "polar::init_group, calling "
 				"A->init_group_from_generators_by_base_images" << endl;
 		}
-	//SG = new vector_ge;
-	//tl = NEW_INT(A->base_len);
 	A->init_group_from_generators_by_base_images(
 		group_generator_data, group_generator_size, 
 		f_group_order_target, group_order_target, 
@@ -101,8 +81,6 @@ void polar::init_group(
 		cout << "polar::init_group, calling "
 				"A->init_group_from_generators" << endl;
 		}
-	//SG = new vector_ge;
-	//tl = NEW_INT(A->base_len);
 	A->init_group_from_generators(
 		group_generator_data, group_generator_size, 
 		f_group_order_target, group_order_target, 
@@ -139,13 +117,9 @@ void polar::init(int argc, const char **argv,
 	
 	
 	
-	//AG = new action_on_grassmannian;
-	
-	//AG->init(*A, n, k, q, F, verbose_level);
-
-	tmp_M = new INT[n * n];
-	base_cols = new INT[n];
-	Gen = new poset_classification;
+	tmp_M = NEW_INT(n * n);
+	base_cols = NEW_INT(n);
+	Gen = NEW_OBJECT(poset_classification);
 
 	Gen->read_arguments(argc, argv, 0);
 
@@ -446,7 +420,7 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 		}
 
 	nb_maximals = index_INT;
-	Rank_table = new longinteger_object[index_INT];
+	Rank_table = NEW_OBJECTS(longinteger_object, index_INT);
 	Adj = NEW_INT(index_INT * index_INT);
 	M = NEW_PINT(index_INT);
 
@@ -668,8 +642,6 @@ void polar::show_stabilizer(INT depth, INT orbit_idx, INT verbose_level)
 	INT goi, i, order;
 	strong_generators *Strong_gens;
 
-	//gens = new vector_ge;
-	//tl = NEW_INT(A->base_len);
 	Elt = NEW_INT(A->elt_size_in_INT);	
 	//node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
 	//O2 = &Gen->root[node2];
@@ -696,10 +668,8 @@ void polar::show_stabilizer(INT depth, INT orbit_idx, INT verbose_level)
 		cout << endl;
 		}
 	
-	delete Strong_gens;
-	delete S;
-	//delete gens;
-	//FREE_INT(tl);
+	FREE_OBJECT(Strong_gens);
+	FREE_OBJECT(S);
 	FREE_INT(Elt);
 }
 
@@ -713,7 +683,7 @@ void polar::get_maximals(INT depth, INT orbit_idx, INT verbose_level)
 	INT *Elt;
 	INT goi, i, order;
 
-	gens = new vector_ge;
+	gens = NEW_OBJECT(vector_ge);
 	tl = NEW_INT(A->base_len);
 	Elt = NEW_INT(A->elt_size_in_INT);	
 	node2 = Gen->first_oracle_node_at_level[depth] + orbit_idx;
@@ -737,8 +707,8 @@ void polar::get_maximals(INT depth, INT orbit_idx, INT verbose_level)
 		cout << endl;
 		}
 	
-	delete S;
-	delete gens;
+	FREE_OBJECT(S);
+	FREE_OBJECT(gens);
 	FREE_INT(tl);
 	FREE_INT(Elt);
 }

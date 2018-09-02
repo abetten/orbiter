@@ -12,10 +12,10 @@ all: classify \
 
 
 
-classify : classify2 ; 
-other : other2 ; 
-snakes_and_ladders : snakes_and_ladders2 ; 
-set_stabilizer : set_stabilizer2 ; 
+classify : classify2 
+other : other2 
+snakes_and_ladders : snakes_and_ladders2 
+set_stabilizer : set_stabilizer2 
 
 classify2 :  ; cd classify; $(MAKE)
 other2 :  ; cd other; $(MAKE)

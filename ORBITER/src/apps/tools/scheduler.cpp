@@ -512,7 +512,7 @@ void do_scheduling(INT N, INT *list_of_cases,
 
 		job_table *JT;
 
-		JT = new job_table[J];
+		JT = NEW_OBJECTS(job_table, J);
 		for (i = 0; i < J; i++) {
 			JT[i].job = i;
 			JT[i].f_task_assigned = FALSE;

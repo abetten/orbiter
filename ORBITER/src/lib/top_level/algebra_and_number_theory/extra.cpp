@@ -164,7 +164,7 @@ void compute_lifts_new(
 
 	exact_cover *E;
 
-	E = new exact_cover;
+	E = NEW_OBJECT(exact_cover);
 
  
 	E->init_basic(user_data, 
@@ -206,7 +206,7 @@ void compute_lifts_new(
 		f_write_tree, fname_tree,
 		verbose_level - 1);
 
-	delete E;
+	FREE_OBJECT(E);
 	
 	if (f_v) {
 		cout << "compute_lifts_new done" << endl;
