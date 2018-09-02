@@ -61,7 +61,7 @@ finite_field::~finite_field()
 	if (alpha_power_table)
 		FREE_INT(alpha_power_table);
 	if (polynomial)
-		FREE_BYTE(polynomial);
+		FREE_char(polynomial);
 	if (v1)
 		FREE_INT(v1);
 	if (v2)
@@ -69,7 +69,7 @@ finite_field::~finite_field()
 	if (v3)
 		FREE_INT(v3);
 	if (symbol_for_print) {
-		FREE_BYTE(symbol_for_print);
+		FREE_char(symbol_for_print);
 		}
 	null();
 }
@@ -83,7 +83,7 @@ void finite_field::init(INT q)
 void finite_field::init(INT q, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	const BYTE *poly;
+	const char *poly;
 	
 	if (f_v) {
 		cout << "finite_field::init q=" << q << endl;
@@ -104,18 +104,18 @@ void finite_field::init(INT q, INT verbose_level)
 		}
 }
 
-void finite_field::init_symbol_for_print(const BYTE *symbol)
+void finite_field::init_symbol_for_print(const char *symbol)
 {
 	if (symbol_for_print) {
-		FREE_BYTE(symbol_for_print);
+		FREE_char(symbol_for_print);
 		symbol_for_print = NULL;
 		}
-	symbol_for_print = NEW_BYTE(strlen(symbol) + 1);
+	symbol_for_print = NEW_char(strlen(symbol) + 1);
 	strcpy(symbol_for_print, symbol);
 }
 
 void finite_field::init_override_polynomial(INT q,
-		const BYTE *poly, INT verbose_level)
+		const char *poly, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -170,7 +170,7 @@ void finite_field::init_override_polynomial(INT q,
 	else {
 		l = 0;
 		}
-	polynomial = NEW_BYTE(l + 1);
+	polynomial = NEW_char(l + 1);
 	if (poly) {
 		strcpy(polynomial, poly);
 		}
@@ -254,7 +254,7 @@ void finite_field::init_override_polynomial(INT q,
 		}
 }
 
-void finite_field::print_minimum_polynomial(INT p, const BYTE *polynomial)
+void finite_field::print_minimum_polynomial(INT p, const char *polynomial)
 {
 	finite_field GFp;
 	
@@ -652,7 +652,7 @@ void finite_field::create_tables_extension_field(INT verbose_level)
 void finite_field::print(INT f_add_mult_table)
 {
 	if (e > 1) {
-		//BYTE *poly;
+		//char *poly;
 	
 		//poly = get_primitive_polynomial(p, e, 0 /* verbose_level */);
 		
@@ -710,7 +710,7 @@ void finite_field::print_tables()
 		}
 }
 
-void finite_field::print_tables_extension_field(const BYTE *poly)
+void finite_field::print_tables_extension_field(const char *poly)
 {
 	INT i, a, b, c, l;
 	INT verbose_level = 0;
@@ -1643,7 +1643,7 @@ void finite_field::print_element(ostream &ost, INT a)
 }
 
 void finite_field::print_element_with_symbol(ostream &ost,
-		INT a, INT f_exponential, INT width, const BYTE *symbol)
+		INT a, INT f_exponential, INT width, const char *symbol)
 {
 	INT b;
 	
@@ -1689,7 +1689,7 @@ void finite_field::INT_vec_print(ostream &ost, INT *v, INT len)
 }
 
 void finite_field::INT_vec_print_elements_exponential(ostream &ost,
-		INT *v, INT len, const BYTE *symbol_for_print)
+		INT *v, INT len, const char *symbol_for_print)
 {
 	INT i;
 	ost << "(";
@@ -1704,7 +1704,7 @@ void finite_field::INT_vec_print_elements_exponential(ostream &ost,
 }
 
 void finite_field::latex_addition_table(ostream &f,
-		INT f_elements_exponential, const BYTE *symbol_for_print)
+		INT f_elements_exponential, const char *symbol_for_print)
 {
 	INT i, j, k;
 	
@@ -1740,7 +1740,7 @@ void finite_field::latex_addition_table(ostream &f,
 }
 
 void finite_field::latex_multiplication_table(ostream &f,
-		INT f_elements_exponential, const BYTE *symbol_for_print)
+		INT f_elements_exponential, const char *symbol_for_print)
 {
 	INT i, j, k;
 	
@@ -1775,7 +1775,7 @@ void finite_field::latex_multiplication_table(ostream &f,
 }
 
 void finite_field::latex_matrix(ostream &f, INT f_elements_exponential,
-		const BYTE *symbol_for_print, INT *M, INT m, INT n)
+		const char *symbol_for_print, INT *M, INT m, INT n)
 {
 	INT i, j;
 	
@@ -1976,7 +1976,7 @@ void finite_field::cheat_sheet(ostream &f, INT verbose_level)
 	INT *v;
 	INT f_first;
 	INT a, h;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 
 
 	if (f_v) {

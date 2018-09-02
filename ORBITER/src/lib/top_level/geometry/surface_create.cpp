@@ -432,7 +432,7 @@ void surface_create::init2(INT verbose_level)
 }
 
 void surface_create::apply_transformations(
-	const BYTE **transform_coeffs,
+	const char **transform_coeffs,
 	INT *f_inverse_transform, INT nb_transform, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_export_magma = FALSE;
 	INT f_export_maple = FALSE;
 	INT f_print = FALSE;
@@ -63,8 +63,8 @@ int main(int argc, char **argv)
 
 		cout << "export_magma" << endl;
 
-		BYTE fname_magma[1000];
-		BYTE fname_text[1000];
+		char fname_magma[1000];
+		char fname_text[1000];
 
 		strcpy(fname_magma, fname);
 
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 
 		cout << "export_maple" << endl;
 
-		BYTE fname_maple[1000];
+		char fname_maple[1000];
 
 		strcpy(fname_maple, fname);
 

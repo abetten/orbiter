@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 
 void FortCollins()
 {
-	const BYTE *alphabet = "CFILNORST";
+	const char *alphabet = "CFILNORST";
 
 	INT n = 9, i;
 	INT set[9];
@@ -199,7 +199,7 @@ void test5()
 
 void test6()
 {
-	const BYTE *Names[] = {
+	const char *Names[] = {
 		"francis",
 		"peter",
 		"cory",
@@ -220,7 +220,7 @@ void test6()
 	
 	for (c = 0; c < nb_names; c++) {
 
-		const BYTE *name = Names[c];
+		const char *name = Names[c];
 		INT len = strlen(name);
 		INT *set;
 		INT i, j;

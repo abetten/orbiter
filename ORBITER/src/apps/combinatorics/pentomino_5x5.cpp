@@ -88,7 +88,7 @@ int main(void)
 
 
 	INT f_write_tree = FALSE;
-	const BYTE *fname_tree = "";
+	const char *fname_tree = "";
 	
 	D->solve_all_DLX_with_RHS(f_write_tree, fname_tree, verbose_level);
 	cout << "After solve, we found " << D->_resultanz << " solutions" << endl;
@@ -116,7 +116,7 @@ int main(void)
 
 	{
 
-	const BYTE *fname = "solutions.csv";
+	const char *fname = "solutions.csv";
 
 	L->save_csv(fname, TRUE /* f_make_heading */, verbose_level);
 	}
@@ -146,7 +146,7 @@ int main(void)
 
 
 	{
-	const BYTE *fname = "pentomino_all.tex";
+	const char *fname = "pentomino_all.tex";
 	ofstream fp(fname);
 
 	latex_head_easy(fp);
@@ -193,7 +193,7 @@ int main(void)
 	INT o, f, p;
 	
 	{
-	const BYTE *fname = "pentomino_orbits.tex";
+	const char *fname = "pentomino_orbits.tex";
 	ofstream fp(fname);
 
 	latex_head_easy(fp);
@@ -250,7 +250,7 @@ int main(void)
 
 
 	{
-	const BYTE *fname = "pentomino_orbits_reduced.tex";
+	const char *fname = "pentomino_orbits_reduced.tex";
 	ofstream fp(fname);
 
 

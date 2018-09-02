@@ -133,7 +133,7 @@ class action_by_subfield_structure {
 public:
 	INT n;
 	INT Q;
-	const BYTE *poly_q;
+	const char *poly_q;
 	INT q;
 	INT s;
 	INT m; // n * s
@@ -841,7 +841,7 @@ public:
 
 	INT *Elt1, *Elt2, *Elt3;
 		// temporary storage
-	UBYTE *elt1, *elt2, *elt3;
+	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 
 	page_storage *Elts;
@@ -855,8 +855,8 @@ public:
 	INT compute_image(action *A, INT *Elt, INT i, INT verbose_level);
 	void element_one(action *A, INT *Elt, INT verbose_level);
 	INT element_is_one(action *A, INT *Elt, INT verbose_level);
-	void element_unpack(UBYTE *elt, INT *Elt, INT verbose_level);
-	void element_pack(INT *Elt, UBYTE *elt, INT verbose_level);
+	void element_unpack(uchar *elt, INT *Elt, INT verbose_level);
+	void element_pack(INT *Elt, uchar *elt, INT verbose_level);
 	void element_retrieve(action *A, INT hdl, INT *Elt, 
 		INT verbose_level);
 	INT element_store(action *A, INT *Elt, INT verbose_level);

@@ -164,7 +164,7 @@ void geometry::print_latex(ostream& ost)
 
 void geometry::print_head_latex(ostream& ost)
 {
-	BYTE geo_label_tex[1000];
+	char geo_label_tex[1000];
 
 	texable_string(label().s(), geo_label_tex);
 
@@ -378,9 +378,9 @@ void geometry::print_ascii(ostream& ost)
 INT geometry::scan(istream& f)
 {
 	INT nr;
-	BYTE buf[MYBUFSIZE];
-	BYTE str1[MYBUFSIZE];
-	BYTE *p_str;
+	char buf[MYBUFSIZE];
+	char str1[MYBUFSIZE];
+	char *p_str;
 	
 	//cout << "in geometry::scan()" << endl;
 	while (TRUE) {
@@ -408,11 +408,11 @@ INT geometry::scan(istream& f)
 
 }
 
-void geometry::scan_body(istream& f, INT geo_nr, BYTE *geo_label)
+void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 {
 	INT v, b = 0, i, j, a, a1, l;
-	BYTE buf[MYBUFSIZE];
-	BYTE *p_str;
+	char buf[MYBUFSIZE];
+	char *p_str;
 	
 	v = -1;
 	X().m_mn(0, 0);
@@ -905,14 +905,14 @@ void geometry::get_lexleast_X(matrix & X0)
 
 // #define BUFSIZE 50000
 
-INT search_geo_file(matrix & X0, BYTE *fname, INT geo_nr, BYTE *geo_label, INT f_v)
+INT search_geo_file(matrix & X0, char *fname, INT geo_nr, char *geo_label, INT f_v)
 {
-	BYTE buf[MYBUFSIZE];
+	char buf[MYBUFSIZE];
 	ifstream f(fname);
 	geometry G;
-	BYTE *p_str;
+	char *p_str;
 	INT geo_nr1;
-	BYTE geo_label1[MYBUFSIZE];
+	char geo_label1[MYBUFSIZE];
 	
 	G.allocate_geometry();
 	if (!f) {

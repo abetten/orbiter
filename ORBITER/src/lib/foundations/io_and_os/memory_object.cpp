@@ -13,8 +13,8 @@
 
 //
 // 
-// alloc_length: allocated length in BYTEs
-// used_length: used length in BYTES
+// alloc_length: allocated length in chars
+// used_length: used length in charS
 // cur_pointer:
 //          0 <= pointer < used length. 
 //
@@ -39,7 +39,7 @@ void memory_object::null()
 void memory_object::freeself()
 {
 	if (char_pointer) {
-		FREE_BYTE(char_pointer);
+		FREE_char(char_pointer);
 		}
 	null();
 }
@@ -73,7 +73,7 @@ void memory_object::alloc(INT length, INT verbose_level)
 		}
 	freeself();
 
-	char_pointer = NEW_BYTE(length);
+	char_pointer = NEW_char(length);
 	if (char_pointer == NULL) {
 		cout << "memory_object::alloc() out of memory" << endl;
 		exit(1);
@@ -118,7 +118,7 @@ void memory_object::realloc(INT new_length, INT verbose_level)
 	INT old_length;
 	INT old_cur_pointer;
 	INT i;
-	BYTE *old_pc;
+	char *old_pc;
 	
 	if (f_v) {
 		cout << "memory_object::realloc new_length=" << new_length << endl;
@@ -139,7 +139,7 @@ void memory_object::realloc(INT new_length, INT verbose_level)
 	for (i = old_length; i < new_length; i++) {
 		char_pointer[i] = 0;
 		}
-	FREE_BYTE(old_pc);
+	FREE_char(old_pc);
 	cur_pointer = old_cur_pointer;
 	if (f_v) {
 		cout << "memory_object::realloc done" << endl;
@@ -168,7 +168,7 @@ void memory_object::read_char(char *c)
 	cur_pointer++;
 }
 
-void memory_object::write_string(const BYTE *p)
+void memory_object::write_string(const char *p)
 {	
 	INT l, i;
 
@@ -179,29 +179,29 @@ void memory_object::write_string(const BYTE *p)
 	write_char(0);
 }
 
-void memory_object::read_string(BYTE *&p)
+void memory_object::read_string(char *&p)
 {	
-	BYTE *q;
-	BYTE c;
+	char *q;
+	char c;
 	INT alloc_length;
 	INT used_length;
 	INT i;
 
 	alloc_length = 1024;
 	used_length = 0;
-	q = NEW_BYTE(alloc_length);
+	q = NEW_char(alloc_length);
 
 	while (TRUE) {
 		read_char(&c);
 		if (used_length == alloc_length) {
 			INT new_alloc_length = 2 * alloc_length;
-			BYTE *q1;
+			char *q1;
 
-			q1 = NEW_BYTE(new_alloc_length);
+			q1 = NEW_char(new_alloc_length);
 			for (i = 0; i < used_length; i++) {
 				q1[i] = q[i];
 				}
-			FREE_BYTE(q);
+			FREE_char(q);
 			q = q1;
 			alloc_length = new_alloc_length;
 			}
@@ -213,22 +213,22 @@ void memory_object::read_string(BYTE *&p)
 	// now used_length = strlen(q) + 1
 
 	// copy the result over. This gets rid of the overhead:
-	p = NEW_BYTE(used_length);
+	p = NEW_char(used_length);
 	strcpy(p, q);
 
-	FREE_BYTE(q);
+	FREE_char(q);
 }
 
 void memory_object::write_double(double f)
 {
-	append(sizeof(double), (BYTE *) &f, 0);
+	append(sizeof(double), (char *) &f, 0);
 }
 
 void memory_object::read_double(double *f)
 {
 	double f1;
 	INT l1, j, cur_p, l;
-	BYTE *cp, *cp1;
+	char *cp, *cp1;
 	
 	cur_p = cur_pointer;
 	l = used_length;
@@ -238,7 +238,7 @@ void memory_object::read_double(double *f)
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
-	cp1 = (BYTE *) &f1;
+	cp1 = (char *) &f1;
 	for (j = 0; j < (INT)sizeof(double); j++) {
 		*cp1 = *cp;
 		cp1++;
@@ -252,15 +252,15 @@ void memory_object::write_int64(INT i)
 {
 	INT8 i1 = (INT8) i;
 	
-	block_swap_bytes((SCHAR *) &i1, 8, 1);
-	append(8, (BYTE *) &i1, 0);
+	block_swap_chars((SCHAR *) &i1, 8, 1);
+	append(8, (char *) &i1, 0);
 }
 
 void memory_object::read_int64(INT *i)
 {
 	INT8 i1;
 	INT l1, j, cur_p, l;
-	BYTE *cp, *cp1;
+	char *cp, *cp1;
 	
 	cur_p = cur_pointer;
 	l = used_length;
@@ -270,13 +270,13 @@ void memory_object::read_int64(INT *i)
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
-	cp1 = (BYTE *) &i1;
+	cp1 = (char *) &i1;
 	for (j = 0; j < 8; j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
 		}
-	block_swap_bytes((SCHAR *) &i1, 8, 1);
+	block_swap_chars((SCHAR *) &i1, 8, 1);
 	cur_pointer += 8;
 	*i = (INT) i1;
 }
@@ -285,8 +285,8 @@ void memory_object::write_int(INT i)
 {
 	INT4 i1 = (INT4) i;
 	
-	block_swap_bytes((SCHAR *) &i1, 4, 1);
-	append(4, (BYTE *) &i1, 0);
+	block_swap_chars((SCHAR *) &i1, 4, 1);
+	append(4, (char *) &i1, 0);
 }
 
 void memory_object::read_int(INT *i)
@@ -294,7 +294,7 @@ void memory_object::read_int(INT *i)
 	INT f_v = FALSE;
 	INT4 i1;
 	INT l1, j, cur_p, l;
-	BYTE *cp, *cp1;
+	char *cp, *cp1;
 	
 	if (f_v) {
 		cout << "memory_object::read_int" << endl;
@@ -307,13 +307,13 @@ void memory_object::read_int(INT *i)
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
-	cp1 = (BYTE *) &i1;
+	cp1 = (char *) &i1;
 	for (j = 0; j < 4; j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
 		}
-	block_swap_bytes((SCHAR *) &i1, 4, 1);
+	block_swap_chars((SCHAR *) &i1, 4, 1);
 	cur_pointer += 4;
 	if (f_v) {
 		cout << "memory_object::read_int done read " << i1 << endl;
@@ -323,7 +323,7 @@ void memory_object::read_int(INT *i)
 
 #include <cstdio>
 
-void memory_object::read_file(const BYTE *fname, INT verbose_level)
+void memory_object::read_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	FILE *fp;
@@ -347,7 +347,7 @@ void memory_object::read_file(const BYTE *fname, INT verbose_level)
 		}
 }
 
-void memory_object::write_file(const BYTE *fname, INT verbose_level)
+void memory_object::write_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	FILE *fp;
@@ -373,7 +373,7 @@ void memory_object::write_file(const BYTE *fname, INT verbose_level)
 		}
 }
 
-INT memory_object::multiplicity_of_character(BYTE c)
+INT memory_object::multiplicity_of_character(char c)
 {
 	INT i, l;
 	
@@ -386,13 +386,13 @@ INT memory_object::multiplicity_of_character(BYTE c)
 	return l;
 }
 
-static void code(UBYTE *pc, INT l, UBYTE *pc2, UBYTE code_char);
-static INT decode(UBYTE *pc2, INT l2, UBYTE *pc, UBYTE code_char);
+static void code(uchar *pc, INT l, uchar *pc2, uchar code_char);
+static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char);
 
-static void code(UBYTE *pc, INT l, UBYTE *pc2, UBYTE code_char)
+static void code(uchar *pc, INT l, uchar *pc2, uchar code_char)
 /* Wolfgang Boessenecker 940919 */
 {
-	UBYTE cc;
+	uchar cc;
 	INT pos = 0, pos2 = 0, pos2h = 0, i;
 
 	while (pos < l) {
@@ -420,11 +420,11 @@ static void code(UBYTE *pc, INT l, UBYTE *pc2, UBYTE code_char)
 		}
 }
 
-static INT decode(UBYTE *pc2, INT l2, UBYTE *pc, UBYTE code_char)
+static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char)
 // returns the length of the data after decompression
 // pc may be NULL 
 {
-	UBYTE cc = 0;
+	uchar cc = 0;
 	INT pos = 0, pos2 = 0, i = 8;
 	
 	while (TRUE) {
@@ -436,7 +436,7 @@ static INT decode(UBYTE *pc2, INT l2, UBYTE *pc, UBYTE code_char)
 			pos2++;
 			i = 0;
 			}
-		if (cc & (UBYTE) 128U) {
+		if (cc & (uchar) 128U) {
 			if (pc) {
 				pc[pos] = code_char;
 				}
@@ -466,12 +466,12 @@ void memory_object::compress(INT verbose_level)
 
 	l = used_length;
 	if (f_v) {
-		cout << "memory_object::compress compressing " << l << " bytes";
+		cout << "memory_object::compress compressing " << l << " chars";
 		}
-	l_c = multiplicity_of_character((BYTE) 0);
+	l_c = multiplicity_of_character((char) 0);
 	l2 = l - l_c + ((l + 7) >> 3);
 	mem2.alloc(l2, 0); // sets used_length to l2 
-	code((UBYTE *) char_pointer, l, (UBYTE *) mem2.char_pointer, (UBYTE) 0);
+	code((uchar *) char_pointer, l, (uchar *) mem2.char_pointer, (uchar) 0);
 #if 0
 	if (l3 != l2) {
 		cout << "memory_object::compress() warning: l2 = " << l2 << " != l3 = " << l3 << endl;
@@ -484,7 +484,7 @@ void memory_object::compress(INT verbose_level)
 	alloc_length = mem2.alloc_length;
 	mem2.null();
 	if (f_v) {
-		cout << "memory_object::compress compressed from " << l << " to " << l2 << " bytes." << endl;
+		cout << "memory_object::compress compressed from " << l << " to " << l2 << " chars." << endl;
 		}
 }
 
@@ -496,11 +496,11 @@ void memory_object::decompress(INT verbose_level)
 	
 	l2 = used_length;
 	if (f_v) {
-		cout << "memory_object::decompress decompressing from " << l2 << " bytes";
+		cout << "memory_object::decompress decompressing from " << l2 << " chars";
 		}
-	l = decode((UBYTE *) char_pointer, l2, NULL, (UBYTE) 0);
+	l = decode((uchar *) char_pointer, l2, NULL, (uchar) 0);
 	mem2.alloc(l, 0);
-	decode((UBYTE *) char_pointer, l2, (UBYTE *) mem2.char_pointer, (UBYTE) 0);
+	decode((uchar *) char_pointer, l2, (uchar *) mem2.char_pointer, (uchar) 0);
 	freeself();
 	char_pointer = mem2.char_pointer;
 	cur_pointer = 0;
@@ -510,7 +510,7 @@ void memory_object::decompress(INT verbose_level)
 
 	if (f_v) {
 		cout << "memory_object::decompress decompressing from " << l2 << " to ";
-		cout << l << " bytes." << endl;
+		cout << l << " chars." << endl;
 		}
 }
 

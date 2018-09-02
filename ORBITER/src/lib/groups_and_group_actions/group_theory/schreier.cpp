@@ -2093,7 +2093,7 @@ void schreier::draw_forest(const char *fname_mask,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT i;
 
 	if (f_v) {
@@ -2205,7 +2205,7 @@ void schreier::draw_tree2(const char *fname,
 	INT x_min = 0, x_max = 1000000;
 	INT y_min = 0, y_max = 1000000;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 
 	if (f_v) {
 		cout << "schreier::draw_tree2" << endl;
@@ -2246,7 +2246,7 @@ void schreier::draw_tree2(const char *fname,
 	avg = (double) L / (double)N;
 	x = 500000;
 	calc_y_coordinate(y, max_depth + 1, max_depth);
-	BYTE str[1000];
+	char str[1000];
 	INT nb_gens;
 	double H; // entropy
 
@@ -2319,7 +2319,7 @@ void schreier::subtree_draw_lines(mp_graphics &G,
 		}
 #endif
 	if (l > 1) {
-		BYTE str[1000];
+		char str[1000];
 		// if pt is not the root node:
 		G.polygon2(Px, Py, 0, 1);
 		sprintf(str, "$\\alpha_{%ld}$", label[i]);
@@ -3097,7 +3097,7 @@ void schreier::read_from_memory_object(
 		}
 }
 
-void schreier::write_file(BYTE *fname, INT verbose_level)
+void schreier::write_file(char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	memory_object M;
@@ -3115,7 +3115,7 @@ void schreier::write_file(BYTE *fname, INT verbose_level)
 		}
 }
 
-void schreier::read_file(const BYTE *fname, INT verbose_level)
+void schreier::read_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	memory_object M;
@@ -3220,7 +3220,7 @@ void schreier::read_from_file_binary(ifstream &fp, INT verbose_level)
 }
 
 
-void schreier::write_file_binary(BYTE *fname, INT verbose_level)
+void schreier::write_file_binary(char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -3239,7 +3239,7 @@ void schreier::write_file_binary(BYTE *fname, INT verbose_level)
 		}
 }
 
-void schreier::read_file_binary(const BYTE *fname, INT verbose_level)
+void schreier::read_file_binary(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -3405,7 +3405,7 @@ INT schreier::orbit_number(INT pt)
 		}
 }
 
-void schreier::latex(const BYTE *fname)
+void schreier::latex(const char *fname)
 {
 	INT f_with_cosetrep = TRUE;
 	

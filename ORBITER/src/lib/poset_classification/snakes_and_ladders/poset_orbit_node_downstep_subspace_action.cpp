@@ -633,7 +633,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		Schreier.print_tables(cout, FALSE/* f_with_cosetrep*/);
 
 		INT h;
-		BYTE fname[1000];
+		char fname[1000];
 		INT xmax = 2000000;
 		INT ymax = 1000000;
 		INT f_circletext = TRUE;

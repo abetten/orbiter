@@ -7,9 +7,9 @@
 #include <math.h>
 
 
-void draw_density(BYTE *prefix, INT *the_set, INT set_size,
-	INT f_title, const BYTE *title, INT out_of, 
-	const BYTE *label_x, 
+void draw_density(char *prefix, INT *the_set, INT set_size,
+	INT f_title, const char *title, INT out_of, 
+	const char *label_x, 
 	INT f_circle, INT circle_at, INT circle_rad, 
 	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
@@ -23,8 +23,8 @@ void draw_density(BYTE *prefix, INT *the_set, INT set_size,
 	INT x_min = 0, x_max = 1000;
 	INT y_min = 0, y_max = 1000;
 	INT factor_1000 = 1000;
-	//BYTE ext[1000];
-	BYTE fname_full[1000];
+	//char ext[1000];
+	char fname_full[1000];
 	INT i, prev; //, prev_start;
 	INT *outline_value;
 	INT *outline_number;
@@ -112,10 +112,10 @@ void draw_density(BYTE *prefix, INT *the_set, INT set_size,
 	
 }
 
-void draw_density_multiple_curves(BYTE *prefix,
+void draw_density_multiple_curves(char *prefix,
 	INT **Data, INT *Data_size, INT nb_data_sets, 
-	INT f_title, const BYTE *title, INT out_of, 
-	const BYTE *label_x, 
+	INT f_title, const char *title, INT out_of, 
+	const char *label_x, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
 	INT xmax, INT ymax, INT offset_x, INT f_switch_x, 
 	INT f_v_logarithmic, double log_base, INT no, INT f_embedded, 
@@ -129,8 +129,8 @@ void draw_density_multiple_curves(BYTE *prefix,
 	INT x_min = 0, x_max = 1000;
 	INT y_min = 0, y_max = 1000;
 	INT factor_1000 = 1000;
-	//BYTE ext[1000];
-	BYTE fname_full[1000];
+	//char ext[1000];
+	char fname_full[1000];
 	INT i, prev; //, prev_start;
 	INT **outline_value;
 	INT **outline_number;
@@ -238,8 +238,8 @@ void draw_density_multiple_curves(BYTE *prefix,
 void draw_density2(mp_graphics &G, INT no, 
 	INT *outline_value, INT *outline_number, INT outline_sz, 
 	INT min_value, INT max_value, INT offset_x, INT f_switch_x, 
-	INT f_title, const BYTE *title, 
-	const BYTE *label_x, 
+	INT f_title, const char *title, 
+	const char *label_x, 
 	INT f_circle, INT circle_at, INT circle_rad, 
 	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid)
@@ -248,7 +248,7 @@ void draw_density2(mp_graphics &G, INT no,
 	INT Px[1000], Py[1000];
 	//INT phi = 360 / 12;
 	//INT rad1 = 400;
-	BYTE str[1000];
+	char str[1000];
 	INT y_in, x, y, k;
 	
 	INT min_x, max_x, min_y, max_y;
@@ -486,8 +486,8 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 	INT **outline_value, INT **outline_number, INT *outline_sz, INT nb_curves, 
 	INT min_x, INT max_x, INT min_y, INT max_y, 
 	INT offset_x, INT f_switch_x, 
-	INT f_title, const BYTE *title, 
-	const BYTE *label_x, 
+	INT f_title, const char *title, 
+	const char *label_x, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid,
 	INT f_v_logarithmic, double log_base)
 {
@@ -495,7 +495,7 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 	INT Px[1000], Py[1000];
 	//INT phi = 360 / 12;
 	//INT rad1 = 400;
-	BYTE str[1000];
+	char str[1000];
 	INT curve;
 	
 #if 0
@@ -690,7 +690,7 @@ void get_coord_log(INT *Px, INT *Py, INT idx, INT x, INT y, INT min_x, INT min_y
 
 
 
-void read_numbers_from_file(const BYTE *fname, 
+void read_numbers_from_file(const char *fname, 
 	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -776,7 +776,7 @@ void y_to_pt_on_curve(INT y_in, INT &x, INT &y,
 
 void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, INT f_with_points, INT rad, 
 	INT q, INT *Table, INT nb, 
-	INT f_point_labels, BYTE **Point_labels, 
+	INT f_point_labels, char **Point_labels, 
 	INT f_embedded, INT f_sideways, 
 	INT verbose_level)
 {
@@ -784,7 +784,7 @@ void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, INT f_wit
 	INT x_min = 0, x_max = 1000000;
 	INT y_min = 0, y_max = 1000000;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	//INT f_embedded = TRUE;
 	//INT f_sideways = FALSE;
 	
@@ -819,7 +819,7 @@ void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, INT f_wit
 
 void projective_plane_draw_grid2(mp_graphics &G, INT q, 
 	INT *Table, INT nb, INT f_with_points, INT rad, 
-	INT f_point_labels, BYTE **Point_labels, INT verbose_level)
+	INT f_point_labels, char **Point_labels, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	double a, b;

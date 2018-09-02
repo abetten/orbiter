@@ -18,7 +18,7 @@ INT surface_23_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 19, 0, 0, 19, 0, 6, 0, 0, 18, 3, 3, 0, 
 	0, 0, 0, 0, 0, 0, 1, 0, 18, 0, 0, 21, 0, 1, 0, 0, 1, 0, 20, 7, 
 };
-const BYTE *surface_23_stab_order[] = {
+const char *surface_23_stab_order[] = {
 	"4",
 	"12",
 	"24",

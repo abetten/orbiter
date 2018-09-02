@@ -17,12 +17,12 @@ int main(int argc, char **argv)
 {
 	INT verbose_level = 0;
 	INT f_fname_in_mask = FALSE;
-	const BYTE *fname_in_mask = NULL;
+	const char *fname_in_mask = NULL;
 	INT f_N = FALSE;
 	INT N = 0;
 	INT f_save = FALSE;
-	const BYTE *save_fname_csv = NULL;
-	const BYTE *save_col_label = NULL;
+	const char *save_fname_csv = NULL;
+	const char *save_col_label = NULL;
 	INT f_graph_number_of_vertices = FALSE;
 	INT i, j;
 
@@ -65,9 +65,9 @@ int main(int argc, char **argv)
 
 	//INT f_v = (verbose_level >= 1);
 
-	BYTE ext[1000];
-	BYTE fname[1000];
-	//BYTE fname_out[1000];
+	char ext[1000];
+	char fname[1000];
+	//char fname_out[1000];
 
 
 	get_extension_if_present(fname_in_mask, ext);
@@ -102,11 +102,11 @@ int main(int argc, char **argv)
 		else if (strcmp(ext, ".txt") == 0) {
 
 			f_has_ago = TRUE;
-			BYTE **data;
+			char **data;
 			INT *Set_sizes;
 			INT **Sets;
-			BYTE **Ago_ascii;
-			BYTE **Aut_ascii;
+			char **Ago_ascii;
+			char **Aut_ascii;
 			INT *Casenumbers;
 			
 #if 0
@@ -179,13 +179,13 @@ int main(int argc, char **argv)
 			}
 		if (f_save) {
 
-			BYTE fname[1000];
-			BYTE ext[1000];
+			char fname[1000];
+			char ext[1000];
 			strcpy(fname, save_fname_csv);
 			get_extension_if_present_and_chop_off(fname, ext);
 			strcat(fname, "_ago");
 			strcat(fname, ext);
-			const BYTE *column_label[] = {"i", "j", "ago"};
+			const char *column_label[] = {"i", "j", "ago"};
 
 			cout << "saving file " << fname << endl;
 			INT_matrix_write_csv_with_labels(fname, 

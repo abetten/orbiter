@@ -22,8 +22,8 @@ public:
 	INT q1;
 	INT q2;
 
-	BYTE label[1000];
-	BYTE label_tex[1000];
+	char label[1000];
+	char label_tex[1000];
 
 	INT degree_of_matrix_group1;
 	INT dimension_of_matrix_group1;
@@ -44,7 +44,7 @@ public:
 	INT bits_per_elt;
 	INT char_per_elt;
 
-	UBYTE *elt1;
+	uchar *elt1;
 
 	INT base_len_in_component1;
 	INT *base_for_component1;
@@ -73,10 +73,10 @@ public:
 	void element_move(INT *A, INT *B, INT verbose_level);
 	void element_invert(INT *A, INT *Av, INT verbose_level);
 	INT offset_i(INT i);
-	void element_pack(INT *Elt, UBYTE *elt);
-	void element_unpack(UBYTE *elt, INT *Elt);
-	void put_digit(UBYTE *elt, INT f, INT i, INT d);
-	INT get_digit(UBYTE *elt, INT f, INT i);
+	void element_pack(INT *Elt, uchar *elt);
+	void element_unpack(uchar *elt, INT *Elt);
+	void put_digit(uchar *elt, INT f, INT i, INT d);
+	INT get_digit(uchar *elt, INT f, INT i);
 	void make_element(INT *Elt, INT *data, INT verbose_level);
 	void element_print_easy(INT *Elt, ostream &ost);
 	void compute_base_and_transversals(INT verbose_level);
@@ -105,7 +105,7 @@ public:
 	finite_field *F;
 	INT f_semilinear;
 
-	BYTE prefix[1000];
+	char prefix[1000];
 	strong_generators *initial_strong_gens;
 	action *A_linear;
 	matrix_group *Mtx;
@@ -122,22 +122,22 @@ public:
 	void freeself();
 	void init(linear_group_description *description, 
 		INT verbose_level);
-	void init_PGL2q_OnConic(BYTE *prefix, INT verbose_level);
-	void init_wedge_action(BYTE *prefix, INT verbose_level);
-	void init_monomial_group(BYTE *prefix, INT verbose_level);
-	void init_diagonal_group(BYTE *prefix, INT verbose_level);
-	void init_singer_group(BYTE *prefix, INT singer_power, 
+	void init_PGL2q_OnConic(char *prefix, INT verbose_level);
+	void init_wedge_action(char *prefix, INT verbose_level);
+	void init_monomial_group(char *prefix, INT verbose_level);
+	void init_diagonal_group(char *prefix, INT verbose_level);
+	void init_singer_group(char *prefix, INT singer_power, 
 		INT verbose_level);
-	void init_null_polarity_group(BYTE *prefix, INT verbose_level);
-	void init_borel_subgroup_upper(BYTE *prefix, INT verbose_level);
-	void init_identity_subgroup(BYTE *prefix, INT verbose_level);
-	void init_symplectic_group(BYTE *prefix, INT verbose_level);
-	void init_subfield_structure_action(BYTE *prefix, INT s, 
+	void init_null_polarity_group(char *prefix, INT verbose_level);
+	void init_borel_subgroup_upper(char *prefix, INT verbose_level);
+	void init_identity_subgroup(char *prefix, INT verbose_level);
+	void init_symplectic_group(char *prefix, INT verbose_level);
+	void init_subfield_structure_action(char *prefix, INT s, 
 		INT verbose_level);
-	void init_orthogonal_group(BYTE *prefix, 
+	void init_orthogonal_group(char *prefix, 
 		INT epsilon, INT verbose_level);
-	void init_subgroup_from_file(BYTE *prefix, 
-		const BYTE *subgroup_fname, const BYTE *subgroup_label, 
+	void init_subgroup_from_file(char *prefix, 
+		const char *subgroup_fname, const char *subgroup_label, 
 		INT verbose_level);
 };
 
@@ -176,8 +176,8 @@ public:
 	INT f_borel_subgroup_upper;
 	INT f_borel_subgroup_lower;
 	INT f_identity_group;
-	const BYTE *subgroup_fname;
-	const BYTE *subgroup_label;
+	const char *subgroup_fname;
+	const char *subgroup_label;
 	INT f_orthogonal_group;
 	INT orthogonal_group_epsilon;
 
@@ -237,8 +237,8 @@ public:
 		// = n, the size of the vectors on which we act
 	INT make_element_size;
 
-	BYTE label[1000];
-	BYTE label_tex[1000];
+	char label[1000];
+	char label_tex[1000];
 	
 	INT f_GFq_is_allocated;
 		// if TRUE, GFq will be destroyed in the destructor
@@ -265,7 +265,7 @@ public:
 		// temporary vectors of length 2n
 	INT *v3;
 		// used in GL_mult_vector_from_the_left_contragredient
-	UBYTE *elt1, *elt2, *elt3;
+	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 	
 	page_storage *Elts;
@@ -316,8 +316,8 @@ public:
 	void GL_transpose_internal(INT *A, INT *At, INT verbose_level);
 	void GL_invert(INT *A, INT *Ainv);
 	void GL_invert_internal(INT *A, INT *Ainv, INT verbose_level);
-	void GL_unpack(UBYTE *elt, INT *Elt, INT verbose_level);
-	void GL_pack(INT *Elt, UBYTE *elt);
+	void GL_unpack(uchar *elt, INT *Elt, INT verbose_level);
+	void GL_pack(INT *Elt, uchar *elt);
 	void GL_print_easy(INT *Elt, ostream &ost);
 	void GL_code_for_make_element(INT *Elt, INT *data);
 	void GL_print_for_make_element(INT *Elt, ostream &ost);
@@ -325,10 +325,10 @@ public:
 	void GL_print_easy_normalized(INT *Elt, ostream &ost);
 	void GL_print_latex(INT *Elt, ostream &ost);
 	void GL_print_easy_latex(INT *Elt, ostream &ost);
-	int get_digit(UBYTE *elt, INT i, INT j);
-	int get_digit_frobenius(UBYTE *elt);
-	void put_digit(UBYTE *elt, INT i, INT j, INT d);
-	void put_digit_frobenius(UBYTE *elt, INT d);
+	int get_digit(uchar *elt, INT i, INT j);
+	int get_digit_frobenius(uchar *elt);
+	void put_digit(uchar *elt, INT i, INT j, INT d);
+	void put_digit_frobenius(uchar *elt, INT d);
 	void make_element(INT *Elt, INT *data, INT verbose_level);
 	void make_GL_element(INT *Elt, INT *A, INT f);
 	void orthogonal_group_random_generator(action *A, orthogonal *O, 
@@ -376,7 +376,7 @@ public:
 	INT elt_size_INT;
 	
 	INT *Elt1, *Elt2, *Elt3, *Elt4;
-	UBYTE *elt1, *elt2, *elt3;
+	uchar *elt1, *elt2, *elt3;
 		// temporary storage, used in element_store()
 	INT *Eltrk1, *Eltrk2, *Eltrk3;
 		// used in store / retrieve
@@ -401,8 +401,8 @@ public:
 	void mult(INT *A, INT *B, INT *AB);
 	void copy(INT *A, INT *B);
 	void invert(INT *A, INT *Ainv);
-	void unpack(UBYTE *elt, INT *Elt);
-	void pack(INT *Elt, UBYTE *elt);
+	void unpack(uchar *elt, INT *Elt);
+	void pack(INT *Elt, uchar *elt);
 	void print(INT *Elt, ostream &ost);
 	void code_for_make_element(INT *Elt, INT *data);
 	void print_for_make_element(INT *Elt, ostream &ost);
@@ -671,12 +671,12 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 		INT f_trivial_group, INT f_compact, INT verbose_level);
 	void write_to_memory_object(memory_object *m, INT verbose_level);
 	void read_from_memory_object(memory_object *m, INT verbose_level);
-	void write_file(BYTE *fname, INT verbose_level);
-	void read_file(const BYTE *fname, INT verbose_level);
+	void write_file(char *fname, INT verbose_level);
+	void read_file(const char *fname, INT verbose_level);
 	void write_to_file_binary(ofstream &fp, INT verbose_level);
 	void read_from_file_binary(ifstream &fp, INT verbose_level);
-	void write_file_binary(BYTE *fname, INT verbose_level);
-	void read_file_binary(const BYTE *fname, INT verbose_level);
+	void write_file_binary(char *fname, INT verbose_level);
+	void read_file_binary(const char *fname, INT verbose_level);
 	void orbits_as_set_of_sets(set_of_sets *&S, INT verbose_level);
 	void get_orbit_reps(INT *&Reps, INT &nb_reps, INT verbose_level);
 	INT find_shortest_orbit_if_unique(INT &idx);
@@ -685,7 +685,7 @@ print_and_list_orbits_and_stabilizer_sorted_by_length_and_list_stabilizer_elemen
 	void get_orbit_lengths_once_each(INT *&orbit_lengths, 
 		INT &nb_orbit_lengths);
 	INT orbit_number(INT pt);
-	void latex(const BYTE *fname);
+	void latex(const char *fname);
 	void get_orbit_decomposition_scheme_of_graph(
 		INT *Adj, INT n, INT *&Decomp_scheme, INT verbose_level);
 	void list_elements_as_permutations_vertically(ostream &ost);
@@ -882,7 +882,7 @@ public:
 		// computes the depth of the element, 
 		// updates the arrays gen_depth and gen_perm accordingly
 		// does not change the transversals
-	void create_group_tree(const BYTE *fname, INT f_full, 
+	void create_group_tree(const char *fname, INT f_full, 
 		INT verbose_level);
 	void print_transversals();
 	void print_transversals_short();
@@ -1060,8 +1060,8 @@ public:
 			INT *Elt, INT verbose_level), 
 		INT verbose_level);
 	INT closure_group(INT nb_times, INT verbose_level);
-	void write_all_group_elements(BYTE *fname, INT verbose_level);
-	void print_all_group_elements_to_file(BYTE *fname, 
+	void write_all_group_elements(char *fname, INT verbose_level);
+	void print_all_group_elements_to_file(char *fname, 
 		INT verbose_level);
 	void print_all_group_elements();
 	void print_all_group_elements_as_permutations();
@@ -1090,14 +1090,14 @@ public:
 		INT verbose_level);
 	void find_element_of_prime_power_order(INT p, 
 		INT *Elt, INT &e, INT &nb_trials, INT verbose_level);
-	void save_list_of_elements(BYTE *fname, 
+	void save_list_of_elements(char *fname, 
 		INT verbose_level);
 	void read_list_of_elements(action *A, 
-		BYTE *fname, INT verbose_level);
+		char *fname, INT verbose_level);
 	void evaluate_word_INT(INT word_len, 
 		INT *word, INT *Elt, INT verbose_level);
-	void write_sgs(const BYTE *fname, INT verbose_level);
-	void read_sgs(const BYTE *fname, vector_ge *SG, 
+	void write_sgs(const char *fname, INT verbose_level);
+	void read_sgs(const char *fname, vector_ge *SG, 
 		INT verbose_level);
 	INT least_moved_point_at_level(INT lvl, INT verbose_level);
 	INT mult_by_rank(INT rk_a, INT rk_b, INT verbose_level);
@@ -1112,7 +1112,7 @@ public:
 	void create_Cayley_graph(vector_ge *gens, INT *&Adj, INT &n, 
 		INT verbose_level);
 	void create_group_table(INT *&Table, INT &n, INT verbose_level);
-	void write_as_magma_permutation_group(const BYTE *fname_base, 
+	void write_as_magma_permutation_group(const char *fname_base, 
 		vector_ge *gens, INT verbose_level);
 
 	// sims2.C:
@@ -1184,7 +1184,7 @@ public:
 	void init(action *A, INT verbose_level);
 	void init_from_sims(sims *S, INT verbose_level);
 	void init_from_ascii_coding(action *A, 
-		BYTE *ascii_coding, INT verbose_level);
+		char *ascii_coding, INT verbose_level);
 	strong_generators *create_copy();
 	void init_copy(strong_generators *S, 
 		INT verbose_level);
@@ -1201,7 +1201,7 @@ public:
 	void init_from_data_with_target_go_ascii(action *A, 
 		INT *data, 
 		INT nb_elements, INT elt_size, 
-		const BYTE *ascii_target_go,
+		const char *ascii_target_go,
 		INT verbose_level);
 	void init_from_data_with_target_go(action *A, 
 		INT *data_gens, 
@@ -1228,13 +1228,13 @@ public:
 	void init_group_extension(strong_generators *subgroup, 
 		vector_ge *new_gens, INT index, 
 		INT verbose_level);
-	void switch_to_subgroup(const BYTE *rank_vector_text, 
-		const BYTE *subgroup_order_text, sims *S, 
+	void switch_to_subgroup(const char *rank_vector_text, 
+		const char *subgroup_order_text, sims *S, 
 		INT *&subgroup_gens_idx, INT &nb_subgroup_gens, 
 		INT verbose_level);
 	void init_subgroup(action *A, INT *subgroup_gens_idx, 
 		INT nb_subgroup_gens, 
-		const BYTE *subgroup_order_text, 
+		const char *subgroup_order_text, 
 		sims *S, 
 		INT verbose_level);
 	sims *create_sims(INT verbose_level);
@@ -1250,7 +1250,7 @@ public:
 	void print_generators_ost(ostream &ost);
 	void print_generators_in_source_code();
 	void print_generators_in_source_code_to_file(
-	const BYTE *fname);
+	const char *fname);
 	void print_generators_even_odd();
 	void print_generators_MAGMA(action *A, ostream &ost);
 	void print_generators_tex();
@@ -1287,13 +1287,13 @@ public:
 	void write_to_file_binary(ofstream &fp, INT verbose_level);
 	void read_from_file_binary(action *A, ifstream &fp, 
 		INT verbose_level);
-	void write_file(const BYTE *fname, INT verbose_level);
-	void read_file(action *A, const BYTE *fname, INT verbose_level);
-	void generators_for_shallow_schreier_tree(BYTE *label, 
+	void write_file(const char *fname, INT verbose_level);
+	void read_file(action *A, const char *fname, INT verbose_level);
+	void generators_for_shallow_schreier_tree(char *label, 
 		vector_ge *chosen_gens, INT verbose_level);
-	void compute_ascii_coding(BYTE *&ascii_coding, INT verbose_level);
-	void decode_ascii_coding(BYTE *ascii_coding, INT verbose_level);
-	void export_permutation_group_to_magma(const BYTE *fname, 
+	void compute_ascii_coding(char *&ascii_coding, INT verbose_level);
+	void decode_ascii_coding(char *ascii_coding, INT verbose_level);
+	void export_permutation_group_to_magma(const char *fname, 
 		INT verbose_level);
 	void compute_and_print_orbits_on_a_given_set(action *A_given,
 		INT *set, INT len, INT verbose_level);
@@ -1381,9 +1381,9 @@ public:
 
 };
 
-void strong_generators_array_write_file(const BYTE *fname, 
+void strong_generators_array_write_file(const char *fname, 
 	strong_generators *p, INT nb, INT verbose_level);
-void strong_generators_array_read_from_file(const BYTE *fname, 
+void strong_generators_array_read_from_file(const char *fname, 
 	action *A, strong_generators *&p, INT &nb, INT verbose_level);
 
 // #############################################################################
@@ -1426,8 +1426,8 @@ public:
 	INT q;
 	INT nb_factors;
 
-	BYTE label[1000];
-	BYTE label_tex[1000];
+	char label[1000];
+	char label_tex[1000];
 
 	INT degree_of_matrix_group;
 	INT dimension_of_matrix_group;
@@ -1458,7 +1458,7 @@ public:
 	INT bits_per_elt;
 	INT char_per_elt;
 
-	UBYTE *elt1;
+	uchar *elt1;
 
 	INT base_len_in_component;
 	INT *base_for_component;
@@ -1490,10 +1490,10 @@ public:
 	INT offset_i(INT i);
 	void create_matrix(INT *Elt, INT *A, INT verbose_level);
 		// uses A1, A2
-	void element_pack(INT *Elt, UBYTE *elt);
-	void element_unpack(UBYTE *elt, INT *Elt);
-	void put_digit(UBYTE *elt, INT f, INT i, INT j, INT d);
-	INT get_digit(UBYTE *elt, INT f, INT i, INT j);
+	void element_pack(INT *Elt, uchar *elt);
+	void element_unpack(uchar *elt, INT *Elt);
+	void put_digit(uchar *elt, INT f, INT i, INT j, INT d);
+	INT get_digit(uchar *elt, INT f, INT i, INT j);
 	void make_element_from_one_component(INT *Elt, INT f, INT *Elt_component);
 	void make_element_from_permutation(INT *Elt, INT *perm);
 	void make_element(INT *Elt, INT *data, INT verbose_level);

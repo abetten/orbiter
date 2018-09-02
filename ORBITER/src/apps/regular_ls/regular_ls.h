@@ -25,9 +25,9 @@ public:
 	INT target_size;
 	INT *initial_pair_covering;
 
-	BYTE starter_directory_name[1000];
-	BYTE prefix[1000];
-	BYTE prefix_with_directory[1000];
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char prefix_with_directory[1000];
 
 	INT m2;
 	INT *v1; // [k]
@@ -45,7 +45,7 @@ public:
 	INT *open_pair_idx; // [m2]
 	
 	void init_basic(int argc, const char **argv, 
-		const BYTE *input_prefix, const BYTE *base_fname, 
+		const char *input_prefix, const char *base_fname, 
 		INT starter_size, 
 		INT verbose_level);
 	void read_arguments(int argc, const char **argv);
@@ -75,17 +75,17 @@ public:
 		INT &f_ruled_out, 
 		INT verbose_level);
 #if 0
-	void extend(const BYTE *fname, 
+	void extend(const char *fname, 
 		INT f_single_case, INT single_case, 
 		INT N, INT K, INT R, INT f_lambda_reached, INT depth, 
 		INT f_lexorder_test, 
 		INT verbose_level);
-	void extend_a_single_case(const BYTE *fname, 
+	void extend_a_single_case(const char *fname, 
 		INT N, INT K, INT R, INT f_lambda_reached, 
 		INT f_lexorder_test, 
 		INT orbit_at_level, INT nb_orbits, INT depth, 
 		INT verbose_level);
-	void handle_starter(const BYTE *fname, 
+	void handle_starter(const char *fname, 
 		INT N, INT K, INT R, INT f_lambda_reached, 
 		INT f_lexorder_test, 
 		INT orbit_at_level, INT nb_orbits, 

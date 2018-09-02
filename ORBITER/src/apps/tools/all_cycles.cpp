@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_depth = FALSE;
 	INT depth = 0;
 	INT f_draw_poset = FALSE;
@@ -146,7 +146,7 @@ int main(int argc, char **argv)
 	cout << "ago on edges = " << ago << endl;
 
 	
-	BYTE prefix[1000];
+	char prefix[1000];
 	poset_classification *gen;
 	
 

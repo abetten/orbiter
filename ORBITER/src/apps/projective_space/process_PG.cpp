@@ -29,12 +29,12 @@ int main(int argc, char **argv)
 	INT f_k = FALSE;
 	INT k;
 	INT f_poly = FALSE;
-	BYTE *poly = NULL;
+	char *poly = NULL;
 	INT f_conic_type = FALSE;
 	INT f_randomized = FALSE;
 	INT nb_times = 0;
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_add_nucleus = FALSE;
 	INT f_TDO = FALSE;
 	INT f_maxdepth_for_TDO = FALSE;
@@ -160,8 +160,8 @@ int main(int argc, char **argv)
 
 	set = NEW_INT(ONE_MILLION);
 	{
-	BYTE buf[MY_BUFSIZE];
-	BYTE *p_buf;
+	char buf[MY_BUFSIZE];
+	char *p_buf;
 	INT cnt;
 	
 	ifstream fp(fname);
@@ -264,8 +264,8 @@ int main(int argc, char **argv)
 				INT nucleus;
 				INT *set2;
 				INT sz2;
-				BYTE fname_base[1000];
-				BYTE fname2[1000];
+				char fname_base[1000];
+				char fname2[1000];
 				
 				P->find_nucleus(set, set_size, nucleus, verbose_level);
 

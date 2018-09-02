@@ -9,7 +9,7 @@
 static void print_from_to(INT d, INT i, INT j, INT *v1, INT *v2);
 
 action *create_automorphism_group_from_group_table(
-	const BYTE *fname_base,
+	const char *fname_base,
 	INT *Table, INT group_order, INT *gens, INT nb_gens, 
 	strong_generators *&Aut_gens, 
 	INT verbose_level)
@@ -1222,13 +1222,13 @@ action *create_automorphism_group_of_colored_graph_object(
 }
 
 action *create_automorphism_group_of_colored_graph(
-	INT n, INT f_bitvec, UBYTE *Adj_bitvec, INT *Adj, 
+	INT n, INT f_bitvec, uchar *Adj_bitvec, INT *Adj, 
 	INT *vertex_colors, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action *A;
-	UBYTE *Adj1;
+	uchar *Adj1;
 	INT *labeling;
 	INT *parts;
 	INT nb_parts;
@@ -1260,7 +1260,7 @@ action *create_automorphism_group_of_colored_graph(
 
 	N = (n1 * (n1 - 1)) >> 1;
 	len = (N + 7) >> 3;
-	Adj1 = NEW_UBYTE(len);
+	Adj1 = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		Adj1[i] = 0;
 		}
@@ -1316,12 +1316,12 @@ action *create_automorphism_group_of_colored_graph(
 
 	FREE_INT(parts);
 	FREE_INT(labeling);
-	FREE_UBYTE(Adj1);
+	FREE_uchar(Adj1);
 	return A;
 }
 
 action *create_automorphism_group_of_graph_bitvec(
-	INT n, UBYTE *Adj_bitvec, 
+	INT n, uchar *Adj_bitvec, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1347,7 +1347,7 @@ action *create_automorphism_group_of_graph_bitvec(
 
 action *create_automorphism_group_of_graph_with_partition_and_labeling(
 	INT n, 
-	INT f_bitvector, UBYTE *Adj_bitvec, INT *Adj, 
+	INT f_bitvector, uchar *Adj_bitvec, INT *Adj, 
 	INT nb_parts, INT *parts, 
 	INT *labeling, 
 	INT verbose_level)
@@ -2726,7 +2726,7 @@ sims *set_stabilizer_in_projective_space(
 	action *A_linear, projective_space *P, 
 	INT *set, INT set_size, INT &canonical_pt, 
 	INT *canonical_set_or_NULL, 
-	INT f_save_incma_in_and_out, const BYTE *save_incma_in_and_out_prefix, 
+	INT f_save_incma_in_and_out, const char *save_incma_in_and_out_prefix, 
 	INT verbose_level)
 // added 2/28/2011, called from analyze.C
 // November 17, 2014 moved here from TOP_LEVEL/extra.C
@@ -2853,8 +2853,8 @@ sims *set_stabilizer_in_projective_space(
 				cout << "too large to print" << endl;
 				}
 			}
-		BYTE fname_csv[1000];
-		BYTE fname_bin[1000];
+		char fname_csv[1000];
+		char fname_bin[1000];
 
 		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
@@ -2953,8 +2953,8 @@ sims *set_stabilizer_in_projective_space(
 				cout << "too large to print" << endl;
 				}
 			}
-		BYTE fname_csv[1000];
-		BYTE fname_bin[1000];
+		char fname_csv[1000];
+		char fname_bin[1000];
 
 		sprintf(fname_csv, "%sIncma_out_%ld_%ld.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
@@ -3259,7 +3259,7 @@ void projective_space_init_line_action(projective_space *P,
 }
 
 void color_distribution_matrix(action *A,
-	INT *Elt, INT n, UBYTE *Adj, INT *colors, classify *C,
+	INT *Elt, INT n, uchar *Adj, INT *colors, classify *C,
 	INT *&Mtx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3287,7 +3287,7 @@ void color_distribution_matrix(action *A,
 
 void test_color_distribution(action *A,
 	vector_ge *gens, INT n,
-	UBYTE *Adj, INT *colors, INT verbose_level)
+	uchar *Adj, INT *colors, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 1);
@@ -3324,7 +3324,7 @@ void test_color_distribution(action *A,
 }
 
 void color_preserving_subgroup(action *A,
-	INT n, UBYTE *Adj, INT *colors, sims *&Subgroup,
+	INT n, uchar *Adj, INT *colors, sims *&Subgroup,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3411,7 +3411,7 @@ void color_preserving_subgroup(action *A,
 }
 
 INT test_automorphism_group_of_graph_bitvec(action *A,
-	INT n, UBYTE *Adj, INT verbose_level)
+	INT n, uchar *Adj, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	strong_generators *SG;
@@ -3754,7 +3754,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 
 void do_canonical_form(INT n, finite_field *F, 
 	INT *set, INT set_size, INT f_semilinear, 
-	const BYTE *fname_base, INT verbose_level)
+	const char *fname_base, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);

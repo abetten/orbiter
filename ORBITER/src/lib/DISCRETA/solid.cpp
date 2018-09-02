@@ -1943,10 +1943,10 @@ void solid::make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles)
 }
 
 
-void solid::write_graphfile(BYTE *fname)
+void solid::write_graphfile(char *fname)
 {
 	ofstream fp(fname);
-	BYTE str[256];
+	char str[256];
 	INT i, l;
 	
 	cout << "solid::write_graphfile() fname=" << fname;
@@ -1998,10 +1998,10 @@ void solid::write_graphfile(BYTE *fname)
 	fp << "</GRAPH>" << endl;
 }
 
-void solid::write_solidfile(BYTE *fname)
+void solid::write_solidfile(char *fname)
 {
 	ofstream fp(fname);
-	BYTE str[256];
+	char str[256];
 	INT i, l;
 	
 	cout << "solid::write_graphfile() fname=" << fname;

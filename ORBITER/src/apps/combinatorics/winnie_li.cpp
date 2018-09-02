@@ -122,7 +122,7 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 
 
 	colored_graph *CG;
-	BYTE fname[1000];
+	char fname[1000];
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(q, Adj, verbose_level);

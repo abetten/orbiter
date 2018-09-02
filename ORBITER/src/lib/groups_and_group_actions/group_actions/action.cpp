@@ -378,8 +378,8 @@ void action::allocate_element_data()
 	eltrk2 = NEW_INT(elt_size_in_INT);
 	eltrk3 = NEW_INT(elt_size_in_INT);
 	elt_mult_apply = NEW_INT(elt_size_in_INT);
-	elt1 = NEW_UBYTE(coded_elt_size_in_char);
-	element_rw_memory_object = NEW_BYTE(coded_elt_size_in_char);
+	elt1 = NEW_uchar(coded_elt_size_in_char);
+	element_rw_memory_object = NEW_char(coded_elt_size_in_char);
 }
 
 void action::free_element_data()
@@ -412,10 +412,10 @@ void action::free_element_data()
 		FREE_INT(elt_mult_apply);
 		}
 	if (elt1) {
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 		}
 	if (element_rw_memory_object) {
-		FREE_BYTE(element_rw_memory_object);
+		FREE_char(element_rw_memory_object);
 		}
 	null_element_data();
 }
@@ -1885,7 +1885,7 @@ void action::element_power_INT_in_place(INT *Elt,
 }
 
 void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3,
-		const BYTE *word, INT verbose_level)
+		const char *word, INT verbose_level)
 {
 	INT *Elt4;
 	INT *Elt5;
@@ -1918,7 +1918,7 @@ void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3,
 
 void action::init_group_from_generators(
 	INT *group_generator_data, INT group_generator_size,
-	INT f_group_order_target, const BYTE *group_order_target, 
+	INT f_group_order_target, const char *group_order_target, 
 	vector_ge *gens, strong_generators *&Strong_gens, 
 	INT verbose_level)
 {
@@ -1992,7 +1992,7 @@ void action::init_group_from_generators(
 
 void action::init_group_from_generators_by_base_images(
 	INT *group_generator_data, INT group_generator_size, 
-	INT f_group_order_target, const BYTE *group_order_target, 
+	INT f_group_order_target, const char *group_order_target, 
 	vector_ge *gens, strong_generators *&Strong_gens_out, 
 	INT verbose_level)
 {
@@ -2403,15 +2403,15 @@ void action::element_commutator_abavbv(INT *Elt_A,
 	FREE_INT(Elt4);
 }
 
-void action::read_representatives(BYTE *fname,
+void action::read_representatives(char *fname,
 		INT *&Reps, INT &nb_reps, INT &size, INT verbose_level)
 {
 	INT f_casenumbers = FALSE;
 	INT nb_cases;
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii; 
+	char **Ago_ascii;
+	char **Aut_ascii; 
 	INT *Casenumbers;
 	INT i, j;
 	
@@ -2440,16 +2440,16 @@ void action::read_representatives(BYTE *fname,
 }
 
 void action::read_representatives_and_strong_generators(
-	BYTE *fname, INT *&Reps,
-	BYTE **&Aut_ascii, INT &nb_reps, INT &size, INT verbose_level)
+	char *fname, INT *&Reps,
+	char **&Aut_ascii, INT &nb_reps, INT &size, INT verbose_level)
 //INT **&Tl, vector_ge **gens, 
 {
 	INT f_casenumbers = FALSE;
 	INT nb_cases;
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	//BYTE **Aut_ascii; 
+	char **Ago_ascii;
+	//char **Aut_ascii; 
 	INT *Casenumbers;
 	INT i, j;
 	
@@ -2478,14 +2478,14 @@ void action::read_representatives_and_strong_generators(
 }
 
 void action::read_file_and_print_representatives(
-		BYTE *fname, INT f_print_stabilizer_generators)
+		char *fname, INT f_print_stabilizer_generators)
 {
 	INT f_casenumbers = FALSE;
 	INT nb_cases;
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii; 
+	char **Ago_ascii;
+	char **Aut_ascii; 
 	INT *Casenumbers;
 	INT i;
 	
@@ -2542,7 +2542,7 @@ void action::read_file_and_print_representatives(
 
 }
 
-void action::read_set_and_stabilizer(const BYTE *fname, 
+void action::read_set_and_stabilizer(const char *fname, 
 	INT no, INT *&set, INT &set_sz, sims *&stab, 
 	strong_generators *&Strong_gens, 
 	INT &nb_cases, 
@@ -2554,8 +2554,8 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 	//INT nb_cases;
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii; 
+	char **Ago_ascii;
+	char **Aut_ascii; 
 	INT *Casenumbers;
 	group *G;
 	INT i;
@@ -2631,7 +2631,7 @@ void action::read_set_and_stabilizer(const BYTE *fname,
 }
 
 void action::get_generators_from_ascii_coding(
-		BYTE *ascii_coding, vector_ge *&gens, INT *&tl, INT verbose_level)
+		char *ascii_coding, vector_ge *&gens, INT *&tl, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -2767,7 +2767,7 @@ void action::compute_orbits_on_points(schreier *&Sch,
 }
 
 void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no,
-		vector_ge *&gens, const BYTE *&stab_order,
+		vector_ge *&gens, const char *&stab_order,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -2799,7 +2799,7 @@ void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no,
 
 void action::stabilizer_of_translation_plane_representative(
 		INT q, INT k, INT no,
-		vector_ge *&gens, const BYTE *&stab_order,
+		vector_ge *&gens, const char *&stab_order,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -2830,13 +2830,13 @@ void action::stabilizer_of_translation_plane_representative(
 		}
 }
 
-void action::normalizer_using_MAGMA(const BYTE *prefix,
+void action::normalizer_using_MAGMA(const char *prefix,
 		sims *G, sims *H, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_magma[1000];
-	BYTE fname_output[1000];
-	BYTE cmd[1000];
+	char fname_magma[1000];
+	char fname_output[1000];
+	char cmd[1000];
 
 	if (f_v) {
 		cout << "action::normalizer_using_MAGMA" << endl;
@@ -2892,13 +2892,13 @@ void action::normalizer_using_MAGMA(const BYTE *prefix,
 		}
 }
 
-void action::conjugacy_classes_using_MAGMA(const BYTE *prefix,
+void action::conjugacy_classes_using_MAGMA(const char *prefix,
 		sims *G, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_magma[1000];
-	BYTE fname_output[1000];
-	BYTE cmd[1000];
+	char fname_magma[1000];
+	char fname_output[1000];
+	char cmd[1000];
 
 	if (f_v) {
 		cout << "action::conjugacy_classes_using_MAGMA" << endl;
@@ -2948,13 +2948,13 @@ void action::conjugacy_classes_using_MAGMA(const BYTE *prefix,
 		}
 }
 
-void action::centralizer_using_MAGMA(const BYTE *prefix,
+void action::centralizer_using_MAGMA(const char *prefix,
 		sims *G, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_magma[1000];
-	BYTE fname_output[1000];
-	BYTE cmd[1000];
+	char fname_magma[1000];
+	char fname_output[1000];
+	char cmd[1000];
 
 	if (f_v) {
 		cout << "action::centralizer_using_MAGMA" << endl;

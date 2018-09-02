@@ -129,8 +129,8 @@ void blt_set::freeself()
 
 
 void blt_set::init_basic(finite_field *F, 
-	const BYTE *input_prefix, 
-	const BYTE *base_fname,
+	const char *input_prefix, 
+	const char *base_fname,
 	INT starter_size,  
 	int argc, const char **argv, 
 	INT verbose_level)
@@ -424,7 +424,7 @@ void blt_set::init2(INT verbose_level)
 void blt_set::create_graphs(
 	INT orbit_at_level_r, INT orbit_at_level_m, 
 	INT level_of_candidates_file, 
-	const BYTE *output_prefix, 
+	const char *output_prefix, 
 	INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
 	INT verbose_level)
 {
@@ -445,10 +445,10 @@ void blt_set::create_graphs(
 	//f_memory_debug = TRUE;
 
 
-	BYTE fname[1000];
-	BYTE fname_list_of_cases[1000];
-	BYTE fname_time[1000];
-	BYTE graph_fname_base[1000];
+	char fname[1000];
+	char fname_list_of_cases[1000];
+	char fname_time[1000];
+	char graph_fname_base[1000];
 	INT orbit;
 	INT nb_orbits;
 	INT *list_of_cases;
@@ -509,7 +509,7 @@ void blt_set::create_graphs(
 			verbose_level - 2)) {
 			list_of_cases[nb_of_cases++] = orbit;
 
-			BYTE fname[1000];
+			char fname[1000];
 
 			sprintf(fname, "%s%s.bin", output_prefix, CG->fname_base);
 			CG->save(fname, verbose_level - 2);
@@ -569,10 +569,10 @@ void blt_set::create_graphs(
 }
 
 void blt_set::create_graphs_list_of_cases(
-	const BYTE *case_label, 
-	const BYTE *list_of_cases_text, 
+	const char *case_label, 
+	const char *list_of_cases_text, 
 	INT level_of_candidates_file, 
-	const BYTE *output_prefix, 
+	const char *output_prefix, 
 	INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
 	INT verbose_level)
 {
@@ -604,9 +604,9 @@ void blt_set::create_graphs_list_of_cases(
 				"f_lexorder_test=" << f_lexorder_test << endl;
 		}
 
-	BYTE fname[1000];
-	BYTE fname_list_of_cases[1000];
-	BYTE graph_fname_base[1000];
+	char fname[1000];
+	char fname_list_of_cases[1000];
+	char graph_fname_base[1000];
 	INT orbit;
 	INT nb_orbits;
 	INT *list_of_cases_created;
@@ -656,7 +656,7 @@ void blt_set::create_graphs_list_of_cases(
 			verbose_level - 2)) {
 			list_of_cases_created[nb_of_cases_created++] = orbit;
 
-			BYTE fname[1000];
+			char fname[1000];
 
 			sprintf(fname, "%s%s.bin", output_prefix, CG->fname_base);
 			CG->save(fname, verbose_level - 2);
@@ -708,9 +708,9 @@ void blt_set::create_graphs_list_of_cases(
 
 INT blt_set::create_graph(
 	INT orbit_at_level, INT level_of_candidates_file, 
-	const BYTE *output_prefix, 
+	const char *output_prefix, 
 	INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
-	INT &nb_vertices, BYTE *graph_fname_base,
+	INT &nb_vertices, char *graph_fname_base,
 	colored_graph *&CG,  
 	INT verbose_level)
 // returns TRUE if a graph was written, FALSE otherwise
@@ -931,7 +931,7 @@ INT blt_set::create_graph(
 						"nb_points=" << R->nb_candidates << endl;
 		}
 
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 	INT bitvector_length_in_bits;
 	INT bitvector_length;
 
@@ -989,7 +989,7 @@ finish:
 void blt_set::compute_adjacency_list_fast(
 	INT first_point_of_starter,
 	INT *points, INT nb_points, INT *point_color, 
-	UBYTE *&bitvector_adjacency,
+	uchar *&bitvector_adjacency,
 	INT &bitvector_length_in_bits,
 	INT &bitvector_length,
 	INT verbose_level)
@@ -1013,7 +1013,7 @@ void blt_set::compute_adjacency_list_fast(
 
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_UBYTE(bitvector_length);
+	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 		}

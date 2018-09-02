@@ -11,8 +11,8 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 	INT point_label_offset, 
 	INT f_edge_labels, 
 	INT f_bipartite, INT size_of_bipartition, 
-	INT f_partition, const BYTE *partition_text, 
-	INT f_vertex_selection, const BYTE *vertex_selection_text, 
+	INT f_partition, const char *partition_text, 
+	INT f_vertex_selection, const char *vertex_selection_text, 
 	INT rad, 
 	INT verbose_level);
 
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	INT f_nb_V = FALSE;
 	INT nb_V = 0, nb_E = 0;
 	INT f_fname = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT point_label_offset = 0; 
 	INT f_edge_labels = FALSE;
 	INT f_directed = FALSE;
@@ -44,23 +44,23 @@ int main(int argc, char **argv)
 	INT f_line_width = FALSE;
 	double tikz_global_line_width = 1.5;
 	INT f_export = FALSE;
-	const BYTE *fname_export = NULL;
+	const char *fname_export = NULL;
 	INT f_edge_set = FALSE;
-	const BYTE *edge_set = NULL;
+	const char *edge_set = NULL;
 	INT f_colored_graph = FALSE;
-	const BYTE *colored_graph_fname = NULL;
+	const char *colored_graph_fname = NULL;
 	INT f_bipartite = FALSE;
 	INT size_of_bipartition = 0;
 	INT x, y, e, u, v;
 	INT f_partition = FALSE;
-	const BYTE *partition_text = NULL;
-	BYTE partition_text2[10000];
+	const char *partition_text = NULL;
+	char partition_text2[10000];
 	INT f_partition_by_color_classes = FALSE;
 	INT *partition = NULL;
 	INT *partition_first = NULL;
 	INT partition_length = NULL;
 	INT f_vertex_selection = FALSE;
-	const BYTE *vertex_selection_text = NULL;
+	const char *vertex_selection_text = NULL;
 	INT f_no_point_labels = FALSE;
 	INT f_point_labels = FALSE;
 	INT *point_labels = NULL;
@@ -283,8 +283,8 @@ int main(int argc, char **argv)
 		}
 
 
-	BYTE fname2[1000];
-	BYTE ext[1000];
+	char fname2[1000];
+	char ext[1000];
 
 	sprintf(fname2, "%s", fname);
 	
@@ -364,7 +364,7 @@ int main(int argc, char **argv)
 
 #if 0
 	if (f_labels) {
-		BYTE str[1000];
+		char str[1000];
 		
 		for (i = 0; i < nb_V; i++) {
 			sprintf(str, "%ld", i);
@@ -425,8 +425,8 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 	INT point_label_offset, 
 	INT f_edge_labels, 
 	INT f_bipartite, INT size_of_bipartition, 
-	INT f_partition, const BYTE *partition_text, 
-	INT f_vertex_selection, const BYTE *vertex_selection_text, 
+	INT f_partition, const char *partition_text, 
+	INT f_vertex_selection, const char *vertex_selection_text, 
 	INT rad, 
 	INT verbose_level)
 {
@@ -435,7 +435,7 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 	INT Px[1000], Py[1000];
 	INT Qx[1000], Qy[1000];
 	INT Rx[1000], Ry[1000];
-	BYTE str[1000];
+	char str[1000];
 	double phi = ((double) 360) / nb_v;
 	double phi_half = phi * 0.5;
 	INT rad1 = 170000;
@@ -627,7 +627,7 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 			}
 		}
 	if (f_partition) {
-		BYTE str[1000];
+		char str[1000];
 
 		//G.sl_thickness(25);
 		//G.circle(0, 0, rad1a);

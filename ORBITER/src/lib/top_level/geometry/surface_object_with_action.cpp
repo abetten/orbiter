@@ -639,7 +639,7 @@ void surface_object_with_action::init_orbits_on_points_not_on_lines(
 
 void surface_object_with_action::print_automorphism_group(
 	ostream &ost,
-	INT f_print_orbits, const BYTE *fname_mask)
+	INT f_print_orbits, const char *fname_mask)
 {
 	longinteger_object go;
 
@@ -708,7 +708,7 @@ void surface_object_with_action::print_automorphism_group(
 
 		INT i;
 		for (i = 0; i < Orbits_on_single_sixes->nb_orbits; i++) {
-			BYTE fname[1000];
+			char fname[1000];
 
 			sprintf(fname, fname_mask, i);
 			ost << "" << endl; 
@@ -1178,8 +1178,8 @@ void surface_object_with_action::quartic(
 
 
 void surface_object_with_action::cheat_sheet(ostream &ost, 
-	const BYTE *label_txt, const BYTE *label_tex, 
-	INT f_print_orbits, const BYTE *fname_mask, 
+	const char *label_txt, const char *label_tex, 
+	INT f_print_orbits, const char *fname_mask, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1335,7 +1335,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 		}
 
 
-	BYTE magma_fname[1000];
+	char magma_fname[1000];
 
 	sprintf(magma_fname, "%s_group.magma", label_txt);
 	Aut_gens->export_permutation_group_to_magma(
@@ -1351,7 +1351,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 	
 	{
 	ifstream fp1(magma_fname);
-	BYTE line[100000];
+	char line[100000];
 
 	while (TRUE) {
 		if (fp1.eof()) {
@@ -1376,7 +1376,7 @@ void surface_object_with_action::cheat_sheet(ostream &ost,
 
 void surface_object_with_action::cheat_sheet_quartic_curve(
 	ostream &ost,
-	const BYTE *label_txt, const BYTE *label_tex,
+	const char *label_txt, const char *label_tex,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

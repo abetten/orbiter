@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	INT f_q = FALSE;
 	INT q;
 	INT f_poly = FALSE;
-	BYTE *poly = NULL;
+	char *poly = NULL;
 	
 	t0 = os_ticks();
 
@@ -239,7 +239,7 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 		}
 	cout << endl;
 
-	BYTE fname[1000];
+	char fname[1000];
 	sprintf(fname, "G_%ld_%ld_%ld.txt", n, k, q);
 	write_set_to_file(fname, L, N, verbose_level);
 

@@ -64,7 +64,7 @@ class poset_classification {
 public:
 	INT t0;
 
-	BYTE problem_label[1000];
+	char problem_label[1000];
 	
 	action *A; // the action in which the group is given
 	action *A2; // the action in which we do the search
@@ -162,20 +162,20 @@ public:
 	INT xmax, ymax, radius;
 	
 	INT f_recover;
-	const BYTE *recover_fname;
+	const char *recover_fname;
 
 	INT f_extend;
 	INT extend_from, extend_to;
 	INT extend_r, extend_m;
-	BYTE extend_fname[1000];
+	char extend_fname[1000];
 
 	INT f_lex;
 	INT f_max_depth;
 	INT max_depth;
 
-	BYTE fname_base[1000]; // = path + prefix
-	BYTE prefix[1000]; // = fname_base without prefix
-	BYTE path[1000];
+	char fname_base[1000]; // = path + prefix
+	char prefix[1000]; // = fname_base without prefix
+	char path[1000];
 
 
 	INT f_starter;
@@ -228,7 +228,7 @@ public:
 	double progress_epsilon;
 
 	INT f_draw_schreier_trees;
-		BYTE schreier_tree_prefix[1000];
+		char schreier_tree_prefix[1000];
 		INT schreier_tree_xmax; // = 1000000;
 		INT schreier_tree_ymax; // =  500000;
 		INT schreier_tree_f_circletext; // = TRUE;
@@ -402,12 +402,12 @@ public:
 	void initialize(action *A_base, action *A_use, 
 		strong_generators *gens, 
 		INT depth, 
-		const BYTE *path, const BYTE *prefix, INT verbose_level);
+		const char *path, const char *prefix, INT verbose_level);
 	void initialize_with_starter(action *A_base, action *A_use, 
 		strong_generators *gens, 
 		INT depth, 
-		BYTE *path, 
-		BYTE *prefix, 
+		char *path, 
+		char *prefix, 
 		INT starter_size, 
 		INT *starter, 
 		strong_generators *Starter_Strong_gens, 
@@ -563,15 +563,15 @@ public:
 		INT verbose_level);
 	
 	// poset_classification_draw.C:
-	void write_treefile_and_draw_tree(BYTE *fname_base, 
+	void write_treefile_and_draw_tree(char *fname_base, 
 		INT lvl, INT xmax, INT ymax, INT rad, 
 		INT f_embedded, INT verbose_level);
-	INT write_treefile(BYTE *fname_base, INT lvl, 
+	INT write_treefile(char *fname_base, INT lvl, 
 		INT verbose_level);
-	void draw_tree(BYTE *fname_base, INT lvl, 
+	void draw_tree(char *fname_base, INT lvl, 
 		INT xmax, INT ymax, INT rad, INT f_embedded, 
 		INT f_sideways, INT verbose_level);
-	void draw_tree_low_level(BYTE *fname, INT nb_nodes, 
+	void draw_tree_low_level(char *fname, INT nb_nodes, 
 		INT *coord_xyw, INT *perm, INT *perm_inv, 
 		INT f_draw_points, INT f_draw_extension_points, 
 		INT f_draw_aut_group_order, 
@@ -582,13 +582,13 @@ public:
 		INT f_draw_points, INT f_draw_extension_points, 
 		INT f_draw_aut_group_order, 
 		INT radius, INT verbose_level);
-	void draw_poset_full(const BYTE *fname_base, INT depth, 
+	void draw_poset_full(const char *fname_base, INT depth, 
 		INT data, INT f_embedded, INT f_sideways, 
 		double x_stretch, INT verbose_level);
-	void draw_poset(const BYTE *fname_base, INT depth, 
+	void draw_poset(const char *fname_base, INT depth, 
 		INT data1, INT f_embedded, INT f_sideways, 
 		INT verbose_level);
-	void draw_level_graph(const BYTE *fname_base, INT depth, 
+	void draw_level_graph(const char *fname_base, INT depth, 
 		INT data, INT level, INT f_embedded, INT f_sideways, 
 		INT verbose_level);
 	void make_full_poset_graph(INT depth, layered_graph *&LG, 
@@ -610,12 +610,12 @@ public:
 	void housekeeping(INT i, INT f_write_files, INT t0, 
 		INT verbose_level);
 	void housekeeping_no_data_file(INT i, INT t0, INT verbose_level);
-	INT test_sv_level_file_binary(INT level, BYTE *fname_base);
-	void read_sv_level_file_binary(INT level, BYTE *fname_base, 
+	INT test_sv_level_file_binary(INT level, char *fname_base);
+	void read_sv_level_file_binary(INT level, char *fname_base, 
 		INT f_split, INT split_mod, INT split_case, 
 		INT f_recreate_extensions, INT f_dont_keep_sv, 
 		INT verbose_level);
-	void write_sv_level_file_binary(INT level, BYTE *fname_base, 
+	void write_sv_level_file_binary(INT level, char *fname_base, 
 		INT f_split, INT split_mod, INT split_case, 
 		INT verbose_level);
 	void read_sv_level_file_binary2(INT level, FILE *fp, 
@@ -625,32 +625,32 @@ public:
 	void write_sv_level_file_binary2(INT level, FILE *fp, 
 		INT f_split, INT split_mod, INT split_case, 
 		INT verbose_level);
-	void read_level_file_binary(INT level, BYTE *fname_base, 
+	void read_level_file_binary(INT level, char *fname_base, 
 		INT verbose_level);
-	void write_level_file_binary(INT level, BYTE *fname_base, 
+	void write_level_file_binary(INT level, char *fname_base, 
 		INT verbose_level);
 	void read_level_file_binary2(INT level, FILE *fp, 
 		INT &nb_group_elements, INT verbose_level);
 	void write_level_file_binary2(INT level, FILE *fp, 
 		INT &nb_group_elements, INT verbose_level);
 	INT calc_size_on_file(INT depth_completed, INT verbose_level);
-	void make_fname_candidates_file_default(BYTE *fname, INT level);
-	void write_candidates_binary_using_sv(BYTE *fname_base, 
+	void make_fname_candidates_file_default(char *fname, INT level);
+	void write_candidates_binary_using_sv(char *fname_base, 
 		INT lvl, INT t0, INT verbose_level);
-	void read_level_file(INT level, BYTE *fname, INT verbose_level);
+	void read_level_file(INT level, char *fname, INT verbose_level);
 	void read_data_file(INT &depth_completed, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 	void write_data_file(INT depth_completed, 
-		const BYTE *fname_base, INT verbose_level);
+		const char *fname_base, INT verbose_level);
 	void read_memory_object(INT &depth_completed, 
 		memory_object *m, INT &nb_group_elements, INT verbose_level);
 	void write_memory_object(INT depth_completed, 
 		memory_object *m, INT &nb_group_elements, INT verbose_level);
-	void recover(const BYTE *recover_fname, 
+	void recover(const char *recover_fname, 
 		INT &depth_completed, INT verbose_level);
-	void write_lvl_file_with_candidates(BYTE *fname_base, 
+	void write_lvl_file_with_candidates(char *fname_base, 
 		INT lvl, INT t0, INT verbose_level);
-	void write_lvl_file(BYTE *fname_base, INT lvl, 
+	void write_lvl_file(char *fname_base, INT lvl, 
 		INT t0, INT f_with_stabilizer_generators, INT f_long_version,
 		INT verbose_level);
 	void write_lvl(ostream &f, INT lvl, INT t0, 
@@ -694,7 +694,7 @@ public:
 
 // in poset_classification_io.C:
 void poset_classification_read_candidates_of_orbit(
-	const BYTE *fname, INT orbit_at_level,
+	const char *fname, INT orbit_at_level,
 	INT *&candidates, INT &nb_candidates, INT verbose_level);
 
 

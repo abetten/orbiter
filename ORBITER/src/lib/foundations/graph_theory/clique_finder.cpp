@@ -15,7 +15,7 @@
 
 #undef SUSPICOUS
 
-void clique_finder::open_tree_file(const BYTE *fname_base,
+void clique_finder::open_tree_file(const char *fname_base,
 		INT f_decision_nodes_only)
 {
 	f_write_tree = TRUE;
@@ -34,10 +34,10 @@ void clique_finder::close_tree_file()
 			<< file_size(fname_tree) << endl;
 }
 
-void clique_finder::init(const BYTE *label, INT n, 
+void clique_finder::init(const char *label, INT n, 
 	INT target_depth, 
 	INT f_has_adj_list, INT *adj_list_coded, 
-	INT f_has_bitvector, UBYTE *bitvector_adjacency, 
+	INT f_has_bitvector, uchar *bitvector_adjacency, 
 	INT print_interval, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_store_solutions, 
@@ -123,9 +123,9 @@ void clique_finder::delinearize_adjacency_list(INT verbose_level)
 	if (f_v) {
 		cout << "clique_finder::delinearize_adjacency_list" << endl;
 		}
-	row_by_row_adjacency_matrix = NEW_PBYTE(n);
+	row_by_row_adjacency_matrix = NEW_pchar(n);
 	for (i = 0; i < n; i++) {
-		row_by_row_adjacency_matrix[i] = NEW_BYTE(n);
+		row_by_row_adjacency_matrix[i] = NEW_char(n);
 		for (j = 0; j < n; j++) {
 			row_by_row_adjacency_matrix[i][j] = 0;
 			}
@@ -165,7 +165,7 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 	if (f_v) {
 		cout << "clique_finder::allocate_bitmatrix" << endl;
 		}
-	bitmatrix_N = (n + 7) >> 3; // 1 byte = 8 bits = 2^3
+	bitmatrix_N = (n + 7) >> 3; // 1 char = 8 bits = 2^3
 	bitmatrix_m = n;
 	bitmatrix_n = n;
 	size = bitmatrix_m * bitmatrix_N;
@@ -173,7 +173,7 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 		cout << "clique_finder::allocate_bitmatrix "
 				"allocating BITMATRIX of size " << size << endl;
 		}
-	bitmatrix_adjacency = NEW_UBYTE(size);
+	bitmatrix_adjacency = NEW_uchar(size);
 	f_has_bitmatrix = TRUE;
 
 	if (f_v) {
@@ -320,7 +320,7 @@ void clique_finder::free()
 
 	if (bitmatrix_adjacency) {
 		//delete [] adjacency;
-		FREE_UBYTE(bitmatrix_adjacency);
+		FREE_uchar(bitmatrix_adjacency);
 		}
 	if (pt_list) {
 		FREE_INT(pt_list);
@@ -358,9 +358,9 @@ void clique_finder::free()
 	if (f_has_row_by_row_adjacency_matrix) {
 		INT i;
 		for (i = 0; i < n; i++) {
-			FREE_BYTE(row_by_row_adjacency_matrix[i]);
+			FREE_char(row_by_row_adjacency_matrix[i]);
 			}
-		FREE_PBYTE(row_by_row_adjacency_matrix);
+		FREE_pchar(row_by_row_adjacency_matrix);
 		}
 
 	null();
@@ -695,7 +695,7 @@ void clique_finder::write_entry_to_tree_file(INT depth,
 void clique_finder::m_iji(INT i, INT j, INT a)
 {
 	INT m, n; //, N; //, jj, bit;
-	//UBYTE mask;
+	//uchar mask;
 	
 	m = bitmatrix_m;
 	n = bitmatrix_n;
@@ -716,10 +716,10 @@ void clique_finder::m_iji(INT i, INT j, INT a)
 #if 0
 	jj = j >> 3;
 	bit = j & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitmatrix_adjacency[i * N + jj];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitmatrix_adjacency[i * N + jj];
 	if (a == 0) {
-		UBYTE not_mask = ~mask;
+		uchar not_mask = ~mask;
 		x &= not_mask;
 		}
 	else {
@@ -774,11 +774,11 @@ INT clique_finder::s_ij(INT i, INT j)
 		}
 
 #if 0
-	//UBYTE mask;
+	//uchar mask;
 	jj = j >> 3;
 	bit = j & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitmatrix_adjacency[i * N + jj];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitmatrix_adjacency[i * N + jj];
 	if (x & mask)
 		return 1;
 	else
@@ -1493,7 +1493,7 @@ void all_cliques_of_given_size(INT *Adj,
 	INT n2;
 	INT i, j, h;
 	clique_finder *C;
-	const BYTE *label = "all_cliques_of_given_size";
+	const char *label = "all_cliques_of_given_size";
 	INT print_interval = 1000;
 	INT f_maxdepth = FALSE;
 	INT maxdepth = 0;

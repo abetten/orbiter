@@ -173,7 +173,7 @@ void isomorph::probe(INT flag_orbit, INT subset_rk,
 }
 
 void isomorph::isomorph_testing(INT t0, 
-	INT f_play_back, const BYTE *play_back_file_name, 
+	INT f_play_back, const char *play_back_file_name, 
 	INT f_implicit_fusion, INT print_mod, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -427,8 +427,8 @@ void isomorph::write_classification_graph(INT verbose_level)
 		}
 
 
-	BYTE fname_base1[1000];
-	BYTE fname[1000];
+	char fname_base1[1000];
+	char fname[1000];
 	sprintf(fname_base1, "%sclassification_graph", prefix);
 	sprintf(fname, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
@@ -477,8 +477,8 @@ void isomorph::decomposition_matrix(INT verbose_level)
 			}
 		}
 
-	BYTE fname_base1[1000];
-	BYTE fname[1000];
+	char fname_base1[1000];
+	char fname[1000];
 	
 	sprintf(fname_base1, "%sdecomposition_matrix", prefix);
 	sprintf(fname, "%s.csv", fname_base1);

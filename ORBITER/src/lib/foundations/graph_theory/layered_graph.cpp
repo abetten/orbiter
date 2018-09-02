@@ -38,7 +38,7 @@ void layered_graph::freeself()
 }
 
 void layered_graph::init(INT nb_layers, INT *Nb_nodes_layer, 
-	const BYTE *fname_base, INT verbose_level)
+	const char *fname_base, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -164,7 +164,7 @@ void layered_graph::add_edge(INT l1, INT n1, INT l2, INT n2,
 }
 
 void layered_graph::add_text(INT l, INT n,
-		const BYTE *text, INT verbose_level)
+		const char *text, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -256,7 +256,7 @@ void layered_graph::draw_with_options(const char *fname,
 	INT x_min = 0; //, x_max = 10000;
 	INT y_min = 0; //, y_max = 10000;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	double move_out = 0.005;
 	INT edge_label = 1;
 	
@@ -288,7 +288,7 @@ void layered_graph::draw_with_options(const char *fname,
 	INT x, y, x2, y2;
 	INT Px[10], Py[10];
 	INT threshold = 50000;
-	BYTE text[1000];	
+	char text[1000];	
 	INT xoffset = 3 * O->rad / 2;
 	INT yoffset = 0;
 	INT own_id;
@@ -624,7 +624,7 @@ void layered_graph::draw_with_options(const char *fname,
 					O->f_rotated, x, y);
 
 
-			BYTE label[1000];
+			char label[1000];
 
 			
 			if (L[i].Nodes[j].label) {
@@ -724,7 +724,7 @@ void layered_graph::draw_with_options(const char *fname,
 			G.polygon2(Px, Py, 0, 1);
 			}
 		for (i = 0; i < nb_layers; i++) {
-			BYTE str[1000];
+			char str[1000];
 			
 			coordinates(L[i].Nodes[0].id,
 					O->x_max, O->y_max, O->f_rotated, x, y);
@@ -800,7 +800,7 @@ void layered_graph::find_node_by_id(INT id, INT &l, INT &n)
 }
 
 
-void layered_graph::write_file(BYTE *fname,
+void layered_graph::write_file(char *fname,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -819,7 +819,7 @@ void layered_graph::write_file(BYTE *fname,
 		}
 }
 
-void layered_graph::read_file(const BYTE *fname,
+void layered_graph::read_file(const char *fname,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -875,7 +875,7 @@ void layered_graph::write_memory_object(
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "layered_graph::write_memory_object "
-				"finished, data size (in bytes) = "
+				"finished, data size (in chars) = "
 				<< m->used_length << endl;
 		}
 }
@@ -886,7 +886,7 @@ void layered_graph::read_memory_object(
 	INT f_v = (verbose_level >= 1);
 	INT i;
 	INT version, a;
-	BYTE *p;
+	char *p;
 	
 	if (f_v) {
 		cout << "layered_graph::read_memory_object" << endl;
@@ -916,7 +916,7 @@ void layered_graph::read_memory_object(
 	
 	m->read_string(p);
 	strcpy(fname_base, p);
-	FREE_BYTE(p);
+	FREE_char(p);
 
 	m->read_int(&a);
 	if (a != MAGIC_SYNC) {

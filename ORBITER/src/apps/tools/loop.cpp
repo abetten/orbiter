@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_command_mask = FALSE;
-	const BYTE *command_mask = NULL;
+	const char *command_mask = NULL;
 	INT f_N = FALSE;
 	INT N = 0;
 	INT f_nb = FALSE;
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	BYTE str[1000];
+	char str[1000];
 
 	
 	for (i = 0; i < N; i++) {

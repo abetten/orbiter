@@ -115,7 +115,7 @@ void isomorph::init_solutions(INT **Solutions, INT *Nb_sol,
 }
 
 void isomorph::count_solutions_from_clique_finder_case_by_case(
-		INT nb_files, INT *list_of_cases, const BYTE **fname,
+		INT nb_files, INT *list_of_cases, const char **fname,
 		INT verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
@@ -186,7 +186,7 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 
 
 void isomorph::count_solutions_from_clique_finder(
-		INT nb_files, const BYTE **fname, INT verbose_level)
+		INT nb_files, const char **fname, INT verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
 	INT f_v = (verbose_level >= 1);
@@ -264,7 +264,7 @@ void isomorph::count_solutions_from_clique_finder(
 
 
 void isomorph::read_solutions_from_clique_finder_case_by_case(
-		INT nb_files, INT *list_of_cases, const BYTE **fname,
+		INT nb_files, INT *list_of_cases, const char **fname,
 		INT verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
@@ -360,7 +360,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 
 
 void isomorph::read_solutions_from_clique_finder(
-		INT nb_files, const BYTE **fname,
+		INT nb_files, const char **fname,
 		INT verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
@@ -407,8 +407,8 @@ void isomorph::read_solutions_from_clique_finder(
 		INT **Solutions;
 		INT the_case, h; //, u, v;
 		INT nb_solutions_total;
-		BYTE fname_summary[1000];
-		BYTE extension[1000];
+		char fname_summary[1000];
+		char extension[1000];
 		
 		strcpy(fname_summary, fname[i]);
 		chop_off_extension_if_present(fname_summary, extension);
@@ -549,7 +549,7 @@ void isomorph::add_solutions_to_database(INT *Solutions,
 
 
 void isomorph::build_up_database(INT nb_files,
-	const BYTE **fname,
+	const char **fname,
 	INT f_has_final_test_function, 
 	INT (*final_test_function)(INT *data, INT sz,
 			void *final_test_data, INT verbose_level),
@@ -562,9 +562,9 @@ void isomorph::build_up_database(INT nb_files,
 	INT f_vvv = (verbose_level >= 3);
 
 	INT i, nb_total = 0, j, a, nb = 0, prev = 0, id = 0, h;
-	BYTE *p_buf;
+	char *p_buf;
 	INT data[1000];
-	BYTE buf[MY_BUFSIZE];
+	char buf[MY_BUFSIZE];
 	INT print_mod = 1000;
 	UINT4 datref;
 	INT nb_fail = 0;
@@ -740,15 +740,15 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE **fname;
+	char **fname;
 	INT i;
-	BYTE file_name[1000];
+	char file_name[1000];
 	
 	if (f_v) {
 		cout << "isomorph::init_cases_from_file_modulus_"
 				"and_build_up_database modulus = " << modulus << endl;
 		}
-	fname = NEW_PBYTE(modulus);
+	fname = NEW_pchar(modulus);
 	if (f_v) {
 		cout << "creating file names" << endl;
 		}
@@ -763,7 +763,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 			}
 		//sprintf(file_name, "extend_BLT_41_lvl_%ld_%ld_42_%ld_1024.txt",
 		//level, level, i);
-		fname[i] = NEW_BYTE(strlen(file_name) + 1);
+		fname[i] = NEW_char(strlen(file_name) + 1);
 		strcpy(fname[i], file_name);
 		}
 	if (f_vv) {
@@ -772,7 +772,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 			}
 		}
 	count_solutions(modulus,
-		(const BYTE **) fname,
+		(const char **) fname,
 		f_get_statistics,
 		f_has_final_test_function,
 		final_test_function,
@@ -784,7 +784,7 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 
 	// now we know N, the number of solutions
 	
-	build_up_database(modulus, (const BYTE **) fname, 
+	build_up_database(modulus, (const char **) fname, 
 		f_has_final_test_function,
 		final_test_function,
 		final_test_data,
@@ -794,9 +794,9 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 		cout << "deleting file names" << endl;
 		}
 	for (i = 0; i < modulus; i++) {
-		FREE_BYTE(fname[i]);
+		FREE_char(fname[i]);
 		}
-	FREE_PBYTE(fname);
+	FREE_pchar(fname);
 }
 
 void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
@@ -810,9 +810,9 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE **fname;
+	char **fname;
 	INT i, r, s, bs, nb_files, j, k, h, u;
-	BYTE file_name[1000];
+	char file_name[1000];
 	
 	if (f_v) {
 		cout << "isomorph::init_cases_from_file_mixed_"
@@ -835,7 +835,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		cout << "number of files is " << nb_files << endl;
 		}
 	
-	fname = NEW_PBYTE(nb_files);
+	fname = NEW_pchar(nb_files);
 	if (f_v) {
 		cout << "creating file names" << endl;
 		}
@@ -851,7 +851,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 					prefix, level, u, bs);
 			//sprintf(file_name, "extend_BLT_41_lvl_%ld_%ld_42_%ld_1024.txt",
 			// level, level, i);
-			fname[j] = NEW_BYTE(strlen(file_name) + 1);
+			fname[j] = NEW_char(strlen(file_name) + 1);
 			strcpy(fname[j], file_name);
 			j++;
 			}
@@ -868,7 +868,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		}
 	
 	count_solutions(nb_files,
-		(const BYTE **) fname,
+		(const char **) fname,
 		f_get_statistics,
 		f_has_final_test_function,
 		final_test_function,
@@ -878,7 +878,7 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 	// now we know N, the number of solutions
 	
 	
-	build_up_database(nb_files, (const BYTE **) fname, 
+	build_up_database(nb_files, (const char **) fname, 
 		f_has_final_test_function,
 		final_test_function,
 		final_test_data,
@@ -888,12 +888,12 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		cout << "deleting file names" << endl;
 		}
 	for (i = 0; i < nb_files; i++) {
-		FREE_BYTE(fname[i]);
+		FREE_char(fname[i]);
 		}
-	FREE_PBYTE(fname);
+	FREE_pchar(fname);
 }
 
-void isomorph::count_solutions(INT nb_files, const BYTE **fname, 
+void isomorph::count_solutions(INT nb_files, const char **fname, 
 	INT f_get_statistics, 
 	INT f_has_final_test_function, 
 	INT (*final_test_function)(INT *data, INT sz,
@@ -983,14 +983,14 @@ void isomorph::count_solutions(INT nb_files, const BYTE **fname,
 }
 
 void isomorph::get_statistics(INT nb_files,
-		const BYTE **fname, INT verbose_level)
+		const char **fname, INT verbose_level)
 {
 	INT i, the_case, nb_sol, nb_backtrack, nb_backtrack_decision;
 	INT nb_points, dt[5], dt_total;
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
 	//INT f_vvv = (verbose_level >= 3);
-	BYTE fname_summary[1000];
+	char fname_summary[1000];
 	
 	if (f_v) {
 		cout << "get_statistics: reading "
@@ -1134,7 +1134,7 @@ void isomorph::evaluate_statistics(INT verbose_level)
 
 
 
-void isomorph::count_solutions2(INT nb_files, const BYTE **fname, 
+void isomorph::count_solutions2(INT nb_files, const char **fname, 
 	INT &total_days, INT &total_hours, INT &total_minutes, 
 	INT f_has_final_test_function, 
 	INT (*final_test_function)(INT *data, INT sz,
@@ -1148,12 +1148,12 @@ void isomorph::count_solutions2(INT nb_files, const BYTE **fname,
 	INT f_vv = (verbose_level >= 2);
 	INT f_vvv = (verbose_level >= 3);
 	INT i, no, l, j, a, nb, prev;
-	BYTE *p_buf;
-	BYTE buf[MY_BUFSIZE];
+	char *p_buf;
+	char buf[MY_BUFSIZE];
 	INT data[1000];
 	INT *nb_sol_per_file;
 	Vector v;
-	BYTE str[1000];
+	char str[1000];
 	INT nb_fail = 0;
 	
 	if (f_v) {
@@ -1829,7 +1829,7 @@ void isomorph::induced_action_on_set_and_kernel(
 
 
 void isomorph::handle_event_files(INT nb_event_files,
-		const BYTE **event_file_name, INT verbose_level)
+		const char **event_file_name, INT verbose_level)
 {
 	INT i;
 	
@@ -1843,7 +1843,7 @@ void isomorph::handle_event_files(INT nb_event_files,
 	
 }
 
-void isomorph::read_event_file(const BYTE *event_file_name,
+void isomorph::read_event_file(const char *event_file_name,
 		INT verbose_level)
 {
 	INT i;
@@ -1869,10 +1869,10 @@ void isomorph::read_event_file(const BYTE *event_file_name,
 void isomorph::skip_through_event_file(
 		ifstream &f, INT verbose_level)
 {
-	BYTE buf[MY_BUFSIZE];
-	BYTE token[1000];
+	char buf[MY_BUFSIZE];
+	char token[1000];
 	INT l, j, case_no;
-	BYTE *p_buf;
+	char *p_buf;
 
 	cout << "isomorph::skip_through_event_file" << endl;
 
@@ -1925,9 +1925,9 @@ void isomorph::skip_through_event_file1(ifstream &f,
 		INT case_no, INT orbit_no, INT verbose_level)
 {
 	INT l, j, from_orbit, to_orbit, rank_subset;
-	BYTE *p_buf;
-	BYTE token[1000];
-	BYTE buf[MY_BUFSIZE];
+	char *p_buf;
+	char token[1000];
+	char buf[MY_BUFSIZE];
 
 
 	while (TRUE) {
@@ -2020,15 +2020,15 @@ void isomorph::skip_through_event_file1(ifstream &f,
 
 
 void isomorph::event_file_completed_cases(
-	const BYTE *event_file_name,
+	const char *event_file_name,
 	INT &nb_completed_cases, INT *completed_cases,
 	INT verbose_level)
 {
 	INT l, j, a;
-	BYTE *p_buf;
-	BYTE token[1000];
+	char *p_buf;
+	char token[1000];
 	ifstream f(event_file_name);
-	BYTE buf[MY_BUFSIZE];
+	char buf[MY_BUFSIZE];
 	
 	nb_completed_cases = 0;
 	while (TRUE) {
@@ -2061,13 +2061,13 @@ void isomorph::event_file_completed_cases(
 }
 
 void isomorph::event_file_read_case(
-		const BYTE *event_file_name, INT case_no,
+		const char *event_file_name, INT case_no,
 		INT verbose_level)
 {
 	INT l, j, a;
-	BYTE *p_buf;
-	BYTE token[1000];
-	BYTE buf[MY_BUFSIZE];
+	char *p_buf;
+	char token[1000];
+	char buf[MY_BUFSIZE];
 	ifstream f(event_file_name);
 	
 	while (TRUE) {
@@ -2109,9 +2109,9 @@ void isomorph::event_file_read_case1(ifstream &f,
 		INT case_no, INT verbose_level)
 {
 	INT l, j, from_orbit, to_orbit, rank_subset;
-	BYTE *p_buf;
-	BYTE token[1000];
-	BYTE buf[MY_BUFSIZE];
+	char *p_buf;
+	char token[1000];
+	char buf[MY_BUFSIZE];
 
 
 	while (TRUE) {
@@ -2175,9 +2175,9 @@ INT isomorph::next_subset_play_back(INT &subset_rank,
 	INT &f_eof, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 3);
-	BYTE *p_buf;
-	BYTE token[1000];
-	BYTE buf[MY_BUFSIZE];
+	char *p_buf;
+	char token[1000];
+	char buf[MY_BUFSIZE];
 	INT rank;
 		
 	f_eof = FALSE;
@@ -2250,7 +2250,7 @@ INT isomorph::next_subset_play_back(INT &subset_rank,
 }
 
 void isomorph::read_everything_including_classification(
-		const BYTE *prefix_classify, INT verbose_level)
+		const char *prefix_classify, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;

@@ -756,7 +756,7 @@ void compute_stabilizer::update_stabilizer(INT verbose_level)
 	Stab->group_order(n_e_w_stab_order);
 	cmp = D.compare_unsigned(n_e_w_stab_order, stab_order);
 	if (cmp) {
-		BYTE fname[1000];
+		char fname[1000];
 		cout << "compute_stabilizer::update_stabilizer n_e_w stabilizer order is " << n_e_w_stab_order << endl;
 		n_e_w_stab_order.assign_to(stab_order);
 

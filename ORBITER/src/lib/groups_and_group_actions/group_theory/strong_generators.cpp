@@ -91,7 +91,7 @@ void strong_generators::init_from_sims(sims *S, INT verbose_level)
 }
 
 void strong_generators::init_from_ascii_coding(action *A,
-		BYTE *ascii_coding, INT verbose_level)
+		char *ascii_coding, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -254,7 +254,7 @@ void strong_generators::init_from_data(action *A, INT *data,
 
 void strong_generators::init_from_data_with_target_go_ascii(
 	action *A, INT *data,
-	INT nb_elements, INT elt_size, const BYTE *ascii_target_go,
+	INT nb_elements, INT elt_size, const char *ascii_target_go,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -726,8 +726,8 @@ void strong_generators::init_group_extension(
 }
 
 void strong_generators::switch_to_subgroup(
-	const BYTE *rank_vector_text,
-	const BYTE *subgroup_order_text, sims *S,
+	const char *rank_vector_text,
+	const char *subgroup_order_text, sims *S,
 	INT *&subgroup_gens_idx, INT &nb_subgroup_gens,
 	INT verbose_level)
 {
@@ -807,7 +807,7 @@ void strong_generators::switch_to_subgroup(
 
 void strong_generators::init_subgroup(action *A,
 	INT *subgroup_gens_idx, INT nb_subgroup_gens,
-	const BYTE *subgroup_order_text, 
+	const char *subgroup_order_text, 
 	sims *S, 
 	INT verbose_level)
 {
@@ -1090,7 +1090,7 @@ void strong_generators::print_generators_in_source_code()
 }
 
 void strong_generators::print_generators_in_source_code_to_file(
-		const BYTE *fname)
+		const char *fname)
 {
 	INT i;
 	longinteger_object go;
@@ -1500,7 +1500,7 @@ void strong_generators::orbits_light(action *A_given,
 {
 	INT f_v = (verbose_level >= 1);	
 	INT f_vv = FALSE; //(verbose_level >= 2);	
-	UBYTE *reached;
+	uchar *reached;
 	INT Orbit_allocated;
 	INT Orbit_len;
 	INT *Orbit;
@@ -1717,7 +1717,7 @@ void strong_generators::orbits_light(action *A_given,
 
 	FREE_INT(Orbit);
 	FREE_INT(Q);
-	FREE_UBYTE(reached);
+	FREE_uchar(reached);
 	FREE_INT(Generator_idx);
 	//FREE_INT(Nb_per_generator);
 	if (f_v) {
@@ -1856,7 +1856,7 @@ void strong_generators::read_from_file_binary(
 		}
 }
 
-void strong_generators::write_file(const BYTE *fname, INT verbose_level)
+void strong_generators::write_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	memory_object M;
@@ -1875,7 +1875,7 @@ void strong_generators::write_file(const BYTE *fname, INT verbose_level)
 }
 
 void strong_generators::read_file(action *A,
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	memory_object M;
@@ -1899,7 +1899,7 @@ void strong_generators::read_file(action *A,
 }
 
 void strong_generators::generators_for_shallow_schreier_tree(
-		BYTE *label, vector_ge *chosen_gens, INT verbose_level)
+		char *label, vector_ge *chosen_gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	action *AR;
@@ -1958,7 +1958,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 					"schreier_tree Sch->nb_orbits > 1" << endl;
 			exit(1);
 			}
-		BYTE label1[1000];
+		char label1[1000];
 		INT xmax = 1000000;
 		INT ymax = 1000000;
 		INT f_circletext = TRUE;
@@ -2043,18 +2043,18 @@ void strong_generators::generators_for_shallow_schreier_tree(
 
 
 void strong_generators::compute_ascii_coding(
-		BYTE *&ascii_coding, INT verbose_level)
+		char *&ascii_coding, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT sz, i, j;
-	BYTE *p;
+	char *p;
 
 	if (f_v) {
 		cout << "strong_generators::compute_ascii_coding" << endl;
 		}
 	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(INT4) +
 			A->coded_elt_size_in_char * gens->len) + 1;
-	ascii_coding = NEW_BYTE(sz);
+	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
 	code_INT4(p, (INT4) A->base_len);
 		// in GALOIS/util.C
@@ -2068,7 +2068,7 @@ void strong_generators::compute_ascii_coding(
 	for (i = 0; i < gens->len; i++) {
 		A->element_pack(gens->ith(i), A->elt1, FALSE);
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			code_UBYTE(p, A->elt1[j]);
+			code_uchar(p, A->elt1[j]);
 			}
 		}
 	*p++ = 0;
@@ -2086,11 +2086,11 @@ void strong_generators::compute_ascii_coding(
 }
 
 void strong_generators::decode_ascii_coding(
-		BYTE *ascii_coding, INT verbose_level)
+		char *ascii_coding, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT str_len, len, nbsg, i, j;
-	BYTE *p, *p0;
+	char *p, *p0;
 	action *A_save;
 	INT *base1;
 
@@ -2137,7 +2137,7 @@ void strong_generators::decode_ascii_coding(
 		}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			decode_UBYTE(p, A->elt1[j]);
+			decode_uchar(p, A->elt1[j]);
 			}
 		A->element_unpack(A->elt1, gens->ith(i), FALSE);
 		}
@@ -2155,7 +2155,7 @@ void strong_generators::decode_ascii_coding(
 }
 
 void strong_generators::export_permutation_group_to_magma(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -2296,7 +2296,7 @@ void strong_generators::compute_and_print_orbits(
 
 	Sch->orbits_as_set_of_sets(S, 0 /* verbose_level */);
 
-	const BYTE *fname = "orbits.csv";
+	const char *fname = "orbits.csv";
 	
 	cout << "writing orbits to file " << fname << endl;
 	S->save_csv(fname, 1 /* verbose_level */);
@@ -2462,7 +2462,7 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 
 // unsed in SEMIFIELD/semifield_starter_io.C:
 
-void strong_generators_array_write_file(const BYTE *fname,
+void strong_generators_array_write_file(const char *fname,
 		strong_generators *p, INT nb, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -2485,7 +2485,7 @@ void strong_generators_array_write_file(const BYTE *fname,
 			<< fname << " of size " << file_size(fname) << endl;
 }
 
-void strong_generators_array_read_from_file(const BYTE *fname,
+void strong_generators_array_read_from_file(const char *fname,
 		action *A, strong_generators *&p, INT &nb, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

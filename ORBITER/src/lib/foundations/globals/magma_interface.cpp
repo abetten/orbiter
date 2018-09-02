@@ -7,11 +7,11 @@
 
 #include "foundations.h"
 
-void magma_write_permutation_group(const BYTE *fname_base,
+void magma_write_permutation_group(const char *fname_base,
 	INT group_order, INT *Table, INT *gens, INT nb_gens,
 	INT verbose_level)
 {
-	BYTE fname[1000];
+	char fname[1000];
 	INT i;
 
 	sprintf(fname, "%s.magma", fname_base);
@@ -34,14 +34,14 @@ void magma_write_permutation_group(const BYTE *fname_base,
 }
 
 void magma_normalizer_in_Sym_n(
-	const BYTE *fname_base,
+	const char *fname_base,
 	INT group_order, INT *Table, INT *gens, INT nb_gens,
 	INT *&N_gens, INT &N_nb_gens, INT &N_go,
 	INT verbose_level)
 {
-	BYTE fname_magma[1000];
-	BYTE fname_output[1000];
-	//BYTE cmd[1000];
+	char fname_magma[1000];
+	char fname_output[1000];
+	//char cmd[1000];
 	INT i;
 
 	sprintf(fname_magma, "%s.magma", fname_base);
@@ -115,7 +115,7 @@ void magma_normalizer_in_Sym_n(
 
 }
 
-void read_magma_permutation_group(const BYTE *fname,
+void read_magma_permutation_group(const char *fname,
 	INT degree, INT *&gens, INT &nb_gens, INT &go,
 	INT verbose_level)
 {

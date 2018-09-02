@@ -73,7 +73,7 @@ void representatives::free()
 }
 
 void representatives::init(action *A,
-		INT nb_objects, BYTE *prefix, INT verbose_level)
+		INT nb_objects, char *prefix, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;

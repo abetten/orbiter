@@ -63,7 +63,7 @@ void colored_graph::freeself()
 				cout << "colored_graph::freeself "
 						"bitvector_adjacency" << endl;
 				}
-			FREE_UBYTE(bitvector_adjacency);
+			FREE_uchar(bitvector_adjacency);
 			}
 		}
 	if (list_of_edges) {
@@ -408,7 +408,7 @@ void colored_graph::print_adjacency_list()
 }
 
 void colored_graph::init_with_point_labels(INT nb_points, INT nb_colors, 
-	INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+	INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 	INT *point_labels, 
 	INT verbose_level)
 {
@@ -429,7 +429,7 @@ void colored_graph::init_with_point_labels(INT nb_points, INT nb_colors,
 }
 
 void colored_graph::init(INT nb_points, INT nb_colors, 
-	INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+	INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -472,7 +472,7 @@ void colored_graph::init(INT nb_points, INT nb_colors,
 }
 
 void colored_graph::init_no_colors(INT nb_points,
-	UBYTE *bitvec, INT f_ownership_of_bitvec,
+	uchar *bitvec, INT f_ownership_of_bitvec,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -500,7 +500,7 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 	INT f_v = (verbose_level >= 1);
 	INT i, j, k;
 	INT bitvector_length;
-	UBYTE *bitvec;
+	uchar *bitvec;
 
 
 	if (f_v) {
@@ -511,7 +511,7 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 	L = (nb_points * (nb_points - 1)) >> 1;
 
 	bitvector_length = (L + 7) >> 3;
-	bitvec = NEW_UBYTE(bitvector_length);
+	bitvec = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvec[i] = 0;
 		}
@@ -542,7 +542,7 @@ void colored_graph::init_adjacency_upper_triangle(
 	INT f_v = (verbose_level >= 1);
 	INT i, j, k;
 	INT bitvector_length;
-	UBYTE *bitvec;
+	uchar *bitvec;
 
 
 	if (f_v) {
@@ -553,7 +553,7 @@ void colored_graph::init_adjacency_upper_triangle(
 	L = (nb_points * (nb_points - 1)) >> 1;
 
 	bitvector_length = (L + 7) >> 3;
-	bitvec = NEW_UBYTE(bitvector_length);
+	bitvec = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvec[i] = 0;
 		}
@@ -621,7 +621,7 @@ void colored_graph::init_user_data(INT *data,
 		}
 }
 
-void colored_graph::save(const BYTE *fname, INT verbose_level)
+void colored_graph::save(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -641,14 +641,14 @@ void colored_graph::save(const BYTE *fname, INT verbose_level)
 		}
 }
 
-void colored_graph::load(const BYTE *fname, INT verbose_level)
+void colored_graph::load(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
 
 #if 0
 	FILE *fp;
-	BYTE ext[1000];
+	char ext[1000];
 	INT i;
 	
 	if (file_size(fname) <= 0) {
@@ -716,8 +716,8 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 #endif
 
 	f_ownership_of_bitvec = TRUE;
-	bitvector_adjacency = NEW_UBYTE(bitvector_length);
-	fread_UBYTEs(fp, bitvector_adjacency, bitvector_length);
+	bitvector_adjacency = NEW_uchar(bitvector_length);
+	fread_uchars(fp, bitvector_adjacency, bitvector_length);
 
 #if 0
 	for (i = 0; i < bitvector_length; i++) {
@@ -788,7 +788,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(
 void
 colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 	INT target_depth,
-	const BYTE *fname, 
+	const char *fname, 
 	INT f_restrictions, INT *restrictions, 
 	INT &nb_sol, INT &decision_step_counter, 
 	INT verbose_level)
@@ -857,7 +857,7 @@ void colored_graph::all_rainbow_cliques(ofstream *fp,
 	INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level)
@@ -895,7 +895,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(
 	ofstream *fp, INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT f_has_additional_test_function,
 	void (*call_back_additional_test_function)(
@@ -954,7 +954,7 @@ void colored_graph::draw_on_circle(char *fname,
 	INT f_labels, INT f_embedded, INT f_sideways, 
 	double tikz_global_scale, double tikz_global_line_width)
 {
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname);
 	{
@@ -990,7 +990,7 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels,
 	double phi = 360. / (double) n;
 	double rad1 = 500000;
 	double rad2 = 5000;
-	//BYTE str[1000];
+	//char str[1000];
 	
 	Px = NEW_INT(n);
 	Py = NEW_INT(n);
@@ -1052,7 +1052,7 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels,
 		G.circle(Px[i], Py[i], rad2);
 		}
 	if (f_labels) {
-		BYTE str[1000];
+		char str[1000];
 		for (i = 0; i < n; i++) {
 			sprintf(str, "%ld", i);
 			G.aligned_text(Px1[i], Py1[i], "", str);
@@ -1067,14 +1067,14 @@ void colored_graph::draw_on_circle_2(mp_graphics &G, INT f_labels,
 
 
 
-void colored_graph::draw(const BYTE *fname, 
+void colored_graph::draw(const char *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 	double scale, double line_width, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_dots = FALSE;
-	UBYTE *D = NULL;
+	uchar *D = NULL;
 	INT len, i, j, k;
 	INT nb_vertices;
 	
@@ -1089,7 +1089,7 @@ void colored_graph::draw(const BYTE *fname,
 	if (f_v) {
 		cout << "colored_graph::draw len = " << len << endl;
 		}
-	D = NEW_UBYTE(len);
+	D = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		D[i] = 0;
 		}
@@ -1116,14 +1116,14 @@ void colored_graph::draw(const BYTE *fname,
 		FALSE, NULL);
 	
 
-	FREE_UBYTE(D);
+	FREE_uchar(D);
 	
 	if (f_v) {
 		cout << "colored_graph::draw done" << endl;
 		}
 }
 
-void colored_graph::draw_Levi(const BYTE *fname, 
+void colored_graph::draw_Levi(const char *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 	INT f_partition, INT nb_row_parts, INT *row_part_first, 
 	INT nb_col_parts, INT *col_part_first, 
@@ -1133,7 +1133,7 @@ void colored_graph::draw_Levi(const BYTE *fname,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_dots = FALSE;
-	UBYTE *D = NULL;
+	uchar *D = NULL;
 	INT len, i, j, k;
 	
 	if (f_v) {
@@ -1154,7 +1154,7 @@ void colored_graph::draw_Levi(const BYTE *fname,
 	if (f_v) {
 		cout << "colored_graph::draw_Levi len = " << len << endl;
 		}
-	D = NEW_UBYTE(len);
+	D = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		D[i] = 0;
 		}
@@ -1193,7 +1193,7 @@ void colored_graph::draw_Levi(const BYTE *fname,
 		f_draw_labels, labels);
 	
 
-	FREE_UBYTE(D);
+	FREE_uchar(D);
 	if (f_draw_labels) {
 		FREE_INT(labels);
 		}
@@ -1204,7 +1204,7 @@ void colored_graph::draw_Levi(const BYTE *fname,
 }
 
 void colored_graph::draw_with_a_given_partition(
-	const BYTE *fname,
+	const char *fname,
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 	INT *parts, INT nb_parts, 
 	double scale, double line_width, 
@@ -1215,7 +1215,7 @@ void colored_graph::draw_with_a_given_partition(
 	INT f_row_grid = FALSE;
 	INT f_col_grid = FALSE;
 	INT nb_vertices;
-	UBYTE *D = NULL;
+	uchar *D = NULL;
 	INT i, j, k, len;
 	INT *P;
 
@@ -1237,7 +1237,7 @@ void colored_graph::draw_with_a_given_partition(
 		cout << "colored_graph::draw_with_a_given_partition "
 				"len = " << len << endl;
 		}
-	D = NEW_UBYTE(len);
+	D = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		D[i] = 0;
 		}
@@ -1262,7 +1262,7 @@ void colored_graph::draw_with_a_given_partition(
 		FALSE /*f_has_labels*/, NULL /*labels*/);
 		// GALOIS/draw.C
 
-	FREE_UBYTE(D);
+	FREE_uchar(D);
 	FREE_INT(P);
 	
 	if (f_v) {
@@ -1271,7 +1271,7 @@ void colored_graph::draw_with_a_given_partition(
 
 }
 
-void colored_graph::draw_partitioned(const BYTE *fname, 
+void colored_graph::draw_partitioned(const char *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 	INT f_labels, 
 	double scale, double line_width, 
@@ -1279,7 +1279,7 @@ void colored_graph::draw_partitioned(const BYTE *fname,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_dots = FALSE;
-	UBYTE *D = NULL;
+	uchar *D = NULL;
 	//INT xmax_out = 1000000;
 	//INT ymax_out = 1000000;
 	INT len, i, j, k, ii, jj;
@@ -1296,7 +1296,7 @@ void colored_graph::draw_partitioned(const BYTE *fname,
 	if (f_v) {
 		cout << "colored_graph::draw_partitioned len = " << len << endl;
 		}
-	D = NEW_UBYTE(len);
+	D = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		D[i] = 0;
 		}
@@ -1343,7 +1343,7 @@ void colored_graph::draw_partitioned(const BYTE *fname,
 		f_labels /*f_has_labels*/, C.sorting_perm_inv /*labels*/);
 		// GALOIS/draw.C
 
-	FREE_UBYTE(D);
+	FREE_uchar(D);
 	FREE_INT(part);
 	
 	if (f_v) {
@@ -1362,7 +1362,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	INT *color_in_subgraph;
 	INT i, j, l, len, ii, jj, c, idx;
 	INT nb_points_subgraph;
-	UBYTE *bitvec;
+	uchar *bitvec;
 
 	if (f_v) {
 		cout << "colored_graph::compute_neighborhood_subgraph "
@@ -1415,7 +1415,7 @@ colored_graph *colored_graph::compute_neighborhood_subgraph(
 	
 	l = (nb_points_subgraph * (nb_points_subgraph - 1)) >> 1;
 	len = (l + 7) >> 3;
-	bitvec = NEW_UBYTE(len);
+	bitvec = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		bitvec[i] = 0;
 		}
@@ -1454,7 +1454,7 @@ colored_graph
 	INT *color_in_subgraph;
 	INT i, j, l, len, ii, jj, c, idx;
 	INT nb_points_subgraph;
-	UBYTE *bitvec;
+	uchar *bitvec;
 
 	if (f_v) {
 		cout << "colored_graph::compute_neighborhood_subgraph_with_"
@@ -1512,7 +1512,7 @@ colored_graph
 	
 	l = (nb_points_subgraph * (nb_points_subgraph - 1)) >> 1;
 	len = (l + 7) >> 3;
-	bitvec = NEW_UBYTE(len);
+	bitvec = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		bitvec[i] = 0;
 		}
@@ -1540,7 +1540,7 @@ colored_graph
 
 
 void colored_graph::export_to_magma(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1600,7 +1600,7 @@ void colored_graph::export_to_magma(
 }
 
 void colored_graph::export_to_maple(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, h;
@@ -1666,7 +1666,7 @@ void colored_graph::export_to_maple(
 }
 
 void colored_graph::export_to_file(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1714,7 +1714,7 @@ void colored_graph::export_to_file(
 }
 
 void colored_graph::export_to_text(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1762,7 +1762,7 @@ void colored_graph::export_to_text(
 }
 
 void colored_graph::export_laplacian_to_file(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, d;
@@ -1824,7 +1824,7 @@ void colored_graph::export_laplacian_to_file(
 }
 
 void colored_graph::export_to_file_matlab(
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -2043,7 +2043,7 @@ INT colored_graph::is_cycle(INT nb_e, INT *edges,
 }
 
 
-void colored_graph::draw_it(const BYTE *fname_base, 
+void colored_graph::draw_it(const char *fname_base, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	double scale, double line_width)
 {
@@ -2054,11 +2054,11 @@ void colored_graph::draw_it(const BYTE *fname_base,
 	INT f_col_grid = FALSE;
 
 	INT L, length, i, j, k, a;
-	UBYTE *bitvec;
+	uchar *bitvec;
 
 	L = nb_points * nb_points;
 	length = (L + 7) >> 3;
-	bitvec = NEW_UBYTE(length);
+	bitvec = NEW_uchar(length);
 	for (i = 0; i < length; i++) {
 		bitvec[i] = 0;
 		}
@@ -2085,7 +2085,7 @@ void colored_graph::draw_it(const BYTE *fname_base,
 		FALSE, NULL);
 		// in draw.C
 
-	FREE_UBYTE(bitvec);
+	FREE_uchar(bitvec);
 	
 }
 
@@ -2459,13 +2459,13 @@ INT colored_graph::rainbow_cliques_nonrecursive(
 // global functions:
 // #############################################################################
 
-void colored_graph_draw(const BYTE *fname, 
+void colored_graph_draw(const char *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	double scale, double line_width, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_draw[1000];
+	char fname_draw[1000];
 	colored_graph CG;
 
 	if (f_v) {
@@ -2488,19 +2488,19 @@ void colored_graph_draw(const BYTE *fname,
 		}
 }
 
-void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw, 
-	INT f_output_fname, const BYTE *output_fname, 
+void colored_graph_all_cliques(const char *fname, INT f_output_solution_raw, 
+	INT f_output_fname, const char *output_fname, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	colored_graph CG;
-	BYTE fname_sol[1000];
-	BYTE fname_success[1000];
+	char fname_sol[1000];
+	char fname_success[1000];
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques" << endl;
@@ -2549,11 +2549,11 @@ void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw,
 
 void colored_graph_all_cliques_list_of_cases(
 	INT *list_of_cases, INT nb_cases, INT f_output_solution_raw,
-	const BYTE *fname_template, 
-	const BYTE *fname_sol, const BYTE *fname_stats, 
+	const char *fname_template, 
+	const char *fname_sol, const char *fname_stats, 
 	INT f_split, INT split_r, INT split_m, 
 	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const BYTE *prefix, 
+	INT f_prefix, const char *prefix, 
 	INT print_interval, 
 	INT verbose_level)
 {
@@ -2561,8 +2561,8 @@ void colored_graph_all_cliques_list_of_cases(
 	INT i, c;
 	INT Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	INT search_steps, decision_steps, nb_sol, dt;
-	BYTE fname[1000];
-	BYTE fname_tmp[1000];
+	char fname[1000];
+	char fname_tmp[1000];
 
 	if (f_v) {
 		cout << "colored_graph_all_cliques_list_of_cases" << endl;
@@ -2635,11 +2635,11 @@ void colored_graph_all_cliques_list_of_cases(
 
 void colored_graph_all_cliques_list_of_files(
 	INT nb_cases,
-	INT *Case_number, const BYTE **Case_fname, 
+	INT *Case_number, const char **Case_fname, 
 	INT f_output_solution_raw, 
-	const BYTE *fname_sol, const BYTE *fname_stats, 
+	const char *fname_sol, const char *fname_stats, 
 	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const BYTE *prefix, 
+	INT f_prefix, const char *prefix, 
 	INT print_interval, 
 	INT verbose_level)
 {
@@ -2661,7 +2661,7 @@ void colored_graph_all_cliques_list_of_files(
 
 
 		colored_graph *CG;
-		const BYTE *fname;
+		const char *fname;
 
 
 		CG = NEW_OBJECT(colored_graph);
@@ -2749,7 +2749,7 @@ void call_back_clique_found_using_file_output(
 }
 
 INT colored_graph_all_rainbow_cliques_nonrecursive(
-	const BYTE *fname,
+	const char *fname,
 	INT &nb_backtrack_nodes, 
 	INT verbose_level)
 {

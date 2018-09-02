@@ -25,7 +25,7 @@ void the_end(INT t0)
 
 
 	INT mem_usage;
-	BYTE fname[1000];
+	char fname[1000];
 
 	mem_usage = os_memory_usage();
 	sprintf(fname, "memory_usage.csv");

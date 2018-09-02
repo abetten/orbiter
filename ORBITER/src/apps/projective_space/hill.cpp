@@ -372,7 +372,7 @@ void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	const BYTE *override_poly;
+	const char *override_poly;
 	INT p, hh, f_semilinear;
 	INT f_basis = TRUE;
 	INT q = F->q;
@@ -622,7 +622,7 @@ void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT
 	INT Sz[2];
 	INT *Subsets[2];
 	//INT f_semilinear = TRUE;
-	//BYTE *override_poly = NULL;
+	//char *override_poly = NULL;
 	//INT f_basis = FALSE;
 	
 	Sz[0] = nb_lines;

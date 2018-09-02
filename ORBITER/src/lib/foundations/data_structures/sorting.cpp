@@ -1319,17 +1319,17 @@ void INT_vec_print_types_naked_tex(ostream &ost, INT f_backwards, INT *the_vec_s
 		}
 }
 
-void Heapsort(void *v, INT len, INT entry_size_in_bytes, 
+void Heapsort(void *v, INT len, INT entry_size_in_chars, 
 	INT (*compare_func)(void *v1, void *v2))
 {
 	INT end;
 	
 	//cout << "Heapsort len=" << len << endl;
-	Heapsort_make_heap(v, len, entry_size_in_bytes, compare_func);
+	Heapsort_make_heap(v, len, entry_size_in_chars, compare_func);
 	for (end = len - 1; end > 0; ) {
-		Heapsort_swap(v, 0, end, entry_size_in_bytes);
+		Heapsort_swap(v, 0, end, entry_size_in_chars);
 		end--;
-		Heapsort_sift_down(v, 0, end, entry_size_in_bytes, compare_func);
+		Heapsort_sift_down(v, 0, end, entry_size_in_chars, compare_func);
 		}
 }
 	
@@ -1479,7 +1479,7 @@ void heapsort_make_heap_with_log(INT *v, INT *w, INT len)
 		}
 }
 
-void Heapsort_make_heap(void *v, INT len, INT entry_size_in_bytes, 
+void Heapsort_make_heap(void *v, INT len, INT entry_size_in_chars, 
 	INT (*compare_func)(void *v1, void *v2))
 {
 	INT start;
@@ -1487,7 +1487,7 @@ void Heapsort_make_heap(void *v, INT len, INT entry_size_in_bytes,
 	//cout << "Heapsort_make_heap len=" << len << endl;
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
 		Heapsort_sift_down(v, start, len - 1, 
-			entry_size_in_bytes, compare_func);
+			entry_size_in_chars, compare_func);
 		}
 }
 
@@ -1546,10 +1546,10 @@ void heapsort_sift_down_with_log(INT *v, INT *w, INT start, INT end)
 		}
 }
 
-void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_bytes, 
+void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_chars, 
 	INT (*compare_func)(void *v1, void *v2))
 {
-	BYTE *V = (BYTE *) v;
+	char *V = (char *) v;
 	INT root, child, c;
 	
 	//cout << "Heapsort_sift_down " << start << " : " << end << endl;
@@ -1559,18 +1559,18 @@ void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_bytes,
 		if (child + 1 <= end) {
 			//cout << "compare " << child << " : " << child + 1 << endl;
 			c = (*compare_func)(
-				V + child * entry_size_in_bytes, 
-				V + (child + 1) * entry_size_in_bytes);
+				V + child * entry_size_in_chars, 
+				V + (child + 1) * entry_size_in_chars);
 			if (c < 0 /*v[child] < v[child + 1]*/) {
 				child++;
 				}
 			}
 		//cout << "compare " << root << " : " << child << endl;
 		c = (*compare_func)(
-			V + root * entry_size_in_bytes, 
-			V + child * entry_size_in_bytes);
+			V + root * entry_size_in_chars, 
+			V + child * entry_size_in_chars);
 		if (c < 0 /*v[root] < v[child] */) {
-			Heapsort_swap(v, root, child, entry_size_in_bytes);
+			Heapsort_swap(v, root, child, entry_size_in_chars);
 			root = child;
 			}
 		else {
@@ -1601,7 +1601,7 @@ void Heapsort_general_sift_down(void *data, INT start, INT end,
 		c = (*compare_func)(data, root, child, extra_data);
 		if (c < 0 /*v[root] < v[child] */) {
 			(*swap_func)(data, root, child, extra_data);
-			//Heapsort_swap(v, root, child, entry_size_in_bytes);
+			//Heapsort_swap(v, root, child, entry_size_in_chars);
 			root = child;
 			}
 		else {
@@ -1619,15 +1619,15 @@ void heapsort_swap(INT *v, INT i, INT j)
 	v[j] = a;
 }
 
-void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_bytes)
+void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_chars)
 {
 	INT a, h, I, J;
-	BYTE *V;
+	char *V;
 	
-	I = i * entry_size_in_bytes;
-	J = j * entry_size_in_bytes;
-	V = (BYTE *)v;
-	for (h = 0; h < entry_size_in_bytes; h++) {
+	I = i * entry_size_in_chars;
+	J = j * entry_size_in_chars;
+	V = (char *)v;
+	for (h = 0; h < entry_size_in_chars; h++) {
 		a = V[I + h];
 		V[I + h] = V[J + h];
 		V[J + h] = a;
@@ -1636,7 +1636,7 @@ void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_bytes)
 
 #include <ctype.h>
 
-INT is_all_digits(BYTE *p)
+INT is_all_digits(char *p)
 {
 	INT i, l;
 

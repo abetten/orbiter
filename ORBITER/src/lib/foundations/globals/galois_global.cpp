@@ -74,7 +74,7 @@ void test_unipoly2()
 	
 }
 
-BYTE *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT verbose_level)
+char *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	finite_field Fp;
@@ -93,13 +93,13 @@ BYTE *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT ver
 	FX.get_a_primitive_polynomial(m, degree, verbose_level - 1);
 	FX.rank_longinteger(m, rk);
 	
-	BYTE *s;
+	char *s;
 	INT i, j;
 	if (f_v) {
 		cout << "found a polynomial. It's rank is " << rk << endl;
 		}
 	
-	s = NEW_BYTE(rk.len() + 1);
+	s = NEW_char(rk.len() + 1);
 	for (i = rk.len() - 1, j = 0; i >= 0; i--, j++) {
 		s[j] = '0' + rk.rep()[i];
 		}
@@ -241,10 +241,10 @@ void gl_random_matrix(INT k, INT q, INT verbose_level)
 
 }
 
-void save_as_colored_graph_easy(const BYTE *fname_base,
+void save_as_colored_graph_easy(const char *fname_base,
 		INT n, INT *Adj, INT verbose_level)
 {
-	BYTE fname[1000];
+	char fname[1000];
 	INT f_v = (verbose_level >= 1);
 
 	if (f_v) {
@@ -266,11 +266,11 @@ void save_as_colored_graph_easy(const BYTE *fname_base,
 		}
 }
 
-void save_colored_graph(const BYTE *fname,
+void save_colored_graph(const char *fname,
 	INT nb_vertices, INT nb_colors,
 	INT *points, INT *point_color, 
 	INT *data, INT data_sz, 
-	UBYTE *bitvector_adjacency, INT bitvector_length,
+	uchar *bitvector_adjacency, INT bitvector_length,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -305,7 +305,7 @@ void save_colored_graph(const BYTE *fname,
 			}
 		fwrite_INT4(fp, point_color[i]);
 		}
-	fwrite_UBYTEs(fp, bitvector_adjacency, bitvector_length);
+	fwrite_uchars(fp, bitvector_adjacency, bitvector_length);
 	fclose(fp);
 
 
@@ -315,11 +315,11 @@ void save_colored_graph(const BYTE *fname,
 }
 
 
-void load_colored_graph(const BYTE *fname,
+void load_colored_graph(const char *fname,
 	INT &nb_vertices, INT &nb_colors,
 	INT *&vertex_labels, INT *&vertex_colors, 
 	INT *&user_data, INT &user_data_size, 
-	UBYTE *&bitvector_adjacency, INT &bitvector_length,
+	uchar *&bitvector_adjacency, INT &bitvector_length,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -370,8 +370,8 @@ void load_colored_graph(const BYTE *fname,
 			}
 		}
 
-	bitvector_adjacency = NEW_UBYTE(bitvector_length);
-	fread_UBYTEs(fp, bitvector_adjacency, bitvector_length);
+	bitvector_adjacency = NEW_uchar(bitvector_length);
+	fread_uchars(fp, bitvector_adjacency, bitvector_length);
 
 
 	fclose(fp);
@@ -566,12 +566,12 @@ void print_Pijk(INT *Pijk, INT nb_colors)
 
 
 
-void write_colored_graph(ofstream &ost, BYTE *label, 
+void write_colored_graph(ofstream &ost, char *label, 
 	INT point_offset, 
 	INT nb_points, 
 	INT f_has_adjacency_matrix, INT *Adj, 
 	INT f_has_adjacency_list, INT *adj_list, 
-	INT f_has_bitvector, UBYTE *bitvector_adjacency, 
+	INT f_has_bitvector, uchar *bitvector_adjacency, 
 	INT f_has_is_adjacent_callback, 
 	INT (*is_adjacent_callback)(INT i, INT j, void *data), 
 	void *is_adjacent_callback_data, 
@@ -924,7 +924,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		}
 }
 
-void determine_conic(INT q, const BYTE *override_poly,
+void determine_conic(INT q, const char *override_poly,
 		INT *input_pts, INT nb_pts, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1058,7 +1058,7 @@ void create_Levi_graph_from_incidence_matrix(
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 	INT L, /*bitvector_length_in_bits,*/ bitvector_length;
 	INT i, j, k, r, c;
 	INT N;
@@ -1073,7 +1073,7 @@ void create_Levi_graph_from_incidence_matrix(
 
 	//bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_UBYTE(bitvector_length);
+	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 		}

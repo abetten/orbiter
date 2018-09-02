@@ -590,7 +590,7 @@ void sims::add_generator(INT *elt, INT verbose_level)
 		}
 }
 
-void sims::create_group_tree(const BYTE *fname,
+void sims::create_group_tree(const char *fname,
 		INT f_full, INT verbose_level)
 {
 	INT i, j, h, go, l;
@@ -4237,17 +4237,17 @@ INT sims::closure_group(INT nb_times, INT verbose_level)
 	return f_extended;
 }
 
-void sims::write_all_group_elements(BYTE *fname, INT verbose_level)
+void sims::write_all_group_elements(char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt;
-	//BYTE *elt;
+	//char *elt;
 	longinteger_object go;
 	FILE *fp;
 	INT i;
 	
 	Elt = NEW_INT(A->elt_size_in_INT);
-	//elt = NEW_BYTE(A->coded_elt_size_in_char);
+	//elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 	
 	fp = fopen(fname, "wb");
@@ -4261,10 +4261,10 @@ void sims::write_all_group_elements(BYTE *fname, INT verbose_level)
 				<< file_size(fname) << endl;
 		}
 	FREE_INT(Elt);
-	//FREE_BYTE(elt);
+	//FREE_char(elt);
 }
 
-void sims::print_all_group_elements_to_file(BYTE *fname,
+void sims::print_all_group_elements_to_file(char *fname,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -4819,7 +4819,7 @@ void sims::find_element_of_prime_power_order(INT p,
 		}
 }
 
-void sims::save_list_of_elements(BYTE *fname, INT verbose_level)
+void sims::save_list_of_elements(char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt1;
@@ -4852,7 +4852,7 @@ void sims::save_list_of_elements(BYTE *fname, INT verbose_level)
 		}
 }
 
-void sims::read_list_of_elements(action *A, BYTE *fname,
+void sims::read_list_of_elements(action *A, char *fname,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -4908,11 +4908,11 @@ void sims::evaluate_word_INT(INT word_len,
 	FREE_INT(Elt2);
 }
 
-void sims::write_sgs(const BYTE *fname, INT verbose_level)
+void sims::write_sgs(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Elt;
-	BYTE *elt;
+	char *elt;
 	longinteger_object go;
 	INT i;
 	vector_ge SG;
@@ -4922,7 +4922,7 @@ void sims::write_sgs(const BYTE *fname, INT verbose_level)
 		cout << "sims::write_sgs fname=" << fname << endl;
 		}
 	Elt = NEW_INT(A->elt_size_in_INT);
-	elt = NEW_BYTE(A->coded_elt_size_in_char);
+	elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 
 	tl = NEW_INT(A->base_len);
@@ -4961,7 +4961,7 @@ void sims::write_sgs(const BYTE *fname, INT verbose_level)
 				<< file_size(fname) << endl;
 		}
 	FREE_INT(Elt);
-	FREE_BYTE(elt);
+	FREE_char(elt);
 }
 
 
@@ -4969,32 +4969,32 @@ void sims::write_sgs(const BYTE *fname, INT verbose_level)
 #define READ_SGS_BUF_SIZE 50000
 
 
-void sims::read_sgs(const BYTE *fname,
+void sims::read_sgs(const char *fname,
 		vector_ge *SG, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT *Elt;
-	BYTE *elt;
+	char *elt;
 	longinteger_object go;
 	INT i, j;
-	BYTE label[1000];
-	BYTE *buf;
+	char label[1000];
+	char *buf;
 	INT base_length;
 	INT *base1; // [base_length]
 	INT *tl; //[base_length]
 	INT nb_gens;
 	INT make_element_size1;
 	INT *data; // [nb_gens * make_element_size1]
-	//BYTE str[1000];
+	//char str[1000];
 
 	if (f_v) {
 		cout << "sims::read_sgs fname=" << fname << endl;
 		}
 
-	buf = NEW_BYTE(READ_SGS_BUF_SIZE);
+	buf = NEW_char(READ_SGS_BUF_SIZE);
 	Elt = NEW_INT(A->elt_size_in_INT);
-	elt = NEW_BYTE(A->coded_elt_size_in_char);
+	elt = NEW_char(A->coded_elt_size_in_char);
 	//group_order(go);
 	
 	if (f_v) {
@@ -5004,7 +5004,7 @@ void sims::read_sgs(const BYTE *fname,
 	{
 		ifstream fp(fname);
 		//string str;
-		BYTE *p_buf;
+		char *p_buf;
 
 		// reading a comment line: "group of order ..."
 		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
@@ -5185,8 +5185,8 @@ void sims::read_sgs(const BYTE *fname,
 	FREE_INT(tl);
 	FREE_INT(base1);
 	FREE_INT(Elt);
-	FREE_BYTE(elt);
-	FREE_BYTE(buf);
+	FREE_char(elt);
+	FREE_char(buf);
 }
 
 
@@ -5234,14 +5234,14 @@ INT sims::least_moved_point_at_level(INT lvl, INT verbose_level)
 }
 
 #if 0
-INT sims::identify_group(BYTE *path_t144,
-		BYTE *discreta_home, INT verbose_level)
+INT sims::identify_group(char *path_t144,
+		char *discreta_home, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT group_idx;
 	INT h, i, j, *Elt;
 	longinteger_object go;
-	const BYTE *fname = "group_generators.txt";
+	const char *fname = "group_generators.txt";
 
 	if (f_v) {
 		cout << "sims::identify_group" << endl;
@@ -5266,7 +5266,7 @@ INT sims::identify_group(BYTE *path_t144,
 		cout << "sims::identify_group written file "
 				<< fname << " of size " << file_size(fname) << endl;
 		}
-	BYTE cmd[2000];
+	char cmd[2000];
 
 	sprintf(cmd, "%s/t144.out -discreta_home %s "
 			"group_generators.txt >log.tmp",
@@ -5615,7 +5615,7 @@ void sims::create_group_table(INT *&Table, INT &n,
 		}
 }
 
-void sims::write_as_magma_permutation_group(const BYTE *fname_base,
+void sims::write_as_magma_permutation_group(const char *fname_base,
 		vector_ge *gens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -5668,7 +5668,7 @@ void sims::write_as_magma_permutation_group(const BYTE *fname_base,
 > G := PermutationGroup< 12 | (1,6,7)(2,5,8,3,4,9)(11,12),
 >                             (1,3)(4,9,12)(5,8,10,6,7,11) >;
 #endif
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "%s.magma", fname_base);
 	{

@@ -31,7 +31,7 @@ void file_output::freeself()
 }
 
 
-void file_output::open(const BYTE *fname, void *user_data, INT verbose_level)
+void file_output::open(const char *fname, void *user_data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 

@@ -8,10 +8,10 @@
 #include "orbiter.h"
 
 
-void analyze(INT n, INT k, INT t, INT q, const BYTE *fname, INT verbose_level);
+void analyze(INT n, INT k, INT t, INT q, const char *fname, INT verbose_level);
 void analyze_design(INT n, INT k, INT t, INT q, finite_field *F, 
 	grassmann *Gr_t, grassmann *Gr_k, grassmann *Gr_tk, INT *design, INT len, INT verbose_level);
-void test_group(INT n, INT k, INT t, INT q, const BYTE *fname, linear_group_description *Descr, INT verbose_level);
+void test_group(INT n, INT k, INT t, INT q, const char *fname, linear_group_description *Descr, INT verbose_level);
 void group_of_design(INT n, INT k, INT t, INT q, finite_field *F, 
 	grassmann *Gr_t, grassmann *Gr_k, grassmann *Gr_tk, 
 	action *A, action *A2, 
@@ -31,7 +31,7 @@ int main(int argc, const char **argv)
 	INT f_q = FALSE;
 	INT q = 0;
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_linear = FALSE;
 	linear_group_description *Descr = NULL;
 	
@@ -100,7 +100,7 @@ int main(int argc, const char **argv)
 		}
 }
 
-void analyze(INT n, INT k, INT t, INT q, const BYTE *fname, INT verbose_level)
+void analyze(INT n, INT k, INT t, INT q, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Designs;
@@ -203,7 +203,7 @@ void analyze_design(INT n, INT k, INT t, INT q, finite_field *F,
 	
 }
 
-void test_group(INT n, INT k, INT t, INT q, const BYTE *fname, linear_group_description *Descr, INT verbose_level)
+void test_group(INT n, INT k, INT t, INT q, const char *fname, linear_group_description *Descr, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT *Designs;

@@ -176,14 +176,14 @@ void transform_llur_double(double *in, double *out, double &x, double &y)
 #endif
 }
 
-void draw(BYTE *fname)
+void draw(char *fname)
 {
 	INT n = 100, dx = 10, dy = 10;
 	INT xmin = -n * dx, xmax = n * dx;
 	INT ymin = -n * dy, ymax = 0;
 	INT factor_1000 = 1000;
 	INT Px[1000], Py[1000];
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = FALSE;
 	
@@ -255,16 +255,16 @@ void polygon3D(mp_graphics &G, INT *Px, INT *Py, INT dim, INT x0, INT y0, INT z0
 }
 
 void integer_4pts(mp_graphics &G, INT *Px, INT *Py, INT p1, INT p2, INT p3, INT p4, 
-	const BYTE *align, INT a)
+	const char *align, INT a)
 {
-	BYTE str[100];
+	char str[100];
 	
 	sprintf(str, "%ld", a);
 	text_4pts(G, Px, Py, p1, p2, p3, p4, align, str);
 }
 
 void text_4pts(mp_graphics &G, INT *Px, INT *Py, INT p1, INT p2, INT p3, INT p4, 
-	const BYTE *align, const BYTE *str)
+	const char *align, const char *str)
 {
 	INT x = Px[p1] + Px[p2] + Px[p3] + Px[p4];
 	INT y = Py[p1] + Py[p2] + Py[p3] + Py[p4];
@@ -665,7 +665,7 @@ void draw_graph_on_2D_grid(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT rad
 		}
 
 	if (f_point_labels) {
-		BYTE str[1000];
+		char str[1000];
 		
 		for (i = 0; i < nb_V; i++) {
 			sprintf(str, "%ld", i+ point_label_offset);
@@ -744,17 +744,17 @@ void draw_tournament(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT
 	delete Y;
 }
 
-void draw_bitmatrix(const BYTE *fname_base, INT f_dots, 
+void draw_bitmatrix(const char *fname_base, INT f_dots, 
 	INT f_partition, INT nb_row_parts, INT *row_part_first, INT nb_col_parts, INT *col_part_first, 
 	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, UBYTE *D, INT *M, 
+	INT f_bitmatrix, uchar *D, INT *M, 
 	INT m, INT n, INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	double scale, double line_width, 
 	INT f_has_labels, INT *labels)
 {
 	mp_graphics G;
-	BYTE fname_base2[1000];
-	BYTE fname[1000];
+	char fname_base2[1000];
+	char fname[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = FALSE;
 	//double scale = .3;
@@ -787,11 +787,11 @@ void draw_bitmatrix(const BYTE *fname_base, INT f_dots,
 void draw_bitmatrix2(mp_graphics &G, INT f_dots, 
 	INT f_partition, INT nb_row_parts, INT *row_part_first, INT nb_col_parts, INT *col_part_first, 
 	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, UBYTE *D, INT *M, 
+	INT f_bitmatrix, uchar *D, INT *M, 
 	INT m, INT n, INT xmax, INT ymax, 
 	INT f_has_labels, INT *labels)
 {
-	BYTE comment[1000];
+	char comment[1000];
 	grid_frame F;
 	INT i, j, ii, jj, ij, a, cnt, mn, mtn, mtn1;
 	INT indent = 0;

@@ -26,7 +26,7 @@ int main(int argc, const char **argv)
 	INT f_q = FALSE;
 	INT q = 0;
 	INT f_arc = FALSE;
-	const BYTE *the_arc_text = NULL;
+	const char *the_arc_text = NULL;
 	INT f_classify = FALSE;
 	INT i;
 
@@ -152,7 +152,7 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 	INT q;
 	surface *Surf;
 	finite_field *F;
-	BYTE fname_arc_lifting[1000];
+	char fname_arc_lifting[1000];
 
 	F = Surf_A->F;
 	q = F->q;
@@ -173,8 +173,8 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 		}
 
 	{
-	BYTE title[10000];
-	BYTE author[10000];
+	char title[10000];
+	char author[10000];
 	INT i;
 	
 	sprintf(title, "Lifting a single arc over GF(%ld) ", q);
@@ -256,7 +256,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	finite_field *F;
 	INT i, j, arc_idx;
 	
-	BYTE fname_arc_lifting[10000];
+	char fname_arc_lifting[10000];
 
 	F = Surf_A->F;
 	q = F->q;
@@ -283,8 +283,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 
 	{
-	BYTE title[10000];
-	BYTE author[10000];
+	char title[10000];
+	char author[10000];
 	sprintf(title, "Arc lifting over GF(%ld) ", q);
 	sprintf(author, "");
 
@@ -348,7 +348,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 
 
-	BYTE fname_base[1000];
+	char fname_base[1000];
 	sprintf(fname_base, "arcs_q%ld", q);
 
 	if (q < 20) {
@@ -425,8 +425,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		delete The_arc;
 		}
 
-		BYTE arc_label[1000];
-		BYTE arc_label_short[1000];
+		char arc_label[1000];
+		char arc_label_short[1000];
 		
 		sprintf(arc_label, "%ld / %ld", arc_idx, Six_arcs->nb_arcs_not_on_conic);
 		sprintf(arc_label_short, "Arc%ld", arc_idx);

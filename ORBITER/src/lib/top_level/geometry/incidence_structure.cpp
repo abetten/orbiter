@@ -47,9 +47,9 @@ void incidence_structure_compute_TDA_general(partitionstack &S,
 	//INT ht0;
 	//INT hash;
 	//INT i;
-	BYTE fname[1000];
-	BYTE fname_pic[1000];
-	BYTE fname_scheme[1000];
+	char fname[1000];
+	char fname_pic[1000];
+	char fname_scheme[1000];
 	
 	if (f_v) {
 		cout << "TDA:" << endl;

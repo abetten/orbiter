@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	INT i;
 	INT q;
 	INT f_poly = FALSE;
-	BYTE *poly = NULL;
+	char *poly = NULL;
 	
 	t0 = os_ticks();
 
@@ -114,7 +114,7 @@ void create_ovoid(finite_field *F, INT verbose_level)
 		}
 	cout << endl;
 
-	BYTE fname[1000];
+	char fname[1000];
 	sprintf(fname, "ovoid_%ld.txt", q);
 	write_set_to_file(fname, L, N, verbose_level);
 

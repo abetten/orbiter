@@ -22,9 +22,9 @@ int main(int argc, const char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_file_in = FALSE;
-	const BYTE *fname_in;
+	const char *fname_in;
 	INT f_file_out = FALSE;
-	const BYTE *fname_out;
+	const char *fname_out;
 	INT f_parameters = FALSE;
 	INT v, r, b, k;
 
@@ -90,8 +90,8 @@ int main(int argc, const char **argv)
 	INT nb_cases;
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii;
+	char **Ago_ascii;
+	char **Aut_ascii;
 	INT *Casenumbers;
 	INT h, j, a, u, ii, jj;
 	INT *M1;

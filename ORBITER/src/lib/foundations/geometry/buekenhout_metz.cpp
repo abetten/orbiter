@@ -1338,7 +1338,7 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 
 void buekenhout_metz::write_unital_to_file()
 {
-	BYTE fname_unital[1000];
+	char fname_unital[1000];
 	
 	get_name(fname_unital);
 	strcat(fname_unital, ".txt");
@@ -1348,7 +1348,7 @@ void buekenhout_metz::write_unital_to_file()
 }
 
 
-void buekenhout_metz::get_name(BYTE *name)
+void buekenhout_metz::get_name(char *name)
 {
 	if (f_Uab) {
 		sprintf(name, "U_%ld_%ld_%ld", parameter_a, parameter_b, q);

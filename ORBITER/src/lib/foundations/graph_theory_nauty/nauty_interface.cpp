@@ -37,9 +37,9 @@ static nvector lab[MAXN], ptn[MAXN], orbits[MAXN];
 using namespace std;
 
 typedef long int INT;
-typedef unsigned char UBYTE;
+typedef unsigned char uchar;
 
-INT bitvector_s_i(UBYTE *bitvec, INT i);
+INT bitvector_s_i(uchar *bitvec, INT i);
 INT ij2k(INT i, INT j, INT n);
 
 static void nauty_interface_allocate_data(INT n);
@@ -49,10 +49,10 @@ static void nauty_interface_free_data();
 
 
 typedef long int INT;
-typedef unsigned char UBYTE;
+typedef unsigned char uchar;
 
 
-void nauty_interface_graph_bitvec(INT v, UBYTE *bitvector_adjacency, 
+void nauty_interface_graph_bitvec(INT v, uchar *bitvector_adjacency, 
 	INT *labeling, INT *partition, 
 	INT *Aut, INT &Aut_counter, 
 	INT *Base, INT &Base_length, 

@@ -271,7 +271,7 @@ void subspace_orbits::rank_set_from_matrix(INT len, INT *S, INT *M)
 
 void subspace_orbits::Kramer_Mesner_matrix(INT t, INT k,
 	INT f_print_matrix,
-	INT f_read_solutions, const BYTE *solution_fname,
+	INT f_read_solutions, const char *solution_fname,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -404,7 +404,7 @@ void subspace_orbits::Kramer_Mesner_matrix(INT t, INT k,
 						Subspace_ranks[i][j];
 				}
 			}
-		BYTE fname[1000];
+		char fname[1000];
 		
 		strcpy(fname, solution_fname);
 		replace_extension_with(fname, "_designs.csv");
@@ -420,7 +420,7 @@ void subspace_orbits::Kramer_Mesner_matrix(INT t, INT k,
 	
 
 
-		BYTE fname[1000];
+		char fname[1000];
 
 		sprintf(fname, "%s_KM_%ld_%ld.system", Gen->fname_base, t, k);
 		cout << "saving diophant under the name " << fname << endl;

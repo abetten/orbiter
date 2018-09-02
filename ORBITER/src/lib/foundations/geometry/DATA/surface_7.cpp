@@ -3,7 +3,7 @@ INT surface_7_size = 20;
 INT surface_7_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3, 0, 1, 0, 0, 3, 0, 2, 3, 
 };
-const BYTE *surface_7_stab_order[] = {
+const char *surface_7_stab_order[] = {
 	"648",
 };
 INT surface_7_nb_E[] = { 

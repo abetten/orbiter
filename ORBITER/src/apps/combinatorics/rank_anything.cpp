@@ -77,7 +77,7 @@ void rank_subsets(INT n, INT verbose_level)
 		cout << " has rank " << r << endl;
 		}
 
-	BYTE fname[1000];
+	char fname[1000];
 	INT h;
 
 	sprintf(fname, "subsets_of_%ld.tree", n);
@@ -130,7 +130,7 @@ void rank_binary_trees(INT n, INT verbose_level)
 			}
 		}
 
-	BYTE fname[1000];
+	char fname[1000];
 	INT h;
 
 	sprintf(fname, "binary_tree_of_depth_%ld.tree", n);

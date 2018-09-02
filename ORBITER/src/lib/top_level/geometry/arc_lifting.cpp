@@ -13,9 +13,9 @@
 
 
 static void intersection_matrix_entry_print(INT *p, 
-	INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data);
+	INT m, INT n, INT i, INT j, INT val, char *output, void *data);
 static void Web_of_cubic_curves_entry_print(INT *p, 
-	INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data);
+	INT m, INT n, INT i, INT j, INT val, char *output, void *data);
 
 arc_lifting::arc_lifting()
 {
@@ -1535,7 +1535,7 @@ void arc_lifting::print_web_of_cubic_curves(ostream &ost)
 	row_len[0] = 15;
 	col_fst[0] = 0;
 	col_len[0] = 10;
-	BYTE str[1000];
+	char str[1000];
 	INT i, j, k, l, m, n, h, ij, kl, mn;
 
 	Surf->P2->compute_bisecants_and_conics(arc,
@@ -2191,7 +2191,7 @@ void arc_lifting::print_isomorphism_types_of_trihedral_pairs(
 
 static void intersection_matrix_entry_print(INT *p, 
 	INT m, INT n, INT i, INT j, INT val,
-	BYTE *output, void *data)
+	char *output, void *data)
 {
 	//arc_lifting *AL;
 	//AL = (arc_lifting *) data;
@@ -2217,7 +2217,7 @@ static void intersection_matrix_entry_print(INT *p,
 
 static void Web_of_cubic_curves_entry_print(INT *p, 
 	INT m, INT n, INT i, INT j, INT val,
-	BYTE *output, void *data)
+	char *output, void *data)
 {
 	arc_lifting *AL;
 	AL = (arc_lifting *) data;

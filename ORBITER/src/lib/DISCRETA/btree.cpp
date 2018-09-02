@@ -211,7 +211,7 @@ ostream& btree::print(ostream& ost)
 	return ost;
 }
 
-void btree::init(const BYTE *file_name, INT f_duplicatekeys, 
+void btree::init(const char *file_name, INT f_duplicatekeys, 
 	INT btree_idx)
 {
 	m_l_n(11);
@@ -255,12 +255,12 @@ void btree::add_key_string(INT output_size, INT field1, INT field2)
 	key().append(bk);
 }
 
-void btree::key_fill_in(BYTE *the_key, Vector& the_object)
+void btree::key_fill_in(char *the_key, Vector& the_object)
 {
 	bt_key_fill_in(the_key, key(), the_object);
 }
 
-void btree::key_print(BYTE *the_key, ostream& ost)
+void btree::key_print(char *the_key, ostream& ost)
 {
 	bt_key_print(the_key, key(), ost);
 }
@@ -425,7 +425,7 @@ void btree::WriteInfo(INT verbose_level)
 		exit(1);
 		}
 	size = sizeof(Buffer);
-	fill_char((BYTE *)BF, size, 0);
+	fill_char((char *)BF, size, 0);
 	BF->Page.AllocRec = (INT4) AllocRec();
 	BF->Page.NextFreeRec = (INT4) FreeRec();
 	BF->Page.RootRec = (INT4) Root();
@@ -478,7 +478,7 @@ INT btree::AllocateRec(INT verbose_level)
 		cout << "btree::AllocateRec FreeRec() > 0 not yet implemented" << endl;
 		exit(1);
 #endif
-		fill_char((BYTE *)BF, sizeof(Buffer), 0);
+		fill_char((char *)BF, sizeof(Buffer), 0);
 		x = FreeRec();
 		file_seek(x);
 		file_read(&BF->Page, "AllocateRec");
@@ -508,7 +508,7 @@ void btree::ReleaseRec(INT x)
 		exit(1);
 		}
 	size = (INT)sizeof(Buffer);
-	fill_char((BYTE *)BF, size, 0);
+	fill_char((char *)BF, size, 0);
 	BF->Page.NextFreeRec = (INT4) FreeRec();
 	file_seek(x);
 	file_write(&BF->Page, "ReleaseRec");
@@ -613,7 +613,7 @@ void btree::SavePage(Buffer *BF, INT verbose_level)
 INT btree::search_string(discreta_base& key_op, INT& pos, INT verbose_level)
 {
 	KEYTYPE the_key;
-	BYTE *p_key = the_key.c;
+	char *p_key = the_key.c;
 	
 	bt_key &the_bt_key = key()[0].as_bt_key();
 	
@@ -632,8 +632,8 @@ void btree::search_interval_INT4(INT i_min, INT i_max,
 {
 	INT f_v = (verbose_level >= 1);
 	KEYTYPE key_min, key_max;
-	BYTE *p_key_min = key_min.c;
-	BYTE *p_key_max = key_max.c;
+	char *p_key_min = key_min.c;
+	char *p_key_max = key_max.c;
 	integer I_min, I_max;
 	I_min.m_i(i_min - 1);
 	I_max.m_i(i_max);
@@ -665,8 +665,8 @@ void btree::search_interval_INT4_INT4(INT l0, INT u0,
 		cout << "btree::search_interval_INT4_INT4 low=(" << l0 << "," << l1 << ") high=(" << u0 << "," << u1 << ")" << endl;
 		}
 	KEYTYPE key_min, key_max;
-	BYTE *p_key_min = key_min.c;
-	BYTE *p_key_max = key_max.c;
+	char *p_key_min = key_min.c;
+	char *p_key_max = key_max.c;
 	integer I_min, I_max;
 	INT idx_min, idx_max;
 	INT f_found_min, f_found_max;
@@ -698,8 +698,8 @@ void btree::search_interval_INT4_INT4_INT4(INT l0, INT u0,
 {
 	INT f_v = (verbose_level >= 1);
 	KEYTYPE key_min, key_max;
-	BYTE *p_key_min = key_min.c;
-	BYTE *p_key_max = key_max.c;
+	char *p_key_min = key_min.c;
+	char *p_key_max = key_max.c;
 	integer I_min, I_max;
 	INT idx_min, idx_max;
 	INT f_found_min, f_found_max;
@@ -736,8 +736,8 @@ void btree::search_interval_INT4_INT4_INT4_INT4(INT l0, INT u0,
 {
 	INT f_v = (verbose_level >= 1);
 	KEYTYPE key_min, key_max;
-	BYTE *p_key_min = key_min.c;
-	BYTE *p_key_max = key_max.c;
+	char *p_key_min = key_min.c;
+	char *p_key_max = key_max.c;
 	integer I_min, I_max;
 	INT idx_min, idx_max;
 	INT f_found_min, f_found_max;
@@ -781,7 +781,7 @@ INT btree::search_INT4_INT4(INT data1, INT data2, INT& idx, INT verbose_level)
 		cout << "btree::search_INT4_INT4 data=(" << data1 << "," << data2 << ")" << endl;
 		}
 	KEYTYPE key;
-	BYTE *p_key = key.c;
+	char *p_key = key.c;
 	integer I1, I2;
 	INT f_found;
 	
@@ -895,7 +895,7 @@ INT btree::get_highest_INT4()
 	// cout << i << " : ";
 	// key_print(key.c, ost);
 	// cout << endl;
-	BYTE *p_key = key.c;
+	char *p_key = key.c;
 	INT4 i;
 	bt_key_get_INT4(&p_key, i);
 	return i;
@@ -1109,7 +1109,7 @@ INT btree::SearchPage(Buffer *buffer,
 			}
 		res = bt_key_compare(
 			item->Key.c, 
-			(BYTE *) pSearchKey, 
+			(char *) pSearchKey, 
 			key(), 
 			key_depth);
 		if (res == 0) {
@@ -1327,8 +1327,8 @@ void btree::insert_key(KEYTYPE *pKey,
 		}
 	NewRoot = new Buffer;
 	BF1 = new Buffer;
-	fill_char((BYTE *)NewRoot, sizeof(Buffer), 0);
-	fill_char((BYTE *)BF1, sizeof(Buffer), 0);
+	fill_char((char *)NewRoot, sizeof(Buffer), 0);
+	fill_char((char *)BF1, sizeof(Buffer), 0);
 	f_keyadded = FALSE;
 	IKpKey = pKey;
 	IKpData = pData;
@@ -1549,7 +1549,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 		page_print(BF, cout);
 		}
 	SplitBF = new Buffer;
-	fill_char((BYTE *)SplitBF, sizeof(Buffer), 0);
+	fill_char((char *)SplitBF, sizeof(Buffer), 0);
 	new_page_num = AllocateRec(f_v);
 	if (f_v) {
 		cout << "Split new page=" << new_page_num << endl;
@@ -1693,7 +1693,7 @@ void btree::Delete(INT Node, INT& Underflow, INT verbose_level)
 		return;
 		}
 	DKBF = new Buffer;
-	fill_char((BYTE *) DKBF, sizeof(Buffer), 0);
+	fill_char((char *) DKBF, sizeof(Buffer), 0);
 	LoadPage(DKBF, Node, verbose_level - 1);
 	
 	/*	SearchPage(p, DKBF, DKpDelKey, NIL, &idx, &x, &DKFound);*/
@@ -1765,7 +1765,7 @@ void btree::FindGreatest(INT Node1,
 		cout << "btree::FindGreatest Node1=" << Node1 << " x=" << x << endl;
 		}
 	buf = new Buffer;
-	fill_char((BYTE *)buf, sizeof(Buffer), 0);
+	fill_char((char *)buf, sizeof(Buffer), 0);
 	LoadPage(buf, Node1, verbose_level - 1);
 	NumBF = buf->Page.NumItems;
 	Node2 = buf->Page.Item[NumBF].Ref;
@@ -1820,9 +1820,9 @@ void btree::Compensate(INT Precedent,
 	BF1 = new Buffer;
 	BF2 = new Buffer;
 	BF3 = new Buffer;
-	fill_char((BYTE *)BF1, sizeof(Buffer), 0);
-	fill_char((BYTE *)BF2, sizeof(Buffer), 0);
-	fill_char((BYTE *)BF3, sizeof(Buffer), 0);
+	fill_char((char *)BF1, sizeof(Buffer), 0);
+	fill_char((char *)BF2, sizeof(Buffer), 0);
+	fill_char((char *)BF3, sizeof(Buffer), 0);
 	LoadPage(BF1, Node, verbose_level - 1);
 	LoadPage(BF3, Precedent, verbose_level - 1);
 	NumBF3 = BF3->Page.NumItems;
@@ -2133,7 +2133,7 @@ void btree::file_close()
 	// cout << "btree::file_close() file " << filename().s() << " closed" << endl;
 }
 
-void btree::file_write(PageTyp *page, const BYTE *message)
+void btree::file_write(PageTyp *page, const char *message)
 {
 	if (!f_open()) {
 		cout << "btree::file_write() file not open" << endl;
@@ -2146,10 +2146,10 @@ void btree::file_write(PageTyp *page, const BYTE *message)
 		cout << "idx=" << idx << endl;
 		exit(1);
 		}
-	fstream_table[idx]->write((BYTE *) page, sizeof(PageTyp));
+	fstream_table[idx]->write((char *) page, sizeof(PageTyp));
 }
 
-void btree::file_read(PageTyp *page, const BYTE *message)
+void btree::file_read(PageTyp *page, const char *message)
 {
 	if (!f_open()) {
 		cout << "btree::file_read() file not open" << endl;
@@ -2162,7 +2162,7 @@ void btree::file_read(PageTyp *page, const BYTE *message)
 		cout << "idx=" << idx << endl;
 		exit(1);
 		}
-	fstream_table[idx]->read((BYTE *) page, sizeof(PageTyp));
+	fstream_table[idx]->read((char *) page, sizeof(PageTyp));
 }
 
 void btree::file_seek(INT page_no)
@@ -2189,8 +2189,8 @@ void btree::file_seek(INT page_no)
 static void bt_item_copy(ItemTyp *a, ItemTyp *b)
 {
 	INT i, len;
-	BYTE *pca = (BYTE *)a;
-	BYTE *pcb = (BYTE *)b;
+	char *pca = (char *)a;
+	char *pcb = (char *)b;
 	
 	len = sizeof(ItemTyp);
 	for (i = 0; i < len; i++)

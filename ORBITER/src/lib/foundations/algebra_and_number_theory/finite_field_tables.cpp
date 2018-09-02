@@ -137,7 +137,7 @@ INT finitefield_largest_degree_irreducible_polynomial[] = {
 	};
 
 
-const BYTE *finitefield_primitive_polynomial[][100] = {
+const char *finitefield_primitive_polynomial[][100] = {
 // over GF(2):
 {
 "7", // X^2+X+1
@@ -929,11 +929,11 @@ const BYTE *finitefield_primitive_polynomial[][100] = {
 },
 };
 
-const BYTE *get_primitive_polynomial(INT p, INT e, INT verbose_level)
+const char *get_primitive_polynomial(INT p, INT e, INT verbose_level)
 {
 	//INT f_v = (verbose_level >= 1);
 	INT idx;
-	BYTE *s;
+	char *s;
 	
 	if (!INT_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
 		cout << "I don't have prime " << p << " in the tables" << endl;
@@ -958,7 +958,7 @@ const BYTE *get_primitive_polynomial(INT p, INT e, INT verbose_level)
 		cout << "requested: degree " << e << " polynomial over GF(" << p << ")" << endl;
 		exit(1);
 		}
-	const BYTE *m = finitefield_primitive_polynomial[idx][e - 2];
+	const char *m = finitefield_primitive_polynomial[idx][e - 2];
 	if (strlen(m) == 0) {
 		cout << "get_primitive_polynomial() I do not have a polynomial\n";
 		cout << "of that degree over that field" << endl;

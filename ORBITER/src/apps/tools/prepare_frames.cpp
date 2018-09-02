@@ -29,9 +29,9 @@ int main(int argc, const char **argv)
 	INT nb_inputs = 0;
 	INT input_first[1000];
 	INT input_len[1000];
-	const BYTE *input_mask[1000];
+	const char *input_mask[1000];
 	INT f_o = FALSE;
-	const BYTE *output_mask = NULL;
+	const char *output_mask = NULL;
 	INT f_output_starts_at = FALSE;
 	INT output_starts_at = 0;
 	INT f_step = FALSE;
@@ -71,9 +71,9 @@ int main(int argc, const char **argv)
 		}
 	INT nb_frames;
 	INT j, h, u;
-	BYTE input_fname[1000];
-	BYTE output_fname[1000];
-	BYTE cmd[1000];
+	char input_fname[1000];
+	char output_fname[1000];
+	char cmd[1000];
 
 	nb_frames = 0;
 	for (i = 0; i < nb_inputs; i++) {

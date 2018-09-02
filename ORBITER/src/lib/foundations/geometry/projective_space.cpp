@@ -79,7 +79,7 @@ void projective_space::freeself()
 		FREE_OBJECT(Grass_planes);
 		}
 	if (incidence_bitvec) {
-		FREE_UBYTE(incidence_bitvec);
+		FREE_uchar(incidence_bitvec);
 		}
 	if (Line_through_two_points) {
 		FREE_INT(Line_through_two_points);
@@ -350,7 +350,7 @@ void projective_space::init_incidence_structure(INT verbose_level)
 			}
 		//Incidence = NEW_INT(N_points * N_lines);
 		//INT_vec_zero(Incidence, N_points * N_points);
-		incidence_bitvec = NEW_UBYTE(len);
+		incidence_bitvec = NEW_uchar(len);
 		for (i = 0; i < len; i++) {
 			incidence_bitvec[i] = 0;
 			}
@@ -4903,7 +4903,7 @@ void projective_space::klein_correspondence(
 	INT *x4, *y4;
 	INT a, b, c;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 
 
 	if (f_v) {
@@ -4961,7 +4961,7 @@ void projective_space::Pluecker_coordinates(
 	INT basis8[8];
 	INT *x4, *y4;
 	INT f_elements_exponential = FALSE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 	
 	if (f_v) {
 		cout << "projective_space::Pluecker_coordinates" << endl;
@@ -5010,7 +5010,7 @@ void projective_space::klein_correspondence_special_model(
 	INT a, b, c;
 	INT half;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 	//INT *table;
 
 	if (f_v) {
@@ -6342,13 +6342,13 @@ void projective_space::draw_point_set_in_plane(
 		unrank_point(Table + i * 3, Pts[i]);
 		}
 	if (f_point_labels) {
-		BYTE str[1000];
-		BYTE **Labels;
+		char str[1000];
+		char **Labels;
 
-		Labels = NEW_PBYTE(nb_pts);
+		Labels = NEW_pchar(nb_pts);
 		for (i = 0; i < nb_pts; i++) {
 			sprintf(str, "%ld", Pts[i]);
-			Labels[i] = NEW_BYTE(strlen(str) + 1);
+			Labels[i] = NEW_char(strlen(str) + 1);
 			strcpy(Labels[i], str);
 			}
 		projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad, 
@@ -6356,9 +6356,9 @@ void projective_space::draw_point_set_in_plane(
 			f_embedded, f_sideways, 
 			0 /*verbose_level */);
 		for (i = 0; i < nb_pts; i++) {
-			FREE_BYTE(Labels[i]);
+			FREE_char(Labels[i]);
 			}
-		FREE_PBYTE(Labels);
+		FREE_pchar(Labels);
 		}
 	else {
 		projective_plane_draw_grid(fname, xmax, ymax, f_with_points, rad, 

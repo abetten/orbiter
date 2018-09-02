@@ -517,7 +517,7 @@ void poset_classification::init(action *A, action *A2,
 void poset_classification::initialize(action *A_base, action *A_use, 
 	strong_generators *gens, 
 	INT depth, 
-	const BYTE *path, const BYTE *prefix, INT verbose_level)
+	const char *path, const char *prefix, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -567,8 +567,8 @@ void poset_classification::initialize_with_starter(
 	action *A_base, action *A_use,
 	strong_generators *gens, 
 	INT depth, 
-	BYTE *path, 
-	BYTE *prefix, 
+	char *path, 
+	char *prefix, 
 	INT starter_size, 
 	INT *starter, 
 	strong_generators *Starter_Strong_gens, 

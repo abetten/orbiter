@@ -98,7 +98,7 @@ void geo_parameter::append_to_entries(INT a1, INT a2, INT a3, INT a4)
 	nb_entries++;
 }
 
-void geo_parameter::write(ofstream &aStream, BYTE *label)
+void geo_parameter::write(ofstream &aStream, char *label)
 {
 	
 	if (mode == MODE_SINGLE) {
@@ -113,7 +113,7 @@ void geo_parameter::write(ofstream &aStream, BYTE *label)
 		}
 }
 
-void geo_parameter::write_mode_single(ofstream &aStream, BYTE *label)
+void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 {
 	INT i, j, sum, pt_level = -1, bt_level = -1, xy, x, y, z, w;
 
@@ -177,7 +177,7 @@ void geo_parameter::write_mode_single(ofstream &aStream, BYTE *label)
 		extra_row_level << " " << extra_col_level << endl;
 }
 
-void geo_parameter::write_mode_stack(ofstream &aStream, BYTE *label)
+void geo_parameter::write_mode_stack(ofstream &aStream, char *label)
 {
 	INT i;
 	
@@ -761,7 +761,7 @@ void geo_parameter::print_C_source()
 {
 	INT i, j;
 	
-	cout << "BYTE *name = \"" << label << "\";" << endl;
+	cout << "char *name = \"" << label << "\";" << endl;
 	cout << "int part[] = {";
 	for (i = 0; i < nb_parts; i++) 
 		cout << part[i] << ",";

@@ -344,7 +344,7 @@ void tdo_data::solve_second_system_with_help(INT verbose_level,
 void tdo_data::solve_second_system_from_file(INT verbose_level,
 	INT *classes_len, INT f_scale, INT scaling,
 	INT *&line_types, INT &nb_line_types, 
-	INT *&distributions, INT &nb_distributions, BYTE *solution_file_name)
+	INT *&distributions, INT &nb_distributions, char *solution_file_name)
 {
 	int f_v = (verbose_level >= 1);
 	INT cnt, i, j, a, nb_sol, *the_solution;

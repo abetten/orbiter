@@ -225,7 +225,7 @@ void create_object(INT verbose_level)
 	
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	
@@ -365,7 +365,7 @@ void create_object(INT verbose_level)
 	
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	
@@ -464,7 +464,7 @@ void create_object(INT verbose_level)
 	print_integer_matrix_width(cout, Mtx2, nb_POINTS, nb_BLOCKS, nb_BLOCKS, 1);
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	
@@ -524,7 +524,7 @@ void create_object(INT verbose_level)
 
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	
@@ -740,7 +740,7 @@ void create_geometry(INT verbose_level)
 	
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	
@@ -828,7 +828,7 @@ void create_geometry(INT verbose_level)
 	print_integer_matrix_width(cout, Mtx2, nb_points, nb_lines, nb_lines, 1);
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	
@@ -862,7 +862,7 @@ void create_geometry(INT verbose_level)
 	print_integer_matrix_width(cout, Mtx3, nb_points_folded, nb_lines_folded, nb_lines_folded, 1);
 	{
 	incidence_structure Inc;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "HamG_%ld_2.inc", n);
 	

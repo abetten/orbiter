@@ -58,7 +58,7 @@ void poset_classification::housekeeping(INT i,
 		}
 	
 	if (f_write_files) {
-		BYTE my_fname_base[1000];
+		char my_fname_base[1000];
 		
 		if (f_v) {
 			cout << "poset_classification_housekeeping writing files" << endl;
@@ -200,7 +200,7 @@ void poset_classification::housekeeping_no_data_file(INT i,
 		}
 
 	if (f_W || (f_w && i == sz)) {
-		BYTE fname_base2[1000];
+		char fname_base2[1000];
 		
 		sprintf(fname_base2, "%sa", fname_base);
 		write_level_file_binary(i, fname_base2, 1/*verbose_level*/);
@@ -228,9 +228,9 @@ void poset_classification::housekeeping_no_data_file(INT i,
 		}
 }
 
-INT poset_classification::test_sv_level_file_binary(INT level, BYTE *fname_base)
+INT poset_classification::test_sv_level_file_binary(INT level, char *fname_base)
 {
-	BYTE fname[1000];
+	char fname[1000];
 	
 	sprintf(fname, "%s_lvl_%ld_sv.data", fname_base, level);
 	if (file_size(fname) >= 1)
@@ -240,13 +240,13 @@ INT poset_classification::test_sv_level_file_binary(INT level, BYTE *fname_base)
 }
 
 void poset_classification::read_sv_level_file_binary(
-	INT level, BYTE *fname_base,
+	INT level, char *fname_base,
 	INT f_split, INT split_mod, INT split_case, 
 	INT f_recreate_extensions, INT f_dont_keep_sv, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	
 	sprintf(fname, "%s_lvl_%ld_sv.data", fname_base, level);
 	
@@ -271,12 +271,12 @@ void poset_classification::read_sv_level_file_binary(
 }
 
 void poset_classification::write_sv_level_file_binary(
-	INT level, BYTE *fname_base,
+	INT level, char *fname_base,
 	INT f_split, INT split_mod, INT split_case, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	
 	sprintf(fname, "%s_lvl_%ld_sv.data", fname_base, level);
 	
@@ -404,10 +404,10 @@ void poset_classification::write_sv_level_file_binary2(INT level, FILE *fp,
 }
 
 void poset_classification::read_level_file_binary(INT level,
-		BYTE *fname_base, INT verbose_level)
+		char *fname_base, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT nb_group_elements;
 	
 	sprintf(fname, "%s_lvl_%ld.data", fname_base, level);
@@ -437,10 +437,10 @@ void poset_classification::read_level_file_binary(INT level,
 }
 
 void poset_classification::write_level_file_binary(INT level,
-		BYTE *fname_base, INT verbose_level)
+		char *fname_base, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT nb_group_elements;
 	
 	sprintf(fname, "%s_lvl_%ld.data", fname_base, level);
@@ -600,17 +600,17 @@ INT poset_classification::calc_size_on_file(INT depth_completed,
 }
 
 void poset_classification::make_fname_candidates_file_default(
-		BYTE *fname, INT level)
+		char *fname, INT level)
 {
 	sprintf(fname, "%s_lvl_%ld_candidates.bin", fname_base, level);
 }
 
-void poset_classification::write_candidates_binary_using_sv(BYTE *fname_base,
+void poset_classification::write_candidates_binary_using_sv(char *fname_base,
 		INT lvl, INT t0, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE;
-	BYTE fname1[1000];
+	char fname1[1000];
 	
 	if (f_v) {
 		cout << "poset_classification::write_candidates_binary_using_sv "
@@ -706,7 +706,7 @@ void poset_classification::write_candidates_binary_using_sv(BYTE *fname_base,
 }
 
 void poset_classification_read_candidates_of_orbit(
-	const BYTE *fname, INT orbit_at_level,
+	const char *fname, INT orbit_at_level,
 	INT *&candidates, INT &nb_candidates, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -762,13 +762,13 @@ void poset_classification_read_candidates_of_orbit(
 }
 
 void poset_classification::read_level_file(INT level,
-		BYTE *fname, INT verbose_level)
+		char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT *set_sizes;
 	INT **sets;
-	BYTE **data;
+	char **data;
 	INT nb_cases;
 	INT nb_nodes, first_at_level;
 	INT i, I, J;
@@ -893,7 +893,7 @@ void poset_classification::read_level_file(INT level,
 }
 
 void poset_classification::read_data_file(INT &depth_completed,
-		const BYTE *fname, INT verbose_level)
+		const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT size;
@@ -964,11 +964,11 @@ void poset_classification::read_data_file(INT &depth_completed,
 }
 
 void poset_classification::write_data_file(INT depth_completed,
-		const BYTE *fname_base, INT verbose_level)
+		const char *fname_base, INT verbose_level)
 {
 	memory_object *m;
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT nb_group_elements;
 	INT size0;
 	
@@ -1029,7 +1029,7 @@ void poset_classification::read_memory_object(INT &depth_completed,
 	//nb_nodes = first_oracle_node_at_level[depth_completed + 1];
 	if (f_v) {
 		cout << "poset_classification::read_memory_object, "
-				"data size (in bytes) = " << m->used_length << endl;
+				"data size (in chars) = " << m->used_length << endl;
 		}
 	nb_group_elements = 0;
 	m->read_int(&version);
@@ -1118,12 +1118,12 @@ void poset_classification::write_memory_object(INT depth_completed,
 	m->write_int(MAGIC_SYNC); // a check to see if the file is not corrupt
 	if (f_v) {
 		cout << "poset_classification::write_memory_object "
-				"finished, data size (in bytes) = "
+				"finished, data size (in chars) = "
 				<< m->used_length << endl;
 		}
 }
 
-void poset_classification::recover(const BYTE *recover_fname,
+void poset_classification::recover(const char *recover_fname,
 		INT &depth_completed, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1141,11 +1141,11 @@ void poset_classification::recover(const BYTE *recover_fname,
 }
 
 void poset_classification::write_lvl_file_with_candidates(
-		BYTE *fname_base, INT lvl, INT t0,
+		char *fname_base, INT lvl, INT t0,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname1[1000];
+	char fname1[1000];
 	
 	sprintf(fname1, "%s_lvl_%ld_candidates.txt", fname_base, lvl);
 	{
@@ -1172,13 +1172,13 @@ void poset_classification::write_lvl_file_with_candidates(
 }
 
 
-void poset_classification::write_lvl_file(BYTE *fname_base,
+void poset_classification::write_lvl_file(char *fname_base,
 		INT lvl, INT t0, INT f_with_stabilizer_generators,
 		INT f_long_version,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname1[1000];
+	char fname1[1000];
 	sprintf(fname1, "%s_lvl_%ld", fname_base, lvl);
 	{
 	ofstream f(fname1);
@@ -1372,16 +1372,16 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		spreadsheet *&Sp, INT max_depth)
 {
 	INT Nb_orbits, nb_orbits, i, level, first;
-	PBYTE *Text_level;
-	PBYTE *Text_node;
-	PBYTE *Text_orbit_reps;
-	PBYTE *Text_stab_order;
-	PBYTE *Text_orbit_length;
-	PBYTE *Text_schreier_vector_length;
+	pchar *Text_level;
+	pchar *Text_node;
+	pchar *Text_orbit_reps;
+	pchar *Text_stab_order;
+	pchar *Text_orbit_length;
+	pchar *Text_schreier_vector_length;
 	longinteger_object stab_order, orbit_length;
 	INT schreier_vector_length;
 	INT *rep;
-	BYTE str[1000];
+	char str[1000];
 	poset_orbit_node *O;
 
 	Nb_orbits = 0;
@@ -1390,12 +1390,12 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		}
 
 	rep = NEW_INT(max_depth);
-	Text_level = NEW_PBYTE(Nb_orbits);
-	Text_node = NEW_PBYTE(Nb_orbits);
-	Text_orbit_reps = NEW_PBYTE(Nb_orbits);
-	Text_stab_order = NEW_PBYTE(Nb_orbits);
-	Text_orbit_length = NEW_PBYTE(Nb_orbits);
-	Text_schreier_vector_length = NEW_PBYTE(Nb_orbits);
+	Text_level = NEW_pchar(Nb_orbits);
+	Text_node = NEW_pchar(Nb_orbits);
+	Text_orbit_reps = NEW_pchar(Nb_orbits);
+	Text_stab_order = NEW_pchar(Nb_orbits);
+	Text_orbit_length = NEW_pchar(Nb_orbits);
+	Text_schreier_vector_length = NEW_pchar(Nb_orbits);
 
 	first = 0;
 	for (level = 0; level <= max_depth; level++) {
@@ -1403,49 +1403,49 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 		nb_orbits = nb_orbits_at_level(level);
 		for (i = 0; i < nb_orbits; i++) {
 			sprintf(str, "%ld", level);
-			Text_level[first + i] = NEW_BYTE(strlen(str) + 1);
+			Text_level[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_level[first + i], str);
 
 			sprintf(str, "%ld", i);
-			Text_node[first + i] = NEW_BYTE(strlen(str) + 1);
+			Text_node[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_node[first + i], str);
 
 			get_set_by_level(level, i, rep);
 			INT_vec_print_to_str(str, rep, level);
-			Text_orbit_reps[first + i] = NEW_BYTE(strlen(str) + 1);
+			Text_orbit_reps[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_reps[first + i], str);
 			
 			get_orbit_length_and_stabilizer_order(i, level, 
 				stab_order, orbit_length);
 			stab_order.print_to_string(str);
-			Text_stab_order[first + i] = NEW_BYTE(strlen(str) + 1);
+			Text_stab_order[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_stab_order[first + i], str);
 			
 			orbit_length.print_to_string(str);
-			Text_orbit_length[first + i] = NEW_BYTE(strlen(str) + 1);
+			Text_orbit_length[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_orbit_length[first + i], str);
 			
 			O = get_node_ij(level, i);
 			schreier_vector_length = O->get_nb_of_live_points();
 			sprintf(str, "%ld", schreier_vector_length);
-			Text_schreier_vector_length[first + i] = NEW_BYTE(strlen(str) + 1);
+			Text_schreier_vector_length[first + i] = NEW_char(strlen(str) + 1);
 			strcpy(Text_schreier_vector_length[first + i], str);
 			}
 		}
 	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(Nb_orbits + 1, 7);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const BYTE **)
+	Sp->fill_column_with_text(1, (const char **)
 			Text_level, "Level");
-	Sp->fill_column_with_text(2, (const BYTE **)
+	Sp->fill_column_with_text(2, (const char **)
 			Text_node, "Node");
-	Sp->fill_column_with_text(3, (const BYTE **)
+	Sp->fill_column_with_text(3, (const char **)
 			Text_orbit_reps, "Orbit rep");
-	Sp->fill_column_with_text(4, (const BYTE **)
+	Sp->fill_column_with_text(4, (const char **)
 			Text_stab_order, "Stab order");
-	Sp->fill_column_with_text(5, (const BYTE **)
+	Sp->fill_column_with_text(5, (const char **)
 			Text_orbit_length, "Orbit length");
-	Sp->fill_column_with_text(6, (const BYTE **)
+	Sp->fill_column_with_text(6, (const char **)
 			Text_schreier_vector_length, "Schreier vector length");
 
 #if 0
@@ -1456,29 +1456,29 @@ void poset_classification::make_spreadsheet_of_orbit_reps(
 
 	FREE_INT(rep);
 	for (i = 0; i < Nb_orbits; i++) {
-		FREE_BYTE(Text_level[i]);
+		FREE_char(Text_level[i]);
 		}
-	FREE_PBYTE(Text_level);
+	FREE_pchar(Text_level);
 	for (i = 0; i < Nb_orbits; i++) {
-		FREE_BYTE(Text_node[i]);
+		FREE_char(Text_node[i]);
 		}
-	FREE_PBYTE(Text_node);
+	FREE_pchar(Text_node);
 	for (i = 0; i < Nb_orbits; i++) {
-		FREE_BYTE(Text_orbit_reps[i]);
+		FREE_char(Text_orbit_reps[i]);
 		}
-	FREE_PBYTE(Text_orbit_reps);
+	FREE_pchar(Text_orbit_reps);
 	for (i = 0; i < Nb_orbits; i++) {
-		FREE_BYTE(Text_stab_order[i]);
+		FREE_char(Text_stab_order[i]);
 		}
-	FREE_PBYTE(Text_stab_order);
+	FREE_pchar(Text_stab_order);
 	for (i = 0; i < Nb_orbits; i++) {
-		FREE_BYTE(Text_orbit_length[i]);
+		FREE_char(Text_orbit_length[i]);
 		}
-	FREE_PBYTE(Text_orbit_length);
+	FREE_pchar(Text_orbit_length);
 	for (i = 0; i < Nb_orbits; i++) {
-		FREE_BYTE(Text_schreier_vector_length[i]);
+		FREE_char(Text_schreier_vector_length[i]);
 		}
-	FREE_PBYTE(Text_schreier_vector_length);
+	FREE_pchar(Text_schreier_vector_length);
 	
 }
 
@@ -1486,11 +1486,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 		spreadsheet *&Sp, INT max_depth)
 {
 	INT nb_rows, Nb_orbits, nb_orbits, i, level;
-	PBYTE *Text_label;
-	PBYTE *Text_nb_orbits;
-	PBYTE *Text_orbit_length_sum;
-	PBYTE *Text_schreier_vector_length_sum;
-	PBYTE *Text_binomial;
+	pchar *Text_label;
+	pchar *Text_nb_orbits;
+	pchar *Text_orbit_length_sum;
+	pchar *Text_schreier_vector_length_sum;
+	pchar *Text_binomial;
 	longinteger_object stab_order, orbit_length,
 		orbit_length_sum, orbit_length_total;
 	longinteger_object a, a_total;
@@ -1499,17 +1499,17 @@ void poset_classification::make_spreadsheet_of_level_info(
 	longinteger_object schreier_vector_length,
 		schreier_vector_length_sum, schreier_vector_length_total;
 	INT *rep;
-	BYTE str[1000];
+	char str[1000];
 	poset_orbit_node *O;
 
 
 	nb_rows = max_depth + 2; // one extra row for totals
 	rep = NEW_INT(max_depth);
-	Text_label = NEW_PBYTE(nb_rows);
-	Text_nb_orbits = NEW_PBYTE(nb_rows);
-	Text_orbit_length_sum = NEW_PBYTE(nb_rows);
-	Text_schreier_vector_length_sum = NEW_PBYTE(nb_rows);
-	Text_binomial = NEW_PBYTE(nb_rows);
+	Text_label = NEW_pchar(nb_rows);
+	Text_nb_orbits = NEW_pchar(nb_rows);
+	Text_orbit_length_sum = NEW_pchar(nb_rows);
+	Text_schreier_vector_length_sum = NEW_pchar(nb_rows);
+	Text_binomial = NEW_pchar(nb_rows);
 
 	Nb_orbits = 0;
 	orbit_length_total.create(0);
@@ -1523,11 +1523,11 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 
 		sprintf(str, "%ld", level);
-		Text_label[level] = NEW_BYTE(strlen(str) + 1);
+		Text_label[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_label[level], str);
 
 		sprintf(str, "%ld", nb_orbits);
-		Text_nb_orbits[level] = NEW_BYTE(strlen(str) + 1);
+		Text_nb_orbits[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_nb_orbits[level], str);
 
 		orbit_length_sum.create(0);
@@ -1568,53 +1568,53 @@ void poset_classification::make_spreadsheet_of_level_info(
 		D.add_in_place(a_total, a);
 
 		orbit_length_sum.print_to_string(str);
-		Text_orbit_length_sum[level] = NEW_BYTE(strlen(str) + 1);
+		Text_orbit_length_sum[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_orbit_length_sum[level], str);
 
 		schreier_vector_length_sum.print_to_string(str);
-		Text_schreier_vector_length_sum[level] = NEW_BYTE(strlen(str) + 1);
+		Text_schreier_vector_length_sum[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_schreier_vector_length_sum[level], str);
 
 		a.print_to_string(str);
-		Text_binomial[level] = NEW_BYTE(strlen(str) + 1);
+		Text_binomial[level] = NEW_char(strlen(str) + 1);
 		strcpy(Text_binomial[level], str);
 
 		}
 
 	level = max_depth + 1;
 	sprintf(str, "total");
-	Text_label[level] = NEW_BYTE(strlen(str) + 1);
+	Text_label[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_label[level], str);
 
 	sprintf(str, "%ld", Nb_orbits);
-	Text_nb_orbits[level] = NEW_BYTE(strlen(str) + 1);
+	Text_nb_orbits[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_nb_orbits[level], str);
 
 	orbit_length_total.print_to_string(str);
-	Text_orbit_length_sum[level] = NEW_BYTE(strlen(str) + 1);
+	Text_orbit_length_sum[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_orbit_length_sum[level], str);
 
 	schreier_vector_length_total.print_to_string(str);
-	Text_schreier_vector_length_sum[level] = NEW_BYTE(strlen(str) + 1);
+	Text_schreier_vector_length_sum[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_schreier_vector_length_sum[level], str);
 
 	a_total.print_to_string(str);
-	Text_binomial[level] = NEW_BYTE(strlen(str) + 1);
+	Text_binomial[level] = NEW_char(strlen(str) + 1);
 	strcpy(Text_binomial[level], str);
 
 
 	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_rows + 1, 6);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const BYTE **)
+	Sp->fill_column_with_text(1, (const char **)
 			Text_label, "Level");
-	Sp->fill_column_with_text(2, (const BYTE **)
+	Sp->fill_column_with_text(2, (const char **)
 			Text_nb_orbits, "Nb_orbits");
-	Sp->fill_column_with_text(3, (const BYTE **)
+	Sp->fill_column_with_text(3, (const char **)
 			Text_orbit_length_sum, "Orbit_length_sum");
-	Sp->fill_column_with_text(4, (const BYTE **)
+	Sp->fill_column_with_text(4, (const char **)
 			Text_schreier_vector_length_sum, "Schreier_vector_length_sum");
-	Sp->fill_column_with_text(5, (const BYTE **)
+	Sp->fill_column_with_text(5, (const char **)
 			Text_binomial, "Binomial");
 
 
@@ -1627,25 +1627,25 @@ void poset_classification::make_spreadsheet_of_level_info(
 
 	FREE_INT(rep);
 	for (i = 0; i < nb_rows; i++) {
-		FREE_BYTE(Text_label[i]);
+		FREE_char(Text_label[i]);
 		}
-	FREE_PBYTE(Text_label);
+	FREE_pchar(Text_label);
 	for (i = 0; i < nb_rows; i++) {
-		FREE_BYTE(Text_nb_orbits[i]);
+		FREE_char(Text_nb_orbits[i]);
 		}
-	FREE_PBYTE(Text_nb_orbits);
+	FREE_pchar(Text_nb_orbits);
 	for (i = 0; i < nb_rows; i++) {
-		FREE_BYTE(Text_orbit_length_sum[i]);
+		FREE_char(Text_orbit_length_sum[i]);
 		}
-	FREE_PBYTE(Text_orbit_length_sum);
+	FREE_pchar(Text_orbit_length_sum);
 	for (i = 0; i < nb_rows; i++) {
-		FREE_BYTE(Text_schreier_vector_length_sum[i]);
+		FREE_char(Text_schreier_vector_length_sum[i]);
 		}
-	FREE_PBYTE(Text_schreier_vector_length_sum);
+	FREE_pchar(Text_schreier_vector_length_sum);
 	for (i = 0; i < nb_rows; i++) {
-		FREE_BYTE(Text_binomial[i]);
+		FREE_char(Text_binomial[i]);
 		}
-	FREE_PBYTE(Text_binomial);
+	FREE_pchar(Text_binomial);
 	
 }
 

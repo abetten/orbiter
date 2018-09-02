@@ -538,7 +538,7 @@ void vector_ge::read_from_file_binary(ifstream &fp, INT verbose_level)
 		}
 }
 
-void vector_ge::extract_subset_of_elements_by_rank_text_vector(const BYTE *rank_vector_text, sims *S, INT verbose_level)
+void vector_ge::extract_subset_of_elements_by_rank_text_vector(const char *rank_vector_text, sims *S, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 

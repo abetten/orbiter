@@ -16,10 +16,10 @@ int main(int argc, char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_list_of_cases = FALSE;
-	const BYTE *fname_list_of_cases = NULL;
-	const BYTE *fname_template = NULL;
+	const char *fname_list_of_cases = NULL;
+	const char *fname_template = NULL;
 	INT f_output_file = FALSE;
-	const BYTE *output_file = NULL;
+	const char *output_file = NULL;
 	
 
 	for (i = 1; i < argc; i++) {
@@ -51,8 +51,8 @@ int main(int argc, char **argv)
 
 	INT *list_of_cases;
 	INT nb_cases;
-	BYTE fname_sol[1000];
-	BYTE fname_stats[1000];
+	char fname_sol[1000];
+	char fname_stats[1000];
 	
 	if (f_output_file) {
 		sprintf(fname_sol, "%s", output_file);
@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 
 }
 
-void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT verbose_level)
+void read_set_from_file(const char *fname, INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a;
@@ -139,7 +139,7 @@ void replace_extension_with(char *p, const char *new_ext)
 
 
 
-INT file_size(const BYTE *name)
+INT file_size(const char *name)
 {
 	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
@@ -282,44 +282,44 @@ void INT_vec_swap_points(INT *list, INT *list_inv, INT idx1, INT idx2)
 
 
 
-UBYTE *bitvector_allocate(INT length)
+uchar *bitvector_allocate(INT length)
 {
 	INT l, i;
-	UBYTE *p;
+	uchar *p;
 
 	l = (length + 7) >> 3;
-	p = new UBYTE [l];
+	p = new uchar [l];
 	for (i = 0; i < l; i++) {
 		p[i] = 0;
 		}
 	return p;
 }
 
-UBYTE *bitvector_allocate_and_coded_length(INT length, INT &coded_length)
+uchar *bitvector_allocate_and_coded_length(INT length, INT &coded_length)
 {
 	INT l, i;
-	UBYTE *p;
+	uchar *p;
 
 	l = (length + 7) >> 3;
 	coded_length = l;
-	p = new UBYTE [l];
+	p = new uchar [l];
 	for (i = 0; i < l; i++) {
 		p[i] = 0;
 		}
 	return p;
 }
 
-void bitvector_m_ii(UBYTE *bitvec, INT i, INT a)
+void bitvector_m_ii(uchar *bitvec, INT i, INT a)
 {
 	INT ii, bit;
-	UBYTE mask;
+	uchar mask;
 
 	ii = i >> 3;
 	bit = i & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitvec[ii];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
 	if (a == 0) {
-		UBYTE not_mask = ~mask;
+		uchar not_mask = ~mask;
 		x &= not_mask;
 		}
 	else {
@@ -327,28 +327,28 @@ void bitvector_m_ii(UBYTE *bitvec, INT i, INT a)
 		}
 }
 
-void bitvector_set_bit(UBYTE *bitvec, INT i)
+void bitvector_set_bit(uchar *bitvec, INT i)
 {
 	INT ii, bit;
-	UBYTE mask;
+	uchar mask;
 
 	ii = i >> 3;
 	bit = i & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitvec[ii];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
 	x |= mask;
 }
 
-INT bitvector_s_i(UBYTE *bitvec, INT i)
+INT bitvector_s_i(uchar *bitvec, INT i)
 // returns 0 or 1
 {
 	INT ii, bit;
-	UBYTE mask;
+	uchar mask;
 
 	ii = i >> 3;
 	bit = i & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitvec[ii];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
 	if (x & mask) {
 		return 1;
 		}
@@ -429,12 +429,12 @@ INT4 fread_INT4(FILE *fp)
 	return I;
 }
 
-void fwrite_UBYTEs(FILE *fp, UBYTE *p, INT len)
+void fwrite_uchars(FILE *fp, uchar *p, INT len)
 {
 	fwrite(p, 1 /* size */, len /* items */, fp);
 }
 
-void fread_UBYTEs(FILE *fp, UBYTE *p, INT len)
+void fread_uchars(FILE *fp, uchar *p, INT len)
 {
 	fread(p, 1 /* size */, len /* items */, fp);
 }
@@ -442,10 +442,10 @@ void fread_UBYTEs(FILE *fp, UBYTE *p, INT len)
 
 
 void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, INT f_output_solution_raw, 
-	const BYTE *fname_template, 
-	const BYTE *fname_sol, const BYTE *fname_stats, 
+	const char *fname_template, 
+	const char *fname_sol, const char *fname_stats, 
 	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const BYTE *prefix, 
+	INT f_prefix, const char *prefix, 
 	INT print_interval, 
 	INT verbose_level)
 {
@@ -453,8 +453,8 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 	INT i, c;
 	INT Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
 	INT search_steps, decision_steps, nb_sol, dt;
-	BYTE fname[1000];
-	BYTE fname_tmp[1000];
+	char fname[1000];
+	char fname_tmp[1000];
 
 	{
 	ofstream fp(fname_sol);
@@ -644,7 +644,7 @@ void colored_graph::print()
 }
 
 void colored_graph::init_with_point_labels(INT nb_points, INT nb_colors, 
-	INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+	INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 	INT *point_labels, 
 	INT verbose_level)
 {
@@ -665,7 +665,7 @@ void colored_graph::init_with_point_labels(INT nb_points, INT nb_colors,
 }
 
 void colored_graph::init(INT nb_points, INT nb_colors, 
-	INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+	INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -707,7 +707,7 @@ void colored_graph::init(INT nb_points, INT nb_colors,
 
 }
 
-void colored_graph::init_no_colors(INT nb_points, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+void colored_graph::init_no_colors(INT nb_points, uchar *bitvec, INT f_ownership_of_bitvec, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -735,7 +735,7 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 	INT f_v = (verbose_level >= 1);
 	INT i, j, k;
 	INT bitvector_length;
-	UBYTE *bitvec;
+	uchar *bitvec;
 
 
 	if (f_v) {
@@ -746,7 +746,7 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 	L = (nb_points * (nb_points - 1)) >> 1;
 
 	bitvector_length = (L + 7) >> 3;
-	bitvec = new UBYTE [bitvector_length];
+	bitvec = new uchar [bitvector_length];
 	for (i = 0; i < bitvector_length; i++) {
 		bitvec[i] = 0;
 		}
@@ -809,11 +809,11 @@ void colored_graph::init_user_data(INT *data, INT data_size, INT verbose_level)
 		}
 }
 
-void colored_graph::load(const BYTE *fname, INT verbose_level)
+void colored_graph::load(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	FILE *fp;
-	BYTE ext[1000];
+	char ext[1000];
 	INT i;
 	
 	if (file_size(fname) <= 0) {
@@ -877,8 +877,8 @@ void colored_graph::load(const BYTE *fname, INT verbose_level)
 	cout << endl;
 #endif
 
-	bitvector_adjacency = new UBYTE [bitvector_length];
-	fread_UBYTEs(fp, bitvector_adjacency, bitvector_length);
+	bitvector_adjacency = new uchar [bitvector_length];
+	fread_uchars(fp, bitvector_adjacency, bitvector_length);
 
 
 	fclose(fp);
@@ -920,7 +920,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(INT target_depth,
 }
 
 void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(INT target_depth, 
-	const BYTE *fname, 
+	const char *fname, 
 	INT f_restrictions, INT *restrictions, 
 	INT &nb_sol, INT &decision_step_counter, 
 	INT verbose_level)
@@ -980,7 +980,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level)
@@ -1014,7 +1014,7 @@ void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw,
 void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *fp, INT f_output_solution_raw, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT f_has_additional_test_function,
 	void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 
@@ -1061,7 +1061,7 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *
 }
 
 
-void colored_graph::export_to_file(const BYTE *fname, INT verbose_level)
+void colored_graph::export_to_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
@@ -1169,7 +1169,7 @@ void file_output::freeself()
 }
 
 
-void file_output::open(const BYTE *fname, void *user_data, INT verbose_level)
+void file_output::open(const char *fname, void *user_data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1216,7 +1216,7 @@ void file_output::write_line(INT nb, INT *data, INT verbose_level)
 
 #undef SUSPICOUS
 
-void clique_finder::open_tree_file(const BYTE *fname_base, INT f_decision_nodes_only)
+void clique_finder::open_tree_file(const char *fname_base, INT f_decision_nodes_only)
 {
 	f_write_tree = TRUE;
 	clique_finder::f_decision_nodes_only = f_decision_nodes_only;
@@ -1233,10 +1233,10 @@ void clique_finder::close_tree_file()
 	cout << "written file " << fname_tree << " of size " << file_size(fname_tree) << endl;
 }
 
-void clique_finder::init(const BYTE *label, INT n, 
+void clique_finder::init(const char *label, INT n, 
 	INT target_depth, 
 	INT f_has_adj_list, INT *adj_list_coded, 
-	INT f_has_bitvector, UBYTE *bitvector_adjacency, 
+	INT f_has_bitvector, uchar *bitvector_adjacency, 
 	INT print_interval, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_store_solutions, 
@@ -1314,14 +1314,14 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 	if (f_v) {
 		cout << "clique_finder::allocate_bitmatrix" << endl;
 		}
-	bitmatrix_N = (n + 7) >> 3; // 1 byte = 8 bits = 2^3
+	bitmatrix_N = (n + 7) >> 3; // 1 char = 8 bits = 2^3
 	bitmatrix_m = n;
 	bitmatrix_n = n;
 	size = bitmatrix_m * bitmatrix_N;
 	if (f_v) {
 		cout << "clique_finder::allocate_bitmatrix allocating BITMATRIX of size " << size << endl;
 		}
-	bitmatrix_adjacency = new UBYTE [size];
+	bitmatrix_adjacency = new uchar [size];
 	f_has_bitmatrix = TRUE;
 
 	if (f_v) {
@@ -1717,7 +1717,7 @@ void clique_finder::write_entry_to_tree_file(INT depth, INT verbose_level)
 void clique_finder::m_iji(INT i, INT j, INT a)
 {
 	INT m, n, N; //, jj, bit;
-	//UBYTE mask;
+	//uchar mask;
 	
 	m = bitmatrix_m;
 	n = bitmatrix_n;
@@ -1736,10 +1736,10 @@ void clique_finder::m_iji(INT i, INT j, INT a)
 #if 0
 	jj = j >> 3;
 	bit = j & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitmatrix_adjacency[i * N + jj];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitmatrix_adjacency[i * N + jj];
 	if (a == 0) {
-		UBYTE not_mask = ~mask;
+		uchar not_mask = ~mask;
 		x &= not_mask;
 		}
 	else {
@@ -1783,11 +1783,11 @@ INT clique_finder::s_ij(INT i, INT j)
 		}
 
 #if 0
-	//UBYTE mask;
+	//uchar mask;
 	jj = j >> 3;
 	bit = j & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitmatrix_adjacency[i * N + jj];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitmatrix_adjacency[i * N + jj];
 	if (x & mask)
 		return 1;
 	else
@@ -2456,7 +2456,7 @@ void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz, INT *&Sol, I
 	INT n2;
 	INT i, j, h;
 	clique_finder *C;
-	const BYTE *label = "all_cliques_of_given_size";
+	const char *label = "all_cliques_of_given_size";
 	INT print_interval = 1000;
 	INT f_maxdepth = FALSE;
 	INT maxdepth = 0;
@@ -2530,7 +2530,7 @@ void rainbow_cliques::freeself()
 void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level)
@@ -2565,7 +2565,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions,
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT f_has_additional_test_function,
 	void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 

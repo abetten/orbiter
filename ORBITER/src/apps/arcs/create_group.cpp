@@ -58,7 +58,7 @@ void create_group_arcs8(INT q, INT verbose_level)
 	INT arc_8_reps[] = {
 		0, 1, 2, 3, 28, 38, 43, 55, 64, 69, 
 	};
-	const BYTE *arc_8_stab_order[] = {
+	const char *arc_8_stab_order[] = {
 		"1512",
 	};
 	INT arc_8_make_element_size = 10;

@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 		cout << " has rank " << r << endl;
 		}
 
-	BYTE fname[1000];
+	char fname[1000];
 	INT h;
 
 	sprintf(fname, "subsets_of_%ld.tree", n);

@@ -62,7 +62,7 @@ void longinteger_domain::subtract_signless(longinteger_object &a, longinteger_ob
 	c.freeself();
 	c.sign() = FALSE;
 	c.len() = a.len();
-	c.rep() = NEW_BYTE(c.len());
+	c.rep() = NEW_char(c.len());
 	for (i = 0; i < c.len(); i++)
 		c.rep()[i] = 0;
 
@@ -144,7 +144,7 @@ void longinteger_domain::add(longinteger_object &a, longinteger_object &b, longi
 			return;
 			}
 		}
-	c.rep() = NEW_BYTE(c.len());
+	c.rep() = NEW_char(c.len());
 	for (i = 0; i < c.len(); i++) {
 		c.rep()[i] = 0;
 		}
@@ -198,7 +198,7 @@ void longinteger_domain::mult(longinteger_object &a, longinteger_object &b, long
 	
 	c.freeself();
 	c.len() = a.len() + b.len() + 2;
-	c.rep() = NEW_BYTE(c.len());
+	c.rep() = NEW_char(c.len());
 	for (i = 0; i < c.len(); i++) {
 		c.rep()[i] = 0;
 		}
@@ -223,13 +223,13 @@ void longinteger_domain::mult(longinteger_object &a, longinteger_object &b, long
 			carry = d / 10;
 			c.rep()[i + j] = d % 10;
 			if (f_v) {
-				cout << "c[" << i + j << "]=" << d % 10 << "=" << (BYTE)('0' + c.rep()[i + j]) << endl;
+				cout << "c[" << i + j << "]=" << d % 10 << "=" << (char)('0' + c.rep()[i + j]) << endl;
 				}
 			}
 		if (carry) {
 			c.rep()[j + a.len()] = carry;
 			if (f_v) {
-				cout << "c[" << j + a.len() << "]=" << carry << "=" << (BYTE)('0' + carry) << endl;
+				cout << "c[" << j + a.len() << "]=" << carry << "=" << (char)('0' + carry) << endl;
 				}
 			}
 		}
@@ -326,7 +326,7 @@ void longinteger_domain::mult_mod(longinteger_object &a,
 		}
 	l = m.len();
 	c.len() = (int) (l + 2);
-	c.rep() = NEW_BYTE(c.len());
+	c.rep() = NEW_char(c.len());
 	for (i = 0; i < c.len(); i++)
 		c.rep()[i] = 0;
 	c.assign_to(c0);
@@ -495,7 +495,7 @@ void longinteger_domain::integral_division(
 	// load r with leading b.len() digits of a: 
 	r.sign() = FALSE;
 	r.len() = b.len() + 1;
-	r.rep() = NEW_BYTE(r.len());
+	r.rep() = NEW_char(r.len());
 	l = a.len() - b.len();
 	for (i = 0; i < b.len(); i++) {
 		r.rep()[i] = a.rep()[l + i];
@@ -505,7 +505,7 @@ void longinteger_domain::integral_division(
 	// allocate q of length a.len() - b.len() + 1
 	q.sign() = FALSE;
 	q.len() = a.len() - b.len() + 1;
-	q.rep() = NEW_BYTE(q.len());
+	q.rep() = NEW_char(q.len());
 	for (i = 0; i < q.len(); i++) {
 		q.rep()[i] = 0;
 		}
@@ -2559,8 +2559,8 @@ void longinteger_free_global_data()
 		}
 }
 
-void longinteger_print_digits(BYTE *rep, INT len)
+void longinteger_print_digits(char *rep, INT len)
 {
-	for (int h = 0; h < len; h++) cout << (BYTE)('0' + rep[h]) << " ";
+	for (int h = 0; h < len; h++) cout << (char)('0' + rep[h]) << " ";
 }
 

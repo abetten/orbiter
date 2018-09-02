@@ -4456,7 +4456,7 @@ void finite_field::make_all_irreducible_polynomials_of_degree_d(
 	//Fp.init(p, 0 /*verbose_level*/);
 	unipoly_domain FX(this);
 
-	const BYTE *poly;
+	const char *poly;
 
 	poly = get_primitive_polynomial(q, d, 0 /* verbose_level */);
 
@@ -4613,7 +4613,7 @@ INT finite_field::count_all_irreducible_polynomials_of_degree_d(
 	//Fp.init(p, 0 /*verbose_level*/);
 	unipoly_domain FX(this);
 
-	const BYTE *poly;
+	const char *poly;
 
 	poly = get_primitive_polynomial(q, d, 0 /* verbose_level */);
 

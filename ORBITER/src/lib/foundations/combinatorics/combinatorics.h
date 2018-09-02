@@ -50,11 +50,11 @@ public:
 		// the number of isomorphism types
 
 	INT rep_len;
-		// the number of UBYTE we need to store the canonical form of 
+		// the number of uchar we need to store the canonical form of 
 		// one object
 
 
-	UBYTE **Type_data; 
+	uchar **Type_data; 
 		// Type_data[N][rep_len]
 		// the canonical form of the i-th representative is 
 		// Type_data[i][rep_len]
@@ -95,10 +95,10 @@ public:
 	void null();
 	void freeself();
 	void init(INT N, INT rep_len, INT verbose_level);
-	INT add(UBYTE *data, void *extra_data, INT verbose_level);
+	INT add(uchar *data, void *extra_data, INT verbose_level);
 	void finalize(INT verbose_level);
 	void print_reps();
-	void save(const BYTE *prefix, 
+	void save(const char *prefix, 
 		void (*encode_function)(void *extra_data, 
 			INT *&encoding, INT &encoding_sz, void *global_data),
 		void (*get_group_order_or_NULL)(void *extra_data, 

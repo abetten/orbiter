@@ -173,45 +173,45 @@ void INT_vec_delete_element_assume_sorted(INT *v,
 	len--;
 }
 
-UBYTE *bitvector_allocate(INT length)
+uchar *bitvector_allocate(INT length)
 {
 	INT l, i;
-	UBYTE *p;
+	uchar *p;
 
 	l = (length + 7) >> 3;
-	p = NEW_UBYTE(l);
+	p = NEW_uchar(l);
 	for (i = 0; i < l; i++) {
 		p[i] = 0;
 		}
 	return p;
 }
 
-UBYTE *bitvector_allocate_and_coded_length(
+uchar *bitvector_allocate_and_coded_length(
 	INT length, INT &coded_length)
 {
 	INT l, i;
-	UBYTE *p;
+	uchar *p;
 
 	l = (length + 7) >> 3;
 	coded_length = l;
-	p = NEW_UBYTE(l);
+	p = NEW_uchar(l);
 	for (i = 0; i < l; i++) {
 		p[i] = 0;
 		}
 	return p;
 }
 
-void bitvector_m_ii(UBYTE *bitvec, INT i, INT a)
+void bitvector_m_ii(uchar *bitvec, INT i, INT a)
 {
 	INT ii, bit;
-	UBYTE mask;
+	uchar mask;
 
 	ii = i >> 3;
 	bit = i & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitvec[ii];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
 	if (a == 0) {
-		UBYTE not_mask = ~mask;
+		uchar not_mask = ~mask;
 		x &= not_mask;
 		}
 	else {
@@ -219,28 +219,28 @@ void bitvector_m_ii(UBYTE *bitvec, INT i, INT a)
 		}
 }
 
-void bitvector_set_bit(UBYTE *bitvec, INT i)
+void bitvector_set_bit(uchar *bitvec, INT i)
 {
 	INT ii, bit;
-	UBYTE mask;
+	uchar mask;
 
 	ii = i >> 3;
 	bit = i & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitvec[ii];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
 	x |= mask;
 }
 
-INT bitvector_s_i(UBYTE *bitvec, INT i)
+INT bitvector_s_i(uchar *bitvec, INT i)
 // returns 0 or 1
 {
 	INT ii, bit;
-	UBYTE mask;
+	uchar mask;
 
 	ii = i >> 3;
 	bit = i & 7;
-	mask = ((UBYTE) 1) << bit;
-	UBYTE &x = bitvec[ii];
+	mask = ((uchar) 1) << bit;
+	uchar &x = bitvec[ii];
 	if (x & mask) {
 		return 1;
 		}
@@ -274,7 +274,7 @@ INT INT_vec_hash_after_sorting(INT *data, INT len)
 	return h;
 }
 
-const BYTE *plus_minus_string(INT epsilon)
+const char *plus_minus_string(INT epsilon)
 {
 	if (epsilon == 1) {
 		return "+";
@@ -289,7 +289,7 @@ const BYTE *plus_minus_string(INT epsilon)
 	exit(1);
 }
 
-const BYTE *plus_minus_letter(INT epsilon)
+const char *plus_minus_letter(INT epsilon)
 {
 	if (epsilon == 1) {
 		return "p";
@@ -450,10 +450,10 @@ void itoa(char *p, INT len_of_p, INT i)
 #endif
 }
 
-void BYTE_swap(BYTE *p, BYTE *q, INT len)
+void char_swap(char *p, char *q, INT len)
 {
 	INT i;
-	BYTE c;
+	char c;
 	
 	for (i = 0; i < len; i++) {
 		c = *q;
@@ -931,8 +931,8 @@ void INT_set_print_tex(ostream &ost, INT *v, INT len)
 
 void INT_set_print_masked_tex(ostream &ost, 
 	INT *v, INT len, 
-	const BYTE *mask_begin, 
-	const BYTE *mask_end)
+	const char *mask_begin, 
+	const char *mask_end)
 {
 	INT i;
 	
@@ -1086,13 +1086,13 @@ void integer_vec_print(ostream &ost, int *v, int len)
 	ost << " )";
 }
 
-void UBYTE_print_bitwise(ostream &ost, UBYTE u)
+void uchar_print_bitwise(ostream &ost, uchar u)
 {
-	UBYTE mask;
+	uchar mask;
 	INT i;
 	
 	for (i = 0; i < 8; i++) {
-		mask = ((UBYTE) 1) << i;
+		mask = ((uchar) 1) << i;
 		if (u & mask)
 			ost << "1";
 		else
@@ -1100,7 +1100,7 @@ void UBYTE_print_bitwise(ostream &ost, UBYTE u)
 		}
 }
 
-void UBYTE_move(UBYTE *p, UBYTE *q, INT len)
+void uchar_move(uchar *p, uchar *q, INT len)
 {
 	INT i;
 	
@@ -1448,7 +1448,7 @@ INT delta_time(INT t0)
 
 
 
-INT file_size(const BYTE *name)
+INT file_size(const char *name)
 {
 	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
@@ -1482,9 +1482,9 @@ INT file_size(const BYTE *name)
 #endif
 }
 
-void delete_file(const BYTE *fname)
+void delete_file(const char *fname)
 {
-	BYTE str[1000];
+	char str[1000];
 	
 	sprintf(str, "rm %s", fname);
 	system(str);
@@ -1506,12 +1506,12 @@ INT4 fread_INT4(FILE *fp)
 	return I;
 }
 
-void fwrite_UBYTEs(FILE *fp, UBYTE *p, INT len)
+void fwrite_uchars(FILE *fp, uchar *p, INT len)
 {
 	fwrite(p, 1 /* size */, len /* items */, fp);
 }
 
-void fread_UBYTEs(FILE *fp, UBYTE *p, INT len)
+void fread_uchars(FILE *fp, uchar *p, INT len)
 {
 	fread(p, 1 /* size */, len /* items */, fp);
 }
@@ -1533,7 +1533,7 @@ void latex_head_easy(ostream& ost)
 
 }
 
-void latex_head_easy_with_extras_in_the_praeamble(ostream& ost, const BYTE *extras)
+void latex_head_easy_with_extras_in_the_praeamble(ostream& ost, const char *extras)
 {
 	latex_head(ost, 
 		FALSE /* f_book */, 
@@ -1563,10 +1563,10 @@ void latex_head_easy_sideways(ostream& ost)
 }
 
 void latex_head(ostream& ost, INT f_book, INT f_title, 
-	const BYTE *title, const BYTE *author, 
+	const char *title, const char *author, 
 	INT f_toc, INT f_landscape, INT f_12pt, 
 	INT f_enlarged_page, INT f_pagenumbers, 
-	const BYTE *extras_for_preamble)
+	const char *extras_for_preamble)
 {
 	if (f_12pt) {
 		ost << "\\documentclass[12pt]{";
@@ -2070,7 +2070,7 @@ static const char *ascii_code = "abcdefghijklmnop";
 
 static INT f_has_swap_initialized = FALSE;
 static INT f_has_swap = 0;
-	// indicates if byte swap is present 
+	// indicates if char swap is present 
 	// i.e., little endian / big endian 
 
 static void test_swap()
@@ -2095,13 +2095,13 @@ static void test_swap()
 	f_has_swap_initialized = TRUE;
 }
 
-// block_swap_bytes:
-// switches the bytes in the 
+// block_swap_chars:
+// switches the chars in the 
 // buffer pointed to by "ptr". 
 // There are "no" intervals of size "size".
 // This routine is due to Roland Grund
 
-void block_swap_bytes(SCHAR *ptr, INT size, INT no)
+void block_swap_chars(SCHAR *ptr, INT size, INT no)
 {
 	SCHAR *ptr_end, *ptr_start;
 	SCHAR chr;
@@ -2130,47 +2130,47 @@ void code_INT4(char *&p, INT4 i)
 	INT4 ii = i;
 
 	//cout << "code_INT4 " << i << endl;
-	UBYTE *q = (UBYTE *) &ii;
-	//block_swap_bytes((SCHAR *)&ii, 4, 1);
-	code_UBYTE(p, q[0]);
-	code_UBYTE(p, q[1]);
-	code_UBYTE(p, q[2]);
-	code_UBYTE(p, q[3]);
+	uchar *q = (uchar *) &ii;
+	//block_swap_chars((SCHAR *)&ii, 4, 1);
+	code_uchar(p, q[0]);
+	code_uchar(p, q[1]);
+	code_uchar(p, q[2]);
+	code_uchar(p, q[3]);
 }
 
 INT4 decode_INT4(char *&p)
 {
 	INT4 ii;
-	UBYTE *q = (UBYTE *) &ii;
-	decode_UBYTE(p, q[0]);
-	decode_UBYTE(p, q[1]);
-	decode_UBYTE(p, q[2]);
-	decode_UBYTE(p, q[3]);
-	//block_swap_bytes((SCHAR *)&ii, 4, 1);
+	uchar *q = (uchar *) &ii;
+	decode_uchar(p, q[0]);
+	decode_uchar(p, q[1]);
+	decode_uchar(p, q[2]);
+	decode_uchar(p, q[3]);
+	//block_swap_chars((SCHAR *)&ii, 4, 1);
 	//cout << "decode_INT4 " << ii << endl;
 	return ii;
 }
 
-void code_UBYTE(char *&p, UBYTE a)
+void code_uchar(char *&p, uchar a)
 {
-	//cout << "code_UBYTE " << (INT) a << endl;
+	//cout << "code_uchar " << (INT) a << endl;
 	INT a_high = a >> 4;
 	INT a_low = a & 15;
 	*p++ = ascii_code[a_high];
 	*p++ = ascii_code[a_low];
 }
 
-void decode_UBYTE(char *&p, UBYTE &a)
+void decode_uchar(char *&p, uchar &a)
 {
 	INT a_high = (INT)(*p++ - 'a');
 	INT a_low = (INT)(*p++ - 'a');
 	INT i;
-	//cout << "decode_UBYTE a_high = " << a_high << endl;
-	//cout << "decode_UBYTE a_low = " << a_low << endl;
+	//cout << "decode_uchar a_high = " << a_high << endl;
+	//cout << "decode_uchar a_low = " << a_low << endl;
 	i = (a_high << 4) | a_low;
-	//cout << "decode_UBYTE i = " << i << endl;
-	//cout << "decode_UBYTE " << (INT) i << endl;
-	a = (UBYTE)i;
+	//cout << "decode_uchar i = " << i << endl;
+	//cout << "decode_uchar " << (INT) i << endl;
+	a = (uchar)i;
 }
 
 void print_incidence_structure(ostream &ost, 
@@ -2196,7 +2196,7 @@ void print_incidence_structure(ostream &ost,
 #include <sstream>
 
 
-void INT_vec_scan(const BYTE *s, INT *&v, INT &len)
+void INT_vec_scan(const char *s, INT *&v, INT &len)
 {
 #if 0
 	{
@@ -2221,7 +2221,7 @@ void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
 {
 	//INT verbose_level = 0;
 	INT a;
-	BYTE s[10000], c;
+	char s[10000], c;
 	INT l, h;
 		
 	len = 20;
@@ -2318,7 +2318,7 @@ void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
 		}
 }
 
-void double_vec_scan(const BYTE *s, double *&v, INT &len)
+void double_vec_scan(const char *s, double *&v, INT &len)
 {
 
 	istringstream ins(s);
@@ -2330,7 +2330,7 @@ void double_vec_scan_from_stream(istream & is, double *&v, INT &len)
 	INT verbose_level = 1;
 	INT f_v = (verbose_level >= 1);
 	double a;
-	BYTE s[10000], c;
+	char s[10000], c;
 	INT l, h;
 		
 	len = 20;
@@ -2447,7 +2447,7 @@ void scan_permutation_from_stream(istream & is,
 	INT *cycle; // [l]
 	//INT *perm; // [l]
 	INT i, a_last, a, dig, ci;
-	BYTE s[10000], c;
+	char s[10000], c;
 	INT si, largest_point = 0;
 	
 	cycle = NEW_INT(l);
@@ -2649,7 +2649,7 @@ void chop_off_extension_if_present(char *p, const char *ext)
 		}
 }
 
-void get_fname_base(const char *p, BYTE *fname_base)
+void get_fname_base(const char *p, char *fname_base)
 {
 	INT i, l = strlen(p);
 
@@ -2697,9 +2697,9 @@ void get_extension_if_present_and_chop_off(char *p, char *ext)
 
 #include <ctype.h>
 
-INT s_scan_int(BYTE **s, INT *i)
+INT s_scan_int(char **s, INT *i)
 {
-	BYTE str1[512];
+	char str1[512];
 	
 	if (!s_scan_token(s, str1))
 		return FALSE;
@@ -2712,9 +2712,9 @@ INT s_scan_int(BYTE **s, INT *i)
 	return TRUE;
 }
 
-INT s_scan_token(BYTE **s, BYTE *str)
+INT s_scan_token(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len;
 	
 	while (TRUE) {
@@ -2765,9 +2765,9 @@ INT s_scan_token(BYTE **s, BYTE *str)
 	return TRUE;
 }
 
-INT s_scan_token_arbitrary(BYTE **s, BYTE *str)
+INT s_scan_token_arbitrary(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len;
 	
 	while (TRUE) {
@@ -2797,9 +2797,9 @@ INT s_scan_token_arbitrary(BYTE **s, BYTE *str)
 	return TRUE;
 }
 
-INT s_scan_str(BYTE **s, BYTE *str)
+INT s_scan_str(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len, f_break;
 	
 	while (TRUE) {
@@ -2847,9 +2847,9 @@ INT s_scan_str(BYTE **s, BYTE *str)
 	return TRUE;
 }
 
-INT s_scan_token_comma_separated(BYTE **s, BYTE *str)
+INT s_scan_token_comma_separated(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len;
 	
 	len = 0;
@@ -2970,30 +2970,30 @@ INT INT_vec_hash(INT *v, INT len, INT bit_length)
 	return h;
 }
 
-void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers, 
+void parse_sets(INT nb_cases, char **data, INT f_casenumbers, 
 	INT *&Set_sizes, INT **&Sets, 
-	BYTE **&Ago_ascii, BYTE **&Aut_ascii, 
+	char **&Ago_ascii, char **&Aut_ascii, 
 	INT *&Casenumbers, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT h, casenumber;
-	BYTE *ago_ascii, *aut_ascii;
-	BYTE *p_buf;
+	char *ago_ascii, *aut_ascii;
+	char *p_buf;
 	
 	if (f_v) {
 		cout << "parse_sets f_casenumbers=" << f_casenumbers 
 			<< " nb_cases = " << nb_cases << endl;
 		}
 	
-	ago_ascii = NEW_BYTE(MY_BUFSIZE);
-	aut_ascii = NEW_BYTE(MY_BUFSIZE);
+	ago_ascii = NEW_char(MY_BUFSIZE);
+	aut_ascii = NEW_char(MY_BUFSIZE);
 	
 	Set_sizes = NEW_INT(nb_cases);
 	Sets = NEW_PINT(nb_cases);
-	Ago_ascii = NEW_PBYTE(nb_cases);
-	Aut_ascii = NEW_PBYTE(nb_cases);
+	Ago_ascii = NEW_pchar(nb_cases);
+	Aut_ascii = NEW_pchar(nb_cases);
 	Casenumbers = NEW_INT(nb_cases);
 	
 	for (h = 0; h < nb_cases; h++) {
@@ -3014,10 +3014,10 @@ void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers,
 
 		Casenumbers[h] = casenumber;
 		
-		Ago_ascii[h] = NEW_BYTE(strlen(ago_ascii) + 1);
+		Ago_ascii[h] = NEW_char(strlen(ago_ascii) + 1);
 		strcpy(Ago_ascii[h], ago_ascii);
 
-		Aut_ascii[h] = NEW_BYTE(strlen(aut_ascii) + 1);
+		Aut_ascii[h] = NEW_char(strlen(aut_ascii) + 1);
 		strcpy(Aut_ascii[h], aut_ascii);
 		
 #if 0
@@ -3033,15 +3033,15 @@ void parse_sets(INT nb_cases, BYTE **data, INT f_casenumbers,
 		}
 	
 	
-	FREE_BYTE(ago_ascii);
-	FREE_BYTE(aut_ascii);
+	FREE_char(ago_ascii);
+	FREE_char(aut_ascii);
 }
 
-void parse_line(BYTE *line, INT &len, 
-	INT *&set, BYTE *ago_ascii, BYTE *aut_ascii)
+void parse_line(char *line, INT &len, 
+	INT *&set, char *ago_ascii, char *aut_ascii)
 {
 	INT i;
-	BYTE *p_buf;
+	char *p_buf;
 
 	//cout << "parse_line: " << line << endl;
 	p_buf = line;
@@ -3061,10 +3061,10 @@ void parse_line(BYTE *line, INT &len,
 }
 
 
-INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
+INT count_number_of_orbits_in_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *buf, *p_buf;
+	char *buf, *p_buf;
 	INT nb_sol, len;
 	INT ret;
 
@@ -3079,7 +3079,7 @@ INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
 		return -1;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	
 
@@ -3123,15 +3123,15 @@ INT count_number_of_orbits_in_file(const BYTE *fname, INT verbose_level)
 	ret = nb_sol;
 //finish:
 
-	FREE_BYTE(buf);
+	FREE_char(buf);
 
 	return ret;
 }
 
-INT count_number_of_lines_in_file(const BYTE *fname, INT verbose_level)
+INT count_number_of_lines_in_file(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *buf;
+	char *buf;
 	INT nb_lines;
 
 	if (f_v) {
@@ -3145,7 +3145,7 @@ INT count_number_of_lines_in_file(const BYTE *fname, INT verbose_level)
 		return 0;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	
 
@@ -3164,24 +3164,24 @@ INT count_number_of_lines_in_file(const BYTE *fname, INT verbose_level)
 		nb_lines++;
 		}
 	}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 
 	return nb_lines;
 }
 
-INT try_to_read_file(const BYTE *fname, 
-	INT &nb_cases, BYTE **&data, INT verbose_level)
+INT try_to_read_file(const char *fname, 
+	INT &nb_cases, char **&data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT n1;
-	BYTE *buf, *p_buf;
+	char *buf, *p_buf;
 	INT nb_sol, len, a;
 	
 	if (f_v) {
 		cout << "try_to_read_file trying to read file " << fname 
 			<< " of size " << file_size(fname) << endl;
 		}
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	
 	if (file_size(fname) <= 0)
@@ -3233,7 +3233,7 @@ INT try_to_read_file(const BYTE *fname,
 		}
 	}
 	nb_cases = nb_sol;
-	data = NEW_PBYTE(nb_cases);	
+	data = NEW_pchar(nb_cases);	
 	{
 	ifstream fp(fname);
 
@@ -3278,7 +3278,7 @@ INT try_to_read_file(const BYTE *fname,
 			}
 
 
-		data[nb_sol] = NEW_BYTE(len + 1);
+		data[nb_sol] = NEW_char(len + 1);
 		strcpy(data[nb_sol], buf);
 		
 		//cout << nb_sol << " : " << data[nb_sol] << endl;
@@ -3287,16 +3287,16 @@ INT try_to_read_file(const BYTE *fname,
 		}
 	}
 
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	return TRUE;
 	
 return_false:
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	return FALSE;
 }
 
-void read_and_parse_data_file(const BYTE *fname, INT &nb_cases, 
-	BYTE **&data, INT **&sets, INT *&set_sizes, INT verbose_level)
+void read_and_parse_data_file(const char *fname, INT &nb_cases, 
+	char **&data, INT **&sets, INT *&set_sizes, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -3329,8 +3329,8 @@ void read_and_parse_data_file(const BYTE *fname, INT &nb_cases,
 		}
 	//parse_sets(nb_cases, data, set_sizes, sets);
 
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii;
+	char **Ago_ascii;
+	char **Aut_ascii;
 	INT *Casenumbers;
 	INT i;
 	
@@ -3346,11 +3346,11 @@ void read_and_parse_data_file(const BYTE *fname, INT &nb_cases,
 		}
 
 	for (i = 0; i < nb_cases; i++) {
-		FREE_BYTE(Ago_ascii[i]);
-		FREE_BYTE(Aut_ascii[i]);
+		FREE_char(Ago_ascii[i]);
+		FREE_char(Aut_ascii[i]);
 		}
-	FREE_PBYTE(Ago_ascii);
-	FREE_PBYTE(Aut_ascii);
+	FREE_pchar(Ago_ascii);
+	FREE_pchar(Aut_ascii);
 	if (f_v) {
 		cout << "read_and_parse_data_file done" << endl;
 		}
@@ -3358,10 +3358,10 @@ void read_and_parse_data_file(const BYTE *fname, INT &nb_cases,
 }
 
 void parse_sets_and_check_sizes_easy(INT len, INT nb_cases, 
-	BYTE **data, INT **&sets)
+	char **data, INT **&sets)
 {
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii;
+	char **Ago_ascii;
+	char **Aut_ascii;
 	INT *Casenumbers;
 	INT *set_sizes;
 	INT i;
@@ -3388,17 +3388,17 @@ void parse_sets_and_check_sizes_easy(INT len, INT nb_cases,
 #endif
 
 	for (i = 0; i < nb_cases; i++) {
-		FREE_BYTE(Ago_ascii[i]);
-		FREE_BYTE(Aut_ascii[i]);
+		FREE_char(Ago_ascii[i]);
+		FREE_char(Aut_ascii[i]);
 		}
-	FREE_PBYTE(Ago_ascii);
-	FREE_PBYTE(Aut_ascii);
+	FREE_pchar(Ago_ascii);
+	FREE_pchar(Aut_ascii);
 
 }
 
 void free_data_fancy(INT nb_cases, 
 	INT *Set_sizes, INT **Sets, 
-	BYTE **Ago_ascii, BYTE **Aut_ascii, 
+	char **Ago_ascii, char **Aut_ascii, 
 	INT *Casenumbers)
 // Frees only those pointers that are not NULL
 {
@@ -3406,15 +3406,15 @@ void free_data_fancy(INT nb_cases,
 	
 	if (Ago_ascii) {
 		for (i = 0; i < nb_cases; i++) {
-			FREE_BYTE(Ago_ascii[i]);
+			FREE_char(Ago_ascii[i]);
 			}
-		FREE_PBYTE(Ago_ascii);
+		FREE_pchar(Ago_ascii);
 		}
 	if (Aut_ascii) {
 		for (i = 0; i < nb_cases; i++) {
-			FREE_BYTE(Aut_ascii[i]);
+			FREE_char(Aut_ascii[i]);
 			}
-		FREE_PBYTE(Aut_ascii);
+		FREE_pchar(Aut_ascii);
 		}
 	if (Sets) {
 		for (i = 0; i < nb_cases; i++) {
@@ -3430,18 +3430,18 @@ void free_data_fancy(INT nb_cases,
 		}
 }
 
-void read_and_parse_data_file_fancy(const BYTE *fname, 
+void read_and_parse_data_file_fancy(const char *fname, 
 	INT f_casenumbers, 
 	INT &nb_cases, 
 	INT *&Set_sizes, INT **&Sets, 
-	BYTE **&Ago_ascii, 
-	BYTE **&Aut_ascii, 
+	char **&Ago_ascii, 
+	char **&Aut_ascii, 
 	INT *&Casenumbers, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE **data;
+	char **data;
 	INT i;
 	
 	if (f_v) {
@@ -3485,15 +3485,15 @@ void read_and_parse_data_file_fancy(const BYTE *fname,
 		cout << "read_and_parse_data_file_fancy: freeing temporary data" << endl;
 		}
 	for (i = 0; i < nb_cases; i++) {
-		FREE_BYTE(data[i]);
+		FREE_char(data[i]);
 		}
-	FREE_PBYTE(data);
+	FREE_pchar(data);
 	if (f_vv) {
 		cout << "read_and_parse_data_file_fancy: done" << endl;
 		}
 }
 
-void read_set_from_file(const BYTE *fname, 
+void read_set_from_file(const char *fname, 
 	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3538,7 +3538,7 @@ void read_set_from_file(const BYTE *fname,
 		}
 }
 
-void write_set_to_file(const BYTE *fname, 
+void write_set_to_file(const char *fname, 
 	INT *the_set, INT set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3569,7 +3569,7 @@ void write_set_to_file(const BYTE *fname,
 		}
 }
 
-void read_set_from_file_INT4(const BYTE *fname, 
+void read_set_from_file_INT4(const char *fname, 
 	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3609,7 +3609,7 @@ void read_set_from_file_INT4(const BYTE *fname,
 		}
 }
 
-void write_set_to_file_as_INT4(const BYTE *fname, 
+void write_set_to_file_as_INT4(const char *fname, 
 	INT *the_set, INT set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3655,7 +3655,7 @@ void write_set_to_file_as_INT4(const BYTE *fname,
 		}
 }
 
-void write_set_to_file_as_INT8(const BYTE *fname, 
+void write_set_to_file_as_INT8(const char *fname, 
 	INT *the_set, INT set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3701,7 +3701,7 @@ void write_set_to_file_as_INT8(const BYTE *fname,
 		}
 }
 
-void read_k_th_set_from_file(const BYTE *fname, INT k, 
+void read_k_th_set_from_file(const char *fname, INT k, 
 	INT *&the_set, INT &set_size, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3743,7 +3743,7 @@ void read_k_th_set_from_file(const BYTE *fname, INT k,
 }
 
 
-void write_incidence_matrix_to_file(BYTE *fname, 
+void write_incidence_matrix_to_file(char *fname, 
 	INT *Inc, INT m, INT n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3782,14 +3782,14 @@ void write_incidence_matrix_to_file(BYTE *fname,
 #define READ_INCIDENCE_BUFSIZE 1000000
 
 void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n, 
-	BYTE *inc_file_name, INT inc_file_idx, INT verbose_level)
+	char *inc_file_name, INT inc_file_idx, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT nb_inc;
 	INT a, h, cnt;
-	BYTE buf[READ_INCIDENCE_BUFSIZE];
-	BYTE *p_buf;
+	char buf[READ_INCIDENCE_BUFSIZE];
+	char *p_buf;
 	INT *X = NULL;
 
 
@@ -3875,14 +3875,14 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 }
 
 INT inc_file_get_number_of_geometries(
-	BYTE *inc_file_name, INT verbose_level)
+	char *inc_file_name, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT nb_inc;
 	INT a, h, cnt;
-	BYTE buf[READ_INCIDENCE_BUFSIZE];
-	BYTE *p_buf;
+	char buf[READ_INCIDENCE_BUFSIZE];
+	char *p_buf;
 	INT *X = NULL;
 	INT m, n;
 
@@ -3960,7 +3960,7 @@ void print_line_of_number_signs()
 	cout << "##################################################################################################" << endl;
 }
 
-void print_repeated_character(ostream &ost, BYTE c, INT n)
+void print_repeated_character(ostream &ost, char c, INT n)
 {
 	INT i;
 	
@@ -3972,7 +3972,7 @@ void print_repeated_character(ostream &ost, BYTE c, INT n)
 void print_pointer_hex(ostream &ost, void *p)
 {
 	void *q = p;
-	UBYTE *pp = (UBYTE *)&q;
+	uchar *pp = (uchar *)&q;
 	INT i, a, low, high;
 	
 	ost << "0x";
@@ -3989,10 +3989,10 @@ void print_pointer_hex(ostream &ost, void *p)
 void print_hex_digit(ostream &ost, INT digit)
 {
 	if (digit < 10) {
-		ost << (BYTE)('0' + digit);
+		ost << (char)('0' + digit);
 		}
 	else if (digit < 16) {
-		ost << (BYTE)('a' + (digit - 10));
+		ost << (char)('a' + (digit - 10));
 		}
 	else {
 		cout << "print_hex_digit illegal digit " << digit << endl;
@@ -4000,12 +4000,12 @@ void print_hex_digit(ostream &ost, INT digit)
 		}
 }
 
-void count_number_of_solutions_in_file(const BYTE *fname, 
+void count_number_of_solutions_in_file(const char *fname, 
 	INT &nb_solutions, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *buf;
+	char *buf;
 
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file " << fname << endl;
@@ -4021,7 +4021,7 @@ void count_number_of_solutions_in_file(const BYTE *fname,
 		//return;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	
 
@@ -4047,19 +4047,19 @@ void count_number_of_solutions_in_file(const BYTE *fname,
 		nb_solutions++;
 		}
 	}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file " << fname << endl;
 		cout << "nb_solutions = " << nb_solutions << endl;
 		}
 }
 
-void count_number_of_solutions_in_file_by_case(const BYTE *fname, 
+void count_number_of_solutions_in_file_by_case(const char *fname, 
 	INT *&nb_solutions, INT *&case_nb, INT &nb_cases, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *buf;
+	char *buf;
 	//INT nb_sol;
 	INT N = 1000;
 	INT i;
@@ -4083,7 +4083,7 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 		//return;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	
 
@@ -4141,7 +4141,7 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 			
 		}
 	}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file_by_case " 
 			<< fname << endl;
@@ -4149,13 +4149,13 @@ void count_number_of_solutions_in_file_by_case(const BYTE *fname,
 		}
 }
 
-void read_solutions_from_file(const BYTE *fname, 
+void read_solutions_from_file(const char *fname, 
 	INT &nb_solutions, INT *&Solutions, INT solution_size, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *buf;
-	BYTE *p_buf;
+	char *buf;
+	char *p_buf;
 	INT i, a, nb_sol;
 
 	if (f_v) {
@@ -4170,7 +4170,7 @@ void read_solutions_from_file(const BYTE *fname,
 		return;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	count_number_of_solutions_in_file(fname, 
 		nb_solutions, 
@@ -4212,19 +4212,19 @@ void read_solutions_from_file(const BYTE *fname,
 		cout << "read_solutions_from_file nb_sol != nb_solutions" << endl;
 		exit(1);
 		}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "read_solutions_from_file done" << endl;
 		}
 }
 
-void read_solutions_from_file_by_case(const BYTE *fname, 
+void read_solutions_from_file_by_case(const char *fname, 
 	INT *nb_solutions, INT *case_nb, INT nb_cases, 
 	INT **&Solutions, INT solution_size, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *buf;
+	char *buf;
 	//INT nb_sol;
 	INT i;
 	INT nb_case1;
@@ -4243,7 +4243,7 @@ void read_solutions_from_file_by_case(const BYTE *fname,
 		return;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	Solutions = NEW_PINT(nb_cases);
 
@@ -4286,7 +4286,7 @@ void read_solutions_from_file_by_case(const BYTE *fname,
 			}
 		else { 
 			if (the_case >= 0) {
-				BYTE *p_buf;
+				char *p_buf;
 				INT sz, a;
 				
 				//cout << "read_solutions_from_file_by_case reading solution " << the_case_count << " for case " << the_case << endl;
@@ -4306,15 +4306,15 @@ void read_solutions_from_file_by_case(const BYTE *fname,
 			
 		}
 	}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "read_solutions_from_file_by_case done" << endl;
 		}
 }
 
-void copy_file_to_ostream(ostream &ost, BYTE *fname)
+void copy_file_to_ostream(ostream &ost, char *fname)
 {
-	//BYTE buf[MY_BUFSIZE];
+	//char buf[MY_BUFSIZE];
 	
 	{
 	ifstream fp(fname);
@@ -4348,7 +4348,7 @@ void copy_file_to_ostream(ostream &ost, BYTE *fname)
 }
 
 void INT_vec_write_csv(INT *v, INT len, 
-	const BYTE *fname, const BYTE *label)
+	const char *fname, const char *label)
 {
 	INT i;
 
@@ -4364,7 +4364,7 @@ void INT_vec_write_csv(INT *v, INT len,
 }
 
 void INT_vecs_write_csv(INT *v1, INT *v2, INT len, 
-	const BYTE *fname, const BYTE *label1, const BYTE *label2)
+	const char *fname, const char *label1, const char *label2)
 {
 	INT i;
 
@@ -4380,7 +4380,7 @@ void INT_vecs_write_csv(INT *v1, INT *v2, INT len,
 }
 
 void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len, 
-	const BYTE *fname, const BYTE **column_label)
+	const char *fname, const char **column_label)
 {
 	INT i, j;
 
@@ -4409,7 +4409,7 @@ void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len,
 	}
 }
 
-void INT_matrix_write_csv(const BYTE *fname, INT *M, INT m, INT n)
+void INT_matrix_write_csv(const char *fname, INT *M, INT m, INT n)
 {
 	INT i, j;
 
@@ -4432,7 +4432,7 @@ void INT_matrix_write_csv(const BYTE *fname, INT *M, INT m, INT n)
 	}
 }
 
-void double_matrix_write_csv(const BYTE *fname, double *M, INT m, INT n)
+void double_matrix_write_csv(const char *fname, double *M, INT m, INT n)
 {
 	INT i, j;
 
@@ -4455,8 +4455,8 @@ void double_matrix_write_csv(const BYTE *fname, double *M, INT m, INT n)
 	}
 }
 
-void INT_matrix_write_csv_with_labels(const BYTE *fname, 
-	INT *M, INT m, INT n, const BYTE **column_label)
+void INT_matrix_write_csv_with_labels(const char *fname, 
+	INT *M, INT m, INT n, const char **column_label)
 {
 	INT i, j;
 
@@ -4479,7 +4479,7 @@ void INT_matrix_write_csv_with_labels(const BYTE *fname,
 	}
 }
 
-void INT_matrix_read_csv(const BYTE *fname, 
+void INT_matrix_read_csv(const char *fname, 
 	INT *&M, INT &m, INT &n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -4515,7 +4515,7 @@ void INT_matrix_read_csv(const BYTE *fname,
 
 }
 
-void double_matrix_read_csv(const BYTE *fname, 
+void double_matrix_read_csv(const char *fname, 
 	double *&M, INT &m, INT &n, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -4553,7 +4553,7 @@ void double_matrix_read_csv(const BYTE *fname,
 
 }
 
-void INT_matrix_write_text(const BYTE *fname, INT *M, INT m, INT n)
+void INT_matrix_write_text(const char *fname, INT *M, INT m, INT n)
 {
 	INT i, j;
 
@@ -4570,7 +4570,7 @@ void INT_matrix_write_text(const BYTE *fname, INT *M, INT m, INT n)
 	}
 }
 
-void INT_matrix_read_text(const BYTE *fname, INT *&M, INT &m, INT &n)
+void INT_matrix_read_text(const char *fname, INT *&M, INT &m, INT &n)
 {
 	INT i, j;
 
@@ -4711,7 +4711,7 @@ void make_graph_of_disjoint_sets_from_rows_of_matrix(
 }
 
 void write_exact_cover_problem_to_file(INT *Inc, 
-		INT nb_rows, INT nb_cols, const BYTE *fname)
+		INT nb_rows, INT nb_cols, const char *fname)
 {
 	INT i, j, d;
 	
@@ -4740,7 +4740,7 @@ void write_exact_cover_problem_to_file(INT *Inc,
 
 #define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
 
-void read_solution_file(BYTE *fname, 
+void read_solution_file(char *fname, 
 	INT *Inc, INT nb_rows, INT nb_cols, 
 	INT *&Solutions, INT &sol_length, INT &nb_sol, 
 	INT verbose_level)
@@ -4764,9 +4764,9 @@ void read_solution_file(BYTE *fname,
 			<< fname << endl;
 		exit(1);
 		}
-	BYTE *buf;
-	BYTE *p_buf;
-	buf = NEW_BYTE(BUFSIZE_READ_SOLUTION_FILE);
+	char *buf;
+	char *p_buf;
+	buf = NEW_char(BUFSIZE_READ_SOLUTION_FILE);
 	nb_sol = 0;
 	nb_max = 0;
 	{
@@ -4846,13 +4846,13 @@ void read_solution_file(BYTE *fname,
 		}
 	FREE_INT(x);
 	FREE_INT(y);
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "read_solution_file done" << endl;
 		}
 }
 
-void INT_vec_print_to_str(BYTE *str, INT *data, INT len)
+void INT_vec_print_to_str(char *str, INT *data, INT len)
 {
 	INT i, a;
 
@@ -4874,12 +4874,12 @@ void INT_matrix_print_with_labels_and_partition(ostream &ost,
 	INT *row_part_first, INT *row_part_len, INT nb_row_parts,  
 	INT *col_part_first, INT *col_part_len, INT nb_col_parts, 
 	void (*process_function_or_NULL)(INT *p, INT m, INT n, 
-		INT i, INT j, INT val, BYTE *output, void *data), 
+		INT i, INT j, INT val, char *output, void *data), 
 	void *data, 
 	INT f_tex)
 {
 	INT i, j, I, J, u, v;
-	BYTE output[1000];
+	char output[1000];
 	
 	if (f_tex) {
 		ost << "\\begin{array}{r|";
@@ -4963,9 +4963,9 @@ void INT_matrix_print_with_labels_and_partition(ostream &ost,
 }
 
 
-INT is_csv_file(const BYTE *fname)
+INT is_csv_file(const char *fname)
 {
-	BYTE ext[1000];
+	char ext[1000];
 
 	get_extension_if_present(fname, ext);
 	if (strcmp(ext, ".csv") == 0) {
@@ -4976,9 +4976,9 @@ INT is_csv_file(const BYTE *fname)
 		}
 }
 
-INT is_xml_file(const BYTE *fname)
+INT is_xml_file(const char *fname)
 {
-	BYTE ext[1000];
+	char ext[1000];
 
 	get_extension_if_present(fname, ext);
 	if (strcmp(ext, ".xml") == 0) {
@@ -4990,7 +4990,7 @@ INT is_xml_file(const BYTE *fname)
 }
 
 
-void os_date_string(BYTE *str, INT sz)
+void os_date_string(char *str, INT sz)
 {
 	system("date >a");
 	{
@@ -5011,7 +5011,7 @@ INT os_seconds_past_1970()
 	system("chmod ugo+x b");
 	system("./b >a");
 	{
-	BYTE str[1000];
+	char str[1000];
 
 	ifstream f1("a");
 	f1.getline(str, sizeof(str));
@@ -5384,7 +5384,7 @@ void povray_rotate_111(INT h, INT nb_frames, ostream &fp)
 }
 
 
-void povray_ini(ostream &ost, const BYTE *fname_pov, 
+void povray_ini(ostream &ost, const char *fname_pov, 
 	INT first_frame, INT last_frame)
 {
 	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;
@@ -5428,13 +5428,13 @@ void test_typedefs()
 	cout << "test_typedefs() done" << endl;
 }
 
-void concatenate_files(const BYTE *fname_in_mask, INT N, 
-	const BYTE *fname_out, const BYTE *EOF_marker, INT f_title_line, 
+void concatenate_files(const char *fname_in_mask, INT N, 
+	const char *fname_out, const char *EOF_marker, INT f_title_line, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
-	BYTE *buf;
+	char fname[1000];
+	char *buf;
 	INT h, cnt;
 
 	if (f_v) {
@@ -5442,7 +5442,7 @@ void concatenate_files(const BYTE *fname_in_mask, INT N,
 			<< " N=" << N << " fname_out=" << fname_out << endl;
 		}
 
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	{
 	ofstream fp_out(fname_out);
@@ -5485,7 +5485,7 @@ void concatenate_files(const BYTE *fname_in_mask, INT N,
 	}
 	cout << "Written file " << fname_out << " of size " 
 		<< file_size(fname_out) << endl;
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	if (f_v) {
 		cout << "concatenate_files done" << endl;
 		}

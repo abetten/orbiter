@@ -19,9 +19,9 @@ class BLT_set_create {
 public:
 	BLT_set_create_description *Descr;
 
-	BYTE prefix[1000];
-	BYTE label_txt[1000];
-	BYTE label_tex[1000];
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
 
 	INT q;
 	finite_field *F;
@@ -44,7 +44,7 @@ public:
 	void null();
 	void freeself();
 	void init(BLT_set_create_description *Descr, INT verbose_level);
-	void apply_transformations(const BYTE **transform_coeffs, 
+	void apply_transformations(const char **transform_coeffs, 
 		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
 
@@ -65,7 +65,7 @@ public:
 	INT f_catalogue;
 	INT iso;
 	INT f_family;
-	const BYTE *family_name;
+	const char *family_name;
 
 
 	
@@ -90,7 +90,7 @@ public:
 
 	INT q;
 	INT f_poly;
-	const BYTE *poly;
+	const char *poly;
 	finite_field *F;
 	int argc;
 	const char **argv;
@@ -111,14 +111,14 @@ public:
 	INT f_target_size;
 	INT target_size;
 
-	BYTE starter_directory_name[1000];
-	BYTE prefix[1000];
-	BYTE prefix_with_directory[1000];
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char prefix_with_directory[1000];
 	INT starter_size;
 
 
 	INT f_recognize;
-	const BYTE *recognize[1000];
+	const char *recognize[1000];
 	INT nb_recognize;
 
 
@@ -155,8 +155,8 @@ public:
 	void read_arguments(int argc, const char **argv);
 	void main(INT verbose_level);
 	void init(finite_field *F,
-		const BYTE *input_prefix, 
-		const BYTE *base_fname,
+		const char *input_prefix, 
+		const char *base_fname,
 		INT starter_size,  
 		int argc, const char **argv, 
 		INT verbose_level);
@@ -371,7 +371,7 @@ public:
 class choose_points_or_lines {
 
 public:
-	BYTE label[1000];
+	char label[1000];
 	INT t0;
 	
 	void *data;
@@ -427,7 +427,7 @@ public:
 	void freeself();
 	void null_representative();
 	void free_representative();
-	void init(const BYTE *label, void *data, 
+	void init(const char *label, void *data, 
 		action *A, action *A_lines, 
 		INT f_choose_lines, 
 		INT nb_points_or_lines, 
@@ -731,7 +731,7 @@ public:
 	projective_space *P2; // do not free
 	
 	arc_generator *Gen;
-	BYTE base_fname[1000];
+	char base_fname[1000];
 
 	INT d;
 	INT sz;
@@ -825,10 +825,10 @@ public:
 	~polar();
 	void init_group_by_base_images(INT *group_generator_data, 
 		INT group_generator_size, 
-		INT f_group_order_target, const BYTE *group_order_target, 
+		INT f_group_order_target, const char *group_order_target, 
 		INT verbose_level);
 	void init_group(INT *group_generator_data, INT group_generator_size, 
-		INT f_group_order_target, const BYTE *group_order_target, 
+		INT f_group_order_target, const char *group_order_target, 
 		INT verbose_level);
 	void init(int argc, const char **argv, action *A, orthogonal *O, 
 		INT epsilon, INT n, INT k, finite_field *F, INT depth, 
@@ -879,7 +879,7 @@ void polar_callback_early_test_func(INT *S, INT len,
 
 
 void Hill_cap56(int argc, const char **argv, 
-	BYTE *fname, INT &nb_Pts, INT *&Pts, 
+	char *fname, INT &nb_Pts, INT *&Pts, 
 	INT verbose_level);
 void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz);
 INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, 
@@ -887,7 +887,7 @@ INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set,
 void create_Buekenhout_Metz(
 	finite_field *Fq, finite_field *FQ, 
 	INT f_classical, INT f_Uab, INT parameter_a, INT parameter_b, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 
 // #############################################################################
@@ -1040,8 +1040,8 @@ public:
 	INT *line_orbit_reps;
 	INT *line_orbit_len;
 	INT *line_orbit_first;
-	BYTE **line_orbit_label;
-	BYTE **line_orbit_label_tex;
+	char **line_orbit_label;
+	char **line_orbit_label_tex;
 	INT *line_orbit;
 	INT *line_orbit_inv;
 
@@ -1069,7 +1069,7 @@ public:
 	projective_space *P2; // do not free
 	
 	arc_generator *Gen;
-	BYTE base_fname[1000];
+	char base_fname[1000];
 
 	INT nb_orbits;
 
@@ -1130,9 +1130,9 @@ public:
 	INT f_override_schreier_depth;
 	INT override_schreier_depth;
 
-	BYTE starter_directory_name[1000];
-	BYTE prefix[1000];
-	//BYTE prefix_with_directory[1000];
+	char starter_directory_name[1000];
+	char prefix[1000];
+	//char prefix_with_directory[1000];
 	INT starter_size;
 
 
@@ -1185,8 +1185,8 @@ public:
 	void freeself();
 	void init(INT order, INT n, INT k, INT max_depth, 
 		finite_field *F, INT f_recoordinatize, 
-		const BYTE *input_prefix, 
-		const BYTE *base_fname,
+		const char *input_prefix, 
+		const char *base_fname,
 		INT starter_size,  
 		int argc, const char **argv, 
 		INT verbose_level);
@@ -1223,7 +1223,7 @@ public:
 		INT iso_cnt, sims *Stab, schreier &Orb, 
 		INT *data, INT verbose_level);
 		// called from callback_print_isomorphism_type()
-	void save_klein_invariants(BYTE *prefix, 
+	void save_klein_invariants(char *prefix, 
 		INT iso_cnt, 
 		INT *data, INT data_size, INT verbose_level);
 	void klein(ofstream &ost, 
@@ -1243,8 +1243,8 @@ public:
 	void make_spread(INT *data, INT type_of_spread, INT verbose_level);
 	void make_spread_from_q_clan(INT *data, INT type_of_spread, 
 		INT verbose_level);
-	void read_and_print_spread(const BYTE *fname, INT verbose_level);
-	void HMO(const BYTE *fname, INT verbose_level);
+	void read_and_print_spread(const char *fname, INT verbose_level);
+	void HMO(const char *fname, INT verbose_level);
 	void get_spread_matrices(INT *F, INT *G, INT *data, INT verbose_level);
 	void print_spread(INT *data, INT sz);
 	void report2(isomorph &Iso, INT verbose_level);
@@ -1300,9 +1300,9 @@ class spread_create {
 public:
 	spread_create_description *Descr;
 
-	BYTE prefix[1000];
-	BYTE label_txt[1000];
-	BYTE label_tex[1000];
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
 
 	INT q;
 	finite_field *F;
@@ -1327,7 +1327,7 @@ public:
 	void null();
 	void freeself();
 	void init(spread_create_description *Descr, INT verbose_level);
-	void apply_transformations(const BYTE **transform_coeffs, 
+	void apply_transformations(const char **transform_coeffs, 
 		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
 
@@ -1350,7 +1350,7 @@ public:
 	INT f_catalogue;
 	INT iso;
 	INT f_family;
-	const BYTE *family_name;
+	const char *family_name;
 
 
 	
@@ -1439,7 +1439,7 @@ public:
 
 	INT f_semilinear;
 
-	BYTE fname_base[1000];
+	char fname_base[1000];
 
 	action *A; // the action of PGL(4,q) on points
 	action *A2; // the action on the wedge product
@@ -1467,7 +1467,7 @@ public:
 
 
 	INT nb_identify;
-	BYTE **Identify_label;
+	char **Identify_label;
 	INT **Identify_coeff;
 	INT **Identify_monomial;
 	INT *Identify_length;
@@ -1496,7 +1496,7 @@ public:
 
 	void identify_surfaces(INT verbose_level);
 	void identify(INT nb_identify, 
-		BYTE **Identify_label, 
+		char **Identify_label, 
 		INT **Identify_coeff, 
 		INT **Identify_monomial, 
 		INT *Identify_length, 
@@ -1529,9 +1529,9 @@ class surface_create {
 public:
 	surface_create_description *Descr;
 
-	BYTE prefix[1000];
-	BYTE label_txt[1000];
-	BYTE label_tex[1000];
+	char prefix[1000];
+	char label_txt[1000];
+	char label_tex[1000];
 
 	INT f_ownership;
 
@@ -1563,7 +1563,7 @@ public:
 		INT verbose_level);
 	void init(surface_create_description *Descr, INT verbose_level);
 	void init2(INT verbose_level);
-	void apply_transformations(const BYTE **transform_coeffs, 
+	void apply_transformations(const char **transform_coeffs, 
 		INT *f_inverse_transform, INT nb_transform, INT verbose_level);
 };
 
@@ -1585,11 +1585,11 @@ public:
 	INT f_catalogue;
 	INT iso;
 	INT f_by_coefficients;
-	const BYTE *coefficients_text;
+	const char *coefficients_text;
 	INT f_family_S;
 	INT parameter_a;
 	INT f_arc_lifting;
-	const BYTE *arc_lifting_text;
+	const char *arc_lifting_text;
 
 
 	
@@ -1668,17 +1668,17 @@ public:
 	void init_orbits_on_trihedral_pairs(INT verbose_level);
 	void init_orbits_on_points_not_on_lines(INT verbose_level);
 	void print_automorphism_group(ostream &ost, 
-		INT f_print_orbits, const BYTE *fname_mask);
+		INT f_print_orbits, const char *fname_mask);
 	void compute_quartic(INT pt_orbit, 
 		INT &pt_A, INT &pt_B, INT *transporter, 
 		INT *equation, INT *equation_nice, INT verbose_level);
 	void quartic(ostream &ost, INT verbose_level);
 	void cheat_sheet(ostream &ost, 
-		const BYTE *label_txt, const BYTE *label_tex, 
-		INT f_print_orbits, const BYTE *fname_mask, 
+		const char *label_txt, const char *label_tex, 
+		INT f_print_orbits, const char *fname_mask, 
 		INT verbose_level);
 	void cheat_sheet_quartic_curve(ostream &ost, 
-		const BYTE *label_txt, const BYTE *label_tex, 
+		const char *label_txt, const char *label_tex, 
 		INT verbose_level);
 };
 
@@ -1730,7 +1730,7 @@ public:
 		INT *double_six, INT verbose_level);
 	void arc_lifting_and_classify(INT f_log_fp, ofstream &fp, 
 		INT *Arc6, 
-		const BYTE *arc_label, const BYTE *arc_label_short, 
+		const char *arc_label, const char *arc_label_short, 
 		INT nb_surfaces, 
 		six_arcs_not_on_a_conic *Six_arcs, 
 		INT *Arc_identify_nb, 
@@ -1789,9 +1789,9 @@ public:
 		vector_ge *spread_stab_gens, 
 		longinteger_object &spread_stab_go, 
 		INT verbose_level);
-	void classify_arcs(const BYTE *prefix, 
+	void classify_arcs(const char *prefix, 
 		INT depth, INT verbose_level);
-	void classify_subplanes(const BYTE *prefix, 
+	void classify_subplanes(const char *prefix, 
 		INT verbose_level);
 	INT check_arc(INT *S, INT len, INT verbose_level);
 	INT check_subplane(INT *S, INT len, INT verbose_level);

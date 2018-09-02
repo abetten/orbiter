@@ -34,8 +34,8 @@ void twisted_tensor_product_codes(
 	INT r;
 	INT beta, beta_q;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
-	const BYTE *symbol_for_print_subfield = "\\omega";
+	const char *symbol_for_print = "\\alpha";
+	const char *symbol_for_print_subfield = "\\omega";
 	
 	
 	
@@ -162,7 +162,7 @@ void create_matrix_M(
 	finite_field *F, finite_field *f,
 	INT &m, INT &n, INT &beta, INT &r, INT *exponents, 
 	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	INT f_elements_exponential, const BYTE *symbol_for_print, 
+	INT f_elements_exponential, const char *symbol_for_print, 
 	INT verbose_level)
 // INT exponents[9]
 {
@@ -319,7 +319,7 @@ void create_matrix_M(
 
 void create_matrix_H_subfield(finite_field *F, finite_field*f, 
 	INT *H_subfield, INT *C, INT *C_inv, INT *M, INT m, INT n, INT beta, INT beta_q, 
-	INT f_elements_exponential, const BYTE *symbol_for_print, const BYTE *symbol_for_print_subfield, 
+	INT f_elements_exponential, const char *symbol_for_print, const char *symbol_for_print_subfield, 
 	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
 	INT verbose_level)
 {
@@ -527,8 +527,8 @@ void make_tensor_code_9dimensional_as_point_set(finite_field *F,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_hyperoval = FALSE;
-	const BYTE *override_poly = "";
-	const BYTE *override_poly_Q = "";
+	const char *override_poly = "";
+	const char *override_poly_Q = "";
 	INT i, t, q;
 	INT *code;
 	
@@ -589,7 +589,7 @@ void make_tensor_code_9dimensional_as_point_set(finite_field *F,
 }
 
 void make_tensor_code_9_dimensional(INT q, 
-	const BYTE *override_poly_Q, const BYTE *override_poly, 
+	const char *override_poly_Q, const char *override_poly, 
 	INT f_hyperoval, 
 	INT *&code, INT &length, 
 	INT verbose_level)

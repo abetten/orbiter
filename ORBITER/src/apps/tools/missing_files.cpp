@@ -21,9 +21,9 @@ int main(int argc, char **argv)
 	INT f_N2 = FALSE;
 	INT N2 = 0;
 	INT f_mask = FALSE;
-	const BYTE *mask = NULL;
+	const char *mask = NULL;
 	INT f_save = FALSE;
-	const BYTE *fname_out = NULL;
+	const char *fname_out = NULL;
 	INT f_split = FALSE;
 	INT split_r = 0;
 	INT split_m = 0;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	
 	INT nb_missing = 0;
 	INT *Missing = NULL;
-	BYTE fname[1000];
+	char fname[1000];
 	INT missing_n;
 
 

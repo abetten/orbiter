@@ -133,11 +133,11 @@ private:
 	INT *log_alpha_table;
 	INT *alpha_power_table;
 	INT *v1, *v2, *v3; // vectors of length e.
-	BYTE *symbol_for_print;
+	char *symbol_for_print;
 
 public:
-	const BYTE *override_poly;
-	BYTE *polynomial;
+	const char *override_poly;
+	char *polynomial;
 		// the actual polynomial we consider 
 		// as integer (in text form)
 	INT q, p, e;
@@ -150,10 +150,10 @@ public:
 	~finite_field();
 	void init(INT q);
 	void init(INT q, INT verbose_level);
-	void init_symbol_for_print(const BYTE *symbol);
-	void init_override_polynomial(INT q, const BYTE *poly, 
+	void init_symbol_for_print(const char *symbol);
+	void init_override_polynomial(INT q, const char *poly, 
 		INT verbose_level);
-	void print_minimum_polynomial(INT p, const BYTE *polynomial);
+	void print_minimum_polynomial(INT p, const char *polynomial);
 	INT compute_subfield_polynomial(INT order_subfield, 
 		INT verbose_level);
 	void compute_subfields(INT verbose_level);
@@ -165,7 +165,7 @@ public:
 	void print(INT f_add_mult_table);
 	void print_add_mult_tables();
 	void print_tables();
-	void print_tables_extension_field(const BYTE *poly);
+	void print_tables_extension_field(const char *poly);
 	void display_T2(ostream &ost);
 	void display_T3(ostream &ost);
 	void display_N2(ostream &ost);
@@ -248,16 +248,16 @@ public:
 	void print_indicator_square_nonsquare(INT a);
 	void print_element(ostream &ost, INT a);
 	void print_element_with_symbol(ostream &ost, 
-		INT a, INT f_exponential, INT width, const BYTE *symbol);
+		INT a, INT f_exponential, INT width, const char *symbol);
 	void INT_vec_print(ostream &ost, INT *v, INT len);
 	void INT_vec_print_elements_exponential(ostream &ost, 
-		INT *v, INT len, const BYTE *symbol_for_print);
+		INT *v, INT len, const char *symbol_for_print);
 	void latex_addition_table(ostream &f, 
-		INT f_elements_exponential, const BYTE *symbol_for_print);
+		INT f_elements_exponential, const char *symbol_for_print);
 	void latex_multiplication_table(ostream &f, 
-		INT f_elements_exponential, const BYTE *symbol_for_print);
+		INT f_elements_exponential, const char *symbol_for_print);
 	void latex_matrix(ostream &f, INT f_elements_exponential, 
-		const BYTE *symbol_for_print, INT *M, INT m, INT n);
+		const char *symbol_for_print, INT *M, INT m, INT n);
 	void power_table(INT t, INT *power_table, INT len);
 	INT evaluate_conic_form(INT *six_coeffs, INT *v3);
 	INT evaluate_quadric_form_in_PG_three(INT *ten_coeffs, INT *v4);
@@ -683,8 +683,8 @@ public:
 extern INT finitefield_primes[];
 extern INT finitefield_nb_primes;
 extern INT finitefield_largest_degree_irreducible_polynomial[];
-extern const BYTE *finitefield_primitive_polynomial[][100];
-const BYTE *get_primitive_polynomial(INT p, INT e, INT verbose_level);
+extern const char *finitefield_primitive_polynomial[][100];
+const char *get_primitive_polynomial(INT p, INT e, INT verbose_level);
 
 // #############################################################################
 // finite_ring.C:
@@ -1113,8 +1113,8 @@ public:
 	finite_field *F;
 	INT nb_monomials;
 	INT *Monomials; // [nb_monomials * n]
-	BYTE **symbols;
-	BYTE **symbols_latex;
+	char **symbols;
+	char **symbols_latex;
 	INT *Variables; // [nb_monomials * degree]
 		// Variables contains the monomials written out 
 		// as a sequence of length degree 
@@ -1152,11 +1152,11 @@ public:
 	INT index_of_monomial(INT *v);
 	void print_monomial(ostream &ost, INT i);
 	void print_monomial(ostream &ost, INT *mon);
-	void print_monomial(BYTE *str, INT i);
+	void print_monomial(char *str, INT i);
 	void print_equation(ostream &ost, INT *coeffs);
 	void print_equation_with_line_breaks_tex(ostream &ost, 
 		INT *coeffs, INT nb_terms_per_line, 
-		const BYTE *new_line_text);
+		const char *new_line_text);
 	void enumerate_points(INT *coeff, INT *Pts, INT &nb_pts, 
 		INT verbose_level);
 	INT evaluate_at_a_point_by_rank(INT *coeff, INT pt);
@@ -1333,7 +1333,7 @@ void longinteger_collect_add(INT &nb_agos,
 void longinteger_collect_print(ostream &ost, INT &nb_agos, 
 	longinteger_object *&agos, INT *&multiplicities);
 void longinteger_free_global_data();
-void longinteger_print_digits(BYTE *rep, INT len);
+void longinteger_print_digits(char *rep, INT len);
 
 
 
@@ -1561,7 +1561,7 @@ public:
 	void create_object_by_rank_longinteger(unipoly_object &p, 
 		longinteger_object &rank, INT verbose_level);
 	void create_object_by_rank_string(unipoly_object &p, 
-		const BYTE *rk, INT verbose_level);
+		const char *rk, INT verbose_level);
 	void create_Dickson_polynomial(unipoly_object &p, INT *map);
 	void delete_object(unipoly_object &p);
 	void unrank(unipoly_object p, INT rk);

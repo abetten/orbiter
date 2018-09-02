@@ -132,9 +132,9 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	INT *set, INT set_size, INT &canonical_pt, 
 	INT *canonical_set_or_NULL, 
 	INT f_save_incma_in_and_out,
-	const BYTE *save_incma_in_and_out_prefix,
+	const char *save_incma_in_and_out_prefix,
 	INT f_compute_canonical_form,
-	UBYTE *&canonical_form,
+	uchar *&canonical_form,
 	INT &canonical_form_len,
 	INT verbose_level)
 // December 22, 2017, based on earlier work:
@@ -260,8 +260,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 			cout << "too large to print" << endl;
 			}
 
-		BYTE fname_csv[1000];
-		BYTE fname_bin[1000];
+		char fname_csv[1000];
+		char fname_bin[1000];
 
 		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
@@ -406,9 +406,9 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		}
 
 	if (f_save_incma_in_and_out) {
-		BYTE fname_labeling[1000];
-		BYTE fname_csv[1000];
-		BYTE fname_bin[1000];
+		char fname_labeling[1000];
+		char fname_csv[1000];
+		char fname_bin[1000];
 
 		sprintf(fname_labeling, "%slabeling_%ld_%ld.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
@@ -633,9 +633,9 @@ strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
 	object_in_projective_space *OiP, 
 	INT f_save_incma_in_and_out,
-	const BYTE *save_incma_in_and_out_prefix,
+	const char *save_incma_in_and_out_prefix,
 	INT f_compute_canonical_form,
-	UBYTE *&canonical_form,
+	uchar *&canonical_form,
 	INT &canonical_form_len,
 	INT verbose_level)
 {
@@ -694,8 +694,8 @@ strong_generators
 			cout << "too large to print" << endl;
 			}
 
-		BYTE fname_csv[1000];
-		BYTE fname_bin[1000];
+		char fname_csv[1000];
+		char fname_bin[1000];
 
 		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
@@ -789,9 +789,9 @@ strong_generators
 
 
 	if (f_save_incma_in_and_out) {
-		BYTE fname_labeling[1000];
-		BYTE fname_csv[1000];
-		BYTE fname_bin[1000];
+		char fname_labeling[1000];
+		char fname_csv[1000];
+		char fname_bin[1000];
 
 		sprintf(fname_labeling, "%slabeling_%ld_%ld.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);

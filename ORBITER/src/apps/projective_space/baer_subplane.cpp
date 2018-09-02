@@ -46,8 +46,8 @@ int main(int argc, char **argv)
 
 void Baer_subplane(INT q, INT verbose_level)
 {
-	const BYTE *override_poly_Q = NULL;
-	const BYTE *override_poly_q = NULL;
+	const char *override_poly_Q = NULL;
+	const char *override_poly_q = NULL;
 	projective_space *P2;
 	INT Q;
 	INT *S;
@@ -102,7 +102,7 @@ void Baer_subplane(INT q, INT verbose_level)
 
 
 
-	BYTE fname[1000];
+	char fname[1000];
 	sprintf(fname, "Baer_subplane_%ld_%ld.txt", q, Q);
 	write_set_to_file(fname, S, sz, verbose_level);
 

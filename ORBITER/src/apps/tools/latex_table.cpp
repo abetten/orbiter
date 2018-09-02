@@ -21,17 +21,17 @@ int main(int argc, char **argv)
 	INT i;
 
 	INT f_file = FALSE;
-	const BYTE *fname;
+	const char *fname;
 
 	INT f_save = FALSE;
-	BYTE *save_fname = NULL;
+	char *save_fname = NULL;
 
 	INT f_range = FALSE;
 	INT range_first = 0;
 	INT range_len = 0;
 
 	INT f_selection = FALSE;
-	const BYTE *selection_str = NULL;
+	const char *selection_str = NULL;
 	INT *selection = NULL;
 	INT selection_len = 0;
 

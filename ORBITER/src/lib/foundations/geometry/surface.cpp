@@ -75,39 +75,39 @@ void surface::freeself()
 		FREE_INT(base_cols);
 		}
 	if (f_v) {
-		cout << "before FREE_PBYTE(Line_label);" << endl;
+		cout << "before FREE_pchar(Line_label);" << endl;
 		}
 	if (Line_label) {
 		INT i;
 		
 		for (i = 0; i < 27; i++) {
-			FREE_BYTE(Line_label[i]);
+			FREE_char(Line_label[i]);
 			}
-		FREE_PBYTE(Line_label);
+		FREE_pchar(Line_label);
 		}
 	if (Line_label_tex) {
 		INT i;
 		
 		for (i = 0; i < 27; i++) {
-			FREE_BYTE(Line_label_tex[i]);
+			FREE_char(Line_label_tex[i]);
 			}
-		FREE_PBYTE(Line_label_tex);
+		FREE_pchar(Line_label_tex);
 		}
 	if (Eckard_point_label) {
 		INT i;
 		
 		for (i = 0; i < 45; i++) {
-			FREE_BYTE(Eckard_point_label[i]);
+			FREE_char(Eckard_point_label[i]);
 			}
-		FREE_PBYTE(Eckard_point_label);
+		FREE_pchar(Eckard_point_label);
 		}
 	if (Eckard_point_label_tex) {
 		INT i;
 		
 		for (i = 0; i < 45; i++) {
-			FREE_BYTE(Eckard_point_label_tex[i]);
+			FREE_char(Eckard_point_label_tex[i]);
 			}
-		FREE_PBYTE(Eckard_point_label_tex);
+		FREE_pchar(Eckard_point_label_tex);
 		}
 	if (f_v) {
 		cout << "before FREE_INT(Trihedral_pairs);" << endl;
@@ -119,9 +119,9 @@ void surface::freeself()
 		INT i;
 		
 		for (i = 0; i < nb_trihedral_pairs; i++) {
-			FREE_BYTE(Trihedral_pair_labels[i]);
+			FREE_char(Trihedral_pair_labels[i]);
 			}
-		FREE_PBYTE(Trihedral_pair_labels);
+		FREE_pchar(Trihedral_pair_labels);
 		}
 	if (Trihedral_pairs_row_sets) {
 		FREE_INT(Trihedral_pairs_row_sets);
@@ -187,9 +187,9 @@ void surface::freeself()
 		INT i;
 		
 		for (i = 0; i < 36; i++) {
-			FREE_BYTE(Double_six_label_tex[i]);
+			FREE_char(Double_six_label_tex[i]);
 			}
-		FREE_PBYTE(Double_six_label_tex);
+		FREE_pchar(Double_six_label_tex);
 		}
 	if (Half_double_sixes) {
 		FREE_INT(Half_double_sixes);
@@ -199,9 +199,9 @@ void surface::freeself()
 		INT i;
 		
 		for (i = 0; i < 72; i++) {
-			FREE_BYTE(Half_double_six_label_tex[i]);
+			FREE_char(Half_double_six_label_tex[i]);
 			}
-		FREE_PBYTE(Half_double_six_label_tex);
+		FREE_pchar(Half_double_six_label_tex);
 		}
 
 	if (Half_double_six_to_double_six) {
@@ -601,7 +601,7 @@ void surface::label_variables_3(homogeneous_polynomial_domain *HPD,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
-	BYTE label[1000];
+	char label[1000];
 	
 	if (f_v) {
 		cout << "surface::label_variables_3" << endl;
@@ -612,28 +612,28 @@ void surface::label_variables_3(homogeneous_polynomial_domain *HPD,
 		}
 	if (HPD->symbols) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols[i]);
+			FREE_char(HPD->symbols[i]);
 			}
-		FREE_PBYTE(HPD->symbols);
+		FREE_pchar(HPD->symbols);
 		}
 	if (HPD->symbols_latex) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols_latex[i]);
+			FREE_char(HPD->symbols_latex[i]);
 			}
-		FREE_PBYTE(HPD->symbols_latex);
+		FREE_pchar(HPD->symbols_latex);
 		}
-	HPD->symbols = NEW_PBYTE(3);
-	HPD->symbols_latex = NEW_PBYTE(3);
+	HPD->symbols = NEW_pchar(3);
+	HPD->symbols_latex = NEW_pchar(3);
 	for (i = 0; i < 3; i++) {
 		sprintf(label, "y_%ld", i);
 		l = strlen(label);
-		HPD->symbols[i] = NEW_BYTE(l + 1);
+		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 3; i++) {
 		sprintf(label, "y_{%ld}", i);
 		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_BYTE(l + 1);
+		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	if (f_v) {
@@ -647,7 +647,7 @@ void surface::label_variables_x123(homogeneous_polynomial_domain *HPD,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
-	BYTE label[1000];
+	char label[1000];
 	
 	if (f_v) {
 		cout << "surface::label_variables_x123" << endl;
@@ -658,28 +658,28 @@ void surface::label_variables_x123(homogeneous_polynomial_domain *HPD,
 		}
 	if (HPD->symbols) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols[i]);
+			FREE_char(HPD->symbols[i]);
 			}
-		FREE_PBYTE(HPD->symbols);
+		FREE_pchar(HPD->symbols);
 		}
 	if (HPD->symbols_latex) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols_latex[i]);
+			FREE_char(HPD->symbols_latex[i]);
 			}
-		FREE_PBYTE(HPD->symbols_latex);
+		FREE_pchar(HPD->symbols_latex);
 		}
-	HPD->symbols = NEW_PBYTE(3);
-	HPD->symbols_latex = NEW_PBYTE(3);
+	HPD->symbols = NEW_pchar(3);
+	HPD->symbols_latex = NEW_pchar(3);
 	for (i = 0; i < 3; i++) {
 		sprintf(label, "x_%ld", i + 1);
 		l = strlen(label);
-		HPD->symbols[i] = NEW_BYTE(l + 1);
+		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 3; i++) {
 		sprintf(label, "x_{%ld}", i + 1);
 		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_BYTE(l + 1);
+		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	if (f_v) {
@@ -693,7 +693,7 @@ void surface::label_variables_4(homogeneous_polynomial_domain *HPD,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
-	BYTE label[1000];
+	char label[1000];
 	
 	if (f_v) {
 		cout << "surface::label_variables_4" << endl;
@@ -704,28 +704,28 @@ void surface::label_variables_4(homogeneous_polynomial_domain *HPD,
 		}
 	if (HPD->symbols) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols[i]);
+			FREE_char(HPD->symbols[i]);
 			}
-		FREE_PBYTE(HPD->symbols);
+		FREE_pchar(HPD->symbols);
 		}
 	if (HPD->symbols_latex) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols_latex[i]);
+			FREE_char(HPD->symbols_latex[i]);
 			}
-		FREE_PBYTE(HPD->symbols_latex);
+		FREE_pchar(HPD->symbols_latex);
 		}
-	HPD->symbols = NEW_PBYTE(4);
-	HPD->symbols_latex = NEW_PBYTE(4);
+	HPD->symbols = NEW_pchar(4);
+	HPD->symbols_latex = NEW_pchar(4);
 	for (i = 0; i < 4; i++) {
 		sprintf(label, "x_%ld", i);
 		l = strlen(label);
-		HPD->symbols[i] = NEW_BYTE(l + 1);
+		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 4; i++) {
 		sprintf(label, "x_{%ld}", i);
 		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_BYTE(l + 1);
+		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	if (f_v) {
@@ -739,7 +739,7 @@ void surface::label_variables_27(homogeneous_polynomial_domain *HPD,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, l;
-	BYTE label[1000];
+	char label[1000];
 	
 	if (f_v) {
 		cout << "surface::label_variables_27" << endl;
@@ -750,29 +750,29 @@ void surface::label_variables_27(homogeneous_polynomial_domain *HPD,
 		}
 	if (HPD->symbols) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols[i]);
+			FREE_char(HPD->symbols[i]);
 			}
-		FREE_PBYTE(HPD->symbols);
+		FREE_pchar(HPD->symbols);
 		}
 	if (HPD->symbols_latex) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols_latex[i]);
+			FREE_char(HPD->symbols_latex[i]);
 			}
-		FREE_PBYTE(HPD->symbols_latex);
+		FREE_pchar(HPD->symbols_latex);
 		}
-	HPD->symbols = NEW_PBYTE(27);
-	HPD->symbols_latex = NEW_PBYTE(27);
+	HPD->symbols = NEW_pchar(27);
+	HPD->symbols_latex = NEW_pchar(27);
 	for (i = 0; i < 3; i++) {
 		sprintf(label, "y_%ld", i);
 		l = strlen(label);
-		HPD->symbols[i] = NEW_BYTE(l + 1);
+		HPD->symbols[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols[i], label);
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "f_%ld%ld", i, j);
 			l = strlen(label);
-			HPD->symbols[3 + i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols[3 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[3 + i * 4 + j], label);
 			}
 		}
@@ -780,21 +780,21 @@ void surface::label_variables_27(homogeneous_polynomial_domain *HPD,
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "g_%ld%ld", i, j);
 			l = strlen(label);
-			HPD->symbols[3 + 12 + i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols[3 + 12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[3 + 12 + i * 4 + j], label);
 			}
 		}
 	for (i = 0; i < 3; i++) {
 		sprintf(label, "y_{%ld}", i);
 		l = strlen(label);
-		HPD->symbols_latex[i] = NEW_BYTE(l + 1);
+		HPD->symbols_latex[i] = NEW_char(l + 1);
 		strcpy(HPD->symbols_latex[i], label);
 		}
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "f_{%ld%ld}", i, j);
 			l = strlen(label);
-			HPD->symbols_latex[3 + i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols_latex[3 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[3 + i * 4 + j], label);
 			}
 		}
@@ -802,7 +802,7 @@ void surface::label_variables_27(homogeneous_polynomial_domain *HPD,
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "g_{%ld%ld}", i, j);
 			l = strlen(label);
-			HPD->symbols_latex[3 + 12 + i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols_latex[3 + 12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[3 + 12 + i * 4 + j], label);
 			}
 		}
@@ -817,7 +817,7 @@ void surface::label_variables_24(homogeneous_polynomial_domain *HPD,
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j, l;
-	BYTE label[1000];
+	char label[1000];
 	
 	if (f_v) {
 		cout << "surface::label_variables_24" << endl;
@@ -828,23 +828,23 @@ void surface::label_variables_24(homogeneous_polynomial_domain *HPD,
 		}
 	if (HPD->symbols) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols[i]);
+			FREE_char(HPD->symbols[i]);
 			}
-		FREE_PBYTE(HPD->symbols);
+		FREE_pchar(HPD->symbols);
 		}
 	if (HPD->symbols_latex) {
 		for (i = 0; i < HPD->n; i++) {
-			FREE_BYTE(HPD->symbols_latex[i]);
+			FREE_char(HPD->symbols_latex[i]);
 			}
-		FREE_PBYTE(HPD->symbols_latex);
+		FREE_pchar(HPD->symbols_latex);
 		}
-	HPD->symbols = NEW_PBYTE(24);
-	HPD->symbols_latex = NEW_PBYTE(24);
+	HPD->symbols = NEW_pchar(24);
+	HPD->symbols_latex = NEW_pchar(24);
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "f_%ld%ld", i, j);
 			l = strlen(label);
-			HPD->symbols[i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols[i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[i * 4 + j], label);
 			}
 		}
@@ -852,7 +852,7 @@ void surface::label_variables_24(homogeneous_polynomial_domain *HPD,
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "g_%ld%ld", i, j);
 			l = strlen(label);
-			HPD->symbols[12 + i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols[12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols[12 + i * 4 + j], label);
 			}
 		}
@@ -860,7 +860,7 @@ void surface::label_variables_24(homogeneous_polynomial_domain *HPD,
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "f_{%ld%ld}", i, j);
 			l = strlen(label);
-			HPD->symbols_latex[i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols_latex[i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[i * 4 + j], label);
 			}
 		}
@@ -868,7 +868,7 @@ void surface::label_variables_24(homogeneous_polynomial_domain *HPD,
 		for (j = 0; j < 4; j++) {
 			sprintf(label, "g_{%ld%ld}", i, j);
 			l = strlen(label);
-			HPD->symbols_latex[12 + i * 4 + j] = NEW_BYTE(l + 1);
+			HPD->symbols_latex[12 + i * 4 + j] = NEW_char(l + 1);
 			strcpy(HPD->symbols_latex[12 + i * 4 + j], label);
 			}
 		}
@@ -961,9 +961,9 @@ void surface::init_line_data(INT verbose_level)
 		//INT_matrix_print(Sets2, 15, 2);
 		}
 
-	Line_label = NEW_PBYTE(27);
-	Line_label_tex = NEW_PBYTE(27);
-	BYTE str[1000];
+	Line_label = NEW_pchar(27);
+	Line_label_tex = NEW_pchar(27);
+	char str[1000];
 	INT a, b, c, l;
 
 	for (i = 0; i < 27; i++) {
@@ -985,7 +985,7 @@ void surface::init_line_data(INT verbose_level)
 				<< " for line " << i << endl;
 			}
 		l = strlen(str);
-		Line_label[i] = NEW_BYTE(l + 1);
+		Line_label[i] = NEW_char(l + 1);
 		strcpy(Line_label[i], str);
 		}
 
@@ -1008,7 +1008,7 @@ void surface::init_line_data(INT verbose_level)
 				<< " for line " << i << endl;
 			}
 		l = strlen(str);
-		Line_label_tex[i] = NEW_BYTE(l + 1);
+		Line_label_tex[i] = NEW_char(l + 1);
 		strcpy(Line_label_tex[i], str);
 		}
 
@@ -3103,33 +3103,33 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, a;
-	BYTE str[1000];
+	char str[1000];
 	INT w[6];
 	INT Basis[8];
-	BYTE **Text_wedge;
-	BYTE **Text_line;
-	BYTE **Text_klein;
+	char **Text_wedge;
+	char **Text_line;
+	char **Text_klein;
 
 	if (f_v) {
 		cout << "surface::make_spreadsheet_of_lines_in_three_kinds" << endl;
 		}
 
-	Text_wedge = NEW_PBYTE(nb_lines);
-	Text_line = NEW_PBYTE(nb_lines);
-	Text_klein = NEW_PBYTE(nb_lines);
+	Text_wedge = NEW_pchar(nb_lines);
+	Text_line = NEW_pchar(nb_lines);
+	Text_klein = NEW_pchar(nb_lines);
 
 	for (i = 0; i < nb_lines; i++) {
 		a = Wedge_rk[i];
 		PG_element_unrank_modified(*F, w, 1, 6 /*wedge_dimension*/, a);
 		INT_vec_print_to_str(str, w, 6);
-		Text_wedge[i] = NEW_BYTE(strlen(str) + 1);
+		Text_wedge[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_wedge[i], str);
 		}
 	for (i = 0; i < nb_lines; i++) {
 		a = Line_rk[i];
 		Gr->unrank_INT_here(Basis, a, 0 /* verbose_level */);
 		INT_vec_print_to_str(str, Basis, 8);
-		Text_line[i] = NEW_BYTE(strlen(str) + 1);
+		Text_line[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_line[i], str);
 		}
 	for (i = 0; i < nb_lines; i++) {
@@ -3139,7 +3139,7 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 			// Aug 25, 2018
 		INT_vec_print_to_str(str, w, 6);
 			// w was v, error corrected
-		Text_klein[i] = NEW_BYTE(strlen(str) + 1);
+		Text_klein[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_klein[i], str);
 		}
 
@@ -3147,24 +3147,24 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 	Sp->init_empty_table(nb_lines + 1, 7);
 	Sp->fill_column_with_row_index(0, "Idx");
 	Sp->fill_column_with_INT(1, Wedge_rk, "Wedge_rk");
-	Sp->fill_column_with_text(2, (const BYTE **) Text_wedge, "Wedge coords");
+	Sp->fill_column_with_text(2, (const char **) Text_wedge, "Wedge coords");
 	Sp->fill_column_with_INT(3, Line_rk, "Line_rk");
-	Sp->fill_column_with_text(4, (const BYTE **) Text_line, "Line basis");
+	Sp->fill_column_with_text(4, (const char **) Text_line, "Line basis");
 	Sp->fill_column_with_INT(5, Klein_rk, "Klein_rk");
-	Sp->fill_column_with_text(6, (const BYTE **) Text_klein, "Klein coords");
+	Sp->fill_column_with_text(6, (const char **) Text_klein, "Klein coords");
 	
 	for (i = 0; i < nb_lines; i++) {
-		FREE_BYTE(Text_wedge[i]);
+		FREE_char(Text_wedge[i]);
 		}
-	FREE_PBYTE(Text_wedge);
+	FREE_pchar(Text_wedge);
 	for (i = 0; i < nb_lines; i++) {
-		FREE_BYTE(Text_line[i]);
+		FREE_char(Text_line[i]);
 		}
-	FREE_PBYTE(Text_line);
+	FREE_pchar(Text_line);
 	for (i = 0; i < nb_lines; i++) {
-		FREE_BYTE(Text_klein[i]);
+		FREE_char(Text_klein[i]);
 		}
-	FREE_PBYTE(Text_klein);
+	FREE_pchar(Text_klein);
 
 
 	if (f_v) {
@@ -3172,7 +3172,7 @@ void surface::make_spreadsheet_of_lines_in_three_kinds(
 		}
 }
 
-void surface::save_lines_in_three_kinds(const BYTE *fname_csv, 
+void surface::save_lines_in_three_kinds(const char *fname_csv, 
 	INT *Lines_wedge, INT *Lines, INT *Lines_klein, INT nb_lines)
 {
 	spreadsheet *Sp;
@@ -3435,7 +3435,7 @@ void surface::find_tritangent_planes_intersecting_in_a_line(INT line_idx,
 
 
 void surface::make_trihedral_pairs(INT *&T, 
-	BYTE **&T_label, INT &nb_trihedral_pairs, 
+	char **&T_label, INT &nb_trihedral_pairs, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -3444,14 +3444,14 @@ void surface::make_trihedral_pairs(INT *&T,
 	INT second_subset[6];
 	INT complement[6];
 	INT size_complement;
-	BYTE label[1000];
+	char label[1000];
 
 	if (f_v) {
 		cout << "surface::make_trihedral_pairs" << endl;
 		}
 	nb_trihedral_pairs = 120;
 	T = NEW_INT(nb_trihedral_pairs * 9);
-	T_label = NEW_PBYTE(nb_trihedral_pairs);
+	T_label = NEW_pchar(nb_trihedral_pairs);
 
 	idx = 0;
 
@@ -3468,7 +3468,7 @@ void surface::make_trihedral_pairs(INT *&T,
 		sprintf(label, "%ld%ld%ld", subset[0] + 1, subset[1] + 1, subset[2] + 1);
 
 		make_Tijk(T + idx * 9, subset[0], subset[1], subset[2]);
-		T_label[idx] = NEW_BYTE(strlen(label) + 1);
+		T_label[idx] = NEW_char(strlen(label) + 1);
 		strcpy(T_label[idx], label);
 #if 0
 		if (h == 16) {
@@ -3496,7 +3496,7 @@ void surface::make_trihedral_pairs(INT *&T,
 				subset[second_subset[1]] + 1, 
 				subset[complement[0]] + 1, 
 				subset[complement[1]] + 1);
-			T_label[idx] = NEW_BYTE(strlen(label) + 1);
+			T_label[idx] = NEW_char(strlen(label) + 1);
 			strcpy(T_label[idx], label);
 			}
 		}
@@ -3519,7 +3519,7 @@ void surface::make_trihedral_pairs(INT *&T,
 			complement[0] + 1, 
 			complement[1] + 1, 
 			complement[2] + 1);
-		T_label[idx] = NEW_BYTE(strlen(label) + 1);
+		T_label[idx] = NEW_char(strlen(label) + 1);
 		strcpy(T_label[idx], label);
 		}
 
@@ -3676,7 +3676,7 @@ void surface::make_Eckardt_points(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, l;
-	BYTE str[1000];
+	char str[1000];
 
 	if (f_v) {
 		cout << "surface::make_Eckardt_points" << endl;
@@ -3686,14 +3686,14 @@ void surface::make_Eckardt_points(INT verbose_level)
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].init_by_rank(i);
 		}
-	Eckard_point_label = NEW_PBYTE(nb_Eckardt_points);
-	Eckard_point_label_tex = NEW_PBYTE(nb_Eckardt_points);
+	Eckard_point_label = NEW_pchar(nb_Eckardt_points);
+	Eckard_point_label_tex = NEW_pchar(nb_Eckardt_points);
 	for (i = 0; i < nb_Eckardt_points; i++) {
 		Eckardt_points[i].latex_to_str_without_E(str);
 		l = strlen(str);
-		Eckard_point_label[i] = NEW_BYTE(l + 1);
+		Eckard_point_label[i] = NEW_char(l + 1);
 		strcpy(Eckard_point_label[i], str);
-		Eckard_point_label_tex[i] = NEW_BYTE(l + 1);
+		Eckard_point_label_tex[i] = NEW_char(l + 1);
 		strcpy(Eckard_point_label_tex[i], str);
 		}
 	if (f_v) {
@@ -5066,7 +5066,7 @@ void surface::create_surface_family_S(INT a, INT *Lines27,
 }
 
 #if 0
-void surface::create_surface(INT f_iso, INT iso, INT f_S, INT a, INT f_equation, const BYTE *eqn_txt, 
+void surface::create_surface(INT f_iso, INT iso, INT f_S, INT a, INT f_equation, const char *eqn_txt, 
 	INT f_equation_is_given, INT *given_equation, 
 	INT f_has_trihedral_pair, INT t_idx, INT *nine_lines, 
 	INT *Lines, INT *equation, INT verbose_level)
@@ -5667,8 +5667,8 @@ void surface::init_double_sixes(INT verbose_level)
 		exit(1);
 		}
 
-	Double_six_label_tex = NEW_PBYTE(36);
-	BYTE str[1000];
+	Double_six_label_tex = NEW_pchar(36);
+	char str[1000];
 
 	for (i = 0; i < 36; i++) {
 		if (i < 1) {
@@ -5698,7 +5698,7 @@ void surface::init_double_sixes(INT verbose_level)
 				<< " for Double six " << i << endl;
 			}
 		l = strlen(str);
-		Double_six_label_tex[i] = NEW_BYTE(l + 1);
+		Double_six_label_tex[i] = NEW_char(l + 1);
 		strcpy(Double_six_label_tex[i], str);
 		}
 
@@ -5730,8 +5730,8 @@ void surface::create_half_double_sixes(INT verbose_level)
 			Half_double_six_to_double_six_row[2 * i + j] = j;
 			}
 		}
-	Half_double_six_label_tex = NEW_PBYTE(72);
-	BYTE str[1000];
+	Half_double_six_label_tex = NEW_pchar(72);
+	char str[1000];
 
 	for (i = 0; i < 36; i++) {
 		for (j = 0; j < 2; j++) {
@@ -5772,7 +5772,7 @@ void surface::create_half_double_sixes(INT verbose_level)
 					<< 2 * i + j << endl;
 				}
 			l = strlen(str);
-			Half_double_six_label_tex[2 * i + j] = NEW_BYTE(l + 1);
+			Half_double_six_label_tex[2 * i + j] = NEW_char(l + 1);
 			strcpy(Half_double_six_label_tex[2 * i + j], str);
 			}
 		}

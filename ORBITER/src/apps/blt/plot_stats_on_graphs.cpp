@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	INT q = 0;
 	
 	INT f_file = FALSE;
-	BYTE *fname = NULL;
+	char *fname = NULL;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -39,9 +39,9 @@ int main(int argc, char **argv)
 			}
 		}
 	
-	BYTE fname_out[1000];
-	BYTE prefix[1000];
-	BYTE ext[1000];
+	char fname_out[1000];
+	char prefix[1000];
+	char ext[1000];
 
 	if (!f_file) {
 		cout << "please use option -file <fname>" << endl;
@@ -93,10 +93,10 @@ int main(int argc, char **argv)
 
 
 
-	BYTE fname1[1000];
-	BYTE fname2[1000];
-	BYTE fname3[1000];
-	BYTE cmd[1000];
+	char fname1[1000];
+	char fname2[1000];
+	char fname3[1000];
+	char cmd[1000];
 
 	sprintf(fname1, "%s_data.dat", prefix);
 	sprintf(fname2, "%s_gnuplot.txt", prefix);

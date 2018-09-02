@@ -215,7 +215,7 @@ void graph_generator::init(int argc, const char **argv)
 {
 	INT N;
 	INT target_depth;
-	BYTE prefix[1000];
+	char prefix[1000];
 	
 	A_base = NEW_OBJECT(action);
 	A_on_edges = NEW_OBJECT(action);
@@ -828,7 +828,7 @@ void graph_generator::draw_graphs(INT level,
 		cout << " : " << go << endl;
 
 
-		BYTE fname_full[1000];
+		char fname_full[1000];
 
 		sprintf(fname_full, "%s_rep_%ld_%ld.mp",
 				gen->fname_base, level, h);

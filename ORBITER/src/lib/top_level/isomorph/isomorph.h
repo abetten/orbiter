@@ -26,26 +26,26 @@ public:
 	INT f_use_implicit_fusion;
 	
 
-	BYTE prefix[500];
-	BYTE prefix_invariants[500];
-	BYTE prefix_tex[500];
+	char prefix[500];
+	char prefix_invariants[500];
+	char prefix_tex[500];
 
-	BYTE fname_staborbits[500];
-	BYTE fname_case_len[500];
-	BYTE fname_statistics[500];
-	BYTE fname_hash_and_datref[500];
-	BYTE fname_db1[500];
-	BYTE fname_db2[500];
-	BYTE fname_db3[500];
-	BYTE fname_db4[500];
-	BYTE fname_db5[500];
-	BYTE fname_db_level[500];
-	BYTE fname_db_level_idx1[500];
-	BYTE fname_db_level_idx2[500];
-	BYTE fname_db_level_ge[500];
+	char fname_staborbits[500];
+	char fname_case_len[500];
+	char fname_statistics[500];
+	char fname_hash_and_datref[500];
+	char fname_db1[500];
+	char fname_db2[500];
+	char fname_db3[500];
+	char fname_db4[500];
+	char fname_db5[500];
+	char fname_db_level[500];
+	char fname_db_level_idx1[500];
+	char fname_db_level_idx2[500];
+	char fname_db_level_ge[500];
 	
-	BYTE event_out_fname[1000];
-	BYTE fname_orbits_of_stabilizer_csv[1000];
+	char event_out_fname[1000];
+	char fname_orbits_of_stabilizer_csv[1000];
 
 	INT nb_starter; 
 		// the number of orbits at 'level', 
@@ -263,8 +263,8 @@ public:
 
 	// database access:
 	database *D1, *D2;
-	BYTE fname_ge1[1000];
-	BYTE fname_ge2[1000];
+	char fname_ge1[1000];
+	char fname_ge2[1000];
 	FILE *fp_ge1, *fp_ge2;
 	Vector *v;
 	database *DB_sol;
@@ -299,7 +299,7 @@ public:
 	void null_tmp_data();
 	void allocate_tmp_data();
 	void free_tmp_data();
-	void init(const BYTE *prefix, 
+	void init(const char *prefix, 
 		action *A_base, action *A, poset_classification *gen,
 		INT size, INT level, 
 		INT f_use_database_for_starter, 
@@ -324,7 +324,7 @@ public:
 	INT test_edge(INT n1, INT *subset1, 
 		INT *transporter, INT verbose_level);
 	void read_data_files_for_starter(INT level, 
-		const BYTE *prefix, INT verbose_level);
+		const char *prefix, INT verbose_level);
 		// Calls gen->read_level_file_binary 
 		// for all levels i from 0 to level
 		// Uses letter a files for i from 0 to level - 1
@@ -339,7 +339,7 @@ public:
 	void compute_Ago_Ago_induced(longinteger_object *&Ago, 
 		longinteger_object *&Ago_induced, INT verbose_level);
 	void init_high_level(action *A, poset_classification *gen,
-		INT size, BYTE *prefix_classify, BYTE *prefix, 
+		INT size, char *prefix_classify, char *prefix, 
 		INT level, INT verbose_level);
 	
 
@@ -350,7 +350,7 @@ public:
 	void probe(INT flag_orbit, INT subset_rk, 
 		INT f_implicit_fusion, INT verbose_level);
 	void isomorph_testing(INT t0, INT f_play_back, 
-		const BYTE *play_back_file_name, 
+		const char *play_back_file_name, 
 		INT f_implicit_fusion, INT print_mod, INT verbose_level);
 	void write_classification_matrix(INT verbose_level);
 	void write_classification_graph(INT verbose_level);
@@ -552,21 +552,21 @@ public:
 		INT *Nb_sol, INT verbose_level);
 	// Solutions[nb_starter], Nb_sol[nb_starter]
 	void count_solutions_from_clique_finder_case_by_case(INT nb_files, 
-		INT *list_of_cases, const BYTE **fname, 
+		INT *list_of_cases, const char **fname, 
 		INT verbose_level);
 	void count_solutions_from_clique_finder(INT nb_files, 
-		const BYTE **fname, 
+		const char **fname, 
 		INT verbose_level);
 	void read_solutions_from_clique_finder_case_by_case(INT nb_files, 
-		INT *list_of_cases, const BYTE **fname, 
+		INT *list_of_cases, const char **fname, 
 		INT verbose_level);
 	void read_solutions_from_clique_finder(INT nb_files, 
-		const BYTE **fname, INT verbose_level);
+		const char **fname, INT verbose_level);
 	void add_solutions_to_database(INT *Solutions, 
 		INT the_case, INT nb_solutions, INT nb_solutions_total, 
 		INT print_mod, INT &no, 
 		INT verbose_level);
-	void build_up_database(INT nb_files, const BYTE **fname, 
+	void build_up_database(INT nb_files, const char **fname, 
 		INT f_has_final_test_function, 
 		INT (*final_test_function)(INT *data, INT sz, 
 			void *final_test_data, INT verbose_level),
@@ -590,17 +590,17 @@ public:
 		void *final_test_data, 
 		INT verbose_level);
 	void count_solutions(INT nb_files, 
-		const BYTE **fname, INT f_get_statistics, 
+		const char **fname, INT f_get_statistics, 
 		INT f_has_final_test_function, 
 		INT (*final_test_function)(INT *data, INT sz, 
 			void *final_test_data, INT verbose_level),
 		void *final_test_data, 
 		INT verbose_level);
-	void get_statistics(INT nb_files, const BYTE **fname, 
+	void get_statistics(INT nb_files, const char **fname, 
 		INT verbose_level);
 	void write_statistics();
 	void evaluate_statistics(INT verbose_level);
-	void count_solutions2(INT nb_files, const BYTE **fname, 
+	void count_solutions2(INT nb_files, const char **fname, 
 		INT &total_days, INT &total_hours, INT &total_minutes, 
 		INT f_has_final_test_function, 
 		INT (*final_test_function)(INT *data, INT sz, 
@@ -639,17 +639,17 @@ public:
 		action *A, sims *Stab, INT size, INT *set, 
 		INT verbose_level);
 	void handle_event_files(INT nb_event_files, 
-		const BYTE **event_file_name, INT verbose_level);
-	void read_event_file(const BYTE *event_file_name, 
+		const char **event_file_name, INT verbose_level);
+	void read_event_file(const char *event_file_name, 
 		INT verbose_level);
 	void skip_through_event_file(ifstream &f, 
 		INT verbose_level);
 	void skip_through_event_file1(ifstream &f, 
 		INT case_no, INT orbit_no, INT verbose_level);
-	void event_file_completed_cases(const BYTE *event_file_name, 
+	void event_file_completed_cases(const char *event_file_name, 
 		INT &nb_completed_cases, INT *completed_cases, 
 		INT verbose_level);
-	void event_file_read_case(const BYTE *event_file_name, 
+	void event_file_read_case(const char *event_file_name, 
 		INT case_no, INT verbose_level);
 	void event_file_read_case1(ifstream &f, 
 		INT case_no, INT verbose_level);
@@ -657,7 +657,7 @@ public:
 		ifstream *play_back_file, 
 		INT &f_eof, INT verbose_level);
 	void read_everything_including_classification(
-		const BYTE *prefix_classify, INT verbose_level);
+		const char *prefix_classify, INT verbose_level);
 
 
 };
@@ -678,7 +678,7 @@ public:
 	INT f_read_solutions;
 	INT f_read_solutions_from_clique_finder;
 	INT f_read_solutions_from_clique_finder_list_of_cases;
-	const BYTE *fname_list_of_cases;
+	const char *fname_list_of_cases;
 	INT f_read_solutions_after_split;
 	INT read_solutions_split_m;
 	
@@ -689,22 +689,22 @@ public:
 	INT f_isomorph_testing;
 	INT f_classification_graph;
 	INT f_event_file; // -e <event file> option
-	const BYTE *event_file_name;
+	const char *event_file_name;
 	INT print_mod;
 	INT f_report;
 	INT f_subset_orbits;
 	INT f_subset_orbits_file;
-	const BYTE *subset_orbits_fname;
+	const char *subset_orbits_fname;
 	INT f_eliminate_graphs_if_possible;
 	INT f_down_orbits;
 
-	const BYTE *prefix_iso;
+	const char *prefix_iso;
 
 	action *A;
 	action *A2;
 	poset_classification *gen;
 	INT target_size;
-	const BYTE *prefix_with_directory;
+	const char *prefix_with_directory;
 	exact_cover_arguments *ECA;
 	
 	void (*callback_report)(isomorph *Iso, void *data, 
@@ -725,7 +725,7 @@ public:
 	void read_arguments(int argc, const char **argv, 
 		INT verbose_level);
 	void init(action *A, action *A2, poset_classification *gen,
-		INT target_size, const BYTE *prefix_with_directory, 
+		INT target_size, const char *prefix_with_directory, 
 		exact_cover_arguments *ECA, 
 		void (*callback_report)(isomorph *Iso, void *data, 
 			INT verbose_level), 
@@ -754,18 +754,18 @@ struct isomorph_worker_data {
 
 void isomorph_read_statistic_files(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix, INT level, 
-	const BYTE **fname, INT nb_files, INT verbose_level);
+	INT size, const char *prefix_classify, 
+	const char *prefix, INT level, 
+	const char **fname, INT nb_files, INT verbose_level);
 void isomorph_build_db(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, INT verbose_level);
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, INT verbose_level);
 void isomorph_read_solution_files(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
-	const BYTE **fname, INT nb_files, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
+	const char **fname, INT nb_files, 
 	INT f_has_final_test_function, 
 	INT (*final_test_function)(INT *data, INT sz, 
 		void *final_test_data, INT verbose_level),
@@ -773,57 +773,57 @@ void isomorph_read_solution_files(action *A_base,
 	INT verbose_level);
 void isomorph_init_solutions_from_memory(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
 	INT **Solutions, INT *Nb_sol, INT verbose_level);
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
-	const BYTE **fname, INT *list_of_cases, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
+	const char **fname, INT *list_of_cases, 
 	INT nb_files, INT verbose_level);
 void isomorph_read_solution_files_from_clique_finder(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
-	const BYTE **fname, INT nb_files, INT verbose_level);
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
+	const char **fname, INT nb_files, INT verbose_level);
 void isomorph_compute_orbits(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, INT verbose_level);
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, INT verbose_level);
 void isomorph_testing(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
-	INT f_play_back, const BYTE *old_event_file, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
+	INT f_play_back, const char *old_event_file, 
 	INT print_mod, INT verbose_level);
 void isomorph_classification_graph(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
 	INT verbose_level);
 void isomorph_identify(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
-	INT identify_nb_files, const BYTE **fname, INT *Iso_type, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
+	INT identify_nb_files, const char **fname, INT *Iso_type, 
 	INT f_save, INT verbose_level);
 void isomorph_identify_table(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, 
-	const BYTE *prefix_iso, INT level, 
+	INT size, const char *prefix_classify, 
+	const char *prefix_iso, INT level, 
 	INT nb_rows, INT *Table, INT *Iso_type, 
 	INT verbose_level);
 	// Table[nb_rows * size]
 void isomorph_worker(action *A_base, action *A,
 	poset_classification *gen,
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, 
+	INT size, const char *prefix_classify, const char *prefix_iso, 
 	void (*work_callback)(isomorph *Iso, void *data, INT verbose_level), 
 	void *work_data, 
 	INT level, INT verbose_level);
 void isomorph_compute_down_orbits(action *A_base, 
 	action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, const BYTE *prefix, 
+	INT size, const char *prefix_classify, const char *prefix, 
 	void *data, 
 	INT level, INT verbose_level);
 void isomorph_compute_down_orbits_worker(isomorph *Iso, 
@@ -834,10 +834,10 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 	INT *&special_orbit_identify, 
 	INT verbose_level);
 void isomorph_report_data_in_source_code_inside_tex(
-	isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, 
+	isomorph &Iso, const char *prefix, char *label_of_structure_plural, 
 	ostream &F, INT verbose_level);
 void isomorph_report_data_in_source_code_inside_tex_with_selection(
-	isomorph &Iso, const BYTE *prefix, BYTE *label_of_structure_plural, 
+	isomorph &Iso, const char *prefix, char *label_of_structure_plural, 
 	ostream &fp, INT selection_size, INT *selection, 
 	INT verbose_level);
 

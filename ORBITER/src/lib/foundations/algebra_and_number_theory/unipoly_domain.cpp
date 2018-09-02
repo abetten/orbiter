@@ -171,7 +171,7 @@ void unipoly_domain::create_object_by_rank_longinteger(unipoly_object &p,
 	//print_object(p, cout); cout << endl;
 }
 
-void unipoly_domain::create_object_by_rank_string(unipoly_object &p, const BYTE *rk, INT verbose_level)
+void unipoly_domain::create_object_by_rank_string(unipoly_object &p, const char *rk, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_object rank;
@@ -296,13 +296,13 @@ INT unipoly_domain::degree(unipoly_object p)
 
 INT unip_f_print_sub = FALSE;
 INT unip_f_use_variable_name = FALSE;
-BYTE unip_variable_name[128];
+char unip_variable_name[128];
 
 ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 {
 	INT i, k;
 	INT f_prev = FALSE;
-	BYTE *x, *y;
+	char *x, *y;
 	INT f_nothing_printed_at_all = TRUE;
 	INT *rep = (INT *) p;
 	INT d = rep[0]; // degree
@@ -312,13 +312,13 @@ ostream& unipoly_domain::print_object(unipoly_object p, ostream& ost)
 		x = unip_variable_name;
 		}
 	else {
-		x = (BYTE *) "X";
+		x = (char *) "X";
 		}
 	if (unip_f_print_sub) {
-		y = (BYTE *) "_";
+		y = (char *) "_";
 		}
 	else {
-		y = (BYTE *) "^";
+		y = (char *) "^";
 		}
 	// ost << "(";
 	for (i = d; i >= 0; i--) {

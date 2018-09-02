@@ -32,8 +32,8 @@ public:
 	INT q;
 	INT d;
 
-	BYTE directory_path[1000];
-	BYTE prefix[1000];
+	char directory_path[1000];
+	char prefix[1000];
 
 
 	finite_field *F; // F_q

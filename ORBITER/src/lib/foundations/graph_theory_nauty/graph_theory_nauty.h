@@ -11,7 +11,7 @@
 // nauty_interface.C:
 // #############################################################################
 
-void nauty_interface_graph_bitvec(INT v, UBYTE *bitvector_adjacency, 
+void nauty_interface_graph_bitvec(INT v, uchar *bitvector_adjacency, 
 	INT *labeling, INT *partition, 
 	INT *Aut, INT &Aut_counter, 
 	INT *Base, INT &Base_length, 

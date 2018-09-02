@@ -69,7 +69,7 @@ void test1(INT n, INT q, INT verbose_level)
 	finite_field *F;
 	projective_space *P;
 	INT f_semilinear = TRUE;
-	const BYTE *override_poly = NULL;
+	const char *override_poly = NULL;
 	INT f_basis = TRUE;
 	INT f_with_group = TRUE;
 

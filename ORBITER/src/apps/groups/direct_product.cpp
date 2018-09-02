@@ -36,7 +36,7 @@ public:
 	INT q1;
 	INT q2;
 
-	const BYTE *group_label;
+	const char *group_label;
 
 	finite_field *F1;
 	finite_field *F2;
@@ -120,7 +120,7 @@ public:
 	// a file where we print the solution, it has the extension bblt
 	// for "base block line transitive" design
 	//FILE *fp_sol;
-	//BYTE fname_solution_file[1000];
+	//char fname_solution_file[1000];
 
 	// for testing the mask:
 	INT *f_row_used; // [Xsize];
@@ -140,9 +140,9 @@ public:
 	~direct_product_action();
 	void init(int argc, const char **argv,
 			INT d1, INT q1, INT d2, INT q2,
-			INT f_subgroup, const BYTE *subgroup_gens_text,
-			const BYTE *subgroup_order_text,
-			const BYTE *group_label,
+			INT f_subgroup, const char *subgroup_gens_text,
+			const char *subgroup_order_text,
+			const char *group_label,
 			INT depth,
 			INT verbose_level);
 	void create_graph(
@@ -200,9 +200,9 @@ int main(int argc, const char **argv)
 	INT f_depth = FALSE;
 	INT depth = 0;
 	INT f_subgroup = FALSE;
-	const BYTE *subgroup_gens_text = NULL;
-	const BYTE *subgroup_order_text = NULL;
-	const BYTE *group_label = NULL;
+	const char *subgroup_gens_text = NULL;
+	const char *subgroup_order_text = NULL;
+	const char *group_label = NULL;
 
 	t0 = os_ticks();
 
@@ -471,9 +471,9 @@ direct_product_action::~direct_product_action()
 
 void direct_product_action::init(int argc, const char **argv,
 		INT d1, INT q1, INT d2, INT q2,
-		INT f_subgroup, const BYTE *subgroup_gens_text,
-		const BYTE *subgroup_order_text,
-		const BYTE *group_label,
+		INT f_subgroup, const char *subgroup_gens_text,
+		const char *subgroup_order_text,
+		const char *group_label,
 		INT depth,
 		INT verbose_level)
 {
@@ -1005,7 +1005,7 @@ void direct_product_action::init(int argc, const char **argv,
 		cout << "target_depth=" << target_depth << endl;
 
 		orbiter_data_file *ODF;
-		BYTE fname[1000];
+		char fname[1000];
 		//INT i, j;
 		INT level = depth;
 
@@ -1621,7 +1621,7 @@ void direct_product_action::compute_pair_orbit_table(INT verbose_level)
 void direct_product_action::write_pair_orbit_file(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT set[1000];
 	INT i, j, k, n, size, l;
 

@@ -33,7 +33,7 @@ void count_recursion(INT n, INT *digits, INT depth);
 void draw_action(char *fname_base, INT xmax, INT ymax, INT *Adjacency, INT m, INT n, INT f_cartesian);
 void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian);
 void Halls_theorem();
-void draw_matrix(matrix &H, BYTE *fname, INT xmax, INT ymax, INT f_cartesian);
+void draw_matrix(matrix &H, char *fname, INT xmax, INT ymax, INT f_cartesian);
 void test_hall(INT n, INT nb_inc, INT verbose_level);
 void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, INT verbose_level);
 INT search_new_boy(matrix &H, Vector &x, Vector &y, INT l, INT &prev);
@@ -470,7 +470,7 @@ void draw_action(char *fname_base, INT xmax, INT ymax, INT *Adjacency, INT m, IN
 	INT x_min = -1500, x_max = 1500;
 	INT y_min = -1500, y_max = 1500;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = FALSE;
 	
@@ -509,7 +509,7 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 	INT step;
 	INT i, j, t;
 	INT rad;
-	BYTE str[1000];
+	char str[1000];
 	
 	if (f_cartesian) {
 		delta_phi1 = 2000 / m;
@@ -637,7 +637,7 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 
 void Halls_theorem()
 {
-	BYTE fname[1000];
+	char fname[1000];
 	INT xmax = 1000;
 	INT ymax = 1000;
 	INT Adjacency[] = {
@@ -668,7 +668,7 @@ void Halls_theorem()
 	draw_action(fname, xmax, ymax, Adjacency, m, n, f_cartesian);
 }
 
-void draw_matrix(matrix &H, BYTE *fname, INT xmax, INT ymax, INT f_cartesian)
+void draw_matrix(matrix &H, char *fname, INT xmax, INT ymax, INT f_cartesian)
 {
 	INT *Adjacency;
 	INT m, n, i, j;
@@ -706,7 +706,7 @@ void test_hall(INT n, INT nb_inc, INT verbose_level)
 
 #else
 	for (i = 0; i < 20; i++) {
-		BYTE fname[1000];
+		char fname[1000];
 		if (f_v) {
 			cout << "i=" << i << " ";
 			}
@@ -992,7 +992,7 @@ void one_by_one()
 	INT np1 = n + 1;
 	INT *M;
 	INT i, j;
-	BYTE fname[1000];
+	char fname[1000];
 	
 	M = new INT[np1 * np1];
 	for (i = 1; i <= n; i++) {
@@ -1012,7 +1012,7 @@ void one_by_one()
 	cout << "opening file " << fname << endl;
 
 	latex_head(file, FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/, 
-		"Anton Betten" /*BYTE *author*/, FALSE/* f_toc*/, 
+		"Anton Betten" /*char *author*/, FALSE/* f_toc*/, 
 		FALSE /* f_landscape*/,
 			FALSE /* f_12pt */, 
 			TRUE /* f_enlarged_page */, 

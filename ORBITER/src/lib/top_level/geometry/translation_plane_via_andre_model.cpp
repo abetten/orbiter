@@ -375,11 +375,11 @@ void translation_plane_via_andre_model::init(INT *spread_elements_numeric,
 		}
 }
 
-void translation_plane_via_andre_model::classify_arcs(const BYTE *prefix, INT depth, INT verbose_level)
+void translation_plane_via_andre_model::classify_arcs(const char *prefix, INT depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT t0 = os_ticks();
-	//BYTE fname_base[1000];
+	//char fname_base[1000];
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_arcs" << endl;
@@ -445,8 +445,8 @@ void translation_plane_via_andre_model::classify_arcs(const BYTE *prefix, INT de
 
 
 #if 0
-	BYTE prefix_iso[1000];
-	BYTE cmd[1000];
+	char prefix_iso[1000];
+	char cmd[1000];
 
 	sprintf(prefix_iso, "ISO/");
 	sprintf(cmd, "mkdir %s", prefix_iso);
@@ -469,12 +469,12 @@ void translation_plane_via_andre_model::classify_arcs(const BYTE *prefix, INT de
 
 }
 
-void translation_plane_via_andre_model::classify_subplanes(const BYTE *prefix, INT verbose_level)
+void translation_plane_via_andre_model::classify_subplanes(const char *prefix, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT t0 = os_ticks();
 	INT depth = 7;
-	//BYTE fname_base[1000];
+	//char fname_base[1000];
 
 	if (f_v) {
 		cout << "translation_plane_via_andre_model::classify_subplanes" << endl;
@@ -543,8 +543,8 @@ void translation_plane_via_andre_model::classify_subplanes(const BYTE *prefix, I
 
 
 #if 0
-	BYTE prefix_iso[1000];
-	BYTE cmd[1000];
+	char prefix_iso[1000];
+	char cmd[1000];
 
 	sprintf(prefix_iso, "ISO/");
 	sprintf(cmd, "mkdir %s", prefix_iso);

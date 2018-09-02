@@ -251,7 +251,7 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 }
 
 void spread_create::apply_transformations(
-	const BYTE **transform_coeffs,
+	const char **transform_coeffs,
 	INT *f_inverse_transform, INT nb_transform,
 	INT verbose_level)
 {

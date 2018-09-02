@@ -80,16 +80,16 @@ void singer_cycle::freeself()
 	if (line_orbit_label) {
 		INT i;
 		for (i = 0; i < P->N_lines; i++) {
-			FREE_BYTE(line_orbit_label[i]);
+			FREE_char(line_orbit_label[i]);
 			}
-		FREE_PBYTE(line_orbit_label);
+		FREE_pchar(line_orbit_label);
 		}
 	if (line_orbit_label_tex) {
 		INT i;
 		for (i = 0; i < P->N_lines; i++) {
-			FREE_BYTE(line_orbit_label_tex[i]);
+			FREE_char(line_orbit_label_tex[i]);
 			}
-		FREE_PBYTE(line_orbit_label_tex);
+		FREE_pchar(line_orbit_label_tex);
 		}
 	if (line_orbit) {
 		FREE_INT(line_orbit);
@@ -107,7 +107,7 @@ void singer_cycle::freeself()
 void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	const BYTE *poly;
+	const char *poly;
 	INT i, j, a;
 
 	if (f_v) {
@@ -269,8 +269,8 @@ void singer_cycle::init_lines(INT verbose_level)
 	line_orbit_len = NEW_INT(nb_line_orbits);
 	line_orbit_first = NEW_INT(nb_line_orbits);
 
-	line_orbit_label = NEW_PBYTE(P->N_lines);
-	line_orbit_label_tex = NEW_PBYTE(P->N_lines);
+	line_orbit_label = NEW_pchar(P->N_lines);
+	line_orbit_label_tex = NEW_pchar(P->N_lines);
 	line_orbit = NEW_INT(P->N_lines);
 	line_orbit_inv = NEW_INT(P->N_lines);
 	for (i = 0; i < Sch->nb_orbits; i++) {
@@ -298,19 +298,19 @@ void singer_cycle::init_lines(INT verbose_level)
 		for (j = 0; j < line_orbit_len[i]; j++) {
 			line_orbit[h] = a;
 			line_orbit_inv[a] = h;
-			BYTE str[1000];
+			char str[1000];
 			sprintf(str, "A%ld", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " is " << str << endl;
 				}
-			line_orbit_label[h] = NEW_BYTE(strlen(str) + 1);
+			line_orbit_label[h] = NEW_char(strlen(str) + 1);
 			sprintf(str, "A_{%ld}", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " in tex is " << str << endl;
 				}
-			line_orbit_label_tex[h] = NEW_BYTE(strlen(str) + 1);
+			line_orbit_label_tex[h] = NEW_char(strlen(str) + 1);
 			strcpy(line_orbit_label_tex[h], str);
 			b = A2->element_image_of(a, Elt, 0);
 			a = b;

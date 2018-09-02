@@ -150,7 +150,7 @@ void matrix_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_le
 	INT f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
 	INT *Elt1 = (INT *) Elt;
-	UBYTE *elt1 = (UBYTE *)elt;
+	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
 		cout << "matrix_group_element_unpack" << endl;
@@ -163,7 +163,7 @@ void matrix_group_element_pack(action &A, void *Elt, void *elt, INT verbose_leve
 	INT f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
 	INT *Elt1 = (INT *) Elt;
-	UBYTE *elt1 = (UBYTE *)elt;
+	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
 		cout << "matrix_group_element_pack" << endl;
@@ -176,7 +176,7 @@ void matrix_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_le
 	INT f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
 	INT *Elt = (INT *) elt;
-	UBYTE *p_elt;
+	uchar *p_elt;
 	
 	if (f_v) {
 		cout << "matrix_group_element_retrieve hdl = " << hdl << endl;
@@ -473,7 +473,7 @@ void matrix_group_element_print_verbose(action &A, void *elt, ostream &ost)
 void matrix_group_elt_print(void *elt, void *data, ostream &ost)
 {
 	matrix_group &G = * (matrix_group *) data;
-	UBYTE *p_elt = (UBYTE *) elt;
+	uchar *p_elt = (uchar *) elt;
 	INT Elt[1000];
 	
 	G.GL_unpack(p_elt, Elt, FALSE);

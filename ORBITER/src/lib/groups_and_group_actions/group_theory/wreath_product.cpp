@@ -102,7 +102,7 @@ void wreath_product::freeself()
 		FREE_OBJECT(P);
 	}
 	if (elt1) {
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 	}
 	if (Elts) {
 		FREE_OBJECT(Elts);
@@ -213,7 +213,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	bits_per_elt = nb_factors * dimension_of_matrix_group *
 			dimension_of_matrix_group * bits_per_digit;
 	char_per_elt = nb_factors + ((bits_per_elt + 7) >> 3);
-	elt1 = NEW_UBYTE(char_per_elt);
+	elt1 = NEW_uchar(char_per_elt);
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"bits_per_digit = " << bits_per_digit << endl;
@@ -620,12 +620,12 @@ void wreath_product::create_matrix(INT *Elt, INT *A, INT verbose_level)
 	}
 }
 
-void wreath_product::element_pack(INT *Elt, UBYTE *elt)
+void wreath_product::element_pack(INT *Elt, uchar *elt)
 {
 	INT i, j, f;
 
 	for (f = 0; f < nb_factors; f++) {
-		elt[f] = (UBYTE) Elt[f];
+		elt[f] = (uchar) Elt[f];
 	}
 	for (f = 0; f < nb_factors; f++) {
 		for (i = 0; i < dimension_of_matrix_group; i++) {
@@ -637,7 +637,7 @@ void wreath_product::element_pack(INT *Elt, UBYTE *elt)
 	}
 }
 
-void wreath_product::element_unpack(UBYTE *elt, INT *Elt)
+void wreath_product::element_unpack(uchar *elt, INT *Elt)
 {
 	INT i, j, f;
 	INT *m;
@@ -658,7 +658,7 @@ void wreath_product::element_unpack(UBYTE *elt, INT *Elt)
 	}
 }
 
-void wreath_product::put_digit(UBYTE *elt, INT f, INT i, INT j, INT d)
+void wreath_product::put_digit(uchar *elt, INT f, INT i, INT j, INT d)
 {
 	INT h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
@@ -677,7 +677,7 @@ void wreath_product::put_digit(UBYTE *elt, INT f, INT i, INT j, INT d)
 	}
 }
 
-INT wreath_product::get_digit(UBYTE *elt, INT f, INT i, INT j)
+INT wreath_product::get_digit(uchar *elt, INT f, INT i, INT j)
 {
 	INT h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;

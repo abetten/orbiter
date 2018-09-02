@@ -16,7 +16,7 @@ void transform_dist(INT *in, INT *out, INT &x, INT &y);
 void transform_dist_x(INT *in, INT *out, INT &x);
 void transform_dist_y(INT *in, INT *out, INT &y);
 void transform_llur_double(double *in, double *out, double &x, double &y);
-void draw(BYTE *fname);
+void draw(char *fname);
 void on_circle_int(INT *Px, INT *Py, INT idx, INT angle_in_degree, INT rad);
 void on_circle_double(double *Px, double *Py, INT idx, 
 	double angle_in_degree, double rad);
@@ -24,10 +24,10 @@ void polygon3D(mp_graphics &G, INT *Px, INT *Py, INT dim,
 	INT x0, INT y0, INT z0, INT x1, INT y1, INT z1);
 void integer_4pts(mp_graphics &G, INT *Px, INT *Py, 
 	INT p1, INT p2, INT p3, INT p4, 
-	const BYTE *align, INT a);
+	const char *align, INT a);
 void text_4pts(mp_graphics &G, INT *Px, INT *Py, 
 	INT p1, INT p2, INT p3, INT p4, 
-	const BYTE *align, const BYTE *str);
+	const char *align, const char *str);
 void affine_pt1(INT *Px, INT *Py, INT p0, INT p1, INT p2, 
 	double f1, INT p3);
 void affine_pt2(INT *Px, INT *Py, INT p0, INT p1, INT p1b, 
@@ -76,11 +76,11 @@ void draw_graph_on_2D_grid(mp_graphics *G,
 void draw_tournament(mp_graphics *G, 
 	INT x, INT y, INT dx, INT dy, INT nb_V, 
 	INT *Edges, INT nb_E, INT verbose_level);
-void draw_bitmatrix(const BYTE *fname_base, INT f_dots, 
+void draw_bitmatrix(const char *fname_base, INT f_dots, 
 	INT f_partition, INT nb_row_parts, INT *row_part_first, 
 	INT nb_col_parts, INT *col_part_first, 
 	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, UBYTE *D, INT *M, 
+	INT f_bitmatrix, uchar *D, INT *M, 
 	INT m, INT n, INT xmax_in, INT ymax_in, INT xmax, INT ymax, 
 	double scale, double line_width, 
 	INT f_has_labels, INT *labels);
@@ -88,7 +88,7 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 	INT f_partition, INT nb_row_parts, INT *row_part_first, 
 	INT nb_col_parts, INT *col_part_first, 
 	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, UBYTE *D, INT *M, 
+	INT f_bitmatrix, uchar *D, INT *M, 
 	INT m, INT n, INT xmax, INT ymax, 
 	INT f_has_labels, INT *labels);
 
@@ -290,7 +290,7 @@ public:
 		INT i9, INT i10, INT i11);
 	void polygon2_arrow_halfway(INT *Px, INT *Py, INT i1, INT i2);
 	void polygon2_arrow_halfway_and_label(INT *Px, INT *Py, INT i1, INT i2, 
-		const BYTE *alignment, const BYTE *txt);
+		const char *alignment, const char *txt);
 	void grid_aligned_text(grid_frame *F, INT x, INT y, 
 		const char *alignment, const char *p);
 	void aligned_text(INT x, INT y, const char *alignment, const char *p);
@@ -320,7 +320,7 @@ public:
 	void begin_figure(INT factor_1000);
 	void end_figure();
 
-	void comment(const BYTE *p);
+	void comment(const char *p);
 	void text(INT x, INT y, const char *p);
 	void circle(INT x, INT y, INT rad);
 	void circle_text(INT x, INT y, INT rad, const char *text);
@@ -337,9 +337,9 @@ public:
 
 
 	// output commands log file:
-	void header_log(BYTE *str_date);
+	void header_log(char *str_date);
 	void footer_log();
-	void comment_log(const BYTE *p);
+	void comment_log(const char *p);
 	void st_alignment_log();
 	void sl_udsty_log();
 	void sl_ends_log();
@@ -361,9 +361,9 @@ public:
 
 
 	// output commands metapost:
-	void header_mp(BYTE *str_date);
+	void header_mp(char *str_date);
 	void footer_mp();
-	void comment_mp(const BYTE *p);
+	void comment_mp(const char *p);
 	void text_mp(INT x1, INT y1, const char *p);
 	void begin_figure_mp(INT factor_1000);
 	void end_figure_mp();
@@ -384,13 +384,13 @@ public:
 	void output_x_metapost(INT x);
 	void output_y_metapost(INT y);
 	INT get_label(INT x, INT y);
-	void get_alignment_mp(BYTE *align);
+	void get_alignment_mp(char *align);
 	void line_thickness_mp();
 
 	// output commands tikz:
-	void header_tikz(BYTE *str_date);
+	void header_tikz(char *str_date);
 	void footer_tikz();
-	void comment_tikz(const BYTE *p);
+	void comment_tikz(const char *p);
 	void text_tikz(INT x1, INT y1, const char *p);
 	void circle_tikz(INT x, INT y, INT rad);
 	void output_circle_text_tikz(INT x, INT y, INT idx, INT rad, 
@@ -419,19 +419,19 @@ public:
 // plot.C:
 // #############################################################################
 
-void draw_density(BYTE *prefix, INT *the_set, INT set_size,
-	INT f_title, const BYTE *title, INT out_of, 
-	const BYTE *label_x, 
+void draw_density(char *prefix, INT *the_set, INT set_size,
+	INT f_title, const char *title, INT out_of, 
+	const char *label_x, 
 	INT f_circle, INT circle_at, INT circle_rad, 
 	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
 	INT xmax, INT ymax, INT offset_x, 
 	INT f_switch_x, INT no, INT f_embedded, 
 	INT verbose_level);
-void draw_density_multiple_curves(BYTE *prefix,
+void draw_density_multiple_curves(char *prefix,
 	INT **Data, INT *Data_size, INT nb_data_sets, 
-	INT f_title, const BYTE *title, INT out_of, 
-	const BYTE *label_x, 
+	INT f_title, const char *title, INT out_of, 
+	const char *label_x, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
 	INT xmax, INT ymax, INT offset_x, INT f_switch_x, 
 	INT f_v_logarithmic, double log_base, INT no, INT f_embedded, 
@@ -439,8 +439,8 @@ void draw_density_multiple_curves(BYTE *prefix,
 void draw_density2(mp_graphics &G, INT no, 
 	INT *outline_value, INT *outline_number, INT outline_sz, 
 	INT min_value, INT max_value, INT offset_x, INT f_switch_x, 
-	INT f_title, const BYTE *title, 
-	const BYTE *label_x, 
+	INT f_title, const char *title, 
+	const char *label_x, 
 	INT f_circle, INT circle_at, INT circle_rad, 
 	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid);
@@ -449,11 +449,11 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 	INT *outline_sz, INT nb_curves, 
 	INT min_x, INT max_x, INT min_y, INT max_y, 
 	INT offset_x, INT f_switch_x, 
-	INT f_title, const BYTE *title, 
-	const BYTE *label_x, 
+	INT f_title, const char *title, 
+	const char *label_x, 
 	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
 	INT f_v_logarithmic, double log_base);
-void read_numbers_from_file(const BYTE *fname, 
+void read_numbers_from_file(const char *fname, 
 	INT *&the_set, INT &set_size, INT verbose_level);
 void get_coord(INT *Px, INT *Py, INT idx, INT x, INT y, 
 	INT min_x, INT min_y, INT max_x, INT max_y, INT f_switch_x);
@@ -465,12 +465,12 @@ void y_to_pt_on_curve(INT y_in, INT &x, INT &y,
 void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, 
 	INT f_with_points, INT rad, 
 	INT q, INT *Table, INT nb, 
-	INT f_point_labels, BYTE **Point_labels, 
+	INT f_point_labels, char **Point_labels, 
 	INT f_embedded, INT f_sideways, 
 	INT verbose_level);
 void projective_plane_draw_grid2(mp_graphics &G, INT q, INT *Table, 
 	INT nb, INT f_with_points, INT rad, 
-	INT f_point_labels, BYTE **Point_labels, INT verbose_level);
+	INT f_point_labels, char **Point_labels, INT verbose_level);
 void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3, 
 	double &a, double &b);
 
@@ -618,9 +618,9 @@ public:
 	INT face4(INT pt1, INT pt2, INT pt3, INT pt4);
 	INT face5(INT pt1, INT pt2, INT pt3, INT pt4, INT pt5);
 	void draw_lines_with_selection(INT *selection, INT nb_select, 
-		double r, const BYTE *options, ostream &ost);
+		double r, const char *options, ostream &ost);
 	void draw_line_with_selection(INT line_idx, 
-		double r, const BYTE *options, ostream &ost);
+		double r, const char *options, ostream &ost);
 	void draw_lines_cij_with_selection(INT *selection, INT nb_select, 
 		ostream &ost);
 	void draw_lines_cij(ostream &ost);
@@ -631,27 +631,27 @@ public:
 		ostream &ost);
 	void draw_lines_bj(ostream &ost);
 	void draw_edges_with_selection(INT *selection, INT nb_select, 
-		double rad, const BYTE *options, ostream &ost);
+		double rad, const char *options, ostream &ost);
 	void draw_faces_with_selection(INT *selection, INT nb_select, 
-		double thickness_half, const BYTE *options, ostream &ost);
-	void draw_face(INT idx, double thickness_half, const BYTE *options, 
+		double thickness_half, const char *options, ostream &ost);
+	void draw_face(INT idx, double thickness_half, const char *options, 
 		ostream &ost);
-	void draw_text(const BYTE *text, double thickness_half, double extra_spacing, 
+	void draw_text(const char *text, double thickness_half, double extra_spacing, 
 			double scale, 
 			double off_x, double off_y, double off_z, 
-			const BYTE *color_options, 
+			const char *color_options, 
 			double x, double y, double z, 
 			double up_x, double up_y, double up_z, 
 			double view_x, double view_y, double view_z, 
 			ostream &ost, INT verbose_level);
 	void draw_planes_with_selection(INT *selection, INT nb_select, 
-		const BYTE *options, ostream &ost);
+		const char *options, ostream &ost);
 	void draw_points_with_selection(INT *selection, INT nb_select, 
-		double rad, const BYTE *options, ostream &ost);
+		double rad, const char *options, ostream &ost);
 	void draw_cubic_with_selection(INT *selection, INT nb_select, 
-		const BYTE *options, ostream &ost);
+		const char *options, ostream &ost);
 	void draw_quadric_with_selection(INT *selection, INT nb_select, 
-		const BYTE *options, ostream &ost);
+		const char *options, ostream &ost);
 	INT intersect_line_and_plane(INT line_idx, INT plane_idx, 
 		INT &intersection_point_idx, 
 		INT verbose_level);
@@ -721,7 +721,7 @@ public:
 
 	tree();
 	~tree();
-	void init(const BYTE *fname, INT xmax, INT ymax, INT verbose_level);
+	void init(const char *fname, INT xmax, INT ymax, INT verbose_level);
 	void draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, 
 		INT rad, 
 		INT f_circle, INT f_circletext, INT f_i, INT f_edge_labels, 
@@ -755,7 +755,7 @@ public:
 	
 	INT f_int_data;
 	INT int_data;
-	BYTE *char_data;
+	char *char_data;
 	INT nb_children;
 	tree_node **children;
 
@@ -769,7 +769,7 @@ public:
 	tree_node();
 	~tree_node();
 	void init(INT depth, tree_node *parent, INT f_value, INT value, 
-		INT f_i_data, INT i_data, BYTE *c_data, INT verbose_level);
+		INT f_i_data, INT i_data, char *c_data, INT verbose_level);
 	void print_path();
 	void print_depth_first();
 	void compute_DFS_rank(INT &rk);
@@ -778,7 +778,7 @@ public:
 	void calc_weight();
 	void place_xy(INT left, INT right, INT ymax, INT max_depth);
 	void place_on_circle(INT xmax, INT ymax, INT max_depth);
-	void add_node(INT l, INT depth, INT *path, INT i_data, BYTE *c_data, 
+	void add_node(INT l, INT depth, INT *path, INT i_data, char *c_data, 
 		INT verbose_level);
 	INT find_child(INT val);
 	void get_values(INT *v);

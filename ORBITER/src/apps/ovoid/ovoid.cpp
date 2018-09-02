@@ -44,7 +44,7 @@ int main(int argc, const char **argv)
 	
 	if (Gen.f_read) {
 		orbiter_data_file *ODF;
-		BYTE fname[1000];
+		char fname[1000];
 		INT i, j;
 		INT level = Gen.read_level;
 
@@ -59,7 +59,7 @@ int main(int argc, const char **argv)
 		INT f_split = FALSE;
 		INT split_r = 0;
 		INT split_m = 1;
-		BYTE fname_graph_mask[1000];
+		char fname_graph_mask[1000];
 		INT f_lexorder = TRUE;
 
 		sprintf(fname_graph_mask,
@@ -91,7 +91,7 @@ int main(int argc, const char **argv)
 			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 					<< ODF->Aut_ascii[orbit_idx] << endl;
 
-			BYTE fname_graph[1000];
+			char fname_graph[1000];
 			colored_graph *CG;
 
 			sprintf(fname_graph, fname_graph_mask, orbit_idx);

@@ -10,7 +10,7 @@
 
 INT t0 = 0;
 
-void read(const BYTE *fname, INT verbose_level);
+void read(const char *fname, INT verbose_level);
 void welch(INT q, INT verbose_level);
 void Lempel_Golomb(INT q, INT verbose_level);
 void costas(INT n, INT verbose_level);
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 	INT f_LG = FALSE;
 	INT LG_q = 0;
 	INT f_r = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	
  	t0 = os_ticks();
 	
@@ -100,12 +100,12 @@ int main(int argc, char **argv)
 	INT **D;
 	INT nb_sol = 0;
 	INT nb_sol_lexleast = 0;
-	BYTE fname1[1000];
-	BYTE fname2[1000];
+	char fname1[1000];
+	char fname2[1000];
 	ofstream *fp1;
 	ofstream *fp2;
 
-void read(const BYTE *fname, INT verbose_level)
+void read(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -114,8 +114,8 @@ void read(const BYTE *fname, INT verbose_level)
 		}
 
 
-	BYTE *buf;
-	BYTE *p_buf;
+	char *buf;
+	char *p_buf;
 	INT nb_sol, nb_sol1;
 	INT a, sz, i, j, n;
 	INT *Sol;
@@ -124,7 +124,7 @@ void read(const BYTE *fname, INT verbose_level)
 		return;
 		}
 	
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 
 

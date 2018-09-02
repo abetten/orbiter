@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	INT f_v = (verbose_level >= 1);
 
 	INT *BLT;
-	BYTE fname[1000];
+	char fname[1000];
 
 	BLT = BLT_representative(q, k);
 	sprintf(fname, "BLT_%ld_%ld.txt", q, k);

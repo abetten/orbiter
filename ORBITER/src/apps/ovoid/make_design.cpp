@@ -79,7 +79,7 @@ void do_it()
 	INT *D1;
 	INT *D2;
 	INT i, j, a, b;
-	BYTE fname[1000];
+	char fname[1000];
 	INT *data1 = data1a;
 	INT *data2 = data2a;
 

@@ -31,9 +31,9 @@ int main(int argc, char **argv)
 	INT f_q = FALSE;
 	INT q;
 	INT f_file = FALSE;
-	BYTE *file_name;
+	char *file_name;
 	INT f_poly = FALSE;
-	const BYTE *poly = "";
+	const char *poly = "";
 	INT *the_set;
 	INT set_size = 0;
 
@@ -111,7 +111,7 @@ void do_analyze_projective_code(INT n, finite_field *F,
 	INT d, i, j;
 	INT q = F->q;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 
 	if (f_v) {
 		cout << "analyzing projective code of length " << set_size << endl;

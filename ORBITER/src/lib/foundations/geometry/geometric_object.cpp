@@ -289,7 +289,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 void create_hyperoval(finite_field *F, 
 	INT f_translation, INT translation_exponent, 
 	INT f_Segre, INT f_Payne, INT f_Cherowitzo, INT f_OKeefe_Penttila, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -368,7 +368,7 @@ void create_hyperoval(finite_field *F,
 
 void create_subiaco_oval(finite_field *F, 
 	INT f_short, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -421,7 +421,7 @@ void create_subiaco_oval(finite_field *F,
 }
 
 void create_subiaco_hyperoval(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -469,7 +469,7 @@ void create_subiaco_hyperoval(finite_field *F,
 }
 
 void create_adelaide_hyperoval(subfield_structure *S, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -518,7 +518,7 @@ void create_adelaide_hyperoval(subfield_structure *S,
 }
 
 void create_ovoid(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -569,7 +569,7 @@ void create_ovoid(finite_field *F,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	sprintf(fname, "ovoid_%ld.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -580,7 +580,7 @@ void create_ovoid(finite_field *F,
 }
 
 void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	projective_space *P2;
@@ -637,7 +637,7 @@ void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq,
 
 
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	sprintf(fname, "Baer_substructure_in_PG_%ld_%ld.txt", n, Q);
 	//write_set_to_file(fname, S, sz, verbose_level);
 
@@ -650,7 +650,7 @@ void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq,
 
 
 void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -700,7 +700,7 @@ void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	if (f_embedded) {
 		sprintf(fname, "BLT_%ld_%ld_embedded.txt", q, BLT_k);
 		}
@@ -720,7 +720,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 	INT f_Fisher,
 	INT f_Mondello,
 	INT f_FTWKB,
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -733,7 +733,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 	orthogonal *O;
 	INT q = Fq->q;
 	//INT *v;
-	//BYTE BLT_label[1000];
+	//char BLT_label[1000];
 	
 	if (f_v) {
 		cout << "create_BLT" << endl;
@@ -806,7 +806,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	if (f_embedded) {
 		sprintf(fname, "BLT_%s_%ld_embedded.txt", BLT_label, q);
 		}
@@ -824,7 +824,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 }
 
 void create_orthogonal(INT epsilon, INT n, finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -867,7 +867,7 @@ void create_orthogonal(INT epsilon, INT n, finite_field *F,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	sprintf(fname, "Q%s_%ld_%ld.txt", plus_minus_letter(epsilon), n, F->q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -877,7 +877,7 @@ void create_orthogonal(INT epsilon, INT n, finite_field *F,
 }
 
 void create_hermitian(INT n, finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -917,7 +917,7 @@ void create_hermitian(INT n, finite_field *F,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	sprintf(fname, "H_%ld_%ld.txt", n, F->q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -929,7 +929,7 @@ void create_hermitian(INT n, finite_field *F,
 
 
 void create_twisted_cubic(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -981,7 +981,7 @@ void create_twisted_cubic(finite_field *F,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	sprintf(fname, "twisted_cubic_%ld.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
@@ -994,7 +994,7 @@ void create_twisted_cubic(finite_field *F,
 
 void create_ttp_code(finite_field *FQ, finite_field *Fq, 
 	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1005,7 +1005,7 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 	INT *H_subfield;
 	INT m, n;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print_subfield = "\\alpha";
+	const char *symbol_for_print_subfield = "\\alpha";
 
 	if (f_v) {
 		cout << "create_ttp_code" << endl;
@@ -1069,7 +1069,7 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 	cout << endl;
 #endif
 
-	//BYTE fname[1000];
+	//char fname[1000];
 	if (f_construction_A) {
 		if (f_hyperoval) {
 			sprintf(fname, "ttp_code_Ah_%ld.txt", Fq->q);
@@ -1089,7 +1089,7 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 }
 
 void create_unital_XXq_YZq_ZYq(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1136,7 +1136,7 @@ void create_unital_XXq_YZq_ZYq(finite_field *F,
 
 void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *Fq, 
 	INT f_embedded_in_PG_4_q, 
-	BYTE *fname, INT &nb_lines, INT *&Lines, 
+	char *fname, INT &nb_lines, INT *&Lines, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1312,7 +1312,7 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 
 
 void create_whole_space(INT n, finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1343,7 +1343,7 @@ void create_whole_space(INT n, finite_field *F,
 
 void create_hyperplane(INT n, finite_field *F, 
 	INT pt, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1389,7 +1389,7 @@ void create_hyperplane(INT n, finite_field *F,
 }
 
 void create_segre_variety(finite_field *F, INT a, INT b, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1458,7 +1458,7 @@ void create_segre_variety(finite_field *F, INT a, INT b,
 }
 
 void create_Maruta_Hamada_arc(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

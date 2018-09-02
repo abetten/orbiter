@@ -30,16 +30,16 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_coordinates = FALSE;
 	INT xmax_in = ONE_MILLION;
 	INT ymax_in = ONE_MILLION;
 	INT xmax_out = ONE_MILLION;
 	INT ymax_out = ONE_MILLION;
 	INT f_export_magma = FALSE;
-	const BYTE *magma_fname = NULL;
+	const char *magma_fname = NULL;
 	INT f_export_matlab = FALSE;
-	const BYTE *matlab_fname = NULL;
+	const char *matlab_fname = NULL;
 	INT f_on_circle = FALSE;
 	INT f_bitmatrix = FALSE;
 	INT f_labels = FALSE;
@@ -55,13 +55,13 @@ int main(int argc, char **argv)
 	INT f_all_cocliques = FALSE;
 	INT f_characteristic_polynomial = FALSE;
 	INT f_export = FALSE;
-	const BYTE *export_fname = NULL;
+	const char *export_fname = NULL;
 	INT f_export_laplacian = FALSE;
-	const BYTE *export_laplacian_fname = NULL;
+	const char *export_laplacian_fname = NULL;
 	INT f_expand_power = FALSE;
 	INT expand_power = 0;
 	INT expand_power_nb_graphs;
-	const BYTE *expand_power_graph_fname[1000];
+	const char *expand_power_graph_fname[1000];
 	INT f_partitioned = FALSE;
 	INT f_partition = FALSE;
 	INT part[1000];
@@ -247,7 +247,7 @@ int main(int argc, char **argv)
 
 
 	if (f_on_circle) {
-		BYTE fname2[1000];
+		char fname2[1000];
 
 		strcpy(fname2, fname);
 		replace_extension_with(fname2, "_on_circle");
@@ -259,7 +259,7 @@ int main(int argc, char **argv)
 		}
 	else if (f_bitmatrix) {
 
-		BYTE fname2[1000];
+		char fname2[1000];
 
 		strcpy(fname2, fname);
 		replace_extension_with(fname2, "_bitmatrix");
@@ -593,7 +593,7 @@ int main(int argc, char **argv)
 		cout << "ago on points = " << ago << endl;
 
 		
-		BYTE prefix[1000];
+		char prefix[1000];
 		poset_classification *gen;
 		INT nb_orbits, depth;
 		

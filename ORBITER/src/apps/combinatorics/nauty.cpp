@@ -8,9 +8,9 @@
 void canonical_form(INT *Adj, INT *Adj2, INT n, INT nb_edges, INT *edges2, 
 	INT *labeling, action *&A, action *&A2, schreier *&Sch,
 	INT verbose_level);
-void make_graph_fname(BYTE *fname_full,
-		BYTE *fname_full_tex, INT n, INT *set, INT sz);
-void draw_graph_to_file(const BYTE *fname, INT n,
+void make_graph_fname(char *fname_full,
+		char *fname_full_tex, INT n, INT *set, INT sz);
+void draw_graph_to_file(const char *fname, INT n,
 		INT *set, INT sz, double scale, INT f_embedded, INT f_sideways);
 
 int main(int argc, char **argv)
@@ -110,11 +110,11 @@ int main(int argc, char **argv)
 		INT N, E;
 		INT *set;
 		INT sz;
-		BYTE fname1_tex[1000];
-		BYTE fname2_tex[1000];
-		BYTE fname1[1000];
-		BYTE fname2[1000];
-		const BYTE *fname = "table_of_graphs.tex";
+		char fname1_tex[1000];
+		char fname2_tex[1000];
+		char fname1[1000];
+		char fname2[1000];
+		const char *fname = "table_of_graphs.tex";
 
 		{
 		ofstream fp(fname);
@@ -265,8 +265,8 @@ void canonical_form(INT *Adj, INT *Adj2,
 }
 
 
-void make_graph_fname(BYTE *fname_full,
-		BYTE *fname_full_tex, INT n, INT *set, INT sz)
+void make_graph_fname(char *fname_full,
+		char *fname_full_tex, INT n, INT *set, INT sz)
 {
 	INT i;
 	
@@ -279,7 +279,7 @@ void make_graph_fname(BYTE *fname_full,
 	sprintf(fname_full_tex + strlen(fname_full_tex), ".tex");
 }
 
-void draw_graph_to_file(const BYTE *fname,
+void draw_graph_to_file(const char *fname,
 		INT n, INT *set, INT sz, double scale,
 		INT f_embedded, INT f_sideways)
 {

@@ -273,7 +273,7 @@ void code_generator::init(int argc, const char **argv)
 		sprintf(prefix, "nonlinear_codes_%ld_%ld_%ld", n, q, d);
 		}
 	if (strlen(directory_path)) {
-		BYTE cmd[1000];
+		char cmd[1000];
 
 		sprintf(cmd, "mkdir %s", directory_path);
 		system(cmd);
@@ -522,7 +522,7 @@ void code_generator::main(INT verbose_level)
 		{
 		spreadsheet *Sp;
 		gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-		BYTE fname_csv[1000];
+		char fname_csv[1000];
 		sprintf(fname_csv, "orbits_%ld.csv", depth);
 		Sp->save(fname_csv, verbose_level);
 		delete Sp;

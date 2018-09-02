@@ -43,14 +43,14 @@ void data_file::freeself()
 	if (nb_cases >= 0) {
 		for (i = 0; i < nb_cases; i++) {
 			FREE_INT(sets[i]);
-			FREE_BYTE(Ago_ascii[i]);
-			FREE_BYTE(Aut_ascii[i]);
+			FREE_char(Ago_ascii[i]);
+			FREE_char(Aut_ascii[i]);
 			}
 		FREE_INT(set_sizes);
 		FREE_PINT(sets);
 		FREE_INT(casenumbers);
-		FREE_PBYTE(Ago_ascii);
-		FREE_PBYTE(Aut_ascii);
+		FREE_pchar(Ago_ascii);
+		FREE_pchar(Aut_ascii);
 		if (f_has_candidates) {
 			FREE_INT(nb_candidates);
 			for (i = 0; i < nb_cases; i++) {
@@ -63,7 +63,7 @@ void data_file::freeself()
 	cout << "data_file::freeself done" << endl;
 }
 
-void data_file::read(const BYTE *fname, INT f_casenumbers, INT verbose_level)
+void data_file::read(const char *fname, INT f_casenumbers, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -84,7 +84,7 @@ void data_file::read(const BYTE *fname, INT f_casenumbers, INT verbose_level)
 		}	
 }
 
-void data_file::read_candidates(const BYTE *candidates_fname, INT verbose_level)
+void data_file::read_candidates(const char *candidates_fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, cnt, a, b;

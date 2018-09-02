@@ -61,7 +61,7 @@ public:
 
 
 	INT f_prefix;
-	BYTE prefix[1000]; // prefix for output files
+	char prefix[1000]; // prefix for output files
 
 	INT f_list;
 	
@@ -69,7 +69,7 @@ public:
 	INT max_depth;
 
 	INT f_poly;
-	const BYTE *override_poly;
+	const char *override_poly;
 
 	INT f_draw_poset;
 	INT f_embedded;
@@ -78,7 +78,7 @@ public:
 	INT f_read;
 	INT read_level;
 
-	BYTE prefix_with_directory[1000];
+	char prefix_with_directory[1000];
 
 	klein_correspondence *K;
 	INT *color_table;
@@ -102,7 +102,7 @@ public:
 	void make_graphs(orbiter_data_file *ODF,
 		INT f_split, INT split_r, INT split_m,
 		INT f_lexorder_test,
-		const BYTE *fname_mask,
+		const char *fname_mask,
 		INT verbose_level);
 	void make_one_graph(orbiter_data_file *ODF,
 		INT orbit_idx,

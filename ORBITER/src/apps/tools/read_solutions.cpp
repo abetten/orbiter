@@ -15,9 +15,9 @@ int main(int argc, char **argv)
 	INT i, j;
 	INT verbose_level = 0;
 	INT f_file_mask_data = FALSE;
-	const BYTE *file_mask_data = NULL;
+	const char *file_mask_data = NULL;
 	INT f_file_mask_success = FALSE;
-	const BYTE *file_mask_success = NULL;
+	const char *file_mask_success = NULL;
 	INT f_N = FALSE;
 	INT N = 0;
 	INT f_nb_cases = FALSE;
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	INT f_data_set_size = FALSE;
 	INT data_set_size = 0;
 	INT f_save = FALSE;
-	const BYTE *save_prefix = NULL;
+	const char *save_prefix = NULL;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 	INT *Missing = NULL;
 	INT nb_existing = 0;
 	INT *Existing = NULL;
-	BYTE fname[1000];
+	char fname[1000];
 	
 	
 	Missing = NEW_INT(N);
@@ -133,8 +133,8 @@ int main(int argc, char **argv)
 	Data_sets = NEW_INT(nb_data_sets_allocated * data_set_size);
 
 
-	BYTE *p_buf;
-	BYTE buf[MY_BUFSIZE];
+	char *p_buf;
+	char buf[MY_BUFSIZE];
 
 	
 	for (h = 0; h < nb_existing; h++) {
@@ -284,14 +284,14 @@ int main(int argc, char **argv)
 	
 
 	if (f_save) {
-		BYTE fname_FstLen[1000];
+		char fname_FstLen[1000];
 	
 		sprintf(fname_FstLen, "%s_FstLen.csv", save_prefix);
 		INT_matrix_write_csv(fname_FstLen, FstLen, nb_cases, 2);
 
 		cout << "Written file " << fname_FstLen << " of size " << file_size(fname_FstLen) << endl;
 
-		BYTE fname_Data[1000];
+		char fname_Data[1000];
 	
 		sprintf(fname_Data, "%s_Data.csv", save_prefix);
 		INT_matrix_write_csv(fname_Data, Data_sorted, nb_data_sets_used, data_set_size);

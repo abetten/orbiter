@@ -239,8 +239,8 @@ void arc_generator::main(INT verbose_level)
 
 
 void arc_generator::init(finite_field *F,
-	const BYTE *input_prefix, 
-	const BYTE *base_fname,
+	const char *input_prefix, 
+	const char *base_fname,
 	INT starter_size,  
 	int argc, const char **argv, 
 	INT verbose_level)
@@ -519,7 +519,7 @@ void arc_generator::compute_starter(INT verbose_level)
 		{
 		spreadsheet *Sp;
 		gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-		BYTE fname_csv[1000];
+		char fname_csv[1000];
 		sprintf(fname_csv, "orbits_%ld.csv", depth);
 		Sp->save(fname_csv, verbose_level);
 		FREE_OBJECT(Sp);
@@ -972,7 +972,7 @@ INT arc_generator::arc_test(INT *S, INT len, INT verbose_level)
 void arc_generator::report(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 
 	if (f_v) {
 		cout << "arc_generator::report" << endl;
@@ -988,8 +988,8 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 	ofstream f(fname);
 	INT f_book = TRUE;
 	INT f_title = TRUE;
-	BYTE title[1000];
-	const BYTE *author = "Orbiter";
+	char title[1000];
+	const char *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;
@@ -1273,8 +1273,8 @@ void arc_generator::report(isomorph &Iso, INT verbose_level)
 		}
 
 
-	BYTE prefix[1000];
-	BYTE label_of_structure_plural[1000];
+	char prefix[1000];
+	char label_of_structure_plural[1000];
 
 	sprintf(prefix, "arcs_%ld_%ld", q, target_size);
 	sprintf(label_of_structure_plural, "Arcs");

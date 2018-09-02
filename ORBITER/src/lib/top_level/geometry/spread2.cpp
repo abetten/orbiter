@@ -20,10 +20,10 @@ void spread::print_isomorphism_type(isomorph *Iso,
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_implicit_fusion = FALSE;
-	BYTE fname[1000];
-	BYTE fname_klein[1000];
+	char fname[1000];
+	char fname_klein[1000];
 	INT f_elements_exponential = FALSE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 	INT i, p, h;
 	longinteger_object so;
 	//action *AA; // the action induced on the set
@@ -56,7 +56,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 		}
 
 	latex_head(file, FALSE/* f_book*/, FALSE /* f_title */, NULL /*title*/, 
-		"Orbiter" /*BYTE *author*/, FALSE/* f_toc*/, 
+		"Orbiter" /*char *author*/, FALSE/* f_toc*/, 
 		FALSE /* f_landscape*/,
 		FALSE /* f_12pt */, 
 		TRUE /* f_enlarged_page */, 
@@ -197,7 +197,7 @@ void spread::print_isomorphism_type(isomorph *Iso,
 }
 
 
-void spread::save_klein_invariants(BYTE *prefix, 
+void spread::save_klein_invariants(char *prefix, 
 	INT iso_cnt, 
 	INT *data, INT data_size, INT verbose_level)
 {
@@ -253,7 +253,7 @@ void spread::save_klein_invariants(BYTE *prefix,
 			}
 		}
 
-	BYTE fname[1000];
+	char fname[1000];
 	
 	sprintf(fname, "%s%ld_klein_invariant.bin", prefix, iso_cnt);
 	v.save_file(fname);
@@ -357,7 +357,7 @@ void spread::klein(ofstream &ost,
 
 		cout << "we will draw an incidence picture" << endl;
 		
-		BYTE fname_pic[1000];
+		char fname_pic[1000];
 		incidence_structure *I;
 		partitionstack *Stack;
 		
@@ -397,8 +397,8 @@ void spread::klein(ofstream &ost,
 
 		I->compute_TDO_safe(*Stack, depth, verbose_level + 2);
 		
-		BYTE fname_row_scheme[1000];
-		BYTE fname_col_scheme[1000];
+		char fname_row_scheme[1000];
+		char fname_col_scheme[1000];
 
 		sprintf(fname_row_scheme, "%s_%ld_planes_row_scheme.tex", Iso->prefix, iso_cnt);
 		sprintf(fname_col_scheme, "%s_%ld_planes_col_scheme.tex", Iso->prefix, iso_cnt);
@@ -1109,7 +1109,7 @@ void spread::czerwinski_oakden(INT level, INT verbose_level)
 		cout << "spread::czerwinski_oakden" << endl;
 		}
 
-	const BYTE *label[] = {
+	const char *label[] = {
 		"S1", 
 		"S2", 
 		"S3", 
@@ -1132,8 +1132,8 @@ void spread::czerwinski_oakden(INT level, INT verbose_level)
 		"B7", 
 		"B8", 
 		};
-	BYTE fname[] = "Czerwinski_Oakden.txt";
-	BYTE fname2[1000];
+	char fname[] = "Czerwinski_Oakden.txt";
+	char fname2[1000];
 	{
 	ofstream fp(fname);
 	
@@ -1196,7 +1196,7 @@ void spread::write_spread_to_file(INT type_of_spread, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 	INT *data;
 	INT sz = order + 1;
-	BYTE fname[1000];
+	char fname[1000];
 
 	if (f_v) {
 		cout << "spread::write_spread_to_file" << endl;
@@ -1490,7 +1490,7 @@ void spread::make_spread_from_q_clan(INT *data, INT type_of_spread, INT verbose_
 		}
 }
 
-void spread::read_and_print_spread(const BYTE *fname, INT verbose_level)
+void spread::read_and_print_spread(const char *fname, INT verbose_level)
 {
 	INT *data;
 	INT sz;
@@ -1500,7 +1500,7 @@ void spread::read_and_print_spread(const BYTE *fname, INT verbose_level)
 	FREE_INT(data);
 }
 
-void spread::HMO(const BYTE *fname, INT verbose_level)
+void spread::HMO(const char *fname, INT verbose_level)
 {
 	INT *data;
 	INT sz, i, h, h1;
@@ -1608,7 +1608,7 @@ void spread::HMO(const BYTE *fname, INT verbose_level)
 		cout << "has rank " << Data2[h] << endl;
 		}
 
-	BYTE fname2[1000];
+	char fname2[1000];
 	sprintf(fname2, "HMO_%s", fname);
 
 	write_set_to_file(fname2, Data2, Sz, verbose_level);
@@ -1700,7 +1700,7 @@ void spread::print_spread(INT *data, INT sz)
 void spread::report2(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT target_size = order + 1;
 
 	if (f_v) {
@@ -1712,8 +1712,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 	ofstream f(fname);
 	INT f_book = TRUE;
 	INT f_title = TRUE;
-	BYTE title[1000];
-	const BYTE *author = "Orbiter";
+	char title[1000];
+	const char *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;
@@ -2123,8 +2123,8 @@ void spread::report2(isomorph &Iso, INT verbose_level)
 
 	//Iso.close_solution_database(verbose_level - 1);
 
-	BYTE prefix[1000];
-	BYTE label_of_structure_plural[1000];
+	char prefix[1000];
+	char label_of_structure_plural[1000];
 
 	sprintf(prefix, "Spreads_%ld_%ld", q, k);
 	sprintf(label_of_structure_plural, "Spreads");
@@ -2148,7 +2148,7 @@ void spread::all_cooperstein_thas_quotients(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT h;
-	BYTE fname[1000];
+	char fname[1000];
 	INT cnt = 0;
 
 	if (f_v) {
@@ -2338,7 +2338,7 @@ void spread::cooperstein_thas_quotients(isomorph &Iso, ofstream &f, INT h, INT &
 
 
 
-		BYTE fname[1000];
+		char fname[1000];
 		sprintf(fname, "quotient_q%ld_iso%ld_nb%ld_orbit_length%ld.txt", i_power_j(q, k), h, u, orbit_length);
 		write_set_to_file(fname, data2, order, 0 /* verbose_level*/);
 		cnt++;

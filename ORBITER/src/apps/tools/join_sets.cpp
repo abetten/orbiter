@@ -15,13 +15,13 @@ int main(int argc, char **argv)
 	INT i, j;
 	INT verbose_level = 0;
 	INT f_file_mask = FALSE;
-	const BYTE *file_mask = NULL;
+	const char *file_mask = NULL;
 	INT f_N = FALSE;
 	INT N = 0;
 	INT f_out_mask = FALSE;
-	const BYTE *out_mask = NULL;
+	const char *out_mask = NULL;
 	INT f_save = FALSE;
-	const BYTE *save_fname = NULL;
+	const char *save_fname = NULL;
 
 
 	cout << argv[0] << endl;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	M = 0;
 
 	for (i = 0; i < N; i++) {
-		BYTE fname[1000];
+		char fname[1000];
 
 		sprintf(fname, file_mask, i, i, i, i, i);
 		
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 	S->fill_entry_with_text(0 /* row_idx */, 4 /* col_idx */, "C4");
 	for (i = 0; i < N; i++) {
 		for (j = 0; j < Set_sz[i]; j++, h++) {
-			BYTE str[1000];
+			char str[1000];
 
 			sprintf(str, "%ld", h);
 			S->fill_entry_with_text(1 + h /* row_idx */, 0 /* col_idx */, str);

@@ -16,10 +16,10 @@
 #define POINTER_TYPE_INT 3
 #define POINTER_TYPE_PINT 4
 #define POINTER_TYPE_PPINT 5
-#define POINTER_TYPE_BYTE 6
-#define POINTER_TYPE_UBYTE 7
-#define POINTER_TYPE_PBYTE 8
-#define POINTER_TYPE_PUBYTE 9
+#define POINTER_TYPE_char 6
+#define POINTER_TYPE_uchar 7
+#define POINTER_TYPE_pchar 8
+#define POINTER_TYPE_puchar 9
 #define POINTER_TYPE_PVOID 10
 #define POINTER_TYPE_OBJECT 11
 #define POINTER_TYPE_OBJECTS 12
@@ -56,7 +56,7 @@ void mem_object_registry_entry::null()
 	source_line = 0;
 }
 
-void mem_object_registry_entry::set_type_from_string(BYTE *str)
+void mem_object_registry_entry::set_type_from_string(char *str)
 {
 	if (strcmp(str, "int") == 0) {
 		object_type = POINTER_TYPE_SMALLINT;
@@ -68,14 +68,14 @@ void mem_object_registry_entry::set_type_from_string(BYTE *str)
 		object_type = POINTER_TYPE_PINT;
 	} else if (strcmp(str, "PPINT") == 0) {
 		object_type = POINTER_TYPE_PPINT;
-	} else if (strcmp(str, "BYTE") == 0) {
-		object_type = POINTER_TYPE_BYTE;
-	} else if (strcmp(str, "UBYTE") == 0) {
-		object_type = POINTER_TYPE_UBYTE;
-	} else if (strcmp(str, "PBYTE") == 0) {
-		object_type = POINTER_TYPE_PBYTE;
-	} else if (strcmp(str, "PUBYTE") == 0) {
-		object_type = POINTER_TYPE_PUBYTE;
+	} else if (strcmp(str, "char") == 0) {
+		object_type = POINTER_TYPE_char;
+	} else if (strcmp(str, "uchar") == 0) {
+		object_type = POINTER_TYPE_uchar;
+	} else if (strcmp(str, "pchar") == 0) {
+		object_type = POINTER_TYPE_pchar;
+	} else if (strcmp(str, "puchar") == 0) {
+		object_type = POINTER_TYPE_puchar;
 	} else if (strcmp(str, "pvoid") == 0) {
 		object_type = POINTER_TYPE_PVOID;
 	} else if (strcmp(str, "OBJECT") == 0) {
@@ -107,17 +107,17 @@ void mem_object_registry_entry::print_type(ostream &ost)
 	else if (object_type == POINTER_TYPE_PPINT) {
 		ost << "PPINT";
 		}
-	else if (object_type == POINTER_TYPE_BYTE) {
-		ost << "BYTE";
+	else if (object_type == POINTER_TYPE_char) {
+		ost << "char";
 		}
-	else if (object_type == POINTER_TYPE_UBYTE) {
-		ost << "UBYTE";
+	else if (object_type == POINTER_TYPE_uchar) {
+		ost << "uchar";
 		}
-	else if (object_type == POINTER_TYPE_PBYTE) {
-		ost << "PBYTE";
+	else if (object_type == POINTER_TYPE_pchar) {
+		ost << "pchar";
 		}
-	else if (object_type == POINTER_TYPE_PUBYTE) {
-		ost << "PUBYTE";
+	else if (object_type == POINTER_TYPE_puchar) {
+		ost << "puchar";
 		}
 	else if (object_type == POINTER_TYPE_PVOID) {
 		ost << "pvoid";
@@ -155,17 +155,17 @@ int mem_object_registry_entry::size_of()
 	else if (object_type == POINTER_TYPE_PPINT) {
 		return sizeof(INT **) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_BYTE) {
-		return sizeof(BYTE) * object_n;
+	else if (object_type == POINTER_TYPE_char) {
+		return sizeof(char) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_UBYTE) {
-		return sizeof(UBYTE) * object_n;
+	else if (object_type == POINTER_TYPE_uchar) {
+		return sizeof(uchar) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_PBYTE) {
-		return sizeof(BYTE *) * object_n;
+	else if (object_type == POINTER_TYPE_pchar) {
+		return sizeof(char *) * object_n;
 		}
-	else if (object_type == POINTER_TYPE_PUBYTE) {
-		return sizeof(UBYTE *) * object_n;
+	else if (object_type == POINTER_TYPE_puchar) {
+		return sizeof(uchar *) * object_n;
 		}
 	else if (object_type == POINTER_TYPE_PVOID) {
 		return sizeof(pvoid) * object_n;
@@ -329,7 +329,7 @@ void mem_object_registry::allocate(INT N, INT verbose_level)
 
 
 void mem_object_registry::set_automatic_dump(
-		INT automatic_dump_interval, const BYTE *fname_mask,
+		INT automatic_dump_interval, const char *fname_mask,
 		INT verbose_level)
 {
 	int f_v = (verbose_level >= 1);
@@ -350,7 +350,7 @@ void mem_object_registry::automatic_dump()
 	if ((cur_time % automatic_dump_interval) != 0) {
 		return;
 	}
-	BYTE fname[1000];
+	char fname[1000];
 	INT a;
 
 	a = cur_time / automatic_dump_interval;
@@ -366,7 +366,7 @@ void mem_object_registry::manual_dump()
 	if (!f_automatic_dump) {
 		return;
 	}
-	BYTE fname[1000];
+	char fname[1000];
 	INT a;
 
 	a = cur_time / automatic_dump_interval + 1;
@@ -376,7 +376,7 @@ void mem_object_registry::manual_dump()
 	dump_to_csv_file(fname);
 }
 
-void mem_object_registry::manual_dump_with_file_name(const BYTE *fname)
+void mem_object_registry::manual_dump_with_file_name(const char *fname)
 {
 	dump_to_csv_file(fname);
 }
@@ -397,7 +397,7 @@ void mem_object_registry::dump()
 	cout << "nb_allocate_total=" << nb_allocate_total << endl;
 	cout << "nb_delete_total=" << nb_delete_total << endl;
 	cout << "cur_time=" << cur_time << endl;
-	cout << "total allocation size in BYTE=" << sz << endl;
+	cout << "total allocation size in char=" << sz << endl;
 	cout << "table of all currently active memory allocations in increasing "
 			"order of the value of the pointer" << endl;
 	for (i = 0; i < nb_entries_used; i++) {
@@ -405,7 +405,7 @@ void mem_object_registry::dump()
 	}
 }
 
-void mem_object_registry::dump_to_csv_file(const BYTE *fname)
+void mem_object_registry::dump_to_csv_file(const char *fname)
 {
 	INT i, s, sz;
 
@@ -431,7 +431,7 @@ void mem_object_registry::dump_to_csv_file(const BYTE *fname)
 		fp << "nb_allocate_total=" << nb_allocate_total << endl;
 		fp << "nb_delete_total=" << nb_delete_total << endl;
 		fp << "cur_time=" << cur_time << endl;
-		fp << "total allocation size in BYTE=" << sz << endl;
+		fp << "total allocation size in char=" << sz << endl;
 	}
 }
 
@@ -636,35 +636,35 @@ void mem_object_registry::free_PPINT(INT ***p, const char *file, int line)
 	delete [] p;
 }
 
-BYTE *mem_object_registry::allocate_BYTE(INT n, const char *file, int line)
+char *mem_object_registry::allocate_char(INT n, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_BYTE BYTE[n], "
+		cout << "mem_object_registry::allocate_char char[n], "
 				"n=" << n << " file=" << file << " line=" << line << endl;
 	}
-	BYTE *p;
-	p = new BYTE[n];
+	char *p;
+	p = new char[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_BYTE, (int) n, sizeof(BYTE),
+				POINTER_TYPE_char, (int) n, sizeof(char),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_BYTE(BYTE *p, const char *file, int line)
+void mem_object_registry::free_char(char *p, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::free_BYTE BYTE[n], "
+		cout << "mem_object_registry::free_char char[n], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (p == NULL) {
-		cout << "mem_object_registry::free_BYTE "
+		cout << "mem_object_registry::free_char "
 				"NULL pointer, ignoring" << endl;
 		cout << "p=" << p << " file=" << file
 				<< " line=" << line << endl;
@@ -676,35 +676,35 @@ void mem_object_registry::free_BYTE(BYTE *p, const char *file, int line)
 	delete [] p;
 }
 
-UBYTE *mem_object_registry::allocate_UBYTE(INT n, const char *file, int line)
+uchar *mem_object_registry::allocate_uchar(INT n, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_UBYTE UBYTE[n], "
+		cout << "mem_object_registry::allocate_uchar uchar[n], "
 				"n=" << n << " file=" << file << " line=" << line << endl;
 	}
-	UBYTE *p;
-	p = new UBYTE[n];
+	uchar *p;
+	p = new uchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_UBYTE, (int) n, sizeof(UBYTE),
+				POINTER_TYPE_uchar, (int) n, sizeof(uchar),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_UBYTE(UBYTE *p, const char *file, int line)
+void mem_object_registry::free_uchar(uchar *p, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::free_UBYTE UBYTE[n], "
+		cout << "mem_object_registry::free_uchar uchar[n], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (p == NULL) {
-		cout << "mem_object_registry::free_UBYTE "
+		cout << "mem_object_registry::free_uchar "
 				"NULL pointer, ignoring" << endl;
 		cout << "p=" << p << " file=" << file
 				<< " line=" << line << endl;
@@ -716,35 +716,35 @@ void mem_object_registry::free_UBYTE(UBYTE *p, const char *file, int line)
 	delete [] p;
 }
 
-BYTE **mem_object_registry::allocate_PBYTE(INT n, const char *file, int line)
+char **mem_object_registry::allocate_pchar(INT n, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_PBYTE PBYTE[n], "
+		cout << "mem_object_registry::allocate_pchar pchar[n], "
 				"n=" << n << " file=" << file << " line=" << line << endl;
 	}
-	BYTE **p;
-	p = new PBYTE[n];
+	char **p;
+	p = new pchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_PBYTE, (int) n, sizeof(BYTE *),
+				POINTER_TYPE_pchar, (int) n, sizeof(char *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_PBYTE(BYTE **p, const char *file, int line)
+void mem_object_registry::free_pchar(char **p, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::free_PBYTE PBYTE[n], "
+		cout << "mem_object_registry::free_pchar pchar[n], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (p == NULL) {
-		cout << "mem_object_registry::free_PBYTE "
+		cout << "mem_object_registry::free_pchar "
 				"NULL pointer, ignoring" << endl;
 		cout << "p=" << p << " file=" << file
 				<< " line=" << line << endl;
@@ -756,35 +756,35 @@ void mem_object_registry::free_PBYTE(BYTE **p, const char *file, int line)
 	delete [] p;
 }
 
-UBYTE **mem_object_registry::allocate_PUBYTE(INT n, const char *file, int line)
+uchar **mem_object_registry::allocate_puchar(INT n, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_PUBYTE PUBYTE[n], "
+		cout << "mem_object_registry::allocate_puchar puchar[n], "
 				"n=" << n << " file=" << file << " line=" << line << endl;
 	}
-	UBYTE **p;
-	p = new PUBYTE[n];
+	uchar **p;
+	p = new puchar[n];
 	if (f_memory_debug) {
 		add_to_registry(p /* pointer */,
-				POINTER_TYPE_PUBYTE, (int) n, sizeof(BYTE *),
+				POINTER_TYPE_puchar, (int) n, sizeof(char *),
 				"", file, line,
 				memory_debug_verbose_level - 1);
 		}
 	return p;
 }
 
-void mem_object_registry::free_PUBYTE(UBYTE **p, const char *file, int line)
+void mem_object_registry::free_puchar(uchar **p, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::free_PUBYTE PUBYTE[n], "
+		cout << "mem_object_registry::free_puchar puchar[n], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (p == NULL) {
-		cout << "mem_object_registry::free_PUBYTE "
+		cout << "mem_object_registry::free_puchar "
 				"NULL pointer, ignoring" << endl;
 		cout << "p=" << p << " file=" << file
 				<< " line=" << line << endl;
@@ -842,7 +842,7 @@ void *mem_object_registry::allocate_OBJECTS(void *p, INT n, INT size_of,
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_OBJECTS BYTE[n * size_of], "
+		cout << "mem_object_registry::allocate_OBJECTS char[n * size_of], "
 				"n=" << n << " file=" << file << " line=" << line << endl;
 	}
 	if (f_memory_debug) {
@@ -859,7 +859,7 @@ void mem_object_registry::free_OBJECTS(void *p, const char *file, int line)
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::free_OBJECTS BYTE[n * size_of], "
+		cout << "mem_object_registry::free_OBJECTS char[n * size_of], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (p == NULL) {
@@ -881,7 +881,7 @@ void *mem_object_registry::allocate_OBJECT(void *p, INT size_of,
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::allocate_OBJECT BYTE[size_of], "
+		cout << "mem_object_registry::allocate_OBJECT char[size_of], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (f_memory_debug) {
@@ -898,7 +898,7 @@ void mem_object_registry::free_OBJECT(void *p, const char *file, int line)
 	int f_v = (memory_debug_verbose_level >= 1);
 
 	if (f_v) {
-		cout << "mem_object_registry::free_OBJECT BYTE[size_of], "
+		cout << "mem_object_registry::free_OBJECT char[size_of], "
 				" file=" << file << " line=" << line << endl;
 	}
 	if (p == NULL) {
@@ -1376,7 +1376,7 @@ void registry_dump()
 		}
 	cout << "overall number of objects in the registry: "
 			<< registry_size << endl;
-	cout << "overall allocation in bytes: " << sz << endl;
+	cout << "overall allocation in chars: " << sz << endl;
 	memory_watch_list_dump();
 }
 
@@ -1386,7 +1386,7 @@ typedef struct registry_key_pair registry_key_pair;
 
 
 struct registry_key_pair {
-	const BYTE *file;
+	const char *file;
 	INT line;
 	INT idx;
 	INT sz;
@@ -1520,7 +1520,7 @@ void registry_dump_sorted()
 		}
 	cout << "overall number of objects in the registry: "
 			<< registry_size << endl;
-	cout << "overall allocation in bytes: " << sz << endl;
+	cout << "overall allocation in chars: " << sz << endl;
 	print_line_of_number_signs();
 
 
@@ -1574,7 +1574,7 @@ void registry_dump_sorted_by_size()
 
 	cout << "overall number of objects in the registry: "
 			<< registry_size << endl;
-	cout << "overall allocation in bytes: " << sz << endl;
+	cout << "overall allocation in chars: " << sz << endl;
 
 	delete [] K;
 }
@@ -1622,11 +1622,11 @@ void registry_print_type(INT t)
 	else if (t == POINTER_TYPE_PINT) {
 		cout << "INT*";
 		}
-	else if (t == POINTER_TYPE_BYTE) {
-		cout << "BYTE";
+	else if (t == POINTER_TYPE_char) {
+		cout << "char";
 		}
-	else if (t == POINTER_TYPE_PBYTE) {
-		cout << "BYTE*";
+	else if (t == POINTER_TYPE_pchar) {
+		cout << "char*";
 		}
 	else if (t == POINTER_TYPE_PVOID) {
 		cout << "void*";

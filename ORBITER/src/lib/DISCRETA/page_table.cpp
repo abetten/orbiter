@@ -388,8 +388,8 @@ void page_table::allocate_rec(Buffer *BF, INT buf_idx, INT x, INT verbose_level)
 		reallocate_table(verbose_level - 1);
 		}
 
-	fill_char((BYTE *)BF, sizeof(Buffer), 0);
-	ref = btree_pages->store((UBYTE *) &BF->Page);
+	fill_char((char *)BF, sizeof(Buffer), 0);
+	ref = btree_pages->store((uchar *) &BF->Page);
 
 	if (search(btree_page_registry_length, buf_idx, x, idx)) {
 		cout << "page_table::allocate_rec error, found entry in the table" << endl;

@@ -118,12 +118,12 @@ void bt_key::init_int2_vec(INT field1, INT field2, INT vec_fst, INT vec_len)
 	bt_key::int_vec_len() = vec_len;
 }
 
-INT bt_lexicographic_cmp(BYTE *p1, BYTE *p2)
+INT bt_lexicographic_cmp(char *p1, char *p2)
 {
 	return strcmp(p1, p2);
 }
 
-INT bt_key_int_cmp(BYTE *p1, BYTE *p2)
+INT bt_key_int_cmp(char *p1, char *p2)
 {
 	INT4 *p_l1, *p_l2;
 	
@@ -138,7 +138,7 @@ INT bt_key_int_cmp(BYTE *p1, BYTE *p2)
 	return 0;
 }
 
-INT bt_key_int2_cmp(BYTE *p1, BYTE *p2)
+INT bt_key_int2_cmp(char *p1, char *p2)
 {
 	INT4 *p_l1, *p_l2;
 	
@@ -159,24 +159,24 @@ INT bt_key_int2_cmp(BYTE *p1, BYTE *p2)
 	return 0;
 }
 
-void bt_key_print_INT4(BYTE **key, ostream& ost)
+void bt_key_print_INT4(char **key, ostream& ost)
 {
 	INT4 i;
 	bt_key_get_INT4(key, i);
 	ost << i;
 }
 
-void bt_key_print_INT2(BYTE **key, ostream& ost)
+void bt_key_print_INT2(char **key, ostream& ost)
 {
 	INT2 i;
 	bt_key_get_INT2(key, i);
 	ost << i;
 }
 
-void bt_key_print(BYTE *key, Vector& V, ostream& ost)
+void bt_key_print(char *key, Vector& V, ostream& ost)
 {
-	BYTE *the_key = key;
-	BYTE c;
+	char *the_key = key;
+	char c;
 	INT i, j, l1, output_size;
 	enum bt_key_kind k;
 	
@@ -242,13 +242,13 @@ void bt_key_print(BYTE *key, Vector& V, ostream& ost)
 	ost << "]";
 }
 
-INT bt_key_compare_INT4(BYTE **p_key1, BYTE **p_key2)
+INT bt_key_compare_INT4(char **p_key1, char **p_key2)
 {
 	INT4 int1, int2;
 	INT i;
-	BYTE c;
-	BYTE *pc_1 = (BYTE *) &int1;
-	BYTE *pc_2 = (BYTE *) &int2;
+	char c;
+	char *pc_1 = (char *) &int1;
+	char *pc_2 = (char *) &int2;
 	
 	for (i = 0; i < 4; i++) {
 		c = **p_key1;
@@ -267,13 +267,13 @@ INT bt_key_compare_INT4(BYTE **p_key1, BYTE **p_key2)
 	return 0;
 }
 
-INT bt_key_compare_INT2(BYTE **p_key1, BYTE **p_key2)
+INT bt_key_compare_INT2(char **p_key1, char **p_key2)
 {
 	INT2 int1, int2;
 	INT i;
-	BYTE c;
-	BYTE *pc_1 = (BYTE *) &int1;
-	BYTE *pc_2 = (BYTE *) &int2;
+	char c;
+	char *pc_1 = (char *) &int1;
+	char *pc_2 = (char *) &int2;
 	
 	for (i = 0; i < 2; i++) {
 		c = **p_key1;
@@ -292,10 +292,10 @@ INT bt_key_compare_INT2(BYTE **p_key1, BYTE **p_key2)
 	return 0;
 }
 
-INT bt_key_compare(BYTE *key1, BYTE *key2, Vector& V, INT depth)
+INT bt_key_compare(char *key1, char *key2, Vector& V, INT depth)
 {
-	BYTE *the_key1 = key1;
-	BYTE *the_key2 = key2;
+	char *the_key1 = key1;
+	char *the_key2 = key2;
 	INT i, j, output_size, res;
 	enum bt_key_kind k;
 	
@@ -354,7 +354,7 @@ INT bt_key_compare(BYTE *key1, BYTE *key2, Vector& V, INT depth)
 	return 0;
 }
 
-void bt_key_fill_in_INT4(BYTE **p_key, discreta_base& key_op)
+void bt_key_fill_in_INT4(char **p_key, discreta_base& key_op)
 {
 	if (key_op.s_kind() != INTEGER) {
 		cout << "bt_key_fill_in_INT4() object not an INTEGER" << endl;
@@ -363,8 +363,8 @@ void bt_key_fill_in_INT4(BYTE **p_key, discreta_base& key_op)
 	integer& key_op_int = key_op.as_integer();
 	INT4 a = (INT4) key_op_int.s_i();
 	INT i;
-	BYTE *pc = (BYTE *) &a;
-	BYTE c;
+	char *pc = (char *) &a;
+	char c;
 	
 	for (i = 0; i < 4; i++) {
 		c = pc[i];
@@ -373,7 +373,7 @@ void bt_key_fill_in_INT4(BYTE **p_key, discreta_base& key_op)
 		}
 }
 
-void bt_key_fill_in_INT2(BYTE **p_key, discreta_base& key_op)
+void bt_key_fill_in_INT2(char **p_key, discreta_base& key_op)
 {
 	if (key_op.s_kind() != INTEGER) {
 		cout << "bt_key_fill_in_INT2() object not an INTEGER" << endl;
@@ -382,8 +382,8 @@ void bt_key_fill_in_INT2(BYTE **p_key, discreta_base& key_op)
 	integer& key_op_int = key_op.as_integer();
 	INT2 a = key_op_int.s_i();
 	INT i;
-	BYTE *pc = (BYTE *) &a;
-	BYTE c;
+	char *pc = (char *) &a;
+	char c;
 	
 	for (i = 0; i < 2; i++) {
 		c = pc[i];
@@ -392,7 +392,7 @@ void bt_key_fill_in_INT2(BYTE **p_key, discreta_base& key_op)
 		}
 }
 
-void bt_key_fill_in_string(BYTE **p_key, INT output_size, discreta_base& key_op)
+void bt_key_fill_in_string(char **p_key, INT output_size, discreta_base& key_op)
 {
 	if (key_op.s_kind() != HOLLERITH) {
 		cout << "bt_key_fill_in_string() object not an HOLLERITH" << endl;
@@ -403,9 +403,9 @@ void bt_key_fill_in_string(BYTE **p_key, INT output_size, discreta_base& key_op)
 	*p_key += output_size;
 }
 
-void bt_key_fill_in(BYTE *key, Vector& V, Vector& the_object)
+void bt_key_fill_in(char *key, Vector& V, Vector& the_object)
 {
-	BYTE *the_key = key;
+	char *the_key = key;
 	INT i, j, output_size;
 	enum bt_key_kind k;
 	
@@ -469,9 +469,9 @@ void bt_key_fill_in(BYTE *key, Vector& V, Vector& the_object)
 		}
 }
 
-void bt_key_get_INT4(BYTE **key, INT4 &i)
+void bt_key_get_INT4(char **key, INT4 &i)
 {
-	BYTE *pc = (BYTE *)&i;
+	char *pc = (char *)&i;
 	
 	pc[0] = **key; (*key)++;
 	pc[1] = **key; (*key)++;
@@ -479,9 +479,9 @@ void bt_key_get_INT4(BYTE **key, INT4 &i)
 	pc[3] = **key; (*key)++;
 }
 
-void bt_key_get_INT2(BYTE **key, INT2 &i)
+void bt_key_get_INT2(char **key, INT2 &i)
 {
-	BYTE *pc = (BYTE *)&i;
+	char *pc = (char *)&i;
 	
 	pc[0] = **key; (*key)++;
 	pc[1] = **key; (*key)++;

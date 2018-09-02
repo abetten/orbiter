@@ -33,7 +33,7 @@ void longinteger_object::freeself()
 			longinteger_print_digits(rep(), len());
 			cout << endl;
 			}
-		FREE_BYTE(r);
+		FREE_char(r);
 		r = NULL;
 		}
 	if (f_v) {
@@ -56,7 +56,7 @@ void longinteger_object::create(INT i)
 		sgn = FALSE;
 		}
 	if (i == 0) {
-		r = NEW_BYTE(1);
+		r = NEW_char(1);
 		r[0] = 0;
 		l = 1;
 		return;
@@ -66,7 +66,7 @@ void longinteger_object::create(INT i)
 		cout << "longinteger_object::create "
 				"i=" << i << " log =  " << l << endl;
 		}
-	r = NEW_BYTE(l);
+	r = NEW_char(l);
 	j = 0;
 	while (i) {
 		dj = i % 10;
@@ -144,7 +144,7 @@ void longinteger_object::create_from_base_b_representation(
 }
 
 void longinteger_object::create_from_base_10_string(
-		const BYTE *str, INT verbose_level)
+		const char *str, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	longinteger_domain D;
@@ -167,7 +167,7 @@ void longinteger_object::create_from_base_10_string(
 	x.assign_to(*this);
 }
 
-void longinteger_object::create_from_base_10_string(const BYTE *str)
+void longinteger_object::create_from_base_10_string(const char *str)
 {
 	create_from_base_10_string(str, 0);
 }
@@ -207,7 +207,7 @@ void longinteger_object::assign_to(longinteger_object &b)
 		}
 	b.sgn = sgn;
 	b.l = l;
-	b.r = NEW_BYTE(b.l);
+	b.r = NEW_char(b.l);
 	for (i = 0; i < l; i++) {
 		b.r[i] = r[i];
 		}
@@ -326,7 +326,7 @@ void longinteger_object::print_width(ostream& ost, INT width)
 		}
 }
 
-void longinteger_object::print_to_string(BYTE *str)
+void longinteger_object::print_to_string(char *str)
 {
 	INT i, j = 0;
 	char c;

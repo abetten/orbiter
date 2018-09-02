@@ -2267,7 +2267,7 @@ void strong_generators::generators_for_the_stabilizer_of_the_cubic_surface(
 	INT *data;
 	INT nb_gens;
 	INT data_size;
-	const BYTE *ascii_target_go;
+	const char *ascii_target_go;
 	longinteger_object target_go;
 	INT i;
 	
@@ -2421,7 +2421,7 @@ void strong_generators::BLT_set_from_catalogue_stabilizer(
 	INT *data;
 	INT nb_gens;
 	INT data_size;
-	const BYTE *ascii_target_go;
+	const char *ascii_target_go;
 	longinteger_object target_go;
 	INT i;
 	
@@ -2505,7 +2505,7 @@ void strong_generators::stabilizer_of_spread_from_catalogue(
 	INT *data;
 	INT nb_gens;
 	INT data_size;
-	const BYTE *ascii_target_go;
+	const char *ascii_target_go;
 	longinteger_object target_go;
 	INT i;
 	

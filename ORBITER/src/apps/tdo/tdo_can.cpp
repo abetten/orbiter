@@ -8,7 +8,7 @@
 
 INT t0;
 
-BYTE buf[BUFSIZE];
+char buf[BUFSIZE];
 
 int main(int argc, char **argv)
 {
@@ -16,11 +16,11 @@ int main(int argc, char **argv)
 	int verbose_level = 0;
 	int f_transpose;
 	//int f_nauty = FALSE;
-	BYTE *fname_in;
-	BYTE str[1000];
-	BYTE ext[1000];
-	BYTE fname_out[1000];
-	BYTE fname_out2[1000];
+	char *fname_in;
+	char str[1000];
+	char ext[1000];
+	char fname_out[1000];
+	char fname_out2[1000];
 
 	int nb_V, *V;
 	int nb_B, *B;
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	INT nb_agos;
 	longinteger_object *agos;
 	INT *multiplicities;
-	BYTE *p_buf;
+	char *p_buf;
 	
 
 	t0 = os_ticks();

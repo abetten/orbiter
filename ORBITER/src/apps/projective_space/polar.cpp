@@ -38,7 +38,7 @@ int main(int argc, const char **argv)
 	INT group_generators_data[1000];
 	INT group_generators_data_size = 0;
 	INT f_group_order_target = FALSE;
-	const BYTE *group_order_target;
+	const char *group_order_target;
 	INT f_KM = FALSE;
 	INT KM_t = 0;
 	INT KM_k = 0;
@@ -372,7 +372,7 @@ void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	const BYTE *override_poly;
+	const char *override_poly;
 	INT p, hh, f_semilinear;
 	INT f_basis = TRUE;
 	INT q = F->q;

@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 	INT f_Subiaco64_1 = FALSE;
 	INT f_Subiaco64_2 = FALSE;
 	INT f_Adelaide64 = FALSE;
-	const BYTE *poly = NULL;
+	const char *poly = NULL;
 	INT i, j, q;
 
 	t0 = os_ticks();

@@ -13,7 +13,7 @@
 // #############################################################################
 
 void read_orbit_rep_and_candidates_from_files_and_process(action *A, 
-	BYTE *prefix, 
+	char *prefix, 
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	void (*early_test_func_callback)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
@@ -28,7 +28,7 @@ void read_orbit_rep_and_candidates_from_files_and_process(action *A,
 	INT &nb_candidates,
 	INT &nb_cases, 
 	INT verbose_level);
-void read_candidates_for_one_orbit_from_file(BYTE *prefix,
+void read_candidates_for_one_orbit_from_file(char *prefix,
 		INT level, INT orbit_at_level, INT level_of_candidates_file,
 		INT *S,
 		void (*early_test_func_callback)(INT *S, INT len,
@@ -39,7 +39,7 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 		INT *&candidates,
 		INT &nb_candidates,
 		INT verbose_level);
-void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix, 
+void read_orbit_rep_and_candidates_from_files(action *A, char *prefix, 
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	INT *&starter,
 	INT &starter_sz,
@@ -49,12 +49,12 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	INT &nb_candidates,
 	INT &nb_cases, 
 	INT verbose_level);
-INT find_orbit_index_in_data_file(const BYTE *prefix,
+INT find_orbit_index_in_data_file(const char *prefix,
 		INT level_of_candidates_file, INT *starter,
 		INT verbose_level);
 void compute_orbits_on_subsets(poset_classification *&gen,
 	INT target_depth,
-	const BYTE *prefix, 
+	const char *prefix, 
 	INT f_W, INT f_w,
 	action *A, action *A2, 
 	strong_generators *Strong_gens, 
@@ -74,7 +74,7 @@ poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	strong_generators *Strong_gens, 
 	INT k, INT verbose_level);
 void print_extension_type(ostream &ost, INT t);
-const BYTE *trace_result_as_text(trace_result r);
+const char *trace_result_as_text(trace_result r);
 INT trace_result_is_no_result(trace_result r);
 void wedge_product_export_magma(poset_classification *Gen, INT n, INT q,
 	INT vector_space_dimension, INT level, INT verbose_level);

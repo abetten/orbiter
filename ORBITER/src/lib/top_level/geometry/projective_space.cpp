@@ -13,7 +13,7 @@
 
 
 void Hill_cap56(int argc, const char **argv, 
-	BYTE *fname, INT &nb_Pts, INT *&Pts, 
+	char *fname, INT &nb_Pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -414,7 +414,7 @@ done:
 void create_Buekenhout_Metz(
 	finite_field *Fq, finite_field *FQ, 
 	INT f_classical, INT f_Uab, INT parameter_a, INT parameter_b, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

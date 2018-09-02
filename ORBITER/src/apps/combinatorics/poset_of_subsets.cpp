@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 		}
 
 	layered_graph *LG;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "poset_of_subsets_%ld", n);
 	if (f_tree) {
@@ -108,7 +108,7 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 			unrank_k_subset(r, set1, n, k);
 			LG->add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
 
-			BYTE text[1000];
+			char text[1000];
 			INT a, j, j0;
 			if (f_depth_first) {
 				cout << "k=" << k << " r=" << r << " set=";

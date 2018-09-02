@@ -34,7 +34,7 @@ void orbit_transversal::freeself()
 }
 
 void orbit_transversal::read_from_file(
-		action *A, action *A2, const BYTE *fname, INT verbose_level)
+		action *A, action *A2, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -47,8 +47,8 @@ void orbit_transversal::read_from_file(
 
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii; 
+	char **Ago_ascii;
+	char **Aut_ascii; 
 	INT *Casenumbers;
 	INT nb_cases, nb_cases_mod;
 	INT i;

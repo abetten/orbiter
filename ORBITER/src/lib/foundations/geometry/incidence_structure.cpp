@@ -320,7 +320,7 @@ void incidence_structure::init_by_matrix(
 }
 
 void incidence_structure::init_by_matrix_as_bitvector(
-		INT m, INT n, UBYTE *M_bitvec, INT verbose_level)
+		INT m, INT n, uchar *M_bitvec, INT verbose_level)
 {
 	INT i, j;
 	INT f_v = (verbose_level >= 1);
@@ -576,7 +576,7 @@ INT incidence_structure::get_nb_inc()
 		}
 }
 
-void incidence_structure::save_inc_file(BYTE *fname)
+void incidence_structure::save_inc_file(char *fname)
 {
 	INT i, j, nb_inc;
 
@@ -595,7 +595,7 @@ void incidence_structure::save_inc_file(BYTE *fname)
 	f << "-1" << endl;
 }
 
-void incidence_structure::save_row_by_row_file(BYTE *fname)
+void incidence_structure::save_row_by_row_file(char *fname)
 {
     INT i, j; //, nb_inc;
     int w;
@@ -2735,7 +2735,7 @@ void incidence_structure::do_tdo_high_level(partitionstack &S,
 			verbose_level);
 		}
 	if (f_write_tdo_class_files) {
-		BYTE fname[1000];
+		char fname[1000];
 		INT *row_classes, *row_class_inv, nb_row_classes;
 		INT *col_classes, *col_class_inv, nb_col_classes;
 		INT i;
@@ -2774,7 +2774,7 @@ void incidence_structure::compute_tdo(partitionstack &S,
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname[1000];
+	char fname[1000];
 	INT f_list_incidences = FALSE;
 
 	if (f_v) {
@@ -2870,10 +2870,10 @@ void incidence_structure::compute_tdo_stepwise(
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname[1000];
-	BYTE fname_pic[1000];
-	BYTE fname_scheme[1000];
-	BYTE fname_extra[1000];
+	char fname[1000];
+	char fname_pic[1000];
+	char fname_scheme[1000];
+	char fname_extra[1000];
 	INT step, f_refine, f_refine_prev, f_done;
 	INT f_local_coordinates = FALSE;
 	INT f_list_incidences = FALSE;
@@ -3642,15 +3642,15 @@ void incidence_structure::compute_extended_matrix(
 
 void incma_latex_picture(ostream &fp, 
 	INT width, INT width_10, 
-	INT f_outline_thin, const BYTE *unit_length, 
-	const BYTE *thick_lines,
-	const BYTE *thin_lines,
-	const BYTE *geo_line_width,
+	INT f_outline_thin, const char *unit_length, 
+	const char *thick_lines,
+	const char *thin_lines,
+	const char *geo_line_width,
 	INT v, INT b, 
 	INT V, INT B, INT *Vi, INT *Bj, 
 	INT *R, INT *X, INT dim_X, 
-	INT f_labelling_points, const BYTE **point_labels, 
-	INT f_labelling_blocks, const BYTE **block_labels)
+	INT f_labelling_points, const char **point_labels, 
+	INT f_labelling_blocks, const char **block_labels)
 // width for one box in 0.1mm 
 // width_10 is 1 10th of width
 // example: width = 40, width_10 = 4 
@@ -3660,9 +3660,9 @@ void incma_latex_picture(ostream &fp,
 	INT x0, y0, x1, y1;
 	INT X0, Y0, X1, Y1;
 	INT width_8, width_5;
-	const BYTE *tdo_line_width = thick_lines; // "0.7mm";
-	const BYTE *line_width = thin_lines; // "0.15mm";
-	// BYTE *geo_line_width = "0.25mm";
+	const char *tdo_line_width = thick_lines; // "0.7mm";
+	const char *line_width = thin_lines; // "0.15mm";
+	// char *geo_line_width = "0.25mm";
 	
 	width_8 = width - 2 * width_10;
 	width_5 = width >> 1;
@@ -3789,7 +3789,7 @@ void incma_latex_picture(ostream &fp,
 
 
 static INT incma_latex_unit_length_nb = 0;
-static const BYTE *incma_latex_unit_length[100];
+static const char *incma_latex_unit_length[100];
 
 
 
@@ -3798,7 +3798,7 @@ void incma_latex(ostream &fp,
 	INT V, INT B, INT *Vi, INT *Bj, 
 	INT *R, INT *X, INT dim_X)
 {
-	const BYTE *unit_length;
+	const char *unit_length;
 
 	if (incma_latex_unit_length_nb == 0) {
 		unit_length = "0.065mm";
@@ -3820,7 +3820,7 @@ void incma_latex(ostream &fp,
 }
 
 
-void incma_latex_override_unit_length(const BYTE *override_unit_length)
+void incma_latex_override_unit_length(const char *override_unit_length)
 {
 	incma_latex_unit_length[incma_latex_unit_length_nb++] =
 			override_unit_length;

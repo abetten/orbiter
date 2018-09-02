@@ -25,7 +25,7 @@ tree_node::~tree_node()
 }
 
 void tree_node::init(INT depth, tree_node *parent, INT f_value, INT value, 
-	INT f_i_data, INT i_data, BYTE *c_data, INT verbose_level)
+	INT f_i_data, INT i_data, char *c_data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -42,7 +42,7 @@ void tree_node::init(INT depth, tree_node *parent, INT f_value, INT value,
 	f_int_data = f_i_data;
 	int_data = i_data;
 	if (c_data) {
-		char_data = NEW_BYTE(strlen(c_data) + 1);
+		char_data = NEW_char(strlen(c_data) + 1);
 		strcpy(char_data, c_data);
 		}
 	else 
@@ -182,7 +182,7 @@ void tree_node::place_on_circle(INT xmax, INT ymax, INT max_depth)
 		}
 }
 
-void tree_node::add_node(INT l, INT depth, INT *path, INT i_data, BYTE *c_data, 
+void tree_node::add_node(INT l, INT depth, INT *path, INT i_data, char *c_data, 
 	INT verbose_level)
 {
 	INT i, idx;

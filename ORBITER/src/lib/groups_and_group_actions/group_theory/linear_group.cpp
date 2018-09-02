@@ -181,7 +181,7 @@ void linear_group::init(
 		}
 }
 
-void linear_group::init_PGL2q_OnConic(BYTE *prefix,
+void linear_group::init_PGL2q_OnConic(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -227,7 +227,7 @@ void linear_group::init_PGL2q_OnConic(BYTE *prefix,
 		}
 }
 
-void linear_group::init_wedge_action(BYTE *prefix,
+void linear_group::init_wedge_action(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -289,7 +289,7 @@ void linear_group::init_wedge_action(BYTE *prefix,
 		}
 }
 
-void linear_group::init_monomial_group(BYTE *prefix,
+void linear_group::init_monomial_group(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -322,7 +322,7 @@ void linear_group::init_monomial_group(BYTE *prefix,
 		}
 }
 
-void linear_group::init_diagonal_group(BYTE *prefix,
+void linear_group::init_diagonal_group(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -355,7 +355,7 @@ void linear_group::init_diagonal_group(BYTE *prefix,
 		}
 }
 
-void linear_group::init_singer_group(BYTE *prefix,
+void linear_group::init_singer_group(char *prefix,
 		INT singer_power, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -390,7 +390,7 @@ void linear_group::init_singer_group(BYTE *prefix,
 		}
 }
 
-void linear_group::init_null_polarity_group(BYTE *prefix,
+void linear_group::init_null_polarity_group(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -423,7 +423,7 @@ void linear_group::init_null_polarity_group(BYTE *prefix,
 		}
 }
 
-void linear_group::init_borel_subgroup_upper(BYTE *prefix,
+void linear_group::init_borel_subgroup_upper(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -457,7 +457,7 @@ void linear_group::init_borel_subgroup_upper(BYTE *prefix,
 		}
 }
 
-void linear_group::init_identity_subgroup(BYTE *prefix,
+void linear_group::init_identity_subgroup(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -490,7 +490,7 @@ void linear_group::init_identity_subgroup(BYTE *prefix,
 		}
 }
 
-void linear_group::init_symplectic_group(BYTE *prefix,
+void linear_group::init_symplectic_group(char *prefix,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -524,7 +524,7 @@ void linear_group::init_symplectic_group(BYTE *prefix,
 }
 
 void linear_group::init_subfield_structure_action(
-		BYTE *prefix, INT s, INT verbose_level)
+		char *prefix, INT s, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -563,7 +563,7 @@ void linear_group::init_subfield_structure_action(
 		}
 }
 
-void linear_group::init_orthogonal_group(BYTE *prefix, 
+void linear_group::init_orthogonal_group(char *prefix, 
 	INT epsilon, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -611,8 +611,8 @@ void linear_group::init_orthogonal_group(BYTE *prefix,
 }
 
 
-void linear_group::init_subgroup_from_file(BYTE *prefix, 
-	const BYTE *subgroup_fname, const BYTE *subgroup_label, 
+void linear_group::init_subgroup_from_file(char *prefix, 
+	const char *subgroup_fname, const char *subgroup_label, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

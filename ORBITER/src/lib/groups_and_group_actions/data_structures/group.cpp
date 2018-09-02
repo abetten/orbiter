@@ -85,7 +85,7 @@ void group::init_ascii_coding(const char *ascii_coding)
 {
 	delete_ascii_coding();
 	
-	group::ascii_coding = NEW_BYTE(strlen(ascii_coding) + 1);
+	group::ascii_coding = NEW_char(strlen(ascii_coding) + 1);
 	strcpy(group::ascii_coding, ascii_coding);
 	f_has_ascii_coding = TRUE;
 }
@@ -93,7 +93,7 @@ void group::init_ascii_coding(const char *ascii_coding)
 void group::delete_ascii_coding()
 {
 	if (f_has_ascii_coding) {
-		FREE_BYTE(ascii_coding);
+		FREE_char(ascii_coding);
 		f_has_ascii_coding = FALSE;
 		ascii_coding = NULL;
 		}
@@ -291,7 +291,7 @@ void group::code_ascii(INT verbose_level)
 	require_strong_generators();
 	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(INT4)
 			+ A->coded_elt_size_in_char * SG->len) + 1;
-	ascii_coding = NEW_BYTE(sz);
+	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
 
 	//cout << "group::code_ascii action A->base_len=" << A->base_len << endl;
@@ -308,7 +308,7 @@ void group::code_ascii(INT verbose_level)
 	for (i = 0; i < SG->len; i++) {
 		A->element_pack(SG->ith(i), A->elt1, FALSE);
 		for (j = 0; j < A->coded_elt_size_in_char; j++)
-			code_UBYTE(p, A->elt1[j]);
+			code_uchar(p, A->elt1[j]);
 		}
 	*p++ = 0;
 	if (p - ascii_coding != sz) {
@@ -364,7 +364,7 @@ void group::decode_ascii(INT verbose_level)
 		}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
-			decode_UBYTE(p, A->elt1[j]);
+			decode_uchar(p, A->elt1[j]);
 			}
 		A->element_unpack(A->elt1, SG->ith(i), FALSE);
 		}

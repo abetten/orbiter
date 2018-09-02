@@ -551,7 +551,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	poset_orbit_node *O;
 	INT set1[1000];
 	INT set2[1000];
-	//BYTE *elt;
+	//char *elt;
 	
 	if (f_v) {
 		cout << "isomorph::create_level_database "
@@ -571,7 +571,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	FILE *fp;
 	INT cnt = 0;
 	
-	//elt = NEW_BYTE(gen->A->coded_elt_size_in_char);
+	//elt = NEW_char(gen->A->coded_elt_size_in_char);
 	
 	init_DB_level(D, level, verbose_level - 1);
 	
@@ -690,7 +690,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 			}
 #if 0
 		INT len_mem, h, idx1;
-		BYTE *mem;
+		char *mem;
 		if (idx != len - 1) {
 			cout << "idx != len - 1, idx=" << idx << " len=" << len
 					<< " i=" << i << " j=" << j << endl;
@@ -698,7 +698,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 			}
 		len_mem = (O->nb_strong_generators + nb_fusion) *
 				gen->A->coded_elt_size_in_char;
-		mem = NEW_BYTE(len_mem);
+		mem = NEW_char(len_mem);
 		idx1 = 0;
 		for (j = 0; j < O->nb_strong_generators; j++) {
 			gen->A->element_retrieve(O->hdl_strong_generators[j],
@@ -772,7 +772,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 				<< gen->A->coded_elt_size_in_char << endl;
 		}
 	
-	//FREE_BYTE(elt);
+	//FREE_char(elt);
 	
 }
 

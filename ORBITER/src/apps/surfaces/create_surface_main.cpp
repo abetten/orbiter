@@ -24,7 +24,7 @@ int main(int argc, const char **argv)
 	INT f_description = FALSE;
 	surface_create_description *Descr;
 	INT nb_transform = 0;
-	const BYTE *transform_coeffs[1000];
+	const char *transform_coeffs[1000];
 	INT f_inverse_transform[1000];
 	INT f_quartic = FALSE;
 
@@ -180,10 +180,10 @@ int main(int argc, const char **argv)
 
 
 
-		BYTE fname[1000];
-		BYTE fname_mask[1000];
-		BYTE label[1000];
-		BYTE label_tex[1000];
+		char fname[1000];
+		char fname_mask[1000];
+		char label[1000];
+		char label_tex[1000];
 
 		sprintf(fname, "surface_%s.tex", SC->prefix);
 		sprintf(label, "surface_%s", SC->label_txt);
@@ -195,7 +195,7 @@ int main(int argc, const char **argv)
 			latex_head_easy(fp);
 			SoA->cheat_sheet(fp, 
 				label, label_tex, 
-				TRUE /* f_print_orbits */, fname_mask /* const BYTE *fname_mask*/, 
+				TRUE /* f_print_orbits */, fname_mask /* const char *fname_mask*/, 
 				verbose_level);
 
 

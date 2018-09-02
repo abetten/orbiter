@@ -94,7 +94,7 @@ void choose_points_or_lines::free_representative()
 	null_representative();
 }
 
-void choose_points_or_lines::init(const BYTE *label, void *data, 
+void choose_points_or_lines::init(const char *label, void *data, 
 	action *A, action *A_lines, 
 	INT f_choose_lines, 
 	INT nb_points_or_lines, 

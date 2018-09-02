@@ -141,7 +141,7 @@ void linear_set::freeself()
 }
 
 void linear_set::init(int argc, const char **argv, 
-	INT s, INT n, INT q, const BYTE *poly_q, const BYTE *poly_Q, 
+	INT s, INT n, INT q, const char *poly_q, const char *poly_Q, 
 	INT depth, INT f_identify, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -665,7 +665,7 @@ void linear_set::read_data_file(INT depth, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT depth_completed;
-	BYTE fname[1000];
+	char fname[1000];
 
 	if (f_v) {
 		cout << "linear_set::read_data_file" << endl;
@@ -677,7 +677,7 @@ void linear_set::read_data_file(INT depth, INT verbose_level)
 		}
 
 	INT level;
-	BYTE prefix[1000];
+	char prefix[1000];
 
 
 	sprintf(prefix, "%sb", Gen->fname_base);
@@ -787,7 +787,7 @@ void linear_set::classify_secondary(int argc, const char **argv,
 	INT *candidates;
 	INT nb_candidates;
 	INT a;
-	BYTE fname_candidates[1000];
+	char fname_candidates[1000];
 
 	Gen->make_fname_candidates_file_default(fname_candidates, level);
 

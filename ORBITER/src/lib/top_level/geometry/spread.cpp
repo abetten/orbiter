@@ -116,8 +116,8 @@ void spread::freeself()
 
 void spread::init(INT order, INT n, INT k, INT max_depth, 
 	finite_field *F, INT f_recoordinatize, 
-	const BYTE *input_prefix, 
-	const BYTE *base_fname,
+	const char *input_prefix, 
+	const char *base_fname,
 	INT starter_size,  
 	int argc, const char **argv, 
 	INT verbose_level)
@@ -984,7 +984,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 		cout << endl;
 		}
 
-	UBYTE *Adj;
+	uchar *Adj;
 	
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new before Dio->make_clique_graph_adjacency_matrix" << endl;
@@ -1009,7 +1009,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 		cout << "spread::lifting_prepare_function_new after CG->init_with_point_labels" << endl;
 		}
 	
-	BYTE fname_clique_graph[1000];
+	char fname_clique_graph[1000];
 
 	sprintf(fname_clique_graph, "%sgraph_%ld.bin", E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
@@ -1023,7 +1023,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 	SL->col_labels = NULL;
 
 	FREE_OBJECT(SL);
-	//FREE_UBYTE(Adj);
+	//FREE_uchar(Adj);
 	FREE_INT(col_color);
 	
 	if (f_v) {
@@ -1056,7 +1056,7 @@ void spread::print(INT len, INT *S)
 {
 	INT i;
 	INT f_elements_exponential = FALSE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 	
 	if (len == 0) {
 		return;

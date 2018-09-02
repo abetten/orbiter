@@ -143,7 +143,7 @@ void isomorph_arguments::read_arguments(int argc, const char **argv,
 
 void isomorph_arguments::init(action *A, action *A2,
 	poset_classification *gen,
-	INT target_size, const BYTE *prefix_with_directory, exact_cover_arguments *ECA, 
+	INT target_size, const char *prefix_with_directory, exact_cover_arguments *ECA, 
 	void (*callback_report)(isomorph *Iso, void *data, INT verbose_level), 
 	void (*callback_subset_orbits)(isomorph *Iso, void *data, INT verbose_level), 
 	void *callback_data, 
@@ -203,8 +203,8 @@ void isomorph_arguments::execute(INT verbose_level)
 		}
 	else if (f_read_solutions) {
 
-		const BYTE *fname[1];
-		BYTE fname1[1000];
+		const char *fname[1];
+		char fname1[1000];
 		INT nb_files = 1;
 		
 		//sprintf(fname1, "%s%s_solutions_%ld_0_1.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size);
@@ -221,8 +221,8 @@ void isomorph_arguments::execute(INT verbose_level)
 		}
 	else if (f_read_solutions_from_clique_finder) {
 
-		const BYTE *fname[1];
-		BYTE fname1[1000];
+		const char *fname[1];
+		char fname1[1000];
 		INT nb_files = 1;
 		
 		sprintf(fname1, "%s%s_solutions_%ld_0_1.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size);
@@ -244,28 +244,28 @@ void isomorph_arguments::execute(INT verbose_level)
 		read_set_from_file(fname_list_of_cases, list_of_cases, nb_cases, verbose_level);
 		cout << "nb_cases=" << nb_cases << endl;
 
-		BYTE **fname;
-		BYTE fname1[1000];
+		char **fname;
+		char fname1[1000];
 		INT i, c;
 		
-		fname = NEW_PBYTE(nb_cases);
+		fname = NEW_pchar(nb_cases);
 		for (i = 0; i < nb_cases; i++) {
 			c = list_of_cases[i];
 			//cout << "read_solutions_from_clique_finder_list_of_cases case " << i << " / " << nb_cases << ":" << endl;
 			sprintf(fname1, "%s%s_solutions_%ld.txt", ECA->solution_prefix, ECA->base_fname, c);
 
-			fname[i] = NEW_BYTE(strlen(fname1) + 1);
+			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
 
 		isomorph_read_solution_files_from_clique_finder_case_by_case(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
-			(const BYTE **) fname, list_of_cases, nb_cases, verbose_level);
+			(const char **) fname, list_of_cases, nb_cases, verbose_level);
 
 		for (i = 0; i < nb_cases; i++) {
-			FREE_BYTE(fname[i]);
+			FREE_char(fname[i]);
 			}
-		FREE_PBYTE(fname);
+		FREE_pchar(fname);
 		FREE_INT(list_of_cases);
 		}
 
@@ -273,16 +273,16 @@ void isomorph_arguments::execute(INT verbose_level)
 	else if (f_read_solutions_after_split) {
 
 
-		BYTE **fname;
-		BYTE fname1[1000];
+		char **fname;
+		char fname1[1000];
 		INT nb_files = 0;
 		INT i;
 
 		nb_files = read_solutions_split_m;
-		fname = NEW_PBYTE(nb_files);
+		fname = NEW_pchar(nb_files);
 		for (i = 0; i < read_solutions_split_m; i++) {
 			sprintf(fname1, "%s%s_solutions_%ld_%ld_%ld.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size, i, read_solutions_split_m);
-			fname[i] = NEW_BYTE(strlen(fname1) + 1);
+			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
 		cout << "Reading the following " << nb_files << " files:" << endl;
@@ -294,13 +294,13 @@ void isomorph_arguments::execute(INT verbose_level)
 		
 		isomorph_read_solution_files_from_clique_finder(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
-			(const BYTE **) fname, nb_files, verbose_level);
+			(const char **) fname, nb_files, verbose_level);
 		}
 
 
 	else if (f_read_statistics_after_split) {
-		BYTE **fname;
-		BYTE fname1[1000];
+		char **fname;
+		char fname1[1000];
 		INT nb_files = 0;
 		INT i;
 
@@ -308,10 +308,10 @@ void isomorph_arguments::execute(INT verbose_level)
 		cout << "f_read_statistics_after_split" << endl;
 		
 		nb_files = read_statistics_split_m;
-		fname = NEW_PBYTE(nb_files);
+		fname = NEW_pchar(nb_files);
 		for (i = 0; i < read_statistics_split_m; i++) {
 			sprintf(fname1, "%s%s_solutions_%ld_%ld_%ld_stats.txt", ECA->solution_prefix, ECA->base_fname, ECA->starter_size, i, read_solutions_split_m);
-			fname[i] = NEW_BYTE(strlen(fname1) + 1);
+			fname[i] = NEW_char(strlen(fname1) + 1);
 			strcpy(fname[i], fname1);
 			}
 		cout << "Reading the following " << nb_files << " files:" << endl;
@@ -322,12 +322,12 @@ void isomorph_arguments::execute(INT verbose_level)
 		
 		isomorph_read_statistic_files(A, A2, gen, 
 			target_size, prefix_with_directory, prefix_iso, ECA->starter_size, 
-			(const BYTE **) fname, nb_files, verbose_level);
+			(const char **) fname, nb_files, verbose_level);
 
 		for (i = 0; i < nb_files; i++) {
-			FREE_BYTE(fname[i]);
+			FREE_char(fname[i]);
 			}
-		FREE_PBYTE(fname);
+		FREE_pchar(fname);
 		}
 
 	else if (f_compute_orbits) {

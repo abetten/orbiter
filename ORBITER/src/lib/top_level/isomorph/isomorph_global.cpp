@@ -12,9 +12,9 @@
 void isomorph_read_statistic_files(
 	action *A_base, action *A,
 	poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix, INT level,
-	const BYTE **fname, INT nb_files,
+	INT size, const char *prefix_classify,
+	const char *prefix, INT level,
+	const char **fname, INT nb_files,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -155,7 +155,7 @@ void isomorph_read_statistic_files(
 
 	// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
 
-	const BYTE *Column_label[] = {
+	const char *Column_label[] = {
 		"Case_nb", 
 		"Nb_sol", 
 		"Nb_backtrack", 
@@ -163,7 +163,7 @@ void isomorph_read_statistic_files(
 		"Dt", 
 		"Dt_in_sec" 
 		};
-	const BYTE *fname_collected = "stats_collected.csv";
+	const char *fname_collected = "stats_collected.csv";
 	INT_matrix_write_csv_with_labels(fname_collected,
 			Stats_short, Nb_cases, 6, Column_label);
 
@@ -219,8 +219,8 @@ void isomorph_read_statistic_files(
 
 void isomorph_build_db(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -274,9 +274,9 @@ void isomorph_build_db(
 
 void isomorph_read_solution_files(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
-	const BYTE **fname, INT nb_files, 
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
+	const char **fname, INT nb_files, 
 	INT f_has_final_test_function, 
 	INT (*final_test_function)(INT *data, INT sz,
 			void *final_test_data, INT verbose_level),
@@ -357,8 +357,8 @@ void isomorph_read_solution_files(
 
 void isomorph_init_solutions_from_memory(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
 	INT **Solutions, INT *Nb_sol, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -436,8 +436,8 @@ void isomorph_init_solutions_from_memory(
 
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
-	const BYTE **fname, INT *list_of_cases, INT nb_files, INT verbose_level)
+	INT size, const char *prefix_classify, const char *prefix_iso, INT level, 
+	const char **fname, INT *list_of_cases, INT nb_files, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_implicit_fusion = FALSE;
@@ -532,8 +532,8 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 
 void isomorph_read_solution_files_from_clique_finder(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, INT level, 
-	const BYTE **fname, INT nb_files, INT verbose_level)
+	INT size, const char *prefix_classify, const char *prefix_iso, INT level, 
+	const char **fname, INT nb_files, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_implicit_fusion = FALSE;
@@ -622,8 +622,8 @@ void isomorph_read_solution_files_from_clique_finder(
 
 void isomorph_compute_orbits(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level, INT verbose_level)
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_implicit_fusion = FALSE;
@@ -671,9 +671,9 @@ void isomorph_compute_orbits(
 
 void isomorph_testing(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
-	INT f_play_back, const BYTE *old_event_file,
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
+	INT f_play_back, const char *old_event_file,
 	INT print_mod, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -765,7 +765,7 @@ void isomorph_testing(
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 	
-	BYTE fname[1000];
+	char fname[1000];
 	sprintf(fname, "%sorbits.txt", prefix_iso);
 	{
 	ofstream fp(fname);
@@ -825,8 +825,8 @@ void isomorph_testing(
 
 void isomorph_classification_graph(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -884,16 +884,16 @@ void isomorph_classification_graph(
 
 void isomorph_identify(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
-	INT identify_nb_files, const BYTE **fname, INT *Iso_type, 
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
+	INT identify_nb_files, const char **fname, INT *Iso_type, 
 	INT f_save, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_implicit_fusion = FALSE;
 	INT *the_set;
 	INT set_size;
-	BYTE fname_transporter[1000];
+	char fname_transporter[1000];
 
 
 
@@ -986,8 +986,8 @@ void isomorph_identify(
 
 void isomorph_identify_table(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify,
-	const BYTE *prefix_iso, INT level,
+	INT size, const char *prefix_classify,
+	const char *prefix_iso, INT level,
 	INT nb_rows, INT *Table, INT *Iso_type, 
 	INT verbose_level)
 // Table[nb_rows * size]
@@ -1087,7 +1087,7 @@ void isomorph_identify_table(
 
 void isomorph_worker(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, const BYTE *prefix_iso, 
+	INT size, const char *prefix_classify, const char *prefix_iso, 
 	void (*work_callback)(isomorph *Iso, void *data, INT verbose_level), 
 	void *work_data, 
 	INT level, INT verbose_level)
@@ -1153,7 +1153,7 @@ void isomorph_worker(
 
 void isomorph_compute_down_orbits(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const BYTE *prefix_classify, const BYTE *prefix, 
+	INT size, const char *prefix_classify, const char *prefix, 
 	void *data, 
 	INT level, INT verbose_level)
 {
@@ -1461,8 +1461,8 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 }
 
 void isomorph_report_data_in_source_code_inside_tex(
-		isomorph &Iso, const BYTE *prefix,
-		BYTE *label_of_structure_plural, ostream &f,
+		isomorph &Iso, const char *prefix,
+		char *label_of_structure_plural, ostream &f,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1489,8 +1489,8 @@ void isomorph_report_data_in_source_code_inside_tex(
 
 
 void isomorph_report_data_in_source_code_inside_tex_with_selection(
-		isomorph &Iso, const BYTE *prefix,
-		BYTE *label_of_structure_plural, ostream &fp,
+		isomorph &Iso, const char *prefix,
+		char *label_of_structure_plural, ostream &fp,
 		INT selection_size, INT *selection,
 		INT verbose_level)
 {
@@ -1542,7 +1542,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		fp << endl;
 		}
 	fp << "};" << endl;
-	fp << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
+	fp << "const char *" << prefix << "_stab_order[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 

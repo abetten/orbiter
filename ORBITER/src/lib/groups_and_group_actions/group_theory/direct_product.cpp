@@ -56,7 +56,7 @@ void direct_product::freeself()
 		FREE_INT(tmp_Elt1);
 	}
 	if (elt1) {
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 	}
 	if (Elts) {
 		FREE_OBJECT(Elts);
@@ -141,7 +141,7 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	bits_per_elt = M1->make_element_size * bits_per_digit1
 			+ M2->make_element_size * bits_per_digit2;
 	char_per_elt = ((bits_per_elt + 7) >> 3);
-	elt1 = NEW_UBYTE(char_per_elt);
+	elt1 = NEW_uchar(char_per_elt);
 	if (f_v) {
 		cout << "direct_product::init "
 				"bits_per_digit1 = " << bits_per_digit1 << endl;
@@ -387,7 +387,7 @@ INT direct_product::offset_i(INT f)
 	}
 }
 
-void direct_product::element_pack(INT *Elt, UBYTE *elt)
+void direct_product::element_pack(INT *Elt, uchar *elt)
 {
 	INT i;
 
@@ -401,7 +401,7 @@ void direct_product::element_pack(INT *Elt, UBYTE *elt)
 	}
 }
 
-void direct_product::element_unpack(UBYTE *elt, INT *Elt)
+void direct_product::element_unpack(uchar *elt, INT *Elt)
 {
 	INT i;
 	INT *m;
@@ -423,7 +423,7 @@ void direct_product::element_unpack(UBYTE *elt, INT *Elt)
 	//element_print_easy(Elt, cout);
 }
 
-void direct_product::put_digit(UBYTE *elt, INT f, INT i, INT d)
+void direct_product::put_digit(uchar *elt, INT f, INT i, INT d)
 {
 	INT h0 = 0;
 	INT h, h1, a;
@@ -449,7 +449,7 @@ void direct_product::put_digit(UBYTE *elt, INT f, INT i, INT d)
 	}
 }
 
-INT direct_product::get_digit(UBYTE *elt, INT f, INT i)
+INT direct_product::get_digit(uchar *elt, INT f, INT i)
 {
 	INT h0 = 0;
 	INT h, h1, a, d;
