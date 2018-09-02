@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 		}
 
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 
 
 	if (f_TP) {

@@ -17,7 +17,7 @@ void draw_empty_grid(INT q, INT type, INT param_a, INT xmax, INT ymax, INT verbo
 void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbose_level);
 void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level);
 void draw_grid_(mp_graphics &G, INT xmax, INT ymax, INT q, INT type, INT param_a);
-void prepare_latex_simple(BYTE *fname_base, INT verbose_level);
+void prepare_latex_simple(char *fname_base, INT verbose_level);
 
 
 int main(int argc, char **argv)
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 void draw_empty_grid(INT q, INT type, INT param_a, INT xmax, INT ymax, INT verbose_level)
 {
 	{
-	BYTE fname[1000];
+	char fname[1000];
 	{
 	mp_graphics *G;
 
@@ -97,7 +97,7 @@ void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbos
 	INT x_min = 0, x_max = ONE_MILLION;
 	INT y_min = 0, y_max = ONE_MILLION;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = FALSE;
 	
@@ -123,7 +123,7 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 	//INT x_min = 0, x_max = 1000;
 	//INT y_min = 0, y_max = 1000;
 	//INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname);
 	G->end_figure();
@@ -142,7 +142,7 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 	grid_frame F;
 	INT i, j;
 	INT Px[10], Py[10];
-	BYTE text[1000];
+	char text[1000];
 	INT rad = 10000;
 
 	F.f_matrix_notation = FALSE;
@@ -236,7 +236,7 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 
 }
 
-void prepare_latex_simple(BYTE *fname_base, INT verbose_level)
+void prepare_latex_simple(char *fname_base, INT verbose_level)
 {
 	char tex_file_name[1000];
 	char dvi_file_name[1000];

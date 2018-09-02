@@ -12,11 +12,11 @@ void convert(ifstream &f, ofstream &g, int f_simple);
 int main(int argc, char **argv)
 {
 	INT i;
-	BYTE *cc_fname;
-	BYTE str[1000];
-	BYTE ext[1000];
-	BYTE fname_out[1000];
-	//BYTE label[1000];
+	char *cc_fname;
+	char str[1000];
+	char ext[1000];
+	char fname_out[1000];
+	//char label[1000];
 	INT verbose_level = 0;
 	INT f_simple = FALSE;
 		
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
 void convert(ifstream &f, ofstream &g, int f_simple)
 {
-	//BYTE type[64];
+	//char type[64];
 	//FILE *fp;
 	INT b_len = 0, *B = NULL, b = 0;
 	INT v_len = 0, *V = NULL, v = 0;
@@ -80,7 +80,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 	//INT f_simple = FALSE; /* JS 180100 */
 	//ISO_TYPE *it;
 	string str;
-	BYTE buf[100000];
+	char buf[100000];
 
 	//inc_file_name[0] = 0;
 	//GEO_fname[0] = 0;

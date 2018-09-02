@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_orbiter_path = FALSE;
-	const BYTE *orbiter_path = NULL;
+	const char *orbiter_path = NULL;
 	INT f_q = FALSE;
 	INT q = 0;
 	INT f_slice = FALSE;
@@ -55,14 +55,14 @@ int main(int argc, char **argv)
 
 
 	INT verbose_level_run = verbose_level - 2;
-	BYTE cmd1[1000];
-	BYTE cmd2[1000];
-	BYTE cmd3[1000];
-	BYTE cmd4[1000];
-	BYTE cmd5[1000];
-	BYTE cmd6[1000];
-	BYTE cmd7[1000];
-	BYTE cmd8[1000];
+	char cmd1[1000];
+	char cmd2[1000];
+	char cmd3[1000];
+	char cmd4[1000];
+	char cmd5[1000];
+	char cmd6[1000];
+	char cmd7[1000];
+	char cmd8[1000];
 	INT t[10];
 	INT dt[10];
 	INT Mem[10];
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 
 	INT m, n;
 	INT *M;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "memory_usage.csv");
 	t[0] = os_seconds_past_1970();
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
 		}
 	dt[8] = t[8] - t[0];
 		
-	BYTE fname2[1000];
+	char fname2[1000];
 	INT Stats[9+8];
 
 	INT_vec_copy(dt, Stats, 9);

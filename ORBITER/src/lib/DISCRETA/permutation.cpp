@@ -320,7 +320,7 @@ void permutation::scan(istream & is, INT f_v)
 	Vector cycle;
 	permutation perm;
 	INT i, a_last, a, dig, ci;
-	BYTE s[10000], c;
+	char s[10000], c;
 	INT si, largest_point = 0;
 	
 	//l = s_l();
@@ -571,10 +571,10 @@ void permutation::write_mem(memory & M, INT debug_depth)
 	
 	l = s_l();
 	M.write_int(l);
-	if (ONE_BYTE_INT(l)) {
+	if (ONE_char_INT(l)) {
 		for (i = 0; i < l; i++) {
 			a = s_i(i) + 1;
-			M.write_char((BYTE) a);
+			M.write_char((char) a);
 			}
 		}
 	else {
@@ -592,7 +592,7 @@ void permutation::read_mem(memory & M, INT debug_depth)
 	
 	M.read_int(&l);
 	m_l(l);
-	if (ONE_BYTE_INT(l)) {
+	if (ONE_char_INT(l)) {
 		for (i = 0; i < l; i++) {
 			M.read_char(&c);
 			a = (INT) c;
@@ -616,7 +616,7 @@ INT permutation::csf()
 	
 	l = s_l();
 	size += 4; /* l */
-	if (ONE_BYTE_INT(l))
+	if (ONE_char_INT(l))
 		size += l * 1;
 	else
 		size += l * 4;

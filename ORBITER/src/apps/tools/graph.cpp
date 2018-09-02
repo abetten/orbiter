@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_sort_by_colors = FALSE;
 
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 
 	if (f_sort_by_colors) {
 		colored_graph *CG2;
-		BYTE fname2[1000];
+		char fname2[1000];
 		
 		strcpy(fname2, fname);
 		replace_extension_with(fname2, "_sorted.bin");

@@ -898,7 +898,7 @@ void tdo_scheme::print_scheme_tex(ostream &ost, INT h)
 	print_scheme_tex_fancy(ost, h, FALSE, NULL);
 }
 
-void tdo_scheme::print_scheme_tex_fancy(ostream &ost, INT h, INT f_label, BYTE *label)
+void tdo_scheme::print_scheme_tex_fancy(ostream &ost, INT h, INT f_label, char *label)
 {
 	INT i, j, a = 0, n, m, c1, c2;
 	
@@ -1512,7 +1512,7 @@ INT tdo_scheme::refine_rows_easy(int verbose_level,
 	INT Nb_eqns, Nb_vars;
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE label[100];
+	char label[100];
 
 	if (f_v) {
 		cout << "refine_rows_easy" << endl;
@@ -1561,7 +1561,7 @@ INT tdo_scheme::refine_rows_easy(int verbose_level,
 		D.print();
 		}
 	if (f_vv) {
-		BYTE label[1000];
+		char label[1000];
 			
 		sprintf(label, "first");
 		D.write_xml(cout, label);
@@ -1712,7 +1712,7 @@ INT tdo_scheme::refine_rows_easy(int verbose_level,
 		D2.print();
 		}
 	if (f_vv) {
-		BYTE label[1000];
+		char label[1000];
 			
 		sprintf(label, "second");
 		D2.write_xml(cout, label);
@@ -1833,7 +1833,7 @@ INT tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 			point_types, nb_point_types);
 		
 		if (f_vv) {
-			BYTE label[1000];
+			char label[1000];
 			
 			sprintf(label, "first_%ld", r);
 			T.D1->write_xml(cout, label);
@@ -1926,7 +1926,7 @@ INT tdo_scheme::refine_rows_hard(partitionstack &P, int verbose_level,
 		return FALSE;
 		}
 	if (f_vv) {
-		BYTE label[1000];
+		char label[1000];
 			
 		sprintf(label, "second");
 		T.D2->write_xml(cout, label);
@@ -2272,7 +2272,7 @@ INT tdo_scheme::tdo_rows_setup_second_system_eqns_joining(INT verbose_level,
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT l2, I1, I2, k, b, ab, i, j, r, I, J, f, l, c, a, a2, rr, p, u, h, L1, L2;
-	BYTE label[100];
+	char label[100];
 	
 	if (f_v) {
 		cout << "tdo_scheme::tdo_rows_setup_second_system_eqns_joining" << endl;
@@ -2417,7 +2417,7 @@ INT tdo_scheme::tdo_rows_setup_second_system_eqns_counting(INT verbose_level,
 	INT eqn_offset)
 {
 	INT l2, b, i, j, r, I, J, f, l, c, a, S, s, L1, L2;
-	BYTE label[100];
+	char label[100];
 	//INT nb_vars = T.D1->n;
 	
 	l2 = nb_col_classes[COL];
@@ -2481,7 +2481,7 @@ INT tdo_scheme::tdo_rows_setup_second_system_eqns_packing(INT verbose_level,
 	INT f_v = (verbose_level >= 1);
 	INT nb_eqns_packing;
 	INT /*l2,*/ i, r, f, l, j, c, J, JJ, k, h, rr, p, u, a, len, f_used, L1, L2;
-	BYTE label[100];
+	char label[100];
 	//INT nb_vars = T.D1->n;
 	
 	//l2 = nb_col_classes[COL];
@@ -2716,7 +2716,7 @@ INT tdo_scheme::refine_cols_hard(partitionstack &P, INT verbose_level, INT f_onc
 		
 		
 		if (f_vv) {
-			BYTE label[1000];
+			char label[1000];
 			
 			sprintf(label, "first_%ld", r);
 			T.D1->write_xml(cout, label);
@@ -2837,7 +2837,7 @@ INT tdo_scheme::refine_cols_hard(partitionstack &P, INT verbose_level, INT f_onc
 
 
 	if (f_vv) {
-		BYTE label[1000];
+		char label[1000];
 			
 		sprintf(label, "second");
 		T.D2->write_xml(cout, label);
@@ -3194,7 +3194,7 @@ INT tdo_scheme::tdo_columns_setup_second_system_eqns_joining(INT verbose_level,
 {
 	INT f_v = (verbose_level >= 1);
 	INT l2, L1, L2, i, r, f, l, j, c, J, I, I1, I2, a, b, ab, a2, k, h, rr, p, u;
-	BYTE label[100];
+	char label[100];
 	
 	l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
@@ -3292,7 +3292,7 @@ void tdo_scheme::tdo_columns_setup_second_system_eqns_counting(INT verbose_level
 	INT eqn_start)
 {
 	INT /*l2,*/ L1, L2, i, r, f, l, j, c, J, I, a, b, S, s;
-	BYTE label[100];
+	char label[100];
 
 	//l2 = nb_row_classes[ROW];
 	column_refinement_L1_L2(P, f_omit, omit, L1, L2, verbose_level);
@@ -3370,7 +3370,7 @@ INT tdo_scheme::tdo_columns_setup_second_system_eqns_upper_bound(INT verbose_lev
 	INT f_v = (verbose_level >= 1);
 	INT nb_eqns_packing;
 	INT /*l2,*/ L1, L2, i, r, f, l, j, c, J, I, k, h, rr, p, u, a, len, f_used;
-	BYTE label[100];
+	char label[100];
 	
 	nb_eqns_packing = 0;
 	//l2 = nb_row_classes[ROW];

@@ -113,7 +113,7 @@ void mp_graphics::setup(const char *fname_base,
 	//INT x_min = 0, x_max = 1000;
 	//INT y_min = 0, y_max = 1000;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname_base);
 	init(fname_full, in_xmin, in_ymin,
@@ -607,7 +607,7 @@ void mp_graphics::draw_axes_and_grid(
 		if ((i % x_tick_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
 			continue;
 			}
-		BYTE str[1000];
+		char str[1000];
 		sprintf(str, "%ld", i);
 		cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
@@ -634,7 +634,7 @@ void mp_graphics::draw_axes_and_grid(
 		if ((i % y_tick_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
 			continue;
 			}
-		BYTE str[1000];
+		char str[1000];
 		sprintf(str, "%ld", i);
 		cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
@@ -1435,7 +1435,7 @@ void mp_graphics::polygon2_arrow_halfway(INT *Px, INT *Py,
 
 void mp_graphics::polygon2_arrow_halfway_and_label(INT *Px, INT *Py,
 	INT i1, INT i2,
-	const BYTE *alignment, const BYTE *txt)
+	const char *alignment, const char *txt)
 {
 	INT Idx[3];
 	INT X[3], Y[3];
@@ -1505,7 +1505,7 @@ void mp_graphics::aligned_text_with_offset(INT x, INT y,
 {
 	INT h_align = 1, v_align = 1;
 	INT l, i;
-	BYTE c;
+	char c;
 	
 	//fp_log << "AlignedText " << x << " " << y << " " << xoffset
 	// << " " << yoffset << " " << alignment << " \"" << p << "\"" << endl;
@@ -1644,7 +1644,7 @@ void mp_graphics::coords_min_max(INT x, INT y)
 
 void mp_graphics::header()
 {
-	BYTE str[1024];
+	char str[1024];
 	
 	f_min_max_set = FALSE;
 	//system("rm a");
@@ -1678,7 +1678,7 @@ void mp_graphics::end_figure()
 	end_figure_mp();
 }
 
-void mp_graphics::comment(const BYTE *p)
+void mp_graphics::comment(const char *p)
 {
 	comment_log(p);
 	comment_mp(p);
@@ -1771,7 +1771,7 @@ void mp_graphics::fill_idx(INT *Px, INT *Py, INT *Idx, INT n,
 // device specific output commands: log file
 // #############################################################################
 
-void mp_graphics::header_log(BYTE *str_date)
+void mp_graphics::header_log(char *str_date)
 {
 	fp_log << "% file: " << fname_log << endl;
 	fp_log << "% created by Orbiter graphics interface" << endl;
@@ -1786,7 +1786,7 @@ void mp_graphics::footer_log()
 	fp_log << "END_OF_FILE" << endl << endl;
 }
 
-void mp_graphics::comment_log(const BYTE *p)
+void mp_graphics::comment_log(const char *p)
 {
 	fp_log << "Comment " << p << endl;
 }
@@ -1905,7 +1905,7 @@ void mp_graphics::circle_log(INT x1, INT y1, INT rad)
 // #############################################################################
 
 
-void mp_graphics::header_mp(BYTE *str_date)
+void mp_graphics::header_mp(char *str_date)
 {
 	fp_mp << "% file: " << fname_mp << endl;
 	fp_mp << "% created by Orbiter metapost interface" << endl;
@@ -1930,7 +1930,7 @@ void mp_graphics::footer_mp()
 void mp_graphics::begin_figure_mp(INT factor_1000)
 {
 	double d;
-	BYTE str[1000];
+	char str[1000];
 	INT i, l;
 	
 	d = (double) factor_1000 * 0.001  * 0.1;
@@ -1953,14 +1953,14 @@ void mp_graphics::end_figure_mp()
 	fp_mp << "endfig;" << endl << endl;
 }
 
-void mp_graphics::comment_mp(const BYTE *p)
+void mp_graphics::comment_mp(const char *p)
 {
 	fp_mp << "% " << p << endl;
 }
 
 void mp_graphics::text_mp(INT x1, INT y1, const char *p)
 {
-	BYTE align[64];
+	char align[64];
 	INT lab;
 
 	get_alignment_mp(align);
@@ -2195,7 +2195,7 @@ INT mp_graphics::get_label(INT x, INT y)
 	return i++;
 }
 
-void mp_graphics::get_alignment_mp(BYTE *align)
+void mp_graphics::get_alignment_mp(char *align)
 {
 	if (txt_halign == 2) {
 			// right aligned, text to the
@@ -2243,7 +2243,7 @@ void mp_graphics::line_thickness_mp()
 // device specific output commands: tikz
 // #############################################################################
 
-void mp_graphics::header_tikz(BYTE *str_date)
+void mp_graphics::header_tikz(char *str_date)
 {
 	fp_tikz << "% file: " << fname_tikz << endl;
 	fp_tikz << "% created by Orbiter tikz interface" << endl;
@@ -2289,7 +2289,7 @@ void mp_graphics::footer_tikz()
 		}
 }
 
-void mp_graphics::comment_tikz(const BYTE *p)
+void mp_graphics::comment_tikz(const char *p)
 {
 	fp_tikz << "% " << p << endl;
 }
@@ -2338,7 +2338,7 @@ void mp_graphics::circle_tikz(INT x, INT y, INT rad)
 void mp_graphics::output_circle_text_tikz(INT x, INT y,
 		INT idx, INT rad, const char *text)
 {
-	//BYTE str[1000];
+	//char str[1000];
 
 	//sprintf(str, "%ld", idx);
 

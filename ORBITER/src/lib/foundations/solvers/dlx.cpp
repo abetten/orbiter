@@ -91,9 +91,9 @@ inline INT dataRight(INT i) { return (i+1)%nCol; }
 inline INT dataUp(INT i) { return i-1<0?nRow-1:i-1; }
 inline INT dataDown(INT i) { return (i+1)%nRow; }
 
-void open_solution_file(INT f_write_file, const BYTE *solution_fname, INT verbose_level);
+void open_solution_file(INT f_write_file, const char *solution_fname, INT verbose_level);
 void close_solution_file(INT f_write_file);
-void open_tree_file(INT f_write_tree_file, const BYTE *tree_fname, INT verbose_level);
+void open_tree_file(INT f_write_tree_file, const char *tree_fname, INT verbose_level);
 void close_tree_file(INT f_write_tree_file);
 void print_position(dlx_node *p);
 void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *type, INT verbose_level);
@@ -158,8 +158,8 @@ void DlxTest()
 
 void DlxTransposeAppendAndSolve(INT *Data, INT nb_rows, INT nb_cols, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level)
 {
 	INT *Data2;
@@ -183,8 +183,8 @@ void DlxTransposeAppendAndSolve(INT *Data, INT nb_rows, INT nb_cols,
 void DlxTransposeAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols, 
 	INT *RHS, INT f_has_type, diophant_equation_type *type, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level)
 {
 	INT *Data2;
@@ -208,8 +208,8 @@ void DlxTransposeAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols,
 
 void DlxAppendRowAndSolve(INT *Data, INT nb_rows, INT nb_cols, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level)
 {
 	INT *Data2;
@@ -237,8 +237,8 @@ void DlxAppendRowAndSolve(INT *Data, INT nb_rows, INT nb_cols,
 void DlxAppendRowAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols, 
 	INT *RHS, INT f_has_type, diophant_equation_type *type, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level)
 {
 	INT *Data2;
@@ -270,8 +270,8 @@ void DlxAppendRowAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols,
 
 void DlxSolve(INT *Data, INT nb_rows, INT nb_cols, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -318,8 +318,8 @@ void DlxSolve(INT *Data, INT nb_rows, INT nb_cols,
 void DlxSolve_with_RHS(INT *Data, INT nb_rows, INT nb_cols, 
 	INT *RHS, INT f_has_type, diophant_equation_type *type, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -365,7 +365,7 @@ void DlxSolve_with_RHS(INT *Data, INT nb_rows, INT nb_cols,
 		}
 }
 
-void open_solution_file(INT f_write_file, const BYTE *solution_fname, INT verbose_level)
+void open_solution_file(INT f_write_file, const char *solution_fname, INT verbose_level)
 {
 	if (f_write_file) {
 		dlx_fp_sol = new ofstream;
@@ -387,7 +387,7 @@ void close_solution_file(INT f_write_file)
 		}
 }
 
-void open_tree_file(INT f_write_tree_file, const BYTE *tree_fname, INT verbose_level)
+void open_tree_file(INT f_write_tree_file, const char *tree_fname, INT verbose_level)
 {
 	if (f_write_tree_file) {
 		DLX_f_write_tree = TRUE;

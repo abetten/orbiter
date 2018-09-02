@@ -50,7 +50,7 @@ void graph_node::null()
 void graph_node::freeself()
 {
 	if (label) {
-		FREE_BYTE(label);
+		FREE_char(label);
 		}
 	if (neighbor_list) {
 		FREE_INT(neighbor_list);
@@ -92,16 +92,16 @@ void graph_node::add_neighbor(INT l, INT n, INT id)
 	nb_neighbors++;
 }
 
-void graph_node::add_text(const BYTE *text)
+void graph_node::add_text(const char *text)
 {
 	INT l;
-	BYTE *p;
+	char *p;
 
 	l = strlen(text);
-	p = NEW_BYTE(l + 1);
+	p = NEW_char(l + 1);
 	strcpy(p, text);
 	if (label) {
-		FREE_BYTE(label);
+		FREE_char(label);
 		}
 	label = p;
 }
@@ -179,7 +179,7 @@ void graph_node::write_memory_object(
 	m->write_double(radius_factor);
 	if (f_v) {
 		cout << "graph_node::write_memory_object "
-				"finished, data size (in bytes) = "
+				"finished, data size (in chars) = "
 				<< m->used_length << endl;
 		}
 }

@@ -45,7 +45,7 @@ INT surface_31_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 4, 0, 0, 1, 0, 16, 0, 0, 0, 14, 26, 0, 
 	0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 17, 0, 1, 0, 0, 13, 0, 16, 13, 
 };
-const BYTE *surface_31_stab_order[] = {
+const char *surface_31_stab_order[] = {
 	"4",
 	"12",
 	"24",

@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	INT verbose_level = 0;
 	INT i;
 	INT f_override_poly = FALSE;
-	BYTE *my_override_poly = NULL;
+	char *my_override_poly = NULL;
 	INT f_n = FALSE;
 	INT n = 0;
 	INT f_q = FALSE;
@@ -78,10 +78,10 @@ int main(int argc, char **argv)
 
 void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 {
-	//const BYTE *override_poly;
-	BYTE fname[1000];
-	BYTE title[1000];
-	BYTE author[1000];
+	//const char *override_poly;
+	char fname[1000];
+	char title[1000];
+	char author[1000];
 	//INT f_with_group = FALSE;
 	//INT f_semilinear = FALSE;
 	//INT f_basis = TRUE;
@@ -129,7 +129,7 @@ void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 	if (n == 2) {
 		f << "\\clearpage" << endl << endl;
 		f << "\\section{The Plane}" << endl;
-		BYTE fname_base[1000];
+		char fname_base[1000];
 		INT *set;
 		INT i;
 		INT rad = 17000;

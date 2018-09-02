@@ -19,10 +19,10 @@ int main(int argc, char **argv)
 	INT verbose_level = 0;
 	INT i;
 	INT f_file = FALSE;
-	const BYTE *fname;
-	const BYTE *column;
+	const char *fname;
+	const char *column;
 	INT f_secondary = FALSE;
-	const BYTE *secondary_column;
+	const char *secondary_column;
 
 	t0 = os_ticks();
 

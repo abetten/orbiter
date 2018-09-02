@@ -13,7 +13,7 @@
 #undef DEBUG_INTEGRAL_DIVISION
 
 static double square_root(double x);
-static void add_gsel(Vector & gsel, group_selection_type type, INT val1, INT val2, BYTE *s);
+static void add_gsel(Vector & gsel, group_selection_type type, INT val1, INT val2, char *s);
 static void my_get_generators(discreta_base& a, Vector& gens);
 static INT compose_well_known_group(group_selection & gs, Vector & S, INT & height, 
 	ostream & g_label, ostream & g_label_tex, INT f_v);
@@ -287,7 +287,7 @@ ostream& group_selection::print(ostream& ost)
 	return ost;
 }
 
-void group_selection::init(group_selection_type t, INT v1, INT v2, BYTE *str)
+void group_selection::init(group_selection_type t, INT v1, INT v2, char *str)
 {
 	m_l(4);
 	c_kind(GROUP_SELECTION);
@@ -576,7 +576,7 @@ void compose_gsel_from_strings(Vector &gsel, INT num_args, char **args)
 	
 }
 
-static void add_gsel(Vector & gsel, group_selection_type type, INT val1, INT val2, BYTE *s)
+static void add_gsel(Vector & gsel, group_selection_type type, INT val1, INT val2, char *s)
 {
 	group_selection gs;
 	
@@ -668,8 +668,8 @@ void compose_group(Vector & gsel, Vector & gens,
 {
 	Vector Stack;
 	INT height = 0, i, l;
-	BYTE *g_label;
-	BYTE *g_label_tex;
+	char *g_label;
+	char *g_label_tex;
 	ostringstream gl;
 	ostringstream glt;
 	
@@ -859,9 +859,9 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == From_file) {
-		BYTE *fname = gs.s().s();
+		char *fname = gs.s().s();
 		INT f_cyclic_notation;
-		BYTE ext[1000];
+		char ext[1000];
 		
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
@@ -896,7 +896,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Permutation_generator) {
-		BYTE *s = gs.s().s();
+		char *s = gs.s().s();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Permutation_generator " << s << endl;

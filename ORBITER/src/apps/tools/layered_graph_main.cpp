@@ -27,7 +27,7 @@ void draw_ending_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_ma
 #define MAX_FILES 1000
 
 	INT f_my_type = FALSE;
-	const BYTE *the_type = NULL;
+	const char *the_type = NULL;
 	INT f_boxed = FALSE;
 	INT boxed_group_size = 1;
 	INT f_text_underneath = FALSE;
@@ -48,7 +48,7 @@ int main(int argc, const char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *fname;
+	const char *fname;
 	INT f_draw = FALSE;
 	INT f_spanning_tree = FALSE;
 	INT xmax = 1000000;
@@ -247,7 +247,7 @@ int main(int argc, const char **argv)
 		f_rotated, 
 		scale, line_width);
 	
-	BYTE fname_out[1000];
+	char fname_out[1000];
 
 	strcpy(fname_out, fname);
 	chop_off_extension_if_present(fname_out, ".layered_graph");
@@ -287,7 +287,7 @@ void draw_vertex_callback(layered_graph *LG, mp_graphics *G, INT layer, INT node
 		}
 
 	if (f_numbering_on) {
-		BYTE str[1000];
+		char str[1000];
 		
 		sprintf(str, "%ld", LG->L[layer].Nodes[node].depth_first_node_rank);
 		G->aligned_text(x + (INT)(dx * numbering_on_scale), 
@@ -299,14 +299,14 @@ void draw_vertex_callback(layered_graph *LG, mp_graphics *G, INT layer, INT node
 void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
 {
 	//INT d1;
-	//BYTE str[1000];
+	//char str[1000];
 
 	cout << "draw_vertex_callback_standard x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	//sprintf(str, "%ld", d1);
-	BYTE str[1000000];
-	BYTE str2[1000000];
+	char str[1000000];
+	char str2[1000000];
 
 	str[0] = 0;
 	str2[0] = 0;
@@ -350,13 +350,13 @@ void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, INT layer,
 void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
 {
 	//INT d1;
-	//BYTE str[1000];
+	//char str[1000];
 
 	cout << "draw_vertex_callback_placeholders x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	//sprintf(str, "%ld", d1);
-	BYTE str[1000000];
+	char str[1000000];
 	INT i, r, l, d, rk;
 	INT *digits;
 
@@ -441,7 +441,7 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, IN
 	if (LG->L[layer].Nodes[node].f_has_vec_data) {
 
 		cout << "node has vector data" << endl;
-		BYTE str[1000000];
+		char str[1000000];
 		INT i;
 		INT *D;
 		INT len;
@@ -486,7 +486,7 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, IN
 		INT_vec_print(cout, D, depth);
 		cout << endl;
 
-		BYTE str[1000000];
+		char str[1000000];
 		INT i;
 
 		sprintf(str, "graph_begin %ld %ld %ld %ld %ld %ld %ld %ld ", layer, node, x, y, dx, dy, nb_V, depth);
@@ -514,7 +514,7 @@ void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, INT laye
 
 	if (LG->L[layer].Nodes[node].f_has_vec_data) {
 
-		BYTE str[1000000];
+		char str[1000000];
 		INT i;
 		INT *D;
 		INT len;
@@ -544,7 +544,7 @@ void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, INT laye
 		INT_vec_print(cout, D, depth);
 		cout << endl;
 
-		BYTE str[1000000];
+		char str[1000000];
 		INT i;
 
 		sprintf(str, "tournament_begin %ld %ld %ld %ld %ld %ld %ld %ld ", layer, node, x, y, dx, dy, nb_V, depth);
@@ -677,7 +677,7 @@ void draw_ending_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_ma
 	if (f_text_underneath) {
 		INT i, j;
 		INT x, y;
-		BYTE str[1000];
+		char str[1000];
 		
 		G->st_overwrite(TRUE);
 		for (i = 0; i < LG->nb_layers; i++) {

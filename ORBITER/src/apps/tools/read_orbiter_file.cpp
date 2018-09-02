@@ -15,9 +15,9 @@ int main(int argc, char **argv)
 	INT i, j;
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *file_name = NULL;
+	const char *file_name = NULL;
 	INT f_save = FALSE;
-	const BYTE *file_name_save = NULL;
+	const char *file_name_save = NULL;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -44,11 +44,11 @@ int main(int argc, char **argv)
 
 #if 0
 	INT nb_orbits;
-	BYTE **data;
+	char **data;
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii;
+	char **Ago_ascii;
+	char **Aut_ascii;
 	INT *Casenumbers;
 
 	INT *Ago;
@@ -79,8 +79,8 @@ int main(int argc, char **argv)
 #else
 	orbiter_data_file *ODF;
 	INT *Ago;
-	BYTE fname[1000];
-	BYTE candidates_fname[1000];
+	char fname[1000];
+	char candidates_fname[1000];
 	INT f_has_candidates = FALSE;
 	INT level;
 
@@ -116,35 +116,35 @@ int main(int argc, char **argv)
 	INT nb_orbits = ODF->nb_cases;
 
 	//INT level;
-	PBYTE *Text_level;
-	PBYTE *Text_node;
-	PBYTE *Text_orbit_reps;
-	PBYTE *Text_stab_order;
-	BYTE str[10000];
+	pchar *Text_level;
+	pchar *Text_node;
+	pchar *Text_orbit_reps;
+	pchar *Text_stab_order;
+	char str[10000];
 
 	//level = Set_sizes[0];
 
 	cout << "level=" << level << endl;
 
-	Text_level = NEW_PBYTE(nb_orbits);
-	Text_node = NEW_PBYTE(nb_orbits);
-	Text_orbit_reps = NEW_PBYTE(nb_orbits);
-	Text_stab_order = NEW_PBYTE(nb_orbits);
+	Text_level = NEW_pchar(nb_orbits);
+	Text_node = NEW_pchar(nb_orbits);
+	Text_orbit_reps = NEW_pchar(nb_orbits);
+	Text_stab_order = NEW_pchar(nb_orbits);
 
 	for (i = 0; i < nb_orbits; i++) {
 		sprintf(str, "%ld", level);
-		Text_level[i] = NEW_BYTE(strlen(str) + 1);
+		Text_level[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_level[i], str);
 
 		sprintf(str, "%ld", i);
-		Text_node[i] = NEW_BYTE(strlen(str) + 1);
+		Text_node[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_node[i], str);
 
 		INT_vec_print_to_str(str, ODF->sets[i], level);
-		Text_orbit_reps[i] = NEW_BYTE(strlen(str) + 1);
+		Text_orbit_reps[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_orbit_reps[i], str);
 		
-		Text_stab_order[i] = NEW_BYTE(strlen(ODF->Ago_ascii[i]) + 1);
+		Text_stab_order[i] = NEW_char(strlen(ODF->Ago_ascii[i]) + 1);
 		strcpy(Text_stab_order[i], ODF->Ago_ascii[i]);
 		
 		}
@@ -154,10 +154,10 @@ int main(int argc, char **argv)
 	Sp = NEW_OBJECT(spreadsheet);
 	Sp->init_empty_table(nb_orbits + 1, 5);
 	Sp->fill_column_with_row_index(0, "Line");
-	Sp->fill_column_with_text(1, (const BYTE **) Text_level, "Level");
-	Sp->fill_column_with_text(2, (const BYTE **) Text_node, "Node");
-	Sp->fill_column_with_text(3, (const BYTE **) Text_orbit_reps, "Orbit rep");
-	Sp->fill_column_with_text(4, (const BYTE **) Text_stab_order, "Stab order");
+	Sp->fill_column_with_text(1, (const char **) Text_level, "Level");
+	Sp->fill_column_with_text(2, (const char **) Text_node, "Node");
+	Sp->fill_column_with_text(3, (const char **) Text_orbit_reps, "Orbit rep");
+	Sp->fill_column_with_text(4, (const char **) Text_stab_order, "Stab order");
 
 	if (f_save) {
 		cout << "before Sp->save " << file_name_save << endl;
@@ -166,19 +166,19 @@ int main(int argc, char **argv)
 		}
 
 	for (i = 0; i < nb_orbits; i++) {
-		FREE_BYTE(Text_level[i]);
+		FREE_char(Text_level[i]);
 		}
-	FREE_PBYTE(Text_level);
+	FREE_pchar(Text_level);
 	for (i = 0; i < nb_orbits; i++) {
-		FREE_BYTE(Text_node[i]);
+		FREE_char(Text_node[i]);
 		}
-	FREE_PBYTE(Text_node);
+	FREE_pchar(Text_node);
 	for (i = 0; i < nb_orbits; i++) {
-		FREE_BYTE(Text_orbit_reps[i]);
+		FREE_char(Text_orbit_reps[i]);
 		}
-	FREE_PBYTE(Text_orbit_reps);
+	FREE_pchar(Text_orbit_reps);
 	for (i = 0; i < nb_orbits; i++) {
-		FREE_BYTE(Text_stab_order[i]);
+		FREE_char(Text_stab_order[i]);
 		}
 
 }

@@ -13,7 +13,7 @@ void draw_vertex_callback_graph(tree *T, mp_graphics *G, INT *v, INT layer, tree
 
 
 	INT f_my_type = FALSE;
-	const BYTE *the_type = NULL;
+	const char *the_type = NULL;
 	INT graph_nb_V = 0;
 	INT f_graph_perm = FALSE;
 	INT graph_perm[1000];
@@ -31,13 +31,13 @@ int main(int argc, const char **argv)
 	INT f_i = FALSE;
 	INT f_e = FALSE;
 	INT i;
-	BYTE fname_base[1000];
-	BYTE fname_out[1000];
-	BYTE ext[1000];
+	char fname_base[1000];
+	char fname_out[1000];
+	char ext[1000];
 	INT f_no_circletext = FALSE;
 	INT f_circle = FALSE;
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_on_circle = FALSE;
 	INT f_graph = FALSE;
 	INT f_rad = FALSE;
@@ -233,7 +233,7 @@ void draw_vertex_callback(tree *T, mp_graphics *G, INT *v, INT layer, tree_node 
 void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
 {
 	INT rk, r, l, d, i, *digits;
-	BYTE str[1000];
+	char str[1000];
 
 	cout << "draw_vertex_callback_placeholders" << endl;
 
@@ -268,7 +268,7 @@ void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, INT *v, INT laye
 void draw_vertex_callback_standard(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
 {
 	//INT d1;
-	BYTE str[1000];
+	char str[1000];
 
 	cout << "draw_vertex_callback_standard x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
@@ -283,7 +283,7 @@ void draw_vertex_callback_standard(tree *T, mp_graphics *G, INT *v, INT layer, t
 void draw_vertex_callback_graph(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
 {
 	//INT d1;
-	//BYTE str[1000];
+	//char str[1000];
 
 	cout << "draw_vertex_callback_graph x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;

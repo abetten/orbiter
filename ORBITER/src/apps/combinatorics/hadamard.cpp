@@ -21,7 +21,7 @@ public:
 	INT n;
 	INT N, N2;
 	INT bitvector_length;
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 	colored_graph *CG;
 
 	action *A;
@@ -140,7 +140,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 
 	bitvector_length = (N2 + 7) >> 3;
 
-	bitvector_adjacency = NEW_UBYTE(bitvector_length);
+	bitvector_adjacency = NEW_uchar(bitvector_length);
 
 	if (f_v) {
 		cout << "after allocating adjacency bitvector" << endl;
@@ -206,7 +206,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 
 	{
 	colored_graph *CG;
-	BYTE fname[1000];
+	char fname[1000];
 
 	CG = NEW_OBJECT(colored_graph);
 	INT *color;
@@ -245,7 +245,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 		cout << "initializing colored graph done" << endl;
 		}
 
-	BYTE fname_graph[1000];
+	char fname_graph[1000];
 	
 	sprintf(fname_graph, "Hadamard_graph_%ld.magma", n);
 	CG->export_to_magma(fname_graph, 1);
@@ -317,7 +317,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 			cout << "drawing adjacency matrix" << endl;
 			}
 
-		BYTE fname_base[1000];
+		char fname_base[1000];
 		INT xmax_in = ONE_MILLION;
 		INT ymax_in = ONE_MILLION;
 		INT xmax_out = 500000;
@@ -351,13 +351,13 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 		cout << "computing automorphism group of uncolored graph done, group order = " << go << endl;
 		}
 
-	BYTE fname_group[1000];
+	char fname_group[1000];
 	
 	
 	sprintf(fname_group, "Hadamard_group_%ld.magma", n);
 	A->Strong_gens->export_permutation_group_to_magma(fname_group, 1 /* verbose_level */);
 
-	BYTE prefix[1000];
+	char prefix[1000];
 	sprintf(prefix, "./had_%ld", n);
 
 	if (f_v) {

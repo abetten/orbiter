@@ -17,11 +17,11 @@ int main(int argc, char **argv)
 	INT f_N = FALSE;
 	INT N = 0;
 	INT f_fname_in_mask = FALSE;
-	const BYTE *fname_in_mask = NULL;
+	const char *fname_in_mask = NULL;
 	INT f_save = FALSE;
-	const BYTE *fname_out = NULL;
+	const char *fname_out = NULL;
 	INT f_EOF_marker = FALSE;
-	const BYTE *EOF_marker = NULL;
+	const char *EOF_marker = NULL;
 	INT f_title_line = FALSE;
 	INT f_loop = FALSE;
 	INT loop_from = 0;
@@ -85,8 +85,8 @@ int main(int argc, char **argv)
 		INT h;
 
 		for (h = loop_from; h <= loop_to; h++) {
-			BYTE fname_in_mask_processed[1000];
-			BYTE fname_out_processed[1000];
+			char fname_in_mask_processed[1000];
+			char fname_out_processed[1000];
 
 			sprintf(fname_in_mask_processed, fname_in_mask, h);
 			sprintf(fname_out_processed, fname_out, h);

@@ -37,22 +37,22 @@ int main(int argc, const char **argv)
 	INT verbose_level = 0;
 	INT i, j;
 	INT f_override_poly = FALSE;
-	const BYTE *override_poly = NULL;
+	const char *override_poly = NULL;
 	INT f_depth = FALSE;
 	INT depth = 0;
 	INT f_r = FALSE;
 	INT depth_completed = -1;
-	const BYTE *data_file_name = NULL;
+	const char *data_file_name = NULL;
 	INT f_group_generators = FALSE;
 	INT group_generators_data[1000];
 	INT group_generators_data_size = 0;
 	INT f_group_order_target = FALSE;
-	const BYTE *group_order_target;
+	const char *group_order_target;
 	INT f_KM = FALSE;
 	INT KM_t = 0;
 	INT KM_k = 0;
 	INT f_read_solutions = FALSE;
-	const BYTE *solution_fname = NULL;
+	const char *solution_fname = NULL;
 	INT f_print_generators = FALSE;
 	INT f_exportmagma = FALSE;
 	INT f_draw_poset = FALSE;
@@ -64,7 +64,7 @@ int main(int argc, const char **argv)
 	INT f_list_LCD = FALSE;
 	INT f_print_matrix = FALSE;
 	INT f_run_log_fname = FALSE;
-	const BYTE *run_log_fname = NULL;
+	const char *run_log_fname = NULL;
 	
 	linear_group_description *Descr;
 	
@@ -327,7 +327,7 @@ int main(int argc, const char **argv)
 	if (f_table_of_nodes) {
 		INT *Table;
 		INT nb_rows, nb_cols;
-		BYTE fname[1000];
+		char fname[1000];
 
 		if (f_v) {
 			cout << "before SubOrb.Gen->get_table_of_nodes" << endl;
@@ -352,9 +352,9 @@ int main(int argc, const char **argv)
 
 
 	cout << "Memory usage = " << os_memory_usage() <<  " Time = " << delta_time(t0) << " tps = " << os_ticks_per_second() << endl;
-	BYTE exec_log_fname[1000];
+	char exec_log_fname[1000];
 	INT M[3];
-	const BYTE *column_labels[] = {
+	const char *column_labels[] = {
 		"memory", "time", "tps"
 		};
 

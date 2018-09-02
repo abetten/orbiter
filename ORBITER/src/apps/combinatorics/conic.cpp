@@ -33,9 +33,9 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbose_level);
 void draw_points(mp_graphics &G, projective_space *P, INT *pts, INT nb_points, INT verbose_level);
 void get_ab(INT q, INT x1, INT x2, INT x3, INT &a, INT &b);
-void prepare_latex(BYTE *fname_base, projective_space *P, INT *pts, INT nb_points, 
+void prepare_latex(char *fname_base, projective_space *P, INT *pts, INT nb_points, 
 	strong_generators *Aut_gens, INT verbose_level);
-void prepare_latex_simple(BYTE *fname_base, INT verbose_level);
+void prepare_latex_simple(char *fname_base, INT verbose_level);
 
 
 int main(int argc, char **argv)
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 void draw_empty_grid(INT q, INT f_include_line_at_infinity, INT verbose_level)
 {
 	{
-	BYTE fname[1000];
+	char fname[1000];
 	{
 	INT xmax = 300;
 	INT ymax = 300;
@@ -141,7 +141,7 @@ void draw_empty_grid(INT q, INT f_include_line_at_infinity, INT verbose_level)
 
 void LunelliSce(INT verbose_level) 
 {
-	const BYTE *override_poly = "19";
+	const char *override_poly = "19";
 	finite_field F;
 	projective_space *P;
 	action *A;
@@ -209,7 +209,7 @@ void LunelliSce(INT verbose_level)
 
 void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT verbose_level) 
 {
-	const BYTE *override_poly = NULL;
+	const char *override_poly = NULL;
 	finite_field F;
 	projective_space *P;
 	action *A;
@@ -320,7 +320,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		Aut_gens = NULL;
 		}
 	{
-	BYTE fname[1000];
+	char fname[1000];
 	{
 	mp_graphics *G;
 	INT f_include_line_at_infinity = TRUE;
@@ -447,7 +447,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		Incidence[Edges2[j] * nb_e + j] = 1;
 		}
 
-	BYTE fname[1000];
+	char fname[1000];
 	sprintf(fname, "ext_lines_%ld.inc", P->F->q);
 	{
 	ofstream f(fname);
@@ -608,7 +608,7 @@ void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbos
 	INT x_min = 0, x_max = 1000;
 	INT y_min = 0, y_max = 1000;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = FALSE;
 	
@@ -634,7 +634,7 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 	//INT x_min = 0, x_max = 1000;
 	//INT y_min = 0, y_max = 1000;
 	//INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname);
 	G->end_figure();
@@ -724,14 +724,14 @@ void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbo
 		cout << "drawing text" << endl;
 		}
 	for (x = 0; x < q; x++) {
-		BYTE str[1000];
+		char str[1000];
 		sprintf(str, "$%ld$", x);
 		a = Xcoord(x);
 		b = Ycoord(-1);
 		G.aligned_text(Px[a * Q + b], Py[a * Q + b], "t", str);
 		}
 	for (y = 0; y < q; y++) {
-		BYTE str[1000];
+		char str[1000];
 		sprintf(str, "$%ld$", y);
 		a = Xcoord(-1);
 		b = Ycoord(y);
@@ -740,7 +740,7 @@ void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbo
 
 
 	if (f_include_line_at_infinity) {
-		BYTE str[1000];
+		char str[1000];
 		sprintf(str, "$\\infty$");
 		a = Xcoord(-1);
 		b = Ycoord(q);
@@ -828,7 +828,7 @@ void get_ab(INT q, INT x1, INT x2, INT x3, INT &a, INT &b)
 }
 
 
-void prepare_latex(BYTE *fname_base, projective_space *P, INT *pts, INT nb_points, 
+void prepare_latex(char *fname_base, projective_space *P, INT *pts, INT nb_points, 
 	strong_generators *Aut_gens, INT verbose_level)
 {
 	char tex_file_name[1000];
@@ -933,7 +933,7 @@ void prepare_latex(BYTE *fname_base, projective_space *P, INT *pts, INT nb_point
 
 }
 
-void prepare_latex_simple(BYTE *fname_base, INT verbose_level)
+void prepare_latex_simple(char *fname_base, INT verbose_level)
 {
 	char tex_file_name[1000];
 	char dvi_file_name[1000];

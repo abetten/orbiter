@@ -364,7 +364,7 @@ void gl_classes::print_matrix_and_centralizer_order_latex(
 	INT *Select_polynomial, *Select_Partition;
 	INT i, a, m, p, b;
 	INT f_elements_exponential = FALSE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 
 	Mtx = NEW_INT(k * k);
 

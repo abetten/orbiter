@@ -8,7 +8,7 @@
 
 #include "foundations.h"
 
-INT strcmp_with_or_without(BYTE *p, BYTE *q);
+INT strcmp_with_or_without(char *p, char *q);
 
 spreadsheet::spreadsheet()
 {
@@ -34,9 +34,9 @@ void spreadsheet::freeself()
 	
 	if (tokens) {
 		for (i = 0; i < nb_tokens; i++) {
-			FREE_BYTE(tokens[i]);
+			FREE_char(tokens[i]);
 			}
-		FREE_PBYTE(tokens);
+		FREE_pchar(tokens);
 		}
 	if (line_start) {
 		FREE_INT(line_start);
@@ -53,7 +53,7 @@ void spreadsheet::freeself()
 void spreadsheet::init_set_of_sets(set_of_sets *S, INT f_make_heading)
 {
 	INT s, i, j, a, h, len, offset = 0;
-	BYTE str[1000];
+	char str[1000];
 
 	s = S->largest_set_size();
 	if (f_make_heading) {
@@ -70,14 +70,14 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, INT f_make_heading)
 		Table[i] = -1;
 		}
 	nb_tokens = nb_rows * nb_cols;
-	tokens = NEW_PBYTE(nb_tokens + 1);
+	tokens = NEW_pchar(nb_tokens + 1);
 
 	h = 0;
 	if (f_make_heading) {
 		for (j = 0; j < s + 1; j++) {
 			sprintf(str, "C%ld", j);
 			len = strlen(str);
-			tokens[h] = NEW_BYTE(len + 1);
+			tokens[h] = NEW_char(len + 1);
 			strcpy(tokens[h], str);
 			Table[0 * nb_cols + j] = h;
 			h++;
@@ -87,7 +87,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, INT f_make_heading)
 
 		sprintf(str, "%ld", S->Set_size[i]);
 		len = strlen(str);
-		tokens[h] = NEW_BYTE(len + 1);
+		tokens[h] = NEW_char(len + 1);
 		strcpy(tokens[h], str);
 		Table[(i + offset) * nb_cols + 0] = h;
 		h++;
@@ -97,7 +97,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, INT f_make_heading)
 			
 			sprintf(str, "%ld", a);
 			len = strlen(str);
-			tokens[h] = NEW_BYTE(len + 1);
+			tokens[h] = NEW_char(len + 1);
 			strcpy(tokens[h], str);
 			Table[(i + offset) * nb_cols + 1 + j] = h;
 			h++;
@@ -109,7 +109,7 @@ void spreadsheet::init_set_of_sets(set_of_sets *S, INT f_make_heading)
 void spreadsheet::init_INT_matrix(INT nb_rows, INT nb_cols, INT *A)
 {
 	INT i, len, a;
-	BYTE str[1000];
+	char str[1000];
 	
 	spreadsheet::nb_rows = nb_rows;
 	spreadsheet::nb_cols = nb_cols;
@@ -118,12 +118,12 @@ void spreadsheet::init_INT_matrix(INT nb_rows, INT nb_cols, INT *A)
 		Table[i] = -1;
 		}
 	nb_tokens = nb_rows * nb_cols;
-	tokens = NEW_PBYTE(nb_tokens + 1);
+	tokens = NEW_pchar(nb_tokens + 1);
 	for (i = 0; i < nb_tokens; i++) {
 		a = A[i];
 		sprintf(str, "%ld", a);
 		len = strlen(str);
-		tokens[i] = NEW_BYTE(len + 1);
+		tokens[i] = NEW_char(len + 1);
 		strcpy(tokens[i], str);
 		Table[i] = i;
 		}
@@ -140,110 +140,110 @@ void spreadsheet::init_empty_table(INT nb_rows, INT nb_cols)
 		Table[i] = i;
 		}
 	nb_tokens = nb_rows * nb_cols;
-	tokens = NEW_PBYTE(nb_tokens);
+	tokens = NEW_pchar(nb_tokens);
 	for (i = 0; i < nb_tokens; i++) {
 		tokens[i] = NULL;
 		}
 }
 
-void spreadsheet::fill_entry_with_text(INT row_idx, INT col_idx, const BYTE *text)
+void spreadsheet::fill_entry_with_text(INT row_idx, INT col_idx, const char *text)
 {
 	INT l, t;
 	
 	t = Table[row_idx * nb_cols + col_idx];
 	if (tokens[t]) {
-		//cout << "fill_column_with_text before FREE_BYTE i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
-		FREE_BYTE(tokens[t]);
+		//cout << "fill_column_with_text before FREE_char i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
+		FREE_char(tokens[t]);
 		}
 	l = strlen(text);
-	tokens[t] = NEW_BYTE(l + 1);
+	tokens[t] = NEW_char(l + 1);
 	strcpy(tokens[t], text);
 }
 
-void spreadsheet::fill_column_with_text(INT col_idx, const BYTE **text, const BYTE *heading)
+void spreadsheet::fill_column_with_text(INT col_idx, const char **text, const char *heading)
 {
 	INT i, l, t;
 	
 	for (i = 0; i < nb_rows; i++) {
 		t = Table[i * nb_cols + col_idx];
 		if (tokens[t]) {
-			//cout << "fill_column_with_text before FREE_BYTE i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
-			FREE_BYTE(tokens[t]);
+			//cout << "fill_column_with_text before FREE_char i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
+			FREE_char(tokens[t]);
 			}
 		if (i == 0) {
 			l = strlen(heading);
-			tokens[t] = NEW_BYTE(l + 1);
+			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
 			}
 		else {
 			l = strlen(text[i - 1]);
-			tokens[t] = NEW_BYTE(l + 1);
+			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], text[i - 1]);
 			}
 		}
 }
 
-void spreadsheet::fill_column_with_INT(INT col_idx, INT *data, const BYTE *heading)
+void spreadsheet::fill_column_with_INT(INT col_idx, INT *data, const char *heading)
 {
 	INT i, l, t;
-	BYTE str[1000];
+	char str[1000];
 	
 	for (i = 0; i < nb_rows; i++) {
 		t = Table[i * nb_cols + col_idx];
 		if (tokens[t]) {
-			//cout << "fill_column_with_INT before FREE_BYTE i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
-			FREE_BYTE(tokens[t]);
+			//cout << "fill_column_with_INT before FREE_char i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
+			FREE_char(tokens[t]);
 			}
 		if (i == 0) {
 			l = strlen(heading);
-			tokens[t] = NEW_BYTE(l + 1);
+			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
 			}
 		else {
 			sprintf(str, "%ld", data[i - 1]);
 			l = strlen(str);
-			tokens[t] = NEW_BYTE(l + 1);
+			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
 			}
 		}
 }
 
-void spreadsheet::fill_column_with_row_index(INT col_idx, const BYTE *heading)
+void spreadsheet::fill_column_with_row_index(INT col_idx, const char *heading)
 {
 	INT i, l, t;
-	BYTE str[1000];
+	char str[1000];
 	
 	for (i = 0; i < nb_rows; i++) {
 		t = Table[i * nb_cols + col_idx];
 		if (tokens[t]) {
-			//cout << "fill_column_with_row_index before FREE_BYTE i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
-			FREE_BYTE(tokens[t]);
+			//cout << "fill_column_with_row_index before FREE_char i=" << i << " col_idx=" << col_idx << " t=" << t << endl;
+			FREE_char(tokens[t]);
 			}
 		if (i == 0) {
 			l = strlen(heading);
-			tokens[t] = NEW_BYTE(l + 1);
+			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], heading);
 			}
 		else {
 			sprintf(str, "%ld", i - 1);
 			l = strlen(str);
-			tokens[t] = NEW_BYTE(l + 1);
+			tokens[t] = NEW_char(l + 1);
 			strcpy(tokens[t], str);
 			}
 		}
 }
 
-void spreadsheet::add_token(BYTE *label)
+void spreadsheet::add_token(char *label)
 {
-	BYTE **tokens2;
+	char **tokens2;
 	INT i, j, len;
 
-	tokens2 = NEW_PBYTE(nb_tokens + 1);
+	tokens2 = NEW_pchar(nb_tokens + 1);
 	for (i = 0; i < nb_tokens; i++) {
 		tokens2[i] = tokens[i];
 		}
 	len = strlen(label);
-	tokens2[nb_tokens] = NEW_BYTE(len + 1);
+	tokens2[nb_tokens] = NEW_char(len + 1);
 	for (i = 0, j = 0; i < len; i++) {
 		if ((INT)label[i] < 0) {
 			cout << "spreadsheet::add_token negative character " << (INT) label[i] << endl;
@@ -254,12 +254,12 @@ void spreadsheet::add_token(BYTE *label)
 		}
 	tokens2[nb_tokens][j++] = 0;
 	//strcpy(tokens2[nb_tokens], label);
-	FREE_PBYTE(tokens);
+	FREE_pchar(tokens);
 	tokens = tokens2;
 	nb_tokens++;
 }
 
-void spreadsheet::save(const BYTE *fname, INT verbose_level)
+void spreadsheet::save(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -274,7 +274,7 @@ void spreadsheet::save(const BYTE *fname, INT verbose_level)
 		}
 }
 
-void spreadsheet::read_spreadsheet(const BYTE *fname, INT verbose_level)
+void spreadsheet::read_spreadsheet(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = FALSE; //(verbose_level >= 2);
@@ -527,31 +527,31 @@ void spreadsheet::print_table_with_row_selection(INT *f_selected, ostream &ost)
 		}
 }
 
-void spreadsheet::print_table_sorted(ostream &ost, const BYTE *sort_by)
+void spreadsheet::print_table_sorted(ostream &ost, const char *sort_by)
 {
 	INT i, t, ii;
 	INT idx;
 	INT *perm;
-	BYTE **labels;
+	char **labels;
 	
 	idx = find_by_column(sort_by);
 	perm = NEW_INT(nb_rows - 1);
-	labels = NEW_PBYTE(nb_rows - 1);
+	labels = NEW_pchar(nb_rows - 1);
 	for (i = 0; i < nb_rows - 1; i++) {
 		perm[i] = i;
 		t = Table[(i + 1) * nb_cols + idx];
 		if (t >= 0) {
 			if (tokens[t][0] == '"') {
-				labels[i] = NEW_BYTE(strlen(tokens[t]) + 1);
+				labels[i] = NEW_char(strlen(tokens[t]) + 1);
 				strcpy(labels[i], tokens[t] + 1);
 				}
 			else {
-				labels[i] = NEW_BYTE(strlen(tokens[t]) + 1);
+				labels[i] = NEW_char(strlen(tokens[t]) + 1);
 				strcpy(labels[i], tokens[t]);
 				}
 			}
 		else {
-			labels[i] = NEW_BYTE(1);
+			labels[i] = NEW_char(1);
 			labels[i][0] = 0;
 			}
 		}
@@ -573,7 +573,7 @@ void spreadsheet::print_table_sorted(ostream &ost, const BYTE *sort_by)
 }
 
 
-void spreadsheet::add_column_with_constant_value(BYTE *label, BYTE *value)
+void spreadsheet::add_column_with_constant_value(char *label, char *value)
 {
 	INT i;
 
@@ -625,7 +625,7 @@ void spreadsheet::reallocate_table_add_row()
 	nb_rows++;
 }
 
-INT spreadsheet::find_by_column(const BYTE *join_by)
+INT spreadsheet::find_by_column(const char *join_by)
 {
 	INT j, t, c; //, h;
 	
@@ -645,7 +645,7 @@ INT spreadsheet::find_by_column(const BYTE *join_by)
 			}
 		}
 	// in case we don't find it, maybe it is because the labels are all encapsulated in \" signs
-	BYTE join_by_in_quotes[1000];
+	char join_by_in_quotes[1000];
 
 	sprintf(join_by_in_quotes, "\"%s",join_by);
 	for (j = 0; j < nb_cols; j++) {
@@ -671,14 +671,14 @@ INT spreadsheet::find_by_column(const BYTE *join_by)
 	exit(1);
 }
 
-void spreadsheet::tokenize(const BYTE *fname, 
-	BYTE **&tokens, INT &nb_tokens, INT verbose_level)
+void spreadsheet::tokenize(const char *fname, 
+	char **&tokens, INT &nb_tokens, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE buf[BUFSIZE];
-	BYTE *p_buf;
-	BYTE str[BUFSIZE];
+	char buf[BUFSIZE];
+	char *p_buf;
+	char str[BUFSIZE];
 	INT i; //, r;
 
 	if (f_v) {
@@ -743,7 +743,7 @@ void spreadsheet::tokenize(const BYTE *fname,
 	//f_vv = TRUE;
 
 
-	tokens = NEW_PBYTE(nb_tokens);
+	tokens = NEW_pchar(nb_tokens);
 	{
 	ifstream fp(fname);
 	i = 0;
@@ -787,7 +787,7 @@ void spreadsheet::tokenize(const BYTE *fname,
 			continue;
 			}
 #endif
-		tokens[i] = NEW_BYTE(strlen(str) + 1);
+		tokens[i] = NEW_char(strlen(str) + 1);
 		strcpy(tokens[i], str);
 		if (f_vv) {
 			cout << "Token " << setw(6) << i << " is '" << tokens[i] << "'" << endl;
@@ -797,7 +797,7 @@ void spreadsheet::tokenize(const BYTE *fname,
 
 #if 1
 	sprintf(str, "END_OF_LINE");
-	tokens[i] = NEW_BYTE(strlen(str) + 1);
+	tokens[i] = NEW_char(strlen(str) + 1);
 	strcpy(tokens[i], str);
 	if (f_vv) {
 		cout << "Token " << setw(6) << i << " is '" << tokens[i] << "'" << endl;
@@ -834,7 +834,7 @@ void spreadsheet::remove_quotes(INT verbose_level)
 		}
 }
 
-void spreadsheet::remove_rows(const BYTE *drop_column, const BYTE *drop_label, INT verbose_level)
+void spreadsheet::remove_rows(const char *drop_column, const char *drop_label, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -869,7 +869,7 @@ void spreadsheet::remove_rows(const BYTE *drop_column, const BYTE *drop_label, I
 		}
 }
 
-void spreadsheet::remove_rows_where_field_is_empty(const BYTE *drop_column, INT verbose_level)
+void spreadsheet::remove_rows_where_field_is_empty(const char *drop_column, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -946,7 +946,7 @@ void spreadsheet::find_rows(INT verbose_level)
 
 void spreadsheet::get_value_double_or_NA(INT i, INT j, double &val, INT &f_NA)
 {
-	BYTE *str;
+	char *str;
 
 	str = get_string(i, j);
 	cout << "spreadsheet::get_value_double_or_NA str=" << str << endl;
@@ -960,16 +960,16 @@ void spreadsheet::get_value_double_or_NA(INT i, INT j, double &val, INT &f_NA)
 		}
 }
 
-BYTE *spreadsheet::get_string(INT i, INT j)
+char *spreadsheet::get_string(INT i, INT j)
 {
 	INT t;
-	BYTE str[1000];
-	BYTE *s;
+	char str[1000];
+	char *s;
 	
 	t = Table[i * nb_cols + j];
 	//cout << "t=" << t << endl;
 	if (t == -1) {
-		s = NEW_BYTE(1);
+		s = NEW_char(1);
 		strcpy(s, "");
 		}
 	else {
@@ -981,7 +981,7 @@ BYTE *spreadsheet::get_string(INT i, INT j)
 			strcpy(str, tokens[t]);
 			}
 
-		s = NEW_BYTE(strlen(str) + 1);
+		s = NEW_char(strlen(str) + 1);
 		strcpy(s, str);
 		}
 	return s;
@@ -989,7 +989,7 @@ BYTE *spreadsheet::get_string(INT i, INT j)
 
 INT spreadsheet::get_INT(INT i, INT j)
 {
-	BYTE *p;
+	char *p;
 	INT a;
 
 	p = get_string(i, j);
@@ -999,7 +999,7 @@ INT spreadsheet::get_INT(INT i, INT j)
 
 double spreadsheet::get_double(INT i, INT j)
 {
-	BYTE *p;
+	char *p;
 	double a;
 
 	p = get_string(i, j);
@@ -1015,7 +1015,7 @@ void spreadsheet::join_with(spreadsheet *S2, INT by1, INT by2, INT verbose_level
 	//INT by1, by2;
 	INT j1, j2, t1, t2;
 	INT i1, i2;
-	BYTE *label2;
+	char *label2;
 	INT tt1, tt2;
 	INT f_need_to_add;
 
@@ -1034,7 +1034,7 @@ void spreadsheet::join_with(spreadsheet *S2, INT by1, INT by2, INT verbose_level
 
 
 	for (i2 = 1; i2 < S2->nb_rows; i2++) {
-		BYTE *T2;
+		char *T2;
 		t2 = S2->Table[i2 * S2->nb_cols + by2];
 		if (t2 == -1) {
 			continue;
@@ -1175,7 +1175,7 @@ void spreadsheet::join_with(spreadsheet *S2, INT by1, INT by2, INT verbose_level
 		}
 }
 
-void spreadsheet::patch_with(spreadsheet *S2, BYTE *join_by)
+void spreadsheet::patch_with(spreadsheet *S2, char *join_by)
 {
 	INT by1;
 	INT t0, t1, /*t2,*/ t3;
@@ -1192,9 +1192,9 @@ void spreadsheet::patch_with(spreadsheet *S2, BYTE *join_by)
 
 
 	for (i2 = 1; i2 < S2->nb_rows; i2++) {
-		BYTE *what;
-		BYTE *who;
-		BYTE *patch_value;
+		char *what;
+		char *who;
+		char *patch_value;
 		t0 = S2->Table[i2 * S2->nb_cols + 0];
 		t1 = S2->Table[i2 * S2->nb_cols + 1];
 		//t2 = S2->Table[i2 * S2->nb_cols + 2];
@@ -1245,7 +1245,7 @@ void spreadsheet::patch_with(spreadsheet *S2, BYTE *join_by)
 
 
 
-INT my_atoi(BYTE *str)
+INT my_atoi(char *str)
 {
 	INT a;
 	if (strlen(str)) {
@@ -1257,40 +1257,40 @@ INT my_atoi(BYTE *str)
 
 INT compare_strings(void *a, void *b, void *data)
 {
-	BYTE *A = (BYTE *) a;
-	BYTE *B = (BYTE *) b;
+	char *A = (char *) a;
+	char *B = (char *) b;
 	return strcmp(A, B);
 }
 
-INT strcmp_with_or_without(BYTE *p, BYTE *q)
+INT strcmp_with_or_without(char *p, char *q)
 {
-	BYTE *str1;
-	BYTE *str2;
+	char *str1;
+	char *str2;
 	INT ret;
 
 	if (p[0] == '"') {
-		str1 = NEW_BYTE(strlen(p) + 1);
+		str1 = NEW_char(strlen(p) + 1);
 		strcpy(str1, p);
 		}
 	else {
-		str1 = NEW_BYTE(strlen(p) + 3);
+		str1 = NEW_char(strlen(p) + 3);
 		strcpy(str1, "\"");
 		strcpy(str1 + strlen(str1), p);
 		strcpy(str1 + strlen(str1), "\"");
 		}
 	if (q[0] == '"') {
-		str2 = NEW_BYTE(strlen(q) + 1);
+		str2 = NEW_char(strlen(q) + 1);
 		strcpy(str2, q);
 		}
 	else {
-		str2 = NEW_BYTE(strlen(q) + 3);
+		str2 = NEW_char(strlen(q) + 3);
 		strcpy(str2, "\"");
 		strcpy(str2 + strlen(str2), q);
 		strcpy(str2 + strlen(str2), "\"");
 		}
 	ret = strcmp(str1, str2);
-	FREE_BYTE(str1);
-	FREE_BYTE(str2);
+	FREE_char(str1);
+	FREE_char(str2);
 	return ret;
 }
 

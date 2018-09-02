@@ -587,7 +587,7 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 		cout << "orbit_of_equations::generators_for_stabilizer_of_"
 				"orbit_rep done" << endl;
 		}
-	FREE_OBJECT(gens);
+	return gens;
 }
 
 
@@ -605,7 +605,7 @@ INT orbit_of_equations::search_data(INT *data, INT &idx)
 		}
 }
 
-void orbit_of_equations::save_csv(const BYTE *fname, INT verbose_level)
+void orbit_of_equations::save_csv(const char *fname, INT verbose_level)
 {
 	INT i;
 	INT *Data;

@@ -567,7 +567,7 @@ INT surface_with_action::create_double_six_from_five_lines_with_a_common_transve
 void surface_with_action::arc_lifting_and_classify(
 	INT f_log_fp, ofstream &fp, 
 	INT *Arc6, 
-	const BYTE *arc_label, const BYTE *arc_label_short, 
+	const char *arc_label, const char *arc_label_short, 
 	INT nb_surfaces, 
 	six_arcs_not_on_a_conic *Six_arcs, 
 	INT *Arc_identify_nb, 
@@ -604,7 +604,7 @@ void surface_with_action::arc_lifting_and_classify(
 		}
 
 	
-	BYTE magma_fname[1000];
+	char magma_fname[1000];
 
 	sprintf(magma_fname, "surface_q%ld_iso%ld_group.magma",
 			q, nb_surfaces);
@@ -753,7 +753,7 @@ void surface_with_action::arc_lifting_and_classify(
 				"before SOA->print_automorphism_group" << endl;
 			}
 
-		BYTE fname_mask[1000];
+		char fname_mask[1000];
 
 		sprintf(fname_mask, "orbit_half_double_sixes_q%ld_iso%ld_%%ld",
 				q, nb_surfaces);

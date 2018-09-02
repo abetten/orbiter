@@ -905,7 +905,7 @@ void induced_action_element_unpack(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_unpack((UBYTE *)elt, (INT *)Elt, verbose_level);
+		PA->element_unpack((uchar *)elt, (INT *)Elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -932,7 +932,7 @@ void induced_action_element_pack(action &A,
 		
 		PA = A.G.product_action_data;
 		PA->element_pack((INT *)Elt,
-				(UBYTE *)elt, verbose_level);
+				(uchar *)elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;

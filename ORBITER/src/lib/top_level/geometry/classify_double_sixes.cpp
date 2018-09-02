@@ -231,7 +231,7 @@ void classify_double_sixes::init(
 	//Five_plus_one->print_function = callback_print_set;
 	//Five_plus_one->print_function_data = (void *) this;
 
-	BYTE fname_base[1000];
+	char fname_base[1000];
 	sprintf(fname_base, "fiveplusone_q%ld", q);
 	
 	Five_plus_one->depth = 5;
@@ -338,7 +338,7 @@ void classify_double_sixes::make_spreadsheet_of_neighbors(
 	spreadsheet *&Sp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_csv[1000];
+	char fname_csv[1000];
 
 	if (f_v) {
 		cout << "classify_double_sixes::make_spreadsheet_of_neighbors" << endl;
@@ -403,7 +403,7 @@ void classify_double_sixes::classify_partial_ovoids(
 	
 	if (f_draw_poset) {
 		{
-		BYTE fname_poset[1000];
+		char fname_poset[1000];
 		sprintf(fname_poset, "fiveplusone_q%ld", q);
 		Five_plus_one->draw_poset(fname_poset,
 				5 /*depth*/, 0 /* data1 */,
@@ -414,7 +414,7 @@ void classify_double_sixes::classify_partial_ovoids(
 		}
 	if (f_draw_poset_full) {
 		{
-		BYTE fname_poset[1000];
+		char fname_poset[1000];
 		sprintf(fname_poset, "fiveplusone_q%ld", q);
 		Five_plus_one->draw_poset(fname_poset,
 				5 /*depth*/, 0 /* data1 */,
@@ -427,7 +427,7 @@ void classify_double_sixes::classify_partial_ovoids(
 		{
 		spreadsheet *Sp;
 		Five_plus_one->make_spreadsheet_of_orbit_reps(Sp, 5);
-		BYTE fname_csv[1000];
+		char fname_csv[1000];
 		sprintf(fname_csv, "fiveplusone_%ld.csv", q);
 		Sp->save(fname_csv, verbose_level);
 		FREE_OBJECT(Sp);
@@ -728,15 +728,15 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	INT i, k;
 	INT *Stab_order;
 	INT *Len;
-	BYTE **Transporter;
-	BYTE **Text;
+	char **Transporter;
+	char **Text;
 	INT *rep;
 	INT *lines;
 	INT *data;
 	longinteger_object go;
 	longinteger_object len;
-	BYTE fname_csv[1000];
-	BYTE str[1000];
+	char fname_csv[1000];
+	char str[1000];
 	
 
 	if (f_v) {
@@ -752,8 +752,8 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	lines = NEW_INT(k);
 	Stab_order = NEW_INT(nb);
 	Len = NEW_INT(nb);
-	Transporter = NEW_PBYTE(nb);
-	Text = NEW_PBYTE(nb);
+	Transporter = NEW_pchar(nb);
+	Text = NEW_pchar(nb);
 	data = NEW_INT(A->make_element_size);
 
 	for (i = 0; i < nb; i++) {
@@ -770,7 +770,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 
 		INT_vec_print_to_str(str, lines, k);
 
-		Text[i] = NEW_BYTE(strlen(str) + 1);
+		Text[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text[i], str);
 		}
 
@@ -788,7 +788,7 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 				INT_vec_print_to_str(str, data, A->make_element_size);
 
 				}
-			Transporter[i] = NEW_BYTE(strlen(str) + 1);
+			Transporter[i] = NEW_char(strlen(str) + 1);
 			strcpy(Transporter[i], str);
 			}
 		}
@@ -807,13 +807,13 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	Sp->init_empty_table(nb + 1, 5);
 	Sp->fill_column_with_row_index(0, "Orbit");
 	Sp->fill_column_with_INT(1, Idx, "Idx");
-	Sp->fill_column_with_text(2, (const BYTE **) Text, "Rep");
+	Sp->fill_column_with_text(2, (const char **) Text, "Rep");
 	Sp->fill_column_with_INT(3, Stab_order, "Stab_order");
 	Sp->fill_column_with_INT(4, Len, "Orbit_length");
 #if 0
 	if (f_with_fusion) {
 		Sp->fill_column_with_INT(5, Fusion, "Fusion");
-		Sp->fill_column_with_text(6, (const BYTE **) Transporter, "Transporter");
+		Sp->fill_column_with_text(6, (const char **) Transporter, "Transporter");
 		}
 #endif
 	cout << "before Sp->save " << fname_csv << endl;
@@ -825,13 +825,13 @@ void classify_double_sixes::make_spreadsheet_of_fiveplusone_configurations(
 	FREE_INT(Stab_order);
 	FREE_INT(Len);
 	for (i = 0; i < nb; i++) {
-		FREE_BYTE(Text[i]);
+		FREE_char(Text[i]);
 		}
-	FREE_PBYTE(Text);
+	FREE_pchar(Text);
 	for (i = 0; i < nb; i++) {
-		FREE_BYTE(Transporter[i]);
+		FREE_char(Transporter[i]);
 		}
-	FREE_PBYTE(Transporter);
+	FREE_pchar(Transporter);
 	FREE_INT(data);
 	if (f_v) {
 		cout << "classify_double_sixes::make_spreadsheet_"

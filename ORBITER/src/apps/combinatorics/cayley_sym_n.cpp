@@ -84,7 +84,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 	INT nb_gens = 0;
 	INT deg = 0;
 	vector_ge *gens;
-	BYTE fname_base[1000];
+	char fname_base[1000];
 
 
 	if (f_star) {

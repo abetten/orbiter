@@ -34,9 +34,9 @@ public:
 	INT q; // field order
 
 
-	BYTE starter_directory_name[1000];
-	BYTE prefix[1000];
-	BYTE prefix_with_directory[1000];
+	char starter_directory_name[1000];
+	char prefix[1000];
+	char prefix_with_directory[1000];
 	INT starter_size;
 	
 	poset_classification *gen;
@@ -73,8 +73,8 @@ public:
 	void null();
 	void freeself();
 	void init_basic(finite_field *F, 
-		const BYTE *input_prefix, 
-		const BYTE *base_fname,
+		const char *input_prefix, 
+		const char *base_fname,
 		INT starter_size,  
 		int argc, const char **argv, 
 		INT verbose_level);
@@ -85,21 +85,21 @@ public:
 	void create_graphs(
 		INT orbit_at_level_r, INT orbit_at_level_m, 
 		INT level_of_candidates_file, 
-		const BYTE *output_prefix, 
+		const char *output_prefix, 
 		INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
 		INT verbose_level);
 	void create_graphs_list_of_cases(
-		const BYTE *case_label, 
-		const BYTE *list_of_cases_text, 
+		const char *case_label, 
+		const char *list_of_cases_text, 
 		INT level_of_candidates_file, 
-		const BYTE *output_prefix, 
+		const char *output_prefix, 
 		INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
 		INT verbose_level);
 	INT create_graph(
 		INT orbit_at_level, INT level_of_candidates_file, 
-		const BYTE *output_prefix, 
+		const char *output_prefix, 
 		INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
-		INT &nb_vertices, BYTE *graph_fname_base, 
+		INT &nb_vertices, char *graph_fname_base, 
 		colored_graph *&CG,  
 		INT verbose_level);
 
@@ -111,7 +111,7 @@ public:
 		INT verbose_level);
 	void compute_adjacency_list_fast(INT first_point_of_starter, 
 		INT *points, INT nb_points, INT *point_color, 
-		UBYTE *&bitvector_adjacency,
+		uchar *&bitvector_adjacency,
 		INT &bitvector_length_in_bits, INT &bitvector_length,
 		INT verbose_level);
 	void early_test_func(INT *S, INT len, 

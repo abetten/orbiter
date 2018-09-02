@@ -23,7 +23,7 @@ int main(int argc, const char **argv)
 	INT f_q = FALSE;
 	INT q = 0;
 	INT f_poly = FALSE;
-	const BYTE *poly = NULL;
+	const char *poly = NULL;
 	INT f_starter = FALSE;
 	INT f_list = FALSE;
 	INT f_draw_poset = FALSE;
@@ -37,8 +37,8 @@ int main(int argc, const char **argv)
 	INT create_graphs_r, create_graphs_m, create_graphs_level;
 	INT f_eliminate_graphs_if_possible = FALSE;
 	INT f_create_graphs_list_of_cases = FALSE;
-	const BYTE *create_graphs_list_of_cases = NULL;
-	const BYTE *create_graphs_list_of_cases_prefix = NULL;
+	const char *create_graphs_list_of_cases = NULL;
+	const char *create_graphs_list_of_cases_prefix = NULL;
 
 
 	exact_cover_arguments *ECA = NULL;
@@ -188,7 +188,7 @@ int main(int argc, const char **argv)
 				{
 				spreadsheet *Sp;
 				Gen.gen->make_spreadsheet_of_orbit_reps(Sp, depth);
-				BYTE fname_csv[1000];
+				char fname_csv[1000];
 				sprintf(fname_csv, "partial_BLT_sets_%ld_%ld.csv",
 						q, depth);
 				Sp->save(fname_csv, verbose_level);

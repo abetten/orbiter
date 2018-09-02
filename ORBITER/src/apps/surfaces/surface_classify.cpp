@@ -26,7 +26,7 @@ int main(int argc, const char **argv)
 	//start_memory_debug();
 	
 	INT f_memory_dump_at_end = FALSE;
-	const BYTE *memory_dump_at_end_fname = NULL;
+	const char *memory_dump_at_end_fname = NULL;
 
 
 	{
@@ -46,9 +46,9 @@ int main(int argc, const char **argv)
 	INT f_draw_poset_full = FALSE;
 	INT f_automatic_memory_dump = FALSE;
 	INT automatic_dump_interval = 0;
-	const BYTE *automatic_dump_mask = NULL;
+	const char *automatic_dump_mask = NULL;
 	INT f_memory_dump_at_peak = FALSE;
-	const BYTE *memory_dump_at_peak_fname = NULL;
+	const char *memory_dump_at_peak_fname = NULL;
 
 
 	INT i;
@@ -175,7 +175,7 @@ int main(int argc, const char **argv)
 
 
 		{
-		BYTE fname[1000];
+		char fname[1000];
 	
 		sprintf(fname, "Double_sixes_q%ld.data", q);
 		cout << "Reading file " << fname << " of size " << file_size(fname) << endl;
@@ -220,7 +220,7 @@ int main(int argc, const char **argv)
 
 
 		{
-		BYTE fname[1000];
+		char fname[1000];
 	
 		sprintf(fname, "Double_sixes_q%ld.data", q);
 		{
@@ -245,9 +245,9 @@ int main(int argc, const char **argv)
 		cout << "surface_classify writing cheat sheet on double sixes" << endl;
 		}
 	{
-	BYTE fname[1000];
-	BYTE title[1000];
-	BYTE author[1000];
+	char fname[1000];
+	char title[1000];
+	char author[1000];
 
 	sprintf(title, "Cheat Sheet on Double Sixes over GF(%ld) ", q);
 	sprintf(author, "");
@@ -288,7 +288,7 @@ int main(int argc, const char **argv)
 
 
 		{
-		BYTE fname[1000];
+		char fname[1000];
 	
 		sprintf(fname, "Surfaces_q%ld.data", q);
 		cout << "Reading file " << fname << " of size " << file_size(fname) << endl;
@@ -321,7 +321,7 @@ int main(int argc, const char **argv)
 			}
 
 		{
-		BYTE fname[1000];
+		char fname[1000];
 	
 		sprintf(fname, "Surfaces_q%ld.data", q);
 		{
@@ -346,9 +346,9 @@ int main(int argc, const char **argv)
 
 	if (f_report) {
 		{
-		BYTE fname[1000];
-		BYTE title[1000];
-		BYTE author[1000];
+		char fname[1000];
+		char title[1000];
+		char author[1000];
 		INT f_with_stabilizers = TRUE;
 
 		sprintf(title, "Cubic Surfaces with 27 Lines over GF(%ld) ", q);

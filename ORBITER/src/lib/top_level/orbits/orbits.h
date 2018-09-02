@@ -56,7 +56,7 @@ public:
 	strong_generators *generators_for_stabilizer_of_orbit_rep(
 		longinteger_object &full_group_order, INT verbose_level);
 	INT search_data(INT *data, INT &idx);
-	void save_csv(const BYTE *fname, INT verbose_level);
+	void save_csv(const char *fname, INT verbose_level);
 };
 
 INT orbit_of_equations_compare_func(void *a, void *b, void *data);
@@ -191,7 +191,7 @@ INT orbit_of_subspaces_compare_func(void *a, void *b, void *data);
 
 class orbit_rep {
 public:
-	BYTE prefix[1000];
+	char prefix[1000];
 	action *A;
 	void (*early_test_func_callback)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
@@ -217,7 +217,7 @@ public:
 	~orbit_rep();
 	void null();
 	void freeself();
-	void init_from_file(action *A, BYTE *prefix, 
+	void init_from_file(action *A, char *prefix, 
 		INT level, INT orbit_at_level, INT level_of_candidates_file, 
 		void (*early_test_func_callback)(INT *S, INT len, 
 			INT *candidates, INT nb_candidates, 
@@ -286,7 +286,7 @@ public:
 	void unrank_set_to_matrix(INT len, INT *S, INT *M);
 	void rank_set_from_matrix(INT len, INT *S, INT *M);
 	void Kramer_Mesner_matrix(INT t, INT k, INT f_print_matrix, 
-		INT f_read_solutions, const BYTE *solution_fname, 
+		INT f_read_solutions, const char *solution_fname, 
 		INT verbose_level);
 	void print_all_solutions(diophant *D, INT k, INT *Sol, INT nb_sol, 
 		INT **Subspace_ranks, INT &nb_subspaces, INT verbose_level);

@@ -51,23 +51,22 @@ typedef unsigned long ULONG;
 typedef ULONG *PULONG;
 typedef short SHORT;
 typedef SHORT *PSHORT;
-typedef char BYTE;
-typedef BYTE *PBYTE;
-typedef unsigned char UBYTE;
-typedef UBYTE *PUBYTE;
+typedef char *pchar;
+typedef unsigned char uchar;
+typedef uchar *puchar;
 typedef char SCHAR;
 typedef SCHAR *PSCHAR;
 typedef float FLOAT;
 typedef FLOAT *PFLOAT;
-typedef BYTE TSTRING;
+typedef char TSTRING;
 typedef int *pint;
 typedef void *pvoid;
 typedef int INT4;
 
 
-void read_set_from_file(const BYTE *fname, INT *&the_set, INT &set_size, INT verbose_level);
+void read_set_from_file(const char *fname, INT *&the_set, INT &set_size, INT verbose_level);
 void replace_extension_with(char *p, const char *new_ext);
-INT file_size(const BYTE *name);
+INT file_size(const char *name);
 void INT_vec_copy(INT *from, INT *to, INT len);
 void INT_vec_zero(INT *v, INT len);
 void INT_vec_print(ostream &ost, INT *v, INT len);
@@ -76,11 +75,11 @@ void INT_set_print(INT *v, INT len);
 void INT_set_print(ostream &ost, INT *v, INT len);
 void print_set(ostream &ost, INT size, INT *set);
 void INT_vec_swap_points(INT *list, INT *list_inv, INT idx1, INT idx2);
-UBYTE *bitvector_allocate(INT length);
-UBYTE *bitvector_allocate_and_coded_length(INT length, INT &coded_length);
-void bitvector_m_ii(UBYTE *bitvec, INT i, INT a);
-void bitvector_set_bit(UBYTE *bitvec, INT i);
-INT bitvector_s_i(UBYTE *bitvec, INT i);
+uchar *bitvector_allocate(INT length);
+uchar *bitvector_allocate_and_coded_length(INT length, INT &coded_length);
+void bitvector_m_ii(uchar *bitvec, INT i, INT a);
+void bitvector_set_bit(uchar *bitvec, INT i);
+INT bitvector_s_i(uchar *bitvec, INT i);
 // returns 0 or 1
 INT ij2k(INT i, INT j, INT n);
 void k2ij(INT k, INT & i, INT & j, INT n);
@@ -88,13 +87,13 @@ void get_extension_if_present(const char *p, char *ext);
 void chop_off_extension_if_present(char *p, const char *ext);
 void fwrite_INT4(FILE *fp, INT a);
 INT4 fread_INT4(FILE *fp);
-void fwrite_UBYTEs(FILE *fp, UBYTE *p, INT len);
-void fread_UBYTEs(FILE *fp, UBYTE *p, INT len);
+void fwrite_uchars(FILE *fp, uchar *p, INT len);
+void fread_uchars(FILE *fp, uchar *p, INT len);
 void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, INT f_output_solution_raw, 
-	const BYTE *fname_template, 
-	const BYTE *fname_sol, const BYTE *fname_stats, 
+	const char *fname_template, 
+	const char *fname_sol, const char *fname_stats, 
 	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const BYTE *prefix, 
+	INT f_prefix, const char *prefix, 
 	INT print_interval, 
 	INT verbose_level);
 void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_level);
@@ -108,7 +107,7 @@ void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_lev
 class colored_graph {
 public:
 
-	BYTE fname_base[1000];
+	char fname_base[1000];
 	
 	INT nb_points;
 	INT nb_colors;
@@ -124,7 +123,7 @@ public:
 	INT *user_data;
 
 	INT f_ownership_of_bitvec;
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 
 	INT f_has_list_of_edges;
 	INT nb_edges;
@@ -139,37 +138,37 @@ public:
 	void set_adjacency(INT i, INT j, INT a);
 	void print();
 	void init(INT nb_points, INT nb_colors, 
-		INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+		INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 		INT verbose_level);
 	void init_with_point_labels(INT nb_points, INT nb_colors, 
-		INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+		INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 		INT *point_labels, 
 		INT verbose_level);
-	void init_no_colors(INT nb_points, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+	void init_no_colors(INT nb_points, uchar *bitvec, INT f_ownership_of_bitvec, 
 		INT verbose_level);
 	void init_adjacency(INT nb_points, INT nb_colors, 
 		INT *colors, INT *Adj, INT verbose_level);
 	void init_adjacency_no_colors(INT nb_points, INT *Adj, INT verbose_level);
 	void init_user_data(INT *data, INT data_size, INT verbose_level);
-	void load(const BYTE *fname, INT verbose_level);
+	void load(const char *fname, INT verbose_level);
 	void all_cliques_of_size_k_ignore_colors(INT target_depth, 
 		INT &nb_sol, INT &decision_step_counter, INT verbose_level);
 	void all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(INT target_depth, 
-		const BYTE *fname, 
+		const char *fname, 
 		INT f_restrictions, INT *restrictions, 
 		INT &nb_sol, INT &decision_step_counter, 
 		INT verbose_level);
 	void all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
-		INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+		INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 		INT print_interval, 
 		INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 		INT verbose_level);
 	void all_rainbow_cliques_with_additional_test_function(ofstream *fp, INT f_output_solution_raw, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
-		INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+		INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 		INT print_interval, 
 		INT f_has_additional_test_function,
 		void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 
@@ -183,7 +182,7 @@ public:
 		void *user_data, 
 		INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 		INT verbose_level);
-	void export_to_file(const BYTE *fname, INT verbose_level);
+	void export_to_file(const char *fname, INT verbose_level);
 	void early_test_func_for_clique_search(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
 		INT *good_candidates, INT &nb_good_candidates, 
@@ -198,7 +197,7 @@ public:
 
 class file_output {
 public:
-	BYTE fname[1000];
+	char fname[1000];
 	INT f_file_is_open;
 	ofstream *fp;
 	void *user_data;
@@ -207,7 +206,7 @@ public:
 	~file_output();
 	void null();
 	void freeself();
-	void open(const BYTE *fname, void *user_data, INT verbose_level);
+	void open(const char *fname, void *user_data, INT verbose_level);
 	void close();
 	void write_line(INT nb, INT *data, INT verbose_level);
 };
@@ -220,14 +219,14 @@ public:
 
 class clique_finder {
 public:
-	BYTE label[1000];
+	char label[1000];
 	INT n; // number of points
 	
 	INT print_interval;
 	
 	INT f_write_tree;
 	INT f_decision_nodes_only;
-	BYTE fname_tree[1000];
+	char fname_tree[1000];
 	ofstream *fp_tree;
 
 	
@@ -245,12 +244,12 @@ public:
 	INT bitmatrix_m;
 	INT bitmatrix_n;
 	INT bitmatrix_N;
-	UBYTE *bitmatrix_adjacency;
+	uchar *bitmatrix_adjacency;
 
 	INT f_has_adj_list;
 	INT *adj_list_coded;
 	INT f_has_bitvector;
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 
 	INT *pt_list;
 	INT *pt_list_inv;
@@ -306,12 +305,12 @@ public:
 	void *call_back_clique_found_data;
 	
 	
-	void open_tree_file(const BYTE *fname_base, INT f_decision_nodes_only);
+	void open_tree_file(const char *fname_base, INT f_decision_nodes_only);
 	void close_tree_file();
-	void init(const BYTE *label, INT n, 
+	void init(const char *label, INT n, 
 		INT target_depth, 
 		INT f_has_adj_list, INT *adj_list_coded, 
-		INT f_has_bitvector, UBYTE *bitvector_adjacency, 
+		INT f_has_bitvector, uchar *bitvector_adjacency, 
 		INT print_interval, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_store_solutions, 
@@ -381,14 +380,14 @@ public:
 	void search(colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
-		INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+		INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 		INT print_interval, 
 		INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 		INT verbose_level);
 	void search_with_additional_test_function(colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
-		INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+		INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 		INT print_interval, 
 		INT f_has_additional_test_function,
 		void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 

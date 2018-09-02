@@ -19,8 +19,8 @@
  *              - 3 + 1: used_length
  *              - 3 + 2: cur_pointer
  * 
- * alloc_length: allocated length in BYTEs
- * used_length: used length in BYTES
+ * alloc_length: allocated length in chars
+ * used_length: used length in charS
  * cur_pointer:
  *          0 <= pointer < used length. 
  */
@@ -68,7 +68,7 @@ memory::~memory()
 void memory::freeself_memory()
 {
 
-	BYTE *pc;
+	char *pc;
 	INT *pi;
 	
 	if (self.char_pointer == NULL) {
@@ -157,7 +157,7 @@ void memory::alloc(INT length)
 	freeself_memory();
 	size = length + mem_oversize + 3 * sizeof(INT);
 #ifdef DEBUG_MEM
-	cout << "memory::alloc() allocating " << size << " bytes" << endl;
+	cout << "memory::alloc() allocating " << size << " chars" << endl;
 #endif
 
 	pi = (INT *) new char[size];
@@ -174,13 +174,13 @@ void memory::alloc(INT length)
 	cur_pointer() = 0;
 	c_kind(MEMORY);
 #ifdef DEBUG_MEM
-	cout << "memory::alloc() " << used_length() << " bytes allocated." << endl;
+	cout << "memory::alloc() " << used_length() << " chars allocated." << endl;
 #endif
 }
 
 void memory::append(INT length, char *d)
 {
-	BYTE *pc;
+	char *pc;
 	INT i, old_length, new_length;
 	
 	old_length = used_length();
@@ -202,7 +202,7 @@ void memory::realloc(INT new_length)
 	INT old_length;
 	INT old_cur_pointer;
 	INT i;
-	BYTE *old_pc, *pc;
+	char *old_pc, *pc;
 	INT *old_pi;
 	
 	old_pc = self.char_pointer;
@@ -226,7 +226,7 @@ void memory::realloc(INT new_length)
 	delete [] old_pi;
 	cur_pointer() = old_cur_pointer;
 #ifdef DEBUG_MEM
-	cout << "memory::realloc() to " << used_length() << " bytes" << endl;
+	cout << "memory::realloc() to " << used_length() << " chars" << endl;
 #endif
 }
 
@@ -265,15 +265,15 @@ void memory::write_int(INT i)
 #ifdef DEBUG_WRITE_INT
 	cout << "memory::write_int(), at " << used_length() << ", writing int " << i1 << endl;
 #endif
-	block_swap_bytes((SCHAR *) &i1, 4, 1);
-	append(4, (BYTE *) &i1);
+	block_swap_chars((SCHAR *) &i1, 4, 1);
+	append(4, (char *) &i1);
 }
 
 void memory::read_int(INT *i)
 {
 	INT4 i1;
 	INT l1, j, cur_p, l;
-	BYTE *cp, *cp1;
+	char *cp, *cp1;
 	
 	cur_p = cur_pointer();
 	l = used_length();
@@ -283,14 +283,14 @@ void memory::read_int(INT *i)
 		exit(1);
 		}
 	cp = self.char_pointer + cur_p;
-	cp1 = (BYTE *) &i1;
+	cp1 = (char *) &i1;
 	for (j = 0; j < 4; j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
 		}
 	/* i1 = *(INT *) (cp + cur_p); */
-	block_swap_bytes((SCHAR *) &i1, 4, 1);
+	block_swap_chars((SCHAR *) &i1, 4, 1);
 #ifdef DEBUG_WRITE_INT
 	cout << "memory::read_int(), at " << cur_pointer() << ", reading " << i1 << endl;
 #endif
@@ -300,11 +300,11 @@ void memory::read_int(INT *i)
 
 #include <cstdio>
 
-void memory::read_file(BYTE *fname, INT f_v)
+void memory::read_file(char *fname, INT f_v)
 {
 	FILE *fp;
 	INT fsize;
-	BYTE *pc;
+	char *pc;
 
 	fsize = file_size(fname);
 	alloc(fsize);
@@ -322,11 +322,11 @@ void memory::read_file(BYTE *fname, INT f_v)
 		}
 }
 
-void memory::write_file(BYTE *fname, INT f_v)
+void memory::write_file(char *fname, INT f_v)
 {
 	FILE *fp;
 	INT size;
-	BYTE *pc;
+	char *pc;
 
 	size = used_length();
 	pc = self.char_pointer;
@@ -346,9 +346,9 @@ void memory::write_file(BYTE *fname, INT f_v)
 		}
 }
 
-INT memory::multiplicity_of_character(BYTE c)
+INT memory::multiplicity_of_character(char c)
 {
-	BYTE *pc;
+	char *pc;
 	INT i, l = 0, len;
 	
 	pc = self.char_pointer;
@@ -359,13 +359,13 @@ INT memory::multiplicity_of_character(BYTE c)
 	return l;
 }
 
-static void code(UBYTE *pc, INT l, UBYTE *pc2, UBYTE code_char);
-static INT decode(UBYTE *pc2, INT l2, UBYTE *pc, UBYTE code_char);
+static void code(uchar *pc, INT l, uchar *pc2, uchar code_char);
+static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char);
 
-static void code(UBYTE *pc, INT l, UBYTE *pc2, UBYTE code_char)
+static void code(uchar *pc, INT l, uchar *pc2, uchar code_char)
 /* Wolfgang Boessenecker 940919 */
 {
-	UBYTE cc;
+	uchar cc;
 	INT pos = 0, pos2 = 0, pos2h = 0, i;
 
 	while (pos < l) {
@@ -393,11 +393,11 @@ static void code(UBYTE *pc, INT l, UBYTE *pc2, UBYTE code_char)
 		}
 }
 
-static INT decode(UBYTE *pc2, INT l2, UBYTE *pc, UBYTE code_char)
+static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char)
 // returns length of decompressed data 
 // pc may be NULL */
 {
-	UBYTE cc = 0;
+	uchar cc = 0;
 	INT pos = 0, pos2 = 0, i = 8;
 	
 	while (TRUE) {
@@ -409,7 +409,7 @@ static INT decode(UBYTE *pc2, INT l2, UBYTE *pc, UBYTE code_char)
 			pos2++;
 			i = 0;
 			}
-		if (cc & (UBYTE) 128U) {
+		if (cc & (uchar) 128U) {
 			if (pc) {
 				pc[pos] = code_char;
 				}
@@ -434,7 +434,7 @@ void memory::compress(INT f_v)
 // Wolfgang Boessenecker 9/94 
 {
 	memory mem2;
-	BYTE *pc, *pc2;
+	char *pc, *pc2;
 	INT l, l2, l_c;
 
 	pc = self.char_pointer;
@@ -442,11 +442,11 @@ void memory::compress(INT f_v)
 	if (f_v) {
 		cout << "compressing from " << l << " to ";
 		}
-	l_c = multiplicity_of_character((BYTE) 0);
+	l_c = multiplicity_of_character((char) 0);
 	l2 = l - l_c + ((l + 7) >> 3);
 	mem2.alloc(l2); // sets used_length to l2 
 	pc2 = mem2.self.char_pointer;
-	code((UBYTE *) pc, l, (UBYTE *) pc2, (UBYTE) 0);
+	code((uchar *) pc, l, (uchar *) pc2, (uchar) 0);
 #if 0
 	if (l3 != l2) {
 		cout << "memory::compress() warning: l2 = " << l2 << " != l3 = " << l3 << endl;
@@ -454,7 +454,7 @@ void memory::compress(INT f_v)
 #endif
 	swap(mem2);
 	if (f_v) {
-		cout << l2 << " bytes." << endl;
+		cout << l2 << " chars." << endl;
 		print(cout);
 		}
 }
@@ -462,7 +462,7 @@ void memory::compress(INT f_v)
 void memory::decompress(INT f_v)
 {
 	memory mem;
-	BYTE *pc, *pc2;
+	char *pc, *pc2;
 	INT l, l2;
 	
 	pc2 = self.char_pointer;
@@ -470,13 +470,13 @@ void memory::decompress(INT f_v)
 	if (f_v) {
 		cout << "decompressing from " << l2 << " to ";
 		}
-	l = decode((UBYTE *) pc2, l2, NULL, (UBYTE) 0);
+	l = decode((uchar *) pc2, l2, NULL, (uchar) 0);
 	mem.alloc(l);
 	pc = mem.self.char_pointer;
-	decode((UBYTE *) pc2, l2, (UBYTE *) pc, (UBYTE) 0);
+	decode((uchar *) pc2, l2, (uchar *) pc, (uchar) 0);
 	swap(mem);
 	if (f_v) {
-		cout << l << " bytes." << endl;
+		cout << l << " chars." << endl;
 		}
 }
 
@@ -499,7 +499,7 @@ void memory::write_mem(memory & M, INT debug_depth)
 	M.write_int(l);
 	for (i = 0; i < l; i++) {
 		a = s_i(i);
-		M.write_char((BYTE) a);
+		M.write_char((char) a);
 		}
 }
 
@@ -507,10 +507,10 @@ void memory::read_mem(memory & M, INT debug_depth)
 {
 	INT i, l;
 	char c;
-	BYTE *mem;
+	char *mem;
 	
 	M.read_int(&l);	
-	mem = new BYTE[l];
+	mem = new char[l];
 	
 	for (i = 0; i < l; i++) {
 		M.read_char(&c);

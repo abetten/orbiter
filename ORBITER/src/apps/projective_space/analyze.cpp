@@ -60,9 +60,9 @@ int main(int argc, char **argv)
 	INT f_switch = FALSE;
 	INT switch1, switch2;
 	INT f_file = FALSE;
-	BYTE *file_name;
+	char *file_name;
 	INT f_poly = FALSE;
-	BYTE *poly = NULL;
+	char *poly = NULL;
 	INT f_planes = FALSE;
 	INT f_hf_planes = FALSE;
 	INT f_hyperplanes = FALSE;
@@ -285,7 +285,7 @@ void analyze(INT n, finite_field *F, INT *set, INT set_size,
 	projective_space *P2;
 	INT f_with_group = FALSE;
 	INT f_semilinear = TRUE;
-	//const BYTE *override_poly = NULL;
+	//const char *override_poly = NULL;
 	INT f_basis = TRUE;
 	INT q = F->q;
 

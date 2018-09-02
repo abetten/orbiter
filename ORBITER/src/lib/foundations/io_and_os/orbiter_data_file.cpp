@@ -30,20 +30,20 @@ void orbiter_data_file::freeself()
 	INT i;
 	
 	for (i = 0; i < nb_cases; i++) {
-		FREE_BYTE(Ago_ascii[i]);
-		FREE_BYTE(Aut_ascii[i]);
+		FREE_char(Ago_ascii[i]);
+		FREE_char(Aut_ascii[i]);
 		}
-	FREE_PBYTE(Ago_ascii);
-	FREE_PBYTE(Aut_ascii);
+	FREE_pchar(Ago_ascii);
+	FREE_pchar(Aut_ascii);
 
 	FREE_INT(set_sizes);
 	FREE_INT(Casenumbers);
 }
 
-void orbiter_data_file::load(const BYTE *fname, INT verbose_level)
+void orbiter_data_file::load(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE **data;
+	char **data;
 	INT i;
 
 
@@ -75,9 +75,9 @@ void orbiter_data_file::load(const BYTE *fname, INT verbose_level)
 		}
 
 	for (i = 0; i < nb_cases; i++) {
-		FREE_BYTE(data[i]);
+		FREE_char(data[i]);
 		}
-	FREE_PBYTE(data);
+	FREE_pchar(data);
 	
 	if (f_v) {
 		cout << "orbiter_data_file::load done nb_cases = " << nb_cases << endl;

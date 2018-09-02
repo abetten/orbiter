@@ -22,14 +22,14 @@ page_storage::~page_storage()
 		//cout << "page_ptr_used=" << page_ptr_used << endl;
 		for (i = 0; i < page_ptr_used; i++) {
 			//cout << "deleting page" << i << endl;
-			FREE_UBYTE(pages[i]);
-			FREE_UBYTE(allocation_tables[i]);
+			FREE_uchar(pages[i]);
+			FREE_uchar(allocation_tables[i]);
 			//cout << "deleting page" << i << " done" << endl;
 			}
 		//cout << "deleting pages" << endl;
-		FREE_PUBYTE(pages);
+		FREE_puchar(pages);
 		//cout << "deleting allocation_tables" << endl;
-		FREE_PUBYTE(allocation_tables);
+		FREE_puchar(allocation_tables);
 		pages = NULL;
 		allocation_tables = NULL;
 		}
@@ -89,11 +89,11 @@ void page_storage::init(INT entry_size,
 			page_storage::page_length_log--;
 			continue;
 			}
-		if (page_size > MAX_PAGE_SIZE_IN_BYTES) {
+		if (page_size > MAX_PAGE_SIZE_IN_charS) {
 			if (f_v) {
 				cout << "page_storage::init page_size too big" << endl;
-				cout << "the maximum page size in BYTE is "
-						<< MAX_PAGE_SIZE_IN_BYTES << endl;
+				cout << "the maximum page size in char is "
+						<< MAX_PAGE_SIZE_IN_charS << endl;
 				}
 			page_storage::page_length_log--;
 			continue;
@@ -113,20 +113,20 @@ void page_storage::init(INT entry_size,
 				<< allocation_table_length << endl;
 		cout << "allocating pages / allocation_tables" << endl;
 		}
-	pages = NEW_PUBYTE(page_ptr_oversize);
-	allocation_tables = NEW_PUBYTE(page_ptr_oversize);
+	pages = NEW_puchar(page_ptr_oversize);
+	allocation_tables = NEW_puchar(page_ptr_oversize);
 	
 	page_ptr_allocated = page_ptr_oversize;
 	page_ptr_used = 1;
 	if (f_v) {
 		cout << "allocating page[0] of size " << page_size << endl;
 		}
-	pages[0] = NEW_UBYTE(page_size);
+	pages[0] = NEW_uchar(page_size);
 	if (f_v) {
 		cout << "allocating allocation_tables[0] "
 				"of size " << allocation_table_length << endl;
 		}
-	allocation_tables[0] = NEW_UBYTE(allocation_table_length);
+	allocation_tables[0] = NEW_uchar(allocation_table_length);
 	for (i = 0; i < allocation_table_length; i++) {
 		allocation_tables[0][i] = 0;
 		}
@@ -151,9 +151,9 @@ void page_storage::print()
 	cout << "entry_size=" << entry_size << endl;
 	cout << "page_length_log=" << page_length_log << endl;
 	cout << "page_length=" << page_length << endl;
-	cout << "page_size (in BYTE )=" << page_size << endl;
+	cout << "page_size (in char )=" << page_size << endl;
 	cout << "page_ptr_oversize=" << page_ptr_oversize << endl;
-	cout << "allocation_table_length (in BYTE)="
+	cout << "allocation_table_length (in char)="
 			<< allocation_table_length << endl;
 	cout << "overall_length=" << overall_length << endl;
 	cout << "page_ptr_used=" << page_ptr_used << endl;
@@ -162,9 +162,9 @@ void page_storage::print()
 	print_storage_used();
 }
 
-UBYTE *page_storage::s_i_and_allocate(INT i)
+uchar *page_storage::s_i_and_allocate(INT i)
 {
-	UBYTE *p, *q;
+	uchar *p, *q;
 	INT j;
 	
 	INT page_idx = i & (page_length - 1);
@@ -187,7 +187,7 @@ UBYTE *page_storage::s_i_and_allocate(INT i)
 	q = allocation_tables[page];
 	INT word = page_idx >> 3;
 	INT bit = page_idx & 7;
-	UBYTE mask = ((UBYTE) 1) << bit;
+	uchar mask = ((uchar) 1) << bit;
 	//cout << "p=" << ((INT) p) << " q=" << ((INT)(q + word)) << endl;
 	
 	if (word >= allocation_table_length) {
@@ -207,7 +207,7 @@ UBYTE *page_storage::s_i_and_allocate(INT i)
 	else 
 		j = 0;
 	for (; j < 5; j++) {
-		UBYTE_print_bitwise(cout, q[word + j]);
+		uchar_print_bitwise(cout, q[word + j]);
 		cout << " ";
 		}
 	cout << endl;
@@ -225,7 +225,7 @@ UBYTE *page_storage::s_i_and_allocate(INT i)
 			}
 		cout << endl;
 		for (j = 0; j < 10; j++) {
-			UBYTE_print_bitwise(cout, q[word + j]);
+			uchar_print_bitwise(cout, q[word + j]);
 			cout << " ";
 			}
 		cout << endl;
@@ -241,7 +241,7 @@ UBYTE *page_storage::s_i_and_allocate(INT i)
 	else 
 		j = 0;
 	for (; j < 5; j++) {
-		UBYTE_print_bitwise(cout, q[word + j]);
+		uchar_print_bitwise(cout, q[word + j]);
 		cout << " ";
 		}
 	cout << endl;
@@ -249,9 +249,9 @@ UBYTE *page_storage::s_i_and_allocate(INT i)
 	return p;
 }
 
-UBYTE *page_storage::s_i_and_deallocate(INT i)
+uchar *page_storage::s_i_and_deallocate(INT i)
 {
-	UBYTE *p;
+	uchar *p;
 	
 	if (i >= overall_length) {
 		cout << "page_storage::s_i_and_deallocate "
@@ -274,8 +274,8 @@ UBYTE *page_storage::s_i_and_deallocate(INT i)
 	p = pages[page] + page_idx * entry_size;
 	INT word = page_idx >> 3;
 	INT bit = page_idx & 7;
-	UBYTE mask = ((UBYTE) 1) << bit;
-	UBYTE not_mask = ~mask;
+	uchar mask = ((uchar) 1) << bit;
+	uchar not_mask = ~mask;
 	if ((allocation_tables[page][word] & mask) == 0) {
 		cout << "page_storage::s_i_and_deallocate "
 				"deallocating entry which is currently not in use" << endl;
@@ -287,7 +287,7 @@ UBYTE *page_storage::s_i_and_deallocate(INT i)
 	return p;
 }
 
-UBYTE *page_storage::s_i(INT i)
+uchar *page_storage::s_i(INT i)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -308,7 +308,7 @@ UBYTE *page_storage::s_i(INT i)
 		}
 	INT word = page_idx >> 3;
 	INT bit = page_idx & 7;
-	UBYTE mask = ((UBYTE) 1) << bit;
+	uchar mask = ((uchar) 1) << bit;
 	if ((allocation_tables[page][word] & mask) == 0) {
 		cout << "page_storage::s_i "
 				"access to entry which is currently not used" << endl;
@@ -321,7 +321,7 @@ UBYTE *page_storage::s_i(INT i)
 	return pages[page] + page_idx * entry_size;
 }
 
-UBYTE *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
+uchar *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -342,7 +342,7 @@ UBYTE *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
 		}
 	INT word = page_idx >> 3;
 	INT bit = page_idx & 7;
-	UBYTE mask = ((UBYTE) 1) << bit;
+	uchar mask = ((uchar) 1) << bit;
 	if (allocation_tables[page][word] & mask) {
 		f_allocated = TRUE;
 		}
@@ -365,7 +365,7 @@ void page_storage::check_allocation_table()
 		}
 	INT word = page_idx >> 3;
 	//INT bit = page_idx & 7;
-	//UBYTE mask = ((UBYTE) 1) << bit;
+	//uchar mask = ((uchar) 1) << bit;
 	for (word++; word < allocation_table_length; word++) {
 		if (allocation_tables[page][word]) {
 			INT j;
@@ -379,7 +379,7 @@ void page_storage::check_allocation_table()
 				}
 			cout << endl;
 			for (j = 0; j < 10; j++) {
-				UBYTE_print_bitwise(cout,
+				uchar_print_bitwise(cout,
 						allocation_tables[page][word + j]);
 				cout << " ";
 				}
@@ -390,10 +390,10 @@ void page_storage::check_allocation_table()
 		}
 }
 
-INT page_storage::store(UBYTE *elt)
+INT page_storage::store(uchar *elt)
 {
 	INT i, hdl;
-	UBYTE *p, *q;
+	uchar *p, *q;
 	
 	if (nb_free_entries) {
 		INT nfe = next_free_entry;
@@ -401,7 +401,7 @@ INT page_storage::store(UBYTE *elt)
 		p = s_i_and_allocate(nfe);
 		INT next_next_free_entry;
 		
-		UBYTE_move(p, (UBYTE *) &next_next_free_entry, sizeof(INT));
+		uchar_move(p, (uchar *) &next_next_free_entry, sizeof(INT));
 		if (nb_free_entries > 1) {
 			if (next_next_free_entry < 0 ||
 					next_next_free_entry >= overall_length) {
@@ -419,7 +419,7 @@ INT page_storage::store(UBYTE *elt)
 			}
 		next_free_entry = next_next_free_entry;
 
-		UBYTE_move(elt, p, entry_size);
+		uchar_move(elt, p, entry_size);
 		nb_free_entries--;
 		hdl = nfe;
 #ifdef DEBUG_PAGE_STORAGE
@@ -441,22 +441,22 @@ INT page_storage::store(UBYTE *elt)
 					"allocating page # "
 					<< (overall_length >> page_length_log) << endl;
 			if (page_ptr_used == page_ptr_allocated) {
-				UBYTE **pages1 =
-						NEW_PUBYTE(page_ptr_used + page_ptr_oversize);
-				UBYTE **allocation_tables1 =
-						NEW_PUBYTE(page_ptr_used + page_ptr_oversize);
+				uchar **pages1 =
+						NEW_puchar(page_ptr_used + page_ptr_oversize);
+				uchar **allocation_tables1 =
+						NEW_puchar(page_ptr_used + page_ptr_oversize);
 				for (i = 0; i < page_ptr_used; i++) {
 					pages1[i] = pages[i];
 					allocation_tables1[i] = allocation_tables[i];
 					}
-				FREE_PUBYTE(pages);
-				FREE_PUBYTE(allocation_tables);
+				FREE_puchar(pages);
+				FREE_puchar(allocation_tables);
 				pages = pages1;
 				allocation_tables = allocation_tables1;
 				page_ptr_allocated += page_ptr_oversize;
 				}
-			p = NEW_UBYTE(page_size);
-			q = NEW_UBYTE(allocation_table_length);
+			p = NEW_uchar(page_size);
+			q = NEW_uchar(allocation_table_length);
 			for (i = 0; i < page_size; i++) {
 				p[i] = 0;
 				}
@@ -474,7 +474,7 @@ INT page_storage::store(UBYTE *elt)
 				"overall_length = " << overall_length << endl;
 #endif		
 		p = s_i_and_allocate(overall_length);
-		UBYTE_move(elt, p, entry_size);
+		uchar_move(elt, p, entry_size);
 		//cout << "storing at " << p << endl;
 		//check_allocation_table();
 		hdl = overall_length++;
@@ -493,10 +493,10 @@ INT page_storage::store(UBYTE *elt)
 void page_storage::dispose(INT hdl)
 {
 #if 1
-	UBYTE *p = s_i_and_deallocate(hdl);
+	uchar *p = s_i_and_deallocate(hdl);
 
 	INT next_next_free_entry = next_free_entry;
-	UBYTE_move((UBYTE *) &next_next_free_entry, p, sizeof(INT));
+	uchar_move((uchar *) &next_next_free_entry, p, sizeof(INT));
 	next_free_entry = hdl;
 	nb_free_entries++;
 	//check_free_list();
@@ -509,7 +509,7 @@ void page_storage::dispose(INT hdl)
 void page_storage::check_free_list()
 {
 	INT nb = 0, nfe, f_allocated; 
-	UBYTE *p;
+	uchar *p;
 	
 	if (nb_free_entries == 0)
 		return;
@@ -526,7 +526,7 @@ void page_storage::check_free_list()
 			print();
 			exit(1);
 			}
-		UBYTE_move(p, (UBYTE *) &nfe, sizeof(INT));
+		uchar_move(p, (uchar *) &nfe, sizeof(INT));
 		if (nfe == -1)
 			break;
 		}

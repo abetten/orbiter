@@ -32,20 +32,20 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_maxdepth = FALSE;
 	INT maxdepth = 0;
 	INT print_interval = 1000;
 	INT f_list_of_cases = FALSE;
-	const BYTE *fname_list_of_cases = NULL;
-	const BYTE *fname_template = NULL;
+	const char *fname_list_of_cases = NULL;
+	const char *fname_template = NULL;
 	INT f_prefix = FALSE;
-	const BYTE *prefix = "";
+	const char *prefix = "";
 	INT f_output_file = FALSE;
-	const BYTE *output_file = NULL;
+	const char *output_file = NULL;
 	INT f_tree = FALSE;
 	INT f_decision_nodes_only = FALSE;
-	const BYTE *fname_tree = NULL;
+	const char *fname_tree = NULL;
 	INT f_output_solution_raw = FALSE;
 	INT f_no_colors = FALSE;
 	INT clique_size;
@@ -60,9 +60,9 @@ int main(int argc, char **argv)
 	INT f_input_list_of_files = FALSE;
 	INT input_list_of_files_nb = 0;
 	INT input_list_of_files_case[100000];
-	const BYTE *input_list_of_files_fname[100000];
+	const char *input_list_of_files_fname[100000];
 	INT f_success_file = FALSE;
-	const BYTE *success_fname = NULL;
+	const char *success_fname = NULL;
 	INT f_nonrecursive = FALSE;
 
 
@@ -176,8 +176,8 @@ int main(int argc, char **argv)
 
 
 			colored_graph CG;
-			BYTE fname_magma[1000];
-			BYTE fname_text[1000];
+			char fname_magma[1000];
+			char fname_text[1000];
 
 			strcpy(fname_magma, fname);
 
@@ -209,8 +209,8 @@ int main(int argc, char **argv)
 
 		if (f_no_colors) {
 			colored_graph CG;
-			//BYTE fname_sol[1000];
-			//BYTE fname_draw[1000];
+			//char fname_sol[1000];
+			//char fname_draw[1000];
 			INT nb_sol;
 			INT decision_step_counter;
 
@@ -224,8 +224,8 @@ int main(int argc, char **argv)
 			cout << "clique_size = " << clique_size << endl;
 
 
-			BYTE fname_solution[1000];
-			BYTE fname_success[1000];
+			char fname_solution[1000];
+			char fname_success[1000];
 
 			strcpy(fname_solution, fname);
 
@@ -325,9 +325,9 @@ int main(int argc, char **argv)
 	else if (f_list_of_cases) {
 		INT *list_of_cases;
 		INT nb_cases;
-		BYTE fname_sol[1000];
-		BYTE fname_stats[1000];
-		BYTE split[1000];
+		char fname_sol[1000];
+		char fname_stats[1000];
+		char split[1000];
 		
 
 		if (f_split) {
@@ -372,8 +372,8 @@ int main(int argc, char **argv)
 		
 		cout << "input_list_of_files with " << input_list_of_files_nb << " input files" << endl;
 
-		BYTE fname_sol[1000];
-		BYTE fname_stats[1000];
+		char fname_sol[1000];
+		char fname_stats[1000];
 
 		if (f_output_file) {
 			sprintf(fname_sol, "%s", output_file);

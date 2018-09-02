@@ -1843,7 +1843,7 @@ INT matrix::hip()
 
 INT matrix::hip1()
 // homogeneous integer matrix predicate, 
-// test for 1 byte numbers; 
+// test for 1 char numbers; 
 // only to apply if hip TRUE. 
 {
 	INT i, j, m, n, k;
@@ -1857,7 +1857,7 @@ INT matrix::hip1()
 				exit(1);
 				}
 			k = s_iji(i, j);
-			if (!ONE_BYTE_INT(k))
+			if (!ONE_char_INT(k))
 				return FALSE;
 			}
 		}
@@ -1867,15 +1867,15 @@ INT matrix::hip1()
 void matrix::write_mem(memory & M, INT debug_depth)
 {
 	INT i, j, m, n, k;
-	BYTE f_hip = 0, f_hip1 = 0;
+	char f_hip = 0, f_hip1 = 0;
 	
 	m = s_m();
 	n = s_n();
 	M.write_int(n); // !!! first n then m
 	M.write_int(m);
-	f_hip = (BYTE) hip();
+	f_hip = (char) hip();
 	if (f_hip)
-		f_hip1 = (BYTE) hip1();
+		f_hip1 = (char) hip1();
 	if (debug_depth > 0) {
 		cout << "writing " << m << " x " << n << " ";
 		if (f_hip) {
@@ -1893,7 +1893,7 @@ void matrix::write_mem(memory & M, INT debug_depth)
 			for (i = 0; i < m; i++) {
 				for (j = 0; j < n; j++) {
 					k = s_iji(i, j);
-					M.write_char((BYTE) k);
+					M.write_char((char) k);
 					}
 				}
 			}
@@ -1917,7 +1917,7 @@ void matrix::write_mem(memory & M, INT debug_depth)
 void matrix::read_mem(memory & M, INT debug_depth)
 {
 	INT i, j, m, n, k;
-	BYTE c, f_hip = 0, f_hip1 = 0;
+	char c, f_hip = 0, f_hip1 = 0;
 	
 	M.read_int(&n);
 	M.read_int(&m);
@@ -1973,15 +1973,15 @@ INT matrix::csf()
 {
 	INT size = 0;
 	INT i, j, m, n;
-	BYTE f_hip, f_hip1;
+	char f_hip, f_hip1;
 	
 	m = s_m();
 	n = s_n();
 	size += 8; /* n, m */
-	f_hip = (BYTE) hip();
+	f_hip = (char) hip();
 	size += 1; /* f_hip */
 	if (f_hip) {
-		f_hip1 = (BYTE) hip1();
+		f_hip1 = (char) hip1();
 		size += 1; /* f_hip1 */
 		if (f_hip1)
 			size += 1 * m * n;
@@ -2374,8 +2374,8 @@ void matrix::incma_print_latex(ostream &f,
 
 void matrix::incma_print_latex2(ostream &f, 
 	INT width, INT width_10, 
-	INT f_outline_thin, const BYTE *unit_length, 
-	const BYTE *thick_lines, const BYTE *thin_lines, const BYTE *geo_line_width, 
+	INT f_outline_thin, const char *unit_length, 
+	const char *thick_lines, const char *thin_lines, const char *geo_line_width, 
 	INT f_row_decomp, Vector &row_decomp, 
 	INT f_col_decomp, Vector &col_decomp, 
 	INT f_labelling_points, Vector &point_labels, 
@@ -2390,9 +2390,9 @@ void matrix::incma_print_latex2(ostream &f,
 	INT x0, y0, x1, y1;
 	INT X0, Y0, X1, Y1;
 	INT width_8, width_5;
-	const BYTE *tdo_line_width = thick_lines /* "0.7mm" */;
-	const BYTE *line_width = thin_lines /* "0.15mm" */;
-	/* BYTE *geo_line_width = "0.25mm"; */
+	const char *tdo_line_width = thick_lines /* "0.7mm" */;
+	const char *line_width = thin_lines /* "0.15mm" */;
+	/* char *geo_line_width = "0.25mm"; */
 	Vector rd, cd;
 	
 	v = s_m();
@@ -2511,11 +2511,11 @@ void matrix::incma_print_latex2(ostream &f,
 void matrix::calc_hash_key(INT key_len, hollerith & hash_key, INT f_v)
 {
 	INT al_len;
-	BYTE *alphabet = NULL;
-	BYTE *inc = NULL;
-	BYTE *key = NULL;
+	char *alphabet = NULL;
+	char *inc = NULL;
+	char *key = NULL;
 	INT i0, i, j, k, v, b, nb_inc, pr, x, y;
-	BYTE c;
+	char c;
 	INT f_vv = FALSE;
 	Vector P;
 	INT nb_primes = 25;
@@ -2531,9 +2531,9 @@ void matrix::calc_hash_key(INT key_len, hollerith & hash_key, INT f_v)
 		}
 	the_first_n_primes(P, nb_primes);
 	al_len = MAXIMUM(256, b);
-	alphabet = (BYTE *) new BYTE[al_len + 1];
-	inc = (BYTE *) new BYTE[nb_inc + 1];
-	key = (BYTE *) new BYTE[key_len + 1];
+	alphabet = (char *) new char[al_len + 1];
+	inc = (char *) new char[nb_inc + 1];
+	key = (char *) new char[key_len + 1];
 	i0 = 0;
 	k = 0;
 	while (k < al_len) {
@@ -3577,7 +3577,7 @@ void matrix::canon_tonchev(INT f_row_decomp, Vector & row_decomp,
 }
 #endif
 
-void matrix::save_as_geometry(INT number, BYTE *label)
+void matrix::save_as_geometry(INT number, char *label)
 {
 	hollerith h;
 	geometry G;
@@ -3608,7 +3608,7 @@ void matrix::save_as_geometry(INT number, BYTE *label)
 }
 
 
-void matrix::save_as_inc_file(BYTE *fname)
+void matrix::save_as_inc_file(char *fname)
 {
 	INT i, j = 0, m, n, nb_X = 0;
 	m = s_m();

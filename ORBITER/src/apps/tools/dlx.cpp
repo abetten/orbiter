@@ -16,11 +16,11 @@ int main(int argc, const char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *fname;
+	const char *fname;
 	INT f_solution_file = FALSE;
-	const BYTE *solution_fname = NULL;
+	const char *solution_fname = NULL;
 	INT f_tree_file = FALSE;
-	const BYTE *tree_fname = NULL;
+	const char *tree_fname = NULL;
 
 
 	t0 = os_ticks();

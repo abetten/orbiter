@@ -94,7 +94,7 @@ void eckardt_point::latex_index_only(ostream &ost)
 		}
 }
 
-void eckardt_point::latex_to_str(BYTE *str)
+void eckardt_point::latex_to_str(char *str)
 {
 	INT t, i, j;
 	
@@ -119,7 +119,7 @@ void eckardt_point::latex_to_str(BYTE *str)
 		}
 }
 
-void eckardt_point::latex_to_str_without_E(BYTE *str)
+void eckardt_point::latex_to_str_without_E(char *str)
 {
 	INT t, i, j;
 	

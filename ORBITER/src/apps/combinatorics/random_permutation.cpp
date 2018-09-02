@@ -5,7 +5,7 @@
 
 #include "orbiter.h"
 
-void choose_random_permutation(INT n, INT f_save, const BYTE *fname, INT verbose_level);
+void choose_random_permutation(INT n, INT f_save, const char *fname, INT verbose_level);
 
 int main(int argc, char **argv)
 {
@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 	INT f_n = FALSE;
 	INT n;
 	INT f_save = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 	choose_random_permutation(n, f_save, fname, verbose_level);
 }
 
-void choose_random_permutation(INT n, INT f_save, const BYTE *fname, INT verbose_level)
+void choose_random_permutation(INT n, INT f_save, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 

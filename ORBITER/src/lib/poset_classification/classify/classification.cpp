@@ -111,7 +111,7 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 }
 
 void classification::print_latex(ostream &ost, 
-	const BYTE *title, INT f_with_stabilizers)
+	const char *title, INT f_with_stabilizers)
 {
 	INT verbose_level = 0;
 	INT f_v = (verbose_level >= 1);

@@ -103,7 +103,7 @@ INT surface_64_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 49, 0, 0, 49, 0, 56, 0, 0, 57, 48, 48, 0, 
 	0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 
 };
-const BYTE *surface_64_stab_order[] = {
+const char *surface_64_stab_order[] = {
 	"192",
 	"6",
 	"2",

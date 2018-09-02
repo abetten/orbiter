@@ -622,7 +622,7 @@ void design_parameter::lambda_of_supplementary(discreta_base& lambda_supplementa
 	lambda_supplementary = q.lambda();
 }
 
-void design_parameter::init_database(database& D, BYTE *path)
+void design_parameter::init_database(database& D, char *path)
 // path including trailing slash
 /* 
  * btree #0: id, v, t, k, lambda

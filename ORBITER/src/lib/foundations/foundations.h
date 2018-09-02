@@ -137,11 +137,11 @@ using namespace std;
 
 
 // define exactly one of the following to match your system:
-#undef INT_HAS_2_BYTES
-#define INT_HAS_4_BYTES
-#undef INT_HAS_8_BYTES
+#undef INT_HAS_2_charS
+#define INT_HAS_4_charS
+#undef INT_HAS_8_charS
 
-#ifdef INT_HAS_2_BYTES
+#ifdef INT_HAS_2_charS
 typedef short INT2;
 typedef long INT4;
 typedef long INT8;
@@ -149,7 +149,7 @@ typedef unsigned short UINT2;
 typedef unsigned long UINT4;
 typedef unsigned long UINT8;
 #endif
-#ifdef INT_HAS_4_BYTES
+#ifdef INT_HAS_4_charS
 typedef short INT2;
 typedef int INT4;
 typedef long INT8;
@@ -157,7 +157,7 @@ typedef unsigned short UINT2;
 typedef unsigned int UINT4;
 typedef unsigned long UINT8;
 #endif
-#ifdef INT_HAS_8_BYTES
+#ifdef INT_HAS_8_charS
 typedef short INT2;
 typedef short int INT4;
 typedef int INT8;
@@ -178,22 +178,21 @@ typedef unsigned long ULONG;
 typedef ULONG *PULONG;
 typedef short SHORT;
 typedef SHORT *PSHORT;
-typedef char BYTE;
-typedef BYTE *PBYTE;
-typedef unsigned char UBYTE;
-typedef UBYTE *PUBYTE;
+typedef char *pchar;
+typedef unsigned char uchar;
+typedef uchar *puchar;
 typedef char SCHAR;
 typedef SCHAR *PSCHAR;
 typedef float FLOAT;
 typedef FLOAT *PFLOAT;
-typedef BYTE TSTRING;
+typedef char TSTRING;
 typedef int *pint;
 typedef void *pvoid;
 
 
 
 #define PAGE_LENGTH_LOG 20
-#define MAX_PAGE_SIZE_IN_BYTES (5 * 1L << 20)
+#define MAX_PAGE_SIZE_IN_charS (5 * 1L << 20)
 #define BUFSIZE 100000
 #undef DEBUG_PAGE_STORAGE
 
@@ -207,7 +206,7 @@ typedef void *pvoid;
 #define ODD(x)      ( ((x) % 2) == 1 )
 #define DOUBLYEVEN(x)     ( ((x) % 4) == 0 )
 #define SINGLYEVEN(x)     ( ((x) % 4) == 2 )
-#define ONE_BYTE_INT(a) (((a) > -126) && ((a) < 127))
+#define ONE_char_INT(a) (((a) > -126) && ((a) < 127))
 #define ONE_MILLION 1000000
 #define ONE_HUNDRED_THOUSAND 100000
 
@@ -305,10 +304,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_INT(n) global_mem_object_registry.allocate_INT(n, __FILE__, __LINE__)
 #define NEW_PINT(n) global_mem_object_registry.allocate_PINT(n, __FILE__, __LINE__)
 #define NEW_PPINT(n) global_mem_object_registry.allocate_PPINT(n, __FILE__, __LINE__)
-#define NEW_BYTE(n) global_mem_object_registry.allocate_BYTE(n, __FILE__, __LINE__)
-#define NEW_UBYTE(n) global_mem_object_registry.allocate_UBYTE(n, __FILE__, __LINE__)
-#define NEW_PBYTE(n) global_mem_object_registry.allocate_PBYTE(n, __FILE__, __LINE__)
-#define NEW_PUBYTE(n) global_mem_object_registry.allocate_PUBYTE(n, __FILE__, __LINE__)
+#define NEW_char(n) global_mem_object_registry.allocate_char(n, __FILE__, __LINE__)
+#define NEW_uchar(n) global_mem_object_registry.allocate_uchar(n, __FILE__, __LINE__)
+#define NEW_pchar(n) global_mem_object_registry.allocate_pchar(n, __FILE__, __LINE__)
+#define NEW_puchar(n) global_mem_object_registry.allocate_puchar(n, __FILE__, __LINE__)
 #define NEW_pvoid(n) global_mem_object_registry.allocate_pvoid(n, __FILE__, __LINE__)
 #define NEW_OBJECT(type) (type *)global_mem_object_registry.allocate_OBJECT(new type, sizeof(type), #type, __FILE__, __LINE__)
 #define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), #type, __FILE__, __LINE__)
@@ -317,10 +316,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define FREE_INT(p) global_mem_object_registry.free_INT(p, __FILE__, __LINE__)
 #define FREE_PINT(p) global_mem_object_registry.free_PINT(p, __FILE__, __LINE__)
 #define FREE_PPINT(p) global_mem_object_registry.free_PPINT(p, __FILE__, __LINE__)
-#define FREE_BYTE(p) global_mem_object_registry.free_BYTE(p, __FILE__, __LINE__)
-#define FREE_UBYTE(p) global_mem_object_registry.free_UBYTE(p, __FILE__, __LINE__)
-#define FREE_PBYTE(p) global_mem_object_registry.free_PBYTE(p, __FILE__, __LINE__)
-#define FREE_PUBYTE(p) global_mem_object_registry.free_PUBYTE(p, __FILE__, __LINE__)
+#define FREE_char(p) global_mem_object_registry.free_char(p, __FILE__, __LINE__)
+#define FREE_uchar(p) global_mem_object_registry.free_uchar(p, __FILE__, __LINE__)
+#define FREE_pchar(p) global_mem_object_registry.free_pchar(p, __FILE__, __LINE__)
+#define FREE_puchar(p) global_mem_object_registry.free_puchar(p, __FILE__, __LINE__)
 #define FREE_pvoid(p) global_mem_object_registry.free_pvoid(p, __FILE__, __LINE__)
 #define FREE_OBJECT(p) {global_mem_object_registry.free_OBJECT(p, __FILE__, __LINE__); delete p;}
 #define FREE_OBJECTS(p) {global_mem_object_registry.free_OBJECTS(p, __FILE__, __LINE__); delete [] p;}
@@ -330,10 +329,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_INT(n) new INT[n]
 #define NEW_PINT(n) new PINT[n]
 #define NEW_PPINT(n) new PPINT[n]
-#define NEW_BYTE(n) new BYTE[n]
-#define NEW_UBYTE(n) new UBYTE[n]
-#define NEW_PBYTE(n) new PBYTE[n]
-#define NEW_PUBYTE(n) new PUBYTE[n]
+#define NEW_char(n) new char[n]
+#define NEW_uchar(n) new uchar[n]
+#define NEW_pchar(n) new pchar[n]
+#define NEW_puchar(n) new puchar[n]
 #define NEW_pvoid(n) new pvoid[n]
 #define NEW_OBJECT(type) new type
 #define NEW_OBJECTS(type, n) new type[n]
@@ -342,10 +341,10 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define FREE_INT(p) delete [] p
 #define FREE_PINT(p) delete [] p
 #define FREE_PPINT(p) delete [] p
-#define FREE_BYTE(p) delete [] p
-#define FREE_UBYTE(p) delete [] p
-#define FREE_PBYTE(p) delete [] p
-#define FREE_PUBYTE(p) delete [] p
+#define FREE_char(p) delete [] p
+#define FREE_uchar(p) delete [] p
+#define FREE_pchar(p) delete [] p
+#define FREE_puchar(p) delete [] p
 #define FREE_pvoid(p) delete [] p
 #define FREE_OBJECT(p) delete p
 #define FREE_OBJECTS(p) delete [] p
@@ -432,8 +431,8 @@ public:
 	void create_power_minus_one(INT a, INT e);
 		// creates a^e  - 1
 	void create_from_base_b_representation(INT b, INT *rep, INT len);
-	void create_from_base_10_string(const BYTE *str, INT verbose_level);
-	void create_from_base_10_string(const BYTE *str);
+	void create_from_base_10_string(const char *str, INT verbose_level);
+	void create_from_base_10_string(const char *str);
 	INT as_INT();
 	void as_longinteger(longinteger_object &a);
 	void assign_to(longinteger_object &b);
@@ -442,7 +441,7 @@ public:
 	ostream& print_not_scientific(ostream& ost);
 	INT output_width();
 	void print_width(ostream& ost, INT width);
-	void print_to_string(BYTE *str);
+	void print_to_string(char *str);
 	void normalize();
 	void negate();
 	int is_zero();

@@ -8,7 +8,7 @@
 
 #define MY_BUFSIZE 1000000
 
-const BYTE *version = "tdo_refine 7/31 2008";
+const char *version = "tdo_refine 7/31 2008";
 
 
 void print_distribution(ostream &ost, 
@@ -74,12 +74,12 @@ class tdo_parameter_calculation {
 	
 INT t0;
 	INT cnt;
-	BYTE *p_buf;
-	BYTE str[1000];
-	BYTE ext[1000];
-	BYTE *fname_in;
-	//BYTE fname_base[1000];
-	BYTE fname_out[1000];
+	char *p_buf;
+	char str[1000];
+	char ext[1000];
+	char *fname_in;
+	//char fname_base[1000];
+	char fname_out[1000];
 	INT verbose_level;
 	INT f_lambda3;
 	INT lambda3, block_size;
@@ -88,7 +88,7 @@ INT t0;
 	INT f_range;
 	INT range_first, range_len;
 	INT f_select;
-	BYTE *select_label;
+	char *select_label;
 	INT f_omit1;
 	INT omit1;
 	INT f_omit2;
@@ -122,18 +122,18 @@ INT t0;
 	void do_it(ofstream &g, INT verbose_level);
 	void do_row_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, INT verbose_level);
 	void do_col_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, INT verbose_level);
-	void do_all_row_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
+	void do_all_row_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
 		INT *point_types, INT nb_point_types, INT point_type_len, 
 		INT *distributions, INT nb_distributions, INT &nb_tactical, INT verbose_level);
-	void do_all_column_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
+	void do_all_column_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
 		INT *line_types, INT nb_line_types, INT line_type_len, 
 		INT *distributions, INT nb_distributions, INT &nb_tactical, INT verbose_level);
-	INT do_row_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
+	INT do_row_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
 		INT *point_types, INT nb_point_types, INT point_type_len, 
 		INT *distributions, INT nb_distributions, INT verbose_level);
 		// returns TRUE or FALSE depending on whether the 
 		// refinement gave a tactical decomposition
-	INT do_column_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
+	INT do_column_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
 		INT *line_types, INT nb_line_types, INT line_type_len, 
 		INT *distributions, INT nb_distributions, INT verbose_level);
 		// returns TRUE or FALSE depending on whether the 
@@ -535,7 +535,7 @@ void tdo_parameter_calculation::do_col_refinement(ofstream &g, tdo_scheme &G,
 		}
 }
 
-void tdo_parameter_calculation::do_all_row_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
+void tdo_parameter_calculation::do_all_row_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
 	INT *point_types, INT nb_point_types, INT point_type_len, 
 	INT *distributions, INT nb_distributions, INT &nb_tactical, 
 	INT verbose_level)
@@ -565,7 +565,7 @@ void tdo_parameter_calculation::do_all_row_refinements(BYTE *label_in, ofstream 
 			
 }
 
-void tdo_parameter_calculation::do_all_column_refinements(BYTE *label_in, ofstream &g, tdo_scheme &G, 
+void tdo_parameter_calculation::do_all_column_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
 	INT *line_types, INT nb_line_types, INT line_type_len, 
 	INT *distributions, INT nb_distributions, INT &nb_tactical, 
 	INT verbose_level)
@@ -597,7 +597,7 @@ void tdo_parameter_calculation::do_all_column_refinements(BYTE *label_in, ofstre
 }
 
 
-INT tdo_parameter_calculation::do_row_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
+INT tdo_parameter_calculation::do_row_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
 	INT *point_types, INT nb_point_types, INT point_type_len, 
 	INT *distributions, INT nb_distributions, INT verbose_level)
 // returns TRUE or FALSE depending on whether the 
@@ -605,7 +605,7 @@ INT tdo_parameter_calculation::do_row_refinement(INT t, BYTE *label_in, ofstream
 {
 	INT r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
 	INT *type_index;
-	//BYTE label_out[1000];
+	//char label_out[1000];
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 6);
 	INT f_vvv = (verbose_level >= 7);
@@ -769,7 +769,7 @@ INT tdo_parameter_calculation::do_row_refinement(INT t, BYTE *label_in, ofstream
 	return f_tactical;
 }
 
-INT tdo_parameter_calculation::do_column_refinement(INT t, BYTE *label_in, ofstream &g, tdo_scheme &G, 
+INT tdo_parameter_calculation::do_column_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
 	INT *line_types, INT nb_line_types, INT line_type_len, 
 	INT *distributions, INT nb_distributions, INT verbose_level)
 // returns TRUE or FALSE depending on whether the 
@@ -777,7 +777,7 @@ INT tdo_parameter_calculation::do_column_refinement(INT t, BYTE *label_in, ofstr
 {
 	INT r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
 	INT *type_index;
-	//BYTE label_out[1000];
+	//char label_out[1000];
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 6);
 	INT f_vvv = (verbose_level >= 7);

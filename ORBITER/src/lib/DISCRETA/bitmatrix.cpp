@@ -118,7 +118,7 @@ bitmatrix& bitmatrix::m_mn(INT m, INT n)
 	INT N, size, n1;
 	
 	freeself();
-	N = n >> 5; // 4 bytes = 32 bits = 2^5
+	N = n >> 5; // 4 chars = 32 bits = 2^5
 	n1 = N << 5;
 	if (n > n1)
 		N++;

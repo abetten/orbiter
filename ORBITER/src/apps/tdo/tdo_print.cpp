@@ -48,20 +48,20 @@ void print_usage()
 int main(int argc, char **argv)
 {
 	INT cnt;
-	BYTE str[1000];
-	BYTE ext[1000];
-	BYTE *fname_in;
-	BYTE fname_out[1000];
+	char str[1000];
+	char ext[1000];
+	char *fname_in;
+	char fname_out[1000];
 	INT verbose_level = 0;
 	INT f_widor = FALSE;
 	INT f_range = FALSE;
 	INT range_first, range_len;
 	INT f_select = FALSE;
-	BYTE *select_label;
+	char *select_label;
 	INT f_C = FALSE;
 	INT f_tex = FALSE;
 	INT f_texfile = FALSE;
-	BYTE *texfile_name = NULL;
+	char *texfile_name = NULL;
 	INT f_ROW = FALSE;
 	INT f_COL = FALSE;
 	INT f_Tex = FALSE;
@@ -242,7 +242,7 @@ int main(int argc, char **argv)
 				}
 			}
 		if (f_Tex) {
-			BYTE fname[1000];
+			char fname[1000];
 			
 			sprintf(fname, "%s.tex", GP.label);
 			ofstream f(fname);

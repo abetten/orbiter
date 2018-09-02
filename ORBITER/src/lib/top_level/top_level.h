@@ -91,11 +91,11 @@ class representatives {
 public:
 	action *A;
 
-	BYTE prefix[1000];
-	BYTE fname_rep[1000];
-	BYTE fname_stabgens[1000];
-	BYTE fname_fusion[1000];
-	BYTE fname_fusion_ge[1000];
+	char prefix[1000];
+	char fname_rep[1000];
+	char fname_stabgens[1000];
+	char fname_fusion[1000];
+	char fname_fusion_ge[1000];
 
 
 
@@ -125,7 +125,7 @@ public:
 
 
 
-	//BYTE *elt;
+	//char *elt;
 	INT *Elt1;
 	INT *tl; // [A->base_len]
 
@@ -138,7 +138,7 @@ public:
 	void null();
 	~representatives();
 	void free();
-	void init(action *A, INT nb_objects, BYTE *prefix, INT verbose_level);
+	void init(action *A, INT nb_objects, char *prefix, INT verbose_level);
 	void write_fusion(INT verbose_level);
 	void read_fusion(INT verbose_level);
 	void write_representatives_and_stabilizers(INT verbose_level);

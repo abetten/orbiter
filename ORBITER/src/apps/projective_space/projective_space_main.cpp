@@ -28,31 +28,31 @@ INT t0; // the system time when the program started
 
 
 void canonical_form(INT nb_inputs, INT *input_type, 
-	const BYTE **input_string, const BYTE **input_string2, 
+	const char **input_string, const char **input_string2, 
 	INT nb_objects_to_test, 
 	projective_space_with_action *PA, 
-	INT f_save_incma_in_and_out, const BYTE *prefix, 
+	INT f_save_incma_in_and_out, const char *prefix, 
 	INT verbose_level);
 void classify_objects_using_nauty(INT nb_inputs, INT *input_type, 
-	const BYTE **input_string, const BYTE **input_string2, 
+	const char **input_string, const char **input_string2, 
 	INT nb_objects_to_test, 
 	projective_space_with_action *PA, classify_bitvectors *CB, 
-	INT f_save_incma_in_and_out, const BYTE *prefix, 
+	INT f_save_incma_in_and_out, const char *prefix, 
 	INT verbose_level);
 INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type, 
-	const BYTE **input_string, const BYTE **input_string2, 
+	const char **input_string, const char **input_string2, 
 	INT verbose_level);
 object_in_projective_space *create_object_from_string(projective_space_with_action *PA, 
-	INT f_points, const BYTE *set_as_string, INT verbose_level);
+	INT f_points, const char *set_as_string, INT verbose_level);
 INT process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
 	object_in_projective_space *OiP, 
-	INT f_save_incma_in_and_out, const BYTE *prefix, 
+	INT f_save_incma_in_and_out, const char *prefix, 
 	INT nb_objects_to_test, 
 	strong_generators *&SG, 
 	INT verbose_level);
 void OiPA_encode(void *extra_data, INT *&encoding, INT &encoding_sz, void *global_data);
 void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_data);
-void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data);
+void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, char *output, void *data);
 void compute_ago_distribution(projective_space_with_action *PA, 
 	classify_bitvectors *CB, classify *&C_ago, INT verbose_level);
 void compute_ago_distribution_permuted(projective_space_with_action *PA, 
@@ -71,14 +71,14 @@ int main(int argc, char **argv)
 	INT f_n = FALSE;
 	INT n;
 	INT f_poly = FALSE;
-	BYTE *poly = NULL;
+	char *poly = NULL;
 
 	INT f_init_incidence_structure = TRUE;
 
 	INT nb_inputs = 0;
 	INT input_type[1000];
-	const BYTE *input_string[1000];
-	const BYTE *input_string2[1000];
+	const char *input_string[1000];
+	const char *input_string2[1000];
 
 
 	INT f_all_k_subsets = FALSE;
@@ -87,10 +87,10 @@ int main(int argc, char **argv)
 	INT f_save_incma_in_and_out = FALSE;
 
 	INT f_prefix = FALSE;
-	const BYTE *prefix = "";
+	const char *prefix = "";
 
 	INT f_save = FALSE;
-	const BYTE *output_prefix = "";
+	const char *output_prefix = "";
 
 	INT order_list_sz = 0;
 	INT order_list[1000];
@@ -320,7 +320,7 @@ int main(int argc, char **argv)
 		cout << "The orbits in more detail:" << endl;
 		INT j;
 	
-		BYTE fname[1000];
+		char fname[1000];
 
 		if (prefix == NULL) {
 			cout << "please use option -prefix <prefix> toset the prefix for the tex file" << endl;
@@ -421,14 +421,14 @@ int main(int argc, char **argv)
 
 			strong_generators *SG;
 			longinteger_object go;
-			BYTE save_incma_in_and_out_prefix[1000];
+			char save_incma_in_and_out_prefix[1000];
 	
 			if (f_save_incma_in_and_out) {
 				sprintf(save_incma_in_and_out_prefix, "%s_iso_%ld_%ld", prefix, i, j);
 				}
 	
 	
-			UBYTE *canonical_form;
+			uchar *canonical_form;
 			INT canonical_form_len;
 
 
@@ -648,10 +648,10 @@ int main(int argc, char **argv)
 }
 
 void canonical_form(INT nb_inputs, INT *input_type, 
-	const BYTE **input_string, const BYTE **input_string2, 
+	const char **input_string, const char **input_string2, 
 	INT nb_objects_to_test, 
 	projective_space_with_action *PA, 
-	INT f_save_incma_in_and_out, const BYTE *prefix, 
+	INT f_save_incma_in_and_out, const char *prefix, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -904,10 +904,10 @@ void canonical_form(INT nb_inputs, INT *input_type,
 
 
 void classify_objects_using_nauty(INT nb_inputs, INT *input_type, 
-	const BYTE **input_string, const BYTE **input_string2, 
+	const char **input_string, const char **input_string2, 
 	INT nb_objects_to_test, 
 	projective_space_with_action *PA, classify_bitvectors *CB, 
-	INT f_save_incma_in_and_out, const BYTE *prefix, 
+	INT f_save_incma_in_and_out, const char *prefix, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1140,7 +1140,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 }
 
 INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type, 
-	const BYTE **input_string, const BYTE **input_string2, 
+	const char **input_string, const char **input_string2, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1236,7 +1236,7 @@ INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type,
 }
 
 object_in_projective_space *create_object_from_string(projective_space_with_action *PA, 
-	INT type, const BYTE *set_as_string, INT verbose_level)
+	INT type, const char *set_as_string, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -1297,7 +1297,7 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 
 INT process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
 	object_in_projective_space *OiP, 
-	INT f_save_incma_in_and_out, const BYTE *prefix, 
+	INT f_save_incma_in_and_out, const char *prefix, 
 	INT nb_objects_to_test, 
 	strong_generators *&SG, 
 	INT verbose_level)
@@ -1311,14 +1311,14 @@ INT process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 
 	longinteger_object go;
 	//INT *Extra_data;
-	BYTE save_incma_in_and_out_prefix[1000];
+	char save_incma_in_and_out_prefix[1000];
 	
 	if (f_save_incma_in_and_out) {
 		sprintf(save_incma_in_and_out_prefix, "%s_%ld_", prefix, CB->n);
 		}
 	
 	
-	UBYTE *canonical_form;
+	uchar *canonical_form;
 	INT canonical_form_len;
 
 
@@ -1403,7 +1403,7 @@ void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_dat
 	
 }
 
-void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, BYTE *output, void *data)
+void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, char *output, void *data)
 {
 	classify_bitvectors *CB;
 	object_in_projective_space_with_action *OiPA;

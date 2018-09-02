@@ -11,7 +11,7 @@ INT t0;
 
 void design_from_PG(INT PG_n, INT PG_q, INT verbose_level);
 void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level);
-void do_it(const BYTE *fname, INT verbose_level);
+void do_it(const char *fname, INT verbose_level);
 void design_properties(incidence_structure *Incidence, INT verbose_level);
 INT number_of_blocks_through_set_of_points(incidence_structure *Incidence, INT *set_of_points, INT set_size);
 
@@ -21,7 +21,7 @@ int main(int argc, const char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *fname;
+	const char *fname;
 	INT f_PG = FALSE;
 	INT PG_n = 0;
 	INT PG_q = 0;
@@ -112,7 +112,7 @@ void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level)
 		}
 }
 
-void do_it(const BYTE *fname, INT verbose_level)
+void do_it(const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 

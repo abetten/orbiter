@@ -25,7 +25,7 @@ int main(int argc, const char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_poly = FALSE;
-	const BYTE *poly = NULL;
+	const char *poly = NULL;
 	INT f_order = FALSE;
 	INT order = 0;
 	INT f_dim_over_kernel = FALSE;
@@ -37,18 +37,18 @@ int main(int argc, const char **argv)
 
 
 	INT nb_identify = 0;
-	const BYTE *identify_data[1000];
+	const char *identify_data[1000];
 
 
 	INT f_list = FALSE;
 	INT f_make_quotients = FALSE;
 	INT f_print_spread = FALSE;
-	const BYTE *fname_print_spread;
+	const char *fname_print_spread;
 	INT f_HMO = FALSE;
-	const BYTE *fname_HMO;
+	const char *fname_HMO;
 	INT f_print_representatives = FALSE;
 	INT representatives_size = 0;
-	const BYTE *representatives_fname = NULL;
+	const char *representatives_fname = NULL;
 	INT f_test_identify = FALSE;
 	INT identify_level = 0;
 	INT identify_nb_times = 0;
@@ -263,7 +263,7 @@ int main(int argc, const char **argv)
 
 	cout << "spread_classify.C before IA.init" << endl;
 
-	BYTE prefix_with_directory[1000];
+	char prefix_with_directory[1000];
 
 	sprintf(prefix_with_directory, "%s%s", T.starter_directory_name, T.prefix);
 
@@ -418,7 +418,7 @@ int main(int argc, const char **argv)
 		orbit_rep *R;
 		INT *M;
 		INT no, nb;
-		BYTE fname[1000];
+		char fname[1000];
 		
 		cout << "spread_classify.C printing orbit representatives at level " << representatives_size << endl;
 		R = NEW_OBJECT(orbit_rep);
@@ -430,7 +430,7 @@ int main(int argc, const char **argv)
 
 		cout << "there are " << nb << " orbit representatives in the file " << fname << endl;
 		for (no = 0; no < nb; no++) {
-			R->init_from_file(T.A /*A_base*/, (BYTE *) representatives_fname, 
+			R->init_from_file(T.A /*A_base*/, (char *) representatives_fname, 
 				representatives_size, no, representatives_size - 1/*level_of_candidates_file*/, 
 				spread_lifting_early_test_function, 
 				&T, 

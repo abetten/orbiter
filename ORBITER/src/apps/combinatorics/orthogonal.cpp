@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 	cout << "The adjacency matrix of the collinearity graph has been computed" << endl;
 
 	colored_graph *CG;
-	BYTE fname[1000];
+	char fname[1000];
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);

@@ -383,7 +383,7 @@ void recoordinatize::compute_live_points(INT verbose_level)
 		}
 
 
-	BYTE fname[1000];
+	char fname[1000];
 
 
 #if 0

@@ -12,19 +12,19 @@
 
 
 void create_files(INT N, 
-	const BYTE **lines, INT nb_lines, 
-	const BYTE *file_mask, 
-	INT f_repeat, INT repeat_N, const BYTE *repeat_mask, 
+	const char **lines, INT nb_lines, 
+	const char *file_mask, 
+	INT f_repeat, INT repeat_N, const char *repeat_mask, 
 	INT f_split, INT split_m, 
 	INT verbose_level);
 void create_files_list_of_cases(spreadsheet *S, 
 	INT read_cases_column_of_case, INT read_cases_column_of_fname, 
 	INT N, 
-	const BYTE **lines, INT nb_lines, 
-	const BYTE **final_lines, INT nb_final_lines, 
-	INT f_tasks, INT nb_tasks, const BYTE *tasks_line, 
-	const BYTE *command, 
-	const BYTE *file_mask, 
+	const char **lines, INT nb_lines, 
+	const char **final_lines, INT nb_final_lines, 
+	INT f_tasks, INT nb_tasks, const char *tasks_line, 
+	const char *command, 
+	const char *file_mask, 
 	INT verbose_level);
 
 
@@ -34,28 +34,28 @@ int main(int argc, char **argv)
 	INT i, j;
 	INT verbose_level = 0;
 	INT f_file_mask = FALSE;
-	const BYTE *file_mask = NULL;
+	const char *file_mask = NULL;
 	INT f_N = FALSE;
 	INT N = 0;
 	INT nb_lines = 0;
-	const BYTE *lines[MAX_LINES];
+	const char *lines[MAX_LINES];
 	INT nb_final_lines = 0;
-	const BYTE *final_lines[MAX_LINES];
+	const char *final_lines[MAX_LINES];
 	INT f_command = FALSE;
-	const BYTE *command = NULL;
+	const char *command = NULL;
 	INT f_repeat = FALSE;
 	INT repeat_N = 0;
-	const BYTE *repeat_mask;
+	const char *repeat_mask;
 	INT f_split = FALSE;
 	INT split_m = 0;
 	INT f_read_cases = FALSE;
-	const BYTE *read_cases_fname = NULL;
+	const char *read_cases_fname = NULL;
 	INT f_read_cases_text = FALSE;
 	INT read_cases_column_of_case = 0;
 	INT read_cases_column_of_fname = 0;
 	INT f_tasks = FALSE;
 	INT nb_tasks = 0;
-	const BYTE *tasks_line = NULL;
+	const char *tasks_line = NULL;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -131,8 +131,8 @@ int main(int argc, char **argv)
 
 	if (f_read_cases) {
 
-		BYTE fname[1000];
-		BYTE str[1000];
+		char fname[1000];
+		char str[1000];
 		INT *Cases;
 		INT nb_cases;
 		INT n, c;
@@ -147,8 +147,8 @@ int main(int argc, char **argv)
 		INT_vec_print(cout, Cases, nb_cases);
 		cout << endl;
 
-			const BYTE *log_fname = "log_file.txt";
-			const BYTE *log_mask = "\tsbatch job%04ld";
+			const char *log_fname = "log_file.txt";
+			const char *log_mask = "\tsbatch job%04ld";
 			{
 			ofstream fp_log(log_fname);
 
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
 					}
 				cout << "Written file " << fname << " of size " << file_size(fname) << endl;
 
-				BYTE log_entry[1000];
+				char log_entry[1000];
 				
 				sprintf(log_entry, log_mask, i);
 				fp_log << log_entry << endl;
@@ -233,24 +233,24 @@ int main(int argc, char **argv)
 }
 
 void create_files(INT N, 
-	const BYTE **lines, INT nb_lines, 
-	const BYTE *file_mask, 
-	INT f_repeat, INT repeat_N, const BYTE *repeat_mask, 
+	const char **lines, INT nb_lines, 
+	const char *file_mask, 
+	INT f_repeat, INT repeat_N, const char *repeat_mask, 
 	INT f_split, INT split_m, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
 
-	BYTE fname[1000];
-	BYTE str[1000];
+	char fname[1000];
+	char str[1000];
 	INT r;
 
 	if (f_v) {
 		cout << "create_files" << endl;
 		}
 	
-	const BYTE *makefile_fname = "makefile_submit";
+	const char *makefile_fname = "makefile_submit";
 	{
 	ofstream fp_makefile(makefile_fname);
 	
@@ -298,18 +298,18 @@ void create_files(INT N,
 void create_files_list_of_cases(spreadsheet *S, 
 	INT read_cases_column_of_case, INT read_cases_column_of_fname, 
 	INT N, 
-	const BYTE **lines, INT nb_lines, 
-	const BYTE **final_lines, INT nb_final_lines, 
-	INT f_tasks, INT nb_tasks, const BYTE *tasks_line, 
-	const BYTE *command, 
-	const BYTE *file_mask, 
+	const char **lines, INT nb_lines, 
+	const char **final_lines, INT nb_final_lines, 
+	INT f_tasks, INT nb_tasks, const char *tasks_line, 
+	const char *command, 
+	const char *file_mask, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i, j;
 
-	BYTE fname[1000];
-	BYTE str[1000];
+	char fname[1000];
+	char str[1000];
 
 	if (f_v) {
 		cout << "create_files_list_of_cases" << endl;
@@ -319,7 +319,7 @@ void create_files_list_of_cases(spreadsheet *S,
 	cout << "nb_cases=" << nb_cases << endl;
 
 
-	const BYTE *makefile_fname = "makefile_submit";
+	const char *makefile_fname = "makefile_submit";
 	{
 	ofstream fp_makefile(makefile_fname);
 	
@@ -337,7 +337,7 @@ void create_files_list_of_cases(spreadsheet *S,
 			}
 
 		if (f_tasks) {
-			BYTE str[1000];
+			char str[1000];
 			INT t;
 			INT NT;
 
@@ -354,7 +354,7 @@ void create_files_list_of_cases(spreadsheet *S,
 					if (((j - i) / N) % nb_tasks != t) {
 						continue;
 						}
-					BYTE *entry;
+					char *entry;
 					INT case_number;
 
 					case_number = S->get_INT(j + 1, read_cases_column_of_case);
@@ -370,7 +370,7 @@ void create_files_list_of_cases(spreadsheet *S,
 				if ((j % N) != i) {
 					continue;
 					}
-				BYTE *entry;
+				char *entry;
 				INT case_number;
 
 				case_number = S->get_INT(j + 1, read_cases_column_of_case);

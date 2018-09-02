@@ -19,18 +19,18 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_general_format = FALSE;
 	//INT f_maxdepth = FALSE;
 	//INT maxdepth = 0;
 	//INT print_interval = 1000;
 	INT f_list_of_cases = FALSE;
-	const BYTE *fname_list_of_cases = NULL;
-	const BYTE *fname_template = NULL;
+	const char *fname_list_of_cases = NULL;
+	const char *fname_template = NULL;
 	INT f_prefix = FALSE;
-	const BYTE *prefix = NULL;
+	const char *prefix = NULL;
 	INT f_output_file = FALSE;
-	const BYTE *output_file = NULL;
+	const char *output_file = NULL;
 	INT f_print = FALSE;
 	INT f_print_tex = FALSE;
 	INT f_draw = FALSE;
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	INT f_analyze = FALSE;
 	INT f_tree = FALSE;
 	INT f_decision_nodes_only = FALSE;
-	const BYTE *fname_tree = NULL;
+	const char *fname_tree = NULL;
 	INT f_coordinates = FALSE;
 	INT xmax_in = ONE_MILLION;
 	INT ymax_in = ONE_MILLION;
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	INT ymax_out = ONE_MILLION;
 	INT f_output_solution_raw = FALSE;
 	INT f_test = FALSE;
-	const BYTE *solution_file = NULL;
+	const char *solution_file = NULL;
 	INT f_make_clique_graph = FALSE;
 	INT f_RHS = FALSE;
 	INT RHS_value = 0;
@@ -215,7 +215,7 @@ int main(int argc, char **argv)
 	else {
 		if (is_xml_file(fname)) {
 			{
-			BYTE label[1000];
+			char label[1000];
 			ifstream f(fname);
 			Dio->read_xml(f, label);
 			}
@@ -255,7 +255,7 @@ int main(int argc, char **argv)
 
 
 	if (f_draw) {
-		BYTE fname_base[1000];
+		char fname_base[1000];
 
 		sprintf(fname_base, "%s", fname);
 		replace_extension_with(fname_base, "_drawing");		
@@ -267,7 +267,7 @@ int main(int argc, char **argv)
 
 	if (f_make_clique_graph) {
 
-		BYTE fname_base[1000];
+		char fname_base[1000];
 
 
 		sprintf(fname_base, "%s", fname);
@@ -331,7 +331,7 @@ int main(int argc, char **argv)
 		}
 
 	if (f_print_tex) {
-		BYTE fname_base[1000];
+		char fname_base[1000];
 
 		sprintf(fname_base, "%s", fname);
 		replace_extension_with(fname_base, "_print.tex");

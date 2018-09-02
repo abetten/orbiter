@@ -442,7 +442,7 @@ INT action::element_signum_of_permutation(void *elt)
 void action::element_write_file_fp(INT *Elt, FILE *fp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *elt;
+	char *elt;
 	
 	elt = element_rw_memory_object;
 	if (f_v) {
@@ -457,7 +457,7 @@ void action::element_write_file_fp(INT *Elt, FILE *fp, INT verbose_level)
 void action::element_read_file_fp(INT *Elt, FILE *fp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *elt;
+	char *elt;
 	
 	elt = element_rw_memory_object;
 	fread(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
@@ -469,7 +469,7 @@ void action::element_read_file_fp(INT *Elt, FILE *fp, INT verbose_level)
 		}
 }
 
-void action::element_write_file(INT *Elt, const BYTE *fname, INT verbose_level)
+void action::element_write_file(INT *Elt, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -483,7 +483,7 @@ void action::element_write_file(INT *Elt, const BYTE *fname, INT verbose_level)
 		}
 }
 
-void action::element_read_file(INT *Elt, const BYTE *fname, INT verbose_level)
+void action::element_read_file(INT *Elt, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -500,7 +500,7 @@ void action::element_read_file(INT *Elt, const BYTE *fname, INT verbose_level)
 void action::element_write_to_memory_object(INT *Elt, memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *elt;
+	char *elt;
 
 	if (f_v) {
 		cout << "action::element_write_to_memory_object" << endl;
@@ -515,7 +515,7 @@ void action::element_write_to_memory_object(INT *Elt, memory_object *m, INT verb
 void action::element_read_from_memory_object(INT *Elt, memory_object *m, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *elt;
+	char *elt;
 	INT i;
 
 	
@@ -533,7 +533,7 @@ void action::element_read_from_memory_object(INT *Elt, memory_object *m, INT ver
 void action::element_write_to_file_binary(INT *Elt, ofstream &fp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *elt;
+	char *elt;
 
 	if (f_v) {
 		cout << "action::element_write_to_file_binary" << endl;
@@ -543,27 +543,27 @@ void action::element_write_to_file_binary(INT *Elt, ofstream &fp, INT verbose_le
 				"coded_elt_size_in_char == 0" << endl;
 		exit(1);
 	}
-	elt = NEW_BYTE(coded_elt_size_in_char);
+	elt = NEW_char(coded_elt_size_in_char);
 
 	element_pack(Elt, elt, FALSE);
 	fp.write(elt, coded_elt_size_in_char);
-	FREE_BYTE(elt);
+	FREE_char(elt);
 }
 
 void action::element_read_from_file_binary(INT *Elt, ifstream &fp, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE *elt;
+	char *elt;
 
 	
 	if (f_v) {
 		cout << "action::element_read_from_memory_object" << endl;
 		}
-	elt = NEW_BYTE(coded_elt_size_in_char);
+	elt = NEW_char(coded_elt_size_in_char);
 
 	fp.read(elt, coded_elt_size_in_char);
 	element_unpack(elt, Elt, FALSE);
-	FREE_BYTE(elt);
+	FREE_char(elt);
 }
 
 void action::random_element(sims *S, INT *Elt, INT verbose_level)

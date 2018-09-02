@@ -314,8 +314,8 @@ class mp_graphics;
 
 // in global.C:
 
-extern const BYTE *discreta_home;
-extern const BYTE *discreta_arch;
+extern const char *discreta_home;
+extern const char *discreta_arch;
 
 typedef class labelled_branching labelled_branching;
 typedef class base_change base_change;
@@ -358,9 +358,9 @@ INT NormRemainder(INT a, INT m);
 INT log2(INT n);
 INT sqrt_mod(INT a, INT p);
 INT sqrt_mod_involved(INT a, INT p);
-//void latex_head(ostream& ost, INT f_book, INT f_title, BYTE *title, BYTE *author, INT f_toc, INT f_landscape);
+//void latex_head(ostream& ost, INT f_book, INT f_title, char *title, char *author, INT f_toc, INT f_landscape);
 //void latex_foot(ostream& ost);
-void html_head(ostream& ost, BYTE *title_long, BYTE *title_short);
+void html_head(ostream& ost, char *title_long, char *title_short);
 void html_foot(ostream& ost);
 void sieve(Vector &primes, INT factorbase, INT f_v);
 void sieve_primes(Vector &v, INT from, INT to, INT limit, INT f_v);
@@ -403,7 +403,7 @@ void frobenius_in_AG(domain *dom, INT n, permutation &p);
 // n is the dimension
 void translation_in_AG(domain *dom, INT n, INT i, discreta_base & a, permutation &p);
 enum printing_mode_enum current_printing_mode();
-void call_system(BYTE *cmd);
+void call_system(char *cmd);
 void fill_char(void *v, INT cnt, INT c);
 INT hash_INT(INT hash0, INT a);
 void queue_init(Vector &Q, INT elt);
@@ -419,7 +419,7 @@ INT Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols,
 	INT f_P, INT *P, INT m, INT n, INT Pn, 
 	INT q, INT *add_table, INT *mult_table, INT *negate_table, INT *inv_table, INT f_v);
 // returns the rank which is the number of entries in base_cols
-void UBYTE_move(UBYTE *p, UBYTE *q, INT len);
+void uchar_move(uchar *p, uchar *q, INT len);
 void INT_vector_realloc(INT *&p, INT old_length, INT new_length);
 void INT_vector_shorten(INT *&p, INT new_length);
 void INT_matrix_realloc(INT *&p, INT old_m, INT new_m, INT old_n, INT new_n);
@@ -744,9 +744,9 @@ class memory: public discreta_base
 	void read_char(char *c);
 	void write_int(INT i);
 	void read_int(INT *i);
-	void read_file(BYTE *fname, INT f_v);
-	void write_file(BYTE *fname, INT f_v);
-	INT multiplicity_of_character(BYTE c);
+	void read_file(char *fname, INT f_v);
+	void write_file(char *fname, INT f_v);
+	INT multiplicity_of_character(char c);
 	void compress(INT f_v);
 	void decompress(INT f_v);
 	INT csf();
@@ -790,8 +790,8 @@ class hollerith: public discreta_base
 	void write_mem(memory & m, INT debug_depth);
 	void read_mem(memory & m, INT debug_depth);
 	INT csf();
-	void chop_off_extension_if_present(BYTE *ext);
-	void get_extension_if_present(BYTE *ext);
+	void chop_off_extension_if_present(char *ext);
+	void get_extension_if_present(char *ext);
 	void get_current_date();
 };
 
@@ -803,7 +803,7 @@ class integer: public discreta_base
 {
 	public:
 	integer();
-	integer(BYTE *p);
+	integer(char *p);
 	integer(INT i);
 	integer(const discreta_base& x);
 		// copy constructor
@@ -1333,8 +1333,8 @@ class matrix: public discreta_base
 		INT f_labelling_blocks, Vector &block_labels);
 	void incma_print_latex2(ostream &f, 
 		INT width, INT width_10, 
-		INT f_outline_thin, const BYTE *unit_length, 
-		const BYTE *thick_lines, const BYTE *thin_lines, const BYTE *geo_line_width, 
+		INT f_outline_thin, const char *unit_length, 
+		const char *thick_lines, const char *thin_lines, const char *geo_line_width, 
 		INT f_row_decomp, Vector &row_decomp, 
 		INT f_col_decomp, Vector &col_decomp, 
 		INT f_labelling_points, Vector &point_labels, 
@@ -1391,8 +1391,8 @@ class matrix: public discreta_base
 		INT f_get_aut_group, INT f_aut_group_on_lexleast, Vector & aut_gens, 
 		INT f_v, INT f_vv, INT f_vvv);
 #endif
-	void save_as_geometry(INT number, BYTE *label);
-	void save_as_inc_file(BYTE *fname);
+	void save_as_geometry(INT number, char *label);
+	void save_as_inc_file(char *fname);
 	void save_as_inc(ofstream &f);
 };
 
@@ -1609,7 +1609,7 @@ class geometry: public Vector
 	void print_inc_header(ostream &ost);
 	void print_ascii(ostream& ost);
 	INT scan(istream&);
-	void scan_body(istream& f, INT geo_nr, BYTE *geo_label);
+	void scan_body(istream& f, INT geo_nr, char *geo_label);
 
 
 	INT & number() { return Vector::s_i(0).as_integer().s_i(); }
@@ -1653,7 +1653,7 @@ class geometry: public Vector
 	void get_lexleast_X(matrix & X0);
 };
 
-INT search_geo_file(matrix & X0, BYTE *fname, INT geo_nr, BYTE *geo_label, INT f_v);
+INT search_geo_file(matrix & X0, char *fname, INT geo_nr, char *geo_label, INT f_v);
 
 // geo_canon.C:
 
@@ -1752,7 +1752,7 @@ class group_selection: public Vector
 	INT & val2() { return Vector::s_i(2).as_integer().s_i(); }
 	hollerith & s() { return Vector::s_i(3).as_hollerith(); }
 
-	void init(group_selection_type type, INT v1, INT v2, BYTE *str);
+	void init(group_selection_type type, INT v1, INT v2, char *str);
 };
 
 const char *group_selection_type_as_text(group_selection_type t);
@@ -1957,8 +1957,8 @@ class solid: public Vector
 	void icosahedron(INT r);
 	void make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles);
 		
-	void write_graphfile(BYTE *fname);
-	void write_solidfile(BYTE *fname);
+	void write_graphfile(char *fname);
+	void write_solidfile(char *fname);
 };
 void vec_generators_aut_cube_nd(INT n, Vector &gen);
 void number_to_binary(INT n, INT *v, INT digits);
@@ -1979,7 +1979,7 @@ typedef struct design_data DESIGN_DATA;
 
 
 struct design_data {
-	BYTE *KM_fname;
+	char *KM_fname;
 	INT v, t, k;
 	Vector gen;
 	Vector MM;
@@ -1996,47 +1996,47 @@ struct design_data {
 };
 
 
-void write_KM_file(BYTE *gsel, BYTE *g_label, BYTE *g_label_tex, BYTE *km_fname, BYTE *acting_on, 
+void write_KM_file(char *gsel, char *g_label, char *g_label_tex, char *km_fname, char *acting_on, 
 	Vector & G_gen, discreta_base & go, INT deg,
 	matrix & M, INT t, INT k);
-void write_KM_file2(BYTE *gsel, BYTE *g_label, BYTE *g_label_tex, BYTE *km_fname, BYTE *acting_on, 
+void write_KM_file2(char *gsel, char *g_label, char *g_label_tex, char *km_fname, char *acting_on, 
 	Vector & G_gen, discreta_base & go, INT deg,
 	matrix & M, INT t, INT k, INT f_right_hand_side_in_last_column_of_M);
-void write_ascii_generators(BYTE *km_fname, Vector & gen);
-void write_ascii_representatives(BYTE *km_fname, Vector & R);
-void write_ascii_stabilizer_orders(BYTE *km_fname, Vector & Ago);
-void write_ascii_stabilizer_orders_k_sets(BYTE *km_fname, Vector & Ago, INT k);
-void write_ascii_KM_matrices(BYTE *km_fname, Vector & MM);
-void km_read_ascii_vtk(BYTE *KM_fname, INT &v, INT &t, INT &k);
-void km_read_ascii_strings(BYTE *KM_fname, hollerith& group_construction, hollerith& group_label, hollerith& group_label_tex, hollerith& acting_on);
-void km_read_generators(BYTE *KM_fname, Vector & gen);
-void km_read_KM_matrices(BYTE *KM_fname, Vector & MM);
-void km_read_orbit_representatives(BYTE *KM_fname, Vector & RR);
-void km_read_stabilizer_orders(BYTE *KM_fname, Vector & stab_go);
-void km_read_orbits_below(BYTE *KM_fname, Vector & Orbits_below1, Vector & Orbits_below2);
-void km_read_lambda_values(BYTE *KM_fname, Vector & lambda_values, Vector & lambda_solution_count);
-void km_get_solutions_from_solver(BYTE *KM_fname, INT lambda);
-INT km_nb_of_solutions(BYTE *KM_fname, INT lambda);
-void km_get_solutions(BYTE *KM_fname, INT lambda, INT from, INT len, Vector& S);
+void write_ascii_generators(char *km_fname, Vector & gen);
+void write_ascii_representatives(char *km_fname, Vector & R);
+void write_ascii_stabilizer_orders(char *km_fname, Vector & Ago);
+void write_ascii_stabilizer_orders_k_sets(char *km_fname, Vector & Ago, INT k);
+void write_ascii_KM_matrices(char *km_fname, Vector & MM);
+void km_read_ascii_vtk(char *KM_fname, INT &v, INT &t, INT &k);
+void km_read_ascii_strings(char *KM_fname, hollerith& group_construction, hollerith& group_label, hollerith& group_label_tex, hollerith& acting_on);
+void km_read_generators(char *KM_fname, Vector & gen);
+void km_read_KM_matrices(char *KM_fname, Vector & MM);
+void km_read_orbit_representatives(char *KM_fname, Vector & RR);
+void km_read_stabilizer_orders(char *KM_fname, Vector & stab_go);
+void km_read_orbits_below(char *KM_fname, Vector & Orbits_below1, Vector & Orbits_below2);
+void km_read_lambda_values(char *KM_fname, Vector & lambda_values, Vector & lambda_solution_count);
+void km_get_solutions_from_solver(char *KM_fname, INT lambda);
+INT km_nb_of_solutions(char *KM_fname, INT lambda);
+void km_get_solutions(char *KM_fname, INT lambda, INT from, INT len, Vector& S);
 void km_read_until_lambdaend(ifstream & f);
 void Mtk_via_Mtr_Mrk(INT t, INT r, INT k, matrix & Mtr, matrix & Mrk, matrix & Mtk, INT f_v);
 void Mtk_from_MM(Vector & MM, matrix & Mtk, INT t, INT k, INT f_v);
 
-DESIGN_DATA *prepare_for_intersection_numbers(BYTE *KM_fname);
+DESIGN_DATA *prepare_for_intersection_numbers(char *KM_fname);
 void design_load_all_solutions(DESIGN_DATA *dd, INT lambda);
 void design_prepare_orbit_lengths(DESIGN_DATA *dd);
 void design_orbits_vector(Vector & X, Vector & orbits, INT f_complement);
 
-void global_intersection_numbers_prepare_data(BYTE *KM_fname, INT lambda, INT s_max, 
+void global_intersection_numbers_prepare_data(char *KM_fname, INT lambda, INT s_max, 
 	DESIGN_DATA *&dd, matrix& L, matrix& Z, matrix &Bv, matrix & S1t, matrix &D);
-void global_intersection_numbers_compute(BYTE *KM_fname, INT lambda, INT s_max, 
+void global_intersection_numbers_compute(char *KM_fname, INT lambda, INT s_max, 
 	DESIGN_DATA *&dd, matrix& L, matrix& Z, matrix &Bv, matrix & S1t, matrix &D, 
 	Vector& sol, matrix& As1, matrix& As2, Vector& inv);
-void global_intersection_numbers(BYTE *KM_fname, INT lambda, INT s_max);
-void extend_design_from_residual(BYTE *KM_fname, INT lambda);
+void global_intersection_numbers(char *KM_fname, INT lambda, INT s_max);
+void extend_design_from_residual(char *KM_fname, INT lambda);
 void get_group_to_file(INT arg_length, char **group_arg_list, INT f_v);
-void show_design(BYTE *solid_fname, BYTE *KM_fname, INT lambda, INT m);
-void report(BYTE *KM_fname, INT s_max);
+void show_design(char *solid_fname, char *KM_fname, INT lambda, INT m);
+void report(char *KM_fname, INT s_max);
 void canonical_set_reps(Vector& Set_reps, perm_group &G, INT f_v, INT f_vv, INT f_vvv);
 void normalizer_action_on_orbits(perm_group & G, Vector & Reps, 
 	Vector &N_gens, Vector &N_gens_induced, INT f_v);
@@ -2094,21 +2094,21 @@ class bt_key: public Vector
 	void init_int2_vec(INT field1, INT field2, INT vec_fst, INT vec_len);
 };
 
-INT bt_lexicographic_cmp(BYTE *p1, BYTE *p2);
-INT bt_key_int_cmp(BYTE *p1, BYTE *p2);
-INT bt_key_int2_cmp(BYTE *p1, BYTE *p2);
-void bt_key_print_INT4(BYTE **key, ostream& ost);
-void bt_key_print_INT2(BYTE **key, ostream& ost);
-void bt_key_print(BYTE *key, Vector& V, ostream& ost);
-INT bt_key_compare_INT4(BYTE **p_key1, BYTE **p_key2);
-INT bt_key_compare_INT2(BYTE **p_key1, BYTE **p_key2);
-INT bt_key_compare(BYTE *key1, BYTE *key2, Vector& V, INT depth);
-void bt_key_fill_in_INT4(BYTE **p_key, discreta_base& key_op);
-void bt_key_fill_in_INT2(BYTE **p_key, discreta_base& key_op);
-void bt_key_fill_in_string(BYTE **p_key, INT output_size, discreta_base& key_op);
-void bt_key_fill_in(BYTE *key, Vector& V, Vector& the_object);
-void bt_key_get_INT4(BYTE **key, INT4 &i);
-void bt_key_get_INT2(BYTE **key, INT2 &i);
+INT bt_lexicographic_cmp(char *p1, char *p2);
+INT bt_key_int_cmp(char *p1, char *p2);
+INT bt_key_int2_cmp(char *p1, char *p2);
+void bt_key_print_INT4(char **key, ostream& ost);
+void bt_key_print_INT2(char **key, ostream& ost);
+void bt_key_print(char *key, Vector& V, ostream& ost);
+INT bt_key_compare_INT4(char **p_key1, char **p_key2);
+INT bt_key_compare_INT2(char **p_key1, char **p_key2);
+INT bt_key_compare(char *key1, char *key2, Vector& V, INT depth);
+void bt_key_fill_in_INT4(char **p_key, discreta_base& key_op);
+void bt_key_fill_in_INT2(char **p_key, discreta_base& key_op);
+void bt_key_fill_in_string(char **p_key, INT output_size, discreta_base& key_op);
+void bt_key_fill_in(char *key, Vector& V, Vector& the_object);
+void bt_key_get_INT4(char **key, INT4 &i);
+void bt_key_get_INT2(char **key, INT2 &i);
 
 #define BTREEMAXKEYLEN 24
 //#define BTREEMAXKEYLEN 48
@@ -2119,7 +2119,7 @@ void bt_key_get_INT2(BYTE **key, INT2 &i);
 
 
 typedef struct keycarrier {
-	BYTE c[BTREEMAXKEYLEN];
+	char c[BTREEMAXKEYLEN];
 } KEYCARRIER;
 
 typedef KEYCARRIER KEYTYPE;
@@ -2171,8 +2171,8 @@ class database: public Vector
 	INT & file_size() { return Vector::s_i(6).as_integer().s_i(); }
 	INT & file_type() { return Vector::s_i(7).as_integer().s_i(); }
 
-	void init(const BYTE *filename, INT objectkind, INT f_compress);
-	void init_with_file_type(const BYTE *filename, 
+	void init(const char *filename, INT objectkind, INT f_compress);
+	void init_with_file_type(const char *filename, 
 		INT objectkind, INT f_compress, INT file_type);
 	
 	void create(INT verbose_level);
@@ -2204,7 +2204,7 @@ class database: public Vector
 	void print_by_btree_with_datref(INT btree_idx, ostream& ost);
 	void print_subset(Vector& datrefs, ostream& ost);
 	void extract_subset(Vector& datrefs, 
-		BYTE *out_path, INT verbose_level);
+		char *out_path, INT verbose_level);
 	void search_INT4(INT btree_idx, 
 		INT imin, INT imax, Vector &datrefs, 
 		INT verbose_level);
@@ -2319,12 +2319,12 @@ class btree: public Vector
 	INT & btree_idx() { return Vector::s_i(9).as_integer().s_i(); }
 	INT & page_table_idx() { return Vector::s_i(10).as_integer().s_i(); }
 
-	void init(const BYTE *file_name, INT f_duplicatekeys, INT btree_idx);
+	void init(const char *file_name, INT f_duplicatekeys, INT btree_idx);
 	void add_key_INT4(INT field1, INT field2);
 	void add_key_INT2(INT field1, INT field2);
 	void add_key_string(INT output_size, INT field1, INT field2);
-	void key_fill_in(BYTE *the_key, Vector& the_object);
-	void key_print(BYTE *the_key, ostream& ost);
+	void key_fill_in(char *the_key, Vector& the_object);
+	void key_print(char *the_key, ostream& ost);
 
 	void create(INT verbose_level);
 	void open(INT verbose_level);
@@ -2419,8 +2419,8 @@ class btree: public Vector
 	void file_open();
 	void file_create();
 	void file_close();
-	void file_write(PageTyp *page, const BYTE *message);
-	void file_read(PageTyp *page, const BYTE *message);
+	void file_write(PageTyp *page, const char *message);
+	void file_read(PageTyp *page, const char *message);
 	void file_seek(INT page_no);
 };
 
@@ -2557,17 +2557,17 @@ void design_mendelsohn_rhs(INT v, INT t, INT k, discreta_base& lambda, INT m, IN
 INT design_parameter_database_already_there(database &D, design_parameter &p, INT& idx);
 void design_parameter_database_add_if_new(database &D, design_parameter &p, INT& highest_id, INT verbose_level);
 void design_parameter_database_closure(database &D, INT highest_id_already_closed, INT minimal_t, INT verbose_level);
-void design_parameter_database_read_design_txt(BYTE *fname_design_txt, BYTE *path_db, INT f_form_closure, INT minimal_t, INT verbose_level);
-void design_parameter_database_export_tex(BYTE *path_db);
+void design_parameter_database_read_design_txt(char *fname_design_txt, char *path_db, INT f_form_closure, INT minimal_t, INT verbose_level);
+void design_parameter_database_export_tex(char *path_db);
 INT determine_restricted_number_of_designs_t(database &D, btree &B, 
 	INT btree_idx_tvkl, INT t, INT first, INT len);
 INT determine_restricted_number_of_designs_t_v(database &D, btree &B, 
 	INT btree_idx_tvkl, INT t, INT v, INT first, INT len);
 void prepare_design_parameters_from_id(database &D, INT id, hollerith& h);
 void prepare_link(hollerith& link, INT id);
-void design_parameter_database_clans(BYTE *path_db, INT f_html, INT f_v, INT f_vv);
-void design_parameter_database_family_report(BYTE *path_db, INT t, INT v, INT k, INT lambda, INT minimal_t);
-void design_parameter_database_clan_report(BYTE *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path);
+void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_vv);
+void design_parameter_database_family_report(char *path_db, INT t, INT v, INT k, INT lambda, INT minimal_t);
+void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path);
 INT Maxfit(INT i, INT j);
 #if 0
 void create_all_masks(char *label, 
@@ -2644,7 +2644,7 @@ class design_parameter: public Vector
 	INT is_selfsupplementary();
 	void lambda_of_supplementary(discreta_base& lambda_supplementary);
 	
-	void init_database(database& D, BYTE *path);
+	void init_database(database& D, char *path);
 };
 
 
@@ -2686,7 +2686,7 @@ void compute_transversal(Vector &gens, INT discreta_base_pt, Vector &T, INT f_v,
 void allocate_orbit_on_pairs_data(INT v, INT *&orbits_on_pairs);
 void calc_orbits_on_pairs(Vector & gens, INT *&orbits_on_pairs, INT &nb_orbits, 
 	Vector & orbit_first_i, Vector & orbit_first_j, Vector & orbit_length, int f_v, int f_vv);
-void write_orbits_on_pairs_to_file(BYTE *group_label, INT nb_points, 
+void write_orbits_on_pairs_to_file(char *group_label, INT nb_points, 
 	Vector &orbit_first_i, Vector &orbit_first_j, Vector &orbit_length, 
 	INT *orbits_on_pairs);
 void prepare_2_orbits_in_product_action(char *group_label, 

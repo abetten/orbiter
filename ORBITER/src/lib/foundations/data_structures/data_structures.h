@@ -28,8 +28,8 @@ public:
 	void allocate(INT len);
 	void allocate_and_init(INT len, INT *V);
 	void init_permutation_from_string(const char *s);
-	void read_ascii_file(const BYTE *fname);
-	void read_binary_file_INT4(const BYTE *fname);
+	void read_ascii_file(const char *fname);
+	void read_binary_file_INT4(const char *fname);
 	INT &s_i(INT i);
 	INT &length();
 	void print(ostream &ost);
@@ -41,9 +41,9 @@ public:
 	void insert_at(INT a, INT idx);
 	void insert_if_not_yet_there(INT a);
 	void sort_and_remove_duplicates();
-	void write_to_ascii_file(const BYTE *fname);
-	void write_to_binary_file_INT4(const BYTE *fname);
-	void write_to_csv_file(const BYTE *fname, const BYTE *label);
+	void write_to_ascii_file(const char *fname);
+	void write_to_binary_file_INT4(const char *fname);
+	void write_to_csv_file(const char *fname, const char *label);
 	INT hash();
 	INT minimum();
 	INT maximum();
@@ -63,13 +63,13 @@ class data_file {
 	
 	public:
 
-	BYTE fname[1000];
+	char fname[1000];
 	INT nb_cases;
 	INT *set_sizes;
 	INT **sets;
 	INT *casenumbers;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii;
+	char **Ago_ascii;
+	char **Aut_ascii;
 
 	INT f_has_candidates;
 	INT *nb_candidates;
@@ -79,8 +79,8 @@ class data_file {
 	~data_file();
 	void null();
 	void freeself();
-	void read(const BYTE *fname, INT f_casenumbers, INT verbose_level);
-	void read_candidates(const BYTE *candidates_fname, INT verbose_level);
+	void read(const char *fname, INT f_casenumbers, INT verbose_level);
+	void read_candidates(const char *candidates_fname, INT verbose_level);
 };
 
 // #############################################################################
@@ -197,10 +197,10 @@ class partitionstack {
 	void print_cell(INT i);
 	void print_cell_latex(ostream &ost, INT i);
 	void print_subset();
-	void write_cell_to_file(INT i, BYTE *fname, 
+	void write_cell_to_file(INT i, char *fname, 
 		INT verbose_level);
 	void write_cell_to_file_points_or_lines(INT i, 
-		BYTE *fname, INT verbose_level);
+		char *fname, INT verbose_level);
 	void refine_arbitrary_set(INT size, INT *set, 
 		INT verbose_level);
 	void split_cell(INT verbose_level);
@@ -350,11 +350,11 @@ public:
 	void init_basic_constant_size(INT underlying_set_size, 
 		INT nb_sets, INT constant_size, INT verbose_level);
 	void init_from_file(INT underlying_set_size, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 	void init_from_csv_file(INT underlying_set_size, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 	void init_from_orbiter_file(INT underlying_set_size, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 	void init_set(INT idx_of_set, INT *set, INT sz, 
 		INT verbose_level);
 		// Stores a copy of the given set.
@@ -393,7 +393,7 @@ public:
 		INT verbose_level);
 	INT has_constant_size_property();
 	INT largest_set_size();
-	void save_csv(const BYTE *fname, 
+	void save_csv(const char *fname, 
 		INT f_make_heading, INT verbose_level);
 	INT find_common_element_in_two_sets(INT idx1, INT idx2, 
 		INT &common_elt);
@@ -504,7 +504,7 @@ void INT_vec_print_types_naked(ostream &ost, INT f_backwards,
 void INT_vec_print_types_naked_tex(ostream &ost, INT f_backwards, 
 	INT *the_vec_sorted, 
 	INT nb_types, INT *type_first, INT *type_len);
-void Heapsort(void *v, INT len, INT entry_size_in_bytes, 
+void Heapsort(void *v, INT len, INT entry_size_in_chars, 
 	INT (*compare_func)(void *v1, void *v2));
 void Heapsort_general(void *data, INT len, 
 	INT (*compare_func)(void *data, INT i, INT j, void *extra_data), 
@@ -522,7 +522,7 @@ void INT_vec_heapsort(INT *v, INT len);
 void INT_vec_heapsort_with_log(INT *v, INT *w, INT len);
 void heapsort_make_heap(INT *v, INT len);
 void heapsort_make_heap_with_log(INT *v, INT *w, INT len);
-void Heapsort_make_heap(void *v, INT len, INT entry_size_in_bytes, 
+void Heapsort_make_heap(void *v, INT len, INT entry_size_in_chars, 
 	INT (*compare_func)(void *v1, void *v2));
 void Heapsort_general_make_heap(void *data, INT len, 
 	INT (*compare_func)(void *data, INT i, INT j, void *extra_data), 
@@ -530,15 +530,15 @@ void Heapsort_general_make_heap(void *data, INT len,
 	void *extra_data);
 void heapsort_sift_down(INT *v, INT start, INT end);
 void heapsort_sift_down_with_log(INT *v, INT *w, INT start, INT end);
-void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_bytes, 
+void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_chars, 
 	INT (*compare_func)(void *v1, void *v2));
 void Heapsort_general_sift_down(void *data, INT start, INT end, 
 	INT (*compare_func)(void *data, INT i, INT j, void *extra_data), 
 	void (*swap_func)(void *data, INT i, INT j, void *extra_data), 
 	void *extra_data);
 void heapsort_swap(INT *v, INT i, INT j);
-void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_bytes);
-INT is_all_digits(BYTE *p);
+void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_chars);
+INT is_all_digits(char *p);
 void find_points_by_multiplicity(INT *data, INT data_sz, INT multiplicity, 
 	INT *&pts, INT &nb_pts);
 
@@ -553,7 +553,7 @@ class spreadsheet {
 
 public:
 
-	BYTE **tokens;
+	char **tokens;
 	INT nb_tokens;
 
 	INT *line_start, *line_size;
@@ -571,16 +571,16 @@ public:
 	void init_INT_matrix(INT nb_rows, INT nb_cols, INT *A);
 	void init_empty_table(INT nb_rows, INT nb_cols);
 	void fill_entry_with_text(INT row_idx, 
-		INT col_idx, const BYTE *text);
-	void fill_column_with_text(INT col_idx, const BYTE **text, 
-		const BYTE *heading);
+		INT col_idx, const char *text);
+	void fill_column_with_text(INT col_idx, const char **text, 
+		const char *heading);
 	void fill_column_with_INT(INT col_idx, INT *data, 
-		const BYTE *heading);
+		const char *heading);
 	void fill_column_with_row_index(INT col_idx, 
-		const BYTE *heading);
-	void add_token(BYTE *label);
-	void save(const BYTE *fname, INT verbose_level);
-	void read_spreadsheet(const BYTE *fname, INT verbose_level);
+		const char *heading);
+	void add_token(char *label);
+	void save(const char *fname, INT verbose_level);
+	void read_spreadsheet(const char *fname, INT verbose_level);
 	void print_table(ostream &ost, INT f_enclose_in_parentheses);
 	void print_table_latex_all_columns(ostream &ost, 
 		INT f_enclose_in_parentheses);
@@ -593,31 +593,31 @@ public:
 	void print_table_row_detailed(INT row, ostream &ost);
 	void print_table_with_row_selection(INT *f_selected, 
 		ostream &ost);
-	void print_table_sorted(ostream &ost, const BYTE *sort_by);
-	void add_column_with_constant_value(BYTE *label, BYTE *value);
+	void print_table_sorted(ostream &ost, const char *sort_by);
+	void add_column_with_constant_value(char *label, char *value);
 	void reallocate_table();
 	void reallocate_table_add_row();
-	INT find_by_column(const BYTE *join_by);
-	void tokenize(const BYTE *fname, 
-		BYTE **&tokens, INT &nb_tokens, INT verbose_level);
+	INT find_by_column(const char *join_by);
+	void tokenize(const char *fname, 
+		char **&tokens, INT &nb_tokens, INT verbose_level);
 	void remove_quotes(INT verbose_level);
-	void remove_rows(const BYTE *drop_column, const BYTE *drop_label, 
+	void remove_rows(const char *drop_column, const char *drop_label, 
 		INT verbose_level);
-	void remove_rows_where_field_is_empty(const BYTE *drop_column, 
+	void remove_rows_where_field_is_empty(const char *drop_column, 
 		INT verbose_level);
 	void find_rows(INT verbose_level);
 	void get_value_double_or_NA(INT i, INT j, double &val, INT &f_NA);
-	BYTE *get_string(INT i, INT j);
+	char *get_string(INT i, INT j);
 	INT get_INT(INT i, INT j);
 	double get_double(INT i, INT j);
 	void join_with(spreadsheet *S2, INT by1, INT by2, 
 		INT verbose_level);
-	void patch_with(spreadsheet *S2, BYTE *join_by);
+	void patch_with(spreadsheet *S2, char *join_by);
 
 
 };
 
-INT my_atoi(BYTE *str);
+INT my_atoi(char *str);
 INT compare_strings(void *a, void *b, void *data);
 
 // #############################################################################

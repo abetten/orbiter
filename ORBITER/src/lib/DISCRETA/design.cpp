@@ -492,10 +492,10 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 
 //#define BUFSIZE 50000
 
-void design_parameter_database_read_design_txt(BYTE *fname_design_txt, BYTE *path_db, INT f_form_closure, INT minimal_t, INT verbose_level)
+void design_parameter_database_read_design_txt(char *fname_design_txt, char *path_db, INT f_form_closure, INT minimal_t, INT verbose_level)
 {
-	BYTE buf[BUFSIZE], *p_buf;
-	BYTE comment[BUFSIZE];
+	char buf[BUFSIZE], *p_buf;
+	char comment[BUFSIZE];
 	INT t, v, k, lambda;
 	INT btree_idx_id = 0;
 
@@ -574,7 +574,7 @@ void design_parameter_database_read_design_txt(BYTE *fname_design_txt, BYTE *pat
 
 }
 
-void design_parameter_database_export_tex(BYTE *path_db)
+void design_parameter_database_export_tex(char *path_db)
 {
 	INT verbose_level = 0;
 	INT btree_idx_id = 0;
@@ -1054,7 +1054,7 @@ void prepare_link(hollerith& link, INT id)
 
 #include <stdio.h>
 
-void design_parameter_database_clans(BYTE *path_db, INT f_html, INT f_v, INT f_vv)
+void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_vv)
 {
 	INT verbose_level = 0;
 	INT btree_idx_id = 0;
@@ -1231,7 +1231,7 @@ void design_parameter_database_clans(BYTE *path_db, INT f_html, INT f_v, INT f_v
 		}
 }
 
-void design_parameter_database_family_report(BYTE *path_db, INT t, INT v, INT k, INT lambda, INT minimal_t)
+void design_parameter_database_family_report(char *path_db, INT t, INT v, INT k, INT lambda, INT minimal_t)
 {
 	INT verbose_level = 0;
 	// INT btree_idx_id = 0;
@@ -1339,7 +1339,7 @@ static void prepare_entry(Vector &entry, INT i, INT j, INT h, INT t, INT v, INT 
 	entry.m_ii(4, -1);
 }
 
-void design_parameter_database_clan_report(BYTE *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path)
+void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path)
 {
 	INT verbose_level = 0;
 	INT btree_idx_id = 0;

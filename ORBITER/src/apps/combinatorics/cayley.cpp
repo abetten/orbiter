@@ -246,7 +246,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 
 	{
 	colored_graph *CG;
-	BYTE fname[1000];
+	char fname[1000];
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
@@ -274,7 +274,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 		}
 	{
 	colored_graph *CG;
-	BYTE fname[1000];
+	char fname[1000];
 
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);

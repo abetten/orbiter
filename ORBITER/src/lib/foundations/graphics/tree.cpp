@@ -21,21 +21,21 @@ tree::~tree()
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(const BYTE *fname, INT xmax, INT ymax, INT verbose_level)
+void tree::init(const char *fname, INT xmax, INT ymax, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 1);
-	BYTE *buf;
-	BYTE *p_buf;
+	char *buf;
+	char *p_buf;
 	INT l, a, i, i_data, nb_nodes;
-	BYTE *c_data;
+	char *c_data;
 	INT path[TREEPATHLEN];
 	
 	if (f_v) {
 		cout << "reading tree from file " << fname << endl;
 		}
 	nb_nodes = 0;
-	buf = NEW_BYTE(BUFSIZE_TREE);
+	buf = NEW_char(BUFSIZE_TREE);
 	{
 	ifstream f(fname);
 	//f.getline(buf, BUFSIZE_TREE);
@@ -139,7 +139,7 @@ void tree::init(const BYTE *fname, INT xmax, INT ymax, INT verbose_level)
 	if (f_v) {
 		root->print_depth_first();
 		}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 
 }
 
@@ -155,7 +155,7 @@ void tree::draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, INT r
 	INT x_min = 0, x_max = xmax_in;
 	INT y_min = 0, y_max = ymax_in;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	
 	strcpy(fname_full, fname);
 

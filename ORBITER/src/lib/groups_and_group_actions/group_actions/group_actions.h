@@ -153,7 +153,7 @@ public:
 	/** how many INT's we need to store one group element */
 	INT elt_size_in_INT;
 
-	/** how many BYTE's (=char's) do we need
+	/** how many char's (=char's) do we need
 	 * to store a group element in the compressed form */
 	INT coded_elt_size_in_char;
 
@@ -248,21 +248,21 @@ public:
 	/** temporary elements */
 	INT *Elt1, *Elt2, *Elt3, *Elt4, *Elt5;
 	INT *eltrk1, *eltrk2, *eltrk3, *elt_mult_apply;
-	UBYTE *elt1;
-	BYTE *element_rw_memory_object;
+	uchar *elt1;
+	char *element_rw_memory_object;
 		// [coded_elt_size_in_char]
 		// for element_write_to_memory_object, 
 		// element_read_from_memory_object
 
 	
 	/** a label for the group which can be used in filenames */
-	BYTE group_prefix[1000];
+	char group_prefix[1000];
 
 	/** a fancy label for the group */
-	BYTE label[1000];
+	char label[1000];
 
 	/** a fancy label for the group for latex */
-	BYTE label_tex[1000];
+	char label_tex[1000];
 
 
 
@@ -362,15 +362,15 @@ public:
 	void element_power_INT_in_place(INT *Elt, 
 		INT n, INT verbose_level);
 	void word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3, 
-		const BYTE *word, INT verbose_level);
+		const char *word, INT verbose_level);
 	void init_group_from_generators(INT *group_generator_data, 
 		INT group_generator_size, 
-		INT f_group_order_target, const BYTE *group_order_target, 
+		INT f_group_order_target, const char *group_order_target, 
 		vector_ge *gens, strong_generators *&Strong_gens, 
 		INT verbose_level);
 	void init_group_from_generators_by_base_images(
 		INT *group_generator_data, INT group_generator_size, 
-		INT f_group_order_target, const BYTE *group_order_target, 
+		INT f_group_order_target, const char *group_order_target, 
 		vector_ge *gens, strong_generators *&Strong_gens_out, 
 		INT verbose_level);
 	void print_symmetry_group_type(ostream &ost);
@@ -396,20 +396,20 @@ public:
 		INT *Elt_B, INT *Elt_C, INT verbose_level);
 	void element_commutator_abavbv(INT *Elt_A, 
 		INT *Elt_B, INT *Elt_C, INT verbose_level);
-	void read_representatives(BYTE *fname, 
+	void read_representatives(char *fname, 
 		INT *&Reps, INT &nb_reps, INT &size, INT verbose_level);
-	void read_representatives_and_strong_generators(BYTE *fname, 
+	void read_representatives_and_strong_generators(char *fname, 
 		INT *&Reps, 
-		BYTE **&Aut_ascii, INT &nb_reps, 
+		char **&Aut_ascii, INT &nb_reps, 
 		INT &size, INT verbose_level);
-	void read_file_and_print_representatives(BYTE *fname, 
+	void read_file_and_print_representatives(char *fname, 
 		INT f_print_stabilizer_generators);
-	void read_set_and_stabilizer(const BYTE *fname, 
+	void read_set_and_stabilizer(const char *fname, 
 		INT no, INT *&set, INT &set_sz, sims *&stab, 
 		strong_generators *&Strong_gens, 
 		INT &nb_cases, 
 		INT verbose_level);
-	void get_generators_from_ascii_coding(BYTE *ascii_coding, 
+	void get_generators_from_ascii_coding(char *ascii_coding, 
 		vector_ge *&gens, INT *&tl, INT verbose_level);
 	void lexorder_test(INT *set, INT set_sz, INT &set_sz_after_test, 
 		vector_ge *gens, INT max_starter, 
@@ -418,15 +418,15 @@ public:
 		vector_ge *gens, INT verbose_level);
 	void stabilizer_of_dual_hyperoval_representative(INT k, 
 		INT n, INT no, vector_ge *&gens, 
-		const BYTE *&stab_order, INT verbose_level);
+		const char *&stab_order, INT verbose_level);
 	void stabilizer_of_translation_plane_representative(INT q, 
-		INT k, INT no, vector_ge *&gens, const BYTE *&stab_order, 
+		INT k, INT no, vector_ge *&gens, const char *&stab_order, 
 		INT verbose_level);
-	void normalizer_using_MAGMA(const BYTE *prefix, 
+	void normalizer_using_MAGMA(const char *prefix, 
 		sims *G, sims *H, INT verbose_level);
-	void conjugacy_classes_using_MAGMA(const BYTE *prefix, 
+	void conjugacy_classes_using_MAGMA(const char *prefix, 
 		sims *G, INT verbose_level);
-	void centralizer_using_MAGMA(const BYTE *prefix, 
+	void centralizer_using_MAGMA(const char *prefix, 
 		sims *G, INT *Elt, INT verbose_level);
 	void point_stabilizer_any_point(INT &pt, 
 		schreier *&Sch, sims *&Stab, 
@@ -767,9 +767,9 @@ public:
 	void element_read_file_fp(INT *Elt, 
 		FILE *fp, INT verbose_level);
 	void element_write_file(INT *Elt, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 	void element_read_file(INT *Elt, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 	void element_write_to_memory_object(INT *Elt, 
 		memory_object *m, INT verbose_level);
 	void element_read_from_memory_object(INT *Elt, 
@@ -806,7 +806,7 @@ public:
 // #############################################################################
 
 
-action *create_automorphism_group_from_group_table(const BYTE *fname_base, 
+action *create_automorphism_group_from_group_table(const char *fname_base, 
 	INT *Table, INT group_order, INT *gens, INT nb_gens, 
 	strong_generators *&Aut_gens, 
 	INT verbose_level);
@@ -874,15 +874,15 @@ action *create_automorphism_group_of_graph(
 action *create_automorphism_group_of_colored_graph_object(
 	colored_graph *CG, INT verbose_level);
 action *create_automorphism_group_of_colored_graph(
-	INT n, INT f_bitvec, UBYTE *Adj_bitvec, INT *Adj, 
+	INT n, INT f_bitvec, uchar *Adj_bitvec, INT *Adj, 
 	INT *vertex_colors, 
 	INT verbose_level);
 action *create_automorphism_group_of_graph_bitvec(
-	INT n, UBYTE *Adj_bitvec, 
+	INT n, uchar *Adj_bitvec, 
 	INT verbose_level);
 action *create_automorphism_group_of_graph_with_partition_and_labeling(
 	INT n, 
-	INT f_bitvector, UBYTE *Adj_bitvec, INT *Adj, 
+	INT f_bitvector, uchar *Adj_bitvec, INT *Adj, 
 	INT nb_parts, INT *parts, 
 	INT *labeling, 
 	INT verbose_level);
@@ -941,22 +941,22 @@ sims *set_stabilizer_in_projective_space(
 	INT *set, INT set_size, INT &canonical_pt, 
 	INT *canonical_set_or_NULL, 
 	INT f_save_incma_in_and_out, 
-	const BYTE *save_incma_in_and_out_prefix, 
+	const char *save_incma_in_and_out_prefix, 
 	INT verbose_level);
 void projective_space_init_line_action(projective_space *P, 
 	action *A_points, action *&A_on_lines, 
 	INT verbose_level);
 void color_distribution_matrix(action *A, 
-	INT *Elt, INT n, UBYTE *Adj, INT *colors, classify *C, 
+	INT *Elt, INT n, uchar *Adj, INT *colors, classify *C, 
 	INT *&Mtx, INT verbose_level);
 void test_color_distribution(action *A, 
-	vector_ge *gens, INT n, UBYTE *Adj, INT *colors, 
+	vector_ge *gens, INT n, uchar *Adj, INT *colors, 
 	INT verbose_level);
 void color_preserving_subgroup(action *A, 
-	INT n, UBYTE *Adj, INT *colors, sims *&Subgroup, 
+	INT n, uchar *Adj, INT *colors, sims *&Subgroup, 
 	INT verbose_level);
 INT test_automorphism_group_of_graph_bitvec(action *A, 
-	INT n, UBYTE *Adj, INT verbose_level);
+	INT n, uchar *Adj, INT verbose_level);
 void compute_conjugacy_classes(sims *S, action *&Aconj, 
 	action_by_conjugation *&ABC, schreier *&Sch, 
 	strong_generators *&SG, INT &nb_classes, 
@@ -980,7 +980,7 @@ void perm_print_cycles_sorted_by_length_offset(ostream &ost,
 	INT f_print_cycles_of_length_one, INT verbose_level);
 void do_canonical_form(INT n, finite_field *F, 
 	INT *set, INT set_size, INT f_semilinear, 
-	const BYTE *fname_base, INT verbose_level);
+	const char *fname_base, INT verbose_level);
 void create_action_and_compute_orbits_on_equations(
 	action *A, homogeneous_polynomial_domain *HPD, 
 	INT *The_equations, INT nb_equations, strong_generators *gens, 

@@ -17,14 +17,14 @@
 
 class clique_finder {
 public:
-	BYTE label[1000];
+	char label[1000];
 	INT n; // number of points
 	
 	INT print_interval;
 	
 	INT f_write_tree;
 	INT f_decision_nodes_only;
-	BYTE fname_tree[1000];
+	char fname_tree[1000];
 	ofstream *fp_tree;
 
 	
@@ -42,15 +42,15 @@ public:
 	INT bitmatrix_m;
 	INT bitmatrix_n;
 	INT bitmatrix_N;
-	UBYTE *bitmatrix_adjacency;
+	uchar *bitmatrix_adjacency;
 
 	INT f_has_adj_list;
 	INT *adj_list_coded;
 	INT f_has_bitvector;
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 
 	INT f_has_row_by_row_adjacency_matrix;
-	BYTE **row_by_row_adjacency_matrix; // [n][n]
+	char **row_by_row_adjacency_matrix; // [n][n]
 
 
 	INT *pt_list;
@@ -109,13 +109,13 @@ public:
 	void *call_back_clique_found_data2;
 	
 	
-	void open_tree_file(const BYTE *fname_base, 
+	void open_tree_file(const char *fname_base, 
 		INT f_decision_nodes_only);
 	void close_tree_file();
-	void init(const BYTE *label, INT n, 
+	void init(const char *label, INT n, 
 		INT target_depth, 
 		INT f_has_adj_list, INT *adj_list_coded, 
-		INT f_has_bitvector, UBYTE *bitvector_adjacency, 
+		INT f_has_bitvector, uchar *bitvector_adjacency, 
 		INT print_interval, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_store_solutions, 
@@ -172,7 +172,7 @@ void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz,
 class colored_graph {
 public:
 
-	BYTE fname_base[1000];
+	char fname_base[1000];
 	
 	INT nb_points;
 	INT nb_colors;
@@ -188,7 +188,7 @@ public:
 	INT *user_data; // [user_data_size]
 
 	INT f_ownership_of_bitvec;
-	UBYTE *bitvector_adjacency;
+	uchar *bitvector_adjacency;
 
 	INT f_has_list_of_edges;
 	INT nb_edges;
@@ -210,13 +210,13 @@ public:
 	void print_points_and_colors();
 	void print_adjacency_list();
 	void init(INT nb_points, INT nb_colors, 
-		INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+		INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 		INT verbose_level);
 	void init_with_point_labels(INT nb_points, INT nb_colors, 
-		INT *colors, UBYTE *bitvec, INT f_ownership_of_bitvec, 
+		INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
 		INT *point_labels, 
 		INT verbose_level);
-	void init_no_colors(INT nb_points, UBYTE *bitvec, 
+	void init_no_colors(INT nb_points, uchar *bitvec, 
 		INT f_ownership_of_bitvec, 
 		INT verbose_level);
 	void init_adjacency(INT nb_points, INT nb_colors, 
@@ -226,20 +226,20 @@ public:
 	void init_adjacency_no_colors(INT nb_points, INT *Adj, 
 		INT verbose_level);
 	void init_user_data(INT *data, INT data_size, INT verbose_level);
-	void save(const BYTE *fname, INT verbose_level);
-	void load(const BYTE *fname, INT verbose_level);
+	void save(const char *fname, INT verbose_level);
+	void load(const char *fname, INT verbose_level);
 	void all_cliques_of_size_k_ignore_colors(INT target_depth, 
 		INT &nb_sol, INT &decision_step_counter, INT verbose_level);
 	void all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 		INT target_depth, 
-		const BYTE *fname, 
+		const char *fname, 
 		INT f_restrictions, INT *restrictions, 
 		INT &nb_sol, INT &decision_step_counter, 
 		INT verbose_level);
 	void all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
-		INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+		INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 		INT print_interval, 
 		INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 		INT verbose_level);
@@ -247,7 +247,7 @@ public:
 		INT f_output_solution_raw, 
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
-		INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+		INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 		INT print_interval, 
 		INT f_has_additional_test_function,
 		void (*call_back_additional_test_function)(rainbow_cliques *R, 
@@ -269,23 +269,23 @@ public:
 		double tikz_global_scale, double tikz_global_line_width);
 	void draw_on_circle_2(mp_graphics &G, INT f_labels, 
 		INT f_radius, double radius);
-	void draw(const BYTE *fname, 
+	void draw(const char *fname, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 		double scale, double line_width, 
 		INT verbose_level);
-	void draw_Levi(const BYTE *fname, 
+	void draw_Levi(const char *fname, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 		INT f_partition, INT nb_row_parts, INT *row_part_first, 
 		INT nb_col_parts, INT *col_part_first, 
 		INT m, INT n, INT f_draw_labels, 
 		double scale, double line_width, 
 		INT verbose_level);
-	void draw_with_a_given_partition(const BYTE *fname, 
+	void draw_with_a_given_partition(const char *fname, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 		INT *parts, INT nb_parts, 
 		double scale, double line_width, 
 		INT verbose_level);
-	void draw_partitioned(const BYTE *fname, 
+	void draw_partitioned(const char *fname, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out,
 		INT f_labels, 
 		double scale, double line_width, 
@@ -301,13 +301,13 @@ public:
 		INT pt, void *test_function_data, INT verbose_level),
 		void *test_function_data, 
 		INT verbose_level);
-	void export_to_magma(const BYTE *fname, INT verbose_level);
-	void export_to_maple(const BYTE *fname, INT verbose_level);
-	void export_to_file(const BYTE *fname, INT verbose_level);
-	void export_to_text(const BYTE *fname, INT verbose_level);
-	void export_laplacian_to_file(const BYTE *fname, 
+	void export_to_magma(const char *fname, INT verbose_level);
+	void export_to_maple(const char *fname, INT verbose_level);
+	void export_to_file(const char *fname, INT verbose_level);
+	void export_to_text(const char *fname, INT verbose_level);
+	void export_laplacian_to_file(const char *fname, 
 		INT verbose_level);
-	void export_to_file_matlab(const BYTE *fname, INT verbose_level);
+	void export_to_file_matlab(const char *fname, INT verbose_level);
 	void early_test_func_for_clique_search(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
 		INT *good_candidates, INT &nb_good_candidates, 
@@ -321,7 +321,7 @@ public:
 		INT *good_candidates, INT &nb_good_candidates, 
 		INT verbose_level);
 	INT is_cycle(INT nb_e, INT *edges, INT verbose_level);
-	void draw_it(const BYTE *fname_base, 
+	void draw_it(const char *fname_base, 
 		INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 		double scale, double line_width);
 	INT rainbow_cliques_nonrecursive(INT &nb_backtrack_nodes, INT verbose_level);
@@ -330,38 +330,38 @@ public:
 
 // global functions in colored_graph.C:
 
-void colored_graph_draw(const BYTE *fname, 
+void colored_graph_draw(const char *fname, 
 	INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
 	double scale, double line_width, 
 	INT verbose_level);
-void colored_graph_all_cliques(const BYTE *fname, INT f_output_solution_raw, 
-	INT f_output_fname, const BYTE *output_fname, 
+void colored_graph_all_cliques(const char *fname, INT f_output_solution_raw, 
+	INT f_output_fname, const char *output_fname, 
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level);
 void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, 
 	INT f_output_solution_raw, 
-	const BYTE *fname_template, 
-	const BYTE *fname_sol, const BYTE *fname_stats, 
+	const char *fname_template, 
+	const char *fname_sol, const char *fname_stats, 
 	INT f_split, INT split_r, INT split_m, 
 	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const BYTE *prefix, 
+	INT f_prefix, const char *prefix, 
 	INT print_interval, 
 	INT verbose_level);
 void colored_graph_all_cliques_list_of_files(INT nb_cases, 
-	INT *Case_number, const BYTE **Case_fname, 
+	INT *Case_number, const char **Case_fname, 
 	INT f_output_solution_raw, 
-	const BYTE *fname_sol, const BYTE *fname_stats, 
+	const char *fname_sol, const char *fname_stats, 
 	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const BYTE *prefix, 
+	INT f_prefix, const char *prefix, 
 	INT print_interval, 
 	INT verbose_level);
 void call_back_clique_found_using_file_output(clique_finder *CF, 
 	INT verbose_level);
-INT colored_graph_all_rainbow_cliques_nonrecursive(const BYTE *fname, 
+INT colored_graph_all_rainbow_cliques_nonrecursive(const char *fname, 
 	INT &nb_backtrack_nodes, 
 	INT verbose_level);
 
@@ -402,7 +402,7 @@ public:
 
 class graph_node {
 public:
-	BYTE *label;
+	char *label;
 	INT id;
 
 	INT f_has_data1;
@@ -443,7 +443,7 @@ public:
 	void null();
 	void freeself();
 	void add_neighbor(INT l, INT n, INT id);
-	void add_text(const BYTE *text);
+	void add_text(const char *text);
 	void add_vec_data(INT *v, INT len);
 	void set_distinguished_element(INT idx);
 	void add_data1(INT data);
@@ -474,7 +474,7 @@ public:
 	INT nb_nodes_total;
 	INT id_of_first_node;
 	graph_layer *L;
-	BYTE fname_base[1000];
+	char fname_base[1000];
 	INT data1;
 
 	layered_graph();
@@ -482,13 +482,13 @@ public:
 	void null();
 	void freeself();
 	void init(INT nb_layers, INT *Nb_nodes_layer, 
-		const BYTE *fname_base, INT verbose_level);
+		const char *fname_base, INT verbose_level);
 	void place(INT verbose_level);
 	void place_with_y_stretch(double y_stretch, INT verbose_level);
 	void place_with_grouping(INT **Group_sizes, INT *Nb_groups, 
 		double x_stretch, INT verbose_level);
 	void add_edge(INT l1, INT n1, INT l2, INT n2, INT verbose_level);
-	void add_text(INT l, INT n, const BYTE *text, INT verbose_level);
+	void add_text(INT l, INT n, const char *text, INT verbose_level);
 	void add_data1(INT data, INT verbose_level);
 	void add_node_vec_data(INT l, INT n, INT *v, INT len, 
 		INT verbose_level);
@@ -504,8 +504,8 @@ public:
 	void coordinates(INT id, INT x_max, INT y_max, 
 		INT f_rotated, INT &x, INT &y);
 	void find_node_by_id(INT id, INT &l, INT &n);
-	void write_file(BYTE *fname, INT verbose_level);
-	void read_file(const BYTE *fname, INT verbose_level);
+	void write_file(char *fname, INT verbose_level);
+	void read_file(const char *fname, INT verbose_level);
 	void write_memory_object(memory_object *m, INT verbose_level);
 	void read_memory_object(memory_object *m, INT verbose_level);
 	void create_spanning_tree(INT f_place_x, INT verbose_level);
@@ -629,7 +629,7 @@ public:
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
 		INT f_tree, INT f_decision_nodes_only, 
-		const BYTE *fname_tree,  
+		const char *fname_tree,  
 		INT print_interval, 
 		INT &search_steps, 
 		INT &decision_steps, INT &nb_sol, INT &dt, 
@@ -639,7 +639,7 @@ public:
 		INT f_maxdepth, INT maxdepth, 
 		INT f_restrictions, INT *restrictions, 
 		INT f_tree, INT f_decision_nodes_only, 
-		const BYTE *fname_tree,  
+		const char *fname_tree,  
 		INT print_interval, 
 		INT f_has_additional_test_function,
 		void (*call_back_additional_test_function)(

@@ -367,7 +367,7 @@ void elliptic_curve::draw_grid(char *fname,
 	INT x_min = 0, x_max = 1000000;
 	INT y_min = 0, y_max = 1000000;
 	INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = FALSE;
 	
@@ -493,7 +493,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 				}
 			// drawing point labels:
 			for (i = 0; i < nb; i++) {
-				BYTE str[1000];
+				char str[1000];
 				sprintf(str, "%ld", i);
 				x1 = T[3 * i + 0];
 				x2 = T[3 * i + 1];

@@ -777,7 +777,7 @@ INT isomorph::trace_next_point_database(
 	INT f_vvv = (verbose_level >= 3);
 	INT cur_node_local, i;
 	INT set[1000];
-	//BYTE *elt;
+	//char *elt;
 	INT *tmp_ELT;
 	INT pt, image;
 
@@ -791,7 +791,7 @@ INT isomorph::trace_next_point_database(
 
 
 	prepare_database_access(cur_level, verbose_level);
-	//elt = NEW_BYTE(gen->A->coded_elt_size_in_char);
+	//elt = NEW_char(gen->A->coded_elt_size_in_char);
 	tmp_ELT = NEW_INT(gen->A->elt_size_in_INT);
 	
 	cur_node_local =
@@ -921,7 +921,7 @@ INT isomorph::trace_next_point_database(
 final_check:
 
 	FREE_INT(tmp_ELT);
-	//FREE_BYTE(elt);
+	//FREE_char(elt);
 
 #if 1
 	// this is needed if implicit fusion nodes are used

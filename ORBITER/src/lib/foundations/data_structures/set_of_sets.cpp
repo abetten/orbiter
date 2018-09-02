@@ -166,7 +166,7 @@ void set_of_sets::init_basic_constant_size(INT underlying_set_size,
 
 #define MY_BUFSIZE ONE_MILLION
 
-void set_of_sets::init_from_file(INT underlying_set_size, const BYTE *fname, INT verbose_level)
+void set_of_sets::init_from_file(INT underlying_set_size, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	
@@ -190,7 +190,7 @@ void set_of_sets::init_from_file(INT underlying_set_size, const BYTE *fname, INT
 		}
 }
 
-void set_of_sets::init_from_csv_file(INT underlying_set_size, const BYTE *fname, INT verbose_level)
+void set_of_sets::init_from_csv_file(INT underlying_set_size, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -224,7 +224,7 @@ void set_of_sets::init_from_csv_file(INT underlying_set_size, const BYTE *fname,
 		}
 }
 
-void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const BYTE *fname, INT verbose_level)
+void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT i;
@@ -244,9 +244,9 @@ void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const BYTE *fn
 		}
 	INT_vec_zero(Set_size, nb_sets);
 
-	BYTE *buf, *p_buf;
+	char *buf, *p_buf;
 
-	buf = NEW_BYTE(MY_BUFSIZE);
+	buf = NEW_char(MY_BUFSIZE);
 
 	{
 	ifstream fp(fname);
@@ -296,7 +296,7 @@ void set_of_sets::init_from_orbiter_file(INT underlying_set_size, const BYTE *fn
 		exit(1);
 		}
 	}
-	FREE_BYTE(buf);
+	FREE_char(buf);
 	
 	if (f_v) {
 		cout << "set_of_sets::init_from_orbiter_file done" << endl;
@@ -1177,7 +1177,7 @@ INT set_of_sets::largest_set_size()
 	return s;
 }
 
-void set_of_sets::save_csv(const BYTE *fname,
+void set_of_sets::save_csv(const char *fname,
 		INT f_make_heading, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

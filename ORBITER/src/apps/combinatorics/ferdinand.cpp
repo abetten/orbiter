@@ -55,10 +55,10 @@ public:
 	INT *generators;
 	INT nb_generators;
 
-	BYTE fname_base[1000];
-	BYTE prefix[000];
-	BYTE fname[1000];
-	BYTE fname_graphs[1000];
+	char fname_base[1000];
+	char prefix[000];
+	char fname[1000];
+	char fname_graphs[1000];
 
 	strong_generators *Aut_gens;
 	longinteger_object Aut_order;
@@ -277,7 +277,7 @@ void ferdinand(INT level, INT group, INT subgroup,
 		CG->init_adjacency(go /* nb_points*/, 2 /* nb_colors */, 
 			Cayley->f_subgroup /*colors*/, Adj, 0 /* verbose_level*/);
 
-		BYTE fname[1000];
+		char fname[1000];
 
 		sprintf(fname, "F_%ld_%ld_%ld.bin", go, create_graph_level, connection_element);
 		CG->save(fname, verbose_level);
@@ -763,7 +763,7 @@ void cayley_graph_search::init_group_level_4(INT verbose_level)
 
 		}
 	else if (group == 5) {
-		const BYTE *data_str[] = { 
+		const char *data_str[] = { 
 			"(1,2)(5,8,6,7)(9,12,10,11)", 
 			"(1,4)(2,3)(5,12)(6,11)(7,10)(8,9)",
 			"(5,10)(6,9)(7,12)(8,11)", 
@@ -795,7 +795,7 @@ void cayley_graph_search::init_group_level_4(INT verbose_level)
 			A->make_element(Elt1, perm, 0 /*verbose_level*/);
 			A->element_move(Elt1, gens->ith(i), 0);
 			}
-		const BYTE *data_subgroup_str[] = { 
+		const char *data_subgroup_str[] = { 
 			"(1,4)(2,3)(5,8)(6,7)(9,12)(10,11)", 
 			"(1,4)(2,3)(5,12)(6,11)(7,10)(8,9)",
 			"(1,2)(3,4)(12)", 

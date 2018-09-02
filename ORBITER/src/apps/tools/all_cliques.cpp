@@ -14,12 +14,12 @@
 
 INT t0; // the system time when the program started
 
-void use_group(const BYTE *fname, colored_graph *CG, 
+void use_group(const char *fname, colored_graph *CG, 
 	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
 	INT f_sideways, INT nb_print_level, INT *print_level, 
 	INT verbose_level);
 void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level);
-void save_orbits_at_level(const BYTE *fname, poset_classification *gen, INT level, INT verbose_level);
+void save_orbits_at_level(const char *fname, poset_classification *gen, INT level, INT verbose_level);
 void early_test_function_cliques(INT *S, INT len, 
 	INT *candidates, INT nb_candidates, 
 	INT *good_candidates, INT &nb_good_candidates, 
@@ -35,12 +35,12 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_file = FALSE;	
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_use_group = FALSE;
 	INT f_all_cliques = FALSE;
 	INT f_all_cliques_of_size = FALSE;
 	INT clique_size = 0;
-	const BYTE *solution_fname = NULL;
+	const char *solution_fname = NULL;
 	INT f_all_cocliques = FALSE;
 	INT f_draw_poset = FALSE;
 	INT f_embedded = FALSE;
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 }
 
 
-void use_group(const BYTE *fname, colored_graph *CG, 
+void use_group(const char *fname, colored_graph *CG, 
 	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
 	INT f_sideways, INT nb_print_level, INT *print_level, 
 	INT verbose_level)
@@ -213,7 +213,7 @@ void use_group(const BYTE *fname, colored_graph *CG,
 
 
 
-	BYTE prefix[1000];
+	char prefix[1000];
 	poset_classification *gen;
 	INT nb_orbits, depth;
 
@@ -290,7 +290,7 @@ void use_group(const BYTE *fname, colored_graph *CG,
 			print_orbits_at_level(gen, print_level[i], verbose_level);
 
 			{
-			BYTE fname[1000];
+			char fname[1000];
 
 			sprintf(fname, "reps_at_level_%ld.txt", print_level[i]);
 			save_orbits_at_level(fname, gen, print_level[i], verbose_level);
@@ -342,7 +342,7 @@ void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_lev
 	FREE_INT(set);
 }
 
-void save_orbits_at_level(const BYTE *fname,
+void save_orbits_at_level(const char *fname,
 		poset_classification *gen, INT level, INT verbose_level)
 {
 	INT *set;

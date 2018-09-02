@@ -15,34 +15,34 @@ int main(int argc, char **argv)
 	INT i;
 	
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_x = FALSE;
-	const BYTE *x_str = NULL;
+	const char *x_str = NULL;
 	INT f_y = FALSE;
-	const BYTE *y_str = NULL;
+	const char *y_str = NULL;
 	INT f_x_label = FALSE;
-	const BYTE *x_label = "";
+	const char *x_label = "";
 	INT f_y_label = FALSE;
-	const BYTE *y_label = "";
+	const char *y_label = "";
 	INT f_title = FALSE;
-	const BYTE *title = "";
+	const char *title = "";
 	INT f_x_multiplyer = FALSE;
 	double x_multiplyer = 1.;
 	INT f_y_multiplyer = FALSE;
 	double y_multiplyer = 1.;
 	INT f_name = FALSE;
-	const BYTE *name = "";
+	const char *name = "";
 	INT f_series = FALSE;
 	INT series_from = 0;
 	INT series_len = 0;
-	const BYTE *series_column_mask = NULL;
+	const char *series_column_mask = NULL;
 	INT f_series_by_values = FALSE;
-	const BYTE *series_by_values_str = 0;
-	const BYTE *series_by_values_column_mask = NULL;
+	const char *series_by_values_str = 0;
+	const char *series_by_values_column_mask = NULL;
 	INT f_logscale = FALSE;
-	const BYTE *logscale_xy = NULL;
+	const char *logscale_xy = NULL;
 	INT f_key_position = FALSE;
-	const BYTE *key_position = NULL;
+	const char *key_position = NULL;
 	INT f_png = TRUE;
 	INT f_tikz = TRUE;
 
@@ -133,9 +133,9 @@ int main(int argc, char **argv)
 			}
 		}
 	
-	//BYTE fname_out[1000];
-	BYTE prefix[1000];
-	BYTE ext[1000];
+	//char fname_out[1000];
+	char prefix[1000];
+	char ext[1000];
 
 	if (!f_file) {
 		cout << "please use option -file <fname>" << endl;
@@ -157,7 +157,7 @@ int main(int argc, char **argv)
 	Sp->print_table(cout, TRUE);
 	if (f_series) {
 		Idx1 = NEW_INT(series_len);
-		BYTE label[1000];
+		char label[1000];
 
 		for (i = 0; i < series_len; i++) {
 			sprintf(label, series_column_mask, series_from + i);
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 
 		INT_vec_scan(series_by_values_str, values, series_len);
 		Idx1 = NEW_INT(series_len);
-		BYTE label[1000];
+		char label[1000];
 
 		for (i = 0; i < series_len; i++) {
 			sprintf(label, series_by_values_column_mask, values[i]);
@@ -309,10 +309,10 @@ int main(int argc, char **argv)
 
 
 
-	BYTE fname_dat[1000];
-	BYTE fname_txt[1000];
-	BYTE fname_out[1000];
-	BYTE cmd[1000];
+	char fname_dat[1000];
+	char fname_txt[1000];
+	char fname_out[1000];
+	char cmd[1000];
 
 	sprintf(fname_dat, "%s_data.dat", prefix);
 	sprintf(fname_txt, "%s_gnuplot.txt", prefix);
@@ -404,7 +404,7 @@ int main(int argc, char **argv)
 			}
 		if (f_series || f_series_by_values) {
 			for (h = 0; h < m; h++) {
-				BYTE my_title[1000];
+				char my_title[1000];
 				sprintf(my_title, title, h + 1);
 				if (h == 0) {
 					fp << "plot '" << fname_dat << "' index " << h << " with linespoints  ls " << (h % 3) + 1 << " title '" << my_title << "'";

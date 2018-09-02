@@ -192,7 +192,7 @@ public:
 	void read_from_file_binary(ifstream &fp, 
 		INT verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
-		const BYTE *rank_vector_text, sims *S, 
+		const char *rank_vector_text, sims *S, 
 		INT verbose_level);
 	void extract_subset_of_elements_by_rank(INT *rank_vector, 
 		INT len, sims *S, INT verbose_level);

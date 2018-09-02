@@ -7,7 +7,7 @@
 #include "regular_ls.h"
 
 void regular_ls_generator::init_basic(int argc, const char **argv, 
-	const BYTE *input_prefix, const BYTE *base_fname, 
+	const char *input_prefix, const char *base_fname, 
 	INT starter_size, 
 	INT verbose_level)
 {
@@ -289,7 +289,7 @@ void regular_ls_generator::compute_starter(
 	INT f_draw_poset, INT f_embedded, INT f_sideways, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	//BYTE cmd[1000];
+	//char cmd[1000];
 
 	if (f_v) {
 		cout << "regular_ls_generator::compute_starter" << endl;

@@ -833,7 +833,7 @@ INT scene::face5(INT pt1, INT pt2, INT pt3, INT pt4, INT pt5)
 
 
 void scene::draw_lines_with_selection(INT *selection, INT nb_select, 
-	double r, const BYTE *options, ostream &ost)
+	double r, const char *options, ostream &ost)
 {
 	INT i, j, h, s;
 		
@@ -869,7 +869,7 @@ void scene::draw_lines_with_selection(INT *selection, INT nb_select,
 }
 
 void scene::draw_line_with_selection(INT line_idx, 
-	double r, const BYTE *options, ostream &ost)
+	double r, const char *options, ostream &ost)
 {
 	INT j, h, s;
 		
@@ -1031,7 +1031,7 @@ void scene::draw_lines_bj(ostream &ost)
 
 
 void scene::draw_edges_with_selection(INT *selection, INT nb_select, 
-	double rad, const BYTE *options, ostream &ost)
+	double rad, const char *options, ostream &ost)
 {
 	INT s, i, j, h, pt1, pt2;
 		
@@ -1068,7 +1068,7 @@ void scene::draw_edges_with_selection(INT *selection, INT nb_select,
 }
 
 void scene::draw_faces_with_selection(INT *selection, INT nb_select, 
-	double thickness_half, const BYTE *options, ostream &ost)
+	double thickness_half, const char *options, ostream &ost)
 {
 	INT s, i, j;
 		
@@ -1088,7 +1088,7 @@ void scene::draw_faces_with_selection(INT *selection, INT nb_select,
 }
 
 
-void scene::draw_face(INT idx, double thickness_half, const BYTE *options, 
+void scene::draw_face(INT idx, double thickness_half, const char *options, 
 	ostream &ost)
 {
 	INT *pts;
@@ -1171,10 +1171,10 @@ void scene::draw_face(INT idx, double thickness_half, const BYTE *options,
 	delete [] Pts_out;
 }
 
-void scene::draw_text(const BYTE *text, double thickness_half, double extra_spacing, 
+void scene::draw_text(const char *text, double thickness_half, double extra_spacing, 
 		double scale, 
 		double off_x, double off_y, double off_z, 
-		const BYTE *color_options, 
+		const char *color_options, 
 		double x, double y, double z, 
 		double up_x, double up_y, double up_z, 
 		double view_x, double view_y, double view_z, 
@@ -1288,7 +1288,7 @@ void scene::draw_text(const BYTE *text, double thickness_half, double extra_spac
 
 
 void scene::draw_planes_with_selection(INT *selection, INT nb_select, 
-	const BYTE *options, ostream &ost)
+	const char *options, ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
 	INT i, j, h, s;
@@ -1318,7 +1318,7 @@ void scene::draw_planes_with_selection(INT *selection, INT nb_select,
 }
 
 void scene::draw_points_with_selection(INT *selection, INT nb_select, 
-	double rad, const BYTE *options, ostream &ost)
+	double rad, const char *options, ostream &ost)
 // rad = 0.06 works
 {
 	INT i, j, h, s;
@@ -1349,7 +1349,7 @@ void scene::draw_points_with_selection(INT *selection, INT nb_select,
 }
 
 void scene::draw_cubic_with_selection(INT *selection, INT nb_select, 
-	const BYTE *options, ostream &ost)
+	const char *options, ostream &ost)
 {
 	INT i, j, h, s;
 		
@@ -1379,7 +1379,7 @@ void scene::draw_cubic_with_selection(INT *selection, INT nb_select,
 }
 
 void scene::draw_quadric_with_selection(INT *selection, INT nb_select, 
-	const BYTE *options, ostream &ost)
+	const char *options, ostream &ost)
 {
 	INT i, j, h, s;
 		

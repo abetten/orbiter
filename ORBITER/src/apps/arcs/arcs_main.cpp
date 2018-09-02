@@ -65,7 +65,7 @@ int main(int argc, const char **argv)
 				spreadsheet *Sp;
 				Gen->gen->make_spreadsheet_of_level_info(
 						Sp, Gen->ECA->starter_size);
-				BYTE fname_csv[1000];
+				char fname_csv[1000];
 				sprintf(fname_csv, "arcs_%ld_%ld_level.csv",
 						Gen->q, Gen->ECA->starter_size);
 				Sp->save(fname_csv, Gen->verbose_level);
@@ -76,7 +76,7 @@ int main(int argc, const char **argv)
 				spreadsheet *Sp;
 				Gen->gen->make_spreadsheet_of_orbit_reps(
 						Sp, Gen->ECA->starter_size);
-				BYTE fname_csv[1000];
+				char fname_csv[1000];
 				sprintf(fname_csv, "arcs_%ld_%ld.csv",
 						Gen->q, Gen->ECA->starter_size);
 				Sp->save(fname_csv, Gen->verbose_level);

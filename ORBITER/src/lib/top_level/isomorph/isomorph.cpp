@@ -269,14 +269,14 @@ void isomorph::free_tmp_data()
 		}
 }
 
-void isomorph::init(const BYTE *prefix, 
+void isomorph::init(const char *prefix, 
 	action *A_base, action *A, poset_classification *gen,
 	INT size, INT level, 
 	INT f_use_database_for_starter, 
 	INT f_implicit_fusion, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE cmd[1000];
+	char cmd[1000];
 
 	if (f_v) {
 		cout << "isomorph::init" << endl;
@@ -1413,7 +1413,7 @@ INT isomorph::test_edge(INT n1,
 
 
 void isomorph::read_data_files_for_starter(INT level, 
-	const BYTE *prefix, INT verbose_level)
+	const char *prefix, INT verbose_level)
 // Calls gen->read_level_file_binary for all levels i from 0 to level
 // Uses letter a files for i from 0 to level - 1
 // and letter b file for i = level.
@@ -1421,8 +1421,8 @@ void isomorph::read_data_files_for_starter(INT level,
 // Finally, it computes nb_starter.
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_base_a[1000];
-	BYTE fname_base_b[1000];
+	char fname_base_a[1000];
+	char fname_base_b[1000];
 	INT i, i0;
 	
 	if (f_v) {
@@ -1591,7 +1591,7 @@ void isomorph::compute_Ago_Ago_induced(longinteger_object *&Ago,
 }
 
 void isomorph::init_high_level(action *A, poset_classification *gen,
-	INT size, BYTE *prefix_classify, BYTE *prefix, INT level,
+	INT size, char *prefix_classify, char *prefix, INT level,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

@@ -1631,7 +1631,7 @@ void poset_classification::list_whole_orbit(INT depth, INT orbit_idx,
 		}
 
 	if (f_save_stab) {
-		BYTE fname[1000];
+		char fname[1000];
 
 		sprintf(fname, "%s_stab_%ld_%ld.bin", fname_base, depth, orbit_idx);
 		cout << "saving stabilizer poset_classifications to file " << fname << endl;
@@ -2087,8 +2087,8 @@ void poset_classification::generate_source_code(INT level, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname[1000];
-	BYTE my_prefix[1000];
+	char fname[1000];
+	char my_prefix[1000];
 	INT iso_type;
 	INT *rep;
 	INT i, j;
@@ -2126,7 +2126,7 @@ void poset_classification::generate_source_code(INT level, INT verbose_level)
 		fp << endl;
 		}
 	fp << "};" << endl;
-	fp << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
+	fp << "const char *" << prefix << "_stab_order[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		//rep = The_surface[iso_type]->coeff;
 

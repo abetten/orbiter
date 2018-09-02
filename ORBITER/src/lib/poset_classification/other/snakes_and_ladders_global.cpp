@@ -11,7 +11,7 @@
 #define MY_OWN_BUFSIZE 1000000
 
 void read_orbit_rep_and_candidates_from_files_and_process(
-	action *A, BYTE *prefix,
+	action *A, char *prefix,
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	void (*early_test_func_callback)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 
@@ -89,7 +89,7 @@ void read_orbit_rep_and_candidates_from_files_and_process(
 		}
 }
 
-void read_candidates_for_one_orbit_from_file(BYTE *prefix,
+void read_candidates_for_one_orbit_from_file(char *prefix,
 		INT level, INT orbit_at_level, INT level_of_candidates_file,
 		INT *S,
 		void (*early_test_func_callback)(INT *S, INT len,
@@ -127,7 +127,7 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 		cout << "read_orbit_rep_and_candidates_from_files "
 				"before generator_read_candidates_of_orbit" << endl;
 		}
-	BYTE fname2[1000];
+	char fname2[1000];
 	sprintf(fname2, "%s_lvl_%ld_candidates.bin",
 			prefix, level_of_candidates_file);
 	poset_classification_read_candidates_of_orbit(
@@ -174,7 +174,7 @@ void read_candidates_for_one_orbit_from_file(BYTE *prefix,
 	}
 }
 
-void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix, 
+void read_orbit_rep_and_candidates_from_files(action *A, char *prefix, 
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	INT *&starter,
 	INT &starter_sz,
@@ -198,7 +198,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 	candidates = NULL;
 	//longinteger_object stab_go;
 
-	BYTE fname1[1000];
+	char fname1[1000];
 	sprintf(fname1, "%s_lvl_%ld", prefix, level);
 	
 	A->read_set_and_stabilizer(fname1, 
@@ -243,9 +243,9 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 		ifstream f(fname3);
 		INT a, i, cnt;
 		INT *S;
-		BYTE buf[MY_OWN_BUFSIZE];
+		char buf[MY_OWN_BUFSIZE];
 		INT len, str_len;
-		BYTE *p_buf;
+		char *p_buf;
 
 		S = NEW_INT(level_of_candidates_file);
 	
@@ -319,7 +319,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 		cout << "read_orbit_rep_and_candidates_from_files "
 				"before generator_read_candidates_of_orbit" << endl;
 		}
-	BYTE fname2[1000];
+	char fname2[1000];
 	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix,
 			level_of_candidates_file);
 	poset_classification_read_candidates_of_orbit(
@@ -349,12 +349,12 @@ void read_orbit_rep_and_candidates_from_files(action *A, BYTE *prefix,
 		}
 }
 
-INT find_orbit_index_in_data_file(const BYTE *prefix,
+INT find_orbit_index_in_data_file(const char *prefix,
 		INT level_of_candidates_file, INT *starter,
 		INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 	INT orbit_idx;
 
 	if (f_v) {
@@ -371,9 +371,9 @@ INT find_orbit_index_in_data_file(const BYTE *prefix,
 	ifstream f(fname);
 	INT a, i, cnt;
 	INT *S;
-	BYTE buf[MY_OWN_BUFSIZE];
+	char buf[MY_OWN_BUFSIZE];
 	INT len, str_len;
-	BYTE *p_buf;
+	char *p_buf;
 
 	S = NEW_INT(level_of_candidates_file);
 
@@ -438,7 +438,7 @@ INT find_orbit_index_in_data_file(const BYTE *prefix,
 
 void compute_orbits_on_subsets(poset_classification *&gen,
 	INT target_depth,
-	const BYTE *prefix, 
+	const char *prefix, 
 	INT f_W, INT f_w,
 	action *A, action *A2, 
 	strong_generators *Strong_gens, 
@@ -662,7 +662,7 @@ void print_extension_type(ostream &ost, INT t)
 		}
 }
 
-const BYTE *trace_result_as_text(trace_result r)
+const char *trace_result_as_text(trace_result r)
 {
 	if (r == found_automorphism) {
 		return "found_automorphism";
@@ -730,7 +730,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 		cout << "fst=" << fst << " len=" << len << endl;
 		}
 	poset_orbit_node *O;
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "Wedge_n%ld_q%ld_d%ld.magma", n, q, level);
 

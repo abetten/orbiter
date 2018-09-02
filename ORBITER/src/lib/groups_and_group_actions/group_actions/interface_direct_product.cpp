@@ -107,7 +107,7 @@ void direct_product_group_element_unpack(action &A,
 	INT f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
 	INT *Elt1 = (INT *) Elt;
-	UBYTE *elt1 = (UBYTE *)elt;
+	uchar *elt1 = (uchar *)elt;
 
 	if (f_v) {
 		cout << "direct_product_group_element_unpack" << endl;
@@ -121,7 +121,7 @@ void direct_product_group_element_pack(action &A,
 	INT f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
 	INT *Elt1 = (INT *) Elt;
-	UBYTE *elt1 = (UBYTE *)elt;
+	uchar *elt1 = (uchar *)elt;
 
 	if (f_v) {
 		cout << "direct_product_group_element_pack" << endl;
@@ -135,7 +135,7 @@ void direct_product_group_element_retrieve(action &A,
 	INT f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
 	INT *Elt = (INT *) elt;
-	UBYTE *p_elt;
+	uchar *p_elt;
 
 	if (f_v) {
 		cout << "direct_product_group_element_"

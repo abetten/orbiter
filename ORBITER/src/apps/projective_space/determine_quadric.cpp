@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	INT nb_pt_coords = 0;
 	INT pt_coords[1000];
 	INT f_poly = FALSE;
-	const BYTE *override_poly = NULL;
+	const char *override_poly = NULL;
 	
  	t0 = os_ticks();
 	

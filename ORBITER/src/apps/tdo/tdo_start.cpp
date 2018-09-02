@@ -7,20 +7,20 @@
 
 INT t0;
 
-const BYTE *version = "tdo_start Jan 30 2008";
+const char *version = "tdo_start Jan 30 2008";
 
-BYTE buf[BUFSIZE];
+char buf[BUFSIZE];
 
 void print_usage();
 int main(int argc, char **argv);
-void create_all_linetypes(BYTE *label_base, INT m, INT verbose_level);
-void write_tdo_line_type(ofstream &g, BYTE *label_base, INT m, INT n, 
+void create_all_linetypes(char *label_base, INT m, INT verbose_level);
+void write_tdo_line_type(ofstream &g, char *label_base, INT m, INT n, 
 	INT nb_line_types, INT *lines, INT *multiplicities);
-void write_row_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B, 
+void write_row_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
 	INT *V, INT *B, INT *the_scheme);
-void write_col_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B, 
+void write_col_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
 	INT *V, INT *B, INT *the_scheme);
-void write_td_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B, 
+void write_td_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
 	INT *V, INT *B, INT *the_scheme);
 
 void print_usage()
@@ -48,7 +48,7 @@ void print_usage()
 
 int main(int argc, char **argv)
 {
-	BYTE fname_out[1000];
+	char fname_out[1000];
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_conf = FALSE;
@@ -64,8 +64,8 @@ int main(int argc, char **argv)
 	INT nb_lines;
 	INT line_size[1000];
 	INT line_multiplicity[1000];
-	BYTE *label_base;
-	BYTE label[1000];
+	char *label_base;
+	char label[1000];
 
 	cout << version << endl;
 	if (argc <= 1) {
@@ -258,10 +258,10 @@ int main(int argc, char **argv)
 	cout << endl;
 }
 
-void create_all_linetypes(BYTE *label_base, INT m, INT verbose_level)
+void create_all_linetypes(char *label_base, INT m, INT verbose_level)
 {
-	BYTE fname[1000];
-	BYTE label[1000];
+	char fname[1000];
+	char label[1000];
 	INT nb_line_types;
 	INT *lines;
 	INT *multiplicities;
@@ -373,7 +373,7 @@ void create_all_linetypes(BYTE *label_base, INT m, INT verbose_level)
 	delete [] types;
 }
 
-void write_tdo_line_type(ofstream &g, BYTE *label_base, INT m, INT n, 
+void write_tdo_line_type(ofstream &g, char *label_base, INT m, INT n, 
 	INT nb_line_types, INT *lines, INT *multiplicities)
 {
 	INT a, j, row_level, col_level, lambda_level, extra_row_level, extra_col_level;
@@ -402,7 +402,7 @@ void write_tdo_line_type(ofstream &g, BYTE *label_base, INT m, INT n,
 		<< endl;
 }
 
-void write_row_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B, 
+void write_row_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
 	INT *V, INT *B, INT *the_scheme)
 {
 	INT i, j, ii, jj, m, n, f, row_level, col_level, lambda_level;
@@ -456,7 +456,7 @@ void write_row_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B,
 		<< endl;
 }
 
-void write_col_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B, 
+void write_col_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
 	INT *V, INT *B, INT *the_scheme)
 {
 	INT i, j, ii, jj, m, n, f, row_level, col_level, lambda_level;
@@ -510,7 +510,7 @@ void write_col_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B,
 		<< endl;
 }
 
-void write_td_scheme(ofstream &g, BYTE *label_base, INT nb_V, INT nb_B, 
+void write_td_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
 	INT *V, INT *B, INT *the_scheme)
 {
 	INT i, j, ii, jj, m, n, f, row_level, col_level, lambda_level, a, b, c;

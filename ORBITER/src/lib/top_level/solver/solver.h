@@ -17,13 +17,13 @@
 class exact_cover {
 public:
 
-	BYTE input_prefix[1000];
-	BYTE output_prefix[1000];
-	BYTE solution_prefix[1000];
-	BYTE base_fname[1000];
+	char input_prefix[1000];
+	char output_prefix[1000];
+	char solution_prefix[1000];
+	char base_fname[1000];
 
-	BYTE fname_solutions[1000];
-	BYTE fname_statistics[1000];
+	char fname_solutions[1000];
+	char fname_statistics[1000];
 
 	void *user_data;
 
@@ -72,7 +72,7 @@ public:
 	INT *starter; // [starter_size]
 
 	INT f_randomized;
-	const BYTE *random_permutation_fname;
+	const char *random_permutation_fname;
 	INT *random_permutation;
 
 	exact_cover();
@@ -82,8 +82,8 @@ public:
 	void init_basic(void *user_data, 
 		action *A_base, action *A_on_blocks, 
 		INT target_size, INT starter_size, 
-		const BYTE *input_prefix, const BYTE *output_prefix, 
-		const BYTE *solution_prefix, const BYTE *base_fname, 
+		const char *input_prefix, const char *output_prefix, 
+		const char *solution_prefix, const char *base_fname, 
 		INT f_lex, 
 		INT verbose_level);
 
@@ -104,7 +104,7 @@ public:
 		INT verbose_level);
 	void set_split(INT split_r, INT split_m, INT verbose_level);
 	void set_single_case(INT single_case, INT verbose_level);
-	void randomize(const BYTE *random_permutation_fname, INT verbose_level);
+	void randomize(const char *random_permutation_fname, INT verbose_level);
 	void add_solution_test_function(
 		INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, 
 		void *data, INT verbose_level), 
@@ -115,15 +115,15 @@ public:
 		INT starter_case, INT verbose_level)
 		);
 	void compute_liftings_new(INT f_solve, INT f_save, INT f_read_instead, 
-		INT f_draw_system, const BYTE *fname_system, 
-		INT f_write_tree, const BYTE *fname_tree, INT verbose_level);
+		INT f_draw_system, const char *fname_system, 
+		INT f_write_tree, const char *fname_tree, INT verbose_level);
 	void compute_liftings_single_case_new(INT starter_case, 
 		INT f_solve, INT f_save, INT f_read_instead, 
 		INT &nb_col, 
 		INT *&Solutions, INT &sol_length, INT &nb_sol, 
 		INT &nb_backtrack, INT &dt, 
-		INT f_draw_system, const BYTE *fname_system, 
-		INT f_write_tree, const BYTE *fname_tree, 
+		INT f_draw_system, const char *fname_system, 
+		INT f_write_tree, const char *fname_tree, 
 		INT verbose_level);
 	void lexorder_test(INT *live_blocks2, INT &nb_live_blocks2, 
 		vector_ge *stab_gens, 
@@ -148,13 +148,13 @@ public:
 	action *A2;
 	void *user_data;
 	INT f_has_base_fname;
-	const BYTE *base_fname;
+	const char *base_fname;
 	INT f_has_input_prefix;
-	const BYTE *input_prefix;
+	const char *input_prefix;
 	INT f_has_output_prefix;
-	const BYTE *output_prefix;
+	const char *output_prefix;
 	INT f_has_solution_prefix;
-	const BYTE *solution_prefix;
+	const char *solution_prefix;
 	INT f_lift;
 	INT f_starter_size;
 	INT starter_size;
@@ -167,9 +167,9 @@ public:
 	INT f_save;
 	INT f_read;
 	INT f_draw_system;
-	const BYTE *fname_system;
+	const char *fname_system;
 	INT f_write_tree;
-	const BYTE *fname_tree;
+	const char *fname_tree;
 	void (*prepare_function_new)(exact_cover *E, INT starter_case, 
 		INT *candidates, INT nb_candidates, 
 		strong_generators *Strong_gens, 
@@ -190,7 +190,7 @@ public:
 		INT starter_case, INT verbose_level);
 
 	INT f_randomized;
-	const BYTE *random_permutation_fname;
+	const char *random_permutation_fname;
 
 	exact_cover_arguments();
 	~exact_cover_arguments();

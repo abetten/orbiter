@@ -91,7 +91,7 @@ ostream& hollerith::print(ostream& ost)
 
 INT hollerith::compare_with(discreta_base &a)
 {
-	BYTE *p1, *p2;
+	char *p1, *p2;
 	
 	if (a.s_kind() != HOLLERITH) {
 		cout << "hollerith::compare_with() a is not a hollerith object" << endl;
@@ -130,7 +130,7 @@ void hollerith::append(const char *p)
 
 void hollerith::append_i(INT i)
 {
-	BYTE str[1000];
+	char str[1000];
 	
 	itoa(str, 1000, i);
 	append(str);
@@ -179,7 +179,7 @@ INT hollerith::csf()
 		return 1;
 }
 
-void hollerith::chop_off_extension_if_present(BYTE *ext)
+void hollerith::chop_off_extension_if_present(char *ext)
 {
 	char *p = s();
 	INT l1 = strlen(p);
@@ -190,7 +190,7 @@ void hollerith::chop_off_extension_if_present(BYTE *ext)
 		}
 }
 
-void hollerith::get_extension_if_present(BYTE *ext)
+void hollerith::get_extension_if_present(char *ext)
 {
 	char *p = s();
 	INT i, l = strlen(p);
@@ -205,7 +205,7 @@ void hollerith::get_extension_if_present(BYTE *ext)
 
 void hollerith::get_current_date()
 {
-	BYTE str[1000];
+	char str[1000];
 
 	system("rm a");
 	system("date >a");

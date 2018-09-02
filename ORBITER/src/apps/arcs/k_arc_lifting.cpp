@@ -11,17 +11,17 @@
 INT t0; // the system time when the program started
 
 int main(int argc, char **argv);
-void arc_lifting_from_classification_file(const BYTE *classification_fname, 
+void arc_lifting_from_classification_file(const char *classification_fname, 
 	projective_space *P, INT k, INT sz, 
 	INT f_Cook, INT f_DLX, INT f_McKay, 
 	INT f_split, INT split_r, INT split_m, 
-	INT f_save_system, const BYTE *fname_system, 
-	INT f_solution_prefix, const BYTE *solution_prefix, 
+	INT f_save_system, const char *fname_system, 
+	INT f_solution_prefix, const char *solution_prefix, 
 	INT &nb_sol_total, 
 	INT verbose_level);
 void do_arc_lifting(projective_space *P, INT k, 
 	INT *arc, INT arc_sz, INT target_sz, 
-	INT f_save_system, const BYTE *fname_system, 
+	INT f_save_system, const char *fname_system, 
 	INT f_Cook, INT f_DLX, INT f_McKay, 
 	INT verbose_level);
 void user_callback_solution_found(INT *sol, INT len, INT nb_sol, void *data);
@@ -62,23 +62,23 @@ int main(int argc, char **argv)
 	INT f_q = FALSE;
 	INT q = 0;
 	INT f_poly = FALSE;
-	const BYTE *poly = NULL;
+	const char *poly = NULL;
 	INT f_arc = FALSE;
-	const BYTE *arc_text = NULL;
+	const char *arc_text = NULL;
 	INT f_fining_labels = FALSE;
 	INT f_cook_labels = FALSE;
 	INT f_classification = FALSE;
-	const BYTE *classification_fname = NULL;
+	const char *classification_fname = NULL;
 	INT f_split = FALSE;
 	INT split_r = 0;
 	INT split_m = 0;
 	INT f_solution_prefix = FALSE;
-	const BYTE *solution_prefix = NULL;
+	const char *solution_prefix = NULL;
 	INT f_Cook = FALSE;
 	INT f_DLX = FALSE;
 	INT f_McKay = FALSE;
 	INT f_save_system = FALSE;
-	const BYTE *fname_system = NULL;
+	const char *fname_system = NULL;
 	INT f_loop = FALSE;
 	INT loop_start = -1;
 	INT loop_increment = 0;
@@ -324,7 +324,7 @@ int main(int argc, char **argv)
 	else if (f_classification) {
 		cout << "processing classification" << endl;
 		if (f_loop) {
-			BYTE classification_fname2[10000];
+			char classification_fname2[10000];
 			INT loop_end, nb_loop_iterations = 0, cur_loop_iterations;
 			INT nb_sol_overall = 0;
 
@@ -384,12 +384,12 @@ int main(int argc, char **argv)
 
 
 
-void arc_lifting_from_classification_file(const BYTE *classification_fname, 
+void arc_lifting_from_classification_file(const char *classification_fname, 
 	projective_space *P, INT k, INT sz, 
 	INT f_Cook, INT f_DLX, INT f_McKay, 
 	INT f_split, INT split_r, INT split_m, 
-	INT f_save_system, const BYTE *fname_system, 
-	INT f_solution_prefix, const BYTE *solution_prefix, 
+	INT f_save_system, const char *fname_system, 
+	INT f_solution_prefix, const char *solution_prefix, 
 	INT &nb_sol_total, 
 	INT verbose_level)
 {
@@ -461,8 +461,8 @@ void arc_lifting_from_classification_file(const BYTE *classification_fname,
 	INT_vec_zero(Cnt, T->nb_orbits);
 
 
-	BYTE solution_fname[1000];
-	BYTE success_fname[1000];
+	char solution_fname[1000];
+	char success_fname[1000];
 
 	if (!f_solution_prefix) {
 		sprintf(solution_fname, "arc_%ld_%ld_from_%s", sz, k, classification_fname);
@@ -561,7 +561,7 @@ void arc_lifting_from_classification_file(const BYTE *classification_fname,
 
 void do_arc_lifting(projective_space *P, INT k, 
 	INT *arc, INT arc_sz, INT target_sz, 
-	INT f_save_system, const BYTE *fname_system, 
+	INT f_save_system, const char *fname_system, 
 	INT f_Cook, INT f_DLX, INT f_McKay, 
 	INT verbose_level)
 {
@@ -1014,7 +1014,7 @@ void do_arc_lifting(projective_space *P, INT k,
 
 
 #if 0
-	const BYTE *fname_sol = "solutions.txt";
+	const char *fname_sol = "solutions.txt";
 
 	if (FALSE /*file_size(fname_sol) > 0*/) {
 		INT *Sol;

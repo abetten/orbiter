@@ -925,7 +925,7 @@ INT Vector::hip()
 
 INT Vector::hip1()
 // homogeneous integer Vector predicate, 
-// test for 1 byte numbers; 
+// test for 1 char numbers; 
 // only to apply if hip TRUE. */
 {
 	INT i, l, k;
@@ -937,7 +937,7 @@ INT Vector::hip1()
 			exit(1);
 			}
 		k = s_ii(i);
-		if (!ONE_BYTE_INT(k))
+		if (!ONE_char_INT(k))
 			return FALSE;
 		}
 	return TRUE;
@@ -946,13 +946,13 @@ INT Vector::hip1()
 void Vector::write_mem(memory & m, INT debug_depth)
 {
 	INT i, l, k;
-	BYTE f_hip = 0, f_hip1 = 0;
+	char f_hip = 0, f_hip1 = 0;
 	
 	l = s_l();
 	m.write_int(l);
-	f_hip = (BYTE) hip();
+	f_hip = (char) hip();
 	if (f_hip)
-		f_hip1 = (BYTE) hip1();
+		f_hip1 = (char) hip1();
 	if (debug_depth > 0) {
 		cout << "writing ";
 		if (f_hip) {
@@ -969,7 +969,7 @@ void Vector::write_mem(memory & m, INT debug_depth)
 		if (f_hip1) {
 			for (i = 0; i < l; i++) {
 				k = s_ii(i);
-				m.write_char((BYTE) k);
+				m.write_char((char) k);
 				}
 			}
 		else {
@@ -993,7 +993,7 @@ void Vector::write_mem(memory & m, INT debug_depth)
 void Vector::read_mem(memory & m, INT debug_depth)
 {
 	INT i, l, k;
-	BYTE c, f_hip = 0, f_hip1 = 0;
+	char c, f_hip = 0, f_hip1 = 0;
 	
 	m.read_int(&l);
 	m_l(l);
@@ -1041,15 +1041,15 @@ void Vector::read_mem(memory & m, INT debug_depth)
 INT Vector::csf()
 {
 	INT i, l;
-	BYTE f_hip, f_hip1;
+	char f_hip, f_hip1;
 	INT size = 0;
 	
 	l = s_l();
 	size += 4; /* l */
-	f_hip = (BYTE) hip();
+	f_hip = (char) hip();
 	size += 1; /* f_hip */
 	if (f_hip) {
-		f_hip1 = (BYTE) hip1();
+		f_hip1 = (char) hip1();
 		size += 1; /* f_hip1 */
 		if (f_hip1)
 			size += 1 * l;

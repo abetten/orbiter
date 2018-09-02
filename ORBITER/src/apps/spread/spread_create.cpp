@@ -24,7 +24,7 @@ int main(int argc, const char **argv)
 	INT f_description = FALSE;
 	spread_create_description *Descr;
 	INT nb_transform = 0;
-	const BYTE *transform_coeffs[1000];
+	const char *transform_coeffs[1000];
 	INT f_inverse_transform[1000];
 
 	t0 = os_ticks();

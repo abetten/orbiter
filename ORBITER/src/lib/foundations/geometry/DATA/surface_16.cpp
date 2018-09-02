@@ -7,7 +7,7 @@ INT surface_16_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 6, 0, 0, 5, 0, 1, 0, 0, 4, 0, 0, 7, 
 	0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 
 };
-const BYTE *surface_16_stab_order[] = {
+const char *surface_16_stab_order[] = {
 	"384",
 	"12",
 	"64",

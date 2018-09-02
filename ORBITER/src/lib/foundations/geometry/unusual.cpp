@@ -99,17 +99,17 @@ unusual_model::~unusual_model()
 		}
 }
 
-void unusual_model::setup_sum_of_squares(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
+void unusual_model::setup_sum_of_squares(INT q, const char *poly_q, const char *poly_Q, INT verbose_level)
 {
 	setup2(q, poly_q, poly_Q, TRUE, verbose_level);
 }
 
-void unusual_model::setup(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level)
+void unusual_model::setup(INT q, const char *poly_q, const char *poly_Q, INT verbose_level)
 {
 	setup2(q, poly_q, poly_Q, FALSE, verbose_level);
 }
 
-void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_sum_of_squares, INT verbose_level)
+void unusual_model::setup2(INT q, const char *poly_q, const char *poly_Q, INT f_sum_of_squares, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -123,8 +123,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 	Q = qq = q * q;
 	nb_terms = 0;
 
-	//const BYTE *override_poly_Q = NULL;
-	//const BYTE *override_poly_q = NULL;
+	//const char *override_poly_Q = NULL;
+	//const char *override_poly_q = NULL;
 	
 	is_prime_power(q, p, h);
 	
@@ -173,8 +173,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 
 #if 0
 	if (q == 9) {
-		BYTE *override_poly_Q = "110"; // X^{4} + X^{3} + 2
-		BYTE *override_poly_q = "17"; // X^2 - X - 1 = X^2 +2X + 2 = 2 + 2*3 + 9 = 17
+		char *override_poly_Q = "110"; // X^{4} + X^{3} + 2
+		char *override_poly_q = "17"; // X^2 - X - 1 = X^2 +2X + 2 = 2 + 2*3 + 9 = 17
 		//finite_field::init_override_polynomial() GF(81) = GF(3^4), polynomial = X^{4} + X^{3} + 2 = 110
 		//subfields of F_{81}:
 		//subfield 3^2 : subgroup_index = 10
@@ -186,8 +186,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 25) {
-		BYTE *override_poly_Q = "767"; // X^{4} + X^{3} + 3X + 2
-		BYTE *override_poly_q = "47"; // X^2 - X - 3 = X^2 +4X + 2=25+20+2=47
+		char *override_poly_Q = "767"; // X^{4} + X^{3} + 3X + 2
+		char *override_poly_q = "47"; // X^2 - X - 3 = X^2 +4X + 2=25+20+2=47
 		//subfields of F_{625}:
 		//subfield 5^2 : subgroup_index = 26
 		//0 : 0 : 1 : 1
@@ -198,8 +198,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 27) {
-		BYTE *override_poly_Q = "974"; // X^{6} + X^{5} + 2
-		BYTE *override_poly_q = "34"; // X^3 - X + 1 = X^3 +2X + 1 = 27+6+1=34
+		char *override_poly_Q = "974"; // X^{6} + X^{5} + 2
+		char *override_poly_q = "34"; // X^3 - X + 1 = X^3 +2X + 1 = 27+6+1=34
 		//subfields of F_{729}:
 		//subfield 3^2 : subgroup_index = 91
 		//0 : 0 : 1 : 1
@@ -215,8 +215,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 49) {
-		BYTE *override_poly_Q = "2754"; // X^{4} + X^{3} + X + 3
-		BYTE *override_poly_q = "94"; // X^2-X+3 = X^2+6X+3 = 49+6*7+3=94
+		char *override_poly_Q = "2754"; // X^{4} + X^{3} + X + 3
+		char *override_poly_q = "94"; // X^2-X+3 = X^2+6X+3 = 49+6*7+3=94
 		//subfields of F_{2401}:
 		//subfield 7^2 : subgroup_index = 50
 		//0 : 0 : 1 : 1
@@ -227,8 +227,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 81) {
-		BYTE *override_poly_Q = "6590"; // X^{8} + X^{3} + 2
-		BYTE *override_poly_q = "89"; // X^4-X-1=X^4+2X+2=81+2*3+2=89
+		char *override_poly_Q = "6590"; // X^{8} + X^{3} + 2
+		char *override_poly_q = "89"; // X^4-X-1=X^4+2X+2=81+2*3+2=89
 		//subfields of F_{6561}:
 		//subfield 3^4 : subgroup_index = 82
 		//0 : 0 : 1 : 1
@@ -241,8 +241,8 @@ void unusual_model::setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, INT f_
 		f.init_override_polynomial(q, override_poly_q, verbose_level - 2);
 		}
 	else if (q == 121) {
-		BYTE *override_poly_Q = "15985"; // X^{4} + X^{3} + X + 2
-		BYTE *override_poly_q = "200"; // X^2-4X+2=X^2+7X+2=11^2+7*11+2=200
+		char *override_poly_Q = "15985"; // X^{4} + X^{3} + X + 2
+		char *override_poly_q = "200"; // X^2-4X+2=X^2+7X+2=11^2+7*11+2=200
 		//subfields of F_{14641}:
 		//subfield 11^2 : subgroup_index = 122
 		//0 : 0 : 1 : 1

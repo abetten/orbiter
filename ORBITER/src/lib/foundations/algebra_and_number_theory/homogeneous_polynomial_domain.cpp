@@ -30,15 +30,15 @@ void homogeneous_polynomial_domain::freeself()
 		}
 	if (symbols) {
 		for (i = 0; i < n; i++) {
-			FREE_BYTE(symbols[i]);
+			FREE_char(symbols[i]);
 			}
-		FREE_PBYTE(symbols);
+		FREE_pchar(symbols);
 		}
 	if (symbols_latex) {
 		for (i = 0; i < n; i++) {
-			FREE_BYTE(symbols_latex[i]);
+			FREE_char(symbols_latex[i]);
 			}
-		FREE_PBYTE(symbols_latex);
+		FREE_pchar(symbols_latex);
 		}
 	if (Variables) {
 		FREE_INT(Variables);
@@ -209,8 +209,8 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 			}
 		}
 
-	BYTE label[1000];
-	symbols = NEW_PBYTE(n);
+	char label[1000];
+	symbols = NEW_pchar(n);
 	for (i = 0; i < n; i++) {
 
 		INT l;
@@ -223,10 +223,10 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 			}
 		label[1] = 0;
 		l = strlen(label);
-		symbols[i] = NEW_BYTE(l + 1);
+		symbols[i] = NEW_char(l + 1);
 		strcpy(symbols[i], label);
 		}
-	symbols_latex = NEW_PBYTE(n);
+	symbols_latex = NEW_pchar(n);
 	for (i = 0; i < n; i++) {
 
 		INT l;
@@ -239,7 +239,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 			}
 		label[1] = 0;
 		l = strlen(label);
-		symbols_latex[i] = NEW_BYTE(l + 1);
+		symbols_latex[i] = NEW_char(l + 1);
 		strcpy(symbols_latex[i], label);
 		}
 
@@ -412,7 +412,7 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, INT *mon)
 		}
 }
 
-void homogeneous_polynomial_domain::print_monomial(BYTE *str, INT i)
+void homogeneous_polynomial_domain::print_monomial(char *str, INT i)
 {
 	INT j, a;
 	
@@ -458,7 +458,7 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, INT *coeffs)
 
 void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 	ostream &ost, INT *coeffs, INT nb_terms_per_line,
-	const BYTE *new_line_text)
+	const char *new_line_text)
 {
 	INT i, c, cnt = 0;
 	INT f_first = TRUE;

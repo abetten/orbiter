@@ -243,7 +243,7 @@ void BLT_set_create::init(BLT_set_create_description *Descr, INT verbose_level)
 		}
 }
 
-void BLT_set_create::apply_transformations(const BYTE **transform_coeffs, 
+void BLT_set_create::apply_transformations(const char **transform_coeffs, 
 	INT *f_inverse_transform, INT nb_transform, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);

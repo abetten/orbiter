@@ -172,8 +172,8 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	cout << "-1" << endl;
 
 	schreier *Sch;
-	BYTE fname_tree[1000];
-	BYTE fname_report[1000];
+	char fname_tree[1000];
+	char fname_report[1000];
 	INT xmax = 2000000;
 	INT ymax = 1000000;
 	INT f_circletext = TRUE;
@@ -258,7 +258,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 		Sch2->init_generators(*gens);
 		Sch2->compute_all_point_orbits(verbose_level);
 
-		BYTE fname_tree2[1000];
+		char fname_tree2[1000];
 
 		sprintf(fname_tree2, "O_%ld_%ld_%ld_tree2", epsilon, n, q);
 		Sch2->draw_tree(fname_tree2, 0 /* orbit_no*/,

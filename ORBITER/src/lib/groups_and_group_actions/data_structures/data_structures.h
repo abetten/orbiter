@@ -98,7 +98,7 @@ public:
 	void null();
 	void freeself();
 	void read_from_file(action *A, action *A2, 
-		const BYTE *fname, INT verbose_level);
+		const char *fname, INT verbose_level);
 };
 
 // #############################################################################
@@ -114,19 +114,19 @@ class page_storage {
 public:
 	INT overall_length;
 	
-	INT entry_size; // in BYTE
+	INT entry_size; // in char
 	INT page_length_log; // number of bits
 	INT page_length; // entries per page
-	INT page_size; // size in BYTE of one page
+	INT page_size; // size in char of one page
 	INT allocation_table_length;
-		// size in BYTE of one allocation table
+		// size in char of one allocation table
 	
 	INT page_ptr_used;
 	INT page_ptr_allocated;
 	INT page_ptr_oversize;
 	
-	UBYTE **pages;
-	UBYTE **allocation_tables;
+	uchar **pages;
+	uchar **allocation_tables;
 	
 	INT next_free_entry;
 	INT nb_free_entries;
@@ -137,12 +137,12 @@ public:
 		void (* elt_print)(void *p, void *data, ostream &ost), 
 		void *elt_print_data);
 	void print();
-	UBYTE *s_i_and_allocate(INT i);
-	UBYTE *s_i_and_deallocate(INT i);
-	UBYTE *s_i(INT i);
-	UBYTE *s_i_and_allocation_bit(INT i, INT &f_allocated);
+	uchar *s_i_and_allocate(INT i);
+	uchar *s_i_and_deallocate(INT i);
+	uchar *s_i(INT i);
+	uchar *s_i_and_allocation_bit(INT i, INT &f_allocated);
 	void check_allocation_table();
-	INT store(UBYTE *elt);
+	INT store(uchar *elt);
 	void dispose(INT hdl);
 	void check_free_list();
 	page_storage();
@@ -198,16 +198,16 @@ public:
 		INT *set, INT set_size, INT &canonical_pt, 
 		INT *canonical_set_or_NULL, 
 		INT f_save_incma_in_and_out, 
-		const BYTE *save_incma_in_and_out_prefix, 
+		const char *save_incma_in_and_out_prefix, 
 		INT f_compute_canonical_form, 
-		UBYTE *&canonical_form, INT &canonical_form_len, 
+		uchar *&canonical_form, INT &canonical_form_len, 
 		INT verbose_level);
 	strong_generators *set_stabilizer_of_object(
 		object_in_projective_space *OiP, 
 		INT f_save_incma_in_and_out, 
-		const BYTE *save_incma_in_and_out_prefix, 
+		const char *save_incma_in_and_out_prefix, 
 		INT f_compute_canonical_form, 
-		UBYTE *&canonical_form, 
+		uchar *&canonical_form, 
 		INT &canonical_form_len, 
 		INT verbose_level);
 	void report_fixed_objects_in_PG_3_tex(
@@ -290,9 +290,9 @@ public:
 	set_and_stabilizer *create_copy(INT verbose_level);
 	void init_data(INT *data, INT sz, INT verbose_level);
 	void init_stab_from_data(INT *data_gens, 
-		INT data_gens_size, INT nb_gens, const BYTE *ascii_target_go, 
+		INT data_gens_size, INT nb_gens, const char *ascii_target_go, 
 		INT verbose_level);
-	void init_stab_from_file(const BYTE *fname_gens, 
+	void init_stab_from_file(const char *fname_gens, 
 		INT verbose_level);
 	void print_set_tex(ostream &ost);
 	void print_set_tex_for_inline_text(ostream &ost);

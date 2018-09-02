@@ -68,7 +68,7 @@ typedef class difference_set_in_heisenberg_group difference_set_in_heisenberg_gr
 class difference_set_in_heisenberg_group {
 
 public:
-	BYTE fname_base[1000];
+	char fname_base[1000];
 
 	INT n;
 	INT q;
@@ -95,8 +95,8 @@ public:
 	INT *E1;
 	INT rk_E1;
 
-	BYTE prefix[1000];
-	BYTE fname_magma_out[1000];
+	char prefix[1000];
+	char fname_magma_out[1000];
 	sims *Aut;
 	sims *U;
 	longinteger_object U_go;
@@ -1022,7 +1022,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 			}
 		}
 #if 0
-	BYTE prefix[000];
+	char prefix[000];
 	INT f_W = TRUE;
 	INT f_w = FALSE;
 	INT target_depth = nb_pairs_of_type1;

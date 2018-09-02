@@ -44,11 +44,11 @@ void product_action::free()
 	if (Elt3)
 		FREE_INT(Elt3);
 	if (elt1)
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 	if (elt2)
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 	if (elt3)
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 	null();
 }
 
@@ -75,9 +75,9 @@ void product_action::init(action *A1, action *A2, INT f_use_projections, INT ver
 	Elt1 = NEW_INT(elt_size_in_INT);
 	Elt2 = NEW_INT(elt_size_in_INT);
 	Elt3 = NEW_INT(elt_size_in_INT);
-	elt1 = NEW_UBYTE(coded_elt_size_in_char);
-	elt2 = NEW_UBYTE(coded_elt_size_in_char);
-	elt3 = NEW_UBYTE(coded_elt_size_in_char);
+	elt1 = NEW_uchar(coded_elt_size_in_char);
+	elt2 = NEW_uchar(coded_elt_size_in_char);
+	elt3 = NEW_uchar(coded_elt_size_in_char);
 
 
 	Elts = NEW_OBJECT(page_storage);
@@ -149,13 +149,13 @@ INT product_action::element_is_one(action *A, INT *Elt, INT verbose_level)
 	return TRUE;
 }
 
-void product_action::element_unpack(UBYTE *elt, INT *Elt, INT verbose_level)
+void product_action::element_unpack(uchar *elt, INT *Elt, INT verbose_level)
 {
 	A1->element_unpack(elt, Elt, verbose_level);
 	A2->element_unpack(elt + A1->coded_elt_size_in_char, Elt + A1->elt_size_in_INT, verbose_level);
 }
 
-void product_action::element_pack(INT *Elt, UBYTE *elt, INT verbose_level)
+void product_action::element_pack(INT *Elt, uchar *elt, INT verbose_level)
 {
 	A1->element_pack(Elt, elt, verbose_level);
 	A2->element_pack(Elt + A1->elt_size_in_INT, elt + A1->coded_elt_size_in_char, verbose_level);
@@ -164,7 +164,7 @@ void product_action::element_pack(INT *Elt, UBYTE *elt, INT verbose_level)
 void product_action::element_retrieve(action *A, INT hdl, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	UBYTE *p_elt;
+	uchar *p_elt;
 	
 	if (f_v) {
 		cout << "product_action::element_retrieve() hdl = " << hdl << endl;

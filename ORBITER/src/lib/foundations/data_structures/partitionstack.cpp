@@ -563,7 +563,7 @@ void partitionstack::print_cell_latex(ostream &ost, INT i)
 	ost << " \\}";
 }
 
-void partitionstack::write_cell_to_file(INT i, BYTE *fname, INT verbose_level)
+void partitionstack::write_cell_to_file(INT i, char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT j, first, len;
@@ -582,7 +582,7 @@ void partitionstack::write_cell_to_file(INT i, BYTE *fname, INT verbose_level)
 	FREE_INT(set);
 }
 
-void partitionstack::write_cell_to_file_points_or_lines(INT i, BYTE *fname, INT verbose_level)
+void partitionstack::write_cell_to_file_points_or_lines(INT i, char *fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT j, first, len, m = 0;

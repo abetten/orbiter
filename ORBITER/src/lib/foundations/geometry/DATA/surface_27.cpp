@@ -13,7 +13,7 @@ INT surface_27_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 24, 0, 0, 21, 0, 7, 0, 0, 4, 16, 25, 25, 
 	0, 0, 0, 0, 0, 0, 1, 0, 3, 0, 0, 1, 0, 8, 0, 0, 7, 8, 3, 5, 
 };
-const BYTE *surface_27_stab_order[] = {
+const char *surface_27_stab_order[] = {
 	"12",
 	"6",
 	"6",

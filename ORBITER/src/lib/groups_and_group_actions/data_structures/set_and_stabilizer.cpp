@@ -131,7 +131,7 @@ void set_and_stabilizer::init_data(INT *data, INT sz, INT verbose_level)
 }
 
 void set_and_stabilizer::init_stab_from_data(INT *data_gens, 
-	INT data_gens_size, INT nb_gens, const BYTE *ascii_target_go, 
+	INT data_gens_size, INT nb_gens, const char *ascii_target_go, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -172,7 +172,7 @@ void set_and_stabilizer::init_stab_from_data(INT *data_gens,
 }
 
 void set_and_stabilizer::init_stab_from_file(
-	const BYTE *fname_gens,
+	const char *fname_gens,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -194,7 +194,7 @@ void set_and_stabilizer::init_stab_from_file(
 	ifstream f(fname_gens);
 	INT nb_gens;
 	INT *data;
-	BYTE target_go_ascii[1000];
+	char target_go_ascii[1000];
 
 	f >> nb_gens;
 	f >> target_go_ascii;
@@ -547,7 +547,7 @@ void set_and_stabilizer::init_surface(surface *Surf,
 	INT *data;
 	INT nb_gens;
 	INT data_size;
-	const BYTE *stab_order;
+	const char *stab_order;
 	//INT nb_E;
 	INT *starter_configuration;
 	INT nb_lines;

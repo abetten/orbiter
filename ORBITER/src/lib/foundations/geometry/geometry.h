@@ -189,7 +189,7 @@ public:
 	void create_unital_Uab_tex(INT verbose_level);
 	void compute_the_design(INT verbose_level);
 	void write_unital_to_file();
-	void get_name(BYTE *name);
+	void get_name(char *name);
 
 };
 
@@ -208,7 +208,7 @@ INT buekenhout_metz_check_good_points(INT len, INT *S, void *data,
 INT cubic_surface_nb_reps(INT q);
 INT *cubic_surface_representative(INT q, INT i);
 void cubic_surface_stab_gens(INT q, INT i, INT *&data, INT &nb_gens, 
-	INT &data_size, const BYTE *&stab_order);
+	INT &data_size, const char *&stab_order);
 INT cubic_surface_nb_Eckardt_points(INT q, INT i);
 INT *cubic_surface_single_six(INT q, INT i);
 INT *cubic_surface_Lines(INT q, INT i);
@@ -216,34 +216,34 @@ INT *cubic_surface_Lines(INT q, INT i);
 INT hyperoval_nb_reps(INT q);
 INT *hyperoval_representative(INT q, INT i);
 void hyperoval_gens(INT q, INT i, INT *&data, INT &nb_gens, 
-	INT &data_size, const BYTE *&stab_order);
+	INT &data_size, const char *&stab_order);
 
 
 INT DH_nb_reps(INT k, INT n);
 INT *DH_representative(INT k, INT n, INT i);
 void DH_stab_gens(INT k, INT n, INT i, INT *&data, INT &nb_gens, 
-	INT &data_size, const BYTE *&stab_order);
+	INT &data_size, const char *&stab_order);
 
 INT Spread_nb_reps(INT q, INT k);
 INT *Spread_representative(INT q, INT k, INT i, INT &sz);
 void Spread_stab_gens(INT q, INT k, INT i, INT *&data, INT &nb_gens, 
-	INT &data_size, const BYTE *&stab_order);
+	INT &data_size, const char *&stab_order);
 
 INT BLT_nb_reps(INT q);
 INT *BLT_representative(INT q, INT no);
 void BLT_stab_gens(INT q, INT no, INT *&data, INT &nb_gens, 
-	INT &data_size, const BYTE *&stab_order);
+	INT &data_size, const char *&stab_order);
 
 
 
-const BYTE *override_polynomial_subfield(INT q);
-const BYTE *override_polynomial_extension_field(INT q);
+const char *override_polynomial_subfield(INT q);
+const char *override_polynomial_extension_field(INT q);
 void create_Fisher_BLT_set(INT *Fisher_BLT, INT q, 
-	const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level);
+	const char *poly_q, const char *poly_Q, INT verbose_level);
 void create_Linear_BLT_set(INT *BLT, INT q, 
-	const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level);
+	const char *poly_q, const char *poly_Q, INT verbose_level);
 void create_Mondello_BLT_set(INT *BLT, INT q, 
-	const BYTE *poly_q, const BYTE *poly_Q, INT verbose_level);
+	const char *poly_q, const char *poly_Q, INT verbose_level);
 void print_quadratic_form_list_coded(INT form_nb_terms, 
 	INT *form_i, INT *form_j, INT *form_coeff);
 void make_Gram_matrix_from_list_coded_quadratic_form(
@@ -440,8 +440,8 @@ public:
 	void print();
 	void latex(ostream &ost);
 	void latex_index_only(ostream &ost);
-	void latex_to_str(BYTE *str);
-	void latex_to_str_without_E(BYTE *str);
+	void latex_to_str(char *str);
+	void latex_to_str_without_E(char *str);
 	void init2(INT i, INT j);
 	void init3(INT ij, INT kl, INT mn);
 	void init6(INT i, INT j, INT k, INT l, INT m, INT n);
@@ -526,7 +526,7 @@ public:
 	INT v, b;
 	
 	INT mode;
-	BYTE label[1000];
+	char label[1000];
 	
 	// for MODE_SINGLE
 	INT nb_V, nb_B;
@@ -554,9 +554,9 @@ public:
 	~geo_parameter();
 	void append_to_part(INT a);
 	void append_to_entries(INT a1, INT a2, INT a3, INT a4);
-	void write(ofstream &aStream, BYTE *label);
-	void write_mode_single(ofstream &aStream, BYTE *label);
-	void write_mode_stack(ofstream &aStream, BYTE *label);
+	void write(ofstream &aStream, char *label);
+	void write_mode_single(ofstream &aStream, char *label);
+	void write_mode_stack(ofstream &aStream, char *label);
 	void convert_single_to_stack(INT verbose_level);
 	INT partition_number_row(INT row_idx);
 	INT partition_number_col(INT col_idx);
@@ -604,67 +604,67 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 void create_hyperoval(finite_field *F, 
 	INT f_translation, INT translation_exponent, 
 	INT f_Segre, INT f_Payne, INT f_Cherowitzo, INT f_OKeefe_Penttila, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_subiaco_oval(finite_field *F, 
 	INT f_short, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_subiaco_hyperoval(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_adelaide_hyperoval(subfield_structure *S, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_ovoid(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq, 
 	INT f_Linear,
 	INT f_Fisher,
 	INT f_Mondello,
 	INT f_FTWKB,
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_orthogonal(INT epsilon, INT n, finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_hermitian(INT n, finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_twisted_cubic(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_ttp_code(finite_field *FQ, finite_field *Fq, 
 	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_unital_XXq_YZq_ZYq(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, 
 	finite_field *Fq, 
 	INT f_embedded_in_PG_4_q, 
-	BYTE *fname, INT &nb_lines, INT *&Lines, 
+	char *fname, INT &nb_lines, INT *&Lines, 
 	INT verbose_level);
 void create_whole_space(INT n, finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_hyperplane(INT n, finite_field *F, 
 	INT pt, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_segre_variety(finite_field *F, INT a, INT b, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 void create_Maruta_Hamada_arc(finite_field *F, 
-	BYTE *fname, INT &nb_pts, INT *&Pts, 
+	char *fname, INT &nb_pts, INT *&Pts, 
 	INT verbose_level);
 
 // #############################################################################
@@ -697,7 +697,7 @@ void do_conic_type(INT n, finite_field *F, INT f_randomized, INT nb_times,
 	INT verbose_level);
 void do_test_diagonal_line(INT n, finite_field *F, 
 	INT *set_in, INT set_size, 
-	BYTE *fname_orbits_on_quadrangles, 
+	char *fname_orbits_on_quadrangles, 
 	INT verbose_level);
 void do_andre(finite_field *FQ, finite_field *Fq, 
 	INT *the_set_in, INT set_size_in, 
@@ -717,7 +717,7 @@ void do_embed_points(INT n, finite_field *F,
 	INT *set_in, INT *&set_out, INT set_size, INT verbose_level);
 void do_draw_points_in_plane(finite_field *F, 
 	INT *set, INT set_size, 
-	const BYTE *fname_base, INT f_point_labels, INT f_embedded, 
+	const char *fname_base, INT f_point_labels, INT f_embedded, 
 		INT f_sideways, INT verbose_level);
 void do_ideal(INT n, finite_field *F, 
 	INT *set_in, INT set_size, INT degree, 
@@ -950,7 +950,7 @@ void int_k2ij(INT k, INT & i, INT & j, INT n);
 class incidence_structure {
 	public:
 
-	BYTE label[1000];
+	char label[1000];
 
 
 	INT nb_rows;
@@ -994,7 +994,7 @@ class incidence_structure {
 		INT verbose_level);
 	void init_by_set_of_sets(set_of_sets *SoS, INT verbose_level);
 	void init_by_matrix(INT m, INT n, INT *M, INT verbose_level);
-	void init_by_matrix_as_bitvector(INT m, INT n, UBYTE *M_bitvec, 
+	void init_by_matrix_as_bitvector(INT m, INT n, uchar *M_bitvec, 
 		INT verbose_level);
 	void init_by_matrix2(INT verbose_level);
 	INT nb_points();
@@ -1003,8 +1003,8 @@ class incidence_structure {
 	INT get_lines_on_point(INT *data, INT i);
 	INT get_points_on_line(INT *data, INT j);
 	INT get_nb_inc();
-	void save_inc_file(BYTE *fname);
-	void save_row_by_row_file(BYTE *fname);
+	void save_inc_file(char *fname);
+	void save_row_by_row_file(char *fname);
 	void print(ostream &ost);
 	void compute_TDO_safe_first(partitionstack &PStack, 
 		INT depth, INT &step, INT &f_refine, 
@@ -1184,14 +1184,14 @@ class incidence_structure {
 
 void incma_latex_picture(ostream &fp, 
 	INT width, INT width_10, 
-	INT f_outline_thin, const BYTE *unit_length, 
-	const BYTE *thick_lines, const BYTE *thin_lines, 
-	const BYTE *geo_line_width, 
+	INT f_outline_thin, const char *unit_length, 
+	const char *thick_lines, const char *thin_lines, 
+	const char *geo_line_width, 
 	INT v, INT b, 
 	INT V, INT B, INT *Vi, INT *Bj, 
 	INT *R, INT *X, INT dim_X, 
-	INT f_labelling_points, const BYTE **point_labels, 
-	INT f_labelling_blocks, const BYTE **block_labels);
+	INT f_labelling_points, const char **point_labels, 
+	INT f_labelling_blocks, const char **block_labels);
 // width for one box in 0.1mm 
 // width_10 is 1 10th of width
 // example: width = 40, width_10 = 4 */
@@ -1199,7 +1199,7 @@ void incma_latex(ostream &fp,
 	INT v, INT b, 
 	INT V, INT B, INT *Vi, INT *Bj, 
 	INT *R, INT *X, INT dim_X);
-void incma_latex_override_unit_length(const BYTE *override_unit_length);
+void incma_latex_override_unit_length(const char *override_unit_length);
 void incma_latex_override_unit_length_drop();
 
 
@@ -1260,7 +1260,7 @@ class knarr {
 public:
 	INT q;
 	INT f_poly;
-	BYTE *poly;
+	char *poly;
 	INT BLT_no;
 	
 	W3q *W;
@@ -2173,7 +2173,7 @@ public:
 	INT k; // number of points on a line
 
 
-	UBYTE *incidence_bitvec; // N_points * N_lines bits
+	uchar *incidence_bitvec; // N_points * N_lines bits
 	INT *Lines; // [N_lines * k]
 	INT *Lines_on_point; // [N_points * r]
 	INT *Line_through_two_points; // [N_points * N_points]
@@ -2481,11 +2481,11 @@ public:
 	INT *System; // [max_pts * nb_monomials]
 	INT *base_cols; // [nb_monomials]
 
-	BYTE **Line_label; // [27]
-	BYTE **Line_label_tex; // [27]
+	char **Line_label; // [27]
+	char **Line_label_tex; // [27]
 
 	INT *Trihedral_pairs; // [nb_trihedral_pairs * 9]
-	BYTE **Trihedral_pair_labels; // [nb_trihedral_pairs]
+	char **Trihedral_pair_labels; // [nb_trihedral_pairs]
 	INT *Trihedral_pairs_row_sets; // [nb_trihedral_pairs * 3]
 	INT *Trihedral_pairs_col_sets; // [nb_trihedral_pairs * 3]
 	INT nb_trihedral_pairs; // = 120
@@ -2496,8 +2496,8 @@ public:
 	INT nb_Eckardt_points; // = 45
 	eckardt_point *Eckardt_points;
 
-	BYTE **Eckard_point_label; // [nb_Eckardt_points]
-	BYTE **Eckard_point_label_tex; // [nb_Eckardt_points]
+	char **Eckard_point_label; // [nb_Eckardt_points]
+	char **Eckard_point_label_tex; // [nb_Eckardt_points]
 
 
 	INT nb_trihedral_to_Eckardt; // nb_trihedral_pairs * 6
@@ -2536,14 +2536,14 @@ public:
 		// cubic polynomials in four variables
 
 	INT *Double_six; // [36 * 12]
-	BYTE **Double_six_label_tex; // [36]
+	char **Double_six_label_tex; // [36]
 
 
 	INT *Half_double_sixes; // [72 * 6] 
 		// warning: the half double sixes are sorted individually,
 		// so the pairing between the lines 
 		// in the associated double six is gone.
-	BYTE **Half_double_six_label_tex; // [72]
+	char **Half_double_six_label_tex; // [72]
 
 	INT *Half_double_six_to_double_six; // [72]
 	INT *Half_double_six_to_double_six_row; // [72]
@@ -2669,7 +2669,7 @@ public:
 	void make_spreadsheet_of_lines_in_three_kinds(spreadsheet *&Sp, 
 		INT *Wedge_rk, INT *Line_rk, INT *Klein_rk, INT nb_lines, 
 		INT verbose_level);
-	void save_lines_in_three_kinds(const BYTE *fname_csv, 
+	void save_lines_in_three_kinds(const char *fname_csv, 
 		INT *Lines_wedge, INT *Lines, INT *Lines_klein, INT nb_lines);
 	INT line_ai(INT i);
 	INT line_bi(INT i);
@@ -2683,7 +2683,7 @@ public:
 	void latex_table_of_tritangent_planes(ostream &ost);
 	void find_tritangent_planes_intersecting_in_a_line(INT line_idx, 
 		INT &plane1, INT &plane2, INT verbose_level);
-	void make_trihedral_pairs(INT *&T, BYTE **&T_label, 
+	void make_trihedral_pairs(INT *&T, char **&T_label, 
 		INT &nb_trihedral_pairs, INT verbose_level);
 	void process_trihedral_pairs(INT verbose_level);
 	void make_Tijk(INT *T, INT i, INT j, INT k);
@@ -3042,7 +3042,7 @@ public:
 		INT *classes_len, INT f_scale, INT scaling,
 		INT *&line_types, INT &nb_line_types, 
 		INT *&distributions, INT &nb_distributions,
-		BYTE *solution_file_name);
+		char *solution_file_name);
 	void solve_second_system(INT verbose_level,
 		INT f_use_mckay_solver, INT f_once,
 		INT *classes_len, INT f_scale, INT scaling,
@@ -3072,7 +3072,7 @@ public:
 struct solution_file_data {
 	INT nb_solution_files;
 	INT system_no[MAX_SOLUTION_FILE];
-	BYTE *solution_file[MAX_SOLUTION_FILE];
+	char *solution_file[MAX_SOLUTION_FILE];
 };
 
 //! a TDO scheme captures the combinatorics of a decomposed incidence structure
@@ -3150,7 +3150,7 @@ public:
 	void print_scheme(INT h, INT f_v);
 	void print_scheme_tex(ostream &ost, INT h);
 	void print_scheme_tex_fancy(ostream &ost,
-			INT h, INT f_label, BYTE *label);
+			INT h, INT f_label, char *label);
 	void compute_whether_first_inc_must_be_moved(
 			INT *f_first_inc_must_be_moved, INT verbose_level);
 	INT count_nb_inc_from_row_scheme(INT verbose_level);
@@ -3361,11 +3361,11 @@ public:
 	
 	unusual_model();
 	~unusual_model();
-	void setup_sum_of_squares(INT q, const BYTE *poly_q, 
-		const BYTE *poly_Q, INT verbose_level);
-	void setup(INT q, const BYTE *poly_q, const BYTE *poly_Q, 
+	void setup_sum_of_squares(INT q, const char *poly_q, 
+		const char *poly_Q, INT verbose_level);
+	void setup(INT q, const char *poly_q, const char *poly_Q, 
 		INT verbose_level);
-	void setup2(INT q, const BYTE *poly_q, const BYTE *poly_Q, 
+	void setup2(INT q, const char *poly_q, const char *poly_Q, 
 		INT f_sum_of_squares, INT verbose_level);
 	void convert_to_ranks(INT n, INT *unusual_coordinates, 
 		INT *ranks, INT verbose_level);
@@ -3427,7 +3427,7 @@ class W3q {
 public:
 	INT q;
 	//INT f_poly;
-	//BYTE *poly;
+	//char *poly;
 	projective_space *P3;
 	orthogonal *Q4;
 	finite_field *F;

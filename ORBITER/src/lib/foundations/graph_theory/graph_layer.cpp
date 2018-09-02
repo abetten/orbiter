@@ -135,7 +135,7 @@ void graph_layer::write_memory_object(
 	m->write_double(y_coordinate);
 	if (f_v) {
 		cout << "graph_layer::write_memory_object finished, "
-				"data size (in bytes) = " << m->used_length << endl;
+				"data size (in chars) = " << m->used_length << endl;
 		}
 }
 

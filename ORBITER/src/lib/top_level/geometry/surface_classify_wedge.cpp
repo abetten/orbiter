@@ -96,7 +96,7 @@ void surface_classify_wedge::read_arguments(int argc, const char **argv,
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-identify") == 0) {
 			if (nb_identify == 0) {
-				Identify_label = NEW_PBYTE(1000);
+				Identify_label = NEW_pchar(1000);
 				Identify_coeff = NEW_PINT(1000);
 				Identify_monomial = NEW_PINT(1000);
 				Identify_length = NEW_INT(1000);
@@ -105,9 +105,9 @@ void surface_classify_wedge::read_arguments(int argc, const char **argv,
 			INT monomial[1000];
 			INT nb_terms = 0;
 			cout << "-identify " << endl;
-			const BYTE *label = argv[++i];
+			const char *label = argv[++i];
 			cout << "-identify " << label << endl;
-			Identify_label[nb_identify] = NEW_BYTE(strlen(label) + 1);
+			Identify_label[nb_identify] = NEW_char(strlen(label) + 1);
 			strcpy(Identify_label[nb_identify], label);
 			for (j = 0; ; j++) {
 				coeff[j] = atoi(argv[++i]);
@@ -789,8 +789,8 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname[1000];
-	BYTE *prefix;
+	char fname[1000];
+	char *prefix;
 	INT iso_type;
 	INT *rep;
 	INT i, j;
@@ -817,7 +817,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 		f << endl;
 		}
 	f << "};" << endl;
-	f << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
+	f << "const char *" << prefix << "_stab_order[] = {" << endl;
 	for (iso_type = 0; iso_type < nb_iso; iso_type++) {
 		//rep = The_surface[iso_type]->coeff;
 
@@ -1197,7 +1197,7 @@ void surface_classify_wedge::identify_surfaces(INT verbose_level)
 }
 
 void surface_classify_wedge::identify(INT nb_identify, 
-	BYTE **Identify_label, 
+	char **Identify_label, 
 	INT **Identify_coeff, 
 	INT **Identify_monomial, 
 	INT *Identify_length, 
@@ -1764,8 +1764,8 @@ void surface_classify_wedge::identify_surface(INT *coeff_of_given_surface,
 
 void surface_classify_wedge::latex_surfaces(ostream &ost, INT f_with_stabilizers)
 {
-	BYTE title[10000];
-	BYTE title_ds[10000];
+	char title[10000];
+	char title_ds[10000];
 
 	sprintf(title, "Cubic Surfaces with 27 Lines in $\\PG(3,%ld)$", q);
 	sprintf(title_ds, "Double Sixes in $\\PG(3,%ld)$", q);
@@ -1932,8 +1932,8 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname[1000];
-	BYTE *prefix;
+	char fname[1000];
+	char *prefix;
 	//INT iso_type;
 	INT orbit_index;
 	//INT *rep;
@@ -1993,7 +1993,7 @@ void surface_classify_wedge::generate_source_code(INT verbose_level)
 		cout << "surface_classify_wedge::generate_source_code preparing stab_order" << endl;
 		}
 	f << "// the stabilizer orders:" << endl;
-	f << "const BYTE *" << prefix << "_stab_order[] = {" << endl;
+	f << "const char *" << prefix << "_stab_order[] = {" << endl;
 	for (orbit_index = 0; orbit_index < Surfaces->nb_orbits; orbit_index++) {
 
 		longinteger_object ago;

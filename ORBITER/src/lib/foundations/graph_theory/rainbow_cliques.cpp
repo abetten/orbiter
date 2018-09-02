@@ -32,7 +32,7 @@ void rainbow_cliques::search(colored_graph *graph,
 	ofstream *fp_sol, INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
 	INT verbose_level)
@@ -69,7 +69,7 @@ void rainbow_cliques::search_with_additional_test_function(
 	ofstream *fp_sol, INT f_output_solution_raw,
 	INT f_maxdepth, INT maxdepth, 
 	INT f_restrictions, INT *restrictions,
-	INT f_tree, INT f_decision_nodes_only, const BYTE *fname_tree,  
+	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
 	INT print_interval, 
 	INT f_has_additional_test_function,
 	void (*call_back_additional_test_function)(

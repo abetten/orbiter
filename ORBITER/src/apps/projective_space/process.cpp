@@ -30,16 +30,16 @@ int main(int argc, char **argv)
 	INT f_k = FALSE;
 	INT k;
 	INT f_poly = FALSE;
-	BYTE *poly = NULL;
+	char *poly = NULL;
 	INT f_Q = FALSE;
 	INT Q;
 	INT f_poly_Q = FALSE;
-	BYTE *poly_Q = NULL;
+	char *poly_Q = NULL;
 	INT f_embed = FALSE;
 	INT f_orthogonal = FALSE;
 	INT orthogonal_epsilon = 0;
 	INT f_file = FALSE;
-	BYTE *fname;
+	char *fname;
 	INT f_andre = FALSE;
 	INT f_print = FALSE;
 	INT f_lines_in_PG = FALSE;
@@ -61,13 +61,13 @@ int main(int argc, char **argv)
 	INT from_line = 0, to_line = 0;
 	INT f_bsf3 = FALSE;
 	INT f_test_diagonals = FALSE;
-	BYTE *test_diagonals_fname = NULL;
+	char *test_diagonals_fname = NULL;
 	INT f_klein = FALSE;
 	INT f_draw_points_in_plane = FALSE;
 	INT f_point_labels = FALSE;
 	INT f_set = FALSE;
-	const BYTE *set_label = NULL;
-	const BYTE *the_set = NULL;
+	const char *set_label = NULL;
+	const char *the_set = NULL;
 	INT f_canonical_form = FALSE;
 	INT f_ideal = FALSE;
 	INT ideal_degree = 0;
@@ -252,9 +252,9 @@ int main(int argc, char **argv)
 	INT *the_set_out = NULL;
 	INT set_size_in = 0;
 	INT set_size_out = 0;
-	BYTE fname_out[1000];
-	BYTE fname_base[1000];
-	BYTE ext[1000];
+	char fname_out[1000];
+	char fname_base[1000];
+	char ext[1000];
 	
 	if (!f_file && !f_set) {
 		cout << "please use option -file <fname> to specify input file or -set <set_label> <list_of_elements>" << endl;

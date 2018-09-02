@@ -13,9 +13,9 @@
 
 INT t0; // the system time when the program started
 
-void split(const BYTE *fname_base, INT split_v, INT f_dots, UBYTE *D, INT m, INT n, INT xmax, INT ymax, 
+void split(const char *fname_base, INT split_v, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
 	double scale, double line_width);
-void read_orbit_data(const BYTE *fname, 
+void read_orbit_data(const char *fname, 
 	INT &nb_orbits, INT &N, 
 	INT *&orbit_fst, 
 	INT *&orbit_len, 
@@ -25,19 +25,19 @@ void read_orbit_data(const BYTE *fname,
 	INT *&schreier_vector, 
 	INT *&schreier_prev, 
 	INT verbose_level);
-void draw_it(const BYTE *fname_base, INT idx, INT f_dots, UBYTE *D, INT m, INT n, INT xmax, INT ymax, 
+void draw_it(const char *fname_base, INT idx, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
 	double scale, double line_width);
-void draw_it2(mp_graphics &G, INT f_dots, UBYTE *D, INT m, INT n, INT xmax, INT ymax);
+void draw_it2(mp_graphics &G, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax);
 
 int main(int argc, char **argv)
 {
 	INT verbose_level = 0;
 	INT i;
-	const BYTE *fname1 = NULL;
-	const BYTE *fname2 = NULL;
-	const BYTE *fname3 = NULL;
+	const char *fname1 = NULL;
+	const char *fname2 = NULL;
+	const char *fname3 = NULL;
 	INT f_output_fname = FALSE;
-	const BYTE *output_fname = NULL;
+	const char *output_fname = NULL;
 	INT xmax = 1000;
 	INT ymax = 1000;
 	INT f_dots = FALSE;
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 	INT m1, n1;
 	INT *M2;
 	INT m2, n2;
-	UBYTE *D; // bitvector
+	uchar *D; // bitvector
 
 	INT m, n;
 	INT *up_fst;
@@ -153,7 +153,7 @@ int main(int argc, char **argv)
 	cout << "allocating D, of size " << m * n << endl;
 	len = (m * n + 7) >> 3;
 	cout << "len = " << len << endl;
-	D = NEW_UBYTE(len);
+	D = NEW_uchar(len);
 	for (i = 0; i < len; i++) {
 		D[i] = 0;
 		}
@@ -222,13 +222,13 @@ int main(int argc, char **argv)
 	the_end_quietly(t0);
 }
 
-void split(const BYTE *fname_base, INT split_v, INT f_dots, UBYTE *D, INT m, INT n, INT xmax, INT ymax, 
+void split(const char *fname_base, INT split_v, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
 	double scale, double line_width)
 {
 	INT nb_pic;
 	INT h;
 	INT i0, i1, i, j, m1, len;
-	UBYTE *D1;
+	uchar *D1;
 
 	nb_pic = m / split_v + 1;
 	for (h = 0; h < nb_pic; h++) {
@@ -238,7 +238,7 @@ void split(const BYTE *fname_base, INT split_v, INT f_dots, UBYTE *D, INT m, INT
 		m1 = i1 - i0;
 		len = (m1 * n + 7) >> 3;
 		cout << "len = " << len << endl;
-		D1 = NEW_UBYTE(len);
+		D1 = NEW_uchar(len);
 		for (i = 0; i < len; i++) {
 			D1[i] = 0;
 			}
@@ -250,11 +250,11 @@ void split(const BYTE *fname_base, INT split_v, INT f_dots, UBYTE *D, INT m, INT
 				}
 			}
 		draw_it(fname_base, h/*idx*/, f_dots, D1, m1, n, xmax, ymax, scale, line_width);
-		FREE_UBYTE(D1);
+		FREE_uchar(D1);
 		}
 }
 
-void read_orbit_data(const BYTE *fname, 
+void read_orbit_data(const char *fname, 
 	INT &nb_orbits, INT &N, 
 	INT *&orbit_fst, 
 	INT *&orbit_len, 
@@ -320,12 +320,12 @@ void read_orbit_data(const BYTE *fname,
 		}
 }
 
-void draw_it(const BYTE *fname_base, INT idx, INT f_dots, UBYTE *D, INT m, INT n, INT xmax, INT ymax, 
+void draw_it(const char *fname_base, INT idx, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
 	double scale, double line_width)
 {
 	mp_graphics G;
-	BYTE fname_base2[1000];
-	BYTE fname[1000];
+	char fname_base2[1000];
+	char fname[1000];
 	INT f_embedded = TRUE;
 	INT f_sideways = TRUE;
 	
@@ -344,7 +344,7 @@ void draw_it(const BYTE *fname_base, INT idx, INT f_dots, UBYTE *D, INT m, INT n
 	cout << "draw_it written file " << fname << " of size " << file_size(fname) << endl;
 }
 
-void draw_it2(mp_graphics &G, INT f_dots, UBYTE *D, INT m, INT n, INT xmax, INT ymax)
+void draw_it2(mp_graphics &G, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax)
 {
 	grid_frame F;
 	INT i, j, a, cnt, mn;

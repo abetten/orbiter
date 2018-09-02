@@ -40,13 +40,13 @@ void classify_bitvectors::freeself()
 
 	if (Type_data) {
 		for (i = 0; i < nb_types; i++) {
-			FREE_UBYTE(Type_data[i]);
+			FREE_uchar(Type_data[i]);
 			}
-		FREE_PUBYTE(Type_data);
+		FREE_puchar(Type_data);
 		}
 	if (Type_extra_data) {
 		for (i = 0; i < nb_types; i++) {
-			//FREE_UBYTE(Type_data[i]);
+			//FREE_uchar(Type_data[i]);
 			}
 		FREE_pvoid(Type_extra_data);
 		}
@@ -79,7 +79,7 @@ void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
 		}
 	classify_bitvectors::N = N;
 	classify_bitvectors::rep_len = rep_len;
-	Type_data = NEW_PUBYTE(N);
+	Type_data = NEW_puchar(N);
 	Type_extra_data = NEW_pvoid(N);
 	Type_rep = NEW_INT(N);
 	Type_mult = NEW_INT(N);
@@ -97,7 +97,7 @@ void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
 		}
 }
 
-INT classify_bitvectors::add(UBYTE *data,
+INT classify_bitvectors::add(uchar *data,
 		void *extra_data, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -199,7 +199,7 @@ void classify_bitvectors::print_reps()
 		}
 }
 
-void classify_bitvectors::save(const BYTE *prefix, 
+void classify_bitvectors::save(const char *prefix, 
 	void (*encode_function)(void *extra_data,
 			INT *&encoding, INT &encoding_sz, void *global_data),
 	void (*get_group_order_or_NULL)(void *extra_data,
@@ -208,8 +208,8 @@ void classify_bitvectors::save(const BYTE *prefix,
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname_txt[1000];
-	BYTE fname_csv[1000];
+	char fname_txt[1000];
+	char fname_csv[1000];
 	INT i, j;
 	
 	if (f_v) {
@@ -319,8 +319,8 @@ void classify_bitvectors::save(const BYTE *prefix,
 INT compare_func_for_bitvectors(void *a, void *b, void *data)
 {
 	classify_bitvectors *CB = (classify_bitvectors *) data;
-	UBYTE *A = (UBYTE *) a;
-	UBYTE *B = (UBYTE *) b;
+	uchar *A = (uchar *) a;
+	uchar *B = (uchar *) b;
 	INT i;
 	
 	for (i = 0; i < CB->rep_len; i++) {

@@ -13,35 +13,35 @@
 
 void test_unipoly();
 void test_unipoly2();
-BYTE *search_for_primitive_polynomial_of_given_degree(INT p, 
+char *search_for_primitive_polynomial_of_given_degree(INT p, 
 	INT degree, INT verbose_level);
 void search_for_primitive_polynomials(INT p_min, INT p_max, 
 	INT n_min, INT n_max, INT verbose_level);
 void make_linear_irreducible_polynomials(INT q, INT &nb, INT *&table, 
 	INT verbose_level);
 void gl_random_matrix(INT k, INT q, INT verbose_level);
-void save_as_colored_graph_easy(const BYTE *fname_base, INT n, INT *Adj, 
+void save_as_colored_graph_easy(const char *fname_base, INT n, INT *Adj, 
 	INT verbose_level);
-void save_colored_graph(const BYTE *fname, INT nb_vertices, INT nb_colors, 
+void save_colored_graph(const char *fname, INT nb_vertices, INT nb_colors, 
 	INT *vertex_labels, INT *vertex_colors, 
 	INT *data, INT data_sz, 
-	UBYTE *bitvector_adjacency, INT bitvector_length,
+	uchar *bitvector_adjacency, INT bitvector_length,
 	INT verbose_level);
-void load_colored_graph(const BYTE *fname, INT &nb_vertices, INT &nb_colors, 
+void load_colored_graph(const char *fname, INT &nb_vertices, INT &nb_colors, 
 	INT *&vertex_labels, INT *&vertex_colors, 
 	INT *&user_data, INT &user_data_size, 
-	UBYTE *&bitvector_adjacency, INT &bitvector_length,
+	uchar *&bitvector_adjacency, INT &bitvector_length,
 	INT verbose_level);
 INT is_diagonal_matrix(INT *A, INT n);
 INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk, 
 	INT *&colors, INT &nb_colors, INT verbose_level);
 void print_Pijk(INT *Pijk, INT nb_colors);
-void write_colored_graph(ofstream &ost, BYTE *label, 
+void write_colored_graph(ofstream &ost, char *label, 
 	INT point_offset, 
 	INT nb_points, 
 	INT f_has_adjacency_matrix, INT *Adj, 
 	INT f_has_adjacency_list, INT *adj_list, 
-	INT f_has_bitvector, UBYTE *bitvector_adjacency, 
+	INT f_has_bitvector, uchar *bitvector_adjacency, 
 	INT f_has_is_adjacent_callback, 
 	INT (*is_adjacent_callback)(INT i, INT j, void *data), 
 	void *is_adjacent_callback_data, 
@@ -51,7 +51,7 @@ int str2int(string &str);
 void print_longinteger_after_multiplying(ostream &ost, INT *factors, INT len);
 void andre_preimage(projective_space *P2, projective_space *P4, 
 	INT *set2, INT sz2, INT *set4, INT &sz4, INT verbose_level);
-void determine_conic(INT q, const BYTE *override_poly, INT *input_pts, 
+void determine_conic(INT q, const char *override_poly, INT *input_pts, 
 	INT nb_pts, INT verbose_level);
 void compute_decomposition_of_graph_wrt_partition(INT *Adj, INT N, 
 	INT *first, INT *len, INT nb_parts, INT *&R, INT verbose_level);
@@ -65,12 +65,12 @@ void create_Levi_graph_from_incidence_matrix(colored_graph *&CG, INT *M,
 // magma_interface.C
 // #############################################################################
 
-void magma_write_permutation_group(const BYTE *fname_base, INT group_order, 
+void magma_write_permutation_group(const char *fname_base, INT group_order, 
 	INT *Table, INT *gens, INT nb_gens, INT verbose_level);
-void magma_normalizer_in_Sym_n(const BYTE *fname_base, INT group_order, 
+void magma_normalizer_in_Sym_n(const char *fname_base, INT group_order, 
 	INT *Table, INT *gens, INT nb_gens, 
 	INT *&N_gens, INT &N_nb_gens, INT &N_go, INT verbose_level);
-void read_magma_permutation_group(const BYTE *fname, INT degree, 
+void read_magma_permutation_group(const char *fname, INT degree, 
 	INT *&gens, INT &nb_gens, INT &go, INT verbose_level);
 
 // #############################################################################

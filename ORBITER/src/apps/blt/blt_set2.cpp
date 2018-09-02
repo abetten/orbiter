@@ -304,7 +304,7 @@ void blt_set::Law_71(INT verbose_level)
 void blt_set::report(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 
 	if (f_v) {
 		cout << "blt_set::report" << endl;
@@ -315,8 +315,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	ofstream f(fname);
 	INT f_book = TRUE;
 	INT f_title = TRUE;
-	BYTE title[1000];
-	const BYTE *author = "Orbiter";
+	char title[1000];
+	const char *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;
@@ -818,8 +818,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		}
 
 
-	BYTE prefix[1000];
-	BYTE label_of_structure_plural[1000];
+	char prefix[1000];
+	char label_of_structure_plural[1000];
 
 	sprintf(prefix, "BLT_%ld", q);
 	sprintf(label_of_structure_plural, "BLT-Sets");
@@ -851,7 +851,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
-	BYTE fname[1000];
+	char fname[1000];
 
 	if (f_v) {
 		cout << "blt_set::subset_orbits" << endl;
@@ -885,8 +885,8 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 	ofstream f(fname);
 	INT f_book = TRUE;
 	INT f_title = TRUE;
-	BYTE title[1000];
-	const BYTE *author = "Orbiter";
+	char title[1000];
+	const char *author = "Orbiter";
 	INT f_toc = TRUE;
 	INT f_landscape = FALSE;
 	INT f_12pt = FALSE;

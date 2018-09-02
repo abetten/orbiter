@@ -31,9 +31,9 @@ int main(int argc, const char **argv)
 	INT depth = 0;
 	INT f_print_generators = FALSE;
 	INT f_poly_q = FALSE;
-	const BYTE *poly_q = NULL;
+	const char *poly_q = NULL;
 	INT f_poly_Q = FALSE;
-	const BYTE *poly_Q = NULL;
+	const char *poly_Q = NULL;
 	INT f_semilinear = FALSE;
 	INT f_classify = FALSE;
 	INT f_read = FALSE;

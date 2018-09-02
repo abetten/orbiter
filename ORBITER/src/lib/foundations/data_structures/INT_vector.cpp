@@ -62,7 +62,7 @@ void INT_vector::init_permutation_from_string(const char *s)
 	FREE_INT(perm);
 }
 
-void INT_vector::read_ascii_file(const BYTE *fname)
+void INT_vector::read_ascii_file(const char *fname)
 {
 	INT verbose_level = 0;
 	INT *the_set;
@@ -72,7 +72,7 @@ void INT_vector::read_ascii_file(const BYTE *fname)
 	FREE_INT(the_set);
 }
 
-void INT_vector::read_binary_file_INT4(const BYTE *fname)
+void INT_vector::read_binary_file_INT4(const char *fname)
 {
 	INT verbose_level = 0;
 	INT *the_set;
@@ -169,17 +169,17 @@ void INT_vector::sort_and_remove_duplicates()
 	INT_vec_sort_and_remove_duplicates(M, m);
 }
 
-void INT_vector::write_to_ascii_file(const BYTE *fname)
+void INT_vector::write_to_ascii_file(const char *fname)
 {
 	write_set_to_file(fname, M, m, 0 /*verbose_level*/);
 }
 
-void INT_vector::write_to_binary_file_INT4(const BYTE *fname)
+void INT_vector::write_to_binary_file_INT4(const char *fname)
 {
 	write_set_to_file_as_INT4(fname, M, m, 0 /*verbose_level*/);
 }
 
-void INT_vector::write_to_csv_file(const BYTE *fname, const BYTE *label)
+void INT_vector::write_to_csv_file(const char *fname, const char *label)
 {
 	INT_vec_write_csv(M, m, fname, label);
 }

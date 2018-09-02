@@ -20,7 +20,7 @@ integer::integer()
 	clearself();
 }
 
-integer::integer(BYTE *p)
+integer::integer(char *p)
 {
 	INT i = atoi(p);
 	

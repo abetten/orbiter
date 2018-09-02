@@ -72,14 +72,14 @@ void unipoly::copyobject_to(discreta_base &x)
 
 INT my_unip_f_print_sub = FALSE;
 INT my_unip_f_use_variable_name = FALSE;
-BYTE my_unip_variable_name[128];
+char my_unip_variable_name[128];
 
 
 ostream& unipoly::print(ostream& ost)
 {
 	INT d, i, f_print_k, k, f_prev = FALSE;
 	discreta_base coef;
-	const BYTE *x, *y;
+	const char *x, *y;
 	INT f_nothing_printed_at_all = TRUE;
 	
 	if (my_unip_f_use_variable_name)

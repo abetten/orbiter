@@ -96,7 +96,7 @@ int main()
 
 	compute_orbits_on_subsets(Gen, 
 		k /* target_depth */,
-		"" /* const BYTE *prefix */, 
+		"" /* const char *prefix */, 
 		FALSE /* f_W */, FALSE /* f_w */,
 		A /* action *A */, A /* action *A2 */, 
 		A->Strong_gens /* strong_generators *Strong_gens */, 
@@ -279,7 +279,7 @@ void do_simeon(set_and_stabilizer *SaS)
 
 	compute_orbits_on_subsets(Gen2, 
 		target_depth,
-		"" /* const BYTE *prefix */, 
+		"" /* const char *prefix */, 
 		FALSE /* f_W */, FALSE /* f_w */,
 		A /* action *A */, A3 /* action *A2 */, 
 		SaS->Strong_gens /* strong_generators *Strong_gens */, 

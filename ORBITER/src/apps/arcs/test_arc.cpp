@@ -20,9 +20,9 @@ int main(int argc, char **argv)
 	INT f_q = FALSE;
 	INT q = 0;
 	INT f_poly = FALSE;
-	const BYTE *poly = NULL;
+	const char *poly = NULL;
 	INT f_arc = FALSE;
-	const BYTE *arc_text = NULL;
+	const char *arc_text = NULL;
 	INT i;
 
 	t0 = os_ticks();

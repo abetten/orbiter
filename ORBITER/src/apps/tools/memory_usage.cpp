@@ -23,10 +23,10 @@ int main(int argc, char **argv)
 	INT f_file_mask = FALSE;
 	INT range_first = 0;
 	INT range_len = 0;
-	const BYTE *fname_mask;
+	const char *fname_mask;
 
 	INT nb_extra_files = 0;
-	const BYTE *extra_files[1000];
+	const char *extra_files[1000];
 
 
 	t0 = os_ticks();
@@ -64,21 +64,21 @@ int main(int argc, char **argv)
 	nb_files += nb_extra_files;
 
 
-	BYTE fname[1000];
-	BYTE **fnames;
-	fnames = NEW_PBYTE(nb_files);
+	char fname[1000];
+	char **fnames;
+	fnames = NEW_pchar(nb_files);
 	h = 0;
 	if (f_file_mask) {
 		for (i = 0; i < range_len; i++) {
 			sprintf(fname, fname_mask, range_first + i);
-			fnames[h] = NEW_BYTE(strlen(fname) + 1);
+			fnames[h] = NEW_char(strlen(fname) + 1);
 			strcpy(fnames[h], fname);
 			cout << "created file name " << h << " as " << fnames[h] << endl;
 			h++;
 		}
 	}
 	for (i = 0; i < nb_extra_files; i++) {
-		fnames[h] = NEW_BYTE(strlen(extra_files[i]) + 1);
+		fnames[h] = NEW_char(strlen(extra_files[i]) + 1);
 		strcpy(fnames[h], extra_files[i]);
 		cout << "created file name " << h << " as " << fnames[h] << endl;
 		h++;
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 
 		cout << "file " << idx << " / " << nb_files << " is " << fnames[idx] << ":" << endl;
 		spreadsheet *S;
-		BYTE *p;
+		char *p;
 		INT N, a;
 
 		S = NEW_OBJECT(spreadsheet);
@@ -130,11 +130,11 @@ int main(int argc, char **argv)
 			M[idx]->entries[i].object_size_of = S->get_INT(i + 1, 5);
 
 			p = S->get_string(i + 1, 6);
-			M[idx]->entries[i].extra_type_info = NEW_BYTE(strlen(p) + 1);
+			M[idx]->entries[i].extra_type_info = NEW_char(strlen(p) + 1);
 			strcpy((char *) M[idx]->entries[i].extra_type_info, p);
 
 			p = S->get_string(i + 1, 7);
-			M[idx]->entries[i].source_file = NEW_BYTE(strlen(p) + 1);
+			M[idx]->entries[i].source_file = NEW_char(strlen(p) + 1);
 			strcpy((char *) M[idx]->entries[i].source_file, p);
 
 			M[idx]->entries[i].source_line = S->get_INT(i + 1, 8);

@@ -665,7 +665,7 @@ void do_conic_type(INT n, finite_field *F, INT f_randomized, INT nb_times,
 
 void do_test_diagonal_line(INT n, finite_field *F, 
 	INT *set_in, INT set_size, 
-	BYTE *fname_orbits_on_quadrangles, 
+	char *fname_orbits_on_quadrangles, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -698,11 +698,11 @@ void do_test_diagonal_line(INT n, finite_field *F,
 	INT f_casenumbers = FALSE;
 	INT *Casenumbers;
 	INT nb_cases;
-	//BYTE **data;
+	//char **data;
 	INT **sets;
 	INT *set_sizes;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii;
+	char **Ago_ascii;
+	char **Aut_ascii;
 
 	INT *Nb;
 
@@ -1058,7 +1058,7 @@ void do_print_lines_in_PG(INT n, finite_field *F,
 	INT d = n + 1;
 	INT h, a;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 
 	P = NEW_OBJECT(projective_space);
 	
@@ -1084,7 +1084,7 @@ void do_print_points_in_PG(INT n, finite_field *F,
 	INT d = n + 1;
 	INT h, a;
 	//INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 	INT *v;
 
 	P = NEW_OBJECT(projective_space);
@@ -1113,7 +1113,7 @@ void do_print_points_in_orthogonal_space(INT epsilon, INT n, finite_field *F,
 	INT d = n + 1;
 	INT h, a;
 	//INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 	INT *v;
 	orthogonal *O;
 
@@ -1148,7 +1148,7 @@ void do_print_points_on_grassmannian(INT n, INT k, finite_field *F,
 	INT d = n + 1;
 	INT h, a;
 	INT f_elements_exponential = TRUE;
-	const BYTE *symbol_for_print = "\\alpha";
+	const char *symbol_for_print = "\\alpha";
 
 	P = NEW_OBJECT(projective_space);
 	Grass = NEW_OBJECT(grassmann);
@@ -1254,7 +1254,7 @@ void do_embed_points(INT n, finite_field *F,
 
 void do_draw_points_in_plane(finite_field *F, 
 	INT *set, INT set_size, 
-	const BYTE *fname_base, INT f_point_labels, INT f_embedded, INT f_sideways, 
+	const char *fname_base, INT f_point_labels, INT f_embedded, INT f_sideways, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -1449,7 +1449,7 @@ void do_group_in_PG(INT n, finite_field *F,
 	//INT f_vv = (verbose_level >= 2);
 	projective_space *P;
 	//INT f_elements_exponential = TRUE;
-	//const BYTE *symbol_for_print = "\\alpha";
+	//const char *symbol_for_print = "\\alpha";
 	INT f_semilinear = TRUE;
 
 	if (f_v) {

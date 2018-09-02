@@ -18,7 +18,7 @@ static void print_table_bottom(ofstream &fp);
 static void print_set_special(ofstream &fp, INT *set, INT sz);
 
 void poset_classification::write_treefile_and_draw_tree(
-		BYTE *fname_base, INT lvl, INT xmax, INT ymax,
+		char *fname_base, INT lvl, INT xmax, INT ymax,
 		INT rad, INT f_embedded,
 		INT verbose_level)
 {
@@ -43,12 +43,12 @@ void poset_classification::write_treefile_and_draw_tree(
 		}
 }
 
-INT poset_classification::write_treefile(BYTE *fname_base,
+INT poset_classification::write_treefile(char *fname_base,
 		INT lvl, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname1[1000];
+	char fname1[1000];
 	INT i, level;
 		
 	if (f_v) {
@@ -103,14 +103,14 @@ INT poset_classification::write_treefile(BYTE *fname_base,
 		}
 }
 
-void poset_classification::draw_tree(BYTE *fname_base, INT lvl, 
+void poset_classification::draw_tree(char *fname_base, INT lvl, 
 	INT xmax, INT ymax, INT rad, INT f_embedded,
 	INT f_sideways, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
-	BYTE fname[1000];
-	BYTE fname1[1000];
+	char fname[1000];
+	char fname1[1000];
 	tree T;
 	//INT xmax = 1000;
 	//INT ymax = 1000;
@@ -218,7 +218,7 @@ void poset_classification::draw_tree(BYTE *fname_base, INT lvl,
 		}
 }
 
-void poset_classification::draw_tree_low_level(BYTE *fname, INT nb_nodes, 
+void poset_classification::draw_tree_low_level(char *fname, INT nb_nodes, 
 	INT *coord_xyw, INT *perm, INT *perm_inv, 
 	INT f_draw_points, INT f_draw_extension_points,
 	INT f_draw_aut_group_order,
@@ -230,7 +230,7 @@ void poset_classification::draw_tree_low_level(BYTE *fname, INT nb_nodes,
 	INT x_min = 0, x_max = 10000;
 	INT y_min = 0, y_max = 10000;
 	//INT factor_1000 = 1000;
-	BYTE fname_full[1000];
+	char fname_full[1000];
 	double scale = 0.3;
 	double line_width = 1.0;
 	
@@ -307,7 +307,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	INT nb_e, Nb_e, pt, dx, dx0, /*Dx, Dx0,*/ nxt, hdl, depth, hdl2;
 	INT set0[100];
 	INT set1[100];
-	BYTE str[1000];
+	char str[1000];
 	INT rad = 200 >> 3;
 	
 	Px = NEW_INT(nb_nodes);
@@ -544,7 +544,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 		longinteger_object go;
 		INT x_offset = 0;
 		INT y_offset = -200;
-		BYTE str2[1000];
+		char str2[1000];
 	
 		for (i = 0; i < nb_nodes; i++) {
 			if (root[i].addl == NULL)
@@ -602,7 +602,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	FREE_INT(Qy);
 }
 
-void poset_classification::draw_poset_full(const BYTE *fname_base,
+void poset_classification::draw_poset_full(const char *fname_base,
 		INT depth, INT data, INT f_embedded, INT f_sideways,
 		double x_stretch,
 		INT verbose_level)
@@ -620,8 +620,8 @@ void poset_classification::draw_poset_full(const BYTE *fname_base,
 				"after make_full_poset_graph" << endl;
 		}
 
-	BYTE fname_base1[1000];
-	BYTE fname1[1000];
+	char fname_base1[1000];
+	char fname1[1000];
 	INT xmax = 1000000;
 	INT ymax = 1000000;
 	INT x_max = 10000;
@@ -671,7 +671,7 @@ void poset_classification::draw_poset_full(const BYTE *fname_base,
 		}
 }
 
-void poset_classification::draw_poset(const BYTE *fname_base,
+void poset_classification::draw_poset(const char *fname_base,
 		INT depth, INT data, INT f_embedded, INT f_sideways,
 		INT verbose_level)
 {
@@ -715,14 +715,14 @@ void poset_classification::draw_poset(const BYTE *fname_base,
 				"after make_poset_graph_detailed" << endl;
 		}
 
-	BYTE fname_base1[1000];
-	BYTE fname1[1000];
-	BYTE fname_base2[1000];
-	BYTE fname2[1000];
-	BYTE fname_base3[1000];
-	BYTE fname3[1000];
-	BYTE fname_base4[1000];
-	BYTE fname4[1000];
+	char fname_base1[1000];
+	char fname1[1000];
+	char fname_base2[1000];
+	char fname2[1000];
+	char fname_base3[1000];
+	char fname3[1000];
+	char fname_base4[1000];
+	char fname4[1000];
 	INT xmax = 1000000;
 	INT ymax = 1000000;
 	INT x_max = 10000;
@@ -805,7 +805,7 @@ void poset_classification::draw_poset(const BYTE *fname_base,
 		}
 }
 
-void poset_classification::draw_level_graph(const BYTE *fname_base,
+void poset_classification::draw_level_graph(const char *fname_base,
 		INT depth, INT data, INT level,
 		INT f_embedded, INT f_sideways,
 		INT verbose_level)
@@ -821,8 +821,8 @@ void poset_classification::draw_level_graph(const BYTE *fname_base,
 	make_level_graph(depth, LG, data, level, verbose_level - 1);
 
 
-	BYTE fname_base1[1000];
-	BYTE fname[1000];
+	char fname_base1[1000];
+	char fname[1000];
 	INT xmax = 1000000;
 	INT ymax = 1000000;
 	INT x_max = 10000;
@@ -1346,7 +1346,7 @@ void poset_classification::make_auxiliary_graph(INT depth,
 				}
 
 
-			BYTE text[1000];
+			char text[1000];
 			longinteger_object go, go1;
 			INT n, so, len, r;
 			
@@ -1521,7 +1521,7 @@ void poset_classification::make_graph(INT depth,
 				}
 
 
-			BYTE text[1000];
+			char text[1000];
 			longinteger_object go, go1;
 			INT n;
 			
@@ -1713,7 +1713,7 @@ void poset_classification::make_level_graph(INT depth,
 				}
 
 
-			BYTE text[1000];
+			char text[1000];
 			longinteger_object go, go1;
 			INT n, so, len, r;
 			
@@ -1967,7 +1967,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 				}
 
 
-			BYTE text[1000];
+			char text[1000];
 			longinteger_object go, go1;
 			INT n, so, len, r;
 			
@@ -2054,8 +2054,8 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = FALSE; //(verbose_level >= 2);
-	BYTE fname_base1[1000];
-	BYTE fname[1000];
+	char fname_base1[1000];
+	char fname[1000];
 	INT lvl, po, so, n, n1, f, cnt;
 	INT *set;
 	longinteger_domain D;
@@ -2093,7 +2093,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 					}
 				n = first_poset_orbit_node_at_level[lvl] + po;
 				
-				BYTE text[1000];
+				char text[1000];
 				longinteger_object go, go1;
 			
 				n = first_poset_orbit_node_at_level[lvl] + po;

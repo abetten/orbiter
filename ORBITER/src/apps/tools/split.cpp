@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_split = FALSE;
 	INT split_m;
 	INT i;
@@ -46,15 +46,15 @@ int main(int argc, char **argv)
 
 	INT f_v = (verbose_level >= 1);
 
-	BYTE fname_base[1000];
-	BYTE fname_out[1000];
+	char fname_base[1000];
+	char fname_out[1000];
 
 	get_fname_base(fname, fname_base);
 
 	INT *Set_sizes;
 	INT **Sets;
-	BYTE **Ago_ascii;
-	BYTE **Aut_ascii; 
+	char **Ago_ascii;
+	char **Aut_ascii; 
 	INT *Casenumbers;
 	INT nb_cases;
 	INT j, h;

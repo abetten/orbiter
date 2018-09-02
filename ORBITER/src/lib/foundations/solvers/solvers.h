@@ -22,7 +22,7 @@ public:
 	static INT cntr_objects;
 	static INT f_debug_memory;
 
-	BYTE label[1000];
+	char label[1000];
 	INT m; // number of equations or inequalities
 	INT n; // number of indeterminates
 	INT sum; // constraint: sum(i=0..(n-1); x[i]) = sum 
@@ -39,7 +39,7 @@ public:
 		// [m] he current values of the RHS 
 		// (=RHS - what is chosen on the left
 	diophant_equation_type *type;
-	BYTE **eqn_label; // [m] a label for each equation / inequality
+	char **eqn_label; // [m] a label for each equation / inequality
 
 
 	// the following vectors are used by diophant::test_solution
@@ -77,7 +77,7 @@ public:
 	INT &Aij(INT i, INT j);
 	INT &Gij(INT i, INT j);
 	INT &RHSi(INT i);
-	void init_eqn_label(INT i, BYTE *label);
+	void init_eqn_label(INT i, char *label);
 	void print();
 	void print_tight();
 	void print_dense();
@@ -93,20 +93,20 @@ public:
 	INT solve_next();
 	INT solve_first_wassermann(INT verbose_level);
 	INT solve_first_mckay(INT f_once, INT verbose_level);
-	void draw_solutions(const BYTE *fname, INT verbose_level);
-	void write_solutions(const BYTE *fname, INT verbose_level);
-	void read_solutions_from_file(const BYTE *fname_sol, 
+	void draw_solutions(const char *fname, INT verbose_level);
+	void write_solutions(const char *fname, INT verbose_level);
+	void read_solutions_from_file(const char *fname_sol, 
 		INT verbose_level);
 	void get_solutions(INT *&Sol, INT &nb_sol, INT verbose_level);
 	void get_solutions_full_length(INT *&Sol, INT &nb_sol, 
 		INT verbose_level);
 	void test_solution_full_length(INT *sol, INT verbose_level);
-	INT solve_all_DLX(INT f_write_tree, const BYTE *fname_tree, 
+	INT solve_all_DLX(INT f_write_tree, const char *fname_tree, 
 		INT verbose_level);
-	INT solve_all_DLX_with_RHS(INT f_write_tree, const BYTE *fname_tree, 
+	INT solve_all_DLX_with_RHS(INT f_write_tree, const char *fname_tree, 
 		INT verbose_level);
 	INT solve_all_DLX_with_RHS_and_callback(INT f_write_tree, 
-		const BYTE *fname_tree, 
+		const char *fname_tree, 
 		void (*user_callback_solution_found)(INT *sol, INT len, 
 			INT nb_sol, void *data), 
 		INT verbose_level);
@@ -121,9 +121,9 @@ public:
 	INT solve_next_betten(INT verbose_level);
 	INT j_fst(INT j, INT verbose_level);
 	INT j_nxt(INT j, INT verbose_level);
-	void solve_mckay(const BYTE *label, INT maxresults, 
+	void solve_mckay(const char *label, INT maxresults, 
 		INT &nb_backtrack_nodes, INT &nb_sol, INT verbose_level);
-	void solve_mckay_override_minrhs_in_inequalities(const BYTE *label, 
+	void solve_mckay_override_minrhs_in_inequalities(const char *label, 
 		INT maxresults, INT &nb_backtrack_nodes, 
 		INT minrhs, INT &nb_sol, INT verbose_level);
 	void latex_it();
@@ -135,12 +135,12 @@ public:
 	INT maximum_number_of_non_zero_coefficients_in_row();
 	void get_coefficient_matrix(INT *&M, INT &nb_rows, INT &nb_cols, 
 		INT verbose_level);
-	void save_as_Levi_graph(const BYTE *fname, INT verbose_level);
-	void save_in_compact_format(const BYTE *fname, INT verbose_level);
-	void read_compact_format(const BYTE *fname, INT verbose_level);
-	void save_in_general_format(const BYTE *fname, INT verbose_level);
-	void read_general_format(const BYTE *fname, INT verbose_level);
-	void save_in_wassermann_format(const BYTE *fname, INT verbose_level);
+	void save_as_Levi_graph(const char *fname, INT verbose_level);
+	void save_in_compact_format(const char *fname, INT verbose_level);
+	void read_compact_format(const char *fname, INT verbose_level);
+	void save_in_general_format(const char *fname, INT verbose_level);
+	void read_general_format(const char *fname, INT verbose_level);
+	void save_in_wassermann_format(const char *fname, INT verbose_level);
 	void solve_wassermann(INT verbose_level);
 	void eliminate_zero_rows_quick(INT verbose_level);
 	void eliminate_zero_rows(INT *&eqn_number, INT verbose_level);
@@ -149,16 +149,16 @@ public:
 		INT &nb_eqns_replaced, INT *&eqns_replaced, 
 		INT verbose_level);
 	void multiply_A_x_to_RHS1();
-	void write_xml(ostream &ost, const BYTE *label);
-	void read_xml(ifstream &f, BYTE *label);
+	void write_xml(ostream &ost, const char *label);
+	void read_xml(ifstream &f, char *label);
 		// label will be set to the label that is in the file
 		// therefore, label must point to sufficient memory
 	void append_equation();
 	void delete_equation(INT I);
-	void write_gurobi_binary_variables(const BYTE *fname);
-	void draw_it(const BYTE *fname_base, INT xmax_in, INT ymax_in, 
+	void write_gurobi_binary_variables(const char *fname);
+	void draw_it(const char *fname_base, INT xmax_in, INT ymax_in, 
 		INT xmax_out, INT ymax_out);
-	void draw_partitioned(const BYTE *fname_base, 
+	void draw_partitioned(const char *fname_base, 
 		INT xmax_in, INT ymax_in, 
 		INT xmax_out, INT ymax_out, 
 		INT f_solution, INT *solution, INT solution_sz, 
@@ -166,14 +166,14 @@ public:
 	INT test_solution(INT *sol, INT len, INT verbose_level);
 	void get_columns(INT *col, INT nb_col, set_of_sets *&S, 
 		INT verbose_level);
-	void test_solution_file(const BYTE *solution_file, 
+	void test_solution_file(const char *solution_file, 
 		INT verbose_level);
 	void analyze(INT verbose_level);
 	INT is_of_Steiner_type();
-	void make_clique_graph_adjacency_matrix(UBYTE *&Adj, 
+	void make_clique_graph_adjacency_matrix(uchar *&Adj, 
 		INT verbose_level);
 	void make_clique_graph(colored_graph *&CG, INT verbose_level);
-	void make_clique_graph_and_save(const BYTE *clique_graph_fname, 
+	void make_clique_graph_and_save(const char *clique_graph_fname, 
 		INT verbose_level);
 	void test_if_the_last_solution_is_unique();
 };
@@ -184,16 +184,16 @@ INT diophant_solve_first_mckay(diophant *Dio, INT f_once, INT verbose_level);
 INT diophant_solve_all_mckay(diophant *Dio, INT &nb_backtrack_nodes, INT verbose_level);
 INT diophant_solve_once_mckay(diophant *Dio, INT verbose_level);
 INT diophant_solve_next_mckay(diophant *Dio, INT verbose_level);
-void diophant_solve_mckay(diophant *Dio, const BYTE *label, INT maxresults, INT &nb_backtrack_nodes, INT &nb_sol, INT verbose_level);
-void diophant_solve_mckay_override_minrhs_in_inequalities(diophant *Dio, const BYTE *label, 
+void diophant_solve_mckay(diophant *Dio, const char *label, INT maxresults, INT &nb_backtrack_nodes, INT &nb_sol, INT verbose_level);
+void diophant_solve_mckay_override_minrhs_in_inequalities(diophant *Dio, const char *label, 
 	INT maxresults, INT &nb_backtrack_nodes, 
 	INT minrhs, INT &nb_sol, INT verbose_level);
 void solve_diophant(INT *Inc, INT nb_rows, INT nb_cols, INT nb_needed, 
 	INT f_has_Rhs, INT *Rhs, 
 	INT *&Solutions, INT &nb_sol, INT &nb_backtrack, INT &dt, 
 	INT f_DLX, 
-	INT f_draw_system, const BYTE *fname_system, 
-	INT f_write_tree, const BYTE *fname_tree, 
+	INT f_draw_system, const char *fname_system, 
+	INT f_write_tree, const char *fname_tree, 
 	INT verbose_level);
 // allocates Solutions[nb_sol * target_size]
 // where target_size = starter_size + nb_needed
@@ -213,36 +213,36 @@ void de_install_callback_solution_found();
 void DlxTest();
 void DlxTransposeAppendAndSolve(INT *Data, INT nb_rows, INT nb_cols, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level);
 void DlxTransposeAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols, 
 	INT *RHS, INT f_has_type, diophant_equation_type *type, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level);
 void DlxAppendRowAndSolve(INT *Data, INT nb_rows, INT nb_cols, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level);
 void DlxAppendRowAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols, 
 	INT *RHS, INT f_has_type, diophant_equation_type *type, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level);
 void DlxSolve(INT *Data, INT nb_rows, INT nb_cols, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level);
 void DlxSolve_with_RHS(INT *Data, INT nb_rows, INT nb_cols, 
 	INT *RHS, INT f_has_type, diophant_equation_type *type, 
 	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const BYTE *solution_fname, 
-	INT f_write_tree_file, const BYTE *tree_fname, 
+	INT f_write_file, const char *solution_fname, 
+	INT f_write_tree_file, const char *tree_fname, 
 	INT verbose_level);
 void DlxSearchRHS(INT k, INT verbose_level);
 

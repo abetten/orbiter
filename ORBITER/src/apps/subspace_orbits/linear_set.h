@@ -77,7 +77,7 @@ public:
 	void freeself();
 	void init(int argc, const char **argv, 
 		INT s, INT n, INT q, 
-		const BYTE *poly_q, const BYTE *poly_Q, 
+		const char *poly_q, const char *poly_Q, 
 		INT depth, INT f_identify, INT verbose_level);
 	void do_classify(INT verbose_level);
 	INT test_set(INT len, INT *S, INT verbose_level);

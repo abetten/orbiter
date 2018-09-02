@@ -19,8 +19,8 @@
 INT t0; // the system time when the program started
 
 
-void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, BYTE *fname);
-void export_gap(finite_field *F, INT d, INT *Pts, INT nb_pts, BYTE *fname);
+void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname);
+void export_gap(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname);
 
 
 
@@ -33,11 +33,11 @@ int main(int argc, const char **argv)
 	INT f_n = FALSE;
 	INT n;
 	INT f_poly = FALSE;
-	const BYTE *poly = NULL;
+	const char *poly = NULL;
 	INT f_Q = FALSE;
 	INT Q;
 	INT f_poly_Q = FALSE;
-	const BYTE *poly_Q = NULL;
+	const char *poly_Q = NULL;
 
 	INT f_subiaco_oval = FALSE;
 	INT f_short = FALSE;
@@ -296,7 +296,7 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	BYTE fname[1000];
+	char fname[1000];
 	INT nb_pts;
 	INT *Pts = NULL;
 
@@ -578,9 +578,9 @@ int main(int argc, const char **argv)
 }
 
 
-void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, BYTE *fname)
+void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname)
 {
-	BYTE fname2[1000];
+	char fname2[1000];
 	INT *v;
 	INT h, i, a, b;
 
@@ -627,9 +627,9 @@ void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, BYTE *fname)
 	FREE_INT(v);
 }
 
-void export_gap(finite_field *F, INT d, INT *Pts, INT nb_pts, BYTE *fname)
+void export_gap(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname)
 {
-	BYTE fname2[1000];
+	char fname2[1000];
 	INT *v;
 	INT h, i, a, b;
 

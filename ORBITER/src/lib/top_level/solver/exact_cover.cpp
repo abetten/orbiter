@@ -50,8 +50,8 @@ void exact_cover::freeself()
 void exact_cover::init_basic(void *user_data, 
 	action *A_base, action *A_on_blocks, 
 	INT target_size, INT starter_size, 
-	const BYTE *input_prefix, const BYTE *output_prefix, 
-	const BYTE *solution_prefix, const BYTE *base_fname, 
+	const char *input_prefix, const char *output_prefix, 
+	const char *solution_prefix, const char *base_fname, 
 	INT f_lex, 
 	INT verbose_level)
 {
@@ -84,7 +84,7 @@ void exact_cover::init_basic(void *user_data,
 	strcpy(exact_cover::solution_prefix, solution_prefix);
 	strcpy(exact_cover::base_fname, base_fname);
 
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "%s%s_lvl_%ld", input_prefix, base_fname, starter_size);
 	if (f_v) {
@@ -175,7 +175,7 @@ void exact_cover::set_single_case(INT single_case, INT verbose_level)
 		}
 }
 
-void exact_cover::randomize(const BYTE *random_permutation_fname, INT verbose_level)
+void exact_cover::randomize(const char *random_permutation_fname, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 
@@ -226,8 +226,8 @@ void exact_cover::add_late_cleanup_function(
 
 
 void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_instead, 
-	INT f_draw_system, const BYTE *fname_system, 
-	INT f_write_tree, const BYTE *fname_tree, INT verbose_level)
+	INT f_draw_system, const char *fname_system, 
+	INT f_write_tree, const char *fname_tree, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	//INT f_vv = (verbose_level >= 2);
@@ -305,15 +305,15 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 		nb_sol = 0;
 
 		INT *Solutions = NULL;
-		BYTE fname1[1000];
+		char fname1[1000];
 
 
 		if (f_write_tree) {
 			sprintf(fname1, fname_tree, starter_case);
 			}
 		
-		BYTE fname_system2[1000];
-		BYTE fname_tree2[1000];
+		char fname_system2[1000];
+		char fname_tree2[1000];
 
 		if (f_draw_system) {
 			sprintf(fname_system2, "%s_%ld", fname_system, the_starter_case);
@@ -436,7 +436,7 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 	cout << "nb_deleted_solutions=" << nb_deleted_solutions << endl;
 	
 	INT *Vec[6];
-	const BYTE *column_labels[6] = {"Case_nb", "Nb_sol", "Nb_backtrack", "Nb_col", "Dt", "Dt_in_sec" };
+	const char *column_labels[6] = {"Case_nb", "Nb_sol", "Nb_backtrack", "Nb_col", "Dt", "Dt_in_sec" };
 	Vec[0] = Case_nb;
 	Vec[1] = Nb_sol;
 	Vec[2] = Nb_backtrack;
@@ -466,14 +466,14 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 	INT f_solve, INT f_save, INT f_read_instead, 
 	INT &nb_col, 
 	INT *&Solutions, INT &sol_length, INT &nb_sol, INT &nb_backtrack, INT &dt, 
-	INT f_draw_system, const BYTE *fname_system, 
-	INT f_write_tree, const BYTE *fname_tree, 
+	INT f_draw_system, const char *fname_system, 
+	INT f_write_tree, const char *fname_tree, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
 	INT f_v4 = (verbose_level >= 4);
-	BYTE str[1000];
+	char str[1000];
 
 
 	if (f_v) {
@@ -579,9 +579,9 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 				}
 			}
 
-		BYTE fname[1000];
-		BYTE fname_Levi[1000];
-		BYTE fname_sol[1000];
+		char fname[1000];
+		char fname_Levi[1000];
+		char fname_sol[1000];
 
 		sprintf(fname, "%ssystem_%ld.txt", output_prefix, starter_case);
 		sprintf(fname_Levi, "%ssystem_%ld_Levi_graph.bin", output_prefix, starter_case);
@@ -621,8 +621,8 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 					}
 				}
 			else if (f_read_instead) {
-				BYTE fname_sol[1000];
-				const BYTE *fname_solutions_mask = "%ssystem_%ld.solutions";
+				char fname_sol[1000];
+				const char *fname_solutions_mask = "%ssystem_%ld.solutions";
 				
 				sprintf(fname_sol, fname_solutions_mask, solution_prefix, starter_case);
 

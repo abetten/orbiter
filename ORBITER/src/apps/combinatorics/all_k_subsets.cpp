@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	INT k;
 	INT *set;
 	INT N;
-	BYTE fname[1000];
+	char fname[1000];
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

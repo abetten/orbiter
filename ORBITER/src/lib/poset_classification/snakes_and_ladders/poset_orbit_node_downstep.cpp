@@ -84,7 +84,7 @@ void poset_orbit_node::downstep(poset_classification *gen,
 		INT i;
 	
 		for (i = 0; i < nb_orbits; i++) {
-			BYTE label[1000];
+			char label[1000];
 			INT xmax = gen->schreier_tree_xmax;
 			INT ymax =  gen->schreier_tree_ymax;
 			INT f_circletext = gen->schreier_tree_f_circletext;
@@ -112,7 +112,7 @@ void poset_orbit_node::downstep(poset_classification *gen,
 				0 /*verbose_level */);
 			}
 		
-		BYTE label_data[1000];
+		char label_data[1000];
 		sprintf(label_data, "%sschreier_data_node_%ld.tex",
 				gen->schreier_tree_prefix, node);
 		Schreier.latex(label_data);

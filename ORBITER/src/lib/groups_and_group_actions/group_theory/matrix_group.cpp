@@ -312,9 +312,9 @@ void matrix_group::allocate_data(INT verbose_level)
 	v1 = NEW_INT(2 * n);
 	v2 = NEW_INT(2 * n);
 	v3 = NEW_INT(2 * n);
-	elt1 = NEW_UBYTE(char_per_elt);
-	elt2 = NEW_UBYTE(char_per_elt);
-	elt3 = NEW_UBYTE(char_per_elt);
+	elt1 = NEW_uchar(char_per_elt);
+	elt2 = NEW_uchar(char_per_elt);
+	elt3 = NEW_uchar(char_per_elt);
 	base_cols = NEW_INT(n);
 	
 	if (f_v) {
@@ -382,13 +382,13 @@ void matrix_group::free_data(INT verbose_level)
 				"destroying elt1-3" << endl;
 		}
 	if (elt1) {
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 		}
 	if (elt2) {
-		FREE_UBYTE(elt2);
+		FREE_uchar(elt2);
 		}
 	if (elt3) {
-		FREE_UBYTE(elt3);
+		FREE_uchar(elt3);
 		}
 	if (f_v) {
 		cout << "matrix_group::free_data "
@@ -1246,7 +1246,7 @@ void matrix_group::GL_invert_internal(INT *A, INT *Ainv, INT verbose_level)
 	
 }
 
-void matrix_group::GL_unpack(UBYTE *elt, INT *Elt, INT verbose_level)
+void matrix_group::GL_unpack(uchar *elt, INT *Elt, INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
 	INT f_vv = (verbose_level >= 2);
@@ -1303,7 +1303,7 @@ void matrix_group::GL_unpack(UBYTE *elt, INT *Elt, INT verbose_level)
 		}
 }
 
-void matrix_group::GL_pack(INT *Elt, UBYTE *elt)
+void matrix_group::GL_pack(INT *Elt, uchar *elt)
 {
 	INT i, j;
 	
@@ -1622,17 +1622,17 @@ void matrix_group::GL_print_easy_latex(INT *Elt, ostream &ost)
 		}
 }
 
-int matrix_group::get_digit(UBYTE *elt, INT i, INT j)
+int matrix_group::get_digit(uchar *elt, INT i, INT j)
 {
 	int h0 = (int) (i * n + j) * bits_per_digit;
 	int h, h1, word, bit;
-	UBYTE mask, d = 0;
+	uchar mask, d = 0;
 	
 	for (h = (int) bits_per_digit - 1; h >= 0; h--) {
 		h1 = h0 + h;
 		word = h1 >> 3;
 		bit = h1 & 7;
-		mask = ((UBYTE) 1) << bit;
+		mask = ((uchar) 1) << bit;
 		d <<= 1;
 		if (elt[word] & mask)
 			d |= 1;
@@ -1640,11 +1640,11 @@ int matrix_group::get_digit(UBYTE *elt, INT i, INT j)
 	return d;
 }
 
-int matrix_group::get_digit_frobenius(UBYTE *elt)
+int matrix_group::get_digit_frobenius(uchar *elt)
 {
 	int h0;
 	int h, h1, word, bit;
-	UBYTE mask, d = 0;
+	uchar mask, d = 0;
 	
 	if (f_affine) {
 		h0 = (int) (n * n + n) * bits_per_digit;
@@ -1656,7 +1656,7 @@ int matrix_group::get_digit_frobenius(UBYTE *elt)
 		h1 = h0 + h;
 		word = h1 >> 3;
 		bit = h1 & 7;
-		mask = ((UBYTE) 1) << bit;
+		mask = ((uchar) 1) << bit;
 		d <<= 1;
 		if (elt[word] & mask)
 			d |= 1;
@@ -1664,11 +1664,11 @@ int matrix_group::get_digit_frobenius(UBYTE *elt)
 	return d;
 }
 
-void matrix_group::put_digit(UBYTE *elt, INT i, INT j, INT d)
+void matrix_group::put_digit(uchar *elt, INT i, INT j, INT d)
 {
 	int h0 = (int) (i * n + j) * bits_per_digit;
 	int h, h1, word, bit;
-	UBYTE mask;
+	uchar mask;
 	
 	//cout << "put_digit() " << d << " bits_per_digit = "
 	//		<< bits_per_digit << endl;
@@ -1677,23 +1677,23 @@ void matrix_group::put_digit(UBYTE *elt, INT i, INT j, INT d)
 		word = h1 >> 3;
 		//cout << "word = " << word << endl;
 		bit = h1 & 7;
-		mask = ((UBYTE) 1) << bit;
+		mask = ((uchar) 1) << bit;
 		if (d & 1) {
 			elt[word] |= mask;
 			}
 		else {
-			UBYTE not_mask = ~mask;
+			uchar not_mask = ~mask;
 			elt[word] &= not_mask;
 			}
 		d >>= 1;
 		}
 }
 
-void matrix_group::put_digit_frobenius(UBYTE *elt, INT d)
+void matrix_group::put_digit_frobenius(uchar *elt, INT d)
 {
 	int h0;
 	int h, h1, word, bit;
-	UBYTE mask;
+	uchar mask;
 	
 	if (f_affine) {
 		h0 = (int) (n * n + n) * bits_per_digit;
@@ -1705,12 +1705,12 @@ void matrix_group::put_digit_frobenius(UBYTE *elt, INT d)
 		h1 = h0 + h;
 		word = h1 >> 3;
 		bit = h1 & 7;
-		mask = ((UBYTE) 1) << bit;
+		mask = ((uchar) 1) << bit;
 		if (d & 1) {
 			elt[word] |= mask;
 			}
 		else {
-			UBYTE not_mask = ~mask;
+			uchar not_mask = ~mask;
 			elt[word] &= not_mask;
 			}
 		d >>= 1;

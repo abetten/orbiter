@@ -50,7 +50,7 @@ polar::~polar()
 
 void polar::init_group_by_base_images(
 	INT *group_generator_data, INT group_generator_size, 
-	INT f_group_order_target, const BYTE *group_order_target, 
+	INT f_group_order_target, const char *group_order_target, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -71,7 +71,7 @@ void polar::init_group_by_base_images(
 
 void polar::init_group(
 	INT *group_generator_data, INT group_generator_size, 
-	INT f_group_order_target, const BYTE *group_order_target, 
+	INT f_group_order_target, const char *group_order_target, 
 	INT verbose_level)
 {
 	INT f_v = (verbose_level >= 1);
@@ -595,7 +595,7 @@ void polar::dual_polar_graph(INT depth, INT orbit_idx,
 		}
 
 	{
-	BYTE fname[1000];
+	char fname[1000];
 
 	sprintf(fname, "dual_polar_graph_O_%ld_%ld_%ld.inc", epsilon, n, q);
 	{

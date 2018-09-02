@@ -15,7 +15,7 @@
 
 
 void create_graph_from_file(layered_graph *&LG,
-		INT f_grouping, double x_stretch, const BYTE *fname);
+		INT f_grouping, double x_stretch, const char *fname);
 
 
 int main(int argc, const char **argv)
@@ -23,7 +23,7 @@ int main(int argc, const char **argv)
 	INT i;
 	INT verbose_level = 0;
 	INT f_file = FALSE;
-	const BYTE *fname = NULL;
+	const char *fname = NULL;
 	INT f_grouping = FALSE;
 	double x_stretch = 0.7;
 
@@ -53,7 +53,7 @@ int main(int argc, const char **argv)
 	create_graph_from_file(LG, f_grouping, x_stretch, fname);
 
 
-	BYTE fname_out[1000];
+	char fname_out[1000];
 
 	sprintf(fname_out, "%s", fname);
 
@@ -70,7 +70,7 @@ int main(int argc, const char **argv)
 
 
 void create_graph_from_file(layered_graph *&LG,
-		INT f_grouping, double x_stretch, const BYTE *fname)
+		INT f_grouping, double x_stretch, const char *fname)
 {
 	LG = NEW_OBJECT(layered_graph);
 	INT nb_layer;
@@ -98,7 +98,7 @@ void create_graph_from_file(layered_graph *&LG,
 		for (n1 = 0; n1 < Nb[l1]; n1++) {
 			fp >> a;
 
-			BYTE text[1000];
+			char text[1000];
 
 			sprintf(text, "%ld", a);
 			LG->add_text(l1, n1, text, 0/*verbose_level*/);

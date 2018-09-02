@@ -600,13 +600,13 @@ void ovoid_generator::print(INT *S, INT len)
 void ovoid_generator::make_graphs(orbiter_data_file *ODF,
 	INT f_split, INT split_r, INT split_m,
 	INT f_lexorder_test,
-	const BYTE *fname_mask,
+	const char *fname_mask,
 	INT verbose_level)
 {
 	INT orbit_idx;
 	INT f_v = (verbose_level >= 1);
 	INT f_v3 = (verbose_level >= 3);
-	BYTE fname_graph[1000];
+	char fname_graph[1000];
 	INT level;
 
 	if (f_v) {
@@ -873,7 +873,7 @@ void ovoid_generator::create_graph(orbiter_data_file *ODF,
 
 	starter_size = ODF->set_sizes[orbit_idx];
 
-	UBYTE *bitvector_adjacency = NULL;
+	uchar *bitvector_adjacency = NULL;
 	INT bitvector_length_in_bits;
 	INT bitvector_length;
 	Pts = NEW_INT(nb_points * d);
@@ -885,7 +885,7 @@ void ovoid_generator::create_graph(orbiter_data_file *ODF,
 
 	bitvector_length_in_bits = L;
 	bitvector_length = (L + 7) >> 3;
-	bitvector_adjacency = NEW_UBYTE(bitvector_length);
+	bitvector_adjacency = NEW_uchar(bitvector_length);
 	for (i = 0; i < bitvector_length; i++) {
 		bitvector_adjacency[i] = 0;
 		}

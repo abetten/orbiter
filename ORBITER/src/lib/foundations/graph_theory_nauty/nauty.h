@@ -186,7 +186,7 @@ it is necessary to check they are correct.
 *        2-Jul-98 : - declared ALLBITS                                       *
 *       21-Oct-98 : - allow WORDSIZE==64 using unsigned long long            *
 *                   - added BIGNAUTY option for really big graphs            *
-*       11-Dec-99 : - made bit, leftbit and bytecount static in each file    *
+*       11-Dec-99 : - made bit, leftbit and charcount static in each file    *
 *        9-Jan-00 : - declared nauty_check() and nautil_check()              *
 *       12-Feb-00 : - Used #error for compile-time checks                    *
 *                   - Added DYNREALLOC                                       *
@@ -674,10 +674,10 @@ typedef unsigned long nauty_counter;
    ALLBITS     = all (numbered) bits in a setword  */
 
 #if  WORDSIZE==64
-#define POPCOUNTMAC(x) (bytecount[(x)>>56 & 0xFF] + bytecount[(x)>>48 & 0xFF] \
-                   + bytecount[(x)>>40 & 0xFF] + bytecount[(x)>>32 & 0xFF] \
-                   + bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
-                   + bytecount[(x)>>8 & 0xFF]  + bytecount[(x) & 0xFF])
+#define POPCOUNTMAC(x) (charcount[(x)>>56 & 0xFF] + charcount[(x)>>48 & 0xFF] \
+                   + charcount[(x)>>40 & 0xFF] + charcount[(x)>>32 & 0xFF] \
+                   + charcount[(x)>>24 & 0xFF] + charcount[(x)>>16 & 0xFF] \
+                   + charcount[(x)>>8 & 0xFF]  + charcount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK3232 ? \
                        (x) &   MSK1648 ? \
                          (x) & MSK0856 ? \
@@ -702,8 +702,8 @@ typedef unsigned long nauty_counter;
 #endif
 
 #if  WORDSIZE==32
-#define POPCOUNTMAC(x) (bytecount[(x)>>24 & 0xFF] + bytecount[(x)>>16 & 0xFF] \
-                        + bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
+#define POPCOUNTMAC(x) (charcount[(x)>>24 & 0xFF] + charcount[(x)>>16 & 0xFF] \
+                        + charcount[(x)>>8 & 0xFF] + charcount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK1616 ? ((x) & MSK0824 ? \
                      leftbit[((x)>>24) & MSK8] : 8+leftbit[(x)>>16]) \
                     : ((x) & MSK0808 ? 16+leftbit[(x)>>8] : 24+leftbit[x]))
@@ -714,7 +714,7 @@ typedef unsigned long nauty_counter;
 #endif
 
 #if  WORDSIZE==16
-#define POPCOUNTMAC(x) (bytecount[(x)>>8 & 0xFF] + bytecount[(x) & 0xFF])
+#define POPCOUNTMAC(x) (charcount[(x)>>8 & 0xFF] + charcount[(x) & 0xFF])
 #define FIRSTBIT(x) ((x) & MSK0808 ? leftbit[((x)>>8) & MSK8] : 8+leftbit[x])
 #define BITMASK(x)  (MSK15C >> (x))
 #define ALLBITS  MSK16
@@ -1055,11 +1055,11 @@ extern int labelorg;   /* Declared in nautil.c */
 extern volatile int nauty_kill_request;  /* Also declared in nautil.c */
 
 #ifndef NAUTY_IN_MAGMA
-  /* Things equivalent to bit, bytecount, leftbit are defined
+  /* Things equivalent to bit, charcount, leftbit are defined
      in bs.h for Magma. */
 #if  EXTDEF_TYPE==1
 extern setword bit[];
-extern int bytecount[];
+extern int charcount[];
 extern int leftbit[];
 
 #else
@@ -1124,9 +1124,9 @@ setword bit[] = {0100000,040000,020000,010000,04000,02000,01000,0400,0200,
                  0100,040,020,010,04,02,01};
 #endif
 
-    /*  array giving number of 1-bits in bytes valued 0..255: */
+    /*  array giving number of 1-bits in chars valued 0..255: */
 EXTDEF_CLASS const
-int bytecount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
+int charcount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
                    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
                    1,2,2,3,2,3,3,4,2,3,3,4,3,4,4,5,
                    2,3,3,4,3,4,4,5,3,4,4,5,4,5,5,6,
@@ -1143,7 +1143,7 @@ int bytecount[] = {0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,
                    3,4,4,5,4,5,5,6,4,5,5,6,5,6,6,7,
                    4,5,5,6,5,6,6,7,5,6,6,7,6,7,7,8};
 
-    /* array giving position (1..7) of high-order 1-bit in byte: */
+    /* array giving position (1..7) of high-order 1-bit in char: */
 EXTDEF_CLASS const
 int leftbit[] =   {8,7,6,6,5,5,5,5,4,4,4,4,4,4,4,4,
                    3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,

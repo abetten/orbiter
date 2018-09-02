@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 		}
 	cout << endl;
 
-	BYTE fname[1000];
+	char fname[1000];
 	sprintf(fname, "Q%s_%ld_%ld.txt", plus_minus_letter(epsilon), n, q);
 	write_set_to_file(fname, L, N, verbose_level);
 

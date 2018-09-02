@@ -1082,8 +1082,8 @@ void discreta_base::write_memory(memory &m, INT debug_depth)
 	k = s_kind();
 	i = (INT) k;
 	c = (char) k;
-	if (!ONE_BYTE_INT(i)) {
-		cout << "write_memory(): kind not 1 byte" << endl;
+	if (!ONE_char_INT(i)) {
+		cout << "write_memory(): kind not 1 char" << endl;
 		exit(1);
 		}
 	m.write_char(c);
@@ -1265,8 +1265,8 @@ INT discreta_base::calc_size_on_file()
 	k = s_kind();
 	i = (INT) k;
 	c = (char) k;
-	if (!ONE_BYTE_INT(i)) {
-		cout << "write_memory(): kind not 1 byte" << endl;
+	if (!ONE_char_INT(i)) {
+		cout << "write_memory(): kind not 1 char" << endl;
 		exit(1);
 		}
 	size = 1;
@@ -1388,7 +1388,7 @@ void discreta_base::save_ascii(ostream & f)
 	INT size, debug_depth;
 	INT i;
 	UINT a, a1, a2;
-	UBYTE *pc, c1, c2;
+	uchar *pc, c1, c2;
 
 	if (f_v) {
 		cout << "discreta_base::save_ascii(): calculating memory size" << endl;
@@ -1411,7 +1411,7 @@ void discreta_base::save_ascii(ostream & f)
 		cout << "discreta_base::save_ascii(): saving data" << endl;
 		}
 	size = M.used_length();
-	pc = (UBYTE *) M.self.char_pointer;
+	pc = (uchar *) M.self.char_pointer;
 	
 	f << "ASCII " << size << endl;
 	for (i = 0; i < size; i++) {
@@ -1433,13 +1433,13 @@ void discreta_base::load_ascii(istream & f)
 // reads ASCII style objects written with save-ascii
 {
 	memory M;
-	BYTE buf[BUFSIZE];
-	BYTE str[1024], *p;
+	char buf[BUFSIZE];
+	char str[1024], *p;
 	INT f_v = TRUE;
 	INT f_vv = FALSE;
 	INT size, i, debug_depth;
-	UBYTE *pc;
-	UBYTE c;
+	uchar *pc;
+	uchar c;
 	INT a;
 	UINT a1, a2;
 	char cc;
@@ -1456,7 +1456,7 @@ void discreta_base::load_ascii(istream & f)
 		cout << "discreta_base::load_ascii(): reading ASCII file of size " << size << endl;
 		}
 	M.alloc(size);
-	pc = (UBYTE *) M.self.char_pointer;
+	pc = (uchar *) M.self.char_pointer;
 	for (i = 0; i < size; i++) {
 		while (TRUE) {
 			if (f.eof()) {
@@ -1479,7 +1479,7 @@ void discreta_base::load_ascii(istream & f)
 		a2 = a2 - '0';
 		a = a2 << 4;
 		a += a1;
-		c = (UBYTE) a;
+		c = (uchar) a;
 		pc[i] = c; 
 		}
 #if 1

@@ -27,8 +27,8 @@ INT printing_mode_stack_size = 0;
 static enum printing_mode_enum printing_mode_stack[MAX_PRINTING_MODE_STACK];
 
 
-const BYTE *discreta_home = NULL;
-const BYTE *discreta_arch = NULL;
+const char *discreta_home = NULL;
+const char *discreta_arch = NULL;
 
 
 /**** global functions ***/
@@ -39,7 +39,7 @@ void discreta_init()
 {
 	INT verbose_level = 0;
 	INT f_v = (verbose_level >= 1);
-	BYTE str[1000];
+	char str[1000];
 	
 	discreta_home = getenv("DISCRETA_HOME");
 	if (discreta_home == NULL) {
@@ -1061,7 +1061,7 @@ INT sqrt_mod_involved(INT a, INT p)
 }
 
 #if 0
-void latex_head(ostream& ost, INT f_book, INT f_title, BYTE *title, BYTE *author, INT f_toc, INT f_landscape)
+void latex_head(ostream& ost, INT f_book, INT f_title, char *title, char *author, INT f_toc, INT f_landscape)
 {
 ost << "\\documentclass[12pt]{";
 if (f_book)
@@ -1456,7 +1456,7 @@ ost << endl;
 }
 #endif
 
-void html_head(ostream& ost, BYTE *title_long, BYTE *title_short)
+void html_head(ostream& ost, char *title_long, char *title_short)
 {
 	ost << "<html>\n";
 	ost << "<head>\n";
@@ -1959,7 +1959,7 @@ void itoa(char *p, INT len_of_p, INT i)
 
 static INT f_has_swap_initialized = FALSE;
 static INT f_has_swap = 0;
-	// indicates if byte swap is present 
+	// indicates if char swap is present 
 	// i.e., little endian / big endian 
 
 static void test_swap()
@@ -1974,13 +1974,13 @@ static void test_swap()
 #endif
 
 #if 0
-// block_swap_bytes:
-// turns round the bytes within 
+// block_swap_chars:
+// turns round the chars within 
 // "no" intervalls of "size" in the 
 // buffer pointed to by "ptr" 
 // this routine goes back to Roland Grund
 
-void block_swap_bytes(SCHAR *ptr, INT size, INT no)
+void block_swap_chars(SCHAR *ptr, INT size, INT no)
 {
 	SCHAR *ptr_end, *ptr_start;
 	SCHAR chr;
@@ -2011,7 +2011,7 @@ void block_swap_bytes(SCHAR *ptr, INT size, INT no)
 #include <unistd.h>
 #include <fcntl.h>
 
-INT file_size(BYTE *name)
+INT file_size(char *name)
 {
 #ifdef SYSTEMUNIX
 	INT handle, size;
@@ -2042,9 +2042,9 @@ INT file_size(BYTE *name)
 
 #include <ctype.h>
 
-INT s_scan_int(BYTE **s, INT *i)
+INT s_scan_int(char **s, INT *i)
 {
-	BYTE str1[512];
+	char str1[512];
 	
 	if (!s_scan_token(s, str1))
 		return FALSE;
@@ -2056,9 +2056,9 @@ INT s_scan_int(BYTE **s, INT *i)
 	return TRUE;
 }
 
-INT s_scan_token(BYTE **s, BYTE *str)
+INT s_scan_token(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len;
 	
 	while (TRUE) {
@@ -2105,9 +2105,9 @@ INT s_scan_token(BYTE **s, BYTE *str)
 	return TRUE;
 }
 
-INT s_scan_token_arbitrary(BYTE **s, BYTE *str)
+INT s_scan_token_arbitrary(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len;
 	
 	//cout << "s_scan_token_arbitrary:" << *s << endl;
@@ -2139,9 +2139,9 @@ INT s_scan_token_arbitrary(BYTE **s, BYTE *str)
 	return TRUE;
 }
 
-INT s_scan_str(BYTE **s, BYTE *str)
+INT s_scan_str(char **s, char *str)
 {
-	BYTE c;
+	char c;
 	INT len, f_break;
 	
 	while (TRUE) {
@@ -2427,7 +2427,7 @@ INT tuple2_unrank(INT i, INT j, INT n, INT f_injective)
 }
 
 #if 0
-void chop_off_extension_if_present(BYTE *p, BYTE *ext)
+void chop_off_extension_if_present(char *p, char *ext)
 {
 	INT l1 = strlen(p);
 	INT l2 = strlen(ext);
@@ -2437,7 +2437,7 @@ void chop_off_extension_if_present(BYTE *p, BYTE *ext)
 		}
 }
 
-void get_extension_if_present(BYTE *p, BYTE *ext)
+void get_extension_if_present(char *p, char *ext)
 {
 	INT i, l = strlen(p);
 	
@@ -2455,7 +2455,7 @@ void get_extension_if_present(BYTE *p, BYTE *ext)
 void output_texable_string(ostream & ost, char *in)
 {
 	INT i, l;
-	BYTE str[100], c;
+	char str[100], c;
 	
 	l = strlen(in);
 	for (i = 0; i < l; i++) {
@@ -2474,7 +2474,7 @@ void output_texable_string(ostream & ost, char *in)
 void texable_string(char *in, char *out)
 {
 	INT i, l;
-	BYTE str[100], c;
+	char str[100], c;
 	
 	l = strlen(in);
 	out[0] = 0;
@@ -2744,7 +2744,7 @@ printing_mode::~printing_mode()
 	printing_mode_stack_size--;
 }
 
-void call_system(BYTE *cmd)
+void call_system(char *cmd)
 {
 	printf("executing: %s\n", cmd);
 	system(cmd);
@@ -2752,10 +2752,10 @@ void call_system(BYTE *cmd)
 
 void fill_char(void *v, INT cnt, INT c)
 {
-	BYTE ch = (BYTE)c;
-	BYTE *s;
+	char ch = (char)c;
+	char *s;
 	
-	s = (BYTE *)v;
+	s = (char *)v;
 	cnt++;
 	while (--cnt)
 		*s++ = ch;
@@ -3125,7 +3125,7 @@ INT Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols,
 	return rank;
 }
 
-void BYTE_move(BYTE *p, BYTE *q, INT len)
+void char_move(char *p, char *q, INT len)
 {
 	INT i;
 	
@@ -3134,10 +3134,10 @@ void BYTE_move(BYTE *p, BYTE *q, INT len)
 }
 
 #if 0
-void BYTE_swap(BYTE *p, BYTE *q, INT len)
+void char_swap(char *p, char *q, INT len)
 {
 	INT i;
-	BYTE c;
+	char c;
 	
 	for (i = 0; i < len; i++) {
 		c = *q;
@@ -3146,7 +3146,7 @@ void BYTE_swap(BYTE *p, BYTE *q, INT len)
 		}
 }
 
-void UBYTE_move(UBYTE *p, UBYTE *q, INT len)
+void uchar_move(uchar *p, uchar *q, INT len)
 {
 	INT i;
 	
@@ -3376,13 +3376,13 @@ INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
 	return f_found;
 }
 
-void UBYTE_print_bitwise(ostream &ost, UBYTE u)
+void uchar_print_bitwise(ostream &ost, uchar u)
 {
-	UBYTE mask;
+	uchar mask;
 	INT i;
 	
 	for (i = 0; i < 8; i++) {
-		mask = ((UBYTE) 1) << i;
+		mask = ((uchar) 1) << i;
 		if (u & mask)
 			ost << "1";
 		else

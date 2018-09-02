@@ -53,7 +53,7 @@ void orbit_rep::freeself()
 }
 
 void orbit_rep::init_from_file(
-	action *A, BYTE *prefix,
+	action *A, char *prefix,
 	INT level, INT orbit_at_level, INT level_of_candidates_file, 
 	void (*early_test_func_callback)(INT *S, INT len, 
 		INT *candidates, INT nb_candidates, 

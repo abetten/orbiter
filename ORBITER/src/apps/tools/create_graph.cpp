@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	t0 = os_ticks();
 	INT verbose_level = 0;
 	INT f_save = FALSE;	
-	const BYTE *save_fname = NULL;
+	const char *save_fname = NULL;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

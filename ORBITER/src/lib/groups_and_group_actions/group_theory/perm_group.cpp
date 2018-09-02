@@ -48,11 +48,11 @@ void perm_group::free()
 		FREE_INT(Elt4);
 	//cout << "perm_group::free before elt1" << endl;
 	if (elt1)
-		FREE_UBYTE(elt1);
+		FREE_uchar(elt1);
 	if (elt2)
-		FREE_UBYTE(elt2);
+		FREE_uchar(elt2);
 	if (elt3)
-		FREE_UBYTE(elt3);
+		FREE_uchar(elt3);
 	//cout << "perm_group::free before Elts" << endl;
 	if (Elts) {
 		FREE_OBJECT(Elts);
@@ -73,9 +73,9 @@ void perm_group::allocate()
 	Elt2 = NEW_INT(elt_size_INT);
 	Elt3 = NEW_INT(elt_size_INT);
 	Elt4 = NEW_INT(elt_size_INT);
-	elt1 = NEW_UBYTE(char_per_elt);
-	elt2 = NEW_UBYTE(char_per_elt);
-	elt3 = NEW_UBYTE(char_per_elt);
+	elt1 = NEW_uchar(char_per_elt);
+	elt2 = NEW_uchar(char_per_elt);
+	elt3 = NEW_uchar(char_per_elt);
 	Eltrk1 = NEW_INT(elt_size_INT);
 	Eltrk2 = NEW_INT(elt_size_INT);
 	Eltrk3 = NEW_INT(elt_size_INT);
@@ -337,28 +337,28 @@ void perm_group::invert(INT *A, INT *Ainv)
 	perm_inverse(A, Ainv, degree);
 }
 
-void perm_group::unpack(UBYTE *elt, INT *Elt)
+void perm_group::unpack(uchar *elt, INT *Elt)
 {
 	INT i, j;
 	
 	for (i = 0; i < degree; i++) {
-		UBYTE *p;
+		uchar *p;
 
-		p = (UBYTE *)(Elt + i);
+		p = (uchar *)(Elt + i);
 		for (j = 0; j < (INT) sizeof(INT); j++) {
 			*p++ = *elt++;
 			}
 		}
 }
 
-void perm_group::pack(INT *Elt, UBYTE *elt)
+void perm_group::pack(INT *Elt, uchar *elt)
 {
 	INT i, j;
 	
 	for (i = 0; i < degree; i++) {
-		UBYTE *p;
+		uchar *p;
 
-		p = (UBYTE *)(Elt + i);
+		p = (uchar *)(Elt + i);
 		for (j = 0; j < (INT) sizeof(INT); j++) {
 			*elt++ = *p++;
 			}

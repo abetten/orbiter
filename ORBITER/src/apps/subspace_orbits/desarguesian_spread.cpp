@@ -28,9 +28,9 @@ int main(int argc, const char **argv)
 	INT f_q = FALSE;
 	INT q;
 	INT f_poly_q = FALSE;
-	const BYTE *poly_q = NULL;
+	const char *poly_q = NULL;
 	INT f_poly_Q = FALSE;
-	const BYTE *poly_Q = NULL;
+	const char *poly_Q = NULL;
 
 	t0 = os_ticks();
 	

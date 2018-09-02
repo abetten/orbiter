@@ -87,7 +87,7 @@ void perm_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_leve
 	INT f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
 	INT *Elt1 = (INT *) Elt;
-	UBYTE *elt1 = (UBYTE *)elt;
+	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
 		cout << "perm_group_element_unpack()" << endl;
@@ -100,7 +100,7 @@ void perm_group_element_pack(action &A, void *Elt, void *elt, INT verbose_level)
 	INT f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
 	INT *Elt1 = (INT *) Elt;
-	UBYTE *elt1 = (UBYTE *)elt;
+	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
 		cout << "perm_group_element_pack()" << endl;
@@ -113,7 +113,7 @@ void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_leve
 	INT f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
 	INT *Elt = (INT *) elt;
-	UBYTE *p_elt;
+	uchar *p_elt;
 	
 	if (f_v) {
 		cout << "perm_group_element_retrieve() hdl = " << hdl << endl;
@@ -365,7 +365,7 @@ void perm_group_element_print_for_make_element_no_commas(action &A, void *elt, o
 void perm_group_elt_print(void *elt, void *data, ostream &ost)
 {
 	perm_group &G = * (perm_group *) data;
-	UBYTE *p_elt = (UBYTE *) elt;
+	uchar *p_elt = (uchar *) elt;
 	INT Elt[1000];
 	
 	G.unpack(p_elt, Elt);
