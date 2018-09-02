@@ -24,8 +24,8 @@ void analyze_group(action *A, sims *S,
 	INT nb_primes, nb_gens2;
 	
 	
-	Elt1 = new INT[A->elt_size_in_INT];
-	Elt2 = new INT[A->elt_size_in_INT];
+	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_INT(A->elt_size_in_INT);
 	
 	
 	S->group_order(go);
@@ -49,7 +49,7 @@ void analyze_group(action *A, sims *S,
 	INT *center;
 	INT size_center;
 	
-	center = new INT[goi];
+	center = NEW_INT(goi);
 	
 	S->center(*SG, center, size_center, verbose_level);
 	
@@ -72,7 +72,7 @@ void analyze_group(action *A, sims *S,
 	
 	factor_group *FactorGroup;
 
-	FactorGroup = new factor_group;
+	FactorGroup = NEW_OBJECT(factor_group);
 		
 	create_factor_group(A, S, goi, size_center, center,
 			FactorGroup, verbose_level);
@@ -113,11 +113,11 @@ void analyze_group(action *A, sims *S,
 	vector_ge SGH1, SGH2, SGH3;
 	INT *tl1, *tl2, *tl3, *tlF1, *tlF2;
 	
-	tl1 = new INT[A->base_len];
-	tl2 = new INT[A->base_len];
-	tl3 = new INT[A->base_len];
-	tlF1 = new INT[A->base_len];
-	tlF2 = new INT[A->base_len];
+	tl1 = NEW_INT(A->base_len);
+	tl2 = NEW_INT(A->base_len);
+	tl3 = NEW_INT(A->base_len);
+	tlF1 = NEW_INT(A->base_len);
+	tlF2 = NEW_INT(A->base_len);
 	
 	
 	// now we compute H1, the derived group
@@ -145,7 +145,7 @@ void analyze_group(action *A, sims *S,
 	INT *elts_H1;
 	
 	size_H1 = goH1.as_INT();
-	elts_H1 = new INT[size_H1];
+	elts_H1 = NEW_INT(size_H1);
 
 
 	FactorGroup->FactorGroup->Sims->element_ranks_subgroup(
@@ -156,7 +156,7 @@ void analyze_group(action *A, sims *S,
 
 	factor_group *ModH1;
 
-	ModH1 = new factor_group;
+	ModH1 = NEW_OBJECT(factor_group);
 
 	create_factor_group(FactorGroup->FactorGroupConjugated, 
 		FactorGroup->FactorGroup->Sims, 
@@ -219,7 +219,7 @@ void analyze_group(action *A, sims *S,
 	INT *elts_H2;
 	
 	size_H2 = goH2.as_INT();
-	elts_H2 = new INT[size_H1];
+	elts_H2 = NEW_INT(size_H1);
 
 
 	H1.element_ranks_subgroup(&H2, elts_H2, verbose_level);
@@ -229,7 +229,7 @@ void analyze_group(action *A, sims *S,
 
 	factor_group *ModH2;
 
-	ModH2 = new factor_group;
+	ModH2 = NEW_OBJECT(factor_group);
 
 	create_factor_group(FactorGroup->FactorGroupConjugated, 
 		&H1, 
@@ -300,14 +300,14 @@ void analyze_group(action *A, sims *S,
 		A->print(cout, gens2->ith(i));
 		}
 
-	delete [] Elt1;
-	delete [] Elt2;
-	delete [] perm;
-	delete [] tl1;
-	delete [] tl2;
-	delete [] tl3;
-	delete [] tlF1;
-	delete [] tlF2;
+	FREE_INT(Elt1);
+	FREE_INT(Elt2);
+	FREE_INT(perm);
+	FREE_INT(tl1);
+	FREE_INT(tl2);
+	FREE_INT(tl3);
+	FREE_INT(tlF1);
+	FREE_INT(tlF2);
 }
 
 void compute_regular_representation(action *A, sims *S,
@@ -320,7 +320,7 @@ void compute_regular_representation(action *A, sims *S,
 	goi = go.as_INT();
 	cout << "computing the regular representation of degree "
 			<< go << ":" << endl;
-	perm = new INT[SG->len * goi];
+	perm = NEW_INT(SG->len * goi);
 	
 	for (i = 0; i < SG->len; i++) {
 		S->regular_representation(SG->ith(i),
@@ -345,13 +345,13 @@ void presentation(action *A, sims *S, INT goi,
 	INT *word_list;
 	INT *inverse_word_list;
 	
-	Elt1 = new INT[A->elt_size_in_INT];
-	Elt2 = new INT[A->elt_size_in_INT];
-	Elt3 = new INT[A->elt_size_in_INT];
-	Elt4 = new INT[A->elt_size_in_INT];
+	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt4 = NEW_INT(A->elt_size_in_INT);
 	
-	word_list = new INT[goi];
-	inverse_word_list = new INT[goi];
+	word_list = NEW_INT(goi);
+	inverse_word_list = NEW_INT(goi);
 	
 	l = gens->len;
 	
@@ -462,13 +462,13 @@ void presentation(action *A, sims *S, INT goi,
 		cout << endl;
 		}
 
-	delete [] Elt1;
-	delete [] Elt2;
-	delete [] Elt3;
-	delete [] Elt4;
+	FREE_INT(Elt1);
+	FREE_INT(Elt2);
+	FREE_INT(Elt3);
+	FREE_INT(Elt4);
 	
-	delete [] word_list;
-	delete [] inverse_word_list;
+	FREE_INT(word_list);
+	FREE_INT(inverse_word_list);
 }
 
 

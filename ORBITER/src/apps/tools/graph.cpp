@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 		}
 	colored_graph *CG;
 
-	CG = new colored_graph;
+	CG = NEW_OBJECT(colored_graph);
 
 	CG->load(fname, verbose_level);
 

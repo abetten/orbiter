@@ -91,7 +91,7 @@ int main(int argc, char **argv)
 	
 	spreadsheet *S;
 
-	S = new spreadsheet;
+	S = NEW_OBJECT(spreadsheet);
 
 	S->init_empty_table(M + 1 /*nb_rows*/, 5 /* nb_cols */);
 

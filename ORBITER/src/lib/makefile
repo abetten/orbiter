@@ -7,11 +7,11 @@ LFLAGS = -lm
 all: foundations groups_and_group_actions poset_classification discreta toplevel liborbiter.a
 
 
-foundations : foundations2 ; 
-groups_and_group_actions : groups_and_group_actions2 ; 
-poset_classification : poset_classification2 ; 
-discreta : discreta2 ; 
-toplevel : toplevel2 ; 
+foundations : foundations2 
+groups_and_group_actions : groups_and_group_actions2 
+poset_classification : poset_classification2 
+discreta : discreta2 
+toplevel : toplevel2 
 
 foundations2 : ; cd foundations; $(MAKE)
 groups_and_group_actions2 : ; cd groups_and_group_actions; $(MAKE)

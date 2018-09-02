@@ -235,7 +235,7 @@ int main(int argc, char **argv)
 	else if (f_colored_graph) {
 		colored_graph *CG;
 
-		CG = new colored_graph;
+		CG = NEW_OBJECT(colored_graph);
 		cout << "loading colored_graph from file " << colored_graph_fname << endl;
 		CG->load(colored_graph_fname, verbose_level);
 		cout << "After loading the graph, CG->nb_points=" << CG->nb_points << endl;

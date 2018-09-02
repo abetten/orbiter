@@ -12,10 +12,10 @@ all: data_structures \
 
 
 
-data_structures : data_structures2 ; 
-group_actions : group_actions2 ; 
-group_theory : group_theory2 ; 
-induced_actions : induced_actions2 ; 
+data_structures : data_structures2 
+group_actions : group_actions2 
+group_theory : group_theory2 
+induced_actions : induced_actions2 
 
 data_structures2 :  ; cd data_structures; $(MAKE)
 group_actions2 :  ; cd group_actions; $(MAKE)

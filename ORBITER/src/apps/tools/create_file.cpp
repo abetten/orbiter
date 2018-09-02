@@ -193,7 +193,7 @@ int main(int argc, char **argv)
 		spreadsheet *S;
 		INT row;
 
-		S = new spreadsheet;
+		S = NEW_OBJECT(spreadsheet);
 		S->read_spreadsheet(read_cases_fname, 0 /*verbose_level*/);
 	
 		cout << "Read spreadsheet with " << S->nb_rows << " rows" << endl;

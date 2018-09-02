@@ -153,7 +153,7 @@ void young::init(INT n, INT verbose_level)
 		cout << "young::init" << endl;
 		}
 	young::n = n;
-	A = new action;
+	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
@@ -195,7 +195,7 @@ void young::init(INT n, INT verbose_level)
 
 
 
-	D = new a_domain;
+	D = NEW_OBJECT(a_domain);
 	D->init_integer_fractions(verbose_level);
 
 	if (f_v) {
@@ -543,8 +543,8 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 		}
 
 
-	Row_partition = new set_of_sets;
-	Col_partition = new set_of_sets;
+	Row_partition = NEW_OBJECT(set_of_sets);
+	Col_partition = NEW_OBJECT(set_of_sets);
 
 	Row_partition->init_basic(n, l1, row_parts, 0 /* verbose_level*/);
 	for (i = 0; i < l1; i++) {
@@ -701,8 +701,8 @@ void young::compute_generators(INT &go1, INT &go2, INT verbose_level)
 		cout << "nb_gens2 = " << nb_gens2 << endl;
 		}
 
-	gens1 = new vector_ge;
-	gens2 = new vector_ge;
+	gens1 = NEW_OBJECT(vector_ge);
+	gens2 = NEW_OBJECT(vector_ge);
 
 	INT u, s, t;
 
