@@ -35,20 +35,20 @@ void k_arc_generator::freeself()
 		FREE_OBJECT(Gen);
 		}
 	if (line_type) {
-		FREE_INT(line_type);
+		FREE_int(line_type);
 		}
 	if (k_arc_idx) {
-		FREE_INT(k_arc_idx);
+		FREE_int(k_arc_idx);
 		}
 	null();
 }
 
 void k_arc_generator::init(finite_field *F, projective_space *P2, 
-	INT d, INT sz, 
+	int d, int sz, 
 	int argc, const char **argv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "k_arc_generator::init d=" << d << " sz=" << sz << endl;
@@ -59,9 +59,9 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 	k_arc_generator::F = F;
 	k_arc_generator::P2 = P2;
 	
-	line_type = NEW_INT(P2->N_lines);
+	line_type = NEW_int(P2->N_lines);
 
-	sprintf(base_fname, "arcs_q%ld_d%ld", F->q, d);
+	sprintf(base_fname, "arcs_q%d_d%d", F->q, d);
 
 	
 	Gen = NEW_OBJECT(arc_generator);
@@ -116,14 +116,14 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 
 
 	
-	INT *Arc;
-	INT h, j;
+	int *Arc;
+	int h, j;
 	
 
 	nb_k_arcs = 0;
 
-	Arc = NEW_INT(sz);
-	k_arc_idx = NEW_INT(nb_orbits);	
+	Arc = NEW_int(sz);
+	k_arc_idx = NEW_int(nb_orbits);	
 	
 	if (f_v) {
 		cout << "k_arc_generator::init testing the arcs" << endl;
@@ -152,7 +152,7 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 
 
 		}
-	FREE_INT(Arc);
+	FREE_int(Arc);
 
 	if (f_v) {
 		cout << "We found " << nb_k_arcs << " isomorphism types of ("
@@ -169,11 +169,11 @@ void k_arc_generator::init(finite_field *F, projective_space *P2,
 
 }
 
-void k_arc_generator::compute_line_type(INT *set, INT len,
-		INT verbose_level)
+void k_arc_generator::compute_line_type(int *set, int len,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a, b;
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b;
 
 	if (f_v) {
 		cout << "k_arc_generator::compute_line_type" << endl;
@@ -184,7 +184,7 @@ void k_arc_generator::compute_line_type(INT *set, INT len,
 				"P->Lines_on_point == 0" << endl;
 		exit(1);
 		}
-	INT_vec_zero(line_type, P2->N_lines);
+	int_vec_zero(line_type, P2->N_lines);
 	for (i = 0; i < len; i++) {
 		a = set[i];
 		for (j = 0; j < P2->r; j++) {

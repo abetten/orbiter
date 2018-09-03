@@ -10,9 +10,9 @@
 
 #include "orbiter.h"
 
-void isomorph::setup_and_open_solution_database(INT verbose_level)
+void isomorph::setup_and_open_solution_database(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph::setup_and_open_solution_database" << endl;
@@ -29,9 +29,9 @@ void isomorph::setup_and_open_solution_database(INT verbose_level)
 	DB_sol->open(0 /*verbose_level - 1*/);
 }
 
-void isomorph::setup_and_create_solution_database(INT verbose_level)
+void isomorph::setup_and_create_solution_database(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph::setup_and_create_solution_database" << endl;
@@ -48,18 +48,18 @@ void isomorph::setup_and_create_solution_database(INT verbose_level)
 	DB_sol->create(0 /*verbose_level - 1*/);
 }
 
-void isomorph::close_solution_database(INT verbose_level)
+void isomorph::close_solution_database(int verbose_level)
 {
 	DB_sol->close(0/*verbose_level - 1*/);
 }
 
-void isomorph::setup_and_open_level_database(INT verbose_level)
+void isomorph::setup_and_open_level_database(int verbose_level)
 // Called from do_iso_test, identify and test_hash 
 // (Which are all in isomorph_testing.C)
 // Calls init_DB_level for D1 and D2 and D1->open and D2->open.
 // Calls fopen for fp_ge1 and fp_ge2.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph::setup_and_open_level_database" << endl;
@@ -90,10 +90,10 @@ void isomorph::setup_and_open_level_database(INT verbose_level)
 	fp_ge2 = fopen(fname_ge2, "r");
 }
 
-void isomorph::close_level_database(INT verbose_level)
+void isomorph::close_level_database(int verbose_level)
 // Closes D1, D2, fp_ge1, fp_ge2.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph::close_level_database" << endl;
@@ -110,13 +110,13 @@ void isomorph::close_level_database(INT verbose_level)
 	fp_ge2 = NULL;
 }
 
-void isomorph::prepare_database_access(INT cur_level, INT verbose_level)
+void isomorph::prepare_database_access(int cur_level, int verbose_level)
 // sets DB_level to be D1 or D2, depending on cur_level
 // Called from make_set_smaller_database
 // and load_strong_generators
 // and trace_next_point_database
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph::prepare_database_access "
@@ -140,16 +140,16 @@ void isomorph::prepare_database_access(INT cur_level, INT verbose_level)
 		}
 }
 
-void isomorph::init_DB_sol(INT verbose_level)
+void isomorph::init_DB_sol(int verbose_level)
 // We assume that the starter is of size 'level' and that 
 // fields 4,..., 4+level-1 are the starter values
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	database &D = *DB_sol;
 	btree B1, B2, B3, B4;
-	INT f_compress = TRUE;
-	INT f_duplicatekeys = TRUE;
-	INT i;
+	int f_compress = TRUE;
+	int f_duplicatekeys = TRUE;
+	int i;
 
 	if (f_v) {
 		cout << "isomorph::init_DB_sol" << endl;
@@ -160,9 +160,9 @@ void isomorph::init_DB_sol(INT verbose_level)
 
 	//cout << "isomorph::init_DB_sol before B1.init" << endl;
 	B1.init(fname_db2, f_duplicatekeys, 0 /* btree_idx */);
-	B1.add_key_INT4(0, 0); 
+	B1.add_key_int4(0, 0); 
 		// the index of the starter
-	B1.add_key_INT4(1, 0);
+	B1.add_key_int4(1, 0);
 		// the number of this solution within the solutions 
 		// of the same starter
 	D.btree_access().append(B1);
@@ -172,28 +172,28 @@ void isomorph::init_DB_sol(INT verbose_level)
 	B2.init(fname_db3, f_duplicatekeys, 1 /* btree_idx */);
 		// entries 4, 5, ... 4 + level - 1 are the starter values 
 	for (i = 0; i < level; i++) {
-		B2.add_key_INT4(4 + i, 0);
+		B2.add_key_int4(4 + i, 0);
 		}
-	//B2.add_key_INT4(3, 0);
-	//B2.add_key_INT4(4, 0);
-	//B2.add_key_INT4(5, 0);
-	//B2.add_key_INT4(6, 0);
-	//B2.add_key_INT4(7, 0);
-	//B2.add_key_INT4(8, 0);
+	//B2.add_key_int4(3, 0);
+	//B2.add_key_int4(4, 0);
+	//B2.add_key_int4(5, 0);
+	//B2.add_key_int4(6, 0);
+	//B2.add_key_int4(7, 0);
+	//B2.add_key_int4(8, 0);
 	D.btree_access().append(B2);
 
 
 	//cout << "isomorph::init_DB_sol before B3.init" << endl;
 	B3.init(fname_db4, f_duplicatekeys, 2 /* btree_idx */);
-	B3.add_key_INT4(2, 0);
+	B3.add_key_int4(2, 0);
 		// the id
 	D.btree_access().append(B3);
 
 
 	B4.init(fname_db5, f_duplicatekeys, 3 /* btree_idx */);
-	B4.add_key_INT4(0, 0); 
+	B4.add_key_int4(0, 0); 
 		// the index of the starter
-	B4.add_key_INT4(3, 0); 
+	B4.add_key_int4(3, 0); 
 		// the hash value
 	D.btree_access().append(B4);
 
@@ -201,15 +201,15 @@ void isomorph::init_DB_sol(INT verbose_level)
 	//cout << "isomorph::init_DB_sol done" << endl;
 }
 
-void isomorph::add_solution_to_database(INT *data, 
-	INT nb, INT id, INT no, INT nb_solutions, INT h, UINT4 &datref, 
-	INT print_mod, INT verbose_level)
+void isomorph::add_solution_to_database(int *data, 
+	int nb, int id, int no, int nb_solutions, int h, uint4 &datref, 
+	int print_mod, int verbose_level)
 {
-	INT f_vvv = (verbose_level >= 3);
+	int f_vvv = (verbose_level >= 3);
 	Vector v;
-	INT j;
+	int j;
 	
-	//h = INT_vec_hash_after_sorting(data + 1, size);
+	//h = int_vec_hash_after_sorting(data + 1, size);
 	v.m_l_n(4 + size);
 	v.m_ii(0, data[0]); // starter number
 	v.m_ii(1, nb); // solution number within this starter
@@ -230,11 +230,11 @@ void isomorph::add_solution_to_database(INT *data,
 		}
 }
 
-void isomorph::load_solution(INT id, INT *data)
+void isomorph::load_solution(int id, int *data)
 {
-	INT i, j, datref;
+	int i, j, datref;
 	Vector v;
-	//INT verbose_level = 0;
+	//int verbose_level = 0;
 	
 	if (f_use_table_of_solutions) {
 		for (j = 0; j < size; j++) {
@@ -242,9 +242,9 @@ void isomorph::load_solution(INT id, INT *data)
 			}
 		return;
 		}
-	//DB_sol->get_object_by_unique_INT4(2, id, v, verbose_level);
+	//DB_sol->get_object_by_unique_int4(2, id, v, verbose_level);
 	datref = id_to_datref[id];
-	DB_sol->get_object((UINT4) datref, v, 0/*verbose_level*/);
+	DB_sol->get_object((uint4) datref, v, 0/*verbose_level*/);
 	
 	//cout << v << endl;
 	for (i = 0; i < size; i++) {
@@ -253,9 +253,9 @@ void isomorph::load_solution(INT id, INT *data)
 }
 
 void isomorph::load_solution_by_btree(
-		INT btree_idx, INT idx, INT &id, INT *data)
+		int btree_idx, int idx, int &id, int *data)
 {
-	//INT i;
+	//int i;
 	Vector v;
 
 	cout << "isomorph::load_solution_by_btree" << endl;
@@ -271,8 +271,8 @@ void isomorph::load_solution_by_btree(
 
 
 
-INT isomorph::find_extension_easy(
-		INT *set, INT case_nb, INT &idx, INT verbose_level)
+int isomorph::find_extension_easy(
+		int *set, int case_nb, int &idx, int verbose_level)
 // case_nb is the starter that is associated with the given set.
 // We wish to find out if the set is a solution that has been stored 
 // with that starter. 
@@ -286,15 +286,15 @@ INT isomorph::find_extension_easy(
 // calls load solution for each of the solutions 
 // stored with the case and compares the vectors.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph::find_extension_easy "
 				"case_nb=" << case_nb << endl;
 		}
 #if 0
-	INT ret1, idx1;
-	INT ret2, idx2;
+	int ret1, idx1;
+	int ret2, idx2;
 	ret1 = find_extension_easy_old(D, set, case_nb, idx1, verbose_level);
 	if (f_v) {
 		cout << "isomorph::find_extension_easy idx1=" << idx1 << endl;
@@ -315,19 +315,19 @@ INT isomorph::find_extension_easy(
 	idx = idx1;
 	return ret1;
 #else
-	INT ret;
+	int ret;
 	ret = find_extension_easy_new(set, case_nb, idx, verbose_level);
 	return ret;
 #endif
 }
 
-INT isomorph::find_extension_search_interval(INT *set, 
-	INT first, INT len, INT &idx, 
-	INT f_btree_idx, INT btree_idx, 
-	INT f_through_hash, INT verbose_level)
+int isomorph::find_extension_search_interval(int *set, 
+	int first, int len, int &idx, 
+	int f_btree_idx, int btree_idx, 
+	int f_through_hash, int verbose_level)
 {
-	INT *data = find_extension_set1;
-	INT i, id = 0;
+	int *data = find_extension_set1;
+	int i, id = 0;
 	
 	for (i = 0; i < len; i++) {
 		if (f_btree_idx) {
@@ -342,8 +342,8 @@ INT isomorph::find_extension_search_interval(INT *set,
 				}
 			load_solution(id, data);
 			}
-		INT_vec_heapsort(data + level, size - level);
-		if (INT_vec_compare(set + level, data + level, size - level) == 0) {
+		int_vec_heapsort(data + level, size - level);
+		if (int_vec_compare(set + level, data + level, size - level) == 0) {
 			break;
 			}
 		}
@@ -357,17 +357,17 @@ INT isomorph::find_extension_search_interval(INT *set,
 	return TRUE;
 }
 
-INT isomorph::find_extension_easy_old(INT *set,
-		INT case_nb, INT &idx, INT verbose_level)
+int isomorph::find_extension_easy_old(int *set,
+		int case_nb, int &idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT first, len, ret;
+	int f_v = (verbose_level >= 1);
+	int first, len, ret;
 	
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_old" << endl;
 		cout << "case_nb=" << case_nb << endl;
 		}
-	INT_vec_heapsort(set + level, size - level);
+	int_vec_heapsort(set + level, size - level);
 	first = solution_first[case_nb];
 	len = solution_len[case_nb];
 	ret = find_extension_search_interval(set, 
@@ -385,32 +385,32 @@ INT isomorph::find_extension_easy_old(INT *set,
 	return ret;
 }
 
-INT isomorph::find_extension_easy_new(INT *set,
-		INT case_nb, INT &idx, INT verbose_level)
+int isomorph::find_extension_easy_new(int *set,
+		int case_nb, int &idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = FALSE; // (verbose_level >= 2);
-	INT ret;
-	INT f_found, first, idx2, len;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; // (verbose_level >= 2);
+	int ret;
+	int f_found, first, idx2, len;
 	
 	if (f_v) {
 		cout << "isomorph::find_extension_easy_new" << endl;
 		}
-	INT_vec_heapsort(set + level, size - level);
+	int_vec_heapsort(set + level, size - level);
 	
-	INT h;
+	int h;
 
-	h = INT_vec_hash_after_sorting(set, size);
+	h = int_vec_hash_after_sorting(set, size);
 
 
-	f_found = INT_vec_search_first_occurence(hash_vs_id_hash,
+	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
 			N, h, first);
 
 	if (!f_found) {
 		ret = FALSE;
 		goto finish;
 		}
-	f_found = INT_vec_search_first_occurence(hash_vs_id_hash,
+	f_found = int_vec_search_first_occurence(hash_vs_id_hash,
 			N, h + 1, idx2);
 	len = idx2 - first;
 #if 0
@@ -419,17 +419,17 @@ INT isomorph::find_extension_easy_new(INT *set,
 		cout << "case_nb=" << case_nb << " h=" << h << endl;
 		}
 	btree &B4 = DB_sol->btree_access_i(3);
-	//INT l0 = case_nb;
-	//INT u0 = case_nb;
-	//INT l1 = h;
-	//INT u1 = h + 1;
-	INT first, last, len;
-	INT f_found1, f_found2;
-	f_found1 = B4.search_INT4_INT4(case_nb, h, first,
+	//int l0 = case_nb;
+	//int u0 = case_nb;
+	//int l1 = h;
+	//int u1 = h + 1;
+	int first, last, len;
+	int f_found1, f_found2;
+	f_found1 = B4.search_int4_int4(case_nb, h, first,
 			0 /*verbose_level */);
 
 #if 0
-	B4.search_interval_INT4_INT4(l0, u0, 
+	B4.search_interval_int4_int4(l0, u0, 
 		l1, u1, 
 		first, len, 
 		3 /*verbose_level*/);
@@ -437,7 +437,7 @@ INT isomorph::find_extension_easy_new(INT *set,
 	if (f_vv) {
 		cout << "f_found1=" << f_found1 << " first=" << first << endl;
 		}
-	f_found2 = B4.search_INT4_INT4(case_nb, h + 1, last,
+	f_found2 = B4.search_int4_int4(case_nb, h + 1, last,
 			0 /*verbose_level */);
 	if (f_vv) {
 		cout << "f_found2=" << f_found2 << " last=" << last << endl;
@@ -470,13 +470,13 @@ finish:
 	
 }
 
-INT isomorph::open_database_and_identify_object(INT *set,
-	INT *transporter,
-	INT f_implicit_fusion, INT verbose_level)
+int isomorph::open_database_and_identify_object(int *set,
+	int *transporter,
+	int f_implicit_fusion, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT r;
-	INT f_failure_to_find_point;
+	int f_v = (verbose_level >= 1);
+	int r;
+	int f_failure_to_find_point;
 
 	if (f_v) {
 		cout << "isomorph::open_database_and_identify_object" << endl;
@@ -512,45 +512,45 @@ INT isomorph::open_database_and_identify_object(INT *set,
 
 
 
-void isomorph::init_DB_level(database &D, INT level, INT verbose_level)
+void isomorph::init_DB_level(database &D, int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	btree B1, B2;
-	INT f_compress = TRUE;
-	INT f_duplicatekeys = TRUE;
-	INT i;
+	int f_compress = TRUE;
+	int f_duplicatekeys = TRUE;
+	int i;
 
 	if (f_v) {
 		cout << "isomorph::init_DB_level level=" << level << endl;
 		}
-	sprintf(fname_db_level, "%sstarter_lvl_%ld.db", prefix, level);
-	sprintf(fname_db_level_idx1, "%sstarter_lvl_%ld_a.idx", prefix, level);
-	sprintf(fname_db_level_idx2, "%sstarter_lvl_%ld_b.idx", prefix, level);
-	sprintf(fname_db_level_ge, "%sstarter_lvl_%ld_ge.bin", prefix, level);
+	sprintf(fname_db_level, "%sstarter_lvl_%d.db", prefix, level);
+	sprintf(fname_db_level_idx1, "%sstarter_lvl_%d_a.idx", prefix, level);
+	sprintf(fname_db_level_idx2, "%sstarter_lvl_%d_b.idx", prefix, level);
+	sprintf(fname_db_level_ge, "%sstarter_lvl_%d_ge.bin", prefix, level);
 
 	D.init(fname_db_level, VECTOR, f_compress);
 	
 	B1.init(fname_db_level_idx1, f_duplicatekeys, 0 /* btree_idx */);
-	B1.add_key_INT4(0, 0); 
+	B1.add_key_int4(0, 0); 
 	D.btree_access().append(B1);
 
 	B2.init(fname_db_level_idx2, f_duplicatekeys, 1 /* btree_idx */);
 		// 2 up to 2+level-1 are the values of the starter (of size level)
 	for (i = 0; i < level; i++) {
-		B2.add_key_INT4(2 + i, 0);
+		B2.add_key_int4(2 + i, 0);
 		}
 	D.btree_access().append(B2);
 }
 
-void isomorph::create_level_database(INT level, INT verbose_level)
+void isomorph::create_level_database(int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE;//(verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT f, nb_nodes, I, J, i, j, idx, print_mod = 1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;//(verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int f, nb_nodes, I, J, i, j, idx, print_mod = 1;
 	poset_orbit_node *O;
-	INT set1[1000];
-	INT set2[1000];
+	int set1[1000];
+	int set2[1000];
 	//char *elt;
 	
 	if (f_v) {
@@ -569,7 +569,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	
 	database D;
 	FILE *fp;
-	INT cnt = 0;
+	int cnt = 0;
 	
 	//elt = NEW_char(gen->A->coded_elt_size_in_char);
 	
@@ -589,15 +589,15 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 			cout << "isomorph::create_level_database level "
 					<< level << " i=" << i << " / " << nb_nodes
 					<< " set=";
-			INT_vec_print(cout, set1, level);
+			int_vec_print(cout, set1, level);
 			cout << endl;
 			}
 		
-		INT len, nb_fusion;
+		int len, nb_fusion;
 		Vector v;
 
 
-			// # INTs   description
+			// # ints   description
 			// 1         global ID
 			// 1         ancestor global ID
 			// level     the set itself
@@ -667,13 +667,13 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 				
 
 				gen->A2->map_a_set(set1, set2, level + 1, gen->Elt1, 0);
-				INT_vec_heapsort(set2, level + 1);
+				int_vec_heapsort(set2, level + 1);
 
 				if (f_vv /*f_vv && (i % print_mod) == 0*/) {
 					cout << "mapping ";
-					INT_vec_print(cout, set1, level + 1);
+					int_vec_print(cout, set1, level + 1);
 					cout << " to ";
-					INT_vec_print(cout, set2, level + 1);
+					int_vec_print(cout, set2, level + 1);
 					cout << endl;
 					}
 	
@@ -689,7 +689,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 				}
 			}
 #if 0
-		INT len_mem, h, idx1;
+		int len_mem, h, idx1;
 		char *mem;
 		if (idx != len - 1) {
 			cout << "idx != len - 1, idx=" << idx << " len=" << len
@@ -754,7 +754,7 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 		D.add_object(v, 0 /*verbose_level - 2*/);
 		if (f_v && ((i % print_mod) == 0)) {
 			cout << "object " << i << " / " << nb_nodes << " added : ";
-			INT sz;
+			int sz;
 			sz = v.csf();
 			cout << "size on file = " << sz << ", group element "
 					"counter = " << cnt << endl;
@@ -776,15 +776,15 @@ void isomorph::create_level_database(INT level, INT verbose_level)
 	
 }
 
-void isomorph::load_strong_generators(INT cur_level,
-		INT cur_node_local,
+void isomorph::load_strong_generators(int cur_level,
+		int cur_node_local,
 	vector_ge &gens, longinteger_object &go,
-	INT verbose_level)
+	int verbose_level)
 // Called from compute_stabilizer and from orbit_representative
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v5 = (verbose_level >= 5);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v5 = (verbose_level >= 5);
 
 	if (f_v) {
 		cout << "isomorph::load_strong_generators "
@@ -810,14 +810,14 @@ void isomorph::load_strong_generators(INT cur_level,
 		}
 }
 
-void isomorph::load_strong_generators_oracle(INT cur_level,
-	INT cur_node_local,
-	vector_ge &gens, longinteger_object &go, INT verbose_level)
+void isomorph::load_strong_generators_oracle(int cur_level,
+	int cur_node_local,
+	vector_ge &gens, longinteger_object &go, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	poset_orbit_node *O;
-	INT *tl;
-	INT i, node;
+	int *tl;
+	int i, node;
 	longinteger_domain Dom;
 
 	if (f_v) {
@@ -834,12 +834,12 @@ void isomorph::load_strong_generators_oracle(INT cur_level,
 		go.create(1);
 		goto finish;
 		}
-	tl = NEW_INT(gen->A->base_len);
+	tl = NEW_int(gen->A->base_len);
 	for (i = 0; i < gen->A->base_len; i++) {
 		tl[i] = O->tl[i];
 		}
 	Dom.multiply_up(go, tl, gen->A->base_len);
-	FREE_INT(tl);
+	FREE_int(tl);
 	gens.init(gen->A);
 	gens.allocate(O->nb_strong_generators);
 	for (i = 0; i < O->nb_strong_generators; i++) {
@@ -855,20 +855,20 @@ finish:
 		}
 }
 
-void isomorph::load_strong_generators_database(INT cur_level,
-		INT cur_node_local,
-	vector_ge &gens, longinteger_object &go, INT verbose_level)
+void isomorph::load_strong_generators_database(int cur_level,
+		int cur_node_local,
+	vector_ge &gens, longinteger_object &go, int verbose_level)
 // Reads node cur_node (global index) from database D through btree 0
 // Reads generators from file fp_ge
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT *tmp_ELT;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int *tmp_ELT;
 	Vector v;
-	INT i;
-	INT set[1000];
-	INT *tl;
+	int i;
+	int set[1000];
+	int *tl;
 	longinteger_domain Dom;
 
 
@@ -880,7 +880,7 @@ void isomorph::load_strong_generators_database(INT cur_level,
 
 	prepare_database_access(cur_level, verbose_level);
 
-	tmp_ELT = NEW_INT(gen->A->elt_size_in_INT);
+	tmp_ELT = NEW_int(gen->A->elt_size_in_int);
 	
 	//cur_node_local = cur_node - first_node;
 	if (f_v) {
@@ -899,11 +899,11 @@ void isomorph::load_strong_generators_database(INT cur_level,
 		}
 	if (f_vv) {
 		cout << "isomorph::load_strong_generators_database set: ";
-		INT_vec_print(cout, set, cur_level);
+		int_vec_print(cout, set, cur_level);
 		cout << endl;
 		}
-	INT nb_strong_generators;
-	INT pos, ref;
+	int nb_strong_generators;
+	int pos, ref;
 	pos = 2 + cur_level;
 	nb_strong_generators = v.s_ii(pos++);
 	if (f_vv) {
@@ -917,12 +917,12 @@ void isomorph::load_strong_generators_database(INT cur_level,
 		go.create(1);
 		goto finish;
 		}
-	tl = NEW_INT(gen->A->base_len);
+	tl = NEW_int(gen->A->base_len);
 	for (i = 0; i < gen->A->base_len; i++) {
 		tl[i] = v.s_ii(pos++);
 		}
 	Dom.multiply_up(go, tl, gen->A->base_len);
-	FREE_INT(tl);
+	FREE_int(tl);
 	pos = v.s_l() - 1;
 	ref = v.s_ii(pos++);
 	if (f_vv) {
@@ -939,7 +939,7 @@ void isomorph::load_strong_generators_database(INT cur_level,
 				0/* verbose_level*/);
 		}
 finish:
-	FREE_INT(tmp_ELT);
+	FREE_int(tmp_ELT);
 
 	if (f_v) {
 		cout << "isomorph::load_strong_generators_database "

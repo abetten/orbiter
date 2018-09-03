@@ -13,7 +13,7 @@
 
 sims *create_sims_from_generators_with_target_group_order_factorized(
 	action *A,
-	vector_ge *gens, INT *tl, INT len, INT verbose_level)
+	vector_ge *gens, int *tl, int len, int verbose_level)
 {
 	longinteger_object go;
 	longinteger_domain D;
@@ -23,9 +23,9 @@ sims *create_sims_from_generators_with_target_group_order_factorized(
 		gens, TRUE /* f_target_go */, go, verbose_level);
 }
 
-sims *create_sims_from_generators_with_target_group_order_INT(
+sims *create_sims_from_generators_with_target_group_order_int(
 	action *A,
-	vector_ge *gens, INT target_go, INT verbose_level)
+	vector_ge *gens, int target_go, int verbose_level)
 {
 	longinteger_object tgo;
 
@@ -38,7 +38,7 @@ sims *create_sims_from_generators_with_target_group_order_INT(
 sims *create_sims_from_generators_with_target_group_order(
 	action *A,
 	vector_ge *gens, longinteger_object &target_go,
-	INT verbose_level)
+	int verbose_level)
 {
 	return create_sims_from_generators_randomized(A, 
 		gens, TRUE /* f_target_go */, target_go, verbose_level);
@@ -46,7 +46,7 @@ sims *create_sims_from_generators_with_target_group_order(
 
 sims *create_sims_from_generators_without_target_group_order(
 	action *A,
-	vector_ge *gens, INT verbose_level)
+	vector_ge *gens, int verbose_level)
 {
 	longinteger_object dummy;
 	
@@ -56,9 +56,9 @@ sims *create_sims_from_generators_without_target_group_order(
 
 sims *create_sims_from_single_generator_without_target_group_order(
 	action *A,
-	INT *Elt, INT verbose_level)
+	int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *S;
 	vector_ge *gens;
 	longinteger_object dummy;
@@ -82,10 +82,10 @@ sims *create_sims_from_single_generator_without_target_group_order(
 }
 
 sims *create_sims_from_generators_randomized(action *A, 
-	vector_ge *gens, INT f_target_go, longinteger_object &target_go,
-	INT verbose_level)
+	vector_ge *gens, int f_target_go, longinteger_object &target_go,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//init(A);
 	//init_trivial_group(0);
 	//freeself();
@@ -135,13 +135,13 @@ sims *create_sims_from_generators_randomized(action *A,
 }
 
 sims *create_sims_for_centralizer_of_matrix(
-		action *A, INT *Mtx, INT verbose_level)
+		action *A, int *Mtx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	matrix_group *M;
 	finite_field *F;
-	INT d, q, i;
+	int d, q, i;
 	gl_classes *C; 
 
 	if (f_v) {
@@ -174,12 +174,12 @@ sims *create_sims_for_centralizer_of_matrix(
 		cout << "create_sims_for_centralizer_of_matrix "
 				"d = " << d << " q = " << q << endl;
 		cout << "Mtx=" << endl;
-		INT_matrix_print(Mtx, d, d);
+		int_matrix_print(Mtx, d, d);
 		}
 
 	//gl_classes C;
 	//gl_class_rep *Reps;
-	//INT nb_classes;
+	//int nb_classes;
 
 	//C.init(d, F, 0 /*verbose_level - 2*/);
 
@@ -196,7 +196,7 @@ sims *create_sims_for_centralizer_of_matrix(
 				"The conjugacy classes are:" << endl;
 		for (i = 0; i < nb_classes; i++) {
 			cout << "Class " << i << ":" << endl;
-			INT_matrix_print(Reps[i].type_coding.M,
+			int_matrix_print(Reps[i].type_coding.M,
 					Reps[i].type_coding.m, Reps[i].type_coding.n);
 			cout << "Centralizer order = "
 					<< Reps[i].centralizer_order << endl;
@@ -205,25 +205,25 @@ sims *create_sims_for_centralizer_of_matrix(
 #endif
 
 	
-	//INT class_rep;
+	//int class_rep;
 
-	INT *Elt;
+	int *Elt;
 
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 
 	gl_class_rep *R1;
 
 	R1 = NEW_OBJECT(gl_class_rep);
 
-	INT *Basis;
-	INT **Gens;
-	INT nb_gens;
-	INT nb_alloc = 20;
+	int *Basis;
+	int **Gens;
+	int nb_gens;
+	int nb_alloc = 20;
 		
-	Gens = NEW_PINT(nb_alloc);
+	Gens = NEW_pint(nb_alloc);
 	nb_gens = 0;
 			
-	Basis = NEW_INT(d * d);
+	Basis = NEW_int(d * d);
 	if (f_v) {
 		cout << "create_sims_for_centralizer_of_matrix "
 				"before generators_for_centralizer" << endl;
@@ -234,7 +234,7 @@ sims *create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "create_sims_for_centralizer_of_matrix "
 				"Basis=" << endl;
-		INT_matrix_print(Basis, d, d);
+		int_matrix_print(Basis, d, d);
 		cout << "create_sims_for_centralizer_of_matrix "
 				"We found " << nb_gens << " centralizing matrices" << endl;
 		}
@@ -244,7 +244,7 @@ sims *create_sims_for_centralizer_of_matrix(
 				"Gens=" << endl;
 		for (i = 0; i < nb_gens; i++) {
 			cout << "Gen " << i << " / " << nb_gens << " is:" << endl;
-			INT_matrix_print(Gens[i], d, d);
+			int_matrix_print(Gens[i], d, d);
 			}
 		}
 
@@ -253,9 +253,9 @@ sims *create_sims_for_centralizer_of_matrix(
 				0/*verbose_level*/)) {
 			cout << "The matrices do not commute" << endl;
 			cout << "Mtx=" << endl;
-			INT_matrix_print(Mtx, d, d);
+			int_matrix_print(Mtx, d, d);
 			cout << "Gens[i]=" << endl;
-			INT_matrix_print(Gens[i], d, d);
+			int_matrix_print(Gens[i], d, d);
 			exit(1);
 			}
 		}
@@ -265,7 +265,7 @@ sims *create_sims_for_centralizer_of_matrix(
 	if (f_v) {
 		cout << "The type of the matrix under "
 				"consideration is:" << endl;
-		INT_matrix_print(R1->type_coding.M,
+		int_matrix_print(R1->type_coding.M,
 				R1->type_coding.m, R1->type_coding.n);
 		}
 
@@ -283,16 +283,16 @@ sims *create_sims_for_centralizer_of_matrix(
 
 	vector_ge *gens;
 	vector_ge *SG;
-	INT *tl;
+	int *tl;
 	longinteger_object centralizer_order, cent_go;
-	INT *Elt1;
+	int *Elt1;
 		
 	gens = NEW_OBJECT(vector_ge);
 	SG = NEW_OBJECT(vector_ge);
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	gens->init(A);
 	gens->allocate(nb_gens);
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 		
 	for (i = 0; i < nb_gens; i++) {
 		A->make_element(Elt1, Gens[i], 0);
@@ -326,17 +326,17 @@ sims *create_sims_for_centralizer_of_matrix(
 
 
 	for (i = 0; i < nb_gens; i++) {
-		FREE_INT(Gens[i]);
+		FREE_int(Gens[i]);
 		}
-	FREE_PINT(Gens);
+	FREE_pint(Gens);
 
 	FREE_OBJECT(R1);
 	FREE_OBJECT(gens);
 	FREE_OBJECT(SG);
-	FREE_INT(tl);
-	FREE_INT(Elt1);
-	FREE_INT(Elt);
-	FREE_INT(Basis);
+	FREE_int(tl);
+	FREE_int(Elt1);
+	FREE_int(Elt);
+	FREE_int(Basis);
 
 	if (f_v) {
 		cout << "create_sims_for_centralizer_of_matrix done" << endl;

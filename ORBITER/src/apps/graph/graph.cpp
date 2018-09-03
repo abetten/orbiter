@@ -13,7 +13,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, const char **argv)
@@ -27,17 +27,17 @@ int main(int argc, const char **argv)
 
 	{
 	graph_generator Gen;
-	INT schreier_depth = 10000;
-	INT f_use_invariant_subset_if_available = TRUE;
-	INT f_debug = FALSE;
-	INT depth;
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int schreier_depth = 10000;
+	int f_use_invariant_subset_if_available = TRUE;
+	int f_debug = FALSE;
+	int depth;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 
 	
 	Gen.init(argc, argv);
 
-	INT verbose_level = Gen.gen->verbose_level;
+	int verbose_level = Gen.gen->verbose_level;
 
 	depth = Gen.gen->main(t0, 
 		schreier_depth, 
@@ -70,25 +70,25 @@ int main(int argc, const char **argv)
 	//Gen.gen->print_data_structure_tex(depth, Gen.gen->verbose_level);
 
 	if (Gen.f_plesken) {
-		INT *P;
-		INT N;
+		int *P;
+		int N;
 		Gen.gen->Plesken_matrix_up(depth, P, N, Gen.gen->verbose_level);
 		cout << "Plesken matrix up:" << endl;
-		INT_matrix_print_tex(cout, P, N, N);
+		int_matrix_print_tex(cout, P, N, N);
 
-		FREE_INT(P);
+		FREE_int(P);
 		Gen.gen->Plesken_matrix_down(depth, P, N, Gen.gen->verbose_level);
 		cout << "Plesken matrix down:" << endl;
-		INT_matrix_print_tex(cout, P, N, N);
+		int_matrix_print_tex(cout, P, N, N);
 
-		FREE_INT(P);
+		FREE_int(P);
 		}
 
 	if (Gen.f_list) {
-		INT f_show_orbit_decomposition = FALSE;
-		INT f_show_stab = FALSE;
-		INT f_save_stab = FALSE;
-		INT f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = FALSE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
 		
 		Gen.gen->list_all_orbits_at_level(Gen.gen->depth, 
 			FALSE, NULL, NULL, 
@@ -97,11 +97,11 @@ int main(int argc, const char **argv)
 		}
 
 	if (Gen.f_list_all) {
-		INT f_show_orbit_decomposition = FALSE;
-		INT f_show_stab = FALSE;
-		INT f_save_stab = FALSE;
-		INT f_show_whole_orbit = FALSE;
-		INT j;
+		int f_show_orbit_decomposition = FALSE;
+		int f_show_stab = FALSE;
+		int f_save_stab = FALSE;
+		int f_show_whole_orbit = FALSE;
+		int j;
 		
 		for (j = 0; j <= Gen.gen->depth; j++) {
 			Gen.gen->list_all_orbits_at_level(j, 
@@ -112,11 +112,11 @@ int main(int argc, const char **argv)
 		}
 
 	if (Gen.f_draw_graphs) {
-		INT xmax_in = 1000000;
-		INT ymax_in = 1000000;
-		INT xmax = 1000000;
-		INT ymax = 1000000;
-		INT level;
+		int xmax_in = 1000000;
+		int ymax_in = 1000000;
+		int xmax = 1000000;
+		int ymax = 1000000;
+		int level;
 
 		for (level = 0; level <= Gen.gen->depth; level++) {
 			Gen.draw_graphs(level, Gen.scale,
@@ -127,10 +127,10 @@ int main(int argc, const char **argv)
 		}
 
 	if (Gen.f_draw_graphs_at_level) {
-		INT xmax_in = 1000000;
-		INT ymax_in = 1000000;
-		INT xmax = 1000000;
-		INT ymax = 1000000;
+		int xmax_in = 1000000;
+		int ymax_in = 1000000;
+		int xmax = 1000000;
+		int ymax = 1000000;
 
 		Gen.draw_graphs(Gen.level, Gen.scale,
 				xmax_in, ymax_in, xmax, ymax,
@@ -151,18 +151,18 @@ int main(int argc, const char **argv)
 				depth, Gen.gen->verbose_level);
 		}
 	if (Gen.f_identify) {
-		INT *transporter;
-		INT orbit_at_level;
+		int *transporter;
+		int orbit_at_level;
 		
-		transporter = NEW_INT(Gen.gen->A->elt_size_in_INT);
+		transporter = NEW_int(Gen.gen->A->elt_size_in_int);
 		
 		Gen.gen->identify(Gen.identify_data, Gen.identify_data_sz,
 				transporter, orbit_at_level, Gen.gen->verbose_level);
 
-		FREE_INT(transporter);
+		FREE_int(transporter);
 		}
 
-	INT N, F, level;
+	int N, F, level;
 	
 	N = 0;
 	F = 0;

@@ -10,10 +10,10 @@
 void poset_orbit_node::setup_factor_space_action_light(
 	poset_classification *gen,
 	action_on_factor_space &AF, 
-	INT lvl, INT verbose_level)
+	int lvl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *the_set;
+	int f_v = (verbose_level >= 1);
+	int *the_set;
 		
 	if (f_v) {
 		cout << "poset_orbit_node::setup_factor_space_action_light "
@@ -22,7 +22,7 @@ void poset_orbit_node::setup_factor_space_action_light(
 				"node=" << node << " prev=" << prev
 				<< " pt=" << pt << endl;
 		}
-	the_set = NEW_INT(lvl);
+	the_set = NEW_int(lvl);
 	store_set_to(gen, lvl - 1, the_set);
 	
 	AF.init_light(*gen->A,
@@ -34,19 +34,19 @@ void poset_orbit_node::setup_factor_space_action_light(
 		gen->unrank_point_func, 
 		gen->rank_point_data, 
 		verbose_level - 1);
-	FREE_INT(the_set);
+	FREE_int(the_set);
 }
 
 void poset_orbit_node::setup_factor_space_action_with_early_test(
 	poset_classification *gen,
 	action_on_factor_space &AF, action &A_factor_space, 
-	INT lvl, INT verbose_level)
+	int lvl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *subset;
-	INT *the_set;
-	INT n, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *subset;
+	int *the_set;
+	int n, i;
 		
 	if (f_v) {
 		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
@@ -57,7 +57,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
 				"A2->degree=" << gen->A2->degree << endl;
 		}
-	the_set = NEW_INT(lvl + 1);
+	the_set = NEW_int(lvl + 1);
 		// the +1 is for safety !!! 
 		// Namely, so that the test function has one more entry 
 		// to store the candidate point in.
@@ -72,25 +72,25 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 					"retrieving candidate set from Schreier vector "
 					"of node " << prev << endl;
 			}
-		INT *osv = gen->root[prev].sv;
+		int *osv = gen->root[prev].sv;
 		n = osv[0];
 		subset = osv + 1;
 		}
 	else {
 		n = gen->A2->degree;
-		subset = NEW_INT(n);
+		subset = NEW_int(n);
 		for (i = 0; i < n; i++) {
 			subset[i] = i;
 			}
 		}
-	INT *candidates;
-	INT nb_candidates;
+	int *candidates;
+	int nb_candidates;
 		
 	if (f_vv) {
 		gen->print_level_info(lvl + 1, node);
 		cout << " : number of live points = " << n << endl;
 		}
-	candidates = NEW_INT(gen->A2->degree);
+	candidates = NEW_int(gen->A2->degree);
 
 	if (f_vv) {
 		cout << "poset_orbit_node::setup_factor_space_action_with_early_test "
@@ -108,7 +108,7 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				<< " n = " << n
 				<< " nb_candidates=" << nb_candidates << endl;
 		//cout << "candidates: ";
-		//INT_vec_print(cout, candidates, nb_candidates);
+		//int_vec_print(cout, candidates, nb_candidates);
 		//cout << endl;
 		}
 
@@ -131,10 +131,10 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 				"after AF.init_by_rank_table_mode" << endl;
 		}
 	
-	FREE_INT(candidates);
-	FREE_INT(the_set);
+	FREE_int(candidates);
+	FREE_int(the_set);
 	if (lvl == 0) {
-		FREE_INT(subset);
+		FREE_int(subset);
 		}
 		
 	if (f_vv) {
@@ -164,18 +164,18 @@ void poset_orbit_node::setup_factor_space_action_with_early_test(
 void poset_orbit_node::setup_factor_space_action(
 	poset_classification *gen,
 	action_on_factor_space &AF, action &A_factor_space, 
-	INT lvl, INT f_compute_tables, INT verbose_level)
+	int lvl, int f_compute_tables, int verbose_level)
 // called from poset_orbit_node::init_extension_node,
 // poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action
 // (in poset_orbit_node_upstep_subspace_action)
 // poset_orbit_node::downstep_subspace_action
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v20 = (verbose_level >= 20);
-	INT *the_set;
-	INT *coordinates;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v20 = (verbose_level >= 20);
+	int *the_set;
+	int *coordinates;
+	int i;
 
 	if (f_v) {
 		cout << "poset_orbit_node::setup_factor_space_action "
@@ -185,13 +185,13 @@ void poset_orbit_node::setup_factor_space_action(
 				<< " pt=" << pt << endl;
 		cout << "f_compute_tables=" << f_compute_tables << endl;
 		}
-	the_set = NEW_INT(lvl);
-	coordinates = NEW_INT(lvl * gen->vector_space_dimension);
+	the_set = NEW_int(lvl);
+	coordinates = NEW_int(lvl * gen->vector_space_dimension);
 	store_set_to(gen, lvl - 1, the_set);
 
 	if (f_v) {
 		cout << "the set: ";
-		INT_vec_print(cout, the_set, lvl);
+		int_vec_print(cout, the_set, lvl);
 		cout << endl;
 		cout << "poset_orbit_node::setup_factor_space_action "
 				"initializing action_on_factor_space "
@@ -230,28 +230,28 @@ void poset_orbit_node::setup_factor_space_action(
 				<< endl;
 		}
 	
-	FREE_INT(the_set);
-	FREE_INT(coordinates);
+	FREE_int(the_set);
+	FREE_int(coordinates);
 }
 
 void poset_orbit_node::downstep_subspace_action(
 	poset_classification *gen,
-	INT lvl, 
-	INT f_create_schreier_vector, INT f_compact, 
-	INT f_use_invariant_subset_if_available, 
-	INT f_implicit_fusion, 
-	INT verbose_level)
+	int lvl, 
+	int f_create_schreier_vector, int f_compact, 
+	int f_use_invariant_subset_if_available, 
+	int f_implicit_fusion, 
+	int verbose_level)
 // called from generator::downstep
 {
 	//if (node == 0) {verbose_level += 20;
 	// cout << "poset_orbit_node::downstep_subspace_action node 0 reached" << endl;}
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v4 = (verbose_level >= 4);
-	INT nb_orbits;
-	//INT good_orbits1, nb_points1;
-	INT f_using_invariant_subset = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 4);
+	int nb_orbits;
+	//int good_orbits1, nb_points1;
+	int f_using_invariant_subset = FALSE;
 	schreier *Schreier;
 	action_on_factor_space *AF;
 	action *A_factor_space;
@@ -279,11 +279,11 @@ void poset_orbit_node::downstep_subspace_action(
 			print_set_verbose(gen);
 			}
 		if (prev >= 0 && gen->root[prev].sv) {
-			INT nb = gen->root[prev].sv[0];
+			int nb = gen->root[prev].sv[0];
 			cout << " with " << nb << " live points";
 			if (f_vvv) {
 				cout << " : ";
-				INT_vec_print(cout, gen->root[prev].sv + 1, nb);
+				int_vec_print(cout, gen->root[prev].sv + 1, nb);
 				cout << endl;
 				}
 			else {
@@ -472,11 +472,11 @@ void poset_orbit_node::downstep_subspace_action(
 
 void poset_orbit_node::downstep_subspace_action_print_orbits(
 	poset_classification *gen, schreier &Schreier,
-	INT lvl, 
-	INT f_print_orbits, 
-	INT verbose_level)
+	int lvl, 
+	int f_print_orbits, 
+	int verbose_level)
 {
-	INT h, first, len, rep;
+	int h, first, len, rep;
 	action_on_factor_space *AF;
 	
 	cout << "poset_orbit_node::downstep_subspace_action_print_orbits" << endl;
@@ -506,7 +506,7 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 			gen->rank_point_data);
 
 		cout << " = ";
-		INT_vec_print(cout,
+		int_vec_print(cout,
 				gen->tmp_v1, gen->vector_space_dimension);
 		cout << " : " << setw(5) << len;
 		if (f_print_orbits) {
@@ -526,15 +526,15 @@ void poset_orbit_node::downstep_subspace_action_print_orbits(
 
 void poset_orbit_node::downstep_orbits_subspace_action(
 	poset_classification *gen, schreier &Schreier,
-	INT lvl, 
-	INT f_use_invariant_subset_if_available, 
-	INT &f_using_invariant_subset, 
-	INT verbose_level)
+	int lvl, 
+	int f_use_invariant_subset_if_available, 
+	int &f_using_invariant_subset, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT f_v10 = (verbose_level >= 10);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int f_v10 = (verbose_level >= 10);
 	action_on_factor_space *AF;
 
 	if (f_v) {
@@ -565,13 +565,13 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		cout << "poset_orbit_node::downstep_orbits_subspace_action: "
 				"The " << Schreier.nb_orbits
 				<< " orbits are:" << endl;
-		INT h;
+		int h;
 		cout << "h : orbit_len[h] : orbit : "
 				"orbit (via AF->preimage_table)" << endl;
 		for (h = 0; h < Schreier.nb_orbits; h++) {
 			cout << setw(4) << h << " / " << Schreier.nb_orbits << " : ";
 
-			INT first, rep;
+			int first, rep;
 
 			first = Schreier.orbit_first[h];
 			rep = AF->preimage_table[Schreier.orbit[first + 0]];
@@ -582,7 +582,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 				gen->rank_point_data);
 
 			cout << rep << " = ";
-			INT_vec_print(cout,
+			int_vec_print(cout,
 					gen->tmp_v1, gen->vector_space_dimension);
 
 			cout << " : " << setw(5) << Schreier.orbit_len[h];
@@ -599,7 +599,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		for (h = 0; h < Schreier.nb_orbits; h++) {
 			cout << "orbit " << setw(4) << h << " / " << Schreier.nb_orbits << " : " << endl;
 
-			INT first, len, rep, j;
+			int first, len, rep, j;
 
 			first = Schreier.orbit_first[h];
 			len = Schreier.orbit_len[h];
@@ -613,7 +613,7 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 					gen->rank_point_data);
 
 				cout << setw(3) << j << " / " << setw(3) << len << " : " << rep << " = ";
-				INT_vec_print(cout,
+				int_vec_print(cout,
 						gen->tmp_v1, gen->vector_space_dimension);
 				cout << " : ";
 				cout << Schreier.prev[first + j];
@@ -632,21 +632,21 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 		cout << "Schreier structure table:" << endl;
 		Schreier.print_tables(cout, FALSE/* f_with_cosetrep*/);
 
-		INT h;
+		int h;
 		char fname[1000];
-		INT xmax = 2000000;
-		INT ymax = 1000000;
-		INT f_circletext = TRUE;
-		INT rad = 20000;
-		INT f_embedded = TRUE;
-		INT f_sideways = TRUE;
+		int xmax = 2000000;
+		int ymax = 1000000;
+		int f_circletext = TRUE;
+		int rad = 20000;
+		int f_embedded = TRUE;
+		int f_sideways = TRUE;
 		double scale = 0.35;
 		double line_width = 0.6;
-		INT f_has_point_labels = FALSE;
-		INT *point_labels = NULL;
+		int f_has_point_labels = FALSE;
+		int *point_labels = NULL;
 
 		for (h = 0; h < Schreier.nb_orbits; h++) {
-			sprintf(fname, "node_%ld_tree_%ld", node, h);
+			sprintf(fname, "node_%d_tree_%d", node, h);
 			cout << "before Schreier.draw_tree fname = " << fname << endl;
 			Schreier.draw_tree(fname, h /* orbit_no */,
 				xmax, ymax, f_circletext, rad,
@@ -680,15 +680,15 @@ void poset_orbit_node::downstep_orbits_subspace_action(
 void poset_orbit_node::find_extensions_subspace_action(
 	poset_classification *gen, schreier &O,
 	action *A_factor_space, action_on_factor_space *AF, 
-	INT lvl, INT f_implicit_fusion, INT verbose_level)
+	int lvl, int f_implicit_fusion, int verbose_level)
 // prepares all extension nodes and marks them as unprocessed.
 // we are at depth lvl, i.e., currently, we have a set of size lvl.
 // removes implicit fusion orbits
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT h, k, fst, /*len,*/ pt, pt1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int h, k, fst, /*len,*/ pt, pt1;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::find_extensions_subspace_action" << endl;
@@ -746,7 +746,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 			}
 		else {
 			// we need to check whether the point is already in the set:
-			INT ii;
+			int ii;
 			
 			for (ii = 0; ii < lvl; ii++) {
 				if (gen->S[ii] == pt)
@@ -776,7 +776,7 @@ void poset_orbit_node::find_extensions_subspace_action(
 #if 1
 	// reallocate:
 	extension *E2 = E;
-	INT nb_extension_points = 0;
+	int nb_extension_points = 0;
 	
 	E = NEW_OBJECTS(extension, nb_extensions);
 	for (k = 0; k < nb_extensions; k++) {
@@ -802,20 +802,20 @@ void poset_orbit_node::find_extensions_subspace_action(
 }
 
 void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
-	INT f_create_schreier_vector, INT f_compact, 
+	int f_create_schreier_vector, int f_compact, 
 	schreier &Schreier, 
 	action *A_factor_space, action_on_factor_space *AF, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 10);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 10);
 	
 	if (f_v) {
 		cout << "poset_orbit_node::create_schreier_vector_wrapper_subspace_action"
 				<< endl;
 		}
 	if (/*nb_strong_generators &&*/ f_create_schreier_vector) {
-		INT f_trivial_group;
+		int f_trivial_group;
 		
 		if (f_vv) {
 			cout << "calling get_schreier_vector" << endl;
@@ -832,7 +832,7 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 
 		if (f_vv) {
 			cout << "schreier vector before relabeling :" << endl;
-			INT_vec_print(cout, sv + 1, sv[0]);
+			int_vec_print(cout, sv + 1, sv[0]);
 			cout << endl;
 			}
 		if (f_v) {
@@ -848,7 +848,7 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 			}
 		if (f_vv) {
 			cout << "schreier vector after relabeling :" << endl;
-			INT_vec_print(cout, sv + 1, sv[0]);
+			int_vec_print(cout, sv + 1, sv[0]);
 			cout << endl;
 			}
 		}
@@ -861,28 +861,28 @@ void poset_orbit_node::create_schreier_vector_wrapper_subspace_action(
 		}
 }
 
-void schreier_vector_relabel_points(INT *sv,
+void schreier_vector_relabel_points(int *sv,
 	action_on_factor_space *AF,
-	INT f_compact, INT f_trivial_group,
-	INT verbose_level)
+	int f_compact, int f_trivial_group,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT n;
-	INT *pts;
-	INT *prev;
-	INT *label;
-	INT i, pt, pre, q, pr, new_pr, pos;
-	INT *new_sv;
-	INT *new_pts;
-	INT *new_pts_sorted;
-	INT *perm;
-	INT *new_sv_pts;
-	INT *new_sv_prev;
-	INT *new_sv_label;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int n;
+	int *pts;
+	int *prev;
+	int *label;
+	int i, pt, pre, q, pr, new_pr, pos;
+	int *new_sv;
+	int *new_pts;
+	int *new_pts_sorted;
+	int *perm;
+	int *new_sv_pts;
+	int *new_sv_prev;
+	int *new_sv_label;
 
-	INT nb_old_orbit_reps = 0, idx, j;
-	INT *old_orbit_reps = NULL;
+	int nb_old_orbit_reps = 0, idx, j;
+	int *old_orbit_reps = NULL;
 
 	if (f_v) {
 		cout << "schreier_vector_relabel_points" << endl;
@@ -901,7 +901,7 @@ void schreier_vector_relabel_points(INT *sv,
 		if (f_v) {
 			cout << "trivial group" << endl;
 			}
-		new_sv = NEW_INT(n + 1);
+		new_sv = NEW_int(n + 1);
 		new_pts = new_sv + 1;
 		new_sv[0] = n;
 		for (i = 0; i < n; i++) {
@@ -915,19 +915,19 @@ void schreier_vector_relabel_points(INT *sv,
 				}
 			new_pts[i] = q;
 			}
-		INT_vec_heapsort(new_pts, n);
+		int_vec_heapsort(new_pts, n);
 		for (i = 0; i < n + 1; i++) {
 			sv[i] = new_sv[i];
 			}
-		FREE_INT(new_sv);
+		FREE_int(new_sv);
 		return;
 		}
 
 
-	new_sv = NEW_INT(3 * n + 1);
-	new_pts = NEW_INT(n);
-	new_pts_sorted = NEW_INT(n);
-	perm = NEW_INT(n);
+	new_sv = NEW_int(3 * n + 1);
+	new_pts = NEW_int(n);
+	new_pts_sorted = NEW_int(n);
+	perm = NEW_int(n);
 	new_sv_pts = new_sv + 1;
 	new_sv_prev = new_sv_pts + n;
 	new_sv_label = new_sv_prev + n;
@@ -943,15 +943,15 @@ void schreier_vector_relabel_points(INT *sv,
 				nb_old_orbit_reps++;
 				}
 			}
-		old_orbit_reps = NEW_INT(nb_old_orbit_reps);
+		old_orbit_reps = NEW_int(nb_old_orbit_reps);
 		j = 0;
 		for (i = 0; i < n; i++) {
 			if (prev[i] == -1) {
 				old_orbit_reps[j++] = pts[i];
 				}
 			}
-		INT_vec_heapsort(old_orbit_reps, nb_old_orbit_reps);
-		INT_vec_print(cout, old_orbit_reps, nb_old_orbit_reps);
+		int_vec_heapsort(old_orbit_reps, nb_old_orbit_reps);
+		int_vec_print(cout, old_orbit_reps, nb_old_orbit_reps);
 		cout << endl;
 		cout << "There are " << nb_old_orbit_reps
 				<< " old orbit reps, they are:" << endl;
@@ -963,7 +963,7 @@ void schreier_vector_relabel_points(INT *sv,
 	if (f_vv) {
 		cout << "before:" << endl;
 		for (i = 0; i < n; i++) {
-			if (INT_vec_search(old_orbit_reps,
+			if (int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : "
 						<< setw(5) << pts[i] << endl;
@@ -985,7 +985,7 @@ void schreier_vector_relabel_points(INT *sv,
 		q = AF->project_onto_Gauss_reduced_vector(
 				pre, 0 /*verbose_level - 2*/);
 		if (FALSE) {
-			if (INT_vec_search(old_orbit_reps,
+			if (int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pt, idx)) {
 				cout << "i=" << i << " pt=" << pt
 						<< " pre=" << pre << " q=" << q << endl << endl;
@@ -997,7 +997,7 @@ void schreier_vector_relabel_points(INT *sv,
 		//cout << "after:" << endl;
 		cout << "i : pts[i] : new_pts[i]" << endl;
 		for (i = 0; i < n; i++) {
-			if (INT_vec_search(old_orbit_reps,
+			if (int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : "
 						<< setw(5) << pts[i] << " : "
@@ -1011,12 +1011,12 @@ void schreier_vector_relabel_points(INT *sv,
 	for (i = 0; i < n; i++) {
 		new_pts_sorted[i] = new_pts[i];
 		}
-	INT_vec_heapsort_with_log(new_pts_sorted, perm, n);
+	int_vec_heapsort_with_log(new_pts_sorted, perm, n);
 	if (f_vv) {
 		cout << "after sorting:" << endl;
 		cout << "i : pts[i] : new_pts_sorted[i] : perm[i]" << endl;
 		for (i = 0; i < n; i++) {
-			if (INT_vec_search(old_orbit_reps,
+			if (int_vec_search(old_orbit_reps,
 					nb_old_orbit_reps, pts[i], idx)) {
 				cout << setw(5) << i << " : " 
 					<< setw(5) << pts[i] << " : " 
@@ -1087,12 +1087,12 @@ void schreier_vector_relabel_points(INT *sv,
 	for (i = 0; i < 3 * n + 1; i++) {
 		sv[i] = new_sv[i];
 		}
-	FREE_INT(new_sv);
-	FREE_INT(new_pts);
-	FREE_INT(new_pts_sorted);
-	FREE_INT(perm);
+	FREE_int(new_sv);
+	FREE_int(new_pts);
+	FREE_int(new_pts_sorted);
+	FREE_int(perm);
 	if (old_orbit_reps) {
-		FREE_INT(old_orbit_reps);
+		FREE_int(old_orbit_reps);
 		}
 	if (f_v) {
 		cout << "n e w schreier vector created" << endl;

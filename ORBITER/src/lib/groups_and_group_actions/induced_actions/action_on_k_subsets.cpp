@@ -26,18 +26,18 @@ void action_on_k_subsets::null()
 void action_on_k_subsets::free()
 {
 	if (set1) {
-		FREE_INT(set1);
+		FREE_int(set1);
 		}
 	if (set2) {
-		FREE_INT(set2);
+		FREE_int(set2);
 		}
 	null();
 }
 
-void action_on_k_subsets::init(action *A, INT k, INT verbose_level)
+void action_on_k_subsets::init(action *A, int k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT n;
+	int f_v = (verbose_level >= 1);
+	int n;
 	
 	if (f_v) {
 		cout << "action_on_k_subsets::init k=" << k << endl;
@@ -45,20 +45,20 @@ void action_on_k_subsets::init(action *A, INT k, INT verbose_level)
 	action_on_k_subsets::A = A;
 	action_on_k_subsets::k = k;
 	n = A->degree;
-	degree = INT_n_choose_k(n, k);
-	set1 = NEW_INT(k);
-	set2 = NEW_INT(k);
+	degree = int_n_choose_k(n, k);
+	set1 = NEW_int(k);
+	set2 = NEW_int(k);
 	if (f_v) {
 		cout << "action_on_k_subsets::init n=" << n << endl;
 		cout << "action_on_k_subsets::init n choose k=" << degree << endl;
 		}
 }
 
-void action_on_k_subsets::compute_image(INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_k_subsets::compute_image(int *Elt, int i, int &j, int verbose_level)
 {
-	INT u, a, b;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int u, a, b;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "action_on_k_subsets::compute_image i = " << i << endl;
@@ -73,13 +73,13 @@ void action_on_k_subsets::compute_image(INT *Elt, INT i, INT &j, INT verbose_lev
 		b = A->image_of(Elt, a);
 		set2[u] = b;
 		}
-	INT_vec_heapsort(set2, k);
+	int_vec_heapsort(set2, k);
 	j = rank_k_subset(set2, A->degree, k);
 	if (f_vv) {
 		cout << "set " << i << " = ";
-		INT_vec_print(cout, set1, k);
+		int_vec_print(cout, set1, k);
 		cout << " maps to ";
-		INT_vec_print(cout, set2, k);
+		int_vec_print(cout, set2, k);
 		cout << " = " << j << endl;
 		}
 	if (j < 0 || j >= degree) {

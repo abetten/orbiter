@@ -24,51 +24,51 @@ norm_tables::norm_tables()
 norm_tables::~norm_tables()
 {
 	if (norm_table) {
-		FREE_INT(norm_table);
+		FREE_int(norm_table);
 		norm_table = NULL;
 		}
 	if (norm_table_sorted) {
-		FREE_INT(norm_table_sorted);
+		FREE_int(norm_table_sorted);
 		norm_table_sorted = NULL;
 		}
 	if (sorting_perm) {
-		FREE_INT(sorting_perm);
+		FREE_int(sorting_perm);
 		sorting_perm = NULL;
 		}
 	if (sorting_perm_inv) {
-		FREE_INT(sorting_perm_inv);
+		FREE_int(sorting_perm_inv);
 		sorting_perm_inv = NULL;
 		}
 	if (type_first) {
-		FREE_INT(type_first);
+		FREE_int(type_first);
 		type_first = NULL;
 		}
 	if (type_len) {
-		FREE_INT(type_len);
+		FREE_int(type_len);
 		type_len = NULL;
 		}
 	if (the_type) {
-		FREE_INT(the_type);
+		FREE_int(the_type);
 		the_type = NULL;
 		}
 }
 
-void norm_tables::init(unusual_model &U, INT verbose_level)
+void norm_tables::init(unusual_model &U, int verbose_level)
 {
-	INT qq = U.F.q;
-	INT i, f, l, j, a, b, c, jj;
+	int qq = U.F.q;
+	int i, f, l, j, a, b, c, jj;
 	
-	norm_table = NEW_INT(qq);
+	norm_table = NEW_int(qq);
 	for (i = 1; i < qq; i++) {
 		norm_table[i - 1] = U.N2(i);
 		}
 	
-	INT_vec_classify(qq - 1, norm_table, norm_table_sorted, 
+	int_vec_classify(qq - 1, norm_table, norm_table_sorted, 
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 	
 	//cout << "nb_types=" << NT.nb_types << endl;
-	the_type = NEW_INT(nb_types);
+	the_type = NEW_int(nb_types);
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = type_len[i];
@@ -87,11 +87,11 @@ void norm_tables::init(unusual_model &U, INT verbose_level)
 
 }
 
-INT norm_tables::choose_an_element_of_given_norm(INT norm, INT verbose_level)
+int norm_tables::choose_an_element_of_given_norm(int norm, int verbose_level)
 {
-	INT idx, f, gamma;
+	int idx, f, gamma;
 	
-	INT_vec_search(the_type, nb_types, norm, idx);
+	int_vec_search(the_type, nb_types, norm, idx);
 	f = type_first[idx];
 	//l = type_len[idx];
 	gamma = sorting_perm_inv[f + 0] + 1;

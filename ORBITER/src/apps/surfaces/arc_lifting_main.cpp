@@ -12,23 +12,23 @@
 #include "orbiter.h"
 
 
-INT t0 = 0;
+int t0 = 0;
 
 
 int main(int argc, const char **argv);
-void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT verbose_level);
-void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, INT verbose_level);
+void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int verbose_level);
+void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, int verbose_level);
 
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_arc = FALSE;
+	int verbose_level = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_arc = FALSE;
 	const char *the_arc_text = NULL;
-	INT f_classify = FALSE;
-	INT i;
+	int f_classify = FALSE;
+	int i;
 
 	t0 = os_ticks();
 
@@ -64,7 +64,7 @@ int main(int argc, const char **argv)
 		}
 
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 		
 	F->init(q, 0);
 
@@ -76,7 +76,7 @@ int main(int argc, const char **argv)
 		cout << "after Surf->init" << endl;
 		}
 
-	INT f_semilinear;
+	int f_semilinear;
 
 	if (is_prime(q)) {
 		f_semilinear = FALSE;
@@ -119,10 +119,10 @@ int main(int argc, const char **argv)
 	
 
 	if (f_arc) {
-		INT *arc;
-		INT arc_size;
+		int *arc;
+		int arc_size;
 
-		INT_vec_scan(the_arc_text, arc, arc_size);
+		int_vec_scan(the_arc_text, arc, arc_size);
 		
 		if (f_v) {
 			cout << "before lift_single_arc" << endl;
@@ -146,10 +146,10 @@ int main(int argc, const char **argv)
 }
 
 
-void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT verbose_level)
+void lift_single_arc(int *arc, int arc_size, surface_with_action *Surf_A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q;
+	int f_v = (verbose_level >= 1);
+	int q;
 	surface *Surf;
 	finite_field *F;
 	char fname_arc_lifting[1000];
@@ -162,7 +162,7 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 	if (f_v) {
 		cout << "lift_single_arc q=" << q << endl;
 		cout << "Lifting the arc ";
-		INT_vec_print(cout, arc, arc_size);
+		int_vec_print(cout, arc, arc_size);
 		cout << endl;
 		}
 
@@ -175,15 +175,15 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 	{
 	char title[10000];
 	char author[10000];
-	INT i;
+	int i;
 	
-	sprintf(title, "Lifting a single arc over GF(%ld) ", q);
+	sprintf(title, "Lifting a single arc over GF(%d) ", q);
 	sprintf(author, "");
 
-	sprintf(fname_arc_lifting, "single_arc_lifting_q%ld_arc", q);
+	sprintf(fname_arc_lifting, "single_arc_lifting_q%d_arc", q);
 
 	for (i = 0; i < 6; i++) {
-		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%ld", arc[i]);
+		sprintf(fname_arc_lifting + strlen(fname_arc_lifting), "_%d", arc[i]);
 		}
 	sprintf(fname_arc_lifting + strlen(fname_arc_lifting), ".tex");
 	ofstream fp(fname_arc_lifting);
@@ -197,7 +197,7 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 
 
 	fp << "We are lifting the arc ";
-	INT_vec_print(fp, arc, arc_size);
+	int_vec_print(fp, arc, arc_size);
 	fp << endl;
 
 	fp << "consisting of the following points:\\\\" << endl;
@@ -248,13 +248,13 @@ void lift_single_arc(INT *arc, INT arc_size, surface_with_action *Surf_A, INT ve
 		}
 }
 
-void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, INT verbose_level)
+void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_action *Surf_A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q;
+	int f_v = (verbose_level >= 1);
+	int q;
 	surface *Surf;
 	finite_field *F;
-	INT i, j, arc_idx;
+	int i, j, arc_idx;
 	
 	char fname_arc_lifting[10000];
 
@@ -285,10 +285,10 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 	{
 	char title[10000];
 	char author[10000];
-	sprintf(title, "Arc lifting over GF(%ld) ", q);
+	sprintf(title, "Arc lifting over GF(%d) ", q);
 	sprintf(author, "");
 
-	sprintf(fname_arc_lifting, "arc_lifting_q%ld.tex", q);
+	sprintf(fname_arc_lifting, "arc_lifting_q%d.tex", q);
 	ofstream fp(fname_arc_lifting);
 
 
@@ -349,7 +349,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 
 	char fname_base[1000];
-	sprintf(fname_base, "arcs_q%ld", q);
+	sprintf(fname_base, "arcs_q%d", q);
 
 	if (q < 20) {
 		cout << "before Gen->gen->draw_poset_full" << endl;
@@ -362,22 +362,22 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		}
 
 
-	INT *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
-	INT *Arc_identify; //[Six_arcs->nb_arcs_not_on_conic *
+	int *f_deleted; // [Six_arcs->nb_arcs_not_on_conic]
+	int *Arc_identify; //[Six_arcs->nb_arcs_not_on_conic *
 				// Six_arcs->nb_arcs_not_on_conic]
-	INT *Arc_identify_nb; // [Six_arcs->nb_arcs_not_on_conic]
-	INT Arc6[6];
-	INT nb_surfaces;
+	int *Arc_identify_nb; // [Six_arcs->nb_arcs_not_on_conic]
+	int Arc6[6];
+	int nb_surfaces;
 
 	nb_surfaces = 0;
 
-	f_deleted = NEW_INT(Six_arcs->nb_arcs_not_on_conic);
-	Arc_identify = NEW_INT(Six_arcs->nb_arcs_not_on_conic *
+	f_deleted = NEW_int(Six_arcs->nb_arcs_not_on_conic);
+	Arc_identify = NEW_int(Six_arcs->nb_arcs_not_on_conic *
 			Six_arcs->nb_arcs_not_on_conic);
-	Arc_identify_nb = NEW_INT(Six_arcs->nb_arcs_not_on_conic);
+	Arc_identify_nb = NEW_int(Six_arcs->nb_arcs_not_on_conic);
 
-	INT_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
-	INT_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
+	int_vec_zero(f_deleted, Six_arcs->nb_arcs_not_on_conic);
+	int_vec_zero(Arc_identify_nb, Six_arcs->nb_arcs_not_on_conic);
 
 	for (arc_idx = 0; arc_idx < Six_arcs->nb_arcs_not_on_conic; arc_idx++) {
 
@@ -411,7 +411,7 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		
 		fp << "Arc " << arc_idx << " / " << Six_arcs->nb_arcs_not_on_conic << " is: ";
 		fp << "$$" << endl;
-		//INT_vec_print(fp, Arc6, 6);
+		//int_vec_print(fp, Arc6, 6);
 		The_arc->print_set_tex(fp);
 		fp << "$$" << endl;
 
@@ -428,8 +428,8 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 		char arc_label[1000];
 		char arc_label_short[1000];
 		
-		sprintf(arc_label, "%ld / %ld", arc_idx, Six_arcs->nb_arcs_not_on_conic);
-		sprintf(arc_label_short, "Arc%ld", arc_idx);
+		sprintf(arc_label, "%d / %d", arc_idx, Six_arcs->nb_arcs_not_on_conic);
+		sprintf(arc_label_short, "Arc%d", arc_idx);
 		
 		if (f_v) {
 			cout << "classify_arcs_and_do_arc_lifting before do_arc_lifting" << endl;
@@ -466,11 +466,11 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 			}
 		cout << endl;
 		}
-	INT *Decomp;
-	INT a;
+	int *Decomp;
+	int a;
 
-	Decomp = NEW_INT(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
-	INT_vec_zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+	Decomp = NEW_int(Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
+	int_vec_zero(Decomp, Six_arcs->nb_arcs_not_on_conic * nb_surfaces);
 	for (i = 0; i < nb_surfaces; i++) {
 		for (j = 0; j < Arc_identify_nb[i]; j++) {
 			a = Arc_identify[i * Six_arcs->nb_arcs_not_on_conic + j];
@@ -491,10 +491,10 @@ void classify_arcs_and_do_arc_lifting(int argc, const char **argv, surface_with_
 
 
 
-	FREE_INT(Decomp);
-	FREE_INT(f_deleted);
-	FREE_INT(Arc_identify);
-	FREE_INT(Arc_identify_nb);
+	FREE_int(Decomp);
+	FREE_int(f_deleted);
+	FREE_int(Arc_identify);
+	FREE_int(Arc_identify_nb);
 
 	latex_foot(fp);
 	} // fp

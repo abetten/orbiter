@@ -11,7 +11,7 @@ void free_global_data()
 	longinteger_free_global_data();
 }
 
-void the_end(INT t0)
+void the_end(int t0)
 {
 	cout << "***************** The End **********************" << endl;
 	if (f_memory_debug) {
@@ -24,15 +24,15 @@ void the_end(INT t0)
 	cout << endl;
 
 
-	INT mem_usage;
+	int mem_usage;
 	char fname[1000];
 
 	mem_usage = os_memory_usage();
 	sprintf(fname, "memory_usage.csv");
-	INT_matrix_write_csv(fname, &mem_usage, 1, 1);
+	int_matrix_write_csv(fname, &mem_usage, 1, 1);
 }
 
-void the_end_quietly(INT t0)
+void the_end_quietly(int t0)
 {
 	//cout << "the_end_quietly: freeing global data" << endl;
 	free_global_data();
@@ -41,12 +41,12 @@ void the_end_quietly(INT t0)
 }
 
 void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
-	INT level, matrix &M, INT verbose_level)
+	int level, matrix &M, int verbose_level)
 // we assume that we don't use implicit fusion nodes
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE;//(verbose_level >= 2);
-	INT f1, f2, f3, l1, l2, i, j, k, I, J, len;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;//(verbose_level >= 2);
+	int f1, f2, f3, l1, l2, i, j, k, I, J, len;
 	poset_orbit_node *O;
 	
 	if (f_v) {
@@ -91,7 +91,7 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 				// fusion node
 				len = O->E[k].orbit_len;
 
-				INT I1, ext1;
+				int I1, ext1;
 				poset_orbit_node *O1;
 				
 				I1 = O->E[k].data1;
@@ -132,17 +132,17 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 
 #if 0
 				//cout << "fusion node:" << endl;
-				//INT_vec_print(cout, gen->S, level + 1);
+				//int_vec_print(cout, gen->S, level + 1);
 				//cout << endl;
 				gen->A->element_retrieve(O->E[k].data, gen->Elt1, 0);
 	
 				gen->A2->map_a_set(gen->S, gen->S0, level + 1, gen->Elt1, 0);
-				//INT_vec_print(cout, gen->S0, level + 1);
+				//int_vec_print(cout, gen->S0, level + 1);
 				//cout << endl;
 
-				INT_vec_heapsort(gen->S0, level + 1); //INT_vec_sort(level + 1, gen->S0);
+				int_vec_heapsort(gen->S0, level + 1); //int_vec_sort(level + 1, gen->S0);
 
-				//INT_vec_print(cout, gen->S0, level + 1);
+				//int_vec_print(cout, gen->S0, level + 1);
 				//cout << endl;
 
 				J = gen->find_oracle_node_for_set(level + 1, gen->S0, 0);
@@ -159,19 +159,19 @@ void calc_Kramer_Mesner_matrix_neighboring(poset_classification *gen,
 
 
 
-void Mtk_from_MM(Vector & MM, matrix & Mtk, INT t, INT k, 
-	INT f_subspaces, INT q,  INT verbose_level)
+void Mtk_from_MM(Vector & MM, matrix & Mtk, int t, int k, 
+	int f_subspaces, int q,  int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix M, N;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "Mtk_from_MM(): t = " << t << ", k = " << k << endl;
 		}
 	if (k == t) {
 		matrix &M1 = MM[t - 1].as_matrix();
-		INT n = M1.s_n();
+		int n = M1.s_n();
 		Mtk.m_mn_n(n, n);
 		Mtk.one();
 		return;
@@ -188,14 +188,14 @@ void Mtk_from_MM(Vector & MM, matrix & Mtk, INT t, INT k,
 		}
 }
 
-void Mtk_via_Mtr_Mrk(INT t, INT r, INT k, INT f_subspaces, INT q,  
-	matrix & Mtr, matrix & Mrk, matrix & Mtk, INT verbose_level)
+void Mtk_via_Mtr_Mrk(int t, int r, int k, int f_subspaces, int q,  
+	matrix & Mtr, matrix & Mrk, matrix & Mtk, int verbose_level)
 // Computes $M_{tk}$ via a recursion formula:
 // $M_{tk} = {{k - t} \choose {k - r}} \cdot M_{t,r} \cdot M_{r,k}$.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	discreta_base s, h;
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	if (f_v) {
 		cout << "Mtk_via_Mtr_Mrk(): t = " << t << ", r = " << r << ", k = " << k << endl;
@@ -207,7 +207,7 @@ void Mtk_via_Mtr_Mrk(INT t, INT r, INT k, INT f_subspaces, INT q,
 		longinteger_object a;
 		
 		D.q_binomial(a, k - t, r - t, q, 0/* verbose_level*/);
-		s.m_i_i(a.as_INT());
+		s.m_i_i(a.as_int());
 		}
 	else {
 		Binomial(k - t, k - r, s);
@@ -227,12 +227,12 @@ void Mtk_via_Mtr_Mrk(INT t, INT r, INT k, INT f_subspaces, INT q,
 }
 
 void Mtk_sup_to_inf(poset_classification *gen,
-	INT t, INT k, matrix & Mtk_sup, matrix & Mtk_inf, INT verbose_level)
+	int t, int k, matrix & Mtk_sup, matrix & Mtk_inf, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT Nt, Nk, i, j, a;
-	INT *M_sup;
-	INT *M_inf;	
+	int f_v = (verbose_level >= 1);
+	int Nt, Nk, i, j, a;
+	int *M_sup;
+	int *M_inf;	
 	
 	if (f_v) {
 		cout << "Mtk_sup_to_inf" << endl;
@@ -243,8 +243,8 @@ void Mtk_sup_to_inf(poset_classification *gen,
 		cout << "M_{" << t << "," << k << "} sup is a matrix of size " << Nt << " x " << Nk << endl;
 		cout << Mtk_sup << endl;
 		}
-	M_sup = NEW_INT(Nt * Nk);
-	M_inf = NEW_INT(Nt * Nk);
+	M_sup = NEW_int(Nt * Nk);
+	M_inf = NEW_int(Nt * Nk);
 	for (i = 0; i < Nt; i++) {
 		for (j = 0; j < Nk; j++) {
 			M_sup[i * Nk + j] = Mtk_sup.s_iji(i, j);
@@ -276,12 +276,12 @@ void Mtk_sup_to_inf(poset_classification *gen,
 }
 
 void compute_Kramer_Mesner_matrix(poset_classification *gen,
-	INT t, INT k, matrix &Mtk, INT f_subspaces, INT q, INT verbose_level)
+	int t, int k, matrix &Mtk, int f_subspaces, int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	// compute Kramer Mesner matrices
 	Vector V;
-	INT i; //, a;
+	int i; //, a;
 	
 
 	if (f_v) {
@@ -308,23 +308,23 @@ void compute_Kramer_Mesner_matrix(poset_classification *gen,
 	//Mtk.print(cout);
 
 	if (f_v) {
-		INT m = Mtk.s_m();
-		INT n = Mtk.s_n();
+		int m = Mtk.s_m();
+		int n = Mtk.s_n();
 		cout << "compute_Kramer_Mesner_matrix t=" << t << " k=" << k << " done" << endl;
 		cout << "compute_Kramer_Mesner_matrix the matrix has size " << m << " x " << n << endl;
 		}
 }
 
-void matrix_to_diophant(matrix& M, diophant *&D, INT verbose_level)
+void matrix_to_diophant(matrix& M, diophant *&D, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "matrix_to_diophant" << endl;
 		}
-	INT nb_rows;
-	INT nb_cols;
-	INT i, j;
+	int nb_rows;
+	int nb_cols;
+	int i, j;
 
 	D = NEW_OBJECT(diophant);
 

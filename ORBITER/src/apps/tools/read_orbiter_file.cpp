@@ -12,11 +12,11 @@
 
 int main(int argc, char **argv)
 {
-	INT i, j;
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int i, j;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *file_name = NULL;
-	INT f_save = FALSE;
+	int f_save = FALSE;
 	const char *file_name_save = NULL;
 
 	cout << argv[0] << endl;
@@ -43,19 +43,19 @@ int main(int argc, char **argv)
 	
 
 #if 0
-	INT nb_orbits;
+	int nb_orbits;
 	char **data;
-	INT *Set_sizes;
-	INT **Sets;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
-	INT *Casenumbers;
+	int *Casenumbers;
 
-	INT *Ago;
+	int *Ago;
 	
 #if 0
-	//INT **sets;
-	//INT *set_sizes;
+	//int **sets;
+	//int *set_sizes;
 	cout << "before read_and_parse_data_file " << fname << endl;
 	read_and_parse_data_file(fname, Nb_rows[i], 
 		data, sets, set_sizes, 
@@ -78,11 +78,11 @@ int main(int argc, char **argv)
 		verbose_level);
 #else
 	orbiter_data_file *ODF;
-	INT *Ago;
+	int *Ago;
 	char fname[1000];
 	char candidates_fname[1000];
-	INT f_has_candidates = FALSE;
-	INT level;
+	int f_has_candidates = FALSE;
+	int level;
 
 	sprintf(fname, "%s", file_name);
 	sprintf(candidates_fname, "%s_candidates.bin", fname);
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 
 #endif
 	cout << "after parse_sets, scanning Ago[i]" << endl;
-	Ago = NEW_INT(ODF->nb_cases);
+	Ago = NEW_int(ODF->nb_cases);
 	for (j = 0; j < ODF->nb_cases; j++) {
 		Ago[j] = atoi(ODF->Ago_ascii[j]);
 		}
@@ -113,9 +113,9 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT nb_orbits = ODF->nb_cases;
+	int nb_orbits = ODF->nb_cases;
 
-	//INT level;
+	//int level;
 	pchar *Text_level;
 	pchar *Text_node;
 	pchar *Text_orbit_reps;
@@ -132,15 +132,15 @@ int main(int argc, char **argv)
 	Text_stab_order = NEW_pchar(nb_orbits);
 
 	for (i = 0; i < nb_orbits; i++) {
-		sprintf(str, "%ld", level);
+		sprintf(str, "%d", level);
 		Text_level[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_level[i], str);
 
-		sprintf(str, "%ld", i);
+		sprintf(str, "%d", i);
 		Text_node[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_node[i], str);
 
-		INT_vec_print_to_str(str, ODF->sets[i], level);
+		int_vec_print_to_str(str, ODF->sets[i], level);
 		Text_orbit_reps[i] = NEW_char(strlen(str) + 1);
 		strcpy(Text_orbit_reps[i], str);
 		

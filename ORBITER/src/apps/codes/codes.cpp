@@ -7,7 +7,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, const char **argv)

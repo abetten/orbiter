@@ -7,9 +7,9 @@
 #include "foundations.h"
 
 
-INT ijk_rank(INT i, INT j, INT k, INT n)
+int ijk_rank(int i, int j, int k, int n)
 {
-	INT set[3];
+	int set[3];
 	
 	set[0] = i;
 	set[1] = j;
@@ -17,16 +17,16 @@ INT ijk_rank(INT i, INT j, INT k, INT n)
 	return rank_k_subset(set, n, 3);
 }
 
-void ijk_unrank(INT &i, INT &j, INT &k, INT n, INT rk)
+void ijk_unrank(int &i, int &j, int &k, int n, int rk)
 {
-	INT set[3];
+	int set[3];
 	
 	unrank_k_subset(rk, set, n, 3);
 }
 
-INT largest_binomial2_below(INT a2)
+int largest_binomial2_below(int a2)
 {
-	INT b, b2;
+	int b, b2;
 	
 	for (b = 1; ; b++) {
 		b2 = binomial2(b);
@@ -38,9 +38,9 @@ INT largest_binomial2_below(INT a2)
 		}
 }
 
-INT largest_binomial3_below(INT a3)
+int largest_binomial3_below(int a3)
 {
-	INT b, b3;
+	int b, b3;
 	
 	for (b = 1; ; b++) {
 		b3 = binomial3(b);
@@ -52,7 +52,7 @@ INT largest_binomial3_below(INT a3)
 		}
 }
 
-INT binomial2(INT a)
+int binomial2(int a)
 {
 	if (a == 0)
 		return 0;
@@ -62,9 +62,9 @@ INT binomial2(INT a)
 		return a * (a >> 1);
 }
 
-INT binomial3(INT a)
+int binomial3(int a)
 {
-	INT r;
+	int r;
 	if (a <= 2)
 		return 0;
 	r = a % 6;
@@ -84,16 +84,16 @@ INT binomial3(INT a)
 	exit(1);
 }
 
-INT minus_one_if_positive(INT i)
+int minus_one_if_positive(int i)
 {
 	if (i)
 		return i - 1;
 	return 0;
 }
 
-void int_vec_bubblesort_increasing(INT len, INT *p)
+void int_vec_bubblesort_increasing(int len, int *p)
 {
-	INT i, j, a;
+	int i, j, a;
 	for (i = 0; i < len; i++) {
 		for (j = i + 1; j < len; j++) {
 			if (p[i] > p[j]) {
@@ -105,13 +105,14 @@ void int_vec_bubblesort_increasing(INT len, INT *p)
 		}
 }
 
-INT int_vec_search(INT *v, INT len, INT a, INT &idx)
+#if 0
+int int_vec_search(int *v, int len, int a, int &idx)
 // returns TRUE if the value a has been found in the array v[] of size len, 
 // FALSE otherwise.
 // if a has been found, idx is the position where is occurs
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
+	int l, r, m, res;
+	int f_found = FALSE;
 	
 	if (len == 0) {
 		idx = 0;
@@ -145,10 +146,11 @@ INT int_vec_search(INT *v, INT len, INT a, INT &idx)
 	idx = l;
 	return f_found;
 }
+#endif
 
-void int_vec_print(INT *v, INT len)
+void int_vec_print(int *v, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		cout << i << " : " << v[i] << endl;
@@ -157,7 +159,7 @@ void int_vec_print(INT *v, INT len)
 
 #if 1
 
-INT integer_vec_compare(INT *p, INT *q, INT len)
+int integer_vec_compare(int *p, int *q, int len)
 {
 	int i;
 	
@@ -171,7 +173,7 @@ INT integer_vec_compare(INT *p, INT *q, INT len)
 }
 #endif
 
-INT int_ij2k(INT i, INT j, INT n)
+int int_ij2k(int i, int j, int n)
 {
 	if (i == j) {
 		cout << "ij2k() i == j" << endl;
@@ -182,9 +184,9 @@ INT int_ij2k(INT i, INT j, INT n)
 	return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
 }
 
-void int_k2ij(INT k, INT & i, INT & j, INT n)
+void int_k2ij(int k, int & i, int & j, int n)
 {
-	INT ii, k_save = k;
+	int ii, k_save = k;
 	
 	for (ii = 0; ii < n; ii++) {
 		if (k < n - ii - 1) {

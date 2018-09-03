@@ -17,12 +17,12 @@ typedef class ovoid_generator ovoid_generator;
 
 // global data and global functions:
 
-extern INT t0; // the system time when the program started
+extern int t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
-INT check_conditions(INT len, INT *S, void *data, INT verbose_level);
-void callback_print_set(INT len, INT *S, void *data);
-INT callback_check_conditions(INT len, INT *S, void *data, INT verbose_level);
+int check_conditions(int len, int *S, void *data, int verbose_level);
+void callback_print_set(int len, int *S, void *data);
+int callback_check_conditions(int len, int *S, void *data, int verbose_level);
 
 // #############################################################################
 // ovoid_generator.C:
@@ -45,82 +45,82 @@ public:
 	
 	orthogonal *O;
 	
-	INT epsilon; // the type of the quadric (0, 1 or -1)
-	INT n; // projective dimension
-	INT d; // algebraic dimension
-	INT q; // field order
-	INT m; // Witt index
-	INT depth; // search depth
+	int epsilon; // the type of the quadric (0, 1 or -1)
+	int n; // projective dimension
+	int d; // algebraic dimension
+	int q; // field order
+	int m; // Witt index
+	int depth; // search depth
 
-	INT N; // = O->nb_points
+	int N; // = O->nb_points
 	
-	INT *u, *v, *w, *tmp1; // vectors of length d
+	int *u, *v, *w, *tmp1; // vectors of length d
 		
-	INT nb_sol; // number of solutions so far
+	int nb_sol; // number of solutions so far
 
 
 
-	INT f_prefix;
+	int f_prefix;
 	char prefix[1000]; // prefix for output files
 
-	INT f_list;
+	int f_list;
 	
-	INT f_max_depth;
-	INT max_depth;
+	int f_max_depth;
+	int max_depth;
 
-	INT f_poly;
+	int f_poly;
 	const char *override_poly;
 
-	INT f_draw_poset;
-	INT f_embedded;
-	INT f_sideways;
+	int f_draw_poset;
+	int f_embedded;
+	int f_sideways;
 
-	INT f_read;
-	INT read_level;
+	int f_read;
+	int read_level;
 
 	char prefix_with_directory[1000];
 
 	klein_correspondence *K;
-	INT *color_table;
-	INT nb_colors;
+	int *color_table;
+	int nb_colors;
 
-	INT *Pts; // [N * d]
-	INT *Candidates; // [N * d]
+	int *Pts; // [N * d]
+	int *Candidates; // [N * d]
 
 
 	ovoid_generator();
 	~ovoid_generator();
-	void init(int argc, const char **argv, INT &verbose_level);
-	void read_arguments(int argc, const char **argv, INT &verbose_level);
-	INT check_conditions(INT len, INT *S, INT verbose_level);
-	void early_test_func(INT *S, INT len,
-		INT *candidates, INT nb_candidates,
-		INT *good_candidates, INT &nb_good_candidates,
-		INT verbose_level);
-	INT collinearity_test(INT *S, INT len, INT verbose_level);
-	void print(INT *S, INT len);
+	void init(int argc, const char **argv, int &verbose_level);
+	void read_arguments(int argc, const char **argv, int &verbose_level);
+	int check_conditions(int len, int *S, int verbose_level);
+	void early_test_func(int *S, int len,
+		int *candidates, int nb_candidates,
+		int *good_candidates, int &nb_good_candidates,
+		int verbose_level);
+	int collinearity_test(int *S, int len, int verbose_level);
+	void print(int *S, int len);
 	void make_graphs(orbiter_data_file *ODF,
-		INT f_split, INT split_r, INT split_m,
-		INT f_lexorder_test,
+		int f_split, int split_r, int split_m,
+		int f_lexorder_test,
 		const char *fname_mask,
-		INT verbose_level);
+		int verbose_level);
 	void make_one_graph(orbiter_data_file *ODF,
-		INT orbit_idx,
-		INT f_lexorder_test,
+		int orbit_idx,
+		int f_lexorder_test,
 		colored_graph *&CG,
-		INT verbose_level);
+		int verbose_level);
 	void create_graph(orbiter_data_file *ODF,
-		INT orbit_idx,
-		INT *candidates, INT nb_candidates,
+		int orbit_idx,
+		int *candidates, int nb_candidates,
 		colored_graph *&CG,
-		INT verbose_level);
-	void compute_coloring(INT *starter, INT starter_size,
-			INT *candidates, INT nb_points,
-			INT *point_color, INT &nb_colors_used, INT verbose_level);
+		int verbose_level);
+	void compute_coloring(int *starter, int starter_size,
+			int *candidates, int nb_points,
+			int *point_color, int &nb_colors_used, int verbose_level);
 
 };
 
-void ovoid_generator_early_test_func_callback(INT *S, INT len,
-	INT *candidates, INT nb_candidates,
-	INT *good_candidates, INT &nb_good_candidates,
-	void *data, INT verbose_level);
+void ovoid_generator_early_test_func_callback(int *S, int len,
+	int *candidates, int nb_candidates,
+	int *good_candidates, int &nb_good_candidates,
+	void *data, int verbose_level);

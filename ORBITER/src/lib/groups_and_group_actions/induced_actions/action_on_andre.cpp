@@ -29,20 +29,20 @@ void action_on_andre::null()
 void action_on_andre::free()
 {
 	if (coords1) {
-		FREE_INT(coords1);
+		FREE_int(coords1);
 		}
 	if (coords2) {
-		FREE_INT(coords2);
+		FREE_int(coords2);
 		}
 	if (coords3) {
-		FREE_INT(coords3);
+		FREE_int(coords3);
 		}
 	null();
 }
 
-void action_on_andre::init(action *An, action *An1, andre_construction *Andre, INT verbose_level)
+void action_on_andre::init(action *An, action *An1, andre_construction *Andre, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_on_andre::init" << endl;
@@ -57,9 +57,9 @@ void action_on_andre::init(action *An, action *An1, andre_construction *Andre, I
 	n1 = n + 1;
 	N = Andre->N;
 	degree = Andre->N * 2;
-	coords1 = NEW_INT(k1 * n1);
-	coords2 = NEW_INT(k1 * n1);
-	coords3 = NEW_INT(k * n);
+	coords1 = NEW_int(k1 * n1);
+	coords2 = NEW_int(k1 * n1);
+	coords3 = NEW_int(k * n);
 	if (f_v) {
 		cout << "action_on_andre::init degree=" << degree << endl;
 		}
@@ -68,10 +68,10 @@ void action_on_andre::init(action *An, action *An1, andre_construction *Andre, I
 		}
 }
 
-void action_on_andre::compute_image(INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_andre::compute_image(int *Elt, int i, int &j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a;
+	int f_v = (verbose_level >= 1);
+	int a;
 	
 	if (f_v) {
 		cout << "action_on_andre::compute_image" << endl;
@@ -89,11 +89,11 @@ void action_on_andre::compute_image(INT *Elt, INT i, INT &j, INT verbose_level)
 		}
 }
 
-INT action_on_andre::compute_image_of_point(INT *Elt, INT pt_idx, INT verbose_level)
+int action_on_andre::compute_image_of_point(int *Elt, int pt_idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	andre_construction_point_element Pt;
-	INT i, image, rk, idx, parallel_class_idx;
+	int i, image, rk, idx, parallel_class_idx;
 	
 	if (f_v) {
 		cout << "action_on_andre::compute_image_of_point" << endl;
@@ -105,32 +105,32 @@ INT action_on_andre::compute_image_of_point(INT *Elt, INT pt_idx, INT verbose_le
 			cout << "action_on_andre::compute_image_of_point point is at infinity, at_infinity_idx=" << Pt.at_infinity_idx << endl;
 			}
 		for (i = 0; i < k; i++) {
-			INT_vec_copy(Andre->spread_elements_genma + Pt.at_infinity_idx * k * n + i * n, coords1 + i * n1, n);
+			int_vec_copy(Andre->spread_elements_genma + Pt.at_infinity_idx * k * n + i * n, coords1 + i * n1, n);
 			coords1[i * n1 + n] = 0;
 			}
 		if (f_v) {
 			cout << "Spread element embedded:" << endl;
-			INT_matrix_print(coords1, k, n1);
+			int_matrix_print(coords1, k, n1);
 			}
 		for (i = 0; i < k; i++) {
 			An1->element_image_of_low_level(coords1 + i * n1, coords2 + i * n1, Elt, verbose_level - 1);
 			}
 		if (f_v) {
 			cout << "Image of spread element:" << endl;
-			INT_matrix_print(coords2, k, n1);
+			int_matrix_print(coords2, k, n1);
 			}
 		for (i = 0; i < k; i++) {
-			INT_vec_copy(coords2 + i * n1, coords3 + i * n, n);
+			int_vec_copy(coords2 + i * n1, coords3 + i * n, n);
 			}
 		if (f_v) {
 			cout << "Reduced:" << endl;
-			INT_matrix_print(coords3, k, n);
+			int_matrix_print(coords3, k, n);
 			}
-		rk = Andre->Grass->rank_INT_here(coords3, 0 /* verbose_level*/);
+		rk = Andre->Grass->rank_int_here(coords3, 0 /* verbose_level*/);
 		if (f_v) {
 			cout << "rk=" << rk << endl;
 			}
-		if (!INT_vec_search(Andre->spread_elements_numeric_sorted, Andre->spread_size, rk, idx)) {
+		if (!int_vec_search(Andre->spread_elements_numeric_sorted, Andre->spread_size, rk, idx)) {
 			cout << "andre_construction_line_element::rank annot find the spread element in the sorted list" << endl;
 			exit(1);
 			}
@@ -144,13 +144,13 @@ INT action_on_andre::compute_image_of_point(INT *Elt, INT pt_idx, INT verbose_le
 		image = parallel_class_idx;
 		}
 	else {
-		INT_vec_copy(Pt.coordinates, coords1, n);
+		int_vec_copy(Pt.coordinates, coords1, n);
 		coords1[n] = 1;
 
 		An1->element_image_of_low_level(coords1, coords2, Elt, verbose_level - 1);
 
 		PG_element_normalize(*Andre->F, coords2, 1, n1);
-		INT_vec_copy(coords2, Pt.coordinates, n);
+		int_vec_copy(coords2, Pt.coordinates, n);
 		image = Pt.rank(0 /* verbose_level*/);
 		}
 	
@@ -160,11 +160,11 @@ INT action_on_andre::compute_image_of_point(INT *Elt, INT pt_idx, INT verbose_le
 	return image;
 }
 
-INT action_on_andre::compute_image_of_line(INT *Elt, INT line_idx, INT verbose_level)
+int action_on_andre::compute_image_of_line(int *Elt, int line_idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	andre_construction_line_element Line;
-	INT i, j, image;
+	int i, j, image;
 	
 	if (f_v) {
 		cout << "action_on_andre::compute_image_of_line" << endl;

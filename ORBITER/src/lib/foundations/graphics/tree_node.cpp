@@ -24,11 +24,11 @@ tree_node::~tree_node()
 {
 }
 
-void tree_node::init(INT depth, tree_node *parent, INT f_value, INT value, 
-	INT f_i_data, INT i_data, char *c_data, INT verbose_level)
+void tree_node::init(int depth, tree_node *parent, int f_value, int value, 
+	int f_i_data, int i_data, char *c_data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "tree_node::init depth=" << depth << " value=" << value << endl;
@@ -63,7 +63,7 @@ void tree_node::print_path()
 
 void tree_node::print_depth_first()
 {
-	INT i;
+	int i;
 	
 	cout << "depth " << depth << " : ";
 	print_path();
@@ -89,9 +89,9 @@ void tree_node::print_depth_first()
 		}
 }
 
-void tree_node::compute_DFS_rank(INT &rk)
+void tree_node::compute_DFS_rank(int &rk)
 {
-	INT i;
+	int i;
 	
 	DFS_rank = rk;
 	rk++;
@@ -100,9 +100,9 @@ void tree_node::compute_DFS_rank(INT &rk)
 		}
 }
 
-void tree_node::get_coordinates(INT &idx, INT *coord_xy)
+void tree_node::get_coordinates(int &idx, int *coord_xy)
 {
-	INT i;
+	int i;
 	
 	coord_xy[idx * 2 + 0] = placement_x;
 	coord_xy[idx * 2 + 1] = placement_y;
@@ -112,9 +112,9 @@ void tree_node::get_coordinates(INT &idx, INT *coord_xy)
 		}
 }
 
-void tree_node::get_coordinates_and_width(INT &idx, INT *coord_xyw)
+void tree_node::get_coordinates_and_width(int &idx, int *coord_xyw)
 {
-	INT i;
+	int i;
 	
 	coord_xyw[idx * 3 + 0] = placement_x;
 	coord_xyw[idx * 3 + 1] = placement_y;
@@ -127,7 +127,7 @@ void tree_node::get_coordinates_and_width(INT &idx, INT *coord_xyw)
 
 void tree_node::calc_weight()
 {
-	INT i;
+	int i;
 
 	weight = 1;
 	for (i = 0; i < nb_children; i++) {
@@ -136,9 +136,9 @@ void tree_node::calc_weight()
 		}
 }
 
-void tree_node::place_xy(INT left, INT right, INT ymax, INT max_depth)
+void tree_node::place_xy(int left, int right, int ymax, int max_depth)
 {
-	INT i, w, w0, w1, lft, rgt;
+	int i, w, w0, w1, lft, rgt;
 	double dx;
 	
 	placement_x = (left + right) >> 1;
@@ -151,22 +151,22 @@ void tree_node::place_xy(INT left, INT right, INT ymax, INT max_depth)
 	
 	for (i = 0; i < nb_children; i++) {
 		w1 = children[i]->weight;
-		lft = left + (INT)((double)w0 * dx);
-		rgt = left + (INT)((double)(w0 + w1) * dx);
+		lft = left + (int)((double)w0 * dx);
+		rgt = left + (int)((double)(w0 + w1) * dx);
 		children[i]->place_xy(lft, rgt, ymax, max_depth);
 		w0 += w1;
 		}
 }
 
-void tree_node::place_on_circle(INT xmax, INT ymax, INT max_depth)
+void tree_node::place_on_circle(int xmax, int ymax, int max_depth)
 {
-	INT i, dy;
+	int i, dy;
 	double x, y;
 	double x1, y1;
 
 	x = placement_x;
 	y = placement_y;
-	dy = (INT)((double)ymax / (double)(max_depth + 1));
+	dy = (int)((double)ymax / (double)(max_depth + 1));
 	y = ymax - y;
 	y -= dy * 0.5;
 	y /= ymax;
@@ -175,23 +175,23 @@ void tree_node::place_on_circle(INT xmax, INT ymax, INT max_depth)
 	x -= M_PI;
 	x1 = y * cos(x) * xmax * 0.5 + xmax * 0.5;
 	y1 = y * sin(x) * ymax * 0.5 + ymax * 0.5;
-	placement_x = (INT) x1;
-	placement_y = (INT) y1;
+	placement_x = (int) x1;
+	placement_y = (int) y1;
 	for (i = 0; i < nb_children; i++) {
 		children[i]->place_on_circle(xmax, ymax, max_depth);
 		}
 }
 
-void tree_node::add_node(INT l, INT depth, INT *path, INT i_data, char *c_data, 
-	INT verbose_level)
+void tree_node::add_node(int l, int depth, int *path, int i_data, char *c_data, 
+	int verbose_level)
 {
-	INT i, idx;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int i, idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "tree_node::add_node: depth=" << depth << " : ";
-		INT_vec_print(cout, path, l);
+		int_vec_print(cout, path, l);
 		cout << endl;
 		}
 	if (l == 0) {
@@ -240,9 +240,9 @@ void tree_node::add_node(INT l, INT depth, INT *path, INT i_data, char *c_data,
 	children[idx]->add_node(l, depth + 1, path, i_data, c_data, verbose_level);
 }
 
-INT tree_node::find_child(INT val)
+int tree_node::find_child(int val)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_children; i++) {
 		if (children[i]->value == val)
@@ -251,7 +251,7 @@ INT tree_node::find_child(INT val)
 	return -1;
 }
 
-void tree_node::get_values(INT *v)
+void tree_node::get_values(int *v)
 {
 	cout << "get_values depth=" << depth << " value=" << value << endl;
 	if (depth) {
@@ -260,18 +260,18 @@ void tree_node::get_values(INT *v)
 		}
 }
 
-void tree_node::draw_edges(mp_graphics &G, INT rad, INT f_circle, INT f_circletext, INT f_i, 
-	INT f_has_parent, INT parent_x, INT parent_y, INT max_depth, INT f_edge_labels, 
-	INT f_has_draw_vertex_callback, 
-	void (*draw_vertex_callback)(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy),
+void tree_node::draw_edges(mp_graphics &G, int rad, int f_circle, int f_circletext, int f_i, 
+	int f_has_parent, int parent_x, int parent_y, int max_depth, int f_edge_labels, 
+	int f_has_draw_vertex_callback, 
+	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
 	tree *T
 	)
 {
-	//INT rad = 20;
-	//INT dx = rad; // / sqrt(2);
-	//INT dy = dx;
-	INT x, y, i;
-	INT Px[3], Py[3];
+	//int rad = 20;
+	//int dx = rad; // / sqrt(2);
+	//int dy = dx;
+	int x, y, i;
+	int Px[3], Py[3];
 	
 #if DONT_DRAW_ROOT_NODE
 	if (!f_has_parent) {
@@ -318,20 +318,20 @@ void tree_node::draw_edges(mp_graphics &G, INT rad, INT f_circle, INT f_circlete
 		}
 }
 
-void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circletext, INT f_i, 
-	INT f_has_parent, INT parent_x, INT parent_y, INT max_depth, INT f_edge_labels, 
-	INT f_has_draw_vertex_callback, 
-	void (*draw_vertex_callback)(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy),
+void tree_node::draw_vertices(mp_graphics &G, int rad, int f_circle, int f_circletext, int f_i, 
+	int f_has_parent, int parent_x, int parent_y, int max_depth, int f_edge_labels, 
+	int f_has_draw_vertex_callback, 
+	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy),
 	tree *T
 	)
 {
-	//INT rad = 20;
-	INT dx = rad; // / sqrt(2);
-	INT dy = dx;
-	INT x, y, i;
-	INT Px[3], Py[3];
+	//int rad = 20;
+	int dx = rad; // / sqrt(2);
+	int dy = dx;
+	int x, y, i;
+	int Px[3], Py[3];
 	char str[1000];
-	INT *v;
+	int *v;
 	
 #if DONT_DRAW_ROOT_NODE
 	if (!f_has_parent) {
@@ -348,17 +348,17 @@ void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circl
 	y = placement_y;
 	// calc_y_coordinate(y, depth, max_depth);
 
-	v = NEW_INT(depth + 1);
+	v = NEW_int(depth + 1);
 	get_values(v);
 
 
 	if (rad > 0) {
 		if (f_circle) {
 			if (depth == 0) {
-				G.nice_circle(x, y, (INT) (rad * 1.2));
+				G.nice_circle(x, y, (int) (rad * 1.2));
 				}
 			if (depth == 18) { // clearly something specific, here hyperval in PG(2,16)
-				G.nice_circle(x, y, (INT) (rad * 3));
+				G.nice_circle(x, y, (int) (rad * 3));
 				}
 			else {
 				G.nice_circle(x, y, rad);
@@ -371,7 +371,7 @@ void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circl
 		cout << "calling draw_vertex_callback" << endl;
 		(*draw_vertex_callback)(T, &G, v, depth, this, x, y, dx, dy);
 		}
-	FREE_INT(v);
+	FREE_int(v);
 
 
 	cout << "{" << x << "," << y << "}, // depth " << depth << " ";
@@ -395,7 +395,7 @@ void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circl
 	if (T->f_count_leaves) {
 		if (nb_children == 0) {
 		
-			INT dy, x0, y0;
+			int dy, x0, y0;
 
 			x0 = placement_x;
 			y0 = placement_y;
@@ -404,7 +404,7 @@ void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circl
 			y0 -= dy;
 		
 
-			sprintf(str, "L%ld", T->leaf_count);
+			sprintf(str, "L%d", T->leaf_count);
 
 			T->leaf_count++;
 			G.aligned_text(x0, y0, "", str);
@@ -417,7 +417,7 @@ void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circl
 			f_has_draw_vertex_callback, draw_vertex_callback, T);
 		}
 	if (f_value) {
-		sprintf(str, "%ld", value);
+		sprintf(str, "%d", value);
 		}
 	else {
 		sprintf(str, " ");
@@ -430,19 +430,19 @@ void tree_node::draw_vertices(mp_graphics &G, INT rad, INT f_circle, INT f_circl
 		//G.aligned_text(x, y, 1, "tl", str);
 		}
 	if (f_i && f_circletext && f_int_data) {
-		sprintf(str, "%ld", int_data);
+		sprintf(str, "%d", int_data);
 		G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 }
 
-void tree_node::draw_sideways(mp_graphics &G, INT f_circletext, INT f_i, 
-	INT f_has_parent, INT parent_x, INT parent_y, INT max_depth, INT f_edge_labels)
+void tree_node::draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
+	int f_has_parent, int parent_x, int parent_y, int max_depth, int f_edge_labels)
 {
-	INT x, y, i;
-	INT xx, yy;
-	INT Px[3], Py[3];
+	int x, y, i;
+	int xx, yy;
+	int Px[3], Py[3];
 	char str[1000];
-	//INT rad = 50;
+	//int rad = 50;
 	
 #if DONT_DRAW_ROOT_NODE
 	if (!f_has_parent) {
@@ -490,7 +490,7 @@ void tree_node::draw_sideways(mp_graphics &G, INT f_circletext, INT f_i,
 		children[i]->draw_sideways(G, f_circletext, f_i, TRUE, xx, yy, max_depth, f_edge_labels);
 		}
 	if (f_value) {
-		sprintf(str, "%ld", value);
+		sprintf(str, "%d", value);
 		}
 	else {
 		sprintf(str, " ");
@@ -511,18 +511,18 @@ void tree_node::draw_sideways(mp_graphics &G, INT f_circletext, INT f_i,
 		//G.aligned_text(xx, yy, 1, "tl", str);
 		}
 	if (f_i && f_circletext && f_int_data) {
-		sprintf(str, "%ld", int_data);
+		sprintf(str, "%d", int_data);
 		G.aligned_text(Px[1], Py[1], "tl", str);
 		}
 }
 
 
-INT tree_node_calc_y_coordinate(INT ymax, INT l, INT max_depth)
+int tree_node_calc_y_coordinate(int ymax, int l, int max_depth)
 {
-	INT dy, y;
+	int dy, y;
 	
-	dy = (INT)((double)ymax / (double)(max_depth + 1));
-	y = (INT)(dy * ((double)l + 0.5));
+	dy = (int)((double)ymax / (double)(max_depth + 1));
+	y = (int)(dy * ((double)l + 0.5));
 	y = ymax - y;
 	return y;
 }

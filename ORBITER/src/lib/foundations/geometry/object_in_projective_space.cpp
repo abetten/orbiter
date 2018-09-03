@@ -34,7 +34,7 @@ void object_in_projective_space::null()
 void object_in_projective_space::freeself()
 {
 	if (set) {
-		FREE_INT(set);
+		FREE_int(set);
 		}
 	if (SoS) {
 		FREE_OBJECT(SoS);
@@ -49,12 +49,12 @@ void object_in_projective_space::print(ostream &ost)
 {
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": ";
-		INT_vec_print(ost, set, sz);
+		int_vec_print(ost, set, sz);
 		ost << endl;
 		}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": ";
-		INT_vec_print(ost, set, sz);
+		int_vec_print(ost, set, sz);
 		ost << endl;
 		}
 	else if (type == t_PAC) {
@@ -68,12 +68,12 @@ void object_in_projective_space::print_tex(ostream &ost)
 {
 	if (type == t_PTS) {
 		ost << "set of points of size " << sz << ": $\\{";
-		INT_vec_print(ost, set, sz);
+		int_vec_print(ost, set, sz);
 		ost << "\\}$" << endl;
 		}
 	else if (type == t_LNS) {
 		ost << "set of lines of size " << sz << ": $\\{";
-		INT_vec_print(ost, set, sz);
+		int_vec_print(ost, set, sz);
 		ost << "\\}$" << endl;
 		}
 	else if (type == t_PAC) {
@@ -83,44 +83,44 @@ void object_in_projective_space::print_tex(ostream &ost)
 		}
 }
 
-void object_in_projective_space::init_point_set(projective_space *P, INT *set, INT sz, INT verbose_level)
+void object_in_projective_space::init_point_set(projective_space *P, int *set, int sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_point_set" << endl;
 		}
 	object_in_projective_space::P = P;
 	type = t_PTS;
-	object_in_projective_space::set = NEW_INT(sz);
-	INT_vec_copy(set, object_in_projective_space::set, sz);
+	object_in_projective_space::set = NEW_int(sz);
+	int_vec_copy(set, object_in_projective_space::set, sz);
 	object_in_projective_space::sz = sz;
 	if (f_v) {
 		cout << "object_in_projective_space::init_point_set done" << endl;
 		}
 }
 
-void object_in_projective_space::init_line_set(projective_space *P, INT *set, INT sz, INT verbose_level)
+void object_in_projective_space::init_line_set(projective_space *P, int *set, int sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_line_set" << endl;
 		}
 	object_in_projective_space::P = P;
 	type = t_LNS;
-	object_in_projective_space::set = NEW_INT(sz);
-	INT_vec_copy(set, object_in_projective_space::set, sz);
+	object_in_projective_space::set = NEW_int(sz);
+	int_vec_copy(set, object_in_projective_space::set, sz);
 	object_in_projective_space::sz = sz;
 	if (f_v) {
 		cout << "object_in_projective_space::init_line_set done" << endl;
 		}
 }
 
-void object_in_projective_space::init_packing_from_set(projective_space *P, INT *packing, INT sz, INT verbose_level)
+void object_in_projective_space::init_packing_from_set(projective_space *P, int *packing, int sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, q, size_of_spread, size_of_packing;
+	int f_v = (verbose_level >= 1);
+	int i, q, size_of_spread, size_of_packing;
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_packing_from_set" << endl;
@@ -142,7 +142,7 @@ void object_in_projective_space::init_packing_from_set(projective_space *P, INT 
 		0 /* verbose_level */);
 
 	for (i = 0; i < size_of_packing; i++) {
-		INT_vec_copy(packing + i * size_of_spread, SoS->Sets[i], size_of_spread);
+		int_vec_copy(packing + i * size_of_spread, SoS->Sets[i], size_of_spread);
 		}
 #if 0
 	if (f_v) {
@@ -157,17 +157,17 @@ void object_in_projective_space::init_packing_from_set(projective_space *P, INT 
 		}
 }
 
-void object_in_projective_space::init_packing_from_set_of_sets(projective_space *P, set_of_sets *SoS, INT verbose_level)
+void object_in_projective_space::init_packing_from_set_of_sets(projective_space *P, set_of_sets *SoS, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_packing_from_set_of_sets" << endl;
 		}
 	object_in_projective_space::P = P;
 	type = t_PAC;
-	//object_in_projective_space::set = NEW_INT(sz);
-	//INT_vec_copy(set, object_in_projective_space::set, sz);
+	//object_in_projective_space::set = NEW_int(sz);
+	//int_vec_copy(set, object_in_projective_space::set, sz);
 	//object_in_projective_space::sz = sz;
 
 	object_in_projective_space::SoS = SoS->copy();
@@ -178,10 +178,10 @@ void object_in_projective_space::init_packing_from_set_of_sets(projective_space 
 }
 
 void object_in_projective_space::init_packing_from_spread_table(projective_space *P, 
-	INT *data, INT *Spread_table, INT nb_spreads, INT spread_size, INT verbose_level)
+	int *data, int *Spread_table, int nb_spreads, int spread_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, i, q, size_of_spread, size_of_packing;
+	int f_v = (verbose_level >= 1);
+	int a, i, q, size_of_spread, size_of_packing;
 
 	if (f_v) {
 		cout << "object_in_projective_space::init_packing_from_spread_table" << endl;
@@ -204,7 +204,7 @@ void object_in_projective_space::init_packing_from_spread_table(projective_space
 
 	for (i = 0; i < size_of_packing; i++) {
 		a = data[i];
-		INT_vec_copy(Spread_table + a * size_of_spread, SoS->Sets[i], size_of_spread);
+		int_vec_copy(Spread_table + a * size_of_spread, SoS->Sets[i], size_of_spread);
 		}
 
 	if (f_v) {
@@ -212,9 +212,9 @@ void object_in_projective_space::init_packing_from_spread_table(projective_space
 		}
 }
 
-void object_in_projective_space::encode_incma(INT *&Incma, INT &nb_rows, INT &nb_cols, INT *&partition, INT verbose_level)
+void object_in_projective_space::encode_incma(int *&Incma, int &nb_rows, int &nb_cols, int *&partition, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_incma" << endl;
@@ -243,15 +243,15 @@ void object_in_projective_space::encode_incma(INT *&Incma, INT &nb_rows, INT &nb
 		}
 }
 
-void object_in_projective_space::encode_point_set(INT *&Incma, INT &nb_rows, INT &nb_cols, INT *&partition, INT verbose_level)
+void object_in_projective_space::encode_point_set(int *&Incma, int &nb_rows, int &nb_cols, int *&partition, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_point_set" << endl;
 		}
-	INT i, j;
-	INT f_vvv = (verbose_level >= 3);
+	int i, j;
+	int f_vvv = (verbose_level >= 3);
 	
 	C = NEW_OBJECT(classify);
 
@@ -270,15 +270,15 @@ void object_in_projective_space::encode_point_set(INT *&Incma, INT &nb_rows, INT
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C->second_nb_types;
 
-	INT N, L;
+	int N, L;
 	
 	N = nb_rows + nb_cols;
 	L = nb_rows * nb_cols;
 
-	Incma = NEW_INT(L);
-	partition = NEW_INT(N);
+	Incma = NEW_int(L);
+	partition = NEW_int(N);
 
-	INT_vec_zero(Incma, L);
+	int_vec_zero(Incma, L);
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
@@ -302,7 +302,7 @@ void object_in_projective_space::encode_point_set(INT *&Incma, INT &nb_rows, INT
 
 	// last columns:
 	for (j = 0; j < C->second_nb_types; j++) {
-		INT h, f2, l2, m, idx, f, l;
+		int h, f2, l2, m, idx, f, l;
 
 		f2 = C->second_type_first[j];
 		l2 = C->second_type_len[j];
@@ -354,30 +354,30 @@ void object_in_projective_space::encode_point_set(INT *&Incma, INT &nb_rows, INT
 		}
 }
 
-void object_in_projective_space::encode_line_set(INT *&Incma, INT &nb_rows, INT &nb_cols, INT *&partition, INT verbose_level)
+void object_in_projective_space::encode_line_set(int *&Incma, int &nb_rows, int &nb_cols, int *&partition, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_line_set" << endl;
 		}
-	INT i, j;
-	INT f_vvv = (verbose_level >= 3);
+	int i, j;
+	int f_vvv = (verbose_level >= 3);
 	
 
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + 1;
 
-	INT N, L;
+	int N, L;
 	
 	N = nb_rows + nb_cols;
 	L = nb_rows * nb_cols;
 
-	partition = NEW_INT(N);
-	Incma = NEW_INT(L);
+	partition = NEW_int(N);
+	Incma = NEW_int(L);
 
 
-	INT_vec_zero(Incma, L);
+	int_vec_zero(Incma, L);
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
@@ -387,7 +387,7 @@ void object_in_projective_space::encode_line_set(INT *&Incma, INT &nb_rows, INT 
 
 	// last rows:
 	for (i = 0; i < 1; i++) {
-		INT h;
+		int h;
 
 		for (h = 0; h < sz; h++) {
 			j = set[h];
@@ -420,30 +420,30 @@ void object_in_projective_space::encode_line_set(INT *&Incma, INT &nb_rows, INT 
 }
 
 
-void object_in_projective_space::encode_packing(INT *&Incma, INT &nb_rows, INT &nb_cols, INT *&partition, INT verbose_level)
+void object_in_projective_space::encode_packing(int *&Incma, int &nb_rows, int &nb_cols, int *&partition, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_packing" << endl;
 		}
-	INT i, j;
-	INT f_vvv = (verbose_level >= 3);
+	int i, j;
+	int f_vvv = (verbose_level >= 3);
 	
 
 	nb_rows = P->N_points + SoS->nb_sets;
 	nb_cols = P->N_lines + 1;
 
-	INT N, L;
+	int N, L;
 	
 	N = nb_rows + nb_cols;
 	L = nb_rows * nb_cols;
 
-	Incma = NEW_INT(L);
-	partition = NEW_INT(N);
+	Incma = NEW_int(L);
+	partition = NEW_int(N);
 
 
-	INT_vec_zero(Incma, L);
+	int_vec_zero(Incma, L);
 
 	for (i = 0; i < P->N_points; i++) {
 		for (j = 0; j < P->N_lines; j++) {
@@ -453,7 +453,7 @@ void object_in_projective_space::encode_packing(INT *&Incma, INT &nb_rows, INT &
 
 	// last rows:
 	for (i = 0; i < SoS->nb_sets; i++) {
-		INT h;
+		int h;
 
 		for (h = 0; h < SoS->Set_size[i]; h++) {
 			j = SoS->Sets[i][h];
@@ -486,12 +486,12 @@ void object_in_projective_space::encode_packing(INT *&Incma, INT &nb_rows, INT &
 }
 
 void object_in_projective_space::encode_incma_and_make_decomposition(
-	INT *&Incma, INT &nb_rows, INT &nb_cols, INT *&partition, 
+	int *&Incma, int &nb_rows, int &nb_cols, int *&partition, 
 	incidence_structure *&Inc, 
 	partitionstack *&Stack, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_incma_and_make_decomposition" << endl;
@@ -572,9 +572,9 @@ void object_in_projective_space::encode_incma_and_make_decomposition(
 		}
 }
 
-void object_in_projective_space::encode_object(INT *&encoding, INT &encoding_sz, INT verbose_level)
+void object_in_projective_space::encode_object(int *&encoding, int &encoding_sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_object" << endl;
@@ -606,44 +606,44 @@ void object_in_projective_space::encode_object(INT *&encoding, INT &encoding_sz,
 		}
 }
 
-void object_in_projective_space::encode_object_points(INT *&encoding, INT &encoding_sz, INT verbose_level)
+void object_in_projective_space::encode_object_points(int *&encoding, int &encoding_sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_object_points" << endl;
 		}
 	encoding_sz = sz;
-	encoding = NEW_INT(sz);
-	INT_vec_copy(set, encoding, sz);
+	encoding = NEW_int(sz);
+	int_vec_copy(set, encoding, sz);
 }
 
-void object_in_projective_space::encode_object_lines(INT *&encoding, INT &encoding_sz, INT verbose_level)
+void object_in_projective_space::encode_object_lines(int *&encoding, int &encoding_sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_object_lines" << endl;
 		}
 	encoding_sz = sz;
-	encoding = NEW_INT(sz);
-	INT_vec_copy(set, encoding, sz);
+	encoding = NEW_int(sz);
+	int_vec_copy(set, encoding, sz);
 }
 
-void object_in_projective_space::encode_object_packing(INT *&encoding, INT &encoding_sz, INT verbose_level)
+void object_in_projective_space::encode_object_packing(int *&encoding, int &encoding_sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::encode_object_packing" << endl;
 		}
-	INT i, h;
+	int i, h;
 	
 	encoding_sz = SoS->total_size();
-	encoding = NEW_INT(encoding_sz);
+	encoding = NEW_int(encoding_sz);
 	h = 0;
 	for (i = 0; i < SoS->nb_sets; i++) {
-		INT_vec_copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
+		int_vec_copy(SoS->Sets[i], encoding + h, SoS->Set_size[i]);
 		h += SoS->Set_size[i];
 		}
 	if (h != encoding_sz) {
@@ -652,9 +652,9 @@ void object_in_projective_space::encode_object_packing(INT *&encoding, INT &enco
 		}
 }
 
-void object_in_projective_space::klein(INT verbose_level)
+void object_in_projective_space::klein(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "object_in_projective_space::klein" << endl;
@@ -675,13 +675,13 @@ void object_in_projective_space::klein(INT verbose_level)
 
 	projective_space *P5;
 	grassmann *Gr;
-	INT *pts_klein;
-	INT i, N;
+	int *pts_klein;
+	int i, N;
 	
 	longinteger_object *R;
-	INT **Pts_on_plane;
-	INT *nb_pts_on_plane;
-	INT nb_planes;
+	int **Pts_on_plane;
+	int *nb_pts_on_plane;
+	int nb_planes;
 
 
 
@@ -691,7 +691,7 @@ void object_in_projective_space::klein(INT verbose_level)
 		FALSE /* f_init_incidence_structure */, 
 		0 /* verbose_level - 2 */);
 
-	pts_klein = NEW_INT(sz);
+	pts_klein = NEW_int(sz);
 	
 	if (f_v) {
 		cout << "object_in_projective_space::klein before P3->klein_correspondence" << endl;
@@ -700,7 +700,7 @@ void object_in_projective_space::klein(INT verbose_level)
 		set, sz, pts_klein, 0/*verbose_level*/);
 
 
-	N = P5->nb_rk_k_subspaces_as_INT(3);
+	N = P5->nb_rk_k_subspaces_as_int(3);
 	if (f_v) {
 		cout << "object_in_projective_space::klein N = " << N << endl;
 		}
@@ -732,7 +732,7 @@ void object_in_projective_space::klein(INT verbose_level)
 			if (nb_pts_on_plane[i] >= 3) {
 				cout << setw(3) << i << " / " << nb_planes << " : " << R[i] 
 					<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-				INT_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+				int_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 				cout << endl;
 				}
 			}
@@ -740,18 +740,18 @@ void object_in_projective_space::klein(INT verbose_level)
 		}
 	cout << "before FREE_OBJECTS(R);" << endl;
 	FREE_OBJECTS(R);
-	cout << "before FREE_INT(Pts_on_plane[i]);" << endl;
+	cout << "before FREE_int(Pts_on_plane[i]);" << endl;
 	for (i = 0; i < nb_planes; i++) {
-		FREE_INT(Pts_on_plane[i]);
+		FREE_int(Pts_on_plane[i]);
 		}
-	cout << "before FREE_PINT(Pts_on_plane);" << endl;
-	FREE_PINT(Pts_on_plane);
-	cout << "before FREE_INT(nb_pts_on_plane);" << endl;
-	FREE_INT(nb_pts_on_plane);
+	cout << "before FREE_pint(Pts_on_plane);" << endl;
+	FREE_pint(Pts_on_plane);
+	cout << "before FREE_int(nb_pts_on_plane);" << endl;
+	FREE_int(nb_pts_on_plane);
 
 	
 	
-	FREE_INT(pts_klein);
+	FREE_int(pts_klein);
 	FREE_OBJECT(P5);
 	FREE_OBJECT(Gr);
 	if (f_v) {

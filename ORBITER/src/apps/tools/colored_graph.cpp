@@ -11,20 +11,20 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;	
+	int verbose_level = 0;
+	int f_file = FALSE;	
 	const char *fname = NULL;
-	INT f_export_magma = FALSE;
-	INT f_export_maple = FALSE;
-	INT f_print = FALSE;
+	int f_export_magma = FALSE;
+	int f_export_maple = FALSE;
+	int f_print = FALSE;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

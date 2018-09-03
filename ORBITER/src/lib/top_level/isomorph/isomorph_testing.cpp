@@ -11,9 +11,9 @@
 #include "orbiter.h"
 
 
-void isomorph::iso_test_init(INT verbose_level)
+void isomorph::iso_test_init(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "isomorph::iso_test_init" << endl;
@@ -31,34 +31,34 @@ void isomorph::iso_test_init(INT verbose_level)
 		}
 }
 
-void isomorph::iso_test_init2(INT verbose_level)
+void isomorph::iso_test_init2(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT i;
+	int f_v = (verbose_level >= 1);
+	//int i;
 	
 	if (f_v) {
 		cout << "isomorph::iso_test_init2" << endl;
 		}
 	
-	subset = NEW_INT(level);
-	subset_witness = NEW_INT(level);
-	rearranged_set = NEW_INT(size);
-	rearranged_set_save = NEW_INT(size);
-	canonical_set = NEW_INT(size);
-	tmp_set = NEW_INT(size);
-	Elt_transporter = NEW_INT(A->elt_size_in_INT);
-	tmp_Elt = NEW_INT(A->elt_size_in_INT);
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	transporter = NEW_INT(A->elt_size_in_INT);
+	subset = NEW_int(level);
+	subset_witness = NEW_int(level);
+	rearranged_set = NEW_int(size);
+	rearranged_set_save = NEW_int(size);
+	canonical_set = NEW_int(size);
+	tmp_set = NEW_int(size);
+	Elt_transporter = NEW_int(A->elt_size_in_int);
+	tmp_Elt = NEW_int(A->elt_size_in_int);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	transporter = NEW_int(A->elt_size_in_int);
 	
 	if (f_v) {
 		cout << "isomorph::iso_test_init2 "
-				"before INT_n_choose_k" << endl;
+				"before int_n_choose_k" << endl;
 		}
-	NCK = INT_n_choose_k(size, level);
+	NCK = int_n_choose_k(size, level);
 	if (f_v) {
 		cout << "isomorph::iso_test_init2 "
-				"after INT_n_choose_k" << endl;
+				"after int_n_choose_k" << endl;
 		}
 
 
@@ -67,14 +67,14 @@ void isomorph::iso_test_init2(INT verbose_level)
 		}
 }
 
-void isomorph::probe(INT flag_orbit, INT subset_rk,
-		INT f_implicit_fusion, INT verbose_level)
+void isomorph::probe(int flag_orbit, int subset_rk,
+		int f_implicit_fusion, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *Stab;
 	longinteger_object go;
-	INT data[1000];
-	INT i, id;
+	int data[1000];
+	int i, id;
 
 	if (f_v) {
 		cout << "isomorph::probe for flag orbit " << flag_orbit
@@ -108,7 +108,7 @@ void isomorph::probe(INT flag_orbit, INT subset_rk,
 	load_solution(id, data);
 	if (f_v) {
 		cout << "isomorph::probe flag orbit " << flag_orbit << " : ";
-		INT_vec_print(cout, data, size);
+		int_vec_print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -133,7 +133,7 @@ void isomorph::probe(INT flag_orbit, INT subset_rk,
 	if (f_v) {
 		cout << "isomorph::probe the subset with rank "
 				<< subset_rk  << " is ";
-		INT_vec_print(cout, subset, level);
+		int_vec_print(cout, subset, level);
 		cout << endl;
 		cout << "size=" << size << endl;
 		cout << "level=" << level << endl;
@@ -149,7 +149,7 @@ void isomorph::probe(INT flag_orbit, INT subset_rk,
 
 	if (f_v) {
 		cout << "The rearranged set is ";
-		INT_vec_print(cout, rearranged_set, size);
+		int_vec_print(cout, rearranged_set, size);
 		cout << endl;
 		}
 
@@ -172,15 +172,15 @@ void isomorph::probe(INT flag_orbit, INT subset_rk,
 	stabilizer_action_exit();
 }
 
-void isomorph::isomorph_testing(INT t0, 
-	INT f_play_back, const char *play_back_file_name, 
-	INT f_implicit_fusion, INT print_mod, INT verbose_level)
+void isomorph::isomorph_testing(int t0, 
+	int f_play_back, const char *play_back_file_name, 
+	int f_implicit_fusion, int print_mod, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_v4 = FALSE;// (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
+	int f_v4 = FALSE;// (verbose_level >= 1);
 	sims *Stab;
 	longinteger_object go;
-	INT f_eof;
+	int f_eof;
 	
 	if (f_v) {
 		cout << "isomorph::isomorph_testing" << endl;
@@ -282,14 +282,14 @@ void isomorph::isomorph_testing(INT t0,
 		}
 }
 
-void isomorph::write_classification_matrix(INT verbose_level)
+void isomorph::write_classification_matrix(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT *Mtx;
-	INT nb_rows, nb_cols;
-	INT *starter_idx;
-	INT i, j, f, l, h;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Mtx;
+	int nb_rows, nb_cols;
+	int *starter_idx;
+	int i, j, f, l, h;
 	
 
 	if (f_v) {
@@ -299,9 +299,9 @@ void isomorph::write_classification_matrix(INT verbose_level)
 	nb_rows = nb_starter;
 	nb_cols = Reps->count;
 
-	Mtx = NEW_INT(nb_rows * nb_cols);
-	INT_vec_zero(Mtx, nb_rows * nb_cols);
-	starter_idx = NEW_INT(nb_orbits);
+	Mtx = NEW_int(nb_rows * nb_cols);
+	int_vec_zero(Mtx, nb_rows * nb_cols);
+	starter_idx = NEW_int(nb_orbits);
 
 	for (i = 0; i < nb_starter; i++) {
 		f = starter_orbit_fst[i];
@@ -311,13 +311,13 @@ void isomorph::write_classification_matrix(INT verbose_level)
 			}
 		}
 
-	INT *down_link;
+	int *down_link;
 
 	compute_down_link(down_link, verbose_level);
 
 	if (f_v) {
 		cout << "starter_idx=";
-		INT_vec_print(cout, starter_idx, nb_orbits);
+		int_vec_print(cout, starter_idx, nb_orbits);
 		cout << endl;
 		}
 
@@ -330,26 +330,26 @@ void isomorph::write_classification_matrix(INT verbose_level)
 	if (f_v) {
 		cout << "isomorph::write_classification_matrix" << endl;
 		cout << "The classification matrix is:" << endl;
-		INT_matrix_print(Mtx, nb_rows, nb_cols);
+		int_matrix_print(Mtx, nb_rows, nb_cols);
 		}
 
-	FREE_INT(Mtx);
-	FREE_INT(starter_idx);
-	FREE_INT(down_link);
+	FREE_int(Mtx);
+	FREE_int(starter_idx);
+	FREE_int(down_link);
 	
 	if (f_v) {
 		cout << "isomorph::write_classification_matrix done" << endl;
 		}
 }
 
-void isomorph::write_classification_graph(INT verbose_level)
+void isomorph::write_classification_graph(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT nb_layers;
-	INT *Nb;
-	INT *Fst;
-	INT i, j, f, l, d;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_layers;
+	int *Nb;
+	int *Fst;
+	int i, j, f, l, d;
 
 	if (f_v) {
 		cout << "isomorph::write_classification_graph" << endl;
@@ -358,8 +358,8 @@ void isomorph::write_classification_graph(INT verbose_level)
 
 
 	nb_layers = 3;
-	Nb = NEW_INT(nb_layers);
-	Fst = NEW_INT(nb_layers + 1);
+	Nb = NEW_int(nb_layers);
+	Fst = NEW_int(nb_layers + 1);
 
 	Fst[0] = 0;
 	Nb[0] = nb_starter;
@@ -416,7 +416,7 @@ void isomorph::write_classification_graph(INT verbose_level)
 				"making the second set of edges" << endl;
 		}
 
-	INT *down_link;
+	int *down_link;
 
 	compute_down_link(down_link, verbose_level);
 
@@ -439,31 +439,31 @@ void isomorph::write_classification_graph(INT verbose_level)
 		}
 
 
-	FREE_INT(down_link);
+	FREE_int(down_link);
 	FREE_OBJECT(LG);
 	if (f_v) {
 		cout << "isomorph::write_classification_graph done" << endl;
 		}
 }
 
-void isomorph::decomposition_matrix(INT verbose_level)
+void isomorph::decomposition_matrix(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT m, n, i, j, a, b, f, l;
-	INT *M;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int m, n, i, j, a, b, f, l;
+	int *M;
 
 	if (f_v) {
 		cout << "isomorph::decomposition_matrix" << endl;
 		}
 	m = nb_starter;
 	n = Reps->count;
-	M = NEW_INT(m * n);
+	M = NEW_int(m * n);
 	for (i = 0; i < m * n; i++) {
 		M[i] = 0;
 		}
 
-	INT *down_link;
+	int *down_link;
 
 	compute_down_link(down_link, verbose_level);
 
@@ -482,27 +482,27 @@ void isomorph::decomposition_matrix(INT verbose_level)
 	
 	sprintf(fname_base1, "%sdecomposition_matrix", prefix);
 	sprintf(fname, "%s.csv", fname_base1);
-	INT_matrix_write_csv(fname, M, m, n);
+	int_matrix_write_csv(fname, M, m, n);
 
-	FREE_INT(down_link);
-	FREE_INT(M);
+	FREE_int(down_link);
+	FREE_int(M);
 	if (f_v) {
 		cout << "isomorph::decomposition_matrix done" << endl;
 		}
 }
 
 
-void isomorph::compute_down_link(INT *&down_link,
-		INT verbose_level)
+void isomorph::compute_down_link(int *&down_link,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, f, flag_orbit;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, f, flag_orbit;
 	
 	if (f_v) {
 		cout << "isomorph::compute_down_link" << endl;
 		}
-	down_link = NEW_INT(nb_orbits);
+	down_link = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		down_link[i] = -1;
 		}
@@ -530,7 +530,7 @@ void isomorph::compute_down_link(INT *&down_link,
 
 	if (f_vv) {
 		cout << "down_link: ";
-		INT_vec_print(cout, down_link, nb_orbits);
+		int_vec_print(cout, down_link, nb_orbits);
 		cout << endl;
 		}
 	if (f_v) {
@@ -538,18 +538,18 @@ void isomorph::compute_down_link(INT *&down_link,
 		}
 }
 
-void isomorph::do_iso_test(INT t0, sims *&Stab, 
-	INT f_play_back, ifstream *play_back_file, 
-	INT &f_eof, INT print_mod, 
-	INT f_implicit_fusion, INT verbose_level)
+void isomorph::do_iso_test(int t0, sims *&Stab, 
+	int f_play_back, ifstream *play_back_file, 
+	int &f_eof, int print_mod, 
+	int f_implicit_fusion, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
 	longinteger_object go;
-	INT id;
-	INT data[1000];
-	INT f_continue;
+	int id;
+	int data[1000];
+	int f_continue;
 	
 	
 	if (f_v) {
@@ -577,7 +577,7 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 	load_solution(id, data);
 	if (f_vv) {
 		cout << "isomorph::do_iso_test orbit_no = " << orbit_no << " : ";
-		INT_vec_print(cout, data, size);
+		int_vec_print(cout, data, size);
 		cout << endl;
 		}
 	
@@ -688,17 +688,17 @@ void isomorph::do_iso_test(INT t0, sims *&Stab,
 }
 
 
-INT isomorph::next_subset(INT t0, 
-	INT &f_continue, sims *Stab, INT *data, 
-	INT f_play_back, ifstream *play_back_file, INT &f_eof, 
-	INT verbose_level)
+int isomorph::next_subset(int t0, 
+	int &f_continue, sims *Stab, int *data, 
+	int f_play_back, ifstream *play_back_file, int &f_eof, 
+	int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v6 = (verbose_level >= 6);
-	INT f_is_minimal;
-	INT i;
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v6 = (verbose_level >= 6);
+	int f_is_minimal;
+	int i;
 
 	f_continue = FALSE;
 	
@@ -738,7 +738,7 @@ INT isomorph::next_subset(INT t0,
 	if (f_vvv) {
 		cout << "iso_node " << iso_nodes << " found minimal subset no " 
 			<< cnt_minimal << ", rank = " << subset_rank << " : ";
-		INT_set_print(cout, subset, level);
+		int_set_print(cout, subset, level);
 		cout << endl;
 		}
 	cnt_minimal++;
@@ -776,17 +776,17 @@ INT isomorph::next_subset(INT t0,
 }
 
 void isomorph::process_rearranged_set(
-	sims *Stab, INT *data,
-	INT f_implicit_fusion, INT verbose_level)
+	sims *Stab, int *data,
+	int f_implicit_fusion, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT f_v6 = (verbose_level >= 6);
-	INT orbit_no0, id0, hdl, i, j;
-	INT data0[1000];
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int f_v6 = (verbose_level >= 6);
+	int orbit_no0, id0, hdl, i, j;
+	int data0[1000];
 	longinteger_object new_go;
-	INT f_found;
+	int f_found;
 	
 	if (f_v) {
 		cout << "isomorph::process_rearranged_set "
@@ -796,7 +796,7 @@ void isomorph::process_rearranged_set(
 		//cout << "before identify_solution" << endl;
 		}
 	
-	INT f_failure_to_find_point;
+	int f_failure_to_find_point;
 
 	f_found = identify_solution_relaxed(
 		rearranged_set, transporter,
@@ -818,18 +818,18 @@ void isomorph::process_rearranged_set(
 					<< orbit_no << " subset " << subset_rank
 					<< " : not found" << endl;
 			cout << "Original set: ";
-			INT_vec_print(cout, data, size);
+			int_vec_print(cout, data, size);
 			cout << endl;
 			cout << "subset: ";
-			INT_vec_print(cout, subset, level);
+			int_vec_print(cout, subset, level);
 			cout << endl;
 			cout << "Rearranged set: ";
-			INT_vec_print(cout, rearranged_set_save, size);
+			int_vec_print(cout, rearranged_set_save, size);
 			cout << endl;
 			cout << "After trace: ";
-			INT_vec_print(cout, rearranged_set, size);
+			int_vec_print(cout, rearranged_set, size);
 			cout << endl;
-			INT_vec_copy(rearranged_set_save, rearranged_set, size);
+			int_vec_copy(rearranged_set_save, rearranged_set, size);
 			f_found = identify_solution_relaxed(
 				rearranged_set, transporter,
 				f_implicit_fusion, orbit_no0, f_failure_to_find_point,
@@ -932,12 +932,12 @@ void isomorph::process_rearranged_set(
 			cout << "n e w transporter times old transporter inverse:" << endl;
 			A->element_print(tmp_Elt, cout);
 			cout << "subset: ";
-			INT_vec_print(cout, subset, level);
+			int_vec_print(cout, subset, level);
 			cout << endl;
 
-			INT my_data[1000];
-			INT my_data0[1000];
-			INT original_orbit;
+			int my_data[1000];
+			int my_data0[1000];
+			int original_orbit;
 			
 			original_orbit = Reps->fusion[orbit_no0];
 			load_solution(orbit_perm[orbit_fst[orbit_no]], my_data);
@@ -976,9 +976,9 @@ void isomorph::process_rearranged_set(
 		}
 }
 
-INT isomorph::is_minimal(INT verbose_level)
+int isomorph::is_minimal(int verbose_level)
 {
-	INT rk, rk0;
+	int rk, rk0;
 	
 	rk = rank_k_subset(subset, size, level);
 	rk0 = UF->ancestor(rk);
@@ -993,26 +993,26 @@ INT isomorph::is_minimal(INT verbose_level)
 
 void isomorph::stabilizer_action_exit()
 {
-	INT h;
+	int h;
 	
 	for (h = 0; h < stabilizer_nb_generators; h++) {
-		FREE_INT(stabilizer_generators[h]);
+		FREE_int(stabilizer_generators[h]);
 		}
-	FREE_PINT(stabilizer_generators);
-	FREE_INT(stabilizer_orbit);
+	FREE_pint(stabilizer_generators);
+	FREE_int(stabilizer_orbit);
 	stabilizer_generators = NULL;
 	stabilizer_orbit = NULL;
 }
 
 
 
-void isomorph::stabilizer_action_init(INT verbose_level)
+void isomorph::stabilizer_action_init(int verbose_level)
 // Computes the permutations of the set that are induced by the 
 // generators for the stabilizer in AA
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, i, j;
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int h, i, j;
+	int *Elt;
 	
 	nb_sets_reached = 0;
 	nb_is_minimal_called = 0;
@@ -1025,15 +1025,15 @@ void isomorph::stabilizer_action_init(INT verbose_level)
 
 	stabilizer_nb_generators = AA->Strong_gens->gens->len;
 	//stabilizer_nb_generators = AA->strong_generators->len;
-	stabilizer_generators = NEW_PINT(stabilizer_nb_generators);
+	stabilizer_generators = NEW_pint(stabilizer_nb_generators);
 	
-	stabilizer_orbit = NEW_INT(NCK);
+	stabilizer_orbit = NEW_int(NCK);
 	for (i = 0; i < NCK; i++) {
 		stabilizer_orbit[i] = -2;
 		}
 	
 	for (h = 0; h < stabilizer_nb_generators; h++) {
-		stabilizer_generators[h] = NEW_INT(size);
+		stabilizer_generators[h] = NEW_int(size);
 		Elt = AA->Strong_gens->gens->ith(h);
 		//Elt = AA->strong_generators->ith(h);
 		for (i = 0; i < size; i++) {
@@ -1049,12 +1049,12 @@ void isomorph::stabilizer_action_init(INT verbose_level)
 		}
 }
 
-void isomorph::stabilizer_action_add_generator(INT *Elt, INT verbose_level)
+void isomorph::stabilizer_action_add_generator(int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT **new_gens;
-	INT h, i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int **new_gens;
+	int h, i, j;
 	
 	AA->group_order(stabilizer_group_order);
 	if (f_v) {
@@ -1062,12 +1062,12 @@ void isomorph::stabilizer_action_add_generator(INT *Elt, INT verbose_level)
 				<< stabilizer_group_order << endl;
 		}
 
-	new_gens = NEW_PINT(stabilizer_nb_generators + 1);
+	new_gens = NEW_pint(stabilizer_nb_generators + 1);
 	for (h = 0; h < stabilizer_nb_generators; h++) {
 		new_gens[h] = stabilizer_generators[h];
 		}
 	h = stabilizer_nb_generators;
-	new_gens[h] = NEW_INT(size);
+	new_gens[h] = NEW_int(size);
 	for (i = 0; i < size; i++) {
 		j = AA->image_of(Elt, i);
 		new_gens[h][i] = j;
@@ -1079,18 +1079,18 @@ void isomorph::stabilizer_action_add_generator(INT *Elt, INT verbose_level)
 		cout << endl;
 		}
 	stabilizer_nb_generators++;
-	FREE_PINT(stabilizer_generators);
+	FREE_pint(stabilizer_generators);
 	stabilizer_generators = new_gens;
 
-	INT *Elt1;
-	INT len, nb, N;
+	int *Elt1;
+	int len, nb, N;
 	double f;
 
 	len = gens_perm->len;
 
 	gens_perm->reallocate(len + 1);
 
-	Elt1 = NEW_INT(AA_perm->elt_size_in_INT);
+	Elt1 = NEW_int(AA_perm->elt_size_in_int);
 
 	AA_perm->make_element(Elt1, stabilizer_generators[h],
 			0 /* verbose_level */);
@@ -1111,17 +1111,17 @@ void isomorph::stabilizer_action_add_generator(INT *Elt, INT verbose_level)
 
 
 
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 }
 
-void isomorph::print_statistics_iso_test(INT t0, sims *Stab)
+void isomorph::print_statistics_iso_test(int t0, sims *Stab)
 {
 	//double progress;
 	longinteger_object go; 
 	longinteger_object AA_go;
-	INT subset_rank;
-	INT t1, dt;
-	INT nb, N;
+	int subset_rank;
+	int t1, dt;
+	int nb, N;
 	double f1; //, f2;
 	
 	t1 = os_ticks();
@@ -1150,7 +1150,7 @@ void isomorph::print_statistics_iso_test(INT t0, sims *Stab)
 #endif
 	cout << "ancestors left = " << nb << " / " << N
 			<< " (" << f1 << "%): ";
-	INT_set_print(cout, subset, level);
+	int_set_print(cout, subset, level);
 	cout << " current stabilizer order " << go 
 		<< " induced action order " << AA_go 
 		<< " nb_reps=" << Reps->nb_reps 
@@ -1169,14 +1169,14 @@ void isomorph::print_statistics_iso_test(INT t0, sims *Stab)
 }
 
 
-INT isomorph::identify(INT *set, INT f_implicit_fusion,
-		INT verbose_level)
+int isomorph::identify(int *set, int f_implicit_fusion,
+		int verbose_level)
 // opens and closes the solution database and the level database.
 // Hence this function is slow.
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT idx;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int idx;
 	
 	if (f_v) {
 		cout << "isomorph::identify" << endl;
@@ -1195,14 +1195,14 @@ INT isomorph::identify(INT *set, INT f_implicit_fusion,
 	return idx;
 }
 
-INT isomorph::identify_database_is_open(INT *set,
-		INT f_implicit_fusion, INT verbose_level)
+int isomorph::identify_database_is_open(int *set,
+		int f_implicit_fusion, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	//database DD1, DD2;
-	INT data0[1000];
-	INT orbit_no0, id0, f;
+	int data0[1000];
+	int orbit_no0, id0, f;
 
 	if (f_v) {
 		cout << "isomorph::identify_database_is_open" << endl;
@@ -1210,7 +1210,7 @@ INT isomorph::identify_database_is_open(INT *set,
 	//setup_and_open_solution_database(verbose_level - 1);
 	//setup_and_open_level_database(verbose_level - 2);
 
-	INT f_failure_to_find_point;
+	int f_failure_to_find_point;
 	
 	orbit_no0 = identify_solution(set, transporter,
 			f_implicit_fusion, f_failure_to_find_point,
@@ -1251,10 +1251,10 @@ INT isomorph::identify_database_is_open(INT *set,
 		// this seems to slow down the process.
 
 		FILE *f2;
-		INT *Elt1, *Elt2;
+		int *Elt1, *Elt2;
 		
-		Elt1 = NEW_INT(gen->A->elt_size_in_INT);
-		Elt2 = NEW_INT(gen->A->elt_size_in_INT);
+		Elt1 = NEW_int(gen->A->elt_size_in_int);
+		Elt2 = NEW_int(gen->A->elt_size_in_int);
 		
 		f2 = fopen(Reps->fname_fusion_ge, "rb");
 		fseek(f2, orbit_no0 * gen->A->coded_elt_size_in_char, SEEK_SET);
@@ -1263,8 +1263,8 @@ INT isomorph::identify_database_is_open(INT *set,
 		fclose(f2);
 		gen->A->mult(transporter, Elt1, Elt2);
 		gen->A->move(Elt2, transporter);
-		FREE_INT(Elt1);
-		FREE_INT(Elt2);
+		FREE_int(Elt1);
+		FREE_int(Elt2);
 		}
 
 	id0 = orbit_perm[orbit_fst[f]];
@@ -1286,9 +1286,9 @@ INT isomorph::identify_database_is_open(INT *set,
 		A->print(cout, transporter);
 		}
 
-	INT idx;
+	int idx;
 
-	if (!INT_vec_search(Reps->rep, Reps->count, f, idx)) {
+	if (!int_vec_search(Reps->rep, Reps->count, f, idx)) {
 		cout << "representative not found f=" << f << endl;
 		exit(1);
 		}
@@ -1305,10 +1305,10 @@ INT isomorph::identify_database_is_open(INT *set,
 
 
 void isomorph::induced_action_on_set_basic(sims *S,
-		INT *set, INT verbose_level)
+		int *set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, K_go;
 	
 	if (f_v) {
@@ -1346,7 +1346,7 @@ void isomorph::induced_action_on_set_basic(sims *S,
 }
 
 void isomorph::induced_action_on_set(
-		sims *S, INT *set, INT verbose_level)
+		sims *S, int *set, int verbose_level)
 // Called by do_iso_test and print_isomorphism_types
 // Creates the induced action on the set from the given action.
 // The given action is gen->A2
@@ -1358,8 +1358,8 @@ void isomorph::induced_action_on_set(
 {
 	longinteger_object go, K_go;
 	//sims *K;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set" << endl;
@@ -1465,10 +1465,10 @@ void isomorph::induced_action_on_set(
 
 	vector_ge *gens = AA->Strong_gens->gens;
 	//vector_ge *gens = AA->strong_generators;
-	INT len, h, i, j;
-	INT *data1;
-	INT *data2;
-	INT *Elt1;
+	int len, h, i, j;
+	int *data1;
+	int *data2;
+	int *Elt1;
 
 	len = gens->len;
 	gens_perm = NEW_OBJECT(vector_ge);
@@ -1476,9 +1476,9 @@ void isomorph::induced_action_on_set(
 	gens_perm->init(AA_perm);
 	gens_perm->allocate(len);
 
-	data1 = NEW_INT(size);
-	data2 = NEW_INT(size);
-	Elt1 = NEW_INT(AA_perm->elt_size_in_INT);
+	data1 = NEW_int(size);
+	data2 = NEW_int(size);
+	Elt1 = NEW_int(AA_perm->elt_size_in_int);
 
 	for (h = 0; h < len; h++) {
 		if (FALSE /*f_v*/) {
@@ -1491,7 +1491,7 @@ void isomorph::induced_action_on_set(
 			}
 		if (FALSE /*f_v*/) {
 			cout << "isomorph::induced_action_on_set permutation: ";
-			INT_vec_print(cout, data1, size);
+			int_vec_print(cout, data1, size);
 			cout << endl;
 			}
 		AA_perm->make_element(Elt1, data1, 0 /* verbose_level */);
@@ -1515,7 +1515,7 @@ void isomorph::induced_action_on_set(
 				"after UF->add_generators" << endl;
 		}
 	if (f_v) {
-		INT nb, N;
+		int nb, N;
 		double f;
 		nb = UF->count_ancestors();
 		N = AA_on_k_subsets->degree;
@@ -1527,21 +1527,21 @@ void isomorph::induced_action_on_set(
 		cout << "isomorph::induced_action_on_set finished" << endl;
 		}
 
-	FREE_INT(data1);
-	FREE_INT(data2);
-	FREE_INT(Elt1);
+	FREE_int(data1);
+	FREE_int(data2);
+	FREE_int(Elt1);
 }
 
-INT isomorph::handle_automorphism(INT *set, sims *Stab,
-		INT *Elt, INT verbose_level)
+int isomorph::handle_automorphism(int *set, sims *Stab,
+		int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v6 = (verbose_level >= 6);
-	INT *Elt1;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v6 = (verbose_level >= 6);
+	int *Elt1;
 	longinteger_object go, go1;
-	INT ret;
+	int ret;
 	
 	if (f_v) {
 		cout << "isomorph::handle_automorphism orbit " << orbit_no

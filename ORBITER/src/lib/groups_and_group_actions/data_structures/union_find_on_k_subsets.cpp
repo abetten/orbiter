@@ -55,18 +55,18 @@ void union_find_on_k_subsets::null()
 
 void union_find_on_k_subsets::init(
 	action *A_original, sims *S,
-	INT *set, INT set_sz, INT k, 
-	INT *interesting_k_subsets,
-	INT nb_interesting_k_subsets,
-	INT verbose_level)
+	int *set, int set_sz, int k, 
+	int *interesting_k_subsets,
+	int nb_interesting_k_subsets,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, K_go;
-	INT i, j, h, len;
-	INT *data1;
-	INT *data2;
-	INT *Elt1;
+	int i, j, h, len;
+	int *data1;
+	int *data2;
+	int *Elt1;
 
 
 	if (f_v) {
@@ -181,9 +181,9 @@ void union_find_on_k_subsets::init(
 	gens_perm->init(Ar_perm);
 	gens_perm->allocate(len);
 
-	data1 = NEW_INT(set_sz);
-	data2 = NEW_INT(set_sz);
-	Elt1 = NEW_INT(Ar_perm->elt_size_in_INT);
+	data1 = NEW_int(set_sz);
+	data2 = NEW_int(set_sz);
+	Elt1 = NEW_int(Ar_perm->elt_size_in_int);
 
 	for (h = 0; h < len; h++) {
 		if (FALSE /*f_v*/) {
@@ -196,7 +196,7 @@ void union_find_on_k_subsets::init(
 			}
 		if (FALSE /*f_v*/) {
 			cout << "union_find_on_k_subsets::init permutation: ";
-			INT_vec_print(cout, data1, set_sz);
+			int_vec_print(cout, data1, set_sz);
 			cout << endl;
 			}
 		Ar_perm->make_element(Elt1, data1, 0 /* verbose_level */);
@@ -220,7 +220,7 @@ void union_find_on_k_subsets::init(
 				"after UF->add_generators" << endl;
 		}
 	if (f_v) {
-		INT nb, N;
+		int nb, N;
 		double f;
 		nb = UF->count_ancestors();
 		N = Arkr->degree;
@@ -233,9 +233,9 @@ void union_find_on_k_subsets::init(
 		cout << "union_find_on_k_subsets::init finished" << endl;
 		}
 
-	FREE_INT(data1);
-	FREE_INT(data2);
-	FREE_INT(Elt1);
+	FREE_int(data1);
+	FREE_int(data2);
+	FREE_int(Elt1);
 
 	
 	if (f_v) {
@@ -244,9 +244,9 @@ void union_find_on_k_subsets::init(
 }
 
 
-INT union_find_on_k_subsets::is_minimal(INT rk, INT verbose_level)
+int union_find_on_k_subsets::is_minimal(int rk, int verbose_level)
 {
-	INT rk0;
+	int rk0;
 	
 	rk0 = UF->ancestor(rk);
 	if (rk0 == rk) {

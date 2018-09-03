@@ -13,12 +13,12 @@
 
 
 void Hill_cap56(int argc, const char **argv, 
-	char *fname, INT &nb_Pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_Pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT epsilon, n, q, w, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int epsilon, n, q, w, i;
 	polar *P;
 	action *A;
 	action *An;
@@ -42,7 +42,7 @@ void Hill_cap56(int argc, const char **argv,
 		cout << "Hill_cap before init_orthogonal" << endl;
 		}
 
-	INT f_semilinear;
+	int f_semilinear;
 	
 	if (is_prime(F->q)) {
 		f_semilinear = FALSE;
@@ -98,7 +98,7 @@ void Hill_cap56(int argc, const char **argv,
 	if (f_v) {
 		cout << "Hill_cap before P.compute_orbits" << endl;
 		}
-	INT t0 = os_ticks();
+	int t0 = os_ticks();
 	P->compute_orbits(t0, verbose_level - 2);
 	
 	if (f_v) {
@@ -111,7 +111,7 @@ void Hill_cap56(int argc, const char **argv,
 #if 1
 
 	longinteger_object *Rank_lines;
-	INT nb_lines;
+	int nb_lines;
 		
 	if (f_v) {
 		cout << "Hill_cap before P.dual_polar_graph" << endl;
@@ -144,14 +144,14 @@ void Hill_cap56(int argc, const char **argv,
 
 	sims *S;
 	longinteger_object go;
-	//INT goi;
-	INT *Elt;
+	//int goi;
+	int *Elt;
 
-	Elt = NEW_INT(P->A->elt_size_in_INT);
+	Elt = NEW_int(P->A->elt_size_in_int);
 	S = P->A->Sims;
 	S->group_order(go);	
 	cout << "found a group of order " << go << endl;
-	//goi = go.as_INT();
+	//goi = go.as_int();
 
 	if (f_v) {
 		cout << "Hill_cap finding an element of order 7" << endl;
@@ -163,7 +163,7 @@ void Hill_cap56(int argc, const char **argv,
 
 
 	schreier *Orb;
-	INT N;
+	int N;
 
 	if (f_v) {
 		cout << "Hill_cap computing orbits on points" << endl;
@@ -184,16 +184,16 @@ void Hill_cap56(int argc, const char **argv,
 
 
 
-	INT *pt_coords;
-	//INT *Good_orbits;
-	INT *set;
-	INT a, nb_pts, j;
+	int *pt_coords;
+	//int *Good_orbits;
+	int *set;
+	int a, nb_pts, j;
 
 	N = Orb->nb_orbits;	
 	nb_pts = P->A->degree;
-	pt_coords = NEW_INT(nb_pts * n);
-	set = NEW_INT(nb_pts);
-	//Good_orbits = NEW_INT(N);
+	pt_coords = NEW_int(nb_pts * n);
+	set = NEW_int(nb_pts);
+	//Good_orbits = NEW_int(N);
 
 	for (i = 0; i < nb_pts; i++) {
 		O->unrank_point(pt_coords + i * n, 1, i, 0);
@@ -206,14 +206,14 @@ void Hill_cap56(int argc, const char **argv,
 		a = O->evaluate_quadratic_form(pt_coords + i * n, 1);
 		cout << setw(3) << i << " : " << a << endl;
 		}
-	INT sz[9];
-	INT i1, i2, i3, i4, i5, i6, i7, i8, ii;
-	INT nb_sol;
+	int sz[9];
+	int i1, i2, i3, i4, i5, i6, i7, i8, ii;
+	int nb_sol;
 
-	INT *Sets; // [max_sol * 56]
-	INT max_sol = 100;
+	int *Sets; // [max_sol * 56]
+	int max_sol = 100;
 	
-	Sets = NEW_INT(max_sol * 56);
+	Sets = NEW_int(max_sol * 56);
 	
 	sz[0] = 0;
 	nb_sol = 0;
@@ -221,7 +221,7 @@ void Hill_cap56(int argc, const char **argv,
 		sz[1] = sz[0];
 		append_orbit_and_adjust_size(Orb, i1, set, sz[1]);
 		//cout << "after append_orbit_and_adjust_size :";
-		//INT_vec_print(cout, set, sz[1]);
+		//int_vec_print(cout, set, sz[1]);
 		//cout << endl;
 		if (!test_if_arc(F, pt_coords, set, sz[1], n, verbose_level)) {
 			continue;
@@ -274,7 +274,7 @@ void Hill_cap56(int argc, const char **argv,
 										exit(1);
 										}
 									for (ii = 0; ii < sz[8]; ii++) {
-										INT rk;
+										int rk;
 										PG_element_rank_modified(*O->F, pt_coords + set[ii] * n, 1, n, rk);
 										Sets[nb_sol * 56 + ii] = rk;
 										}
@@ -282,7 +282,7 @@ void Hill_cap56(int argc, const char **argv,
 									nb_sol++;
 									cout << "solution " << nb_sol << ", a set of size " << sz[8] << " : ";
 									cout << i1 << "," << i2 << "," << i3 << "," << i4 << "," << i5 << "," << i6 << "," << i7 << "," << i8 << endl;
-									INT_vec_print(cout, set, sz[8]);
+									int_vec_print(cout, set, sz[8]);
 									cout << endl;
 
 
@@ -301,7 +301,7 @@ void Hill_cap56(int argc, const char **argv,
 			} // next i2
 		} // next i1
 	cout << "there are " << nb_sol << " solutions" << endl;
-	cout << "out of " << INT_n_choose_k(N, 8) << " possibilities" << endl;
+	cout << "out of " << int_n_choose_k(N, 8) << " possibilities" << endl;
 
 
 	for (i = 0; i < nb_sol; i++) {
@@ -318,13 +318,13 @@ void Hill_cap56(int argc, const char **argv,
 		}
 
 	nb_Pts = 56;
-	Pts = NEW_INT(56);
+	Pts = NEW_int(56);
 	for (j = 0; j < 56; j++) {
 		Pts[j] = Sets[0 * 56 + j];
 		}
 	sprintf(fname, "Hill_cap_56.txt");
 
-	FREE_INT(Sets);
+	FREE_int(Sets);
 
 	delete P;
 	delete A;
@@ -334,10 +334,10 @@ void Hill_cap56(int argc, const char **argv,
 }
 
 void append_orbit_and_adjust_size(schreier *Orb,
-		INT idx, INT *set, INT &sz)
+		int idx, int *set, int &sz)
 // Used by Hill_cap56()
 {
-	INT f, i, len;
+	int f, i, len;
 
 	f = Orb->orbit_first[idx];
 	len = Orb->orbit_len[idx];
@@ -348,35 +348,35 @@ void append_orbit_and_adjust_size(schreier *Orb,
 
 
 
-INT test_if_arc(finite_field *Fq, INT *pt_coords,
-		INT *set, INT set_sz, INT k, INT verbose_level)
+int test_if_arc(finite_field *Fq, int *pt_coords,
+		int *set, int set_sz, int k, int verbose_level)
 // Used by Hill_cap56()
 {
-	INT f_v = FALSE; //(verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT subset[3];
-	INT subset1[3];
-	INT *Mtx;
-	INT ret = FALSE;
-	INT i, j, a, rk;
+	int f_v = FALSE; //(verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int subset[3];
+	int subset1[3];
+	int *Mtx;
+	int ret = FALSE;
+	int i, j, a, rk;
 
 
 	if (f_v) {
 		cout << "test_if_arc testing set" << endl;
-		INT_vec_print(cout, set, set_sz);
+		int_vec_print(cout, set, set_sz);
 		cout << endl;
 		}
-	Mtx = NEW_INT(3 * k);
+	Mtx = NEW_int(3 * k);
 	
 	first_k_subset(subset, set_sz, 3);
 	while (TRUE) {
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
 			}
-		INT_vec_sort(3, subset1);
+		int_vec_sort(3, subset1);
 		if (f_vv) {
 			cout << "testing subset ";
-			INT_vec_print(cout, subset1, 3);
+			int_vec_print(cout, subset1, 3);
 			cout << endl;
 			}
 				
@@ -407,19 +407,19 @@ INT test_if_arc(finite_field *Fq, INT *pt_coords,
 	ret = TRUE;
 done:
 	
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	return ret;
 }
 
 void create_Buekenhout_Metz(
 	finite_field *Fq, finite_field *FQ, 
-	INT f_classical, INT f_Uab, INT parameter_a, INT parameter_b, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	int f_classical, int f_Uab, int parameter_a, int parameter_b, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, rk, d = 3;
-	INT v[3];
+	int f_v = (verbose_level >= 1);
+	int i, rk, d = 3;
+	int v[3];
 	buekenhout_metz *BM;
 		// in TOP_LEVEL/buekenhout_metz.C
 
@@ -448,7 +448,7 @@ void create_Buekenhout_Metz(
 	//BM->write_unital_to_file();
 
 	nb_pts = BM->sz;
-	Pts = NEW_INT(nb_pts);
+	Pts = NEW_int(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		Pts[i] = BM->U[i];
 		}
@@ -462,7 +462,7 @@ void create_Buekenhout_Metz(
 		BM->P2->unrank_point(v, rk);
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
 			}
 		}

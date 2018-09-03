@@ -37,10 +37,10 @@ void BLT_set_create_description::freeself()
 	null();
 }
 
-INT BLT_set_create_description::read_arguments(int argc, const char **argv, 
-	INT verbose_level)
+int BLT_set_create_description::read_arguments(int argc, const char **argv, 
+	int verbose_level)
 {
-	INT i;
+	int i;
 
 	cout << "BLT_set_create_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

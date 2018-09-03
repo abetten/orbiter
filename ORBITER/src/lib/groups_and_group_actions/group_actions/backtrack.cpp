@@ -15,57 +15,57 @@ typedef struct action_is_minimal_data action_is_minimal_data;
 
 struct action_is_minimal_data {
 	action *A;
-	INT backtrack_node;
-	INT size;
-	INT *set;
-	INT *the_set;
-	INT *choices; // [A.base_len * A.degree]
-	INT *nb_choices;
-	INT *current_choice;
-	INT *witness;
-	INT *transporter_witness;
+	int backtrack_node;
+	int size;
+	int *set;
+	int *the_set;
+	int *choices; // [A.base_len * A.degree]
+	int *nb_choices;
+	int *current_choice;
+	int *witness;
+	int *transporter_witness;
 	partitionstack *Staborbits;
-	INT nb_auts;
-	INT nb_auts_allocated;
-	INT *aut_data; // [nb_auts_allocated * A->base_len]
-	INT first_moved;
-	INT f_automorphism_seen;
-	INT *is_minimal_base_point;  // [A->base_len]
+	int nb_auts;
+	int nb_auts_allocated;
+	int *aut_data; // [nb_auts_allocated * A->base_len]
+	int first_moved;
+	int f_automorphism_seen;
+	int *is_minimal_base_point;  // [A->base_len]
 		// is_minimal_base_point[i] = TRUE means that 
 		// the i-th base point b_i is the first moved point 
 		// under the (i-1)-th group in the stabilizer chain.
 };
 
 void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D);
-INT action_is_minimal_recursion(action_is_minimal_data *D,
-		INT depth, INT verbose_level);
+int action_is_minimal_recursion(action_is_minimal_data *D,
+		int depth, int verbose_level);
 
 void action_is_minimal_reallocate_aut_data(action_is_minimal_data &D)
 {
-	INT nb_auts_allocated2;
-	INT *aut_data2;
-	INT i;
+	int nb_auts_allocated2;
+	int *aut_data2;
+	int i;
 	
 	nb_auts_allocated2 = D.nb_auts_allocated + AUTS_ALLOCATE_BLOCK_SIZE;
-	aut_data2 = NEW_INT(nb_auts_allocated2 * D.A->base_len);
+	aut_data2 = NEW_int(nb_auts_allocated2 * D.A->base_len);
 	for (i = 0; i < D.nb_auts * D.A->base_len; i++) {
 		aut_data2[i] = D.aut_data[i];
 		}
-	FREE_INT(D.aut_data);
+	FREE_int(D.aut_data);
 	D.aut_data = aut_data2;
 	D.nb_auts_allocated = nb_auts_allocated2;
 }
 
-INT action_is_minimal_recursion(action_is_minimal_data *D,
-		INT depth, INT verbose_level)
+int action_is_minimal_recursion(action_is_minimal_data *D,
+		int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT transversal_length, base_point, image_point;
-	INT *current_set;
-	INT *next_set;
-	INT i, idx, coset, cmp, ret, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int transversal_length, base_point, image_point;
+	int *current_set;
+	int *next_set;
+	int i, idx, coset, cmp, ret, a;
 	action *A;
 	
 	D->backtrack_node++;
@@ -82,11 +82,11 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 		cout << endl;
 		}
 	if (f_vvv) {
-		INT_vec_print(cout, current_set, D->size);
+		int_vec_print(cout, current_set, D->size);
 		cout << endl;
 		}
 	if (depth == A->base_len) {
-		cmp = INT_vec_compare(current_set, D->the_set, D->size);
+		cmp = int_vec_compare(current_set, D->the_set, D->size);
 		if (cmp == 0) {
 			D->f_automorphism_seen = TRUE;
 			if (D->nb_auts == D->nb_auts_allocated) {
@@ -111,9 +111,9 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 				cout << "automorphism " << D->nb_auts
 					<< " first_moved = " << D->first_moved
 					<< " choice: ";
-				INT_vec_print(cout, D->current_choice, A->base_len);
+				int_vec_print(cout, D->current_choice, A->base_len);
 				cout << " points: ";
-				INT_vec_print(cout, D->aut_data +
+				int_vec_print(cout, D->aut_data +
 						D->nb_auts * A->base_len, A->base_len);
 				cout << endl;
 				}
@@ -132,8 +132,8 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 				exit(1);
 				}
 			if (f_v && D->first_moved < A->base_len) {
-				INT *Elt, a1, a2;
-				Elt = NEW_INT(A->elt_size_in_INT);
+				int *Elt, a1, a2;
+				Elt = NEW_int(A->elt_size_in_int);
 				A->invert(D->transporter_witness, Elt);
 				i = D->first_moved;
 				a = A->base[i];
@@ -143,7 +143,7 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 					<< setw(3) << a1 << " -> " 
 					<< setw(3) << a << " -> " 
 					<< setw(3) << a2 << endl;
-				FREE_INT(Elt);
+				FREE_int(Elt);
 				}
 			D->nb_auts++;
 			}
@@ -158,19 +158,19 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 				<< " base_point=" << base_point << endl;
 		}
 	if (f_vvv) {
-		INT_vec_print(cout, current_set, D->size);
+		int_vec_print(cout, current_set, D->size);
 		cout << endl;
 		}
 	D->nb_choices[depth] = 0;
 	for (i = 0; i < transversal_length; i++) {
-		INT f_accept = FALSE;
-		INT base_point;
+		int f_accept = FALSE;
+		int base_point;
 		
 		base_point = A->orbit[depth][0];
 		image_point = A->orbit[depth][i];
 		if (D->is_minimal_base_point[depth] &&
-				INT_vec_search(current_set, D->size, base_point, idx)) {
-			if (INT_vec_search(current_set, D->size, image_point, idx)) {
+				int_vec_search(current_set, D->size, base_point, idx)) {
+			if (int_vec_search(current_set, D->size, image_point, idx)) {
 				f_accept = TRUE;
 				}
 			}
@@ -199,7 +199,7 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 		}
 	if (f_vv) {
 		cout << "choice set of size " << D->nb_choices[depth] << " : ";
-		INT_vec_print(cout, D->choices + depth * A->degree,
+		int_vec_print(cout, D->choices + depth * A->degree,
 				D->nb_choices[depth]);
 		cout << endl;
 		}
@@ -234,7 +234,7 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 				<< " coset=" << coset << endl;
 			}
 		if (f_vvv) {
-			INT_vec_print(cout, current_set, D->size);
+			int_vec_print(cout, current_set, D->size);
 			cout << endl;
 			}
 		A->Sims->coset_rep_inv(depth, coset, 0 /*verbose_level*/);
@@ -249,16 +249,16 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 		A->map_a_set(current_set, next_set, D->size, A->Sims->cosetrep, 0);
 		if (FALSE /*f_vv*/) {
 			cout << "image set: ";
-			INT_vec_print(cout, next_set, D->size);
+			int_vec_print(cout, next_set, D->size);
 			cout << endl;
 			}
-		INT_vec_quicksort_increasingly(next_set, D->size);
+		int_vec_quicksort_increasingly(next_set, D->size);
 		if (f_vv) {
 			cout << "sorted image : ";
-			INT_vec_print(cout, next_set, D->size);
+			int_vec_print(cout, next_set, D->size);
 			cout << endl;
 			}
-		cmp = INT_vec_compare(next_set, D->the_set, D->size);
+		cmp = int_vec_compare(next_set, D->the_set, D->size);
 		if (f_vv) {
 			cout << "compare yields " << cmp;
 			cout << endl;
@@ -271,7 +271,7 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 			cout << " image_point=" << image_point
 					<< " coset=" << coset << endl;
 			//cout << " next_set = ";
-			//INT_vec_print(cout, next_set, D->size);
+			//int_vec_print(cout, next_set, D->size);
 			//cout << endl;
 			}
 		
@@ -279,12 +279,12 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 			if (f_v) {
 				cout << "the current set is less than the original set, "
 						"so the original set was not minimal" << endl;
-				INT_vec_print(cout, next_set, D->size);
+				int_vec_print(cout, next_set, D->size);
 				cout << endl;
 				}
-			INT_vec_copy(next_set, D->witness, D->size);
-			INT k, choice;
-			INT_vec_zero(A->Sims->path, A->base_len);
+			int_vec_copy(next_set, D->witness, D->size);
+			int k, choice;
+			int_vec_zero(A->Sims->path, A->base_len);
 			for (k = 0; k <= depth; k++) {
 				choice = D->choices[k * A->degree + D->current_choice[k]];
 				A->Sims->path[k] = A->Sims->orbit_inv[k][choice];
@@ -304,7 +304,7 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 		ret = action_is_minimal_recursion(D, depth + 1, verbose_level);
 		if (f_vv) {
 			cout << "depth = " << depth << " finished" << endl;
-			//INT_vec_print(cout, current_set, D->size);
+			//int_vec_print(cout, current_set, D->size);
 			//cout << " : choice " << D->current_choice[depth]
 			// << " finished, return value = " << ret << endl;
 			}
@@ -315,48 +315,48 @@ INT action_is_minimal_recursion(action_is_minimal_data *D,
 	
 	if (f_vv) {
 		cout << "depth = " << depth << " finished" << endl;
-		//INT_vec_print(cout, current_set, D->size);
+		//int_vec_print(cout, current_set, D->size);
 		//cout << endl;
 		}
 	return TRUE;
 }
 
-INT action::is_minimal(INT size, INT *set,
-	INT &backtrack_level, INT verbose_level)
+int action::is_minimal(int size, int *set,
+	int &backtrack_level, int verbose_level)
 {
-	INT *witness;
-	INT *transporter_witness;
-	INT ret, backtrack_nodes;
-	INT f_get_automorphism_group = FALSE;
+	int *witness;
+	int *transporter_witness;
+	int ret, backtrack_nodes;
+	int f_get_automorphism_group = FALSE;
 	sims Aut;
 	
-	witness = NEW_INT(size);
-	transporter_witness = NEW_INT(elt_size_in_INT);
+	witness = NEW_int(size);
+	transporter_witness = NEW_int(elt_size_in_int);
 	
 	ret = is_minimal_witness(size, set, backtrack_level,
 		witness, transporter_witness, backtrack_nodes, 
 		f_get_automorphism_group, Aut, 
 		verbose_level);
 	
-	FREE_INT(witness);
-	FREE_INT(transporter_witness);
+	FREE_int(witness);
+	FREE_int(transporter_witness);
 	return ret;
 }
 
-void action::make_canonical(INT size, INT *set,
-	INT *canonical_set, INT *transporter, 
-	INT &total_backtrack_nodes, 
-	INT f_get_automorphism_group, sims *Aut,
-	INT verbose_level)
+void action::make_canonical(int size, int *set,
+	int *canonical_set, int *transporter, 
+	int &total_backtrack_nodes, 
+	int f_get_automorphism_group, sims *Aut,
+	int verbose_level)
 {
 	//verbose_level += 10;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *Elt1, *Elt2, *Elt3;
-	INT *set1;
-	INT *set2;
-	INT backtrack_level, backtrack_nodes, cnt = 0;
-	//INT f_get_automorphism_group = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2, *Elt3;
+	int *set1;
+	int *set2;
+	int backtrack_level, backtrack_nodes, cnt = 0;
+	//int f_get_automorphism_group = TRUE;
 	//sims Aut;
 	
 	total_backtrack_nodes = 0;
@@ -366,7 +366,7 @@ void action::make_canonical(INT size, INT *set,
 		}
 	if (f_vv) {
 		cout << "the input set is ";
-		INT_vec_print(cout, set, size);
+		int_vec_print(cout, set, size);
 		cout << endl;
 		}
 
@@ -376,13 +376,13 @@ void action::make_canonical(INT size, INT *set,
 		cout << "action::make_canonical group order = " << go << endl;
 		}
 	
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
-	Elt3 = NEW_INT(elt_size_in_INT);
-	set1 = NEW_INT(size);
-	set2 = NEW_INT(size);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	set1 = NEW_int(size);
+	set2 = NEW_int(size);
 	
-	INT_vec_copy(set, set1, size);
+	int_vec_copy(set, set1, size);
 	element_one(Elt1, FALSE);
 	
 	while (TRUE) {
@@ -411,18 +411,18 @@ void action::make_canonical(INT size, INT *set,
 		if (f_v) {
 			cout << "action::make_canonical finished iteration " << cnt;
 			if (f_vv) {
-				INT_vec_print(cout, set2, size);
+				int_vec_print(cout, set2, size);
 				}
 			cout << " with " 
 				<< backtrack_nodes << " backtrack nodes, total:"
 				<< total_backtrack_nodes << endl;
 			}
-		INT_vec_copy(set2, set1, size);
+		int_vec_copy(set2, set1, size);
 		element_mult(Elt1, Elt2, Elt3, 0);
 		element_move(Elt3, Elt1, 0);
 		
 		}
-	INT_vec_copy(set1, canonical_set, size);
+	int_vec_copy(set1, canonical_set, size);
 	element_move(Elt1, transporter, FALSE);
 	
 	if (!check_if_transporter_for_set(transporter,
@@ -439,32 +439,32 @@ void action::make_canonical(INT size, INT *set,
 		}
 	if (f_vv) {
 		cout << "the canonical set is ";
-		INT_vec_print(cout, canonical_set, size);
+		int_vec_print(cout, canonical_set, size);
 		cout << endl;
 		}
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(set1);
-	FREE_INT(set2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(set1);
+	FREE_int(set2);
 	//exit(1);
 }
 
-INT action::is_minimal_witness(INT size, INT *set,
-	INT &backtrack_level, INT *witness, INT *transporter_witness, 
-	INT &backtrack_nodes, 
-	INT f_get_automorphism_group, sims &Aut,
-	INT verbose_level)
+int action::is_minimal_witness(int size, int *set,
+	int &backtrack_level, int *witness, int *transporter_witness, 
+	int &backtrack_nodes, 
+	int f_get_automorphism_group, sims &Aut,
+	int verbose_level)
 {
 	action A;
 	action_is_minimal_data D;
-	INT ret = TRUE;
-	INT i;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 4);
-	INT f_vvv = (verbose_level >= 5);
-	INT f_vvvv = (verbose_level >= 7);
+	int ret = TRUE;
+	int i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 4);
+	int f_vvv = (verbose_level >= 5);
+	int f_vvvv = (verbose_level >= 7);
 	
 	if (f_vv) {
 		cout << "action::is_minimal_witness" << endl;
@@ -472,7 +472,7 @@ INT action::is_minimal_witness(INT size, INT *set,
 		}
 	if (f_vvv) {
 		cout << "the input set is ";
-		INT_vec_print(cout, set, size);
+		int_vec_print(cout, set, size);
 		cout << endl;
 		}
 	
@@ -525,7 +525,7 @@ INT action::is_minimal_witness(INT size, INT *set,
 
 	D.nb_auts = 0;
 	D.nb_auts_allocated = AUTS_ALLOCATE_BLOCK_SIZE;
-	D.aut_data = NEW_INT(D.nb_auts_allocated * A.base_len);
+	D.aut_data = NEW_int(D.nb_auts_allocated * A.base_len);
 	D.first_moved = A.base_len;
 	D.f_automorphism_seen = FALSE;
 	
@@ -539,21 +539,21 @@ INT action::is_minimal_witness(INT size, INT *set,
 		cout << "computing stabilizer orbits finished" << endl;
 		}
 
-	D.the_set = NEW_INT((A.base_len + 1) * size);
-	INT_vec_copy(set, D.the_set, size);
-	INT_vec_quicksort_increasingly(D.the_set, size);
+	D.the_set = NEW_int((A.base_len + 1) * size);
+	int_vec_copy(set, D.the_set, size);
+	int_vec_quicksort_increasingly(D.the_set, size);
 	
 	D.backtrack_node = 0;
-	D.choices = NEW_INT(A.base_len * A.degree);
-	D.nb_choices = NEW_INT(A.base_len);
-	D.current_choice = NEW_INT(A.base_len);
+	D.choices = NEW_int(A.base_len * A.degree);
+	D.nb_choices = NEW_int(A.base_len);
+	D.current_choice = NEW_int(A.base_len);
 	D.witness = witness;
 	D.transporter_witness = transporter_witness;
-	D.is_minimal_base_point = NEW_INT(A.base_len);
+	D.is_minimal_base_point = NEW_int(A.base_len);
 
 	for (i = 0; i < A.base_len; i++) {
 		partitionstack *S;
-		INT b, c, f, l, j, p;
+		int b, c, f, l, j, p;
 		
 		b = A.base[i];
 		if (i == size)
@@ -584,8 +584,8 @@ INT action::is_minimal_witness(INT size, INT *set,
 					S->print(cout);
 					S->print_raw();
 					}
-				INT k;
-				INT_vec_zero(A.Sims->path, A.base_len);
+				int k;
+				int_vec_zero(A.Sims->path, A.base_len);
 #if 0
 				for (k = 0; k < A.base_len; k++) {
 					A.Sims->path[k] = 0;
@@ -615,7 +615,7 @@ INT action::is_minimal_witness(INT size, INT *set,
 		}
 	// now we compute is_minimal_base_point array:
 	for (i = 0; i < A.base_len; i++) {
-		INT j, b, c, l;
+		int j, b, c, l;
 		partitionstack *S;
 		S = &D.Staborbits[i];
 		b = A.base[i];
@@ -635,7 +635,7 @@ INT action::is_minimal_witness(INT size, INT *set,
 		}
 	if (f_v) {
 		cout << "action::is_minimal_witness: D.is_minimal_base_point=";
-		INT_vec_print(cout, D.is_minimal_base_point, A.base_len);
+		int_vec_print(cout, D.is_minimal_base_point, A.base_len);
 		cout << endl;
 		}
 	
@@ -658,14 +658,14 @@ finish:
 		for (i = 0; i < size; i++) {
 			witness[i] = A.image_of(transporter_witness, set[i]);
 			}
-		//INT_vec_sort(size, witness);
-		INT_vec_heapsort(witness, size);
+		//int_vec_sort(size, witness);
+		int_vec_heapsort(witness, size);
 		}
 	
 
 	if (ret && f_get_automorphism_group) {
 		if (f_vv) {
-			INT j, /*image_point,*/ coset;
+			int j, /*image_point,*/ coset;
 			
 			cout << "automorphism generators:" << endl;
 			for (i = 0; i < D.nb_auts; i++) {
@@ -680,7 +680,7 @@ finish:
 						}
 					}
 				cout << ")" << endl;
-				//INT_vec_print(cout, D.aut_data + i * base_len, base_len);
+				//int_vec_print(cout, D.aut_data + i * base_len, base_len);
 				}
 			}
 		sims Aut2, K;
@@ -719,13 +719,13 @@ finish:
 		cout << "freeing memory" << endl;
 		}
 	
-	FREE_INT(D.aut_data);
+	FREE_int(D.aut_data);
 	delete [] D.Staborbits;
-	FREE_INT(D.the_set);
-	FREE_INT(D.choices);
-	FREE_INT(D.nb_choices);
-	FREE_INT(D.current_choice);
-	FREE_INT(D.is_minimal_base_point);
+	FREE_int(D.the_set);
+	FREE_int(D.choices);
+	FREE_int(D.nb_choices);
+	FREE_int(D.current_choice);
+	FREE_int(D.is_minimal_base_point);
 
 	return ret;
 }

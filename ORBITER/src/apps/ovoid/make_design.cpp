@@ -15,14 +15,14 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 void do_it();
 
 
 // the first partial ovoid with group of order 11520:
 
-INT data1a[] = {
+int data1a[] = {
    25,	30,   31,	59,   68,	88,   93,  121,  123,  143, 
    26,	44,   45,	52,   55,	82,  102,  131,  140,  149, 
    19,	37,   43,	53,   75,	85,   94,  127,  141,  142, 
@@ -40,7 +40,7 @@ INT data1a[] = {
    64,	65,   66,	69,   70,	71,   73,	74,  130,  158, 
   100, 103,  104,  105,  112,  115,  116,  117,  133,  159, 
 };
-INT data2a[] = {
+int data2a[] = {
   134,  135,  140,  141,  146,  147,  152,  153,  158,  159, 
   119,  120,  122,  123,  125,  126,  128,  129,  130,  133, 
    40,   41,   43,   44,   46,   47,   48,   51,   90,   95, 
@@ -71,21 +71,21 @@ int main(int argc, char **argv)
 
 void do_it()
 {
-	INT v = 16;
-	INT k = 10;
-	INT N = 160;
+	int v = 16;
+	int k = 10;
+	int N = 160;
 
-	INT *M;
-	INT *D1;
-	INT *D2;
-	INT i, j, a, b;
+	int *M;
+	int *D1;
+	int *D2;
+	int i, j, a, b;
 	char fname[1000];
-	INT *data1 = data1a;
-	INT *data2 = data2a;
+	int *data1 = data1a;
+	int *data2 = data2a;
 
-	M = NEW_INT(v * v);
-	D1 = NEW_INT(N);
-	D2 = NEW_INT(N);
+	M = NEW_int(v * v);
+	D1 = NEW_int(N);
+	D2 = NEW_int(N);
 	for (i = 0; i < v; i++) {
 		for (j = 0; j < k; j++) {
 			a = data1[i * k + j];

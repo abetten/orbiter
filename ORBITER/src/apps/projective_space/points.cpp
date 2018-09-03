@@ -14,26 +14,26 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void orthogonal_points(INT epsilon, INT n, INT q, INT f_lines, INT verbose_level);
-void orthogonal_lines(finite_field *F, INT epsilon, INT n, INT *c123, INT verbose_level);
-void points(INT n, INT q, INT verbose_level);
+void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level);
+void orthogonal_lines(finite_field *F, int epsilon, int n, int *c123, int verbose_level);
+void points(int n, int q, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_d = FALSE;
-	INT d = 0;
-	INT f_q = FALSE;
-	INT q;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_orthogonal = FALSE;
-	INT f_epsilon = FALSE;
-	INT epsilon = 0;
-	INT f_lines = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_d = FALSE;
+	int d = 0;
+	int f_q = FALSE;
+	int q;
+	int f_n = FALSE;
+	int n = 0;
+	int f_orthogonal = FALSE;
+	int f_epsilon = FALSE;
+	int epsilon = 0;
+	int f_lines = FALSE;
 	
  	t0 = os_ticks();
 	
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 		points(d, q, verbose_level);
 		}
 	
-	INT dt;
+	int dt;
 	dt = delta_time(t0);
 
 	cout << "time in ticks " << dt << " tps=" << os_ticks_per_second() << endl;
@@ -108,15 +108,15 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void orthogonal_points(INT epsilon, INT n, INT q, INT f_lines, INT verbose_level)
+void orthogonal_points(int epsilon, int n, int q, int f_lines, int verbose_level)
 {
-	INT i, j;
-	INT d;
-	INT N;
-	INT c123[3] = {0, 0, 0};
-	INT *v;
-	INT *v2;
-	INT *G;
+	int i, j;
+	int d;
+	int N;
+	int c123[3] = {0, 0, 0};
+	int *v;
+	int *v2;
+	int *G;
 	
 	d = n + 1;
 	N = nb_pts_Qepsilon(epsilon, n, q);
@@ -124,9 +124,9 @@ void orthogonal_points(INT epsilon, INT n, INT q, INT f_lines, INT verbose_level
 	cout << "number of points = " << N << endl;
 
 
-	v = new INT[d];
-	v2 = new INT[d];
-	G = new INT[d * d];
+	v = new int[d];
+	v2 = new int[d];
+	G = new int[d * d];
 
 	
 	finite_field *F;
@@ -149,7 +149,7 @@ void orthogonal_points(INT epsilon, INT n, INT q, INT f_lines, INT verbose_level
 	for (i = 0; i < N; i++) {
 		Q_epsilon_unrank(*F, v, 1, epsilon, n, c123[0], c123[1], c123[2], i);
 		cout << "P_{" << i << "} & ";
-		INT_vec_print(cout, v, n + 1);
+		int_vec_print(cout, v, n + 1);
 		j = Q_epsilon_rank(*F, v, 1, epsilon, n, c123[0], c123[1], c123[2]);
 		cout << "\\\\" << endl;
 		if (j != i) {
@@ -164,22 +164,22 @@ void orthogonal_points(INT epsilon, INT n, INT q, INT f_lines, INT verbose_level
 		}
 	
 	delete F;
-	FREE_INT(v);
-	FREE_INT(v2);
-	FREE_INT(G);
+	FREE_int(v);
+	FREE_int(v2);
+	FREE_int(G);
 }
 
-void orthogonal_lines(finite_field *F, INT epsilon, INT n, INT *c123, INT verbose_level)
+void orthogonal_lines(finite_field *F, int epsilon, int n, int *c123, int verbose_level)
 {
 	orthogonal O;
-	INT p1, p2, i, j, a, len;
-	INT d, q;
-	INT *L;
+	int p1, p2, i, j, a, len;
+	int d, q;
+	int *L;
 	
 	d = n + 1;
 	q = F->q;
 	O.init(epsilon, d, F, verbose_level);
-	L = NEW_INT(2 * d);
+	L = NEW_int(2 * d);
 	
 	cout << "O^" << epsilon << "(" << d << "," << q << ") with " 
 		<< O.nb_points << " points and " << O.nb_lines << " lines" << endl << endl;
@@ -191,7 +191,7 @@ void orthogonal_lines(finite_field *F, INT epsilon, INT n, INT *c123, INT verbos
 		for (i = 0; i < O.T1_m; i++) {
 			O.unrank_point(O.v1, 1, i, 0);
 			cout << i << " : ";
-			INT_vec_print(cout, O.v1, n);
+			int_vec_print(cout, O.v1, n);
 			j = O.rank_point(O.v1, 1, 0);
 			cout << " : " << j << endl;
 			}
@@ -210,8 +210,8 @@ void orthogonal_lines(finite_field *F, INT epsilon, INT n, INT *c123, INT verbos
 		O.unrank_point(O.v1, 1, p1, 0);
 		O.unrank_point(O.v2, 1, p2, 0);
 
-		INT_vec_copy(O.v1, L, d);
-		INT_vec_copy(O.v2, L + d, d);
+		int_vec_copy(O.v1, L, d);
+		int_vec_copy(O.v2, L + d, d);
 
 		cout << "\\left[" << endl;
 		print_integer_matrix_tex(cout, L, 2, d);
@@ -232,9 +232,9 @@ void orthogonal_lines(finite_field *F, INT epsilon, INT n, INT *c123, INT verbos
 
 #if 1
 		O.points_on_line(p1, p2, O.line1, 0 /*verbose_level - 1*/);
-		INT_vec_sort(q + 1, O.line1);
+		int_vec_sort(q + 1, O.line1);
 		
-		INT_set_print_masked_tex(cout, O.line1, q + 1, "P_{", "}");
+		int_set_print_masked_tex(cout, O.line1, q + 1, "P_{", "}");
 		cout << "\\\\" << endl;
 #if 0
 		for (r1 = 0; r1 <= q; r1++) {
@@ -262,14 +262,14 @@ void orthogonal_lines(finite_field *F, INT epsilon, INT n, INT *c123, INT verbos
 }
 
 
-void points(INT d, INT q, INT verbose_level)
+void points(int d, int q, int verbose_level)
 {
-	INT N_points, n, i, j;
+	int N_points, n, i, j;
 	finite_field F;
-	INT *v;
+	int *v;
 	
 	n = d + 1;
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 	F.init(q, 0);
 	
@@ -279,10 +279,10 @@ void points(INT d, INT q, INT verbose_level)
 		PG_element_unrank_modified(F, v, 1, n, i);
 #if 0
 		cout << "point " << i << " : ";
-		INT_vec_print(cout, v, n);
+		int_vec_print(cout, v, n);
 		cout << " = ";
 		PG_element_normalize_from_front(F, v, 1, n);
-		INT_vec_print(cout, v, n);
+		int_vec_print(cout, v, n);
 		cout << endl;
 #endif
 		PG_element_rank_modified(F, v, 1, n, j);
@@ -292,6 +292,6 @@ void points(INT d, INT q, INT verbose_level)
 			}
 		}
 
-	FREE_INT(v);
+	FREE_int(v);
 }
 

@@ -13,20 +13,20 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_description = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_description = FALSE;
 	surface_create_description *Descr;
-	INT nb_transform = 0;
+	int nb_transform = 0;
 	const char *transform_coeffs[1000];
-	INT f_inverse_transform[1000];
-	INT f_quartic = FALSE;
+	int f_inverse_transform[1000];
+	int f_quartic = FALSE;
 
 	t0 = os_ticks();
 
@@ -66,7 +66,7 @@ int main(int argc, const char **argv)
 		}
 
 	surface_create *SC;
-	INT j;
+	int j;
 
 	SC = NEW_OBJECT(surface_create);
 
@@ -81,14 +81,14 @@ int main(int argc, const char **argv)
 		cout << "after SC->apply_transformations" << endl;
 		}
 
-	INT coeffs_out[20];
+	int coeffs_out[20];
 	action *A;
-	//INT *Elt1;
-	INT *Elt2;
+	//int *Elt1;
+	int *Elt2;
 	
 	A = SC->Surf_A->A;
 
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	
 
 	PG_element_normalize(*SC->F, SC->coeffs, 1, 20);
@@ -110,7 +110,7 @@ int main(int argc, const char **argv)
 			PG_element_normalize(*SC->F, coeffs_out, 1, 20);
 
 
-			if (INT_vec_compare(SC->coeffs, coeffs_out, 20)) {
+			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
 				cout << "error, the transformation does not preserve the equation of the surface" << endl;
 				exit(1);
 				}
@@ -163,7 +163,7 @@ int main(int argc, const char **argv)
 
 
 		six_arcs_not_on_a_conic *Six_arcs;
-		INT *transporter;
+		int *transporter;
 
 		Six_arcs = NEW_OBJECT(six_arcs_not_on_a_conic);
 	
@@ -175,7 +175,7 @@ int main(int argc, const char **argv)
 		Six_arcs->init(SC->F, SC->Surf->P2, 
 			argc, argv, 
 			verbose_level);
-		transporter = NEW_INT(Six_arcs->Gen->A->elt_size_in_INT);
+		transporter = NEW_int(Six_arcs->Gen->A->elt_size_in_int);
 
 
 
@@ -188,7 +188,7 @@ int main(int argc, const char **argv)
 		sprintf(fname, "surface_%s.tex", SC->prefix);
 		sprintf(label, "surface_%s", SC->label_txt);
 		sprintf(label_tex, "surface %s", SC->label_tex);
-		sprintf(fname_mask, "surface_%s_orbit_%%ld", SC->prefix);
+		sprintf(fname_mask, "surface_%s_orbit_%%d", SC->prefix);
 		{
 			ofstream fp(fname);
 
@@ -201,14 +201,14 @@ int main(int argc, const char **argv)
 
 
 			surface_object *SO;
-			INT *Arc_iso; // [72]
-			INT *Clebsch_map; // [nb_pts]
-			INT *Clebsch_coeff; // [nb_pts * 4]
-			INT line_a, line_b;
-			INT transversal_line;
-			INT tritangent_plane_rk;
-			INT plane_rk_global;
-			INT ds, ds_row;
+			int *Arc_iso; // [72]
+			int *Clebsch_map; // [nb_pts]
+			int *Clebsch_coeff; // [nb_pts * 4]
+			int line_a, line_b;
+			int transversal_line;
+			int tritangent_plane_rk;
+			int plane_rk_global;
+			int ds, ds_row;
 			SO = SoA->SO;
 
 			fp << endl;
@@ -218,9 +218,9 @@ int main(int argc, const char **argv)
 			fp << endl;
 
 
-			Arc_iso = NEW_INT(72);
-			Clebsch_map = NEW_INT(SO->nb_pts);
-			Clebsch_coeff = NEW_INT(SO->nb_pts * 4);
+			Arc_iso = NEW_int(72);
+			Clebsch_map = NEW_int(SO->nb_pts);
+			Clebsch_coeff = NEW_int(SO->nb_pts * 4);
 
 			for (ds = 0; ds < 36; ds++) {
 				for (ds_row = 0; ds_row < 2; ds_row++) {
@@ -245,10 +245,10 @@ int main(int argc, const char **argv)
 
 					plane_rk_global = SO->Tritangent_planes[SO->Eckardt_to_Tritangent_plane[tritangent_plane_rk]];
 
-					INT Arc[6];
-					INT Arc2[6];
-					INT Blown_up_lines[6];
-					INT perm[6];
+					int Arc[6];
+					int Arc2[6];
+					int Blown_up_lines[6];
+					int perm[6];
 					
 					SO->clebsch_map_find_arc_and_lines(Clebsch_map, Arc, Blown_up_lines, 0 /* verbose_level */);
 
@@ -256,7 +256,7 @@ int main(int argc, const char **argv)
 						perm[j] = j;
 						}
 
-					INT_vec_heapsort_with_log(Blown_up_lines, perm, 6);
+					int_vec_heapsort_with_log(Blown_up_lines, perm, 6);
 					for (j = 0; j < 6; j++) {
 						Arc2[j] = Arc[perm[j]];
 						}
@@ -285,10 +285,10 @@ int main(int argc, const char **argv)
 
 					fp << "$$" << endl;
 					fp << "Arc $";
-					INT_set_print_tex(fp, Arc2, 6);
+					int_set_print_tex(fp, Arc2, 6);
 					fp << "$\\\\" << endl;
 					fp << "Half double six: $";
-					INT_set_print_tex(fp, Blown_up_lines, 6);
+					int_set_print_tex(fp, Blown_up_lines, 6);
 					fp << "=\\{";
 					for (j = 0; j < 6; j++) {
 						fp << SC->Surf->Line_label_tex[Blown_up_lines[j]];
@@ -299,11 +299,11 @@ int main(int argc, const char **argv)
 					fp << "The arc consists of the following points:\\\\" << endl;
 					display_table_of_projective_points(fp, SC->F, Arc2, 6, 3);
 
-					INT orbit_at_level, idx;
+					int orbit_at_level, idx;
 					Six_arcs->Gen->gen->identify(Arc2, 6, transporter, orbit_at_level, 0 /*verbose_level */);
 
 			
-					if (!INT_vec_search(Six_arcs->Not_on_conic_idx, 
+					if (!int_vec_search(Six_arcs->Not_on_conic_idx, 
 						Six_arcs->nb_arcs_not_on_conic, orbit_at_level, idx)) {
 						cout << "could not find orbit" << endl;
 						exit(1);
@@ -320,8 +320,8 @@ int main(int argc, const char **argv)
 					}
 				}
 			
-			FREE_INT(Clebsch_map);
-			FREE_INT(Clebsch_coeff);
+			FREE_int(Clebsch_map);
+			FREE_int(Clebsch_coeff);
 
 			
 			fp << "The isomorphism type of arc associated with each half-double six is:" << endl;
@@ -349,14 +349,14 @@ int main(int argc, const char **argv)
 
 		FREE_OBJECT(SoA);
 		FREE_OBJECT(Six_arcs);
-		FREE_INT(transporter);
+		FREE_int(transporter);
 
 
 		}
 
 
 
-	FREE_INT(Elt2);
+	FREE_int(Elt2);
 
 	FREE_OBJECT(SC);
 

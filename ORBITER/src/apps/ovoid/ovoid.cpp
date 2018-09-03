@@ -14,7 +14,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, const char **argv)
@@ -28,15 +28,15 @@ int main(int argc, const char **argv)
 
 	{
 	ovoid_generator Gen;
-	INT schreier_depth = 10000;
-	INT f_use_invariant_subset_if_available = TRUE;
-	//INT f_implicit_fusion = FALSE;
-	INT f_debug = FALSE;
-	INT verbose_level = 0;
+	int schreier_depth = 10000;
+	int f_use_invariant_subset_if_available = TRUE;
+	//int f_implicit_fusion = FALSE;
+	int f_debug = FALSE;
+	int verbose_level = 0;
 	
 	Gen.init(argc, argv, verbose_level);
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "before generator_main" << endl;
@@ -45,10 +45,10 @@ int main(int argc, const char **argv)
 	if (Gen.f_read) {
 		orbiter_data_file *ODF;
 		char fname[1000];
-		INT i, j;
-		INT level = Gen.read_level;
+		int i, j;
+		int level = Gen.read_level;
 
-		sprintf(fname, "%s_lvl_%ld", Gen.prefix_with_directory, level);
+		sprintf(fname, "%s_lvl_%d", Gen.prefix_with_directory, level);
 
 		ODF = NEW_OBJECT(orbiter_data_file);
 		ODF->load(fname, verbose_level);
@@ -56,14 +56,14 @@ int main(int argc, const char **argv)
 				<< " orbits at level " << level << endl;
 
 
-		INT f_split = FALSE;
-		INT split_r = 0;
-		INT split_m = 1;
+		int f_split = FALSE;
+		int split_r = 0;
+		int split_m = 1;
 		char fname_graph_mask[1000];
-		INT f_lexorder = TRUE;
+		int f_lexorder = TRUE;
 
 		sprintf(fname_graph_mask,
-				"graph_ovoid_Q%ld_%ld_%ld_level%ld_case%%ld.bin",
+				"graph_ovoid_Q%d_%d_%d_level%d_case%%d.bin",
 				Gen.epsilon, Gen.d - 1, Gen.q, level);
 
 		cout << "creating graphs:" << endl;
@@ -76,7 +76,7 @@ int main(int argc, const char **argv)
 			fname_graph_mask,
 			verbose_level);
 #else
-		INT orbit_idx;
+		int orbit_idx;
 
 		for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
 
@@ -86,7 +86,7 @@ int main(int argc, const char **argv)
 				}
 			}
 			cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-			INT_vec_print(cout, ODF->sets[orbit_idx],
+			int_vec_print(cout, ODF->sets[orbit_idx],
 					ODF->set_sizes[orbit_idx]);
 			cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 					<< ODF->Aut_ascii[orbit_idx] << endl;
@@ -112,7 +112,7 @@ int main(int argc, const char **argv)
 
 		for (i = 0; i < ODF->nb_cases; i++) {
 			cout << i << " / " << ODF->nb_cases << " : ";
-			INT_vec_print(cout, ODF->sets[i], ODF->set_sizes[i]);
+			int_vec_print(cout, ODF->sets[i], ODF->set_sizes[i]);
 			cout << " : " << ODF->Ago_ascii[i] << " : "
 					<< ODF->Aut_ascii[i] << endl;
 
@@ -152,15 +152,15 @@ int main(int argc, const char **argv)
 			}
 
 #if 0
-			INT *candidates;
-			INT nb_candidates;
+			int *candidates;
+			int nb_candidates;
 
 			if (f_has_candidates) {
 				generator_read_candidates_of_orbit(candidates_fname,
 						i /* orbit_at_level */,
 						candidates, nb_candidates, 0 /* verbose_level */);
 				cout << "With " << nb_candidates << " live points: ";
-				INT_vec_print(cout, candidates, nb_candidates);
+				int_vec_print(cout, candidates, nb_candidates);
 				cout << endl;
 
 			}
@@ -228,7 +228,7 @@ void usage(int argc, const char **argv)
 }
 
 
-void callback_print_set(INT len, INT *S, void *data)
+void callback_print_set(int len, int *S, void *data)
 {
 	ovoid_generator *Gen = (ovoid_generator *) data;
 	
@@ -236,8 +236,8 @@ void callback_print_set(INT len, INT *S, void *data)
 	Gen->print(S, len);
 }
 
-INT callback_check_conditions(INT len, INT *S,
-		void *data, INT verbose_level)
+int callback_check_conditions(int len, int *S,
+		void *data, int verbose_level)
 {
 	ovoid_generator *Gen = (ovoid_generator *) data;
 	return Gen->check_conditions(len, S, verbose_level);

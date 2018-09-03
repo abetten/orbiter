@@ -15,16 +15,16 @@
 
 
 void create_graph_from_file(layered_graph *&LG,
-		INT f_grouping, double x_stretch, const char *fname);
+		int f_grouping, double x_stretch, const char *fname);
 
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *fname = NULL;
-	INT f_grouping = FALSE;
+	int f_grouping = FALSE;
 	double x_stretch = 0.7;
 
 	for (i = 1; i < argc; i++) {
@@ -70,20 +70,20 @@ int main(int argc, const char **argv)
 
 
 void create_graph_from_file(layered_graph *&LG,
-		INT f_grouping, double x_stretch, const char *fname)
+		int f_grouping, double x_stretch, const char *fname)
 {
 	LG = NEW_OBJECT(layered_graph);
-	INT nb_layer;
-	INT *Nb;
-	INT *Nb_orbits;
-	INT **Orbit_length;
-	INT i, l1, n1, l2, n2, nb_v = 0, c = 0, a;
+	int nb_layer;
+	int *Nb;
+	int *Nb_orbits;
+	int **Orbit_length;
+	int i, l1, n1, l2, n2, nb_v = 0, c = 0, a;
 
 	ifstream fp(fname);
 	fp >> nb_layer;
-	Nb = NEW_INT(nb_layer);
-	Nb_orbits = NEW_INT(nb_layer);
-	Orbit_length = NEW_PINT(nb_layer);
+	Nb = NEW_int(nb_layer);
+	Nb_orbits = NEW_int(nb_layer);
+	Orbit_length = NEW_pint(nb_layer);
 	nb_v = 0;
 	for (i = 0; i < nb_layer; i++) {
 		fp >> Nb[i];
@@ -100,14 +100,14 @@ void create_graph_from_file(layered_graph *&LG,
 
 			char text[1000];
 
-			sprintf(text, "%ld", a);
+			sprintf(text, "%d", a);
 			LG->add_text(l1, n1, text, 0/*verbose_level*/);
 			}
 		}
 
 	for (l1 = 0; l1 < nb_layer; l1++) {
 		fp >> Nb_orbits[l1];
-		Orbit_length[l1] = NEW_INT(Nb_orbits[l1]);
+		Orbit_length[l1] = NEW_int(Nb_orbits[l1]);
 		for (i = 0; i < Nb_orbits[l1]; i++) {
 			fp >> Orbit_length[l1][i];
 			}

@@ -10,14 +10,14 @@
 
 int main(int argc, char **argv)
 {
-	//INT t0 = os_ticks();
-	INT verbose_level;
-	INT i;
+	//int t0 = os_ticks();
+	int verbose_level;
+	int i;
 
-	INT f_q = FALSE;
-	INT q = 0;
+	int f_q = FALSE;
+	int q = 0;
 	
-	INT f_file = FALSE;
+	int f_file = FALSE;
 	char *fname = NULL;
 
 	cout << argv[0] << endl;
@@ -57,10 +57,10 @@ int main(int argc, char **argv)
 	cout << "Reading data from file " << fname << " of size " << file_size(fname) << endl;
 
 
-	INT *Data;
-	INT m, n;
+	int *Data;
+	int m, n;
 	
-	INT_matrix_read_csv(fname, Data, m, n, verbose_level);
+	int_matrix_read_csv(fname, Data, m, n, verbose_level);
 	
 	while (m) {
 		if (Data[(m - 1) * n + n - 1] == 0) {
@@ -70,19 +70,19 @@ int main(int argc, char **argv)
 			break;
 			}
 		}
-	INT_matrix_print(Data, m, n);
+	int_matrix_print(Data, m, n);
 
 
-	INT *Series;
+	int *Series;
 		
-	Series = NEW_INT(m * 2);
-	INT_vec_zero(Series, m * 2);
+	Series = NEW_int(m * 2);
+	int_vec_zero(Series, m * 2);
 	for (i = 0; i < m; i++) {
 		Series[i * 2 + 0] = Data[i * n + 1];
 		Series[i * 2 + 1] = Data[i * n + 7];
 		}
 	cout << "Series:" << endl;
-	INT_matrix_print(Series, m, 2);
+	int_matrix_print(Series, m, 2);
 
 	strcpy(prefix, fname);
 	get_extension_if_present(prefix, ext);

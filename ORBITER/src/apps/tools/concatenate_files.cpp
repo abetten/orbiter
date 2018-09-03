@@ -8,24 +8,24 @@
 
 #include "orbiter.h"
 
-INT t0;
+int t0;
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_fname_in_mask = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_N = FALSE;
+	int N = 0;
+	int f_fname_in_mask = FALSE;
 	const char *fname_in_mask = NULL;
-	INT f_save = FALSE;
+	int f_save = FALSE;
 	const char *fname_out = NULL;
-	INT f_EOF_marker = FALSE;
+	int f_EOF_marker = FALSE;
 	const char *EOF_marker = NULL;
-	INT f_title_line = FALSE;
-	INT f_loop = FALSE;
-	INT loop_from = 0;
-	INT loop_to = 0;
+	int f_title_line = FALSE;
+	int f_loop = FALSE;
+	int loop_from = 0;
+	int loop_to = 0;
 	
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 		}
 
 	if (f_loop) {
-		INT h;
+		int h;
 
 		for (h = loop_from; h <= loop_to; h++) {
 			char fname_in_mask_processed[1000];

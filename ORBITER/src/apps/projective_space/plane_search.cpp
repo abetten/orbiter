@@ -13,22 +13,22 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv);
-void plane_search(INT q, INT verbose_level);
-void backtrack(finite_field *F, INT row, INT verbose_level);
-void compute_row(finite_field *F, INT row);
-INT check_row(finite_field *F, INT row, INT verbose_level);
-void remove_row(finite_field *F, INT row);
-void clear_row(finite_field *F, INT row);
+void plane_search(int q, int verbose_level);
+void backtrack(finite_field *F, int row, int verbose_level);
+void compute_row(finite_field *F, int row);
+int check_row(finite_field *F, int row, int verbose_level);
+void remove_row(finite_field *F, int row);
+void clear_row(finite_field *F, int row);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q;
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q;
 	
  	t0 = os_ticks();
 	
@@ -52,28 +52,28 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-INT nb_sol = 0;
-INT *lambda; // [q]
-INT *M; // [q * q]
-INT *f_column_entry; // [q * q]
+int nb_sol = 0;
+int *lambda; // [q]
+int *M; // [q * q]
+int *f_column_entry; // [q * q]
 
-void plane_search(INT q, INT verbose_level)
+void plane_search(int q, int verbose_level)
 {
-	INT i;
+	int i;
 	finite_field *F;
 
 	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level);
 	
-	M = NEW_INT(q * q);
+	M = NEW_int(q * q);
 	for (i = 0; i < q * q; i++) {
 		M[i] = 0;
 		}
-	f_column_entry = NEW_INT(q * q);
+	f_column_entry = NEW_int(q * q);
 	for (i = 0; i < q * q; i++) {
 		f_column_entry[i] = FALSE;
 		}
-	lambda = NEW_INT(q);
+	lambda = NEW_int(q);
 	lambda[0] = 0;
 	compute_row(F, 0);
 	if (!check_row(F, 0, verbose_level)) {
@@ -92,27 +92,27 @@ void plane_search(INT q, INT verbose_level)
 	delete F;
 }
 
-void backtrack(finite_field *F, INT row, INT verbose_level)
+void backtrack(finite_field *F, int row, int verbose_level)
 {
-	INT q = F->q;
-	INT f_v = (verbose_level >= 1);
-	INT f = F->e;
+	int q = F->q;
+	int f_v = (verbose_level >= 1);
+	int f = F->e;
 
 	if (f_v) {
 		cout << "backtrack row=" << row << endl;
 				cout << "lambda=";
-				INT_vec_print(cout, lambda, row);
+				int_vec_print(cout, lambda, row);
 				cout << endl;
 				cout << "M=" << endl;
-				INT_matrix_print(M, q, q);
+				int_matrix_print(M, q, q);
 				cout << endl;
 				cout << "f_column_entry=" << endl;
-				INT_matrix_print(f_column_entry, q, q);
+				int_matrix_print(f_column_entry, q, q);
 				cout << endl;
 		}
 	if (row == q) {
 		cout << "solution " << nb_sol << " : ";
-		INT_vec_print(cout, lambda, q);
+		int_vec_print(cout, lambda, q);
 		cout << endl;
 		nb_sol++;
 		return;
@@ -126,13 +126,13 @@ void backtrack(finite_field *F, INT row, INT verbose_level)
 			if (f_v) {
 				cout << "accepted" << endl;
 				cout << "lambda=";
-				INT_vec_print(cout, lambda, row + 1);
+				int_vec_print(cout, lambda, row + 1);
 				cout << endl;
 				cout << "M=" << endl;
-				INT_matrix_print(M, q, q);
+				int_matrix_print(M, q, q);
 				cout << endl;
 				cout << "f_column_entry=" << endl;
-				INT_matrix_print(f_column_entry, q, q);
+				int_matrix_print(f_column_entry, q, q);
 				cout << endl;
 				}
 			backtrack(F, row + 1, verbose_level);
@@ -140,13 +140,13 @@ void backtrack(finite_field *F, INT row, INT verbose_level)
 			if (f_v) {
 				cout << "after remove_row:" << endl;
 				cout << "lambda=";
-				INT_vec_print(cout, lambda, row + 1);
+				int_vec_print(cout, lambda, row + 1);
 				cout << endl;
 				cout << "M=" << endl;
-				INT_matrix_print(M, q, q);
+				int_matrix_print(M, q, q);
 				cout << endl;
 				cout << "f_column_entry=" << endl;
-				INT_matrix_print(f_column_entry, q, q);
+				int_matrix_print(f_column_entry, q, q);
 				cout << endl;
 				}
 			}
@@ -154,13 +154,13 @@ void backtrack(finite_field *F, INT row, INT verbose_level)
 			if (f_v) {
 				cout << "rejected" << endl;
 				cout << "lambda=";
-				INT_vec_print(cout, lambda, row + 1);
+				int_vec_print(cout, lambda, row + 1);
 				cout << endl;
 				cout << "M=" << endl;
-				INT_matrix_print(M, q, q);
+				int_matrix_print(M, q, q);
 				cout << endl;
 				cout << "f_column_entry=" << endl;
-				INT_matrix_print(f_column_entry, q, q);
+				int_matrix_print(f_column_entry, q, q);
 				cout << endl;
 				}
 			}
@@ -169,10 +169,10 @@ void backtrack(finite_field *F, INT row, INT verbose_level)
 }
 
 
-void compute_row(finite_field *F, INT row)
+void compute_row(finite_field *F, int row)
 {
-	INT x, x1, y, l;
-	INT q = F->q;
+	int x, x1, y, l;
+	int q = F->q;
 
 	l = lambda[row];
 	for (x = 1; x < q; x++) {
@@ -182,11 +182,11 @@ void compute_row(finite_field *F, INT row)
 		}
 }
 
-INT check_row(finite_field *F, INT row, INT verbose_level)
+int check_row(finite_field *F, int row, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, y, x1;
-	INT q = F->q;
+	int f_v = (verbose_level >= 1);
+	int x, y, x1;
+	int q = F->q;
 
 	for (x = 1; x < q; x++) {
 		y = M[row * q + x];
@@ -205,10 +205,10 @@ INT check_row(finite_field *F, INT row, INT verbose_level)
 	return TRUE;
 }
 
-void remove_row(finite_field *F, INT row)
+void remove_row(finite_field *F, int row)
 {
-	INT x, y;
-	INT q = F->q;
+	int x, y;
+	int q = F->q;
 	
 	for (x = 1; x < q; x++) {
 		y = M[row * q + x];
@@ -220,10 +220,10 @@ void remove_row(finite_field *F, INT row)
 		}
 }
 
-void clear_row(finite_field *F, INT row)
+void clear_row(finite_field *F, int row)
 {
-	INT x, y;
-	INT q = F->q;
+	int x, y;
+	int q = F->q;
 	
 	for (x = 1; x < q; x++) {
 		y = M[row * q + x];

@@ -70,17 +70,17 @@ void unipoly::copyobject_to(discreta_base &x)
 #endif
 }
 
-INT my_unip_f_print_sub = FALSE;
-INT my_unip_f_use_variable_name = FALSE;
+int my_unip_f_print_sub = FALSE;
+int my_unip_f_use_variable_name = FALSE;
 char my_unip_variable_name[128];
 
 
 ostream& unipoly::print(ostream& ost)
 {
-	INT d, i, f_print_k, k, f_prev = FALSE;
+	int d, i, f_print_k, k, f_prev = FALSE;
 	discreta_base coef;
 	const char *x, *y;
-	INT f_nothing_printed_at_all = TRUE;
+	int f_nothing_printed_at_all = TRUE;
 	
 	if (my_unip_f_use_variable_name)
 		x = my_unip_variable_name;
@@ -94,7 +94,7 @@ ostream& unipoly::print(ostream& ost)
 	// ost << "(";
 	for (i = d; i >= 0; i--) {
 		coef = s_i(i);
-		if (coef.s_kind() == INTEGER) {
+		if (coef.s_kind() == intEGER) {
 			k = coef.s_i_i();
 			if (k == 0) {
 				if (i == 0 && f_nothing_printed_at_all) {
@@ -165,17 +165,17 @@ ostream& unipoly::print_as_vector(ostream& ost)
 	return Vector::print(ost);
 }
 
-void unipoly::m_l(INT l)
+void unipoly::m_l(int l)
 {
 	// cout << "unipoly::m_l()\n";
 	Vector::m_l_n(l);
 	settype_unipoly();
 }
 
-INT unipoly::degree()
+int unipoly::degree()
 {
-	INT l = s_l();
-	INT i;
+	int l = s_l();
+	int i;
 	
 	for (i = l - 1; i >= 0; i--) {
 		if (!s_i(i).is_zero())
@@ -189,7 +189,7 @@ void unipoly::mult_to(discreta_base &x, discreta_base &y)
 	unipoly& px = x.as_unipoly();
 	unipoly py;
 	discreta_base a;
-	INT d1, d2, d3, i, j, k;
+	int d1, d2, d3, i, j, k;
 	
 	if (s_kind() != UNIPOLY) {
 		cout << "unipoly::mult_to() this not a unipoly\n";
@@ -224,7 +224,7 @@ void unipoly::add_to(discreta_base &x, discreta_base &y)
 	unipoly& px = x.as_unipoly();
 	unipoly py;
 	discreta_base a;
-	INT d1, d2, d3, i;
+	int d1, d2, d3, i;
 	
 	if (s_kind() != UNIPOLY) {
 		cout << "unipoly::add_to() this not a unipoly\n";
@@ -256,7 +256,7 @@ void unipoly::add_to(discreta_base &x, discreta_base &y)
 void unipoly::negate_to(discreta_base &x)
 {
 	unipoly px;
-	INT i, l;
+	int i, l;
 	
 	if (s_kind() != UNIPOLY) {
 		cout << "unipoly::negate_to() this is not a unipoly\n";
@@ -289,9 +289,9 @@ void unipoly::x()
 	s_i(1).one();
 }
 
-void unipoly::x_to_the_i(INT i)
+void unipoly::x_to_the_i(int i)
 {
-	INT j;
+	int j;
 	
 	m_l(i + 1);
 	for (j = 0; j < i; j++) {
@@ -300,9 +300,9 @@ void unipoly::x_to_the_i(INT i)
 	s_i(i).one();
 }
 
-INT unipoly::is_one()
+int unipoly::is_one()
 {
-	INT d;
+	int d;
 	
 	d = degree();
 	if (d > 0)
@@ -310,9 +310,9 @@ INT unipoly::is_one()
 	return s_i(0).is_one();
 }
 
-INT unipoly::is_zero()
+int unipoly::is_zero()
 {
-	INT d;
+	int d;
 	
 	d = degree();
 	if (d > 0)
@@ -320,9 +320,9 @@ INT unipoly::is_zero()
 	return s_i(0).is_zero();
 }
 
-INT unipoly::compare_with_euklidean(discreta_base &a)
+int unipoly::compare_with_euklidean(discreta_base &a)
 {
-	INT d1, d2;
+	int d1, d2;
 	unipoly &pa = a.as_unipoly();
 	
 	d1 = degree();
@@ -334,10 +334,10 @@ INT unipoly::compare_with_euklidean(discreta_base &a)
 	return 0;
 }
 
-void unipoly::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, INT verbose_level)
+void unipoly::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT dm, dn, dq, i, j, ii, jj;
+	int f_v = (verbose_level >= 1);
+	int dm, dn, dq, i, j, ii, jj;
 	discreta_base a, av, b, bav, c;
 	unipoly &n = x.as_unipoly();
 	unipoly qq, rr;
@@ -420,7 +420,7 @@ void unipoly::integral_division(discreta_base &x, discreta_base &q, discreta_bas
 
 void unipoly::derive()
 {
-	INT i, d;
+	int i, d;
 	discreta_base a;
 	
 	d = degree();
@@ -433,11 +433,11 @@ void unipoly::derive()
 	s_i(d).zero();
 }
 
-INT unipoly::is_squarefree(INT verbose_level)
+int unipoly::is_squarefree(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	unipoly a, u, v, g;
-	INT d;
+	int d;
 	
 	a = *this;
 	a.derive();
@@ -455,13 +455,13 @@ INT unipoly::is_squarefree(INT verbose_level)
 		return TRUE;
 }
 
-INT unipoly::is_irreducible_GFp(INT p, INT verbose_level)
+int unipoly::is_irreducible_GFp(int p, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix B;
 	domain d(p);
 	with w(&d);
-	INT l, r;
+	int l, r;
 	
 	if (!is_squarefree(verbose_level))
 		return FALSE;
@@ -477,11 +477,11 @@ INT unipoly::is_irreducible_GFp(INT p, INT verbose_level)
 		return FALSE;
 }
 
-INT unipoly::is_irreducible(INT q, INT verbose_level)
+int unipoly::is_irreducible(int q, int verbose_level)
 {
-	INT f_v = (verbose_level = 1);
+	int f_v = (verbose_level = 1);
 	matrix B;
-	INT l, r;
+	int l, r;
 	
 	if (!is_squarefree(verbose_level))
 		return FALSE;
@@ -497,7 +497,7 @@ INT unipoly::is_irreducible(INT q, INT verbose_level)
 		return FALSE;
 }
 
-INT unipoly::is_primitive(INT m, INT p, Vector& vp, INT verbose_level)
+int unipoly::is_primitive(int m, int p, Vector& vp, int verbose_level)
 //Returns TRUE iff the polynomial $x$ has order $m$ 
 //modulo the polynomial this (over GF(p)). 
 //The prime factorization of $m$ must be given in vp (only the primes).
@@ -505,7 +505,7 @@ INT unipoly::is_primitive(INT m, INT p, Vector& vp, INT verbose_level)
 //$a^m =1 mod q$ and $a^{m/p_i} \not= 1 mod q$ for all $p_i \mid m.$ 
 //In this case, we have $a=x$ and we assume that $a^m = 1 mod q.$
 {
-	INT l, i, m1;
+	int l, i, m1;
 	unipoly a;
 	domain d(p);
 	with w(&d);
@@ -521,10 +521,10 @@ INT unipoly::is_primitive(INT m, INT p, Vector& vp, INT verbose_level)
 	return TRUE;
 }
 
-void unipoly::numeric_polynomial(INT n, INT q)
+void unipoly::numeric_polynomial(int n, int q)
 {
 	Vector v;
-	INT i, l;
+	int i, l;
 	
 	v.q_adic(n, q);
 	l = v.s_l();
@@ -534,12 +534,12 @@ void unipoly::numeric_polynomial(INT n, INT q)
 		}
 }
 
-INT unipoly::polynomial_numeric(INT q)
+int unipoly::polynomial_numeric(int q)
 {
 	return q_adic_as_int(q);
 }
 
-void unipoly::singer_candidate(INT p, INT f, INT b, INT a)
+void unipoly::singer_candidate(int p, int f, int b, int a)
 {
 	m_l(f + 1);
 	s_i(f).one();
@@ -548,9 +548,9 @@ void unipoly::singer_candidate(INT p, INT f, INT b, INT a)
 	s_i(0).m_i_i(a);
 }
 
-void unipoly::Singer(INT p, INT f, INT f_v, INT f_vv)
+void unipoly::Singer(int p, int f, int f_v, int f_vv)
 {
-	INT m, i, a, b, low, high;
+	int m, i, a, b, low, high;
 	Vector vp, ve;
 	unipoly x;
 	
@@ -597,11 +597,11 @@ void unipoly::Singer(INT p, INT f, INT f_v, INT f_vv)
 	exit(1);
 }
 
-void unipoly::get_an_irreducible_polynomial(INT f, INT verbose_level)
+void unipoly::get_an_irreducible_polynomial(int f, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT low, high, q, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int low, high, q, i;
 	domain *d;
 	unipoly x;
 	
@@ -642,7 +642,7 @@ void unipoly::get_an_irreducible_polynomial(INT f, INT verbose_level)
 
 void unipoly::evaluate_at(discreta_base& x, discreta_base& y)
 {
-	INT i, d;
+	int i, d;
 	discreta_base z;
 	
 	d = degree();
@@ -668,7 +668,7 @@ void unipoly::largest_divisor_prime_to(unipoly& q, unipoly& r)
 //In other words, $r$ is the maximal divisor of $p$ which is prime to $q$.
 {
 	unipoly rr, g, u, v;
-	INT d;
+	int d;
 	
 	d = degree();
 	r = *this;
@@ -683,7 +683,7 @@ void unipoly::largest_divisor_prime_to(unipoly& q, unipoly& r)
 
 void unipoly::monic()
 {
-	INT d, i;
+	int d, i;
 	discreta_base a;
 	
 	d = degree();
@@ -696,13 +696,13 @@ void unipoly::monic()
 		}
 }
 
-void unipoly::normal_base(INT p, matrix& F, matrix& N, INT verbose_level)
+void unipoly::normal_base(int p, matrix& F, matrix& N, int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	domain d(p);
 	with ww(&d);
-	INT i, f;
+	int i, f;
 	Vector v, V;
 	unipoly x, mue;
 	
@@ -775,14 +775,14 @@ void unipoly::normal_base(INT p, matrix& F, matrix& N, INT verbose_level)
 
 }
 
-INT unipoly::first_irreducible_polynomial(INT p, unipoly& m, matrix& F, matrix& N, Vector &v, INT verbose_level)
+int unipoly::first_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	domain d(p);
 	with ww(&d);
 	Vector w;
 	unipoly a;
-	INT f, i;
+	int f, i;
 	
 	f = F.s_m();
 	v.first_regular_word(f, p);
@@ -801,14 +801,14 @@ INT unipoly::first_irreducible_polynomial(INT p, unipoly& m, matrix& F, matrix& 
 	return TRUE;
 }
 
-INT unipoly::next_irreducible_polynomial(INT p, unipoly& m, matrix& F, matrix& N, Vector &v, INT verbose_level)
+int unipoly::next_irreducible_polynomial(int p, unipoly& m, matrix& F, matrix& N, Vector &v, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	domain d(p);
 	with ww(&d);
 	Vector w;
 	unipoly a;
-	INT f, i;
+	int f, i;
 	
 	f = F.s_m();
 	if (!v.next_regular_word(p))
@@ -840,7 +840,7 @@ void unipoly::normalize(discreta_base &p)
 }
 
 
-void unipoly::Xnm1(INT n)
+void unipoly::Xnm1(int n)
 {
 	m_l_n(n + 1);
 	s_i(n).one();
@@ -849,12 +849,12 @@ void unipoly::Xnm1(INT n)
 }
 
 
-static INT multiply(Vector & vp, Vector & ve);
+static int multiply(Vector & vp, Vector & ve);
 
-void unipoly::Phi(INT n, INT f_v)
+void unipoly::Phi(int n, int f_v)
 {
 	Vector vp, ve, vd;
-	INT i, j, l, mu, d, nd;
+	int i, j, l, mu, d, nd;
 	unipoly p, q, r;
 	
 	if (f_v) {
@@ -899,9 +899,9 @@ void unipoly::Phi(INT n, INT f_v)
 	p.integral_division_exact(q, *this);
 }
 
-static INT multiply(Vector & vp, Vector & ve)
+static int multiply(Vector & vp, Vector & ve)
 {
-	INT i, l, n, m;
+	int i, l, n, m;
 	
 	n = 1;
 	l = vp.s_l();
@@ -913,9 +913,9 @@ static INT multiply(Vector & vp, Vector & ve)
 }
 
 
-void unipoly::weight_enumerator_MDS_code(INT n, INT k, INT q, INT f_v, INT f_vv, INT f_vvv)
+void unipoly::weight_enumerator_MDS_code(int n, int k, int q, int f_v, int f_vv, int f_vvv)
 {
-	INT j, h, l;
+	int j, h, l;
 	discreta_base a, b, c, d, e;
 	
 	m_l_n(n + 1);
@@ -976,12 +976,12 @@ void unipoly::weight_enumerator_MDS_code(INT n, INT k, INT q, INT f_v, INT f_vv,
 		}
 }
 
-void unipoly::charpoly(INT q, INT size, INT *mtx, INT verbose_level)
+void unipoly::charpoly(int q, int size, int *mtx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	matrix M;
-	INT i, j, k, a, p, h;
+	int i, j, k, a, p, h;
 	finite_field Fq;
 	//unipoly_domain U;
 	//unipoly_object char_poly;
@@ -1059,8 +1059,8 @@ void unipoly::charpoly(INT q, INT size, INT *mtx, INT verbose_level)
 
 
 	unipoly charpoly;
-	INT deg;
-	INT l, lv, b, c;
+	int deg;
+	int l, lv, b, c;
 
 	charpoly = M.s_ij(size - 1, size - 1);
 	

@@ -8,20 +8,20 @@ int main(int argc, char **argv)
 {
 	finite_field *F;
 	grassmann *Gr;
-	INT verbose_level = 0;
-	INT i, j, rr, N;
-	INT *M1; // [k * n]
-	INT *M2; // [k * n]
-	INT *M; // [2 * k * n]
-	INT *Adj;
-	INT f_q = FALSE;
-	INT q;
-	INT f_k = FALSE;
-	INT k = 0; // vector space dimension of subspaces
-	INT f_n = FALSE;
-	INT n = 0; // vector space dimension of whole space
-	INT f_r = FALSE;
-	INT r = 0; // two subspaces are incident if the rank of their span is r
+	int verbose_level = 0;
+	int i, j, rr, N;
+	int *M1; // [k * n]
+	int *M2; // [k * n]
+	int *M; // [2 * k * n]
+	int *Adj;
+	int f_q = FALSE;
+	int q;
+	int f_k = FALSE;
+	int k = 0; // vector space dimension of subspaces
+	int f_n = FALSE;
+	int n = 0; // vector space dimension of whole space
+	int f_r = FALSE;
+	int r = 0; // two subspaces are incident if the rank of their span is r
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -77,23 +77,23 @@ int main(int argc, char **argv)
 
 	N = generalized_binomial(n, k, q);
 
-	M1 = NEW_INT(k * n);
-	M2 = NEW_INT(k * n);
-	M = NEW_INT(2 * k * n);
+	M1 = NEW_int(k * n);
+	M2 = NEW_int(k * n);
+	M = NEW_int(2 * k * n);
 
-	Adj = NEW_INT(N * N);
-	INT_vec_zero(Adj, N * N);
+	Adj = NEW_int(N * N);
+	int_vec_zero(Adj, N * N);
 
 	for (i = 0; i < N; i++) {
 		
-		Gr->unrank_INT_here(M1, i, 0 /* verbose_level */);
+		Gr->unrank_int_here(M1, i, 0 /* verbose_level */);
 
 		for (j = i + 1; j < N; j++) {
 
-			Gr->unrank_INT_here(M2, j, 0 /* verbose_level */);
+			Gr->unrank_int_here(M2, j, 0 /* verbose_level */);
 		
-			INT_vec_copy(M1, M, k * n);
-			INT_vec_copy(M2, M + k * n, k * n);
+			int_vec_copy(M1, M, k * n);
+			int_vec_copy(M2, M + k * n, k * n);
 
 			rr = F->rank_of_rectangular_matrix(M, 2 * k, n, 0 /* verbose_level */);
 			if (rr == r) {
@@ -110,7 +110,7 @@ int main(int argc, char **argv)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
-	sprintf(fname, "grassmann_graph_%ld_%ld_%ld_%ld.colored_graph", n, k, q, r);
+	sprintf(fname, "grassmann_graph_%d_%d_%d_%d.colored_graph", n, k, q, r);
 
 	CG->save(fname, verbose_level);
 
@@ -118,9 +118,9 @@ int main(int argc, char **argv)
 	
 
 	FREE_OBJECT(CG);
-	FREE_INT(M1);
-	FREE_INT(M2);
-	FREE_INT(M);
+	FREE_int(M1);
+	FREE_int(M2);
+	FREE_int(M);
 	FREE_OBJECT(Gr);
 	FREE_OBJECT(F);
 }

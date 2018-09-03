@@ -78,7 +78,7 @@ void buekenhout_metz::freeself()
 		delete gens;
 		}
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	if (A) {
 		delete A;
@@ -88,57 +88,57 @@ void buekenhout_metz::freeself()
 		}
 #endif
 	if (f_is_Baer) {
-		FREE_INT(f_is_Baer);
+		FREE_int(f_is_Baer);
 		}
 	if (idx_in_unital) {
-		FREE_INT(idx_in_unital);
+		FREE_int(idx_in_unital);
 		}
 	if (idx_in_secants) {
-		FREE_INT(idx_in_secants);
+		FREE_int(idx_in_secants);
 		}
 	if (tangent_line_at_point) {
-		FREE_INT(tangent_line_at_point);
+		FREE_int(tangent_line_at_point);
 		}
 	if (f_is_tangent_line) {
-		FREE_INT(f_is_tangent_line);
+		FREE_int(f_is_tangent_line);
 		}
 	if (point_of_tangency) {
-		FREE_INT(point_of_tangency);
+		FREE_int(point_of_tangency);
 		}
 	if (Intersection_sets) {
-		FREE_INT(Intersection_sets);
+		FREE_int(Intersection_sets);
 		}
 	if (Design_blocks) {
-		FREE_INT(Design_blocks);
+		FREE_int(Design_blocks);
 		}
 	if (secant_lines) {
-		FREE_INT(secant_lines);
+		FREE_int(secant_lines);
 		}
 	if (tangent_lines) {
-		FREE_INT(tangent_lines);
+		FREE_int(tangent_lines);
 		}
 	if (components) {
-		FREE_INT(components);
+		FREE_int(components);
 		}
 	if (embedding) {
-		FREE_INT(embedding);
+		FREE_int(embedding);
 		}
 	if (pair_embedding) {
-		FREE_INT(pair_embedding);
+		FREE_int(pair_embedding);
 		}
 	if (v) {
-		FREE_INT(v);
-		FREE_INT(w1);
-		FREE_INT(w2);
-		FREE_INT(w3);
-		FREE_INT(w4);
-		FREE_INT(w5);
+		FREE_int(v);
+		FREE_int(w1);
+		FREE_int(w2);
+		FREE_int(w3);
+		FREE_int(w4);
+		FREE_int(w5);
 		}
 	if (U) {
-		FREE_INT(U);
+		FREE_int(U);
 		}
 	if (ovoid) {
-		FREE_INT(ovoid);
+		FREE_int(ovoid);
 		}
 	if (FQ) {
 		delete FQ;
@@ -161,18 +161,18 @@ void buekenhout_metz::freeself()
 		}
 #endif
 	if (good_points) {
-		FREE_INT(good_points);
+		FREE_int(good_points);
 		}
 	null();
 }
 
 void buekenhout_metz::init(
 		finite_field *Fq, finite_field *FQ, 
-		INT f_Uab, INT a, INT b, 
-		INT f_classical, INT verbose_level)
+		int f_Uab, int a, int b, 
+		int f_classical, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	buekenhout_metz::Fq = Fq;
 	buekenhout_metz::FQ = FQ;
@@ -271,26 +271,26 @@ void buekenhout_metz::init(
 		}
 	
 
-	v = NEW_INT(3);
-	w1 = NEW_INT(6);
-	w2 = NEW_INT(6);
-	w3 = NEW_INT(6);
-	w4 = NEW_INT(6);
-	w5 = NEW_INT(6);
+	v = NEW_int(3);
+	w1 = NEW_int(6);
+	w2 = NEW_int(6);
+	w3 = NEW_int(6);
+	w4 = NEW_int(6);
+	w5 = NEW_int(6);
 }
 
-void buekenhout_metz::init_ovoid(INT verbose_level)
+void buekenhout_metz::init_ovoid(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "buekenhout_metz::init_ovoid" << endl;
 		}
-	INT X0, X1, Y1, Z, i, a;
+	int X0, X1, Y1, Z, i, a;
 	
 	theta_3 = nb_PG_elements(3, q);
-	ovoid = NEW_INT(theta_3);
+	ovoid = NEW_int(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
 		PG_element_unrank_modified(*Fq, w1, 1, 4, i);
@@ -342,7 +342,7 @@ void buekenhout_metz::init_ovoid(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
-		INT_vec_print(cout, ovoid, sz_ovoid);
+		int_vec_print(cout, ovoid, sz_ovoid);
 		cout << endl;
 		}
 	if (f_vv) {
@@ -355,9 +355,9 @@ void buekenhout_metz::init_ovoid(INT verbose_level)
 		}
 }
 
-void buekenhout_metz::init_ovoid_Uab_even(INT a, INT b, INT verbose_level)
+void buekenhout_metz::init_ovoid_Uab_even(int a, int b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "buekenhout_metz::init_ovoid_Uab_even" << endl;
@@ -369,8 +369,8 @@ void buekenhout_metz::init_ovoid_Uab_even(INT a, INT b, INT verbose_level)
 		exit(1);
 		}
 	
-	INT X0, X1, Y1, Z, i, aa;
-	INT a1, a2, /*b1,*/ b2, delta, delta2, lambda, lambda_big, c1, c2, c3;
+	int X0, X1, Y1, Z, i, aa;
+	int a1, a2, /*b1,*/ b2, delta, delta2, lambda, lambda_big, c1, c2, c3;
 	
 	a1 = components[a * 2 + 0];
 	a2 = components[a * 2 + 1];
@@ -401,7 +401,7 @@ void buekenhout_metz::init_ovoid_Uab_even(INT a, INT b, INT verbose_level)
 		}
 	
 	theta_3 = nb_PG_elements(3, q);
-	ovoid = NEW_INT(theta_3);
+	ovoid = NEW_int(theta_3);
 	sz_ovoid = 0;
 	for (i = 0; i < theta_3; i++) {
 		PG_element_unrank_modified(*Fq, w1, 1, 4, i);
@@ -427,7 +427,7 @@ void buekenhout_metz::init_ovoid_Uab_even(INT a, INT b, INT verbose_level)
 			}
 		}
 	cout << "found an ovoid of size " << sz_ovoid << ":" << endl;
-	INT_vec_print(cout, ovoid, sz_ovoid);
+	int_vec_print(cout, ovoid, sz_ovoid);
 	cout << endl;
 	P3->print_set(ovoid, sz_ovoid);
 
@@ -437,12 +437,12 @@ void buekenhout_metz::init_ovoid_Uab_even(INT a, INT b, INT verbose_level)
 		}
 }
 
-void buekenhout_metz::create_unital(INT verbose_level)
+void buekenhout_metz::create_unital(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 3);
-	INT f_vvv = (verbose_level >= 4);
-	INT i, j, a, b, c1, c2, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 3);
+	int f_vvv = (verbose_level >= 4);
+	int i, j, a, b, c1, c2, h;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital" << endl;
@@ -456,18 +456,18 @@ void buekenhout_metz::create_unital(INT verbose_level)
 
 	if (f_v) {
 		cout << "The vertex is:" << endl;
-		INT_vec_print(cout, w1, 5);
+		int_vec_print(cout, w1, 5);
 		cout << endl;
 		}
 	
-	U = NEW_INT(q * q * q + 1);
+	U = NEW_int(q * q * q + 1);
 	sz = 0;
 	for (i = 1; i < q * q + 1; i++) {
 		a = ovoid[i];
 		P3->unrank_point(w2, a);
 		if (f_vv) {
 			cout << i << "-th ovoidal point is " << a << " : ";
-			INT_vec_print(cout, w2, 4);
+			int_vec_print(cout, w2, 4);
 			cout << endl;
 			}
 
@@ -487,7 +487,7 @@ void buekenhout_metz::create_unital(INT verbose_level)
 		w3[4] = w2[3];
 		if (f_vv) {
 			cout << "after embedding:" << endl;
-			INT_vec_print(cout, w3, 5);
+			int_vec_print(cout, w3, 5);
 			cout << endl;
 			}
 		
@@ -500,7 +500,7 @@ void buekenhout_metz::create_unital(INT verbose_level)
 				}
 			if (f_vvv) {
 				cout << "w4:" << endl;
-				INT_vec_print(cout, w4, 5);
+				int_vec_print(cout, w4, 5);
 				cout << endl;
 				}
 			
@@ -510,7 +510,7 @@ void buekenhout_metz::create_unital(INT verbose_level)
 			w5[5] = 0;
 			if (f_vvv) {
 				cout << "w5 (with added 0):" << endl;
-				INT_vec_print(cout, w5, 6);
+				int_vec_print(cout, w5, 6);
 				cout << endl;
 				}
 
@@ -524,7 +524,7 @@ void buekenhout_metz::create_unital(INT verbose_level)
 
 			if (f_vvv) {
 				cout << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				//cout << endl;
 				}
 
@@ -546,7 +546,7 @@ void buekenhout_metz::create_unital(INT verbose_level)
 
 	if (f_v) {
 		cout << "the Buekenhout Metz unital of size " << sz << " : ";
-		INT_vec_print(cout, U, sz);
+		int_vec_print(cout, U, sz);
 		cout << endl;
 
 		for (i = 0; i < sz; i++) {
@@ -559,11 +559,11 @@ void buekenhout_metz::create_unital(INT verbose_level)
 
 }
 
-void buekenhout_metz::create_unital_tex(INT verbose_level)
+void buekenhout_metz::create_unital_tex(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 3);
-	INT i, j, a, /*b,*/ c1, c2, h;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 3);
+	int i, j, a, /*b,*/ c1, c2, h;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital_tex" << endl;
@@ -577,17 +577,17 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 
 
 	//cout << "The vertex is:" << endl;
-	//INT_vec_print(cout, w1, 5);
+	//int_vec_print(cout, w1, 5);
 	//cout << endl;
 	
-	//U = NEW_INT(q * q * q + 1);
+	//U = NEW_int(q * q * q + 1);
 	//sz = 0;
 	for (i = 1; i < q * q + 1; i++) {
 		a = ovoid[i];
 		P3->unrank_point(w2, a);
 		if (FALSE) {
 			cout << i << "-th ovoidal point is " << a << " : ";
-			INT_vec_print(cout, w2, 4);
+			int_vec_print(cout, w2, 4);
 			cout << endl;
 			}
 
@@ -603,7 +603,7 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 		w3[4] = w2[3];
 		if (FALSE) {
 			cout << "after embedding:" << endl;
-			INT_vec_print(cout, w3, 5);
+			int_vec_print(cout, w3, 5);
 			cout << endl;
 			}
 		cout << "(";
@@ -631,7 +631,7 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 				}
 			if (FALSE) {
 				cout << "w4:" << endl;
-				INT_vec_print(cout, w4, 5);
+				int_vec_print(cout, w4, 5);
 				cout << endl;
 				}
 			
@@ -641,7 +641,7 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 			w5[5] = 0;
 			if (FALSE) {
 				cout << "w5 (with added 0):" << endl;
-				INT_vec_print(cout, w5, 6);
+				int_vec_print(cout, w5, 6);
 				cout << endl;
 				}
 
@@ -655,10 +655,10 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 
 			if (FALSE) {
 				cout << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				//cout << endl;
 				}
-			FQ->INT_vec_print(cout, v, 3);
+			FQ->int_vec_print(cout, v, 3);
 
 #if 0
 			cout << "(";
@@ -674,13 +674,13 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 #endif
 
 #if 0
-			INT rk;
+			int rk;
 			
 			rk = P2->rank_point(v);
 
 			//cout << rk << " ";
 
-			INT x, y, t1, t2, t3;
+			int x, y, t1, t2, t3;
 			x = v[0];
 			t1 = FQ->mult(parameter_a, FQ->mult(x, x));
 			t2 = FQ->mult(parameter_b, FQ->power(x, q + 1));
@@ -721,11 +721,11 @@ void buekenhout_metz::create_unital_tex(INT verbose_level)
 		}
 }
 
-void buekenhout_metz::create_unital_Uab_tex(INT verbose_level)
+void buekenhout_metz::create_unital_Uab_tex(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 3);
-	INT i, r, x, y;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 3);
+	int i, r, x, y;
 
 	if (f_v) {
 		cout << "buekenhout_metz::create_unital_Uab_tex" << endl;
@@ -752,7 +752,7 @@ void buekenhout_metz::create_unital_Uab_tex(INT verbose_level)
 		for (r = 0; r < q; r++) {
 			cout << " & ";
 			
-			INT t1, t2, t3;
+			int t1, t2, t3;
 
 			t1 = FQ->mult(parameter_a, FQ->mult(x, x));
 			t2 = FQ->mult(parameter_b, FQ->power(x, q + 1));
@@ -768,7 +768,7 @@ void buekenhout_metz::create_unital_Uab_tex(INT verbose_level)
 			v[2] = 1;
 
 
-			FQ->INT_vec_print(cout, v, 3);
+			FQ->int_vec_print(cout, v, 3);
 #if 0
 			cout << "(";
 			FQ->print_element_with_symbol(cout, v[0],
@@ -783,7 +783,7 @@ void buekenhout_metz::create_unital_Uab_tex(INT verbose_level)
 #endif
 
 
-			INT rk;
+			int rk;
 			
 			rk = P2->rank_point(v);
 
@@ -820,20 +820,20 @@ void buekenhout_metz::create_unital_Uab_tex(INT verbose_level)
 		}
 }
 
-void buekenhout_metz::compute_the_design(INT verbose_level)
+void buekenhout_metz::compute_the_design(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, h, a, b;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, h, a, b;
 
 	if (f_v) {
 		cout << "buekenhout_metz::compute_the_design" << endl;
 		}
 
 
-	tangent_lines = NEW_INT(P2->N_lines);
-	secant_lines = NEW_INT(P2->N_lines);
-	block = NEW_INT(q + 1);
+	tangent_lines = NEW_int(P2->N_lines);
+	secant_lines = NEW_int(P2->N_lines);
+	block = NEW_int(q + 1);
 
 	P2->find_k_secant_lines(U, sz, q + 1, 
 		secant_lines, nb_secant_lines, verbose_level - 1);
@@ -841,7 +841,7 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 	if (f_vv) {
 		cout << "There are " << nb_secant_lines
 				<< " secant lines, they are:" << endl;
-		INT_vec_print(cout, secant_lines, nb_secant_lines);
+		int_vec_print(cout, secant_lines, nb_secant_lines);
 		cout << endl;
 		}
 
@@ -851,15 +851,15 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 	if (f_vv) {
 		cout << "There are " << nb_tangent_lines
 				<< " tangent lines, they are:" << endl;
-		INT_vec_print(cout, tangent_lines, nb_tangent_lines);
+		int_vec_print(cout, tangent_lines, nb_tangent_lines);
 		cout << endl;
 		}
 
 
 	
-	tangent_line_at_point = NEW_INT(P2->N_points);
-	f_is_tangent_line = NEW_INT(P2->N_lines);
-	point_of_tangency = NEW_INT(P2->N_lines);
+	tangent_line_at_point = NEW_int(P2->N_points);
+	f_is_tangent_line = NEW_int(P2->N_lines);
+	point_of_tangency = NEW_int(P2->N_lines);
 	for (i = 0; i < P2->N_points; i++) {
 		tangent_line_at_point[i] = -1;
 		}
@@ -870,7 +870,7 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 	for (h = 0; h < nb_tangent_lines; h++) {
 		a = tangent_lines[h];
 		f_is_tangent_line[a] = TRUE;
-		INT_vec_intersect(P2->Lines + a * P2->k, P2->k,
+		int_vec_intersect(P2->Lines + a * P2->k, P2->k,
 				U, sz, block, block_size);
 		if (block_size != 1) {
 			cout << "block_size != 1" << endl;
@@ -893,8 +893,8 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 			}
 		}
 
-	idx_in_unital = NEW_INT(P2->N_points);
-	idx_in_secants = NEW_INT(P2->N_lines);
+	idx_in_unital = NEW_int(P2->N_points);
+	idx_in_secants = NEW_int(P2->N_lines);
 	for (i = 0; i < P2->N_points; i++) {
 		idx_in_unital[i] = -1;
 		}
@@ -910,11 +910,11 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 		idx_in_secants[a] = i;
 		}
 
-	Intersection_sets = NEW_INT(nb_secant_lines * (q + 1));
-	Design_blocks = NEW_INT(nb_secant_lines * (q + 1));
+	Intersection_sets = NEW_int(nb_secant_lines * (q + 1));
+	Design_blocks = NEW_int(nb_secant_lines * (q + 1));
 	for (h = 0; h < nb_secant_lines; h++) {
 		a = secant_lines[h];
-		INT_vec_intersect(P2->Lines + a * P2->k,
+		int_vec_intersect(P2->Lines + a * P2->k,
 				P2->k, U, sz, block, block_size);
 		if (block_size != q + 1) {
 			cout << "block_size != q + 1" << endl;
@@ -929,7 +929,7 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 			Intersection_sets[h * (q + 1) + j] = block[j];
 			Design_blocks[h * (q + 1) + j] = b;
 			}
-		FREE_INT(block);
+		FREE_int(block);
 		}
 
 	if (f_vv) {
@@ -939,7 +939,7 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 		}
 
 
-	f_is_Baer = NEW_INT(nb_secant_lines);
+	f_is_Baer = NEW_int(nb_secant_lines);
 	for (j = 0; j < nb_secant_lines; j++) {
 		f_is_Baer[j] = P2->is_contained_in_Baer_subline(
 				Intersection_sets + j * (q + 1), q + 1,
@@ -952,7 +952,7 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 		for (i = 0; i < nb_secant_lines; i++) {
 			cout << setw(3) << i << " : ";
 			cout << setw(3) << secant_lines[i] << " : ";
-			INT_vec_print(cout, Intersection_sets + i * (q + 1), q + 1);
+			int_vec_print(cout, Intersection_sets + i * (q + 1), q + 1);
 			cout << " : ";
 			cout << setw(3) << f_is_Baer[i] << endl;
 			}
@@ -960,9 +960,9 @@ void buekenhout_metz::compute_the_design(INT verbose_level)
 }
 
 #if 0
-void buekenhout_metz::compute_automorphism_group(INT verbose_level)
+void buekenhout_metz::compute_automorphism_group(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "buekenhout_metz::compute_automorphism_group" << endl;
@@ -1023,7 +1023,7 @@ void buekenhout_metz::compute_automorphism_group(INT verbose_level)
 
 
 	gens = NEW_OBJECT(vector_ge);
-	tl = NEW_INT(P2->A->base_len);
+	tl = NEW_int(P2->A->base_len);
 	S->extract_strong_generators_in_order(*gens, tl, verbose_level);
 
 	if (f_v) {
@@ -1035,12 +1035,12 @@ void buekenhout_metz::compute_automorphism_group(INT verbose_level)
 }
 
 
-void buekenhout_metz::compute_orbits(INT verbose_level)
+void buekenhout_metz::compute_orbits(int verbose_level)
 // Computes the orbits on points and on lines,
 // then calls investigate_line_orbit for all line orbits
 {
-	INT f_v = (verbose_level >= 1);
-	INT h;
+	int f_v = (verbose_level >= 1);
+	int h;
 	
 
 	if (f_v) {
@@ -1094,7 +1094,7 @@ void buekenhout_metz::compute_orbits(INT verbose_level)
 
 }
 
-void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
+void buekenhout_metz::investigate_line_orbit(int h, int verbose_level)
 // Investigates a secant line orbit
 // We compute the stabilizer of the secant line.
 // We compute the orbits of the stabilizer
@@ -1106,24 +1106,24 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 // Finally, we compute the stabilizer of T1_set in the stabilizer of the pair.
 // This is done in a rather crude way, namely by testing each group element.
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT u;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int u;
 
 	if (f_v) {
 		cout << "buekenhout_metz::investigate_line_orbit" << endl;
 		}
 	longinteger_object stab_order;
-	INT the_line;
-	INT idx, f_hit_favorite;
-	INT PP1, PP2, T1, T2, T, Q, PP, vv;
+	int the_line;
+	int idx, f_hit_favorite;
+	int PP1, PP2, T1, T2, T, Q, PP, vv;
 
 		
 	the_line = Orb2->orbit[Orb2->orbit_first[h]];
 		
 
 	// make sure the line is a secant line:
-	if (!INT_vec_search_linear(secant_lines, nb_secant_lines, the_line, idx)) {
+	if (!int_vec_search_linear(secant_lines, nb_secant_lines, the_line, idx)) {
 		if (f_v) {
 			cout << "line-orbit " << h << " represented by line "
 				<< the_line << " does not consist of "
@@ -1140,12 +1140,12 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 		}
 		
 
-	INT_vec_intersect(P2->Lines + the_line * P2->k,
+	int_vec_intersect(P2->Lines + the_line * P2->k,
 			P2->k, U, sz, good_points, nb_good_points);
 		
 	if (f_v) {
 		cout << "the block is ";
-		INT_vec_print(cout, good_points, nb_good_points);
+		int_vec_print(cout, good_points, nb_good_points);
 		cout << endl;
 		}
 
@@ -1206,7 +1206,7 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 #if 0
 		if (f_vv) {
 			cout << "with stabilizer tl=";
-			INT_vec_print(cout, C->stab_tl, C->A->base_len);
+			int_vec_print(cout, C->stab_tl, C->A->base_len);
 			cout << endl;
 			cout << "generated by" << endl;
 			C->stab_gens->print(cout);
@@ -1227,10 +1227,10 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 
 
 
-		INT *T1_set;
-		INT T1_set_size;
+		int *T1_set;
+		int T1_set_size;
 
-		T1_set = NEW_INT(q + 1);
+		T1_set = NEW_int(q + 1);
 		T1_set_size = 0;
 			
 		t1 = 0;			
@@ -1245,7 +1245,7 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 			else {
 				T1_set[T1_set_size++] = T;
 				}
-			if (INT_vec_search_linear(good_points,
+			if (int_vec_search_linear(good_points,
 					nb_good_points, PP, idx)) {
 				if (f_v) {
 					cout << vv << "-th line " << T << " on Q is "
@@ -1266,13 +1266,13 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 		if (f_v) {
 			cout << "t1=" << t1 << endl;
 			cout << "T1_set = ";
-			INT_vec_print(cout, T1_set, T1_set_size);
+			int_vec_print(cout, T1_set, T1_set_size);
 			cout << endl;
 			}
 
 		longinteger_object go;
-		INT *Elt;
-		INT goi, go1, ii;
+		int *Elt;
+		int goi, go1, ii;
 		sims *Stab0;
 
 		Stab0 = create_sims_from_generators_with_target_group_order_factorized(
@@ -1286,12 +1286,12 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 			Stab0->group_order(go);
 			cout << "in a group of order " << go << endl;
 			}
-		goi = go.as_INT();
+		goi = go.as_int();
 		go1 = 0;
-		Elt = NEW_INT(P2->A->elt_size_in_INT);
+		Elt = NEW_int(P2->A->elt_size_in_int);
 			
 		for (ii = 0; ii < goi; ii++) {
-			Stab0->element_unrank_INT(ii, Elt);
+			Stab0->element_unrank_int(ii, Elt);
 			if (P2->A2->check_if_in_set_stabilizer(Elt, 
 				T1_set_size, T1_set, 0 /*verbose_level*/)) {
 				if (f_vv) {
@@ -1305,10 +1305,10 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 		if (f_v) {
 			cout << "stabilizer order " << go1 << endl;
 			}
-		FREE_INT(Elt);
+		FREE_int(Elt);
 
 #if 0
-		INT i;
+		int i;
 		cout << "computing stabilizer using set stabilizer routine:" << endl;
 		sims *T1_set_stab;
 		T1_set_stab = create_sims_for_stabilizer_with_input_group(P2->A2, 
@@ -1318,10 +1318,10 @@ void buekenhout_metz::investigate_line_orbit(INT h, INT verbose_level)
 		cout << "stabilizer order " << go << endl;
 			
 		vector_ge *set_stab_gens;
-		INT *set_stab_tl;
+		int *set_stab_tl;
 			
 		set_stab_gens = NEW_OBJECT(vector_ge);
-		set_stab_tl = NEW_INT(P2->A->base_len);
+		set_stab_tl = NEW_int(P2->A->base_len);
 		T1_set_stab->extract_strong_generators_in_order(
 				*set_stab_gens, set_stab_tl, 0/*verbose_level*/);
 		cout << "strong generators are:" << endl;
@@ -1351,33 +1351,33 @@ void buekenhout_metz::write_unital_to_file()
 void buekenhout_metz::get_name(char *name)
 {
 	if (f_Uab) {
-		sprintf(name, "U_%ld_%ld_%ld", parameter_a, parameter_b, q);
+		sprintf(name, "U_%d_%d_%d", parameter_a, parameter_b, q);
 		}
 	else {
 		if (f_classical) {
-			sprintf(name, "H%ld", q);
+			sprintf(name, "H%d", q);
 			}
 		else {
-			sprintf(name, "BM%ld", q);
+			sprintf(name, "BM%d", q);
 			}
 		}
 }
 
-INT buekenhout_metz_check_good_points(INT len,
-		INT *S, void *data, INT verbose_level)
+int buekenhout_metz_check_good_points(int len,
+		int *S, void *data, int verbose_level)
 {
-	INT i, a, idx;
-	INT f_v = FALSE;
+	int i, a, idx;
+	int f_v = FALSE;
 	buekenhout_metz *BM = (buekenhout_metz *) data;
 
 	if (f_v) {
 		cout << "buekenhout_metz_check_good_points checking the set ";
-		INT_vec_print(cout, S, len);
+		int_vec_print(cout, S, len);
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
 		a = S[i];
-		if (!INT_vec_search_linear(BM->good_points,
+		if (!int_vec_search_linear(BM->good_points,
 				BM->nb_good_points, a, idx)) {
 			if (f_v) {
 				cout << "The set is rejected" << endl;

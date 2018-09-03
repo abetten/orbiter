@@ -64,7 +64,7 @@ kind Vector::s_virtual_kind()
 
 void Vector::copyobject_to(discreta_base &x)
 {
-	INT i, l;
+	int i, l;
 	
 #ifdef VECTOR_COPY_VERBOSE
 	cout << "in Vector::copyobject_to()\n";
@@ -100,17 +100,17 @@ void Vector::copyobject_to(discreta_base &x)
 		}
 }
 
-#undef PRINT_WITH_TYPE
+#undef PRint_WITH_TYPE
 
 ostream& Vector::Print(ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	
 	if (self.vector_pointer == NULL) {
 		ost << "vector not allocated";
 		}
 	l = s_l();
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 	ost << "(VECTOR of length " << l << ", \n";
 #endif
 	for (i = 0; i < l; i++) {
@@ -118,7 +118,7 @@ ostream& Vector::Print(ostream& ost)
 		if (i < l - 1)
 			ost << ", \n";
 		}
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 	ost << ")";
 #endif
 	ost << "\n";
@@ -127,7 +127,7 @@ ostream& Vector::Print(ostream& ost)
 
 ostream& Vector::print(ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	
 	// cout << "Vector::print()" << endl;
 	if (self.vector_pointer == NULL) {
@@ -144,7 +144,7 @@ ostream& Vector::print(ostream& ost)
 		ost << "]";
 		}
 	else {
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 		ost << "(VECTOR of length " << l << ", ";
 #else
 		ost << "(";
@@ -161,7 +161,7 @@ ostream& Vector::print(ostream& ost)
 
 ostream& Vector::print_unformatted(ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	
 	if (self.vector_pointer == NULL) {
 		ost << "vector not allocated";
@@ -176,7 +176,7 @@ ostream& Vector::print_unformatted(ostream& ost)
 
 ostream& Vector::print_intvec(ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	
 	if (self.vector_pointer == NULL) {
 		ost << "vector not allocated";
@@ -192,9 +192,9 @@ ostream& Vector::print_intvec(ostream& ost)
 	return ost;
 }
 
-discreta_base & Vector::s_i(INT i)
+discreta_base & Vector::s_i(int i)
 {
-	INT l;
+	int l;
 	
 	if (self.vector_pointer == NULL) {
 		cout << "Vector::s_i() vector_pointer == NULL\n";
@@ -208,7 +208,7 @@ discreta_base & Vector::s_i(INT i)
 	return self.vector_pointer[i];
 }
 
-INT Vector::s_l()
+int Vector::s_l()
 {
 	if (self.vector_pointer == NULL)
 		return 0;
@@ -216,7 +216,7 @@ INT Vector::s_l()
 	return self.vector_pointer[-1].s_i_i();
 }
 
-void Vector::m_l(INT l)
+void Vector::m_l(int l)
 {
 	// cout << "vector::m_l() l=" << l << "\n";
 	// printobjectkind(cout);
@@ -227,9 +227,9 @@ void Vector::m_l(INT l)
 	self.vector_pointer = calloc_nobjects_plus_length(l, BASE);
 }
 
-void Vector::m_l_n(INT l)
+void Vector::m_l_n(int l)
 {
-	INT i;
+	int i;
 	
 	m_l(l);
 	for (i = 0; i < l; i++) {
@@ -237,9 +237,9 @@ void Vector::m_l_n(INT l)
 		}
 }
 
-void Vector::m_l_e(INT l)
+void Vector::m_l_e(int l)
 {
-	INT i;
+	int i;
 	
 	m_l(l);
 	for (i = 0; i < l; i++) {
@@ -247,9 +247,9 @@ void Vector::m_l_e(INT l)
 		}
 }
 
-void Vector::m_l_x(INT l, discreta_base &x)
+void Vector::m_l_x(int l, discreta_base &x)
 {
-	INT i;
+	int i;
 	
 	m_l(l);
 	for (i = 0; i < l; i++) {
@@ -257,10 +257,10 @@ void Vector::m_l_x(INT l, discreta_base &x)
 		}
 }
 
-Vector& Vector::realloc(INT l)
+Vector& Vector::realloc(int l)
 {
 	Vector v;
-	INT i, ll;
+	int i, ll;
 	
 	ll = s_l();
 	v.m_l(l);
@@ -291,7 +291,7 @@ void Vector::mult_to(discreta_base &x, discreta_base &y)
 
 void Vector::add_to(discreta_base &x, discreta_base &y)
 {
-	INT i, l;
+	int i, l;
 	
 	y.freeself();
 	if (s_kind() != VECTOR) {
@@ -324,7 +324,7 @@ void Vector::inc()
 
 void Vector::dec()
 {
-	INT l = s_l();
+	int l = s_l();
 	
 	if (l == 0) {
 		cout << "Vector::dec() length is zero\n";
@@ -333,9 +333,9 @@ void Vector::dec()
 	realloc(l - 1);
 }
 
-INT Vector::compare_with(discreta_base &a)
+int Vector::compare_with(discreta_base &a)
 {
-	INT l1, l2, i, c;
+	int l1, l2, i, c;
 	
 	if (s_kind() != VECTOR) {
 		return compare_with(a);
@@ -365,7 +365,7 @@ INT Vector::compare_with(discreta_base &a)
 void Vector::append_vector(Vector &v)
 {
 	Vector w;
-	INT i, l1, l2, l3;
+	int i, l1, l2, l3;
 	
 	l1 = s_l();
 	l2 = v.s_l();
@@ -380,9 +380,9 @@ void Vector::append_vector(Vector &v)
 	swap(w);
 }
 
-Vector& Vector::append_integer(INT a)
+Vector& Vector::append_integer(int a)
 {
-	INT l;
+	int l;
 	
 	l = s_l();
 	inc();
@@ -392,7 +392,7 @@ Vector& Vector::append_integer(INT a)
 
 Vector& Vector::append(discreta_base& a)
 {
-	INT l;
+	int l;
 	
 	l = s_l();
 	inc();
@@ -400,9 +400,9 @@ Vector& Vector::append(discreta_base& a)
 	return *this;
 }
 
-Vector& Vector::insert_element(INT i, discreta_base& x)
+Vector& Vector::insert_element(int i, discreta_base& x)
 {
-	INT j, l;
+	int j, l;
 	
 	l = s_l();
 	// cout << "Vector::insert_element(" << i << ", " << x << "), l=" << l << "\n";
@@ -417,9 +417,9 @@ Vector& Vector::insert_element(INT i, discreta_base& x)
 	return *this;
 }
 
-Vector& Vector::get_and_delete_element(INT i, discreta_base& x)
+Vector& Vector::get_and_delete_element(int i, discreta_base& x)
 {
-	INT l;
+	int l;
 	
 	l = s_l();
 	if (i >= l) {
@@ -430,9 +430,9 @@ Vector& Vector::get_and_delete_element(INT i, discreta_base& x)
 	return delete_element(i);
 }
 
-Vector& Vector::delete_element(INT i)
+Vector& Vector::delete_element(int i)
 {
-	INT l, j;
+	int l, j;
 	l = s_l();
 	for (j = i + 1; j < l; j++) {
 		s_i(j - 1).swap(s_i(j));
@@ -452,7 +452,7 @@ bool Vector::insert_sorted(discreta_base& x)
 	// behind the x already there.
 	// returns true if the element was already in the Vector.
 {
-	INT idx;
+	int idx;
 	
 	if (search(x, &idx)) {
 		// cout << "insert_sorted() found element at " << idx << endl;
@@ -467,7 +467,7 @@ bool Vector::insert_sorted(discreta_base& x)
 		}
 }
 
-bool Vector::search(discreta_base& x, INT *idx)
+bool Vector::search(discreta_base& x, int *idx)
 	// returns TRUE if the object x has been found. 
 	// idx contains the position where the object which 
 	// has been found lies. 
@@ -477,7 +477,7 @@ bool Vector::search(discreta_base& x, INT *idx)
 	// the next larger element. 
 	// This is the position to insert x if required.
 {
-	INT l, r, m, res, len;
+	int l, r, m, res, len;
 	bool f_found = false;
 	
 	len = s_l();
@@ -514,14 +514,14 @@ bool Vector::search(discreta_base& x, INT *idx)
 	return f_found;
 }
 
-static void quicksort(Vector& v, INT left, INT right);
-static void quicksort_with_logging(Vector& v, permutation& p, INT left, INT right);
-static void partition(Vector& v, INT left, INT right, INT *middle);
-static void partition_with_logging(Vector& v, permutation& p, INT left, INT right, INT *middle);
+static void quicksort(Vector& v, int left, int right);
+static void quicksort_with_logging(Vector& v, permutation& p, int left, int right);
+static void partition(Vector& v, int left, int right, int *middle);
+static void partition_with_logging(Vector& v, permutation& p, int left, int right, int *middle);
 
 Vector& Vector::sort()
 {
-	INT l;
+	int l;
 	
 	l = s_l();
 	quicksort(*this, 0, l - 1);
@@ -543,7 +543,7 @@ Vector& Vector::sort_with_logging(permutation& p)
 	// lay before, i.e. p[i] is the position of the
 	// sorted element i in the unsorted Vector.
 {
-	INT l;
+	int l;
 	
 	l = s_l();
 	p.m_l(l);
@@ -553,9 +553,9 @@ Vector& Vector::sort_with_logging(permutation& p)
 }
 
 
-static void quicksort(Vector& v, INT left, INT right)
+static void quicksort(Vector& v, int left, int right)
 {
-	INT middle;
+	int middle;
 	
 	if (left < right) {
 		partition(v, left, right, &middle);
@@ -564,9 +564,9 @@ static void quicksort(Vector& v, INT left, INT right)
 		}
 }
 
-static void quicksort_with_logging(Vector& v, permutation& p, INT left, INT right)
+static void quicksort_with_logging(Vector& v, permutation& p, int left, int right)
 {
-	INT middle;
+	int middle;
 	
 	if (left < right) {
 		partition_with_logging(v, p, left, right, &middle);
@@ -575,9 +575,9 @@ static void quicksort_with_logging(Vector& v, permutation& p, INT left, INT righ
 		}
 }
 
-static void partition(Vector& v, INT left, INT right, INT *middle)
+static void partition(Vector& v, int left, int right, int *middle)
 {
-	INT l, r, m, len, m1, res, pivot;
+	int l, r, m, len, m1, res, pivot;
 	
 	// pivot strategy: take the element in the middle: 
 	len = right + 1 - left;
@@ -614,9 +614,9 @@ static void partition(Vector& v, INT left, INT right, INT *middle)
 	*middle = m;
 }
 
-static void partition_with_logging(Vector& v, permutation& p, INT left, INT right, INT *middle)
+static void partition_with_logging(Vector& v, permutation& p, int left, int right, int *middle)
 {
-	INT l, r, m, len, m1, res, pivot;
+	int l, r, m, len, m1, res, pivot;
 	
 	// pivot strategy: take the element in the middle: 
 	len = right + 1 - left;
@@ -624,7 +624,7 @@ static void partition_with_logging(Vector& v, permutation& p, INT left, INT righ
 	pivot = left;
 	if (m1) {
 		v[pivot].swap(v[left + m1]);
-		INT_swap(p[pivot], p[left + m1]);
+		int_swap(p[pivot], p[left + m1]);
 		}
 	l = left;
 	r = right;
@@ -648,13 +648,13 @@ static void partition_with_logging(Vector& v, permutation& p, INT left, INT righ
 		// now v[l] > v[pivot] and v[r] <= v[pivot] 
 		if (l < r) {
 			v[l].swap(v[r]);
-			INT_swap(p[l], p[r]);
+			int_swap(p[l], p[r]);
 			}
 		}
 	m = r;
 	if (left != m) {
 		v[left].swap(v[m]);
-		INT_swap(p[left], p[m]);
+		int_swap(p[left], p[m]);
 		}
 	*middle = m;
 }
@@ -662,8 +662,8 @@ static void partition_with_logging(Vector& v, permutation& p, INT left, INT righ
 
 void Vector::sum_of_all_entries(discreta_base &x)
 {
-	INT l = s_l();
-	INT i;
+	int l = s_l();
+	int i;
 	
 	x = s_i(0);
 	for (i = 1; i < l; i++) {
@@ -674,9 +674,9 @@ void Vector::sum_of_all_entries(discreta_base &x)
 
 
 
-void Vector::n_choose_k_first(INT n, INT k)
+void Vector::n_choose_k_first(int n, int k)
 {
-	INT i;
+	int i;
 	
 	m_l_n(k);
 	for (i = 0; i < k; i++) {
@@ -684,9 +684,9 @@ void Vector::n_choose_k_first(INT n, INT k)
 		}
 }
 
-INT Vector::n_choose_k_next(INT n, INT k)
+int Vector::n_choose_k_next(int n, int k)
 {
-	INT i, ii, a;
+	int i, ii, a;
 	
 	if (k != s_l()) {
 		cout << "Vector::n_choose_k_next() k != s_l()";
@@ -705,10 +705,10 @@ INT Vector::n_choose_k_next(INT n, INT k)
 	return FALSE;
 }
 
-INT Vector::next_lehmercode()
+int Vector::next_lehmercode()
 {
-	INT l = s_l();
-	INT i, j;
+	int l = s_l();
+	int i, j;
 	
 	for (i = l - 1, j = 0; i >= 0; i--, j++) {
 		if (s_ii(i) < j) {
@@ -724,7 +724,7 @@ INT Vector::next_lehmercode()
 void Vector::lehmercode2perm(permutation& p)
 //Computes the permutation $p$ defined by its lehmercode (this).
 {
-	INT i, k, l;
+	int i, k, l;
 	Vector list;
 	
 	l = s_l();
@@ -742,9 +742,9 @@ void Vector::lehmercode2perm(permutation& p)
 		}
 }
 
-void Vector::q_adic(INT n, INT q)
+void Vector::q_adic(int n, int q)
 {
-	INT r, i = 0;
+	int r, i = 0;
 	
 	m_l(0);
 	do {
@@ -756,9 +756,9 @@ void Vector::q_adic(INT n, INT q)
 		} while(n);
 }
 
-INT Vector::q_adic_as_int(INT q)
+int Vector::q_adic_as_int(int q)
 {
-	INT r, n = 0, i, l;
+	int r, n = 0, i, l;
 	
 	l = s_l();
 	n = 0;
@@ -772,7 +772,7 @@ INT Vector::q_adic_as_int(INT q)
 
 void Vector::mult_scalar(discreta_base& a)
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
@@ -780,14 +780,14 @@ void Vector::mult_scalar(discreta_base& a)
 		}
 }
 
-void Vector::first_word(INT n, INT q)
+void Vector::first_word(int n, int q)
 {
 	m_l_n(n);
 }
 
-INT Vector::next_word(INT q)
+int Vector::next_word(int q)
 {
-	INT n, i;
+	int n, i;
 	
 	n = s_l();
 	i = n - 1;
@@ -801,12 +801,12 @@ INT Vector::next_word(INT q)
 	return TRUE;
 }
 
-void Vector::first_regular_word(INT n, INT q)
+void Vector::first_regular_word(int n, int q)
 {
 	m_l_n(n);
 }
 
-INT Vector::next_regular_word(INT q)
+int Vector::next_regular_word(int q)
 {
 	do {
 		if (!next_word(q))
@@ -815,10 +815,10 @@ INT Vector::next_regular_word(INT q)
 	return TRUE;
 }
 
-INT Vector::is_regular_word()
+int Vector::is_regular_word()
 // works correct only for Vectors over the integers
 {
-	INT n, i, k, ipk, f_rg;
+	int n, i, k, ipk, f_rg;
 	
 	n = s_l();
 	if (n == 1)
@@ -842,7 +842,7 @@ INT Vector::is_regular_word()
 
 void Vector::apply_permutation(permutation &p)
 {
-	INT i, j, l;
+	int i, j, l;
 	Vector v;
 	
 	l = s_l();
@@ -856,7 +856,7 @@ void Vector::apply_permutation(permutation &p)
 
 void Vector::apply_permutation_to_elements(permutation &p)
 {
-	INT i, l, a, b;
+	int i, l, a, b;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
@@ -868,7 +868,7 @@ void Vector::apply_permutation_to_elements(permutation &p)
 
 void Vector::content(Vector & c, Vector & where)
 {
-	INT i, l, idx;
+	int i, l, idx;
 	discreta_base x;
 	Vector v;
 	
@@ -890,7 +890,7 @@ void Vector::content(Vector & c, Vector & where)
 
 void Vector::content_multiplicities_only(Vector & c, Vector & mult)
 {
-	INT i, l, idx;
+	int i, l, idx;
 	discreta_base x;
 	integer int_ob;
 	
@@ -910,42 +910,42 @@ void Vector::content_multiplicities_only(Vector & c, Vector & mult)
 		}
 }
 
-INT Vector::hip()
+int Vector::hip()
 // homogeneous integer Vector predicate
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != INTEGER)
+		if (s_i(i).s_kind() != intEGER)
 			return FALSE;
 		}
 	return TRUE;
 }
 
-INT Vector::hip1()
+int Vector::hip1()
 // homogeneous integer Vector predicate, 
 // test for 1 char numbers; 
 // only to apply if hip TRUE. */
 {
-	INT i, l, k;
+	int i, l, k;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != INTEGER) {
-			cout << "Vector::hip1(): object not of type INTEGER\n";
+		if (s_i(i).s_kind() != intEGER) {
+			cout << "Vector::hip1(): object not of type intEGER\n";
 			exit(1);
 			}
 		k = s_ii(i);
-		if (!ONE_char_INT(k))
+		if (!ONE_char_int(k))
 			return FALSE;
 		}
 	return TRUE;
 }
 
-void Vector::write_mem(memory & m, INT debug_depth)
+void Vector::write_mem(memory & m, int debug_depth)
 {
-	INT i, l, k;
+	int i, l, k;
 	char f_hip = 0, f_hip1 = 0;
 	
 	l = s_l();
@@ -990,9 +990,9 @@ void Vector::write_mem(memory & m, INT debug_depth)
 		}
 }
 
-void Vector::read_mem(memory & m, INT debug_depth)
+void Vector::read_mem(memory & m, int debug_depth)
 {
-	INT i, l, k;
+	int i, l, k;
 	char c, f_hip = 0, f_hip1 = 0;
 	
 	m.read_int(&l);
@@ -1015,7 +1015,7 @@ void Vector::read_mem(memory & m, INT debug_depth)
 		if (f_hip1) {
 			for (i = 0; i < l; i++) {
 				m.read_char(&c);
-				k = (INT) c;
+				k = (int) c;
 				m_ii(i, k);
 				}
 			}
@@ -1038,11 +1038,11 @@ void Vector::read_mem(memory & m, INT debug_depth)
 		}
 }
 
-INT Vector::csf()
+int Vector::csf()
 {
-	INT i, l;
+	int i, l;
 	char f_hip, f_hip1;
-	INT size = 0;
+	int size = 0;
 	
 	l = s_l();
 	size += 4; /* l */
@@ -1066,7 +1066,7 @@ INT Vector::csf()
 void Vector::conjugate(discreta_base & a)
 {
 	discreta_base av, b;
-	INT i, l;
+	int i, l;
 	
 	av = a;
 	av.invert();
@@ -1090,8 +1090,8 @@ void Vector::conjugate_with_inverse(discreta_base & a)
 
 void merge(Vector &v1, Vector &v2, Vector &v3)
 {
-	INT l1, l2, l3, i1 = 0, i2 = 0, r;
-	INT f_add1, f_add2;
+	int l1, l2, l3, i1 = 0, i2 = 0, r;
+	int f_add1, f_add2;
 	
 	l1 = v1.s_l();
 	l2 = v2.s_l();
@@ -1126,8 +1126,8 @@ void merge_with_fellows(Vector &v1, Vector &v1_fellow,
 	Vector &v2, Vector &v2_fellow, 
 	Vector &v3, Vector &v3_fellow)
 {
-	INT l1, l2, l3, i1 = 0, i2 = 0, r;
-	INT f_add1, f_add2;
+	int l1, l2, l3, i1 = 0, i2 = 0, r;
+	int f_add1, f_add2;
 	
 	l1 = v1.s_l();
 	l2 = v2.s_l();
@@ -1164,7 +1164,7 @@ void merge_with_fellows(Vector &v1, Vector &v1_fellow,
 void merge_with_value(Vector &idx1, Vector &idx2, Vector &idx3, 
 	Vector &val1, Vector &val2, Vector &val3)
 {
-	INT i1, i2, l1, l2, a1, a2, f_add1, f_add2;
+	int i1, i2, l1, l2, a1, a2, f_add1, f_add2;
 	Vector v;
 	
 	idx3.m_l(0);
@@ -1223,7 +1223,7 @@ void merge_with_value(Vector &idx1, Vector &idx2, Vector &idx3,
 
 void Vector::replace(Vector &v)
 {
-	INT i, l, a, b;
+	int i, l, a, b;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
@@ -1235,7 +1235,7 @@ void Vector::replace(Vector &v)
 
 void Vector::vector_of_vectors_replace(Vector &v)
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
@@ -1243,9 +1243,9 @@ void Vector::vector_of_vectors_replace(Vector &v)
 		}
 }
 
-void Vector::extract_subvector(Vector & v, INT first, INT len)
+void Vector::extract_subvector(Vector & v, int first, int len)
 {
-	INT i;
+	int i;
 	
 	v.m_l(len);
 	for (i = 0; i < len; i++) {
@@ -1254,10 +1254,10 @@ void Vector::extract_subvector(Vector & v, INT first, INT len)
 }
 
 #if 0
-INT nb_PG_elements(INT n, INT q)
+int nb_PG_elements(int n, int q)
 // $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 {
-	INT qhl, l, deg;
+	int qhl, l, deg;
 	
 	l = 0;
 	qhl = 1;
@@ -1270,7 +1270,7 @@ INT nb_PG_elements(INT n, INT q)
 	return deg;
 }
 
-INT nb_AG_elements(INT n, INT q)
+int nb_AG_elements(int n, int q)
 // $q^n$
 {
 	return i_power_j(q, n);
@@ -1280,7 +1280,7 @@ INT nb_AG_elements(INT n, INT q)
 void Vector::PG_element_normalize()
 // top (=highest) element which is different from zero becomes one
 {
-	INT i, j, l;
+	int i, j, l;
 	discreta_base a;
 	
 	l = s_l();
@@ -1300,10 +1300,10 @@ void Vector::PG_element_normalize()
 	exit(1);
 }
 
-void Vector::PG_element_rank(INT &a)
+void Vector::PG_element_rank(int &a)
 {
 	domain *d;
-	INT l, i, j, q, q_power_j, b;
+	int l, i, j, q, q_power_j, b;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "Vector::PG_element_rank() no finite field domain" << endl;
@@ -1346,10 +1346,10 @@ void Vector::PG_element_rank(INT &a)
 	a += b;
 }
 
-void Vector::PG_element_rank_modified(INT &a)
+void Vector::PG_element_rank_modified(int &a)
 {
 	domain *d;
-	INT l, i, j, q, q_power_j, b;
+	int l, i, j, q, q_power_j, b;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "Vector::PG_element_rank_modified() no finite field domain" << endl;
@@ -1411,10 +1411,10 @@ void Vector::PG_element_rank_modified(INT &a)
 	a += l - 1;
 }
 
-void Vector::PG_element_unrank(INT a)
+void Vector::PG_element_unrank(int a)
 {
 	domain *d;
-	INT q, n, l, qhl, k, j, r, a1 = a;
+	int q, n, l, qhl, k, j, r, a1 = a;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "Vector::PG_element_unrank() no finite field domain" << endl;
@@ -1458,10 +1458,10 @@ void Vector::PG_element_unrank(INT a)
 	exit(1);
 }
 
-void Vector::PG_element_unrank_modified(INT a)
+void Vector::PG_element_unrank_modified(int a)
 {
 	domain *d;
-	INT q, n, l, qhl, k, j, r, a1 = a;
+	int q, n, l, qhl, k, j, r, a1 = a;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "Vector::PG_element_unrank_modified() no finite field domain" << endl;
@@ -1515,10 +1515,10 @@ void Vector::PG_element_unrank_modified(INT a)
 	exit(1);
 }
 
-void Vector::AG_element_rank(INT &a)
+void Vector::AG_element_rank(int &a)
 {
 	domain *d;
-	INT q, l, i;
+	int q, l, i;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "Vector::AG_element_rank() no finite field domain" << endl;
@@ -1538,10 +1538,10 @@ void Vector::AG_element_rank(INT &a)
 		}
 }
 
-void Vector::AG_element_unrank(INT a)
+void Vector::AG_element_unrank(int a)
 {
 	domain *d;
-	INT q, n, i, b;
+	int q, n, i, b;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "Vector::AG_element_unrank() no finite field domain" << endl;
@@ -1560,9 +1560,9 @@ void Vector::AG_element_unrank(INT a)
 		}
 }
 
-INT Vector::hamming_weight()
+int Vector::hamming_weight()
 {
-	INT i, l, w;
+	int i, l, w;
 	
 	w = 0;
 	l = s_l();
@@ -1575,7 +1575,7 @@ INT Vector::hamming_weight()
 
 void Vector::scalar_product(Vector &w, discreta_base & a)
 {
-	INT l, i;
+	int l, i;
 	discreta_base b;
 	
 	l = s_l();
@@ -1596,7 +1596,7 @@ void Vector::scalar_product(Vector &w, discreta_base & a)
 
 void Vector::hadamard_product(Vector &w)
 {
-	INT l, i;
+	int l, i;
 	discreta_base b;
 	
 	l = s_l();
@@ -1611,10 +1611,10 @@ void Vector::hadamard_product(Vector &w)
 
 void Vector::intersect(Vector& b, Vector &c)
 {
-	INT l1 = s_l();
-	INT l2 = b.s_l();
-	INT l3 = 0;
-	INT i, idx;
+	int l1 = s_l();
+	int l2 = b.s_l();
+	int l3 = 0;
+	int i, idx;
 	
 	if (l2 < l1) {
 		b.intersect(*this, c);
@@ -1635,7 +1635,7 @@ void intersection_of_vectors(Vector& V, Vector& v)
 // v becomes the set of elements lying in all Vectors of V
 {
 	Vector vl;
-	INT l, i, j;
+	int l, i, j;
 	permutation p;
 	Vector vv;
 	
@@ -1658,9 +1658,9 @@ void intersection_of_vectors(Vector& V, Vector& v)
 		}
 }
 
-INT Vector::vector_of_vectors_overall_length()
+int Vector::vector_of_vectors_overall_length()
 {
-	INT i, l, s = 0;
+	int i, l, s = 0;
 	
 	l = s_l();
 	for (i = 0; i < l; i++) {
@@ -1677,13 +1677,13 @@ INT Vector::vector_of_vectors_overall_length()
 
 void Vector::first_divisor(Vector &exponents)
 {
-	INT l = exponents.s_l();
+	int l = exponents.s_l();
 	m_l_n(l);
 }
 
-INT Vector::next_divisor(Vector &exponents)
+int Vector::next_divisor(Vector &exponents)
 {
-	INT n, i;
+	int n, i;
 	
 	n = s_l();
 	i = n - 1;
@@ -1699,9 +1699,9 @@ INT Vector::next_divisor(Vector &exponents)
 	return TRUE;
 }
 
-INT Vector::next_non_trivial_divisor(Vector &exponents)
+int Vector::next_non_trivial_divisor(Vector &exponents)
 {
-	INT n, i;
+	int n, i;
 	
 	n = s_l();
 	i = n - 1;
@@ -1726,7 +1726,7 @@ INT Vector::next_non_trivial_divisor(Vector &exponents)
 
 void Vector::multiply_out(Vector &primes, discreta_base &x)
 {
-	INT n, i;
+	int n, i;
 	discreta_base a;
 	
 	x.m_i_i(1);
@@ -1740,27 +1740,27 @@ void Vector::multiply_out(Vector &primes, discreta_base &x)
 		}
 }
 
-INT Vector::hash(INT hash0)
+int Vector::hash(int hash0)
 {
-	INT h = hash0;
-	INT i, l;
+	int h = hash0;
+	int i, l;
 	
 	l = s_l();
-	h = hash_INT(h, s_l());
+	h = hash_int(h, s_l());
 	for (i = 0; i < l; i++) {
-		if (s_i(i).s_kind() != INTEGER) {
+		if (s_i(i).s_kind() != intEGER) {
 			cout << "Vector::hash() must be vector of integers" << endl;
 			exit(1);
 			}
-		h = hash_INT(h, s_ii(i));
+		h = hash_int(h, s_ii(i));
 		}
 	return h;
 }
 
-INT Vector::is_subset_of(Vector &w)
+int Vector::is_subset_of(Vector &w)
 // w must be sorted
 {
-	INT i, idx;
+	int i, idx;
 	
 	for (i = 0; i < s_l(); i++) {
 		if (!w.search(s_i(i), &idx))
@@ -1771,7 +1771,7 @@ INT Vector::is_subset_of(Vector &w)
 
 void Vector::concatenation(Vector &v1, Vector &v2)
 {
-	INT l1, l2, l3, i, k;
+	int l1, l2, l3, i, k;
 	
 	l1 = v1.s_l();
 	l2 = v2.s_l();
@@ -1788,9 +1788,9 @@ void Vector::concatenation(Vector &v1, Vector &v2)
 		}
 }
 
-#undef DEBUG_PRINT_WORD_NICELY
+#undef DEBUG_PRint_WORD_NICELY
 
-void Vector::print_word_nicely(ostream &ost, INT f_generator_labels, Vector &generator_labels)
+void Vector::print_word_nicely(ostream &ost, int f_generator_labels, Vector &generator_labels)
 {
 	if (f_generator_labels) {
 		print_word_nicely_with_generator_labels(ost, generator_labels);
@@ -1798,7 +1798,7 @@ void Vector::print_word_nicely(ostream &ost, INT f_generator_labels, Vector &gen
 	else {
 		print_word_nicely2(ost);
 		}
-#ifdef DEBUG_PRINT_WORD_NICELY
+#ifdef DEBUG_PRint_WORD_NICELY
 	cout << *this << " = ";
 	if (f_generator_labels) {
 		print_word_nicely_with_generator_labels(cout, generator_labels);
@@ -1812,7 +1812,7 @@ void Vector::print_word_nicely(ostream &ost, INT f_generator_labels, Vector &gen
 
 void Vector::print_word_nicely2(ostream &ost)
 {
-	INT i, j, e, l;
+	int i, j, e, l;
 	char c;
 	
 	l = s_l();
@@ -1839,7 +1839,7 @@ void Vector::print_word_nicely2(ostream &ost)
 
 void Vector::print_word_nicely_with_generator_labels(ostream &ost, Vector &generator_labels)
 {
-	INT i, j, e, l;
+	int i, j, e, l;
 	
 	l = s_l();
 	for (i = 0; i < l; i += e) {
@@ -1863,7 +1863,7 @@ void Vector::print_word_nicely_with_generator_labels(ostream &ost, Vector &gener
 
 void Vector::vector_of_vectors_lengths(Vector &lengths)
 {
-	INT i, l, ll;
+	int i, l, ll;
 	
 	l = s_l();
 	lengths.m_l_n(l);
@@ -1875,7 +1875,7 @@ void Vector::vector_of_vectors_lengths(Vector &lengths)
 
 void Vector::get_element_orders(Vector &vec_of_orders)
 {
-	INT i, l, o;
+	int i, l, o;
 	
 	l = s_l();
 	vec_of_orders.m_l_n(l);

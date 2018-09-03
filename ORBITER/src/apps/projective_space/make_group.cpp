@@ -11,15 +11,15 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void create_group(INT verbose_level);
+void create_group(int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 	
 	t0 = os_ticks();
 	
@@ -37,17 +37,17 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void create_group(INT verbose_level)
+void create_group(int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	INT n = 1;
-	INT q = 8;
+	//int f_v = (verbose_level >= 1);
+	int n = 1;
+	int q = 8;
 
 	action *A;
 	action *A2;
 	finite_field *F;
 	projective_space *P;
-	INT i;
+	int i;
 	
 	F = new finite_field;
 	P = new projective_space;
@@ -66,17 +66,17 @@ void create_group(INT verbose_level)
 
 
 
-	INT generators[] = {
+	int generators[] = {
 		0,1,1,1,2,
 		1,3,2,0,2
 		};
 	vector_ge gens;
-	INT *Elt1;
+	int *Elt1;
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 
-	//set1 = NEW_INT(P->N_points);
-	//set2 = NEW_INT(P->N_points);
+	//set1 = NEW_int(P->N_points);
+	//set2 = NEW_int(P->N_points);
 
 	gens.init(A);
 	gens.allocate(2);
@@ -89,7 +89,7 @@ void create_group(INT verbose_level)
 		}
 
 	sims *S;
-	INT nb_times = 100;
+	int nb_times = 100;
 
 	S = new sims;
 	S->init(A);

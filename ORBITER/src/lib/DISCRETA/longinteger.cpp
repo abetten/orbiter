@@ -6,22 +6,22 @@
 
 #include "orbiter.h"
 
-#undef DEBUG_LONGINTEGER_DIVISION
-#undef DEBUG_LONGINTEGER_COMPARE
+#undef DEBUG_LONGintEGER_DIVISION
+#undef DEBUG_LONGintEGER_COMPARE
 
 
 static void subtract_signless(longinteger &x, longinteger &y, longinteger &z);
-static INT do_division(longinteger& r, longinteger *d);
+static int do_division(longinteger& r, longinteger *d);
 
 longinteger::longinteger()
 {
-	k = LONGINTEGER;
+	k = LONGintEGER;
 	clearself();
 }
 
-longinteger::longinteger(INT a)
+longinteger::longinteger(int a)
 {
-	INT l;
+	int l;
 	char *p;
 	ostringstream s;
 	
@@ -36,9 +36,9 @@ longinteger::longinteger(INT a)
 }
 
 #if 0
-longinteger::longinteger(LONGINT a)
+longinteger::longinteger(LONGint a)
 {
-	INT l;
+	int l;
 	char *p;
 	ostringstream s;
 	
@@ -56,7 +56,7 @@ longinteger::longinteger(LONGINT a)
 longinteger::longinteger(const char *s)
 {
 	// cout << "longinteger::longinteger(char *s)" << s << endl;
-	k = LONGINTEGER;
+	k = LONGintEGER;
 	clearself();
 	if (s[0] == '-')
 		allocate(TRUE, s + 1);
@@ -84,7 +84,7 @@ longinteger& longinteger::operator = (const discreta_base &x)
 void longinteger::settype_longinteger()
 {
 	new(this) longinteger;
-	k = LONGINTEGER;
+	k = LONGintEGER;
 }
 
 longinteger::~longinteger()
@@ -103,7 +103,7 @@ void longinteger::freeself_longinteger()
 
 kind longinteger::s_virtual_kind()
 {
-	return LONGINTEGER;
+	return LONGintEGER;
 }
 
 void longinteger::copyobject_to(discreta_base &x)
@@ -118,11 +118,11 @@ void longinteger::copyobject_to(discreta_base &x)
 
 ostream& longinteger::print(ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	char c;
 		
-#ifdef PRINT_WITH_TYPE
-	ost << "(LONGINTEGER, ";
+#ifdef PRint_WITH_TYPE
+	ost << "(LONGintEGER, ";
 #endif
 	if (s_rep() == NULL) {
 		ost << "NULL";
@@ -134,45 +134,45 @@ ostream& longinteger::print(ostream& ost)
 		for (i = l - 1; i >= 0; i--) {
 			c = '0' + s_rep()->p[i];
 			ost << c;
-#ifdef LONGINTEGER_PRINT_DOTS
-			if (i && (i % LONGINTEGER_DIGITS_FOR_DOT) == 0)
+#ifdef LONGintEGER_PRint_DOTS
+			if (i && (i % LONGintEGER_DIGITS_FOR_DOT) == 0)
 				ost << ".";
 #endif
 			}
 		}
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 	ost << ")";
 #endif
 	return ost;
 }
 
-LONGINTEGER_REPRESENTATION *longinteger::s_rep()
+LONGintEGER_REPRESENTATION *longinteger::s_rep()
 {
 	return self.longinteger_rep;
 }
 
-INT& longinteger::s_sign()
+int& longinteger::s_sign()
 {
 	return self.longinteger_rep->sign;
 }
 
-INT& longinteger::s_len()
+int& longinteger::s_len()
 {
 	return self.longinteger_rep->len;
 }
 
-char& longinteger::s_p(INT i)
+char& longinteger::s_p(int i)
 {
 	return self.longinteger_rep->p[i];
 }
 
-void longinteger::allocate(INT sign, const char *p)
+void longinteger::allocate(int sign, const char *p)
 {
-	INT i, l;
+	int i, l;
 	
 	l = strlen(p);
-	if (s_kind() != LONGINTEGER) {
-		cout << "longinteger::allocate() s_kind() != LONGINTEGER\n";
+	if (s_kind() != LONGintEGER) {
+		cout << "longinteger::allocate() s_kind() != LONGintEGER\n";
 		exit(1);
 		}
 	allocate_empty(l);
@@ -183,12 +183,12 @@ void longinteger::allocate(INT sign, const char *p)
 		}
 }
 
-void longinteger::allocate_internal(INT sign, INT len, const char *p)
+void longinteger::allocate_internal(int sign, int len, const char *p)
 {
-	INT i;
+	int i;
 	
-	if (s_kind() != LONGINTEGER) {
-		cout << "longinteger::allocate_internal() s_kind() != LONGINTEGER\n";
+	if (s_kind() != LONGintEGER) {
+		cout << "longinteger::allocate_internal() s_kind() != LONGintEGER\n";
 		exit(1);
 		}
 	allocate_empty(len);
@@ -198,15 +198,15 @@ void longinteger::allocate_internal(INT sign, INT len, const char *p)
 		}
 }
 
-void longinteger::allocate_empty(INT len)
+void longinteger::allocate_empty(int len)
 {
-	INT i;
+	int i;
 	
-	if (s_kind() != LONGINTEGER) {
-		cout << "longinteger::allocate_empty() s_kind() != LONGINTEGER\n";
+	if (s_kind() != LONGintEGER) {
+		cout << "longinteger::allocate_empty() s_kind() != LONGintEGER\n";
 		exit(1);
 		}
-	self.longinteger_rep = (LONGINTEGER_REPRESENTATION *) new char[sizeof(LONGINTEGER_REPRESENTATION) + len];
+	self.longinteger_rep = (LONGintEGER_REPRESENTATION *) new char[sizeof(LONGintEGER_REPRESENTATION) + len];
 	s_sign() = FALSE;
 	s_len() = len;
 	for (i = 0; i < len; i++) {
@@ -216,7 +216,7 @@ void longinteger::allocate_empty(INT len)
 
 void longinteger::normalize_representation()
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_len();
 	for (i = l - 1; i > 0; i--) {
@@ -227,16 +227,16 @@ void longinteger::normalize_representation()
 }
 
 
-INT longinteger::compare_with(discreta_base &b)
+int longinteger::compare_with(discreta_base &b)
 {
-	INT sa, sb;
+	int sa, sb;
 	
-	if (s_kind() != LONGINTEGER) {
-		cout << "longinteger::compare_with() s_kind() != LONGINTEGER\n";
+	if (s_kind() != LONGintEGER) {
+		cout << "longinteger::compare_with() s_kind() != LONGintEGER\n";
 		exit(1);
 		}
-	if (b.s_kind() != LONGINTEGER) {
-		if (b.s_kind() != INTEGER) {
+	if (b.s_kind() != LONGintEGER) {
+		if (b.s_kind() != intEGER) {
 			cout << "longinteger::compare_with() b is neither longinteger nor integer\n";
 			exit(1);
 			}
@@ -246,7 +246,7 @@ INT longinteger::compare_with(discreta_base &b)
 		return compare_with(b1);
 		}
 	longinteger &B = b.as_longinteger();
-	INT r;
+	int r;
 	
 	sa = s_sign();
 	sb = B.s_sign();
@@ -257,7 +257,7 @@ INT longinteger::compare_with(discreta_base &b)
 			return 1;
 		}
 	r = compare_with_unsigned(B);
-#ifdef DEBUG_LONGINTEGER_COMPARE
+#ifdef DEBUG_LONGintEGER_COMPARE
 	cout << "longinteger::compare_with_unsigned() returns " << r << "\n";
 #endif
 	if (sa)
@@ -266,14 +266,14 @@ INT longinteger::compare_with(discreta_base &b)
 		return r;
 }
 
-INT longinteger::compare_with_unsigned(longinteger &b)
+int longinteger::compare_with_unsigned(longinteger &b)
 {
-	INT la, lb, l, i, d1, d2;
+	int la, lb, l, i, d1, d2;
 	
 	la = s_len();
 	lb = b.s_len();
 	l = MAXIMUM(la, lb);
-#ifdef DEBUG_LONGINTEGER_COMPARE
+#ifdef DEBUG_LONGintEGER_COMPARE
 	cout << "longinteger::compare_with_unsigned()\n";
 	cout << "la=" << la << " lb=" << lb << endl;
 #endif
@@ -287,7 +287,7 @@ INT longinteger::compare_with_unsigned(longinteger &b)
 			d2 = b.s_p(i);
 		else
 			d2 = 0;
-#ifdef DEBUG_LONGINTEGER_COMPARE
+#ifdef DEBUG_LONGintEGER_COMPARE
 		cout << "i=" << i << "d1=" << d1 << "d2=" << d2 << endl;
 #endif
 		if (d1 < d2)
@@ -301,20 +301,20 @@ INT longinteger::compare_with_unsigned(longinteger &b)
 void longinteger::mult_to(discreta_base &x, discreta_base &y)
 {
 	longinteger Y;
-	INT len;
+	int len;
 	
-	if (s_kind() != LONGINTEGER) {
+	if (s_kind() != LONGintEGER) {
 		cout << "longinteger::mult_to() this is not a longinteger\n";
 		exit(1);
 		}
-	if (x.s_kind() == INTEGER) {
+	if (x.s_kind() == intEGER) {
 		longinteger x1;
 		
 		x1.homo_z(x.s_i_i());
 		mult_to(x1, y);
 		return;
 		}
-	if (x.s_kind() != LONGINTEGER) {
+	if (x.s_kind() != LONGintEGER) {
 		cout << "longinteger::mult_to() x is not a longinteger\n";
 		exit(1);
 		}
@@ -329,7 +329,7 @@ void longinteger::mult_to(discreta_base &x, discreta_base &y)
 		Y.s_sign() = TRUE;
 		}
 	
-	INT la, lb;
+	int la, lb;
 	char cb, c1, carry;
 	
 	for (lb = 0; lb < X.s_len(); lb++) {
@@ -357,9 +357,9 @@ void longinteger::mult_to(discreta_base &x, discreta_base &y)
 	Y.swap(y);
 }
 
-INT longinteger::invert_to(discreta_base &x)
+int longinteger::invert_to(discreta_base &x)
 {	
-	if (s_kind() != LONGINTEGER) {
+	if (s_kind() != LONGintEGER) {
 		cout << "longinteger::invert_to() this is not a longinteger\n";
 		exit(1);
 		}
@@ -370,21 +370,21 @@ INT longinteger::invert_to(discreta_base &x)
 void longinteger::add_to(discreta_base &x, discreta_base &y)
 {
 	longinteger Y;
-	INT len, sign_a, sign_b, cmp_a_b, l;
+	int len, sign_a, sign_b, cmp_a_b, l;
 	char ca, cb, c1, carry;
 	
-	if (s_kind() != LONGINTEGER) {
+	if (s_kind() != LONGintEGER) {
 		cout << "longinteger::add_to() this is not a longinteger\n";
 		exit(1);
 		}
-	if (x.s_kind() == INTEGER) {
+	if (x.s_kind() == intEGER) {
 		longinteger x1;
 		
 		x1.homo_z(x.s_i_i());
 		add_to(x1, y);
 		return;
 		}
-	if (x.s_kind() != LONGINTEGER) {
+	if (x.s_kind() != LONGintEGER) {
 		cout << "longinteger::add_to() x is not a longinteger\n";
 		exit(1);
 		}
@@ -448,7 +448,7 @@ static void subtract_signless(longinteger &x, longinteger &y, longinteger &z)
 // z := x - y (signless)
 // assumes |x| > |y|
 {
-	INT len, l;
+	int len, l;
 	char ca, cb, carry;
 	
 	len = x.s_len();
@@ -476,7 +476,7 @@ static void subtract_signless(longinteger &x, longinteger &y, longinteger &z)
 
 void longinteger::negate_to(discreta_base &x)
 {
-	if (s_kind() != LONGINTEGER) {
+	if (s_kind() != LONGintEGER) {
 		cout << "longinteger::negate_to() this not an integer\n";
 		exit(1);
 		}
@@ -510,18 +510,18 @@ void longinteger::m_one()
 	swap(x);
 }
 
-void longinteger::homo_z(INT z)
+void longinteger::homo_z(int z)
 {
 	char str[1024];
 	
-	sprintf(str, "%ld", z);
+	sprintf(str, "%d", z);
 	
 	longinteger x(str);
 	swap(x);
 }
 
 #if 0
-void longinteger::homo_z(LONGINT z)
+void longinteger::homo_z(LONGint z)
 {
 	char *p;
 	ostringstream s;
@@ -550,7 +550,7 @@ void longinteger::dec()
 	*this += x;
 }
 
-INT longinteger::is_zero()
+int longinteger::is_zero()
 {
 	longinteger x = ("0");
 	
@@ -559,7 +559,7 @@ INT longinteger::is_zero()
 	return FALSE;
 }
 
-INT longinteger::is_one()
+int longinteger::is_one()
 {
 	longinteger x = ("1");
 	
@@ -568,7 +568,7 @@ INT longinteger::is_one()
 	return FALSE;
 }
 
-INT longinteger::is_m_one()
+int longinteger::is_m_one()
 {
 	longinteger x = ("-1");
 	
@@ -577,28 +577,28 @@ INT longinteger::is_m_one()
 	return FALSE;
 }
 
-INT longinteger::is_even()
+int longinteger::is_even()
 {
-	INT d = (INT) s_p(0);
+	int d = (int) s_p(0);
 	
 	return EVEN(d);
 }
 
-INT longinteger::is_odd()
+int longinteger::is_odd()
 {
-	INT d = (INT) s_p(0);
+	int d = (int) s_p(0);
 	
 	return ODD(d);
 }
 
-INT longinteger::compare_with_euklidean(discreta_base &b)
+int longinteger::compare_with_euklidean(discreta_base &b)
 {
-	if (s_kind() != LONGINTEGER) {
-		cout << "longinteger::compare_with_euklidean() s_kind() != LONGINTEGER\n";
+	if (s_kind() != LONGintEGER) {
+		cout << "longinteger::compare_with_euklidean() s_kind() != LONGintEGER\n";
 		exit(1);
 		}
-	if (b.s_kind() != LONGINTEGER) {
-		if (b.s_kind() != INTEGER) {
+	if (b.s_kind() != LONGintEGER) {
+		if (b.s_kind() != intEGER) {
 			cout << "longinteger::compare_with_euklidean() b is neither longinteger nor integer\n";
 			exit(1);
 			}
@@ -608,32 +608,32 @@ INT longinteger::compare_with_euklidean(discreta_base &b)
 		return compare_with_euklidean(b1);
 		}
 	longinteger &B = b.as_longinteger();
-	INT r;
+	int r;
 	r = compare_with_unsigned(B);
 	// cout << "longinteger::compare_with_unsigned() returns " << r << "\n";
 	return r;
 }
 
-void longinteger::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, INT verbose_level)
+void longinteger::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
 {
-	if (s_kind() != LONGINTEGER) {
+	if (s_kind() != LONGintEGER) {
 		cout << "longinteger::integral_division() this is not a longinteger\n";
 		exit(1);
 		}
-	if (x.s_kind() == INTEGER) {
+	if (x.s_kind() == intEGER) {
 		longinteger x1;
 		
 		x1.homo_z(x.s_i_i());
 		integral_division(x1, q, r, verbose_level);
 		return;
 		}
-	if (x.s_kind() != LONGINTEGER) {
+	if (x.s_kind() != LONGintEGER) {
 		cout << "longinteger::integral_division() x is not a longinteger\n";
 		exit(1);
 		}
 	longinteger &X = x.as_longinteger();
 	longinteger Q, R, r1, r2, d[10], dm[10];
-	INT len, sign_x, sign_r, i, l1, l, idx;
+	int len, sign_x, sign_r, i, l1, l, idx;
 	
 	normalize_representation();
 	X.normalize_representation();
@@ -662,19 +662,19 @@ void longinteger::integral_division(discreta_base &x, discreta_base &q, discreta
 	sign_x = X.s_sign();
 	X.s_sign() = FALSE;
 	for (i = 0; i < 10; i++) {
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "i = " << i << " ";
 #endif
 		r1.homo_z(i);
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "r1 = " << r1 << " ";
 #endif
 		d[i].mult(X, r1);
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "d[i] = " << d[i] << " ";
 #endif
 		d[i].negate_to(dm[i]);
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "dm[i] = " << dm[i] << endl;
 #endif
 		}
@@ -688,28 +688,28 @@ void longinteger::integral_division(discreta_base &x, discreta_base &q, discreta
 	for (l = 0; l < len; l++) {
 		r1.s_p(l) = s_p(l1 + l);
 		}
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 	cout << "r1 = " << r1 << endl;
 #endif
 	
 	
 	// main loop containing all divisions:
 	for ( ; l1 >= 0; l1--) {
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "dividing r1=" << r1 << endl;
 #endif
 		idx = do_division(r1, d);
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "do_division, idx = " << idx << endl;
 		cout << "Q[" << l1 << "]=" << idx << endl;
 #endif
 		
 		Q.s_p(l1) = (char) idx;
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "calling r2.add()\n";
 #endif
 		r2.add(r1, dm[idx]);
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "r2=" << r2 << endl;
 #endif
 		if (l1 == 0)
@@ -735,12 +735,12 @@ void longinteger::integral_division(discreta_base &x, discreta_base &q, discreta
 	r2.swap(r);
 }
 
-static INT do_division(longinteger& r, longinteger *d)
+static int do_division(longinteger& r, longinteger *d)
 {
-	INT i, cmp;
+	int i, cmp;
 	
 	for (i = 9; i >= 0; i--) {
-#ifdef DEBUG_LONGINTEGER_DIVISION
+#ifdef DEBUG_LONGintEGER_DIVISION
 		cout << "do_division, i = " << i << " r=" << r << " d[i]=" << d[i] << endl;
 #endif
 		cmp = r.compare_with(d[i]);
@@ -753,14 +753,14 @@ static INT do_division(longinteger& r, longinteger *d)
 
 void longinteger::square_root_floor(discreta_base &x)
 {
-	if (s_kind() != LONGINTEGER) {
+	if (s_kind() != LONGintEGER) {
 		cout << "longinteger::square_root_floor() this is not a longinteger\n";
 		exit(1);
 		}
 	x.freeself();
 	longinteger &X = x.change_to_longinteger();
 	longinteger Y, YY;
-	INT la, l, len;
+	int la, l, len;
 	char c1;
 	
 	normalize_representation();
@@ -795,7 +795,7 @@ void longinteger::square_root_floor(discreta_base &x)
 	Y.swap(X);
 }
 
-longinteger& longinteger::Mersenne(INT n)
+longinteger& longinteger::Mersenne(int n)
 // $M_n = 2^n - 1$
 {
 	longinteger a = "2", b = "-1";
@@ -807,7 +807,7 @@ longinteger& longinteger::Mersenne(INT n)
 	return *this;
 }
 
-longinteger& longinteger::Fermat(INT n)
+longinteger& longinteger::Fermat(int n)
 // $F_n = 2^{2^n} + 1$
 {
 	longinteger a = "2", b = "1", l = "2";
@@ -821,10 +821,10 @@ longinteger& longinteger::Fermat(INT n)
 	return *this;
 }
 
-INT longinteger::s_i()
+int longinteger::s_i()
 {
 	char *p;
-	INT x, l;
+	int x, l;
 	ostringstream s;
 	
 	s << *this << ends;
@@ -833,16 +833,16 @@ INT longinteger::s_i()
 	p = new char [l + 1];
 	s.str().copy(p, l, 0);
 	p[l] = 0;
-	sscanf(p, "%ld", &x);
+	sscanf(p, "%d", &x);
 	delete [] p;
 	return x;
 	
 }
 
-INT longinteger::retract_to_integer_if_possible(integer &x)
+int longinteger::retract_to_integer_if_possible(integer &x)
 {
 	if (s_len() < 6) {
-		INT i = s_i();
+		int i = s_i();
 		x.m_i(i);
 		return TRUE;
 		}
@@ -850,7 +850,7 @@ INT longinteger::retract_to_integer_if_possible(integer &x)
 		return FALSE;
 }
 
-INT longinteger::modp(INT p)
+int longinteger::modp(int p)
 {
 	longinteger P, Q, R;
 	
@@ -859,10 +859,10 @@ INT longinteger::modp(INT p)
 	return R.s_i();
 }
 
-INT longinteger::ny_p(INT p)
+int longinteger::ny_p(int p)
 {
 	longinteger P, Q, R;
-	INT n = 0;
+	int n = 0;
 	
 	P.homo_z(p);
 	while (TRUE) {
@@ -875,7 +875,7 @@ INT longinteger::ny_p(INT p)
 	return n;
 }
 
-void longinteger::divide_out_int(INT d)
+void longinteger::divide_out_int(int d)
 {
 	longinteger D, Q, R;
 	
@@ -884,9 +884,9 @@ void longinteger::divide_out_int(INT d)
 	swap(Q);
 }
 
-INT longinteger::Lucas_test_Mersenne(INT m, INT f_v)
+int longinteger::Lucas_test_Mersenne(int m, int f_v)
 {
-	INT i;
+	int i;
 	longinteger s("4"), m2("-2"), t;
 	
 	Mersenne(m);

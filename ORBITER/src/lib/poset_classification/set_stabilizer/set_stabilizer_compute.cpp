@@ -21,26 +21,26 @@ set_stabilizer_compute::set_stabilizer_compute()
 
 set_stabilizer_compute::~set_stabilizer_compute()
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "set_stabilizer_compute::~set_stabilizer_compute" << endl;
 		}
 	if (the_set) {
-		FREE_INT(the_set);
+		FREE_int(the_set);
 		the_set = NULL;
 		}
 	if (the_set_sorted) {
-		FREE_INT(the_set_sorted);
+		FREE_int(the_set_sorted);
 		the_set_sorted = NULL;
 		}
 	if (the_set_sorting_perm) {
-		FREE_INT(the_set_sorting_perm);
+		FREE_int(the_set_sorting_perm);
 		the_set_sorting_perm = NULL;
 		}
 	if (the_set_sorting_perm_inv) {
-		FREE_INT(the_set_sorting_perm_inv);
+		FREE_int(the_set_sorting_perm_inv);
 		the_set_sorting_perm_inv = NULL;
 		}
 	if (gen) {
@@ -62,10 +62,10 @@ set_stabilizer_compute::~set_stabilizer_compute()
 }
 
 void set_stabilizer_compute::init(action *A,
-		INT *set, INT size, INT verbose_level)
+		int *set, int size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	longinteger_object go;
 
 	if (f_v) {
@@ -95,11 +95,11 @@ void set_stabilizer_compute::init(action *A,
 void set_stabilizer_compute::init_with_strong_generators(
 	action *A, action *A0,
 	strong_generators *Strong_gens, 
-	INT *set, INT size, INT verbose_level)
+	int *set, int size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT t;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int t;
 	longinteger_object go;
 	
 	set_stabilizer_compute::A = A0;
@@ -115,15 +115,15 @@ void set_stabilizer_compute::init_with_strong_generators(
 			<< " and order " << go << ", set of size " << size << endl;
 		}
 	
-	the_set = NEW_INT(set_size);
-	the_set_sorted = NEW_INT(set_size);
-	the_set_sorting_perm = NEW_INT(set_size);
-	the_set_sorting_perm_inv = NEW_INT(set_size);
+	the_set = NEW_int(set_size);
+	the_set_sorted = NEW_int(set_size);
+	the_set_sorting_perm = NEW_int(set_size);
+	the_set_sorting_perm_inv = NEW_int(set_size);
 	
-	INT_vec_copy(set, the_set, set_size);
-	INT_vec_copy(set, the_set_sorted, set_size);
+	int_vec_copy(set, the_set, set_size);
+	int_vec_copy(set, the_set_sorted, set_size);
 
-	INT_vec_sorting_permutation(the_set_sorted, set_size, 
+	int_vec_sorting_permutation(the_set_sorted, set_size, 
 		the_set_sorting_perm, 
 		the_set_sorting_perm_inv, TRUE /* f_increasingly */);
 	for (t = 0; t < set_size; t++) {
@@ -132,7 +132,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 	
 	if (f_v) {
 		cout << "Stabilizing the set ";
-		INT_vec_print(cout, the_set_sorted, set_size);
+		int_vec_print(cout, the_set_sorted, set_size);
 		cout << endl;
 		}
 	if (FALSE /*f_vv*/) {
@@ -171,7 +171,7 @@ void set_stabilizer_compute::init_with_strong_generators(
 #endif
 	gen->f_its_OK_to_not_have_an_early_test_func = TRUE;
 
-	INT nb_poset_orbit_nodes = ONE_MILLION;
+	int nb_poset_orbit_nodes = ONE_MILLION;
 	
 	gen->init_poset_orbit_node(nb_poset_orbit_nodes, verbose_level - 1);
 
@@ -188,17 +188,17 @@ void set_stabilizer_compute::init_with_strong_generators(
 		}
 }
 
-void set_stabilizer_compute::compute_set_stabilizer(INT t0,
-		INT &nb_backtrack_nodes, strong_generators *&Aut_gens,
-		INT verbose_level)
+void set_stabilizer_compute::compute_set_stabilizer(int t0,
+		int &nb_backtrack_nodes, strong_generators *&Aut_gens,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, lvl, depth_completed = 0;
-	INT f_create_schreier_vector = TRUE;
-	INT f_compact = TRUE;
-	INT f_use_invariant_subset_if_available = TRUE;
-	INT f_write_candidate_file = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, lvl, depth_completed = 0;
+	int f_create_schreier_vector = TRUE;
+	int f_compact = TRUE;
+	int f_use_invariant_subset_if_available = TRUE;
+	int f_write_candidate_file = FALSE;
 // f_use_invariant_subset_if_available is an option that affects the downstep.
 // if FALSE, the orbits of the stabilizer on all points are computed. 
 // if TRUE, the orbits of the stabilizer on the set of points that were 
@@ -206,19 +206,19 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0,
 // (using Schreier.orbits_on_invariant_subset_fast).
 // The set of possible points is stored 
 // inside the schreier vector data structure (sv).
-	INT vl;
-	INT f_debug = FALSE;
+	int vl;
+	int f_debug = FALSE;
 	
 	if (f_v) {
 		cout << "set_stabilizer_compute::compute_set_stabilizer "
 				"depth = " << gen->depth << endl;
 		}
 
-	INT *frequency = NULL; // [nb_orbits]
-	INT nb_orbits = 0;
-	INT *orbit_idx_of_subset; // [n_choose_k]
-	INT n_choose_k;
-	INT counter = 0;
+	int *frequency = NULL; // [nb_orbits]
+	int nb_orbits = 0;
+	int *orbit_idx_of_subset; // [n_choose_k]
+	int n_choose_k;
+	int counter = 0;
 
 	nb_backtrack_nodes = 0;
 	for (lvl = depth_completed; lvl <= gen->depth; lvl++) {
@@ -278,15 +278,15 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0,
 			}
 		gen->housekeeping_no_data_file(lvl + 1, t0, vl);
 	
-		FREE_INT(frequency);
-		FREE_INT(orbit_idx_of_subset);
+		FREE_int(frequency);
+		FREE_int(orbit_idx_of_subset);
 		
 		} // next lvl
 	if (f_v) {
 		cout << "set_stabilizer_compute::compute_set_stabilizer "
 				"level " << lvl << " reached" << endl;
 		}
-	INT f, idx = -1, nd;
+	int f, idx = -1, nd;
 	
 	for (i = 0; i < nb_orbits; i++) {
 		if (frequency[i]) {
@@ -310,26 +310,26 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0,
 	group G;
 	poset_orbit_node *O;
 	longinteger_object go, go1;
-	INT *Elt1, *Elt2, *Elt3;
+	int *Elt1, *Elt2, *Elt3;
 	
 	O = &gen->root[nd];
 	O->store_set_to(gen, lvl - 1, gen->set0);
 	
 	if (f_v) {
 		cout << "the original set is ";
-		INT_vec_print(cout, the_set, lvl);
+		int_vec_print(cout, the_set, lvl);
 		cout << endl;
 		}
 	
 	if (f_v) {
 		cout << "the canonical set is ";
-		INT_vec_print(cout, gen->set0, lvl);
+		int_vec_print(cout, gen->set0, lvl);
 		cout << endl;
 		}
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 	A->element_move(gen->transporter->ith(lvl), Elt1, FALSE);
 	A->element_invert(Elt1, Elt2, FALSE);
 	
@@ -404,15 +404,15 @@ void set_stabilizer_compute::compute_set_stabilizer(INT t0,
 		}
 #endif
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 }
 
 void set_stabilizer_compute::print_frequencies(
-		INT lvl, INT *frequency, INT nb_orbits)
+		int lvl, int *frequency, int nb_orbits)
 {
-	INT i, f;
+	int i, f;
 
 	cout << "orbit i : frequency[i] : stab order" << endl;
 
@@ -448,17 +448,17 @@ void set_stabilizer_compute::print_frequencies(
 #endif
 }
 
-INT set_stabilizer_compute::handle_frequencies(INT lvl, 
-	INT *frequency, INT nb_orbits, INT *orbit_idx_of_subset, 
-	INT &counter, INT n_choose_k, strong_generators *&Aut_gens,
-	INT verbose_level)
+int set_stabilizer_compute::handle_frequencies(int lvl, 
+	int *frequency, int nb_orbits, int *orbit_idx_of_subset, 
+	int &counter, int n_choose_k, strong_generators *&Aut_gens,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	classify C;
-	INT nb_types;
-	INT i, j, selected_type, selected_frequency, first, len, orb_idx;
-	INT nb_interesting_orbits;	
+	int nb_types;
+	int i, j, selected_type, selected_frequency, first, len, orb_idx;
+	int nb_interesting_orbits;	
 		
 	if (f_v) {
 		cout << "set_stabilizer_compute::handle_frequencies" << endl;
@@ -516,8 +516,8 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 		// interesting_subsets are the lvl-subsets of the given set
 		// which are of the chosen type.
 		// There is nb_interesting_subsets of them.
-		INT *interesting_subsets;
-		INT nb_interesting_subsets;
+		int *interesting_subsets;
+		int nb_interesting_subsets;
 
 		
 		cout << "set_stabilizer_compute::handle_frequencies we decide to go for subsets of size " << lvl << ", selected_frequency = " << selected_frequency << endl;
@@ -534,7 +534,7 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 		cout << "orbit " << orb_idx << " has frequency " << nb_interesting_subsets << " first=" << first << " len=" << len << endl;
 		cout << "n_choose_k=" << n_choose_k << endl;
 		j = 0;
-		interesting_subsets = NEW_INT(nb_interesting_subsets);
+		interesting_subsets = NEW_int(nb_interesting_subsets);
 		for (i = 0; i < n_choose_k; i++) {
 			if (orbit_idx_of_subset[i] == orb_idx) {
 				interesting_subsets[j++] = i;
@@ -554,7 +554,7 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 		if (f_v) {
 			cout << "set_stabilizer_compute::handle_frequencies calling compute_stabilizer_function" << endl;
 			}
-		//INT nodes;
+		//int nodes;
 
 
 		//compute_stabilizer_function(the_set, set_size, A, A, gen, lvl, orb_idx, orb_mult, interesting_subsets, Stab, nodes, verbose_level);
@@ -581,7 +581,7 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 
 		//overall_backtrack_nodes += CS->nodes;
 
-		FREE_INT(interesting_subsets);
+		FREE_int(interesting_subsets);
 
 		cout << "set_stabilizer_compute::handle_frequencies: Stabilizer computation finished.";
 		//the_end_quietly(t0);
@@ -592,19 +592,19 @@ INT set_stabilizer_compute::handle_frequencies(INT lvl,
 	return FALSE;
 }
 
-void set_stabilizer_compute::print_interesting_subsets(INT lvl, INT nb_interesting_subsets, INT *interesting_subsets)
+void set_stabilizer_compute::print_interesting_subsets(int lvl, int nb_interesting_subsets, int *interesting_subsets)
 {
-	INT i, j;
+	int i, j;
 	
 	cout << "the ranks of the corresponding subsets are:" << endl;
-	INT_vec_print(cout, interesting_subsets, nb_interesting_subsets);
+	int_vec_print(cout, interesting_subsets, nb_interesting_subsets);
 	cout << endl;
-	INT set[1000];
+	int set[1000];
 	cout << "the subsets are:" << endl;
 
 	if (nb_interesting_subsets < 50) {
 		for (i = 0; i < nb_interesting_subsets; i++) {
-			INT ii;
+			int ii;
 			j = interesting_subsets[i];
 			unrank_k_subset(j, set, set_size, lvl);
 			cout << setw(3) << i << " : " << setw(6) << j << " : (";
@@ -613,7 +613,7 @@ void set_stabilizer_compute::print_interesting_subsets(INT lvl, INT nb_interesti
 				if (ii < lvl - 1)
 					cout << ", ";
 				}
-			//INT_vec_print(cout, set, lvl);
+			//int_vec_print(cout, set, lvl);
 			cout << ")" << endl;
 #if 0
 			cout << " : (";
@@ -637,37 +637,37 @@ void set_stabilizer_compute::print_interesting_subsets(INT lvl, INT nb_interesti
 		}
 }
 
-void set_stabilizer_compute::compute_frequencies(INT level, 
-	INT *&frequency, INT &nb_orbits, 
-	INT *&isomorphism_type_of_subset, INT &n_choose_k, INT verbose_level)
+void set_stabilizer_compute::compute_frequencies(int level, 
+	int *&frequency, int &nb_orbits, 
+	int *&isomorphism_type_of_subset, int &n_choose_k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	//INT f_vvvv = (verbose_level >= 4);
-	INT set[1000];
-	INT subset[1000];
-	INT canonical_subset[1000];
-	INT i;
-	INT /*idx, f,*/ local_idx, subset_rk, print_mod;
-	INT *Elt1;
-	//INT f_implicit_fusion = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	//int f_vvvv = (verbose_level >= 4);
+	int set[1000];
+	int subset[1000];
+	int canonical_subset[1000];
+	int i;
+	int /*idx, f,*/ local_idx, subset_rk, print_mod;
+	int *Elt1;
+	//int f_implicit_fusion = TRUE;
 	
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 
 	//f = gen->first_oracle_node_at_level[level];
 	nb_orbits = gen->nb_orbits_at_level(level);
-	n_choose_k = INT_n_choose_k(set_size, level);
+	n_choose_k = int_n_choose_k(set_size, level);
 	
 	if (f_v) {
 		cout << "set_stabilizer_compute::compute_frequencies level=" << level << " nb_orbits=" << nb_orbits << " n_choose_k=" << n_choose_k << endl;
 		}	
 	
-	frequency = NEW_INT(nb_orbits);
-	isomorphism_type_of_subset = NEW_INT(n_choose_k);
+	frequency = NEW_int(nb_orbits);
+	isomorphism_type_of_subset = NEW_int(n_choose_k);
 	
-	INT_vec_zero(frequency, nb_orbits);
+	int_vec_zero(frequency, nb_orbits);
 
 	first_k_subset(set, set_size, level);
 	subset_rk = 0;
@@ -678,7 +678,7 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 		print_mod = 1000;
 		}
 	while (TRUE) {
-		INT f_v2 = FALSE;
+		int f_v2 = FALSE;
 
 		if ((subset_rk % print_mod) == 0) {
 			f_v2 = TRUE;
@@ -687,7 +687,7 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 			cout << "set_stabilizer_compute::compute_frequencies level=" << level 
 				<< " testing set " << subset_rk << " / " << n_choose_k 
 				<< " = " << 100. * (double) subset_rk / (double) n_choose_k << " % : ";
-			INT_vec_print(cout, set, level);
+			int_vec_print(cout, set, level);
 			cout << endl;
 			}
 		for (i = 0; i < level; i++) {
@@ -696,7 +696,7 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 			}
 		if (FALSE /*f_v2*/) {
 			cout << "corresponding to set ";
-			INT_vec_print(cout, subset, level);
+			int_vec_print(cout, subset, level);
 			cout << endl;
 			}
 		gen->A->element_one(gen->transporter->ith(0), 0);
@@ -753,10 +753,10 @@ void set_stabilizer_compute::compute_frequencies(INT level,
 		}
 	if (f_vv) {
 		cout << "isomorphism_type_of_subset:";
-		INT_vec_print(cout, isomorphism_type_of_subset, MINIMUM(100, n_choose_k));
+		int_vec_print(cout, isomorphism_type_of_subset, MINIMUM(100, n_choose_k));
 		cout << endl;
 		}
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 }
 
 

@@ -18,7 +18,7 @@
 
 #undef DEBUG_CONTENT
 
-static INT gfq_dep(INT n, matrix& A, matrix& P, Vector& v, INT m, permutation& rho, INT verbose_level);
+static int gfq_dep(int n, matrix& A, matrix& P, Vector& v, int m, permutation& rho, int verbose_level);
 
 
 
@@ -76,7 +76,7 @@ kind matrix::s_virtual_kind()
 
 void matrix::copyobject_to(discreta_base &x)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 #ifdef MATRIX_COPY_VERBOSE
 	cout << "in matrix::copyobject_to()\n";
@@ -104,12 +104,12 @@ void matrix::copyobject_to(discreta_base &x)
 
 ostream& matrix::print(ostream& ost)
 {
-	INT i, j, k, m, n, l1, l2, l3;
+	int i, j, k, m, n, l1, l2, l3;
 	Vector col_width;
 	
 	m = s_m();
 	n = s_n();
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 	ost << "(MATRIX of size " << m << " x " << n << ", \n";
 #endif
 	col_width.m_l_n(n);
@@ -127,7 +127,7 @@ ostream& matrix::print(ostream& ost)
 	if (current_printing_mode() == printing_mode_ascii) {
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				INT l;
+				int l;
 				ostringstream s;
 	
 				s << s_ij(i, j);
@@ -145,7 +145,7 @@ ostream& matrix::print(ostream& ost)
 		ost << "\\begin{array}{*{" << n << "}{c}}\n";
 		for (i = 0; i < m; i++) {
 			for (j = 0; j < n; j++) {
-				INT l;
+				int l;
 				ostringstream s;
 	
 				s << s_ij(i, j);
@@ -163,16 +163,16 @@ ostream& matrix::print(ostream& ost)
 	else {
 		ost << "current_printing_mode() = " << current_printing_mode() << " not yet implemented" << endl;
 		}
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 	ost << ")";
 #endif
 	//ost << "\n";
 	return ost;
 }
 
-INT matrix::compare_with(discreta_base &a)
+int matrix::compare_with(discreta_base &a)
 {
-	INT i, j, m1, n1, m2, n2, r;
+	int i, j, m1, n1, m2, n2, r;
 	
 	if (a.s_kind() != MATRIX) {
 		cout << "matrix::compare_with() a is not a matrix object" << endl;
@@ -201,16 +201,16 @@ INT matrix::compare_with(discreta_base &a)
 	return 0;
 }
 
-matrix& matrix::m_mn(INT m, INT n)
+matrix& matrix::m_mn(int m, int n)
 {
 	freeself();
 	self.matrix_pointer = calloc_m_times_n_objects(m, n, BASE);
 	return *this;
 }
 
-matrix& matrix::m_mn_n(INT m, INT n)
+matrix& matrix::m_mn_n(int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	m_mn(m, n);
 	for (i = 0; i < m; i++) {
@@ -221,10 +221,10 @@ matrix& matrix::m_mn_n(INT m, INT n)
 	return *this;
 }
 
-matrix& matrix::realloc(INT m, INT n)
+matrix& matrix::realloc(int m, int n)
 {
 	matrix M;
-	INT i, j, m1, n1;
+	int i, j, m1, n1;
 	
 	m1 = s_m();
 	n1 = s_n();
@@ -238,23 +238,23 @@ matrix& matrix::realloc(INT m, INT n)
 	return *this;
 }
 
-INT matrix::s_m()
+int matrix::s_m()
 {
 	if (self.matrix_pointer == NULL)
 		return 0;
 	return self.matrix_pointer[-2].s_i_i();
 }
 
-INT matrix::s_n()
+int matrix::s_n()
 {
 	if (self.matrix_pointer == NULL)
 		return 0;
 	return self.matrix_pointer[-1].s_i_i();
 }
 
-discreta_base & matrix::s_ij(INT i, INT j)
+discreta_base & matrix::s_ij(int i, int j)
 {
-	INT m, n;
+	int m, n;
 	
 #ifdef DEBUG_S_IJ
 	cout << "matrix::s_ij(" << i << ", " << j << ")" << endl;
@@ -276,7 +276,7 @@ discreta_base & matrix::s_ij(INT i, INT j)
 	return self.matrix_pointer[i * n + j];
 }
 
-discreta_base & matrix_access::operator [](INT j)
+discreta_base & matrix_access::operator [](int j)
 {
 	return p->s_ij(i, j);
 }
@@ -302,7 +302,7 @@ void matrix::mult_to(discreta_base &x, discreta_base &y)
 void matrix::matrix_mult_to(matrix &x, discreta_base &y)
 {
 	matrix py;
-	INT i, j, k, m, n, l;
+	int i, j, k, m, n, l;
 	
 	if (s_kind() != MATRIX) {
 		cout << "matrix::matrix_mult_to() this is not a matrix\n";
@@ -342,7 +342,7 @@ void matrix::matrix_mult_to(matrix &x, discreta_base &y)
 void matrix::vector_mult_to(Vector &x, discreta_base &y)
 {
 	Vector py;
-	INT i, j, m, l;
+	int i, j, m, l;
 	
 	if (s_kind() != MATRIX) {
 		cout << "matrix::vector_mult_to() this is not a matrix\n";
@@ -378,7 +378,7 @@ void matrix::vector_mult_to(Vector &x, discreta_base &y)
 
 void matrix::multiply_vector_from_left(Vector &x, Vector &y)
 {
-	INT l, i, j, m, n;
+	int l, i, j, m, n;
 	
 	l = x.s_l();
 	m = s_m();
@@ -404,9 +404,9 @@ void matrix::multiply_vector_from_left(Vector &x, Vector &y)
 		}	
 }
 
-INT matrix::invert_to(discreta_base &x)
+int matrix::invert_to(discreta_base &x)
 {
-	INT m, n, rank;
+	int m, n, rank;
 	matrix P;
 	Vector base_cols;
 	
@@ -435,7 +435,7 @@ INT matrix::invert_to(discreta_base &x)
 
 void matrix::add_to(discreta_base &x, discreta_base &y)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	y.freeself();
 	if (s_kind() != MATRIX) {
@@ -470,7 +470,7 @@ void matrix::add_to(discreta_base &x, discreta_base &y)
 
 void matrix::negate_to(discreta_base &x)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	if (s_kind() != MATRIX) {
 		cout << "matrix::negate_to() this not a matrix\n";
@@ -493,7 +493,7 @@ void matrix::negate_to(discreta_base &x)
 
 void matrix::one()
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
@@ -513,7 +513,7 @@ void matrix::one()
 
 void matrix::zero()
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
@@ -524,10 +524,10 @@ void matrix::zero()
 		}
 }
 
-INT matrix::is_zero()
+int matrix::is_zero()
 {
 	matrix B;
-	INT m, n;
+	int m, n;
 	
 	m = s_m();
 	n = s_n();
@@ -539,10 +539,10 @@ INT matrix::is_zero()
 	
 }
 
-INT matrix::is_one()
+int matrix::is_one()
 {
 	matrix B;
-	INT m, n, i, j;
+	int m, n, i, j;
 	
 	m = s_m();
 	n = s_n();
@@ -563,11 +563,11 @@ INT matrix::is_one()
 }
 
 
-INT matrix::Gauss(INT f_special, INT f_complete, Vector& base_cols, 
-	INT f_P, matrix& P, INT f_v)
+int matrix::Gauss(int f_special, int f_complete, Vector& base_cols, 
+	int f_P, matrix& P, int f_v)
 // returns the rank
 {
-	INT rank, i, j, k, jj, m, n, Pn = 0;
+	int rank, i, j, k, jj, m, n, Pn = 0;
 	discreta_base pivot, pivot_inv, a, b, c, z, f;
 	
 	base_cols.m_l(0);
@@ -721,7 +721,7 @@ INT matrix::Gauss(INT f_special, INT f_complete, Vector& base_cols,
 	return rank;
 }
 
-INT matrix::rank()
+int matrix::rank()
 {
 	Vector base_cols;
 	matrix P;
@@ -729,9 +729,9 @@ INT matrix::rank()
 	return Gauss(FALSE, FALSE, base_cols, FALSE, P, FALSE);
 }
 
-INT matrix::get_kernel(Vector& base_cols, matrix& kernel)
+int matrix::get_kernel(Vector& base_cols, matrix& kernel)
 {
-	INT r, m, n, k, i, j, ii, iii, a, b;
+	int r, m, n, k, i, j, ii, iii, a, b;
 	Vector kcol;
 	
 	m = s_m();
@@ -800,7 +800,7 @@ INT matrix::get_kernel(Vector& base_cols, matrix& kernel)
 matrix& matrix::transpose()
 {
 	matrix A;
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
@@ -814,12 +814,12 @@ matrix& matrix::transpose()
 	return *this;
 }
 
-INT matrix::Asup2Ainf()
+int matrix::Asup2Ainf()
 //Computes the Plesken matrix $A^\wedge$ (Ainf)  from $A^\vee$ (Asup).
 //Compare Plesken~\cite{Plesken82}.
 {
 	Vector orbit_size;
-	INT m, n, i, j;
+	int m, n, i, j;
 	
 	m = s_m();
 	n = s_n();
@@ -849,7 +849,7 @@ INT matrix::Asup2Ainf()
 }
 
 
-INT matrix::Ainf2Asup()
+int matrix::Ainf2Asup()
 {
 	transpose();
 	Asup2Ainf();
@@ -857,11 +857,11 @@ INT matrix::Ainf2Asup()
 	return TRUE;
 }
 
-INT matrix::Asup2Acover()
+int matrix::Asup2Acover()
 //Computes the cover relations of the poset defined by this (=Asup).
 //Assumes that Asup is upper triangular.
 {
-	INT m, n, i, j, k;
+	int m, n, i, j, k;
 	
 	m = s_m();
 	n = s_n();
@@ -891,12 +891,12 @@ INT matrix::Asup2Acover()
 	return TRUE;
 }
 
-INT matrix::Acover2nl(Vector& nl)
+int matrix::Acover2nl(Vector& nl)
 //Computes the \lq neighbour-list\rq of the poset whose cover relations are given 
 //in this (=Acover). This list nl is used as input for the lattice-placement 
 //program \lq vbp \rq.
 {
-	INT m, n, i, j, k, len, cur;
+	int m, n, i, j, k, len, cur;
 	
 	m = s_m();
 	n = s_n();
@@ -926,14 +926,14 @@ INT matrix::Acover2nl(Vector& nl)
 	return TRUE;
 }
 
-void matrix::Frobenius(unipoly& m, INT p, INT verbose_level)
+void matrix::Frobenius(unipoly& m, int p, int verbose_level)
 //computes a $d \times d$ matrix whose j-th column 
 //contains the coefficients of $x^{p^j} \mod m$. 
 //Here, $d = \deg m.$  
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	unipoly a, b, c;
-	INT i, j, d, d1;
+	int i, j, d, d1;
 	
 	d = m.degree();
 	if (f_v) {
@@ -964,10 +964,10 @@ void matrix::Frobenius(unipoly& m, INT p, INT verbose_level)
 		}
 }
 
-void matrix::Berlekamp(unipoly& m, INT p, INT verbose_level)
+void matrix::Berlekamp(unipoly& m, int p, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, l;
+	int f_v = (verbose_level >= 1);
+	int i, l;
 	integer m1;
 	
 	Frobenius(m, p, FALSE);
@@ -984,10 +984,10 @@ void matrix::Berlekamp(unipoly& m, INT p, INT verbose_level)
 		}
 }
 
-void matrix::companion_matrix(unipoly& m, INT verbose_level)
+void matrix::companion_matrix(unipoly& m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, d;
+	int f_v = (verbose_level >= 1);
+	int i, d;
 	
 	if (f_v) {
 		cout << "companion_matrix() of the polynomial " << m << endl;
@@ -1009,7 +1009,7 @@ void matrix::companion_matrix(unipoly& m, INT verbose_level)
 
 void matrix::elements_to_unipoly()
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	// cout << "matrix::elements_to_unipoly()" << endl;
 	m = s_m();
@@ -1030,7 +1030,7 @@ void matrix::elements_to_unipoly()
 void matrix::minus_X_times_id()
 {
 	unipoly a;
-	INT i, m, n, l;
+	int i, m, n, l;
 	
 	a.x();
 	a.negate();
@@ -1046,7 +1046,7 @@ void matrix::minus_X_times_id()
 void matrix::X_times_id_minus_self()
 {
 	unipoly a;
-	INT i, j, m, n, l;
+	int i, j, m, n, l;
 	
 	a.x();
 	//a.negate();
@@ -1064,10 +1064,10 @@ void matrix::X_times_id_minus_self()
 		}
 }
 
-void matrix::smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, INT verbose_level)
+void matrix::smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT m, n, i, j, l, ii, jj, stable;
+	int f_v = (verbose_level >= 1);
+	int m, n, i, j, l, ii, jj, stable;
 	discreta_base a0, a1, am1;
 	
 	if (f_v) {
@@ -1169,11 +1169,11 @@ void matrix::smith_normal_form(matrix& P, matrix& Pv, matrix& Q, matrix& Qv, INT
 		}
 }
 
-INT matrix::smith_eliminate_column(matrix& P, matrix& Pv, INT i, INT verbose_level)
+int matrix::smith_eliminate_column(matrix& P, matrix& Pv, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT m, j, action = FALSE;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int m, j, action = FALSE;
 	discreta_base x, y, u, v, g, x1, y1;
 	
 	if (f_v) {
@@ -1234,11 +1234,11 @@ INT matrix::smith_eliminate_column(matrix& P, matrix& Pv, INT i, INT verbose_lev
 	return action;
 }
 
-INT matrix::smith_eliminate_row(matrix& Q, matrix& Qv, INT i, INT verbose_level)
+int matrix::smith_eliminate_row(matrix& Q, matrix& Qv, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT n, j, action = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int n, j, action = FALSE;
 	discreta_base x, y, u, v, g, x1, y1;
 	
 	if (f_v) {
@@ -1285,11 +1285,11 @@ INT matrix::smith_eliminate_row(matrix& Q, matrix& Qv, INT i, INT verbose_level)
 	return action;
 }
 
-void matrix::multiply_2by2_from_left(INT i, INT j, 
-	discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, INT verbose_level)
+void matrix::multiply_2by2_from_left(int i, int j, 
+	discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT k, n;
+	int f_v = (verbose_level >= 1);
+	int k, n;
 	discreta_base x, y, xx, yy;
 	
 	if (f_v) {
@@ -1311,11 +1311,11 @@ void matrix::multiply_2by2_from_left(INT i, INT j,
 		}
 }
 
-void matrix::multiply_2by2_from_right(INT i, INT j, 
-	discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, INT verbose_level)
+void matrix::multiply_2by2_from_right(int i, int j, 
+	discreta_base& aii, discreta_base& aij, discreta_base& aji, discreta_base& ajj, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT k, m;
+	int f_v = (verbose_level >= 1);
+	int k, m;
 	discreta_base x, y, xx, yy;
 	
 	if (f_v) {
@@ -1340,7 +1340,7 @@ void matrix::multiply_2by2_from_right(INT i, INT j,
 void matrix::to_vector_of_rows(Vector& v)
 {
 	Vector vv;
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
@@ -1356,7 +1356,7 @@ void matrix::to_vector_of_rows(Vector& v)
 
 void matrix::from_vector_of_rows(Vector& v)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = v.s_l();
 	if (m <= 0) {
@@ -1377,7 +1377,7 @@ void matrix::from_vector_of_rows(Vector& v)
 void matrix::to_vector_of_columns(Vector& v)
 {
 	Vector vv;
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
@@ -1393,7 +1393,7 @@ void matrix::to_vector_of_columns(Vector& v)
 
 void matrix::from_vector_of_columns(Vector& v)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	n = v.s_l();
 	if (n <= 0) {
@@ -1413,7 +1413,7 @@ void matrix::from_vector_of_columns(Vector& v)
 
 void matrix::evaluate_at(discreta_base& x)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	discreta_base y;
 	
 	m = s_m();
@@ -1427,11 +1427,11 @@ void matrix::evaluate_at(discreta_base& x)
 }
 
 
-static INT gfq_dep(INT n, matrix& A, matrix& P, Vector& v, INT m, permutation& rho, INT verbose_level)
+static int gfq_dep(int n, matrix& A, matrix& P, Vector& v, int m, permutation& rho, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, k, f_null, pp;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k, f_null, pp;
 	discreta_base a0, a1, c;
 
 	if (f_v) {
@@ -1482,18 +1482,18 @@ static INT gfq_dep(INT n, matrix& A, matrix& P, Vector& v, INT m, permutation& r
 	return f_null;
 }
 
-void matrix::KX_module_order_ideal(INT i, unipoly& mue, INT verbose_level)
+void matrix::KX_module_order_ideal(int i, unipoly& mue, int verbose_level)
 // Lueneburg~\cite{Lueneburg87a} p. 105
 // determines the order ideal of $e_i$, the $i$-th unit vector,
 // in the module over the polynomial ring $K[X]$ ($K$ a field), 
 // which is given by substituting the matrix $F$ into the polynomial.
 // the matrix $F$ (in this) has dimensions $n \times n$
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	matrix A, P;
 	Vector v, v1;
-	INT n, m, f_null, j;
+	int n, m, f_null, j;
 	permutation rho;
 	discreta_base c;
 	
@@ -1553,7 +1553,7 @@ void matrix::KX_module_order_ideal(INT i, unipoly& mue, INT verbose_level)
 
 void matrix::KX_module_apply(unipoly& p, Vector& v)
 {
-	INT i, d;
+	int i, d;
 	Vector w, ww, vv;
 	
 	d = p.degree();
@@ -1572,13 +1572,13 @@ void matrix::KX_module_apply(unipoly& p, Vector& v)
 }
 
 void matrix::KX_module_join(Vector& v1, unipoly& mue1, 
-	Vector& v2, unipoly& mue2, Vector& v3, unipoly& mue3, INT verbose_level)
+	Vector& v2, unipoly& mue2, Vector& v3, unipoly& mue3, int verbose_level)
 // compare Lueneburg~\cite{Lueneburg87a} p. 106.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	unipoly u, v, g, gg, r, rr, rrr, r4, m1, m2;
 	Vector vv1, vv2;
-	INT dg, dm2;
+	int dg, dm2;
 	
 	if (f_v) {
 		cout << "matrix::KX_module_join()" << endl;
@@ -1642,11 +1642,11 @@ void matrix::KX_module_join(Vector& v1, unipoly& mue1,
 		}
 }
 
-void matrix::KX_cyclic_module_generator(Vector& v, unipoly& mue, INT verbose_level)
+void matrix::KX_cyclic_module_generator(Vector& v, unipoly& mue, int verbose_level)
 {
-	INT f_v = (verbose_level > 1);
-	INT f_vv = (verbose_level > 2);
-	INT i, f;
+	int f_v = (verbose_level > 1);
+	int f_vv = (verbose_level > 2);
+	int i, f;
 	Vector v1, v2, v3;
 	unipoly mue1, mue2, mue3;
 	
@@ -1675,14 +1675,14 @@ void matrix::KX_cyclic_module_generator(Vector& v, unipoly& mue, INT verbose_lev
 	mue1.swap(mue);
 }
 
-void matrix::KX_module_minpol(unipoly& p, unipoly& m, unipoly& mue, INT verbose_level)
+void matrix::KX_module_minpol(unipoly& p, unipoly& m, unipoly& mue, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	unipoly x, x0, x1, q, y;
 	Vector V, v, v0;
 	discreta_base c;
-	INT i, j, d, f, l;
+	int i, j, d, f, l;
 	
 	if (f_v) {
 		cout << "matrix::KX_module_minpol" << endl;
@@ -1767,9 +1767,9 @@ void matrix::KX_module_minpol(unipoly& p, unipoly& m, unipoly& mue, INT verbose_
 		}
 }
 
-void matrix::binomial(INT n_min, INT n_max, INT k_min, INT k_max)
+void matrix::binomial(int n_min, int n_max, int k_min, int k_max)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = n_max + 1 - n_min;
 	n = k_max + 1 - k_min;
@@ -1781,10 +1781,10 @@ void matrix::binomial(INT n_min, INT n_max, INT k_min, INT k_max)
 		}
 }
 
-void matrix::stirling_second(INT n_min, INT n_max, INT k_min, INT k_max, INT f_ordered)
+void matrix::stirling_second(int n_min, int n_max, int k_min, int k_max, int f_ordered)
 {
-	INT i, j, m, n;
-	INT f_v = FALSE;
+	int i, j, m, n;
+	int f_v = FALSE;
 	
 	m = n_max + 1 - n_min;
 	n = k_max + 1 - k_min;
@@ -1796,10 +1796,10 @@ void matrix::stirling_second(INT n_min, INT n_max, INT k_min, INT k_max, INT f_o
 		}
 }
 
-void matrix::stirling_first(INT n_min, INT n_max, INT k_min, INT k_max, INT f_signless)
+void matrix::stirling_first(int n_min, int n_max, int k_min, int k_max, int f_signless)
 {
-	INT i, j, m, n;
-	INT f_v = FALSE;
+	int i, j, m, n;
+	int f_v = FALSE;
 	
 	m = n_max + 1 - n_min;
 	n = k_max + 1 - k_min;
@@ -1811,9 +1811,9 @@ void matrix::stirling_first(INT n_min, INT n_max, INT k_min, INT k_max, INT f_si
 		}
 }
 
-void matrix::binomial(INT n_min, INT n_max, INT k_min, INT k_max, INT f_inverse)
+void matrix::binomial(int n_min, int n_max, int k_min, int k_max, int f_inverse)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = n_max + 1 - n_min;
 	n = k_max + 1 - k_min;
@@ -1827,46 +1827,46 @@ void matrix::binomial(INT n_min, INT n_max, INT k_min, INT k_max, INT f_inverse)
 		}
 }
 
-INT matrix::hip()
+int matrix::hip()
 // homogeneous integer matrix predicate 
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	
 	m = s_m();
 	n = s_n();
 	for (i = 0; i < m; i++)
 		for (j = 0; j < n; j++)
-			if (s_ij(i, j).s_kind() != INTEGER)
+			if (s_ij(i, j).s_kind() != intEGER)
 				return FALSE;
 	return TRUE;
 }
 
-INT matrix::hip1()
+int matrix::hip1()
 // homogeneous integer matrix predicate, 
 // test for 1 char numbers; 
 // only to apply if hip TRUE. 
 {
-	INT i, j, m, n, k;
+	int i, j, m, n, k;
 	
 	m = s_m();
 	n = s_n();
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
-			if (s_ij(i, j).s_kind() != INTEGER) {
-				cout << "matrix::hip1(): not INTEGER\n";
+			if (s_ij(i, j).s_kind() != intEGER) {
+				cout << "matrix::hip1(): not intEGER\n";
 				exit(1);
 				}
 			k = s_iji(i, j);
-			if (!ONE_char_INT(k))
+			if (!ONE_char_int(k))
 				return FALSE;
 			}
 		}
 	return TRUE;
 }
 
-void matrix::write_mem(memory & M, INT debug_depth)
+void matrix::write_mem(memory & M, int debug_depth)
 {
-	INT i, j, m, n, k;
+	int i, j, m, n, k;
 	char f_hip = 0, f_hip1 = 0;
 	
 	m = s_m();
@@ -1914,9 +1914,9 @@ void matrix::write_mem(memory & M, INT debug_depth)
 		}
 }
 
-void matrix::read_mem(memory & M, INT debug_depth)
+void matrix::read_mem(memory & M, int debug_depth)
 {
-	INT i, j, m, n, k;
+	int i, j, m, n, k;
 	char c, f_hip = 0, f_hip1 = 0;
 	
 	M.read_int(&n);
@@ -1941,7 +1941,7 @@ void matrix::read_mem(memory & M, INT debug_depth)
 			for (i = 0; i < m; i++) {
 				for (j = 0; j < n; j++) {
 					M.read_char(&c);
-					k = (INT) c;
+					k = (int) c;
 					m_iji(i, j, k);
 					}
 				}
@@ -1969,10 +1969,10 @@ void matrix::read_mem(memory & M, INT debug_depth)
 		}
 }
 
-INT matrix::csf()
+int matrix::csf()
 {
-	INT size = 0;
-	INT i, j, m, n;
+	int size = 0;
+	int i, j, m, n;
 	char f_hip, f_hip1;
 	
 	m = s_m();
@@ -1998,9 +1998,9 @@ INT matrix::csf()
 	return size;
 }
 
-void matrix::calc_theX(INT & nb_X, INT *&theX)
+void matrix::calc_theX(int & nb_X, int *&theX)
 {
-	INT m, n, i, j;
+	int m, n, i, j;
 	
 	m = s_m();
 	n = s_n();
@@ -2012,7 +2012,7 @@ void matrix::calc_theX(INT & nb_X, INT *&theX)
 				nb_X++;
 			}
 		}
-	theX = (INT *) new INT[nb_X];
+	theX = (int *) new int[nb_X];
 	
 	nb_X = 0;
 	for (i = 0; i < m; i++) {
@@ -2025,21 +2025,21 @@ void matrix::calc_theX(INT & nb_X, INT *&theX)
 }
 
 #if 0
-void matrix::lexleast_incidence_matrix(INT f_on_rows, 
-	INT f_row_decomp, Vector & row_decomp, 
-	INT f_col_decomp, Vector & col_decomp, 
-	INT f_ddp, Vector & DDp, 
-	INT f_ddb, Vector & DDb, 
-	INT f_group, perm_group & G, 
+void matrix::lexleast_incidence_matrix(int f_on_rows, 
+	int f_row_decomp, Vector & row_decomp, 
+	int f_col_decomp, Vector & col_decomp, 
+	int f_ddp, Vector & DDp, 
+	int f_ddb, Vector & DDb, 
+	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
-	INT f_print_backtrack_points, 
-	INT f_get_aut_group, INT f_aut_group_on_lexleast, Vector & aut_gens, 
-	INT f_v, INT f_vv)
+	int f_print_backtrack_points, 
+	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
+	int f_v, int f_vv)
 {
-	INT nb_X, *theX;
-	INT f_maxtest = FALSE;
-	INT back_to;
-	INT f_transposed = FALSE;
+	int nb_X, *theX;
+	int f_maxtest = FALSE;
+	int back_to;
+	int f_transposed = FALSE;
 	
 	if (f_on_rows)
 		f_transposed = TRUE;
@@ -2067,11 +2067,11 @@ void matrix::lexleast_incidence_matrix(INT f_on_rows,
 }
 #endif
 
-void matrix::apply_perms(INT f_row_perm, permutation &row_perm, 
-	INT f_col_perm, permutation &col_perm)
+void matrix::apply_perms(int f_row_perm, permutation &row_perm, 
+	int f_col_perm, permutation &col_perm)
 {
 	matrix M;
-	INT m, n, i, ii, j, jj;
+	int m, n, i, ii, j, jj;
 	permutation rowperm, colperm;
 	
 	m = s_m();
@@ -2102,7 +2102,7 @@ void matrix::apply_perms(INT f_row_perm, permutation &row_perm,
 void matrix::apply_col_row_perm(permutation &p)
 {
 	matrix M;
-	INT m, n, i, ii, j, jj;
+	int m, n, i, ii, j, jj;
 	
 	m = s_m();
 	n = s_n();
@@ -2120,7 +2120,7 @@ void matrix::apply_col_row_perm(permutation &p)
 void matrix::apply_row_col_perm(permutation &p)
 {
 	matrix M;
-	INT m, n, i, ii, j, jj;
+	int m, n, i, ii, j, jj;
 	
 	m = s_m();
 	n = s_n();
@@ -2135,13 +2135,13 @@ void matrix::apply_row_col_perm(permutation &p)
 	swap(M);
 }
 
-void matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, INT f_tex, 
+void matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, int f_tex, 
 	Vector & decomp, permutation & p)
 {
 	matrix M;
-	INT m, n;
+	int m, n;
 	Vector row_decomp, col_decomp;
-	INT i, l1, l, ll;
+	int i, l1, l, ll;
 	
 	m = s_m();
 	n = s_n();
@@ -2170,7 +2170,7 @@ void matrix::incma_print_ascii_permuted_and_decomposed(ostream &ost, INT f_tex,
 void matrix::print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_decomp)
 {
 	matrix T;
-	INT m, n, M, N, i, j, i0, j0, v, h;
+	int m, n, M, N, i, j, i0, j0, v, h;
 	Vector hbar, vbar;
 
 	m = s_m();
@@ -2240,12 +2240,12 @@ void matrix::print_decomposed(ostream &ost, Vector &row_decomp, Vector &col_deco
 	ost << T;
 }
 
-void matrix::incma_print_ascii(ostream &ost, INT f_tex, 
-	INT f_row_decomp, Vector &row_decomp, 
-	INT f_col_decomp, Vector &col_decomp)
+void matrix::incma_print_ascii(ostream &ost, int f_tex, 
+	int f_row_decomp, Vector &row_decomp, 
+	int f_col_decomp, Vector &col_decomp)
 {
 	matrix T;
-	INT m, n, M, N, i, j, i0, j0, v, h;
+	int m, n, M, N, i, j, i0, j0, v, h;
 	Vector hbar, vbar;
 	Vector S;
 	Vector rd, cd;
@@ -2353,10 +2353,10 @@ void matrix::incma_print_ascii(ostream &ost, INT f_tex,
 }
 
 void matrix::incma_print_latex(ostream &f, 
-	INT f_row_decomp, Vector &row_decomp, 
-	INT f_col_decomp, Vector &col_decomp, 
-	INT f_labelling_points, Vector &point_labels, 
-	INT f_labelling_blocks, Vector &block_labels)
+	int f_row_decomp, Vector &row_decomp, 
+	int f_col_decomp, Vector &col_decomp, 
+	int f_labelling_points, Vector &point_labels, 
+	int f_labelling_blocks, Vector &block_labels)
 {
 	incma_print_latex2(f, 
 		40 /* width */, 
@@ -2373,23 +2373,23 @@ void matrix::incma_print_latex(ostream &f,
 }
 
 void matrix::incma_print_latex2(ostream &f, 
-	INT width, INT width_10, 
-	INT f_outline_thin, const char *unit_length, 
+	int width, int width_10, 
+	int f_outline_thin, const char *unit_length, 
 	const char *thick_lines, const char *thin_lines, const char *geo_line_width, 
-	INT f_row_decomp, Vector &row_decomp, 
-	INT f_col_decomp, Vector &col_decomp, 
-	INT f_labelling_points, Vector &point_labels, 
-	INT f_labelling_blocks, Vector &block_labels)
+	int f_row_decomp, Vector &row_decomp, 
+	int f_col_decomp, Vector &col_decomp, 
+	int f_labelling_points, Vector &point_labels, 
+	int f_labelling_blocks, Vector &block_labels)
 /* width for one box in 0.1mm 
  * width_10 is 1 10th of width
  * example: width = 40, width_10 = 4 */
 {
-	INT v, b;
-	INT w, h, w1, h1;
-	INT i, j, k, a;
-	INT x0, y0, x1, y1;
-	INT X0, Y0, X1, Y1;
-	INT width_8, width_5;
+	int v, b;
+	int w, h, w1, h1;
+	int i, j, k, a;
+	int x0, y0, x1, y1;
+	int X0, Y0, X1, Y1;
+	int width_8, width_5;
 	const char *tdo_line_width = thick_lines /* "0.7mm" */;
 	const char *line_width = thin_lines /* "0.15mm" */;
 	/* char *geo_line_width = "0.25mm"; */
@@ -2488,7 +2488,7 @@ void matrix::incma_print_latex2(ostream &f,
 		for (j = 0; j < b; j++) {
 			if (s_iji(i, j) == 0)
 				continue;
-			// printf("%ld ", j);
+			// printf("%d ", j);
 			x0 = j * width;
 			x1 = (j + 1) * width;
 			X0 = x0 + width_10;
@@ -2508,17 +2508,17 @@ void matrix::incma_print_latex2(ostream &f,
 	f << "\\end{picture}" << endl;
 }
 
-void matrix::calc_hash_key(INT key_len, hollerith & hash_key, INT f_v)
+void matrix::calc_hash_key(int key_len, hollerith & hash_key, int f_v)
 {
-	INT al_len;
+	int al_len;
 	char *alphabet = NULL;
 	char *inc = NULL;
 	char *key = NULL;
-	INT i0, i, j, k, v, b, nb_inc, pr, x, y;
+	int i0, i, j, k, v, b, nb_inc, pr, x, y;
 	char c;
-	INT f_vv = FALSE;
+	int f_vv = FALSE;
 	Vector P;
-	INT nb_primes = 25;
+	int nb_primes = 25;
 	
 	v = s_m();
 	b = s_n();
@@ -2581,14 +2581,14 @@ void matrix::calc_hash_key(INT key_len, hollerith & hash_key, INT f_v)
 		pr = P.s_ii(k % 25);
 		x = 0;
 		for (i = 0; i < nb_inc; i++) {
-			y = (INT) inc[j];
+			y = (int) inc[j];
 			x = (x + y) % 256;
 			j += pr;
 			if (j >= nb_inc)
 				j = 0;
 			}
 		key[k] = alphabet[x];
-		// printf("k=%ld pr = %ld x=%ld h[k]=%c\n", k, pr, x, h[k]);
+		// printf("k=%d pr = %d x=%d h[k]=%c\n", k, pr, x, h[k]);
 		}
 	key[key_len - 1] = 0;
 	hash_key.init(key);
@@ -2600,9 +2600,9 @@ void matrix::calc_hash_key(INT key_len, hollerith & hash_key, INT f_v)
 	delete [] key;
 }
 
-INT matrix::is_in_center()
+int matrix::is_in_center()
 {
-	INT m, n, i, j;
+	int m, n, i, j;
 	matrix A;
 	integer c;
 	
@@ -2630,11 +2630,11 @@ INT matrix::is_in_center()
 	return 1;
 }
 
-void matrix::power_mod(INT r, integer &P, matrix &C)
+void matrix::power_mod(int r, integer &P, matrix &C)
 {
 	matrix B;
-	INT m, n, i, j, l;
-	INT p = P.s_i();
+	int m, n, i, j, l;
+	int p = P.s_i();
 	
 	m = s_m();
 	n = s_n();
@@ -2652,7 +2652,7 @@ void matrix::power_mod(INT r, integer &P, matrix &C)
 		for (j = 0; j < n; j++) 
 		{
 			integer e, c;
-			INT em;
+			int em;
 			
 			e = B[i][j];
 			l = e.s_i();
@@ -2663,12 +2663,12 @@ void matrix::power_mod(INT r, integer &P, matrix &C)
 	}
 }
 
-INT matrix::proj_order_mod(integer &P)
+int matrix::proj_order_mod(integer &P)
 {
 	matrix B;
-	INT m, n;
-	INT p = P.s_i();
-	INT ord = 0;
+	int m, n;
+	int p = P.s_i();
+	int ord = 0;
 	
 	m = s_m();
 	n = s_n();
@@ -2701,16 +2701,16 @@ INT matrix::proj_order_mod(integer &P)
 
 
 
-void matrix::PG_rep(domain *dom, permutation &p, INT f_action_from_right, INT f_modified)
+void matrix::PG_rep(domain *dom, permutation &p, int f_action_from_right, int f_modified)
 {
 	with ww(dom);
 	PG_rep(p, f_action_from_right, f_modified);
 }
 
-void matrix::PG_rep(permutation &p, INT f_action_from_right, INT f_modified)
+void matrix::PG_rep(permutation &p, int f_action_from_right, int f_modified)
 {
 	domain *d;
-	INT m, q, l, i, j;
+	int m, q, l, i, j;
 	Vector v, w;
 	
 	m = s_m();
@@ -2739,16 +2739,16 @@ void matrix::PG_rep(permutation &p, INT f_action_from_right, INT f_modified)
 		}
 }
 
-void matrix::AG_rep(domain *dom, permutation &p, INT f_action_from_right)
+void matrix::AG_rep(domain *dom, permutation &p, int f_action_from_right)
 {
 	with ww(dom);
 	AG_rep(p, f_action_from_right);
 }
 
-void matrix::AG_rep(permutation &p, INT f_action_from_right)
+void matrix::AG_rep(permutation &p, int f_action_from_right)
 {
 	domain *d;
-	INT m, q, l, i, j;
+	int m, q, l, i, j;
 	Vector v, w;
 	
 	m = s_m();
@@ -2771,9 +2771,9 @@ void matrix::AG_rep(permutation &p, INT f_action_from_right)
 		}
 }
 
-void matrix::MacWilliamsTransform(INT n, INT q, INT f_v)
+void matrix::MacWilliamsTransform(int n, int q, int f_v)
 {
-	INT i, j;
+	int i, j;
 	
 	m_mn(n + 1, n + 1);
 	for (i = 0; i <= n; i++) {
@@ -2792,13 +2792,13 @@ void matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 	with ww(dom);
 	domain *dom1 = NULL;
 	
-	INT q = finite_field_domain_order_int(dom1);
-	INT k, n, i, j, h;
+	int q = finite_field_domain_order_int(dom1);
+	int k, n, i, j, h;
 	Vector w, c;
 	
 	k = s_m();
 	n = s_n();
-	INT l = nb_AG_elements(k, q);
+	int l = nb_AG_elements(k, q);
 
 	w.m_l(k);
 	v.m_l_n(n + 1);
@@ -2812,15 +2812,15 @@ void matrix::weight_enumerator_brute_force(domain *dom, Vector &v)
 		}
 }
 
-void matrix::Simplex_code_generator_matrix(domain *dom, INT k, INT f_v)
+void matrix::Simplex_code_generator_matrix(domain *dom, int k, int f_v)
 {
 	with ww(dom);
 	domain *dom1 = NULL;
 	Vector w;
-	INT i, j;
+	int i, j;
 	
-	INT q = finite_field_domain_order_int(dom1);
-	INT n = nb_PG_elements(k - 1, q);
+	int q = finite_field_domain_order_int(dom1);
+	int n = nb_PG_elements(k - 1, q);
 	m_mn(k, n);
 	w.m_l_n(k);
 	for (j = 0; j < n; j++) {
@@ -2835,12 +2835,12 @@ void matrix::Simplex_code_generator_matrix(domain *dom, INT k, INT f_v)
 		}
 }
 
-void matrix::PG_design_point_vs_hyperplane(domain *dom, INT k, INT f_v)
+void matrix::PG_design_point_vs_hyperplane(domain *dom, int k, int f_v)
 {
 	with ww(dom);
-	INT i, j, l;
+	int i, j, l;
 	
-	INT q = dom->order_int();
+	int q = dom->order_int();
 	l = nb_PG_elements(k, q);
 	m_mn_n(l, l);
 	Vector v, w;
@@ -2863,14 +2863,14 @@ void matrix::PG_design_point_vs_hyperplane(domain *dom, INT k, INT f_v)
 		}
 }
 
-void matrix::PG_k_q_design(domain *dom, INT k, INT f_v, INT f_vv)
+void matrix::PG_k_q_design(domain *dom, int k, int f_v, int f_vv)
 {
 	with ww(dom);
-	INT ii, i, j, nb_pts, nb_lines, r;
+	int ii, i, j, nb_pts, nb_lines, r;
 	matrix v, w, z;
 	discreta_base a;
 		
-	INT q = dom->order_int();
+	int q = dom->order_int();
 	nb_pts = nb_PG_elements(k, q);
 	nb_lines = nb_PG_lines(k, q);
 	if (f_v) {
@@ -2923,10 +2923,10 @@ void matrix::PG_k_q_design(domain *dom, INT k, INT f_v, INT f_vv)
 		}
 }
 
-void matrix::determinant(discreta_base &d, INT verbose_level)
+void matrix::determinant(discreta_base &d, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT n, h, i, j, ii, jj;
+	int f_v = (verbose_level >= 1);
+	int n, h, i, j, ii, jj;
 	matrix M1;
 	discreta_base a;
 
@@ -2979,7 +2979,7 @@ void matrix::determinant(discreta_base &d, INT verbose_level)
 		}
 }
 
-void matrix::det(discreta_base & d, INT f_v, INT f_vv)
+void matrix::det(discreta_base & d, int f_v, int f_vv)
 {
 	matrix A;
 	
@@ -2987,15 +2987,15 @@ void matrix::det(discreta_base & d, INT f_v, INT f_vv)
 	A.det_modify_input_matrix(d, f_v, f_vv);
 }
 
-void matrix::det_modify_input_matrix(discreta_base & d, INT f_v, INT f_vv)
+void matrix::det_modify_input_matrix(discreta_base & d, int f_v, int f_vv)
 {
-	INT rk, i;
-	INT f_special = TRUE;
-	INT f_complete = FALSE;
+	int rk, i;
+	int f_special = TRUE;
+	int f_complete = FALSE;
 	
 	Vector base_cols;
 	matrix P;
-	INT f_P = FALSE;
+	int f_P = FALSE;
 
 	if (f_v) {
 		cout << "in det():" << endl << *this << endl;
@@ -3025,15 +3025,15 @@ void determinant_map(discreta_base & x, discreta_base &d)
 		exit(1);
 		}
 	matrix & M = x.as_matrix();
-	INT f_v = FALSE;
-	INT f_vv = FALSE;
+	int f_v = FALSE;
+	int f_vv = FALSE;
 	M.det(d, f_v, f_vv);
 }
 
-void matrix::PG_line_rank(INT &a, INT f_v)
+void matrix::PG_line_rank(int &a, int f_v)
 {
 	domain *d;
-	INT q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
+	int q, m, n, l, s, i, a1, a2, a3, nb, ql, pivot_row, pivot_row2 = 0;
 	discreta_base x;
 	
 	if (!is_finite_field_domain(d)) {
@@ -3165,10 +3165,10 @@ void matrix::PG_line_rank(INT &a, INT f_v)
 		}
 }
 
-void matrix::PG_line_unrank(INT a)
+void matrix::PG_line_unrank(int a)
 {
 	domain *d;
-	INT q, m, n, l, s, k, a1, a2, a3, nb, ql;
+	int q, m, n, l, s, k, a1, a2, a3, nb, ql;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_line_unrank() no finite field domain" << endl;
@@ -3230,9 +3230,9 @@ void matrix::PG_line_unrank(INT a)
 	exit(1);
 }
 
-void matrix::PG_point_normalize(INT i0, INT j0, INT di, INT dj, INT length)
+void matrix::PG_point_normalize(int i0, int j0, int di, int dj, int length)
 {
-	INT i, j;
+	int i, j;
 	discreta_base a;
 	
 	j = 0;
@@ -3252,10 +3252,10 @@ void matrix::PG_point_normalize(INT i0, INT j0, INT di, INT dj, INT length)
 	exit(1);
 }
 
-void matrix::PG_point_unrank(INT i0, INT j0, INT di, INT dj, INT length, INT a)
+void matrix::PG_point_unrank(int i0, int j0, int di, int dj, int length, int a)
 {
 	domain *d;
-	INT q, n, l, qhl, k, j, r, a1 = a;
+	int q, n, l, qhl, k, j, r, a1 = a;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_point_unrank() no finite field domain" << endl;
@@ -3300,10 +3300,10 @@ void matrix::PG_point_unrank(INT i0, INT j0, INT di, INT dj, INT length, INT a)
 	exit(1);
 }
 
-void matrix::PG_point_rank(INT i0, INT j0, INT di, INT dj, INT length, INT &a)
+void matrix::PG_point_rank(int i0, int j0, int di, int dj, int length, int &a)
 {
 	domain *d;
-	INT i, j, q, q_power_j, b;
+	int i, j, q, q_power_j, b;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::PG_point_rank() no finite field domain" << endl;
@@ -3349,7 +3349,7 @@ void matrix::PG_point_rank(INT i0, INT j0, INT di, INT dj, INT length, INT &a)
 void matrix::PG_element_normalize()
 // lowest element which is different from zero becomes one in each column
 {
-	INT i, ii, j, m, n;
+	int i, ii, j, m, n;
 	discreta_base a;
 	
 	m = s_m();
@@ -3374,10 +3374,10 @@ void matrix::PG_element_normalize()
 		}
 }
 
-void matrix::AG_point_rank(INT i0, INT j0, INT di, INT dj, INT length, INT &a)
+void matrix::AG_point_rank(int i0, int j0, int di, int dj, int length, int &a)
 {
 	domain *d;
-	INT q, i;
+	int q, i;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::AG_point_rank() no finite field domain" << endl;
@@ -3396,10 +3396,10 @@ void matrix::AG_point_rank(INT i0, INT j0, INT di, INT dj, INT length, INT &a)
 		}
 }
 
-void matrix::AG_point_unrank(INT i0, INT j0, INT di, INT dj, INT length, INT a)
+void matrix::AG_point_unrank(int i0, int j0, int di, int dj, int length, int a)
 {
 	domain *d;
-	INT q, i, b;
+	int q, i, b;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "matrix::AG_point_unrank() no finite field domain" << endl;
@@ -3417,9 +3417,9 @@ void matrix::AG_point_unrank(INT i0, INT j0, INT di, INT dj, INT length, INT a)
 		}
 }
 
-INT nb_PG_lines(INT n, INT q)
+int nb_PG_lines(int n, int q)
 {
-	INT l, ql, nb, s, a = 0, m;
+	int l, ql, nb, s, a = 0, m;
 	
 	m = n + 1;
 	for (l = 0; l < m; l++) {
@@ -3432,12 +3432,12 @@ INT nb_PG_lines(INT n, INT q)
 }
 
 #if 0
-void matrix::canon(INT f_row_decomp, Vector & row_decomp, 
-	INT f_col_decomp, Vector & col_decomp, 
-	INT f_group, perm_group & G, 
+void matrix::canon(int f_row_decomp, Vector & row_decomp, 
+	int f_col_decomp, Vector & col_decomp, 
+	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
-	INT f_get_aut_group, INT f_aut_group_on_lexleast, Vector & aut_gens, discreta_base &ago,
-	INT f_v, INT f_vv, INT f_vvv, INT f_vvvv, INT f_tree_file)
+	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, discreta_base &ago,
+	int f_v, int f_vv, int f_vvv, int f_vvvv, int f_tree_file)
 {
 	permutation canonical_form;
 	Vector aut_generators;
@@ -3457,12 +3457,12 @@ void matrix::canon(INT f_row_decomp, Vector & row_decomp,
 	
 }
 
-void matrix::canon_partition_backtrack(INT f_row_decomp, Vector & row_decomp, 
-	INT f_col_decomp, Vector & col_decomp, 
-	INT f_group, perm_group & G, 
+void matrix::canon_partition_backtrack(int f_row_decomp, Vector & row_decomp, 
+	int f_col_decomp, Vector & col_decomp, 
+	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
-	INT f_get_aut_group, INT f_aut_group_on_lexleast, Vector & aut_gens, discreta_base &ago,
-	INT f_v, INT f_vv, INT f_vvv, INT f_vvvv, INT f_tree_file)
+	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, discreta_base &ago,
+	int f_v, int f_vv, int f_vvv, int f_vvvv, int f_tree_file)
 {
 	permutation canonical_form;
 	Vector aut_generators;
@@ -3483,12 +3483,12 @@ void matrix::canon_partition_backtrack(INT f_row_decomp, Vector & row_decomp,
 }
 #endif
 
-void matrix::canon_nauty(INT f_row_decomp, Vector & row_decomp, 
-	INT f_col_decomp, Vector & col_decomp, 
-	INT f_group, perm_group & G, 
+void matrix::canon_nauty(int f_row_decomp, Vector & row_decomp, 
+	int f_col_decomp, Vector & col_decomp, 
+	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
-	INT f_get_aut_group, INT f_aut_group_on_lexleast, Vector & aut_gens, 
-	INT f_v, INT f_vv, INT f_vvv)
+	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
+	int f_v, int f_vv, int f_vvv)
 {
 #if 0
 	int *M;
@@ -3510,7 +3510,7 @@ void matrix::canon_nauty(INT f_row_decomp, Vector & row_decomp,
 	
 	int *labeling;
 	int *partition;
-	INT *Aut;
+	int *Aut;
 	int Aut_counter;
 	int *Base;
 	int Base_length;
@@ -3528,7 +3528,7 @@ void matrix::canon_nauty(INT f_row_decomp, Vector & row_decomp,
 		}
 	partition[m - 1] = 0;
 	
-	Aut = new INT[ (m + n) * (m + n)];
+	Aut = new int[ (m + n) * (m + n)];
 	Base = new int[m + n];
 	Transversal_length = new int[m + n];
 	
@@ -3548,12 +3548,12 @@ void matrix::canon_nauty(INT f_row_decomp, Vector & row_decomp,
 }
 
 #if 0
-void matrix::canon_tonchev(INT f_row_decomp, Vector & row_decomp, 
-	INT f_col_decomp, Vector & col_decomp, 
-	INT f_group, perm_group & G, 
+void matrix::canon_tonchev(int f_row_decomp, Vector & row_decomp, 
+	int f_col_decomp, Vector & col_decomp, 
+	int f_group, perm_group & G, 
 	permutation & p, permutation & q, 
-	INT f_get_aut_group, INT f_aut_group_on_lexleast, Vector & aut_gens, 
-	INT f_v, INT f_vv, INT f_vvv)
+	int f_get_aut_group, int f_aut_group_on_lexleast, Vector & aut_gens, 
+	int f_v, int f_vv, int f_vvv)
 {
 	cout << "matrix::canon_tonchev() tonchev program not accessible" << endl;
 #if 0
@@ -3577,7 +3577,7 @@ void matrix::canon_tonchev(INT f_row_decomp, Vector & row_decomp,
 }
 #endif
 
-void matrix::save_as_geometry(INT number, char *label)
+void matrix::save_as_geometry(int number, char *label)
 {
 	hollerith h;
 	geometry G;
@@ -3587,7 +3587,7 @@ void matrix::save_as_geometry(INT number, char *label)
 	G.X() = *this;
 
 	Vector labelling_P, labelling_B;
-	INT i, m, n;
+	int i, m, n;
 	m = s_m();
 	n = s_n();
 	labelling_P.m_l_n(m);
@@ -3610,7 +3610,7 @@ void matrix::save_as_geometry(INT number, char *label)
 
 void matrix::save_as_inc_file(char *fname)
 {
-	INT i, j = 0, m, n, nb_X = 0;
+	int i, j = 0, m, n, nb_X = 0;
 	m = s_m();
 	n = s_n();
 	for (i = 0; i < m; i++) {
@@ -3627,7 +3627,7 @@ void matrix::save_as_inc_file(char *fname)
 
 void matrix::save_as_inc(ofstream &f)
 {
-	INT i, j, m, n;
+	int i, j, m, n;
 	m = s_m();
 	n = s_n();
 	for (i = 0; i < m; i++) {

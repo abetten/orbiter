@@ -13,24 +13,24 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
-void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level);
+void cheat_sheet_PG(int n, finite_field *F, int f_surface, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_override_poly = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_override_poly = FALSE;
 	char *my_override_poly = NULL;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_surface = FALSE;
+	int f_n = FALSE;
+	int n = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_surface = FALSE;
 	
  	t0 = os_ticks();
 	
@@ -76,19 +76,19 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
+void cheat_sheet_PG(int n, finite_field *F, int f_surface, int verbose_level)
 {
 	//const char *override_poly;
 	char fname[1000];
 	char title[1000];
 	char author[1000];
-	//INT f_with_group = FALSE;
-	//INT f_semilinear = FALSE;
-	//INT f_basis = TRUE;
-	INT q = F->q;
+	//int f_with_group = FALSE;
+	//int f_semilinear = FALSE;
+	//int f_basis = TRUE;
+	int q = F->q;
 	
-	sprintf(fname, "PG_%ld_%ld.tex", n, q);
-	sprintf(title, "Cheat Sheet PG($%ld,%ld$)", n, q);
+	sprintf(fname, "PG_%d_%d.tex", n, q);
+	sprintf(title, "Cheat Sheet PG($%d,%d$)", n, q);
 	//sprintf(author, "");
 	author[0] = 0;
 	projective_space *P;
@@ -130,17 +130,17 @@ void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 		f << "\\clearpage" << endl << endl;
 		f << "\\section{The Plane}" << endl;
 		char fname_base[1000];
-		INT *set;
-		INT i;
-		INT rad = 17000;
+		int *set;
+		int i;
+		int rad = 17000;
 
-		set = NEW_INT(P->N_points);
+		set = NEW_int(P->N_points);
 		for (i = 0; i < P->N_points; i++) {
 			set[i] = i;
 			}
-		sprintf(fname_base, "plane_of_order_%ld", F->q);
+		sprintf(fname_base, "plane_of_order_%d", F->q);
 		P->draw_point_set_in_plane(fname_base, set, P->N_points, TRUE /*f_with_points*/, TRUE /*f_point_labels*/, FALSE /*f_embedded*/, FALSE /*f_sideways*/, rad, 0 /* verbose_level */);
-		FREE_INT(set);
+		FREE_int(set);
 		f << "{\\scriptsize" << endl;
 		f << "$$" << endl;
 		f << "\\input " << fname_base << ".tex" << endl;
@@ -164,7 +164,7 @@ void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 
 
 	// report subspaces:
-	INT k;
+	int k;
 	
 	for (k = 1; k < n; k++) {
 		f << "\\clearpage" << endl << endl;
@@ -203,15 +203,15 @@ void cheat_sheet_PG(INT n, finite_field *F, INT f_surface, INT verbose_level)
 		S->latex_table_of_Eckardt_points(f);
 
 #if 1
-		INT *Lines;
+		int *Lines;
 
 		cout << "creating S_{3,1}:" << endl;
-		Lines = NEW_INT(27);
+		Lines = NEW_int(27);
 		S->create_special_double_six(Lines, 3 /*a*/, 1 /*b*/, 0 /* verbose_level */);
 		S->create_remaining_fifteen_lines(Lines, Lines + 12, 0 /* verbose_level */);
 		P->Grass_lines->print_set(Lines, 27);
 
-		FREE_INT(Lines);
+		FREE_int(Lines);
 #endif
 		delete S;		
 		}

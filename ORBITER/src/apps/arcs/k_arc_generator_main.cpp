@@ -12,7 +12,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, const char **argv)
@@ -21,14 +21,14 @@ int main(int argc, const char **argv)
 	
 	
 	{
-	INT f_d = FALSE;
-	INT d = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_sz = FALSE;
-	INT sz = 0;
-	INT i;
-	INT verbose_level = 0;
+	int f_d = FALSE;
+	int d = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_sz = FALSE;
+	int sz = 0;
+	int i;
+	int verbose_level = 0;
 
 	for (i = 1; i < argc; i++) {
 		

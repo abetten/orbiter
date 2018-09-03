@@ -10,7 +10,7 @@
 
 #include "foundations.h"
 
-INT finitefield_primes[] = {
+int finitefield_primes[] = {
 	2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 
 	17, 19, 23, 25, 27, 29, 31, 32, 37, 41, 
 	43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 
@@ -25,10 +25,10 @@ INT finitefield_primes[] = {
 
 
 	};
-INT finitefield_nb_primes = 
+int finitefield_nb_primes = 
 	sizeof(finitefield_primes) / sizeof(finitefield_primes[0]);
 
-INT finitefield_largest_degree_irreducible_polynomial[] = {
+int finitefield_largest_degree_irreducible_polynomial[] = {
 	60 /*2*/, 
 	42 /*3*/, 
 	4/*4*/, 
@@ -929,13 +929,13 @@ const char *finitefield_primitive_polynomial[][100] = {
 },
 };
 
-const char *get_primitive_polynomial(INT p, INT e, INT verbose_level)
+const char *get_primitive_polynomial(int p, int e, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	INT idx;
+	//int f_v = (verbose_level >= 1);
+	int idx;
 	char *s;
 	
-	if (!INT_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
+	if (!int_vec_search(finitefield_primes, finitefield_nb_primes, p, idx)) {
 		cout << "I don't have prime " << p << " in the tables" << endl;
 		cout << "searching for a polynomial of degree " << e << endl;
 		s = search_for_primitive_polynomial_of_given_degree(p, e, verbose_level);

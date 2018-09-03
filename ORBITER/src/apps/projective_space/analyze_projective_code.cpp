@@ -15,27 +15,27 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
-void do_analyze_projective_code(INT n, finite_field *F, 
-	INT *the_set, INT set_size, INT verbose_level);
+void do_analyze_projective_code(int n, finite_field *F, 
+	int *the_set, int set_size, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_q = FALSE;
-	INT q;
-	INT f_file = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n = 0;
+	int f_q = FALSE;
+	int q;
+	int f_file = FALSE;
 	char *file_name;
-	INT f_poly = FALSE;
+	int f_poly = FALSE;
 	const char *poly = "";
-	INT *the_set;
-	INT set_size = 0;
+	int *the_set;
+	int set_size = 0;
 
 	
  	t0 = os_ticks();
@@ -98,19 +98,19 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void do_analyze_projective_code(INT n, finite_field *F, 
-	INT *the_set, INT set_size, INT verbose_level)
+void do_analyze_projective_code(int n, finite_field *F, 
+	int *the_set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	//INT f_with_group = FALSE;
-	//INT f_semilinear = FALSE;
-	//INT f_basis = FALSE;
-	INT *genma;
-	INT *v;
-	INT d, i, j;
-	INT q = F->q;
-	INT f_elements_exponential = TRUE;
+	//int f_with_group = FALSE;
+	//int f_semilinear = FALSE;
+	//int f_basis = FALSE;
+	int *genma;
+	int *v;
+	int d, i, j;
+	int q = F->q;
+	int f_elements_exponential = TRUE;
 	const char *symbol_for_print = "\\alpha";
 
 	if (f_v) {
@@ -130,8 +130,8 @@ void do_analyze_projective_code(INT n, finite_field *F,
 
 	
 	d = n + 1;
-	v = NEW_INT(d);
-	genma = NEW_INT(d * set_size);
+	v = NEW_int(d);
+	genma = NEW_int(d * set_size);
 	
 	for (j = 0; j < set_size; j++) {
 		P->unrank_point(v, the_set[j]);
@@ -146,9 +146,9 @@ void do_analyze_projective_code(INT n, finite_field *F,
 		print_integer_matrix_width(cout, genma, d, set_size, set_size, 2);
 		}
 
-	INT N;
-	INT min_d;
-	INT *weights;
+	int N;
+	int min_d;
+	int *weights;
 	F->code_projective_weights(set_size, d, genma, weights, verbose_level);
 
 	N = nb_PG_elements(n, q);

@@ -27,23 +27,23 @@ void heisenberg::null()
 void heisenberg::freeself()
 {
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		}
 	if (Elt2) {
-		FREE_INT(Elt2);
+		FREE_int(Elt2);
 		}
 	if (Elt3) {
-		FREE_INT(Elt3);
+		FREE_int(Elt3);
 		}
 	if (Elt4) {
-		FREE_INT(Elt4);
+		FREE_int(Elt4);
 		}
 }
 
-void heisenberg::init(finite_field *F, INT n, INT verbose_level)
+void heisenberg::init(finite_field *F, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "heisenberg::init n=" << n << " q=" << F->q << endl;
@@ -54,40 +54,40 @@ void heisenberg::init(finite_field *F, INT n, INT verbose_level)
 	len = 2 * n + 1;
 	group_order = i_power_j(q, len);
 
-	Elt1 = NEW_INT(len);
-	Elt2 = NEW_INT(len);
-	Elt3 = NEW_INT(len);
-	Elt4 = NEW_INT(len);
+	Elt1 = NEW_int(len);
+	Elt2 = NEW_int(len);
+	Elt3 = NEW_int(len);
+	Elt4 = NEW_int(len);
 	if (f_v) {
 		cout << "heisenberg::init done" << endl;
 		}
 }
 
-void heisenberg::unrank_element(INT *Elt, INT rk)
+void heisenberg::unrank_element(int *Elt, int rk)
 {
 	AG_element_unrank(q, Elt, 1, len, rk);
 }
 
-INT heisenberg::rank_element(INT *Elt)
+int heisenberg::rank_element(int *Elt)
 {
-	INT rk;
+	int rk;
 	
 	AG_element_rank(q, Elt, 1, len, rk);
 	return rk;
 }
 
-void heisenberg::element_add(INT *Elt1, INT *Elt2, INT *Elt3, INT verbose_level)
+void heisenberg::element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level)
 {
-	INT a;
+	int a;
 
 	F->add_vector(Elt1, Elt2, Elt3, len);
 	a = F->dot_product(n, Elt1, Elt2 + n);
 	Elt3[2 * n] = F->add(Elt3[2 * n], a);
 }
 
-void heisenberg::element_negate(INT *Elt1, INT *Elt2, INT verbose_level)
+void heisenberg::element_negate(int *Elt1, int *Elt2, int verbose_level)
 {
-	INT a;
+	int a;
 
 	F->negate_vector(Elt1, Elt2, len);
 	a = F->dot_product(n, Elt1, Elt1 + n);
@@ -95,9 +95,9 @@ void heisenberg::element_negate(INT *Elt1, INT *Elt2, INT verbose_level)
 }
 
 
-INT heisenberg::element_add_by_rank(INT rk_a, INT rk_b, INT verbose_level)
+int heisenberg::element_add_by_rank(int rk_a, int rk_b, int verbose_level)
 {
-	INT rk;
+	int rk;
 	
 	unrank_element(Elt1, rk_a);
 	unrank_element(Elt2, rk_b);
@@ -106,9 +106,9 @@ INT heisenberg::element_add_by_rank(INT rk_a, INT rk_b, INT verbose_level)
 	return rk;
 }
 
-INT heisenberg::element_negate_by_rank(INT rk_a, INT verbose_level)
+int heisenberg::element_negate_by_rank(int rk_a, int verbose_level)
 {
-	INT rk;
+	int rk;
 	
 	unrank_element(Elt1, rk_a);
 	element_negate(Elt1, Elt2, 0 /* verbose_level */);
@@ -116,16 +116,16 @@ INT heisenberg::element_negate_by_rank(INT rk_a, INT verbose_level)
 	return rk;
 }
 
-void heisenberg::group_table(INT *&Table, INT verbose_level)
+void heisenberg::group_table(int *&Table, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i, j, k;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, j, k;
 
 	if (f_v) {
 		cout << "heisenberg::group_table" << endl;
 		}
-	Table = NEW_INT(group_order * group_order);
+	Table = NEW_int(group_order * group_order);
 	for (i = 0; i < group_order; i++) {
 		unrank_element(Elt1, i);
 		for (j = 0; j < group_order; j++) {
@@ -140,16 +140,16 @@ void heisenberg::group_table(INT *&Table, INT verbose_level)
 		}
 }
 
-void heisenberg::group_table_abv(INT *&Table_abv, INT verbose_level)
+void heisenberg::group_table_abv(int *&Table_abv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i, j, k;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, j, k;
 
 	if (f_v) {
 		cout << "heisenberg::group_table" << endl;
 		}
-	Table_abv = NEW_INT(group_order * group_order);
+	Table_abv = NEW_int(group_order * group_order);
 	for (i = 0; i < group_order; i++) {
 		unrank_element(Elt1, i);
 		for (j = 0; j < group_order; j++) {
@@ -165,17 +165,17 @@ void heisenberg::group_table_abv(INT *&Table_abv, INT verbose_level)
 		}
 }
 
-void heisenberg::generating_set(INT *&gens, INT &nb_gens, INT verbose_level)
+void heisenberg::generating_set(int *&gens, int &nb_gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i, j, cnt, k;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, j, cnt, k;
 
 	if (f_v) {
 		cout << "heisenberg::generating_set" << endl;
 		}
 	nb_gens = (n * F->e) * 2 + F->e;
-	gens = NEW_INT(nb_gens);
+	gens = NEW_int(nb_gens);
 	cnt = 0;
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < F->e; j++) {

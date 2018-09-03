@@ -42,26 +42,26 @@ void W3q::freeself()
 		FREE_OBJECT(Q4);
 		}
 	if (Basis) {
-		FREE_INT(Basis);
+		FREE_int(Basis);
 		}
 	if (Lines) {
-		FREE_INT(Lines);
+		FREE_int(Lines);
 		}
 	if (Q4_rk) {
-		FREE_INT(Q4_rk);
+		FREE_int(Q4_rk);
 		}
 	if (Line_idx) {
-		FREE_INT(Line_idx);
+		FREE_int(Line_idx);
 		}
 	null();
 }
 
-void W3q::init(finite_field *F, INT verbose_level)
+void W3q::init(finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT h, c, rk;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int h, c, rk;
 
 	W3q::F = F;
 	W3q::q = F->q;
@@ -71,7 +71,7 @@ void W3q::init(finite_field *F, INT verbose_level)
 		}
 	P3 = NEW_OBJECT(projective_space);
 	Q4 = NEW_OBJECT(orthogonal);
-	Basis = NEW_INT(2 * 4);
+	Basis = NEW_int(2 * 4);
 	
 	P3->init(3, F, 
 		//TRUE /* f_init_group */, 
@@ -83,7 +83,7 @@ void W3q::init(finite_field *F, INT verbose_level)
 	F = P3->F;
 	Q4->init(0, 5, F, verbose_level - 1);
 
-	Lines = NEW_INT(P3->N_lines);
+	Lines = NEW_int(P3->N_lines);
 	nb_lines = 0;
 	for (h = 0; h < P3->N_lines; h++) {
 		P3->unrank_line(Basis, h);
@@ -94,15 +94,15 @@ void W3q::init(finite_field *F, INT verbose_level)
 		Lines[nb_lines++] = h;
 		}
 	cout << "We found " << nb_lines << " Lines, they are" << endl;
-	INT_vec_print(cout, Lines, nb_lines);
+	int_vec_print(cout, Lines, nb_lines);
 	cout << endl;
 
 	if (nb_lines != Q4->nb_points) {
 		cout << "nb_lines != Q4->nb_points" << endl;
 		exit(1);
 		}
-	Q4_rk = NEW_INT(nb_lines);
-	Line_idx = NEW_INT(nb_lines);
+	Q4_rk = NEW_int(nb_lines);
+	Line_idx = NEW_int(nb_lines);
 
 
 	for (h = 0; h < nb_lines; h++) {
@@ -117,7 +117,7 @@ void W3q::init(finite_field *F, INT verbose_level)
 
 		if (f_vvv) {
 			cout << "v5=";
-			INT_vec_print(cout, v5, 5);
+			int_vec_print(cout, v5, 5);
 			cout << endl;
 			}
 		
@@ -142,18 +142,18 @@ void W3q::init(finite_field *F, INT verbose_level)
 			cout << setw(4) << Q4_rk[h] << " : ";
 			cout << setw(4) << Line_idx[h] << " : ";
 			P3->unrank_line(Basis, Lines[h]);
-			INT_vec_print(cout, Basis, 4);
+			int_vec_print(cout, Basis, 4);
 			cout << " : ";
-			INT_vec_print(cout, Basis + 4, 4);
+			int_vec_print(cout, Basis + 4, 4);
 			Q4->unrank_point(v5, 1, Q4_rk[h], 0);
 			cout << " : ";
-			INT_vec_print(cout, v5, 5);
+			int_vec_print(cout, v5, 5);
 			cout << endl;
 			}
 		}
 }
 
-INT W3q::evaluate_symplectic_form(INT *x4, INT *y4)
+int W3q::evaluate_symplectic_form(int *x4, int *y4)
 {
 	return F->evaluate_symplectic_form(4, x4, y4);
 
@@ -165,7 +165,7 @@ INT W3q::evaluate_symplectic_form(INT *x4, INT *y4)
 		);*/
 }
 
-void W3q::isomorphism_Q4q(INT *x4, INT *y4, INT *v)
+void W3q::isomorphism_Q4q(int *x4, int *y4, int *v)
 {
 	v[0] = F->Pluecker_12(x4, y4);
 	v[1] = F->negate(F->Pluecker_13(x4, y4));

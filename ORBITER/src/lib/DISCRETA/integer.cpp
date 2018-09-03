@@ -10,28 +10,28 @@
 //#include <sstream.h>
 #include <stdlib.h>
 
-#undef INTEGER_M_I_VERBOSE
+#undef intEGER_M_I_VERBOSE
 
 /********************************* integer *********************************/
 
 integer::integer()
 {
-	k = INTEGER;
+	k = intEGER;
 	clearself();
 }
 
 integer::integer(char *p)
 {
-	INT i = atoi(p);
+	int i = atoi(p);
 	
-	k = INTEGER;
+	k = intEGER;
 	clearself();
 	m_i((int) i);
 }
 
-integer::integer(INT i)
+integer::integer(int i)
 {
-	k = INTEGER;
+	k = intEGER;
 	clearself();
 	m_i((int) i);
 }
@@ -56,7 +56,7 @@ void integer::settype_integer()
 {
 	// cout << "integer::settype_integer()\n";
 	new(this) integer;
-	k = INTEGER;
+	k = intEGER;
 }
 
 integer::~integer()
@@ -73,7 +73,7 @@ void integer::freeself_integer()
 
 kind integer::s_virtual_kind()
 {
-	return INTEGER;
+	return intEGER;
 }
 
 void integer::copyobject_to(discreta_base &x)
@@ -87,8 +87,8 @@ void integer::copyobject_to(discreta_base &x)
 ostream& integer::print(ostream& ost)
 {
 	domain *dom;
-#ifdef PRINT_WITH_TYPE
-	ost << "(INTEGER, ";
+#ifdef PRint_WITH_TYPE
+	ost << "(intEGER, ";
 #endif
 #if 0
 	if (dom && dom->type == GFp) {
@@ -98,7 +98,7 @@ ostream& integer::print(ostream& ost)
 	if (is_GFq_domain(dom)) {
 		unipoly a;
 		domain *sub_domain;
-		INT p;
+		int p;
 		
 		sub_domain = dom->sub_domain();
 		with w(sub_domain);
@@ -111,15 +111,15 @@ ostream& integer::print(ostream& ost)
 		ost << s_i();
 		}
 
-#ifdef PRINT_WITH_TYPE
+#ifdef PRint_WITH_TYPE
 	ost << ")";
 #endif
 	return ost;
 }
 
-integer& integer::m_i(INT i)
+integer& integer::m_i(int i)
 {
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		cout << "error: integer::m_i() this not an integer, converting\n";
 		exit(1);
 		// settype_integer();
@@ -128,17 +128,17 @@ integer& integer::m_i(INT i)
 	return *this;
 }
 
-INT integer::compare_with(discreta_base &a)
+int integer::compare_with(discreta_base &a)
 {
-	INT i, j;
+	int i, j;
 	//domain *dom;
 	
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		return compare_with(a);
 		}
-	if (a.s_kind() != INTEGER) {
-		if (a.s_kind() == LONGINTEGER) {
-			INT r = a.as_longinteger().compare_with(*this);
+	if (a.s_kind() != intEGER) {
+		if (a.s_kind() == LONGintEGER) {
+			int r = a.as_longinteger().compare_with(*this);
 			return -r;
 			}
 		cout << "integer::compare_with() a is neither integer nor longinteger\n";
@@ -164,12 +164,12 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 {
 	domain *dom;
 	
-	if (x.s_kind() == INTEGER) {
+	if (x.s_kind() == intEGER) {
 
 		if (is_GFq_domain(dom)) {
 			unipoly a, b, c;
 			domain *sub_domain;
-			INT p, res;
+			int p, res;
 		
 			sub_domain = dom->sub_domain();
 			with w(sub_domain);
@@ -185,12 +185,12 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 		else {
 
 
-			INT l1, l2, l3;
+			int l1, l2, l3;
 	
 			l1 = log2();
 			l2 = x.as_integer().log2();
 			l3 = l1 + l2;
-			if (l3 >= BITS_OF_INT) {
+			if (l3 >= BITS_OF_int) {
 				longinteger a, b, c;
 				
 				a.homo_z(s_i());
@@ -210,7 +210,7 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 				}
 			}
 		}
-	else if (x.s_kind() == LONGINTEGER) {
+	else if (x.s_kind() == LONGintEGER) {
 		longinteger a, b, c;
 			
 		a.homo_z(s_i());
@@ -227,12 +227,12 @@ void integer::mult_to(discreta_base &x, discreta_base &y)
 		}
 }
 
-INT integer::invert_to(discreta_base &x)
+int integer::invert_to(discreta_base &x)
 {
-	INT i;
+	int i;
 	domain *dom;
 	
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		cout << "integer::invert_to() this not an integer" << endl;
 		exit(1);
 		}
@@ -246,7 +246,7 @@ INT integer::invert_to(discreta_base &x)
 	else if (is_GFq_domain(dom)) {
 		unipoly a;
 		domain *sub_domain;
-		INT p, res;
+		int p, res;
 		
 		sub_domain = dom->sub_domain();
 		with w(sub_domain);
@@ -259,7 +259,7 @@ INT integer::invert_to(discreta_base &x)
 		// cout << endl;
 		a.invert_mod(*dom->factor_poly());
 #else
-		INT q, l;
+		int q, l;
 		
 		q = dom->order_int();
 		l = q - 2;
@@ -284,13 +284,13 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 {
 	domain *dom;
 	
-	if (x.s_kind() == INTEGER) {
+	if (x.s_kind() == intEGER) {
 
 
 		if (is_GFq_domain(dom)) {
 			unipoly a, b, c;
 			domain *sub_domain;
-			INT p, res;
+			int p, res;
 		
 			sub_domain = dom->sub_domain();
 			with w(sub_domain);
@@ -303,12 +303,12 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 			y.m_i_i(res);
 			}
 		else {
-			INT l1, l2, l3;
+			int l1, l2, l3;
 	
 			l1 = log2();
 			l2 = x.as_integer().log2();
 			l3 = MAXIMUM(l1, l2) + 1;;
-			if (l3 >= BITS_OF_INT) {
+			if (l3 >= BITS_OF_int) {
 				longinteger a, b, c;
 			
 				a.homo_z(s_i());
@@ -328,7 +328,7 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 				}
 			}
 		}
-	else if (x.s_kind() == LONGINTEGER) {
+	else if (x.s_kind() == LONGintEGER) {
 		longinteger a, b, c;
 			
 		a.homo_z(s_i());
@@ -347,17 +347,17 @@ void integer::add_to(discreta_base &x, discreta_base &y)
 
 void integer::negate_to(discreta_base &x)
 {
-	INT i;
+	int i;
 	domain *dom;
 	
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		cout << "integer::negate_to() this not an integer\n";
 		exit(1);
 		}
 	if (is_GFq_domain(dom)) {
 		unipoly a;
 		domain *sub_domain;
-		INT p, res;
+		int p, res;
 		
 		sub_domain = dom->sub_domain();
 		with w(sub_domain);
@@ -380,7 +380,7 @@ void integer::negate_to(discreta_base &x)
 
 void integer::normalize(discreta_base &p)
 {
-	INT i, pp;
+	int i, pp;
 	
 	i = s_i();
 	pp = p.s_i_i();
@@ -435,7 +435,7 @@ void integer::m_one()
 	negate();
 }
 
-void integer::homo_z(INT z)
+void integer::homo_z(int z)
 {
 	domain *dom;
 	
@@ -443,7 +443,7 @@ void integer::homo_z(INT z)
 		m_i( remainder_mod(z, dom->order_int()));
 		}
 	else if (is_GFq_domain(dom)) {
-		INT p = finite_field_domain_characteristic(dom);
+		int p = finite_field_domain_characteristic(dom);
 		cout << "homo_z in GFq, characteristic = " << p << endl;
 		m_i( remainder_mod(z, p));
 		// cout << "integer::homo_z() not allowed for GF(q) domain" << endl;
@@ -486,7 +486,7 @@ void integer::dec()
 		}
 }
 
-INT integer::is_zero()
+int integer::is_zero()
 {
 	integer a; 
 	
@@ -497,7 +497,7 @@ INT integer::is_zero()
 		return FALSE;
 }
 
-INT integer::is_one()
+int integer::is_one()
 {
 	integer a; 
 	
@@ -508,7 +508,7 @@ INT integer::is_one()
 		return FALSE;
 }
 
-INT integer::is_m_one()
+int integer::is_m_one()
 {
 	integer a; 
 	
@@ -519,14 +519,14 @@ INT integer::is_m_one()
 		return FALSE;
 }
 
-INT integer::compare_with_euklidean(discreta_base &a)
+int integer::compare_with_euklidean(discreta_base &a)
 {
-	INT i, j;
+	int i, j;
 	
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		return compare_with_euklidean(a);
 		}
-	if (a.s_kind() != INTEGER) {
+	if (a.s_kind() != intEGER) {
 		cout << "integer::compare_with_euklidean() a is not an integer\n";
 		exit(1);
 		}
@@ -539,16 +539,16 @@ INT integer::compare_with_euklidean(discreta_base &a)
 	return 0;
 }
 
-void integer::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, INT verbose_level)
+void integer::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
 {
-	INT a, b, qq, rr;
+	int a, b, qq, rr;
 	
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		cout << "integer::integral_division() this not an integer\n";
 		exit(1);
 		}
-	if (x.s_kind() != INTEGER) {
-		if (x.s_kind() == LONGINTEGER) {
+	if (x.s_kind() != intEGER) {
+		if (x.s_kind() == LONGintEGER) {
 			integer y;
 			if (!x.as_longinteger().retract_to_integer_if_possible(y)) {
 				cout << "integer::integral_division() longinteger x cannot be retracted to integer\n";
@@ -576,18 +576,18 @@ void integer::integral_division(discreta_base &x, discreta_base &q, discreta_bas
 	r.m_i_i(rr);
 }
 
-void integer::rand(INT low, INT high)
+void integer::rand(int low, int high)
 {
-	INT l = high + 1 - low;
+	int l = high + 1 - low;
 	double r = (double) ::rand() * (double)l / RAND_MAX;
 	
-	m_i(low + (INT) r);
+	m_i(low + (int) r);
 }
 
-INT integer::log2()
+int integer::log2()
 {
-	INT a = ABS(s_i());
-	INT l = 0;
+	int a = ABS(s_i());
+	int l = 0;
 	
 	while (a) {
 		l++;

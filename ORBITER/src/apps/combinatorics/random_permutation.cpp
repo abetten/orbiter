@@ -5,15 +5,15 @@
 
 #include "orbiter.h"
 
-void choose_random_permutation(INT n, INT f_save, const char *fname, INT verbose_level);
+void choose_random_permutation(int n, int f_save, const char *fname, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n;
-	INT f_save = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n;
+	int f_save = FALSE;
 	const char *fname = NULL;
 
 	for (i = 1; i < argc; i++) {
@@ -41,21 +41,21 @@ int main(int argc, char **argv)
 	choose_random_permutation(n, f_save, fname, verbose_level);
 }
 
-void choose_random_permutation(INT n, INT f_save, const char *fname, INT verbose_level)
+void choose_random_permutation(int n, int f_save, const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "choose_random_permutation" << endl;
 		}
 
-	INT *P;
+	int *P;
 
-	P = NEW_INT(n);
+	P = NEW_int(n);
 	random_permutation(P, n);
 
 	if (f_save) {
-		INT_vec_write_csv(P, n, fname, "perm");
+		int_vec_write_csv(P, n, fname, "perm");
 		}
 	if (f_v) {
 		cout << "choose_random_permutation done" << endl;

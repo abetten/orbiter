@@ -29,20 +29,20 @@ void action_on_wedge_product::null()
 void action_on_wedge_product::free()
 {
 	if (wedge_v1) {
-		FREE_INT(wedge_v1);
+		FREE_int(wedge_v1);
 		}
 	if (wedge_v2) {
-		FREE_INT(wedge_v2);
+		FREE_int(wedge_v2);
 		}
 	if (wedge_v3) {
-		FREE_INT(wedge_v3);
+		FREE_int(wedge_v3);
 		}
 	null();
 }
 
-void action_on_wedge_product::init(action &A, INT verbose_level)
+void action_on_wedge_product::init(action &A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action_on_wedge_product::init" << endl;
@@ -60,68 +60,68 @@ void action_on_wedge_product::init(action &A, INT verbose_level)
 	//degree = i_power_j(q, wedge_dimension);
 	degree = nb_PG_elements(wedge_dimension - 1, q);
 	low_level_point_size = wedge_dimension;
-	wedge_v1 = NEW_INT(wedge_dimension);
-	wedge_v2 = NEW_INT(wedge_dimension);
-	wedge_v3 = NEW_INT(wedge_dimension);
+	wedge_v1 = NEW_int(wedge_dimension);
+	wedge_v2 = NEW_int(wedge_dimension);
+	wedge_v3 = NEW_int(wedge_dimension);
 }
 
-void action_on_wedge_product::unrank_point(INT *v, INT rk)
+void action_on_wedge_product::unrank_point(int *v, int rk)
 {
 	PG_element_unrank_modified(*F, v, 1, wedge_dimension, rk);
 }
 
-INT action_on_wedge_product::rank_point(INT *v)
+int action_on_wedge_product::rank_point(int *v)
 {
-	INT rk;
+	int rk;
 
 	PG_element_rank_modified(*F, v, 1, wedge_dimension, rk);
 	return rk;
 }
 
-INT action_on_wedge_product::compute_image_INT(
-	action &A, INT *Elt, INT a, INT verbose_level)
+int action_on_wedge_product::compute_image_int(
+	action &A, int *Elt, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int b;
 	
 	if (f_v) {
-		cout << "action_on_wedge_product::compute_image_INT" << endl;
+		cout << "action_on_wedge_product::compute_image_int" << endl;
 		}
 	//AG_element_unrank(q, wedge_v1, 1, wedge_dimension, a);
 	PG_element_unrank_modified(*F, wedge_v1, 1, wedge_dimension, a);
 	if (f_vv) {
-		cout << "action_on_wedge_product::compute_image_INT a = " << a << " wedge_v1 = ";
-		INT_vec_print(cout, wedge_v1, wedge_dimension);
+		cout << "action_on_wedge_product::compute_image_int a = " << a << " wedge_v1 = ";
+		int_vec_print(cout, wedge_v1, wedge_dimension);
 		cout << endl;
 		}
 	
-	compute_image_INT_low_level(A, Elt, wedge_v1, wedge_v2, verbose_level);
+	compute_image_int_low_level(A, Elt, wedge_v1, wedge_v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		INT_vec_print(cout, wedge_v2, wedge_dimension);
+		int_vec_print(cout, wedge_v2, wedge_dimension);
 		cout << endl;
 		}
 
 	//AG_element_rank(q, wedge_v2, 1, wedge_dimension, b);
 	PG_element_rank_modified(*F, wedge_v2, 1, wedge_dimension, b);
 	if (f_v) {
-		cout << "action_on_wedge_product::compute_image_INT done " << a << "->" << b << endl;
+		cout << "action_on_wedge_product::compute_image_int done " << a << "->" << b << endl;
 		}
 	return b;
 }
 
-INT action_on_wedge_product::element_entry_frobenius(action &A, INT *Elt, INT verbose_level)
+int action_on_wedge_product::element_entry_frobenius(action &A, int *Elt, int verbose_level)
 {
-	INT f;
+	int f;
 
 	f = A.element_linear_entry_frobenius(Elt, verbose_level);
 	return f;
 }
 
-INT action_on_wedge_product::element_entry_ij(action &A, INT *Elt, INT I, INT J, INT verbose_level)
+int action_on_wedge_product::element_entry_ij(action &A, int *Elt, int I, int J, int verbose_level)
 {
-	INT i, j, k, l, w;
+	int i, j, k, l, w;
 
 	k2ij(I, i, j, n);
 	k2ij(J, k, l, n);
@@ -129,9 +129,9 @@ INT action_on_wedge_product::element_entry_ij(action &A, INT *Elt, INT I, INT J,
 	return w;
 }
 
-INT action_on_wedge_product::element_entry_ijkl(action &A, INT *Elt, INT i, INT j, INT k, INT l, INT verbose_level)
+int action_on_wedge_product::element_entry_ijkl(action &A, int *Elt, int i, int j, int k, int l, int verbose_level)
 {
-	INT aki, alj, akj, ali, u, v, w;
+	int aki, alj, akj, ali, u, v, w;
 
 	aki = A.element_linear_entry_ij(Elt, k, i, verbose_level); //Elt[k * n + i];
 	alj = A.element_linear_entry_ij(Elt, l, j, verbose_level); //Elt[l * n + j];
@@ -143,8 +143,8 @@ INT action_on_wedge_product::element_entry_ijkl(action &A, INT *Elt, INT i, INT 
 	return w;
 }
 
-void action_on_wedge_product::compute_image_INT_low_level(
-	action &A, INT *Elt, INT *input, INT *output, INT verbose_level)
+void action_on_wedge_product::compute_image_int_low_level(
+	action &A, int *Elt, int *input, int *output, int verbose_level)
 // x_{i,j} e_i \wedge e_j * A = 
 // \sum_{k < l} \sum_{i < j} x_{i,j} (a_{i,k}a_{j,l} - a_{i,l}a_{j,k}) e_k \wedge e_l
 // or (after a change of indices)
@@ -155,18 +155,18 @@ void action_on_wedge_product::compute_image_INT_low_level(
 // \sum_{k < l} x_{k,l} (a_{k,i}a_{l,j} - a_{k,j}a_{l,i}),
 // which are the entries in the row indexed by (i,j).
 {
-	INT *x = input;
-	INT *xA = output;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, ij, k, l, kl, c, w, z, xkl;
+	int *x = input;
+	int *xA = output;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, ij, k, l, kl, c, w, z, xkl;
 	
 	if (f_v) {
-		cout << "action_on_wedge_product::compute_image_INT_low_level" << endl;
+		cout << "action_on_wedge_product::compute_image_int_low_level" << endl;
 		}
 	if (f_vv) {
 		cout << "wedge action: x=";
-		INT_vec_print(cout, x, wedge_dimension);
+		int_vec_print(cout, x, wedge_dimension);
 		cout << endl;
 		}
 	// (i,j) = row index
@@ -213,22 +213,22 @@ void action_on_wedge_product::compute_image_INT_low_level(
 		} // next i
 	if (f_vv) {
 		cout << "xA=";
-		INT_vec_print(cout, xA, wedge_dimension);
+		int_vec_print(cout, xA, wedge_dimension);
 		cout << endl;
 		}
 	if (M->f_semilinear) {
-		INT f = A.linear_entry_frobenius(Elt); //Elt[n * n];
+		int f = A.linear_entry_frobenius(Elt); //Elt[n * n];
 		for (i = 0; i < wedge_dimension; i++) {
 			xA[i] = F->frobenius_power(xA[i], f);
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
-			INT_vec_print(cout, xA, wedge_dimension);
+			int_vec_print(cout, xA, wedge_dimension);
 			cout << endl;
 			}
 		}
 	if (f_v) {
-		cout << "action_on_wedge_product::compute_image_INT_low_level done" << endl;
+		cout << "action_on_wedge_product::compute_image_int_low_level done" << endl;
 		}
 }
 

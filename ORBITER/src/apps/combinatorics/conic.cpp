@@ -21,27 +21,27 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void draw_empty_grid(INT q, INT f_include_line_at_infinity, INT verbose_level);
-void LunelliSce(INT verbose_level);
-void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT verbose_level);
-void find_collinear_triple(projective_space *P, INT *pts, INT sz);
-INT analyze_color_graph(INT C, INT *colors, INT n, INT *M, INT *Pijk, INT verbose_level);
-void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbose_level);
-void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level);
-void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbose_level);
-void draw_points(mp_graphics &G, projective_space *P, INT *pts, INT nb_points, INT verbose_level);
-void get_ab(INT q, INT x1, INT x2, INT x3, INT &a, INT &b);
-void prepare_latex(char *fname_base, projective_space *P, INT *pts, INT nb_points, 
-	strong_generators *Aut_gens, INT verbose_level);
-void prepare_latex_simple(char *fname_base, INT verbose_level);
+void draw_empty_grid(int q, int f_include_line_at_infinity, int verbose_level);
+void LunelliSce(int verbose_level);
+void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int verbose_level);
+void find_collinear_triple(projective_space *P, int *pts, int sz);
+int analyze_color_graph(int C, int *colors, int n, int *M, int *Pijk, int verbose_level);
+void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbose_level);
+void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level);
+void draw_grid_(mp_graphics &G, int q, int f_include_line_at_infinity, int verbose_level);
+void draw_points(mp_graphics &G, projective_space *P, int *pts, int nb_points, int verbose_level);
+void get_ab(int q, int x1, int x2, int x3, int &a, int &b);
+void prepare_latex(char *fname_base, projective_space *P, int *pts, int nb_points, 
+	strong_generators *Aut_gens, int verbose_level);
+void prepare_latex_simple(char *fname_base, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 	
  	t0 = os_ticks();
 	
@@ -52,66 +52,66 @@ int main(int argc, char **argv)
 			}
 		}
 
-	INT q = 8;
-	INT five_pts[] = {48,55,38,29,60};
+	int q = 8;
+	int five_pts[] = {48,55,38,29,60};
 
 	determine_conic(q, NULL /* override_poly */, five_pts, 5, verbose_level);
 
 
-	//draw_empty_grid(5, TRUE /* INT f_include_line_at_infinity  */,  0); exit(1);
+	//draw_empty_grid(5, TRUE /* int f_include_line_at_infinity  */,  0); exit(1);
 	//LunelliSce(verbose_level);
 
 
-	//INT six_coeffs[] = { 3, 1, 2, 4, 1, 4 }; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 3, 1, 2, 4, 1, 4 }; int f_do_stabilizer = FALSE;
 
-	//INT six_coeffs[] = { 0, 1, 0, 0, 6, 0 }; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 0, 1, 0, 0, 6, 0 }; int f_do_stabilizer = FALSE;
 
 
 
-	//INT six_coeffs[] = { 0, 1, 0, 0, 1, 0 }; INT q = 4; INT f_do_stabilizer = FALSE; 
+	//int six_coeffs[] = { 0, 1, 0, 0, 1, 0 }; int q = 4; int f_do_stabilizer = FALSE; 
 	// Y^2 = XZ
 
 
-	//INT six_coeffs[] = { 0, 1, 0, 0, 1, 0 }; INT q = 8; INT f_do_stabilizer = TRUE;
+	//int six_coeffs[] = { 0, 1, 0, 0, 1, 0 }; int q = 8; int f_do_stabilizer = TRUE;
 	// Y^2 = XZ PROBLEM in set_stabilizer !!!
 	
-	//INT six_coeffs[] = { 0, 1, 0, 0, 4, 0 }; INT q = 5; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 0, 1, 0, 0, 4, 0 }; int q = 5; int f_do_stabilizer = FALSE;
 
-	//INT six_coeffs[] = { 1, 1, 0, 1, 1, 0 }; INT q = 5; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 1, 1, 0, 1, 1, 0 }; int q = 5; int f_do_stabilizer = FALSE;
 	
 	// Osaka homework problem:
-	//INT six_coeffs[] = { 1, 6, 1, 0, 0, 1 }; INT q = 7; INT f_do_stabilizer = FALSE;
-	//INT xmax = 270; INT ymax = 270;
+	//int six_coeffs[] = { 1, 6, 1, 0, 0, 1 }; int q = 7; int f_do_stabilizer = FALSE;
+	//int xmax = 270; int ymax = 270;
 
 
 	// Osaka homework problem:
 	// X^2 + Y^2 = Z^2 mod 13 (affine: x^2 + y^2 = 1, ellipse, 2 pts at infinity)
-	//INT six_coeffs[] = { 1, 1, 12, 0, 0, 0  }; INT q = 13; INT f_do_stabilizer = FALSE;
-	//INT xmax = 400; INT ymax = 400;
+	//int six_coeffs[] = { 1, 1, 12, 0, 0, 0  }; int q = 13; int f_do_stabilizer = FALSE;
+	//int xmax = 400; int ymax = 400;
 
 
-	//INT six_coeffs[] = { 0, 1, 0, 0, 12, 0  }; INT q = 13; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 0, 1, 0, 0, 12, 0  }; int q = 13; int f_do_stabilizer = FALSE;
 	// Y^2 = XZ mod 13 
 
-	//INT six_coeffs[] = { 1, 0, 0, 0, 0, 12  }; INT q = 13; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 1, 0, 0, 0, 0, 12  }; int q = 13; int f_do_stabilizer = FALSE;
 	// X^2 = YZ mod 13 (affine: y = x^2, parabola, 1 pt at infinity)
 	
-	//INT six_coeffs[] = { 0, 0, 1, 12, 0, 0  }; INT q = 13; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 0, 0, 1, 12, 0, 0  }; int q = 13; int f_do_stabilizer = FALSE;
 	// XY = Z^2 mod 13 (affine: y = 1/x, hyperbola, 2 pts at infinity)
 
-	//INT six_coeffs[] = { 1, 1, 6, 0, 0, 0  }; INT q = 7; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 1, 1, 6, 0, 0, 0  }; int q = 7; int f_do_stabilizer = FALSE;
 	// X^2 + Y^2 = Z^2 mod 7 (affine: x^2 + y^2 = 1, ellipse, 0 pts at infinity)
 	
-	//INT six_coeffs[] = { 1, 1, 10, 0, 0, 0  }; INT q = 11; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 1, 1, 10, 0, 0, 0  }; int q = 11; int f_do_stabilizer = FALSE;
 	// X^2 + Y^2 = Z^2 mod 11 (affine: x^2 + y^2 = 1, ellipse, 0 pts at infinity)
 	
-	//INT six_coeffs[] = { 1, 1, 12, 0, 0, 0  }; INT q = 13; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 1, 1, 12, 0, 0, 0  }; int q = 13; int f_do_stabilizer = FALSE;
 	// X^2 + Y^2 = Z^2 mod 13 (affine: x^2 + y^2 = 1, ellipse, 2 pts at infinity)
 
-	//INT six_coeffs[] = { 1, 0, 0, 0, 0, 2  }; INT q = 27; INT f_do_stabilizer = FALSE;
+	//int six_coeffs[] = { 1, 0, 0, 0, 0, 2  }; int q = 27; int f_do_stabilizer = FALSE;
 	// X^2 = YZ in GF(27) (affine: y = x^2, parabola, 1 pt at infinity)
 	
-	//INT six_coeffs[] = { 1, 2, 3, 4, 5, 6  }; INT q = 17; INT f_do_stabilizer = FALSE; 
+	//int six_coeffs[] = { 1, 2, 3, 4, 5, 6  }; int q = 17; int f_do_stabilizer = FALSE; 
 	// 
 	
 	//conic(q, six_coeffs, xmax, ymax, f_do_stabilizer, verbose_level);
@@ -119,16 +119,16 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void draw_empty_grid(INT q, INT f_include_line_at_infinity, INT verbose_level)
+void draw_empty_grid(int q, int f_include_line_at_infinity, int verbose_level)
 {
 	{
 	char fname[1000];
 	{
-	INT xmax = 300;
-	INT ymax = 300;
+	int xmax = 300;
+	int ymax = 300;
 	mp_graphics *G;
 
-	sprintf(fname, "grid_%ld_%ld", q, f_include_line_at_infinity);
+	sprintf(fname, "grid_%d_%d", q, f_include_line_at_infinity);
 	draw_beginning(fname, G, xmax, ymax, verbose_level);
 
 	draw_grid_(*G, q, f_include_line_at_infinity, verbose_level);
@@ -139,20 +139,20 @@ void draw_empty_grid(INT q, INT f_include_line_at_infinity, INT verbose_level)
 		
 }
 
-void LunelliSce(INT verbose_level) 
+void LunelliSce(int verbose_level) 
 {
 	const char *override_poly = "19";
 	finite_field F;
 	projective_space *P;
 	action *A;
 	//matrix_group *Mtx;
-	INT n = 3;
-	INT q = 16;
-	//INT f_with_group = TRUE;
-	//INT f_basis = TRUE;
-	//INT f_semilinear = TRUE;
-	INT v[3];
-	//INT w[3];
+	int n = 3;
+	int q = 16;
+	//int f_with_group = TRUE;
+	//int f_basis = TRUE;
+	//int f_semilinear = TRUE;
+	int v[3];
+	//int w[3];
 
 	//F.init(q), verbose_level - 2);
 	F.init_override_polynomial(q, override_poly, verbose_level);
@@ -170,13 +170,13 @@ void LunelliSce(INT verbose_level)
 	
 	
 	//Mtx = A->G.matrix_grp;
-	INT cubic1[100];
-	INT cubic1_size = 0;
-	INT cubic2[100];
-	INT cubic2_size = 0;
-	INT hoval[100];
-	INT hoval_size = 0;
-	INT a, b, i;
+	int cubic1[100];
+	int cubic1_size = 0;
+	int cubic2[100];
+	int cubic2_size = 0;
+	int hoval[100];
+	int hoval_size = 0;
+	int a, b, i;
 
 	for (i = 0; i < P->N_points; i++) {
 		P->unrank_point(v, i);
@@ -194,30 +194,30 @@ void LunelliSce(INT verbose_level)
 		}
 	cout << "the size of the hyperoval is " << hoval_size << endl;
 	cout << "the hyperoval is:" << endl;
-	INT_vec_print(cout, hoval, hoval_size);
+	int_vec_print(cout, hoval, hoval_size);
 	cout << endl;
 	cout << "the size of cubic1 is " << cubic1_size << endl;
 	cout << "the cubic1 is:" << endl;
-	INT_vec_print(cout, cubic1, cubic1_size);
+	int_vec_print(cout, cubic1, cubic1_size);
 	cout << endl;
 	cout << "the size of cubic2 is " << cubic2_size << endl;
 	cout << "the cubic2 is:" << endl;
-	INT_vec_print(cout, cubic2, cubic2_size);
+	int_vec_print(cout, cubic2, cubic2_size);
 	cout << endl;
 	
 }
 
-void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT verbose_level) 
+void conic(int q, int *six_coeffs, int xmax, int ymax, int f_do_stabilizer, int verbose_level) 
 {
 	const char *override_poly = NULL;
 	finite_field F;
 	projective_space *P;
 	action *A;
-	INT n = 3;
-	//INT f_with_group = TRUE;
+	int n = 3;
+	//int f_with_group = TRUE;
 	
-	INT v[3];
-	//INT w[3];
+	int v[3];
+	//int w[3];
 
 	//F.init(q), verbose_level - 2);
 	F.init_override_polynomial(q, override_poly, verbose_level);
@@ -232,15 +232,15 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	A = NEW_OBJECT(action);
 	A->init_general_linear_group(n, &F, FALSE /* f_semilinear */, TRUE /* f_basis */, verbose_level - 2);
 	
-	INT variety[100];
-	INT variety_size = 0;
-	INT a, i, j, h;
+	int variety[100];
+	int variety_size = 0;
+	int a, i, j, h;
 
 	for (i = 0; i < P->N_points; i++) {
 		P->unrank_point(v, i);
 		a = F.evaluate_conic_form(six_coeffs, v);
 		cout << i << " : ";
-		INT_vec_print(cout, v, 3);
+		int_vec_print(cout, v, 3);
 		cout << " : " << a << endl;
 		if (a == 0) {
 			variety[variety_size++] = i;
@@ -248,24 +248,24 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		}
 	cout << "the size of the variety is " << variety_size << endl;
 	cout << "the variety is:" << endl;
-	INT_vec_print(cout, variety, variety_size);
+	int_vec_print(cout, variety, variety_size);
 	cout << endl;
 	for (i = 0; i < variety_size; i++) {
 		P->unrank_point(v, variety[i]);
 		a = F.evaluate_conic_form(six_coeffs, v);
 		cout << i << " : ";
-		INT_vec_print(cout, v, 3);
+		int_vec_print(cout, v, 3);
 		cout << " : " << a << endl;
 		}
 	
 #if 0
-	INT pts[] = {2, 22, 6, 18, 10};
+	int pts[] = {2, 22, 6, 18, 10};
 	find_collinear_triple(P, pts, 5);
 	
-	INT five_pts[] = {3, 6, 7, 28, 30};
+	int five_pts[] = {3, 6, 7, 28, 30};
 #endif
-	//INT six_coeffs[6];
-	INT five_pts[5];
+	//int six_coeffs[6];
+	int five_pts[5];
 	five_pts[0] = variety[0];
 	five_pts[1] = variety[1];
 	five_pts[2] = variety[2];
@@ -274,22 +274,22 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	
 	P->determine_conic_in_plane(five_pts, 5, six_coeffs, verbose_level);
 
-	INT points[1000];
-	INT tangents[1000];
-	INT *exterior_points;
-	INT *secants;
-	INT nb_secants, nb_exterior_points;
-	INT nb_points;
-	//INT v[3];
+	int points[1000];
+	int tangents[1000];
+	int *exterior_points;
+	int *secants;
+	int nb_secants, nb_exterior_points;
+	int nb_points;
+	//int v[3];
 	
 	P->conic_points(five_pts, six_coeffs, points, nb_points, verbose_level);
 	cout << "the " << nb_points << " conic points are: ";
-	INT_vec_print(cout, points, nb_points);
+	int_vec_print(cout, points, nb_points);
 	cout << endl;
 	for (i = 0; i < nb_points; i++) {
 		P->unrank_point(v, points[i]);
 		cout << i << " : " << points[i] << " : ";
-		INT_vec_print(cout, v, 3);
+		int_vec_print(cout, v, 3);
 		cout << endl;
 		}
 
@@ -304,7 +304,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	
 		set_stabilizer_compute STAB;
 		sims *Stab;
-		INT nb_backtrack_nodes;
+		int nb_backtrack_nodes;
 	
 		cout << "computing stabilizer of conic:" << endl;
 		STAB.init(A, variety, variety_size /* points, nb_points*/ , verbose_level);
@@ -323,9 +323,9 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	char fname[1000];
 	{
 	mp_graphics *G;
-	INT f_include_line_at_infinity = TRUE;
+	int f_include_line_at_infinity = TRUE;
 
-	sprintf(fname, "conic_%ld", q);
+	sprintf(fname, "conic_%d", q);
 	draw_beginning(fname, G, xmax, ymax, verbose_level);
 
 	//variety_size = 0;
@@ -346,12 +346,12 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		tangents, verbose_level);
 
 	cout << "the " << nb_points << " tangent lines are: ";
-	INT_vec_print(cout, tangents, nb_points);
+	int_vec_print(cout, tangents, nb_points);
 	cout << endl;
 
 	nb_exterior_points = (nb_points * (nb_points - 1)) >> 1;
 	nb_secants = nb_exterior_points;
-	exterior_points = NEW_INT(nb_exterior_points);
+	exterior_points = NEW_int(nb_exterior_points);
 	h = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
@@ -359,12 +359,12 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 				tangents[i] * P->N_lines + tangents[j]];
 			}
 		}
-	INT_vec_heapsort(exterior_points, nb_exterior_points);
+	int_vec_heapsort(exterior_points, nb_exterior_points);
 	cout << "the " << nb_exterior_points << " exterior points are: ";
-	INT_vec_print(cout, exterior_points, nb_exterior_points);
+	int_vec_print(cout, exterior_points, nb_exterior_points);
 	cout << endl;
 
-	secants = NEW_INT(nb_secants);
+	secants = NEW_int(nb_secants);
 	h = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
@@ -372,15 +372,15 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 				points[i] * P->N_points + points[j]];
 			}
 		}
-	INT_vec_heapsort(secants, nb_secants);
+	int_vec_heapsort(secants, nb_secants);
 	cout << "the " << nb_secants << " secants are: ";
-	INT_vec_print(cout, secants, nb_secants);
+	int_vec_print(cout, secants, nb_secants);
 	cout << endl;
 
-	INT *external_lines;
-	INT nb_external_lines;
+	int *external_lines;
+	int nb_external_lines;
 	
-	external_lines = NEW_INT(P->N_lines);
+	external_lines = NEW_int(P->N_lines);
 	for (i = 0; i < P->N_lines; i++) {
 		external_lines[i] = i;
 		}
@@ -389,19 +389,19 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	set_delete_elements(external_lines, nb_external_lines, secants, nb_secants);
 
 	cout << "the " << nb_external_lines << " external lines are: ";
-	INT_vec_print(cout, external_lines, nb_external_lines);
+	int_vec_print(cout, external_lines, nb_external_lines);
 	cout << endl;
 	
-	INT *adjacency;
-	INT idx;
+	int *adjacency;
+	int idx;
 
-	adjacency = NEW_INT(nb_external_lines * nb_external_lines);
+	adjacency = NEW_int(nb_external_lines * nb_external_lines);
 	for (i = 0; i < nb_external_lines; i++) {
 		adjacency[i * nb_external_lines + i] = 0;
 		for (j = i + 1; j < nb_external_lines; j++) {
 			a = P->Line_intersection[
 				external_lines[i] * P->N_lines + external_lines[j]];
-			if (INT_vec_search(exterior_points, nb_exterior_points, a, idx)) {
+			if (int_vec_search(exterior_points, nb_exterior_points, a, idx)) {
 				adjacency[i * nb_external_lines + j] = 1;
 				adjacency[j * nb_external_lines + i] = 1;
 				}
@@ -415,19 +415,19 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	print_integer_matrix_width(cout, adjacency, 
 		nb_external_lines, nb_external_lines, nb_external_lines, 
 		1);
-	INT *Edges1;
-	INT *Edges2;
-	INT *Incidence;
-	INT nb_e = 0;
+	int *Edges1;
+	int *Edges2;
+	int *Incidence;
+	int nb_e = 0;
 	for (i = 0; i < nb_external_lines; i++) {
 		for (j = i + 1; j < nb_external_lines; j++) {
 			if (adjacency[i * nb_external_lines + j])
 				nb_e++;
 			}
 		}
-	Edges1 = NEW_INT(nb_e);
-	Edges2 = NEW_INT(nb_e);
-	Incidence = NEW_INT(nb_external_lines * nb_e);
+	Edges1 = NEW_int(nb_e);
+	Edges2 = NEW_int(nb_e);
+	Incidence = NEW_int(nb_external_lines * nb_e);
 	for (i = 0; i < nb_external_lines * nb_e; i++) {
 		Incidence[i] = 0;
 		}
@@ -448,7 +448,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 		}
 
 	char fname[1000];
-	sprintf(fname, "ext_lines_%ld.inc", P->F->q);
+	sprintf(fname, "ext_lines_%d.inc", P->F->q);
 	{
 	ofstream f(fname);
 
@@ -464,11 +464,11 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	}
 	cout << "written file " << fname << " of size " << file_size(fname) << endl;
 
-	INT colors[] = {0,1};
-	INT C = 2;
-	INT *Pijk;
+	int colors[] = {0,1};
+	int C = 2;
+	int *Pijk;
 	
-	Pijk = NEW_INT(C * C * C);
+	Pijk = NEW_int(C * C * C);
 	if (analyze_color_graph(C, colors, nb_external_lines, adjacency, Pijk, verbose_level)) {
 		cout << "is association scheme" << endl;
 		}
@@ -484,8 +484,8 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	strong_generators *Aut_gens;
 	sims *Stab;
 	//vector_ge gens;
-	//INT *tl;
-	INT nb_backtrack_nodes;
+	//int *tl;
+	int nb_backtrack_nodes;
 
 	cout << "computing stabilizer of conic:" << endl;
 	STAB.init(A, points, nb_points, verbose_level);
@@ -498,7 +498,7 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	
 	action *A2;
 	action A2r;
-	INT f_induce_action = TRUE;
+	int f_induce_action = TRUE;
 
 	projective_space_init_line_action(P, A, A2, verbose_level);
 	A2r.induced_action_by_restriction(*A2, 
@@ -518,11 +518,11 @@ void conic(INT q, INT *six_coeffs, INT xmax, INT ymax, INT f_do_stabilizer, INT 
 	}
 }
 
-void find_collinear_triple(projective_space *P, INT *pts, INT sz)
+void find_collinear_triple(projective_space *P, int *pts, int sz)
 {
-	INT i1, i2, i3, rk;
-	INT M[9];
-	INT base_cols[3];
+	int i1, i2, i3, rk;
+	int M[9];
+	int base_cols[3];
 	
 	for (i1 = 0; i1 < sz; i1++) {
 		for (i2 = i1 + 1; i2 < sz; i2++) {
@@ -539,9 +539,9 @@ void find_collinear_triple(projective_space *P, INT *pts, INT sz)
 		}
 }
 
-INT analyze_color_graph(INT C, INT *colors, INT n, INT *M, INT *Pijk, INT verbose_level)
+int analyze_color_graph(int C, int *colors, int n, int *M, int *Pijk, int verbose_level)
 {
-	INT k, i, j, u, v, w, pijk, pijk1;
+	int k, i, j, u, v, w, pijk, pijk1;
 	
 	for (k = 0; k < C; k++) {
 		for (i = 0; i < C; i++) {
@@ -603,14 +603,14 @@ INT analyze_color_graph(INT C, INT *colors, INT n, INT *M, INT *Pijk, INT verbos
 }
 
 
-void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbose_level)
+void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbose_level)
 {
-	INT x_min = 0, x_max = 1000;
-	INT y_min = 0, y_max = 1000;
-	INT factor_1000 = 1000;
+	int x_min = 0, x_max = 1000;
+	int y_min = 0, y_max = 1000;
+	int factor_1000 = 1000;
 	char fname_full[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 	
 	//cout << "draw_grid q=" << q << endl;
 	sprintf(fname_full, "%s.mp", fname);
@@ -629,11 +629,11 @@ void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbos
 	//draw_grid_(G, q, verbose_level);
 }
 
-void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level)
+void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level)
 {
-	//INT x_min = 0, x_max = 1000;
-	//INT y_min = 0, y_max = 1000;
-	//INT factor_1000 = 1000;
+	//int x_min = 0, x_max = 1000;
+	//int y_min = 0, y_max = 1000;
+	//int factor_1000 = 1000;
 	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname);
@@ -648,16 +648,16 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 #define Xcoord(x) (2 + 2 * (x))
 #define Ycoord(y) (2 + 2 * (y))
 
-void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbose_level)
+void draw_grid_(mp_graphics &G, int q, int f_include_line_at_infinity, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, y, Q, a, b, c, d;
-	INT *Px, *Py;
-	INT u;
-	//INT x1, x2, x3;
-	//INT y1, y2, y3;
-	//INT rad = 20;
-	//INT i, j;
+	int f_v = (verbose_level >= 1);
+	int x, y, Q, a, b, c, d;
+	int *Px, *Py;
+	int u;
+	//int x1, x2, x3;
+	//int y1, y2, y3;
+	//int rad = 20;
+	//int i, j;
 	
 	if (f_v) {
 		cout << "draw_grid_" << endl;
@@ -672,8 +672,8 @@ void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbo
 		cout << "u=" << u << endl;
 		cout << "Q=" << Q << endl;
 		}
-	Px = NEW_INT(Q * Q);
-	Py = NEW_INT(Q * Q);
+	Px = NEW_int(Q * Q);
+	Py = NEW_int(Q * Q);
 	
 	for (x = 0; x < Q; x++) {
 		for (y = 0; y < Q; y++) {
@@ -725,14 +725,14 @@ void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbo
 		}
 	for (x = 0; x < q; x++) {
 		char str[1000];
-		sprintf(str, "$%ld$", x);
+		sprintf(str, "$%d$", x);
 		a = Xcoord(x);
 		b = Ycoord(-1);
 		G.aligned_text(Px[a * Q + b], Py[a * Q + b], "t", str);
 		}
 	for (y = 0; y < q; y++) {
 		char str[1000];
-		sprintf(str, "$%ld$", y);
+		sprintf(str, "$%d$", y);
 		a = Xcoord(-1);
 		b = Ycoord(y);
 		G.aligned_text(Px[a * Q + b], Py[a * Q + b], "r", str);
@@ -748,22 +748,22 @@ void draw_grid_(mp_graphics &G, INT q, INT f_include_line_at_infinity, INT verbo
 		}
 
 //done:
-	FREE_INT(Px);
-	FREE_INT(Py);
+	FREE_int(Px);
+	FREE_int(Py);
 }
 
-void draw_points(mp_graphics &G, projective_space *P, INT *pts, INT nb_points, INT verbose_level)
+void draw_points(mp_graphics &G, projective_space *P, int *pts, int nb_points, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, y, Q, a, b; //, c, d;
-	INT *Px, *Py;
-	INT u;
-	INT q;
-	INT v[3];
-	INT x1, x2, x3;
-	//INT y1, y2, y3;
-	INT rad = 20;
-	INT i; //, j;
+	int f_v = (verbose_level >= 1);
+	int x, y, Q, a, b; //, c, d;
+	int *Px, *Py;
+	int u;
+	int q;
+	int v[3];
+	int x1, x2, x3;
+	//int y1, y2, y3;
+	int rad = 20;
+	int i; //, j;
 	
 	if (f_v) {
 		cout << "draw_points" << endl;
@@ -779,8 +779,8 @@ void draw_points(mp_graphics &G, projective_space *P, INT *pts, INT nb_points, I
 		cout << "u=" << u << endl;
 		cout << "Q=" << Q << endl;
 		}
-	Px = NEW_INT(Q * Q);
-	Py = NEW_INT(Q * Q);
+	Px = NEW_int(Q * Q);
+	Py = NEW_int(Q * Q);
 	
 	for (x = 0; x < Q; x++) {
 		for (y = 0; y < Q; y++) {
@@ -795,7 +795,7 @@ void draw_points(mp_graphics &G, projective_space *P, INT *pts, INT nb_points, I
 	for (i = 0; i < nb_points; i++) {
 		P->unrank_point(v, pts[i]);
 		cout << "point " << i << " : ";
-		INT_vec_print(cout, v, 3);
+		int_vec_print(cout, v, 3);
 		cout << endl;
 		x1 = v[0];
 		x2 = v[1];
@@ -804,12 +804,12 @@ void draw_points(mp_graphics &G, projective_space *P, INT *pts, INT nb_points, I
 		G.nice_circle(Px[a * Q + b], Py[a * Q + b], rad);
 		}
 	
-	FREE_INT(Px);
-	FREE_INT(Py);
+	FREE_int(Px);
+	FREE_int(Py);
 }
 	
 
-void get_ab(INT q, INT x1, INT x2, INT x3, INT &a, INT &b)
+void get_ab(int q, int x1, int x2, int x3, int &a, int &b)
 {
 	if (x3 == 0) {
 		if (x2 == 0) {
@@ -828,8 +828,8 @@ void get_ab(INT q, INT x1, INT x2, INT x3, INT &a, INT &b)
 }
 
 
-void prepare_latex(char *fname_base, projective_space *P, INT *pts, INT nb_points, 
-	strong_generators *Aut_gens, INT verbose_level)
+void prepare_latex(char *fname_base, projective_space *P, int *pts, int nb_points, 
+	strong_generators *Aut_gens, int verbose_level)
 {
 	char tex_file_name[1000];
 	char dvi_file_name[1000];
@@ -880,7 +880,7 @@ void prepare_latex(char *fname_base, projective_space *P, INT *pts, INT nb_point
 		f << "Group order " << go << endl;
 		f << "$$" << endl;
 		for (h = 0; h < Aut_gens->gens->len; h++) {
-			INT *Elt;
+			int *Elt;
 
 			Elt = Aut_gens->gens->ith(h);
 			f << "\\left(" << endl;
@@ -933,7 +933,7 @@ void prepare_latex(char *fname_base, projective_space *P, INT *pts, INT nb_point
 
 }
 
-void prepare_latex_simple(char *fname_base, INT verbose_level)
+void prepare_latex_simple(char *fname_base, int verbose_level)
 {
 	char tex_file_name[1000];
 	char dvi_file_name[1000];

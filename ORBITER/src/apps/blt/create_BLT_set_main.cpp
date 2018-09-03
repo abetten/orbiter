@@ -13,19 +13,19 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_description = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_description = FALSE;
 	BLT_set_create_description *Descr;
-	INT nb_transform = 0;
+	int nb_transform = 0;
 	const char *transform_coeffs[1000];
-	INT f_inverse_transform[1000];
+	int f_inverse_transform[1000];
 
 	t0 = os_ticks();
 
@@ -64,7 +64,7 @@ int main(int argc, const char **argv)
 		}
 
 	BLT_set_create *BC;
-	//INT j;
+	//int j;
 
 	BC = NEW_OBJECT(BLT_set_create);
 
@@ -81,12 +81,12 @@ int main(int argc, const char **argv)
 		}
 
 	action *A;
-	//INT *Elt1;
-	INT *Elt2;
+	//int *Elt1;
+	int *Elt2;
 	
 	A = BC->A;
 
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	
 
 
@@ -105,7 +105,7 @@ int main(int argc, const char **argv)
 			PG_element_normalize(*SC->F, coeffs_out, 1, 20);
 
 
-			if (INT_vec_compare(SC->coeffs, coeffs_out, 20)) {
+			if (int_vec_compare(SC->coeffs, coeffs_out, 20)) {
 				cout << "error, the transformation does not "
 						"preserve the equation of the surface" << endl;
 				exit(1);
@@ -123,7 +123,7 @@ int main(int argc, const char **argv)
 
 	cout << "We have created the following BLT-set:" << endl;
 	cout << "$$" << endl;
-	INT_set_print_tex(cout, BC->set, BC->q + 1);
+	int_set_print_tex(cout, BC->set, BC->q + 1);
 	cout << endl;
 	cout << "$$" << endl;
 
@@ -136,7 +136,7 @@ int main(int argc, const char **argv)
 	
 
 
-	FREE_INT(Elt2);
+	FREE_int(Elt2);
 
 	FREE_OBJECT(BC);
 

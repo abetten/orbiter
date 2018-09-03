@@ -8,41 +8,41 @@
 
 #define NB_PIECES 18
 
-	INT *S[NB_PIECES];
-	INT S_length[NB_PIECES];
-	INT *O[NB_PIECES];
-	INT O_length[NB_PIECES];
-	INT *T[NB_PIECES];
-	INT T_length[NB_PIECES];
-	INT *R[NB_PIECES];
-	INT R_length[NB_PIECES];
-	INT Rotate[4 * 25];
-	INT Rotate6[4 * 36];
-	INT var_start[NB_PIECES + 1];
-	INT var_length[NB_PIECES + 1];
+	int *S[NB_PIECES];
+	int S_length[NB_PIECES];
+	int *O[NB_PIECES];
+	int O_length[NB_PIECES];
+	int *T[NB_PIECES];
+	int T_length[NB_PIECES];
+	int *R[NB_PIECES];
+	int R_length[NB_PIECES];
+	int Rotate[4 * 25];
+	int Rotate6[4 * 36];
+	int var_start[NB_PIECES + 1];
+	int var_length[NB_PIECES + 1];
 
-INT has_interlocking_Ps(INT *set);
-INT has_interlocking_Pprime(INT *set);
-INT has_interlocking_Ls(INT *set);
-INT test_if_interlocking_Ps(INT a1, INT a2);
-INT has_interlocking_Lprime(INT *set);
-INT test_if_interlocking_Ls(INT a1, INT a2);
-INT number_of_pieces_of_type(INT t, INT *set);
-INT does_it_contain_an_I(INT *set);
-void decode_assembly(INT *set);
+int has_interlocking_Ps(int *set);
+int has_interlocking_Pprime(int *set);
+int has_interlocking_Ls(int *set);
+int test_if_interlocking_Ps(int a1, int a2);
+int has_interlocking_Lprime(int *set);
+int test_if_interlocking_Ls(int a1, int a2);
+int number_of_pieces_of_type(int t, int *set);
+int does_it_contain_an_I(int *set);
+void decode_assembly(int *set);
 // input set[5]
-void decode_piece(INT j, INT &h, INT &r, INT &t);
+void decode_piece(int j, int &h, int &r, int &t);
 // h is the kind of piece
 // r is the rotation index
 // t is the translation index
 // to get the actual rotation and translation, use 
 // R[h][r] and T[h][t].
-INT code_piece(INT h, INT r, INT t);
-void draw_it(ostream &ost, INT *sol);
-void compute_image_function(set_of_sets *S, void *compute_image_data, INT elt_idx, INT gen_idx, INT &idx_of_image, INT verbose_level);
-INT compare_func(void *vec, void *a, INT b, void *data_for_compare);
-void turn_piece(INT &h, INT &r, INT &t, INT verbose_level);
-void flip_piece(INT &h, INT &r, INT &t, INT verbose_level);
+int code_piece(int h, int r, int t);
+void draw_it(ostream &ost, int *sol);
+void compute_image_function(set_of_sets *S, void *compute_image_data, int elt_idx, int gen_idx, int &idx_of_image, int verbose_level);
+int compare_func(void *vec, void *a, int b, void *data_for_compare);
+void turn_piece(int &h, int &r, int &t, int verbose_level);
+void flip_piece(int &h, int &r, int &t, int verbose_level);
 void setup_pieces();
 void setup_rotate();
 void setup_var_start();
@@ -53,8 +53,8 @@ void make_coefficient_matrix(diophant *D);
 
 int main(void)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 	
 	setup_pieces();
 	setup_rotate();
@@ -62,10 +62,10 @@ int main(void)
 
 	
 	
-	INT nb_eqns;
-	INT nb_vars;
-	INT nb_eqn1;
-	INT nb_eqn2;
+	int nb_eqns;
+	int nb_vars;
+	int nb_eqn1;
+	int nb_eqn2;
 
 	nb_vars = var_start[NB_PIECES];
 	nb_eqn1 = 5 * 5;
@@ -87,27 +87,27 @@ int main(void)
 	make_coefficient_matrix(D);
 
 
-	INT f_write_tree = FALSE;
+	int f_write_tree = FALSE;
 	const char *fname_tree = "";
 	
 	D->solve_all_DLX_with_RHS(f_write_tree, fname_tree, verbose_level);
 	cout << "After solve, we found " << D->_resultanz << " solutions" << endl;
 
-	INT *Sol;
-	INT nb_sol, sol_length = 5;
+	int *Sol;
+	int nb_sol, sol_length = 5;
 
 	D->get_solutions(Sol, nb_sol, verbose_level);
 
 
 	set_of_sets *L;
-	INT l;
+	int l;
 
 	L = NEW_OBJECT(set_of_sets);
 	L->init_basic_constant_size(nb_vars, 
 		nb_sol, sol_length, 0 /* verbose_level */);
 
 	for (l = 0; l < nb_sol; l++) {
-		INT_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
+		int_vec_copy(Sol + l * sol_length, L->Sets[l], sol_length);
 		}
 
 	L->sort_all(0);
@@ -157,7 +157,7 @@ int main(void)
 
 		cout << "Solution " << l << " : ";
 #if 1
-		INT_vec_print(cout, L->Sets[l], sol_length);
+		int_vec_print(cout, L->Sets[l], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -176,11 +176,11 @@ int main(void)
 	latex_foot(fp);
 	}
 
-	INT nb_orbits;
-	INT *orbit;
-	INT *orbit_inv;
-	INT *orbit_first;
-	INT *orbit_len;
+	int nb_orbits;
+	int *orbit;
+	int *orbit_inv;
+	int *orbit_first;
+	int *orbit_len;
 
 	L->compute_orbits(nb_orbits, orbit, orbit_inv, orbit_first, orbit_len, 
 		compute_image_function, 
@@ -190,7 +190,7 @@ int main(void)
 
 	cout << "We found " << nb_orbits << " orbits \\\\" << endl;
 	
-	INT o, f, p;
+	int o, f, p;
 	
 	{
 	const char *fname = "pentomino_orbits.tex";
@@ -204,7 +204,7 @@ int main(void)
 		i = orbit[f];
 #if 1
 		cout << "Representative of orbit " << o << " is solution " << i << " : ";
-		INT_vec_print(cout, L->Sets[i], sol_length);
+		int_vec_print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -219,11 +219,11 @@ int main(void)
 	latex_foot(fp);
 	}
 
-	INT nb_orbits_without_I;
-	INT *orbits_without_I;
+	int nb_orbits_without_I;
+	int *orbits_without_I;
 	
 	nb_orbits_without_I = 0;
-	orbits_without_I = NEW_INT(nb_orbits);
+	orbits_without_I = NEW_int(nb_orbits);
 	for (o = 0; o < nb_orbits; o++) {
 		f = orbit_first[o];
 		i = orbit[f];
@@ -264,7 +264,7 @@ int main(void)
 
 #if 1
 		cout << p << " / " << nb_orbits_without_I << " Representative of orbit " << o << " is solution " << i << " : ";
-		INT_vec_print(cout, L->Sets[i], sol_length);
+		int_vec_print(cout, L->Sets[i], sol_length);
 		cout << "\\\\" << endl;
 #endif
 
@@ -281,7 +281,7 @@ int main(void)
 #if 0
 
 	cout << "Orbits with interlocking Ps:\\\\" << endl;
-	INT cnt = 0;
+	int cnt = 0;
 	for (p = 0; p < nb_orbits_without_I; p++) {
 		o = orbits_without_I[p];
 		f = orbit_first[o];
@@ -289,7 +289,7 @@ int main(void)
 
 		if (has_interlocking_Ps(L->Sets[i])) {
 			cout << "With interlocking P's, orbit " << o << " without I is solution " << i << " : ";
-			INT_vec_print(cout, L->Sets[i], sol_length);
+			int_vec_print(cout, L->Sets[i], sol_length);
 			cout << "\\\\" << endl;
 
 			draw_it(L->Sets[i]);
@@ -302,11 +302,11 @@ int main(void)
 	FREE_OBJECT(D);
 }
 
-INT has_interlocking_Ps(INT *set)
+int has_interlocking_Ps(int *set)
 {
-	INT i, j, a;
-	INT L[5];
-	INT nb_L = 0;
+	int i, j, a;
+	int L[5];
+	int nb_L = 0;
 
 	for (i = 0; i < 5; i++) {
 		a = set[i];
@@ -327,11 +327,11 @@ INT has_interlocking_Ps(INT *set)
 	return FALSE;
 }
 
-INT has_interlocking_Pprime(INT *set)
+int has_interlocking_Pprime(int *set)
 {
-	INT i, j, a;
-	INT L[5];
-	INT nb_L = 0;
+	int i, j, a;
+	int L[5];
+	int nb_L = 0;
 
 	for (i = 0; i < 5; i++) {
 		a = set[i];
@@ -352,11 +352,11 @@ INT has_interlocking_Pprime(INT *set)
 	return FALSE;
 }
 
-INT has_interlocking_Ls(INT *set)
+int has_interlocking_Ls(int *set)
 {
-	INT i, j, a;
-	INT L[5];
-	INT nb_L = 0;
+	int i, j, a;
+	int L[5];
+	int nb_L = 0;
 
 	for (i = 0; i < 5; i++) {
 		a = set[i];
@@ -377,11 +377,11 @@ INT has_interlocking_Ls(INT *set)
 	return FALSE;
 }
 
-INT has_interlocking_Lprime(INT *set)
+int has_interlocking_Lprime(int *set)
 {
-	INT i, j, a;
-	INT L[5];
-	INT nb_L = 0;
+	int i, j, a;
+	int L[5];
+	int nb_L = 0;
 
 	for (i = 0; i < 5; i++) {
 		a = set[i];
@@ -402,10 +402,10 @@ INT has_interlocking_Lprime(INT *set)
 	return FALSE;
 }
 
-INT test_if_interlocking_Ps(INT a1, INT a2)
+int test_if_interlocking_Ps(int a1, int a2)
 {
-	INT h1, r1, t1, tt1, x1, y1, rr1;
-	INT h2, r2, t2, tt2, x2, y2, rr2;
+	int h1, r1, t1, tt1, x1, y1, rr1;
+	int h2, r2, t2, tt2, x2, y2, rr2;
 
 	decode_piece(a1, h1, r1, t1);
 	tt1 = T[h1][t1];
@@ -433,10 +433,10 @@ INT test_if_interlocking_Ps(INT a1, INT a2)
 	return TRUE;
 }
 
-INT test_if_interlocking_Ls(INT a1, INT a2)
+int test_if_interlocking_Ls(int a1, int a2)
 {
-	INT h1, r1, t1, tt1, x1, y1, rr1;
-	INT h2, r2, t2, tt2, x2, y2, rr2;
+	int h1, r1, t1, tt1, x1, y1, rr1;
+	int h2, r2, t2, tt2, x2, y2, rr2;
 
 	decode_piece(a1, h1, r1, t1);
 	tt1 = T[h1][t1];
@@ -464,9 +464,9 @@ INT test_if_interlocking_Ls(INT a1, INT a2)
 	return TRUE;
 }
 
-INT number_of_pieces_of_type(INT t, INT *set)
+int number_of_pieces_of_type(int t, int *set)
 {
-	INT i, a, cnt = 0;
+	int i, a, cnt = 0;
 
 	for (i = 0; i < 5; i++) {
 		a = set[i];
@@ -477,9 +477,9 @@ INT number_of_pieces_of_type(INT t, INT *set)
 	return cnt;
 }
 
-INT does_it_contain_an_I(INT *set)
+int does_it_contain_an_I(int *set)
 {
-	INT i, a;
+	int i, a;
 
 	for (i = 0; i < 5; i++) {
 		a = set[i];
@@ -490,13 +490,13 @@ INT does_it_contain_an_I(INT *set)
 	return FALSE;
 }
 
-void decode_assembly(INT *set)
+void decode_assembly(int *set)
 // input set[5]
 {
-	INT i, h, r, t, tt, x, y, rr;
+	int i, h, r, t, tt, x, y, rr;
 
 	cout << "Set ";
-	INT_vec_print(cout, set, 5);
+	int_vec_print(cout, set, 5);
 	cout << endl;
 
 	for (i = 0; i < 5; i++) {
@@ -509,7 +509,7 @@ void decode_assembly(INT *set)
 		}
 }
 
-void decode_piece(INT j, INT &h, INT &r, INT &t)
+void decode_piece(int j, int &h, int &r, int &t)
 // h is the kind of piece
 // r is the rotation index
 // t is the translation index
@@ -520,7 +520,7 @@ void decode_piece(INT j, INT &h, INT &r, INT &t)
 // y = tt / 5;
 
 {
-	INT j0;
+	int j0;
 	
 	for (h = 0; h < NB_PIECES; h++) {
 		j0 = var_start[h + 1];
@@ -534,20 +534,20 @@ void decode_piece(INT j, INT &h, INT &r, INT &t)
 		}
 }
 
-INT code_piece(INT h, INT r, INT t)
+int code_piece(int h, int r, int t)
 {
-	INT j;
+	int j;
 
 	j = var_start[h] + r * T_length[h] + t;
 	return j;
 }
 
 
-void draw_it(ostream &ost, INT *sol)
+void draw_it(ostream &ost, int *sol)
 {
-	INT sol_length = 5;
-	INT u, h, r, rr, t, tt, tx, ty, s, a, b, x, y, j;
-	INT *O1;
+	int sol_length = 5;
+	int u, h, r, rr, t, tt, tx, ty, s, a, b, x, y, j;
+	int *O1;
 
 	ost << "\\begin{tikzpicture}[x=1cm, y=1cm, semitransparent, scale=0.5]" << endl;
 	ost << "\\draw[step=1cm, line width=0.3mm, black!30!white] (0,0) grid (5cm,5cm);" << endl;
@@ -560,7 +560,7 @@ void draw_it(ostream &ost, INT *sol)
 		ty = tt / 5;
 		rr = R[h][r];
 
-		O1 = NEW_INT(O_length[h]);
+		O1 = NEW_int(O_length[h]);
 		for (s = 0; s < O_length[h]; s++) {
 			a = O[h][s];
 			a += tx;
@@ -579,29 +579,29 @@ void draw_it(ostream &ost, INT *sol)
 				}
 			}
 		ost << ";" << endl;
-		FREE_INT(O1);
+		FREE_int(O1);
 		}
 	ost << "\\end{tikzpicture}" << endl;
 }
 
-void compute_image_function(set_of_sets *S, void *compute_image_data, INT elt_idx, INT gen_idx, INT &idx_of_image, INT verbose_level)
+void compute_image_function(set_of_sets *S, void *compute_image_data, int elt_idx, int gen_idx, int &idx_of_image, int verbose_level)
 // implements a rotation by 90 degree:
 {
-	//INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *set1;
-	INT *set2;
-	INT sz, i, a, b, h, r, t, idx;
+	//int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *set1;
+	int *set2;
+	int sz, i, a, b, h, r, t, idx;
 
 	set1 = S->Sets[elt_idx];
 	sz = S->Set_size[elt_idx];
-	set2 = NEW_INT(sz);
+	set2 = NEW_int(sz);
 
 
 	if (f_v) {
 		cout << "compute_image_function computing image of solution " << elt_idx << " = ";
-		INT_vec_print(cout, set1, sz);
+		int_vec_print(cout, set1, sz);
 		cout << " under generator " << gen_idx << endl;
 		}
 
@@ -627,46 +627,46 @@ void compute_image_function(set_of_sets *S, void *compute_image_data, INT elt_id
 			}
 		set2[i] = b;
 		}
-	INT_vec_heapsort(set2, sz);
+	int_vec_heapsort(set2, sz);
 	if (!vec_search_general(S, 
 		compare_func, 
 		NULL /* void *data_for_compare */, 
 		S->nb_sets, set2, idx, 0 /*verbose_level*/)) {
 		cout << "compute_image_function cannot find image" << endl;
-		INT_vec_print(cout, set2, sz);
+		int_vec_print(cout, set2, sz);
 		cout << endl;
 		exit(1);
 		}
 	idx_of_image = idx;
 	if (f_v) {
 		cout << "compute_image_function image is ";
-		INT_vec_print(cout, set2, sz);
+		int_vec_print(cout, set2, sz);
 		cout << " which is solution " << idx_of_image << endl;
 		}
-	FREE_INT(set2);
+	FREE_int(set2);
 
 }
 
-INT compare_func(void *vec, void *a, INT b, void *data_for_compare)
+int compare_func(void *vec, void *a, int b, void *data_for_compare)
 {
 	set_of_sets *S = (set_of_sets *) vec;
-	INT sz, c;
+	int sz, c;
 
 	sz = S->Set_size[b];
-	c = INT_vec_compare((INT *) a, S->Sets[b], sz);
+	c = int_vec_compare((int *) a, S->Sets[b], sz);
 #if 0
 	cout << "compare ";
-	INT_vec_print(cout, (INT *) a, sz);
+	int_vec_print(cout, (int *) a, sz);
 	cout << " : ";
-	INT_vec_print(cout, S->Sets[b], sz);
+	int_vec_print(cout, S->Sets[b], sz);
 	cout << " yields " << c << endl;
 #endif
 	return -c;	
 }
  
-void turn_piece(INT &h, INT &r, INT &t, INT verbose_level)
+void turn_piece(int &h, int &r, int &t, int verbose_level)
 {
-	INT tx, ty, txx = 0, tyy = 0, tt;
+	int tx, ty, txx = 0, tyy = 0, tt;
 
 	tt = T[h][t];
 	tx = tt % 5;
@@ -692,17 +692,17 @@ void turn_piece(INT &h, INT &r, INT &t, INT verbose_level)
 	r++;
 	r %= R_length[h];
 	tt = tyy * 5 + txx;
-	if (!INT_vec_search_linear(T[h], T_length[h], tt, t)) {
+	if (!int_vec_search_linear(T[h], T_length[h], tt, t)) {
 		cout << "turn_piece cannot find tt=" << tt << " for h=" << h << endl;
 		exit(1);
 		}
 }
 
-void flip_piece(INT &h, INT &r, INT &t, INT verbose_level)
+void flip_piece(int &h, int &r, int &t, int verbose_level)
 {
-	//INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
-	INT tx, ty, txx = 0, tyy = 0, tt;
+	//int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	int tx, ty, txx = 0, tyy = 0, tt;
 
 	if (f_v) {
 		cout << "flip_piece" << endl;
@@ -849,7 +849,7 @@ void flip_piece(INT &h, INT &r, INT &t, INT verbose_level)
 	if (f_v) {
 		cout << "r=" << r << " x'=" << txx << " y'=" << tyy << " tt=" << tt << endl;
 		}
-	if (!INT_vec_search_linear(T[h], T_length[h], tt, t)) {
+	if (!int_vec_search_linear(T[h], T_length[h], tt, t)) {
 		cout << "flip_piece cannot find tt=" << tt << " for h=" << h << endl;
 		exit(1);
 		}
@@ -865,88 +865,88 @@ void flip_piece(INT &h, INT &r, INT &t, INT verbose_level)
 void setup_pieces()
 {
 	// pieces on a 5 x 5 grid:
-	INT S1[] = {1,5,6,7,11,-1}; // X, Plus
-	INT S2[] = {1,2,5,6,11,-1}; // F
-	INT S3[] = {0,1,6,7,11,-1}; // F'
-	INT S4[] = {0,5,10,15,20,-1}; // I
-	INT S5[] = {0,5,10,15,16,-1}; // L
-	INT S6[] = {1,6,10,11,15,-1}; // N
-	INT S7[] = {0,1,5,6,10,-1}; // P
-	INT S8[] = {0,1,2,6,11,-1}; // T
-	INT S9[] = {0,2,5,6,7,-1}; // U
-	INT S10[] = {0,5,10,11,12,-1}; // V
-	INT S11[] = {0,5,6,11,12,-1}; // W
-	INT S12[] = {1,5,6,11,16,-1}; // Y
-	INT S13[] = {0,1,6,11,12,-1}; // Z
-	INT S14[] = {1,6,11,15,16,-1}; // L'
-	INT S15[] = {0,5,10,11,16,-1}; // N'
-	INT S16[] = {0,1,5,6,11,-1}; // P'
-	INT S17[] = {0,5,6,10,15,-1}; // Y'
-	INT S18[] = {1,2,6,10,11,-1}; // Z'
+	int S1[] = {1,5,6,7,11,-1}; // X, Plus
+	int S2[] = {1,2,5,6,11,-1}; // F
+	int S3[] = {0,1,6,7,11,-1}; // F'
+	int S4[] = {0,5,10,15,20,-1}; // I
+	int S5[] = {0,5,10,15,16,-1}; // L
+	int S6[] = {1,6,10,11,15,-1}; // N
+	int S7[] = {0,1,5,6,10,-1}; // P
+	int S8[] = {0,1,2,6,11,-1}; // T
+	int S9[] = {0,2,5,6,7,-1}; // U
+	int S10[] = {0,5,10,11,12,-1}; // V
+	int S11[] = {0,5,6,11,12,-1}; // W
+	int S12[] = {1,5,6,11,16,-1}; // Y
+	int S13[] = {0,1,6,11,12,-1}; // Z
+	int S14[] = {1,6,11,15,16,-1}; // L'
+	int S15[] = {0,5,10,11,16,-1}; // N'
+	int S16[] = {0,1,5,6,11,-1}; // P'
+	int S17[] = {0,5,6,10,15,-1}; // Y'
+	int S18[] = {1,2,6,10,11,-1}; // Z'
 
 	//outline on a 6 x 6 grid:
-	INT O1[] = {1,2,8,9,15,14,20,19,13,12,6,7,1,-1}; // X, Plus
-	INT O2[] = {1,3,9,8,20,19,13,12,6,7,1,-1}; // F
-	INT O3[] = {0,2,8,9,15,14,20,19,7,6,0,-1}; // F'
-	INT O4[] = {0,1,31,30,0,-1}; // I
-	INT O5[] = {0,1,19,20,26,24,0,-1}; // L
-	INT O6[] = {1,2,20,19,25,24,12,13,1,-1}; // N
-	INT O7[] = {0,2,14,13,19,18,0,-1}; // P
-	INT O8[] = {0,3,9,8,20,19,7,6,0,-1}; // T
-	INT O9[] = {0,1,7,8,2,3,15,12,0,-1}; // U
-	INT O10[] = {0,1,13,15,21,18,0,-1}; // V
-	INT O11[] = {0,1,7,8,14,15,21,19,13,12,0,-1}; // W
-	INT O12[] = {1,2,26,25,13,12,6,7,1,-1}; // Y
-	INT O13[] = {0,2,14,15,21,19,7,6,0,-1}; // Z
-	INT O14[] = {1,2,26,24,18,19,1,-1}; // L'
-	INT O15[] = {0,1,13,14,26,25,19,18,0,-1}; // N'
-	INT O16[] = {0,2,20,19,13,12,0,-1}; // P'
-	INT O17[] = {0,1,7,8,14,13,25,24,0,-1}; // Y'
-	INT O18[] = {1,3,9,8,20,18,12,13,1,-1}; // Z'
+	int O1[] = {1,2,8,9,15,14,20,19,13,12,6,7,1,-1}; // X, Plus
+	int O2[] = {1,3,9,8,20,19,13,12,6,7,1,-1}; // F
+	int O3[] = {0,2,8,9,15,14,20,19,7,6,0,-1}; // F'
+	int O4[] = {0,1,31,30,0,-1}; // I
+	int O5[] = {0,1,19,20,26,24,0,-1}; // L
+	int O6[] = {1,2,20,19,25,24,12,13,1,-1}; // N
+	int O7[] = {0,2,14,13,19,18,0,-1}; // P
+	int O8[] = {0,3,9,8,20,19,7,6,0,-1}; // T
+	int O9[] = {0,1,7,8,2,3,15,12,0,-1}; // U
+	int O10[] = {0,1,13,15,21,18,0,-1}; // V
+	int O11[] = {0,1,7,8,14,15,21,19,13,12,0,-1}; // W
+	int O12[] = {1,2,26,25,13,12,6,7,1,-1}; // Y
+	int O13[] = {0,2,14,15,21,19,7,6,0,-1}; // Z
+	int O14[] = {1,2,26,24,18,19,1,-1}; // L'
+	int O15[] = {0,1,13,14,26,25,19,18,0,-1}; // N'
+	int O16[] = {0,2,20,19,13,12,0,-1}; // P'
+	int O17[] = {0,1,7,8,14,13,25,24,0,-1}; // Y'
+	int O18[] = {1,3,9,8,20,18,12,13,1,-1}; // Z'
 	
 
 	// translations:
-	INT T1[] = {0,1,2,5,6,7,10,11,12,-1}; // X, Plus
-	INT T2[] = {0,1,2,5,6,7,10,11,12,-1}; // F
-	INT T3[] = {0,1,2,5,6,7,10,11,12,-1}; // F'
-	INT T4[] = {0,1,2,3,4,-1}; // I
-	INT T5[] = {0,1,2,3,5,6,7,8,-1}; // L
-	INT T6[] = {0,1,2,3,5,6,7,8,-1}; // N
-	INT T7[] = {0,1,2,3,5,6,7,8,10,11,12,13,-1}; // P
-	INT T8[] = {0,1,2,5,6,7,10,11,12,-1}; // T
-	INT T9[] = {0,1,2,5,6,7,10,11,12,15,16,17,-1}; // U
-	INT T10[] = {0,1,2,5,6,7,10,11,12,-1}; // V
-	INT T11[] = {0,1,2,5,6,7,10,11,12,-1}; // W
-	INT T12[] = {0,1,2,3,5,6,7,8,-1}; // Y
-	INT T13[] = {0,1,2,5,6,7,10,11,12,-1}; // Z
-	INT T14[] = {0,1,2,3,5,6,7,8,-1}; // L'
-	INT T15[] = {0,1,2,3,5,6,7,8,-1}; // N'
-	INT T16[] = {0,1,2,3,5,6,7,8,10,11,12,13,-1}; // P'
-	INT T17[] = {0,1,2,3,5,6,7,8,-1}; // Y'
-	INT T18[] = {0,1,2,5,6,7,10,11,12,-1}; // Z'
+	int T1[] = {0,1,2,5,6,7,10,11,12,-1}; // X, Plus
+	int T2[] = {0,1,2,5,6,7,10,11,12,-1}; // F
+	int T3[] = {0,1,2,5,6,7,10,11,12,-1}; // F'
+	int T4[] = {0,1,2,3,4,-1}; // I
+	int T5[] = {0,1,2,3,5,6,7,8,-1}; // L
+	int T6[] = {0,1,2,3,5,6,7,8,-1}; // N
+	int T7[] = {0,1,2,3,5,6,7,8,10,11,12,13,-1}; // P
+	int T8[] = {0,1,2,5,6,7,10,11,12,-1}; // T
+	int T9[] = {0,1,2,5,6,7,10,11,12,15,16,17,-1}; // U
+	int T10[] = {0,1,2,5,6,7,10,11,12,-1}; // V
+	int T11[] = {0,1,2,5,6,7,10,11,12,-1}; // W
+	int T12[] = {0,1,2,3,5,6,7,8,-1}; // Y
+	int T13[] = {0,1,2,5,6,7,10,11,12,-1}; // Z
+	int T14[] = {0,1,2,3,5,6,7,8,-1}; // L'
+	int T15[] = {0,1,2,3,5,6,7,8,-1}; // N'
+	int T16[] = {0,1,2,3,5,6,7,8,10,11,12,13,-1}; // P'
+	int T17[] = {0,1,2,3,5,6,7,8,-1}; // Y'
+	int T18[] = {0,1,2,5,6,7,10,11,12,-1}; // Z'
 
 	//rotations:
-	INT R1[] = {0,-1}; // X, Plus
-	INT R2[] = {0,1,2,3,-1}; // F
-	INT R3[] = {0,1,2,3,-1}; // F'
-	INT R4[] = {0,1,-1}; // I
-	INT R5[] = {0,1,2,3,-1}; // L
-	INT R6[] = {0,1,2,3,-1}; // N
-	INT R7[] = {0,1,2,3,-1}; // P
-	INT R8[] = {0,1,2,3,-1}; // T
-	INT R9[] = {0,1,2,3,-1}; // U
-	INT R10[] = {0,1,2,3,-1}; // V
-	INT R11[] = {0,1,2,3,-1}; // W
-	INT R12[] = {0,1,2,3,-1}; // Y
-	INT R13[] = {0,1,-1}; // Z
-	INT R14[] = {0,1,2,3,-1}; // L
-	INT R15[] = {0,1,2,3,-1}; // N'
-	INT R16[] = {0,1,2,3,-1}; // P'
-	INT R17[] = {0,1,2,3,-1}; // Y'
-	INT R18[] = {0,1,-1}; // Z'
+	int R1[] = {0,-1}; // X, Plus
+	int R2[] = {0,1,2,3,-1}; // F
+	int R3[] = {0,1,2,3,-1}; // F'
+	int R4[] = {0,1,-1}; // I
+	int R5[] = {0,1,2,3,-1}; // L
+	int R6[] = {0,1,2,3,-1}; // N
+	int R7[] = {0,1,2,3,-1}; // P
+	int R8[] = {0,1,2,3,-1}; // T
+	int R9[] = {0,1,2,3,-1}; // U
+	int R10[] = {0,1,2,3,-1}; // V
+	int R11[] = {0,1,2,3,-1}; // W
+	int R12[] = {0,1,2,3,-1}; // Y
+	int R13[] = {0,1,-1}; // Z
+	int R14[] = {0,1,2,3,-1}; // L
+	int R15[] = {0,1,2,3,-1}; // N'
+	int R16[] = {0,1,2,3,-1}; // P'
+	int R17[] = {0,1,2,3,-1}; // Y'
+	int R18[] = {0,1,-1}; // Z'
 
 
-	INT i, j;
+	int i, j;
 
 	S[0] = S1;
 	S[1] = S2;
@@ -1054,7 +1054,7 @@ void setup_pieces()
 
 void setup_rotate()
 {
-	INT i, j, ii, jj, h;
+	int i, j, ii, jj, h;
 	
 	for (i = 0; i < 5; i++) {
 		for (j = 0; j < 5; j++) {
@@ -1116,7 +1116,7 @@ void setup_rotate()
 
 void setup_var_start()
 {
-	INT h;
+	int h;
 	
 	var_start[0] = 0;
 	for (h = 0; h < NB_PIECES; h++) {
@@ -1132,7 +1132,7 @@ void setup_var_start()
 
 void make_coefficient_matrix(diophant *D)
 {
-	INT i, h, j0, r, t, rr, tt, s, x, y, z;
+	int i, h, j0, r, t, rr, tt, s, x, y, z;
 
 	for (h = 0; h < NB_PIECES; h++) {
 		j0 = var_start[h];

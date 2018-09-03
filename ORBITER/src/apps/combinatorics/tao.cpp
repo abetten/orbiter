@@ -13,29 +13,29 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
-void test_heisenberg(INT n, INT q, INT verbose_level);
-void difference_set_in_heisenberg_group_early_test_func(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level);
-void zuppo_list(sims *S, INT *Zuppos, INT &nb_zuppos, INT verbose_level);
+void test_heisenberg(int n, int q, int verbose_level);
+void difference_set_in_heisenberg_group_early_test_func(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level);
+void zuppo_list(sims *S, int *Zuppos, int &nb_zuppos, int verbose_level);
 void dimino(sims *S, 
-	INT *subgroup, INT subgroup_sz, INT *gens, INT &nb_gens, 
-	INT *cosets, 
-	INT new_gen, 
-	INT *group, INT &group_sz, 
-	INT verbose_level);
+	int *subgroup, int subgroup_sz, int *gens, int &nb_gens, 
+	int *cosets, 
+	int new_gen, 
+	int *group, int &group_sz, 
+	int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_heisenberg = FALSE;
-	INT n, q;
+	int verbose_level = 0;
+	int i;
+	int f_heisenberg = FALSE;
+	int n, q;
 	
  	t0 = os_ticks();
 	
@@ -70,30 +70,30 @@ class difference_set_in_heisenberg_group {
 public:
 	char fname_base[1000];
 
-	INT n;
-	INT q;
+	int n;
+	int q;
 	finite_field *F;
 	heisenberg *H;
-	INT *Table;
-	INT *Table_abv;
-	INT *gens;
-	INT nb_gens;
+	int *Table;
+	int *Table_abv;
+	int *gens;
+	int nb_gens;
 
 #if 0
-	INT *N_gens;
-	INT N_nb_gens;
-	INT N_go;
+	int *N_gens;
+	int N_nb_gens;
+	int N_go;
 #endif
 	action *A;
 	strong_generators *Aut_gens;
 	longinteger_object Aut_order;
 	
-	INT given_base_length; // = nb_gens
-	INT *given_base; // = gens
-	INT *base_image;
-	INT *base_image_elts;
-	INT *E1;
-	INT rk_E1;
+	int given_base_length; // = nb_gens
+	int *given_base; // = gens
+	int *base_image;
+	int *base_image_elts;
+	int *E1;
+	int rk_E1;
 
 	char prefix[1000];
 	char fname_magma_out[1000];
@@ -105,56 +105,56 @@ public:
 
 
 	// N = normalizer of U in Aut
-	INT *N_gens;
-	INT N_nb_gens, N_go;
+	int *N_gens;
+	int N_nb_gens, N_go;
 	action *N;
 	longinteger_object N_order;
 
 	action *N_on_orbits;
-	INT *Paired_with;
-	INT nb_paired_orbits;
-	INT *Pairs;
-	INT *Pair_orbit_length;
+	int *Paired_with;
+	int nb_paired_orbits;
+	int *Pairs;
+	int *Pair_orbit_length;
 
 
-	INT *Pairs_of_type1;
-	INT nb_pairs_of_type1;
-	INT *Pairs_of_type2;
-	INT nb_pairs_of_type2;
-	INT *Sets1;
-	INT *Sets2;
+	int *Pairs_of_type1;
+	int nb_pairs_of_type1;
+	int *Pairs_of_type2;
+	int nb_pairs_of_type2;
+	int *Sets1;
+	int *Sets2;
 
 
-	INT *Short_pairs;
-	INT *Long_pairs;
+	int *Short_pairs;
+	int *Long_pairs;
 
-	INT *f_orbit_select;
-	INT *Short_orbit_inverse;
+	int *f_orbit_select;
+	int *Short_orbit_inverse;
 
 	action *A_on_short_orbits;
-	INT nb_short_orbits;
-	INT nb_long_orbits;
+	int nb_short_orbits;
+	int nb_long_orbits;
 
 	poset_classification *gen;
 
 
 
 
-	void init(INT n, INT q, INT verbose_level);
-	void do_n2q3(INT verbose_level);
-	void check_overgroups_of_order_nine(INT verbose_level);
-	void create_minimal_overgroups(INT verbose_level);
-	void early_test_func(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		INT verbose_level);
+	void init(int n, int q, int verbose_level);
+	void do_n2q3(int verbose_level);
+	void check_overgroups_of_order_nine(int verbose_level);
+	void create_minimal_overgroups(int verbose_level);
+	void early_test_func(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		int verbose_level);
 
 };
 
-void difference_set_in_heisenberg_group::init(INT n, INT q, INT verbose_level)
+void difference_set_in_heisenberg_group::init(int n, int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i; //, j, a, b, ord;
+	int f_v = (verbose_level >= 1);
+	int i; //, j, a, b, ord;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::init" << endl;
@@ -183,17 +183,17 @@ void difference_set_in_heisenberg_group::init(INT n, INT q, INT verbose_level)
 	
 	H->generating_set(gens, nb_gens, verbose_level);
 	cout << "Generating set of size " << nb_gens << ":" << endl;
-	INT_vec_print(cout, gens, nb_gens);
+	int_vec_print(cout, gens, nb_gens);
 	cout << endl;
 
 	for (i = 0; i < nb_gens; i++) {
 		cout << "generator " << i << " / " << nb_gens << " is " << gens[i] << ":" << endl;
 		H->unrank_element(H->Elt1, gens[i]);
-		INT_vec_print(cout, H->Elt1, H->len);
+		int_vec_print(cout, H->Elt1, H->len);
 		cout << endl;
 		}
 
-	sprintf(fname_base, "H_%ld_%ld", n, q);
+	sprintf(fname_base, "H_%d_%d", n, q);
 	//magma_write_permutation_group(fname_base, H->group_order, Table, gens, nb_gens, verbose_level);
 
 
@@ -215,25 +215,25 @@ void difference_set_in_heisenberg_group::init(INT n, INT q, INT verbose_level)
 			cout << a << " -> " << b << " : ";
 			H->unrank_element(H->Elt1, a);
 			H->unrank_element(H->Elt2, b);
-			INT_vec_print(cout, H->Elt1, H->len);
+			int_vec_print(cout, H->Elt1, H->len);
 			cout << " -> ";
-			INT_vec_print(cout, H->Elt2, H->len);
+			int_vec_print(cout, H->Elt2, H->len);
 			cout << endl;
 			}
 		}
 	given_base_length = H->len;
-	given_base = NEW_INT(given_base_length);
+	given_base = NEW_int(given_base_length);
 	for (i = 0; i < given_base_length; i++) {
 		given_base[i] = i_power_j(q, i);
 		}
 	cout << "given base: ";
-	INT_vec_print(cout, given_base, given_base_length);
+	int_vec_print(cout, given_base, given_base_length);
 	cout << endl;
 	
 #if 0
-	H_gens = NEW_INT(H->group_order * nb_gens);
+	H_gens = NEW_int(H->group_order * nb_gens);
 	for (i = 0; i < nb_gens; i++) {
-		INT_vec_copy(Table + gens[i] * H->group_order, H_gens + i * H->group_order, H->group_order);
+		int_vec_copy(Table + gens[i] * H->group_order, H_gens + i * H->group_order, H->group_order);
 		}
 #endif
 
@@ -271,20 +271,20 @@ void difference_set_in_heisenberg_group::init(INT n, INT q, INT verbose_level)
 		}
 }
 
-void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
+void difference_set_in_heisenberg_group::do_n2q3(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a, b, t;
-	INT h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, t;
+	int h, k, f, /*l,*/ u, v, len1, len2, /*pos,*/ s;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::do_n2q3" << endl;
 		}
 
-	base_image = NEW_INT(given_base_length);
-	base_image_elts = NEW_INT(given_base_length * H->len);
+	base_image = NEW_int(given_base_length);
+	base_image_elts = NEW_int(given_base_length * H->len);
 
-	INT_vec_zero(base_image_elts, given_base_length * H->len);
+	int_vec_zero(base_image_elts, given_base_length * H->len);
 
 	base_image_elts[0] = 1;
 	base_image_elts[2] = 1;
@@ -304,7 +304,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 		base_image[i] = H->rank_element(base_image_elts + i * 5);
 		}
 
-	E1 = NEW_INT(A->elt_size_in_INT);
+	E1 = NEW_int(A->elt_size_in_int);
 	
 	cout << "making element" << endl;
 	A->make_element_from_base_image(E1, base_image, verbose_level);
@@ -361,7 +361,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 	cout << "created the normalizer N of order " << N_order << endl;
 
 	
-	rk_E1 = N->Sims->element_rank_INT(E1);
+	rk_E1 = N->Sims->element_rank_int(E1);
 	cout << "rk_E1 = " << rk_E1 << endl;
 
 	N_on_orbits = NEW_OBJECT(action);
@@ -373,7 +373,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 	cout << "action on orbits has been created, degree = " <<N_on_orbits->degree << endl;
 
 
-	Paired_with = NEW_INT(Sch->nb_orbits);
+	Paired_with = NEW_int(Sch->nb_orbits);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		f = Sch->orbit_first[i];
 		//l = Sch->orbit_len[i];
@@ -388,8 +388,8 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 		cout << i << " : " << Paired_with[i] << endl;
 		}
 	nb_paired_orbits = 0;
-	Pairs = NEW_INT(Sch->nb_orbits * 2);
-	Pair_orbit_length = NEW_INT(Sch->nb_orbits);
+	Pairs = NEW_int(Sch->nb_orbits * 2);
+	Pair_orbit_length = NEW_int(Sch->nb_orbits);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		if (Paired_with[i] <= i) { // omit the self paired orbit of the identity element
 			continue;
@@ -439,18 +439,18 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 
 	Pair_orbit_type.get_class_by_value(Pairs_of_type1, nb_pairs_of_type1, 1, 0 /* verbose_level */);
 	Pair_orbit_type.get_class_by_value(Pairs_of_type2, nb_pairs_of_type2, 3, 0 /* verbose_level */);
-	INT_vec_heapsort(Pairs_of_type1, nb_pairs_of_type1);
-	INT_vec_heapsort(Pairs_of_type2, nb_pairs_of_type2);
+	int_vec_heapsort(Pairs_of_type1, nb_pairs_of_type1);
+	int_vec_heapsort(Pairs_of_type2, nb_pairs_of_type2);
 	cout << "We found " << 	nb_pairs_of_type1 << " pairs of short orbits, they are:" << endl;
-	INT_vec_print(cout, Pairs_of_type1, nb_pairs_of_type1);
+	int_vec_print(cout, Pairs_of_type1, nb_pairs_of_type1);
 	cout << endl;
 	cout << "We found " << 	nb_pairs_of_type2 << " pairs of long orbits, they are:" << endl;
-	INT_vec_print(cout, Pairs_of_type2, nb_pairs_of_type2);
+	int_vec_print(cout, Pairs_of_type2, nb_pairs_of_type2);
 	cout << endl;
 
 
 
-	Sets1 = NEW_INT(nb_pairs_of_type1 * 2);
+	Sets1 = NEW_int(nb_pairs_of_type1 * 2);
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];
 		a = Pairs[2 * h + 0];
@@ -462,7 +462,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 		Sets1[s * 2 + 0] = Sch->orbit[u];
 		Sets1[s * 2 + 1] = Sch->orbit[v];
 		}
-	Sets2 = NEW_INT(nb_pairs_of_type2 * 6);
+	Sets2 = NEW_int(nb_pairs_of_type2 * 6);
 	for (s = 0; s < nb_pairs_of_type2; s++) {
 		h = Pairs_of_type2[s];
 		a = Pairs[2 * h + 0];
@@ -490,15 +490,15 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 	nb_long_orbits = 2 * nb_pairs_of_type2;
 	
 
-	Short_pairs = NEW_INT(nb_short_orbits);
-	Long_pairs = NEW_INT(nb_long_orbits);
+	Short_pairs = NEW_int(nb_short_orbits);
+	Long_pairs = NEW_int(nb_long_orbits);
 
-	Short_orbit_inverse = NEW_INT(Sch->nb_orbits);
-	INT_vec_mone(Short_orbit_inverse, Sch->nb_orbits);
+	Short_orbit_inverse = NEW_int(Sch->nb_orbits);
+	int_vec_mone(Short_orbit_inverse, Sch->nb_orbits);
 
 	for (s = 0; s < nb_pairs_of_type1; s++) {
 		h = Pairs_of_type1[s];
-		INT_vec_copy(Pairs + 2 * h, Short_pairs + 2 * s, 2);
+		int_vec_copy(Pairs + 2 * h, Short_pairs + 2 * s, 2);
 		for (t = 0; t < 2; t++) {
 			a = Short_pairs[2 * s + t];
 			Short_orbit_inverse[a] = 2 * s + t;
@@ -508,7 +508,7 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 
 	for (s = 0; s < nb_pairs_of_type2; s++) {
 		h = Pairs_of_type2[s];
-		INT_vec_copy(Pairs + 2 * h, Long_pairs + 2 * s, 2);
+		int_vec_copy(Pairs + 2 * h, Long_pairs + 2 * s, 2);
 		}
 	
 	cout << "Short_pairs:" << endl;
@@ -527,16 +527,16 @@ void difference_set_in_heisenberg_group::do_n2q3(INT verbose_level)
 }
 
 
-void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verbose_level)
+void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::check_overgroups_of_order_nine" << endl;
 		}
-	INT second_gen_idx[] = { 
+	int second_gen_idx[] = { 
 		731, 353, 381, 379, 46, 357, 700, 359, 698, 721, 
 		696, 694, 723, 355, 725, 44, 690, 688, 686, 664, 
 		733, 383, 660, 347, 42, 656, 345, 652, 343, 1035, 
@@ -547,16 +547,16 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		418, 52, 1250, 414, 50, 993, 391, 658, 737, 385, 
 		48, 1029 };
 
-	INT *Elt1, *Elt2;
-	INT h;
-	INT nb_overgroups = sizeof(second_gen_idx) / sizeof(INT);
+	int *Elt1, *Elt2;
+	int h;
+	int nb_overgroups = sizeof(second_gen_idx) / sizeof(int);
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	
 
 	cout << "making element Elt1:" << endl;
-	N->Sims->element_unrank_INT(rk_E1, Elt1, 0);
+	N->Sims->element_unrank_int(rk_E1, Elt1, 0);
 	A->element_print(Elt1, cout);
 	cout << endl;
 
@@ -572,7 +572,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 
 
 		cout << "making element" << endl;
-		N->Sims->element_unrank_INT(second_gen_idx[h], Elt2, 0);
+		N->Sims->element_unrank_int(second_gen_idx[h], Elt2, 0);
 		cout << "second generator has been created:" << endl;
 		A->element_print(Elt2, cout);
 		cout << endl;
@@ -588,7 +588,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 			O_gens, 0 /* verbose_level */);
 		O->group_order(O_go);
 		cout << "The order of O is " << O_go << endl;
-		if (O_go.as_INT() != 9) {
+		if (O_go.as_int() != 9) {
 			cout << "The group O does not have order 9" << endl;
 			exit(1);
 			}
@@ -611,11 +611,11 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		Overgroup_orbit_type.print_naked(TRUE);
 		cout << endl;
 
-		INT *Pairing;
-		INT s, a, b, f, l, o1, o2; //, pos;
+		int *Pairing;
+		int s, a, b, f, l, o1, o2; //, pos;
 
 
-		Pairing = NEW_INT(nb_long_orbits);
+		Pairing = NEW_int(nb_long_orbits);
 		for (a = 0; a < Sch1->nb_orbits; a++) {
 			f = Sch1->orbit_first[a];
 			l = Sch1->orbit_len[a];
@@ -634,22 +634,22 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		print_integer_matrix_with_standard_labels(cout, Pairing, Sch1->nb_orbits, 1, FALSE /* f_tex */);
 	
 	
-		INT *long_orbits;
-		INT nb_long_orbits;
-		INT *Pairs_of_long_orbits;
-		INT nb_pairs_of_long_orbits;
+		int *long_orbits;
+		int nb_long_orbits;
+		int *Pairs_of_long_orbits;
+		int nb_pairs_of_long_orbits;
 
 
 		Overgroup_orbit_type.get_class_by_value(long_orbits, nb_long_orbits, 3, 0 /* verbose_level */);
-		INT_vec_heapsort(long_orbits, nb_long_orbits);
+		int_vec_heapsort(long_orbits, nb_long_orbits);
 		cout << "We found " << 	nb_long_orbits << " long orbits, they are:" << endl;
-		INT_vec_print(cout, long_orbits, nb_long_orbits);
+		int_vec_print(cout, long_orbits, nb_long_orbits);
 		cout << endl;
 
 
 		
 
-		Pairs_of_long_orbits = NEW_INT(Sch1->nb_orbits * 2);
+		Pairs_of_long_orbits = NEW_int(Sch1->nb_orbits * 2);
 		nb_pairs_of_long_orbits = 0;
 		for (s = 0; s < nb_long_orbits; s++) {
 			a = long_orbits[s];
@@ -665,20 +665,20 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		print_integer_matrix_with_standard_labels(cout, Pairs_of_long_orbits, nb_pairs_of_long_orbits, 2, FALSE /* f_tex */);
 
 
-		INT N;
-		INT *selection;
-		INT *count;
-		INT *D;
-		INT D_sz;
-		INT u, t, ff, ll, v, k, di, dj;
-		INT i, j;
-		INT nb_good, nb_bad;
+		int N;
+		int *selection;
+		int *count;
+		int *D;
+		int D_sz;
+		int u, t, ff, ll, v, k, di, dj;
+		int i, j;
+		int nb_good, nb_bad;
 
 		N = i_power_j(2, nb_pairs_of_long_orbits);
 		cout << "N=" << N << endl;
-		selection = NEW_INT(nb_pairs_of_long_orbits);
-		D = NEW_INT(H->group_order);
-		count = NEW_INT(H->group_order);
+		selection = NEW_int(nb_pairs_of_long_orbits);
+		D = NEW_int(H->group_order);
+		count = NEW_int(H->group_order);
 		nb_good = 0;
 		nb_bad = 0;
 		for (u = 0; u < N; u++) {
@@ -700,7 +700,7 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 					cout << "s=" << s << endl;
 					cout << "t=" << t << endl;
 					cout << "testing case " << u << " = ";
-					INT_vec_print(cout, selection, nb_pairs_of_long_orbits);
+					int_vec_print(cout, selection, nb_pairs_of_long_orbits);
 					cout << endl;
 					exit(1);
 					}
@@ -719,13 +719,13 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 				}
 			if (((u + 250) % 1) == 0) {
 				cout << "testing case " << u << " = ";
-				INT_vec_print(cout, selection, nb_pairs_of_long_orbits);
+				int_vec_print(cout, selection, nb_pairs_of_long_orbits);
 				cout << endl;
 				cout << "We found a set D of size " << D_sz << ":" << endl;
-				INT_vec_print(cout, D, D_sz);
+				int_vec_print(cout, D, D_sz);
 				cout << endl;
 				}
-			INT_vec_zero(count, H->group_order);
+			int_vec_zero(count, H->group_order);
 			for (i = 0; i < D_sz; i++) {
 				di = D[i];
 				for (j = 0; j < D_sz; j++) {
@@ -779,14 +779,14 @@ void difference_set_in_heisenberg_group::check_overgroups_of_order_nine(INT verb
 		}
 }
 
-void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_level)
+void difference_set_in_heisenberg_group::create_minimal_overgroups(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Zuppos;
-	INT nb_zuppos;
-	INT goi;
+	int f_v = (verbose_level >= 1);
+	int *Zuppos;
+	int nb_zuppos;
+	int goi;
 	longinteger_object go;
-	INT i, j, t;
+	int i, j, t;
 
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::create_minimal_overgroups" << endl;
@@ -794,36 +794,36 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 	
 	N->Sims->group_order(go);
 	cout << "go=" << go << endl;
-	goi = go.as_INT();
+	goi = go.as_int();
 
 
-	Zuppos = NEW_INT(goi);
+	Zuppos = NEW_int(goi);
 	zuppo_list(N->Sims, Zuppos, nb_zuppos, verbose_level);
 
 	cout << "We found " << nb_zuppos << " zuppos." << endl;
-	INT_vec_print(cout, Zuppos, nb_zuppos);
+	int_vec_print(cout, Zuppos, nb_zuppos);
 	cout << endl;
 
-	INT *subgroup_elements;
-	INT subgroup_sz;
-	INT *gens;
-	INT nb_gens;
-	INT *cosets;
-	//INT new_gen;
-	INT *group;
-	INT group_sz;
+	int *subgroup_elements;
+	int subgroup_sz;
+	int *gens;
+	int nb_gens;
+	int *cosets;
+	//int new_gen;
+	int *group;
+	int group_sz;
 
-	subgroup_elements = NEW_INT(goi);
-	gens = NEW_INT(goi);
-	cosets = NEW_INT(goi);
-	group = NEW_INT(goi);
+	subgroup_elements = NEW_int(goi);
+	gens = NEW_int(goi);
+	cosets = NEW_int(goi);
+	group = NEW_int(goi);
 	subgroup **Subs;
-	INT *Group_order;
-	INT z;
+	int *Group_order;
+	int z;
 
 	Subs = new psubgroup[nb_zuppos];
 
-	Group_order = NEW_INT(nb_zuppos);
+	Group_order = NEW_int(nb_zuppos);
 
 	for (z = 0; z < nb_zuppos; z++) {
 		//cout << "zuppo " << z << " / " << nb_zuppos << ":" << endl;
@@ -839,7 +839,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 
 #if 0
 		cout << "found a group of order " << group_sz << " : ";
-		INT_vec_print(cout, group, group_sz);
+		int_vec_print(cout, group, group_sz);
 		cout << endl;
 #endif
 
@@ -850,9 +850,9 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 		
 		}
 	classify Group_orders;
-	INT *Idx_subgroup;
-	INT nb_subgroups;
-	INT o, idx_E1;
+	int *Idx_subgroup;
+	int nb_subgroups;
+	int o, idx_E1;
 
 	Group_orders.init(Group_order, nb_zuppos, FALSE, 0);
 	cout << "We found the following group orders: ";
@@ -912,17 +912,17 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 
 			// compute minimal overgroups:
 			subgroup **Overgroups;
-			INT *Overgroup_order;
+			int *Overgroup_order;
 
 			Overgroups = new psubgroup[nb_zuppos];
 
-			Overgroup_order = NEW_INT(nb_zuppos);
+			Overgroup_order = NEW_int(nb_zuppos);
 
 			for (z = 0; z < nb_zuppos; z++) {
 				cout << "zuppo " << z << " / " << nb_zuppos << ":" << endl;
-				INT_vec_copy(Subgroups_of_order[j]->Elements, subgroup_elements, Subgroups_of_order[j]->group_order);
+				int_vec_copy(Subgroups_of_order[j]->Elements, subgroup_elements, Subgroups_of_order[j]->group_order);
 				subgroup_sz = Subgroups_of_order[j]->group_order;
-				INT_vec_copy(Subgroups_of_order[j]->gens, gens, Subgroups_of_order[j]->nb_gens);
+				int_vec_copy(Subgroups_of_order[j]->gens, gens, Subgroups_of_order[j]->nb_gens);
 				nb_gens = Subgroups_of_order[j]->nb_gens;
 				dimino(N->Sims, 
 					subgroup_elements, subgroup_sz, gens, nb_gens, 
@@ -932,7 +932,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 					0 /* verbose_level */);
 
 				cout << "found a group of order " << group_sz << " : ";
-				INT_vec_print(cout, group, group_sz);
+				int_vec_print(cout, group, group_sz);
 				cout << endl;
 
 				Overgroup_order[z] = group_sz;
@@ -948,9 +948,9 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 			Overgroup_orders.print_naked(TRUE);
 			cout << endl;
 
-			INT *Idx_overgroup;
-			INT nb_overgroups;
-			INT ii, oo, f, a;
+			int *Idx_overgroup;
+			int nb_overgroups;
+			int ii, oo, f, a;
 			
 			subgroup **Overgroups_of_order;
 
@@ -995,8 +995,8 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 				cout << "There are " << Sch_overgroups->nb_orbits << " classes" << endl;
 				cout << "Representatives of the conjugacy classes are:" << endl;
 
-				INT *second_generator;
-				second_generator = NEW_INT(Sch_overgroups->nb_orbits);
+				int *second_generator;
+				second_generator = NEW_int(Sch_overgroups->nb_orbits);
 				for (j = 0; j < Sch_overgroups->nb_orbits; j++) {
 					//cout << "orbit " << j << " / " << Sch_overgroups->nb_orbits << ":" << endl;
 					f = Sch_overgroups->orbit_first[j];
@@ -1015,7 +1015,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 					}
 				cout << "the second generators are:" << endl;
 				//print_integer_matrix_with_standard_labels(cout, second_generator, Sch_overgroups->nb_orbits, 1, FALSE /* f_tex */);
-				INT_vec_print_Cpp(cout, second_generator, Sch_overgroups->nb_orbits);
+				int_vec_print_Cpp(cout, second_generator, Sch_overgroups->nb_orbits);
 				cout << endl;
 				} // next ii
 			exit(1);
@@ -1023,15 +1023,15 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 		}
 #if 0
 	char prefix[000];
-	INT f_W = TRUE;
-	INT f_w = FALSE;
-	INT target_depth = nb_pairs_of_type1;
+	int f_W = TRUE;
+	int f_w = FALSE;
+	int target_depth = nb_pairs_of_type1;
 
-	sprintf(prefix, "H_%ld_%ld_short", n, q);
+	sprintf(prefix, "H_%d_%d_short", n, q);
 
 	cout << "classifying subsets:" << endl;
 
-	f_orbit_select = NEW_INT(nb_short_orbits);
+	f_orbit_select = NEW_int(nb_short_orbits);
 
 	compute_orbits_on_subsets(gen, 
 		target_depth,
@@ -1041,7 +1041,7 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 		N->Strong_gens, 
 		difference_set_in_heisenberg_group_early_test_func,
 		this /* void *early_test_func_data */, 
-		NULL /* INT (*candidate_incremental_check_func)(INT len, INT *S, void *data, INT verbose_level)*/, 
+		NULL /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level)*/, 
 		this /* void *candidate_incremental_check_data */, 
 		verbose_level);
 
@@ -1052,24 +1052,24 @@ void difference_set_in_heisenberg_group::create_minimal_overgroups(INT verbose_l
 		}
 }
 
-void difference_set_in_heisenberg_group::early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	INT verbose_level)
+void difference_set_in_heisenberg_group::early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	int verbose_level)
 {
 	verbose_level = 1;
-	INT f_v = (verbose_level >= 1);
-	INT i, a, aa, b, bb;
+	int f_v = (verbose_level >= 1);
+	int i, a, aa, b, bb;
 	
 	if (f_v) {
 		cout << "difference_set_in_heisenberg_group::early_test_func" << endl;
 		cout << "S=";
-		INT_vec_print(cout, S, len);
+		int_vec_print(cout, S, len);
 		cout << endl;
 		}
 
 	nb_good_candidates = 0;
-	INT_vec_zero(f_orbit_select, nb_short_orbits);
+	int_vec_zero(f_orbit_select, nb_short_orbits);
 
 
 	for (i = 0; i < len; i++) {
@@ -1127,7 +1127,7 @@ void difference_set_in_heisenberg_group::early_test_func(INT *S, INT len,
 		}
 	if (f_v) {
 		cout << "They are:" << endl;
-		INT_vec_print(cout, good_candidates, nb_good_candidates);
+		int_vec_print(cout, good_candidates, nb_good_candidates);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1136,7 +1136,7 @@ void difference_set_in_heisenberg_group::early_test_func(INT *S, INT len,
 }
 
 
-void test_heisenberg(INT n, INT q, INT verbose_level)
+void test_heisenberg(int n, int q, int verbose_level)
 {
 	difference_set_in_heisenberg_group *DS;
 
@@ -1160,10 +1160,10 @@ void test_heisenberg(INT n, INT q, INT verbose_level)
 	
 }
 
-void difference_set_in_heisenberg_group_early_test_func(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level)
+void difference_set_in_heisenberg_group_early_test_func(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level)
 {
 	difference_set_in_heisenberg_group *DS = (difference_set_in_heisenberg_group *) data;
 
@@ -1173,15 +1173,15 @@ void difference_set_in_heisenberg_group_early_test_func(INT *S, INT len,
 		verbose_level);
 }
 
-void zuppo_list(sims *S, INT *Zuppos, INT &nb_zuppos, INT verbose_level)
+void zuppo_list(sims *S, int *Zuppos, int &nb_zuppos, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT goi;
+	int f_v = (verbose_level >= 1);
+	int goi;
 	longinteger_object go;
-	INT rk, o, i, j;
-	INT *Elt1;
-	INT *Elt2;
-	INT *f_done;
+	int rk, o, i, j;
+	int *Elt1;
+	int *Elt2;
+	int *f_done;
 	action *A;
 
 	if (f_v) {
@@ -1190,11 +1190,11 @@ void zuppo_list(sims *S, INT *Zuppos, INT &nb_zuppos, INT verbose_level)
 	A = S->A;
 	S->group_order(go);
 	cout << "go=" << go << endl;
-	goi = go.as_INT();
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	f_done = NEW_INT(goi);
-	INT_vec_zero(f_done, goi);
+	goi = go.as_int();
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	f_done = NEW_int(goi);
+	int_vec_zero(f_done, goi);
 	if (f_v) {
 		cout << "zuppo_list group of order " << goi << endl;
 		}
@@ -1204,7 +1204,7 @@ void zuppo_list(sims *S, INT *Zuppos, INT &nb_zuppos, INT verbose_level)
 		if (f_done[rk]) {
 			continue;
 			}
-		S->element_unrank_INT(rk, Elt1, 0 /*verbose_level*/);
+		S->element_unrank_int(rk, Elt1, 0 /*verbose_level*/);
 		//cout << "element created" << endl;
 		o = A->element_order(Elt1);
 		//cout << "element order = " << o << endl;
@@ -1218,39 +1218,39 @@ void zuppo_list(sims *S, INT *Zuppos, INT &nb_zuppos, INT verbose_level)
 		Zuppos[nb_zuppos++] = rk;
 		f_done[rk] = TRUE;
 		for (i = 1; i < o; i++) {
-			if (gcd_INT(i, o) == 1) {
+			if (gcd_int(i, o) == 1) {
 				A->element_move(Elt1, Elt2, 0);
-				A->element_power_INT_in_place(Elt2, i, 0 /* verbose_level*/);
-				j = S->element_rank_INT(Elt2);
+				A->element_power_int_in_place(Elt2, i, 0 /* verbose_level*/);
+				j = S->element_rank_int(Elt2);
 				f_done[j] = TRUE;
 				}
 			}
 		}
 	cout << "We found " << nb_zuppos << " zuppo elements" << endl;
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(f_done);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(f_done);
 	if (f_v) {
 		cout << "zuppo_list done" << endl;
 		}
 }
 
 void dimino(sims *S, 
-	INT *subgroup, INT subgroup_sz, INT *gens, INT &nb_gens, 
-	INT *cosets, 
-	INT new_gen, 
-	INT *group, INT &group_sz, 
-	INT verbose_level)
+	int *subgroup, int subgroup_sz, int *gens, int &nb_gens, 
+	int *cosets, 
+	int new_gen, 
+	int *group, int &group_sz, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, k, c, idx, new_coset_rep, nb_cosets;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k, c, idx, new_coset_rep, nb_cosets;
 
 	if (f_v) {
 		cout << "dimino new_gen = " << new_gen << endl;
 		}
-	INT_vec_copy(subgroup, group, subgroup_sz);
-	INT_vec_heapsort(group, subgroup_sz);
+	int_vec_copy(subgroup, group, subgroup_sz);
+	int_vec_heapsort(group, subgroup_sz);
 	group_sz = subgroup_sz;
 	
 	cosets[0] = 0;
@@ -1267,7 +1267,7 @@ void dimino(sims *S,
 			if (f_vv) {
 				cout << "coset rep " << i << " times generator " << j << " is " << c << endl;
 				}
-			if (INT_vec_search(group, group_sz, c, idx)) {
+			if (int_vec_search(group, group_sz, c, idx)) {
 				if (f_vv) {
 					cout << "already there" << endl;
 					}
@@ -1282,7 +1282,7 @@ void dimino(sims *S,
 				c = S->mult_by_rank(subgroup[k], new_coset_rep);
 				group[group_sz++] = c;
 				}
-			INT_vec_heapsort(group, group_sz);
+			int_vec_heapsort(group, group_sz);
 			if (f_vv) {
 				cout << "new group size = " << group_sz << endl;
 				}
@@ -1299,29 +1299,29 @@ void dimino(sims *S,
 }
 
 #if 0
-INT mult(sims *S, INT rk_a, INT rk_b, INT *Elt1, INT *Elt2, INT *Elt3)
+int mult(sims *S, int rk_a, int rk_b, int *Elt1, int *Elt2, int *Elt3)
 {
-	INT rk;
+	int rk;
 
-	S->element_unrank_INT(rk_a, Elt1, 0 /*verbose_level*/);
-	S->element_unrank_INT(rk_b, Elt2, 0 /*verbose_level*/);
+	S->element_unrank_int(rk_a, Elt1, 0 /*verbose_level*/);
+	S->element_unrank_int(rk_b, Elt2, 0 /*verbose_level*/);
 	S->A->element_mult(Elt1, Elt2, Elt3, 0);
-	rk = S->element_rank_INT(Elt3);
+	rk = S->element_rank_int(Elt3);
 	return rk;
 }
 #endif
 #if 0
-INT conjugate(sims *S, INT rk_a, INT rk_b, INT *Elt1, INT *Elt2, INT *Elt3, INT *Elt4)
+int conjugate(sims *S, int rk_a, int rk_b, int *Elt1, int *Elt2, int *Elt3, int *Elt4)
 // computes b^{-1} * a * b
 {
-	INT rk;
+	int rk;
 
-	S->element_unrank_INT(rk_a, Elt1, 0 /*verbose_level*/); // Elt1 = a
-	S->element_unrank_INT(rk_b, Elt2, 0 /*verbose_level*/); // Elt2 = b
+	S->element_unrank_int(rk_a, Elt1, 0 /*verbose_level*/); // Elt1 = a
+	S->element_unrank_int(rk_b, Elt2, 0 /*verbose_level*/); // Elt2 = b
 	S->A->element_invert(Elt2, Elt3, 0 /*verbose_level*/); // Elt3 = b^{-1}
 	S->A->element_mult(Elt3, Elt1, Elt4, 0);
 	S->A->element_mult(Elt4, Elt2, Elt3, 0);
-	rk = S->element_rank_INT(Elt3);
+	rk = S->element_rank_int(Elt3);
 	return rk;
 }
 #endif

@@ -30,35 +30,35 @@ void action_on_subgroups::null()
 
 void action_on_subgroups::free()
 {
-	INT i;
+	int i;
 	
 	if (sets) {
 		for (i = 0; i < nb_subgroups; i++) {
-			FREE_INT(sets[i]);
+			FREE_int(sets[i]);
 			}
-		FREE_PINT(sets);
+		FREE_pint(sets);
 		}
 	if (image_set) {
-		FREE_INT(image_set);
+		FREE_int(image_set);
 		}
 	if (perm) {
-		FREE_INT(perm);
+		FREE_int(perm);
 		}
 	if (perm_inv) {
-		FREE_INT(perm_inv);
+		FREE_int(perm_inv);
 		}
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		}
 	null();
 }
 
-void action_on_subgroups::init(action *A, sims *S, INT nb_subgroups, 
-	INT subgroup_order, subgroup **Subgroups, INT verbose_level)
+void action_on_subgroups::init(action *A, sims *S, int nb_subgroups, 
+	int subgroup_order, subgroup **Subgroups, int verbose_level)
 {
-	INT i;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 5);
+	int i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 5);
 	
 	if (f_v) {
 		cout << "action_on_subgroups::init nb_subgroups=" << nb_subgroups << " subgroup_order=" << subgroup_order << endl;
@@ -69,23 +69,23 @@ void action_on_subgroups::init(action *A, sims *S, INT nb_subgroups,
 	action_on_subgroups::subgroup_order = subgroup_order;
 	action_on_subgroups::Subgroups = Subgroups;
 
-	sets = NEW_PINT(nb_subgroups);
-	image_set = NEW_INT(subgroup_order);
-	perm = NEW_INT(nb_subgroups);
-	perm_inv = NEW_INT(nb_subgroups);
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	sets = NEW_pint(nb_subgroups);
+	image_set = NEW_int(subgroup_order);
+	perm = NEW_int(nb_subgroups);
+	perm_inv = NEW_int(nb_subgroups);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	
 	for (i = 0; i < nb_subgroups; i++) {
 		perm[i] = i;
 		perm_inv[i] = i;
 		}
 	for (i = 0; i < nb_subgroups; i++) {
-		sets[i] = NEW_INT(subgroup_order);
-		INT_vec_copy(Subgroups[i]->Elements, sets[i], subgroup_order);
-		INT_vec_quicksort_increasingly(sets[i], subgroup_order);
+		sets[i] = NEW_int(subgroup_order);
+		int_vec_copy(Subgroups[i]->Elements, sets[i], subgroup_order);
+		int_vec_quicksort_increasingly(sets[i], subgroup_order);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
-			INT_vec_print(cout, sets[i], subgroup_order);
+			int_vec_print(cout, sets[i], subgroup_order);
 			cout << endl;
 			}
 		}
@@ -113,7 +113,7 @@ void action_on_subgroups::init(action *A, sims *S, INT nb_subgroups,
 		for (i = 0; i < nb_sets; i++) {
 			j = perm_inv[i];
 			cout << "set " << i << " is set " << j << " : ";
-			INT_vec_print(cout, sets[j], set_size);
+			int_vec_print(cout, sets[j], set_size);
 			cout << endl;
 			}
 #endif
@@ -123,11 +123,11 @@ void action_on_subgroups::init(action *A, sims *S, INT nb_subgroups,
 		}
 }
 
-INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
+int action_on_subgroups::compute_image(int *Elt, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT idx, res, j, b, aa, s, t;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int idx, res, j, b, aa, s, t;
 
 	if (f_v) {
 		cout << "action_on_subgroups::compute_image a = " << a << endl;
@@ -150,7 +150,7 @@ INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
 		}
 	if (f_vv) {
 		cout << "sets[perm[a]]:" << endl;
-		INT_vec_print(cout, sets[aa], subgroup_order);
+		int_vec_print(cout, sets[aa], subgroup_order);
 		cout << endl;
 		for (j = 0; j < subgroup_order; j++) {
 			cout << j << " : " << sets[aa][j] << " : " << endl;
@@ -159,7 +159,7 @@ INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
 			}
 		}
 
-	//r = S->element_rank_INT(Elt);
+	//r = S->element_rank_int(Elt);
 	A->element_invert(Elt, Elt1, 0);
 
 	for (j = 0; j < subgroup_order; j++) {
@@ -168,14 +168,14 @@ INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
 		//t = S->conjugate_by_rank(s, r, 0);
 		image_set[j] = t;
 		}
-	INT_vec_heapsort(image_set, subgroup_order);
+	int_vec_heapsort(image_set, subgroup_order);
 	
 #if 0
 	A->map_a_set_and_reorder(sets[perm[a]], image_set, set_size, Elt, 0);
 #endif
 	if (f_vv) {
 		cout << "after map_a_set_and_reorder:" << endl;
-		INT_vec_print(cout, image_set, subgroup_order);
+		int_vec_print(cout, image_set, subgroup_order);
 		cout << endl;
 		for (j = 0; j < subgroup_order; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
@@ -188,7 +188,7 @@ INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
 	if (!vec_search((void **)sets, action_on_subgroups_compare_inverted, 
 		this, nb_subgroups, image_set, idx, verbose_level)) {
 
-		INT u;
+		int u;
 		cout << "action_on_subgroups::compute_image image set not found" << endl;
 		cout << "action = " << A->label << endl;
 
@@ -202,14 +202,14 @@ INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
 		cout << "a=" << a << endl;
 		cout << "perm[a]=" << aa << endl;
 		cout << "sets[perm[a]]:" << endl;
-		INT_vec_print_fully(cout, sets[aa], subgroup_order);
+		int_vec_print_fully(cout, sets[aa], subgroup_order);
 		cout << endl;
 		cout << "image_set:" << endl;
-		INT_vec_print_fully(cout, image_set, subgroup_order);
+		int_vec_print_fully(cout, image_set, subgroup_order);
 		cout << endl;
 		for (u = 0; u < nb_subgroups; u++) {
 			cout << u << " : ";
-			INT_vec_print(cout, sets[u], subgroup_order);
+			int_vec_print(cout, sets[u], subgroup_order);
 			cout << endl;
 			}
 		for (u = 0; u < subgroup_order; u++) {
@@ -239,25 +239,25 @@ INT action_on_subgroups::compute_image(INT *Elt, INT a, INT verbose_level)
 
 
 
-INT action_on_subgroups_compare(void *a, void *b, void *data)
+int action_on_subgroups_compare(void *a, void *b, void *data)
 {
 	action_on_subgroups *AOS = (action_on_subgroups *) data;
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
-	INT c;
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int c;
 	
-	c = INT_vec_compare(A, B, AOS->subgroup_order);
+	c = int_vec_compare(A, B, AOS->subgroup_order);
 	return c;
 }
 
-INT action_on_subgroups_compare_inverted(void *a, void *b, void *data)
+int action_on_subgroups_compare_inverted(void *a, void *b, void *data)
 {
 	action_on_subgroups *AOS = (action_on_subgroups *) data;
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
-	INT c;
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int c;
 	
-	c = INT_vec_compare(B, A, AOS->subgroup_order);
+	c = int_vec_compare(B, A, AOS->subgroup_order);
 	return c;
 }
 

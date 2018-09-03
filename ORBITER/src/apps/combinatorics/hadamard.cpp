@@ -18,48 +18,48 @@ typedef class hadamard hadamard;
 class hadamard {
 
 public:
-	INT n;
-	INT N, N2;
-	INT bitvector_length;
+	int n;
+	int N, N2;
+	int bitvector_length;
 	uchar *bitvector_adjacency;
 	colored_graph *CG;
 
 	action *A;
 
-	INT *v;
+	int *v;
 	
 	poset_classification *gen;
-	INT nb_orbits;
+	int nb_orbits;
 
-	void init(INT n, INT f_draw, INT verbose_level, INT verbose_level_clique);
-	INT clique_test(INT *set, INT sz);
-	void early_test_func(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		INT verbose_level);
+	void init(int n, int f_draw, int verbose_level, int verbose_level_clique);
+	int clique_test(int *set, int sz);
+	void early_test_func(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		int verbose_level);
 };
 
 
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void do_it(INT n, INT f_draw, INT verbose_level);
-INT dot_product(INT a, INT b, INT n);
-void early_test_function(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
+void do_it(int n, int f_draw, int verbose_level);
+int dot_product(int a, int b, int n);
+void early_test_function(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT verbose_level_clique = 0;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_draw = FALSE;
+	int i;
+	int verbose_level = 0;
+	int verbose_level_clique = 0;
+	int f_n = FALSE;
+	int n = 0;
+	int f_draw = FALSE;
 	
  	t0 = os_ticks();
 	
@@ -95,19 +95,19 @@ int main(int argc, char **argv)
 
 }
 
-void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_clique)
+void hadamard::init(int n, int f_draw, int verbose_level, int verbose_level_clique)
 {
-	INT f_v = (verbose_level = 1);
-	INT i, j, k, d, cnt, cnt1;
+	int f_v = (verbose_level = 1);
+	int i, j, k, d, cnt, cnt1;
 
-	if (n > (INT)sizeof(INT) * 8) {
-		cout << "n > sizeof(UINT) * 8" << endl;
+	if (n > (int)sizeof(int) * 8) {
+		cout << "n > sizeof(uint) * 8" << endl;
 		exit(1);
 		}
 
 	hadamard::n = n;
 
-	v = NEW_INT(n);
+	v = NEW_int(n);
 	
 	N = (1 << n);
 
@@ -132,7 +132,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 					cout << "-";
 					}
 				}
-			//INT_vec_print(cout, v, n);
+			//int_vec_print(cout, v, n);
 			cout << endl;
 			}
 		}
@@ -209,19 +209,19 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 	char fname[1000];
 
 	CG = NEW_OBJECT(colored_graph);
-	INT *color;
+	int *color;
 
-	color = NEW_INT(N);
-	INT_vec_zero(color, N);
+	color = NEW_int(N);
+	int_vec_zero(color, N);
 
 	CG->init(N, 1, color, bitvector_adjacency, FALSE, verbose_level);
 
-	sprintf(fname, "Hadamard_graph_%ld.colored_graph", n);
+	sprintf(fname, "Hadamard_graph_%d.colored_graph", n);
 
 	CG->save(fname, verbose_level);
 
 
-	FREE_INT(color);
+	FREE_int(color);
 	FREE_OBJECT(CG);
 	}
 
@@ -234,10 +234,10 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 		cout << "initializing colored graph" << endl;
 		}
 
-	INT *color;
+	int *color;
 
-	color = NEW_INT(N);
-	INT_vec_zero(color, N);
+	color = NEW_int(N);
+	int_vec_zero(color, N);
 
 	CG->init(N, 1, color, bitvector_adjacency, FALSE, verbose_level);
 
@@ -247,14 +247,14 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 
 	char fname_graph[1000];
 	
-	sprintf(fname_graph, "Hadamard_graph_%ld.magma", n);
+	sprintf(fname_graph, "Hadamard_graph_%d.magma", n);
 	CG->export_to_magma(fname_graph, 1);
 
 	{
-	INT *color_graph;
+	int *color_graph;
 
-	color_graph = NEW_INT(N * N);
-	INT_vec_zero(color_graph, N * N);
+	color_graph = NEW_int(N * N);
+	int_vec_zero(color_graph, N * N);
 	k = 0;
 	cnt1 = 0;
 	for (i = 0; i < N; i++) {
@@ -282,34 +282,34 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 	
 	cout << "color graph:" << endl;
 	if (N < 30) {
-		INT_matrix_print(color_graph, N, N);
+		int_matrix_print(color_graph, N, N);
 		}
 	else {
 		cout << "Too big to print" << endl;
 		}
 	
 #if 0
-	INT *Pijk;
-	INT *colors;
-	INT nb_colors;
+	int *Pijk;
+	int *colors;
+	int nb_colors;
 
 	is_association_scheme(color_graph, N, Pijk, 
 		colors, nb_colors, verbose_level);
 
 	cout << "number of colors = " << nb_colors << endl;
 	cout << "colors: ";
-	INT_vec_print(cout, colors, nb_colors);
+	int_vec_print(cout, colors, nb_colors);
 	cout << endl;
 	cout << "Pijk:" << endl;
 	for (i = 0; i < nb_colors; i++) {
 		cout << "i=" << i << ":" << endl;
-		INT_matrix_print(Pijk + i * nb_colors * nb_colors, nb_colors, nb_colors);
+		int_matrix_print(Pijk + i * nb_colors * nb_colors, nb_colors, nb_colors);
 		}
-	FREE_INT(Pijk);
-	FREE_INT(colors);
+	FREE_int(Pijk);
+	FREE_int(colors);
 #endif
 
-	FREE_INT(color_graph);
+	FREE_int(color_graph);
 	}
 
 	if (f_draw) {
@@ -318,14 +318,14 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 			}
 
 		char fname_base[1000];
-		INT xmax_in = ONE_MILLION;
-		INT ymax_in = ONE_MILLION;
-		INT xmax_out = 500000;
-		INT ymax_out = 500000;
+		int xmax_in = ONE_MILLION;
+		int ymax_in = ONE_MILLION;
+		int xmax_out = 500000;
+		int ymax_out = 500000;
 		double scale = 0.4;
 		double line_width = 0.5;
 	
-		sprintf(fname_base, "Hadamard_graph_%ld", n);
+		sprintf(fname_base, "Hadamard_graph_%d", n);
 
 
 		//CG->draw_partitioned(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, verbose_level);
@@ -354,11 +354,11 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 	char fname_group[1000];
 	
 	
-	sprintf(fname_group, "Hadamard_group_%ld.magma", n);
+	sprintf(fname_group, "Hadamard_group_%d.magma", n);
 	A->Strong_gens->export_permutation_group_to_magma(fname_group, 1 /* verbose_level */);
 
 	char prefix[1000];
-	sprintf(prefix, "./had_%ld", n);
+	sprintf(prefix, "./had_%d", n);
 
 	if (f_v) {
 		cout << "Starting the clique finder, target_depth = " << n << " prefix=" << prefix << endl;
@@ -377,20 +377,20 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 
 	nb_orbits = gen->nb_orbits_at_level(n);
 
-	INT h, a, c;
-	INT *set;
-	INT *H;
-	INT *Ht;
-	INT *M;
+	int h, a, c;
+	int *set;
+	int *H;
+	int *Ht;
+	int *M;
 	
-	set = NEW_INT(n);
-	H = NEW_INT(n * n);
-	Ht = NEW_INT(n * n);
-	M = NEW_INT(n * n);
+	set = NEW_int(n);
+	H = NEW_int(n * n);
+	Ht = NEW_int(n * n);
+	M = NEW_int(n * n);
 	for (h = 0; h < nb_orbits; h++) {
 		gen->get_set_by_level(n, h, set);
 		cout << "Orbit " << h << " is the set ";
-		INT_vec_print(cout, set, n);
+		int_vec_print(cout, set, n);
 		cout << endl;
 
 		
@@ -415,7 +415,7 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 				}
 			}
 		cout << "The hadamard matrix " << h << " is:" << endl;
-		INT_matrix_print(H, n, n);
+		int_matrix_print(H, n, n);
 		for (i = 0; i < n; i++) {
 			for (j = 0; j < n; j++) {
 				a = H[i * n + j];
@@ -433,13 +433,13 @@ void hadamard::init(INT n, INT f_draw, INT verbose_level, INT verbose_level_cliq
 				}
 			}
 		cout << "The matrix H * H^t is:" << endl;
-		INT_matrix_print(M, n, n);
+		int_matrix_print(M, n, n);
 		}
 }
 
-INT hadamard::clique_test(INT *set, INT sz)
+int hadamard::clique_test(int *set, int sz)
 {
-	INT i, j, a, b, idx;
+	int i, j, a, b, idx;
 
 	for (i = 0; i < n; i++) {
 		a = set[i];
@@ -458,26 +458,26 @@ INT hadamard::clique_test(INT *set, INT sz)
 	return TRUE;
 }
 
-void hadamard::early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	INT verbose_level)
+void hadamard::early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT j, a, pt;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int j, a, pt;
 
 	if (f_v) {
 		cout << "hadamard::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		INT_vec_print(cout, candidates, nb_candidates);
+		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		INT_vec_copy(candidates, good_candidates, nb_candidates);
+		int_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -495,9 +495,9 @@ void hadamard::early_test_func(INT *S, INT len,
 }
 
 
-INT dot_product(INT a, INT b, INT n)
+int dot_product(int a, int b, int n)
 {
-	INT i, c, aa, bb;
+	int i, c, aa, bb;
 
 	c = 0;
 	for (i = 0; i < n; i++) {
@@ -515,13 +515,13 @@ INT dot_product(INT a, INT b, INT n)
 	return c;
 }
 
-void early_test_function(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_function(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	hadamard *H = (hadamard *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_function for set ";

@@ -14,17 +14,17 @@
 
 
 
-void decomposition_projective_space(INT k, finite_field *F, 
-	INT nb_subsets, INT *sz, INT **subsets, 
-	INT verbose_level)
+void decomposition_projective_space(int k, finite_field *F, 
+	int nb_subsets, int *sz, int **subsets, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	incidence_structure Inc;
-	INT nb_pts, nb_lines;
-	INT *Mtx;
-	INT *part;
-	INT i, j, level;
+	int nb_pts, nb_lines;
+	int *Mtx;
+	int *part;
+	int i, j, level;
 	projective_space PG;
 		
 	if (f_v) {
@@ -39,8 +39,8 @@ void decomposition_projective_space(INT k, finite_field *F,
 		cout << "m = N_points = " << nb_pts << endl;
 		cout << "n = N_lines = " << nb_lines << endl;
 		}
-	part = NEW_INT(nb_subsets);
-	Mtx = NEW_INT(nb_pts * nb_lines);
+	part = NEW_int(nb_subsets);
+	Mtx = NEW_int(nb_pts * nb_lines);
 	if (PG.incidence_bitvec == NULL) {
 		cout << "PG.incidence_bitvec == NULL" << endl;
 		exit(1);
@@ -56,7 +56,7 @@ void decomposition_projective_space(INT k, finite_field *F,
 
 
 	partitionstack Stack;
-	INT ht0, c, l;
+	int ht0, c, l;
 
 	Stack.allocate(nb_pts + nb_lines, 0);
 	Stack.subset_continguous(Inc.nb_points(), Inc.nb_lines());
@@ -96,9 +96,9 @@ void decomposition_projective_space(INT k, finite_field *F,
 			}
 
 
-		//INT hash;
-		INT TDO_depth;
-		INT f_labeled = TRUE;
+		//int hash;
+		int TDO_depth;
+		int f_labeled = TRUE;
 
 
 		TDO_depth = nb_pts + nb_lines;
@@ -126,7 +126,7 @@ void decomposition_projective_space(INT k, finite_field *F,
 		}
 
 
-	FREE_INT(part);
-	FREE_INT(Mtx);
+	FREE_int(part);
+	FREE_int(Mtx);
 }
 

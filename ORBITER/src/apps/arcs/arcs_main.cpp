@@ -14,7 +14,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, const char **argv)
@@ -66,7 +66,7 @@ int main(int argc, const char **argv)
 				Gen->gen->make_spreadsheet_of_level_info(
 						Sp, Gen->ECA->starter_size);
 				char fname_csv[1000];
-				sprintf(fname_csv, "arcs_%ld_%ld_level.csv",
+				sprintf(fname_csv, "arcs_%d_%d_level.csv",
 						Gen->q, Gen->ECA->starter_size);
 				Sp->save(fname_csv, Gen->verbose_level);
 				delete Sp;
@@ -77,7 +77,7 @@ int main(int argc, const char **argv)
 				Gen->gen->make_spreadsheet_of_orbit_reps(
 						Sp, Gen->ECA->starter_size);
 				char fname_csv[1000];
-				sprintf(fname_csv, "arcs_%ld_%ld.csv",
+				sprintf(fname_csv, "arcs_%d_%d.csv",
 						Gen->q, Gen->ECA->starter_size);
 				Sp->save(fname_csv, Gen->verbose_level);
 				delete Sp;

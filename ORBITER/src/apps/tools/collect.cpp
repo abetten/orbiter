@@ -8,23 +8,23 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv);
-INT INT_vec_sum(INT *v, INT len);
+int int_vec_sum(int *v, int len);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT f_fname_in_mask = FALSE;
+	int verbose_level = 0;
+	int f_fname_in_mask = FALSE;
 	const char *fname_in_mask = NULL;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_save = FALSE;
+	int f_N = FALSE;
+	int N = 0;
+	int f_save = FALSE;
 	const char *save_fname_csv = NULL;
 	const char *save_col_label = NULL;
-	INT f_graph_number_of_vertices = FALSE;
-	INT i, j;
+	int f_graph_number_of_vertices = FALSE;
+	int i, j;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 
 	char ext[1000];
 	char fname[1000];
@@ -73,16 +73,16 @@ int main(int argc, char **argv)
 	get_extension_if_present(fname_in_mask, ext);
 	cout << "extension: " << ext << endl;
 
-	INT **Data;
-	INT **Ago;
-	INT *Nb_rows;
-	INT *Nb_cols;
-	INT f_has_ago = FALSE;
+	int **Data;
+	int **Ago;
+	int *Nb_rows;
+	int *Nb_cols;
+	int f_has_ago = FALSE;
 
-	Data = NEW_PINT(N);
-	Ago = NEW_PINT(N);
-	Nb_rows = NEW_INT(N);
-	Nb_cols = NEW_INT(N);
+	Data = NEW_pint(N);
+	Ago = NEW_pint(N);
+	Nb_rows = NEW_int(N);
+	Nb_cols = NEW_int(N);
 	for (i = 0; i < N; i++) {
 		sprintf(fname, fname_in_mask, i);
 		cout << "trying to read file " << i << " / " << N << " named " << fname << ":" << endl;
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
 			Nb_cols[i] = 0;
 			}
 		else if (strcmp(ext, ".csv") == 0) {
-			INT_matrix_read_csv(fname, Data[i], 
+			int_matrix_read_csv(fname, Data[i], 
 				Nb_rows[i], Nb_cols[i], verbose_level);
 			cout << "read file " << fname << " with " << Nb_rows[i] << " rows" << endl;
 			}
@@ -103,15 +103,15 @@ int main(int argc, char **argv)
 
 			f_has_ago = TRUE;
 			char **data;
-			INT *Set_sizes;
-			INT **Sets;
+			int *Set_sizes;
+			int **Sets;
 			char **Ago_ascii;
 			char **Aut_ascii;
-			INT *Casenumbers;
+			int *Casenumbers;
 			
 #if 0
-			//INT **sets;
-			//INT *set_sizes;
+			//int **sets;
+			//int *set_sizes;
 			cout << "before read_and_parse_data_file " << fname << endl;
 			read_and_parse_data_file(fname, Nb_rows[i], 
 				data, sets, set_sizes, 
@@ -133,13 +133,13 @@ int main(int argc, char **argv)
 				Casenumbers, 
 				verbose_level);
 			cout << "after parse_sets, scanning Ago[i]" << endl;
-			Ago[i] = NEW_INT(Nb_rows[i]);
+			Ago[i] = NEW_int(Nb_rows[i]);
 			for (j = 0; j < Nb_rows[i]; j++) {
 				Ago[i][j] = atoi(Ago_ascii[j]);
 				}
 			cout << "after scanning Ago[i]" << endl;
 			
-			//INT_matrix_read_csv(fname, Data[i], 
+			//int_matrix_read_csv(fname, Data[i], 
 			//	Nb_rows[i], Nb_cols[i], verbose_level);
 			//cout << "read file " << fname << " with " << Nb_rows[i] << " rows" << endl;
 			}
@@ -152,23 +152,23 @@ int main(int argc, char **argv)
 	C.print_naked(TRUE);
 	cout << endl;
 
-	INT total;
+	int total;
 
-	total = INT_vec_sum(Nb_rows, N);
+	total = int_vec_sum(Nb_rows, N);
 	cout << "total = " << total << endl;
 
 	if (f_save) {
-		INT_vec_write_csv(Nb_rows, N, save_fname_csv, save_col_label);
+		int_vec_write_csv(Nb_rows, N, save_fname_csv, save_col_label);
 		cout << "Written file " << save_fname_csv << " of size " << file_size(save_fname_csv) << endl;
 		}
 
 	if (f_has_ago) {
-		INT *T;
-		INT h;
+		int *T;
+		int h;
 
 		cout << "creating table T" << endl;
 
-		T = NEW_INT(total * 3);
+		T = NEW_int(total * 3);
 		h = 0;
 		for (i = 0; i < N; i++) {
 			for (j = 0; j < Nb_rows[i]; j++, h++) {
@@ -188,21 +188,21 @@ int main(int argc, char **argv)
 			const char *column_label[] = {"i", "j", "ago"};
 
 			cout << "saving file " << fname << endl;
-			INT_matrix_write_csv_with_labels(fname, 
+			int_matrix_write_csv_with_labels(fname, 
 				T, total, 3, column_label);
 			
-			//INT_vec_write_csv(Nb_rows, N, fname, "Nb");
+			//int_vec_write_csv(Nb_rows, N, fname, "Nb");
 			cout << "Written file " << fname << " of size " << file_size(fname) << endl;
 			}
-		FREE_INT(T);
+		FREE_int(T);
 		}
 
 }
 
-INT INT_vec_sum(INT *v, INT len)
+int int_vec_sum(int *v, int len)
 {
-	INT s = 0;
-	INT i;
+	int s = 0;
+	int i;
 
 	for (i = 0; i < len; i++) {
 		s += v[i];

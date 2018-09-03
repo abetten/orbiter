@@ -15,88 +15,88 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
-#define INPUT_TYPE_SET_OF_POINTS 1
+#define INPUT_TYPE_SET_OF_POintS 1
 #define INPUT_TYPE_SET_OF_LINES 2
 #define INPUT_TYPE_SET_OF_PACKING 3
-#define INPUT_TYPE_FILE_OF_POINTS 4
+#define INPUT_TYPE_FILE_OF_POintS 4
 #define INPUT_TYPE_FILE_OF_LINES 5
 #define INPUT_TYPE_FILE_OF_PACKINGS 6
 #define INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE 7
 
 
-void canonical_form(INT nb_inputs, INT *input_type, 
+void canonical_form(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
-	INT nb_objects_to_test, 
+	int nb_objects_to_test, 
 	projective_space_with_action *PA, 
-	INT f_save_incma_in_and_out, const char *prefix, 
-	INT verbose_level);
-void classify_objects_using_nauty(INT nb_inputs, INT *input_type, 
+	int f_save_incma_in_and_out, const char *prefix, 
+	int verbose_level);
+void classify_objects_using_nauty(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
-	INT nb_objects_to_test, 
+	int nb_objects_to_test, 
 	projective_space_with_action *PA, classify_bitvectors *CB, 
-	INT f_save_incma_in_and_out, const char *prefix, 
-	INT verbose_level);
-INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type, 
+	int f_save_incma_in_and_out, const char *prefix, 
+	int verbose_level);
+int count_number_of_objects_to_test(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
-	INT verbose_level);
+	int verbose_level);
 object_in_projective_space *create_object_from_string(projective_space_with_action *PA, 
-	INT f_points, const char *set_as_string, INT verbose_level);
-INT process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
+	int f_points, const char *set_as_string, int verbose_level);
+int process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
 	object_in_projective_space *OiP, 
-	INT f_save_incma_in_and_out, const char *prefix, 
-	INT nb_objects_to_test, 
+	int f_save_incma_in_and_out, const char *prefix, 
+	int nb_objects_to_test, 
 	strong_generators *&SG, 
-	INT verbose_level);
-void OiPA_encode(void *extra_data, INT *&encoding, INT &encoding_sz, void *global_data);
+	int verbose_level);
+void OiPA_encode(void *extra_data, int *&encoding, int &encoding_sz, void *global_data);
 void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_data);
-void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, char *output, void *data);
+void print_summary_table_entry(int *Table, int m, int n, int i, int j, int val, char *output, void *data);
 void compute_ago_distribution(projective_space_with_action *PA, 
-	classify_bitvectors *CB, classify *&C_ago, INT verbose_level);
+	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
 void compute_ago_distribution_permuted(projective_space_with_action *PA, 
-	classify_bitvectors *CB, classify *&C_ago, INT verbose_level);
+	classify_bitvectors *CB, classify *&C_ago, int verbose_level);
 void compute_and_print_ago_distribution(ostream &ost, projective_space_with_action *PA, 
-	classify_bitvectors *CB, INT verbose_level);
+	classify_bitvectors *CB, int verbose_level);
 void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_space_with_action *PA, 
-	classify_bitvectors *CB, INT verbose_level);
+	classify_bitvectors *CB, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q;
-	INT f_n = FALSE;
-	INT n;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q;
+	int f_n = FALSE;
+	int n;
+	int f_poly = FALSE;
 	char *poly = NULL;
 
-	INT f_init_incidence_structure = TRUE;
+	int f_init_incidence_structure = TRUE;
 
-	INT nb_inputs = 0;
-	INT input_type[1000];
+	int nb_inputs = 0;
+	int input_type[1000];
 	const char *input_string[1000];
 	const char *input_string2[1000];
 
 
-	INT f_all_k_subsets = FALSE;
-	INT k = 0;
+	int f_all_k_subsets = FALSE;
+	int k = 0;
 
-	INT f_save_incma_in_and_out = FALSE;
+	int f_save_incma_in_and_out = FALSE;
 
-	INT f_prefix = FALSE;
+	int f_prefix = FALSE;
 	const char *prefix = "";
 
-	INT f_save = FALSE;
+	int f_save = FALSE;
 	const char *output_prefix = "";
 
-	INT order_list_sz = 0;
-	INT order_list[1000];
+	int order_list_sz = 0;
+	int order_list[1000];
 
-	INT f_classify_nauty = FALSE;
-	INT f_classify_backtrack = FALSE;
+	int f_classify_nauty = FALSE;
+	int f_classify_backtrack = FALSE;
 
 	t0 = os_ticks();
 
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 			cout << "-poly " << poly << endl;
 			}
 		else if (strcmp(argv[i], "-set_of_points") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POINTS;
+			input_type[nb_inputs] = INPUT_TYPE_SET_OF_POintS;
 			input_string[nb_inputs] = argv[++i];
 			input_string2[nb_inputs] = NULL;
 			cout << "-set_of_points " << input_string[nb_inputs] << endl;
@@ -143,7 +143,7 @@ int main(int argc, char **argv)
 			nb_inputs++;
 			}
 		else if (strcmp(argv[i], "-file_of_points") == 0) {
-			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POINTS;
+			input_type[nb_inputs] = INPUT_TYPE_FILE_OF_POintS;
 			input_string[nb_inputs] = argv[++i];
 			input_string2[nb_inputs] = NULL;
 			cout << "-file_of_points " << input_string[nb_inputs] << endl;
@@ -205,7 +205,7 @@ int main(int argc, char **argv)
 		}
 
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (!f_q) {
 		cout << "please use option -q <q>" << endl;
@@ -221,7 +221,7 @@ int main(int argc, char **argv)
 	F = new finite_field;
 	F->init_override_polynomial(q, poly, 0);
 	
-	INT f_semilinear;
+	int f_semilinear;
 	
 
 	if (is_prime(q)) {
@@ -242,7 +242,7 @@ int main(int argc, char **argv)
 		0 /* verbose_level */);
 
 
-	INT nb_objects_to_test;
+	int nb_objects_to_test;
 	
 	cout << "before count_number_of_objects_to_test" << endl;
 	nb_objects_to_test = count_number_of_objects_to_test(nb_inputs, input_type, 
@@ -297,7 +297,7 @@ int main(int argc, char **argv)
 
 	#if 0
 			for (j = 0; j < rep_len; j++) {
-				cout << (INT) Type_data[i][j];
+				cout << (int) Type_data[i][j];
 				if (j < rep_len - 1) {
 					cout << ", ";
 					}
@@ -318,7 +318,7 @@ int main(int argc, char **argv)
 
 
 		cout << "The orbits in more detail:" << endl;
-		INT j;
+		int j;
 	
 		char fname[1000];
 
@@ -334,14 +334,14 @@ int main(int argc, char **argv)
 	
 		latex_head_easy(fp);
 
-		INT *Table;
-		INT width = 4;
-		INT *row_labels;
-		INT *col_labels;
-		INT row_part_first[2], row_part_len[1];
-		INT nb_row_parts = 1;
-		INT col_part_first[2], col_part_len[1];
-		INT nb_col_parts = 1;
+		int *Table;
+		int width = 4;
+		int *row_labels;
+		int *col_labels;
+		int row_part_first[2], row_part_len[1];
+		int nb_row_parts = 1;
+		int col_part_first[2], col_part_len[1];
+		int nb_col_parts = 1;
 
 
 
@@ -353,11 +353,11 @@ int main(int argc, char **argv)
 		col_part_first[1] = width;
 		col_part_len[0] = width;
 
-		Table = NEW_INT(CB->nb_types * width);
-		INT_vec_zero(Table, CB->nb_types * width);
+		Table = NEW_int(CB->nb_types * width);
+		int_vec_zero(Table, CB->nb_types * width);
 
-		row_labels = NEW_INT(CB->nb_types);
-		col_labels = NEW_INT(width);
+		row_labels = NEW_int(CB->nb_types);
+		col_labels = NEW_int(width);
 		for (i = 0; i < CB->nb_types; i++) {
 			row_labels[i] = i;
 			}
@@ -376,7 +376,7 @@ int main(int argc, char **argv)
 
 		fp << "\\section{Summary of Orbits}" << endl;
 		fp << "$$" << endl;
-		INT_matrix_print_with_labels_and_partition(fp, Table, CB->nb_types, 4, 
+		int_matrix_print_with_labels_and_partition(fp, Table, CB->nb_types, 4, 
 			row_labels, col_labels, 
 			row_part_first, row_part_len, nb_row_parts,  
 			col_part_first, col_part_len, nb_col_parts,  
@@ -398,14 +398,14 @@ int main(int argc, char **argv)
 
 
 			{
-			INT *Input_objects;
-			INT nb_input_objects;
+			int *Input_objects;
+			int nb_input_objects;
 			CB->C_type_of->get_class_by_value(Input_objects, nb_input_objects, j, 0 /*verbose_level */);
 
 			cout << "This isomorphism type appears " << nb_input_objects << " times, namely for the following input objects:" << endl;
-			INT_vec_print_as_matrix(cout, Input_objects, nb_input_objects, 10 /* width */, FALSE /* f_tex */);
+			int_vec_print_as_matrix(cout, Input_objects, nb_input_objects, 10 /* width */, FALSE /* f_tex */);
 
-			FREE_INT(Input_objects);
+			FREE_int(Input_objects);
 			}
 			//OiP = new object_in_projective_space;
 
@@ -415,7 +415,7 @@ int main(int argc, char **argv)
 				OiP->print(cout);
 				}
 
-			//OiP->init_point_set(PA->P, (INT *)CB->Type_extra_data[j], sz, 0 /* verbose_level*/);
+			//OiP->init_point_set(PA->P, (int *)CB->Type_extra_data[j], sz, 0 /* verbose_level*/);
 
 
 
@@ -424,12 +424,12 @@ int main(int argc, char **argv)
 			char save_incma_in_and_out_prefix[1000];
 	
 			if (f_save_incma_in_and_out) {
-				sprintf(save_incma_in_and_out_prefix, "%s_iso_%ld_%ld", prefix, i, j);
+				sprintf(save_incma_in_and_out_prefix, "%s_iso_%d_%d", prefix, i, j);
 				}
 	
 	
 			uchar *canonical_form;
-			INT canonical_form_len;
+			int canonical_form_len;
 
 
 			SG = PA->set_stabilizer_of_object(
@@ -446,37 +446,37 @@ int main(int argc, char **argv)
 				OiP->print(fp);
 				fp << "\\\\" << endl;
 				}
-			//INT_vec_print(fp, OiP->set, OiP->sz);
+			//int_vec_print(fp, OiP->set, OiP->sz);
 			fp << "Group order " << go << "\\\\" << endl;
 
 			fp << "Stabilizer:" << endl;
 			SG->print_generators_tex(fp);
 
 			{
-			INT *Input_objects;
-			INT nb_input_objects;
+			int *Input_objects;
+			int nb_input_objects;
 			CB->C_type_of->get_class_by_value(Input_objects, nb_input_objects, j, 0 /*verbose_level */);
-			INT_vec_heapsort(Input_objects, nb_input_objects);
+			int_vec_heapsort(Input_objects, nb_input_objects);
 
 			fp << "This isomorphism type appears " << nb_input_objects << " times, namely for the following " << nb_input_objects << " input objects: " << endl;
 			if (nb_input_objects < 10) {
 				fp << "$" << endl;
-				INT_set_print_tex(fp, Input_objects, nb_input_objects);
+				int_set_print_tex(fp, Input_objects, nb_input_objects);
 				fp << "$\\\\" << endl;
 				}
 			else {
 				fp << "$$" << endl;
-				INT_vec_print_as_matrix(fp, Input_objects, nb_input_objects, 10 /* width */, TRUE /* f_tex */);
+				int_vec_print_as_matrix(fp, Input_objects, nb_input_objects, 10 /* width */, TRUE /* f_tex */);
 				fp << "$$" << endl;
 				}
 
-			FREE_INT(Input_objects);
+			FREE_int(Input_objects);
 			}
 
 
-			INT *Incma;
-			INT nb_rows, nb_cols;
-			INT *partition;
+			int *Incma;
+			int nb_rows, nb_cols;
+			int *partition;
 			incidence_structure *Inc;
 			partitionstack *Stack;
 
@@ -486,11 +486,11 @@ int main(int argc, char **argv)
 				Inc, 
 				Stack, 
 				verbose_level);
-			FREE_INT(Incma);
-			FREE_INT(partition);
+			FREE_int(Incma);
+			FREE_int(partition);
 	#if 0
 			cout << "set ";
-			INT_vec_print(cout, OiP->set, OiP->sz);
+			int_vec_print(cout, OiP->set, OiP->sz);
 			cout << " go=" << go << endl;
 
 			cout << "Stabilizer:" << endl;
@@ -500,8 +500,8 @@ int main(int argc, char **argv)
 			incidence_structure *Inc;
 			partitionstack *Stack;
 	
-			INT Sz[1];
-			INT *Subsets[1];
+			int Sz[1];
+			int *Subsets[1];
 
 			Sz[0] = OiP->sz;
 			Subsets[0] = OiP->set;
@@ -524,7 +524,7 @@ int main(int argc, char **argv)
 	#if 0
 			fp << "canonical form: ";
 			for (i = 0; i < canonical_form_len; i++) {
-				fp << (INT)canonical_form[i];
+				fp << (int)canonical_form[i];
 				if (i < canonical_form_len - 1) {
 					fp << ", ";
 					}
@@ -544,8 +544,8 @@ int main(int argc, char **argv)
 
 
 
-			INT f_refine_prev, f_refine, h;
-			INT f_print_subscripts = TRUE;
+			int f_refine_prev, f_refine, h;
+			int f_print_subscripts = TRUE;
 
 			f_refine_prev = TRUE;
 			for (h = 0; ; h++) {
@@ -560,14 +560,14 @@ int main(int argc, char **argv)
 					cout << "incidence_structure::compute_TDO_safe h=" << h << " after refine" << endl;
 					}
 				if (EVEN(h)) {
-					//INT f_list_incidences = FALSE;
+					//int f_list_incidences = FALSE;
 					Inc->get_and_print_column_tactical_decomposition_scheme_tex(
 						fp, TRUE /* f_enter_math */, f_print_subscripts, *Stack);
 					//get_and_print_col_decomposition_scheme(PStack, f_list_incidences, FALSE);
 					//PStack.print_classes_points_and_lines(cout);
 					}
 				else {
-					//INT f_list_incidences = FALSE;
+					//int f_list_incidences = FALSE;
 					Inc->get_and_print_row_tactical_decomposition_scheme_tex(
 						fp, TRUE /* f_enter_math */, f_print_subscripts, *Stack);
 					//get_and_print_row_decomposition_scheme(PStack, f_list_incidences, FALSE);
@@ -589,15 +589,15 @@ int main(int argc, char **argv)
 
 		
 			sims *Stab;
-			INT *Elt;
-			INT nb_trials;
-			INT max_trials = 100;
+			int *Elt;
+			int nb_trials;
+			int max_trials = 100;
 
 			Stab = SG->create_sims(verbose_level);
-			Elt = NEW_INT(PA->A->elt_size_in_INT);
+			Elt = NEW_int(PA->A->elt_size_in_int);
 		
 			for (h = 0; h < order_list_sz; h++) {
-				if (Stab->find_element_of_given_order_INT(Elt, order_list[h], nb_trials, max_trials, verbose_level)) {
+				if (Stab->find_element_of_given_order_int(Elt, order_list[h], nb_trials, max_trials, verbose_level)) {
 					fp << "We found an element of order " << order_list[h] << ", which is:" << endl;
 					fp << "$$" << endl;
 					PA->A->element_print_latex(Elt, fp);
@@ -612,7 +612,7 @@ int main(int argc, char **argv)
 				}
 
 
-			FREE_INT(Elt);
+			FREE_int(Elt);
 			delete Stack;
 			delete Inc;
 			delete SG;
@@ -625,8 +625,8 @@ int main(int argc, char **argv)
 
 		cout << "Written file " << fname << " of size " << file_size(fname) << endl;
 		
-		//FREE_INT(perm);
-		//FREE_INT(v);
+		//FREE_int(perm);
+		//FREE_int(v);
 
 		} // if (f_classify_nauty)
 
@@ -647,16 +647,16 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void canonical_form(INT nb_inputs, INT *input_type, 
+void canonical_form(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
-	INT nb_objects_to_test, 
+	int nb_objects_to_test, 
 	projective_space_with_action *PA, 
-	INT f_save_incma_in_and_out, const char *prefix, 
-	INT verbose_level)
+	int f_save_incma_in_and_out, const char *prefix, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT input_idx;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int input_idx;
 	
 	if (f_v) {
 		cout << "canonical_form" << endl;
@@ -665,7 +665,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
 		cout << "input " << input_idx << " / " << nb_inputs << " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
 			cout << "input set of points " << input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
@@ -677,15 +677,15 @@ void canonical_form(INT nb_inputs, INT *input_type,
 
 			sims *Aut;
 			Aut = new sims;
-			INT f_get_automorphism_group = TRUE;
-			INT total_backtrack_nodes = 0;
-			INT *canonical_set;
-			INT *transporter;
+			int f_get_automorphism_group = TRUE;
+			int total_backtrack_nodes = 0;
+			int *canonical_set;
+			int *transporter;
 
 
 			
-			canonical_set = NEW_INT(OiP->sz);
-			transporter = NEW_INT(PA->A->elt_size_in_INT);
+			canonical_set = NEW_int(OiP->sz);
+			transporter = NEW_int(PA->A->elt_size_in_int);
 
 
 			PA->A->make_canonical(
@@ -706,7 +706,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 				}
 			else {
 				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
-				INT idx;
+				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
@@ -740,7 +740,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 				}
 			else {
 				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
-				INT idx;
+				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
@@ -774,7 +774,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 				}
 			else {
 				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
-				INT idx;
+				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
@@ -788,7 +788,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 				}
 #endif
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS || 
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS || 
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
@@ -802,17 +802,17 @@ void canonical_form(INT nb_inputs, INT *input_type,
 			SoS->init_from_file(PA->P->N_points /* underlying_set_size */, input_string[input_idx], verbose_level);
 			cout << "Read the file " << input_string[input_idx] << endl;
 
-			INT h;
+			int h;
 
 
 			// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-			INT *Spread_table;
-			INT nb_spreads;
-			INT spread_size;
+			int *Spread_table;
+			int nb_spreads;
+			int spread_size;
 
 			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				cout << "Reading spread table from file " << input_string2[input_idx] << endl;
-				INT_matrix_read_csv(input_string2[input_idx], Spread_table, nb_spreads, spread_size, 0 /* verbose_level */);
+				int_matrix_read_csv(input_string2[input_idx], Spread_table, nb_spreads, spread_size, 0 /* verbose_level */);
 				cout << "Reading spread table from file " << input_string2[input_idx] << " done" << endl;
 				cout << "The spread table contains " << nb_spreads << " spreads" << endl;
 				}
@@ -822,8 +822,8 @@ void canonical_form(INT nb_inputs, INT *input_type,
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				INT *the_set_in;
-				INT set_size_in;
+				int *the_set_in;
+				int set_size_in;
 				object_in_projective_space *OiP;
 
 
@@ -832,12 +832,12 @@ void canonical_form(INT nb_inputs, INT *input_type,
 		
 				cout << "The input set " << h << " / " << SoS->nb_sets << " has size " << set_size_in << ":" << endl;
 				cout << "The input set is:" << endl;
-				INT_vec_print(cout, the_set_in, set_size_in);
+				int_vec_print(cout, the_set_in, set_size_in);
 				cout << endl;
 
 				OiP = new object_in_projective_space;
 
-				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
+				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
 					OiP->init_point_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
 				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
@@ -869,7 +869,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 				else {
 					cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
 
-					INT idx;
+					int idx;
 
 					object_in_projective_space_with_action *OiPA;
 
@@ -887,7 +887,7 @@ void canonical_form(INT nb_inputs, INT *input_type,
 
 				}
 			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				FREE_INT(Spread_table);
+				FREE_int(Spread_table);
 				}
 			delete SoS;
 			}
@@ -903,17 +903,17 @@ void canonical_form(INT nb_inputs, INT *input_type,
 }
 
 
-void classify_objects_using_nauty(INT nb_inputs, INT *input_type, 
+void classify_objects_using_nauty(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
-	INT nb_objects_to_test, 
+	int nb_objects_to_test, 
 	projective_space_with_action *PA, classify_bitvectors *CB, 
-	INT f_save_incma_in_and_out, const char *prefix, 
-	INT verbose_level)
+	int f_save_incma_in_and_out, const char *prefix, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT input_idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int input_idx;
 	
 	if (f_v) {
 		cout << "classify_objects_using_nauty" << endl;
@@ -922,7 +922,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
 		cout << "input " << input_idx << " / " << nb_inputs << " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
 			cout << "input set of points " << input_string[input_idx] << ":" << endl;
 
 			object_in_projective_space *OiP;
@@ -941,7 +941,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 				}
 			else {
 				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
-				INT idx;
+				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
@@ -973,7 +973,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 				}
 			else {
 				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
-				INT idx;
+				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
@@ -1005,7 +1005,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 				}
 			else {
 				cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
-				INT idx;
+				int idx;
 
 				object_in_projective_space_with_action *OiPA;
 
@@ -1018,7 +1018,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 				compute_and_print_ago_distribution(cout, PA, CB, verbose_level);
 				}
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS || 
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS || 
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS ||
 				input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
@@ -1032,17 +1032,17 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 			SoS->init_from_file(PA->P->N_points /* underlying_set_size */, input_string[input_idx], verbose_level);
 			cout << "Read the file " << input_string[input_idx] << endl;
 
-			INT h;
+			int h;
 
 
 			// for use if INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE
-			INT *Spread_table;
-			INT nb_spreads;
-			INT spread_size;
+			int *Spread_table;
+			int nb_spreads;
+			int spread_size;
 
 			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
 				cout << "Reading spread table from file " << input_string2[input_idx] << endl;
-				INT_matrix_read_csv(input_string2[input_idx], Spread_table, nb_spreads, spread_size, 0 /* verbose_level */);
+				int_matrix_read_csv(input_string2[input_idx], Spread_table, nb_spreads, spread_size, 0 /* verbose_level */);
 				cout << "Reading spread table from file " << input_string2[input_idx] << " done" << endl;
 				cout << "The spread table contains " << nb_spreads << " spreads" << endl;
 				}
@@ -1052,8 +1052,8 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 			for (h = 0; h < SoS->nb_sets; h++) {
 
 
-				INT *the_set_in;
-				INT set_size_in;
+				int *the_set_in;
+				int set_size_in;
 				object_in_projective_space *OiP;
 
 
@@ -1066,13 +1066,13 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 
 				if (f_vvv) {
 					cout << "The input set is:" << endl;
-					INT_vec_print(cout, the_set_in, set_size_in);
+					int_vec_print(cout, the_set_in, set_size_in);
 					cout << endl;
 					}
 
 				OiP = new object_in_projective_space;
 
-				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
+				if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
 					OiP->init_point_set(PA->P, the_set_in, set_size_in, 0 /* verbose_level*/);
 					}
 				else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_LINES) {
@@ -1102,7 +1102,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 				else {
 					cout << "New isomorphism type! The new number of isomorphism types is " << CB->nb_types << endl;
 
-					INT idx;
+					int idx;
 
 					object_in_projective_space_with_action *OiPA;
 
@@ -1122,7 +1122,7 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 
 				}
 			if (input_type[input_idx] == INPUT_TYPE_FILE_OF_PACKINGS_THROUGH_SPREAD_TABLE) {
-				FREE_INT(Spread_table);
+				FREE_int(Spread_table);
 				}
 			delete SoS;
 			}
@@ -1139,13 +1139,13 @@ void classify_objects_using_nauty(INT nb_inputs, INT *input_type,
 		}
 }
 
-INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type, 
+int count_number_of_objects_to_test(int nb_inputs, int *input_type, 
 	const char **input_string, const char **input_string2, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT input_idx, nb_obj;
-	INT nb_objects_to_test;
+	int f_v = (verbose_level >= 1);
+	int input_idx, nb_obj;
+	int nb_objects_to_test;
 	
 	if (f_v) {
 		cout << "count_number_of_objects_to_test" << endl;
@@ -1154,7 +1154,7 @@ INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type,
 	for (input_idx = 0; input_idx < nb_inputs; input_idx++) {
 		cout << "input " << input_idx << " / " << nb_inputs << " is:" << endl;
 
-		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POINTS) {
+		if (input_type[input_idx] == INPUT_TYPE_SET_OF_POintS) {
 			if (f_v) {
 				cout << "input set of points " << input_string[input_idx] << ":" << endl;
 				}
@@ -1178,7 +1178,7 @@ INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type,
 			nb_objects_to_test++;
 
 			}
-		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POINTS) {
+		else if (input_type[input_idx] == INPUT_TYPE_FILE_OF_POintS) {
 			if (f_v) {
 				cout << "input sets of points from file " << input_string[input_idx] << ":" << endl;
 				}
@@ -1236,9 +1236,9 @@ INT count_number_of_objects_to_test(INT nb_inputs, INT *input_type,
 }
 
 object_in_projective_space *create_object_from_string(projective_space_with_action *PA, 
-	INT type, const char *set_as_string, INT verbose_level)
+	int type, const char *set_as_string, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "create_object_from_string" << endl;
@@ -1246,17 +1246,17 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 		}
 
 
-	INT *the_set_in;
-	INT set_size_in;
+	int *the_set_in;
+	int set_size_in;
 	object_in_projective_space *OiP;
 
-	INT_vec_scan(set_as_string, the_set_in, set_size_in);
+	int_vec_scan(set_as_string, the_set_in, set_size_in);
 
 
 	if (f_v) {
 		cout << "The input set has size " << set_size_in << ":" << endl;
 		cout << "The input set is:" << endl;
-		INT_vec_print(cout, the_set_in, set_size_in);
+		int_vec_print(cout, the_set_in, set_size_in);
 		cout << endl;
 		cout << "The type is: ";
 		if (type == t_PTS) {
@@ -1287,7 +1287,7 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 		exit(1);
 		}
 
-	FREE_INT(the_set_in);
+	FREE_int(the_set_in);
 	
 	if (f_v) {
 		cout << "create_object_from_string done" << endl;
@@ -1295,31 +1295,31 @@ object_in_projective_space *create_object_from_string(projective_space_with_acti
 	return OiP;
 }
 
-INT process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
+int process_object(projective_space_with_action *PA, classify_bitvectors *CB, 
 	object_in_projective_space *OiP, 
-	INT f_save_incma_in_and_out, const char *prefix, 
-	INT nb_objects_to_test, 
+	int f_save_incma_in_and_out, const char *prefix, 
+	int nb_objects_to_test, 
 	strong_generators *&SG, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 
 	if (f_v) {
 		cout << "process_object n=" << CB->n << endl;
 		}
 
 	longinteger_object go;
-	//INT *Extra_data;
+	//int *Extra_data;
 	char save_incma_in_and_out_prefix[1000];
 	
 	if (f_save_incma_in_and_out) {
-		sprintf(save_incma_in_and_out_prefix, "%s_%ld_", prefix, CB->n);
+		sprintf(save_incma_in_and_out_prefix, "%s_%d_", prefix, CB->n);
 		}
 	
 	
 	uchar *canonical_form;
-	INT canonical_form_len;
+	int canonical_form_len;
 
 
 	SG = PA->set_stabilizer_of_object(
@@ -1336,7 +1336,7 @@ INT process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 #if 0
 	cout << "canonical form: ";
 	for (i = 0; i < canonical_form_len; i++) {
-		cout << (INT)canonical_form[i];
+		cout << (int)canonical_form[i];
 		if (i < canonical_form_len - 1) {
 			cout << ", ";
 			}
@@ -1345,8 +1345,8 @@ INT process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 	//cout << endl;
 
 #if 0
-	Extra_data = NEW_INT(OiP->sz);
-	INT_vec_copy(OiP->set, Extra_data, OiP->sz);
+	Extra_data = NEW_int(OiP->sz);
+	int_vec_copy(OiP->set, Extra_data, OiP->sz);
 	
 	if (CB->n == 0) {
 		CB->init(nb_objects_to_test, canonical_form_len, verbose_level);
@@ -1359,7 +1359,7 @@ INT process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 			}
 		}
 	if (!CB->add(canonical_form, Extra_data, verbose_level)) {
-		FREE_INT(Extra_data);
+		FREE_int(Extra_data);
 		}
 #endif
 	if (CB->n == 0) {
@@ -1376,7 +1376,7 @@ INT process_object(projective_space_with_action *PA, classify_bitvectors *CB,
 	return ret;
 }
 
-void OiPA_encode(void *extra_data, INT *&encoding, INT &encoding_sz, void *global_data)
+void OiPA_encode(void *extra_data, int *&encoding, int &encoding_sz, void *global_data)
 {
 	//cout << "OiPA_encode" << endl;
 	object_in_projective_space_with_action *OiPA;
@@ -1403,13 +1403,13 @@ void OiPA_group_order(void *extra_data, longinteger_object &go, void *global_dat
 	
 }
 
-void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, char *output, void *data)
+void print_summary_table_entry(int *Table, int m, int n, int i, int j, int val, char *output, void *data)
 {
 	classify_bitvectors *CB;
 	object_in_projective_space_with_action *OiPA;
 	void *extra_data;
 	longinteger_object go;
-	INT h;
+	int h;
 
 	CB = (classify_bitvectors *) data;
 
@@ -1433,7 +1433,7 @@ void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, 
 	else {
 		//cout << "print_summary_table_entry i=" << i << " j=" << j << endl;
 		if (j == -1) {
-			sprintf(output, "%ld", i);
+			sprintf(output, "%d", i);
 			}
 		else if (j == 2) {
 			extra_data = CB->Type_extra_data[CB->perm[i]];
@@ -1445,14 +1445,14 @@ void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, 
 		else if (j == 3) {
 
 
-			INT *Input_objects;
-			INT nb_input_objects;
+			int *Input_objects;
+			int nb_input_objects;
 			CB->C_type_of->get_class_by_value(Input_objects, nb_input_objects, CB->perm[i], 0 /*verbose_level */);
-			INT_vec_heapsort(Input_objects, nb_input_objects);
+			int_vec_heapsort(Input_objects, nb_input_objects);
 
 			output[0] = 0;
 			for (h = 0; h < nb_input_objects; h++) {
-				sprintf(output + strlen(output), "%ld", Input_objects[h]);
+				sprintf(output + strlen(output), "%d", Input_objects[h]);
 				if (h < nb_input_objects - 1) {
 					strcat(output, ", ");
 					}
@@ -1462,71 +1462,71 @@ void print_summary_table_entry(INT *Table, INT m, INT n, INT i, INT j, INT val, 
 					}
 				}
 
-			FREE_INT(Input_objects);
+			FREE_int(Input_objects);
 			}
 		else {
-			sprintf(output, "%ld", val);
+			sprintf(output, "%d", val);
 			}
 		}
 }
 
 
 void compute_ago_distribution(projective_space_with_action *PA, 
-	classify_bitvectors *CB, classify *&C_ago, INT verbose_level)
+	classify_bitvectors *CB, classify *&C_ago, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "compute_ago_distribution" << endl;
 		}
-	INT *Ago;
-	INT i;
+	int *Ago;
+	int i;
 
-	Ago = NEW_INT(CB->nb_types);
+	Ago = NEW_int(CB->nb_types);
 	for (i = 0; i < CB->nb_types; i++) {
 		object_in_projective_space_with_action *OiPA;
 
 		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[i];
-		Ago[i] = OiPA->Aut_gens->group_order_as_INT();
+		Ago[i] = OiPA->Aut_gens->group_order_as_int();
 		}
 	C_ago = new classify;
 	C_ago->init(Ago, CB->nb_types, FALSE, 0);
-	FREE_INT(Ago);
+	FREE_int(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution done" << endl;
 		}
 }
 
 void compute_ago_distribution_permuted(projective_space_with_action *PA, 
-	classify_bitvectors *CB, classify *&C_ago, INT verbose_level)
+	classify_bitvectors *CB, classify *&C_ago, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted" << endl;
 		}
-	INT *Ago;
-	INT i;
+	int *Ago;
+	int i;
 
-	Ago = NEW_INT(CB->nb_types);
+	Ago = NEW_int(CB->nb_types);
 	for (i = 0; i < CB->nb_types; i++) {
 		object_in_projective_space_with_action *OiPA;
 
 		OiPA = (object_in_projective_space_with_action *) CB->Type_extra_data[CB->perm[i]];
-		Ago[i] = OiPA->Aut_gens->group_order_as_INT();
+		Ago[i] = OiPA->Aut_gens->group_order_as_int();
 		}
 	C_ago = new classify;
 	C_ago->init(Ago, CB->nb_types, FALSE, 0);
-	FREE_INT(Ago);
+	FREE_int(Ago);
 	if (f_v) {
 		cout << "compute_ago_distribution_permuted done" << endl;
 		}
 }
 
 void compute_and_print_ago_distribution(ostream &ost, projective_space_with_action *PA, 
-	classify_bitvectors *CB, INT verbose_level)
+	classify_bitvectors *CB, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution" << endl;
@@ -1542,10 +1542,10 @@ void compute_and_print_ago_distribution(ostream &ost, projective_space_with_acti
 }
 
 void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_space_with_action *PA, 
-	classify_bitvectors *CB, INT verbose_level)
+	classify_bitvectors *CB, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "compute_and_print_ago_distribution_with_classes" << endl;
@@ -1558,8 +1558,8 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_sp
 	ost << endl;
 	ost << "$$" << endl;
 	set_of_sets *SoS;
-	INT *types;
-	INT nb_types;
+	int *types;
+	int nb_types;
 
 	SoS = C_ago->get_set_partition_and_types(types, nb_types, verbose_level);
 
@@ -1567,14 +1567,14 @@ void compute_and_print_ago_distribution_with_classes(ostream &ost, projective_sp
 	// go backwards to show large group orders first:
 	for (i = SoS->nb_sets - 1; i >= 0; i--) {
 		ost << "Group order $" << types[i] << "$ appears for the following $" << SoS->Set_size[i] << "$ classes: $" << endl;
-		INT_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
+		int_set_print_tex(ost, SoS->Sets[i], SoS->Set_size[i]);
 		ost << "$\\\\" << endl;
-		//INT_vec_print_as_matrix(ost, SoS->Sets[i], SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
+		//int_vec_print_as_matrix(ost, SoS->Sets[i], SoS->Set_size[i], 10 /* width */, TRUE /* f_tex */);
 		//ost << "$$" << endl;
 		
 		}
 	
-	FREE_INT(types);
+	FREE_int(types);
 	delete SoS;
 	delete C_ago;
 }

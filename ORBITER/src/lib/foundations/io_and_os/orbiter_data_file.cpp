@@ -27,7 +27,7 @@ void orbiter_data_file::null()
 
 void orbiter_data_file::freeself()
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_cases; i++) {
 		FREE_char(Ago_ascii[i]);
@@ -36,15 +36,15 @@ void orbiter_data_file::freeself()
 	FREE_pchar(Ago_ascii);
 	FREE_pchar(Aut_ascii);
 
-	FREE_INT(set_sizes);
-	FREE_INT(Casenumbers);
+	FREE_int(set_sizes);
+	FREE_int(Casenumbers);
 }
 
-void orbiter_data_file::load(const char *fname, INT verbose_level)
+void orbiter_data_file::load(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char **data;
-	INT i;
+	int i;
 
 
 	if (f_v) {

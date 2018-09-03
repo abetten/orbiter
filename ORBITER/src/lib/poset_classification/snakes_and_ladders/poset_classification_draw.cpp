@@ -13,16 +13,16 @@
 
 static void print_table1_top(ofstream &fp);
 static void print_table1_bottom(ofstream &fp);
-static void print_table_top(ofstream &fp, INT f_permutation_degree_is_small);
+static void print_table_top(ofstream &fp, int f_permutation_degree_is_small);
 static void print_table_bottom(ofstream &fp);
-static void print_set_special(ofstream &fp, INT *set, INT sz);
+static void print_set_special(ofstream &fp, int *set, int sz);
 
 void poset_classification::write_treefile_and_draw_tree(
-		char *fname_base, INT lvl, INT xmax, INT ymax,
-		INT rad, INT f_embedded,
-		INT verbose_level)
+		char *fname_base, int lvl, int xmax, int ymax,
+		int rad, int f_embedded,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "poset_classification::write_treefile_and_draw_tree "
@@ -43,18 +43,18 @@ void poset_classification::write_treefile_and_draw_tree(
 		}
 }
 
-INT poset_classification::write_treefile(char *fname_base,
-		INT lvl, INT verbose_level)
+int poset_classification::write_treefile(char *fname_base,
+		int lvl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	char fname1[1000];
-	INT i, level;
+	int i, level;
 		
 	if (f_v) {
 		cout << "poset_classification::write_treefile" << endl;
 		}
-	sprintf(fname1, "%s_%ld.tree", fname_base, lvl);
+	sprintf(fname1, "%s_%d.tree", fname_base, lvl);
 	
 	if  (first_poset_orbit_node_at_level[lvl + 1] < MAX_NODES_FOR_TREEFILE) {
 		{
@@ -103,31 +103,31 @@ INT poset_classification::write_treefile(char *fname_base,
 		}
 }
 
-void poset_classification::draw_tree(char *fname_base, INT lvl, 
-	INT xmax, INT ymax, INT rad, INT f_embedded,
-	INT f_sideways, INT verbose_level)
+void poset_classification::draw_tree(char *fname_base, int lvl, 
+	int xmax, int ymax, int rad, int f_embedded,
+	int f_sideways, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	char fname[1000];
 	char fname1[1000];
 	tree T;
-	//INT xmax = 1000;
-	//INT ymax = 1000;
-	INT idx = 0;
-	INT nb_nodes, i;
-	INT *coord_xyw;
-	INT *perm;
-	INT *perm_inv;
-	INT f_draw_points = TRUE;
-	INT f_draw_extension_points = FALSE;
-	INT f_draw_aut_group_order = FALSE;
+	//int xmax = 1000;
+	//int ymax = 1000;
+	int idx = 0;
+	int nb_nodes, i;
+	int *coord_xyw;
+	int *perm;
+	int *perm_inv;
+	int f_draw_points = TRUE;
+	int f_draw_extension_points = FALSE;
+	int f_draw_aut_group_order = FALSE;
 
 	if (f_v) {
 		cout << "poset_classification::draw_tree" << endl;
 		}
-	sprintf(fname, "%s_%ld", fname_base, lvl);
-	sprintf(fname1, "%s_%ld.tree", fname_base, lvl);
+	sprintf(fname, "%s_%d", fname_base, lvl);
+	sprintf(fname1, "%s_%d.tree", fname_base, lvl);
 			
 	if (file_size(fname1)) {
 		if (f_vv) {
@@ -158,7 +158,7 @@ void poset_classification::draw_tree(char *fname_base, INT lvl,
 			f_draw_aut_group_order = FALSE;
 			}
 			
-		coord_xyw = NEW_INT(3 * nb_nodes);
+		coord_xyw = NEW_int(3 * nb_nodes);
 			
 		if (f_vv) {
 			cout << "poset_classification::draw_tree calling get_coordinates" << endl;
@@ -167,7 +167,7 @@ void poset_classification::draw_tree(char *fname_base, INT lvl,
 
 #if 0
 		for (i = 0; i < nb_nodes; i++) {
-			coord_xyw[i * 3 + 2] = (INT)sqrt((double)coord_xyw[i * 3 + 2]);
+			coord_xyw[i * 3 + 2] = (int)sqrt((double)coord_xyw[i * 3 + 2]);
 			}
 #endif
 
@@ -208,9 +208,9 @@ void poset_classification::draw_tree(char *fname_base, INT lvl,
 			xmax, ymax, rad, f_embedded, f_sideways,
 			0 /*verbose_level - 2*/);
 			
-		FREE_INT(coord_xyw);
-		FREE_INT(perm);
-		FREE_INT(perm_inv);
+		FREE_int(coord_xyw);
+		FREE_int(perm);
+		FREE_int(perm_inv);
 		}
 	else {
 		cout << "poset_classification::draw_tree the file " << fname1
@@ -218,18 +218,18 @@ void poset_classification::draw_tree(char *fname_base, INT lvl,
 		}
 }
 
-void poset_classification::draw_tree_low_level(char *fname, INT nb_nodes, 
-	INT *coord_xyw, INT *perm, INT *perm_inv, 
-	INT f_draw_points, INT f_draw_extension_points,
-	INT f_draw_aut_group_order,
-	INT xmax, INT ymax, INT rad, INT f_embedded,
-	INT f_sideways,
-	INT verbose_level)
+void poset_classification::draw_tree_low_level(char *fname, int nb_nodes, 
+	int *coord_xyw, int *perm, int *perm_inv, 
+	int f_draw_points, int f_draw_extension_points,
+	int f_draw_aut_group_order,
+	int xmax, int ymax, int rad, int f_embedded,
+	int f_sideways,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x_min = 0, x_max = 10000;
-	INT y_min = 0, y_max = 10000;
-	//INT factor_1000 = 1000;
+	int f_v = (verbose_level >= 1);
+	int x_min = 0, x_max = 10000;
+	int y_min = 0, y_max = 10000;
+	//int factor_1000 = 1000;
 	char fname_full[1000];
 	double scale = 0.3;
 	double line_width = 1.0;
@@ -286,35 +286,35 @@ void poset_classification::draw_tree_low_level(char *fname, INT nb_nodes,
 }
 
 void poset_classification::draw_tree_low_level1(mp_graphics &G,
-	INT nb_nodes,
-	INT *coords, INT *perm, INT *perm_inv, 
-	INT f_draw_points, INT f_draw_extension_points,
-	INT f_draw_aut_group_order,
-	INT radius, INT verbose_level)
+	int nb_nodes,
+	int *coords, int *perm, int *perm_inv, 
+	int f_draw_points, int f_draw_extension_points,
+	int f_draw_aut_group_order,
+	int radius, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT *Px, *Py, *Width;
-	INT *Qx, *Qy;
-	INT x, y;
-	INT i, j;
-	INT y_offset2 = 200;
-	//INT y_offset3 = -590;
-	//INT y_offset4 = -350;
-	//INT delta_x = 1000;
-	//INT delta_y = 1000;
-	INT nb_e, Nb_e, pt, dx, dx0, /*Dx, Dx0,*/ nxt, hdl, depth, hdl2;
-	INT set0[100];
-	INT set1[100];
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int *Px, *Py, *Width;
+	int *Qx, *Qy;
+	int x, y;
+	int i, j;
+	int y_offset2 = 200;
+	//int y_offset3 = -590;
+	//int y_offset4 = -350;
+	//int delta_x = 1000;
+	//int delta_y = 1000;
+	int nb_e, Nb_e, pt, dx, dx0, /*Dx, Dx0,*/ nxt, hdl, depth, hdl2;
+	int set0[100];
+	int set1[100];
 	char str[1000];
-	INT rad = 200 >> 3;
+	int rad = 200 >> 3;
 	
-	Px = NEW_INT(nb_nodes);
-	Py = NEW_INT(nb_nodes);
-	Width = NEW_INT(nb_nodes);
-	Qx = NEW_INT(100);
-	Qy = NEW_INT(100);
+	Px = NEW_int(nb_nodes);
+	Py = NEW_int(nb_nodes);
+	Width = NEW_int(nb_nodes);
+	Qx = NEW_int(100);
+	Qy = NEW_int(100);
 	
 	if (f_v) {	
 		cout << "draw_tree_low_level1" << endl;
@@ -420,7 +420,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 					if (f_vvv) {
 						cout << "fusion node i=" << i
 								<< " j=" << j << " set = ";
-						INT_set_print(set0, depth + 1);
+						int_set_print(set0, depth + 1);
 						cout << endl;
 						}
 				
@@ -428,11 +428,11 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	
 					A2->map_a_set(set0, set1, depth + 1, Elt1, 0);
 
-					INT_vec_heapsort(set1, depth + 1);
+					int_vec_heapsort(set1, depth + 1);
 				
 					if (f_vvv) {
 						cout << "mapping the set to = ";
-						INT_set_print(set1, depth + 1);
+						int_set_print(set1, depth + 1);
 						cout << endl;
 						}
 
@@ -520,7 +520,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 		if (i == 0)
 			continue;
 		pt = root[perm_inv[i]].pt;
-		sprintf(str, "%ld", pt);
+		sprintf(str, "%d", pt);
 		//G.aligned_text(Px, Py, i, "", str);
 		if (f_draw_points) {
 			G.circle_text(Px[i], Py[i], rad, str);
@@ -542,8 +542,8 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 	if (f_draw_aut_group_order) {
 		//longinteger_domain D;
 		longinteger_object go;
-		INT x_offset = 0;
-		INT y_offset = -200;
+		int x_offset = 0;
+		int y_offset = -200;
 		char str2[1000];
 	
 		for (i = 0; i < nb_nodes; i++) {
@@ -580,7 +580,7 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 
 			for (j = 0; j < nb_e; j++) {
 				pt = root[i].E[j].pt;
-				sprintf(str, "%ld", pt);
+				sprintf(str, "%d", pt);
 				x = Px[perm[i]] - dx0 + j * dx;
 				y = Py[perm[i]] - y_offset2;
 				if (f_draw_extension_points) {
@@ -595,19 +595,19 @@ void poset_classification::draw_tree_low_level1(mp_graphics &G,
 			}
 		}
 	
-	FREE_INT(Px);
-	FREE_INT(Py);
-	FREE_INT(Width);
-	FREE_INT(Qx);
-	FREE_INT(Qy);
+	FREE_int(Px);
+	FREE_int(Py);
+	FREE_int(Width);
+	FREE_int(Qx);
+	FREE_int(Qy);
 }
 
 void poset_classification::draw_poset_full(const char *fname_base,
-		INT depth, INT data, INT f_embedded, INT f_sideways,
+		int depth, int data, int f_embedded, int f_sideways,
 		double x_stretch,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	layered_graph *LG;
 
 	if (f_v) {
@@ -622,21 +622,21 @@ void poset_classification::draw_poset_full(const char *fname_base,
 
 	char fname_base1[1000];
 	char fname1[1000];
-	INT xmax = 1000000;
-	INT ymax = 1000000;
-	INT x_max = 10000;
-	INT y_max = 10000;
-	INT rad = 50;
-	INT f_circle = TRUE;
-	INT f_corners = FALSE;
-	INT f_nodes_empty = FALSE;
-	INT f_show_level_info = FALSE;
-	INT f_label_edges = FALSE;
-	INT f_rotated = FALSE;
+	int xmax = 1000000;
+	int ymax = 1000000;
+	int x_max = 10000;
+	int y_max = 10000;
+	int rad = 50;
+	int f_circle = TRUE;
+	int f_corners = FALSE;
+	int f_nodes_empty = FALSE;
+	int f_show_level_info = FALSE;
+	int f_label_edges = FALSE;
+	int f_rotated = FALSE;
 	double scale = .45;
 	double line_width = 1.5;
 
-	sprintf(fname_base1, "%s_poset_full_lvl_%ld", fname_base, depth);
+	sprintf(fname_base1, "%s_poset_full_lvl_%d", fname_base, depth);
 	sprintf(fname1, "%s.layered_graph", fname_base1);
 	
 	LG->write_file(fname1, 0 /*verbose_level*/);
@@ -672,10 +672,10 @@ void poset_classification::draw_poset_full(const char *fname_base,
 }
 
 void poset_classification::draw_poset(const char *fname_base,
-		INT depth, INT data, INT f_embedded, INT f_sideways,
-		INT verbose_level)
+		int depth, int data, int f_embedded, int f_sideways,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	layered_graph *LG1;
 	layered_graph *LG2;
 	layered_graph *LG3;
@@ -723,27 +723,27 @@ void poset_classification::draw_poset(const char *fname_base,
 	char fname3[1000];
 	char fname_base4[1000];
 	char fname4[1000];
-	INT xmax = 1000000;
-	INT ymax = 1000000;
-	INT x_max = 10000;
-	INT y_max = 10000;
-	INT rad = 50;
-	INT f_circle = TRUE;
-	INT f_corners = FALSE;
-	INT f_nodes_empty = FALSE;
-	INT f_show_level_info = FALSE;
-	INT f_label_edges = FALSE;
-	INT f_rotated = FALSE;
+	int xmax = 1000000;
+	int ymax = 1000000;
+	int x_max = 10000;
+	int y_max = 10000;
+	int rad = 50;
+	int f_circle = TRUE;
+	int f_corners = FALSE;
+	int f_nodes_empty = FALSE;
+	int f_show_level_info = FALSE;
+	int f_label_edges = FALSE;
+	int f_rotated = FALSE;
 	double scale = .45;
 	double line_width = 1.5;
 
-	sprintf(fname_base1, "%s_aux_poset_lvl_%ld", fname_base, depth);
+	sprintf(fname_base1, "%s_aux_poset_lvl_%d", fname_base, depth);
 	sprintf(fname1, "%s.layered_graph", fname_base1);
-	sprintf(fname_base2, "%s_poset_lvl_%ld", fname_base, depth);
+	sprintf(fname_base2, "%s_poset_lvl_%d", fname_base, depth);
 	sprintf(fname2, "%s.layered_graph", fname_base2);
-	sprintf(fname_base3, "%s_tree_lvl_%ld", fname_base, depth);
+	sprintf(fname_base3, "%s_tree_lvl_%d", fname_base, depth);
 	sprintf(fname3, "%s.layered_graph", fname_base3);
-	sprintf(fname_base4, "%s_poset_detailed_lvl_%ld", fname_base, depth);
+	sprintf(fname_base4, "%s_poset_detailed_lvl_%d", fname_base, depth);
 	sprintf(fname4, "%s.layered_graph", fname_base4);
 
 	if (f_v) {
@@ -806,11 +806,11 @@ void poset_classification::draw_poset(const char *fname_base,
 }
 
 void poset_classification::draw_level_graph(const char *fname_base,
-		INT depth, INT data, INT level,
-		INT f_embedded, INT f_sideways,
-		INT verbose_level)
+		int depth, int data, int level,
+		int f_embedded, int f_sideways,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	layered_graph *LG;
 
 	if (f_v) {
@@ -823,21 +823,21 @@ void poset_classification::draw_level_graph(const char *fname_base,
 
 	char fname_base1[1000];
 	char fname[1000];
-	INT xmax = 1000000;
-	INT ymax = 1000000;
-	INT x_max = 10000;
-	INT y_max = 10000;
-	INT rad = 50;
-	INT f_circle = TRUE;
-	INT f_corners = FALSE;
-	INT f_nodes_empty = FALSE;
-	INT f_show_level_info = TRUE;
-	INT f_label_edges = FALSE;
-	INT f_rotated = FALSE;
+	int xmax = 1000000;
+	int ymax = 1000000;
+	int x_max = 10000;
+	int y_max = 10000;
+	int rad = 50;
+	int f_circle = TRUE;
+	int f_corners = FALSE;
+	int f_nodes_empty = FALSE;
+	int f_show_level_info = TRUE;
+	int f_label_edges = FALSE;
+	int f_rotated = FALSE;
 	double scale = .45;
 	double line_width = 1.5;
 
-	sprintf(fname_base1, "%s_lvl_%ld_bipartite_lvl_%ld",
+	sprintf(fname_base1, "%s_lvl_%d_bipartite_lvl_%d",
 			fname_base, depth, level);
 	sprintf(fname, "%s.layered_graph", fname_base1);
 	LG->write_file(fname, 0 /*verbose_level*/);
@@ -864,50 +864,50 @@ void poset_classification::draw_level_graph(const char *fname_base,
 
 
 void poset_classification::make_full_poset_graph(
-		INT depth, layered_graph *&LG,
-		INT data1, double x_stretch, INT verbose_level)
+		int depth, layered_graph *&LG,
+		int data1, double x_stretch, int verbose_level)
 // Draws the full poset: each element of each orbit is drawn.
 // The orbits are indicated by grouping the elements closer together.
-// Uses INT_vec_sort_and_test_if_contained to test containment relation.
+// Uses int_vec_sort_and_test_if_contained to test containment relation.
 // This is only good for actions on sets, not for actions on subspaces
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT nb_layers;
-	INT *Nb_elements;
-	INT *Fst;
-	INT *Nb_orbits;
-	INT **Fst_element_per_orbit;
-	INT **Orbit_len;
-	INT i, j, lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
-	INT *set;
-	INT *set1;
-	INT *set2;
-	INT f_contained;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_layers;
+	int *Nb_elements;
+	int *Fst;
+	int *Nb_orbits;
+	int **Fst_element_per_orbit;
+	int **Orbit_len;
+	int i, j, lvl, po, po2, so, n1, n2, ol1, ol2, el1, el2, h;
+	int *set;
+	int *set1;
+	int *set2;
+	int f_contained;
 	//longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph" << endl;
 		}
-	set = NEW_INT(depth + 1);
-	set1 = NEW_INT(depth + 1);
-	set2 = NEW_INT(depth + 1);
+	set = NEW_int(depth + 1);
+	set1 = NEW_int(depth + 1);
+	set2 = NEW_int(depth + 1);
 	nb_layers = depth + 1;
-	Nb_elements = NEW_INT(nb_layers);
-	Nb_orbits = NEW_INT(nb_layers);
-	Fst = NEW_INT(nb_layers + 1);
-	Fst_element_per_orbit = NEW_PINT(nb_layers);
-	Orbit_len = NEW_PINT(nb_layers);
+	Nb_elements = NEW_int(nb_layers);
+	Nb_orbits = NEW_int(nb_layers);
+	Fst = NEW_int(nb_layers + 1);
+	Fst_element_per_orbit = NEW_pint(nb_layers);
+	Orbit_len = NEW_pint(nb_layers);
 	Fst[0] = 0;
 	for (i = 0; i <= depth; i++) {
 		Nb_orbits[i] = nb_orbits_at_level(i);
-		Fst_element_per_orbit[i] = NEW_INT(Nb_orbits[i] + 1);
-		Orbit_len[i] = NEW_INT(Nb_orbits[i]);
+		Fst_element_per_orbit[i] = NEW_int(Nb_orbits[i] + 1);
+		Orbit_len[i] = NEW_int(Nb_orbits[i]);
 		Nb_elements[i] = 0;
 
 		Fst_element_per_orbit[i][0] = 0;
 		for (j = 0; j < Nb_orbits[i]; j++) {
-			Orbit_len[i][j] = orbit_length_as_INT(j, i);
+			Orbit_len[i][j] = orbit_length_as_int(j, i);
 			Nb_elements[i] += Orbit_len[i][j];
 			Fst_element_per_orbit[i][j + 1] =
 					Fst_element_per_orbit[i][j] + Orbit_len[i][j];
@@ -962,10 +962,10 @@ void poset_classification::make_full_poset_graph(
 			n1 = first_poset_orbit_node_at_level[lvl] + po;
 
 
-			INT *Down_orbits;
-			INT nb_down_orbits;
+			int *Down_orbits;
+			int nb_down_orbits;
 
-			Down_orbits = NEW_INT(root[n1].nb_extensions);
+			Down_orbits = NEW_int(root[n1].nb_extensions);
 			nb_down_orbits = 0;
 
 			for (so = 0; so < root[n1].nb_extensions; so++) {
@@ -988,7 +988,7 @@ void poset_classification::make_full_poset_graph(
 					//cout << "fusion node" << endl;
 					// po = data1
 					// so = data2
-					INT n0, so0;
+					int n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
 					//cout << "fusion (" << n1 << "/" << so << ") "
@@ -1014,16 +1014,16 @@ void poset_classification::make_full_poset_graph(
 				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " downorbits = ";
-				INT_vec_print(cout, Down_orbits, nb_down_orbits);
+				int_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 				}
 
-			INT_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
+			int_vec_sort_and_remove_duplicates(Down_orbits, nb_down_orbits);
 			if (f_vv) {
 				cout << "poset_classification::make_full_poset_graph adding edges "
 						"lvl=" << lvl << " po=" << po
 						<< " so=" << so << " unique downorbits = ";
-				INT_vec_print(cout, Down_orbits, nb_down_orbits);
+				int_vec_print(cout, Down_orbits, nb_down_orbits);
 				cout << endl;
 				}
 
@@ -1052,7 +1052,7 @@ void poset_classification::make_full_poset_graph(
 							0 /* verbose_level */);
 					if (f_vv) {
 						cout << "set1=";
-						INT_vec_print(cout, set1, lvl);
+						int_vec_print(cout, set1, lvl);
 						cout << endl;
 						}
 
@@ -1066,7 +1066,7 @@ void poset_classification::make_full_poset_graph(
 								0 /* verbose_level */);
 						if (f_vv) {
 							cout << "set2=";
-							INT_vec_print(cout, set2, lvl + 1);
+							int_vec_print(cout, set2, lvl + 1);
 							cout << endl;
 							}
 
@@ -1081,17 +1081,17 @@ void poset_classification::make_full_poset_graph(
 									<< " el1=" << el1 << " el2=" << el2
 									<< endl;
 							cout << "set1=";
-							INT_vec_print(cout, set1, lvl);
+							int_vec_print(cout, set1, lvl);
 							cout << endl;
 							cout << "set2=";
-							INT_vec_print(cout, set2, lvl + 1);
+							int_vec_print(cout, set2, lvl + 1);
 							cout << endl;
 							}
 						
 
-						INT_vec_copy(set1, set, lvl);
+						int_vec_copy(set1, set, lvl);
 
-						//f_contained = INT_vec_sort_and_test_if_contained(
+						//f_contained = int_vec_sort_and_test_if_contained(
 						// set, lvl, set2, lvl + 1);
 						f_contained = poset_structure_is_contained(
 								set, lvl, set2, lvl + 1,
@@ -1119,7 +1119,7 @@ void poset_classification::make_full_poset_graph(
 				} // next h
 
 
-			FREE_INT(Down_orbits);
+			FREE_int(Down_orbits);
 
 			} // po
 		} // lvl
@@ -1160,7 +1160,7 @@ void poset_classification::make_full_poset_graph(
 						0 /* verbose_level */);
 				if (f_vv) {
 					cout << "set1=";
-					INT_vec_print(cout, set1, lvl);
+					int_vec_print(cout, set1, lvl);
 					cout << endl;
 					}
 
@@ -1176,36 +1176,36 @@ void poset_classification::make_full_poset_graph(
 
 
 
-	FREE_INT(set);
-	FREE_INT(set1);
-	FREE_INT(set2);
-	FREE_INT(Nb_elements);
-	FREE_INT(Nb_orbits);
-	FREE_INT(Fst);
+	FREE_int(set);
+	FREE_int(set1);
+	FREE_int(set2);
+	FREE_int(Nb_elements);
+	FREE_int(Nb_orbits);
+	FREE_int(Fst);
 	for (i = 0; i <= depth; i++) {
-		FREE_INT(Fst_element_per_orbit[i]);
+		FREE_int(Fst_element_per_orbit[i]);
 		}
-	FREE_PINT(Fst_element_per_orbit);
+	FREE_pint(Fst_element_per_orbit);
 	for (i = 0; i <= depth; i++) {
-		FREE_INT(Orbit_len[i]);
+		FREE_int(Orbit_len[i]);
 		}
-	FREE_PINT(Orbit_len);
+	FREE_pint(Orbit_len);
 	if (f_v) {
 		cout << "poset_classification::make_full_poset_graph done" << endl;
 		}
 }
 
-void poset_classification::make_auxiliary_graph(INT depth,
-		layered_graph *&LG, INT data1, INT verbose_level)
+void poset_classification::make_auxiliary_graph(int depth,
+		layered_graph *&LG, int data1, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
-	INT f_v4 = (verbose_level >= 4);
-	INT nb_layers;
-	INT *Nb;
-	INT *Fst;
-	INT i, lvl, po, so, n, n1, f;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 4);
+	int nb_layers;
+	int *Nb;
+	int *Fst;
+	int i, lvl, po, so, n, n1, f;
 	longinteger_domain D;
 
 	if (f_v) {
@@ -1217,8 +1217,8 @@ void poset_classification::make_auxiliary_graph(INT depth,
 	
 
 	nb_layers = 2 * depth + 1;
-	Nb = NEW_INT(nb_layers);
-	Fst = NEW_INT(nb_layers);
+	Nb = NEW_int(nb_layers);
+	Fst = NEW_int(nb_layers);
 	Fst[0] = 0;
 	for (i = 0; i < depth; i++) {
 		Nb[2 * i] = nb_orbits_at_level(i);
@@ -1287,7 +1287,7 @@ void poset_classification::make_auxiliary_graph(INT depth,
 						}
 					// po = data1
 					// so = data2
-					INT n0, so0;
+					int n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
 					if (f_v4) {
@@ -1348,7 +1348,7 @@ void poset_classification::make_auxiliary_graph(INT depth,
 
 			char text[1000];
 			longinteger_object go, go1;
-			INT n, so, len, r;
+			int n, so, len, r;
 			
 			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
@@ -1370,31 +1370,31 @@ void poset_classification::make_auxiliary_graph(INT depth,
 			for (so = 0; so < root[n].nb_extensions; so++) {
 				extension *E = root[n].E + so;
 				len = E->orbit_len;
-				D.integral_division_by_INT(go, len, go1, r);
+				D.integral_division_by_int(go, len, go1, r);
 				go1.print_to_string(text);
 				LG->add_text(2 * lvl + 1, f + so, text, 0/*verbose_level*/);
 				}
 			f += root[n].nb_extensions;
 			}
 		}
-	FREE_INT(Nb);
-	FREE_INT(Fst);
+	FREE_int(Nb);
+	FREE_int(Fst);
 	
 	if (f_v) {
 		cout << "poset_classification::make_auxiliary_graph done" << endl;
 		}
 }
 
-void poset_classification::make_graph(INT depth,
-		layered_graph *&LG, INT data1, INT f_tree, INT verbose_level)
+void poset_classification::make_graph(int depth,
+		layered_graph *&LG, int data1, int f_tree, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT nb_layers;
-	INT *Nb;
-	INT *Fst;
-	INT i, lvl, po, so, n, n1;
-	INT *the_set;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int nb_layers;
+	int *Nb;
+	int *Fst;
+	int i, lvl, po, so, n, n1;
+	int *the_set;
 	//longinteger_domain D;
 
 	if (f_v) {
@@ -1406,8 +1406,8 @@ void poset_classification::make_graph(INT depth,
 	
 
 	nb_layers = depth + 1;
-	Nb = NEW_INT(nb_layers);
-	Fst = NEW_INT(nb_layers);
+	Nb = NEW_int(nb_layers);
+	Fst = NEW_int(nb_layers);
 	Fst[0] = 0;
 	for (i = 0; i < depth; i++) {
 		Nb[i] = nb_orbits_at_level(i);
@@ -1415,7 +1415,7 @@ void poset_classification::make_graph(INT depth,
 		}
 	Nb[depth] = nb_orbits_at_level(depth);
 
-	the_set = NEW_INT(depth);
+	the_set = NEW_int(depth);
 
 	
 	LG = NEW_OBJECT(layered_graph);
@@ -1470,7 +1470,7 @@ void poset_classification::make_graph(INT depth,
 					//cout << "fusion node" << endl;
 					// po = data1
 					// so = data2
-					INT n0, so0;
+					int n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
 					//cout << "fusion (" << n << "/" << so << ") -> ("
@@ -1523,7 +1523,7 @@ void poset_classification::make_graph(INT depth,
 
 			char text[1000];
 			longinteger_object go, go1;
-			INT n;
+			int n;
 			
 			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
@@ -1541,7 +1541,7 @@ void poset_classification::make_graph(INT depth,
 				}
 #else
 			// label the node with the group order:
-			//LG->add_node_data1(lvl, po, go.as_INT(), 0/*verbose_level*/);
+			//LG->add_node_data1(lvl, po, go.as_int(), 0/*verbose_level*/);
 #endif
 			if (lvl) {
 				LG->add_node_data2(lvl, po, lvl - 1, 0/*verbose_level*/);
@@ -1555,28 +1555,28 @@ void poset_classification::make_graph(INT depth,
 				}
 			}
 		}
-	FREE_INT(Nb);
-	FREE_INT(Fst);
-	FREE_INT(the_set);
+	FREE_int(Nb);
+	FREE_int(Fst);
+	FREE_int(the_set);
 	
 	if (f_v) {
 		cout << "poset_classification::make_graph done" << endl;
 		}
 }
 
-void poset_classification::make_level_graph(INT depth,
-		layered_graph *&LG, INT data1, INT level, INT verbose_level)
+void poset_classification::make_level_graph(int depth,
+		layered_graph *&LG, int data1, int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *Nb;
-	INT *Fst;
-	INT nb_middle;
-	INT i, lvl, po, so, n, n1, f, l;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Nb;
+	int *Fst;
+	int nb_middle;
+	int i, lvl, po, so, n, n1, f, l;
 	longinteger_domain D;
-	INT nb_layers = 4;
-	INT *the_set;
-	INT *the_set2;
+	int nb_layers = 4;
+	int *the_set;
+	int *the_set2;
 
 	if (f_v) {
 		cout << "poset_classification::make_level_graph "
@@ -1586,10 +1586,10 @@ void poset_classification::make_level_graph(INT depth,
 	//print_fusion_nodes(depth);
 
 	
-	the_set = NEW_INT(depth);
-	the_set2 = NEW_INT(depth);
-	Nb = NEW_INT(4);
-	Fst = NEW_INT(2);
+	the_set = NEW_int(depth);
+	the_set2 = NEW_int(depth);
+	Nb = NEW_int(4);
+	Fst = NEW_int(2);
 	Fst[0] = 0;
 	for (i = 0; i < level; i++) {
 		Fst[0] += nb_orbits_at_level(i);
@@ -1607,7 +1607,7 @@ void poset_classification::make_level_graph(INT depth,
 		cout << "poset_classification::make_level_graph before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
-		INT_vec_print(cout, Nb, 4);
+		int_vec_print(cout, Nb, 4);
 		cout << endl;
 		}
 	LG->add_data1(data1, 0/*verbose_level*/);
@@ -1652,7 +1652,7 @@ void poset_classification::make_level_graph(INT depth,
 				//cout << "fusion node" << endl;
 				// po = data1
 				// so = data2
-				INT n0, so0;
+				int n0, so0;
 				n0 = E->data1;
 				so0 = E->data2;
 				//cout << "fusion (" << n << "/" << so
@@ -1715,7 +1715,7 @@ void poset_classification::make_level_graph(INT depth,
 
 			char text[1000];
 			longinteger_object go, go1;
-			INT n, so, len, r;
+			int n, so, len, r;
 			
 			n = first_poset_orbit_node_at_level[lvl] + po;
 			get_stabilizer_order(lvl, po, go);
@@ -1743,7 +1743,7 @@ void poset_classification::make_level_graph(INT depth,
 				for (so = 0; so < root[n].nb_extensions; so++) {
 					extension *E = root[n].E + so;
 					len = E->orbit_len;
-					D.integral_division_by_INT(go, len, go1, r);
+					D.integral_division_by_int(go, len, go1, r);
 					go1.print_to_string(text);
 					LG->add_text(1, f + so, text, 0/*verbose_level*/);
 					LG->add_text(2, f + so, text, 0/*verbose_level*/);
@@ -1776,10 +1776,10 @@ void poset_classification::make_level_graph(INT depth,
 				}
 			}
 		}
-	FREE_INT(the_set);
-	FREE_INT(the_set2);
-	FREE_INT(Nb);
-	FREE_INT(Fst);
+	FREE_int(the_set);
+	FREE_int(the_set2);
+	FREE_int(Nb);
+	FREE_int(Fst);
 	
 	if (f_v) {
 		cout << "poset_classification::make_level_graph done" << endl;
@@ -1787,17 +1787,17 @@ void poset_classification::make_level_graph(INT depth,
 }
 
 void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
-		INT data1, INT max_depth, INT verbose_level)
+		int data1, int max_depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *Nb;
-	INT *Nb_middle;
-	INT i, po, so, n, n1, f, L;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Nb;
+	int *Nb_middle;
+	int i, po, so, n, n1, f, L;
 	longinteger_domain D;
-	INT nb_layers = 3 * max_depth + 1;
-	INT *the_set;
-	INT *the_set2;
+	int nb_layers = 3 * max_depth + 1;
+	int *the_set;
+	int *the_set2;
 
 	if (f_v) {
 		cout << "poset_classification::make_poset_graph_detailed "
@@ -1809,10 +1809,10 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 	//print_fusion_nodes(depth);
 
 	
-	the_set = NEW_INT(max_depth);
-	the_set2 = NEW_INT(max_depth);
-	Nb = NEW_INT(nb_layers);
-	Nb_middle = NEW_INT(max_depth);
+	the_set = NEW_int(max_depth);
+	the_set2 = NEW_int(max_depth);
+	Nb = NEW_int(nb_layers);
+	Nb_middle = NEW_int(max_depth);
 	for (i = 0; i < max_depth; i++) {
 		Nb_middle[i] = count_extension_nodes_at_level(i);
 		}
@@ -1831,7 +1831,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 				"before LG->init" << endl;
 		cout << "nb_layers=" << nb_layers << endl;
 		cout << "Nb=";
-		INT_vec_print(cout, Nb, nb_layers);
+		int_vec_print(cout, Nb, nb_layers);
 		cout << endl;
 		}
 	LG->add_data1(data1, 0/*verbose_level*/);
@@ -1906,7 +1906,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 					//cout << "fusion node" << endl;
 					// po = data1
 					// so = data2
-					INT n0, so0;
+					int n0, so0;
 					n0 = E->data1;
 					so0 = E->data2;
 					//cout << "fusion (" << n << "/" << so
@@ -1969,7 +1969,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 
 			char text[1000];
 			longinteger_object go, go1;
-			INT n, so, len, r;
+			int n, so, len, r;
 			
 			n = first_poset_orbit_node_at_level[L] + po;
 			get_stabilizer_order(L, po, go);
@@ -2006,7 +2006,7 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 						}
 					extension *E = root[n].E + so;
 					len = E->orbit_len;
-					D.integral_division_by_INT(go, len, go1, r);
+					D.integral_division_by_int(go, len, go1, r);
 					go1.print_to_string(text);
 					LG->add_text(3 * L + 1, f + so, text, 0/*verbose_level*/);
 					LG->add_text(3 * L + 2, f + so, text, 0/*verbose_level*/);
@@ -2039,10 +2039,10 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 				} // if (L < max_depth)
 			} // next po
 		} // next L
-	FREE_INT(the_set);
-	FREE_INT(the_set2);
-	FREE_INT(Nb);
-	FREE_INT(Nb_middle);
+	FREE_int(the_set);
+	FREE_int(the_set2);
+	FREE_int(Nb);
+	FREE_int(Nb_middle);
 	
 	if (f_v) {
 		cout << "poset_classification::make_poset_graph_detailed done" << endl;
@@ -2050,23 +2050,23 @@ void poset_classification::make_poset_graph_detailed(layered_graph *&LG,
 }
 
 
-void poset_classification::print_data_structure_tex(INT depth, INT verbose_level)
+void poset_classification::print_data_structure_tex(int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = FALSE; //(verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; //(verbose_level >= 2);
 	char fname_base1[1000];
 	char fname[1000];
-	INT lvl, po, so, n, n1, f, cnt;
-	INT *set;
+	int lvl, po, so, n, n1, f, cnt;
+	int *set;
 	longinteger_domain D;
 
 	if (f_v) {
 		cout << "poset_classification::print_data_structure_tex" << endl;
 		}
-	sprintf(fname_base1, "%s_data_lvl_%ld", fname_base, depth);
+	sprintf(fname_base1, "%s_data_lvl_%d", fname_base, depth);
 	sprintf(fname, "%s.tex", fname_base1);
 
-	set = NEW_INT(depth);
+	set = NEW_int(depth);
 	{
 		ofstream fp(fname);
 
@@ -2104,7 +2104,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 
 				fp << lvl << " & " << po << " & ";
 
-				INT_vec_print(fp, set, lvl);
+				int_vec_print(fp, set, lvl);
 
 				fp << " & " << go << "\\\\" << endl;
 				
@@ -2116,7 +2116,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 		fp << "\\bigskip" << endl;
 		fp << endl;
 
-		INT f_permutation_degree_is_small;
+		int f_permutation_degree_is_small;
 
 		if (A2->degree < 15) {
 			f_permutation_degree_is_small = TRUE;
@@ -2141,7 +2141,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 				n = first_poset_orbit_node_at_level[lvl] + po;
 
 				longinteger_object go, go1;
-				INT ol, r, hdl;
+				int ol, r, hdl;
 			
 				n = first_poset_orbit_node_at_level[lvl] + po;
 				get_stabilizer_order(lvl, po, go);
@@ -2165,7 +2165,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 					extension *E = root[n].E + so;
 					ol = E->orbit_len;
 
-					D.integral_division_by_INT(go, 
+					D.integral_division_by_int(go, 
 						ol, go1, r);
 
 					if (E->type == EXTENSION_TYPE_EXTENSION) {
@@ -2179,7 +2179,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 						set[lvl] = E->pt;
 
 						print_set_special(fp, set, lvl + 1);
-						//INT_vec_print(fp, set, lvl + 1);
+						//int_vec_print(fp, set, lvl + 1);
 
 						fp << " & ";
 
@@ -2194,7 +2194,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 							}
 
 						root[n1].store_set_to(this, lvl + 1 - 1, set);
-						//INT_vec_print(fp, set, lvl + 1);
+						//int_vec_print(fp, set, lvl + 1);
 						print_set_special(fp, set, lvl + 1);
 
 						fp << " & " << go1 << "\\\\" << endl;
@@ -2206,7 +2206,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 						//cout << "fusion node" << endl;
 						// po = data1
 						// so = data2
-						INT n0, so0;
+						int n0, so0;
 						n0 = E->data1;
 						so0 = E->data2;
 						//cout << "fusion (" << n << "/" << so
@@ -2233,7 +2233,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 
 						root[n].store_set_to(this, lvl - 1, set);
 						set[lvl] = E->pt;
-						//INT_vec_print(fp, set, lvl + 1);
+						//int_vec_print(fp, set, lvl + 1);
 						print_set_special(fp, set, lvl + 1);
 
 						fp << " & ";
@@ -2259,7 +2259,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 
 
 						root[n1].store_set_to(this, lvl + 1 - 1, set);
-						//INT_vec_print(fp, set, lvl + 1);
+						//int_vec_print(fp, set, lvl + 1);
 						print_set_special(fp, set, lvl + 1);
 
 						fp << " & " << go1 << "\\\\" << endl;
@@ -2283,7 +2283,7 @@ void poset_classification::print_data_structure_tex(INT depth, INT verbose_level
 		
 		latex_foot(fp);
 	}
-	FREE_INT(set);
+	FREE_int(set);
 	if (f_v) {
 		cout << "poset_classification::print_data_structure_tex done" << endl;
 		}
@@ -2304,7 +2304,7 @@ static void print_table1_bottom(ofstream &fp)
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_table_top(ofstream &fp, INT f_permutation_degree_is_small)
+static void print_table_top(ofstream &fp, int f_permutation_degree_is_small)
 {
 	fp << "\\begin{tabular}{|r|r|r|r|r";
 	if (f_permutation_degree_is_small) {
@@ -2327,9 +2327,9 @@ static void print_table_bottom(ofstream &fp)
 	fp << "\\end{tabular}" << endl;
 }
 
-static void print_set_special(ofstream &fp, INT *set, INT sz)
+static void print_set_special(ofstream &fp, int *set, int sz)
 {
-	INT i;
+	int i;
 
 	fp << "(";
 	for (i = 0; i < sz; i++) {

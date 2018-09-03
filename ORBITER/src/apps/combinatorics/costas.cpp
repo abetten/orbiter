@@ -8,34 +8,34 @@
 
 #include "orbiter.h"
 
-INT t0 = 0;
+int t0 = 0;
 
-void read(const char *fname, INT verbose_level);
-void welch(INT q, INT verbose_level);
-void Lempel_Golomb(INT q, INT verbose_level);
-void costas(INT n, INT verbose_level);
-INT test(INT *A, INT n);
-INT test_recursion(INT *A, INT n, INT i);
-void recursion(INT i, INT n);
-INT lex_compare(INT *A, INT *B, INT n);
-void make_canonical(INT *A, INT *Canonical, INT n, INT verbose_level);
-INT is_lexleast(INT *A, INT n, INT verbose_level);
-void perm_rotate_right(INT *A, INT *B, INT n, INT verbose_level);
-void perm_flip_at_vertical_axis(INT *A, INT *B, INT n, INT verbose_level);
+void read(const char *fname, int verbose_level);
+void welch(int q, int verbose_level);
+void Lempel_Golomb(int q, int verbose_level);
+void costas(int n, int verbose_level);
+int test(int *A, int n);
+int test_recursion(int *A, int n, int i);
+void recursion(int i, int n);
+int lex_compare(int *A, int *B, int n);
+void make_canonical(int *A, int *Canonical, int n, int verbose_level);
+int is_lexleast(int *A, int n, int verbose_level);
+void perm_rotate_right(int *A, int *B, int n, int verbose_level);
+void perm_flip_at_vertical_axis(int *A, int *B, int n, int verbose_level);
 
 #define MY_BUFSIZE 1000000
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_welch = FALSE;
-	INT welch_q = 0;
-	INT f_LG = FALSE;
-	INT LG_q = 0;
-	INT f_r = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n = 0;
+	int f_welch = FALSE;
+	int welch_q = 0;
+	int f_LG = FALSE;
+	int LG_q = 0;
+	int f_r = FALSE;
 	const char *fname = NULL;
 	
  	t0 = os_ticks();
@@ -89,25 +89,25 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-	//INT n;
-	INT *C;
-	INT *A;
-	INT *B;
-	INT *A1;
-	INT *A2;
-	INT *A3;
-	INT *f_taken;
-	INT **D;
-	INT nb_sol = 0;
-	INT nb_sol_lexleast = 0;
+	//int n;
+	int *C;
+	int *A;
+	int *B;
+	int *A1;
+	int *A2;
+	int *A3;
+	int *f_taken;
+	int **D;
+	int nb_sol = 0;
+	int nb_sol_lexleast = 0;
 	char fname1[1000];
 	char fname2[1000];
 	ofstream *fp1;
 	ofstream *fp2;
 
-void read(const char *fname, INT verbose_level)
+void read(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "read fname=" << fname << endl;
@@ -116,9 +116,9 @@ void read(const char *fname, INT verbose_level)
 
 	char *buf;
 	char *p_buf;
-	INT nb_sol, nb_sol1;
-	INT a, sz, i, j, n;
-	INT *Sol;
+	int nb_sol, nb_sol1;
+	int a, sz, i, j, n;
+	int *Sol;
 
 	if (file_size(fname) < 0) {
 		return;
@@ -157,15 +157,15 @@ void read(const char *fname, INT verbose_level)
 
 	cout << "reading a file with " << nb_sol << " solutions of size " << sz << endl;
 
-	A = NEW_INT(n);
-	INT_vec_zero(A, n);
-	B = NEW_INT(n);
-	A1 = NEW_INT(n);
-	A2 = NEW_INT(n);
-	A3 = NEW_INT(n);
+	A = NEW_int(n);
+	int_vec_zero(A, n);
+	B = NEW_int(n);
+	A1 = NEW_int(n);
+	A2 = NEW_int(n);
+	A3 = NEW_int(n);
 
 
-	Sol = NEW_INT(nb_sol * sz);
+	Sol = NEW_int(nb_sol * sz);
 	
 	nb_sol1 = 0;
 	{
@@ -190,7 +190,7 @@ void read(const char *fname, INT verbose_level)
 	}
 
 	cout << "The solutions are:" << endl;
-	INT_matrix_print(Sol, nb_sol, sz);
+	int_matrix_print(Sol, nb_sol, sz);
 
 	for (i = 0; i < nb_sol; i++) {
 		cout << i << " : ";
@@ -200,7 +200,7 @@ void read(const char *fname, INT verbose_level)
 
 
 	for (i = 0; i < nb_sol; i++) {
-		INT_vec_copy(Sol + i * n, A, n);
+		int_vec_copy(Sol + i * n, A, n);
 		if (A[0] == 0) {
 			for (j = 1; j < n; j++) {
 				A[j - 1] = A[j] - 1;
@@ -208,17 +208,17 @@ void read(const char *fname, INT verbose_level)
 			n--;
 			make_canonical(A, B, n, FALSE /* verbose_level */);
 			cout << i << " derived is ";
-			INT_vec_print(cout, B, n);
+			int_vec_print(cout, B, n);
 			cout << endl;
 			n++;
 			}
 		}
 }
 
-void welch(INT q, INT verbose_level)
+void welch(int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, lambda, k, ci, alpha, j, n, p, e;
+	int f_v = (verbose_level >= 1);
+	int i, lambda, k, ci, alpha, j, n, p, e;
 	finite_field *F;
 
 	if (f_v) {
@@ -230,18 +230,18 @@ void welch(INT q, INT verbose_level)
 		//exit(1);
 		}
 	n = q - 1;
-	A = NEW_INT(n);
-	INT_vec_zero(A, n);
-	B = NEW_INT(n);
-	A1 = NEW_INT(n);
-	A2 = NEW_INT(n);
-	A3 = NEW_INT(n);
+	A = NEW_int(n);
+	int_vec_zero(A, n);
+	B = NEW_int(n);
+	A1 = NEW_int(n);
+	A2 = NEW_int(n);
+	A3 = NEW_int(n);
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	for (lambda = 1; lambda < q; lambda++) {
 		for (k = 1; k < q; k++) {
-			if (gcd_INT(k, q - 1) == 1) {
+			if (gcd_int(k, q - 1) == 1) {
 				alpha = F->alpha_power(k);
 				for (i = 0; i < q - 1; i++) {
 					ci = F->mult(lambda, F->power(alpha, i));
@@ -261,9 +261,9 @@ void welch(INT q, INT verbose_level)
 					make_canonical(A, B, n, FALSE /* verbose_level */);
 					if (f_v) {
 						cout << "created Welch array lambda=" << lambda << " k=" << k << " : ";
-						INT_vec_print(cout, A, n);
+						int_vec_print(cout, A, n);
 						cout << " canonical : ";
-						INT_vec_print(cout, B, n);
+						int_vec_print(cout, B, n);
 						cout << endl;
 						if (B[0] == 0) {
 							for (j = 1; j < n; j++) {
@@ -271,11 +271,11 @@ void welch(INT q, INT verbose_level)
 								}
 							n--;
 							cout << i << " derived is ";
-							INT_vec_print(cout, A, n);
+							int_vec_print(cout, A, n);
 
 							make_canonical(A, B, n, FALSE /* verbose_level */);
 							cout << ", canonical is ";
-							INT_vec_print(cout, B, n);
+							int_vec_print(cout, B, n);
 							cout << endl;
 
 							if (B[0] == 0) {
@@ -284,11 +284,11 @@ void welch(INT q, INT verbose_level)
 									}
 								n--;
 								cout << i << " derived twice is ";
-								INT_vec_print(cout, A, n);
+								int_vec_print(cout, A, n);
 							
 								make_canonical(A, B, n, FALSE /* verbose_level */);
 								cout << ", canonical ";
-								INT_vec_print(cout, B, n);
+								int_vec_print(cout, B, n);
 								cout << endl;
 								n++;
 								}
@@ -302,39 +302,39 @@ void welch(INT q, INT verbose_level)
 		}
 
 	delete F;
-	FREE_INT(A);
-	FREE_INT(B);
-	FREE_INT(A1);
-	FREE_INT(A2);
-	FREE_INT(A3);
+	FREE_int(A);
+	FREE_int(B);
+	FREE_int(A1);
+	FREE_int(A2);
+	FREE_int(A3);
 }
 
-void Lempel_Golomb(INT q, INT verbose_level)
+void Lempel_Golomb(int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT n, i, k1, k2, k2v, alpha, beta, ai, bi, l1, l2, g, v, j;
+	int f_v = (verbose_level >= 1);
+	int n, i, k1, k2, k2v, alpha, beta, ai, bi, l1, l2, g, v, j;
 	finite_field *F;
 
 	if (f_v) {
 		cout << "Lempel_Golomb q=" << q << endl;
 		}
 	n = q - 2;
-	A = NEW_INT(n);
-	INT_vec_zero(A, n);
-	B = NEW_INT(n);
-	A1 = NEW_INT(n);
-	A2 = NEW_INT(n);
-	A3 = NEW_INT(n);
+	A = NEW_int(n);
+	int_vec_zero(A, n);
+	B = NEW_int(n);
+	A1 = NEW_int(n);
+	A2 = NEW_int(n);
+	A3 = NEW_int(n);
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
 
 	for (k1 = 1; k1 < q; k1++) {
-		if (gcd_INT(k1, q - 1) == 1) {
+		if (gcd_int(k1, q - 1) == 1) {
 			alpha = F->alpha_power(k1);
 			for (k2 = 1; k2 < q; k2++) {
-				if (gcd_INT(k2, q - 1) == 1) {
+				if (gcd_int(k2, q - 1) == 1) {
 					//cout << "before extended_gcd k2=" << k2 << " q-1=" << q - 1 << endl;
-					extended_gcd_INT(k2, q - 1, g, k2v, v);
+					extended_gcd_int(k2, q - 1, g, k2v, v);
 					//cout << "k2v=" << k2v << endl;
 					while (k2v < 0) {
 						k2v += q - 1;
@@ -362,9 +362,9 @@ void Lempel_Golomb(INT q, INT verbose_level)
 					make_canonical(A, B, n, FALSE /* verbose_level */);
 					if (f_v) {
 						cout << "created Lempel_Golomb array k1=" << k1 << " k2=" << k2 << " : ";
-						INT_vec_print(cout, A, n);
+						int_vec_print(cout, A, n);
 						cout << " canonical : ";
-						INT_vec_print(cout, B, n);
+						int_vec_print(cout, B, n);
 						cout << endl;
 						if (B[0] == 0) {
 							for (j = 1; j < n; j++) {
@@ -373,7 +373,7 @@ void Lempel_Golomb(INT q, INT verbose_level)
 							n--;
 							make_canonical(A, B, n, FALSE /* verbose_level */);
 							cout << i << " derived is ";
-							INT_vec_print(cout, B, n);
+							int_vec_print(cout, B, n);
 							cout << endl;
 
 							if (B[0] == 0) {
@@ -383,7 +383,7 @@ void Lempel_Golomb(INT q, INT verbose_level)
 								n--;
 								make_canonical(A, B, n, FALSE /* verbose_level */);
 								cout << i << " derived twice is ";
-								INT_vec_print(cout, B, n);
+								int_vec_print(cout, B, n);
 								cout << endl;
 								n++;
 								}
@@ -397,23 +397,23 @@ void Lempel_Golomb(INT q, INT verbose_level)
 		}
 
 	FREE_OBJECT(F);
-	FREE_INT(A);
-	FREE_INT(B);
-	FREE_INT(A1);
-	FREE_INT(A2);
-	FREE_INT(A3);
+	FREE_int(A);
+	FREE_int(B);
+	FREE_int(A1);
+	FREE_int(A2);
+	FREE_int(A3);
 }
 
-void costas(INT n, INT verbose_level)
+void costas(int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "costas n=" << n << endl;
 		}
-	sprintf(fname1, "costas_%ld.txt", n);
-	sprintf(fname2, "costas_%ld_lexleast.txt", n);
+	sprintf(fname1, "costas_%d.txt", n);
+	sprintf(fname2, "costas_%d_lexleast.txt", n);
 
 	{
 	ofstream Fp1(fname1);
@@ -421,19 +421,19 @@ void costas(INT n, INT verbose_level)
 
 	fp1 = &Fp1;
 	fp2 = &Fp2;
-	C = NEW_INT(n * n);
-	INT_vec_zero(C, n * n);
-	A = NEW_INT(n);
-	INT_vec_zero(A, n);
-	A1 = NEW_INT(n);
-	A2 = NEW_INT(n);
-	A3 = NEW_INT(n);
-	f_taken = NEW_INT(n);
-	INT_vec_zero(f_taken, n);
-	D = NEW_PINT(n);
+	C = NEW_int(n * n);
+	int_vec_zero(C, n * n);
+	A = NEW_int(n);
+	int_vec_zero(A, n);
+	A1 = NEW_int(n);
+	A2 = NEW_int(n);
+	A3 = NEW_int(n);
+	f_taken = NEW_int(n);
+	int_vec_zero(f_taken, n);
+	D = NEW_pint(n);
 	for (i = 0; i < n; i++) {
-		D[i] = NEW_INT(2 * n);
-		INT_vec_zero(D[i], 2 * n);
+		D[i] = NEW_int(2 * n);
+		int_vec_zero(D[i], 2 * n);
 		}
 	
 	nb_sol = 0;
@@ -448,43 +448,43 @@ void costas(INT n, INT verbose_level)
 	Fp2 << "-1 " << nb_sol_lexleast << endl;
 	}
 	
-	FREE_INT(C);
-	FREE_INT(A);
-	FREE_INT(A1);
-	FREE_INT(A2);
-	FREE_INT(A3);
-	FREE_INT(f_taken);
+	FREE_int(C);
+	FREE_int(A);
+	FREE_int(A1);
+	FREE_int(A2);
+	FREE_int(A3);
+	FREE_int(f_taken);
 	for (i = 0; i < n; i++) {
-		FREE_INT(D[i]);
+		FREE_int(D[i]);
 		}
-	FREE_PINT(D);
+	FREE_pint(D);
 }
 
-INT test(INT *A, INT n)
+int test(int *A, int n)
 {
-	INT i, ret;
+	int i, ret;
 	
-	f_taken = NEW_INT(n);
-	INT_vec_zero(f_taken, n);
-	D = NEW_PINT(n);
+	f_taken = NEW_int(n);
+	int_vec_zero(f_taken, n);
+	D = NEW_pint(n);
 	for (i = 0; i < n; i++) {
-		D[i] = NEW_INT(2 * n);
-		INT_vec_zero(D[i], 2 * n);
+		D[i] = NEW_int(2 * n);
+		int_vec_zero(D[i], 2 * n);
 		}
 	ret = test_recursion(A, n, 0);
 
 	for (i = 0; i < n; i++) {
-		FREE_INT(D[i]);
+		FREE_int(D[i]);
 		}
-	FREE_PINT(D);
-	FREE_INT(f_taken);
+	FREE_pint(D);
+	FREE_int(f_taken);
 	return ret;
 }
 
 
-INT test_recursion(INT *A, INT n, INT i)
+int test_recursion(int *A, int n, int i)
 {
-	INT j, h, x, y;
+	int j, h, x, y;
 
 	if (i == n) {
 		return TRUE;
@@ -509,9 +509,9 @@ INT test_recursion(INT *A, INT n, INT i)
 	return TRUE;
 }
 
-void recursion(INT i, INT n)
+void recursion(int i, int n)
 {
-	INT j, h, x, y, u;
+	int j, h, x, y, u;
 	
 	if (i == n) {
 		nb_sol++;
@@ -524,7 +524,7 @@ void recursion(INT i, INT n)
 
 		if (is_lexleast(A, n, FALSE /* verbose_level */)) {
 			cout << "lexleast solution " << nb_sol << " : ";
-			INT_vec_print(cout, A, n);
+			int_vec_print(cout, A, n);
 			cout << endl;
 			nb_sol_lexleast++;
 			*fp2 << n;
@@ -536,7 +536,7 @@ void recursion(INT i, INT n)
 			}
 		else {
 			cout << "solution " << nb_sol << " : ";
-			INT_vec_print(cout, A, n);
+			int_vec_print(cout, A, n);
 			cout << " is not lexleast" << endl;
 			return;
 			}
@@ -589,9 +589,9 @@ void recursion(INT i, INT n)
 		}
 }
 
-INT lex_compare(INT *A, INT *B, INT n)
+int lex_compare(int *A, int *B, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		if (A[i] < B[i]) {
@@ -604,57 +604,57 @@ INT lex_compare(INT *A, INT *B, INT n)
 	return 0;
 }
 
-void make_canonical(INT *A, INT *Canonical, INT n, INT verbose_level)
+void make_canonical(int *A, int *Canonical, int n, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 
-	INT_vec_copy(A, A3, n);
+	int_vec_copy(A, A3, n);
 
 	perm_rotate_right(A, A1, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A1, n) == 1) {
-		INT_vec_copy(A1, A3, n);
+		int_vec_copy(A1, A3, n);
 		}
 	perm_rotate_right(A1, A2, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A2, n) == 1) {
-		INT_vec_copy(A2, A3, n);
+		int_vec_copy(A2, A3, n);
 		}
 	perm_rotate_right(A2, A1, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A1, n) == 1) {
-		INT_vec_copy(A1, A3, n);
+		int_vec_copy(A1, A3, n);
 		}
 	perm_flip_at_vertical_axis(A1, A2, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A2, n) == 1) {
-		INT_vec_copy(A2, A3, n);
+		int_vec_copy(A2, A3, n);
 		}
 	perm_rotate_right(A2, A1, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A1, n) == 1) {
-		INT_vec_copy(A1, A3, n);
+		int_vec_copy(A1, A3, n);
 		}
 	perm_rotate_right(A1, A2, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A2, n) == 1) {
-		INT_vec_copy(A2, A3, n);
+		int_vec_copy(A2, A3, n);
 		}
 	perm_rotate_right(A2, A1, n, FALSE /* verbose_level */);
 	if (lex_compare(A3, A1, n) == 1) {
-		INT_vec_copy(A1, A3, n);
+		int_vec_copy(A1, A3, n);
 		}
-	INT_vec_copy(A3, Canonical, n);
+	int_vec_copy(A3, Canonical, n);
 }
 
-INT is_lexleast(INT *A, INT n, INT verbose_level)
+int is_lexleast(int *A, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "is_lexleast testing ";
-		INT_vec_print(cout, A, n);
+		int_vec_print(cout, A, n);
 		cout << endl;
 		}
 	perm_rotate_right(A, A1, n, FALSE /* verbose_level */);
 	if (lex_compare(A, A1, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after one rotation: ";
-			INT_vec_print(cout, A1, n);
+			int_vec_print(cout, A1, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -663,7 +663,7 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	if (lex_compare(A, A2, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after two rotations: ";
-			INT_vec_print(cout, A2, n);
+			int_vec_print(cout, A2, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -672,7 +672,7 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	if (lex_compare(A, A1, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after three rotations: ";
-			INT_vec_print(cout, A1, n);
+			int_vec_print(cout, A1, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -681,7 +681,7 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	if (lex_compare(A, A1, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after flip: ";
-			INT_vec_print(cout, A1, n);
+			int_vec_print(cout, A1, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -690,7 +690,7 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	if (lex_compare(A, A2, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after flip and one rotation: ";
-			INT_vec_print(cout, A2, n);
+			int_vec_print(cout, A2, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -699,7 +699,7 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	if (lex_compare(A, A1, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after flip and two rotations: ";
-			INT_vec_print(cout, A1, n);
+			int_vec_print(cout, A1, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -708,7 +708,7 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	if (lex_compare(A, A2, n) == 1) {
 		if (f_v) {
 			cout << "not lexleast after flip and three rotation: ";
-			INT_vec_print(cout, A2, n);
+			int_vec_print(cout, A2, n);
 			cout << endl;
 			}
 		return FALSE;
@@ -719,10 +719,10 @@ INT is_lexleast(INT *A, INT n, INT verbose_level)
 	return TRUE;
 }
 
-void perm_rotate_right(INT *A, INT *B, INT n, INT verbose_level)
+void perm_rotate_right(int *A, int *B, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "perm_rotate_right" << endl;
@@ -736,10 +736,10 @@ void perm_rotate_right(INT *A, INT *B, INT n, INT verbose_level)
 		}
 }
 
-void perm_flip_at_vertical_axis(INT *A, INT *B, INT n, INT verbose_level)
+void perm_flip_at_vertical_axis(int *A, int *B, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "perm_flip_at_vertical_axis" << endl;

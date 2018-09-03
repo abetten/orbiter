@@ -7,10 +7,10 @@
 #include "groups_and_group_actions.h"
 
 void action::init_action_on_lines(action *A,
-		finite_field *F, INT n, INT verbose_level)
+		finite_field *F, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	action_on_grassmannian *A_lines;
 	grassmann *Grass_lines;
 
@@ -80,10 +80,10 @@ void action::init_action_on_lines(action *A,
 
 void action::induced_action_by_representation_on_conic(
 	action *A_old,
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	action_by_representation *Rep; // do not free
 	//matrix_group *M;
@@ -128,7 +128,7 @@ void action::induced_action_by_representation_on_conic(
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -150,10 +150,10 @@ void action::induced_action_by_representation_on_conic(
 
 void action::induced_action_on_cosets(
 	action_on_cosets *A_on_cosets,
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -162,11 +162,11 @@ void action::induced_action_on_cosets(
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_on_cosets->A_linear;
-	sprintf(group_prefix, "%s_Cosets_%ld",
+	sprintf(group_prefix, "%s_Cosets_%d",
 			A->label, A_on_cosets->dimension_of_subspace);
-	sprintf(label, "%s_Cosets_%ld",
+	sprintf(label, "%s_Cosets_%d",
 			A->label, A_on_cosets->dimension_of_subspace);
-	sprintf(label_tex, "%s Cosets_%ld",
+	sprintf(label_tex, "%s Cosets_%d",
 			A->label_tex, A_on_cosets->dimension_of_subspace);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -203,7 +203,7 @@ void action::induced_action_on_cosets(
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -224,10 +224,10 @@ void action::induced_action_on_cosets(
 
 void action::induced_action_on_factor_space(action *A_old, 
 	action_on_factor_space *AF, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -236,11 +236,11 @@ void action::induced_action_on_factor_space(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_Factorspace_%ld_%ld_%ld",
+	sprintf(group_prefix, "%s_Factorspace_%d_%d_%d",
 			A->label, AF->len, AF->factor_space_len, AF->F->q);
-	sprintf(label, "%s_Factorspace_%ld_%ld_%ld",
+	sprintf(label, "%s_Factorspace_%d_%d_%d",
 			A->label, AF->len, AF->factor_space_len, AF->F->q);
-	sprintf(label_tex, "%s Factorspace_%ld_%ld_%ld",
+	sprintf(label_tex, "%s Factorspace_%d_%d_%d",
 			A->label_tex, AF->len, AF->factor_space_len, AF->F->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -277,7 +277,7 @@ void action::induced_action_on_factor_space(action *A_old,
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -294,9 +294,9 @@ void action::induced_action_on_factor_space(action *A_old,
 		}
 }
 
-action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
+action *action::induced_action_on_grassmannian(int k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_grassmannian *AG;
 	action *A;
 	matrix_group *M;
@@ -306,9 +306,9 @@ action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
 		}
 	A = NEW_OBJECT(action);
 
-	sprintf(A->group_prefix, "%s_on_%ld_subspaces", label, k);
-	sprintf(A->label, "%s_on_%ld_subspaces", label, k);
-	sprintf(A->label_tex, "%s on %ld subspaces", label, k);
+	sprintf(A->group_prefix, "%s_on_%d_subspaces", label, k);
+	sprintf(A->label, "%s_on_%d_subspaces", label, k);
+	sprintf(A->label_tex, "%s on %d subspaces", label, k);
 	if (f_v) {
 		cout << "the old_action " << label
 			<< " has base_length = " << base_len
@@ -337,7 +337,7 @@ action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
 	
 	A->f_has_strong_generators = FALSE;
 	
-	A->degree = AG->degree.as_INT();
+	A->degree = AG->degree.as_int();
 	A->base_len = 0;
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
@@ -347,7 +347,7 @@ action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
 	
 	
 	
-	A->elt_size_in_INT = elt_size_in_INT;
+	A->elt_size_in_int = elt_size_in_int;
 	A->coded_elt_size_in_char = coded_elt_size_in_char;
 	
 	if (f_v) {
@@ -371,10 +371,10 @@ action *action::induced_action_on_grassmannian(INT k, INT verbose_level)
 
 void action::induced_action_on_grassmannian(action *A_old, 
 	action_on_grassmannian *AG, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -383,11 +383,11 @@ void action::induced_action_on_grassmannian(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_Grassmann_%ld_%ld_%ld",
+	sprintf(group_prefix, "%s_Grassmann_%d_%d_%d",
 			A->label, AG->n, AG->k, AG->q);
-	sprintf(label, "%s_Grassmann_%ld_%ld_%ld",
+	sprintf(label, "%s_Grassmann_%d_%d_%d",
 			A->label, AG->n, AG->k, AG->q);
-	sprintf(label_tex, "%s Grassmann_%ld_%ld_%ld",
+	sprintf(label_tex, "%s Grassmann_%d_%d_%d",
 			A->label_tex, AG->n, AG->k, AG->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -435,7 +435,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	
 	f_has_strong_generators = FALSE;
 	
-	degree = AG->degree.as_INT();
+	degree = AG->degree.as_int();
 	base_len = 0;
 	if (f_v) {
 		cout << "action::induced_action_on_grassmannian "
@@ -445,7 +445,7 @@ void action::induced_action_on_grassmannian(action *A_old,
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	if (f_v) {
@@ -474,10 +474,10 @@ void action::induced_action_on_grassmannian(action *A_old,
 
 void action::induced_action_on_spread_set(action *A_old, 
 	action_on_spread_set *AS, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -486,11 +486,11 @@ void action::induced_action_on_spread_set(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_SpreadSet_%ld_%ld",
+	sprintf(group_prefix, "%s_SpreadSet_%d_%d",
 			A->label, AS->k, AS->q);
-	sprintf(label, "%s_SpreadSet_%ld_%ld",
+	sprintf(label, "%s_SpreadSet_%d_%d",
 			A->label, AS->k, AS->q);
-	sprintf(label_tex, "%s SpreadSet_%ld_%ld",
+	sprintf(label_tex, "%s SpreadSet_%d_%d",
 			A->label_tex, AS->k, AS->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -532,7 +532,7 @@ void action::induced_action_on_spread_set(action *A_old,
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -554,10 +554,10 @@ void action::induced_action_on_spread_set(action *A_old,
 
 void action::induced_action_on_orthogonal(action *A_old, 
 	action_on_orthogonal *AO, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -567,27 +567,27 @@ void action::induced_action_on_orthogonal(action *A_old,
 		}
 	A = A_old;
 	if (AO->f_on_points) {
-		sprintf(group_prefix, "%s_orthogonal_on_points_%ld_%ld_%ld",
+		sprintf(group_prefix, "%s_orthogonal_on_points_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label, "%s_orthogonal_on_points_%ld_%ld_%ld",
+		sprintf(label, "%s_orthogonal_on_points_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label_tex, "%s orthogonal_on_points_%ld_%ld_%ld",
+		sprintf(label_tex, "%s orthogonal_on_points_%d_%d_%d",
 				A->label_tex, AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	else if (AO->f_on_lines) {
-		sprintf(group_prefix, "%s_orthogonal_on_lines_%ld_%ld_%ld",
+		sprintf(group_prefix, "%s_orthogonal_on_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label, "%s_orthogonal_on_lines_%ld_%ld_%ld",
+		sprintf(label, "%s_orthogonal_on_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label_tex, "%s orthogonal_on_lines_%ld_%ld_%ld",
+		sprintf(label_tex, "%s orthogonal_on_lines_%d_%d_%d",
 				A->label_tex, AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	else if (AO->f_on_points_and_lines) {
-		sprintf(group_prefix, "%s_orthogonal_on_points_and_lines_%ld_%ld_%ld",
+		sprintf(group_prefix, "%s_orthogonal_on_points_and_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label, "%s_orthogonal_on_points_and_lines_%ld_%ld_%ld",
+		sprintf(label, "%s_orthogonal_on_points_and_lines_%d_%d_%d",
 				A->label, AO->O->epsilon, AO->O->n, AO->O->q);
-		sprintf(label_tex, "%s orthogonal_on_points_and_lines_%ld_%ld_%ld",
+		sprintf(label_tex, "%s orthogonal_on_points_and_lines_%d_%d_%d",
 				A->label_tex, AO->O->epsilon, AO->O->n, AO->O->q);
 		}
 	if (f_v) {
@@ -625,7 +625,7 @@ void action::induced_action_on_orthogonal(action *A_old,
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -646,10 +646,10 @@ void action::induced_action_on_orthogonal(action *A_old,
 
 void action::induced_action_on_wedge_product(action *A_old, 
 	action_on_wedge_product *AW, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -690,7 +690,7 @@ void action::induced_action_on_wedge_product(action *A_old,
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -711,10 +711,10 @@ void action::induced_action_on_wedge_product(action *A_old,
 
 void action::induced_action_by_subfield_structure(action *A_old, 
 	action_by_subfield_structure *SubfieldStructure, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	//matrix_group *M;
 	
@@ -723,11 +723,11 @@ void action::induced_action_by_subfield_structure(action *A_old,
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
-	sprintf(group_prefix, "%s_subfield_%ld",
+	sprintf(group_prefix, "%s_subfield_%d",
 			A->label, SubfieldStructure->q);
-	sprintf(label, "%s_subfield_%ld",
+	sprintf(label, "%s_subfield_%d",
 			A->label, SubfieldStructure->q);
-	sprintf(label_tex, "%s subfield %ld",
+	sprintf(label_tex, "%s subfield %d",
 			A->label_tex, SubfieldStructure->q);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -758,7 +758,7 @@ void action::induced_action_by_subfield_structure(action *A_old,
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -780,9 +780,9 @@ void action::induced_action_by_subfield_structure(action *A_old,
 
 
 void action::induced_action_on_determinant(
-		sims *old_G, INT verbose_level)
+		sims *old_G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_determinant *AD;
 	action *A;
 	matrix_group *M;
@@ -823,7 +823,7 @@ void action::induced_action_on_determinant(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -837,9 +837,9 @@ void action::induced_action_on_determinant(
 }
 
 void action::induced_action_on_sign(
-		sims *old_G, INT verbose_level)
+		sims *old_G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_sign *OnSign;
 	action *A;
 	
@@ -873,7 +873,7 @@ void action::induced_action_on_sign(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -887,13 +887,13 @@ void action::induced_action_on_sign(
 }
 
 void action::induced_action_by_conjugation(sims *old_G, 
-	sims *Base_group, INT f_ownership,
-	INT f_basis, INT verbose_level)
+	sims *Base_group, int f_ownership,
+	int f_basis, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_by_conjugation *ABC;
 	longinteger_object go;
-	INT goi;
+	int goi;
 	action *A;
 	
 	A = Base_group->A;
@@ -904,13 +904,13 @@ void action::induced_action_by_conjugation(sims *old_G,
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 		}
-	sprintf(group_prefix, "%s_C%ld", A->label, goi);
-	sprintf(label, "%s_C%ld", A->label, goi);
-	sprintf(label_tex, "%s C%ld", A->label_tex, goi);
+	sprintf(group_prefix, "%s_C%d", A->label, goi);
+	sprintf(label, "%s_C%d", A->label, goi);
+	sprintf(label_tex, "%s C%d", A->label_tex, goi);
 	f_has_subaction = TRUE;
 	subaction = A;
 	ABC = NEW_OBJECT(action_by_conjugation);
@@ -929,7 +929,7 @@ void action::induced_action_by_conjugation(sims *old_G,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -949,13 +949,13 @@ void action::induced_action_by_conjugation(sims *old_G,
 }
 
 void action::induced_action_by_right_multiplication(
-	INT f_basis, sims *old_G,
-	sims *Base_group, INT f_ownership, INT verbose_level)
+	int f_basis, sims *old_G,
+	sims *Base_group, int f_ownership, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_by_right_multiplication *ABRM;
 	longinteger_object go;
-	INT goi;
+	int goi;
 	action *A;
 	
 	A = Base_group->A;
@@ -966,10 +966,10 @@ void action::induced_action_by_right_multiplication(
 			<< " and degree " << A->degree << endl;
 		}
 	Base_group->group_order(go);
-	goi = go.as_INT();
-	sprintf(group_prefix, "%s_R%ld", A->label, goi);
-	sprintf(label, "%s_R%ld", A->label, goi);
-	sprintf(label_tex, "%s R%ld", A->label_tex, goi);
+	goi = go.as_int();
+	sprintf(group_prefix, "%s_R%d", A->label, goi);
+	sprintf(label, "%s_R%d", A->label, goi);
+	sprintf(label_tex, "%s R%d", A->label_tex, goi);
 	if (f_v) {
 		cout << "we are acting on a group of order " << goi << endl;
 		}
@@ -991,7 +991,7 @@ void action::induced_action_by_right_multiplication(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1007,10 +1007,10 @@ void action::induced_action_by_right_multiplication(
 }
 
 action *action::create_induced_action_on_sets(
-		INT nb_sets, INT set_size, INT *sets,
-		INT verbose_level)
+		int nb_sets, int set_size, int *sets,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	
 	if (f_v) {
@@ -1037,11 +1037,11 @@ action *action::create_induced_action_on_sets(
 
 void action::induced_action_on_sets(
 	action &old_action, sims *old_G,
-	INT nb_sets, INT set_size, INT *sets, 
-	INT f_induce_action, INT verbose_level)
+	int nb_sets, int set_size, int *sets, 
+	int f_induce_action, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = FALSE; // (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; // (verbose_level >= 2);
 	action_on_sets *AOS;
 	
 	if (f_v) {
@@ -1055,11 +1055,11 @@ void action::induced_action_on_sets(
 		cout << "action::induced_action_on_sets "
 				"verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_S%ld",
+	sprintf(group_prefix, "%s_S%d",
 			old_action.label, set_size);
-	sprintf(label, "%s_S%ld",
+	sprintf(label, "%s_S%d",
 			old_action.label, set_size);
-	sprintf(label_tex, "%s S%ld",
+	sprintf(label_tex, "%s S%d",
 			old_action.label_tex, set_size);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
@@ -1093,7 +1093,7 @@ void action::induced_action_on_sets(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1120,10 +1120,10 @@ void action::induced_action_on_sets(
 }
 
 action *action::create_induced_action_on_subgroups(sims *S, 
-	INT nb_subgroups, INT group_order, subgroup **Subgroups,
-	INT verbose_level)
+	int nb_subgroups, int group_order, subgroup **Subgroups,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	
 	if (f_v) {
@@ -1142,11 +1142,11 @@ action *action::create_induced_action_on_subgroups(sims *S,
 
 void action::induced_action_on_subgroups(
 	action *old_action, sims *S,
-	INT nb_subgroups, INT group_order, subgroup **Subgroups, 
-	INT verbose_level)
+	int nb_subgroups, int group_order, subgroup **Subgroups, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = FALSE; // (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = FALSE; // (verbose_level >= 2);
 	action_on_subgroups *AOS;
 	
 	if (f_v) {
@@ -1158,11 +1158,11 @@ void action::induced_action_on_subgroups(
 		cout << "action::induced_action_on_subgroups "
 				"verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_on_subgroups%ld_%ld",
+	sprintf(group_prefix, "%s_on_subgroups%d_%d",
 			old_action->label, nb_subgroups, group_order);
-	sprintf(label, "%s_on_subgroups%ld_%ld",
+	sprintf(label, "%s_on_subgroups%d_%d",
 			old_action->label, nb_subgroups, group_order);
-	sprintf(label_tex, "%s on_subgroups%ld_%ld",
+	sprintf(label_tex, "%s on_subgroups%d_%d",
 			old_action->label_tex, nb_subgroups, group_order);
 	f_has_subaction = TRUE;
 	subaction = old_action;
@@ -1195,7 +1195,7 @@ void action::induced_action_on_subgroups(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action->elt_size_in_INT;
+	elt_size_in_int = old_action->elt_size_in_int;
 	coded_elt_size_in_char = old_action->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1211,10 +1211,10 @@ void action::induced_action_on_subgroups(
 
 void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	action &old_action,
-	INT f_induce_action, sims *old_G, 
-	INT *sv, INT pt, INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int *sv, int pt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_by_restriction *ABR;
 	
 	if (f_v) {
@@ -1225,11 +1225,11 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_res_sv%ld",
+	sprintf(group_prefix, "%s_res_sv%d",
 			old_action.label, pt);
-	sprintf(label, "%s_res_sv%ld",
+	sprintf(label, "%s_res_sv%d",
 			old_action.label, pt);
-	sprintf(label_tex, "%s res_sv%ld",
+	sprintf(label_tex, "%s res_sv%d",
 			old_action.label_tex, pt);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
@@ -1256,7 +1256,7 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1280,9 +1280,9 @@ void action::induced_action_by_restriction_on_orbit_with_schreier_vector(
 }
 
 action *action::restricted_action(
-		INT *points, INT nb_points, INT verbose_level)
+		int *points, int nb_points, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	action_by_restriction *ABR;
 	
@@ -1294,11 +1294,11 @@ action *action::restricted_action(
 		cout << "verbose_level = " << verbose_level << endl;
 		}
 	A = NEW_OBJECT(action);
-	sprintf(A->group_prefix, "%s_res%ld",
+	sprintf(A->group_prefix, "%s_res%d",
 			label, nb_points);
-	sprintf(A->label, "%s_res%ld",
+	sprintf(A->label, "%s_res%d",
 			label, nb_points);
-	sprintf(A->label_tex, "%s res%ld",
+	sprintf(A->label_tex, "%s res%d",
 			label_tex, nb_points);
 	A->f_has_subaction = TRUE;
 	A->subaction = this;
@@ -1322,7 +1322,7 @@ action *action::restricted_action(
 	A->allocate_base_data(0);
 	
 	
-	A->elt_size_in_INT = elt_size_in_INT;
+	A->elt_size_in_int = elt_size_in_int;
 	A->coded_elt_size_in_char = coded_elt_size_in_char;
 	
 	A->allocate_element_data();
@@ -1337,11 +1337,11 @@ action *action::restricted_action(
 
 void action::induced_action_by_restriction(
 	action &old_action,
-	INT f_induce_action, sims *old_G, 
-	INT nb_points, INT *points, INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int nb_points, int *points, int verbose_level)
 // uses action_by_restriction data type
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_by_restriction *ABR;
 	
 	if (f_v) {
@@ -1352,11 +1352,11 @@ void action::induced_action_by_restriction(
 		cout << "f_induce_action = " << f_induce_action << endl;
 		cout << "verbose_level = " << verbose_level << endl;
 		}
-	sprintf(group_prefix, "%s_res%ld",
+	sprintf(group_prefix, "%s_res%d",
 			old_action.label, nb_points);
-	sprintf(label, "%s_res%ld",
+	sprintf(label, "%s_res%d",
 			old_action.label, nb_points);
-	sprintf(label_tex, "%s res%ld",
+	sprintf(label_tex, "%s res%d",
 			old_action.label_tex, nb_points);
 	f_has_subaction = TRUE;
 	subaction = &old_action;
@@ -1380,7 +1380,7 @@ void action::induced_action_by_restriction(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1404,9 +1404,9 @@ void action::induced_action_by_restriction(
 
 void action::induced_action_on_pairs(
 	action &old_action, sims *old_G,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::induced_action_on_pairs" << endl;
@@ -1427,13 +1427,13 @@ void action::induced_action_on_pairs(
 	
 	f_has_strong_generators = FALSE;
 	
-	degree = INT_n_choose_k(old_action.degree, 2);
+	degree = int_n_choose_k(old_action.degree, 2);
 	base_len = 0;
 	init_function_pointers_induced_action();
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1447,9 +1447,9 @@ void action::induced_action_on_pairs(
 		}
 }
 
-action *action::create_induced_action_on_ordered_pairs(INT verbose_level)
+action *action::create_induced_action_on_ordered_pairs(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	
 	if (f_v) {
@@ -1467,9 +1467,9 @@ action *action::create_induced_action_on_ordered_pairs(INT verbose_level)
 
 void action::induced_action_on_ordered_pairs(
 	action &old_action, sims *old_G,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::induced_action_on_ordered_pairs" << endl;
@@ -1496,7 +1496,7 @@ void action::induced_action_on_ordered_pairs(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1513,10 +1513,10 @@ void action::induced_action_on_ordered_pairs(
 }
 
 void action::induced_action_on_k_subsets(
-	action &old_action, INT k,
-	INT verbose_level)
+	action &old_action, int k,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_k_subsets *On_k_subsets;
 	
 	if (f_v) {
@@ -1525,11 +1525,11 @@ void action::induced_action_on_k_subsets(
 			<< " has base_length = " << old_action.base_len
 			<< " and degree " << old_action.degree << endl;
 		}
-	sprintf(group_prefix, "%s_on_%ld_subsets",
+	sprintf(group_prefix, "%s_on_%d_subsets",
 			old_action.label, k);
-	sprintf(label, "%s_on_%ld_subsets",
+	sprintf(label, "%s_on_%d_subsets",
 			old_action.label, k);
-	sprintf(label_tex, "%s^{[%ld]}",
+	sprintf(label_tex, "%s^{[%d]}",
 			old_action.label_tex, k);
 
 
@@ -1552,7 +1552,7 @@ void action::induced_action_on_k_subsets(
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1565,10 +1565,10 @@ void action::induced_action_on_k_subsets(
 }
 
 void action::induced_action_on_orbits(action *old_action,
-	schreier *Sch, INT f_play_it_safe,
-	INT verbose_level)
+	schreier *Sch, int f_play_it_safe,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_orbits *On_orbits;
 	
 	if (f_v) {
@@ -1605,7 +1605,7 @@ void action::induced_action_on_orbits(action *old_action,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action->elt_size_in_INT;
+	elt_size_in_int = old_action->elt_size_in_int;
 	coded_elt_size_in_char = old_action->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1618,10 +1618,10 @@ void action::induced_action_on_orbits(action *old_action,
 }
 
 void action::induced_action_on_flags(action *old_action,
-	INT *type, INT type_len,
-	INT verbose_level)
+	int *type, int type_len,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_flags *On_flags;
 	
 	if (f_v) {
@@ -1658,7 +1658,7 @@ void action::induced_action_on_flags(action *old_action,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action->elt_size_in_INT;
+	elt_size_in_int = old_action->elt_size_in_int;
 	coded_elt_size_in_char = old_action->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1671,10 +1671,10 @@ void action::induced_action_on_flags(action *old_action,
 }
 
 void action::induced_action_on_bricks(action &old_action,
-	brick_domain *B, INT f_linear_action,
-	INT verbose_level)
+	brick_domain *B, int f_linear_action,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_bricks *On_bricks;
 	
 	if (f_v) {
@@ -1707,7 +1707,7 @@ void action::induced_action_on_bricks(action &old_action,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action.elt_size_in_INT;
+	elt_size_in_int = old_action.elt_size_in_int;
 	coded_elt_size_in_char = old_action.coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1722,9 +1722,9 @@ void action::induced_action_on_bricks(action &old_action,
 
 void action::induced_action_on_andre(action *An,
 	action *An1, andre_construction *Andre,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_andre *On_andre;
 	
 	if (f_v) {
@@ -1758,7 +1758,7 @@ void action::induced_action_on_andre(action *An,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = An1->elt_size_in_INT;
+	elt_size_in_int = An1->elt_size_in_int;
 	coded_elt_size_in_char = An1->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1771,12 +1771,12 @@ void action::induced_action_on_andre(action *An,
 }
 
 void action::setup_product_action(action *A1, action *A2,
-	INT f_use_projections, INT verbose_level)
+	int f_use_projections, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	product_action *PA;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "action::setup_product_action" << endl;
@@ -1803,7 +1803,7 @@ void action::setup_product_action(action *A1, action *A2,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = PA->elt_size_in_INT;
+	elt_size_in_int = PA->elt_size_in_int;
 	coded_elt_size_in_char = PA->coded_elt_size_in_char;
 	
 	make_element_size = A1->make_element_size + A2->make_element_size;
@@ -1843,10 +1843,10 @@ void action::setup_product_action(action *A1, action *A2,
 void action::induced_action_on_homogeneous_polynomials(
 	action *A_old,
 	homogeneous_polynomial_domain *HPD, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	action_on_homogeneous_polynomials *OnHP;
 	//matrix_group *M;
@@ -1857,9 +1857,9 @@ void action::induced_action_on_homogeneous_polynomials(
 		}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
-	sprintf(group_prefix, "%s_HP_%ld_%ld", A->label, HPD->n, HPD->degree);
-	sprintf(label, "%s_HP_%ld_%ld", A->label, HPD->n, HPD->degree);
-	sprintf(label_tex, "%s HP %ld %ld", A->label_tex, HPD->n, HPD->degree);
+	sprintf(group_prefix, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
+	sprintf(label, "%s_HP_%d_%d", A->label, HPD->n, HPD->degree);
+	sprintf(label_tex, "%s HP %d %d", A->label_tex, HPD->n, HPD->degree);
 	if (f_v) {
 		cout << "the old_action " << A->label
 			<< " has base_length = " << A->base_len
@@ -1900,7 +1900,7 @@ void action::induced_action_on_homogeneous_polynomials(
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -1922,26 +1922,27 @@ void action::induced_action_on_homogeneous_polynomials(
 void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	action *A_old,
 	homogeneous_polynomial_domain *HPD, 
-	INT *Equations, INT nb_equations, 
-	INT f_induce_action, sims *old_G, 
-	INT verbose_level)
+	int *Equations, int nb_equations, 
+	int f_induce_action, sims *old_G, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A;
 	action_on_homogeneous_polynomials *OnHP;
 	//matrix_group *M;
 	
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"f_induce_action=" << f_induce_action << endl;
 		}
 	A = A_old;
 	OnHP = NEW_OBJECT(action_on_homogeneous_polynomials);
-	sprintf(group_prefix, "%s_HP_%ld_%ld_eqn%ld",
+	sprintf(group_prefix, "%s_HP_%d_%d_eqn%d",
 			A->label, HPD->n, HPD->degree, nb_equations);
-	sprintf(label, "%s_HP_%ld_%ld_eqn%ld",
+	sprintf(label, "%s_HP_%d_%d_eqn%d",
 			A->label, HPD->n, HPD->degree, nb_equations);
-	sprintf(label_tex, "%s HP %ld %ld %ld",
+	sprintf(label_tex, "%s HP %d %d %d",
 			A->label_tex, HPD->n, HPD->degree, nb_equations);
 	if (f_v) {
 		cout << "the old_action " << A->label
@@ -1951,29 +1952,35 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	f_has_subaction = TRUE;
 	subaction = A;
 	if (A->type_G != matrix_group_t) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"action not of matrix group type" << endl;
 		exit(1);
 		}
 	//M = A->G.matrix_grp;
 
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"before OnHP->init" << endl;
 		}
 	OnHP->init(A, HPD, verbose_level);
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"after OnHP->init" << endl;
 		}
 
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"before OnHP->init_invariant_set_of_equations" << endl;
 		}
-	OnHP->init_invariant_set_of_equations(Equations, nb_equations, verbose_level);
+	OnHP->init_invariant_set_of_equations(
+			Equations, nb_equations, verbose_level);
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"after OnHP->init_invariant_set_of_equations" << endl;
 		}
 
@@ -1993,7 +2000,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 	
 	
 	
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	
 	allocate_element_data();
@@ -2004,7 +2011,8 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 		}
 
 	if (f_v) {
-		cout << "action::induced_action_on_homogeneous_polynomials_given_by_equations "
+		cout << "action::induced_action_on_homogeneous_"
+				"polynomials_given_by_equations "
 				"finished, created action " << label << endl;
 		cout << "degree=" << A->degree << endl;
 		cout << "make_element_size=" << A->make_element_size << endl;
@@ -2017,7 +2025,7 @@ void action::induced_action_on_homogeneous_polynomials_given_by_equations(
 
 
 void action::induced_action_recycle_sims(action &old_action, 
-	INT verbose_level)
+	int verbose_level)
 {
 	sims *old_G;
 	
@@ -2034,9 +2042,9 @@ void action::induced_action_recycle_sims(action &old_action,
 
 void action::induced_action_override_sims(
 	action &old_action, sims *old_G,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::induced_action_override_sims before induce" << endl;
@@ -2050,13 +2058,14 @@ void action::induced_action_override_sims(
 }
 
 void action::induce(action *old_action, sims *old_G, 
-	INT base_of_choice_len, INT *base_of_choice,
-	INT verbose_level)
-// after this procedure, action will have a sims for the group and the kernel
+	int base_of_choice_len, int *base_of_choice,
+	int verbose_level)
+// after this procedure, action will have
+// a sims for the group and the kernel
 // it will also have strong generators
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	action *subaction;
 	sims *G, *K;
 		// will become part of the action object
@@ -2064,7 +2073,7 @@ void action::induce(action *old_action, sims *old_G,
 	longinteger_object go, go1, go2, go3;
 	longinteger_object G_order, K_order;
 	longinteger_domain D;
-	INT b, i, old_base_len;
+	int b, i, old_base_len;
 	action *fallback_action;
 	
 	if (f_v) {
@@ -2111,7 +2120,7 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "subaction->base_len = " << subaction->base_len << endl;
 		if (base_of_choice_len) {
 			cout << "base of choice:" << endl;
-			INT_vec_print(cout, base_of_choice, base_of_choice_len);
+			int_vec_print(cout, base_of_choice, base_of_choice_len);
 			cout << endl;
 			}
 		else {
@@ -2174,8 +2183,10 @@ void action::induce(action *old_action, sims *old_G,
 	G->init_trivial_group(verbose_level - 2);
 	K->init_trivial_group(verbose_level - 2);
 	if (f_v) {
-		cout << "action::induce after init_trivial_group" << endl;
-		cout << "action::induce calling build_up_group_random_process" << endl;
+		cout << "action::induce "
+				"after init_trivial_group" << endl;
+		cout << "action::induce "
+				"calling build_up_group_random_process" << endl;
 		}
 
 	G->build_up_group_random_process(K, old_G, go, 
@@ -2183,7 +2194,8 @@ void action::induce(action *old_action, sims *old_G,
 		NULL /*choose_next_base_point_method*/, 
 		verbose_level);
 	if (f_v) {
-		cout << "action::induce after build_up_group_random_process" << endl;
+		cout << "action::induce "
+				"after build_up_group_random_process" << endl;
 		}
 
 	G->group_order(G_order);
@@ -2193,13 +2205,13 @@ void action::induce(action *old_action, sims *old_G,
 		cout << "found a group in action " << G->A->label
 				<< " of order " << G_order << " ";
 		cout << "transversal lengths:" << endl;
-		INT_vec_print(cout, G->orbit_len, G->A->base_len);
+		int_vec_print(cout, G->orbit_len, G->A->base_len);
 		cout << endl;
 
 		cout << "kernel in action " << K->A->label
 				<< " of order " << K_order << " ";
 		cout << "transversal lengths:" << endl;
-		INT_vec_print(cout, K->orbit_len, K->A->base_len);
+		int_vec_print(cout, K->orbit_len, K->A->base_len);
 		cout << endl;
 		}
 	D.mult(G_order, K_order, go3);
@@ -2230,30 +2242,30 @@ void action::induce(action *old_action, sims *old_G,
 		}
 }
 
-INT action::least_moved_point_at_level(INT level, INT verbose_level)
+int action::least_moved_point_at_level(int level, int verbose_level)
 {
 	return Sims->least_moved_point_at_level(level, verbose_level);
 }
 
-void action::lex_least_base_in_place(INT verbose_level)
+void action::lex_least_base_in_place(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *set;
-	INT *old_base;
-	INT i, lmp, old_base_len;
+	int f_v = (verbose_level >= 1);
+	int *set;
+	int *old_base;
+	int i, lmp, old_base_len;
 
 	if (f_v) {
 		cout << "action::lex_least_base_in_place action "
 				<< label << " base=";
-		INT_vec_print(cout, base, base_len);
+		int_vec_print(cout, base, base_len);
 		cout << endl;
 		print_info();
 		//cout << "the generators are:" << endl;
 		//Sims->print_generators();
 		}
 
-	set = NEW_INT(degree);
-	old_base = NEW_INT(base_len);
+	set = NEW_int(degree);
+	old_base = NEW_int(base_len);
 	old_base_len = base_len;
 	for (i = 0; i < base_len; i++) {
 		old_base[i] = base[i];
@@ -2291,12 +2303,12 @@ void action::lex_least_base_in_place(INT verbose_level)
 	if (f_v) {
 		cout << "action::lex_least_base_in_place "
 				"done, action " << label << " base=";
-		INT_vec_print(cout, base, base_len);
+		int_vec_print(cout, base, base_len);
 		cout << endl;
 		print_info();
 		//cout << "the generators are:" << endl;
 		//Sims->print_generators();
-		INT f_changed = FALSE;
+		int f_changed = FALSE;
 
 		if (old_base_len != base_len) {
 			f_changed = TRUE;
@@ -2312,28 +2324,28 @@ void action::lex_least_base_in_place(INT verbose_level)
 		if (f_changed) {
 			cout << "The base has changed !!!" << endl;
 			cout << "old base: ";
-			INT_vec_print(cout, old_base, old_base_len);
+			int_vec_print(cout, old_base, old_base_len);
 			cout << endl;
 			cout << "new base: ";
-			INT_vec_print(cout, base, base_len);
+			int_vec_print(cout, base, base_len);
 			cout << endl;
 			}
 		}
-	FREE_INT(old_base);
-	FREE_INT(set);
+	FREE_int(old_base);
+	FREE_int(set);
 }
 
-void action::lex_least_base(action *old_action, INT verbose_level)
+void action::lex_least_base(action *old_action, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *set;
+	int f_v = (verbose_level >= 1);
+	int *set;
 	action *A, *old_A;
-	INT i, lmp;
+	int i, lmp;
 
 	if (f_v) {
 		cout << "action::lex_least_base action "
 				<< old_action->label << " base=";
-		INT_vec_print(cout, old_action->base, old_action->base_len);
+		int_vec_print(cout, old_action->base, old_action->base_len);
 		cout << endl;
 		}
 #if 0
@@ -2350,7 +2362,7 @@ void action::lex_least_base(action *old_action, INT verbose_level)
 		}
 	A = NEW_OBJECT(action);
 
-	set = NEW_INT(old_action->degree);
+	set = NEW_int(old_action->degree);
 	
 	old_A = old_action;
 	
@@ -2380,19 +2392,19 @@ void action::lex_least_base(action *old_action, INT verbose_level)
 		}
 	base_change(old_A, old_A->base_len,
 			old_A->base, verbose_level - 1);
-	FREE_INT(set);
+	FREE_int(set);
 	if (f_v) {
 		cout << "action::lex_least_base action " << label << " base=";
-		INT_vec_print(cout, base, base_len);
+		int_vec_print(cout, base, base_len);
 		cout << endl;
 		}
 }
 
-INT action::test_if_lex_least_base(INT verbose_level)
+int action::test_if_lex_least_base(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *AA;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "action::test_if_lex_least_base:" << endl;
@@ -2418,12 +2430,12 @@ INT action::test_if_lex_least_base(INT verbose_level)
 	return TRUE;
 }
 
-void action::base_change_in_place(INT size, INT *set, INT verbose_level)
+void action::base_change_in_place(int size, int *set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_v5 = (verbose_level >= 5);
+	int f_v = (verbose_level >= 1);
+	int f_v5 = (verbose_level >= 5);
 	action *A;
-	INT i;
+	int i;
 
 	if (f_v) {
 		cout << "action::base_change_in_place" << endl;
@@ -2520,14 +2532,14 @@ void action::base_change_in_place(INT size, INT *set, INT verbose_level)
 }
 
 void action::base_change(action *old_action, 
-	INT size, INT *set, INT verbose_level)
+	int size, int *set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "action::base_change to the following set:" << endl;
-		INT_vec_print(cout, set, size);
+		int_vec_print(cout, set, size);
 		cout << endl;
 		}
 	if (!old_action->f_has_sims) {
@@ -2548,7 +2560,7 @@ void action::base_change(action *old_action,
 	allocate_base_data(0);
 	
 	
-	elt_size_in_INT = old_action->elt_size_in_INT;
+	elt_size_in_int = old_action->elt_size_in_int;
 	coded_elt_size_in_char = old_action->coded_elt_size_in_char;
 	make_element_size = old_action->make_element_size;
 	low_level_point_size = old_action->low_level_point_size;

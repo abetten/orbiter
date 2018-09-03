@@ -12,13 +12,13 @@ const char *version = "tdo_refine 7/31 2008";
 
 
 void print_distribution(ostream &ost, 
-	INT *types, INT nb_types, INT type_len,  
-	INT *distributions, INT nb_distributions);
-INT compare_func_INT_vec(void *a, void *b, void *data);
-INT compare_func_INT_vec_inverse(void *a, void *b, void *data);
-void distribution_reverse_sorting(INT f_increasing, 
-	INT *types, INT nb_types, INT type_len,  
-	INT *distributions, INT nb_distributions);
+	int *types, int nb_types, int type_len,  
+	int *distributions, int nb_distributions);
+int compare_func_int_vec(void *a, void *b, void *data);
+int compare_func_int_vec_inverse(void *a, void *b, void *data);
+void distribution_reverse_sorting(int f_increasing, 
+	int *types, int nb_types, int type_len,  
+	int *distributions, int nb_distributions);
 
 void print_usage()
 {
@@ -72,36 +72,36 @@ typedef class tdo_parameter_calculation tdo_parameter_calculation;
 class tdo_parameter_calculation {
 	public:
 	
-INT t0;
-	INT cnt;
+int t0;
+	int cnt;
 	char *p_buf;
 	char str[1000];
 	char ext[1000];
 	char *fname_in;
 	//char fname_base[1000];
 	char fname_out[1000];
-	INT verbose_level;
-	INT f_lambda3;
-	INT lambda3, block_size;
-	INT f_scale;
-	INT scaling;
-	INT f_range;
-	INT range_first, range_len;
-	INT f_select;
+	int verbose_level;
+	int f_lambda3;
+	int lambda3, block_size;
+	int f_scale;
+	int scaling;
+	int f_range;
+	int range_first, range_len;
+	int f_select;
 	char *select_label;
-	INT f_omit1;
-	INT omit1;
-	INT f_omit2;
-	INT omit2;
-	INT f_D1_upper_bound_x0;
-	INT D1_upper_bound_x0;
-	INT f_reverse;
-	INT f_reverse_inverse;
-	INT f_use_packing_numbers;
-	INT f_dual_is_linear_space;
-	INT f_do_the_geometric_test;
-	INT f_once;
-	INT f_use_mckay_solver;
+	int f_omit1;
+	int omit1;
+	int f_omit2;
+	int omit2;
+	int f_D1_upper_bound_x0;
+	int D1_upper_bound_x0;
+	int f_reverse;
+	int f_reverse_inverse;
+	int f_use_packing_numbers;
+	int f_dual_is_linear_space;
+	int f_do_the_geometric_test;
+	int f_once;
+	int f_use_mckay_solver;
 
 	
 	geo_parameter GP;
@@ -112,30 +112,30 @@ INT t0;
 	//int new_entries[1000000];
 
 
-	INT f_doit;
-	INT nb_written, nb_written_tactical, nb_tactical;
-	INT cnt_second_system;
+	int f_doit;
+	int nb_written, nb_written_tactical, nb_tactical;
+	int cnt_second_system;
 	solution_file_data *Sol;
 
 	void read_arguments(int argc, char **argv);
 	void main_loop();
-	void do_it(ofstream &g, INT verbose_level);
-	void do_row_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, INT verbose_level);
-	void do_col_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, INT verbose_level);
+	void do_it(ofstream &g, int verbose_level);
+	void do_row_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
+	void do_col_refinement(ofstream &g, tdo_scheme &G, partitionstack &P, int verbose_level);
 	void do_all_row_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
-		INT *point_types, INT nb_point_types, INT point_type_len, 
-		INT *distributions, INT nb_distributions, INT &nb_tactical, INT verbose_level);
+		int *point_types, int nb_point_types, int point_type_len, 
+		int *distributions, int nb_distributions, int &nb_tactical, int verbose_level);
 	void do_all_column_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
-		INT *line_types, INT nb_line_types, INT line_type_len, 
-		INT *distributions, INT nb_distributions, INT &nb_tactical, INT verbose_level);
-	INT do_row_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
-		INT *point_types, INT nb_point_types, INT point_type_len, 
-		INT *distributions, INT nb_distributions, INT verbose_level);
+		int *line_types, int nb_line_types, int line_type_len, 
+		int *distributions, int nb_distributions, int &nb_tactical, int verbose_level);
+	int do_row_refinement(int t, char *label_in, ofstream &g, tdo_scheme &G, 
+		int *point_types, int nb_point_types, int point_type_len, 
+		int *distributions, int nb_distributions, int verbose_level);
 		// returns TRUE or FALSE depending on whether the 
 		// refinement gave a tactical decomposition
-	INT do_column_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
-		INT *line_types, INT nb_line_types, INT line_type_len, 
-		INT *distributions, INT nb_distributions, INT verbose_level);
+	int do_column_refinement(int t, char *label_in, ofstream &g, tdo_scheme &G, 
+		int *line_types, int nb_line_types, int line_type_len, 
+		int *distributions, int nb_distributions, int verbose_level);
 		// returns TRUE or FALSE depending on whether the 
 		// refinement gave a tactical decomposition
 };
@@ -168,8 +168,8 @@ int main(int argc, char **argv)
 
 	G->GP2.part_nb_alloc = 10000;
 	G->GP2.entries_nb_alloc = 1000000;
-	G->GP2.part = new INT[G->GP2.part_nb_alloc];
-	G->GP2.entries = new INT[G->GP2.entries_nb_alloc];
+	G->GP2.part = new int[G->GP2.part_nb_alloc];
+	G->GP2.entries = new int[G->GP2.entries_nb_alloc];
 
 	
 	G->f_reverse = FALSE;
@@ -190,7 +190,7 @@ int main(int argc, char **argv)
 
 void tdo_parameter_calculation::read_arguments(int argc, char **argv)
 {
-	INT i;
+	int i;
 	
 	if (argc <= 1) {
 		print_usage();
@@ -287,9 +287,9 @@ void tdo_parameter_calculation::read_arguments(int argc, char **argv)
 
 void tdo_parameter_calculation::main_loop()
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	
 	cout << "opening file " << fname_in << " for reading" << endl;
 	ifstream f(fname_in);
@@ -301,7 +301,7 @@ void tdo_parameter_calculation::main_loop()
 
 	sprintf(fname_out, "%s", str);
 	if (f_range) {
-		sprintf(fname_out + strlen(fname_out), "_r%ld_%ld", range_first, range_len);
+		sprintf(fname_out + strlen(fname_out), "_r%d_%d", range_first, range_len);
 		}
 	if (f_select) {
 		sprintf(fname_out + strlen(fname_out), "_S%s", select_label);
@@ -362,11 +362,11 @@ void tdo_parameter_calculation::main_loop()
 	}
 }
 
-void tdo_parameter_calculation::do_it(ofstream &g, INT verbose_level)
+void tdo_parameter_calculation::do_it(ofstream &g, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	tdo_scheme G;
 	partitionstack P;
@@ -416,18 +416,18 @@ void tdo_parameter_calculation::do_it(ofstream &g, INT verbose_level)
 }
 
 void tdo_parameter_calculation::do_row_refinement(ofstream &g, tdo_scheme &G, 
-	partitionstack &P, INT verbose_level)
+	partitionstack &P, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "col_level > row_level" << endl;
 		}
-	INT *point_types, nb_point_types, point_type_len;
-	INT *distributions, nb_distributions;
-	INT f_success;
+	int *point_types, nb_point_types, point_type_len;
+	int *distributions, nb_distributions;
+	int f_success;
 				
 	if (f_lambda3) {
 		f_success = G.td3_refine_rows(verbose_level - 1, f_once, 
@@ -462,8 +462,8 @@ void tdo_parameter_calculation::do_row_refinement(ofstream &g, tdo_scheme &G,
 				
 		nb_written += nb_distributions;
 		nb_written_tactical += nb_tactical;
-		FREE_INT(point_types);
-		FREE_INT(distributions);
+		FREE_int(point_types);
+		FREE_int(distributions);
 		}
 	else {
 		if (f_v) {
@@ -475,15 +475,15 @@ void tdo_parameter_calculation::do_row_refinement(ofstream &g, tdo_scheme &G,
 }
 
 void tdo_parameter_calculation::do_col_refinement(ofstream &g, tdo_scheme &G, 
-	partitionstack &P, INT verbose_level)
+	partitionstack &P, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 
-	INT *line_types, nb_line_types, line_type_len;
-	INT *distributions, nb_distributions;
-	INT f_success;
+	int *line_types, nb_line_types, line_type_len;
+	int *distributions, nb_distributions;
+	int f_success;
 				
 	if (f_v) {
 		cout << "col_level < row_level" << endl;
@@ -523,8 +523,8 @@ void tdo_parameter_calculation::do_col_refinement(ofstream &g, tdo_scheme &G,
 
 		nb_written += nb_distributions;
 		nb_written_tactical += nb_tactical;
-		FREE_INT(line_types);
-		FREE_INT(distributions);
+		FREE_int(line_types);
+		FREE_int(distributions);
 		}
 	else {
 		if (f_v) {
@@ -536,12 +536,12 @@ void tdo_parameter_calculation::do_col_refinement(ofstream &g, tdo_scheme &G,
 }
 
 void tdo_parameter_calculation::do_all_row_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
-	INT *point_types, INT nb_point_types, INT point_type_len, 
-	INT *distributions, INT nb_distributions, INT &nb_tactical, 
-	INT verbose_level)
+	int *point_types, int nb_point_types, int point_type_len, 
+	int *distributions, int nb_distributions, int &nb_tactical, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, t;
+	int f_v = (verbose_level >= 1);
+	int i, t;
 			
 	nb_tactical = 0;
 	for (i = 0; i < GP.nb_parts; i++) 
@@ -566,12 +566,12 @@ void tdo_parameter_calculation::do_all_row_refinements(char *label_in, ofstream 
 }
 
 void tdo_parameter_calculation::do_all_column_refinements(char *label_in, ofstream &g, tdo_scheme &G, 
-	INT *line_types, INT nb_line_types, INT line_type_len, 
-	INT *distributions, INT nb_distributions, INT &nb_tactical, 
-	INT verbose_level)
+	int *line_types, int nb_line_types, int line_type_len, 
+	int *distributions, int nb_distributions, int &nb_tactical, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, t;
+	int f_v = (verbose_level >= 1);
+	int i, t;
 			
 
 	nb_tactical = 0;
@@ -597,25 +597,25 @@ void tdo_parameter_calculation::do_all_column_refinements(char *label_in, ofstre
 }
 
 
-INT tdo_parameter_calculation::do_row_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
-	INT *point_types, INT nb_point_types, INT point_type_len, 
-	INT *distributions, INT nb_distributions, INT verbose_level)
+int tdo_parameter_calculation::do_row_refinement(int t, char *label_in, ofstream &g, tdo_scheme &G, 
+	int *point_types, int nb_point_types, int point_type_len, 
+	int *distributions, int nb_distributions, int verbose_level)
 // returns TRUE or FALSE depending on whether the 
 // refinement gave a tactical decomposition
 {
-	INT r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
-	INT *type_index;
+	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
+	int *type_index;
 	//char label_out[1000];
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 6);
-	INT f_vvv = (verbose_level >= 7);
-	INT f_tactical;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 6);
+	int f_vvv = (verbose_level >= 7);
+	int f_tactical;
 
 	if (f_v) {
 		cout << "do_row_refinement t=" << t << endl;
 		}
 	
-	type_index = NEW_INT(nb_point_types);
+	type_index = NEW_int(nb_point_types);
 	for (i = 0; i < nb_point_types; i++) 
 		type_index[i] = -1;
 	
@@ -691,7 +691,7 @@ INT tdo_parameter_calculation::do_row_refinement(INT t, char *label_in, ofstream
 	{
 		tdo_scheme G2;
 		
-		G2.init_part_and_entries_INT(GP2.part, GP2.entries, verbose_level - 2);
+		G2.init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
 
 		G2.row_level = new_nb_parts;
 		G2.col_level = G.col_level;
@@ -737,7 +737,7 @@ INT tdo_parameter_calculation::do_row_refinement(INT t, char *label_in, ofstream
 				}
 			}
 			
-		sprintf(GP2.label, "%s.%ld", label_in, t + 1);
+		sprintf(GP2.label, "%s.%d", label_in, t + 1);
 			
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
@@ -765,29 +765,29 @@ INT tdo_parameter_calculation::do_row_refinement(INT t, char *label_in, ofstream
 			f_tactical = FALSE;
 	}
 
-	FREE_INT(type_index);
+	FREE_int(type_index);
 	return f_tactical;
 }
 
-INT tdo_parameter_calculation::do_column_refinement(INT t, char *label_in, ofstream &g, tdo_scheme &G, 
-	INT *line_types, INT nb_line_types, INT line_type_len, 
-	INT *distributions, INT nb_distributions, INT verbose_level)
+int tdo_parameter_calculation::do_column_refinement(int t, char *label_in, ofstream &g, tdo_scheme &G, 
+	int *line_types, int nb_line_types, int line_type_len, 
+	int *distributions, int nb_distributions, int verbose_level)
 // returns TRUE or FALSE depending on whether the 
 // refinement gave a tactical decomposition
 {
-	INT r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
-	INT *type_index;
+	int r, i, j, h, a, l, R, c1, c2, S, s, idx, new_nb_parts, new_nb_entries;
+	int *type_index;
 	//char label_out[1000];
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 6);
-	INT f_vvv = (verbose_level >= 7);
-	INT f_tactical;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 6);
+	int f_vvv = (verbose_level >= 7);
+	int f_tactical;
 
 	if (f_v) {
 		cout << "do_column_refinement t=" << t << endl;
 		}
 	
-	type_index = NEW_INT(nb_line_types);
+	type_index = NEW_int(nb_line_types);
 	
 	for (i = 0; i < nb_line_types; i++) 
 		type_index[i] = -1;
@@ -827,7 +827,7 @@ INT tdo_parameter_calculation::do_column_refinement(INT t, char *label_in, ofstr
 				cout << "s=" << s << endl;
 				cout << "l=" << l << endl;
 				cout << "a=" << a << endl;
-				INT_vec_print(cout, distributions + t * nb_line_types, nb_line_types);
+				int_vec_print(cout, distributions + t * nb_line_types, nb_line_types);
 				cout << endl;
 				exit(1);
 				}
@@ -858,7 +858,7 @@ INT tdo_parameter_calculation::do_column_refinement(INT t, char *label_in, ofstr
 		
 		G2 = new tdo_scheme;
 		
-		G2->init_part_and_entries_INT(GP2.part, GP2.entries, verbose_level - 2);
+		G2->init_part_and_entries_int(GP2.part, GP2.entries, verbose_level - 2);
 
 		G2->row_level = GP.row_level;
 		G2->col_level = new_nb_parts;
@@ -904,7 +904,7 @@ INT tdo_parameter_calculation::do_column_refinement(INT t, char *label_in, ofstr
 				}
 			}
 		
-		sprintf(GP2.label, "%s.%ld", label_in, t + 1);
+		sprintf(GP2.label, "%s.%d", label_in, t + 1);
 			
 		GP2.nb_parts = new_nb_parts;
 		GP2.nb_entries = new_nb_entries;
@@ -933,13 +933,13 @@ INT tdo_parameter_calculation::do_column_refinement(INT t, char *label_in, ofstr
 		delete G2;
 		}
 
-	FREE_INT(type_index);
+	FREE_int(type_index);
 	return f_tactical;
 }
 
 void print_distribution(ostream &ost, 
-	INT *types, INT nb_types, INT type_len,  
-	INT *distributions, INT nb_distributions)
+	int *types, int nb_types, int type_len,  
+	int *distributions, int nb_distributions)
 {
 	int i, j;
 	
@@ -987,7 +987,7 @@ void print_distribution(ostream &ost,
 	ost << endl;
 
 	ost << "distributions (in compact format):" << endl;
-	INT f_first, a;
+	int f_first, a;
 	for (i = 0; i < nb_distributions; i++) {
 		ost << setw(3) << i + 1 << " & ";
 		f_first = TRUE;
@@ -1006,12 +1006,13 @@ void print_distribution(ostream &ost,
 	ost << endl;
 }
 
-INT compare_func_INT_vec(void *a, void *b, void *data)
+int compare_func_int_vec(void *a, void *b, void *data)
 {
-	INT *p = (INT *)a;
-	INT *q = (INT *)b;
-	INT size = (INT) data;
-	INT i;
+	int *p = (int *)a;
+	int *q = (int *)b;
+	int *d = (int *) data;
+	int size = d[0];
+	int i;
 	
 	for (i = 0; i < size; i++) {
 		if (p[i] > q[i])
@@ -1022,12 +1023,13 @@ INT compare_func_INT_vec(void *a, void *b, void *data)
 	return 0;
 }
 
-INT compare_func_INT_vec_inverse(void *a, void *b, void *data)
+int compare_func_int_vec_inverse(void *a, void *b, void *data)
 {
-	INT *p = (INT *)a;
-	INT *q = (INT *)b;
-	INT size = (INT) data;
-	INT i;
+	int *p = (int *)a;
+	int *q = (int *)b;
+	int *d = (int *) data;
+	int size = d[0];
+	int i;
 	
 	for (i = 0; i < size; i++) {
 		if (p[i] > q[i])
@@ -1038,16 +1040,16 @@ INT compare_func_INT_vec_inverse(void *a, void *b, void *data)
 	return 0;
 }
 
-void distribution_reverse_sorting(INT f_increasing, 
-	INT *types, INT nb_types, INT type_len,  
-	INT *distributions, INT nb_distributions)
+void distribution_reverse_sorting(int f_increasing, 
+	int *types, int nb_types, int type_len,  
+	int *distributions, int nb_distributions)
 {
 	int i, j;
-	INT *D;
-	INT **P;
+	int *D;
+	int **P;
 
-	D = new INT[nb_distributions * nb_types];
-	P = new PINT[nb_distributions];
+	D = new int[nb_distributions * nb_types];
+	P = new pint[nb_distributions];
 
 	for (i = 0; i < nb_distributions; i++) {
 		P[i] = D + i * nb_types;
@@ -1055,11 +1057,16 @@ void distribution_reverse_sorting(INT f_increasing,
 			D[i * nb_types + nb_types - 1 - j] = distributions[i * nb_types + j];
 			}
 		}
+
+	int p[1];
+
+	p[0] = nb_types;
+
 	if (f_increasing) {
-		quicksort_array(nb_distributions, (void **) P, compare_func_INT_vec_inverse, (void *)nb_types);
+		quicksort_array(nb_distributions, (void **) P, compare_func_int_vec_inverse, (void *)p);
 		}
 	else {
-		quicksort_array(nb_distributions, (void **) P, compare_func_INT_vec, (void *)nb_types);
+		quicksort_array(nb_distributions, (void **) P, compare_func_int_vec, (void *)p);
 		}
 
 	for (i = 0; i < nb_distributions; i++) {

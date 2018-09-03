@@ -31,23 +31,23 @@ void action_on_orthogonal::null()
 void action_on_orthogonal::free()
 {
 	if (v1) {
-		FREE_INT(v1);
+		FREE_int(v1);
 		}
 	if (v2) {
-		FREE_INT(v2);
+		FREE_int(v2);
 		}
 	if (w1) {
-		FREE_INT(w1);
+		FREE_int(w1);
 		}
 	if (w2) {
-		FREE_INT(w2);
+		FREE_int(w2);
 		}
 	null();
 }
 
-void action_on_orthogonal::init(action *original_action, orthogonal *O, INT f_on_points, INT f_on_lines, INT f_on_points_and_lines, INT verbose_level)
+void action_on_orthogonal::init(action *original_action, orthogonal *O, int f_on_points, int f_on_lines, int f_on_points_and_lines, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_on_orthogonal::init" << endl;
@@ -65,10 +65,10 @@ void action_on_orthogonal::init(action *original_action, orthogonal *O, INT f_on
 	action_on_orthogonal::f_on_points_and_lines = f_on_points_and_lines;
 	low_level_point_size = O->n + 1;
 		
-	v1 = NEW_INT(low_level_point_size);
-	v2 = NEW_INT(low_level_point_size);
-	w1 = NEW_INT(low_level_point_size);
-	w2 = NEW_INT(low_level_point_size);
+	v1 = NEW_int(low_level_point_size);
+	v2 = NEW_int(low_level_point_size);
+	w1 = NEW_int(low_level_point_size);
+	w2 = NEW_int(low_level_point_size);
 	
 	if (f_on_points) {
 		degree = O->nb_points;
@@ -92,10 +92,10 @@ void action_on_orthogonal::init(action *original_action, orthogonal *O, INT f_on
 		}
 }
 
-INT action_on_orthogonal::map_a_point(INT *Elt, INT i, INT verbose_level)
+int action_on_orthogonal::map_a_point(int *Elt, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j;
+	int f_v = (verbose_level >= 1);
+	int j;
 	action *A;
 	
 	if (f_v) {
@@ -111,11 +111,11 @@ INT action_on_orthogonal::map_a_point(INT *Elt, INT i, INT verbose_level)
 	return j;
 }
 
-INT action_on_orthogonal::map_a_line(INT *Elt, INT i, INT verbose_level)
+int action_on_orthogonal::map_a_line(int *Elt, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT j, p1, p2, q1, q2;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int j, p1, p2, q1, q2;
 	action *A;
 	
 	if (f_v) {
@@ -139,23 +139,23 @@ INT action_on_orthogonal::map_a_line(INT *Elt, INT i, INT verbose_level)
 	return j;
 }
 
-INT action_on_orthogonal::compute_image_INT(INT *Elt, INT i, INT verbose_level)
+int action_on_orthogonal::compute_image_int(int *Elt, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j;
+	int f_v = (verbose_level >= 1);
+	int j;
 	//action *A;
 	
 	//A = original_action;
 
 	if (f_v) {
-		cout << "action_on_orthogonal::compute_image_INT i = " << i << endl;
+		cout << "action_on_orthogonal::compute_image_int i = " << i << endl;
 		//cout << "A->low_level_point_size=" << A->low_level_point_size << endl;
 		//cout << "using action " << A->label << endl;
 		}
 
 	
 	if (i >= degree) {
-		cout << "action_on_orthogonal::compute_image_INT i >= degree" << endl;
+		cout << "action_on_orthogonal::compute_image_int i >= degree" << endl;
 		}
 	if (f_on_points) {
 		j = map_a_point(Elt, i, verbose_level - 1);
@@ -174,12 +174,12 @@ INT action_on_orthogonal::compute_image_INT(INT *Elt, INT i, INT verbose_level)
 			}
 		}
 	else {
-		cout << "action_on_orthogonal::compute_image_INT need to know the type of action" << endl;
+		cout << "action_on_orthogonal::compute_image_int need to know the type of action" << endl;
 		exit(1);
 		}
 
 	if (f_v) {
-		cout << "action_on_orthogonal::compute_image_INT image of " << i << " is " << j << endl;
+		cout << "action_on_orthogonal::compute_image_int image of " << i << " is " << j << endl;
 		}
 
 	return j;

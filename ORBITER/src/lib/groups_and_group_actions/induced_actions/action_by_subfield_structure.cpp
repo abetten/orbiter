@@ -35,19 +35,19 @@ void action_by_subfield_structure::null()
 void action_by_subfield_structure::free()
 {
 	if (v1) {
-		FREE_INT(v1);
+		FREE_int(v1);
 		}
 	if (v2) {
-		FREE_INT(v2);
+		FREE_int(v2);
 		}
 	if (v3) {
-		FREE_INT(v3);
+		FREE_int(v3);
 		}
 	if (Eltq) {
-		FREE_INT(Eltq);
+		FREE_int(Eltq);
 		}
 	if (Mtx) {
-		FREE_INT(Mtx);
+		FREE_int(Mtx);
 		}
 	if (S) {
 		FREE_OBJECT(S);
@@ -58,12 +58,12 @@ void action_by_subfield_structure::free()
 	null();
 }
 
-void action_by_subfield_structure::init(action &A, finite_field *Fq, INT verbose_level)
+void action_by_subfield_structure::init(action &A, finite_field *Fq, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT p1, h1;
-	INT p, h;
-	INT q;
+	int f_v = (verbose_level >= 1);
+	int p1, h1;
+	int p, h;
+	int q;
 
 	if (f_v) {
 		cout << "action_by_subfield_structure::init" << endl;
@@ -105,15 +105,15 @@ void action_by_subfield_structure::init(action &A, finite_field *Fq, INT verbose
 
 	degree = nb_PG_elements(m - 1, q);
 	low_level_point_size = m;
-	v1 = NEW_INT(m);
-	v2 = NEW_INT(m);
-	v3 = NEW_INT(m);
+	v1 = NEW_int(m);
+	v2 = NEW_int(m);
+	v3 = NEW_int(m);
 
 
 	Aq = NEW_OBJECT(action);
 
-	INT f_basis = TRUE;
-	INT f_semilinear = FALSE;
+	int f_basis = TRUE;
+	int f_semilinear = FALSE;
 
 
 	if (f_v) {
@@ -134,57 +134,57 @@ void action_by_subfield_structure::init(action &A, finite_field *Fq, INT verbose
 	S->init(FQ, Fq, verbose_level);
 	cout << "action_by_subfield_structure::init creating subfield structure done" << endl;
 		
-	Eltq = NEW_INT(Aq->elt_size_in_INT);
-	Mtx = NEW_INT(m * m);
+	Eltq = NEW_int(Aq->elt_size_in_int);
+	Mtx = NEW_int(m * m);
 
 }
 
-INT action_by_subfield_structure::compute_image_INT(
-	action &A, INT *Elt, INT a, INT verbose_level)
+int action_by_subfield_structure::compute_image_int(
+	action &A, int *Elt, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int b;
 	
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_INT" << endl;
+		cout << "action_by_subfield_structure::compute_image_int" << endl;
 		}
 	PG_element_unrank_modified(*Fq, v1, 1, m, a);
 	if (f_vv) {
-		cout << "action_by_subfield_structure::compute_image_INT a = " << a << " v1 = ";
-		INT_vec_print(cout, v1, m);
+		cout << "action_by_subfield_structure::compute_image_int a = " << a << " v1 = ";
+		int_vec_print(cout, v1, m);
 		cout << endl;
 		}
 	
-	compute_image_INT_low_level(A, Elt, v1, v2, verbose_level);
+	compute_image_int_low_level(A, Elt, v1, v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		INT_vec_print(cout, v2, m);
+		int_vec_print(cout, v2, m);
 		cout << endl;
 		}
 
 	PG_element_rank_modified(*Fq, v2, 1, m, b);
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_INT done " << a << "->" << b << endl;
+		cout << "action_by_subfield_structure::compute_image_int done " << a << "->" << b << endl;
 		}
 	return b;
 }
 
-void action_by_subfield_structure::compute_image_INT_low_level(
-	action &A, INT *Elt, INT *input, INT *output, INT verbose_level)
+void action_by_subfield_structure::compute_image_int_low_level(
+	action &A, int *Elt, int *input, int *output, int verbose_level)
 {
-	INT *x = input;
-	INT *xA = output;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, a, b, c, d, I, J, u, v;
+	int *x = input;
+	int *xA = output;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, a, b, c, d, I, J, u, v;
 	
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_INT_low_level" << endl;
+		cout << "action_by_subfield_structure::compute_image_int_low_level" << endl;
 		}
 	if (f_vv) {
 		cout << "subfield structure action: x=";
-		INT_vec_print(cout, x, m);
+		int_vec_print(cout, x, m);
 		cout << endl;
 		}
 
@@ -209,11 +209,11 @@ void action_by_subfield_structure::compute_image_INT_low_level(
 
 	if (f_vv) {
 		cout << "xA=";
-		INT_vec_print(cout, xA, m);
+		int_vec_print(cout, xA, m);
 		cout << endl;
 		}
 	if (MQ->f_semilinear) {
-		cout << "action_by_subfield_structure::compute_image_INT_low_level cannot handle semilinear elements" << endl;
+		cout << "action_by_subfield_structure::compute_image_int_low_level cannot handle semilinear elements" << endl;
 		exit(1);
 #if 0
 		for (i = 0; i < m; i++) {
@@ -221,13 +221,13 @@ void action_by_subfield_structure::compute_image_INT_low_level(
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
-			INT_vec_print(cout, xA, m);
+			int_vec_print(cout, xA, m);
 			cout << endl;
 			}
 #endif
 		}
 	if (f_v) {
-		cout << "action_by_subfield_structure::compute_image_INT_low_level done" << endl;
+		cout << "action_by_subfield_structure::compute_image_int_low_level done" << endl;
 		}
 }
 

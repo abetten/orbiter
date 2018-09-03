@@ -17,12 +17,12 @@
 // ####################################################################################
 
 
-INT perm_group_element_image_of(action &A, INT a, void *elt, INT verbose_level)
+int perm_group_element_image_of(action &A, int a, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
-	INT b;
+	int *Elt = (int *) elt;
+	int b;
 	
 	if (f_v) {
 		cout << "perm_group_element_image_of() image of " << a;
@@ -32,7 +32,7 @@ INT perm_group_element_image_of(action &A, INT a, void *elt, INT verbose_level)
 			b = Elt[a];
 			}
 		else {
-			INT /*x,*/ y, xx, yy;
+			int /*x,*/ y, xx, yy;
 			
 			a -= G.offset;
 			//x = a / G.n;
@@ -51,10 +51,10 @@ INT perm_group_element_image_of(action &A, INT a, void *elt, INT verbose_level)
 	return b;
 }
 
-void perm_group_element_one(action &A, void *elt, INT f_v)
+void perm_group_element_one(action &A, void *elt, int f_v)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	
 	if (f_v) {
 		cout << "perm_group_element_one() ";
@@ -62,12 +62,12 @@ void perm_group_element_one(action &A, void *elt, INT f_v)
 	G.one(Elt);
 }
 
-INT perm_group_element_is_one(action &A, void *elt, INT verbose_level)
+int perm_group_element_is_one(action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
-	INT f_is_one;
+	int *Elt = (int *) elt;
+	int f_is_one;
 	
 	if (f_v) {
 		cout << "perm_group_element_is_one() ";
@@ -82,11 +82,11 @@ INT perm_group_element_is_one(action &A, void *elt, INT verbose_level)
 	return f_is_one;
 }
 
-void perm_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_level)
+void perm_group_element_unpack(action &A, void *elt, void *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
@@ -95,11 +95,11 @@ void perm_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_leve
 	G.unpack(elt1, Elt1);
 }
 
-void perm_group_element_pack(action &A, void *Elt, void *elt, INT verbose_level)
+void perm_group_element_pack(action &A, void *Elt, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
@@ -108,11 +108,11 @@ void perm_group_element_pack(action &A, void *Elt, void *elt, INT verbose_level)
 	G.pack(Elt1, elt1);
 }
 
-void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_level)
+void perm_group_element_retrieve(action &A, int hdl, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	uchar *p_elt;
 	
 	if (f_v) {
@@ -124,8 +124,8 @@ void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_leve
 			//cout << "Eltrk1=" << G.Eltrk1 << endl;
 			//cout << "Eltrk2=" << G.Eltrk2 << endl;
 			//cout << "Eltrk3=" << G.Eltrk3 << endl;
-		INT i, j, ii, l, q, r;
-		INT a;
+		int i, j, ii, l, q, r;
+		int a;
 	
 		a = hdl;
 		for (ii = A.base_len - 1; ii >= 0; ii--) {
@@ -145,7 +145,7 @@ void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_leve
 		
 		
 			// pre multiply the coset representative:
-			A.element_mult(A.transversal_reps[i] + j * A.elt_size_in_INT, G.Eltrk1, G.Eltrk2, 0);
+			A.element_mult(A.transversal_reps[i] + j * A.elt_size_in_int, G.Eltrk1, G.Eltrk2, 0);
 			A.element_move(G.Eltrk2, G.Eltrk1, 0);
 			}
 		A.element_move(G.Eltrk1, Elt, 0);
@@ -161,20 +161,20 @@ void perm_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_leve
 		}
 }
 
-INT perm_group_element_store(action &A, void *elt, INT verbose_level)
+int perm_group_element_store(action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
-	INT hdl;
+	int *Elt = (int *) elt;
+	int hdl;
 	
 	if (f_v) {
 		cout << "perm_group_element_store()" << endl;
 		}
 #if 0
 	if (FALSE /* A.f_group_order_is_small */) {
-		INT i, j, bi, jj, l;
-		INT a;
+		int i, j, bi, jj, l;
+		int a;
 	
 		//cout << "perm_group_element_store" << endl;
 		A.element_move(elt, G.Eltrk1, 0);
@@ -197,10 +197,10 @@ INT perm_group_element_store(action &A, void *elt, INT verbose_level)
 				}
 			a += j;
 			
-			//A.element_print(A.transversal_reps[i] + j * A.elt_size_in_INT, cout);
-			//perm_print_list(cout, A.transversal_reps[i] + j * A.elt_size_in_INT, G.degree);
+			//A.element_print(A.transversal_reps[i] + j * A.elt_size_in_int, cout);
+			//perm_print_list(cout, A.transversal_reps[i] + j * A.elt_size_in_int, G.degree);
 			
-			G.invert(A.transversal_reps[i] + j * A.elt_size_in_INT, G.Eltrk2);
+			G.invert(A.transversal_reps[i] + j * A.elt_size_in_int, G.Eltrk2);
 			
 			//cout << "after invert ";
 			//perm_print_list(cout, G.Eltrk2, G.degree);
@@ -234,13 +234,13 @@ INT perm_group_element_store(action &A, void *elt, INT verbose_level)
 	return hdl;
 }
 
-void perm_group_element_mult(action &A, void *a, void *b, void *ab, INT verbose_level)
+void perm_group_element_mult(action &A, void *a, void *b, void *ab, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
-	INT *AB = (INT *) ab;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
+	int *AB = (int *) ab;
 
 	if (f_v) {
 		cout << "perm_group_element_mult() degree=" << G.degree << endl;
@@ -260,12 +260,12 @@ void perm_group_element_mult(action &A, void *a, void *b, void *ab, INT verbose_
 		}
 }
 
-void perm_group_element_invert(action &A, void *a, void *av, INT verbose_level)
+void perm_group_element_invert(action &A, void *a, void *av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *AA = (INT *) a;
-	INT *AAv = (INT *) av;
+	int *AA = (int *) a;
+	int *AAv = (int *) av;
 
 	if (f_v) {
 		cout << "perm_group_element_invert()" << endl;
@@ -279,12 +279,12 @@ void perm_group_element_invert(action &A, void *a, void *av, INT verbose_level)
 		}
 }
 
-void perm_group_element_move(action &A, void *a, void *b, INT verbose_level)
+void perm_group_element_move(action &A, void *a, void *b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
 
 	if (f_v) {
 		cout << "perm_group_element_move()" << endl;
@@ -292,9 +292,9 @@ void perm_group_element_move(action &A, void *a, void *b, INT verbose_level)
 	G.copy(AA, BB);
 }
 
-void perm_group_element_dispose(action &A, INT hdl, INT verbose_level)
+void perm_group_element_dispose(action &A, int hdl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	perm_group &G = *A.G.perm_grp;
 
 	if (f_v) {
@@ -311,7 +311,7 @@ void perm_group_element_dispose(action &A, INT hdl, INT verbose_level)
 void perm_group_element_print(action &A, void *elt, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	//cout << "perm_group_element_print" << endl;
 	G.print(Elt, ost);
@@ -322,7 +322,7 @@ void perm_group_element_print(action &A, void *elt, ostream &ost)
 void perm_group_element_print_latex(action &A, void *elt, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.print(Elt, ost);
 	//G.print_with_action(&A, Elt, ost);
@@ -331,15 +331,15 @@ void perm_group_element_print_latex(action &A, void *elt, ostream &ost)
 void perm_group_element_print_verbose(action &A, void *elt, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.print(Elt, ost);
 }
 
-void perm_group_element_code_for_make_element(action &A, void *elt, INT *data)
+void perm_group_element_code_for_make_element(action &A, void *elt, int *data)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.code_for_make_element(Elt, data);
 }
@@ -347,7 +347,7 @@ void perm_group_element_code_for_make_element(action &A, void *elt, INT *data)
 void perm_group_element_print_for_make_element(action &A, void *elt, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.print_for_make_element(Elt, ost);
 }
@@ -355,7 +355,7 @@ void perm_group_element_print_for_make_element(action &A, void *elt, ostream &os
 void perm_group_element_print_for_make_element_no_commas(action &A, void *elt, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.print_for_make_element_no_commas(Elt, ost);
 }
@@ -366,14 +366,14 @@ void perm_group_elt_print(void *elt, void *data, ostream &ost)
 {
 	perm_group &G = * (perm_group *) data;
 	uchar *p_elt = (uchar *) elt;
-	INT Elt[1000];
+	int Elt[1000];
 	
 	G.unpack(p_elt, Elt);
 	G.print(Elt, ost);
 }
 #endif
 
-void perm_group_print_point(action &A, INT a, ostream &ost)
+void perm_group_print_point(action &A, int a, ostream &ost)
 {
 	perm_group &G = *A.G.perm_grp;
 	
@@ -382,7 +382,7 @@ void perm_group_print_point(action &A, INT a, ostream &ost)
 			cout << "r_{" << a << "}";
 			}
 		else {
-			INT x, y;
+			int x, y;
 			
 			a -= G.offset;
 			x = a / G.n;

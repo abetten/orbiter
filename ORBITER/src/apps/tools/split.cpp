@@ -8,18 +8,18 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *fname = NULL;
-	INT f_split = FALSE;
-	INT split_m;
-	INT i;
+	int f_split = FALSE;
+	int split_m;
+	int i;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -44,20 +44,20 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	char fname_base[1000];
 	char fname_out[1000];
 
 	get_fname_base(fname, fname_base);
 
-	INT *Set_sizes;
-	INT **Sets;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
-	INT *Casenumbers;
-	INT nb_cases;
-	INT j, h;
+	int *Casenumbers;
+	int nb_cases;
+	int j, h;
 
 	if (f_v) {
 		cout << "before read_and_parse_data_file_fancy" << endl;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	cout << "opening output files:" << endl;
 	Fp = new ofstream[split_m];
 	for (i = 0; i < split_m; i++) {
-		sprintf(fname_out, "%s_split%ldm%ld", fname_base, i, split_m);
+		sprintf(fname_out, "%s_split%dm%d", fname_base, i, split_m);
 		Fp[i].open(fname_out);
 		}
 	cout << "opening output files done" << endl;

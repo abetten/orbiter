@@ -31,28 +31,28 @@ void orbit_node::freeself()
 	null();
 }
 
-void orbit_node::init(classification *C, INT orbit_index, 
-	strong_generators *gens, INT *Rep, INT verbose_level)
+void orbit_node::init(classification *C, int orbit_index, 
+	strong_generators *gens, int *Rep, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbit_node::init "
 				"orbit_index=" << orbit_index << " rep=";
-		INT_vec_print(cout, Rep, C->representation_sz);
+		int_vec_print(cout, Rep, C->representation_sz);
 		cout << endl;
 		}
 	orbit_node::C = C;
 	orbit_node::orbit_index = orbit_index;
 	orbit_node::gens = gens;
-	INT_vec_copy(Rep,
+	int_vec_copy(Rep,
 			C->Rep + orbit_index * C->representation_sz,
 			C->representation_sz);
 }
 
-void orbit_node::write_file(ofstream &fp, INT verbose_level)
+void orbit_node::write_file(ofstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "orbit_node::write_file" << endl;
@@ -64,9 +64,9 @@ void orbit_node::write_file(ofstream &fp, INT verbose_level)
 		}
 }
 
-void orbit_node::read_file(ifstream &fp, INT verbose_level)
+void orbit_node::read_file(ifstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "orbit_node::read_file" << endl;

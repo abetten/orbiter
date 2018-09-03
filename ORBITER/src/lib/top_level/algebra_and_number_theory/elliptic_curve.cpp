@@ -31,18 +31,18 @@ void elliptic_curve::null()
 void elliptic_curve::freeself()
 {
 	if (T) {
-		FREE_INT(T);
+		FREE_int(T);
 		}
 	if (A) {
-		FREE_INT(A);
+		FREE_int(A);
 		}
 }
 
 
-void elliptic_curve::init(finite_field *F, INT b, INT c,
-		INT verbose_level)
+void elliptic_curve::init(finite_field *F, int b, int c,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "elliptic_curve::init q=" << F->q
@@ -87,7 +87,7 @@ void elliptic_curve::init(finite_field *F, INT b, INT c,
 
 #if 0
 	{
-	INT a, b, c;
+	int a, b, c;
 	a = 1;
 	b = 2;
 	c = E.A[a * E.nb + b];
@@ -103,21 +103,21 @@ void elliptic_curve::init(finite_field *F, INT b, INT c,
 }
 
 
-void elliptic_curve::compute_points(INT verbose_level)
+void elliptic_curve::compute_points(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, y, y1, y2;
-	INT r;
-	INT bound;
+	int f_v = (verbose_level >= 1);
+	int x, y, y1, y2;
+	int r;
+	int bound;
 
 	if (f_v) {
 		cout << "elliptic_curve::compute_points" << endl;
 		}
-	bound = q + 1 + 2 * ((INT)(sqrt(q)) + 1);// Hasse Weil bound
+	bound = q + 1 + 2 * ((int)(sqrt(q)) + 1);// Hasse Weil bound
 	
 
 
-	T = NEW_INT(bound * 3);
+	T = NEW_int(bound * 3);
 	nb = 0;
 
 
@@ -237,7 +237,7 @@ void elliptic_curve::compute_points(INT verbose_level)
 		}
 }
 
-void elliptic_curve::add_point_to_table(INT x, INT y, INT z)
+void elliptic_curve::add_point_to_table(int x, int y, int z)
 {
 	T[nb * 3 + 0] = x;
 	T[nb * 3 + 1] = y;
@@ -245,10 +245,10 @@ void elliptic_curve::add_point_to_table(INT x, INT y, INT z)
 	nb++;
 }
 
-INT elliptic_curve::evaluate_RHS(INT x)
+int elliptic_curve::evaluate_RHS(int x)
 // evaluates x^3 + bx + c
 {
-	INT x2, x3, t;
+	int x2, x3, t;
 	
 	x2 = F->mult(x, x);
 	x3 = F->mult(x2, x);
@@ -259,7 +259,7 @@ INT elliptic_curve::evaluate_RHS(INT x)
 
 void elliptic_curve::print_points()
 {
-	INT i;
+	int i;
 	
 	cout << "i : point (x,y,x)" << endl;
 	for (i = 0; i < nb; i++) {
@@ -270,7 +270,7 @@ void elliptic_curve::print_points()
 
 void elliptic_curve::print_points_affine()
 {
-	INT i;
+	int i;
 	
 	cout << "i : point (x,y,x)" << endl;
 	for (i = 0; i < nb; i++) {
@@ -287,12 +287,12 @@ void elliptic_curve::print_points_affine()
 
 
 void elliptic_curve::addition(
-	INT x1, INT x2, INT x3, 
-	INT y1, INT y2, INT y3, 
-	INT &z1, INT &z2, INT &z3, INT verbose_level)
+	int x1, int x2, int x3, 
+	int y1, int y2, int y3, 
+	int &z1, int &z2, int &z3, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, two, three, top, bottom, m;
+	int f_v = (verbose_level >= 1);
+	int a, two, three, top, bottom, m;
 	
 	if (f_v) {
 		cout << "elliptic_curve::addition: ";
@@ -360,16 +360,16 @@ void elliptic_curve::addition(
 }
 
 void elliptic_curve::draw_grid(char *fname,
-		INT xmax, INT ymax, INT f_with_points,
-		INT verbose_level)
+		int xmax, int ymax, int f_with_points,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x_min = 0, x_max = 1000000;
-	INT y_min = 0, y_max = 1000000;
-	INT factor_1000 = 1000;
+	int f_v = (verbose_level >= 1);
+	int x_min = 0, x_max = 1000000;
+	int y_min = 0, y_max = 1000000;
+	int factor_1000 = 1000;
 	char fname_full[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 	
 	if (f_v) {
 		cout << "draw_grid" << endl;
@@ -403,28 +403,28 @@ void elliptic_curve::draw_grid(char *fname,
 
 
 void elliptic_curve::draw_grid2(mp_graphics &G,
-		INT f_with_points, INT verbose_level)
+		int f_with_points, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b;
-	INT x1, x2, x3;
+	int f_v = (verbose_level >= 1);
+	int a, b;
+	int x1, x2, x3;
 
-	INT rad = 10000;
-	INT i, h;
+	int rad = 10000;
+	int i, h;
 	double x_stretch = 0.0010;
 	double y_stretch = 0.0010;
 	//double x_stretch = 0.01;
 	//double y_stretch = 0.01;
 
 	double *Dx, *Dy;
-	INT *Px, *Py;
-	INT dx = ONE_MILLION * 50 * x_stretch;
-	INT dy = ONE_MILLION * 50 * y_stretch;
-	INT N = 1000;
+	int *Px, *Py;
+	int dx = ONE_MILLION * 50 * x_stretch;
+	int dy = ONE_MILLION * 50 * y_stretch;
+	int N = 1000;
 
 
-	Px = NEW_INT(N);
-	Py = NEW_INT(N);
+	Px = NEW_int(N);
+	Py = NEW_int(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
@@ -494,7 +494,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 			// drawing point labels:
 			for (i = 0; i < nb; i++) {
 				char str[1000];
-				sprintf(str, "%ld", i);
+				sprintf(str, "%d", i);
 				x1 = T[3 * i + 0];
 				x2 = T[3 * i + 1];
 				x3 = T[3 * i + 2];
@@ -517,7 +517,7 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 		}
 	G.sl_ends(0 /* line_beg_style */, 1 /* line_end_style*/);
 	
-	INT ord;
+	int ord;
 
 	if (f_v) {
 		cout << "drawing multiples of point" << endl;
@@ -584,8 +584,8 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 #endif
 
 
-	FREE_INT(Px);
-	FREE_INT(Py);
+	FREE_int(Px);
+	FREE_int(Py);
 	delete [] Dx;
 	delete [] Dy;
 
@@ -596,8 +596,8 @@ void elliptic_curve::draw_grid2(mp_graphics &G,
 		}
 }
 
-void elliptic_curve::make_affine_point(INT x1, INT x2, INT x3,
-		INT &a, INT &b, INT verbose_level)
+void elliptic_curve::make_affine_point(int x1, int x2, int x3,
+		int &a, int &b, int verbose_level)
 {
 	if (x3 == 0) {
 		a = q >> 1;
@@ -612,9 +612,9 @@ void elliptic_curve::make_affine_point(INT x1, INT x2, INT x3,
 
 
 #if 0
-INT multiple_of_point(elliptic_curve &E, INT i, INT n)
+int multiple_of_point(elliptic_curve &E, int i, int n)
 {
-	INT j, a;
+	int j, a;
 
 	a = E.nb - 1;
 	for (j = 0; j < n; j++) {
@@ -624,20 +624,20 @@ INT multiple_of_point(elliptic_curve &E, INT i, INT n)
 }
 #endif
 
-void elliptic_curve::compute_addition_table(INT verbose_level)
+void elliptic_curve::compute_addition_table(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_v3 = (verbose_level >= 3);
-	INT i, j, k;
-	INT x1, x2, x3;
-	INT y1, y2, y3;
-	INT z1, z2, z3;
+	int f_v = (verbose_level >= 1);
+	//int f_v3 = (verbose_level >= 3);
+	int i, j, k;
+	int x1, x2, x3;
+	int y1, y2, y3;
+	int z1, z2, z3;
 
 	if (f_v) {
 		cout << "elliptic_curve::compute_addition_table" << endl;
 		}
 	
-	A = NEW_INT(nb * nb);
+	A = NEW_int(nb * nb);
 	for (i = 0; i < nb; i++) {
 		x1 = T[3 * i + 0];
 		x2 = T[3 * i + 1];
@@ -666,14 +666,14 @@ void elliptic_curve::compute_addition_table(INT verbose_level)
 
 void elliptic_curve::print_addition_table()
 {
-	INT_matrix_print(A, nb, nb);
-	INT_matrix_print_tex(cout, A, nb, nb);
+	int_matrix_print(A, nb, nb);
+	int_matrix_print_tex(cout, A, nb, nb);
 }
 
 #if 0
-INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
+int elliptic_curve::index_of_point(int x1, int x2, int x3)
 {
-	INT a, i;
+	int a, i;
 	
 	if (x3 == 0) {
 		return 0;
@@ -695,17 +695,17 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 }
 #endif
 
-INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
-//INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
+int elliptic_curve::index_of_point(int x1, int x2, int x3)
+//int int_vec_search(int *v, int len, int a, int &idx)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx
 // the position where it should be inserted if
 // the vector is assumed to be in increasing order.
 
 {
-	INT l, r, m, res, a;
-	INT f_found = FALSE;
-	INT f_v = FALSE;
+	int l, r, m, res, a;
+	int f_found = FALSE;
+	int f_v = FALSE;
 	
 	if (nb == 0) {
 		cout << "elliptic_curve::index_of_point "
@@ -798,10 +798,10 @@ INT elliptic_curve::index_of_point(INT x1, INT x2, INT x3)
 	return l;
 }
 
-INT elliptic_curve::order_of_point(INT i)
+int elliptic_curve::order_of_point(int i)
 {
-	INT j;
-	INT ord;
+	int j;
+	int ord;
 
 	j = i;
 	ord = 1;
@@ -812,10 +812,10 @@ INT elliptic_curve::order_of_point(INT i)
 	return ord;
 }
 
-void elliptic_curve::print_all_powers(INT i)
+void elliptic_curve::print_all_powers(int i)
 {
-	INT j;
-	INT ord;
+	int j;
+	int ord;
 
 	j = i;
 	ord = 1;

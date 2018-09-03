@@ -13,7 +13,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 
@@ -25,20 +25,20 @@ int main(int argc, const char **argv)
 	
 	{
 
-	INT verbose_level = 0;
-	INT nb_inputs = 0;
-	INT input_first[1000];
-	INT input_len[1000];
+	int verbose_level = 0;
+	int nb_inputs = 0;
+	int input_first[1000];
+	int input_len[1000];
 	const char *input_mask[1000];
-	INT f_o = FALSE;
+	int f_o = FALSE;
 	const char *output_mask = NULL;
-	INT f_output_starts_at = FALSE;
-	INT output_starts_at = 0;
-	INT f_step = FALSE;
-	INT step = 0;
+	int f_output_starts_at = FALSE;
+	int output_starts_at = 0;
+	int f_step = FALSE;
+	int step = 0;
 
 
-	INT i;
+	int i;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -69,8 +69,8 @@ int main(int argc, const char **argv)
 			cout << "-output_starts_at " << output_starts_at << endl;
 			}
 		}
-	INT nb_frames;
-	INT j, h, u;
+	int nb_frames;
+	int j, h, u;
 	char input_fname[1000];
 	char output_fname[1000];
 	char cmd[1000];

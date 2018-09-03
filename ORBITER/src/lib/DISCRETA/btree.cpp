@@ -9,7 +9,7 @@
 
 #include <stdlib.h> // for system
 
-//INT bt_debug = FALSE;
+//int bt_debug = FALSE;
 
 #undef USE_TABLE
 #define WRITE_INFO_ONLY_AT_END
@@ -23,14 +23,14 @@
 
 
 
-INT f_RootBF_free[MAX_ROOT_BUF];
+int f_RootBF_free[MAX_ROOT_BUF];
 Buffer *RootBF = NULL;
 Buffer *tmpBF = NULL;
 	// used in: bt_open(), WriteInfo(), AllocateRec(), ReleaseRec()
 
 
 
-INT fstream_table_used[MAX_FSTREAM_TABLE];
+int fstream_table_used[MAX_FSTREAM_TABLE];
 fstream *fstream_table[MAX_FSTREAM_TABLE];
 
 
@@ -39,17 +39,17 @@ fstream *fstream_table[MAX_FSTREAM_TABLE];
 
 static void bt_item_copy(ItemTyp *a, ItemTyp *b);
 
-// ##########################################################################################################
+// #############################################################################
 // global stuff
-// ##########################################################################################################
+// #############################################################################
 
 
 
-void database_init(INT verbose_level)
+void database_init(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "database_init()" << endl;
@@ -62,7 +62,7 @@ void database_init(INT verbose_level)
 		cout << "database_init() sizeof(ItemTyp)=" << sizeof(ItemTyp) << endl;
 		cout << "database_init() sizeof(PageTyp)=" << sizeof(PageTyp) << endl;
 		cout << "database_init() sizeof(Buffer)=" << sizeof(Buffer) << endl;
-		cout << "database_init() sizeof(INT4)=" << sizeof(INT4) << endl;
+		cout << "database_init() sizeof(int4)=" << sizeof(int4) << endl;
 		}
 	
 	RootBF = (Buffer *) new Buffer[MAX_ROOT_BUF];
@@ -92,7 +92,7 @@ void database_init(INT verbose_level)
 
 void database_exit(void)
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	
 	if (RootBF) {
 		delete [] RootBF;
@@ -101,23 +101,24 @@ void database_exit(void)
 	page_table_exit(verbose_level - 1);
 }
 
-INT fstream_table_get_free_entry()
+int fstream_table_get_free_entry()
 // never gives out handle 0, as it stands for file not open
 // that is, the zeroth-entry is never used
 {
-	for (INT i = 1; i < MAX_FSTREAM_TABLE; i++) {
+	for (int i = 1; i < MAX_FSTREAM_TABLE; i++) {
 		if (!fstream_table_used[i])
 			return i;
 		}
-	cout << "fstream_table_get_free_entry() table full, too many open files" << endl;
+	cout << "fstream_table_get_free_entry() table full, "
+			"too many open files" << endl;
 	exit(1);
 }
 
 
-INT root_buf_alloc(void)
+int root_buf_alloc(void)
 // error if there is no free buffer 
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < MAX_ROOT_BUF; i++) {
 		if (f_RootBF_free[i]) {
@@ -129,7 +130,7 @@ INT root_buf_alloc(void)
 	exit(1);
 }
 
-void root_buf_free(INT i)
+void root_buf_free(int i)
 {
 	if (i < 0 || i >= MAX_ROOT_BUF) {
 		cout << "root_buf_free()|i illegal" << endl;
@@ -140,9 +141,9 @@ void root_buf_free(INT i)
 
 
 
-// ##########################################################################################################
+// #############################################################################
 // class btree
-// ##########################################################################################################
+// #############################################################################
 
 btree::btree() : Vector()
 {
@@ -152,7 +153,8 @@ btree::btree() : Vector()
 btree::btree(const discreta_base &x)
 	// copy constructor:    this := x
 {
-	cout << "btree::copy constructor for object: " << const_cast<discreta_base &>(x) << "\n";
+	cout << "btree::copy constructor for object: "
+			<< const_cast<discreta_base &>(x) << "\n";
 	const_cast<discreta_base &>(x).copyobject_to(*this);
 }
 
@@ -211,8 +213,8 @@ ostream& btree::print(ostream& ost)
 	return ost;
 }
 
-void btree::init(const char *file_name, INT f_duplicatekeys, 
-	INT btree_idx)
+void btree::init(const char *file_name, int f_duplicatekeys, 
+	int btree_idx)
 {
 	m_l_n(11);
 	c_kind(BTREE);
@@ -231,23 +233,23 @@ void btree::init(const char *file_name, INT f_duplicatekeys,
 	page_table_idx() = -1;
 }
 
-void btree::add_key_INT4(INT field1, INT field2)
+void btree::add_key_int4(int field1, int field2)
 {
 	bt_key bk;
 	
-	bk.init_INT4(field1, field2);
+	bk.init_int4(field1, field2);
 	key().append(bk);
 }
 
-void btree::add_key_INT2(INT field1, INT field2)
+void btree::add_key_int2(int field1, int field2)
 {
 	bt_key bk;
 	
-	bk.init_INT2(field1, field2);
+	bk.init_int2(field1, field2);
 	key().append(bk);
 }
 
-void btree::add_key_string(INT output_size, INT field1, INT field2)
+void btree::add_key_string(int output_size, int field1, int field2)
 {
 	bt_key bk;
 	
@@ -265,10 +267,10 @@ void btree::key_print(char *the_key, ostream& ost)
 	bt_key_print(the_key, key(), ost);
 }
 
-void btree::create(INT verbose_level)
+void btree::create(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Buffer *Root_BF;
 	
 	if (f_v) {
@@ -282,7 +284,7 @@ void btree::create(INT verbose_level)
 	
 	buf_idx() = root_buf_alloc();
 	Root_BF = RootBF + buf_idx();
-	fill_char(Root_BF, (INT)sizeof(Buffer), 0);
+	fill_char(Root_BF, (int)sizeof(Buffer), 0);
 
 	FreeRec() = 0;
 	AllocRec() = 0;
@@ -301,10 +303,10 @@ void btree::create(INT verbose_level)
 		}
 }
 
-void btree::open(INT verbose_level)
+void btree::open(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Buffer *Root_BF;
 	
 	if (f_v) {
@@ -318,7 +320,7 @@ void btree::open(INT verbose_level)
 	
 	buf_idx() = root_buf_alloc();
 	Root_BF = RootBF + buf_idx();
-	fill_char(Root_BF, (INT)sizeof(Buffer), 0);
+	fill_char(Root_BF, (int)sizeof(Buffer), 0);
 	
 
 
@@ -339,16 +341,16 @@ void btree::open(INT verbose_level)
 			}
 		file_seek(Root());
 		file_read(&Root_BF->Page, "btree::open");
-		Root_BF->PageNum = (INT4) Root();
+		Root_BF->PageNum = (int4) Root();
 		}
 	else {
 		Root_BF->PageNum = 0;
 		}
 }
 
-void btree::close(INT verbose_level)
+void btree::close(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "btree::close" << endl;
@@ -378,10 +380,10 @@ void btree::close(INT verbose_level)
 	page_table_idx() = -1;
 }
 
-void btree::ReadInfo(INT verbose_level)
+void btree::ReadInfo(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "btree::ReadInfo" << endl;
@@ -407,14 +409,14 @@ void btree::ReadInfo(INT verbose_level)
 	delete BF;
 }
 
-void btree::WriteInfo(INT verbose_level)
+void btree::WriteInfo(int verbose_level)
 /* Schreibt die Variablen 'AllocRec', 'FreeRec' und 'Root' 
  * als 'AllocRec', 'NextFreeRec' und 'RootRec' 
  * in die 0-te Seite der Datenbank. */
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT size;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int size;
 	Buffer *BF = tmpBF;
 	
 	if (f_v) {
@@ -426,9 +428,9 @@ void btree::WriteInfo(INT verbose_level)
 		}
 	size = sizeof(Buffer);
 	fill_char((char *)BF, size, 0);
-	BF->Page.AllocRec = (INT4) AllocRec();
-	BF->Page.NextFreeRec = (INT4) FreeRec();
-	BF->Page.RootRec = (INT4) Root();
+	BF->Page.AllocRec = (int4) AllocRec();
+	BF->Page.NextFreeRec = (int4) FreeRec();
+	BF->Page.RootRec = (int4) Root();
 	
 	if (f_vv) {
 		cout << "btree::WriteInfo writing page 0" << endl;
@@ -441,15 +443,15 @@ void btree::WriteInfo(INT verbose_level)
 	file_write(&BF->Page, "WriteInfo");
 }
 
-INT btree::AllocateRec(INT verbose_level)
+int btree::AllocateRec(int verbose_level)
 /* Ein freier Record der Datanbank wird ermittelt
  * --
  * rueckgabe: Gibt Nummer eines freien Records an */
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Buffer *BF = tmpBF;
-	INT x;
+	int x;
 	
 	if (f_vv) {
 		cout << "btree::AllocateRec" << endl;
@@ -494,22 +496,22 @@ INT btree::AllocateRec(INT verbose_level)
 	return x;
 }
 
-void btree::ReleaseRec(INT x)
+void btree::ReleaseRec(int x)
 /* Gibt einen Record wieder frei
  * Der Block wird an den Anfang der Frei-Liste eingefuegt.
  * --
- * INT x - Nummer des freizugebenden Records */
+ * int x - Nummer des freizugebenden Records */
 {
-	INT size;
+	int size;
 	Buffer *BF = tmpBF;
 	
 	if (!f_open()) {
 		cout << "btree::ReleaseRec() not open\n";
 		exit(1);
 		}
-	size = (INT)sizeof(Buffer);
+	size = (int)sizeof(Buffer);
 	fill_char((char *)BF, size, 0);
-	BF->Page.NextFreeRec = (INT4) FreeRec();
+	BF->Page.NextFreeRec = (int4) FreeRec();
 	file_seek(x);
 	file_write(&BF->Page, "ReleaseRec");
 	FreeRec() = x;
@@ -523,16 +525,16 @@ void btree::ReleaseRec(INT x)
 #endif
 }
 
-void btree::LoadPage(Buffer *BF, INT x, INT verbose_level)
+void btree::LoadPage(Buffer *BF, int x, int verbose_level)
 /* Laedt eine Seite in den Speicher. Soll die Wurzel ge-
  * laden werden, so wird nur der Puffer kopiert
  * --
  * Buffer *BF - Puffer enthaelt nach Aufruf die Seite
- * INT x      - zu ladende Seite */
+ * int x      - zu ladende Seite */
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "btree::LoadPage x=" << x << endl;
@@ -547,7 +549,7 @@ void btree::LoadPage(Buffer *BF, INT x, INT verbose_level)
 		*BF = *Root_BF;
 		}
 	else {
-		BF->PageNum = (INT4) x;
+		BF->PageNum = (int4) x;
 #ifdef USE_TABLE
 		page_table *T;
 	
@@ -575,12 +577,12 @@ void btree::LoadPage(Buffer *BF, INT x, INT verbose_level)
 		}
 }
 
-void btree::SavePage(Buffer *BF, INT verbose_level)
+void btree::SavePage(Buffer *BF, int verbose_level)
 /* Eine Seite wird auf den Hintergrundspeicher geschrieben
  * --
  * Buffer *BF - Zu speichernde Seite */
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "btree::SavePage" << endl;
@@ -610,7 +612,7 @@ void btree::SavePage(Buffer *BF, INT verbose_level)
 		}
 }
 
-INT btree::search_string(discreta_base& key_op, INT& pos, INT verbose_level)
+int btree::search_string(discreta_base& key_op, int& pos, int verbose_level)
 {
 	KEYTYPE the_key;
 	char *p_key = the_key.c;
@@ -627,187 +629,187 @@ INT btree::search_string(discreta_base& key_op, INT& pos, INT verbose_level)
 	return search(&the_key, NULL, &pos, 1, verbose_level);
 }
 
-void btree::search_interval_INT4(INT i_min, INT i_max, 
-	INT& first, INT &len, INT verbose_level)
+void btree::search_interval_int4(int i_min, int i_max, 
+	int& first, int &len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	KEYTYPE key_min, key_max;
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
 	integer I_min, I_max;
 	I_min.m_i(i_min - 1);
 	I_max.m_i(i_max);
-	INT idx_min, idx_max;
-	INT f_found_min, f_found_max;
+	int idx_min, idx_max;
+	int f_found_min, f_found_max;
 	
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 	if (f_v) {
-		cout << "search_interval_INT4 I_min=" << I_min << " I_max=" << I_max << endl;
+		cout << "search_interval_int4 I_min=" << I_min << " I_max=" << I_max << endl;
 		}
 	
 	f_found_min = search(&key_min, NULL, &idx_min, 1, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 1, verbose_level);
 	if (f_v) {
-		cout << "search_interval_INT4 f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_INT4 f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+		cout << "search_interval_int4 f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "search_interval_int4 f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
 		}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-void btree::search_interval_INT4_INT4(INT l0, INT u0, 
-	INT l1, INT u1, INT& first, INT &len, INT verbose_level)
+void btree::search_interval_int4_int4(int l0, int u0, 
+	int l1, int u1, int& first, int &len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "btree::search_interval_INT4_INT4 low=(" << l0 << "," << l1 << ") high=(" << u0 << "," << u1 << ")" << endl;
+		cout << "btree::search_interval_int4_int4 low=(" << l0 << "," << l1 << ") high=(" << u0 << "," << u1 << ")" << endl;
 		}
 	KEYTYPE key_min, key_max;
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
 	integer I_min, I_max;
-	INT idx_min, idx_max;
-	INT f_found_min, f_found_max;
+	int idx_min, idx_max;
+	int f_found_min, f_found_max;
 	
 	I_min.m_i(l0);
 	I_max.m_i(u0);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 	I_min.m_i(l1 - 1);
 	I_max.m_i(u1);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 
 	f_found_min = search(&key_min, NULL, &idx_min, 2, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 2, verbose_level);
 	if (f_v) {
-		cout << "search_interval_INT4_INT4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_INT4_INT4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+		cout << "search_interval_int4_int4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "search_interval_int4_int4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
 		}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-void btree::search_interval_INT4_INT4_INT4(INT l0, INT u0, 
-	INT l1, INT u1, INT l2, INT u2, 
-	INT& first, INT &len, INT verbose_level)
+void btree::search_interval_int4_int4_int4(int l0, int u0, 
+	int l1, int u1, int l2, int u2, 
+	int& first, int &len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	KEYTYPE key_min, key_max;
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
 	integer I_min, I_max;
-	INT idx_min, idx_max;
-	INT f_found_min, f_found_max;
+	int idx_min, idx_max;
+	int f_found_min, f_found_max;
 	
 	I_min.m_i(l0);
 	I_max.m_i(u0);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 	I_min.m_i(l1);
 	I_max.m_i(u1);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 	I_min.m_i(l2 - 1);
 	I_max.m_i(u2);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 
 	f_found_min = search(&key_min, NULL, &idx_min, 3, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 3, verbose_level);
 	if (f_v) {
-		cout << "search_interval_INT4_INT4_INT4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_INT4_INT4_INT4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+		cout << "search_interval_int4_int4_int4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "search_interval_int4_int4_int4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
 		}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-void btree::search_interval_INT4_INT4_INT4_INT4(INT l0, INT u0, 
-	INT l1, INT u1, INT l2, INT u2, 
-	INT l3, INT u3, INT& first, INT &len, INT verbose_level)
+void btree::search_interval_int4_int4_int4_int4(int l0, int u0, 
+	int l1, int u1, int l2, int u2, 
+	int l3, int u3, int& first, int &len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	KEYTYPE key_min, key_max;
 	char *p_key_min = key_min.c;
 	char *p_key_max = key_max.c;
 	integer I_min, I_max;
-	INT idx_min, idx_max;
-	INT f_found_min, f_found_max;
+	int idx_min, idx_max;
+	int f_found_min, f_found_max;
 	
 	I_min.m_i(l0);
 	I_max.m_i(u0);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 	I_min.m_i(l1);
 	I_max.m_i(u1);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 	I_min.m_i(l2);
 	I_max.m_i(u2);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 	I_min.m_i(l3 - 1);
 	I_max.m_i(u3);
-	bt_key_fill_in_INT4(&p_key_min, I_min);
-	bt_key_fill_in_INT4(&p_key_max, I_max);
+	bt_key_fill_in_int4(&p_key_min, I_min);
+	bt_key_fill_in_int4(&p_key_max, I_max);
 
 
 	f_found_min = search(&key_min, NULL, &idx_min, 4, verbose_level);
 	f_found_max = search(&key_max, NULL, &idx_max, 4, verbose_level);
 	if (f_v) {
-		cout << "search_interval_INT4_INT4_INT4_INT4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
-		cout << "search_interval_INT4_INT4_INT4_INT4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
+		cout << "search_interval_int4_int4_int4_int4() f_found_min=" << f_found_min << " idx_min=" << idx_min << endl;
+		cout << "search_interval_int4_int4_int4_int4() f_found_max=" << f_found_max << " idx_max=" << idx_max << endl;
 		}
 	first = idx_min + 1;
 	len = idx_max - idx_min;
 }
 
-INT btree::search_INT4_INT4(INT data1, INT data2, INT& idx, INT verbose_level)
+int btree::search_int4_int4(int data1, int data2, int& idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "btree::search_INT4_INT4 data=(" << data1 << "," << data2 << ")" << endl;
+		cout << "btree::search_int4_int4 data=(" << data1 << "," << data2 << ")" << endl;
 		}
 	KEYTYPE key;
 	char *p_key = key.c;
 	integer I1, I2;
-	INT f_found;
+	int f_found;
 	
 	I1.m_i(data1);
 	I2.m_i(data2);
-	bt_key_fill_in_INT4(&p_key, I1);
-	bt_key_fill_in_INT4(&p_key, I2);
+	bt_key_fill_in_int4(&p_key, I1);
+	bt_key_fill_in_int4(&p_key, I2);
 
 
 
 	f_found = search(&key, NULL, &idx, 2, verbose_level);
 	if (f_v) {
-		cout << "search_INT4_INT4() f_found=" << f_found << " idx=" << idx << endl;
+		cout << "search_int4_int4() f_found=" << f_found << " idx=" << idx << endl;
 		}
 	return f_found;
 }
 
-INT btree::search_unique_INT4(INT i, INT verbose_level)
+int btree::search_unique_int4(int i, int verbose_level)
 // returns -1 if the element could not be found or is not unique.
 // otherwise, the idx of the element is returned
 {
-	INT first, len;
+	int first, len;
 	
-	search_interval_INT4(i, i, first, len, verbose_level);
+	search_interval_int4(i, i, first, len, verbose_level);
 	if (len > 1) {
-		cout << "btree::search_unique_INT4() WARNING: element is not unique, returning -1" << endl;
+		cout << "btree::search_unique_int4() WARNING: element is not unique, returning -1" << endl;
 		return -1;
 		}
 	if (len == 0) {
@@ -816,15 +818,15 @@ INT btree::search_unique_INT4(INT i, INT verbose_level)
 	return first;
 }
 
-INT btree::search_unique_INT4_INT4_INT4_INT4(INT i0, INT i1, 
-	INT i2, INT i3, INT verbose_level)
+int btree::search_unique_int4_int4_int4_int4(int i0, int i1, 
+	int i2, int i3, int verbose_level)
 // returns -1 if an element whose key starts with [i0,i1,i2,i3] could not be found or is not unique.
 // otherwise, the idx of that element is returned
 {
-	INT f_v = (verbose_level >= 1);
-	INT first, len;
+	int f_v = (verbose_level >= 1);
+	int first, len;
 	
-	search_interval_INT4_INT4_INT4_INT4(
+	search_interval_int4_int4_int4_int4(
 		i0, i0, 
 		i1, i1, 
 		i2, i2, 
@@ -839,7 +841,7 @@ INT btree::search_unique_INT4_INT4_INT4_INT4(INT i0, INT i1,
 
 	if (len > 1) {
 		print_all(cout);
-		cout << "btree::search_unique_INT4_INT4_INT4_INT4() WARNING: element is not unique, returning -1" << endl;
+		cout << "btree::search_unique_int4_int4_int4_int4() WARNING: element is not unique, returning -1" << endl;
 		cout << "key=[" << i0 << ", " << i1 << ", " << i2 << ", " << i3 << "]" << endl;
 		cout << "first=" << first << " len=" << len << endl;
 		exit(1);
@@ -850,11 +852,11 @@ INT btree::search_unique_INT4_INT4_INT4_INT4(INT i0, INT i1,
 	return first;
 }
 
-INT btree::search_datref_of_unique_INT4(INT i, INT verbose_level)
+int btree::search_datref_of_unique_int4(int i, int verbose_level)
 {
-	INT no = search_unique_INT4(i, verbose_level);
+	int no = search_unique_int4(i, verbose_level);
 	if (no == -1) {
-		cout << "btree::search_unique_INT4() no == -1, cannot determine element" << endl;
+		cout << "btree::search_unique_int4() no == -1, cannot determine element" << endl;
 		exit(1);
 		}
 	KEYTYPE key;
@@ -864,9 +866,9 @@ INT btree::search_datref_of_unique_INT4(INT i, INT verbose_level)
 	return data.datref;
 }
 
-INT btree::search_datref_of_unique_INT4_if_there(INT i, INT verbose_level)
+int btree::search_datref_of_unique_int4_if_there(int i, int verbose_level)
 {
-	INT no = search_unique_INT4(i, verbose_level);
+	int no = search_unique_int4(i, verbose_level);
 	if (no == -1) {
 		return -1;
 		}
@@ -877,15 +879,15 @@ INT btree::search_datref_of_unique_INT4_if_there(INT i, INT verbose_level)
 	return data.datref;
 }
 
-INT btree::get_highest_INT4()
+int btree::get_highest_int4()
 // returns -1 if the btree is empty,
-// otherwise the INT4 value of the key 
+// otherwise the int4 value of the key 
 // of the last (highest) element in the btree.
 {
-	INT len;
+	int len;
 	KEYTYPE key;
 	DATATYPE data;
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	
 	len = length(verbose_level);
 	if (len == 0) {
@@ -896,28 +898,28 @@ INT btree::get_highest_INT4()
 	// key_print(key.c, ost);
 	// cout << endl;
 	char *p_key = key.c;
-	INT4 i;
-	bt_key_get_INT4(&p_key, i);
+	int4 i;
+	bt_key_get_int4(&p_key, i);
 	return i;
 }
 
-void btree::get_datrefs(INT first, INT len, Vector& datrefs)
+void btree::get_datrefs(int first, int len, Vector& datrefs)
 {
 	KEYTYPE key;
 	DATATYPE data;
-	INT verbose_level = 0;
+	int verbose_level = 0;
 
 	datrefs.m_l_n(len);
-	for (INT i = 0; i < len; i++) {
+	for (int i = 0; i < len; i++) {
 		ith(first + i, &key, &data, verbose_level);
 		datrefs.m_ii(i, data.datref);
 		}
 }
 
-INT btree::search(void *pSearchKey, 
-	DATATYPE *pData, INT *idx, 
-	INT key_depth, 
-	INT verbose_level)
+int btree::search(void *pSearchKey, 
+	DATATYPE *pData, int *idx, 
+	int key_depth, 
+	int verbose_level)
 // returns true iff searchKey has been found.
 
 /* void pointer pSearchKey hier.
@@ -933,9 +935,9 @@ INT btree::search(void *pSearchKey,
  * idx kann also auch -1 werden (nicht gefunden - 
  * vor dem 0-ten Datensatz) */
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	Buffer Buf;
-	INT f_found;
+	int f_found;
 	
 	if (f_v) {
 		cout << "btree::search Root()=" << Root() << endl;
@@ -958,23 +960,23 @@ INT btree::search(void *pSearchKey,
 	return f_found;
 }
 
-INT btree::SearchBtree(INT page, 
+int btree::SearchBtree(int page, 
 	void *pSearchKey, DATATYPE *pData, 
-	Buffer *Buf, INT *idx, INT key_depth, 
-	INT verbose_level)
+	Buffer *Buf, int *idx, int key_depth, 
+	int verbose_level)
 // returns true iff searchKey has been found.
 
 /* Sucht einen Schluessel in der Datenbank
  * --
  * KEYTYPE  pSearchKey - Zu suchender Schluessel
  * DATATYPE *pData     - Zum Schluessel gehoerende Daten
- * INT      *idx         - Enthaelt Nummer des gefundenen bzw des naechst 
+ * int      *idx         - Enthaelt Nummer des gefundenen bzw des naechst 
  *                         kleineren Datensatzes
- * INT      *f_found     - Gibt an, ob Daten gefunden wurden */
+ * int      *f_found     - Gibt an, ob Daten gefunden wurden */
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT x, f_found, f_found1, idx1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int x, f_found, f_found1, idx1;
 	
 	if (f_v) {
 		cout << "btree::SearchBtree page=" << page << endl;
@@ -1035,10 +1037,10 @@ INT btree::SearchBtree(INT page,
 	return f_found;
 }
 
-INT btree::SearchPage(Buffer *buffer, 
+int btree::SearchPage(Buffer *buffer, 
 	void *pSearchKey, DATATYPE *pSearchData, 
-	INT *cur, INT *x, INT key_depth, 
-	INT verbose_level)
+	int *cur, int *x, int key_depth, 
+	int verbose_level)
 // binary search within one page.
 // returns true if the key searched for has been found, false otherwise
 // in case that the key has been found, 
@@ -1054,14 +1056,14 @@ INT btree::SearchPage(Buffer *buffer,
  * DATATYPE *pSearchData - optional, nur datref verwendet. 
  *                         Bei gleichen Schluesseln werden 
  *                         zusaetzlich die datref's verglichen.
- * INT *x                - Gibt Position an, falls Suche 
+ * int *x                - Gibt Position an, falls Suche 
  *                         erfolgreich. Ansonsten naechst 
  *                         kleinerers Element.
  *                         x kann also auch null werden.
- * INT *Found            - Gibt an, ob Schluessel gefunden.
+ * int *Found            - Gibt an, ob Schluessel gefunden.
  * 
  * Es wird aufgerufen:
- *   WORD (*cmp_func)(void *key1, void *key2, INT *res);
+ *   WORD (*cmp_func)(void *key1, void *key2, int *res);
  * Key1 stammt aus der Datenbank, key2 ist der durchgeschleifte, 
  * zu suchende Schluessel. 
  * Ergebnis:
@@ -1078,14 +1080,14 @@ INT btree::SearchPage(Buffer *buffer,
  * Datensatznummer enthaelt, wenn es vorher im Suchbaum 
  * schon mitgefuehrt wurde. */
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	ItemTyp *item = NULL;
-	UINT4 searchdatref = 0;
-	INT childs;
-	INT r, l, i;
-	INT res;
-	INT f_found = FALSE;
+	uint4 searchdatref = 0;
+	int childs;
+	int r, l, i;
+	int res;
+	int f_found = FALSE;
 	
 	if (f_v) {
 		cout << "btree::SearchPage" << endl;
@@ -1155,11 +1157,11 @@ INT btree::SearchPage(Buffer *buffer,
 	return f_found;
 }
 
-INT btree::length(INT verbose_level)
+int btree::length(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT l;
-	INT j, pagelen;
+	int f_v = (verbose_level >= 1);
+	int l;
+	int j, pagelen;
 	//Buffer *Root_BF;
 	Buffer *BF;
 	
@@ -1199,15 +1201,15 @@ INT btree::length(INT verbose_level)
 	return l;
 }
 
-void btree::ith(INT l, 
-	KEYTYPE *key, DATATYPE *data, INT verbose_level)
+void btree::ith(int l, 
+	KEYTYPE *key, DATATYPE *data, int verbose_level)
 /* key muss auf einen ganzen KEYTYPE zeigen, 
  * da der gesamte keycarrier mittels struct-
  * zuweisung kopiert wird. */
 {
-	INT f_v = (verbose_level >= 1);
-	INT cur, page, ref;
-	INT i, f_found;
+	int f_v = (verbose_level >= 1);
+	int cur, page, ref;
+	int i, f_found;
 	Buffer *buffer;
 	
 	if (f_v) {
@@ -1255,15 +1257,15 @@ void btree::ith(INT l,
 		}
 }
 
-INT btree::page_i_th(INT l, 
+int btree::page_i_th(int l, 
 	Buffer *buffer, 
-	INT *cur, INT *i, 
-	INT verbose_level)
+	int *cur, int *i, 
+	int verbose_level)
 // returns true iff element could be found
 {
-	INT f_v = (verbose_level >= 1);
-	INT childs;
-	INT page_len, j;
+	int f_v = (verbose_level >= 1);
+	int childs;
+	int page_len, j;
 	
 	if (f_v) {
 		cout << "btree::page_i_th looking for entry " << l << endl;
@@ -1296,12 +1298,12 @@ INT btree::page_i_th(INT l,
 static KEYTYPE *IKpKey;
 static DATATYPE *IKpData;
 static Buffer *IKBF;
-static INT IKFound;
-static INT IKRisen;
-static INT f_keyadded;
+static int IKFound;
+static int IKRisen;
+static int f_keyadded;
 
 void btree::insert_key(KEYTYPE *pKey, 
-	DATATYPE *pData, INT verbose_level)
+	DATATYPE *pData, int verbose_level)
 /* Fuegt einen Schluessel in die Datenbank ein. Wenn
  * der Schluessel schon existiert, werden nur die Daten
  * ('Data') aktualisiert
@@ -1309,12 +1311,12 @@ void btree::insert_key(KEYTYPE *pKey,
  * KEYTYPE Key   - Einzufuegender Schluessel
  * DATATYPE Data - Die zum Schluessel gehoerenden Daten */
 {
-	INT f_v = (verbose_level >= 1);
-	INT RootSplit;
+	int f_v = (verbose_level >= 1);
+	int RootSplit;
 	ItemTyp RootItem;
 	Buffer *NewRoot = NULL;
 	Buffer *BF1 = NULL;
-	INT NewNeighbourChilds, new_page_num;
+	int NewNeighbourChilds, new_page_num;
 	
 	if (f_v) {
 		cout << "btree::insert_key key=";
@@ -1359,14 +1361,14 @@ void btree::insert_key(KEYTYPE *pKey,
 			cout << endl;
 			}
 		new_page_num = AllocateRec(verbose_level);
-		NewRoot->PageNum = (INT4) new_page_num;
+		NewRoot->PageNum = (int4) new_page_num;
 		if (f_v) {
 			cout << "btree::insert_key: RootSplit, NewRoot->PageNum = " << NewRoot->PageNum << endl;
 			}
 
 		NewRoot->Page.NumItems = 1;
-		NewRoot->Page.Item[0].Ref = (INT4) Root();
-		NewRoot->Page.Item[0].Childs = (INT4) NewNeighbourChilds;
+		NewRoot->Page.Item[0].Ref = (int4) Root();
+		NewRoot->Page.Item[0].Childs = (int4) NewNeighbourChilds;
 		NewRoot->Page.Item[1] = RootItem;
 		
 		Root() = NewRoot->PageNum;
@@ -1395,14 +1397,14 @@ void btree::insert_key(KEYTYPE *pKey,
 		}
 }
 
-void btree::Update(INT Node, INT *Rise, 
-	ItemTyp *RisenItem, INT *RisenNeighbourChilds, 
-	INT verbose_level)
+void btree::Update(int Node, int *Rise, 
+	ItemTyp *RisenItem, int *RisenNeighbourChilds, 
+	int verbose_level)
 /* Einfuegen in den Zweig Node.
  * RisenNeighbourChilds nur gesetzt, wenn Rise TRUE ist. */
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, idx, z;
+	int f_v = (verbose_level >= 1);
+	int x, idx, z;
 
 	if (f_v) {
 		cout << "Update() in page " << Node << endl;
@@ -1477,7 +1479,7 @@ void btree::Update(INT Node, INT *Rise,
 			cout << endl;
 			}
 		/* RisenItem muss nach x eingefuegt werden: */
-		IKBF->Page.Item[x].Childs = (INT4) *RisenNeighbourChilds;
+		IKBF->Page.Item[x].Childs = (int4) *RisenNeighbourChilds;
 		/* Nach Seiten-Split hat der linke Nachbar weniger 
 		 * Nachfolger */
 		if (IKBF->Page.NumItems < BTREEMAXPAGESIZE) {
@@ -1519,8 +1521,8 @@ void btree::Update(INT Node, INT *Rise,
 
 
 void btree::Split(Buffer *BF, ItemTyp *Item, 
-	INT x, INT *RisenNeighbourChilds, 
-	INT verbose_level)
+	int x, int *RisenNeighbourChilds, 
+	int verbose_level)
 /* Fuegt Item in volle Seite BF nach position x ein.
  * Die uebervolle Seite wird zerlegt, die 2. Haelfte in 
  * eine neue Seite kopiert. Das mittlere Element wird 
@@ -1534,12 +1536,12 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
  * kleinerte muss von der rufenden Funktion gesichert 
  * werden. */
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	ItemTyp SplitItem;
 	Buffer *SplitBF = NULL;
-	INT sum1, sum2;
-	INT z;
-	INT new_page_num;
+	int sum1, sum2;
+	int z;
+	int new_page_num;
 	
 	if (f_v) {
 		cout << "Split page=" << BF->PageNum << " at x=" << x << endl;
@@ -1554,7 +1556,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	if (f_v) {
 		cout << "Split new page=" << new_page_num << endl;
 		}
-	SplitBF->PageNum = (INT4) new_page_num;
+	SplitBF->PageNum = (int4) new_page_num;
 	if (x < BTREEHALFPAGESIZE) {
 		SplitItem = BF->Page.Item[BTREEHALFPAGESIZE];
 		for (z = BTREEHALFPAGESIZE - 1; z >= x + 1; z--) {
@@ -1587,7 +1589,7 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	BF->Page.NumItems = BTREEHALFPAGESIZE;
 	SplitBF->Page.NumItems = BTREEHALFPAGESIZE;
 	SplitItem.Ref = SplitBF->PageNum;
-	SplitItem.Childs = (INT4) sum2;
+	SplitItem.Childs = (int4) sum2;
 	*Item = SplitItem;
 	
 	if (f_v) {
@@ -1613,19 +1615,19 @@ void btree::Split(Buffer *BF, ItemTyp *Item,
 	delete SplitBF;
 }
 
-static INT DKFound;
-static INT DKidx, DKcur;
+static int DKFound;
+static int DKidx, DKcur;
 /*static Buffer *DKBF;*/
-static INT f_keydeleted;
+static int f_keydeleted;
 
-void btree::delete_ith(INT idx, INT verbose_level)
+void btree::delete_ith(int idx, int verbose_level)
 /* Loescht einen Datensatz in der Datenbank
  * --
  * DelKey - Zu loeschender Schluessel */
 {
-	INT f_v = (verbose_level >= 1);
-	INT z, z2;
-	INT Underflow;
+	int f_v = (verbose_level >= 1);
+	int z, z2;
+	int Underflow;
 	/* Buffer BF; */
 	Buffer *Root_BF;
 	
@@ -1679,10 +1681,10 @@ void btree::delete_ith(INT idx, INT verbose_level)
 		}
 }
 
-void btree::Delete(INT Node, INT& Underflow, INT verbose_level)
+void btree::Delete(int Node, int& Underflow, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, y, z;
+	int f_v = (verbose_level >= 1);
+	int x, y, z;
 	Buffer *DKBF = NULL;
 
 	if (f_v) {
@@ -1751,13 +1753,13 @@ void btree::Delete(INT Node, INT& Underflow, INT verbose_level)
 		}
 }
 
-void btree::FindGreatest(INT Node1, 
-	INT& Underflow, Buffer *DKBF, INT x, 
-	INT verbose_level)
+void btree::FindGreatest(int Node1, 
+	int& Underflow, Buffer *DKBF, int x, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT Node2;
-	INT NumBF;
+	int f_v = (verbose_level >= 1);
+	int Node2;
+	int NumBF;
 	Buffer *buf = NULL;
 	Buffer *Root_BF;
 
@@ -1792,7 +1794,7 @@ void btree::FindGreatest(INT Node1,
 			}
 		NumBF--;
 		Underflow = (NumBF < BTREEHALFPAGESIZE);
-		buf->Page.NumItems = (INT4) NumBF;
+		buf->Page.NumItems = (int4) NumBF;
 		SavePage(buf, verbose_level - 1);
 		}
 	delete buf;
@@ -1801,15 +1803,15 @@ void btree::FindGreatest(INT Node1,
 		}
 }
 
-void btree::Compensate(INT Precedent, 
-	INT Node, INT Path, INT& Underflow, 
-	INT verbose_level)
+void btree::Compensate(int Precedent, 
+	int Node, int Path, int& Underflow, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT Neighbour;
-	INT NumBF2, NumBF3;
-	INT x, z;
-	INT sum;
+	int f_v = (verbose_level >= 1);
+	int Neighbour;
+	int NumBF2, NumBF3;
+	int x, z;
+	int sum;
 	Buffer *BF1 = NULL;
 	Buffer *BF2 = NULL;
 	Buffer *BF3 = NULL;
@@ -1850,7 +1852,7 @@ void btree::Compensate(INT Precedent,
 			if (f_v) {
 				cout << "case I with x=" << x << endl;
 				}
-			/*printf("Fall I x = %ld\n", x);*/
+			/*printf("Fall I x = %d\n", x);*/
 			for (z = 1; z <= x - 1; z++) {
 				BF1->Page.Item[BTREEHALFPAGESIZE + z] = BF2->Page.Item[z];
 				sum += BF2->Page.Item[z].Childs;
@@ -1866,8 +1868,8 @@ void btree::Compensate(INT Precedent,
 			for (z = 1; z <= NumBF2; z++) {
 				BF2->Page.Item[z] = BF2->Page.Item[x + z];
 				}
-			BF2->Page.NumItems = (INT4) NumBF2;
-			BF1->Page.NumItems = (INT4) (BTREEHALFPAGESIZE + x - 1);
+			BF2->Page.NumItems = (int4) NumBF2;
+			BF1->Page.NumItems = (int4) (BTREEHALFPAGESIZE + x - 1);
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF2, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
@@ -1877,7 +1879,7 @@ void btree::Compensate(INT Precedent,
 			if (f_v) {
 				cout << "case II with x=" << x << endl;
 				}
-			/*printf("Fall II x = %ld\n", x);*/
+			/*printf("Fall II x = %d\n", x);*/
 			BF3->Page.Item[Path].Childs += BF3->Page.Item[Path + 1].Childs + 1;
 			for (z = 1; z <= BTREEHALFPAGESIZE; z++) {
 				BF1->Page.Item[BTREEHALFPAGESIZE + z] = BF2->Page.Item[z];
@@ -1886,7 +1888,7 @@ void btree::Compensate(INT Precedent,
 				BF3->Page.Item[z] = BF3->Page.Item[z + 1];
 				}
 			BF1->Page.NumItems = BTREEMAXPAGESIZE;
-			BF3->Page.NumItems = (INT4) NumBF3 - 1L;
+			BF3->Page.NumItems = (int4) NumBF3 - 1L;
 			Underflow = (NumBF3 <= BTREEHALFPAGESIZE);
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
@@ -1906,7 +1908,7 @@ void btree::Compensate(INT Precedent,
 			if (f_v) {
 				cout << "case III with x=" << x << endl;
 				}
-			/*printf("Fall III x = %ld\n", x);*/
+			/*printf("Fall III x = %d\n", x);*/
 			for (z = BTREEHALFPAGESIZE - 1L; z >= 1; z--) {
 				BF1->Page.Item[z + x] = BF1->Page.Item[z];
 				}
@@ -1927,8 +1929,8 @@ void btree::Compensate(INT Precedent,
 			BF3->Page.Item[Path].Data = BF2->Page.Item[NumBF2 + 1].Data;
 			BF3->Page.Item[Path].Childs += sum;
 			BF3->Page.Item[Path - 1].Childs -= sum;
-			BF2->Page.NumItems = (INT4) NumBF2;
-			BF1->Page.NumItems = (INT4) (x + BTREEHALFPAGESIZE - 1L);
+			BF2->Page.NumItems = (int4) NumBF2;
+			BF1->Page.NumItems = (int4) (x + BTREEHALFPAGESIZE - 1L);
 			SavePage(BF1, verbose_level - 1);
 			SavePage(BF2, verbose_level - 1);
 			SavePage(BF3, verbose_level - 1);
@@ -1938,7 +1940,7 @@ void btree::Compensate(INT Precedent,
 			if (f_v) {
 				cout << "case IV with x=" << x << endl;
 				}
-			/*printf("Fall IV x = %ld\n", x);*/
+			/*printf("Fall IV x = %d\n", x);*/
 			BF2->Page.Item[NumBF2 + 1].Key = BF3->Page.Item[Path].Key;
 			BF2->Page.Item[NumBF2 + 1].Data = BF3->Page.Item[Path].Data;
 			BF2->Page.Item[NumBF2 + 1].Ref = BF1->Page.Item[0].Ref;
@@ -1947,7 +1949,7 @@ void btree::Compensate(INT Precedent,
 				BF2->Page.Item[NumBF2 + 1 + z] = BF1->Page.Item[z];
 				}
 			BF2->Page.NumItems = BTREEMAXPAGESIZE;
-			BF3->Page.NumItems = (INT4) NumBF3 - 1;
+			BF3->Page.NumItems = (int4) NumBF3 - 1;
 			BF3->Page.Item[Path - 1].Childs += 
 				BF3->Page.Item[Path].Childs + 1;
 			Underflow = (NumBF3 <= BTREEHALFPAGESIZE);
@@ -1966,19 +1968,19 @@ void btree::Compensate(INT Precedent,
 
 void btree::print_all(ostream& ost)
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	
-	INT bt_len = length(verbose_level);
+	int bt_len = length(verbose_level);
 	
 	print_range(0, bt_len, ost);
 }
 
-void btree::print_range(INT first, INT len, ostream& ost)
+void btree::print_range(int first, int len, ostream& ost)
 {
-	INT i, j, bt_len;
+	int i, j, bt_len;
 	KEYTYPE key;
 	DATATYPE data;
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	
 	bt_len = length(verbose_level);
 	for (i = 0; i < len; i++) {
@@ -1996,11 +1998,11 @@ void btree::print_range(INT first, INT len, ostream& ost)
 		}
 }
 
-void btree::print_page(INT x, ostream& ost)
+void btree::print_page(int x, ostream& ost)
 {
-	INT y;
+	int y;
 	Buffer BF;
-	INT verbose_level = 0;
+	int verbose_level = 0;
 
 	if (x == 0) {
 		return;
@@ -2015,7 +2017,7 @@ void btree::print_page(INT x, ostream& ost)
 
 void btree::page_print(Buffer *BF, ostream& ost)
 {
-	INT i, len; //, childs, ref, datref, data_size;
+	int i, len; //, childs, ref, datref, data_size;
 	ItemTyp *item = NULL;
 	
 	ost << "PageNum = " << BF->PageNum << endl;
@@ -2047,9 +2049,9 @@ void btree::page_print(Buffer *BF, ostream& ost)
 	ost << endl;
 }
 
-void btree::item_print(ItemTyp *item, INT i, ostream& ost)
+void btree::item_print(ItemTyp *item, int i, ostream& ost)
 {
-	INT childs, ref, datref, data_size;
+	int childs, ref, datref, data_size;
 	
 	childs = item->Childs;
 	ref = item->Ref;
@@ -2072,14 +2074,14 @@ void btree::item_print(ItemTyp *item, INT i, ostream& ost)
 		<< "," << setw(8) << ref << "}" << endl; }
 
 
-// ####################################################################################
+// #############################################################################
 // global functions and low level functions
-// ####################################################################################
+// #############################################################################
 
 
 void btree::file_open()
 {
-	INT idx = fstream_table_get_free_entry();
+	int idx = fstream_table_get_free_entry();
 	fstream *f = new fstream(filename().s(), ios::in | ios::out | ios::binary);
 	fstream_table[idx] = f;
 	fstream_table_used[idx] = TRUE;
@@ -2096,7 +2098,7 @@ void btree::file_create()
 	cmd.append(filename().s());
 	system(cmd.s());
 	
-	INT idx = fstream_table_get_free_entry();
+	int idx = fstream_table_get_free_entry();
 	{
 	fstream *f = new fstream(filename().s(), ios::out | ios::binary);
 	if (!*f) {
@@ -2165,16 +2167,16 @@ void btree::file_read(PageTyp *page, const char *message)
 	fstream_table[idx]->read((char *) page, sizeof(PageTyp));
 }
 
-void btree::file_seek(INT page_no)
+void btree::file_seek(int page_no)
 {
-	INT offset;
+	int offset;
 	
 	//cout << "file_seek page " << page_no << endl;
 	if (!f_open()) {
 		cout << "btree::file_seek() file not open" << endl;
 		exit(1);
 		}
-	offset = page_no * (INT)sizeof(PageTyp);
+	offset = page_no * (int)sizeof(PageTyp);
 	int idx = (int) stream();
 	if (!fstream_table_used[idx]) {
 		cout << "btree::file_seek() !fstream_table_used[idx]" << endl;
@@ -2188,7 +2190,7 @@ void btree::file_seek(INT page_no)
 
 static void bt_item_copy(ItemTyp *a, ItemTyp *b)
 {
-	INT i, len;
+	int i, len;
 	char *pca = (char *)a;
 	char *pcb = (char *)b;
 	

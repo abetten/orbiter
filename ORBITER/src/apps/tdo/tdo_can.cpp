@@ -6,7 +6,7 @@
 
 #include "orbiter.h"
 
-INT t0;
+int t0;
 
 char buf[BUFSIZE];
 
@@ -27,12 +27,12 @@ int main(int argc, char **argv)
 	int *row_scheme;
 	int *col_scheme;
 	
-	INT a, b, c, ra, r;
-	INT m, n, i, j, cnt = 0;
+	int a, b, c, ra, r;
+	int m, n, i, j, cnt = 0;
 	longinteger_object ago;
-	INT nb_agos;
+	int nb_agos;
 	longinteger_object *agos;
-	INT *multiplicities;
+	int *multiplicities;
 	char *p_buf;
 	
 
@@ -212,13 +212,16 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-INT INT_vec_compare_interface(void *a, void *b, void *data)
+#if 0
+int int_vec_compare_interface(void *a, void *b, void *data)
 {
-	INT *A, *B, nb_inc;
+	int *A, *B, nb_inc;
 	
-	A = (INT *) a;
-	B = (INT *) b;
-	nb_inc = (INT) data;
+	A = (int *) a;
+	B = (int *) b;
+	nb_inc = (int) data;
 	//cout << "compare " << nb_inc << endl;
-	return INT_vec_compare(A, B, nb_inc);
+	return int_vec_compare(A, B, nb_inc);
 }
+#endif
+

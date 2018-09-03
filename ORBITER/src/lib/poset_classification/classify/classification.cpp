@@ -39,16 +39,16 @@ void classification::freeself()
 		FREE_OBJECTS(Orbit);
 		}
 	if (Rep) {
-		FREE_INT(Rep);
+		FREE_int(Rep);
 		}
 	null();
 }
 
 void classification::init(action *A, action *A2, 
-	INT max_orbits, INT representation_sz, 
-	longinteger_object &go, INT verbose_level)
+	int max_orbits, int representation_sz, 
+	longinteger_object &go, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "classification::init "
@@ -62,18 +62,18 @@ void classification::init(action *A, action *A2,
 	classification::max_orbits = max_orbits;
 	classification::representation_sz = representation_sz;
 	Orbit = NEW_OBJECTS(orbit_node, max_orbits);
-	Rep = NEW_INT(max_orbits * representation_sz);
+	Rep = NEW_int(max_orbits * representation_sz);
 	if (f_v) {
 		cout << "classification::init done" << endl;
 		}
 }
 
 set_and_stabilizer *classification::get_set_and_stabilizer(
-		INT orbit_index, INT verbose_level)
+		int orbit_index, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	set_and_stabilizer *SaS;
-	INT *data;
+	int *data;
 	strong_generators *Strong_gens;
 
 	if (f_v) {
@@ -82,8 +82,8 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 
 	SaS = NEW_OBJECT(set_and_stabilizer);
 
-	data = NEW_INT(representation_sz);
-	INT_vec_copy(
+	data = NEW_int(representation_sz);
+	int_vec_copy(
 			Rep + orbit_index * representation_sz,
 			data, representation_sz);
 	
@@ -111,10 +111,10 @@ set_and_stabilizer *classification::get_set_and_stabilizer(
 }
 
 void classification::print_latex(ostream &ost, 
-	const char *title, INT f_with_stabilizers)
+	const char *title, int f_with_stabilizers)
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	
 	cout << "classification::print_latex" << endl;
 	
@@ -134,7 +134,7 @@ void classification::print_latex(ostream &ost,
 
 	ost << "The group has " << nb_orbits << " orbits: \\\\" << endl;
 
-	INT i;
+	int i;
 	longinteger_domain D;
 	longinteger_object go1, ol, Ol;
 	Ol.create(0);
@@ -158,7 +158,7 @@ void classification::print_latex(ostream &ost,
 			}
 		
 		ost << "$" << i << " / " << nb_orbits << "$ $" << endl;
-		INT_set_print_tex_for_inline_text(ost,
+		int_set_print_tex_for_inline_text(ost,
 				Rep + i * representation_sz,
 				representation_sz);
 		ost << "_{";
@@ -178,19 +178,19 @@ void classification::print_latex(ostream &ost,
 	ost << "The overall number of objects is: " << Ol << "\\\\" << endl;
 }
 
-void classification::write_file(ofstream &fp, INT verbose_level)
+void classification::write_file(ofstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "classification::write_file" << endl;
 		}
-	fp.write((char *) &nb_orbits, sizeof(INT));
-	fp.write((char *) &representation_sz, sizeof(INT));
+	fp.write((char *) &nb_orbits, sizeof(int));
+	fp.write((char *) &representation_sz, sizeof(int));
 
 	for (i = 0; i < nb_orbits * representation_sz; i++) {
-		fp.write((char *) &Rep[i], sizeof(INT));
+		fp.write((char *) &Rep[i], sizeof(int));
 		}
 	for (i = 0; i < nb_orbits; i++) {
 		Orbit[i].write_file(fp, 0/*verbose_level*/);
@@ -201,20 +201,20 @@ void classification::write_file(ofstream &fp, INT verbose_level)
 		}
 }
 
-void classification::read_file(ifstream &fp, INT verbose_level)
+void classification::read_file(ifstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "classification::read_file" << endl;
 		}
-	fp.read((char *) &nb_orbits, sizeof(INT));
-	fp.read((char *) &representation_sz, sizeof(INT));
+	fp.read((char *) &nb_orbits, sizeof(int));
+	fp.read((char *) &representation_sz, sizeof(int));
 
-	Rep = NEW_INT(nb_orbits * representation_sz);
+	Rep = NEW_int(nb_orbits * representation_sz);
 	for (i = 0; i < nb_orbits * representation_sz; i++) {
-		fp.read((char *) &Rep[i], sizeof(INT));
+		fp.read((char *) &Rep[i], sizeof(int));
 		}
 	
 	max_orbits = nb_orbits;

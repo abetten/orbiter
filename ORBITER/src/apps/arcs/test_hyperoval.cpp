@@ -8,22 +8,22 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	//INT f_poly = FALSE;
-	INT f_stabilizer = FALSE;
-	INT f_regular = FALSE;
-	INT f_LunelliSce = FALSE;
-	INT f_Subiaco64_1 = FALSE;
-	INT f_Subiaco64_2 = FALSE;
-	INT f_Adelaide64 = FALSE;
+	int verbose_level = 0;
+	//int f_poly = FALSE;
+	int f_stabilizer = FALSE;
+	int f_regular = FALSE;
+	int f_LunelliSce = FALSE;
+	int f_Subiaco64_1 = FALSE;
+	int f_Subiaco64_2 = FALSE;
+	int f_Adelaide64 = FALSE;
 	const char *poly = NULL;
-	INT i, j, q;
+	int i, j, q;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -83,18 +83,18 @@ int main(int argc, char **argv)
 		cout << endl;
 		}
 	
-	INT n = q + 2;
-	INT t, f, a, rk;
-	INT *coords;
-	INT *pts;
-	INT subset[3];
-	INT Mtx[9];
+	int n = q + 2;
+	int t, f, a, rk;
+	int *coords;
+	int *pts;
+	int subset[3];
+	int Mtx[9];
 	finite_field Fq;
 
 	Fq.init_override_polynomial(q, poly, verbose_level);
 	
-	coords = NEW_INT(n * 3);
-	pts = NEW_INT(n);
+	coords = NEW_int(n * 3);
+	pts = NEW_int(n);
 
 	if (f_LunelliSce) {
 		LunelliSce(&Fq, pts, verbose_level);
@@ -135,7 +135,7 @@ int main(int argc, char **argv)
 	first_k_subset(subset, n, 3);
 	while (TRUE) {
 		cout << "testing subset ";
-		INT_vec_print(cout, subset, 3);
+		int_vec_print(cout, subset, 3);
 		cout << endl;
 		
 		for (i = 0; i < 3; i++) {
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
 		// computing stabilizer:
 		action *A;
 		strong_generators *Aut_gens;
-		//INT t0 = os_ticks();
+		//int t0 = os_ticks();
 	
 		A = NEW_OBJECT(action);
 
@@ -175,7 +175,7 @@ int main(int argc, char **argv)
 	
 		set_stabilizer_compute STAB;
 		sims *Stab;
-		INT nb_backtrack_nodes;
+		int nb_backtrack_nodes;
 	
 		cout << "computing stabilizer of the hyperoval:" << endl;
 		STAB.init(A, pts, n, verbose_level);

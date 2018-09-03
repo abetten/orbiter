@@ -10,7 +10,7 @@
 
 #include "foundations.h"
 
-double norm_of_vector(INT x1, INT x2, INT y1, INT y2);
+double norm_of_vector(int x1, int x2, int y1, int y2);
 
 layered_graph::layered_graph()
 {
@@ -37,11 +37,11 @@ void layered_graph::freeself()
 	null();
 }
 
-void layered_graph::init(INT nb_layers, INT *Nb_nodes_layer, 
-	const char *fname_base, INT verbose_level)
+void layered_graph::init(int nb_layers, int *Nb_nodes_layer, 
+	const char *fname_base, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "layered_graph::init" << endl;
@@ -63,10 +63,10 @@ void layered_graph::init(INT nb_layers, INT *Nb_nodes_layer,
 		}
 }
 
-void layered_graph::place(INT verbose_level)
+void layered_graph::place(int verbose_level)
 {
 	double dy, dy2;
-	INT i;
+	int i;
 
 	dy = 1. / (double) nb_layers;
 	dy2 = dy * .5;
@@ -76,10 +76,10 @@ void layered_graph::place(INT verbose_level)
 		}
 }
 
-void layered_graph::place_with_y_stretch(double y_stretch, INT verbose_level)
+void layered_graph::place_with_y_stretch(double y_stretch, int verbose_level)
 {
 	double dy, dy2;
-	INT i;
+	int i;
 
 	dy = y_stretch / (double) nb_layers;
 	dy2 = dy * .5;
@@ -89,12 +89,12 @@ void layered_graph::place_with_y_stretch(double y_stretch, INT verbose_level)
 		}
 }
 
-void layered_graph::place_with_grouping(INT **Group_sizes,
-		INT *Nb_groups, double x_stretch, INT verbose_level)
+void layered_graph::place_with_grouping(int **Group_sizes,
+		int *Nb_groups, double x_stretch, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double dy, dy2;
-	INT i;
+	int i;
 
 	if (f_v) {
 		cout << "layered_graph::place_with_grouping "
@@ -120,11 +120,11 @@ void layered_graph::place_with_grouping(INT **Group_sizes,
 		}
 }
 
-void layered_graph::add_edge(INT l1, INT n1, INT l2, INT n2,
-		INT verbose_level)
+void layered_graph::add_edge(int l1, int n1, int l2, int n2,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT id1, id2;
+	int f_v = (verbose_level >= 1);
+	int id1, id2;
 
 	if (f_v) {
 		cout << "layered_graph::add_edge l1=" << l1
@@ -163,10 +163,10 @@ void layered_graph::add_edge(INT l1, INT n1, INT l2, INT n2,
 		}
 }
 
-void layered_graph::add_text(INT l, INT n,
-		const char *text, INT verbose_level)
+void layered_graph::add_text(int l, int n,
+		const char *text, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::add_text l=" << l
@@ -175,9 +175,9 @@ void layered_graph::add_text(INT l, INT n,
 	L[l].Nodes[n].add_text(text);
 }
 
-void layered_graph::add_data1(INT data, INT verbose_level)
+void layered_graph::add_data1(int data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::add_data1" << endl;
@@ -185,10 +185,10 @@ void layered_graph::add_data1(INT data, INT verbose_level)
 	data1 = data;
 }
 
-void layered_graph::add_node_vec_data(INT l, INT n,
-		INT *v, INT len, INT verbose_level)
+void layered_graph::add_node_vec_data(int l, int n,
+		int *v, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::add_node_vec_data "
@@ -198,9 +198,9 @@ void layered_graph::add_node_vec_data(INT l, INT n,
 }
 
 void layered_graph::set_distinguished_element_index(
-		INT l, INT n, INT index, INT verbose_level)
+		int l, int n, int index, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::set_distinguished_element_index "
@@ -210,10 +210,10 @@ void layered_graph::set_distinguished_element_index(
 }
 
 
-void layered_graph::add_node_data1(INT l, INT n,
-		INT data, INT verbose_level)
+void layered_graph::add_node_data1(int l, int n,
+		int data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::add_node_data1 "
@@ -222,10 +222,10 @@ void layered_graph::add_node_data1(INT l, INT n,
 	L[l].Nodes[n].add_data1(data);
 }
 
-void layered_graph::add_node_data2(INT l, INT n,
-		INT data, INT verbose_level)
+void layered_graph::add_node_data2(int l, int n,
+		int data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::add_node_data2 "
@@ -234,10 +234,10 @@ void layered_graph::add_node_data2(INT l, INT n,
 	L[l].Nodes[n].add_data2(data);
 }
 
-void layered_graph::add_node_data3(INT l, INT n,
-		INT data, INT verbose_level)
+void layered_graph::add_node_data3(int l, int n,
+		int data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "layered_graph::add_node_data3 "
@@ -249,16 +249,16 @@ void layered_graph::add_node_data3(INT l, INT n,
 
 
 void layered_graph::draw_with_options(const char *fname,
-		layered_graph_draw_options *O, INT verbose_level)
+		layered_graph_draw_options *O, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
-	INT x_min = 0; //, x_max = 10000;
-	INT y_min = 0; //, y_max = 10000;
-	INT factor_1000 = 1000;
+	int x_min = 0; //, x_max = 10000;
+	int y_min = 0; //, y_max = 10000;
+	int factor_1000 = 1000;
 	char fname_full[1000];
 	double move_out = 0.005;
-	INT edge_label = 1;
+	int edge_label = 1;
 	
 	strcpy(fname_full, fname);
 	strcat(fname_full, ".mp");
@@ -282,16 +282,16 @@ void layered_graph::draw_with_options(const char *fname,
 		G.frame(move_out);
 		}
 	
-	INT i, j, h, id, n, l;
-	//INT rad = 50;
-	INT rad_x_twice, rad_y_twice;
-	INT x, y, x2, y2;
-	INT Px[10], Py[10];
-	INT threshold = 50000;
+	int i, j, h, id, n, l;
+	//int rad = 50;
+	int rad_x_twice, rad_y_twice;
+	int x, y, x2, y2;
+	int Px[10], Py[10];
+	int threshold = 50000;
 	char text[1000];	
-	INT xoffset = 3 * O->rad / 2;
-	INT yoffset = 0;
-	INT own_id;
+	int xoffset = 3 * O->rad / 2;
+	int yoffset = 0;
+	int own_id;
 	
 	rad_x_twice = O->rad >> 3;
 	rad_y_twice = O->rad >> 3;
@@ -319,9 +319,9 @@ void layered_graph::draw_with_options(const char *fname,
 	for (i = 0; i < nb_layers; i++) {
 
 		if (O->f_select_layers) {
-			INT idx;
+			int idx;
 			
-			if (!INT_vec_search_linear(O->layer_select,
+			if (!int_vec_search_linear(O->layer_select,
 					O->nb_layer_select, i, idx)) {
 				continue;
 				}
@@ -363,12 +363,12 @@ void layered_graph::draw_with_options(const char *fname,
 
 			own_id = L[i].Nodes[j].id;
 
-			INT *up;
-			INT *down;
-			INT nb_up, nb_down;
+			int *up;
+			int *down;
+			int nb_up, nb_down;
 
-			up = NEW_INT(L[i].Nodes[j].nb_neighbors);
-			down = NEW_INT(L[i].Nodes[j].nb_neighbors);
+			up = NEW_int(L[i].Nodes[j].nb_neighbors);
+			down = NEW_int(L[i].Nodes[j].nb_neighbors);
 			nb_up = 0;
 			nb_down = 0;
 
@@ -388,9 +388,9 @@ void layered_graph::draw_with_options(const char *fname,
 					cout << "is in layer " << l << " mode " << n << endl;
 					}
 				if (O->f_select_layers) {
-					INT idx;
+					int idx;
 			
-					if (!INT_vec_search_linear(O->layer_select,
+					if (!int_vec_search_linear(O->layer_select,
 							O->nb_layer_select, l, idx)) {
 						continue;
 						}			
@@ -427,10 +427,10 @@ void layered_graph::draw_with_options(const char *fname,
 					if (h > 0 && h < nb_up - 1) {
 #if 1
 						Px[0] = x;
-						Px[1] = (INT)(x + ((double)(x2 - x)) /
+						Px[1] = (int)(x + ((double)(x2 - x)) /
 							norm_of_vector(x, x2, y, y2) * rad_x_twice);
 						Py[0] = y;
-						Py[1] = (INT)(y + ((double)(y2 - y)) /
+						Py[1] = (int)(y + ((double)(y2 - y)) /
 							norm_of_vector(x, x2, y, y2) * rad_y_twice);
 #endif
 						}
@@ -445,7 +445,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%ld", edge_label);
+						sprintf(text, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -466,7 +466,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%ld", edge_label);
+						sprintf(text, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -513,7 +513,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%ld", edge_label);
+						sprintf(text, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -540,7 +540,7 @@ void layered_graph::draw_with_options(const char *fname,
 					if (O->f_label_edges) {
 						Px[2] = (Px[0] + Px[1]) >> 1;
 						Py[2] = (Py[0] + Py[1]) >> 1;
-						sprintf(text, "%ld", edge_label);
+						sprintf(text, "%d", edge_label);
 						G.aligned_text_with_offset(Px[2], Py[2],
 								xoffset, yoffset, "", text);
 						edge_label++;
@@ -554,8 +554,8 @@ void layered_graph::draw_with_options(const char *fname,
 					}
 				}
 
-			FREE_INT(up);
-			FREE_INT(down);
+			FREE_int(up);
+			FREE_int(down);
 
 
 #if 0
@@ -584,9 +584,9 @@ void layered_graph::draw_with_options(const char *fname,
 	for (i = 0; i < nb_layers; i++) {
 
 		if (O->f_select_layers) {
-			INT idx;
+			int idx;
 			
-			if (!INT_vec_search_linear(O->layer_select,
+			if (!int_vec_search_linear(O->layer_select,
 					O->nb_layer_select, i, idx)) {
 				continue;
 				}
@@ -651,7 +651,7 @@ void layered_graph::draw_with_options(const char *fname,
 				}
 
 			if (L[i].Nodes[j].radius_factor >= 1.) {
-				sprintf(label, "{\\scriptsize %ld}", L[i].Nodes[j].data1);
+				sprintf(label, "{\\scriptsize %d}", L[i].Nodes[j].data1);
 				}
 			else {
 				label[0] = 0;
@@ -731,7 +731,7 @@ void layered_graph::draw_with_options(const char *fname,
 			Px[0] = 0;
 			Py[0] = y;
 			//G.nice_circle(Px[0], Py[0], rad * 4);
-			sprintf(str, "%ld", i);
+			sprintf(str, "%d", i);
 			G.aligned_text(Px[0], Py[0], "", str);
 			}
 		}
@@ -750,7 +750,7 @@ void layered_graph::draw_with_options(const char *fname,
 }
 
 void layered_graph::coordinates_direct(double x_in, double y_in,
-		INT x_max, INT y_max, INT f_rotated, INT &x, INT &y)
+		int x_max, int y_max, int f_rotated, int &x, int &y)
 {
 	double x1, y1;
 
@@ -762,28 +762,28 @@ void layered_graph::coordinates_direct(double x_in, double y_in,
 		x1 = x_in;
 		y1 = y_in;
 		}
-	x = (INT)(x1 * x_max);
-	y = (INT)(y1 * y_max);
+	x = (int)(x1 * x_max);
+	y = (int)(y1 * y_max);
 }
 
-void layered_graph::coordinates(INT id,
-		INT x_max, INT y_max, INT f_rotated, INT &x, INT &y)
+void layered_graph::coordinates(int id,
+		int x_max, int y_max, int f_rotated, int &x, int &y)
 {
-	INT l, n;
+	int l, n;
 
 	find_node_by_id(id, l, n);
 
 	coordinates_direct(L[l].Nodes[n].x_coordinate,
 			L[l].y_coordinate, x_max, y_max, f_rotated, x, y);
 #if 0
-	x = (INT)(L[l].Nodes[n].x_coordinate * x_max);
-	y = (INT)(L[l].y_coordinate * y_max);
+	x = (int)(L[l].Nodes[n].x_coordinate * x_max);
+	y = (int)(L[l].y_coordinate * y_max);
 #endif
 }
 
-void layered_graph::find_node_by_id(INT id, INT &l, INT &n)
+void layered_graph::find_node_by_id(int id, int &l, int &n)
 {
-	INT i, id0;
+	int i, id0;
 	
 	id0 = 0;
 	for (i = 0; i < nb_layers; i++) {
@@ -801,9 +801,9 @@ void layered_graph::find_node_by_id(INT id, INT &l, INT &n)
 
 
 void layered_graph::write_file(char *fname,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object M;
 	
 	if (f_v) {
@@ -820,9 +820,9 @@ void layered_graph::write_file(char *fname,
 }
 
 void layered_graph::read_file(const char *fname,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object M;
 	
 	if (f_v) {
@@ -843,11 +843,11 @@ void layered_graph::read_file(const char *fname,
 }
 
 void layered_graph::write_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "layered_graph::write_memory_object" << endl;
@@ -881,11 +881,11 @@ void layered_graph::write_memory_object(
 }
 
 void layered_graph::read_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	INT version, a;
+	int f_v = (verbose_level >= 1);
+	int i;
+	int version, a;
 	char *p;
 	
 	if (f_v) {
@@ -932,10 +932,10 @@ void layered_graph::read_memory_object(
 
 
 void layered_graph::create_spanning_tree(
-		INT f_place_x, INT verbose_level)
+		int f_place_x, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT l, n, id, id1, l1, n1;
+	int f_v = (verbose_level >= 1);
+	int l, n, id, id1, l1, n1;
 	
 	if (f_v) {
 		cout << "layered_graph::create_spanning_tree" << endl;
@@ -978,10 +978,10 @@ void layered_graph::create_spanning_tree(
 }
 
 
-void layered_graph::compute_depth_first_ranks(INT verbose_level)
+void layered_graph::compute_depth_first_ranks(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT r = 0;
+	int f_v = (verbose_level >= 1);
+	int r = 0;
 	
 	if (f_v) {
 		cout << "layered_graph::compute_depth_first_ranks" << endl;
@@ -998,10 +998,10 @@ void layered_graph::compute_depth_first_ranks(INT verbose_level)
 
 
 void layered_graph::set_radius_factor_for_all_nodes_at_level(
-		INT lvl, double radius_factor, INT verbose_level)
+		int lvl, double radius_factor, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j;
+	int f_v = (verbose_level >= 1);
+	int j;
 
 	if (f_v) {
 		cout << "layered_graph::set_radius_factor_for_all_"
@@ -1020,7 +1020,7 @@ void layered_graph::set_radius_factor_for_all_nodes_at_level(
 
 
 
-double norm_of_vector(INT x1, INT x2, INT y1, INT y2)
+double norm_of_vector(int x1, int x2, int y1, int y2)
 {
 	return sqrt((double)(x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }

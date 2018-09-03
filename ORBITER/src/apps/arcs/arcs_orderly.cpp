@@ -8,46 +8,46 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-	INT verbose_level = 0;
-	INT k;
+	int verbose_level = 0;
+	int k;
 	finite_field *F;
 	projective_space *P;
 	action *A_linear;
-	INT *Arc;
-	INT arc_sz;
-	INT target_sz;
-	INT *Idx_table; // [target_sz * P->N_points]
-	INT *line_type; // [P->N_lines]
-	INT *Line_type; // [target_sz * P->N_lines]
-	INT *Nb_total; // [target_sz + 1]
-	INT *Nb_canonical; // [target_sz + 1]
-	INT *Nb_complete; // [target_sz + 1]
-	INT *Nb_orbits; // [target_sz + 1]
-	INT *Cur_orbit; // [target_sz + 1]
-	INT *canonical_set;
-	INT cnt;
+	int *Arc;
+	int arc_sz;
+	int target_sz;
+	int *Idx_table; // [target_sz * P->N_points]
+	int *line_type; // [P->N_lines]
+	int *Line_type; // [target_sz * P->N_lines]
+	int *Nb_total; // [target_sz + 1]
+	int *Nb_canonical; // [target_sz + 1]
+	int *Nb_complete; // [target_sz + 1]
+	int *Nb_orbits; // [target_sz + 1]
+	int *Cur_orbit; // [target_sz + 1]
+	int *canonical_set;
+	int cnt;
 
 
 int main(int argc, char **argv);
-void do_arc_lifting(projective_space *P, INT k, 
-	INT *arc, INT arc_sz, INT target_sz, INT verbose_level);
-void extend(INT arc_size, INT verbose_level);
+void do_arc_lifting(projective_space *P, int k, 
+	int *arc, int arc_sz, int target_sz, int verbose_level);
+void extend(int arc_size, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT f_k = FALSE;
-	INT f_sz = FALSE;
-	INT sz = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_poly = FALSE;
+	int f_k = FALSE;
+	int f_sz = FALSE;
+	int sz = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_poly = FALSE;
 	const char *poly = NULL;
-	INT f_arc = FALSE;
+	int f_arc = FALSE;
 	const char *arc_text = NULL;
-	INT f_fining = FALSE;
-	INT i;
+	int f_fining = FALSE;
+	int i;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	cout << "k=" << k << endl;
 	cout << "q=" << q << endl;
@@ -140,51 +140,51 @@ int main(int argc, char **argv)
 	if (f_arc) {
 
 		if (f_fining) {
-			INT a;
-			INT v[3];
+			int a;
+			int v[3];
 			
 			for (a = 1; a <= P->N_points; a++) {
 				PG_element_unrank_fining(*P->F, v, 3, a);
 				cout << a << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				cout << endl;
 				}
 			}
 
-		INT *the_arc;
-		INT the_arc_sz;
+		int *the_arc;
+		int the_arc_sz;
 		
-		INT_vec_scan(arc_text, the_arc, the_arc_sz);
+		int_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc of size " << the_arc_sz << " = ";
-		INT_vec_print(cout, the_arc, the_arc_sz);
+		int_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 
 		if (f_fining) {
-			INT a, b;
-			INT v[3];
-			INT w[3];
+			int a, b;
+			int v[3];
+			int w[3];
 			
 			cout << "changing from fining to orbiter:" << endl;
 			for (i = 0; i < the_arc_sz; i++) {
 				a = the_arc[i];
 				PG_element_unrank_fining(*P->F, v, 3, a);
-				INT_vec_copy(v, w, 3);
+				int_vec_copy(v, w, 3);
 				PG_element_rank_modified(*P->F, w, 1, 3, b);
 				cout << a << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				cout << " : " << b << endl;
 				the_arc[i] = b;
 				}
 			cout << "input arc in orbiter labels = ";
-			INT_vec_print(cout, the_arc, the_arc_sz);
+			int_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
 
-		INT_vec_heapsort(the_arc, the_arc_sz);
+		int_vec_heapsort(the_arc, the_arc_sz);
 
 		cout << "input arc in orbiter labels sorted= ";
-		INT_vec_print(cout, the_arc, the_arc_sz);
+		int_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 		
@@ -202,32 +202,32 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void do_arc_lifting(projective_space *P, INT k, 
-	INT *arc, INT arc_sz, INT target_sz, INT verbose_level)
+void do_arc_lifting(projective_space *P, int k, 
+	int *arc, int arc_sz, int target_sz, int verbose_level)
 {
-	INT i;
+	int i;
 
 	
 	::target_sz = target_sz;
 	::arc_sz = arc_sz;
-	Arc = NEW_INT(target_sz);
-	INT_vec_copy(arc, Arc, arc_sz);
+	Arc = NEW_int(target_sz);
+	int_vec_copy(arc, Arc, arc_sz);
 
 	cout << "do_arc_lifting" << endl;
 	F = P->F;
 	
-	Nb_total = NEW_INT(target_sz + 1);
-	Nb_canonical = NEW_INT(target_sz + 1);
-	Nb_complete = NEW_INT(target_sz + 1);
-	Nb_orbits = NEW_INT(target_sz + 1);
-	Cur_orbit = NEW_INT(target_sz + 1);
-	INT_vec_zero(Nb_total, target_sz + 1);
-	INT_vec_zero(Nb_canonical, target_sz + 1);
-	INT_vec_zero(Nb_complete, target_sz + 1);
-	INT_vec_zero(Nb_orbits, target_sz + 1);
-	INT_vec_zero(Cur_orbit, target_sz + 1);
+	Nb_total = NEW_int(target_sz + 1);
+	Nb_canonical = NEW_int(target_sz + 1);
+	Nb_complete = NEW_int(target_sz + 1);
+	Nb_orbits = NEW_int(target_sz + 1);
+	Cur_orbit = NEW_int(target_sz + 1);
+	int_vec_zero(Nb_total, target_sz + 1);
+	int_vec_zero(Nb_canonical, target_sz + 1);
+	int_vec_zero(Nb_complete, target_sz + 1);
+	int_vec_zero(Nb_orbits, target_sz + 1);
+	int_vec_zero(Cur_orbit, target_sz + 1);
 	
-	INT f_semilinear;
+	int f_semilinear;
 
 	if (is_prime(F->q)) {
 		f_semilinear = FALSE;
@@ -240,14 +240,14 @@ void do_arc_lifting(projective_space *P, INT k,
 			F, f_semilinear, TRUE /*f_basis */, 0 /*verbose_level*/);
 	
 
-	Idx_table = NEW_INT(target_sz * P->N_points);
+	Idx_table = NEW_int(target_sz * P->N_points);
 
 
-	Line_type = NEW_INT(target_sz * P->N_lines);
-	line_type = NEW_INT(P->N_lines);
+	Line_type = NEW_int(target_sz * P->N_lines);
+	line_type = NEW_int(P->N_lines);
 	P->line_intersection_type(arc, arc_sz, line_type, 0 /* verbose_level */);
 	cout << "line_type: ";
-	INT_vec_print_fully(cout, line_type, P->N_lines);
+	int_vec_print_fully(cout, line_type, P->N_lines);
 	cout << endl;
 
 #if 0
@@ -257,13 +257,13 @@ void do_arc_lifting(projective_space *P, INT k,
 		}
 #endif
 
-	canonical_set = NEW_INT(P->N_points);
+	canonical_set = NEW_int(P->N_points);
 
 
 	cnt = -1;
 	extend(arc_sz, verbose_level);
 
-	FREE_INT(canonical_set);
+	FREE_int(canonical_set);
 
 	for (i = 0; i <= target_sz; i++) {
 		cout << setw(5) << i
@@ -277,17 +277,17 @@ void do_arc_lifting(projective_space *P, INT k,
 }
 
 
-void extend(INT arc_size, INT verbose_level)
+void extend(int arc_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	sims *Stab;
 	longinteger_object go;
-	INT i, pt, nb, orb, h, idx, line, f;
-	INT *line_type_before;
-	INT *line_type_after;
-	INT *Idx;
-	INT canonical_pt;
+	int i, pt, nb, orb, h, idx, line, f;
+	int *line_type_before;
+	int *line_type_after;
+	int *Idx;
+	int canonical_pt;
 
 	cnt++;
 	if (f_v) {
@@ -296,7 +296,7 @@ void extend(INT arc_size, INT verbose_level)
 			cout << Cur_orbit[i] << "/" << Nb_orbits[i] << " ";
 		}
 		cout << "; Arc=";
-		INT_vec_print(cout, Arc, arc_size);
+		int_vec_print(cout, Arc, arc_size);
 		cout << endl;
 	}
 
@@ -374,7 +374,7 @@ void extend(INT arc_size, INT verbose_level)
 			cout << "Node " << cnt << " level " << arc_size << " testing orbit " << orb
 					<< " / " << Sch->nb_orbits << " pt=" << pt << " ";
 		}
-		if (INT_vec_search(Arc, arc_size, pt, idx)) {
+		if (int_vec_search(Arc, arc_size, pt, idx)) {
 			if (f_vv) {
 				cout << "fail (already in the set)" << endl;
 			}
@@ -382,7 +382,7 @@ void extend(INT arc_size, INT verbose_level)
 		}
 
 		
-		INT_vec_copy(line_type_before, line_type_after, P->N_lines);
+		int_vec_copy(line_type_before, line_type_after, P->N_lines);
 
 		for (i = 0; i < F->q + 1; i++) {
 			line = P->Lines_on_point[pt * P->k + i];
@@ -445,7 +445,7 @@ void extend(INT arc_size, INT verbose_level)
 			Arc[arc_size] = pt;
 
 
-			INT_vec_copy(line_type_before, line_type_after, P->N_lines);
+			int_vec_copy(line_type_before, line_type_after, P->N_lines);
 			for (i = 0; i < F->q + 1; i++) {
 				line = P->Lines_on_point[pt * P->k + i];
 				line_type_after[line]++;

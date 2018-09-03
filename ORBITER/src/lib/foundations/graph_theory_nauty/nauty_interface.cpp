@@ -36,30 +36,28 @@ static nvector lab[MAXN], ptn[MAXN], orbits[MAXN];
 
 using namespace std;
 
-typedef long int INT;
 typedef unsigned char uchar;
 
-INT bitvector_s_i(uchar *bitvec, INT i);
-INT ij2k(INT i, INT j, INT n);
+int bitvector_s_i(uchar *bitvec, int i);
+int ij2k(int i, int j, int n);
 
-static void nauty_interface_allocate_data(INT n);
+static void nauty_interface_allocate_data(int n);
 static void nauty_interface_free_data();
 #else
 #endif
 
 
-typedef long int INT;
 typedef unsigned char uchar;
 
 
-void nauty_interface_graph_bitvec(INT v, uchar *bitvector_adjacency, 
-	INT *labeling, INT *partition, 
-	INT *Aut, INT &Aut_counter, 
-	INT *Base, INT &Base_length, 
-	INT *Transversal_length, INT &Ago, INT verbose_level)
+void nauty_interface_graph_bitvec(int v, uchar *bitvector_adjacency, 
+	int *labeling, int *partition, 
+	int *Aut, int &Aut_counter, 
+	int *Base, int &Base_length, 
+	int *Transversal_length, int &Ago, int verbose_level)
 {
 #if HAS_NAUTY
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	static DEFAULTOPTIONS(options);
 	statsblk(stats);
 	set *row;
@@ -151,21 +149,21 @@ void nauty_interface_graph_bitvec(INT v, uchar *bitvector_adjacency,
 #endif
 }
 
-void nauty_interface_graph_INT(INT v, INT *Adj, 
-	INT *labeling, INT *partition, 
-	INT *Aut, INT &Aut_counter, 
-	INT *Base, INT &Base_length, 
-	INT *Transversal_length, INT &Ago, INT verbose_level)
+void nauty_interface_graph_int(int v, int *Adj, 
+	int *labeling, int *partition, 
+	int *Aut, int &Aut_counter, 
+	int *Base, int &Base_length, 
+	int *Transversal_length, int &Ago, int verbose_level)
 {
 #if HAS_NAUTY
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	static DEFAULTOPTIONS(options);
 	statsblk(stats);
 	set *row;
 	int m, n, i, j;
 
 	if (f_v) {
-		cout << "nauty_interface_graph_INT" << endl;
+		cout << "nauty_interface_graph_int" << endl;
 		}
 	options.getcanon = TRUE;
 	options.defaultptn = FALSE;
@@ -180,10 +178,10 @@ void nauty_interface_graph_INT(INT v, INT *Adj,
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
-		cout << "nauty_interface_graph_INT n >= MAXN" << endl;
+		cout << "nauty_interface_graph_int n >= MAXN" << endl;
 		exit(1);
 		}
-	//cout << "nauty_interface_graph_INT() n = " << n << " m=" << m << endl;
+	//cout << "nauty_interface_graph_int() n = " << n << " m=" << m << endl;
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
@@ -207,12 +205,12 @@ void nauty_interface_graph_INT(INT v, INT *Adj,
 	//ptn[v - 1] = 0;
 	//cout << "calling nauty..." << endl;
 	if (f_v) {
-		cout << "nauty_interface_graph_INT calling nauty" << endl;
+		cout << "nauty_interface_graph_int calling nauty" << endl;
 	}
 //	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_v) {
-		cout << "nauty_interface_graph_INT after nauty" << endl;
+		cout << "nauty_interface_graph_int after nauty" << endl;
 		}
 	//cout << "numnodes=" << stats.numnodes << endl;
 	for (i = 0; i < n; i++) {
@@ -235,17 +233,17 @@ void nauty_interface_graph_INT(INT v, INT *Adj,
 #endif
 	nauty_interface_free_data();
 	if (f_v) {
-		cout << "nauty_interface_graph_INT done" << endl;
+		cout << "nauty_interface_graph_int done" << endl;
 		}
 #endif
 }
 
 
-void nauty_interface_INT(INT v, INT b, INT *X, INT nb_inc, 
-	INT *labeling, INT *partition, 
-	INT *Aut, INT &Aut_counter, 
-	INT *Base, INT &Base_length, 
-	INT *Transversal_length, INT &Ago)
+void nauty_interface_int(int v, int b, int *X, int nb_inc, 
+	int *labeling, int *partition, 
+	int *Aut, int &Aut_counter, 
+	int *Base, int &Base_length, 
+	int *Transversal_length, int &Ago)
 {
 #if HAS_NAUTY
 	static DEFAULTOPTIONS(options);
@@ -266,12 +264,12 @@ void nauty_interface_INT(INT v, INT b, INT *X, INT nb_inc,
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
-		cout << "nauty_interface_INT() n >= MAXN" << endl;
-		cout << "nauty_interface_INT() n = " << n << endl;
-		cout << "nauty_interface_INT() MAXN = " << (INT)MAXN << endl;
+		cout << "nauty_interface_int() n >= MAXN" << endl;
+		cout << "nauty_interface_int() n = " << n << endl;
+		cout << "nauty_interface_int() MAXN = " << (int)MAXN << endl;
 		exit(1);
 		}
-	//cout << "nauty_interface_INT() n = " << n << " m=" << m << endl;
+	//cout << "nauty_interface_int() n = " << n << " m=" << m << endl;
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
 		EMPTYSET(row, m);
@@ -334,9 +332,9 @@ void nauty_interface_INT(INT v, INT b, INT *X, INT nb_inc,
 #endif
 }
 
-void nauty_interface(int v, int b, INT *X, INT nb_inc, 
+void nauty_interface(int v, int b, int *X, int nb_inc, 
 	int *labeling, int *partition, 
-	INT *Aut, int &Aut_counter, 
+	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
 	int *Transversal_length, int &Ago)
 {
@@ -361,7 +359,7 @@ void nauty_interface(int v, int b, INT *X, INT nb_inc,
 	if (n >= MAXN) {
 		cout << "nauty_interface() n >= MAXN" << endl;
 		cout << "nauty_interface() n = " << n << endl;
-		cout << "nauty_interface() MAXN = " << (INT)MAXN << endl;
+		cout << "nauty_interface() MAXN = " << (int)MAXN << endl;
 		exit(1);
 		}
 	//cout << "nauty_interface() n = " << n << " m=" << m << endl;
@@ -429,7 +427,7 @@ void nauty_interface(int v, int b, INT *X, INT nb_inc,
 
 void nauty_interface_matrix(int *M, int v, int b,
 	int *labeling, int *partition, 
-	INT *Aut, int &Aut_counter, 
+	int *Aut, int &Aut_counter, 
 	int *Base, int &Base_length, 
 	int *Transversal_length, int &Ago)
 // called from INC_GEN/inc_gen_iso.C
@@ -510,22 +508,22 @@ void nauty_interface_matrix(int *M, int v, int b,
 #endif
 }
 
-void nauty_interface_matrix_INT(INT *M, INT v, INT b, 
-	INT *labeling, INT *partition, 
-	INT *Aut, INT &Aut_counter, 
-	INT *Base, INT &Base_length, 
-	INT *Transversal_length, INT &Ago, INT verbose_level)
+void nauty_interface_matrix_int(int *M, int v, int b, 
+	int *labeling, int *partition, 
+	int *Aut, int &Aut_counter, 
+	int *Base, int &Base_length, 
+	int *Transversal_length, int &Ago, int verbose_level)
 {
 #if HAS_NAUTY
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	static DEFAULTOPTIONS(options);
 	statsblk(stats);
 	set *row;
-	INT m, n, i, j, p1, p2;
+	int m, n, i, j, p1, p2;
 
 	if (f_v) {
-		cout << "nauty_interface_matrix_INT v=" << v << " b=" << b << endl;
+		cout << "nauty_interface_matrix_int v=" << v << " b=" << b << endl;
 		}
 	options.getcanon = TRUE;
 	options.defaultptn = FALSE;
@@ -544,13 +542,13 @@ void nauty_interface_matrix_INT(INT *M, INT v, INT b,
 
 	m = (n + WORDSIZE - 1) / WORDSIZE;
 	if (n >= MAXN) {
-		cout << "nauty_interface_matrix_INT n >= MAXN" << endl;
-		cout << "nauty_interface_matrix_INT() n = " << n << endl;
-		cout << "nauty_interface_matrix_INT() MAXN = " << (INT)MAXN << endl;
+		cout << "nauty_interface_matrix_int n >= MAXN" << endl;
+		cout << "nauty_interface_matrix_int() n = " << n << endl;
+		cout << "nauty_interface_matrix_int() MAXN = " << (int)MAXN << endl;
 		exit(1);
 		}
 	if (f_vv) {
-		cout << "nauty_interface_matrix_INT n = " << n << " m=" << m << endl;
+		cout << "nauty_interface_matrix_int n = " << n << " m=" << m << endl;
 		}
 	for (i = 0; i < n; i++) {
 		row = GRAPHROW(g, i, m);
@@ -576,14 +574,14 @@ void nauty_interface_matrix_INT(INT *M, INT v, INT b,
 		}
 	//ptn[v - 1] = 0;
 	if (f_vv) {
-		cout << "nauty_interface_matrix_INT, calling nauty..." << endl;
+		cout << "nauty_interface_matrix_int, calling nauty..." << endl;
 	}
 //	nauty(g, lab, ptn, NILSET, orbits, &options, &stats, workspace, MAX_WORKSPACE * MAXM, m, n, canong);
 	densenauty(g, lab, ptn, orbits, &options, &stats, m, n, canong);
 	if (f_vv) {
-		cout << "nauty_interface_matrix_INT, after nauty" << endl;
-		cout << "nauty_interface_matrix_INT, ago=" << ago << endl;
-		cout << "nauty_interface_matrix_INT, numnodes=" << stats.numnodes << endl;
+		cout << "nauty_interface_matrix_int, after nauty" << endl;
+		cout << "nauty_interface_matrix_int, ago=" << ago << endl;
+		cout << "nauty_interface_matrix_int, numnodes=" << stats.numnodes << endl;
 		}
 	for (i = 0; i < n; i++) {
 		labeling[i] = lab[i];
@@ -608,7 +606,7 @@ void nauty_interface_matrix_INT(INT *M, INT v, INT b,
 }
 
 #if 1
-static void nauty_interface_allocate_data(INT n)
+static void nauty_interface_allocate_data(int n)
 {
 #if HAS_NAUTY
 	aut = new int[n * n];

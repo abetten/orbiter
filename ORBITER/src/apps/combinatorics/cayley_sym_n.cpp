@@ -7,24 +7,24 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void do_it(INT n, INT f_special, INT f_bubble, INT f_pancake, INT f_burnt_pancake, INT verbose_level);
-void get_submatrices(INT n, INT *Adj, INT N, INT N0, INT **&P, INT verbose_level);
-void mult_matrix(INT *P, INT *Q, INT *R, INT N);
+void do_it(int n, int f_special, int f_bubble, int f_pancake, int f_burnt_pancake, int verbose_level);
+void get_submatrices(int n, int *Adj, int N, int N0, int **&P, int verbose_level);
+void mult_matrix(int *P, int *Q, int *R, int N);
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_star = FALSE;
-	INT f_bubble = FALSE;
-	INT f_pancake = FALSE;
-	INT f_burnt_pancake = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_n = FALSE;
+	int n = 0;
+	int f_star = FALSE;
+	int f_bubble = FALSE;
+	int f_pancake = FALSE;
+	int f_burnt_pancake = FALSE;
 	
 	t0 = os_ticks();
 
@@ -68,9 +68,9 @@ int main(int argc, char **argv)
 	
 }
 
-void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, INT verbose_level)
+void do_it(int n, int f_star, int f_bubble, int f_pancake, int f_burnt_pancake, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "do_it" << endl;
@@ -78,26 +78,26 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 
 	action *A;
 	longinteger_object go;
-	INT goi;
-	INT *v;
-	INT i, j;
-	INT nb_gens = 0;
-	INT deg = 0;
+	int goi;
+	int *v;
+	int i, j;
+	int nb_gens = 0;
+	int deg = 0;
 	vector_ge *gens;
 	char fname_base[1000];
 
 
 	if (f_star) {
-		sprintf(fname_base, "Cayley_Sym_%ld_star", n);
+		sprintf(fname_base, "Cayley_Sym_%d_star", n);
 		}
 	else if (f_bubble) {
-		sprintf(fname_base, "Cayley_Sym_%ld_coxeter", n);
+		sprintf(fname_base, "Cayley_Sym_%d_coxeter", n);
 		}
 	else if (f_pancake) {
-		sprintf(fname_base, "Cayley_pancake_%ld", n);
+		sprintf(fname_base, "Cayley_pancake_%d", n);
 		}
 	else if (f_burnt_pancake) {
-		sprintf(fname_base, "Cayley_burnt_pancake_%ld", n);
+		sprintf(fname_base, "Cayley_burnt_pancake_%d", n);
 		}
 	else {
 		cout << "please specify the type of Cayley graph" << endl;
@@ -129,18 +129,18 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 	A->init_symmetric_group(deg, 0 /*verbose_level*/);
 	A->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 	cout << "Created group Sym(" << deg << ") of size " << goi << endl;
 
 	strong_generators *SG;
 
 
 	if (f_burnt_pancake) {
-		INT *factors;
-		INT nb_factors;
-		INT deg1;
-		INT nb_perms;
-		INT *perms;
+		int *factors;
+		int nb_factors;
+		int deg1;
+		int nb_perms;
+		int *perms;
 		vector_ge *G_gens;
 		longinteger_object target_go;
 		longinteger_domain D;
@@ -167,8 +167,8 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 			G_gens, SG, verbose_level - 3);
 		
 		FREE_OBJECT(G_gens);
-		FREE_INT(perms);
-		FREE_INT(factors);
+		FREE_int(perms);
+		FREE_int(factors);
 		}
 	else {
 		SG = A->Strong_gens;
@@ -181,7 +181,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 	G = SG->create_sims(0 /* verbose_level */);
 	G->group_order(G_go);
 	cout << "created group G of order " << G_go << endl;
-	goi = G_go.as_INT();
+	goi = G_go.as_int();
 	
 
 	gens = NEW_OBJECT(vector_ge);
@@ -189,7 +189,7 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 	gens->init(A);
 	gens->allocate(nb_gens);
 
-	v = NEW_INT(deg);
+	v = NEW_int(deg);
 
 
 	if (f_star) {
@@ -242,15 +242,15 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 #endif
 
 	
-	INT *Adj;
-	INT goi1;
+	int *Adj;
+	int goi1;
 
 	G->create_Cayley_graph(gens, Adj, goi1, verbose_level);
 
 
 
 	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
-	//INT_matrix_print(Adj, goi, goi);
+	//int_matrix_print(Adj, goi, goi);
 
 
 	save_as_colored_graph_easy(fname_base, goi, Adj, 0 /* verbose_level */);
@@ -259,41 +259,41 @@ void do_it(INT n, INT f_star, INT f_bubble, INT f_pancake, INT f_burnt_pancake, 
 	return;
 
 
-	INT N0;
-	INT **P;
-	//INT N2;
-	INT h;
+	int N0;
+	int **P;
+	//int N2;
+	int h;
 
 	N0 = goi / n;
 	get_submatrices(n, Adj, goi, N0, P, verbose_level);
 
 	for (h = 0; h < n - 1; h++) {
 		cout << "P_" << h << "=" << endl;
-		INT_matrix_print(P[h], N0, N0);
+		int_matrix_print(P[h], N0, N0);
 		}
 
 
 	for (h = 0; h < n - 1; h++) {
-		FREE_INT(P[h]);
+		FREE_int(P[h]);
 		}
-	FREE_PINT(P);
+	FREE_pint(P);
 
 	//delete CG;
-	FREE_INT(Adj);
+	FREE_int(Adj);
 	FREE_OBJECT(gens);
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 
-void get_submatrices(INT n, INT *Adj, INT N, INT N0, INT **&P, INT verbose_level)
+void get_submatrices(int n, int *Adj, int N, int N0, int **&P, int verbose_level)
 {
 	
-	//INT *Q;
-	INT h, i, j;
+	//int *Q;
+	int h, i, j;
 
-	P = NEW_PINT(n - 1);
+	P = NEW_pint(n - 1);
 	for (h = 0; h < n - 1; h++) {
-		P[h] = NEW_INT(N0 * N0);
+		P[h] = NEW_int(N0 * N0);
 		for (i = 0; i < N0; i++) {
 			for (j = 0; j < N0; j++) {
 				P[h][i * N0 + j] = Adj[(1 + h) * N * N0 + i * N + j];
@@ -303,15 +303,15 @@ void get_submatrices(INT n, INT *Adj, INT N, INT N0, INT **&P, INT verbose_level
 }
 
 #if 0
-	Q = NEW_INT(N0 * N0);
+	Q = NEW_int(N0 * N0);
 	
 	N2 = N - N0;
-	Adj2 = NEW_INT(N2 * N2);
+	Adj2 = NEW_int(N2 * N2);
 	for (u = 0; u < n - 1; u++) {
 		for (v = 0; v < n - 1; v++) {
 			mult_matrix(P[u], P[v], Q, N0);
 			cout << "P_" << u << " * P_" << v << " = " << endl;
-			INT_matrix_print(Q, N0, N0);
+			int_matrix_print(Q, N0, N0);
 			for (i = 0; i < N0; i++) {
 				for (j = 0; j < N0; j++) {
 					Adj2[u * N0 * N2 + i * N2 + v * N0 + j] = Q[i * N0 + j]; 
@@ -321,15 +321,15 @@ void get_submatrices(INT n, INT *Adj, INT N, INT N0, INT **&P, INT verbose_level
 		}
 
 	cout << "Adj2=" << endl;
-	INT_matrix_print(Adj2, N2, N2);
+	int_matrix_print(Adj2, N2, N2);
 
-	FREE_INT(Q);
+	FREE_int(Q);
 }
 #endif
 
-void mult_matrix(INT *P, INT *Q, INT *R, INT N)
+void mult_matrix(int *P, int *Q, int *R, int N)
 {
-	INT i, j, h, a;
+	int i, j, h, a;
 
 	for (i = 0; i < N; i++) {
 		for (j = 0; j < N; j++) {

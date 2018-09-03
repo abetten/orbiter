@@ -40,23 +40,23 @@ struct dlx_node {
     dlx_node * Up;
     dlx_node * Down;
     
-    INT  row; // row index
-    INT  col; // col index
+    int  row; // row index
+    int  col; // col index
 };
 
-INT DLX_f_write_tree = FALSE;
-INT DLX_write_tree_cnt = 0;
+int DLX_f_write_tree = FALSE;
+int DLX_write_tree_cnt = 0;
 ofstream *DLX_fp_tree = NULL;
 
 
-INT nRow;
-INT nCol;
+int nRow;
+int nCol;
 
-INT f_has_RHS = FALSE; // [nCol]
-INT *target_RHS = NULL; // [nCol]
-INT *current_RHS = NULL; // [nCol]
-INT *current_row = NULL; // [nCol]
-INT *current_row_save = NULL; // [sum_rhs]
+int f_has_RHS = FALSE; // [nCol]
+int *target_RHS = NULL; // [nCol]
+int *current_RHS = NULL; // [nCol]
+int *current_row = NULL; // [nCol]
+int *current_row_save = NULL; // [sum_rhs]
 
 
 // we allow three types of conditions:
@@ -64,63 +64,63 @@ INT *current_row_save = NULL; // [sum_rhs]
 // inequalities t_LE
 // zero or a fixed value t_ZOR
 
-INT f_type = FALSE;
+int f_type = FALSE;
 diophant_equation_type *type = NULL; // [nCol]
-INT *changed_type_columns = NULL; // [nCol]
-INT *nb_changed_type_columns = NULL; // [sum_rhs]
-INT nb_changed_type_columns_total;
+int *changed_type_columns = NULL; // [nCol]
+int *nb_changed_type_columns = NULL; // [sum_rhs]
+int nb_changed_type_columns_total;
 
-INT *Result; // [nRow]
-INT *Nb_choices; // [nRow]
-INT *Cur_choice; // [nRow]
-INT *DLX_Cur_col; // [nRow]
-INT *Nb_col_nodes; // [nCol]
-INT dlx_nb_sol = 0;
-INT dlx_nb_backtrack_nodes;
+int *Result; // [nRow]
+int *Nb_choices; // [nRow]
+int *Cur_choice; // [nRow]
+int *DLX_Cur_col; // [nRow]
+int *Nb_col_nodes; // [nCol]
+int dlx_nb_sol = 0;
+int dlx_nb_backtrack_nodes;
 dlx_node *Matrix = NULL; // [nRow * nCol]
 dlx_node *Root = NULL; 
 //dlx_node **RowHeader = NULL; // [nRow]
-INT dlx_f_write_to_file = FALSE;
+int dlx_f_write_to_file = FALSE;
 ofstream *dlx_fp_sol = NULL;
-INT f_has_callback_solution_found = FALSE;
-void (*callback_solution_found)(INT *solution, INT len, INT nb_sol, void *data);
+int f_has_callback_solution_found = FALSE;
+void (*callback_solution_found)(int *solution, int len, int nb_sol, void *data);
 void *callback_solution_found_data;
 
-inline INT dataLeft(INT i) { return i-1<0?nCol-1:i-1; }
-inline INT dataRight(INT i) { return (i+1)%nCol; }
-inline INT dataUp(INT i) { return i-1<0?nRow-1:i-1; }
-inline INT dataDown(INT i) { return (i+1)%nRow; }
+inline int dataLeft(int i) { return i-1<0?nCol-1:i-1; }
+inline int dataRight(int i) { return (i+1)%nCol; }
+inline int dataUp(int i) { return i-1<0?nRow-1:i-1; }
+inline int dataDown(int i) { return (i+1)%nRow; }
 
-void open_solution_file(INT f_write_file, const char *solution_fname, INT verbose_level);
-void close_solution_file(INT f_write_file);
-void open_tree_file(INT f_write_tree_file, const char *tree_fname, INT verbose_level);
-void close_tree_file(INT f_write_tree_file);
+void open_solution_file(int f_write_file, const char *solution_fname, int verbose_level);
+void close_solution_file(int f_write_file);
+void open_tree_file(int f_write_tree_file, const char *tree_fname, int verbose_level);
+void close_tree_file(int f_write_tree_file);
 void print_position(dlx_node *p);
-void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *type, INT verbose_level);
+void Create_RHS(int nb_cols, int *RHS, int f_has_type, diophant_equation_type *type, int verbose_level);
 void Delete_RHS();
-void CreateMatrix(INT *Data, INT nb_rows, INT nb_cols, INT verbose_level);
+void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level);
 void DeleteMatrix();
-dlx_node *get_column_header(INT c);
+dlx_node *get_column_header(int c);
 dlx_node *ChooseColumnFancy(void);
 dlx_node *ChooseColumn(void);
 dlx_node *ChooseColumnFancyRHS(void);
 dlx_node *ChooseColumnRHS(void);
 void print_root();
-void write_tree(INT k);
-void print_if_necessary(INT k);
-void process_solution(INT k);
-void count_nb_choices(INT k, dlx_node *Column);
-INT IsDone();
-INT IsColumnDone(INT c);
-INT IsColumnNotDone(INT c);
-void DlxSearch(INT k);
-void DlxSearchRHS(INT k);
+void write_tree(int k);
+void print_if_necessary(int k);
+void process_solution(int k);
+void count_nb_choices(int k, dlx_node *Column);
+int IsDone();
+int IsColumnDone(int c);
+int IsColumnNotDone(int c);
+void DlxSearch(int k);
+void DlxSearchRHS(int k);
 void Cover(dlx_node *ColNode);
 void UnCover(dlx_node *ColNode);
 
 
 void install_callback_solution_found(
-	void (*callback_solution_found)(INT *solution, INT len, INT nb_sol, void *data),
+	void (*callback_solution_found)(int *solution, int len, int nb_sol, void *data),
 	void *callback_solution_found_data)
 {
 	f_has_callback_solution_found = TRUE;
@@ -135,7 +135,7 @@ void de_install_callback_solution_found()
 
 void DlxTest()
 {
-	INT Data[] = {
+	int Data[] = {
 0, 0, 1, 0, 1, 1, 0,
 1, 0, 0, 1, 0, 0, 1,
 0, 1, 1, 0, 0, 1, 0,
@@ -145,9 +145,9 @@ void DlxTest()
 };
 // solutions: rows 0, 3, 4 make 1,1,1,1,1,1,1
 
-	INT nb_rows = 6;
-	INT nb_cols = 7;
-	INT nb_sol, nb_backtrack;
+	int nb_rows = 6;
+	int nb_cols = 7;
+	int nb_sol, nb_backtrack;
 
 	DlxAppendRowAndSolve(Data, nb_rows, nb_cols, 
 		nb_sol, nb_backtrack, 
@@ -156,16 +156,16 @@ void DlxTest()
 		0);
 }
 
-void DlxTransposeAppendAndSolve(INT *Data, INT nb_rows, INT nb_cols, 
-	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const char *solution_fname, 
-	INT f_write_tree_file, const char *tree_fname, 
-	INT verbose_level)
+void DlxTransposeAppendAndSolve(int *Data, int nb_rows, int nb_cols, 
+	int &nb_sol, int &nb_backtrack, 
+	int f_write_file, const char *solution_fname, 
+	int f_write_tree_file, const char *tree_fname, 
+	int verbose_level)
 {
-	INT *Data2;
-	INT i, j;
+	int *Data2;
+	int i, j;
 
-	Data2 = NEW_INT(nb_cols * nb_rows);
+	Data2 = NEW_int(nb_cols * nb_rows);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Data2[j * nb_rows + i] = Data[i * nb_cols + j];
@@ -177,20 +177,20 @@ void DlxTransposeAppendAndSolve(INT *Data, INT nb_rows, INT nb_cols,
 		f_write_tree_file, tree_fname, 
 		verbose_level);
 
-	FREE_INT(Data2);
+	FREE_int(Data2);
 }
 
-void DlxTransposeAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols, 
-	INT *RHS, INT f_has_type, diophant_equation_type *type, 
-	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const char *solution_fname, 
-	INT f_write_tree_file, const char *tree_fname, 
-	INT verbose_level)
+void DlxTransposeAndSolveRHS(int *Data, int nb_rows, int nb_cols, 
+	int *RHS, int f_has_type, diophant_equation_type *type, 
+	int &nb_sol, int &nb_backtrack, 
+	int f_write_file, const char *solution_fname, 
+	int f_write_tree_file, const char *tree_fname, 
+	int verbose_level)
 {
-	INT *Data2;
-	INT i, j;
+	int *Data2;
+	int i, j;
 
-	Data2 = NEW_INT(nb_cols * nb_rows);
+	Data2 = NEW_int(nb_cols * nb_rows);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Data2[j * nb_rows + i] = Data[i * nb_cols + j];
@@ -203,19 +203,19 @@ void DlxTransposeAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols,
 		f_write_tree_file, tree_fname, 
 		verbose_level);
 
-	FREE_INT(Data2);
+	FREE_int(Data2);
 }
 
-void DlxAppendRowAndSolve(INT *Data, INT nb_rows, INT nb_cols, 
-	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const char *solution_fname, 
-	INT f_write_tree_file, const char *tree_fname, 
-	INT verbose_level)
+void DlxAppendRowAndSolve(int *Data, int nb_rows, int nb_cols, 
+	int &nb_sol, int &nb_backtrack, 
+	int f_write_file, const char *solution_fname, 
+	int f_write_tree_file, const char *tree_fname, 
+	int verbose_level)
 {
-	INT *Data2;
-	INT i, j;
+	int *Data2;
+	int i, j;
 
-	Data2 = NEW_INT((nb_rows + 1) * nb_cols);
+	Data2 = NEW_int((nb_rows + 1) * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Data2[i * nb_cols + j] = Data[i * nb_cols + j];
@@ -231,20 +231,20 @@ void DlxAppendRowAndSolve(INT *Data, INT nb_rows, INT nb_cols,
 		f_write_tree_file, tree_fname,
 		verbose_level);
 
-	FREE_INT(Data2);
+	FREE_int(Data2);
 }
 
-void DlxAppendRowAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols, 
-	INT *RHS, INT f_has_type, diophant_equation_type *type, 
-	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const char *solution_fname, 
-	INT f_write_tree_file, const char *tree_fname, 
-	INT verbose_level)
+void DlxAppendRowAndSolveRHS(int *Data, int nb_rows, int nb_cols, 
+	int *RHS, int f_has_type, diophant_equation_type *type, 
+	int &nb_sol, int &nb_backtrack, 
+	int f_write_file, const char *solution_fname, 
+	int f_write_tree_file, const char *tree_fname, 
+	int verbose_level)
 {
-	INT *Data2;
-	INT i, j;
+	int *Data2;
+	int i, j;
 
-	Data2 = NEW_INT((nb_rows + 1) * nb_cols);
+	Data2 = NEW_int((nb_rows + 1) * nb_cols);
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
 			Data2[i * nb_cols + j] = Data[i * nb_cols + j];
@@ -265,16 +265,16 @@ void DlxAppendRowAndSolveRHS(INT *Data, INT nb_rows, INT nb_cols,
 		f_write_tree_file, tree_fname,
 		verbose_level);
 
-	FREE_INT(Data2);
+	FREE_int(Data2);
 }
 
-void DlxSolve(INT *Data, INT nb_rows, INT nb_cols, 
-	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const char *solution_fname, 
-	INT f_write_tree_file, const char *tree_fname, 
-	INT verbose_level)
+void DlxSolve(int *Data, int nb_rows, int nb_cols, 
+	int &nb_sol, int &nb_backtrack, 
+	int f_write_file, const char *solution_fname, 
+	int f_write_tree_file, const char *tree_fname, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "DlxSolve nb_rows = " << nb_rows << " nb_cols = " << nb_cols << endl;
@@ -315,14 +315,14 @@ void DlxSolve(INT *Data, INT nb_rows, INT nb_cols,
 		}
 }
 
-void DlxSolve_with_RHS(INT *Data, INT nb_rows, INT nb_cols, 
-	INT *RHS, INT f_has_type, diophant_equation_type *type, 
-	INT &nb_sol, INT &nb_backtrack, 
-	INT f_write_file, const char *solution_fname, 
-	INT f_write_tree_file, const char *tree_fname, 
-	INT verbose_level)
+void DlxSolve_with_RHS(int *Data, int nb_rows, int nb_cols, 
+	int *RHS, int f_has_type, diophant_equation_type *type, 
+	int &nb_sol, int &nb_backtrack, 
+	int f_write_file, const char *solution_fname, 
+	int f_write_tree_file, const char *tree_fname, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "DlxSolve_with_RHS nb_rows = " << nb_rows << " nb_cols = " << nb_cols << endl;
@@ -365,7 +365,7 @@ void DlxSolve_with_RHS(INT *Data, INT nb_rows, INT nb_cols,
 		}
 }
 
-void open_solution_file(INT f_write_file, const char *solution_fname, INT verbose_level)
+void open_solution_file(int f_write_file, const char *solution_fname, int verbose_level)
 {
 	if (f_write_file) {
 		dlx_fp_sol = new ofstream;
@@ -377,7 +377,7 @@ void open_solution_file(INT f_write_file, const char *solution_fname, INT verbos
 		}
 }
 
-void close_solution_file(INT f_write_file)
+void close_solution_file(int f_write_file)
 {
 	if (f_write_file) {
 		*dlx_fp_sol << -1 << " " << dlx_nb_sol << " " << dlx_nb_backtrack_nodes << endl;
@@ -387,7 +387,7 @@ void close_solution_file(INT f_write_file)
 		}
 }
 
-void open_tree_file(INT f_write_tree_file, const char *tree_fname, INT verbose_level)
+void open_tree_file(int f_write_tree_file, const char *tree_fname, int verbose_level)
 {
 	if (f_write_tree_file) {
 		DLX_f_write_tree = TRUE;
@@ -401,7 +401,7 @@ void open_tree_file(INT f_write_tree_file, const char *tree_fname, INT verbose_l
 		}
 }
 
-void close_tree_file(INT f_write_tree_file)
+void close_tree_file(int f_write_tree_file)
 {
 	if (f_write_tree_file) {
 		*DLX_fp_tree << -1 << " " << DLX_write_tree_cnt << endl;
@@ -414,10 +414,10 @@ void print_position(dlx_node *p)
 	cout << p->row << "/" << p->col;
 }
 
-void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *type, INT verbose_level)
+void Create_RHS(int nb_cols, int *RHS, int f_has_type, diophant_equation_type *type, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, sum_rhs;
+	int f_v = (verbose_level >= 1);
+	int i, sum_rhs;
 
 	if (f_v) {
 		cout << "dlx.C: Create_RHS" << endl;
@@ -430,9 +430,9 @@ void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *t
 		}
 
 
-	target_RHS = NEW_INT(nCol);
-	current_RHS = NEW_INT(nCol);
-	current_row = NEW_INT(nCol);
+	target_RHS = NEW_int(nCol);
+	current_RHS = NEW_int(nCol);
+	current_row = NEW_int(nCol);
 	
 	for (i = 0; i < nCol; i++) {
 		target_RHS[i] = RHS[i];
@@ -449,7 +449,7 @@ void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *t
 		cout << "sum_rhs=" << sum_rhs << endl;
 		}
 
-	current_row_save = NEW_INT(sum_rhs);
+	current_row_save = NEW_int(sum_rhs);
 
 	if (f_has_type) {
 		::type = NEW_OBJECTS(diophant_equation_type, nCol);
@@ -463,8 +463,8 @@ void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *t
 			::type[i] = t_EQ;
 			}
 		}
-	changed_type_columns = NEW_INT(nCol);
-	nb_changed_type_columns = NEW_INT(sum_rhs);
+	changed_type_columns = NEW_int(nCol);
+	nb_changed_type_columns = NEW_int(sum_rhs);
 	nb_changed_type_columns_total = 0;
 
 	if (f_v) {
@@ -475,19 +475,19 @@ void Create_RHS(INT nb_cols, INT *RHS, INT f_has_type, diophant_equation_type *t
 void Delete_RHS()
 {
 	if (target_RHS) {
-		FREE_INT(target_RHS);
+		FREE_int(target_RHS);
 		target_RHS = NULL;
 		}
 	if (current_RHS) {
-		FREE_INT(current_RHS);
+		FREE_int(current_RHS);
 		current_RHS = NULL;
 		}
 	if (current_row) {
-		FREE_INT(current_row);
+		FREE_int(current_row);
 		current_row = NULL;
 		}
 	if (current_row_save) {
-		FREE_INT(current_row_save);
+		FREE_int(current_row_save);
 		current_row_save = NULL;
 		}
 	if (f_type) {
@@ -496,10 +496,10 @@ void Delete_RHS()
 		}
 }
 
-void CreateMatrix(INT *Data, INT nb_rows, INT nb_cols, INT verbose_level)
+void CreateMatrix(int *Data, int nb_rows, int nb_cols, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b, i, j;
+	int f_v = (verbose_level >= 1);
+	int a, b, i, j;
 
 	nRow = nb_rows;
 	nCol = nb_cols;
@@ -514,7 +514,7 @@ void CreateMatrix(INT *Data, INT nb_rows, INT nb_cols, INT verbose_level)
 				}
 			cout << endl;
 			}
-		//INT_matrix_print(Data, nb_rows, nb_cols);
+		//int_matrix_print(Data, nb_rows, nb_cols);
 		cout << endl;
 		}
 
@@ -523,11 +523,11 @@ void CreateMatrix(INT *Data, INT nb_rows, INT nb_cols, INT verbose_level)
 	//RowHeader = new pdlx_node[nRow];
 
 	
-	Result = NEW_INT(nRow);
-	Nb_choices = NEW_INT(nRow);
-	Cur_choice = NEW_INT(nRow);
-	DLX_Cur_col = NEW_INT(nRow);
-	Nb_col_nodes = NEW_INT(nCol);
+	Result = NEW_int(nRow);
+	Nb_choices = NEW_int(nRow);
+	Cur_choice = NEW_int(nRow);
+	DLX_Cur_col = NEW_int(nRow);
+	Nb_col_nodes = NEW_int(nCol);
 
 	for (j = 0; j < nCol; j++) {
 		Nb_col_nodes[j] = 0;
@@ -609,13 +609,13 @@ void DeleteMatrix()
 {
 	delete Matrix;
 	delete Root;
-	FREE_INT(Result);
-	FREE_INT(Nb_choices);
-	FREE_INT(Cur_choice);
-	FREE_INT(Nb_col_nodes);
+	FREE_int(Result);
+	FREE_int(Nb_choices);
+	FREE_int(Cur_choice);
+	FREE_int(Nb_col_nodes);
 }
 
-dlx_node *get_column_header(INT c)
+dlx_node *get_column_header(int c)
 {
 	dlx_node *Node;
 	
@@ -630,7 +630,7 @@ dlx_node *get_column_header(INT c)
 
 dlx_node *ChooseColumnFancy(void)
 {
-	INT j, nb_node, nb_node_min = 0;
+	int j, nb_node, nb_node_min = 0;
 	dlx_node *Node, *Node_min = NULL;
 	
 	for (Node = Root->Right; Node != Root; Node = Node->Right) {
@@ -661,7 +661,7 @@ dlx_node *ChooseColumn(void)
 
 dlx_node *ChooseColumnFancyRHS(void)
 {
-	INT j, nb_node, nb_node_min = 0;
+	int j, nb_node, nb_node_min = 0;
 	dlx_node *Node, *Node_min = NULL;
 	
 	for (Node = Root->Right; Node != Root; Node = Node->Right) {
@@ -687,7 +687,7 @@ dlx_node *ChooseColumnFancyRHS(void)
 dlx_node *ChooseColumnRHS(void)
 {
 	dlx_node *Node;
-	INT j;
+	int j;
 	
 	if (Root->Right == Root) {
 		cout << "ChooseColumn Root->Right == Root" << endl;
@@ -721,10 +721,10 @@ void print_root()
 		}
 }
 
-void write_tree(INT k)
+void write_tree(int k)
 {
 	if (DLX_f_write_tree) {
-		INT i;
+		int i;
 		*DLX_fp_tree << k;
 		for (i = 0; i < k; i++) {
 			*DLX_fp_tree << " " << Result[i];
@@ -734,10 +734,10 @@ void write_tree(INT k)
 		}
 }
 
-void print_if_necessary(INT k)
+void print_if_necessary(int k)
 {
 	if ((dlx_nb_backtrack_nodes & ((1 << 20) - 1)) == 0) {
-		INT a;
+		int a;
 
 		a = dlx_nb_backtrack_nodes >> 20;
 		cout << "DlxSearch: " << a << " * 2^20 nodes, " << " nb_sol=" << dlx_nb_sol << " position ";
@@ -751,18 +751,18 @@ void print_if_necessary(INT k)
 		}
 }
 
-void process_solution(INT k)
+void process_solution(int k)
 {
 #if 0
 	if (f_v) {
         	cout << "DlxSearch solution " << dlx_nb_sol << " : ";
 		//PrintSolution();
-		INT_vec_print(cout, Result, k);
+		int_vec_print(cout, Result, k);
 		cout << endl;
 		}
 #endif
 	if (dlx_f_write_to_file) {
-		INT i;
+		int i;
 		*dlx_fp_sol << k;
 		for (i = 0; i < k; i++) {
 			*dlx_fp_sol << " " << Result[i];
@@ -775,10 +775,10 @@ void process_solution(INT k)
 	dlx_nb_sol++;
 }
 
-void count_nb_choices(INT k, dlx_node *Column)
+void count_nb_choices(int k, dlx_node *Column)
 {
 	dlx_node *RowNode;
-	INT r;
+	int r;
 
 	Nb_choices[k] = 0;
 	
@@ -798,10 +798,10 @@ void count_nb_choices(INT k, dlx_node *Column)
 		}
 }
 
-INT IsDone()
+int IsDone()
 {
 	dlx_node *N;
-	INT c;
+	int c;
 	
 #if 0
 	cout << "c : current_RHS[c] : target_RHS[c]" << endl;
@@ -824,7 +824,7 @@ INT IsDone()
 		}
 }
 
-INT IsColumnDone(INT c)
+int IsColumnDone(int c)
 {
 	if (current_RHS[c] == target_RHS[c]) {
 		return TRUE;
@@ -832,7 +832,7 @@ INT IsColumnDone(INT c)
 	return FALSE;
 }
 
-INT IsColumnNotDone(INT c)
+int IsColumnNotDone(int c)
 {
 	if (type[c] == t_EQ && current_RHS[c] < target_RHS[c]) {
 		return TRUE;
@@ -840,7 +840,7 @@ INT IsColumnNotDone(INT c)
 	return FALSE;
 }
 
-void DlxSearch(INT k)
+void DlxSearch(int k)
 {
 	//cout << "DlxSearch k=" << k << endl;
 	//print_root();
@@ -906,9 +906,9 @@ void DlxSearch(INT k)
 	UnCover(Column);
 }
 
-void DlxSearchRHS(INT k, INT verbose_level)
+void DlxSearchRHS(int k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 #if 0
 	if ((dlx_nb_backtrack_nodes % 100000) == 0) {
@@ -918,7 +918,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 
 
 	if (f_v) {
-		INT i;
+		int i;
 		
 		cout << "DlxSearchRHS k=" << k << " dlx_nb_backtrack_nodes=" << dlx_nb_backtrack_nodes << " : ";
 		for (i = 0; i < k; i++) {
@@ -940,7 +940,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 		// All header columns gone means we have a valid solution!
 		if (f_v) {
 			cout << "DlxSearchRHS k=" << k << " solution ";
-			INT_vec_print(cout, Result, k);
+			int_vec_print(cout, Result, k);
 			cout << " found" << endl;
 			}
 
@@ -950,7 +950,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 
 
 	dlx_node *Column;
-	INT r, c, f_done, c0, c2;
+	int r, c, f_done, c0, c2;
 
 
 	Column = NULL;
@@ -1035,7 +1035,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 
 		if (f_v) {
 			cout << "DlxSearchRHS k=" << k << " column " << c << " choice " << Cur_choice[k] << " / " << Nb_choices[k] << " which is ";
-			INT_vec_print(cout, Result, k + 1);
+			int_vec_print(cout, Result, k + 1);
 			cout << endl;
 			}
 
@@ -1102,7 +1102,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 
 		if (f_v) {
 			cout << "DlxSearchRHS k=" << k << " column " << c << " choice " << Cur_choice[k] << " / " << Nb_choices[k] << " which is ";
-			INT_vec_print(cout, Result, k + 1);
+			int_vec_print(cout, Result, k + 1);
 			cout << " recursing" << endl;
 			}
 
@@ -1112,7 +1112,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 
 		if (f_v) {
 			cout << "DlxSearchRHS k=" << k << " column " << c << " choice " << Cur_choice[k] << " / " << Nb_choices[k] << " which is ";
-			INT_vec_print(cout, Result, k + 1);
+			int_vec_print(cout, Result, k + 1);
 			cout << " after recursion" << endl;
 			}
 
@@ -1132,7 +1132,7 @@ void DlxSearchRHS(INT k, INT verbose_level)
 		// Here we undo the change of type from above
 		// EQ's are changed back into ZOR's:
 
-		INT i;
+		int i;
 		
 		for (i = 0; i < nb_changed_type_columns[k]; i++) {
 			c2 = changed_type_columns[--nb_changed_type_columns_total];
@@ -1162,7 +1162,7 @@ void Cover(dlx_node *ColNode)
 
 	//cout << "Cover" << endl;
 	dlx_node *RowNode, *RightNode;
-	INT j;
+	int j;
 
 	// remove the column by crosslisting the left and right neighbors.
 	// recall that this is in the header.
@@ -1198,7 +1198,7 @@ void UnCover(dlx_node *ColNode)
 
 	//cout << "UnCover" << endl;
 	dlx_node *RowNode, *LeftNode;
-	INT j;
+	int j;
 
 	// puts rows back in which have previously been removed in Cover:
 

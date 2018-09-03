@@ -10,10 +10,10 @@
 
 #define MAX_DOMAIN_STACK 100
 
-INT domain_stack_len = 0;
+int domain_stack_len = 0;
 static domain* domain_stack[MAX_DOMAIN_STACK];
 
-domain::domain(INT p)
+domain::domain(int p)
 {
 	the_type = GFp;
 	the_prime.m_i_i(p);
@@ -49,33 +49,33 @@ domain_type domain::type()
 	return the_type;
 }
 
-INT domain::order_int()
+int domain::order_int()
 {
 	if (the_type == GFp)
 		return the_prime.s_i_i();
 	if (the_type == GFq) {
-		INT q = the_sub_domain->order_int();
-		INT f = the_factor_poly->degree();
-		INT Q = i_power_j(q, f);
+		int q = the_sub_domain->order_int();
+		int f = the_factor_poly->degree();
+		int Q = i_power_j(q, f);
 		return Q;
 		}
 	cout << "domain::order_int() no finite field domain" << endl;
 	exit(1);
 }
 
-INT domain::order_subfield_int()
+int domain::order_subfield_int()
 {
 	if (the_type == GFp)
 		return the_prime.s_i_i();
 	if (the_type == GFq) {
-		INT q = the_sub_domain->order_int();
+		int q = the_sub_domain->order_int();
 		return q;
 		}
 	cout << "domain::order_subfield_int() no finite field domain" << endl;
 	exit(1);
 }
 
-INT domain::characteristic()
+int domain::characteristic()
 {
 	if (the_type == GFp)
 		return the_prime.s_i_i();
@@ -124,7 +124,7 @@ void pop_domain(domain *& d)
 
 
 
-INT has_domain()
+int has_domain()
 {
 	if (domain_stack_len > 0)
 		return TRUE;
@@ -156,7 +156,7 @@ domain *get_domain_if_pc_group()
 }
 #endif
 
-INT is_GFp_domain(domain *& d)
+int is_GFp_domain(domain *& d)
 {
 	if (!has_domain())
 		return FALSE;
@@ -169,7 +169,7 @@ INT is_GFp_domain(domain *& d)
 	return FALSE;
 }
 
-INT is_GFq_domain(domain *& d)
+int is_GFq_domain(domain *& d)
 {
 	if (!has_domain())
 		return FALSE;
@@ -182,7 +182,7 @@ INT is_GFq_domain(domain *& d)
 	return FALSE;
 }
 
-INT is_finite_field_domain(domain *& d)
+int is_finite_field_domain(domain *& d)
 {
 	if (is_GFp_domain(d))
 		return TRUE;
@@ -191,7 +191,7 @@ INT is_finite_field_domain(domain *& d)
 	return FALSE;
 }
 
-INT finite_field_domain_order_int(domain * d)
+int finite_field_domain_order_int(domain * d)
 {
 	if (is_GFp_domain(d)) {
 		return d->order_int();
@@ -203,7 +203,7 @@ INT finite_field_domain_order_int(domain * d)
 	exit(1);
 }
 
-INT finite_field_domain_characteristic(domain * d)
+int finite_field_domain_characteristic(domain * d)
 {
 	if (is_GFp_domain(d)) {
 		return d->characteristic();
@@ -215,10 +215,10 @@ INT finite_field_domain_characteristic(domain * d)
 	exit(1);
 }
 
-INT finite_field_domain_primitive_root()
+int finite_field_domain_primitive_root()
 {
 	domain *d;
-	INT q;
+	int q;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "finite_field_domain_primitive_root() no finite field domain" << endl;
@@ -230,7 +230,7 @@ INT finite_field_domain_primitive_root()
 		}
 	else {
 		integer a;
-		INT i, o;
+		int i, o;
 		
 		cout << "finite_field_domain_primitive_root():" << endl;
 		for (i = 1; i < q; i++) {
@@ -243,7 +243,7 @@ INT finite_field_domain_primitive_root()
 			}
 		cout << "finite_field_domain_primitive_root() couldn't find primitive root!" << endl;
 		exit(1);
-		// INT p, f;
+		// int p, f;
 		// factor_prime_power(q, &p, &f);
 
 		// return p;
@@ -253,7 +253,7 @@ INT finite_field_domain_primitive_root()
 void finite_field_domain_base_over_subfield(Vector & b)
 {
 	domain *d, *sd;
-	INT qq, q, f, a, i;
+	int qq, q, f, a, i;
 	
 	if (!is_finite_field_domain(d)) {
 		cout << "finite_field_domain_base_over_subfield() no finite field domain" << endl;
@@ -299,7 +299,7 @@ typedef struct ff_memory FF_MEMORY;
 
 
 struct ff_memory {
-	INT q, p, f;
+	int q, p, f;
 	domain *d1;
 	unipoly *m;
 	domain *d2;
@@ -311,10 +311,10 @@ struct ff_memory {
 static int nb_ffm = 0;
 static FF_MEMORY *Ffm[MAX_FF_DOMAIN];
 
-domain *allocate_finite_field_domain(INT q, INT f_v)
+domain *allocate_finite_field_domain(int q, int f_v)
 {
 	FF_MEMORY *ffm = new FF_MEMORY;
-	INT p, f;
+	int p, f;
 	
 	if (nb_ffm >= MAX_FF_DOMAIN) {
 		cout << "allocate_finite_field_domain() too many finite field domains" << endl;
@@ -346,9 +346,9 @@ domain *allocate_finite_field_domain(INT q, INT f_v)
 	return ffm->dom;
 }
 
-void free_finite_field_domain(domain *dom, INT f_v)
+void free_finite_field_domain(domain *dom, int f_v)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_ffm; i++) {
 		if (Ffm[i]->dom == dom) {

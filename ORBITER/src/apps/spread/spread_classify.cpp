@@ -13,49 +13,49 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void print_spread(INT len, INT *S, void *data);
+void print_spread(int len, int *S, void *data);
 
 
 #define MAX_FILES 1000
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_poly = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_poly = FALSE;
 	const char *poly = NULL;
-	INT f_order = FALSE;
-	INT order = 0;
-	INT f_dim_over_kernel = FALSE;
-	INT dim_over_kernel = 0;
-	INT f_make_spread = FALSE;
-	INT type_of_spread = 0;
-	INT f_recoordinatize = FALSE;
-	INT f_starter = FALSE;
+	int f_order = FALSE;
+	int order = 0;
+	int f_dim_over_kernel = FALSE;
+	int dim_over_kernel = 0;
+	int f_make_spread = FALSE;
+	int type_of_spread = 0;
+	int f_recoordinatize = FALSE;
+	int f_starter = FALSE;
 
 
-	INT nb_identify = 0;
+	int nb_identify = 0;
 	const char *identify_data[1000];
 
 
-	INT f_list = FALSE;
-	INT f_make_quotients = FALSE;
-	INT f_print_spread = FALSE;
+	int f_list = FALSE;
+	int f_make_quotients = FALSE;
+	int f_print_spread = FALSE;
 	const char *fname_print_spread;
-	INT f_HMO = FALSE;
+	int f_HMO = FALSE;
 	const char *fname_HMO;
-	INT f_print_representatives = FALSE;
-	INT representatives_size = 0;
+	int f_print_representatives = FALSE;
+	int representatives_size = 0;
 	const char *representatives_fname = NULL;
-	INT f_test_identify = FALSE;
-	INT identify_level = 0;
-	INT identify_nb_times = 0;
-	INT f_draw_poset = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_print_data_structure = FALSE;
+	int f_test_identify = FALSE;
+	int identify_level = 0;
+	int identify_nb_times = 0;
+	int f_draw_poset = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_print_data_structure = FALSE;
 
 
 	exact_cover_arguments *ECA = NULL;
@@ -201,7 +201,7 @@ int main(int argc, const char **argv)
 	ECA->read_arguments(argc, argv, verbose_level);
 	IA->read_arguments(argc, argv, verbose_level);
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (!f_order) {
@@ -217,7 +217,7 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	INT p, e, e1, n, k, q;
+	int p, e, e1, n, k, q;
 	
 	factor_prime_power(order, p, e);
 	cout << "order = " << order << " = " << p << "^" << e << endl;
@@ -249,7 +249,7 @@ int main(int argc, const char **argv)
 
 	T.read_arguments(argc, argv);
 	
-	INT max_depth = i_power_j(F->q, k) + 1;
+	int max_depth = i_power_j(F->q, k) + 1;
 
 	cout << "spread_classify.C before T.init" << endl;
 	T.init(order, n, k, max_depth, 
@@ -291,7 +291,7 @@ int main(int argc, const char **argv)
 	
 
 		if (f_list) {
-			INT f_show_orbit_decomposition = TRUE, f_show_stab = TRUE, f_save_stab = TRUE, f_show_whole_orbit = FALSE;
+			int f_show_orbit_decomposition = TRUE, f_show_stab = TRUE, f_save_stab = TRUE, f_show_whole_orbit = FALSE;
 		
 			T.gen->list_all_orbits_at_level(ECA->starter_size, 
 				TRUE, 
@@ -300,7 +300,7 @@ int main(int argc, const char **argv)
 				f_show_orbit_decomposition, f_show_stab, f_save_stab, f_show_whole_orbit);
 
 #if 0
-			INT d;
+			int d;
 			for (d = 0; d < 3; d++) {
 				T.gen->print_schreier_vectors_at_depth(d, verbose_level);
 				}
@@ -334,19 +334,19 @@ int main(int argc, const char **argv)
 		cout << "spread_classify.C classifying translation planes done" << endl;
 
 		//T.gen->print_node(5);
-		INT *transporter;
-		INT orbit_at_level;
+		int *transporter;
+		int orbit_at_level;
 		
-		transporter = NEW_INT(T.gen->A->elt_size_in_INT);
+		transporter = NEW_int(T.gen->A->elt_size_in_int);
 		
 		for (i = 0; i < nb_identify; i++) {
 
-			INT *data;
-			INT sz;
+			int *data;
+			int sz;
 
-			INT_vec_scan(identify_data[i], data, sz);
+			int_vec_scan(identify_data[i], data, sz);
 			cout << "spread_classify.C identifying set " << i << " / " << nb_identify << " : ";
-			INT_vec_print(cout, data, sz);
+			int_vec_print(cout, data, sz);
 			cout << endl;
 			T.gen->identify(data, sz, transporter, orbit_at_level, verbose_level);
 
@@ -354,10 +354,10 @@ int main(int argc, const char **argv)
 			cout << "A transporter is " << endl;
 			T.gen->A->element_print_quick(transporter, cout);
 
-			FREE_INT(data);
+			FREE_int(data);
 		}
 
-		FREE_INT(transporter);
+		FREE_int(transporter);
 	}
 	else if (f_test_identify) {
 		cout << "spread_classify.C f_test_identify" << endl;
@@ -416,15 +416,15 @@ int main(int argc, const char **argv)
 
 	if (f_print_representatives) {
 		orbit_rep *R;
-		INT *M;
-		INT no, nb;
+		int *M;
+		int no, nb;
 		char fname[1000];
 		
 		cout << "spread_classify.C printing orbit representatives at level " << representatives_size << endl;
 		R = NEW_OBJECT(orbit_rep);
-		M = NEW_INT(T.k * T.n);
+		M = NEW_int(T.k * T.n);
 
-		sprintf(fname, "%s_lvl_%ld", representatives_fname, representatives_size);
+		sprintf(fname, "%s_lvl_%d", representatives_fname, representatives_size);
 
 		nb = count_number_of_orbits_in_file(fname, verbose_level);
 
@@ -436,7 +436,7 @@ int main(int argc, const char **argv)
 				&T, 
 				verbose_level - 1
 				);
-			// R has: INT *candidates; INT nb_candidates;
+			// R has: int *candidates; int nb_candidates;
 	
 			for (i = 0; i < representatives_size; i++) {
 				cout << R->rep[i] << " ";
@@ -444,8 +444,8 @@ int main(int argc, const char **argv)
 			cout << endl;
 			for (i = 0; i < representatives_size; i++) {
 				cout << R->rep[i] << " = " << endl;
-				T.Grass->unrank_INT_here(M, R->rep[i], 0/*verbose_level - 4*/);
-				INT_matrix_print(M, T.k, T.n);
+				T.Grass->unrank_int_here(M, R->rep[i], 0/*verbose_level - 4*/);
+				int_matrix_print(M, T.k, T.n);
 			}
 		}
 		FREE_OBJECT(R);
@@ -460,7 +460,7 @@ int main(int argc, const char **argv)
 }
 
 
-void print_spread(INT len, INT *S, void *data)
+void print_spread(int len, int *S, void *data)
 {
 	spread *T = (spread *) data;
 	

@@ -50,53 +50,53 @@ void wreath_product::null()
 
 void wreath_product::freeself()
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "wreath_product::freeself" << endl;
 		}
 	if (mtx_size) {
-		FREE_INT(mtx_size);
+		FREE_int(mtx_size);
 	}
 	if (perm_offset_i) {
-		FREE_INT(perm_offset_i);
+		FREE_int(perm_offset_i);
 	}
 	if (index_set1) {
-		FREE_INT(index_set1);
+		FREE_int(index_set1);
 	}
 	if (index_set2) {
-		FREE_INT(index_set2);
+		FREE_int(index_set2);
 	}
 	if (u) {
-		FREE_INT(u);
+		FREE_int(u);
 	}
 	if (v) {
-		FREE_INT(v);
+		FREE_int(v);
 	}
 	if (w) {
-		FREE_INT(w);
+		FREE_int(w);
 	}
 	if (A1) {
-		FREE_INT(A1);
+		FREE_int(A1);
 	}
 	if (A2) {
-		FREE_INT(A2);
+		FREE_int(A2);
 	}
 	if (A3) {
-		FREE_INT(A3);
+		FREE_int(A3);
 	}
 	if (tmp_Elt1) {
-		FREE_INT(tmp_Elt1);
+		FREE_int(tmp_Elt1);
 	}
 	if (tmp_perm1) {
-		FREE_INT(tmp_perm1);
+		FREE_int(tmp_perm1);
 	}
 	if (tmp_perm2) {
-		FREE_INT(tmp_perm2);
+		FREE_int(tmp_perm2);
 	}
 	if (induced_perm) {
-		FREE_INT(induced_perm);
+		FREE_int(induced_perm);
 	}
 	if (P) {
 		FREE_OBJECT(P);
@@ -108,16 +108,16 @@ void wreath_product::freeself()
 		FREE_OBJECT(Elts);
 	}
 	if (base_for_component) {
-		FREE_INT(base_for_component);
+		FREE_int(base_for_component);
 	}
 	if (tl_for_component) {
-		FREE_INT(tl_for_component);
+		FREE_int(tl_for_component);
 	}
 	if (the_base) {
-		FREE_INT(the_base);
+		FREE_int(the_base);
 	}
 	if (the_transversal_length) {
-		FREE_INT(the_transversal_length);
+		FREE_int(the_transversal_length);
 	}
 	null();
 	if (f_v) {
@@ -126,10 +126,10 @@ void wreath_product::freeself()
 }
 
 void wreath_product::init_tensor_wreath_product(matrix_group *M,
-		action *A_mtx, INT nb_factors, INT verbose_level)
+		action *A_mtx, int nb_factors, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product" << endl;
@@ -155,8 +155,8 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	P = NEW_OBJECT(perm_group);
 	P->init(nb_factors, 10 /* page_length_log */, 0 /* verbose_level */);
 
-	sprintf(label, "%s_wreath_Sym%ld", M->label, nb_factors);
-	sprintf(label_tex, "%s \\wr {\\rm Sym}(%ld)", M->label_tex, nb_factors);
+	sprintf(label, "%s_wreath_Sym%d", M->label, nb_factors);
+	sprintf(label_tex, "%s \\wr {\\rm Sym}(%d)", M->label_tex, nb_factors);
 
 	degree_of_matrix_group = M->degree;
 	dimension_of_matrix_group = M->n;
@@ -179,7 +179,7 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << "wreath_product::init_tensor_wreath_product "
 				"degree_overall = " << degree_overall << endl;
 	}
-	perm_offset_i = NEW_INT(nb_factors + 1);
+	perm_offset_i = NEW_int(nb_factors + 1);
 		// one more so it can also be used to indicated
 		// the start of the tensor product action.
 	perm_offset_i[0] = nb_factors;
@@ -187,27 +187,27 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		// note equality here!
 		perm_offset_i[i] = perm_offset_i[i - 1] + degree_of_matrix_group;
 	}
-	mtx_size = NEW_INT(nb_factors);
+	mtx_size = NEW_int(nb_factors);
 	for (i = 0; i < nb_factors; i++) {
 		mtx_size[i] = i_power_j(dimension_of_matrix_group, i + 1);
 	}
-	index_set1 = NEW_INT(nb_factors);
-	index_set2 = NEW_INT(nb_factors);
-	u = NEW_INT(dimension_of_tensor_action);
-	v = NEW_INT(dimension_of_tensor_action);
-	w = NEW_INT(dimension_of_tensor_action);
-	A1 = NEW_INT(dimension_of_tensor_action * dimension_of_tensor_action);
-	A2 = NEW_INT(dimension_of_tensor_action * dimension_of_tensor_action);
-	A3 = NEW_INT(dimension_of_tensor_action * dimension_of_tensor_action);
-	elt_size_INT = M->elt_size_INT * nb_factors + P->elt_size_INT;
+	index_set1 = NEW_int(nb_factors);
+	index_set2 = NEW_int(nb_factors);
+	u = NEW_int(dimension_of_tensor_action);
+	v = NEW_int(dimension_of_tensor_action);
+	w = NEW_int(dimension_of_tensor_action);
+	A1 = NEW_int(dimension_of_tensor_action * dimension_of_tensor_action);
+	A2 = NEW_int(dimension_of_tensor_action * dimension_of_tensor_action);
+	A3 = NEW_int(dimension_of_tensor_action * dimension_of_tensor_action);
+	elt_size_int = M->elt_size_int * nb_factors + P->elt_size_int;
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
-				"elt_size_INT = " << elt_size_INT << endl;
+				"elt_size_int = " << elt_size_int << endl;
 	}
-	tmp_Elt1 = NEW_INT(elt_size_INT);
-	tmp_perm1 = NEW_INT(P->elt_size_INT);
-	tmp_perm2 = NEW_INT(P->elt_size_INT);
-	induced_perm = NEW_INT(dimension_of_tensor_action);
+	tmp_Elt1 = NEW_int(elt_size_int);
+	tmp_perm1 = NEW_int(P->elt_size_int);
+	tmp_perm2 = NEW_int(P->elt_size_int);
+	induced_perm = NEW_int(dimension_of_tensor_action);
 
 	bits_per_digit = M->bits_per_digit;
 	bits_per_elt = nb_factors * dimension_of_matrix_group *
@@ -229,8 +229,8 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 		cout << "wreath_product::init_tensor_wreath_product "
 				"base_len_in_component = " << base_len_in_component << endl;
 	}
-	base_for_component = NEW_INT(base_len_in_component);
-	tl_for_component = NEW_INT(base_len_in_component);
+	base_for_component = NEW_int(base_len_in_component);
+	tl_for_component = NEW_int(base_len_in_component);
 	general_linear_matrix_group_base_and_transversal_length(
 		dimension_of_matrix_group,
 		F, FALSE /* f_semilinear */,
@@ -240,11 +240,11 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"base_for_component = ";
-		INT_vec_print(cout, base_for_component, base_len_in_component);
+		int_vec_print(cout, base_for_component, base_len_in_component);
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"tl_for_component = ";
-		INT_vec_print(cout, tl_for_component, base_len_in_component);
+		int_vec_print(cout, tl_for_component, base_len_in_component);
 		cout << endl;
 	}
 
@@ -264,11 +264,11 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	if (f_v) {
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_base = ";
-		INT_vec_print(cout, the_base, base_length);
+		int_vec_print(cout, the_base, base_length);
 		cout << endl;
 		cout << "wreath_product::init_tensor_wreath_product "
 				"the_transversal_length = ";
-		INT_vec_print(cout, the_transversal_length, base_length);
+		int_vec_print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -277,10 +277,10 @@ void wreath_product::init_tensor_wreath_product(matrix_group *M,
 	}
 }
 
-INT wreath_product::element_image_of(INT *Elt, INT a, INT verbose_level)
+int wreath_product::element_image_of(int *Elt, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f, a0, b, c;
+	int f_v = (verbose_level >= 1);
+	int f, a0, b, c;
 
 	if (f_v) {
 		cout << "wreath_product::element_image_of" << endl;
@@ -330,14 +330,14 @@ INT wreath_product::element_image_of(INT *Elt, INT a, INT verbose_level)
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"u = ";
-				INT_vec_print(cout, u, dimension_of_tensor_action);
+				int_vec_print(cout, u, dimension_of_tensor_action);
 				cout << endl;
 			}
 			create_matrix(Elt, A3, 0 /* verbose_level */);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"A3 = " << endl;
-				INT_matrix_print(A3,
+				int_matrix_print(A3,
 						dimension_of_tensor_action,
 						dimension_of_tensor_action);
 			}
@@ -347,14 +347,14 @@ INT wreath_product::element_image_of(INT *Elt, INT a, INT verbose_level)
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"v = ";
-				INT_vec_print(cout, v, dimension_of_tensor_action);
+				int_vec_print(cout, v, dimension_of_tensor_action);
 				cout << endl;
 			}
 			apply_permutation(Elt, v, w, 0 /* verbose_level*/);
 			if (f_v) {
 				cout << "wreath_product::element_image_of "
 						"w = ";
-				INT_vec_print(cout, w, dimension_of_tensor_action);
+				int_vec_print(cout, w, dimension_of_tensor_action);
 				cout << endl;
 			}
 			PG_element_rank_modified(*F, w, 1,
@@ -379,11 +379,11 @@ INT wreath_product::element_image_of(INT *Elt, INT a, INT verbose_level)
 	return b;
 }
 
-void wreath_product::element_image_of_low_level(INT *Elt,
-		INT *input, INT *output, INT verbose_level)
+void wreath_product::element_image_of_low_level(int *Elt,
+		int *input, int *output, int verbose_level)
 // we assume that we are in the tensor product domain
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level" << endl;
@@ -391,14 +391,14 @@ void wreath_product::element_image_of_low_level(INT *Elt,
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"input = ";
-		INT_vec_print(cout, input, dimension_of_tensor_action);
+		int_vec_print(cout, input, dimension_of_tensor_action);
 		cout << endl;
 	}
 	create_matrix(Elt, A3, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"A3 = " << endl;
-		INT_matrix_print(A3,
+		int_matrix_print(A3,
 				dimension_of_tensor_action,
 				dimension_of_tensor_action);
 	}
@@ -408,14 +408,14 @@ void wreath_product::element_image_of_low_level(INT *Elt,
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"v = ";
-		INT_vec_print(cout, v, dimension_of_tensor_action);
+		int_vec_print(cout, v, dimension_of_tensor_action);
 		cout << endl;
 	}
 	apply_permutation(Elt, v, output, verbose_level - 1);
 	if (f_v) {
 		cout << "wreath_product::element_image_of_low_level "
 				"output = ";
-		INT_vec_print(cout, output, dimension_of_tensor_action);
+		int_vec_print(cout, output, dimension_of_tensor_action);
 		cout << endl;
 	}
 	if (f_v) {
@@ -423,9 +423,9 @@ void wreath_product::element_image_of_low_level(INT *Elt,
 	}
 }
 
-void wreath_product::element_one(INT *Elt)
+void wreath_product::element_one(int *Elt)
 {
-	INT f;
+	int f;
 
 	P->one(Elt);
 	for (f = 0; f < nb_factors; f++) {
@@ -433,9 +433,9 @@ void wreath_product::element_one(INT *Elt)
 	}
 }
 
-INT wreath_product::element_is_one(INT *Elt)
+int wreath_product::element_is_one(int *Elt)
 {
-		INT f, scalar;
+		int f, scalar;
 
 		if (!P->is_one(Elt)) {
 			return FALSE;
@@ -450,11 +450,11 @@ INT wreath_product::element_is_one(INT *Elt)
 		return TRUE;
 }
 
-void wreath_product::element_mult(INT *A, INT *B, INT *AB,
-		INT verbose_level)
+void wreath_product::element_mult(int *A, int *B, int *AB,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f, g;
+	int f_v = (verbose_level >= 1);
+	int f, g;
 
 	if (f_v) {
 		cout << "wreath_product::element_mult" << endl;
@@ -472,14 +472,14 @@ void wreath_product::element_mult(INT *A, INT *B, INT *AB,
 	}
 }
 
-void wreath_product::element_move(INT *A, INT *B, INT verbose_level)
+void wreath_product::element_move(int *A, int *B, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "wreath_product::element_move" << endl;
 	}
-	INT_vec_copy(A, B, elt_size_INT);
+	int_vec_copy(A, B, elt_size_int);
 
 #if 0
 	if (f_v) {
@@ -492,10 +492,10 @@ void wreath_product::element_move(INT *A, INT *B, INT verbose_level)
 	}
 }
 
-void wreath_product::element_invert(INT *A, INT *Av, INT verbose_level)
+void wreath_product::element_invert(int *A, int *Av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f, g;
+	int f_v = (verbose_level >= 1);
+	int f, g;
 
 	if (f_v) {
 		cout << "wreath_product::element_invert" << endl;
@@ -510,9 +510,9 @@ void wreath_product::element_invert(INT *A, INT *Av, INT verbose_level)
 	}
 }
 
-void wreath_product::compute_induced_permutation(INT *Elt, INT *perm)
+void wreath_product::compute_induced_permutation(int *Elt, int *perm)
 {
-	INT i, j, h, k, a;
+	int i, j, h, k, a;
 
 	for (i = 0; i < dimension_of_tensor_action; i++) {
 		AG_element_unrank(q, index_set1, 1, nb_factors, i);
@@ -527,33 +527,33 @@ void wreath_product::compute_induced_permutation(INT *Elt, INT *perm)
 }
 
 
-void wreath_product::apply_permutation(INT *Elt,
-		INT *v_in, INT *v_out, INT verbose_level)
+void wreath_product::apply_permutation(int *Elt,
+		int *v_in, int *v_out, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "wreath_product::apply_permutation" << endl;
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation perm=";
-		INT_vec_print(cout, Elt, nb_factors);
+		int_vec_print(cout, Elt, nb_factors);
 		cout << endl;
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation v_in=";
-		INT_vec_print(cout, v_in, dimension_of_tensor_action);
+		int_vec_print(cout, v_in, dimension_of_tensor_action);
 		cout << endl;
 	}
-	INT_vec_zero(v_out, dimension_of_tensor_action);
+	int_vec_zero(v_out, dimension_of_tensor_action);
 
 	//perm_inverse(Elt, tmp_perm1, nb_factors);
 
 	compute_induced_permutation(Elt, induced_perm);
 	if (f_v) {
 		cout << "wreath_product::apply_permutation induced_perm=";
-		INT_vec_print(cout, induced_perm, dimension_of_tensor_action);
+		int_vec_print(cout, induced_perm, dimension_of_tensor_action);
 		cout << endl;
 	}
 
@@ -574,7 +574,7 @@ void wreath_product::apply_permutation(INT *Elt,
 	}
 	if (f_v) {
 		cout << "wreath_product::apply_permutation v_out=";
-		INT_vec_print(cout, v_out, dimension_of_tensor_action);
+		int_vec_print(cout, v_out, dimension_of_tensor_action);
 		cout << endl;
 	}
 	if (f_v) {
@@ -582,22 +582,22 @@ void wreath_product::apply_permutation(INT *Elt,
 	}
 }
 
-INT wreath_product::offset_i(INT f)
+int wreath_product::offset_i(int f)
 {
-	return P->elt_size_INT + f * M->elt_size_INT;
+	return P->elt_size_int + f * M->elt_size_int;
 }
 
-void wreath_product::create_matrix(INT *Elt, INT *A, INT verbose_level)
+void wreath_product::create_matrix(int *Elt, int *A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f, N;
+	int f_v = (verbose_level >= 1);
+	int f, N;
 
 	if (f_v) {
 		cout << "wreath_product::create_matrix" << endl;
 	}
 	for (f = 0; f < nb_factors; f++) {
 		if (f == 0) {
-			INT_vec_copy(Elt + offset_i(f), A1,
+			int_vec_copy(Elt + offset_i(f), A1,
 					dimension_of_matrix_group * dimension_of_matrix_group);
 			N = dimension_of_matrix_group;
 		} else {
@@ -605,24 +605,24 @@ void wreath_product::create_matrix(INT *Elt, INT *A, INT verbose_level)
 					A1, Elt + offset_i(f),
 					mtx_size[f - 1], dimension_of_matrix_group,
 					A2, N, 0 /* verbose_level */);
-			INT_vec_copy(A2, A1, N * N);
+			int_vec_copy(A2, A1, N * N);
 		}
 		if (f_v) {
 			cout << "wreath_product::create_matrix "
 					"after step " << f << ":" << endl;
-			INT_matrix_print(A1, N, N);
+			int_matrix_print(A1, N, N);
 		}
 	}
-	INT_vec_copy(A1, A,
+	int_vec_copy(A1, A,
 			dimension_of_tensor_action * dimension_of_tensor_action);
 	if (f_v) {
 		cout << "wreath_product::create_matrix done" << endl;
 	}
 }
 
-void wreath_product::element_pack(INT *Elt, uchar *elt)
+void wreath_product::element_pack(int *Elt, uchar *elt)
 {
-	INT i, j, f;
+	int i, j, f;
 
 	for (f = 0; f < nb_factors; f++) {
 		elt[f] = (uchar) Elt[f];
@@ -637,10 +637,10 @@ void wreath_product::element_pack(INT *Elt, uchar *elt)
 	}
 }
 
-void wreath_product::element_unpack(uchar *elt, INT *Elt)
+void wreath_product::element_unpack(uchar *elt, int *Elt)
 {
-	INT i, j, f;
-	INT *m;
+	int i, j, f;
+	int *m;
 
 	for (f = 0; f < nb_factors; f++) {
 		Elt[f] = elt[f];
@@ -653,16 +653,16 @@ void wreath_product::element_unpack(uchar *elt, INT *Elt)
 						get_digit(elt, f, i, j);
 			}
 		}
-		M->GL_invert_internal(m, m + M->elt_size_INT_half,
+		M->GL_invert_internal(m, m + M->elt_size_int_half,
 				0 /*verbose_level - 2*/);
 	}
 }
 
-void wreath_product::put_digit(uchar *elt, INT f, INT i, INT j, INT d)
+void wreath_product::put_digit(uchar *elt, int f, int i, int j, int d)
 {
-	INT h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
+	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
-	INT h, h1, a;
+	int h, h1, a;
 
 	for (h = 0; h < bits_per_digit; h++) {
 		h1 = h0 + h;
@@ -677,11 +677,11 @@ void wreath_product::put_digit(uchar *elt, INT f, INT i, INT j, INT d)
 	}
 }
 
-INT wreath_product::get_digit(uchar *elt, INT f, INT i, INT j)
+int wreath_product::get_digit(uchar *elt, int f, int i, int j)
 {
-	INT h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
+	int h0 = (int) (f * dimension_of_matrix_group * dimension_of_matrix_group +
 			(i * dimension_of_matrix_group + j)) * bits_per_digit;
-	INT h, h1, a, d;
+	int h, h1, a, d;
 
 	d = 0;
 	for (h = bits_per_digit - 1; h >= 0; h--) {
@@ -696,10 +696,10 @@ INT wreath_product::get_digit(uchar *elt, INT f, INT i, INT j)
 	return d;
 }
 
-void wreath_product::make_element_from_one_component(INT *Elt,
-		INT f, INT *Elt_component)
+void wreath_product::make_element_from_one_component(int *Elt,
+		int f, int *Elt_component)
 {
-		INT g;
+		int g;
 
 		P->one(Elt);
 		for (g = 0; g < nb_factors; g++) {
@@ -711,9 +711,9 @@ void wreath_product::make_element_from_one_component(INT *Elt,
 		}
 }
 
-void wreath_product::make_element_from_permutation(INT *Elt, INT *perm)
+void wreath_product::make_element_from_permutation(int *Elt, int *perm)
 {
-		INT f;
+		int f;
 
 		for (f = 0; f < nb_factors; f++) {
 			Elt[f] = perm[f];
@@ -723,17 +723,17 @@ void wreath_product::make_element_from_permutation(INT *Elt, INT *perm)
 		}
 }
 
-void wreath_product::make_element(INT *Elt, INT *data, INT verbose_level)
+void wreath_product::make_element(int *Elt, int *data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f, offset;
+	int f_v = (verbose_level >= 1);
+	int f, offset;
 
 	if (f_v) {
 		cout << "wreath_product::make_element" << endl;
 		}
 	if (f_v) {
 		cout << "wreath_product::make_element data:" << endl;
-		INT_vec_print(cout, data, make_element_size);
+		int_vec_print(cout, data, make_element_size);
 		cout << endl;
 	}
 	for (f = 0; f < nb_factors; f++) {
@@ -743,7 +743,7 @@ void wreath_product::make_element(INT *Elt, INT *data, INT verbose_level)
 	for (f = 0; f < nb_factors; f++) {
 		M->make_element(Elt + offset_i(f), data + offset,
 				0 /* verbose_level */);
-		offset += M->elt_size_INT_half;
+		offset += M->elt_size_int_half;
 	}
 	if (f_v) {
 		cout << "wreath_product::make_element created this element:" << endl;
@@ -754,9 +754,9 @@ void wreath_product::make_element(INT *Elt, INT *data, INT verbose_level)
 		}
 }
 
-void wreath_product::element_print_easy(INT *Elt, ostream &ost)
+void wreath_product::element_print_easy(int *Elt, ostream &ost)
 {
-	INT f;
+	int f;
 
 	ost << "begin element of wreath product: " << endl;
 	ost << "[";
@@ -774,10 +774,10 @@ void wreath_product::element_print_easy(INT *Elt, ostream &ost)
 	ost << "end element of wreath product" << endl;
 }
 
-void wreath_product::compute_base_and_transversals(INT verbose_level)
+void wreath_product::compute_base_and_transversals(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, f, h;
+	int f_v = (verbose_level >= 1);
+	int i, f, h;
 
 	if (f_v) {
 		cout << "wreath_product::compute_base_and_transversals" << endl;
@@ -785,7 +785,7 @@ void wreath_product::compute_base_and_transversals(INT verbose_level)
 	base_length = 0;
 	base_length += nb_factors;
 	base_length += nb_factors * base_len_in_component;
-	the_base = NEW_INT(base_length);
+	the_base = NEW_int(base_length);
 
 	h = 0;
 	for (i = 0; i < nb_factors; i++, h++) {
@@ -801,7 +801,7 @@ void wreath_product::compute_base_and_transversals(INT verbose_level)
 				"h != base_length (1)" << endl;
 		exit(1);
 	}
-	the_transversal_length = NEW_INT(base_length);
+	the_transversal_length = NEW_int(base_length);
 	h = 0;
 	for (i = 0; i < nb_factors; i++, h++) {
 		the_transversal_length[h] = nb_factors - i;
@@ -821,15 +821,15 @@ void wreath_product::compute_base_and_transversals(INT verbose_level)
 		}
 }
 
-void wreath_product::make_strong_generators_data(INT *&data,
-		INT &size, INT &nb_gens, INT verbose_level)
+void wreath_product::make_strong_generators_data(int *&data,
+		int &size, int &nb_gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *GL_data;
-	INT GL_size;
-	INT GL_nb_gens;
-	INT h, k, f, g;
-	INT *dat;
+	int f_v = (verbose_level >= 1);
+	int *GL_data;
+	int GL_size;
+	int GL_nb_gens;
+	int h, k, f, g;
+	int *dat;
 
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data" << endl;
@@ -851,8 +851,8 @@ void wreath_product::make_strong_generators_data(INT *&data,
 	nb_gens = nb_factors - 1 + nb_factors * GL_nb_gens;
 	size = nb_factors + nb_factors *
 			dimension_of_matrix_group * dimension_of_matrix_group;
-	data = NEW_INT(nb_gens * size);
-	dat = NEW_INT(size);
+	data = NEW_int(nb_gens * size);
+	dat = NEW_int(size);
 
 	h = 0;
 	// generators for the components:
@@ -861,16 +861,16 @@ void wreath_product::make_strong_generators_data(INT *&data,
 			perm_identity(dat, nb_factors);
 			for (k = 0; k < nb_factors; k++) {
 				if (k == f) {
-					INT_vec_copy(GL_data + g * GL_size,
-							dat + nb_factors + k * M->elt_size_INT_half,
+					int_vec_copy(GL_data + g * GL_size,
+							dat + nb_factors + k * M->elt_size_int_half,
 							GL_size);
 				} else {
 					F->identity_matrix(
-							dat + nb_factors + k * M->elt_size_INT_half,
+							dat + nb_factors + k * M->elt_size_int_half,
 							dimension_of_matrix_group);
 				}
 			}
-			INT_vec_copy(dat, data + h * size, size);
+			int_vec_copy(dat, data + h * size, size);
 			h++;
 		}
 	}
@@ -879,10 +879,10 @@ void wreath_product::make_strong_generators_data(INT *&data,
 	for (k = nb_factors - 2; k >= 0; k--) {
 		perm_elementary_transposition(dat, nb_factors, k);
 		for (f = 0; f < nb_factors; f++) {
-			F->identity_matrix(dat + nb_factors + f * M->elt_size_INT_half,
+			F->identity_matrix(dat + nb_factors + f * M->elt_size_int_half,
 					dimension_of_matrix_group);
 		}
-		INT_vec_copy(dat, data + h * size, size);
+		int_vec_copy(dat, data + h * size, size);
 		h++;
 	}
 #endif
@@ -890,7 +890,7 @@ void wreath_product::make_strong_generators_data(INT *&data,
 		cout << "h != nb_gens" << endl;
 		exit(1);
 	}
-	FREE_INT(dat);
+	FREE_int(dat);
 	if (f_v) {
 		cout << "wreath_product::make_strong_generators_data done" << endl;
 	}

@@ -5,29 +5,29 @@
 
 #include "orbiter.h"
 
-void canonical_form(INT *Adj, INT *Adj2, INT n, INT nb_edges, INT *edges2, 
-	INT *labeling, action *&A, action *&A2, schreier *&Sch,
-	INT verbose_level);
+void canonical_form(int *Adj, int *Adj2, int n, int nb_edges, int *edges2, 
+	int *labeling, action *&A, action *&A2, schreier *&Sch,
+	int verbose_level);
 void make_graph_fname(char *fname_full,
-		char *fname_full_tex, INT n, INT *set, INT sz);
-void draw_graph_to_file(const char *fname, INT n,
-		INT *set, INT sz, double scale, INT f_embedded, INT f_sideways);
+		char *fname_full_tex, int n, int *set, int sz);
+void draw_graph_to_file(const char *fname, int n,
+		int *set, int sz, double scale, int f_embedded, int f_sideways);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n;
-	INT f_edges = FALSE;
-	INT edges[1000];
-	INT nb_edges = 0;
-	INT f_all = FALSE;
-	INT j, h;
-	INT f_scale = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n;
+	int f_edges = FALSE;
+	int edges[1000];
+	int nb_edges = 0;
+	int f_all = FALSE;
+	int j, h;
+	int f_scale = FALSE;
 	double scale = 0.04;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 				nb_edges++;
 				}
 			cout << "-edges ";
-			INT_vec_print(cout, edges, nb_edges);
+			int_vec_print(cout, edges, nb_edges);
 			cout << endl;
 			}
 		}
@@ -67,23 +67,23 @@ int main(int argc, char **argv)
 		cout << "Please use option -n <n>" << endl;
 		exit(1);
 		}
-	INT *Adj;
-	INT *Adj2;
-	INT *edges2;
-	INT *labeling;
-	INT e, n2;
+	int *Adj;
+	int *Adj2;
+	int *edges2;
+	int *labeling;
+	int e, n2;
 
 	n2 = (n * (n - 1)) >> 1;
 
-	Adj = NEW_INT(n * n);
-	Adj2 = NEW_INT(n * n);
-	edges2 = NEW_INT(n2);
-	labeling = NEW_INT(n);
+	Adj = NEW_int(n * n);
+	Adj2 = NEW_int(n * n);
+	edges2 = NEW_int(n2);
+	labeling = NEW_int(n);
 
 
 	if (f_edges) {
-		INT_vec_zero(Adj, n * n);
-		INT_vec_zero(Adj2, n * n);
+		int_vec_zero(Adj, n * n);
+		int_vec_zero(Adj2, n * n);
 		for (h = 0; h < nb_edges; h++) {
 			e = edges[h];
 			k2ij(e, i, j, n);
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 				edges2, labeling, A, A2, Sch, verbose_level);
 
 		cout << "canonical form: " << endl;
-		INT_vec_print(cout, edges2, nb_edges);
+		int_vec_print(cout, edges2, nb_edges);
 		cout << endl;
 
 		delete Sch;
@@ -107,9 +107,9 @@ int main(int argc, char **argv)
 		}
 
 	if (f_all) {
-		INT N, E;
-		INT *set;
-		INT sz;
+		int N, E;
+		int *set;
+		int sz;
 		char fname1_tex[1000];
 		char fname2_tex[1000];
 		char fname1[1000];
@@ -119,17 +119,17 @@ int main(int argc, char **argv)
 		{
 		ofstream fp(fname);
 
-		set = NEW_INT(n2);
+		set = NEW_int(n2);
 		N = i_power_j(2, n2);
 		fp << "\\begin{tabular}{|c|l|c|c|l|c|l|}" << endl;
 		fp << "\\hline" << endl;
 		for (E = 0; E < N; E++) {
 			//cout << "graph " << E << " / " << N << " : ";
 			fp << E << " & ";
-			INT_vec_zero(Adj, n * n);
-			INT_vec_zero(Adj2, n * n);
+			int_vec_zero(Adj, n * n);
+			int_vec_zero(Adj2, n * n);
 			unrank_subset(set, sz, n2, E);
-			INT_set_print_tex(fp, set, sz);
+			int_set_print_tex(fp, set, sz);
 
 			make_graph_fname(fname1, fname1_tex, n, set, sz);
 			draw_graph_to_file(fname1, n, set, sz,
@@ -148,7 +148,7 @@ int main(int argc, char **argv)
 			action *A;
 			action *A2;
 			schreier *Sch;
-			INT f, l, a;
+			int f, l, a;
 
 
 			canonical_form(Adj, Adj2, n, sz,
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 				}
 			fp << "]";
 			fp << " & ";
-			INT_set_print_tex(fp, edges2, sz);
+			int_set_print_tex(fp, edges2, sz);
 			make_graph_fname(fname2, fname2_tex, n, edges2, sz);
 			draw_graph_to_file(fname2, n,
 					edges2, sz, scale, f_embedded, f_sideways);
@@ -199,22 +199,22 @@ int main(int argc, char **argv)
 		cout << "written file " << fname << " of size "
 				<< file_size(fname) << endl;
 
-		FREE_INT(set);
+		FREE_int(set);
 		}
 
-	FREE_INT(Adj);
-	FREE_INT(Adj2);
-	FREE_INT(edges2);
-	FREE_INT(labeling);
+	FREE_int(Adj);
+	FREE_int(Adj2);
+	FREE_int(edges2);
+	FREE_int(labeling);
 }
 
-void canonical_form(INT *Adj, INT *Adj2,
-	INT n, INT nb_edges, INT *edges2,
-	INT *labeling, action *&A, action *&A2,
-	schreier *&Sch, INT verbose_level)
+void canonical_form(int *Adj, int *Adj2,
+	int n, int nb_edges, int *edges2,
+	int *labeling, action *&A, action *&A2,
+	schreier *&Sch, int verbose_level)
 {
 	//action *A;
-	INT i, j, ii, jj, e, nb_e;
+	int i, j, ii, jj, e, nb_e;
 	
 
 	A = create_automorphism_group_and_canonical_labeling_of_graph(
@@ -266,13 +266,13 @@ void canonical_form(INT *Adj, INT *Adj2,
 
 
 void make_graph_fname(char *fname_full,
-		char *fname_full_tex, INT n, INT *set, INT sz)
+		char *fname_full_tex, int n, int *set, int sz)
 {
-	INT i;
+	int i;
 	
-	sprintf(fname_full, "graph_%ld", n);
+	sprintf(fname_full, "graph_%d", n);
 	for (i = 0; i < sz; i++) {
-		sprintf(fname_full + strlen(fname_full), "_%ld", set[i]);
+		sprintf(fname_full + strlen(fname_full), "_%d", set[i]);
 		}
 	strcpy(fname_full_tex, fname_full);
 	sprintf(fname_full + strlen(fname_full), ".mp");
@@ -280,12 +280,12 @@ void make_graph_fname(char *fname_full,
 }
 
 void draw_graph_to_file(const char *fname,
-		INT n, INT *set, INT sz, double scale,
-		INT f_embedded, INT f_sideways)
+		int n, int *set, int sz, double scale,
+		int f_embedded, int f_sideways)
 {
-	INT x_min = 0, x_max = 1000000;
-	INT y_min = 0, y_max = 1000000;
-	INT x, y, dx, dy;
+	int x_min = 0, x_max = 1000000;
+	int y_min = 0, y_max = 1000000;
+	int x, y, dx, dy;
 
 	x = (x_max - x_min) >> 1;
 	y = (y_max - y_min) >> 1;

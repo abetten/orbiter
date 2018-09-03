@@ -26,7 +26,7 @@ void strong_generators::null()
 void strong_generators::freeself()
 {
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	if (gens) {
 		FREE_OBJECT(gens);
@@ -37,7 +37,7 @@ void strong_generators::freeself()
 void strong_generators::swap_with(strong_generators *SG)
 {
 	action *my_A;
-	INT *my_tl;
+	int *my_tl;
 	vector_ge *my_gens;
 
 	my_A = A;
@@ -59,9 +59,9 @@ void strong_generators::init(action *A)
 	init(A, 0);
 }
 
-void strong_generators::init(action *A, INT verbose_level)
+void strong_generators::init(action *A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::init" << endl;
@@ -72,16 +72,16 @@ void strong_generators::init(action *A, INT verbose_level)
 		}
 }
 
-void strong_generators::init_from_sims(sims *S, INT verbose_level)
+void strong_generators::init_from_sims(sims *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "strong_generators::init_from_sims" << endl;
 		}
 	A = S->A;
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	gens = NEW_OBJECT(vector_ge);
 	S->extract_strong_generators_in_order(*gens, tl,
 			0 /*verbose_level*/);
@@ -91,10 +91,10 @@ void strong_generators::init_from_sims(sims *S, INT verbose_level)
 }
 
 void strong_generators::init_from_ascii_coding(action *A,
-		char *ascii_coding, INT verbose_level)
+		char *ascii_coding, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
 	group *G;
 
@@ -141,19 +141,19 @@ strong_generators *strong_generators::create_copy()
 }
 
 void strong_generators::init_copy(strong_generators *S,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::init_copy" << endl;
 		}
 	A = S->A;
-	tl = NEW_INT(A->base_len);
-	//cout << "strong_generators::init_copy before INT_vec_copy" << endl;
-	INT_vec_copy(S->tl, tl, A->base_len);
+	tl = NEW_int(A->base_len);
+	//cout << "strong_generators::init_copy before int_vec_copy" << endl;
+	int_vec_copy(S->tl, tl, A->base_len);
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(S->gens->len);
@@ -168,16 +168,16 @@ void strong_generators::init_copy(strong_generators *S,
 }
 
 void strong_generators::init_by_hdl(action *A,
-		INT *gen_hdl, INT nb_gen, INT verbose_level)
+		int *gen_hdl, int nb_gen, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "strong_generators::init_by_hdl" << endl;
 		}
 	init(A, 0);
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	for (i = 0; i < A->base_len; i++) {
 		tl[i] = 1;
 		}
@@ -193,11 +193,11 @@ void strong_generators::init_by_hdl(action *A,
 }
 
 void strong_generators::init_from_permutation_representation(
-	action *A, INT *data,
-	INT nb_elements, INT group_order, 
-	INT verbose_level)
+	action *A, int *data,
+	int nb_elements, int group_order, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::init_from_permutation_"
@@ -213,13 +213,13 @@ void strong_generators::init_from_permutation_representation(
 	
 	sims *S;
 
-	S = create_sims_from_generators_with_target_group_order_INT(A, 
+	S = create_sims_from_generators_with_target_group_order_int(A, 
 		my_gens, group_order, 0 /* verbose_level */);
 	
 	init_from_sims(S, 0 /* verbose_level */);
 
-	//tl = NEW_INT(A->base_len);
-	//INT_vec_copy(transversal_length, tl, A->base_len);
+	//tl = NEW_int(A->base_len);
+	//int_vec_copy(transversal_length, tl, A->base_len);
 
 	FREE_OBJECT(my_gens);
 	if (f_v) {
@@ -229,11 +229,11 @@ void strong_generators::init_from_permutation_representation(
 		}
 }
 
-void strong_generators::init_from_data(action *A, INT *data, 
-	INT nb_elements, INT elt_size, INT *transversal_length, 
-	INT verbose_level)
+void strong_generators::init_from_data(action *A, int *data, 
+	int nb_elements, int elt_size, int *transversal_length, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data" << endl;
@@ -244,8 +244,8 @@ void strong_generators::init_from_data(action *A, INT *data,
 	gens->init_from_data(A, data, 
 		nb_elements, elt_size, verbose_level);
 	
-	tl = NEW_INT(A->base_len);
-	INT_vec_copy(transversal_length, tl, A->base_len);
+	tl = NEW_int(A->base_len);
+	int_vec_copy(transversal_length, tl, A->base_len);
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data done" << endl;
@@ -253,11 +253,11 @@ void strong_generators::init_from_data(action *A, INT *data,
 }
 
 void strong_generators::init_from_data_with_target_go_ascii(
-	action *A, INT *data,
-	INT nb_elements, INT elt_size, const char *ascii_target_go,
-	INT verbose_level)
+	action *A, int *data,
+	int nb_elements, int elt_size, const char *ascii_target_go,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object target_go;
 
 	if (f_v) {
@@ -276,13 +276,13 @@ void strong_generators::init_from_data_with_target_go_ascii(
 }
 
 void strong_generators::init_from_data_with_target_go(
-	action *A, INT *data_gens,
-	INT data_gens_size, INT nb_gens,
+	action *A, int *data_gens,
+	int data_gens_size, int nb_gens,
 	longinteger_object &target_go,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::init_from_data_"
@@ -338,7 +338,7 @@ void strong_generators::init_from_data_with_target_go(
 	gens = SG->gens;
 	SG->gens = NULL;
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	tl = SG->tl;
 	SG->tl = NULL;
@@ -354,18 +354,18 @@ void strong_generators::init_from_data_with_target_go(
 void
 strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 	schreier *Sch,
-	INT pt, INT &orbit_idx, longinteger_object &full_group_order,
-	INT verbose_level)
+	int pt, int &orbit_idx, longinteger_object &full_group_order,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int *Elt;
 	strong_generators *SG0;
 	
 	if (f_v) {
 		cout << "strong_generators::init_point_stabilizer_of_arbitrary_"
 				"point_through_schreier" << endl;
 		}
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	Sch->transporter_from_point_to_orbit_rep(pt, orbit_idx, Elt,
 			0 /* verbose_level */);
 
@@ -377,7 +377,7 @@ strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 	init_generators_for_the_conjugate_group_aGav(SG0, Elt, 0 /* verbose_level */);
 	
 	FREE_OBJECT(SG0);
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	if (f_v) {
 		cout << "strong_generators::init_point_stabilizer_of_arbitrary_"
 				"point_through_schreier done" << endl;
@@ -386,10 +386,10 @@ strong_generators::init_point_stabilizer_of_arbitrary_point_through_schreier(
 
 void strong_generators::init_point_stabilizer_orbit_rep_schreier(
 	schreier *Sch,
-	INT orbit_idx, longinteger_object &full_group_order,
-	INT verbose_level)
+	int orbit_idx, longinteger_object &full_group_order,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *Stab;
 	
 	if (f_v) {
@@ -407,12 +407,12 @@ void strong_generators::init_point_stabilizer_orbit_rep_schreier(
 }
 
 void strong_generators::init_generators_for_the_conjugate_group_avGa(
-		strong_generators *SG, INT *Elt_a, INT verbose_level)
+		strong_generators *SG, int *Elt_a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
 	longinteger_object go;
-	//INT i;	
+	//int i;	
 	
 	if (f_v) {
 		cout << "strong_generators::init_generators_for_the_"
@@ -456,12 +456,12 @@ void strong_generators::init_generators_for_the_conjugate_group_avGa(
 }
 
 void strong_generators::init_generators_for_the_conjugate_group_aGav(
-		strong_generators *SG, INT *Elt_a, INT verbose_level)
+		strong_generators *SG, int *Elt_a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
 	longinteger_object go;
-	//INT i;	
+	//int i;	
 	
 	if (f_v) {
 		cout << "strong_generators::init_generators_for_the_"
@@ -517,12 +517,12 @@ void strong_generators::init_generators_for_the_conjugate_group_aGav(
 }
 
 void strong_generators::init_transposed_group(
-		strong_generators *SG, INT verbose_level)
+		strong_generators *SG, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	vector_ge *gens;
 	longinteger_object go;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "strong_generators::init_transposed_group" << endl;
@@ -565,11 +565,11 @@ void strong_generators::init_transposed_group(
 }
 
 void strong_generators::init_group_extension(
-	strong_generators *subgroup, INT *data, INT index,
-	INT verbose_level)
+	strong_generators *subgroup, int *data, int index,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	longinteger_object target_go;
 	longinteger_domain D;
 
@@ -580,7 +580,7 @@ void strong_generators::init_group_extension(
 	A = subgroup->A;
 
 	vector_ge *my_gens;
-	INT nb_gens;
+	int nb_gens;
 
 	my_gens = NEW_OBJECT(vector_ge);
 	my_gens->init(A);
@@ -623,7 +623,7 @@ void strong_generators::init_group_extension(
 	gens = SG->gens;
 	SG->gens = NULL;
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	tl = SG->tl;
 	SG->tl = NULL;
@@ -637,11 +637,11 @@ void strong_generators::init_group_extension(
 
 void strong_generators::init_group_extension(
 	strong_generators *subgroup,
-	vector_ge *new_gens, INT index,
-	INT verbose_level)
+	vector_ge *new_gens, int index,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	longinteger_object target_go;
 	longinteger_domain D;
 
@@ -652,7 +652,7 @@ void strong_generators::init_group_extension(
 	A = subgroup->A;
 
 	vector_ge *my_gens;
-	INT nb_gens, nb_new_gens;
+	int nb_gens, nb_new_gens;
 
 	my_gens = NEW_OBJECT(vector_ge);
 	my_gens->init(A);
@@ -712,7 +712,7 @@ void strong_generators::init_group_extension(
 	gens = SG->gens;
 	SG->gens = NULL;
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	tl = SG->tl;
 	SG->tl = NULL;
@@ -728,10 +728,10 @@ void strong_generators::init_group_extension(
 void strong_generators::switch_to_subgroup(
 	const char *rank_vector_text,
 	const char *subgroup_order_text, sims *S,
-	INT *&subgroup_gens_idx, INT &nb_subgroup_gens,
-	INT verbose_level)
+	int *&subgroup_gens_idx, int &nb_subgroup_gens,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object target_go;
 
 	if (f_v) {
@@ -744,11 +744,11 @@ void strong_generators::switch_to_subgroup(
 	//S = create_sims(0 /* verbose_level */);
 	
 
-	INT_vec_scan(rank_vector_text, subgroup_gens_idx, nb_subgroup_gens);
+	int_vec_scan(rank_vector_text, subgroup_gens_idx, nb_subgroup_gens);
 	if (f_v) {
 		cout << "strong_generators::switch_to_subgroup "
 				"after scanning: ";
-		INT_vec_print(cout, subgroup_gens_idx, nb_subgroup_gens);
+		int_vec_print(cout, subgroup_gens_idx, nb_subgroup_gens);
 		cout << endl;
 		}
 
@@ -793,7 +793,7 @@ void strong_generators::switch_to_subgroup(
 	gens = SG->gens;
 	SG->gens = NULL;
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	tl = SG->tl;
 	SG->tl = NULL;
@@ -806,12 +806,12 @@ void strong_generators::switch_to_subgroup(
 }
 
 void strong_generators::init_subgroup(action *A,
-	INT *subgroup_gens_idx, INT nb_subgroup_gens,
+	int *subgroup_gens_idx, int nb_subgroup_gens,
 	const char *subgroup_order_text, 
 	sims *S, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object target_go;
 
 	if (f_v) {
@@ -861,7 +861,7 @@ void strong_generators::init_subgroup(action *A,
 	gens = SG->gens;
 	SG->gens = NULL;
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	tl = SG->tl;
 	SG->tl = NULL;
@@ -874,9 +874,9 @@ void strong_generators::init_subgroup(action *A,
 }
 
 
-sims *strong_generators::create_sims(INT verbose_level)
+sims *strong_generators::create_sims(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *S;
 
 
@@ -899,9 +899,9 @@ sims *strong_generators::create_sims(INT verbose_level)
 }
 
 sims *strong_generators::create_sims_in_different_action(
-		action *A_given, INT verbose_level)
+		action *A_given, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *S;
 
 
@@ -927,16 +927,16 @@ sims *strong_generators::create_sims_in_different_action(
 }
 
 void strong_generators::add_generators(
-		vector_ge *coset_reps, INT group_index,
-		INT verbose_level)
+		vector_ge *coset_reps, int group_index,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	sims *S;
 	vector_ge *gens1; 
-	INT *tl1;
-	INT *coset_reps_vec;
-	INT i;
+	int *tl1;
+	int *coset_reps_vec;
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::add_generators" << endl;
@@ -947,14 +947,14 @@ void strong_generators::add_generators(
 		A->print_info();
 		}
 
-	coset_reps_vec = NEW_INT(group_index * A->elt_size_in_INT);
+	coset_reps_vec = NEW_int(group_index * A->elt_size_in_int);
 	for (i = 0; i < group_index; i++) {
 		A->element_move(coset_reps->ith(i),
-				coset_reps_vec + i * A->elt_size_in_INT, 0);
+				coset_reps_vec + i * A->elt_size_in_int, 0);
 		}
 
 	gens1 = NEW_OBJECT(vector_ge);
-	tl1 = NEW_INT(A->base_len);
+	tl1 = NEW_int(A->base_len);
 	
 	S = create_sims(verbose_level - 1);
 
@@ -963,13 +963,13 @@ void strong_generators::add_generators(
 		*gens1, tl1, 
 		verbose_level - 2);
 
-	FREE_INT(coset_reps_vec);
+	FREE_int(coset_reps_vec);
 
 	if (gens) {
 		FREE_OBJECT(gens);
 		}
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	gens = gens1;
 	tl = tl1;
@@ -981,12 +981,12 @@ void strong_generators::add_generators(
 }
 
 void strong_generators::add_single_generator(
-		INT *Elt, INT group_index, INT verbose_level)
+		int *Elt, int group_index, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *S;
 	vector_ge *gens1; 
-	INT *tl1;
+	int *tl1;
 
 	if (f_v) {
 		cout << "strong_generators::add_single_generator" << endl;
@@ -995,7 +995,7 @@ void strong_generators::add_single_generator(
 		}
 
 	gens1 = NEW_OBJECT(vector_ge);
-	tl1 = NEW_INT(A->base_len);
+	tl1 = NEW_int(A->base_len);
 	
 	S = create_sims(verbose_level - 1);
 
@@ -1008,7 +1008,7 @@ void strong_generators::add_single_generator(
 		FREE_OBJECT(gens);
 		}
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		}
 	gens = gens1;
 	tl = tl1;
@@ -1027,24 +1027,24 @@ void strong_generators::group_order(longinteger_object &go)
 	D.multiply_up(go, tl, A->base_len);
 }
 
-INT strong_generators::group_order_as_INT()
+int strong_generators::group_order_as_int()
 {
 	longinteger_domain D;
 	longinteger_object go;
 
 	D.multiply_up(go, tl, A->base_len);
-	return go.as_INT();
+	return go.as_int();
 }
 
 void strong_generators::print_generators()
 {
-	INT i;
+	int i;
 	longinteger_object go;
 
 	group_order(go);
 	cout << "Strong generators for a group of order "
 			<< go << " tl=";
-	INT_vec_print(cout, tl, A->base_len);
+	int_vec_print(cout, tl, A->base_len);
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / "
@@ -1056,12 +1056,12 @@ void strong_generators::print_generators()
 
 void strong_generators::print_generators_ost(ostream &ost)
 {
-	INT i;
+	int i;
 	longinteger_object go;
 
 	group_order(go);
 	ost << "Strong generators for a group of order " << go << " tl=";
-	INT_vec_print(ost, tl, A->base_len);
+	int_vec_print(ost, tl, A->base_len);
 	ost << endl;
 	for (i = 0; i < gens->len; i++) {
 		ost << "Generator " << i << " / "
@@ -1073,13 +1073,13 @@ void strong_generators::print_generators_ost(ostream &ost)
 
 void strong_generators::print_generators_in_source_code()
 {
-	INT i;
+	int i;
 	longinteger_object go;
 
 	group_order(go);
 	cout << "Strong generators for a group of "
 			"order " << go << " tl=";
-	INT_vec_print(cout, tl, A->base_len);
+	int_vec_print(cout, tl, A->base_len);
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / "
@@ -1092,7 +1092,7 @@ void strong_generators::print_generators_in_source_code()
 void strong_generators::print_generators_in_source_code_to_file(
 		const char *fname)
 {
-	INT i;
+	int i;
 	longinteger_object go;
 
 	{
@@ -1112,12 +1112,12 @@ void strong_generators::print_generators_in_source_code_to_file(
 
 void strong_generators::print_generators_even_odd()
 {
-	INT i, sgn;
+	int i, sgn;
 	longinteger_object go;
 
 	group_order(go);
 	cout << "Strong generators for a group of order " << go << " tl=";
-	INT_vec_print(cout, tl, A->base_len);
+	int_vec_print(cout, tl, A->base_len);
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / " << gens->len << " is:" << endl;
@@ -1131,7 +1131,7 @@ void strong_generators::print_generators_even_odd()
 
 void strong_generators::print_generators_MAGMA(action *A, ostream &ost)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < gens->len; i++) {
 		//cout << "Generator " << i << " / "
@@ -1155,7 +1155,7 @@ void strong_generators::print_generators_tex()
 
 void strong_generators::print_generators_tex(ostream &ost)
 {
-	INT i;
+	int i;
 	longinteger_object go;
 
 	group_order(go);
@@ -1175,7 +1175,7 @@ void strong_generators::print_generators_tex(ostream &ost)
 
 void strong_generators::print_generators_as_permutations()
 {
-	INT i;
+	int i;
 	longinteger_object go;
 
 	group_order(go);
@@ -1193,7 +1193,7 @@ void strong_generators::print_generators_as_permutations()
 void strong_generators::print_with_given_action(
 		ostream &ost, action *A2)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < gens->len; i++) {
 		cout << "Generator " << i << " / "
@@ -1206,48 +1206,48 @@ void strong_generators::print_with_given_action(
 
 void strong_generators::print_elements_ost(ostream &ost)
 {
-	INT i;
+	int i;
 	longinteger_object go;
 	sims *S;
-	INT *Elt;
+	int *Elt;
 
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	INT_vec_print(ost, tl, A->base_len);
+	int_vec_print(ost, tl, A->base_len);
 	ost << "\\\\" << endl;
-	for (i = 0; i < go.as_INT(); i++) {
-		S->element_unrank_INT(i, Elt, 0 /* verbose_level */);
+	for (i = 0; i < go.as_int(); i++) {
+		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
 		A->element_print_latex(Elt, ost);
 		ost << "$$" << endl;
 		}
 	FREE_OBJECT(S);
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void strong_generators::print_elements_latex_ost(ostream &ost)
 {
-	INT i, order, m;
+	int i, order, m;
 	longinteger_object go;
 	sims *S;
-	INT *Elt;
+	int *Elt;
 
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	S = create_sims(0 /*verbose_level */);
 	ost << "Group elements for a group of order " << go << " tl=";
-	INT_vec_print(ost, tl, A->base_len);
+	int_vec_print(ost, tl, A->base_len);
 	ost << "\\\\" << endl;
-	m = MINIMUM(go.as_INT(), 100);
-	if (m < go.as_INT()) {
+	m = MINIMUM(go.as_int(), 100);
+	if (m < go.as_int()) {
 		ost << "We will only list the first " << m
 				<< " elements:\\\\" << endl;
 		}
 	for (i = 0; i < m; i++) {
-		S->element_unrank_INT(i, Elt, 0 /* verbose_level */);
+		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
 		order = A->element_order(Elt);
 		ost << "Element " << i << " / " << go << " is:" << endl;
 		ost << "$$" << endl;
@@ -1256,13 +1256,13 @@ void strong_generators::print_elements_latex_ost(ostream &ost)
 		ost << "The element has order " << order << ".\\\\" << endl;
 		}
 	FREE_OBJECT(S);
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void strong_generators::create_group_table(
-		INT *&Table, INT &go, INT verbose_level)
+		int *&Table, int &go, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *S;
 
 	if (f_v) {
@@ -1278,41 +1278,41 @@ void strong_generators::create_group_table(
 
 void strong_generators::list_of_elements_of_subgroup(
 	strong_generators *gens_subgroup,
-	INT *&Subgroup_elements_by_index, INT &sz_subgroup, INT verbose_level)
+	int *&Subgroup_elements_by_index, int &sz_subgroup, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int i, a;
 	longinteger_object go;
 	sims *S;
 	sims *U;
-	INT *Elt;
+	int *Elt;
 
 	if (f_v) {
 		cout << "strong_generators::list_of_elements_of_subgroup" << endl;
 		}
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	S = create_sims(0 /*verbose_level */);
 	U = gens_subgroup->create_sims(0 /*verbose_level */);
 	U->group_order(go);
-	sz_subgroup = go.as_INT();
-	Subgroup_elements_by_index = NEW_INT(go.as_INT());
+	sz_subgroup = go.as_int();
+	Subgroup_elements_by_index = NEW_int(go.as_int());
 	for (i = 0; i < sz_subgroup; i++) {
-		U->element_unrank_INT(i, Elt, 0 /* verbose_level */);
-		a = S->element_rank_INT(Elt);
+		U->element_unrank_int(i, Elt, 0 /* verbose_level */);
+		a = S->element_rank_int(Elt);
 		Subgroup_elements_by_index[i] = a;
 		}
 	FREE_OBJECT(S);
 	FREE_OBJECT(U);
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	if (f_v) {
 		cout << "strong_generators::list_of_elements_of_subgroup done" << endl;
 		}
 }
 
 void strong_generators::compute_schreier_with_given_action(
-		action *A_given, schreier *&Sch, INT verbose_level)
+		action *A_given, schreier *&Sch, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::compute_schreier_"
@@ -1336,10 +1336,10 @@ void strong_generators::compute_schreier_with_given_action(
 }
 
 void strong_generators::compute_schreier_with_given_action_on_a_given_set(
-		action *A_given, schreier *&Sch, INT *set, INT len,
-		INT verbose_level)
+		action *A_given, schreier *&Sch, int *set, int len,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::compute_schreier_with_"
@@ -1364,12 +1364,12 @@ void strong_generators::compute_schreier_with_given_action_on_a_given_set(
 		}
 }
 
-void strong_generators::orbits_on_points(INT &nb_orbits,
-		INT *&orbit_reps, INT verbose_level)
+void strong_generators::orbits_on_points(int &nb_orbits,
+		int *&orbit_reps, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier *Sch;
-	INT i, f, a;
+	int i, f, a;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points" << endl;
@@ -1381,7 +1381,7 @@ void strong_generators::orbits_on_points(INT &nb_orbits,
 
 
 	nb_orbits = Sch->nb_orbits;
-	orbit_reps = NEW_INT(nb_orbits);
+	orbit_reps = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		f = Sch->orbit_first[i];
 		a = Sch->orbit[f];
@@ -1397,12 +1397,12 @@ void strong_generators::orbits_on_points(INT &nb_orbits,
 }
 
 void strong_generators::orbits_on_points_with_given_action(
-		action *A_given, INT &nb_orbits, INT *&orbit_reps,
-		INT verbose_level)
+		action *A_given, int &nb_orbits, int *&orbit_reps,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier *Sch;
-	INT i, f, a;
+	int i, f, a;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_on_points_with_"
@@ -1413,7 +1413,7 @@ void strong_generators::orbits_on_points_with_given_action(
 	compute_schreier_with_given_action(A_given, Sch, verbose_level - 1);
 
 	nb_orbits = Sch->nb_orbits;
-	orbit_reps = NEW_INT(nb_orbits);
+	orbit_reps = NEW_int(nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		f = Sch->orbit_first[i];
 		a = Sch->orbit[f];
@@ -1430,9 +1430,9 @@ void strong_generators::orbits_on_points_with_given_action(
 }
 
 schreier *strong_generators::orbits_on_points_schreier(
-		action *A_given, INT verbose_level)
+		action *A_given, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier *Sch;
 	longinteger_object go;
 
@@ -1468,9 +1468,9 @@ schreier *strong_generators::orbits_on_points_schreier(
 }
 
 schreier *strong_generators::orbit_of_one_point_schreier(
-		action *A_given, INT pt, INT verbose_level)
+		action *A_given, int pt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier *Sch;
 
 	if (f_v) {
@@ -1494,23 +1494,23 @@ schreier *strong_generators::orbit_of_one_point_schreier(
 }
 
 void strong_generators::orbits_light(action *A_given, 
-	INT *&Orbit_reps, INT *&Orbit_lengths, INT &nb_orbits, 
-	INT **&Pts_per_generator, INT *&Nb_per_generator, 
-	INT verbose_level)
+	int *&Orbit_reps, int *&Orbit_lengths, int &nb_orbits, 
+	int **&Pts_per_generator, int *&Nb_per_generator, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);	
-	INT f_vv = FALSE; //(verbose_level >= 2);	
+	int f_v = (verbose_level >= 1);	
+	int f_vv = FALSE; //(verbose_level >= 2);	
 	uchar *reached;
-	INT Orbit_allocated;
-	INT Orbit_len;
-	INT *Orbit;
-	INT *Q;
-	INT Q_allocated;
-	INT Q_len;
-	INT pt, i = 0, h, nb_gens, a, b, idx;
-	INT Orbit_reps_allocated;
-	INT nb_reached;
-	INT *Generator_idx;
+	int Orbit_allocated;
+	int Orbit_len;
+	int *Orbit;
+	int *Q;
+	int Q_allocated;
+	int Q_len;
+	int pt, i = 0, h, nb_gens, a, b, idx;
+	int Orbit_reps_allocated;
+	int nb_reached;
+	int *Generator_idx;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_light "
@@ -1518,15 +1518,15 @@ void strong_generators::orbits_light(action *A_given,
 		}
 
 	Orbit_reps_allocated = 1024;
-	Orbit_reps = NEW_INT(Orbit_reps_allocated);
-	Orbit_lengths = NEW_INT(Orbit_reps_allocated);
+	Orbit_reps = NEW_int(Orbit_reps_allocated);
+	Orbit_lengths = NEW_int(Orbit_reps_allocated);
 	nb_orbits = 0;
 
 	if (f_v) {
 		cout << "strong_generators::orbits_light "
 				"allocating array Generator_idx" << endl;
 		}
-	Generator_idx = NEW_INT(A_given->degree);
+	Generator_idx = NEW_int(A_given->degree);
 	if (f_v) {
 		cout << "strong_generators::orbits_light "
 				"allocating array Generator_idx done" << endl;
@@ -1538,10 +1538,10 @@ void strong_generators::orbits_light(action *A_given,
 	nb_reached = 0;
 
 	Orbit_allocated = 1024;
-	Orbit = NEW_INT(Orbit_allocated);
+	Orbit = NEW_int(Orbit_allocated);
 
 	Q_allocated = 1024;
-	Q = NEW_INT(Q_allocated);
+	Q = NEW_int(Q_allocated);
 	
 	nb_gens = gens->len;
 
@@ -1549,9 +1549,9 @@ void strong_generators::orbits_light(action *A_given,
 		f_v = TRUE;
 		}
 
-	Nb_per_generator = NEW_INT(nb_gens);
-	INT_vec_zero(Nb_per_generator, nb_gens);
-	Pts_per_generator = NEW_PINT(nb_gens);
+	Nb_per_generator = NEW_int(nb_gens);
+	int_vec_zero(Nb_per_generator, nb_gens);
+	Pts_per_generator = NEW_pint(nb_gens);
 
 	for (pt = 0; pt < A_given->degree; pt++) {
 		if (bitvector_s_i(reached, pt)) {
@@ -1592,17 +1592,17 @@ void strong_generators::orbits_light(action *A_given,
 							"under generator " << h
 							<< " it maps to " << b << endl;
 					}
-				if (!INT_vec_search(Orbit, Orbit_len, b, idx)) {
+				if (!int_vec_search(Orbit, Orbit_len, b, idx)) {
 					if (Orbit_len == Orbit_allocated) {
-						INT new_oa;
-						INT *O;
+						int new_oa;
+						int *O;
 
 						new_oa = 2 * Orbit_allocated;
-						O = NEW_INT(new_oa);
+						O = NEW_int(new_oa);
 						for (i = 0; i < Orbit_len; i++) {
 							O[i] = Orbit[i];
 							}
-						FREE_INT(Orbit);
+						FREE_int(Orbit);
 						Orbit = O;
 						Orbit_allocated = new_oa;
 						}
@@ -1616,7 +1616,7 @@ void strong_generators::orbits_light(action *A_given,
 
 					if (f_vv) {
 						cout << "current orbit: ";
-						INT_vec_print(cout, Orbit, Orbit_len);
+						int_vec_print(cout, Orbit, Orbit_len);
 						cout << endl;
 						}
 
@@ -1629,15 +1629,15 @@ void strong_generators::orbits_light(action *A_given,
 						}
 
 					if (Q_len == Q_allocated) {
-						INT new_qa;
-						INT *new_Q;
+						int new_qa;
+						int *new_Q;
 
 						new_qa = 2 * Q_allocated;
-						new_Q = NEW_INT(new_qa);
+						new_Q = NEW_int(new_qa);
 						for (i = 0; i < Q_len; i++) {
 							new_Q[i] = Q[i];
 							}
-						FREE_INT(Q);
+						FREE_int(Q);
 						Q = new_Q;
 						Q_allocated = new_qa;
 						}
@@ -1646,7 +1646,7 @@ void strong_generators::orbits_light(action *A_given,
 
 					if (f_vv) {
 						cout << "current Queue: ";
-						INT_vec_print(cout, Q, Q_len);
+						int_vec_print(cout, Q, Q_len);
 						cout << endl;
 						}
 
@@ -1659,19 +1659,19 @@ void strong_generators::orbits_light(action *A_given,
 					<< Orbit_len << endl;
 			}
 		if (nb_orbits == Orbit_reps_allocated) {
-			INT an;
-			INT *R;
-			INT *L;
+			int an;
+			int *R;
+			int *L;
 
 			an = 2 * Orbit_reps_allocated;
-			R = NEW_INT(an);
-			L = NEW_INT(an);
+			R = NEW_int(an);
+			L = NEW_int(an);
 			for (i = 0; i < nb_orbits; i++) {
 				R[i] = Orbit_reps[i];
 				L[i] = Orbit_lengths[i];
 				}
-			FREE_INT(Orbit_reps);
-			FREE_INT(Orbit_lengths);
+			FREE_int(Orbit_reps);
+			FREE_int(Orbit_lengths);
 			Orbit_reps = R;
 			Orbit_lengths = L;
 			Orbit_reps_allocated = an;
@@ -1696,10 +1696,10 @@ void strong_generators::orbits_light(action *A_given,
 				"Pts_per_generator" << endl;
 		}
 	for (i = 0; i < nb_gens; i++) { 
-		INT *v;
-		INT j;
+		int *v;
+		int j;
 
-		v = NEW_INT(Nb_per_generator[i]);
+		v = NEW_int(Nb_per_generator[i]);
 		j = 0;
 		for (pt = 0; pt < A_given->degree; pt++) {
 			if (Generator_idx[pt] == i) {
@@ -1715,11 +1715,11 @@ void strong_generators::orbits_light(action *A_given,
 		Pts_per_generator[i] = v;
 		}
 
-	FREE_INT(Orbit);
-	FREE_INT(Q);
+	FREE_int(Orbit);
+	FREE_int(Q);
 	FREE_uchar(reached);
-	FREE_INT(Generator_idx);
-	//FREE_INT(Nb_per_generator);
+	FREE_int(Generator_idx);
+	//FREE_int(Nb_per_generator);
 	if (f_v) {
 		cout << "strong_generators::orbits_light degree = "
 				<< A_given->degree << " we found "
@@ -1728,10 +1728,10 @@ void strong_generators::orbits_light(action *A_given,
 }
 
 void strong_generators::write_to_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::write_to_memory_object" << endl;
@@ -1747,10 +1747,10 @@ void strong_generators::write_to_memory_object(
 }
 
 void strong_generators::read_from_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, l;
+	int f_v = (verbose_level >= 1);
+	int i, l;
 
 	if (f_v) {
 		cout << "strong_generators::read_from_memory_object" << endl;
@@ -1763,7 +1763,7 @@ void strong_generators::read_from_memory_object(
 		cout << "strong_generators::read_from_memory_object "
 				"l != A->base_len" << endl;
 		}
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	for (i = 0; i < A->base_len; i++) {
@@ -1772,7 +1772,7 @@ void strong_generators::read_from_memory_object(
 
 	if (f_v) {
 		cout << "strong_generators::read_from_memory_object tl=";
-		INT_vec_print(cout, tl, A->base_len);
+		int_vec_print(cout, tl, A->base_len);
 		cout << endl;
 		}
 	
@@ -1783,10 +1783,10 @@ void strong_generators::read_from_memory_object(
 }
 
 void strong_generators::write_to_file_binary(
-		ofstream &fp, INT verbose_level)
+		ofstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::write_to_file_binary" << endl;
@@ -1801,7 +1801,7 @@ void strong_generators::write_to_file_binary(
 		cout << "strong_generators::write_to_file_binary "
 				"A->base_len=" << A->base_len << endl;
 		}
-	fp.write((char *) &A->base_len, sizeof(INT));
+	fp.write((char *) &A->base_len, sizeof(int));
 
 	if (tl == NULL) {
 		cout << "strong_generators::write_to_file_binary tl == NULL" << endl;
@@ -1812,7 +1812,7 @@ void strong_generators::write_to_file_binary(
 			cout << "strong_generators::write_to_file_binary "
 					"before writing tl[" << i << "]" << endl;
 			}
-		fp.write((char *) &tl[i], sizeof(INT));
+		fp.write((char *) &tl[i], sizeof(int));
 		}
 	if (f_v) {
 		cout << "strong_generators::write_to_file_binary "
@@ -1829,24 +1829,24 @@ void strong_generators::write_to_file_binary(
 }
 
 void strong_generators::read_from_file_binary(
-		action *A, ifstream &fp, INT verbose_level)
+		action *A, ifstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, l;
+	int f_v = (verbose_level >= 1);
+	int i, l;
 
 	if (f_v) {
 		cout << "strong_generators::read_from_file_binary" << endl;
 		}
 	init(A, 0);
-	fp.read((char *) &l, sizeof(INT));
+	fp.read((char *) &l, sizeof(int));
 	if (l != A->base_len) {
 		cout << "strong_generators::read_from_file_binary "
 				"l != A->base_len" << endl;
 		exit(1);
 		}
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	for (i = 0; i < A->base_len; i++) {
-		fp.read((char *) &tl[i], sizeof(INT));
+		fp.read((char *) &tl[i], sizeof(int));
 		}
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
@@ -1856,9 +1856,9 @@ void strong_generators::read_from_file_binary(
 		}
 }
 
-void strong_generators::write_file(const char *fname, INT verbose_level)
+void strong_generators::write_file(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object M;
 	
 	if (f_v) {
@@ -1875,9 +1875,9 @@ void strong_generators::write_file(const char *fname, INT verbose_level)
 }
 
 void strong_generators::read_file(action *A,
-		const char *fname, INT verbose_level)
+		const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object M;
 	
 	if (f_v) {
@@ -1899,18 +1899,18 @@ void strong_generators::read_file(action *A,
 }
 
 void strong_generators::generators_for_shallow_schreier_tree(
-		char *label, vector_ge *chosen_gens, INT verbose_level)
+		char *label, vector_ge *chosen_gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *AR;
 	sims *S;
-	INT go;
+	int go;
 	double avg;
 	double log_go;
-	INT cnt = 0;
-	INT i;
+	int cnt = 0;
+	int i;
 	
-	go = group_order_as_INT();
+	go = group_order_as_int();
 	log_go = log(go);
 	if (f_v) {
 		cout << "strong_generators::generators_for_shallow_"
@@ -1959,12 +1959,12 @@ void strong_generators::generators_for_shallow_schreier_tree(
 			exit(1);
 			}
 		char label1[1000];
-		INT xmax = 1000000;
-		INT ymax = 1000000;
-		INT f_circletext = TRUE;
-		INT rad = 3000;
+		int xmax = 1000000;
+		int ymax = 1000000;
+		int f_circletext = TRUE;
+		int rad = 3000;
 
-		sprintf(label1, "%s_%ld", label, cnt);
+		sprintf(label1, "%s_%d", label, cnt);
 		Sch->draw_tree(label1, 0 /* orbit_no */,
 			xmax, ymax, f_circletext, rad,
 			TRUE /* f_embedded */, FALSE /* f_sideways */, 
@@ -1973,10 +1973,10 @@ void strong_generators::generators_for_shallow_schreier_tree(
 			0 /* verbose_level */);
 
 		
-		INT *Depth;
-		INT avgi, f, /*l,*/ idx;
+		int *Depth;
+		int avgi, f, /*l,*/ idx;
 
-		Depth = NEW_INT(Sch->A->degree);
+		Depth = NEW_int(Sch->A->degree);
 		for (i = 0; i < Sch->A->degree; i++) {
 			Depth[i] = Sch->depth_in_tree(i);
 			}
@@ -2002,9 +2002,9 @@ void strong_generators::generators_for_shallow_schreier_tree(
 			break;
 			}
 
-		avgi = (INT) avg;
+		avgi = (int) avg;
 		if (f_v) {
-			cout << "average as INT = " << avgi << endl;
+			cout << "average as int = " << avgi << endl;
 			}
 		f = 0;
 		for (i = 0; i < Cl.nb_types; i++) {
@@ -2029,7 +2029,7 @@ void strong_generators::generators_for_shallow_schreier_tree(
 		chosen_gens->append(Sch->cosetrep);
 		
 
-		FREE_INT(Depth);
+		FREE_int(Depth);
 		FREE_OBJECT(Sch);
 		cnt++;
 		}
@@ -2043,27 +2043,27 @@ void strong_generators::generators_for_shallow_schreier_tree(
 
 
 void strong_generators::compute_ascii_coding(
-		char *&ascii_coding, INT verbose_level)
+		char *&ascii_coding, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT sz, i, j;
+	int f_v = (verbose_level >= 1);
+	int sz, i, j;
 	char *p;
 
 	if (f_v) {
 		cout << "strong_generators::compute_ascii_coding" << endl;
 		}
-	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(INT4) +
+	sz = 2 * ((2 + A->base_len + A->base_len) * sizeof(int4) +
 			A->coded_elt_size_in_char * gens->len) + 1;
 	ascii_coding = NEW_char(sz);
 	p = ascii_coding;
-	code_INT4(p, (INT4) A->base_len);
+	code_int4(p, (int4) A->base_len);
 		// in GALOIS/util.C
-	code_INT4(p, (INT4) gens->len);
+	code_int4(p, (int4) gens->len);
 	for (i = 0; i < A->base_len; i++) {
-		code_INT4(p, (INT4) A->base[i]);
+		code_int4(p, (int4) A->base[i]);
 		}
 	for (i = 0; i < A->base_len; i++) {
-		code_INT4(p, (INT4) tl[i]);
+		code_int4(p, (int4) tl[i]);
 		}
 	for (i = 0; i < gens->len; i++) {
 		A->element_pack(gens->ith(i), A->elt1, FALSE);
@@ -2086,13 +2086,13 @@ void strong_generators::compute_ascii_coding(
 }
 
 void strong_generators::decode_ascii_coding(
-		char *ascii_coding, INT verbose_level)
+		char *ascii_coding, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT str_len, len, nbsg, i, j;
+	int f_v = (verbose_level >= 1);
+	int str_len, len, nbsg, i, j;
 	char *p, *p0;
 	action *A_save;
-	INT *base1;
+	int *base1;
 
 	if (f_v) {
 		cout << "strong_generators::decode_ascii_coding" << endl;
@@ -2106,8 +2106,8 @@ void strong_generators::decode_ascii_coding(
 	p = ascii_coding;
 	p0 = p;
 	str_len = strlen(ascii_coding);
-	len = decode_INT4(p);
-	nbsg = decode_INT4(p);
+	len = decode_int4(p);
+	nbsg = decode_int4(p);
 	if (len != A->base_len) {
 		cout << "strong_generators::decode_ascii_coding "
 				"len != A->base_len" << endl;
@@ -2119,10 +2119,10 @@ void strong_generators::decode_ascii_coding(
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(nbsg);
-	base1 = NEW_INT(A->base_len);
-	tl = NEW_INT(A->base_len);
+	base1 = NEW_int(A->base_len);
+	tl = NEW_int(A->base_len);
 	for (i = 0; i < A->base_len; i++) {
-		base1[i] = decode_INT4(p);
+		base1[i] = decode_int4(p);
 		}
 	for (i = 0; i < A->base_len; i++) {
 		if (base1[i] != A->base[i]) {
@@ -2133,7 +2133,7 @@ void strong_generators::decode_ascii_coding(
 			}
 		}
 	for (i = 0; i < A->base_len; i++) {
-		tl[i] = decode_INT4(p);
+		tl[i] = decode_int4(p);
 		}
 	for (i = 0; i < nbsg; i++) {
 		for (j = 0; j < A->coded_elt_size_in_char; j++) {
@@ -2141,7 +2141,7 @@ void strong_generators::decode_ascii_coding(
 			}
 		A->element_unpack(A->elt1, gens->ith(i), FALSE);
 		}
-	FREE_INT(base1);
+	FREE_int(base1);
 	if (p - p0 != str_len) {
 		cout << "strong_generators::decode_ascii_coding "
 				"p - p0 != str_len" << endl;
@@ -2155,10 +2155,10 @@ void strong_generators::decode_ascii_coding(
 }
 
 void strong_generators::export_permutation_group_to_magma(
-		const char *fname, INT verbose_level)
+		const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::export_permutation_"
@@ -2193,11 +2193,11 @@ void strong_generators::export_permutation_group_to_magma(
 
 
 void strong_generators::compute_and_print_orbits_on_a_given_set(
-		action *A_given, INT *set, INT len, INT verbose_level)
+		action *A_given, int *set, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier *Sch;
-	INT i, j, f, l, a;
+	int i, j, f, l, a;
 
 	if (f_v) {
 		cout << "strong_generators::compute_and_print_"
@@ -2242,11 +2242,11 @@ void strong_generators::compute_and_print_orbits_on_a_given_set(
 }
 
 void strong_generators::compute_and_print_orbits(
-		action *A_given, INT verbose_level)
+		action *A_given, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier *Sch;
-	INT i, j, f, l, a;
+	int i, j, f, l, a;
 
 	if (f_v) {
 		cout << "strong_generators::compute_and_print_orbits" << endl;
@@ -2307,10 +2307,10 @@ void strong_generators::compute_and_print_orbits(
 
 }
 
-INT strong_generators::test_if_normalizing(sims *S, INT verbose_level)
+int strong_generators::test_if_normalizing(sims *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::test_if_normalizing" << endl;
@@ -2339,10 +2339,10 @@ INT strong_generators::test_if_normalizing(sims *S, INT verbose_level)
 
 
 void strong_generators::test_if_set_is_invariant_under_given_action(
-		action *A_given, INT *set, INT set_sz, INT verbose_level)
+		action *A_given, int *set, int set_sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "strong_generators::test_if_set_is_invariant_"
@@ -2366,9 +2366,9 @@ void strong_generators::test_if_set_is_invariant_under_given_action(
 }
 
 strong_generators *strong_generators::point_stabilizer(
-		INT pt, INT verbose_level)
+		int pt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::point_stabilizer" << endl;
@@ -2414,9 +2414,9 @@ strong_generators *strong_generators::point_stabilizer(
 
 void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 	action *A_given,
-	INT pt_A, INT pt_B, INT *Elt, INT verbose_level)
+	int pt_A, int pt_B, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "strong_generators::make_element_which_moves_"
@@ -2424,8 +2424,8 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 		}
 
 	schreier *Orb;
-	INT orbit_idx;
-	INT len;
+	int orbit_idx;
+	int len;
 
 
 	Orb = orbit_of_one_point_schreier(A_given, pt_A,
@@ -2463,11 +2463,11 @@ void strong_generators::make_element_which_moves_a_point_from_A_to_B(
 // unsed in SEMIFIELD/semifield_starter_io.C:
 
 void strong_generators_array_write_file(const char *fname,
-		strong_generators *p, INT nb, INT verbose_level)
+		strong_generators *p, int nb, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object M;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "strong_generators_array_write_file" << endl;
@@ -2486,11 +2486,11 @@ void strong_generators_array_write_file(const char *fname,
 }
 
 void strong_generators_array_read_from_file(const char *fname,
-		action *A, strong_generators *&p, INT &nb, INT verbose_level)
+		action *A, strong_generators *&p, int &nb, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object M;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "strong_generators_array_read_from_file" << endl;
@@ -2519,10 +2519,10 @@ void strong_generators_array_read_from_file(const char *fname,
 				"reading " << nb << " stabilizers done" << endl;
 		}
 
-	INT *Go;
-	Go = NEW_INT(nb);
+	int *Go;
+	Go = NEW_int(nb);
 	for (i = 0; i < nb; i++) {
-		Go[i] = p[i].group_order_as_INT();
+		Go[i] = p[i].group_order_as_int();
 		}
 	classify C;
 
@@ -2531,7 +2531,7 @@ void strong_generators_array_read_from_file(const char *fname,
 	C.print(TRUE);
 
 #if 0
-	INT f, l, j, pos;
+	int f, l, j, pos;
 
 	cout << "stabilizer order : orbit" << endl;
 	for (i = C.nb_types - 1; i > 0; i--) {
@@ -2546,7 +2546,7 @@ void strong_generators_array_read_from_file(const char *fname,
 		}
 	#endif
 	
-	FREE_INT(Go);
+	FREE_int(Go);
 
 
 }

@@ -45,16 +45,16 @@ static void vmmult(MINDIST *MD, int *v, int **mx, int *cv);
 
 int mindist(int n, int k, int q, int *G, 
 	int f_v, int f_vv, int idx_zero, int idx_one, 
-	INT *add_table, INT *mult_table)
+	int *add_table, int *mult_table)
 //Main routine for the code minimum distance computation.
 //The tables are only needed if $q = p^f$ with $f > 1$. 
 //In the GF(p) case, just pass a NULL pointer. 
 {
 	MINDIST MD;
 	int i, j, a, d;
-	INT p, e;
+	int p, e;
 	//vector vp, ve;
-	INT wt_rows, w;
+	int wt_rows, w;
 
 	factor_prime_power(q, p, e);
 	MD.f_v = f_v;
@@ -213,12 +213,12 @@ int mindist(int n, int k, int q, int *G,
 
 static void print_matrix(MINDIST *MD, int **G)
 {
-	INT i, j, a;
+	int i, j, a;
 
 	for (i = 1; i <= MD->k; i++) {
 		for (j = 1; j <= MD->n; j++) {
 			a = G[i][j];
-			printf("%ld ", a);
+			printf("%d ", a);
 			}
 		printf("\n");
 		}

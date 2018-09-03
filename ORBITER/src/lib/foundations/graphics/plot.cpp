@@ -7,36 +7,36 @@
 #include <math.h>
 
 
-void draw_density(char *prefix, INT *the_set, INT set_size,
-	INT f_title, const char *title, INT out_of, 
+void draw_density(char *prefix, int *the_set, int set_size,
+	int f_title, const char *title, int out_of, 
 	const char *label_x, 
-	INT f_circle, INT circle_at, INT circle_rad, 
-	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
-	INT xmax, INT ymax, INT offset_x, INT f_switch_x, INT no, INT f_embedded, 
-	INT verbose_level)
+	int f_circle, int circle_at, int circle_rad, 
+	int f_mu, int f_sigma, int nb_standard_deviations, 
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
+	int xmax, int ymax, int offset_x, int f_switch_x, int no, int f_embedded, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_v5 = (verbose_level >= 5);
-	INT *set;
-	INT x_min = 0, x_max = 1000;
-	INT y_min = 0, y_max = 1000;
-	INT factor_1000 = 1000;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_v5 = (verbose_level >= 5);
+	int *set;
+	int x_min = 0, x_max = 1000;
+	int y_min = 0, y_max = 1000;
+	int factor_1000 = 1000;
 	//char ext[1000];
 	char fname_full[1000];
-	INT i, prev; //, prev_start;
-	INT *outline_value;
-	INT *outline_number;
-	INT outline_sz = 0;
-	INT f_sideways = FALSE;
+	int i, prev; //, prev_start;
+	int *outline_value;
+	int *outline_number;
+	int outline_sz = 0;
+	int f_sideways = FALSE;
 	
 
 	if (f_v) {
 		cout << "draw_density" << endl;
 		}
 
-	set = NEW_INT(set_size);
+	set = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		set[i] = the_set[i];
 		}
@@ -48,7 +48,7 @@ void draw_density(char *prefix, INT *the_set, INT set_size,
 			}
 		}
 
-	INT_vec_heapsort(set, set_size);
+	int_vec_heapsort(set, set_size);
 	if (f_vv) {
 		cout << "draw_density after sorting:" << endl;
 		for (i = 0; i < set_size; i++) {
@@ -56,8 +56,8 @@ void draw_density(char *prefix, INT *the_set, INT set_size,
 			}
 		}
 	
-	outline_value = NEW_INT(set_size);
-	outline_number = NEW_INT(set_size);
+	outline_value = NEW_int(set_size);
+	outline_number = NEW_int(set_size);
 	outline_sz = 0;
 	prev = set[0];
 	//prev_start = 0;
@@ -78,7 +78,7 @@ void draw_density(char *prefix, INT *the_set, INT set_size,
 		}
 
 	
-	sprintf(fname_full, "%s_%ld.mp", prefix, no);
+	sprintf(fname_full, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
@@ -108,48 +108,48 @@ void draw_density(char *prefix, INT *the_set, INT set_size,
 	if (f_v) {
 		cout << "draw_density written file " << fname_full << " of size " << file_size(fname_full) << endl;
 		}
-	FREE_INT(set);
+	FREE_int(set);
 	
 }
 
 void draw_density_multiple_curves(char *prefix,
-	INT **Data, INT *Data_size, INT nb_data_sets, 
-	INT f_title, const char *title, INT out_of, 
+	int **Data, int *Data_size, int nb_data_sets, 
+	int f_title, const char *title, int out_of, 
 	const char *label_x, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
-	INT xmax, INT ymax, INT offset_x, INT f_switch_x, 
-	INT f_v_logarithmic, double log_base, INT no, INT f_embedded, 
-	INT verbose_level)
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
+	int xmax, int ymax, int offset_x, int f_switch_x, 
+	int f_v_logarithmic, double log_base, int no, int f_embedded, 
+	int verbose_level)
 {
 	verbose_level += 6;
-	INT f_v = (verbose_level >= 1);
-	INT f_v5 = (verbose_level >= 5);
-	INT **Data2;
-	//INT *set;
-	INT x_min = 0, x_max = 1000;
-	INT y_min = 0, y_max = 1000;
-	INT factor_1000 = 1000;
+	int f_v = (verbose_level >= 1);
+	int f_v5 = (verbose_level >= 5);
+	int **Data2;
+	//int *set;
+	int x_min = 0, x_max = 1000;
+	int y_min = 0, y_max = 1000;
+	int factor_1000 = 1000;
 	//char ext[1000];
 	char fname_full[1000];
-	INT i, prev; //, prev_start;
-	INT **outline_value;
-	INT **outline_number;
-	INT *outline_sz;
-	INT curve;
-	INT f_sideways = FALSE;
+	int i, prev; //, prev_start;
+	int **outline_value;
+	int **outline_number;
+	int *outline_sz;
+	int curve;
+	int f_sideways = FALSE;
 	
 
 	if (f_v) {
 		cout << "draw_density_multiple_curves" << endl;
 		}
 
-	Data2 = NEW_PINT(nb_data_sets);
+	Data2 = NEW_pint(nb_data_sets);
 	for (curve = 0; curve < nb_data_sets; curve++) {
-		Data2[curve] = NEW_INT(Data_size[curve]);
+		Data2[curve] = NEW_int(Data_size[curve]);
 		for (i = 0; i < Data_size[curve]; i++) {
 			Data2[curve][i] = Data[curve][i];
 			}
-		INT_vec_heapsort(Data2[curve], Data_size[curve]);
+		int_vec_heapsort(Data2[curve], Data_size[curve]);
 		if (f_v5) {
 			cout << "after sorting:" << endl;
 			for (i = 0; i < Data_size[curve]; i++) {
@@ -157,15 +157,15 @@ void draw_density_multiple_curves(char *prefix,
 				}
 			}
 		}
-	INT max_x; 
+	int max_x; 
 	
 	max_x = 0;
-	outline_value = NEW_PINT(nb_data_sets);
-	outline_number = NEW_PINT(nb_data_sets);
-	outline_sz = NEW_INT(nb_data_sets);
+	outline_value = NEW_pint(nb_data_sets);
+	outline_number = NEW_pint(nb_data_sets);
+	outline_sz = NEW_int(nb_data_sets);
 	for (curve = 0; curve < nb_data_sets; curve++) {
-		outline_value[curve] = NEW_INT(Data_size[curve]);
-		outline_number[curve] = NEW_INT(Data_size[curve]);
+		outline_value[curve] = NEW_int(Data_size[curve]);
+		outline_number[curve] = NEW_int(Data_size[curve]);
 		outline_sz[curve] = 0;
 		max_x = MAXIMUM(max_x, Data_size[curve]);
 		prev = Data2[curve][0];
@@ -192,7 +192,7 @@ void draw_density_multiple_curves(char *prefix,
 		}
 
 	
-	sprintf(fname_full, "%s_%ld.mp", prefix, no);
+	sprintf(fname_full, "%s_%d.mp", prefix, no);
 	{
 	mp_graphics G(fname_full, x_min, y_min, x_max, y_max, f_embedded, f_sideways);
 	G.out_xmin() = 0;
@@ -223,37 +223,37 @@ void draw_density_multiple_curves(char *prefix,
 		cout << "draw_density written file " << fname_full << " of size " << file_size(fname_full) << endl;
 		}
 	for (curve = 0; curve < nb_data_sets; curve++) {
-		FREE_INT(Data2[curve]);
-		FREE_INT(outline_value[curve]);
-		FREE_INT(outline_number[curve]);
+		FREE_int(Data2[curve]);
+		FREE_int(outline_value[curve]);
+		FREE_int(outline_number[curve]);
 		}
-	FREE_PINT(Data2);
-	FREE_PINT(outline_value);
-	FREE_PINT(outline_number);
-	FREE_INT(outline_sz);
+	FREE_pint(Data2);
+	FREE_pint(outline_value);
+	FREE_pint(outline_number);
+	FREE_int(outline_sz);
 	
 }
 
 
-void draw_density2(mp_graphics &G, INT no, 
-	INT *outline_value, INT *outline_number, INT outline_sz, 
-	INT min_value, INT max_value, INT offset_x, INT f_switch_x, 
-	INT f_title, const char *title, 
+void draw_density2(mp_graphics &G, int no, 
+	int *outline_value, int *outline_number, int outline_sz, 
+	int min_value, int max_value, int offset_x, int f_switch_x, 
+	int f_title, const char *title, 
 	const char *label_x, 
-	INT f_circle, INT circle_at, INT circle_rad, 
-	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid)
+	int f_circle, int circle_at, int circle_rad, 
+	int f_mu, int f_sigma, int nb_standard_deviations, 
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid)
 {
-	INT i;
-	INT Px[1000], Py[1000];
-	//INT phi = 360 / 12;
-	//INT rad1 = 400;
+	int i;
+	int Px[1000], Py[1000];
+	//int phi = 360 / 12;
+	//int rad1 = 400;
 	char str[1000];
-	INT y_in, x, y, k;
+	int y_in, x, y, k;
 	
-	INT min_x, max_x, min_y, max_y;
-	INT sum, a;
-	INT mini_x, i0;
+	int min_x, max_x, min_y, max_y;
+	int sum, a;
+	int mini_x, i0;
 	double average;
 	double sigma; // standard deviation
 	double sum1, f;
@@ -323,20 +323,20 @@ void draw_density2(mp_graphics &G, INT no,
 
 
 	if (f_switch_x) {
-		sprintf(str, "{\\bf {\\large %ld}}", max_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
 		G.aligned_text(Px[0], Py[0], "t", str);
-		sprintf(str, "{\\bf {\\large %ld}}", min_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
 		G.aligned_text(Px[1], Py[1], "t", str);
 		}
 	else {
-		sprintf(str, "{\\bf {\\large %ld}}", min_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
 		G.aligned_text(Px[0], Py[0], "t", str);
-		sprintf(str, "{\\bf {\\large %ld}}", max_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
 		G.aligned_text(Px[1], Py[1], "t", str);
 		}
-	sprintf(str, "{\\bf {\\large %ld}}", min_y);
+	sprintf(str, "{\\bf {\\large %d}}", min_y);
 	G.aligned_text(Px[0], Py[0], "r", str);
-	sprintf(str, "{\\bf {\\large %ld}}", max_y);
+	sprintf(str, "{\\bf {\\large %d}}", max_y);
 	G.aligned_text(Px[3], Py[3], "r", str);
 
 
@@ -365,7 +365,7 @@ void draw_density2(mp_graphics &G, INT no,
 
 
 	if (f_mu) {
-		y_in = (INT) average;
+		y_in = (int) average;
 		y_to_pt_on_curve(y_in, x, y, 
 			outline_value, outline_number, outline_sz);
 		get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
@@ -386,7 +386,7 @@ void draw_density2(mp_graphics &G, INT no,
 
 
 	for (k = 1; k < nb_standard_deviations; k++) {
-		y_in = (INT) (average + k * sigma);
+		y_in = (int) (average + k * sigma);
 		y_to_pt_on_curve(y_in, x, y, 
 			outline_value, outline_number, outline_sz);
 		get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
@@ -395,14 +395,14 @@ void draw_density2(mp_graphics &G, INT no,
 		Py[0] -= 10;
 		G.polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
-			sprintf(str, "$\\overline{x}+%ld \\sigma$", k);
+			sprintf(str, "$\\overline{x}+%d \\sigma$", k);
 			}
 		else {
 			sprintf(str, "$\\overline{x}+\\sigma$");
 			}
 		G.aligned_text(Px[2], Py[2], "r", str);
 
-		y_in = (INT) (average - k * sigma);
+		y_in = (int) (average - k * sigma);
 		y_to_pt_on_curve(y_in, x, y, 
 			outline_value, outline_number, outline_sz);
 		get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y, FALSE);
@@ -411,7 +411,7 @@ void draw_density2(mp_graphics &G, INT no,
 		Py[0] -= 10;
 		G.polygon3(Px, Py, 0, 1, 2);
 		if (k > 1) {
-			sprintf(str, "{\\bf {\\large $\\overline{x}-%ld \\sigma$}}", k);
+			sprintf(str, "{\\bf {\\large $\\overline{x}-%d \\sigma$}}", k);
 			}
 		else {
 			sprintf(str, "{\\bf {\\large $\\overline{x}-\\sigma$}}");
@@ -420,7 +420,7 @@ void draw_density2(mp_graphics &G, INT no,
 		}
 
 #if 0
-	y_in = (INT) (average + 2 * sigma);
+	y_in = (int) (average + 2 * sigma);
 	y_to_pt_on_curve(y_in, x, y, 
 		outline_value, outline_number, outline_sz);
 	get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y);
@@ -430,7 +430,7 @@ void draw_density2(mp_graphics &G, INT no,
 	G.polygon3(Px, Py, 0, 1, 2);
 	G.aligned_text(Px[2], Py[2], "r", "$\\overline{x}+2\\sigma$");
 
-	y_in = (INT) (average - 2 * sigma);
+	y_in = (int) (average - 2 * sigma);
 	y_to_pt_on_curve(y_in, x, y, 
 		outline_value, outline_number, outline_sz);
 	get_coord(Px, Py, 0, x, min_y, min_x, min_y, max_x, max_y);
@@ -444,11 +444,11 @@ void draw_density2(mp_graphics &G, INT no,
 
 
 
-	INT line_dashing = 50;
+	int line_dashing = 50;
 	G.sl_udsty(line_dashing);
 
 	if (f_v_grid) {
-		INT delta;
+		int delta;
 
 		delta = 1000 / v_grid;
 		for (i = 1; i <= v_grid - 1; i++) {
@@ -460,7 +460,7 @@ void draw_density2(mp_graphics &G, INT no,
 			}
 		}
 	if (f_h_grid) {
-		INT delta;
+		int delta;
 
 		delta = 1000 / h_grid;
 		for (i = 1; i <= h_grid - 1; i++) {
@@ -482,27 +482,27 @@ void draw_density2(mp_graphics &G, INT no,
 	
 }
 
-void draw_density2_multiple_curves(mp_graphics &G, INT no, 
-	INT **outline_value, INT **outline_number, INT *outline_sz, INT nb_curves, 
-	INT min_x, INT max_x, INT min_y, INT max_y, 
-	INT offset_x, INT f_switch_x, 
-	INT f_title, const char *title, 
+void draw_density2_multiple_curves(mp_graphics &G, int no, 
+	int **outline_value, int **outline_number, int *outline_sz, int nb_curves, 
+	int min_x, int max_x, int min_y, int max_y, 
+	int offset_x, int f_switch_x, 
+	int f_title, const char *title, 
 	const char *label_x, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid,
-	INT f_v_logarithmic, double log_base)
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid,
+	int f_v_logarithmic, double log_base)
 {
-	INT i;
-	INT Px[1000], Py[1000];
-	//INT phi = 360 / 12;
-	//INT rad1 = 400;
+	int i;
+	int Px[1000], Py[1000];
+	//int phi = 360 / 12;
+	//int rad1 = 400;
 	char str[1000];
-	INT curve;
+	int curve;
 	
 #if 0
-	INT min_x, max_x, min_y, max_y;
+	int min_x, max_x, min_y, max_y;
 	
-	min_x = INT_MAX;
-	max_x = INT_MIN;
+	min_x = int_MAX;
+	max_x = int_MIN;
 	for (curve = 0; curve < nb_curves; curve++) {
 		min_x = MINIMUM(min_x, outline_number[curve][0]);
 		min_x = MINIMUM(min_x, outline_number[curve][outline_sz[curve] - 1]);
@@ -569,21 +569,21 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 
 
 	if (f_switch_x) {
-		sprintf(str, "{\\bf {\\large %ld}}", max_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
 		G.aligned_text(Px[1], Py[1], "t", str);
-		sprintf(str, "{\\bf {\\large %ld}}", min_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
 		G.aligned_text(Px[0], Py[0], "t", str);
 		}
 	else {
-		sprintf(str, "{\\bf {\\large %ld}}", min_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", min_x + offset_x);
 		G.aligned_text(Px[0], Py[0], "t", str);
-		sprintf(str, "{\\bf {\\large %ld}}", max_x + offset_x);
+		sprintf(str, "{\\bf {\\large %d}}", max_x + offset_x);
 		G.aligned_text(Px[1], Py[1], "t", str);
 		}
 
-	sprintf(str, "{\\bf {\\large %ld}}", min_y);
+	sprintf(str, "{\\bf {\\large %d}}", min_y);
 	G.aligned_text(Px[0], Py[0], "r", str);
-	sprintf(str, "{\\bf {\\large %ld}}", max_y);
+	sprintf(str, "{\\bf {\\large %d}}", max_y);
 	G.aligned_text(Px[3], Py[3], "r", str);
 
 
@@ -597,8 +597,8 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 
 
 
-	INT line_dashing = 50;
-	INT line_thickness = 15;
+	int line_dashing = 50;
+	int line_thickness = 15;
 	G.sl_udsty(line_dashing);
 	G.sl_thickness(line_thickness);
 
@@ -609,15 +609,15 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 			delta = log10(max_x - min_x) / v_grid;
 			for (i = 1; i <= v_grid - 1; i++) {
 				a = min_x + pow(10, i * delta);
-				Px[0] = (INT)a;
+				Px[0] = (int)a;
 				Py[0] = 0;
-				Px[1] = (INT)a;
+				Px[1] = (int)a;
 				Py[1] = 1000;
 				G.polygon2(Px, Py, 0, 1);
 				}
 			}
 		else {
-			INT delta;
+			int delta;
 			delta = 1000 / v_grid;
 			for (i = 1; i <= v_grid - 1; i++) {
 				Px[0] = i * delta;
@@ -635,18 +635,18 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 			delta = (log(max_y - min_y + 1) / log(log_base))/ h_grid;
 			for (i = 1; i <= h_grid - 1; i++) {
 				a = min_y + pow(log_base, i * delta);
-				get_coord_log(Px, Py, 2, min_x, (INT)a, min_x, min_y, max_x, max_y, log_base, FALSE /* f_switch_x */);
+				get_coord_log(Px, Py, 2, min_x, (int)a, min_x, min_y, max_x, max_y, log_base, FALSE /* f_switch_x */);
 				Px[0] = Px[2];
 				Py[0] = Py[2];
 				Px[1] = 1000;
 				Py[1] = Py[2];
 				G.polygon2(Px, Py, 0, 1);
-				sprintf(str, "{%ld}", (INT)a);
+				sprintf(str, "{%d}", (int)a);
 				G.aligned_text(Px[0], Py[0], "r", str);
 				}
 			}
 		else {
-			INT delta;
+			int delta;
 
 			delta = 1000 / h_grid;
 			for (i = 1; i <= h_grid - 1; i++) {
@@ -669,33 +669,33 @@ void draw_density2_multiple_curves(mp_graphics &G, INT no,
 	
 }
 
-void get_coord(INT *Px, INT *Py, INT idx, INT x, INT y, INT min_x, INT min_y, INT max_x, INT max_y, INT f_switch_x)
+void get_coord(int *Px, int *Py, int idx, int x, int y, int min_x, int min_y, int max_x, int max_y, int f_switch_x)
 {
-	Px[idx] = (INT)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
+	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
 	if (f_switch_x) {
 		Px[idx] = 1000 - Px[idx];
 		}
-	Py[idx] = (INT)(1000 * (double)(y - min_y) / (double)(max_y - min_y));
+	Py[idx] = (int)(1000 * (double)(y - min_y) / (double)(max_y - min_y));
 }
 
-void get_coord_log(INT *Px, INT *Py, INT idx, INT x, INT y, INT min_x, INT min_y, INT max_x, INT max_y, double log_base, INT f_switch_x)
+void get_coord_log(int *Px, int *Py, int idx, int x, int y, int min_x, int min_y, int max_x, int max_y, double log_base, int f_switch_x)
 {
-	Px[idx] = (INT)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
+	Px[idx] = (int)(1000 * (double)(x - min_x) / (double)(max_x - min_x));
 	if (f_switch_x) {
 		Px[idx] = 1000 - Px[idx];
 		}
-	Py[idx] = (INT)(1000 * log((double)(y - min_y + 1)) /  
+	Py[idx] = (int)(1000 * log((double)(y - min_y + 1)) /  
 		((double)log(max_y - min_y + 1)));
 }
 
 
 
 void read_numbers_from_file(const char *fname, 
-	INT *&the_set, INT &set_size, INT verbose_level)
+	int *&the_set, int &set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, a;
 	double d;
 	
 	if (f_v) {
@@ -704,14 +704,14 @@ void read_numbers_from_file(const char *fname,
 	ifstream f(fname);
 	
 	set_size = 1000;
-	the_set = NEW_INT(set_size);
+	the_set = NEW_int(set_size);
 	
 	for (i = 0; TRUE; i++) {
 		if (f.eof()) {
 			break;
 			}
 		f >> d;
-		a = (INT) d;
+		a = (int) d;
 		if (f_vv) {
 			cout << "read_set_from_file: the " << i << "-th number is " << d << " which becomes " << a << endl;
 			}
@@ -729,18 +729,18 @@ void read_numbers_from_file(const char *fname,
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		INT_vec_print(cout, the_set, set_size);
+		int_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
 
-void y_to_pt_on_curve(INT y_in, INT &x, INT &y,  
-	INT *outline_value, INT *outline_number, INT outline_sz)
+void y_to_pt_on_curve(int y_in, int &x, int &y,  
+	int *outline_value, int *outline_number, int outline_sz)
 {
-	INT f_v = FALSE;
-	INT idx, f_found;
+	int f_v = FALSE;
+	int idx, f_found;
 
-	f_found = INT_vec_search(outline_value, outline_sz, y_in, idx);
+	f_found = int_vec_search(outline_value, outline_sz, y_in, idx);
 	if (f_found) {
 		x = outline_number[idx];
 		y = outline_value[idx];
@@ -774,19 +774,19 @@ void y_to_pt_on_curve(INT y_in, INT &x, INT &y,
 
 }
 
-void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, INT f_with_points, INT rad, 
-	INT q, INT *Table, INT nb, 
-	INT f_point_labels, char **Point_labels, 
-	INT f_embedded, INT f_sideways, 
-	INT verbose_level)
+void projective_plane_draw_grid(const char *fname, int xmax, int ymax, int f_with_points, int rad, 
+	int q, int *Table, int nb, 
+	int f_point_labels, char **Point_labels, 
+	int f_embedded, int f_sideways, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x_min = 0, x_max = 1000000;
-	INT y_min = 0, y_max = 1000000;
-	INT factor_1000 = 1000;
+	int f_v = (verbose_level >= 1);
+	int x_min = 0, x_max = 1000000;
+	int y_min = 0, y_max = 1000000;
+	int factor_1000 = 1000;
 	char fname_full[1000];
-	//INT f_embedded = TRUE;
-	//INT f_sideways = FALSE;
+	//int f_embedded = TRUE;
+	//int f_sideways = FALSE;
 	
 	if (f_v) {
 		cout << "projective_plane_draw_grid" << endl;
@@ -817,30 +817,30 @@ void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, INT f_wit
 }
 
 
-void projective_plane_draw_grid2(mp_graphics &G, INT q, 
-	INT *Table, INT nb, INT f_with_points, INT rad, 
-	INT f_point_labels, char **Point_labels, INT verbose_level)
+void projective_plane_draw_grid2(mp_graphics &G, int q, 
+	int *Table, int nb, int f_with_points, int rad, 
+	int f_point_labels, char **Point_labels, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double a, b;
-	INT x1, x2, x3;
+	int x1, x2, x3;
 
-	//INT rad = 17000;
-	INT i, h;
+	//int rad = 17000;
+	int i, h;
 	double x_stretch = 0.0010;
 	double y_stretch = 0.0010;
 	//double x_stretch = 0.01;
 	//double y_stretch = 0.01;
 
 	double *Dx, *Dy;
-	INT *Px, *Py;
-	INT dx = ONE_MILLION * 50 * x_stretch;
-	INT dy = ONE_MILLION * 50 * y_stretch;
-	INT N = 1000;
+	int *Px, *Py;
+	int dx = ONE_MILLION * 50 * x_stretch;
+	int dy = ONE_MILLION * 50 * y_stretch;
+	int N = 1000;
 
 
-	Px = NEW_INT(N);
-	Py = NEW_INT(N);
+	Px = NEW_int(N);
+	Py = NEW_int(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
@@ -963,7 +963,7 @@ void projective_plane_draw_grid2(mp_graphics &G, INT q,
 		}
 }
 
-void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3, double &a, double &b)
+void projective_plane_make_affine_point(int q, int x1, int x2, int x3, double &a, double &b)
 {
 	if (x3 == 0) {
 		if (x2 == 0) {

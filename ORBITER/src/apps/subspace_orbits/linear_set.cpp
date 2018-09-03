@@ -48,7 +48,7 @@ void linear_set::null()
 
 void linear_set::freeself()
 {
-	INT f_v = FALSE;
+	int f_v = FALSE;
 
 	if (Gen) {
 		if (f_v) {
@@ -123,16 +123,16 @@ void linear_set::freeself()
 		delete FQ;
 		}
 	if (Basis) {
-		FREE_INT(Basis);
+		FREE_int(Basis);
 		}
 	if (base_cols) {
-		FREE_INT(base_cols);
+		FREE_int(base_cols);
 		}
 	if (Gen2) {
 		delete Gen2;
 		}
 	if (is_allowed) {
-		FREE_INT(is_allowed);
+		FREE_int(is_allowed);
 		}
 	if (T) {
 		delete T;
@@ -141,11 +141,11 @@ void linear_set::freeself()
 }
 
 void linear_set::init(int argc, const char **argv, 
-	INT s, INT n, INT q, const char *poly_q, const char *poly_Q, 
-	INT depth, INT f_identify, INT verbose_level)
+	int s, int n, int q, const char *poly_q, const char *poly_Q, 
+	int depth, int f_identify, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "linear_set::init" << endl;
@@ -204,7 +204,7 @@ void linear_set::init(int argc, const char **argv,
 
 	if (f_v) {
 		cout << "Field-basis: ";
-		INT_vec_print(cout, SubS->Basis, s);
+		int_vec_print(cout, SubS->Basis, s);
 		cout << endl;
 		}
 	
@@ -287,8 +287,8 @@ void linear_set::init(int argc, const char **argv,
 
 
 
-	Basis = NEW_INT(depth * vector_space_dimension);
-	base_cols = NEW_INT(vector_space_dimension);
+	Basis = NEW_int(depth * vector_space_dimension);
+	base_cols = NEW_int(vector_space_dimension);
 
 
 	D = new desarguesian_spread;
@@ -315,14 +315,14 @@ void linear_set::init(int argc, const char **argv,
 		cout << "linear_set::init after D1->init" << endl;
 		}
 
-	INT *vec;
-	INT i, j;
+	int *vec;
+	int i, j;
 
 	if (f_v) {
 		cout << "linear_set::init computing spread_embedding" << endl;
 		}
-	spread_embedding = NEW_INT(D->N);
-	vec = NEW_INT(m1);
+	spread_embedding = NEW_int(D->N);
+	vec = NEW_int(m1);
 	for (i = 0; i < D->N; i++) {
 		PG_element_unrank_modified(*FQ, vec, 1, m, i);
 		vec[m] = 0;
@@ -330,7 +330,7 @@ void linear_set::init(int argc, const char **argv,
 		spread_embedding[i] = j;
 		}
 
-	FREE_INT(vec);
+	FREE_int(vec);
 	if (f_v) {
 		cout << "linear_set::init computing spread_embedding done" << endl;
 		}	
@@ -341,7 +341,7 @@ void linear_set::init(int argc, const char **argv,
 	Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "subspaces_%ld_%ld_%ld", n, q, s);
+	sprintf(Gen->fname_base, "subspaces_%d_%d_%d", n, q, s);
 	
 	
 	Gen->depth = depth;
@@ -381,7 +381,7 @@ void linear_set::init(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_nodes = 1000;
+	int nb_nodes = 1000;
 	
 	if (f_v) {
 		cout << "linear_set::init before Gen->init_poset_orbit_node" << endl;
@@ -401,7 +401,7 @@ void linear_set::init(int argc, const char **argv,
 	if (f_identify) {
 		T = new spread;
 
-		INT f_recoordinatize = TRUE;
+		int f_recoordinatize = TRUE;
 		
 		k = n >> 1;
 		order = i_power_j(q, k);
@@ -410,7 +410,7 @@ void linear_set::init(int argc, const char **argv,
 			cout << "Classifying spreads of order " << order << endl;
 			}
 
-		INT max_depth = order + 1;
+		int max_depth = order + 1;
 
 		T->init(order, n, k, max_depth, 
 			Fq, f_recoordinatize, 
@@ -436,15 +436,15 @@ void linear_set::init(int argc, const char **argv,
 		}
 }
 
-void linear_set::do_classify(INT verbose_level)
+void linear_set::do_classify(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_set::do_classify" << endl;
 		}
 
-	//INT t0 = os_ticks();
+	//int t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "linear_set::do_classify calling generator_main" << endl;
@@ -466,7 +466,7 @@ void linear_set::do_classify(INT verbose_level)
 		verbose_level - 1);
 #endif
 	
-	INT nb_orbits;
+	int nb_orbits;
 	
 	if (f_v) {
 		cout << "linear_set::do_classify done with generator_main" << endl;
@@ -482,17 +482,17 @@ void linear_set::do_classify(INT verbose_level)
 		}
 }
 
-INT linear_set::test_set(INT len, INT *S, INT verbose_level)
+int linear_set::test_set(int len, int *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT ret = TRUE;
-	INT i, rk;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int ret = TRUE;
+	int i, rk;
 	
 	if (f_v) {
 		cout << "linear_set::test_set" << endl;
 		cout << "Testing set ";
-		INT_vec_print(cout, S, len);
+		int_vec_print(cout, S, len);
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
@@ -534,21 +534,21 @@ INT linear_set::test_set(INT len, INT *S, INT verbose_level)
 	return ret;
 }
 
-void linear_set::compute_intersection_types_at_level(INT level, 
-	INT &nb_nodes, INT *&Intersection_dimensions, INT verbose_level)
+void linear_set::compute_intersection_types_at_level(int level, 
+	int &nb_nodes, int *&Intersection_dimensions, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT node, i;
-	INT *set;
+	int f_v = (verbose_level >= 1);
+	int node, i;
+	int *set;
 	
 	if (f_v) {
 		cout << "linear_set::compute_intersection_types_at_level" << endl;
 		}
 	
-	set = NEW_INT(level);
+	set = NEW_int(level);
 
 	nb_nodes = Gen->nb_orbits_at_level(level);
-	Intersection_dimensions = NEW_INT(nb_nodes * D->N);
+	Intersection_dimensions = NEW_int(nb_nodes * D->N);
 	for (node = 0; node < nb_nodes; node++) {
 		Gen->get_set_by_level(level, node, set);
 		for (i = 0; i < level; i++) {
@@ -561,33 +561,33 @@ void linear_set::compute_intersection_types_at_level(INT level,
 		}
 
 
-	FREE_INT(set);
+	FREE_int(set);
 
 	if (f_v) {
 		cout << "linear_set::compute_intersection_types_at_level done" << endl;
 		}
 }
 
-void linear_set::calculate_intersections(INT depth, INT verbose_level)
+void linear_set::calculate_intersections(int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "linear_set::calculate_intersections" << endl;
 		}
 
-	INT level;
-	INT *Nb_nodes;
-	INT **Intersection_dimensions;
-	INT ***Sets;
-	INT **Set_sz;
+	int level;
+	int *Nb_nodes;
+	int **Intersection_dimensions;
+	int ***Sets;
+	int **Set_sz;
 	longinteger_object go;
-	INT i, h, j;
+	int i, h, j;
 	
-	Nb_nodes = NEW_INT(depth + 1);
-	Intersection_dimensions = NEW_PINT(depth + 1);
-	Sets = NEW_PPINT(depth + 1);
-	Set_sz = NEW_PINT(depth + 1);
+	Nb_nodes = NEW_int(depth + 1);
+	Intersection_dimensions = NEW_pint(depth + 1);
+	Sets = NEW_ppint(depth + 1);
+	Set_sz = NEW_pint(depth + 1);
 
 	for (level = 0; level <= depth; level++) {
 		cout << "Computing intersection types at level " << level << " / " << depth << ":" << endl;
@@ -600,7 +600,7 @@ void linear_set::calculate_intersections(INT depth, INT verbose_level)
 		cout << "Intersection types at level " << level << " / " << depth << " with " << Nb_nodes[level] << " orbits:" << endl;
 		for (i = 0; i < Nb_nodes[level]; i++) {
 			cout << setw(3) << i << " : ";
-			INT_vec_print(cout, Intersection_dimensions[level] + i * D->N, D->N);
+			int_vec_print(cout, Intersection_dimensions[level] + i * D->N, D->N);
 			cout << " : ";
 			{
 			classify C;
@@ -613,14 +613,14 @@ void linear_set::calculate_intersections(INT depth, INT verbose_level)
 			cout << go;
 			cout << endl;
 			}
-		//INT_matrix_print(Intersection_dimensions[level], Nb_nodes[level], LS->D->N);
+		//int_matrix_print(Intersection_dimensions[level], Nb_nodes[level], LS->D->N);
 		}
 	for (level = 0; level <= depth; level++) {
 		cout << "Level " << level << ":" << endl;
-		Sets[level] = NEW_PINT(Nb_nodes[level]);
-		Set_sz[level] = NEW_INT(Nb_nodes[level]);
+		Sets[level] = NEW_pint(Nb_nodes[level]);
+		Set_sz[level] = NEW_int(Nb_nodes[level]);
 		for (h = 0; h < Nb_nodes[level]; h++) {
-			INT *I;
+			int *I;
 
 			I = Intersection_dimensions[level] + h * D->N;
 			Set_sz[level][h] = 0;
@@ -629,7 +629,7 @@ void linear_set::calculate_intersections(INT depth, INT verbose_level)
 					Set_sz[level][h]++;
 					}
 				}
-			Sets[level][h] = NEW_INT(Set_sz[level][h]);
+			Sets[level][h] = NEW_int(Set_sz[level][h]);
 			j = 0;
 			for (i = 0; i < D->N; i++) {
 				if (I[i]) {
@@ -637,7 +637,7 @@ void linear_set::calculate_intersections(INT depth, INT verbose_level)
 					}
 				}
 			cout << h << " : ";
-			INT_vec_print(cout, Sets[level][h], Set_sz[level][h]);
+			int_vec_print(cout, Sets[level][h], Set_sz[level][h]);
 			cout << endl;
 			}
 		}
@@ -645,38 +645,38 @@ void linear_set::calculate_intersections(INT depth, INT verbose_level)
 
 	for (level = 0; level <= depth; level++) {
 		for (h = 0; h < Nb_nodes[level]; h++) {
-			FREE_INT(Sets[level][h]);
+			FREE_int(Sets[level][h]);
 			}
-		FREE_PINT(Sets[level]);
-		FREE_INT(Set_sz[level]);
-		FREE_INT(Intersection_dimensions[level]);
+		FREE_pint(Sets[level]);
+		FREE_int(Set_sz[level]);
+		FREE_int(Intersection_dimensions[level]);
 		}
-	FREE_PPINT(Sets);
-	FREE_PINT(Set_sz);
-	FREE_PINT(Intersection_dimensions);
-	FREE_INT(Nb_nodes);
+	FREE_ppint(Sets);
+	FREE_pint(Set_sz);
+	FREE_pint(Intersection_dimensions);
+	FREE_int(Nb_nodes);
 
 	if (f_v) {
 		cout << "linear_set::calculate_intersections done" << endl;
 		}
 }
 
-void linear_set::read_data_file(INT depth, INT verbose_level)
+void linear_set::read_data_file(int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT depth_completed;
+	int f_v = (verbose_level >= 1);
+	int depth_completed;
 	char fname[1000];
 
 	if (f_v) {
 		cout << "linear_set::read_data_file" << endl;
 		}
-	sprintf(fname, "%s_%ld.data", Gen->fname_base, depth);
+	sprintf(fname, "%s_%d.data", Gen->fname_base, depth);
 	Gen->read_data_file(depth_completed, fname, 0 /*verbose_level - 1*/);
 	if (f_v) {
 		cout << "linear_set::read_data_file after read_data_file" << endl;
 		}
 
-	INT level;
+	int level;
 	char prefix[1000];
 
 
@@ -705,15 +705,15 @@ void linear_set::read_data_file(INT depth, INT verbose_level)
 }
 
 
-void linear_set::print_orbits_at_level(INT level)
+void linear_set::print_orbits_at_level(int level)
 {
-	INT len, orbit_at_level, i;
+	int len, orbit_at_level, i;
 	longinteger_object go;
-	INT *set;
-	INT *Basis;
+	int *set;
+	int *Basis;
 
-	set = NEW_INT(level);
-	Basis = NEW_INT(level * n);
+	set = NEW_int(level);
+	Basis = NEW_int(level * n);
 
 	len = Gen->nb_orbits_at_level(level);
 	for (orbit_at_level = 0; orbit_at_level < len; orbit_at_level++) {
@@ -724,25 +724,25 @@ void linear_set::print_orbits_at_level(INT level)
 		Gen->get_stabilizer_order(level, orbit_at_level, go);
 		cout << "orbit " << orbit_at_level << " / " << len << " stabilizer order " << go << ":" << endl;
 		cout << "set: ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << endl;
 		cout << "Basis:" << endl;
-		INT_matrix_print(Basis, level, n);
+		int_matrix_print(Basis, level, n);
 		}
 
-	FREE_INT(set);
-	FREE_INT(Basis);
+	FREE_int(set);
+	FREE_int(Basis);
 
 }
 
 void linear_set::classify_secondary(int argc, const char **argv, 
-	INT level, INT orbit_at_level, 
+	int level, int orbit_at_level, 
 	strong_generators *strong_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, nb_allowed;
-	INT *set;
+	int f_v = (verbose_level >= 1);
+	int i, nb_allowed;
+	int *set;
 	
 	if (f_v) {
 		cout << "linear_set::classify_secondary" << endl;
@@ -751,18 +751,18 @@ void linear_set::classify_secondary(int argc, const char **argv,
 	secondary_level = level;
 	secondary_orbit_at_level = orbit_at_level;
 
-	set = NEW_INT(level);
-	is_allowed = NEW_INT(Aq->degree);
+	set = NEW_int(level);
+	is_allowed = NEW_int(Aq->degree);
 
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
 		PG_element_unrank_modified(*Fq, Basis + i * n, 1, n, set[i]);
 		}
 	cout << "set: ";
-	INT_vec_print(cout, set, level);
+	int_vec_print(cout, set, level);
 	cout << endl;
 	cout << "Basis:" << endl;
-	INT_matrix_print(Basis, level, n);
+	int_matrix_print(Basis, level, n);
 	
 	
 
@@ -784,9 +784,9 @@ void linear_set::classify_secondary(int argc, const char **argv,
 
 
 #if 0
-	INT *candidates;
-	INT nb_candidates;
-	INT a;
+	int *candidates;
+	int nb_candidates;
+	int a;
 	char fname_candidates[1000];
 
 	Gen->make_fname_candidates_file_default(fname_candidates, level);
@@ -796,10 +796,10 @@ void linear_set::classify_secondary(int argc, const char **argv,
 	generator_read_candidates_of_orbit(fname_candidates, orbit_at_level, 
 		candidates, nb_candidates, verbose_level);
 
-	INT *good_candidates;
-	INT nb_good_candidates;
+	int *good_candidates;
+	int nb_good_candidates;
 
-	good_candidates = NEW_INT(nb_candidates);
+	good_candidates = NEW_int(nb_candidates);
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		a = candidates[i];
@@ -809,10 +809,10 @@ void linear_set::classify_secondary(int argc, const char **argv,
 		}
 	cout << "Out of " << nb_candidates << " candidates, " << nb_good_candidates << " survive" << endl;
 
-	INT *good_candidates;
-	INT nb_good_candidates;
+	int *good_candidates;
+	int nb_good_candidates;
 
-	good_candidates = NEW_INT(nb_candidates);
+	good_candidates = NEW_int(nb_candidates);
 	nb_good_candidates = 0;
 	for (i = 0; i < nb_candidates; i++) {
 		a = candidates[i];
@@ -823,10 +823,10 @@ void linear_set::classify_secondary(int argc, const char **argv,
 
 #endif
 
-	INT *candidates;
-	INT nb_candidates;
+	int *candidates;
+	int nb_candidates;
 	
-	candidates = NEW_INT(nb_allowed);
+	candidates = NEW_int(nb_allowed);
 	nb_candidates = 0;
 	for (i = 0; i < Aq->degree; i++) {
 		if (is_allowed[i]) {
@@ -834,7 +834,7 @@ void linear_set::classify_secondary(int argc, const char **argv,
 			}
 		}
 	cout << "candidates:" << nb_candidates << endl;
-	INT_vec_print(cout, candidates, nb_candidates);
+	int_vec_print(cout, candidates, nb_candidates);
 	cout << endl;
 
 
@@ -852,17 +852,17 @@ void linear_set::classify_secondary(int argc, const char **argv,
 
 
 	
-	FREE_INT(set);
-	//FREE_INT(is_allowed); // don't free is_allowed, it is part of linear_set now.
-	FREE_INT(candidates);
+	FREE_int(set);
+	//FREE_int(is_allowed); // don't free is_allowed, it is part of linear_set now.
+	FREE_int(candidates);
 }
 
 void linear_set::init_secondary(int argc, const char **argv, 
-	INT *candidates, INT nb_candidates, 
+	int *candidates, int nb_candidates, 
 	strong_generators *Strong_gens_previous, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_set::init_secondary" << endl;
@@ -876,7 +876,7 @@ void linear_set::init_secondary(int argc, const char **argv,
 	Gen2->read_arguments(argc, argv, 0);
 
 	//Gen2->prefix[0] = 0;
-	sprintf(Gen2->fname_base, "subspaces_%ld_%ld_%ld_secondary_%ld_%ld", n, q, s, 
+	sprintf(Gen2->fname_base, "subspaces_%d_%d_%d_secondary_%d_%d", n, q, s, 
 		secondary_level, secondary_orbit_at_level);
 	
 	
@@ -927,7 +927,7 @@ void linear_set::init_secondary(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_nodes = 1000;
+	int nb_nodes = 1000;
 	
 	if (f_v) {
 		cout << "linear_set::init_secondary before Gen2->init_poset_orbit_node" << endl;
@@ -970,15 +970,15 @@ void linear_set::init_secondary(int argc, const char **argv,
 
 }
 
-void linear_set::do_classify_secondary(INT verbose_level)
+void linear_set::do_classify_secondary(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_set::do_classify_secondary" << endl;
 		}
 
-	INT t0 = os_ticks();
+	int t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "linear_set::do_classify_secondary calling generator_main" << endl;
@@ -994,7 +994,7 @@ void linear_set::do_classify_secondary(INT verbose_level)
 		f_debug, 
 		verbose_level - 1);
 	
-	INT nb_orbits;
+	int nb_orbits;
 	
 	if (f_v) {
 		cout << "linear_set::do_classify_secondary done with generator_main" << endl;
@@ -1004,32 +1004,32 @@ void linear_set::do_classify_secondary(INT verbose_level)
 		cout << "linear_set::do_classify_secondary we found " << nb_orbits << " orbits at depth " << secondary_depth<< endl;
 		}
 
-	INT h, i;
+	int h, i;
 	
-	INT *set1;
-	INT *set2;
-	INT *Basis1;
-	INT *Basis2;
+	int *set1;
+	int *set2;
+	int *Basis1;
+	int *Basis2;
 
-	set1 = NEW_INT(secondary_level);
-	set2 = NEW_INT(secondary_depth);
-	Basis1 = NEW_INT(secondary_level * n);
-	Basis2 = NEW_INT(secondary_depth * n);
+	set1 = NEW_int(secondary_level);
+	set2 = NEW_int(secondary_depth);
+	Basis1 = NEW_int(secondary_level * n);
+	Basis2 = NEW_int(secondary_depth * n);
 
 	Gen->get_set_by_level(secondary_level, secondary_orbit_at_level, set1);
 	for (i = 0; i < secondary_level; i++) {
 		PG_element_unrank_modified(*Fq, Basis1 + i * n, 1, n, set1[i]);
 		}
 	cout << "set1: ";
-	INT_vec_print(cout, set1, secondary_level);
+	int_vec_print(cout, set1, secondary_level);
 	cout << endl;
 	cout << "Basis1:" << endl;
-	INT_matrix_print(Basis1, secondary_level, n);
+	int_matrix_print(Basis1, secondary_level, n);
 
 
-	INT *Intersection_dimensions;
+	int *Intersection_dimensions;
 
-	Intersection_dimensions = NEW_INT(D->N);
+	Intersection_dimensions = NEW_int(D->N);
 
 	for (h = 0; h < nb_orbits; h++) {
 		cout << "Orbit " << h << " / " << nb_orbits << ":" << endl;
@@ -1038,17 +1038,17 @@ void linear_set::do_classify_secondary(INT verbose_level)
 			PG_element_unrank_modified(*Fq, Basis2 + i * n, 1, n, set2[i]);
 			}
 		cout << "set2: ";
-		INT_vec_print(cout, set2, secondary_depth);
+		int_vec_print(cout, set2, secondary_depth);
 		cout << endl;
 		cout << "Basis2:" << endl;
-		INT_matrix_print(Basis2, secondary_depth, n);
+		int_matrix_print(Basis2, secondary_depth, n);
 
 
 		D->compute_intersection_type(secondary_depth, Basis2, 
 			Intersection_dimensions, 0 /*verbose_level - 1*/);
 
 		cout << "Intersection_dimensions:";
-		INT_vec_print(cout, Intersection_dimensions, D->N);
+		int_vec_print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
 		strong_generators *Strong_gens2;
@@ -1065,7 +1065,7 @@ void linear_set::do_classify_secondary(INT verbose_level)
 		delete Strong_gens2;
 		}
 
-	FREE_INT(Intersection_dimensions);
+	FREE_int(Intersection_dimensions);
 
 
 	if (f_v) {
@@ -1073,20 +1073,20 @@ void linear_set::do_classify_secondary(INT verbose_level)
 		}
 }
 
-INT linear_set::test_set_secondary(INT len, INT *S, INT verbose_level)
+int linear_set::test_set_secondary(int len, int *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT ret = TRUE;
-	INT i, rk;
-	INT *v;
-	INT *w;
-	INT nb;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int ret = TRUE;
+	int i, rk;
+	int *v;
+	int *w;
+	int nb;
 	
 	if (f_v) {
 		cout << "linear_set::test_set_secondary" << endl;
 		cout << "Testing set ";
-		INT_vec_print(cout, S, len);
+		int_vec_print(cout, S, len);
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
@@ -1110,8 +1110,8 @@ INT linear_set::test_set_secondary(INT len, INT *S, INT verbose_level)
 		// need to make sure that the whole space consists of allowable vectors:
 
 
-		v = NEW_INT(len);
-		w = NEW_INT(n);
+		v = NEW_int(len);
+		w = NEW_int(n);
 		nb = nb_PG_elements(len - 1, q);
 
 	
@@ -1125,8 +1125,8 @@ INT linear_set::test_set_secondary(INT len, INT *S, INT verbose_level)
 				}
 			}
 	
-		FREE_INT(v);
-		FREE_INT(w);
+		FREE_int(v);
+		FREE_int(w);
 		}
 
 	if (ret) {
@@ -1149,30 +1149,30 @@ INT linear_set::test_set_secondary(INT len, INT *S, INT verbose_level)
 }
 
 void linear_set::compute_stabilizer_of_linear_set(int argc, const char **argv, 
-	INT level, INT orbit_at_level, 
+	int level, int orbit_at_level, 
 	strong_generators *&strong_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, nb_allowed;
-	INT *set;
+	int f_v = (verbose_level >= 1);
+	int i, nb_allowed;
+	int *set;
 	
 	if (f_v) {
 		cout << "linear_set::compute_stabilizer_of_linear_set" << endl;
 		}
 	
-	set = NEW_INT(level);
-	is_allowed = NEW_INT(Aq->degree);
+	set = NEW_int(level);
+	is_allowed = NEW_int(Aq->degree);
 
 	Gen->get_set_by_level(level, orbit_at_level, set);
 	for (i = 0; i < level; i++) {
 		PG_element_unrank_modified(*Fq, Basis + i * n, 1, n, set[i]);
 		}
 	cout << "set: ";
-	INT_vec_print(cout, set, level);
+	int_vec_print(cout, set, level);
 	cout << endl;
 	cout << "Basis:" << endl;
-	INT_matrix_print(Basis, level, n);
+	int_matrix_print(Basis, level, n);
 	
 	
 
@@ -1196,10 +1196,10 @@ void linear_set::compute_stabilizer_of_linear_set(int argc, const char **argv,
 
 
 
-	INT *candidates;
-	INT nb_candidates;
+	int *candidates;
+	int nb_candidates;
 	
-	candidates = NEW_INT(nb_allowed);
+	candidates = NEW_int(nb_allowed);
 	nb_candidates = 0;
 	for (i = 0; i < Aq->degree; i++) {
 		if (is_allowed[i]) {
@@ -1207,7 +1207,7 @@ void linear_set::compute_stabilizer_of_linear_set(int argc, const char **argv,
 			}
 		}
 	cout << "candidates:" << nb_candidates << endl;
-	INT_vec_print(cout, candidates, nb_candidates);
+	int_vec_print(cout, candidates, nb_candidates);
 	cout << endl;
 
 
@@ -1225,19 +1225,19 @@ void linear_set::compute_stabilizer_of_linear_set(int argc, const char **argv,
 		verbose_level);
 
 	
-	FREE_INT(set);
-	//FREE_INT(is_allowed); // don't free is_allowed, it is part of linear_set now.
-	FREE_INT(candidates);
+	FREE_int(set);
+	//FREE_int(is_allowed); // don't free is_allowed, it is part of linear_set now.
+	FREE_int(candidates);
 }
 
 void linear_set::init_compute_stabilizer(int argc, const char **argv, 
-	INT level, INT orbit_at_level,  
-	INT *candidates, INT nb_candidates, 
+	int level, int orbit_at_level,  
+	int *candidates, int nb_candidates, 
 	strong_generators *Strong_gens_previous, 
 	strong_generators *&strong_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_set::init_compute_stabilizer" << endl;
@@ -1248,7 +1248,7 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 	Gen_stab->read_arguments(argc, argv, 0);
 
 	//Gen_stab->prefix[0] = 0;
-	sprintf(Gen_stab->fname_base, "subspaces_%ld_%ld_%ld_stabilizer_%ld_%ld", n, q, s, 
+	sprintf(Gen_stab->fname_base, "subspaces_%d_%d_%d_stabilizer_%d_%d", n, q, s, 
 		level, orbit_at_level);
 	
 	
@@ -1299,7 +1299,7 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_nodes = 1000;
+	int nb_nodes = 1000;
 	
 	if (f_v) {
 		cout << "linear_set::init_compute_stabilizer before Gen_stab->init_poset_orbit_node" << endl;
@@ -1345,18 +1345,18 @@ void linear_set::init_compute_stabilizer(int argc, const char **argv,
 
 }
 
-void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level, 
-	INT *candidates, INT nb_candidates, 
+void linear_set::do_compute_stabilizer(int level, int orbit_at_level, 
+	int *candidates, int nb_candidates, 
 	strong_generators *&strong_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_set::do_compute_stabilizer" << endl;
 		}
 
-	INT t0 = os_ticks();
+	int t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "linear_set::do_compute_stabilizer calling generator_main" << endl;
@@ -1372,7 +1372,7 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 		f_debug, 
 		verbose_level - 1);
 	
-	INT nb_orbits;
+	int nb_orbits;
 	
 	if (f_v) {
 		cout << "linear_set::do_compute_stabilizer done with generator_main" << endl;
@@ -1382,18 +1382,18 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 		cout << "linear_set::do_compute_stabilizer we found " << nb_orbits << " orbits at depth " << Gen_stab->depth << endl;
 		}
 
-	INT *set1;
-	INT *set2;
-	INT *set3;
-	INT *Basis1;
-	INT *Basis2;
-	INT i, h, orbit;
+	int *set1;
+	int *set2;
+	int *set3;
+	int *Basis1;
+	int *Basis2;
+	int i, h, orbit;
 	
-	set1 = NEW_INT(level);
-	set2 = NEW_INT(level);
-	set3 = NEW_INT(level);
-	Basis1 = NEW_INT(level * n);
-	Basis2 = NEW_INT(level * n);
+	set1 = NEW_int(level);
+	set2 = NEW_int(level);
+	set3 = NEW_int(level);
+	Basis1 = NEW_int(level * n);
+	Basis2 = NEW_int(level * n);
 
 
 	Gen->get_set_by_level(level, orbit_at_level, set1);
@@ -1401,25 +1401,25 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 		PG_element_unrank_modified(*Fq, Basis1 + i * n, 1, n, set1[i]);
 		}
 	cout << "set1: ";
-	INT_vec_print(cout, set1, level);
+	int_vec_print(cout, set1, level);
 	cout << endl;
 	cout << "Basis1:" << endl;
-	INT_matrix_print(Basis1, level, n);
+	int_matrix_print(Basis1, level, n);
 
 	
-	INT *linear_set;
-	INT linear_set_sz;
+	int *linear_set;
+	int linear_set_sz;
 
 	D->compute_linear_set(Basis1, level, 
 		linear_set, linear_set_sz, 
 		verbose_level);
 
 #if 0
-	INT *Intersection_dimensions1;
-	INT *linear_set;
-	INT linear_set_sz, j;
+	int *Intersection_dimensions1;
+	int *linear_set;
+	int linear_set_sz, j;
 
-	Intersection_dimensions1 = NEW_INT(D->N);
+	Intersection_dimensions1 = NEW_int(D->N);
 
 	D->compute_intersection_type(level, Basis1, 
 		Intersection_dimensions1, 0 /*verbose_level - 1*/);
@@ -1430,7 +1430,7 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 			linear_set_sz++;
 			}
 		}
-	linear_set = NEW_INT(linear_set_sz);
+	linear_set = NEW_int(linear_set_sz);
 	j = 0;
 	for (i = 0; i < D->N; i++) {
 		if (Intersection_dimensions1[i]) {
@@ -1438,27 +1438,27 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 			}
 		}
 	cout << "The linear set is: ";
-	INT_vec_print(cout, linear_set, linear_set_sz);
+	int_vec_print(cout, linear_set, linear_set_sz);
 	cout << endl;
 #endif
 	
 
-	INT *Intersection_dimensions;
-	INT *Elt1;
+	int *Intersection_dimensions;
+	int *Elt1;
 	vector_ge *aut_gens;
 	strong_generators *Strong_gens_previous;
-	INT group_index, orbit_len, go_INT;
+	int group_index, orbit_len, go_int;
 	longinteger_object go;
 
 	Gen->get_stabilizer_generators(Strong_gens_previous,  
 		level, orbit_at_level, verbose_level);
 
 	Strong_gens_previous->group_order(go);
-	go_INT = go.as_INT();
+	go_int = go.as_int();
 
 
-	Elt1 = NEW_INT(Aq->elt_size_in_INT);
-	Intersection_dimensions = NEW_INT(D->N);
+	Elt1 = NEW_int(Aq->elt_size_in_int);
+	Intersection_dimensions = NEW_int(D->N);
 	aut_gens = new vector_ge;
 
 	aut_gens->init(Aq);
@@ -1470,26 +1470,26 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 
 	group_index = 0;
 	for (h = 0; h < nb_orbits; h++) {
-		orbit_len = Gen_stab->orbit_length_as_INT(h, level);
+		orbit_len = Gen_stab->orbit_length_as_int(h, level);
 		cout << h << " / " << nb_orbits << " orbit if length " << orbit_len << ":" << endl;
 		Gen_stab->get_set_by_level(level, h, set2);
 		for (i = 0; i < level; i++) {
 			PG_element_unrank_modified(*Fq, Basis2 + i * n, 1, n, set2[i]);
 			}
 		cout << "set2: ";
-		INT_vec_print(cout, set2, level);
+		int_vec_print(cout, set2, level);
 		cout << endl;
 		cout << "Basis2:" << endl;
-		INT_matrix_print(Basis2, level, n);
+		int_matrix_print(Basis2, level, n);
 
 		D->compute_intersection_type(level, Basis2, 
 			Intersection_dimensions, 0 /*verbose_level - 1*/);
 
 		cout << "Intersection_dimensions:";
-		INT_vec_print(cout, Intersection_dimensions, D->N);
+		int_vec_print(cout, Intersection_dimensions, D->N);
 		cout << endl;
 
-		//INT f_lex = TRUE;
+		//int f_lex = TRUE;
 		
 		orbit = Gen->trace_set(set2, level, level, 
 			set3 /* canonical_set */, Elt1 /* *Elt_transporter */, 
@@ -1525,16 +1525,16 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 			}
 		}
 
-	cout << "old stabilizer order = " << go_INT << endl;
+	cout << "old stabilizer order = " << go_int << endl;
 	cout << "group_index = " << group_index << endl;
 
 	sims *Aut;
-	INT target_go;
+	int target_go;
 
-	target_go = go_INT * group_index;
+	target_go = go_int * group_index;
 	cout << "target_go = " << target_go << endl;
 	cout << "creating group of order " << target_go << ":" << endl;
-	Aut = create_sims_from_generators_with_target_group_order_INT(Aq, 
+	Aut = create_sims_from_generators_with_target_group_order_int(Aq, 
 		aut_gens, target_go, verbose_level);
 	cout << "Stabilizer created successfully" << endl;
 	
@@ -1560,8 +1560,8 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 #if 0
 	set_stabilizer_compute *STAB;
 	sims *StabQ;
-	//INT t0;
-	INT nb_backtrack_nodes;
+	//int t0;
+	int nb_backtrack_nodes;
 	longinteger_object goQ;
 
 	t0 = os_ticks();
@@ -1577,16 +1577,16 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 #endif
 
 
-	FREE_INT(linear_set);
+	FREE_int(linear_set);
 	delete gensQ;
 
-	FREE_INT(set1);
-	FREE_INT(set2);
-	FREE_INT(set3);
-	FREE_INT(Basis1);
-	FREE_INT(Basis2);
-	FREE_INT(Intersection_dimensions);
-	FREE_INT(Elt1);
+	FREE_int(set1);
+	FREE_int(set2);
+	FREE_int(set3);
+	FREE_int(Basis1);
+	FREE_int(Basis2);
+	FREE_int(Intersection_dimensions);
+	FREE_int(Elt1);
 	delete Strong_gens_previous;
 
 	if (f_v) {
@@ -1600,10 +1600,10 @@ void linear_set::do_compute_stabilizer(INT level, INT orbit_at_level,
 // #############################################################################
 
 
-INT linear_set_rank_point_func(INT *v, void *data)
+int linear_set_rank_point_func(int *v, void *data)
 {
 	linear_set *LS;
-	INT rk;
+	int rk;
 	
 	LS = (linear_set *) data;
 	AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
@@ -1611,7 +1611,7 @@ INT linear_set_rank_point_func(INT *v, void *data)
 	return rk;
 }
 
-void linear_set_unrank_point_func(INT *v, INT rk, void *data)
+void linear_set_unrank_point_func(int *v, int rk, void *data)
 {
 	linear_set *LS;
 	
@@ -1620,17 +1620,17 @@ void linear_set_unrank_point_func(INT *v, INT rk, void *data)
 	//PG_element_unrank_modified(*LS->Fq, v, 1, LS->vector_space_dimension, rk);
 }
 
-void linear_set_early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void linear_set_early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	verbose_level = 2;
 
 	linear_set *LS;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 
 	LS = (linear_set *) data;
 
@@ -1663,16 +1663,16 @@ void linear_set_early_test_func(INT *S, INT len,
 		}
 }
 
-void linear_set_secondary_early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void linear_set_secondary_early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	//verbose_level = 1;
 
 	linear_set *LS;
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	LS = (linear_set *) data;
 

@@ -28,9 +28,9 @@ void action_on_determinant::free()
 }
 
 
-void action_on_determinant::init(action &A, INT f_projective, INT m, INT verbose_level)
+void action_on_determinant::init(action &A, int f_projective, int m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	
 	if (f_v) {
@@ -47,7 +47,7 @@ void action_on_determinant::init(action &A, INT f_projective, INT m, INT verbose
 	M = A.G.matrix_grp;
 	q = M->GFq->q;
 	if (f_projective) {
-		degree = gcd_INT(m, q - 1);
+		degree = gcd_int(m, q - 1);
 		}
 	else {
 		degree = q - 1;
@@ -61,11 +61,11 @@ void action_on_determinant::init(action &A, INT f_projective, INT m, INT verbose
 		}
 }
 
-void action_on_determinant::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_determinant::compute_image(action *A, int *Elt, int i, int &j, int verbose_level)
 {
 	//verbose_level = 1;
-	INT f_v = (verbose_level >= 1);
-	INT a, b, c, l = 0;
+	int f_v = (verbose_level >= 1);
+	int a, b, c, l = 0;
 	
 	if (f_v) {
 		cout << "action_on_determinant::compute_image i = " << i << endl;

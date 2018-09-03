@@ -33,10 +33,10 @@ void graph_layer::freeself()
 	null();
 }
 
-void graph_layer::init(INT nb_nodes,
-		INT id_of_first_node, INT verbose_level)
+void graph_layer::init(int nb_nodes,
+		int id_of_first_node, int verbose_level)
 {
-	INT i, id;
+	int i, id;
 
 	graph_layer::id_of_first_node = id_of_first_node;
 	graph_layer::nb_nodes = nb_nodes;
@@ -50,10 +50,10 @@ void graph_layer::init(INT nb_nodes,
 		}
 }
 
-void graph_layer::place(INT verbose_level)
+void graph_layer::place(int verbose_level)
 {
 	double dx, dx2;
-	INT i;
+	int i;
 
 	dx = 1. / nb_nodes;
 	dx2 = dx * .5;
@@ -64,21 +64,21 @@ void graph_layer::place(INT verbose_level)
 }
 
 void graph_layer::place_with_grouping(
-		INT *group_size, INT nb_groups,
-		double x_stretch, INT verbose_level)
+		int *group_size, int nb_groups,
+		double x_stretch, int verbose_level)
 // x_stretch is less than 1.
 {
-	INT f_v = (verbose_level >= 1);
-	INT *group_start;
+	int f_v = (verbose_level >= 1);
+	int *group_start;
 	double *group_x;
 	double *group_dx;
-	INT i, j, nb_elements;
+	int i, j, nb_elements;
 
 	if (f_v) {
 		cout << "graph_layer::place_with_grouping "
 				"nb_groups=" << nb_groups << endl;
 		}
-	group_start = NEW_INT(nb_groups + 1);
+	group_start = NEW_int(nb_groups + 1);
 	group_dx = new double[nb_groups + 1];
 	group_x = new double[nb_groups + 1];
 	group_start[0] = 0;
@@ -108,7 +108,7 @@ void graph_layer::place_with_grouping(
 	(((double)i + .5) * group_dx[j] / (double) group_size[j]) * x_stretch;
 			}
 		}
-	FREE_INT(group_start);
+	FREE_int(group_start);
 	delete [] group_dx;
 	delete [] group_x;
 	if (f_v) {
@@ -117,10 +117,10 @@ void graph_layer::place_with_grouping(
 }
 
 void graph_layer::write_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "graph_layer::write_memory_object "
@@ -140,10 +140,10 @@ void graph_layer::write_memory_object(
 }
 
 void graph_layer::read_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "graph_layer::read_memory_object" << endl;

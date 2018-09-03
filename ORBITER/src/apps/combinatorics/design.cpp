@@ -7,24 +7,24 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void design_from_PG(INT PG_n, INT PG_q, INT verbose_level);
-void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level);
-void do_it(const char *fname, INT verbose_level);
-void design_properties(incidence_structure *Incidence, INT verbose_level);
-INT number_of_blocks_through_set_of_points(incidence_structure *Incidence, INT *set_of_points, INT set_size);
+void design_from_PG(int PG_n, int PG_q, int verbose_level);
+void design_from_PG_with_field(int PG_n, finite_field *F, int verbose_level);
+void do_it(const char *fname, int verbose_level);
+void design_properties(incidence_structure *Incidence, int verbose_level);
+int number_of_blocks_through_set_of_points(incidence_structure *Incidence, int *set_of_points, int set_size);
 
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *fname;
-	INT f_PG = FALSE;
-	INT PG_n = 0;
-	INT PG_q = 0;
+	int f_PG = FALSE;
+	int PG_n = 0;
+	int PG_q = 0;
 	
 	t0 = os_ticks();
 
@@ -62,9 +62,9 @@ int main(int argc, const char **argv)
 		}	
 }
 
-void design_from_PG(INT PG_n, INT PG_q, INT verbose_level)
+void design_from_PG(int PG_n, int PG_q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	finite_field *F;
 	
 	if (f_v) {
@@ -78,9 +78,9 @@ void design_from_PG(INT PG_n, INT PG_q, INT verbose_level)
 	FREE_OBJECT(F);
 }
 
-void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level)
+void design_from_PG_with_field(int PG_n, finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	
 	if (f_v) {
@@ -112,28 +112,28 @@ void design_from_PG_with_field(INT PG_n, finite_field *F, INT verbose_level)
 		}
 }
 
-void do_it(const char *fname, INT verbose_level)
+void do_it(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
-	INT *M;
-	INT *Inc;
-	INT i, j, h, m, n, k;
+	int *M;
+	int *Inc;
+	int i, j, h, m, n, k;
 
 	if (f_v) {
 		cout << "Reading matrix from file " << fname << endl;
 		}
-	INT_matrix_read_csv(fname, M, m, k, verbose_level - 1);
+	int_matrix_read_csv(fname, M, m, k, verbose_level - 1);
 
 	cout << "Read matrix of size " << m << " x " << k << endl;
-	INT_matrix_print(M, m, k);
+	int_matrix_print(M, m, k);
 	n = 0;
 	for (i = 0; i < m * k; i++) {
 		n = MAXIMUM(M[i], n);
 		}
 	cout << "largest entry is " << n << endl;
 	n++;
-	Inc = NEW_INT(n * m);
+	Inc = NEW_int(n * m);
 	for (i = 0; i < n * m; i++) {
 		Inc[i] = 0;
 		}
@@ -147,8 +147,8 @@ void do_it(const char *fname, INT verbose_level)
 
 
 	incidence_structure *Incidence;
-	INT set_size = n;
-	INT nb_blocks = m;
+	int set_size = n;
+	int nb_blocks = m;
 
 
 
@@ -159,20 +159,20 @@ void do_it(const char *fname, INT verbose_level)
 	design_properties(Incidence, verbose_level);
 
 
-	FREE_INT(Inc);
+	FREE_int(Inc);
 	FREE_OBJECT(Incidence);
 }
 
 
 
 
-void design_properties(incidence_structure *Incidence, INT verbose_level)
+void design_properties(incidence_structure *Incidence, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	partitionstack *Stack;
 
-	INT set_size = Incidence->nb_rows;
-	INT nb_blocks = Incidence->nb_cols;
+	int set_size = Incidence->nb_rows;
+	int nb_blocks = Incidence->nb_cols;
 
 		
 	Stack = NEW_OBJECT(partitionstack);
@@ -189,18 +189,18 @@ void design_properties(incidence_structure *Incidence, INT verbose_level)
 			cout, FALSE /* f_enter_math */, TRUE /* f_print_subscripts */, *Stack);
 		}
 
-	INT *set;
-	INT Nt, a, t, h;
+	int *set;
+	int Nt, a, t, h;
 	
-	set = NEW_INT(set_size);
+	set = NEW_int(set_size);
 	for (t = 2; t <= 4; t++) {
-		INT *Freq;
+		int *Freq;
 		
 		cout << "Checking strength t=" << t << endl;
-		Nt = INT_n_choose_k(set_size, t);
+		Nt = int_n_choose_k(set_size, t);
 		cout << "There are " << Nt << " " << t << "-subsets of an " << set_size << "-set" << endl;
 
-		Freq = NEW_INT(Nt);
+		Freq = NEW_int(Nt);
 		for (h = 0; h < Nt; h++) {
 			if ((h % 100000) == 0) {
 				cout << "checking subset " << h << " / " << Nt << endl;
@@ -217,15 +217,15 @@ void design_properties(incidence_structure *Incidence, INT verbose_level)
 		C.print(TRUE /* f_backwards */);
 		}
 
-	FREE_INT(set);
+	FREE_int(set);
 	delete Stack;
 }
 
-INT number_of_blocks_through_set_of_points(incidence_structure *Incidence, INT *set_of_points, INT set_size)
+int number_of_blocks_through_set_of_points(incidence_structure *Incidence, int *set_of_points, int set_size)
 {
-	INT i, j;
-	INT nb, h;
-	INT m;
+	int i, j;
+	int nb, h;
+	int m;
 
 	m = Incidence->nb_rows;
 	

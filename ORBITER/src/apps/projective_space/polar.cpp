@@ -13,44 +13,44 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose_level);
+void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level);
 
 
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i, j;
-	INT f_epsilon = FALSE;
-	INT epsilon = 0;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_k = FALSE;
-	INT k = 0;
-	INT f_q = FALSE;
-	INT q;
-	INT f_depth = FALSE;
-	INT depth = 0;
-	INT f_group_generators = FALSE;
-	INT group_generators_data[1000];
-	INT group_generators_data_size = 0;
-	INT f_group_order_target = FALSE;
+	int verbose_level = 0;
+	int i, j;
+	int f_epsilon = FALSE;
+	int epsilon = 0;
+	int f_n = FALSE;
+	int n = 0;
+	int f_k = FALSE;
+	int k = 0;
+	int f_q = FALSE;
+	int q;
+	int f_depth = FALSE;
+	int depth = 0;
+	int f_group_generators = FALSE;
+	int group_generators_data[1000];
+	int group_generators_data_size = 0;
+	int f_group_order_target = FALSE;
 	const char *group_order_target;
-	INT f_KM = FALSE;
-	INT KM_t = 0;
-	INT KM_k = 0;
-	INT f_group_generators_by_base_image = FALSE;
-	INT f_print_generators = FALSE;
-	INT f_cosets = FALSE;
-	INT cosets_depth, cosets_orbit_idx;
-	INT f_dual_polar = FALSE;
-	INT dual_polar_depth, dual_polar_orbit_idx;
-	INT f_show_stabilizer = FALSE;
-	INT show_stabilizer_depth, show_stabilizer_orbit_idx;
-	INT f_action_on_maximals = FALSE;
+	int f_KM = FALSE;
+	int KM_t = 0;
+	int KM_k = 0;
+	int f_group_generators_by_base_image = FALSE;
+	int f_print_generators = FALSE;
+	int f_cosets = FALSE;
+	int cosets_depth, cosets_orbit_idx;
+	int f_dual_polar = FALSE;
+	int dual_polar_depth, dual_polar_orbit_idx;
+	int f_show_stabilizer = FALSE;
+	int show_stabilizer_depth, show_stabilizer_orbit_idx;
+	int f_action_on_maximals = FALSE;
 	
  	t0 = os_ticks();
 	
@@ -115,7 +115,7 @@ int main(int argc, const char **argv)
 				}
 			group_generators_data_size = j;
 			cout << "-G ";
-			INT_vec_print(cout, group_generators_data, group_generators_data_size);
+			int_vec_print(cout, group_generators_data, group_generators_data_size);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-GB") == 0) {
@@ -127,7 +127,7 @@ int main(int argc, const char **argv)
 				}
 			group_generators_data_size = j;
 			cout << "-GB ";
-			INT_vec_print(cout, group_generators_data, group_generators_data_size);
+			int_vec_print(cout, group_generators_data, group_generators_data_size);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-GBstarting1") == 0) {
@@ -140,7 +140,7 @@ int main(int argc, const char **argv)
 				}
 			group_generators_data_size = j;
 			cout << "-GB ";
-			INT_vec_print(cout, group_generators_data, group_generators_data_size);
+			int_vec_print(cout, group_generators_data, group_generators_data_size);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-GO") == 0) {
@@ -202,9 +202,9 @@ int main(int argc, const char **argv)
 
 #if 0
 	{
-	INT f_vv = (verbose_level >= 2);
-	INT the_set[] = {0,1,2,7,16,49};
-	INT set_size = 6;
+	int f_vv = (verbose_level >= 2);
+	int the_set[] = {0,1,2,7,16,49};
+	int set_size = 6;
 	set_stabilizer_compute *S;
 	sims *Stab;
 	vector_ge * Stab_SG;
@@ -213,7 +213,7 @@ int main(int argc, const char **argv)
 	S = new set_stabilizer_compute;
 	
 	//sims Stab;
-	INT nb_backtrack_nodes;
+	int nb_backtrack_nodes;
 
 	Stab = new sims;
 	Stab_SG = new vector_ge;
@@ -277,7 +277,7 @@ int main(int argc, const char **argv)
 		}
 	if (f_dual_polar) {
 		longinteger_object *Rank_maximals;
-		INT nb_maximals;
+		int nb_maximals;
 		
 		P.dual_polar_graph(dual_polar_depth, dual_polar_orbit_idx, Rank_maximals, nb_maximals, verbose_level);
 		delete [] Rank_maximals;		
@@ -287,21 +287,21 @@ int main(int argc, const char **argv)
 		}
 	if (f_action_on_maximals) {
 		longinteger_object *Rank_maximals;
-		INT *Rank_maximals_INT;
-		INT nb_maximals;
+		int *Rank_maximals_int;
+		int nb_maximals;
 		grassmann *Grass;
 		action_on_grassmannian *AG;
 		action A2;
 		
 		P.dual_polar_graph(k, 0, Rank_maximals, nb_maximals, verbose_level);
 
-		Rank_maximals_INT = NEW_INT(nb_maximals);
+		Rank_maximals_int = NEW_int(nb_maximals);
 		for (i = 0; i < nb_maximals; i++) {
-			Rank_maximals_INT[i] = Rank_maximals[i].as_INT();
+			Rank_maximals_int[i] = Rank_maximals[i].as_int();
 			}
 		cout << "we have " << nb_maximals << " maximals:" << endl;
 		for (i = 0; i < nb_maximals; i++) {
-			cout << setw(4) << i << " : " << setw(10) << Rank_maximals_INT[i] << endl;
+			cout << setw(4) << i << " : " << setw(10) << Rank_maximals_int[i] << endl;
 			}
 
 		
@@ -317,18 +317,18 @@ int main(int argc, const char **argv)
 
 		sims *S;
 		longinteger_object go;
-		INT goi, i, order;
-		INT *Elt;
+		int goi, i, order;
+		int *Elt;
 
-		Elt = NEW_INT(P.A->elt_size_in_INT);
+		Elt = NEW_int(P.A->elt_size_in_int);
 		S = P.A->Sims;
 		S->group_order(go);	
 		cout << "group of order " << go << endl;
-		goi = go.as_INT();
+		goi = go.as_int();
 
 #if 0
 		for (i = 0; i < goi; i++) {
-			S->element_unrank_INT(i, Elt);
+			S->element_unrank_int(i, Elt);
 			order = A->element_order(Elt);
 			cout << "element " << i << " of order " << order << ":" << endl;
 			A->element_print_quick(Elt, cout);
@@ -342,9 +342,9 @@ int main(int argc, const char **argv)
 		A_restr = new action;
 		A_restr->induced_action_by_restriction(A2, 
 			FALSE /* f_induce_action */, S, 
-			nb_maximals, Rank_maximals_INT, verbose_level);
+			nb_maximals, Rank_maximals_int, verbose_level);
 		for (i = 0; i < goi; i++) {
-			S->element_unrank_INT(i, Elt);
+			S->element_unrank_int(i, Elt);
 			order = A->element_order(Elt);
 			cout << "element " << i << " of order " << order << ":" << endl;
 			A->element_print_quick(Elt, cout);
@@ -358,8 +358,8 @@ int main(int argc, const char **argv)
 	
 		// do not free AG
 		delete A_restr;
-		FREE_INT(Elt);
-		FREE_INT(Rank_maximals_INT);
+		FREE_int(Elt);
+		FREE_int(Rank_maximals_int);
 		delete [] Rank_maximals;		
 		}
 	
@@ -368,14 +368,14 @@ int main(int argc, const char **argv)
 	the_end(t0);
 }
 
-void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose_level)
+void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	const char *override_poly;
-	INT p, hh, f_semilinear;
-	INT f_basis = TRUE;
-	INT q = F->q;
+	int p, hh, f_semilinear;
+	int f_basis = TRUE;
+	int q = F->q;
 
 	if (f_v) {
 		cout << "init_orthogonal epsilon=" << epsilon << " n=" << n << " q=" << q << endl;

@@ -35,7 +35,7 @@ void permutation::set_print_type_PG_1_q_element(domain *dom)
 	current_permutation_print_type_dom = dom;
 }
 
-void permutation::convert_digit(INT i, hollerith &a)
+void permutation::convert_digit(int i, hollerith &a)
 {
 	a.init("");
 	if (current_permutation_print_type == integer_from_zero) {
@@ -123,7 +123,7 @@ kind permutation::s_virtual_kind()
 
 void permutation::copyobject_to(discreta_base &x)
 {
-	INT i, l;
+	int i, l;
 	
 #ifdef PERMUTATION_COPY_VERBOSE
 	cout << "permutation::copyobject_to()\n";
@@ -165,8 +165,8 @@ ostream& permutation::print_cycle(ostream& ost)
 {
 	if (current_printing_mode() == printing_mode_ascii || current_printing_mode() == printing_mode_latex) {
 		Vector have_seen;
-		INT l, l1, first, next, len, n;
-		INT f_nothing_printed_at_all = TRUE;
+		int l, l1, first, next, len, n;
+		int f_nothing_printed_at_all = TRUE;
 		
 		n = s_l();
 		have_seen.m_l(n);
@@ -231,8 +231,8 @@ ostream& permutation::print_cycle(ostream& ost)
 	
 	else if (current_printing_mode() == printing_mode_gap) {
 		Vector have_seen;
-		INT l, l1, first, next, len, n;
-		INT f_nothing_printed_at_all = TRUE;
+		int l, l1, first, next, len, n;
+		int f_nothing_printed_at_all = TRUE;
 		
 		n = s_l();
 		have_seen.m_l(n);
@@ -307,21 +307,21 @@ ostream& permutation::print_cycle(ostream& ost)
 }
 
 
-void permutation::sscan(const char *s, INT f_v)
+void permutation::sscan(const char *s, int f_v)
 {
 	istringstream ins(s);
 	scan(ins, f_v);
 }
 
-void permutation::scan(istream & is, INT f_v)
+void permutation::scan(istream & is, int f_v)
 //Scans a permutation from a stream.
 {
-	INT l = 20;
+	int l = 20;
 	Vector cycle;
 	permutation perm;
-	INT i, a_last, a, dig, ci;
+	int i, a_last, a, dig, ci;
 	char s[10000], c;
-	INT si, largest_point = 0;
+	int si, largest_point = 0;
 	
 	//l = s_l();
 	perm.m_l(l);
@@ -368,7 +368,7 @@ void permutation::scan(istream & is, INT f_v)
 			if (dig >= l) {
 				permutation perm1;
 				Vector cycle1;
-				INT l1, i;
+				int l1, i;
 				
 				l1 = MAXIMUM(l + (l >> 1), largest_point + 1);
 				cout << "permutation::scan(): digit = " << dig << " >= " << l << ", extending permutation degree to " << l1 << endl;
@@ -419,7 +419,7 @@ void permutation::scan(istream & is, INT f_v)
 		} // end of loop over all cycles
 	{
 	permutation perm1;
-	INT i;
+	int i;
 	
 	perm1.m_l(largest_point + 1);
 	for (i = 0; i <= largest_point; i++) {
@@ -433,9 +433,9 @@ void permutation::scan(istream & is, INT f_v)
 	swap(perm);
 }
 
-INT & permutation::s_i(INT i)
+int & permutation::s_i(int i)
 {
-	INT l;
+	int l;
 	
 	if (self.vector_pointer == NULL) {
 		cout << "permutation::s_i() vector_pointer == NULL\n";
@@ -453,7 +453,7 @@ void permutation::mult_to(discreta_base &x, discreta_base &y)
 {
 	permutation& px = x.as_permutation();
 	permutation py;
-	INT i, l;
+	int i, l;
 	
 	if (s_kind() != PERMUTATION) {
 		cout << "permutation::mult_to() this not a permutation\n";
@@ -475,10 +475,10 @@ void permutation::mult_to(discreta_base &x, discreta_base &y)
 	y.swap(py);
 }
 
-INT permutation::invert_to(discreta_base &x)
+int permutation::invert_to(discreta_base &x)
 {
 	permutation px;
-	INT i, j, l;
+	int i, j, l;
 	
 	if (s_kind() != PERMUTATION) {
 		cout << "permutation::invert_to() this is not a permutation\n";
@@ -496,16 +496,16 @@ INT permutation::invert_to(discreta_base &x)
 
 void permutation::one()
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_l();
 	for (i = 0; i < l; i++)
 		s_i(i) = i;
 }
 
-INT permutation::is_one()
+int permutation::is_one()
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_l();
 	for (i = 0; i < l; i++)
@@ -514,9 +514,9 @@ INT permutation::is_one()
 	return TRUE;
 }
 
-INT permutation::compare_with(discreta_base &a)
+int permutation::compare_with(discreta_base &a)
 {
-	INT l1, l2, i, c;
+	int l1, l2, i, c;
 	
 	if (s_kind() != PERMUTATION) {
 		return compare_with(a);
@@ -550,7 +550,7 @@ void permutation::perm2lehmercode(Vector v)
 Computes the lehmercode of a given permutation
 #endif
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	s_s()->copy(vec);
 	for (i = 0; i < vec->s_li(); ) {
@@ -565,13 +565,13 @@ Computes the lehmercode of a given permutation
 #endif
 
 
-void permutation::write_mem(memory & M, INT debug_depth)
+void permutation::write_mem(memory & M, int debug_depth)
 {
-	INT i, l, a;
+	int i, l, a;
 	
 	l = s_l();
 	M.write_int(l);
-	if (ONE_char_INT(l)) {
+	if (ONE_char_int(l)) {
 		for (i = 0; i < l; i++) {
 			a = s_i(i) + 1;
 			M.write_char((char) a);
@@ -585,17 +585,17 @@ void permutation::write_mem(memory & M, INT debug_depth)
 		}
 }
 
-void permutation::read_mem(memory & M, INT debug_depth)
+void permutation::read_mem(memory & M, int debug_depth)
 {
-	INT i, l, a;
+	int i, l, a;
 	char c;
 	
 	M.read_int(&l);
 	m_l(l);
-	if (ONE_char_INT(l)) {
+	if (ONE_char_int(l)) {
 		for (i = 0; i < l; i++) {
 			M.read_char(&c);
-			a = (INT) c;
+			a = (int) c;
 			a--;
 			s_i(i) = a;
 			}
@@ -609,14 +609,14 @@ void permutation::read_mem(memory & M, INT debug_depth)
 		}
 }
 
-INT permutation::csf()
+int permutation::csf()
 {
-	INT l;
-	INT size = 0;
+	int l;
+	int size = 0;
 	
 	l = s_l();
 	size += 4; /* l */
-	if (ONE_char_INT(l))
+	if (ONE_char_int(l))
 		size += l * 1;
 	else
 		size += l * 4;
@@ -625,7 +625,7 @@ INT permutation::csf()
 
 void permutation::get_fixpoints(Vector &f)
 {
-	INT i, l;
+	int i, l;
 	
 	l = s_l();
 	f.m_l(0);
@@ -647,8 +647,8 @@ void permutation::induce_action_on_blocks(permutation & gg, Vector & B)
 //exception: empty blocks are treated correctly, 
 //they lie in the first positions of B (due to the sorting).
 {
-	INT i, j, l, b, a, aa;
-	INT nb_empty, idx;
+	int i, j, l, b, a, aa;
+	int nb_empty, idx;
 	Vector b1;
 	
 	b = B.s_l();
@@ -684,7 +684,7 @@ void permutation::induce3(permutation & b)
 //induction on three sets. Gives a permutation of degree $(n choose 3)$ 
 //where $n$ is the degree of the permutation in this.
 {
-	INT k, l, n, n3, m1, m2, m3, bm1, bm2, bm3, x;
+	int k, l, n, n3, m1, m2, m3, bm1, bm2, bm3, x;
 
 	n = s_l();
 	n3 = n * (n - 1) * (n - 2);
@@ -731,8 +731,8 @@ void permutation::induce2(permutation & b)
 //$1 \le i < j \le n$, which are enumerated in the following way:
 //$\{ \{1,2\}, \{1,3\}, \ldots,\{2,3\},\ldots,\{n-1,n\}\}$.
 {
-	INT n;
-	INT i, j, k, i1, j1, k1, m;
+	int n;
+	int i, j, k, i1, j1, k1, m;
 	
 	n = s_l();
 	m = (n * (n - 1)) >> 1;
@@ -748,11 +748,11 @@ void permutation::induce2(permutation & b)
 		}
 }
 
-void permutation::induce_on_2tuples(permutation & p, INT f_injective)
+void permutation::induce_on_2tuples(permutation & p, int f_injective)
 //computes induction on two sets.
 //tuple2\_rank and tuple2\_unrank are used.
 {
-	INT n, m, i, j, rank, i1, j1, rank1;
+	int n, m, i, j, rank, i1, j1, rank1;
 
 	n = s_l();
 	if (f_injective)
@@ -769,9 +769,9 @@ void permutation::induce_on_2tuples(permutation & p, INT f_injective)
 		}
 }
 
-void permutation::add_n_fixpoints_in_front(permutation & b, INT n)
+void permutation::add_n_fixpoints_in_front(permutation & b, int n)
 {
-	INT i, j, l;
+	int i, j, l;
 
 	l = s_l();
 	b.m_l(n + l);
@@ -783,9 +783,9 @@ void permutation::add_n_fixpoints_in_front(permutation & b, INT n)
 		}
 }
 
-void permutation::add_n_fixpoints_at_end(permutation & b, INT n)
+void permutation::add_n_fixpoints_at_end(permutation & b, int n)
 {
-	INT i, j, l;
+	int i, j, l;
 
 	l = s_l();
 	b.m_l(n + l);
@@ -805,14 +805,14 @@ void permutation::add_fixpoint_in_front(permutation & b)
 	// cout << "add_n_fixpoints_in_front() gives " << b << endl;
 }
 
-void permutation::embed_at(permutation & b, INT n, INT at)
+void permutation::embed_at(permutation & b, int n, int at)
 //adds at fixpoints at the beginning, 
 //n - at - l fixpoints at the end. 
 //l is the length of the this permutation.
 //Result is b.
 {
 	permutation q;
-	INT l, m;
+	int l, m;
 
 	l = s_l();
 	if (n < l) {
@@ -828,10 +828,10 @@ void permutation::embed_at(permutation & b, INT n, INT at)
 	q.add_n_fixpoints_at_end(b, m);
 }
 
-void permutation::remove_fixpoint(permutation & b, INT i)
+void permutation::remove_fixpoint(permutation & b, int i)
 //Attention: $0 \le i < n$ (before: $1 \le i \le n$)
 {
-	INT j, k, l;
+	int j, k, l;
 
 	l = s_l();
 	if (s_ii(i) != i) {
@@ -855,7 +855,7 @@ void permutation::remove_fixpoint(permutation & b, INT i)
 void permutation::join(permutation & a, permutation & b)
 //Let $a$ and $b$ act on disjoint sets, and put the resulting permutation into this.
 {
-	INT i, j, l1, l2, l3;
+	int i, j, l1, l2, l3;
 
 	l1 = a.s_l();
 	l2 = b.s_l();
@@ -874,7 +874,7 @@ void permutation::join(permutation & a, permutation & b)
 void permutation::cartesian_product_action(permutation & a, permutation & b)
 //a acts on the rows, b on the columns of the cartesian product.
 {
-	INT n, m, nm, i, j, rank, i1, j1, rank1;
+	int n, m, nm, i, j, rank, i1, j1, rank1;
 
 	n = a.s_l();
 	m = b.s_l();
@@ -891,9 +891,9 @@ void permutation::cartesian_product_action(permutation & a, permutation & b)
 }
 
 
-void permutation::Add2Cycle(INT i0, INT i1)
+void permutation::Add2Cycle(int i0, int i1)
 {
-	INT N;
+	int N;
 	
 	N = s_l();
 	if (i0 < 0 || i0 >= N || i1 < 0 || i1 >= N) 
@@ -905,9 +905,9 @@ void permutation::Add2Cycle(INT i0, INT i1)
 	m_ii(i1, i0);
 }
 
-void permutation::Add3Cycle(INT i0, INT i1, INT i2)
+void permutation::Add3Cycle(int i0, int i1, int i2)
 {
-	INT N;
+	int N;
 	
 	N = s_l();
 	if (i0 < 0 || i0 >= N || i1 < 0 || 
@@ -921,9 +921,9 @@ void permutation::Add3Cycle(INT i0, INT i1, INT i2)
 	m_ii(i2, i0);
 }
 
-void permutation::Add4Cycle(INT i0, INT i1, INT i2, INT i3)
+void permutation::Add4Cycle(int i0, int i1, int i2, int i3)
 {
-	INT N;
+	int N;
 	
 	N = s_l();
 	if (i0 < 0 || i0 >= N || i1 < 0 || 
@@ -938,9 +938,9 @@ void permutation::Add4Cycle(INT i0, INT i1, INT i2, INT i3)
 	m_ii(i3, i0);
 }
 
-void permutation::Add5Cycle(INT i0, INT i1, INT i2, INT i3, INT i4)
+void permutation::Add5Cycle(int i0, int i1, int i2, int i3, int i4)
 {
-	INT N;
+	int N;
 	
 	N = s_l();
 	if (i0 < 0 || i0 >= N || i1 < 0 || 
@@ -957,9 +957,9 @@ void permutation::Add5Cycle(INT i0, INT i1, INT i2, INT i3, INT i4)
 	m_ii(i4, i0);
 }
 
-void permutation::AddNCycle(INT first, INT len)
+void permutation::AddNCycle(int first, int len)
 {
-	INT N, i;
+	int N, i;
 	
 	N = s_l();
 	if (first < 1 || first + len - 1 > N) 
@@ -976,10 +976,10 @@ void permutation::AddNCycle(INT first, INT len)
 	}
 }
 
-void permutation::cycle_type(Vector& type, INT f_v)
+void permutation::cycle_type(Vector& type, int f_v)
 {
 	Vector have_seen;
-	INT l, l1, first, next, len, n;
+	int l, l1, first, next, len, n;
 	
 	n = s_l();
 	have_seen.m_l(n);
@@ -1024,10 +1024,10 @@ void permutation::cycle_type(Vector& type, INT f_v)
 		}
 }
 
-INT permutation::nb_of_inversions(INT f_v)
+int permutation::nb_of_inversions(int f_v)
 {
 	Vector type;
-	INT i, l, inv = 0, ai;
+	int i, l, inv = 0, ai;
 	
 	l = s_l();
 	cycle_type(type, f_v);
@@ -1038,18 +1038,18 @@ INT permutation::nb_of_inversions(INT f_v)
 	return inv;
 }
 
-INT permutation::signum(INT f_v)
+int permutation::signum(int f_v)
 {
-	INT inv = nb_of_inversions(f_v);
+	int inv = nb_of_inversions(f_v);
 	if (EVEN(inv))
 		return 1;
 	else
 		return -1;
 }
 
-INT permutation::is_even(INT f_v)
+int permutation::is_even(int f_v)
 {
-	INT inv = nb_of_inversions(f_v);
+	int inv = nb_of_inversions(f_v);
 	if (EVEN(inv))
 		return TRUE;
 	else
@@ -1060,7 +1060,7 @@ INT permutation::is_even(INT f_v)
 void permutation::cycles(Vector &cycles)
 {
 	Vector have_seen, cycle;
-	INT l, l1, first, next, len, n;
+	int l, l1, first, next, len, n;
 
 	cycles.m_l(0);
 	n = s_l();
@@ -1106,9 +1106,9 @@ void permutation::cycles(Vector &cycles)
 		}
 }
 
-void permutation::restrict_to_subset(permutation &q, INT first, INT len)
+void permutation::restrict_to_subset(permutation &q, int first, int len)
 {
-	INT i, j;
+	int i, j;
 	
 	q.m_l(len);
 	for (i = 0; i < len; i++) {
@@ -1126,11 +1126,11 @@ void permutation::restrict_to_subset(permutation &q, INT first, INT len)
 		}
 }
 
-void permutation::induce_on_lines_of_PG_k_q(INT k, INT q, permutation &per, INT f_v, INT f_vv)
+void permutation::induce_on_lines_of_PG_k_q(int k, int q, permutation &per, int f_v, int f_vv)
 {
 	domain *dom;
-	INT nb_pts, nb_lines;
-	INT i, j, p1, p2, q1, q2;
+	int nb_pts, nb_lines;
+	int i, j, p1, p2, q1, q2;
 	
 	dom = allocate_finite_field_domain(q, f_v);
 	matrix L;
@@ -1183,12 +1183,12 @@ void permutation::induce_on_lines_of_PG_k_q(INT k, INT q, permutation &per, INT 
 	}
 }
 
-void permutation::singer_cycle_on_points_of_projective_plane(INT p, INT f_modified, INT f_v)
+void permutation::singer_cycle_on_points_of_projective_plane(int p, int f_modified, int f_v)
 {
 	unipoly a;
 	matrix M;
-	INT l;
-	INT f_action_from_right = TRUE;
+	int l;
+	int f_action_from_right = TRUE;
 	
 	a.Singer(p, 3, FALSE, FALSE);
 	cout << "permutation::singer_cycle_on_points_of_projective_plane(): primitive polynomial: " << a << endl;
@@ -1217,9 +1217,9 @@ void permutation::singer_cycle_on_points_of_projective_plane(INT p, INT f_modifi
 		}
 }
 
-void permutation::Cn_in_Cnm(INT n, INT m)
+void permutation::Cn_in_Cnm(int n, int m)
 {
-	INT i, nm = n * m;
+	int i, nm = n * m;
 	
 	if (n < 1) {
 		cout << "permutation::Cn_in_Cnm()n < 1" << endl;
@@ -1238,9 +1238,9 @@ void permutation::Cn_in_Cnm(INT n, INT m)
 	power_int(m);
 }
 
-INT permutation::preimage(INT i)
+int permutation::preimage(int i)
 {
-	INT j, l;
+	int j, l;
 	
 	l = s_l();
 	for (j = 0; j < l; j++) {
@@ -1251,12 +1251,12 @@ INT permutation::preimage(INT i)
 	exit(1);
 }
 
-void permutation::m_l(INT l)
+void permutation::m_l(int l)
 {
-	INT i;
+	int i;
 	
 	freeself();
-	self.vector_pointer = calloc_nobjects_plus_length(l, INTEGER);
+	self.vector_pointer = calloc_nobjects_plus_length(l, intEGER);
 	for (i = 0; i < l; i++) {
 		s_i(i) = i;
 		}
@@ -1264,21 +1264,21 @@ void permutation::m_l(INT l)
 
 void signum_map(discreta_base & x, discreta_base &d)
 {
-	INT sgn;
+	int sgn;
 	
 	if (x.s_kind() != PERMUTATION) {
 		cout << "signum_map() x must be a permutation" << endl;
 		exit(1);
 		}
 	permutation & p = x.as_permutation();
-	INT f_v = FALSE;
+	int f_v = FALSE;
 	sgn = p.signum(f_v);
 	d.change_to_integer();
 	d.m_i_i(sgn);
 }
 
 #if 0
-char get_character(istream & is, INT f_v)
+char get_character(istream & is, int f_v)
 {
 	char c;
 	
@@ -1288,7 +1288,7 @@ char get_character(istream & is, INT f_v)
 		}
 	is >> c;
 	if (f_v) {
-		cout << "get_character: \"" << c << "\", ascii=" << (INT)c << endl;
+		cout << "get_character: \"" << c << "\", ascii=" << (int)c << endl;
 		}
 	return c;
 }

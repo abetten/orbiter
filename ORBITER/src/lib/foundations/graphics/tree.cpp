@@ -21,15 +21,15 @@ tree::~tree()
 #define TREEPATHLEN 10000
 #define BUFSIZE_TREE 100000
 
-void tree::init(const char *fname, INT xmax, INT ymax, INT verbose_level)
+void tree::init(const char *fname, int xmax, int ymax, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
 	char *buf;
 	char *p_buf;
-	INT l, a, i, i_data, nb_nodes;
+	int l, a, i, i_data, nb_nodes;
 	char *c_data;
-	INT path[TREEPATHLEN];
+	int path[TREEPATHLEN];
 	
 	if (f_v) {
 		cout << "reading tree from file " << fname << endl;
@@ -128,9 +128,9 @@ void tree::init(const char *fname, INT xmax, INT ymax, INT verbose_level)
 	if (f_vv) {
 		root->print_depth_first();
 		}
-	tree::path = NEW_INT(max_depth + 1);
+	tree::path = NEW_int(max_depth + 1);
 
-	INT my_nb_nodes;
+	int my_nb_nodes;
 	
 	compute_DFS_ranks(my_nb_nodes, verbose_level);
 	
@@ -143,18 +143,18 @@ void tree::init(const char *fname, INT xmax, INT ymax, INT verbose_level)
 
 }
 
-void tree::draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, INT rad, 
-	INT f_circle, INT f_circletext, INT f_i, INT f_edge_labels, 
-	INT f_has_draw_vertex_callback, 
-	void (*draw_vertex_callback)(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, 
-		INT x, INT y, INT dx, INT dy), 
-	INT f_embedded, INT f_sideways, INT f_on_circle, 
+void tree::draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, int rad, 
+	int f_circle, int f_circletext, int f_i, int f_edge_labels, 
+	int f_has_draw_vertex_callback, 
+	void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, 
+		int x, int y, int dx, int dy), 
+	int f_embedded, int f_sideways, int f_on_circle, 
 	double tikz_global_scale, double tikz_global_line_width
 	)
 {
-	INT x_min = 0, x_max = xmax_in;
-	INT y_min = 0, y_max = ymax_in;
-	INT factor_1000 = 1000;
+	int x_min = 0, x_max = xmax_in;
+	int y_min = 0, y_max = ymax_in;
+	int factor_1000 = 1000;
 	char fname_full[1000];
 	
 	strcpy(fname_full, fname);
@@ -184,7 +184,7 @@ void tree::draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, INT r
 	//G.frame(0.05);
 	
 #if 0
-	INT x = 500000, y;
+	int x = 500000, y;
 	calc_y_coordinate(y, 0, max_depth);
 	
 	if (f_circletext) {
@@ -197,11 +197,11 @@ void tree::draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, INT r
 
 	//root->draw_sideways(G, f_circletext, f_i, FALSE, 10000 - 0, 10000 - 0, max_depth, f_edge_labels);
 
-	INT *radii = NULL;
-	INT x0, y0;
+	int *radii = NULL;
+	int x0, y0;
 	
 	if (f_on_circle) {
-		INT l;
+		int l;
 
 #if 1
 		G.sl_thickness(30); // 100 is normal
@@ -230,7 +230,7 @@ void tree::draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, INT r
 	root->draw_vertices(G, rad, f_circle, f_circletext, f_i, FALSE, 0, 0, max_depth, f_edge_labels, f_has_draw_vertex_callback, draw_vertex_callback, this);
 
 	if (f_on_circle) {
-		FREE_INT(radii);
+		FREE_int(radii);
 		}
 
 
@@ -241,16 +241,16 @@ void tree::draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, INT r
 	
 }
 
-void tree::circle_center_and_radii(INT xmax, INT ymax, INT max_depth, INT &x0, INT &y0, INT *&rad)
+void tree::circle_center_and_radii(int xmax, int ymax, int max_depth, int &x0, int &y0, int *&rad)
 {
-	INT l, dy;
+	int l, dy;
 	double y;
 
 	x0 = xmax * 0.5;
 	y0 = ymax * 0.5;
-	rad = NEW_INT(max_depth + 1);
+	rad = NEW_int(max_depth + 1);
 	for (l = 0; l <= max_depth; l++) {
-		dy = (INT)((double)ymax / (double)(max_depth + 1));
+		dy = (int)((double)ymax / (double)(max_depth + 1));
 		y = tree_node_calc_y_coordinate(ymax, l, max_depth);
 		y = ymax - y;
 		y -= dy * 0.5;
@@ -259,10 +259,10 @@ void tree::circle_center_and_radii(INT xmax, INT ymax, INT max_depth, INT &x0, I
 		}
 }
 
-void tree::compute_DFS_ranks(INT &nb_nodes, INT verbose_level)
+void tree::compute_DFS_ranks(int &nb_nodes, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk;
+	int f_v = (verbose_level >= 1);
+	int rk;
 
 	if (f_v) {
 		cout << "tree::compute_DFS_ranks" << endl;

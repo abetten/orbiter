@@ -53,11 +53,11 @@ void linear_group_description::freeself()
 	null();
 }
 
-INT linear_group_description::read_arguments(
+int linear_group_description::read_arguments(
 	int argc, const char **argv,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT i;
+	int i;
 
 	cout << "linear_group_description::read_arguments" << endl;
 	for (i = 0; i < argc; i++) {

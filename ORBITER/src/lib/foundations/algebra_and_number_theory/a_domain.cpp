@@ -30,52 +30,52 @@ void a_domain::freeself()
 	
 }
 
-void a_domain::init_integers(INT verbose_level)
+void a_domain::init_integers(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::init_integers" << endl;
 		}
 	kind = domain_the_integers;
-	size_of_instance_in_INT = 1;
+	size_of_instance_in_int = 1;
 }
 
-void a_domain::init_integer_fractions(INT verbose_level)
+void a_domain::init_integer_fractions(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::init_integer_fractions" << endl;
 		}
 	kind = domain_integer_fractions;
-	size_of_instance_in_INT = 2;
+	size_of_instance_in_int = 2;
 }
 
 
-INT a_domain::as_INT(INT *elt, INT verbose_level)
+int a_domain::as_int(int *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
-		cout << "a_domain::as_INT" << endl;
+		cout << "a_domain::as_int" << endl;
 		}
 	if (kind == domain_the_integers) {
 		return elt[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, g;
+		int at, ab, g;
 
 		at = elt[0];
 		ab = elt[1];
 		if (at == 0) {
 			return 0;
 			}
-		g = gcd_INT(at, ab);
+		g = gcd_int(at, ab);
 		at /= g;
 		ab /= g;
 		if (ab != 1 && ab != -1) {
-			cout << "a_domain::as_INT the number is not an integer" << endl;
+			cout << "a_domain::as_int the number is not an integer" << endl;
 			exit(1);
 			}
 		if (ab == -1) {
@@ -84,14 +84,14 @@ INT a_domain::as_INT(INT *elt, INT verbose_level)
 		return at;
 		}
 	else {
-		cout << "a_domain::as_INT unknown domain kind" << endl;
+		cout << "a_domain::as_int unknown domain kind" << endl;
 		exit(1);
 		}
 }
 
-void a_domain::make_integer(INT *elt, INT n, INT verbose_level)
+void a_domain::make_integer(int *elt, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::make_integer" << endl;
@@ -109,9 +109,9 @@ void a_domain::make_integer(INT *elt, INT n, INT verbose_level)
 		}
 }
 
-void a_domain::make_zero(INT *elt, INT verbose_level)
+void a_domain::make_zero(int *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::make_zero" << endl;
@@ -129,23 +129,23 @@ void a_domain::make_zero(INT *elt, INT verbose_level)
 		}
 }
 
-void a_domain::make_zero_vector(INT *elt, INT len, INT verbose_level)
+void a_domain::make_zero_vector(int *elt, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "a_domain::make_zero_vector" << endl;
 		}
 	for (i = 0; i < len; i++) {
-		make_zero(elt + i * size_of_instance_in_INT, 0);
+		make_zero(elt + i * size_of_instance_in_int, 0);
 		}
 }
 
-INT a_domain::is_zero_vector(INT *elt, INT len, INT verbose_level)
+int a_domain::is_zero_vector(int *elt, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "a_domain::is_zero_vector" << endl;
@@ -162,10 +162,10 @@ INT a_domain::is_zero_vector(INT *elt, INT len, INT verbose_level)
 }
 
 
-INT a_domain::is_zero(INT *elt, INT verbose_level)
+int a_domain::is_zero(int *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 
 	if (f_v) {
 		cout << "a_domain::is_zero" << endl;
@@ -193,9 +193,9 @@ INT a_domain::is_zero(INT *elt, INT verbose_level)
 	return ret;
 }
 
-void a_domain::make_one(INT *elt, INT verbose_level)
+void a_domain::make_one(int *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::make_one" << endl;
@@ -213,10 +213,10 @@ void a_domain::make_one(INT *elt, INT verbose_level)
 		}
 }
 
-INT a_domain::is_one(INT *elt, INT verbose_level)
+int a_domain::is_one(int *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret = FALSE;
+	int f_v = (verbose_level >= 1);
+	int ret = FALSE;
 
 	if (f_v) {
 		cout << "a_domain::is_one" << endl;
@@ -230,7 +230,7 @@ INT a_domain::is_one(INT *elt, INT verbose_level)
 			}
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, g;
+		int at, ab, g;
 		
 		at = elt[0];
 		ab = elt[1];
@@ -238,7 +238,7 @@ INT a_domain::is_one(INT *elt, INT verbose_level)
 			ret = FALSE;
 			}
 		else {
-			g = gcd_INT(at, ab);
+			g = gcd_int(at, ab);
 			at = at / g;
 			ab = ab / g;
 			if (ab < 0) {
@@ -260,9 +260,9 @@ INT a_domain::is_one(INT *elt, INT verbose_level)
 	return ret;
 }
 
-void a_domain::copy(INT *elt_from, INT *elt_to, INT verbose_level)
+void a_domain::copy(int *elt_from, int *elt_to, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::copy" << endl;
@@ -280,10 +280,10 @@ void a_domain::copy(INT *elt_from, INT *elt_to, INT verbose_level)
 		}
 }
 
-void a_domain::copy_vector(INT *elt_from, INT *elt_to, INT len, INT verbose_level)
+void a_domain::copy_vector(int *elt_from, int *elt_to, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "a_domain::copy_vector" << endl;
@@ -294,34 +294,34 @@ void a_domain::copy_vector(INT *elt_from, INT *elt_to, INT len, INT verbose_leve
 }
 
 
-void a_domain::swap_vector(INT *elt1, INT *elt2, INT n, INT verbose_level)
+void a_domain::swap_vector(int *elt1, int *elt2, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "a_domain::swap_vector" << endl;
 		}
 	for (i = 0; i < n; i++) {
-		swap(elt1 + i * size_of_instance_in_INT, elt2 + i * size_of_instance_in_INT, 0);
+		swap(elt1 + i * size_of_instance_in_int, elt2 + i * size_of_instance_in_int, 0);
 		}
 }
 
-void a_domain::swap(INT *elt1, INT *elt2, INT verbose_level)
+void a_domain::swap(int *elt1, int *elt2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::swap" << endl;
 		}
 	if (kind == domain_the_integers) {
-		INT a;
+		int a;
 		a = elt2[0];
 		elt2[0] = elt1[0];
 		elt1[0] = a;
 		}
 	else if (kind == domain_integer_fractions) {
-		INT a;
+		int a;
 		a = elt2[0];
 		elt2[0] = elt1[0];
 		elt1[0] = a;
@@ -335,9 +335,9 @@ void a_domain::swap(INT *elt1, INT *elt2, INT verbose_level)
 		}
 }
 
-void a_domain::add(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
+void a_domain::add(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::add" << endl;
@@ -346,14 +346,14 @@ void a_domain::add(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		elt_c[0] = elt_a[0] + elt_b[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, bt, bb, ct, cb;
+		int at, ab, bt, bb, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
 		bt = elt_b[0];
 		bb = elt_b[1];
 		
-		INT_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		int_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 
 		elt_c[0] = ct;
 		elt_c[1] = cb;
@@ -364,9 +364,9 @@ void a_domain::add(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		}
 }
 
-void a_domain::add_apply(INT *elt_a, INT *elt_b, INT verbose_level)
+void a_domain::add_apply(int *elt_a, int *elt_b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::add_apply" << endl;
@@ -375,14 +375,14 @@ void a_domain::add_apply(INT *elt_a, INT *elt_b, INT verbose_level)
 		elt_a[0] = elt_a[0] + elt_b[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, bt, bb, ct, cb;
+		int at, ab, bt, bb, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
 		bt = elt_b[0];
 		bb = elt_b[1];
 		
-		INT_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		int_add_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 
 		elt_a[0] = ct;
 		elt_a[1] = cb;
@@ -393,9 +393,9 @@ void a_domain::add_apply(INT *elt_a, INT *elt_b, INT verbose_level)
 		}
 }
 
-void a_domain::subtract(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
+void a_domain::subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::subtract" << endl;
@@ -404,13 +404,13 @@ void a_domain::subtract(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		elt_c[0] = elt_a[0] + elt_b[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, bt, bb, g, a1, b1, ct, cb;
+		int at, ab, bt, bb, g, a1, b1, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
 		bt = elt_b[0];
 		bb = elt_b[1];
-		g = gcd_INT(ab, bb);
+		g = gcd_int(ab, bb);
 		a1 = ab / g;
 		b1 = bb / g;
 		cb = a1 * g;
@@ -424,9 +424,9 @@ void a_domain::subtract(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		}
 }
 
-void a_domain::negate(INT *elt, INT verbose_level)
+void a_domain::negate(int *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::negate" << endl;
@@ -443,10 +443,10 @@ void a_domain::negate(INT *elt, INT verbose_level)
 		}
 }
 
-void a_domain::negate_vector(INT *elt, INT len, INT verbose_level)
+void a_domain::negate_vector(int *elt, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "a_domain::negate" << endl;
@@ -456,9 +456,9 @@ void a_domain::negate_vector(INT *elt, INT len, INT verbose_level)
 		}
 }
 
-void a_domain::mult(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
+void a_domain::mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::mult" << endl;
@@ -467,7 +467,7 @@ void a_domain::mult(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		elt_c[0] = elt_a[0] * elt_b[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, bt, bb, ct, cb;
+		int at, ab, bt, bb, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
@@ -475,7 +475,7 @@ void a_domain::mult(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		bb = elt_b[1];
 
 
-		INT_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 		
 		elt_c[0] = ct;
 		elt_c[1] = cb;
@@ -486,9 +486,9 @@ void a_domain::mult(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		}
 }
 
-void a_domain::mult_apply(INT *elt_a, INT *elt_b, INT verbose_level)
+void a_domain::mult_apply(int *elt_a, int *elt_b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::mult_apply" << endl;
@@ -497,7 +497,7 @@ void a_domain::mult_apply(INT *elt_a, INT *elt_b, INT verbose_level)
 		elt_a[0] = elt_a[0] * elt_b[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, bt, bb, ct, cb;
+		int at, ab, bt, bb, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
@@ -505,7 +505,7 @@ void a_domain::mult_apply(INT *elt_a, INT *elt_b, INT verbose_level)
 		bb = elt_b[1];
 
 
-		INT_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
+		int_mult_fractions(at, ab, bt, bb, ct, cb, 0 /* verbose_level */);
 		
 		//cout << "a_domain::mult_apply " << at << "/" << ab << " * " << bt << "/" << bb << " = " << ct << "/" << bb << endl;
 		
@@ -518,20 +518,20 @@ void a_domain::mult_apply(INT *elt_a, INT *elt_b, INT verbose_level)
 		}
 }
 
-void a_domain::power(INT *elt_a, INT *elt_b, INT n, INT verbose_level)
+void a_domain::power(int *elt_a, int *elt_b, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *tmp1;
-	INT *tmp2;
-	INT *tmp3;
+	int f_v = (verbose_level >= 1);
+	int *tmp1;
+	int *tmp2;
+	int *tmp3;
 
 
 	if (f_v) {
 		cout << "a_domain::power" << endl;
 		}
-	tmp1 = NEW_INT(size_of_instance_in_INT);
-	tmp2 = NEW_INT(size_of_instance_in_INT);
-	tmp3 = NEW_INT(size_of_instance_in_INT);
+	tmp1 = NEW_int(size_of_instance_in_int);
+	tmp2 = NEW_int(size_of_instance_in_int);
+	tmp3 = NEW_int(size_of_instance_in_int);
 
 	if (n < 0) {
 		cout << "a_domain::power exponent is negative" << endl;
@@ -552,17 +552,17 @@ void a_domain::power(INT *elt_a, INT *elt_b, INT n, INT verbose_level)
 		copy(tmp2, tmp3, 0);
 		}
 	copy(tmp1, elt_b, 0);
-	FREE_INT(tmp1);
-	FREE_INT(tmp2);
-	FREE_INT(tmp3);
+	FREE_int(tmp1);
+	FREE_int(tmp2);
+	FREE_int(tmp3);
 	if (f_v) {
 		cout << "a_domain::power done" << endl;
 		}
 }
 
-void a_domain::mult_by_integer(INT *elt, INT n, INT verbose_level)
+void a_domain::mult_by_integer(int *elt, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::mult_by_integer" << endl;
@@ -579,15 +579,15 @@ void a_domain::mult_by_integer(INT *elt, INT n, INT verbose_level)
 		}
 }
 
-void a_domain::divide_by_integer(INT *elt, INT n, INT verbose_level)
+void a_domain::divide_by_integer(int *elt, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::divide_by_integer" << endl;
 		}
 	if (kind == domain_the_integers) {
-		INT a;
+		int a;
 
 		a = elt[0];
 		if (a % n) {
@@ -597,11 +597,11 @@ void a_domain::divide_by_integer(INT *elt, INT n, INT verbose_level)
 		elt[0] /= n;
 		}
 	else if (kind == domain_integer_fractions) {
-		INT a, b, g, n1;
+		int a, b, g, n1;
 
 		a = elt[0];
 		b = elt[1];
-		g = gcd_INT(a, n);
+		g = gcd_int(a, n);
 		a /= g;
 		n1 = n / g;
 		b *= n1;	
@@ -615,25 +615,25 @@ void a_domain::divide_by_integer(INT *elt, INT n, INT verbose_level)
 }
 
 
-void a_domain::divide(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
+void a_domain::divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::divide" << endl;
 		}
 	if (kind == domain_the_integers) {
-		INT g;
+		int g;
 
 		if (elt_b[0] == 0) {
 			cout << "a_domain::divide division by zero" << endl;
 			exit(1);
 			}
-		g = gcd_INT(elt_a[0], elt_b[0]);
+		g = gcd_int(elt_a[0], elt_b[0]);
 		elt_c[0] = elt_a[0] / g;
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab, bt, bb, ct, cb;
+		int at, ab, bt, bb, ct, cb;
 
 		at = elt_a[0];
 		ab = elt_a[1];
@@ -645,7 +645,7 @@ void a_domain::divide(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 			exit(1);
 			}
 
-		INT_mult_fractions(at, ab, bb, bt, ct, cb, 0 /* verbose_level */);
+		int_mult_fractions(at, ab, bb, bt, ct, cb, 0 /* verbose_level */);
 
 		elt_c[0] = ct;
 		elt_c[1] = cb;
@@ -656,15 +656,15 @@ void a_domain::divide(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level)
 		}
 }
 
-void a_domain::inverse(INT *elt_a, INT *elt_b, INT verbose_level)
+void a_domain::inverse(int *elt_a, int *elt_b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::inverse" << endl;
 		}
 	if (kind == domain_the_integers) {
-		INT a, av;
+		int a, av;
 		
 		a = elt_a[0];
 		if (a == 1) {
@@ -680,7 +680,7 @@ void a_domain::inverse(INT *elt_a, INT *elt_b, INT verbose_level)
 		elt_b[0] = av;
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab;
+		int at, ab;
 
 		
 		at = elt_a[0];
@@ -699,13 +699,13 @@ void a_domain::inverse(INT *elt_a, INT *elt_b, INT verbose_level)
 }
 
 
-void a_domain::print(INT *elt)
+void a_domain::print(int *elt)
 {
 	if (kind == domain_the_integers) {
 		cout << elt[0];
 		}
 	else if (kind == domain_integer_fractions) {
-		INT at, ab;
+		int at, ab;
 
 		at = elt[0];
 		ab = elt[1];
@@ -734,9 +734,9 @@ void a_domain::print(INT *elt)
 		}
 }
 
-void a_domain::print_vector(INT *elt, INT n)
+void a_domain::print_vector(int *elt, int n)
 {
-	INT i;
+	int i;
 	
 	cout << "(";
 	for (i = 0; i < n; i++) {
@@ -748,9 +748,9 @@ void a_domain::print_vector(INT *elt, INT n)
 	cout << ")";
 }
 
-void a_domain::print_matrix(INT *A, INT m, INT n)
+void a_domain::print_matrix(int *A, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -763,9 +763,9 @@ void a_domain::print_matrix(INT *A, INT m, INT n)
 		}
 }
 
-void a_domain::print_matrix_for_maple(INT *A, INT m, INT n)
+void a_domain::print_matrix_for_maple(int *A, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	cout << "[";
 	for (i = 0; i < m; i++) {
@@ -786,9 +786,9 @@ void a_domain::print_matrix_for_maple(INT *A, INT m, INT n)
 		}
 }
 
-void a_domain::make_element_from_integer(INT *elt, INT n, INT verbose_level)
+void a_domain::make_element_from_integer(int *elt, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "a_domain::make_element_from_integer" << endl;
@@ -810,23 +810,23 @@ void a_domain::make_element_from_integer(INT *elt, INT n, INT verbose_level)
 		}
 }
 
-INT *a_domain::offset(INT *A, INT i)
+int *a_domain::offset(int *A, int i)
 {
-	return A + i * size_of_instance_in_INT;
+	return A + i * size_of_instance_in_int;
 }
 
-INT a_domain::Gauss_echelon_form(INT *A, INT f_special, INT f_complete, INT *base_cols, 
-	INT f_P, INT *P, INT m, INT n, INT Pn, INT verbose_level)
+int a_domain::Gauss_echelon_form(int *A, int f_special, int f_complete, int *base_cols, 
+	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
 // P is a m x Pn matrix (if f_P is TRUE)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT rank, i, j, k, jj;
-	INT *pivot, *pivot_inv;
-	INT *a, *b, *c, *z, *f;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int rank, i, j, k, jj;
+	int *pivot, *pivot_inv;
+	int *a, *b, *c, *z, *f;
 	
 	if (f_v) {
 		cout << "Gauss algorithm for matrix:" << endl;
@@ -835,13 +835,13 @@ INT a_domain::Gauss_echelon_form(INT *A, INT f_special, INT f_complete, INT *bas
 		print_matrix(A, m, n);
 		}
 
-	pivot = NEW_INT(size_of_instance_in_INT);
-	pivot_inv = NEW_INT(size_of_instance_in_INT);
-	a = NEW_INT(size_of_instance_in_INT);
-	b = NEW_INT(size_of_instance_in_INT);
-	c = NEW_INT(size_of_instance_in_INT);
-	z = NEW_INT(size_of_instance_in_INT);
-	f = NEW_INT(size_of_instance_in_INT);
+	pivot = NEW_int(size_of_instance_in_int);
+	pivot_inv = NEW_int(size_of_instance_in_int);
+	a = NEW_int(size_of_instance_in_int);
+	b = NEW_int(size_of_instance_in_int);
+	c = NEW_int(size_of_instance_in_int);
+	z = NEW_int(size_of_instance_in_int);
+	f = NEW_int(size_of_instance_in_int);
 
 	i = 0;
 	for (j = 0; j < n; j++) {
@@ -1077,13 +1077,13 @@ INT a_domain::Gauss_echelon_form(INT *A, INT f_special, INT f_complete, INT *bas
 			} // next i
 		}
 
-	FREE_INT(pivot);
-	FREE_INT(pivot_inv);
-	FREE_INT(a);
-	FREE_INT(b);
-	FREE_INT(c);
-	FREE_INT(z);
-	FREE_INT(f);
+	FREE_int(pivot);
+	FREE_int(pivot_inv);
+	FREE_int(a);
+	FREE_int(b);
+	FREE_int(c);
+	FREE_int(z);
+	FREE_int(f);
 	
 	if (f_v) { 
 		cout << endl;
@@ -1094,21 +1094,21 @@ INT a_domain::Gauss_echelon_form(INT *A, INT f_special, INT f_complete, INT *bas
 }
 
 
-void a_domain::Gauss_step(INT *v1, INT *v2, INT len, INT idx, INT verbose_level)
+void a_domain::Gauss_step(int *v1, int *v2, int len, int idx, int verbose_level)
 // afterwards: v2[idx] = 0 and v1,v2 span the same space as before
 // v1 is not changed if v1[idx] is nonzero
 {
-	INT i;
-	INT f_v = (verbose_level >= 1);
-	INT *tmp1;
-	INT *tmp2;
+	int i;
+	int f_v = (verbose_level >= 1);
+	int *tmp1;
+	int *tmp2;
 	
 	if (f_v) {
 		cout << "Gauss_step" << endl;
 		}
 
-	tmp1 = NEW_INT(size_of_instance_in_INT);
-	tmp2 = NEW_INT(size_of_instance_in_INT);
+	tmp1 = NEW_int(size_of_instance_in_int);
+	tmp2 = NEW_int(size_of_instance_in_int);
 
 	if (is_zero(offset(v2, idx), 0)) {
 		goto after;
@@ -1137,26 +1137,26 @@ after:
 		cout << "Gauss_step done" << endl;
 		}
 
-	FREE_INT(tmp1);
-	FREE_INT(tmp2);
+	FREE_int(tmp1);
+	FREE_int(tmp2);
 }
 
-void a_domain::matrix_get_kernel(INT *M, INT m, INT n, INT *base_cols, INT nb_base_cols, 
-	INT &kernel_m, INT &kernel_n, INT *kernel, INT verbose_level)
-// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) INT's)
+void a_domain::matrix_get_kernel(int *M, int m, int n, int *base_cols, int nb_base_cols, 
+	int &kernel_m, int &kernel_n, int *kernel, int verbose_level)
+// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) int's)
 // kernel is stored as column vectors, i.e. kernel_m = n and kernel_n = n - nb_base_cols.
 {
-	INT f_v = (verbose_level >= 1);
-	INT r, k, i, j, ii, jj;
-	INT *kernel_cols;
-	INT *zero;
-	INT *m_one;
+	int f_v = (verbose_level >= 1);
+	int r, k, i, j, ii, jj;
+	int *kernel_cols;
+	int *zero;
+	int *m_one;
 	
 	if (f_v) {
 		cout << "a_domain::matrix_get_kernel" << endl;
 		}
-	zero = NEW_INT(size_of_instance_in_INT);
-	m_one = NEW_INT(size_of_instance_in_INT);
+	zero = NEW_int(size_of_instance_in_int);
+	m_one = NEW_int(size_of_instance_in_int);
 
 	make_zero(zero, 0);
 	make_one(m_one, 0);
@@ -1168,9 +1168,9 @@ void a_domain::matrix_get_kernel(INT *M, INT m, INT n, INT *base_cols, INT nb_ba
 	kernel_m = n;
 	kernel_n = k;
 	
-	kernel_cols = NEW_INT(k);
+	kernel_cols = NEW_int(k);
 
-	INT_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
+	int_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
 	
 
 	for (i = 0; i < r; i++) {
@@ -1194,30 +1194,30 @@ void a_domain::matrix_get_kernel(INT *M, INT m, INT n, INT *base_cols, INT nb_ba
 		}
 	
 
-	FREE_INT(kernel_cols);
-	FREE_INT(zero);
-	FREE_INT(m_one);
+	FREE_int(kernel_cols);
+	FREE_int(zero);
+	FREE_int(m_one);
 	if (f_v) {
 		cout << "a_domain::matrix_get_kernel done" << endl;
 		}
 }
 
-void a_domain::matrix_get_kernel_as_row_vectors(INT *M, INT m, INT n, INT *base_cols, INT nb_base_cols, 
-	INT &kernel_m, INT &kernel_n, INT *kernel, INT verbose_level)
-// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) INT's)
+void a_domain::matrix_get_kernel_as_row_vectors(int *M, int m, int n, int *base_cols, int nb_base_cols, 
+	int &kernel_m, int &kernel_n, int *kernel, int verbose_level)
+// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) int's)
 // kernel is stored as row vectors, i.e. kernel_m = n - nb_base_cols and kernel_n = n.
 {
-	INT f_v = (verbose_level >= 1);
-	INT r, k, i, j, ii, jj;
-	INT *kernel_cols;
-	INT *zero;
-	INT *m_one;
+	int f_v = (verbose_level >= 1);
+	int r, k, i, j, ii, jj;
+	int *kernel_cols;
+	int *zero;
+	int *m_one;
 	
 	if (f_v) {
 		cout << "a_domain::matrix_get_kernel_as_row_vectors" << endl;
 		}
-	zero = NEW_INT(size_of_instance_in_INT);
-	m_one = NEW_INT(size_of_instance_in_INT);
+	zero = NEW_int(size_of_instance_in_int);
+	m_one = NEW_int(size_of_instance_in_int);
 
 	make_zero(zero, 0);
 	make_one(m_one, 0);
@@ -1229,9 +1229,9 @@ void a_domain::matrix_get_kernel_as_row_vectors(INT *M, INT m, INT n, INT *base_
 	kernel_m = k;
 	kernel_n = n;
 	
-	kernel_cols = NEW_INT(k);
+	kernel_cols = NEW_int(k);
 
-	INT_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
+	int_vec_complement(base_cols, kernel_cols, n, nb_base_cols);
 	
 
 	for (i = 0; i < r; i++) {
@@ -1255,28 +1255,28 @@ void a_domain::matrix_get_kernel_as_row_vectors(INT *M, INT m, INT n, INT *base_
 		}
 	
 
-	FREE_INT(kernel_cols);
-	FREE_INT(zero);
-	FREE_INT(m_one);
+	FREE_int(kernel_cols);
+	FREE_int(zero);
+	FREE_int(m_one);
 	if (f_v) {
 		cout << "a_domain::matrix_get_kernel_as_row_vectors done" << endl;
 		}
 }
 
-void a_domain::get_image_and_kernel(INT *M, INT n, INT &rk, INT verbose_level)
+void a_domain::get_image_and_kernel(int *M, int n, int &rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_special = FALSE;
-	INT f_complete = TRUE;
-	INT *base_cols;
-	INT f_P = FALSE;
-	INT kernel_m, kernel_n;
+	int f_v = (verbose_level >= 1);
+	int f_special = FALSE;
+	int f_complete = TRUE;
+	int *base_cols;
+	int f_P = FALSE;
+	int kernel_m, kernel_n;
 	
 	if (f_v) {
 		cout << "a_domain::get_image_and_kernel" << endl;
 		}
 
-	base_cols = NEW_INT(n);
+	base_cols = NEW_int(n);
 	rk = Gauss_echelon_form(M, f_special, f_complete, base_cols, 
 		f_P, NULL, n, n, n, verbose_level);
 
@@ -1288,31 +1288,31 @@ void a_domain::get_image_and_kernel(INT *M, INT n, INT &rk, INT verbose_level)
 		print_matrix(M, n, n);
 		}
 
-	FREE_INT(base_cols);
+	FREE_int(base_cols);
 	if (f_v) {
 		cout << "a_domain::get_image_and_kernel done" << endl;
 		}
 }
 
-void a_domain::complete_basis(INT *M, INT m, INT n, INT verbose_level)
+void a_domain::complete_basis(int *M, int m, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_special = FALSE;
-	INT f_complete = TRUE;
-	INT f_P = FALSE;
-	INT *M1;
-	INT *base_cols;
-	INT *kernel_cols;
-	INT i, j, k, a, rk;
+	int f_v = (verbose_level >= 1);
+	int f_special = FALSE;
+	int f_complete = TRUE;
+	int f_P = FALSE;
+	int *M1;
+	int *base_cols;
+	int *kernel_cols;
+	int i, j, k, a, rk;
 	
 	if (f_v) {
 		cout << "a_domain::complete_basis" << endl;
 		}
 
-	M1 = NEW_INT(m * n * size_of_instance_in_INT);
+	M1 = NEW_int(m * n * size_of_instance_in_int);
 	copy_vector(M, M1, m * n, 0);
 	
-	base_cols = NEW_INT(n);
+	base_cols = NEW_int(n);
 
 	rk = Gauss_echelon_form(M1, f_special, f_complete, base_cols, 
 		f_P, NULL, m, n, n, verbose_level);
@@ -1324,9 +1324,9 @@ void a_domain::complete_basis(INT *M, INT m, INT n, INT verbose_level)
 	
 	k = n - rk;
 
-	kernel_cols = NEW_INT(k);
+	kernel_cols = NEW_int(k);
 
-	INT_vec_complement(base_cols, kernel_cols, n, rk);
+	int_vec_complement(base_cols, kernel_cols, n, rk);
 	for (i = rk; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			make_zero(offset(M, i * n + j), 0);
@@ -1342,20 +1342,20 @@ void a_domain::complete_basis(INT *M, INT m, INT n, INT verbose_level)
 		print_matrix(M, n, n);
 		}
 
-	FREE_INT(base_cols);
-	FREE_INT(kernel_cols);
-	FREE_INT(M1);
+	FREE_int(base_cols);
+	FREE_int(kernel_cols);
+	FREE_int(M1);
 	if (f_v) {
 		cout << "a_domain::complete_basis done" << endl;
 		}
 }
 
-void a_domain::mult_matrix(INT *A, INT *B, INT *C, INT ma, INT na, INT nb, INT verbose_level)
+void a_domain::mult_matrix(int *A, int *B, int *C, int ma, int na, int nb, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, k;
-	INT *D, *E;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k;
+	int *D, *E;
 	
 	if (f_v) {
 		cout << "a_domain::mult_matrix" << endl;
@@ -1366,8 +1366,8 @@ void a_domain::mult_matrix(INT *A, INT *B, INT *C, INT ma, INT na, INT nb, INT v
 		cout << "a_domain::mult_matrix B=" << endl;
 		print_matrix(B, na, nb);
 		}
-	D = NEW_INT(size_of_instance_in_INT);
-	E = NEW_INT(size_of_instance_in_INT);
+	D = NEW_int(size_of_instance_in_int);
+	E = NEW_int(size_of_instance_in_int);
 	for (i = 0; i < ma; i++) {
 		for (k = 0; k < nb; k++) {
 			make_zero(D, 0);
@@ -1378,8 +1378,8 @@ void a_domain::mult_matrix(INT *A, INT *B, INT *C, INT ma, INT na, INT nb, INT v
 			copy(D, offset(C, i * nb + k), 0);
 			}
 		}
-	FREE_INT(D);
-	FREE_INT(E);
+	FREE_int(D);
+	FREE_int(E);
 	if (f_vv) {
 		cout << "a_domain::mult_matrix C=" << endl;
 		print_matrix(C, ma, nb);
@@ -1389,27 +1389,27 @@ void a_domain::mult_matrix(INT *A, INT *B, INT *C, INT ma, INT na, INT nb, INT v
 		}
 }
 
-void a_domain::mult_matrix3(INT *A, INT *B, INT *C, INT *D, INT n, INT verbose_level)
+void a_domain::mult_matrix3(int *A, int *B, int *C, int *D, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *T;
+	int f_v = (verbose_level >= 1);
+	int *T;
 	
 	if (f_v) {
 		cout << "a_domain::mult_matrix3" << endl;
 		}
-	T = NEW_INT(n * n * size_of_instance_in_INT);
+	T = NEW_int(n * n * size_of_instance_in_int);
 	mult_matrix(A, B, T, n, n, n, 0);
 	mult_matrix(T, C, D, n, n, n, 0);
-	FREE_INT(T);
+	FREE_int(T);
 	if (f_v) {
 		cout << "a_domain::mult_matrix3 done" << endl;
 		}
 }
 
-void a_domain::add_apply_matrix(INT *A, INT *B, INT m, INT n, INT verbose_level)
+void a_domain::add_apply_matrix(int *A, int *B, int m, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 	
 	if (f_v) {
 		cout << "a_domain::add_apply_matrix" << endl;
@@ -1424,10 +1424,10 @@ void a_domain::add_apply_matrix(INT *A, INT *B, INT m, INT n, INT verbose_level)
 		}
 }
 
-void a_domain::matrix_mult_apply_scalar(INT *A, INT *s, INT m, INT n, INT verbose_level)
+void a_domain::matrix_mult_apply_scalar(int *A, int *s, int m, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 	
 	if (f_v) {
 		cout << "a_domain::matrix_mult_apply_scalar" << endl;
@@ -1442,11 +1442,11 @@ void a_domain::matrix_mult_apply_scalar(INT *A, INT *s, INT m, INT n, INT verbos
 		}
 }
 
-void a_domain::make_block_matrix_2x2(INT *Mtx, INT n, INT k, INT *A, INT *B, INT *C, INT *D, INT verbose_level)
+void a_domain::make_block_matrix_2x2(int *Mtx, int n, int k, int *A, int *B, int *C, int *D, int verbose_level)
 // A is k x k, B is k x (n - k), C is (n - k) x k, D is (n - k) x (n - k), Mtx is n x n
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, r;
+	int f_v = (verbose_level >= 1);
+	int i, j, r;
 	
 	if (f_v) {
 		cout << "a_domain::make_block_matrix_2x2" << endl;
@@ -1478,10 +1478,10 @@ void a_domain::make_block_matrix_2x2(INT *Mtx, INT n, INT k, INT *A, INT *B, INT
 		}
 }
 
-void a_domain::make_identity_matrix(INT *A, INT n, INT verbose_level)
+void a_domain::make_identity_matrix(int *A, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "a_domain::make_identity_matrix" << endl;
@@ -1495,26 +1495,26 @@ void a_domain::make_identity_matrix(INT *A, INT n, INT verbose_level)
 		}
 }
 
-void a_domain::matrix_inverse(INT *A, INT *Ainv, INT n, INT verbose_level)
+void a_domain::matrix_inverse(int *A, int *Ainv, int n, int verbose_level)
 {
-	INT *T, *basecols;
+	int *T, *basecols;
 	
-	T = NEW_INT(n * n * size_of_instance_in_INT);
-	basecols = NEW_INT(n * size_of_instance_in_INT);
+	T = NEW_int(n * n * size_of_instance_in_int);
+	basecols = NEW_int(n * size_of_instance_in_int);
 	
 	matrix_invert(A, T, basecols, Ainv, n, verbose_level);
 	
-	FREE_INT(T);
-	FREE_INT(basecols);
+	FREE_int(T);
+	FREE_int(basecols);
 }
 
-void a_domain::matrix_invert(INT *A, INT *T, INT *basecols, INT *Ainv, INT n, INT verbose_level)
+void a_domain::matrix_invert(int *A, int *T, int *basecols, int *Ainv, int n, int verbose_level)
 // T[n * n]
 // basecols[n]
 {
-	INT rk;
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int rk;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "a_domain::matrix_invert" << endl;

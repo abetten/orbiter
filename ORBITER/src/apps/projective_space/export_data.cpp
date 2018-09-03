@@ -12,14 +12,14 @@
 
 int main(int argc, char **argv)
 {
-	INT t0 = os_ticks();
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q;
-	INT f_TP = FALSE;
-	INT f_BLT = FALSE;
-	INT k;
+	int t0 = os_ticks();
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q;
+	int f_TP = FALSE;
+	int f_BLT = FALSE;
+	int k;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -44,34 +44,34 @@ int main(int argc, char **argv)
 
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname[1000];
 
 
 	if (f_TP) {
-		INT nb_reps;
-		INT *p;
-		INT *Table;
-		INT width;
+		int nb_reps;
+		int *p;
+		int *Table;
+		int width;
 		
-		sprintf(fname, "Spread_%ld_%ld.csv", q, k);
+		sprintf(fname, "Spread_%d_%d.csv", q, k);
 		nb_reps = Spread_nb_reps(q, k);
 		width = i_power_j(q, k) + 1;
-		Table = NEW_INT(nb_reps * width);
+		Table = NEW_int(nb_reps * width);
 		for (i = 0; i < nb_reps; i++) {
-			INT sz;
+			int sz;
 			
 			p = Spread_representative(q, k, i, sz);
-			INT_vec_copy(p, Table + i * width, width);
+			int_vec_copy(p, Table + i * width, width);
 			}
-		INT_matrix_write_csv(fname, Table, nb_reps, width);
-		FREE_INT(Table);
+		int_matrix_write_csv(fname, Table, nb_reps, width);
+		FREE_int(Table);
 		}
 	else if (f_BLT) {
-		INT *BLT;
+		int *BLT;
 
 		BLT = BLT_representative(q, k);
-		sprintf(fname, "BLT_%ld_%ld.txt", q, k);
+		sprintf(fname, "BLT_%d_%d.txt", q, k);
 		write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 		}
 	if (f_v) {

@@ -69,9 +69,9 @@
 
 
 
-INT cubic_surface_nb_reps(INT q)
+int cubic_surface_nb_reps(int q)
 {
-	INT nb;
+	int nb;
 
 	if (q == 4) {
 		nb = surface_4_nb_reps;
@@ -177,10 +177,10 @@ INT cubic_surface_nb_reps(INT q)
 	return nb;
 }
 
-INT *cubic_surface_representative(INT q, INT i)
+int *cubic_surface_representative(int q, int i)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	int *p, nb, sz;
 	if (q == 4) {
 		p = surface_4_reps;
 		nb = surface_4_nb_reps;
@@ -360,12 +360,12 @@ INT *cubic_surface_representative(INT q, INT i)
 	return p;
 }
 
-void cubic_surface_stab_gens(INT q, INT i,
-		INT *&data, INT &nb_gens, INT &data_size, const char *&stab_order)
+void cubic_surface_stab_gens(int q, int i,
+		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
-	INT *Reps;
-	INT nb, make_element_size;
-	INT f, l;
+	int *Reps;
+	int nb, make_element_size;
+	int f, l;
 	
 	if (q == 4) {
 		Reps = surface_4_stab_gens;
@@ -643,10 +643,10 @@ void cubic_surface_stab_gens(INT q, INT i,
 	data = Reps + f * make_element_size;
 }
 
-INT cubic_surface_nb_Eckardt_points(INT q, INT i)
+int cubic_surface_nb_Eckardt_points(int q, int i)
 // i starts from 0
 {
-	INT *p, nb; //, sz;
+	int *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_nb_E;
 		nb = surface_4_nb_reps;
@@ -826,10 +826,10 @@ INT cubic_surface_nb_Eckardt_points(INT q, INT i)
 }
 
 
-INT *cubic_surface_single_six(INT q, INT i)
+int *cubic_surface_single_six(int q, int i)
 // i starts from 0
 {
-	INT *p, nb; //, sz;
+	int *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_single_six;
 		nb = surface_4_nb_reps;
@@ -1008,10 +1008,10 @@ INT *cubic_surface_single_six(INT q, INT i)
 	return p + i * 6;
 }
 
-INT *cubic_surface_Lines(INT q, INT i)
+int *cubic_surface_Lines(int q, int i)
 // i starts from 0
 {
-	INT *p, nb; //, sz;
+	int *p, nb; //, sz;
 	if (q == 4) {
 		p = surface_4_Lines;
 		nb = surface_4_nb_reps;
@@ -1197,9 +1197,9 @@ INT *cubic_surface_Lines(INT q, INT i)
 // #############################################################################
 
 
-INT hyperoval_nb_reps(INT q)
+int hyperoval_nb_reps(int q)
 {
-	INT nb;
+	int nb;
 
 	if (q == 8) {
 		nb = arcs_8_10_nb_reps;
@@ -1218,10 +1218,10 @@ INT hyperoval_nb_reps(INT q)
 	return nb;
 }
 
-INT *hyperoval_representative(INT q, INT i)
+int *hyperoval_representative(int q, int i)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	int *p, nb, sz;
 	if (q == 8) {
 		p = arcs_8_10_reps;
 		nb = arcs_8_10_nb_reps;
@@ -1256,12 +1256,12 @@ INT *hyperoval_representative(INT q, INT i)
 	return p;
 }
 
-void hyperoval_gens(INT q, INT i,
-		INT *&data, INT &nb_gens, INT &data_size, const char *&stab_order)
+void hyperoval_gens(int q, int i,
+		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
-	INT *Reps;
-	INT nb, make_element_size;
-	INT f, l;
+	int *Reps;
+	int nb, make_element_size;
+	int f, l;
 	
 	if (q == 8) {
 		Reps = arcs_8_10_stab_gens;
@@ -1317,9 +1317,9 @@ void hyperoval_gens(INT q, INT i,
 
 
 
-INT DH_nb_reps(INT k, INT n)
+int DH_nb_reps(int k, int n)
 {
-	INT nb;
+	int nb;
 
 	if (k == 4 && n == 7) {
 		nb = DH_4_7_nb_reps;
@@ -1335,10 +1335,10 @@ INT DH_nb_reps(INT k, INT n)
 	return nb;
 }
 
-INT *DH_representative(INT k, INT n, INT i)
+int *DH_representative(int k, int n, int i)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	int *p, nb, sz;
 	if (k == 4 && n == 7) {
 		p = DH_4_7_reps;
 		nb = DH_4_7_nb_reps;
@@ -1368,12 +1368,12 @@ INT *DH_representative(INT k, INT n, INT i)
 	return p;
 }
 
-void DH_stab_gens(INT k, INT n, INT i,
-		INT *&data, INT &nb_gens, INT &data_size, const char *&stab_order)
+void DH_stab_gens(int k, int n, int i,
+		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
-	INT *Reps;
-	INT nb, make_element_size;
-	INT f, l;
+	int *Reps;
+	int nb, make_element_size;
+	int f, l;
 	
 	if (k == 4 && n == 7) {
 		Reps = DH_4_7_stab_gens;
@@ -1422,9 +1422,9 @@ void DH_stab_gens(INT k, INT n, INT i,
 
 
 
-INT Spread_nb_reps(INT q, INT k)
+int Spread_nb_reps(int q, int k)
 {
-	INT nb;
+	int nb;
 
 	if (q == 2 && k == 2) {
 		nb = Spreads_2_2_nb_reps;
@@ -1453,10 +1453,10 @@ INT Spread_nb_reps(INT q, INT k)
 }
 
 
-INT *Spread_representative(INT q, INT k, INT i, INT &sz)
+int *Spread_representative(int q, int k, int i, int &sz)
 // i starts from 0
 {
-	INT *p, nb;
+	int *p, nb;
 
 	if (q == 2 && k == 2) {
 		p = Spreads_2_2_reps;
@@ -1507,12 +1507,12 @@ INT *Spread_representative(INT q, INT k, INT i, INT &sz)
 	return p;
 }
 
-void Spread_stab_gens(INT q, INT k, INT i,
-		INT *&data, INT &nb_gens, INT &data_size, const char *&stab_order)
+void Spread_stab_gens(int q, int k, int i,
+		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
-	INT *Reps;
-	INT nb, make_element_size;
-	INT f, l;
+	int *Reps;
+	int nb, make_element_size;
+	int f, l;
 	
 	if (q == 2 && k == 2) {
 		Reps = Spreads_2_2_stab_gens;
@@ -1590,9 +1590,9 @@ void Spread_stab_gens(INT q, INT k, INT i,
 
 
 
-INT BLT_nb_reps(INT q)
+int BLT_nb_reps(int q)
 {
-	INT nb;
+	int nb;
 
 	if (q == 3) {
 		nb = BLT_3_nb_reps;
@@ -1671,10 +1671,10 @@ INT BLT_nb_reps(INT q)
 	return nb;
 }
 
-INT *BLT_representative(INT q, INT no)
+int *BLT_representative(int q, int no)
 // i starts from 0
 {
-	INT *p, nb, sz;
+	int *p, nb, sz;
 
 	if (q == 3) {
 		p = BLT_3_reps;
@@ -1810,12 +1810,12 @@ INT *BLT_representative(INT q, INT no)
 	return p;
 }
 
-void BLT_stab_gens(INT q, INT no,
-		INT *&data, INT &nb_gens, INT &data_size, const char *&stab_order)
+void BLT_stab_gens(int q, int no,
+		int *&data, int &nb_gens, int &data_size, const char *&stab_order)
 {
-	INT *Reps;
-	INT nb, make_element_size;
-	INT f, l;
+	int *Reps;
+	int nb, make_element_size;
+	int f, l;
 	
 	if (q == 3) {
 		Reps = BLT_3_stab_gens;
@@ -2024,10 +2024,10 @@ void BLT_stab_gens(INT q, INT no,
 
 
 
-const char *override_polynomial_subfield(INT q)
+const char *override_polynomial_subfield(int q)
 {
 	const char *override_poly = NULL;
-	INT p, h;
+	int p, h;
 	
 	if (!is_prime_power(q, p, h)) {
 		cout << "override_polynomial_subfield "
@@ -2062,9 +2062,9 @@ const char *override_polynomial_subfield(INT q)
 		cout << "override_polynomial_subfield, "
 				"do not have a polynomial for q=" << q << endl;
 		
-		INT verbose_level = 2;
+		int verbose_level = 2;
 		finite_field f, F;
-		INT qq = q * q;
+		int qq = q * q;
 		
 		cout << "initializing large field" << endl;
 		F.init(qq, verbose_level);
@@ -2085,10 +2085,10 @@ const char *override_polynomial_subfield(INT q)
 	return override_poly;
 }
 
-const char *override_polynomial_extension_field(INT q)
+const char *override_polynomial_extension_field(int q)
 {
 	const char *override_poly = NULL;
-	INT p, h;
+	int p, h;
 	
 	if (!is_prime_power(q, p, h)) {
 		cout << "override_polynomial_extension_field q is not a prime power" << endl;
@@ -2212,11 +2212,11 @@ const char *override_polynomial_extension_field(INT q)
 		}
 #endif
 
-void create_Fisher_BLT_set(INT *Fisher_BLT,
-		INT q, const char *poly_q, const char *poly_Q, INT verbose_level)
+void create_Fisher_BLT_set(int *Fisher_BLT,
+		int q, const char *poly_q, const char *poly_Q, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	unusual_model U;
 	
 	U.setup(q, poly_q, poly_Q, verbose_level);
@@ -2224,11 +2224,11 @@ void create_Fisher_BLT_set(INT *Fisher_BLT,
 	
 }
 
-void create_Linear_BLT_set(INT *BLT, INT q,
-		const char *poly_q, const char *poly_Q, INT verbose_level)
+void create_Linear_BLT_set(int *BLT, int q,
+		const char *poly_q, const char *poly_Q, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	unusual_model U;
 	
 	U.setup(q, poly_q, poly_Q, verbose_level);
@@ -2236,11 +2236,11 @@ void create_Linear_BLT_set(INT *BLT, INT q,
 	
 }
 
-void create_Mondello_BLT_set(INT *BLT, INT q,
-		const char *poly_q, const char *poly_Q, INT verbose_level)
+void create_Mondello_BLT_set(int *BLT, int q,
+		const char *poly_q, const char *poly_Q, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	unusual_model U;
 	
 	U.setup(q, poly_q, poly_Q, verbose_level);
@@ -2248,10 +2248,10 @@ void create_Mondello_BLT_set(INT *BLT, INT q,
 	
 }
 
-void print_quadratic_form_list_coded(INT form_nb_terms, 
-	INT *form_i, INT *form_j, INT *form_coeff)
+void print_quadratic_form_list_coded(int form_nb_terms, 
+	int *form_i, int *form_j, int *form_coeff)
 {
-	INT k;
+	int k;
 	
 	for (k = 0; k < form_nb_terms; k++) {
 		cout << "i=" << form_i[k] << " j=" << form_j[k]
@@ -2260,12 +2260,12 @@ void print_quadratic_form_list_coded(INT form_nb_terms,
 }
 
 void make_Gram_matrix_from_list_coded_quadratic_form(
-	INT n, finite_field &F,
-	INT nb_terms, INT *form_i, INT *form_j, INT *form_coeff, INT *Gram)
+	int n, finite_field &F,
+	int nb_terms, int *form_i, int *form_j, int *form_coeff, int *Gram)
 {
-	INT k, i, j, c;
+	int k, i, j, c;
 	
-	INT_vec_zero(Gram, n * n);
+	int_vec_zero(Gram, n * n);
 #if 0
 	for (i = 0; i < n * n; i++)
 		Gram[i] = 0;
@@ -2282,10 +2282,10 @@ void make_Gram_matrix_from_list_coded_quadratic_form(
 		}
 }
 
-void add_term(INT n, finite_field &F,
-	INT &nb_terms, INT *form_i, INT *form_j, INT *form_coeff,
-	INT *Gram,
-	INT i, INT j, INT coeff)
+void add_term(int n, finite_field &F,
+	int &nb_terms, int *form_i, int *form_j, int *form_coeff,
+	int *Gram,
+	int i, int j, int coeff)
 {
 	form_i[nb_terms] = i;
 	form_j[nb_terms] = j;
@@ -2301,15 +2301,15 @@ void add_term(INT n, finite_field &F,
 }
 
 void create_BLT_point(finite_field *F,
-		INT *v5, INT a, INT b, INT c, INT verbose_level)
+		int *v5, int a, int b, int c, int verbose_level)
 // creates the point (-b/2,-c,a,-(b^2/4-ac),1) 
 // check if it satisfies x_0^2 + x_1x_2 + x_3x_4:
 // b^2/4 + (-c)*a + -(b^2/4-ac)
 // = b^2/4 -ac -b^2/4 + ac = 0
 {
-	INT f_v = (verbose_level >= 1);
-	INT v0, v1, v2, v3, v4;
-	INT half, four, quarter, minus_one;
+	int f_v = (verbose_level >= 1);
+	int v0, v1, v2, v3, v4;
+	int half, four, quarter, minus_one;
 	
 	if (f_v) {
 		cout << "create_BLT_point" << endl;
@@ -2331,7 +2331,7 @@ void create_BLT_point(finite_field *F,
 	v3 = F->mult(minus_one, F->add(
 			F->mult(F->mult(b, b), quarter), F->negate(F->mult(a, c))));
 	v4 = 1;
-	INT_vec_init5(v5, v0, v1, v2, v3, v4);
+	int_vec_init5(v5, v0, v1, v2, v3, v4);
 	if (f_v) {
 		cout << "create_BLT_point done" << endl;
 		}
@@ -2339,19 +2339,19 @@ void create_BLT_point(finite_field *F,
 }
 
 void create_FTWKB_BLT_set(orthogonal *O,
-		INT *set, INT verbose_level)
+		int *set, int verbose_level)
 // for q congruent 2 mod 3
 // a(t)= t, b(t) = 3*t^2, c(t) = 3*t^3, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5];
-	INT r, i, a, b, c;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int r, i, a, b, c;
 	finite_field *F;
 	
 	F = O->F;
-	INT q = F->q;
+	int q = F->q;
 	if (q <= 5) {
 		cout << "create_FTWKB_BLT_set q <= 5" << endl;
 		exit(1);
@@ -2372,7 +2372,7 @@ void create_FTWKB_BLT_set(orthogonal *O,
 		create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -2380,10 +2380,10 @@ void create_FTWKB_BLT_set(orthogonal *O,
 			cout << "rank " << set[i] << endl;
 			}
 		}
-	INT_vec_init5(v, 0, 0, 0, 1, 0);
+	int_vec_init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
-		INT_vec_print(cout, v, 5);
+		int_vec_print(cout, v, 5);
 		cout << endl;
 		}
 	set[q] = O->rank_point(v, 1, 0);
@@ -2392,22 +2392,22 @@ void create_FTWKB_BLT_set(orthogonal *O,
 		}
 	if (f_v) {
 		cout << "the BLT set FTWKB is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void create_K1_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_K1_BLT_set(orthogonal *O, int *set, int verbose_level)
 // for a nonsquare m, and q=p^e
 // a(t)= t, b(t) = 0, c(t) = -m*t^p, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5];
-	INT i, m, minus_one, exponent, a, b, c;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int i, m, minus_one, exponent, a, b, c;
 	finite_field *F;
-	INT q;
+	int q;
 	
 	F = O->F;
 	q = F->q;
@@ -2430,7 +2430,7 @@ void create_K1_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -2438,10 +2438,10 @@ void create_K1_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 			cout << "rank " << set[i] << endl;
 			}
 		}
-	INT_vec_init5(v, 0, 0, 0, 1, 0);
+	int_vec_init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
-		INT_vec_print(cout, v, 5);
+		int_vec_print(cout, v, 5);
 		cout << endl;
 		}
 	set[q] = O->rank_point(v, 1, 0);
@@ -2450,22 +2450,22 @@ void create_K1_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "the BLT set K1 is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void create_K2_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_K2_BLT_set(orthogonal *O, int *set, int verbose_level)
 // for q congruent 2 or 3 mod 5
 // a(t)= t, b(t) = 5*t^3, c(t) = 5*t^5, all t \in GF(q)
 // together with the point (0, 0, 0, 1, 0)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5];
-	INT five, r, i, a, b, c;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5];
+	int five, r, i, a, b, c;
 	finite_field *F;
-	INT q;
+	int q;
 	
 	F = O->F;
 	q = F->q;
@@ -2490,7 +2490,7 @@ void create_K2_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		create_BLT_point(F, v, a, b, c, verbose_level - 2);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -2498,10 +2498,10 @@ void create_K2_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 			cout << "rank " << set[i] << endl;
 			}
 		}
-	INT_vec_init5(v, 0, 0, 0, 1, 0);
+	int_vec_init5(v, 0, 0, 0, 1, 0);
 	if (f_vv) {
 		cout << "point : ";
-		INT_vec_print(cout, v, 5);
+		int_vec_print(cout, v, 5);
 		cout << endl;
 		}
 	set[q] = O->rank_point(v, 1, 0);
@@ -2510,19 +2510,19 @@ void create_K2_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "the BLT set K2 is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
 void create_LP_37_72_BLT_set(orthogonal *O,
-		INT *set, INT verbose_level)
+		int *set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5], v0, v1, v2, v3, v4;
-	INT i;
-	INT coordinates[] = {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
 		0,0,0,0,1,
 		1,0,0,0,0,
 		1,20,1,33,5,
@@ -2563,7 +2563,7 @@ void create_LP_37_72_BLT_set(orthogonal *O,
 		1,34,9,29,6
 		};
 	finite_field *F;
-	INT q;
+	int q;
 	
 	F = O->F;
 	q = F->q;
@@ -2577,10 +2577,10 @@ void create_LP_37_72_BLT_set(orthogonal *O,
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		INT_vec_init5(v, v0, v1, v2, v3, v4);
+		int_vec_init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -2590,18 +2590,18 @@ void create_LP_37_72_BLT_set(orthogonal *O,
 		}
 	if (f_v) {
 		cout << "the BLT set LP_37_72 is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void create_LP_37_4a_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_LP_37_4a_BLT_set(orthogonal *O, int *set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5], v0, v1, v2, v3, v4;
-	INT i;
-	INT coordinates[] = {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
 		0,0,0,0,1,
 		1,0,0,0,0,
 		1,9,16,8,5,
@@ -2642,7 +2642,7 @@ void create_LP_37_4a_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		1,16,31,29,18
 		};
 	finite_field *F;
-	INT q;
+	int q;
 	
 	F = O->F;
 	q = F->q;
@@ -2656,10 +2656,10 @@ void create_LP_37_4a_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		INT_vec_init5(v, v0, v1, v2, v3, v4);
+		int_vec_init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -2669,18 +2669,18 @@ void create_LP_37_4a_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "the BLT set LP_37_4a is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
-void create_LP_37_4b_BLT_set(orthogonal *O, INT *set, INT verbose_level)
+void create_LP_37_4b_BLT_set(orthogonal *O, int *set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5], v0, v1, v2, v3, v4;
-	INT i;
-	INT coordinates[] = {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
 		0,0,0,0,1,
 		1,0,0,0,0,
 		1,3,7,25,24,
@@ -2721,7 +2721,7 @@ void create_LP_37_4b_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		1,36,27,6,17
 		};
 	finite_field *F;
-	INT q;
+	int q;
 	
 	F = O->F;
 	q = F->q;
@@ -2735,10 +2735,10 @@ void create_LP_37_4b_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		INT_vec_init5(v, v0, v1, v2, v3, v4);
+		int_vec_init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -2748,20 +2748,20 @@ void create_LP_37_4b_BLT_set(orthogonal *O, INT *set, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "the BLT set LP_37_4b is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }
 
 void Segre_hyperoval(finite_field *F,
-		INT *&Pts, INT &nb_pts, INT verbose_level)
+		int *&Pts, int &nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
-	INT e = F->e;
-	INT N = q + 2;
-	INT i, t, a, t6;
-	INT *Mtx;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
+	int e = F->e;
+	int N = q + 2;
+	int i, t, a, t6;
+	int *Mtx;
 
 	if (f_v) {
 		cout << "Segre_hyperoval q=" << q << endl;
@@ -2773,9 +2773,9 @@ void Segre_hyperoval(finite_field *F,
 
 	nb_pts = N;
 
-	Pts = NEW_INT(N);
-	Mtx = NEW_INT(N * 3);
-	INT_vec_zero(Mtx, N * 3);
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		t6 = F->power(t, 6);
 		Mtx[t * 3 + 0] = 1;
@@ -2795,7 +2795,7 @@ void Segre_hyperoval(finite_field *F,
 		Pts[i] = a;
 		}
 
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	if (f_v) {
 		cout << "Segre_hyperoval q=" << q << " done" << endl;
 		}
@@ -2803,15 +2803,15 @@ void Segre_hyperoval(finite_field *F,
 
 
 void GlynnI_hyperoval(finite_field *F,
-		INT *&Pts, INT &nb_pts, INT verbose_level)
+		int *&Pts, int &nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
-	INT e = F->e;
-	INT N = q + 2;
-	INT i, t, te, a;
-	INT sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
-	INT *Mtx;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
+	int e = F->e;
+	int N = q + 2;
+	int i, t, te, a;
+	int sigma, gamma = 0, Sigma, /*Gamma,*/ exponent;
+	int *Mtx;
 
 	if (f_v) {
 		cout << "GlynnI_hyperoval q=" << q << endl;
@@ -2842,9 +2842,9 @@ void GlynnI_hyperoval(finite_field *F,
 
 	nb_pts = N;
 
-	Pts = NEW_INT(N);
-	Mtx = NEW_INT(N * 3);
-	INT_vec_zero(Mtx, N * 3);
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		te = F->power(t, exponent);
 		Mtx[t * 3 + 0] = 1;
@@ -2864,22 +2864,22 @@ void GlynnI_hyperoval(finite_field *F,
 		Pts[i] = a;
 		}
 
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	if (f_v) {
 		cout << "GlynnI_hyperoval q=" << q << " done" << endl;
 		}
 }
 
 void GlynnII_hyperoval(finite_field *F,
-		INT *&Pts, INT &nb_pts, INT verbose_level)
+		int *&Pts, int &nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
-	INT e = F->e;
-	INT N = q + 2;
-	INT i, t, te, a;
-	INT sigma, gamma = 0, Sigma, Gamma, exponent;
-	INT *Mtx;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
+	int e = F->e;
+	int N = q + 2;
+	int i, t, te, a;
+	int sigma, gamma = 0, Sigma, Gamma, exponent;
+	int *Mtx;
 
 	if (f_v) {
 		cout << "GlynnII_hyperoval q=" << q << endl;
@@ -2909,9 +2909,9 @@ void GlynnII_hyperoval(finite_field *F,
 
 	nb_pts = N;
 
-	Pts = NEW_INT(N);
-	Mtx = NEW_INT(N * 3);
-	INT_vec_zero(Mtx, N * 3);
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		te = F->power(t, exponent);
 		Mtx[t * 3 + 0] = 1;
@@ -2931,7 +2931,7 @@ void GlynnII_hyperoval(finite_field *F,
 		Pts[i] = a;
 		}
 
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	if (f_v) {
 		cout << "GlynnII_hyperoval q=" << q << " done" << endl;
 		}
@@ -2965,21 +2965,21 @@ void GlynnII_hyperoval(finite_field *F,
 //Best,Tim
 
 
-void Adelaide_hyperoval(subfield_structure *S, INT *&Pts, INT &nb_pts, INT verbose_level)
+void Adelaide_hyperoval(subfield_structure *S, int *&Pts, int &nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	finite_field *Fq = S->Fq;
 	finite_field *FQ = S->FQ;
-	INT q = Fq->q;
-	INT e = Fq->e;
-	INT N = q + 2;
+	int q = Fq->q;
+	int e = Fq->e;
+	int N = q + 2;
 	
-	INT i, t, b, bq, bk, tr_b, tr_bk, tr_b_down, tr_bk_down, tr_b_down_inv;
-	INT a, tr_a, tr_a_down, t_lift, alpha, k;
-	INT sqrt_t, c, cv, d, f;
-	INT top1, top2, u, v, w, r;
-	INT *Mtx;
+	int i, t, b, bq, bk, tr_b, tr_bk, tr_b_down, tr_bk_down, tr_b_down_inv;
+	int a, tr_a, tr_a_down, t_lift, alpha, k;
+	int sqrt_t, c, cv, d, f;
+	int top1, top2, u, v, w, r;
+	int *Mtx;
 
 	if (f_v) {
 		cout << "Adelaide_hyperoval q=" << q << endl;
@@ -3021,9 +3021,9 @@ void Adelaide_hyperoval(subfield_structure *S, INT *&Pts, INT &nb_pts, INT verbo
 	tr_b_down_inv = Fq->inverse(tr_b_down);
 
 
-	Pts = NEW_INT(N);
-	Mtx = NEW_INT(N * 3);
-	INT_vec_zero(Mtx, N * 3);
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 
 		sqrt_t = Fq->frobenius_power(t, e - 1);
@@ -3074,7 +3074,7 @@ void Adelaide_hyperoval(subfield_structure *S, INT *&Pts, INT &nb_pts, INT verbo
 		Pts[i] = r;
 		}
 
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 
 	if (f_v) {
 		cout << "Adelaide_hyperoval q=" << q << " done" << endl;
@@ -3091,16 +3091,16 @@ void Adelaide_hyperoval(subfield_structure *S, INT *&Pts, INT &nb_pts, INT verbo
 // formula (53)
 
 void Subiaco_oval(finite_field *F,
-		INT *&Pts, INT &nb_pts, INT f_short, INT verbose_level)
+		int *&Pts, int &nb_pts, int f_short, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
-	INT e = F->e;
-	INT N = q + 1;
-	INT i, t, a, b, h, alpha, k, top, bottom;
-	INT omega, omega2;
-	INT t2, t3, t4, sqrt_t;
-	INT *Mtx;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
+	int e = F->e;
+	int N = q + 1;
+	int i, t, a, b, h, alpha, k, top, bottom;
+	int omega, omega2;
+	int t2, t3, t4, sqrt_t;
+	int *Mtx;
 
 	if (f_v) {
 		cout << "Subiaco_oval q=" << q << " f_short=" << f_short << endl;
@@ -3119,9 +3119,9 @@ void Subiaco_oval(finite_field *F,
 		cout << "Subiaco_oval F->add3(omega2, omega, 1) != 0" << endl;
 		exit(1);
 		}
-	Pts = NEW_INT(N);
-	Mtx = NEW_INT(N * 3);
-	INT_vec_zero(Mtx, N * 3);
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		t2 = F->mult(t, t);
 		t3 = F->mult(t2, t);
@@ -3163,7 +3163,7 @@ void Subiaco_oval(finite_field *F,
 		Pts[i] = a;
 		}
 
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	if (f_v) {
 		cout << "Subiaco_oval q=" << q << " done" << endl;
 		}
@@ -3186,16 +3186,16 @@ void Subiaco_oval(finite_field *F,
 
 
 void Subiaco_hyperoval(finite_field *F,
-		INT *&Pts, INT &nb_pts, INT verbose_level)
+		int *&Pts, int &nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
-	INT e = F->e;
-	INT N = q + 2;
-	INT i, t, d, dv, d2, one_d_d2, a, h;
-	INT t2, t3, t4, sqrt_t;
-	INT top1, top2, top3, top4, top, bottom;
-	INT *Mtx;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
+	int e = F->e;
+	int N = q + 2;
+	int i, t, d, dv, d2, one_d_d2, a, h;
+	int t2, t3, t4, sqrt_t;
+	int top1, top2, top3, top4, top, bottom;
+	int *Mtx;
 
 	if (f_v) {
 		cout << "Subiaco_hyperoval q=" << q << endl;
@@ -3215,9 +3215,9 @@ void Subiaco_hyperoval(finite_field *F,
 	d2 = F->mult(d, d);
 	one_d_d2 = F->add3(1, d, d2);
 
-	Pts = NEW_INT(N);
-	Mtx = NEW_INT(N * 3);
-	INT_vec_zero(Mtx, N * 3);
+	Pts = NEW_int(N);
+	Mtx = NEW_int(N * 3);
+	int_vec_zero(Mtx, N * 3);
 	for (t = 0; t < q; t++) {
 		t2 = F->mult(t, t);
 		t3 = F->mult(t2, t);
@@ -3263,7 +3263,7 @@ void Subiaco_hyperoval(finite_field *F,
 		Pts[i] = a;
 		}
 
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	if (f_v) {
 		cout << "Subiaco_hyperoval q=" << q << " done" << endl;
 		}
@@ -3286,14 +3286,14 @@ void Subiaco_hyperoval(finite_field *F,
 //where ß is a primitive root of GF(32) satisfying beta^5 = beta^2 + 1.
 //The full automorphism group of this hyperoval has order 3.
 
-INT OKeefe_Penttila_32(finite_field *F, INT t)
+int OKeefe_Penttila_32(finite_field *F, int t)
 // needs the field generated by beta with beta^5 = beta^2+1
 // From Bill Cherowitzo's hyperoval page
 {
-	INT *t_powers;
-	INT a, b, c, d, e, beta6, beta11, beta20;
+	int *t_powers;
+	int a, b, c, d, e, beta6, beta11, beta20;
 
-	t_powers = NEW_INT(31);
+	t_powers = NEW_int(31);
 	
 	F->power_table(t, t_powers, 31);
 	a = F->add3(t_powers[4], t_powers[16], t_powers[28]);
@@ -3312,20 +3312,20 @@ INT OKeefe_Penttila_32(finite_field *F, INT t)
 
 	e = F->add4(a, b, c, d);
 
-	FREE_INT(t_powers);
+	FREE_int(t_powers);
 	return e;
 }
 
 
 
-INT Subiaco64_1(finite_field *F, INT t)
+int Subiaco64_1(finite_field *F, int t)
 // needs the field generated by beta with beta^6 = beta+1
 // The first one from Bill Cherowitzo's hyperoval page
 {
-	INT *t_powers;
-	INT a, b, c, d, beta21, beta42;
+	int *t_powers;
+	int a, b, c, d, beta21, beta42;
 
-	t_powers = NEW_INT(65);
+	t_powers = NEW_int(65);
 	
 	F->power_table(t, t_powers, 65);
 	a = F->add6(t_powers[8], t_powers[12], t_powers[20],
@@ -3340,18 +3340,18 @@ INT Subiaco64_1(finite_field *F, INT t)
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);
 	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
-	FREE_INT(t_powers);
+	FREE_int(t_powers);
 	return d;
 }
 
-INT Subiaco64_2(finite_field *F, INT t)
+int Subiaco64_2(finite_field *F, int t)
 // needs the field generated by beta with beta^6 = beta+1
 // The second one from Bill Cherowitzo's hyperoval page
 {
-	INT *t_powers;
-	INT a, b, c, d, beta21, beta42;
+	int *t_powers;
+	int a, b, c, d, beta21, beta42;
 
-	t_powers = NEW_INT(65);
+	t_powers = NEW_int(65);
 	
 	F->power_table(t, t_powers, 65);
 	a = F->add3(t_powers[24], t_powers[30], t_powers[62]);
@@ -3368,17 +3368,17 @@ INT Subiaco64_2(finite_field *F, INT t)
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);
 	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
-	FREE_INT(t_powers);
+	FREE_int(t_powers);
 	return d;
 }
 
-INT Adelaide64(finite_field *F, INT t)
+int Adelaide64(finite_field *F, int t)
 // needs the field generated by beta with beta^6 = beta+1
 {
-	INT *t_powers;
-	INT a, b, c, d, beta21, beta42;
+	int *t_powers;
+	int a, b, c, d, beta21, beta42;
 
-	t_powers = NEW_INT(65);
+	t_powers = NEW_int(65);
 	
 	F->power_table(t, t_powers, 65);
 	a = F->add7(t_powers[4], t_powers[8], t_powers[14], t_powers[34],
@@ -3390,21 +3390,21 @@ INT Adelaide64(finite_field *F, INT t)
 	beta21 = F->power(2, 21);
 	beta42 = F->mult(beta21, beta21);
 	d = F->add3(a, F->mult(beta21, b), F->mult(beta42, c));
-	FREE_INT(t_powers);
+	FREE_int(t_powers);
 	return d;
 }
 
 
 
-void LunelliSce(finite_field *Fq, INT *pts18, INT verbose_level)
+void LunelliSce(finite_field *Fq, int *pts18, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//const char *override_poly = "19";
 	//finite_field F;
-	//INT n = 3;
-	//INT q = 16;
-	INT v[3];
-	//INT w[3];
+	//int n = 3;
+	//int q = 16;
+	int v[3];
+	//int w[3];
 
 	if (f_v) {
 		cout << "LunelliSce" << endl;
@@ -3413,15 +3413,15 @@ void LunelliSce(finite_field *Fq, INT *pts18, INT verbose_level)
 	//F.init_override_polynomial(q, override_poly, verbose_level);
 
 #if 0
-	INT cubic1[100];
-	INT cubic1_size = 0;
-	INT cubic2[100];
-	INT cubic2_size = 0;
-	INT hoval[100];
-	INT hoval_size = 0;
+	int cubic1[100];
+	int cubic1_size = 0;
+	int cubic2[100];
+	int cubic2_size = 0;
+	int hoval[100];
+	int hoval_size = 0;
 #endif
 	
-	INT a, b, i, sz, N;
+	int a, b, i, sz, N;
 
 	if (Fq->q != 16) {
 		cout << "LunelliSce field order must be 16" << endl;
@@ -3432,7 +3432,7 @@ void LunelliSce(finite_field *Fq, INT *pts18, INT verbose_level)
 	for (i = 0; i < N; i++) {
 		PG_element_unrank_modified(*Fq, v, 1, 3, i);
 		//cout << "i=" << i << " v=";
-		//INT_vec_print(cout, v, 3);
+		//int_vec_print(cout, v, 3);
 		//cout << endl;
 		
 		a = LunelliSce_evaluate_cubic1(Fq, v);
@@ -3450,27 +3450,27 @@ void LunelliSce(finite_field *Fq, INT *pts18, INT verbose_level)
 	if (f_v) {
 		cout << "the size of the LinelliSce hyperoval is " << sz << endl;
 		cout << "the LinelliSce hyperoval is:" << endl;
-		INT_vec_print(cout, pts18, sz);
+		int_vec_print(cout, pts18, sz);
 		cout << endl;
 		}
 
 #if 0
 	cout << "the size of cubic1 is " << cubic1_size << endl;
 	cout << "the cubic1 is:" << endl;
-	INT_vec_print(cout, cubic1, cubic1_size);
+	int_vec_print(cout, cubic1, cubic1_size);
 	cout << endl;
 	cout << "the size of cubic2 is " << cubic2_size << endl;
 	cout << "the cubic2 is:" << endl;
-	INT_vec_print(cout, cubic2, cubic2_size);
+	int_vec_print(cout, cubic2, cubic2_size);
 	cout << endl;
 #endif
 
 }
 
-INT LunelliSce_evaluate_cubic1(finite_field *F, INT *v)
+int LunelliSce_evaluate_cubic1(finite_field *F, int *v)
 // computes X^3 + Y^3 + Z^3 + \eta^3 XYZ
 {
-	INT a, b, c, d, e, eta3;
+	int a, b, c, d, e, eta3;
 
 	eta3 = F->power(2, 3);
 	//eta12 = F->power(2, 12);
@@ -3482,10 +3482,10 @@ INT LunelliSce_evaluate_cubic1(finite_field *F, INT *v)
 	return e;
 }
 
-INT LunelliSce_evaluate_cubic2(finite_field *F, INT *v)
+int LunelliSce_evaluate_cubic2(finite_field *F, int *v)
 // computes X^3 + Y^3 + Z^3 + \eta^{12} XYZ
 {
-	INT a, b, c, d, e, eta12;
+	int a, b, c, d, e, eta12;
 
 	//eta3 = F->power(2, 3);
 	eta12 = F->power(2, 12);
@@ -3506,34 +3506,34 @@ INT LunelliSce_evaluate_cubic2(finite_field *F, INT *v)
 // plane_invariant started 2/23/09
 
 
-void plane_invariant(INT q, orthogonal *O, unusual_model *U, 
-	INT size, INT *set, 
-	INT &nb_planes, INT *&intersection_matrix, 
-	INT &Block_size, INT *&Blocks, 
-	INT verbose_level)
+void plane_invariant(int q, orthogonal *O, unusual_model *U, 
+	int size, int *set, 
+	int &nb_planes, int *&intersection_matrix, 
+	int &Block_size, int *&Blocks, 
+	int verbose_level)
 // using hash values
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT *Mtx;
-	INT *Hash;
-	INT rk, H, log2_of_q, n_choose_k;
-	INT f_special = FALSE;
-	INT f_complete = TRUE;
-	INT base_col[1000];
-	INT subset[1000];
-	INT level = 3;
-	INT n = 5;
-	INT cnt;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int *Mtx;
+	int *Hash;
+	int rk, H, log2_of_q, n_choose_k;
+	int f_special = FALSE;
+	int f_complete = TRUE;
+	int base_col[1000];
+	int subset[1000];
+	int level = 3;
+	int n = 5;
+	int cnt;
+	int i;
 	
 	
-	n_choose_k = INT_n_choose_k(size, level);
-	log2_of_q = INT_log2(q);
+	n_choose_k = int_n_choose_k(size, level);
+	log2_of_q = int_log2(q);
 	
-	Mtx = NEW_INT(level * n);
-	Hash = NEW_INT(n_choose_k);
+	Mtx = NEW_int(level * n);
+	Hash = NEW_int(n_choose_k);
 	
 	first_k_subset(subset, size, level);
 	cnt = -1;
@@ -3551,11 +3551,11 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			}
 		if (f_vvv) {
 			cout << "subset " << setw(5) << cnt << " : ";
-			INT_vec_print(cout, subset, level);
+			int_vec_print(cout, subset, level);
 			cout << " : "; // << endl;
 			}
 		//print_integer_matrix_width(cout, Mtx, level, n, n, 3);
-		rk = O->F->Gauss_INT(Mtx, f_special, f_complete,
+		rk = O->F->Gauss_int(Mtx, f_special, f_complete,
 				base_col, FALSE, NULL, level, n, n, 0);
 		if (f_vvv) {
 			cout << "after Gauss, rank = " << rk << endl;
@@ -3573,10 +3573,10 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			break;
 			}
 		}
-	INT *Hash_sorted, *sorting_perm, *sorting_perm_inv,
+	int *Hash_sorted, *sorting_perm, *sorting_perm_inv,
 		nb_types, *type_first, *type_len;
 	
-	INT_vec_classify(n_choose_k, Hash, Hash_sorted, 
+	int_vec_classify(n_choose_k, Hash, Hash_sorted, 
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 	
@@ -3592,10 +3592,10 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 				<< setw(10) << Hash_sorted[type_first[i]] << endl;
 			}
 		}
-	INT *type_len_sorted, *sorting_perm2, *sorting_perm_inv2, 
+	int *type_len_sorted, *sorting_perm2, *sorting_perm_inv2, 
 		nb_types2, *type_first2, *type_len2;
 	
-	INT_vec_classify(nb_types, type_len, type_len_sorted, 
+	int_vec_classify(nb_types, type_len, type_len_sorted, 
 		sorting_perm2, sorting_perm_inv2, 
 		nb_types2, type_first2, type_len2);
 
@@ -3608,7 +3608,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 				<< setw(10) << type_len_sorted[type_first2[i]] << endl;
 			}
 		}
-	INT f, ff, ll, j, u, ii, jj, idx;
+	int f, ff, ll, j, u, ii, jj, idx;
 	
 	f = type_first2[nb_types2 - 1];
 	nb_planes = type_len2[nb_types2 - 1];
@@ -3642,7 +3642,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 				cnt = sorting_perm_inv[ff + u];
 				unrank_k_subset(cnt, subset, size, level);
 				cout << "subset " << setw(5) << cnt << " : ";
-				INT_vec_print(cout, subset, level);
+				int_vec_print(cout, subset, level);
 				cout << " : " << endl;
 				}
 			}
@@ -3650,13 +3650,13 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 	
 	//return;
 	
-	//INT *Blocks;
-	INT *Block;
-	//INT Block_size;
+	//int *Blocks;
+	int *Block;
+	//int Block_size;
 	
 	
-	Block = NEW_INT(size);
-	Blocks = NEW_INT(nb_planes * size);
+	Block = NEW_int(size);
+	Blocks = NEW_int(nb_planes * size);
 	
 	for (i = 0; i < nb_planes; i++) {
 		j = sorting_perm_inv2[f + i];
@@ -3674,14 +3674,14 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			unrank_k_subset(cnt, subset, size, level);
 			if (f_vvv) {
 				cout << "subset " << setw(5) << cnt << " : ";
-				INT_vec_print(cout, subset, level);
+				int_vec_print(cout, subset, level);
 				cout << " : " << endl;
 				}
 			for (ii = 0; ii < level; ii++) {
 				Q_unrank(*O->F, Mtx + ii * n, 1, n - 1, set[subset[ii]]);
 				}
 			for (ii = 0; ii < level; ii++) {
-				if (!INT_vec_search(Block, Block_size, subset[ii], idx)) {
+				if (!int_vec_search(Block, Block_size, subset[ii], idx)) {
 					for (jj = Block_size; jj > idx; jj--) {
 						Block[jj] = Block[jj - 1];
 						}
@@ -3689,7 +3689,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 					Block_size++;
 					}
 				}
-			rk = O->F->Gauss_INT(Mtx, f_special,
+			rk = O->F->Gauss_int(Mtx, f_special,
 					f_complete, base_col, FALSE, NULL, level, n, n, 0);
 			if (f_vvv)  {
 				cout << "after Gauss, rank = " << rk << endl;
@@ -3706,7 +3706,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			}
 		if (f_vv) {
 			cout << "found Block ";
-			INT_vec_print(cout, Block, Block_size);
+			int_vec_print(cout, Block, Block_size);
 			cout << endl;
 			}
 		for (u = 0; u < Block_size; u++) {
@@ -3722,13 +3722,13 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 			}
 		}
 	
-	INT *Incma, *Incma_t, *IIt, *ItI;
-	INT a;
+	int *Incma, *Incma_t, *IIt, *ItI;
+	int a;
 	
-	Incma = NEW_INT(size * nb_planes);
-	Incma_t = NEW_INT(nb_planes * size);
-	IIt = NEW_INT(size * size);
-	ItI = NEW_INT(nb_planes * nb_planes);
+	Incma = NEW_int(size * nb_planes);
+	Incma_t = NEW_int(nb_planes * size);
+	IIt = NEW_int(size * size);
+	ItI = NEW_int(nb_planes * nb_planes);
 
 
 	for (i = 0; i < size * nb_planes; i++) {
@@ -3778,7 +3778,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 				nb_planes, nb_planes, nb_planes, 3);
 		}
 	
-	intersection_matrix = NEW_INT(nb_planes * nb_planes);
+	intersection_matrix = NEW_int(nb_planes * nb_planes);
 	for (i = 0; i < nb_planes; i++) {
 		for (j = 0; j < nb_planes; j++) {
 			intersection_matrix[i * nb_planes + j] = ItI[i * nb_planes + j];
@@ -3789,7 +3789,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 	{
 		char fname[1000];
 		
-		sprintf(fname, "plane_invariant_%ld_%ld.txt", q, k);
+		sprintf(fname, "plane_invariant_%d_%d.txt", q, k);
 		
 		ofstream fp(fname);
 		fp << nb_planes << endl;
@@ -3810,29 +3810,29 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 	}
 #endif
 
-	FREE_INT(Mtx);
-	FREE_INT(Hash);
-	FREE_INT(Block);
-	//FREE_INT(Blocks);
-	FREE_INT(Incma);
-	FREE_INT(Incma_t);
-	FREE_INT(IIt);
-	FREE_INT(ItI);
+	FREE_int(Mtx);
+	FREE_int(Hash);
+	FREE_int(Block);
+	//FREE_int(Blocks);
+	FREE_int(Incma);
+	FREE_int(Incma_t);
+	FREE_int(IIt);
+	FREE_int(ItI);
 
 
-	FREE_INT(Hash_sorted);
-	FREE_INT(sorting_perm);
-	FREE_INT(sorting_perm_inv);
-	FREE_INT(type_first);
-	FREE_INT(type_len);
+	FREE_int(Hash_sorted);
+	FREE_int(sorting_perm);
+	FREE_int(sorting_perm_inv);
+	FREE_int(type_first);
+	FREE_int(type_len);
 	
 
 
-	FREE_INT(type_len_sorted);
-	FREE_INT(sorting_perm2);
-	FREE_INT(sorting_perm_inv2);
-	FREE_INT(type_first2);
-	FREE_INT(type_len2);
+	FREE_int(type_len_sorted);
+	FREE_int(sorting_perm2);
+	FREE_int(sorting_perm_inv2);
+	FREE_int(type_first2);
+	FREE_int(type_len2);
 
 
 
@@ -3841,7 +3841,7 @@ void plane_invariant(INT q, orthogonal *O, unusual_model *U,
 
 
 void create_Law_71_BLT_set(orthogonal *O,
-		INT *set, INT verbose_level)
+		int *set, int verbose_level)
 // This example can be found in Maska Law's thesis on page 115.
 // Maska Law: Flocks, generalised quadrangles
 // and translatrion planes from BLT-sets,
@@ -3851,11 +3851,11 @@ void create_Law_71_BLT_set(orthogonal *O,
 // starting form the subgroup A_4 of
 // the stabilizer of the Fisher/Thas/Walker/Kantor examples.
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT v[5], v0, v1, v2, v3, v4;
-	INT i;
-	INT coordinates[] = {
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int v[5], v0, v1, v2, v3, v4;
+	int i;
+	int coordinates[] = {
 #if 1
 		0,0,0,0,1,
 		1,0,0,0,0,
@@ -3898,7 +3898,7 @@ void create_Law_71_BLT_set(orthogonal *O,
 #endif
 		};
 	finite_field *F;
-	INT q;
+	int q;
 	
 	F = O->F;
 	q = F->q;
@@ -3912,10 +3912,10 @@ void create_Law_71_BLT_set(orthogonal *O,
 		v2 = coordinates[i * 5 + 4];
 		v3 = coordinates[i * 5 + 1];
 		v4 = coordinates[i * 5 + 3];
-		INT_vec_init5(v, v0, v1, v2, v3, v4);
+		int_vec_init5(v, v0, v1, v2, v3, v4);
 		if (f_vv) {
 			cout << "point " << i << " : ";
-			INT_vec_print(cout, v, 5);
+			int_vec_print(cout, v, 5);
 			cout << endl;
 			}
 		set[i] = O->rank_point(v, 1, 0);
@@ -3925,7 +3925,7 @@ void create_Law_71_BLT_set(orthogonal *O,
 		}
 	if (f_v) {
 		cout << "the BLT set LP_71 is ";
-		INT_vec_print(cout, set, q + 1);
+		int_vec_print(cout, set, q + 1);
 		cout << endl;
 		}
 }

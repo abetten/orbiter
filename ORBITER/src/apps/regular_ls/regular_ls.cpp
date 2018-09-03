@@ -13,19 +13,19 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_starter = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_starter = FALSE;
 
-	INT f_draw_poset = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
+	int f_draw_poset = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
 
 	exact_cover_arguments *ECA = NULL;
 	isomorph_arguments *IA = NULL;
@@ -72,7 +72,7 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_memory_debug) {
 		start_memory_debug();
@@ -109,7 +109,7 @@ int main(int argc, const char **argv)
 
 	if (f_starter) {
 
-		INT f_write_candidate_file = TRUE;
+		int f_write_candidate_file = TRUE;
 		
 		Gen.compute_starter(
 			//ECA->f_lex, 

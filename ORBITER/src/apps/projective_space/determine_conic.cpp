@@ -16,18 +16,18 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 1;
-	INT i;
-	INT q = -1;
-	INT nb_pts = 0;
-	INT pts[1000];
-	INT nb_pt_coords = 0;
-	INT pt_coords[1000];
-	INT f_poly = FALSE;
+	int verbose_level = 1;
+	int i;
+	int q = -1;
+	int nb_pts = 0;
+	int pts[1000];
+	int nb_pt_coords = 0;
+	int pt_coords[1000];
+	int f_poly = FALSE;
 	const char *override_poly = NULL;
 	
  	t0 = os_ticks();
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 				nb_pts++;
 				}
 			cout << "-pts ";
-			INT_vec_print(cout, pts, nb_pts);
+			int_vec_print(cout, pts, nb_pts);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-pt_coords") == 0) {
@@ -67,15 +67,15 @@ int main(int argc, char **argv)
 				nb_pt_coords++;
 				}
 			cout << "-pt_coords ";
-			INT_vec_print(cout, pt_coords, nb_pt_coords);
+			int_vec_print(cout, pt_coords, nb_pt_coords);
 			cout << endl;
 			}
 		}
 
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *input_pts;
-	INT six_coeffs[6];
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *input_pts;
+	int six_coeffs[6];
 	finite_field *F;
 	projective_space *P;
 
@@ -95,21 +95,21 @@ int main(int argc, char **argv)
 			cout << "please give exactly 5 points using -pts <p1> ... <p5>" << endl;
 			exit(1);
 			}
-		input_pts = NEW_INT(nb_pts);
-		INT_vec_copy(pts, input_pts, nb_pts);
+		input_pts = NEW_int(nb_pts);
+		int_vec_copy(pts, input_pts, nb_pts);
 		}
 	else if (nb_pt_coords) {
-		INT a;
+		int a;
 		
 		nb_pts = nb_pt_coords / 3;
 		if (nb_pt_coords < 15) {
 			cout << "please give at least 15 point coordinates using -pt_coords <p1> ... <p15>" << endl;
 			exit(1);
 			}
-		input_pts = NEW_INT(nb_pts);
+		input_pts = NEW_int(nb_pts);
 		for (i = 0; i < nb_pts; i++) {
 			cout << "point " << i << " has coordinates ";
-			INT_vec_print(cout, pt_coords + i * 3, 3);
+			int_vec_print(cout, pt_coords + i * 3, 3);
 			cout << endl;
 			PG_element_rank_modified(*F, pt_coords + i * 3, 1, 3, a);
 			input_pts[i] = a;
@@ -124,7 +124,7 @@ int main(int argc, char **argv)
 
 
 	cout << "input_pts: ";
-	INT_vec_print(cout, input_pts, nb_pts);
+	int_vec_print(cout, input_pts, nb_pts);
 	cout << endl;
 
 
@@ -145,28 +145,28 @@ int main(int argc, char **argv)
 
 	if (f_v) {
 		cout << "determine_conic the six coefficients are ";
-		INT_vec_print(cout, six_coeffs, 6);
+		int_vec_print(cout, six_coeffs, 6);
 		cout << endl;
 		}
 
 	//determine_conic(q, NULL /* override_poly */, five_pts, verbose_level);
 
-	INT points[1000];
-	INT nb_points;
-	//INT v[3];
+	int points[1000];
+	int nb_points;
+	//int v[3];
 	
 	cout << "conic points brute force:" << endl;
 	P->conic_points_brute_force(six_coeffs, points, nb_points, verbose_level);
 	if (f_v) {
-		INT v[3];
+		int v[3];
 		
 		cout << "the " << nb_points << " conic points are: ";
-		INT_vec_print(cout, points, nb_points);
+		int_vec_print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
 			cout << i << " : " << points[i] << " : ";
-			INT_vec_print(cout, v, 3);
+			int_vec_print(cout, v, 3);
 			cout << endl;
 			}
 		}
@@ -175,21 +175,21 @@ int main(int argc, char **argv)
 	cout << "conic points:" << endl;
 	P->conic_points(input_pts, six_coeffs, points, nb_points, verbose_level);
 	if (f_v) {
-		INT v[3];
+		int v[3];
 		
 		cout << "the " << nb_points << " conic points are: ";
-		INT_vec_print(cout, points, nb_points);
+		int_vec_print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
 			cout << i << " : " << points[i] << " : ";
-			INT_vec_print(cout, v, 3);
+			int_vec_print(cout, v, 3);
 			cout << endl;
 			}
 		}
 	delete P;
 	delete F;
-	FREE_INT(input_pts);
+	FREE_int(input_pts);
 
 }
 

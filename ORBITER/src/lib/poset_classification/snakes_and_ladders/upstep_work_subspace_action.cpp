@@ -9,7 +9,7 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-INT upstep_work::upstep_subspace_action(INT verbose_level)
+int upstep_work::upstep_subspace_action(int verbose_level)
 // This routine is called from upstep_work::init_extension_node
 // It computes coset_table.
 // It is testing a set of size 'size'. 
@@ -22,16 +22,16 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 {
 	//if (prev == 1)  verbose_level += 20;
 	
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 5);
-	INT f_vvv = (verbose_level >= 6);
-	//INT f_v4 = (verbose_level >= 7);
-	INT f_v5 = (verbose_level >= 8);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 5);
+	int f_vvv = (verbose_level >= 6);
+	//int f_v4 = (verbose_level >= 7);
+	int f_v5 = (verbose_level >= 8);
 	schreier up_orbit;
 	union_find UF;
-	INT *aut;
+	int *aut;
 	trace_result r;
-	INT final_node, final_ex;
+	int final_node, final_ex;
 	
 	wreath_product *W;
 	matrix_group *M;
@@ -41,12 +41,12 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 	action_on_grassmannian *AG;
 	{
 	action A_on_hyperplanes;
-	INT big_n, n, k, rk, degree, idx;
-	INT *ambient_space;
-	INT *base_change_matrix;
-	INT *base_cols;
-	INT *embedding;
-	INT *changed_space;
+	int big_n, n, k, rk, degree, idx;
+	int *ambient_space;
+	int *base_change_matrix;
+	int *base_cols;
+	int *embedding;
+	int *changed_space;
 	
 	AG = NEW_OBJECT(action_on_grassmannian);
 	
@@ -57,7 +57,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep in subspace action for set ";
-		INT_set_print(cout, gen->S, size);
+		int_set_print(cout, gen->S, size);
 		cout << " verbose_level=" << verbose_level;
 		cout << " f_indicate_not_canonicals="
 				<< f_indicate_not_canonicals << endl;
@@ -98,11 +98,11 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		cout << "n=" << n << endl;
 		cout << "k=" << k << endl;
 		}
-	ambient_space = NEW_INT(n * big_n);
-	base_change_matrix = NEW_INT(n * n);
-	base_cols = NEW_INT(n);
-	embedding = NEW_INT(n);
-	changed_space = NEW_INT(n * big_n);
+	ambient_space = NEW_int(n * big_n);
+	base_change_matrix = NEW_int(n * n);
+	base_cols = NEW_int(n);
+	embedding = NEW_int(n);
+	changed_space = NEW_int(n * big_n);
 	
 	gen->unrank_basis(ambient_space, gen->S, n);
 
@@ -267,8 +267,8 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			cout << "upstep_work::upstep_subspace_action "
 					"unranking " << coset << ":" << endl;
 		}
-		G.unrank_INT(coset, 0 /*verbose_level - 5*/);
-		INT_vec_copy(G.M, base_change_matrix, k * n);
+		G.unrank_int(coset, 0 /*verbose_level - 5*/);
+		int_vec_copy(G.M, base_change_matrix, k * n);
 
 		if (f_vvv) {
 			cout << "upstep_work::upstep_subspace_action "
@@ -290,14 +290,14 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			}
 		if (f_v5) {
 			cout << "upstep_work::upstep_subspace_action base_cols:";
-			INT_vec_print(cout, base_cols, rk);
+			int_vec_print(cout, base_cols, rk);
 			cout << " embedding:";
-			INT_vec_print(cout, embedding, n - rk);
+			int_vec_print(cout, embedding, n - rk);
 			cout << endl;
 			}
 
 		// fill the matrix up and make it invertible:
-		INT_vec_zero(base_change_matrix + (n - 1) * n, n);
+		int_vec_zero(base_change_matrix + (n - 1) * n, n);
 		base_change_matrix[(n - 1) * n + embedding[0]] = 1;
 
 		if (f_v5) {
@@ -346,7 +346,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			cout << "upstep_work::upstep_subspace_action "
 					"changed_space for coset " << coset
 					<< " as rank vector: ";
-			INT_vec_print(cout, gen->set[0], n);
+			int_vec_print(cout, gen->set[0], n);
 			cout << endl; 
 			}
 		
@@ -358,7 +358,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		if (f_vv) {
 			print_level_extension_coset_info();
 			cout << "upstep_work::upstep_subspace_action exchanged set: ";
-			INT_set_print(cout, gen->set[0], size);
+			int_set_print(cout, gen->set[0], size);
 			cout << endl;
 			cout << "upstep_work::upstep_subspace_action "
 					"calling find_automorphism_by_tracing" << endl;
@@ -370,10 +370,10 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 			}
 #endif
 		
-		INT nb_times_image_of_called0 = gen->A->nb_times_image_of_called;
-		INT nb_times_mult_called0 = gen->A->nb_times_mult_called;
-		INT nb_times_invert_called0 = gen->A->nb_times_invert_called;
-		INT nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
+		int nb_times_image_of_called0 = gen->A->nb_times_image_of_called;
+		int nb_times_mult_called0 = gen->A->nb_times_mult_called;
+		int nb_times_invert_called0 = gen->A->nb_times_invert_called;
+		int nb_times_retrieve_called0 = gen->A->nb_times_retrieve_called;
 
 		
 		if (f_vv) {
@@ -505,7 +505,7 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		print_level_extension_info();
 		cout << "upstep_work::upstep_subspace_action "
 				"upstep orbit length for set ";
-		INT_set_print(cout, gen->S, size);
+		int_set_print(cout, gen->S, size);
 		cout << " is " << up_orbit.orbit_len[0] << endl;
 		}
 
@@ -519,9 +519,9 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 
 	if (gen->f_do_group_extension_in_upstep) {
 		vector_ge SG_extension;
-		INT *tl_extension = NEW_INT(gen->A->base_len);
-		INT f_OK;
-		INT f_tolerant = FALSE;
+		int *tl_extension = NEW_int(gen->A->base_len);
+		int f_OK;
+		int f_tolerant = FALSE;
 	
 #if 0
 		if (cur == 26) {
@@ -552,14 +552,14 @@ INT upstep_work::upstep_subspace_action(INT verbose_level)
 		H->init_strong_generators(SG_extension, tl_extension);
 
 
-		FREE_INT(tl_extension);
+		FREE_int(tl_extension);
 		}
 	
-	FREE_INT(ambient_space);
-	FREE_INT(base_change_matrix);
-	FREE_INT(base_cols);
-	FREE_INT(embedding);
-	FREE_INT(changed_space);
+	FREE_int(ambient_space);
+	FREE_int(base_change_matrix);
+	FREE_int(base_cols);
+	FREE_int(embedding);
+	FREE_int(changed_space);
 	
 	if (f_vv) {
 		cout << "upstep_work::upstep_subspace_action "

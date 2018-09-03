@@ -9,15 +9,15 @@
 
 void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 	poset_classification *gen,
-	INT lvl, INT pt_to_trace,
-	INT &pt0, INT *&cosetrep, INT verbose_level)
+	int lvl, int pt_to_trace,
+	int &pt0, int *&cosetrep, int verbose_level)
 // called by oracle::trace_next_point
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action_on_factor_space AF;
 	action A_factor_space;
-	INT projected_pt, projected_pt0;
-	INT f_check_image = FALSE;
+	int projected_pt, projected_pt0;
+	int f_check_image = FALSE;
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_"
@@ -82,7 +82,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 		return;
 		}
 	if (sv) {
-		INT f_trivial_group;
+		int f_trivial_group;
 		
 		if (nb_strong_generators) 
 			f_trivial_group = FALSE;
@@ -118,7 +118,7 @@ void poset_orbit_node::orbit_representative_and_coset_rep_inv_subspace_action(
 				<< " projected_pt0=" << projected_pt0
 				<< " preimage=" << pt0 << endl;
 			}
-		INT a;
+		int a;
 		a = gen->A2->element_image_of(pt_to_trace, gen->Elt1, 0);
 		if (f_v) {
 			cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv_"

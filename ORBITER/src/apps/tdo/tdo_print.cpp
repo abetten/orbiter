@@ -7,13 +7,13 @@
 #include <string>
 #include <DISCRETA/discreta.h>
 
-INT t0;
+int t0;
 
 using std::string;
 
 
 void intersection_of_columns(geo_parameter &GP, tdo_scheme &G, 
-	INT j1, INT j2, Vector &V, Vector &M, INT verbose_level);
+	int j1, int j2, Vector &V, Vector &M, int verbose_level);
 
 void print_usage()
 {
@@ -47,31 +47,31 @@ void print_usage()
 
 int main(int argc, char **argv)
 {
-	INT cnt;
+	int cnt;
 	char str[1000];
 	char ext[1000];
 	char *fname_in;
 	char fname_out[1000];
-	INT verbose_level = 0;
-	INT f_widor = FALSE;
-	INT f_range = FALSE;
-	INT range_first, range_len;
-	INT f_select = FALSE;
+	int verbose_level = 0;
+	int f_widor = FALSE;
+	int f_range = FALSE;
+	int range_first, range_len;
+	int f_select = FALSE;
 	char *select_label;
-	INT f_C = FALSE;
-	INT f_tex = FALSE;
-	INT f_texfile = FALSE;
+	int f_C = FALSE;
+	int f_tex = FALSE;
+	int f_texfile = FALSE;
 	char *texfile_name = NULL;
-	INT f_ROW = FALSE;
-	INT f_COL = FALSE;
-	INT f_Tex = FALSE;
-	INT f_nt = FALSE;
-	INT f_intersection = FALSE;
-	INT intersection_j1, intersection_j2;
-	INT i, f_doit;
-	INT f_w = FALSE;
-	INT nb_written = 0;
-	INT f_v, f_vv, f_vvv;
+	int f_ROW = FALSE;
+	int f_COL = FALSE;
+	int f_Tex = FALSE;
+	int f_nt = FALSE;
+	int f_intersection = FALSE;
+	int intersection_j1, intersection_j2;
+	int i, f_doit;
+	int f_w = FALSE;
+	int nb_written = 0;
+	int f_v, f_vv, f_vvv;
 
 	t0 = os_ticks();
 	if (argc <= 1) {
@@ -215,7 +215,7 @@ int main(int argc, char **argv)
 		//cout << "before convert_single_to_stack" << endl;	
 		//GP.convert_single_to_stack();
 		//cout << "after convert_single_to_stack" << endl;
-		//sprintf(label, "%s.%ld", str, i);
+		//sprintf(label, "%s.%d", str, i);
 		//GP.write(g, label);
 		if (f_vv) {
 			cout << "before init_tdo_scheme" << endl;
@@ -258,7 +258,7 @@ int main(int argc, char **argv)
 			vm.s_i(0).swap(V);
 			vm.s_i(1).swap(M);
 			cout << "vm:" << vm << endl;
-			INT idx;
+			int idx;
 			mu.m_i_i(1);
 			if (VM.search(vm, &idx)) {
 				VM_mult.m_ii(idx, VM_mult.s_ii(idx) + 1);
@@ -286,7 +286,7 @@ int main(int argc, char **argv)
 		}
 
 	if (f_intersection) {
-		INT cl, c, l, j, L;
+		int cl, c, l, j, L;
 		cout << "the intersection types are:" << endl;
 		for (i = 0; i < VM.s_l(); i++) {
 			//cout << setw(5) << VM_mult.s_ii(i) << " x " << VM.s_i(i) << endl;
@@ -303,7 +303,7 @@ int main(int argc, char **argv)
 				l = Vc.s_l();
 				for (j = 0; j < l; j++) {
 					Vector &the_type = Vc.s_i(j).as_vector();
-					INT mult = Mc.s_ii(j);
+					int mult = Mc.s_ii(j);
 					cout << setw(5) << mult << " x " << the_type << endl;
 					}
 				cout << "--------------------------" << endl;
@@ -312,10 +312,10 @@ int main(int argc, char **argv)
 
 			classify *C;
 			classify *C_pencil;
-			INT f_second = FALSE;
-			INT *pencil_data;
-			INT pencil_data_size = 0;
-			INT pos, b, hh;
+			int f_second = FALSE;
+			int *pencil_data;
+			int pencil_data_size = 0;
+			int pos, b, hh;
 			
 			C = new classify[cl];
 			C_pencil = new classify;
@@ -328,14 +328,14 @@ int main(int argc, char **argv)
 				L = 0;
 				for (j = 0; j < l; j++) {
 					Vector &the_type = Vc.s_i(j).as_vector();
-					INT mult = Mc.s_ii(j);
+					int mult = Mc.s_ii(j);
 					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
 						pencil_data_size += mult;
 						}
 					}
 				}
 			//cout << "pencil_data_size=" << pencil_data_size << endl;
-			pencil_data = new INT[pencil_data_size];
+			pencil_data = new int[pencil_data_size];
 			pos = 0;
 			
 			for (c = 0; c < cl; c++) {
@@ -346,7 +346,7 @@ int main(int argc, char **argv)
 				L = 0;
 				for (j = 0; j < l; j++) {
 					Vector &the_type = Vc.s_i(j).as_vector();
-					INT mult = Mc.s_ii(j);
+					int mult = Mc.s_ii(j);
 					if (the_type.s_ii(1) == 1 && the_type.s_ii(0)) {
 						b = the_type.s_ii(0);
 						for (hh = 0; hh < mult; hh++) {
@@ -356,7 +356,7 @@ int main(int argc, char **argv)
 					}
 				}
 			//cout << "pencil_data: ";
-			//INT_vec_print(cout, pencil_data, pencil_data_size);
+			//int_vec_print(cout, pencil_data, pencil_data_size);
 			//cout << endl;
 			C_pencil->init(pencil_data, pencil_data_size, FALSE /*f_second */, verbose_level - 2);
 			delete [] pencil_data;
@@ -371,17 +371,17 @@ int main(int argc, char **argv)
 					Vector &the_type = Vc.s_i(j).as_vector();
 					if (the_type.s_ii(1)) 
 						continue;
-					INT mult = Mc.s_ii(j);
+					int mult = Mc.s_ii(j);
 					L += mult;
 					}
-				INT *data;
-				INT k, h, a;
+				int *data;
+				int k, h, a;
 
-				data = new INT[L];
+				data = new int[L];
 				k = 0;
 				for (j = 0; j < l; j++) {
 					Vector &the_type = Vc.s_i(j).as_vector();
-					INT mult = Mc.s_ii(j);
+					int mult = Mc.s_ii(j);
 					if (the_type.s_ii(1)) 
 						continue;
 					a = the_type.s_ii(0);
@@ -390,7 +390,7 @@ int main(int argc, char **argv)
 						}
 					}
 				//cout << "data: ";
-				//INT_vec_print(cout, data, L);
+				//int_vec_print(cout, data, L);
 				//cout << endl;
 				C[c].init(data, L, f_second, verbose_level - 2);
 				delete [] data;
@@ -417,12 +417,12 @@ int main(int argc, char **argv)
 }
 
 void intersection_of_columns(geo_parameter &GP, tdo_scheme &G, 
-	INT j1, INT j2, Vector &V, Vector &M, INT verbose_level)
+	int j1, int j2, Vector &V, Vector &M, int verbose_level)
 {
-	INT f_v = (verbose_level >= 3);
-	INT f_vv = (verbose_level >= 4);
-	INT c, i, c1, J1, J2, a1, a2, m, f, l, ii;
-	INT h = ROW;
+	int f_v = (verbose_level >= 3);
+	int f_vv = (verbose_level >= 4);
+	int c, i, c1, J1, J2, a1, a2, m, f, l, ii;
+	int h = ROW;
 	partitionstack P;
 	
 	if (f_v) {
@@ -449,7 +449,7 @@ void intersection_of_columns(geo_parameter &GP, tdo_scheme &G,
 
 	Vector v;
 	discreta_base mu;
-	INT idx;
+	int idx;
 	
 	V.m_l(P.ht);
 	M.m_l(P.ht);

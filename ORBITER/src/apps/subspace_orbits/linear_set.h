@@ -20,23 +20,23 @@ typedef class linear_set linear_set;
 
 class linear_set {
 public:
-	INT s;
-	INT n;
-	INT m; // n = s * m
-	INT q;
-	INT Q; // Q = q^s
-	INT depth;
-	INT f_semilinear;
-	INT schreier_depth;
-	INT f_use_invariant_subset_if_available;
-	//INT f_lex;
-	INT f_debug;
-	INT f_has_extra_test_func;
-	INT (*extra_test_func)(void *, INT len, INT *S, 
-		void *extra_test_func_data, INT verbose_level);
+	int s;
+	int n;
+	int m; // n = s * m
+	int q;
+	int Q; // Q = q^s
+	int depth;
+	int f_semilinear;
+	int schreier_depth;
+	int f_use_invariant_subset_if_available;
+	//int f_lex;
+	int f_debug;
+	int f_has_extra_test_func;
+	int (*extra_test_func)(void *, int len, int *S, 
+		void *extra_test_func_data, int verbose_level);
 	void *extra_test_func_data;
-	INT *Basis; // [depth * vector_space_dimension]
-	INT *base_cols;
+	int *Basis; // [depth * vector_space_dimension]
+	int *base_cols;
 	
 	finite_field *Fq;
 	finite_field *FQ;
@@ -46,87 +46,87 @@ public:
 	action *AQ;
 	action *A_PGLQ;
 	poset_classification *Gen;
-	INT vector_space_dimension; // = n
+	int vector_space_dimension; // = n
 	strong_generators *Strong_gens;
 	desarguesian_spread *D;
-	INT n1;
-	INT m1;
+	int n1;
+	int m1;
 	desarguesian_spread *D1;
-	INT *spread_embedding; // [D->N]
+	int *spread_embedding; // [D->N]
 
-	INT f_identify;
-	INT k;
-	INT order;
+	int f_identify;
+	int k;
+	int order;
 	spread *T;
 	
 
 
-	INT secondary_level;
-	INT secondary_orbit_at_level;
-	INT secondary_depth;
-	INT *secondary_candidates;
-	INT secondary_nb_candidates;
-	INT secondary_schreier_depth;
+	int secondary_level;
+	int secondary_orbit_at_level;
+	int secondary_depth;
+	int *secondary_candidates;
+	int secondary_nb_candidates;
+	int secondary_schreier_depth;
 	poset_classification *Gen_stab;
 	poset_classification *Gen2;
-	INT *is_allowed;
+	int *is_allowed;
 
 	linear_set();
 	~linear_set();
 	void null();
 	void freeself();
 	void init(int argc, const char **argv, 
-		INT s, INT n, INT q, 
+		int s, int n, int q, 
 		const char *poly_q, const char *poly_Q, 
-		INT depth, INT f_identify, INT verbose_level);
-	void do_classify(INT verbose_level);
-	INT test_set(INT len, INT *S, INT verbose_level);
-	void compute_intersection_types_at_level(INT level, 
-		INT &nb_nodes, INT *&Intersection_dimensions, 
-		INT verbose_level);
-	void calculate_intersections(INT depth, INT verbose_level);
-	void read_data_file(INT depth, INT verbose_level);
-	void print_orbits_at_level(INT level);
+		int depth, int f_identify, int verbose_level);
+	void do_classify(int verbose_level);
+	int test_set(int len, int *S, int verbose_level);
+	void compute_intersection_types_at_level(int level, 
+		int &nb_nodes, int *&Intersection_dimensions, 
+		int verbose_level);
+	void calculate_intersections(int depth, int verbose_level);
+	void read_data_file(int depth, int verbose_level);
+	void print_orbits_at_level(int level);
 	void classify_secondary(int argc, const char **argv, 
-		INT level, INT orbit_at_level, 
+		int level, int orbit_at_level, 
 		strong_generators *strong_gens, 
-		INT verbose_level);
+		int verbose_level);
 	void init_secondary(int argc, const char **argv, 
-		INT *candidates, INT nb_candidates, 
+		int *candidates, int nb_candidates, 
 		strong_generators *Strong_gens_previous, 
-		INT verbose_level);
-	void do_classify_secondary(INT verbose_level);
-	INT test_set_secondary(INT len, INT *S, INT verbose_level);
+		int verbose_level);
+	void do_classify_secondary(int verbose_level);
+	int test_set_secondary(int len, int *S, int verbose_level);
 	void compute_stabilizer_of_linear_set(int argc, const char **argv, 
-		INT level, INT orbit_at_level, 
+		int level, int orbit_at_level, 
 		strong_generators *&strong_gens, 
-		INT verbose_level);
+		int verbose_level);
 	void init_compute_stabilizer(int argc, const char **argv, 
-		INT level, INT orbit_at_level,  
-		INT *candidates, INT nb_candidates, 
+		int level, int orbit_at_level,  
+		int *candidates, int nb_candidates, 
 		strong_generators *Strong_gens_previous, 
 		strong_generators *&strong_gens, 
-		INT verbose_level);
-	void do_compute_stabilizer(INT level, INT orbit_at_level, 
-		INT *candidates, INT nb_candidates, 
+		int verbose_level);
+	void do_compute_stabilizer(int level, int orbit_at_level, 
+		int *candidates, int nb_candidates, 
 		strong_generators *&strong_gens, 
-		INT verbose_level);
+		int verbose_level);
 
 	//linear_set2.C:
-	void construct_semifield(INT orbit_for_W, INT verbose_level);
+	void construct_semifield(int orbit_for_W, int verbose_level);
 
 };
 
 
-INT linear_set_rank_point_func(INT *v, void *data);
-void linear_set_unrank_point_func(INT *v, INT rk, void *data);
-void linear_set_early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
-void linear_set_secondary_early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
+int linear_set_rank_point_func(int *v, void *data);
+void linear_set_unrank_point_func(int *v, int rk, void *data);
+void linear_set_early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
+void linear_set_secondary_early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
 
 

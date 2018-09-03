@@ -5,7 +5,6 @@ LFLAGS = -lm
 
 MODULES = \
 	base.o \
-	bitmatrix.o \
 	bt_key.o \
 	btree.o \
 	database.o \

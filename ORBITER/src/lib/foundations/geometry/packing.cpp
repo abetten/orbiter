@@ -6,15 +6,15 @@
 
 #include "foundations.h"
 
-INT TDO_upper_bounds_v_max_init = 12;
-INT TDO_upper_bounds_v_max = -1;
-INT *TDO_upper_bounds_table = NULL;
-INT *TDO_upper_bounds_table_source = NULL;
+int TDO_upper_bounds_v_max_init = 12;
+int TDO_upper_bounds_v_max = -1;
+int *TDO_upper_bounds_table = NULL;
+int *TDO_upper_bounds_table_source = NULL;
 	// 0 = nothing
 	// 1 = packing number
 	// 2 = braun test
 	// 3 = maxfit
-INT TDO_upper_bounds_initial_data[] = {
+int TDO_upper_bounds_initial_data[] = {
 3,3,1,
 4,3,1,
 5,3,2,
@@ -73,9 +73,9 @@ INT TDO_upper_bounds_initial_data[] = {
 -1
 };
 
-INT &TDO_upper_bound(INT i, INT j)
+int &TDO_upper_bound(int i, int j)
 {
-	INT m, bound;
+	int m, bound;
 	
 	if (i <= 0) {
 		cout << "TDO_upper_bound i <= 0, i = " << i << endl;
@@ -105,7 +105,7 @@ INT &TDO_upper_bound(INT i, INT j)
 	return TDO_upper_bound_internal(i, j);
 }
 
-INT &TDO_upper_bound_internal(INT i, INT j)
+int &TDO_upper_bound_internal(int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
 		cout << "TDO_upper_bound i > v_max" << endl;
@@ -124,7 +124,7 @@ INT &TDO_upper_bound_internal(INT i, INT j)
 	return TDO_upper_bounds_table[(i - 1) * TDO_upper_bounds_v_max + j - 1];
 }
 
-INT &TDO_upper_bound_source(INT i, INT j)
+int &TDO_upper_bound_source(int i, int j)
 {
 	if (i > TDO_upper_bounds_v_max) {
 		cout << "TDO_upper_bound_source i > v_max" << endl;
@@ -143,9 +143,9 @@ INT &TDO_upper_bound_source(INT i, INT j)
 	return TDO_upper_bounds_table_source[(i - 1) * TDO_upper_bounds_v_max + j - 1];
 }
 
-INT braun_test_single_type(INT v, INT k, INT ak)
+int braun_test_single_type(int v, int k, int ak)
 {
-	INT i, l, s, m;
+	int i, l, s, m;
 	
 	i = 0;
 	s = 0;
@@ -159,9 +159,9 @@ INT braun_test_single_type(INT v, INT k, INT ak)
 	return TRUE;
 }
 
-INT braun_test_upper_bound(INT v, INT k)
+int braun_test_upper_bound(int v, int k)
 {
-	INT n, bound, v2, k2;
+	int n, bound, v2, k2;
 	
 	//cout << "braun_test_upper_bound v=" << v << " k=" << k << endl;
 	if (k == 1) {
@@ -188,13 +188,13 @@ INT braun_test_upper_bound(INT v, INT k)
 	return bound;
 }
 
-void TDO_refine_init_upper_bounds(INT v_max)
+void TDO_refine_init_upper_bounds(int v_max)
 {
-	INT i, j, bound, bound_braun, bound_maxfit, u;
+	int i, j, bound, bound_braun, bound_maxfit, u;
 	//cout << "TDO_refine_init_upper_bounds v_max=" << v_max << endl;
 	
-	TDO_upper_bounds_table = NEW_INT(v_max * v_max);
-	TDO_upper_bounds_table_source = NEW_INT(v_max * v_max);
+	TDO_upper_bounds_table = NEW_int(v_max * v_max);
+	TDO_upper_bounds_table_source = NEW_int(v_max * v_max);
 	TDO_upper_bounds_v_max = v_max;
 	for (i = 0; i < v_max * v_max; i++) {
 		TDO_upper_bounds_table[i] = -1;
@@ -233,17 +233,17 @@ void TDO_refine_init_upper_bounds(INT v_max)
 	//print_integer_matrix_width(cout, TDO_upper_bounds_table_source, v_max, v_max, v_max, 3);
 }
 
-void TDO_refine_extend_upper_bounds(INT new_v_max)
+void TDO_refine_extend_upper_bounds(int new_v_max)
 {
-	INT *new_upper_bounds;
-	INT *new_upper_bounds_source;
-	INT i, j, bound, bound_braun, bound_maxfit, src;
-	INT v_max;
+	int *new_upper_bounds;
+	int *new_upper_bounds_source;
+	int i, j, bound, bound_braun, bound_maxfit, src;
+	int v_max;
 
 	//cout << "TDO_refine_extend_upper_bounds new_v_max=" << new_v_max << endl;
 	v_max = TDO_upper_bounds_v_max;
-	new_upper_bounds = NEW_INT(new_v_max * new_v_max);
-	new_upper_bounds_source = NEW_INT(new_v_max * new_v_max);
+	new_upper_bounds = NEW_int(new_v_max * new_v_max);
+	new_upper_bounds_source = NEW_int(new_v_max * new_v_max);
 	for (i = 0; i < new_v_max * new_v_max; i++) {
 		new_upper_bounds[i] = -1;
 		new_upper_bounds_source[i] = 0;
@@ -256,8 +256,8 @@ void TDO_refine_extend_upper_bounds(INT new_v_max)
 			new_upper_bounds_source[(i - 1) * new_v_max + (j - 1)] = src;
 			}
 		}
-	FREE_INT(TDO_upper_bounds_table);
-	FREE_INT(TDO_upper_bounds_table_source);
+	FREE_int(TDO_upper_bounds_table);
+	FREE_int(TDO_upper_bounds_table_source);
 	TDO_upper_bounds_table = new_upper_bounds;
 	TDO_upper_bounds_table_source = new_upper_bounds_source;
 	TDO_upper_bounds_v_max = new_v_max;
@@ -280,9 +280,9 @@ void TDO_refine_extend_upper_bounds(INT new_v_max)
 	
 }
 
-INT braun_test_on_line_type(INT v, INT *type)
+int braun_test_on_line_type(int v, int *type)
 {
-	INT i, k, ak, l, s, m;
+	int i, k, ak, l, s, m;
 	
 	i = 0;
 	s = 0;
@@ -300,12 +300,12 @@ INT braun_test_on_line_type(INT v, INT *type)
 	return TRUE;
 }
 
-INT maxfit_table_v_max = -1;
-INT *maxfit_table = NULL;
+int maxfit_table_v_max = -1;
+int *maxfit_table = NULL;
 
-INT &maxfit(INT i, INT j)
+int &maxfit(int i, int j)
 {
-	INT m;
+	int m;
 	
 	m = MAXIMUM(i, j);
 	if (maxfit_table_v_max == -1) {
@@ -317,7 +317,7 @@ INT &maxfit(INT i, INT j)
 	return maxfit_internal(i, j);
 }
 
-INT &maxfit_internal(INT i, INT j)
+int &maxfit_internal(int i, int j)
 {
 	if (i > maxfit_table_v_max) {
 		cout << "maxfit_table_v_max i > v_max" << endl;
@@ -342,22 +342,22 @@ INT &maxfit_internal(INT i, INT j)
 	return maxfit_table[(i - 1) * maxfit_table_v_max + j - 1];
 }
 
-void maxfit_table_init(INT v_max)
+void maxfit_table_init(int v_max)
 {
 	//cout << "maxfit_table_init v_max=" << v_max << endl;
 	
-	maxfit_table = NEW_INT(v_max * v_max);
+	maxfit_table = NEW_int(v_max * v_max);
 	maxfit_table_v_max = v_max;
 	maxfit_table_compute();
 	//print_integer_matrix_width(cout, maxfit_table, v_max, v_max, v_max, 3);
 }
 
-void maxfit_table_reallocate(INT v_max)
+void maxfit_table_reallocate(int v_max)
 {
 	cout << "maxfit_table_reallocate v_max=" << v_max << endl;
 	
-	FREE_INT(maxfit_table);
-	maxfit_table = NEW_INT(v_max * v_max);
+	FREE_int(maxfit_table);
+	maxfit_table = NEW_int(v_max * v_max);
 	maxfit_table_v_max = v_max;
 	maxfit_table_compute();
 	//print_integer_matrix_width(cout, maxfit_table, v_max, v_max, v_max, 3);
@@ -367,9 +367,9 @@ void maxfit_table_reallocate(INT v_max)
 
 void maxfit_table_compute()
 {
-	INT M = maxfit_table_v_max;
-	INT *matrix = maxfit_table;
-	INT m, i, j, inz, gki;
+	int M = maxfit_table_v_max;
+	int *matrix = maxfit_table;
+	int m, i, j, inz, gki;
 	
 	//cout << "computing maxfit table v_max=" << maxfit_table_v_max << endl;
 	for (i=0; i<M*M; i++) {
@@ -397,9 +397,9 @@ void maxfit_table_compute()
 		} // next i
 }
 
-INT packing_number_via_maxfit(INT n, INT k)
+int packing_number_via_maxfit(int n, int k)
 {
-	INT m;
+	int m;
 	
 	if (k == 1) {
 		return INT_MAX;

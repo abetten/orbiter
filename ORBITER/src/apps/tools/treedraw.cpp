@@ -6,51 +6,51 @@
 #include "orbiter.h"
 
 
-void draw_vertex_callback(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_standard(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_graph(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy);
+void draw_vertex_callback(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
+void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
+void draw_vertex_callback_standard(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
+void draw_vertex_callback_graph(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy);
 
 
-	INT f_my_type = FALSE;
+	int f_my_type = FALSE;
 	const char *the_type = NULL;
-	INT graph_nb_V = 0;
-	INT f_graph_perm = FALSE;
-	INT graph_perm[1000];
-	INT f_multiple_circles = FALSE;
-	INT nb_circles = 1;
+	int graph_nb_V = 0;
+	int f_graph_perm = FALSE;
+	int graph_perm[1000];
+	int f_multiple_circles = FALSE;
+	int nb_circles = 1;
 
 int main(int argc, const char **argv)
 {
-	INT t0 = os_ticks();
-	INT verbose_level = 0;
-	INT xmax = 1000000;
-	INT ymax = 1000000;
-	INT xmax_out = 1000000;
-	INT ymax_out = 1000000;
-	INT f_i = FALSE;
-	INT f_e = FALSE;
-	INT i;
+	int t0 = os_ticks();
+	int verbose_level = 0;
+	int xmax = 1000000;
+	int ymax = 1000000;
+	int xmax_out = 1000000;
+	int ymax_out = 1000000;
+	int f_i = FALSE;
+	int f_e = FALSE;
+	int i;
 	char fname_base[1000];
 	char fname_out[1000];
 	char ext[1000];
-	INT f_no_circletext = FALSE;
-	INT f_circle = FALSE;
-	INT f_file = FALSE;
+	int f_no_circletext = FALSE;
+	int f_circle = FALSE;
+	int f_file = FALSE;
 	const char *fname = NULL;
-	INT f_on_circle = FALSE;
-	INT f_graph = FALSE;
-	INT f_rad = FALSE;
-	INT rad = 3000;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_scale = FALSE;
+	int f_on_circle = FALSE;
+	int f_graph = FALSE;
+	int f_rad = FALSE;
+	int rad = 3000;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_scale = FALSE;
 	double scale = .45;
-	INT f_line_width = FALSE;
+	int f_line_width = FALSE;
 	double line_width = 1.5;
-	INT f_placeholder_labels = FALSE;
-	INT f_circletext = FALSE;
-	INT f_count_leaves = FALSE;
+	int f_placeholder_labels = FALSE;
+	int f_circletext = FALSE;
+	int f_count_leaves = FALSE;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -117,12 +117,12 @@ int main(int argc, const char **argv)
 		else if (strcmp(argv[i], "-graph_perm") == 0) {
 			f_graph_perm = TRUE;
 			graph_nb_V = atoi(argv[++i]);
-			INT j;
+			int j;
 			for (j = 0; j < graph_nb_V; j++) {
 				graph_perm[j] = atoi(argv[++i]);
 				}
 			cout << "-graph_perm " << graph_nb_V << " ";
-			INT_vec_print(cout, graph_perm, graph_nb_V);
+			int_vec_print(cout, graph_perm, graph_nb_V);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-rad") == 0) {
@@ -215,7 +215,7 @@ int main(int argc, const char **argv)
 }
 
 
-void draw_vertex_callback(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
 {
 
 	cout << "draw_vertex_callback" << endl;
@@ -230,9 +230,9 @@ void draw_vertex_callback(tree *T, mp_graphics *G, INT *v, INT layer, tree_node 
 	cout << "draw_vertex_callback done" << endl;
 }
 
-void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
 {
-	INT rk, r, l, d, i, *digits;
+	int rk, r, l, d, i, *digits;
 	char str[1000];
 
 	cout << "draw_vertex_callback_placeholders" << endl;
@@ -248,7 +248,7 @@ void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, INT *v, INT laye
 		r = r / 10;
 		l++;
 		}
-	digits = NEW_INT(l);
+	digits = NEW_int(l);
 	r = rk;
 	l = 0;
 	while (r) {
@@ -260,41 +260,41 @@ void draw_vertex_callback_placeholders(tree *T, mp_graphics *G, INT *v, INT laye
 	for (i = 0; i < l; i++) {
 		sprintf(str + strlen(str), "%c", (char) ('a' + digits[l - 1 - i]));
 		}
-	FREE_INT(digits);
+	FREE_int(digits);
 	G->aligned_text(x, y, "", str);
 	cout << "draw_vertex_callback_placeholders done" << endl;
 }
 
-void draw_vertex_callback_standard(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_standard(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
 {
-	//INT d1;
+	//int d1;
 	char str[1000];
 
 	cout << "draw_vertex_callback_standard x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	
-	//sprintf(str, "%ld", N->value);
-	sprintf(str, "%ld", N->int_data);
+	//sprintf(str, "%d", N->value);
+	sprintf(str, "%d", N->int_data);
 
 	G->aligned_text(x, y, "", str);
 }
 
-void draw_vertex_callback_graph(tree *T, mp_graphics *G, INT *v, INT layer, tree_node *N, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_graph(tree *T, mp_graphics *G, int *v, int layer, tree_node *N, int x, int y, int dx, int dy)
 {
-	//INT d1;
+	//int d1;
 	//char str[1000];
 
 	cout << "draw_vertex_callback_graph x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
 	
-	//sprintf(str, "%ld", N->value);
+	//sprintf(str, "%d", N->value);
 
 	//G->aligned_text(x, y, "", str);
 
 	if (f_graph_perm) {
-		INT i, a, b, x, y, x1, y1;
+		int i, a, b, x, y, x1, y1;
 		for (i = 0; i < layer; i++) {
 			a = v[i];
 			k2ij(a, x, y, graph_nb_V);

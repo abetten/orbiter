@@ -16,64 +16,64 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q;
-	INT f_n = FALSE;
-	INT n;
-	INT f_k = FALSE;
-	INT k;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q;
+	int f_n = FALSE;
+	int n;
+	int f_k = FALSE;
+	int k;
+	int f_poly = FALSE;
 	char *poly = NULL;
-	INT f_Q = FALSE;
-	INT Q;
-	INT f_poly_Q = FALSE;
+	int f_Q = FALSE;
+	int Q;
+	int f_poly_Q = FALSE;
 	char *poly_Q = NULL;
-	INT f_embed = FALSE;
-	INT f_orthogonal = FALSE;
-	INT orthogonal_epsilon = 0;
-	INT f_file = FALSE;
+	int f_embed = FALSE;
+	int f_orthogonal = FALSE;
+	int orthogonal_epsilon = 0;
+	int f_file = FALSE;
 	char *fname;
-	INT f_andre = FALSE;
-	INT f_print = FALSE;
-	INT f_lines_in_PG = FALSE;
-	INT f_points_in_PG = FALSE;
-	INT f_points_on_grassmannian = FALSE;
-	INT f_group = FALSE;
-	INT f_list_group_elements = FALSE;
-	INT f_line_type = FALSE;
-	INT f_plane_type = FALSE;
-	INT f_plane_type_failsafe = FALSE;
-	INT f_conic_type = FALSE;
-	INT f_randomized = FALSE;
-	INT nb_times = 0;
-	INT f_hyperplane_type = FALSE;
-	INT f_fast = FALSE;
-	INT f_show = FALSE;
-	INT f_cone = FALSE;
-	INT f_move_line = FALSE;
-	INT from_line = 0, to_line = 0;
-	INT f_bsf3 = FALSE;
-	INT f_test_diagonals = FALSE;
+	int f_andre = FALSE;
+	int f_print = FALSE;
+	int f_lines_in_PG = FALSE;
+	int f_points_in_PG = FALSE;
+	int f_points_on_grassmannian = FALSE;
+	int f_group = FALSE;
+	int f_list_group_elements = FALSE;
+	int f_line_type = FALSE;
+	int f_plane_type = FALSE;
+	int f_plane_type_failsafe = FALSE;
+	int f_conic_type = FALSE;
+	int f_randomized = FALSE;
+	int nb_times = 0;
+	int f_hyperplane_type = FALSE;
+	int f_fast = FALSE;
+	int f_show = FALSE;
+	int f_cone = FALSE;
+	int f_move_line = FALSE;
+	int from_line = 0, to_line = 0;
+	int f_bsf3 = FALSE;
+	int f_test_diagonals = FALSE;
 	char *test_diagonals_fname = NULL;
-	INT f_klein = FALSE;
-	INT f_draw_points_in_plane = FALSE;
-	INT f_point_labels = FALSE;
-	INT f_set = FALSE;
+	int f_klein = FALSE;
+	int f_draw_points_in_plane = FALSE;
+	int f_point_labels = FALSE;
+	int f_set = FALSE;
 	const char *set_label = NULL;
 	const char *the_set = NULL;
-	INT f_canonical_form = FALSE;
-	INT f_ideal = FALSE;
-	INT ideal_degree = 0;
-	INT f_find_Eckardt_points_from_arc = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
+	int f_canonical_form = FALSE;
+	int f_ideal = FALSE;
+	int ideal_degree = 0;
+	int f_find_Eckardt_points_from_arc = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
 	
 	t0 = os_ticks();
 
@@ -248,10 +248,10 @@ int main(int argc, char **argv)
 			}
 		}
 
-	INT *the_set_in = NULL;
-	INT *the_set_out = NULL;
-	INT set_size_in = 0;
-	INT set_size_out = 0;
+	int *the_set_in = NULL;
+	int *the_set_out = NULL;
+	int set_size_in = 0;
+	int set_size_out = 0;
 	char fname_out[1000];
 	char fname_base[1000];
 	char ext[1000];
@@ -269,7 +269,7 @@ int main(int argc, char **argv)
 		}
 	else if (f_set) {
 		strcpy(fname_base, set_label);
-		INT_vec_scan(the_set, the_set_in, set_size_in);
+		int_vec_scan(the_set, the_set_in, set_size_in);
 		}
 	else {
 		cout << "should not be here" << endl;
@@ -278,7 +278,7 @@ int main(int argc, char **argv)
 
 	cout << "The input set has size " << set_size_in << ":" << endl;
 	cout << "The input set is:" << endl;
-	INT_vec_print(cout, the_set_in, set_size_in);
+	int_vec_print(cout, the_set_in, set_size_in);
 	cout << endl;
 
 	if (!f_q) {
@@ -404,8 +404,8 @@ int main(int argc, char **argv)
 			f_show, verbose_level);
 		}
 	else if (f_plane_type) {
-		INT *intersection_type;
-		INT highest_intersection_number;
+		int *intersection_type;
+		int highest_intersection_number;
 
 		if (!f_n) {
 			cout << " please use option -n <n>" << endl;
@@ -424,7 +424,7 @@ int main(int argc, char **argv)
 			}
 		cout << endl;
 
-		FREE_INT(intersection_type);
+		FREE_int(intersection_type);
 #if 0
 		if (f_fast) {
 			do_m_subspace_type_fast(n, q, 2, f_poly, poly, 
@@ -453,8 +453,8 @@ int main(int argc, char **argv)
 
 		}
 	else if (f_conic_type) {
-		INT *intersection_type;
-		INT highest_intersection_number;
+		int *intersection_type;
+		int highest_intersection_number;
 
 		if (!f_n) {
 			cout << " please use option -n <n>" << endl;
@@ -473,7 +473,7 @@ int main(int argc, char **argv)
 			}
 		cout << endl;
 
-		FREE_INT(intersection_type);
+		FREE_int(intersection_type);
 		}
 	else if (f_hyperplane_type) {
 		if (!f_n) {
@@ -541,7 +541,7 @@ int main(int argc, char **argv)
 			cout << " please use option -n <n>" << endl;
 			exit(1);
 			}
-		INT f_semilinear = FALSE;
+		int f_semilinear = FALSE;
 		if (!is_prime(q)) {
 			f_semilinear = TRUE;
 			}
@@ -572,7 +572,7 @@ int main(int argc, char **argv)
 
 	if (the_set_out) {
 		cout << "output: ";
-		INT_vec_print(cout, the_set_out, set_size_out);
+		int_vec_print(cout, the_set_out, set_size_out);
 		cout << endl;
 		}
 
@@ -582,11 +582,11 @@ int main(int argc, char **argv)
 		}
 	
 	if (the_set_in) {
-		FREE_INT(the_set_in);
+		FREE_int(the_set_in);
 		the_set_in = NULL;
 		}
 	if (the_set_out) {
-		FREE_INT(the_set_out);
+		FREE_int(the_set_out);
 		the_set_out = NULL;
 		}
 	the_end(t0);

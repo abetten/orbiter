@@ -34,35 +34,35 @@ void subfield_structure::null()
 void subfield_structure::freeself()
 {
 	if (Basis) {
-		FREE_INT(Basis);
+		FREE_int(Basis);
 		}
 	if (embedding) {
-		FREE_INT(embedding);
+		FREE_int(embedding);
 		}
 	if (embedding_inv) {
-		FREE_INT(embedding_inv);
+		FREE_int(embedding_inv);
 		}
 	if (components) {
-		FREE_INT(components);
+		FREE_int(components);
 		}
 	if (FQ_embedding) {
-		FREE_INT(FQ_embedding);
+		FREE_int(FQ_embedding);
 		}
 	if (Fq_element) {
-		FREE_INT(Fq_element);
+		FREE_int(Fq_element);
 		}
 	if (v) {
-		FREE_INT(v);
+		FREE_int(v);
 		}
 	null();
 }
 
 void subfield_structure::init(finite_field *FQ,
-		finite_field *Fq, INT verbose_level)
+		finite_field *Fq, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT alpha, omega, i;
-	INT *my_basis;
+	int f_v = (verbose_level >= 1);
+	int alpha, omega, i;
+	int *my_basis;
 
 	if (f_v) {
 		cout << "subfield_structure::init" << endl;
@@ -85,7 +85,7 @@ void subfield_structure::init(finite_field *FQ,
 		}
 
 
-	my_basis = NEW_INT(s);
+	my_basis = NEW_int(s);
 	alpha = FQ->p; // the primitive element
 	omega = FQ->power(alpha, s);
 	for (i = 0; i < s; i++) {
@@ -93,7 +93,7 @@ void subfield_structure::init(finite_field *FQ,
 		}
 	init_with_given_basis(FQ, Fq, my_basis, verbose_level);
 
-	FREE_INT(my_basis);
+	FREE_int(my_basis);
 
 	if (f_v) {
 		cout << "subfield_structure::init done" << endl;
@@ -101,11 +101,11 @@ void subfield_structure::init(finite_field *FQ,
 }
 
 void subfield_structure::init_with_given_basis(
-		finite_field *FQ, finite_field *Fq, INT *given_basis,
-		INT verbose_level)
+		finite_field *FQ, finite_field *Fq, int *given_basis,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT /*alpha,*/ /*omega,*/ i, j, h;
+	int f_v = (verbose_level >= 1);
+	int /*alpha,*/ /*omega,*/ i, j, h;
 
 	if (f_v) {
 		cout << "subfield_structure::init_with_given_basis" << endl;
@@ -127,13 +127,13 @@ void subfield_structure::init_with_given_basis(
 	if (f_v) {
 		cout << "index = " << s << endl;
 		}
-	Basis = NEW_INT(s);
-	embedding = NEW_INT(Q);
-	embedding_inv = NEW_INT(Q);
-	components = NEW_INT(Q * s);
-	FQ_embedding = NEW_INT(q);
-	Fq_element = NEW_INT(Q);
-	v = NEW_INT(s);
+	Basis = NEW_int(s);
+	embedding = NEW_int(Q);
+	embedding_inv = NEW_int(Q);
+	components = NEW_int(Q * s);
+	FQ_embedding = NEW_int(q);
+	Fq_element = NEW_int(Q);
+	v = NEW_int(s);
 
 	//alpha = FQ->p; // the primitive element
 	//omega = FQ->power(alpha, s);
@@ -142,7 +142,7 @@ void subfield_structure::init_with_given_basis(
 		}
 	if (f_v) {
 		cout << "Field basis: ";
-		INT_vec_print(cout, Basis, s);
+		int_vec_print(cout, Basis, s);
 		cout << endl;
 		}
 	for (i = 0; i < Q; i++) {
@@ -172,7 +172,7 @@ void subfield_structure::init_with_given_basis(
 
 void subfield_structure::print_embedding()
 {
-	INT i, j;
+	int i, j;
 	
 	cout << "subfield_structure::print_embedding:" << endl;
 	cout << "i : vector over F_q : embedding" << endl;
@@ -180,7 +180,7 @@ void subfield_structure::print_embedding()
 		AG_element_unrank(q, v, 1, s, i);
 		j = evaluate_over_Fq(v);
 		cout << setw(4) << i << " : ";
-		INT_vec_print(cout, v, s);
+		int_vec_print(cout, v, s);
 		cout << " : " << j << endl;
 		}
 	cout << "subfield_structure::print_embedding in reverse:" << endl;
@@ -188,15 +188,15 @@ void subfield_structure::print_embedding()
 	for (i = 0; i < Q; i++) {
 		AG_element_rank(q, components + i * s, 1, s, j);
 		cout << setw(4) << i << " : ";
-		INT_vec_print(cout, components + i * s, s);
+		int_vec_print(cout, components + i * s, s);
 		cout << " : " << j << endl;
 		}
 	
 }
 
-INT subfield_structure::evaluate_over_FQ(INT *v)
+int subfield_structure::evaluate_over_FQ(int *v)
 {
-	INT i, a, b;
+	int i, a, b;
 
 	a = 0;
 	for (i = 0; i < s; i++) {
@@ -206,9 +206,9 @@ INT subfield_structure::evaluate_over_FQ(INT *v)
 	return a;
 }
 
-INT subfield_structure::evaluate_over_Fq(INT *v)
+int subfield_structure::evaluate_over_Fq(int *v)
 {
-	INT i, a, b, c;
+	int i, a, b, c;
 
 	a = 0;
 	for (i = 0; i < s; i++) {
@@ -219,11 +219,11 @@ INT subfield_structure::evaluate_over_Fq(INT *v)
 	return a;
 }
 
-void subfield_structure::lift_matrix(INT *MQ,
-		INT m, INT *Mq, INT verbose_level)
+void subfield_structure::lift_matrix(int *MQ,
+		int m, int *Mq, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, I, J, a, b, c, d, u, v, n;
+	int f_v = (verbose_level >= 1);
+	int i, j, I, J, a, b, c, d, u, v, n;
 
 	if (f_v) {
 		cout << "subfield_structure::lift_matrix" << endl;
@@ -250,12 +250,12 @@ void subfield_structure::lift_matrix(INT *MQ,
 		}
 }
 
-void subfield_structure::retract_matrix(INT *Mq,
-		INT n, INT *MQ, INT m, INT verbose_level)
+void subfield_structure::retract_matrix(int *Mq,
+		int n, int *MQ, int m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *vec;
-	INT i, j, I, J, u, v, d, b, bv, a, rk;
+	int f_v = (verbose_level >= 1);
+	int *vec;
+	int i, j, I, J, u, v, d, b, bv, a, rk;
 
 	if (f_v) {
 		cout << "subfield_structure::retract_matrix" << endl;
@@ -264,7 +264,7 @@ void subfield_structure::retract_matrix(INT *Mq,
 		cout << "subfield_structure::retract_matrix m * s != n" << endl;
 		exit(1);
 		}
-	vec = NEW_INT(s);
+	vec = NEW_int(s);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < m; j++) {
 			I = s * i;
@@ -291,7 +291,7 @@ void subfield_structure::retract_matrix(INT *Mq,
 				}
 			}
 		}
-	FREE_INT(vec);
+	FREE_int(vec);
 	if (f_v) {
 		cout << "subfield_structure::retract_matrix done" << endl;
 		}

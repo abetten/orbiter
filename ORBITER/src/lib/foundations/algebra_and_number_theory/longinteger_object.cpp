@@ -9,7 +9,7 @@
 
 #include "foundations.h"
 
-INT longinteger_f_print_scientific = FALSE;
+int longinteger_f_print_scientific = FALSE;
 
 longinteger_object::longinteger_object()
 {
@@ -25,7 +25,7 @@ longinteger_object::~longinteger_object()
 
 void longinteger_object::freeself()
 {
-	INT f_v = FALSE;
+	int f_v = FALSE;
 	
 	if (r) {
 		if (f_v) {
@@ -41,10 +41,10 @@ void longinteger_object::freeself()
 		}
 }
 
-void longinteger_object::create(INT i)
+void longinteger_object::create(int i)
 {
-	INT ii, j, dj;
-	INT f_v = FALSE;
+	int ii, j, dj;
+	int f_v = FALSE;
 
 	ii = i;
 	freeself();
@@ -61,7 +61,7 @@ void longinteger_object::create(INT i)
 		l = 1;
 		return;
 		}
-	l = (int) INT_log10(i);
+	l = (int) int_log10(i);
 	if (f_v) {
 		cout << "longinteger_object::create "
 				"i=" << i << " log =  " << l << endl;
@@ -82,40 +82,40 @@ void longinteger_object::create(INT i)
 		}
 }
 
-void longinteger_object::create_product(INT nb_factors, INT *factors)
+void longinteger_object::create_product(int nb_factors, int *factors)
 {
 	longinteger_domain D;
 	
 	D.multiply_up(*this, factors, nb_factors);
 }
 
-void longinteger_object::create_power(INT a, INT e)
+void longinteger_object::create_power(int a, int e)
 // creates a^e
 {
 	longinteger_domain D;
-	INT *factors;
-	INT i;
+	int *factors;
+	int i;
 
-	factors = NEW_INT(e);
+	factors = NEW_int(e);
 	for (i = 0; i < e; i++) {
 		factors[i] = a;
 		}
 	
 	D.multiply_up(*this, factors, e);
 
-	FREE_INT(factors);
+	FREE_int(factors);
 }
 
-void longinteger_object::create_power_minus_one(INT a, INT e)
+void longinteger_object::create_power_minus_one(int a, int e)
 // creates a^e  - 1
 {
 	longinteger_domain D;
 	longinteger_object A;
-	INT *factors;
-	INT i;
+	int *factors;
+	int i;
 
 	A.create(-1);
-	factors = NEW_INT(e);
+	factors = NEW_int(e);
 	for (i = 0; i < e; i++) {
 		factors[i] = a;
 		}
@@ -123,15 +123,15 @@ void longinteger_object::create_power_minus_one(INT a, INT e)
 	D.multiply_up(*this, factors, e);
 	D.add_in_place(*this, A);
 
-	FREE_INT(factors);
+	FREE_int(factors);
 }
 
 void longinteger_object::create_from_base_b_representation(
-		INT b, INT *rep, INT len)
+		int b, int *rep, int len)
 {
 	longinteger_domain D;
 	longinteger_object x, y, z, bb;
-	INT i;
+	int i;
 	
 	x.zero();
 	bb.create(b);
@@ -144,12 +144,12 @@ void longinteger_object::create_from_base_b_representation(
 }
 
 void longinteger_object::create_from_base_10_string(
-		const char *str, INT verbose_level)
+		const char *str, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
 	longinteger_object x, y, z, bb;
-	INT i, len;
+	int i, len;
 	
 	len = strlen(str);
 	x.zero();
@@ -172,9 +172,9 @@ void longinteger_object::create_from_base_10_string(const char *str)
 	create_from_base_10_string(str, 0);
 }
 
-INT longinteger_object::as_INT()
+int longinteger_object::as_int()
 {
-	INT i, x = 0;
+	int i, x = 0;
 	
 	for (i = l - 1; i >= 0; i--) {
 		x *= 10;
@@ -188,8 +188,8 @@ INT longinteger_object::as_INT()
 
 void longinteger_object::assign_to(longinteger_object &b)
 {
-	INT i;
-	INT f_v = FALSE;
+	int i;
+	int f_v = FALSE;
 	
 	if (f_v) {
 		cout << "longinteger_object::assign_to "
@@ -222,7 +222,7 @@ void longinteger_object::assign_to(longinteger_object &b)
 void longinteger_object::swap_with(longinteger_object &b)
 {
 	char s;
-	INT length;
+	int length;
 	char *rep;
 	
 	s = sgn;
@@ -238,7 +238,7 @@ void longinteger_object::swap_with(longinteger_object &b)
 
 ostream& longinteger_object::print(ostream& ost)
 {
-	INT i;
+	int i;
 	char c;
 		
 	if (r == NULL) {
@@ -267,7 +267,7 @@ ostream& longinteger_object::print(ostream& ost)
 
 ostream& longinteger_object::print_not_scientific(ostream& ost)
 {
-	INT i;
+	int i;
 	char c;
 		
 	if (r == NULL) {
@@ -284,9 +284,9 @@ ostream& longinteger_object::print_not_scientific(ostream& ost)
 	return ost;
 }
 
-INT longinteger_object::output_width()
+int longinteger_object::output_width()
 {
-	INT h;
+	int h;
 	
 	h = l;
 	if (sgn)
@@ -294,9 +294,9 @@ INT longinteger_object::output_width()
 	return h;
 }
 
-void longinteger_object::print_width(ostream& ost, INT width)
+void longinteger_object::print_width(ostream& ost, int width)
 {
-	INT i, len, w;
+	int i, len, w;
 	char c;
 		
 	if (r == NULL) {
@@ -328,7 +328,7 @@ void longinteger_object::print_width(ostream& ost, INT width)
 
 void longinteger_object::print_to_string(char *str)
 {
-	INT i, j = 0;
+	int i, j = 0;
 	char c;
 		
 	if (r == NULL) {
@@ -348,7 +348,7 @@ void longinteger_object::print_to_string(char *str)
 
 void longinteger_object::normalize()
 {
-	INT i;
+	int i;
 	
 	for (i = l - 1; i > 0; i--) {
 		if (r[i] != 0)
@@ -437,7 +437,7 @@ void longinteger_object::decrement()
 	swap_with(c);
 }
 
-void longinteger_object::add_INT(INT a)
+void longinteger_object::add_int(int a)
 {
 	longinteger_object b, c;
 	longinteger_domain D;
@@ -447,7 +447,7 @@ void longinteger_object::add_INT(INT a)
 	swap_with(c);
 }
 
-void longinteger_object::create_i_power_j(INT i, INT j)
+void longinteger_object::create_i_power_j(int i, int j)
 {
 	longinteger_domain D;
 	
@@ -464,7 +464,7 @@ ostream& operator<<(ostream& ost, longinteger_object& p)
 	return ost;
 }
 
-INT longinteger_object::compare_with_INT(INT a)
+int longinteger_object::compare_with_int(int a)
 {
 	longinteger_domain D;
 	longinteger_object b;

@@ -13,16 +13,16 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
-void Baer_subplane(INT q, INT verbose_level);
+void Baer_subplane(int q, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT q;
+	int verbose_level = 0;
+	int i;
+	int q;
 	
 	t0 = os_ticks();
 
@@ -44,18 +44,18 @@ int main(int argc, char **argv)
 }
 
 
-void Baer_subplane(INT q, INT verbose_level)
+void Baer_subplane(int q, int verbose_level)
 {
 	const char *override_poly_Q = NULL;
 	const char *override_poly_q = NULL;
 	projective_space *P2;
-	INT Q;
-	INT *S;
-	INT sz;
+	int Q;
+	int *S;
+	int sz;
 	finite_field *FQ;
 	finite_field *Fq;
-	INT *v;
-	INT i, j, a, b, index, f_is_in_subfield;
+	int *v;
+	int i, j, a, b, index, f_is_in_subfield;
 
 	Q = q * q;
 	P2 = new projective_space;
@@ -74,8 +74,8 @@ void Baer_subplane(INT q, INT verbose_level)
 	index = (Q - 1) / (q - 1);
 	cout << "index=" << index << endl;
 	
-	v = NEW_INT(3);	
-	S = NEW_INT(P2->N_points);
+	v = NEW_int(3);	
+	S = NEW_int(P2->N_points);
 	sz = 0;
 	for (i = 0; i < P2->N_points; i++) {
 		PG_element_unrank_modified(*FQ, v, 1, 3, i);
@@ -103,13 +103,13 @@ void Baer_subplane(INT q, INT verbose_level)
 
 
 	char fname[1000];
-	sprintf(fname, "Baer_subplane_%ld_%ld.txt", q, Q);
+	sprintf(fname, "Baer_subplane_%d_%d.txt", q, Q);
 	write_set_to_file(fname, S, sz, verbose_level);
 
 
 
-	FREE_INT(v);
-	FREE_INT(S);
+	FREE_int(v);
+	FREE_int(S);
 	delete P2;
 }
 

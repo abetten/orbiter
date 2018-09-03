@@ -24,15 +24,15 @@ void action_on_sign::null()
 void action_on_sign::free()
 {	
 	if (perm) {
-		FREE_INT(perm);
+		FREE_int(perm);
 		}
 	null();
 }
 
 
-void action_on_sign::init(action *A, INT verbose_level)
+void action_on_sign::init(action *A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	
 	if (f_v) {
@@ -43,7 +43,7 @@ void action_on_sign::init(action *A, INT verbose_level)
 	if (f_v) {
 		cout << "perm_degree=" << perm_degree << endl;
 		}
-	perm = NEW_INT(perm_degree);
+	perm = NEW_int(perm_degree);
 	degree = 2;
 	
 	if (f_v) {
@@ -51,10 +51,10 @@ void action_on_sign::init(action *A, INT verbose_level)
 		}
 }
 
-void action_on_sign::compute_image(INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_sign::compute_image(int *Elt, int i, int &j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT u, v, sgn;
+	int f_v = (verbose_level >= 1);
+	int u, v, sgn;
 	
 	if (f_v) {
 		cout << "action_on_sign::compute_image i = " << i << endl;

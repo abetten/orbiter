@@ -24,10 +24,10 @@ void print_usage()
 
 int main(int argc, char **argv)
 {
-	INT t0 = os_ticks();
-	INT verbose_level = 0;
-	INT i;
-	INT q, k;
+	int t0 = os_ticks();
+	int verbose_level = 0;
+	int i;
+	int q, k;
 
 	if (argc <= 2) {
 		print_usage();
@@ -43,13 +43,13 @@ int main(int argc, char **argv)
 	q = atoi(argv[argc - 2]);
 	k = atoi(argv[argc - 1]);
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
-	INT *BLT;
+	int *BLT;
 	char fname[1000];
 
 	BLT = BLT_representative(q, k);
-	sprintf(fname, "BLT_%ld_%ld.txt", q, k);
+	sprintf(fname, "BLT_%d_%d.txt", q, k);
 	write_set_to_file(fname, BLT, q + 1, verbose_level - 1);
 	if (f_v) {
 		cout << "written file " << fname << " of size " << file_size(fname) << endl;

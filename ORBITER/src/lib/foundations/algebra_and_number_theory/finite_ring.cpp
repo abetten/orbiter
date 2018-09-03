@@ -32,19 +32,19 @@ void finite_ring::null()
 void finite_ring::freeself()
 {
 	if (add_table) {
-		FREE_INT(add_table);
+		FREE_int(add_table);
 		}
 	if (mult_table) {
-		FREE_INT(mult_table);
+		FREE_int(mult_table);
 		}
 	if (f_is_unit_table) {
-		FREE_INT(f_is_unit_table);
+		FREE_int(f_is_unit_table);
 		}
 	if (negate_table) {
-		FREE_INT(negate_table);
+		FREE_int(negate_table);
 		}
 	if (inv_table) {
-		FREE_INT(inv_table);
+		FREE_int(inv_table);
 		}
 	if (Fp) {
 		FREE_OBJECT(Fp);
@@ -52,21 +52,21 @@ void finite_ring::freeself()
 	null();
 }
 
-void finite_ring::init(INT q, INT verbose_level)
+void finite_ring::init(int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a;
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
 	
 	if (f_v) {
 		cout << "finite_ring::init q=" << q << endl;
 		}
 	finite_ring::q = q;
 	factor_prime_power(q, p, e);
-	add_table = NEW_INT(q * q);
-	mult_table = NEW_INT(q * q);
-	f_is_unit_table = NEW_INT(q);
-	negate_table = NEW_INT(q);
-	inv_table = NEW_INT(q);
+	add_table = NEW_int(q * q);
+	mult_table = NEW_int(q * q);
+	f_is_unit_table = NEW_int(q);
+	negate_table = NEW_int(q);
+	inv_table = NEW_int(q);
 	for (i = 0; i < q; i++) {
 		f_is_unit_table[i] = FALSE;
 		negate_table[i] = -1;
@@ -89,17 +89,17 @@ void finite_ring::init(INT q, INT verbose_level)
 	Fp->init(p, verbose_level);
 }
 
-INT finite_ring::zero()
+int finite_ring::zero()
 {
 	return 0;
 }
 
-INT finite_ring::one()
+int finite_ring::one()
 {
 	return 1;
 }
 
-INT finite_ring::is_zero(INT i)
+int finite_ring::is_zero(int i)
 {
 	if (i == 0)
 		return TRUE;
@@ -107,7 +107,7 @@ INT finite_ring::is_zero(INT i)
 		return FALSE;
 }
 
-INT finite_ring::is_one(INT i)
+int finite_ring::is_one(int i)
 {
 	if (i == 1)
 		return TRUE;
@@ -115,12 +115,12 @@ INT finite_ring::is_one(INT i)
 		return FALSE;
 }
 
-INT finite_ring::is_unit(INT i)
+int finite_ring::is_unit(int i)
 {
 	return f_is_unit_table[i];
 }
 
-INT finite_ring::add(INT i, INT j)
+int finite_ring::add(int i, int j)
 {
 	//cout << "finite_field::add i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
@@ -134,7 +134,7 @@ INT finite_ring::add(INT i, INT j)
 	return add_table[i * q + j];
 }
 
-INT finite_ring::mult(INT i, INT j)
+int finite_ring::mult(int i, int j)
 {
 	//cout << "finite_field::mult i=" << i << " j=" << j << endl;
 	if (i < 0 || i >= q) {
@@ -148,7 +148,7 @@ INT finite_ring::mult(INT i, INT j)
 	return mult_table[i * q + j];
 }
 
-INT finite_ring::negate(INT i)
+int finite_ring::negate(int i)
 {
 	if (i < 0 || i >= q) {
 		cout << "finite_ring::negate() i = " << i << endl;
@@ -157,7 +157,7 @@ INT finite_ring::negate(INT i)
 	return negate_table[i];
 }
 
-INT finite_ring::inverse(INT i)
+int finite_ring::inverse(int i)
 {
 	if (i <= 0 || i >= q) {
 		cout << "finite_ring::inverse() i = " << i << endl;
@@ -171,21 +171,21 @@ INT finite_ring::inverse(INT i)
 	return inv_table[i];
 }
 
-INT finite_ring::Gauss_INT(INT *A, INT f_special,
-	INT f_complete, INT *base_cols,
-	INT f_P, INT *P, INT m, INT n, INT Pn, INT verbose_level)
+int finite_ring::Gauss_int(int *A, int f_special,
+	int f_complete, int *base_cols,
+	int f_P, int *P, int m, int n, int Pn, int verbose_level)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
 // P is a m x Pn matrix (if f_P is TRUE)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT rank, i, j, k, jj;
-	INT pivot, pivot_inv = 0, a, b, c, z, f;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int rank, i, j, k, jj;
+	int pivot, pivot_inv = 0, a, b, c, z, f;
 	
 	if (f_v) {
-		cout << "finite_ring::Gauss_INT Gauss algorithm for matrix:" << endl;
+		cout << "finite_ring::Gauss_int Gauss algorithm for matrix:" << endl;
 		print_integer_matrix_width(cout, A, m, n, n, 5);
 		//print_tables();
 		}
@@ -203,11 +203,11 @@ INT finite_ring::Gauss_INT(INT *A, INT f_special,
 				// pivot element found: 
 				if (k != i) {
 					for (jj = 0; jj < n; jj++) {
-						INT_swap(A[i * n + jj], A[k * n + jj]);
+						int_swap(A[i * n + jj], A[k * n + jj]);
 						}
 					if (f_P) {
 						for (jj = 0; jj < Pn; jj++) {
-							INT_swap(P[i * Pn + jj], P[k * Pn + jj]);
+							int_swap(P[i * Pn + jj], P[k * Pn + jj]);
 							}
 						}
 					}
@@ -257,7 +257,7 @@ INT finite_ring::Gauss_INT(INT *A, INT f_special,
 				}
 			if (f_vv) {
 				cout << "made pivot to one:" << endl;
-				INT_vec_print(cout, A + i * n, n);
+				int_vec_print(cout, A + i * n, n);
 				cout << endl;
 				}
 			}
@@ -296,7 +296,7 @@ INT finite_ring::Gauss_INT(INT *A, INT f_special,
 				}
 			if (f_vv) {
 				cout << "after eliminating row " << k << ":" << endl;
-				INT_vec_print(cout, A + k * n, n);
+				int_vec_print(cout, A + k * n, n);
 				cout << endl;
 				}
 			if (f_P) {

@@ -11,8 +11,8 @@ mp_graphics::mp_graphics()
 }
 
 mp_graphics::mp_graphics(const char *file_name,
-		INT xmin, INT ymin, INT xmax, INT ymax,
-		INT f_embedded, INT f_sideways)
+		int xmin, int ymin, int xmax, int ymax,
+		int f_embedded, int f_sideways)
 {
 	
 	default_values();
@@ -55,8 +55,8 @@ void mp_graphics::default_values()
 }
 
 void mp_graphics::init(const char *file_name,
-	INT xmin, INT ymin, INT xmax, INT ymax,
-	INT f_embedded, INT f_sideways)
+	int xmin, int ymin, int xmax, int ymax,
+	int f_embedded, int f_sideways)
 {
 	mp_graphics::f_embedded = f_embedded;
 	mp_graphics::f_sideways = f_sideways;
@@ -85,9 +85,9 @@ void mp_graphics::init(const char *file_name,
 	dev[3] = ymax;
 }
 
-void mp_graphics::exit(ostream &ost, INT verbose_level)
+void mp_graphics::exit(ostream &ost, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_file_open) {
 		fp_mp.close();
@@ -106,13 +106,13 @@ void mp_graphics::exit(ostream &ost, INT verbose_level)
 }
 
 void mp_graphics::setup(const char *fname_base, 
-	INT in_xmin, INT in_ymin, INT in_xmax, INT in_ymax, 
-	INT xmax, INT ymax, INT f_embedded, INT f_sideways, 
+	int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
+	int xmax, int ymax, int f_embedded, int f_sideways, 
 	double scale, double line_width)
 {
-	//INT x_min = 0, x_max = 1000;
-	//INT y_min = 0, y_max = 1000;
-	INT factor_1000 = 1000;
+	//int x_min = 0, x_max = 1000;
+	//int y_min = 0, y_max = 1000;
+	int factor_1000 = 1000;
 	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname_base);
@@ -151,10 +151,10 @@ void mp_graphics::set_scale(double scale)
 
 void mp_graphics::frame(double move_out)
 {
-	INT Px[30];
-	INT Py[30];
-	INT x, y, dx, dy, ox, oy, Ox, Oy;
-	INT xmin, ymin, xmax, ymax;
+	int Px[30];
+	int Py[30];
+	int x, y, dx, dy, ox, oy, Ox, Oy;
+	int xmin, ymin, xmax, ymax;
 	
 	xmin = out_xmin();
 	xmax = out_xmax();
@@ -164,10 +164,10 @@ void mp_graphics::frame(double move_out)
 	dx = xmax - xmin;
 	dy = ymax - ymin;
 	
-	ox = (INT)(dx * .05);
-	oy = (INT)(dy * .05);
-	Ox = (INT)(dx * move_out);
-	Oy = (INT)(dy * move_out);
+	ox = (int)(dx * .05);
+	oy = (int)(dy * .05);
+	Ox = (int)(dx * move_out);
+	Oy = (int)(dy * move_out);
 	xmin -= Ox;
 	xmax += Ox;
 	ymin -= Oy;
@@ -249,10 +249,10 @@ void mp_graphics::frame(double move_out)
 
 void mp_graphics::frame_constant_aspect_ratio(double move_out)
 {
-	INT Px[30];
-	INT Py[30];
-	INT x, y, dx, dy, ox, oy, Ox, Oy;
-	INT xmin, ymin, xmax, ymax;
+	int Px[30];
+	int Py[30];
+	int x, y, dx, dy, ox, oy, Ox, Oy;
+	int xmin, ymin, xmax, ymax;
 	
 	xmin = out_xmin();
 	xmax = out_xmax();
@@ -264,8 +264,8 @@ void mp_graphics::frame_constant_aspect_ratio(double move_out)
 	dx = xmax - xmin;
 	dy = ymax - ymin;
 	
-	INT adjust_x = 0;
-	INT adjust_y = 0;
+	int adjust_x = 0;
+	int adjust_y = 0;
 	
 	if (dx > dy) {
 		adjust_y = (dx - dy) >> 1;
@@ -287,10 +287,10 @@ void mp_graphics::frame_constant_aspect_ratio(double move_out)
 	dx = xmax - xmin;
 	dy = ymax - ymin;
 	
-	ox = (INT)(dx * .05);
-	oy = (INT)(dy * .05);
-	Ox = (INT)(dx * move_out);
-	Oy = (INT)(dy * move_out);
+	ox = (int)(dx * .05);
+	oy = (int)(dy * .05);
+	Ox = (int)(dx * move_out);
+	Oy = (int)(dy * move_out);
 	xmin -= Ox;
 	xmax += Ox;
 	ymin -= Oy;
@@ -370,62 +370,62 @@ void mp_graphics::frame_constant_aspect_ratio(double move_out)
 	polygon3(Px, Py, 11, 9, 10);
 }
 
-void mp_graphics::finish(ostream &ost, INT verbose_level)
+void mp_graphics::finish(ostream &ost, int verbose_level)
 {
 	end_figure();
 	footer();
 	exit(cout, verbose_level - 1);
 }
 
-INT& mp_graphics::out_xmin()
+int& mp_graphics::out_xmin()
 {
 	return dev[0];
 }
 
-INT& mp_graphics::out_ymin()
+int& mp_graphics::out_ymin()
 {
 	return dev[1];
 }
 
-INT& mp_graphics::out_xmax()
+int& mp_graphics::out_xmax()
 {
 	return dev[2];
 }
 
-INT& mp_graphics::out_ymax()
+int& mp_graphics::out_ymax()
 {
 	return dev[3];
 }
 
-void mp_graphics::user2dev(INT &x, INT &y)
+void mp_graphics::user2dev(int &x, int &y)
 {
 	transform_llur(user, dev, x, y);
 }
 
-void mp_graphics::dev2user(INT &x, INT &y)
+void mp_graphics::dev2user(int &x, int &y)
 {
 	transform_llur(dev, user, x, y);
 }
 
-void mp_graphics::user2dev_dist_x(INT &x)
+void mp_graphics::user2dev_dist_x(int &x)
 {
 	transform_dist_x(user, dev, x);
 }
 
-void mp_graphics::user2dev_dist_y(INT &y)
+void mp_graphics::user2dev_dist_y(int &y)
 {
 	transform_dist_y(user, dev, y);
 }
 
 void mp_graphics::draw_polar_grid(double r_max,
-		INT nb_circles, INT nb_rays, double x_stretch)
+		int nb_circles, int nb_rays, double x_stretch)
 {
-	INT N = 1000;
-	INT number;
-	INT i;
+	int N = 1000;
+	int number;
+	int i;
 	double dr;
-	INT *Px;
-	INT *Py;
+	int *Px;
+	int *Py;
 	double *Dx;
 	double *Dy;
 	double dx = 1.;
@@ -436,8 +436,8 @@ void mp_graphics::draw_polar_grid(double r_max,
 	sl_thickness(100);	
 	//G.sf_color(1);
 	//G.sf_interior(10);
-	Px = NEW_INT(N);
-	Py = NEW_INT(N);
+	Px = NEW_int(N);
+	Py = NEW_int(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
@@ -446,7 +446,7 @@ void mp_graphics::draw_polar_grid(double r_max,
 	Px[0] = 0;
 	Py[0] = 0;
 	for (i = 1; i <= nb_circles; i++) {
-		circle(Px[0], Py[0], (INT)dx * dr * i * x_stretch);
+		circle(Px[0], Py[0], (int)dx * dr * i * x_stretch);
 		}
 
 	number = nb_rays;
@@ -469,27 +469,27 @@ void mp_graphics::draw_axes_and_grid(
 	double x_min, double x_max,
 	double y_min, double y_max,
 	double x_stretch, double y_stretch,
-	INT f_x_axis_at_y_min, INT f_y_axis_at_x_min, 
-	INT x_mod, INT y_mod, INT x_tick_mod, INT y_tick_mod, 
+	int f_x_axis_at_y_min, int f_y_axis_at_x_min, 
+	int x_mod, int y_mod, int x_tick_mod, int y_tick_mod, 
 	double x_labels_offset, double y_labels_offset, 
 	double x_tick_half_width, double y_tick_half_width, 
-	INT f_v_lines, INT subdivide_v, INT f_h_lines, INT subdivide_h)
+	int f_v_lines, int subdivide_v, int f_h_lines, int subdivide_h)
 {
 	double *Dx, *Dy;
-	INT *Px, *Py;
+	int *Px, *Py;
 	double dx = x_stretch;//ONE_MILLION * 50 * x_stretch;
 	double dy = y_stretch;//ONE_MILLION * 50 * y_stretch;
-	INT N = 1000;
-	INT n;
-	INT i, j, h;
+	int N = 1000;
+	int n;
+	int i, j, h;
 
 	
 
 	sl_thickness(100);	
 	//sf_color(1);
 	//sf_interior(10);
-	Px = NEW_INT(N);
-	Py = NEW_INT(N);
+	Px = NEW_int(N);
+	Py = NEW_int(N);
 	Dx = new double[N];
 	Dy = new double[N];
 
@@ -534,8 +534,8 @@ void mp_graphics::draw_axes_and_grid(
 
 	// draw x_ticks:
 	j = 0;
-	for (i = (INT)x_min; i <= (INT)x_max; i++) {
-		if ((i % x_tick_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
+	for (i = (int)x_min; i <= (int)x_max; i++) {
+		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 			continue;
 			}
 		Dx[j] = i;
@@ -551,8 +551,8 @@ void mp_graphics::draw_axes_and_grid(
 		Py[i] = Dy[i] * dy;
 		}
 	j = 0;
-	for (i = (INT)x_min; i <= (INT)x_max; i++) {
-		if ((i % x_tick_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
+	for (i = (int)x_min; i <= (int)x_max; i++) {
+		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 			continue;
 			}
 		polygon2(Px, Py, j, j + 1);
@@ -562,8 +562,8 @@ void mp_graphics::draw_axes_and_grid(
 
 	// draw y_ticks:
 	j = 0;
-	for (i = (INT)y_min; i <= (INT)y_max; i++) {
-		if ((i % y_tick_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
+	for (i = (int)y_min; i <= (int)y_max; i++) {
+		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
 			}
 		Dx[j] = x0 + (-1) * y_tick_half_width;
@@ -579,8 +579,8 @@ void mp_graphics::draw_axes_and_grid(
 		Py[i] = Dy[i] * dy;
 		}
 	j = 0;
-	for (i = (INT)y_min; i <= (INT)y_max; i++) {
-		if ((i % y_tick_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
+	for (i = (int)y_min; i <= (int)y_max; i++) {
+		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
 			}
 		polygon2(Px, Py, j, j + 1);
@@ -589,8 +589,8 @@ void mp_graphics::draw_axes_and_grid(
 
 	// draw x_labels:
 	j = 0;
-	for (i = (INT)x_min; i <= (INT)x_max; i++) {
-		if ((i % x_tick_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
+	for (i = (int)x_min; i <= (int)x_max; i++) {
+		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 			continue;
 			}
 		Dx[j] = i;
@@ -603,12 +603,12 @@ void mp_graphics::draw_axes_and_grid(
 		Py[i] = Dy[i] * dy;
 		}
 	j = 0;
-	for (i = (INT)x_min; i <= (INT)x_max; i++) {
-		if ((i % x_tick_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
+	for (i = (int)x_min; i <= (int)x_max; i++) {
+		if ((i % x_tick_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 			continue;
 			}
 		char str[1000];
-		sprintf(str, "%ld", i);
+		sprintf(str, "%d", i);
 		cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
 		j += 1;
@@ -616,8 +616,8 @@ void mp_graphics::draw_axes_and_grid(
 
 	// draw y_labels:
 	j = 0;
-	for (i = (INT)y_min; i <= (INT)y_max; i++) {
-		if ((i % y_tick_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
+	for (i = (int)y_min; i <= (int)y_max; i++) {
+		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
 			}
 		Dy[j] = i;
@@ -630,12 +630,12 @@ void mp_graphics::draw_axes_and_grid(
 		Py[i] = Dy[i] * dy;
 		}
 	j = 0;
-	for (i = (INT)y_min; i <= (INT)y_max; i++) {
-		if ((i % y_tick_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
+	for (i = (int)y_min; i <= (int)y_max; i++) {
+		if ((i % y_tick_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 			continue;
 			}
 		char str[1000];
-		sprintf(str, "%ld", i);
+		sprintf(str, "%d", i);
 		cout << "str='" << str << "'" << endl;
 		aligned_text_array(Px, Py, j, "", str);
 		j += 1;
@@ -649,12 +649,12 @@ void mp_graphics::draw_axes_and_grid(
 
 		sl_thickness(35);	
 		h = 0;
-		for (i = (INT)x_min; i <= (INT)x_max; i++) {
-			if ((i % x_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
+		for (i = (int)x_min; i <= (int)x_max; i++) {
+			if ((i % x_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 				continue;
 				}
 			for (j = 0; j <= subdivide_v; j++) {
-				if (j && i == (INT)x_max) {
+				if (j && i == (int)x_max) {
 					continue;
 					}
 				Dx[h] = i + (double) j * ddx;
@@ -671,12 +671,12 @@ void mp_graphics::draw_axes_and_grid(
 			Py[i] = Dy[i] * dy;
 			}
 		h = 0;
-		for (i = (INT)x_min; i <= (INT)x_max; i++) {
-			if ((i % x_mod) && (i != (INT)x_min) && (i != (INT)x_max)) {
+		for (i = (int)x_min; i <= (int)x_max; i++) {
+			if ((i % x_mod) && (i != (int)x_min) && (i != (int)x_max)) {
 				continue;
 				}
 			for (j = 0; j <= subdivide_v; j++) {
-				if (j && i == (INT)x_max) {
+				if (j && i == (int)x_max) {
 					continue;
 					}
 				polygon2(Px, Py, h, h + 1);
@@ -693,12 +693,12 @@ void mp_graphics::draw_axes_and_grid(
 
 		sl_thickness(35);	
 		h = 0;
-		for (i = (INT)y_min; i <= (INT)y_max; i++) {
-			if ((i % y_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
+		for (i = (int)y_min; i <= (int)y_max; i++) {
+			if ((i % y_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 				continue;
 				}
 			for (j = 0; j <= subdivide_h; j++) {
-				if (j && i == (INT)y_max) {
+				if (j && i == (int)y_max) {
 					continue;
 					}
 				Dy[h] = i + (double) j * ddy;
@@ -715,12 +715,12 @@ void mp_graphics::draw_axes_and_grid(
 			Py[i] = Dy[i] * dy;
 			}
 		h = 0;
-		for (i = (INT)y_min; i <= (INT)y_max; i++) {
-			if ((i % y_mod) && (i != (INT)y_min) && (i != (INT)y_max)) {
+		for (i = (int)y_min; i <= (int)y_max; i++) {
+			if ((i % y_mod) && (i != (int)y_min) && (i != (int)y_max)) {
 				continue;
 				}
 			for (j = 0; j <= subdivide_h; j++) {
-				if (j && i == (INT)y_max) {
+				if (j && i == (int)y_max) {
 					continue;
 					}
 				polygon2(Px, Py, h, h + 1);
@@ -739,16 +739,16 @@ void mp_graphics::draw_axes_and_grid(
 
 }
 
-void mp_graphics::plot_curve(INT N, INT *f_DNE,
+void mp_graphics::plot_curve(int N, int *f_DNE,
 		double *Dx, double *Dy, double dx, double dy)
 {
-	INT *Px;
-	INT *Py;
-	INT i, j;
-	//INT Dx1, Dy1, Dx2, Dy2, L1, L2;
+	int *Px;
+	int *Py;
+	int i, j;
+	//int Dx1, Dy1, Dx2, Dy2, L1, L2;
 
-	Px = NEW_INT(N);
-	Py = NEW_INT(N);
+	Px = NEW_int(N);
+	Py = NEW_int(N);
 	j = 0;
 	for (i = 0; i < N; i++) {
 		if (f_DNE[i] == FALSE) {
@@ -811,12 +811,12 @@ void mp_graphics::plot_curve(INT N, INT *f_DNE,
 		polygon2(Px, Py, i + 0, i + 1);
 		}
 #endif
-	FREE_INT(Px);
-	FREE_INT(Py);
+	FREE_int(Px);
+	FREE_int(Py);
 }
 
 
-void mp_graphics::nice_circle(INT x, INT y, INT rad)
+void mp_graphics::nice_circle(int x, int y, int rad)
 {
 	//fp_log << "NiceCircle " << x << " " << y << " " << rad << endl;
 
@@ -829,156 +829,156 @@ void mp_graphics::nice_circle(INT x, INT y, INT rad)
 }
 
 void mp_graphics::grid_polygon2(grid_frame *F, 
-	INT x0, INT y0, INT x1, INT y1)
+	int x0, int y0, int x1, int y1)
 {
-	INT *Px, *Py, *Idx;
-	INT i;
+	int *Px, *Py, *Idx;
+	int i;
 
-	Px = NEW_INT(2);
-	Py = NEW_INT(2);
-	Idx = NEW_INT(2);
+	Px = NEW_int(2);
+	Py = NEW_int(2);
+	Idx = NEW_int(2);
 
 	for (i = 0; i < 2; i++) {
 		Idx[i] = i;
 		}
 	if (F->f_matrix_notation) {
-		Px[0] = (INT)(F->origin_x + y0 * F->dx);
-		Py[0] = (INT)(F->origin_y + (F->m - x0) * F->dy);
-		Px[1] = (INT)(F->origin_x + y1 * F->dx);
-		Py[1] = (INT)(F->origin_y + (F->m - x1) * F->dy);
+		Px[0] = (int)(F->origin_x + y0 * F->dx);
+		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
+		Px[1] = (int)(F->origin_x + y1 * F->dx);
+		Py[1] = (int)(F->origin_y + (F->m - x1) * F->dy);
 		}
 	else {
-		Px[0] = (INT)(F->origin_x + x0 * F->dx);
-		Py[0] = (INT)(F->origin_y + y0 * F->dy);
-		Px[1] = (INT)(F->origin_x + x1 * F->dx);
-		Py[1] = (INT)(F->origin_y + y1 * F->dy);
+		Px[0] = (int)(F->origin_x + x0 * F->dx);
+		Py[0] = (int)(F->origin_y + y0 * F->dy);
+		Px[1] = (int)(F->origin_x + x1 * F->dx);
+		Py[1] = (int)(F->origin_y + y1 * F->dy);
 		}
 	polygon_idx(Px, Py, Idx, 2);
-	FREE_INT(Px);
-	FREE_INT(Py);
-	FREE_INT(Idx);
+	FREE_int(Px);
+	FREE_int(Py);
+	FREE_int(Idx);
 }
 
 void mp_graphics::grid_polygon4(grid_frame *F, 
-	INT x0, INT y0, INT x1, INT y1,
-	INT x2, INT y2, INT x3, INT y3)
+	int x0, int y0, int x1, int y1,
+	int x2, int y2, int x3, int y3)
 {
-	INT *Px, *Py, *Idx;
-	INT i;
+	int *Px, *Py, *Idx;
+	int i;
 
-	Px = NEW_INT(4);
-	Py = NEW_INT(4);
-	Idx = NEW_INT(4);
+	Px = NEW_int(4);
+	Py = NEW_int(4);
+	Idx = NEW_int(4);
 
 	for (i = 0; i < 4; i++) {
 		Idx[i] = i;
 		}
 	if (F->f_matrix_notation) {
-		Px[0] = (INT)(F->origin_x + y0 * F->dx);
-		Py[0] = (INT)(F->origin_y + (F->m - x0) * F->dy);
-		Px[1] = (INT)(F->origin_x + y1 * F->dx);
-		Py[1] = (INT)(F->origin_y + (F->m - x1) * F->dy);
-		Px[2] = (INT)(F->origin_x + y2 * F->dx);
-		Py[2] = (INT)(F->origin_y + (F->m - x2) * F->dy);
-		Px[3] = (INT)(F->origin_x + y3 * F->dx);
-		Py[3] = (INT)(F->origin_y + (F->m - x3) * F->dy);
+		Px[0] = (int)(F->origin_x + y0 * F->dx);
+		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
+		Px[1] = (int)(F->origin_x + y1 * F->dx);
+		Py[1] = (int)(F->origin_y + (F->m - x1) * F->dy);
+		Px[2] = (int)(F->origin_x + y2 * F->dx);
+		Py[2] = (int)(F->origin_y + (F->m - x2) * F->dy);
+		Px[3] = (int)(F->origin_x + y3 * F->dx);
+		Py[3] = (int)(F->origin_y + (F->m - x3) * F->dy);
 		}
 	else {
-		Px[0] = (INT)(F->origin_x + x0 * F->dx);
-		Py[0] = (INT)(F->origin_y + y0 * F->dy);
-		Px[1] = (INT)(F->origin_x + x1 * F->dx);
-		Py[1] = (INT)(F->origin_y + y1 * F->dy);
-		Px[2] = (INT)(F->origin_x + x2 * F->dx);
-		Py[2] = (INT)(F->origin_y + y2 * F->dy);
-		Px[3] = (INT)(F->origin_x + x3 * F->dx);
-		Py[3] = (INT)(F->origin_y + y3 * F->dy);
+		Px[0] = (int)(F->origin_x + x0 * F->dx);
+		Py[0] = (int)(F->origin_y + y0 * F->dy);
+		Px[1] = (int)(F->origin_x + x1 * F->dx);
+		Py[1] = (int)(F->origin_y + y1 * F->dy);
+		Px[2] = (int)(F->origin_x + x2 * F->dx);
+		Py[2] = (int)(F->origin_y + y2 * F->dy);
+		Px[3] = (int)(F->origin_x + x3 * F->dx);
+		Py[3] = (int)(F->origin_y + y3 * F->dy);
 		}
 	polygon_idx(Px, Py, Idx, 4);
-	FREE_INT(Px);
-	FREE_INT(Py);
-	FREE_INT(Idx);
+	FREE_int(Px);
+	FREE_int(Py);
+	FREE_int(Idx);
 }
 
 void mp_graphics::grid_polygon5(grid_frame *F, 
-	INT x0, INT y0, INT x1, INT y1,
-	INT x2, INT y2, INT x3, INT y3,
-	INT x4, INT y4)
+	int x0, int y0, int x1, int y1,
+	int x2, int y2, int x3, int y3,
+	int x4, int y4)
 {
-	INT *Px, *Py, *Idx;
-	INT i;
+	int *Px, *Py, *Idx;
+	int i;
 
-	Px = NEW_INT(5);
-	Py = NEW_INT(5);
-	Idx = NEW_INT(5);
+	Px = NEW_int(5);
+	Py = NEW_int(5);
+	Idx = NEW_int(5);
 
 	for (i = 0; i < 5; i++) {
 		Idx[i] = i;
 		}
 	if (F->f_matrix_notation) {
-		Px[0] = (INT)(F->origin_x + y0 * F->dx);
-		Py[0] = (INT)(F->origin_y + (F->m - x0) * F->dy);
-		Px[1] = (INT)(F->origin_x + y1 * F->dx);
-		Py[1] = (INT)(F->origin_y + (F->m - x1) * F->dy);
-		Px[2] = (INT)(F->origin_x + y2 * F->dx);
-		Py[2] = (INT)(F->origin_y + (F->m - x2) * F->dy);
-		Px[3] = (INT)(F->origin_x + y3 * F->dx);
-		Py[3] = (INT)(F->origin_y + (F->m - x3) * F->dy);
-		Px[4] = (INT)(F->origin_x + y4 * F->dx);
-		Py[4] = (INT)(F->origin_y + (F->m - x4) * F->dy);
+		Px[0] = (int)(F->origin_x + y0 * F->dx);
+		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
+		Px[1] = (int)(F->origin_x + y1 * F->dx);
+		Py[1] = (int)(F->origin_y + (F->m - x1) * F->dy);
+		Px[2] = (int)(F->origin_x + y2 * F->dx);
+		Py[2] = (int)(F->origin_y + (F->m - x2) * F->dy);
+		Px[3] = (int)(F->origin_x + y3 * F->dx);
+		Py[3] = (int)(F->origin_y + (F->m - x3) * F->dy);
+		Px[4] = (int)(F->origin_x + y4 * F->dx);
+		Py[4] = (int)(F->origin_y + (F->m - x4) * F->dy);
 		}
 	else {
-		Px[0] = (INT)(F->origin_x + x0 * F->dx);
-		Py[0] = (INT)(F->origin_y + y0 * F->dy);
-		Px[1] = (INT)(F->origin_x + x1 * F->dx);
-		Py[1] = (INT)(F->origin_y + y1 * F->dy);
-		Px[2] = (INT)(F->origin_x + x2 * F->dx);
-		Py[2] = (INT)(F->origin_y + y2 * F->dy);
-		Px[3] = (INT)(F->origin_x + x3 * F->dx);
-		Py[3] = (INT)(F->origin_y + y3 * F->dy);
-		Px[4] = (INT)(F->origin_x + x4 * F->dx);
-		Py[4] = (INT)(F->origin_y + y4 * F->dy);
+		Px[0] = (int)(F->origin_x + x0 * F->dx);
+		Py[0] = (int)(F->origin_y + y0 * F->dy);
+		Px[1] = (int)(F->origin_x + x1 * F->dx);
+		Py[1] = (int)(F->origin_y + y1 * F->dy);
+		Px[2] = (int)(F->origin_x + x2 * F->dx);
+		Py[2] = (int)(F->origin_y + y2 * F->dy);
+		Px[3] = (int)(F->origin_x + x3 * F->dx);
+		Py[3] = (int)(F->origin_y + y3 * F->dy);
+		Px[4] = (int)(F->origin_x + x4 * F->dx);
+		Py[4] = (int)(F->origin_y + y4 * F->dy);
 		}
 	polygon_idx(Px, Py, Idx, 5);
-	FREE_INT(Px);
-	FREE_INT(Py);
-	FREE_INT(Idx);
+	FREE_int(Px);
+	FREE_int(Py);
+	FREE_int(Idx);
 }
 
-void mp_graphics::polygon(INT *Px, INT *Py, INT n)
+void mp_graphics::polygon(int *Px, int *Py, int n)
 {
-	INT *Idx = NEW_INT(n);
-	INT i;
+	int *Idx = NEW_int(n);
+	int i;
 	
 	polygon_log(Px, Py, n);
 	for (i = 0; i < n; i++) {
 		Idx[i] = i;
 		}
 	polygon_idx(Px, Py, Idx, n);
-	FREE_INT(Idx);
+	FREE_int(Idx);
 }
 
-void mp_graphics::polygon2(INT *Px, INT *Py, INT i1, INT i2)
+void mp_graphics::polygon2(int *Px, int *Py, int i1, int i2)
 {
-	INT Idx[2];
+	int Idx[2];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	polygon_idx(Px, Py, Idx, 2);
 }
 
-void mp_graphics::polygon3(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3)
+void mp_graphics::polygon3(int *Px, int *Py,
+		int i1, int i2, int i3)
 {
-	INT Idx[3];
+	int Idx[3];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
 	polygon_idx(Px, Py, Idx, 3);
 }
 
-void mp_graphics::polygon4(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4)
+void mp_graphics::polygon4(int *Px, int *Py,
+		int i1, int i2, int i3, int i4)
 {
-	INT Idx[4];
+	int Idx[4];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -986,10 +986,10 @@ void mp_graphics::polygon4(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 4);
 }
 
-void mp_graphics::polygon5(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5)
+void mp_graphics::polygon5(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5)
 {
-	INT Idx[5];
+	int Idx[5];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -999,10 +999,10 @@ void mp_graphics::polygon5(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 5);
 }
 
-void mp_graphics::polygon6(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6)
+void mp_graphics::polygon6(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1012,11 +1012,11 @@ void mp_graphics::polygon6(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 6);
 }
 
-void mp_graphics::polygon7(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7)
+void mp_graphics::polygon7(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1027,11 +1027,11 @@ void mp_graphics::polygon7(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 7);
 }
 
-void mp_graphics::polygon8(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8)
+void mp_graphics::polygon8(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1043,11 +1043,11 @@ void mp_graphics::polygon8(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 8);
 }
 
-void mp_graphics::polygon9(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8, INT i9)
+void mp_graphics::polygon9(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8, int i9)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1060,11 +1060,11 @@ void mp_graphics::polygon9(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 9);
 }
 
-void mp_graphics::polygon10(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8, INT i9, INT i10)
+void mp_graphics::polygon10(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8, int i9, int i10)
 {
-	INT Idx[20];
+	int Idx[20];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1078,11 +1078,11 @@ void mp_graphics::polygon10(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 10);
 }
 
-void mp_graphics::polygon11(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8, INT i9, INT i10, INT i11)
+void mp_graphics::polygon11(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8, int i9, int i10, int i11)
 {
-	INT Idx[20];
+	int Idx[20];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1097,47 +1097,47 @@ void mp_graphics::polygon11(INT *Px, INT *Py,
 	polygon_idx(Px, Py, Idx, 11);
 }
 
-void mp_graphics::polygon_idx(INT *Px, INT *Py, INT *Idx, INT n)
+void mp_graphics::polygon_idx(int *Px, int *Py, int *Idx, int n)
 {
 	polygon_idx_log(Px, Py, Idx, n);
 	polygon_idx2(Px, Py, Idx, n, FALSE);
 }
 
-void mp_graphics::bezier(INT *Px, INT *Py, INT n)
+void mp_graphics::bezier(int *Px, int *Py, int n)
 {
-	INT *Idx = NEW_INT(n);
-	INT i;
+	int *Idx = NEW_int(n);
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		Idx[i] = i;
 		}
 	bezier_idx(Px, Py, Idx, n);
-	FREE_INT(Idx);
+	FREE_int(Idx);
 }
 
-void mp_graphics::bezier2(INT *Px, INT *Py,
-		INT i1, INT i2)
+void mp_graphics::bezier2(int *Px, int *Py,
+		int i1, int i2)
 {
-	INT Idx[2];
+	int Idx[2];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	bezier_idx(Px, Py, Idx, 2);
 }
 
-void mp_graphics::bezier3(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3)
+void mp_graphics::bezier3(int *Px, int *Py,
+		int i1, int i2, int i3)
 {
-	INT Idx[3];
+	int Idx[3];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
 	bezier_idx(Px, Py, Idx, 3);
 }
 
-void mp_graphics::bezier4(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4)
+void mp_graphics::bezier4(int *Px, int *Py,
+		int i1, int i2, int i3, int i4)
 {
-	INT Idx[4];
+	int Idx[4];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1145,10 +1145,10 @@ void mp_graphics::bezier4(INT *Px, INT *Py,
 	bezier_idx(Px, Py, Idx, 4);
 }
 
-void mp_graphics::bezier5(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5)
+void mp_graphics::bezier5(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5)
 {
-	INT Idx[5];
+	int Idx[5];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1157,10 +1157,10 @@ void mp_graphics::bezier5(INT *Px, INT *Py,
 	bezier_idx(Px, Py, Idx, 5);
 }
 
-void mp_graphics::bezier6(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6)
+void mp_graphics::bezier6(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6)
 {
-	INT Idx[6];
+	int Idx[6];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1170,10 +1170,10 @@ void mp_graphics::bezier6(INT *Px, INT *Py,
 	bezier_idx(Px, Py, Idx, 6);
 }
 
-void mp_graphics::bezier7(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6, INT i7)
+void mp_graphics::bezier7(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6, int i7)
 {
-	INT Idx[7];
+	int Idx[7];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1184,110 +1184,110 @@ void mp_graphics::bezier7(INT *Px, INT *Py,
 	bezier_idx(Px, Py, Idx, 7);
 }
 
-void mp_graphics::bezier_idx(INT *Px, INT *Py, INT *Idx, INT n)
+void mp_graphics::bezier_idx(int *Px, int *Py, int *Idx, int n)
 {
 	bezier_idx_log(Px, Py, Idx, n);
 	bezier_idx2(Px, Py, Idx, n, FALSE);
 }
 
 void mp_graphics::grid_fill_polygon4(grid_frame *F, 
-	INT x0, INT y0, INT x1, INT y1,
-	INT x2, INT y2, INT x3, INT y3)
+	int x0, int y0, int x1, int y1,
+	int x2, int y2, int x3, int y3)
 {
-	INT *Px, *Py, *Idx;
-	INT i;
+	int *Px, *Py, *Idx;
+	int i;
 
-	Px = NEW_INT(4);
-	Py = NEW_INT(4);
-	Idx = NEW_INT(4);
+	Px = NEW_int(4);
+	Py = NEW_int(4);
+	Idx = NEW_int(4);
 
 	for (i = 0; i < 4; i++) {
 		Idx[i] = i;
 		}
 	if (F->f_matrix_notation) {
-		Px[0] = (INT)(F->origin_x + y0 * F->dx);
-		Py[0] = (INT)(F->origin_y + (F->m - x0) * F->dy);
-		Px[1] = (INT)(F->origin_x + y1 * F->dx);
-		Py[1] = (INT)(F->origin_y + (F->m - x1) * F->dy);
-		Px[2] = (INT)(F->origin_x + y2 * F->dx);
-		Py[2] = (INT)(F->origin_y + (F->m - x2) * F->dy);
-		Px[3] = (INT)(F->origin_x + y3 * F->dx);
-		Py[3] = (INT)(F->origin_y + (F->m - x3) * F->dy);
+		Px[0] = (int)(F->origin_x + y0 * F->dx);
+		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
+		Px[1] = (int)(F->origin_x + y1 * F->dx);
+		Py[1] = (int)(F->origin_y + (F->m - x1) * F->dy);
+		Px[2] = (int)(F->origin_x + y2 * F->dx);
+		Py[2] = (int)(F->origin_y + (F->m - x2) * F->dy);
+		Px[3] = (int)(F->origin_x + y3 * F->dx);
+		Py[3] = (int)(F->origin_y + (F->m - x3) * F->dy);
 		}
 	else {
-		Px[0] = (INT)(F->origin_x + x0 * F->dx);
-		Py[0] = (INT)(F->origin_y + y0 * F->dy);
-		Px[1] = (INT)(F->origin_x + x1 * F->dx);
-		Py[1] = (INT)(F->origin_y + y1 * F->dy);
-		Px[2] = (INT)(F->origin_x + x2 * F->dx);
-		Py[2] = (INT)(F->origin_y + y2 * F->dy);
-		Px[3] = (INT)(F->origin_x + x3 * F->dx);
-		Py[3] = (INT)(F->origin_y + y3 * F->dy);
+		Px[0] = (int)(F->origin_x + x0 * F->dx);
+		Py[0] = (int)(F->origin_y + y0 * F->dy);
+		Px[1] = (int)(F->origin_x + x1 * F->dx);
+		Py[1] = (int)(F->origin_y + y1 * F->dy);
+		Px[2] = (int)(F->origin_x + x2 * F->dx);
+		Py[2] = (int)(F->origin_y + y2 * F->dy);
+		Px[3] = (int)(F->origin_x + x3 * F->dx);
+		Py[3] = (int)(F->origin_y + y3 * F->dy);
 		}
 	fill_idx(Px, Py, Idx, 4, "--", TRUE);
-	FREE_INT(Px);
-	FREE_INT(Py);
-	FREE_INT(Idx);
+	FREE_int(Px);
+	FREE_int(Py);
+	FREE_int(Idx);
 }
 
 void mp_graphics::grid_fill_polygon5(grid_frame *F, 
-	INT x0, INT y0, INT x1, INT y1, INT x2, INT y2,
-	INT x3, INT y3, INT x4, INT y4)
+	int x0, int y0, int x1, int y1, int x2, int y2,
+	int x3, int y3, int x4, int y4)
 {
-	INT *Px, *Py, *Idx;
-	INT i;
+	int *Px, *Py, *Idx;
+	int i;
 
-	Px = NEW_INT(5);
-	Py = NEW_INT(5);
-	Idx = NEW_INT(5);
+	Px = NEW_int(5);
+	Py = NEW_int(5);
+	Idx = NEW_int(5);
 
 	for (i = 0; i < 5; i++) {
 		Idx[i] = i;
 		}
 	if (F->f_matrix_notation) {
-		Px[0] = (INT)(F->origin_x + y0 * F->dx);
-		Py[0] = (INT)(F->origin_y + (F->m - x0) * F->dy);
-		Px[1] = (INT)(F->origin_x + y1 * F->dx);
-		Py[1] = (INT)(F->origin_y + (F->m - x1) * F->dy);
-		Px[2] = (INT)(F->origin_x + y2 * F->dx);
-		Py[2] = (INT)(F->origin_y + (F->m - x2) * F->dy);
-		Px[3] = (INT)(F->origin_x + y3 * F->dx);
-		Py[3] = (INT)(F->origin_y + (F->m - x3) * F->dy);
-		Px[4] = (INT)(F->origin_x + y4 * F->dx);
-		Py[4] = (INT)(F->origin_y + (F->m - x4) * F->dy);
+		Px[0] = (int)(F->origin_x + y0 * F->dx);
+		Py[0] = (int)(F->origin_y + (F->m - x0) * F->dy);
+		Px[1] = (int)(F->origin_x + y1 * F->dx);
+		Py[1] = (int)(F->origin_y + (F->m - x1) * F->dy);
+		Px[2] = (int)(F->origin_x + y2 * F->dx);
+		Py[2] = (int)(F->origin_y + (F->m - x2) * F->dy);
+		Px[3] = (int)(F->origin_x + y3 * F->dx);
+		Py[3] = (int)(F->origin_y + (F->m - x3) * F->dy);
+		Px[4] = (int)(F->origin_x + y4 * F->dx);
+		Py[4] = (int)(F->origin_y + (F->m - x4) * F->dy);
 		}
 	else {
-		Px[0] = (INT)(F->origin_x + x0 * F->dx);
-		Py[0] = (INT)(F->origin_y + y0 * F->dy);
-		Px[1] = (INT)(F->origin_x + x1 * F->dx);
-		Py[1] = (INT)(F->origin_y + y1 * F->dy);
-		Px[2] = (INT)(F->origin_x + x2 * F->dx);
-		Py[2] = (INT)(F->origin_y + y2 * F->dy);
-		Px[3] = (INT)(F->origin_x + x3 * F->dx);
-		Py[3] = (INT)(F->origin_y + y3 * F->dy);
-		Px[4] = (INT)(F->origin_x + x4 * F->dx);
-		Py[4] = (INT)(F->origin_y + y4 * F->dy);
+		Px[0] = (int)(F->origin_x + x0 * F->dx);
+		Py[0] = (int)(F->origin_y + y0 * F->dy);
+		Px[1] = (int)(F->origin_x + x1 * F->dx);
+		Py[1] = (int)(F->origin_y + y1 * F->dy);
+		Px[2] = (int)(F->origin_x + x2 * F->dx);
+		Py[2] = (int)(F->origin_y + y2 * F->dy);
+		Px[3] = (int)(F->origin_x + x3 * F->dx);
+		Py[3] = (int)(F->origin_y + y3 * F->dy);
+		Px[4] = (int)(F->origin_x + x4 * F->dx);
+		Py[4] = (int)(F->origin_y + y4 * F->dy);
 		}
 	fill_idx(Px, Py, Idx, 5, "--", TRUE);
-	FREE_INT(Px);
-	FREE_INT(Py);
-	FREE_INT(Idx);
+	FREE_int(Px);
+	FREE_int(Py);
+	FREE_int(Idx);
 }
 
-void mp_graphics::fill_polygon3(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3)
+void mp_graphics::fill_polygon3(int *Px, int *Py,
+		int i1, int i2, int i3)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
 	fill_idx(Px, Py, Idx, 3, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon4(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4)
+void mp_graphics::fill_polygon4(int *Px, int *Py,
+		int i1, int i2, int i3, int i4)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1295,10 +1295,10 @@ void mp_graphics::fill_polygon4(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 4, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon5(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5)
+void mp_graphics::fill_polygon5(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1307,10 +1307,10 @@ void mp_graphics::fill_polygon5(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 5, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon6(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6)
+void mp_graphics::fill_polygon6(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1320,11 +1320,11 @@ void mp_graphics::fill_polygon6(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 6, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon7(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7)
+void mp_graphics::fill_polygon7(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1335,11 +1335,11 @@ void mp_graphics::fill_polygon7(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 7, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon8(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8)
+void mp_graphics::fill_polygon8(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1351,11 +1351,11 @@ void mp_graphics::fill_polygon8(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 8, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon9(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8, INT i9)
+void mp_graphics::fill_polygon9(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8, int i9)
 {
-	INT Idx[10];
+	int Idx[10];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1368,11 +1368,11 @@ void mp_graphics::fill_polygon9(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 9, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon10(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8, INT i9, INT i10)
+void mp_graphics::fill_polygon10(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8, int i9, int i10)
 {
-	INT Idx[20];
+	int Idx[20];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1386,11 +1386,11 @@ void mp_graphics::fill_polygon10(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 10, "--", FALSE);
 }
 
-void mp_graphics::fill_polygon11(INT *Px, INT *Py,
-		INT i1, INT i2, INT i3, INT i4, INT i5, INT i6,
-		INT i7, INT i8, INT i9, INT i10, INT i11)
+void mp_graphics::fill_polygon11(int *Px, int *Py,
+		int i1, int i2, int i3, int i4, int i5, int i6,
+		int i7, int i8, int i9, int i10, int i11)
 {
-	INT Idx[20];
+	int Idx[20];
 	Idx[0] = i1;
 	Idx[1] = i2;
 	Idx[2] = i3;
@@ -1405,11 +1405,11 @@ void mp_graphics::fill_polygon11(INT *Px, INT *Py,
 	fill_idx(Px, Py, Idx, 11, "--", FALSE);
 }
 
-void mp_graphics::polygon2_arrow_halfway(INT *Px, INT *Py,
-		INT i1, INT i2)
+void mp_graphics::polygon2_arrow_halfway(int *Px, int *Py,
+		int i1, int i2)
 {
-	INT Idx[3];
-	INT X[3], Y[3];
+	int Idx[3];
+	int X[3], Y[3];
 	
 	X[0] = Px[i1];
 	X[1] = Px[i2];
@@ -1433,12 +1433,12 @@ void mp_graphics::polygon2_arrow_halfway(INT *Px, INT *Py,
 	sl_ends(0, 0);
 }
 
-void mp_graphics::polygon2_arrow_halfway_and_label(INT *Px, INT *Py,
-	INT i1, INT i2,
+void mp_graphics::polygon2_arrow_halfway_and_label(int *Px, int *Py,
+	int i1, int i2,
 	const char *alignment, const char *txt)
 {
-	INT Idx[3];
-	INT X[3], Y[3];
+	int Idx[3];
+	int X[3], Y[3];
 	
 	X[0] = Px[i1];
 	X[1] = Px[i2];
@@ -1465,27 +1465,27 @@ void mp_graphics::polygon2_arrow_halfway_and_label(INT *Px, INT *Py,
 }
 
 void mp_graphics::grid_aligned_text(grid_frame *F,
-		INT x, INT y, const char *alignment, const char *p)
+		int x, int y, const char *alignment, const char *p)
 {
-	INT *Px, *Py;
+	int *Px, *Py;
 
-	Px = NEW_INT(1);
-	Py = NEW_INT(1);
+	Px = NEW_int(1);
+	Py = NEW_int(1);
 
 	if (F->f_matrix_notation) {
-		Px[0] = (INT)(F->origin_x + y * F->dx);
-		Py[0] = (INT)(F->origin_y + (F->m - x) * F->dy);
+		Px[0] = (int)(F->origin_x + y * F->dx);
+		Py[0] = (int)(F->origin_y + (F->m - x) * F->dy);
 		}
 	else {
-		Px[0] = (INT)(F->origin_x + x * F->dx);
-		Py[0] = (INT)(F->origin_y + y * F->dy);
+		Px[0] = (int)(F->origin_x + x * F->dx);
+		Py[0] = (int)(F->origin_y + y * F->dy);
 		}
 	aligned_text(Px[0], Py[0], alignment, p);
-	FREE_INT(Px);
-	FREE_INT(Py);
+	FREE_int(Px);
+	FREE_int(Py);
 }
 
-void mp_graphics::aligned_text(INT x, INT y,
+void mp_graphics::aligned_text(int x, int y,
 		const char *alignment, const char *p)
 {
 	//fp_log << "AlignedText " << x << " " << y << " "
@@ -1493,18 +1493,18 @@ void mp_graphics::aligned_text(INT x, INT y,
 	aligned_text_with_offset(x, y, 0, 0, alignment, p);
 }
 
-void mp_graphics::aligned_text_array(INT *Px, INT *Py, INT idx,
+void mp_graphics::aligned_text_array(int *Px, int *Py, int idx,
 		const char *alignment, const char *p)
 {
 	aligned_text(Px[idx], Py[idx], alignment, p);
 }
 
-void mp_graphics::aligned_text_with_offset(INT x, INT y,
-		INT xoffset, INT yoffset,
+void mp_graphics::aligned_text_with_offset(int x, int y,
+		int xoffset, int yoffset,
 	const char *alignment, const char *p)
 {
-	INT h_align = 1, v_align = 1;
-	INT l, i;
+	int h_align = 1, v_align = 1;
+	int l, i;
 	char c;
 	
 	//fp_log << "AlignedText " << x << " " << y << " " << xoffset
@@ -1538,82 +1538,82 @@ void mp_graphics::aligned_text_with_offset(INT x, INT y,
 
 
 
-void mp_graphics::st_alignment(INT txt_halign, INT txt_valign)
+void mp_graphics::st_alignment(int txt_halign, int txt_valign)
 {
 	mp_graphics::txt_halign = txt_halign;
 	mp_graphics::txt_valign = txt_valign;
 	st_alignment_log();
 }
 
-void mp_graphics::sl_udsty(INT line_dashing)
+void mp_graphics::sl_udsty(int line_dashing)
 {
 	mp_graphics::line_dashing = line_dashing;
 	sl_udsty_log();
 }
 
-void mp_graphics::sl_ends(INT line_beg_style, INT line_end_style)
+void mp_graphics::sl_ends(int line_beg_style, int line_end_style)
 {
 	mp_graphics::line_beg_style = line_beg_style;
 	mp_graphics::line_end_style = line_end_style;
 	sl_ends_log();
 }
 
-void mp_graphics::sl_thickness(INT line_thickness)
+void mp_graphics::sl_thickness(int line_thickness)
 {
 	mp_graphics::line_thickness = line_thickness;
 	line_thickness_mp();
 	sl_thickness_log();
 }
 
-void mp_graphics::sl_color(INT line_color)
+void mp_graphics::sl_color(int line_color)
 {
 	mp_graphics::line_color = line_color;
 	sl_color_log();
 }
 
-void mp_graphics::sf_interior(INT fill_interior)
+void mp_graphics::sf_interior(int fill_interior)
 {
 	mp_graphics::fill_interior = fill_interior;
 	sf_interior_log();
 }
 
-void mp_graphics::sf_color(INT fill_color)
+void mp_graphics::sf_color(int fill_color)
 {
 	mp_graphics::fill_color = fill_color;
 	sf_color_log();
 }
 
-void mp_graphics::sf_outline(INT fill_outline)
+void mp_graphics::sf_outline(int fill_outline)
 {
 	mp_graphics::fill_outline = fill_outline;
 	sf_outline_log();
 }
 
-void mp_graphics::sf_shape(INT fill_shape)
+void mp_graphics::sf_shape(int fill_shape)
 {
 	mp_graphics::fill_shape = fill_shape;
 	sf_shape_log();
 }
 
-void mp_graphics::sf_nofill(INT fill_nofill)
+void mp_graphics::sf_nofill(int fill_nofill)
 {
 	mp_graphics::fill_nofill = fill_nofill;
 	sf_nofill_log();
 }
 
-void mp_graphics::st_boxed(INT txt_boxed)
+void mp_graphics::st_boxed(int txt_boxed)
 {
 	mp_graphics::txt_boxed = txt_boxed;
 	st_boxed_log();
 }
 
-void mp_graphics::st_overwrite(INT txt_overwrite)
+void mp_graphics::st_overwrite(int txt_overwrite)
 {
 	mp_graphics::txt_overwrite = txt_overwrite;
 	st_overwrite_log();
 }
 
-void mp_graphics::st_rotate(INT txt_rotate)
+void mp_graphics::st_rotate(int txt_rotate)
 {
 	mp_graphics::txt_rotate = txt_rotate;
 	st_rotate_log();
@@ -1622,7 +1622,7 @@ void mp_graphics::st_rotate(INT txt_rotate)
 
 
 
-void mp_graphics::coords_min_max(INT x, INT y)
+void mp_graphics::coords_min_max(int x, int y)
 {
 	if (!f_min_max_set) {
 		x_min = x_max = x;
@@ -1668,7 +1668,7 @@ void mp_graphics::footer()
 	footer_tikz();
 }
 
-void mp_graphics::begin_figure(INT factor_1000)
+void mp_graphics::begin_figure(int factor_1000)
 {
 	begin_figure_mp(factor_1000);
 }
@@ -1688,9 +1688,9 @@ void mp_graphics::comment(const char *p)
 
 
 
-void mp_graphics::text(INT x, INT y, const char *p)
+void mp_graphics::text(int x, int y, const char *p)
 {
-	INT x1, y1;
+	int x1, y1;
 	
 	//fp_log << "Text " << x << " " << y << " \"" << p << "\"" << endl;
 
@@ -1704,7 +1704,7 @@ void mp_graphics::text(INT x, INT y, const char *p)
 	text_tikz(x1, y1, p);
 }
 
-void mp_graphics::circle(INT x, INT y, INT rad)
+void mp_graphics::circle(int x, int y, int rad)
 {
 	//fp_log << "Circle " << x << " " << y << " " << rad << endl;
 
@@ -1719,7 +1719,7 @@ void mp_graphics::circle(INT x, INT y, INT rad)
 	circle_tikz(x, y, rad);
 }
 
-void mp_graphics::circle_text(INT x, INT y, INT rad, const char *p)
+void mp_graphics::circle_text(int x, int y, int rad, const char *p)
 {
 	//fp_log << "CircleText " << x << " " << y << " \"" << p << "\"" << endl;
 
@@ -1736,30 +1736,30 @@ void mp_graphics::circle_text(INT x, INT y, INT rad, const char *p)
 }
 
 #if 0
-void mp_graphics::polygon_or_bezier_idx(INT *Px, INT *Py, INT *Idx, INT n,
-		const char *symbol, INT f_cycle)
+void mp_graphics::polygon_or_bezier_idx(int *Px, int *Py, int *Idx, int n,
+		const char *symbol, int f_cycle)
 {
 	polygon_or_bezier_idx_mp(Px, Py, Idx, n, symbol, f_cycle);
 	polygon_or_bezier_idx_tikz(Px, Py, Idx, n, symbol, f_cycle);
 }
 #endif
 
-void mp_graphics::polygon_idx2(INT *Px, INT *Py, INT *Idx, INT n,
-		INT f_cycle)
+void mp_graphics::polygon_idx2(int *Px, int *Py, int *Idx, int n,
+		int f_cycle)
 {
 	polygon_idx_mp(Px, Py, Idx, n, f_cycle);
 	polygon_idx_tikz(Px, Py, Idx, n, f_cycle);
 }
 
-void mp_graphics::bezier_idx2(INT *Px, INT *Py, INT *Idx, INT n,
-		INT f_cycle)
+void mp_graphics::bezier_idx2(int *Px, int *Py, int *Idx, int n,
+		int f_cycle)
 {
 	bezier_idx_mp(Px, Py, Idx, n, f_cycle);
 	bezier_idx_tikz(Px, Py, Idx, n, f_cycle);
 }
 
-void mp_graphics::fill_idx(INT *Px, INT *Py, INT *Idx, INT n,
-		const char *symbol, INT f_cycle)
+void mp_graphics::fill_idx(int *Px, int *Py, int *Idx, int n,
+		const char *symbol, int f_cycle)
 {
 	fill_idx_mp(Px, Py, Idx, n, symbol, f_cycle);
 	fill_idx_tikz(fp_tikz, Px, Py, Idx, n, symbol, f_cycle);
@@ -1856,9 +1856,9 @@ void mp_graphics::st_rotate_log()
 	fp_log << "st_rotate " << txt_rotate << endl;
 }
 
-void mp_graphics::bezier_idx_log(INT *Px, INT *Py, INT *Idx, INT n)
+void mp_graphics::bezier_idx_log(int *Px, int *Py, int *Idx, int n)
 {
-	INT i;
+	int i;
 	
 	fp_log << "Bezier " << n;
 	for (i = 0; i < n; i++) {
@@ -1867,9 +1867,9 @@ void mp_graphics::bezier_idx_log(INT *Px, INT *Py, INT *Idx, INT n)
 	fp_log << endl;
 }
 
-void mp_graphics::polygon_log(INT *Px, INT *Py, INT n)
+void mp_graphics::polygon_log(int *Px, int *Py, int n)
 {
-	INT i;
+	int i;
 	
 	fp_log << "Polygon " << n;
 	for (i = 0; i < n; i++) {
@@ -1878,9 +1878,9 @@ void mp_graphics::polygon_log(INT *Px, INT *Py, INT n)
 	fp_log << endl;
 }
 
-void mp_graphics::polygon_idx_log(INT *Px, INT *Py, INT *Idx, INT n)
+void mp_graphics::polygon_idx_log(int *Px, int *Py, int *Idx, int n)
 {
-	INT i;
+	int i;
 	
 	fp_log << "Polygon " << n;
 	for (i = 0; i < n; i++) {
@@ -1889,12 +1889,12 @@ void mp_graphics::polygon_idx_log(INT *Px, INT *Py, INT *Idx, INT n)
 	fp_log << endl;
 }
 
-void mp_graphics::text_log(INT x1, INT y1, const char *p)
+void mp_graphics::text_log(int x1, int y1, const char *p)
 {
 	fp_log << "Text " << x1 << ", " << y1 << ", \"" << p << "\"" << endl;
 }
 
-void mp_graphics::circle_log(INT x1, INT y1, INT rad)
+void mp_graphics::circle_log(int x1, int y1, int rad)
 {
 	fp_log << "Circle " << x1 << ", " << y1 << ", " << rad << endl;
 }
@@ -1927,11 +1927,11 @@ void mp_graphics::footer_mp()
 	fp_mp << "end" << endl << endl;
 }
 
-void mp_graphics::begin_figure_mp(INT factor_1000)
+void mp_graphics::begin_figure_mp(int factor_1000)
 {
 	double d;
 	char str[1000];
-	INT i, l;
+	int i, l;
 	
 	d = (double) factor_1000 * 0.001  * 0.1;
 	
@@ -1958,10 +1958,10 @@ void mp_graphics::comment_mp(const char *p)
 	fp_mp << "% " << p << endl;
 }
 
-void mp_graphics::text_mp(INT x1, INT y1, const char *p)
+void mp_graphics::text_mp(int x1, int y1, const char *p)
 {
 	char align[64];
-	INT lab;
+	int lab;
 
 	get_alignment_mp(align);
 	if (txt_boxed) {
@@ -1987,9 +1987,9 @@ void mp_graphics::text_mp(INT x1, INT y1, const char *p)
 		}
 }
 
-void mp_graphics::circle_mp(INT x, INT y, INT rad)
+void mp_graphics::circle_mp(int x, int y, int rad)
 {
-	INT X[10], Y[10], i;
+	int X[10], Y[10], i;
 
 	X[0] = x +  rad;
 	Y[0] = y;
@@ -2038,8 +2038,8 @@ void mp_graphics::circle_mp(INT x, INT y, INT rad)
 		}
 }
 
-void mp_graphics::output_circle_text_mp(INT x, INT y,
-		INT idx, const char *text)
+void mp_graphics::output_circle_text_mp(int x, int y,
+		int idx, const char *text)
 {
 	fp_mp << "circleit.l" << idx << "(btex " << text << " etex);" << endl;
 	fp_mp << "l" << idx << ".c = ";
@@ -2049,10 +2049,10 @@ void mp_graphics::output_circle_text_mp(INT x, INT y,
 	fp_mp << "drawboxed(l" << idx << ");" << endl;
 }
 
-void mp_graphics::polygon_idx_mp(INT *Px, INT *Py,
-		INT *Idx, INT n, INT f_cycle)
+void mp_graphics::polygon_idx_mp(int *Px, int *Py,
+		int *Idx, int n, int f_cycle)
 {
-	INT x, y, i;
+	int x, y, i;
 
 	//f << "pickup pencircle scaled " << line_thickness << "pt;" << endl;
 	if (line_end_style == 1)
@@ -2086,10 +2086,10 @@ void mp_graphics::polygon_idx_mp(INT *Px, INT *Py,
 	fp_mp << ";" << endl;
 }
 
-void mp_graphics::bezier_idx_mp(INT *Px, INT *Py,
-		INT *Idx, INT n, INT f_cycle)
+void mp_graphics::bezier_idx_mp(int *Px, int *Py,
+		int *Idx, int n, int f_cycle)
 {
-	INT x, y, i;
+	int x, y, i;
 
 	//f << "pickup pencircle scaled " << line_thickness << "pt;" << endl;
 	if (line_end_style == 1)
@@ -2123,10 +2123,10 @@ void mp_graphics::bezier_idx_mp(INT *Px, INT *Py,
 	fp_mp << ";" << endl;
 }
 
-void mp_graphics::fill_idx_mp(INT *Px, INT *Py,
-		INT *Idx, INT n, const char *symbol, INT f_cycle)
+void mp_graphics::fill_idx_mp(int *Px, int *Py,
+		int *Idx, int n, const char *symbol, int f_cycle)
 {
-	INT x, y, i;
+	int x, y, i;
 
 	fp_mp << "fill buildcycle(";
 	//fp_mp << "p[" << cur_path << "] = buildcycle(";
@@ -2161,7 +2161,7 @@ void mp_graphics::fill_idx_mp(INT *Px, INT *Py,
 	
 }
 
-void mp_graphics::output_xy_metapost(INT x, INT y)
+void mp_graphics::output_xy_metapost(int x, int y)
 {
 	fp_mp << "(";
 	output_x_metapost(x);
@@ -2170,7 +2170,7 @@ void mp_graphics::output_xy_metapost(INT x, INT y)
 	fp_mp << ")";
 }
 
-void mp_graphics::output_x_metapost(INT x)
+void mp_graphics::output_x_metapost(int x)
 {
 	double d;
 
@@ -2179,7 +2179,7 @@ void mp_graphics::output_x_metapost(INT x)
 	fp_mp << d << "u ";
 }
 
-void mp_graphics::output_y_metapost(INT y)
+void mp_graphics::output_y_metapost(int y)
 {
 	double d;
 
@@ -2188,7 +2188,7 @@ void mp_graphics::output_y_metapost(INT y)
 	fp_mp << d << "u ";
 }
 
-INT mp_graphics::get_label(INT x, INT y)
+int mp_graphics::get_label(int x, int y)
 {
 	static int i = 0;
 	
@@ -2295,7 +2295,7 @@ void mp_graphics::comment_tikz(const char *p)
 }
 
 
-void mp_graphics::text_tikz(INT x1, INT y1, const char *p)
+void mp_graphics::text_tikz(int x1, int y1, const char *p)
 {
 	if (txt_overwrite) {
 		fp_tikz << "\\draw ";
@@ -2314,7 +2314,7 @@ void mp_graphics::text_tikz(INT x1, INT y1, const char *p)
 }
 
 
-void mp_graphics::circle_tikz(INT x, INT y, INT rad)
+void mp_graphics::circle_tikz(int x, int y, int rad)
 {
 	if (fill_interior > 0) {
 		fp_tikz << "\\filldraw[color=";
@@ -2335,12 +2335,12 @@ void mp_graphics::circle_tikz(INT x, INT y, INT rad)
 }
 
 
-void mp_graphics::output_circle_text_tikz(INT x, INT y,
-		INT idx, INT rad, const char *text)
+void mp_graphics::output_circle_text_tikz(int x, int y,
+		int idx, int rad, const char *text)
 {
 	//char str[1000];
 
-	//sprintf(str, "%ld", idx);
+	//sprintf(str, "%d", idx);
 
 	fp_tikz << "\\draw "; 
 	output_xy_tikz(x, y);
@@ -2357,11 +2357,11 @@ void mp_graphics::output_circle_text_tikz(INT x, INT y,
 }
 
 
-void mp_graphics::polygon_idx_tikz(INT *Px, INT *Py,
-		INT *Idx, INT n, INT f_cycle)
+void mp_graphics::polygon_idx_tikz(int *Px, int *Py,
+		int *Idx, int n, int f_cycle)
 {
-	INT f_need_comma = FALSE;
-	INT x, y, i;
+	int f_need_comma = FALSE;
+	int x, y, i;
 
 	fp_tikz << "\\draw [";
 	if (line_end_style == 1 && line_beg_style == 0) {
@@ -2407,11 +2407,11 @@ void mp_graphics::polygon_idx_tikz(INT *Px, INT *Py,
 	fp_tikz << ";" << endl;
 }
 
-void mp_graphics::bezier_idx_tikz(INT *Px, INT *Py,
-		INT *Idx, INT n, INT f_cycle)
+void mp_graphics::bezier_idx_tikz(int *Px, int *Py,
+		int *Idx, int n, int f_cycle)
 {
-	INT f_need_comma = FALSE;
-	INT x, y, i;
+	int f_need_comma = FALSE;
+	int x, y, i;
 	
 	fp_tikz << "\\draw [";
 	if (line_end_style == 1 && line_beg_style == 0) {
@@ -2466,7 +2466,7 @@ void mp_graphics::bezier_idx_tikz(INT *Px, INT *Py,
 	fp_tikz << ";" << endl;
 }
 
-void mp_graphics::color_tikz(ofstream &fp, INT color)
+void mp_graphics::color_tikz(ofstream &fp, int color)
 {
 	if (color == 0)
 		fp << "white";
@@ -2513,11 +2513,11 @@ void mp_graphics::color_tikz(ofstream &fp, INT color)
 // darkgray, lightgray, brown, lime, olive, orange, pink,
 // purple, teal, violet and white.
 
-void mp_graphics::fill_idx_tikz(ofstream &fp, INT *Px, INT *Py,
-		INT *Idx, INT n, const char *symbol, INT f_cycle)
+void mp_graphics::fill_idx_tikz(ofstream &fp, int *Px, int *Py,
+		int *Idx, int n, const char *symbol, int f_cycle)
 {
-	INT f_need_comma;
-	INT i, x, y;
+	int f_need_comma;
+	int i, x, y;
 	
 	fp << "\\fill [color=";
 
@@ -2580,7 +2580,7 @@ void mp_graphics::fill_idx_tikz(ofstream &fp, INT *Px, INT *Py,
 }
 
 #if 1
-void mp_graphics::output_xy_tikz(INT x, INT y)
+void mp_graphics::output_xy_tikz(int x, int y)
 {
 	fp_tikz << "(";
 	output_x_tikz(x);
@@ -2589,7 +2589,7 @@ void mp_graphics::output_xy_tikz(INT x, INT y)
 	fp_tikz << ")";
 }
 #else
-void mp_graphics::output_xy_tikz(INT x, INT y)
+void mp_graphics::output_xy_tikz(int x, int y)
 {
 	double dx, dy, x2, y2, f;
 	
@@ -2618,7 +2618,7 @@ void mp_graphics::output_xy_tikz(INT x, INT y)
 }
 #endif
 
-void mp_graphics::output_x_tikz(INT x)
+void mp_graphics::output_x_tikz(int x)
 {
 	double d;
 
@@ -2632,7 +2632,7 @@ void mp_graphics::output_x_tikz(INT x)
 		}
 }
 
-void mp_graphics::output_y_tikz(INT y)
+void mp_graphics::output_y_tikz(int y)
 {
 	double d;
 

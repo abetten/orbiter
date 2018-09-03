@@ -9,10 +9,10 @@
 
 #include "foundations.h"
 
-INT nb_PG_elements(INT n, INT q)
+int nb_PG_elements(int n, int q)
 // $\frac{q^{n+1} - 1}{q-1} = \sum_{i=0}^{n} q^i $
 {
-	INT qhl, l, deg;
+	int qhl, l, deg;
 	
 	l = 0;
 	qhl = 1;
@@ -25,49 +25,49 @@ INT nb_PG_elements(INT n, INT q)
 	return deg;
 }
 
-INT nb_PG_elements_not_in_subspace(INT n, INT m, INT q)
+int nb_PG_elements_not_in_subspace(int n, int m, int q)
 // |PG_n(q)| - |PG_m(q)|
 {
-	INT a, b;
+	int a, b;
 	
 	a = nb_PG_elements(n, q);
 	b = nb_PG_elements(m, q);
 	return a - b;
 }
 
-INT nb_AG_elements(INT n, INT q)
+int nb_AG_elements(int n, int q)
 // $q^n$
 {
 	return i_power_j(q, n);
 }
 
-void all_PG_elements_in_subspace(finite_field *F, INT *genma, INT k, INT n, INT *&point_list, INT &nb_points, INT verbose_level)
+void all_PG_elements_in_subspace(finite_field *F, int *genma, int k, int n, int *&point_list, int &nb_points, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT *message;
-	INT *word;
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int *message;
+	int *word;
+	int i, j;
 
 	if (f_v) {
 		cout << "all_PG_elements_in_subspace" << endl;
 		}
-	message = NEW_INT(k);
-	word = NEW_INT(n);
+	message = NEW_int(k);
+	word = NEW_int(n);
 	nb_points = generalized_binomial(k, 1, F->q);
-	point_list = NEW_INT(nb_points);
+	point_list = NEW_int(nb_points);
 	
 	for (i = 0; i < nb_points; i++) {
 		PG_element_unrank_modified(*F, message, 1, k, i);
 		if (f_vv) {
 			cout << "message " << i << " / " << nb_points << " is ";
-			INT_vec_print(cout, message, k);
+			int_vec_print(cout, message, k);
 			cout << endl;
 			}
 		F->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
-			INT_vec_print(cout, word, n);
+			int_vec_print(cout, word, n);
 			cout << endl;
 			}
 		PG_element_rank_modified(*F, word, 1, n, j);
@@ -77,43 +77,43 @@ void all_PG_elements_in_subspace(finite_field *F, INT *genma, INT k, INT n, INT 
 		point_list[i] = j;
 		}
 	if (f_v) {
-		cout << "before FREE_INT(message);" << endl;
+		cout << "before FREE_int(message);" << endl;
 		}
 
-	FREE_INT(message);
-	FREE_INT(word);
+	FREE_int(message);
+	FREE_int(word);
 	if (f_v) {
 		cout << "all_PG_elements_in_subspace done" << endl;
 		}
 }
 
-void all_PG_elements_in_subspace_array_is_given(finite_field *F, INT *genma, INT k, INT n, INT *point_list, INT &nb_points, INT verbose_level)
+void all_PG_elements_in_subspace_array_is_given(finite_field *F, int *genma, int k, int n, int *point_list, int &nb_points, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT *message;
-	INT *word;
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int *message;
+	int *word;
+	int i, j;
 
 	if (f_v) {
 		cout << "all_PG_elements_in_subspace_array_is_given" << endl;
 		}
-	message = NEW_INT(k);
-	word = NEW_INT(n);
+	message = NEW_int(k);
+	word = NEW_int(n);
 	nb_points = generalized_binomial(k, 1, F->q);
-	//point_list = NEW_INT(nb_points);
+	//point_list = NEW_int(nb_points);
 	
 	for (i = 0; i < nb_points; i++) {
 		PG_element_unrank_modified(*F, message, 1, k, i);
 		if (f_vv) {
 			cout << "message " << i << " / " << nb_points << " is ";
-			INT_vec_print(cout, message, k);
+			int_vec_print(cout, message, k);
 			cout << endl;
 			}
 		F->mult_vector_from_the_left(message, genma, word, k, n);
 		if (f_vv) {
 			cout << "yields word ";
-			INT_vec_print(cout, word, n);
+			int_vec_print(cout, word, n);
 			cout << endl;
 			}
 		PG_element_rank_modified(*F, word, 1, n, j);
@@ -123,21 +123,21 @@ void all_PG_elements_in_subspace_array_is_given(finite_field *F, INT *genma, INT
 		point_list[i] = j;
 		}
 	if (f_v) {
-		cout << "before FREE_INT(message);" << endl;
+		cout << "before FREE_int(message);" << endl;
 		}
 
-	FREE_INT(message);
-	FREE_INT(word);
+	FREE_int(message);
+	FREE_int(word);
 	if (f_v) {
 		cout << "all_PG_elements_in_subspace_array_is_given done" << endl;
 		}
 }
 
-void display_all_PG_elements(INT n, finite_field &GFq)
+void display_all_PG_elements(int n, finite_field &GFq)
 {
-	INT *v = NEW_INT(n + 1);
-	INT l = nb_PG_elements(n, GFq.q);
-	INT i, j, a;
+	int *v = NEW_int(n + 1);
+	int l = nb_PG_elements(n, GFq.q);
+	int i, j, a;
 	
 	for (i = 0; i < l; i++) {
 		PG_element_unrank_modified(GFq, v, 1, n + 1, i);
@@ -148,14 +148,14 @@ void display_all_PG_elements(INT n, finite_field &GFq)
 		PG_element_rank_modified(GFq, v, 1, n + 1, a);
 		cout << " : " << a << endl;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-void display_all_PG_elements_not_in_subspace(INT n, INT m, finite_field &GFq)
+void display_all_PG_elements_not_in_subspace(int n, int m, finite_field &GFq)
 {
-	INT *v = NEW_INT(n + 1);
-	INT l = nb_PG_elements_not_in_subspace(n, m, GFq.q);
-	INT i, j, a;
+	int *v = NEW_int(n + 1);
+	int l = nb_PG_elements_not_in_subspace(n, m, GFq.q);
+	int i, j, a;
 	
 	for (i = 0; i < l; i++) {
 		PG_element_unrank_modified_not_in_subspace(GFq, v, 1, n + 1, m, i);
@@ -166,14 +166,14 @@ void display_all_PG_elements_not_in_subspace(INT n, INT m, finite_field &GFq)
 		PG_element_rank_modified_not_in_subspace(GFq, v, 1, n + 1, m, a);
 		cout << " : " << a << endl;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-void display_all_AG_elements(INT n, finite_field &GFq)
+void display_all_AG_elements(int n, finite_field &GFq)
 {
-	INT *v = NEW_INT(n);
-	INT l = nb_AG_elements(n, GFq.q);
-	INT i, j;
+	int *v = NEW_int(n);
+	int l = nb_AG_elements(n, GFq.q);
+	int i, j;
 	
 	for (i = 0; i < l; i++) {
 		AG_element_unrank(GFq.q, v, 1, n + 1, i);
@@ -183,22 +183,22 @@ void display_all_AG_elements(INT n, finite_field &GFq)
 			}
 		cout << endl;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-void PG_element_apply_frobenius(INT n, finite_field &GFq, INT *v, INT f)
+void PG_element_apply_frobenius(int n, finite_field &GFq, int *v, int f)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		v[i] = GFq.frobenius_power(v[i], f);
 		}
 }
 
-void PG_element_normalize(finite_field &GFq, INT *v, INT stride, INT len)
+void PG_element_normalize(finite_field &GFq, int *v, int stride, int len)
 // last non-zero element made one
 {
-	INT i, j, a;
+	int i, j, a;
 	
 	for (i = len - 1; i >= 0; i--) {
 		a = v[i * stride];
@@ -217,10 +217,10 @@ void PG_element_normalize(finite_field &GFq, INT *v, INT stride, INT len)
 	exit(1);
 }
 
-void PG_element_normalize_from_front(finite_field &GFq, INT *v, INT stride, INT len)
+void PG_element_normalize_from_front(finite_field &GFq, int *v, int stride, int len)
 // first non zero element made one
 {
-	INT i, j, a;
+	int i, j, a;
 	
 	for (i = 0; i < len; i++) {
 		a = v[i * stride];
@@ -239,10 +239,10 @@ void PG_element_normalize_from_front(finite_field &GFq, INT *v, INT stride, INT 
 	exit(1);
 }
 
-void PG_element_rank_modified(finite_field &GFq, INT *v, INT stride, INT len, INT &a)
+void PG_element_rank_modified(finite_field &GFq, int *v, int stride, int len, int &a)
 {
-	INT i, j, q_power_j, b, sqj;
-	INT f_v = FALSE;
+	int i, j, q_power_j, b, sqj;
+	int f_v = FALSE;
 	
 	if (len <= 0) {
 		cout << "PG_element_rank_modified() len <= 0" << endl;
@@ -349,9 +349,9 @@ void PG_element_rank_modified(finite_field &GFq, INT *v, INT stride, INT len, IN
 	a += len;
 }
 
-void PG_element_unrank_fining(finite_field &GFq, INT *v, INT len, INT a)
+void PG_element_unrank_fining(finite_field &GFq, int *v, int len, int a)
 {
-	INT b, c, q;
+	int b, c, q;
 	
 	q = GFq.q;
 	if (len != 3) {
@@ -416,9 +416,9 @@ void PG_element_unrank_fining(finite_field &GFq, INT *v, INT len, INT a)
 		}
 }
 
-void PG_element_unrank_gary_cook(finite_field &GFq, INT *v, INT len, INT a)
+void PG_element_unrank_gary_cook(finite_field &GFq, int *v, int len, int a)
 {
-	INT b, q, qm1o2, rk, i;
+	int b, q, qm1o2, rk, i;
 	
 	q = GFq.q;
 	if (len != 3) {
@@ -470,9 +470,9 @@ void PG_element_unrank_gary_cook(finite_field &GFq, INT *v, INT len, INT a)
 		}
 }
 
-void PG_element_unrank_modified(finite_field &GFq, INT *v, INT stride, INT len, INT a)
+void PG_element_unrank_modified(finite_field &GFq, int *v, int stride, int len, int a)
 {
-	INT n, l, ql, sql, k, j, r, a1 = a;
+	int n, l, ql, sql, k, j, r, a1 = a;
 	
 	n = len;
 	if (n <= 0) {
@@ -540,9 +540,9 @@ void PG_element_unrank_modified(finite_field &GFq, INT *v, INT stride, INT len, 
 	exit(1);
 }
 
-void PG_element_rank_modified_not_in_subspace(finite_field &GFq, INT *v, INT stride, INT len, INT m, INT &a)
+void PG_element_rank_modified_not_in_subspace(finite_field &GFq, int *v, int stride, int len, int m, int &a)
 {
-	INT s, qq, i;
+	int s, qq, i;
 	
 	qq = 1;
 	s = qq;
@@ -559,9 +559,9 @@ void PG_element_rank_modified_not_in_subspace(finite_field &GFq, INT *v, INT str
 	a -= (m + 1);
 }
 
-void PG_element_unrank_modified_not_in_subspace(finite_field &GFq, INT *v, INT stride, INT len, INT m, INT a)
+void PG_element_unrank_modified_not_in_subspace(finite_field &GFq, int *v, int stride, int len, int m, int a)
 {
-	INT s, qq, i;
+	int s, qq, i;
 	
 	qq = 1;
 	s = qq;
@@ -579,9 +579,9 @@ void PG_element_unrank_modified_not_in_subspace(finite_field &GFq, INT *v, INT s
 	PG_element_unrank_modified(GFq, v, stride, len, a);
 }
 
-void AG_element_rank(INT q, INT *v, INT stride, INT len, INT &a)
+void AG_element_rank(int q, int *v, int stride, int len, int &a)
 {
-	INT i;
+	int i;
 	
 	if (len <= 0) {
 		cout << "AG_element_rank() len <= 0" << endl;
@@ -596,9 +596,9 @@ void AG_element_rank(INT q, INT *v, INT stride, INT len, INT &a)
 		}
 }
 
-void AG_element_unrank(INT q, INT *v, INT stride, INT len, INT a)
+void AG_element_unrank(int q, int *v, int stride, int len, int a)
 {
-	INT i, b;
+	int i, b;
 	
 #if 1
 	if (len <= 0) {
@@ -613,11 +613,11 @@ void AG_element_unrank(INT q, INT *v, INT stride, INT len, INT a)
 		}
 }
 
-void AG_element_rank_longinteger(INT q, INT *v, INT stride, INT len, longinteger_object &a)
+void AG_element_rank_longinteger(int q, int *v, int stride, int len, longinteger_object &a)
 {
 	longinteger_domain D;
 	longinteger_object Q, a1;
-	INT i;
+	int i;
 	
 	if (len <= 0) {
 		cout << "AG_element_rank_longinteger() len <= 0" << endl;
@@ -626,8 +626,8 @@ void AG_element_rank_longinteger(INT q, INT *v, INT stride, INT len, longinteger
 	a.create(0);
 	Q.create(q);
 	for (i = len - 1; i >= 0; i--) {
-		a.add_INT(v[i * stride]);
-		//cout << "AG_element_rank_longinteger after add_INT " << a << endl;
+		a.add_int(v[i * stride]);
+		//cout << "AG_element_rank_longinteger after add_int " << a << endl;
 		if (i > 0) {
 			D.mult(a, Q, a1);
 			a.swap_with(a1);
@@ -636,9 +636,9 @@ void AG_element_rank_longinteger(INT q, INT *v, INT stride, INT len, longinteger
 		}
 }
 
-void AG_element_unrank_longinteger(INT q, INT *v, INT stride, INT len, longinteger_object &a)
+void AG_element_unrank_longinteger(int q, int *v, int stride, int len, longinteger_object &a)
 {
-	INT i, r;
+	int i, r;
 	longinteger_domain D;
 	longinteger_object Q, a1;
 	
@@ -647,7 +647,7 @@ void AG_element_unrank_longinteger(INT q, INT *v, INT stride, INT len, longinteg
 		exit(1);
 		}
 	for (i = 0; i < len; i++) {
-		D.integral_division_by_INT(a, q, a1, r);
+		D.integral_division_by_int(a, q, a1, r);
 		//r = a % q;
 		v[i * stride] = r;
 		//a /= q;
@@ -656,9 +656,9 @@ void AG_element_unrank_longinteger(INT q, INT *v, INT stride, INT len, longinteg
 }
 
 
-INT PG_element_modified_is_in_subspace(INT n, INT m, INT *v)
+int PG_element_modified_is_in_subspace(int n, int m, int *v)
 {
-	INT j;
+	int j;
 	
 	for (j = m + 1; j < n + 1; j++) {
 		if (v[j]) {
@@ -668,14 +668,14 @@ INT PG_element_modified_is_in_subspace(INT n, INT m, INT *v)
 	return TRUE;
 }
 
-void PG_element_modified_not_in_subspace_perm(INT n, INT m, 
-	finite_field &GFq, INT *orbit, INT *orbit_inv, INT verbose_level)
+void PG_element_modified_not_in_subspace_perm(int n, int m, 
+	finite_field &GFq, int *orbit, int *orbit_inv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *v = NEW_INT(n + 1);
-	INT l = nb_PG_elements(n, GFq.q);
-	INT ll = nb_PG_elements_not_in_subspace(n, m, GFq.q);
-	INT i, j1 = 0, j2 = ll, f_in, j;
+	int f_v = (verbose_level >= 1);
+	int *v = NEW_int(n + 1);
+	int l = nb_PG_elements(n, GFq.q);
+	int ll = nb_PG_elements_not_in_subspace(n, m, GFq.q);
+	int i, j1 = 0, j2 = ll, f_in, j;
 	
 	for (i = 0; i < l; i++) {
 		PG_element_unrank_modified(GFq, v, 1, n + 1, i);
@@ -711,21 +711,21 @@ void PG_element_modified_not_in_subspace_perm(INT n, INT m,
 		cout << "j2 != l" << endl;
 		exit(1);
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-INT PG2_line_on_point_unrank(finite_field &GFq, INT *v1, INT rk)
+int PG2_line_on_point_unrank(finite_field &GFq, int *v1, int rk)
 {
-	INT v2[3];
+	int v2[3];
 	
 	PG2_line_on_point_unrank_second_point(GFq, v1, v2, rk);
 	return PG2_line_rank(GFq, v1, v2, 1);
 }
 
-void PG2_line_on_point_unrank_second_point(finite_field &GFq, INT *v1, INT *v2, INT rk)
+void PG2_line_on_point_unrank_second_point(finite_field &GFq, int *v1, int *v2, int rk)
 {
-	INT V[2];
-	INT idx0, idx1, idx2;
+	int V[2];
+	int idx0, idx1, idx2;
 	
 	PG_element_normalize(GFq, v1, 1/* stride */, 3);
 	if (v1[2] == 1) {
@@ -749,13 +749,13 @@ void PG2_line_on_point_unrank_second_point(finite_field &GFq, INT *v1, INT *v2, 
 	v2[idx2] = GFq.add(v1[idx2], V[1]);
 }
 
-INT PG2_line_rank(finite_field &GFq, INT *v1, INT *v2, INT stride)
+int PG2_line_rank(finite_field &GFq, int *v1, int *v2, int stride)
 {
-	INT A[9];
-	INT base_cols[3];
-	INT kernel_m, kernel_n;
-	INT kernel[9];
-	INT rk, line_rk;
+	int A[9];
+	int base_cols[3];
+	int kernel_m, kernel_n;
+	int kernel[9];
+	int rk, line_rk;
 	
 	A[0] = v1[0];
 	A[1] = v1[1];
@@ -763,7 +763,7 @@ INT PG2_line_rank(finite_field &GFq, INT *v1, INT *v2, INT stride)
 	A[3] = v2[0];
 	A[4] = v2[1];
 	A[5] = v2[2];
-	rk = GFq.Gauss_INT(A, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
+	rk = GFq.Gauss_int(A, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL /*P*/, 2, 3, 3, 0 /* verbose_level */);
 	if (rk != 2) {
 		cout << "PG2_line_rank rk != 2" << endl;
@@ -783,16 +783,16 @@ INT PG2_line_rank(finite_field &GFq, INT *v1, INT *v2, INT stride)
 	return line_rk;
 }
 
-void PG2_line_unrank(finite_field &GFq, INT *v1, INT *v2, INT stride, INT line_rk)
+void PG2_line_unrank(finite_field &GFq, int *v1, int *v2, int stride, int line_rk)
 {
-	INT A[9];
-	INT base_cols[3];
-	INT kernel_m, kernel_n;
-	INT kernel[9];
-	INT rk;
+	int A[9];
+	int base_cols[3];
+	int kernel_m, kernel_n;
+	int kernel[9];
+	int rk;
 	
 	PG_element_unrank_modified(GFq, A, 1 /* stride*/, 3, line_rk);
-	rk = GFq.Gauss_INT(A, FALSE /* f_special */, TRUE /* f_complete */, 
+	rk = GFq.Gauss_int(A, FALSE /* f_special */, TRUE /* f_complete */, 
 		base_cols, 
 		FALSE /* f_P */, NULL /*P*/, 1, 3, 3, 0 /* verbose_level */);
 	if (rk != 1) {
@@ -817,11 +817,11 @@ void PG2_line_unrank(finite_field &GFq, INT *v1, INT *v2, INT stride, INT line_r
 	v2[2] = kernel[5];
 }
 
-void test_PG(INT n, INT q)
+void test_PG(int n, int q)
 {
 	finite_field GFq;
-	INT m;
-	INT verbose_level = 1;
+	int m;
+	int verbose_level = 1;
 	
 	GFq.init(q, verbose_level);
 	
@@ -836,9 +836,9 @@ void test_PG(INT n, INT q)
 }
 
 
-void line_through_two_points(finite_field &GFq, INT len, INT pt1, INT pt2, INT *line)
+void line_through_two_points(finite_field &GFq, int len, int pt1, int pt2, int *line)
 {
-	INT v1[100], v2[100], v3[100], alpha, a, ii;
+	int v1[100], v2[100], v3[100], alpha, a, ii;
 	
 	if (len > 100) {
 		cout << "line_through_two_points() len >= 100" << endl;
@@ -858,13 +858,13 @@ void line_through_two_points(finite_field &GFq, INT len, INT pt1, INT pt2, INT *
 		}
 }
 
-void print_set_in_affine_plane(finite_field &GFq, INT len, INT *S)
+void print_set_in_affine_plane(finite_field &GFq, int len, int *S)
 {
-	INT *A;
-	INT i, j, x, y, v[3];
+	int *A;
+	int i, j, x, y, v[3];
 	
 	
-	A = NEW_INT(GFq.q * GFq.q);
+	A = NEW_int(GFq.q * GFq.q);
 	for (x = 0; x < GFq.q; x++) {
 		for (y = 0; y < GFq.q; y++) {
 			A[(GFq.q - 1 - y) * GFq.q + x] = 0;
@@ -887,12 +887,12 @@ void print_set_in_affine_plane(finite_field &GFq, INT len, INT *S)
 			}
 		cout << endl;
 		}
-	FREE_INT(A);
+	FREE_int(A);
 }
 
-INT consecutive_ones_property_in_affine_plane(ostream &ost, finite_field &GFq, INT len, INT *S)
+int consecutive_ones_property_in_affine_plane(ostream &ost, finite_field &GFq, int len, int *S)
 {
-	INT i, y, v[3];
+	int i, y, v[3];
 	
 	
 	for (i = 0; i < len; i++) {
@@ -909,17 +909,17 @@ INT consecutive_ones_property_in_affine_plane(ostream &ost, finite_field &GFq, I
 	return TRUE;
 }
 
-void oval_polynomial(finite_field &GFq, INT *S, unipoly_domain &D, unipoly_object &poly, 
-	INT verbose_level)
+void oval_polynomial(finite_field &GFq, int *S, unipoly_domain &D, unipoly_object &poly, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, v[3], x; //, y;
-	INT *map;
+	int f_v = (verbose_level >= 1);
+	int i, v[3], x; //, y;
+	int *map;
 	
 	if (f_v) {
 		cout << "oval_polynomial" << endl;
 		}
-	map = NEW_INT(GFq.q);
+	map = NEW_int(GFq.q);
 	for (i = 0; i < GFq.q; i++) {
 		PG_element_unrank_modified(GFq, v, 1 /* stride */, 3 /* len */, S[2 + i]);
 		if (v[2] != 1) {
@@ -941,26 +941,26 @@ void oval_polynomial(finite_field &GFq, INT *S, unipoly_domain &D, unipoly_objec
 	
 	D.create_Dickson_polynomial(poly, map);
 	
-	FREE_INT(map);
+	FREE_int(map);
 	if (f_v) {
 		cout << "oval_polynomial done" << endl;
 		}
 }
 
 
-INT line_intersection_with_oval(finite_field &GFq, INT *f_oval_point, INT line_rk, 
-	INT verbose_level)
+int line_intersection_with_oval(finite_field &GFq, int *f_oval_point, int line_rk, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT line[3], base_cols[3], K[6], points[6], rk, kernel_m, kernel_n;
-	INT j, w[2], a, b, pt[3], nb = 0;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int line[3], base_cols[3], K[6], points[6], rk, kernel_m, kernel_n;
+	int j, w[2], a, b, pt[3], nb = 0;
 	
 	if (f_v) {
 		cout << "intersecting line " << line_rk << " with the oval" << endl;
 		}
 	PG_element_unrank_modified(GFq, line, 1, 3, line_rk);
-	rk = GFq.Gauss_INT(line, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
+	rk = GFq.Gauss_int(line, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL /* P */, 1 /* m */, 3 /* n */, 0 /* Pn */, 
 		0 /* verbose_level */);
 	if (f_vv) {
@@ -969,7 +969,7 @@ INT line_intersection_with_oval(finite_field &GFq, INT *f_oval_point, INT line_r
 		}
 	GFq.matrix_get_kernel(line, 1, 3, base_cols, rk, 
 		kernel_m, kernel_n, K);
-	INT_matrix_transpose(K, kernel_m, kernel_n, points);
+	int_matrix_transpose(K, kernel_m, kernel_n, points);
 	if (f_vv) {
 		cout << "points:" << endl;
 		print_integer_matrix(cout, points, 2, 3);
@@ -1001,15 +1001,15 @@ INT line_intersection_with_oval(finite_field &GFq, INT *f_oval_point, INT line_r
 	return nb;
 }
 
-INT get_base_line(finite_field &GFq, INT plane1, INT plane2, INT verbose_level)
+int get_base_line(finite_field &GFq, int plane1, int plane2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "get_base_line()" << endl;
 		}
-	INT planes[8], base_cols[4], rk;
-	INT intersection[16], intersection2[16], lines[6], line[3], kernel_m, kernel_n, line_rk;
+	int planes[8], base_cols[4], rk;
+	int intersection[16], intersection2[16], lines[6], line[3], kernel_m, kernel_n, line_rk;
 
 	AG_element_unrank(GFq.q, planes, 1, 3, plane1);
 	planes[3] = 1;
@@ -1019,7 +1019,7 @@ INT get_base_line(finite_field &GFq, INT plane1, INT plane2, INT verbose_level)
 		cout << "planes:" << endl;
 		print_integer_matrix(cout, planes, 2, 4);
 		}
-	rk = GFq.Gauss_INT(planes, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
+	rk = GFq.Gauss_int(planes, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL /* P */, 2 /* m */, 4 /* n */, 0 /* Pn */, 
 		0 /* verbose_level */);
 	if (f_v) {
@@ -1028,7 +1028,7 @@ INT get_base_line(finite_field &GFq, INT plane1, INT plane2, INT verbose_level)
 		}
 	GFq.matrix_get_kernel(planes, 2, 4, base_cols, rk, 
 		kernel_m, kernel_n, intersection);
-	INT_matrix_transpose(intersection, kernel_m, kernel_n, intersection2);
+	int_matrix_transpose(intersection, kernel_m, kernel_n, intersection2);
 	if (f_v) {
 		cout << "kernel:" << endl;
 		print_integer_matrix(cout, intersection2, kernel_n, kernel_m);
@@ -1043,7 +1043,7 @@ INT get_base_line(finite_field &GFq, INT plane1, INT plane2, INT verbose_level)
 		cout << "lines:" << endl;
 		print_integer_matrix(cout, lines, 2, 3);
 		}
-	rk = GFq.Gauss_INT(lines, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
+	rk = GFq.Gauss_int(lines, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL /* P */, 2 /* m */, 3 /* n */, 0 /* Pn */, 
 		0 /* verbose_level */);
 	if (rk != 2) {
@@ -1066,10 +1066,10 @@ INT get_base_line(finite_field &GFq, INT plane1, INT plane2, INT verbose_level)
 	return line_rk;
 }
 
-INT PHG_element_normalize(finite_ring &R, INT *v, INT stride, INT len)
+int PHG_element_normalize(finite_ring &R, int *v, int stride, int len)
 // last unit element made one
 {
-	INT i, j, a;
+	int i, j, a;
 	
 	for (i = len - 1; i >= 0; i--) {
 		a = v[i * stride];
@@ -1088,10 +1088,10 @@ INT PHG_element_normalize(finite_ring &R, INT *v, INT stride, INT len)
 }
 
 
-INT PHG_element_normalize_from_front(finite_ring &R, INT *v, INT stride, INT len)
+int PHG_element_normalize_from_front(finite_ring &R, int *v, int stride, int len)
 // first non unit element made one
 {
-	INT i, j, a;
+	int i, j, a;
 	
 	for (i = 0; i < len; i++) {
 		a = v[i * stride];
@@ -1109,12 +1109,12 @@ INT PHG_element_normalize_from_front(finite_ring &R, INT *v, INT stride, INT len
 	exit(1);
 }
 
-INT PHG_element_rank(finite_ring &R, INT *v, INT stride, INT len)
+int PHG_element_rank(finite_ring &R, int *v, int stride, int len)
 {
-	INT i, j, idx, a, b, r1, r2, rk, N;
-	INT f_v = FALSE;
-	INT *w;
-	INT *embedding;
+	int i, j, idx, a, b, r1, r2, rk, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
 	
 	if (len <= 0) {
 		cout << "PHG_element_rank() len <= 0" << endl;
@@ -1135,8 +1135,8 @@ INT PHG_element_rank(finite_ring &R, INT *v, INT stride, INT len)
 			}
 		cout << endl;
 		}
-	w = NEW_INT(len - 1);
-	embedding = NEW_INT(len - 1);
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
 	for (i = 0, j = 0; i < len - 1; i++, j++) {
 		if (i == idx) {
 			j++;
@@ -1154,7 +1154,7 @@ INT PHG_element_rank(finite_ring &R, INT *v, INT stride, INT len)
 		}
 	if (f_v) {
 		cout << "w=";
-		INT_vec_print(cout, w, len - 1);
+		int_vec_print(cout, w, len - 1);
 		cout << endl;
 		}
 	AG_element_rank(R.e, w, 1, len - 1, r1);
@@ -1163,26 +1163,26 @@ INT PHG_element_rank(finite_ring &R, INT *v, INT stride, INT len)
 	N = nb_PG_elements(len - 1, R.p);
 	rk = r1 * N + r2;
 
-	FREE_INT(w);
-	FREE_INT(embedding);
+	FREE_int(w);
+	FREE_int(embedding);
 
 	return rk;
 }
 
-void PHG_element_unrank(finite_ring &R, INT *v, INT stride, INT len, INT rk)
+void PHG_element_unrank(finite_ring &R, int *v, int stride, int len, int rk)
 {
-	INT i, j, idx, r1, r2, N;
-	INT f_v = FALSE;
-	INT *w;
-	INT *embedding;
+	int i, j, idx, r1, r2, N;
+	int f_v = FALSE;
+	int *w;
+	int *embedding;
 	
 	if (len <= 0) {
 		cout << "PHG_element_unrank() len <= 0" << endl;
 		exit(1);
 		}
 
-	w = NEW_INT(len - 1);
-	embedding = NEW_INT(len - 1);
+	w = NEW_int(len - 1);
+	embedding = NEW_int(len - 1);
 
 	N = nb_PG_elements(len - 1, R.p);
 	r2 = rk % N;
@@ -1193,7 +1193,7 @@ void PHG_element_unrank(finite_ring &R, INT *v, INT stride, INT len, INT rk)
 
 	if (f_v) {
 		cout << "w=";
-		INT_vec_print(cout, w, len - 1);
+		int_vec_print(cout, w, len - 1);
 		cout << endl;
 		}
 
@@ -1211,25 +1211,25 @@ void PHG_element_unrank(finite_ring &R, INT *v, INT stride, INT len, INT rk)
 
 
 
-	FREE_INT(w);
-	FREE_INT(embedding);
+	FREE_int(w);
+	FREE_int(embedding);
 
 }
 
-INT nb_PHG_elements(INT n, finite_ring &R)
+int nb_PHG_elements(int n, finite_ring &R)
 {
-	INT N1, N2;
+	int N1, N2;
 	
 	N1 = nb_PG_elements(n, R.p);
 	N2 = nb_AG_elements(n, R.e);
 	return N1 * N2;
 }
 
-void display_all_PHG_elements(INT n, INT q)
+void display_all_PHG_elements(int n, int q)
 {
-	INT *v = NEW_INT(n + 1);
-	INT l;
-	INT i, j, a;
+	int *v = NEW_int(n + 1);
+	int l;
+	int i, j, a;
 	finite_ring R;
 
 	R.init(q, 0);
@@ -1243,16 +1243,16 @@ void display_all_PHG_elements(INT n, INT q)
 		a = PHG_element_rank(R, v, 1, n + 1);
 		cout << " : " << a << endl;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 
-void display_table_of_projective_points(ostream &ost, finite_field *F, INT *v, INT nb_pts, INT len)
+void display_table_of_projective_points(ostream &ost, finite_field *F, int *v, int nb_pts, int len)
 {
-	INT i;
-	INT *coords;
+	int i;
+	int *coords;
 	
-	coords = NEW_INT(len);
+	coords = NEW_int(len);
 	ost << "{\\renewcommand*{\\arraystretch}{1.5}" << endl;
 	ost << "$$" << endl;
 	ost << "\\begin{array}{|c|c|c|}" << endl;
@@ -1263,7 +1263,7 @@ void display_table_of_projective_points(ostream &ost, finite_field *F, INT *v, I
 	for (i = 0; i < nb_pts; i++) {
 		PG_element_unrank_modified(*F, coords, 1, 3, v[i]);
 		ost << i << " & " << v[i] << " & ";
-		INT_vec_print(ost, coords, len);
+		int_vec_print(ost, coords, len);
 		ost << "\\\\" << endl;
 		if (((i + 1) % 30) == 0) {
 			ost << "\\hline" << endl;
@@ -1280,7 +1280,7 @@ void display_table_of_projective_points(ostream &ost, finite_field *F, INT *v, I
 	ost << "\\hline" << endl;
 	ost << "\\end{array}" << endl;
 	ost << "$$}%" << endl;
-	FREE_INT(coords);
+	FREE_int(coords);
 }
 
 

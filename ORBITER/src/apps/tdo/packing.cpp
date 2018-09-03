@@ -7,19 +7,19 @@
 
 #define N 100
 
-INT t0;
+int t0;
 
 int main(int argc, char **argv)
 {
 	t0 = os_ticks();
-	INT *P;
-	INT i, j, a, b, f_one_seen;
+	int *P;
+	int i, j, a, b, f_one_seen;
 	
 	a = maxfit(35, 7);
 	b = maxfit(35, 8);
 	cout << "maxfit 35 7 = " << a << endl;
 	cout << "maxfit 35 8 = " << b << endl;
-	P = new INT[N * N];
+	P = new int[N * N];
 	for (i = N - 1; i >= 1; i--) {
 		for (j = i; j >= 2; j--) {
 			a = TDO_upper_bound(i, j);

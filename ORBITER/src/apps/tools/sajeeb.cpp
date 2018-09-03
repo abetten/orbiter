@@ -13,12 +13,12 @@
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_list_of_cases = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_list_of_cases = FALSE;
 	const char *fname_list_of_cases = NULL;
 	const char *fname_template = NULL;
-	INT f_output_file = FALSE;
+	int f_output_file = FALSE;
 	const char *output_file = NULL;
 	
 
@@ -49,8 +49,8 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT *list_of_cases;
-	INT nb_cases;
+	int *list_of_cases;
+	int nb_cases;
 	char fname_sol[1000];
 	char fname_stats[1000];
 	
@@ -81,10 +81,10 @@ int main(int argc, char **argv)
 
 }
 
-void read_set_from_file(const char *fname, INT *&the_set, INT &set_size, INT verbose_level)
+void read_set_from_file(const char *fname, int *&the_set, int &set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int i, a;
 	
 	if (f_v) {
 		cout << "read_set_from_file opening file " << fname << " of size " << file_size(fname) << " for reading" << endl;
@@ -92,7 +92,7 @@ void read_set_from_file(const char *fname, INT *&the_set, INT &set_size, INT ver
 	ifstream f(fname);
 	
 	f >> set_size;
-	the_set = new INT[set_size];
+	the_set = new int[set_size];
 	
 	for (i = 0; i < set_size; i++) {
 		f >> a;
@@ -109,7 +109,7 @@ void read_set_from_file(const char *fname, INT *&the_set, INT &set_size, INT ver
 #if 0
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		INT_vec_print(cout, the_set, set_size);
+		int_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 #endif
@@ -117,7 +117,7 @@ void read_set_from_file(const char *fname, INT *&the_set, INT &set_size, INT ver
 
 void replace_extension_with(char *p, const char *new_ext)
 {
-	INT i, l;
+	int i, l;
 
 	l = strlen(p);
 	for (i = l - 1; i >= 0; i--) {
@@ -139,11 +139,11 @@ void replace_extension_with(char *p, const char *new_ext)
 
 
 
-INT file_size(const char *name)
+int file_size(const char *name)
 {
 	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
-	INT handle, size;
+	int handle, size;
 	
 	//cout << "Unix mode" << endl;
 	handle = open(name, O_RDWR/*mode*/);
@@ -152,7 +152,7 @@ INT file_size(const char *name)
 	return(size);
 #endif
 #ifdef SYSTEMMAC
-	INT handle, size;
+	int handle, size;
 	
 	//cout << "Macintosh mode" << endl;
 	handle = open(name, O_RDONLY);
@@ -166,36 +166,36 @@ INT file_size(const char *name)
 
 	//cout << "Windows mode" << endl;
 
-	INT handle = _open (name,_O_RDONLY);
-	INT size   = _lseek (handle,0,SEEK_END);
+	int handle = _open (name,_O_RDONLY);
+	int size   = _lseek (handle,0,SEEK_END);
 	close (handle);
 	return (size);
 #endif
 }
 
-void INT_vec_copy(INT *from, INT *to, INT len)
+void int_vec_copy(int *from, int *to, int len)
 {
-	INT i;
-	INT *p, *q;
+	int i;
+	int *p, *q;
 
 	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
 		*q = *p;
 		}
 }
 
-void INT_vec_zero(INT *v, INT len)
+void int_vec_zero(int *v, int len)
 {
-	INT i;
-	INT *p;
+	int i;
+	int *p;
 
 	for (p = v, i = 0; i < len; p++, i++) {
 		*p = 0;
 		}
 }
 
-void INT_vec_print(ostream &ost, INT *v, INT len)
+void int_vec_print(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	if (len > 50) {
 		ost << "( ";
@@ -213,13 +213,13 @@ void INT_vec_print(ostream &ost, INT *v, INT len)
 		ost << " )";
 		}
 	else {
-		INT_vec_print_fully(ost, v, len);
+		int_vec_print_fully(ost, v, len);
 		}
 }
 
-void INT_vec_print_fully(ostream &ost, INT *v, INT len)
+void int_vec_print_fully(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "( ";
 	for (i = 0; i < len; i++) {
@@ -230,14 +230,14 @@ void INT_vec_print_fully(ostream &ost, INT *v, INT len)
 	ost << " )";
 }
 
-void INT_set_print(INT *v, INT len)
+void int_set_print(int *v, int len)
 {
-	INT_set_print(cout, v, len);
+	int_set_print(cout, v, len);
 }
 
-void INT_set_print(ostream &ost, INT *v, INT len)
+void int_set_print(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "{ ";
 	for (i = 0; i < len; i++) {
@@ -248,9 +248,9 @@ void INT_set_print(ostream &ost, INT *v, INT len)
 	ost << " }";
 }
 
-void print_set(ostream &ost, INT size, INT *set)
+void print_set(ostream &ost, int size, int *set)
 {
-	INT i;
+	int i;
 	
 	ost << "{ ";
 	for (i = 0; i < size; i++) {
@@ -263,9 +263,9 @@ void print_set(ostream &ost, INT size, INT *set)
 
 
 
-void INT_vec_swap_points(INT *list, INT *list_inv, INT idx1, INT idx2)
+void int_vec_swap_points(int *list, int *list_inv, int idx1, int idx2)
 {
-	INT p1, p2;
+	int p1, p2;
 	
 	if (idx1 == idx2) {
 		return;
@@ -282,9 +282,9 @@ void INT_vec_swap_points(INT *list, INT *list_inv, INT idx1, INT idx2)
 
 
 
-uchar *bitvector_allocate(INT length)
+uchar *bitvector_allocate(int length)
 {
-	INT l, i;
+	int l, i;
 	uchar *p;
 
 	l = (length + 7) >> 3;
@@ -295,9 +295,9 @@ uchar *bitvector_allocate(INT length)
 	return p;
 }
 
-uchar *bitvector_allocate_and_coded_length(INT length, INT &coded_length)
+uchar *bitvector_allocate_and_coded_length(int length, int &coded_length)
 {
-	INT l, i;
+	int l, i;
 	uchar *p;
 
 	l = (length + 7) >> 3;
@@ -309,9 +309,9 @@ uchar *bitvector_allocate_and_coded_length(INT length, INT &coded_length)
 	return p;
 }
 
-void bitvector_m_ii(uchar *bitvec, INT i, INT a)
+void bitvector_m_ii(uchar *bitvec, int i, int a)
 {
-	INT ii, bit;
+	int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -327,9 +327,9 @@ void bitvector_m_ii(uchar *bitvec, INT i, INT a)
 		}
 }
 
-void bitvector_set_bit(uchar *bitvec, INT i)
+void bitvector_set_bit(uchar *bitvec, int i)
 {
-	INT ii, bit;
+	int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -339,10 +339,10 @@ void bitvector_set_bit(uchar *bitvec, INT i)
 	x |= mask;
 }
 
-INT bitvector_s_i(uchar *bitvec, INT i)
+int bitvector_s_i(uchar *bitvec, int i)
 // returns 0 or 1
 {
-	INT ii, bit;
+	int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -358,7 +358,7 @@ INT bitvector_s_i(uchar *bitvec, INT i)
 }
 
 
-INT ij2k(INT i, INT j, INT n)
+int ij2k(int i, int j, int n)
 {
 	if (i == j) {
 		cout << "ij2k() i == j" << endl;
@@ -372,9 +372,9 @@ INT ij2k(INT i, INT j, INT n)
 		}
 }
 
-void k2ij(INT k, INT & i, INT & j, INT n)
+void k2ij(int k, int & i, int & j, int n)
 {
-	INT ii, k_save = k;
+	int ii, k_save = k;
 	
 	for (ii = 0; ii < n; ii++) {
 		if (k < n - ii - 1) {
@@ -390,7 +390,7 @@ void k2ij(INT k, INT & i, INT & j, INT n)
 
 void get_extension_if_present(const char *p, char *ext)
 {
-	INT i, l = strlen(p);
+	int i, l = strlen(p);
 	
 	//cout << "get_extension_if_present " << p << " l=" << l << endl;
 	ext[0] = 0;
@@ -405,54 +405,54 @@ void get_extension_if_present(const char *p, char *ext)
 
 void chop_off_extension_if_present(char *p, const char *ext)
 {
-	INT l1 = strlen(p);
-	INT l2 = strlen(ext);
+	int l1 = strlen(p);
+	int l2 = strlen(ext);
 	
 	if (l1 > l2 && strcmp(p + l1 - l2, ext) == 0) {
 		p[l1 - l2] = 0;
 		}
 }
 
-void fwrite_INT4(FILE *fp, INT a)
+void fwrite_int4(FILE *fp, int a)
 {
-	INT4 I;
+	int4 I;
 
-	I = (INT4) a;
+	I = (int4) a;
 	fwrite(&I, 1 /* size */, 4 /* items */, fp);
 }
 
-INT4 fread_INT4(FILE *fp)
+int4 fread_int4(FILE *fp)
 {
-	INT4 I;
+	int4 I;
 
 	fread(&I, 1 /* size */, 4 /* items */, fp);
 	return I;
 }
 
-void fwrite_uchars(FILE *fp, uchar *p, INT len)
+void fwrite_uchars(FILE *fp, uchar *p, int len)
 {
 	fwrite(p, 1 /* size */, len /* items */, fp);
 }
 
-void fread_uchars(FILE *fp, uchar *p, INT len)
+void fread_uchars(FILE *fp, uchar *p, int len)
 {
 	fread(p, 1 /* size */, len /* items */, fp);
 }
 
 
 
-void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, INT f_output_solution_raw, 
+void colored_graph_all_cliques_list_of_cases(int *list_of_cases, int nb_cases, int f_output_solution_raw, 
 	const char *fname_template, 
 	const char *fname_sol, const char *fname_stats, 
-	INT f_maxdepth, INT maxdepth, 
-	INT f_prefix, const char *prefix, 
-	INT print_interval, 
-	INT verbose_level)
+	int f_maxdepth, int maxdepth, 
+	int f_prefix, const char *prefix, 
+	int print_interval, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, c;
-	INT Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
-	INT search_steps, decision_steps, nb_sol, dt;
+	int f_v = (verbose_level >= 1);
+	int i, c;
+	int Search_steps = 0, Decision_steps = 0, Nb_sol = 0, Dt = 0;
+	int search_steps, decision_steps, nb_sol, dt;
 	char fname[1000];
 	char fname_tmp[1000];
 
@@ -507,9 +507,9 @@ void colored_graph_all_cliques_list_of_cases(INT *list_of_cases, INT nb_cases, I
 }
 
 
-void call_back_clique_found_using_file_output(clique_finder *CF, INT verbose_level)
+void call_back_clique_found_using_file_output(clique_finder *CF, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 
 	//cout << "call_back_clique_found_using_file_output" << endl;
 	
@@ -567,10 +567,10 @@ void colored_graph::freeself()
 	null();
 }
 
-void colored_graph::compute_edges(INT verbose_level)
+void colored_graph::compute_edges(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, nb, a;
+	int f_v = (verbose_level >= 1);
+	int i, j, nb, a;
 
 	if (f_v) {
 		cout << "colored_graph::compute_edges" << endl;
@@ -587,7 +587,7 @@ void colored_graph::compute_edges(INT verbose_level)
 				}
 			}
 		}
-	list_of_edges = new INT [nb];
+	list_of_edges = new int [nb];
 	nb_edges = 0;
 	for (i = 0; i < nb_points; i++) {
 		for (j = i + 1; j < nb_points; j++) {
@@ -609,7 +609,7 @@ void colored_graph::compute_edges(INT verbose_level)
 }
 
 
-INT colored_graph::is_adjacent(INT i, INT j)
+int colored_graph::is_adjacent(int i, int j)
 {
 	if (i == j) {
 		return FALSE;
@@ -617,22 +617,22 @@ INT colored_graph::is_adjacent(INT i, INT j)
 	if (i > j) {
 		return is_adjacent(j, i);
 		}
-	INT k;
+	int k;
 	
 	k = ij2k(i, j, nb_points);
 	return bitvector_s_i(bitvector_adjacency, k);
 }
 
-void colored_graph::set_adjacency(INT i, INT j, INT a)
+void colored_graph::set_adjacency(int i, int j, int a)
 {
-	INT k;
+	int k;
 	k = ij2k(i, j, nb_points);
 	bitvector_m_ii(bitvector_adjacency, k, a);
 }
 
 void colored_graph::print()
 {
-	INT i;
+	int i;
 	
 	cout << "colored graph with " << nb_points << " points and " << nb_colors << " colors" << endl;
 
@@ -643,12 +643,12 @@ void colored_graph::print()
 	
 }
 
-void colored_graph::init_with_point_labels(INT nb_points, INT nb_colors, 
-	INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
-	INT *point_labels, 
-	INT verbose_level)
+void colored_graph::init_with_point_labels(int nb_points, int nb_colors, 
+	int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
+	int *point_labels, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "colored_graph::init_with_point_labels" << endl;
@@ -658,18 +658,18 @@ void colored_graph::init_with_point_labels(INT nb_points, INT nb_colors,
 	init(nb_points, nb_colors, 
 		colors, bitvec, f_ownership_of_bitvec, 
 		verbose_level);
-	INT_vec_copy(point_labels, points, nb_points);
+	int_vec_copy(point_labels, points, nb_points);
 	if (f_v) {
 		cout << "colored_graph::init_with_point_labels done" << endl;
 		}
 }
 
-void colored_graph::init(INT nb_points, INT nb_colors, 
-	INT *colors, uchar *bitvec, INT f_ownership_of_bitvec, 
-	INT verbose_level)
+void colored_graph::init(int nb_points, int nb_colors, 
+	int *colors, uchar *bitvec, int f_ownership_of_bitvec, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "colored_graph::init" << endl;
@@ -685,17 +685,17 @@ void colored_graph::init(INT nb_points, INT nb_colors,
 
 	user_data_size = 0;
 	
-	points = new INT [nb_points];
+	points = new int [nb_points];
 	for (i = 0; i < nb_points; i++) {
 		points[i] = i;
 		}
-	point_color = new INT [nb_points];
+	point_color = new int [nb_points];
 
 	if (colors) {
-		INT_vec_copy(colors, point_color, nb_points);
+		int_vec_copy(colors, point_color, nb_points);
 		}
 	else {
-		INT_vec_zero(point_color, nb_points);
+		int_vec_zero(point_color, nb_points);
 		}
 	
 	colored_graph::f_ownership_of_bitvec = f_ownership_of_bitvec;
@@ -707,18 +707,18 @@ void colored_graph::init(INT nb_points, INT nb_colors,
 
 }
 
-void colored_graph::init_no_colors(INT nb_points, uchar *bitvec, INT f_ownership_of_bitvec, 
-	INT verbose_level)
+void colored_graph::init_no_colors(int nb_points, uchar *bitvec, int f_ownership_of_bitvec, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *vertex_colors;
+	int f_v = (verbose_level >= 1);
+	int *vertex_colors;
 
 	if (f_v) {
 		cout << "colored_graph::init_no_colors" << endl;
 		cout << "nb_points=" << nb_points << endl;
 		}
-	vertex_colors = new INT[nb_points];
-	INT_vec_zero(vertex_colors, nb_points);
+	vertex_colors = new int[nb_points];
+	int_vec_zero(vertex_colors, nb_points);
 
 	init(nb_points, 1 /* nb_colors */, 
 		vertex_colors, bitvec, f_ownership_of_bitvec, verbose_level);
@@ -729,12 +729,12 @@ void colored_graph::init_no_colors(INT nb_points, uchar *bitvec, INT f_ownership
 		}
 }
 
-void colored_graph::init_adjacency(INT nb_points, INT nb_colors, 
-	INT *colors, INT *Adj, INT verbose_level)
+void colored_graph::init_adjacency(int nb_points, int nb_colors, 
+	int *colors, int *Adj, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, k;
-	INT bitvector_length;
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
+	int bitvector_length;
 	uchar *bitvec;
 
 
@@ -770,17 +770,17 @@ void colored_graph::init_adjacency(INT nb_points, INT nb_colors,
 
 }
 
-void colored_graph::init_adjacency_no_colors(INT nb_points, INT *Adj, INT verbose_level)
+void colored_graph::init_adjacency_no_colors(int nb_points, int *Adj, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *vertex_colors;
+	int f_v = (verbose_level >= 1);
+	int *vertex_colors;
 
 	if (f_v) {
 		cout << "colored_graph::init_adjacency_no_colors" << endl;
 		cout << "nb_points=" << nb_points << endl;
 		}
-	vertex_colors = new INT[nb_points];
-	INT_vec_zero(vertex_colors, nb_points);
+	vertex_colors = new int[nb_points];
+	int_vec_zero(vertex_colors, nb_points);
 
 	init_adjacency(nb_points, 1 /* nb_colors */, 
 		vertex_colors, Adj, verbose_level);
@@ -791,16 +791,16 @@ void colored_graph::init_adjacency_no_colors(INT nb_points, INT *Adj, INT verbos
 		}
 }
 
-void colored_graph::init_user_data(INT *data, INT data_size, INT verbose_level)
+void colored_graph::init_user_data(int *data, int data_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "colored_graph::init_user_data" << endl;
 		}
 	user_data_size = data_size;
-	user_data = new INT [data_size];
+	user_data = new int [data_size];
 	for (i = 0; i < data_size; i++) {
 		user_data[i] = data[i];
 		}
@@ -809,12 +809,12 @@ void colored_graph::init_user_data(INT *data, INT data_size, INT verbose_level)
 		}
 }
 
-void colored_graph::load(const char *fname, INT verbose_level)
+void colored_graph::load(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
 	char ext[1000];
-	INT i;
+	int i;
 	
 	if (file_size(fname) <= 0) {
 		cout << "colored_graph::load file is empty or does not exist" << endl;
@@ -835,23 +835,23 @@ void colored_graph::load(const char *fname, INT verbose_level)
 
 	fp = fopen(fname, "rb");
 
-	nb_points = fread_INT4(fp);
-	nb_colors = fread_INT4(fp);
+	nb_points = fread_int4(fp);
+	nb_colors = fread_int4(fp);
 
 
 	L = (nb_points * (nb_points - 1)) >> 1;
 
 	bitvector_length = (L + 7) >> 3;
 
-	user_data_size = fread_INT4(fp);
-	user_data = new INT[user_data_size];
+	user_data_size = fread_int4(fp);
+	user_data = new int[user_data_size];
 	
 	for (i = 0; i < user_data_size; i++) {
-		user_data[i] = fread_INT4(fp);
+		user_data[i] = fread_int4(fp);
 		}
 
-	points = new INT[nb_points];
-	point_color = new INT[nb_points];
+	points = new int[nb_points];
+	point_color = new int[nb_points];
 
 
 	if (f_v) {
@@ -859,8 +859,8 @@ void colored_graph::load(const char *fname, INT verbose_level)
 		}
 	
 	for (i = 0; i < nb_points; i++) {
-		points[i] = fread_INT4(fp);
-		point_color[i] = fread_INT4(fp);
+		points[i] = fread_int4(fp);
+		point_color[i] = fread_int4(fp);
 		if (point_color[i] >= nb_colors) {
 			cout << "colored_graph::load" << endl;
 			cout << "point_color[i] >= nb_colors" << endl;
@@ -873,7 +873,7 @@ void colored_graph::load(const char *fname, INT verbose_level)
 
 #if 0
 	cout << "colored_graph::load points=";
-	INT_vec_print(cout, points, nb_points);
+	int_vec_print(cout, points, nb_points);
 	cout << endl;
 #endif
 
@@ -887,12 +887,12 @@ void colored_graph::load(const char *fname, INT verbose_level)
 		}
 }
 
-void colored_graph::all_cliques_of_size_k_ignore_colors(INT target_depth, 
-	INT &nb_sol, INT &decision_step_counter, INT verbose_level)
+void colored_graph::all_cliques_of_size_k_ignore_colors(int target_depth, 
+	int &nb_sol, int &decision_step_counter, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	clique_finder *CF;
-	INT print_interval = 10000000;
+	int print_interval = 10000000;
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors" << endl;
@@ -901,7 +901,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(INT target_depth,
 
 	CF->init("", nb_points, 
 		target_depth, 
-		FALSE /* f_has_adj_list */, NULL /* INT *adj_list_coded */, 
+		FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */, 
 		TRUE /* f_has_bitvector */, bitvector_adjacency, 
 		print_interval, 
 		FALSE /* f_maxdepth */, 0 /* maxdepth */, 
@@ -919,21 +919,21 @@ void colored_graph::all_cliques_of_size_k_ignore_colors(INT target_depth,
 		}
 }
 
-void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(INT target_depth, 
+void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(int target_depth, 
 	const char *fname, 
-	INT f_restrictions, INT *restrictions, 
-	INT &nb_sol, INT &decision_step_counter, 
-	INT verbose_level)
+	int f_restrictions, int *restrictions, 
+	int &nb_sol, int &decision_step_counter, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	clique_finder *CF;
-	INT print_interval = 1000000;
+	int print_interval = 1000000;
 
 	if (f_v) {
 		cout << "colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file " << fname << endl;
 		if (f_restrictions) {
 			cout << "with restrictions: ";
-			INT_vec_print(cout, restrictions, 3);
+			int_vec_print(cout, restrictions, 3);
 			cout << endl;
 			}
 		}
@@ -949,7 +949,7 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 
 	CF->init("", nb_points, 
 		target_depth, 
-		FALSE /* f_has_adj_list */, NULL /* INT *adj_list_coded */, 
+		FALSE /* f_has_adj_list */, NULL /* int *adj_list_coded */, 
 		TRUE /* f_has_bitvector */, bitvector_adjacency, 
 		print_interval, 
 		FALSE /* f_maxdepth */, 0 /* maxdepth */, 
@@ -977,15 +977,15 @@ void colored_graph::all_cliques_of_size_k_ignore_colors_and_write_solutions_to_f
 		}
 }
 
-void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw, 
-	INT f_maxdepth, INT maxdepth, 
-	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
-	INT print_interval, 
-	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
-	INT verbose_level)
+void colored_graph::all_rainbow_cliques(ofstream *fp, int f_output_solution_raw, 
+	int f_maxdepth, int maxdepth, 
+	int f_restrictions, int *restrictions, 
+	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int print_interval, 
+	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	rainbow_cliques *R;
 
 	if (f_v) {
@@ -1011,25 +1011,25 @@ void colored_graph::all_rainbow_cliques(ofstream *fp, INT f_output_solution_raw,
 		}
 }
 
-void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *fp, INT f_output_solution_raw, 
-	INT f_maxdepth, INT maxdepth, 
-	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
-	INT print_interval, 
-	INT f_has_additional_test_function,
+void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *fp, int f_output_solution_raw, 
+	int f_maxdepth, int maxdepth, 
+	int f_restrictions, int *restrictions, 
+	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int print_interval, 
+	int f_has_additional_test_function,
 	void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 
-		INT current_clique_size, INT *current_clique, 
-		INT nb_pts, INT &reduced_nb_pts, 
-		INT *pt_list, INT *pt_list_inv, 
-		INT verbose_level), 
-	INT f_has_print_current_choice_function,
+		int current_clique_size, int *current_clique, 
+		int nb_pts, int &reduced_nb_pts, 
+		int *pt_list, int *pt_list_inv, 
+		int verbose_level), 
+	int f_has_print_current_choice_function,
 	void (*call_back_print_current_choice)(clique_finder *CF, 
-		INT depth, void *user_data, INT verbose_level), 
+		int depth, void *user_data, int verbose_level), 
 	void *user_data, 
-	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
-	INT verbose_level)
+	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	rainbow_cliques *R;
 
 	if (f_v) {
@@ -1061,10 +1061,10 @@ void colored_graph::all_rainbow_cliques_with_additional_test_function(ofstream *
 }
 
 
-void colored_graph::export_to_file(const char *fname, INT verbose_level)
+void colored_graph::export_to_file(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "colored_graph::export_to_file" << endl;
@@ -1108,26 +1108,26 @@ void colored_graph::export_to_file(const char *fname, INT verbose_level)
 }
 
 
-void colored_graph::early_test_func_for_clique_search(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	INT verbose_level)
+void colored_graph::early_test_func_for_clique_search(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT j, a, pt;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int j, a, pt;
 
 	if (f_v) {
 		cout << "colored_graph::early_test_func_for_clique_search checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		INT_vec_print(cout, candidates, nb_candidates);
+		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
 	if (len == 0) {
 		nb_good_candidates = nb_candidates;
-		INT_vec_copy(candidates, good_candidates, nb_candidates);
+		int_vec_copy(candidates, good_candidates, nb_candidates);
 		return;
 		}
 
@@ -1169,9 +1169,9 @@ void file_output::freeself()
 }
 
 
-void file_output::open(const char *fname, void *user_data, INT verbose_level)
+void file_output::open(const char *fname, void *user_data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "file_output::open" << endl;
@@ -1198,9 +1198,9 @@ void file_output::close()
 	f_file_is_open = FALSE;
 }
 
-void file_output::write_line(INT nb, INT *data, INT verbose_level)
+void file_output::write_line(int nb, int *data, int verbose_level)
 {
-	INT i;
+	int i;
 
 	if (!f_file_is_open) {
 		cout << "file_output::write_line file is not open" << endl;
@@ -1216,7 +1216,7 @@ void file_output::write_line(INT nb, INT *data, INT verbose_level)
 
 #undef SUSPICOUS
 
-void clique_finder::open_tree_file(const char *fname_base, INT f_decision_nodes_only)
+void clique_finder::open_tree_file(const char *fname_base, int f_decision_nodes_only)
 {
 	f_write_tree = TRUE;
 	clique_finder::f_decision_nodes_only = f_decision_nodes_only;
@@ -1233,17 +1233,17 @@ void clique_finder::close_tree_file()
 	cout << "written file " << fname_tree << " of size " << file_size(fname_tree) << endl;
 }
 
-void clique_finder::init(const char *label, INT n, 
-	INT target_depth, 
-	INT f_has_adj_list, INT *adj_list_coded, 
-	INT f_has_bitvector, uchar *bitvector_adjacency, 
-	INT print_interval, 
-	INT f_maxdepth, INT maxdepth, 
-	INT f_store_solutions, 
-	INT verbose_level)
+void clique_finder::init(const char *label, int n, 
+	int target_depth, 
+	int f_has_adj_list, int *adj_list_coded, 
+	int f_has_bitvector, uchar *bitvector_adjacency, 
+	int print_interval, 
+	int f_maxdepth, int maxdepth, 
+	int f_store_solutions, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	strcpy(clique_finder::label, label);
 	
@@ -1267,28 +1267,28 @@ void clique_finder::init(const char *label, INT n,
 		}
 	nb_sol = 0;
 
-	pt_list = new INT[n];
+	pt_list = new int[n];
 	if (f_v) {
 		cout << "clique_finder::init pt_list allocated" << endl;
 		}
-	pt_list_inv = new INT[n];
+	pt_list_inv = new int[n];
 	if (f_v) {
 		cout << "clique_finder::init pt_list_inv allocated" << endl;
 		}
-	nb_points = new INT[target_depth + 1];
-	candidates = new INT[(target_depth + 1) * n];
-	nb_candidates = new INT[target_depth];
-	current_choice = new INT[target_depth];
-	level_counter = new INT[target_depth];
-	f_level_mod = new INT[target_depth];
-	level_r = new INT[target_depth];
-	level_m = new INT[target_depth];
-	current_clique = new INT[target_depth];
+	nb_points = new int[target_depth + 1];
+	candidates = new int[(target_depth + 1) * n];
+	nb_candidates = new int[target_depth];
+	current_choice = new int[target_depth];
+	level_counter = new int[target_depth];
+	f_level_mod = new int[target_depth];
+	level_r = new int[target_depth];
+	level_m = new int[target_depth];
+	current_clique = new int[target_depth];
 
-	INT_vec_zero(level_counter, target_depth);
-	INT_vec_zero(f_level_mod, target_depth);
-	INT_vec_zero(level_r, target_depth);
-	INT_vec_zero(level_m, target_depth);
+	int_vec_zero(level_counter, target_depth);
+	int_vec_zero(f_level_mod, target_depth);
+	int_vec_zero(level_r, target_depth);
+	int_vec_zero(level_m, target_depth);
 
 
 	for (i = 0; i < n; i++) {
@@ -1306,10 +1306,10 @@ void clique_finder::init(const char *label, INT n,
 		}
 }
 
-void clique_finder::allocate_bitmatrix(INT verbose_level)
+void clique_finder::allocate_bitmatrix(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, k, size;
+	int f_v = (verbose_level >= 1);
+	int i, j, k, size;
 
 	if (f_v) {
 		cout << "clique_finder::allocate_bitmatrix" << endl;
@@ -1351,7 +1351,7 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 				//adjacency[i * n + j] = adj_list_coded[k];
 				//adjacency[j * n + i] = adj_list_coded[k];
 
-				INT aij = 0;
+				int aij = 0;
 
 				if (f_has_adj_list) {
 					aij = adj_list_coded[k];
@@ -1370,10 +1370,10 @@ void clique_finder::allocate_bitmatrix(INT verbose_level)
 		}
 }
 
-void clique_finder::init_restrictions(INT *restrictions, INT verbose_level)
+void clique_finder::init_restrictions(int *restrictions, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, i, r, m;
+	int f_v = (verbose_level >= 1);
+	int h, i, r, m;
 
 	if (f_v) {
 		cout << "clique_finder::init_restrictions" << endl;
@@ -1497,18 +1497,18 @@ void clique_finder::free()
 	null();
 }
 
-void clique_finder::init_point_labels(INT *pt_labels)
+void clique_finder::init_point_labels(int *pt_labels)
 {
-	INT i;
-	point_labels = new INT [n];
+	int i;
+	point_labels = new int [n];
 	for (i = 0; i < n; i++) {
 		point_labels[i] = pt_labels[i];
 		}
 }
 
-void clique_finder::print_set(INT size, INT *set)
+void clique_finder::print_set(int size, int *set)
 {
-	INT i, a, b;
+	int i, a, b;
 	
 	cout << "(";
 	for (i = 0; i < size; i++) {
@@ -1521,7 +1521,7 @@ void clique_finder::print_set(INT size, INT *set)
 	cout << ")";
 }
 
-void clique_finder::log_position_and_choice(INT depth, INT counter_save, INT counter)
+void clique_finder::log_position_and_choice(int depth, int counter_save, int counter)
 {
 #if 0
 	cout << label << " counter " << counter_save;
@@ -1537,11 +1537,11 @@ void clique_finder::log_position_and_choice(INT depth, INT counter_save, INT cou
 	cout << " nb_sol=" << nb_sol << " ";
 	if (FALSE) {
 		cout << " clique ";
-		INT_set_print(cout, current_clique, depth);
+		int_set_print(cout, current_clique, depth);
 		}
 }
 
-void clique_finder::log_position(INT depth, INT counter_save, INT counter)
+void clique_finder::log_position(int depth, int counter_save, int counter)
 {
 #if 0
 	cout << label << " counter " << counter_save;
@@ -1555,13 +1555,13 @@ void clique_finder::log_position(INT depth, INT counter_save, INT counter)
 	log_choice(depth);
 	if (FALSE) {
 		cout << " clique ";
-		INT_set_print(cout, current_clique, depth);
+		int_set_print(cout, current_clique, depth);
 		}
 }
 
-void clique_finder::log_choice(INT depth)
+void clique_finder::log_choice(int depth)
 {
-	INT i;
+	int i;
 
 	cout << "choice ";
 	for (i = 0; i < depth; i++) {
@@ -1572,11 +1572,11 @@ void clique_finder::log_choice(INT depth)
 	cout << " ";
 }
 
-void clique_finder::swap_point(INT idx1, INT idx2)
+void clique_finder::swap_point(int idx1, int idx2)
 {
-	INT_vec_swap_points(pt_list, pt_list_inv, idx1, idx2);
+	int_vec_swap_points(pt_list, pt_list_inv, idx1, idx2);
 #if 0
-	INT p1, p2;
+	int p1, p2;
 	
 	if (idx1 == idx2) {
 		return;
@@ -1590,9 +1590,9 @@ void clique_finder::swap_point(INT idx1, INT idx2)
 #endif
 }
 
-INT clique_finder::degree_of_point(INT depth, INT i, INT nb_points)
+int clique_finder::degree_of_point(int depth, int i, int nb_points)
 {
-	INT pti, ptj, j, d;
+	int pti, ptj, j, d;
 	
 	pti = pt_list[i];
 	d = 0;
@@ -1609,9 +1609,9 @@ INT clique_finder::degree_of_point(INT depth, INT i, INT nb_points)
 }
 
 #if 0
-INT clique_finder::degree_of_point_verbose(INT i, INT nb_points)
+int clique_finder::degree_of_point_verbose(int i, int nb_points)
 {
-	INT pti, ptj, j, d;
+	int pti, ptj, j, d;
 	
 	pti = pt_list[i];
 	d = 0;
@@ -1632,14 +1632,14 @@ INT clique_finder::degree_of_point_verbose(INT i, INT nb_points)
 }
 #endif
 
-INT clique_finder::is_suspicous(INT i)
+int clique_finder::is_suspicous(int i)
 {
 	if (point_is_suspicous == NULL)
 		return FALSE;
 	return point_is_suspicous[i];
 }
 
-INT clique_finder::point_label(INT i)
+int clique_finder::point_label(int i)
 {
 	if (point_labels)
 		return point_labels[i];
@@ -1647,9 +1647,9 @@ INT clique_finder::point_label(INT i)
 		return i;
 }
 
-INT clique_finder::is_adjacent(INT depth, INT i, INT j)
+int clique_finder::is_adjacent(int depth, int i, int j)
 {
-	INT a;
+	int a;
 
 	//a = adjacency[i * n + j];
 	if (i == j) {
@@ -1666,9 +1666,9 @@ INT clique_finder::is_adjacent(INT depth, INT i, INT j)
 	return a;
 }
 
-void clique_finder::write_entry_to_tree_file(INT depth, INT verbose_level)
+void clique_finder::write_entry_to_tree_file(int depth, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	if (!f_write_tree) {
 		return;
@@ -1689,7 +1689,7 @@ void clique_finder::write_entry_to_tree_file(INT depth, INT verbose_level)
 		return;
 		}
 	if (f_decision_nodes_only) {
-		INT d;
+		int d;
 	
 		d = 0;
 		for (i = 0; i < depth; i++) {
@@ -1714,9 +1714,9 @@ void clique_finder::write_entry_to_tree_file(INT depth, INT verbose_level)
 		}
 }
 
-void clique_finder::m_iji(INT i, INT j, INT a)
+void clique_finder::m_iji(int i, int j, int a)
 {
-	INT m, n, N; //, jj, bit;
+	int m, n, N; //, jj, bit;
 	//uchar mask;
 	
 	m = bitmatrix_m;
@@ -1748,9 +1748,9 @@ void clique_finder::m_iji(INT i, INT j, INT a)
 #endif
 }
 
-INT clique_finder::s_ij(INT i, INT j)
+int clique_finder::s_ij(int i, int j)
 {
-	INT k, aij;
+	int k, aij;
 	
 	if ( i < 0 || i >= n ) {
 		cout << "clique_finder::s_ij() addressing error, i = " << i << ", n = " << n << endl;
@@ -1796,11 +1796,11 @@ INT clique_finder::s_ij(INT i, INT j)
 }
 
 
-void clique_finder::backtrack_search(INT depth, INT verbose_level)
+void clique_finder::backtrack_search(int depth, int verbose_level)
 {
-	INT nb_old, i, nb_new;
-	INT pt1, pt2, pt, pass, f_go, counter_save;
-	INT my_verbose_level;
+	int nb_old, i, nb_new;
+	int pt1, pt2, pt, pass, f_go, counter_save;
+	int my_verbose_level;
 	
 	counter++;
 	counter_save = counter;
@@ -1814,9 +1814,9 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 	else {
 		my_verbose_level = verbose_level;
 		}
-	INT f_v = (my_verbose_level >= 1);
-	INT f_vv = (my_verbose_level >= 2);
-	//INT f_vvv = (my_verbose_level >= 3);
+	int f_v = (my_verbose_level >= 1);
+	int f_vv = (my_verbose_level >= 2);
+	//int f_vvv = (my_verbose_level >= 3);
 
 	if (f_v) {
 		cout << "clique_finder::backtrack_search : ";
@@ -1835,7 +1835,7 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 		if (f_store_solutions) {
 			//cout << "storing solution" << endl;
 			vector<int> sol;
-			INT j;
+			int j;
 			sol.resize(depth);
 			for (j = 0; j < depth; j++) {
 				sol[j] = (int) current_clique[j];
@@ -1852,7 +1852,7 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 			}
 		//cout << "solution " << nb_sol << ", found a clique of size target_depth" << endl;
 		//cout << "clique";
-		//INT_set_print(cout, current_clique, depth);
+		//int_set_print(cout, current_clique, depth);
 		//cout << " depth = " << depth << endl;
 		//exit(1);
 
@@ -1878,7 +1878,7 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 		log_position(depth, counter_save, counter);
 		cout << " : # active points from previous level is " << nb_old << endl;
 		//cout << " : previous lvl_pt_list[" << depth - 1 << "] of size " << nb_old << " : " << endl;
-		////INT_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
+		////int_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
 		//print_point_set(depth, counter_save, counter, nb_old, lvl_pt_list[depth - 1]);
 		//cout << endl;
 		}
@@ -2013,10 +2013,10 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 
 
 	{
-	//INT i; //, nb_old;
+	//int i; //, nb_old;
 
 	if (call_back_find_candidates) {
-		INT reduced_nb_points;
+		int reduced_nb_points;
 
 		if (f_v) {
 			log_position(depth, counter_save, counter);
@@ -2052,7 +2052,7 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 		// If we don't have a find_candidates callback, 
 		// we take all the points into consideration:
 
-		INT_vec_copy(pt_list, candidates + depth * n, nb_points[depth]);
+		int_vec_copy(pt_list, candidates + depth * n, nb_points[depth]);
 		nb_candidates[depth] = nb_points[depth];
 		}
 	}
@@ -2113,7 +2113,7 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 				log_position(depth, counter_save, counter);
 				cout << " : considering clique ";
 				print_set(depth + 1, current_clique);
-				//INT_set_print(cout, current_clique, depth);
+				//int_set_print(cout, current_clique, depth);
 				cout << " depth = " << depth << " nb_old=" << nb_old << endl;
 				f_go = TRUE;
 				}
@@ -2157,12 +2157,12 @@ void clique_finder::backtrack_search(INT depth, INT verbose_level)
 		}
 }
 
-INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
+int clique_finder::solve_decision_problem(int depth, int verbose_level)
 // returns TRUE if we found a solution
 {
-	INT nb_old, i, nb_new;
-	INT pt1, pt2, pt, pass, f_go, counter_save;
-	INT my_verbose_level;
+	int nb_old, i, nb_new;
+	int pt1, pt2, pt, pass, f_go, counter_save;
+	int my_verbose_level;
 	
 	counter++;
 	counter_save = counter;
@@ -2176,9 +2176,9 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 	else {
 		my_verbose_level = verbose_level;
 		}
-	INT f_v = (my_verbose_level >= 1);
-	INT f_vv = (my_verbose_level >= 2);
-	//INT f_vvv = (my_verbose_level >= 3);
+	int f_v = (my_verbose_level >= 1);
+	int f_vv = (my_verbose_level >= 2);
+	//int f_vvv = (my_verbose_level >= 3);
 
 	if (f_v) {
 		cout << "solve_decision_problem : ";
@@ -2195,7 +2195,7 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 			}
 		//cout << "solution " << nb_sol << ", found a clique of size target_depth" << endl;
 		//cout << "clique";
-		//INT_set_print(cout, current_clique, depth);
+		//int_set_print(cout, current_clique, depth);
 		//cout << " depth = " << depth << endl;
 		//exit(1);
 
@@ -2221,7 +2221,7 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 		log_position(depth, counter_save, counter);
 		cout << " : # active points from previous level is " << nb_old << endl;
 		//cout << " : previous lvl_pt_list[" << depth - 1 << "] of size " << nb_old << " : " << endl;
-		////INT_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
+		////int_vec_print(cout, lvl_pt_list[depth - 1], lvl_nb_points[depth - 1]);
 		//print_point_set(depth, counter_save, counter, nb_old, lvl_pt_list[depth - 1]);
 		//cout << endl;
 		}
@@ -2330,10 +2330,10 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 
 
 	{
-	INT i; //, nb_old;
+	int i; //, nb_old;
 
 	if (call_back_find_candidates) {
-		INT reduced_nb_points;
+		int reduced_nb_points;
 		
 		nb_candidates[depth] = (*call_back_find_candidates)(this, 
 			depth, current_clique, 
@@ -2393,7 +2393,7 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 				log_position(depth, counter_save, counter);
 				cout << " : considering clique ";
 				print_set(depth + 1, current_clique);
-				//INT_set_print(cout, current_clique, depth);
+				//int_set_print(cout, current_clique, depth);
 				cout << " depth = " << depth << " nb_old=" << nb_old << endl;
 				f_go = TRUE;
 				}
@@ -2433,14 +2433,14 @@ INT clique_finder::solve_decision_problem(INT depth, INT verbose_level)
 	return FALSE;
 }
 
-void clique_finder::get_solutions(INT *&Sol, INT &nb_solutions, INT &clique_sz, INT verbose_level)
+void clique_finder::get_solutions(int *&Sol, int &nb_solutions, int &clique_sz, int verbose_level)
 {
-	INT i, j;
+	int i, j;
 	
 	nb_solutions = nb_sol;
 	//nb_sol = nb_sol;
 	clique_sz = target_depth;
-	Sol = new INT [nb_sol * target_depth];
+	Sol = new int [nb_sol * target_depth];
 	for (i = 0; i < nb_sol; i++) {
 		for (j = 0; j < target_depth; j++) {
 			Sol[i * target_depth + j] = solutions.front()[j];
@@ -2449,23 +2449,23 @@ void clique_finder::get_solutions(INT *&Sol, INT &nb_solutions, INT &clique_sz, 
 		}
 }
 
-void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz, INT *&Sol, INT &nb_sol, INT verbose_level)
+void all_cliques_of_given_size(int *Adj, int nb_pts, int clique_sz, int *&Sol, int &nb_sol, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *adj_list_coded;
-	INT n2;
-	INT i, j, h;
+	int f_v = (verbose_level >= 1);
+	int *adj_list_coded;
+	int n2;
+	int i, j, h;
 	clique_finder *C;
 	const char *label = "all_cliques_of_given_size";
-	INT print_interval = 1000;
-	INT f_maxdepth = FALSE;
-	INT maxdepth = 0;
+	int print_interval = 1000;
+	int f_maxdepth = FALSE;
+	int maxdepth = 0;
 
 	if (f_v) {
 		cout << "all_cliques_of_given_size" << endl;
 		}
 	n2 = (nb_pts * (nb_pts - 1)) >> 1;
-	adj_list_coded = new INT [n2];
+	adj_list_coded = new int [n2];
 	h = 0;
 	cout << "all_cliques_of_given_size: computing adj_list_coded" << endl;
 	for (i = 0; i < nb_pts; i++) {
@@ -2494,7 +2494,7 @@ void all_cliques_of_given_size(INT *Adj, INT nb_pts, INT clique_sz, INT *&Sol, I
 		cout << "all_cliques_of_given_size done with search, we found " << C->nb_sol << " solutions" << endl;
 		}
 
-	INT sz;
+	int sz;
 	C->get_solutions(Sol, nb_sol, sz, verbose_level);
 	if (sz != clique_sz) {
 		cout << "all_cliques_of_given_size sz != clique_sz" << endl;
@@ -2527,17 +2527,17 @@ void rainbow_cliques::freeself()
 	null();
 }
 
-void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
-	INT f_maxdepth, INT maxdepth, 
-	INT f_restrictions, INT *restrictions, 
-	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
-	INT print_interval, 
-	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
-	INT verbose_level)
+void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, int f_output_solution_raw, 
+	int f_maxdepth, int maxdepth, 
+	int f_restrictions, int *restrictions, 
+	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int print_interval, 
+	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int i;
 	
 	if (f_v) {
 		cout << "rainbow_cliques::search" << endl;
@@ -2562,27 +2562,27 @@ void rainbow_cliques::search(colored_graph *graph, ofstream *fp_sol, INT f_outpu
 }
 
 void rainbow_cliques::search_with_additional_test_function(
-	colored_graph *graph, ofstream *fp_sol, INT f_output_solution_raw, 
-	INT f_maxdepth, INT maxdepth, 
-	INT f_restrictions, INT *restrictions,
-	INT f_tree, INT f_decision_nodes_only, const char *fname_tree,  
-	INT print_interval, 
-	INT f_has_additional_test_function,
+	colored_graph *graph, ofstream *fp_sol, int f_output_solution_raw, 
+	int f_maxdepth, int maxdepth, 
+	int f_restrictions, int *restrictions,
+	int f_tree, int f_decision_nodes_only, const char *fname_tree,  
+	int print_interval, 
+	int f_has_additional_test_function,
 	void (*call_back_additional_test_function)(rainbow_cliques *R, void *user_data, 
-		INT current_clique_size, INT *current_clique, 
-		INT nb_pts, INT &reduced_nb_pts, 
-		INT *pt_list, INT *pt_list_inv, 
-		INT verbose_level), 
-	INT f_has_print_current_choice_function,
+		int current_clique_size, int *current_clique, 
+		int nb_pts, int &reduced_nb_pts, 
+		int *pt_list, int *pt_list_inv, 
+		int verbose_level), 
+	int f_has_print_current_choice_function,
 	void (*call_back_print_current_choice)(clique_finder *CF, 
-		INT depth, void *user_data, INT verbose_level), 
+		int depth, void *user_data, int verbose_level), 
 	void *user_data, 
-	INT &search_steps, INT &decision_steps, INT &nb_sol, INT &dt, 
-	INT verbose_level)
+	int &search_steps, int &decision_steps, int &nb_sol, int &dt, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "rainbow_cliques::search_with_additional_test_function" << endl;
@@ -2600,9 +2600,9 @@ void rainbow_cliques::search_with_additional_test_function(
 		}
 	rainbow_cliques::graph = graph;
 	rainbow_cliques::fp_sol = fp_sol;
-	f_color_satisfied = new INT[graph->nb_colors];
-	color_chosen_at_depth = new INT[graph->nb_colors];
-	color_frequency = new INT[graph->nb_colors];
+	f_color_satisfied = new int[graph->nb_colors];
+	color_chosen_at_depth = new int[graph->nb_colors];
+	color_frequency = new int[graph->nb_colors];
 	
 	for (i = 0; i < graph->nb_colors; i++) {
 		f_color_satisfied[i] = FALSE;
@@ -2705,14 +2705,14 @@ void rainbow_cliques::search_with_additional_test_function(
 	
 }
 
-INT rainbow_cliques::find_candidates(
-	INT current_clique_size, INT *current_clique, 
-	INT nb_pts, INT &reduced_nb_pts, 
-	INT *pt_list, INT *pt_list_inv, 
-	INT *candidates, INT verbose_level)
+int rainbow_cliques::find_candidates(
+	int current_clique_size, int *current_clique, 
+	int nb_pts, int &reduced_nb_pts, 
+	int *pt_list, int *pt_list_inv, 
+	int *candidates, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT c, i, j, c0, c0_freq, pt;
+	int f_v = (verbose_level >= 1);
+	int c, i, j, c0, c0_freq, pt;
 	
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates nb_pts = " << nb_pts << endl;
@@ -2723,7 +2723,7 @@ INT rainbow_cliques::find_candidates(
 	// color_frequency[i] is the frequency of points with color i 
 	// in the list pt_list[]:
 
-	INT_vec_zero(color_frequency, graph->nb_colors);
+	int_vec_zero(color_frequency, graph->nb_colors);
 	for (i = 0; i < nb_pts; i++) {
 		pt = pt_list[i];
 		if (pt >= graph->nb_points) {
@@ -2739,7 +2739,7 @@ INT rainbow_cliques::find_candidates(
 		}
 	if (f_v) {
 		cout << "rainbow_cliques::find_candidates color_frequency: ";
-		INT_vec_print(cout, color_frequency, graph->nb_colors);
+		int_vec_print(cout, color_frequency, graph->nb_colors);
 		cout << endl;
 		}
 
@@ -2751,7 +2751,7 @@ INT rainbow_cliques::find_candidates(
 			if (color_frequency[c]) {
 				cout << "rainbow_cliques::find_candidates satisfied color appears with positive frequency" << endl;
 				cout << "current clique:";
-				INT_vec_print(cout, current_clique, current_clique_size);
+				int_vec_print(cout, current_clique, current_clique_size);
 				cout << endl;
 				exit(1);
 				}
@@ -2795,9 +2795,9 @@ INT rainbow_cliques::find_candidates(
 	return c0_freq;
 }
 
-void rainbow_cliques::clique_found(INT *current_clique, INT verbose_level)
+void rainbow_cliques::clique_found(int *current_clique, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < target_depth; i++) {
 		*fp_sol << current_clique[i] << " ";
@@ -2805,9 +2805,9 @@ void rainbow_cliques::clique_found(INT *current_clique, INT verbose_level)
 	*fp_sol << endl;
 }
 
-void rainbow_cliques::clique_found_record_in_original_labels(INT *current_clique, INT verbose_level)
+void rainbow_cliques::clique_found_record_in_original_labels(int *current_clique, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	*fp_sol << graph->user_data_size + target_depth << " ";
 	for (i = 0; i < graph->user_data_size; i++) {
@@ -2820,19 +2820,19 @@ void rainbow_cliques::clique_found_record_in_original_labels(INT *current_clique
 }
 
 
-void call_back_colored_graph_clique_found(clique_finder *CF, INT verbose_level)
+void call_back_colored_graph_clique_found(clique_finder *CF, int verbose_level)
 {
-	INT f_v = FALSE; //(verbose_level >= 1);
+	int f_v = FALSE; //(verbose_level >= 1);
 
 	//cout << "call_back_colored_graph_clique_found" << endl;
 	
 	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
 
 	if (f_v) {
-		INT i, pt, c;
+		int i, pt, c;
 		
 		cout << "call_back_colored_graph_clique_found clique";
-		INT_set_print(cout, CF->current_clique, CF->target_depth);
+		int_set_print(cout, CF->current_clique, CF->target_depth);
 		cout << endl;
 		for (i = 0; i < CF->target_depth; i++) {
 			pt = CF->current_clique[i];
@@ -2849,12 +2849,12 @@ void call_back_colored_graph_clique_found(clique_finder *CF, INT verbose_level)
 }
 
 void call_back_colored_graph_add_point(clique_finder *CF, 
-	INT current_clique_size, INT *current_clique, 
-	INT pt, INT verbose_level)
+	int current_clique_size, int *current_clique, 
+	int pt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
-	INT c;
+	int c;
 	
 	c = R->graph->point_color[pt];
 	if (R->f_color_satisfied[c]) {
@@ -2872,12 +2872,12 @@ void call_back_colored_graph_add_point(clique_finder *CF,
 }
 
 void call_back_colored_graph_delete_point(clique_finder *CF, 
-	INT current_clique_size, INT *current_clique, 
-	INT pt, INT verbose_level)
+	int current_clique_size, int *current_clique, 
+	int pt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
-	INT c;
+	int c;
 	
 	c = R->graph->point_color[pt];
 	if (!R->f_color_satisfied[c]) {
@@ -2890,20 +2890,20 @@ void call_back_colored_graph_delete_point(clique_finder *CF,
 		}
 }
 
-INT call_back_colored_graph_find_candidates(clique_finder *CF, 
-	INT current_clique_size, INT *current_clique, 
-	INT nb_pts, INT &reduced_nb_pts, 
-	INT *pt_list, INT *pt_list_inv, 
-	INT *candidates, INT verbose_level)
+int call_back_colored_graph_find_candidates(clique_finder *CF, 
+	int current_clique_size, int *current_clique, 
+	int nb_pts, int &reduced_nb_pts, 
+	int *pt_list, int *pt_list_inv, 
+	int *candidates, int verbose_level)
 {
 	//verbose_level = 1;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	rainbow_cliques *R = (rainbow_cliques *) CF->call_back_clique_found_data;
-	INT ret;
+	int ret;
 
 	if (R->f_has_additional_test_function) {
 
-		INT tmp_nb_points;
+		int tmp_nb_points;
 
 		if (f_v) {
 			cout << "call_back_colored_graph_find_candidates before call_back_additional_test_function" << endl;

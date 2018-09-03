@@ -40,7 +40,7 @@ void flag_orbit_node::null()
 void flag_orbit_node::freeself()
 {
 	if (fusion_elt) {
-		FREE_INT(fusion_elt);
+		FREE_int(fusion_elt);
 		}
 	if (gens) {
 		FREE_OBJECT(gens);
@@ -49,13 +49,13 @@ void flag_orbit_node::freeself()
 }
 
 void flag_orbit_node::init(
-	flag_orbits *Flag_orbits, INT flag_orbit_index,
-	INT downstep_primary_orbit, INT downstep_secondary_orbit, 
-	INT downstep_orbit_len, INT f_long_orbit, 
-	INT *pt_representation, strong_generators *Strong_gens, 
-	INT verbose_level)
+	flag_orbits *Flag_orbits, int flag_orbit_index,
+	int downstep_primary_orbit, int downstep_secondary_orbit, 
+	int downstep_orbit_len, int f_long_orbit, 
+	int *pt_representation, strong_generators *Strong_gens, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "flag_orbit_node::init" << endl;
@@ -66,7 +66,7 @@ void flag_orbit_node::init(
 	flag_orbit_node::downstep_secondary_orbit = downstep_secondary_orbit;
 	flag_orbit_node::downstep_orbit_len = downstep_orbit_len;
 	flag_orbit_node::f_long_orbit = FALSE;
-	INT_vec_copy(pt_representation,
+	int_vec_copy(pt_representation,
 			Flag_orbits->Pt +
 			flag_orbit_index * Flag_orbits->pt_representation_sz,
 			Flag_orbits->pt_representation_sz);
@@ -76,21 +76,21 @@ void flag_orbit_node::init(
 		}
 }
 
-void flag_orbit_node::write_file(ofstream &fp, INT verbose_level)
+void flag_orbit_node::write_file(ofstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "flag_orbit_node::write_file" << endl;
 		}
-	fp.write((char *) &downstep_primary_orbit, sizeof(INT));
-	fp.write((char *) &downstep_secondary_orbit, sizeof(INT));
-	fp.write((char *) &downstep_orbit_len, sizeof(INT));
-	fp.write((char *) &upstep_primary_orbit, sizeof(INT));
-	fp.write((char *) &upstep_secondary_orbit, sizeof(INT));
-	fp.write((char *) &f_fusion_node, sizeof(INT));
+	fp.write((char *) &downstep_primary_orbit, sizeof(int));
+	fp.write((char *) &downstep_secondary_orbit, sizeof(int));
+	fp.write((char *) &downstep_orbit_len, sizeof(int));
+	fp.write((char *) &upstep_primary_orbit, sizeof(int));
+	fp.write((char *) &upstep_secondary_orbit, sizeof(int));
+	fp.write((char *) &f_fusion_node, sizeof(int));
 	if (f_fusion_node) {
-		fp.write((char *) &fusion_with, sizeof(INT));
+		fp.write((char *) &fusion_with, sizeof(int));
 		Flag_orbits->A->element_write_to_file_binary(fusion_elt, fp, 0);
 		}
 	gens->write_to_file_binary(fp, 0 /* verbose_level */);
@@ -100,23 +100,23 @@ void flag_orbit_node::write_file(ofstream &fp, INT verbose_level)
 		}
 }
 
-void flag_orbit_node::read_file(ifstream &fp, INT verbose_level)
+void flag_orbit_node::read_file(ifstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "flag_orbit_node::read_file" << endl;
 		}
 	
-	fp.read((char *) &downstep_primary_orbit, sizeof(INT));
-	fp.read((char *) &downstep_secondary_orbit, sizeof(INT));
-	fp.read((char *) &downstep_orbit_len, sizeof(INT));
-	fp.read((char *) &upstep_primary_orbit, sizeof(INT));
-	fp.read((char *) &upstep_secondary_orbit, sizeof(INT));
-	fp.read((char *) &f_fusion_node, sizeof(INT));
+	fp.read((char *) &downstep_primary_orbit, sizeof(int));
+	fp.read((char *) &downstep_secondary_orbit, sizeof(int));
+	fp.read((char *) &downstep_orbit_len, sizeof(int));
+	fp.read((char *) &upstep_primary_orbit, sizeof(int));
+	fp.read((char *) &upstep_secondary_orbit, sizeof(int));
+	fp.read((char *) &f_fusion_node, sizeof(int));
 	if (f_fusion_node) {
-		fp.read((char *) &fusion_with, sizeof(INT));
-		fusion_elt = NEW_INT(Flag_orbits->A->elt_size_in_INT);
+		fp.read((char *) &fusion_with, sizeof(int));
+		fusion_elt = NEW_int(Flag_orbits->A->elt_size_in_int);
 		Flag_orbits->A->element_read_from_file_binary(fusion_elt, fp, 0);
 		}
 

@@ -16,89 +16,89 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
-void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname);
-void export_gap(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname);
+void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname);
+void export_gap(finite_field *F, int d, int *Pts, int nb_pts, char *fname);
 
 
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q;
-	INT f_n = FALSE;
-	INT n;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q;
+	int f_n = FALSE;
+	int n;
+	int f_poly = FALSE;
 	const char *poly = NULL;
-	INT f_Q = FALSE;
-	INT Q;
-	INT f_poly_Q = FALSE;
+	int f_Q = FALSE;
+	int Q;
+	int f_poly_Q = FALSE;
 	const char *poly_Q = NULL;
 
-	INT f_subiaco_oval = FALSE;
-	INT f_short = FALSE;
-	INT f_subiaco_hyperoval = FALSE;
-	INT f_adelaide_hyperoval = FALSE;
+	int f_subiaco_oval = FALSE;
+	int f_short = FALSE;
+	int f_subiaco_hyperoval = FALSE;
+	int f_adelaide_hyperoval = FALSE;
 
-	INT f_hyperoval = FALSE;
-	INT f_translation = FALSE;
-	INT translation_exponent = 0;
-	INT f_Segre = FALSE;
-	INT f_Payne = FALSE;
-	INT f_Cherowitzo = FALSE;
-	INT f_OKeefe_Penttila = FALSE;
+	int f_hyperoval = FALSE;
+	int f_translation = FALSE;
+	int translation_exponent = 0;
+	int f_Segre = FALSE;
+	int f_Payne = FALSE;
+	int f_Cherowitzo = FALSE;
+	int f_OKeefe_Penttila = FALSE;
 
-	INT f_BLT_database = FALSE;
-	INT BLT_k = 0;
-	INT f_BLT_in_PG = FALSE;
+	int f_BLT_database = FALSE;
+	int BLT_k = 0;
+	int f_BLT_in_PG = FALSE;
 	
-	INT f_BLT_Linear = FALSE;
-	INT f_BLT_Fisher = FALSE;
-	INT f_BLT_Mondello = FALSE;
-	INT f_BLT_FTWKB = FALSE;
+	int f_BLT_Linear = FALSE;
+	int f_BLT_Fisher = FALSE;
+	int f_BLT_Mondello = FALSE;
+	int f_BLT_FTWKB = FALSE;
 
-	INT f_ovoid = FALSE;
+	int f_ovoid = FALSE;
 
-	INT f_Baer = FALSE;
+	int f_Baer = FALSE;
 	
-	INT f_orthogonal = FALSE;
-	INT orthogonal_epsilon = 0;
+	int f_orthogonal = FALSE;
+	int orthogonal_epsilon = 0;
 
-	INT f_hermitian = FALSE;
+	int f_hermitian = FALSE;
 
-	INT f_twisted_cubic = FALSE;
+	int f_twisted_cubic = FALSE;
 
-	INT f_Hill_cap_56 = FALSE;
+	int f_Hill_cap_56 = FALSE;
 
-	INT f_ttp_code = FALSE;
-	INT f_ttp_construction_A = FALSE;
-	INT f_ttp_hyperoval = FALSE;
-	INT f_ttp_construction_B = FALSE;
+	int f_ttp_code = FALSE;
+	int f_ttp_construction_A = FALSE;
+	int f_ttp_hyperoval = FALSE;
+	int f_ttp_construction_B = FALSE;
 
-	INT f_unital_XXq_YZq_ZYq = FALSE;
+	int f_unital_XXq_YZq_ZYq = FALSE;
 
-	INT f_desarguesian_line_spread_in_PG_3_q = FALSE;
-	INT f_embedded_in_PG_4_q = FALSE;
+	int f_desarguesian_line_spread_in_PG_3_q = FALSE;
+	int f_embedded_in_PG_4_q = FALSE;
 
-	INT f_Buekenhout_Metz = FALSE;
-	INT f_classical = FALSE;
-	INT f_Uab = FALSE;
-	INT parameter_a = 0;
-	INT parameter_b = 0;
+	int f_Buekenhout_Metz = FALSE;
+	int f_classical = FALSE;
+	int f_Uab = FALSE;
+	int parameter_a = 0;
+	int parameter_b = 0;
 
-	INT f_whole_space = FALSE;
-	INT f_hyperplane = FALSE;
-	INT pt = 0;
+	int f_whole_space = FALSE;
+	int f_hyperplane = FALSE;
+	int pt = 0;
 	
-	INT f_segre_variety = FALSE;
-	INT segre_variety_a;
-	INT segre_variety_b;
+	int f_segre_variety = FALSE;
+	int segre_variety_a;
+	int segre_variety_b;
 
-	INT f_Maruta_Hamada_arc = FALSE;
+	int f_Maruta_Hamada_arc = FALSE;
 
 	t0 = os_ticks();
 
@@ -297,8 +297,8 @@ int main(int argc, const char **argv)
 		}
 
 	char fname[1000];
-	INT nb_pts;
-	INT *Pts = NULL;
+	int nb_pts;
+	int *Pts = NULL;
 
 	finite_field *F;
 
@@ -572,19 +572,19 @@ int main(int argc, const char **argv)
 
 
 	if (Pts) {
-		FREE_INT(Pts);
+		FREE_int(Pts);
 		}
 	the_end(t0);
 }
 
 
-void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname)
+void export_magma(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 {
 	char fname2[1000];
-	INT *v;
-	INT h, i, a, b;
+	int *v;
+	int h, i, a, b;
 
-	v = NEW_INT(d);
+	v = NEW_int(d);
 	strcpy(fname2, fname);
 	replace_extension_with(fname2, ".magma");
 	
@@ -624,16 +624,16 @@ void export_magma(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname)
 	}
 	cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
 
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-void export_gap(finite_field *F, INT d, INT *Pts, INT nb_pts, char *fname)
+void export_gap(finite_field *F, int d, int *Pts, int nb_pts, char *fname)
 {
 	char fname2[1000];
-	INT *v;
-	INT h, i, a, b;
+	int *v;
+	int h, i, a, b;
 
-	v = NEW_INT(d);
+	v = NEW_int(d);
 	strcpy(fname2, fname);
 	replace_extension_with(fname2, ".gap");
 	
@@ -697,6 +697,6 @@ StructureDescription(stab);
 #endif
 
 
-	FREE_INT(v);
+	FREE_int(v);
 }
 

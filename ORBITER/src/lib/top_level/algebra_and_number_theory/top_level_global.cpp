@@ -7,8 +7,8 @@
 
 
 
-INT callback_partial_ovoid_test(INT len, INT *S,
-		void *data, INT verbose_level)
+int callback_partial_ovoid_test(int len, int *S,
+		void *data, int verbose_level)
 {
 	classify_double_sixes *Classify_double_sixes =
 			(classify_double_sixes *) data;

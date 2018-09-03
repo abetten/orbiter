@@ -19,12 +19,12 @@
 // #############################################################################
 
 
-INT induced_action_element_image_of(action &A,
-		INT a, void *elt, INT verbose_level)
+int induced_action_element_image_of(action &A,
+		int a, void *elt, int verbose_level)
 {
-	INT *Elt = (INT *) elt;
-	INT b = 0;
-	INT f_v = (verbose_level >= 1);
+	int *Elt = (int *) elt;
+	int b = 0;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "induced_action_element_image_of "
@@ -96,7 +96,7 @@ INT induced_action_element_image_of(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		b = Rep->compute_image_INT(*sub, Elt, a, verbose_level - 1);
+		b = Rep->compute_image_int(*sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_determinant_t) {
 		if (f_v) {
@@ -136,7 +136,7 @@ INT induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of no subaction" << endl;
 			exit(1);
 			}
-		b = AG->compute_image_INT(sub, Elt, a, verbose_level - 1);
+		b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_spread_set_t) {
 		if (f_v) {
@@ -145,7 +145,7 @@ INT induced_action_element_image_of(action &A,
 			}
 		action_on_spread_set *AS = A.G.AS;
 
-		b = AS->compute_image_INT(Elt, a, verbose_level - 1);
+		b = AS->compute_image_int(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_orthogonal_t) {
 		if (f_v) {
@@ -163,7 +163,7 @@ INT induced_action_element_image_of(action &A,
 			exit(1);
 			}
 #endif
-		b = AO->compute_image_INT(Elt, a, verbose_level - 1);
+		b = AO->compute_image_int(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_wedge_product_t) {
 		if (f_v) {
@@ -179,7 +179,7 @@ INT induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of no subaction" << endl;
 			exit(1);
 			}
-		b = AW->compute_image_INT(*sub, Elt, a, verbose_level - 1);
+		b = AW->compute_image_int(*sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_homogeneous_polynomials_t) {
 		if (f_v) {
@@ -188,7 +188,7 @@ INT induced_action_element_image_of(action &A,
 			}
 		action_on_homogeneous_polynomials *OnHP = A.G.OnHP;
 
-		b = OnHP->compute_image_INT(Elt, a, verbose_level - 1);
+		b = OnHP->compute_image_int(Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_by_subfield_structure_t) {
 		if (f_v) {
@@ -205,7 +205,7 @@ INT induced_action_element_image_of(action &A,
 			cout << "induced_action_element_image_of no subaction" << endl;
 			exit(1);
 			}
-		b = SubfieldStructure->compute_image_INT(
+		b = SubfieldStructure->compute_image_int(
 				*sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_cosets_t) {
@@ -339,7 +339,7 @@ INT induced_action_element_image_of(action &A,
 					"action_on_pairs_t" << endl;
 			}
 		action *sub;
-		INT i, j, u, v;
+		int i, j, u, v;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -358,7 +358,7 @@ INT induced_action_element_image_of(action &A,
 					"action_on_ordered_pairs_t" << endl;
 			}
 		action *sub;
-		INT a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
+		int a2, b2, swap, swap2, i, j, tmp, u, v, u2, v2;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -419,7 +419,7 @@ INT induced_action_element_image_of(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		b = PA->compute_image(&A, (INT *)elt, a, verbose_level - 1);
+		b = PA->compute_image(&A, (int *)elt, a, verbose_level - 1);
 		}
 	else {
 		cout << "induced_action_element_image_of type_G "
@@ -437,15 +437,15 @@ INT induced_action_element_image_of(action &A,
 }
 
 void induced_action_element_image_of_low_level(action &A,
-		INT *input, INT *output, void *elt, INT verbose_level)
+		int *input, int *output, void *elt, int verbose_level)
 {
-	INT *Elt = (INT *) elt;
-	INT f_v = (verbose_level >= 1);
+	int *Elt = (int *) elt;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level "
 				"computing image of ";
-		INT_vec_print(cout, input, A.low_level_point_size);
+		int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 		}
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -518,7 +518,7 @@ void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		Rep->compute_image_INT_low_level(*sub,
+		Rep->compute_image_int_low_level(*sub,
 				Elt, input, output, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_determinant_t) {
@@ -555,7 +555,7 @@ void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		b = AG->compute_image_INT(sub, Elt, a, verbose_level - 1);
+		b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 #endif
 		}
 	else if (A.type_G == action_on_spread_set_t) {
@@ -588,7 +588,7 @@ void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		AW->compute_image_INT_low_level(*sub,
+		AW->compute_image_int_low_level(*sub,
 				Elt, input, output, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_homogeneous_polynomials_t) {
@@ -597,7 +597,7 @@ void induced_action_element_image_of_low_level(action &A,
 			}
 		action_on_homogeneous_polynomials *OnHP = A.G.OnHP;
 
-		OnHP->compute_image_INT_low_level(Elt,
+		OnHP->compute_image_int_low_level(Elt,
 				input, output, verbose_level - 1);
 		}
 	else if (A.type_G == action_by_subfield_structure_t) {
@@ -616,7 +616,7 @@ void induced_action_element_image_of_low_level(action &A,
 					"no subaction" << endl;
 			exit(1);
 			}
-		SubfieldStructure->compute_image_INT_low_level(*sub,
+		SubfieldStructure->compute_image_int_low_level(*sub,
 				Elt, input, output, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_cosets_t) {
@@ -697,7 +697,7 @@ void induced_action_element_image_of_low_level(action &A,
 		exit(1);
 #if 0
 		action *sub;
-		INT i, j, u, v;
+		int i, j, u, v;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -748,7 +748,7 @@ void induced_action_element_image_of_low_level(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		b = PA->compute_image(&A, (INT *)elt, a, verbose_level - 1);
+		b = PA->compute_image(&A, (int *)elt, a, verbose_level - 1);
 		}
 #endif
 		}
@@ -760,20 +760,20 @@ void induced_action_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "induced_action_element_image_of_low_level  done" << endl;
 		cout << "image of ";
-		INT_vec_print(cout, input, A.low_level_point_size);
+		int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << " is ";
-		INT_vec_print(cout, output, A.low_level_point_size);
+		int_vec_print(cout, output, A.low_level_point_size);
 		cout << endl;
 		}
 }
 
-INT induced_action_element_linear_entry_ij(action &A,
-		void *elt, INT i, INT j, INT verbose_level)
+int induced_action_element_linear_entry_ij(action &A,
+		void *elt, int i, int j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT b;
+	int *Elt = (int *) elt;
+	int b;
 
 	if (f_v) {
 		cout << "induced_action_element_linear_entry_ij "
@@ -803,13 +803,13 @@ INT induced_action_element_linear_entry_ij(action &A,
 	return b;
 }
 
-INT induced_action_element_linear_entry_frobenius(
-		action &A, void *elt, INT verbose_level)
+int induced_action_element_linear_entry_frobenius(
+		action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT b;
+	int *Elt = (int *) elt;
+	int b;
 
 	if (f_v) {
 		cout << "induced_action_element_linear_entry_frobenius" << endl;
@@ -841,9 +841,9 @@ INT induced_action_element_linear_entry_frobenius(
 
 
 void induced_action_element_one(action &A,
-		void *elt, INT verbose_level)
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -853,7 +853,7 @@ void induced_action_element_one(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_one(&A, (INT *) elt, verbose_level);
+		PA->element_one(&A, (int *) elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -866,10 +866,10 @@ void induced_action_element_one(action &A,
 		}
 }
 
-INT induced_action_element_is_one(action &A,
-		void *elt, INT verbose_level)
+int induced_action_element_is_one(action &A,
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -879,7 +879,7 @@ INT induced_action_element_is_one(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		return PA->element_is_one(&A, (INT *) elt, verbose_level);
+		return PA->element_is_one(&A, (int *) elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -893,9 +893,9 @@ INT induced_action_element_is_one(action &A,
 }
 
 void induced_action_element_unpack(action &A,
-		void *elt, void *Elt, INT verbose_level)
+		void *elt, void *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -905,7 +905,7 @@ void induced_action_element_unpack(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_unpack((uchar *)elt, (INT *)Elt, verbose_level);
+		PA->element_unpack((uchar *)elt, (int *)Elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -919,9 +919,9 @@ void induced_action_element_unpack(action &A,
 }
 
 void induced_action_element_pack(action &A,
-		void *Elt, void *elt, INT verbose_level)
+		void *Elt, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -931,7 +931,7 @@ void induced_action_element_pack(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_pack((INT *)Elt,
+		PA->element_pack((int *)Elt,
 				(uchar *)elt, verbose_level);
 		}
 	else {
@@ -946,9 +946,9 @@ void induced_action_element_pack(action &A,
 }
 
 void induced_action_element_retrieve(action &A,
-		INT hdl, void *elt, INT verbose_level)
+		int hdl, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -959,7 +959,7 @@ void induced_action_element_retrieve(action &A,
 		
 		PA = A.G.product_action_data;
 		PA->element_retrieve(&A, hdl,
-				(INT *)elt, verbose_level);
+				(int *)elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -972,10 +972,10 @@ void induced_action_element_retrieve(action &A,
 		}
 }
 
-INT induced_action_element_store(action &A,
-		void *elt, INT verbose_level)
+int induced_action_element_store(action &A,
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -986,7 +986,7 @@ INT induced_action_element_store(action &A,
 		
 		PA = A.G.product_action_data;
 		return PA->element_store(&A,
-				(INT *)elt, verbose_level);
+				(int *)elt, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -1000,9 +1000,9 @@ INT induced_action_element_store(action &A,
 }
 
 void induced_action_element_mult(action &A,
-		void *a, void *b, void *ab, INT verbose_level)
+		void *a, void *b, void *ab, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -1012,8 +1012,8 @@ void induced_action_element_mult(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_mult((INT *)a, (INT *)b,
-				(INT *)ab, verbose_level);
+		PA->element_mult((int *)a, (int *)b,
+				(int *)ab, verbose_level);
 		}
 	else {
 		sub = A.subaction;
@@ -1027,9 +1027,9 @@ void induced_action_element_mult(action &A,
 }
 
 void induced_action_element_invert(action &A,
-		void *a, void *av, INT verbose_level)
+		void *a, void *av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -1039,7 +1039,7 @@ void induced_action_element_invert(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_invert((INT *)a, (INT *)av,
+		PA->element_invert((int *)a, (int *)av,
 				verbose_level);
 		}
 	else {
@@ -1054,9 +1054,9 @@ void induced_action_element_invert(action &A,
 }
 
 void induced_action_element_transpose(action &A,
-		void *a, void *at, INT verbose_level)
+		void *a, void *at, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -1066,7 +1066,7 @@ void induced_action_element_transpose(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_transpose((INT *)a, (INT *)at,
+		PA->element_transpose((int *)a, (int *)at,
 				verbose_level);
 		}
 	else {
@@ -1081,9 +1081,9 @@ void induced_action_element_transpose(action &A,
 }
 
 void induced_action_element_move(action &A,
-		void *a, void *b, INT verbose_level)
+		void *a, void *b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -1093,7 +1093,7 @@ void induced_action_element_move(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_move((INT *)a, (INT *)b,
+		PA->element_move((int *)a, (int *)b,
 				verbose_level);
 		}
 	else {
@@ -1108,9 +1108,9 @@ void induced_action_element_move(action &A,
 }
 
 void induced_action_element_dispose(action &A,
-		INT hdl, INT verbose_level)
+		int hdl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *sub;
 	
 	if (f_v) {
@@ -1140,7 +1140,7 @@ void induced_action_element_print(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_print((INT *)elt, ost);
+		PA->element_print((int *)elt, ost);
 		}
 	else if (A.f_has_subaction) {
 		action *sub;
@@ -1152,15 +1152,15 @@ void induced_action_element_print(action &A,
 			}
 		sub->element_print_quick(elt, ost);
 
-		INT n;
-		INT *fp;
+		int n;
+		int *fp;
 		
-		fp = NEW_INT(sub->degree);
+		fp = NEW_int(sub->degree);
 		n = sub->find_fixed_points(elt, fp, 0);
 		ost << "with " << n << " fixed points in action "
 				<< sub->label << endl;
-		FREE_INT(fp);
-		sub->element_print_base_images((INT *)elt, ost);
+		FREE_int(fp);
+		sub->element_print_base_images((int *)elt, ost);
 		ost << endl;
 		}
 	else {
@@ -1178,7 +1178,7 @@ void induced_action_element_print_quick(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_print((INT *)elt, ost);
+		PA->element_print((int *)elt, ost);
 		}
 	else if (A.f_has_subaction) {
 		action *sub;
@@ -1206,7 +1206,7 @@ void induced_action_element_print_latex(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_print_latex((INT *)elt, ost);
+		PA->element_print_latex((int *)elt, ost);
 		}
 	else {
 		action *sub;
@@ -1227,7 +1227,7 @@ void induced_action_element_print_verbose(action &A,
 		product_action *PA;
 		
 		PA = A.G.product_action_data;
-		PA->element_print((INT *)elt, ost);
+		PA->element_print((int *)elt, ost);
 		}
 	else {
 		action *sub;
@@ -1243,9 +1243,9 @@ void induced_action_element_print_verbose(action &A,
 }
 
 void induced_action_element_code_for_make_element(action &A,
-		void *elt, INT *data)
+		void *elt, int *data)
 {
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	//cout << "induced_action_element_code_for_make_element
 	//not yet implemented" << endl;
@@ -1264,7 +1264,7 @@ void induced_action_element_code_for_make_element(action &A,
 void induced_action_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	//cout << "induced_action_element_print_for_
 	// make_element not yet implemented" << endl;
@@ -1283,7 +1283,7 @@ void induced_action_element_print_for_make_element(action &A,
 void induced_action_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	//cout << "induced_action_element_print_for_"
 	// "make_element_no_commas not yet implemented" << endl;
@@ -1300,7 +1300,7 @@ void induced_action_element_print_for_make_element_no_commas(
 }
 
 void induced_action_print_point(action &A,
-		INT a, ostream &ost)
+		int a, ostream &ost)
 {
 
 	if (A.type_G == action_by_right_multiplication_t) {
@@ -1419,7 +1419,7 @@ void induced_action_print_point(action &A,
 		}
 	else if (A.type_G == action_on_pairs_t) {
 		action *sub;
-		INT i, j;
+		int i, j;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -1432,7 +1432,7 @@ void induced_action_print_point(action &A,
 		}
 	else if (A.type_G == action_on_ordered_pairs_t) {
 		action *sub;
-		INT a2, swap, tmp, i, j;
+		int a2, swap, tmp, i, j;
 		
 		sub = A.subaction;
 		if (sub == NULL) {
@@ -1484,7 +1484,7 @@ void induced_action_print_point(action &A,
 		//ost << a;
 #endif
 		AG->print_point(a, ost);
-		//b = AG->compute_image_INT(sub, Elt, a, verbose_level - 1);
+		//b = AG->compute_image_int(sub, Elt, a, verbose_level - 1);
 		}
 	else if (A.type_G == action_on_spread_set_t) {
 		if (FALSE) {

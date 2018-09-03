@@ -45,31 +45,31 @@ void klein_correspondence::freeself()
 		delete Gr62;
 		}
 	if (Form) {
-		FREE_INT(Form);
+		FREE_int(Form);
 		}
 	if (Line_to_point_on_quadric) {
-		FREE_INT(Line_to_point_on_quadric);
+		FREE_int(Line_to_point_on_quadric);
 		}
 	if (Point_on_quadric_to_line) {
-		FREE_INT(Point_on_quadric_to_line);
+		FREE_int(Point_on_quadric_to_line);
 		}
 	if (Point_on_quadric_embedded_in_P5) {
-		FREE_INT(Point_on_quadric_embedded_in_P5);
+		FREE_int(Point_on_quadric_embedded_in_P5);
 		}
 	if (coordinates_of_quadric_points) {
-		FREE_INT(coordinates_of_quadric_points);
+		FREE_int(coordinates_of_quadric_points);
 		}
 	if (Pt_rk) {
-		FREE_INT(Pt_rk);
+		FREE_int(Pt_rk);
 		}
 }
 
-void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_level)
+void klein_correspondence::init(finite_field *F, orthogonal *O, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT d = 6;
-	INT i, u, v;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int d = 6;
+	int i, u, v;
 
 	if (f_v) {
 		cout << "klein_correspondence::init" << endl;
@@ -111,8 +111,8 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 	Gr62->init(6, 2, F, 0 /* verbose_level */);
 
 
-	Form = NEW_INT(d * d);
-	INT_vec_zero(Form, d * d);
+	Form = NEW_int(d * d);
+	int_vec_zero(Form, d * d);
 	// the matrix with blocks
 	// [0 1]
 	// [1 0]
@@ -125,32 +125,32 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 		}
 	if (f_v) {
 		cout << "klein_correspondence::init Form matrix:" << endl;
-		INT_matrix_print(Form, d, d);
+		int_matrix_print(Form, d, d);
 		}
 	if (f_v) {
 		cout << "klein_correspondence::init before allocate "
 				"Line_to_point_on_quadric P3->N_lines="
 				<< P3->N_lines << endl;
 		}
-	Line_to_point_on_quadric = NEW_INT(P3->N_lines);
+	Line_to_point_on_quadric = NEW_int(P3->N_lines);
 	if (f_v) {
 		cout << "klein_correspondence::init before allocate "
 				"Point_on_quadric_to_line P3->N_lines="
 				<< P3->N_lines << endl;
 		}
-	Point_on_quadric_to_line = NEW_INT(P3->N_lines);
+	Point_on_quadric_to_line = NEW_int(P3->N_lines);
 	if (f_v) {
 		cout << "klein_correspondence::init before allocate "
 				"Point_on_quadric_embedded_in_P5 P3->N_lines="
 				<< P3->N_lines << endl;
 		}
-	Point_on_quadric_embedded_in_P5 = NEW_INT(P3->N_lines);
+	Point_on_quadric_embedded_in_P5 = NEW_int(P3->N_lines);
 
-	INT basis_line[8]; // [2 * 4]
-	INT v6[6];
-	INT *x4, *y4, a, b, c, val, j;
+	int basis_line[8]; // [2 * 4]
+	int v6[6];
+	int *x4, *y4, a, b, c, val, j;
 
-	//basis_line = NEW_INT(8);
+	//basis_line = NEW_int(8);
 	for (i = 0; i < P3->N_lines; i++) {
 		Point_on_quadric_to_line[i] = -1;
 		}
@@ -180,7 +180,7 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 		if (FALSE) {
 			cout << "klein_correspondence::init i=" << i
 					<< " / " << P3->N_lines << " v6 : ";
-			INT_vec_print(cout, v6, 6);
+			int_vec_print(cout, v6, 6);
 			cout << " : j=" << j << endl;
 			}
 		Line_to_point_on_quadric[i] = j;
@@ -202,18 +202,18 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 				"of_quadric_points P3->N_lines * d="
 				<< P3->N_lines * d << endl;
 		}
-	coordinates_of_quadric_points = NEW_INT(P3->N_lines * d);
+	coordinates_of_quadric_points = NEW_int(P3->N_lines * d);
 
 
 	if (f_v) {
 		cout << "klein_correspondence::init before allocate "
 				"Pt_rk P3->N_lines=" << P3->N_lines << endl;
 		}
-	Pt_rk = NEW_INT(P3->N_lines);
+	Pt_rk = NEW_int(P3->N_lines);
 
 	for (i = 0; i < P3->N_lines; i++) {
 		O->unrank_point(coordinates_of_quadric_points + i * d, 1, i, 0);
-		INT_vec_copy(coordinates_of_quadric_points + i * d, v6, 6);
+		int_vec_copy(coordinates_of_quadric_points + i * d, v6, 6);
 		PG_element_rank_modified(*F, v6, 1, d, a);
 		Pt_rk[i] = a;
 		}
@@ -238,7 +238,7 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 					}
 				cout << "\\end{array}" << endl;
 				cout << "\\right] & " << endl;
-				INT_vec_print(cout,
+				int_vec_print(cout,
 						coordinates_of_quadric_points + i * d, d);
 				//cout << " : " << Pt_rk[i] << endl;
 				cout << "\\\\" << endl;
@@ -261,7 +261,7 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 		cout << "klein_correspondence::init before "
 				"allocate Pt_idx nb_pts_P=" << nb_pts_PG << endl;
 		}
-	Pt_idx = NEW_INT(nb_pts_PG);
+	Pt_idx = NEW_int(nb_pts_PG);
 	for (i = 0; i < nb_pts_PG; i++) {
 		Pt_idx[i] = -1;
 		}
@@ -278,22 +278,22 @@ void klein_correspondence::init(finite_field *F, orthogonal *O, INT verbose_leve
 }
 
 void klein_correspondence::plane_intersections(
-	INT *lines_in_PG3, INT nb_lines,
+	int *lines_in_PG3, int nb_lines,
 	longinteger_object *&R,
-	INT **&Pts_on_plane, 
-	INT *&nb_pts_on_plane, 
-	INT &nb_planes, 
-	INT verbose_level)
+	int **&Pts_on_plane, 
+	int *&nb_pts_on_plane, 
+	int &nb_planes, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *pts;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *pts;
+	int i;
 
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections" << endl;
 		}
-	pts = NEW_INT(nb_lines);
+	pts = NEW_int(nb_lines);
 	
 	P3->klein_correspondence(P5, 
 		lines_in_PG3, nb_lines, pts, 0/*verbose_level*/);
@@ -310,13 +310,13 @@ void klein_correspondence::plane_intersections(
 		for (i = 0; i < nb_planes; i++) {
 			cout << setw(3) << i << " : " << R[i] 
 				<< " : " << setw(5) << nb_pts_on_plane[i] << " : ";
-			INT_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
+			int_vec_print(cout, Pts_on_plane[i], nb_pts_on_plane[i]);
 			cout << endl; 
 			}
 #endif
 		}
 	
-	FREE_INT(pts);
+	FREE_int(pts);
 	if (f_v) {
 		cout << "klein_correspondence::plane_intersections done" << endl;
 		}

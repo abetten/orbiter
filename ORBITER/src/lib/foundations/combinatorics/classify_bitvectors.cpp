@@ -36,7 +36,7 @@ void classify_bitvectors::null()
 
 void classify_bitvectors::freeself()
 {
-	INT i;
+	int i;
 
 	if (Type_data) {
 		for (i = 0; i < nb_types; i++) {
@@ -51,28 +51,28 @@ void classify_bitvectors::freeself()
 		FREE_pvoid(Type_extra_data);
 		}
 	if (Type_rep) {
-		FREE_INT(Type_rep);
+		FREE_int(Type_rep);
 		}
 	if (Type_mult) {
-		FREE_INT(Type_mult);
+		FREE_int(Type_mult);
 		}
 	if (type_of) {
-		FREE_INT(type_of);
+		FREE_int(type_of);
 		}
 	if (C_type_of) {
 		FREE_OBJECT(C_type_of);
 		}
 	if (perm) {
-		FREE_INT(perm);
+		FREE_int(perm);
 		}
 	null();
 }
 
 
-void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
+void classify_bitvectors::init(int N, int rep_len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::init" << endl;
@@ -81,9 +81,9 @@ void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
 	classify_bitvectors::rep_len = rep_len;
 	Type_data = NEW_puchar(N);
 	Type_extra_data = NEW_pvoid(N);
-	Type_rep = NEW_INT(N);
-	Type_mult = NEW_INT(N);
-	type_of = NEW_INT(N);
+	Type_rep = NEW_int(N);
+	Type_mult = NEW_int(N);
+	type_of = NEW_int(N);
 	for (i = 0; i < N; i++) {
 		type_of[i] = -1;
 		}
@@ -97,11 +97,11 @@ void classify_bitvectors::init(INT N, INT rep_len, INT verbose_level)
 		}
 }
 
-INT classify_bitvectors::add(uchar *data,
-		void *extra_data, INT verbose_level)
+int classify_bitvectors::add(uchar *data,
+		void *extra_data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT idx, i, ret;
+	int f_v = (verbose_level >= 1);
+	int idx, i, ret;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::add" << endl;
@@ -149,9 +149,9 @@ INT classify_bitvectors::add(uchar *data,
 	return ret;
 }
 
-void classify_bitvectors::finalize(INT verbose_level)
+void classify_bitvectors::finalize(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "classify_bitvectors::finalize" << endl;
@@ -161,18 +161,18 @@ void classify_bitvectors::finalize(INT verbose_level)
 	C_type_of->init(type_of, N, FALSE, 0);
 
 
-	INT *v;
-	INT i;
+	int *v;
+	int i;
 
-	perm = NEW_INT(nb_types);
-	v = NEW_INT(nb_types);
+	perm = NEW_int(nb_types);
+	v = NEW_int(nb_types);
 	for (i = 0; i < nb_types; i++) {
 		perm[i] = i;
 		v[i] = Type_rep[i];
 		}
-	INT_vec_heapsort_with_log(v, perm, nb_types);
+	int_vec_heapsort_with_log(v, perm, nb_types);
 
-	FREE_INT(v);
+	FREE_int(v);
 	
 	if (f_v) {
 		cout << "classify_bitvectors::finalize done" << endl;
@@ -181,7 +181,7 @@ void classify_bitvectors::finalize(INT verbose_level)
 
 void classify_bitvectors::print_reps()
 {
-	INT i;
+	int i;
 	
 	cout << "We found " << nb_types << " types:" << endl;
 	for (i = 0; i < nb_types; i++) {
@@ -189,7 +189,7 @@ void classify_bitvectors::print_reps()
 
 #if 0
 		for (j = 0; j < rep_len; j++) {
-			cout << (INT) Type_data[i][j];
+			cout << (int) Type_data[i][j];
 			if (j < rep_len - 1) {
 				cout << ", ";
 				}
@@ -201,16 +201,16 @@ void classify_bitvectors::print_reps()
 
 void classify_bitvectors::save(const char *prefix, 
 	void (*encode_function)(void *extra_data,
-			INT *&encoding, INT &encoding_sz, void *global_data),
+			int *&encoding, int &encoding_sz, void *global_data),
 	void (*get_group_order_or_NULL)(void *extra_data,
 			longinteger_object &go, void *global_data),
 	void *global_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname_txt[1000];
 	char fname_csv[1000];
-	INT i, j;
+	int i, j;
 	
 	if (f_v) {
 		cout << "classify_bitvectors::save" << endl;
@@ -224,8 +224,8 @@ void classify_bitvectors::save(const char *prefix,
 		cout << "classify_bitvectors::save perm == NULL" << endl;
 		exit(1);
 		}
-	INT *Reps = NULL; // [nb_types * sz]
-	INT sz = 0;
+	int *Reps = NULL; // [nb_types * sz]
+	int sz = 0;
 
 
 	if (f_v) {
@@ -234,13 +234,13 @@ void classify_bitvectors::save(const char *prefix,
 		}
 	{
 	ofstream fp(fname_txt);
-	INT h;
+	int h;
 
 	for (i = 0; i < nb_types; i++) {
 		j = perm[i];
 
-		INT *encoding;
-		INT encoding_sz;
+		int *encoding;
+		int encoding_sz;
 
 		if (f_v) {
 			cout << "classify_bitvectors::save " << i << " / "
@@ -269,17 +269,17 @@ void classify_bitvectors::save(const char *prefix,
 		fp << endl;
 		if (i == 0) {
 			sz = encoding_sz;
-			Reps = NEW_INT(nb_types * sz);
-			INT_vec_copy(encoding, Reps, sz);
+			Reps = NEW_int(nb_types * sz);
+			int_vec_copy(encoding, Reps, sz);
 			}
 		else {
 			if (encoding_sz != sz) {
 				cout << "encoding_sz != sz" << endl;
 				exit(1);
 				}
-			INT_vec_copy(encoding, Reps + i * sz, sz);
+			int_vec_copy(encoding, Reps + i * sz, sz);
 			}
-		FREE_INT(encoding);
+		FREE_int(encoding);
 		}
 	fp << "-1 " << nb_types << " " << N << endl;
 	}
@@ -296,7 +296,7 @@ void classify_bitvectors::save(const char *prefix,
 		cout << "classify_bitvectors::save writing "
 				"file " << fname_csv << endl;
 		}
-	INT_matrix_write_csv(fname_csv, Reps, nb_types, sz);
+	int_matrix_write_csv(fname_csv, Reps, nb_types, sz);
 
 	if (f_v) {
 		cout << "classify_bitvectors::save "
@@ -308,7 +308,7 @@ void classify_bitvectors::save(const char *prefix,
 		}
 
 	if (Reps) {
-		FREE_INT(Reps);
+		FREE_int(Reps);
 		}
 	
 	if (f_v) {
@@ -316,12 +316,12 @@ void classify_bitvectors::save(const char *prefix,
 		}
 }
 
-INT compare_func_for_bitvectors(void *a, void *b, void *data)
+int compare_func_for_bitvectors(void *a, void *b, void *data)
 {
 	classify_bitvectors *CB = (classify_bitvectors *) data;
 	uchar *A = (uchar *) a;
 	uchar *B = (uchar *) b;
-	INT i;
+	int i;
 	
 	for (i = 0; i < CB->rep_len; i++) {
 		if (A[i] < B[i]) {

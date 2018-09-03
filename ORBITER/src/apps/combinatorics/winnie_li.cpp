@@ -9,19 +9,19 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void do_it(INT q, INT f_index, INT index, INT verbose_level);
+void do_it(int q, int f_index, int index, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_index = FALSE;
-	INT index = 0;
+	int i;
+	int verbose_level = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_index = FALSE;
+	int index = 0;
 	
 	t0 = os_ticks();
 
@@ -54,13 +54,13 @@ int main(int argc, char **argv)
 	
 }
 
-void do_it(INT q, INT f_index, INT index, INT verbose_level)
+void do_it(int q, int f_index, int index, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 	finite_field *F;
-	INT i, j, h, u, p, k, co_index, q1, relative_norm;
-	INT *N1;
-	INT *Adj;
+	int i, j, h, u, p, k, co_index, q1, relative_norm;
+	int *N1;
+	int *Adj;
 	
 
 	F = NEW_OBJECT(finite_field);
@@ -95,7 +95,7 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 		}
 	cout << "relative_norm=" << relative_norm << endl;
 
-	N1 = NEW_INT(k);
+	N1 = NEW_int(k);
 	j = 0;
 	for (i = 0; i < q; i++) {
 		if (F->power(i, relative_norm) == 1) {
@@ -107,10 +107,10 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 		exit(1);
 		}
 	cout << "found " << k << " norm-one elements:" << endl;
-	INT_vec_print(cout, N1, k);
+	int_vec_print(cout, N1, k);
 	cout << endl;
 
-	Adj = NEW_INT(q * q);
+	Adj = NEW_int(q * q);
 	for (i = 0; i < q; i++) {
 		for (h = 0; h < k; h++) {
 			j = N1[h];
@@ -128,10 +128,10 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 	CG->init_adjacency_no_colors(q, Adj, verbose_level);
 
 	if (f_index) {
-		sprintf(fname, "Winnie_Li_%ld_%ld.colored_graph", q, index);
+		sprintf(fname, "Winnie_Li_%d_%d.colored_graph", q, index);
 		}
 	else {
-		sprintf(fname, "Winnie_Li_%ld.colored_graph", q);
+		sprintf(fname, "Winnie_Li_%d.colored_graph", q);
 		}
 
 	CG->save(fname, verbose_level);
@@ -141,8 +141,8 @@ void do_it(INT q, INT f_index, INT index, INT verbose_level)
 
 
 	FREE_OBJECT(CG);
-	FREE_INT(Adj);
-	FREE_INT(N1);
+	FREE_int(Adj);
+	FREE_int(N1);
 	FREE_OBJECT(F);
 
 

@@ -8,21 +8,21 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
-	INT lvl, INT current_node, 
-	INT current_extension, INT len, INT f_tolerant,
-	INT verbose_level)
+int poset_orbit_node::apply_fusion_element(poset_classification *gen,
+	int lvl, int current_node, 
+	int current_extension, int len, int f_tolerant,
+	int verbose_level)
 // returns next_node
 {
-	INT f_v = (verbose_level >= 1);
-	INT next_node;
-	INT *set;
+	int f_v = (verbose_level >= 1);
+	int next_node;
+	int *set;
 
 	if (f_v) {
 		cout << "poset_orbit_node::apply_fusion_element" << endl;
 		}
 
-	//set = NEW_INT(len + 1); // this call should be eliminated
+	//set = NEW_int(len + 1); // this call should be eliminated
 	set = gen->tmp_set_apply_fusion;
 
 	gen->A->element_retrieve(
@@ -41,7 +41,7 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 			gen->A2->element_print_as_permutation(gen->Elt1, cout);
 			}
 		cout << "to the set ";
-		INT_vec_print(cout, gen->set[lvl + 1], len + 1);
+		int_vec_print(cout, gen->set[lvl + 1], len + 1);
 		cout << endl;
 		}
 	gen->A2->map_a_set(
@@ -51,7 +51,7 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 			gen->Elt1, 0);
 	if (f_v) {
 		cout << "poset_orbit_node::apply_fusion_element the set becomes: ";
-		INT_vec_print(cout, set, len + 1);
+		int_vec_print(cout, set, len + 1);
 		cout << endl;
 		}
 
@@ -59,7 +59,7 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 			gen->transporter->ith(lvl + 1),
 			gen->Elt1, gen->Elt2, 0);
 	if (f_v) {
-		INT_vec_print(cout,
+		int_vec_print(cout,
 				gen->set[lvl + 1], len + 1);
 		cout << endl;
 		}
@@ -72,18 +72,18 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 				lvl + 1,
 				verbose_level - 1);
 
-		INT_vec_copy(set, gen->set[lvl + 1], len + 1);
+		int_vec_copy(set, gen->set[lvl + 1], len + 1);
 		}
 	else {
-		INT_vec_heapsort(set, lvl + 1);
-		INT_vec_copy(set, gen->set[lvl + 1], len + 1);
+		int_vec_heapsort(set, lvl + 1);
+		int_vec_copy(set, gen->set[lvl + 1], len + 1);
 		if (f_v) {
 			cout << "poset_orbit_node::apply_fusion_element after sorting: ";
 			}
 		if (f_v) {
 			cout << "poset_orbit_node::apply_fusion_element "
 					"calling find_oracle_node_for_set: ";
-			INT_vec_print(cout, gen->set[lvl + 1], lvl + 1);
+			int_vec_print(cout, gen->set[lvl + 1], lvl + 1);
 			cout << endl;
 			}
 		next_node = gen->find_poset_orbit_node_for_set(
@@ -92,10 +92,10 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 				f_tolerant, 0);
 		}
 
-	//FREE_INT(set);
+	//FREE_int(set);
 	if (f_v) {
 		cout << "oracle::apply_fusion_element the set ";
-		INT_vec_print(cout, gen->set[lvl + 1], lvl + 1);
+		int_vec_print(cout, gen->set[lvl + 1], lvl + 1);
 		cout << " is node " << next_node << endl;
 		}
 	return next_node;
@@ -103,18 +103,18 @@ INT poset_orbit_node::apply_fusion_element(poset_classification *gen,
 
 void poset_orbit_node::install_fusion_node(
 	poset_classification *gen,
-	INT lvl, INT current_node, 
-	INT my_node, INT my_extension, INT my_coset, 
-	INT pt0, INT current_extension, 
-	INT f_debug, INT f_implicit_fusion, 
-	INT verbose_level)
+	int lvl, int current_node, 
+	int my_node, int my_extension, int my_coset, 
+	int pt0, int current_extension, 
+	int f_debug, int f_implicit_fusion, 
+	int verbose_level)
 // Called from oracle::handle_last_level
 // current_node is the same as oracle::node !!!
 // pt0 is the same as E[current_extension].pt !!!
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_v10 = (verbose_level >= 10);
-	INT hdl, cmp;	
+	int f_v = (verbose_level >= 1);
+	//int f_v10 = (verbose_level >= 10);
+	int hdl, cmp;	
 	
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node "
@@ -187,7 +187,7 @@ void poset_orbit_node::install_fusion_node(
 				<< E[current_extension].data1 /*my_node*/
 				<< "/" << E[current_extension].data2 /*my_extension*/
 				<< " : ";
-		INT_vec_print(cout, gen->set0, lvl + 1);
+		int_vec_print(cout, gen->set0, lvl + 1);
 		cout << endl;
 #if 0
 		if (current_node == 9 && pt0 == 39371) {
@@ -215,9 +215,9 @@ void poset_orbit_node::install_fusion_node(
 		gen->A->element_print_verbose(gen->Elt1, cout);
 		cout << endl;
 		cout << "Node " << node << " fusion from ";
-		INT_set_print(cout, gen->set1, lvl + 1);
+		int_set_print(cout, gen->set1, lvl + 1);
 		cout << " to ";
-		INT_set_print(cout, gen->set0, lvl + 1);
+		int_set_print(cout, gen->set0, lvl + 1);
 		cout << endl;
 		if (node == my_node) {
 			exit(1);
@@ -227,7 +227,7 @@ void poset_orbit_node::install_fusion_node(
 
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node set1=";
-		INT_vec_print(cout, gen->set1, lvl + 1);
+		int_vec_print(cout, gen->set1, lvl + 1);
 		cout << endl;
 		cout << "Elt1=" << endl;
 		gen->A->element_print_quick(gen->Elt1, cout);
@@ -240,7 +240,7 @@ void poset_orbit_node::install_fusion_node(
 			gen->Elt1, 0);
 	if (f_v) {
 		cout << "poset_orbit_node::install_fusion_node after map_a_set set3=";
-		INT_vec_print(cout, gen->set3, lvl + 1);
+		int_vec_print(cout, gen->set3, lvl + 1);
 		cout << endl;
 	}
 
@@ -253,49 +253,49 @@ void poset_orbit_node::install_fusion_node(
 			verbose_level);
 		}
 	else {
-		INT_vec_heapsort(gen->set3, lvl);
-		cmp = INT_vec_compare(gen->set3, gen->set0, lvl + 1);
+		int_vec_heapsort(gen->set3, lvl);
+		cmp = int_vec_compare(gen->set3, gen->set0, lvl + 1);
 		}
 
 
 	if (cmp != 0) {
 		cout << "poset_orbit_node::install_fusion_node something is wrong" << endl;
 		cout << "comparing ";
-		INT_set_print(cout, gen->set3, lvl + 1);
+		int_set_print(cout, gen->set3, lvl + 1);
 		cout << " with ";
-		INT_set_print(cout, gen->set0, lvl + 1);
+		int_set_print(cout, gen->set0, lvl + 1);
 		cout << endl;
 		if (gen->f_on_subspaces) {
-			INT *v;
-			INT i;
+			int *v;
+			int i;
 
-			v = NEW_INT(gen->vector_space_dimension);
-			INT_set_print(cout, gen->set3, lvl + 1);
+			v = NEW_int(gen->vector_space_dimension);
+			int_set_print(cout, gen->set3, lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->set3[i]);
-				INT_vec_print(cout, v, gen->vector_space_dimension);
+				int_vec_print(cout, v, gen->vector_space_dimension);
 				cout << endl;
 				}
-			INT_set_print(cout, gen->set0, lvl + 1);
+			int_set_print(cout, gen->set0, lvl + 1);
 			cout << " is " << endl;
 			for (i = 0; i < lvl + 1; i++) {
 				gen->unrank_point(v, gen->set0[i]);
-				INT_vec_print(cout, v, gen->vector_space_dimension);
+				int_vec_print(cout, v, gen->vector_space_dimension);
 				cout << endl;
 				}
 
-			FREE_INT(v);			
+			FREE_int(v);			
 			}
 		exit(1);
 		}
 }
 
-INT poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
-	INT lvl, INT current_node,
-	INT len, INT f_implicit_fusion,
-	INT &f_failure_to_find_point,
-	INT verbose_level)
+int poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
+	int lvl, int current_node,
+	int len, int f_implicit_fusion,
+	int &f_failure_to_find_point,
+	int verbose_level)
 // Called from upstep_work::find_automorphism_by_tracing_recursion
 // applies the permutation which maps the point with index lvl 
 // (i.e. the lvl+1-st point) to its orbit representative.
@@ -305,8 +305,8 @@ INT poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
 // nodes and the set becomes lexicographically
 // less than before, in which case trace has to be restarted.
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 	
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_wrapper" << endl;
@@ -328,21 +328,21 @@ INT poset_orbit_node::trace_next_point_wrapper(poset_classification *gen,
 	return ret;
 }
 
-INT poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
-	INT lvl,
-	INT current_node,
-	INT size,
-	INT *cur_set,
-	INT *tmp_set,
-	INT *cur_transporter,
-	INT *tmp_transporter,
-	INT f_implicit_fusion,
-	INT &f_failure_to_find_point,
-	INT verbose_level)
+int poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
+	int lvl,
+	int current_node,
+	int size,
+	int *cur_set,
+	int *tmp_set,
+	int *cur_transporter,
+	int *tmp_transporter,
+	int f_implicit_fusion,
+	int &f_failure_to_find_point,
+	int verbose_level)
 // called by poset_classification::trace_set_recursion
 {
-	INT ret;
-	INT f_v = (verbose_level >= 1);
+	int ret;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "poset_orbit_node::trace_next_point_in_place" << endl;
@@ -364,7 +364,7 @@ INT poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
 		cout << "poset_orbit_node::trace_next_point_in_place, "
 				"after trace_next_point" << endl;
 		}
-	INT_vec_copy(tmp_set, cur_set, size);
+	int_vec_copy(tmp_set, cur_set, size);
 	gen->A->element_move(tmp_transporter,
 			cur_transporter, 0);
 	if (f_v) {
@@ -373,20 +373,20 @@ INT poset_orbit_node::trace_next_point_in_place(poset_classification *gen,
 	return ret;
 }
 
-void poset_orbit_node::trace_starter(poset_classification *gen, INT size,
-	INT *cur_set, INT *next_set,
-	INT *cur_transporter, INT *next_transporter, 
-	INT verbose_level)
+void poset_orbit_node::trace_starter(poset_classification *gen, int size,
+	int *cur_set, int *next_set,
+	int *cur_transporter, int *next_transporter, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *Elt;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Elt;
+	int i;
 
 	if (f_v) {
 		cout << "poset_orbit_node::trace_starter" << endl;
 		cout << "set:" << endl;
-		INT_vec_print(cout, cur_set, size);
+		int_vec_print(cout, cur_set, size);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
@@ -416,7 +416,7 @@ void poset_orbit_node::trace_starter(poset_classification *gen, INT size,
 
 	if (f_v) {
 		cout << "after canonize:" << endl;
-		INT_vec_print(cout, next_set, size);
+		int_vec_print(cout, next_set, size);
 		cout << endl;
 		}
 	if (f_v) {
@@ -425,24 +425,24 @@ void poset_orbit_node::trace_starter(poset_classification *gen, INT size,
 }
 
 
-INT poset_orbit_node::trace_next_point(poset_classification *gen,
-	INT lvl, INT current_node, INT size, 
-	INT *cur_set, INT *next_set,
-	INT *cur_transporter, INT *next_transporter, 
-	INT f_implicit_fusion, INT &f_failure_to_find_point,
-	INT verbose_level)
+int poset_orbit_node::trace_next_point(poset_classification *gen,
+	int lvl, int current_node, int size, 
+	int *cur_set, int *next_set,
+	int *cur_transporter, int *next_transporter, 
+	int f_implicit_fusion, int &f_failure_to_find_point,
+	int verbose_level)
 // Called by poset_orbit_node::trace_next_point_wrapper
 // and by oracle::trace_next_point_in_place
 // returns FALSE only if f_implicit_fusion is TRUE and
 // the set becomes lexcographically less 
 {
-	INT the_point, pt0, i;
-	INT *cosetrep;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v10 = (verbose_level >= 10);
-	INT ret;
+	int the_point, pt0, i;
+	int *cosetrep;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v10 = (verbose_level >= 10);
+	int ret;
 	
 	f_failure_to_find_point = FALSE;
 	the_point = cur_set[lvl];
@@ -499,7 +499,7 @@ INT poset_orbit_node::trace_next_point(poset_classification *gen,
 					"we apply no element and copy the set "
 					"and the transporter over:" << endl;
 			}
-		INT_vec_copy(cur_set, next_set, size);
+		int_vec_copy(cur_set, next_set, size);
 		gen->A2->element_move(cur_transporter, next_transporter, FALSE);
 		}
 	else {
@@ -516,11 +516,11 @@ INT poset_orbit_node::trace_next_point(poset_classification *gen,
 				cout << endl;
 				}
 			cout << "cur_set: ";
-			INT_vec_print(cout, cur_set, size);
+			int_vec_print(cout, cur_set, size);
 			cout << endl;
 			}
 		
-		INT_vec_copy(cur_set, next_set, lvl);
+		int_vec_copy(cur_set, next_set, lvl);
 		next_set[lvl] = pt0;
 		for (i = lvl + 1; i < size; i++) {
 			next_set[i] = gen->A2->element_image_of(
@@ -533,14 +533,14 @@ INT poset_orbit_node::trace_next_point(poset_classification *gen,
 			}
 		if (f_v) {
 			cout << "poset_orbit_node::trace_next_point next_set: ";
-			INT_vec_print(cout, next_set, size);
+			int_vec_print(cout, next_set, size);
 			cout << endl;
 			}
 
 		//gen->A->map_a_set(gen->set[lvl],
 		// gen->set[lvl + 1], len + 1, cosetrep);
 
-		//INT_vec_sort(len, gen->set[lvl + 1]);
+		//int_vec_sort(len, gen->set[lvl + 1]);
 		// we keep the last point extra
 
 #if 0
@@ -567,7 +567,7 @@ INT poset_orbit_node::trace_next_point(poset_classification *gen,
 		cout << "poset_orbit_node::trace_next_point lvl = " << lvl
 			<< " mapping " << the_point << "->" << pt0
 			<< " done, the set becomes ";
-		INT_set_print(cout, next_set, size);
+		int_set_print(cout, next_set, size);
 		cout << endl;
 		if (gen->f_print_function && f_vvv) {
 			(*gen->print_function)(size,
@@ -610,16 +610,16 @@ INT poset_orbit_node::trace_next_point(poset_classification *gen,
 	return ret;
 }
 
-INT poset_orbit_node::orbit_representative_and_coset_rep_inv(
+int poset_orbit_node::orbit_representative_and_coset_rep_inv(
 	poset_classification *gen,
-	INT lvl, INT pt_to_trace,
-	INT &pt0, INT *&cosetrep,
-	INT verbose_level)
+	int lvl, int pt_to_trace,
+	int &pt0, int *&cosetrep,
+	int verbose_level)
 // called by oracle::oracle::trace_next_point
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_check_image = FALSE;
-	INT f_allow_failure = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_check_image = FALSE;
+	int f_allow_failure = TRUE;
 
 	if (f_v) {
 		cout << "poset_orbit_node::orbit_representative_and_coset_rep_inv "
@@ -633,7 +633,7 @@ INT poset_orbit_node::orbit_representative_and_coset_rep_inv(
 		return TRUE;
 		}
 	if (sv) {
-		INT f_trivial_group;
+		int f_trivial_group;
 		
 		if (nb_strong_generators) 
 			f_trivial_group = FALSE;

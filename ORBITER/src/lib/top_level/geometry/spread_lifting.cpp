@@ -34,29 +34,29 @@ void spread_lifting::null()
 void spread_lifting::freeself()
 {
 	if (points_covered_by_starter) {
-		FREE_INT(points_covered_by_starter);
+		FREE_int(points_covered_by_starter);
 		}
 	if (free_point_list) {
-		FREE_INT(free_point_list);
+		FREE_int(free_point_list);
 		}
 	if (point_idx) {
-		FREE_INT(point_idx);
+		FREE_int(point_idx);
 		}
 	if (col_labels) {
-		FREE_INT(col_labels);
+		FREE_int(col_labels);
 		}
 	null();
 }
 
 void spread_lifting::init(spread *S, exact_cover *E, 
-	INT *starter, INT starter_size, 
-	INT starter_case_number, INT starter_number_of_cases, 
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	INT f_lex, 
-	INT verbose_level)
+	int *starter, int starter_size, 
+	int starter_case_number, int starter_number_of_cases, 
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	int f_lex, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	longinteger_object go;
 	
 	
@@ -103,13 +103,13 @@ void spread_lifting::init(spread *S, exact_cover *E,
 		}
 
 
-	col_labels = NEW_INT(nb_candidates);
-	INT_vec_copy(candidates, col_labels, nb_candidates);
+	col_labels = NEW_int(nb_candidates);
+	int_vec_copy(candidates, col_labels, nb_candidates);
 	nb_cols = nb_candidates;
 
 
 	if (f_lex) {
-		INT nb_cols_before;
+		int nb_cols_before;
 
 		nb_cols_before = nb_cols;
 		E->lexorder_test(col_labels, nb_cols, Strong_gens->gens, 
@@ -133,26 +133,26 @@ void spread_lifting::init(spread *S, exact_cover *E,
 }
 
 void spread_lifting::compute_points_covered_by_starter(
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
+	int i, a;
 	
 	if (f_v) {
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter" << endl;
 		}
 	nb_points_covered_by_starter = starter_size * S->block_size;
-	points_covered_by_starter = NEW_INT(nb_points_covered_by_starter);
+	points_covered_by_starter = NEW_int(nb_points_covered_by_starter);
 
 	for (i = 0; i < starter_size; i++) {
-		INT *point_list;
-		INT nb_points;
+		int *point_list;
+		int nb_points;
 
 		a = starter[i];
-		S->Grass->unrank_INT(a, 0/*verbose_level - 4*/);
+		S->Grass->unrank_int(a, 0/*verbose_level - 4*/);
 		all_PG_elements_in_subspace(S->F,
 			S->Grass->M, S->k, S->n, point_list,
 			nb_points, 0 /*verbose_level - 2*/);
@@ -164,25 +164,25 @@ void spread_lifting::compute_points_covered_by_starter(
 			exit(1);
 			}
 
-		INT_vec_copy(point_list,
+		int_vec_copy(point_list,
 				points_covered_by_starter + i * S->block_size,
 				S->block_size);
 
 		if (f_v3) {
 			cout << "starter element " << i << " / "
 					<< starter_size << " is " << a << ":" << endl;
-			INT_matrix_print(S->Grass->M, S->k, S->n);
+			int_matrix_print(S->Grass->M, S->k, S->n);
 			//cout << endl;
 			cout << "points_covered_by_starter: " << endl;
-			INT_vec_print(cout,
+			int_vec_print(cout,
 					points_covered_by_starter +
 						i * S->block_size, S->block_size);
 			cout << endl;
 			}
 
-		FREE_INT(point_list);
+		FREE_int(point_list);
 		}
-	INT_vec_heapsort(points_covered_by_starter,
+	int_vec_heapsort(points_covered_by_starter,
 			nb_points_covered_by_starter);
 	if (f_vv) {
 		cout << "spread_lifting::compute_points_"
@@ -190,7 +190,7 @@ void spread_lifting::compute_points_covered_by_starter(
 		cout << "spread_lifting::compute_points_"
 				"covered_by_starter nb_points_covered_by_starter="
 				<< nb_points_covered_by_starter << endl;
-		INT_vec_print(cout, points_covered_by_starter,
+		int_vec_print(cout, points_covered_by_starter,
 				nb_points_covered_by_starter);
 		cout << endl;
 		}
@@ -202,12 +202,12 @@ void spread_lifting::compute_points_covered_by_starter(
 }
 
 void spread_lifting::prepare_free_points(
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
-	INT i, j, idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
+	int i, j, idx;
 	
 	if (f_v) {
 		cout << "spread_lifting::prepare_free_points" << endl;
@@ -218,11 +218,11 @@ void spread_lifting::prepare_free_points(
 		cout << "spread_lifting::prepare_free_points "
 				"nb_free_points=" << nb_free_points << endl;
 		}
-	free_point_list = NEW_INT(nb_free_points);
-	point_idx = NEW_INT(S->nb_points_total);
+	free_point_list = NEW_int(nb_free_points);
+	point_idx = NEW_int(S->nb_points_total);
 	j = 0;
 	for (i = 0; i < S->nb_points_total; i++) {
-		if (INT_vec_search(points_covered_by_starter,
+		if (int_vec_search(points_covered_by_starter,
 				nb_points_covered_by_starter, i, idx)) {
 			point_idx[i] = -1;
 			}
@@ -245,7 +245,7 @@ void spread_lifting::prepare_free_points(
 	if (f_v3) {
 		cout << "spread_lifting::prepare_free_points "
 				"The " << nb_free_points << " free points:" << endl;
-		INT_vec_print(cout,
+		int_vec_print(cout,
 				free_point_list, nb_free_points);
 		cout << endl;
 		S->print_points(free_point_list, nb_free_points);
@@ -255,14 +255,14 @@ void spread_lifting::prepare_free_points(
 		}
 }
 
-diophant *spread_lifting::create_system(INT verbose_level)
+diophant *spread_lifting::create_system(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v5 = (verbose_level >= 5);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v5 = (verbose_level >= 5);
 	diophant *Dio;
-	INT nb_rows = nb_free_points;
-	INT i, j, a, b, h;
+	int nb_rows = nb_free_points;
+	int i, j, a, b, h;
 
 	if (f_v) {
 		cout << "spread_lifting::create_system" << endl;
@@ -286,11 +286,11 @@ diophant *spread_lifting::create_system(INT verbose_level)
 		}
 	for (j = 0; j < nb_cols; j++) {
 
-		INT *point_list;
-		INT nb_points;
+		int *point_list;
+		int nb_points;
 
 		a = col_labels[j];
-		S->Grass->unrank_INT(a, 0/*verbose_level - 4*/);
+		S->Grass->unrank_int(a, 0/*verbose_level - 4*/);
 		if (f_vv) {
 			cout << "candidate " << j << " / "
 					<< nb_cols << " is " << a << endl;
@@ -298,7 +298,7 @@ diophant *spread_lifting::create_system(INT verbose_level)
 
 		if (f_v5) {
 			cout << "Which is " << endl;
-			INT_matrix_print(S->Grass->M, S->k, S->n);
+			int_matrix_print(S->Grass->M, S->k, S->n);
 			}
 		all_PG_elements_in_subspace(S->F,
 				S->Grass->M, S->k, S->n, point_list, nb_points,
@@ -310,7 +310,7 @@ diophant *spread_lifting::create_system(INT verbose_level)
 			}
 		if (FALSE /*f_vv*/) {
 			cout << "List of points: ";
-			INT_vec_print(cout, point_list, nb_points);
+			int_vec_print(cout, point_list, nb_points);
 			cout << endl;
 			}
 
@@ -333,7 +333,7 @@ diophant *spread_lifting::create_system(INT verbose_level)
 				}
 			Dio->Aij(i, j) = 1;
 			}
-		FREE_INT(point_list);
+		FREE_int(point_list);
 		}
 
 	if (FALSE) {
@@ -353,19 +353,19 @@ diophant *spread_lifting::create_system(INT verbose_level)
 }
 
 void spread_lifting::find_coloring(diophant *Dio, 
-	INT *&col_color, INT &nb_colors, 
-	INT verbose_level)
+	int *&col_color, int &nb_colors, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *colors;
-	INT i, j, a, c;
-	INT *v;
+	int f_v = (verbose_level >= 1);
+	int *colors;
+	int i, j, a, c;
+	int *v;
 	
 	if (f_v) {
 		cout << "spread_lifting::find_coloring" << endl;
 		}
-	v = NEW_INT(S->n);
-	colors = NEW_INT(nb_free_points);
+	v = NEW_int(S->n);
+	colors = NEW_int(nb_free_points);
 	nb_colors = 0;
 	for (i = 0; i < nb_free_points; i++) {
 		a = free_point_list[i];
@@ -386,7 +386,7 @@ void spread_lifting::find_coloring(diophant *Dio,
 		if (f_v) {
 			cout << "found color " << nb_colors
 					<< " : " << i << " = " << a << " = ";
-			INT_vec_print(cout, v, S->n);
+			int_vec_print(cout, v, S->n);
 			cout << endl;
 			}
 		colors[nb_colors++] = i;
@@ -401,7 +401,7 @@ void spread_lifting::find_coloring(diophant *Dio,
 		exit(1);
 		}
 	
-	col_color = NEW_INT(nb_cols);
+	col_color = NEW_int(nb_cols);
 	for (j = 0; j < nb_cols; j++) {
 		for (c = 0; c < nb_colors; c++) {
 			i = colors[c];
@@ -416,8 +416,8 @@ void spread_lifting::find_coloring(diophant *Dio,
 			exit(1);
 			}
 		}
-	FREE_INT(colors);
-	FREE_INT(v);
+	FREE_int(colors);
+	FREE_int(v);
 	if (f_v) {
 		cout << "spread_lifting::find_coloring "
 				"done" << endl;

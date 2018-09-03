@@ -13,21 +13,21 @@
 #include "orbiter.h"
 #include "blt.h"
 
-void blt_set::find_free_points(INT *S, INT S_sz, 
-	INT *&free_pts, INT *&free_pt_idx, INT &nb_free_pts, 
-	INT verbose_level)
+void blt_set::find_free_points(int *S, int S_sz, 
+	int *&free_pts, int *&free_pt_idx, int &nb_free_pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *lines_on_pt;
-	INT *Perp;
-	INT i, j, a, b, h, f, fst, len, pt;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *lines_on_pt;
+	int *Perp;
+	int i, j, a, b, h, f, fst, len, pt;
 	classify C;
 
 	if (f_v) {
 		cout << "blt_set::find_free_points" << endl;
 		}
-	lines_on_pt = NEW_INT(S_sz * (q + 1));
+	lines_on_pt = NEW_int(S_sz * (q + 1));
 	for (i = 0; i < S_sz; i++) {
 		O->lines_on_point_by_line_rank(S[i],
 				lines_on_pt + i * (q + 1),
@@ -37,10 +37,10 @@ void blt_set::find_free_points(INT *S, INT S_sz,
 	if (f_vv) {
 		cout << "blt_set::find_free_points "
 				"Lines on partial BLT set:" << endl;
-		INT_matrix_print(lines_on_pt, S_sz, q + 1);
+		int_matrix_print(lines_on_pt, S_sz, q + 1);
 		}
 
-	Perp = NEW_INT(S_sz * (q + 1) * (q + 1));
+	Perp = NEW_int(S_sz * (q + 1) * (q + 1));
 	for (i = 0; i < S_sz; i++) {
 		for (j = 0; j < q + 1; j++) {
 			a = lines_on_pt[i * (q + 1) + j];
@@ -51,7 +51,7 @@ void blt_set::find_free_points(INT *S, INT S_sz,
 		}
 	if (f_vv) {
 		cout << "blt_set::find_free_points Perp:" << endl;
-		INT_matrix_print(Perp, S_sz * (q + 1), q + 1);
+		int_matrix_print(Perp, S_sz * (q + 1), q + 1);
 		}
 	
 
@@ -67,8 +67,8 @@ void blt_set::find_free_points(INT *S, INT S_sz,
 		cout << "blt_set::find_free_points nb_free_pts="
 				<< nb_free_pts << endl;
 		}
-	free_pts = NEW_INT(nb_free_pts);
-	free_pt_idx = NEW_INT(O->nb_points);
+	free_pts = NEW_int(nb_free_pts);
+	free_pt_idx = NEW_int(O->nb_points);
 	for (h = 0; h < O->nb_points; h++) {
 		free_pt_idx[h] = -1;
 		}
@@ -88,8 +88,8 @@ void blt_set::find_free_points(INT *S, INT S_sz,
 		free_pt_idx[pt] = h;
 		}
 
-	FREE_INT(lines_on_pt);
-	FREE_INT(Perp);
+	FREE_int(lines_on_pt);
+	FREE_int(Perp);
 
 	if (f_v) {
 		cout << "blt_set::find_free_points "
@@ -101,17 +101,17 @@ void blt_set::find_free_points(INT *S, INT S_sz,
 }
 
 void blt_set::lifting_prepare_function_new(
-	exact_cover *E, INT starter_case,
-	INT *candidates, INT nb_candidates,
+	exact_cover *E, int starter_case,
+	int *candidates, int nb_candidates,
 	strong_generators *Strong_gens,
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level)
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_v3 = (verbose_level >= 3);
-	INT i, j, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_v3 = (verbose_level >= 3);
+	int i, j, a;
 	
 	if (f_v) {
 		cout << "blt_set::lifting_prepare_function_new "
@@ -121,9 +121,9 @@ void blt_set::lifting_prepare_function_new(
 
 
 
-	INT nb_free_points, nb_needed;
-	INT *free_point_list; // [nb_free_points]
-	INT *point_idx; // [nb_points_total]
+	int nb_free_points, nb_needed;
+	int *free_point_list; // [nb_free_points]
+	int *point_idx; // [nb_points_total]
 		// point_idx[i] = index of a point in free_point_list 
 		// or -1 if the point is in points_covered_by_starter
 
@@ -154,19 +154,19 @@ void blt_set::lifting_prepare_function_new(
 
 
 
-	col_labels = NEW_INT(nb_candidates);
+	col_labels = NEW_int(nb_candidates);
 
 
-	INT_vec_copy(candidates, col_labels, nb_candidates);
+	int_vec_copy(candidates, col_labels, nb_candidates);
 
 
-	INT nb_rows = nb_free_points;
-	INT nb_cols = nb_candidates;
+	int nb_rows = nb_free_points;
+	int nb_cols = nb_candidates;
 
 
 	if (f_vv) {
 		cout << "blt_set::lifting_prepare_function_new candidates: ";
-		INT_vec_print(cout, candidates, nb_candidates);
+		int_vec_print(cout, candidates, nb_candidates);
 		cout << " (nb_candidates=" << nb_candidates << ")" << endl;
 		}
 
@@ -174,7 +174,7 @@ void blt_set::lifting_prepare_function_new(
 
 
 	if (E->f_lex) {
-		INT nb_cols_before;
+		int nb_cols_before;
 
 		nb_cols_before = nb_cols;
 		E->lexorder_test(col_labels, nb_cols, Strong_gens->gens, 
@@ -195,10 +195,10 @@ void blt_set::lifting_prepare_function_new(
 				"nb_cols=" << nb_cols << endl;
 		}
 
-	INT *Pts1, *Pts2;
+	int *Pts1, *Pts2;
 
-	Pts1 = NEW_INT(nb_free_points * 5);
-	Pts2 = NEW_INT(nb_cols * 5);
+	Pts1 = NEW_int(nb_free_points * 5);
+	Pts2 = NEW_int(nb_cols * 5);
 	for (i = 0; i < nb_free_points; i++) {
 		O->unrank_point(Pts1 + i * 5, 1,
 				free_point_list[i],
@@ -240,10 +240,10 @@ void blt_set::lifting_prepare_function_new(
 		}
 
 
-	FREE_INT(free_point_list);
-	FREE_INT(point_idx);
-	FREE_INT(Pts1);
-	FREE_INT(Pts2);
+	FREE_int(free_point_list);
+	FREE_int(point_idx);
+	FREE_int(Pts1);
+	FREE_int(Pts2);
 	if (f_v) {
 		cout << "blt_set::lifting_prepare_function_new "
 				"nb_free_points=" << nb_free_points
@@ -256,11 +256,11 @@ void blt_set::lifting_prepare_function_new(
 		}
 }
 
-void blt_set::Law_71(INT verbose_level)
+void blt_set::Law_71(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT set[100];
-	INT q = 71;
+	int f_v = (verbose_level >= 1);
+	int set[100];
+	int q = 71;
 	//matrix_group *M;
 	//orthogonal *O;
 
@@ -301,29 +301,29 @@ void blt_set::Law_71(INT verbose_level)
 
 
 
-void blt_set::report(isomorph &Iso, INT verbose_level)
+void blt_set::report(isomorph &Iso, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname[1000];
 
 	if (f_v) {
 		cout << "blt_set::report" << endl;
 		}
-	sprintf(fname, "report_BLT_%ld.tex", q);
+	sprintf(fname, "report_BLT_%d.tex", q);
 
 	{
 	ofstream f(fname);
-	INT f_book = TRUE;
-	INT f_title = TRUE;
+	int f_book = TRUE;
+	int f_title = TRUE;
 	char title[1000];
 	const char *author = "Orbiter";
-	INT f_toc = TRUE;
-	INT f_landscape = FALSE;
-	INT f_12pt = FALSE;
-	INT f_enlarged_page = TRUE;
-	INT f_pagenumbers = TRUE;
+	int f_toc = TRUE;
+	int f_landscape = FALSE;
+	int f_12pt = FALSE;
+	int f_enlarged_page = TRUE;
+	int f_pagenumbers = TRUE;
 
-	sprintf(title, "BLT-sets of Q$(4,%ld)$", q);
+	sprintf(title, "BLT-sets of Q$(4,%d)$", q);
 	cout << "Writing file " << fname << " with "
 			<< Iso.Reps->count << " BLT-sets:" << endl;
 	latex_head(f, f_book, f_title, 
@@ -337,11 +337,11 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 	//Iso.setup_and_open_solution_database(verbose_level - 1);
 
-	INT i, first, /* c,*/ id;
-	INT u, v, h, rep, tt;
+	int i, first, /* c,*/ id;
+	int u, v, h, rep, tt;
 	longinteger_object go;
-	INT data[1000];
-	INT data2[1000];
+	int data[1000];
+	int data2[1000];
 
 
 	longinteger_object *Ago, *Ago_induced;
@@ -384,10 +384,10 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 
 	cout << "Computing intersection and plane invariants" << endl;
-	INT **intersection_type;
-	INT *highest_intersection_number;
-	INT **intersection_matrix;
-	INT *nb_planes;
+	int **intersection_type;
+	int *highest_intersection_number;
+	int **intersection_matrix;
+	int *nb_planes;
 
 	set_of_sets *Sos;
 	set_of_sets *Sos2;
@@ -398,8 +398,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 	grassmann *G;
 	projective_space *P;
-	//INT f_semilinear = TRUE;
-	INT set_size = q + 1;
+	//int f_semilinear = TRUE;
+	int set_size = q + 1;
 
 	P = NEW_OBJECT(projective_space);
 	
@@ -428,8 +428,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 
 	longinteger_object **R;
-	INT **Sos2_idx;
-	INT **Sos3_idx;
+	int **Sos2_idx;
+	int **Sos3_idx;
 
 	Sos = NEW_OBJECTS(set_of_sets, Iso.Reps->count);
 	Sos2 = NEW_OBJECTS(set_of_sets, Iso.Reps->count);
@@ -437,16 +437,16 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	D2 = NEW_OBJECTS(decomposition, Iso.Reps->count);
 	D3 = NEW_OBJECTS(decomposition, Iso.Reps->count);
 	R = NEW_OBJECTS(longinteger_object *, Iso.Reps->count);
-	Sos2_idx = NEW_PINT(Iso.Reps->count);
-	Sos3_idx = NEW_PINT(Iso.Reps->count);
+	Sos2_idx = NEW_pint(Iso.Reps->count);
+	Sos3_idx = NEW_pint(Iso.Reps->count);
 
 	if (f_v) {
 		cout << "blt_set::report computing invariants" << endl;
 		}
-	intersection_type = NEW_PINT(Iso.Reps->count);
-	highest_intersection_number = NEW_INT(Iso.Reps->count);
-	intersection_matrix = NEW_PINT(Iso.Reps->count);
-	nb_planes = NEW_INT(Iso.Reps->count);
+	intersection_type = NEW_pint(Iso.Reps->count);
+	highest_intersection_number = NEW_int(Iso.Reps->count);
+	intersection_matrix = NEW_pint(Iso.Reps->count);
+	nb_planes = NEW_int(Iso.Reps->count);
 	for (h = 0; h < Iso.Reps->count; h++) {
 		if (f_v) {
 			cout << "blt_set::report looking at "
@@ -459,7 +459,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		Iso.load_solution(id, data);
 
 
-		INT v5[5];
+		int v5[5];
 
 		for (i = 0; i < set_size; i++) {
 			O->unrank_point(v5, 1, data[i], 0 /* verbose_level */);
@@ -556,7 +556,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 			//cout << endl;
 			}
 
-		INT a, j;
+		int a, j;
 		f << "Plane intersection type is ";
 		for (i = highest_intersection_number[h]; i >= 0; i--) {
 
@@ -600,8 +600,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 			f << "too big (" << nb_planes[h] << " planes)\\\\" << endl;
 			}
 
-		INT f_enter_math = FALSE;
-		INT f_print_subscripts = TRUE;
+		int f_enter_math = FALSE;
+		int f_print_subscripts = TRUE;
 		
 		f << "$$" << endl;
 		D2[h].print_row_decomposition_tex(
@@ -624,7 +624,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 			f << "$$" << endl;
 			D3[h].Stack->print_classes_tex(f);
 
-			INT t, fst_col, fst, len, u, a;
+			int t, fst_col, fst, len, u, a;
 			
 			fst_col = D3[h].Stack->startCell[1];
 			for (t = 0; t < D3[h].Stack->ht; t++) {
@@ -634,13 +634,13 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 				f << "Column cell " << t << ":\\\\" << endl;
 				len = D3[h].Stack->cellSize[t];
 				fst = D3[h].Stack->startCell[t];
-				INT *Cell;
-				Cell = NEW_INT(len);
+				int *Cell;
+				Cell = NEW_int(len);
 				for (u = 0; u < len; u++) {
 					a = D3[h].Stack->pointList[fst + u] - fst_col;
 					Cell[u] = a;
 					}
-				INT_vec_heapsort(Cell, len);
+				int_vec_heapsort(Cell, len);
 #if 0
 				for (u = 0; u < len; u++) {
 					a = Cell[u];
@@ -665,7 +665,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 					f << "\\right]$\\\\" << endl;
 					}
 #endif
-				FREE_INT(Cell);
+				FREE_int(Cell);
 				}
 			}
 		
@@ -693,20 +693,20 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		f << "$\\\\" << endl;
 		
 		{
-		INT nb_ancestors;
+		int nb_ancestors;
 		nb_ancestors = Iso.UF->count_ancestors();
 		
 		f << "Number of ancestors on $" << Iso.level << "$-sets is "
 				<< nb_ancestors << ".\\\\" << endl;
 
-		INT *orbit_reps;
-		INT nb_orbits;
+		int *orbit_reps;
+		int nb_orbits;
 		strong_generators *Strong_gens;
 		//vector_ge SG;
-		//INT *tl;
+		//int *tl;
 			
 		Strong_gens = NEW_OBJECT(strong_generators);
-		//tl = NEW_INT(Iso.AA->base_len);
+		//tl = NEW_int(Iso.AA->base_len);
 		Strong_gens->init_from_sims(Iso.AA->Sims, 0);
 		//Iso.AA->Sims->extract_strong_generators_in_order(
 		//SG, tl, verbose_level);
@@ -715,8 +715,8 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 		f << "Number of orbits on $" << Iso.level << "$-sets is "
 				<< nb_orbits << ".\\\\" << endl;
-		FREE_INT(orbit_reps);
-		//FREE_INT(tl);
+		FREE_int(orbit_reps);
+		//FREE_int(tl);
 		FREE_OBJECT(Strong_gens);
 		}
 
@@ -733,7 +733,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		C_ol.init(Orb.orbit_len, Orb.nb_orbits, FALSE, 0);
 
 		f << "Orbit lengths: $";
-		//INT_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
+		//int_vec_print(f, Orb.orbit_len, Orb.nb_orbits);
 		C_ol.print_naked_tex(f, FALSE /* f_reverse */);
 		f << "$ \\\\" << endl;
 	
@@ -760,10 +760,10 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		f << "\\end{center}" << endl; 
 
 		f << "The points:\\\\" << endl;
-		INT v5[5];
+		int v5[5];
 		for (i = 0; i < target_size; i++) {
 			O->unrank_point(v5, 1, data[i], 0 /* verbose_level */);
-			//Grass->unrank_INT(data[i], 0/*verbose_level - 4*/);
+			//Grass->unrank_int(data[i], 0/*verbose_level - 4*/);
 			if ((i % 4) == 0) {
 				if (i) {
 					f << "$$" << endl;
@@ -773,7 +773,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 			//f << "\\left[" << endl;
 			//f << "\\begin{array}{c}" << endl;
 			f << "P_{" << i /*data[i]*/ << "}=";
-			INT_vec_print(f, v5, 5);
+			int_vec_print(f, v5, 5);
 #if 0
 			for (u = 0; u < 5; u++) {
 				for (v = 0; v < n; v++) {
@@ -796,12 +796,12 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 		f << " is generated by:\\\\" << endl;
 		for (i = 0; i < Stab->gens.len; i++) {
 		
-			INT *fp, n;
+			int *fp, n;
 		
-			fp = NEW_INT(A->degree);
+			fp = NEW_int(A->degree);
 			n = A->find_fixed_points(Stab->gens.ith(i), fp, 0);
 			//cout << "with " << n << " fixed points" << endl;
-			FREE_INT(fp);
+			FREE_int(fp);
 
 			f << "$$ g_{" << i + 1 << "}=" << endl;
 			A->element_print_latex(Stab->gens.ith(i), f);
@@ -821,7 +821,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 	char prefix[1000];
 	char label_of_structure_plural[1000];
 
-	sprintf(prefix, "BLT_%ld", q);
+	sprintf(prefix, "BLT_%d", q);
 	sprintf(label_of_structure_plural, "BLT-Sets");
 	isomorph_report_data_in_source_code_inside_tex(Iso, 
 		prefix, label_of_structure_plural, f, verbose_level);
@@ -833,7 +833,7 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 
 	latex_foot(f);
-	//FREE_INT(Rk_of_span);
+	//FREE_int(Rk_of_span);
 	FREE_OBJECT(G);
 	FREE_OBJECT(P);
 	FREE_OBJECTS(Ago);
@@ -848,16 +848,16 @@ void blt_set::report(isomorph &Iso, INT verbose_level)
 
 }
 
-void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
+void blt_set::subset_orbits(isomorph &Iso, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname[1000];
 
 	if (f_v) {
 		cout << "blt_set::subset_orbits" << endl;
-		cout << "A->elt_size_in_INT=" << A->elt_size_in_INT << endl;
+		cout << "A->elt_size_in_int=" << A->elt_size_in_int << endl;
 		}
-	sprintf(fname, "report_BLT_%ld_subset_orbits.tex", q);
+	sprintf(fname, "report_BLT_%d_subset_orbits.tex", q);
 
 
 	Iso.load_table_of_solutions(verbose_level);
@@ -868,7 +868,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 			Iso.level - 1, TRUE /* f_compact */,
 			verbose_level);
 
-	INT i;
+	int i;
 	
 	if (f_v) {
 		for (i = 0; i <= Iso.level + 1; i++) {
@@ -883,17 +883,17 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 
 	{
 	ofstream f(fname);
-	INT f_book = TRUE;
-	INT f_title = TRUE;
+	int f_book = TRUE;
+	int f_title = TRUE;
 	char title[1000];
 	const char *author = "Orbiter";
-	INT f_toc = TRUE;
-	INT f_landscape = FALSE;
-	INT f_12pt = FALSE;
-	INT f_enlarged_page = TRUE;
-	INT f_pagenumbers = TRUE;
+	int f_toc = TRUE;
+	int f_landscape = FALSE;
+	int f_12pt = FALSE;
+	int f_enlarged_page = TRUE;
+	int f_pagenumbers = TRUE;
 
-	sprintf(title, "BLT-sets of Q$(4,%ld)$", q);
+	sprintf(title, "BLT-sets of Q$(4,%d)$", q);
 	cout << "Writing file " << fname << " with "
 			<< Iso.Reps->count << " BLT-sets:" << endl;
 	latex_head(f, f_book, f_title, 
@@ -907,10 +907,10 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 
-	INT h, rep, first, id;
+	int h, rep, first, id;
 	longinteger_object go;
-	INT data[1000];
-	//INT data2[1000];
+	int data[1000];
+	//int data2[1000];
 
 	for (h = 0; h < Iso.Reps->count; h++) {
 		rep = Iso.Reps->rep[h];
@@ -924,7 +924,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 		f << "\\section{Isomorphism Type " << h << "}" << endl;
 		f << "\\bigskip" << endl;
 
-		INT_vec_print(cout, data, Iso.size);
+		int_vec_print(cout, data, Iso.size);
 		cout << endl;
 
 		sims *Stab;
@@ -938,7 +938,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 		Iso.induced_action_on_set(Stab, data, 0 /*verbose_level*/);
 		
 		cout << "data after induced_action_on_set:" << endl;
-		INT_vec_print(cout, data, Iso.size);
+		int_vec_print(cout, data, Iso.size);
 		cout << endl;
 		
 		longinteger_object go1;
@@ -953,42 +953,42 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 		f << "$\\\\" << endl;
 
 		{
-		INT *orbit_reps;
-		INT nb_orbits;
+		int *orbit_reps;
+		int nb_orbits;
 		//vector_ge SG;
-		//INT *tl;
+		//int *tl;
 		strong_generators *Strong_gens;
 		
 		Strong_gens = NEW_OBJECT(strong_generators);
 		Strong_gens->init_from_sims(Iso.AA->Sims, 0);
-		//tl = NEW_INT(Iso.AA->base_len);
+		//tl = NEW_int(Iso.AA->base_len);
 		//Iso.AA->Sims->extract_strong_generators_in_order(
 		// SG, tl, verbose_level);
 		orbits_on_k_sets(Iso.AA, Iso.AA, Strong_gens /* SG, tl */, 
 			Iso.level, orbit_reps, nb_orbits, verbose_level);
 
 		cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-		INT_matrix_print(orbit_reps, nb_orbits, Iso.level);
+		int_matrix_print(orbit_reps, nb_orbits, Iso.level);
 
 		f << "Number of orbits on $" << Iso.level
 				<< "$-sets is " << nb_orbits << ".\\\\" << endl;
 
-		INT *rearranged_set;
-		INT *transporter;
-		INT u;
-		INT case_nb;
-		INT f_implicit_fusion = FALSE;
-		INT cnt_special_orbits;
-		INT f_vv = FALSE;
-		INT idx;
+		int *rearranged_set;
+		int *transporter;
+		int u;
+		int case_nb;
+		int f_implicit_fusion = FALSE;
+		int cnt_special_orbits;
+		int f_vv = FALSE;
+		int idx;
 		
-		rearranged_set = NEW_INT(Iso.size);
-		transporter = NEW_INT(A->elt_size_in_INT);
+		rearranged_set = NEW_int(Iso.size);
+		transporter = NEW_int(A->elt_size_in_int);
 
 		cnt_special_orbits = 0;
 		for (u = 0; u < nb_orbits; u++) {
 			cout << "orbit " << u << ":" << endl;
-			INT_vec_print(cout,
+			int_vec_print(cout,
 					orbit_reps + u * Iso.level, Iso.level);
 			cout << endl;
 
@@ -1000,9 +1000,9 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 				// in GALOIS/sorting.C
 
 
-			//INT_vec_print(cout, rearranged_set, Iso.size);
+			//int_vec_print(cout, rearranged_set, Iso.size);
 			//cout << endl;
-			INT f_failure_to_find_point, f_found;
+			int f_failure_to_find_point, f_found;
 
 			A->element_one(transporter, 0);
 			case_nb = Iso.trace_set(rearranged_set, transporter, 
@@ -1037,10 +1037,10 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 		f << "Number of special orbits on $" << Iso.level
 				<< "$-sets is " << cnt_special_orbits << ".\\\\" << endl;
 
-		FREE_INT(rearranged_set);
-		FREE_INT(transporter);
-		FREE_INT(orbit_reps);
-		//FREE_INT(tl);
+		FREE_int(rearranged_set);
+		FREE_int(transporter);
+		FREE_int(orbit_reps);
+		//FREE_int(tl);
 		FREE_OBJECT(Strong_gens);
 		}
 
@@ -1051,7 +1051,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 
 
 	latex_foot(f);
-	//FREE_INT(Rk_of_span);
+	//FREE_int(Rk_of_span);
 	}
 
 	cout << "Written file " << fname << " of size "
@@ -1068,7 +1068,7 @@ void blt_set::subset_orbits(isomorph &Iso, INT verbose_level)
 
 
 
-void print_set(INT len, INT *S, void *data)
+void print_set(int len, int *S, void *data)
 {
 	blt_set *Gen = (blt_set *) data;
 	
@@ -1076,20 +1076,20 @@ void print_set(INT len, INT *S, void *data)
 	Gen->print(S, len);
 }
 
-INT check_conditions(INT len, INT *S, void *data, INT verbose_level)
+int check_conditions(int len, int *S, void *data, int verbose_level)
 {
 	blt_set *Gen = (blt_set *) data;
 	return Gen->check_conditions(len, S, verbose_level);
 }
 
 void blt_set_lifting_prepare_function_new(
-	exact_cover *EC, INT starter_case,
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level)
+	exact_cover *EC, int starter_case,
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	blt_set *B = (blt_set *) EC->user_data;
 
 	if (f_v) {
@@ -1121,13 +1121,13 @@ void blt_set_lifting_prepare_function_new(
 
 
 
-void early_test_func_callback(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_func_callback(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	blt_set *BLT = (blt_set *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_func for set ";
@@ -1143,11 +1143,11 @@ void early_test_func_callback(INT *S, INT len,
 		}
 }
 
-INT check_function_incremental_callback(INT len,
-		INT *S, void *data, INT verbose_level)
+int check_function_incremental_callback(int len,
+		int *S, void *data, int verbose_level)
 {
 	blt_set *BLT = (blt_set *) data;
-	INT f_OK;
+	int f_OK;
 	
 	f_OK = BLT->check_function_incremental(len, S, verbose_level);
 	return f_OK; 
@@ -1155,14 +1155,14 @@ INT check_function_incremental_callback(INT len,
 
 
 
-void callback_report(isomorph *Iso, void *data, INT verbose_level)
+void callback_report(isomorph *Iso, void *data, int verbose_level)
 {
 	blt_set *Gen = (blt_set *) data;
 	
 	Gen->report(*Iso, verbose_level);
 }
 
-void callback_subset_orbits(isomorph *Iso, void *data, INT verbose_level)
+void callback_subset_orbits(isomorph *Iso, void *data, int verbose_level)
 {
 	blt_set *Gen = (blt_set *) data;
 	

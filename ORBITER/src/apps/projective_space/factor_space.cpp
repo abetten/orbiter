@@ -14,22 +14,22 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void test1(INT n, INT q, INT verbose_level);
-void test2(INT n, INT q, INT verbose_level);
-INT rank_point_func(INT *v, void *data);
-void unrank_point_func(INT *v, INT rk, void *data);
-INT test_func(INT len, INT *S, void *data, INT verbose_level);
+void test1(int n, int q, int verbose_level);
+void test2(int n, int q, int verbose_level);
+int rank_point_func(int *v, void *data);
+void unrank_point_func(int *v, int rk, void *data);
+int test_func(int len, int *S, void *data, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_q = FALSE;
-	INT q;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n = 0;
+	int f_q = FALSE;
+	int q;
 	
  	t0 = os_ticks();
 	
@@ -64,14 +64,14 @@ int main(int argc, char **argv)
 }
 
 
-void test1(INT n, INT q, INT verbose_level)
+void test1(int n, int q, int verbose_level)
 {
 	finite_field *F;
 	projective_space *P;
-	INT f_semilinear = TRUE;
+	int f_semilinear = TRUE;
 	const char *override_poly = NULL;
-	INT f_basis = TRUE;
-	INT f_with_group = TRUE;
+	int f_basis = TRUE;
+	int f_with_group = TRUE;
 
 	F = new finite_field;
 	P = new projective_space;
@@ -83,8 +83,8 @@ void test1(INT n, INT q, INT verbose_level)
 		f_semilinear, f_basis, verbose_level);
 
 	action_on_factor_space *AF;
-	INT basis_elts_ranks[] = {3};
-	INT nb_basis_elts = 1;
+	int basis_elts_ranks[] = {3};
+	int nb_basis_elts = 1;
 
 	AF = new action_on_factor_space;
 	AF->init_by_rank(*P->A, *P->A, n + 1, P->F, basis_elts_ranks, nb_basis_elts, 
@@ -92,7 +92,7 @@ void test1(INT n, INT q, INT verbose_level)
 	AF->list_all_elements();
 
 	action *A;
-	INT f_induce_action = TRUE;
+	int f_induce_action = TRUE;
 
 	A = new action;
 
@@ -102,9 +102,9 @@ void test1(INT n, INT q, INT verbose_level)
 		}
 
 	vector_ge SG1;
-	INT *tl;
+	int *tl;
 
-	tl = new INT[P->A->base_len];
+	tl = new int[P->A->base_len];
 	cout << "computing point stabilizer of " << basis_elts_ranks[0] << endl;
 	P->A->Sims->point_stabilizer(SG1, tl, basis_elts_ranks[0], verbose_level);
 	sims *S1;
@@ -134,8 +134,8 @@ void test1(INT n, INT q, INT verbose_level)
 	Sch.print_tables(cout, TRUE /* f_with_cosetrep */);
 	
 #if 0
-	INT *Elt;
-	INT h, i, j;
+	int *Elt;
+	int h, i, j;
 	
 	for (h = 0; h < SG1.len; h++) {
 		Elt = SG1.ith(h);
@@ -149,15 +149,15 @@ void test1(INT n, INT q, INT verbose_level)
 #endif
 }
 
-void test2(INT n, INT q, INT verbose_level)
+void test2(int n, int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	finite_field *F;
 	projective_space *P;
-	INT f_semilinear = TRUE;
-	INT f_basis = TRUE;
-	INT depth = 2;
-	INT f_with_group = TRUE;
+	int f_semilinear = TRUE;
+	int f_basis = TRUE;
+	int depth = 2;
+	int f_with_group = TRUE;
 	
 	F = new finite_field;
 	P = new projective_space;
@@ -215,7 +215,7 @@ void test2(INT n, INT q, INT verbose_level)
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_oracle_nodes = 1000;
+	int nb_oracle_nodes = 1000;
 	
 	if (f_v) {
 		cout << "Gen->init_oracle" << endl;
@@ -226,10 +226,10 @@ void test2(INT n, INT q, INT verbose_level)
 		}
 	Gen->root[0].init_root_node(Gen, Gen->verbose_level);
 	
-	INT schreier_depth = Gen->depth;
-	INT f_use_invariant_subset_if_available = FALSE;
-	INT f_implicit_fusion = FALSE;
-	INT f_debug = FALSE;
+	int schreier_depth = Gen->depth;
+	int f_use_invariant_subset_if_available = FALSE;
+	int f_implicit_fusion = FALSE;
+	int f_debug = FALSE;
 	
 	if (f_v) {
 		cout << "calling generator_main" << endl;
@@ -241,7 +241,7 @@ void test2(INT n, INT q, INT verbose_level)
 		f_debug, 
 		verbose_level - 1);
 	
-	INT f, nb_orbits;
+	int f, nb_orbits;
 	
 	if (f_v) {
 		cout << "done with generator_main" << endl;
@@ -254,16 +254,16 @@ void test2(INT n, INT q, INT verbose_level)
 	
 }
 
-INT rank_point_func(INT *v, void *data)
+int rank_point_func(int *v, void *data)
 {
 	generator *gen = (generator *) data;
-	INT rk;
+	int rk;
 	
 	PG_element_rank_modified(*gen->F, v, 1, gen->vector_space_dimension, rk);
 	return rk;
 }
 
-void unrank_point_func(INT *v, INT rk, void *data)
+void unrank_point_func(int *v, int rk, void *data)
 {
 	generator *gen = (generator *) data;
 
@@ -271,12 +271,12 @@ void unrank_point_func(INT *v, INT rk, void *data)
 }
 
 
-INT test_func(INT len, INT *S, void *data, INT verbose_level)
+int test_func(int len, int *S, void *data, int verbose_level)
 {
 	//arc *Arc = (arc *) data;
-	//INT i, p, j;
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
+	//int i, p, j;
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "checking set ";

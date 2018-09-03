@@ -49,16 +49,16 @@ void projective_space_with_action::freeself()
 		FREE_OBJECT(S);
 		}
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		}
 	null();
 }
 
 void projective_space_with_action::init(
-	finite_field *F, INT n, INT f_semilinear,
-	INT f_init_incidence_structure, INT verbose_level)
+	finite_field *F, int n, int f_semilinear,
+	int f_init_incidence_structure, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "projective_space_with_action::init" << endl;
@@ -78,7 +78,7 @@ void projective_space_with_action::init(
 	
 	init_group(f_semilinear, verbose_level);
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 
 
 	if (f_v) {
@@ -87,9 +87,9 @@ void projective_space_with_action::init(
 }
 
 void projective_space_with_action::init_group(
-		INT f_semilinear, INT verbose_level)
+		int f_semilinear, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "projective_space_with_action::init_group" << endl;
@@ -129,32 +129,32 @@ void projective_space_with_action::init_group(
 }
 
 strong_generators *projective_space_with_action::set_stabilizer(
-	INT *set, INT set_size, INT &canonical_pt, 
-	INT *canonical_set_or_NULL, 
-	INT f_save_incma_in_and_out,
+	int *set, int set_size, int &canonical_pt, 
+	int *canonical_set_or_NULL, 
+	int f_save_incma_in_and_out,
 	const char *save_incma_in_and_out_prefix,
-	INT f_compute_canonical_form,
+	int f_compute_canonical_form,
 	uchar *&canonical_form,
-	INT &canonical_form_len,
-	INT verbose_level)
+	int &canonical_form_len,
+	int verbose_level)
 // December 22, 2017, based on earlier work:
 // added to action_global.C on 2/28/2011, called from analyze.C
 // November 17, 2014 moved here from TOP_LEVEL/extra.C
 // December 31, 2014, moved here from projective_space.C
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
 	action *A_linear;
-	INT *Incma;
-	INT *partition;
-	INT *labeling;
-	INT nb_rows, nb_cols;
-	INT *Aut, Aut_counter;
-	INT *Base, Base_length;
-	INT *Transversal_length, Ago;
-	INT N, i, j, h, a, L;
+	int *Incma;
+	int *partition;
+	int *labeling;
+	int nb_rows, nb_cols;
+	int *Aut, Aut_counter;
+	int *Base, Base_length;
+	int *Transversal_length, Ago;
+	int N, i, j, h, a, L;
 
 	A_linear = A;
 
@@ -190,9 +190,9 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		}
 	nb_rows = P->N_points + 1;
 	nb_cols = P->N_lines + C.second_nb_types;
-	Incma = NEW_INT(nb_rows * nb_cols);
-	partition = NEW_INT(nb_rows + nb_cols);
-	labeling = NEW_INT(nb_rows + nb_cols);
+	Incma = NEW_int(nb_rows * nb_cols);
+	partition = NEW_int(nb_rows + nb_cols);
+	labeling = NEW_int(nb_rows + nb_cols);
 
 	if (f_vv) {
 		cout << "projective_space_with_action::set_stabilizer Initializing Incma" << endl;
@@ -217,7 +217,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	// last columns:
 	for (j = 0; j < C.second_nb_types; j++) {
-		INT f2, l2, m, idx, f, l;
+		int f2, l2, m, idx, f, l;
 
 		f2 = C.second_type_first[j];
 		l2 = C.second_type_len[j];
@@ -263,11 +263,11 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		char fname_csv[1000];
 		char fname_bin[1000];
 
-		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv",
+		sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%ld_%ld.bin",
+		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		INT_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		for (i = 0; i < nb_rows + nb_cols; i++) {
 			labeling[i] = i;
@@ -277,7 +277,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		create_Levi_graph_from_incidence_matrix(CG,
 				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
-		//FREE_INT(Incma);
+		//FREE_int(Incma);
 		delete CG;
 		}
 
@@ -310,34 +310,34 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "projective_space_with_action::set_stabilizer "
 				"initializing Aut, Base, Transversal_length" << endl;
 		}
-	Aut = NEW_INT(N * N);
-	Base = NEW_INT(N);
-	Transversal_length = NEW_INT(N);
+	Aut = NEW_int(N * N);
+	Base = NEW_int(N);
+	Transversal_length = NEW_int(N);
 	
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer "
-				"calling nauty_interface_matrix_INT" << endl;
+				"calling nauty_interface_matrix_int" << endl;
 		}
-	nauty_interface_matrix_INT(Incma, nb_rows, nb_cols, 
+	nauty_interface_matrix_int(Incma, nb_rows, nb_cols, 
 		labeling, partition, 
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer "
-				"done with nauty_interface_matrix_INT, Ago=" << Ago << endl;
+				"done with nauty_interface_matrix_int, Ago=" << Ago << endl;
 		}
 
-	INT *Incma_out;
-	INT ii, jj;
+	int *Incma_out;
+	int ii, jj;
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer "
 				"labeling:" << endl;
-		INT_vec_print(cout, labeling, nb_rows + nb_cols);
+		int_vec_print(cout, labeling, nb_rows + nb_cols);
 		cout << endl;
 		}
 
-	Incma_out = NEW_INT(L);
+	Incma_out = NEW_int(L);
 	for (i = 0; i < nb_rows; i++) {
 		ii = labeling[i];
 		for (j = 0; j < nb_cols; j++) {
@@ -410,15 +410,15 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		char fname_csv[1000];
 		char fname_bin[1000];
 
-		sprintf(fname_labeling, "%slabeling_%ld_%ld.csv",
+		sprintf(fname_labeling, "%slabeling_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_csv, "%sIncma_out_%ld_%ld.csv",
+		sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_out_%ld_%ld.bin",
+		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
-		INT_vec_write_csv(labeling, N, fname_labeling, "canonical labeling");
-		INT_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+		int_vec_write_csv(labeling, N, fname_labeling, "canonical labeling");
+		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;
@@ -428,7 +428,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		FREE_OBJECT(CG);
 		}
 
-	FREE_INT(Incma_out);
+	FREE_int(Incma_out);
 
 	action *A_perm;
 	longinteger_object ago;
@@ -467,8 +467,8 @@ strong_generators *projective_space_with_action::set_stabilizer(
 
 	vector_ge *gens; // permutations from nauty
 	vector_ge *gens1; // matrices
-	INT g, frobenius, pos;
-	INT *Mtx;
+	int g, frobenius, pos;
+	int *Mtx;
 	
 	gens = A_perm->Strong_gens->gens;
 
@@ -476,7 +476,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 	gens1->init(A_linear);
 	gens1->allocate(gens->len);
 	
-	Mtx = NEW_INT(d * d + 1); // leave space for frobenius
+	Mtx = NEW_int(d * d + 1); // leave space for frobenius
 	
 	pos = 0;
 	for (g = 0; g < gens->len; g++) {
@@ -526,7 +526,7 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		cout << "projective_space_with_action::set_stabilizer "
 				"we are now testing the generators:" << endl;
 		}
-	INT j1, j2;
+	int j1, j2;
 	
 	for (g = 0; g < gens1->len; g++) {
 		if (f_vv) {
@@ -596,15 +596,15 @@ strong_generators *projective_space_with_action::set_stabilizer(
 		exit(1);
 		}
 
-	FREE_INT(Aut);
-	FREE_INT(Base);
-	FREE_INT(Transversal_length);
-	FREE_INT(Incma);
-	FREE_INT(partition);
-	FREE_INT(labeling);
+	FREE_int(Aut);
+	FREE_int(Base);
+	FREE_int(Transversal_length);
+	FREE_int(Incma);
+	FREE_int(partition);
+	FREE_int(labeling);
 	FREE_OBJECT(A_perm);
 	FREE_OBJECT(gens1);
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 
 
 	if (f_v) {
@@ -632,26 +632,26 @@ strong_generators *projective_space_with_action::set_stabilizer(
 strong_generators
 *projective_space_with_action::set_stabilizer_of_object(
 	object_in_projective_space *OiP, 
-	INT f_save_incma_in_and_out,
+	int f_save_incma_in_and_out,
 	const char *save_incma_in_and_out_prefix,
-	INT f_compute_canonical_form,
+	int f_compute_canonical_form,
 	uchar *&canonical_form,
-	INT &canonical_form_len,
-	INT verbose_level)
+	int &canonical_form_len,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
 	action *A_linear;
-	INT *Incma;
-	INT *partition;
-	INT *labeling;
-	INT nb_rows, nb_cols;
-	INT *Aut, Aut_counter;
-	INT *Base, Base_length;
-	INT *Transversal_length, Ago;
-	INT N, i, j, a, L;
+	int *Incma;
+	int *partition;
+	int *labeling;
+	int nb_rows, nb_cols;
+	int *Aut, Aut_counter;
+	int *Base, Base_length;
+	int *Transversal_length, Ago;
+	int N, i, j, a, L;
 
 	A_linear = A;
 
@@ -677,7 +677,7 @@ strong_generators
 				"of_object after OiP->encode_incma" << endl;
 		}
 
-	labeling = NEW_INT(nb_rows + nb_cols);
+	labeling = NEW_int(nb_rows + nb_cols);
 	for (i = 0; i < nb_rows + nb_cols; i++) {
 		labeling[i] = i;
 		}
@@ -697,17 +697,17 @@ strong_generators
 		char fname_csv[1000];
 		char fname_bin[1000];
 
-		sprintf(fname_csv, "%sIncma_in_%ld_%ld.csv",
+		sprintf(fname_csv, "%sIncma_in_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_in_%ld_%ld.bin",
+		sprintf(fname_bin, "%sIncma_in_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		INT_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
+		int_matrix_write_csv(fname_csv, Incma, nb_rows, nb_cols);
 
 		colored_graph *CG;
 		create_Levi_graph_from_incidence_matrix(CG,
 				Incma, nb_rows, nb_cols, TRUE, labeling, verbose_level);
 		CG->save(fname_bin, verbose_level);
-		//FREE_INT(Incma);
+		//FREE_int(Incma);
 		delete CG;
 		}
 
@@ -718,35 +718,35 @@ strong_generators
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object initializing Aut, Base, Transversal_length" << endl;
 		}
-	Aut = NEW_INT(N * N);
-	Base = NEW_INT(N);
-	Transversal_length = NEW_INT(N);
+	Aut = NEW_int(N * N);
+	Base = NEW_int(N);
+	Transversal_length = NEW_int(N);
 	
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object calling nauty_interface_matrix_INT" << endl;
+				"of_object calling nauty_interface_matrix_int" << endl;
 		}
-	nauty_interface_matrix_INT(Incma, nb_rows, nb_cols, 
+	nauty_interface_matrix_int(Incma, nb_rows, nb_cols, 
 		labeling, partition, 
 		Aut, Aut_counter, 
 		Base, Base_length, 
 		Transversal_length, Ago, verbose_level - 3);
 	if (f_v) {
 		cout << "projective_space_with_action::set_stabilizer_"
-				"of_object done with nauty_interface_matrix_INT, "
+				"of_object done with nauty_interface_matrix_int, "
 				"Ago=" << Ago << endl;
 		}
 
-	INT *Incma_out;
-	INT ii, jj;
+	int *Incma_out;
+	int ii, jj;
 	if (f_vvv) {
 		cout << "projective_space_with_action::set_stabilizer_"
 				"of_object labeling:" << endl;
-		INT_vec_print(cout, labeling, nb_rows + nb_cols);
+		int_vec_print(cout, labeling, nb_rows + nb_cols);
 		cout << endl;
 		}
 
-	Incma_out = NEW_INT(L);
+	Incma_out = NEW_int(L);
 	for (i = 0; i < nb_rows; i++) {
 		ii = labeling[i];
 		for (j = 0; j < nb_cols; j++) {
@@ -793,20 +793,20 @@ strong_generators
 		char fname_csv[1000];
 		char fname_bin[1000];
 
-		sprintf(fname_labeling, "%slabeling_%ld_%ld.csv",
+		sprintf(fname_labeling, "%slabeling_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_csv, "%sIncma_out_%ld_%ld.csv",
+		sprintf(fname_csv, "%sIncma_out_%d_%d.csv",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
-		sprintf(fname_bin, "%sIncma_out_%ld_%ld.bin",
+		sprintf(fname_bin, "%sIncma_out_%d_%d.bin",
 				save_incma_in_and_out_prefix, nb_rows, nb_cols);
 		
 		cout << "labeling:" << endl;
-		INT_vec_print_as_matrix(cout,
+		int_vec_print_as_matrix(cout,
 				labeling, N, 10 /* width */, TRUE /* f_tex */);
 
-		INT_vec_write_csv(labeling, N,
+		int_vec_write_csv(labeling, N,
 				fname_labeling, "canonical labeling");
-		INT_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
+		int_matrix_write_csv(fname_csv, Incma_out, nb_rows, nb_cols);
 
 		
 		colored_graph *CG;
@@ -816,7 +816,7 @@ strong_generators
 		FREE_OBJECT(CG);
 		}
 
-	FREE_INT(Incma_out);
+	FREE_int(Incma_out);
 
 	action *A_perm;
 	longinteger_object ago;
@@ -856,8 +856,8 @@ strong_generators
 
 	vector_ge *gens; // permutations from nauty
 	vector_ge *gens1; // matrices
-	INT g, frobenius, pos;
-	INT *Mtx;
+	int g, frobenius, pos;
+	int *Mtx;
 	
 	gens = A_perm->Strong_gens->gens;
 
@@ -865,7 +865,7 @@ strong_generators
 	gens1->init(A_linear);
 	gens1->allocate(gens->len);
 	
-	Mtx = NEW_INT(d * d + 1); // leave space for frobenius
+	Mtx = NEW_int(d * d + 1); // leave space for frobenius
 	
 	pos = 0;
 	for (g = 0; g < gens->len; g++) {
@@ -915,7 +915,7 @@ strong_generators
 		cout << "projective_space_with_action::set_stabilizer_of_object "
 				"we are now testing the generators:" << endl;
 		}
-	INT j1, j2;
+	int j1, j2;
 	
 	for (g = 0; g < gens1->len; g++) {
 		if (f_vv) {
@@ -981,15 +981,15 @@ strong_generators
 		exit(1);
 		}
 
-	FREE_INT(Aut);
-	FREE_INT(Base);
-	FREE_INT(Transversal_length);
-	FREE_INT(Incma);
-	FREE_INT(partition);
-	FREE_INT(labeling);
+	FREE_int(Aut);
+	FREE_int(Base);
+	FREE_int(Transversal_length);
+	FREE_int(Incma);
+	FREE_int(partition);
+	FREE_int(labeling);
 	FREE_OBJECT(A_perm);
 	FREE_OBJECT(gens);
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 
 
 	if (f_v) {
@@ -1015,10 +1015,10 @@ strong_generators
 
 
 void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
-	INT *Elt, ostream &ost, 
-	INT verbose_level)
+	int *Elt, ostream &ost, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "projective_space_with_action::report_fixed_"
@@ -1031,8 +1031,8 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 		exit(1);
 		}
 	projective_space *P3;
-	INT i, j, cnt;
-	INT v[4];
+	int i, j, cnt;
+	int v[4];
 
 	P3 = P;
 	
@@ -1063,7 +1063,7 @@ void projective_space_with_action::report_fixed_objects_in_PG_3_tex(
 		PG_element_unrank_modified(*F, v, 1, 4, i);
 		if (j == i) {
 			ost << i << " : ";
-			INT_vec_print(ost, v, 4);
+			int_vec_print(ost, v, 4);
 			ost << "\\\\" << endl;
 			cnt++;
 			}

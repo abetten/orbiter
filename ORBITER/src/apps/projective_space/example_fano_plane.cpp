@@ -8,26 +8,26 @@
 
 int main()
 {
-	INT verbose_level = 0;
-	INT q = 2;
-	INT d = 3;
-	INT k = 4;
+	int verbose_level = 0;
+	int q = 2;
+	int d = 3;
+	int k = 4;
 	finite_field *F;
-	INT f_projective = TRUE;
-	INT f_general = FALSE;
-	INT f_affine = FALSE;
-	INT f_semilinear = FALSE;
-	INT f_special = FALSE;
+	int f_projective = TRUE;
+	int f_general = FALSE;
+	int f_affine = FALSE;
+	int f_semilinear = FALSE;
+	int f_special = FALSE;
 	sims *S;
 	action *A;
 	longinteger_object go;
-	INT *Elt;
-	INT i;
-	INT *v;
+	int *Elt;
+	int i;
+	int *v;
 	schreier *Sch;
 
 		
-	v = NEW_INT(d);
+	v = NEW_int(d);
 
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
@@ -41,10 +41,10 @@ int main()
 	A->group_order(go);
 	cout << "created a group of order " << go << endl;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 
-	for (i = 0; i < go.as_INT(); i++) {
-		S->element_unrank_INT(i, Elt, 0 /* verbose_level */);
+	for (i = 0; i < go.as_int(); i++) {
+		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
 		cout << "element " << i << " / " << go << ":" << endl;
 		A->element_print_quick(Elt, cout);
 		}
@@ -52,7 +52,7 @@ int main()
 	for (i = 0; i < A->degree; i++) {
 		PG_element_unrank_modified(*F, v, 1, d, i);
 		cout << "point " << i << " / " << A->degree << " is ";
-		INT_vec_print(cout, v, d);
+		int_vec_print(cout, v, d);
 		cout << endl;
 		}
 
@@ -72,7 +72,7 @@ int main()
 		k, verbose_level);
 	Gen->print_orbit_numbers(k);
 
-	INT nb_orbits;
+	int nb_orbits;
 
 	nb_orbits = Gen->nb_orbits_at_level(k);
 	cout << "We found " << nb_orbits << " orbits of subsets of size " << k << endl;

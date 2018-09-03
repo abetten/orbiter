@@ -28,9 +28,9 @@ void action_on_orbits::free()
 	null();
 }
 
-void action_on_orbits::init(action *A, schreier *Sch, INT f_play_it_safe, INT verbose_level)
+void action_on_orbits::init(action *A, schreier *Sch, int f_play_it_safe, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_on_orbits::init" << endl;
@@ -44,10 +44,10 @@ void action_on_orbits::init(action *A, schreier *Sch, INT f_play_it_safe, INT ve
 		}
 }
 
-INT action_on_orbits::compute_image(INT *Elt, INT i, INT verbose_level)
+int action_on_orbits::compute_image(int *Elt, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j, j1, f, l, a, b, h;
+	int f_v = (verbose_level >= 1);
+	int j, j1, f, l, a, b, h;
 
 	if (f_v) {
 		cout << "action_on_orbits::compute_image i = " << i << endl;

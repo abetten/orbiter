@@ -10,13 +10,13 @@
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	char *widor_fname;
 	char str[1000];
 	char ext[1000];
 	char fname_out[1000];
 	char label[1000];
-	INT verbose_level = 0;
+	int verbose_level = 0;
 		
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -25,8 +25,8 @@ int main(int argc, char **argv)
 			cout << "-v " << verbose_level << endl;
 			}
 		}
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	widor_fname = argv[argc - 1];
 	strcpy(str, widor_fname);
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 			sprintf(label, "%s", GP.label);
 			}
 		else {
-			sprintf(label, "%ld", i);
+			sprintf(label, "%d", i);
 			}
 		GP.write(g, label);
 		if (f_v) {

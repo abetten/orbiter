@@ -10,41 +10,41 @@
 
 int main(int argc, char **argv)
 {
-	//INT t0 = os_ticks();
-	INT verbose_level;
-	INT i;
+	//int t0 = os_ticks();
+	int verbose_level;
+	int i;
 	
-	INT f_file = FALSE;
+	int f_file = FALSE;
 	const char *fname = NULL;
-	INT f_x = FALSE;
+	int f_x = FALSE;
 	const char *x_str = NULL;
-	INT f_y = FALSE;
+	int f_y = FALSE;
 	const char *y_str = NULL;
-	INT f_x_label = FALSE;
+	int f_x_label = FALSE;
 	const char *x_label = "";
-	INT f_y_label = FALSE;
+	int f_y_label = FALSE;
 	const char *y_label = "";
-	INT f_title = FALSE;
+	int f_title = FALSE;
 	const char *title = "";
-	INT f_x_multiplyer = FALSE;
+	int f_x_multiplyer = FALSE;
 	double x_multiplyer = 1.;
-	INT f_y_multiplyer = FALSE;
+	int f_y_multiplyer = FALSE;
 	double y_multiplyer = 1.;
-	INT f_name = FALSE;
+	int f_name = FALSE;
 	const char *name = "";
-	INT f_series = FALSE;
-	INT series_from = 0;
-	INT series_len = 0;
+	int f_series = FALSE;
+	int series_from = 0;
+	int series_len = 0;
 	const char *series_column_mask = NULL;
-	INT f_series_by_values = FALSE;
+	int f_series_by_values = FALSE;
 	const char *series_by_values_str = 0;
 	const char *series_by_values_column_mask = NULL;
-	INT f_logscale = FALSE;
+	int f_logscale = FALSE;
 	const char *logscale_xy = NULL;
-	INT f_key_position = FALSE;
+	int f_key_position = FALSE;
 	const char *key_position = NULL;
-	INT f_png = TRUE;
-	INT f_tikz = TRUE;
+	int f_png = TRUE;
+	int f_tikz = TRUE;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -147,16 +147,16 @@ int main(int argc, char **argv)
 	cout << "Reading data from file " << fname << " of size " << file_size(fname) << endl;
 
 	spreadsheet *Sp;
-	INT *Idx1, idx2;
-	INT m, n;
-		INT *values;
+	int *Idx1, idx2;
+	int m, n;
+		int *values;
 		
 	
 	Sp = new spreadsheet;
 	Sp->read_spreadsheet(fname, 0 /*verbose_level*/);
 	Sp->print_table(cout, TRUE);
 	if (f_series) {
-		Idx1 = NEW_INT(series_len);
+		Idx1 = NEW_int(series_len);
 		char label[1000];
 
 		for (i = 0; i < series_len; i++) {
@@ -167,8 +167,8 @@ int main(int argc, char **argv)
 		}
 	else if (f_series_by_values) {
 
-		INT_vec_scan(series_by_values_str, values, series_len);
-		Idx1 = NEW_INT(series_len);
+		int_vec_scan(series_by_values_str, values, series_len);
+		Idx1 = NEW_int(series_len);
 		char label[1000];
 
 		for (i = 0; i < series_len; i++) {
@@ -178,7 +178,7 @@ int main(int argc, char **argv)
 		idx2 = -1;
 		}
 	else {
-		Idx1 = NEW_INT(1);
+		Idx1 = NEW_int(1);
 		Idx1[0] = Sp->find_by_column(x_str);
 		idx2 = Sp->find_by_column(y_str);
 		}
@@ -186,10 +186,10 @@ int main(int argc, char **argv)
 	n = Sp->nb_cols;
 
 #if 0
-	INT *Data;
-	INT m, n;
+	int *Data;
+	int m, n;
 	
-	INT_matrix_read_csv(fname, Data, m, n, verbose_level);
+	int_matrix_read_csv(fname, Data, m, n, verbose_level);
 	
 	while (m) {
 		if (Data[(m - 1) * n + n - 1] == 0) {
@@ -199,18 +199,18 @@ int main(int argc, char **argv)
 			break;
 			}
 		}
-	INT_matrix_print(Data, m, n);
+	int_matrix_print(Data, m, n);
 #endif
 
 #if 0
-	INT *Series[9];
-	INT h, u, v;
+	int *Series[9];
+	int h, u, v;
 
 	for (h = 0; h < 9; h++) {
-		INT *S;
+		int *S;
 		
-		S = NEW_INT(m * 2);
-		INT_vec_zero(S, m * 2);
+		S = NEW_int(m * 2);
+		int_vec_zero(S, m * 2);
 		for (i = 0; i < m; i++) {
 			S[i * 2 + 0] = Data[i * n + h];
 			if (h < 9 - 1) {
@@ -225,19 +225,19 @@ int main(int argc, char **argv)
 				}
 			}
 		cout << "Series " << h << ":" << endl;
-		INT_matrix_print(S, m, 2);
+		int_matrix_print(S, m, 2);
 
 		Series[h] = S;
 		}
 #else
 	double *S;
-	INT *f_NA;
-	INT h;
+	int *f_NA;
+	int h;
 
 	if (f_series) {
 		S = new double [series_len * (m + 1)];
-		f_NA = new INT [series_len * (m + 1)];
-		//INT_vec_zero(S, m * 2);
+		f_NA = new int [series_len * (m + 1)];
+		//int_vec_zero(S, m * 2);
 		for (h = 0; h < m; h++) {
 			for (i = 0; i < series_len; i++) {
 				f_NA[i * (m + 1) + 0] = FALSE;
@@ -253,8 +253,8 @@ int main(int argc, char **argv)
 		}
 	else if (f_series_by_values) {
 		S = new double [series_len * (m + 1)];
-		f_NA = new INT [series_len * (m + 1)];
-		//INT_vec_zero(S, m * 2);
+		f_NA = new int [series_len * (m + 1)];
+		//int_vec_zero(S, m * 2);
 		for (h = 0; h < m; h++) {
 			for (i = 0; i < series_len; i++) {
 				S[i * (m + 1) + 0] = values[i];
@@ -270,8 +270,8 @@ int main(int argc, char **argv)
 		}
 	else {
 		S = new double [m * 2];
-		f_NA = new INT [m * 2];
-		//INT_vec_zero(S, m * 2);
+		f_NA = new int [m * 2];
+		//int_vec_zero(S, m * 2);
 		for (i = 0; i < m; i++) {
 			Sp->get_value_double_or_NA(i + 1, Idx1[0], S[i * 2 + 0], f_NA[i * 2 + 0]);
 			//S[i * 2 + 0] = Sp->get_double(i + 1, Idx1[0]);

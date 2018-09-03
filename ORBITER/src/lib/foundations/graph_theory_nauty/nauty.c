@@ -1122,30 +1122,30 @@ writemarker(int level, int tv, int index, int tcellsize,
 {
     char s[30];
 
-#define PUTINT(i) itos(i,s); putstring(outfile,s)
+#define PUTint(i) itos(i,s); putstring(outfile,s)
 #define PUTSTR(x) putstring(outfile,x)
 
     PUTSTR("level ");
-    PUTINT(level);
+    PUTint(level);
     PUTSTR(":  ");
     if (numcells != numorbits)
     {
-        PUTINT(numcells);
+        PUTint(numcells);
         PUTSTR(" cell");
         if (numcells == 1) PUTSTR("; ");
         else               PUTSTR("s; ");
     }
-    PUTINT(numorbits);
+    PUTint(numorbits);
     PUTSTR(" orbit");
     if (numorbits == 1) PUTSTR("; ");
     else                PUTSTR("s; ");
-    PUTINT(tv+labelorg);
+    PUTint(tv+labelorg);
     PUTSTR(" fixed; index ");
-    PUTINT(index);
+    PUTint(index);
     if (tcellsize != index)
     {
         PUTSTR("/");
-        PUTINT(tcellsize);
+        PUTint(tcellsize);
     }
     PUTSTR("\n");
 }

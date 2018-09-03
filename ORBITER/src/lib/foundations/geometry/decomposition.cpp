@@ -30,7 +30,7 @@ void decomposition::null()
 void decomposition::freeself()
 {
 	if (Inc) {
-		FREE_INT(Inc);
+		FREE_int(Inc);
 		}
 	if (I) {
 		delete I;
@@ -39,23 +39,23 @@ void decomposition::freeself()
 		delete Stack;
 		}
 	if (f_has_decomposition) {
-		FREE_INT(row_classes);
-		FREE_INT(row_class_inv);
-		FREE_INT(col_classes);
-		FREE_INT(col_class_inv);
+		FREE_int(row_classes);
+		FREE_int(row_class_inv);
+		FREE_int(col_classes);
+		FREE_int(col_class_inv);
 		}
 	if (f_has_row_scheme) {
-		FREE_INT(row_scheme);
+		FREE_int(row_scheme);
 		}
 	if (f_has_col_scheme) {
-		FREE_INT(col_scheme);
+		FREE_int(col_scheme);
 		}
 	null();
 }
 
-void decomposition::init_inc_and_stack(incidence_structure *Inc, partitionstack *Stack, INT verbose_level)
+void decomposition::init_inc_and_stack(incidence_structure *Inc, partitionstack *Stack, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "decomposition::init_inc_and_stack" << endl;
@@ -69,26 +69,26 @@ void decomposition::init_inc_and_stack(incidence_structure *Inc, partitionstack 
 		}
 }
 
-void decomposition::init_incidence_matrix(INT m, INT n, INT *M, INT verbose_level)
+void decomposition::init_incidence_matrix(int m, int n, int *M, int verbose_level)
 // copies the incidence matrix
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "decomposition::init_incidence_matrix" << endl;
 		}
 	nb_points = m;
 	nb_blocks = n;
-	Inc = NEW_INT(nb_points * nb_blocks);
+	Inc = NEW_int(nb_points * nb_blocks);
 	for (i = 0; i < nb_points * nb_blocks; i++) {
 		Inc[i] = M[i];
 		}
 }
 
-void decomposition::setup_default_partition(INT verbose_level)
+void decomposition::setup_default_partition(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "decomposition::setup_default_partition" << endl;
@@ -115,11 +115,11 @@ void decomposition::setup_default_partition(INT verbose_level)
 		}
 }
 
-void decomposition::compute_TDO(INT max_depth, INT verbose_level)
-// put max_depth = INT_MAX if you want full depth
+void decomposition::compute_TDO(int max_depth, int verbose_level)
+// put max_depth = int_MAX if you want full depth
 {
-	INT f_v = (verbose_level >= 1);
-	//INT depth = INT_MAX;
+	int f_v = (verbose_level >= 1);
+	//int depth = int_MAX;
 
 	if (f_v) {
 		cout << "decomposition::compute_TDO" << endl;
@@ -149,9 +149,9 @@ void decomposition::compute_TDO(INT max_depth, INT verbose_level)
 		
 }
 
-void decomposition::get_row_scheme(INT verbose_level)
+void decomposition::get_row_scheme(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "decomposition::get_row_scheme" << endl;
@@ -162,7 +162,7 @@ void decomposition::get_row_scheme(INT verbose_level)
 		exit(1);
 		}
 	f_has_row_scheme = TRUE;
-	row_scheme = NEW_INT(nb_row_classes * nb_col_classes);
+	row_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	I->get_row_decomposition_scheme(*Stack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
@@ -172,9 +172,9 @@ void decomposition::get_row_scheme(INT verbose_level)
 		}
 }
 
-void decomposition::get_col_scheme(INT verbose_level)
+void decomposition::get_col_scheme(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "decomposition::get_col_scheme" << endl;
@@ -185,7 +185,7 @@ void decomposition::get_col_scheme(INT verbose_level)
 		exit(1);
 		}
 	f_has_col_scheme = TRUE;
-	col_scheme = NEW_INT(nb_row_classes * nb_col_classes);
+	col_scheme = NEW_int(nb_row_classes * nb_col_classes);
 	I->get_col_decomposition_scheme(*Stack, 
 		row_classes, row_class_inv, nb_row_classes,
 		col_classes, col_class_inv, nb_col_classes, 
@@ -197,10 +197,10 @@ void decomposition::get_col_scheme(INT verbose_level)
 
 void decomposition::print_row_decomposition_tex(
 	ostream &ost,
-	INT f_enter_math, INT f_print_subscripts,
-	INT verbose_level)
+	int f_enter_math, int f_print_subscripts,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "decomposition::print_row_decomposition_tex" << endl;
@@ -221,10 +221,10 @@ void decomposition::print_row_decomposition_tex(
 
 void decomposition::print_column_decomposition_tex(
 	ostream &ost,
-	INT f_enter_math, INT f_print_subscripts,
-	INT verbose_level)
+	int f_enter_math, int f_print_subscripts,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "decomposition::print_column_decomposition_tex" << endl;

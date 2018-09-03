@@ -25,10 +25,10 @@ void print_usage()
 
 int main(int argc, char **argv)
 {
-	INT t0 = os_ticks();
-	INT verbose_level = 0;
-	INT i;
-	INT d, n, q, epsilon;
+	int t0 = os_ticks();
+	int verbose_level = 0;
+	int i;
+	int d, n, q, epsilon;
 
 	if (argc <= 3) {
 		print_usage();
@@ -45,11 +45,11 @@ int main(int argc, char **argv)
 	d = atoi(argv[argc - 2]);
 	q = atoi(argv[argc - 1]);
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	n = d - 1; // projective dimension
 		
-	INT m, m1, m2, nb, nb2, nb3, Sbar, N1;
+	int m, m1, m2, nb, nb2, nb3, Sbar, N1;
 	
 	nb3 = nb_pts_Qepsilon(epsilon, n, q);
 	
@@ -89,16 +89,16 @@ int main(int argc, char **argv)
 	cout << "nb3=" << nb3 << endl;
 	test_Orthogonal(epsilon, n, q);
 	
-	INT c1 = 1, c2 = 0, c3 = 0;
-	INT N, j;
+	int c1 = 1, c2 = 0, c3 = 0;
+	int N, j;
 	finite_field GFq;
-	INT *v, *L;
+	int *v, *L;
 
 	GFq.init(q, verbose_level);
 	N = nb_pts_Qepsilon(epsilon, n, q);
 
-	v = NEW_INT(d);
-	L = NEW_INT(N);
+	v = NEW_int(d);
+	L = NEW_int(N);
 
 	if (f_v) {
 		cout << "orthogonal rank : point : projective rank" << endl;
@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 		L[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -130,12 +130,12 @@ int main(int argc, char **argv)
 	cout << endl;
 
 	char fname[1000];
-	sprintf(fname, "Q%s_%ld_%ld.txt", plus_minus_letter(epsilon), n, q);
+	sprintf(fname, "Q%s_%d_%d.txt", plus_minus_letter(epsilon), n, q);
 	write_set_to_file(fname, L, N, verbose_level);
 
 
-	FREE_INT(v);
-	FREE_INT(L);
+	FREE_int(v);
+	FREE_int(L);
 	time_check(cout, t0);
 	cout << endl;
 }

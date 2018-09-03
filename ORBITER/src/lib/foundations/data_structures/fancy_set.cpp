@@ -26,41 +26,41 @@ void fancy_set::null()
 void fancy_set::freeself()
 {
 	if (set) {
-		FREE_INT(set);
+		FREE_int(set);
 		}
 	if (set_inv) {
-		FREE_INT(set_inv);
+		FREE_int(set_inv);
 		}
 	null();
 }
 
-void fancy_set::init(INT n, INT verbose_level)
+void fancy_set::init(int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "fancy_set::init n=" << n << endl;
 		}
 	fancy_set::n = n;
 	fancy_set::k = 0;
-	set = NEW_INT(n);
-	set_inv = NEW_INT(n);
+	set = NEW_int(n);
+	set_inv = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		set[i] = i;
 		set_inv[i] = i;
 		}
 }
 
-void fancy_set::init_with_set(INT n, INT k, INT *subset, INT verbose_level)
+void fancy_set::init_with_set(int n, int k, int *subset, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "fancy_set::init_with_set n=" << n << " k=" << k << endl;
 		cout << "set=";
-		INT_set_print(cout, subset, k);
+		int_set_print(cout, subset, k);
 		cout << endl;
 		}
 	init(n, verbose_level - 1);
@@ -75,7 +75,7 @@ void fancy_set::init_with_set(INT n, INT k, INT *subset, INT verbose_level)
 
 void fancy_set::print()
 {
-	INT i;
+	int i;
 	
 	cout << "{ ";
 	for (i = 0; i < k; i++) {
@@ -93,9 +93,9 @@ void fancy_set::println()
 	cout << endl;
 }
 
-void fancy_set::swap(INT pos, INT a)
+void fancy_set::swap(int pos, int a)
 {
-	INT b, pos_a;
+	int b, pos_a;
 
 	pos_a = set_inv[a];
 	if (pos_a == pos)
@@ -107,9 +107,9 @@ void fancy_set::swap(INT pos, INT a)
 	set_inv[b] = pos_a;
 }
 
-INT fancy_set::is_contained(INT a)
+int fancy_set::is_contained(int a)
 {
-	INT pos_a;
+	int pos_a;
 
 	pos_a = set_inv[a];
 	if (pos_a < k) {
@@ -122,7 +122,7 @@ INT fancy_set::is_contained(INT a)
 
 void fancy_set::copy_to(fancy_set *to)
 {
-	INT i;
+	int i;
 	
 	if (to->n != n) {
 		cout << "to->n != n" << endl;
@@ -137,7 +137,7 @@ void fancy_set::copy_to(fancy_set *to)
 		}
 }
 
-void fancy_set::add_element(INT elt)
+void fancy_set::add_element(int elt)
 {
 	if (!is_contained(elt)) {
 		swap(k, elt);
@@ -145,18 +145,18 @@ void fancy_set::add_element(INT elt)
 		}
 }
 
-void fancy_set::add_elements(INT *elts, INT nb)
+void fancy_set::add_elements(int *elts, int nb)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb; i++) {
 		add_element(elts[i]);
 		}
 }
 
-void fancy_set::delete_elements(INT *elts, INT nb)
+void fancy_set::delete_elements(int *elts, int nb)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb; i++) {
 		if (is_contained(elts[i])) {
@@ -166,7 +166,7 @@ void fancy_set::delete_elements(INT *elts, INT nb)
 		}
 }
 
-void fancy_set::delete_element(INT elt)
+void fancy_set::delete_element(int elt)
 {
 	if (is_contained(elt)) {
 		swap(k - 1, elt);
@@ -174,9 +174,9 @@ void fancy_set::delete_element(INT elt)
 		}
 }
 
-void fancy_set::select_subset(INT *elts, INT nb)
+void fancy_set::select_subset(int *elts, int nb)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb; i++) {
 		if (!is_contained(elts[i])) {
@@ -188,9 +188,9 @@ void fancy_set::select_subset(INT *elts, INT nb)
 	k = nb;
 }
 
-void fancy_set::intersect_with(INT *elts, INT nb)
+void fancy_set::intersect_with(int *elts, int nb)
 {
-	INT i, l;
+	int i, l;
 	
 	l = 0;
 	for (i = 0; i < nb; i++) {
@@ -204,7 +204,7 @@ void fancy_set::intersect_with(INT *elts, INT nb)
 
 void fancy_set::subtract_set(fancy_set *set_to_subtract)
 {
-	INT i, a;
+	int i, a;
 	
 	if (k < set_to_subtract->k) {
 		for (i = 0; i < k; i++) {
@@ -229,16 +229,16 @@ void fancy_set::subtract_set(fancy_set *set_to_subtract)
 
 void fancy_set::sort()
 {
-	INT i, a;
+	int i, a;
 	
-	INT_vec_heapsort(set, k);
+	int_vec_heapsort(set, k);
 	for (i = 0; i < k; i++) {
 		a = set[i];
 		set_inv[a] = i;
 		}
 }
 	
-INT fancy_set::compare_lexicographically(fancy_set *second_set)
+int fancy_set::compare_lexicographically(fancy_set *second_set)
 {
 	sort();
 	second_set->sort();
@@ -248,7 +248,7 @@ INT fancy_set::compare_lexicographically(fancy_set *second_set)
 
 void fancy_set::complement(fancy_set *compl_set)
 {
-	INT i, a;
+	int i, a;
 	
 	if (compl_set->n != n) {
 		cout << "fancy_set::complement compl_set->n != n" << endl;
@@ -267,9 +267,9 @@ void fancy_set::complement(fancy_set *compl_set)
 		}
 }
 
-INT fancy_set::is_subset(fancy_set *set2)
+int fancy_set::is_subset(fancy_set *set2)
 {
-	INT i, a;
+	int i, a;
 	
 	if (set2->k < k)
 		return FALSE;
@@ -281,7 +281,7 @@ INT fancy_set::is_subset(fancy_set *set2)
 	return TRUE;
 }
 
-INT fancy_set::is_equal(fancy_set *set2)
+int fancy_set::is_equal(fancy_set *set2)
 {
 	if (is_subset(set2) && k == set2->k) {
 		return TRUE;

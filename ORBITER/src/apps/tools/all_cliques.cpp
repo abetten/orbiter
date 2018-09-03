@@ -12,41 +12,41 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 void use_group(const char *fname, colored_graph *CG, 
-	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
-	INT f_sideways, INT nb_print_level, INT *print_level, 
-	INT verbose_level);
-void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level);
-void save_orbits_at_level(const char *fname, poset_classification *gen, INT level, INT verbose_level);
-void early_test_function_cliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
-void early_test_function_cocliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
+	int f_all_cliques, int f_all_cocliques, int f_draw_poset, int f_embedded, 
+	int f_sideways, int nb_print_level, int *print_level, 
+	int verbose_level);
+void print_orbits_at_level(poset_classification *gen, int level, int verbose_level);
+void save_orbits_at_level(const char *fname, poset_classification *gen, int level, int verbose_level);
+void early_test_function_cliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
+void early_test_function_cocliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;	
+	int verbose_level = 0;
+	int f_file = FALSE;	
 	const char *fname = NULL;
-	INT f_use_group = FALSE;
-	INT f_all_cliques = FALSE;
-	INT f_all_cliques_of_size = FALSE;
-	INT clique_size = 0;
+	int f_use_group = FALSE;
+	int f_all_cliques = FALSE;
+	int f_all_cliques_of_size = FALSE;
+	int clique_size = 0;
 	const char *solution_fname = NULL;
-	INT f_all_cocliques = FALSE;
-	INT f_draw_poset = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT nb_print_level = 0;
-	INT print_level[1000];
+	int f_all_cocliques = FALSE;
+	int f_draw_poset = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int nb_print_level = 0;
+	int print_level[1000];
 
 	
 	cout << argv[0] << endl;
@@ -120,13 +120,13 @@ int main(int argc, char **argv)
 
 	else {
 		if (f_all_cliques_of_size) {
-			INT nb_sol;
-			INT decision_step_counter;
+			int nb_sol;
+			int decision_step_counter;
 			
 			CG->all_cliques_of_size_k_ignore_colors_and_write_solutions_to_file(
 				clique_size /* target_depth */, 
 				solution_fname, 
-				FALSE /* f_restrictions */, NULL /* INT *restrictions */, 
+				FALSE /* f_restrictions */, NULL /* int *restrictions */, 
 				nb_sol, decision_step_counter, 
 				verbose_level - 2);
 
@@ -149,12 +149,12 @@ int main(int argc, char **argv)
 
 
 void use_group(const char *fname, colored_graph *CG, 
-	INT f_all_cliques, INT f_all_cocliques, INT f_draw_poset, INT f_embedded, 
-	INT f_sideways, INT nb_print_level, INT *print_level, 
-	INT verbose_level)
+	int f_all_cliques, int f_all_cocliques, int f_draw_poset, int f_embedded, 
+	int f_sideways, int nb_print_level, int *print_level, 
+	int verbose_level)
 {
-	INT i, j;
-	INT *Adj;
+	int i, j;
+	int *Adj;
 	action *Aut;
 	longinteger_object ago;
 
@@ -162,8 +162,8 @@ void use_group(const char *fname, colored_graph *CG,
 	//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
 
 
-	Adj = NEW_INT(CG->nb_points * CG->nb_points);
-	INT_vec_zero(Adj, CG->nb_points * CG->nb_points);
+	Adj = NEW_int(CG->nb_points * CG->nb_points);
+	int_vec_zero(Adj, CG->nb_points * CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
 		for (j = i + 1; j < CG->nb_points; j++) {
 			if (CG->is_adjacent(i, j)) {
@@ -182,10 +182,10 @@ void use_group(const char *fname, colored_graph *CG,
 	cout << "ago=" << ago << endl;
 
 	action *Aut_on_points;
-	INT *points;
+	int *points;
 
 	Aut_on_points = NEW_OBJECT(action);
-	points = NEW_INT(CG->nb_points);
+	points = NEW_int(CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
 		points[i] = i;
 		}
@@ -215,7 +215,7 @@ void use_group(const char *fname, colored_graph *CG,
 
 	char prefix[1000];
 	poset_classification *gen;
-	INT nb_orbits, depth;
+	int nb_orbits, depth;
 
 	if (f_all_cliques) {
 
@@ -292,27 +292,27 @@ void use_group(const char *fname, colored_graph *CG,
 			{
 			char fname[1000];
 
-			sprintf(fname, "reps_at_level_%ld.txt", print_level[i]);
+			sprintf(fname, "reps_at_level_%d.txt", print_level[i]);
 			save_orbits_at_level(fname, gen, print_level[i], verbose_level);
 			}
 		
 			}
 		}
 
-	FREE_INT(Adj);
-	FREE_INT(points);
+	FREE_int(Adj);
+	FREE_int(points);
 	FREE_OBJECT(Aut_on_points);
 	FREE_OBJECT(Aut);
 }
 
-void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_level)
+void print_orbits_at_level(poset_classification *gen, int level, int verbose_level)
 {
-	INT *set;
+	int *set;
 	longinteger_object go, ol, ago;
 	longinteger_domain D;
-	INT i, nb_orbits;
+	int i, nb_orbits;
 
-	set = NEW_INT(level);
+	set = NEW_int(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -332,25 +332,25 @@ void print_orbits_at_level(poset_classification *gen, INT level, INT verbose_lev
 
 		
 		cout << "Orbit " << i << " is the set ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 
 		
 		}
 
-	FREE_INT(set);
+	FREE_int(set);
 }
 
 void save_orbits_at_level(const char *fname,
-		poset_classification *gen, INT level, INT verbose_level)
+		poset_classification *gen, int level, int verbose_level)
 {
-	INT *set;
+	int *set;
 	//longinteger_object go, ol, ago;
 	//longinteger_domain D;
-	INT i, j, nb_orbits;
+	int i, j, nb_orbits;
 
-	set = NEW_INT(level);
+	set = NEW_int(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -385,7 +385,7 @@ void save_orbits_at_level(const char *fname,
 
 		
 		cout << "Orbit " << i << " is the set ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 #endif
@@ -396,16 +396,16 @@ void save_orbits_at_level(const char *fname,
 	}
 	cout << "Written file " << fname << " of size " << file_size(fname) << endl;
 
-	FREE_INT(set);
+	FREE_int(set);
 }
 
-void early_test_function_cliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_function_cliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_function for set ";
@@ -424,13 +424,13 @@ void early_test_function_cliques(INT *S, INT len,
 		}
 }
 
-void early_test_function_cocliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_function_cocliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_function for set ";

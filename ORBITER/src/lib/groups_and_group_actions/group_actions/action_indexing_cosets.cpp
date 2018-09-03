@@ -8,11 +8,11 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
-void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_level)
+void action::coset_unrank(sims *G, sims *U, int rank, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, base_idx = 0, base_pt, rank0, nb, rem_INT, len, k, elt_k;
-	INT *Elt_gk, *Elt1, *Elt2;
+	int f_v = (verbose_level >= 1);
+	int i, base_idx = 0, base_pt, rank0, nb, rem_int, len, k, elt_k;
+	int *Elt_gk, *Elt1, *Elt2;
 	longinteger_domain D;
 	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
@@ -23,9 +23,9 @@ void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_leve
 		print_info();
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	Elt_gk = NEW_INT(elt_size_in_INT);
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
+	Elt_gk = NEW_int(elt_size_in_int);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
 	
 	G->group_order(G_order);
 
@@ -81,7 +81,7 @@ void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_leve
 			exit(1);
 			}
 #if 0
-		G->element_unrank_INT(rank, Elt);
+		G->element_unrank_int(rank, Elt);
 		if (f_v) {
 			cout << "the element with rank " << rank << " is:" << endl;
 			element_print_quick(Elt, cout);
@@ -98,36 +98,36 @@ void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_leve
 		cout << "U->orbit_len[base_idx]=" << U->orbit_len[base_idx] << endl;
 		}
 
-	D.integral_division_by_INT(G_order, G->orbit_len[base_idx], G0_order, rem_INT);
+	D.integral_division_by_int(G_order, G->orbit_len[base_idx], G0_order, rem_int);
 
 	if (f_v) {
 		cout << "G0_order=" << G0_order << endl;
 		}
 
-	INT *orbit;
-	INT orbit_len;
+	int *orbit;
+	int orbit_len;
 	
 	orbit_len = G->orbit_len[base_idx];
 	
 
 	// orbit is the G-orbit of base_pt
 
-	orbit = NEW_INT(orbit_len);
-	INT_vec_copy(G->orbit[base_idx], orbit, orbit_len);
+	orbit = NEW_int(orbit_len);
+	int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
 #if 0
 	for (i = 0; i < orbit_len; i++) {
 		orbit[i] = G->orbit[base_idx][i];
 		}
 #endif
-	INT_vec_heapsort(orbit, orbit_len);
+	int_vec_heapsort(orbit, orbit_len);
 
 	if (f_v) {
 		cout << "orbit of length " << orbit_len << ":";
-		INT_vec_print(cout, orbit, orbit_len);
+		int_vec_print(cout, orbit, orbit_len);
 		cout << endl;
 		}
 
-	INT nb_U_orbits_on_subset;
+	int nb_U_orbits_on_subset;
 	
 	G_orb.compute_point_orbit(base_pt, 0 /* verbose_level - 2*/);
 	if (f_v) {
@@ -161,7 +161,7 @@ void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_leve
 			cout << "action::coset_unrank: remainder is not zero, something is wrong" << endl;
 			exit(1);
 			}
-		nb = d.as_INT();
+		nb = d.as_int();
 
 			// nb = length of k-th U-orbit * |G0| / |U|
 
@@ -221,7 +221,7 @@ void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_leve
 				}
 			G_orb.point_stabilizer(this, G_order, Gk, 0, 0/*verbose_level - 2*/);
 			
-			//D.integral_division_by_INT(U_order, len, Uk_order, rem_INT);
+			//D.integral_division_by_int(U_order, len, Uk_order, rem_int);
 			//cout << "expecting stabilizer of " << k << "-th point in U to have order " << Uk_order << endl;
 			U_orb.point_stabilizer(this, U_order, Uk, k, 0/*verbose_level - 2*/);
 
@@ -263,22 +263,22 @@ void action::coset_unrank(sims *G, sims *U, INT rank, INT *Elt, INT verbose_leve
 		}
 
 done2:
-	FREE_INT(orbit);
+	FREE_int(orbit);
 
 done:
 
-	FREE_INT(Elt_gk);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt_gk);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	
 }
 
-INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
+int action::coset_rank(sims *G, sims *U, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rank = 0;
-	INT i, base_idx = 0, base_pt, rank1, nb, rem_INT, len, k, kk, elt_k, im;
-	INT *Elt_gk, *Elt1, *Elt2, *Elt3, *Elt_u;
+	int f_v = (verbose_level >= 1);
+	int rank = 0;
+	int i, base_idx = 0, base_pt, rank1, nb, rem_int, len, k, kk, elt_k, im;
+	int *Elt_gk, *Elt1, *Elt2, *Elt3, *Elt_u;
 	longinteger_domain D;
 	longinteger_object G0_order, G_order, U_order, index, rem, a, b, c, d, Uk_order;
 	schreier G_orb, U_orb;
@@ -292,11 +292,11 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		cout << "in action:" << endl;
 		print_info();
 		}
-	Elt_gk = NEW_INT(elt_size_in_INT);
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
-	Elt3 = NEW_INT(elt_size_in_INT);
-	Elt_u = NEW_INT(elt_size_in_INT);
+	Elt_gk = NEW_int(elt_size_in_int);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	Elt_u = NEW_int(elt_size_in_int);
 	
 	G->group_order(G_order);
 
@@ -345,7 +345,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 			cout << "the groups are equal" << endl;
 			}
 #if 0
-		G->element_unrank_INT(rank, Elt);
+		G->element_unrank_int(rank, Elt);
 		if (f_v) {
 			cout << "the element with rank " << rank << " is:" << endl;
 			element_print_quick(Elt, cout);
@@ -362,34 +362,34 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		cout << "U->orbit_len[base_idx]=" << U->orbit_len[base_idx] << endl;
 		}
 
-	D.integral_division_by_INT(G_order, G->orbit_len[base_idx], G0_order, rem_INT);
+	D.integral_division_by_int(G_order, G->orbit_len[base_idx], G0_order, rem_int);
 
 	if (f_v) {
 		cout << "G0_order=" << G0_order << endl;
 		}
 
-	INT *orbit;
-	INT orbit_len;
+	int *orbit;
+	int orbit_len;
 	
 	orbit_len = G->orbit_len[base_idx];
 	
 
-	orbit = NEW_INT(orbit_len);
-	INT_vec_copy(G->orbit[base_idx], orbit, orbit_len);
+	orbit = NEW_int(orbit_len);
+	int_vec_copy(G->orbit[base_idx], orbit, orbit_len);
 #if 0
 	for (i = 0; i < orbit_len; i++) {
 		orbit[i] = G->orbit[base_idx][i];
 		}
 #endif
-	INT_vec_heapsort(orbit, orbit_len);
+	int_vec_heapsort(orbit, orbit_len);
 
 	if (f_v) {
 		cout << "G-orbit of length " << orbit_len << ":";
-		INT_vec_print(cout, orbit, orbit_len);
+		int_vec_print(cout, orbit, orbit_len);
 		cout << endl;
 		}
 
-	//INT nb_U_orbits_on_subset;
+	//int nb_U_orbits_on_subset;
 	
 	G_orb.compute_point_orbit(base_pt, 0 /* verbose_level - 2*/);
 	if (f_v) {
@@ -428,7 +428,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 			cout << "action::coset_rank: remainder is not zero, something is wrong" << endl;
 			exit(1);
 			}
-		nb = d.as_INT();
+		nb = d.as_int();
 		rank += nb;
 		}
 	if (f_v) {
@@ -442,7 +442,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		cout << "action::coset_rank: remainder is not zero, something is wrong" << endl;
 		exit(1);
 		}
-	nb = d.as_INT();
+	nb = d.as_int();
 	elt_k = U_orb.orbit[U_orb.orbit_first[k]];
 	if (f_v) {
 		cout << "elt_k=" << elt_k << endl;
@@ -504,7 +504,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		}
 	G_orb.point_stabilizer(this, G_order, Gk, 0, 0/*verbose_level - 2*/);
 			
-	//D.integral_division_by_INT(U_order, len, Uk_order, rem_INT);
+	//D.integral_division_by_int(U_order, len, Uk_order, rem_int);
 	//cout << "expecting stabilizer of " << k << "-th point in U to have order " << Uk_order << endl;
 	U_orb.point_stabilizer(this, U_order, Uk, k, 0/*verbose_level - 2*/);
 
@@ -535,7 +535,7 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 		}
 
 
-	INT im;
+	int im;
 	
 	im = element_image_of(elt_k, Elt2, 0);
 	if (im != elt_k) {
@@ -580,15 +580,15 @@ INT action::coset_rank(sims *G, sims *U, INT *Elt, INT verbose_level)
 	delete Uk;
 	}
 
-	FREE_INT(orbit);
+	FREE_int(orbit);
 
 done:
 
-	FREE_INT(Elt_gk);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt_u);
+	FREE_int(Elt_gk);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt_u);
 	return rank;	
 }
 

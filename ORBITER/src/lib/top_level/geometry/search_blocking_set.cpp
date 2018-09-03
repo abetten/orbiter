@@ -46,7 +46,7 @@ void search_blocking_set::null()
 
 void search_blocking_set::freeself()
 {
-	INT i;
+	int i;
 	
 	if (Line_intersections) {
 		FREE_OBJECTS(Line_intersections);
@@ -55,48 +55,48 @@ void search_blocking_set::freeself()
 		FREE_OBJECT(gen);
 		}
 	if (blocking_set) {
-		FREE_INT(blocking_set);
+		FREE_int(blocking_set);
 		}
 	if (sz) {
-		FREE_INT(sz);
+		FREE_int(sz);
 		}
 	if (active_set) {
 		FREE_OBJECT(active_set);
 		}
 	if (sz_active_set) {
-		FREE_INT(sz_active_set);
+		FREE_int(sz_active_set);
 		}
 	if (search_candidates) {
 		for (i = 0; i < max_search_depth; i++) {
 			if (search_candidates[i]) {
-				FREE_INT(search_candidates[i]);
+				FREE_int(search_candidates[i]);
 				search_candidates[i] = NULL;
 				}
 			}
-		FREE_PINT(search_candidates);
+		FREE_pint(search_candidates);
 		}
 	if (search_nb_candidates) {
-		FREE_INT(search_nb_candidates);
+		FREE_int(search_nb_candidates);
 		}
 	if (search_cur) {
-		FREE_INT(search_cur);
+		FREE_int(search_cur);
 		}
 	if (save_sz) {
 		for (i = 0; i < max_search_depth; i++) {
 			if (save_sz[i]) {
-				FREE_INT(save_sz[i]);
+				FREE_int(save_sz[i]);
 				save_sz[i] = NULL;
 				}
 			}
-		FREE_PINT(save_sz);
+		FREE_pint(save_sz);
 		}
 	null();
 }
 
-void search_blocking_set::init(incidence_structure *Inc, action *A, INT verbose_level)
+void search_blocking_set::init(incidence_structure *Inc, action *A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j;
+	int f_v = (verbose_level >= 1);
+	int j;
 	
 	if (f_v) {
 		cout << "search_blocking_set::init" << endl;
@@ -109,18 +109,18 @@ void search_blocking_set::init(incidence_structure *Inc, action *A, INT verbose_
 		Line_intersections[j].init(Inc->nb_rows, 0);
 		}
 
-	blocking_set = NEW_INT(Inc->nb_rows);
-	sz = NEW_INT(Inc->nb_cols);
+	blocking_set = NEW_int(Inc->nb_rows);
+	sz = NEW_int(Inc->nb_cols);
 
 	active_set = NEW_OBJECT(fancy_set);
 	active_set->init(Inc->nb_rows, 0);
-	sz_active_set = NEW_INT(Inc->nb_cols + 1);
+	sz_active_set = NEW_int(Inc->nb_cols + 1);
 }
 
-void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_level)
+void search_blocking_set::find_partial_blocking_sets(int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT t0;
+	int f_v = (verbose_level >= 1);
+	int t0;
 
 	t0 = os_ticks();
 
@@ -164,7 +164,7 @@ void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_leve
 	gen->print_function_data = this;
 #endif	
 
-	INT nb_poset_orbit_nodes = 1000;
+	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
 		cout << "find_partial_blocking_sets calling gen->init_poset_orbit_node" << endl;
@@ -175,10 +175,10 @@ void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_leve
 		}
 	gen->root[0].init_root_node(gen, verbose_level - 1);
 	
-	INT schreier_depth = gen->depth;
-	INT f_use_invariant_subset_if_available = TRUE;
-	//INT f_implicit_fusion = FALSE;
-	INT f_debug = FALSE;
+	int schreier_depth = gen->depth;
+	int f_use_invariant_subset_if_available = TRUE;
+	//int f_implicit_fusion = FALSE;
+	int f_debug = FALSE;
 	
 	gen->f_max_depth = TRUE;
 	gen->max_depth = depth;
@@ -198,11 +198,11 @@ void search_blocking_set::find_partial_blocking_sets(INT depth, INT verbose_leve
 		}
 }
 
-INT search_blocking_set::test_level(INT depth, INT verbose_level)
+int search_blocking_set::test_level(int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_OK;
-	INT f, nb_orbits, h;
+	int f_v = (verbose_level >= 1);
+	int f_OK;
+	int f, nb_orbits, h;
 	
 	if (f_v) {
 		cout << "search_blocking_set::test_level: testing all partial blocking sets at level " << depth << endl;
@@ -218,7 +218,7 @@ INT search_blocking_set::test_level(INT depth, INT verbose_level)
 		
 		if (f_v) {
 			cout << "testing set " << h << " / " << nb_orbits << " : ";
-			INT_vec_print(cout, blocking_set, depth);
+			int_vec_print(cout, blocking_set, depth);
 			cout << endl;
 			}
 		
@@ -244,15 +244,15 @@ INT search_blocking_set::test_level(INT depth, INT verbose_level)
 	return FALSE;
 }
 
-INT search_blocking_set::test_blocking_set(INT len, INT *S, INT verbose_level)
+int search_blocking_set::test_blocking_set(int len, int *S, int verbose_level)
 // computes all Line_intersections[] sets based on the set S[len],
 // uses Inc->lines_on_point[]
 // tests if Line_intersections[j] is greater than zero 
 // but less than Inc->nb_points_on_line[j]  for all j
 {
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
-	INT i, j, h, a;
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int i, j, h, a;
 	
 	if (f_v) {
 		cout << "search_blocking_set::test_blocking_set checking set of points ";
@@ -320,11 +320,11 @@ done:
 	return f_OK;
 }
 
-INT search_blocking_set::test_blocking_set_upper_bound_only(INT len, INT *S, INT verbose_level)
+int search_blocking_set::test_blocking_set_upper_bound_only(int len, int *S, int verbose_level)
 {
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
-	INT i, j, h, a;
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int i, j, h, a;
 	
 	if (f_v) {
 		cout << "search_blocking_set::test_blocking_set_upper_bound_only set of points ";
@@ -388,10 +388,10 @@ done:
 }
 
 
-void search_blocking_set::search_for_blocking_set(INT input_no, INT level, INT f_all, INT verbose_level)
+void search_blocking_set::search_for_blocking_set(int input_no, int level, int f_all, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f, nb_orbits, h, u, i, a, b, j;
+	int f_v = (verbose_level >= 1);
+	int f, nb_orbits, h, u, i, a, b, j;
 	
 	if (f_v) {
 		cout << "search_blocking_set::search_for_blocking_set: input_no=" << input_no << " testing all partial blocking sets at level " << level << endl;
@@ -399,13 +399,13 @@ void search_blocking_set::search_for_blocking_set(INT input_no, INT level, INT f
 		}
 
 	max_search_depth = Inc->nb_rows - level;
-	search_candidates = NEW_PINT(max_search_depth);
-	search_nb_candidates = NEW_INT(max_search_depth);
-	search_cur = NEW_INT(max_search_depth);
-	save_sz = NEW_PINT(max_search_depth);
+	search_candidates = NEW_pint(max_search_depth);
+	search_nb_candidates = NEW_int(max_search_depth);
+	search_cur = NEW_int(max_search_depth);
+	save_sz = NEW_pint(max_search_depth);
 	for (i = 0; i < max_search_depth; i++) {
-		search_candidates[i] = NEW_INT(Inc->nb_rows);
-		save_sz[i] = NEW_INT(Inc->nb_cols);
+		search_candidates[i] = NEW_int(Inc->nb_rows);
+		save_sz[i] = NEW_int(Inc->nb_cols);
 		}
 
 
@@ -428,7 +428,7 @@ void search_blocking_set::search_for_blocking_set(INT input_no, INT level, INT f
 		
 		if (f_v) {
 			cout << "input_no " << input_no << " level " << level << " testing set " << h << " / " << nb_orbits << " : ";
-			INT_vec_print(cout, blocking_set, level);
+			int_vec_print(cout, blocking_set, level);
 			cout << endl;
 			}
 		
@@ -481,15 +481,15 @@ void search_blocking_set::search_for_blocking_set(INT input_no, INT level, INT f
 		}
 }
 
-INT search_blocking_set::recursive_search_for_blocking_set(INT input_no, INT starter_level, INT level, INT verbose_level)
+int search_blocking_set::recursive_search_for_blocking_set(int input_no, int starter_level, int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j;
-	INT t0_first, t0_len, t, line_idx, i, a, b;
+	int f_v = (verbose_level >= 1);
+	int j;
+	int t0_first, t0_len, t, line_idx, i, a, b;
 
 	if (f_v) {
 		cout << "search_blocking_set::recursive_search_for_blocking_set input_no = " << input_no << " level = " << level <<  " sz_active_set = " << active_set->k << endl;
-		INT_vec_print(cout, blocking_set, starter_level + level);
+		int_vec_print(cout, blocking_set, starter_level + level);
 		cout << endl;
 		}
 	if (f_blocking_set_size_desired) {
@@ -527,7 +527,7 @@ INT search_blocking_set::recursive_search_for_blocking_set(INT input_no, INT sta
 	t = C.data_sorted[t0_first];
 	if (t) {
 		cout << "found blocking set of size " << starter_level + level << " : ";
-		INT_vec_print(cout, blocking_set, starter_level + level);
+		int_vec_print(cout, blocking_set, starter_level + level);
 		cout << " line type = ";
 		C.print(FALSE /*f_backwards*/);
 		cout << " : solution no " << nb_solutions + 1;
@@ -610,18 +610,18 @@ INT search_blocking_set::recursive_search_for_blocking_set(INT input_no, INT sta
 	return TRUE;
 }
 
-void search_blocking_set::save_line_intersection_size(INT level)
+void search_blocking_set::save_line_intersection_size(int level)
 {
-	INT j;
+	int j;
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		save_sz[level][j] = Line_intersections[j].k;
 		}
 }
 
-void search_blocking_set::restore_line_intersection_size(INT level)
+void search_blocking_set::restore_line_intersection_size(int level)
 {
-	INT j;
+	int j;
 
 	for (j = 0; j < Inc->nb_cols; j++) {
 		Line_intersections[j].k = save_sz[level][j];
@@ -629,11 +629,11 @@ void search_blocking_set::restore_line_intersection_size(INT level)
 }
 
 
-INT callback_check_partial_blocking_set(INT len, INT *S, void *data, INT verbose_level)
+int callback_check_partial_blocking_set(int len, int *S, void *data, int verbose_level)
 {
 	search_blocking_set *SBS = (search_blocking_set *) data;
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "check_partial_blocking_set: checking set of points ";

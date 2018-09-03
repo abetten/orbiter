@@ -20,13 +20,13 @@ homogeneous_polynomial_domain::~homogeneous_polynomial_domain()
 
 void homogeneous_polynomial_domain::freeself()
 {
-	INT i;
+	int i;
 	
 	if (v) {
-		FREE_INT(v);
+		FREE_int(v);
 		}
 	if (Monomials) {
-		FREE_INT(Monomials);
+		FREE_int(Monomials);
 		}
 	if (symbols) {
 		for (i = 0; i < n; i++) {
@@ -41,40 +41,40 @@ void homogeneous_polynomial_domain::freeself()
 		FREE_pchar(symbols_latex);
 		}
 	if (Variables) {
-		FREE_INT(Variables);
+		FREE_int(Variables);
 		}
 	if (Affine) {
-		FREE_INT(Affine);
+		FREE_int(Affine);
 		}
 	if (Affine_to_monomial) {
-		FREE_INT(Affine_to_monomial);
+		FREE_int(Affine_to_monomial);
 		}
 	if (coeff2) {
-		FREE_INT(coeff2);
+		FREE_int(coeff2);
 		}
 	if (coeff3) {
-		FREE_INT(coeff3);
+		FREE_int(coeff3);
 		}
 	if (coeff4) {
-		FREE_INT(coeff4);
+		FREE_int(coeff4);
 		}
 	if (factors) {
-		FREE_INT(factors);
+		FREE_int(factors);
 		}
 	if (my_affine) {
-		FREE_INT(my_affine);
+		FREE_int(my_affine);
 		}
 	if (P) {
 		FREE_OBJECT(P);
 		}
 	if (base_cols) {
-		FREE_INT(base_cols);
+		FREE_int(base_cols);
 		}
 	if (type1) {
-		FREE_INT(type1);
+		FREE_int(type1);
 		}
 	if (type2) {
-		FREE_INT(type2);
+		FREE_int(type2);
 		}
 	null();
 }
@@ -100,10 +100,10 @@ void homogeneous_polynomial_domain::null()
 }
 
 void homogeneous_polynomial_domain::init(finite_field *F,
-		INT n, INT degree, INT f_init_incidence_structure,
-		INT verbose_level)
+		int n, int degree, int f_init_incidence_structure,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init" << endl;
@@ -113,18 +113,18 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	homogeneous_polynomial_domain::n = n;
 	homogeneous_polynomial_domain::degree = degree;
 	
-	v = NEW_INT(n);
-	type1 = NEW_INT(degree + 1);
-	type2 = NEW_INT(degree + 1);
+	v = NEW_int(n);
+	type1 = NEW_int(degree + 1);
+	type2 = NEW_int(degree + 1);
 
 	make_monomials(verbose_level);
 	
-	coeff2 = NEW_INT(nb_monomials);
-	coeff3 = NEW_INT(nb_monomials);
-	coeff4 = NEW_INT(nb_monomials);
-	factors = NEW_INT(degree);
+	coeff2 = NEW_int(nb_monomials);
+	coeff3 = NEW_int(nb_monomials);
+	coeff4 = NEW_int(nb_monomials);
+	factors = NEW_int(degree);
 
-	my_affine = NEW_INT(degree);
+	my_affine = NEW_int(degree);
 
 
 
@@ -138,7 +138,7 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init after P->init" << endl;
 		}
-	base_cols = NEW_INT(nb_monomials);
+	base_cols = NEW_int(nb_monomials);
 	
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::init done" << endl;
@@ -146,16 +146,16 @@ void homogeneous_polynomial_domain::init(finite_field *F,
 	
 }
 
-void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
+void homogeneous_polynomial_domain::make_monomials(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a, h, idx, t;
+	int f_v = (verbose_level >= 1);
+	int i, j, a, h, idx, t;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::make_monomials" << endl;
 		}
 	
-	nb_monomials = INT_n_choose_k(n + degree - 1, n - 1);
+	nb_monomials = int_n_choose_k(n + degree - 1, n - 1);
 
 	diophant *D;
 
@@ -173,14 +173,14 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 				"We found " << D->_resultanz << " monomials" << endl;
 		}
 
-	INT nb_sol;
+	int nb_sol;
 
 	D->get_solutions_full_length(Monomials, nb_sol, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "There are " << nb_sol << " monomials." << endl;
 
 		if (nb_sol < 100) {
-			INT_matrix_print(Monomials, nb_sol, n);
+			int_matrix_print(Monomials, nb_sol, n);
 			}
 		else {
 			cout << "too many to print" << endl;
@@ -202,7 +202,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 	if (f_v) {
 		cout << "After rearranging by type:" << endl;
 		if (nb_monomials < 100) {
-			INT_matrix_print(Monomials, nb_monomials, n);
+			int_matrix_print(Monomials, nb_monomials, n);
 			}
 		else {
 			cout << "too many to print" << endl;
@@ -213,7 +213,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 	symbols = NEW_pchar(n);
 	for (i = 0; i < n; i++) {
 
-		INT l;
+		int l;
 		
 		if (n == 3) {
 			label[0] = 'X' + i;
@@ -229,7 +229,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 	symbols_latex = NEW_pchar(n);
 	for (i = 0; i < n; i++) {
 
-		INT l;
+		int l;
 		
 		if (n == 3) {
 			label[0] = 'X' + i;
@@ -244,7 +244,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 		}
 
 
-	Variables = NEW_INT(nb_monomials * degree);
+	Variables = NEW_int(nb_monomials * degree);
 	for (i = 0; i < nb_monomials; i++) {
 		h = 0;
 		for (j = 0; j < n; j++) {
@@ -266,7 +266,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 		if (nb_monomials < 100) {
 			for (i = 0; i < nb_monomials; i++) {
 				cout << i << " : ";
-				INT_vec_print(cout, Variables + i * degree, degree);
+				int_vec_print(cout, Variables + i * degree, degree);
 				cout << endl;
 				}
 			}
@@ -278,7 +278,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 	nb_affine = i_power_j(n, degree);
 
 	if (nb_affine < ONE_MILLION) {
-		Affine = NEW_INT(nb_affine * degree);
+		Affine = NEW_int(nb_affine * degree);
 		if (f_v) {
 			cout << "homogeneous_polynomial_domain::make_monomials  "
 					"Affine, nb_affine=" << nb_affine << endl;
@@ -289,15 +289,15 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 		if (FALSE) {
 			cout << "homogeneous_polynomial_domain::make_monomials  "
 					"Affine" << endl;
-			INT_matrix_print(Affine, nb_affine, degree);
+			int_matrix_print(Affine, nb_affine, degree);
 			}
-		Affine_to_monomial = NEW_INT(nb_affine);
+		Affine_to_monomial = NEW_int(nb_affine);
 		for (i = 0; i < nb_affine; i++) {
 			if (i > 0 && (i & ((1 << 20) - 1)) == 0) {
 				cout << "homogeneous_polynomial_domain::make_monomials "
 						"i = " << i << " / " << nb_affine << endl;
 				}
-			INT_vec_zero(v, n);
+			int_vec_zero(v, n);
 			for (j = 0; j < degree; j++) {
 				a = Affine[i * degree + j];
 				v[a]++;
@@ -318,7 +318,7 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 				"Affine : idx:" << endl;
 		for (i = 0; i < nb_affine; i++) {
 			cout << i << " : ";
-			INT_vec_print(cout, Affine + i * degree, degree);
+			int_vec_print(cout, Affine + i * degree, degree);
 			cout << " : " << Affine_to_monomial[i] << endl;
 			}
 		}
@@ -330,9 +330,9 @@ void homogeneous_polynomial_domain::make_monomials(INT verbose_level)
 }
 
 void homogeneous_polynomial_domain::rearrange_monomials_by_partition_type(
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::rearrange_monomials_by_"
@@ -351,11 +351,11 @@ void homogeneous_polynomial_domain::rearrange_monomials_by_partition_type(
 		}
 }
 
-INT homogeneous_polynomial_domain::index_of_monomial(INT *v)
+int homogeneous_polynomial_domain::index_of_monomial(int *v)
 {
 
 #if 0
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < nb_monomials; i++) {
 		for (j = 0; j < n; j++) {
@@ -368,7 +368,7 @@ INT homogeneous_polynomial_domain::index_of_monomial(INT *v)
 			}
 		}
 #endif
-	INT idx;
+	int idx;
 	
 	if (!search_general(Monomials, nb_monomials, v, idx, 
 		homogeneous_polynomial_domain_compare_monomial_with, 
@@ -380,9 +380,9 @@ INT homogeneous_polynomial_domain::index_of_monomial(INT *v)
 	return idx;
 }
 
-void homogeneous_polynomial_domain::print_monomial(ostream &ost, INT i)
+void homogeneous_polynomial_domain::print_monomial(ostream &ost, int i)
 {
-	INT j, a;
+	int j, a;
 	
 	for (j = 0; j < n; j++) {
 		a = Monomials[i * n + j];
@@ -396,9 +396,9 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, INT i)
 		}
 }
 
-void homogeneous_polynomial_domain::print_monomial(ostream &ost, INT *mon)
+void homogeneous_polynomial_domain::print_monomial(ostream &ost, int *mon)
 {
-	INT j, a;
+	int j, a;
 	
 	for (j = 0; j < n; j++) {
 		a = mon[j];
@@ -412,9 +412,9 @@ void homogeneous_polynomial_domain::print_monomial(ostream &ost, INT *mon)
 		}
 }
 
-void homogeneous_polynomial_domain::print_monomial(char *str, INT i)
+void homogeneous_polynomial_domain::print_monomial(char *str, int i)
 {
-	INT j, a;
+	int j, a;
 	
 	str[0] = 0;
 	for (j = 0; j < n; j++) {
@@ -424,18 +424,18 @@ void homogeneous_polynomial_domain::print_monomial(char *str, INT i)
 			}
 		strcat(str + strlen(str), symbols_latex[j]);
 		if (a >= 10) {
-			sprintf(str + strlen(str), "^{%ld}", a);
+			sprintf(str + strlen(str), "^{%d}", a);
 			}
 		else if (a > 1) {
-			sprintf(str + strlen(str), "^%ld", a);
+			sprintf(str + strlen(str), "^%d", a);
 			}
 		}
 }
 
-void homogeneous_polynomial_domain::print_equation(ostream &ost, INT *coeffs)
+void homogeneous_polynomial_domain::print_equation(ostream &ost, int *coeffs)
 {
-	INT i, c;
-	INT f_first = TRUE;
+	int i, c;
+	int f_first = TRUE;
 
 
 	for (i = 0; i < nb_monomials; i++) {
@@ -457,11 +457,11 @@ void homogeneous_polynomial_domain::print_equation(ostream &ost, INT *coeffs)
 }
 
 void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
-	ostream &ost, INT *coeffs, INT nb_terms_per_line,
+	ostream &ost, int *coeffs, int nb_terms_per_line,
 	const char *new_line_text)
 {
-	INT i, c, cnt = 0;
-	INT f_first = TRUE;
+	int i, c, cnt = 0;
+	int f_first = TRUE;
 
 
 	for (i = 0; i < nb_monomials; i++) {
@@ -489,18 +489,18 @@ void homogeneous_polynomial_domain::print_equation_with_line_breaks_tex(
 		}
 }
 
-void homogeneous_polynomial_domain::enumerate_points(INT *coeff,
-		INT *Pts, INT &nb_pts, INT verbose_level)
+void homogeneous_polynomial_domain::enumerate_points(int *coeff,
+		int *Pts, int &nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk, a;
-	//INT *v;
+	int f_v = (verbose_level >= 1);
+	int rk, a;
+	//int *v;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
 				"P->N_points=" << P->N_points << endl;
 		}
-	//v = NEW_INT(n);
+	//v = NEW_int(n);
 	nb_pts = 0;
 	for (rk = 0; rk < P->N_points; rk++) {
 		unrank_point(v, rk);
@@ -510,27 +510,27 @@ void homogeneous_polynomial_domain::enumerate_points(INT *coeff,
 			}
 		}
 
-	//FREE_INT(v);
+	//FREE_int(v);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::enumerate_points "
 				"done" << endl;
 		}
 }
 
-INT homogeneous_polynomial_domain::evaluate_at_a_point_by_rank(
-		INT *coeff, INT pt)
+int homogeneous_polynomial_domain::evaluate_at_a_point_by_rank(
+		int *coeff, int pt)
 {
-	INT a;
+	int a;
 	
 	unrank_point(v, pt);
 	a = evaluate_at_a_point(coeff, v);
 	return a;
 }
 
-INT homogeneous_polynomial_domain::evaluate_at_a_point(
-		INT *coeff, INT *pt_vec)
+int homogeneous_polynomial_domain::evaluate_at_a_point(
+		int *coeff, int *pt_vec)
 {
-	INT i, a, b, c;
+	int i, a, b, c;
 	
 	a = 0;
 	for (i = 0; i < nb_monomials; i++) {
@@ -545,10 +545,10 @@ INT homogeneous_polynomial_domain::evaluate_at_a_point(
 }
 
 void homogeneous_polynomial_domain::substitute_linear(
-	INT *coeff_in, INT *coeff_out,
-	INT *Mtx_inv, INT verbose_level)
+	int *coeff_in, int *coeff_out,
+	int *Mtx_inv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_linear" << endl;
@@ -564,14 +564,14 @@ void homogeneous_polynomial_domain::substitute_linear(
 }
 
 void homogeneous_polynomial_domain::substitute_semilinear(
-	INT *coeff_in, INT *coeff_out,
-	INT f_semilinear, INT frob_power, INT *Mtx_inv,
-	INT verbose_level)
+	int *coeff_in, int *coeff_out,
+	int f_semilinear, int frob_power, int *Mtx_inv,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b, c, i, j, idx;
-	INT *A;
-	INT *V;
+	int f_v = (verbose_level >= 1);
+	int a, b, c, i, j, idx;
+	int *A;
+	int *V;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_"
@@ -586,11 +586,11 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 			}
 		}
 	else {
-		INT_vec_copy(coeff_in, coeff4, nb_monomials);
+		int_vec_copy(coeff_in, coeff4, nb_monomials);
 		}
 
 
-	INT_vec_zero(coeff3, nb_monomials);
+	int_vec_zero(coeff3, nb_monomials);
 	for (i = 0; i < nb_monomials; i++) {
 		c = coeff4[i];
 		if (c == 0) {
@@ -612,14 +612,14 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 
 #if 0
 		cout << "variables: ";
-		INT_vec_print(cout, V, degree);
+		int_vec_print(cout, V, degree);
 		cout << endl;
 
 		cout << "Mtx:" << endl;
-		INT_matrix_print(Mtx_inv, n, n);
+		int_matrix_print(Mtx_inv, n, n);
 #endif
 
-		INT_vec_zero(coeff2, nb_monomials);
+		int_vec_zero(coeff2, nb_monomials);
 		for (a = 0; a < nb_affine; a++) {
 			if (Affine) {
 				A = Affine + a * degree;
@@ -639,7 +639,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 				idx = Affine_to_monomial[a];
 				}
 			else {
-				INT_vec_zero(v, n);
+				int_vec_zero(v, n);
 				for (j = 0; j < degree; j++) {
 					a = Affine[i * degree + j];
 					v[a]++;
@@ -649,9 +649,9 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 
 #if 0
 			cout << "affine " << a << " / " << nb_affine << " : ";
-			INT_vec_print(cout, A, 3);
+			int_vec_print(cout, A, 3);
 			cout << " factors ";
-			INT_vec_print(cout, factors, 3);
+			int_vec_print(cout, factors, 3);
 			cout << " b=" << b << " idx=" << idx << endl;
 #endif
 			coeff2[idx] = F->add(coeff2[idx], b);
@@ -665,7 +665,7 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 				"monomial " << c << " * ";
 		print_monomial(cout, i);
 		cout << " yields:" << endl;
-		INT_vec_print(cout, coeff2, nb_monomials);
+		int_vec_print(cout, coeff2, nb_monomials);
 		cout << endl;
 #endif
 		
@@ -676,11 +676,11 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 #if 0
 	cout << "homogeneous_polynomial_domain::substitute_semilinear "
 			"input:" << endl;
-	INT_vec_print(cout, coeff_in, nb_monomials);
+	int_vec_print(cout, coeff_in, nb_monomials);
 	cout << endl;
 	cout << "homogeneous_polynomial_domain::substitute_semilinear "
 			"output:" << endl;
-	INT_vec_print(cout, coeff3, nb_monomials);
+	int_vec_print(cout, coeff3, nb_monomials);
 	cout << endl;
 #endif
 
@@ -688,16 +688,16 @@ void homogeneous_polynomial_domain::substitute_semilinear(
 
 
 
-	INT_vec_copy(coeff3, coeff_out, nb_monomials);
+	int_vec_copy(coeff3, coeff_out, nb_monomials);
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::substitute_semilinear "
 				"done" << endl;
 		}
 }
 
-INT homogeneous_polynomial_domain::is_zero(INT *coeff)
+int homogeneous_polynomial_domain::is_zero(int *coeff)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_monomials; i++) {
 		if (coeff[i]) {
@@ -707,37 +707,37 @@ INT homogeneous_polynomial_domain::is_zero(INT *coeff)
 	return TRUE;
 }
 
-void homogeneous_polynomial_domain::unrank_point(INT *v, INT rk)
+void homogeneous_polynomial_domain::unrank_point(int *v, int rk)
 {
 	P->unrank_point(v, rk);
 }
 
-INT homogeneous_polynomial_domain::rank_point(INT *v)
+int homogeneous_polynomial_domain::rank_point(int *v)
 {
-	INT rk;
+	int rk;
 
 	rk = P->rank_point(v);
 	return rk;
 }
 
-void homogeneous_polynomial_domain::unrank_coeff_vector(INT *v, INT rk)
+void homogeneous_polynomial_domain::unrank_coeff_vector(int *v, int rk)
 {
 	PG_element_unrank_modified(*F, v, 1, nb_monomials, rk);
 }
 
-INT homogeneous_polynomial_domain::rank_coeff_vector(INT *v)
+int homogeneous_polynomial_domain::rank_coeff_vector(int *v)
 {
-	INT rk;
+	int rk;
 
 	PG_element_rank_modified(*F, v, 1, nb_monomials, rk);
 	return rk;
 }
 
-INT homogeneous_polynomial_domain::test_weierstrass_form(INT rk, 
-	INT &a1, INT &a2, INT &a3, INT &a4, INT &a6, INT verbose_level)
+int homogeneous_polynomial_domain::test_weierstrass_form(int rk, 
+	int &a1, int &a2, int &a3, int &a4, int &a6, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT m_one;
+	int f_v = (verbose_level >= 1);
+	int m_one;
 
 	unrank_coeff_vector(coeff2, rk);
 	if (f_v) {
@@ -773,17 +773,17 @@ INT homogeneous_polynomial_domain::test_weierstrass_form(INT rk,
 	return TRUE;
 }
 
-void homogeneous_polynomial_domain::vanishing_ideal(INT *Pts,
-		INT nb_pts, INT &r, INT *Kernel, INT verbose_level)
+void homogeneous_polynomial_domain::vanishing_ideal(int *Pts,
+		int nb_pts, int &r, int *Kernel, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
-	INT *System;
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int *System;
 
 	if (f_v) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal" << endl;
 		}
-	System = NEW_INT(MAX(nb_pts, nb_monomials) * nb_monomials);
+	System = NEW_int(MAX(nb_pts, nb_monomials) * nb_monomials);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, Pts[i]);
 		for (j = 0; j < nb_monomials; j++) {
@@ -794,7 +794,7 @@ void homogeneous_polynomial_domain::vanishing_ideal(INT *Pts,
 	if (f_v && FALSE) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system:" << endl;
-		INT_matrix_print(System, nb_pts, nb_monomials);
+		int_matrix_print(System, nb_pts, nb_monomials);
 		}
 
 	if (f_v) {
@@ -810,24 +810,24 @@ void homogeneous_polynomial_domain::vanishing_ideal(INT *Pts,
 	if (TRUE) {
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The system in RREF:" << endl;
-		INT_matrix_print(System, r, nb_monomials);
+		int_matrix_print(System, r, nb_monomials);
 		cout << "homogeneous_polynomial_domain::vanishing_ideal "
 				"The kernel:" << endl;
-		INT_matrix_print(System + r * nb_monomials,
+		int_matrix_print(System + r * nb_monomials,
 				nb_monomials - r, nb_monomials);
 		}
-	INT_vec_copy(System + r * nb_monomials, Kernel,
+	int_vec_copy(System + r * nb_monomials, Kernel,
 			(nb_monomials - r) * nb_monomials);
-	FREE_INT(System);
+	FREE_int(System);
 }
 
-INT homogeneous_polynomial_domain::compare_monomials(INT *M1, INT *M2)
+int homogeneous_polynomial_domain::compare_monomials(int *M1, int *M2)
 {
-	INT h, a;
-	INT ret = 0;
+	int h, a;
+	int ret = 0;
 	
-	INT_vec_zero(type1, degree + 1);
-	INT_vec_zero(type2, degree + 1);
+	int_vec_zero(type1, degree + 1);
+	int_vec_zero(type2, degree + 1);
 
 	for (h = 0; h < n; h++) {
 		a = M1[h];
@@ -874,7 +874,7 @@ the_end:
 
 void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 {
-	INT h;
+	int h;
 	
 	//ost << "The ordering of monomials is:\\\\" << endl;
 	ost << "$$" << endl;
@@ -887,7 +887,7 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 		ost << h << " & ";
 		print_monomial(ost, h);
 		ost << " & ";
-		INT_vec_print(ost, Monomials + h * n, n);
+		int_vec_print(ost, Monomials + h * n, n);
 		ost << "\\\\" << endl; 
 		}
 	ost << "\\hline" << endl;
@@ -898,43 +898,43 @@ void homogeneous_polynomial_domain::print_monomial_ordering(ostream &ost)
 
 
 
-INT homogeneous_polynomial_domain_compare_monomial_with(
-		void *data, INT i, INT *data2, void *extra_data)
+int homogeneous_polynomial_domain_compare_monomial_with(
+		void *data, int i, int *data2, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
 			(homogeneous_polynomial_domain *) extra_data;
-	INT *Data;
-	INT ret, n;
+	int *Data;
+	int ret, n;
 
-	Data = (INT *) data;
+	Data = (int *) data;
 	n = HPD->n;
 	ret = HPD->compare_monomials(Data + i * n, data2);
 	return ret;
 }
 
-INT homogeneous_polynomial_domain_compare_monomial(
-		void *data, INT i, INT j, void *extra_data)
+int homogeneous_polynomial_domain_compare_monomial(
+		void *data, int i, int j, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
 			(homogeneous_polynomial_domain *) extra_data;
-	INT *Data;
-	INT ret, n;
+	int *Data;
+	int ret, n;
 
-	Data = (INT *) data;
+	Data = (int *) data;
 	n = HPD->n;
 	ret = HPD->compare_monomials(Data + i * n, Data + j * n);
 	return ret;
 }
 
 void homogeneous_polynomial_domain_swap_monomial(
-		void *data, INT i, INT j, void *extra_data)
+		void *data, int i, int j, void *extra_data)
 {
 	homogeneous_polynomial_domain *HPD =
 			(homogeneous_polynomial_domain *) extra_data;
-	INT *Data;
-	INT h, a, n;
+	int *Data;
+	int h, a, n;
 
-	Data = (INT *) data;
+	Data = (int *) data;
 	n = HPD->n;
 
 	for (h = 0; h < n; h++) {

@@ -11,7 +11,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 
@@ -19,17 +19,17 @@ int main(int argc, const char **argv);
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n;
-	INT f_s = FALSE;
-	INT s;
-	INT f_q = FALSE;
-	INT q;
-	INT f_poly_q = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n;
+	int f_s = FALSE;
+	int s;
+	int f_q = FALSE;
+	int q;
+	int f_poly_q = FALSE;
 	const char *poly_q = NULL;
-	INT f_poly_Q = FALSE;
+	int f_poly_Q = FALSE;
 	const char *poly_Q = NULL;
 
 	t0 = os_ticks();
@@ -77,10 +77,10 @@ int main(int argc, const char **argv)
 		cout << "please use -q option" << endl;
 		exit(1);
 		}
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
-	INT Q;
-	INT m;
+	int Q;
+	int m;
 
 	m = n / s;
 	if (m * s != n) {
@@ -115,7 +115,7 @@ int main(int argc, const char **argv)
 
 	if (f_v) {
 		cout << "Field-basis: ";
-		INT_vec_print(cout, SubS->Basis, s);
+		int_vec_print(cout, SubS->Basis, s);
 		cout << endl;
 		}
 	

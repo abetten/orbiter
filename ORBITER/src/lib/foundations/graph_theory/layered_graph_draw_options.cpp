@@ -45,22 +45,22 @@ layered_graph_draw_options::~layered_graph_draw_options()
 };
 
 void layered_graph_draw_options::init(
-	INT xmax, INT ymax, INT x_max, INT y_max, INT rad, 
-	INT f_circle, INT f_corners, INT f_nodes_empty, 
-	INT f_select_layers, INT nb_layer_select, INT *layer_select, 
-	INT f_has_draw_begining_callback, 
+	int xmax, int ymax, int x_max, int y_max, int rad, 
+	int f_circle, int f_corners, int f_nodes_empty, 
+	int f_select_layers, int nb_layer_select, int *layer_select, 
+	int f_has_draw_begining_callback, 
 	void (*draw_begining_callback)(layered_graph *LG, mp_graphics *G,
-			INT x_max, INT y_max, INT f_rotated, INT dx, INT dy),
-	INT f_has_draw_ending_callback, 
+			int x_max, int y_max, int f_rotated, int dx, int dy),
+	int f_has_draw_ending_callback, 
 	void (*draw_ending_callback)(layered_graph *LG, mp_graphics *G,
-			INT x_max, INT y_max, INT f_rotated, INT dx, INT dy),
-	INT f_has_draw_vertex_callback, 
+			int x_max, int y_max, int f_rotated, int dx, int dy),
+	int f_has_draw_vertex_callback, 
 	void (*draw_vertex_callback)(layered_graph *LG, mp_graphics *G,
-			INT layer, INT node, INT x, INT y, INT dx, INT dy),
-	INT f_show_level_info, 
-	INT f_embedded, INT f_sideways, 
-	INT f_label_edges, 
-	INT f_rotated, 
+			int layer, int node, int x, int y, int dx, int dy),
+	int f_show_level_info, 
+	int f_embedded, int f_sideways, 
+	int f_label_edges, 
+	int f_rotated, 
 	double global_scale, double global_line_width)
 {
 	layered_graph_draw_options *O;

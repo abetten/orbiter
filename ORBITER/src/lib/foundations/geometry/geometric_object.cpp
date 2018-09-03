@@ -10,16 +10,16 @@
 
 #include "foundations.h"
 
-void do_cone_over(INT n, finite_field *F, 
-	INT *set_in, INT set_size_in, INT *&set_out, INT &set_size_out, 
-	INT verbose_level)
+void do_cone_over(int n, finite_field *F, 
+	int *set_in, int set_size_in, int *&set_out, int &set_size_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P1;
 	projective_space *P2;
-	INT *v;
-	INT d = n + 2;
-	INT h, u, a, b, cnt;
+	int *v;
+	int d = n + 2;
+	int h, u, a, b, cnt;
 
 	if (f_v) {
 		cout << "do_cone_over" << endl;
@@ -34,14 +34,14 @@ void do_cone_over(INT n, finite_field *F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level - 2  /*MINIMUM(verbose_level - 1, 3)*/);
 
-	v = NEW_INT(d);
+	v = NEW_int(d);
 
 	set_size_out = 1 + F->q * set_size_in;
-	set_out = NEW_INT(set_size_out);
+	set_out = NEW_int(set_size_out);
 	cnt = 0;
 	
 	// create the vertex:
-	INT_vec_zero(v, d);
+	int_vec_zero(v, d);
 	v[d - 1] = 1;
 	b = P2->rank_point(v);
 	set_out[cnt++] = b;
@@ -67,19 +67,19 @@ void do_cone_over(INT n, finite_field *F,
 		exit(1);
 		}
 
-	FREE_INT(v);
+	FREE_int(v);
 	FREE_OBJECT(P1);
 	FREE_OBJECT(P2);
 }
 
-void do_blocking_set_family_3(INT n, finite_field *F, 
-	INT *set_in, INT set_size, 
-	INT *&the_set_out, INT &set_size_out, 
-	INT verbose_level)
+void do_blocking_set_family_3(int n, finite_field *F, 
+	int *set_in, int set_size, 
+	int *&the_set_out, int &set_size_out, 
+	int verbose_level)
 {
 	projective_space *P;
-	INT h;
-	INT q;
+	int h;
+	int q;
 
 	q = F->q;
 	if (n != 2) {
@@ -101,14 +101,14 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 		0 /* verbose_level - 2 */);
 
 
-	INT *idx;
-	INT p_idx[4];
-	INT line[6];
-	INT diag_pts[3];
-	INT diag_line;
-	INT nb, pt, sz;
-	INT i, j;
-	INT basis[6];
+	int *idx;
+	int p_idx[4];
+	int line[6];
+	int diag_pts[3];
+	int diag_line;
+	int nb, pt, sz;
+	int i, j;
+	int basis[6];
 
 	fancy_set *S;
 
@@ -117,7 +117,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 	S->init(P->N_lines, 0);
 	S->k = 0;
 
-	idx = NEW_INT(set_size);
+	idx = NEW_int(set_size);
 
 #if 1
 	while (TRUE) {
@@ -149,7 +149,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 			exit(1);
 			}
 		P->unrank_line(basis, diag_line);
-		INT_matrix_print(basis, 2, 3);
+		int_matrix_print(basis, 2, 3);
 		nb = 0;
 		for (i = 0; i < set_size; i++) {
 			pt = set_in[i];
@@ -166,11 +166,11 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 #endif
 
 #if 0
-	INT fundamental_quadrangle[4] = {0,1,2,3};
-	INT basis[6];
+	int fundamental_quadrangle[4] = {0,1,2,3};
+	int basis[6];
 	
 	for (i = 0; i < 4; i++) {
-		if (!INT_vec_search_linear(set_in, set_size, fundamental_quadrangle[i], j)) {
+		if (!int_vec_search_linear(set_in, set_size, fundamental_quadrangle[i], j)) {
 			cout << "the point " << fundamental_quadrangle[i] << " is not contained in the hyperoval" << endl;
 			exit(1);
 			}
@@ -200,7 +200,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 		cout << "The diagonal line is " << diag_line << endl;
 
 		P->unrank_line(basis, diag_line);
-		INT_matrix_print(basis, 2, 3);
+		int_matrix_print(basis, 2, 3);
 		
 		if (diag_line != P->line_through_two_points(diag_pts[0], diag_pts[2])) {
 			cout << "diaginal points not collinear!" << endl;
@@ -236,13 +236,13 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 		}
 
 	cout << "we created a blocking set of lines of size " << S->k << ":" << endl;
-	INT_vec_print(cout, S->set, S->k);
+	int_vec_print(cout, S->set, S->k);
 	cout << endl;
 	
 
-	INT *pt_type;
+	int *pt_type;
 	
-	pt_type = NEW_INT(P->N_points);
+	pt_type = NEW_int(P->N_points);
 
 	P->point_types(S->set, S->k, pt_type, 0);
 
@@ -273,7 +273,7 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 
 	cout << "the size is OK" << endl;
 
-	the_set_out = NEW_INT(sz);
+	the_set_out = NEW_int(sz);
 	set_size_out = sz;
 
 	for (i = 0; i < sz; i++) {
@@ -287,17 +287,17 @@ void do_blocking_set_family_3(INT n, finite_field *F,
 }
 
 void create_hyperoval(finite_field *F, 
-	INT f_translation, INT translation_exponent, 
-	INT f_Segre, INT f_Payne, INT f_Cherowitzo, INT f_OKeefe_Penttila, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	int f_translation, int translation_exponent, 
+	int f_Segre, int f_Payne, int f_Cherowitzo, int f_OKeefe_Penttila, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT n = 2;
-	INT i, d;
-	INT *v;
-	INT q = F->q;
+	int n = 2;
+	int i, d;
+	int *v;
+	int q = F->q;
 
 	d = n + 1;
 	P = NEW_OBJECT(projective_space);
@@ -316,32 +316,32 @@ void create_hyperoval(finite_field *F,
 		cout << "create_hyperoval after P->init" << endl;
 		}
 
-	v = NEW_INT(d);
-	Pts = NEW_INT(P->N_points);
+	v = NEW_int(d);
+	Pts = NEW_int(P->N_points);
 
 	if (f_translation) {
 		P->create_translation_hyperoval(Pts, nb_pts, translation_exponent, verbose_level - 0);
-		sprintf(fname, "hyperoval_translation_q%ld.txt", q);
+		sprintf(fname, "hyperoval_translation_q%d.txt", q);
 		}
 	else if (f_Segre) {
 		P->create_Segre_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_Segre_q%ld.txt", q);
+		sprintf(fname, "hyperoval_Segre_q%d.txt", q);
 		}
 	else if (f_Payne) {
 		P->create_Payne_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_Payne_q%ld.txt", q);
+		sprintf(fname, "hyperoval_Payne_q%d.txt", q);
 		}
 	else if (f_Cherowitzo) {
 		P->create_Cherowitzo_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_Cherowitzo_q%ld.txt", q);
+		sprintf(fname, "hyperoval_Cherowitzo_q%d.txt", q);
 		}
 	else if (f_OKeefe_Penttila) {
 		P->create_OKeefe_Penttila_hyperoval_32(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_OKeefe_Penttila_q%ld.txt", q);
+		sprintf(fname, "hyperoval_OKeefe_Penttila_q%d.txt", q);
 		}
 	else {
 		P->create_regular_hyperoval(Pts, nb_pts, verbose_level - 2);
-		sprintf(fname, "hyperoval_regular_q%ld.txt", q);
+		sprintf(fname, "hyperoval_regular_q%d.txt", q);
 		}
 	
 	if (f_v) {
@@ -350,7 +350,7 @@ void create_hyperoval(finite_field *F,
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				INT_vec_print(cout, v, d);
+				int_vec_print(cout, v, d);
 				cout << endl;
 				}
 			}
@@ -362,17 +362,17 @@ void create_hyperoval(finite_field *F,
 		}
 
 	FREE_OBJECT(P);
-	FREE_INT(v);
-	//FREE_INT(L);
+	FREE_int(v);
+	//FREE_int(L);
 }
 
 void create_subiaco_oval(finite_field *F, 
-	INT f_short, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	int f_short, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
 
 	if (f_v) {
 		cout << "create_subiaco_oval" << endl;
@@ -380,20 +380,20 @@ void create_subiaco_oval(finite_field *F,
 
 	Subiaco_oval(F, Pts, nb_pts, f_short, verbose_level);
 	if (f_short) {
-		sprintf(fname, "oval_subiaco_short_q%ld.txt", q);
+		sprintf(fname, "oval_subiaco_short_q%d.txt", q);
 		}
 	else {
-		sprintf(fname, "oval_subiaco_long_q%ld.txt", q);
+		sprintf(fname, "oval_subiaco_long_q%d.txt", q);
 		}
 	
 
 	if (f_v) {
-		INT i;
-		INT n = 2, d = n + 1;
-		INT *v;
+		int i;
+		int n = 2, d = n + 1;
+		int *v;
 		projective_space *P;
 
-		v = NEW_INT(d);
+		v = NEW_int(d);
 		P = NEW_OBJECT(projective_space);
 
 	
@@ -405,11 +405,11 @@ void create_subiaco_oval(finite_field *F,
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				INT_vec_print(cout, v, d);
+				int_vec_print(cout, v, d);
 				cout << endl;
 				}
 			}
-		FREE_INT(v);
+		FREE_int(v);
 		FREE_OBJECT(P);
 		}
 
@@ -421,27 +421,27 @@ void create_subiaco_oval(finite_field *F,
 }
 
 void create_subiaco_hyperoval(finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT q = F->q;
+	int f_v = (verbose_level >= 1);
+	int q = F->q;
 
 	if (f_v) {
 		cout << "create_subiaco_hyperoval" << endl;
 		}
 
 	Subiaco_hyperoval(F, Pts, nb_pts, verbose_level);
-	sprintf(fname, "subiaco_hyperoval_q%ld.txt", q);
+	sprintf(fname, "subiaco_hyperoval_q%d.txt", q);
 	
 
 	if (f_v) {
-		INT i;
-		INT n = 2, d = n + 1;
-		INT *v;
+		int i;
+		int n = 2, d = n + 1;
+		int *v;
 		projective_space *P;
 
-		v = NEW_INT(d);
+		v = NEW_int(d);
 		P = NEW_OBJECT(projective_space);
 
 	
@@ -453,11 +453,11 @@ void create_subiaco_hyperoval(finite_field *F,
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				INT_vec_print(cout, v, d);
+				int_vec_print(cout, v, d);
 				cout << endl;
 				}
 			}
-		FREE_INT(v);
+		FREE_int(v);
 		FREE_OBJECT(P);
 		}
 
@@ -469,28 +469,28 @@ void create_subiaco_hyperoval(finite_field *F,
 }
 
 void create_adelaide_hyperoval(subfield_structure *S, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	finite_field *F = S->Fq;
-	INT q = F->q;
+	int q = F->q;
 
 	if (f_v) {
 		cout << "create_adelaide_hyperoval" << endl;
 		}
 
 	Adelaide_hyperoval(S, Pts, nb_pts, verbose_level);
-	sprintf(fname, "adelaide_hyperoval_q%ld.txt", q);
+	sprintf(fname, "adelaide_hyperoval_q%d.txt", q);
 	
 
 	if (f_v) {
-		INT i;
-		INT n = 2, d = n + 1;
-		INT *v;
+		int i;
+		int n = 2, d = n + 1;
+		int *v;
 		projective_space *P;
 
-		v = NEW_INT(d);
+		v = NEW_int(d);
 		P = NEW_OBJECT(projective_space);
 
 	
@@ -502,11 +502,11 @@ void create_adelaide_hyperoval(subfield_structure *S,
 			P->unrank_point(v, Pts[i]);
 			if (f_v) {
 				cout << setw(4) << i << " : ";
-				INT_vec_print(cout, v, d);
+				int_vec_print(cout, v, d);
 				cout << endl;
 				}
 			}
-		FREE_INT(v);
+		FREE_int(v);
 		FREE_OBJECT(P);
 		}
 
@@ -518,16 +518,16 @@ void create_adelaide_hyperoval(subfield_structure *S,
 }
 
 void create_ovoid(finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT n = 3, epsilon = -1;
-	INT c1 = 1, c2 = 0, c3 = 0;
-	INT i, j, d, h;
-	INT *v, *w;
-	INT q = F->q;
+	int n = 3, epsilon = -1;
+	int c1 = 1, c2 = 0, c3 = 0;
+	int i, j, d, h;
+	int *v, *w;
+	int q = F->q;
 
 	d = n + 1;
 	P = NEW_OBJECT(projective_space);
@@ -538,9 +538,9 @@ void create_ovoid(finite_field *F,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 	nb_pts = nb_pts_Qepsilon(epsilon, n, q);
 
-	v = NEW_INT(n + 1);
-	w = NEW_INT(n + 1);
-	Pts = NEW_INT(P->N_points);
+	v = NEW_int(n + 1);
+	w = NEW_int(n + 1);
+	Pts = NEW_int(P->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -555,7 +555,7 @@ void create_ovoid(finite_field *F,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -570,26 +570,26 @@ void create_ovoid(finite_field *F,
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "ovoid_%ld.txt", q);
+	sprintf(fname, "ovoid_%d.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_OBJECT(P);
-	FREE_INT(v);
-	FREE_INT(w);
-	//FREE_INT(L);
+	FREE_int(v);
+	FREE_int(w);
+	//FREE_int(L);
 }
 
-void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_Baer_substructure(int n, finite_field *FQ, finite_field *Fq, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
 	projective_space *P2;
-	INT q = Fq->q;
-	INT Q = FQ->q;
-	INT sz;
-	INT *v;
-	INT d = n + 1;
-	INT i, j, a, b, index, f_is_in_subfield;
+	int q = Fq->q;
+	int Q = FQ->q;
+	int sz;
+	int *v;
+	int d = n + 1;
+	int i, j, a, b, index, f_is_in_subfield;
 
 	//Q = q * q;
 	P2 = NEW_OBJECT(projective_space);
@@ -609,8 +609,8 @@ void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq,
 	index = (Q - 1) / (q - 1);
 	cout << "index=" << index << endl;
 	
-	v = NEW_INT(d);	
-	Pts = NEW_INT(P2->N_points);
+	v = NEW_int(d);	
+	Pts = NEW_int(P2->N_points);
 	sz = 0;
 	for (i = 0; i < P2->N_points; i++) {
 		PG_element_unrank_modified(*FQ, v, 1, d, i);
@@ -638,37 +638,37 @@ void create_Baer_substructure(INT n, finite_field *FQ, finite_field *Fq,
 
 
 	//char fname[1000];
-	sprintf(fname, "Baer_substructure_in_PG_%ld_%ld.txt", n, Q);
+	sprintf(fname, "Baer_substructure_in_PG_%d_%d.txt", n, Q);
 	//write_set_to_file(fname, S, sz, verbose_level);
 
 
 
-	FREE_INT(v);
-	//FREE_INT(S);
+	FREE_int(v);
+	//FREE_int(S);
 	FREE_OBJECT(P2);
 }
 
 
-void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_BLT_from_database(int f_embedded, finite_field *F, int BLT_k, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
-	INT epsilon = 0;
-	INT n = 4;
-	INT c1 = 0, c2 = 0, c3 = 0;
-	INT d = 5;
-	INT *BLT;
-	INT *v;
-	INT q = F->q;
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int epsilon = 0;
+	int n = 4;
+	int c1 = 0, c2 = 0, c3 = 0;
+	int d = 5;
+	int *BLT;
+	int *v;
+	int q = F->q;
 
 	nb_pts = q + 1;
 
 	BLT = BLT_representative(q, BLT_k);
 
-	v = NEW_INT(d);
-	Pts = NEW_INT(nb_pts);
+	v = NEW_int(d);
+	Pts = NEW_int(nb_pts);
 
 	if (f_v) {
 		cout << "i : orthogonal rank : point : projective rank" << endl;
@@ -686,7 +686,7 @@ void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : " << setw(4) << BLT[i] << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -702,37 +702,37 @@ void create_BLT_from_database(INT f_embedded, finite_field *F, INT BLT_k,
 
 	//char fname[1000];
 	if (f_embedded) {
-		sprintf(fname, "BLT_%ld_%ld_embedded.txt", q, BLT_k);
+		sprintf(fname, "BLT_%d_%d_embedded.txt", q, BLT_k);
 		}
 	else {
-		sprintf(fname, "BLT_%ld_%ld.txt", q, BLT_k);
+		sprintf(fname, "BLT_%d_%d.txt", q, BLT_k);
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
-	FREE_INT(v);
-	//FREE_INT(L);
+	FREE_int(v);
+	//FREE_int(L);
 	//delete F;
 }
 
-void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq, 
-	INT f_Linear,
-	INT f_Fisher,
-	INT f_Mondello,
-	INT f_FTWKB,
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_BLT(int f_embedded, finite_field *FQ, finite_field *Fq, 
+	int f_Linear,
+	int f_Fisher,
+	int f_Mondello,
+	int f_FTWKB,
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT i, j;
-	INT epsilon = 0;
-	INT n = 4;
-	//INT c1 = 0, c2 = 0, c3 = 0;
-	//INT d = 5;
-	//INT *Pts1;
+	int f_v = (verbose_level >= 1);
+	//int i, j;
+	int epsilon = 0;
+	int n = 4;
+	//int c1 = 0, c2 = 0, c3 = 0;
+	//int d = 5;
+	//int *Pts1;
 	orthogonal *O;
-	INT q = Fq->q;
-	//INT *v;
+	int q = Fq->q;
+	//int *v;
 	//char BLT_label[1000];
 	
 	if (f_v) {
@@ -747,9 +747,9 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 
 	//BLT = BLT_representative(q, BLT_k);
 
-	//v = NEW_INT(d);
-	//Pts1 = NEW_INT(nb_pts);
-	Pts = NEW_INT(nb_pts);
+	//v = NEW_int(d);
+	//Pts1 = NEW_int(nb_pts);
+	Pts = NEW_int(nb_pts);
 
 	cout << "create_BLT currently disabled" << endl;
 	exit(1);
@@ -792,7 +792,7 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : " << setw(4) << Pts1[i] << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -808,35 +808,35 @@ void create_BLT(INT f_embedded, finite_field *FQ, finite_field *Fq,
 
 	//char fname[1000];
 	if (f_embedded) {
-		sprintf(fname, "BLT_%s_%ld_embedded.txt", BLT_label, q);
+		sprintf(fname, "BLT_%s_%d_embedded.txt", BLT_label, q);
 		}
 	else {
-		sprintf(fname, "BLT_%s_%ld.txt", BLT_label, q);
+		sprintf(fname, "BLT_%s_%d.txt", BLT_label, q);
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
-	FREE_INT(Pts1);
-	FREE_INT(v);
-	//FREE_INT(L);
+	FREE_int(Pts1);
+	FREE_int(v);
+	//FREE_int(L);
 	FREE_OBJECT(O);
 #endif
 }
 
-void create_orthogonal(INT epsilon, INT n, finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_orthogonal(int epsilon, int n, finite_field *F, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT c1 = 1, c2 = 0, c3 = 0;
-	INT i, j;
-	INT d = n + 1;
-	INT *v;
+	int f_v = (verbose_level >= 1);
+	int c1 = 1, c2 = 0, c3 = 0;
+	int i, j;
+	int d = n + 1;
+	int *v;
 
 	nb_pts = nb_pts_Qepsilon(epsilon, n, F->q);
 
-	v = NEW_INT(d);
-	Pts = NEW_INT(nb_pts);
+	v = NEW_int(d);
+	Pts = NEW_int(nb_pts);
 
 	if (epsilon == -1) {
 		choose_anisotropic_form(*F, c1, c2, c3, verbose_level);
@@ -853,7 +853,7 @@ void create_orthogonal(INT epsilon, INT n, finite_field *F,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -868,22 +868,22 @@ void create_orthogonal(INT epsilon, INT n, finite_field *F,
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "Q%s_%ld_%ld.txt", plus_minus_letter(epsilon), n, F->q);
+	sprintf(fname, "Q%s_%d_%d.txt", plus_minus_letter(epsilon), n, F->q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
-	FREE_INT(v);
-	//FREE_INT(L);
+	FREE_int(v);
+	//FREE_int(L);
 }
 
-void create_hermitian(INT n, finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_hermitian(int n, finite_field *F, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
-	INT d = n + 1;
-	INT *v;
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int d = n + 1;
+	int *v;
 	hermitian *H;
 
 	H = NEW_OBJECT(hermitian);
@@ -891,8 +891,8 @@ void create_hermitian(INT n, finite_field *F,
 
 	nb_pts = H->cnt_Sbar[d];
 
-	v = NEW_INT(d);
-	Pts = NEW_INT(nb_pts);
+	v = NEW_int(d);
+	Pts = NEW_int(nb_pts);
 
 	if (f_v) {
 		cout << "hermitian rank : point : projective rank" << endl;
@@ -903,7 +903,7 @@ void create_hermitian(INT n, finite_field *F,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -918,27 +918,27 @@ void create_hermitian(INT n, finite_field *F,
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "H_%ld_%ld.txt", n, F->q);
+	sprintf(fname, "H_%d_%d.txt", n, F->q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 
-	FREE_INT(v);
+	FREE_int(v);
 	FREE_OBJECT(H);
-	//FREE_INT(L);
+	//FREE_int(L);
 }
 
 
 void create_twisted_cubic(finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT n = 3;
-	INT i, j, d, s, t;
-	INT *v;
-	INT v2[2];
-	INT q = F->q;
+	int n = 3;
+	int i, j, d, s, t;
+	int *v;
+	int v2[2];
+	int q = F->q;
 
 	d = n + 1;
 	P = NEW_OBJECT(projective_space);
@@ -949,8 +949,8 @@ void create_twisted_cubic(finite_field *F,
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 	nb_pts = q + 1;
 
-	v = NEW_INT(n + 1);
-	Pts = NEW_INT(P->N_points);
+	v = NEW_int(n + 1);
+	Pts = NEW_int(P->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -967,7 +967,7 @@ void create_twisted_cubic(finite_field *F,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -982,29 +982,29 @@ void create_twisted_cubic(finite_field *F,
 #endif
 
 	//char fname[1000];
-	sprintf(fname, "twisted_cubic_%ld.txt", q);
+	sprintf(fname, "twisted_cubic_%d.txt", q);
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_OBJECT(P);
-	FREE_INT(v);
-	//FREE_INT(L);
+	FREE_int(v);
+	//FREE_int(L);
 }
 
 
 
 void create_ttp_code(finite_field *FQ, finite_field *Fq, 
-	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	int f_construction_A, int f_hyperoval, int f_construction_B, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	//INT q = Fq->q;
-	INT i, j, d;
-	INT *v;
-	INT *H_subfield;
-	INT m, n;
-	INT f_elements_exponential = TRUE;
+	//int q = Fq->q;
+	int i, j, d;
+	int *v;
+	int *H_subfield;
+	int m, n;
+	int f_elements_exponential = TRUE;
 	const char *symbol_for_print_subfield = "\\alpha";
 
 	if (f_v) {
@@ -1041,8 +1041,8 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 		Fq->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 		}
 
-	v = NEW_INT(d);
-	Pts = NEW_INT(nb_pts);
+	v = NEW_int(d);
+	Pts = NEW_int(nb_pts);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -1055,7 +1055,7 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 		Pts[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -1072,31 +1072,31 @@ void create_ttp_code(finite_field *FQ, finite_field *Fq,
 	//char fname[1000];
 	if (f_construction_A) {
 		if (f_hyperoval) {
-			sprintf(fname, "ttp_code_Ah_%ld.txt", Fq->q);
+			sprintf(fname, "ttp_code_Ah_%d.txt", Fq->q);
 			}
 		else {
-			sprintf(fname, "ttp_code_A_%ld.txt", Fq->q);
+			sprintf(fname, "ttp_code_A_%d.txt", Fq->q);
 			}
 		}
 	else if (f_construction_B) {
-		sprintf(fname, "ttp_code_B_%ld.txt", Fq->q);
+		sprintf(fname, "ttp_code_B_%d.txt", Fq->q);
 		}
 	//write_set_to_file(fname, L, N, verbose_level);
 
 	FREE_OBJECT(P);
-	FREE_INT(v);
-	FREE_INT(H_subfield);
+	FREE_int(v);
+	FREE_int(H_subfield);
 }
 
 void create_unital_XXq_YZq_ZYq(finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P2;
-	INT n = 2;
-	INT i, rk, d;
-	INT *v;
+	int n = 2;
+	int i, rk, d;
+	int *v;
 
 	d = n + 1;
 	P2 = NEW_OBJECT(projective_space);
@@ -1106,8 +1106,8 @@ void create_unital_XXq_YZq_ZYq(finite_field *F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
-	v = NEW_INT(d);
-	Pts = NEW_INT(P2->N_points);
+	v = NEW_int(d);
+	Pts = NEW_int(P2->N_points);
 
 
 	P2->create_unital_XXq_YZq_ZYq(Pts, nb_pts, verbose_level - 1);
@@ -1121,35 +1121,35 @@ void create_unital_XXq_YZq_ZYq(finite_field *F,
 		P2->unrank_point(v, rk);
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << rk << endl;
 			}
 		}
 
 
-	sprintf(fname, "unital_XXq_YZq_ZYq_Q%ld.txt", F->q);
+	sprintf(fname, "unital_XXq_YZq_ZYq_Q%d.txt", F->q);
 
 	FREE_OBJECT(P2);
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 
 void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *Fq, 
-	INT f_embedded_in_PG_4_q, 
-	char *fname, INT &nb_lines, INT *&Lines, 
-	INT verbose_level)
+	int f_embedded_in_PG_4_q, 
+	char *fname, int &nb_lines, int *&Lines, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	projective_space *P1, *P3;
 	//finite_field *FQ, *Fq;
-	INT q = Fq->q;
-	INT Q = q * q;
-	INT j, h, rk, rk1, alpha, e, d;
-	INT *w1, *w2, *v2;
-	INT *components;
-	INT *embedding;
-	INT *pair_embedding;
+	int q = Fq->q;
+	int Q = q * q;
+	int j, h, rk, rk1, alpha, e, d;
+	int *w1, *w2, *v2;
+	int *components;
+	int *embedding;
+	int *pair_embedding;
 
 	P1 = NEW_OBJECT(projective_space);
 	P3 = NEW_OBJECT(projective_space);
@@ -1213,12 +1213,12 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 
 
 	nb_lines = Q + 1;
-	Lines = NEW_INT(nb_lines);
+	Lines = NEW_int(nb_lines);
 
 
-	w1 = NEW_INT(d);
-	w2 = NEW_INT(d);
-	v2 = NEW_INT(2);
+	w1 = NEW_int(d);
+	w2 = NEW_int(d);
+	v2 = NEW_int(2);
 	
 	e = FQ->e >> 1;
 	if (f_vv) {
@@ -1226,8 +1226,8 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 		}
 
 
-	INT a, a0, a1;
-	INT b, b0, b1;
+	int a, a0, a1;
+	int b, b0, b1;
 	
 	if (f_v) {
 		cout << "rk : w1,w2 : line rank" << endl;
@@ -1245,7 +1245,7 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 			// which is an element of the regular spread.
 		if (f_vv) {
 			cout << "v2=";
-			INT_vec_print(cout, v2, 2);
+			int_vec_print(cout, v2, 2);
 			cout << endl;
 			}
 						
@@ -1267,9 +1267,9 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 			}
 		if (f_vv) {
 			cout << "w1=";
-			INT_vec_print(cout, w1, 4);
+			int_vec_print(cout, w1, 4);
 			cout << "w2=";
-			INT_vec_print(cout, w2, 4);
+			int_vec_print(cout, w2, 4);
 			cout << endl;
 			}
 
@@ -1278,46 +1278,46 @@ void create_desarguesian_line_spread_in_PG_3_q(finite_field *FQ, finite_field *F
 			P3->Grass_lines->M[1 * d + j] = w2[j];
 			}
 		if (f_vv) {
-			cout << "before P3->Grass_lines->rank_INT:" << endl;
-			INT_matrix_print(P3->Grass_lines->M, 2, 4);
+			cout << "before P3->Grass_lines->rank_int:" << endl;
+			int_matrix_print(P3->Grass_lines->M, 2, 4);
 			}
-		rk1 = P3->Grass_lines->rank_INT(0 /* verbose_level*/);
+		rk1 = P3->Grass_lines->rank_int(0 /* verbose_level*/);
 		Lines[rk] = rk1;
 		if (f_vv) {
 			cout << setw(4) << rk << " : ";
-			INT_vec_print(cout, w1, d);
+			int_vec_print(cout, w1, d);
 			cout << ", ";
-			INT_vec_print(cout, w2, d);
+			int_vec_print(cout, w2, d);
 			cout << " : " << setw(5) << rk1 << endl;
 			}
 		}
 
 	if (f_embedded_in_PG_4_q) {
-		sprintf(fname, "desarguesian_line_spread_in_PG_3_%ld_embedded.txt", q);
+		sprintf(fname, "desarguesian_line_spread_in_PG_3_%d_embedded.txt", q);
 		}
 	else {
-		sprintf(fname, "desarguesian_line_spread_in_PG_3_%ld.txt", q);
+		sprintf(fname, "desarguesian_line_spread_in_PG_3_%d.txt", q);
 		}
 
 	FREE_OBJECT(P1);
 	FREE_OBJECT(P3);
-	FREE_INT(w1);
-	FREE_INT(w2);
-	FREE_INT(v2);
-	FREE_INT(components);
-	FREE_INT(embedding);
-	FREE_INT(pair_embedding);
+	FREE_int(w1);
+	FREE_int(w2);
+	FREE_int(v2);
+	FREE_int(components);
+	FREE_int(embedding);
+	FREE_int(pair_embedding);
 }
 
 
 
-void create_whole_space(INT n, finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_whole_space(int n, finite_field *F, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT i; //, d;
+	int i; //, d;
 
 	if (f_v) {
 		cout << "create_whole_space" << endl;
@@ -1330,35 +1330,35 @@ void create_whole_space(INT n, finite_field *F,
 		FALSE /* f_init_incidence_structure */, 
 		verbose_level  /*MINIMUM(verbose_level - 1, 3)*/);
 
-	Pts = NEW_INT(P->N_points);
+	Pts = NEW_int(P->N_points);
 	nb_pts = P->N_points;
 	for (i = 0; i < P->N_points; i++) {
 		Pts[i] = i;
 		}
 
-	sprintf(fname, "whole_space_PG_%ld_%ld.txt", n, F->q);
+	sprintf(fname, "whole_space_PG_%d_%d.txt", n, F->q);
 	
 	FREE_OBJECT(P);
 }
 
-void create_hyperplane(INT n, finite_field *F, 
-	INT pt, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_hyperplane(int n, finite_field *F, 
+	int pt, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT i, d, a;
-	INT *v1;
-	INT *v2;
+	int i, d, a;
+	int *v1;
+	int *v2;
 
 	if (f_v) {
 		cout << "create_hyperplane pt=" << pt << endl;
 		}
 	d = n + 1;
 	P = NEW_OBJECT(projective_space);
-	v1 = NEW_INT(d);
-	v2 = NEW_INT(d);
+	v1 = NEW_int(d);
+	v2 = NEW_int(d);
 	
 	P->init(n, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1366,7 +1366,7 @@ void create_hyperplane(INT n, finite_field *F,
 
 	P->unrank_point(v1, pt);
 
-	Pts = NEW_INT(P->N_points);
+	Pts = NEW_int(P->N_points);
 	nb_pts = 0;
 	for (i = 0; i < P->N_points; i++) {
 		P->unrank_point(v2, i);
@@ -1375,31 +1375,31 @@ void create_hyperplane(INT n, finite_field *F,
 			Pts[nb_pts++] = i;
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : ";
-				INT_vec_print(cout, v2, d);
+				int_vec_print(cout, v2, d);
 				cout << " : " << setw(5) << i << endl;
 				}
 			}
 		}
 
-	sprintf(fname, "hyperplane_PG_%ld_%ld_pt%ld.txt", n, F->q, pt);
+	sprintf(fname, "hyperplane_PG_%d_%d_pt%d.txt", n, F->q, pt);
 	
 	FREE_OBJECT(P);
-	FREE_INT(v1);
-	FREE_INT(v2);
+	FREE_int(v1);
+	FREE_int(v2);
 }
 
-void create_segre_variety(finite_field *F, INT a, INT b, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+void create_segre_variety(finite_field *F, int a, int b, 
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P1;
 	projective_space *P2;
 	projective_space *P3;
-	INT i, j, d, N1, N2, rk;
-	INT *v1;
-	INT *v2;
-	INT *v3;
+	int i, j, d, N1, N2, rk;
+	int *v1;
+	int *v2;
+	int *v3;
 
 	if (f_v) {
 		cout << "create_segre_variety" << endl;
@@ -1413,9 +1413,9 @@ void create_segre_variety(finite_field *F, INT a, INT b,
 	P1 = NEW_OBJECT(projective_space);
 	P2 = NEW_OBJECT(projective_space);
 	P3 = NEW_OBJECT(projective_space);
-	v1 = NEW_INT(a + 1);
-	v2 = NEW_INT(b + 1);
-	v3 = NEW_INT(d);
+	v1 = NEW_int(a + 1);
+	v2 = NEW_int(b + 1);
+	v3 = NEW_int(d);
 	
 	P1->init(a, F, 
 		FALSE /* f_init_incidence_structure */, 
@@ -1430,7 +1430,7 @@ void create_segre_variety(finite_field *F, INT a, INT b,
 
 	N1 = P1->N_points;
 	N2 = P2->N_points;
-	Pts = NEW_INT(N1 * N2);
+	Pts = NEW_int(N1 * N2);
 	nb_pts = 0;
 	for (i = 0; i < N1; i++) {
 		P1->unrank_point(v1, i);
@@ -1441,29 +1441,29 @@ void create_segre_variety(finite_field *F, INT a, INT b,
 			Pts[nb_pts++] = rk;
 			if (f_v) {
 				cout << setw(4) << nb_pts - 1 << " : " << endl;
-				INT_matrix_print(v3, a + 1, b + 1);
+				int_matrix_print(v3, a + 1, b + 1);
 				cout << " : " << setw(5) << rk << endl;
 				}
 			}
 		}
 
-	sprintf(fname, "segre_variety_%ld_%ld_%ld.txt", a, b, F->q);
+	sprintf(fname, "segre_variety_%d_%d_%d.txt", a, b, F->q);
 	
 	FREE_OBJECT(P1);
 	FREE_OBJECT(P2);
 	FREE_OBJECT(P3);
-	FREE_INT(v1);
-	FREE_INT(v2);
-	FREE_INT(v3);
+	FREE_int(v1);
+	FREE_int(v2);
+	FREE_int(v3);
 }
 
 void create_Maruta_Hamada_arc(finite_field *F, 
-	char *fname, INT &nb_pts, INT *&Pts, 
-	INT verbose_level)
+	char *fname, int &nb_pts, int *&Pts, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
-	INT N;
+	int N;
 
 	if (f_v) {
 		cout << "create_Maruta_Hamada_arc" << endl;
@@ -1476,14 +1476,14 @@ void create_Maruta_Hamada_arc(finite_field *F,
 	
 
 	N = P->N_points;
-	Pts = NEW_INT(N);
+	Pts = NEW_int(N);
 
 	P->create_Maruta_Hamada_arc2(Pts, nb_pts, verbose_level);
 
-	sprintf(fname, "Maruta_Hamada_arc2_q%ld.txt", F->q);
+	sprintf(fname, "Maruta_Hamada_arc2_q%d.txt", F->q);
 	
 	FREE_OBJECT(P);
-	//FREE_INT(Pts);
+	//FREE_int(Pts);
 }
 
 

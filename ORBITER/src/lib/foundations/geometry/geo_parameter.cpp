@@ -21,73 +21,73 @@ geo_parameter::geo_parameter()
 geo_parameter::~geo_parameter()
 {
 	if (V) {
-		FREE_INT(V);
+		FREE_int(V);
 		V = NULL;
 		}
 	if (B) {
-		FREE_INT(B);
+		FREE_int(B);
 		B = NULL;
 		}
 	if (scheme) {
-		FREE_INT(scheme);
+		FREE_int(scheme);
 		scheme = NULL;
 		}
 	if (fuse) {
-		FREE_INT(fuse);
+		FREE_int(fuse);
 		fuse = NULL;
 		}
 	if (part) {
-		FREE_INT(part);
+		FREE_int(part);
 		part = NULL;
 		}
 	if (entries) {
-		FREE_INT(entries);
+		FREE_int(entries);
 		entries = NULL;
 		}
 }
 
-void geo_parameter::append_to_part(INT a)
+void geo_parameter::append_to_part(int a)
 {
-	INT nb_alloc;
+	int nb_alloc;
 	
 	if (part == NULL) {
 		nb_alloc = 1000;
-		part = NEW_INT(nb_alloc);
+		part = NEW_int(nb_alloc);
 		part_nb_alloc = nb_alloc;
 		nb_parts = 0;
 		}
 	else if (nb_parts == part_nb_alloc) {
 		nb_alloc = nb_parts + 1000;
-		INT *new_part, i;
-		new_part = NEW_INT(nb_alloc);
+		int *new_part, i;
+		new_part = NEW_int(nb_alloc);
 		for (i = 0; i < nb_parts; i++) {
 			new_part[i] = part[i];
 			}
-		FREE_INT(part);
+		FREE_int(part);
 		part = new_part;
 		part_nb_alloc = nb_alloc;
 		}
 	part[nb_parts++] = a;
 }
 
-void geo_parameter::append_to_entries(INT a1, INT a2, INT a3, INT a4)
+void geo_parameter::append_to_entries(int a1, int a2, int a3, int a4)
 {
-	INT nb_alloc;
+	int nb_alloc;
 	
 	if (entries == NULL) {
 		nb_alloc = 1000;
-		entries = NEW_INT(4 * nb_alloc);
+		entries = NEW_int(4 * nb_alloc);
 		entries_nb_alloc = nb_alloc;
 		nb_entries = 0;
 		}
 	else if (nb_entries == entries_nb_alloc) {
 		nb_alloc = nb_entries + 1000;
-		INT *new_entries, i;
-		new_entries = NEW_INT(4 * nb_alloc);
+		int *new_entries, i;
+		new_entries = NEW_int(4 * nb_alloc);
 		for (i = 0; i < 4 * nb_entries; i++) {
 			new_entries[i] = entries[i];
 			}
-		FREE_INT(entries);
+		FREE_int(entries);
 		entries = new_entries;
 		entries_nb_alloc = nb_alloc;
 		}
@@ -115,7 +115,7 @@ void geo_parameter::write(ofstream &aStream, char *label)
 
 void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 {
-	INT i, j, sum, pt_level = -1, bt_level = -1, xy, x, y, z, w;
+	int i, j, sum, pt_level = -1, bt_level = -1, xy, x, y, z, w;
 
 	aStream << label << " " << v + b << " " << v << " ";
 	sum = V[0];
@@ -129,8 +129,8 @@ void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 		sum += B[j];
 		}
 	aStream << " -1 ";
-	if (decomposition_type == POINTTACTICAL ||
-			decomposition_type == POINTANDBLOCKTACTICAL) {
+	if (decomposition_type == POintTACTICAL ||
+			decomposition_type == POintANDBLOCKTACTICAL) {
 		pt_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -142,7 +142,7 @@ void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 			}
 		}
 	if (decomposition_type == BLOCKTACTICAL ||
-			decomposition_type == POINTANDBLOCKTACTICAL) {
+			decomposition_type == POintANDBLOCKTACTICAL) {
 		bt_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -170,16 +170,16 @@ void geo_parameter::write_mode_single(ofstream &aStream, char *label)
 			}
 		}
 	aStream << " -1 ";
-	INT lambda_level = 2;
-	INT extra_row_level = -1;
-	INT extra_col_level = -1;
+	int lambda_level = 2;
+	int extra_row_level = -1;
+	int extra_col_level = -1;
 	aStream << pt_level << " " << bt_level << " " << lambda_level << " " << 
 		extra_row_level << " " << extra_col_level << endl;
 }
 
 void geo_parameter::write_mode_stack(ofstream &aStream, char *label)
 {
-	INT i;
+	int i;
 	
 	aStream << label << " ";
 	for (i = 0; i < nb_parts; i++) {
@@ -198,10 +198,10 @@ void geo_parameter::write_mode_stack(ofstream &aStream, char *label)
 	
 }
 
-void geo_parameter::convert_single_to_stack(INT verbose_level)
+void geo_parameter::convert_single_to_stack(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, sum, x, y, z, w, xy;
+	int f_v = (verbose_level >= 1);
+	int i, j, sum, x, y, z, w, xy;
 	
 	row_level = -1;
 	col_level = -1;
@@ -237,19 +237,19 @@ void geo_parameter::convert_single_to_stack(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "decomposition_type=";
-		if (decomposition_type == POINTTACTICAL) {
-			cout << "POINTTACTICAL" << endl;
+		if (decomposition_type == POintTACTICAL) {
+			cout << "POintTACTICAL" << endl;
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
 			cout << "BLOCKTACTICAL" << endl;
 			}
-		else if (decomposition_type == POINTANDBLOCKTACTICAL) {
-			cout << "POINTANDBLOCKTACTICAL" << endl;
+		else if (decomposition_type == POintANDBLOCKTACTICAL) {
+			cout << "POintANDBLOCKTACTICAL" << endl;
 			}
 		
 		}
-	if (decomposition_type == POINTTACTICAL ||
-			decomposition_type == POINTANDBLOCKTACTICAL) {
+	if (decomposition_type == POintTACTICAL ||
+			decomposition_type == POintANDBLOCKTACTICAL) {
 		row_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -266,7 +266,7 @@ void geo_parameter::convert_single_to_stack(INT verbose_level)
 			}
 		}
 	if (decomposition_type == BLOCKTACTICAL ||
-			decomposition_type == POINTANDBLOCKTACTICAL) {
+			decomposition_type == POintANDBLOCKTACTICAL) {
 		col_level = nb_V + nb_B;
 		for (i = 0; i < nb_V; i++) {
 			for (j = 0; j < nb_B; j++) {
@@ -305,7 +305,7 @@ void geo_parameter::convert_single_to_stack(INT verbose_level)
 		tdo_scheme G;
 		
 		
-		if (decomposition_type == POINTTACTICAL) {
+		if (decomposition_type == POintTACTICAL) {
 			convert_single_to_stack_fuse_simple_pt(verbose_level);
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
@@ -321,7 +321,7 @@ void geo_parameter::convert_single_to_stack(INT verbose_level)
 		tdo_scheme G;
 		
 		
-		if (decomposition_type == POINTTACTICAL) {
+		if (decomposition_type == POintTACTICAL) {
 			convert_single_to_stack_fuse_double_pt(verbose_level);
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
@@ -337,7 +337,7 @@ void geo_parameter::convert_single_to_stack(INT verbose_level)
 		}
 }
 
-INT geo_parameter::partition_number_row(INT row_idx)
+int geo_parameter::partition_number_row(int row_idx)
 {
 	if (row_idx == 0)
 		return 0;
@@ -345,7 +345,7 @@ INT geo_parameter::partition_number_row(INT row_idx)
 		return row_idx + 1;
 }
  
-INT geo_parameter::partition_number_col(INT col_idx)
+int geo_parameter::partition_number_col(int col_idx)
 {
 	if (col_idx == 0) {
 		return 1;
@@ -355,7 +355,7 @@ INT geo_parameter::partition_number_col(INT col_idx)
 		}
 }
  
-INT geo_parameter::input(ifstream &aStream)
+int geo_parameter::input(ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
 	string str;
@@ -379,10 +379,10 @@ INT geo_parameter::input(ifstream &aStream)
 	return FALSE;
 }
 
-INT geo_parameter::input_mode_single(ifstream &aStream)
+int geo_parameter::input_mode_single(ifstream &aStream)
 {
 #ifdef SYSTEMUNIX
-	INT i, j, l, val, eqpos;
+	int i, j, l, val, eqpos;
 	bool brk;
 	string str, mapkey, mapval;
 	
@@ -401,11 +401,11 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 			mapval = str.substr(eqpos + 1, str.size() - eqpos - 1);
 			if (mapkey == "type") {
 				if (mapval == "pt")
-					decomposition_type = POINTTACTICAL;
+					decomposition_type = POintTACTICAL;
 				else if (mapval == "bt")
 					decomposition_type = BLOCKTACTICAL;
 				else if (mapval == "geo")
-					decomposition_type = POINTANDBLOCKTACTICAL;
+					decomposition_type = POintANDBLOCKTACTICAL;
 				else
 					decomposition_type = UNKNOWNTYPE;
 				}
@@ -460,9 +460,9 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 			brk = brk || aStream.eof();
 		}
 	//cout << "nb_V=" << nb_V << " nb_B=" << nb_B << endl;
-	V = NEW_INT(nb_V);
-	B = NEW_INT(nb_B);
-	scheme = NEW_INT(nb_V * nb_B);
+	V = NEW_int(nb_V);
+	B = NEW_int(nb_B);
+	scheme = NEW_int(nb_V * nb_B);
 	fuse = NULL;
 	if (decomposition_type == UNKNOWNTYPE) {
 		cout << "decomposition_type needs to be defined"<<endl;
@@ -509,8 +509,8 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 		}
 #endif
 	if (fuse_type == FUSE_TYPE_SIMPLE) {
-		if (decomposition_type == POINTTACTICAL) {
-			fuse = NEW_INT(nb_V);
+		if (decomposition_type == POintTACTICAL) {
+			fuse = NEW_int(nb_V);
 			for (i = 0; i < nb_V; i++) {
 				aStream >> val;
 				//cout << "read " << val << endl;
@@ -518,7 +518,7 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 				}
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
-			fuse = NEW_INT(nb_B);
+			fuse = NEW_int(nb_B);
 			for (i = 0; i < nb_B; i++) {
 				aStream >> val;
 				//cout << "read " << val << endl;
@@ -531,8 +531,8 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 			}
 		}
 	else if (fuse_type == FUSE_TYPE_DOUBLE) {
-		if (decomposition_type == POINTTACTICAL) {
-			fuse = NEW_INT(4 + 2 * nb_V);
+		if (decomposition_type == POintTACTICAL) {
+			fuse = NEW_int(4 + 2 * nb_V);
 			for (i = 0; i < 4 + 2 * nb_V; i++) {
 				aStream >> val;
 				//cout << "read " << val << endl;
@@ -540,7 +540,7 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 				}
 			}
 		else if (decomposition_type == BLOCKTACTICAL) {
-			fuse = NEW_INT(4 + 2 * nb_B);
+			fuse = NEW_int(4 + 2 * nb_B);
 			for (i = 0; i < 4 + (2 * nb_B); i++) {
 				aStream >> val;
 				//cout << "read " << val << endl;
@@ -565,13 +565,13 @@ INT geo_parameter::input_mode_single(ifstream &aStream)
 	return TRUE;
 }
 
-INT geo_parameter::input_mode_stack(
-		ifstream &aStream, INT verbose_level)
+int geo_parameter::input_mode_stack(
+		ifstream &aStream, int verbose_level)
 {
-#if defined(SYSTEMUNIX) || defined(SYSTEM_IS_MACINTOSH)
-	INT f_v = (verbose_level >= 1);
+#if defined(SYSTEMUNIX) || defined(SYSTEM_IS_MACintOSH)
+	int f_v = (verbose_level >= 1);
 	string str;
-	INT i, l, val, v1, v2, v3, v4;
+	int i, l, val, v1, v2, v3, v4;
 	
 	//part.clear();
 	//entries.clear();
@@ -603,7 +603,7 @@ INT geo_parameter::input_mode_stack(
 		}
 	nb_parts = 0;
 	if (part) {
-		FREE_INT(part);
+		FREE_int(part);
 		part = NULL;
 		}
 	if (f_v) {
@@ -627,7 +627,7 @@ INT geo_parameter::input_mode_stack(
 		}
 	nb_entries = 0;
 	if (entries) {
-		FREE_INT(entries);
+		FREE_int(entries);
 		entries = NULL;
 		}
 	entries = NULL;
@@ -669,23 +669,23 @@ INT geo_parameter::input_mode_stack(
 	return TRUE;
 }
 
-void geo_parameter::init_tdo_scheme(tdo_scheme &G, INT verbose_level)
+void geo_parameter::init_tdo_scheme(tdo_scheme &G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "geo_parameter::init_tdo_scheme" << endl;
 		cout << "nb_parts=" << nb_parts << endl;
 		cout << "nb_entries=" << nb_entries << endl;
 		}
-	G.part = NEW_INT(nb_parts + 1);
+	G.part = NEW_int(nb_parts + 1);
 	for (i = 0; i < nb_parts; i++) {
 		G.part[i] = part[i];
 		}
 	G.part[nb_parts] = -1;
 	G.part_length = nb_parts;
-	G.entries = NEW_INT(nb_entries * 4 + 1);
+	G.entries = NEW_int(nb_entries * 4 + 1);
 	for (i = 0; i < 4 * nb_entries; i++) {
 		G.entries[i] = entries[i];
 		}
@@ -752,14 +752,14 @@ void geo_parameter::print_schemes_tex(tdo_scheme &G)
 
 }
 
-void geo_parameter::print_scheme_tex(ostream &ost, tdo_scheme &G, INT h)
+void geo_parameter::print_scheme_tex(ostream &ost, tdo_scheme &G, int h)
 {
 	G.print_scheme_tex_fancy(ost, h, TRUE, label);
 }
 
 void geo_parameter::print_C_source()
 {
-	INT i, j;
+	int i, j;
 	
 	cout << "char *name = \"" << label << "\";" << endl;
 	cout << "int part[] = {";
@@ -794,17 +794,17 @@ void geo_parameter::print_C_source()
 	cout << "int listofcases_table[] = {" << endl;
 	cout << "};" << endl;
 	cout << "int AGO_THRESHOLD  = 100000000;" << endl;
-	cout << "int PRINT_INTERVAL = 10000;" << endl;
-	cout << "int PRINT_INTERVAL_HOURS = 0;" << endl;
-	cout << "int PRINT_INTERVAL_MINUTES = 0;" << endl;
-	cout << "int PRINT_INTERVAL_SECONDS = 10;" << endl;
+	cout << "int PRint_intERVAL = 10000;" << endl;
+	cout << "int PRint_intERVAL_HOURS = 0;" << endl;
+	cout << "int PRint_intERVAL_MINUTES = 0;" << endl;
+	cout << "int PRint_intERVAL_SECONDS = 10;" << endl;
 }
 
-void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
+void geo_parameter::convert_single_to_stack_fuse_simple_pt(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT I, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int I, u, l, i, j, a, sum, s, M, c, e, h, c1, c2, f;
 	tdo_scheme G;
 
 	if (f_v) {
@@ -813,11 +813,11 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 		}
 	
 
-	INT *class_first, *class_len, nb_classes;
-	INT *block_length;
-	INT *prev_scheme;
-	INT *class_relabel;
-	INT prev_level;
+	int *class_first, *class_len, nb_classes;
+	int *block_length;
+	int *prev_scheme;
+	int *class_relabel;
+	int prev_level;
 			
 	if (f_v) {
 		cout << "processing fuse simple for "
@@ -826,16 +826,16 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 	init_tdo_scheme(G, verbose_level);
 	h = ROW;
 			
-	class_first = NEW_INT(nb_V);
-	class_len = NEW_INT(nb_V);
-	block_length = NEW_INT(nb_V);
-	class_relabel = NEW_INT(nb_V + nb_B);
+	class_first = NEW_int(nb_V);
+	class_len = NEW_int(nb_V);
+	block_length = NEW_int(nb_V);
+	class_relabel = NEW_int(nb_V + nb_B);
 	for (i = 0; i < nb_V + nb_B; i++)
 		class_relabel[i] = -1;
 	class_relabel[0] = 0;
 	class_relabel[nb_V] = 1;
 
-	INT_vec_classify(fuse, nb_V, class_first, class_len, nb_classes);
+	int_vec_classify(fuse, nb_V, class_first, class_len, nb_classes);
 
 #if 0
 	class_first[0] = 0;
@@ -854,7 +854,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 	nb_classes++;
 #endif
 
-	prev_scheme = NEW_INT(nb_classes * nb_B);
+	prev_scheme = NEW_int(nb_classes * nb_B);
 	for (I = 0; I < nb_classes; I++) {
 		block_length[I] = tdo_scheme_get_row_class_length_fused(G, h, 
 			class_first[I], class_len[I]);
@@ -873,13 +873,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 		cout << "found " << nb_classes << " classes in the "
 				"previous row decomposition" << endl;
 		cout << "class_first: ";
-		INT_vec_print(cout, class_first, nb_classes);
+		int_vec_print(cout, class_first, nb_classes);
 		cout << endl;
 		cout << "class_len: ";
-		INT_vec_print(cout, class_len, nb_classes);
+		int_vec_print(cout, class_len, nb_classes);
 		cout << endl;
 		cout << "block_length: ";
-		INT_vec_print(cout, block_length, nb_classes);
+		int_vec_print(cout, block_length, nb_classes);
 		cout << endl;
 		}
 	
@@ -938,13 +938,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 	prev_level = nb_parts;
 	if (f_v) {
 		cout << "the previous decomposition is " << endl;
-		INT_vec_print(cout, part, nb_parts);
+		int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		INT_vec_print(cout, class_relabel, nb_V + nb_B);
+		int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		}
 	nb_entries = 0;
@@ -984,13 +984,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "the extended decomposition is " << endl;
-		INT_vec_print(cout, part, nb_parts);
+		int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		INT_vec_print(cout, class_relabel, nb_V + nb_B);
+		int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		}
 	row_level = nb_parts;
@@ -1007,20 +1007,20 @@ void geo_parameter::convert_single_to_stack_fuse_simple_pt(INT verbose_level)
 			//nb_entries++;
 			}
 		}
-	FREE_INT(class_first);
-	FREE_INT(class_len);
-	FREE_INT(block_length);
-	FREE_INT(prev_scheme);
-	FREE_INT(class_relabel);
+	FREE_int(class_first);
+	FREE_int(class_len);
+	FREE_int(block_length);
+	FREE_int(prev_scheme);
+	FREE_int(class_relabel);
 	//exit(1);
 }
 
 void geo_parameter::convert_single_to_stack_fuse_simple_bt(
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT J, u, l, i, j, a, sum, s, L, M, c, e, h, c1, c2, f;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int J, u, l, i, j, a, sum, s, L, M, c, e, h, c1, c2, f;
 	tdo_scheme G;
 
 	if (f_v) {
@@ -1028,11 +1028,11 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 				"stack_fuse_simple_bt" << endl;
 		}
 	
-	INT *class_first, *class_len, nb_classes;
-	INT *block_length;
-	INT *prev_scheme;
-	INT *class_relabel;
-	INT prev_level;
+	int *class_first, *class_len, nb_classes;
+	int *block_length;
+	int *prev_scheme;
+	int *class_relabel;
+	int prev_level;
 			
 	if (f_v) {
 		cout << "processing fuse simple for "
@@ -1040,16 +1040,16 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		}
 	init_tdo_scheme(G, verbose_level);
 	h = COL;
-	class_first = NEW_INT(nb_B);
-	class_len = NEW_INT(nb_B);
-	block_length = NEW_INT(nb_B);
-	class_relabel = NEW_INT(nb_V + nb_B);
+	class_first = NEW_int(nb_B);
+	class_len = NEW_int(nb_B);
+	block_length = NEW_int(nb_B);
+	class_relabel = NEW_int(nb_V + nb_B);
 	for (i = 0; i < nb_V + nb_B; i++)
 		class_relabel[i] = -1;
 	class_relabel[0] = 0;
 	class_relabel[nb_V] = 1;
 
-	INT_vec_classify(fuse, nb_B, class_first, class_len, nb_classes);
+	int_vec_classify(fuse, nb_B, class_first, class_len, nb_classes);
 
 #if 0
 	class_first[0] = 0;
@@ -1067,7 +1067,7 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		}
 	nb_classes++;
 #endif
-	prev_scheme = NEW_INT(nb_V * nb_classes);
+	prev_scheme = NEW_int(nb_V * nb_classes);
 	for (J = 0; J < nb_classes; J++) {
 		block_length[J] = tdo_scheme_get_col_class_length_fused(G, h, 
 			class_first[J], class_len[J]);
@@ -1087,13 +1087,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		cout << "found " << nb_classes << " classes in the previous "
 				"column decomposition" << endl;
 		cout << "class_first: ";
-		INT_vec_print(cout, class_first, nb_classes);
+		int_vec_print(cout, class_first, nb_classes);
 		cout << endl;
 		cout << "class_len: ";
-		INT_vec_print(cout, class_len, nb_classes);
+		int_vec_print(cout, class_len, nb_classes);
 		cout << endl;
 		cout << "block_length: ";
-		INT_vec_print(cout, block_length, nb_classes);
+		int_vec_print(cout, block_length, nb_classes);
 		cout << endl;
 		}
 	
@@ -1149,13 +1149,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 	prev_level = nb_parts;
 	if (f_v) {
 		cout << "the previous decomposition is " << endl;
-		INT_vec_print(cout, part, nb_parts);
+		int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		INT_vec_print(cout, class_relabel, nb_V + nb_B);
+		int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		}
 	nb_entries = 0;
@@ -1196,13 +1196,13 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 		}
 	if (f_v) {
 		cout << "the extended decomposition is " << endl;
-		INT_vec_print(cout, part, nb_parts);
+		int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		INT_vec_print(cout, class_relabel, nb_V + nb_B);
+		int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		}
 	col_level = nb_parts;
@@ -1219,19 +1219,19 @@ void geo_parameter::convert_single_to_stack_fuse_simple_bt(
 			//nb_entries++;
 			}
 		}
-	FREE_INT(class_first);
-	FREE_INT(class_len);
-	FREE_INT(block_length);
-	FREE_INT(prev_scheme);
-	FREE_INT(class_relabel);
+	FREE_int(class_first);
+	FREE_int(class_len);
+	FREE_int(block_length);
+	FREE_int(prev_scheme);
+	FREE_int(class_relabel);
 	//exit(1);
 }
 
 
-void INT_vec_classify(INT *v, INT len,
-		INT *class_first, INT *class_len, INT &nb_classes)
+void int_vec_classify(int *v, int len,
+		int *class_first, int *class_len, int &nb_classes)
 {
-	INT i;
+	int i;
 	
 	nb_classes = 0;
 	class_first[0] = 0;
@@ -1250,10 +1250,10 @@ void INT_vec_classify(INT *v, INT len,
 	nb_classes++;
 }
 
-INT tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
-		INT h, INT class_first, INT class_len)
+int tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
+		int h, int class_first, int class_len)
 {
-	INT L, u;
+	int L, u;
 	
 	L = 0;
 	for (u = 0; u < class_len; u++) {
@@ -1262,10 +1262,10 @@ INT tdo_scheme_get_row_class_length_fused(tdo_scheme &G,
 	return L;
 }
 
-INT tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
-		INT h, INT class_first, INT class_len)
+int tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
+		int h, int class_first, int class_len)
 {
-	INT L, u;
+	int L, u;
 	
 	L = 0;
 	for (u = 0; u < class_len; u++) {
@@ -1275,13 +1275,13 @@ INT tdo_scheme_get_col_class_length_fused(tdo_scheme &G,
 }
 
 void geo_parameter::convert_single_to_stack_fuse_double_pt(
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT I, u, l, i, j, ii, jj, a, sum, s, M, c, e, h, c1, c2, f, d;
-	INT fuse_block_first[2], fuse_block_len[2];
-	INT *the_fuse[2];
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int I, u, l, i, j, ii, jj, a, sum, s, M, c, e, h, c1, c2, f, d;
+	int fuse_block_first[2], fuse_block_len[2];
+	int *the_fuse[2];
 	
 	tdo_scheme G;
 
@@ -1297,11 +1297,11 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	the_fuse[1] = the_fuse[0] + nb_V;
 	
 
-	INT *class_first[2], *class_len[2], *class_idx[3], nb_classes[2];
-	INT *block_length[2];
-	INT *prev_scheme[2];
-	INT *class_relabel;
-	INT prev_level[2];
+	int *class_first[2], *class_len[2], *class_idx[3], nb_classes[2];
+	int *block_length[2];
+	int *prev_scheme[2];
+	int *class_relabel;
+	int prev_level[2];
 			
 	if (f_v) {
 		cout << "processing fuse double for "
@@ -1311,16 +1311,16 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		cout << "fuse_block_first[1]=" << fuse_block_first[1] << endl;
 		cout << "fuse_block_len[1]  =" << fuse_block_len[1] << endl;
 		cout << "the_fuse[0] : ";
-		INT_vec_print(cout, the_fuse[0], nb_V);
+		int_vec_print(cout, the_fuse[0], nb_V);
 		cout << endl;
 		cout << "the_fuse[1] : ";
-		INT_vec_print(cout, the_fuse[1], nb_V);
+		int_vec_print(cout, the_fuse[1], nb_V);
 		cout << endl;
 		}
 	init_tdo_scheme(G, 0 /*verbose_level*/);
 	h = ROW;
 			
-	class_relabel = NEW_INT(nb_V + nb_B);
+	class_relabel = NEW_int(nb_V + nb_B);
 	for (i = 0; i < nb_V + nb_B; i++)
 		class_relabel[i] = -1;
 	class_relabel[0] = 0;
@@ -1334,35 +1334,35 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 			cout << "d=" << d << endl;
 			}
 
-		class_first[d] = NEW_INT(nb_V);
-		class_len[d] = NEW_INT(nb_V);
-		block_length[d] = NEW_INT(nb_V);
+		class_first[d] = NEW_int(nb_V);
+		class_len[d] = NEW_int(nb_V);
+		block_length[d] = NEW_int(nb_V);
 
-		INT_vec_classify(the_fuse[d], nb_V,
+		int_vec_classify(the_fuse[d], nb_V,
 				class_first[d], class_len[d], nb_classes[d]);
 		for (I = 0; I < nb_classes[d]; I++) {
 			block_length[d][I] = tdo_scheme_get_row_class_length_fused(G, h, 
 				class_first[d][I], class_len[d][I]);
 			}
-		class_idx[d] = NEW_INT(nb_classes[d]);
+		class_idx[d] = NEW_int(nb_classes[d]);
 		if (f_v) {
 			cout << "row decomposition " << d << " found "
 					<< nb_classes[d] << " classes" << endl;
 			cout << "class_first: ";
-			INT_vec_print(cout, class_first[d], nb_classes[d]);
+			int_vec_print(cout, class_first[d], nb_classes[d]);
 			cout << endl;
 			cout << "class_len: ";
-			INT_vec_print(cout, class_len[d], nb_classes[d]);
+			int_vec_print(cout, class_len[d], nb_classes[d]);
 			cout << endl;
 			cout << "block_length: ";
-			INT_vec_print(cout, block_length[d], nb_classes[d]);
+			int_vec_print(cout, block_length[d], nb_classes[d]);
 			cout << endl;
 			}
 		
 		if (f_v) {
 			cout << "computing previous scheme at depth " << d << endl;
 			}
-		prev_scheme[d] = NEW_INT(nb_classes[d] * fuse_block_len[d]);
+		prev_scheme[d] = NEW_int(nb_classes[d] * fuse_block_len[d]);
 		for (jj = 0; jj < fuse_block_len[d]; jj++) {
 			j = fuse_block_first[d] + jj;
 			for (I = 0; I < nb_classes[d]; I++) {
@@ -1413,7 +1413,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 
 
 		} // next d
-	class_idx[2] = NEW_INT(nb_V);
+	class_idx[2] = NEW_int(nb_V);
 	
 	//exit(1);
 	
@@ -1451,7 +1451,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	prev_level[d] = nb_parts;
 	if (f_v) {
 		cout << "class_idx[0]=";
-		INT_vec_print(cout, class_idx[0], nb_classes[0]);
+		int_vec_print(cout, class_idx[0], nb_classes[0]);
 		cout << endl;
 		}
 	
@@ -1481,7 +1481,7 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 	prev_level[d] = nb_parts;
 	if (f_v) {
 		cout << "class_idx[1]=";
-		INT_vec_print(cout, class_idx[1], nb_classes[1]);
+		int_vec_print(cout, class_idx[1], nb_classes[1]);
 		cout << endl;
 		}
 	
@@ -1490,13 +1490,13 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		cout << "prev_level[0]" << prev_level[0] << endl;
 		cout << "prev_level[1]" << prev_level[1] << endl;
 		cout << "the previous decomposition is " << endl;
-		INT_vec_print(cout, part, nb_parts);
+		int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 		//	}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		INT_vec_print(cout, class_relabel, nb_V + nb_B);
+		int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		}
 	
@@ -1563,16 +1563,16 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 		}
 	if (f_v) {
 		cout << "the extended decomposition is " << endl;
-		INT_vec_print(cout, part, nb_parts);
+		int_vec_print(cout, part, nb_parts);
 		//for (i = 0; i < nb_parts; i++) {
 			//cout << part[i] << " ";
 			//}
 		cout << endl;
 		cout << "class_relabel: " << endl;
-		INT_vec_print(cout, class_relabel, nb_V + nb_B);
+		int_vec_print(cout, class_relabel, nb_V + nb_B);
 		cout << endl;
 		cout << "class_idx[2]=";
-		INT_vec_print(cout, class_idx[2], nb_V);
+		int_vec_print(cout, class_idx[2], nb_V);
 		cout << endl;
 		}
 	row_level = nb_parts;
@@ -1593,15 +1593,15 @@ void geo_parameter::convert_single_to_stack_fuse_double_pt(
 }
 
 void geo_parameter::cut_off_two_lines(geo_parameter &GP2, 
-	INT *&part_relabel, INT *&part_length,
-	INT verbose_level)
+	int *&part_relabel, int *&part_length,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	tdo_scheme TDO;
-	INT w, j, S, i;
-	INT *Part;
-	INT *Entries;
+	int w, j, S, i;
+	int *Part;
+	int *Entries;
 	
 	if (f_v) {
 		cout << "geo_parameter::cut_off_two_lines" << endl;
@@ -1613,8 +1613,8 @@ void geo_parameter::cut_off_two_lines(geo_parameter &GP2,
 		cout << "extra_col_level = " << extra_col_level << endl;
 		cout << "lambda_level = " << lambda_level << endl;
         }
-	Part = NEW_INT(nb_parts + 1);
-	Entries = NEW_INT(4 * nb_entries + 1);
+	Part = NEW_int(nb_parts + 1);
+	Entries = NEW_int(4 * nb_entries + 1);
 	for (i = 0; i < nb_parts; i++) {
 		Part[i] = part[i];
 		}
@@ -1627,8 +1627,8 @@ void geo_parameter::cut_off_two_lines(geo_parameter &GP2,
 	TDO.init_TDO(Part, Entries, row_level, col_level, 
 		extra_row_level, extra_col_level, 
 		lambda_level, 0/*verbose_level - 1*/);
-	FREE_INT(Part);
-	FREE_INT(Entries);
+	FREE_int(Part);
+	FREE_int(Entries);
 	w = 0;
 	for (j = TDO.nb_col_classes[COL] - 1; j >= 0; j--) {
 		S = 0;
@@ -1658,13 +1658,13 @@ void geo_parameter::cut_off_some_lines(geo_parameter &GP2, int w,
 }
 #endif
 
-void geo_parameter::cut_off(geo_parameter &GP2, INT w,
-	INT *&part_relabel, INT *&part_length,
-	INT verbose_level)
+void geo_parameter::cut_off(geo_parameter &GP2, int w,
+	int *&part_relabel, int *&part_length,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 3);
-	INT i, W, a, /*u,*/ b, c, d, A, B, C;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 3);
+	int i, W, a, /*u,*/ b, c, d, A, B, C;
 	
 	if (f_v) {
 		cout << "geo_parameter::cut_off cutting off "
@@ -1685,8 +1685,8 @@ void geo_parameter::cut_off(geo_parameter &GP2, INT w,
 	GP2.mode = MODE_STACK;	
 	strcpy(GP2.label, label);
 	
-	part_relabel = NEW_INT(nb_parts + 1);
-	part_length = NEW_INT(nb_parts + 1);
+	part_relabel = NEW_int(nb_parts + 1);
+	part_length = NEW_int(nb_parts + 1);
 	W = part[0] - w;
 	GP2.nb_parts = 0;
 	GP2.part = NULL;
@@ -1808,7 +1808,7 @@ void geo_parameter::cut_off(geo_parameter &GP2, INT w,
 #endif
 #if 1
 	if (f_v) {
-		INT j;
+		int j;
 		cout << "new_part:" << endl;
 		for (i = 0; i < GP2.nb_parts; i++) 
 			cout << GP2.part[i] << " ";
@@ -1831,7 +1831,7 @@ void geo_parameter::cut_off(geo_parameter &GP2, INT w,
 
 void geo_parameter::copy(geo_parameter &GP2)
 {
-	INT i;
+	int i;
 	
 	GP2.decomposition_type = decomposition_type;
 	GP2.fuse_type = fuse_type;
@@ -1869,12 +1869,12 @@ void geo_parameter::print_schemes()
 {
 	cout << "geo_parameter::print_schemes()" << endl;
 #if 1
-	INT i;
+	int i;
 	tdo_scheme TDO;
-	INT *Part, *Entries;
+	int *Part, *Entries;
 
-	Part = NEW_INT(nb_parts + 1);
-	Entries = NEW_INT(4 * nb_entries + 1);
+	Part = NEW_int(nb_parts + 1);
+	Entries = NEW_int(4 * nb_entries + 1);
 	for (i = 0; i < nb_parts; i++) {
 		Part[i] = part[i];
 		}
@@ -1898,8 +1898,8 @@ void geo_parameter::print_schemes()
 		lambda_level, 0/*verbose_level - 1*/);
 	//cout << "geo_parameter::print_schemes after TDO.init_TDO" << endl;
 			
-	FREE_INT(Part);
-	FREE_INT(Entries);
+	FREE_int(Part);
+	FREE_int(Entries);
 
 	TDO.print_all_schemes();
 	cout << "geo_parameter::print_schemes after TDO.print_all_schemes" << endl;

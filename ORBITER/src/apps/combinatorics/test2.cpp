@@ -13,7 +13,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 void FortCollins();
 void test1();
 void test2();
@@ -21,17 +21,17 @@ void test3();
 void test4();
 void test5();
 void test6();
-void print_set(INT *set, INT n, INT k);
-void print_set_as_bitstring(INT *set, INT n, INT k);
-void set_to_bitstring(INT *set, INT n, INT k, INT *bitstring);
-INT first_subset(INT n, INT *set, INT &k);
-INT next_subset(INT n, INT *set, INT &k);
-void rank_subset(INT *set, INT n, INT k, longinteger_object &rk);
-void unrank_subset(INT *set, INT n, INT &k, longinteger_object &rk);
+void print_set(int *set, int n, int k);
+void print_set_as_bitstring(int *set, int n, int k);
+void set_to_bitstring(int *set, int n, int k, int *bitstring);
+int first_subset(int n, int *set, int &k);
+int next_subset(int n, int *set, int &k);
+void rank_subset(int *set, int n, int k, longinteger_object &rk);
+void unrank_subset(int *set, int n, int &k, longinteger_object &rk);
 
 int main(int argc, char **argv)
 {
-	//INT verbose_level = 2;
+	//int verbose_level = 2;
 	t0 = os_ticks();
 #if 0
 	if (argc <= 1) {
@@ -54,9 +54,9 @@ void FortCollins()
 {
 	const char *alphabet = "CFILNORST";
 
-	INT n = 9, i;
-	INT set[9];
-	INT k, cnt;
+	int n = 9, i;
+	int set[9];
+	int k, cnt;
 	longinteger_object rk;
 	
 	first_subset(n, set, k);
@@ -83,10 +83,10 @@ void FortCollins()
 
 void test1()
 {
-	INT n = 9, i;
-	INT set[9];
-	INT bitstring[9];
-	INT k, cnt, nb;
+	int n = 9, i;
+	int set[9];
+	int bitstring[9];
+	int k, cnt, nb;
 	longinteger_object rk;
 	
 	first_subset(n, set, k);
@@ -117,9 +117,9 @@ void test1()
 
 void test2()
 {
-	INT n = 26;
-	INT set[26];
-	INT k, cnt;
+	int n = 26;
+	int set[26];
+	int k, cnt;
 	longinteger_object rk;
 	
 	first_subset(n, set, k);
@@ -139,9 +139,9 @@ void test2()
 
 void test3()
 {
-	INT n = 5;
-	INT set[5];
-	INT k;
+	int n = 5;
+	int set[5];
+	int k;
 	longinteger_object N, rk, rk1;
 	longinteger_domain D;
 	
@@ -158,9 +158,9 @@ void test3()
 
 void test4()
 {
-	INT n = 26;
-	INT set[26];
-	INT k;
+	int n = 26;
+	int set[26];
+	int k;
 	longinteger_object rk, rk1;
 	
 	//rk.create(33548164);
@@ -175,9 +175,9 @@ void test4()
 
 void test5()
 {
-	INT n = 10;
-	INT set[10];
-	INT k;
+	int n = 10;
+	int set[10];
+	int k;
 	longinteger_object rk, rk1;
 	
 	//rk.create(33548164);
@@ -215,21 +215,21 @@ void test6()
 		"eunju",
 		"anton"
 		};
-	INT nb_names = 14;
-	INT c;
+	int nb_names = 14;
+	int c;
 	
 	for (c = 0; c < nb_names; c++) {
 
 		const char *name = Names[c];
-		INT len = strlen(name);
-		INT *set;
-		INT i, j;
+		int len = strlen(name);
+		int *set;
+		int i, j;
 		
-		set = new INT[len + 1];
+		set = new int[len + 1];
 		for (i = 0; i < len; i++) {
-			set[i] = (INT)(name[i] - 'a');
+			set[i] = (int)(name[i] - 'a');
 			}
-		INT_vec_sort(len, set);
+		int_vec_sort(len, set);
 		j = 0;
 		for (i = 1; i < len; i++) {
 			if (set[i] != set[j]) {
@@ -239,12 +239,12 @@ void test6()
 			}
 		len = j + 1;
 		cout << "the name " << name << " corresponds to the set ";
-		INT_vec_print(cout, set, len);
+		int_vec_print(cout, set, len);
 		cout << endl;
 		
 		
-		INT n = 26;
-		INT k;
+		int n = 26;
+		int k;
 		longinteger_object rk, rk1;
 	
 		//rk.create(33548164);
@@ -267,13 +267,13 @@ void test6()
 }
 
 
-void print_set(INT *set, INT n, INT k)
+void print_set(int *set, int n, int k)
 {
 	print_set_as_bitstring(set, n, k);
-	//INT_vec_print(cout, set, k);
+	//int_vec_print(cout, set, k);
 }
 
-void print_set_as_bitstring(INT *set, INT n, INT k)
+void print_set_as_bitstring(int *set, int n, int k)
 {
 	int i, j;
 	
@@ -289,7 +289,7 @@ void print_set_as_bitstring(INT *set, INT n, INT k)
 		}
 }
 
-void set_to_bitstring(INT *set, INT n, INT k, INT *bitstring)
+void set_to_bitstring(int *set, int n, int k, int *bitstring)
 {
 	int i, j;
 	
@@ -305,14 +305,14 @@ void set_to_bitstring(INT *set, INT n, INT k, INT *bitstring)
 		}
 }
 
-INT first_subset(INT n, INT *set, INT &k)
+int first_subset(int n, int *set, int &k)
 {
 	
 	k = 0;
 	return TRUE;
 }
 
-INT next_subset(INT n, INT *set, INT &k)
+int next_subset(int n, int *set, int &k)
 {	
 	if (k == 0) {
 		if (n) {
@@ -339,9 +339,9 @@ INT next_subset(INT n, INT *set, INT &k)
 		}
 }
 
-void rank_subset(INT *set, INT n, INT k, longinteger_object &rk)
+void rank_subset(int *set, int n, int k, longinteger_object &rk)
 {
-	INT i, j;
+	int i, j;
 	longinteger_object a, b;
 	longinteger_domain D;
 	
@@ -364,9 +364,9 @@ void rank_subset(INT *set, INT n, INT k, longinteger_object &rk)
 	b.assign_to(rk);
 }
 
-void unrank_subset(INT *set, INT n, INT &k, longinteger_object &rk)
+void unrank_subset(int *set, int n, int &k, longinteger_object &rk)
 {
-	INT i, c;
+	int i, c;
 	longinteger_object r, a, b;
 	longinteger_domain D;
 	

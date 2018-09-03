@@ -6,26 +6,26 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
-INT action::image_of(void *elt, INT a)
+int action::image_of(void *elt, int a)
 {
 	nb_times_image_of_called++;
 	return (*ptr_element_image_of)(*this, a, elt, 0);
 }
 
 void action::image_of_low_level(void *elt,
-		INT *input, INT *output, INT verbose_level)
+		int *input, int *output, int verbose_level)
 {
 	nb_times_image_of_low_level_called++;
 	(*ptr_element_image_of_low_level)(*this,
 			input, output, elt, verbose_level);
 }
 
-INT action::linear_entry_ij(void *elt, INT i, INT j)
+int action::linear_entry_ij(void *elt, int i, int j)
 {
 	return (*ptr_element_linear_entry_ij)(*this, elt, i, j, 0);
 }
 
-INT action::linear_entry_frobenius(void *elt)
+int action::linear_entry_frobenius(void *elt)
 {
 	return (*ptr_element_linear_entry_frobenius)(*this, elt, 0);
 }
@@ -35,7 +35,7 @@ void action::one(void *elt)
 	(*ptr_element_one)(*this, elt, 0);
 }
 
-INT action::is_one(void *elt)
+int action::is_one(void *elt)
 {
 	return element_is_one(elt, 0);
 	//return (*ptr_element_is_one)(*this, elt, FALSE);
@@ -53,13 +53,13 @@ void action::pack(void *Elt, void *elt)
 	(*ptr_element_pack)(*this, Elt, elt, 0);
 }
 
-void action::retrieve(void *elt, INT hdl)
+void action::retrieve(void *elt, int hdl)
 {
 	nb_times_retrieve_called++;
 	(*ptr_element_retrieve)(*this, hdl, elt, 0);
 }
 
-INT action::store(void *elt)
+int action::store(void *elt)
 {
 	nb_times_store_called++;
 	return (*ptr_element_store)(*this, elt, 0);
@@ -107,7 +107,7 @@ void action::move(void *a, void *b)
 	(*ptr_element_move)(*this, a, b, 0);
 }
 
-void action::dispose(INT hdl)
+void action::dispose(int hdl)
 {
 	(*ptr_element_dispose)(*this, hdl, 0);
 }
@@ -127,12 +127,12 @@ void action::print_as_permutation(ostream &ost, void *elt)
 	element_print_as_permutation(elt, ost);
 }
 
-void action::print_point(INT a, ostream &ost)
+void action::print_point(int a, ostream &ost)
 {
 	return (*ptr_print_point)(*this, a, ost);
 }
 
-void action::code_for_make_element(INT *data, void *elt)
+void action::code_for_make_element(int *data, void *elt)
 {
 	(*ptr_element_code_for_make_element)(*this, elt, data);
 }
@@ -151,13 +151,13 @@ void action::print_for_make_element_no_commas(ostream &ost, void *elt)
 
 // ##########################################################################
 
-INT action::element_image_of(INT a, void *elt, INT verbose_level)
+int action::element_image_of(int a, void *elt, int verbose_level)
 {
 	nb_times_image_of_called++;
 	return (*ptr_element_image_of)(*this, a, elt, verbose_level);
 }
 
-void action::element_image_of_low_level(INT *input, INT *output, void *elt, INT verbose_level)
+void action::element_image_of_low_level(int *input, int *output, void *elt, int verbose_level)
 {
 	if (ptr_element_image_of_low_level == NULL) {
 		cout << "action::element_image_of_low_level ptr is NULL" << endl;
@@ -167,39 +167,39 @@ void action::element_image_of_low_level(INT *input, INT *output, void *elt, INT 
 	(*ptr_element_image_of_low_level)(*this, input, output, elt, verbose_level);
 }
 
-void action::element_one(void *elt, INT verbose_level)
+void action::element_one(void *elt, int verbose_level)
 {
 	(*ptr_element_one)(*this, elt, verbose_level);
 }
 
-INT action::element_linear_entry_ij(void *elt, INT i, INT j, INT verbose_level)
+int action::element_linear_entry_ij(void *elt, int i, int j, int verbose_level)
 {
 	return (*ptr_element_linear_entry_ij)(*this, elt, i, j, verbose_level);
 }
 
-INT action::element_linear_entry_frobenius(void *elt, INT verbose_level)
+int action::element_linear_entry_frobenius(void *elt, int verbose_level)
 {
 	return (*ptr_element_linear_entry_frobenius)(*this, elt, verbose_level);
 }
 
-INT action::element_is_one(void *elt, INT verbose_level)
+int action::element_is_one(void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 	
 	if (f_v) {
 		cout << "action::element_is_one in action " << label << endl;
 		}
 	if (f_has_kernel && Kernel->A->base_len) {
-		INT *Elt1;
-		INT drop_out_level, image;
-		Elt1 = NEW_INT(elt_size_in_INT);
+		int *Elt1;
+		int drop_out_level, image;
+		Elt1 = NEW_int(elt_size_in_int);
 		if (f_v) {
 			cout << "action::element_is_one before Kernel->strip" << endl;
 			}
-		ret = Kernel->strip((INT *)elt, Elt1 /* *residue */, 
+		ret = Kernel->strip((int *)elt, Elt1 /* *residue */, 
 			drop_out_level, image, 0 /*verbose_level*/);
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		if (f_v) {
 			cout << "action::element_is_one returning " << ret << endl;
 			}
@@ -216,53 +216,53 @@ INT action::element_is_one(void *elt, INT verbose_level)
 	return ret;
 }
 
-void action::element_unpack(void *elt, void *Elt, INT verbose_level)
+void action::element_unpack(void *elt, void *Elt, int verbose_level)
 {
 	nb_times_unpack_called++;
 	(*ptr_element_unpack)(*this, elt, Elt, verbose_level);
 }
 
-void action::element_pack(void *Elt, void *elt, INT verbose_level)
+void action::element_pack(void *Elt, void *elt, int verbose_level)
 {
 	nb_times_pack_called++;
 	(*ptr_element_pack)(*this, Elt, elt, verbose_level);
 }
 
-void action::element_retrieve(INT hdl, void *elt, INT verbose_level)
+void action::element_retrieve(int hdl, void *elt, int verbose_level)
 {
 	nb_times_retrieve_called++;
 	(*ptr_element_retrieve)(*this, hdl, elt, verbose_level);
 }
 
-INT action::element_store(void *elt, INT verbose_level)
+int action::element_store(void *elt, int verbose_level)
 {
 	nb_times_store_called++;
 	return (*ptr_element_store)(*this, elt, verbose_level);
 }
 
-void action::element_mult(void *a, void *b, void *ab, INT verbose_level)
+void action::element_mult(void *a, void *b, void *ab, int verbose_level)
 {
 	nb_times_mult_called++;
 	(*ptr_element_mult)(*this, a, b, ab, verbose_level);
 }
 
-void action::element_invert(void *a, void *av, INT verbose_level)
+void action::element_invert(void *a, void *av, int verbose_level)
 {
 	nb_times_invert_called++;
 	(*ptr_element_invert)(*this, a, av, verbose_level);
 }
 
-void action::element_transpose(void *a, void *at, INT verbose_level)
+void action::element_transpose(void *a, void *at, int verbose_level)
 {
 	(*ptr_element_transpose)(*this, a, at, verbose_level);
 }
 
-void action::element_move(void *a, void *b, INT verbose_level)
+void action::element_move(void *a, void *b, int verbose_level)
 {
 	(*ptr_element_move)(*this, a, b, verbose_level);
 }
 
-void action::element_dispose(INT hdl, INT verbose_level)
+void action::element_dispose(int hdl, int verbose_level)
 {
 	(*ptr_element_dispose)(*this, hdl, verbose_level);
 }
@@ -291,7 +291,7 @@ void action::element_print_verbose(void *elt, ostream &ost)
 	(*ptr_element_print_verbose)(*this, elt, ost);
 }
 
-void action::element_code_for_make_element(void *elt, INT *data)
+void action::element_code_for_make_element(void *elt, int *data)
 {
 	(*ptr_element_code_for_make_element)(*this, elt, data);
 }
@@ -311,16 +311,16 @@ void action::element_print_as_permutation(void *elt, ostream &ost)
 	element_print_as_permutation_with_offset(elt, ost, 0, FALSE, TRUE, 0);
 }
 
-void action::element_print_as_permutation_verbose(void *elt, ostream &ost, INT verbose_level)
+void action::element_print_as_permutation_verbose(void *elt, ostream &ost, int verbose_level)
 {
 	element_print_as_permutation_with_offset(elt, ost, 0, FALSE, TRUE, verbose_level);
 }
 
-void action::element_as_permutation(void *elt, INT *perm, INT verbose_level)
+void action::element_as_permutation(void *elt, int *perm, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
 	
 	if (f_v) {
 		cout << "action::element_as_permutation" << endl;
@@ -341,21 +341,21 @@ void action::element_as_permutation(void *elt, INT *perm, INT verbose_level)
 }
 
 void action::element_print_as_permutation_with_offset(void *elt, ostream &ost, 
-	INT offset, INT f_do_it_anyway_even_for_big_degree, 
-	INT f_print_cycles_of_length_one, INT verbose_level)
+	int offset, int f_do_it_anyway_even_for_big_degree, 
+	int f_print_cycles_of_length_one, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *v, i, j;
-	INT f_cycle_length = FALSE;
-	INT f_max_cycle_length = FALSE;
-	INT max_cycle_length = 50;
-	INT f_orbit_structure = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *v, i, j;
+	int f_cycle_length = FALSE;
+	int f_max_cycle_length = FALSE;
+	int max_cycle_length = 50;
+	int f_orbit_structure = FALSE;
 	
 	if (f_v) {
 		cout << "action::element_print_as_permutation_with_offset degree=" << degree << endl;
 		}
-	v = NEW_INT(degree);
+	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
 		if (f_vv) {
 			cout << "action::element_print_as_permutation_with_offset computing image of " << i << endl;
@@ -379,7 +379,7 @@ void action::element_print_as_permutation_with_offset(void *elt, ostream &ost,
 					"calling perm_print_cycles_sorted_by_length_offset" << endl;
 			}
 		//ost << "perm of degree " << degree << " : ";
-		//INT_vec_print_fully(ost, v, degree);
+		//int_vec_print_fully(ost, v, degree);
 		//ost << " = ";
 
 		perm_print_cycles_sorted_by_length_offset(ost, degree, v, offset,
@@ -391,17 +391,17 @@ void action::element_print_as_permutation_with_offset(void *elt, ostream &ost,
 
 
 	//ost << endl;
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 void action::element_print_as_permutation_with_offset_and_max_cycle_length(void *elt, 
-	ostream &ost, INT offset, INT max_cycle_length, INT f_orbit_structure)
+	ostream &ost, int offset, int max_cycle_length, int f_orbit_structure)
 {
-	INT *v, i, j;
-	INT f_cycle_length = FALSE;
-	INT f_max_cycle_length = TRUE;
+	int *v, i, j;
+	int f_cycle_length = FALSE;
+	int f_max_cycle_length = TRUE;
 	
-	v = NEW_INT(degree);
+	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
 		j = element_image_of(i, elt, FALSE);
 		v[i] = j;
@@ -409,12 +409,12 @@ void action::element_print_as_permutation_with_offset_and_max_cycle_length(void 
 	//perm_print(ost, v, degree);
 	perm_print_offset(ost, v, degree, offset, f_cycle_length,
 			f_max_cycle_length, max_cycle_length, f_orbit_structure);
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-void action::element_print_image_of_set(void *elt, INT size, INT *set)
+void action::element_print_image_of_set(void *elt, int size, int *set)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < size; i++) {
 		j = element_image_of(set[i], elt, FALSE);
@@ -422,41 +422,41 @@ void action::element_print_image_of_set(void *elt, INT size, INT *set)
 		}
 }
 
-INT action::element_signum_of_permutation(void *elt)
+int action::element_signum_of_permutation(void *elt)
 {
-	INT *v;
-	INT i, j, sgn;
+	int *v;
+	int i, j, sgn;
 	
-	v = NEW_INT(degree);
+	v = NEW_int(degree);
 	for (i = 0; i < degree; i++) {
 		j = element_image_of(i, elt, FALSE);
 		v[i] = j;
 		}
 	sgn = perm_signum(v, degree);
-	FREE_INT(v);
+	FREE_int(v);
 	return sgn;
 }
 
 
 
-void action::element_write_file_fp(INT *Elt, FILE *fp, INT verbose_level)
+void action::element_write_file_fp(int *Elt, FILE *fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *elt;
 	
 	elt = element_rw_memory_object;
 	if (f_v) {
 		element_print(Elt, cout);
-		INT_vec_print(cout, Elt, elt_size_in_INT);
+		int_vec_print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 	element_pack(Elt, elt, FALSE);
 	fwrite(elt, 1 /* size */, coded_elt_size_in_char /* items */, fp);
 }
 
-void action::element_read_file_fp(INT *Elt, FILE *fp, INT verbose_level)
+void action::element_read_file_fp(int *Elt, FILE *fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *elt;
 	
 	elt = element_rw_memory_object;
@@ -464,14 +464,14 @@ void action::element_read_file_fp(INT *Elt, FILE *fp, INT verbose_level)
 	element_unpack(elt, Elt, FALSE);
 	if (f_v) {
 		element_print(Elt, cout);
-		INT_vec_print(cout, Elt, elt_size_in_INT);
+		int_vec_print(cout, Elt, elt_size_in_int);
 		cout << endl;
 		}
 }
 
-void action::element_write_file(INT *Elt, const char *fname, INT verbose_level)
+void action::element_write_file(int *Elt, const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	FILE *f2;
 	f2 = fopen(fname, "wb");
@@ -483,9 +483,9 @@ void action::element_write_file(INT *Elt, const char *fname, INT verbose_level)
 		}
 }
 
-void action::element_read_file(INT *Elt, const char *fname, INT verbose_level)
+void action::element_read_file(int *Elt, const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "element_read_file: reading from file " << fname << " of size " << file_size(fname) << endl;
@@ -497,9 +497,9 @@ void action::element_read_file(INT *Elt, const char *fname, INT verbose_level)
 	fclose(f2);
 }
 
-void action::element_write_to_memory_object(INT *Elt, memory_object *m, INT verbose_level)
+void action::element_write_to_memory_object(int *Elt, memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *elt;
 
 	if (f_v) {
@@ -512,11 +512,11 @@ void action::element_write_to_memory_object(INT *Elt, memory_object *m, INT verb
 }
 
 
-void action::element_read_from_memory_object(INT *Elt, memory_object *m, INT verbose_level)
+void action::element_read_from_memory_object(int *Elt, memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *elt;
-	INT i;
+	int i;
 
 	
 	if (f_v) {
@@ -530,9 +530,9 @@ void action::element_read_from_memory_object(INT *Elt, memory_object *m, INT ver
 	element_unpack(elt, Elt, FALSE);
 }
 
-void action::element_write_to_file_binary(INT *Elt, ofstream &fp, INT verbose_level)
+void action::element_write_to_file_binary(int *Elt, ofstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *elt;
 
 	if (f_v) {
@@ -550,9 +550,9 @@ void action::element_write_to_file_binary(INT *Elt, ofstream &fp, INT verbose_le
 	FREE_char(elt);
 }
 
-void action::element_read_from_file_binary(INT *Elt, ifstream &fp, INT verbose_level)
+void action::element_read_from_file_binary(int *Elt, ifstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *elt;
 
 	
@@ -566,9 +566,9 @@ void action::element_read_from_file_binary(INT *Elt, ifstream &fp, INT verbose_l
 	FREE_char(elt);
 }
 
-void action::random_element(sims *S, INT *Elt, INT verbose_level)
+void action::random_element(sims *S, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::random_element" << endl;

@@ -50,7 +50,7 @@ void solid::init()
 	// cout << "leave solid::init()" << endl;
 }
 
-void solid::init_V(INT nb_V)
+void solid::init_V(int nb_V)
 {
 	solid::nb_V() = nb_V;
 	placement().m_l(3);
@@ -62,7 +62,7 @@ void solid::init_V(INT nb_V)
 	z().m_l_n(nb_V);
 }
 
-void solid::init_E(INT nb_E)
+void solid::init_E(int nb_E)
 {
 	solid::nb_E() = nb_E;
 	v1().m_l_n(nb_E);
@@ -71,9 +71,9 @@ void solid::init_E(INT nb_E)
 	f2().m_l_n(nb_E);
 }
 
-void solid::init_F(INT nb_F)
+void solid::init_F(int nb_F)
 {
-	INT i;
+	int i;
 	
 	solid::nb_F() = nb_F;
 	nb_e().m_l_n(nb_F);
@@ -132,7 +132,7 @@ kind solid::s_virtual_kind()
 
 void solid::copyobject_to(discreta_base &x)
 {
-	INT i, l;
+	int i, l;
 	
 #ifdef SOLID_COPY_VERBOSE
 	cout << "in solid::copyobject_to()\n";
@@ -172,7 +172,7 @@ ostream& solid::print_list(ostream& ost)
 
 ostream& solid::print(ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	
 	ost << "SOLID\n";
 	ost << "nb_V = " << nb_V() << "\n";
@@ -200,9 +200,9 @@ ostream& solid::print(ostream& ost)
 	return ost;
 }
 
-void solid::standard_vertex_labels(INT f_start_with_zero)
+void solid::standard_vertex_labels(int f_start_with_zero)
 {
-	INT i, l;
+	int i, l;
 
 	cout << "start standard_vertex_labels:" << endl;
 	l = nb_V();
@@ -230,7 +230,7 @@ void solid::standard_vertex_labels(INT f_start_with_zero)
 
 void solid::determine_neighbours()
 {
-	INT e, f1, j1, f2, j2;
+	int e, f1, j1, f2, j2;
 	
 	// cout << "start determine_neighbours():" << endl;
 	for (e = 0; e < nb_E(); e++) 
@@ -243,19 +243,19 @@ void solid::determine_neighbours()
 	}
 }
 
-void On_circle_int(Vector& Px, Vector& Py, INT idx, INT angle_in_degree, INT rad)
+void On_circle_int(Vector& Px, Vector& Py, int idx, int angle_in_degree, int rad)
 {
-	INT x, y;
+	int x, y;
 	
-	x = (INT)(cos_grad(angle_in_degree) * (double) rad);
-	y = (INT)(sin_grad(angle_in_degree) * (double) rad);
+	x = (int)(cos_grad(angle_in_degree) * (double) rad);
+	y = (int)(sin_grad(angle_in_degree) * (double) rad);
 	Px.m_ii(idx, x);
 	Py.m_ii(idx, y);
 }
 
-void solid::find_face(INT e, INT& f1, INT& j1, INT& f2, INT& j2)
+void solid::find_face(int e, int& f1, int& j1, int& f2, int& j2)
 {
-	INT i, j, l, ff1 = -1, ff2 = -1;
+	int i, j, l, ff1 = -1, ff2 = -1;
 	
 	// cout << "start find_face():" << endl;
 	for (i = 0; i < nb_F(); i++) 
@@ -308,9 +308,9 @@ void solid::find_face(INT e, INT& f1, INT& j1, INT& f2, INT& j2)
 	f2 = ff2;
 }
 
-INT solid::find_face_2(INT e1, INT e2)
+int solid::find_face_2(int e1, int e2)
 {
-	INT f1, f2, f3, f4, j1, j2, j3, j4;
+	int f1, f2, f3, f4, j1, j2, j3, j4;
 	
 	find_face(e1, f1, j1, f2, j2);
 	find_face(e2, f3, j3, f4, j4);
@@ -322,9 +322,9 @@ INT solid::find_face_2(INT e1, INT e2)
 	exit(1);
 }
 
-INT solid::find_face_by_two_edges(INT e1, INT e2)
+int solid::find_face_by_two_edges(int e1, int e2)
 {
-	INT f1, f2, f3, f4;
+	int f1, f2, f3, f4;
 	
 	find_faces_at_edge(e1, f1, f2);
 	find_faces_at_edge(e2, f3, f4);
@@ -341,9 +341,9 @@ INT solid::find_face_by_two_edges(INT e1, INT e2)
 	return -1;
 }
 
-void solid::find_faces_at_edge(INT e, INT& f1, INT& f2)
+void solid::find_faces_at_edge(int e, int& f1, int& f2)
 {
-	INT nb_F, i, j, l, n = 0;
+	int nb_F, i, j, l, n = 0;
 	
 	f1 = -1;
 	f2 = -1;
@@ -375,10 +375,10 @@ void solid::find_faces_at_edge(INT e, INT& f1, INT& f2)
 	}
 }
 
-INT solid::find_edge(INT v1, INT v2)
+int solid::find_edge(int v1, int v2)
 {
-	INT i, e1, e2;
-	INT nb_E = solid::nb_E();
+	int i, e1, e2;
+	int nb_E = solid::nb_E();
 	
 	// cout << "start find_edge():" << endl;
 	for (i = 0; i < nb_E; i++) 
@@ -394,7 +394,7 @@ INT solid::find_edge(INT v1, INT v2)
 	return -1;
 }
 
-void solid::add_edge(INT v1, INT v2, INT f1, INT f2)
+void solid::add_edge(int v1, int v2, int f1, int f2)
 {
 	// cout << "start add_edge(), edge no" << nb_E() << " " << v1 << "-" << v2 << endl;
 	solid::v1().append_integer(v1);
@@ -404,7 +404,7 @@ void solid::add_edge(INT v1, INT v2, INT f1, INT f2)
 	nb_E()++;
 }
 
-INT solid::add_edge(INT v1, INT v2)
+int solid::add_edge(int v1, int v2)
 {
 	// cout << "start add_edge(v1,v2), edge no" << nb_E() << " " << v1 << "-" << v2 << endl;
 	solid::v1().append_integer(v1);
@@ -417,9 +417,9 @@ INT solid::add_edge(INT v1, INT v2)
 }
 
 
-INT solid::find_and_add_edge(INT i1, INT i2, INT f_v)
+int solid::find_and_add_edge(int i1, int i2, int f_v)
 {
-	INT e;
+	int e;
 	
 	// cout << "start find_and_add_edge():" << endl;
 	e = find_edge(i1, i2);
@@ -440,7 +440,7 @@ INT solid::find_and_add_edge(INT i1, INT i2, INT f_v)
 	return e;
 }
 
-void solid::add_face3(INT e1, INT e2, INT e3, INT i1, INT i2, INT i3)
+void solid::add_face3(int e1, int e2, int e3, int i1, int i2, int i3)
 {
 	Vector V;
 	
@@ -451,7 +451,7 @@ void solid::add_face3(INT e1, INT e2, INT e3, INT i1, INT i2, INT i3)
 	add_face_n(V);
 }
 
-void solid::add_face4(INT i1, INT i2, INT i3, INT i4)
+void solid::add_face4(int i1, int i2, int i3, int i4)
 {
 	Vector V;
 	
@@ -463,7 +463,7 @@ void solid::add_face4(INT i1, INT i2, INT i3, INT i4)
 	add_face_n(V);
 }
 
-void solid::add_face5(INT i1, INT i2, INT i3, INT i4, INT i5)
+void solid::add_face5(int i1, int i2, int i3, int i4, int i5)
 {
 	Vector V;
 	
@@ -479,8 +479,8 @@ void solid::add_face5(INT i1, INT i2, INT i3, INT i4, INT i5)
 
 void solid::add_face_n(Vector& vertices)
 {
-	INT e, i, l;
-	INT f_v = FALSE;
+	int e, i, l;
+	int f_v = FALSE;
 	
 	l = vertices.s_l();
 	nb_e().inc();
@@ -503,9 +503,9 @@ void solid::add_face_n(Vector& vertices)
 	nb_F()++;
 }
 
-void solid::adjacency_list(INT vertex, INT *adj, INT *nb_adj)
+void solid::adjacency_list(int vertex, int *adj, int *nb_adj)
 {
-	INT i, j, l, ll, a, b, f_found;
+	int i, j, l, ll, a, b, f_found;
 	Vector Adj;
 	
 	Adj.m_l(0);
@@ -543,10 +543,10 @@ void solid::adjacency_list(INT vertex, INT *adj, INT *nb_adj)
 	*nb_adj = l;
 }
 
-void solid::center(INT f, Vector& Px, Vector& Py, Vector& Pz)
+void solid::center(int f, Vector& Px, Vector& Py, Vector& Pz)
 {
-	INT i, nb_e, e, e1, e2;
-	INT x = 0, y = 0, z = 0;
+	int i, nb_e, e, e1, e2;
+	int x = 0, y = 0, z = 0;
 	
 	nb_e = nb_e_i(f);
 	for (i = 0; i < nb_e; i++) 
@@ -562,15 +562,15 @@ void solid::center(INT f, Vector& Px, Vector& Py, Vector& Pz)
 		z += z_i(e2);
 	}
 	nb_e <<= 1;
-	Px.m_ii(f, (INT)((double)x / (double)nb_e));
-	Py.m_ii(f, (INT)((double)y / (double)nb_e));
-	Pz.m_ii(f, (INT)((double)z / (double)nb_e));
+	Px.m_ii(f, (int)((double)x / (double)nb_e));
+	Py.m_ii(f, (int)((double)y / (double)nb_e));
+	Pz.m_ii(f, (int)((double)z / (double)nb_e));
 }
 
-void solid::vertices_of_face(INT i, Vector& V)
+void solid::vertices_of_face(int i, Vector& V)
 {
-	INT nb_e = nb_e_i(i);
-	INT e, j, v1, v2, v3, v4, last_vertex = 0;
+	int nb_e = nb_e_i(i);
+	int e, j, v1, v2, v3, v4, last_vertex = 0;
 	
 	V.m_l_n(nb_e);
 	
@@ -645,20 +645,20 @@ void solid::vertices_of_face(INT i, Vector& V)
 	}
 }
 
-void solid::Ratio(INT e, double r, INT& x, INT& y, INT& z)
+void solid::Ratio(int e, double r, int& x, int& y, int& z)
 {
-	INT e1, e2;
+	int e1, e2;
 
 	e1 = v1_i(e);
 	e2 = v2_i(e);
-	x = x_i(e1) + (INT)((double)(x_i(e2) - x_i(e1)) * r);
-	y = y_i(e1) + (INT)((double)(y_i(e2) - y_i(e1)) * r);
-	z = z_i(e1) + (INT)((double)(z_i(e2) - z_i(e1)) * r);
+	x = x_i(e1) + (int)((double)(x_i(e2) - x_i(e1)) * r);
+	y = y_i(e1) + (int)((double)(y_i(e2) - y_i(e1)) * r);
+	z = z_i(e1) + (int)((double)(z_i(e2) - z_i(e1)) * r);
 }
 
-INT solid::find_common_face(INT e1, INT e2, INT& f)
+int solid::find_common_face(int e1, int e2, int& f)
 {
-	INT n11, n12, n21, n22;
+	int n11, n12, n21, n22;
 	
 	n11 = f1_i(e1);
 	n12 = f2_i(e1);
@@ -680,7 +680,7 @@ INT solid::find_common_face(INT e1, INT e2, INT& f)
 #if 0
 void solid::orientation(Vector& face_list)
 {
-	INT first_v, next_v, first_e, first_f, next_f, j1, j2, i, j, t, l;
+	int first_v, next_v, first_e, first_f, next_f, j1, j2, i, j, t, l;
 	Vector v, vf;
 	
 	first_v = v1_i(0);
@@ -742,8 +742,8 @@ void solid::orientation(Vector& face_list)
 
 void solid::dual(solid& A)
 {
-	INT adj[1000], nb_adj;
-	INT v, i, j, f, e, e1, e2, v1, v2, v3, v4, V1, V2, V3, V4, l;
+	int adj[1000], nb_adj;
+	int v, i, j, f, e, e1, e2, v1, v2, v3, v4, V1, V2, V3, V4, l;
 	solid B;
 	
 	cout << "dual()" << endl;
@@ -853,10 +853,10 @@ void solid::dual(solid& A)
 
 void solid::cut_vertices(double r, solid & A)
 {
-	INT adj[1000], adj1[1000], nb_adj, nb_adj1;
-	INT nb_V, nb_E, nb_F, nb_new_V;
-	INT v, v1;
-	INT ei, ej, e, ee, e1, e2, f, i = 0, j = 0, l, first_new_vertex, k;
+	int adj[1000], adj1[1000], nb_adj, nb_adj1;
+	int nb_V, nb_E, nb_F, nb_new_V;
+	int v, v1;
+	int ei, ej, e, ee, e1, e2, f, i = 0, j = 0, l, first_new_vertex, k;
 	solid B;
 	permutation P, Pind;
 	permutation Q;	
@@ -890,7 +890,7 @@ void solid::cut_vertices(double r, solid & A)
 		// shortens the edges from one side (near v)
 		for (ei = 0; ei < nb_adj; ei++) 
 		{
-			INT x, y, z;
+			int x, y, z;
 			
 			e = adj[ei];
 			e1 = v1_i(e);
@@ -961,16 +961,16 @@ void solid::cut_vertices(double r, solid & A)
 	l = group_generators().s_l();
 	cout << "inducing the group, number of generators = " << l << endl;
 	cout << "nb_V = " << nb_V << " solid::nb_V()=" << solid::nb_V() << endl;
-	for (INT z = 0; z < l; z++) {
+	for (int z = 0; z < l; z++) {
 		P.m_l(nb_V);
 		Q = group_generators_i(z);
 		// cout << "z=" << z << endl;
 		// cout << "Q=" << Q << endl;
 		for (v = 0; v < solid::nb_V(); v++) 
 		{
-			INT k, v2;
-			INT pii, pij;
-			INT new_vertex, image_new_vertex;
+			int k, v2;
+			int pii, pij;
+			int new_vertex, image_new_vertex;
 			
 			k = Q[v];
 			// cout << "v=" << v << " -> k=" << k << endl;
@@ -996,7 +996,7 @@ void solid::cut_vertices(double r, solid & A)
 				// cout << "ei=" << ei << " i=" << i << " ->pii=" << pii << " j=" << j << " ->pij=" << pij << endl;
 				adjacency_list(pii, adj1, &nb_adj1);
 				k = -1;
-				for (INT ii = 0; ii < nb_adj1; ii++)
+				for (int ii = 0; ii < nb_adj1; ii++)
 				{
 					e1 = adj1[ii];
 					v1 = v1_i(e1);
@@ -1080,7 +1080,7 @@ void solid::cut_vertices(double r, solid & A)
 	}
 	
 	Pindv.m_l(l);
-	for (INT zz = 0; zz < l; zz++) 
+	for (int zz = 0; zz < l; zz++) 
 	{
 		Pind.m_l(nb_new_V);
 		for (v = 0; v < nb_new_V; v++)
@@ -1090,7 +1090,7 @@ void solid::cut_vertices(double r, solid & A)
 		Pindv[zz] = Pind;
 	}
 	cout << "new generators:\n";
-	for (INT zzz = 0; zzz < l; zzz++) 
+	for (int zzz = 0; zzz < l; zzz++) 
 	{
 		cout << Pindv[zzz] << endl;
 	}
@@ -1107,10 +1107,10 @@ void solid::cut_vertices(double r, solid & A)
 
 void solid::edge_midpoints(solid& A)
 {
-	INT adj[1000], nb_adj;
-	INT nb_V, nb_E, nb_E_old, nb_F;
-	INT v;
-	INT ei, ej, e, ee, f, i, j, l, k;
+	int adj[1000], nb_adj;
+	int nb_V, nb_E, nb_E_old, nb_F;
+	int v;
+	int ei, ej, e, ee, f, i, j, l, k;
 	solid B;
 	Vector gen_new;
 	
@@ -1127,7 +1127,7 @@ void solid::edge_midpoints(solid& A)
 	B.y().realloc(nb_V + nb_E);
 	B.z().realloc(nb_V + nb_E);
 	for (i = 0; i < nb_E; i++) {
-		INT x, y, z;
+		int x, y, z;
 		B.x().s_i(nb_V + i).change_to_integer();
 		B.y().s_i(nb_V + i).change_to_integer();
 		B.z().s_i(nb_V + i).change_to_integer();
@@ -1199,7 +1199,7 @@ void solid::edge_midpoints(solid& A)
 	cout << "eliminating the old edges and faces:" << endl;
 	for (f = 0; f < nb_F; f++) {
 		Vector edge, neighbour_faces;
-		INT n;
+		int n;
 		
 		k = B.nb_e_i(f);
 		edge.m_l(0);
@@ -1254,7 +1254,7 @@ void solid::edge_midpoints(solid& A)
 	B.nb_E() = B.nb_E() - nb_E_old;
 	
 	for (f = 0; f < B.nb_F(); f++) {
-		INT n;
+		int n;
 		
 		k = B.nb_e_i(f);
 		for (j = 0; j < k; j++) {
@@ -1287,13 +1287,13 @@ void solid::edge_midpoints(solid& A)
 	B.swap(A);
 }
 
-void solid::join_disjoint(solid& A, solid& J, INT f_v)
+void solid::join_disjoint(solid& A, solid& J, int f_v)
 {
 	Vector gen;
-	INT nb_F1, nb_F2, nb_E1, nb_E2, nb_V1, nb_V2, nb_F, nb_E, nb_V;
-	INT i, j, v;
-	INT ll;
-	INT f_vertex_labels = FALSE;
+	int nb_F1, nb_F2, nb_E1, nb_E2, nb_V1, nb_V2, nb_F, nb_E, nb_V;
+	int i, j, v;
+	int ll;
+	int f_vertex_labels = FALSE;
 	
 	cout << "solid::join_disjoint():" << endl;
 	nb_F1 = solid::nb_F();
@@ -1397,7 +1397,7 @@ void solid::join_disjoint(solid& A, solid& J, INT f_v)
 	}
 }
 
-void solid::direct_sum(solid& B, solid& J, INT f_v)
+void solid::direct_sum(solid& B, solid& J, int f_v)
 {
 	Vector gen1, gen2;
 	solid C;
@@ -1412,13 +1412,13 @@ void solid::direct_sum(solid& B, solid& J, INT f_v)
 	C.swap(J);
 }
 
-void solid::direct_product(Vector& gen, solid& J, INT f_v)
+void solid::direct_product(Vector& gen, solid& J, int f_v)
 {
 	double f;
-	INT d;
+	int d;
 	Vector gen0;
 	solid A0, A1, A2;
-	INT i;
+	int i;
 	
 	cout << "solid::direct_product()" << endl;
 	A0 = *this;
@@ -1440,18 +1440,18 @@ void solid::direct_product(Vector& gen, solid& J, INT f_v)
 
 void solid::scale(double f)
 {
-	INT i, a;
+	int i, a;
 	
 	for (i = 0; i < nb_V(); i++) 
 	{
 		a = x_i(i);
-		a = (INT)((double) a * f);
+		a = (int)((double) a * f);
 		x_i(i) = a;
 		a = y_i(i);
-		a = (INT)((double) a * f);
+		a = (int)((double) a * f);
 		y_i(i) = a;
 		a = z_i(i);
-		a = (INT)((double) a * f);
+		a = (int)((double) a * f);
 		z_i(i) = a;
 	}
 }
@@ -1459,7 +1459,7 @@ void solid::scale(double f)
 void solid::add_central_point(solid& A)
 {
 	solid J;
-	INT nb_v = nb_V();
+	int nb_v = nb_V();
 	
 	cout << "solid::add_central_point()" << endl;
 	J = *this;
@@ -1480,16 +1480,16 @@ void solid::add_central_point(solid& A)
 
 void solid::induced_action_on_edges(permutation& p, permutation& q)
 {
-	INT j, v1, v2, w1, w2, k;
+	int j, v1, v2, w1, w2, k;
 	
 	q.m_l(nb_E());
 	for (j = 0; j < nb_E(); j++) {
 		v1 = v1_i(j);
 		v2 = v2_i(j);
-		// printf("edge %ld = (%ld,%ld)", j, v1, v2); fflush(stdout);
+		// printf("edge %d = (%d,%d)", j, v1, v2); fflush(stdout);
 		w1 = p[v1];
 		w2 = p[v2];
-		// printf("maps to (%ld,%ld)\n", w1, w2); fflush(stdout);
+		// printf("maps to (%d,%d)\n", w1, w2); fflush(stdout);
 		k = find_edge(w1, w2);
 		if (k < 0) {
 			cout << "solid::induced_action_on_edges() error in find_edge" << endl;
@@ -1502,7 +1502,7 @@ void solid::induced_action_on_edges(permutation& p, permutation& q)
 void solid::induced_group_on_edges(Vector & gen, Vector & gen_e)
 {
 	permutation p, q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	gen_e.m_l(l);
@@ -1515,10 +1515,10 @@ void solid::induced_group_on_edges(Vector & gen, Vector & gen_e)
 }
 
 
-void solid::tetrahedron(INT r)
+void solid::tetrahedron(int r)
 {
 	double phi, h, c;
-	INT i;
+	int i;
 	permutation P;
 	
 	init();
@@ -1545,8 +1545,8 @@ void solid::tetrahedron(INT r)
 	z().m_l_n(4);
 	for (i = 0; i < 3; i++)
 	{
-		On_circle_int(x(), y(), i, (INT) ((double) i * phi), (INT) c);
-		z_i(i) = (INT)(-0.333333 * r);
+		On_circle_int(x(), y(), i, (int) ((double) i * phi), (int) c);
+		z_i(i) = (int)(-0.333333 * r);
 	}
 	x_i(3) = 0;
 	y_i(3) = 0;
@@ -1569,10 +1569,10 @@ void solid::tetrahedron(INT r)
 	standard_vertex_labels(FALSE /* f_start_with_zero */);
 }
 
-void solid::cube(INT r)
+void solid::cube(int r)
 {
 	permutation p;
-	INT r2 = r >> 1;
+	int r2 = r >> 1;
 	
 	init();
 	nb_V() = 8;
@@ -1630,10 +1630,10 @@ void solid::cube(INT r)
 	group_generators_i(1) = P;
 }
 
-void solid::cube4D(INT r1, INT r2)
+void solid::cube4D(int r1, int r2)
 {
 	solid A, B, C;
-	INT i, nb_E1, nb_V;
+	int i, nb_E1, nb_V;
 
 	A.cube(r1);
 	B.cube(r2);
@@ -1665,17 +1665,17 @@ void solid::cube4D(INT r1, INT r2)
 	// cout << *this << endl;
 }
 
-void vec_generators_aut_cube_nd(INT n, Vector &gen)
+void vec_generators_aut_cube_nd(int n, Vector &gen)
 {
 	Vector gen1, gen2;
 	permutation p;
-	INT i, j, a, b, x, l, ll;
-	INT *v, *w;
+	int i, j, a, b, x, l, ll;
+	int *v, *w;
 	
 	// printf("vec_generators_aut_cube_nd()\n");
 	l = i_power_j(2, n);
-	v = new INT[n];
-	w = new INT[n];
+	v = new int[n];
+	w = new int[n];
 	vec_generators_symmetric_group(gen2, n);
 	ll = gen2.s_l();
 	gen1.m_l(n + ll);
@@ -1715,11 +1715,11 @@ void vec_generators_aut_cube_nd(INT n, Vector &gen)
 
 #undef DEBUG_BINARY_CONVERSION
 
-void number_to_binary(INT n, INT *v, INT digits)
+void number_to_binary(int n, int *v, int digits)
 {
-	INT i;
+	int i;
 #ifdef DEBUG_BINARY_CONVERSION
-	INT n1 = n;
+	int n1 = n;
 #endif
 	
 	for (i = 0; i < digits; i++) {
@@ -1730,22 +1730,22 @@ void number_to_binary(INT n, INT *v, INT digits)
 		n >>= 1;
 		}
 #ifdef DEBUG_BINARY_CONVERSION
-	printf("number %ld to binary: ", n1);
+	printf("number %d to binary: ", n1);
 	for (i = digits - 1; i >= 0; i--) {
-		printf("%ld", v[i]);
+		printf("%d", v[i]);
 		}
 	printf("\n");
 #endif
 }
 
-INT binary_to_number(INT *v, INT digits)
+int binary_to_number(int *v, int digits)
 {
-	INT i, n = 0;
+	int i, n = 0;
 	
 #ifdef DEBUG_BINARY_CONVERSION
 	printf("binary ");
 	for (i = digits - 1; i >= 0; i--) {
-		printf("%ld", v[i]);
+		printf("%d", v[i]);
 		}
 #endif
 	for (i = digits - 1; i >= 0; i--) {
@@ -1754,12 +1754,12 @@ INT binary_to_number(INT *v, INT digits)
 			n++;
 		}
 #ifdef DEBUG_BINARY_CONVERSION
-	printf(" to number %ld\n", n);
+	printf(" to number %d\n", n);
 #endif
 	return n;
 }
 
-void solid::octahedron(INT r)
+void solid::octahedron(int r)
 {
 	solid A;
 	
@@ -1768,13 +1768,13 @@ void solid::octahedron(INT r)
 	A.dual(*this);	
 }
 
-void solid::dodecahedron(INT r)
+void solid::dodecahedron(int r)
 {
 	permutation P;
 	
 	init();
 	double phi, phi_2, sin_phi_2, R, RR, s, d, dr, h, hh, H, a, hH;
-	INT i;
+	int i;
 	
 	group_generators().m_l(2);
 	cout << "first 5-cycle:" << endl;
@@ -1826,15 +1826,15 @@ void solid::dodecahedron(INT r)
 	// cout << "h + H = " << hH << endl;
 	for (i = 0; i < 5; i++) 
 	{
-		On_circle_int(x(), y(), i, (INT)((double) i * phi), r);
+		On_circle_int(x(), y(), i, (int)((double) i * phi), r);
 		// cout << "make z of point " << i << endl;
-		z_i(i) =  - (INT) hH;
+		z_i(i) =  - (int) hH;
 	}
 	for (i = 0; i < 5; i++) 
 	{
-		On_circle_int(x(), y(), 5 + i, (INT)((double) i * phi), (INT) R);
+		On_circle_int(x(), y(), 5 + i, (int)((double) i * phi), (int) R);
 		// cout << "make z of point " << 5+i << endl;
-		z_i(5 + i) = - (INT) H;
+		z_i(5 + i) = - (int) H;
 	}
 	for (i = 0; i < 10; i++) 
 	{
@@ -1870,7 +1870,7 @@ void solid::dodecahedron(INT r)
 	// cout << *this << endl;
 }
 
-void solid::icosahedron(INT r)
+void solid::icosahedron(int r)
 {
 	solid A;
 	
@@ -1882,12 +1882,12 @@ void solid::icosahedron(INT r)
 void solid::make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles)
 {
 	double phi, phi0;
-	INT i, j, k;
+	int i, j, k;
 	permutation P;
-	INT rad_max = 2000;
-	INT rad_min = 400;
+	int rad_max = 2000;
+	int rad_min = 400;
 	
-	INT m = incma.s_m();
+	int m = incma.s_m();
 	init();
 	group_generators() = aut_gens;
 	f_vertex_labels() = FALSE;
@@ -1899,23 +1899,23 @@ void solid::make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles)
 	x().m_l_n(m);
 	y().m_l_n(m);
 	z().m_l_n(m);
-	INT nb_cycles = cycles.s_l();
-	INT delta_rad = (rad_max - rad_min) / nb_cycles;
+	int nb_cycles = cycles.s_l();
+	int delta_rad = (rad_max - rad_min) / nb_cycles;
 	
 	k = 0;
 	phi0 = 0.;
 	for (j = 0; j < nb_cycles; j++) {
 		Vector& cycle = cycles[j].as_vector();
-		INT cycle_len = cycle.s_l();
+		int cycle_len = cycle.s_l();
 		phi = 360. / (double) cycle_len;
-		INT rad = rad_min + j * delta_rad;
+		int rad = rad_min + j * delta_rad;
 		
 #if 1
 			phi0 = phi * 0.25 * (j % 4);
 #endif
 		for (i = 0; i < cycle_len; i++)
 		{
-			On_circle_int(x(), y(), cycle.s_ii(i), (INT) ((double) phi0 + i * phi), rad);
+			On_circle_int(x(), y(), cycle.s_ii(i), (int) ((double) phi0 + i * phi), rad);
 			z_i(k) = 0;
 			k++;
 		}
@@ -1923,7 +1923,7 @@ void solid::make_placed_graph(matrix & incma, Vector& aut_gens, Vector& cycles)
 	
 	nb_V() = m;
 	for (j = 0; j < incma.s_n(); j++) {
-		INT i1 = -1, i2 = -1;
+		int i1 = -1, i2 = -1;
 		
 		for (i = 0; i < m; i++) {
 			if (incma.s_iji(i, j)) {
@@ -1947,7 +1947,7 @@ void solid::write_graphfile(char *fname)
 {
 	ofstream fp(fname);
 	char str[256];
-	INT i, l;
+	int i, l;
 	
 	cout << "solid::write_graphfile() fname=" << fname;
 	cout << " nb_V=" << nb_V() << " nb_E=" << nb_E() << endl; 
@@ -1967,12 +1967,12 @@ void solid::write_graphfile(char *fname)
 	fp << "<GRAPH NAME=\"" << fname << "\" NUMBER_OF_VERTICES=\"" << nb_V();
 	fp << "\" NUMBER_OF_EDGES=\"" << nb_E() << "\">" << endl;
 	fp << "<!-- created by DISCRETA, " << str << " -->" << endl;
-	fp << "<COORDS3D_INT>" << endl;
+	fp << "<COORDS3D_int>" << endl;
 	for (i = 0; i < nb_V(); i++) 
 	{
 		fp << x_i(i) << " " << y_i(i) << " " << z_i(i) << endl; 
 	}
-	fp << "</COORDS3D_INT>" << endl;
+	fp << "</COORDS3D_int>" << endl;
 	fp << "<EDGELIST>" << endl;
 	for (i = 0; i < nb_E(); i++) 
 	{
@@ -2002,7 +2002,7 @@ void solid::write_solidfile(char *fname)
 {
 	ofstream fp(fname);
 	char str[256];
-	INT i, l;
+	int i, l;
 	
 	cout << "solid::write_graphfile() fname=" << fname;
 	cout << " nb_V=" << nb_V() << " nb_E=" << nb_E() << endl; 
@@ -2022,12 +2022,12 @@ void solid::write_solidfile(char *fname)
 	fp << "<GRAPH NAME=\"" << fname << "\" NUMBER_OF_VERTICES=\"" << nb_V();
 	fp << "\" NUMBER_OF_EDGES=\"" << nb_E() << "\"" << endl;
 	fp << "<!-- created by DISCRETA, " << str << " -->" << endl;
-	fp << "<COORDS3D_INT>" << endl;
+	fp << "<COORDS3D_int>" << endl;
 	for (i = 0; i < nb_V(); i++) 
 	{
 		fp << x_i(i) << " " << y_i(i) << " " << z_i(i) << endl; 
 	}
-	fp << "</COORDS3D_INT>" << endl;
+	fp << "</COORDS3D_int>" << endl;
 	fp << "<EDGELIST>" << endl;
 	for (i = 0; i < nb_E(); i++) 
 	{

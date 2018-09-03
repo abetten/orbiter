@@ -43,17 +43,17 @@ void direct_product::null()
 
 void direct_product::freeself()
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "direct_product::freeself" << endl;
 		}
 	if (perm_offset_i) {
-		FREE_INT(perm_offset_i);
+		FREE_int(perm_offset_i);
 	}
 	if (tmp_Elt1) {
-		FREE_INT(tmp_Elt1);
+		FREE_int(tmp_Elt1);
 	}
 	if (elt1) {
 		FREE_uchar(elt1);
@@ -62,22 +62,22 @@ void direct_product::freeself()
 		FREE_OBJECT(Elts);
 	}
 	if (base_for_component1) {
-		FREE_INT(base_for_component1);
+		FREE_int(base_for_component1);
 	}
 	if (tl_for_component1) {
-		FREE_INT(tl_for_component1);
+		FREE_int(tl_for_component1);
 	}
 	if (base_for_component2) {
-		FREE_INT(base_for_component2);
+		FREE_int(base_for_component2);
 	}
 	if (tl_for_component2) {
-		FREE_INT(tl_for_component2);
+		FREE_int(tl_for_component2);
 	}
 	if (the_base) {
-		FREE_INT(the_base);
+		FREE_int(the_base);
 	}
 	if (the_transversal_length) {
-		FREE_INT(the_transversal_length);
+		FREE_int(the_transversal_length);
 	}
 	null();
 	if (f_v) {
@@ -86,9 +86,9 @@ void direct_product::freeself()
 }
 
 void direct_product::init(matrix_group *M1, matrix_group *M2,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "direct_product::init" << endl;
@@ -123,18 +123,18 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		cout << "direct_product::init "
 				"degree_overall = " << degree_overall << endl;
 	}
-	perm_offset_i = NEW_INT(3);
+	perm_offset_i = NEW_int(3);
 		// one more so it can also be used to indicated
 		// the start of the product action.
 	perm_offset_i[0] = 0;
 	perm_offset_i[1] = perm_offset_i[0] + degree_of_matrix_group1;
 	perm_offset_i[2] = perm_offset_i[1] + degree_of_matrix_group2;
-	elt_size_INT = M1->elt_size_INT + M2->elt_size_INT;
+	elt_size_int = M1->elt_size_int + M2->elt_size_int;
 	if (f_v) {
 		cout << "direct_product::init "
-				"elt_size_INT = " << elt_size_INT << endl;
+				"elt_size_int = " << elt_size_int << endl;
 	}
-	tmp_Elt1 = NEW_INT(elt_size_INT);
+	tmp_Elt1 = NEW_int(elt_size_int);
 
 	bits_per_digit1 = M1->bits_per_digit;
 	bits_per_digit2 = M2->bits_per_digit;
@@ -164,8 +164,8 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 		cout << "direct_product::init "
 				"base_len_in_component2 = " << base_len_in_component2 << endl;
 	}
-	base_for_component1 = NEW_INT(base_len_in_component1);
-	tl_for_component1 = NEW_INT(base_len_in_component1);
+	base_for_component1 = NEW_int(base_len_in_component1);
+	tl_for_component1 = NEW_int(base_len_in_component1);
 
 	M1->base_and_transversal_length(
 			base_len_in_component1,
@@ -174,17 +174,17 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component1 = ";
-		INT_vec_print(cout, base_for_component1, base_len_in_component1);
+		int_vec_print(cout, base_for_component1, base_len_in_component1);
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component1 = ";
-		INT_vec_print(cout, tl_for_component1, base_len_in_component1);
+		int_vec_print(cout, tl_for_component1, base_len_in_component1);
 		cout << endl;
 	}
 
 
-	base_for_component2 = NEW_INT(base_len_in_component2);
-	tl_for_component2 = NEW_INT(base_len_in_component2);
+	base_for_component2 = NEW_int(base_len_in_component2);
+	tl_for_component2 = NEW_int(base_len_in_component2);
 	M2->base_and_transversal_length(
 			base_len_in_component2,
 			base_for_component2, tl_for_component2,
@@ -193,11 +193,11 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"base_for_component2 = ";
-		INT_vec_print(cout, base_for_component2, base_len_in_component2);
+		int_vec_print(cout, base_for_component2, base_len_in_component2);
 		cout << endl;
 		cout << "direct_product::init "
 				"tl_for_component2 = ";
-		INT_vec_print(cout, tl_for_component2, base_len_in_component2);
+		int_vec_print(cout, tl_for_component2, base_len_in_component2);
 		cout << endl;
 	}
 
@@ -217,11 +217,11 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	if (f_v) {
 		cout << "direct_product::init "
 				"the_base = ";
-		INT_vec_print(cout, the_base, base_length);
+		int_vec_print(cout, the_base, base_length);
 		cout << endl;
 		cout << "direct_product::init "
 				"the_transversal_length = ";
-		INT_vec_print(cout, the_transversal_length, base_length);
+		int_vec_print(cout, the_transversal_length, base_length);
 		cout << endl;
 	}
 
@@ -230,10 +230,10 @@ void direct_product::init(matrix_group *M1, matrix_group *M2,
 	}
 }
 
-INT direct_product::element_image_of(INT *Elt, INT a, INT verbose_level)
+int direct_product::element_image_of(int *Elt, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a0, b, c, c1, c2, i, j;
+	int f_v = (verbose_level >= 1);
+	int a0, b, c, c1, c2, i, j;
 
 	if (f_v) {
 		cout << "direct_product::element_image_of" << endl;
@@ -308,13 +308,13 @@ INT direct_product::element_image_of(INT *Elt, INT a, INT verbose_level)
 	return b;
 }
 
-void direct_product::element_one(INT *Elt)
+void direct_product::element_one(int *Elt)
 {
 	M1->GL_one(Elt + offset_i(0));
 	M2->GL_one(Elt + offset_i(1));
 }
 
-INT direct_product::element_is_one(INT *Elt)
+int direct_product::element_is_one(int *Elt)
 {
 	if (!M1->GL_is_one(Elt + offset_i(0))) {
 		return FALSE;
@@ -325,10 +325,10 @@ INT direct_product::element_is_one(INT *Elt)
 	return TRUE;
 }
 
-void direct_product::element_mult(INT *A, INT *B, INT *AB,
-		INT verbose_level)
+void direct_product::element_mult(int *A, int *B, int *AB,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "direct_product::element_mult" << endl;
@@ -347,22 +347,22 @@ void direct_product::element_mult(INT *A, INT *B, INT *AB,
 	}
 }
 
-void direct_product::element_move(INT *A, INT *B, INT verbose_level)
+void direct_product::element_move(int *A, int *B, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "direct_product::element_move" << endl;
 	}
-	INT_vec_copy(A, B, elt_size_INT);
+	int_vec_copy(A, B, elt_size_int);
 	if (f_v) {
 		cout << "direct_product::element_move done" << endl;
 	}
 }
 
-void direct_product::element_invert(INT *A, INT *Av, INT verbose_level)
+void direct_product::element_invert(int *A, int *Av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "direct_product::element_invert" << endl;
@@ -375,21 +375,21 @@ void direct_product::element_invert(INT *A, INT *Av, INT verbose_level)
 }
 
 
-INT direct_product::offset_i(INT f)
+int direct_product::offset_i(int f)
 {
 	if (f == 0) {
 		return 0;
 	} else if (f == 1) {
-		return M1->elt_size_INT;
+		return M1->elt_size_int;
 	} else {
 		cout << "direct_product::offset_i illegal value of f" << endl;
 		exit(1);
 	}
 }
 
-void direct_product::element_pack(INT *Elt, uchar *elt)
+void direct_product::element_pack(int *Elt, uchar *elt)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < M1->make_element_size; i++) {
 		put_digit(elt, 0, i,
@@ -401,33 +401,33 @@ void direct_product::element_pack(INT *Elt, uchar *elt)
 	}
 }
 
-void direct_product::element_unpack(uchar *elt, INT *Elt)
+void direct_product::element_unpack(uchar *elt, int *Elt)
 {
-	INT i;
-	INT *m;
+	int i;
+	int *m;
 
 	//cout << "direct_product::element_unpack" << endl;
 	m = Elt + offset_i(0);
 	for (i = 0; i < M1->make_element_size; i++) {
 		m[i] = get_digit(elt, 0, i);
 	}
-	M1->GL_invert_internal(m, m + M1->elt_size_INT_half,
+	M1->GL_invert_internal(m, m + M1->elt_size_int_half,
 			0 /*verbose_level - 2*/);
 	m = Elt + offset_i(1);
 	for (i = 0; i < M2->make_element_size; i++) {
 		m[i] = get_digit(elt, 1, i);
 	}
-	M2->GL_invert_internal(m, m + M2->elt_size_INT_half,
+	M2->GL_invert_internal(m, m + M2->elt_size_int_half,
 			0 /*verbose_level - 2*/);
 	//cout << "after direct_product::element_unpack: " << endl;
 	//element_print_easy(Elt, cout);
 }
 
-void direct_product::put_digit(uchar *elt, INT f, INT i, INT d)
+void direct_product::put_digit(uchar *elt, int f, int i, int d)
 {
-	INT h0 = 0;
-	INT h, h1, a;
-	INT nb_bits = 0;
+	int h0 = 0;
+	int h, h1, a;
+	int nb_bits = 0;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -449,11 +449,11 @@ void direct_product::put_digit(uchar *elt, INT f, INT i, INT d)
 	}
 }
 
-INT direct_product::get_digit(uchar *elt, INT f, INT i)
+int direct_product::get_digit(uchar *elt, int f, int i)
 {
-	INT h0 = 0;
-	INT h, h1, a, d;
-	INT nb_bits = 0;
+	int h0 = 0;
+	int h, h1, a, d;
+	int nb_bits = 0;
 
 	if (f == 0) {
 		nb_bits = bits_per_digit1;
@@ -475,16 +475,16 @@ INT direct_product::get_digit(uchar *elt, INT f, INT i)
 	return d;
 }
 
-void direct_product::make_element(INT *Elt, INT *data, INT verbose_level)
+void direct_product::make_element(int *Elt, int *data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "direct_product::make_element" << endl;
 		}
 	if (f_v) {
 		cout << "direct_product::make_element data:" << endl;
-		INT_vec_print(cout, data, make_element_size);
+		int_vec_print(cout, data, make_element_size);
 		cout << endl;
 	}
 	M1->make_element(Elt + offset_i(0), data,
@@ -500,9 +500,9 @@ void direct_product::make_element(INT *Elt, INT *data, INT verbose_level)
 		}
 }
 
-void direct_product::element_print_easy(INT *Elt, ostream &ost)
+void direct_product::element_print_easy(int *Elt, ostream &ost)
 {
-	INT f;
+	int f;
 
 	ost << "begin element of direct product: " << endl;
 	if (M1->n == 1 && M2->n == 1) {
@@ -523,10 +523,10 @@ void direct_product::element_print_easy(INT *Elt, ostream &ost)
 	ost << "end element of direct product" << endl;
 }
 
-void direct_product::compute_base_and_transversals(INT verbose_level)
+void direct_product::compute_base_and_transversals(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, h;
+	int f_v = (verbose_level >= 1);
+	int i, h;
 
 	if (f_v) {
 		cout << "direct_product::compute_base_and_transversals" << endl;
@@ -534,7 +534,7 @@ void direct_product::compute_base_and_transversals(INT verbose_level)
 	base_length = 0;
 	base_length += base_len_in_component1;
 	base_length += base_len_in_component2;
-	the_base = NEW_INT(base_length);
+	the_base = NEW_int(base_length);
 
 	h = 0;
 	for (i = 0; i < base_len_in_component1; i++, h++) {
@@ -548,7 +548,7 @@ void direct_product::compute_base_and_transversals(INT verbose_level)
 				"h != base_length (1)" << endl;
 		exit(1);
 	}
-	the_transversal_length = NEW_INT(base_length);
+	the_transversal_length = NEW_int(base_length);
 	h = 0;
 	for (i = 0; i < base_len_in_component1; i++, h++) {
 		the_transversal_length[h] = tl_for_component1[i];
@@ -566,18 +566,18 @@ void direct_product::compute_base_and_transversals(INT verbose_level)
 		}
 }
 
-void direct_product::make_strong_generators_data(INT *&data,
-		INT &size, INT &nb_gens, INT verbose_level)
+void direct_product::make_strong_generators_data(int *&data,
+		int &size, int &nb_gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *GL1_data;
-	INT GL1_size;
-	INT GL1_nb_gens;
-	INT *GL2_data;
-	INT GL2_size;
-	INT GL2_nb_gens;
-	INT h, g;
-	INT *dat;
+	int f_v = (verbose_level >= 1);
+	int *GL1_data;
+	int GL1_size;
+	int GL1_nb_gens;
+	int *GL2_data;
+	int GL2_size;
+	int GL2_nb_gens;
+	int h, g;
+	int *dat;
 
 	if (f_v) {
 		cout << "direct_product::make_strong_generators_data" << endl;
@@ -597,41 +597,41 @@ void direct_product::make_strong_generators_data(INT *&data,
 	}
 	nb_gens = GL1_nb_gens + GL2_nb_gens;
 	size = make_element_size;
-	data = NEW_INT(nb_gens * size);
-	dat = NEW_INT(size);
+	data = NEW_int(nb_gens * size);
+	dat = NEW_int(size);
 
 	h = 0;
 	// generators for the second component:
 	for (g = 0; g < GL2_nb_gens; g++) {
-		INT_vec_zero(dat, size);
+		int_vec_zero(dat, size);
 		F1->identity_matrix(
 					dat,
 					dimension_of_matrix_group1);
-		INT_vec_copy(GL2_data + g * GL2_size,
+		int_vec_copy(GL2_data + g * GL2_size,
 					dat + M1->make_element_size,
 					GL2_size);
-		INT_vec_copy(dat, data + h * size, size);
+		int_vec_copy(dat, data + h * size, size);
 		h++;
 	}
 	// generators for the first component:
 	for (g = 0; g < GL1_nb_gens; g++) {
-		INT_vec_zero(dat, size);
-		INT_vec_copy(GL1_data + g * GL1_size,
+		int_vec_zero(dat, size);
+		int_vec_copy(GL1_data + g * GL1_size,
 					dat + 0,
 					GL1_size);
 		F2->identity_matrix(
 					dat + M1->make_element_size,
 					dimension_of_matrix_group2);
-		INT_vec_copy(dat, data + h * size, size);
+		int_vec_copy(dat, data + h * size, size);
 		h++;
 	}
 	if (h != nb_gens) {
 		cout << "h != nb_gens" << endl;
 		exit(1);
 	}
-	FREE_INT(GL1_data);
-	FREE_INT(GL2_data);
-	FREE_INT(dat);
+	FREE_int(GL1_data);
+	FREE_int(GL2_data);
+	FREE_int(dat);
 	if (f_v) {
 		cout << "direct_product::make_strong_generators_data done" << endl;
 	}
@@ -641,16 +641,16 @@ void direct_product::lift_generators(
 		strong_generators *SG1,
 		strong_generators *SG2,
 		action *A, strong_generators *&SG3,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A1;
 	action *A2;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 	vector_ge *gens;
-	INT i, len1, len2, len3;
+	int i, len1, len2, len3;
 	longinteger_domain D;
 	longinteger_object go1, go2, go3;
 
@@ -666,22 +666,22 @@ void direct_product::lift_generators(
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
 	gens->allocate(len3);
-	Elt1 = NEW_INT(A1->elt_size_in_INT);
-	Elt2 = NEW_INT(A2->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A1->elt_size_in_int);
+	Elt2 = NEW_int(A2->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 
 	A1->element_one(Elt1, 0 /* verbose_level */);
 	A2->element_one(Elt2, 0 /* verbose_level */);
 	for (i = 0; i < len1; i++) {
 		A1->element_move(SG1->gens->ith(i), Elt3, 0 /* verbose_level */);
 		A2->element_move(Elt2,
-				Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
+				Elt3 + A1->elt_size_in_int, 0 /* verbose_level */);
 		A->element_move(Elt3, gens->ith(i), 0);
 	}
 	for (i = 0; i < len2; i++) {
 		A1->element_move(Elt1, Elt3, 0 /* verbose_level */);
 		A2->element_move(SG2->gens->ith(i),
-				Elt3 + A1->elt_size_in_INT, 0 /* verbose_level */);
+				Elt3 + A1->elt_size_in_int, 0 /* verbose_level */);
 		A->element_move(Elt3, gens->ith(len1 + i), 0);
 	}
 	if (f_v) {

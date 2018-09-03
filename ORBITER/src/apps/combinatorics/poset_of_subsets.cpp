@@ -5,19 +5,19 @@
 
 #include "orbiter.h"
 
-void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  
-	INT f_depth_first, INT f_breadth_first, INT verbose_level);
+void make_subset_lattice(layered_graph *&LG, int n, int f_tree,  
+	int f_depth_first, int f_breadth_first, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n;
-	INT f_tree = FALSE;
-	INT f_depth_first = FALSE;
-	INT f_breadth_first = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n;
+	int f_tree = FALSE;
+	int f_depth_first = FALSE;
+	int f_breadth_first = FALSE;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	layered_graph *LG;
 	char fname[1000];
 
-	sprintf(fname, "poset_of_subsets_%ld", n);
+	sprintf(fname, "poset_of_subsets_%d", n);
 	if (f_tree) {
 		sprintf(fname + strlen(fname), "_tree");
 		}
@@ -65,28 +65,28 @@ int main(int argc, char **argv)
 	delete LG;
 }
 
-void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,  
-	INT f_depth_first, INT f_breadth_first, INT verbose_level)
+void make_subset_lattice(layered_graph *&LG, int n, int f_tree,  
+	int f_depth_first, int f_breadth_first, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT nb_layers = n + 1;
-	INT *Nb;
-	INT i, k, r, a, b, r0;
-	INT *set1;
-	INT *set2;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_layers = n + 1;
+	int *Nb;
+	int i, k, r, a, b, r0;
+	int *set1;
+	int *set2;
 
 	if (f_v) {
 		cout << "make_subset_lattice n=" << n << endl;
 		}
 
-	Nb = NEW_INT(nb_layers);
+	Nb = NEW_int(nb_layers);
 	for (i = 0; i <= n; i++) {
-		Nb[i] = INT_n_choose_k(n, i);
+		Nb[i] = int_n_choose_k(n, i);
 		}
 
-	set1 = NEW_INT(n);
-	set2 = NEW_INT(n);
+	set1 = NEW_int(n);
+	set2 = NEW_int(n);
 
 	LG = NEW_OBJECT(layered_graph);
 	if (f_vv) {
@@ -109,10 +109,10 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 			LG->add_node_data1(k, r, set1[k - 1], 0/*verbose_level*/);
 
 			char text[1000];
-			INT a, j, j0;
+			int a, j, j0;
 			if (f_depth_first) {
 				cout << "k=" << k << " r=" << r << " set=";
-				INT_vec_print(cout, set1, k);
+				int_vec_print(cout, set1, k);
 				cout << endl;
 				a = 0;
 				for (i = k - 1; i >= 0; i--) {
@@ -129,7 +129,7 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 						}
 					}
 				a += k;
-				sprintf(text, "%ld", a);
+				sprintf(text, "%d", a);
 				}
 			else if (f_breadth_first) {
 				a = 0;
@@ -137,11 +137,11 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 					a += Nb[i];
 					}
 				a += r;
-				sprintf(text, "%ld", a);
+				sprintf(text, "%d", a);
 				}
 			else {
 				if (k) {
-					sprintf(text, "%ld", set1[k - 1]);
+					sprintf(text, "%d", set1[k - 1]);
 					}
 				else {
 					text[0] = 0;
@@ -158,7 +158,7 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 
 			if (f_tree) {
 				for (a = k - 1; a >= k - 1; a--) {
-					INT_vec_copy(set1, set2, k);
+					int_vec_copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}
@@ -168,7 +168,7 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 				}
 			else {
 				for (a = k - 1; a >= 0; a--) {
-					INT_vec_copy(set1, set2, k);
+					int_vec_copy(set1, set2, k);
 					for (b = a; b < k - 1; b++) {
 						set2[b] = set2[b + 1];
 						}
@@ -180,8 +180,8 @@ void make_subset_lattice(layered_graph *&LG, INT n, INT f_tree,
 		}
 
 	
-	FREE_INT(set1);
-	FREE_INT(set2);
+	FREE_int(set1);
+	FREE_int(set2);
 	if (f_v) {
 		cout << "make_subset_lattice done" << endl;
 		}

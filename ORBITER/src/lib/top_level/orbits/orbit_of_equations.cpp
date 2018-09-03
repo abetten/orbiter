@@ -36,32 +36,32 @@ void orbit_of_equations::null()
 
 void orbit_of_equations::freeself()
 {
-	INT i;
+	int i;
 	
 	if (Equations) {
 		for (i = 0; i < used_length; i++) {
-			FREE_INT(Equations[i]);
+			FREE_int(Equations[i]);
 			}
-		FREE_PINT(Equations);
+		FREE_pint(Equations);
 		}
 	if (prev) {
-		FREE_INT(prev);
+		FREE_int(prev);
 		}
 	if (label) {
-		FREE_INT(label);
+		FREE_int(label);
 		}
 	if (data_tmp) {
-		FREE_INT(data_tmp);
+		FREE_int(data_tmp);
 		}
 	null();
 }
 
 void orbit_of_equations::init(action *A, finite_field *F, 
 	action_on_homogeneous_polynomials *AonHPD, 
-	strong_generators *SG, INT *coeff_in, 
-	INT verbose_level)
+	strong_generators *SG, int *coeff_in, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbit_of_equations::init" << endl;
@@ -75,7 +75,7 @@ void orbit_of_equations::init(action *A, finite_field *F,
 	sz = 1 + nb_monomials;
 	sz_for_compare = 1 + nb_monomials;
 	
-	data_tmp = NEW_INT(sz);
+	data_tmp = NEW_int(sz);
 	
 	if (f_v) {
 		cout << "orbit_of_equations::init before compute" << endl;
@@ -95,15 +95,15 @@ void orbit_of_equations::init(action *A, finite_field *F,
 		}
 }
 
-void orbit_of_equations::map_an_equation(INT *object_in, INT *object_out, 
-	INT *Elt, INT verbose_level)
+void orbit_of_equations::map_an_equation(int *object_in, int *object_out, 
+	int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbit_of_equations::map_an_equation" << endl;
 		}
-	AonHPD->compute_image_INT_low_level(
+	AonHPD->compute_image_int_low_level(
 		Elt, object_in + 1, object_out + 1, verbose_level - 2);
 	PG_element_normalize_from_front(*F, 
 		object_out + 1, 1, nb_monomials);
@@ -114,29 +114,29 @@ void orbit_of_equations::map_an_equation(INT *object_in, INT *object_out,
 
 void orbit_of_equations::print_orbit()
 {
-	INT i;
+	int i;
 	
 	cout << "orbit_of_equations::print_orbit We found an orbit of "
 			"length " << used_length << endl;
 	for (i = 0; i < used_length; i++) {
 		cout << i << " : ";
-		INT_vec_print(cout, Equations[i] + 1, nb_monomials);
+		int_vec_print(cout, Equations[i] + 1, nb_monomials);
 		cout << " : ";
 		AonHPD->HPD->print_equation(cout, Equations[i] + 1);
 		cout << endl;
 		}
 }
 
-void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
+void orbit_of_equations::compute_orbit(int *coeff, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i, cur, j, idx;
-	INT *cur_object;
-	INT *new_object;
-	INT *Q;
-	INT Q_len;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i, cur, j, idx;
+	int *cur_object;
+	int *new_object;
+	int *Q;
+	int Q_len;
 
 	if (f_v) {
 		cout << "orbit_of_equations::compute_orbit" << endl;
@@ -144,19 +144,19 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 	if (f_v) {
 		cout << "orbit_of_equations::compute_orbit sz=" << sz << endl;
 		}
-	cur_object = NEW_INT(sz);
-	new_object = NEW_INT(sz);
+	cur_object = NEW_int(sz);
+	new_object = NEW_int(sz);
 	allocation_length = 1000;
-	Equations = NEW_PINT(allocation_length);
-	prev = NEW_INT(allocation_length);
-	label = NEW_INT(allocation_length);
-	Equations[0] = NEW_INT(sz);
+	Equations = NEW_pint(allocation_length);
+	prev = NEW_int(allocation_length);
+	label = NEW_int(allocation_length);
+	Equations[0] = NEW_int(sz);
 	prev[0] = -1;
 	label[0] = -1;
 	if (f_v) {
 		cout << "orbit_of_equations::compute_orbit init Equations[0]" << endl;
 		}
-	INT_vec_copy(coeff, Equations[0] + 1, nb_monomials);
+	int_vec_copy(coeff, Equations[0] + 1, nb_monomials);
 	Equations[0][0] = 0;
 	PG_element_normalize_from_front(*F, 
 		Equations[0] + 1, 1, nb_monomials);
@@ -164,14 +164,14 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 	position_of_original_object = 0;
 
 	used_length = 1;
-	Q = NEW_INT(allocation_length);
+	Q = NEW_int(allocation_length);
 	Q[0] = 0;
 	Q_len = 1;
 	while (Q_len) {
 		if (f_vv) {
 			cout << "orbit_of_equations::compute_orbit  Q_len = "
 					<< Q_len << " : used_length=" << used_length << " : ";
-			INT_vec_print(cout, Q, Q_len);
+			int_vec_print(cout, Q, Q_len);
 			cout << endl;
 			}
 		cur = Q[0];
@@ -180,7 +180,7 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 			}
 		Q_len--;
 
-		INT_vec_copy(Equations[cur], cur_object, sz);
+		int_vec_copy(Equations[cur], cur_object, sz);
 
 
 		for (j = 0; j < SG->gens->len; j++) {
@@ -204,37 +204,37 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 				if (f_vvv) {
 					cout << "orbit_of_equations::compute_orbit "
 							"Found a n e w object : ";
-					INT_vec_print(cout, new_object, sz);
+					int_vec_print(cout, new_object, sz);
 					cout << endl;
 					}
 				
 				if (used_length == allocation_length) {
-					INT al2 = allocation_length + 1000;
-					INT **Equations2;
-					INT *prev2;
-					INT *label2;
-					INT *Q2;
+					int al2 = allocation_length + 1000;
+					int **Equations2;
+					int *prev2;
+					int *label2;
+					int *Q2;
 					if (f_vv) {
 						cout << "orbit_of_equations::compute_orbit "
 								"reallocating to length " << al2 << endl;
 						}
-					Equations2 = NEW_PINT(al2);
-					prev2 = NEW_INT(al2);
-					label2 = NEW_INT(al2);
+					Equations2 = NEW_pint(al2);
+					prev2 = NEW_int(al2);
+					label2 = NEW_int(al2);
 					for (i = 0; i < allocation_length; i++) {
 						Equations2[i] = Equations[i];
 						}
-					INT_vec_copy(prev, prev2, allocation_length);
-					INT_vec_copy(label, label2, allocation_length);
-					FREE_PINT(Equations);
-					FREE_INT(prev);
-					FREE_INT(label);
+					int_vec_copy(prev, prev2, allocation_length);
+					int_vec_copy(label, label2, allocation_length);
+					FREE_pint(Equations);
+					FREE_int(prev);
+					FREE_int(label);
 					Equations = Equations2;
 					prev = prev2;
 					label = label2;
-					Q2 = NEW_INT(al2);
-					INT_vec_copy(Q, Q2, Q_len);
-					FREE_INT(Q);
+					Q2 = NEW_int(al2);
+					int_vec_copy(Q, Q2, Q_len);
+					FREE_int(Q);
 					Q = Q2;
 					allocation_length = al2;
 					}
@@ -247,11 +247,11 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 				for (i = used_length; i > idx; i--) {
 					label[i] = label[i - 1];
 					}
-				Equations[idx] = NEW_INT(sz);
+				Equations[idx] = NEW_int(sz);
 				prev[idx] = cur;
 				label[idx] = j;
 
-				INT_vec_copy(new_object, Equations[idx], sz);
+				int_vec_copy(new_object, Equations[idx], sz);
 
 				if (position_of_original_object >= idx) {
 					position_of_original_object++;
@@ -284,7 +284,7 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 #if 0
 				for (i = 0; i < used_length; i++) {
 					cout << i << " : ";
-					INT_vec_print(cout, Equations[i], sz);
+					int_vec_print(cout, Equations[i], sz);
 					cout << endl;
 					}
 #endif
@@ -297,28 +297,28 @@ void orbit_of_equations::compute_orbit(INT *coeff, INT verbose_level)
 		}
 
 
-	FREE_INT(Q);
-	FREE_INT(new_object);
-	FREE_INT(cur_object);
+	FREE_int(Q);
+	FREE_int(new_object);
+	FREE_int(cur_object);
 	if (f_v) {
 		cout << "orbit_of_equations::compute_orbit done" << endl;
 		}
 }
 
-void orbit_of_equations::get_transporter(INT idx,
-		INT *transporter, INT verbose_level)
+void orbit_of_equations::get_transporter(int idx,
+		int *transporter, int verbose_level)
 // transporter is an element which maps 
 // the orbit representative to the given subspace.
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt1, *Elt2;
-	INT idx0, idx1, l;
+	int f_v = (verbose_level >= 1);
+	int *Elt1, *Elt2;
+	int idx0, idx1, l;
 
 	if (f_v) {
 		cout << "orbit_of_equations::get_transporter" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 
 	A->element_one(Elt1, 0);
 	idx1 = idx;
@@ -337,33 +337,33 @@ void orbit_of_equations::get_transporter(INT idx,
 		}
 	A->element_move(Elt1, transporter, 0);
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	if (f_v) {
 		cout << "orbit_of_equations::get_transporter done" << endl;
 		}
 }
 
 void orbit_of_equations::get_random_schreier_generator(
-		INT *Elt, INT verbose_level)
+		int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT len, r1, r2, pt1, pt2, pt3;
-	INT *E1, *E2, *E3, *E4, *E5;
-	INT *cur_object;
-	INT *new_object;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int len, r1, r2, pt1, pt2, pt3;
+	int *E1, *E2, *E3, *E4, *E5;
+	int *cur_object;
+	int *new_object;
 	
 	if (f_v) {
 		cout << "orbit_of_equations::get_random_schreier_generator" << endl;
 		}
-	E1 = NEW_INT(A->elt_size_in_INT);
-	E2 = NEW_INT(A->elt_size_in_INT);
-	E3 = NEW_INT(A->elt_size_in_INT);
-	E4 = NEW_INT(A->elt_size_in_INT);
-	E5 = NEW_INT(A->elt_size_in_INT);
-	cur_object = NEW_INT(sz);
-	new_object = NEW_INT(sz);
+	E1 = NEW_int(A->elt_size_in_int);
+	E2 = NEW_int(A->elt_size_in_int);
+	E3 = NEW_int(A->elt_size_in_int);
+	E4 = NEW_int(A->elt_size_in_int);
+	E5 = NEW_int(A->elt_size_in_int);
+	cur_object = NEW_int(sz);
+	new_object = NEW_int(sz);
 	len = used_length;
 	pt1 = position_of_original_object;
 	
@@ -384,7 +384,7 @@ void orbit_of_equations::get_random_schreier_generator(
 	A->element_mult(E1, SG->gens->ith(r2), E2, 0);
 
 	// compute image of original subspace under E2:
-	INT_vec_copy(Equations[pt1], cur_object, sz);
+	int_vec_copy(Equations[pt1], cur_object, sz);
 
 	map_an_equation(cur_object, new_object, E2, 0 /* verbose_level*/);
 
@@ -428,13 +428,13 @@ void orbit_of_equations::get_random_schreier_generator(
 	A->element_move(E5, Elt, 0);
 
 
-	FREE_INT(E1);
-	FREE_INT(E2);
-	FREE_INT(E3);
-	FREE_INT(E4);
-	FREE_INT(E5);
-	FREE_INT(cur_object);
-	FREE_INT(new_object);
+	FREE_int(E1);
+	FREE_int(E2);
+	FREE_int(E3);
+	FREE_int(E4);
+	FREE_int(E5);
+	FREE_int(cur_object);
+	FREE_int(new_object);
 	if (f_v) {
 		cout << "orbit_of_equations::get_random_schreier_generator "
 				"done" << endl;
@@ -443,13 +443,13 @@ void orbit_of_equations::get_random_schreier_generator(
 
 void orbit_of_equations::compute_stabilizer(action *default_action, 
 	longinteger_object &go, 
-	sims *&Stab, INT verbose_level)
+	sims *&Stab, int verbose_level)
 // this function allocates a sims structure into Stab.
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v4 = (verbose_level >= 4);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 4);
 
 
 	if (f_v) {
@@ -459,9 +459,9 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 	Stab = NEW_OBJECT(sims);
 	longinteger_object cur_go, target_go;
 	longinteger_domain D;
-	INT len, r, cnt = 0, f_added, drop_out_level, image;
-	INT *residue;
-	INT *E1;
+	int len, r, cnt = 0, f_added, drop_out_level, image;
+	int *residue;
+	int *E1;
 	
 	
 	if (f_v) {
@@ -470,10 +470,10 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 		default_action->print_info();
 		cout << endl;
 		}
-	E1 = NEW_INT(default_action->elt_size_in_INT);
-	residue = NEW_INT(default_action->elt_size_in_INT);
+	E1 = NEW_int(default_action->elt_size_in_int);
+	residue = NEW_int(default_action->elt_size_in_int);
 	len = used_length;
-	D.integral_division_by_INT(go, len, target_go, r);
+	D.integral_division_by_int(go, len, target_go, r);
 	if (r) {	
 		cout << "orbit_of_equations::compute_stabilizer orbit length "
 				"does not divide group order" << endl;
@@ -547,17 +547,17 @@ void orbit_of_equations::compute_stabilizer(action *default_action,
 			}
 		cnt++;
 		}
-	FREE_INT(E1);
-	FREE_INT(residue);
+	FREE_int(E1);
+	FREE_int(residue);
 	if (f_v) {
 		cout << "orbit_of_equations::compute_stabilizer finished" << endl;
 		}
 }
 
 strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
-	longinteger_object &full_group_order, INT verbose_level)
+	longinteger_object &full_group_order, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	strong_generators *gens;
 	sims *Stab;
 
@@ -592,11 +592,14 @@ strong_generators *orbit_of_equations::generators_for_stabilizer_of_orbit_rep(
 
 
 
-INT orbit_of_equations::search_data(INT *data, INT &idx)
+int orbit_of_equations::search_data(int *data, int &idx)
 {
+	int p[1];
+	p[0] = sz_for_compare;
+
 	if (vec_search((void **)Equations,
 			orbit_of_equations_compare_func,
-			(void *) (sz_for_compare),
+			p,
 		used_length, data, idx, 0 /* verbose_level */)) {
 		return TRUE;
 		}
@@ -605,26 +608,27 @@ INT orbit_of_equations::search_data(INT *data, INT &idx)
 		}
 }
 
-void orbit_of_equations::save_csv(const char *fname, INT verbose_level)
+void orbit_of_equations::save_csv(const char *fname, int verbose_level)
 {
-	INT i;
-	INT *Data;
+	int i;
+	int *Data;
 
-	Data = NEW_INT(used_length * nb_monomials);
+	Data = NEW_int(used_length * nb_monomials);
 	for (i = 0; i < used_length; i++) {
-		INT_vec_copy(Equations[i] + 1,
+		int_vec_copy(Equations[i] + 1,
 				Data + i * nb_monomials, nb_monomials);
 		}
-	INT_matrix_write_csv(fname, Data, used_length, nb_monomials);
+	int_matrix_write_csv(fname, Data, used_length, nb_monomials);
 }
 
 
-INT orbit_of_equations_compare_func(void *a, void *b, void *data)
+int orbit_of_equations_compare_func(void *a, void *b, void *data)
 {
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
-	INT n = (INT) data;
-	INT i;
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int *p = (int *) data;
+	int n = *p;
+	int i;
 
 	for (i = 0; i < n; i++) {
 		if (A[i] < B[i]) {

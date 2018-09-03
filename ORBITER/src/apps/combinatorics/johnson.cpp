@@ -8,18 +8,18 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i, j, N, sz;
-	INT *Adj;
-	INT *set1;
-	INT *set2;
-	INT *set3;
-	INT f_n = FALSE;
-	INT n;
-	INT f_k = FALSE;
-	INT k;
-	INT f_s = FALSE;
-	INT s;
+	int verbose_level = 0;
+	int i, j, N, sz;
+	int *Adj;
+	int *set1;
+	int *set2;
+	int *set3;
+	int f_n = FALSE;
+	int n;
+	int f_k = FALSE;
+	int k;
+	int f_s = FALSE;
+	int s;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -56,22 +56,22 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	N = INT_n_choose_k(n, k);
+	N = int_n_choose_k(n, k);
 	
 
-	Adj = NEW_INT(N * N);
-	INT_vec_zero(Adj, N * N);
+	Adj = NEW_int(N * N);
+	int_vec_zero(Adj, N * N);
 
-	set1 = NEW_INT(k);
-	set2 = NEW_INT(k);
-	set3 = NEW_INT(k);
+	set1 = NEW_int(k);
+	set2 = NEW_int(k);
+	set3 = NEW_int(k);
 	
 	for (i = 0; i < N; i++) {
 		unrank_k_subset(i, set1, n, k);
 		for (j = i + 1; j < N; j++) {
 			unrank_k_subset(j, set2, n, k);
 
-			INT_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
+			int_vec_intersect_sorted_vectors(set1, k, set2, k, set3, sz);
 			if (sz == s) {
 				Adj[i * N + j] = 1;
 				Adj[j * N + 1] = 1;
@@ -85,14 +85,14 @@ int main(int argc, char **argv)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
-	sprintf(fname, "Johnson_%ld_%ld_%ld.colored_graph", n, k, s);
+	sprintf(fname, "Johnson_%d_%d_%d.colored_graph", n, k, s);
 
 	CG->save(fname, verbose_level);
 
 	FREE_OBJECT(CG);
-	FREE_INT(Adj);
-	FREE_INT(set1);
-	FREE_INT(set2);
-	FREE_INT(set3);
+	FREE_int(Adj);
+	FREE_int(set1);
+	FREE_int(set2);
+	FREE_int(set3);
 }
 

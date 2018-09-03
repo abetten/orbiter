@@ -16,23 +16,23 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
-void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level);
+void create_grassmannian(int n, int k, finite_field *F, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n;
-	INT f_k = FALSE;
-	INT k;
-	INT f_q = FALSE;
-	INT q;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n;
+	int f_k = FALSE;
+	int k;
+	int f_q = FALSE;
+	int q;
+	int f_poly = FALSE;
 	char *poly = NULL;
 	
 	t0 = os_ticks();
@@ -89,25 +89,25 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
+void create_grassmannian(int n, int k, finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	projective_space *P;
 	projective_space *P2;
 	grassmann *Grass;
-	INT nk, rk, rk1, det, d;
-	INT N, i, j, h, col;
-	INT *v, *B, *A, *L, *subset;
-	INT q = F->q;
+	int nk, rk, rk1, det, d;
+	int N, i, j, h, col;
+	int *v, *B, *A, *L, *subset;
+	int q = F->q;
 
 	d = n + 1;
-	nk = INT_n_choose_k(d, k + 1);
+	nk = int_n_choose_k(d, k + 1);
 	P = new projective_space;
 	P2 = new projective_space;
-	B = NEW_INT((k + 1) * d);
-	v = NEW_INT(nk);
-	A = NEW_INT((k + 1) * (k + 1));
-	subset = NEW_INT(k + 1);
+	B = NEW_int((k + 1) * d);
+	v = NEW_int(nk);
+	A = NEW_int((k + 1) * (k + 1));
+	subset = NEW_int(k + 1);
 
 	if (f_v) {
 		cout << "nk=" << nk << endl;
@@ -145,17 +145,17 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 	longinteger_object aa;
 
 	D.q_binomial(aa, d, k + 1, q, 0);
-	N = aa.as_INT();
+	N = aa.as_int();
 
 	if (f_v) {
 		cout << "N = " << N << endl;
 		}
-	L = NEW_INT(N);
+	L = NEW_int(N);
 	for (rk = 0; rk < N; rk++) {
 		if (f_v) {
 			cout << "rk=" << rk << endl;
 			}
-		Grass->unrank_INT(rk, 0);
+		Grass->unrank_int(rk, 0);
 		for (i = 0; i < (k + 1) * d; i++) {
 			B[i] = Grass->M[i];
 			}
@@ -169,7 +169,7 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 				}
 			unrank_k_subset(h, subset, d, k + 1);
 			if (f_v) {
-				INT_vec_print(cout, subset, k + 1);
+				int_vec_print(cout, subset, k + 1);
 				cout << endl;
 				}
 			for (j = 0; j < k + 1; j++) {
@@ -197,9 +197,9 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 		L[rk] = j;
 		if (f_v) {
 			cout << setw(4) << rk << " : ";
-			INT_vec_print(cout, B, (k + 1) * n);
+			int_vec_print(cout, B, (k + 1) * n);
 			cout << " : ";
-			INT_vec_print(cout, v, nk);
+			int_vec_print(cout, v, nk);
 			cout << " : ";
 			cout << setw(5) << j << endl;
 			}
@@ -207,8 +207,8 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 #if 0
 	N = q + 1;
 
-	v = NEW_INT(n + 1);
-	L = NEW_INT(P->N_points);
+	v = NEW_int(n + 1);
+	L = NEW_int(P->N_points);
 
 	if (f_v) {
 		cout << "i : point : projective rank" << endl;
@@ -225,7 +225,7 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 		L[i] = j;
 		if (f_v) {
 			cout << setw(4) << i << " : ";
-			INT_vec_print(cout, v, d);
+			int_vec_print(cout, v, d);
 			cout << " : " << setw(5) << j << endl;
 			}
 		}
@@ -240,18 +240,18 @@ void create_grassmannian(INT n, INT k, finite_field *F, INT verbose_level)
 	cout << endl;
 
 	char fname[1000];
-	sprintf(fname, "G_%ld_%ld_%ld.txt", n, k, q);
+	sprintf(fname, "G_%d_%d_%d.txt", n, k, q);
 	write_set_to_file(fname, L, N, verbose_level);
 
 
 	delete P;
 	delete P2;
 	delete Grass;
-	FREE_INT(B);
-	FREE_INT(L);
-	FREE_INT(v);
-	FREE_INT(A);
-	FREE_INT(subset);
+	FREE_int(B);
+	FREE_int(L);
+	FREE_int(v);
+	FREE_int(A);
+	FREE_int(subset);
 }
 
 

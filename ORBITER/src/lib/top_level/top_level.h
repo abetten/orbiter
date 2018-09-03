@@ -100,8 +100,8 @@ public:
 
 
 	// flag orbits:
-	INT nb_objects;
-	INT *fusion; // [nb_objects]
+	int nb_objects;
+	int *fusion; // [nb_objects]
 		// fusion[i] == -2 means that the flag orbit i
 		// has not yet been processed by the
 		// isomorphism testing procedure.
@@ -110,7 +110,7 @@ public:
 		// Otherwise, fusion[i] is an earlier flag_orbit,
 		// and handle[i] is a group element that maps
 		// to it
-	INT *handle; // [nb_objects]
+	int *handle; // [nb_objects]
 		// handle[i] is only relevant if fusion[i] != i,
 		// i.e., if flag orbit i is not a representative
 		// of an isomorphism type.
@@ -119,32 +119,32 @@ public:
 
 
 	// classified objects:
-	INT count;
-	INT *rep; // [count]
+	int count;
+	int *rep; // [count]
 	sims **stab; // [count]
 
 
 
 	//char *elt;
-	INT *Elt1;
-	INT *tl; // [A->base_len]
+	int *Elt1;
+	int *tl; // [A->base_len]
 
-	INT nb_open;
-	INT nb_reps;
-	INT nb_fused;
+	int nb_open;
+	int nb_reps;
+	int nb_fused;
 
 
 	representatives();
 	void null();
 	~representatives();
 	void free();
-	void init(action *A, INT nb_objects, char *prefix, INT verbose_level);
-	void write_fusion(INT verbose_level);
-	void read_fusion(INT verbose_level);
-	void write_representatives_and_stabilizers(INT verbose_level);
-	void read_representatives_and_stabilizers(INT verbose_level);
-	void save(INT verbose_level);
-	void load(INT verbose_level);
+	void init(action *A, int nb_objects, char *prefix, int verbose_level);
+	void write_fusion(int verbose_level);
+	void read_fusion(int verbose_level);
+	void write_representatives_and_stabilizers(int verbose_level);
+	void read_representatives_and_stabilizers(int verbose_level);
+	void save(int verbose_level);
+	void load(int verbose_level);
 	void calc_fusion_statistics();
 	void print_fusion_statistics();
 };

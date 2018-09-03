@@ -13,7 +13,7 @@
 #define V  50
 
 
-void list_parameters(INT v_max);
+void list_parameters(int v_max);
 
 int main(int argc, const char **argv)
 {
@@ -21,11 +21,11 @@ int main(int argc, const char **argv)
 }
 
 
-void list_parameters(INT v_max)
+void list_parameters(int v_max)
 {
-	INT v, v2, k, lambda, mu, cnt = 0;
-	INT top, top2, bottom, b, tb;
-	INT i, f, g, r, s;
+	int v, v2, k, lambda, mu, cnt = 0;
+	int top, top2, bottom, b, tb;
+	int i, f, g, r, s;
 	
 	for (v = 2; v <= v_max; v++) {
 		v2 = v >> 1;
@@ -45,9 +45,9 @@ void list_parameters(INT v_max)
 						continue;
 						}
 
-					INT nb;
-					INT *primes, *exponents;
-					nb = factor_INT(bottom, primes, exponents);
+					int nb;
+					int *primes, *exponents;
+					nb = factor_int(bottom, primes, exponents);
 					for (i = 0; i < nb; i++) {
 						if (ODD(exponents[i])) {
 							break;
@@ -89,7 +89,7 @@ void list_parameters(INT v_max)
 					s = (lambda - mu - b) >> 1;
 					cout << "f=" << f << " g=" << g << " r=" << r << " s=" << s << endl;
 					
-					INT L1, R1, L2, R2;
+					int L1, R1, L2, R2;
 
 					L1 = (r + 1) * (k + r + 2 * r * s);
 					R1 = (k + r) * (s + 1) * (s + 1);

@@ -32,21 +32,21 @@ void action_by_conjugation::free()
 		delete Base_group;
 		}
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		}
 	if (Elt2) {
-		FREE_INT(Elt2);
+		FREE_int(Elt2);
 		}
 	if (Elt3) {
-		FREE_INT(Elt3);
+		FREE_int(Elt3);
 		}
 	null();
 }
 
 
-void action_by_conjugation::init(sims *Base_group, INT f_ownership, INT verbose_level)
+void action_by_conjugation::init(sims *Base_group, int f_ownership, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	action *A;
 	
@@ -57,22 +57,22 @@ void action_by_conjugation::init(sims *Base_group, INT f_ownership, INT verbose_
 	action_by_conjugation::f_ownership = f_ownership;
 	A = Base_group->A;
 	Base_group->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "action_by_conjugation::init we are acting on a group of order " << goi << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 	if (f_v) {
 		cout << "action_by_conjugation::init done" << endl;
 		}
 }
 
-INT action_by_conjugation::compute_image(action *A, INT *Elt, INT i, INT verbose_level)
+int action_by_conjugation::compute_image(action *A, int *Elt, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT j;
+	int f_v = (verbose_level >= 1);
+	int j;
 
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image i = " << i << endl;
@@ -82,29 +82,29 @@ INT action_by_conjugation::compute_image(action *A, INT *Elt, INT i, INT verbose
 		exit(1);
 		}
 	A->invert(Elt, Elt2);
-	Base_group->element_unrank_INT(i, Elt1);
+	Base_group->element_unrank_int(i, Elt1);
 	A->mult(Elt2, Elt1, Elt3);
 	A->mult(Elt3, Elt, Elt1);
-	j = Base_group->element_rank_INT(Elt1);
+	j = Base_group->element_rank_int(Elt1);
 	if (f_v) {
 		cout << "action_by_conjugation::compute_image image is " << j << endl;
 		}
 	return j;
 }
 
-INT action_by_conjugation::rank(INT *Elt)
+int action_by_conjugation::rank(int *Elt)
 {
-	INT j;
+	int j;
 
-	j = Base_group->element_rank_INT(Elt);
+	j = Base_group->element_rank_int(Elt);
 
 	return j;
 }
 
-INT action_by_conjugation::multiply(action *A, INT i, INT j, INT verbose_level)
+int action_by_conjugation::multiply(action *A, int i, int j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT k;
+	int f_v = (verbose_level >= 1);
+	int k;
 
 	if (f_v) {
 		cout << "action_by_conjugation::multiply" << endl;
@@ -117,10 +117,10 @@ INT action_by_conjugation::multiply(action *A, INT i, INT j, INT verbose_level)
 		cout << "action_by_conjugation::multiply j = " << j << " out of range" << endl;
 		exit(1);
 		}
-	Base_group->element_unrank_INT(i, Elt1);
-	Base_group->element_unrank_INT(j, Elt2);
+	Base_group->element_unrank_int(i, Elt1);
+	Base_group->element_unrank_int(j, Elt2);
 	A->mult(Elt1, Elt2, Elt3);
-	k = Base_group->element_rank_INT(Elt3);
+	k = Base_group->element_rank_int(Elt3);
 	if (f_v) {
 		cout << "action_by_conjugation::multiply the product is " << k << endl;
 		}

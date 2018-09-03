@@ -46,7 +46,7 @@ void action::null()
 	f_is_linear = FALSE;
 	dimension = 0;
 	base_len = 0;
-	elt_size_in_INT = 0;
+	elt_size_in_int = 0;
 	coded_elt_size_in_char = 0;
 	group_prefix[0] = 0;
 	//f_has_transversal_reps = FALSE;
@@ -75,9 +75,9 @@ void action::null()
 
 void action::freeself()
 {
-	//INT i;
-	INT f_v = FALSE;
-	INT f_vv = FALSE;
+	//int i;
+	int f_v = FALSE;
+	int f_vv = FALSE;
 
 	if (f_v) {
 		cout << "deleting action " << label << endl;
@@ -273,9 +273,9 @@ void action::freeself()
 			cout << "we are freeing the transversal reps" << endl;
 			}
 		for (i = 0; i < base_len; i++) {
-			FREE_INT(transversal_reps[i]);
+			FREE_int(transversal_reps[i]);
 			}
-		FREE_PINT(transversal_reps);
+		FREE_pint(transversal_reps);
 		f_has_transversal_reps = FALSE;
 		}
 #endif
@@ -297,7 +297,7 @@ void action::freeself()
 		FREE_OBJECT(Strong_gens);
 		Strong_gens = NULL;
 		//FREE_OBJECT(strong_generators); //delete strong_generators;
-		//FREE_INT(tl);
+		//FREE_int(tl);
 		//strong_generators = NULL;
 		//tl = NULL;
 		f_has_strong_generators = FALSE;
@@ -369,15 +369,15 @@ void action::allocate_element_data()
 	eltrk1 = eltrk2 = eltrk3 = NULL;
 	elt_mult_apply = NULL;
 	elt1 = NULL;
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
-	Elt3 = NEW_INT(elt_size_in_INT);
-	Elt4 = NEW_INT(elt_size_in_INT);
-	Elt5 = NEW_INT(elt_size_in_INT);
-	eltrk1 = NEW_INT(elt_size_in_INT);
-	eltrk2 = NEW_INT(elt_size_in_INT);
-	eltrk3 = NEW_INT(elt_size_in_INT);
-	elt_mult_apply = NEW_INT(elt_size_in_INT);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	Elt4 = NEW_int(elt_size_in_int);
+	Elt5 = NEW_int(elt_size_in_int);
+	eltrk1 = NEW_int(elt_size_in_int);
+	eltrk2 = NEW_int(elt_size_in_int);
+	eltrk3 = NEW_int(elt_size_in_int);
+	elt_mult_apply = NEW_int(elt_size_in_int);
 	elt1 = NEW_uchar(coded_elt_size_in_char);
 	element_rw_memory_object = NEW_char(coded_elt_size_in_char);
 }
@@ -385,31 +385,31 @@ void action::allocate_element_data()
 void action::free_element_data()
 {
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		}
 	if (Elt2) {
-		FREE_INT(Elt2);
+		FREE_int(Elt2);
 		}
 	if (Elt3) {
-		FREE_INT(Elt3);
+		FREE_int(Elt3);
 		}
 	if (Elt4) {
-		FREE_INT(Elt4);
+		FREE_int(Elt4);
 		}
 	if (Elt5) {
-		FREE_INT(Elt5);
+		FREE_int(Elt5);
 		}
 	if (eltrk1) {
-		FREE_INT(eltrk1);
+		FREE_int(eltrk1);
 		}
 	if (eltrk2) {
-		FREE_INT(eltrk2);
+		FREE_int(eltrk2);
 		}
 	if (eltrk3) {
-		FREE_INT(eltrk3);
+		FREE_int(eltrk3);
 		}
 	if (elt_mult_apply) {
-		FREE_INT(elt_mult_apply);
+		FREE_int(elt_mult_apply);
 		}
 	if (elt1) {
 		FREE_uchar(elt1);
@@ -430,23 +430,23 @@ void action::null_base_data()
 	path = NULL;
 }
 
-void action::allocate_base_data(INT base_len)
+void action::allocate_base_data(int base_len)
 {
-	INT i, j;
+	int i, j;
 	
 	if (f_has_base) {
 		free_base_data();
 		}
 	f_has_base = TRUE;
 	action::base_len = base_len;
-	base = NEW_INT(base_len);
-	transversal_length = NEW_INT(base_len);
-	orbit = NEW_PINT(base_len);
-	orbit_inv = NEW_PINT(base_len);
-	path = NEW_INT(base_len);
+	base = NEW_int(base_len);
+	transversal_length = NEW_int(base_len);
+	orbit = NEW_pint(base_len);
+	orbit_inv = NEW_pint(base_len);
+	path = NEW_int(base_len);
 	for (i = 0; i < base_len; i++) {
-		orbit[i] = NEW_INT(degree);
-		orbit_inv[i] = NEW_INT(degree);
+		orbit[i] = NEW_int(degree);
+		orbit_inv[i] = NEW_int(degree);
 		for (j = 0; j < degree; j++) {
 			orbit[i][j] = -1;
 			orbit_inv[i][j] = -1;
@@ -454,14 +454,14 @@ void action::allocate_base_data(INT base_len)
 		}
 }
 
-void action::reallocate_base(INT new_base_point)
+void action::reallocate_base(int new_base_point)
 {
-	INT i, j;
-	INT *old_base;
-	INT *old_transversal_length;
-	INT **old_orbit;
-	INT **old_orbit_inv;
-	INT *old_path;
+	int i, j;
+	int *old_base;
+	int *old_transversal_length;
+	int **old_orbit;
+	int **old_orbit_inv;
+	int *old_path;
 	
 	old_base = base;
 	old_transversal_length = transversal_length;
@@ -469,13 +469,13 @@ void action::reallocate_base(INT new_base_point)
 	old_orbit_inv = orbit_inv;
 	old_path = path;
 	
-	base = NEW_INT(base_len + 1);
-	transversal_length = NEW_INT(base_len + 1);
-	orbit = NEW_PINT(base_len + 1);
-	orbit_inv = NEW_PINT(base_len + 1);
-	path = NEW_INT(base_len + 1);
-	orbit[base_len] = NEW_INT(degree);
-	orbit_inv[base_len] = NEW_INT(degree);
+	base = NEW_int(base_len + 1);
+	transversal_length = NEW_int(base_len + 1);
+	orbit = NEW_pint(base_len + 1);
+	orbit_inv = NEW_pint(base_len + 1);
+	path = NEW_int(base_len + 1);
+	orbit[base_len] = NEW_int(degree);
+	orbit_inv[base_len] = NEW_int(degree);
 	for (i = 0; i < base_len; i++) {
 		base[i] = old_base[i];
 		transversal_length[i] = old_transversal_length[i];
@@ -491,31 +491,31 @@ void action::reallocate_base(INT new_base_point)
 		}
 	base_len++;
 	if (old_base)
-		FREE_INT(old_base);
+		FREE_int(old_base);
 	if (old_transversal_length)
-		FREE_INT(old_transversal_length);
+		FREE_int(old_transversal_length);
 	if (old_orbit)
-		FREE_PINT(old_orbit);
+		FREE_pint(old_orbit);
 	if (old_orbit_inv)
-		FREE_PINT(old_orbit_inv);
+		FREE_pint(old_orbit_inv);
 	if (old_path)
-		FREE_INT(old_path);
+		FREE_int(old_path);
 }
 
 void action::free_base_data()
 {
-	INT i;
-	INT f_v = FALSE;
+	int i;
+	int f_v = FALSE;
 	
 	if (f_v) {
 		cout << "action::free_base_data" << endl;
 		}
 	if (base) {
-		FREE_INT(base);
+		FREE_int(base);
 		base = NULL;
 		}
 	if (transversal_length) {
-		FREE_INT(transversal_length);
+		FREE_int(transversal_length);
 		transversal_length = NULL;
 		}
 	if (orbit) {
@@ -523,21 +523,21 @@ void action::free_base_data()
 			if (f_v) {
 				cout << "deleting orbit " << i << endl;
 				}
-			FREE_INT(orbit[i]);
+			FREE_int(orbit[i]);
 			orbit[i] = NULL;
 			if (f_v) {
 				cout << "deleting orbit_inv " << i << endl;
 				}
-			FREE_INT(orbit_inv[i]);
+			FREE_int(orbit_inv[i]);
 			orbit_inv[i] = NULL;
 			}
-		FREE_PINT(orbit);
+		FREE_pint(orbit);
 		orbit = NULL;
-		FREE_PINT(orbit_inv);
+		FREE_pint(orbit_inv);
 		orbit_inv = NULL;
 		}
 	if (path) {
-		FREE_INT(path);
+		FREE_int(path);
 		path = NULL;
 		}
 	f_has_base = FALSE;
@@ -550,10 +550,10 @@ void action::free_base_data()
 // ##########################################################################
 
 
-INT action::find_non_fixed_point(void *elt, INT verbose_level)
+int action::find_non_fixed_point(void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 	
 	if (f_v) {
 		cout << "action::find_non_fixed_point" << endl;
@@ -574,11 +574,11 @@ INT action::find_non_fixed_point(void *elt, INT verbose_level)
 	return -1;
 }
 
-INT action::find_fixed_points(void *elt,
-		INT *fixed_points, INT verbose_level)
+int action::find_fixed_points(void *elt,
+		int *fixed_points, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, n = 0;
+	int f_v = (verbose_level >= 1);
+	int i, j, n = 0;
 	
 	if (f_v) {
 		cout << "computing fixed points in action "
@@ -596,35 +596,35 @@ INT action::find_fixed_points(void *elt,
 	return n;
 }
 
-INT action::test_if_set_stabilizes(INT *Elt,
-		INT size, INT *set, INT verbose_level)
+int action::test_if_set_stabilizes(int *Elt,
+		int size, int *set, int verbose_level)
 {
-	INT *set1, *set2;
-	INT i, cmp;
-	INT f_v = (verbose_level >= 1);
+	int *set1, *set2;
+	int i, cmp;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::test_if_set_stabilizes" << endl;
 		}
-	set1 = NEW_INT(size);
-	set2 = NEW_INT(size);
+	set1 = NEW_int(size);
+	set2 = NEW_int(size);
 	for (i = 0; i < size; i++) {
 		set1[i] = set[i];
 		}
-	INT_vec_quicksort_increasingly(set1, size);
+	int_vec_quicksort_increasingly(set1, size);
 	map_a_set(set1, set2, size, Elt, 0);
-	INT_vec_quicksort_increasingly(set2, size);
-	cmp = INT_vec_compare(set1, set2, size);
+	int_vec_quicksort_increasingly(set2, size);
+	cmp = int_vec_compare(set1, set2, size);
 	if (f_v) {
 		cout << "the elements takes " << endl;
-		INT_vec_print(cout, set1, size);
+		int_vec_print(cout, set1, size);
 		cout << endl << "to" << endl;
-		INT_vec_print(cout, set2, size);
+		int_vec_print(cout, set2, size);
 		cout << endl;
 		cout << "cmp = " << cmp << endl;
 		}
-	FREE_INT(set1);
-	FREE_INT(set2);
+	FREE_int(set1);
+	FREE_int(set2);
 	if (cmp == 0) {
 		if (f_v) {
 			cout << "action::test_if_set_stabilizes "
@@ -641,12 +641,12 @@ INT action::test_if_set_stabilizes(INT *Elt,
 		}
 }
 
-void action::map_a_set(INT *set,
-		INT *image_set, INT n, INT *Elt, INT verbose_level)
+void action::map_a_set(int *set,
+		int *image_set, int n, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "action::map_a_set" << endl;
@@ -656,7 +656,7 @@ void action::map_a_set(INT *set,
 		element_print_quick(Elt, cout);
 		cout << endl;
 		cout << "set: " << endl;
-		INT_vec_print(cout, set, n);
+		int_vec_print(cout, set, n);
 		cout << endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -671,19 +671,19 @@ void action::map_a_set(INT *set,
 		}
 }
 
-void action::map_a_set_and_reorder(INT *set,
-		INT *image_set, INT n, INT *Elt, INT verbose_level)
+void action::map_a_set_and_reorder(int *set,
+		int *image_set, int n, int *Elt, int verbose_level)
 {
 	map_a_set(set, image_set, n, Elt, verbose_level);
-	INT_vec_heapsort(image_set, n);
+	int_vec_heapsort(image_set, n);
 }
 
 
 
-void action::init_sims(sims *G, INT verbose_level)
+void action::init_sims(sims *G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, k;
+	int f_v = (verbose_level >= 1);
+	int i, k;
 	
 	if (f_v) {
 		cout << "action::init_sims action " << label
@@ -717,10 +717,10 @@ void action::init_sims(sims *G, INT verbose_level)
 		}
 }
 
-void action::init_base_from_sims(sims *G, INT verbose_level)
+void action::init_base_from_sims(sims *G, int verbose_level)
 {
-	INT i, j, k, l;
-	INT f_v = (verbose_level >= 1);
+	int i, j, k, l;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::init_base_from_sims, "
@@ -764,11 +764,11 @@ void action::init_base_from_sims(sims *G, INT verbose_level)
 		}
 }
 
-INT action::element_has_order_two(INT *E1,
-		INT verbose_level)
+int action::element_has_order_two(int *E1,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 	
 	if (f_v) {
 		cout << "action::element_has_order_two" << endl;
@@ -788,11 +788,11 @@ INT action::element_has_order_two(INT *E1,
 	return ret;
 }
 
-INT action::product_has_order_two(INT *E1,
-		INT *E2, INT verbose_level)
+int action::product_has_order_two(int *E1,
+		int *E2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 	
 	if (f_v) {
 		cout << "action::product_has_order_two" << endl;
@@ -813,11 +813,11 @@ INT action::product_has_order_two(INT *E1,
 	return ret;
 }
 
-INT action::product_has_order_three(INT *E1,
-		INT *E2, INT verbose_level)
+int action::product_has_order_three(int *E1,
+		int *E2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 	
 	if (f_v) {
 		cout << "action::product_has_order_three" << endl;
@@ -839,17 +839,17 @@ INT action::product_has_order_three(INT *E1,
 	return ret;
 }
 
-INT action::element_order(void *elt)
+int action::element_order(void *elt)
 {
 	return element_order_verbose(elt, 0);
 }
 
-INT action::element_order_verbose(void *elt, INT verbose_level)
+int action::element_order_verbose(void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *have_seen;
-	INT l, l1, first, next, len, g, n, order = 1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *have_seen;
+	int l, l1, first, next, len, g, n, order = 1;
 	
 	if (f_v) {
 		cout << "action::element_order_verbose" << endl;
@@ -861,7 +861,7 @@ INT action::element_order_verbose(void *elt, INT verbose_level)
 		element_print_as_permutation(elt, cout);
 		}
 	n = degree;
-	have_seen = NEW_INT(n);
+	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
 		}
@@ -898,10 +898,10 @@ INT action::element_order_verbose(void *elt, INT verbose_level)
 		if (len == 1) {
 			continue;
 			}
-		g = gcd_INT(len, order);
+		g = gcd_int(len, order);
 		order *= len / g;
 		}
-	FREE_INT(have_seen);
+	FREE_int(have_seen);
 	if (f_v) {
 		cout << "action::element_order_verbose "
 				"done order=" << order << endl;
@@ -909,16 +909,16 @@ INT action::element_order_verbose(void *elt, INT verbose_level)
 	return order;
 }
 
-INT action::element_order_if_divisor_of(void *elt, INT o)
+int action::element_order_if_divisor_of(void *elt, int o)
 // returns the order of the element if o == 0
 // if o != 0, returns the order of the element provided it divides o,
 // 0 otherwise.
 {
-	INT *have_seen;
-	INT l, l1, first, next, len, g, n, order = 1;
+	int *have_seen;
+	int l, l1, first, next, len, g, n, order = 1;
 	
 	n = degree;
-	have_seen = NEW_INT(n);
+	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
 		}
@@ -955,20 +955,20 @@ INT action::element_order_if_divisor_of(void *elt, INT o)
 		if (len == 1)
 			continue;
 		if (o && (o % len)) {
-			FREE_INT(have_seen);
+			FREE_int(have_seen);
 			return 0;
 			}
-		g = gcd_INT(len, order);
+		g = gcd_int(len, order);
 		order *= len / g;
 		}
-	FREE_INT(have_seen);
+	FREE_int(have_seen);
 	return order;
 }
 
 void action::compute_all_point_orbits(schreier &S,
-		vector_ge &gens, INT verbose_level)
+		vector_ge &gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::compute_all_point_orbits" << endl;
@@ -981,10 +981,10 @@ void action::compute_all_point_orbits(schreier &S,
 		}
 }
 
-INT action::depth_in_stab_chain(INT *Elt)
+int action::depth_in_stab_chain(int *Elt)
 // the index of the first moved base point
 {
-	INT i, j, b;
+	int i, j, b;
 	
 	for (i = 0; i < base_len; i++) {
 		b = base[i];
@@ -995,11 +995,11 @@ INT action::depth_in_stab_chain(INT *Elt)
 	return base_len;
 }
 
-void action::strong_generators_at_depth(INT depth,
+void action::strong_generators_at_depth(int depth,
 		vector_ge &gen)
 // all strong generators that leave base points 0,..., depth - 1 fix
 {
-	INT i, j, l, n;
+	int i, j, l, n;
 	
 	l = Strong_gens->gens->len;
 	gen.init(this);
@@ -1016,17 +1016,17 @@ void action::strong_generators_at_depth(INT depth,
 }
 
 void action::compute_point_stabilizer_chain(vector_ge &gen, 
-	sims *S, INT *sequence, INT len, INT verbose_level)
+	sims *S, int *sequence, int len, int verbose_level)
 // S points to len + 1 many sims objects
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i;
 	
 	if (f_v) {
 		cout << "action::compute_point_stabilizer_chain for sequence ";
-		INT_vec_print(cout, sequence, len);
+		int_vec_print(cout, sequence, len);
 		cout << endl;
 		}
 	for (i = 0; i <= len; i++) {
@@ -1064,7 +1064,7 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 		}
 	if (f_v) {
 		cout << "action::compute_point_stabilizer_chain for sequence ";
-		INT_vec_print(cout, sequence, len);
+		int_vec_print(cout, sequence, len);
 		cout << " finished" << endl;
 		cout << "i : order of i-th stabilizer" << endl;
 		for (i = 0; i <= len; i++) {
@@ -1082,12 +1082,12 @@ void action::compute_point_stabilizer_chain(vector_ge &gen,
 		}
 }
 
-INT action::compute_orbit_of_point(vector_ge &strong_generators,
-		INT pt, INT *orbit, INT verbose_level)
+int action::compute_orbit_of_point(vector_ge &strong_generators,
+		int pt, int *orbit, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier Schreier;
-	INT len, i, f;
+	int len, i, f;
 	
 	if (f_v) {
 		cout << "action::compute_orbit_of_point: "
@@ -1104,12 +1104,12 @@ INT action::compute_orbit_of_point(vector_ge &strong_generators,
 	return len;
 }
 
-INT action::compute_orbit_of_point_generators_by_handle(INT nb_gen, 
-	INT *gen_handle, INT pt, INT *orbit, INT verbose_level)
+int action::compute_orbit_of_point_generators_by_handle(int nb_gen, 
+	int *gen_handle, int pt, int *orbit, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 	vector_ge gens;
-	INT i;
+	int i;
 	
 	gens.init(this);
 	gens.allocate(nb_gen);
@@ -1120,12 +1120,12 @@ INT action::compute_orbit_of_point_generators_by_handle(INT nb_gen,
 }
 
 
-INT action::least_image_of_point(vector_ge &strong_generators,
-	INT pt, INT *transporter, INT verbose_level)
+int action::least_image_of_point(vector_ge &strong_generators,
+	int pt, int *transporter, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	schreier Schreier;
-	INT len, image, pos, i;
+	int len, image, pos, i;
 	
 	if (f_v) {
 		cout << "action::least_image_of_point: "
@@ -1135,7 +1135,7 @@ INT action::least_image_of_point(vector_ge &strong_generators,
 	Schreier.init_generators(strong_generators);
 	Schreier.compute_point_orbit(pt, 0);
 	len = Schreier.orbit_len[0];
-	image = INT_vec_minimum(Schreier.orbit, len);
+	image = int_vec_minimum(Schreier.orbit, len);
 	pos = Schreier.orbit_inv[image];
 	Schreier.coset_rep(pos);
 	element_move(Schreier.cosetrep, transporter, 0);
@@ -1152,13 +1152,13 @@ INT action::least_image_of_point(vector_ge &strong_generators,
 	return image;
 }
 
-INT action::least_image_of_point_generators_by_handle(
-	INT nb_gen, INT *gen_handle,
-	INT pt, INT *transporter, INT verbose_level)
+int action::least_image_of_point_generators_by_handle(
+	int nb_gen, int *gen_handle,
+	int pt, int *transporter, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 	vector_ge gens;
-	INT i;
+	int i;
 	
 	if (nb_gen == 0) {
 		element_one(transporter, 0);
@@ -1172,9 +1172,9 @@ INT action::least_image_of_point_generators_by_handle(
 	return least_image_of_point(gens, pt, transporter, verbose_level);
 }
 
-void action::all_point_orbits(schreier &Schreier, INT verbose_level)
+void action::all_point_orbits(schreier &Schreier, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::all_point_orbits" << endl;
@@ -1189,12 +1189,12 @@ void action::all_point_orbits(schreier &Schreier, INT verbose_level)
 }
 
 void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int i;
 	vector_ge gen;
 	
 	if (f_v) {
@@ -1202,7 +1202,7 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 		cout << "base_len = " << base_len << endl;
 		for (i = 0; i < base_len; i++) {
 			cout << i << " : " << base[i] << " : " << transversal_length[i];
-			INT_vec_print(cout, orbit[i], transversal_length[i]);
+			int_vec_print(cout, orbit[i], transversal_length[i]);
 			cout << endl;
 			}
 		cout << "degree = " << degree << endl;
@@ -1255,69 +1255,69 @@ void action::compute_stabilizer_orbits(partitionstack *&Staborbits,
 }
 
 
-INT action::check_if_in_set_stabilizer(INT *Elt,
-		INT size, INT *set, INT verbose_level)
+int action::check_if_in_set_stabilizer(int *Elt,
+		int size, int *set, int verbose_level)
 {
-	INT i, a, b, idx;
-	INT *ordered_set;
-	INT f_v = (verbose_level >= 1);
+	int i, a, b, idx;
+	int *ordered_set;
+	int f_v = (verbose_level >= 1);
 	
-	ordered_set = NEW_INT(size);
+	ordered_set = NEW_int(size);
 	for (i = 0; i < size; i++) {
 		ordered_set[i] = set[i];
 		}
-	INT_vec_sort(size, ordered_set);
+	int_vec_sort(size, ordered_set);
 	for (i = 0; i < size; i++) {
 		a = ordered_set[i];
 		b = element_image_of(a, Elt, 0);
-		if (!INT_vec_search(ordered_set, size, b, idx)) {
+		if (!int_vec_search(ordered_set, size, b, idx)) {
 			if (f_v) {
 				cout << "action::check_if_in_set_stabilizer fails" << endl;
 				cout << "set: ";
-				INT_vec_print(cout, set, size);
+				int_vec_print(cout, set, size);
 				cout << endl;
 				cout << "ordered_set: ";
-				INT_vec_print(cout, ordered_set, size);
+				int_vec_print(cout, ordered_set, size);
 				cout << endl;
 				cout << "image of " << i << "-th element "
 						<< a << " is " << b
 						<< " is not found" << endl;
 				}
-			FREE_INT(ordered_set);
+			FREE_int(ordered_set);
 			return FALSE;
 			}
 		}
-	FREE_INT(ordered_set);
+	FREE_int(ordered_set);
 	return TRUE;
 	
 }
 
-INT action::check_if_transporter_for_set(INT *Elt,
-		INT size, INT *set1, INT *set2, INT verbose_level)
+int action::check_if_transporter_for_set(int *Elt,
+		int size, int *set1, int *set2, int verbose_level)
 {
-	INT i, a, b, idx;
-	INT *ordered_set2;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 4);
+	int i, a, b, idx;
+	int *ordered_set2;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 4);
 	
 	if (f_vv) {
 		cout << "action::check_if_transporter_for_set "
 				"size=" << size << endl;
-		INT_vec_print(cout, set1, size);
+		int_vec_print(cout, set1, size);
 		cout << endl;
-		INT_vec_print(cout, set2, size);
+		int_vec_print(cout, set2, size);
 		cout << endl;
 		element_print(Elt, cout);
 		cout << endl;
 		}
-	ordered_set2 = NEW_INT(size);
+	ordered_set2 = NEW_int(size);
 	for (i = 0; i < size; i++) {
 		ordered_set2[i] = set2[i];
 		}
-	INT_vec_sort(size, ordered_set2);
+	int_vec_sort(size, ordered_set2);
 	if (f_vv) {
 		cout << "sorted target set:" << endl;
-		INT_vec_print(cout, ordered_set2, size);
+		int_vec_print(cout, ordered_set2, size);
 		cout << endl;
 		}
 	for (i = 0; i < size; i++) {
@@ -1329,63 +1329,63 @@ INT action::check_if_transporter_for_set(INT *Elt,
 		if (FALSE) {
 			cout << "i=" << i << " a=" << a << " b=" << b << endl;
 			}
-		if (!INT_vec_search(ordered_set2, size, b, idx)) {
+		if (!int_vec_search(ordered_set2, size, b, idx)) {
 			if (f_v) {
 				cout << "action::check_if_transporter_for_set fails" << endl;
 				cout << "set1   : ";
-				INT_vec_print(cout, set1, size);
+				int_vec_print(cout, set1, size);
 				cout << endl;
 				cout << "set2   : ";
-				INT_vec_print(cout, set2, size);
+				int_vec_print(cout, set2, size);
 				cout << endl;
 				cout << "ordered: ";
-				INT_vec_print(cout, ordered_set2, size);
+				int_vec_print(cout, ordered_set2, size);
 				cout << endl;
 				cout << "image of " << i << "-th element "
 						<< a << " is " << b
 						<< " is not found" << endl;
 				}
-			FREE_INT(ordered_set2);
+			FREE_int(ordered_set2);
 			return FALSE;
 			}
 		}
-	FREE_INT(ordered_set2);
+	FREE_int(ordered_set2);
 	return TRUE;
 	
 }
 
 void action::compute_set_orbit(vector_ge &gens,
-	INT size, INT *set,
-	INT &nb_sets, INT **&Sets, INT **&Transporter,
-	INT verbose_level)
+	int size, int *set,
+	int &nb_sets, int **&Sets, int **&Transporter,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *image_set;
-	INT **New_Sets;
-	INT **New_Transporter;
-	INT nb_finished, allocated_nb_sets;
-	INT new_allocated_nb_sets, nb_gens, i, j, h;
+	int f_v = (verbose_level >= 1);
+	int *image_set;
+	int **New_Sets;
+	int **New_Transporter;
+	int nb_finished, allocated_nb_sets;
+	int new_allocated_nb_sets, nb_gens, i, j, h;
 	
 	if (f_v) {
 		cout << "action::compute_set_orbit: ";
-		INT_vec_print(cout, set, size);
+		int_vec_print(cout, set, size);
 		cout << endl;
 		}
 	nb_gens = gens.len;
 	
 	allocated_nb_sets = 100;
-	Sets = NEW_PINT(allocated_nb_sets);
-	Transporter = NEW_PINT(allocated_nb_sets);
+	Sets = NEW_pint(allocated_nb_sets);
+	Transporter = NEW_pint(allocated_nb_sets);
 	nb_sets = 0;
 
-	image_set = NEW_INT(size);
-	Sets[0] = NEW_INT(size);
+	image_set = NEW_int(size);
+	Sets[0] = NEW_int(size);
 	for (i = 0; i < size; i++) {
 		Sets[0][i] = set[i];
 		}
-	INT_vec_sort(size, Sets[0]);
+	int_vec_sort(size, Sets[0]);
 	
-	Transporter[0] = NEW_INT(elt_size_in_INT);
+	Transporter[0] = NEW_int(elt_size_in_int);
 	element_one(Transporter[0], FALSE);
 
 	nb_sets = 1;
@@ -1401,11 +1401,11 @@ void action::compute_set_orbit(vector_ge &gens,
 				gens.ith(i), 0);
 			if (FALSE) {
 				cout << "image under generator " << i << ":";
-				INT_vec_print(cout, image_set, size);
+				int_vec_print(cout, image_set, size);
 				cout << endl;
 				}
 			for (j = 0; j < nb_sets; j++) {
-				if (INT_vec_compare(Sets[j], image_set, size) == 0)
+				if (int_vec_compare(Sets[j], image_set, size) == 0)
 					break;
 				}
 			if (j < nb_sets) {
@@ -1414,12 +1414,12 @@ void action::compute_set_orbit(vector_ge &gens,
 			// n e w set found:
 			if (f_v) {
 				cout << "n e w set " << nb_sets << ":";
-				INT_vec_print(cout, image_set, size);
+				int_vec_print(cout, image_set, size);
 				cout << endl;
 				}
 			Sets[nb_sets] = image_set;
-			image_set = NEW_INT(size);
-			Transporter[nb_sets] = NEW_INT(elt_size_in_INT);
+			image_set = NEW_int(size);
+			Transporter[nb_sets] = NEW_int(elt_size_in_int);
 			element_mult(Transporter[nb_finished],
 					gens.ith(i), Transporter[nb_sets], 0);
 			nb_sets++;
@@ -1427,14 +1427,14 @@ void action::compute_set_orbit(vector_ge &gens,
 				new_allocated_nb_sets = allocated_nb_sets + 100;
 				cout << "reallocating to size "
 						<< new_allocated_nb_sets << endl;
-				New_Sets = NEW_PINT(new_allocated_nb_sets);
-				New_Transporter = NEW_PINT(new_allocated_nb_sets);
+				New_Sets = NEW_pint(new_allocated_nb_sets);
+				New_Transporter = NEW_pint(new_allocated_nb_sets);
 				for (h = 0; h < nb_sets; h++) {
 					New_Sets[h] = Sets[h];
 					New_Transporter[h] = Transporter[h];
 					}
-				FREE_PINT(Sets);
-				FREE_PINT(Transporter);
+				FREE_pint(Sets);
+				FREE_pint(Transporter);
 				Sets = New_Sets;
 				Transporter = New_Transporter;
 				allocated_nb_sets = new_allocated_nb_sets;
@@ -1442,39 +1442,39 @@ void action::compute_set_orbit(vector_ge &gens,
 			} // next i
 		 nb_finished++;
 		}
-	FREE_INT(image_set);
+	FREE_int(image_set);
 	if (f_v) {
 		cout << "action::compute_set_orbit "
 				"found an orbit of size " << nb_sets << endl;
 		for (i = 0; i < nb_sets; i++) {
 			cout << i << " : ";
-			INT_vec_print(cout, Sets[i], size);
+			int_vec_print(cout, Sets[i], size);
 			cout << endl;
 			element_print(Transporter[i], cout);
 			}
 		}
 }
 
-void action::delete_set_orbit(INT nb_sets, INT **Sets, INT **Transporter)
+void action::delete_set_orbit(int nb_sets, int **Sets, int **Transporter)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_sets; i++) {
-		FREE_INT(Sets[i]);
-		FREE_INT(Transporter[i]);
+		FREE_int(Sets[i]);
+		FREE_int(Transporter[i]);
 		}
-	FREE_PINT(Sets);
-	FREE_PINT(Transporter);
+	FREE_pint(Sets);
+	FREE_pint(Transporter);
 }
 
-void action::compute_minimal_set(vector_ge &gens, INT size, INT *set, 
-	INT *minimal_set, INT *transporter, INT verbose_level)
+void action::compute_minimal_set(vector_ge &gens, int size, int *set, 
+	int *minimal_set, int *transporter, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT **Sets;
-	INT **Transporter;
-	INT nb_sets, i;
-	INT min_set;
+	int f_v = (verbose_level >= 1);
+	int **Sets;
+	int **Transporter;
+	int nb_sets, i;
+	int min_set;
 	
 	if (f_v) {
 		cout << "action::compute_minimal_set" << endl;
@@ -1486,7 +1486,7 @@ void action::compute_minimal_set(vector_ge &gens, INT size, INT *set,
 	
 	min_set = 0;
 	for (i = 1; i < nb_sets; i++) {
-		if (INT_vec_compare(Sets[i], Sets[min_set], size) < 0) {
+		if (int_vec_compare(Sets[i], Sets[min_set], size) < 0) {
 			min_set = i;
 			}
 		}
@@ -1498,24 +1498,24 @@ void action::compute_minimal_set(vector_ge &gens, INT size, INT *set,
 }
 
 void action::find_strong_generators_at_level(
-	INT base_len, INT *the_base, INT level,
+	int base_len, int *the_base, int level,
 	vector_ge &gens, vector_ge &subset_of_gens,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT nb_generators_found;
-	INT *gen_idx;
-	INT nb_gens, i, j, bj, bj_image;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int nb_generators_found;
+	int *gen_idx;
+	int nb_gens, i, j, bj, bj_image;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "action::find_strong_generators_at_level "
 				"level=" << level << " base: ";
-		INT_vec_print(cout, the_base, base_len);
+		int_vec_print(cout, the_base, base_len);
 		cout << endl;
 		}
 	nb_gens = gens.len;
-	gen_idx = NEW_INT(gens.len);
+	gen_idx = NEW_int(gens.len);
 	
 	nb_generators_found = 0;
 	for (i = 0; i < nb_gens; i++) {
@@ -1535,7 +1535,7 @@ void action::find_strong_generators_at_level(
 		j = gen_idx[i];
 		element_move(gens.ith(j), subset_of_gens.ith(i), 0);
 		}
-	FREE_INT(gen_idx);
+	FREE_int(gen_idx);
 	if (f_v) {
 		cout << "action::find_strong_generators_at_level found " 
 			<< nb_generators_found << " strong generators" << endl;
@@ -1546,9 +1546,9 @@ void action::find_strong_generators_at_level(
 		}
 }
 
-void action::compute_strong_generators_from_sims(INT verbose_level)
+void action::compute_strong_generators_from_sims(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::compute_strong_generators_from_sims" << endl;
@@ -1571,16 +1571,16 @@ void action::compute_strong_generators_from_sims(INT verbose_level)
 }
 
 void action::make_element_from_permutation_representation(
-		INT *Elt, INT *data, INT verbose_level)
+		int *Elt, int *data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *base_image;
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int *base_image;
+	int i, a;
 	
 	if (f_v) {
 		cout << "action::make_element_from_permutation_representation" << endl;
 		}
-	base_image = NEW_INT(base_len);
+	base_image = NEW_int(base_len);
 	for (i = 0; i < base_len; i++) {
 		a = base[i];
 		base_image[i] = data[a];
@@ -1594,36 +1594,36 @@ void action::make_element_from_permutation_representation(
 		}
 	make_element_from_base_image(Elt, base_image, verbose_level);
 
-	FREE_INT(base_image);
+	FREE_int(base_image);
 	if (f_v) {
 		cout << "action::make_element_from_permutation_representation done"
 				<< endl;
 		}
 }
 
-void action::make_element_from_base_image(INT *Elt,
-		INT *data, INT verbose_level)
+void action::make_element_from_base_image(int *Elt,
+		int *data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT *base_image;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int *base_image;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
 	sims *S;
 #if 1
-	INT offset = 0;
-	INT f_do_it_anyway_even_for_big_degree = TRUE;
-	INT f_print_cycles_of_length_one = FALSE;
+	int offset = 0;
+	int f_do_it_anyway_even_for_big_degree = TRUE;
+	int f_print_cycles_of_length_one = FALSE;
 #endif
 
-	INT i, j, yi, z, b, c, b_pt;
+	int i, j, yi, z, b, c, b_pt;
 
 	if (f_v) {
 		cout << "action::make_element_from_base_image" << endl;
 		cout << "base images: ";
-		INT_vec_print(cout, data, base_len);
+		int_vec_print(cout, data, base_len);
 		cout << endl;
 		print_info();
 		}
@@ -1637,11 +1637,11 @@ void action::make_element_from_base_image(INT *Elt,
 		cout << "action in Sims:" << endl;
 		S->A->print_info();
 		}
-	base_image = NEW_INT(base_len);
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
-	Elt3 = NEW_INT(elt_size_in_INT);
-	Elt4 = NEW_INT(elt_size_in_INT);
+	base_image = NEW_int(base_len);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	Elt4 = NEW_int(elt_size_in_int);
 	for (j = 0; j < base_len; j++) {
 		base_image[j] = data[j];
 		}
@@ -1714,16 +1714,16 @@ void action::make_element_from_base_image(INT *Elt,
 		cout << "action::make_element_from_base_image created element:" << endl;
 		element_print_quick(Elt, cout);
 		}
-	FREE_INT(base_image);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
+	FREE_int(base_image);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
 }
 
-void action::make_element_2x2(INT *Elt, INT a0, INT a1, INT a2, INT a3)
+void action::make_element_2x2(int *Elt, int a0, int a1, int a2, int a3)
 {
-	INT data[4];
+	int data[4];
 	
 	data[0] = a0;
 	data[1] = a1;
@@ -1732,9 +1732,9 @@ void action::make_element_2x2(INT *Elt, INT a0, INT a1, INT a2, INT a3)
 	make_element(Elt, data, 0);
 }
 
-void action::make_element(INT *Elt, INT *data, INT verbose_level)
+void action::make_element(int *Elt, int *data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::make_element" << endl;
@@ -1750,7 +1750,7 @@ void action::make_element(INT *Elt, INT *data, INT verbose_level)
 		PA = G.product_action_data;
 		PA->make_element(Elt, data, verbose_level);
 		//PA->A1->make_element(Elt, data, verbose_level);
-		//PA->A2->make_element(Elt + PA->A1->elt_size_in_INT, 
+		//PA->A2->make_element(Elt + PA->A1->elt_size_in_int, 
 		//	data + PA->A1->make_element_size, verbose_level);
 		}
 	else if (type_G == action_on_sets_t) {
@@ -1804,26 +1804,26 @@ void action::make_element(INT *Elt, INT *data, INT verbose_level)
 }
 
 void action::build_up_automorphism_group_from_aut_data(
-	INT nb_auts, INT *aut_data,
-	sims &S, INT verbose_level)
+	int nb_auts, int *aut_data,
+	sims &S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, i, coset;
-	INT *Elt1, *Elt2;
+	int f_v = (verbose_level >= 1);
+	int h, i, coset;
+	int *Elt1, *Elt2;
 	longinteger_object go;
 	
 	if (f_v) {
 		cout << "action::build_up_automorphism_group_from_aut_data "
 				"action=" << label << " nb_auts=" << nb_auts << endl;
 		}
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
 	S.init(this);
 	S.init_trivial_group(verbose_level - 1);
 	for (h = 0; h < nb_auts; h++) {
 		if (f_v) {
 			cout << "aut_data[" << h << "]=";
-			INT_vec_print(cout, aut_data + h * base_len, base_len);
+			int_vec_print(cout, aut_data + h * base_len, base_len);
 			cout << endl;
 			}
 		for (i = 0; i < base_len; i++) {
@@ -1834,7 +1834,7 @@ void action::build_up_automorphism_group_from_aut_data(
 			}
 		if (f_v) {
 			cout << "path=";
-			INT_vec_print(cout, Sims->path, base_len);
+			int_vec_print(cout, Sims->path, base_len);
 			cout << endl;
 			}
 		Sims->element_from_path_inv(Elt1);
@@ -1853,20 +1853,20 @@ void action::build_up_automorphism_group_from_aut_data(
 				}
 			}
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 }
 
-void action::element_power_INT_in_place(INT *Elt,
-		INT n, INT verbose_level)
+void action::element_power_int_in_place(int *Elt,
+		int n, int verbose_level)
 {
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
 	
-	Elt2 = NEW_INT(elt_size_in_INT);
-	Elt3 = NEW_INT(elt_size_in_INT);
-	Elt4 = NEW_INT(elt_size_in_INT);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	Elt4 = NEW_int(elt_size_in_int);
 	move(Elt, Elt2);
 	one(Elt3);
 	while (n) {
@@ -1879,21 +1879,21 @@ void action::element_power_INT_in_place(INT *Elt,
 		n >>= 1;
 		}
 	move(Elt3, Elt);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
 }
 
-void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3,
-		const char *word, INT verbose_level)
+void action::word_in_ab(int *Elt1, int *Elt2, int *Elt3,
+		const char *word, int verbose_level)
 {
-	INT *Elt4;
-	INT *Elt5;
-	INT l, i;
+	int *Elt4;
+	int *Elt5;
+	int l, i;
 	
 
-	Elt4 = NEW_INT(elt_size_in_INT);
-	Elt5 = NEW_INT(elt_size_in_INT);
+	Elt4 = NEW_int(elt_size_in_int);
+	Elt5 = NEW_int(elt_size_in_int);
 	one(Elt4);
 	l = strlen(word);
 	for (i = 0; i < l; i++) {
@@ -1912,23 +1912,23 @@ void action::word_in_ab(INT *Elt1, INT *Elt2, INT *Elt3,
 		}
 	move(Elt4, Elt3);
 	
-	FREE_INT(Elt4);
-	FREE_INT(Elt5);
+	FREE_int(Elt4);
+	FREE_int(Elt5);
 }
 
 void action::init_group_from_generators(
-	INT *group_generator_data, INT group_generator_size,
-	INT f_group_order_target, const char *group_order_target, 
+	int *group_generator_data, int group_generator_size,
+	int f_group_order_target, const char *group_order_target, 
 	vector_ge *gens, strong_generators *&Strong_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
 	longinteger_object go, cur_go;
 	sims S;
-	INT *Elt;
-	INT nb_gens, i;
-	INT nb_times = 200;
+	int *Elt;
+	int nb_gens, i;
+	int nb_times = 200;
 
 	if (f_v) {
 		cout << "action::init_group_from_generators" << endl;
@@ -1942,7 +1942,7 @@ void action::init_group_from_generators(
 		cout << "group_order_target=" << go << endl;
 		}
 	S.init(this);
-	Elt = NEW_INT(elt_size_in_INT);
+	Elt = NEW_int(elt_size_in_int);
 	nb_gens = group_generator_size / make_element_size;
 	if (nb_gens * make_element_size != group_generator_size) {
 		cout << "action::init_group_from_generators fatal: "
@@ -1958,7 +1958,7 @@ void action::init_group_from_generators(
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
 			}
-		INT_vec_print(cout, group_generator_data + 
+		int_vec_print(cout, group_generator_data + 
 			i * make_element_size, make_element_size);
 		cout << endl;
 		make_element(Elt, 
@@ -1987,22 +1987,22 @@ void action::init_group_from_generators(
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
 
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void action::init_group_from_generators_by_base_images(
-	INT *group_generator_data, INT group_generator_size, 
-	INT f_group_order_target, const char *group_order_target, 
+	int *group_generator_data, int group_generator_size, 
+	int f_group_order_target, const char *group_order_target, 
 	vector_ge *gens, strong_generators *&Strong_gens_out, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
 	longinteger_object go, cur_go;
 	sims S;
-	INT *Elt;
-	INT nb_gens, i;
-	INT nb_times = 200;
+	int *Elt;
+	int nb_gens, i;
+	int nb_times = 200;
 
 	if (f_v) {
 		cout << "action::init_group_from_generators_by_base_images" << endl;
@@ -2016,7 +2016,7 @@ void action::init_group_from_generators_by_base_images(
 		cout << "group_order_target=" << go << endl;
 		}
 	S.init(this);
-	Elt = NEW_INT(elt_size_in_INT);
+	Elt = NEW_int(elt_size_in_int);
 	nb_gens = group_generator_size / base_len;
 	if (f_v) {
 		cout << "nb_gens=" << nb_gens << endl;
@@ -2035,7 +2035,7 @@ void action::init_group_from_generators_by_base_images(
 		if (f_v) {
 			cout << "parsing generator " << i << ":" << endl;
 			}
-		INT_vec_print(cout, group_generator_data + 
+		int_vec_print(cout, group_generator_data + 
 			i * base_len, base_len);
 		cout << endl;
 		make_element_from_base_image(Elt, 
@@ -2064,7 +2064,7 @@ void action::init_group_from_generators_by_base_images(
 	Strong_gens = NEW_OBJECT(strong_generators);
 	Strong_gens->init_from_sims(&S, verbose_level - 1);
 
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void action::print_symmetry_group_type(ostream &ost)
@@ -2096,7 +2096,7 @@ void action::print_info()
 
 	if (base_len) {
 		cout << "base: ";
-		INT_vec_print(cout, base, base_len);
+		int_vec_print(cout, base, base_len);
 		cout << endl;
 		}
 	if (f_has_sims) {
@@ -2105,7 +2105,7 @@ void action::print_info()
 
 		Sims->group_order(go);
 		cout << "Order " << go << " = ";
-		INT_vec_print(cout, Sims->orbit_len, base_len);
+		int_vec_print(cout, Sims->orbit_len, base_len);
 		cout << endl;
 		}
 	cout << endl;
@@ -2115,7 +2115,7 @@ void action::print_info()
 void action::print_base()
 {
 	cout << "action " << label << " has base ";
-	INT_vec_print(cout, base, base_len);
+	int_vec_print(cout, base, base_len);
 	cout << endl;
 }
 
@@ -2136,7 +2136,7 @@ void action::print_group_order(ostream &ost)
 
 void action::print_group_order_long(ostream &ost)
 {
-	INT i;
+	int i;
 	
 	longinteger_object go;
 	group_order(go);
@@ -2148,7 +2148,7 @@ void action::print_group_order_long(ostream &ost)
 
 void action::print_vector(vector_ge &v)
 {
-	INT i, l;
+	int i, l;
 	
 	l = v.len;
 	cout << "vector of " << l << " group elements:" << endl;
@@ -2161,7 +2161,7 @@ void action::print_vector(vector_ge &v)
 
 void action::print_vector_as_permutation(vector_ge &v)
 {
-	INT i, l;
+	int i, l;
 	
 	l = v.len;
 	cout << "vector of " << l << " group elements:" << endl;
@@ -2175,43 +2175,43 @@ void action::print_vector_as_permutation(vector_ge &v)
 
 
 
-void action::element_print_base_images(INT *Elt)
+void action::element_print_base_images(int *Elt)
 {
 	element_print_base_images(Elt, cout);
 }
 
-void action::element_print_base_images(INT *Elt, ostream &ost)
+void action::element_print_base_images(int *Elt, ostream &ost)
 {
 	element_print_base_images_verbose(Elt, cout, 0);
 }
 
 void action::element_print_base_images_verbose(
-		INT *Elt, ostream &ost, INT verbose_level)
+		int *Elt, ostream &ost, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *base_images;
+	int f_v = (verbose_level >= 1);
+	int *base_images;
 	
 	if (f_v) {
 		cout << "action::element_print_base_images_verbose" << endl;
 		}
-	base_images = NEW_INT(base_len);
+	base_images = NEW_int(base_len);
 	element_base_images_verbose(Elt, base_images, verbose_level - 1);
 	ost << "base images: ";
-	INT_vec_print(ost, base_images, base_len);
-	FREE_INT(base_images);
+	int_vec_print(ost, base_images, base_len);
+	FREE_int(base_images);
 }
 
-void action::element_base_images(INT *Elt, INT *base_images)
+void action::element_base_images(int *Elt, int *base_images)
 {
 	element_base_images_verbose(Elt, base_images, 0);
 }
 
 void action::element_base_images_verbose(
-		INT *Elt, INT *base_images, INT verbose_level)
+		int *Elt, int *base_images, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, bi;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, bi;
 	
 	if (f_v) {
 		cout << "action::element_base_images_verbose" << endl;
@@ -2230,25 +2230,25 @@ void action::element_base_images_verbose(
 		}
 }
 
-void action::minimize_base_images(INT level,
-		sims *S, INT *Elt, INT verbose_level)
+void action::minimize_base_images(int level,
+		sims *S, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *base_images1;
-	INT *base_images2;
-	INT *Elt1, *Elt2;
-	INT i, j, /*bi,*/ oj, j0 = 0, image0 = 0, image;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *base_images1;
+	int *base_images2;
+	int *Elt1, *Elt2;
+	int i, j, /*bi,*/ oj, j0 = 0, image0 = 0, image;
 
 
 	if (f_v) {
 		cout << "action::minimize_base_images" << endl;
 		cout << "level=" << level << endl;
 		}
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
-	base_images1 = NEW_INT(base_len);
-	base_images2 = NEW_INT(base_len);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	base_images1 = NEW_int(base_len);
+	base_images2 = NEW_int(base_len);
 	
 	element_move(Elt, Elt1, 0);
 	for (i = level; i < base_len; i++) {
@@ -2302,36 +2302,36 @@ void action::minimize_base_images(INT level,
 		if (f_vv) {
 			cout << "level " << i << " j0=" << j0 << endl;
 			cout << "before: ";
-			INT_vec_print(cout, base_images1, base_len);
+			int_vec_print(cout, base_images1, base_len);
 			cout << endl;
 			cout << "after : ";
-			INT_vec_print(cout, base_images2, base_len);
+			int_vec_print(cout, base_images2, base_len);
 			cout << endl;
 			}
 		}
 
 	element_move(Elt1, Elt, 0);
 	
-	FREE_INT(base_images1);
-	FREE_INT(base_images2);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(base_images1);
+	FREE_int(base_images2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 }
 
 
-void action::element_conjugate_bvab(INT *Elt_A,
-		INT *Elt_B, INT *Elt_C, INT verbose_level)
+void action::element_conjugate_bvab(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT *Elt1, *Elt2;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2;
 
 
 	if (f_v) {
 		cout << "action::element_conjugate_bvab" << endl;
 		}
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
 	if (f_v) {
 		cout << "action::element_conjugate_bvab A=" << endl;
 		element_print_quick(Elt_A, cout);
@@ -2346,50 +2346,50 @@ void action::element_conjugate_bvab(INT *Elt_A,
 		cout << "action::element_conjugate_bvab C=B^-1 * A * B" << endl;
 		element_print_quick(Elt_C, cout);
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	if (f_v) {
 		cout << "action::element_conjugate_bvab done" << endl;
 		}
 }
 
-void action::element_conjugate_babv(INT *Elt_A,
-		INT *Elt_B, INT *Elt_C, INT verbose_level)
+void action::element_conjugate_babv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT *Elt1, *Elt2;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2;
 
 
 	if (f_v) {
 		cout << "action::element_conjugate_babv" << endl;
 		}
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
 
 	element_invert(Elt_B, Elt1, 0);
 	element_mult(Elt_B, Elt_A, Elt2, 0);
 	element_mult(Elt2, Elt1, Elt_C, 0);
 	
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 }
 
-void action::element_commutator_abavbv(INT *Elt_A,
-		INT *Elt_B, INT *Elt_C, INT verbose_level)
+void action::element_commutator_abavbv(int *Elt_A,
+		int *Elt_B, int *Elt_C, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT *Elt1, *Elt2, *Elt3, *Elt4;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2, *Elt3, *Elt4;
 
 
 	if (f_v) {
 		cout << "action::element_commutator_abavbv" << endl;
 		}
-	Elt1 = NEW_INT(elt_size_in_INT);
-	Elt2 = NEW_INT(elt_size_in_INT);
-	Elt3 = NEW_INT(elt_size_in_INT);
-	Elt4 = NEW_INT(elt_size_in_INT);
+	Elt1 = NEW_int(elt_size_in_int);
+	Elt2 = NEW_int(elt_size_in_int);
+	Elt3 = NEW_int(elt_size_in_int);
+	Elt4 = NEW_int(elt_size_in_int);
 
 	element_invert(Elt_A, Elt1, 0);
 	element_invert(Elt_B, Elt2, 0);
@@ -2397,23 +2397,23 @@ void action::element_commutator_abavbv(INT *Elt_A,
 	element_mult(Elt3, Elt1, Elt4, 0);
 	element_mult(Elt4, Elt2, Elt_C, 0);
 	
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
 }
 
 void action::read_representatives(char *fname,
-		INT *&Reps, INT &nb_reps, INT &size, INT verbose_level)
+		int *&Reps, int &nb_reps, int &size, int verbose_level)
 {
-	INT f_casenumbers = FALSE;
-	INT nb_cases;
-	INT *Set_sizes;
-	INT **Sets;
+	int f_casenumbers = FALSE;
+	int nb_cases;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
-	INT *Casenumbers;
-	INT i, j;
+	int *Casenumbers;
+	int i, j;
 	
 
 	cout << "action::read_file_and_print_representatives "
@@ -2427,7 +2427,7 @@ void action::read_representatives(char *fname,
 		0/*verbose_level*/);
 	nb_reps = nb_cases;
 	size = Set_sizes[0];
-	Reps = NEW_INT(nb_cases * size);
+	Reps = NEW_int(nb_cases * size);
 	for (i = 0; i < nb_cases; i++) {
 		for (j = 0; j < size; j++) {
 			Reps[i * size + j] = Sets[i][j];
@@ -2440,18 +2440,18 @@ void action::read_representatives(char *fname,
 }
 
 void action::read_representatives_and_strong_generators(
-	char *fname, INT *&Reps,
-	char **&Aut_ascii, INT &nb_reps, INT &size, INT verbose_level)
-//INT **&Tl, vector_ge **gens, 
+	char *fname, int *&Reps,
+	char **&Aut_ascii, int &nb_reps, int &size, int verbose_level)
+//int **&Tl, vector_ge **gens, 
 {
-	INT f_casenumbers = FALSE;
-	INT nb_cases;
-	INT *Set_sizes;
-	INT **Sets;
+	int f_casenumbers = FALSE;
+	int nb_cases;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	//char **Aut_ascii; 
-	INT *Casenumbers;
-	INT i, j;
+	int *Casenumbers;
+	int i, j;
 	
 
 	cout << "action::read_file_and_print_representatives "
@@ -2465,7 +2465,7 @@ void action::read_representatives_and_strong_generators(
 		0/*verbose_level*/);
 	nb_reps = nb_cases;
 	size = Set_sizes[0];
-	Reps = NEW_INT(nb_cases * size);
+	Reps = NEW_int(nb_cases * size);
 	for (i = 0; i < nb_cases; i++) {
 		for (j = 0; j < size; j++) {
 			Reps[i * size + j] = Sets[i][j];
@@ -2478,16 +2478,16 @@ void action::read_representatives_and_strong_generators(
 }
 
 void action::read_file_and_print_representatives(
-		char *fname, INT f_print_stabilizer_generators)
+		char *fname, int f_print_stabilizer_generators)
 {
-	INT f_casenumbers = FALSE;
-	INT nb_cases;
-	INT *Set_sizes;
-	INT **Sets;
+	int f_casenumbers = FALSE;
+	int nb_cases;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
-	INT *Casenumbers;
-	INT i;
+	int *Casenumbers;
+	int i;
 	
 
 	cout << "action::read_file_and_print_representatives reading file "
@@ -2501,12 +2501,12 @@ void action::read_file_and_print_representatives(
 		0/*verbose_level*/);
 	for (i = 0; i < nb_cases; i++) {
 		cout << "Orbit " << i << " representative ";
-		INT_vec_print(cout, Sets[i], Set_sizes[i]);
+		int_vec_print(cout, Sets[i], Set_sizes[i]);
 		cout << endl;
 
 		group *G;
 		vector_ge *gens;
-		INT *tl;
+		int *tl;
 
 		G = NEW_OBJECT(group);
 		G->init(this);
@@ -2518,11 +2518,11 @@ void action::read_file_and_print_representatives(
 		G->S->group_order(go);
 
 		gens = NEW_OBJECT(vector_ge);
-		tl = NEW_INT(base_len);
+		tl = NEW_int(base_len);
 		G->S->extract_strong_generators_in_order(*gens, tl,
 				0 /* verbose_level */);
 		cout << "Stabilizer has order " << go << " tl=";
-		INT_vec_print(cout, tl, base_len);
+		int_vec_print(cout, tl, base_len);
 		cout << endl;
 
 		if (f_print_stabilizer_generators) {
@@ -2532,7 +2532,7 @@ void action::read_file_and_print_representatives(
 
 		FREE_OBJECT(G);
 		FREE_OBJECT(gens);
-		FREE_INT(tl);
+		FREE_int(tl);
 
 		}
 	free_data_fancy(nb_cases, 
@@ -2543,22 +2543,22 @@ void action::read_file_and_print_representatives(
 }
 
 void action::read_set_and_stabilizer(const char *fname, 
-	INT no, INT *&set, INT &set_sz, sims *&stab, 
+	int no, int *&set, int &set_sz, sims *&stab, 
 	strong_generators *&Strong_gens, 
-	INT &nb_cases, 
-	INT verbose_level)
+	int &nb_cases, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level  >= 1);
-	INT f_vv = (verbose_level  >= 2);
-	INT f_casenumbers = FALSE;
-	//INT nb_cases;
-	INT *Set_sizes;
-	INT **Sets;
+	int f_v = (verbose_level  >= 1);
+	int f_vv = (verbose_level  >= 2);
+	int f_casenumbers = FALSE;
+	//int nb_cases;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
-	INT *Casenumbers;
+	int *Casenumbers;
 	group *G;
-	INT i;
+	int i;
 	
 
 	if (f_v) {
@@ -2582,7 +2582,7 @@ void action::read_set_and_stabilizer(const char *fname,
 		}
 	
 	set_sz = Set_sizes[no];
-	set = NEW_INT(set_sz);
+	set = NEW_int(set_sz);
 	for (i = 0; i < set_sz; i ++) {
 		set[i] = Sets[no][i];
 		}
@@ -2631,10 +2631,10 @@ void action::read_set_and_stabilizer(const char *fname,
 }
 
 void action::get_generators_from_ascii_coding(
-		char *ascii_coding, vector_ge *&gens, INT *&tl, INT verbose_level)
+		char *ascii_coding, vector_ge *&gens, int *&tl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
 	group *G;
 
@@ -2657,7 +2657,7 @@ void action::get_generators_from_ascii_coding(
 	G->S->group_order(go);
 
 	gens = NEW_OBJECT(vector_ge);
-	tl = NEW_INT(base_len);
+	tl = NEW_int(base_len);
 	G->S->extract_strong_generators_in_order(*gens, tl,
 			0 /* verbose_level */);
 
@@ -2673,15 +2673,15 @@ void action::get_generators_from_ascii_coding(
 }
 
 
-void action::lexorder_test(INT *set, INT set_sz,
-	INT &set_sz_after_test,
-	vector_ge *gens, INT max_starter,
-	INT verbose_level)
+void action::lexorder_test(int *set, int set_sz,
+	int &set_sz_after_test,
+	vector_ge *gens, int max_starter,
+	int verbose_level)
 {
-	INT f_v = (verbose_level  >= 1);
-	INT f_v5 = FALSE; //(verbose_level  >= 1);
+	int f_v = (verbose_level  >= 1);
+	int f_v5 = FALSE; //(verbose_level  >= 1);
 	schreier *Sch;
-	INT i, /*loc,*/ orb, first, a, a0;
+	int i, /*loc,*/ orb, first, a, a0;
 
 	if (f_v) {
 		cout << "action::lexorder_test" << endl;
@@ -2748,9 +2748,9 @@ void action::lexorder_test(INT *set, INT set_sz,
 }
 
 void action::compute_orbits_on_points(schreier *&Sch,
-		vector_ge *gens, INT verbose_level)
+		vector_ge *gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::compute_orbits_on_points" << endl;
@@ -2766,14 +2766,14 @@ void action::compute_orbits_on_points(schreier *&Sch,
 		}
 }
 
-void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no,
+void action::stabilizer_of_dual_hyperoval_representative(int k, int n, int no,
 		vector_ge *&gens, const char *&stab_order,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *data, nb_gens, data_size;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *data, nb_gens, data_size;
+	int i;
 
 	if (f_v) {
 		cout << "action::stabilizer_of_dual_hyperoval_representative" << endl;
@@ -2798,14 +2798,14 @@ void action::stabilizer_of_dual_hyperoval_representative(INT k, INT n, INT no,
 }
 
 void action::stabilizer_of_translation_plane_representative(
-		INT q, INT k, INT no,
+		int q, int k, int no,
 		vector_ge *&gens, const char *&stab_order,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *data, nb_gens, data_size;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *data, nb_gens, data_size;
+	int i;
 
 	if (f_v) {
 		cout << "action::stabilizer_of_translation_plane_representative"
@@ -2831,9 +2831,9 @@ void action::stabilizer_of_translation_plane_representative(
 }
 
 void action::normalizer_using_MAGMA(const char *prefix,
-		sims *G, sims *H, INT verbose_level)
+		sims *G, sims *H, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
 	char fname_output[1000];
 	char cmd[1000];
@@ -2844,7 +2844,7 @@ void action::normalizer_using_MAGMA(const char *prefix,
 	sprintf(fname_magma, "%snormalizer.magma", prefix);
 	sprintf(fname_output, "%snormalizer.txt", prefix);
 
-	INT n;
+	int n;
 
 	strong_generators *G_gen;
 	strong_generators *H_gen;
@@ -2893,9 +2893,9 @@ void action::normalizer_using_MAGMA(const char *prefix,
 }
 
 void action::conjugacy_classes_using_MAGMA(const char *prefix,
-		sims *G, INT verbose_level)
+		sims *G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
 	char fname_output[1000];
 	char cmd[1000];
@@ -2906,7 +2906,7 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 	sprintf(fname_magma, "%sconjugacy_classes.magma", prefix);
 	sprintf(fname_output, "%sconjugacy_classes.txt", prefix);
 
-	INT n;
+	int n;
 
 	strong_generators *G_gen;
 
@@ -2949,9 +2949,9 @@ void action::conjugacy_classes_using_MAGMA(const char *prefix,
 }
 
 void action::centralizer_using_MAGMA(const char *prefix,
-		sims *G, INT *Elt, INT verbose_level)
+		sims *G, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname_magma[1000];
 	char fname_output[1000];
 	char cmd[1000];
@@ -2962,7 +2962,7 @@ void action::centralizer_using_MAGMA(const char *prefix,
 	sprintf(fname_magma, "%scentralizer.magma", prefix);
 	sprintf(fname_output, "%scentralizer.txt", prefix);
 
-	INT n;
+	int n;
 
 	strong_generators *G_gen;
 
@@ -3012,17 +3012,17 @@ void action::centralizer_using_MAGMA(const char *prefix,
 		}
 }
 
-void action::point_stabilizer_any_point(INT &pt, 
+void action::point_stabilizer_any_point(int &pt, 
 	schreier *&Sch, sims *&Stab, strong_generators *&stab_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point" << endl;
 		}
 	
-	INT f; //, len;
+	int f; //, len;
 	longinteger_object go;
 	
 	if (f_v) {
@@ -3079,17 +3079,17 @@ void action::point_stabilizer_any_point(INT &pt,
 
 void action::point_stabilizer_any_point_with_given_group(
 	strong_generators *input_gens, 
-	INT &pt, 
+	int &pt, 
 	schreier *&Sch, sims *&Stab, strong_generators *&stab_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::point_stabilizer_any_point_with_given_group" << endl;
 		}
 	
-	INT f; //, len;
+	int f; //, len;
 	longinteger_object go;
 	
 	if (f_v) {
@@ -3149,21 +3149,21 @@ void action::point_stabilizer_any_point_with_given_group(
 
 void action::make_element_which_moves_a_line_in_PG3q(
 		grassmann *Gr,
-		INT line_rk, INT *Elt, INT verbose_level)
+		int line_rk, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action::make_element_which_moves_a_line_in_PG3q" << endl;
 		}
 
-	INT M[4 * 4];
-	INT N[4 * 4 + 1]; // + 1 if f_semilinear
-	INT base_cols[4];
-	INT r, c, i, j;
+	int M[4 * 4];
+	int N[4 * 4 + 1]; // + 1 if f_semilinear
+	int base_cols[4];
+	int r, c, i, j;
 
-	//INT_vec_zero(M, 16);
-	Gr->unrank_INT_here(M, line_rk, 0 /*verbose_level*/);
+	//int_vec_zero(M, 16);
+	Gr->unrank_int_here(M, line_rk, 0 /*verbose_level*/);
 	r = Gr->F->Gauss_simple(M, 2, 4, base_cols, 0 /* verbose_level */);
 	Gr->F->kernel_columns(4, r, base_cols, base_cols + r);
 	
@@ -3190,7 +3190,7 @@ void action::make_element_which_moves_a_line_in_PG3q(
 void action::list_elements_as_permutations_vertically(vector_ge *gens,
 		ostream &ost)
 {
-	INT i, j, a, len;
+	int i, j, a, len;
 
 	len = gens->len;
 	for (j = 0; j < len; j++) {

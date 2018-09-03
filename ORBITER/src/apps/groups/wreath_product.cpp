@@ -12,12 +12,12 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 int main(int argc, const char **argv);
-INT wreath_rank_point_func(INT *v, void *data);
-void wreath_unrank_point_func(INT *v, INT rk, void *data);
+int wreath_rank_point_func(int *v, void *data);
+void wreath_unrank_point_func(int *v, int rk, void *data);
 
 
 
@@ -30,9 +30,9 @@ class tensor_product {
 public:
 	int argc;
 	const char **argv;
-	INT nb_factors;
-	INT n;
-	INT q;
+	int nb_factors;
+	int n;
+	int q;
 
 	finite_field *F;
 	action *A;
@@ -42,13 +42,13 @@ public:
 	longinteger_object go;
 	wreath_product *W;
 	poset_classification *Gen;
-	INT vector_space_dimension;
+	int vector_space_dimension;
 
 	tensor_product();
 	~tensor_product();
 	void init(int argc, const char **argv,
-			INT nb_factors, INT n, INT q, INT depth,
-			INT verbose_level);
+			int nb_factors, int n, int q, int depth,
+			int verbose_level);
 };
 
 
@@ -69,16 +69,16 @@ void usage(int argc, const char **argv)
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_nb_factors = FALSE;
-	INT nb_factors = 0;
-	INT f_d = FALSE;
-	INT d = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_depth = FALSE;
-	INT depth = 0;
+	int i;
+	int verbose_level = 0;
+	int f_nb_factors = FALSE;
+	int nb_factors = 0;
+	int f_d = FALSE;
+	int d = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_depth = FALSE;
+	int depth = 0;
 
 	t0 = os_ticks();
 
@@ -177,12 +177,12 @@ tensor_product::~tensor_product()
 }
 
 void tensor_product::init(int argc, const char **argv,
-		INT nb_factors, INT n, INT q, INT depth,
-		INT verbose_level)
+		int nb_factors, int n, int q, int depth,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *v;
-	INT i, j, a;
+	int f_v = (verbose_level >= 1);
+	int *v;
+	int i, j, a;
 
 	if (f_v) {
 		cout << "tensor_product::init" << endl;
@@ -195,7 +195,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	A = NEW_OBJECT(action);
 
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 
 	F = NEW_OBJECT(finite_field);
@@ -284,27 +284,27 @@ void tensor_product::init(int argc, const char **argv,
 #if 0
 
 	cout << "testing..." << endl;
-	INT r1, r2;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
-	INT *perm1;
-	INT *perm2;
-	INT *perm3;
-	INT *perm4;
-	INT *perm5;
-	INT cnt;
+	int r1, r2;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int *perm1;
+	int *perm2;
+	int *perm3;
+	int *perm4;
+	int *perm5;
+	int cnt;
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
-	perm1 = NEW_INT(A->degree);
-	perm2 = NEW_INT(A->degree);
-	perm3 = NEW_INT(A->degree);
-	perm4 = NEW_INT(A->degree);
-	perm5 = NEW_INT(A->degree);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	perm1 = NEW_int(A->degree);
+	perm2 = NEW_int(A->degree);
+	perm3 = NEW_int(A->degree);
+	perm4 = NEW_int(A->degree);
+	perm5 = NEW_int(A->degree);
 
 	for (cnt = 0; cnt < 10; cnt++) {
 		r1 = random_integer(SG->gens->len);
@@ -446,7 +446,7 @@ void tensor_product::init(int argc, const char **argv,
 
 	cout << "performing test 4:" << endl;
 
-	INT data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
+	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
 	A->make_element(Elt1, data, verbose_level);
 	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
 	cout << "as Elt1 as permutation: " << endl;
@@ -478,15 +478,15 @@ void tensor_product::init(int argc, const char **argv,
 
 	cout << "test 4 passed" << endl;
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
-	FREE_INT(perm1);
-	FREE_INT(perm2);
-	FREE_INT(perm3);
-	FREE_INT(perm4);
-	FREE_INT(perm5);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(perm1);
+	FREE_int(perm2);
+	FREE_int(perm3);
+	FREE_int(perm4);
+	FREE_int(perm5);
 #endif
 
 
@@ -495,7 +495,7 @@ void tensor_product::init(int argc, const char **argv,
 	Gen->read_arguments(argc, argv, 0);
 
 	//Gen->prefix[0] = 0;
-	sprintf(Gen->fname_base, "wreath_%ld_%ld_%ld", nb_factors, n, q);
+	sprintf(Gen->fname_base, "wreath_%d_%d_%d", nb_factors, n, q);
 
 
 	Gen->depth = depth;
@@ -536,7 +536,7 @@ void tensor_product::init(int argc, const char **argv,
 	Gen->print_function_data = this;
 #endif
 
-	INT nb_nodes = 1000;
+	int nb_nodes = 1000;
 
 	if (f_v) {
 		cout << "tensor_product::init before Gen->init_poset_orbit_node" << endl;
@@ -547,15 +547,15 @@ void tensor_product::init(int argc, const char **argv,
 		}
 	Gen->root[0].init_root_node(Gen, verbose_level - 1);
 
-	INT schreier_depth;
-	INT f_use_invariant_subset_if_available;
-	INT f_debug;
+	int schreier_depth;
+	int f_use_invariant_subset_if_available;
+	int f_debug;
 
 	schreier_depth = Gen->depth;
 	f_use_invariant_subset_if_available = TRUE;
 	f_debug = FALSE;
 
-	INT t0 = os_ticks();
+	int t0 = os_ticks();
 
 	if (f_v) {
 		cout << "tensor_product::init before Gen->main" << endl;
@@ -580,10 +580,10 @@ void tensor_product::init(int argc, const char **argv,
 }
 
 
-INT wreath_rank_point_func(INT *v, void *data)
+int wreath_rank_point_func(int *v, void *data)
 {
 	tensor_product *T;
-	INT rk;
+	int rk;
 
 	T = (tensor_product *) data;
 	//AG_element_rank(LS->Fq->q, v, 1, LS->vector_space_dimension, rk);
@@ -591,7 +591,7 @@ INT wreath_rank_point_func(INT *v, void *data)
 	return rk;
 }
 
-void wreath_unrank_point_func(INT *v, INT rk, void *data)
+void wreath_unrank_point_func(int *v, int rk, void *data)
 {
 	tensor_product *T;
 

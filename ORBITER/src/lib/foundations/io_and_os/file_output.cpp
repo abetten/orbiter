@@ -31,9 +31,9 @@ void file_output::freeself()
 }
 
 
-void file_output::open(const char *fname, void *user_data, INT verbose_level)
+void file_output::open(const char *fname, void *user_data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "file_output::open" << endl;
@@ -60,9 +60,9 @@ void file_output::close()
 	f_file_is_open = FALSE;
 }
 
-void file_output::write_line(INT nb, INT *data, INT verbose_level)
+void file_output::write_line(int nb, int *data, int verbose_level)
 {
-	INT i;
+	int i;
 
 	if (!f_file_is_open) {
 		cout << "file_output::write_line file is not open" << endl;
@@ -75,7 +75,7 @@ void file_output::write_line(INT nb, INT *data, INT verbose_level)
 	*fp << endl;
 }
 
-void file_output::write_EOF(INT nb_sol, INT verbose_level)
+void file_output::write_EOF(int nb_sol, int verbose_level)
 {
 	*fp << "-1 " << nb_sol << endl;
 }
