@@ -252,7 +252,7 @@ void memory_object::write_int64(int i)
 {
 	int8 i1 = (int8) i;
 	
-	block_swap_chars((SCHAR *) &i1, 8, 1);
+	block_swap_chars((char *) &i1, 8, 1);
 	append(8, (char *) &i1, 0);
 }
 
@@ -276,7 +276,7 @@ void memory_object::read_int64(int *i)
 		cp1++;
 		cp++;
 		}
-	block_swap_chars((SCHAR *) &i1, 8, 1);
+	block_swap_chars((char *) &i1, 8, 1);
 	cur_pointer += 8;
 	*i = (int) i1;
 }
@@ -285,7 +285,7 @@ void memory_object::write_int(int i)
 {
 	int4 i1 = (int4) i;
 	
-	block_swap_chars((SCHAR *) &i1, 4, 1);
+	block_swap_chars((char *) &i1, 4, 1);
 	append(4, (char *) &i1, 0);
 }
 
@@ -313,7 +313,7 @@ void memory_object::read_int(int *i)
 		cp1++;
 		cp++;
 		}
-	block_swap_chars((SCHAR *) &i1, 4, 1);
+	block_swap_chars((char *) &i1, 4, 1);
 	cur_pointer += 4;
 	if (f_v) {
 		cout << "memory_object::read_int done read " << i1 << endl;

@@ -169,23 +169,11 @@ typedef unsigned int uint8;
 
 typedef int *pint;
 typedef int **ppint;
-//typedef unsigned long uint;
-//typedef uint *puint;
-//typedef long LONG;
-//typedef LONG *PLONG;
-//typedef unsigned long ULONG;
-//typedef ULONG *PULONG;
 typedef short SHORT;
 typedef SHORT *PSHORT;
 typedef char *pchar;
 typedef unsigned char uchar;
 typedef uchar *puchar;
-typedef char SCHAR;
-typedef SCHAR *PSCHAR;
-typedef float FLOAT;
-typedef FLOAT *PFLOAT;
-typedef char TSTRING;
-typedef int *pint;
 typedef void *pvoid;
 
 
@@ -300,8 +288,6 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
 #define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
-//#define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
-#define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
 #define NEW_ppint(n) global_mem_object_registry.allocate_ppint(n, __FILE__, __LINE__)
 #define NEW_char(n) global_mem_object_registry.allocate_char(n, __FILE__, __LINE__)
 #define NEW_uchar(n) global_mem_object_registry.allocate_uchar(n, __FILE__, __LINE__)
@@ -311,8 +297,6 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_OBJECT(type) (type *)global_mem_object_registry.allocate_OBJECT(new type, sizeof(type), #type, __FILE__, __LINE__)
 #define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), #type, __FILE__, __LINE__)
 #define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
-#define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
-//#define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
 #define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
 #define FREE_ppint(p) global_mem_object_registry.free_ppint(p, __FILE__, __LINE__)
 #define FREE_char(p) global_mem_object_registry.free_char(p, __FILE__, __LINE__)
@@ -325,8 +309,6 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #else
 #define NEW_int(n) new int[n]
 #define NEW_pint(n) new pint[n]
-//#define NEW_int(n) new int[n]
-#define NEW_pint(n) new pint[n]
 #define NEW_ppint(n) new ppint[n]
 #define NEW_char(n) new char[n]
 #define NEW_uchar(n) new uchar[n]
@@ -336,8 +318,6 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_OBJECT(type) new type
 #define NEW_OBJECTS(type, n) new type[n]
 #define FREE_int(p) delete [] p
-#define FREE_pint(p) delete [] p
-//#define FREE_int(p) delete [] p
 #define FREE_pint(p) delete [] p
 #define FREE_ppint(p) delete [] p
 #define FREE_char(p) delete [] p
