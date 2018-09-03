@@ -17,28 +17,28 @@ hermitian::hermitian()
 hermitian::~hermitian()
 {
 	if (cnt_N) {
-		FREE_INT(cnt_N);
+		FREE_int(cnt_N);
 		}
 	if (cnt_N1) {
-		FREE_INT(cnt_N1);
+		FREE_int(cnt_N1);
 		}
 	if (cnt_S) {
-		FREE_INT(cnt_S);
+		FREE_int(cnt_S);
 		}
 	if (cnt_Sbar) {
-		FREE_INT(cnt_Sbar);
+		FREE_int(cnt_Sbar);
 		}
 	if (norm_one_elements) {
-		FREE_INT(norm_one_elements);
+		FREE_int(norm_one_elements);
 		}
 	if (index_of_norm_one_element) {
-		FREE_INT(index_of_norm_one_element);
+		FREE_int(index_of_norm_one_element);
 		}
 	if (log_beta) {
-		FREE_INT(log_beta);
+		FREE_int(log_beta);
 		}
 	if (beta_power) {
-		FREE_INT(beta_power);
+		FREE_int(beta_power);
 		}
 	null();
 }
@@ -57,10 +57,10 @@ void hermitian::null()
 }
 
 
-void hermitian::init(finite_field *F, INT nb_vars, INT verbose_level)
+void hermitian::init(finite_field *F, int nb_vars, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a;
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
 	
 	hermitian::F = F;
 	hermitian::Q = F->q;
@@ -73,10 +73,10 @@ void hermitian::init(finite_field *F, INT nb_vars, INT verbose_level)
 		cout << "hermitian::init field must have a quadratic subfield" << endl;
 		exit(1);
 		}
-	cnt_N = NEW_INT(k + 1);
-	cnt_N1 = NEW_INT(k + 1);
-	cnt_S = NEW_INT(k + 1);
-	cnt_Sbar = NEW_INT(k + 1);
+	cnt_N = NEW_int(k + 1);
+	cnt_N1 = NEW_int(k + 1);
+	cnt_S = NEW_int(k + 1);
+	cnt_Sbar = NEW_int(k + 1);
 	cnt_N[0] = 0;
 	cnt_N1[0] = 0;
 	cnt_S[0] = 0;
@@ -100,10 +100,10 @@ void hermitian::init(finite_field *F, INT nb_vars, INT verbose_level)
 		cout << setw(7) << cnt_Sbar[i] << endl;
 		}
 
-	norm_one_elements = NEW_INT(q + 1);
-	index_of_norm_one_element = NEW_INT(Q);
-	log_beta = NEW_INT(Q);
-	beta_power = NEW_INT(q);
+	norm_one_elements = NEW_int(q + 1);
+	index_of_norm_one_element = NEW_int(Q);
+	log_beta = NEW_int(Q);
+	beta_power = NEW_int(q);
 	for (i = 0; i < Q; i++) {
 		index_of_norm_one_element[i] = -1;
 		log_beta[i] = -1;
@@ -115,7 +115,7 @@ void hermitian::init(finite_field *F, INT nb_vars, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "the norm one elements are: ";
-		INT_vec_print(cout, norm_one_elements, q + 1);
+		int_vec_print(cout, norm_one_elements, q + 1);
 		cout << endl;
 		}
 	cout << "i : norm_one_elements[i] : F->N2(norm_one_elements[i])" << endl;
@@ -131,32 +131,32 @@ void hermitian::init(finite_field *F, INT nb_vars, INT verbose_level)
 		}
 }
 
-INT hermitian::nb_points()
+int hermitian::nb_points()
 {
 	return cnt_Sbar[k];
 }
 
-void hermitian::unrank_point(INT *v, INT rk)
+void hermitian::unrank_point(int *v, int rk)
 {
 	Sbar_unrank(v, k, rk, 0 /*verbose_level*/);
 }
 
-INT hermitian::rank_point(INT *v)
+int hermitian::rank_point(int *v)
 {
-	INT rk;
+	int rk;
 
 	rk = Sbar_rank(v, k, 0 /*verbose_level*/);
 	return rk;
 }
 
-void hermitian::list_of_points_embedded_in_PG(INT *&Pts, INT &nb_pts, INT verbose_level)
+void hermitian::list_of_points_embedded_in_PG(int *&Pts, int &nb_pts, int verbose_level)
 {
-	INT i, rk;
-	INT *v;
+	int i, rk;
+	int *v;
 
-	v = NEW_INT(k);
+	v = NEW_int(k);
 	nb_pts = nb_points();
-	Pts = NEW_INT(nb_pts);
+	Pts = NEW_int(nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
 		PG_element_rank_modified(*F, v, 1, k, rk);
@@ -164,13 +164,13 @@ void hermitian::list_of_points_embedded_in_PG(INT *&Pts, INT &nb_pts, INT verbos
 		}
 }
 
-void hermitian::list_all_N(INT verbose_level)
+void hermitian::list_all_N(int verbose_level)
 {
-	INT *v;
-	INT i, j, val0, val;
+	int *v;
+	int i, j, val0, val;
 
 	cout << "list_all_N:" << endl;
-	v = NEW_INT(k);
+	v = NEW_int(k);
 	for (i = 0; i < cnt_N[k]; i++) {
 		//cout << "i=" << i << endl;
 		//if (i == 165) {verbose_level += 2;}
@@ -178,7 +178,7 @@ void hermitian::list_all_N(INT verbose_level)
 		val0 = evaluate_hermitian_form(v, k - 1);
 		val = evaluate_hermitian_form(v, k);
 		cout << setw(5) << i << " : ";
-		INT_vec_print(cout, v, k);
+		int_vec_print(cout, v, k);
 		cout << " : " << val0;
 		cout << " : " << val << endl;
 		if (val == 0) {
@@ -193,13 +193,13 @@ void hermitian::list_all_N(INT verbose_level)
 		}
 }
 
-void hermitian::list_all_N1(INT verbose_level)
+void hermitian::list_all_N1(int verbose_level)
 {
-	INT *v;
-	INT i, j, val0, val;
+	int *v;
+	int i, j, val0, val;
 
 	cout << "list_all_N1:" << endl;
-	v = NEW_INT(k);
+	v = NEW_int(k);
 	for (i = 0; i < cnt_N1[k]; i++) {
 		//cout << "i=" << i << endl;
 		//if (i == 15) {verbose_level += 2;}
@@ -207,7 +207,7 @@ void hermitian::list_all_N1(INT verbose_level)
 		val0 = evaluate_hermitian_form(v, k - 1);
 		val = evaluate_hermitian_form(v, k);
 		cout << setw(5) << i << " : ";
-		INT_vec_print(cout, v, k);
+		int_vec_print(cout, v, k);
 		cout << " : " << val0;
 		cout << " : " << val << endl;
 		if (val != 1) {
@@ -222,13 +222,13 @@ void hermitian::list_all_N1(INT verbose_level)
 		}
 }
 
-void hermitian::list_all_S(INT verbose_level)
+void hermitian::list_all_S(int verbose_level)
 {
-	INT *v;
-	INT i, j, val0, val;
+	int *v;
+	int i, j, val0, val;
 
 	cout << "list_all_S:" << endl;
-	v = NEW_INT(k);
+	v = NEW_int(k);
 	for (i = 0; i < cnt_S[k]; i++) {
 		//cout << "i=" << i << endl;
 		//if (i == 6) {verbose_level += 2;}
@@ -236,7 +236,7 @@ void hermitian::list_all_S(INT verbose_level)
 		val0 = evaluate_hermitian_form(v, k - 1);
 		val = evaluate_hermitian_form(v, k);
 		cout << setw(5) << i << " : ";
-		INT_vec_print(cout, v, k);
+		int_vec_print(cout, v, k);
 		cout << " : " << val0;
 		cout << " : " << val << endl;
 		if (val) {
@@ -251,13 +251,13 @@ void hermitian::list_all_S(INT verbose_level)
 		}
 }
 
-void hermitian::list_all_Sbar(INT verbose_level)
+void hermitian::list_all_Sbar(int verbose_level)
 {
-	INT *v;
-	INT i, j, a, h, val0, val;
+	int *v;
+	int i, j, a, h, val0, val;
 
 	cout << "list_all_Sbar:" << endl;
-	v = NEW_INT(k);
+	v = NEW_int(k);
 	for (i = 0; i < cnt_Sbar[k]; i++) {
 		//cout << "i=" << i << endl;
 		//if (i == 6) {verbose_level += 2;}
@@ -277,7 +277,7 @@ void hermitian::list_all_Sbar(INT verbose_level)
 			val0 = evaluate_hermitian_form(v, k - 1);
 			val = evaluate_hermitian_form(v, k);
 			cout << setw(5) << i << "," << h << " : ";
-			INT_vec_print(cout, v, k);
+			int_vec_print(cout, v, k);
 			cout << " : " << val0;
 			cout << " : " << val << endl;
 			if (val) {
@@ -294,9 +294,9 @@ void hermitian::list_all_Sbar(INT verbose_level)
 }
 
 
-INT hermitian::evaluate_hermitian_form(INT *v, INT len)
+int hermitian::evaluate_hermitian_form(int *v, int len)
 {
-	INT i, a, b;
+	int i, a, b;
 
 	a = 0;
 	for (i = 0; i < len; i++) {
@@ -305,15 +305,15 @@ INT hermitian::evaluate_hermitian_form(INT *v, INT len)
 		//cout << "b=" << b << " a=" << a << endl;
 		}
 	//cout << "hermitian::evaluate_hermitian_form ";
-	//INT_vec_print(cout, v, len);
+	//int_vec_print(cout, v, len);
 	//cout << "val=" << a << endl;
 	return a;
 }
 
-void hermitian::N_unrank(INT *v, INT len, INT rk, INT verbose_level)
+void hermitian::N_unrank(int *v, int len, int rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk1, coset, rk0, coset0, A, val, m_val, log;
+	int f_v = (verbose_level >= 1);
+	int rk1, coset, rk0, coset0, A, val, m_val, log;
 	
 	if (f_v) {
 		cout << "N_unrank len=" << len << " rk=" << rk << endl;
@@ -326,7 +326,7 @@ void hermitian::N_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		v[0] = rk + 1;
 		if (f_v) {
 			cout << "N_unrank len=" << len << " done: ";
-			INT_vec_print(cout, v, len);
+			int_vec_print(cout, v, len);
 			cout << endl;
 			}
 		return;
@@ -393,19 +393,19 @@ void hermitian::N_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "N_unrank len=" << len << " done: ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 }
 
-INT hermitian::N_rank(INT *v, INT len, INT verbose_level)
+int hermitian::N_rank(int *v, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk, rk1, coset, rk0, coset0, val, m_val, log, a;
+	int f_v = (verbose_level >= 1);
+	int rk, rk1, coset, rk0, coset0, val, m_val, log, a;
 	
 	if (f_v) {
 		cout << "N_rank len=" << len << endl;
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	if (len == 1) {
@@ -484,10 +484,10 @@ INT hermitian::N_rank(INT *v, INT len, INT verbose_level)
 	return rk;
 }
 
-void hermitian::N1_unrank(INT *v, INT len, INT rk, INT verbose_level)
+void hermitian::N1_unrank(int *v, int len, int rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT coset, rk2, coset2, rk1, coset1, val, new_val, log, A, a, i;
+	int f_v = (verbose_level >= 1);
+	int coset, rk2, coset2, rk1, coset1, val, new_val, log, A, a, i;
 	
 	if (f_v) {
 		cout << "N1_unrank len=" << len << " rk=" << rk << endl;
@@ -500,7 +500,7 @@ void hermitian::N1_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		v[0] = norm_one_elements[rk];
 		if (f_v) {
 			cout << "N1_unrank len=" << len << " done: ";
-			INT_vec_print(cout, v, len);
+			int_vec_print(cout, v, len);
 			cout << endl;
 			}
 		return;
@@ -513,7 +513,7 @@ void hermitian::N1_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		v[len - 1] = 0;
 		if (f_v) {
 			cout << "N1_unrank len=" << len << " done: ";
-			INT_vec_print(cout, v, len);
+			int_vec_print(cout, v, len);
 			cout << endl;
 			}
 		return;
@@ -591,19 +591,19 @@ void hermitian::N1_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "N1_unrank len=" << len << " done: ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 }
 
-INT hermitian::N1_rank(INT *v, INT len, INT verbose_level)
+int hermitian::N1_rank(int *v, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk, coset, rk2, coset2, rk1, coset1, val, new_val, log, A, a, av, i, log1;
+	int f_v = (verbose_level >= 1);
+	int rk, coset, rk2, coset2, rk1, coset1, val, new_val, log, A, a, av, i, log1;
 	
 	if (f_v) {
 		cout << "N1_rank len=" << len << " : ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	if (len == 1) {
@@ -702,10 +702,10 @@ INT hermitian::N1_rank(INT *v, INT len, INT verbose_level)
 	return rk;
 }
 
-void hermitian::S_unrank(INT *v, INT len, INT rk, INT verbose_level)
+void hermitian::S_unrank(int *v, int len, int rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk1, coset, log, val, m_val;
+	int f_v = (verbose_level >= 1);
+	int rk1, coset, log, val, m_val;
 	
 	if (rk >= cnt_S[len]) {
 		cout << "hermitian::S_unrank fatal: rk >= cnt_S[len]" << endl;
@@ -753,20 +753,20 @@ void hermitian::S_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "S_unrank len=" << len << " done: ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	
 }
 
-INT hermitian::S_rank(INT *v, INT len, INT verbose_level)
+int hermitian::S_rank(int *v, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk, rk1, coset, log, val, m_val, a, log1;
+	int f_v = (verbose_level >= 1);
+	int rk, rk1, coset, log, val, m_val, a, log1;
 	
 	if (f_v) {
 		cout << "S_rank len=" << len << ": ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	if (len == 1) {
@@ -821,10 +821,10 @@ INT hermitian::S_rank(INT *v, INT len, INT verbose_level)
 }
 
 
-void hermitian::Sbar_unrank(INT *v, INT len, INT rk, INT verbose_level)
+void hermitian::Sbar_unrank(int *v, int len, int rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT log, a, b, i;
+	int f_v = (verbose_level >= 1);
+	int log, a, b, i;
 	
 	if (rk >= cnt_Sbar[len]) {
 		cout << "hermitian::Sbar_unrank fatal: rk >= cnt_Sbar[len]" << endl;
@@ -866,20 +866,20 @@ void hermitian::Sbar_unrank(INT *v, INT len, INT rk, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "Sbar_unrank len=" << len << " done: ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	
 }
 
-INT hermitian::Sbar_rank(INT *v, INT len, INT verbose_level)
+int hermitian::Sbar_rank(int *v, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk, val, a, b, bv, log, i;
+	int f_v = (verbose_level >= 1);
+	int rk, val, a, b, bv, log, i;
 	
 	if (f_v) {
 		cout << "Sbar_rank len=" << len << " : ";
-		INT_vec_print(cout, v, len);
+		int_vec_print(cout, v, len);
 		cout << endl;
 		}
 	if (len == 1) {

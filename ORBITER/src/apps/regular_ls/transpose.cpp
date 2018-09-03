@@ -13,20 +13,20 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_file_in = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_file_in = FALSE;
 	const char *fname_in;
-	INT f_file_out = FALSE;
+	int f_file_out = FALSE;
 	const char *fname_out;
-	INT f_parameters = FALSE;
-	INT v, r, b, k;
+	int f_parameters = FALSE;
+	int v, r, b, k;
 
 	t0 = os_ticks();
 
@@ -59,25 +59,25 @@ int main(int argc, const char **argv)
 
 #if 0
 	{
-		INT w[3] = {20,22,23};
-		INT z[3];
-		INT rk;
+		int w[3] = {20,22,23};
+		int z[3];
+		int rk;
 		rk = rank_k_subset(w, 24, 3);
 		cout << "The set ";
-		INT_vec_print(cout, w, 3);
+		int_vec_print(cout, w, 3);
 		cout << " has rank " << rk << endl;
 		unrank_k_subset(rk, z, 24, 3);
 		cout << " and unranks to ";
-		INT_vec_print(cout, w, 3);
+		int_vec_print(cout, w, 3);
 		cout << endl;
 		//exit(1);
 		
 	}
 #endif
 
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	if (!f_file_in) {
 		cout << "Please use option -file_in <fname_in>" << endl;
 		exit(1);
@@ -86,24 +86,24 @@ int main(int argc, const char **argv)
 		cout << "Please use option -parameters <v> <r> <b> <k>" << endl;
 		exit(1);
 		}
-	INT f_casenumbers = FALSE;
-	INT nb_cases;
-	INT *Set_sizes;
-	INT **Sets;
+	int f_casenumbers = FALSE;
+	int nb_cases;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii;
-	INT *Casenumbers;
-	INT h, j, a, u, ii, jj;
-	INT *M1;
-	INT *M2;
-	INT *v1;
-	INT *v2;
-	INT *new_set;
-	INT **New_sets;
-	INT vb;
-	INT *Adj;
-	INT nb_points;
-	INT *points;
+	int *Casenumbers;
+	int h, j, a, u, ii, jj;
+	int *M1;
+	int *M2;
+	int *v1;
+	int *v2;
+	int *new_set;
+	int **New_sets;
+	int vb;
+	int *Adj;
+	int nb_points;
+	int *points;
 
 	action *Ab;
 	
@@ -117,18 +117,18 @@ int main(int argc, const char **argv)
 	cout << "Read " << nb_cases << " orbits from file "
 			<< fname_in << endl;
 
-	points = NEW_INT(b);
+	points = NEW_int(b);
 	nb_points = b;
 	for (i = 0; i < b; i++) {
 		points[i] = i;
 		}
 	vb = v + b;
-	M1 = NEW_INT(v * b);
-	M2 = NEW_INT(b * v);
-	Adj = NEW_INT(vb * vb);
-	v1 = NEW_INT(k);
-	v2 = NEW_INT(r);
-	New_sets = NEW_PINT(nb_cases);
+	M1 = NEW_int(v * b);
+	M2 = NEW_int(b * v);
+	Adj = NEW_int(vb * vb);
+	v1 = NEW_int(k);
+	v2 = NEW_int(r);
+	New_sets = NEW_pint(nb_cases);
 	
 	Ab = NEW_OBJECT(action);
 	Ab->init_symmetric_group(b /* degree */, verbose_level);
@@ -142,7 +142,7 @@ int main(int argc, const char **argv)
 
 	for (h = 0; h < nb_cases; h++) {
 
-		new_set = NEW_INT(v);
+		new_set = NEW_int(v);
 		longinteger_object ago1, ago2, ago3, ago4;
 		longinteger_domain D;
 
@@ -157,7 +157,7 @@ int main(int argc, const char **argv)
 			exit(1);
 			}
 		if (f_vv) {
-			INT_vec_print(cout, Sets[h], b);
+			int_vec_print(cout, Sets[h], b);
 			cout << endl;
 			}
 		for (i = 0; i < v * b; i++) {
@@ -168,7 +168,7 @@ int main(int argc, const char **argv)
 			unrank_k_subset(a, v1, v, k);
 			if (f_vvv) {
 				cout << a << " = ";
-				INT_vec_print(cout, v1, k);
+				int_vec_print(cout, v1, k);
 				cout << endl;
 				} 
 			for (u = 0; u < k; u++) {
@@ -177,7 +177,7 @@ int main(int argc, const char **argv)
 				}
 			}
 		if (f_vvv) {
-			INT_matrix_print(M1, v, b);
+			int_matrix_print(M1, v, b);
 			}
 		for (i = 0; i < v; i++) {
 			u = 0;
@@ -195,7 +195,7 @@ int main(int argc, const char **argv)
 			}
 		if (f_vv) {
 			cout << "Transposed:" << endl;
-			INT_vec_print(cout, new_set, v);
+			int_vec_print(cout, new_set, v);
 			cout << endl;
 			}
 		New_sets[h] = new_set;
@@ -205,7 +205,7 @@ int main(int argc, const char **argv)
 				}
 			}
 		if (f_vvv) {
-			INT_matrix_print(M2, b, v);
+			int_matrix_print(M2, b, v);
 			}
 		for (i = 0; i < vb * vb; i++) {
 			Adj[i] = 0;
@@ -222,8 +222,8 @@ int main(int argc, const char **argv)
 				Adj[j * vb + i] = a;
 				}
 			}
-		INT parts[2];
-		INT nb_parts = 2;
+		int parts[2];
+		int nb_parts = 2;
 
 		parts[0] = b;
 		parts[1] = v;
@@ -231,18 +231,18 @@ int main(int argc, const char **argv)
 		action *At;
 		if (f_vvv) {
 			cout << "Adjacency matrix:" << endl;
-			INT_matrix_print(Adj, vb, vb);
+			int_matrix_print(Adj, vb, vb);
 			}
-		INT *labeling;
+		int *labeling;
 
-		labeling = NEW_INT(vb);
+		labeling = NEW_int(vb);
 
 		At = create_automorphism_group_of_graph_with_partition_and_labeling(
 			vb, FALSE, NULL, Adj, 
 			nb_parts, parts, 
 			labeling, 
 			verbose_level - 2);
-		FREE_INT(labeling);
+		FREE_int(labeling);
 		
 		At->Sims->group_order(ago2);
 
@@ -253,7 +253,7 @@ int main(int argc, const char **argv)
 			}
 		
 		action *Ar;
-		INT f_induce_action = TRUE;
+		int f_induce_action = TRUE;
 		
 		Ar = NEW_OBJECT(action);
 
@@ -277,11 +277,11 @@ int main(int argc, const char **argv)
 		{
 		vector_ge SG;
 		vector_ge SG2;
-		INT *tl;
-		INT *tl2;
+		int *tl;
+		int *tl2;
 
-		tl = NEW_INT(Ar->base_len);
-		tl2 = NEW_INT(Ab->base_len);
+		tl = NEW_int(Ar->base_len);
+		tl2 = NEW_int(Ab->base_len);
 		Ar->Sims->extract_strong_generators_in_order(SG, tl, verbose_level - 2);
 		
 		sims *Stab2;
@@ -290,7 +290,7 @@ int main(int argc, const char **argv)
 			&SG, ago1, verbose_level);
 		Stab2->extract_strong_generators_in_order(SG2, tl2, verbose_level - 2);
 		cout << "tl2=";
-		INT_vec_print(cout, tl2, Ab->base_len);
+		int_vec_print(cout, tl2, Ab->base_len);
 		cout << endl;
 
 		group G;
@@ -315,8 +315,8 @@ int main(int argc, const char **argv)
 			fp << " " << G.ascii_coding << endl;
 			//f << go << " " << G.ascii_coding << endl;
 			}
-		FREE_INT(tl);
-		FREE_INT(tl2);
+		FREE_int(tl);
+		FREE_int(tl2);
 		FREE_OBJECT(Stab2);
 		}
 

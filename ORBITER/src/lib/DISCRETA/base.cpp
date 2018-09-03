@@ -72,18 +72,18 @@ void discreta_base::freeself_kind(kind k)
 {
 	switch (k) {
 		case BASE: freeself_discreta_base(); break;
-		case INTEGER: as_integer().freeself_integer(); break;
+		case intEGER: as_integer().freeself_integer(); break;
 		case VECTOR: as_vector().freeself_vector(); break;
 		case NUMBER_PARTITION: as_number_partition().freeself_number_partition(); break;
 		case PERMUTATION: as_permutation().freeself_permutation(); break;
 		case MATRIX: as_matrix().freeself_matrix(); break;
-		case LONGINTEGER: as_longinteger().freeself_longinteger(); break;
+		case LONGintEGER: as_longinteger().freeself_longinteger(); break;
 		case MEMORY: as_memory().freeself_memory(); break;
 		//case PERM_GROUP: as_perm_group().freeself_perm_group(); break;
 		//case PERM_GROUP_STAB_CHAIN: as_perm_group_stab_chain().freeself_perm_group_stab_chain(); break;
 		case UNIPOLY: as_unipoly().freeself_unipoly(); break;
 		case SOLID: as_solid().freeself_solid(); break;
-		case BITMATRIX: as_bitmatrix().freeself_bitmatrix(); break;
+		//case BITMATRIX: as_bitmatrix().freeself_bitmatrix(); break;
 		//case PC_PRESENTATION: as_pc_presentation().freeself_pc_presentation(); break;
 		//case PC_SUBGROUP: as_pc_subgroup().freeself_pc_subgroup(); break;
 		//case GROUP_WORD: as_group_word().freeself_group_word(); break;
@@ -135,18 +135,18 @@ void discreta_base::c_kind(kind k)
 	// cout << "discreta_base::c_kind(), k= " << kind_ascii(k) << "\n";
 	switch (k) {
 		case BASE: settype_base(); break;
-		case INTEGER: as_integer().settype_integer(); break;
+		case intEGER: as_integer().settype_integer(); break;
 		case VECTOR: as_vector().settype_vector(); break;
 		case NUMBER_PARTITION: as_number_partition().settype_number_partition(); break;
 		case PERMUTATION: as_permutation().settype_permutation(); break;
 		case MATRIX: as_matrix().settype_matrix(); break;
-		case LONGINTEGER: as_longinteger().settype_longinteger(); break;
+		case LONGintEGER: as_longinteger().settype_longinteger(); break;
 		case MEMORY: as_memory().settype_memory(); break;
 		//case PERM_GROUP: as_perm_group().settype_perm_group(); break;
 		//case PERM_GROUP_STAB_CHAIN: as_perm_group_stab_chain().settype_perm_group_stab_chain(); break;
 		case UNIPOLY: as_unipoly().settype_unipoly(); break;
 		case SOLID: as_solid().settype_solid(); break;
-		case BITMATRIX: as_bitmatrix().settype_bitmatrix(); break;
+		//case BITMATRIX: as_bitmatrix().settype_bitmatrix(); break;
 		//case PC_PRESENTATION: as_pc_presentation().settype_pc_presentation(); break;
 		//case PC_SUBGROUP: as_pc_subgroup().settype_pc_subgroup(); break;
 		//case GROUP_WORD: as_group_word().settype_group_word(); break;
@@ -245,9 +245,9 @@ ostream& discreta_base::printobjectkindln(ostream& ost)
 	return ost;
 }
 
-INT& discreta_base::s_i_i()
+int& discreta_base::s_i_i()
 {
-	if (s_kind() != INTEGER) {
+	if (s_kind() != intEGER) {
 		cout << "discreta_base::s_i_i() not an integer, objectkind=";
 		printobjectkindln(cout);
 		exit(1);
@@ -255,13 +255,13 @@ INT& discreta_base::s_i_i()
 	return as_integer().s_i();
 }
 
-void discreta_base::m_i_i(INT i)
+void discreta_base::m_i_i(int i)
 {
 	change_to_integer().m_i(i);
 }
 
 
-INT discreta_base::compare_with(discreta_base &a)
+int discreta_base::compare_with(discreta_base &a)
 {
 	if (s_kind() != BASE) {
 		cout << "compare_with() not implemented for class ";
@@ -274,37 +274,37 @@ INT discreta_base::compare_with(discreta_base &a)
 	return 0;
 }
 
-INT discreta_base::eq(discreta_base &a)
+int discreta_base::eq(discreta_base &a)
 {
-	INT r = compare_with(a);
+	int r = compare_with(a);
 	if (r == 0)
 		return TRUE;
 	else
 		return FALSE;
 }
 
-INT discreta_base::neq(discreta_base &a)
+int discreta_base::neq(discreta_base &a)
 {
-	INT r = compare_with(a);
+	int r = compare_with(a);
 	if (r != 0)
 		return TRUE;
 	else
 		return FALSE;
 }
 
-INT discreta_base::le(discreta_base &a)
+int discreta_base::le(discreta_base &a)
 {
-	INT r = compare_with(a);
+	int r = compare_with(a);
 	if (r <= 0)
 		return TRUE;
 	else
 		return FALSE;
 }
 
-INT discreta_base::lt(discreta_base &a)
+int discreta_base::lt(discreta_base &a)
 {
 	//cout << "lt(): " << *this << ", " << a;
-	INT r = compare_with(a);
+	int r = compare_with(a);
 	//cout << " r=" << r << endl;
 	if (r < 0)
 		return TRUE;
@@ -312,25 +312,25 @@ INT discreta_base::lt(discreta_base &a)
 		return FALSE;
 }
 
-INT discreta_base::ge(discreta_base &a)
+int discreta_base::ge(discreta_base &a)
 {
-	INT r = compare_with(a);
+	int r = compare_with(a);
 	if (r >= 0)
 		return TRUE;
 	else
 		return FALSE;
 }
 
-INT discreta_base::gt(discreta_base &a)
+int discreta_base::gt(discreta_base &a)
 {
-	INT r = compare_with(a);
+	int r = compare_with(a);
 	if (r > 0)
 		return TRUE;
 	else
 		return FALSE;
 }
 
-INT discreta_base::is_even()
+int discreta_base::is_even()
 {
 	discreta_base a, q, r;
 	
@@ -342,7 +342,7 @@ INT discreta_base::is_even()
 		return FALSE;
 }
 
-INT discreta_base::is_odd()
+int discreta_base::is_odd()
 {
 	if (is_even())
 		return FALSE;
@@ -381,10 +381,10 @@ void discreta_base::mult_to(discreta_base &x, discreta_base &y)
 	exit(1);
 }
 
-INT discreta_base::invert()
+int discreta_base::invert()
 {
 	discreta_base a;
-	INT ret;
+	int ret;
 	
 	ret = invert_to(a);
 	// cout << "discreta_base::invert() a="; a.println();
@@ -393,7 +393,7 @@ INT discreta_base::invert()
 	return ret;
 }
 
-INT discreta_base::invert_mod(discreta_base &p)
+int discreta_base::invert_mod(discreta_base &p)
 {
 	discreta_base u, v, g;
 	
@@ -408,7 +408,7 @@ INT discreta_base::invert_mod(discreta_base &p)
 	return TRUE;
 }
 
-INT discreta_base::invert_to(discreta_base &x)
+int discreta_base::invert_to(discreta_base &x)
 {
 	if (s_kind() != BASE) {
 		// cout << "invert_to() not implemented for class ";
@@ -431,7 +431,7 @@ void discreta_base::mult_apply(discreta_base &x)
 }
 
 #if 1
-discreta_base& discreta_base::power_int(INT l)
+discreta_base& discreta_base::power_int(int l)
 {
 	discreta_base a, b;
 	
@@ -458,7 +458,7 @@ discreta_base& discreta_base::power_int(INT l)
 #endif
 
 #if 0
-discreta_base& discreta_base::power_int(INT l)
+discreta_base& discreta_base::power_int(int l)
 {
 	discreta_base *a = callocobject(BASE);
 	discreta_base *b = callocobject(BASE);
@@ -483,7 +483,7 @@ discreta_base& discreta_base::power_int(INT l)
 }
 #endif
 
-discreta_base& discreta_base::power_int_mod(INT l, discreta_base &p)
+discreta_base& discreta_base::power_int_mod(int l, discreta_base &p)
 {
 	discreta_base a, b, c;
 	
@@ -518,9 +518,9 @@ discreta_base& discreta_base::power_longinteger(longinteger& l)
 	a.one();
 	b = *this;
 	while (!l.is_zero()) {
-		if (a.s_kind() == LONGINTEGER) {
+		if (a.s_kind() == LONGintEGER) {
 			longinteger &B = b.as_longinteger();
-			INT d;
+			int d;
 			
 			d = B.s_len();
 			cout << "l=" << l << " digits=" << d << endl;
@@ -550,9 +550,9 @@ discreta_base& discreta_base::power_longinteger_mod(longinteger& l, discreta_bas
 	a.one();
 	b = *this;
 	while (!l.is_zero()) {
-		if (a.s_kind() == LONGINTEGER) {
+		if (a.s_kind() == LONGintEGER) {
 			longinteger &B = a.as_longinteger();
-			INT d;
+			int d;
 			
 			d = B.s_len();
 			cout << "l=" << l << " digits=" << d << endl;
@@ -622,10 +622,10 @@ discreta_base& discreta_base::divide_by_exact(discreta_base& x)
 
 #undef DEBUG_ORDER
 
-INT discreta_base::order()
+int discreta_base::order()
 {
 	discreta_base a, b;
-	INT i = 1;
+	int i = 1;
 	
 	copyobject_to(a);
 	copyobject_to(b);
@@ -642,10 +642,10 @@ INT discreta_base::order()
 	return i;
 }
 
-INT discreta_base::order_mod(discreta_base &p)
+int discreta_base::order_mod(discreta_base &p)
 {
 	discreta_base a, b, c;
-	INT i = 1;
+	int i = 1;
 	
 	copyobject_to(a);
 	copyobject_to(b);
@@ -766,7 +766,7 @@ void discreta_base::m_one()
 	exit(1);
 }
 
-void discreta_base::homo_z(INT z)
+void discreta_base::homo_z(int z)
 {
 	if (s_kind() != BASE) {
 		// cout << "homo_z() not implemented for class ";
@@ -805,7 +805,7 @@ void discreta_base::dec()
 	exit(1);
 }
 
-INT discreta_base::is_zero()
+int discreta_base::is_zero()
 {
 	if (s_kind() != BASE) {
 		// cout << "is_zero() not implemented for class ";
@@ -817,7 +817,7 @@ INT discreta_base::is_zero()
 	exit(1);
 }
 
-INT discreta_base::is_one()
+int discreta_base::is_one()
 {
 	if (s_kind() != BASE) {
 		// cout << "is_one() not implemented for class ";
@@ -829,7 +829,7 @@ INT discreta_base::is_one()
 	exit(1);
 }
 
-INT discreta_base::is_m_one()
+int discreta_base::is_m_one()
 {
 	if (s_kind() != BASE) {
 		// cout << "is_m_one() not implemented for class ";
@@ -841,7 +841,7 @@ INT discreta_base::is_m_one()
 	exit(1);
 }
 
-discreta_base& discreta_base::factorial(INT z)
+discreta_base& discreta_base::factorial(int z)
 {
 	discreta_base a, b;
 	
@@ -855,14 +855,14 @@ discreta_base& discreta_base::factorial(INT z)
 	return *this;
 }
 
-discreta_base& discreta_base::i_power_j(INT i, INT j)
+discreta_base& discreta_base::i_power_j(int i, int j)
 {
 	m_i_i(i);
 	power_int(j);
 	return *this;
 }
 
-INT discreta_base::compare_with_euklidean(discreta_base &a)
+int discreta_base::compare_with_euklidean(discreta_base &a)
 {
 	if (s_kind() != BASE) {
 		// cout << "compare_with_euklidean() not implemented for class ";
@@ -874,7 +874,7 @@ INT discreta_base::compare_with_euklidean(discreta_base &a)
 	exit(1);
 }
 
-void discreta_base::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, INT verbose_level)
+void discreta_base::integral_division(discreta_base &x, discreta_base &q, discreta_base &r, int verbose_level)
 {
 	if (s_kind() != BASE) {
 		// cout << "integral_division() not implemented for class ";
@@ -903,7 +903,7 @@ void discreta_base::integral_division_exact(discreta_base &x, discreta_base &q)
 	exit(1);
 }
 
-void discreta_base::integral_division_by_integer(INT x, discreta_base &q, discreta_base &r)
+void discreta_base::integral_division_by_integer(int x, discreta_base &q, discreta_base &r)
 {
 	discreta_base a;
 	
@@ -911,7 +911,7 @@ void discreta_base::integral_division_by_integer(INT x, discreta_base &q, discre
 	integral_division(a, q, r, 0);
 }
 
-void discreta_base::integral_division_by_integer_exact(INT x, discreta_base &q)
+void discreta_base::integral_division_by_integer_exact(int x, discreta_base &q)
 {
 	discreta_base a;
 	
@@ -919,7 +919,7 @@ void discreta_base::integral_division_by_integer_exact(INT x, discreta_base &q)
 	integral_division_exact(a, q);
 }
 
-void discreta_base::integral_division_by_integer_exact_apply(INT x)
+void discreta_base::integral_division_by_integer_exact_apply(int x)
 {
 	discreta_base a, q;
 	
@@ -928,7 +928,7 @@ void discreta_base::integral_division_by_integer_exact_apply(INT x)
 	swap(q);
 }
 
-INT discreta_base::is_divisor(discreta_base& y)
+int discreta_base::is_divisor(discreta_base& y)
 {
 	discreta_base q, r;
 	
@@ -947,12 +947,12 @@ void discreta_base::modulo(discreta_base &p)
 	swap(r);
 }
 
-void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_base &v, discreta_base &g, INT verbose_level)
+void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_base &v, discreta_base &g, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	discreta_base sign1, sign2;
-	INT c;
+	int c;
 	
 	if (f_v) {
 		cout << "discreta_base::extended_gcd() m=" << *this << " n=" << n << endl;
@@ -975,8 +975,8 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 		return;
 		}
 
-	if (s_kind() == INTEGER) {
-		INT a;
+	if (s_kind() == intEGER) {
+		int a;
 		a = s_i_i();
 		if (a < 0) {
 			sign1.m_i_i(-1);
@@ -1042,10 +1042,10 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 	u = u2;
 	v = v2;
 	g = N;
-	if (s_kind() == INTEGER) {
+	if (s_kind() == intEGER) {
 		// cout << "sign1=" << sign1 << endl;
 		// cout << "sign2=" << sign2 << endl;
-		INT a;
+		int a;
 		
 		a = s_i_i();
 		a *= sign1.s_i_i();
@@ -1073,16 +1073,16 @@ void discreta_base::extended_gcd(discreta_base &n, discreta_base &u, discreta_ba
 		}
 }
 
-void discreta_base::write_memory(memory &m, INT debug_depth)
+void discreta_base::write_memory(memory &m, int debug_depth)
 {
 	enum kind k;
-	INT i;
+	int i;
 	char c;
 	
 	k = s_kind();
-	i = (INT) k;
+	i = (int) k;
 	c = (char) k;
-	if (!ONE_char_INT(i)) {
+	if (!ONE_char_int(i)) {
 		cout << "write_memory(): kind not 1 char" << endl;
 		exit(1);
 		}
@@ -1093,7 +1093,7 @@ void discreta_base::write_memory(memory &m, INT debug_depth)
 	switch (k) {
 		case BASE:
 			break;
-		case INTEGER:
+		case intEGER:
 			m.write_int(s_i_i());
 			break;
 		case VECTOR:
@@ -1108,9 +1108,9 @@ void discreta_base::write_memory(memory &m, INT debug_depth)
 		case MATRIX:
 			as_matrix().write_mem(m, debug_depth);
 			break;
-		case LONGINTEGER:
+		case LONGintEGER:
 			// as_longinteger().write_mem(m, debug_depth);
-			cout << "discreta_base::write_mem() no write_mem for LONGINTEGER" << endl;
+			cout << "discreta_base::write_mem() no write_mem for LONGintEGER" << endl;
 			break;
 		case MEMORY:
 			as_memory().write_mem(m, debug_depth);
@@ -1130,9 +1130,9 @@ void discreta_base::write_memory(memory &m, INT debug_depth)
 		case SOLID:
 			as_solid().write_mem(m, debug_depth);
 			break;
-		case BITMATRIX:
-			as_bitmatrix().write_mem(m, debug_depth);
-			break;
+		//case BITMATRIX:
+			//as_bitmatrix().write_mem(m, debug_depth);
+			//break;
 		//case PC_PRESENTATION:
 			//as_pc_presentation().write_mem(m, debug_depth);
 			//break;
@@ -1168,10 +1168,10 @@ void discreta_base::write_memory(memory &m, INT debug_depth)
 		}
 }
 
-void discreta_base::read_memory(memory &m, INT debug_depth)
+void discreta_base::read_memory(memory &m, int debug_depth)
 {
 	enum kind k;
-	INT i;
+	int i;
 	char c;
 	
 	m.read_char(&c);
@@ -1180,7 +1180,7 @@ void discreta_base::read_memory(memory &m, INT debug_depth)
 	switch (k) {
 		case BASE:
 			break;
-		case INTEGER:
+		case intEGER:
 			m.read_int(&i);
 			m_i_i(i);
 			break;
@@ -1196,9 +1196,9 @@ void discreta_base::read_memory(memory &m, INT debug_depth)
 		case MATRIX:
 			as_matrix().read_mem(m, debug_depth);
 			break;
-		case LONGINTEGER:
+		case LONGintEGER:
 			// as_longinteger().read_mem(m, debug_depth);
-			cout << "discreta_base::read_mem() no read_mem for LONGINTEGER" << endl;
+			cout << "discreta_base::read_mem() no read_mem for LONGintEGER" << endl;
 			break;
 		case MEMORY:
 			as_memory().read_mem(m, debug_depth);
@@ -1218,9 +1218,9 @@ void discreta_base::read_memory(memory &m, INT debug_depth)
 		case SOLID:
 			as_vector().read_mem(m, debug_depth);
 			break;
-		case BITMATRIX:
-			as_bitmatrix().read_mem(m, debug_depth);
-			break;
+//		case BITMATRIX:
+//			as_bitmatrix().read_mem(m, debug_depth);
+//			break;
 		//case PC_PRESENTATION:
 			//as_pc_presentation().read_mem(m, debug_depth);
 			//break;
@@ -1256,16 +1256,16 @@ void discreta_base::read_memory(memory &m, INT debug_depth)
 		}
 }
 
-INT discreta_base::calc_size_on_file()
+int discreta_base::calc_size_on_file()
 {
 	enum kind k;
-	INT i, size;
+	int i, size;
 	char c;
 	
 	k = s_kind();
-	i = (INT) k;
+	i = (int) k;
 	c = (char) k;
-	if (!ONE_char_INT(i)) {
+	if (!ONE_char_int(i)) {
 		cout << "write_memory(): kind not 1 char" << endl;
 		exit(1);
 		}
@@ -1273,7 +1273,7 @@ INT discreta_base::calc_size_on_file()
 	switch (k) {
 		case BASE:
 			break;
-		case INTEGER:
+		case intEGER:
 			size += 4;
 			break;
 		case VECTOR:
@@ -1288,9 +1288,9 @@ INT discreta_base::calc_size_on_file()
 		case MATRIX:
 			size += as_matrix().csf();
 			break;
-		case LONGINTEGER:
+		case LONGintEGER:
 			// size += as_longinteger().csf();
-			cout << "discreta_base::write_mem() no csf for LONGINTEGER" << endl;
+			cout << "discreta_base::write_mem() no csf for LONGintEGER" << endl;
 			break;
 		case MEMORY:
 			size += as_memory().csf();
@@ -1310,9 +1310,9 @@ INT discreta_base::calc_size_on_file()
 		case SOLID:
 			size += as_vector().csf();
 			break;
-		case BITMATRIX:
-			size += as_bitmatrix().csf();
-			break;
+//		case BITMATRIX:
+//			size += as_bitmatrix().csf();
+//			break;
 		//case PC_PRESENTATION:
 			//size += as_pc_presentation().csf();
 			//break;
@@ -1349,10 +1349,10 @@ INT discreta_base::calc_size_on_file()
 	return size;
 }
 
-void discreta_base::pack(memory & M, INT f_v, INT debug_depth)
+void discreta_base::pack(memory & M, int f_v, int debug_depth)
 // used to pack (i.e. to serialize) objects into (binary) strings in memory objects.
 {
-	INT size, size0;
+	int size, size0;
 	
 	if (f_v) {
 		cout << "discreta_base::pack(): calculating memory size" << endl;
@@ -1374,7 +1374,7 @@ void discreta_base::pack(memory & M, INT f_v, INT debug_depth)
 		}
 }
 
-void discreta_base::unpack(memory & M, INT f_v, INT debug_depth)
+void discreta_base::unpack(memory & M, int f_v, int debug_depth)
 // unpacks an object from a binary representation in a memory object
 {
 	read_memory(M, debug_depth);
@@ -1384,10 +1384,10 @@ void discreta_base::save_ascii(ostream & f)
 // writes in ASCII text format (uuencoded like) into the stream f. 
 {
 	memory M;
-	INT f_v = FALSE, f_vv = FALSE;
-	INT size, debug_depth;
-	INT i;
-	UINT a, a1, a2;
+	int f_v = FALSE, f_vv = FALSE;
+	int size, debug_depth;
+	int i;
+	uint a, a1, a2;
 	uchar *pc, c1, c2;
 
 	if (f_v) {
@@ -1415,8 +1415,8 @@ void discreta_base::save_ascii(ostream & f)
 	
 	f << "ASCII " << size << endl;
 	for (i = 0; i < size; i++) {
-		a = (UINT) pc[i];
-		a1 = a % (UINT) 16;
+		a = (uint) pc[i];
+		a1 = a % (uint) 16;
 		a2 = a >> 4;
 		c1 = '0' + a1;
 		c2 = '0' + a2;
@@ -1435,13 +1435,13 @@ void discreta_base::load_ascii(istream & f)
 	memory M;
 	char buf[BUFSIZE];
 	char str[1024], *p;
-	INT f_v = TRUE;
-	INT f_vv = FALSE;
-	INT size, i, debug_depth;
+	int f_v = TRUE;
+	int f_vv = FALSE;
+	int size, i, debug_depth;
 	uchar *pc;
 	uchar c;
-	INT a;
-	UINT a1, a2;
+	int a;
+	uint a1, a2;
 	char cc;
 		
 	f.getline(buf, sizeof(buf));
@@ -1468,13 +1468,13 @@ void discreta_base::load_ascii(istream & f)
 				continue;
 			break;
 			}
-		a1 = (UINT) cc;
+		a1 = (uint) cc;
 		if (f.eof()) {
 			cout << "discreta_base::load_ascii() primature EOF" << endl;
 			exit(1);
 			}
 		f >> cc;
-		a2 = (UINT) cc;
+		a2 = (uint) cc;
 		a1 = a1 - '0';
 		a2 = a2 - '0';
 		a = a2 << 4;

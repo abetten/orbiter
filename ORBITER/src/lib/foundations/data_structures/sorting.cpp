@@ -9,33 +9,33 @@
 
 #include "foundations.h"
 
-void INT_vec_search_vec(INT *v, INT len, INT *A, INT A_sz, INT *Idx)
+void int_vec_search_vec(int *v, int len, int *A, int A_sz, int *Idx)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < A_sz; i++) {
-		if (!INT_vec_search(v, len, A[i], Idx[i])) {
-			cout << "INT_vec_search_vec did not find entry" << endl;
+		if (!int_vec_search(v, len, A[i], Idx[i])) {
+			cout << "int_vec_search_vec did not find entry" << endl;
 			exit(1); 
 			}
 		}
 }
 
-void INT_vec_search_vec_linear(INT *v, INT len, INT *A, INT A_sz, INT *Idx)
+void int_vec_search_vec_linear(int *v, int len, int *A, int A_sz, int *Idx)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < A_sz; i++) {
-		if (!INT_vec_search_linear(v, len, A[i], Idx[i])) {
-			cout << "INT_vec_search_vec did not find entry" << endl;
+		if (!int_vec_search_linear(v, len, A[i], Idx[i])) {
+			cout << "int_vec_search_vec did not find entry" << endl;
 			exit(1); 
 			}
 		}
 }
 
-INT INT_vec_is_subset_of(INT *set, INT sz, INT *big_set, INT big_set_sz)
+int int_vec_is_subset_of(int *set, int sz, int *big_set, int big_set_sz)
 {
-	INT i, j, a;
+	int i, j, a;
 
 	j = 0;
 	for (i = 0; i < sz; i++) {
@@ -55,9 +55,9 @@ INT INT_vec_is_subset_of(INT *set, INT sz, INT *big_set, INT big_set_sz)
 	return TRUE;
 }
 
-void INT_vec_swap_points(INT *list, INT *list_inv, INT idx1, INT idx2)
+void int_vec_swap_points(int *list, int *list_inv, int idx1, int idx2)
 {
-	INT p1, p2;
+	int p1, p2;
 	
 	if (idx1 == idx2) {
 		return;
@@ -70,9 +70,9 @@ void INT_vec_swap_points(INT *list, INT *list_inv, INT idx1, INT idx2)
 	list_inv[p2] = idx1;
 }
 
-INT INT_vec_is_sorted(INT *v, INT len)
+int int_vec_is_sorted(int *v, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 1; i < len; i++) {
 		if (v[i - 1] > v[i]) {
@@ -82,11 +82,11 @@ INT INT_vec_is_sorted(INT *v, INT len)
 	return TRUE;
 }
 
-void INT_vec_sort_and_remove_duplicates(INT *v, INT &len)
+void int_vec_sort_and_remove_duplicates(int *v, int &len)
 {
-	INT i, j;
+	int i, j;
 	
-	INT_vec_heapsort(v, len);
+	int_vec_heapsort(v, len);
 	for (i = len - 1; i > 0; i--) {
 		if (v[i] == v[i - 1]) {
 			for (j = i + 1; j < len; j++) {
@@ -97,12 +97,12 @@ void INT_vec_sort_and_remove_duplicates(INT *v, INT &len)
 		}
 }
 
-INT INT_vec_sort_and_test_if_contained(INT *v1, INT len1, INT *v2, INT len2)
+int int_vec_sort_and_test_if_contained(int *v1, int len1, int *v2, int len2)
 {
-	INT i, j;
+	int i, j;
 	
-	INT_vec_heapsort(v1, len1);
-	INT_vec_heapsort(v2, len2);
+	int_vec_heapsort(v1, len1);
+	int_vec_heapsort(v2, len2);
 	for (i = 0, j = 0; i < len1; ) {
 		if (j == len2) {
 			return FALSE;
@@ -121,9 +121,9 @@ INT INT_vec_sort_and_test_if_contained(INT *v1, INT len1, INT *v2, INT len2)
 	return TRUE;
 }
 
-INT INT_vecs_are_disjoint(INT *v1, INT len1, INT *v2, INT len2)
+int int_vecs_are_disjoint(int *v1, int len1, int *v2, int len2)
 {
-	INT i, j;
+	int i, j;
 
 	i = 0;
 	j = 0;
@@ -147,9 +147,9 @@ INT INT_vecs_are_disjoint(INT *v1, INT len1, INT *v2, INT len2)
 	return TRUE;
 }
 
-INT INT_vecs_find_common_element(INT *v1, INT len1, INT *v2, INT len2, INT &idx1, INT &idx2)
+int int_vecs_find_common_element(int *v1, int len1, int *v2, int len2, int &idx1, int &idx2)
 {
-	INT i, j;
+	int i, j;
 
 	i = 0;
 	j = 0;
@@ -175,32 +175,32 @@ INT INT_vecs_find_common_element(INT *v1, INT len1, INT *v2, INT len2, INT &idx1
 	return FALSE;
 }
 
-void INT_vec_insert_and_reallocate_if_necessary(INT *&vec, INT &used_length, INT &alloc_length, INT a, INT verbose_level)
+void int_vec_insert_and_reallocate_if_necessary(int *&vec, int &used_length, int &alloc_length, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT idx, t;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int idx, t;
 
 	if (f_v) {
-		cout << "INT_vec_insert_and_reallocate_if_necessary" << endl;
+		cout << "int_vec_insert_and_reallocate_if_necessary" << endl;
 		}
-	if (INT_vec_search(vec, used_length, a, idx)) {
+	if (int_vec_search(vec, used_length, a, idx)) {
 		if (f_vv) {
-			cout << "INT_vec_insert_and_reallocate_if_necessary element " << a << " is already in the list" << endl;
+			cout << "int_vec_insert_and_reallocate_if_necessary element " << a << " is already in the list" << endl;
 			}
 		}
 	else {
 		if (used_length == alloc_length) {
-			INT *C;
-			INT new_alloc_length;
+			int *C;
+			int new_alloc_length;
 
 			new_alloc_length = 2 * alloc_length;
 			cout << "reallocating to length " << new_alloc_length << endl;
-			C = NEW_INT(new_alloc_length);
+			C = NEW_int(new_alloc_length);
 			for (t = 0; t < used_length; t++) {
 				C[t] = vec[t];
 				}
-			FREE_INT(vec);
+			FREE_int(vec);
 			vec = C;
 			alloc_length = new_alloc_length;
 			}
@@ -219,30 +219,30 @@ void INT_vec_insert_and_reallocate_if_necessary(INT *&vec, INT &used_length, INT
 			}
 		}
 	if (f_v) {
-		cout << "INT_vec_insert_and_reallocate_if_necessary done" << endl;
+		cout << "int_vec_insert_and_reallocate_if_necessary done" << endl;
 		}
 }
 
-void INT_vec_append_and_reallocate_if_necessary(INT *&vec, INT &used_length, INT &alloc_length, INT a, INT verbose_level)
+void int_vec_append_and_reallocate_if_necessary(int *&vec, int &used_length, int &alloc_length, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT t;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int t;
 
 	if (f_v) {
-		cout << "INT_vec_append_and_reallocate_if_necessary" << endl;
+		cout << "int_vec_append_and_reallocate_if_necessary" << endl;
 		}
 	if (used_length == alloc_length) {
-		INT *C;
-		INT new_alloc_length;
+		int *C;
+		int new_alloc_length;
 
 		new_alloc_length = 2 * alloc_length;
 		cout << "reallocating to length " << new_alloc_length << endl;
-		C = NEW_INT(new_alloc_length);
+		C = NEW_int(new_alloc_length);
 		for (t = 0; t < used_length; t++) {
 			C[t] = vec[t];
 			}
-		FREE_INT(vec);
+		FREE_int(vec);
 		vec = C;
 		alloc_length = new_alloc_length;
 		}
@@ -257,13 +257,13 @@ void INT_vec_append_and_reallocate_if_necessary(INT *&vec, INT &used_length, INT
 			}
 		}
 	if (f_v) {
-		cout << "INT_vec_append_and_reallocate_if_necessary done" << endl;
+		cout << "int_vec_append_and_reallocate_if_necessary done" << endl;
 		}
 }
 
-INT INT_vec_is_zero(INT *v, INT len)
+int int_vec_is_zero(int *v, int len)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
@@ -273,71 +273,71 @@ INT INT_vec_is_zero(INT *v, INT len)
 	return TRUE;
 }
 
-INT test_if_sets_are_equal(INT *set1, INT *set2, INT set_size)
+int test_if_sets_are_equal(int *set1, int *set2, int set_size)
 {
-	INT *S1, *S2;
-	INT i;
+	int *S1, *S2;
+	int i;
 
-	S1 = NEW_INT(set_size);
-	S2 = NEW_INT(set_size);
-	INT_vec_copy(set1, S1, set_size);
-	INT_vec_copy(set2, S2, set_size);
-	INT_vec_heapsort(S1, set_size);
-	INT_vec_heapsort(S2, set_size);
+	S1 = NEW_int(set_size);
+	S2 = NEW_int(set_size);
+	int_vec_copy(set1, S1, set_size);
+	int_vec_copy(set2, S2, set_size);
+	int_vec_heapsort(S1, set_size);
+	int_vec_heapsort(S2, set_size);
 	for (i = 0; i < set_size; i++) {
 		if (S1[i] != S2[i]) {
 			return FALSE;
 			}
 		}
-	FREE_INT(S1);
-	FREE_INT(S2);
+	FREE_int(S1);
+	FREE_int(S2);
 	return TRUE;
 }
 
-void test_if_set(INT *set, INT set_size)
+void test_if_set(int *set, int set_size)
 {
-	INT *S;
-	INT i;
+	int *S;
+	int i;
 
-	S = NEW_INT(set_size);
+	S = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		S[i] = set[i];
 		}
-	INT_vec_heapsort(S, set_size);
+	int_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
 			cout << "the set is not a set: the element " << S[i] << " is repeated" << endl;
 			exit(1);
 			}
 		}
-	FREE_INT(S);
+	FREE_int(S);
 }
 
-INT test_if_set_with_return_value(INT *set, INT set_size)
+int test_if_set_with_return_value(int *set, int set_size)
 {
-	INT *S;
-	INT i;
+	int *S;
+	int i;
 
-	S = NEW_INT(set_size);
+	S = NEW_int(set_size);
 	for (i = 0; i < set_size; i++) {
 		S[i] = set[i];
 		}
-	INT_vec_heapsort(S, set_size);
+	int_vec_heapsort(S, set_size);
 	for (i = 0; i < set_size - 1; i++) {
 		if (S[i] == S[i + 1]) {
 			cout << "the set is not a set: the element " << S[i] << " is repeated" << endl;
-			FREE_INT(S);
+			FREE_int(S);
 			return FALSE;
 			}
 		}
-	FREE_INT(S);
+	FREE_int(S);
 	return TRUE;
 }
 
-void rearrange_subset(INT n, INT k, INT *set, INT *subset, INT *rearranged_set, INT verbose_level)
+void rearrange_subset(int n, int k, int *set, int *subset, int *rearranged_set, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j = 0;
+	int f_v = (verbose_level >= 1);
+	int i, j = 0;
 	
 	for (i = 0; i < n; i++) {
 		if (j < k && subset[j] == i) {
@@ -350,23 +350,23 @@ void rearrange_subset(INT n, INT k, INT *set, INT *subset, INT *rearranged_set, 
 		}
 	if (f_v) {
 		cout << "rearrange_subset ";
-		INT_vec_print(cout, rearranged_set, n);
+		int_vec_print(cout, rearranged_set, n);
 		cout << endl;
 #if 0
 		cout << "rearrange_subset subset=";
-		INT_vec_print(cout, set, n);
+		int_vec_print(cout, set, n);
 		cout << " : ";
-		INT_vec_print(cout, subset, k);
+		int_vec_print(cout, subset, k);
 		cout << " : ";
-		INT_vec_print(cout, rearranged_set, n);
+		int_vec_print(cout, rearranged_set, n);
 		cout << endl;
 #endif
 		}
 }
 
-INT INT_vec_search_linear(INT *v, INT len, INT a, INT &idx)
+int int_vec_search_linear(int *v, int len, int a, int &idx)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		if (v[i] == a) {
@@ -377,37 +377,37 @@ INT INT_vec_search_linear(INT *v, INT len, INT a, INT &idx)
 	return FALSE;
 }
 
-void INT_vec_intersect(INT *v1, INT len1, INT *v2, INT len2, INT *&v3, INT &len3)
+void int_vec_intersect(int *v1, int len1, int *v2, int len2, int *&v3, int &len3)
 {
-	INT *V1, *V2;
-	INT i, a, idx;
+	int *V1, *V2;
+	int i, a, idx;
 
-	V1 = NEW_INT(len1);
-	V2 = NEW_INT(len2);
+	V1 = NEW_int(len1);
+	V2 = NEW_int(len2);
 	for (i = 0; i < len1; i++) {
 		V1[i] = v1[i];
 		}
 	for (i = 0; i < len2; i++) {
 		V2[i] = v2[i];
 		}
-	INT_vec_heapsort(V1, len1);
-	INT_vec_heapsort(V2, len2);
-	v3 = NEW_INT(MAXIMUM(len1, len2));
+	int_vec_heapsort(V1, len1);
+	int_vec_heapsort(V2, len2);
+	v3 = NEW_int(MAXIMUM(len1, len2));
 	len3 = 0;
 	for (i = 0; i < len1; i++) {
 		a = V1[i];
-		if (INT_vec_search(V2, len2, a, idx)) {
+		if (int_vec_search(V2, len2, a, idx)) {
 			v3[len3++] = a;
 			}
 		}
 
-	FREE_INT(V1);
-	FREE_INT(V2);
+	FREE_int(V1);
+	FREE_int(V2);
 }
 
-void INT_vec_intersect_sorted_vectors(INT *v1, INT len1, INT *v2, INT len2, INT *v3, INT &len3)
+void int_vec_intersect_sorted_vectors(int *v1, int len1, int *v2, int len2, int *v3, int &len3)
 {
-	INT i, j, a, b;
+	int i, j, a, b;
 
 	len3 = 0;
 	i = 0;
@@ -434,44 +434,44 @@ void INT_vec_intersect_sorted_vectors(INT *v1, INT len1, INT *v2, INT len2, INT 
 }
 
 
-void INT_vec_sorting_permutation(INT *v, INT len, INT *perm, INT *perm_inv, INT f_increasingly)
+void int_vec_sorting_permutation(int *v, int len, int *perm, int *perm_inv, int f_increasingly)
 // perm and perm_inv must be allocated to len elements
 {
 #if 0
-	INT i;
-	INT *pairs;
-	PINT *V;
+	int i;
+	int *pairs;
+	pint *V;
 	
-	pairs = NEW_INT(len * 2);
-	V = NEW_PINT(len);
+	pairs = NEW_int(len * 2);
+	V = NEW_pint(len);
 	for (i = 0; i < len; i++) {
 		pairs[i * 2 + 0] = v[i];
 		pairs[i * 2 + 1] = i;
 		V[i] = pairs + i * 2;
 		}
 	if (f_increasingly) {
-		quicksort_array(len, (void **)V, INT_compare_increasingly, NULL);
+		quicksort_array(len, (void **)V, int_compare_increasingly, NULL);
 		}
 	else {
-		quicksort_array(len, (void **)V, INT_compare_decreasingly, NULL);
+		quicksort_array(len, (void **)V, int_compare_decreasingly, NULL);
 		}
 	for (i = 0; i < len; i++) {
 		perm_inv[i] = V[i][1];
 		}
 	perm_inverse(perm_inv, perm, len);
 	
-	FREE_INT(V);
-	FREE_PINT(pairs);
+	FREE_int(V);
+	FREE_pint(pairs);
 #else
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		perm_inv[i] = i;
 		}
-	INT_vec_heapsort_with_log(v, perm_inv, len);
+	int_vec_heapsort_with_log(v, perm_inv, len);
 	if (!f_increasingly) {
-		INT n2 = len >> 1;
-		INT a;
+		int n2 = len >> 1;
+		int a;
 
 		for (i = 0; i < n2; i++) {
 			a = v[i];
@@ -486,10 +486,10 @@ void INT_vec_sorting_permutation(INT *v, INT len, INT *perm, INT *perm_inv, INT 
 #endif
 }
 
-INT INT_compare_increasingly(void *a, void *b, void *data)
+int int_compare_increasingly(void *a, void *b, void *data)
 {
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
+	int *A = (int *)a;
+	int *B = (int *)b;
 	
 	if (*A > *B)
 		return 1;
@@ -498,10 +498,10 @@ INT INT_compare_increasingly(void *a, void *b, void *data)
 	return 0;
 }
 
-INT INT_compare_decreasingly(void *a, void *b, void *data)
+int int_compare_decreasingly(void *a, void *b, void *data)
 {
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
+	int *A = (int *)a;
+	int *B = (int *)b;
 	
 	if (*A > *B)
 		return -1;
@@ -510,10 +510,10 @@ INT INT_compare_decreasingly(void *a, void *b, void *data)
 	return 0;
 }
 
-static void INT_vec_partition(INT *v, INT (*compare_func)(INT a, INT b), INT left, INT right, INT *middle)
+static void int_vec_partition(int *v, int (*compare_func)(int a, int b), int left, int right, int *middle)
 {
-	INT l, r, m, len, m1, res, pivot;
-	INT vv;
+	int l, r, m, len, m1, res, pivot;
+	int vv;
 	
 	//cout << "partition: from " << left << " to " << right << endl; 
 	// pivot strategy: take the element in the middle: 
@@ -560,18 +560,18 @@ static void INT_vec_partition(INT *v, INT (*compare_func)(INT a, INT b), INT lef
 	*middle = m;
 }
 
-void INT_vec_quicksort(INT *v, INT (*compare_func)(INT a, INT b), INT left, INT right)
+void int_vec_quicksort(int *v, int (*compare_func)(int a, int b), int left, int right)
 {
-	INT middle;
+	int middle;
 	
 	if (left < right) {
-		INT_vec_partition(v, compare_func, left, right, &middle);
-		INT_vec_quicksort(v, compare_func, left, middle - 1);
-		INT_vec_quicksort(v, compare_func, middle + 1, right);
+		int_vec_partition(v, compare_func, left, right, &middle);
+		int_vec_quicksort(v, compare_func, left, middle - 1);
+		int_vec_quicksort(v, compare_func, middle + 1, right);
 		}
 }
 
-INT compare_increasingly_INT(INT a, INT b)
+int compare_increasingly_int(int a, int b)
 {
 	if (a < b)
 		return -1;
@@ -580,7 +580,7 @@ INT compare_increasingly_INT(INT a, INT b)
 	return 0;
 }
 
-INT compare_decreasingly_INT(INT a, INT b)
+int compare_decreasingly_int(int a, int b)
 {
 	if (a > b)
 		return -1;
@@ -589,21 +589,21 @@ INT compare_decreasingly_INT(INT a, INT b)
 	return 0;
 }
 
-void INT_vec_quicksort_increasingly(INT *v, INT len)
+void int_vec_quicksort_increasingly(int *v, int len)
 {
-	INT_vec_quicksort(v, compare_increasingly_INT, 0, len - 1);
+	int_vec_quicksort(v, compare_increasingly_int, 0, len - 1);
 }
 
-void INT_vec_quicksort_decreasingly(INT *v, INT len)
+void int_vec_quicksort_decreasingly(int *v, int len)
 {
-	INT_vec_quicksort(v, compare_decreasingly_INT, 0, len - 1);
+	int_vec_quicksort(v, compare_decreasingly_int, 0, len - 1);
 }
 
-static void partition(void **v, INT *perm, 
-	INT (*compare_func)(void *a, void *b, void *data), void *data, 
-	INT left, INT right, INT *middle)
+static void partition(void **v, int *perm, 
+	int (*compare_func)(void *a, void *b, void *data), void *data, 
+	int left, int right, int *middle)
 {
-	INT l, r, m, len, m1, res, pivot, tmp;
+	int l, r, m, len, m1, res, pivot, tmp;
 	void *vv;
 	
 	//cout << "partition: from " << left << " to " << right << endl; 
@@ -667,11 +667,11 @@ static void partition(void **v, INT *perm,
 	*middle = m;
 }
 
-static void quicksort(void **v, INT *perm, 
-	INT (*compare_func)(void *a, void *b, void *data), void *data, 
-	INT left, INT right)
+static void quicksort(void **v, int *perm, 
+	int (*compare_func)(void *a, void *b, void *data), void *data, 
+	int left, int right)
 {
-	INT middle;
+	int middle;
 	
 	if (left < right) {
 		partition(v, perm, compare_func, data, left, right, &middle);
@@ -680,25 +680,25 @@ static void quicksort(void **v, INT *perm,
 		}
 }
 
-void quicksort_array(INT len, void **v, 
-	INT (*compare_func)(void *a, void *b, void *data), void *data)
+void quicksort_array(int len, void **v, 
+	int (*compare_func)(void *a, void *b, void *data), void *data)
 {
 	if (len <= 1)
 		return;
 	quicksort(v, NULL, compare_func, data, 0, len - 1);
 }
 
-void quicksort_array_with_perm(INT len, void **v, INT *perm, 
-	INT (*compare_func)(void *a, void *b, void *data), void *data)
+void quicksort_array_with_perm(int len, void **v, int *perm, 
+	int (*compare_func)(void *a, void *b, void *data), void *data)
 {
 	if (len <= 1)
 		return;
 	quicksort(v, perm, compare_func, data, 0, len - 1);
 }
 
-void INT_vec_sort(INT len, INT *p)
+void int_vec_sort(int len, int *p)
 {
-	INT i, j, a;
+	int i, j, a;
 	for (i = 0; i < len; i++) {
 		for (j = i + 1; j < len; j++) {
 			if (p[i] > p[j]) {
@@ -723,9 +723,10 @@ int int_vec_compare(int *p, int *q, int len)
 	return 0;
 }
 
-INT INT_vec_compare(INT *p, INT *q, INT len)
+#if 0
+int int_vec_compare(int *p, int *q, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		if (p[i] < q[i])
@@ -735,10 +736,10 @@ INT INT_vec_compare(INT *p, INT *q, INT len)
 		}
 	return 0;
 }
-
-INT INT_vec_compare_stride(INT *p, INT *q, INT len, INT stride)
+#endif
+int int_vec_compare_stride(int *p, int *q, int len, int stride)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		if (p[i * stride] < q[i * stride])
@@ -749,12 +750,12 @@ INT INT_vec_compare_stride(INT *p, INT *q, INT len, INT stride)
 	return 0;
 }
 
-INT vec_search(void **v, INT (*compare_func)(void *a, void *b, void *data), void *data_for_compare, 
-	INT len, void *a, INT &idx, INT verbose_level)
+int vec_search(void **v, int (*compare_func)(void *a, void *b, void *data), void *data_for_compare, 
+	int len, void *a, int &idx, int verbose_level)
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
-	INT f_v = (verbose_level >= 1);
+	int l, r, m, res;
+	int f_found = FALSE;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "vec_search len=" << len << endl;
@@ -802,13 +803,13 @@ INT vec_search(void **v, INT (*compare_func)(void *a, void *b, void *data), void
 	return f_found;
 }
 
-INT vec_search_general(void *vec, 
-	INT (*compare_func)(void *vec, void *a, INT b, void *data_for_compare), void *data_for_compare, 
-	INT len, void *a, INT &idx, INT verbose_level)
+int vec_search_general(void *vec, 
+	int (*compare_func)(void *vec, void *a, int b, void *data_for_compare), void *data_for_compare, 
+	int len, void *a, int &idx, int verbose_level)
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
-	INT f_v = (verbose_level >= 1);
+	int l, r, m, res;
+	int f_found = FALSE;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "vec_search_general len=" << len << endl;
@@ -856,11 +857,11 @@ INT vec_search_general(void *vec,
 	return f_found;
 }
 
-INT INT_vec_search_and_insert_if_necessary(INT *v, INT &len, INT a)
+int int_vec_search_and_insert_if_necessary(int *v, int &len, int a)
 {
-	INT idx, t;
+	int idx, t;
 
-	if (!INT_vec_search(v, len, a, idx)) {
+	if (!int_vec_search(v, len, a, idx)) {
 		for (t = len - 1; t >= idx; t--) {
 			v[t + 1] = v[t];
 			}
@@ -873,11 +874,11 @@ INT INT_vec_search_and_insert_if_necessary(INT *v, INT &len, INT a)
 		}
 }
 
-INT INT_vec_search_and_remove_if_found(INT *v, INT &len, INT a)
+int int_vec_search_and_remove_if_found(int *v, int &len, int a)
 {
-	INT idx, t;
+	int idx, t;
 
-	if (INT_vec_search(v, len, a, idx)) {
+	if (int_vec_search(v, len, a, idx)) {
 		for (t = idx; t < len - 1; t++) {
 			v[t] = v[t + 1];
 			}
@@ -890,15 +891,15 @@ INT INT_vec_search_and_remove_if_found(INT *v, INT &len, INT a)
 }
 
 
-INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
+int int_vec_search(int *v, int len, int a, int &idx)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx the position where it should be inserted if 
 // the vector is assumed to be in increasing order.
 
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
-	INT f_v = FALSE;
+	int l, r, m, res;
+	int f_found = FALSE;
+	int f_v = FALSE;
 	
 	if (len == 0) {
 		idx = 0;
@@ -951,12 +952,12 @@ INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
 	return f_found;
 }
 
-INT INT_vec_search_first_occurence(INT *v, INT len, INT a, INT &idx)
+int int_vec_search_first_occurence(int *v, int len, int a, int &idx)
 // This function finds the first occurence of the element a.
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
-	INT f_v = FALSE;
+	int l, r, m, res;
+	int f_found = FALSE;
+	int f_v = FALSE;
 	
 	if (len == 0) {
 		idx = 0;
@@ -965,7 +966,7 @@ INT INT_vec_search_first_occurence(INT *v, INT len, INT a, INT &idx)
 	l = 0;
 	r = len;
 	if (f_v) {
-		cout << "INT_vec_search_first_occurence searching for " << a << " l=" << l << " r=" << r << endl;
+		cout << "int_vec_search_first_occurence searching for " << a << " l=" << l << " r=" << r << endl;
 		}
 	// invariant:
 	// v[i] < a for i < l;
@@ -1012,11 +1013,11 @@ INT INT_vec_search_first_occurence(INT *v, INT len, INT a, INT &idx)
 	return f_found;
 }
 
-INT longinteger_vec_search(longinteger_object *v, INT len, 
-	longinteger_object &a, INT &idx)
+int longinteger_vec_search(longinteger_object *v, int len, 
+	longinteger_object &a, int &idx)
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
+	int l, r, m, res;
+	int f_found = FALSE;
 	longinteger_domain D;
 	
 	if (len == 0) {
@@ -1061,24 +1062,24 @@ INT longinteger_vec_search(longinteger_object *v, INT len,
 	return f_found;
 }
 
-void INT_vec_classify_and_print(ostream &ost, INT *v, INT l)
+void int_vec_classify_and_print(ostream &ost, int *v, int l)
 {
 	classify C;
-	INT f_backwards = TRUE;
+	int f_backwards = TRUE;
 
 	C.init(v, l, FALSE, 0);
 	C.print_file(ost, f_backwards);
 }
 
-void INT_vec_values(INT *v, INT l, INT *&w, INT &w_len)
+void int_vec_values(int *v, int l, int *&w, int &w_len)
 {
 	classify C;
-	//INT f_backwards = TRUE;
-	INT i, f, a;
+	//int f_backwards = TRUE;
+	int i, f, a;
 
 	C.init(v, l, FALSE, 0);
 	w_len = C.nb_types;
-	w = NEW_INT(w_len);
+	w = NEW_int(w_len);
 	for (i = 0; i < w_len; i++) {
 		f = C.type_first[i];
 		a = C.data_sorted[f];
@@ -1086,30 +1087,30 @@ void INT_vec_values(INT *v, INT l, INT *&w, INT &w_len)
 		}
 }
 
-void INT_vec_multiplicities(INT *v, INT l, INT *&w, INT &w_len)
+void int_vec_multiplicities(int *v, int l, int *&w, int &w_len)
 {
 	classify C;
-	//INT f_backwards = TRUE;
-	INT i;
+	//int f_backwards = TRUE;
+	int i;
 
 	C.init(v, l, FALSE, 0);
 	w_len = C.nb_types;
-	w = NEW_INT(w_len);
+	w = NEW_int(w_len);
 	for (i = 0; i < w_len; i++) {
 		w[i] = C.type_len[i];
 		}
 }
 
-void INT_vec_values_and_multiplicities(INT *v, INT l, INT *&val, INT *&mult, INT &nb_values)
+void int_vec_values_and_multiplicities(int *v, int l, int *&val, int *&mult, int &nb_values)
 {
 	classify C;
-	//INT f_backwards = TRUE;
-	INT i, f, len, a;
+	//int f_backwards = TRUE;
+	int i, f, len, a;
 
 	C.init(v, l, FALSE, 0);
 	nb_values = C.nb_types;
-	val = NEW_INT(nb_values);
-	mult = NEW_INT(nb_values);
+	val = NEW_int(nb_values);
+	mult = NEW_int(nb_values);
 	for (i = 0; i < nb_values; i++) {
 		f = C.type_first[i];
 		len = C.type_len[i];
@@ -1119,44 +1120,44 @@ void INT_vec_values_and_multiplicities(INT *v, INT l, INT *&val, INT *&mult, INT
 		}
 }
 
-void INT_vec_classify(INT length, INT *the_vec, INT *&the_vec_sorted, 
-	INT *&sorting_perm, INT *&sorting_perm_inv, 
-	INT &nb_types, INT *&type_first, INT *&type_len)
+void int_vec_classify(int length, int *the_vec, int *&the_vec_sorted, 
+	int *&sorting_perm, int *&sorting_perm_inv, 
+	int &nb_types, int *&type_first, int *&type_len)
 {
 	
 #if 0
 	if (length == 0) {
-		cout << "INT_vec_classify length is zero" << endl;
+		cout << "int_vec_classify length is zero" << endl;
 		exit(1);
 		}
 #endif
-	the_vec_sorted = NEW_INT(length);
-	sorting_perm = NEW_INT(length);
-	sorting_perm_inv = NEW_INT(length);
-	type_first = NEW_INT(length);
-	type_len = NEW_INT(length);
+	the_vec_sorted = NEW_int(length);
+	sorting_perm = NEW_int(length);
+	sorting_perm_inv = NEW_int(length);
+	type_first = NEW_int(length);
+	type_len = NEW_int(length);
 	
-	INT_vec_classify_with_arrays(length, the_vec, the_vec_sorted, 
+	int_vec_classify_with_arrays(length, the_vec, the_vec_sorted, 
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 	
 }
 
-void INT_vec_classify_with_arrays(INT length, INT *the_vec, INT *the_vec_sorted, 
-	INT *sorting_perm, INT *sorting_perm_inv, 
-	INT &nb_types, INT *type_first, INT *type_len)
+void int_vec_classify_with_arrays(int length, int *the_vec, int *the_vec_sorted, 
+	int *sorting_perm, int *sorting_perm_inv, 
+	int &nb_types, int *type_first, int *type_len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < length; i++) {
 		the_vec_sorted[i] = the_vec[i];
 		}
-	INT_vec_sorting_permutation(the_vec_sorted, length, sorting_perm, sorting_perm_inv, TRUE /* f_increasingly */);
+	int_vec_sorting_permutation(the_vec_sorted, length, sorting_perm, sorting_perm_inv, TRUE /* f_increasingly */);
 	for (i = 0; i < length; i++) {
 		the_vec_sorted[sorting_perm[i]] = the_vec[i];
 		}
 	
-	INT_vec_sorted_collect_types(length, the_vec_sorted, 
+	int_vec_sorted_collect_types(length, the_vec_sorted, 
 		nb_types, type_first, type_len);
 	
 #if 0
@@ -1177,10 +1178,10 @@ void INT_vec_classify_with_arrays(INT length, INT *the_vec, INT *the_vec_sorted,
 #endif
 }
 
-void INT_vec_sorted_collect_types(INT length, INT *the_vec_sorted, 
-	INT &nb_types, INT *type_first, INT *type_len)
+void int_vec_sorted_collect_types(int length, int *the_vec_sorted, 
+	int &nb_types, int *type_first, int *type_len)
 {
-	INT i;
+	int i;
 	
 	nb_types = 0;
 	type_first[0] = 0;
@@ -1202,18 +1203,18 @@ void INT_vec_sorted_collect_types(INT length, INT *the_vec_sorted,
 	nb_types++;
 }
 
-void INT_vec_print_classified(ostream &ost, INT *vec, INT len)
+void int_vec_print_classified(ostream &ost, int *vec, int len)
 {
-	INT *the_vec_sorted;
-	INT *sorting_perm;
-	INT *sorting_perm_inv;
-	INT *type_first;
-	INT *type_len;
-	INT nb_types;
-	//INT i, f, l, a;
+	int *the_vec_sorted;
+	int *sorting_perm;
+	int *sorting_perm_inv;
+	int *type_first;
+	int *type_len;
+	int nb_types;
+	//int i, f, l, a;
 	
 	
-	INT_vec_classify(len, vec, the_vec_sorted, 
+	int_vec_classify(len, vec, the_vec_sorted, 
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 #if 0
@@ -1228,27 +1229,27 @@ void INT_vec_print_classified(ostream &ost, INT *vec, INT len)
 		}
 	ost << " )";
 #endif
-	INT_vec_print_types(ost, FALSE /* f_backwards */, the_vec_sorted, 
+	int_vec_print_types(ost, FALSE /* f_backwards */, the_vec_sorted, 
 		nb_types, type_first, type_len);
-	FREE_INT(the_vec_sorted);
-	FREE_INT(sorting_perm);
-	FREE_INT(sorting_perm_inv);
-	FREE_INT(type_first);
-	FREE_INT(type_len);
+	FREE_int(the_vec_sorted);
+	FREE_int(sorting_perm);
+	FREE_int(sorting_perm_inv);
+	FREE_int(type_first);
+	FREE_int(type_len);
 }
 
-void INT_vec_print_types(ostream &ost, INT f_backwards, INT *the_vec_sorted, 
-	INT nb_types, INT *type_first, INT *type_len)
+void int_vec_print_types(ostream &ost, int f_backwards, int *the_vec_sorted, 
+	int nb_types, int *type_first, int *type_len)
 {
 	ost << "( ";
-	INT_vec_print_types_naked(ost, f_backwards, the_vec_sorted, nb_types, type_first, type_len);
+	int_vec_print_types_naked(ost, f_backwards, the_vec_sorted, nb_types, type_first, type_len);
 	ost << " )";
 }
 
-void INT_vec_print_types_naked(ostream &ost, INT f_backwards, INT *the_vec_sorted, 
-	INT nb_types, INT *type_first, INT *type_len)
+void int_vec_print_types_naked(ostream &ost, int f_backwards, int *the_vec_sorted, 
+	int nb_types, int *type_first, int *type_len)
 {
-	INT i, f, l, a;
+	int i, f, l, a;
 
 	if (f_backwards) {
 		for (i = nb_types - 1; i >= 0; i--) {
@@ -1278,10 +1279,10 @@ void INT_vec_print_types_naked(ostream &ost, INT f_backwards, INT *the_vec_sorte
 		}
 }
 
-void INT_vec_print_types_naked_tex(ostream &ost, INT f_backwards, INT *the_vec_sorted, 
-	INT nb_types, INT *type_first, INT *type_len)
+void int_vec_print_types_naked_tex(ostream &ost, int f_backwards, int *the_vec_sorted, 
+	int nb_types, int *type_first, int *type_len)
 {
-	INT i, f, l, a;
+	int i, f, l, a;
 
 	if (f_backwards) {
 		for (i = nb_types - 1; i >= 0; i--) {
@@ -1319,10 +1320,10 @@ void INT_vec_print_types_naked_tex(ostream &ost, INT f_backwards, INT *the_vec_s
 		}
 }
 
-void Heapsort(void *v, INT len, INT entry_size_in_chars, 
-	INT (*compare_func)(void *v1, void *v2))
+void Heapsort(void *v, int len, int entry_size_in_chars, 
+	int (*compare_func)(void *v1, void *v2))
 {
-	INT end;
+	int end;
 	
 	//cout << "Heapsort len=" << len << endl;
 	Heapsort_make_heap(v, len, entry_size_in_chars, compare_func);
@@ -1333,12 +1334,12 @@ void Heapsort(void *v, INT len, INT entry_size_in_chars,
 		}
 }
 	
-void Heapsort_general(void *data, INT len, 
-	INT (*compare_func)(void *data, INT i, INT j, void *extra_data), 
-	void (*swap_func)(void *data, INT i, INT j, void *extra_data), 
+void Heapsort_general(void *data, int len, 
+	int (*compare_func)(void *data, int i, int j, void *extra_data), 
+	void (*swap_func)(void *data, int i, int j, void *extra_data), 
 	void *extra_data)
 {
-	INT end;
+	int end;
 	
 	//cout << "Heapsort_general len=" << len << endl;
 	Heapsort_general_make_heap(data, len, compare_func, swap_func, extra_data);
@@ -1352,17 +1353,17 @@ void Heapsort_general(void *data, INT len,
 	
 
 
-INT search_general(void *data, INT len, INT *search_object, INT &idx, 
-	INT (*compare_func)(void *data, INT i, INT *search_object, void *extra_data), 
-	void *extra_data, INT verbose_level)
+int search_general(void *data, int len, int *search_object, int &idx, 
+	int (*compare_func)(void *data, int i, int *search_object, void *extra_data), 
+	void *extra_data, int verbose_level)
 // This function finds the last occurence of the element a.
 // If a is not found, it returns in idx the position where it should be inserted if 
 // the vector is assumed to be in increasing order.
 
 {
-	INT f_v = (verbose_level >= 1);
-	INT l, r, m, res;
-	INT f_found = FALSE;
+	int f_v = (verbose_level >= 1);
+	int l, r, m, res;
+	int f_found = FALSE;
 
 	if (f_v) {
 		cout << "search_general len = " << len << endl;
@@ -1434,9 +1435,9 @@ INT search_general(void *data, INT len, INT *search_object, INT &idx,
 
 
 
-void INT_vec_heapsort(INT *v, INT len)
+void int_vec_heapsort(int *v, int len)
 {
-	INT end;
+	int end;
 	
 	heapsort_make_heap(v, len);
 	for (end = len - 1; end > 0; ) {
@@ -1447,9 +1448,9 @@ void INT_vec_heapsort(INT *v, INT len)
 	
 }
 
-void INT_vec_heapsort_with_log(INT *v, INT *w, INT len)
+void int_vec_heapsort_with_log(int *v, int *w, int len)
 {
-	INT end;
+	int end;
 	
 	heapsort_make_heap_with_log(v, w, len);
 	for (end = len - 1; end > 0; ) {
@@ -1461,28 +1462,28 @@ void INT_vec_heapsort_with_log(INT *v, INT *w, INT len)
 	
 }
 
-void heapsort_make_heap(INT *v, INT len)
+void heapsort_make_heap(int *v, int len)
 {
-	INT start;
+	int start;
 	
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
 		heapsort_sift_down(v, start, len - 1);
 		}
 }
 
-void heapsort_make_heap_with_log(INT *v, INT *w, INT len)
+void heapsort_make_heap_with_log(int *v, int *w, int len)
 {
-	INT start;
+	int start;
 	
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
 		heapsort_sift_down_with_log(v, w, start, len - 1);
 		}
 }
 
-void Heapsort_make_heap(void *v, INT len, INT entry_size_in_chars, 
-	INT (*compare_func)(void *v1, void *v2))
+void Heapsort_make_heap(void *v, int len, int entry_size_in_chars, 
+	int (*compare_func)(void *v1, void *v2))
 {
-	INT start;
+	int start;
 	
 	//cout << "Heapsort_make_heap len=" << len << endl;
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
@@ -1491,12 +1492,12 @@ void Heapsort_make_heap(void *v, INT len, INT entry_size_in_chars,
 		}
 }
 
-void Heapsort_general_make_heap(void *data, INT len, 
-	INT (*compare_func)(void *data, INT i, INT j, void *extra_data), 
-	void (*swap_func)(void *data, INT i, INT j, void *extra_data), 
+void Heapsort_general_make_heap(void *data, int len, 
+	int (*compare_func)(void *data, int i, int j, void *extra_data), 
+	void (*swap_func)(void *data, int i, int j, void *extra_data), 
 	void *extra_data)
 {
-	INT start;
+	int start;
 	
 	//cout << "Heapsort_general_make_heap len=" << len << endl;
 	for (start = (len - 2) >> 1 ; start >= 0; start--) {
@@ -1505,9 +1506,9 @@ void Heapsort_general_make_heap(void *data, INT len,
 		}
 }
 
-void heapsort_sift_down(INT *v, INT start, INT end)
+void heapsort_sift_down(int *v, int start, int end)
 {
-	INT root, child;
+	int root, child;
 	
 	root = start;
 	while (2 * root + 1 <= end) {
@@ -1525,9 +1526,9 @@ void heapsort_sift_down(INT *v, INT start, INT end)
 		}
 }
 
-void heapsort_sift_down_with_log(INT *v, INT *w, INT start, INT end)
+void heapsort_sift_down_with_log(int *v, int *w, int start, int end)
 {
-	INT root, child;
+	int root, child;
 	
 	root = start;
 	while (2 * root + 1 <= end) {
@@ -1546,11 +1547,11 @@ void heapsort_sift_down_with_log(INT *v, INT *w, INT start, INT end)
 		}
 }
 
-void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_chars, 
-	INT (*compare_func)(void *v1, void *v2))
+void Heapsort_sift_down(void *v, int start, int end, int entry_size_in_chars, 
+	int (*compare_func)(void *v1, void *v2))
 {
 	char *V = (char *) v;
-	INT root, child, c;
+	int root, child, c;
 	
 	//cout << "Heapsort_sift_down " << start << " : " << end << endl;
 	root = start;
@@ -1579,12 +1580,12 @@ void Heapsort_sift_down(void *v, INT start, INT end, INT entry_size_in_chars,
 		}
 }
 
-void Heapsort_general_sift_down(void *data, INT start, INT end, 
-	INT (*compare_func)(void *data, INT i, INT j, void *extra_data), 
-	void (*swap_func)(void *data, INT i, INT j, void *extra_data), 
+void Heapsort_general_sift_down(void *data, int start, int end, 
+	int (*compare_func)(void *data, int i, int j, void *extra_data), 
+	void (*swap_func)(void *data, int i, int j, void *extra_data), 
 	void *extra_data)
 {
-	INT root, child, c;
+	int root, child, c;
 	
 	//cout << "Heapsort_general_sift_down " << start << " : " << end << endl;
 	root = start;
@@ -1610,18 +1611,18 @@ void Heapsort_general_sift_down(void *data, INT start, INT end,
 		}
 }
 
-void heapsort_swap(INT *v, INT i, INT j)
+void heapsort_swap(int *v, int i, int j)
 {
-	INT a;
+	int a;
 	
 	a = v[i];
 	v[i] = v[j];
 	v[j] = a;
 }
 
-void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_chars)
+void Heapsort_swap(void *v, int i, int j, int entry_size_in_chars)
 {
-	INT a, h, I, J;
+	int a, h, I, J;
 	char *V;
 	
 	I = i * entry_size_in_chars;
@@ -1636,9 +1637,9 @@ void Heapsort_swap(void *v, INT i, INT j, INT entry_size_in_chars)
 
 #include <ctype.h>
 
-INT is_all_digits(char *p)
+int is_all_digits(char *p)
 {
-	INT i, l;
+	int i, l;
 
 	l = strlen(p);
 	for (i = 0; i < l; i++) {
@@ -1650,7 +1651,7 @@ INT is_all_digits(char *p)
 }
 
 
-void find_points_by_multiplicity(INT *data, INT data_sz, INT multiplicity, INT *&pts, INT &nb_pts)
+void find_points_by_multiplicity(int *data, int data_sz, int multiplicity, int *&pts, int &nb_pts)
 {
 	classify C;
 	C.init(data, data_sz, FALSE, 0);

@@ -6,7 +6,7 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
 #define M 20
 #define Choose2(x)   ((x*(x-1))/2)
@@ -14,9 +14,9 @@ INT t0;
 int main(int argc, char **argv)
 {
 	t0 = os_ticks();
-	INT matrix[M * M];
-	INT matrix2[M * M];
-	INT m, i, j, inz, gki;
+	int matrix[M * M];
+	int matrix2[M * M];
+	int m, i, j, inz, gki;
 	
 	for (i=0; i<M*M; i++) {
 		matrix[i] = matrix2[i] = 0;

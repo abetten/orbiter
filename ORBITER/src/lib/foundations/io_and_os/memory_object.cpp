@@ -44,10 +44,10 @@ void memory_object::freeself()
 	null();
 }
 
-void memory_object::init(INT length, char *d, INT verbose_level)
+void memory_object::init(int length, char *d, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "memory_object::init" << endl;
@@ -61,12 +61,12 @@ void memory_object::init(INT length, char *d, INT verbose_level)
 		}
 }
 
-void memory_object::alloc(INT length, INT verbose_level)
+void memory_object::alloc(int length, int verbose_level)
 // sets alloc_length to length
 // sets used_length to length, 
 // sets cur_pointer to 0.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "memory_object::alloc length=" << length << endl;
@@ -87,10 +87,10 @@ void memory_object::alloc(INT length, INT verbose_level)
 		}
 }
 
-void memory_object::append(INT length, char *d, INT verbose_level)
+void memory_object::append(int length, char *d, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, old_length, new_length;
+	int f_v = (verbose_level >= 1);
+	int i, old_length, new_length;
 	
 	if (f_v) {
 		cout << "memory_object::append" << endl;
@@ -112,12 +112,12 @@ void memory_object::append(INT length, char *d, INT verbose_level)
 		}
 }
 
-void memory_object::realloc(INT new_length, INT verbose_level)
+void memory_object::realloc(int new_length, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT old_length;
-	INT old_cur_pointer;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int old_length;
+	int old_cur_pointer;
+	int i;
 	char *old_pc;
 	
 	if (f_v) {
@@ -153,7 +153,7 @@ void memory_object::write_char(char c)
 
 void memory_object::read_char(char *c)
 {
-	INT l1, cur_p, l;
+	int l1, cur_p, l;
 	char *cp;
 	
 	cur_p = cur_pointer;
@@ -170,7 +170,7 @@ void memory_object::read_char(char *c)
 
 void memory_object::write_string(const char *p)
 {	
-	INT l, i;
+	int l, i;
 
 	l = strlen(p);
 	for (i = 0; i < l; i++) {
@@ -183,9 +183,9 @@ void memory_object::read_string(char *&p)
 {	
 	char *q;
 	char c;
-	INT alloc_length;
-	INT used_length;
-	INT i;
+	int alloc_length;
+	int used_length;
+	int i;
 
 	alloc_length = 1024;
 	used_length = 0;
@@ -194,7 +194,7 @@ void memory_object::read_string(char *&p)
 	while (TRUE) {
 		read_char(&c);
 		if (used_length == alloc_length) {
-			INT new_alloc_length = 2 * alloc_length;
+			int new_alloc_length = 2 * alloc_length;
 			char *q1;
 
 			q1 = NEW_char(new_alloc_length);
@@ -227,19 +227,19 @@ void memory_object::write_double(double f)
 void memory_object::read_double(double *f)
 {
 	double f1;
-	INT l1, j, cur_p, l;
+	int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
 	cur_p = cur_pointer;
 	l = used_length;
 	l1 = l - cur_p;
-	if (l1 < (INT)sizeof(double)) {
+	if (l1 < (int)sizeof(double)) {
 		cout << "memory_object::read_int error: l1 < sizeof(double)" << endl;
 		exit(1);
 		}
 	cp = char_pointer + cur_p;
 	cp1 = (char *) &f1;
-	for (j = 0; j < (INT)sizeof(double); j++) {
+	for (j = 0; j < (int)sizeof(double); j++) {
 		*cp1 = *cp;
 		cp1++;
 		cp++;
@@ -248,18 +248,18 @@ void memory_object::read_double(double *f)
 	*f = f1;
 }
 
-void memory_object::write_int64(INT i)
+void memory_object::write_int64(int i)
 {
-	INT8 i1 = (INT8) i;
+	int8 i1 = (int8) i;
 	
 	block_swap_chars((SCHAR *) &i1, 8, 1);
 	append(8, (char *) &i1, 0);
 }
 
-void memory_object::read_int64(INT *i)
+void memory_object::read_int64(int *i)
 {
-	INT8 i1;
-	INT l1, j, cur_p, l;
+	int8 i1;
+	int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
 	cur_p = cur_pointer;
@@ -278,22 +278,22 @@ void memory_object::read_int64(INT *i)
 		}
 	block_swap_chars((SCHAR *) &i1, 8, 1);
 	cur_pointer += 8;
-	*i = (INT) i1;
+	*i = (int) i1;
 }
 
-void memory_object::write_int(INT i)
+void memory_object::write_int(int i)
 {
-	INT4 i1 = (INT4) i;
+	int4 i1 = (int4) i;
 	
 	block_swap_chars((SCHAR *) &i1, 4, 1);
 	append(4, (char *) &i1, 0);
 }
 
-void memory_object::read_int(INT *i)
+void memory_object::read_int(int *i)
 {
-	INT f_v = FALSE;
-	INT4 i1;
-	INT l1, j, cur_p, l;
+	int f_v = FALSE;
+	int4 i1;
+	int l1, j, cur_p, l;
 	char *cp, *cp1;
 	
 	if (f_v) {
@@ -318,16 +318,16 @@ void memory_object::read_int(INT *i)
 	if (f_v) {
 		cout << "memory_object::read_int done read " << i1 << endl;
 		}
-	*i = (INT) i1;
+	*i = (int) i1;
 }
 
 #include <cstdio>
 
-void memory_object::read_file(const char *fname, INT verbose_level)
+void memory_object::read_file(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
-	INT fsize;
+	int fsize;
 
 	if (f_v) {
 		cout << "memory_object::read_file" << endl;
@@ -335,7 +335,7 @@ void memory_object::read_file(const char *fname, INT verbose_level)
 	fsize = file_size(fname);
 	alloc(fsize, 0);
 	fp = fopen(fname, "r");
-	if ((INT) fread(char_pointer, 1 /* size */, fsize /* nitems */, fp) != fsize) {
+	if ((int) fread(char_pointer, 1 /* size */, fsize /* nitems */, fp) != fsize) {
 		cout << "memory_object::read_file error in fread" << endl;
 		}
 	fclose(fp);
@@ -347,11 +347,11 @@ void memory_object::read_file(const char *fname, INT verbose_level)
 		}
 }
 
-void memory_object::write_file(const char *fname, INT verbose_level)
+void memory_object::write_file(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
-	INT size;
+	int size;
 
 	if (f_v) {
 		cout << "memory_object::write_file" << endl;
@@ -373,9 +373,9 @@ void memory_object::write_file(const char *fname, INT verbose_level)
 		}
 }
 
-INT memory_object::multiplicity_of_character(char c)
+int memory_object::multiplicity_of_character(char c)
 {
-	INT i, l;
+	int i, l;
 	
 	l = 0;
 	for (i = 0; i < used_length; i++) {
@@ -386,14 +386,14 @@ INT memory_object::multiplicity_of_character(char c)
 	return l;
 }
 
-static void code(uchar *pc, INT l, uchar *pc2, uchar code_char);
-static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char);
+static void code(uchar *pc, int l, uchar *pc2, uchar code_char);
+static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char);
 
-static void code(uchar *pc, INT l, uchar *pc2, uchar code_char)
+static void code(uchar *pc, int l, uchar *pc2, uchar code_char)
 /* Wolfgang Boessenecker 940919 */
 {
 	uchar cc;
-	INT pos = 0, pos2 = 0, pos2h = 0, i;
+	int pos = 0, pos2 = 0, pos2h = 0, i;
 
 	while (pos < l) {
 		pos2++;
@@ -420,12 +420,12 @@ static void code(uchar *pc, INT l, uchar *pc2, uchar code_char)
 		}
 }
 
-static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char)
+static int decode(uchar *pc2, int l2, uchar *pc, uchar code_char)
 // returns the length of the data after decompression
 // pc may be NULL 
 {
 	uchar cc = 0;
-	INT pos = 0, pos2 = 0, i = 8;
+	int pos = 0, pos2 = 0, i = 8;
 	
 	while (TRUE) {
 	/* for (; pos2 < l2; ) { */
@@ -457,12 +457,12 @@ static INT decode(uchar *pc2, INT l2, uchar *pc, uchar code_char)
 	return pos;
 }
 
-void memory_object::compress(INT verbose_level)
+void memory_object::compress(int verbose_level)
 // Wolfgang Boessenecker 9/94 
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object mem2;
-	INT l, l2, l_c;
+	int l, l2, l_c;
 
 	l = used_length;
 	if (f_v) {
@@ -488,11 +488,11 @@ void memory_object::compress(INT verbose_level)
 		}
 }
 
-void memory_object::decompress(INT verbose_level)
+void memory_object::decompress(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	memory_object mem2;
-	INT l, l2;
+	int l, l2;
 	
 	l2 = used_length;
 	if (f_v) {

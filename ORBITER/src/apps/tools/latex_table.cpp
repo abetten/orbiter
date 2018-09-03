@@ -11,29 +11,29 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 
-	INT f_file = FALSE;
+	int f_file = FALSE;
 	const char *fname;
 
-	INT f_save = FALSE;
+	int f_save = FALSE;
 	char *save_fname = NULL;
 
-	INT f_range = FALSE;
-	INT range_first = 0;
-	INT range_len = 0;
+	int f_range = FALSE;
+	int range_first = 0;
+	int range_len = 0;
 
-	INT f_selection = FALSE;
+	int f_selection = FALSE;
 	const char *selection_str = NULL;
-	INT *selection = NULL;
-	INT selection_len = 0;
+	int *selection = NULL;
+	int selection_len = 0;
 
 	t0 = os_ticks();
 
@@ -68,8 +68,8 @@ int main(int argc, char **argv)
 			}
 		}
 
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 
 	if (!f_file) {
@@ -82,14 +82,14 @@ int main(int argc, char **argv)
 		}
 
 	if (f_selection) {
-		INT_vec_scan(selection_str, selection, selection_len);
+		int_vec_scan(selection_str, selection, selection_len);
 		cout << "The selected columns are: ";
-		INT_vec_print(cout, selection, selection_len);
+		int_vec_print(cout, selection, selection_len);
 		cout << endl;
 		}
 	
 	spreadsheet *S;
-	INT *f_col_select;
+	int *f_col_select;
 
 	S = NEW_OBJECT(spreadsheet);
 
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 	cout << "Table " << fname << " has been read" << endl;
 
 
-	f_col_select = NEW_INT(S->nb_cols);
+	f_col_select = NEW_int(S->nb_cols);
 	if (f_range) {
 		for (i = 0; i < S->nb_cols; i++) {
 			f_col_select[i] = FALSE;
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 		}
 
 	cout << "f_col_select = ";
-	INT_vec_print(cout, f_col_select, S->nb_cols);
+	int_vec_print(cout, f_col_select, S->nb_cols);
 	cout << endl;
 
 	{

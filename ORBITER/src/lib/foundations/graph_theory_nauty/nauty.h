@@ -25,10 +25,10 @@ it is necessary to check they are correct.
 		               /* putc_unlocked,flockfile and funlockfile*/
 
 #define DEFAULT_WORDSIZE 0
-#define SIZEOF_INT 4
+#define SIZEOF_int 4
 #define SIZEOF_LONG 8
 #define SIZEOF_LONG_LONG 8   /* 0 if nonexistent */
-#define SIZEOF_INT128 16   /* 0 if nonexistent */
+#define SIZEOF_int128 16   /* 0 if nonexistent */
 
 #define HAVE_CONST 1    /* compiler properly supports const */
 
@@ -211,7 +211,7 @@ it is necessary to check they are correct.
 *                   - Now labelorg has a concrete declaration in nautil.c    *
 *                        and EXTDEFS is not needed                           *
 *        5-May-01 : - NILFUNCTION, NILSET, NILGRAPH now obsolete.  Use NULL. *
-*       11-Sep-01 : - setword is unsigned int in the event that UINT_MAX     *
+*       11-Sep-01 : - setword is unsigned int in the event that uint_MAX     *
 *                     is defined and indicates it is big enough              *
 *       17-Oct-01 : - major rewrite for 2.1.  SYS_* variables gone!          *
 *                     Some modernity assumed, eg size_t                      *
@@ -249,7 +249,7 @@ it is necessary to check they are correct.
 *                   - declare shortish and permutation obsolete, now int     *
 *       14-Nov-10 : - SETWORDSNEEDED(n)                                      *
 *       23-May-10 : - declare densenauty()                                   *
-*       29-Jun-10 : - add PRINT_COUNTER(f,x)                                 *
+*       29-Jun-10 : - add PRint_COUNTER(f,x)                                 *
 *                   - add DEFAULTOPTIONS_DIGRAPH()                           *
 *       27-Mar-11 : - declare writegroupsize()                               *
 *       14-Jan-12 : - add HAVE_TLS and TLS_ATTR                              *
@@ -399,7 +399,7 @@ it is necessary to check they are correct.
 
 #ifdef NAUTY_IN_MAGMA
 typedef t_uint setword;
-#define SETWORD_INT  /* Don't assume this is correct in Magma. */
+#define SETWORD_int  /* Don't assume this is correct in Magma. */
 
 #else /* NAUTY_IN_MAGMA */
 
@@ -409,9 +409,9 @@ typedef unsigned short setword;
 #endif
 
 #if WORDSIZE==32
-#if SIZEOF_INT>=4
+#if SIZEOF_int>=4
 typedef unsigned int setword;
-#define SETWORD_INT
+#define SETWORD_int
 #else
 typedef unsigned long setword;
 #define SETWORD_LONG
@@ -419,9 +419,9 @@ typedef unsigned long setword;
 #endif
 
 #if WORDSIZE==64
-#if SIZEOF_INT>=8
+#if SIZEOF_int>=8
 typedef unsigned int setword;
-#define SETWORD_INT
+#define SETWORD_int
 #else
 #if SIZEOF_LONG>=8
 typedef unsigned long setword;
@@ -446,7 +446,7 @@ typedef unsigned long nauty_counter;
 #define COUNTER_FMT "%lu"
 #define COUNTER_FMT_RAW "lu"
 #endif
-#define PRINT_COUNTER(f,x) fprintf(f,COUNTER_FMT,x)
+#define PRint_COUNTER(f,x) fprintf(f,COUNTER_FMT,x)
 
 #define NAUTYVERSIONID (26040+HAVE_TLS)  /* 10000*version + HAVE_TLS */
 #define NAUTYREQUIRED NAUTYVERSIONID  /* Minimum compatible version */
@@ -554,7 +554,7 @@ typedef unsigned long nauty_counter;
 
 #define NOTSUBSET(word1,word2) ((word1) & ~(word2))  /* test if the 1-bits
                     in setword word1 do not form a subset of those in word2  */
-#define INTERSECT(word1,word2) ((word1) &= (word2))  /* AND word2 into word1 */
+#define intERSECT(word1,word2) ((word1) &= (word2))  /* AND word2 into word1 */
 #define UNION(word1,word2)     ((word1) |= (word2))  /* OR word2 into word1 */
 #define SETDIFF(word1,word2)   ((word1) &= ~(word2)) /* - word2 into word1 */
 #define XOR(word1,word2)       ((word1) ^= (word2))  /* XOR word2 into word1 */
@@ -597,7 +597,7 @@ typedef unsigned long nauty_counter;
 #define MSK8                  0xFFUL
 #endif
 
-#if defined(SETWORD_INT) || defined(SETWORD_SHORT)
+#if defined(SETWORD_int) || defined(SETWORD_SHORT)
 #define MSK3232 0xFFFFFFFF00000000U
 #define MSK1648 0xFFFF000000000000U
 #define MSK0856 0xFF00000000000000U
@@ -639,7 +639,7 @@ typedef unsigned long nauty_counter;
 #endif
 #endif
 
-#if defined(SETWORD_INT)
+#if defined(SETWORD_int)
 #if WORDSIZE==16
 #define SETWORD_FORMAT "%04x"
 #endif
@@ -733,7 +733,7 @@ typedef unsigned long nauty_counter;
 #define FIRSTBITNZ(x) __builtin_clzl(x)
 #define FIRSTBIT(x) ((x) ? FIRSTBITNZ(x) : WORDSIZE)
 #endif
-#if defined(SETWORD_INT) && HAVE_CLZ
+#if defined(SETWORD_int) && HAVE_CLZ
 #undef FIRSTBIT
 #undef FIRSTBITNZ
 #define FIRSTBITNZ(x) __builtin_clz(x)
@@ -747,7 +747,7 @@ typedef unsigned long nauty_counter;
 /* Use popcount instructions if available */
 #define POPCOUNT POPCOUNTMAC
 
-#ifdef __INTEL_COMPILER
+#ifdef __intEL_COMPILER
 #include <nmmintrin.h>
 #if WORDSIZE==64 && HAVE_MMPOP64
 #undef POPCOUNT
@@ -772,7 +772,7 @@ typedef unsigned long nauty_counter;
 #undef POPCOUNT
 #define POPCOUNT(x) __builtin_popcountl(x)
 #endif
-#if defined(SETWORD_INT) && HAVE_POPCNT
+#if defined(SETWORD_int) && HAVE_POPCNT
 #undef POPCOUNT
 #define POPCOUNT(x) __builtin_popcount(x)
 #endif
@@ -796,7 +796,7 @@ typedef unsigned long nauty_counter;
 #define FALSE    0
 #define TRUE     1
 
-#if SIZEOF_INT>=4
+#if SIZEOF_int>=4
 #define NAUTY_INFINITY 2000000002  /* Max graph size is 2 billion */
 #else
 #define NAUTY_INFINITY 0x7FFF

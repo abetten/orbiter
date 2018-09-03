@@ -12,16 +12,16 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;	
+	int verbose_level = 0;
+	int f_file = FALSE;	
 	const char *fname = NULL;
-	INT f_sort_by_colors = FALSE;
+	int f_sort_by_colors = FALSE;
 
 
 	for (i = 1; i < argc; i++) {

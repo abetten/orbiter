@@ -48,54 +48,54 @@ void singer_cycle::null()
 void singer_cycle::freeself()
 {
 	if (poly_coeffs) {
-		FREE_INT(poly_coeffs);
+		FREE_int(poly_coeffs);
 		}
 	if (Singer_matrix) {
-		FREE_INT(Singer_matrix);
+		FREE_int(Singer_matrix);
 		}
 	if (Elt) {
-		FREE_INT(Elt);
+		FREE_int(Elt);
 		}
 	if (gens) {
 		delete gens;
 		}
 	if (singer_point_list) {
-		FREE_INT(singer_point_list);
+		FREE_int(singer_point_list);
 		}
 	if (singer_point_list_inv) {
-		FREE_INT(singer_point_list_inv);
+		FREE_int(singer_point_list_inv);
 		}
 	if (Sch) {
 		delete Sch;
 		}
 	if (line_orbit_reps) {
-		FREE_INT(line_orbit_reps);
+		FREE_int(line_orbit_reps);
 		}
 	if (line_orbit_len) {
-		FREE_INT(line_orbit_len);
+		FREE_int(line_orbit_len);
 		}
 	if (line_orbit_first) {
-		FREE_INT(line_orbit_first);
+		FREE_int(line_orbit_first);
 		}
 	if (line_orbit_label) {
-		INT i;
+		int i;
 		for (i = 0; i < P->N_lines; i++) {
 			FREE_char(line_orbit_label[i]);
 			}
 		FREE_pchar(line_orbit_label);
 		}
 	if (line_orbit_label_tex) {
-		INT i;
+		int i;
 		for (i = 0; i < P->N_lines; i++) {
 			FREE_char(line_orbit_label_tex[i]);
 			}
 		FREE_pchar(line_orbit_label_tex);
 		}
 	if (line_orbit) {
-		FREE_INT(line_orbit);
+		FREE_int(line_orbit);
 		}
 	if (line_orbit_inv) {
-		FREE_INT(line_orbit_inv);
+		FREE_int(line_orbit_inv);
 		}
 			// P must be deleted last:
 	if (P) {
@@ -104,11 +104,11 @@ void singer_cycle::freeself()
 	null();
 }
 
-void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbose_level)
+void singer_cycle::init(int n, finite_field *F, action *A, action *A2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	const char *poly;
-	INT i, j, a;
+	int i, j, a;
 
 	if (f_v) {
 		cout << "singer_cycle::init" << endl;
@@ -123,7 +123,7 @@ void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbo
 		exit(1);
 		}
 	poly = get_primitive_polynomial(q, n, verbose_level);
-	poly_coeffs = NEW_INT(n + 1);
+	poly_coeffs = NEW_int(n + 1);
 	{
 	//finite_field GFp;
 	
@@ -133,8 +133,8 @@ void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbo
 	unipoly_object m;
 
 	FX.create_object_by_rank_string(m, poly, 0);
-	INT *rep = (INT *) m;
-	INT *coeffs = rep + 1;
+	int *rep = (int *) m;
+	int *coeffs = rep + 1;
 	
 	for (i = 0; i <= n; i++) {
 		poly_coeffs[i] = coeffs[i];
@@ -144,11 +144,11 @@ void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbo
 	
 	if (f_v) {
 		cout << "singer_cycle::init coefficients: ";
-		INT_vec_print(cout, poly_coeffs, n + 1);
+		int_vec_print(cout, poly_coeffs, n + 1);
 		cout << endl;
 		}
 
-	Singer_matrix = NEW_INT(n* n);
+	Singer_matrix = NEW_int(n* n);
 	for (i = 0; i < n - 1; i++) {
 		for (j = 0; j < n; j++) {
 			if (j == i + 1) {
@@ -165,9 +165,9 @@ void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbo
 		}
 	if (f_v) {
 		cout << "singer_cycle::init Singer_matrix: " << endl;
-		INT_matrix_print(Singer_matrix, n, n);
+		int_matrix_print(Singer_matrix, n, n);
 		}
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	A->make_element(Elt, Singer_matrix, verbose_level);
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
@@ -186,18 +186,18 @@ void singer_cycle::init(INT n, finite_field *F, action *A, action *A2, INT verbo
 		}
 }
 
-void singer_cycle::init_lines(INT verbose_level)
+void singer_cycle::init_lines(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a, b, c, h;
-	INT *v;
-	INT *line;
+	int f_v = (verbose_level >= 1);
+	int i, j, a, b, c, h;
+	int *v;
+	int *line;
 
 	if (f_v) {
 		cout << "singer_cycle::init_lines" << endl;
 		}
 
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 	P = NEW_OBJECT(projective_space);
 
@@ -206,8 +206,8 @@ void singer_cycle::init_lines(INT verbose_level)
 		verbose_level);
 
 
-	singer_point_list = NEW_INT(P->N_points);
-	singer_point_list_inv = NEW_INT(P->N_points);
+	singer_point_list = NEW_int(P->N_points);
+	singer_point_list_inv = NEW_int(P->N_points);
 	a = 0;
 	singer_point_list[0] = 0;
 	singer_point_list_inv[0] = 0;
@@ -218,14 +218,14 @@ void singer_cycle::init_lines(INT verbose_level)
 		a = b;
 		}
 
-	line = NEW_INT(P->k);
+	line = NEW_int(P->k);
 
 	if (f_v) {
 		cout << "singer_cycle::init_lines singer_point_list:" << endl;
 		for (i = 0; i < P->N_points; i++) {
 			cout << i << " : " << singer_point_list[i] << " : ";
 			P->unrank_point(v, singer_point_list[i]);
-			INT_vec_print(cout, v, n);
+			int_vec_print(cout, v, n);
 			cout << endl;
 			}
 		}
@@ -235,8 +235,8 @@ void singer_cycle::init_lines(INT verbose_level)
 		for (i = 0; i < P->r; i++) {
 			a = P->Lines_on_point[0 * P->r + i];
 			cout << "Line " <<  i << " has rank " << a << ":" << endl;
-			P->Grass_lines->unrank_INT(a, 0);
-			INT_matrix_print(P->Grass_lines->M, 2, n);
+			P->Grass_lines->unrank_int(a, 0);
+			int_matrix_print(P->Grass_lines->M, 2, n);
 			h = 0;
 			for (j = 0; j < P->k; j++) {
 				b = P->Lines[a * P->k + j];
@@ -246,7 +246,7 @@ void singer_cycle::init_lines(INT verbose_level)
 					}
 				}
 			cout << "points on this line in powers of singer cycle: ";
-			INT_vec_print(cout, line, h);
+			int_vec_print(cout, line, h);
 			cout << endl;
 			}
 		}
@@ -265,14 +265,14 @@ void singer_cycle::init_lines(INT verbose_level)
 			}
 		}
 	nb_line_orbits = Sch->nb_orbits;
-	line_orbit_reps = NEW_INT(nb_line_orbits);
-	line_orbit_len = NEW_INT(nb_line_orbits);
-	line_orbit_first = NEW_INT(nb_line_orbits);
+	line_orbit_reps = NEW_int(nb_line_orbits);
+	line_orbit_len = NEW_int(nb_line_orbits);
+	line_orbit_first = NEW_int(nb_line_orbits);
 
 	line_orbit_label = NEW_pchar(P->N_lines);
 	line_orbit_label_tex = NEW_pchar(P->N_lines);
-	line_orbit = NEW_INT(P->N_lines);
-	line_orbit_inv = NEW_INT(P->N_lines);
+	line_orbit = NEW_int(P->N_lines);
+	line_orbit_inv = NEW_int(P->N_lines);
 	for (i = 0; i < Sch->nb_orbits; i++) {
 		line_orbit_reps[i] = Sch->orbit[Sch->orbit_first[i]];
 		line_orbit_len[i] = Sch->orbit_len[i];
@@ -280,13 +280,13 @@ void singer_cycle::init_lines(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "line_orbit_reps:";
-		INT_vec_print(cout, line_orbit_reps, nb_line_orbits);
+		int_vec_print(cout, line_orbit_reps, nb_line_orbits);
 		cout << endl;
 		cout << "line_orbit_len:";
-		INT_vec_print(cout, line_orbit_len, nb_line_orbits);
+		int_vec_print(cout, line_orbit_len, nb_line_orbits);
 		cout << endl;
 		cout << "line_orbit_first:";
-		INT_vec_print(cout, line_orbit_first, nb_line_orbits);
+		int_vec_print(cout, line_orbit_first, nb_line_orbits);
 		cout << endl;
 		}
 	h = 0;
@@ -299,13 +299,13 @@ void singer_cycle::init_lines(INT verbose_level)
 			line_orbit[h] = a;
 			line_orbit_inv[a] = h;
 			char str[1000];
-			sprintf(str, "A%ld", j);
+			sprintf(str, "A%d", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " is " << str << endl;
 				}
 			line_orbit_label[h] = NEW_char(strlen(str) + 1);
-			sprintf(str, "A_{%ld}", j);
+			sprintf(str, "A_{%d}", j);
 			str[0] += i;
 			if (f_v) {
 				cout << "label " << j << " in tex is " << str << endl;
@@ -326,18 +326,18 @@ void singer_cycle::init_lines(INT verbose_level)
 	
 	partitionstack *Stack;
 	incidence_structure *Inc;
-	INT f_combined_action = FALSE;
-	INT f_write_tda_files = FALSE;
-	INT f_include_group_order = FALSE;
-	INT f_pic = FALSE;
-	INT f_include_tda_scheme = FALSE;
+	int f_combined_action = FALSE;
+	int f_write_tda_files = FALSE;
+	int f_include_group_order = FALSE;
+	int f_pic = FALSE;
+	int f_include_tda_scheme = FALSE;
 	
 	Inc = NEW_OBJECT(incidence_structure);
 	
 	Inc->init_by_matrix_as_bitvector(P->N_points, P->N_lines, P->incidence_bitvec, 0);
 
-	INT set_size = P->N_points;
-	INT nb_blocks = P->N_lines;
+	int set_size = P->N_points;
+	int nb_blocks = P->N_lines;
 		
 	Stack = NEW_OBJECT(partitionstack);
 	Stack->allocate(set_size + nb_blocks, 0 /* verbose_level */);
@@ -369,7 +369,7 @@ void singer_cycle::init_lines(INT verbose_level)
 	Stack->split_cell(0 /* verbose_level */);
 	Stack->sort_cells();
 
-	INT TDO_depth = INT_MAX;
+	int TDO_depth = int_MAX;
 	
 	cout << "before compute_TDO_safe" << endl;
 	Inc->compute_TDO_safe(*Stack, TDO_depth, verbose_level - 3);
@@ -381,8 +381,8 @@ void singer_cycle::init_lines(INT verbose_level)
 	FREE_OBJECT(Inc);
 	FREE_OBJECT(Stack);
 	
-	FREE_INT(line);
-	FREE_INT(v);
+	FREE_int(line);
+	FREE_int(v);
 	if (f_v) {
 		cout << "singer_cycle::init_lines done" << endl;
 		}

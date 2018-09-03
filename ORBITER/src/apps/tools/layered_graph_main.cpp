@@ -12,63 +12,63 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void draw_vertex_callback(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy);
-void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy);
-INT get_depth(layered_graph *LG, INT layer, INT node);
-INT get_data(layered_graph *LG, INT layer, INT node, INT *Data, INT cur_depth);
-void draw_begining_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_max, INT f_rotated, INT dx, INT dy);
-void draw_ending_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_max, INT f_rotated, INT dx, INT dy);
+void draw_vertex_callback(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
+void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
+void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
+void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
+void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy);
+int get_depth(layered_graph *LG, int layer, int node);
+int get_data(layered_graph *LG, int layer, int node, int *Data, int cur_depth);
+void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy);
+void draw_ending_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy);
 
 #define MAX_FILES 1000
 
-	INT f_my_type = FALSE;
+	int f_my_type = FALSE;
 	const char *the_type = NULL;
-	INT f_boxed = FALSE;
-	INT boxed_group_size = 1;
-	INT f_text_underneath = FALSE;
-	INT x_max = 10000;
-	INT y_max = 10000;
-	INT f_data1 = FALSE;
-	INT f_placeholder_labels = FALSE;
-	INT f_select_layer = FALSE;
-	INT nb_select_layer = 0;
-	INT select_layer[1000];
-	INT f_nodes_empty = FALSE;
-	INT f_scriptsize = FALSE;
-	INT f_numbering_on = FALSE;
+	int f_boxed = FALSE;
+	int boxed_group_size = 1;
+	int f_text_underneath = FALSE;
+	int x_max = 10000;
+	int y_max = 10000;
+	int f_data1 = FALSE;
+	int f_placeholder_labels = FALSE;
+	int f_select_layer = FALSE;
+	int nb_select_layer = 0;
+	int select_layer[1000];
+	int f_nodes_empty = FALSE;
+	int f_scriptsize = FALSE;
+	int f_numbering_on = FALSE;
 	double numbering_on_scale = 1.0;
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *fname;
-	INT f_draw = FALSE;
-	INT f_spanning_tree = FALSE;
-	INT xmax = 1000000;
-	INT ymax = 1000000;
-	INT f_circle = TRUE;
-	INT f_corners = FALSE;
-	INT rad = 50;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_show_level_info = FALSE;
-	INT f_label_edges = FALSE;
-	INT f_y_stretch = FALSE;
+	int f_draw = FALSE;
+	int f_spanning_tree = FALSE;
+	int xmax = 1000000;
+	int ymax = 1000000;
+	int f_circle = TRUE;
+	int f_corners = FALSE;
+	int rad = 50;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_show_level_info = FALSE;
+	int f_label_edges = FALSE;
+	int f_y_stretch = FALSE;
 	double y_stretch = 1.;
-	INT f_x_stretch = FALSE;
+	int f_x_stretch = FALSE;
 	double x_stretch = 1.;
-	INT f_scale = FALSE;
+	int f_scale = FALSE;
 	double scale = .45;
-	INT f_line_width = FALSE;
+	int f_line_width = FALSE;
 	double line_width = 1.5;
-	INT f_rotated = FALSE;
+	int f_rotated = FALSE;
 
 	t0 = os_ticks();
 	for (i = 1; i < argc; i++) {
@@ -217,7 +217,7 @@ int main(int argc, const char **argv)
 
 	cout << "Layered graph read from file" << endl;
 
-	INT data1;
+	int data1;
 
 	
 	data1 = LG->data1;
@@ -267,7 +267,7 @@ int main(int argc, const char **argv)
 
 }
 
-void draw_vertex_callback(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
 {
 	cout << "draw_vertex_callback node " << node << endl;
 	if (f_my_type) {
@@ -289,22 +289,22 @@ void draw_vertex_callback(layered_graph *LG, mp_graphics *G, INT layer, INT node
 	if (f_numbering_on) {
 		char str[1000];
 		
-		sprintf(str, "%ld", LG->L[layer].Nodes[node].depth_first_node_rank);
-		G->aligned_text(x + (INT)(dx * numbering_on_scale), 
-			y - (INT)(dy * numbering_on_scale), "", 
+		sprintf(str, "%d", LG->L[layer].Nodes[node].depth_first_node_rank);
+		G->aligned_text(x + (int)(dx * numbering_on_scale), 
+			y - (int)(dy * numbering_on_scale), "", 
 			str);
 		}
 }
 
-void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
 {
-	//INT d1;
+	//int d1;
 	//char str[1000];
 
 	cout << "draw_vertex_callback_standard x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
-	//sprintf(str, "%ld", d1);
+	//sprintf(str, "%d", d1);
 	char str[1000000];
 	char str2[1000000];
 
@@ -315,19 +315,19 @@ void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, INT layer,
 		if (LG->L[layer].Nodes[node].f_has_data1) {
 			cout << "draw_vertex_callback_standard node " << node << " drawing data1" << endl;
 
-			sprintf(str, "%ld", LG->L[layer].Nodes[node].data1);
+			sprintf(str, "%d", LG->L[layer].Nodes[node].data1);
 			}
 		}
 	else {
 		if (LG->L[layer].Nodes[node].f_has_vec_data) {
 			cout << "has vector data" << endl;
-			INT *D;
-			INT len;
+			int *D;
+			int len;
 
 			D = LG->L[layer].Nodes[node].vec_data;
 			len = LG->L[layer].Nodes[node].vec_data_len;
 			if (len) {
-				sprintf(str, "%ld", D[len - 1]);
+				sprintf(str, "%d", D[len - 1]);
 				}
 			}
 		else {
@@ -347,18 +347,18 @@ void draw_vertex_callback_standard(layered_graph *LG, mp_graphics *G, INT layer,
 	G->aligned_text(x, y, "", str2);
 }
 
-void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
 {
-	//INT d1;
+	//int d1;
 	//char str[1000];
 
 	cout << "draw_vertex_callback_placeholders x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	//d1 = LG->L[layer].Nodes[node].data1;
 	//nb_V = LG->data1;
-	//sprintf(str, "%ld", d1);
+	//sprintf(str, "%d", d1);
 	char str[1000000];
-	INT i, r, l, d, rk;
-	INT *digits;
+	int i, r, l, d, rk;
+	int *digits;
 
 	str[0] = 0;
 
@@ -376,7 +376,7 @@ void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT la
 			}
 		l++;
 		}
-	digits = NEW_INT(l);
+	digits = NEW_int(l);
 	r = rk;
 	l = 1;
 	while (TRUE) {
@@ -391,7 +391,7 @@ void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT la
 	for (i = 0; i < l; i++) {
 		sprintf(str + strlen(str), "%c", (char) ('a' + digits[l - 1 - i]));
 		}
-	FREE_INT(digits);
+	FREE_int(digits);
 
 
 	rk = node;
@@ -408,7 +408,7 @@ void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT la
 			}
 		l++;
 		}
-	digits = NEW_INT(l);
+	digits = NEW_int(l);
 	r = rk;
 	l = 1;
 	while (TRUE) {
@@ -423,15 +423,15 @@ void draw_vertex_callback_placeholders(layered_graph *LG, mp_graphics *G, INT la
 	for (i = 0; i < l; i++) {
 		sprintf(str + strlen(str), "%c", (char) ('a' + digits[l - 1 - i]));
 		}
-	FREE_INT(digits);
+	FREE_int(digits);
 
 	cout << "placeholder " << str << endl;
 	G->aligned_text(x, y, "", str);
 }
 
-void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
 {
-	INT d1, nb_V, depth;
+	int d1, nb_V, depth;
 
 	cout << "draw_vertex_callback x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	d1 = LG->L[layer].Nodes[node].data1;
@@ -442,22 +442,22 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, IN
 
 		cout << "node has vector data" << endl;
 		char str[1000000];
-		INT i;
-		INT *D;
-		INT len;
+		int i;
+		int *D;
+		int len;
 
 		D = LG->L[layer].Nodes[node].vec_data;
 		len = LG->L[layer].Nodes[node].vec_data_len;
 		
-		sprintf(str, "graph_begin %ld %ld %ld %ld %ld %ld %ld %ld ", layer, node, x, y, dx, dy, nb_V, len);
+		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, len);
 		for (i = 0; i < len; i++) {
-			sprintf(str + strlen(str), " %ld", D[i]);
+			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
 
 		if (LG->L[layer].Nodes[node].f_has_distinguished_element) {
 
-			INT distinguished_edge;
+			int distinguished_edge;
 
 
 			distinguished_edge = LG->L[layer].Nodes[node].distinguished_element_index;
@@ -477,35 +477,35 @@ void draw_vertex_callback_graph(layered_graph *LG, mp_graphics *G, INT layer, IN
 		}
 
 	else if (d1 >= 0) {
-		INT *D;
+		int *D;
 		depth = get_depth(LG, layer, node);
 
-		D = NEW_INT(depth + 1);
+		D = NEW_int(depth + 1);
 		get_data(LG, layer, node, D, depth);
 		cout << "draw_vertex_callback layer=" << layer << " node=" << node << " data = ";
-		INT_vec_print(cout, D, depth);
+		int_vec_print(cout, D, depth);
 		cout << endl;
 
 		char str[1000000];
-		INT i;
+		int i;
 
-		sprintf(str, "graph_begin %ld %ld %ld %ld %ld %ld %ld %ld ", layer, node, x, y, dx, dy, nb_V, depth);
+		sprintf(str, "graph_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, depth);
 		for (i = 0; i < depth; i++) {
-			sprintf(str + strlen(str), " %ld", D[i]);
+			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
 		draw_graph(G, x, y, dx, dy, nb_V, D, depth);
 			// in GALOIS/draw.C
 		G->comment("graph_end");
 		
-		FREE_INT(D);
+		FREE_int(D);
 		}
 }
 
-void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, INT layer, INT node, INT x, INT y, INT dx, INT dy)
+void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, int layer, int node, int x, int y, int dx, int dy)
 {
-	INT verbose_level = 0;
-	INT d1, nb_V, depth;
+	int verbose_level = 0;
+	int d1, nb_V, depth;
 
 	cout << "draw_vertex_callback x=" << x << " y=" << y << " dx = " << dx << " dy=" << dy << endl;
 	d1 = LG->L[layer].Nodes[node].data1;
@@ -515,16 +515,16 @@ void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, INT laye
 	if (LG->L[layer].Nodes[node].f_has_vec_data) {
 
 		char str[1000000];
-		INT i;
-		INT *D;
-		INT len;
+		int i;
+		int *D;
+		int len;
 
 		D = LG->L[layer].Nodes[node].vec_data;
 		len = LG->L[layer].Nodes[node].vec_data_len;
 		
-		sprintf(str, "tournament_begin %ld %ld %ld %ld %ld %ld %ld %ld ", layer, node, x, y, dx, dy, nb_V, len);
+		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, len);
 		for (i = 0; i < len; i++) {
-			sprintf(str + strlen(str), " %ld", D[i]);
+			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
 		draw_tournament(G, x, y, dx, dy, nb_V, D, len, verbose_level);
@@ -535,34 +535,34 @@ void draw_vertex_callback_tournament(layered_graph *LG, mp_graphics *G, INT laye
 		}
 
 	else if (d1 >= 0) {
-		INT *D;
+		int *D;
 		depth = get_depth(LG, layer, node);
 
-		D = NEW_INT(depth + 1);
+		D = NEW_int(depth + 1);
 		get_data(LG, layer, node, D, depth);
 		cout << "draw_vertex_callback layer=" << layer << " node=" << node << " data = ";
-		INT_vec_print(cout, D, depth);
+		int_vec_print(cout, D, depth);
 		cout << endl;
 
 		char str[1000000];
-		INT i;
+		int i;
 
-		sprintf(str, "tournament_begin %ld %ld %ld %ld %ld %ld %ld %ld ", layer, node, x, y, dx, dy, nb_V, depth);
+		sprintf(str, "tournament_begin %d %d %d %d %d %d %d %d ", layer, node, x, y, dx, dy, nb_V, depth);
 		for (i = 0; i < depth; i++) {
-			sprintf(str + strlen(str), " %ld", D[i]);
+			sprintf(str + strlen(str), " %d", D[i]);
 			}
 		G->comment(str);
 		draw_tournament(G, x, y, dx, dy, nb_V, D, depth, verbose_level);
 			// in GALOIS/draw.C
 		G->comment("tournament_end");
 		
-		FREE_INT(D);
+		FREE_int(D);
 		}
 }
 
-INT get_depth(layered_graph *LG, INT layer, INT node)
+int get_depth(layered_graph *LG, int layer, int node)
 {
-	INT d1, d2, d3;
+	int d1, d2, d3;
 	
 	d1 = LG->L[layer].Nodes[node].data1;
 	d2 = LG->L[layer].Nodes[node].data2;
@@ -575,9 +575,9 @@ INT get_depth(layered_graph *LG, INT layer, INT node)
 		}
 }
 
-INT get_data(layered_graph *LG, INT layer, INT node, INT *Data, INT cur_depth)
+int get_data(layered_graph *LG, int layer, int node, int *Data, int cur_depth)
 {
-	INT d1, d2, d3;
+	int d1, d2, d3;
 	
 	d1 = LG->L[layer].Nodes[node].data1;
 	d2 = LG->L[layer].Nodes[node].data2;
@@ -593,11 +593,11 @@ INT get_data(layered_graph *LG, INT layer, INT node, INT *Data, INT cur_depth)
 		}
 }
 
-void draw_begining_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_max, INT f_rotated, INT dx, INT dy)
+void draw_begining_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy)
 {
-	INT l, x, y, l1, l2, ll, j, x0, x1, y0, y1;
-	INT Px[100];
-	INT Py[100];
+	int l, x, y, l1, l2, ll, j, x0, x1, y0, y1;
+	int Px[100];
+	int Py[100];
 	
 	cout << "draw_begining_callback" << endl;
 	if (!f_boxed) {
@@ -670,13 +670,13 @@ void draw_begining_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_
 	
 }
 
-void draw_ending_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_max, INT f_rotated, INT dx, INT dy)
+void draw_ending_callback(layered_graph *LG, mp_graphics *G, int x_max, int y_max, int f_rotated, int dx, int dy)
 {
 	cout << "draw_ending_callback" << endl;
 
 	if (f_text_underneath) {
-		INT i, j;
-		INT x, y;
+		int i, j;
+		int x, y;
 		char str[1000];
 		
 		G->st_overwrite(TRUE);
@@ -684,9 +684,9 @@ void draw_ending_callback(layered_graph *LG, mp_graphics *G, INT x_max, INT y_ma
 
 
 			if (f_select_layer) {
-				INT idx;
+				int idx;
 			
-				if (!INT_vec_search_linear(select_layer, nb_select_layer, i, idx)) {
+				if (!int_vec_search_linear(select_layer, nb_select_layer, i, idx)) {
 					continue;
 					}
 			

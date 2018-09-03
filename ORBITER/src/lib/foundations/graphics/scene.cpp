@@ -51,7 +51,7 @@ void scene::freeself()
 		delete [] Line_coords;
 		}
 	if (Edge_points) {
-		FREE_INT(Edge_points);
+		FREE_int(Edge_points);
 		}
 	if (Point_coords) {
 		delete [] Point_coords;
@@ -66,30 +66,30 @@ void scene::freeself()
 		delete [] Cubic_coords;
 		}
 	if (Nb_face_points) {
-		FREE_INT(Nb_face_points);
+		FREE_int(Nb_face_points);
 		}
 	if (Face_points) {
-		INT i;
+		int i;
 		for (i = 0; i < nb_faces; i++) {
-			FREE_INT(Face_points[i]);
+			FREE_int(Face_points[i]);
 			}
-		FREE_PINT(Face_points);
+		FREE_pint(Face_points);
 		}
 	null();
 }
 
-void scene::init(INT verbose_level)
+void scene::init(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "scene::init" << endl;
 		}
 	Line_coords = new double [SCENE_MAX_LINES * 6];
 	nb_lines = 0;
-	Edge_points = NEW_INT(SCENE_MAX_EDGES * 2);
+	Edge_points = NEW_int(SCENE_MAX_EDGES * 2);
 	nb_edges = 0;
-	Point_coords = new double [SCENE_MAX_POINTS * 3];
+	Point_coords = new double [SCENE_MAX_POintS * 3];
 	nb_points = 0;
 	Plane_coords = new double [SCENE_MAX_PLANES * 4];
 	nb_planes = 0;
@@ -97,8 +97,8 @@ void scene::init(INT verbose_level)
 	nb_quadrics = 0;
 	Cubic_coords = new double [SCENE_MAX_CUBICS * 20];
 	nb_cubics = 0;
-	Face_points = NEW_PINT(SCENE_MAX_FACES);
-	Nb_face_points = NEW_INT(SCENE_MAX_FACES);
+	Face_points = NEW_pint(SCENE_MAX_FACES);
+	Nb_face_points = NEW_int(SCENE_MAX_FACES);
 	nb_faces = 0;
 	if (f_v) {
 		cout << "scene::done" << endl;
@@ -106,9 +106,9 @@ void scene::init(INT verbose_level)
 }
 
 scene *scene::transformed_copy(double *A4, double *A4_inv, 
-	double rad, INT verbose_level)
+	double rad, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	scene *S;
 	
 	if (f_v) {
@@ -134,7 +134,7 @@ scene *scene::transformed_copy(double *A4, double *A4_inv,
 
 void scene::print()
 {
-	INT i;
+	int i;
 	
 	cout << "scene:" << endl;
 	cout << "nb_lines=" << nb_lines << endl;
@@ -164,12 +164,12 @@ void scene::print()
 		cout << endl;
 		}
 
-	INT k;
+	int k;
 	
 	cout << "nb_edges=" << nb_edges << endl;
 	for (k = 0; k < nb_edges; k++) {
 		cout << k << " / " << nb_edges << " : ";
-		INT_vec_print(cout, Edge_points + k * 2, 2);
+		int_vec_print(cout, Edge_points + k * 2, 2);
 		cout << endl;
 		}
 }
@@ -177,13 +177,13 @@ void scene::print()
 void scene::transform_lines(scene *S, 
 	double *A4, double *A4_inv, 
 	double rad, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double x[4], y[4];
 	double xx[4], yy[4];
 	double xxx[4], yyy[4];
-	INT i;
+	int i;
 	
 	
 	if (f_v) {
@@ -227,11 +227,11 @@ void scene::transform_lines(scene *S,
 }
 
 void scene::copy_edges(scene *S, double *A4, double *A4_inv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int a, b;
+	int i;
 	
 	
 	if (f_v) {
@@ -249,12 +249,12 @@ void scene::copy_edges(scene *S, double *A4, double *A4_inv,
 }
 
 void scene::transform_points(scene *S, double *A4, double *A4_inv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double x[4];
 	double xx[4];
-	INT i;
+	int i;
 	
 	
 	if (f_v) {
@@ -284,13 +284,13 @@ void scene::transform_points(scene *S, double *A4, double *A4_inv,
 }
 
 void scene::transform_planes(scene *S, double *A4, double *A4_inv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double x[4];
 	double xx[4];
 	double Avt[16];
-	INT i;
+	int i;
 	
 	
 	if (f_v) {
@@ -317,12 +317,12 @@ void scene::transform_planes(scene *S, double *A4, double *A4_inv,
 }
 
 void scene::transform_quadrics(scene *S, double *A4, double *A4_inv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double coeff_in[10];
 	double coeff_out[10];
-	INT i;
+	int i;
 	
 	
 	if (f_v) {
@@ -346,12 +346,12 @@ void scene::transform_quadrics(scene *S, double *A4, double *A4_inv,
 }
 
 void scene::transform_cubics(scene *S, double *A4, double *A4_inv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double coeff_in[20];
 	double coeff_out[20];
-	INT i;
+	int i;
 	
 	
 	if (f_v) {
@@ -375,11 +375,11 @@ void scene::transform_cubics(scene *S, double *A4, double *A4_inv,
 }
 
 void scene::copy_faces(scene *S, double *A4, double *A4_inv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT nb_pts, *pts;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int nb_pts, *pts;
+	int i;
 	
 	
 	if (f_v) {
@@ -397,7 +397,7 @@ void scene::copy_faces(scene *S, double *A4, double *A4_inv,
 }
 
 
-INT scene::line_pt_and_dir(double *x6, double rad)
+int scene::line_pt_and_dir(double *x6, double rad)
 {
 	double pt[6];
 	double pt2[6];
@@ -429,7 +429,7 @@ INT scene::line_pt_and_dir(double *x6, double rad)
 		}
 }
 
-INT scene::line6(double *x6)
+int scene::line6(double *x6)
 {
 	Line_coords[nb_lines * 6 + 0] = x6[0];
 	Line_coords[nb_lines * 6 + 1] = x6[1];
@@ -445,7 +445,7 @@ INT scene::line6(double *x6)
 	return nb_lines - 1;
 }
 
-INT scene::line(double x1, double x2, double x3, 
+int scene::line(double x1, double x2, double x3, 
 	double y1, double y2, double y3)
 {
 	Line_coords[nb_lines * 6 + 0] = x1;
@@ -462,7 +462,7 @@ INT scene::line(double x1, double x2, double x3,
 	return nb_lines - 1;
 }
 
-INT scene::line_through_two_points(INT pt1, INT pt2, double rad)
+int scene::line_through_two_points(int pt1, int pt2, double rad)
 {
 	double x[3], y[3];
 	double xx[3], yy[3];
@@ -486,7 +486,7 @@ INT scene::line_through_two_points(INT pt1, INT pt2, double rad)
 	return nb_lines - 1;
 }
 
-INT scene::edge(INT pt1, INT pt2)
+int scene::edge(int pt1, int pt2)
 {
 	Edge_points[nb_edges * 2 + 0] = pt1;
 	Edge_points[nb_edges * 2 + 1] = pt2;
@@ -498,39 +498,39 @@ INT scene::edge(INT pt1, INT pt2)
 	return nb_edges - 1;
 }
 
-void scene::points(double *Coords, INT nb_points)
+void scene::points(double *Coords, int nb_points)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_points; i++) {
 		point(Coords[i * 3 + 0], Coords[i * 3 + 1], Coords[i * 3 + 2]);
 		}
 }
 
-INT scene::point(double x1, double x2, double x3)
+int scene::point(double x1, double x2, double x3)
 {
 	Point_coords[nb_points * 3 + 0] = x1;
 	Point_coords[nb_points * 3 + 1] = x2;
 	Point_coords[nb_points * 3 + 2] = x3;
 	nb_points++;
-	if (nb_points >= SCENE_MAX_POINTS) {
+	if (nb_points >= SCENE_MAX_POintS) {
 		cout << "too many points" << endl;
 		exit(1);
 		}
 	return nb_points - 1;
 }
 
-INT scene::point_center_of_mass_of_face(INT face_idx)
+int scene::point_center_of_mass_of_face(int face_idx)
 {
 	return point_center_of_mass(Face_points[face_idx], Nb_face_points[face_idx]);
 }
 
-INT scene::point_center_of_mass_of_edge(INT edge_idx)
+int scene::point_center_of_mass_of_edge(int edge_idx)
 {
 	return point_center_of_mass(Edge_points + edge_idx * 2, 2);
 }
 
-INT scene::point_center_of_mass(INT *Pt_idx, INT nb_pts)
+int scene::point_center_of_mass(int *Pt_idx, int nb_pts)
 {
 	double x[3];
 
@@ -538,10 +538,10 @@ INT scene::point_center_of_mass(INT *Pt_idx, INT nb_pts)
 	return point(x[0], x[1], x[2]);
 }
 
-INT scene::triangle(INT line1, INT line2, INT line3, INT verbose_level)
+int scene::triangle(int line1, int line2, int line3, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT pt[3], idx;
+	int f_v = (verbose_level >= 1);
+	int pt[3], idx;
 
 	if (f_v) {
 		cout << "scene::triangle" << endl;
@@ -556,12 +556,12 @@ INT scene::triangle(INT line1, INT line2, INT line3, INT verbose_level)
 	return idx;
 }
 
-INT scene::point_as_intersection_of_two_lines(INT line1, INT line2)
+int scene::point_as_intersection_of_two_lines(int line1, int line2)
 {
 	double x[3], y[3], z[3], u[3], v[3];
 	double System[9];
-	INT ker, idx, i;
-	//INT base_cols[3];
+	int ker, idx, i;
+	//int base_cols[3];
 	double lambda;
 	double Ker[9];
 
@@ -596,7 +596,7 @@ INT scene::point_as_intersection_of_two_lines(INT line1, INT line2)
 	return idx;
 }
 
-INT scene::plane_from_dual_coordinates(double *x4)
+int scene::plane_from_dual_coordinates(double *x4)
 {
 	double y[4];
 	double d, dv;
@@ -609,7 +609,7 @@ INT scene::plane_from_dual_coordinates(double *x4)
 	return plane(y[0], y[1], y[2], y[3]);
 }
 
-INT scene::plane(double x1, double x2, double x3, double a)
+int scene::plane(double x1, double x2, double x3, double a)
 // A plane is called a polynomial shape because 
 // it is defined by a first order polynomial equation. 
 // Given a plane: plane { <A, B, C>, D }
@@ -629,7 +629,7 @@ INT scene::plane(double x1, double x2, double x3, double a)
 	return nb_planes - 1;
 }
 
-INT scene::plane_through_three_points(INT pt1, INT pt2, INT pt3)
+int scene::plane_through_three_points(int pt1, int pt2, int pt3)
 {
 	double p1[3], p2[3], p3[3], n[3], d;
 
@@ -653,18 +653,18 @@ INT scene::plane_through_three_points(INT pt1, INT pt2, INT pt3)
 	return plane(n[0], n[1], n[2], d);
 }
 
-INT scene::quadric_through_three_lines(
-	INT line_idx1, INT line_idx2, INT line_idx3, 
-	INT verbose_level)
+int scene::quadric_through_three_lines(
+	int line_idx1, int line_idx2, int line_idx3, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double coeff[10];
 	double points[9 * 3];
 	double System[9 * 10];
 	double v[3];
 	double x, y, z;
-	INT idx;
-	INT i, k;
+	int idx;
+	int i, k;
 
 	if (f_v) {
 		cout << "scene::quadric_through_three_lines" << endl;
@@ -718,7 +718,7 @@ INT scene::quadric_through_three_lines(
 	return idx;
 }
 
-INT scene::quadric(double *coeff)
+int scene::quadric(double *coeff)
 // povray ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 1: x^2
@@ -732,7 +732,7 @@ INT scene::quadric(double *coeff)
 // 9: z
 // 10: 1
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < 10; i++) {
 		Quadric_coords[nb_quadrics * 10 + i] = coeff[i];
@@ -747,7 +747,7 @@ INT scene::quadric(double *coeff)
 
 
 
-INT scene::cubic(double *coeff)
+int scene::cubic(double *coeff)
 // povray ordering of monomials:
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 1: x^3
@@ -771,7 +771,7 @@ INT scene::cubic(double *coeff)
 // 19: z
 // 20: 1
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < 20; i++) {
 		Cubic_coords[nb_cubics * 20 + i] = coeff[i];
@@ -784,11 +784,11 @@ INT scene::cubic(double *coeff)
 	return nb_cubics - 1;
 }
 
-INT scene::face(INT *pts, INT nb_pts)
+int scene::face(int *pts, int nb_pts)
 {
-	Face_points[nb_faces] = NEW_INT(nb_pts);
+	Face_points[nb_faces] = NEW_int(nb_pts);
 	Nb_face_points[nb_faces] = nb_pts;
-	INT_vec_copy(pts, Face_points[nb_faces], nb_pts);
+	int_vec_copy(pts, Face_points[nb_faces], nb_pts);
 	nb_faces++;
 	if (nb_faces >= SCENE_MAX_FACES) {
 		cout << "too many faces" << endl;
@@ -797,9 +797,9 @@ INT scene::face(INT *pts, INT nb_pts)
 	return nb_faces - 1;
 }
 
-INT scene::face3(INT pt1, INT pt2, INT pt3)
+int scene::face3(int pt1, int pt2, int pt3)
 {
-	INT pts[3];
+	int pts[3];
 
 	pts[0] = pt1;
 	pts[1] = pt2;
@@ -807,9 +807,9 @@ INT scene::face3(INT pt1, INT pt2, INT pt3)
 	return face(pts, 3);
 }
 
-INT scene::face4(INT pt1, INT pt2, INT pt3, INT pt4)
+int scene::face4(int pt1, int pt2, int pt3, int pt4)
 {
-	INT pts[4];
+	int pts[4];
 
 	pts[0] = pt1;
 	pts[1] = pt2;
@@ -818,9 +818,9 @@ INT scene::face4(INT pt1, INT pt2, INT pt3, INT pt4)
 	return face(pts, 4);
 }
 
-INT scene::face5(INT pt1, INT pt2, INT pt3, INT pt4, INT pt5)
+int scene::face5(int pt1, int pt2, int pt3, int pt4, int pt5)
 {
-	INT pts[5];
+	int pts[5];
 
 	pts[0] = pt1;
 	pts[1] = pt2;
@@ -832,10 +832,10 @@ INT scene::face5(INT pt1, INT pt2, INT pt3, INT pt4, INT pt5)
 
 
 
-void scene::draw_lines_with_selection(INT *selection, INT nb_select, 
+void scene::draw_lines_with_selection(int *selection, int nb_select, 
 	double r, const char *options, ostream &ost)
 {
-	INT i, j, h, s;
+	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
@@ -868,10 +868,10 @@ void scene::draw_lines_with_selection(INT *selection, INT nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_line_with_selection(INT line_idx, 
+void scene::draw_line_with_selection(int line_idx, 
 	double r, const char *options, ostream &ost)
 {
-	INT j, h, s;
+	int j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // lines" << endl;
@@ -902,10 +902,10 @@ void scene::draw_line_with_selection(INT line_idx,
 	ost << "	}" << endl;
 }
 
-void scene::draw_lines_cij_with_selection(INT *selection, INT nb_select, 
+void scene::draw_lines_cij_with_selection(int *selection, int nb_select, 
 	ostream &ost)
 {
-	INT i, j, h, s;
+	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // cij lines" << endl;
@@ -939,15 +939,15 @@ void scene::draw_lines_cij_with_selection(INT *selection, INT nb_select,
 
 void scene::draw_lines_cij(ostream &ost)
 {
-	INT selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+	int selection[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
 	
 	draw_lines_cij_with_selection(selection, 15, ost);
 } 
 
-void scene::draw_lines_ai_with_selection(INT *selection, INT nb_select, 
+void scene::draw_lines_ai_with_selection(int *selection, int nb_select, 
 	ostream &ost)
 {
-	INT s, i, j, h;
+	int s, i, j, h;
 		
 	ost << endl;
 	ost << "	union{ // ai lines" << endl;
@@ -981,15 +981,15 @@ void scene::draw_lines_ai_with_selection(INT *selection, INT nb_select,
 
 void scene::draw_lines_ai(ostream &ost)
 {
-	INT selection[] = {0,1,2,3,4,5};
+	int selection[] = {0,1,2,3,4,5};
 	
 	draw_lines_ai_with_selection(selection, 6, ost);
 } 
 
-void scene::draw_lines_bj_with_selection(INT *selection, INT nb_select, 
+void scene::draw_lines_bj_with_selection(int *selection, int nb_select, 
 	ostream &ost)
 {
-	INT s, i, j, h;
+	int s, i, j, h;
 		
 	ost << endl;
 	ost << "	union{ // bj lines" << endl;
@@ -1023,17 +1023,17 @@ void scene::draw_lines_bj_with_selection(INT *selection, INT nb_select,
 
 void scene::draw_lines_bj(ostream &ost)
 {
-	INT selection[] = {0,1,2,3,4,5};
+	int selection[] = {0,1,2,3,4,5};
 	
 	draw_lines_bj_with_selection(selection, 6, ost);
 } 
 
 
 
-void scene::draw_edges_with_selection(INT *selection, INT nb_select, 
+void scene::draw_edges_with_selection(int *selection, int nb_select, 
 	double rad, const char *options, ostream &ost)
 {
-	INT s, i, j, h, pt1, pt2;
+	int s, i, j, h, pt1, pt2;
 		
 	ost << endl;
 	ost << "	union{ // edges" << endl;
@@ -1067,10 +1067,10 @@ void scene::draw_edges_with_selection(INT *selection, INT nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_faces_with_selection(INT *selection, INT nb_select, 
+void scene::draw_faces_with_selection(int *selection, int nb_select, 
 	double thickness_half, const char *options, ostream &ost)
 {
-	INT s, i, j;
+	int s, i, j;
 		
 	ost << endl;
 	ost << "	union{ // faces" << endl;
@@ -1088,11 +1088,11 @@ void scene::draw_faces_with_selection(INT *selection, INT nb_select,
 }
 
 
-void scene::draw_face(INT idx, double thickness_half, const char *options, 
+void scene::draw_face(int idx, double thickness_half, const char *options, 
 	ostream &ost)
 {
-	INT *pts;
-	INT nb_pts, i;
+	int *pts;
+	int nb_pts, i;
 	double *Pts_in;
 	double *Pts_out;
 	double abc3[3];
@@ -1178,9 +1178,9 @@ void scene::draw_text(const char *text, double thickness_half, double extra_spac
 		double x, double y, double z, 
 		double up_x, double up_y, double up_z, 
 		double view_x, double view_y, double view_z, 
-		ostream &ost, INT verbose_level)
+		ostream &ost, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double P1[3];
 	double P2[3];
 	double P3[3];
@@ -1287,11 +1287,11 @@ void scene::draw_text(const char *text, double thickness_half, double extra_spac
 
 
 
-void scene::draw_planes_with_selection(INT *selection, INT nb_select, 
+void scene::draw_planes_with_selection(int *selection, int nb_select, 
 	const char *options, ostream &ost)
 // for instance color = "Orange transmit 0.5 "
 {
-	INT i, j, h, s;
+	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // planes" << endl;
@@ -1317,11 +1317,11 @@ void scene::draw_planes_with_selection(INT *selection, INT nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_points_with_selection(INT *selection, INT nb_select, 
+void scene::draw_points_with_selection(int *selection, int nb_select, 
 	double rad, const char *options, ostream &ost)
 // rad = 0.06 works
 {
-	INT i, j, h, s;
+	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // points" << endl;
@@ -1348,10 +1348,10 @@ void scene::draw_points_with_selection(INT *selection, INT nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_cubic_with_selection(INT *selection, INT nb_select, 
+void scene::draw_cubic_with_selection(int *selection, int nb_select, 
 	const char *options, ostream &ost)
 {
-	INT i, j, h, s;
+	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // cubics" << endl;
@@ -1378,10 +1378,10 @@ void scene::draw_cubic_with_selection(INT *selection, INT nb_select,
 	ost << "	}" << endl;
 }
 
-void scene::draw_quadric_with_selection(INT *selection, INT nb_select, 
+void scene::draw_quadric_with_selection(int *selection, int nb_select, 
 	const char *options, ostream &ost)
 {
-	INT i, j, h, s;
+	int i, j, h, s;
 		
 	ost << endl;
 	ost << "	union{ // quadrics" << endl;
@@ -1408,15 +1408,15 @@ void scene::draw_quadric_with_selection(INT *selection, INT nb_select,
 	ost << "	}" << endl;
 }
 
-INT scene::intersect_line_and_plane(INT line_idx, INT plane_idx, 
-	INT &intersection_point_idx, 
-	INT verbose_level)
+int scene::intersect_line_and_plane(int line_idx, int plane_idx, 
+	int &intersection_point_idx, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; // (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 2);
 	double B[9];
 	double M[12];
-	INT i;
+	int i;
 	double a, av;
 	double v[3];
 
@@ -1500,8 +1500,8 @@ INT scene::intersect_line_and_plane(INT line_idx, INT plane_idx,
 	M[2 * 4 + 3] += B[2];
 
 	// solve M:
-	INT rk;
-	INT base_cols[4];
+	int rk;
+	int base_cols[4];
 	double lambda;
 
 	if (f_vv) {
@@ -1539,15 +1539,15 @@ INT scene::intersect_line_and_plane(INT line_idx, INT plane_idx,
 	return TRUE;
 }
 
-INT scene::intersect_line_and_line(INT line1_idx, INT line2_idx, 
+int scene::intersect_line_and_line(int line1_idx, int line2_idx, 
 	double &lambda, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; // (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 2);
 	double B[3];
 	double M[9];
-	INT i;
+	int i;
 	double v[3];
 
 	if (f_v) {
@@ -1590,8 +1590,8 @@ INT scene::intersect_line_and_line(INT line1_idx, INT line2_idx,
 
 
 	// solve M:
-	INT rk;
-	INT base_cols[3];
+	int rk;
+	int base_cols[3];
 
 	if (f_vv) {
 		cout << "scene::intersect_line_and_line before Gauss elimination:" << endl;
@@ -1628,7 +1628,7 @@ INT scene::intersect_line_and_line(INT line1_idx, INT line2_idx,
 }
 
 
-INT scene::line_extended(double x1, double x2, double x3, 
+int scene::line_extended(double x1, double x2, double x3, 
 	double y1, double y2, double y3, double r)
 {
 	double d1, d2;
@@ -1673,19 +1673,19 @@ INT scene::line_extended(double x1, double x2, double x3,
 	return nb_lines - 1;
 }
 
-void scene::map_a_line(INT line1, INT line2, 
-	INT plane_idx, INT line_idx, double spread, 
-	INT nb_pts, 
-	INT *New_line_idx, INT &nb_new_lines, 
-	INT *New_pt_idx, INT &nb_new_points, 
-	INT verbose_level)
+void scene::map_a_line(int line1, int line2, 
+	int plane_idx, int line_idx, double spread, 
+	int nb_pts, 
+	int *New_line_idx, int &nb_new_lines, 
+	int *New_pt_idx, int &nb_new_points, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double line_pt1_in[3], line_pt2_in[3];
 	double line_pt1[3], line_pt2[3];
 	double direction[3], direction_step[3];
 	double line_pt[3];
-	INT i, h;
+	int i, h;
 
 	if (f_v) {
 		cout << "map_a_line" << endl;
@@ -1729,13 +1729,13 @@ void scene::map_a_line(INT line1, INT line2,
 		}
 }
 
-INT scene::map_a_point(INT line1, INT line2, 
-	INT plane_idx, double pt_in[3], 
-	INT &new_line_idx, INT &new_pt_idx, 
-	INT verbose_level)
+int scene::map_a_point(int line1, int line2, 
+	int plane_idx, double pt_in[3], 
+	int &new_line_idx, int &new_pt_idx, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
 	double line1_pt1[4], line1_pt2[4];
 	double line2_pt1[4], line2_pt2[4];
 	double M1[4 * 4];
@@ -1744,7 +1744,7 @@ INT scene::map_a_point(INT line1, INT line2,
 	double K2[4 * 4];
 	double K3[4 * 4];
 	double K4[4 * 4];
-	INT k1, k2, k3, i;
+	int k1, k2, k3, i;
 
 	if (f_v) {
 		cout << "map_a_point" << endl;
@@ -2007,12 +2007,12 @@ void scene::lines_cij()
 
 void scene::fourD_cube(double rad_desired)
 {
-	INT r, i, j, k, h;
-	INT v[3];
+	int r, i, j, k, h;
+	int v[3];
 	double x[3];
 	double rad;
 
-	INT first_pt_idx;
+	int first_pt_idx;
 
 	first_pt_idx = nb_points;
 	for (r = 0; r < 2; r++) {
@@ -2047,9 +2047,9 @@ void scene::fourD_cube(double rad_desired)
 
 }
 
-void scene::rescale(INT first_pt_idx, double rad_desired)
+void scene::rescale(int first_pt_idx, double rad_desired)
 {
-	INT i;
+	int i;
 	double rad, a;
 
 	for (i = first_pt_idx; i < nb_points; i++) {
@@ -2067,23 +2067,23 @@ void scene::rescale(INT first_pt_idx, double rad_desired)
 	double_vec_scalar_multiple(Point_coords + first_pt_idx * 3, a, 3 * (nb_points - first_pt_idx));
 }
 
-double scene::euclidean_distance(INT pt1, INT pt2)
+double scene::euclidean_distance(int pt1, int pt2)
 {
 	double d;
 	d = distance_euclidean(Point_coords + pt1 * 3, Point_coords + pt2 * 3, 3);
 	return d;
 }
 
-double scene::distance_from_origin(INT pt)
+double scene::distance_from_origin(int pt)
 {
 	double d;
 	d = ::distance_from_origin(Point_coords[pt * 3 + 0], Point_coords[pt * 3 + 1], Point_coords[pt * 3 + 2]);
 	return d;
 }
 
-void scene::fourD_cube_edges(INT first_pt_idx)
+void scene::fourD_cube_edges(int first_pt_idx)
 {
-	INT i, j;
+	int i, j;
 	double d;
 
 	for (i = 0; i < 8; i++) {
@@ -2112,23 +2112,23 @@ void scene::fourD_cube_edges(INT first_pt_idx)
 //v4 = ( 0 , 0 , 1 )
 
 
-void scene::hypercube(INT n, double rad_desired)
+void scene::hypercube(int n, double rad_desired)
 {
-	INT N, i, j, h, k, d;
-	INT *v;
-	INT *w;
+	int N, i, j, h, k, d;
+	int *v;
+	int *w;
 	double *Basis; // [n * 3];
 	double x[3];
 	double t, dt;
 
-	INT first_pt_idx;
+	int first_pt_idx;
 
 	first_pt_idx = nb_points;
 	N = i_power_j(2, n);
 
 	Basis = new double [n * 3];
-	v = NEW_INT(n);
-	w = NEW_INT(n);
+	v = NEW_int(n);
+	w = NEW_int(n);
 	
 	if (n == 4) {
 		Basis[0 * 3 + 0] = sqrt(8./9.); 
@@ -2195,8 +2195,8 @@ void scene::hypercube(INT n, double rad_desired)
 
 	rescale(first_pt_idx, rad_desired);
 	delete [] Basis;
-	FREE_INT(v);
-	FREE_INT(w);
+	FREE_int(v);
+	FREE_int(w);
 }
 
 
@@ -2254,9 +2254,9 @@ void scene::Dodecahedron_points()
 
 }
 
-void scene::Dodecahedron_edges(INT first_pt_idx)
+void scene::Dodecahedron_edges(int first_pt_idx)
 {
-	INT i, j;
+	int i, j;
 	double d;
 	double phi;
 	double two_over_phi;
@@ -2279,12 +2279,12 @@ void scene::Dodecahedron_edges(INT first_pt_idx)
 		}
 }
 
-void scene::Dodecahedron_planes(INT first_pt_idx)
+void scene::Dodecahedron_planes(int first_pt_idx)
 {
-	INT i;
+	int i;
 	
 #if 0
-	INT faces[] = {
+	int faces[] = {
 		8, 9, 11, 10, 
 		12, 14, 15, 13, 
 		16, 17, 19, 18
@@ -2296,7 +2296,7 @@ void scene::Dodecahedron_planes(INT first_pt_idx)
 	face(faces + 4, 4);
 	face(faces + 8, 4);
 #else
-	INT faces[] = {
+	int faces[] = {
 		0,16,1,9,8, 
 		0,12,2,17,16, 
 		0,8,4,14,12,
@@ -2334,7 +2334,7 @@ void scene::clebsch_cubic()
 }
 
 
-double scene::distance_between_two_points(INT pt1, INT pt2)
+double scene::distance_between_two_points(int pt1, int pt2)
 {
 	double x1, x2, x3;
 	double y1, y2, y3;
@@ -2375,7 +2375,7 @@ void scene::create_Hilbert_model()
 	double m = -1.;
 	double px = p + 1;
 	double mx = m - 1;
-	INT i;
+	int i;
 
 	point(p,p,p); // 0
 	point(p,p,m); // 1
@@ -2664,7 +2664,7 @@ void scene::create_Hilbert_model()
 	cubic(coeff_out); // cubic 1
 
 	// pts of the tetrahedron: 0,6,3,5
-	INT pts[4] = {0, 6, 3, 5};
+	int pts[4] = {0, 6, 3, 5};
 	double rad = 5.;
 
 	// create lines 27-32 on Cayley's nodal cubic  (previously: 15,16,17,18,19,20)
@@ -2723,9 +2723,9 @@ void scene::create_Hilbert_model()
 	r = 10;
 	double phi, delta_phi;
 	
-	INT nb_lines0 = nb_lines;
-	INT nb_lines_wanted = 18;
-	INT nb_lines_actual = 0;
+	int nb_lines0 = nb_lines;
+	int nb_lines_wanted = 18;
+	int nb_lines_actual = 0;
 	delta_phi = M_PI / nb_lines_wanted;
 	for (i = 0; i < nb_lines_wanted; i++) {
 		phi = M_PI / 2 + (double) i * delta_phi;

@@ -13,18 +13,18 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void test1(INT n, INT q, INT verbose_level);
+void test1(int n, int q, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_q = FALSE;
-	INT q;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n = 0;
+	int f_q = FALSE;
+	int q;
 	
  	t0 = os_ticks();
 	
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 }
 
 
-void test1(INT n, INT q, INT verbose_level)
+void test1(int n, int q, int verbose_level)
 {
 	finite_field *F;
 	projective_space *P;

@@ -8,11 +8,11 @@
 #include "foundations.h"
 
 void magma_write_permutation_group(const char *fname_base,
-	INT group_order, INT *Table, INT *gens, INT nb_gens,
-	INT verbose_level)
+	int group_order, int *Table, int *gens, int nb_gens,
+	int verbose_level)
 {
 	char fname[1000];
-	INT i;
+	int i;
 
 	sprintf(fname, "%s.magma", fname_base);
 	{
@@ -35,14 +35,14 @@ void magma_write_permutation_group(const char *fname_base,
 
 void magma_normalizer_in_Sym_n(
 	const char *fname_base,
-	INT group_order, INT *Table, INT *gens, INT nb_gens,
-	INT *&N_gens, INT &N_nb_gens, INT &N_go,
-	INT verbose_level)
+	int group_order, int *Table, int *gens, int nb_gens,
+	int *&N_gens, int &N_nb_gens, int &N_go,
+	int verbose_level)
 {
 	char fname_magma[1000];
 	char fname_output[1000];
 	//char cmd[1000];
-	INT i;
+	int i;
 
 	sprintf(fname_magma, "%s.magma", fname_base);
 	sprintf(fname_output, "%s.txt", fname_base);
@@ -102,7 +102,7 @@ void magma_normalizer_in_Sym_n(
 	fp >> N_go;
 	fp >> N_nb_gens;
 	cout << "N_go = " << N_go << " nb_gens = " << N_nb_gens << endl;
-	N_gens = NEW_INT(N_nb_gens * group_order);
+	N_gens = NEW_int(N_nb_gens * group_order);
 	for (i = 0; i < N_nb_gens; i++) {
 		for (j = 0; j < group_order; j++) {
 			fp >> a;
@@ -116,18 +116,18 @@ void magma_normalizer_in_Sym_n(
 }
 
 void read_magma_permutation_group(const char *fname,
-	INT degree, INT *&gens, INT &nb_gens, INT &go,
-	INT verbose_level)
+	int degree, int *&gens, int &nb_gens, int &go,
+	int verbose_level)
 {
 	{
 	ifstream fp(fname);
-	INT i, j, a;
+	int i, j, a;
 
 
 	fp >> go;
 	fp >> nb_gens;
 	cout << "go = " << go << " nb_gens = " << nb_gens << endl;
-	gens = NEW_INT(nb_gens * degree);
+	gens = NEW_int(nb_gens * degree);
 	for (i = 0; i < nb_gens; i++) {
 		for (j = 0; j < degree; j++) {
 			fp >> a;

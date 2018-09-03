@@ -11,17 +11,17 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
  
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_file = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_file = FALSE;
 	const char *fname;
 	const char *column;
-	INT f_secondary = FALSE;
+	int f_secondary = FALSE;
 	const char *secondary_column;
 
 	t0 = os_ticks();
@@ -50,8 +50,8 @@ int main(int argc, char **argv)
 
 	spreadsheet *S;
 
-	INT idx, len, j, t;
-	INT *Data;
+	int idx, len, j, t;
+	int *Data;
 	
 	S = NEW_OBJECT(spreadsheet);
 	
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	cout << "S->nb_rows=" << S->nb_rows << endl;
 
 	idx = S->find_by_column(column);
-	Data = NEW_INT(S->nb_rows);
+	Data = NEW_int(S->nb_rows);
 	for (i = 1; i < S->nb_rows; i++) {
 		j = i - 1;
 		t = S->Table[i * S->nb_cols + idx];
@@ -94,9 +94,9 @@ int main(int argc, char **argv)
 	cout << endl;
 
 	if (f_secondary) {
-		INT idx2;
-		INT f, l, j, pos;
-		INT *Data2;
+		int idx2;
+		int f, l, j, pos;
+		int *Data2;
 		classify *C2;
 		
 		C2 = NEW_OBJECTS(classify, C.nb_types);
@@ -107,11 +107,11 @@ int main(int argc, char **argv)
 			cout << "type " << i << " / " << C.nb_types << ":" << endl;
 			f = C.type_first[i];
 			l = C.type_len[i];
-			Data2 = NEW_INT(l);
+			Data2 = NEW_int(l);
 			for (j = 0; j < l; j++) {
 				pos = C.sorting_perm_inv[f + j];
 				//Data2[j] = Data[pos];
-				Data2[j] = S->get_INT(pos + 1, idx2);
+				Data2[j] = S->get_int(pos + 1, idx2);
 				}
 
 			C2[i].init(Data2, l, FALSE, 0);
@@ -124,7 +124,7 @@ int main(int argc, char **argv)
 			cout << endl;
 			
 
-			FREE_INT(Data2);
+			FREE_int(Data2);
 			
 			}
 

@@ -13,23 +13,23 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-void Hill_cap(int argc, const char **argv, INT verbose_level);
-void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose_level);
-INT get_orbit(schreier *Orb, INT idx, INT *set);
-void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz);
-INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, INT set_sz, INT k, INT verbose_level);
-void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT sz, 
-	longinteger_object *Rank_lines, INT nb_lines, INT verbose_level);
+void Hill_cap(int argc, const char **argv, int verbose_level);
+void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level);
+int get_orbit(schreier *Orb, int idx, int *set);
+void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz);
+int test_if_arc(finite_field *Fq, int *pt_coords, int *set, int set_sz, int k, int verbose_level);
+void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int sz, 
+	longinteger_object *Rank_lines, int nb_lines, int verbose_level);
 
 
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 	
  	t0 = os_ticks();
 	
@@ -45,11 +45,11 @@ int main(int argc, const char **argv)
 	the_end(t0);
 }
 
-void Hill_cap(int argc, const char **argv, INT verbose_level)
+void Hill_cap(int argc, const char **argv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT epsilon, n, q, w, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int epsilon, n, q, w, i;
 	polar P;
 	finite_field *F;
 	action *A;
@@ -112,7 +112,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 #if 1
 
 	longinteger_object *Rank_lines;
-	INT nb_lines;
+	int nb_lines;
 		
 	if (f_v) {
 		cout << "Hill_cap before P.dual_polar_graph" << endl;
@@ -144,14 +144,14 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 
 	sims *S;
 	longinteger_object go;
-	INT goi;
-	INT *Elt;
+	int goi;
+	int *Elt;
 
-	Elt = NEW_INT(P.A->elt_size_in_INT);
+	Elt = NEW_int(P.A->elt_size_in_int);
 	S = P.A->Sims;
 	S->group_order(go);	
 	cout << "found a group of order " << go << endl;
-	goi = go.as_INT();
+	goi = go.as_int();
 
 	if (f_v) {
 		cout << "Hill_cap finding an element of order 7" << endl;
@@ -163,7 +163,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 
 
 	schreier *Orb;
-	INT N;
+	int N;
 
 	if (f_v) {
 		cout << "Hill_cap computing orbits on points" << endl;
@@ -184,16 +184,16 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 
 
 
-	INT *pt_coords;
-	INT *Good_orbits;
-	INT *set;
-	INT a, nb_pts, j;
+	int *pt_coords;
+	int *Good_orbits;
+	int *set;
+	int a, nb_pts, j;
 
 	N = Orb->nb_orbits;	
 	nb_pts = P.A->degree;
-	pt_coords = NEW_INT(nb_pts * n);
-	set = NEW_INT(nb_pts);
-	Good_orbits = NEW_INT(N);
+	pt_coords = NEW_int(nb_pts * n);
+	set = NEW_int(nb_pts);
+	Good_orbits = NEW_int(N);
 
 	for (i = 0; i < nb_pts; i++) {
 		O->unrank_point(pt_coords + i * n, 1, i, 0);
@@ -206,14 +206,14 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 		a = O->evaluate_quadratic_form(pt_coords + i * n, 1);
 		cout << setw(3) << i << " : " << a << endl;
 		}
-	INT sz[9];
-	INT i1, i2, i3, i4, i5, i6, i7, i8, ii;
-	INT nb_sol;
+	int sz[9];
+	int i1, i2, i3, i4, i5, i6, i7, i8, ii;
+	int nb_sol;
 
-	INT *Sets; // [max_sol * 56]
-	INT max_sol = 100;
+	int *Sets; // [max_sol * 56]
+	int max_sol = 100;
 	
-	Sets = NEW_INT(max_sol * 56);
+	Sets = NEW_int(max_sol * 56);
 	
 	sz[0] = 0;
 	nb_sol = 0;
@@ -221,7 +221,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 		sz[1] = sz[0];
 		append_orbit_and_adjust_size(Orb, i1, set, sz[1]);
 		//cout << "after append_orbit_and_adjust_size :";
-		//INT_vec_print(cout, set, sz[1]);
+		//int_vec_print(cout, set, sz[1]);
 		//cout << endl;
 		if (!test_if_arc(F, pt_coords, set, sz[1], n, verbose_level)) {
 			continue;
@@ -274,7 +274,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 										exit(1);
 										}
 									for (ii = 0; ii < sz[8]; ii++) {
-										INT rk;
+										int rk;
 										PG_element_rank_modified(*O->F, pt_coords + set[ii] * n, 1, n, rk);
 										Sets[nb_sol * 56 + ii] = rk;
 										}
@@ -282,7 +282,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 									nb_sol++;
 									cout << "solution " << nb_sol << ", a set of size " << sz[8] << " : ";
 									cout << i1 << "," << i2 << "," << i3 << "," << i4 << "," << i5 << "," << i6 << "," << i7 << "," << i8 << endl;
-									INT_vec_print(cout, set, sz[8]);
+									int_vec_print(cout, set, sz[8]);
 									cout << endl;
 
 
@@ -301,7 +301,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 			} // next i2
 		} // next i1
 	cout << "there are " << nb_sol << " solutions" << endl;
-	cout << "out of " << INT_n_choose_k(N, 8) << " possibilities" << endl;
+	cout << "out of " << int_n_choose_k(N, 8) << " possibilities" << endl;
 
 
 	for (i = 0; i < nb_sol; i++) {
@@ -313,16 +313,16 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 		}
 
 
-	FREE_INT(Sets);
+	FREE_int(Sets);
 
 
 #if 0
 
-	INT *Adj;
-	INT nb_good_orbits;
+	int *Adj;
+	int nb_good_orbits;
 
 
-	INT size;
+	int size;
 
 	nb_good_orbits = 0;
 	for (i = 0; i < N; i++) {
@@ -333,9 +333,9 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 		}
 	
 	cout << "we found " << nb_good_orbits << " good orbits" << endl;
-	INT_vec_print(cout, Good_orbits, nb_good_orbits);
+	int_vec_print(cout, Good_orbits, nb_good_orbits);
 	
-	Adj = NEW_INT(nb_good_orbits * nb_good_orbits);
+	Adj = NEW_int(nb_good_orbits * nb_good_orbits);
 	for (i = 0; i < nb_good_orbits * nb_good_orbits; i++) {
 		Adj[i] = 0;
 		}
@@ -357,7 +357,7 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 	print_integer_matrix_width(cout, Adj, nb_good_orbits, nb_good_orbits, nb_good_orbits, 1);
 
 
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	delete [] Rank_lines;		
 
 #endif
@@ -368,14 +368,14 @@ void Hill_cap(int argc, const char **argv, INT verbose_level)
 	
 }
 
-void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose_level)
+void init_orthogonal(action *A, int epsilon, int n, finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	const char *override_poly;
-	INT p, hh, f_semilinear;
-	INT f_basis = TRUE;
-	INT q = F->q;
+	int p, hh, f_semilinear;
+	int f_basis = TRUE;
+	int q = F->q;
 
 	if (f_v) {
 		cout << "init_orthogonal epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
@@ -422,9 +422,9 @@ void init_orthogonal(action *A, INT epsilon, INT n, finite_field *F, INT verbose
 		}
 }
 
-INT get_orbit(schreier *Orb, INT idx, INT *set)
+int get_orbit(schreier *Orb, int idx, int *set)
 {
-	INT f, i, len;
+	int f, i, len;
 
 	f = Orb->orbit_first[idx];
 	len = Orb->orbit_len[idx];
@@ -434,9 +434,9 @@ INT get_orbit(schreier *Orb, INT idx, INT *set)
 	return len;
 }
 
-void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz)
+void append_orbit_and_adjust_size(schreier *Orb, int idx, int *set, int &sz)
 {
-	INT f, i, len;
+	int f, i, len;
 
 	f = Orb->orbit_first[idx];
 	len = Orb->orbit_len[idx];
@@ -445,33 +445,33 @@ void append_orbit_and_adjust_size(schreier *Orb, INT idx, INT *set, INT &sz)
 		}
 }
 
-INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, INT set_sz, INT k, INT verbose_level)
+int test_if_arc(finite_field *Fq, int *pt_coords, int *set, int set_sz, int k, int verbose_level)
 {
-	INT f_v = FALSE; //(verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 2);
-	INT subset[3];
-	INT subset1[3];
-	INT *Mtx;
-	INT ret = FALSE;
-	INT i, j, a, rk;
+	int f_v = FALSE; //(verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 2);
+	int subset[3];
+	int subset1[3];
+	int *Mtx;
+	int ret = FALSE;
+	int i, j, a, rk;
 
 
 	if (f_v) {
 		cout << "test_if_arc testing set" << endl;
-		INT_vec_print(cout, set, set_sz);
+		int_vec_print(cout, set, set_sz);
 		cout << endl;
 		}
-	Mtx = NEW_INT(3 * k);
+	Mtx = NEW_int(3 * k);
 	
 	first_k_subset(subset, set_sz, 3);
 	while (TRUE) {
 		for (i = 0; i < 3; i++) {
 			subset1[i] = set[subset[i]];
 			}
-		INT_vec_sort(3, subset1);
+		int_vec_sort(3, subset1);
 		if (f_vv) {
 			cout << "testing subset ";
-			INT_vec_print(cout, subset1, 3);
+			int_vec_print(cout, subset1, 3);
 			cout << endl;
 			}
 				
@@ -502,28 +502,28 @@ INT test_if_arc(finite_field *Fq, INT *pt_coords, INT *set, INT set_sz, INT k, I
 	ret = TRUE;
 done:
 	
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	return ret;
 }
 
-void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT sz, 
-	longinteger_object *Rank_lines, INT nb_lines, INT verbose_level)
+void solution(int w, int n, action *A, orthogonal *O, int *coords, int *set, int sz, 
+	longinteger_object *Rank_lines, int nb_lines, int verbose_level)
 {
-	INT *M;
-	INT *Weights;
-	INT *ranks;
-	INT *PG_ranks;
-	INT i, j;
+	int *M;
+	int *Weights;
+	int *ranks;
+	int *PG_ranks;
+	int i, j;
 	finite_field *F;
-	INT q;
-	INT nb_points;
+	int q;
+	int nb_points;
 
 	F = O->F;
 	q = F->q;
 	nb_points = nb_PG_elements(n - 1, q);
 	cout << "nb_points = " << nb_points << endl;
-	ranks = NEW_INT(sz);
-	PG_ranks = NEW_INT(sz);
+	ranks = NEW_int(sz);
+	PG_ranks = NEW_int(sz);
 
 	for (i = 0; i < sz; i++) {
 		ranks[i] = O->rank_point(coords + set[i] * n, 1, 0);
@@ -539,15 +539,15 @@ void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT
 #if 0
 	sims *Stab;
 	vector_ge *gens;
-	INT *tl;
-	INT order;
+	int *tl;
+	int order;
 
 	gens = new vector_ge;
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	Stab = create_sims_for_stabilizer(A, ranks, sz, verbose_level);
 	Stab->extract_strong_generators_in_order(*gens, tl, verbose_level);
 	cout << "tl:";
-	INT_vec_print(cout, tl, A->base_len);
+	int_vec_print(cout, tl, A->base_len);
 	cout << endl;
 	for (i = 0; i < gens->len; i++) {
 		cout << "generator " << i << ":" << endl;
@@ -557,8 +557,8 @@ void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT
 		}
 #endif
 
-	Weights = NEW_INT(n + 1);
-	M = NEW_INT(n * sz);
+	Weights = NEW_int(n + 1);
+	M = NEW_int(n * sz);
 	for (j = 0; j < sz; j++) {
 		for (i = 0; i < n; i++) {
 			M[i * sz + j] = coords[set[j] * n + i];
@@ -577,11 +577,11 @@ void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT
 	Grass.init(n, w, F, 0 /*verbose_level*/);
 
 
-	INT *line_type;
-	INT *mtx;
-	INT h, rk;
-	line_type = NEW_INT(nb_lines);
-	mtx = NEW_INT(3 * n);
+	int *line_type;
+	int *mtx;
+	int h, rk;
+	line_type = NEW_int(nb_lines);
+	mtx = NEW_int(3 * n);
 	
 	for (h = 0; h < nb_lines; h++) {
 		line_type[h] = 0;
@@ -618,18 +618,18 @@ void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT
 
 	cout << "computing tactical decomposition scheme:" << endl;
 	
-	INT nb_subsets = 2;
-	INT Sz[2];
-	INT *Subsets[2];
-	//INT f_semilinear = TRUE;
+	int nb_subsets = 2;
+	int Sz[2];
+	int *Subsets[2];
+	//int f_semilinear = TRUE;
 	//char *override_poly = NULL;
-	//INT f_basis = FALSE;
+	//int f_basis = FALSE;
 	
 	Sz[0] = nb_lines;
-	Subsets[0] = NEW_INT(nb_lines);
+	Subsets[0] = NEW_int(nb_lines);
 	
 	for (i = 0; i < nb_lines; i++) {
-		Subsets[0][i] = nb_points + Rank_lines[i].as_INT();
+		Subsets[0][i] = nb_points + Rank_lines[i].as_int();
 		}
 
 
@@ -643,13 +643,13 @@ void solution(INT w, INT n, action *A, orthogonal *O, INT *coords, INT *set, INT
 		// in TOP_LEVEL/decomposition.C
 
 
-	FREE_INT(line_type);
-	FREE_INT(mtx);
-	FREE_INT(M);
-	FREE_INT(Weights);
-	FREE_INT(ranks);
-	FREE_INT(PG_ranks);
-	//FREE_INT(tl);
+	FREE_int(line_type);
+	FREE_int(mtx);
+	FREE_int(M);
+	FREE_int(Weights);
+	FREE_int(ranks);
+	FREE_int(PG_ranks);
+	//FREE_int(tl);
 	//delete gens;
 	//delete Stab;
 

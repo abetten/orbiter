@@ -10,26 +10,26 @@
 
 #include "orbiter.h"
 
-INT distance(INT n, INT *seq1, INT *seq2);
+int distance(int n, int *seq1, int *seq2);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i, j, N, s;
-	INT *Adj;
-	INT *seq1;
-	INT *seq2;
-	INT *seq3;
-	INT f_n = FALSE;
-	INT n; // sequence length
-	INT f_q = FALSE;
-	INT q; // alphabet size
-	INT f_d = FALSE;
-	INT d; // minimum distance
-	INT f_set = FALSE;
-	INT sz = 0;
-	INT set[1000];
+	int verbose_level = 0;
+	int i, j, N, s;
+	int *Adj;
+	int *seq1;
+	int *seq2;
+	int *seq3;
+	int f_n = FALSE;
+	int n; // sequence length
+	int f_q = FALSE;
+	int q; // alphabet size
+	int f_d = FALSE;
+	int d; // minimum distance
+	int f_set = FALSE;
+	int sz = 0;
+	int set[1000];
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 				set[j] = atoi(argv[++i]);
 				}
 			cout << "-set " << sz;
-			INT_vec_print(cout, set, sz);
+			int_vec_print(cout, set, sz);
 			cout << endl;
 			}
 		}
@@ -85,12 +85,12 @@ int main(int argc, char **argv)
 	N = i_power_j(q, n);
 	
 
-	Adj = NEW_INT(N * N);
-	INT_vec_zero(Adj, N * N);
+	Adj = NEW_int(N * N);
+	int_vec_zero(Adj, N * N);
 
-	seq1 = NEW_INT(n);
-	seq2 = NEW_INT(n);
-	seq3 = NEW_INT(n);
+	seq1 = NEW_int(n);
+	seq2 = NEW_int(n);
+	seq3 = NEW_int(n);
 	
 
 
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 	for (i = 0; i < N; i++) {
 		AG_element_unrank(q, seq1, 1, n, i);
 		cout << i << " : ";
-		INT_vec_print(cout, seq1, n);
+		int_vec_print(cout, seq1, n);
 		cout << endl;
 		}
 
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
-	sprintf(fname, "Sequences_%ld_%ld_%ld.colored_graph", n, q, d);
+	sprintf(fname, "Sequences_%d_%d_%d.colored_graph", n, q, d);
 
 	CG->save(fname, verbose_level);
 
@@ -131,27 +131,27 @@ int main(int argc, char **argv)
 
 	if (f_set) {
 		cout << "The set of size " << sz << " is ";
-		INT_vec_print(cout, set, sz);
+		int_vec_print(cout, set, sz);
 		cout << endl;
 
 
-		INT a, b;
+		int a, b;
 
 
 		for (i = 0; i < sz; i++) {
 			a = set[i];
 			AG_element_unrank(q, seq1, 1, n, a);
 			cout << i << " : " << a << " : ";
-			INT_vec_print(cout, seq1, n);
+			int_vec_print(cout, seq1, n);
 			cout << endl;
 			}
 
-		INT *D, *Adj2;
+		int *D, *Adj2;
 		
-		D = NEW_INT(sz * sz);
-		Adj2 = NEW_INT(sz * sz);
-		INT_vec_zero(D, sz * sz);
-		INT_vec_zero(Adj2, sz * sz);
+		D = NEW_int(sz * sz);
+		Adj2 = NEW_int(sz * sz);
+		int_vec_zero(D, sz * sz);
+		int_vec_zero(Adj2, sz * sz);
 		
 		for (i = 0; i < sz; i++) {
 			a = set[i];
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
 				}
 			}
 		cout << "The distance matrix is:" << endl;
-		INT_matrix_print(D, sz, sz);
+		int_matrix_print(D, sz, sz);
 		cout << endl;
 
 		for (i = 0; i < sz; i++) {
@@ -183,7 +183,7 @@ int main(int argc, char **argv)
 			}
 
 		cout << "The adjacency matrix is:" << endl;
-		INT_matrix_print(Adj2, sz, sz);
+		int_matrix_print(Adj2, sz, sz);
 		cout << endl;
 
 
@@ -201,7 +201,7 @@ int main(int argc, char **argv)
 		CG = NEW_OBJECT(colored_graph);
 		CG->init_adjacency_no_colors(sz, Adj2, verbose_level);
 
-		sprintf(fname, "Sequences_%ld_%ld_%ld_set_%ld.colored_graph", n, q, d, sz);
+		sprintf(fname, "Sequences_%d_%d_%d_set_%d.colored_graph", n, q, d, sz);
 
 		CG->save(fname, verbose_level);
 
@@ -213,15 +213,15 @@ int main(int argc, char **argv)
 
 
 
-	FREE_INT(Adj);
-	FREE_INT(seq1);
-	FREE_INT(seq2);
-	FREE_INT(seq3);
+	FREE_int(Adj);
+	FREE_int(seq1);
+	FREE_int(seq2);
+	FREE_int(seq3);
 }
 
-INT distance(INT n, INT *seq1, INT *seq2)
+int distance(int n, int *seq1, int *seq2)
 {
-	INT h, s;
+	int h, s;
 	
 	s = 0;
 	for (h = 0; h < n; h++) {

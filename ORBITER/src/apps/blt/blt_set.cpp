@@ -15,7 +15,7 @@
 
 void blt_set::read_arguments(int argc, const char **argv)
 {
-	INT i;
+	int i;
 		
 	
 	for (i = 1; i < argc; i++) {
@@ -87,7 +87,7 @@ void blt_set::null()
 
 void blt_set::freeself()
 {
-	INT f_v = FALSE;
+	int f_v = FALSE;
 
 	if (f_v) {
 		cout << "blt_set::freeself before A" << endl;
@@ -114,10 +114,10 @@ void blt_set::freeself()
 		O = NULL;
 		}
 	if (Pts) {
-		FREE_INT(Pts);
+		FREE_int(Pts);
 		}
 	if (Candidates) {
-		FREE_INT(Candidates);
+		FREE_int(Candidates);
 		}
 	null();
 	if (f_v) {
@@ -131,12 +131,12 @@ void blt_set::freeself()
 void blt_set::init_basic(finite_field *F, 
 	const char *input_prefix, 
 	const char *base_fname,
-	INT starter_size,  
+	int starter_size,  
 	int argc, const char **argv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "blt_set::init_basic" << endl;
@@ -217,11 +217,11 @@ void blt_set::init_basic(finite_field *F,
 		}
 }
 
-void blt_set::init_group(INT verbose_level)
+void blt_set::init_group(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_basis = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_basis = TRUE;
 
 	if (f_v) {
 		cout << "blt_set::init_group" << endl;
@@ -264,7 +264,7 @@ void blt_set::init_group(INT verbose_level)
 		cout << "blt_set::init_group "
 				"computing lex least base done" << endl;
 		cout << "blt_set::init_group base: ";
-		INT_vec_print(cout, A->base, A->base_len);
+		int_vec_print(cout, A->base, A->base_len);
 		cout << endl;
 		}
 	
@@ -309,18 +309,18 @@ void blt_set::init_group(INT verbose_level)
 				"allocating Pts and Candidates" << endl;
 		}
 	//int Pts_size = target_size * n;
-	Pts = NEW_INT(target_size * n);
+	Pts = NEW_int(target_size * n);
 
 #if 0
 	for (int i=0; i<Pts_size; i++) Pts[i] = 0;
 			// set all the points to an
 			// initial value of zero
 			// in order to prevent 
-			// finite_field::mult(INT i, INT j)
+			// finite_field::mult(int i, int j)
 			// from throwing an error.
 #endif
 
-	Candidates = NEW_INT(degree * n);
+	Candidates = NEW_int(degree * n);
 	
 	if (f_v) {
 		cout << "blt_set::init_group finished" << endl;
@@ -328,9 +328,9 @@ void blt_set::init_group(INT verbose_level)
 }
 
 
-void blt_set::init_orthogonal_hash(INT verbose_level)
+void blt_set::init_orthogonal_hash(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "blt_set::init_orthogonal_hash" << endl;
@@ -343,11 +343,11 @@ void blt_set::init_orthogonal_hash(INT verbose_level)
 		}
 }
 
-void blt_set::init2(INT verbose_level)
+void blt_set::init2(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "blt_set::init2" << endl;
@@ -394,7 +394,7 @@ void blt_set::init2(INT verbose_level)
 	gen->print_function_data = (void *) this;
 	
 	
-	INT nb_nodes = ONE_MILLION;
+	int nb_nodes = ONE_MILLION;
 	
 	if (f_vv) {
 		cout << "blt_set::init2 calling init_poset_orbit_node with "
@@ -422,15 +422,15 @@ void blt_set::init2(INT verbose_level)
 
 
 void blt_set::create_graphs(
-	INT orbit_at_level_r, INT orbit_at_level_m, 
-	INT level_of_candidates_file, 
+	int orbit_at_level_r, int orbit_at_level_m, 
+	int level_of_candidates_file, 
 	const char *output_prefix, 
-	INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
-	INT verbose_level)
+	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
 
 
 	if (f_v) {
@@ -449,22 +449,22 @@ void blt_set::create_graphs(
 	char fname_list_of_cases[1000];
 	char fname_time[1000];
 	char graph_fname_base[1000];
-	INT orbit;
-	INT nb_orbits;
-	INT *list_of_cases;
-	INT nb_of_cases;
+	int orbit;
+	int nb_orbits;
+	int *list_of_cases;
+	int nb_of_cases;
 
-	INT *Time;
-	INT time_idx;
-
-
+	int *Time;
+	int time_idx;
 
 
-	sprintf(fname, "%s_lvl_%ld", prefix_with_directory, starter_size);
-	sprintf(fname_list_of_cases, "%slist_of_cases_%s_%ld_%ld_%ld.txt",
+
+
+	sprintf(fname, "%s_lvl_%d", prefix_with_directory, starter_size);
+	sprintf(fname_list_of_cases, "%slist_of_cases_%s_%d_%d_%d.txt",
 			output_prefix, prefix, starter_size,
 			orbit_at_level_r, orbit_at_level_m);
-	sprintf(fname_time, "%stime_%s_%ld_%ld_%ld.csv",
+	sprintf(fname_time, "%stime_%s_%d_%d_%d.csv",
 			output_prefix, prefix, starter_size,
 			orbit_at_level_r, orbit_at_level_m);
 
@@ -479,12 +479,12 @@ void blt_set::create_graphs(
 		}
 
 
-	Time = NEW_INT(nb_orbits * 2);
-	INT_vec_zero(Time, nb_orbits * 2);
+	Time = NEW_int(nb_orbits * 2);
+	int_vec_zero(Time, nb_orbits * 2);
 	time_idx = 0;
 
 	nb_of_cases = 0;
-	list_of_cases = NEW_INT(nb_orbits);
+	list_of_cases = NEW_int(nb_orbits);
 	for (orbit = 0; orbit < nb_orbits; orbit++) {
 		if ((orbit % orbit_at_level_m) != orbit_at_level_r) {
 			continue;
@@ -497,9 +497,9 @@ void blt_set::create_graphs(
 
 		
 		colored_graph *CG = NULL;
-		INT nb_vertices = -1;
+		int nb_vertices = -1;
 
-		INT t0 = os_ticks();
+		int t0 = os_ticks();
 		
 		if (create_graph(orbit, level_of_candidates_file, 
 			output_prefix, 
@@ -521,7 +521,7 @@ void blt_set::create_graphs(
 			delete CG;
 			}
 
-		INT t1 = os_ticks();
+		int t1 = os_ticks();
 
 		Time[time_idx * 2 + 0] = orbit;
 		Time[time_idx * 2 + 1] = t1 - t0;
@@ -546,7 +546,7 @@ void blt_set::create_graphs(
 		cout << "blt_set::create_graphs writing file "
 				<< fname_time << endl;
 		}
-	INT_matrix_write_csv(fname_time, Time, time_idx, 2);
+	int_matrix_write_csv(fname_time, Time, time_idx, 2);
 	if (f_v) {
 		cout << "blt_set::create_graphs Written file "
 				<< fname_time << " of size "
@@ -562,8 +562,8 @@ void blt_set::create_graphs(
 				<< file_size(fname_list_of_cases) << endl;
 		}
 
-	FREE_INT(Time);
-	FREE_INT(list_of_cases);
+	FREE_int(Time);
+	FREE_int(list_of_cases);
 
 	//registry_dump_sorted();
 }
@@ -571,14 +571,14 @@ void blt_set::create_graphs(
 void blt_set::create_graphs_list_of_cases(
 	const char *case_label, 
 	const char *list_of_cases_text, 
-	INT level_of_candidates_file, 
+	int level_of_candidates_file, 
 	const char *output_prefix, 
-	INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
-	INT verbose_level)
+	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
 
 
 	if (f_v) {
@@ -590,11 +590,11 @@ void blt_set::create_graphs_list_of_cases(
 	
 	//f_memory_debug = TRUE;
 
-	INT *list_of_cases = NULL;
-	INT nb_of_cases;
+	int *list_of_cases = NULL;
+	int nb_of_cases;
 
 
-	INT_vec_scan(list_of_cases_text, list_of_cases, nb_of_cases);
+	int_vec_scan(list_of_cases_text, list_of_cases, nb_of_cases);
 	if (f_v) {
 		cout << "blt_set::create_graphs_list_of_cases "
 				"nb_of_cases = " << nb_of_cases << endl;
@@ -607,16 +607,16 @@ void blt_set::create_graphs_list_of_cases(
 	char fname[1000];
 	char fname_list_of_cases[1000];
 	char graph_fname_base[1000];
-	INT orbit;
-	INT nb_orbits;
-	INT *list_of_cases_created;
-	INT nb_of_cases_created;
-	INT c;
+	int orbit;
+	int nb_orbits;
+	int *list_of_cases_created;
+	int nb_of_cases_created;
+	int c;
 
 
 
 
-	sprintf(fname, "%s_lvl_%ld", prefix_with_directory, starter_size);
+	sprintf(fname, "%s_lvl_%d", prefix_with_directory, starter_size);
 	sprintf(fname_list_of_cases, "%s%s_list_of_cases.txt",
 			output_prefix, case_label);
 
@@ -633,7 +633,7 @@ void blt_set::create_graphs_list_of_cases(
 
 
 	nb_of_cases_created = 0;
-	list_of_cases_created = NEW_INT(nb_orbits);
+	list_of_cases_created = NEW_int(nb_orbits);
 	for (c = 0; c < nb_of_cases; c++) {
 		orbit = list_of_cases[c];
 		if (f_v3) {
@@ -645,7 +645,7 @@ void blt_set::create_graphs_list_of_cases(
 
 		
 		colored_graph *CG = NULL;
-		INT nb_vertices = -1;
+		int nb_vertices = -1;
 
 
 		if (create_graph(orbit, level_of_candidates_file, 
@@ -700,24 +700,24 @@ void blt_set::create_graphs_list_of_cases(
 				<< " / " << nb_of_cases << " cases" << endl;
 		}
 
-	FREE_INT(list_of_cases_created);
+	FREE_int(list_of_cases_created);
 
 	//registry_dump_sorted();
 }
 
 
-INT blt_set::create_graph(
-	INT orbit_at_level, INT level_of_candidates_file, 
+int blt_set::create_graph(
+	int orbit_at_level, int level_of_candidates_file, 
 	const char *output_prefix, 
-	INT f_lexorder_test, INT f_eliminate_graphs_if_possible, 
-	INT &nb_vertices, char *graph_fname_base,
+	int f_lexorder_test, int f_eliminate_graphs_if_possible, 
+	int &nb_vertices, char *graph_fname_base,
 	colored_graph *&CG,  
-	INT verbose_level)
+	int verbose_level)
 // returns TRUE if a graph was written, FALSE otherwise
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
 
 
 	if (f_v) {
@@ -733,14 +733,14 @@ INT blt_set::create_graph(
 
 	CG = NULL;
 	
-	INT ret;
+	int ret;
 
 	orbit_rep *R;
 
 
 
-	INT max_starter;
-	INT nb;
+	int max_starter;
+	int nb;
 
 	nb_vertices = 0;
 
@@ -767,7 +767,7 @@ INT blt_set::create_graph(
 		cout << "blt_set::create_graph Case "
 				<< orbit_at_level << " / " << R->nb_cases
 				<< " Read starter : ";
-		INT_vec_print(cout, R->rep, starter_size);
+		int_vec_print(cout, R->rep, starter_size);
 		cout << endl;
 		}
 
@@ -789,7 +789,7 @@ INT blt_set::create_graph(
 
 
 	if (f_lexorder_test) {
-		INT nb_candidates2;
+		int nb_candidates2;
 	
 		if (f_v3) {
 			cout << "blt_set::create_graph Case " << orbit_at_level
@@ -829,12 +829,12 @@ INT blt_set::create_graph(
 	nb_vertices = R->nb_candidates;
 
 
-	INT *point_color;
-	INT nb_colors;
+	int *point_color;
+	int nb_colors;
 
-	INT *lines_on_pt;
+	int *lines_on_pt;
 	
-	lines_on_pt = NEW_INT(1 /*starter_size*/ * (q + 1));
+	lines_on_pt = NEW_int(1 /*starter_size*/ * (q + 1));
 	O->lines_on_point_by_line_rank(
 			R->rep[0],
 			lines_on_pt, 0 /* verbose_level */);
@@ -842,10 +842,10 @@ INT blt_set::create_graph(
 	if (f_v3) {
 		cout << "Case " << orbit_at_level
 				<< " Lines on partial BLT set:" << endl;
-		INT_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
+		int_matrix_print(lines_on_pt, 1 /*starter_size*/, q + 1);
 		}
 
-	INT special_line;
+	int special_line;
 
 	special_line = lines_on_pt[0];
 
@@ -882,7 +882,7 @@ INT blt_set::create_graph(
 
 
 
-	INT f, /*l,*/ idx;
+	int f, /*l,*/ idx;
 
 	f = C2.second_type_first[0];
 	//l = C2.second_type_len[0];
@@ -898,7 +898,7 @@ INT blt_set::create_graph(
 		exit(1);
 		}
 #endif
-	INT minimal_type, minimal_type_multiplicity;
+	int minimal_type, minimal_type_multiplicity;
 	
 	minimal_type = idx;
 	minimal_type_multiplicity = C2.type_len[idx];
@@ -932,8 +932,8 @@ INT blt_set::create_graph(
 		}
 
 	uchar *bitvector_adjacency;
-	INT bitvector_length_in_bits;
-	INT bitvector_length;
+	int bitvector_length_in_bits;
+	int bitvector_length;
 
 	compute_adjacency_list_fast(R->rep[0], 
 		R->candidates, R->nb_candidates, point_color, 
@@ -960,12 +960,12 @@ INT blt_set::create_graph(
 		point_color, bitvector_adjacency, TRUE, verbose_level - 2);
 		// the adjacency becomes part of the colored_graph object
 	
-	INT i;
+	int i;
 	for (i = 0; i < R->nb_candidates; i++) {
 		CG->points[i] = R->candidates[i];
 		}
 	CG->init_user_data(R->rep, starter_size, verbose_level - 2);
-	sprintf(CG->fname_base, "graph_BLT_%ld_%ld_%ld",
+	sprintf(CG->fname_base, "graph_BLT_%d_%d_%d",
 			q, starter_size, orbit_at_level);
 		
 
@@ -973,8 +973,8 @@ INT blt_set::create_graph(
 		cout << "blt_set::create_graph colored_graph created" << endl;
 		}
 
-	FREE_INT(lines_on_pt);
-	FREE_INT(point_color);
+	FREE_int(lines_on_pt);
+	FREE_int(point_color);
 
 
 	ret = TRUE;
@@ -987,24 +987,24 @@ finish:
 
 
 void blt_set::compute_adjacency_list_fast(
-	INT first_point_of_starter,
-	INT *points, INT nb_points, INT *point_color, 
+	int first_point_of_starter,
+	int *points, int nb_points, int *point_color, 
 	uchar *&bitvector_adjacency,
-	INT &bitvector_length_in_bits,
-	INT &bitvector_length,
-	INT verbose_level)
+	int &bitvector_length_in_bits,
+	int &bitvector_length,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT L;
-	INT i, j, k, c1, c2;
-	INT *Pts;
-	INT *form_value;
-	INT v1[5];
-	INT m[5];
-	INT f12, f13, f23, d;
-	UINT cnt;
-	INT two;
-	INT *Pi, *Pj;
+	int f_v = (verbose_level >= 1);
+	int L;
+	int i, j, k, c1, c2;
+	int *Pts;
+	int *form_value;
+	int v1[5];
+	int m[5];
+	int f12, f13, f23, d;
+	uint cnt;
+	int two;
+	int *Pi, *Pj;
 
 	if (f_v) {
 		cout << "blt_set::compute_adjacency_list_fast" << endl;
@@ -1018,8 +1018,8 @@ void blt_set::compute_adjacency_list_fast(
 		bitvector_adjacency[i] = 0;
 		}
 	
-	Pts = NEW_INT(nb_points * 5);
-	form_value = NEW_INT(nb_points);
+	Pts = NEW_int(nb_points * 5);
+	form_value = NEW_int(nb_points);
 	O->unrank_point(v1, 1, first_point_of_starter, 0);
 	if (f_v) {
 		cout << "blt_set::compute_adjacency_list_fast "
@@ -1090,8 +1090,8 @@ void blt_set::compute_adjacency_list_fast(
 
 
 
-	FREE_INT(Pts);
-	FREE_INT(form_value);
+	FREE_int(Pts);
+	FREE_int(form_value);
 	if (f_v) {
 		cout << "blt_set::compute_adjacency_list_fast done" << endl;
 		}
@@ -1099,21 +1099,21 @@ void blt_set::compute_adjacency_list_fast(
 
 
 
-void blt_set::compute_colors(INT orbit_at_level, 
-	INT *starter, INT starter_sz, 
-	INT special_line, 
-	INT *candidates, INT nb_candidates, 
-	INT *&point_color, INT &nb_colors, 
-	INT verbose_level)
+void blt_set::compute_colors(int orbit_at_level, 
+	int *starter, int starter_sz, 
+	int special_line, 
+	int *candidates, int nb_candidates, 
+	int *&point_color, int &nb_colors, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT p1, p2;
-	INT v1[5];
-	INT v2[5];
-	INT v3[5];
-	INT *pts_on_special_line;
-	INT idx, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int p1, p2;
+	int v1[5];
+	int v2[5];
+	int v3[5];
+	int *pts_on_special_line;
+	int idx, i;
 
 
 	if (f_v) {
@@ -1128,10 +1128,10 @@ void blt_set::compute_colors(INT orbit_at_level,
 	O->unrank_point(v2, 1, p2, 0);
 	if (f_vv) {
 		cout << "p1=" << p1 << " ";
-		INT_vec_print(cout, v1, 5);
+		int_vec_print(cout, v1, 5);
 		cout << endl;
 		cout << "p2=" << p2 << " ";
-		INT_vec_print(cout, v2, 5);
+		int_vec_print(cout, v2, 5);
 		cout << endl;
 		}
 	if (p1 != starter[0]) {
@@ -1139,17 +1139,17 @@ void blt_set::compute_colors(INT orbit_at_level,
 		exit(1);
 		}
 	
-	pts_on_special_line = NEW_INT(q + 1);
+	pts_on_special_line = NEW_int(q + 1);
 	O->points_on_line(p1, p2, pts_on_special_line,
 			0/*verbose_level*/);
 	
 	if (f_vv) {
 		cout << "pts_on_special_line:" << endl;
-		INT_vec_print(cout, pts_on_special_line, q + 1);
+		int_vec_print(cout, pts_on_special_line, q + 1);
 		cout << endl;
 		}
 
-	if (!INT_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
+	if (!int_vec_search(pts_on_special_line, q + 1, starter[0], idx)) {
 		cout << "cannot find the first point on the line" << endl;
 		exit(1);
 		}
@@ -1159,14 +1159,14 @@ void blt_set::compute_colors(INT orbit_at_level,
 	if (f_vv) {
 		cout << "pts_on_special_line without the first "
 				"starter point:" << endl;
-		INT_vec_print(cout, pts_on_special_line, q);
+		int_vec_print(cout, pts_on_special_line, q);
 		cout << endl;
 		}
 	
-	INT a, b, t, c, j, h;
-	INT *starter_t;
+	int a, b, t, c, j, h;
+	int *starter_t;
 	
-	starter_t = NEW_INT(starter_sz);
+	starter_t = NEW_int(starter_sz);
 	starter_t[0] = -1;
 	for (i = 1; i < starter_sz; i++) {
 		O->unrank_point(v3, 1, starter[i], 0);
@@ -1184,19 +1184,19 @@ void blt_set::compute_colors(INT orbit_at_level,
 
 	if (f_vv) {
 		cout << "starter_t:" << endl;
-		INT_vec_print(cout, starter_t, starter_sz);
+		int_vec_print(cout, starter_t, starter_sz);
 		cout << endl;
 		}
 
-	INT *free_pts;
-	INT *open_colors;
-	INT *open_colors_inv;
+	int *free_pts;
+	int *open_colors;
+	int *open_colors_inv;
 
-	free_pts = NEW_INT(q);
-	open_colors = NEW_INT(q);
-	open_colors_inv = NEW_INT(q);
+	free_pts = NEW_int(q);
+	open_colors = NEW_int(q);
+	open_colors_inv = NEW_int(q);
 
-	point_color = NEW_INT(nb_candidates);
+	point_color = NEW_int(nb_candidates);
 
 	nb_colors = q - starter_sz + 1;
 	j = 0;
@@ -1217,10 +1217,10 @@ void blt_set::compute_colors(INT orbit_at_level,
 		}
 	if (f_vv) {
 		cout << "The " << nb_colors << " free points are :" << endl;
-		INT_vec_print(cout, free_pts, nb_colors);
+		int_vec_print(cout, free_pts, nb_colors);
 		cout << endl;
 		cout << "The " << nb_colors << " open colors are :" << endl;
-		INT_vec_print(cout, open_colors, nb_colors);
+		int_vec_print(cout, open_colors, nb_colors);
 		cout << endl;
 		}
 	for ( ; j < q; j++) {
@@ -1228,7 +1228,7 @@ void blt_set::compute_colors(INT orbit_at_level,
 		}
 	if (f_vv) {
 		cout << "open_colors :" << endl;
-		INT_vec_print(cout, open_colors, q);
+		int_vec_print(cout, open_colors, q);
 		cout << endl;
 		}
 	for (i = 0; i < q; i++) {
@@ -1237,7 +1237,7 @@ void blt_set::compute_colors(INT orbit_at_level,
 		}
 	if (f_vv) {
 		cout << "open_colors_inv :" << endl;
-		INT_vec_print(cout, open_colors_inv, q);
+		int_vec_print(cout, open_colors_inv, q);
 		cout << endl;
 		}
 
@@ -1247,7 +1247,7 @@ void blt_set::compute_colors(INT orbit_at_level,
 		if (f_vv) {
 			cout << "candidate " << i << " / " << nb_candidates
 					<< " is " << candidates[i] << " = ";
-			INT_vec_print(cout, v3, 5);
+			int_vec_print(cout, v3, 5);
 			cout << endl;
 			}
 		a = O->evaluate_bilinear_form(v1, v3, 1);
@@ -1265,7 +1265,7 @@ void blt_set::compute_colors(INT orbit_at_level,
 			cout << "i=" << i << endl;
 			cout << "candidates[i]=" << candidates[i] << endl;
 			cout << "as vector: ";
-			INT_vec_print(cout, v3, 5);
+			int_vec_print(cout, v3, 5);
 			cout << endl;
 			cout << "a=" << a << endl;
 			cout << "b=" << b << endl;
@@ -1280,15 +1280,15 @@ void blt_set::compute_colors(INT orbit_at_level,
 
 	if (f_vv) {
 		cout << "point colors:" << endl;
-		INT_vec_print(cout, point_color, nb_candidates);
+		int_vec_print(cout, point_color, nb_candidates);
 		cout << endl;
 		}
 
-	FREE_INT(pts_on_special_line);
-	FREE_INT(starter_t);
-	FREE_INT(free_pts);
-	FREE_INT(open_colors);
-	FREE_INT(open_colors_inv);
+	FREE_int(pts_on_special_line);
+	FREE_int(starter_t);
+	FREE_int(free_pts);
+	FREE_int(open_colors);
+	FREE_int(open_colors_inv);
 	if (f_v) {
 		cout << "blt_set::compute_colors done" << endl;
 		}
@@ -1296,21 +1296,21 @@ void blt_set::compute_colors(INT orbit_at_level,
 
 
 
-void blt_set::early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	INT verbose_level)
+void blt_set::early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, a;
-	INT f_OK;
-	INT v[5];
-	INT *v1, *v2, *v3;
-	INT m1[5];
-	INT m3[5];
-	INT two;
-	INT fxy, fxz, fyz;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, a;
+	int f_OK;
+	int v[5];
+	int *v1, *v2, *v3;
+	int m1[5];
+	int m3[5];
+	int two;
+	int fxy, fxz, fyz;
 		
 	if (f_v) {
 		cout << "blt_set::early_test_func checking set ";
@@ -1318,7 +1318,7 @@ void blt_set::early_test_func(INT *S, INT len,
 		cout << endl;
 		cout << "candidate set of size "
 				<< nb_candidates << ":" << endl;
-		INT_vec_print(cout, candidates, nb_candidates);
+		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
@@ -1326,7 +1326,7 @@ void blt_set::early_test_func(INT *S, INT len,
 						0/*verbose_level - 4*/);
 				cout << "candidate " << i << "="
 						<< candidates[i] << ": ";
-				INT_vec_print(cout, v, 5);
+				int_vec_print(cout, v, 5);
 				cout << endl;
 				}
 			}
@@ -1344,7 +1344,7 @@ void blt_set::early_test_func(INT *S, INT len,
 
 
 	if (len == 0) {
-		INT_vec_copy(candidates, good_candidates, nb_candidates);
+		int_vec_copy(candidates, good_candidates, nb_candidates);
 		nb_good_candidates = nb_candidates;
 		}
 	else {
@@ -1436,17 +1436,17 @@ void blt_set::early_test_func(INT *S, INT len,
 		} // else
 }
 
-INT blt_set::check_function_incremental(
-		INT len, INT *S, INT verbose_level)
+int blt_set::check_function_incremental(
+		int len, int *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, a;
-	INT f_OK;
-	INT *v1, *v2, *v3;
-	INT m1[5];
-	INT m3[5];
-	INT two;
-	INT fxy, fxz, fyz;
+	int f_v = (verbose_level >= 1);
+	int i, a;
+	int f_OK;
+	int *v1, *v2, *v3;
+	int m1[5];
+	int m3[5];
+	int two;
+	int fxy, fxz, fyz;
 		
 	if (f_v) {
 		cout << "blt_set::check_function_incremental "
@@ -1525,7 +1525,7 @@ INT blt_set::check_function_incremental(
 	return f_OK;
 }
 
-INT blt_set::pair_test(INT a, INT x, INT y, INT verbose_level)
+int blt_set::pair_test(int a, int x, int y, int verbose_level)
 // We assume that a is an element
 // of a set S of size at least two such that
 // S \cup \{ x \} is BLT and 
@@ -1534,9 +1534,9 @@ INT blt_set::pair_test(INT a, INT x, INT y, INT verbose_level)
 // is BLT, we only need to test
 // the triple \{ x,y,a\}
 {
-	INT v1[5], v2[5], v3[5];
-	INT f12, f13, f23;
-	INT d;
+	int v1[5], v2[5], v3[5];
+	int f12, f13, f23;
+	int d;
 
 	O->unrank_point(v1, 1, a, 0);
 	O->unrank_point(v2, 1, x, 0);
@@ -1557,13 +1557,13 @@ INT blt_set::pair_test(INT a, INT x, INT y, INT verbose_level)
 	
 }
 
-INT blt_set::check_conditions(INT len, INT *S, INT verbose_level)
+int blt_set::check_conditions(int len, int *S, int verbose_level)
 {
-	INT f_OK = TRUE;
-	INT f_BLT_test = FALSE;
-	INT f_collinearity_test = FALSE;
-	//INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_OK = TRUE;
+	int f_BLT_test = FALSE;
+	int f_collinearity_test = FALSE;
+	//int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	//f_v = TRUE;
 	//f_vv = TRUE;
@@ -1605,18 +1605,18 @@ INT blt_set::check_conditions(INT len, INT *S, INT verbose_level)
 		}
 }
 
-INT blt_set::collinearity_test(INT *S, INT len, INT verbose_level)
+int blt_set::collinearity_test(int *S, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, x, y;
-	INT f_OK = TRUE;
-	INT fxy;
+	int f_v = (verbose_level >= 1);
+	int i, x, y;
+	int f_OK = TRUE;
+	int fxy;
 	
 	if (f_v) {
 		cout << "collinearity test for" << endl;
 		for (i = 0; i < len; i++) {
 			O->unrank_point(O->v1, 1, S[i], 0);
-			INT_vec_print(cout, O->v1, n);
+			int_vec_print(cout, O->v1, n);
 			cout << endl;
 			}
 		}
@@ -1634,9 +1634,9 @@ INT blt_set::collinearity_test(INT *S, INT len, INT verbose_level)
 				cout << "not OK; ";
 				cout << "{x,y}={" << x << ","
 						<< y << "} are collinear" << endl;
-				INT_vec_print(cout, O->v1, n);
+				int_vec_print(cout, O->v1, n);
 				cout << endl;
-				INT_vec_print(cout, O->v2, n);
+				int_vec_print(cout, O->v2, n);
 				cout << endl;
 				cout << "fxy=" << fxy << endl;
 				}
@@ -1652,13 +1652,13 @@ INT blt_set::collinearity_test(INT *S, INT len, INT verbose_level)
 	return f_OK;
 }
 
-void blt_set::print(INT *S, INT len)
+void blt_set::print(int *S, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		O->unrank_point(O->v1, 1, S[i], 0);
-		INT_vec_print(cout, O->v1, n);
+		int_vec_print(cout, O->v1, n);
 		cout << endl;
 		}
 }

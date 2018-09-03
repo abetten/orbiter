@@ -6,15 +6,15 @@
 #include "foundations/foundations.h"
 #include "groups_and_group_actions.h"
 
-INT schreier_vector_coset_rep_inv_general(action *A, 
-	INT *sv, INT *hdl_gen, INT pt, 
-	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_check_image, INT f_allow_failure, INT verbose_level)
+int schreier_vector_coset_rep_inv_general(action *A, 
+	int *sv, int *hdl_gen, int pt, 
+	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
+	int f_trivial_group, int f_check_image, int f_allow_failure, int verbose_level)
 // determines pt0 to be the first point of the orbit containing pt.
 // cosetrep will be a group element that maps pt to pt0.
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret;
+	int f_v = (verbose_level >= 1);
+	int ret;
 
 	if (f_v) {
 		cout << "schreier_vector_coset_rep_inv tracing point pt" << endl;
@@ -36,15 +36,15 @@ INT schreier_vector_coset_rep_inv_general(action *A,
 	return ret;
 }
 
-INT schreier_vector_coset_rep_inv_compact_general(action *A, 
-	INT *sv, INT *hdl_gen, INT pt, 
-	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_check_image, 
-	INT f_allow_failure, INT verbose_level)
+int schreier_vector_coset_rep_inv_compact_general(action *A, 
+	int *sv, int *hdl_gen, int pt, 
+	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
+	int f_trivial_group, int f_check_image, 
+	int f_allow_failure, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT hdl, pt_loc, pr, la, n;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int hdl, pt_loc, pr, la, n;
 
 	if (f_v) {
 		cout << "schreier_vector_coset_rep_inv_compact_general tracing point " << pt << endl;
@@ -52,7 +52,7 @@ INT schreier_vector_coset_rep_inv_compact_general(action *A,
 	
 	//cout << "schreier_vector_coset_rep_inv_compact_general pt = " << pt << endl;
 	n = sv[0];
-	if (!INT_vec_search(sv + 1, sv[0], pt, pt_loc)) {
+	if (!int_vec_search(sv + 1, sv[0], pt, pt_loc)) {
 		if (f_allow_failure) {
 			return FALSE;
 			}
@@ -60,7 +60,7 @@ INT schreier_vector_coset_rep_inv_compact_general(action *A,
 			cout << "schreier_vector_coset_rep_inv_compact_general, did not find pt" << endl;
 			cout << "pt = " << pt << endl;
 			cout << "vector of length " << n << endl;
-			INT_vec_print(cout, sv + 1, n);
+			int_vec_print(cout, sv + 1, n);
 			cout << endl;
 			exit(1);
 			}
@@ -83,7 +83,7 @@ INT schreier_vector_coset_rep_inv_compact_general(action *A,
 		A->element_invert(Elt1, Elt2, 0);
 		
 		if (f_check_image) {
-			INT prev;
+			int prev;
 			
 			prev = A->element_image_of(pt, Elt2, 0);
 		
@@ -118,13 +118,13 @@ INT schreier_vector_coset_rep_inv_compact_general(action *A,
 
 
 
-void schreier_vector_coset_rep_inv(action *A, INT *sv, INT *hdl_gen, INT pt, 
-	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_compact, INT f_check_image, INT verbose_level)
+void schreier_vector_coset_rep_inv(action *A, int *sv, int *hdl_gen, int pt, 
+	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
+	int f_trivial_group, int f_compact, int f_check_image, int verbose_level)
 // determines pt0 to be the first point of the orbit containing pt.
 // cosetrep will be a group element that maps pt to pt0.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "schreier_vector_coset_rep_inv tracing point pt" << endl;
@@ -145,13 +145,13 @@ void schreier_vector_coset_rep_inv(action *A, INT *sv, INT *hdl_gen, INT pt,
 		}
 }
 
-void schreier_vector_coset_rep_inv_compact(action *A, INT *sv, INT *hdl_gen, INT pt, 
-	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3, 
-	INT f_trivial_group, INT f_check_image, INT verbose_level)
+void schreier_vector_coset_rep_inv_compact(action *A, int *sv, int *hdl_gen, int pt, 
+	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3, 
+	int f_trivial_group, int f_check_image, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT hdl, pt_loc, pr, la, n;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int hdl, pt_loc, pr, la, n;
 
 	if (f_v) {
 		cout << "schreier_vector_coset_rep_inv_compact tracing point " << pt << endl;
@@ -159,11 +159,11 @@ void schreier_vector_coset_rep_inv_compact(action *A, INT *sv, INT *hdl_gen, INT
 	
 	//cout << "schreier_vector_coset_rep_inv_compact pt = " << pt << endl;
 	n = sv[0];
-	if (!INT_vec_search(sv + 1, sv[0], pt, pt_loc)) {
+	if (!int_vec_search(sv + 1, sv[0], pt, pt_loc)) {
 		cout << "schreier_vector_coset_rep_inv_compact, did not find pt" << endl;
 		cout << "pt = " << pt << endl;
 		cout << "vector of length " << n << endl;
-		INT_vec_print(cout, sv + 1, n);
+		int_vec_print(cout, sv + 1, n);
 		cout << endl;
 		exit(1);
 		}
@@ -185,7 +185,7 @@ void schreier_vector_coset_rep_inv_compact(action *A, INT *sv, INT *hdl_gen, INT
 		A->element_invert(Elt1, Elt2, 0);
 		
 		if (f_check_image) {
-			INT prev;
+			int prev;
 			
 			prev = A->element_image_of(pt, Elt2, 0);
 		
@@ -214,10 +214,10 @@ void schreier_vector_coset_rep_inv_compact(action *A, INT *sv, INT *hdl_gen, INT
 		}
 }
 
-void schreier_vector_coset_rep_inv1(action *A, INT *sv, INT *hdl_gen, INT pt, 
-	INT &pt0, INT *cosetrep, INT *Elt1, INT *Elt2, INT *Elt3)
+void schreier_vector_coset_rep_inv1(action *A, int *sv, int *hdl_gen, int pt, 
+	int &pt0, int *cosetrep, int *Elt1, int *Elt2, int *Elt3)
 {
-	INT gen_idx, hdl, prev;
+	int gen_idx, hdl, prev;
 	
 	//cout << "schreier_vector_coset_rep_inv1 pt = " << pt << endl;
 	if (sv[2 * pt + 0] != -1) {
@@ -252,12 +252,12 @@ void schreier_vector_coset_rep_inv1(action *A, INT *sv, INT *hdl_gen, INT pt,
 
 
 
-void schreier_vector_print(INT *sv)
+void schreier_vector_print(int *sv)
 {
-	INT i, n;
-	INT *pts;
-	INT *prev;
-	INT *label;
+	int i, n;
+	int *pts;
+	int *prev;
+	int *label;
 
 	n = sv[0];
 	pts = sv + 1;
@@ -278,17 +278,17 @@ void schreier_vector_print(INT *sv)
 		}
 }
 
-void schreier_vector_print_tree(INT *sv, INT verbose_level)
+void schreier_vector_print_tree(int *sv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, n;
-	INT *pts;
-	INT *prev;
-	//INT *label;
-	INT *Depth;
-	INT d, s;
-	INT /*pt,*/ pr; //, la;
-	//INT pt1, pr1;
+	int f_v = (verbose_level >= 1);
+	int i, n;
+	int *pts;
+	int *prev;
+	//int *label;
+	int *Depth;
+	int d, s;
+	int /*pt,*/ pr; //, la;
+	//int pt1, pr1;
 
 	if (f_v) {
 		cout << "schreier_vector_print_tree" << endl;
@@ -301,8 +301,8 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 		cout << "schreier vector of length " << n << ":" << endl;
 		}
 
-	Depth = NEW_INT(n);
-	INT_vec_zero(Depth, n);
+	Depth = NEW_int(n);
+	int_vec_zero(Depth, n);
 	for (i = 0; i < n; i++) {
 		//pt = pts[i];
 		pr = prev[i];
@@ -333,7 +333,7 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 #endif
 #if 0
 		pt1 = i;
-		if (!INT_vec_search(pts, n, pr, pr1)) {
+		if (!int_vec_search(pts, n, pr, pr1)) {
 			cout << "schreier_vector_print_tree, did not find pr" << endl;
 			exit(1);
 			}
@@ -352,17 +352,17 @@ void schreier_vector_print_tree(INT *sv, INT verbose_level)
 	cout << "total depth is " << s << " for " << n << " nodes, average depth is " << avg << endl;
 	
 
-	FREE_INT(Depth);
+	FREE_int(Depth);
 	if (f_v) {
 		cout << "schreier_vector_print_tree done" << endl;
 		}
 }
 
-INT schreier_vector_compute_depth_recursively(INT n, INT *Depth, INT *pts, INT *prev, INT pt)
+int schreier_vector_compute_depth_recursively(int n, int *Depth, int *pts, int *prev, int pt)
 {
-	INT pos, pr, d;
+	int pos, pr, d;
 	
-	if (!INT_vec_search(pts, n, pt, pos)) {
+	if (!int_vec_search(pts, n, pt, pos)) {
 		cout << "schreier_vector_compute_depth_recursively, did not find pt" << endl;
 		exit(1);
 		}
@@ -384,12 +384,12 @@ INT schreier_vector_compute_depth_recursively(INT n, INT *Depth, INT *pts, INT *
 		}
 }
 
-INT sv_number_of_orbits(INT *sv)
+int sv_number_of_orbits(int *sv)
 {
-	INT i, n, nb = 0;
-	INT *pts;
-	INT *prev;
-	//INT *label;
+	int i, n, nb = 0;
+	int *pts;
+	int *prev;
+	//int *label;
 
 	n = sv[0];
 	pts = sv + 1;
@@ -402,17 +402,17 @@ INT sv_number_of_orbits(INT *sv)
 	return nb;
 }
 
-void analyze_schreier_vector(INT *sv, INT verbose_level)
+void analyze_schreier_vector(int *sv, int verbose_level)
 // we assume that the group is not trivial
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT n, i;
-	INT *depth;
-	INT *ancestor;
-	INT *pts;
-	INT *prev;
-	INT *label;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int n, i;
+	int *depth;
+	int *ancestor;
+	int *pts;
+	int *prev;
+	int *label;
 	double avg;
 
 	if (f_v) {
@@ -422,8 +422,8 @@ void analyze_schreier_vector(INT *sv, INT verbose_level)
 	if (f_v) {
 		cout << "n=" << n << endl;
 		}
-	depth = NEW_INT(n);	
-	ancestor = NEW_INT(n);	
+	depth = NEW_int(n);	
+	ancestor = NEW_int(n);	
 	pts = sv + 1;
 	prev = pts + n;
 	label = prev + n;
@@ -454,14 +454,14 @@ void analyze_schreier_vector(INT *sv, INT verbose_level)
 			}
 		}
 	classify C;
-	INT *data1;
+	int *data1;
 
-	data1 = NEW_INT(n);
+	data1 = NEW_int(n);
 
 	C.init(ancestor, n, FALSE, verbose_level - 2);
 	cout << "orbits:" << endl;
 	C.print(FALSE /*f_backwards*/);
-	INT t, f, l, j;
+	int t, f, l, j;
 
 	cout << "orbit : length : average depth" << endl;
 	for (t = 0; t < C.nb_types; t++) {
@@ -483,7 +483,7 @@ void analyze_schreier_vector(INT *sv, INT verbose_level)
 			}
 		if (FALSE) {
 			cout << "depth vector for orbit " << t << ":" << endl;
-			INT_vec_print(cout, data1, l);
+			int_vec_print(cout, data1, l);
 			cout << endl;
 			}
 		classify C2;
@@ -501,15 +501,15 @@ void analyze_schreier_vector(INT *sv, INT verbose_level)
 			C2.print(FALSE /*f_backwards*/);
 			}
 		}
-	FREE_INT(depth);
-	FREE_INT(ancestor);
-	FREE_INT(data1);
+	FREE_int(depth);
+	FREE_int(ancestor);
+	FREE_int(data1);
 }
 
-INT schreier_vector_determine_depth_recursion(INT n, INT *pts, INT *prev, 
-	INT *depth, INT *ancestor, INT pos)
+int schreier_vector_determine_depth_recursion(int n, int *pts, int *prev, 
+	int *depth, int *ancestor, int pos)
 {
-	INT pt, pt_loc, d;
+	int pt, pt_loc, d;
 	
 	pt = prev[pos];
 	if (pt == -1) {
@@ -517,13 +517,13 @@ INT schreier_vector_determine_depth_recursion(INT n, INT *pts, INT *prev,
 		ancestor[pos] = pts[pos];
 		return 0;
 		}
-	if (!INT_vec_search(pts, n, pt, pt_loc)) {
-		INT i;
+	if (!int_vec_search(pts, n, pt, pt_loc)) {
+		int i;
 		
 		cout << "schreier_vector_determine_depth_recursion, fatal: did not find pt" << endl;
 		cout << "pt = " << pt << endl;
 		cout << "vector of length " << n << endl;
-		INT_vec_print(cout, pts, n);
+		int_vec_print(cout, pts, n);
 		cout << endl;
 		cout << "i : pts[i] : prev[i] : depth[i] : ancestor[i]" << endl;
 		for (i = 0; i < n; i++) {

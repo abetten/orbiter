@@ -13,27 +13,27 @@
 
 
 void twisted_tensor_product_codes(
-	INT *&H_subfield, INT &m, INT &n, 
+	int *&H_subfield, int &m, int &n, 
 	finite_field *F, finite_field *f,
-	INT f_construction_A, INT f_hyperoval, 
-	INT f_construction_B, INT verbose_level)
+	int f_construction_A, int f_hyperoval, 
+	int f_construction_B, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT index;
-	INT exponents[9];
-	INT *M;
-	//INT *H_subfield;
-	INT *C;
-	INT *C_inv;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int index;
+	int exponents[9];
+	int *M;
+	//int *H_subfield;
+	int *C;
+	int *C_inv;
 
-	INT q = f->q;
-	INT q2;
-	INT Q;
-	//INT m, n;
-	INT r;
-	INT beta, beta_q;
-	INT f_elements_exponential = TRUE;
+	int q = f->q;
+	int q2;
+	int Q;
+	//int m, n;
+	int r;
+	int beta, beta_q;
+	int f_elements_exponential = TRUE;
 	const char *symbol_for_print = "\\alpha";
 	const char *symbol_for_print_subfield = "\\omega";
 	
@@ -106,7 +106,7 @@ void twisted_tensor_product_codes(
 		cout << "beta = " << beta << endl;
 		cout << "beta_q = " << beta_q << endl;
 		cout << "Exponents: ";
-		INT_vec_print(cout, exponents, m);
+		int_vec_print(cout, exponents, m);
 		cout << endl;
 		}
 
@@ -131,9 +131,9 @@ void twisted_tensor_product_codes(
 
 
 
-	C = NEW_INT(m * m);
-	C_inv = NEW_INT(m * m);
-	H_subfield = NEW_INT(m * n);
+	C = NEW_int(m * m);
+	C_inv = NEW_int(m * m);
+	H_subfield = NEW_int(m * n);
 
 
 	create_matrix_H_subfield(F, f, 
@@ -150,25 +150,25 @@ void twisted_tensor_product_codes(
 		f->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 		}
 
-	FREE_INT(M);
-	FREE_INT(C);
-	FREE_INT(C_inv);
+	FREE_int(M);
+	FREE_int(C);
+	FREE_int(C_inv);
 
 }
 
 
 void create_matrix_M(
-	INT *&M, 
+	int *&M, 
 	finite_field *F, finite_field *f,
-	INT &m, INT &n, INT &beta, INT &r, INT *exponents, 
-	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	INT f_elements_exponential, const char *symbol_for_print, 
-	INT verbose_level)
-// INT exponents[9]
+	int &m, int &n, int &beta, int &r, int *exponents, 
+	int f_construction_A, int f_hyperoval, int f_construction_B, 
+	int f_elements_exponential, const char *symbol_for_print, 
+	int verbose_level)
+// int exponents[9]
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i, j, t, q, Q, q2;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, j, t, q, Q, q2;
 
 	q = f->q;
 	q2 = q * q;
@@ -270,7 +270,7 @@ void create_matrix_M(
 
 
 	// create matrix M:
-	M = NEW_INT(m * n);
+	M = NEW_int(m * n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			M[i * n + j] = 0;
@@ -299,17 +299,17 @@ void create_matrix_M(
 
 
 	if (f_v) {
-		INT *all_one, *col_sum;
+		int *all_one, *col_sum;
 		
-		all_one = NEW_INT(n);
-		col_sum = NEW_INT(m);
+		all_one = NEW_int(n);
+		col_sum = NEW_int(m);
 		for (i = 0; i < n; i++)
 			all_one[i] = 1;
 		F->mult_matrix_matrix(M, all_one, col_sum, m, n, 1);
 		cout << "overall col_sum:" << endl;
 		print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
-		FREE_INT(all_one);
-		FREE_INT(col_sum);
+		FREE_int(all_one);
+		FREE_int(col_sum);
 		}
 
 
@@ -318,25 +318,25 @@ void create_matrix_M(
 
 
 void create_matrix_H_subfield(finite_field *F, finite_field*f, 
-	INT *H_subfield, INT *C, INT *C_inv, INT *M, INT m, INT n, INT beta, INT beta_q, 
-	INT f_elements_exponential, const char *symbol_for_print, const char *symbol_for_print_subfield, 
-	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	INT verbose_level)
+	int *H_subfield, int *C, int *C_inv, int *M, int m, int n, int beta, int beta_q, 
+	int f_elements_exponential, const char *symbol_for_print, const char *symbol_for_print_subfield, 
+	int f_construction_A, int f_hyperoval, int f_construction_B, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j;
-	INT q;
-	//INT *C;
-	//INT *C_inv;
-	INT *H;
-	INT *AA;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
+	int q;
+	//int *C;
+	//int *C_inv;
+	int *H;
+	int *AA;
 
 	q = f->q;
 	
 	// matrix C is zero:
-	H = NEW_INT(m * n);
-	AA = NEW_INT(m * m);
+	H = NEW_int(m * n);
+	AA = NEW_int(m * m);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < m; j++) {
 			C[i * m + j] = 0;
@@ -345,9 +345,9 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 
 
 	if (f_construction_A) {
-		INT nb_C_coeffs = 15;
-		INT k, aa;
-		INT C_coeffs[] = {
+		int nb_C_coeffs = 15;
+		int k, aa;
+		int C_coeffs[] = {
 			0, 0, 1,
 			1, 1, 1,
 			2, 2, 1,
@@ -372,9 +372,9 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 			}
 		}
 	else if (f_construction_B) {
-		INT nb_C_coeffs = 20;
-		INT k, aa;
-		INT C_coeffs[] = {
+		int nb_C_coeffs = 20;
+		int k, aa;
+		int C_coeffs[] = {
 			0, 0, 1,
 			1, 1, 1,
 			2, 2, 1,
@@ -437,7 +437,7 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 	
 	
 #if 0
-	rk = F.Gauss_INT(M, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
+	rk = F.Gauss_int(M, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL, m /* m */, n /* n */, 0 /* Pn */, 
 		verbose_level - 2);
 	cout << "has rank " << rk << endl;
@@ -451,18 +451,18 @@ void create_matrix_H_subfield(finite_field *F, finite_field*f,
 		f->latex_matrix(cout, f_elements_exponential, symbol_for_print_subfield, H_subfield, m, n);
 		}
 	
-	FREE_INT(H);
-	FREE_INT(AA);
+	FREE_int(H);
+	FREE_int(AA);
 }
 
 
 
-void tt_field_reduction(finite_field &F, finite_field &f, INT m, INT n, INT *M, INT *MM, INT verbose_level)
+void tt_field_reduction(finite_field &F, finite_field &f, int m, int n, int *M, int *MM, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT  i, j, a, z, b, c, Q, q;
-	INT index;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int  i, j, a, z, b, c, Q, q;
+	int index;
 	
 	Q = F.q;
 	q = f.q;
@@ -522,15 +522,15 @@ void tt_field_reduction(finite_field &F, finite_field &f, INT m, INT n, INT *M, 
 //############################################### old stuff:
 
 void make_tensor_code_9dimensional_as_point_set(finite_field *F, 
-	INT *&the_set, INT &length, 
-	INT verbose_level)
+	int *&the_set, int &length, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_hyperoval = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_hyperoval = FALSE;
 	const char *override_poly = "";
 	const char *override_poly_Q = "";
-	INT i, t, q;
-	INT *code;
+	int i, t, q;
+	int *code;
 	
 	if (f_v) {
 		cout << "make_tensor_code_9dimensional_as_point_set" << endl;
@@ -568,9 +568,9 @@ void make_tensor_code_9dimensional_as_point_set(finite_field *F,
 	make_tensor_code_9_dimensional(q, override_poly_Q, override_poly, 
 		f_hyperoval, code, length, verbose_level - 1);
 	
-	the_set = NEW_INT(length);
+	the_set = NEW_int(length);
 	
-	INT pt[9], rk;
+	int pt[9], rk;
 	
 	for (t = 0; t < length; t++) {
 		for (i = 0; i < 9; i++) {
@@ -579,54 +579,54 @@ void make_tensor_code_9dimensional_as_point_set(finite_field *F,
 		PG_element_rank_modified(*F, pt, 1, 9, rk);
 		the_set[t] = rk;
 		}
-	FREE_INT(code);
+	FREE_int(code);
 	if (f_v) {
 		cout << "make_tensor_code_9dimensional_as_point_set done" << endl;
 		cout << "created the set: ";
-		INT_vec_print(cout, the_set, length);
+		int_vec_print(cout, the_set, length);
 		cout << endl;
 		}
 }
 
-void make_tensor_code_9_dimensional(INT q, 
+void make_tensor_code_9_dimensional(int q, 
 	const char *override_poly_Q, const char *override_poly, 
-	INT f_hyperoval, 
-	INT *&code, INT &length, 
-	INT verbose_level)
+	int f_hyperoval, 
+	int *&code, int &length, 
+	int verbose_level)
 {
 	finite_field F;
 	finite_field f;
 	rank_checker rc;
-	INT exponents[9];
-	INT *M;
-	INT *C;
-	INT *C_inv;
-	INT *H;
-	INT *H_subfield;
-	INT index, Q, i, j, t, m, n, r, beta, beta_q;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int exponents[9];
+	int *M;
+	int *C;
+	int *C_inv;
+	int *H;
+	int *H_subfield;
+	int index, Q, i, j, t, m, n, r, beta, beta_q;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	
 	if (f_v) {
 		cout << "make_tensor_code_9_dimensional q=" << q << endl;
 		}
 	
-	//q = 2; override_poly_Q = ""; override_poly = ""; INT f_hyperoval = FALSE;
-	//q = 3; override_poly_Q = ""; override_poly = ""; INT f_hyperoval = FALSE;
-	//q = 4; override_poly_Q = "19"; override_poly = "7"; INT f_hyperoval = FALSE;
+	//q = 2; override_poly_Q = ""; override_poly = ""; int f_hyperoval = FALSE;
+	//q = 3; override_poly_Q = ""; override_poly = ""; int f_hyperoval = FALSE;
+	//q = 4; override_poly_Q = "19"; override_poly = "7"; int f_hyperoval = FALSE;
 		// F_256  generated by X^8 + X^4 + X^3 + X^2 + 1
 		// F_16 generated by X^4+X+1 = 19
 		// F_4 generated by X^2+X+1 = 7
-	//q = 5; override_poly_Q = "47"; override_poly = ""; INT f_hyperoval = FALSE;
+	//q = 5; override_poly_Q = "47"; override_poly = ""; int f_hyperoval = FALSE;
 		// F_625  generated by X^4 + X^3 + 3X + 2
 		// F_25  generated by X^2 + 4X + 2  = 47
-	//q = 7; override_poly_Q = ""; override_poly = ""; INT f_hyperoval = FALSE;
-	//q = 8; override_poly_Q = "97"; override_poly = "11"; INT f_hyperoval = TRUE;
+	//q = 7; override_poly_Q = ""; override_poly = ""; int f_hyperoval = FALSE;
+	//q = 8; override_poly_Q = "97"; override_poly = "11"; int f_hyperoval = TRUE;
 		// F_4096 generated by x^12+x^6+x^4+x+1 
 		// F_64 generated by X^6+X^5+1 = 97
 		// F_8 generated by X^3+X+1 = 11
-	//q = 9; override_poly_Q = ""; override_poly = "17"; INT f_hyperoval = FALSE;
+	//q = 9; override_poly_Q = ""; override_poly = "17"; int f_hyperoval = FALSE;
 	beta = q;
 	Q = q * q;
 	m = 9;
@@ -677,11 +677,11 @@ void make_tensor_code_9_dimensional(INT q,
 	cout << "beta_q = " << beta_q << endl;
 	F.compute_subfields(verbose_level - 3);
 	
-	M = NEW_INT(m * n);
-	C = NEW_INT(m * m);
-	C_inv = NEW_INT(m * m);
-	H = NEW_INT(m * n);
-	H_subfield = NEW_INT(m * n);
+	M = NEW_int(m * n);
+	C = NEW_int(m * m);
+	C_inv = NEW_int(m * m);
+	H = NEW_int(m * n);
+	H_subfield = NEW_int(m * n);
 
 	rc.init(&f, m, n, r + 1);
 
@@ -704,9 +704,9 @@ void make_tensor_code_9_dimensional(INT q,
 	M[2 * n + Q] = 1;
 	if (f_hyperoval)
 		M[1 * n + Q + 1] = 1;
-	INT nb_C_coeffs = 15;
-	INT k, aa;
-	INT C_coeffs[] = {
+	int nb_C_coeffs = 15;
+	int k, aa;
+	int C_coeffs[] = {
 		0, 0, 1,
 		1, 1, 1,
 		2, 2, 1,
@@ -735,17 +735,17 @@ void make_tensor_code_9_dimensional(INT q,
 	print_integer_matrix_width(cout, M, m, n, n, 2);
 	
 	{
-		INT *all_one, *col_sum;
+		int *all_one, *col_sum;
 		
-		all_one = NEW_INT(n);
-		col_sum = NEW_INT(m);
+		all_one = NEW_int(n);
+		col_sum = NEW_int(m);
 		for (i = 0; i < n; i++)
 			all_one[i] = 1;
 		F.mult_matrix_matrix(M, all_one, col_sum, m, n, 1);
 		cout << "col_sum:" << endl;
 		print_integer_matrix_width(cout, col_sum, m, 1, 1, 2);
-		FREE_INT(all_one);
-		FREE_INT(col_sum);
+		FREE_int(all_one);
+		FREE_int(col_sum);
 	}
 	
 #if 0
@@ -766,12 +766,12 @@ void make_tensor_code_9_dimensional(INT q,
 	print_integer_matrix_width(cout, C_inv, m, m, m, 2);
 
 	{
-	INT *AA;
-	AA = NEW_INT(m * m);
+	int *AA;
+	AA = NEW_int(m * m);
 	F.mult_matrix_matrix(C, C_inv, AA, m, m, m);
 	cout << "C * C_inv:" << endl;
 	print_integer_matrix_width(cout, AA, m, m, m, 2);
-	FREE_INT(AA);
+	FREE_int(AA);
 	}
 
 	F.mult_matrix_matrix(C, M, H, m, m, n);
@@ -780,7 +780,7 @@ void make_tensor_code_9_dimensional(INT q,
 	
 	
 #if 0
-	rk = F.Gauss_INT(M, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
+	rk = F.Gauss_int(M, FALSE /* f_special */, TRUE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL, m /* m */, n /* n */, 0 /* Pn */, 
 		FALSE, FALSE);
 	cout << "has rank " << rk << endl;
@@ -793,7 +793,7 @@ void make_tensor_code_9_dimensional(INT q,
 		f.print_integer_matrix_zech(cout, H, m, n);
 		cout << endl;
 		}
-	F.retract_INT_vec(f, 2, H, H_subfield, m * n, 0 /* verbose_level */);
+	F.retract_int_vec(f, 2, H, H_subfield, m * n, 0 /* verbose_level */);
 	//field_reduction(F, f, m, n, H, H_subfield, TRUE, TRUE);
 	if (f_vv) {
 		cout << "after field reduction:" << endl;
@@ -808,10 +808,10 @@ void make_tensor_code_9_dimensional(INT q,
 	code = H_subfield;
 	length = n;
 
-	FREE_INT(M);
-	FREE_INT(C);
-	FREE_INT(C_inv);
-	FREE_INT(H);
+	FREE_int(M);
+	FREE_int(C);
+	FREE_int(C_inv);
+	FREE_int(H);
 	
 }
 

@@ -11,27 +11,27 @@
 #include "orbiter.h"
 
 void analyze_group(action *A, sims *S,
-		vector_ge *SG, vector_ge *gens2, INT verbose_level)
+		vector_ge *SG, vector_ge *gens2, int verbose_level)
 {
-	INT *Elt1;
-	INT *Elt2;
-	INT i, goi;
+	int *Elt1;
+	int *Elt2;
+	int i, goi;
 	longinteger_object go;
-	INT *perm;
-	INT *primes;
-	INT *exponents;
-	INT factorization_length;
-	INT nb_primes, nb_gens2;
+	int *perm;
+	int *primes;
+	int *exponents;
+	int factorization_length;
+	int nb_primes, nb_gens2;
 	
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	
 	
 	S->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 
-	factorization_length = factor_INT(goi, primes, exponents);
+	factorization_length = factor_int(goi, primes, exponents);
 	cout << "analyzing a group of order " << goi << " = ";
 	print_factorization(factorization_length, primes, exponents);
 	cout << endl;
@@ -46,24 +46,24 @@ void analyze_group(action *A, sims *S,
 
 	compute_regular_representation(A, S, SG, perm, verbose_level);
 
-	INT *center;
-	INT size_center;
+	int *center;
+	int size_center;
 	
-	center = NEW_INT(goi);
+	center = NEW_int(goi);
 	
 	S->center(*SG, center, size_center, verbose_level);
 	
 	cout << "the center is:" << endl;
 	for (i = 0; i < size_center; i++) {
 		cout << i << " element has rank " << center[i] << endl;
-		S->element_unrank_INT(center[i], Elt1);
+		S->element_unrank_int(center[i], Elt1);
 		A->print(cout, Elt1);
 		//A->print_as_permutation(cout, Elt1);
 		cout << endl;
 		}
 	cout << endl << endl;
 	
-	S->element_unrank_INT(center[1], Elt1);
+	S->element_unrank_int(center[1], Elt1);
 	A->move(Elt1, gens2->ith(0));
 	nb_gens2 = 1;
 	
@@ -96,7 +96,7 @@ void analyze_group(action *A, sims *S,
 #if 0
 	cout << "now listing all elements:" << endl;
 	for (i = 0; i < FactorGroup->goi_factor_group; i++) {
-		FactorGroup->FactorGroup->Sims->element_unrank_INT(i, Elt1);
+		FactorGroup->FactorGroup->Sims->element_unrank_int(i, Elt1);
 		cout << "element " << i << ":" << endl;
 		A->print(cout, Elt1);
 		FactorGroup->FactorGroupConjugated->print_as_permutation(cout, Elt1);
@@ -111,13 +111,13 @@ void analyze_group(action *A, sims *S,
 	sims H1, H2, H3;
 	longinteger_object goH1, goH2, goH3;
 	vector_ge SGH1, SGH2, SGH3;
-	INT *tl1, *tl2, *tl3, *tlF1, *tlF2;
+	int *tl1, *tl2, *tl3, *tlF1, *tlF2;
 	
-	tl1 = NEW_INT(A->base_len);
-	tl2 = NEW_INT(A->base_len);
-	tl3 = NEW_INT(A->base_len);
-	tlF1 = NEW_INT(A->base_len);
-	tlF2 = NEW_INT(A->base_len);
+	tl1 = NEW_int(A->base_len);
+	tl2 = NEW_int(A->base_len);
+	tl3 = NEW_int(A->base_len);
+	tlF1 = NEW_int(A->base_len);
+	tlF2 = NEW_int(A->base_len);
 	
 	
 	// now we compute H1, the derived group
@@ -141,17 +141,17 @@ void analyze_group(action *A, sims *S,
 	cout << endl << endl;
 	
 
-	INT size_H1;
-	INT *elts_H1;
+	int size_H1;
+	int *elts_H1;
 	
-	size_H1 = goH1.as_INT();
-	elts_H1 = NEW_INT(size_H1);
+	size_H1 = goH1.as_int();
+	elts_H1 = NEW_int(size_H1);
 
 
 	FactorGroup->FactorGroup->Sims->element_ranks_subgroup(
 			&H1, elts_H1, verbose_level);
 	cout << "the ranks of elements in H1 are:" << endl;
-	INT_vec_print(cout, elts_H1, size_H1);
+	int_vec_print(cout, elts_H1, size_H1);
 	cout << endl;
 
 	factor_group *ModH1;
@@ -173,7 +173,7 @@ void analyze_group(action *A, sims *S,
 	cout << "the elements of ModH1 are:" << endl;
 	for (i = 0; i < ModH1->goi_factor_group; i++) {
 		cout << "element " << i << ":" << endl;
-		ModH1->FactorGroup->Sims->element_unrank_INT(i, Elt1);
+		ModH1->FactorGroup->Sims->element_unrank_int(i, Elt1);
 		A->print(cout, Elt1);
 		cout << endl;
 		cout << "in the factor group mod H1" << endl;
@@ -215,16 +215,16 @@ void analyze_group(action *A, sims *S,
 		}
 	cout << endl << endl;
 	
-	INT size_H2;
-	INT *elts_H2;
+	int size_H2;
+	int *elts_H2;
 	
-	size_H2 = goH2.as_INT();
-	elts_H2 = NEW_INT(size_H1);
+	size_H2 = goH2.as_int();
+	elts_H2 = NEW_int(size_H1);
 
 
 	H1.element_ranks_subgroup(&H2, elts_H2, verbose_level);
 	cout << "the ranks of elements in H2 are:" << endl;
-	INT_vec_print(cout, elts_H2, size_H2);
+	int_vec_print(cout, elts_H2, size_H2);
 	cout << endl;
 
 	factor_group *ModH2;
@@ -244,7 +244,7 @@ void analyze_group(action *A, sims *S,
 	cout << "the elements of ModH2 are:" << endl;
 	for (i = 0; i < ModH2->goi_factor_group; i++) {
 		cout << "element " << i << ":" << endl;
-		ModH2->FactorGroup->Sims->element_unrank_INT(i, Elt1);
+		ModH2->FactorGroup->Sims->element_unrank_int(i, Elt1);
 		A->print(cout, Elt1);
 		cout << endl;
 		cout << "in the factor group mod H2" << endl;
@@ -300,27 +300,27 @@ void analyze_group(action *A, sims *S,
 		A->print(cout, gens2->ith(i));
 		}
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(perm);
-	FREE_INT(tl1);
-	FREE_INT(tl2);
-	FREE_INT(tl3);
-	FREE_INT(tlF1);
-	FREE_INT(tlF2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(perm);
+	FREE_int(tl1);
+	FREE_int(tl2);
+	FREE_int(tl3);
+	FREE_int(tlF1);
+	FREE_int(tlF2);
 }
 
 void compute_regular_representation(action *A, sims *S,
-		vector_ge *SG, INT *&perm, INT verbose_level)
+		vector_ge *SG, int *&perm, int verbose_level)
 {
 	longinteger_object go;
-	INT goi, i;
+	int goi, i;
 	
 	S->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	cout << "computing the regular representation of degree "
 			<< go << ":" << endl;
-	perm = NEW_INT(SG->len * goi);
+	perm = NEW_int(SG->len * goi);
 	
 	for (i = 0; i < SG->len; i++) {
 		S->regular_representation(SG->ith(i),
@@ -336,28 +336,28 @@ void compute_regular_representation(action *A, sims *S,
 		}
 }
 
-void presentation(action *A, sims *S, INT goi,
-		vector_ge *gens, INT *primes, INT verbose_level)
+void presentation(action *A, sims *S, int goi,
+		vector_ge *gens, int *primes, int verbose_level)
 {
-	INT *Elt1, *Elt2, *Elt3, *Elt4;
-	INT i, j, jj, k, l, a, b;
-	INT word[100];
-	INT *word_list;
-	INT *inverse_word_list;
+	int *Elt1, *Elt2, *Elt3, *Elt4;
+	int i, j, jj, k, l, a, b;
+	int word[100];
+	int *word_list;
+	int *inverse_word_list;
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
 	
-	word_list = NEW_INT(goi);
-	inverse_word_list = NEW_INT(goi);
+	word_list = NEW_int(goi);
+	inverse_word_list = NEW_int(goi);
 	
 	l = gens->len;
 	
 	cout << "presentation of length " << l << endl;
 	cout << "primes: ";
-	INT_vec_print(cout, primes, l);
+	int_vec_print(cout, primes, l);
 	cout << endl;
 	
 #if 0
@@ -393,11 +393,11 @@ void presentation(action *A, sims *S, INT goi,
 				}
 			}
 		A->move(Elt1, Elt2);
-		a = S->element_rank_INT(Elt2);
+		a = S->element_rank_int(Elt2);
 		word_list[i] = a;
 		inverse_word_list[a] = i;
 		cout << "word " << i << " = ";
-		INT_vec_print(cout, word, 9);
+		int_vec_print(cout, word, 9);
 		cout << " gives " << endl;
 		A->print(cout, Elt1);
 		cout << "which is element " << word_list[i] << endl;
@@ -418,8 +418,8 @@ void presentation(action *A, sims *S, INT goi,
 		}
 	for (i = 0; i < l; i++) {
 		A->move(gens->ith(i), Elt1);
-		A->element_power_INT_in_place(Elt1, primes[i], 0);
-		a = S->element_rank_INT(Elt1);
+		A->element_power_int_in_place(Elt1, primes[i], 0);
+		a = S->element_rank_int(Elt1);
 		cout << "generator " << i << " to the power " << primes[i]
 			<< " is elt " << a << " which is word "
 			<< inverse_word_list[a];
@@ -430,7 +430,7 @@ void presentation(action *A, sims *S, INT goi,
 			j = j - b;
 			j = j / primes[k];
 			}
-		INT_vec_print(cout, word, l);
+		int_vec_print(cout, word, l);
 		cout << " :" << endl;
 		A->print(cout, Elt1);
 		cout << endl;
@@ -444,7 +444,7 @@ void presentation(action *A, sims *S, INT goi,
 			A->mult(Elt2, gens->ith(j), Elt3);
 			A->mult(Elt3, Elt1, Elt4);
 			cout << "g_" << j << "^{g_" << i << "} =" << endl;
-			a = S->element_rank_INT(Elt4);
+			a = S->element_rank_int(Elt4);
 			cout << "which is element " << a << " which is word "
 				<< inverse_word_list[a] << " = ";
 			jj = inverse_word_list[a];
@@ -454,7 +454,7 @@ void presentation(action *A, sims *S, INT goi,
 				jj = jj - b;
 				jj = jj / primes[k];
 				}
-			INT_vec_print(cout, word, l);
+			int_vec_print(cout, word, l);
 			cout << endl;
 			A->print(cout, Elt4);
 			cout << endl;
@@ -462,13 +462,13 @@ void presentation(action *A, sims *S, INT goi,
 		cout << endl;
 		}
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
 	
-	FREE_INT(word_list);
-	FREE_INT(inverse_word_list);
+	FREE_int(word_list);
+	FREE_int(inverse_word_list);
 }
 
 

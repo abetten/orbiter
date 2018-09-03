@@ -17,13 +17,13 @@
 
 
 
-INT direct_product_group_element_image_of(action &A,
-		INT a, void *elt, INT verbose_level)
+int direct_product_group_element_image_of(action &A,
+		int a, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
-	INT b;
+	int *Elt = (int *) elt;
+	int b;
 
 	if (f_v) {
 		cout << "direct_product_group_element_image_of "
@@ -40,23 +40,23 @@ INT direct_product_group_element_image_of(action &A,
 }
 
 void direct_product_group_element_image_of_low_level(action &A,
-		INT *input, INT *output, void *elt, INT verbose_level)
+		int *input, int *output, void *elt, int verbose_level)
 {
 	cout << "direct_product_group_element_image_of_low_level "
 			"N/A";
 	exit(1);
 }
 
-INT direct_product_group_element_linear_entry_ij(action &A,
-		void *elt, INT i, INT j, INT verbose_level)
+int direct_product_group_element_linear_entry_ij(action &A,
+		void *elt, int i, int j, int verbose_level)
 {
 	cout << "direct_product_group_element_linear_entry_ij "
 			"N/A" << endl;
 	exit(1);
 }
 
-INT direct_product_group_element_linear_entry_frobenius(action &A,
-		void *elt, INT verbose_level)
+int direct_product_group_element_linear_entry_frobenius(action &A,
+		void *elt, int verbose_level)
 {
 	cout << "direct_product_group_element_linear_entry_frobenius "
 			"N/A" << endl;
@@ -64,11 +64,11 @@ INT direct_product_group_element_linear_entry_frobenius(action &A,
 }
 
 void direct_product_group_element_one(action &A,
-		void *elt, INT verbose_level)
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	if (f_v) {
 		cout << "direct_product_group_element_one "
@@ -77,13 +77,13 @@ void direct_product_group_element_one(action &A,
 	P.element_one(Elt);
 }
 
-INT direct_product_group_element_is_one(action &A,
-		void *elt, INT verbose_level)
+int direct_product_group_element_is_one(action &A,
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
-	INT ret;
+	int *Elt = (int *) elt;
+	int ret;
 
 	if (f_v) {
 		cout << "direct_product_group_element_one calling "
@@ -102,11 +102,11 @@ INT direct_product_group_element_is_one(action &A,
 }
 
 void direct_product_group_element_unpack(action &A,
-		void *elt, void *Elt, INT verbose_level)
+		void *elt, void *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
 	if (f_v) {
@@ -116,11 +116,11 @@ void direct_product_group_element_unpack(action &A,
 }
 
 void direct_product_group_element_pack(action &A,
-		void *Elt, void *elt, INT verbose_level)
+		void *Elt, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
 	if (f_v) {
@@ -130,11 +130,11 @@ void direct_product_group_element_pack(action &A,
 }
 
 void direct_product_group_element_retrieve(action &A,
-		INT hdl, void *elt, INT verbose_level)
+		int hdl, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	uchar *p_elt;
 
 	if (f_v) {
@@ -151,13 +151,13 @@ void direct_product_group_element_retrieve(action &A,
 		}
 }
 
-INT direct_product_group_element_store(action &A,
-		void *elt, INT verbose_level)
+int direct_product_group_element_store(action &A,
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
-	INT hdl;
+	int *Elt = (int *) elt;
+	int hdl;
 
 	if (f_v) {
 		cout << "direct_product_group_element_store" << endl;
@@ -171,14 +171,14 @@ INT direct_product_group_element_store(action &A,
 }
 
 void direct_product_group_element_mult(action &A,
-		void *a, void *b, void *ab, INT verbose_level)
+		void *a, void *b, void *ab, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	direct_product &P = *A.G.direct_product_group;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
-	INT *AB = (INT *) ab;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
+	int *AB = (int *) ab;
 
 	if (f_v) {
 		cout << "direct_product_group_element_mult" << endl;
@@ -200,13 +200,13 @@ void direct_product_group_element_mult(action &A,
 }
 
 void direct_product_group_element_invert(action &A,
-		void *a, void *av, INT verbose_level)
+		void *a, void *av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	direct_product &P = *A.G.direct_product_group;
-	INT *AA = (INT *) a;
-	INT *AAv = (INT *) av;
+	int *AA = (int *) a;
+	int *AAv = (int *) av;
 
 	if (f_v) {
 		cout << "direct_product_group_element_invert" << endl;
@@ -226,7 +226,7 @@ void direct_product_group_element_invert(action &A,
 }
 
 void direct_product_group_element_transpose(action &A,
-		void *a, void *at, INT verbose_level)
+		void *a, void *at, int verbose_level)
 {
 	cout << "direct_product_group_element_transpose "
 			"not yet implemented" << endl;
@@ -234,12 +234,12 @@ void direct_product_group_element_transpose(action &A,
 }
 
 void direct_product_group_element_move(action &A,
-		void *a, void *b, INT verbose_level)
+		void *a, void *b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
 
 	if (f_v) {
 		cout << "direct_product_group_element_move" << endl;
@@ -248,9 +248,9 @@ void direct_product_group_element_move(action &A,
 }
 
 void direct_product_group_element_dispose(action &A,
-		INT hdl, INT verbose_level)
+		int hdl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product &P = *A.G.direct_product_group;
 
 	if (f_v) {
@@ -264,7 +264,7 @@ void direct_product_group_element_print(action &A,
 		void *elt, ostream &ost)
 {
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 
 	P.element_print_easy(Elt, ost);
@@ -272,7 +272,7 @@ void direct_product_group_element_print(action &A,
 }
 
 void direct_product_group_element_code_for_make_element(action &A,
-		void *elt, INT *data)
+		void *elt, int *data)
 {
 	cout << "direct_product_group_element_code_for_make_element "
 			"not yet implemented" << endl;
@@ -299,7 +299,7 @@ void direct_product_group_element_print_quick(
 		action &A, void *elt, ostream &ost)
 {
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
 
@@ -317,15 +317,15 @@ void direct_product_group_element_print_as_permutation(
 		action &A, void *elt, ostream &ost)
 {
 	//direct_product &P = *A.G.direct_product_group;
-	INT f_v = FALSE;
-	INT *Elt = (INT *) elt;
-	INT i, j;
+	int f_v = FALSE;
+	int *Elt = (int *) elt;
+	int i, j;
 
 	if (f_v) {
 		cout << "direct_product_group_element_print_as_permutation "
 				"degree = " << A.degree << endl;
 		}
-	INT *p = NEW_INT(A.degree);
+	int *p = NEW_int(A.degree);
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation "
 		//"computing image of i=" << i << endl;
@@ -337,19 +337,19 @@ void direct_product_group_element_print_as_permutation(
 		p[i] = j;
 		}
 	perm_print(ost, p, A.degree);
-	FREE_INT(p);
+	FREE_int(p);
 }
 
 void direct_product_group_element_print_verbose(
 		action &A, void *elt, ostream &ost)
 {
 	direct_product &P = *A.G.direct_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	P.element_print_easy(Elt, ost);
 }
 
-void direct_product_group_print_point(action &A, INT a, ostream &ost)
+void direct_product_group_print_point(action &A, int a, ostream &ost)
 {
 	cout << "direct_product_group_print_point "
 			"not yet implemented" << endl;

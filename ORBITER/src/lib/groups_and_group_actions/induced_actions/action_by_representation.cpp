@@ -29,20 +29,20 @@ void action_by_representation::null()
 void action_by_representation::free()
 {
 	if (v1) {
-		FREE_INT(v1);
+		FREE_int(v1);
 		}
 	if (v2) {
-		FREE_INT(v2);
+		FREE_int(v2);
 		}
 	if (v3) {
-		FREE_INT(v3);
+		FREE_int(v3);
 		}
 	null();
 }
 
-void action_by_representation::init_action_on_conic(action &A, INT verbose_level)
+void action_by_representation::init_action_on_conic(action &A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action_by_representation::init_action_on_conic" << endl;
@@ -64,68 +64,68 @@ void action_by_representation::init_action_on_conic(action &A, INT verbose_level
 	dimension = 3;
 	degree = nb_PG_elements(dimension - 1, q);
 	low_level_point_size = 3;
-	v1 = NEW_INT(dimension);
-	v2 = NEW_INT(dimension);
-	v3 = NEW_INT(dimension);
+	v1 = NEW_int(dimension);
+	v2 = NEW_int(dimension);
+	v3 = NEW_int(dimension);
 }
 
-INT action_by_representation::compute_image_INT(
-	action &A, INT *Elt, INT a, INT verbose_level)
+int action_by_representation::compute_image_int(
+	action &A, int *Elt, int a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT b;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int b;
 	
 	if (f_v) {
-		cout << "action_by_representation::compute_image_INT" << endl;
+		cout << "action_by_representation::compute_image_int" << endl;
 		}
 	PG_element_unrank_modified(*F, v1, 1, dimension, a);
 	if (f_vv) {
-		cout << "action_by_representation::compute_image_INT a = " << a << " v1 = ";
-		INT_vec_print(cout, v1, dimension);
+		cout << "action_by_representation::compute_image_int a = " << a << " v1 = ";
+		int_vec_print(cout, v1, dimension);
 		cout << endl;
 		}
 	
-	compute_image_INT_low_level(A, Elt, v1, v2, verbose_level);
+	compute_image_int_low_level(A, Elt, v1, v2, verbose_level);
 	if (f_vv) {
 		cout << " v2=v1 * A=";
-		INT_vec_print(cout, v2, dimension);
+		int_vec_print(cout, v2, dimension);
 		cout << endl;
 		}
 
 	PG_element_rank_modified(*F, v2, 1, dimension, b);
 	if (f_v) {
-		cout << "action_by_representation::compute_image_INT done " << a << "->" << b << endl;
+		cout << "action_by_representation::compute_image_int done " << a << "->" << b << endl;
 		}
 	return b;
 }
 
-void action_by_representation::compute_image_INT_low_level(
-	action &A, INT *Elt, INT *input, INT *output, INT verbose_level)
+void action_by_representation::compute_image_int_low_level(
+	action &A, int *Elt, int *input, int *output, int verbose_level)
 {
-	INT *x = input;
-	INT *xA = output;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, f;
+	int *x = input;
+	int *xA = output;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, f;
 	
 	if (f_v) {
-		cout << "action_by_representation::compute_image_INT_low_level" << endl;
+		cout << "action_by_representation::compute_image_int_low_level" << endl;
 		}
 	if (f_vv) {
-		cout << "action_by_representation::compute_image_INT_low_level: x=";
-		INT_vec_print(cout, x, dimension);
+		cout << "action_by_representation::compute_image_int_low_level: x=";
+		int_vec_print(cout, x, dimension);
 		cout << endl;
 		}
-	INT a, b, c, d;
+	int a, b, c, d;
 
 	a = Elt[0];
 	b = Elt[1];
 	c = Elt[2];
 	d = Elt[3];
 
-	INT AA[9];
-	INT two;
+	int AA[9];
+	int two;
 
 	two = F->add(1, 1);
 	AA[0] = F->mult(a, a);
@@ -144,8 +144,8 @@ void action_by_representation::compute_image_INT_low_level(
 		}
 	F->mult_matrix(x, AA, xA, 1, 3, 3);
 	if (f_vv) {
-		cout << "action_by_representation::compute_image_INT_low_level: xA=";
-		INT_vec_print(cout, xA, dimension);
+		cout << "action_by_representation::compute_image_int_low_level: xA=";
+		int_vec_print(cout, xA, dimension);
 		cout << endl;
 		}
 	if (M->f_semilinear) {
@@ -155,12 +155,12 @@ void action_by_representation::compute_image_INT_low_level(
 			}
 		if (f_vv) {
 			cout << "after " << f << " field automorphisms: xA=";
-			INT_vec_print(cout, xA, dimension);
+			int_vec_print(cout, xA, dimension);
 			cout << endl;
 			}
 		}
 	if (f_v) {
-		cout << "action_by_representation::compute_image_INT_low_level done" << endl;
+		cout << "action_by_representation::compute_image_int_low_level done" << endl;
 		}
 }
 

@@ -17,13 +17,13 @@
 
 
 
-INT wreath_product_group_element_image_of(action &A,
-		INT a, void *elt, INT verbose_level)
+int wreath_product_group_element_image_of(action &A,
+		int a, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
-	INT b;
+	int *Elt = (int *) elt;
+	int b;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of "
@@ -40,17 +40,17 @@ INT wreath_product_group_element_image_of(action &A,
 }
 
 void wreath_product_group_element_image_of_low_level(action &A,
-		INT *input, INT *output, void *elt, INT verbose_level)
+		int *input, int *output, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of_low_level "
 				"computing image of ";
-		INT_vec_print(cout, input, W.dimension_of_tensor_action);
+		int_vec_print(cout, input, W.dimension_of_tensor_action);
 		cout << endl;
 		}
 	W.element_image_of_low_level(Elt, input, output, verbose_level - 1);
@@ -58,18 +58,18 @@ void wreath_product_group_element_image_of_low_level(action &A,
 	if (f_v) {
 		cout << "wreath_product_group_element_image_of_low_level "
 				"image of is ";
-		INT_vec_print(cout, output, W.dimension_of_tensor_action);
+		int_vec_print(cout, output, W.dimension_of_tensor_action);
 		cout << endl;
 		}
 }
 
-INT wreath_product_group_element_linear_entry_ij(action &A,
-		void *elt, INT i, INT j, INT verbose_level)
+int wreath_product_group_element_linear_entry_ij(action &A,
+		void *elt, int i, int j, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *Elt = (INT *) elt;
-	//INT w;
+	//int *Elt = (int *) elt;
+	//int w;
 
 	cout << "wreath_product_group_element_linear_entry_ij "
 			"not yet implemented" << endl;
@@ -84,13 +84,13 @@ INT wreath_product_group_element_linear_entry_ij(action &A,
 #endif
 }
 
-INT wreath_product_group_element_linear_entry_frobenius(action &A,
-		void *elt, INT verbose_level)
+int wreath_product_group_element_linear_entry_frobenius(action &A,
+		void *elt, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *Elt = (INT *) elt;
-	//INT w;
+	//int *Elt = (int *) elt;
+	//int w;
 
 	cout << "wreath_product_group_element_linear_entry_frobenius "
 			"not yet implemented" << endl;
@@ -105,11 +105,11 @@ INT wreath_product_group_element_linear_entry_frobenius(action &A,
 }
 
 void wreath_product_group_element_one(action &A,
-		void *elt, INT verbose_level)
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_one "
@@ -118,13 +118,13 @@ void wreath_product_group_element_one(action &A,
 	W.element_one(Elt);
 }
 
-INT wreath_product_group_element_is_one(action &A,
-		void *elt, INT verbose_level)
+int wreath_product_group_element_is_one(action &A,
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
-	INT ret;
+	int *Elt = (int *) elt;
+	int ret;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_one calling "
@@ -172,11 +172,11 @@ INT wreath_product_group_element_is_one(action &A,
 }
 
 void wreath_product_group_element_unpack(action &A,
-		void *elt, void *Elt, INT verbose_level)
+		void *elt, void *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
 	if (f_v) {
@@ -186,11 +186,11 @@ void wreath_product_group_element_unpack(action &A,
 }
 
 void wreath_product_group_element_pack(action &A,
-		void *Elt, void *elt, INT verbose_level)
+		void *Elt, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 
 	if (f_v) {
@@ -200,11 +200,11 @@ void wreath_product_group_element_pack(action &A,
 }
 
 void wreath_product_group_element_retrieve(action &A,
-		INT hdl, void *elt, INT verbose_level)
+		int hdl, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	uchar *p_elt;
 
 	if (f_v) {
@@ -221,13 +221,13 @@ void wreath_product_group_element_retrieve(action &A,
 		}
 }
 
-INT wreath_product_group_element_store(action &A,
-		void *elt, INT verbose_level)
+int wreath_product_group_element_store(action &A,
+		void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
-	INT hdl;
+	int *Elt = (int *) elt;
+	int hdl;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_store" << endl;
@@ -241,14 +241,14 @@ INT wreath_product_group_element_store(action &A,
 }
 
 void wreath_product_group_element_mult(action &A,
-		void *a, void *b, void *ab, INT verbose_level)
+		void *a, void *b, void *ab, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
-	INT *AB = (INT *) ab;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
+	int *AB = (int *) ab;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_mult" << endl;
@@ -270,13 +270,13 @@ void wreath_product_group_element_mult(action &A,
 }
 
 void wreath_product_group_element_invert(action &A,
-		void *a, void *av, INT verbose_level)
+		void *a, void *av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *AA = (INT *) a;
-	INT *AAv = (INT *) av;
+	int *AA = (int *) a;
+	int *AAv = (int *) av;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_invert" << endl;
@@ -296,13 +296,13 @@ void wreath_product_group_element_invert(action &A,
 }
 
 void wreath_product_group_element_transpose(action &A,
-		void *a, void *at, INT verbose_level)
+		void *a, void *at, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *AA = (INT *) a;
-	//INT *Atv = (INT *) at;
+	//int *AA = (int *) a;
+	//int *Atv = (int *) at;
 
 	cout << "wreath_product_group_element_transpose "
 			"not yet implemented" << endl;
@@ -327,12 +327,12 @@ void wreath_product_group_element_transpose(action &A,
 }
 
 void wreath_product_group_element_move(action &A,
-		void *a, void *b, INT verbose_level)
+		void *a, void *b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_move" << endl;
@@ -341,9 +341,9 @@ void wreath_product_group_element_move(action &A,
 }
 
 void wreath_product_group_element_dispose(action &A,
-		INT hdl, INT verbose_level)
+		int hdl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	wreath_product &W = *A.G.wreath_product_group;
 
 	if (f_v) {
@@ -356,7 +356,7 @@ void wreath_product_group_element_print(action &A,
 		void *elt, ostream &ost)
 {
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 
 	W.element_print_easy(Elt, ost);
@@ -370,14 +370,14 @@ void wreath_product_group_element_print(action &A,
 #endif
 
 #if 0
-	INT *fp, n;
+	int *fp, n;
 
-	fp = NEW_INT(A.degree);
+	fp = NEW_int(A.degree);
 	n = A.find_fixed_points(elt, fp, 0);
 	cout << "with " << n << " fixed points ";
 	A.element_print_base_images(Elt, ost);
 	cout << endl;
-	FREE_INT(fp);
+	FREE_int(fp);
 #endif
 
 #if 0
@@ -391,10 +391,10 @@ void wreath_product_group_element_print(action &A,
 }
 
 void wreath_product_group_element_code_for_make_element(action &A,
-		void *elt, INT *data)
+		void *elt, int *data)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	cout << "wreath_product_group_element_code_for_make_element "
 			"not yet implemented" << endl;
@@ -412,7 +412,7 @@ void wreath_product_group_element_print_for_make_element(action &A,
 		void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	cout << "wreath_product_group_element_print_for_make_element "
 			"not yet implemented" << endl;
@@ -430,7 +430,7 @@ void wreath_product_group_element_print_for_make_element_no_commas(
 		action &A, void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	cout << "wreath_product_group_element_print_for_make_element_no_commas "
 			"not yet implemented" << endl;
@@ -448,8 +448,8 @@ void wreath_product_group_element_print_quick(
 		action &A, void *elt, ostream &ost)
 {
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
-	//INT *fp; //, n;
+	int *Elt = (int *) elt;
+	//int *fp; //, n;
 
 
 	W.element_print_easy(Elt, ost);
@@ -468,10 +468,10 @@ void wreath_product_group_element_print_quick(
 #endif
 
 #if 0
-	//fp = NEW_INT(A.degree);
+	//fp = NEW_int(A.degree);
 	//n = A.find_fixed_points(elt, fp, 0);
 	//cout << "with " << n << " fixed points" << endl;
-	//FREE_INT(fp);
+	//FREE_int(fp);
 	if (FALSE /*A.degree < 0*/ /*1000*/) {
 		//cout << "matrix_group_element_print: "
 		//"printing element as permutation" << endl;
@@ -485,7 +485,7 @@ void wreath_product_group_element_print_latex(
 		action &A, void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
-	//INT *Elt = (INT *) elt;
+	//int *Elt = (int *) elt;
 
 	cout << "wreath_product_group_element_print_latex "
 			"not yet implemented" << endl;
@@ -500,15 +500,15 @@ void wreath_product_group_element_print_as_permutation(
 		action &A, void *elt, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
-	INT f_v = FALSE;
-	INT *Elt = (INT *) elt;
-	INT i, j;
+	int f_v = FALSE;
+	int *Elt = (int *) elt;
+	int i, j;
 
 	if (f_v) {
 		cout << "wreath_product_group_element_print_as_permutation "
 				"degree = " << A.degree << endl;
 		}
-	INT *p = NEW_INT(A.degree);
+	int *p = NEW_int(A.degree);
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation "
 		//"computing image of i=" << i << endl;
@@ -520,28 +520,28 @@ void wreath_product_group_element_print_as_permutation(
 		p[i] = j;
 		}
 	perm_print(ost, p, A.degree);
-	FREE_INT(p);
+	FREE_int(p);
 }
 
 void wreath_product_group_element_print_verbose(
 		action &A, void *elt, ostream &ost)
 {
 	wreath_product &W = *A.G.wreath_product_group;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	W.element_print_easy(Elt, ost);
 #if 0
 	ost << "\n";
-	INT i, j;
+	int i, j;
 
 	if (A.degree < 1000) {
-		INT *p = NEW_INT(A.degree);
+		int *p = NEW_int(A.degree);
 		for (i = 0; i < A.degree; i++) {
 			j = A.element_image_of(i, Elt, FALSE);
 			p[i] = j;
 			}
 		perm_print(ost, p, A.degree);
-		FREE_INT(p);
+		FREE_int(p);
 		}
 	else {
 #if 0
@@ -556,7 +556,7 @@ void wreath_product_group_element_print_verbose(
 
 }
 
-void wreath_product_group_print_point(action &A, INT a, ostream &ost)
+void wreath_product_group_print_point(action &A, int a, ostream &ost)
 {
 	//wreath_product &W = *A.G.wreath_product_group;
 

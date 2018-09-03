@@ -8,25 +8,25 @@
 
 #include "orbiter.h"
 
-INT t0;
+int t0;
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_N_min = FALSE;
-	INT N_min = 0;
-	INT f_N2 = FALSE;
-	INT N2 = 0;
-	INT f_mask = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_N = FALSE;
+	int N = 0;
+	int f_N_min = FALSE;
+	int N_min = 0;
+	int f_N2 = FALSE;
+	int N2 = 0;
+	int f_mask = FALSE;
 	const char *mask = NULL;
-	INT f_save = FALSE;
+	int f_save = FALSE;
 	const char *fname_out = NULL;
-	INT f_split = FALSE;
-	INT split_r = 0;
-	INT split_m = 0;
+	int f_split = FALSE;
+	int split_r = 0;
+	int split_m = 0;
 	
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -75,15 +75,15 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
-	INT nb_missing = 0;
-	INT *Missing = NULL;
+	int nb_missing = 0;
+	int *Missing = NULL;
 	char fname[1000];
-	INT missing_n;
+	int missing_n;
 
 
 	if (f_N2) {
-		Missing = NEW_INT(N * N2 * 2);
-		INT j;
+		Missing = NEW_int(N * N2 * 2);
+		int j;
 
 		missing_n = 2;
 		for (i = 0; i < N; i++) {
@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 		}
 	else {	
 		missing_n = 1;
-		Missing = NEW_INT(N);
+		Missing = NEW_int(N);
 
 		for (i = 0; i < N; i++) {
 			if (f_split) {
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 
 	if (f_save) {
 		if (is_csv_file(fname_out)) {
-			INT_matrix_write_csv(fname_out, Missing, nb_missing, missing_n);
+			int_matrix_write_csv(fname_out, Missing, nb_missing, missing_n);
 			}
 		else {
 			if (missing_n != 1) {

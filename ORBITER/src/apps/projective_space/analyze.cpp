@@ -17,62 +17,62 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void do_switch(projective_space *P, INT switch1, INT switch2, INT *set, INT set_size, INT verbose_level);
-void analyze(INT n, finite_field *F, INT *set, INT set_size, 
-	INT f_switch, INT switch1, INT switch2, 
-	INT f_planes, INT f_hf_planes, INT f_hyperplanes, 
-	INT f_show, INT f_show_orbits, INT f_group, INT f_list_group, INT f_multiset, 
-	INT verbose_level);
+void do_switch(projective_space *P, int switch1, int switch2, int *set, int set_size, int verbose_level);
+void analyze(int n, finite_field *F, int *set, int set_size, 
+	int f_switch, int switch1, int switch2, 
+	int f_planes, int f_hf_planes, int f_hyperplanes, 
+	int f_show, int f_show_orbits, int f_group, int f_list_group, int f_multiset, 
+	int verbose_level);
 void do_lines_with_group(projective_space *P, sims *S, 
-	INT *set, INT set_size, INT f_show, INT f_show_orbits, INT verbose_level);
-void do_lines(projective_space *P, INT *set, INT set_size, INT f_show, INT f_multiset, INT verbose_level);
+	int *set, int set_size, int f_show, int f_show_orbits, int verbose_level);
+void do_lines(projective_space *P, int *set, int set_size, int f_show, int f_multiset, int verbose_level);
 void do_hf_planes(projective_space *P, projective_space *P2, 
-	INT *set, INT set_size, INT f_show, INT verbose_level);
+	int *set, int set_size, int f_show, int verbose_level);
 void do_planes(projective_space *P, projective_space *P2, 
-	INT *set, INT set_size, INT f_show, INT verbose_level);
+	int *set, int set_size, int f_show, int verbose_level);
 void look_at_these_planes_longinteger(
 	projective_space *P, projective_space *P2, 
-	grassmann *Gr, INT *set_of_planes, 
-	INT *rank_idx, longinteger_object *Rank, 
-	INT nb_planes, INT intersection_size, INT *Blocks, 
-	INT *set, INT set_size, INT f_show, INT verbose_level);
+	grassmann *Gr, int *set_of_planes, 
+	int *rank_idx, longinteger_object *Rank, 
+	int nb_planes, int intersection_size, int *Blocks, 
+	int *set, int set_size, int f_show, int verbose_level);
 void look_at_these_planes(projective_space *P, projective_space *P2, 
-	grassmann *Gr, INT *set_of_planes, INT nb_planes, INT intersection_size, INT *Blocks, 
-	INT *set, INT set_size, INT f_show, INT verbose_level);
-void look_at_pairs(projective_space *P, INT *Blocks, INT nb_blocks, INT block_size, 
-	INT *set, INT set_size, INT verbose_level);
+	grassmann *Gr, int *set_of_planes, int nb_planes, int intersection_size, int *Blocks, 
+	int *set, int set_size, int f_show, int verbose_level);
+void look_at_pairs(projective_space *P, int *Blocks, int nb_blocks, int block_size, 
+	int *set, int set_size, int verbose_level);
 void do_hyperplanes(projective_space *P, 
-	INT *set, INT set_size, INT verbose_level);
+	int *set, int set_size, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i, j;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_q = FALSE;
-	INT q;
-	INT f_set = FALSE;
-	INT set[MY_MAX_SET_SIZE];
-	INT set_size = -1;
-	INT f_switch = FALSE;
-	INT switch1, switch2;
-	INT f_file = FALSE;
+	int verbose_level = 0;
+	int i, j;
+	int f_n = FALSE;
+	int n = 0;
+	int f_q = FALSE;
+	int q;
+	int f_set = FALSE;
+	int set[MY_MAX_SET_SIZE];
+	int set_size = -1;
+	int f_switch = FALSE;
+	int switch1, switch2;
+	int f_file = FALSE;
 	char *file_name;
-	INT f_poly = FALSE;
+	int f_poly = FALSE;
 	char *poly = NULL;
-	INT f_planes = FALSE;
-	INT f_hf_planes = FALSE;
-	INT f_hyperplanes = FALSE;
-	INT f_show = FALSE;
-	INT f_show_orbits = FALSE;
-	INT f_group = FALSE;
-	INT f_BLT = FALSE;
-	INT BLT_no = 0;
-	INT f_list_group = FALSE;
-	INT f_multiset = FALSE;
+	int f_planes = FALSE;
+	int f_hf_planes = FALSE;
+	int f_hyperplanes = FALSE;
+	int f_show = FALSE;
+	int f_show_orbits = FALSE;
+	int f_group = FALSE;
+	int f_BLT = FALSE;
+	int BLT_no = 0;
+	int f_list_group = FALSE;
+	int f_multiset = FALSE;
 
 	
  	t0 = os_ticks();
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
 					}
 				}
 			cout << "-set ";
-			INT_vec_print(cout, set, set_size);
+			int_vec_print(cout, set, set_size);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-group") == 0) {
@@ -174,7 +174,7 @@ int main(int argc, char **argv)
 	F->init_override_polynomial(q, poly, 0);
 
 	if (f_file) {
-		INT *the_set;
+		int *the_set;
 		read_set_from_file(file_name, the_set, set_size, verbose_level);
 		if (set_size > MY_MAX_SET_SIZE) {
 			cout << "set is too big, please increase MY_MAX_SET_SIZE" << endl;
@@ -183,16 +183,16 @@ int main(int argc, char **argv)
 		for (i = 0; i < set_size; i++) {
 			set[i] = the_set[i];
 			}
-		FREE_INT(the_set);
+		FREE_int(the_set);
 		}
 
 	if (f_BLT) {
 		action *A;
 		action_on_orthogonal *AO;
 		orthogonal *O;
-		INT *BLT;
-		INT v[5];
-		INT a;
+		int *BLT;
+		int v[5];
+		int a;
 		
 		if (EVEN(q)) {
 			cout << "BLT-sets need q odd" << endl;
@@ -207,8 +207,8 @@ int main(int argc, char **argv)
 
 
 		A = new action;
-		INT f_basis = TRUE;
-		INT f_init_hash_table = TRUE;
+		int f_basis = TRUE;
+		int f_init_hash_table = TRUE;
 	
 		A->init_BLT(F, f_basis, f_init_hash_table, verbose_level);
 		//allocate_tmp_data();
@@ -253,13 +253,13 @@ int main(int argc, char **argv)
 }
 
 
-void do_switch(projective_space *P, INT switch1, INT switch2, 
-	INT *set, INT set_size, INT verbose_level)
+void do_switch(projective_space *P, int switch1, int switch2, 
+	int *set, int set_size, int verbose_level)
 {
-	INT *v;
-	INT i, a;
+	int *v;
+	int i, a;
 
-	v = NEW_INT(P->n + 1);
+	v = NEW_int(P->n + 1);
 	for (i = 0; i < set_size; i++) {
 		a = set[i];
 		P->unrank_point(v, a);
@@ -269,25 +269,25 @@ void do_switch(projective_space *P, INT switch1, INT switch2,
 		a = P->rank_point(v);
 		set[i] = a;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 
-void analyze(INT n, finite_field *F, INT *set, INT set_size, 
-	INT f_switch, INT switch1, INT switch2, 
-	INT f_planes, INT f_hf_planes, INT f_hyperplanes, 
-	INT f_show, INT f_show_orbits, INT f_group, INT f_list_group, INT f_multiset, 
-	INT verbose_level)
+void analyze(int n, finite_field *F, int *set, int set_size, 
+	int f_switch, int switch1, int switch2, 
+	int f_planes, int f_hf_planes, int f_hyperplanes, 
+	int f_show, int f_show_orbits, int f_group, int f_list_group, int f_multiset, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	projective_space *P;
 	projective_space *P2;
-	INT f_with_group = FALSE;
-	INT f_semilinear = TRUE;
+	int f_with_group = FALSE;
+	int f_semilinear = TRUE;
 	//const char *override_poly = NULL;
-	INT f_basis = TRUE;
-	INT q = F->q;
+	int f_basis = TRUE;
+	int q = F->q;
 
 
 	if (f_group) {
@@ -317,7 +317,7 @@ void analyze(INT n, finite_field *F, INT *set, INT set_size,
 
 	if (f_v) {
 		cout << "analyzing set ";
-		INT_vec_print(cout, set, set_size);
+		int_vec_print(cout, set, set_size);
 		cout << " of size " << set_size << endl;
 		}
 	if (f_vv) {
@@ -373,17 +373,17 @@ void analyze(INT n, finite_field *F, INT *set, INT set_size,
 }
 
 void do_lines_with_group(projective_space *P, sims *S, 
-	INT *set, INT set_size, INT f_show, INT f_show_orbits, INT verbose_level)
+	int *set, int set_size, int f_show, int f_show_orbits, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	vector_ge *gens;
 	finite_field *F;
-	INT i, f, l, j, d, b, h, u, sz;
+	int i, f, l, j, d, b, h, u, sz;
 	schreier *Sch_pts;
 	schreier *Sch;
-	INT *Set;
-	INT *basis;
+	int *Set;
+	int *basis;
 
 	if (f_v) {
 		cout << "do_lines_with_group" << endl;
@@ -399,8 +399,8 @@ void do_lines_with_group(projective_space *P, sims *S,
 	
 	gens = &S->gens;
 
-	basis = NEW_INT(2 * d);
-	Set = NEW_INT(MAXIMUM(P->N_points, P->N_lines));
+	basis = NEW_int(2 * d);
+	Set = NEW_int(MAXIMUM(P->N_points, P->N_lines));
 
 	Sch_pts = new schreier;
 	Sch_pts->init(P->A);
@@ -429,7 +429,7 @@ void do_lines_with_group(projective_space *P, sims *S,
 			}
 		if (f_v) {
 			cout << "Point-orbit " << i << " of length=" << l << " : ";
-			INT_vec_print(cout, Set, l);
+			int_vec_print(cout, Set, l);
 			cout << endl;
 			}
 		}
@@ -444,17 +444,17 @@ void do_lines_with_group(projective_space *P, sims *S,
 			}
 		b = Set[0];
 		P->unrank_line(basis, b);
-		INT *L;
-		INT *I;
-		INT sz;
+		int *L;
+		int *I;
+		int sz;
 
 		L = P->Lines + b * P->k;
-		INT_vec_intersect(L, P->k, set, set_size, I, sz);
+		int_vec_intersect(L, P->k, set, set_size, I, sz);
 
 		if (f_v) {
 			cout << "Line-orbit " << i << " of length=" << l << " intersecting in " << sz << " points" << endl;
 			}
-		FREE_INT(I);
+		FREE_int(I);
 		}
 
 
@@ -469,7 +469,7 @@ void do_lines_with_group(projective_space *P, sims *S,
 			}
 		if (f_v) {
 			cout << "orbit: ";
-			INT_vec_print(cout, Set, l);
+			int_vec_print(cout, Set, l);
 			cout << endl;
 			}
 		for (j = 0; j < l; j++) {
@@ -482,22 +482,22 @@ void do_lines_with_group(projective_space *P, sims *S,
 				cout << "line " << b << " has a basis:" << endl;
 				print_integer_matrix_width(cout, basis, 2, d, d, P->F->log10_of_q);
 				}
-			INT *L;
-			INT *I;
-			INT sz;
+			int *L;
+			int *I;
+			int sz;
 
 			L = P->Lines + b * P->k;
-			INT_vec_intersect(L, P->k, set, set_size, I, sz);
+			int_vec_intersect(L, P->k, set, set_size, I, sz);
 
 			if (f_show) {
 				cout << "and intersects in " << sz << " points : ";
-				INT_vec_print(cout, I, sz);
+				int_vec_print(cout, I, sz);
 				cout << endl;
 				cout << "they are:" << endl;
 				P->print_set(I, sz);
 				}
 
-			FREE_INT(I);
+			FREE_int(I);
 			} // next j
 		} // next i
 	
@@ -533,11 +533,11 @@ void do_lines_with_group(projective_space *P, sims *S,
 		}
 
 	
-	INT *Mtx;
+	int *Mtx;
 	incidence_structure *Inc;
 	
 	Inc = new incidence_structure;
-	Mtx = NEW_INT(P->N_points * P->N_lines);
+	Mtx = NEW_int(P->N_points * P->N_lines);
 	if (P->incidence_bitvec == NULL) {
 		cout << "P->incidence_bitvec == NULL" << endl;
 		exit(1);
@@ -575,7 +575,7 @@ void do_lines_with_group(projective_space *P, sims *S,
 	if (f_v) {
 		cout << "initializing A2" << endl;
 		}
-	INT f_induce_action = TRUE;
+	int f_induce_action = TRUE;
 	//sims *S_planes;
 
 	//S_planes = new sims;
@@ -595,9 +595,9 @@ void do_lines_with_group(projective_space *P, sims *S,
 		f_induce_action, S, verbose_level - 1);
 
 	schreier *Sch2;
-	INT *Set2;
-	INT *basis2;
-	INT *M_inf;
+	int *Set2;
+	int *basis2;
+	int *M_inf;
 
 	Sch2 = new schreier;
 	Sch2->init(A2);
@@ -605,9 +605,9 @@ void do_lines_with_group(projective_space *P, sims *S,
 	Sch2->init_generators(*gens);
 	Sch2->compute_all_point_orbits(verbose_level - 2);
 	
-	INT N_planes;
+	int N_planes;
 
-	N_planes = A_planes->degree.as_INT();
+	N_planes = A_planes->degree.as_int();
 	if (f_v) {
 		cout << "N_planes = " << N_planes << endl;
 		}
@@ -617,9 +617,9 @@ void do_lines_with_group(projective_space *P, sims *S,
 		cout << "do_lines_with_group: found " << Sch2->nb_orbits << " orbits on planes" << endl;
 		}
 
-	basis2 = NEW_INT(4 * d);
-	Set2 = NEW_INT(N_planes);
-	M_inf = NEW_INT(Sch->nb_orbits * Sch2->nb_orbits);
+	basis2 = NEW_int(4 * d);
+	Set2 = NEW_int(N_planes);
+	M_inf = NEW_int(Sch->nb_orbits * Sch2->nb_orbits);
 	for (i = 0; i < Sch->nb_orbits * Sch2->nb_orbits; i++) {
 		M_inf[i] = 0;
 		}
@@ -628,12 +628,12 @@ void do_lines_with_group(projective_space *P, sims *S,
 		f = Sch2->orbit_first[i];
 		l = Sch2->orbit_len[i];
 		b = Sch2->orbit[f + 0];
-		A_planes->G->unrank_INT(b, 0 /*verbose_level*/);
+		A_planes->G->unrank_int(b, 0 /*verbose_level*/);
 
-		INT u, jj, rk1, hh;
-		INT *I;
+		int u, jj, rk1, hh;
+		int *I;
 
-		I = NEW_INT(set_size);
+		I = NEW_int(set_size);
 		u = 0;
 		for (jj = 0; jj < set_size; jj++) {
 			for (hh = 0; hh < 3 * d; hh++) {
@@ -650,7 +650,7 @@ void do_lines_with_group(projective_space *P, sims *S,
 		if (f_v) {
 			cout << "Plane orbit " << i << " of length " << l << " intersects in " << u << " points" << endl;
 			}
-		FREE_INT(I);
+		FREE_int(I);
 		}
 	
 	for (i = 0; i < Sch2->nb_orbits; i++) {
@@ -664,7 +664,7 @@ void do_lines_with_group(projective_space *P, sims *S,
 			}
 		if (f_v) {
 			cout << "Plane orbit: ";
-			INT_vec_print(cout, Set2, l);
+			int_vec_print(cout, Set2, l);
 			cout << endl;
 			}
 		for (h = 0; h < l; h++) {
@@ -672,16 +672,16 @@ void do_lines_with_group(projective_space *P, sims *S,
 				break;
 				}
 			b = Set2[h];
-			A_planes->G->unrank_INT(b, 0 /*verbose_level*/);
+			A_planes->G->unrank_int(b, 0 /*verbose_level*/);
 			if (f_show) {
 				cout << h << "-th plane " << b << " has a basis:" << endl;
 				print_integer_matrix_width(cout, A_planes->G->M, 3, d, d, P->F->log10_of_q);
 				}
 
-			INT u, jj, rk1, hh;
-			INT *I;
+			int u, jj, rk1, hh;
+			int *I;
 
-			I = NEW_INT(set_size);
+			I = NEW_int(set_size);
 			u = 0;
 			for (jj = 0; jj < set_size; jj++) {
 				for (hh = 0; hh < 3 * d; hh++) {
@@ -702,16 +702,16 @@ void do_lines_with_group(projective_space *P, sims *S,
 
 			grassmann *G32;
 			grassmann_embedded *Gre;
-			INT *subspace_basis;
-			INT *orbit_type;
+			int *subspace_basis;
+			int *orbit_type;
 
 		
 			for (hh = 0; hh < 3 * d; hh++) {
 				basis2[hh] = A_planes->G->M[hh];
 				}
 
-			orbit_type = NEW_INT(Sch->nb_orbits);
-			subspace_basis = NEW_INT(2 * d);
+			orbit_type = NEW_int(Sch->nb_orbits);
+			subspace_basis = NEW_int(2 * d);
 			G32 = new grassmann;
 			Gre = new grassmann_embedded;
 			G32->init(3, 2, F, verbose_level - 2);
@@ -720,11 +720,11 @@ void do_lines_with_group(projective_space *P, sims *S,
 				orbit_type[j] = 0;
 				}
 			for (jj = 0; jj < Gre->degree; jj++) {
-				Gre->unrank_INT(subspace_basis, jj, 0);
+				Gre->unrank_int(subspace_basis, jj, 0);
 				for (hh = 0; hh < 2 * d; hh++) {
 					P->Grass_lines->M[hh] = subspace_basis[hh];
 					}
-				j = P->Grass_lines->rank_INT(0);
+				j = P->Grass_lines->rank_int(0);
 				if (f_show) {
 					cout << "Subspace " << jj << " has a basis:" << endl;
 					print_integer_matrix_width(cout, subspace_basis, 2, d, d, P->F->log10_of_q);
@@ -735,15 +735,15 @@ void do_lines_with_group(projective_space *P, sims *S,
 				}
 			if (f_show) {
 				cout << "Orbit type: ";
-				INT_vec_print(cout, orbit_type, Sch->nb_orbits);
+				int_vec_print(cout, orbit_type, Sch->nb_orbits);
 				cout << endl;
 				}
 
 			delete G32;
 			delete Gre;
-			FREE_INT(subspace_basis);
-			FREE_INT(orbit_type);
-			FREE_INT(I);
+			FREE_int(subspace_basis);
+			FREE_int(orbit_type);
+			FREE_int(I);
 			} // next h
 
 		} // next i
@@ -753,31 +753,31 @@ void do_lines_with_group(projective_space *P, sims *S,
 		Sch2->nb_orbits, Sch2->nb_orbits, 3);
 
 	delete Grass;
-	FREE_INT(M_inf);
-	FREE_INT(basis);
-	FREE_INT(Set);
+	FREE_int(M_inf);
+	FREE_int(basis);
+	FREE_int(Set);
 	delete Sch;
 	delete Sch_pts;
 	delete A2;
 	//delete A_planes;
-	FREE_INT(basis2);
-	FREE_INT(Set2);
+	FREE_int(basis2);
+	FREE_int(Set2);
 	delete Sch2;
-	FREE_INT(Mtx);
+	FREE_int(Mtx);
 	delete Inc;
 }
 
 
-void do_lines(projective_space *P, INT *set, INT set_size, 
-	INT f_show, INT f_multiset, INT verbose_level)
+void do_lines(projective_space *P, int *set, int set_size, 
+	int f_show, int f_multiset, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *intersection_numbers;
-	INT i, j, h, a;
-	INT *v;
-	INT n = P->n;
-	INT q = P->q;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *intersection_numbers;
+	int i, j, h, a;
+	int *v;
+	int n = P->n;
+	int q = P->q;
 	
 	if (f_v) {
 		cout << "do_lines" << endl;
@@ -789,10 +789,10 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 		return;
 		}
 
-	v = NEW_INT(n + 1);
+	v = NEW_int(n + 1);
 
 
-	intersection_numbers = NEW_INT(P->N_lines);
+	intersection_numbers = NEW_int(P->N_lines);
 	if (f_v) {
 		cout << "after allocating intersection_numbers" << endl;
 		}
@@ -812,7 +812,7 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 		}
 
 	classify C;
-	INT f_second = FALSE;
+	int f_second = FALSE;
 
 	C.init(intersection_numbers, P->N_lines, f_second, 0);
 	if (f_v) {
@@ -821,12 +821,12 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 		}
 	
 	if (f_vv) {
-		INT h, f, l, b;
-		INT *S;
-		INT *basis;
+		int h, f, l, b;
+		int *S;
+		int *basis;
 
-		basis = NEW_INT(2 * (P->n + 1));
-		S = NEW_INT(P->N_lines);
+		basis = NEW_int(2 * (P->n + 1));
+		S = NEW_int(P->N_lines);
 		for (h = 0; h < C.nb_types; h++) {
 			f = C.type_first[h];
 			l = C.type_len[h];
@@ -838,8 +838,8 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
 				}
-			INT_vec_quicksort_increasingly(S, l);
-			INT_vec_print(cout, S, l);
+			int_vec_quicksort_increasingly(S, l);
+			int_vec_print(cout, S, l);
 			cout << endl;
 			for (j = 0; j < l; j++) {
 				b = S[j];
@@ -848,29 +848,29 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 					cout << "line " << b << " has a basis:" << endl;
 					print_integer_matrix_width(cout, basis, 2, P->n + 1, P->n + 1, P->F->log10_of_q);
 					}
-				INT *L;
-				INT *I;
-				INT sz;
+				int *L;
+				int *I;
+				int sz;
 
 				if (P->Lines == NULL) {
 					continue;
 					}
 				L = P->Lines + b * P->k;
-				INT_vec_intersect(L, P->k, set, set_size, I, sz);
+				int_vec_intersect(L, P->k, set, set_size, I, sz);
 
 				if (f_show) {
 					cout << "intersects in " << sz << " points : ";
-					INT_vec_print(cout, I, sz);
+					int_vec_print(cout, I, sz);
 					cout << endl;
 					cout << "they are:" << endl;
 					P->print_set(I, sz);
 					}
 
-				FREE_INT(I);
+				FREE_int(I);
 				}
 			}
-		FREE_INT(S);
-		FREE_INT(basis);
+		FREE_int(S);
+		FREE_int(basis);
 #if 0
 		cout << "i : intersection number of line i" << endl;
 		for (i = 0; i < P->N_lines; i++) {
@@ -879,19 +879,19 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 #endif
 		}
 	if (EVEN(P->F->e) && !f_multiset) {
-		INT q0;
+		int q0;
 
 		q0 = i_power_j(P->F->p, (P->F->e >> 1));
 		if (f_v) {
 			cout << "checking for Baer sublines, order q0=" << q0 << endl;
 			}
 
-		INT h, f, l, b;
-		INT *S;
-		INT *basis;
+		int h, f, l, b;
+		int *S;
+		int *basis;
 
-		basis = NEW_INT(2 * (P->n + 1));		
-		S = NEW_INT(P->N_lines);
+		basis = NEW_int(2 * (P->n + 1));		
+		S = NEW_int(P->N_lines);
 		for (h = 0; h < C.nb_types; h++) {
 			f = C.type_first[h];
 			l = C.type_len[h];
@@ -909,15 +909,15 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
 				}
-			INT_vec_quicksort_increasingly(S, l);
-			INT_vec_print(cout, S, l);
+			int_vec_quicksort_increasingly(S, l);
+			int_vec_print(cout, S, l);
 			cout << endl;
 
-			INT *f_is_baer;
-			INT *circle_type;
+			int *f_is_baer;
+			int *circle_type;
 
-			f_is_baer = NEW_INT(l);
-			circle_type = NEW_INT(q);
+			f_is_baer = NEW_int(l);
+			circle_type = NEW_int(q);
 			
 			for (j = 0; j < l; j++) {
 				b = S[j];
@@ -928,12 +928,12 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 					print_integer_matrix_width(cout, basis, 2, P->n + 1, P->n + 1, P->F->log10_of_q);
 					}
 
-				INT *L;
-				INT *I;
-				INT sz;
+				int *L;
+				int *I;
+				int sz;
 
 				L = P->Lines + b * P->k;
-				INT_vec_intersect(L, P->k, set, set_size, I, sz);
+				int_vec_intersect(L, P->k, set, set_size, I, sz);
 				
 				if (sz != a) {
 					cout << "sz != a" << endl;
@@ -942,9 +942,9 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 				f_is_baer[j] = P->is_contained_in_Baer_subline(I, sz, verbose_level - 3);
 				//cout << "computing circle type:" << endl;				
 				//P->circle_type_of_line_subset(I, sz, circle_type, verbose_level);
-				FREE_INT(I);
+				FREE_int(I);
 				}
-			FREE_INT(circle_type);
+			FREE_int(circle_type);
 
 			classify CB;
 
@@ -955,15 +955,15 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 				CB.print(FALSE /*f_backwards*/);
 				}
 
-			FREE_INT(f_is_baer);
+			FREE_int(f_is_baer);
 			
 
 			} // next h
-		FREE_INT(S);
-		FREE_INT(basis);
+		FREE_int(S);
+		FREE_int(basis);
 
 		if (FALSE /*P->n == 2 && set_size >= 9*/) {
-			INT six_coeffs[6];
+			int six_coeffs[6];
 			
 			if (f_v) {
 				cout << "trying hermitian form:" << endl;
@@ -976,7 +976,7 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 			if (P->determine_hermitian_form_in_plane(set /*nine_pts*/, set_size, six_coeffs, verbose_level - 2)) {
 				if (f_v) {
 					cout << "hermitian form coefficients:" << endl;
-					INT_vec_print(cout, six_coeffs, 6);
+					int_vec_print(cout, six_coeffs, 6);
 					cout << endl;
 					}
 				}
@@ -992,29 +992,29 @@ void do_lines(projective_space *P, INT *set, INT set_size,
 		cout << "do_lines: line-intersection type (again): ";
 		C.print(FALSE /*f_backwards*/);
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 void do_hf_planes(projective_space *P, projective_space *P2, 
-	INT *set, INT set_size, INT f_show, INT verbose_level)
+	int *set, int set_size, int f_show, int verbose_level)
 // high frequency planes
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i, j, a;
-	INT n = P->n;
-	INT q = P->q;
-	INT N;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, j, a;
+	int n = P->n;
+	int q = P->q;
+	int N;
 	longinteger_object aa, rk;
 	longinteger_object *R;
-	INT *rank_idx;
+	int *rank_idx;
 	longinteger_domain D;
 	grassmann *Gr;
-	//INT *Blocks;
-	INT subset[3];
-	INT *Basis;
-	INT d, len, cnt, idx;
-	INT *set_of_planes;
+	//int *Blocks;
+	int subset[3];
+	int *Basis;
+	int d, len, cnt, idx;
+	int *set_of_planes;
 
 	d = n + 1;
 	if (f_v) {
@@ -1024,31 +1024,31 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 		cout << "We will now compute the plane types" << endl;
 		}
 
-	Basis = NEW_INT(4 * d);
+	Basis = NEW_int(4 * d);
 	Gr = new grassmann;
 
 	D.q_binomial(aa, d, 3, q, 0/*verbose_level*/);
-	//N = aa.as_INT();
+	//N = aa.as_int();
 
 	if (f_v) {
 		cout << "there are " << aa << " planes" << endl;
 		}
 
-	N = INT_n_choose_k(set_size, 3);
+	N = int_n_choose_k(set_size, 3);
 	if (f_v) {
 		cout << "there are " << N << " 3-subsets of points" << endl;
 		}
 	Gr->init(n + 1, 3, P->F, 0 /*verbose_level*/);
 
 	R = new longinteger_object[N];
-	rank_idx = NEW_INT(N);
+	rank_idx = NEW_int(N);
 	len = 0;
 	for (i = 0; i < N; i++) {
 		//cout << "i=" << i << endl;
 		unrank_k_subset(i, subset, set_size, 3);
 		if (FALSE) {
 			cout << i << "-th subset ";
-			INT_vec_print(cout, subset, 3);
+			int_vec_print(cout, subset, 3);
 			cout << endl;
 			}
 		for (j = 0; j < 3; j++) {
@@ -1061,7 +1061,7 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 		Gr->rank_longinteger(rk, 0);
 		if (FALSE) {
 			cout << i << "-th subset ";
-			INT_vec_print(cout, subset, 3);
+			int_vec_print(cout, subset, 3);
 			cout << " rank=" << rk << endl;
 			}
 
@@ -1098,7 +1098,7 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 #endif
 		if (FALSE) {
 			cout << i << "-th subset ";
-			INT_vec_print(cout, subset, 3);
+			int_vec_print(cout, subset, 3);
 			cout << " rank=" << rk << " rank_idx=" << rank_idx[i] << endl;
 			}
 		}
@@ -1110,20 +1110,20 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 
 	if (f_v) {
 		cout << "rank_idx:" << endl;
-		INT_vec_print(cout, rank_idx, N);
+		int_vec_print(cout, rank_idx, N);
 		cout << endl;
 		cout << "intersection type of planes: ";
 		C.print(FALSE /*f_backwards*/);
 		}
 
-	INT f, ff, ll, u, nb_types2, nb_planes, nb_times, intersection_size, h;
+	int f, ff, ll, u, nb_types2, nb_planes, nb_times, intersection_size, h;
 	
 	nb_types2 = C.second_nb_types;
 	
 	f = C.second_type_first[nb_types2 - 1];
 	nb_planes = C.second_type_len[nb_types2 - 1];
 
-	set_of_planes = NEW_INT(nb_planes);
+	set_of_planes = NEW_int(nb_planes);
 	
 	for (i = 0; i < nb_planes; i++) {
 		j = C.second_sorting_perm_inv[f + i];
@@ -1153,7 +1153,7 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 		}
 	nb_times = C.second_data_sorted[f];
 	for (intersection_size = 3; ; intersection_size++) {
-		if (INT_n_choose_k(intersection_size, 3) == nb_times) {
+		if (int_n_choose_k(intersection_size, 3) == nb_times) {
 			cout << "intersection_size=" << intersection_size << endl;
 			break;
 			}
@@ -1179,10 +1179,10 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 		}
 #endif
 
-	INT *Blocks;
-	INT rk1;
+	int *Blocks;
+	int rk1;
 
-	Blocks = NEW_INT(nb_planes * intersection_size);
+	Blocks = NEW_int(nb_planes * intersection_size);
 	for (i = 0; i < nb_planes; i++) {
 		j = C.second_sorting_perm_inv[f + i];
 		ff = C.type_first[j];
@@ -1215,7 +1215,7 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 			cout << "Basis:" << endl;
 			print_integer_matrix_width(cout, Basis, 3, d, d, P->F->log10_of_q);
 			cout << "intersects in ";
-			INT_vec_print(cout, Blocks + i * intersection_size, intersection_size);
+			int_vec_print(cout, Blocks + i * intersection_size, intersection_size);
 			cout << endl;
 			cout << "which are the points" << endl;
 			for (u = 0; u < intersection_size; u++) {
@@ -1225,15 +1225,15 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 			}
 		}
 
-	INT g;
-	INT *Incma;
-	INT *ItI;
+	int g;
+	int *Incma;
+	int *ItI;
 			
 	if (f_v) {
 		cout << "Computing plane invariant for " << nb_planes << " planes:" << endl;
 		}
-	Incma = NEW_INT(set_size * nb_planes);
-	ItI = NEW_INT(nb_planes * nb_planes);
+	Incma = NEW_int(set_size * nb_planes);
+	ItI = NEW_int(nb_planes * nb_planes);
 	for (i = 0; i < set_size * nb_planes; i++) {
 		Incma[i] = 0;
 		}
@@ -1280,12 +1280,12 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 		}
 
 	classify D1, D2;
-	INT *f_point_is_present;
-	INT *missing_points;
-	INT nb_missing_points;
+	int *f_point_is_present;
+	int *missing_points;
+	int nb_missing_points;
 
-	f_point_is_present = NEW_INT(q + 1);
-	missing_points = NEW_INT(q + 1);
+	f_point_is_present = NEW_int(q + 1);
+	missing_points = NEW_int(q + 1);
 	for (i = 0; i < q + 1; i++) {
 		f_point_is_present[i] = FALSE;
 		}
@@ -1307,7 +1307,7 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 		cout << "point multiplicities (second order): ";
 		D2.print(FALSE /*f_backwards*/);
 		cout << "The " << nb_missing_points << " missing points are:" << endl;
-		INT_vec_print(cout, missing_points, nb_missing_points);
+		int_vec_print(cout, missing_points, nb_missing_points);
 		cout << endl;
 		}
 
@@ -1327,7 +1327,7 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 			cout << "Basis:" << endl;
 			print_integer_matrix_width(cout, Basis, 3, d, d, P->F->log10_of_q);
 			cout << "intersects in ";
-			INT_vec_print(cout, Blocks + i * intersection_size, intersection_size);
+			int_vec_print(cout, Blocks + i * intersection_size, intersection_size);
 			cout << endl;
 			cout << "which are the points" << endl;
 			for (u = 0; u < intersection_size; u++) {
@@ -1337,8 +1337,8 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 			}
 		}
 
-	FREE_INT(Incma);
-	FREE_INT(ItI);
+	FREE_int(Incma);
+	FREE_int(ItI);
 
 		ff = C.type_first[j];
 		ll = C.type_len[j];
@@ -1351,29 +1351,29 @@ void do_hf_planes(projective_space *P, projective_space *P2,
 	
 	delete [] R;
 	delete Gr;
-	FREE_INT(Basis);
-	FREE_INT(rank_idx);
-	FREE_INT(Blocks);
-	FREE_INT(set_of_planes);
-	FREE_INT(f_point_is_present);
-	FREE_INT(missing_points);
+	FREE_int(Basis);
+	FREE_int(rank_idx);
+	FREE_int(Blocks);
+	FREE_int(set_of_planes);
+	FREE_int(f_point_is_present);
+	FREE_int(missing_points);
 }
 
 void do_planes(projective_space *P, projective_space *P2, 
-	INT *set, INT set_size, INT f_show, INT verbose_level)
+	int *set, int set_size, int f_show, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *plane_type;
-	INT i, j, h, rk1, a;
-	INT *v;
-	INT n = P->n;
-	INT q = P->q;
-	INT N;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *plane_type;
+	int i, j, h, rk1, a;
+	int *v;
+	int n = P->n;
+	int q = P->q;
+	int N;
 	longinteger_object aa;
 	longinteger_domain D;
 	grassmann *Gr;
-	INT *Blocks;
+	int *Blocks;
 
 	if (f_v) {
 		cout << "do_planes" << endl;
@@ -1383,10 +1383,10 @@ void do_planes(projective_space *P, projective_space *P2,
 		}
 
 	Gr = new grassmann;
-	v = NEW_INT(4 * (n + 1));
+	v = NEW_int(4 * (n + 1));
 
 	D.q_binomial(aa, n + 1, 3, q, 0/*verbose_level*/);
-	N = aa.as_INT();
+	N = aa.as_int();
 
 	if (f_v) {
 		cout << "there are " << N << " planes" << endl;
@@ -1394,7 +1394,7 @@ void do_planes(projective_space *P, projective_space *P2,
 
 	Gr->init(n + 1, 3, P->F, 0 /*verbose_level*/);
 	
-	plane_type = NEW_INT(N);
+	plane_type = NEW_int(N);
 	if (f_v) {
 		cout << "after allocating intersection_numbers" << endl;
 		}
@@ -1403,7 +1403,7 @@ void do_planes(projective_space *P, projective_space *P2,
 		plane_type[i] = 0;
 		}
 	for (i = 0; i < N; i++) {
-		Gr->unrank_INT(i, 0);
+		Gr->unrank_int(i, 0);
 		a = 0;
 		for (j = 0; j < set_size; j++) {
 			for (h = 0; h < 3 * (n + 1); h++) {
@@ -1420,7 +1420,7 @@ void do_planes(projective_space *P, projective_space *P2,
 
 	if (f_vv) {
 		cout << "plane types:" << endl;
-		INT_vec_print(cout, plane_type, N);
+		int_vec_print(cout, plane_type, N);
 		cout << endl;
 		}
 
@@ -1431,7 +1431,7 @@ void do_planes(projective_space *P, projective_space *P2,
 
 
 	classify C;
-	INT f_second = FALSE;
+	int f_second = FALSE;
 
 	C.init(plane_type, N, f_second, 0);
 
@@ -1443,11 +1443,11 @@ void do_planes(projective_space *P, projective_space *P2,
 
 
 	if (f_vv) {
-		INT h, f, b, nb_planes, intersection_size, u, g;
-		INT *S;
-		//INT *I;
+		int h, f, b, nb_planes, intersection_size, u, g;
+		int *S;
+		//int *I;
 
-		S = NEW_INT(N);
+		S = NEW_int(N);
 		for (h = C.nb_types - 1; h >= 0; h--) {
 			f = C.type_first[h];
 			nb_planes = C.type_len[h];
@@ -1459,26 +1459,26 @@ void do_planes(projective_space *P, projective_space *P2,
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
 				}
-			INT_vec_quicksort_increasingly(S, nb_planes);
-			INT_vec_print(cout, S, nb_planes);
+			int_vec_quicksort_increasingly(S, nb_planes);
+			int_vec_print(cout, S, nb_planes);
 			cout << endl;
 
 
 			if (nb_planes > 30) {
 				continue;
 				}
-			Blocks = NEW_INT(nb_planes * intersection_size);
+			Blocks = NEW_int(nb_planes * intersection_size);
 			
 			
 			look_at_these_planes(P, P2, 
 				Gr, S /*set_of_planes*/, nb_planes, intersection_size, Blocks, 
 				set, set_size, f_show, verbose_level);
 
-			INT *Incma;
-			INT *ItI;
+			int *Incma;
+			int *ItI;
 			
-			Incma = NEW_INT(set_size * nb_planes);
-			ItI = NEW_INT(nb_planes * nb_planes);
+			Incma = NEW_int(set_size * nb_planes);
+			ItI = NEW_int(nb_planes * nb_planes);
 			for (i = 0; i < set_size * nb_planes; i++) {
 				Incma[i] = 0;
 				}
@@ -1503,45 +1503,45 @@ void do_planes(projective_space *P, projective_space *P2,
 				print_integer_matrix_width(cout, ItI, nb_planes, nb_planes, nb_planes, 3);
 				}
 
-			FREE_INT(Incma);
-			FREE_INT(Blocks);
-			FREE_INT(ItI);
+			FREE_int(Incma);
+			FREE_int(Blocks);
+			FREE_int(ItI);
 			}
-		FREE_INT(S);
+		FREE_int(S);
 		}
 
 
 
 
 	delete Gr;
-	FREE_INT(v);
-	FREE_INT(plane_type);
+	FREE_int(v);
+	FREE_int(plane_type);
 }
 
 
 void look_at_these_planes_longinteger(
 	projective_space *P, projective_space *P2, 
-	grassmann *Gr, INT *set_of_planes, 
-	INT *rank_idx, longinteger_object *Rank, 
-	INT nb_planes, INT intersection_size, INT *Blocks, 
-	INT *set, INT set_size, INT f_show, INT verbose_level)
+	grassmann *Gr, int *set_of_planes, 
+	int *rank_idx, longinteger_object *Rank, 
+	int nb_planes, int intersection_size, int *Blocks, 
+	int *set, int set_size, int f_show, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT j, jj, hh, a, b, c, rk, i;
-	INT n = P->n;
-	INT d = n + 1;
-	INT *Basis;
-	INT *base_cols;
-	INT *local_coords;
-	INT *line_type;
-	INT *local_set;
-	INT *v;
-	INT six_coeffs[6];
-	INT *conic_points;
-	INT conic_nb_points;
-	INT f_is_subset;
-	INT *real_points;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int j, jj, hh, a, b, c, rk, i;
+	int n = P->n;
+	int d = n + 1;
+	int *Basis;
+	int *base_cols;
+	int *local_coords;
+	int *line_type;
+	int *local_set;
+	int *v;
+	int six_coeffs[6];
+	int *conic_points;
+	int conic_nb_points;
+	int f_is_subset;
+	int *real_points;
 
 
 	if (f_v) {
@@ -1553,14 +1553,14 @@ void look_at_these_planes_longinteger(
 		nb_planes, intersection_size, intersection_size, 3);
 
 
-	Basis = NEW_INT(4 * d);
-	local_coords = NEW_INT(intersection_size * 3);
-	base_cols = NEW_INT(d);
-	line_type = NEW_INT(intersection_size + 1);
-	local_set = NEW_INT(intersection_size);
-	v = NEW_INT(d);
-	conic_points = NEW_INT(P2->q + 1);
-	real_points = NEW_INT(intersection_size);
+	Basis = NEW_int(4 * d);
+	local_coords = NEW_int(intersection_size * 3);
+	base_cols = NEW_int(d);
+	line_type = NEW_int(intersection_size + 1);
+	local_set = NEW_int(intersection_size);
+	v = NEW_int(d);
+	conic_points = NEW_int(P2->q + 1);
+	real_points = NEW_int(intersection_size);
 	
 	for (j = 0; j < nb_planes; j++) {
 		
@@ -1591,7 +1591,7 @@ void look_at_these_planes_longinteger(
 			cout << "look_at_these_planes" << endl;
 			cout << "plane has rank " << rk << endl;
 			cout << "base_cols=";
-			INT_vec_print(cout, base_cols, rk);
+			int_vec_print(cout, base_cols, rk);
 			cout << endl;
 			cout << "basis:" << endl;
 			print_integer_matrix_width(cout, Basis, rk, d, d, P->F->log10_of_q);
@@ -1607,7 +1607,7 @@ void look_at_these_planes_longinteger(
 
 			if (f_show) {
 				cout << "jj=" << jj << "-th point " << a << ":";
-				INT_vec_print(cout, v, d);
+				int_vec_print(cout, v, d);
 				cout << endl;
 				}
 			//cout << "basis:" << endl;
@@ -1619,7 +1619,7 @@ void look_at_these_planes_longinteger(
 			
 			if (f_show) {
 				cout << "local coordinates:";
-				INT_vec_print(cout, local_coords + jj * rk, 3);
+				int_vec_print(cout, local_coords + jj * rk, 3);
 				cout << endl;
 				}
 
@@ -1632,7 +1632,7 @@ void look_at_these_planes_longinteger(
 			cout << "look_at_these_planes local coordinates in the subspace are" << endl;
 			print_integer_matrix_width(cout, local_coords, intersection_size, 3, 3, P->F->log10_of_q);
 			cout << "local_set=";
-			INT_vec_print(cout, local_set, intersection_size);
+			int_vec_print(cout, local_set, intersection_size);
 			cout << endl;
 			}
 
@@ -1641,7 +1641,7 @@ void look_at_these_planes_longinteger(
 			intersection_size /* set_size */, line_type, verbose_level - 1);
 		if (f_v) {
 			cout << "line_type=";
-			INT_vec_print(cout, line_type, intersection_size + 1);
+			int_vec_print(cout, line_type, intersection_size + 1);
 			cout << endl;
 			}
 		for (i = 3; i <= intersection_size; i++) {
@@ -1666,17 +1666,17 @@ void look_at_these_planes_longinteger(
 		P2->determine_conic_in_plane(local_set, 5, six_coeffs, verbose_level - 3);
 		if (f_v) {
 			cout << "The conic determined by the first 5 points is:" << endl;
-			INT_vec_print(cout, six_coeffs, 6);
+			int_vec_print(cout, six_coeffs, 6);
 			cout << endl;
 			}
 		P2->conic_points(local_set, six_coeffs, 
 			conic_points, conic_nb_points, verbose_level - 3);
 		if (f_v) {
 			cout << "The " << conic_nb_points << " conic points are:" << endl;
-			INT_vec_print(cout, conic_points, conic_nb_points);
+			int_vec_print(cout, conic_points, conic_nb_points);
 			cout << endl;
 			cout << "local_set=";
-			INT_vec_print(cout, local_set, intersection_size);
+			int_vec_print(cout, local_set, intersection_size);
 			cout << endl;
 			}
 		f_is_subset = is_subset_of(local_set, intersection_size, conic_points, conic_nb_points);
@@ -1694,38 +1694,38 @@ void look_at_these_planes_longinteger(
 		set, set_size, verbose_level);
 #endif
 
-	FREE_INT(Basis);
-	FREE_INT(local_coords);
-	FREE_INT(base_cols);
-	FREE_INT(line_type);
-	FREE_INT(local_set);
-	FREE_INT(v);
-	FREE_INT(conic_points);
-	FREE_INT(real_points);
+	FREE_int(Basis);
+	FREE_int(local_coords);
+	FREE_int(base_cols);
+	FREE_int(line_type);
+	FREE_int(local_set);
+	FREE_int(v);
+	FREE_int(conic_points);
+	FREE_int(real_points);
 }
 
 
 
 void look_at_these_planes(projective_space *P, projective_space *P2, 
-	grassmann *Gr, INT *set_of_planes, 
-	INT nb_planes, INT intersection_size, INT *Blocks, 
-	INT *set, INT set_size, INT f_show, INT verbose_level)
+	grassmann *Gr, int *set_of_planes, 
+	int nb_planes, int intersection_size, int *Blocks, 
+	int *set, int set_size, int f_show, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT j, jj, hh, u, a, b, rk, rk1;
-	INT n = P->n;
-	INT d = n + 1;
-	INT *I;
-	INT *v;
-	//INT *Blocks;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int j, jj, hh, u, a, b, rk, rk1;
+	int n = P->n;
+	int d = n + 1;
+	int *I;
+	int *v;
+	//int *Blocks;
 
-	v = NEW_INT(4 * d);
-	I = NEW_INT(set_size);
-	//Blocks = NEW_INT(nb_planes * intersection_size);
+	v = NEW_int(4 * d);
+	I = NEW_int(set_size);
+	//Blocks = NEW_int(nb_planes * intersection_size);
 	for (j = 0; j < nb_planes; j++) {
 		b = set_of_planes[j];
-		Gr->unrank_INT(b, 0);
+		Gr->unrank_int(b, 0);
 		for (hh = 0; hh < 3 * d; hh++) {
 			v[hh] = Gr->M[hh];
 			}
@@ -1753,17 +1753,17 @@ void look_at_these_planes(projective_space *P, projective_space *P2,
 			P->print_set(I, u);
 			}
 
-		INT *Basis;
-		INT *base_cols;
-		INT *local_coords;
-		INT *line_type;
-		INT *local_set;
+		int *Basis;
+		int *base_cols;
+		int *local_coords;
+		int *line_type;
+		int *local_set;
 
-		Basis = NEW_INT(3 * d);
-		local_coords = NEW_INT(u * 3);
-		base_cols = NEW_INT(d);
-		line_type = NEW_INT(u + 1);
-		local_set = NEW_INT(u);
+		Basis = NEW_int(3 * d);
+		local_coords = NEW_int(u * 3);
+		base_cols = NEW_int(d);
+		line_type = NEW_int(u + 1);
+		local_set = NEW_int(u);
 
 
 		for (hh = 0; hh < 3 * d; hh++) {
@@ -1774,7 +1774,7 @@ void look_at_these_planes(projective_space *P, projective_space *P2,
 			cout << "look_at_these_planes" << endl;
 			cout << "plane has rank " << rk << endl;
 			cout << "base_cols=";
-			INT_vec_print(cout, base_cols, rk);
+			int_vec_print(cout, base_cols, rk);
 			cout << endl;
 			cout << "basis:" << endl;
 			print_integer_matrix_width(cout, Basis, rk, d, d, P->F->log10_of_q);
@@ -1790,7 +1790,7 @@ void look_at_these_planes(projective_space *P, projective_space *P2,
 
 			if (f_show) {
 				cout << "jj=" << jj << " point:";
-				INT_vec_print(cout, v, d);
+				int_vec_print(cout, v, d);
 				cout << endl;
 				}
 			//cout << "basis:" << endl;
@@ -1806,7 +1806,7 @@ void look_at_these_planes(projective_space *P, projective_space *P2,
 			cout << "look_at_these_planes local coordinates in the subspace are" << endl;
 			print_integer_matrix_width(cout, local_coords, u, 3, 3, P->F->log10_of_q);
 			cout << "local_set=";
-			INT_vec_print(cout, local_set, u);
+			int_vec_print(cout, local_set, u);
 			cout << endl;
 			}
 
@@ -1814,15 +1814,15 @@ void look_at_these_planes(projective_space *P, projective_space *P2,
 		P2->line_intersection_type_collected(local_set, u /* set_size */, line_type, verbose_level - 1);
 		if (f_v) {
 			cout << "line_type=";
-			INT_vec_print(cout, line_type, u + 1);
+			int_vec_print(cout, line_type, u + 1);
 			cout << endl;
 			}
 		
-		FREE_INT(Basis);
-		FREE_INT(local_coords);
-		FREE_INT(base_cols);
-		FREE_INT(line_type);
-		FREE_INT(local_set);
+		FREE_int(Basis);
+		FREE_int(local_coords);
+		FREE_int(base_cols);
+		FREE_int(line_type);
+		FREE_int(local_set);
 		
 		} // next j
 
@@ -1836,21 +1836,21 @@ void look_at_these_planes(projective_space *P, projective_space *P2,
 		set, set_size, verbose_level);
 #endif
 
-	FREE_INT(I);
-	FREE_INT(v);
-	//FREE_INT(Blocks);
+	FREE_int(I);
+	FREE_int(v);
+	//FREE_int(Blocks);
 
 }
 
-void look_at_pairs(projective_space *P, INT *Blocks, INT nb_blocks, INT block_size, 
-	INT *set, INT set_size, INT verbose_level)
+void look_at_pairs(projective_space *P, int *Blocks, int nb_blocks, int block_size, 
+	int *set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Pair_covered;
-	INT N, i, j1, j2, a, a1, a2, b1, b2, idx;
-	INT *set_inv;
+	int f_v = (verbose_level >= 1);
+	int *Pair_covered;
+	int N, i, j1, j2, a, a1, a2, b1, b2, idx;
+	int *set_inv;
 
-	set_inv = NEW_INT(P->N_points);
+	set_inv = NEW_int(P->N_points);
 	for (i = 0; i < P->N_points; i++) {
 		set_inv[i] = -1;
 		}
@@ -1859,7 +1859,7 @@ void look_at_pairs(projective_space *P, INT *Blocks, INT nb_blocks, INT block_si
 		set_inv[a] = i;
 		}
 	N = (set_size * (set_size - 1)) >> 1;
-	Pair_covered = NEW_INT(N);
+	Pair_covered = NEW_int(N);
 	for (i = 0; i < N; i++) {
 		Pair_covered[i] = 0;
 		}
@@ -1877,7 +1877,7 @@ void look_at_pairs(projective_space *P, INT *Blocks, INT nb_blocks, INT block_si
 		}
 
 	classify C;
-	INT f_second = FALSE;
+	int f_second = FALSE;
 
 	C.init(Pair_covered, N, f_second, 0);
 	if (f_v) {
@@ -1885,24 +1885,24 @@ void look_at_pairs(projective_space *P, INT *Blocks, INT nb_blocks, INT block_si
 		C.print(FALSE /*f_backwards*/);
 		}
 
-	FREE_INT(Pair_covered);
-	FREE_INT(set_inv);
+	FREE_int(Pair_covered);
+	FREE_int(set_inv);
 }
 
 
 void do_hyperplanes(projective_space *P, 
-	INT *set, INT set_size, INT verbose_level)
+	int *set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *hyperplane_type;
-	INT *intersection_numbers;
-	INT i, j, h, rk1, a;
-	INT *v;
-	INT n = P->n;
-	INT d = n + 1;
-	INT q = P->q;
-	INT N;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *hyperplane_type;
+	int *intersection_numbers;
+	int i, j, h, rk1, a;
+	int *v;
+	int n = P->n;
+	int d = n + 1;
+	int q = P->q;
+	int N;
 	longinteger_object aa;
 	longinteger_domain D;
 	grassmann *Gr;
@@ -1915,10 +1915,10 @@ void do_hyperplanes(projective_space *P,
 		}
 
 	Gr = new grassmann;
-	v = NEW_INT(n * d);
+	v = NEW_int(n * d);
 
 	D.q_binomial(aa, d, n, q, 0/*verbose_level*/);
-	N = aa.as_INT();
+	N = aa.as_int();
 
 	if (f_v) {
 		cout << "there are " << N << " hyperplanes" << endl;
@@ -1926,8 +1926,8 @@ void do_hyperplanes(projective_space *P,
 
 	Gr->init(d, n, P->F, 0 /*verbose_level*/);
 	
-	hyperplane_type = NEW_INT(N);
-	intersection_numbers = NEW_INT(set_size + 1);
+	hyperplane_type = NEW_int(N);
+	intersection_numbers = NEW_int(set_size + 1);
 	if (f_v) {
 		cout << "after allocating intersection_numbers" << endl;
 		}
@@ -1939,7 +1939,7 @@ void do_hyperplanes(projective_space *P,
 		hyperplane_type[i] = 0;
 		}
 	for (i = 0; i < N; i++) {
-		Gr->unrank_INT(i, 0);
+		Gr->unrank_int(i, 0);
 		a = 0;
 		for (j = 0; j < set_size; j++) {
 			for (h = 0; h < n * d; h++) {
@@ -1956,7 +1956,7 @@ void do_hyperplanes(projective_space *P,
 
 	if (f_vv) {
 		cout << "hyperplane types:" << endl;
-		INT_vec_print(cout, hyperplane_type, N);
+		int_vec_print(cout, hyperplane_type, N);
 		cout << endl;
 		}
 
@@ -1967,7 +1967,7 @@ void do_hyperplanes(projective_space *P,
 
 
 	classify C;
-	INT f_second = FALSE;
+	int f_second = FALSE;
 
 	C.init(hyperplane_type, N, f_second, 0);
 
@@ -1979,12 +1979,12 @@ void do_hyperplanes(projective_space *P,
 
 
 	if (f_vv) {
-		INT h, f, l, b;
-		INT *S;
-		//INT *I;
+		int h, f, l, b;
+		int *S;
+		//int *I;
 
-		S = NEW_INT(N);
-		//I = NEW_INT(set_size);
+		S = NEW_int(N);
+		//I = NEW_int(set_size);
 		for (h = 0; h < C.nb_types; h++) {
 			f = C.type_first[h];
 			l = C.type_len[h];
@@ -1996,8 +1996,8 @@ void do_hyperplanes(projective_space *P,
 				b = C.sorting_perm_inv[f + j];
 				S[j] = b;
 				}
-			INT_vec_quicksort_increasingly(S, l);
-			INT_vec_print(cout, S, l);
+			int_vec_quicksort_increasingly(S, l);
+			int_vec_print(cout, S, l);
 			cout << endl;
 
 #if 0
@@ -2006,8 +2006,8 @@ void do_hyperplanes(projective_space *P,
 				set, set_size, verbose_level);
 #endif
 			}
-		FREE_INT(S);
-		//FREE_INT(I);
+		FREE_int(S);
+		//FREE_int(I);
 #if 0
 		cout << "i : intersection number of line i" << endl;
 		for (i = 0; i < P->N_lines; i++) {
@@ -2020,8 +2020,8 @@ void do_hyperplanes(projective_space *P,
 
 
 	delete Gr;
-	FREE_INT(v);
-	FREE_INT(hyperplane_type);
+	FREE_int(v);
+	FREE_int(hyperplane_type);
 }
 
 

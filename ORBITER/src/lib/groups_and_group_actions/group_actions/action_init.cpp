@@ -9,15 +9,15 @@
 	// for memcpy
 
 void action::init_direct_product_group_and_restrict(
-		matrix_group *M1, matrix_group *M2, INT verbose_level)
+		matrix_group *M1, matrix_group *M2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A_direct_product;
 	action *Adp;
 	direct_product *P;
-	INT *points;
-	INT nb_points;
-	INT i;
+	int *points;
+	int nb_points;
+	int i;
 
 	if (f_v) {
 		cout << "action::init_direct_product_group_and_restrict" << endl;
@@ -33,7 +33,7 @@ void action::init_direct_product_group_and_restrict(
 
 	P = A_direct_product->G.direct_product_group;
 	nb_points = P->degree_of_product_action;
-	points = NEW_INT(nb_points);
+	points = NEW_int(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		points[i] = P->perm_offset_i[2] + i;
 	}
@@ -57,9 +57,9 @@ void action::init_direct_product_group_and_restrict(
 
 void action::init_direct_product_group(
 		matrix_group *M1, matrix_group *M2,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	direct_product *P;
 
 	if (f_v) {
@@ -106,7 +106,7 @@ void action::init_direct_product_group(
 
 	init_function_pointers_direct_product_group();
 
-	elt_size_in_INT = P->elt_size_INT;
+	elt_size_in_int = P->elt_size_int;
 	coded_elt_size_in_char = P->char_per_elt;
 	allocate_element_data();
 
@@ -125,12 +125,12 @@ void action::init_direct_product_group(
 
 	allocate_base_data(base_len);
 
-	INT_vec_copy(P->the_base, base, base_len);
-	INT_vec_copy(P->the_transversal_length, transversal_length, base_len);
+	int_vec_copy(P->the_base, base, base_len);
+	int_vec_copy(P->the_transversal_length, transversal_length, base_len);
 
-	INT *gens_data;
-	INT gens_size;
-	INT gens_nb;
+	int *gens_data;
+	int gens_size;
+	int gens_nb;
 
 	if (f_v) {
 		cout << "action::init_direct_product_group "
@@ -154,7 +154,7 @@ void action::init_direct_product_group(
 				"after Strong_gens->init_from_data" << endl;
 		}
 	f_has_strong_generators = TRUE;
-	FREE_INT(gens_data);
+	FREE_int(gens_data);
 
 	sims *S;
 
@@ -206,16 +206,16 @@ void action::init_direct_product_group(
 		}
 }
 
-void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
-		finite_field *F, INT verbose_level)
+void action::init_wreath_product_group_and_restrict(int nb_factors, int n,
+		finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A_wreath;
 	action *Awr;
 	wreath_product *W;
-	INT *points;
-	INT nb_points;
-	INT i;
+	int *points;
+	int nb_points;
+	int i;
 
 	if (f_v) {
 		cout << "action::init_wreath_product_group_and_restrict" << endl;
@@ -231,7 +231,7 @@ void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
 
 	W = A_wreath->G.wreath_product_group;
 	nb_points = W->degree_of_tensor_action;
-	points = NEW_INT(nb_points);
+	points = NEW_int(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		points[i] = W->perm_offset_i[nb_factors] + i;
 	}
@@ -254,11 +254,11 @@ void action::init_wreath_product_group_and_restrict(INT nb_factors, INT n,
 }
 
 
-void action::init_wreath_product_group(INT nb_factors, INT n,
+void action::init_wreath_product_group(int nb_factors, int n,
 		finite_field *F,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action *A_mtx;
 	wreath_product *W;
 	matrix_group *M;
@@ -321,7 +321,7 @@ void action::init_wreath_product_group(INT nb_factors, INT n,
 
 	init_function_pointers_wreath_product_group();
 
-	elt_size_in_INT = W->elt_size_INT;
+	elt_size_in_int = W->elt_size_int;
 	coded_elt_size_in_char = W->char_per_elt;
 	allocate_element_data();
 
@@ -340,12 +340,12 @@ void action::init_wreath_product_group(INT nb_factors, INT n,
 
 	allocate_base_data(base_len);
 
-	INT_vec_copy(W->the_base, base, base_len);
-	INT_vec_copy(W->the_transversal_length, transversal_length, base_len);
+	int_vec_copy(W->the_base, base, base_len);
+	int_vec_copy(W->the_transversal_length, transversal_length, base_len);
 
-	INT *gens_data;
-	INT gens_size;
-	INT gens_nb;
+	int *gens_data;
+	int gens_size;
+	int gens_nb;
 
 	if (f_v) {
 		cout << "action::init_wreath_product_group "
@@ -369,7 +369,7 @@ void action::init_wreath_product_group(INT nb_factors, INT n,
 				"after Strong_gens->init_from_data" << endl;
 		}
 	f_has_strong_generators = TRUE;
-	FREE_INT(gens_data);
+	FREE_int(gens_data);
 
 	sims *S;
 
@@ -421,18 +421,18 @@ void action::init_wreath_product_group(INT nb_factors, INT n,
 		}
 }
 
-void action::init_orthogonal_group(INT epsilon, 
-	INT n, finite_field *F, 
-	INT f_on_points, INT f_on_lines, INT f_on_points_and_lines, 
-	INT f_semilinear, 
-	INT f_basis, INT verbose_level)
+void action::init_orthogonal_group(int epsilon, 
+	int n, finite_field *F, 
+	int f_on_points, int f_on_lines, int f_on_points_and_lines, 
+	int f_semilinear, 
+	int f_basis, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	action *A;
 	orthogonal *O;
 	action_on_orthogonal *AO;
-	INT q = F->q;
+	int q = F->q;
 
 	if (f_v) {
 		cout << "action::init_orthogonal_group "
@@ -469,15 +469,15 @@ void action::init_orthogonal_group(INT epsilon,
 	subaction = A;
 	degree = AO->degree;
 	low_level_point_size = A->low_level_point_size;
-	elt_size_in_INT = A->elt_size_in_INT;
+	elt_size_in_int = A->elt_size_in_int;
 	coded_elt_size_in_char = A->coded_elt_size_in_char;
 	allocate_element_data();
 	init_function_pointers_induced_action();
 	make_element_size = A->make_element_size;
 
-	sprintf(group_prefix, "O%ld_%ld_%ld", epsilon, n, q);
-	sprintf(label, "O^%s(%ld,%ld)", plus_minus_string(epsilon), n, q);
-	sprintf(label_tex, "O^{%s}(%ld,%ld)", plus_minus_string(epsilon), n, q);
+	sprintf(group_prefix, "O%d_%d_%d", epsilon, n, q);
+	sprintf(label, "O^%s(%d,%d)", plus_minus_string(epsilon), n, q);
+	sprintf(label_tex, "O^{%s}(%d,%d)", plus_minus_string(epsilon), n, q);
 
 
 
@@ -531,13 +531,13 @@ void action::init_orthogonal_group(INT epsilon,
 		}
 }
 
-void action::init_BLT(finite_field *F, INT f_basis,
-		INT f_init_hash_table, INT verbose_level)
+void action::init_BLT(finite_field *F, int f_basis,
+		int f_init_hash_table, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT p, hh, epsilon, n;
-	INT f_semilinear = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int p, hh, epsilon, n;
+	int f_semilinear = FALSE;
 	
 	if (f_v) {
 		cout << "action::init_BLT q=" << F->q
@@ -577,7 +577,7 @@ void action::init_BLT(finite_field *F, INT f_basis,
 	if (f_v) {
 		cout << "action::init_BLT computing lex least base done" << endl;
 		cout << "base: ";
-		INT_vec_print(cout, base, base_len);
+		int_vec_print(cout, base, base_len);
 		cout << endl;
 		}
 
@@ -625,15 +625,15 @@ void action::init_BLT(finite_field *F, INT f_basis,
 
 void action::init_group_from_strong_generators(
 	vector_ge *gens, sims *K,
-	INT given_base_length, INT *given_base,
-	INT verbose_level)
+	int given_base_length, int *given_base,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	sims *G;
 	longinteger_object G_order;
-	INT i;
+	int i;
 	
 	
 	if (f_v) {
@@ -650,7 +650,7 @@ void action::init_group_from_strong_generators(
 
 	if (f_vv) {
 		cout << "calling allocate_base_data, initial base:";
-		INT_vec_print(cout, given_base, given_base_length);
+		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
 	allocate_base_data(given_base_length);
@@ -693,7 +693,7 @@ void action::init_group_from_strong_generators(
 				"found a group of order " << G_order << endl;
 		if (f_vv) {
 			cout << "transversal lengths:" << endl;
-			INT_vec_print(cout, G->orbit_len, base_len);
+			int_vec_print(cout, G->orbit_len, base_len);
 			cout << endl;
 			}
 		}
@@ -713,10 +713,10 @@ void action::init_group_from_strong_generators(
 }
 
 void action::init_projective_special_group(
-	INT n, finite_field *F,
-	INT f_semilinear, INT f_basis, INT verbose_level)
+	int n, finite_field *F,
+	int f_semilinear, int f_basis, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action::init_projective_special_group" << endl;
@@ -771,10 +771,10 @@ void action::init_projective_special_group(
 		}
 }
 
-void action::init_projective_group(INT n, finite_field *F, 
-	INT f_semilinear, INT f_basis, INT verbose_level)
+void action::init_projective_group(int n, finite_field *F, 
+	int f_semilinear, int f_basis, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group *M;
 	
 	if (f_v) {
@@ -819,11 +819,11 @@ void action::init_projective_group(INT n, finite_field *F,
 		}
 
 	degree = M->degree;
-	make_element_size = M->elt_size_INT_half;
+	make_element_size = M->elt_size_int_half;
 
 	init_function_pointers_matrix_group();
 
-	elt_size_in_INT = M->elt_size_INT;
+	elt_size_in_int = M->elt_size_int;
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
@@ -855,11 +855,11 @@ void action::init_projective_group(INT n, finite_field *F,
 		}	
 }
 
-void action::init_affine_group(INT n, finite_field *F, 
-	INT f_semilinear, 
-	INT f_basis, INT verbose_level)
+void action::init_affine_group(int n, finite_field *F, 
+	int f_semilinear, 
+	int f_basis, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group *M;
 	
 	if (f_v) {
@@ -895,11 +895,11 @@ void action::init_affine_group(INT n, finite_field *F,
 		}
 
 	degree = M->degree;
-	make_element_size = M->elt_size_INT_half;
+	make_element_size = M->elt_size_int_half;
 
 	init_function_pointers_matrix_group();
 
-	elt_size_in_INT = M->elt_size_INT;
+	elt_size_in_int = M->elt_size_int;
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
@@ -921,11 +921,11 @@ void action::init_affine_group(INT n, finite_field *F,
 		}	
 }
 
-void action::init_general_linear_group(INT n, finite_field *F, 
-	INT f_semilinear, 
-	INT f_basis, INT verbose_level)
+void action::init_general_linear_group(int n, finite_field *F, 
+	int f_semilinear, 
+	int f_basis, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group *M;
 	
 	if (f_v) {
@@ -962,11 +962,11 @@ void action::init_general_linear_group(INT n, finite_field *F,
 		}
 
 	degree = M->degree;
-	make_element_size = M->elt_size_INT_half;
+	make_element_size = M->elt_size_int_half;
 
 	init_function_pointers_matrix_group();
 
-	elt_size_in_INT = M->elt_size_INT;
+	elt_size_in_int = M->elt_size_int;
 	coded_elt_size_in_char = M->char_per_elt;
 	allocate_element_data();
 
@@ -989,9 +989,9 @@ void action::init_general_linear_group(INT n, finite_field *F,
 }
 
 void action::setup_linear_group_from_strong_generators(matrix_group *M, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -1043,13 +1043,13 @@ void action::setup_linear_group_from_strong_generators(matrix_group *M,
 
 void action::init_matrix_group_strong_generators_builtin(
 	matrix_group *M,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT n, q;
+	int f_v = (verbose_level >= 1);
+	int n, q;
 	finite_field *F;
-	INT *data;
-	INT size, nb_gens;
+	int *data;
+	int size, nb_gens;
 	
 	if (f_v) {
 		cout << "action::init_matrix_group_strong_generators_builtin" << endl;
@@ -1100,7 +1100,7 @@ void action::init_matrix_group_strong_generators_builtin(
 	Strong_gens->init_from_data(this, data, nb_gens, size,
 			transversal_length, verbose_level - 1);
 
-	FREE_INT(data);
+	FREE_int(data);
 	
 	if (f_v) {
 		cout << "action::init_matrix_group_strong_generators_builtin "
@@ -1108,19 +1108,19 @@ void action::init_matrix_group_strong_generators_builtin(
 		}
 }
 
-void action::init_permutation_group(INT degree, INT verbose_level)
+void action::init_permutation_group(int degree, int verbose_level)
 {
-	INT page_length_log = PAGE_LENGTH_LOG;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int page_length_log = PAGE_LENGTH_LOG;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	perm_group *P;
 	
 	if (f_v) {
 		cout << "action::init_permutation_group, degree=" << degree << endl;
 		}
-	sprintf(group_prefix, "Perm%ld", degree);
-	sprintf(label, "Perm%ld", degree);
-	sprintf(label_tex, "Perm%ld", degree);
+	sprintf(group_prefix, "Perm%d", degree);
+	sprintf(label, "Perm%d", degree);
+	sprintf(label_tex, "Perm%d", degree);
 	P = NEW_OBJECT(perm_group);
 	type_G = perm_group_t;
 	G.perm_grp = P;
@@ -1139,10 +1139,10 @@ void action::init_permutation_group(INT degree, INT verbose_level)
 	init_function_pointers_permutation_group();
 
 	
-	elt_size_in_INT = P->elt_size_INT;
+	elt_size_in_int = P->elt_size_int;
 	coded_elt_size_in_char = P->char_per_elt;
 	if (f_vv) {
-		cout << "elt_size_in_INT = " << elt_size_in_INT << endl;
+		cout << "elt_size_in_int = " << elt_size_in_int << endl;
 		cout << "coded_elt_size_in_char = " << coded_elt_size_in_char << endl;
 		}
 	allocate_element_data();
@@ -1160,24 +1160,24 @@ void action::init_permutation_group(INT degree, INT verbose_level)
 	
 }
 
-void action::init_permutation_group_from_generators(INT degree, 
-	INT f_target_go, longinteger_object &target_go, 
-	INT nb_gens, INT *gens, 
-	INT given_base_length, INT *given_base,
-	INT verbose_level)
+void action::init_permutation_group_from_generators(int degree, 
+	int f_target_go, longinteger_object &target_go, 
+	int nb_gens, int *gens, 
+	int given_base_length, int *given_base,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "action::init_permutation_group_from_generators "
 				"degree=" << degree << " nb_gens=" << nb_gens
 				<< " given_base_length=" << given_base_length << endl;
 		}
-	sprintf(group_prefix, "Perm%ld", degree);
-	sprintf(label, "Perm%ld", degree);
-	sprintf(label_tex, "Perm%ld", degree);
+	sprintf(group_prefix, "Perm%d", degree);
+	sprintf(label, "Perm%d", degree);
+	sprintf(label_tex, "Perm%d", degree);
 	if (f_vv) {
 		cout << "action::init_permutation_group_from_generators "
 				"the " << nb_gens << " generators are" << endl;
@@ -1207,7 +1207,7 @@ void action::init_permutation_group_from_generators(INT degree,
 		cout << "action::init_permutation_group_from_generators "
 				"calling allocate_base_data" << endl;
 		cout << "initial base:";
-		INT_vec_print(cout, given_base, given_base_length);
+		int_vec_print(cout, given_base, given_base_length);
 		cout << " of length " << given_base_length << endl;
 		}
 	allocate_base_data(given_base_length);
@@ -1284,22 +1284,22 @@ void action::init_permutation_group_from_generators(INT degree,
 		}
 }
 
-void action::init_affine_group(INT n, INT q, 
-	INT f_translations, 
-	INT f_semilinear, INT frobenius_power, 
-	INT f_multiplication, 
-	INT multiplication_order, 
-	INT verbose_level)
+void action::init_affine_group(int n, int q, 
+	int f_translations, 
+	int f_semilinear, int frobenius_power, 
+	int f_multiplication, 
+	int multiplication_order, 
+	int verbose_level)
 {
-	INT nb_gens, degree;
-	INT *gens;
-	INT given_base_length;
-	INT *given_base;
+	int nb_gens, degree;
+	int *gens;
+	int given_base_length;
+	int *given_base;
 	finite_field F;
 	longinteger_object go;
 	
-	sprintf(label, "AGL_%ld_%ld", n, q);
-	sprintf(label_tex, "AGL(%ld,%ld)", n, q);
+	sprintf(label, "AGL_%d_%d", n, q);
+	sprintf(label_tex, "AGL(%d,%d)", n, q);
 
 	F.init(q, verbose_level - 1);
 	
@@ -1316,38 +1316,38 @@ void action::init_affine_group(INT n, INT q,
 		given_base_length, given_base,
 		verbose_level);
 
-	FREE_INT(gens);
-	FREE_INT(given_base);
+	FREE_int(gens);
+	FREE_int(given_base);
 }
 
-void action::init_affine_grid_group(INT q1, INT q2, 
-	INT f_translations1, INT f_translations2, 
-	INT f_semilinear1, INT frobenius_power1, 
-	INT f_semilinear2, INT frobenius_power2, 
-	INT f_multiplication1, INT multiplication_order1, 
-	INT f_multiplication2, INT multiplication_order2, 
-	INT f_diagonal, 
-	INT verbose_level)
+void action::init_affine_grid_group(int q1, int q2, 
+	int f_translations1, int f_translations2, 
+	int f_semilinear1, int frobenius_power1, 
+	int f_semilinear2, int frobenius_power2, 
+	int f_multiplication1, int multiplication_order1, 
+	int f_multiplication2, int multiplication_order2, 
+	int f_diagonal, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT n = 1;
-	INT nb_gens1, degree1;
-	INT nb_gens2, degree2;
-	INT nb_gens3, degree3;
-	INT *gens1;
-	INT *gens2;
-	INT *gens3;
-	INT given_base_length1;
-	INT given_base_length2;
-	INT given_base_length3;
-	INT *given_base1;
-	INT *given_base2;
-	INT *given_base3;
+	int f_v = (verbose_level >= 1);
+	int n = 1;
+	int nb_gens1, degree1;
+	int nb_gens2, degree2;
+	int nb_gens3, degree3;
+	int *gens1;
+	int *gens2;
+	int *gens3;
+	int given_base_length1;
+	int given_base_length2;
+	int given_base_length3;
+	int *given_base1;
+	int *given_base2;
+	int *given_base3;
 	finite_field F1, F2;
 	longinteger_object go;
 	
-	sprintf(label, "AGL_1_%ld_x_AGL_1_%ld", q1, q2);
-	sprintf(label_tex, "AGL(1,%ld) x AGL(1,%ld)", q1, q2);
+	sprintf(label, "AGL_1_%d_x_AGL_1_%d", q1, q2);
+	sprintf(label_tex, "AGL(1,%d) x AGL(1,%d)", q1, q2);
 
 	F1.init(q1, verbose_level - 1);
 	F2.init(q2, verbose_level - 1);
@@ -1395,35 +1395,35 @@ void action::init_affine_grid_group(INT q1, INT q2,
 		given_base_length3, given_base3,
 		verbose_level);
 	if (f_v) {
-		cout << "elt_size_in_INT=" << elt_size_in_INT << endl;
+		cout << "elt_size_in_int=" << elt_size_in_int << endl;
 		}
 
-	FREE_INT(gens1);
-	FREE_INT(gens2);
-	FREE_INT(gens3);
-	FREE_INT(given_base1);
-	FREE_INT(given_base2);
-	FREE_INT(given_base3);
+	FREE_int(gens1);
+	FREE_int(gens2);
+	FREE_int(gens3);
+	FREE_int(given_base1);
+	FREE_int(given_base2);
+	FREE_int(given_base3);
 }
 
-void action::init_symmetric_group(INT degree, INT verbose_level)
+void action::init_symmetric_group(int degree, int verbose_level)
 {
-	INT nb_gens, *gens;
-	INT given_base_length, *given_base;
-	INT i, j;
+	int nb_gens, *gens;
+	int given_base_length, *given_base;
+	int i, j;
 	longinteger_object go;
 	longinteger_domain D;
 	
-	sprintf(label, "Sym_%ld", degree);
-	sprintf(label_tex, "Sym(%ld)", degree);
+	sprintf(label, "Sym_%d", degree);
+	sprintf(label_tex, "Sym(%d)", degree);
 
 	D.factorial(go, degree);
 
 	make_element_size = degree;
 	nb_gens = degree - 1;
 	given_base_length = degree - 1;
-	gens = NEW_INT(nb_gens * degree);
-	given_base = NEW_INT(given_base_length);
+	gens = NEW_int(nb_gens * degree);
+	given_base = NEW_int(given_base_length);
 	for (i = 0; i < nb_gens; i++) {
 		for (j = 0; j < degree; j++) {
 			gens[i * degree + j] = j;
@@ -1439,8 +1439,8 @@ void action::init_symmetric_group(INT degree, INT verbose_level)
 		nb_gens, gens, 
 		given_base_length, given_base,
 		verbose_level);
-	FREE_INT(gens);
-	FREE_INT(given_base);
+	FREE_int(gens);
+	FREE_int(given_base);
 }
 
 void action::null_function_pointers()
@@ -1606,9 +1606,9 @@ void action::init_function_pointers_induced_action()
 	ptr_print_point = induced_action_print_point;
 }
 
-void action::create_sims(INT verbose_level)
+void action::create_sims(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	sims *S;
 	
 	if (f_v) {
@@ -1630,15 +1630,15 @@ void action::create_sims(INT verbose_level)
 
 
 void action::create_orthogonal_group(action *subaction, 
-	INT f_has_target_group_order, longinteger_object &target_go, 
-	void (* callback_choose_random_generator)(INT iteration, 
-		INT *Elt, void *data, INT verbose_level), 
-	INT verbose_level)
+	int f_has_target_group_order, longinteger_object &target_go, 
+	void (* callback_choose_random_generator)(int iteration, 
+		int *Elt, void *data, int verbose_level), 
+	int verbose_level)
 {
 	//verbose_level = 10;
 	
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "action::create_orthogonal_group "

@@ -21,7 +21,7 @@ union_find::~union_find()
 void union_find::freeself()
 {
 	if (prev) {
-		FREE_INT(prev);
+		FREE_int(prev);
 		}
 	null();
 }
@@ -31,25 +31,25 @@ void union_find::null()
 	prev = NULL;
 }
 
-void union_find::init(action *A, INT verbose_level)
+void union_find::init(action *A, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "union_find::init action=" << A->label << endl;
 		}
 	freeself();
 	union_find::A = A;
-	prev = NEW_INT(A->degree);
+	prev = NEW_int(A->degree);
 	for (i = 0; i < A->degree; i++) {
 		prev[i] = i;
 		}
 }
 
-INT union_find::ancestor(INT i)
+int union_find::ancestor(int i)
 {
-	INT j;
+	int j;
 	
 	while ((j = prev[i]) != i) {
 		i = j;
@@ -57,9 +57,9 @@ INT union_find::ancestor(INT i)
 	return i;
 }
 
-INT union_find::count_ancestors()
+int union_find::count_ancestors()
 {
-	INT i, nb;
+	int i, nb;
 
 	nb = 0;
 	for (i = 0; i < A->degree; i++) {
@@ -70,9 +70,9 @@ INT union_find::count_ancestors()
 	
 }
 
-INT union_find::count_ancestors_above(INT i0)
+int union_find::count_ancestors_above(int i0)
 {
-	INT i, nb;
+	int i, nb;
 
 	nb = 0;
 	for (i = i0; i < A->degree; i++) {
@@ -83,9 +83,9 @@ INT union_find::count_ancestors_above(INT i0)
 	
 }
 
-void union_find::do_union(INT a, INT b)
+void union_find::do_union(int a, int b)
 {
-	INT A, B;
+	int A, B;
 
 	A = ancestor(a);
 	B = ancestor(b);
@@ -103,7 +103,7 @@ void union_find::do_union(INT a, INT b)
 
 void union_find::print()
 {
-	INT i, j;
+	int i, j;
 	
 	cout << "i : ancestor(i) : prev[i]" << endl;
 	for (i = 0; i < A->degree; i++) {
@@ -112,11 +112,11 @@ void union_find::print()
 		}
 }
 	
-void union_find::add_generators(vector_ge *gens, INT verbose_level)
+void union_find::add_generators(vector_ge *gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 
 	if (f_v) {
 		cout << "union_find::add_generators" << endl;
@@ -140,14 +140,14 @@ void union_find::add_generators(vector_ge *gens, INT verbose_level)
 		}
 }
 
-void union_find::add_generator(INT *Elt, INT verbose_level)
+void union_find::add_generator(int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT *f_seen;
-	INT i, i0, j, k;
-	INT cnt = 0;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int *f_seen;
+	int i, i0, j, k;
+	int cnt = 0;
 
 	if (f_v) {
 		cout << "union_find::add_generator" << endl;
@@ -161,7 +161,7 @@ void union_find::add_generator(INT *Elt, INT verbose_level)
 		cout << "union_find::add_generator degree=" << A->degree << endl;
 		print();
 		}
-	f_seen = NEW_INT(A->degree);
+	f_seen = NEW_int(A->degree);
 	for (i = 0; i < A->degree; i++) {
 		f_seen[i] = FALSE;
 		}
@@ -195,7 +195,7 @@ void union_find::add_generator(INT *Elt, INT verbose_level)
 			j = k;
 			}
 		}
-	FREE_INT(f_seen);
+	FREE_int(f_seen);
 	if (f_vv) {
 		cout << "union_find::add_generator after:" << endl;
 		print();

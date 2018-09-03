@@ -16,11 +16,11 @@
 void test_unipoly()
 {
 	finite_field GFp;
-	INT p = 2;
+	int p = 2;
 	unipoly_object m, a, b, c;
 	unipoly_object elts[4];
-	INT i, j;
-	INT verbose_level = 0;
+	int i, j;
+	int verbose_level = 0;
 	
 	GFp.init(p, verbose_level);
 	unipoly_domain FX(&GFp);
@@ -57,8 +57,8 @@ void test_unipoly()
 void test_unipoly2()
 {
 	finite_field Fq;
-	INT q = 4, p = 2, i;
-	INT verbose_level = 0;
+	int q = 4, p = 2, i;
+	int verbose_level = 0;
 	
 	Fq.init(q, verbose_level);
 	unipoly_domain FX(&Fq);
@@ -74,9 +74,9 @@ void test_unipoly2()
 	
 }
 
-char *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT verbose_level)
+char *search_for_primitive_polynomial_of_given_degree(int p, int degree, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	finite_field Fp;
 	
 	Fp.init(p, 0 /*verbose_level*/);
@@ -94,7 +94,7 @@ char *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT ver
 	FX.rank_longinteger(m, rk);
 	
 	char *s;
-	INT i, j;
+	int i, j;
 	if (f_v) {
 		cout << "found a polynomial. It's rank is " << rk << endl;
 		}
@@ -114,10 +114,10 @@ char *search_for_primitive_polynomial_of_given_degree(INT p, INT degree, INT ver
 
 
 void search_for_primitive_polynomials(
-		INT p_min, INT p_max, INT n_min, INT n_max, INT verbose_level)
+		int p_min, int p_max, int n_min, int n_max, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT d, p;
+	int f_v = (verbose_level >= 1);
+	int d, p;
 	
 
 	longinteger_f_print_scientific = FALSE;
@@ -163,17 +163,17 @@ void search_for_primitive_polynomials(
 }
 
 
-void make_linear_irreducible_polynomials(INT q, INT &nb,
-		INT *&table, INT verbose_level)
+void make_linear_irreducible_polynomials(int q, int &nb,
+		int *&table, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	finite_field F;
 	F.init(q, 0 /*verbose_level*/);
 #if 0
 	if (f_no_eigenvalue_one) {
 		nb = q - 2;
-		table = NEW_INT(nb * 2);
+		table = NEW_int(nb * 2);
 		for (i = 0; i < nb; i++) {
 			table[i * 2 + 0] = F.negate(i + 2);
 			table[i * 2 + 1] = 1;
@@ -182,7 +182,7 @@ void make_linear_irreducible_polynomials(INT q, INT &nb,
 	else {
 #endif
 		nb = q - 1;
-		table = NEW_INT(nb * 2);
+		table = NEW_int(nb * 2);
 		for (i = 0; i < nb; i++) {
 			table[i * 2 + 0] = F.negate(i + 1);
 			table[i * 2 + 1] = 1;
@@ -194,12 +194,12 @@ void make_linear_irreducible_polynomials(INT q, INT &nb,
 
 
 
-void gl_random_matrix(INT k, INT q, INT verbose_level)
+void gl_random_matrix(int k, int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 1);
-	INT *M;
-	INT *M2;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+	int *M;
+	int *M2;
 	finite_field F;
 	unipoly_object char_poly;
 
@@ -207,13 +207,13 @@ void gl_random_matrix(INT k, INT q, INT verbose_level)
 		cout << "gl_random_matrix" << endl;
 		}
 	F.init(q, 0 /*verbose_level*/);
-	M = NEW_INT(k * k);
-	M2 = NEW_INT(k * k);
+	M = NEW_int(k * k);
+	M2 = NEW_int(k * k);
 	
 	F.random_invertible_matrix(M, k, verbose_level - 2);
 
 	cout << "Random invertible matrix:" << endl;
-	INT_matrix_print(M, k, k);
+	int_matrix_print(M, k, k);
 
 	
 	{
@@ -231,21 +231,21 @@ void gl_random_matrix(INT k, INT q, INT verbose_level)
 
 	U.substitute_matrix_in_polynomial(char_poly, M, M2, k, verbose_level);
 	cout << "After substitution, the matrix is " << endl;
-	INT_matrix_print(M2, k, k);
+	int_matrix_print(M2, k, k);
 
 	U.delete_object(char_poly);
 
 	}
-	FREE_INT(M);
-	FREE_INT(M2);
+	FREE_int(M);
+	FREE_int(M2);
 
 }
 
 void save_as_colored_graph_easy(const char *fname_base,
-		INT n, INT *Adj, INT verbose_level)
+		int n, int *Adj, int verbose_level)
 {
 	char fname[1000];
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "save_as_colored_graph_easy" << endl;
@@ -267,15 +267,15 @@ void save_as_colored_graph_easy(const char *fname_base,
 }
 
 void save_colored_graph(const char *fname,
-	INT nb_vertices, INT nb_colors,
-	INT *points, INT *point_color, 
-	INT *data, INT data_sz, 
-	uchar *bitvector_adjacency, INT bitvector_length,
-	INT verbose_level)
+	int nb_vertices, int nb_colors,
+	int *points, int *point_color, 
+	int *data, int data_sz, 
+	uchar *bitvector_adjacency, int bitvector_length,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
-	INT i;
+	int i;
 
 	if (f_v) {
 		cout << "save_colored_graph" << endl;
@@ -283,27 +283,27 @@ void save_colored_graph(const char *fname,
 		cout << "save_colored_graph nb_vertices=" << nb_vertices << endl;
 		cout << "save_colored_graph nb_colors=" << nb_colors << endl;
 		//cout << "points:";
-		//INT_vec_print(cout, points, nb_vertices);
+		//int_vec_print(cout, points, nb_vertices);
 		//cout << endl;
 		}
 
 	
 	fp = fopen(fname, "wb");
 
-	fwrite_INT4(fp, nb_vertices);
-	fwrite_INT4(fp, nb_colors);
-	fwrite_INT4(fp, data_sz);
+	fwrite_int4(fp, nb_vertices);
+	fwrite_int4(fp, nb_colors);
+	fwrite_int4(fp, data_sz);
 	for (i = 0; i < data_sz; i++) {
-		fwrite_INT4(fp, data[i]);
+		fwrite_int4(fp, data[i]);
 		}
 	for (i = 0; i < nb_vertices; i++) {
 		if (points) {
-			fwrite_INT4(fp, points[i]);
+			fwrite_int4(fp, points[i]);
 			}
 		else {
-			fwrite_INT4(fp, 0);
+			fwrite_int4(fp, 0);
 			}
-		fwrite_INT4(fp, point_color[i]);
+		fwrite_int4(fp, point_color[i]);
 		}
 	fwrite_uchars(fp, bitvector_adjacency, bitvector_length);
 	fclose(fp);
@@ -316,23 +316,23 @@ void save_colored_graph(const char *fname,
 
 
 void load_colored_graph(const char *fname,
-	INT &nb_vertices, INT &nb_colors,
-	INT *&vertex_labels, INT *&vertex_colors, 
-	INT *&user_data, INT &user_data_size, 
-	uchar *&bitvector_adjacency, INT &bitvector_length,
-	INT verbose_level)
+	int &nb_vertices, int &nb_colors,
+	int *&vertex_labels, int *&vertex_colors, 
+	int *&user_data, int &user_data_size, 
+	uchar *&bitvector_adjacency, int &bitvector_length,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	FILE *fp;
-	INT i, L;
+	int i, L;
 
 	if (f_v) {
 		cout << "load_colored_graph" << endl;
 		}
 	fp = fopen(fname, "rb");
 
-	nb_vertices = fread_INT4(fp);
-	nb_colors = fread_INT4(fp);
+	nb_vertices = fread_int4(fp);
+	nb_colors = fread_int4(fp);
 	if (f_v) {
 		cout << "load_colored_graph nb_vertices=" << nb_vertices
 			<< " nb_colors=" << nb_colors << endl;
@@ -347,19 +347,19 @@ void load_colored_graph(const char *fname,
 		cout << "load_colored_graph user_data_size="
 				<< user_data_size << endl;
 		}
-	user_data_size = fread_INT4(fp);
-	user_data = NEW_INT(user_data_size);
+	user_data_size = fread_int4(fp);
+	user_data = NEW_int(user_data_size);
 	
 	for (i = 0; i < user_data_size; i++) {
-		user_data[i] = fread_INT4(fp);
+		user_data[i] = fread_int4(fp);
 		}
 
-	vertex_labels = NEW_INT(nb_vertices);
-	vertex_colors = NEW_INT(nb_vertices);
+	vertex_labels = NEW_int(nb_vertices);
+	vertex_colors = NEW_int(nb_vertices);
 	
 	for (i = 0; i < nb_vertices; i++) {
-		vertex_labels[i] = fread_INT4(fp);
-		vertex_colors[i] = fread_INT4(fp);
+		vertex_labels[i] = fread_int4(fp);
+		vertex_colors[i] = fread_int4(fp);
 		if (vertex_colors[i] >= nb_colors) {
 			cout << "colored_graph::load" << endl;
 			cout << "vertex_colors[i] >= nb_colors" << endl;
@@ -380,9 +380,9 @@ void load_colored_graph(const char *fname,
 		}
 }
 
-INT is_diagonal_matrix(INT *A, INT n)
+int is_diagonal_matrix(int *A, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -399,25 +399,25 @@ INT is_diagonal_matrix(INT *A, INT n)
 	return TRUE;
 }
 
-INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk, 
-	INT *&colors, INT &nb_colors, INT verbose_level)
+int is_association_scheme(int *color_graph, int n, int *&Pijk, 
+	int *&colors, int &nb_colors, int verbose_level)
 // color_graph[n * n]
 // added Dec 22, 2010.
 //Originally in BLT_ANALYZE/analyze_plane_invariant.C
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT N;
-	INT *M1;
-	INT k, i, j;
-	INT ret = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int N;
+	int *M1;
+	int k, i, j;
+	int ret = FALSE;
 	
 	if (f_v) {
 		cout << "is_association_scheme" << endl;
 		}
 	N = (n * (n - 1)) / 2;
-	M1 = NEW_INT(N);
+	M1 = NEW_int(N);
 	k = 0;
 	for (i = 0; i < n; i++) {
 		for (j = i + 1; j < n; j++) {
@@ -434,7 +434,7 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 
 	Cl.init(M1, N, FALSE, 0);
 	nb_colors = Cl.nb_types + 1;
-	colors = NEW_INT(nb_colors);
+	colors = NEW_int(nb_colors);
 	colors[0] = color_graph[0];
 	for (i = 0; i < Cl.nb_types; i++) {
 		colors[i + 1] = Cl.data_sorted[Cl.type_first[i]];
@@ -442,16 +442,16 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 
 	if (f_vv) {
 		cout << "colors (the 0-th color is the diagonal color): ";
-		INT_vec_print(cout, colors, nb_colors);
+		int_vec_print(cout, colors, nb_colors);
 		cout << endl;
 		}
 
-	INT C = nb_colors;
-	INT *M = color_graph;
-	INT pijk, pijk1, u, v, w, u0 = 0, v0 = 0;
+	int C = nb_colors;
+	int *M = color_graph;
+	int pijk, pijk1, u, v, w, u0 = 0, v0 = 0;
 	
-	Pijk = NEW_INT(C * C * C);
-	INT_vec_zero(Pijk, C * C * C);
+	Pijk = NEW_int(C * C * C);
+	int_vec_zero(Pijk, C * C * C);
 	for (k = 0; k < C; k++) {
 		for (i = 0; i < C; i++) {
 			for (j = 0; j < C; j++) {
@@ -489,8 +489,8 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 							}
 						else {
 							if (pijk1 != pijk) {
-								//FREE_INT(Pijk);
-								//FREE_INT(colors);
+								//FREE_int(Pijk);
+								//FREE_int(colors);
 
 								cout << "not an association scheme" << endl;
 								cout << "k=" << k << endl;
@@ -525,7 +525,7 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 			}
 
 		if (C == 3 && colors[1] == 0 && colors[2] == 1) {
-			INT k, lambda, mu;
+			int k, lambda, mu;
 
 			k = Pijk[2 * C * C + 2 * C + 0]; // p220;
 			lambda = Pijk[2 * C * C + 2 * C + 2]; // p222;
@@ -539,19 +539,19 @@ INT is_association_scheme(INT *color_graph, INT n, INT *&Pijk,
 	
 
 done:
-	FREE_INT(M1);
+	FREE_int(M1);
 	return ret;
 }
 
-void print_Pijk(INT *Pijk, INT nb_colors)
+void print_Pijk(int *Pijk, int nb_colors)
 {
-	INT i, j, k;
-	INT C = nb_colors;
+	int i, j, k;
+	int C = nb_colors;
 	
 	for (k = 0; k < C; k++) {
-		INT *Mtx;
+		int *Mtx;
 
-		Mtx = NEW_INT(C * C);
+		Mtx = NEW_int(C * C);
 		for (i = 0; i < C; i++) {
 			for (j = 0; j < C; j++) {
 				Mtx[i * C + j] = Pijk[i * C * C + j * C + k];
@@ -559,7 +559,7 @@ void print_Pijk(INT *Pijk, INT nb_colors)
 			}
 		cout << "P^{(" << k << ")}=(p_{i,j," << k << "})_{i,j}:" << endl;
 		print_integer_matrix_width(cout, Mtx, C, C, C, 3);
-		FREE_INT(Mtx);
+		FREE_int(Mtx);
 		}
 }
 
@@ -567,25 +567,25 @@ void print_Pijk(INT *Pijk, INT nb_colors)
 
 
 void write_colored_graph(ofstream &ost, char *label, 
-	INT point_offset, 
-	INT nb_points, 
-	INT f_has_adjacency_matrix, INT *Adj, 
-	INT f_has_adjacency_list, INT *adj_list, 
-	INT f_has_bitvector, uchar *bitvector_adjacency, 
-	INT f_has_is_adjacent_callback, 
-	INT (*is_adjacent_callback)(INT i, INT j, void *data), 
+	int point_offset, 
+	int nb_points, 
+	int f_has_adjacency_matrix, int *Adj, 
+	int f_has_adjacency_list, int *adj_list, 
+	int f_has_bitvector, uchar *bitvector_adjacency, 
+	int f_has_is_adjacent_callback, 
+	int (*is_adjacent_callback)(int i, int j, void *data), 
 	void *is_adjacent_callback_data, 
-	INT f_colors, INT nb_colors, INT *point_color, 
-	INT f_point_labels, INT *point_label)
+	int f_colors, int nb_colors, int *point_color, 
+	int f_point_labels, int *point_label)
 {
-	INT i, j, d, aij = 0;
+	int i, j, d, aij = 0;
     int w;
 	
 	cout << "write_graph " << label 
 		<< " with " << nb_points 
 		<< " points, point_offset=" <<  point_offset
 		<< endl;
-	w = (int) INT_log10(nb_points);
+	w = (int) int_log10(nb_points);
 	cout << "w=" << w << endl;
 	ost << "<GRAPH label=\"" << label << "\" num_pts=\"" << nb_points 
 		<< "\" f_has_colors=\"" <<  f_colors
@@ -604,7 +604,7 @@ void write_colored_graph(ofstream &ost, char *label,
 				aij = Adj[i * nb_points + j];
 				}
 			else if (f_has_adjacency_list) {
-				INT h;
+				int h;
 				if (i < j) {
 					h = ij2k(i, j, nb_points);
 					}
@@ -614,7 +614,7 @@ void write_colored_graph(ofstream &ost, char *label,
 				aij = adj_list[h];
 				}
 			else if (f_has_bitvector) {
-				INT h;
+				int h;
 				if (i < j) {
 					h = ij2k(i, j, nb_points);
 					}
@@ -645,7 +645,7 @@ void write_colored_graph(ofstream &ost, char *label,
 				aij = Adj[i * nb_points + j];
 				}
 			else if (f_has_adjacency_list) {
-				INT h;
+				int h;
 				if (i < j) {
 					h = ij2k(i, j, nb_points);
 					}
@@ -655,7 +655,7 @@ void write_colored_graph(ofstream &ost, char *label,
 				aij = adj_list[h];
 				}
 			else if (f_has_bitvector) {
-				INT h;
+				int h;
 				if (i < j) {
 					h = ij2k(i, j, nb_points);
 					}
@@ -725,7 +725,7 @@ int str2int(string &str)
 }
 
 void print_longinteger_after_multiplying(
-		ostream &ost, INT *factors, INT len)
+		ostream &ost, int *factors, int len)
 {
 	longinteger_domain D;
 	longinteger_object a;
@@ -735,19 +735,19 @@ void print_longinteger_after_multiplying(
 }
 
 void andre_preimage(projective_space *P2, projective_space *P4, 
-	INT *set2, INT sz2, INT *set4, INT &sz4, INT verbose_level)
+	int *set2, int sz2, int *set4, int &sz4, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	finite_field *FQ;
 	finite_field *Fq;
-	INT /*Q,*/ q;
-	INT *v, *w1, *w2, *w3, *v2;
-	INT *components;
-	INT *embedding;
-	INT *pair_embedding;
-	INT i, h, k, a, a0, a1, b, b0, b1, e, alpha;
+	int /*Q,*/ q;
+	int *v, *w1, *w2, *w3, *v2;
+	int *components;
+	int *embedding;
+	int *pair_embedding;
+	int i, h, k, a, a0, a1, b, b0, b1, e, alpha;
 
 	if (f_v) {
 		cout << "andre_preimage" << endl;
@@ -764,11 +764,11 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 	Fq = P4->F;
 	q = Fq->q;
 	
-	v = NEW_INT(3);
-	w1 = NEW_INT(5);
-	w2 = NEW_INT(5);
-	w3 = NEW_INT(5);
-	v2 = NEW_INT(2);
+	v = NEW_int(3);
+	w1 = NEW_int(5);
+	w2 = NEW_int(5);
+	w3 = NEW_int(5);
+	v2 = NEW_int(2);
 	e = P2->F->e >> 1;
 	if (f_vv) {
 		cout << "e=" << e << endl;
@@ -805,7 +805,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		P2->unrank_point(v, set2[i]);
 		PG_element_normalize(*FQ, v, 1, 3);
 		if (f_vv) {
-			INT_vec_print(cout, v, 3);
+			int_vec_print(cout, v, 3);
 			cout << " becomes ";
 			}
 
@@ -843,9 +843,9 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 				}
 			if (FALSE) {
 				cout << "w1=";
-				INT_vec_print(cout, w1, 4);
+				int_vec_print(cout, w1, 4);
 				cout << "w2=";
-				INT_vec_print(cout, w2, 4);
+				int_vec_print(cout, w2, 4);
 				cout << endl;
 				}
 			
@@ -859,7 +859,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 				PG_element_unrank_modified(*Fq, v2, 1, 2, h);
 				if (FALSE) {
 					cout << "v2=";
-					INT_vec_print(cout, v2, 2);
+					int_vec_print(cout, v2, 2);
 					cout << " : ";
 					}
 				for (k = 0; k < 4; k++) {
@@ -869,7 +869,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 				w3[4] = 0;
 				if (f_vv) {
 					cout << " ";
-					INT_vec_print(cout, w3, 5);
+					int_vec_print(cout, w3, 5);
 					}
 				a = P4->rank_point(w3);
 				if (f_vv) {
@@ -895,7 +895,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 			w1[4] = 1;
 			if (f_vv) {
 				//cout << "w1=";
-				INT_vec_print(cout, w1, 5);
+				int_vec_print(cout, w1, 5);
 				}
 			a = P4->rank_point(w1);
 			if (f_vv) {
@@ -906,7 +906,7 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		}
 	if (f_v) {
 		cout << "we found " << sz4 << " points:" << endl;	
-		INT_vec_print(cout, set4, sz4);
+		int_vec_print(cout, set4, sz4);
 		cout << endl;
 		P4->print_set(set4, sz4);
 		for (i = 0; i < sz4; i++) {
@@ -916,33 +916,33 @@ void andre_preimage(projective_space *P2, projective_space *P4,
 		}
 
 
-	FREE_INT(components);
-	FREE_INT(embedding);
-	FREE_INT(pair_embedding);
+	FREE_int(components);
+	FREE_int(embedding);
+	FREE_int(pair_embedding);
 	if (f_v) {
 		cout << "andre_preimage done" << endl;
 		}
 }
 
-void determine_conic(INT q, const char *override_poly,
-		INT *input_pts, INT nb_pts, INT verbose_level)
+void determine_conic(int q, const char *override_poly,
+		int *input_pts, int nb_pts, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	finite_field F;
 	projective_space *P;
-	//INT f_basis = TRUE;
-	//INT f_semilinear = TRUE;
-	//INT f_with_group = FALSE;
-	INT v[3];
-	INT len = 3;
-	INT six_coeffs[6];
-	INT i;
+	//int f_basis = TRUE;
+	//int f_semilinear = TRUE;
+	//int f_with_group = FALSE;
+	int v[3];
+	int len = 3;
+	int six_coeffs[6];
+	int i;
 
 	if (f_v) {
 		cout << "determine_conic q=" << q << endl;
 		cout << "input_pts: ";
-		INT_vec_print(cout, input_pts, nb_pts);
+		int_vec_print(cout, input_pts, nb_pts);
 		cout << endl;
 		}
 	F.init_override_polynomial(q, override_poly, verbose_level);
@@ -963,24 +963,24 @@ void determine_conic(INT q, const char *override_poly,
 
 	if (f_v) {
 		cout << "determine_conic the six coefficients are ";
-		INT_vec_print(cout, six_coeffs, 6);
+		int_vec_print(cout, six_coeffs, 6);
 		cout << endl;
 		}
 	
-	INT points[1000];
-	INT nb_points;
-	//INT v[3];
+	int points[1000];
+	int nb_points;
+	//int v[3];
 	
 	P->conic_points(input_pts, six_coeffs,
 			points, nb_points, verbose_level - 2);
 	if (f_v) {
 		cout << "the " << nb_points << " conic points are: ";
-		INT_vec_print(cout, points, nb_points);
+		int_vec_print(cout, points, nb_points);
 		cout << endl;
 		for (i = 0; i < nb_points; i++) {
 			P->unrank_point(v, points[i]);
 			cout << i << " : " << points[i] << " : ";
-			INT_vec_print(cout, v, 3);
+			int_vec_print(cout, v, 3);
 			cout << endl;
 			}
 		}
@@ -988,25 +988,25 @@ void determine_conic(INT q, const char *override_poly,
 }
 
 void compute_decomposition_of_graph_wrt_partition(
-	INT *Adj, INT N,
-	INT *first, INT *len, INT nb_parts, INT *&R,
-	INT verbose_level)
+	int *Adj, int N,
+	int *first, int *len, int nb_parts, int *&R,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT I, J, i, j, f1, l1, f2, l2, r0 = 0, r;
+	int f_v = (verbose_level >= 1);
+	int I, J, i, j, f1, l1, f2, l2, r0 = 0, r;
 
 	if (f_v) {
 		cout << "compute_decomposition_of_graph_wrt_partition" << endl;
 		cout << "The partition is:" << endl;
 		cout << "first = ";
-		INT_vec_print(cout, first, nb_parts);
+		int_vec_print(cout, first, nb_parts);
 		cout << endl;
 		cout << "len = ";
-		INT_vec_print(cout, len, nb_parts);
+		int_vec_print(cout, len, nb_parts);
 		cout << endl;
 		}
-	R = NEW_INT(nb_parts * nb_parts);
-	INT_vec_zero(R, nb_parts * nb_parts);
+	R = NEW_int(nb_parts * nb_parts);
+	int_vec_zero(R, nb_parts * nb_parts);
 	for (I = 0; I < nb_parts; I++) {
 		f1 = first[I];
 		l1 = len[I];
@@ -1043,7 +1043,7 @@ void compute_decomposition_of_graph_wrt_partition(
 		}
 }
 
-void INT_vec_print_classified(INT *v, INT len)
+void int_vec_print_classified(int *v, int len)
 {
 	classify C;
 
@@ -1053,15 +1053,15 @@ void INT_vec_print_classified(INT *v, INT len)
 }
 
 void create_Levi_graph_from_incidence_matrix(
-	colored_graph *&CG, INT *M, INT nb_rows, INT nb_cols,
-	INT f_point_labels, INT *point_labels,
-	INT verbose_level)
+	colored_graph *&CG, int *M, int nb_rows, int nb_cols,
+	int f_point_labels, int *point_labels,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	uchar *bitvector_adjacency;
-	INT L, /*bitvector_length_in_bits,*/ bitvector_length;
-	INT i, j, k, r, c;
-	INT N;
+	int L, /*bitvector_length_in_bits,*/ bitvector_length;
+	int i, j, k, r, c;
+	int N;
 	
 	if (f_v) {
 		cout << "create_Levi_graph_from_incidence_matrix" << endl;

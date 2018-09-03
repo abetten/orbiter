@@ -35,7 +35,7 @@ void orbit_rep::null()
 void orbit_rep::freeself()
 {
 	if (rep) {
-		FREE_INT(rep);
+		FREE_int(rep);
 		}
 	if (Stab) {
 		FREE_OBJECT(Stab);
@@ -44,7 +44,7 @@ void orbit_rep::freeself()
 		FREE_OBJECT(Strong_gens);
 		}
 	if (candidates) {
-		FREE_INT(candidates);
+		FREE_int(candidates);
 		}
 	if (stab_go) {
 		FREE_OBJECT(stab_go);
@@ -54,16 +54,16 @@ void orbit_rep::freeself()
 
 void orbit_rep::init_from_file(
 	action *A, char *prefix,
-	INT level, INT orbit_at_level, INT level_of_candidates_file, 
-	void (*early_test_func_callback)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level), 
+	int level, int orbit_at_level, int level_of_candidates_file, 
+	void (*early_test_func_callback)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level), 
 	void *early_test_func_callback_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rep_sz;
+	int f_v = (verbose_level >= 1);
+	int rep_sz;
 	
 	if (f_v) {
 		cout << "orbit_rep::init_from_file orbit_at_level="

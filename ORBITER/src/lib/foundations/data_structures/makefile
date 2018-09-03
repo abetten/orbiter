@@ -6,8 +6,8 @@ LIB =
 LFLAGS = -lm
 
 MODULES = \
-	INT_matrix.o \
-	INT_vector.o \
+	int_matrix.o \
+	int_vector.o \
 	data_file.o \
 	fancy_set.o \
 	partitionstack.o \

@@ -12,17 +12,17 @@
 
 
 int main(int argc, const char **argv);
-void create_group_arcs8(INT q, INT verbose_level);
+void create_group_arcs8(int q, int verbose_level);
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT f_q = TRUE;
-	INT q = 0;
+	int verbose_level = 0;
+	int f_q = TRUE;
+	int q = 0;
 	
 
 
-	INT i;
+	int i;
 
 	cout << argv[0] << endl;
 	for (i = 1; i < argc; i++) {
@@ -47,22 +47,22 @@ int main(int argc, const char **argv)
 
 }
 
-void create_group_arcs8(INT q, INT verbose_level)
+void create_group_arcs8(int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	// created with -poly 11
 
-	//INT arc_8_nb_reps = 1;
-	INT arc_8_size = 10;
-	INT arc_8_reps[] = {
+	//int arc_8_nb_reps = 1;
+	int arc_8_size = 10;
+	int arc_8_reps[] = {
 		0, 1, 2, 3, 28, 38, 43, 55, 64, 69, 
 	};
 	const char *arc_8_stab_order[] = {
 		"1512",
 	};
-	INT arc_8_make_element_size = 10;
-	INT arc_8_stab_gens[] = {
+	int arc_8_make_element_size = 10;
+	int arc_8_stab_gens[] = {
 		4, 0, 0, 0, 1, 0, 0, 0, 5, 2, 
 		4, 0, 0, 0, 3, 0, 4, 3, 6, 2, 
 		1, 0, 0, 6, 5, 2, 7, 5, 3, 1, 
@@ -70,8 +70,8 @@ void create_group_arcs8(INT q, INT verbose_level)
 		1, 5, 4, 5, 2, 4, 1, 2, 5, 0, 
 		2, 5, 1, 0, 3, 0, 7, 7, 7, 1, 
 	};
-	//INT arc_8_stab_gens_fst[] = { 0};
-	INT arc_8_stab_gens_len[] = { 6};
+	//int arc_8_stab_gens_fst[] = { 0};
+	int arc_8_stab_gens_len[] = { 6};
 
 	finite_field *F;
 	action *A;
@@ -107,10 +107,10 @@ void create_group_arcs8(INT q, INT verbose_level)
 
 	sims *Aut;
 	longinteger_object go;
-	INT i, j, o, cnt, nb_zero, nb_zero_max;
-	INT *Elt;
+	int i, j, o, cnt, nb_zero, nb_zero_max;
+	int *Elt;
 
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 
 	Aut = SaS->Strong_gens->create_sims(verbose_level);
 	cout << "group elements of order 9:" << endl;
@@ -119,12 +119,12 @@ void create_group_arcs8(INT q, INT verbose_level)
 	Aut->group_order(go);
 	cnt = 0;
 	nb_zero_max = 0;
-	for (i = 0; i < go.as_INT(); i++) {
-		Aut->element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		Aut->element_unrank_int(i, Elt);
 		o = A->element_order(Elt);
 		if (o == 9) {
 #if 0
-			cout << "Element " << setw(5) << i << " / " << go.as_INT() << endl;
+			cout << "Element " << setw(5) << i << " / " << go.as_int() << endl;
 			A->element_print(Elt, cout);
 			cout << endl;
 #endif
@@ -142,8 +142,8 @@ void create_group_arcs8(INT q, INT verbose_level)
 		}
 	cout << "We found " << cnt << " group elements of order 9. nb_zero_max = " << nb_zero_max << endl;
 
-	for (i = 0; i < go.as_INT(); i++) {
-		Aut->element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		Aut->element_unrank_int(i, Elt);
 		o = A->element_order(Elt);
 		if (o == 9) {
 			nb_zero = 0;
@@ -153,7 +153,7 @@ void create_group_arcs8(INT q, INT verbose_level)
 					}
 				}
 			if (nb_zero == nb_zero_max) {
-				cout << "Element " << setw(5) << i << " / " << go.as_INT() << endl;
+				cout << "Element " << setw(5) << i << " / " << go.as_int() << endl;
 				A->element_print(Elt, cout);
 				A->element_print_as_permutation(Elt, cout);
 				cout << endl;
@@ -161,7 +161,7 @@ void create_group_arcs8(INT q, INT verbose_level)
 			}
 		}
 
-	INT Q;
+	int Q;
 	finite_field *FQ;
 	subfield_structure *Sub;
 
@@ -182,11 +182,11 @@ void create_group_arcs8(INT q, INT verbose_level)
 		cout << "linear_set::init creating subfield structure done" << endl;
 		}
 	
-	INT idx;
+	int idx;
 	
 	idx = 1458;
-	Aut->element_unrank_INT(idx, Elt);
-	cout << "Element " << setw(5) << idx << " / " << go.as_INT() << endl;
+	Aut->element_unrank_int(idx, Elt);
+	cout << "Element " << setw(5) << idx << " / " << go.as_int() << endl;
 	A->element_print(Elt, cout);
 	A->element_print_as_permutation(Elt, cout);
 	cout << endl;
@@ -195,10 +195,10 @@ void create_group_arcs8(INT q, INT verbose_level)
 
 	sims *PGGL3Q;
 	action *AQ;
-	INT *Elt1;
-	INT *Elt2;
-	INT Data1[10];
-	INT Data2[10];
+	int *Elt1;
+	int *Elt2;
+	int Data1[10];
+	int Data2[10];
 	vector_ge *gens;
 	strong_generators *Strong_gens;
 	
@@ -210,8 +210,8 @@ void create_group_arcs8(INT q, INT verbose_level)
 		verbose_level);
 	cout << "creating linear group over FQ done" << endl;
 
-	Elt1 = NEW_INT(AQ->elt_size_in_INT);
-	Elt2 = NEW_INT(AQ->elt_size_in_INT);
+	Elt1 = NEW_int(AQ->elt_size_in_int);
+	Elt2 = NEW_int(AQ->elt_size_in_int);
 	for (i = 0; i < 9; i++) {
 		Data1[i] = Sub->FQ_embedding[Elt[i]];
 		}

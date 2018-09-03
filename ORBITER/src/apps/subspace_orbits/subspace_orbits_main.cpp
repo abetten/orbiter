@@ -14,56 +14,56 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-INT extra_test_func(subspace_orbits *SubOrb, 
-	INT len, INT *S, void *data, INT verbose_level);
-INT test_dim_C_cap_Cperp_property(INT len, INT *S, void *data);
-INT compute_minimum_distance(INT len, INT *S, void *data);
-void print_subspace(INT len, INT *S, void *data);
+int extra_test_func(subspace_orbits *SubOrb, 
+	int len, int *S, void *data, int verbose_level);
+int test_dim_C_cap_Cperp_property(int len, int *S, void *data);
+int compute_minimum_distance(int len, int *S, void *data);
+void print_subspace(int len, int *S, void *data);
 
 
 
 
 
-	INT f_mindist = FALSE;
-	INT the_mindist = 0;
-	INT f_self_orthogonal = FALSE;
-	INT f_doubly_even = FALSE;
+	int f_mindist = FALSE;
+	int the_mindist = 0;
+	int f_self_orthogonal = FALSE;
+	int f_doubly_even = FALSE;
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i, j;
-	INT f_override_poly = FALSE;
+	int verbose_level = 0;
+	int i, j;
+	int f_override_poly = FALSE;
 	const char *override_poly = NULL;
-	INT f_depth = FALSE;
-	INT depth = 0;
-	INT f_r = FALSE;
-	INT depth_completed = -1;
+	int f_depth = FALSE;
+	int depth = 0;
+	int f_r = FALSE;
+	int depth_completed = -1;
 	const char *data_file_name = NULL;
-	INT f_group_generators = FALSE;
-	INT group_generators_data[1000];
-	INT group_generators_data_size = 0;
-	INT f_group_order_target = FALSE;
+	int f_group_generators = FALSE;
+	int group_generators_data[1000];
+	int group_generators_data_size = 0;
+	int f_group_order_target = FALSE;
 	const char *group_order_target;
-	INT f_KM = FALSE;
-	INT KM_t = 0;
-	INT KM_k = 0;
-	INT f_read_solutions = FALSE;
+	int f_KM = FALSE;
+	int KM_t = 0;
+	int KM_k = 0;
+	int f_read_solutions = FALSE;
 	const char *solution_fname = NULL;
-	INT f_print_generators = FALSE;
-	INT f_exportmagma = FALSE;
-	INT f_draw_poset = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_table_of_nodes = FALSE;
-	INT f_list = FALSE;
-	INT f_list_all_levels = FALSE;
-	INT f_list_LCD = FALSE;
-	INT f_print_matrix = FALSE;
-	INT f_run_log_fname = FALSE;
+	int f_print_generators = FALSE;
+	int f_exportmagma = FALSE;
+	int f_draw_poset = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_table_of_nodes = FALSE;
+	int f_list = FALSE;
+	int f_list_all_levels = FALSE;
+	int f_list_LCD = FALSE;
+	int f_print_matrix = FALSE;
+	int f_run_log_fname = FALSE;
 	const char *run_log_fname = NULL;
 	
 	linear_group_description *Descr;
@@ -117,7 +117,7 @@ int main(int argc, const char **argv)
 				}
 			group_generators_data_size = j;
 			cout << "-G ";
-			INT_vec_print(cout, group_generators_data, group_generators_data_size);
+			int_vec_print(cout, group_generators_data, group_generators_data_size);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-GO") == 0) {
@@ -190,7 +190,7 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	finite_field *F;
 	linear_group *LG;
@@ -251,7 +251,7 @@ int main(int argc, const char **argv)
 
 
 	if (f_list) {
-		INT f_show_orbit_decomposition = FALSE, f_show_stab = TRUE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE, f_show_stab = TRUE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
 		
 		SubOrb->Gen->list_all_orbits_at_level(depth, 
 			TRUE, 
@@ -261,8 +261,8 @@ int main(int argc, const char **argv)
 		}
 
 	if (f_list_all_levels) {
-		INT f_show_orbit_decomposition = FALSE, f_show_stab = TRUE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
-		INT l;
+		int f_show_orbit_decomposition = FALSE, f_show_stab = TRUE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int l;
 
 		for (l = 0; l <= depth; l++) {
 			cout << "##### orbits at level " << l << ":" << endl;
@@ -276,9 +276,9 @@ int main(int argc, const char **argv)
 
 	if (f_list_LCD) {
 
-		INT *Orbits;
-		INT nb_orbits;
-		INT *Data;
+		int *Orbits;
+		int nb_orbits;
+		int *Data;
 
 		SubOrb->test_dim = 0;
 		SubOrb->Gen->test_property(depth, 
@@ -288,10 +288,10 @@ int main(int argc, const char **argv)
 
 		cout << "We found " << nb_orbits << " LCD codes" << endl;
 		cout << "They are: ";
-		INT_vec_print(cout, Orbits, nb_orbits);
+		int_vec_print(cout, Orbits, nb_orbits);
 		cout << endl;
 
-		INT f_show_orbit_decomposition = FALSE, f_show_stab = FALSE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
+		int f_show_orbit_decomposition = FALSE, f_show_stab = FALSE, f_save_stab = FALSE, f_show_whole_orbit = FALSE;
 		
 		SubOrb->Gen->list_selected_set_of_orbits_at_level(depth, 
 			nb_orbits, Orbits, 
@@ -312,7 +312,7 @@ int main(int argc, const char **argv)
 		cout << "The distribution of the minimum distance of the " << nb_orbits << " LCD codes is: ";
 		C.print_naked(TRUE);
 		cout << endl;
-		FREE_INT(Data);
+		FREE_int(Data);
 		}
 
 	if (f_draw_poset) {
@@ -325,8 +325,8 @@ int main(int argc, const char **argv)
 
 
 	if (f_table_of_nodes) {
-		INT *Table;
-		INT nb_rows, nb_cols;
+		int *Table;
+		int nb_rows, nb_cols;
 		char fname[1000];
 
 		if (f_v) {
@@ -335,7 +335,7 @@ int main(int argc, const char **argv)
 		SubOrb->Gen->get_table_of_nodes(Table, nb_rows, nb_cols, 0 /*verbose_level*/);
 	
 		if (f_v) {
-			cout << "before INT_matrix_write_csv nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
+			cout << "before int_matrix_write_csv nb_rows=" << nb_rows << " nb_cols=" << nb_cols << endl;
 			}
 
 		sprintf(fname, "%s_table_of_nodes.csv", SubOrb->Gen->fname_base);
@@ -343,17 +343,17 @@ int main(int argc, const char **argv)
 			cout << "writing to file " << fname << endl;
 			}
 
-		INT_matrix_write_csv(fname, Table, nb_rows, nb_cols);
+		int_matrix_write_csv(fname, Table, nb_rows, nb_cols);
 
 
-		FREE_INT(Table);
+		FREE_int(Table);
 		}
 
 
 
 	cout << "Memory usage = " << os_memory_usage() <<  " Time = " << delta_time(t0) << " tps = " << os_ticks_per_second() << endl;
 	char exec_log_fname[1000];
-	INT M[3];
+	int M[3];
 	const char *column_labels[] = {
 		"memory", "time", "tps"
 		};
@@ -368,7 +368,7 @@ int main(int argc, const char **argv)
 	else {
 		sprintf(exec_log_fname, "subspace_orbits_run.csv");
 		}
-	INT_matrix_write_csv_with_labels(exec_log_fname, M, 1, 3, column_labels);
+	int_matrix_write_csv_with_labels(exec_log_fname, M, 1, 3, column_labels);
 	cout << "Written file " << exec_log_fname << " of size " << file_size(exec_log_fname) << endl;
 
 	FREE_OBJECT(LG);
@@ -385,13 +385,13 @@ int main(int argc, const char **argv)
 // ##################################################################################################
 
 
-INT extra_test_func(subspace_orbits *SubOrb, 
-	INT len, INT *S, void *data, INT verbose_level)
+int extra_test_func(subspace_orbits *SubOrb, 
+	int len, int *S, void *data, int verbose_level)
 {
-	INT f_v = FALSE;//(verbose_level >= 1);
-	//INT *p_mindist = (INT *) data;
-	//INT mindist = *p_mindist;
-	INT ret = TRUE;
+	int f_v = FALSE;//(verbose_level >= 1);
+	//int *p_mindist = (int *) data;
+	//int mindist = *p_mindist;
+	int ret = TRUE;
 
 	if (f_mindist) {
 		ret = SubOrb->test_minimum_distance(len, S, the_mindist, 0 /* verbose_level */);
@@ -427,13 +427,13 @@ INT extra_test_func(subspace_orbits *SubOrb,
 }
 
 #if 0
-INT mindist_test_func(subspace_orbits *SubOrb, 
-	INT len, INT *S, void *data, INT verbose_level)
+int mindist_test_func(subspace_orbits *SubOrb, 
+	int len, int *S, void *data, int verbose_level)
 {
-	INT f_v = FALSE;//(verbose_level >= 1);
-	INT *p_mindist = (INT *) data;
-	INT mindist = *p_mindist;
-	INT ret;
+	int f_v = FALSE;//(verbose_level >= 1);
+	int *p_mindist = (int *) data;
+	int mindist = *p_mindist;
+	int ret;
 
 	ret = SubOrb->test_minimum_distance(len, S, mindist, 0 /* verbose_level */);
 	if (f_v) {
@@ -447,11 +447,11 @@ INT mindist_test_func(subspace_orbits *SubOrb,
 	return ret;
 }
 
-INT is_self_orthogonal_test_func(subspace_orbits *SubOrb, 
-	INT len, INT *S, void *data, INT verbose_level)
+int is_self_orthogonal_test_func(subspace_orbits *SubOrb, 
+	int len, int *S, void *data, int verbose_level)
 {
-	INT f_v = FALSE;//(verbose_level >= 1);
-	INT ret;
+	int f_v = FALSE;//(verbose_level >= 1);
+	int ret;
 
 	ret = SubOrb->test_if_self_orthogonal(len, S, 0 /* verbose_level */);
 	if (f_v) {
@@ -466,26 +466,26 @@ INT is_self_orthogonal_test_func(subspace_orbits *SubOrb,
 }
 #endif
 
-INT test_dim_C_cap_Cperp_property(INT len, INT *S, void *data)
+int test_dim_C_cap_Cperp_property(int len, int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
-	INT dim, ret;
+	int dim, ret;
 
 	dim = so->test_dim;
 	ret = so->test_dim_C_cap_Cperp_property(len, S, dim);
 	return ret;
 }
 
-INT compute_minimum_distance(INT len, INT *S, void *data)
+int compute_minimum_distance(int len, int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
-	INT d;
+	int d;
 
 	d = so->compute_minimum_distance(len, S);
 	return d;
 }
 
-void print_subspace(INT len, INT *S, void *data)
+void print_subspace(int len, int *S, void *data)
 {
 	subspace_orbits *so = (subspace_orbits *) data;
 	

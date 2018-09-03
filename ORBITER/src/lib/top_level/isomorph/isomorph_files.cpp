@@ -14,20 +14,20 @@
 
 #define MY_BUFSIZE 1000000
 
-void isomorph::init_solutions(INT **Solutions, INT *Nb_sol,
-	INT verbose_level)
+void isomorph::init_solutions(int **Solutions, int *Nb_sol,
+	int verbose_level)
 // Solutions[nb_starter], Nb_sol[nb_starter]
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i;
 
 	if (f_v) {
 		cout << "isomorph::init_solutions "
 				"nb_starter = " << nb_starter << endl;
 		}
-	solution_first = NEW_INT(nb_starter + 1);
-	solution_len = NEW_INT(nb_starter);
+	solution_first = NEW_int(nb_starter + 1);
+	solution_len = NEW_int(nb_starter);
 	N = 0;
 	for (i = 0; i < nb_starter; i++) {
 		solution_first[i] = 0;
@@ -62,14 +62,14 @@ void isomorph::init_solutions(INT **Solutions, INT *Nb_sol,
 
 	setup_and_create_solution_database(0/*verbose_level - 1*/);
 	
-	INT h;
-	INT no = 0;
-	INT print_mod = 1000;
+	int h;
+	int no = 0;
+	int print_mod = 1000;
 
-	id_to_datref = NEW_INT(N);
-	id_to_hash = NEW_INT(N);
-	hash_vs_id_hash = NEW_INT(N);
-	hash_vs_id_id = NEW_INT(N);
+	id_to_datref = NEW_int(N);
+	id_to_hash = NEW_int(N);
+	hash_vs_id_hash = NEW_int(N);
+	hash_vs_id_id = NEW_int(N);
 
 	if (f_v) {
 		cout << "isomorph::init_solutions "
@@ -99,7 +99,7 @@ void isomorph::init_solutions(INT **Solutions, INT *Nb_sol,
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	INT_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::init_solutions "
 				"after sorting hash_vs_id_hash" << endl;
@@ -115,25 +115,25 @@ void isomorph::init_solutions(INT **Solutions, INT *Nb_sol,
 }
 
 void isomorph::count_solutions_from_clique_finder_case_by_case(
-		INT nb_files, INT *list_of_cases, const char **fname,
-		INT verbose_level)
+		int nb_files, int *list_of_cases, const char **fname,
+		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, h;
 
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder_case_by_case "
 				"nb_starter = " << nb_starter << " nb_files=" << nb_files << endl;
 		}
-	solution_first = NEW_INT(nb_starter + 1);
-	solution_len = NEW_INT(nb_starter);
+	solution_first = NEW_int(nb_starter + 1);
+	solution_len = NEW_int(nb_starter);
 
-	INT_vec_zero(solution_len, nb_starter);
+	int_vec_zero(solution_len, nb_starter);
 	N = 0;
 	for (i = 0; i < nb_files; i++) {
-		INT nb_solutions;
+		int nb_solutions;
 		
 		count_number_of_solutions_in_file(fname[i], 
 			nb_solutions, 
@@ -186,29 +186,29 @@ void isomorph::count_solutions_from_clique_finder_case_by_case(
 
 
 void isomorph::count_solutions_from_clique_finder(
-		INT nb_files, const char **fname, INT verbose_level)
+		int nb_files, const char **fname, int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, h, c, n;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, h, c, n;
 
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder "
 				"nb_starter = " << nb_starter << " nb_files="
 				<< nb_files << endl;
 		}
-	solution_first = NEW_INT(nb_starter + 1);
-	solution_len = NEW_INT(nb_starter);
+	solution_first = NEW_int(nb_starter + 1);
+	solution_len = NEW_int(nb_starter);
 	for (i = 0; i < nb_starter; i++) {
 		solution_first[i] = 0;
 		solution_len[i] = 0;
 		}
 	N = 0;
 	for (i = 0; i < nb_files; i++) {
-		INT *nb_solutions;
-		INT *case_nb;
-		INT nb_cases;
+		int *nb_solutions;
+		int *case_nb;
+		int nb_cases;
 		
 		count_number_of_solutions_in_file_by_case(fname[i], 
 			nb_solutions, case_nb, nb_cases, 
@@ -226,8 +226,8 @@ void isomorph::count_solutions_from_clique_finder(
 			solution_len[c] = n;
 			N += n;
 			}
-		FREE_INT(nb_solutions);
-		FREE_INT(case_nb);
+		FREE_int(nb_solutions);
+		FREE_int(case_nb);
 		}
 	if (f_v) {
 		cout << "isomorph::count_solutions_from_clique_finder "
@@ -264,17 +264,17 @@ void isomorph::count_solutions_from_clique_finder(
 
 
 void isomorph::read_solutions_from_clique_finder_case_by_case(
-		INT nb_files, INT *list_of_cases, const char **fname,
-		INT verbose_level)
+		int nb_files, int *list_of_cases, const char **fname,
+		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
 // We assume that N, the number of solutions is known
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
-	INT i, no = 0;
-	INT print_mod = 1000;
+	int i, no = 0;
+	int print_mod = 1000;
 
 	
 	if (f_v) {
@@ -292,10 +292,10 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 				"database" << endl;
 		}
 
-	id_to_datref = NEW_INT(N);
-	id_to_hash = NEW_INT(N);
-	hash_vs_id_hash = NEW_INT(N);
-	hash_vs_id_id = NEW_INT(N);
+	id_to_datref = NEW_int(N);
+	id_to_hash = NEW_int(N);
+	hash_vs_id_hash = NEW_int(N);
+	hash_vs_id_id = NEW_int(N);
 
 	for (i = 0; i < nb_files; i++) {
 
@@ -304,8 +304,8 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 					"case_by_case, file " << i << " / " << nb_files
 					<< " which is " << fname[i] << endl;
 			}
-		INT nb_solutions;
-		INT *Solutions;
+		int nb_solutions;
+		int *Solutions;
 		
 		read_solutions_from_file(fname[i], 
 			nb_solutions, 
@@ -324,7 +324,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 			verbose_level);
 
 
-		FREE_INT(Solutions);
+		FREE_int(Solutions);
 		}
 
 	
@@ -343,7 +343,7 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	INT_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::read_solutions_from_clique_finder_case_by_case "
 				"after sorting hash_vs_id_hash" << endl;
@@ -360,19 +360,19 @@ void isomorph::read_solutions_from_clique_finder_case_by_case(
 
 
 void isomorph::read_solutions_from_clique_finder(
-		INT nb_files, const char **fname,
-		INT verbose_level)
+		int nb_files, const char **fname,
+		int verbose_level)
 // Called from isomorph_read_solution_files_from_clique_finder
 // Called after count_solutions_from_clique_finder
 // We assume that N, the number of solutions is known
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 
-	INT i, no = 0;
-	//INT *data;
-	INT print_mod = 1000;
+	int i, no = 0;
+	//int *data;
+	int print_mod = 1000;
 
 	
 	if (f_v) {
@@ -383,17 +383,17 @@ void isomorph::read_solutions_from_clique_finder(
 
 	setup_and_create_solution_database(0/*verbose_level - 1*/);
 
-	//data = NEW_INT(size + 1);
+	//data = NEW_int(size + 1);
 
 	if (f_v) {
 		cout << "isomorph::read_solutions_from_clique_finder "
 				"after setup_and_create_solution_database" << endl;
 		}
 
-	id_to_datref = NEW_INT(N);
-	id_to_hash = NEW_INT(N);
-	hash_vs_id_hash = NEW_INT(N);
-	hash_vs_id_id = NEW_INT(N);
+	id_to_datref = NEW_int(N);
+	id_to_hash = NEW_int(N);
+	hash_vs_id_hash = NEW_int(N);
+	hash_vs_id_id = NEW_int(N);
 
 	for (i = 0; i < nb_files; i++) {
 
@@ -401,12 +401,12 @@ void isomorph::read_solutions_from_clique_finder(
 			cout << "isomorph::read_solutions_from_clique_finder "
 					"file " << fname[i] << endl;
 			}
-		INT *nb_solutions;
-		INT *case_nb;
-		INT nb_cases;
-		INT **Solutions;
-		INT the_case, h; //, u, v;
-		INT nb_solutions_total;
+		int *nb_solutions;
+		int *case_nb;
+		int nb_cases;
+		int **Solutions;
+		int the_case, h; //, u, v;
+		int nb_solutions_total;
 		char fname_summary[1000];
 		char extension[1000];
 		
@@ -419,7 +419,7 @@ void isomorph::read_solutions_from_clique_finder(
 			verbose_level - 2);
 
 		
-		INT_vecs_write_csv(case_nb, nb_solutions, nb_cases, 
+		int_vecs_write_csv(case_nb, nb_solutions, nb_cases, 
 			fname_summary, "Case_nb", "Nb_sol");
 		
 		nb_solutions_total = 0;
@@ -448,12 +448,12 @@ void isomorph::read_solutions_from_clique_finder(
 
 			}
 
-		FREE_INT(nb_solutions);
-		FREE_INT(case_nb);
+		FREE_int(nb_solutions);
+		FREE_int(case_nb);
 		for (h = 0; h < nb_cases; h++) {
-			FREE_INT(Solutions[h]);
+			FREE_int(Solutions[h]);
 			}
-		FREE_PINT(Solutions);
+		FREE_pint(Solutions);
 		if (f_vv) {
 			cout << "isomorph::read_solutions_from_clique_finder "
 					"file " << fname[i] << " done" << endl;
@@ -476,7 +476,7 @@ void isomorph::read_solutions_from_clique_finder(
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	INT_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::read_solutions_from_clique_finder "
 				"after sorting hash_vs_id_hash" << endl;
@@ -484,33 +484,33 @@ void isomorph::read_solutions_from_clique_finder(
 
 	close_solution_database(0 /*verbose_level - 1*/);
 
-	//FREE_INT(data);
+	//FREE_int(data);
 
 	if (f_v) {
 		cout << "isomorph::read_solutions_from_clique_finder done" << endl;
 		}
 }
 
-void isomorph::add_solutions_to_database(INT *Solutions, 
-	INT the_case, INT nb_solutions, INT nb_solutions_total,
-	INT print_mod, INT &no,
-	INT verbose_level)
+void isomorph::add_solutions_to_database(int *Solutions, 
+	int the_case, int nb_solutions, int nb_solutions_total,
+	int print_mod, int &no,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT u, v;
-	INT *data;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int u, v;
+	int *data;
 	
 	if (f_v) {
 		cout << "isomorph::add_solutions_to_database "
 				"case " << the_case << endl;
 		}
-	data = NEW_INT(size + 1);
+	data = NEW_int(size + 1);
 	for (u = 0; u < nb_solutions; u++) {
 
-		UINT4 datref;
-		INT hs, id;
+		uint4 datref;
+		int hs, id;
 				
 		data[0] = the_case;
 		for (v = 0; v < size; v++) {
@@ -518,7 +518,7 @@ void isomorph::add_solutions_to_database(INT *Solutions,
 			}
 		id = solution_first[data[0]] + u;
 
-		hs = INT_vec_hash_after_sorting(data + 1, size);
+		hs = int_vec_hash_after_sorting(data + 1, size);
 		if (f_vvv) {
 			cout << "isomorph::add_solutions_to_database "
 					"case " << the_case << " u=" << u << " id=" << id
@@ -538,7 +538,7 @@ void isomorph::add_solutions_to_database(INT *Solutions,
 				
 		no++;
 		}
-	FREE_INT(data);
+	FREE_int(data);
 	if (f_v) {
 		cout << "isomorph::add_solutions_to_database "
 				"case " << the_case << " done, added "
@@ -548,26 +548,26 @@ void isomorph::add_solutions_to_database(INT *Solutions,
 }
 
 
-void isomorph::build_up_database(INT nb_files,
+void isomorph::build_up_database(int nb_files,
 	const char **fname,
-	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz,
-			void *final_test_data, INT verbose_level),
+	int f_has_final_test_function, 
+	int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
 	void *final_test_data, 
-	INT verbose_level)
+	int verbose_level)
 // We assume that N, the number of solutions is known
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 
-	INT i, nb_total = 0, j, a, nb = 0, prev = 0, id = 0, h;
+	int i, nb_total = 0, j, a, nb = 0, prev = 0, id = 0, h;
 	char *p_buf;
-	INT data[1000];
+	int data[1000];
 	char buf[MY_BUFSIZE];
-	INT print_mod = 1000;
-	UINT4 datref;
-	INT nb_fail = 0;
+	int print_mod = 1000;
+	uint4 datref;
+	int nb_fail = 0;
 
 	
 	if (f_v) {
@@ -584,10 +584,10 @@ void isomorph::build_up_database(INT nb_files,
 				"after setup_and_create_solution_database" << endl;
 		}
 
-	id_to_datref = NEW_INT(N);
-	id_to_hash = NEW_INT(N);
-	hash_vs_id_hash = NEW_INT(N);
-	hash_vs_id_id = NEW_INT(N);
+	id_to_datref = NEW_int(N);
+	id_to_hash = NEW_int(N);
+	hash_vs_id_hash = NEW_int(N);
+	hash_vs_id_id = NEW_int(N);
 
 	for (i = 0; i < nb_files; i++) {
 
@@ -607,7 +607,7 @@ void isomorph::build_up_database(INT nb_files,
 #if 0
 			{
 			string S;
-			INT l;
+			int l;
 			getline(f, S);
 			l = S.length();
 			if (f_vvv) {
@@ -663,7 +663,7 @@ void isomorph::build_up_database(INT nb_files,
 					}
 				else {
 					cout << nb_total << " : " << data[0] << " : ";
-					INT_vec_print(cout, data + 1, size);
+					int_vec_print(cout, data + 1, size);
 					cout << endl;
 					}
 				}
@@ -671,7 +671,7 @@ void isomorph::build_up_database(INT nb_files,
 			id = solution_first[data[0]] + nb;
 			
 
-			h = INT_vec_hash_after_sorting(data + 1, size);
+			h = int_vec_hash_after_sorting(data + 1, size);
 			
 			add_solution_to_database(data, 
 				nb, id, nb_total, N, h, datref, print_mod,
@@ -715,7 +715,7 @@ void isomorph::build_up_database(INT nb_files,
 				"Classification of hash values:" << endl;
 		C.print(FALSE /*f_backwards*/);
 	}
-	INT_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::build_up_database "
 				"after sorting hash_vs_id_hash" << endl;
@@ -729,19 +729,19 @@ void isomorph::build_up_database(INT nb_files,
 
 
 void isomorph::init_cases_from_file_modulus_and_build_up_database(
-	INT modulus, INT level, 
-	INT f_collated, INT base_split, 
-	INT f_get_statistics, 
-	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz,
-			void *final_test_data, INT verbose_level),
+	int modulus, int level, 
+	int f_collated, int base_split, 
+	int f_get_statistics, 
+	int f_has_final_test_function, 
+	int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
 	void *final_test_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	char **fname;
-	INT i;
+	int i;
 	char file_name[1000];
 	
 	if (f_v) {
@@ -754,14 +754,14 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 		}
 	for (i = 0; i < modulus; i++) {
 		if (f_collated) {
-			sprintf(file_name, "collated_%s_%ld_%ld_%ld_%ld.txt",
+			sprintf(file_name, "collated_%s_%d_%d_%d_%d.txt",
 					prefix, level, base_split, i, modulus);
 			}
 		else {
-			sprintf(file_name, "extend_%s_%ld_%ld_%ld.txt",
+			sprintf(file_name, "extend_%s_%d_%d_%d.txt",
 					prefix, level, i, modulus);
 			}
-		//sprintf(file_name, "extend_BLT_41_lvl_%ld_%ld_42_%ld_1024.txt",
+		//sprintf(file_name, "extend_BLT_41_lvl_%d_%d_42_%d_1024.txt",
 		//level, level, i);
 		fname[i] = NEW_char(strlen(file_name) + 1);
 		strcpy(fname[i], file_name);
@@ -800,18 +800,18 @@ void isomorph::init_cases_from_file_modulus_and_build_up_database(
 }
 
 void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
-	INT nb_Mod, INT *Mod_r, INT *Mod_split, INT *Mod_base_split, 
-	INT level, INT f_get_statistics, 
-	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz,
-			void *final_test_data, INT verbose_level),
+	int nb_Mod, int *Mod_r, int *Mod_split, int *Mod_base_split, 
+	int level, int f_get_statistics, 
+	int f_has_final_test_function, 
+	int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
 	void *final_test_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	char **fname;
-	INT i, r, s, bs, nb_files, j, k, h, u;
+	int i, r, s, bs, nb_files, j, k, h, u;
 	char file_name[1000];
 	
 	if (f_v) {
@@ -847,9 +847,9 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 		k = bs / s;
 		for (h = 0; h < k; h++) {
 			u = h * s + r;
-			sprintf(file_name, "extend_%s_%ld_%ld_%ld.txt",
+			sprintf(file_name, "extend_%s_%d_%d_%d.txt",
 					prefix, level, u, bs);
-			//sprintf(file_name, "extend_BLT_41_lvl_%ld_%ld_42_%ld_1024.txt",
+			//sprintf(file_name, "extend_BLT_41_lvl_%d_%d_42_%d_1024.txt",
 			// level, level, i);
 			fname[j] = NEW_char(strlen(file_name) + 1);
 			strcpy(fname[j], file_name);
@@ -893,17 +893,17 @@ void isomorph::init_cases_from_file_mixed_modulus_and_build_up_database(
 	FREE_pchar(fname);
 }
 
-void isomorph::count_solutions(INT nb_files, const char **fname, 
-	INT f_get_statistics, 
-	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz,
-			void *final_test_data, INT verbose_level),
+void isomorph::count_solutions(int nb_files, const char **fname, 
+	int f_get_statistics, 
+	int f_has_final_test_function, 
+	int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
 	void *final_test_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	INT total_days, total_hours, total_minutes;
+	int f_v = (verbose_level >= 1);
+	int i;
+	int total_days, total_hours, total_minutes;
 	
 	if (nb_starter == 0) {
 		cout << "isomorph::count_solutions "
@@ -914,16 +914,16 @@ void isomorph::count_solutions(INT nb_files, const char **fname,
 		cout << "isomorph::count_solutions "
 				"nb_starter = " << nb_starter << endl;
 		}
-	solution_first = NEW_INT(nb_starter + 1);
-	solution_len = NEW_INT(nb_starter);
+	solution_first = NEW_int(nb_starter + 1);
+	solution_len = NEW_int(nb_starter);
 	for (i = 0; i < nb_starter; i++) {
 		solution_first[i] = 0;
 		solution_len[i] = 0;
 		}
-	stats_nb_backtrack = NEW_INT(nb_starter);
-	stats_nb_backtrack_decision = NEW_INT(nb_starter);
-	stats_graph_size = NEW_INT(nb_starter);
-	stats_time = NEW_INT(nb_starter);
+	stats_nb_backtrack = NEW_int(nb_starter);
+	stats_nb_backtrack_decision = NEW_int(nb_starter);
+	stats_graph_size = NEW_int(nb_starter);
+	stats_time = NEW_int(nb_starter);
 	
 	for (i = 0; i < nb_starter; i++) {
 		stats_nb_backtrack[i] = -1;
@@ -942,7 +942,7 @@ void isomorph::count_solutions(INT nb_files, const char **fname,
 		cout << "isomorph::count_solutions "
 				"after count_solutions2" << endl;
 		cout << "case_len: ";
-		INT_vec_print(cout, solution_len, nb_starter);
+		int_vec_print(cout, solution_len, nb_starter);
 		cout << endl;
 		}
 	cout << "total computing time for the search : ";
@@ -982,14 +982,14 @@ void isomorph::count_solutions(INT nb_files, const char **fname,
 		}
 }
 
-void isomorph::get_statistics(INT nb_files,
-		const char **fname, INT verbose_level)
+void isomorph::get_statistics(int nb_files,
+		const char **fname, int verbose_level)
 {
-	INT i, the_case, nb_sol, nb_backtrack, nb_backtrack_decision;
-	INT nb_points, dt[5], dt_total;
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int i, the_case, nb_sol, nb_backtrack, nb_backtrack_decision;
+	int nb_points, dt[5], dt_total;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	char fname_summary[1000];
 	
 	if (f_v) {
@@ -1051,7 +1051,7 @@ void isomorph::write_statistics()
 {
 	{
 	ofstream f(fname_statistics);
-	INT i;
+	int i;
 	
 	f << nb_starter << endl;
 	for (i = 0; i < nb_starter; i++) {
@@ -1067,16 +1067,16 @@ void isomorph::write_statistics()
 			<< file_size(fname_statistics) << endl;
 }
 
-void isomorph::evaluate_statistics(INT verbose_level)
+void isomorph::evaluate_statistics(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	INT nb_backtrack_max;
-	INT nb_backtrack_min;
-	INT graph_size_max;
-	INT graph_size_min;
-	INT time_max;
-	INT time_min;
+	int f_v = (verbose_level >= 1);
+	int i;
+	int nb_backtrack_max;
+	int nb_backtrack_min;
+	int graph_size_max;
+	int graph_size_min;
+	int time_max;
+	int time_min;
 	longinteger_object a, b, c, a1, b1, c1, d, n, q1, q2, q3, r1, r2, r3;
 	longinteger_domain D;
 	
@@ -1134,27 +1134,27 @@ void isomorph::evaluate_statistics(INT verbose_level)
 
 
 
-void isomorph::count_solutions2(INT nb_files, const char **fname, 
-	INT &total_days, INT &total_hours, INT &total_minutes, 
-	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz,
-			void *final_test_data, INT verbose_level),
+void isomorph::count_solutions2(int nb_files, const char **fname, 
+	int &total_days, int &total_hours, int &total_minutes, 
+	int f_has_final_test_function, 
+	int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
 	void *final_test_data, 
-	INT verbose_level)
+	int verbose_level)
 // also fills the array case_len[] with the
 // number of solutions per starter
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i, no, l, j, a, nb, prev;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i, no, l, j, a, nb, prev;
 	char *p_buf;
 	char buf[MY_BUFSIZE];
-	INT data[1000];
-	INT *nb_sol_per_file;
+	int data[1000];
+	int *nb_sol_per_file;
 	Vector v;
 	char str[1000];
-	INT nb_fail = 0;
+	int nb_fail = 0;
 	
 	if (f_v) {
 		cout << "count_solutions2: reading " << nb_files << " files" << endl;
@@ -1169,7 +1169,7 @@ void isomorph::count_solutions2(INT nb_files, const char **fname,
 	total_hours = 0;
 	total_minutes = 0;
 
-	nb_sol_per_file = NEW_INT(nb_files);
+	nb_sol_per_file = NEW_int(nb_files);
 	
 	for (i = 0; i < nb_files; i++) {
 
@@ -1268,7 +1268,7 @@ void isomorph::count_solutions2(INT nb_files, const char **fname,
 	
 		} // next i
 	
-	FREE_INT(nb_sol_per_file);
+	FREE_int(nb_sol_per_file);
 	if (f_v) {
 		cout << "isomorph::count_solutions2 done" << endl;
 		}
@@ -1279,7 +1279,7 @@ void isomorph::count_solutions2(INT nb_files, const char **fname,
 void isomorph::write_solution_first_and_len()
 {
 	ofstream f(fname_case_len);
-	INT i;
+	int i;
 	
 	f << N << " " << nb_starter << endl;
 	for (i = 0; i < nb_starter; i++) {
@@ -1297,11 +1297,11 @@ void isomorph::read_solution_first_and_len()
 		<< file_size(fname_case_len) << endl;
 	
 	ifstream f(fname_case_len);
-	INT i, a;
+	int i, a;
 	
 	f >> N >> nb_starter;
-	solution_first = NEW_INT(nb_starter + 1);
-	solution_len = NEW_INT(nb_starter + 1);
+	solution_first = NEW_int(nb_starter + 1);
+	solution_len = NEW_int(nb_starter + 1);
 	for (i = 0; i < nb_starter; i++) {
 		f >> a;
 		f >> solution_first[i];
@@ -1316,21 +1316,21 @@ void isomorph::read_solution_first_and_len()
 		exit(1);
 		}
 	cout << "isomorph::read_solution_first_and_len:" << endl;
-	INT_vec_print_classified(cout, solution_len, nb_starter);
+	int_vec_print_classified(cout, solution_len, nb_starter);
 	cout << endl;
 	cout << "isomorph::read_solution_first_and_len done" << endl; 
 }
 
-void isomorph::write_starter_nb_orbits(INT verbose_level)
+void isomorph::write_starter_nb_orbits(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
 		cout << "isomorph::write_starter_nb_orbits" << endl;
 		}
 
-	INT_vec_write_csv(starter_nb_orbits, nb_starter,
+	int_vec_write_csv(starter_nb_orbits, nb_starter,
 			fname_orbits_of_stabilizer_csv, "Stab_orbits");
 
 	cout << "isomorph::write_starter_nb_orbits Written file "
@@ -1342,22 +1342,22 @@ void isomorph::write_starter_nb_orbits(INT verbose_level)
 		}
 }
 
-void isomorph::read_starter_nb_orbits(INT verbose_level)
+void isomorph::read_starter_nb_orbits(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
 		cout << "isomorph::read_starter_nb_orbits" << endl;
 		}
-	INT *M;
-	INT m, n, i;
+	int *M;
+	int m, n, i;
 
 	cout << "isomorph::read_starter_nb_orbits Reading file "
 			<< fname_orbits_of_stabilizer_csv << " of size "
 			<< file_size(fname_orbits_of_stabilizer_csv) << endl;
 
-	INT_matrix_read_csv(fname_orbits_of_stabilizer_csv,
+	int_matrix_read_csv(fname_orbits_of_stabilizer_csv,
 			M, m, n, verbose_level);
 	
 	if (m != nb_starter) {
@@ -1371,8 +1371,8 @@ void isomorph::read_starter_nb_orbits(INT verbose_level)
 		exit(1);
 		}
 
-	starter_orbit_fst = NEW_INT(nb_starter + 1);
-	starter_nb_orbits = NEW_INT(nb_starter);
+	starter_orbit_fst = NEW_int(nb_starter + 1);
+	starter_nb_orbits = NEW_int(nb_starter);
 	starter_orbit_fst[0] = 0;
 	for (i = 0; i < m; i++) {
 		starter_nb_orbits[i] = M[i];
@@ -1380,7 +1380,7 @@ void isomorph::read_starter_nb_orbits(INT verbose_level)
 				starter_orbit_fst[i] + starter_nb_orbits[i];
 		}
 	
-	FREE_INT(M);
+	FREE_int(M);
 	
 	if (f_v) {
 		cout << "isomorph::read_starter_nb_orbits done" << endl;
@@ -1388,18 +1388,18 @@ void isomorph::read_starter_nb_orbits(INT verbose_level)
 }
 
 
-void isomorph::write_hash_and_datref_file(INT verbose_level)
+void isomorph::write_hash_and_datref_file(int verbose_level)
 // Writes the file 'fname_hash_and_datref'
 // containing id_to_hash[] and id_to_datref[]
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "isomorph::write_hash_and_datref_file" << endl;
 		}
 	{
 	ofstream f(fname_hash_and_datref);
-	INT i;
+	int i;
 	
 	f << N << endl;
 	for (i = 0; i < N; i++) {
@@ -1417,19 +1417,19 @@ void isomorph::write_hash_and_datref_file(INT verbose_level)
 		}
 }
 
-void isomorph::read_hash_and_datref_file(INT verbose_level)
+void isomorph::read_hash_and_datref_file(int verbose_level)
 // Reads the file 'fname_hash_and_datref'
 // containing id_to_hash[] and id_to_datref[]
 // Also initializes hash_vs_id_hash and hash_vs_id_id
 // Called from init_solution
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "isomorph::read_hash_and_datref_file" << endl;
 		}
 	ifstream f(fname_hash_and_datref);
-	INT id, a, h, d, N1;
+	int id, a, h, d, N1;
 	f >> N1;
 	if (N1 != N) {
 		cout << "isomorph::read_hash_and_datref_file "
@@ -1439,10 +1439,10 @@ void isomorph::read_hash_and_datref_file(INT verbose_level)
 		exit(1);
 		}
 
-	id_to_datref = NEW_INT(N);
-	id_to_hash = NEW_INT(N);
-	hash_vs_id_hash = NEW_INT(N);
-	hash_vs_id_id = NEW_INT(N);
+	id_to_datref = NEW_int(N);
+	id_to_hash = NEW_int(N);
+	hash_vs_id_hash = NEW_int(N);
+	hash_vs_id_id = NEW_int(N);
 
 	for (id = 0; id < N; id++) {
 		f >> a >> h >> d;
@@ -1462,23 +1462,23 @@ void isomorph::read_hash_and_datref_file(INT verbose_level)
 				"EOF marker missing" << endl;
 		exit(1);
 		}
-	INT_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
+	int_vec_heapsort_with_log(hash_vs_id_hash, hash_vs_id_id, N);
 	if (f_v) {
 		cout << "isomorph::read_hash_and_datref_file done" << endl;
 		}
 }
 
-void isomorph::write_orbit_data(INT verbose_level)
+void isomorph::write_orbit_data(int verbose_level)
 // Writes the file 'fname_staborbits'
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "write_orbit_data" << endl;
 		}
 	{
 	ofstream f(fname_staborbits);
-	INT i;
+	int i;
 	
 	f << nb_orbits << " " << N << endl;
 	for (i = 0; i < nb_orbits; i++) {
@@ -1503,7 +1503,7 @@ void isomorph::write_orbit_data(INT verbose_level)
 		}
 }
 
-void isomorph::read_orbit_data(INT verbose_level)
+void isomorph::read_orbit_data(int verbose_level)
 // Reads from the file 'fname_staborbits'
 // Reads nb_orbits, N, 
 // orbit_fst[nb_orbits + 1]
@@ -1514,10 +1514,10 @@ void isomorph::read_orbit_data(INT verbose_level)
 // schreier_prev[N]
 // and computed orbit_perm_inv[N]
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	ifstream f(fname_staborbits);
-	INT i, a;
+	int i, a;
 	
 	if (f_v) {
 		cout << "read_orbit_data" << endl;
@@ -1528,13 +1528,13 @@ void isomorph::read_orbit_data(INT verbose_level)
 		cout << "N=" << N << endl;
 		}
 	
-	orbit_fst = NEW_INT(nb_orbits + 1);
-	orbit_len = NEW_INT(nb_orbits);
-	orbit_number = NEW_INT(N);
-	orbit_perm = NEW_INT(N);
-	orbit_perm_inv = NEW_INT(N);
-	schreier_vector = NEW_INT(N);
-	schreier_prev = NEW_INT(N);
+	orbit_fst = NEW_int(nb_orbits + 1);
+	orbit_len = NEW_int(nb_orbits);
+	orbit_number = NEW_int(N);
+	orbit_perm = NEW_int(N);
+	orbit_perm_inv = NEW_int(N);
+	schreier_vector = NEW_int(N);
+	schreier_prev = NEW_int(N);
 	
 	for (i = 0; i < nb_orbits; i++) {
 		f >> a;
@@ -1560,13 +1560,13 @@ void isomorph::read_orbit_data(INT verbose_level)
 		}
 }
 
-void isomorph::print_isomorphism_types(INT f_select,
-		INT select_first, INT select_len,
-		INT verbose_level)
+void isomorph::print_isomorphism_types(int f_select,
+		int select_first, int select_len,
+		int verbose_level)
 // Calls print_set_function (if available)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, i, j, id, first, c;
+	int f_v = (verbose_level >= 1);
+	int h, i, j, id, first, c;
 	longinteger_object go;
 	
 	if (f_v) {
@@ -1595,7 +1595,7 @@ void isomorph::print_isomorphism_types(INT f_select,
 			}
 		}
 
-	INT data[1000];
+	int data[1000];
 
 	setup_and_open_solution_database(verbose_level - 1);
 
@@ -1611,12 +1611,12 @@ void isomorph::print_isomorphism_types(INT f_select,
 		load_solution(id, data);
 		cout << "isomorphism type " << i << " : " << j << " : "
 				<< id << " : ";
-		INT_vec_print(cout, data, size);
+		int_vec_print(cout, data, size);
 		cout << endl;
 #if 0
 		for (j = 0; j < size; j++) {
 			O->unrank_point(O->v2, 1, data[j]);
-			INT_vec_print(cout, O->v2, algebraic_dimension);
+			int_vec_print(cout, O->v2, algebraic_dimension);
 			if (j < size - 1) {
 				cout << ", ";
 				}
@@ -1648,7 +1648,7 @@ void isomorph::print_isomorphism_types(INT f_select,
 		cout << "Computed all orbits on the set, found "
 				<< Orb.nb_orbits << " orbits" << endl;
 		cout << "orbit lengths: ";
-		INT_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
+		int_vec_print(cout, Orb.orbit_len, Orb.nb_orbits);
 		cout << endl;
 	
 		if (print_set_function) {
@@ -1671,27 +1671,27 @@ void isomorph::print_isomorphism_types(INT f_select,
 
 void isomorph::induced_action_on_set_and_kernel(
 	ostream &file, action *A,
-	sims *Stab, INT size, INT *set, INT verbose_level)
+	sims *Stab, int size, int *set, int verbose_level)
 // Used in isomorph_BLT
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	action AAA;
 	//sims K;
 	longinteger_object go, ko;
-	INT i;
-	INT *Elt1;
+	int i;
+	int *Elt1;
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 
 	if (f_v) {
 		cout << "isomorph::induced_action_on_set_and_kernel "
 				"calling induced_action_by_restriction" << endl;
 		cout << "set: ";
-		INT_vec_print(cout, set, size);
+		int_vec_print(cout, set, size);
 		cout << endl;
 		}
 
-	INT f_induce_action = TRUE;
+	int f_induce_action = TRUE;
 	
 	AAA.induced_action_by_restriction(*gen->A2, 
 		f_induce_action, Stab, 
@@ -1709,8 +1709,8 @@ void isomorph::induced_action_on_set_and_kernel(
 			<< go << " and is generated by:" << endl << endl;
 	AAA.group_order(go);
 	for (i = 0; i < Stab->gens.len; i++) {
-		INT f_do_it_anyway_even_for_big_degree= TRUE; 
-		INT f_print_cycles_of_length_one = TRUE;
+		int f_do_it_anyway_even_for_big_degree= TRUE; 
+		int f_print_cycles_of_length_one = TRUE;
 		
 		file << "$g_{" << setw(2) << i + 1 << "} = $";
 		AAA.element_print_as_permutation_with_offset(
@@ -1720,15 +1720,15 @@ void isomorph::induced_action_on_set_and_kernel(
 			0 /* verbose_level */);
 		file << "\\\\" << endl;
 		}
-	if (go.compare_with_INT(10) < 0) {
+	if (go.compare_with_int(10) < 0) {
 		file << "group order is small, so we list "
 				"all elements\\\\" << endl;
-		for (i = 0; i < go.as_INT(); i++) {
-			INT f_do_it_anyway_even_for_big_degree = TRUE; 
-			INT f_print_cycles_of_length_one = TRUE;
+		for (i = 0; i < go.as_int(); i++) {
+			int f_do_it_anyway_even_for_big_degree = TRUE; 
+			int f_print_cycles_of_length_one = TRUE;
 			
 			file << "$a_{" << setw(2) << i + 1 << "} = $";
-			Stab->element_unrank_INT(i, Elt1);
+			Stab->element_unrank_int(i, Elt1);
 			AAA.element_print_as_permutation_with_offset(Elt1, file, 1, 
 				f_do_it_anyway_even_for_big_degree,
 				f_print_cycles_of_length_one, 
@@ -1736,16 +1736,16 @@ void isomorph::induced_action_on_set_and_kernel(
 			file << "\\\\" << endl;
 			}
 		file << "and now the elements themselves:" << endl;
-		for (i = 0; i < go.as_INT(); i++) {
+		for (i = 0; i < go.as_int(); i++) {
 
-			Stab->element_unrank_INT(i, Elt1);
+			Stab->element_unrank_int(i, Elt1);
 
-			INT *fp, n;
+			int *fp, n;
 		
-			fp = NEW_INT(A->degree);
+			fp = NEW_int(A->degree);
 			n = A->find_fixed_points(Elt1, fp, 0);
 			//cout << "with " << n << " fixed points" << endl;
-			FREE_INT(fp);
+			FREE_int(fp);
 
 
 			file << "$a_{" << setw(2) << i + 1 << "} = $" << endl;
@@ -1776,11 +1776,11 @@ void isomorph::induced_action_on_set_and_kernel(
 		schreier Orb;
 		isomorph::A->compute_all_point_orbits(Orb,
 				AAA.Kernel->gens, verbose_level - 2);
-		INT *val, *mult, len;
+		int *val, *mult, len;
 	
 		file << "The kernel has $" << Orb.nb_orbits
 				<< "$ orbits on the quadric.\\\\" << endl;
-		INT_vec_distribution(Orb.orbit_len, Orb.nb_orbits,
+		int_vec_distribution(Orb.orbit_len, Orb.nb_orbits,
 				val, mult, len);
 		file << "The orbit length are $[";
 		for (i = len - 1; i >= 0; i--) {
@@ -1794,7 +1794,7 @@ void isomorph::induced_action_on_set_and_kernel(
 		file << "]$\\\\" << endl;
 		
 #if 0
-		INT min_length, min_idx;
+		int min_length, min_idx;
 		
 		min_idx = -1;
 		for (i = 0; i < Orb.nb_orbits; i++) {
@@ -1816,22 +1816,22 @@ void isomorph::induced_action_on_set_and_kernel(
 			}
 #endif
 
-		FREE_INT(val);
-		FREE_INT(mult);
+		FREE_int(val);
+		FREE_int(mult);
 		}
 	} // if (AAA.Kernel)
 
 	
 	file << "\\bigskip" << endl << endl;
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 	
 }
 
 
-void isomorph::handle_event_files(INT nb_event_files,
-		const char **event_file_name, INT verbose_level)
+void isomorph::handle_event_files(int nb_event_files,
+		const char **event_file_name, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	Reps->count = 0;
 	for (i = 0; i < nb_event_files; i++) {
@@ -1844,17 +1844,17 @@ void isomorph::handle_event_files(INT nb_event_files,
 }
 
 void isomorph::read_event_file(const char *event_file_name,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT i;
-	INT nb_completed_cases, *completed_cases;
+	int i;
+	int nb_completed_cases, *completed_cases;
 	
-	completed_cases = NEW_INT(10000);
+	completed_cases = NEW_int(10000);
 	event_file_completed_cases(event_file_name,
 			nb_completed_cases, completed_cases, verbose_level);
 	cout << "file " << event_file_name << " holds "
 			<< nb_completed_cases << " completed cases: ";
-	INT_vec_print(cout, completed_cases, nb_completed_cases);
+	int_vec_print(cout, completed_cases, nb_completed_cases);
 	cout << endl;
 	for (i = 0; i < nb_completed_cases; i++) {
 		event_file_read_case(event_file_name,
@@ -1867,11 +1867,11 @@ void isomorph::read_event_file(const char *event_file_name,
 #define MY_BUFSIZE 1000000
 
 void isomorph::skip_through_event_file(
-		ifstream &f, INT verbose_level)
+		ifstream &f, int verbose_level)
 {
 	char buf[MY_BUFSIZE];
 	char token[1000];
-	INT l, j, case_no;
+	int l, j, case_no;
 	char *p_buf;
 
 	cout << "isomorph::skip_through_event_file" << endl;
@@ -1922,9 +1922,9 @@ void isomorph::skip_through_event_file(
 }
 
 void isomorph::skip_through_event_file1(ifstream &f,
-		INT case_no, INT orbit_no, INT verbose_level)
+		int case_no, int orbit_no, int verbose_level)
 {
-	INT l, j, from_orbit, to_orbit, rank_subset;
+	int l, j, from_orbit, to_orbit, rank_subset;
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
@@ -2021,10 +2021,10 @@ void isomorph::skip_through_event_file1(ifstream &f,
 
 void isomorph::event_file_completed_cases(
 	const char *event_file_name,
-	INT &nb_completed_cases, INT *completed_cases,
-	INT verbose_level)
+	int &nb_completed_cases, int *completed_cases,
+	int verbose_level)
 {
-	INT l, j, a;
+	int l, j, a;
 	char *p_buf;
 	char token[1000];
 	ifstream f(event_file_name);
@@ -2061,10 +2061,10 @@ void isomorph::event_file_completed_cases(
 }
 
 void isomorph::event_file_read_case(
-		const char *event_file_name, INT case_no,
-		INT verbose_level)
+		const char *event_file_name, int case_no,
+		int verbose_level)
 {
-	INT l, j, a;
+	int l, j, a;
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
@@ -2106,9 +2106,9 @@ void isomorph::event_file_read_case(
 }
 
 void isomorph::event_file_read_case1(ifstream &f,
-		INT case_no, INT verbose_level)
+		int case_no, int verbose_level)
 {
-	INT l, j, from_orbit, to_orbit, rank_subset;
+	int l, j, from_orbit, to_orbit, rank_subset;
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
@@ -2170,15 +2170,15 @@ void isomorph::event_file_read_case1(ifstream &f,
 
 #define MY_BUFSIZE 1000000
 
-INT isomorph::next_subset_play_back(INT &subset_rank,
+int isomorph::next_subset_play_back(int &subset_rank,
 	ifstream *play_back_file,
-	INT &f_eof, INT verbose_level)
+	int &f_eof, int verbose_level)
 {
-	INT f_v = (verbose_level >= 3);
+	int f_v = (verbose_level >= 3);
 	char *p_buf;
 	char token[1000];
 	char buf[MY_BUFSIZE];
-	INT rank;
+	int rank;
 		
 	f_eof = FALSE;
 	if (play_back_file->eof()) {
@@ -2250,10 +2250,10 @@ INT isomorph::next_subset_play_back(INT &subset_rank,
 }
 
 void isomorph::read_everything_including_classification(
-		const char *prefix_classify, INT verbose_level)
+		const char *prefix_classify, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "isomorph::read_everything_including_classification" << endl;
@@ -2285,7 +2285,7 @@ void isomorph::read_everything_including_classification(
 
 	iso_test_init(verbose_level - 1);
 
-	//INT f_implicit_fusion = FALSE;
+	//int f_implicit_fusion = FALSE;
 	
 	gen->f_allowed_to_show_group_elements = FALSE;
 	

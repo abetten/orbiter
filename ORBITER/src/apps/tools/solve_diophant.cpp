@@ -10,59 +10,59 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *fname = NULL;
-	INT f_general_format = FALSE;
-	//INT f_maxdepth = FALSE;
-	//INT maxdepth = 0;
-	//INT print_interval = 1000;
-	INT f_list_of_cases = FALSE;
+	int f_general_format = FALSE;
+	//int f_maxdepth = FALSE;
+	//int maxdepth = 0;
+	//int print_interval = 1000;
+	int f_list_of_cases = FALSE;
 	const char *fname_list_of_cases = NULL;
 	const char *fname_template = NULL;
-	INT f_prefix = FALSE;
+	int f_prefix = FALSE;
 	const char *prefix = NULL;
-	INT f_output_file = FALSE;
+	int f_output_file = FALSE;
 	const char *output_file = NULL;
-	INT f_print = FALSE;
-	INT f_print_tex = FALSE;
-	INT f_draw = FALSE;
-	INT f_draw_solutions = FALSE;
-	INT f_analyze = FALSE;
-	INT f_tree = FALSE;
-	INT f_decision_nodes_only = FALSE;
+	int f_print = FALSE;
+	int f_print_tex = FALSE;
+	int f_draw = FALSE;
+	int f_draw_solutions = FALSE;
+	int f_analyze = FALSE;
+	int f_tree = FALSE;
+	int f_decision_nodes_only = FALSE;
 	const char *fname_tree = NULL;
-	INT f_coordinates = FALSE;
-	INT xmax_in = ONE_MILLION;
-	INT ymax_in = ONE_MILLION;
-	INT xmax_out = ONE_MILLION;
-	INT ymax_out = ONE_MILLION;
-	INT f_output_solution_raw = FALSE;
-	INT f_test = FALSE;
+	int f_coordinates = FALSE;
+	int xmax_in = ONE_MILLION;
+	int ymax_in = ONE_MILLION;
+	int xmax_out = ONE_MILLION;
+	int ymax_out = ONE_MILLION;
+	int f_output_solution_raw = FALSE;
+	int f_test = FALSE;
 	const char *solution_file = NULL;
-	INT f_make_clique_graph = FALSE;
-	INT f_RHS = FALSE;
-	INT RHS_value = 0;
-	INT f_sum = FALSE;
-	INT sum_value = 0;
-	INT RHS_row_nb = 0;
-	INT RHS_row[1000];
-	INT RHS_row_value[1000];
-	INT f_betten = FALSE;
-	INT f_mckay = FALSE;
-	INT nb_xmax = 0;
-	INT xmax_value[1000];
-	INT xmax_variable[1000];
-	INT f_scale = FALSE;
+	int f_make_clique_graph = FALSE;
+	int f_RHS = FALSE;
+	int RHS_value = 0;
+	int f_sum = FALSE;
+	int sum_value = 0;
+	int RHS_row_nb = 0;
+	int RHS_row[1000];
+	int RHS_row_value[1000];
+	int f_betten = FALSE;
+	int f_mckay = FALSE;
+	int nb_xmax = 0;
+	int xmax_value[1000];
+	int xmax_variable[1000];
+	int f_scale = FALSE;
 	double scale = .45;
-	INT f_line_width = FALSE;
+	int f_line_width = FALSE;
 	double line_width = 1.5;
 
 	for (i = 1; i < argc; i++) {
@@ -197,9 +197,9 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
-	//INT search_steps, decision_steps, nb_sol, dt;
+	//int search_steps, decision_steps, nb_sol, dt;
 
 	diophant *Dio;
 
@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 		Dio->init_RHS(RHS_value, verbose_level);
 		}
 
-	INT r, val;
+	int r, val;
 	
 	for (i = 0; i < RHS_row_nb; i++) {
 		r = RHS_row[i];
@@ -261,7 +261,7 @@ int main(int argc, char **argv)
 		replace_extension_with(fname_base, "_drawing");		
 		//Dio->draw_it(fname_base, xmax_in, ymax_in, xmax_out, ymax_out);
 		Dio->draw_partitioned(fname_base, xmax_in, ymax_in, xmax_out, ymax_out, 
-			FALSE, 0, NULL, 
+			FALSE, 0, 0,
 			verbose_level);
 		}
 
@@ -303,7 +303,7 @@ int main(int argc, char **argv)
 
 	Dio->append_equation();
 
-	INT j;
+	int j;
 
 	if (f_v) {
 		cout << "appending one equation for the sum" << endl;
@@ -358,7 +358,7 @@ int main(int argc, char **argv)
 			Dio->solve_all_betten(verbose_level - 2);
 			}
 		else if (f_mckay) {
-			INT nb_backtrack_nodes;
+			int nb_backtrack_nodes;
 			
 			cout << "solving with mckay" << endl;
 			Dio->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);

@@ -7,23 +7,23 @@
 #include "groups_and_group_actions.h"
 
 void choose_random_generator_derived_group(sims *G,
-		INT *Elt, INT verbose_level)
+		int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int *Elt1, *Elt2, *Elt3, *Elt4, *Elt5, *Elt6;
 	action *A;
 	
 	if (f_v) {
 		cout << "choose_random_generator_derived_group" << endl;
 		}
 	A = G->A;
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
-	Elt5 = NEW_INT(A->elt_size_in_INT);
-	Elt6 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	Elt5 = NEW_int(A->elt_size_in_int);
+	Elt6 = NEW_int(A->elt_size_in_int);
 	
 	G->random_element(Elt1, verbose_level - 1);
 	G->random_element(Elt2, verbose_level - 1);
@@ -33,25 +33,25 @@ void choose_random_generator_derived_group(sims *G,
 	A->mult(Elt1, Elt2, Elt6);
 	A->mult(Elt5, Elt6, Elt);
 	
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
-	FREE_INT(Elt5);
-	FREE_INT(Elt6);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(Elt5);
+	FREE_int(Elt6);
 }
 
 void sims::build_up_subgroup_random_process(sims *G, 
 	void (*choose_random_generator_for_subgroup)(sims *G,
-			INT *Elt, INT verbose_level),
-	INT verbose_level)
+			int *Elt, int verbose_level),
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	//INT f_vvvv = (verbose_level >= 10);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	//int f_vvvv = (verbose_level >= 10);
 	longinteger_object go, G_order, quo, rem;
-	INT drop_out_level, image, cnt, f_added;
+	int drop_out_level, image, cnt, f_added;
 	action *GA;
 	
 	GA = A;

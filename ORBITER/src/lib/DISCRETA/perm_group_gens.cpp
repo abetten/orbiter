@@ -8,12 +8,12 @@
 
 
 static void schreier_trace(Vector & schreier, Vector & schreier_generator, 
-	Vector & generators, INT i, discreta_base & p);
+	Vector & generators, int i, discreta_base & p);
 
-INT vec_generators_is_trivial_group(Vector & gen)
+int vec_generators_is_trivial_group(Vector & gen)
 //TRUE if the generators are all the identity, FALSE otherwise.
 {
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -23,11 +23,11 @@ INT vec_generators_is_trivial_group(Vector & gen)
 	return TRUE;
 }
 
-INT is_abelian(Vector & gen)
+int is_abelian(Vector & gen)
 //True if the elements in the vector gen generate an abelian group.
 {
 	discreta_base a;
-	INT i, j, l;
+	int i, j, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -45,7 +45,7 @@ INT is_abelian(Vector & gen)
 #include <parser.h>
 #endif
 
-void read_file_of_generators_xml(Vector & gen, char *fname, INT &f_cyclic_notation, INT f_v)
+void read_file_of_generators_xml(Vector & gen, char *fname, int &f_cyclic_notation, int f_v)
 //opens the file fname for reading and reads generators.
 //A typical input file is:
 //<GENERATORS NOTATION="CYCLE" DEGREE="6">
@@ -60,7 +60,7 @@ void read_file_of_generators_xml(Vector & gen, char *fname, INT &f_cyclic_notati
 #if XML_AVAILABLE
 	xmlDocPtr doc;
 	xmlNodePtr cur;
-	INT i, j, size, degree;
+	int i, j, size, degree;
 	char *notation, *s;
 	
 	
@@ -144,7 +144,7 @@ void read_file_of_generators_xml(Vector & gen, char *fname, INT &f_cyclic_notati
 #endif
 }
 
-void write_file_of_generators_xml_group_label(Vector & gen, char *group_label, INT f_cyclic_notation)
+void write_file_of_generators_xml_group_label(Vector & gen, char *group_label, int f_cyclic_notation)
 //opens the file group_label.xml for writing and writes generators.
 {
 	hollerith fname;
@@ -154,10 +154,10 @@ void write_file_of_generators_xml_group_label(Vector & gen, char *group_label, I
 	write_file_of_generators_xml(gen, fname.s(), f_cyclic_notation);
 }
 
-void write_file_of_generators_xml(Vector & gen, char *fname, INT f_cyclic_notation)
+void write_file_of_generators_xml(Vector & gen, char *fname, int f_cyclic_notation)
 //opens the file fname for writing and writes generators.
 {
-	INT i, l, d;
+	int i, l, d;
 	ofstream f(fname);
 	
 	l = gen.s_l();
@@ -243,7 +243,7 @@ void write_file_of_generators(Vector & G, char *fname)
 
 void write_generators(Vector & G, ofstream & f)
 {
-	INT i, j, a, nb, deg;
+	int i, j, a, nb, deg;
 	
 	nb = G.s_l();
 	if (nb == 0) {
@@ -286,7 +286,7 @@ void write_file_of_generators_gap(Vector & G, char *fname)
 
 void write_generators_gap(Vector & G, ofstream & f)
 {
-	INT i, nb;
+	int i, nb;
 	//permutation q;
 	
 	printing_mode pm(printing_mode_gap);
@@ -314,7 +314,7 @@ void vec_induced_group_on_subset(Vector & V, Vector & subset, Vector & W)
 //The entries in subset must be in $\{0,1,\ldots,deg-1\}$.
 {
 	permutation q;
-	INT i, j, k, a, b, r, l;
+	int i, j, k, a, b, r, l;
 
 	r = V.s_l();
 	W.m_l(r);
@@ -339,13 +339,13 @@ void vec_induced_group_on_subset(Vector & V, Vector & subset, Vector & W)
 		}
 }
 
-void vec_subgroup_of_hol_of_cyclic_group(Vector & V, INT n, INT i)
+void vec_subgroup_of_hol_of_cyclic_group(Vector & V, int n, int i)
 //Computes generators for the subgroup of $Hol(C_n)$ of index $i$.
 //$n$ must be a prime.
 {
-	INT m, m1, g, alpha, alpha1, j, jj;
+	int m, m1, g, alpha, alpha1, j, jj;
 	permutation p;
-	INT f_v = TRUE;
+	int f_v = TRUE;
 	
 	if (!is_prime(n)) {
 		cout << "vec_subgroup_of_hol_of_cyclic_group() n must be a prime !" << endl;
@@ -353,7 +353,7 @@ void vec_subgroup_of_hol_of_cyclic_group(Vector & V, INT n, INT i)
 		}
 	m = n - 1;
 	m1 = m / i;
-	g = gcd_INT(m, i);
+	g = gcd_int(m, i);
 	if (m1 * i != m) {
 		i = g;
 		cout << "WARNING: vec_subgroup_of_hol_of_cyclic_group(): "
@@ -390,14 +390,14 @@ void vec_subgroup_of_hol_of_cyclic_group(Vector & V, INT n, INT i)
 	cout << "2nd generator: " << p << endl;
 }
 
-void vec_hol_of_cyclic_group(Vector & V, INT n)
+void vec_hol_of_cyclic_group(Vector & V, int n)
 //Computes generators for the holomorph of $C_n$, 
 //the cyclic group of $n$ elements. The vector V 
 //becomes the vector of generators.
 {
 	Vector perm, perminv, red;
 	permutation p;
-	INT flag, i, j, ii, a;
+	int flag, i, j, ii, a;
 
 	perm.m_l_n(n + 1);
 	perminv.m_l_n(n + 1);
@@ -454,7 +454,7 @@ void vec_conjugate(Vector & gen, permutation & p)
 //The new vector elements are $\{ p^{-1} g p \mid g \in gen\}$.
 {
 	permutation pv, tmp1;
-	INT i, l;
+	int i, l;
 
 	pv = p;
 	pv.invert();
@@ -475,7 +475,7 @@ void vec_induce_action_on_blocks(Vector & gen, Vector & B)
 //the result replaces the original vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -488,7 +488,7 @@ void vec_induce3(Vector & gen)
 //calls induce3 for all elements in the vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -501,7 +501,7 @@ void vec_induce2(Vector & gen)
 //calls induce2 for all elements in the vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -510,11 +510,11 @@ void vec_induce2(Vector & gen)
 		}
 }
 
-void vec_induce_on_2tuples(Vector & gen, INT f_injective)
+void vec_induce_on_2tuples(Vector & gen, int f_injective)
 //calls induce_on_2tuples for all elements in the vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -527,7 +527,7 @@ void vec_add_fixpoint_in_front(Vector & gen)
 //calls add\_fixpoint\_in\_front for all elements in the vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	// cout << "vec_add_fixpoint_in_front() l=" << l << endl;
@@ -541,21 +541,21 @@ void vec_add_fixpoint_at_end(Vector & gen)
 //calls embed\_at(q, d + 1, 0); for all elements q in the vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
 		permutation &p = gen[i].as_permutation();
-		INT d = p.s_l();
+		int d = p.s_l();
 		p.embed_at(q, d + 1, 0);
 		gen[i].swap(q);
 		}
 }
 
-INT vec_generators_degree(Vector & a)
+int vec_generators_degree(Vector & a)
 //Returns the degree of the (permutation-)group generated by the elements of a.
 {
-	INT l, la;
+	int l, la;
 	
 	la = a.s_l();
 	if (la == 0) {
@@ -581,7 +581,7 @@ void vec_generators_stabilize_point(Vector & a, Vector & b)
 //for $G_0$ are read out of this chain 
 //(by a call to L.get_generators(1)).
 {
-	INT i, l;
+	int i, l;
 	Vector gen;
 
 	l = a.s_l();	
@@ -615,11 +615,11 @@ void vec_generators_group_order(Vector & gen, discreta_base & o)
 }
 #endif
 
-void vec_generators_remove_fixpoint(Vector & gen, INT i)
+void vec_generators_remove_fixpoint(Vector & gen, int i)
 //calls remove\_fixpoint(i) for all elements in the vector gen.
 {
 	permutation q;
-	INT ii, l;
+	int ii, l;
 	
 	l = gen.s_l();
 	for (ii = 0; ii < l; ii++) {
@@ -628,10 +628,10 @@ void vec_generators_remove_fixpoint(Vector & gen, INT i)
 		}
 }
 
-void vec_generators_raise_to_nth_power(Vector & gen, INT n)
+void vec_generators_raise_to_nth_power(Vector & gen, int n)
 //power_int(n) for all generators.
 {
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -639,9 +639,9 @@ void vec_generators_raise_to_nth_power(Vector & gen, INT n)
 		}
 }
 
-void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, INT k, INT q, INT f_v, INT f_vv)
+void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, int k, int q, int f_v, int f_vv)
 {
-	INT i, l;
+	int i, l;
 	permutation pp;
 	
 	l = gen.s_l();
@@ -654,7 +654,7 @@ void vec_generators_induce_on_lines_of_PG_k_q(Vector & gen, INT k, INT q, INT f_
 		}
 }
 
-void vec_generators_trivial_group(Vector & gen, INT deg)
+void vec_generators_trivial_group(Vector & gen, int deg)
 //before: trivial_generators.
 //Generator for the trivial permutation group on \lq deg\rq elements.
 {
@@ -671,11 +671,11 @@ void vec_generators_trivial_group(Vector & gen, INT deg)
 	gen.append(p);
 }
 
-void vec_generators_cyclic_group(Vector & gen, INT deg)
+void vec_generators_cyclic_group(Vector & gen, int deg)
 //Generator for the cyclic group on \lq deg\rq elements.
 {
 	permutation p;
-	INT i;
+	int i;
 	
 	if (deg < 1) {
 		cout << "vec_generators_cyclic_group()|deg < 1" << endl;
@@ -692,7 +692,7 @@ void vec_generators_cyclic_group(Vector & gen, INT deg)
 	gen.append(p);
 }
 
-void vec_generators_Cn_in_Cnm(Vector & gen, INT n, INT m)
+void vec_generators_Cn_in_Cnm(Vector & gen, int n, int m)
 //Generator for the cyclic group $C_n$ as a subgroup of $C_{nm}$ (on $nm$ elements), 
 //i.e. the $m$-th power of the generator of $C_{nm}.$
 {
@@ -701,12 +701,12 @@ void vec_generators_Cn_in_Cnm(Vector & gen, INT n, INT m)
 	gen[0].as_permutation().Cn_in_Cnm(n, m);
 }
 
-void vec_generators_AutCq_in_Cqm(Vector & gen, INT q, INT m)
+void vec_generators_AutCq_in_Cqm(Vector & gen, int q, int m)
 //Generator for $Aut(C_n)$
 //where q is a prime power, as a subgroup of $C_{qm}$ (on $qm$ elements).
 {
 	permutation per;
-	INT p, f;
+	int p, f;
 	
 	if (!factor_if_prime_power(q, &p, &f)) {
 		cout << "vec_generators_AutCq_in_Cqm()|q must be a prime power" << endl;
@@ -727,7 +727,7 @@ void vec_generators_AutCq_in_Cqm(Vector & gen, INT q, INT m)
 	gen[0] = per;
 }
 
-void vec_generators_symmetric_group(Vector & gen, INT deg)
+void vec_generators_symmetric_group(Vector & gen, int deg)
 //Generators for the symmetric group on \lq deg\rq elements.
 {
 	permutation p;
@@ -747,11 +747,11 @@ void vec_generators_symmetric_group(Vector & gen, INT deg)
 	gen.append(p);
 }
 
-void vec_generators_alternating_group(Vector & gen, INT deg)
+void vec_generators_alternating_group(Vector & gen, int deg)
 //Generators for the alternation group on \lq deg\rq elements.
 {
 	permutation p;
-	INT i, j, k;
+	int i, j, k;
 	
 	if (deg < 1) {
 		cout << "vec_generators_alternating_group()|deg < 1" << endl;
@@ -778,12 +778,12 @@ void vec_generators_alternating_group(Vector & gen, INT deg)
 		}	
 }
 
-void vec_generators_alternating_group_huppert(Vector & gen, INT deg)
+void vec_generators_alternating_group_huppert(Vector & gen, int deg)
 //Generators for the alternation group on \lq deg\rq elements.
 //Generators as described in Huppert I, p 138.
 {
 	permutation p;
-	INT i;
+	int i;
 	
 	if (deg < 1) {
 		cout << "vec_generators_alternating_group_huppert()|deg < 1" << endl;
@@ -814,11 +814,11 @@ void vec_generators_alternating_group_huppert(Vector & gen, INT deg)
 		}
 }
 
-void vec_generators_dihedral_group(Vector & gen, INT deg)
+void vec_generators_dihedral_group(Vector & gen, int deg)
 //Generators for the dihedral group on \lq deg\rq elements.
 {
 	permutation p;
-	INT i, m;
+	int i, m;
 	
 	if (deg < 1) {
 		cout << "vec_generators_dihedral_group() deg < 1" << endl;
@@ -852,7 +852,7 @@ void vec_generators_dihedral_group(Vector & gen, INT deg)
 	gen.append(p);
 }
 
-void vec_generators_Mathieu_n(Vector & gen, INT n)
+void vec_generators_Mathieu_n(Vector & gen, int n)
 //Returns generators for $M_n$ ($n \in \{11,12,23,24\}$).
 //The generators are taken from Hall~\cite{Hall59}.
 {
@@ -889,8 +889,8 @@ void vec_generators_Mathieu_11(Vector & gen)
 			"(0,10)(3,5)(4,8)(6,7)" };
 #endif
 	permutation p;
-	INT f_v = FALSE;
-	INT i;
+	int f_v = FALSE;
+	int i;
 	
 	gen.m_l(0);
 	p.m_l(11);
@@ -922,8 +922,8 @@ void vec_generators_Mathieu_12(Vector & gen)
 			"(0,11)(3,6)(4,5)(7,8)" };
 #endif
 	permutation p;
-	INT f_v = FALSE;
-	INT i;
+	int f_v = FALSE;
+	int i;
 	
 	gen.m_l(0);
 	p.m_l(12);
@@ -948,8 +948,8 @@ void vec_generators_Mathieu_23(Vector & gen)
 			"(2,16,9,8,8)(3,12,13,18,4)(7,17,10,11,22)(14,19,21,20,15)" };
 #endif
 	permutation p;
-	INT f_v = FALSE;
-	INT i;
+	int f_v = FALSE;
+	int i;
 	
 	gen.m_l(0);
 	p.m_l(23);
@@ -973,8 +973,8 @@ void vec_generators_Mathieu_24(Vector & gen)
 			"(0,23)(1,22)(2,11)(3,15)(4,17)(5,9)(6,19)(7,13)(8,20)(10,16)(12,21)(14,18)" };
 #endif
 	permutation p;
-	INT f_v = FALSE;
-	INT i;
+	int f_v = FALSE;
+	int i;
 	
 	gen.m_l(0);
 	p.m_l(24);
@@ -993,7 +993,7 @@ void vec_generators_diagonal_sum(Vector & a, Vector & b, Vector & c)
 //respect to an isomorphism from $G$ to $H$.
 {
 	permutation q;
-	INT i, la, lb;
+	int i, la, lb;
 
 	la = a.s_l();
 	lb = b.s_l();
@@ -1020,7 +1020,7 @@ void vec_generators_comma(Vector & a, Vector & b, Vector & c)
 //The fixepoints are added at the end.
 {
 	permutation q;
-	INT i, la, lb, da, db, dc;
+	int i, la, lb, da, db, dc;
 
 	la = a.s_l();
 	lb = b.s_l();
@@ -1045,7 +1045,7 @@ void vec_generators_direct_sum(Vector & a, Vector & b, Vector & c)
 //$X \cup Y$ (the action of the direct product of $G$ and $H$). 
 {
 	permutation q;
-	INT i, la, lb, da, db;
+	int i, la, lb, da, db;
 
 	la = a.s_l();
 	lb = b.s_l();
@@ -1072,7 +1072,7 @@ void vec_generators_direct_product(Vector & a, Vector & b, Vector & c)
 //for $G \times H$ which moves only rows (or columns) of $X \times Y$.
 {
 	permutation id_n, id_m, q;
-	INT i, la, lb, n, m;
+	int i, la, lb, n, m;
 
 	la = a.s_l();
 	lb = b.s_l();
@@ -1095,16 +1095,16 @@ void vec_generators_direct_product(Vector & a, Vector & b, Vector & c)
 }
 
 
-void vec_generators_GL_n_q_as_matrices(Vector & gen, INT n, domain *dom, INT f_v)
+void vec_generators_GL_n_q_as_matrices(Vector & gen, int n, domain *dom, int f_v)
 {
 	vec_generators_GL_n_q_subgroup_as_matrices(gen, n, 1, dom, f_v);
 }
 
-void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, INT n, INT subgroup_index, domain *dom, INT f_v)
+void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, int n, int subgroup_index, domain *dom, int f_v)
 {
 	with w(dom);
 	matrix A;
-	INT i, j, alpha;
+	int i, j, alpha;
 	
 	if (f_v) {
 		cout << "vec_generators_GL_n_q() n=" << n << endl;
@@ -1152,7 +1152,7 @@ void vec_generators_GL_n_q_subgroup_as_matrices(Vector & gen, INT n, INT subgrou
 		}
 }
 
-void vec_generators_SL_n_q_as_matrices(Vector & gen, INT n, domain *dom, INT f_v)
+void vec_generators_SL_n_q_as_matrices(Vector & gen, int n, domain *dom, int f_v)
 {
 	Vector GL_gen;
 	
@@ -1163,7 +1163,7 @@ void vec_generators_SL_n_q_as_matrices(Vector & gen, INT n, domain *dom, INT f_v
 	kernel_of_homomorphism(GL_gen, gen, determinant_map, f_v, FALSE);
 }
 
-void vec_generators_frobenius_in_PG(Vector & gen, INT n, domain *dom, INT f_v)
+void vec_generators_frobenius_in_PG(Vector & gen, int n, domain *dom, int f_v)
 {
 	permutation p;
 	
@@ -1175,7 +1175,7 @@ void vec_generators_frobenius_in_PG(Vector & gen, INT n, domain *dom, INT f_v)
 	gen.append(p);
 }
 
-void vec_generators_frobenius_in_AG(Vector & gen, INT n, domain *dom, INT f_v)
+void vec_generators_frobenius_in_AG(Vector & gen, int n, domain *dom, int f_v)
 {
 	permutation p;
 	
@@ -1187,12 +1187,12 @@ void vec_generators_frobenius_in_AG(Vector & gen, INT n, domain *dom, INT f_v)
 	gen.append(p);
 }
 
-void vec_generators_affine_translations(Vector & gen, INT n, domain *dom, INT f_v)
+void vec_generators_affine_translations(Vector & gen, int n, domain *dom, int f_v)
 {
 	Vector b;
 	with ww(dom);
 	permutation p;
-	INT i, j, l;
+	int i, j, l;
 	
 	gen.m_l(0);
 	finite_field_domain_base_over_subfield(b);
@@ -1211,7 +1211,7 @@ void vec_generators_affine_translations(Vector & gen, INT n, domain *dom, INT f_
 		}
 }
 
-void vec_generators_affine_translations(Vector & gen, INT n, INT q, INT f_v)
+void vec_generators_affine_translations(Vector & gen, int n, int q, int f_v)
 {
 	domain *dom;
 	
@@ -1220,9 +1220,9 @@ void vec_generators_affine_translations(Vector & gen, INT n, INT q, INT f_v)
 	free_finite_field_domain(dom, f_v);
 }
 
-void vec_generators_projective_representation(domain *dom, Vector & a, Vector & b, INT f_action_from_right, INT f_modified, INT f_v)
+void vec_generators_projective_representation(domain *dom, Vector & a, Vector & b, int f_action_from_right, int f_modified, int f_v)
 {
-	INT i, l;
+	int i, l;
 	permutation q;
 	
 	if (f_v) {
@@ -1243,9 +1243,9 @@ void vec_generators_projective_representation(domain *dom, Vector & a, Vector & 
 		}
 }
 
-void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, INT f_v)
+void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, int f_v)
 {
-	INT i, l;
+	int i, l;
 	permutation q;
 	
 	if (f_v) {
@@ -1268,7 +1268,7 @@ void vec_generators_affine_representation(domain *dom, Vector & a, Vector & b, I
 
 #define MY_DEBUG 0
 
-void vec_generators_GL_n_q_projective_representation(Vector & gen, INT n, INT q, INT f_special, INT f_frobenius, INT f_modified, INT f_v)
+void vec_generators_GL_n_q_projective_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_modified, int f_v)
 {
 	domain *dom;
 	Vector GL_gen, gen1, gen2;
@@ -1313,13 +1313,13 @@ void vec_generators_GL_n_q_projective_representation(Vector & gen, INT n, INT q,
 	free_finite_field_domain(dom, f_v);
 }
 
-void vec_generators_GL_n_q_affine_representation(Vector & gen, INT n, INT q, INT f_special, INT f_frobenius, INT f_translations, INT f_v)
+void vec_generators_GL_n_q_affine_representation(Vector & gen, int n, int q, int f_special, int f_frobenius, int f_translations, int f_v)
 {
 	vec_generators_GL_n_q_subgroup_affine_representation(gen, n, q, 1, f_special, f_frobenius, f_translations, f_v);
 }
 
-void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, INT n, INT q, INT subgroup_index, 
-	INT f_special, INT f_frobenius, INT f_translations, INT f_v)
+void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, int n, int q, int subgroup_index, 
+	int f_special, int f_frobenius, int f_translations, int f_v)
 {
 	domain *dom;
 	Vector GL_gen, gen1, gen2, gen4;
@@ -1357,7 +1357,7 @@ void vec_generators_GL_n_q_subgroup_affine_representation(Vector & gen, INT n, I
 }
 
 void kernel_of_homomorphism(Vector & gens, Vector & kernel_gens, 
-	void (*hom)(discreta_base & x, discreta_base & image), INT f_v, INT f_vv)
+	void (*hom)(discreta_base & x, discreta_base & image), int f_v, int f_vv)
 //Computes generators for the kernel of a given homomorphism hom 
 //given generators for a group.
 {
@@ -1365,7 +1365,7 @@ void kernel_of_homomorphism(Vector & gens, Vector & kernel_gens,
 	Vector schreier_back, schreier_gen;
 	discreta_base g, h, ghv, a;
 	integer int_ob;
-	INT nb_gen, i, j, k, next, next1, idx;
+	int nb_gen, i, j, k, next, next1, idx;
 	
 	// f_vv = TRUE;
 	
@@ -1479,10 +1479,10 @@ void kernel_of_homomorphism(Vector & gens, Vector & kernel_gens,
 }
 
 static void schreier_trace(Vector & schreier, Vector & schreier_generator, 
-	Vector & generators, INT i, discreta_base & p)
+	Vector & generators, int i, discreta_base & p)
 {
 	discreta_base p1;
-	INT ii, prev, g;
+	int ii, prev, g;
 	
 	if (schreier.s_l() < i) {
 		cout << "schreier_trace: schreier.s_l() < i" << endl;
@@ -1502,10 +1502,10 @@ static void schreier_trace(Vector & schreier, Vector & schreier_generator,
 		}
 }
 
-void vec_generators_A5_in_PSL(Vector& G, INT q, INT f_v)
+void vec_generators_A5_in_PSL(Vector& G, int q, int f_v)
 {
 	hollerith a;
-	INT f_cyclic_notation;
+	int f_cyclic_notation;
 	
 	a.init("a5_in_psl.out ");
 	a.append_i(q);
@@ -1528,10 +1528,10 @@ void vec_generators_A5_in_PSL(Vector& G, INT q, INT f_v)
 }
 
 
-void vec_generators_S4_in_PSL(Vector& G, INT q, INT f_v)
+void vec_generators_S4_in_PSL(Vector& G, int q, int f_v)
 {
 	hollerith a;
-	INT f_cyclic_notation;
+	int f_cyclic_notation;
 	
 	a.init("s4_in_psl.out ");
 	a.append_i(q);
@@ -1553,7 +1553,7 @@ void vec_generators_S4_in_PSL(Vector& G, INT q, INT f_v)
 		}
 }
 
-void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, INT f_v)
+void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, int f_v)
 {
 	if (f_v) {
 		cout << "computing generators for the subgroup of even elements:" << endl;
@@ -1569,7 +1569,7 @@ void vec_generators_even_subgroup(Vector & gen, Vector & gen_even_subgroup, INT 
 
 #if 0
 void vec_generators_on_conjugacy_class_of_subgroups_by_conjugation(perm_group &G, 
-	Vector &LayerOrbit, INT layer, INT orbit, Vector &gens, Vector &induced_gens, INT f_v, INT f_vv)
+	Vector &LayerOrbit, int layer, int orbit, Vector &gens, Vector &induced_gens, int f_v, int f_vv)
 {
 	Vector action_data;
 	action_data.m_l(1);
@@ -1599,11 +1599,11 @@ void vec_generators_on_conjugacy_class_of_subgroups_by_conjugation(perm_group &G
 }
 #endif
 
-void vec_generators_restrict_to_subset(Vector & gen, INT first, INT len)
+void vec_generators_restrict_to_subset(Vector & gen, int first, int len)
 //calls restrict_to_subset(first, len) for all elements in the vector gen.
 {
 	permutation q;
-	INT i, l;
+	int i, l;
 	
 	l = gen.s_l();
 	for (i = 0; i < l; i++) {
@@ -1612,11 +1612,11 @@ void vec_generators_restrict_to_subset(Vector & gen, INT first, INT len)
 		}
 }
 
-void wreath_embedding(permutation & g, INT n, INT m, permutation & q)
+void wreath_embedding(permutation & g, int n, int m, permutation & q)
 //utility function for computing wreath product generators.
 {
-	INT i, j, ii, first, to;
-	INT nm;
+	int i, j, ii, first, to;
+	int nm;
 	
 	if (g.s_l() != m)
 	{
@@ -1636,11 +1636,11 @@ void wreath_embedding(permutation & g, INT n, INT m, permutation & q)
 	cout << "leave wreath_embedding()" << endl;
 }
 
-void wreath_embedding_component(permutation & g, INT n, INT m, INT j, permutation & q)
+void wreath_embedding_component(permutation & g, int n, int m, int j, permutation & q)
 //utility function for computing wreath product generators.
 {
-	INT i, i_im, first;
-	INT nm;
+	int i, i_im, first;
+	int nm;
 	
 	if (g.s_l() != n)
 	{
@@ -1659,11 +1659,11 @@ void wreath_embedding_component(permutation & g, INT n, INT m, INT j, permutatio
 	cout << "leave wreath_embedding_component()" << endl;
 }
 
-void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, INT f_v)
+void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, int f_v)
 //Computes generators for the wreath product $\la G \ra \wr \la H \ra$ into $W$.
 {
 	permutation per;
-	INT n, m, i, j, lG, lH, nb_gen;
+	int n, m, i, j, lG, lH, nb_gen;
 	
 	f_v = 1;
 
@@ -1703,12 +1703,12 @@ void vec_generators_wreath_product(Vector & G, Vector & H, Vector & W, INT f_v)
 		}
 }
 
-void vec_generators_Sn_wreath_Sm(INT n, INT m, Vector & G)
+void vec_generators_Sn_wreath_Sm(int n, int m, Vector & G)
 //Computes generators for $S_n \wr S_m$ into $G$.
 {
 	permutation per;
 	Vector Sn, Sm;
-	INT i, j, nb_gen_Sn, nb_gen_Sm, nb_gen;
+	int i, j, nb_gen_Sn, nb_gen_Sm, nb_gen;
 	
 	cout << "vec_generators_Sn_wreath_Sm(): n = " << n << " m = " << m << endl;
 	if (n == 1) {
@@ -1745,8 +1745,8 @@ void vec_generators_Sn_wreath_Sm(INT n, INT m, Vector & G)
 		}
 }
 
-void vec_generators_q1_q2(INT q1, INT q2, Vector & gen, hollerith &label, 
-	INT f_write_generators_to_file, INT f_v, INT f_vv)
+void vec_generators_q1_q2(int q1, int q2, Vector & gen, hollerith &label, 
+	int f_write_generators_to_file, int f_v, int f_vv)
 {
 	Vector gen1, gen2;
 	
@@ -1782,15 +1782,15 @@ void vec_generators_q1_q2(INT q1, INT q2, Vector & gen, hollerith &label,
 		cout << endl;
 		}
 	if (f_write_generators_to_file) {
-		INT f_cyclic_notation = TRUE;
+		int f_cyclic_notation = TRUE;
 		write_file_of_generators_xml_group_label(gen, label.s(), f_cyclic_notation);
 		write_file_of_generators_group_label(gen, label.s());
 		write_file_of_generators_gap_group_label(gen, label.s());
 		}
 }
 
-void vec_generators_q1_q2_aubv(INT q1, INT q2, INT u, INT v, Vector & G, hollerith &label, 
-	INT f_write_generators_to_file, INT f_v, INT f_vv)
+void vec_generators_q1_q2_aubv(int q1, int q2, int u, int v, Vector & G, hollerith &label, 
+	int f_write_generators_to_file, int f_v, int f_vv)
 {
 	hollerith h;
 	
@@ -1805,15 +1805,15 @@ void vec_generators_q1_q2_aubv(INT q1, INT q2, INT u, INT v, Vector & G, holleri
 	
 	vec_generators_q1_q2_au1bv1_au2bv2(q1, q2, u, v, 0, 0, G, h, FALSE, f_v, f_vv);
 	if (f_write_generators_to_file) {
-		INT f_cyclic_notation = TRUE;
+		int f_cyclic_notation = TRUE;
 		write_file_of_generators_xml_group_label(G, label.s(), f_cyclic_notation);
 		write_file_of_generators_group_label(G, label.s());
 		write_file_of_generators_gap_group_label(G, label.s());
 		}
 }
 
-void vec_generators_q1_q2_au1bv1_au2bv2(INT q1, INT q2, INT u1, INT v1, INT u2, INT v2, 
-	Vector & G, hollerith &label, INT f_write_generators_to_file, INT f_v, INT f_vv)
+void vec_generators_q1_q2_au1bv1_au2bv2(int q1, int q2, int u1, int v1, int u2, int v2, 
+	Vector & G, hollerith &label, int f_write_generators_to_file, int f_v, int f_vv)
 {
 	Vector gen1, gen2, gen3, matrix_gen1;
 	
@@ -1840,7 +1840,7 @@ void vec_generators_q1_q2_au1bv1_au2bv2(INT q1, INT q2, INT u1, INT v1, INT u2, 
 	vec_generators_affine_translations(gen1, 1 /* n */, field_q1, f_v);
 	vec_generators_affine_translations(gen2, 1 /* n */, field_q2, f_v);
 
-	INT a, a1, a2, b, b1, b2;
+	int a, a1, a2, b, b1, b2;
 	permutation perm_a1, perm_b1, perm_ab1;
 	permutation perm_a2, perm_b2, perm_ab2;
 
@@ -1950,7 +1950,7 @@ void vec_generators_q1_q2_au1bv1_au2bv2(INT q1, INT q2, INT u1, INT v1, INT u2, 
 
 	G = gen3;
 	if (f_write_generators_to_file) {
-		INT f_cyclic_notation = TRUE;
+		int f_cyclic_notation = TRUE;
 		write_file_of_generators_xml_group_label(G, label.s(), f_cyclic_notation);
 		write_file_of_generators_group_label(G, label.s());
 		write_file_of_generators_gap_group_label(G, label.s());
@@ -1960,8 +1960,8 @@ void vec_generators_q1_q2_au1bv1_au2bv2(INT q1, INT q2, INT u1, INT v1, INT u2, 
 	cout << "label= " << label << endl;
 }
 
-void vec_generators_AGGL1q_subgroup(INT q, INT subgroup_index, 
-	INT f_special, INT f_frobenius, INT f_translations, INT f_v)
+void vec_generators_AGGL1q_subgroup(int q, int subgroup_index, 
+	int f_special, int f_frobenius, int f_translations, int f_v)
 {
 	Vector gen;
 	hollerith group_label;
@@ -1992,7 +1992,7 @@ void vec_generators_AGGL1q_subgroup(INT q, INT subgroup_index,
 	
 	fname.init(group_label.s());
 	fname.append(".xml");
-	INT f_cyclic_notation = TRUE;
+	int f_cyclic_notation = TRUE;
 	
 	vec_generators_GL_n_q_subgroup_affine_representation(gen, 1, q, subgroup_index, 
 		f_special, f_frobenius, f_translations, f_v);
@@ -2002,7 +2002,7 @@ void vec_generators_AGGL1q_subgroup(INT q, INT subgroup_index,
 }
 
 #if 0
-void vec_generators_cycle_index(Vector &gen, Vector &C, INT f_v)
+void vec_generators_cycle_index(Vector &gen, Vector &C, int f_v)
 {
 	perm_group G(gen);
 	
@@ -2010,7 +2010,7 @@ void vec_generators_cycle_index(Vector &gen, Vector &C, INT f_v)
 }
 #endif
 
-void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, INT p, INT f_modified, INT f_v)
+void vec_generators_singer_cycle_on_points_of_projective_plane(Vector &gen, int p, int f_modified, int f_v)
 {
 	gen.m_l(1);
 	gen[0].change_to_permutation();

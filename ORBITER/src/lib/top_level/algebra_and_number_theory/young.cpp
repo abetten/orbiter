@@ -47,8 +47,8 @@ void young::null()
 
 void young::freeself()
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -68,10 +68,10 @@ void young::freeself()
 		delete SG;
 		}
 	if (class_size) {
-		FREE_INT(class_size);
+		FREE_int(class_size);
 		}
 	if (class_rep) {
-		FREE_INT(class_rep);
+		FREE_int(class_rep);
 		}
 	if (f_v) {
 		cout << "young::freeself before delete D" << endl;
@@ -80,10 +80,10 @@ void young::freeself()
 		delete D;
 		}
 	if (col_parts) {
-		FREE_INT(col_parts);
+		FREE_int(col_parts);
 		}
 	if (Tableau) {
-		FREE_INT(Tableau);
+		FREE_int(Tableau);
 		}
 	if (Row_partition) {
 		delete Row_partition;
@@ -118,10 +118,10 @@ void young::freeself()
 		delete A;
 		}
 	if (Elt) {
-		FREE_INT(Elt);
+		FREE_int(Elt);
 		}
 	if (v) {
-		FREE_INT(v);
+		FREE_int(v);
 		}
 
 	if (f_v) {
@@ -143,11 +143,11 @@ void young::freeself()
 		}
 }
 
-void young::init(INT n, INT verbose_level)
+void young::init(int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 
 	if (f_v) {
 		cout << "young::init" << endl;
@@ -157,22 +157,22 @@ void young::init(INT n, INT verbose_level)
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 
 	if (f_v) {
 		cout << "Created group Sym(" << n << ") of size " << goi << endl;
 		}
 
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 	S = A->Sims;
 
 	if (f_vv) {
 		cout << "Listing all elements in the group Sym(" << n << "):" << endl;
 		for (i = 0; i < goi; i++) {
-			S->element_unrank_INT(i, Elt);
+			S->element_unrank_int(i, Elt);
 			cout << "element " << i << " is ";
 			A->element_print_quick(Elt, cout);
 			cout << endl;
@@ -203,33 +203,33 @@ void young::init(INT n, INT verbose_level)
 		}
 }
 
-void young::create_module(INT *h_alpha, 
-	INT *&Base, INT *&base_cols, INT &rk, 
-	INT verbose_level)
+void young::create_module(int *h_alpha, 
+	int *&Base, int *&base_cols, int &rk, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "young::create_module" << endl;
 		}
 
-	INT sz;
+	int sz;
 
 
-	goi = S->group_order_INT();
+	goi = S->group_order_int();
 	sz = group_ring_element_size(A, S);
 	
 
-	INT *M1;
+	int *M1;
 
-	M1 = NEW_INT(goi * sz);
-	Base = NEW_INT(goi * sz * D->size_of_instance_in_INT);
+	M1 = NEW_int(goi * sz);
+	Base = NEW_int(goi * sz * D->size_of_instance_in_int);
 	for (j = 0; j < sz; j++) {
 		M1[0 * sz + j] = h_alpha[j];
 		}
 
-	INT *elt4, *elt5;
+	int *elt4, *elt5;
 
 	group_ring_element_create(A, S, elt4);
 	group_ring_element_create(A, S, elt5);
@@ -247,7 +247,7 @@ void young::create_module(INT *h_alpha,
 
 	if (FALSE) {
 		cout << "M1=" << endl;
-		INT_matrix_print(M1, goi, sz);
+		int_matrix_print(M1, goi, sz);
 		}
 
 	for (i = 0; i < goi * sz; i++) {
@@ -259,11 +259,11 @@ void young::create_module(INT *h_alpha,
 		D->print_matrix(Base, goi, sz);
 		}
 
-	INT f_special = FALSE;
-	INT f_complete = TRUE;
-	INT f_P = FALSE;
+	int f_special = FALSE;
+	int f_complete = TRUE;
+	int f_P = FALSE;
 	
-	base_cols = NEW_INT(sz);
+	base_cols = NEW_int(sz);
 
 	if (f_v) {
 		cout << "Calling Gauss_echelon_form:" << endl;
@@ -280,39 +280,39 @@ void young::create_module(INT *h_alpha,
 
 	if (f_v) {
 		cout << "base_cols=" << endl;
-		INT_vec_print(cout, base_cols, rk);
+		int_vec_print(cout, base_cols, rk);
 		cout << endl;
 		}
 
 	
-	FREE_INT(M1);
-	FREE_INT(elt4);
-	FREE_INT(elt5);
+	FREE_int(M1);
+	FREE_int(elt4);
+	FREE_int(elt5);
 	
 	if (f_v) {
 		cout << "young::create_module done" << endl;
 		}
 }
 
-void young::create_representations(INT *Base, INT *base_cols, INT rk, INT verbose_level)
+void young::create_representations(int *Base, int *base_cols, int rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_v3 = (verbose_level >= 3);
-	INT i, j, h, sz;
+	int f_v = (verbose_level >= 1);
+	int f_v3 = (verbose_level >= 3);
+	int i, j, h, sz;
 
 	if (f_v) {
 		cout << "young::create_representations" << endl;
 		}
-	INT ii, idx, c;
+	int ii, idx, c;
 
-	INT *Mtx;
-	INT *M4;
-	INT *elt3, *elt4, *elt5;
+	int *Mtx;
+	int *M4;
+	int *elt3, *elt4, *elt5;
 
 	sz = group_ring_element_size(A, S);
 
-	Mtx = NEW_INT(rk * rk * D->size_of_instance_in_INT);
-	M4 = NEW_INT((rk + 1) * sz * D->size_of_instance_in_INT);
+	Mtx = NEW_int(rk * rk * D->size_of_instance_in_int);
+	M4 = NEW_int((rk + 1) * sz * D->size_of_instance_in_int);
 
 	group_ring_element_create(A, S, elt3);
 	group_ring_element_create(A, S, elt4);
@@ -328,7 +328,7 @@ void young::create_representations(INT *Base, INT *base_cols, INT rk, INT verbos
 
 		for (i = 0; i < rk; i++) {
 			for (j = 0; j < sz; j++) {
-				elt3[j] = D->as_INT(D->offset(Base, i * sz + j), 0);
+				elt3[j] = D->as_int(D->offset(Base, i * sz + j), 0);
 				}
 			group_ring_element_zero(A, S, elt4);
 			elt4[h] = 1;
@@ -375,7 +375,7 @@ void young::create_representations(INT *Base, INT *base_cols, INT rk, INT verbos
 
 
 		cout << "Conjugacy class " << c << " is represented by group element " << h;
-		S->element_unrank_INT(h, Elt);
+		S->element_unrank_int(h, Elt);
 		cout << " which is ";
 		A->element_print(Elt, cout);
 		cout << " which is represented by the matrix:" << endl;
@@ -386,34 +386,34 @@ void young::create_representations(INT *Base, INT *base_cols, INT rk, INT verbos
 		} // next c
 	
 
-	FREE_INT(elt3);
-	FREE_INT(elt4);
-	FREE_INT(elt5);
-	FREE_INT(Mtx);
+	FREE_int(elt3);
+	FREE_int(elt4);
+	FREE_int(elt5);
+	FREE_int(Mtx);
 
 	if (f_v) {
 		cout << "young::create_representations done" << endl;
 		}
 }
 
-void young::create_representation(INT *Base, INT *Base_inv, INT rk, INT group_elt, INT *Mtx, INT verbose_level)
-// Mtx[rk * rk * D->size_of_instance_in_INT]
+void young::create_representation(int *Base, int *Base_inv, int rk, int group_elt, int *Mtx, int verbose_level)
+// Mtx[rk * rk * D->size_of_instance_in_int]
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_v3 = (verbose_level >= 3);
-	INT i, j, sz;
+	int f_v = (verbose_level >= 1);
+	int f_v3 = (verbose_level >= 3);
+	int i, j, sz;
 
 	if (f_v) {
 		cout << "young::create_representation" << endl;
 		}
-	INT ii;
+	int ii;
 
-	INT *M4;
-	INT *elt3, *elt4, *elt5;
+	int *M4;
+	int *elt3, *elt4, *elt5;
 
 	sz = group_ring_element_size(A, S);
 
-	M4 = NEW_INT((rk + 1) * sz * D->size_of_instance_in_INT);
+	M4 = NEW_int((rk + 1) * sz * D->size_of_instance_in_int);
 
 	group_ring_element_create(A, S, elt3);
 	group_ring_element_create(A, S, elt4);
@@ -422,7 +422,7 @@ void young::create_representation(INT *Base, INT *Base_inv, INT rk, INT group_el
 
 	for (i = 0; i < rk; i++) {
 		for (j = 0; j < sz; j++) {
-			elt3[j] = D->as_INT(D->offset(Base, i * sz + j), 0);
+			elt3[j] = D->as_int(D->offset(Base, i * sz + j), 0);
 			}
 		group_ring_element_zero(A, S, elt4);
 		elt4[group_elt] = 1;
@@ -474,23 +474,23 @@ void young::create_representation(INT *Base, INT *Base_inv, INT rk, INT group_el
 
 	
 
-	FREE_INT(elt3);
-	FREE_INT(elt4);
-	FREE_INT(elt5);
+	FREE_int(elt3);
+	FREE_int(elt4);
+	FREE_int(elt5);
 
 	if (f_v) {
 		cout << "young::create_representation done" << endl;
 		}
 }
 
-void young::young_symmetrizer(INT *row_parts, INT nb_row_parts, 
-	INT *tableau, 
-	INT *elt1, INT *elt2, INT *elt3, 
-	INT verbose_level)
+void young::young_symmetrizer(int *row_parts, int nb_row_parts, 
+	int *tableau, 
+	int *elt1, int *elt2, int *elt3, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, a, b, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, a, b, h;
 
 	if (f_v) {
 		cout << "young::young_symmetrizer" << endl;
@@ -499,8 +499,8 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 	young::row_parts = row_parts;
 	l1 = nb_row_parts;
 	l2 = row_parts[0];
-	Tableau = NEW_INT(l1 * l2);
-	col_parts = NEW_INT(l2);
+	Tableau = NEW_int(l1 * l2);
+	col_parts = NEW_int(l2);
 
 	a = row_parts[l1 - 1];
 	for (j = 0; j < a; j++) {
@@ -520,10 +520,10 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 
 	if (f_v) {
 		cout << "row_part: ";
-		INT_vec_print(cout, row_parts, l1);
+		int_vec_print(cout, row_parts, l1);
 		cout << endl;
 		cout << "col_part: ";
-		INT_vec_print(cout, col_parts, l2);
+		int_vec_print(cout, col_parts, l2);
 		cout << endl;
 		}
 
@@ -573,12 +573,12 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 		}
 
 
-	INT go1, go2;
+	int go1, go2;
 		
 	compute_generators(go1, go2, verbose_level);
 
 
-	S1 = create_sims_from_generators_with_target_group_order_INT(A, 
+	S1 = create_sims_from_generators_with_target_group_order_int(A, 
 		gens1, go1, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Row stabilizer created" << endl;
@@ -587,7 +587,7 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 
 	if (f_vv) {
 		for (i = 0; i < go1; i++) {
-			S1->element_unrank_INT(i, Elt);
+			S1->element_unrank_int(i, Elt);
 			cout << "element " << i << " is ";
 			A->element_print_quick(Elt, cout);
 			cout << endl;
@@ -596,7 +596,7 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 
 
 
-	S2 = create_sims_from_generators_with_target_group_order_INT(A, 
+	S2 = create_sims_from_generators_with_target_group_order_int(A, 
 		gens2, go2, 0 /* verbose_level */);
 	if (f_v) {
 		cout << "Column stabilizer created" << endl;
@@ -604,7 +604,7 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 
 	if (f_v) {
 		for (i = 0; i < go2; i++) {
-			S2->element_unrank_INT(i, Elt);
+			S2->element_unrank_int(i, Elt);
 			cout << "element " << i << " is ";
 			A->element_print_quick(Elt, cout);
 			cout << endl;
@@ -612,27 +612,27 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 		}
 
 
-	INT_vec_zero(elt1, goi);
-	INT_vec_zero(elt2, goi);
+	int_vec_zero(elt1, goi);
+	int_vec_zero(elt2, goi);
 
 
 	// Unrank the element in the row-stabilizer subgroup,
 	// then rank the element in the symmetric group.
 	// Put the coefficient as one.
 	for (i = 0; i < go1; i++) {
-		S1->element_unrank_INT(i, Elt);
-		j = S->element_rank_INT(Elt);
+		S1->element_unrank_int(i, Elt);
+		j = S->element_rank_int(Elt);
 		elt1[j] += 1;
 		}
 
-	INT s;
+	int s;
 	
 	// Unrank the element in the column-stabilizer subgroup,
 	// then rank the element in the symmetric group.
 	// Put the coefficient as the sign of the permutation.
 	for (i = 0; i < go2; i++) {
-		S2->element_unrank_INT(i, Elt);
-		j = S->element_rank_INT(Elt);
+		S2->element_unrank_int(i, Elt);
+		j = S->element_rank_int(Elt);
 
 		s = perm_signum(Elt, n);
 		
@@ -668,16 +668,16 @@ void young::young_symmetrizer(INT *row_parts, INT nb_row_parts,
 		}
 }
 
-void young::compute_generators(INT &go1, INT &go2, INT verbose_level)
+void young::compute_generators(int &go1, int &go2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a, h;
+	int f_v = (verbose_level >= 1);
+	int i, j, a, h;
 
 	if (f_v) {
 		cout << "young::compute_generators" << endl;
 		}
 
-	INT nb_gens1, nb_gens2;
+	int nb_gens1, nb_gens2;
 
 	nb_gens1 = 0;	
 	for (i = 0; i < l1; i++) {
@@ -704,7 +704,7 @@ void young::compute_generators(INT &go1, INT &go2, INT verbose_level)
 	gens1 = NEW_OBJECT(vector_ge);
 	gens2 = NEW_OBJECT(vector_ge);
 
-	INT u, s, t;
+	int u, s, t;
 
 	gens1->init(A);
 	gens1->allocate(nb_gens1);
@@ -713,7 +713,7 @@ void young::compute_generators(INT &go1, INT &go2, INT verbose_level)
 	for (i = 0; i < l1; i++) {
 		a = row_parts[i];
 		if (a > 1) {
-			go1 *= INT_factorial(a);
+			go1 *= int_factorial(a);
 			for (j = 1; j < a; j++, h++) {
 				for (u = 0; u < n; u++) {
 					v[u] = u;
@@ -740,7 +740,7 @@ void young::compute_generators(INT &go1, INT &go2, INT verbose_level)
 	for (i = 0; i < l2; i++) {
 		a = col_parts[i];
 		if (a > 1) {
-			go2 *= INT_factorial(a);
+			go2 *= int_factorial(a);
 			for (j = 1; j < a; j++, h++) {
 				for (u = 0; u < n; u++) {
 					v[u] = u;
@@ -766,18 +766,18 @@ void young::compute_generators(INT &go1, INT &go2, INT verbose_level)
 
 }
 
-void young::Maschke(INT *Rep, 
-	INT dim_of_module, INT dim_of_submodule, 
-	INT *&Mu, 
-	INT verbose_level)
+void young::Maschke(int *Rep, 
+	int dim_of_module, int dim_of_submodule, 
+	int *&Mu, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT n, k, r;
-	INT i, j, h, hv;
-	INT sz;
-	INT *A, *Av;
-	INT *g, *gv, *Tau, *Theta, *TauTheta;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int n, k, r;
+	int i, j, h, hv;
+	int sz;
+	int *A, *Av;
+	int *g, *gv, *Tau, *Theta, *TauTheta;
 
 	if (f_v) {
 		cout << "young::Maschke" << endl;
@@ -787,7 +787,7 @@ void young::Maschke(INT *Rep,
 	k = dim_of_submodule;
 	r = n - k;
 	
-	sz = dim_of_module * dim_of_module * D->size_of_instance_in_INT;
+	sz = dim_of_module * dim_of_module * D->size_of_instance_in_int;
 	if (f_v) {
 		cout << "young::Maschke n=" << n << endl;
 		cout << "young::Maschke k=" << k << endl;
@@ -813,12 +813,12 @@ void young::Maschke(INT *Rep,
 		cout << "young::Maschke submodule is invariant, OK" << endl;
 		}
 
-	g = NEW_INT(D->size_of_instance_in_INT);
-	gv = NEW_INT(D->size_of_instance_in_INT);
-	Tau = NEW_INT(r * r * D->size_of_instance_in_INT);
-	Theta = NEW_INT(r * k * D->size_of_instance_in_INT);
-	TauTheta = NEW_INT(r * k * D->size_of_instance_in_INT);
-	Mu = NEW_INT(r * k * D->size_of_instance_in_INT);
+	g = NEW_int(D->size_of_instance_in_int);
+	gv = NEW_int(D->size_of_instance_in_int);
+	Tau = NEW_int(r * r * D->size_of_instance_in_int);
+	Theta = NEW_int(r * k * D->size_of_instance_in_int);
+	TauTheta = NEW_int(r * k * D->size_of_instance_in_int);
+	Mu = NEW_int(r * k * D->size_of_instance_in_int);
 
 	D->make_integer(g, goi, 0);
 	D->inverse(g, gv, 0);
@@ -905,12 +905,12 @@ void young::Maschke(INT *Rep,
 		}
 
 
-	FREE_INT(g);
-	FREE_INT(gv);
-	FREE_INT(Tau);
-	FREE_INT(Theta);
-	FREE_INT(TauTheta);
-	//FREE_INT(Mu);
+	FREE_int(g);
+	FREE_int(gv);
+	FREE_int(Tau);
+	FREE_int(Theta);
+	FREE_int(TauTheta);
+	//FREE_int(Mu);
 	
 
 	if (f_v) {

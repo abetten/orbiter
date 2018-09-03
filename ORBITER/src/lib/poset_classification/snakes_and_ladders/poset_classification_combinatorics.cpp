@@ -10,30 +10,30 @@
 #include "groups_and_group_actions/groups_and_group_actions.h"
 #include "poset_classification/poset_classification.h"
 
-void poset_classification::Plesken_matrix_up(INT depth,
-		INT *&P, INT &N, INT verbose_level)
+void poset_classification::Plesken_matrix_up(int depth,
+		int *&P, int &N, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Nb;
-	INT *Fst;
-	INT *Pij;
-	INT i, j;
-	INT N1, N2;
-	INT a, b, cnt;
+	int f_v = (verbose_level >= 1);
+	int *Nb;
+	int *Fst;
+	int *Pij;
+	int i, j;
+	int N1, N2;
+	int a, b, cnt;
 
 	if (f_v) {
 		cout << "poset_classification::Plesken_matrix_up" << endl;
 		}
 	N = 0;
-	Nb = NEW_INT(depth + 1);
-	Fst = NEW_INT(depth + 2);
+	Nb = NEW_int(depth + 1);
+	Fst = NEW_int(depth + 2);
 	Fst[0] = 0;
 	for (i = 0; i <= depth; i++) {
 		Nb[i] = nb_orbits_at_level(i);
 		Fst[i + 1] = Fst[i] + Nb[i];
 		N += Nb[i];
 		}
-	P = NEW_INT(N * N);
+	P = NEW_int(N * N);
 	for (i = 0; i <= depth; i++) {
 		for (j = 0; j <= depth; j++) {
 			Plesken_submatrix_up(i, j, Pij, N1, N2, verbose_level - 1);
@@ -43,7 +43,7 @@ void poset_classification::Plesken_matrix_up(INT depth,
 					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
 					}
 				}
-			FREE_INT(Pij);
+			FREE_int(Pij);
 			}
 		}
 	if (f_v) {
@@ -51,30 +51,30 @@ void poset_classification::Plesken_matrix_up(INT depth,
 		}
 }
 
-void poset_classification::Plesken_matrix_down(INT depth,
-		INT *&P, INT &N, INT verbose_level)
+void poset_classification::Plesken_matrix_down(int depth,
+		int *&P, int &N, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Nb;
-	INT *Fst;
-	INT *Pij;
-	INT i, j;
-	INT N1, N2;
-	INT a, b, cnt;
+	int f_v = (verbose_level >= 1);
+	int *Nb;
+	int *Fst;
+	int *Pij;
+	int i, j;
+	int N1, N2;
+	int a, b, cnt;
 
 	if (f_v) {
 		cout << "poset_classification::Plesken_matrix_down" << endl;
 		}
 	N = 0;
-	Nb = NEW_INT(depth + 1);
-	Fst = NEW_INT(depth + 2);
+	Nb = NEW_int(depth + 1);
+	Fst = NEW_int(depth + 2);
 	Fst[0] = 0;
 	for (i = 0; i <= depth; i++) {
 		Nb[i] = nb_orbits_at_level(i);
 		Fst[i + 1] = Fst[i] + Nb[i];
 		N += Nb[i];
 		}
-	P = NEW_INT(N * N);
+	P = NEW_int(N * N);
 	for (i = 0; i <= depth; i++) {
 		for (j = 0; j <= depth; j++) {
 			Plesken_submatrix_down(i, j,
@@ -85,7 +85,7 @@ void poset_classification::Plesken_matrix_down(INT depth,
 					P[(Fst[i] + a) * N + Fst[j] + b] = cnt;
 					}
 				}
-			FREE_INT(Pij);
+			FREE_int(Pij);
 			}
 		}
 	if (f_v) {
@@ -93,11 +93,11 @@ void poset_classification::Plesken_matrix_down(INT depth,
 		}
 }
 
-void poset_classification::Plesken_submatrix_up(INT i, INT j,
-		INT *&Pij, INT &N1, INT &N2, INT verbose_level)
+void poset_classification::Plesken_submatrix_up(int i, int j,
+		int *&Pij, int &N1, int &N2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b;
+	int f_v = (verbose_level >= 1);
+	int a, b;
 
 	if (f_v) {
 		cout << "poset_classification::Plesken_submatrix_up "
@@ -105,7 +105,7 @@ void poset_classification::Plesken_submatrix_up(INT i, INT j,
 		}
 	N1 = nb_orbits_at_level(i);
 	N2 = nb_orbits_at_level(j);
-	Pij = NEW_INT(N1 * N2);
+	Pij = NEW_int(N1 * N2);
 	for (a = 0; a < N1; a++) {
 		for (b = 0; b < N2; b++) {
 			Pij[a * N2 + b] = count_incidences_up(
@@ -117,11 +117,11 @@ void poset_classification::Plesken_submatrix_up(INT i, INT j,
 		}
 }
 
-void poset_classification::Plesken_submatrix_down(INT i, INT j,
-		INT *&Pij, INT &N1, INT &N2, INT verbose_level)
+void poset_classification::Plesken_submatrix_down(int i, int j,
+		int *&Pij, int &N1, int &N2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b;
+	int f_v = (verbose_level >= 1);
+	int a, b;
 
 	if (f_v) {
 		cout << "poset_classification::Plesken_submatrix_down "
@@ -129,7 +129,7 @@ void poset_classification::Plesken_submatrix_down(INT i, INT j,
 		}
 	N1 = nb_orbits_at_level(i);
 	N2 = nb_orbits_at_level(j);
-	Pij = NEW_INT(N1 * N2);
+	Pij = NEW_int(N1 * N2);
 	for (a = 0; a < N1; a++) {
 		for (b = 0; b < N2; b++) {
 			Pij[a * N2 + b] = count_incidences_down(
@@ -141,16 +141,16 @@ void poset_classification::Plesken_submatrix_down(INT i, INT j,
 		}
 }
 
-INT poset_classification::count_incidences_up(INT lvl1, INT po1,
-		INT lvl2, INT po2, INT verbose_level)
+int poset_classification::count_incidences_up(int lvl1, int po1,
+		int lvl2, int po2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *set;
-	INT *set1;
-	INT *set2;
-	INT ol, i, cnt = 0;
-	INT f_contained;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *set;
+	int *set1;
+	int *set2;
+	int ol, i, cnt = 0;
+	int f_contained;
 
 	if (f_v) {
 		cout << "poset_classification::count_incidences_up "
@@ -160,37 +160,37 @@ INT poset_classification::count_incidences_up(INT lvl1, INT po1,
 	if (lvl1 > lvl2) {
 		return 0;
 		}
-	set = NEW_INT(lvl2 + 1);
-	set1 = NEW_INT(lvl2 + 1);
-	set2 = NEW_INT(lvl2 + 1);
+	set = NEW_int(lvl2 + 1);
+	set1 = NEW_int(lvl2 + 1);
+	set2 = NEW_int(lvl2 + 1);
 
 	orbit_element_unrank(lvl1, po1, 0 /*el1 */,
 			set1, 0 /* verbose_level */);
 
-	ol = orbit_length_as_INT(po2, lvl2);
+	ol = orbit_length_as_int(po2, lvl2);
 
 	if (f_vv) {
 		cout << "set1=";
-		INT_vec_print(cout, set1, lvl1);
+		int_vec_print(cout, set1, lvl1);
 		cout << endl;
 		}
 
 	for (i = 0; i < ol; i++) {
 
-		INT_vec_copy(set1, set, lvl1);
+		int_vec_copy(set1, set, lvl1);
 
 
 		orbit_element_unrank(lvl2, po2, i, set2, 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "set2 " << i << " / " << ol << "=";
-			INT_vec_print(cout, set2, lvl2);
+			int_vec_print(cout, set2, lvl2);
 			cout << endl;
 			}
 
 		f_contained = poset_structure_is_contained(
 				set, lvl1, set2, lvl2, verbose_level - 2);
-		//f_contained = INT_vec_sort_and_test_if_contained(
+		//f_contained = int_vec_sort_and_test_if_contained(
 		// set, lvl1, set2, lvl2);
 		
 		if (f_vv) {
@@ -204,9 +204,9 @@ INT poset_classification::count_incidences_up(INT lvl1, INT po1,
 		}
 
 	
-	FREE_INT(set);
-	FREE_INT(set1);
-	FREE_INT(set2);
+	FREE_int(set);
+	FREE_int(set1);
+	FREE_int(set2);
 	if (f_v) {
 		cout << "poset_classification::count_incidences_up "
 				"lvl1=" << lvl1 << " po1=" << po1
@@ -216,16 +216,16 @@ INT poset_classification::count_incidences_up(INT lvl1, INT po1,
 	return cnt;
 }
 
-INT poset_classification::count_incidences_down(
-		INT lvl1, INT po1, INT lvl2, INT po2, INT verbose_level)
+int poset_classification::count_incidences_down(
+		int lvl1, int po1, int lvl2, int po2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *set;
-	INT *set1;
-	INT *set2;
-	INT ol, i, cnt = 0;
-	INT f_contained;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *set;
+	int *set1;
+	int *set2;
+	int ol, i, cnt = 0;
+	int f_contained;
 
 	if (f_v) {
 		cout << "poset_classification::count_incidences_down "
@@ -235,37 +235,37 @@ INT poset_classification::count_incidences_down(
 	if (lvl1 > lvl2) {
 		return 0;
 		}
-	set = NEW_INT(lvl2 + 1);
-	set1 = NEW_INT(lvl2 + 1);
-	set2 = NEW_INT(lvl2 + 1);
+	set = NEW_int(lvl2 + 1);
+	set1 = NEW_int(lvl2 + 1);
+	set2 = NEW_int(lvl2 + 1);
 
 	orbit_element_unrank(lvl2, po2, 0 /*el1 */, set2, 0 /* verbose_level */);
 
-	ol = orbit_length_as_INT(po1, lvl1);
+	ol = orbit_length_as_int(po1, lvl1);
 
 	if (f_vv) {
 		cout << "set2=";
-		INT_vec_print(cout, set2, lvl2);
+		int_vec_print(cout, set2, lvl2);
 		cout << endl;
 		}
 
 	for (i = 0; i < ol; i++) {
 
-		INT_vec_copy(set2, set, lvl2);
+		int_vec_copy(set2, set, lvl2);
 
 
 		orbit_element_unrank(lvl1, po1, i, set1, 0 /* verbose_level */);
 
 		if (f_vv) {
 			cout << "set1 " << i << " / " << ol << "=";
-			INT_vec_print(cout, set1, lvl1);
+			int_vec_print(cout, set1, lvl1);
 			cout << endl;
 			}
 
 		
 		f_contained = poset_structure_is_contained(
 				set1, lvl1, set, lvl2, verbose_level - 2);
-		//f_contained = INT_vec_sort_and_test_if_contained(
+		//f_contained = int_vec_sort_and_test_if_contained(
 		// set1, lvl1, set, lvl2);
 						
 		if (f_vv) {
@@ -278,9 +278,9 @@ INT poset_classification::count_incidences_down(
 		}
 
 	
-	FREE_INT(set);
-	FREE_INT(set1);
-	FREE_INT(set2);
+	FREE_int(set);
+	FREE_int(set1);
+	FREE_int(set2);
 	if (f_v) {
 		cout << "poset_classification::count_incidences_down "
 				"lvl1=" << lvl1 << " po1=" << po1
@@ -290,10 +290,10 @@ INT poset_classification::count_incidences_down(
 	return cnt;
 }
 
-void poset_classification::Asup_to_Ainf(INT t, INT k,
-		INT *M_sup, INT *M_inf, INT verbose_level)
+void poset_classification::Asup_to_Ainf(int t, int k,
+		int *M_sup, int *M_inf, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_domain D;
 	longinteger_object quo, rem, aa, bb, cc;
 	longinteger_object go;
@@ -301,8 +301,8 @@ void poset_classification::Asup_to_Ainf(INT t, INT k,
 	longinteger_object *go_k;
 	longinteger_object *ol_t;
 	longinteger_object *ol_k;
-	INT Nt, Nk;
-	INT i, j, a, c;
+	int Nt, Nk;
+	int i, j, a, c;
 	
 	if (f_v) {
 		cout << "poset_classification::Asup_to_Ainf" << endl;
@@ -364,7 +364,7 @@ void poset_classification::Asup_to_Ainf(INT t, INT k,
 						<< " ol_k[j]=" << ol_k[j] << endl;
 				exit(1);
 				}
-			c = cc.as_INT();
+			c = cc.as_int();
 			M_inf[i * Nk + j] = c;
 			}
 		}
@@ -381,10 +381,10 @@ void poset_classification::Asup_to_Ainf(INT t, INT k,
 }
 
 void poset_classification::test_for_multi_edge_in_classification_graph(
-		INT depth, INT verbose_level)
+		int depth, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, f, l, j, h1;
+	int f_v = (verbose_level >= 1);
+	int i, f, l, j, h1;
 
 	if (f_v) {
 		cout << "poset_classification::test_for_multi_edge_in_classification_graph "

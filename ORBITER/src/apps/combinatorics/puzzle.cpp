@@ -136,7 +136,7 @@ int main(void)
 	cout << "nb_eqns=" << nb_eqns << endl;
 
 
-	INT nb_rows, nb_cols, nb_needed;
+	int nb_rows, nb_cols, nb_needed;
 
 	nb_rows = nb_eqns;
 	nb_cols = nb_vars;

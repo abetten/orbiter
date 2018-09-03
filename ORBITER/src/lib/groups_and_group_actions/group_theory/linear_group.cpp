@@ -35,9 +35,9 @@ void linear_group::freeself()
 }
 
 void linear_group::init(
-		linear_group_description *description, INT verbose_level)
+		linear_group_description *description, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_group::init" << endl;
@@ -136,7 +136,7 @@ void linear_group::init(
 		vector_space_dimension = n;
 		q = input_q;
 		Strong_gens = initial_strong_gens;
-		sprintf(prefix, "PGL_%ld_%ld", n, input_q);
+		sprintf(prefix, "PGL_%d_%d", n, input_q);
 		}
 
 	if (description->f_on_k_subspaces) {
@@ -182,9 +182,9 @@ void linear_group::init(
 }
 
 void linear_group::init_PGL2q_OnConic(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_group::init_PGL2q_OnConic "
@@ -220,7 +220,7 @@ void linear_group::init_PGL2q_OnConic(char *prefix,
 				"created action of PGL2_on conic:" << endl;
 		A2->print_info();
 		}
-	sprintf(prefix, "PGL2_OnConic_%ld_%ld", n, q);
+	sprintf(prefix, "PGL2_OnConic_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_PGL2q_OnConic "
 				"created group " << prefix << endl;
@@ -228,9 +228,9 @@ void linear_group::init_PGL2q_OnConic(char *prefix,
 }
 
 void linear_group::init_wedge_action(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
@@ -282,7 +282,7 @@ void linear_group::init_wedge_action(char *prefix,
 				"created wedge action:" << endl;
 		A2->print_info();
 		}
-	sprintf(prefix, "Wedge_%ld_%ld", n, q);
+	sprintf(prefix, "Wedge_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_wedge_action "
 				"created group " << prefix << endl;
@@ -290,9 +290,9 @@ void linear_group::init_wedge_action(char *prefix,
 }
 
 void linear_group::init_monomial_group(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -310,7 +310,7 @@ void linear_group::init_monomial_group(char *prefix,
 	
 	A2 = A_linear;
 
-	sprintf(prefix, "Monomial_%ld_%ld", n, q);
+	sprintf(prefix, "Monomial_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_monomial_group "
 				"created group " << prefix << endl;
@@ -323,9 +323,9 @@ void linear_group::init_monomial_group(char *prefix,
 }
 
 void linear_group::init_diagonal_group(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -343,7 +343,7 @@ void linear_group::init_diagonal_group(char *prefix,
 	
 	A2 = A_linear;
 
-	sprintf(prefix, "Diagonal_%ld_%ld", n, q);
+	sprintf(prefix, "Diagonal_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_diagonal_group "
 				"created group " << prefix << endl;
@@ -356,9 +356,9 @@ void linear_group::init_diagonal_group(char *prefix,
 }
 
 void linear_group::init_singer_group(char *prefix,
-		INT singer_power, INT verbose_level)
+		int singer_power, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -377,7 +377,7 @@ void linear_group::init_singer_group(char *prefix,
 
 	A2 = A_linear;
 
-	sprintf(prefix, "Singer_%ld_%ld_power%ld",
+	sprintf(prefix, "Singer_%d_%d_power%d",
 			n, q, singer_power);
 	if (f_v) {
 		cout << "linear_group::init_singer_group "
@@ -391,9 +391,9 @@ void linear_group::init_singer_group(char *prefix,
 }
 
 void linear_group::init_null_polarity_group(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -411,7 +411,7 @@ void linear_group::init_null_polarity_group(char *prefix,
 	
 	A2 = A_linear;
 
-	sprintf(prefix, "NullPolarity_%ld_%ld", n, q);
+	sprintf(prefix, "NullPolarity_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_null_polarity_group "
 				"created group " << prefix << endl;
@@ -424,9 +424,9 @@ void linear_group::init_null_polarity_group(char *prefix,
 }
 
 void linear_group::init_borel_subgroup_upper(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -445,7 +445,7 @@ void linear_group::init_borel_subgroup_upper(char *prefix,
 	
 	A2 = A_linear;
 
-	sprintf(prefix, "BorelUpper_%ld_%ld", n, q);
+	sprintf(prefix, "BorelUpper_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_borel_subgroup_upper "
 				"created group " << prefix << endl;
@@ -458,9 +458,9 @@ void linear_group::init_borel_subgroup_upper(char *prefix,
 }
 
 void linear_group::init_identity_subgroup(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -478,7 +478,7 @@ void linear_group::init_identity_subgroup(char *prefix,
 	
 	A2 = A_linear;
 
-	sprintf(prefix, "Identity_%ld_%ld", n, q);
+	sprintf(prefix, "Identity_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_identity_subgroup "
 				"created group " << prefix << endl;
@@ -491,9 +491,9 @@ void linear_group::init_identity_subgroup(char *prefix,
 }
 
 void linear_group::init_symplectic_group(char *prefix,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -511,7 +511,7 @@ void linear_group::init_symplectic_group(char *prefix,
 	
 	A2 = A_linear;
 
-	sprintf(prefix, "Sp_%ld_%ld", n, q);
+	sprintf(prefix, "Sp_%d_%d", n, q);
 	if (f_v) {
 		cout << "linear_group::init_symplectic_group "
 				"created group " << prefix << endl;
@@ -524,10 +524,10 @@ void linear_group::init_symplectic_group(char *prefix,
 }
 
 void linear_group::init_subfield_structure_action(
-		char *prefix, INT s, INT verbose_level)
+		char *prefix, int s, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "linear_group::init_subfield_structure_action" << endl;
@@ -551,7 +551,7 @@ void linear_group::init_subfield_structure_action(
 
 	A2 = A_linear;
 
-	sprintf(prefix, "Subfield_%ld_%ld_%ld", n, q, s);
+	sprintf(prefix, "Subfield_%d_%d_%d", n, q, s);
 	if (f_v) {
 		cout << "linear_group::init_subfield_structure_action "
 				"created group " << prefix << endl;
@@ -564,9 +564,9 @@ void linear_group::init_subfield_structure_action(
 }
 
 void linear_group::init_orthogonal_group(char *prefix, 
-	INT epsilon, INT verbose_level)
+	int epsilon, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
@@ -590,14 +590,14 @@ void linear_group::init_orthogonal_group(char *prefix,
 
 	if (EVEN(n)) {
 		if (epsilon == 1) {
-			sprintf(prefix, "Orthogonal_plus_%ld_%ld", n, q);
+			sprintf(prefix, "Orthogonal_plus_%d_%d", n, q);
 			}
 		else {
-			sprintf(prefix, "Orthogonal_minus_%ld_%ld", n, q);
+			sprintf(prefix, "Orthogonal_minus_%d_%d", n, q);
 			}
 		}
 	else {
-		sprintf(prefix, "Orthogonal_%ld_%ld", n, q);
+		sprintf(prefix, "Orthogonal_%d_%d", n, q);
 		}
 	if (f_v) {
 		cout << "linear_group::init_orthogonal_group "
@@ -613,10 +613,10 @@ void linear_group::init_orthogonal_group(char *prefix,
 
 void linear_group::init_subgroup_from_file(char *prefix, 
 	const char *subgroup_fname, const char *subgroup_label, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "linear_group::init_subgroup_from_file" << endl;
@@ -650,7 +650,7 @@ void linear_group::init_subgroup_from_file(char *prefix,
 
 	A2 = A_linear;
 
-	sprintf(prefix, "Subgroup_%s_%ld_%ld",
+	sprintf(prefix, "Subgroup_%s_%d_%d",
 			subgroup_label, n, q);
 	if (f_v) {
 		cout << "linear_group::init_subgroup_from_file "

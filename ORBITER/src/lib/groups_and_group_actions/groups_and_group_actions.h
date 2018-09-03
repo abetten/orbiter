@@ -138,8 +138,8 @@ class vector_ge {
 
 public:
 	action *A;
-	INT *data;
-	INT len;
+	int *data;
+	int len;
 	
 	vector_ge();
 	vector_ge(action *A);
@@ -147,19 +147,19 @@ public:
 	void null();
 	void freeself();
 	void init(action *A);
-	void init_by_hdl(action *A, INT *gen_hdl, INT nb_gen);
-	void init_single(action *A, INT *Elt);
-	void init_double(action *A, INT *Elt1, INT *Elt2);
-	void init_from_permutation_representation(action *A, INT *data, 
-		INT nb_elements, INT verbose_level);
+	void init_by_hdl(action *A, int *gen_hdl, int nb_gen);
+	void init_single(action *A, int *Elt);
+	void init_double(action *A, int *Elt1, int *Elt2);
+	void init_from_permutation_representation(action *A, int *data, 
+		int nb_elements, int verbose_level);
 		// data[nb_elements * degree]
-	void init_from_data(action *A, INT *data, 
-		INT nb_elements, INT elt_size, INT verbose_level);
-	void init_conjugate_svas_of(vector_ge *v, INT *Elt, 
-		INT verbose_level);
-	void init_conjugate_sasv_of(vector_ge *v, INT *Elt, 
-		INT verbose_level);
-	INT *ith(INT i);
+	void init_from_data(action *A, int *data, 
+		int nb_elements, int elt_size, int verbose_level);
+	void init_conjugate_svas_of(vector_ge *v, int *Elt, 
+		int verbose_level);
+	void init_conjugate_sasv_of(vector_ge *v, int *Elt, 
+		int verbose_level);
+	int *ith(int i);
 	void print(ostream &ost);
 	//ostream& print(ostream& ost);
 	ostream& print_quick(ostream& ost);
@@ -167,38 +167,38 @@ public:
 	void print_generators_tex(
 			longinteger_object &go, ostream &ost);
 	ostream& print_as_permutation(ostream& ost);
-	void allocate(INT length);
-	void reallocate(INT new_length);
-	void reallocate_and_insert_at(INT position, INT *elt);
-	void insert_at(INT length_before, INT position, INT *elt);
+	void allocate(int length);
+	void reallocate(int new_length);
+	void reallocate_and_insert_at(int position, int *elt);
+	void insert_at(int length_before, int position, int *elt);
 		// does not reallocate, but shifts elements up to make space.
 		// the last element might be lost if there is no space.
-	void append(INT *elt);
-	void copy_in(INT i, INT *elt);
-	void copy_out(INT i, INT *elt);
-	void conjugate_svas(INT *Elt);
-	void conjugate_sasv(INT *Elt);
+	void append(int *elt);
+	void copy_in(int i, int *elt);
+	void copy_out(int i, int *elt);
+	void conjugate_svas(int *Elt);
+	void conjugate_sasv(int *Elt);
 	void print_with_given_action(ostream &ost, action *A2);
-	void print(ostream &ost, INT f_print_as_permutation, 
-		INT f_offset, INT offset, 
-		INT f_do_it_anyway_even_for_big_degree, 
-		INT f_print_cycles_of_length_one);
+	void print(ostream &ost, int f_print_as_permutation, 
+		int f_offset, int offset, 
+		int f_do_it_anyway_even_for_big_degree, 
+		int f_print_cycles_of_length_one);
 	void write_to_memory_object(memory_object *m, 
-		INT verbose_level);
+		int verbose_level);
 	void read_from_memory_object(memory_object *m, 
-		INT verbose_level);
+		int verbose_level);
 	void write_to_file_binary(ofstream &fp, 
-		INT verbose_level);
+		int verbose_level);
 	void read_from_file_binary(ifstream &fp, 
-		INT verbose_level);
+		int verbose_level);
 	void extract_subset_of_elements_by_rank_text_vector(
 		const char *rank_vector_text, sims *S, 
-		INT verbose_level);
-	void extract_subset_of_elements_by_rank(INT *rank_vector, 
-		INT len, sims *S, INT verbose_level);
-	INT test_if_all_elements_stabilize_a_point(action *A2, INT pt);
-	INT test_if_all_elements_stabilize_a_set(action *A2, 
-		INT *set, INT sz, INT verbose_level);
+		int verbose_level);
+	void extract_subset_of_elements_by_rank(int *rank_vector, 
+		int len, sims *S, int verbose_level);
+	int test_if_all_elements_stabilize_a_point(action *A2, int pt);
+	int test_if_all_elements_stabilize_a_set(action *A2, 
+		int *set, int sz, int verbose_level);
 };
 
 #include "./data_structures/data_structures.h"

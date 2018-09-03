@@ -12,40 +12,40 @@
 
 #define MY_BUFSIZE 1000000
 
-void INT_vec_add(INT *v1, INT *v2, INT *w, INT len)
+void int_vec_add(int *v1, int *v2, int *w, int len)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < len; i++) {
 		w[i] = v1[i] + v2[i];
 		}
 }
 
-void INT_vec_add3(INT *v1, INT *v2, INT *v3, INT *w, INT len)
+void int_vec_add3(int *v1, int *v2, int *v3, int *w, int len)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < len; i++) {
 		w[i] = v1[i] + v2[i] + v3[i];
 		}
 }
 
-void INT_vec_apply(INT *from, INT *through, INT *to, INT len)
+void int_vec_apply(int *from, int *through, int *to, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		to[i] = through[from[i]];
 		}
 }
 
-INT INT_vec_is_constant_on_subset(INT *v, 
-	INT *subset, INT sz, INT &value)
+int int_vec_is_constant_on_subset(int *v, 
+	int *subset, int sz, int &value)
 {
-	INT a, i;
+	int a, i;
 
 	if (sz == 0) {
-		cout << "INT_vec_is_costant_on_subset sz == 0" << endl;
+		cout << "int_vec_is_costant_on_subset sz == 0" << endl;
 		exit(1);
 		}
 	a = v[subset[0]];
@@ -62,13 +62,13 @@ INT INT_vec_is_constant_on_subset(INT *v,
 	return TRUE;
 }
 
-void INT_vec_take_away(INT *v, INT &len, INT *take_away, INT nb_take_away)
+void int_vec_take_away(int *v, int &len, int *take_away, int nb_take_away)
 	// v must be sorted
 {
-	INT i, j, idx;
+	int i, j, idx;
 	
 	for (i = 0; i < nb_take_away; i++) {
-		if (!INT_vec_search(v, len, take_away[i], idx)) {
+		if (!int_vec_search(v, len, take_away[i], idx)) {
 			continue;
 			}
 		for (j = idx; j < len; j++) {
@@ -79,9 +79,9 @@ void INT_vec_take_away(INT *v, INT &len, INT *take_away, INT nb_take_away)
 }
 
 
-INT INT_vec_count_number_of_nonzero_entries(INT *v, INT len)
+int int_vec_count_number_of_nonzero_entries(int *v, int len)
 {
-	INT i, n;
+	int i, n;
 	
 	n = 0;
 	for (i = 0; i < len; i++) {
@@ -92,53 +92,53 @@ INT INT_vec_count_number_of_nonzero_entries(INT *v, INT len)
 	return n;
 }
 
-INT INT_vec_find_first_nonzero_entry(INT *v, INT len)
+int int_vec_find_first_nonzero_entry(int *v, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		if (v[i]) {
 			return i;
 			}
 		}
-	cout << "INT_vec_find_first_nonzero_entry the vector is all zero" 
+	cout << "int_vec_find_first_nonzero_entry the vector is all zero" 
 		<< endl;
 	exit(1);
 }
 
-void INT_vec_zero(INT *v, INT len)
+void int_vec_zero(int *v, int len)
 {
-	INT i;
-	INT *p;
+	int i;
+	int *p;
 
 	for (p = v, i = 0; i < len; p++, i++) {
 		*p = 0;
 		}
 }
 
-void INT_vec_mone(INT *v, INT len)
+void int_vec_mone(int *v, int len)
 {
-	INT i;
-	INT *p;
+	int i;
+	int *p;
 
 	for (p = v, i = 0; i < len; p++, i++) {
 		*p = -1;
 		}
 }
 
-void INT_vec_copy(INT *from, INT *to, INT len)
+void int_vec_copy(int *from, int *to, int len)
 {
-	INT i;
-	INT *p, *q;
+	int i;
+	int *p, *q;
 
 	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
 		*q = *p;
 		}
 }
 
-void double_vec_copy(double *from, double *to, INT len)
+void double_vec_copy(double *from, double *to, int len)
 {
-	INT i;
+	int i;
 	double *p, *q;
 
 	for (p = from, q = to, i = 0; i < len; p++, q++, i++) {
@@ -146,10 +146,10 @@ void double_vec_copy(double *from, double *to, INT len)
 		}
 }
 
-void INT_vec_swap(INT *v1, INT *v2, INT len)
+void int_vec_swap(int *v1, int *v2, int len)
 {
-	INT i, a;
-	INT *p, *q;
+	int i, a;
+	int *p, *q;
 
 	for (p = v1, q = v2, i = 0; i < len; p++, q++, i++) {
 		a = *q;
@@ -158,13 +158,13 @@ void INT_vec_swap(INT *v1, INT *v2, INT len)
 		}
 }
 
-void INT_vec_delete_element_assume_sorted(INT *v, 
-	INT &len, INT a)
+void int_vec_delete_element_assume_sorted(int *v, 
+	int &len, int a)
 {
-	INT idx, i;
+	int idx, i;
 
-	if (!INT_vec_search(v, len, a, idx)) {
-		cout << "INT_vec_delete_element_assume_sorted cannot find the element" << endl;
+	if (!int_vec_search(v, len, a, idx)) {
+		cout << "int_vec_delete_element_assume_sorted cannot find the element" << endl;
 		exit(1);
 		}
 	for (i = idx + 1; i < len; i++) {
@@ -173,9 +173,9 @@ void INT_vec_delete_element_assume_sorted(INT *v,
 	len--;
 }
 
-uchar *bitvector_allocate(INT length)
+uchar *bitvector_allocate(int length)
 {
-	INT l, i;
+	int l, i;
 	uchar *p;
 
 	l = (length + 7) >> 3;
@@ -187,9 +187,9 @@ uchar *bitvector_allocate(INT length)
 }
 
 uchar *bitvector_allocate_and_coded_length(
-	INT length, INT &coded_length)
+	int length, int &coded_length)
 {
-	INT l, i;
+	int l, i;
 	uchar *p;
 
 	l = (length + 7) >> 3;
@@ -201,9 +201,9 @@ uchar *bitvector_allocate_and_coded_length(
 	return p;
 }
 
-void bitvector_m_ii(uchar *bitvec, INT i, INT a)
+void bitvector_m_ii(uchar *bitvec, int i, int a)
 {
-	INT ii, bit;
+	int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -219,9 +219,9 @@ void bitvector_m_ii(uchar *bitvec, INT i, INT a)
 		}
 }
 
-void bitvector_set_bit(uchar *bitvec, INT i)
+void bitvector_set_bit(uchar *bitvec, int i)
 {
-	INT ii, bit;
+	int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -231,10 +231,10 @@ void bitvector_set_bit(uchar *bitvec, INT i)
 	x |= mask;
 }
 
-INT bitvector_s_i(uchar *bitvec, INT i)
+int bitvector_s_i(uchar *bitvec, int i)
 // returns 0 or 1
 {
-	INT ii, bit;
+	int ii, bit;
 	uchar mask;
 
 	ii = i >> 3;
@@ -250,31 +250,31 @@ INT bitvector_s_i(uchar *bitvec, INT i)
 }
 
 
-INT INT_vec_hash(INT *data, INT len)
+int int_vec_hash(int *data, int len)
 {
 	uint32_t h;
 
 	h = SuperFastHash ((const char *) data, 
-		(uint32_t) len * sizeof(INT));
-	return (INT) h;
+		(uint32_t) len * sizeof(int));
+	return (int) h;
 }
 
-INT INT_vec_hash_after_sorting(INT *data, INT len)
+int int_vec_hash_after_sorting(int *data, int len)
 {
-	INT *data2;
-	INT i, h;
+	int *data2;
+	int i, h;
 
-	data2 = NEW_INT(len);
+	data2 = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		data2[i] = data[i];
 		}
-	INT_vec_heapsort(data2, len);
-	h = INT_vec_hash(data2, len);
-	FREE_INT(data2);
+	int_vec_heapsort(data2, len);
+	h = int_vec_hash(data2, len);
+	FREE_int(data2);
 	return h;
 }
 
-const char *plus_minus_string(INT epsilon)
+const char *plus_minus_string(int epsilon)
 {
 	if (epsilon == 1) {
 		return "+";
@@ -289,7 +289,7 @@ const char *plus_minus_string(INT epsilon)
 	exit(1);
 }
 
-const char *plus_minus_letter(INT epsilon)
+const char *plus_minus_letter(int epsilon)
 {
 	if (epsilon == 1) {
 		return "p";
@@ -304,12 +304,12 @@ const char *plus_minus_letter(INT epsilon)
 	exit(1);
 }
 
-void INT_vec_complement(INT *v, INT n, INT k)
+void int_vec_complement(int *v, int n, int k)
 // computes the complement to v + k (v must be allocated to n lements)
 // the first k elements of v[] must be in increasing order.
 {
-	INT *w;
-	INT j1, j2, i;
+	int *w;
+	int j1, j2, i;
 	
 	w = v + k;
 	j1 = 0;
@@ -323,15 +323,15 @@ void INT_vec_complement(INT *v, INT n, INT k)
 		j2++;
 		}
 	if (j2 != n - k) {
-		cout << "INT_vec_complement j2 != n - k" << endl;
+		cout << "int_vec_complement j2 != n - k" << endl;
 		exit(1);
 		}
 }
 
-void INT_vec_complement(INT *v, INT *w, INT n, INT k)
+void int_vec_complement(int *v, int *w, int n, int k)
 // computes the complement of v[k] w[n - k] 
 {
-	INT j1, j2, i;
+	int j1, j2, i;
 	
 	j1 = 0;
 	j2 = 0;
@@ -344,12 +344,12 @@ void INT_vec_complement(INT *v, INT *w, INT n, INT k)
 		j2++;
 		}
 	if (j2 != n - k) {
-		cout << "INT_vec_complement j2 != n - k" << endl;
+		cout << "int_vec_complement j2 != n - k" << endl;
 		exit(1);
 		}
 }
 
-void INT_vec_init5(INT *v, INT a0, INT a1, INT a2, INT a3, INT a4)
+void int_vec_init5(int *v, int a0, int a1, int a2, int a3, int a4)
 {
 	v[0] = a0;
 	v[1] = a1;
@@ -360,9 +360,9 @@ void INT_vec_init5(INT *v, INT a0, INT a1, INT a2, INT a3, INT a4)
 
 void dump_memory_chain(void *allocated_objects)
 {
-	INT i;
+	int i;
 	void **pp;
-	INT *pi;
+	int *pi;
 	void **next;
 	
 	i = 0;
@@ -370,13 +370,13 @@ void dump_memory_chain(void *allocated_objects)
 	while (next) {
 		pp = next;
 		next = (void **) pp[1];
-		pi = (INT *) &pp[2];
+		pi = (int *) &pp[2];
 		cout << i << " : " << *pi << endl;
 		i++;
 		}
 }
 
-void print_vector(ostream &ost, INT *v, int size)
+void print_vector(ostream &ost, int *v, int size)
 {
 	int i;
 	
@@ -389,12 +389,12 @@ void print_vector(ostream &ost, INT *v, int size)
 	ost << ")";
 }
 
-INT INT_vec_minimum(INT *v, INT len)
+int int_vec_minimum(int *v, int len)
 {
-	INT i, m;
+	int i, m;
 	
 	if (len == 0) {
-		cout << "INT_vec_minimum len == 0" << endl;
+		cout << "int_vec_minimum len == 0" << endl;
 		exit(1);
 		}
 	m = v[0];
@@ -406,12 +406,12 @@ INT INT_vec_minimum(INT *v, INT len)
 	return m;
 }
 
-INT INT_vec_maximum(INT *v, INT len)
+int int_vec_maximum(int *v, int len)
 {
-	INT m, i;
+	int m, i;
 	
 	if (len == 0) {
-		cout << "INT_vec_maximum len == 0" << endl;
+		cout << "int_vec_maximum len == 0" << endl;
 		exit(1);
 		}
 	m = v[0];
@@ -422,17 +422,17 @@ INT INT_vec_maximum(INT *v, INT len)
 	return m;
 }
 
-void INT_vec_copy(INT len, INT *from, INT *to)
+void int_vec_copy(int len, int *from, int *to)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++)
 		to[i] = from[i];
 }
 
-INT INT_vec_first_difference(INT *p, INT *q, INT len)
+int int_vec_first_difference(int *p, int *q, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		if (p[i] != q[i])
@@ -441,18 +441,18 @@ INT INT_vec_first_difference(INT *p, INT *q, INT len)
 	return i;
 }
 
-void itoa(char *p, INT len_of_p, INT i)
+void itoa(char *p, int len_of_p, int i)
 {
-	sprintf(p, "%ld", i);
+	sprintf(p, "%d", i);
 #if 0
 	ostrstream os(p, len_of_p);
 	os << i << ends;
 #endif
 }
 
-void char_swap(char *p, char *q, INT len)
+void char_swap(char *p, char *q, int len)
 {
-	INT i;
+	int i;
 	char c;
 	
 	for (i = 0; i < len; i++) {
@@ -463,9 +463,9 @@ void char_swap(char *p, char *q, INT len)
 }
 
 void print_integer_matrix(ostream &ost, 
-	INT *p, INT m, INT n)
+	int *p, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -476,9 +476,9 @@ void print_integer_matrix(ostream &ost,
 }
 
 void print_integer_matrix_width(ostream &ost, 
-	INT *p, INT m, INT n, INT dim_n, INT w)
+	int *p, int m, int n, int dim_n, int w)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -492,9 +492,9 @@ void print_integer_matrix_width(ostream &ost,
 }
 
 void print_01_matrix_tex(ostream &ost, 
-	INT *p, INT m, INT n)
+	int *p, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		cout << "\t\"";
@@ -506,9 +506,9 @@ void print_01_matrix_tex(ostream &ost,
 }
 
 void print_integer_matrix_tex(ostream &ost, 
-	INT *p, INT m, INT n)
+	int *p, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	ost << "\\begin{array}{*{" << n << "}c}" << endl;
 	for (i = 0; i < m; i++) {
@@ -524,10 +524,10 @@ void print_integer_matrix_tex(ostream &ost,
 }
 
 void print_integer_matrix_with_labels(ostream &ost, 
-	INT *p, INT m, INT n, INT *row_labels, INT *col_labels, 
-	INT f_tex)
+	int *p, int m, int n, int *row_labels, int *col_labels, 
+	int f_tex)
 {
-	INT i, j;
+	int i, j;
 	
 	if (f_tex) {
 		ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
@@ -571,7 +571,7 @@ void print_integer_matrix_with_labels(ostream &ost,
 }
 
 void print_integer_matrix_with_standard_labels(ostream &ost, 
-	INT *p, INT m, INT n, INT f_tex)
+	int *p, int m, int n, int f_tex)
 {
 	print_integer_matrix_with_standard_labels_and_offset(ost, 
 		p, m, n, 0, 0, f_tex);
@@ -579,7 +579,7 @@ void print_integer_matrix_with_standard_labels(ostream &ost,
 }
 
 void print_integer_matrix_with_standard_labels_and_offset(ostream &ost, 
-	INT *p, INT m, INT n, INT m_offset, INT n_offset, INT f_tex)
+	int *p, int m, int n, int m_offset, int n_offset, int f_tex)
 {
 	if (f_tex) {
 		print_integer_matrix_with_standard_labels_and_offset_tex(
@@ -592,11 +592,11 @@ void print_integer_matrix_with_standard_labels_and_offset(ostream &ost,
 }
 
 void print_integer_matrix_with_standard_labels_and_offset_text(
-	ostream &ost, INT *p, INT m, INT n, INT m_offset, INT n_offset)
+	ostream &ost, int *p, int m, int n, int m_offset, int n_offset)
 {
-	INT i, j, w;
+	int i, j, w;
 	
-	w = INT_matrix_max_log_of_entries(p, m, n);
+	w = int_matrix_max_log_of_entries(p, m, n);
 
 	for (j = 0; j < w; j++) {
 		ost << " ";
@@ -615,10 +615,10 @@ void print_integer_matrix_with_standard_labels_and_offset_text(
 }
 
 void print_integer_matrix_with_standard_labels_and_offset_tex(
-	ostream &ost, INT *p, INT m, INT n, 
-	INT m_offset, INT n_offset)
+	ostream &ost, int *p, int m, int n, 
+	int m_offset, int n_offset)
 {
-	INT i, j;
+	int i, j;
 	
 	ost << "\\begin{array}{r|*{" << n << "}r}" << endl;
 
@@ -639,14 +639,14 @@ void print_integer_matrix_with_standard_labels_and_offset_tex(
 }
 
 void print_integer_matrix_tex_block_by_block(ostream &ost, 
-	INT *p, INT m, INT n, INT block_width)
+	int *p, int m, int n, int block_width)
 {
-	INT i, j, I, J, nb_row_blocks, nb_col_blocks, v, w;
-	INT *M;
+	int i, j, I, J, nb_row_blocks, nb_col_blocks, v, w;
+	int *M;
 	
 	nb_row_blocks = (m + block_width - 1) / block_width;
 	nb_col_blocks = (n + block_width - 1) / block_width;
-	M = NEW_INT(block_width * block_width);
+	M = NEW_int(block_width * block_width);
 	for (I = 0; I < nb_row_blocks; I++) {
 		for (J = 0; J < nb_col_blocks; J++) {
 			ost << "$$" << endl;
@@ -666,7 +666,7 @@ void print_integer_matrix_tex_block_by_block(ostream &ost,
 			cout << "print_integer_matrix_tex_block_by_block I=" 
 				<< I << " J=" << J << " v=" << v 
 				<< " w=" << w << " M=" << endl;
-			INT_matrix_print(M, v, w);
+			int_matrix_print(M, v, w);
 			print_integer_matrix_with_standard_labels_and_offset(
 				ost, M, v, w, 
 				I * block_width, 
@@ -691,13 +691,13 @@ void print_integer_matrix_tex_block_by_block(ostream &ost,
 			ost << "$$" << endl;
 			} // next J
 		} // next I
-	FREE_INT(M);
+	FREE_int(M);
 }
 
 void print_big_integer_matrix_tex(ostream &ost, 
-	INT *p, INT m, INT n)
+	int *p, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -707,13 +707,13 @@ void print_big_integer_matrix_tex(ostream &ost,
 		}
 }
 
-void INT_matrix_make_block_matrix_2x2(INT *Mtx, 
-	INT k, INT *A, INT *B, INT *C, INT *D)
+void int_matrix_make_block_matrix_2x2(int *Mtx, 
+	int k, int *A, int *B, int *C, int *D)
 // makes the 2k x 2k block matrix 
 // (A B)
 // (C D)
 {
-	INT i, j, n;
+	int i, j, n;
 
 	n = 2 * k;
 	for (i = 0; i < k; i++) {
@@ -738,11 +738,11 @@ void INT_matrix_make_block_matrix_2x2(INT *Mtx,
 		}
 }
 
-void INT_matrix_delete_column_in_place(INT *Mtx, 
-	INT k, INT n, INT pivot)
+void int_matrix_delete_column_in_place(int *Mtx, 
+	int k, int n, int pivot)
 // afterwards, the matrix is k x (n - 1)
 {
-	INT i, j, jj;
+	int i, j, jj;
 
 	for (i = 0; i < k; i++) {
 		jj = 0;
@@ -756,18 +756,18 @@ void INT_matrix_delete_column_in_place(INT *Mtx,
 		}
 }
 
-INT INT_matrix_max_log_of_entries(INT *p, INT m, INT n)
+int int_matrix_max_log_of_entries(int *p, int m, int n)
 {
-	INT i, j, a, w = 1, w1;
+	int i, j, a, w = 1, w1;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			a = p[i * n + j];
 			if (a > 0) {
-				w1 = INT_log10(a);
+				w1 = int_log10(a);
 				}
 			else if (a < 0) {
-				w1 = INT_log10(-a) + 1;
+				w1 = int_log10(-a) + 1;
 				}
 			else {
 				w1 = 1;
@@ -778,17 +778,17 @@ INT INT_matrix_max_log_of_entries(INT *p, INT m, INT n)
 	return w;
 }
 
-void INT_matrix_print(INT *p, INT m, INT n)
+void int_matrix_print(int *p, int m, int n)
 {
-	INT w;
+	int w;
 	
-	w = INT_matrix_max_log_of_entries(p, m, n);
-	INT_matrix_print(p, m, n, w);
+	w = int_matrix_max_log_of_entries(p, m, n);
+	int_matrix_print(p, m, n, w);
 }
 
-void INT_matrix_print(INT *p, INT m, INT n, INT w)
+void int_matrix_print(int *p, int m, int n, int w)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -801,9 +801,9 @@ void INT_matrix_print(INT *p, INT m, INT n, INT w)
 		}
 }
 
-void INT_matrix_print_tex(ostream &ost, INT *p, INT m, INT n)
+void int_matrix_print_tex(ostream &ost, int *p, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	ost << "\\begin{array}{*{" << n << "}{c}}" << endl;
 	for (i = 0; i < m; i++) {
@@ -818,9 +818,9 @@ void INT_matrix_print_tex(ostream &ost, INT *p, INT m, INT n)
 	ost << "\\end{array}" << endl;
 }
 
-void INT_matrix_print_bitwise(INT *p, INT m, INT n)
+void int_matrix_print_bitwise(int *p, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -830,30 +830,30 @@ void INT_matrix_print_bitwise(INT *p, INT m, INT n)
 		}
 }
 
-void INT_vec_distribution_compute_and_print(ostream &ost, 
-	INT *v, INT v_len)
+void int_vec_distribution_compute_and_print(ostream &ost, 
+	int *v, int v_len)
 {
-	INT *val, *mult, len;	
+	int *val, *mult, len;	
 	
-	INT_vec_distribution(v, v_len, val, mult, len);
-	INT_distribution_print(ost, val, mult, len);
+	int_vec_distribution(v, v_len, val, mult, len);
+	int_distribution_print(ost, val, mult, len);
 	ost << endl;
 	
-	FREE_INT(val);
-	FREE_INT(mult);
+	FREE_int(val);
+	FREE_int(mult);
 }
 
-void INT_vec_distribution(INT *v, 
-	INT len_v, INT *&val, INT *&mult, INT &len)
+void int_vec_distribution(int *v, 
+	int len_v, int *&val, int *&mult, int &len)
 {
-	INT i, j, a, idx;
+	int i, j, a, idx;
 	
-	val = NEW_INT(len_v);
-	mult = NEW_INT(len_v);
+	val = NEW_int(len_v);
+	mult = NEW_int(len_v);
 	len = 0;
 	for (i = 0; i < len_v; i++) {
 		a = v[i];
-		if (INT_vec_search(val, len, a, idx)) {
+		if (int_vec_search(val, len, a, idx)) {
 			mult[idx]++;
 			}
 		else {
@@ -868,10 +868,10 @@ void INT_vec_distribution(INT *v,
 		}
 }
 
-void INT_distribution_print(ostream &ost, 
-	INT *val, INT *mult, INT len)
+void int_distribution_print(ostream &ost, 
+	int *val, int *mult, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		ost << val[i];
@@ -889,23 +889,23 @@ void INT_distribution_print(ostream &ost,
 		}
 }
 
-void INT_swap(INT& x, INT& y)
+void int_swap(int& x, int& y)
 {
-	INT z;
+	int z;
 	
 	z = x;
 	x = y;
 	y = z;
 }
 
-void INT_set_print(INT *v, INT len)
+void int_set_print(int *v, int len)
 {
-	INT_set_print(cout, v, len);
+	int_set_print(cout, v, len);
 }
 
-void INT_set_print(ostream &ost, INT *v, INT len)
+void int_set_print(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "{ ";
 	for (i = 0; i < len; i++) {
@@ -916,9 +916,9 @@ void INT_set_print(ostream &ost, INT *v, INT len)
 	ost << " }";
 }
 
-void INT_set_print_tex(ostream &ost, INT *v, INT len)
+void int_set_print_tex(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
@@ -929,12 +929,12 @@ void INT_set_print_tex(ostream &ost, INT *v, INT len)
 	ost << " \\}";
 }
 
-void INT_set_print_masked_tex(ostream &ost, 
-	INT *v, INT len, 
+void int_set_print_masked_tex(ostream &ost, 
+	int *v, int len, 
 	const char *mask_begin, 
 	const char *mask_end)
 {
-	INT i;
+	int i;
 	
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
@@ -946,10 +946,10 @@ void INT_set_print_masked_tex(ostream &ost,
 }
 
 
-void INT_set_print_tex_for_inline_text(ostream &ost, 
-	INT *v, INT len)
+void int_set_print_tex_for_inline_text(ostream &ost, 
+	int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "\\{ ";
 	for (i = 0; i < len; i++) {
@@ -960,9 +960,9 @@ void INT_set_print_tex_for_inline_text(ostream &ost,
 	ost << " \\}";
 }
 
-void INT_vec_print(ostream &ost, INT *v, INT len)
+void int_vec_print(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	if (len > 50) {
 		ost << "( ";
@@ -980,18 +980,18 @@ void INT_vec_print(ostream &ost, INT *v, INT len)
 		ost << " )";
 		}
 	else {
-		INT_vec_print_fully(ost, v, len);
+		int_vec_print_fully(ost, v, len);
 		}
 }
 
-void INT_vec_print_as_matrix(ostream &ost, 
-	INT *v, INT len, INT width, INT f_tex)
+void int_vec_print_as_matrix(ostream &ost, 
+	int *v, int len, int width, int f_tex)
 {
-	INT *w;
-	INT i;
+	int *w;
+	int i;
 
-	w = NEW_INT(len + width - 1);
-	INT_vec_copy(v, w, len);
+	w = NEW_int(len + width - 1);
+	int_vec_copy(v, w, len);
 	for (i = 0; i < width - 1; i++) {
 		w[len + i] = 0;
 		}
@@ -999,12 +999,12 @@ void INT_vec_print_as_matrix(ostream &ost,
 	print_integer_matrix_with_standard_labels(ost, 
 		w, (len + width - 1) / width, width, f_tex);
 
-	FREE_INT(w);
+	FREE_int(w);
 }
 
-void INT_vec_print_as_table(ostream &ost, INT *v, INT len, INT width)
+void int_vec_print_as_table(ostream &ost, int *v, int len, int width)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		ost << v[i];
@@ -1016,9 +1016,9 @@ void INT_vec_print_as_table(ostream &ost, INT *v, INT len, INT width)
 	ost << endl;
 }
 
-void INT_vec_print_fully(ostream &ost, INT *v, INT len)
+void int_vec_print_fully(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "( ";
 	for (i = 0; i < len; i++) {
@@ -1029,9 +1029,9 @@ void INT_vec_print_fully(ostream &ost, INT *v, INT len)
 	ost << " )";
 }
 
-void INT_vec_print_Cpp(ostream &ost, INT *v, INT len)
+void int_vec_print_Cpp(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "{ " << endl;
 	ost << "\t";
@@ -1047,9 +1047,9 @@ void INT_vec_print_Cpp(ostream &ost, INT *v, INT len)
 	ost << " }";
 }
 
-void INT_vec_print_GAP(ostream &ost, INT *v, INT len)
+void int_vec_print_GAP(ostream &ost, int *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "[ ";
 	for (i = 0; i < len; i++) {
@@ -1060,9 +1060,9 @@ void INT_vec_print_GAP(ostream &ost, INT *v, INT len)
 	ost << " ]";
 }
 
-void double_vec_print(ostream &ost, double *v, INT len)
+void double_vec_print(ostream &ost, double *v, int len)
 {
-	INT i;
+	int i;
 	
 	ost << "( ";
 	for (i = 0; i < len; i++) {
@@ -1089,7 +1089,7 @@ void integer_vec_print(ostream &ost, int *v, int len)
 void uchar_print_bitwise(ostream &ost, uchar u)
 {
 	uchar mask;
-	INT i;
+	int i;
 	
 	for (i = 0; i < 8; i++) {
 		mask = ((uchar) 1) << i;
@@ -1100,18 +1100,18 @@ void uchar_print_bitwise(ostream &ost, uchar u)
 		}
 }
 
-void uchar_move(uchar *p, uchar *q, INT len)
+void uchar_move(uchar *p, uchar *q, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) 
 		*q++ = *p++;
 }
 
-void INT_submatrix_all_rows(INT *A, INT m, INT n, 
-	INT nb_cols, INT *cols, INT *B)
+void int_submatrix_all_rows(int *A, int m, int n, 
+	int nb_cols, int *cols, int *B)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -1120,10 +1120,10 @@ void INT_submatrix_all_rows(INT *A, INT m, INT n,
 		}
 }
 
-void INT_submatrix_all_cols(INT *A, INT m, INT n, 
-	INT nb_rows, INT *rows, INT *B)
+void int_submatrix_all_cols(int *A, int m, int n, 
+	int nb_rows, int *rows, int *B)
 {
-	INT i, j;
+	int i, j;
 	
 	for (j = 0; j < n; j++) {
 		for (i = 0; i < nb_rows; i++) {
@@ -1132,10 +1132,10 @@ void INT_submatrix_all_cols(INT *A, INT m, INT n,
 		}
 }
 
-void INT_submatrix(INT *A, INT m, INT n, 
-	INT nb_rows, INT *rows, INT nb_cols, INT *cols, INT *B)
+void int_submatrix(int *A, int m, int n, 
+	int nb_rows, int *rows, int nb_cols, int *cols, int *B)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < nb_rows; i++) {
 		for (j = 0; j < nb_cols; j++) {
@@ -1144,22 +1144,22 @@ void INT_submatrix(INT *A, INT m, INT n,
 		}
 }
 
-void INT_matrix_transpose(INT n, INT *A)
+void int_matrix_transpose(int n, int *A)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < i; j++) {
 			if (i != j)
-				INT_swap(A[i * n + j], A[j * n + i]);
+				int_swap(A[i * n + j], A[j * n + i]);
 			}
 		}
 }
 
-void INT_matrix_transpose(INT *M, INT m, INT n, INT *Mt)
-// Mt must point to the right amount of memory (n * m INT's)
+void int_matrix_transpose(int *M, int m, int n, int *Mt)
+// Mt must point to the right amount of memory (n * m int's)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -1168,31 +1168,31 @@ void INT_matrix_transpose(INT *M, INT m, INT n, INT *Mt)
 		}
 }
 
-void INT_matrix_shorten_rows(INT *&p, INT m, INT n)
+void int_matrix_shorten_rows(int *&p, int m, int n)
 {
-	INT *q = NEW_INT(m * n);
-	INT i, j;
+	int *q = NEW_int(m * n);
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			q[i * n + j] = p[i * n + j];
 			}
 		}
-	FREE_INT(p);
+	FREE_int(p);
 	p = q;
 }
 
-void PINT_matrix_shorten_rows(PINT *&p, INT m, INT n)
+void pint_matrix_shorten_rows(pint *&p, int m, int n)
 {
-	PINT *q = NEW_PINT(m * n);
-	INT i, j;
+	pint *q = NEW_pint(m * n);
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			q[i * n + j] = p[i * n + j];
 			}
 		}
-	FREE_PINT(p);
+	FREE_pint(p);
 	p = q;
 }
 
@@ -1242,13 +1242,13 @@ void runtime(long *l)
 }
 
 
-#ifdef SYSTEM_IS_MACINTOSH
+#ifdef SYSTEM_IS_MACintOSH
 #include <mach/mach.h>
 #endif
 
-INT os_memory_usage()
+int os_memory_usage()
 {
-#ifdef SYSTEM_IS_MACINTOSH
+#ifdef SYSTEM_IS_MACintOSH
 	struct task_basic_info t_info;
 	mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
 
@@ -1289,11 +1289,11 @@ INT os_memory_usage()
 	return 0;
 }
 
-INT os_ticks()
+int os_ticks()
 {
 #ifdef SYSTEMUNIX
 	struct tms tms_buffer;
-	INT t;
+	int t;
 
 	if (-1 == (int) times(&tms_buffer))
 		return(-1);
@@ -1305,19 +1305,19 @@ INT os_ticks()
 	clock_t t;
 	
 	t = clock();
-	return((INT)t);
+	return((int)t);
 #endif
 #ifdef SYSTEMWINDOWS
 	return 0;
 #endif
 }
 
-static INT f_system_time_set = FALSE;
-static INT system_time0 = 0;
+static int f_system_time_set = FALSE;
+static int system_time0 = 0;
 
-INT os_ticks_system()
+int os_ticks_system()
 {
-	INT t;
+	int t;
 
 	t = time(NULL);
 	if (!f_system_time_set) {
@@ -1329,12 +1329,12 @@ INT os_ticks_system()
 	return t;
 }
 
-INT os_ticks_per_second()
+int os_ticks_per_second()
 {
-	static INT f_tps_computed = FALSE;
-	static INT tps = 0;
+	static int f_tps_computed = FALSE;
+	static int tps = 0;
 #ifdef SYSTEMUNIX
-	INT clk_tck = 1;
+	int clk_tck = 1;
 	
 	if (f_tps_computed)
 		return tps;
@@ -1351,10 +1351,10 @@ INT os_ticks_per_second()
 #endif
 }
 
-void os_ticks_to_dhms(INT ticks, INT tps, INT &d, INT &h, INT &m, INT &s)
+void os_ticks_to_dhms(int ticks, int tps, int &d, int &h, int &m, int &s)
 {
-	INT l1;
-	INT f_v = FALSE;
+	int l1;
+	int f_v = FALSE;
 
 	if (f_v) {
 		cout << "os_ticks_to_dhms ticks = " << ticks << endl;
@@ -1388,9 +1388,9 @@ void os_ticks_to_dhms(INT ticks, INT tps, INT &d, INT &h, INT &m, INT &s)
 		}
 }
 
-void time_check_delta(ostream &ost, INT dt)
+void time_check_delta(ostream &ost, int dt)
 {
-	INT tps, d, h, min, s;
+	int tps, d, h, min, s;
 
 	tps = os_ticks_per_second();
 	//cout << "time_check_delta tps=" << tps << endl;
@@ -1405,7 +1405,7 @@ void time_check_delta(ostream &ost, INT dt)
 	//cout << endl;
 }
 
-void print_elapsed_time(ostream &ost, INT d, INT h, INT m, INT s)
+void print_elapsed_time(ostream &ost, int d, int h, int m, int s)
 {
 	if (d > 0) {
 		ost << d << "-" << h << ":" << m << ":" << s;
@@ -1418,9 +1418,9 @@ void print_elapsed_time(ostream &ost, INT d, INT h, INT m, INT s)
 		}
 }
 
-void time_check(ostream &ost, INT t0)
+void time_check(ostream &ost, int t0)
 {
-	INT t1, dt;
+	int t1, dt;
 	
 	t1 = os_ticks();
 	dt = t1 - t0;
@@ -1430,9 +1430,9 @@ void time_check(ostream &ost, INT t0)
 	time_check_delta(ost, dt);
 }
 
-INT delta_time(INT t0)
+int delta_time(int t0)
 {
-	INT t1, dt;
+	int t1, dt;
 	
 	t1 = os_ticks();
 	dt = t1 - t0;
@@ -1448,11 +1448,11 @@ INT delta_time(INT t0)
 
 
 
-INT file_size(const char *name)
+int file_size(const char *name)
 {
 	//cout << "file_size fname=" << name << endl;
 #ifdef SYSTEMUNIX
-	INT handle, size;
+	int handle, size;
 	
 	//cout << "Unix mode" << endl;
 	handle = open(name, O_RDWR/*mode*/);
@@ -1461,7 +1461,7 @@ INT file_size(const char *name)
 	return(size);
 #endif
 #ifdef SYSTEMMAC
-	INT handle, size;
+	int handle, size;
 	
 	//cout << "Macintosh mode" << endl;
 	handle = open(name, O_RDONLY);
@@ -1475,8 +1475,8 @@ INT file_size(const char *name)
 
 	//cout << "Windows mode" << endl;
 
-	INT handle = _open (name,_O_RDONLY);
-	INT size   = _lseek (handle,0,SEEK_END);
+	int handle = _open (name,_O_RDONLY);
+	int size   = _lseek (handle,0,SEEK_END);
 	close (handle);
 	return (size);
 #endif
@@ -1490,28 +1490,28 @@ void delete_file(const char *fname)
 	system(str);
 }
 
-void fwrite_INT4(FILE *fp, INT a)
+void fwrite_int4(FILE *fp, int a)
 {
-	INT4 I;
+	int4 I;
 
-	I = (INT4) a;
+	I = (int4) a;
 	fwrite(&I, 1 /* size */, 4 /* items */, fp);
 }
 
-INT4 fread_INT4(FILE *fp)
+int4 fread_int4(FILE *fp)
 {
-	INT4 I;
+	int4 I;
 
 	fread(&I, 1 /* size */, 4 /* items */, fp);
 	return I;
 }
 
-void fwrite_uchars(FILE *fp, uchar *p, INT len)
+void fwrite_uchars(FILE *fp, uchar *p, int len)
 {
 	fwrite(p, 1 /* size */, len /* items */, fp);
 }
 
-void fread_uchars(FILE *fp, uchar *p, INT len)
+void fread_uchars(FILE *fp, uchar *p, int len)
 {
 	fread(p, 1 /* size */, len /* items */, fp);
 }
@@ -1562,10 +1562,10 @@ void latex_head_easy_sideways(ostream& ost)
 
 }
 
-void latex_head(ostream& ost, INT f_book, INT f_title, 
+void latex_head(ostream& ost, int f_book, int f_title, 
 	const char *title, const char *author, 
-	INT f_toc, INT f_landscape, INT f_12pt, 
-	INT f_enlarged_page, INT f_pagenumbers, 
+	int f_toc, int f_landscape, int f_12pt, 
+	int f_enlarged_page, int f_pagenumbers, 
 	const char *extras_for_preamble)
 {
 	if (f_12pt) {
@@ -2035,27 +2035,27 @@ void seed_random_generator_with_system_time()
 	srand((unsigned int) time(0));
 }
 
-void seed_random_generator(INT seed)
+void seed_random_generator(int seed)
 {
 	srand((unsigned int) seed);
 }
 
-INT random_integer(INT p)
+int random_integer(int p)
 // computes a random integer r with $0 \le r < p.$
 {
-	INT n;
+	int n;
 	
 	if (p == 0) {
 		cout << "random_integer p = 0" << endl;
 		exit(1);
 		}
-	n = (INT)(((double)rand() * (double)p / RAND_MAX)) % p;
+	n = (int)(((double)rand() * (double)p / RAND_MAX)) % p;
 	return n;
 }
 
-void print_set(ostream &ost, INT size, INT *set)
+void print_set(ostream &ost, int size, int *set)
 {
-	INT i;
+	int i;
 	
 	ost << "{ ";
 	for (i = 0; i < size; i++) {
@@ -2068,15 +2068,15 @@ void print_set(ostream &ost, INT size, INT *set)
 
 static const char *ascii_code = "abcdefghijklmnop";
 
-static INT f_has_swap_initialized = FALSE;
-static INT f_has_swap = 0;
+static int f_has_swap_initialized = FALSE;
+static int f_has_swap = 0;
 	// indicates if char swap is present 
 	// i.e., little endian / big endian 
 
 static void test_swap()
 {
 	//unsigned long test_long = 0x11223344L;
-	INT4 test = 0x11223344L;
+	int4 test = 0x11223344L;
 	SCHAR *ptr;
 	
 	ptr = (char *) &test;
@@ -2101,11 +2101,11 @@ static void test_swap()
 // There are "no" intervals of size "size".
 // This routine is due to Roland Grund
 
-void block_swap_chars(SCHAR *ptr, INT size, INT no)
+void block_swap_chars(SCHAR *ptr, int size, int no)
 {
 	SCHAR *ptr_end, *ptr_start;
 	SCHAR chr;
-	INT i;
+	int i;
 	
 	if (!f_has_swap_initialized)
 		test_swap();
@@ -2125,11 +2125,11 @@ void block_swap_chars(SCHAR *ptr, INT size, INT no)
 		}
 }
 
-void code_INT4(char *&p, INT4 i)
+void code_int4(char *&p, int4 i)
 {
-	INT4 ii = i;
+	int4 ii = i;
 
-	//cout << "code_INT4 " << i << endl;
+	//cout << "code_int4 " << i << endl;
 	uchar *q = (uchar *) &ii;
 	//block_swap_chars((SCHAR *)&ii, 4, 1);
 	code_uchar(p, q[0]);
@@ -2138,48 +2138,48 @@ void code_INT4(char *&p, INT4 i)
 	code_uchar(p, q[3]);
 }
 
-INT4 decode_INT4(char *&p)
+int4 decode_int4(char *&p)
 {
-	INT4 ii;
+	int4 ii;
 	uchar *q = (uchar *) &ii;
 	decode_uchar(p, q[0]);
 	decode_uchar(p, q[1]);
 	decode_uchar(p, q[2]);
 	decode_uchar(p, q[3]);
 	//block_swap_chars((SCHAR *)&ii, 4, 1);
-	//cout << "decode_INT4 " << ii << endl;
+	//cout << "decode_int4 " << ii << endl;
 	return ii;
 }
 
 void code_uchar(char *&p, uchar a)
 {
-	//cout << "code_uchar " << (INT) a << endl;
-	INT a_high = a >> 4;
-	INT a_low = a & 15;
+	//cout << "code_uchar " << (int) a << endl;
+	int a_high = a >> 4;
+	int a_low = a & 15;
 	*p++ = ascii_code[a_high];
 	*p++ = ascii_code[a_low];
 }
 
 void decode_uchar(char *&p, uchar &a)
 {
-	INT a_high = (INT)(*p++ - 'a');
-	INT a_low = (INT)(*p++ - 'a');
-	INT i;
+	int a_high = (int)(*p++ - 'a');
+	int a_low = (int)(*p++ - 'a');
+	int i;
 	//cout << "decode_uchar a_high = " << a_high << endl;
 	//cout << "decode_uchar a_low = " << a_low << endl;
 	i = (a_high << 4) | a_low;
 	//cout << "decode_uchar i = " << i << endl;
-	//cout << "decode_uchar " << (INT) i << endl;
+	//cout << "decode_uchar " << (int) i << endl;
 	a = (uchar)i;
 }
 
 void print_incidence_structure(ostream &ost, 
-	INT m, INT n, INT len, INT *S)
+	int m, int n, int len, int *S)
 {
-	INT *M;
-	INT h, i, j;
+	int *M;
+	int h, i, j;
 	
-	M = NEW_INT(m * n);
+	M = NEW_int(m * n);
 	for (i = 0 ; i < m * n; i++)
 		M[i] = 0;
 	
@@ -2190,13 +2190,13 @@ void print_incidence_structure(ostream &ost,
 		}
 	print_integer_matrix(ost, M, m, n);
 	
-	FREE_INT(M);
+	FREE_int(M);
 }
 
 #include <sstream>
 
 
-void INT_vec_scan(const char *s, INT *&v, INT &len)
+void int_vec_scan(const char *s, int *&v, int &len)
 {
 #if 0
 	{
@@ -2208,24 +2208,24 @@ void INT_vec_scan(const char *s, INT *&v, INT &len)
 			break;
 			}
 		ins >> c;
-		cout << "INT_vec_scan_from_stream: \"" << c << "\", ascii=" << (INT)c << endl;
+		cout << "int_vec_scan_from_stream: \"" << c << "\", ascii=" << (int)c << endl;
 		}
 	}
 #endif
 
 	istringstream ins(s);
-	INT_vec_scan_from_stream(ins, v, len);
+	int_vec_scan_from_stream(ins, v, len);
 }
 
-void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
+void int_vec_scan_from_stream(istream & is, int *&v, int &len)
 {
-	//INT verbose_level = 0;
-	INT a;
+	//int verbose_level = 0;
+	int a;
 	char s[10000], c;
-	INT l, h;
+	int l, h;
 		
 	len = 20;
-	v = NEW_INT(len);
+	v = NEW_int(len);
 	h = 0;
 	l = 0;
 
@@ -2248,7 +2248,7 @@ void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
 			}
 		while (TRUE) {
 			// read digits:
-			//cout << "INT_vec_scan_from_stream: \"" << c << "\", ascii=" << (INT)c << endl;
+			//cout << "int_vec_scan_from_stream: \"" << c << "\", ascii=" << (int)c << endl;
 			while (c != 0) {
 				if (c == '-') {
 					//cout << "c='" << c << "'" << endl;
@@ -2277,7 +2277,7 @@ void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
 				if (c == 0) {
 					break;
 					}
-				//cout << "INT_vec_scan_from_stream inside loop: \"" << c << "\", ascii=" << (INT)c << endl;
+				//cout << "int_vec_scan_from_stream inside loop: \"" << c << "\", ascii=" << (int)c << endl;
 				}
 			s[l] = 0;
 			a = atoi(s);
@@ -2286,11 +2286,11 @@ void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
 				}
 			if (h == len) {
 				len += 20;
-				INT *v2;
+				int *v2;
 
-				v2 = NEW_INT(len);
-				INT_vec_copy(v, v2, h);
-				FREE_INT(v);
+				v2 = NEW_int(len);
+				int_vec_copy(v, v2, h);
+				FREE_int(v);
 				v = v2;
 				}
 			v[h++] = a;
@@ -2318,20 +2318,20 @@ void INT_vec_scan_from_stream(istream & is, INT *&v, INT &len)
 		}
 }
 
-void double_vec_scan(const char *s, double *&v, INT &len)
+void double_vec_scan(const char *s, double *&v, int &len)
 {
 
 	istringstream ins(s);
 	double_vec_scan_from_stream(ins, v, len);
 }
 
-void double_vec_scan_from_stream(istream & is, double *&v, INT &len)
+void double_vec_scan_from_stream(istream & is, double *&v, int &len)
 {
-	INT verbose_level = 1;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 1;
+	int f_v = (verbose_level >= 1);
 	double a;
 	char s[10000], c;
-	INT l, h;
+	int l, h;
 		
 	len = 20;
 	v = new double [len];
@@ -2359,7 +2359,7 @@ void double_vec_scan_from_stream(istream & is, double *&v, INT &len)
 			while (c != 0) {
 
 				if (f_v) {
-					cout << "character \"" << c << "\", ascii=" << (INT)c << endl;
+					cout << "character \"" << c << "\", ascii=" << (int)c << endl;
 					}
 
 				if (c == '-') {
@@ -2389,7 +2389,7 @@ void double_vec_scan_from_stream(istream & is, double *&v, INT &len)
 				if (c == 0) {
 					break;
 					}
-				//cout << "INT_vec_scan_from_stream inside loop: \"" << c << "\", ascii=" << (INT)c << endl;
+				//cout << "int_vec_scan_from_stream inside loop: \"" << c << "\", ascii=" << (int)c << endl;
 				}
 			s[l] = 0;
 			sscanf(s, "%lf", &a);
@@ -2432,26 +2432,26 @@ void double_vec_scan_from_stream(istream & is, double *&v, INT &len)
 }
 
 void scan_permutation_from_string(const char *s, 
-	INT *&perm, INT &degree, INT verbose_level)
+	int *&perm, int &degree, int verbose_level)
 {
 	istringstream ins(s);
 	scan_permutation_from_stream(ins, perm, degree, verbose_level);
 }
 
 void scan_permutation_from_stream(istream & is, 
-	INT *&perm, INT &degree, INT verbose_level)
+	int *&perm, int &degree, int verbose_level)
 // Scans a permutation from a stream.
 {
-	INT f_v = (verbose_level >= 1);
-	INT l = 20;
-	INT *cycle; // [l]
-	//INT *perm; // [l]
-	INT i, a_last, a, dig, ci;
+	int f_v = (verbose_level >= 1);
+	int l = 20;
+	int *cycle; // [l]
+	//int *perm; // [l]
+	int i, a_last, a, dig, ci;
 	char s[10000], c;
-	INT si, largest_point = 0;
+	int si, largest_point = 0;
 	
-	cycle = NEW_INT(l);
-	perm = NEW_INT(l);
+	cycle = NEW_int(l);
+	perm = NEW_int(l);
 	degree = l;
 	//l = s_l();
 	//perm.m_l(l);
@@ -2498,11 +2498,11 @@ void scan_permutation_from_stream(istream & is,
 				exit(1);
 				}
 			if (dig >= l) {
-				INT *perm1;
-				INT *cycle1;
+				int *perm1;
+				int *cycle1;
 				//permutation perm1;
 				//vector cycle1;
-				INT l1, i;
+				int l1, i;
 				
 				l1 = MAXIMUM(l + (l >> 1), largest_point + 1);
 				if (f_v) {
@@ -2511,8 +2511,8 @@ void scan_permutation_from_stream(istream & is,
 						<< ", extending permutation degree to " 
 						<< l1 << endl;
 					}
-				perm1 = NEW_INT(l1);
-				cycle1 = NEW_INT(l1);
+				perm1 = NEW_int(l1);
+				cycle1 = NEW_int(l1);
 				
 				//perm1.m_l(l1);
 				for (i = 0; i < l; i++) {
@@ -2522,7 +2522,7 @@ void scan_permutation_from_stream(istream & is,
 				for (i = l; i < l1; i++) {
 					perm1[i] = i;
 					}
-				FREE_INT(perm);
+				FREE_int(perm);
 				perm = perm1;
 				degree = l1;
 				//perm.swap(perm1);
@@ -2532,7 +2532,7 @@ void scan_permutation_from_stream(istream & is,
 					//cycle1.m_ii(i, cycle.s_ii(i));
 					cycle1[i] = cycle[i];
 					}
-				FREE_INT(cycle);
+				FREE_int(cycle);
 				cycle = cycle1;
 				//cycle.swap(cycle1);
 				l = l1;
@@ -2574,7 +2574,7 @@ void scan_permutation_from_stream(istream & is,
 #if 0
 	{
 	permutation perm1;
-	INT i;
+	int i;
 	
 	perm1.m_l(largest_point + 1);
 	for (i = 0; i <= largest_point; i++) {
@@ -2589,12 +2589,12 @@ void scan_permutation_from_stream(istream & is,
 		perm_print(cout, perm, degree);
 		cout << endl;
 		}
-	FREE_INT(cycle);
+	FREE_int(cycle);
 }
 
-char get_character(istream & is, INT verbose_level)
+char get_character(istream & is, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char c;
 	
 	if (!is) {
@@ -2604,14 +2604,14 @@ char get_character(istream & is, INT verbose_level)
 	is >> c;
 	if (f_v) {
 		cout << "get_character: \"" << c 
-			<< "\", ascii=" << (INT)c << endl;
+			<< "\", ascii=" << (int)c << endl;
 		}
 	return c;
 }
 
 void replace_extension_with(char *p, const char *new_ext)
 {
-	INT i, l;
+	int i, l;
 
 	l = strlen(p);
 	for (i = l - 1; i >= 0; i--) {
@@ -2625,8 +2625,8 @@ void replace_extension_with(char *p, const char *new_ext)
 
 void chop_off_extension(char *p)
 {
-	INT len = strlen(p);
-	INT i;
+	int len = strlen(p);
+	int i;
 	
 	for (i = len - 1; i >= 0; i--) {
 		if (p[i] == '/') {
@@ -2641,8 +2641,8 @@ void chop_off_extension(char *p)
 
 void chop_off_extension_if_present(char *p, const char *ext)
 {
-	INT l1 = strlen(p);
-	INT l2 = strlen(ext);
+	int l1 = strlen(p);
+	int l2 = strlen(ext);
 	
 	if (l1 > l2 && strcmp(p + l1 - l2, ext) == 0) {
 		p[l1 - l2] = 0;
@@ -2651,7 +2651,7 @@ void chop_off_extension_if_present(char *p, const char *ext)
 
 void get_fname_base(const char *p, char *fname_base)
 {
-	INT i, l = strlen(p);
+	int i, l = strlen(p);
 
 	strcpy(fname_base, p);
 	for (i = l - 1; i >= 0; i--) {
@@ -2665,7 +2665,7 @@ void get_fname_base(const char *p, char *fname_base)
 
 void get_extension_if_present(const char *p, char *ext)
 {
-	INT i, l = strlen(p);
+	int i, l = strlen(p);
 	
 	//cout << "get_extension_if_present " << p << " l=" << l << endl;
 	ext[0] = 0;
@@ -2680,7 +2680,7 @@ void get_extension_if_present(const char *p, char *ext)
 
 void get_extension_if_present_and_chop_off(char *p, char *ext)
 {
-	INT i, l = strlen(p);
+	int i, l = strlen(p);
 	
 	//cout << "get_extension_if_present " << p << " l=" << l << endl;
 	ext[0] = 0;
@@ -2697,7 +2697,7 @@ void get_extension_if_present_and_chop_off(char *p, char *ext)
 
 #include <ctype.h>
 
-INT s_scan_int(char **s, INT *i)
+int s_scan_int(char **s, int *i)
 {
 	char str1[512];
 	
@@ -2708,14 +2708,14 @@ INT s_scan_int(char **s, INT *i)
 			return FALSE;
 		}
 	//*i = atoi(str1);
-	sscanf(str1, "%ld", i);
+	sscanf(str1, "%d", i);
 	return TRUE;
 }
 
-INT s_scan_token(char **s, char *str)
+int s_scan_token(char **s, char *str)
 {
 	char c;
-	INT len;
+	int len;
 	
 	while (TRUE) {
 		c = **s;
@@ -2765,10 +2765,10 @@ INT s_scan_token(char **s, char *str)
 	return TRUE;
 }
 
-INT s_scan_token_arbitrary(char **s, char *str)
+int s_scan_token_arbitrary(char **s, char *str)
 {
 	char c;
-	INT len;
+	int len;
 	
 	while (TRUE) {
 		c = **s;
@@ -2797,10 +2797,10 @@ INT s_scan_token_arbitrary(char **s, char *str)
 	return TRUE;
 }
 
-INT s_scan_str(char **s, char *str)
+int s_scan_str(char **s, char *str)
 {
 	char c;
-	INT len, f_break;
+	int len, f_break;
 	
 	while (TRUE) {
 		c = **s;
@@ -2847,10 +2847,10 @@ INT s_scan_str(char **s, char *str)
 	return TRUE;
 }
 
-INT s_scan_token_comma_separated(char **s, char *str)
+int s_scan_token_comma_separated(char **s, char *str)
 {
 	char c;
-	INT len;
+	int len;
 	
 	len = 0;
 	c = **s;
@@ -2918,9 +2918,9 @@ INT s_scan_token_comma_separated(char **s, char *str)
 //#define HASH_PRIME ((int) 1 << 30 - 1)
 #define HASH_PRIME 174962718
 
-INT hashing(INT hash0, INT a)
+int hashing(int hash0, int a)
 {
-	INT h = hash0; // a1 = a;
+	int h = hash0; // a1 = a;
 
 	do {
 		h <<= 1;
@@ -2934,11 +2934,11 @@ INT hashing(INT hash0, INT a)
 	return h;
 }
 
-INT hashing_fixed_width(INT hash0, INT a, INT bit_length)
+int hashing_fixed_width(int hash0, int a, int bit_length)
 {
-	INT h = hash0;
-	INT a1 = a;
-	INT i;
+	int h = hash0;
+	int a1 = a;
+	int i;
 
 	for (i = 0; i < bit_length; i++) {
 		h <<= 1;
@@ -2958,10 +2958,10 @@ INT hashing_fixed_width(INT hash0, INT a, INT bit_length)
 	return h;
 }
 
-INT INT_vec_hash(INT *v, INT len, INT bit_length)
+int int_vec_hash(int *v, int len, int bit_length)
 {
-	INT h = 0;
-	INT i;
+	int h = 0;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		//h = hashing(h, v[i]);
@@ -2970,15 +2970,15 @@ INT INT_vec_hash(INT *v, INT len, INT bit_length)
 	return h;
 }
 
-void parse_sets(INT nb_cases, char **data, INT f_casenumbers, 
-	INT *&Set_sizes, INT **&Sets, 
+void parse_sets(int nb_cases, char **data, int f_casenumbers, 
+	int *&Set_sizes, int **&Sets, 
 	char **&Ago_ascii, char **&Aut_ascii, 
-	INT *&Casenumbers, 
-	INT verbose_level)
+	int *&Casenumbers, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT h, casenumber;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int h, casenumber;
 	char *ago_ascii, *aut_ascii;
 	char *p_buf;
 	
@@ -2990,11 +2990,11 @@ void parse_sets(INT nb_cases, char **data, INT f_casenumbers,
 	ago_ascii = NEW_char(MY_BUFSIZE);
 	aut_ascii = NEW_char(MY_BUFSIZE);
 	
-	Set_sizes = NEW_INT(nb_cases);
-	Sets = NEW_PINT(nb_cases);
+	Set_sizes = NEW_int(nb_cases);
+	Sets = NEW_pint(nb_cases);
 	Ago_ascii = NEW_pchar(nb_cases);
 	Aut_ascii = NEW_pchar(nb_cases);
-	Casenumbers = NEW_INT(nb_cases);
+	Casenumbers = NEW_int(nb_cases);
 	
 	for (h = 0; h < nb_cases; h++) {
 		
@@ -3037,17 +3037,17 @@ void parse_sets(INT nb_cases, char **data, INT f_casenumbers,
 	FREE_char(aut_ascii);
 }
 
-void parse_line(char *line, INT &len, 
-	INT *&set, char *ago_ascii, char *aut_ascii)
+void parse_line(char *line, int &len, 
+	int *&set, char *ago_ascii, char *aut_ascii)
 {
-	INT i;
+	int i;
 	char *p_buf;
 
 	//cout << "parse_line: " << line << endl;
 	p_buf = line;
 	s_scan_int(&p_buf, &len);
 	//cout << "parsing data of length " << len << endl;
-	set = NEW_INT(len);
+	set = NEW_int(len);
 	for (i = 0; i < len; i++) {
 		s_scan_int(&p_buf, &set[i]);
 		}
@@ -3061,12 +3061,12 @@ void parse_line(char *line, INT &len,
 }
 
 
-INT count_number_of_orbits_in_file(const char *fname, INT verbose_level)
+int count_number_of_orbits_in_file(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *buf, *p_buf;
-	INT nb_sol, len;
-	INT ret;
+	int nb_sol, len;
+	int ret;
 
 	if (f_v) {
 		cout << "count_number_of_orbits_in_file " << fname << endl;
@@ -3128,11 +3128,11 @@ INT count_number_of_orbits_in_file(const char *fname, INT verbose_level)
 	return ret;
 }
 
-INT count_number_of_lines_in_file(const char *fname, INT verbose_level)
+int count_number_of_lines_in_file(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *buf;
-	INT nb_lines;
+	int nb_lines;
 
 	if (f_v) {
 		cout << "count_number_of_lines_in_file " << fname << endl;
@@ -3169,13 +3169,13 @@ INT count_number_of_lines_in_file(const char *fname, INT verbose_level)
 	return nb_lines;
 }
 
-INT try_to_read_file(const char *fname, 
-	INT &nb_cases, char **&data, INT verbose_level)
+int try_to_read_file(const char *fname, 
+	int &nb_cases, char **&data, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT n1;
+	int f_v = (verbose_level >= 1);
+	//int n1;
 	char *buf, *p_buf;
-	INT nb_sol, len, a;
+	int nb_sol, len, a;
 	
 	if (f_v) {
 		cout << "try_to_read_file trying to read file " << fname 
@@ -3198,7 +3198,7 @@ INT try_to_read_file(const char *fname,
 	if (strlen(buf) == 0) {
 		goto return_false;
 		}
-	sscanf(buf + 1, "%ld", &n1);
+	sscanf(buf + 1, "%d", &n1);
 	cout << "n1=" << n1;
 	if (n1 != n) {
 		cout << "try_to_read_file() n1 != n" << endl;
@@ -3245,7 +3245,7 @@ INT try_to_read_file(const char *fname,
 	if (strlen(buf) == 0) {
 		goto return_false;
 		}
-	sscanf(buf + 1, "%ld", &n1);
+	sscanf(buf + 1, "%d", &n1);
 	if (n1 != n) {
 		cout << "try_to_read_file() n1 != n" << endl;
 		exit(1);
@@ -3295,11 +3295,11 @@ return_false:
 	return FALSE;
 }
 
-void read_and_parse_data_file(const char *fname, INT &nb_cases, 
-	char **&data, INT **&sets, INT *&set_sizes, INT verbose_level)
+void read_and_parse_data_file(const char *fname, int &nb_cases, 
+	char **&data, int **&sets, int *&set_sizes, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "read_and_parse_data_file: reading file " 
@@ -3331,15 +3331,15 @@ void read_and_parse_data_file(const char *fname, INT &nb_cases,
 
 	char **Ago_ascii;
 	char **Aut_ascii;
-	INT *Casenumbers;
-	INT i;
+	int *Casenumbers;
+	int i;
 	
 	parse_sets(nb_cases, data, FALSE /*f_casenumbers */, 
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
 		Casenumbers, 
 		0/*verbose_level - 2*/);
 	
-	FREE_INT(Casenumbers);
+	FREE_int(Casenumbers);
 	
 	for (i = 0; i < nb_cases; i++) {
 		strcpy(data[i], Aut_ascii[i]);
@@ -3357,14 +3357,14 @@ void read_and_parse_data_file(const char *fname, INT &nb_cases,
 
 }
 
-void parse_sets_and_check_sizes_easy(INT len, INT nb_cases, 
-	char **data, INT **&sets)
+void parse_sets_and_check_sizes_easy(int len, int nb_cases, 
+	char **data, int **&sets)
 {
 	char **Ago_ascii;
 	char **Aut_ascii;
-	INT *Casenumbers;
-	INT *set_sizes;
-	INT i;
+	int *Casenumbers;
+	int *set_sizes;
+	int i;
 	
 	parse_sets(nb_cases, data, FALSE /*f_casenumbers */, 
 		set_sizes, sets, Ago_ascii, Aut_ascii, 
@@ -3378,8 +3378,8 @@ void parse_sets_and_check_sizes_easy(INT len, INT nb_cases,
 		}
 	
 	
-	FREE_INT(set_sizes);
-	FREE_INT(Casenumbers);
+	FREE_int(set_sizes);
+	FREE_int(Casenumbers);
 	
 #if 1
 	for (i = 0; i < nb_cases; i++) {
@@ -3396,13 +3396,13 @@ void parse_sets_and_check_sizes_easy(INT len, INT nb_cases,
 
 }
 
-void free_data_fancy(INT nb_cases, 
-	INT *Set_sizes, INT **Sets, 
+void free_data_fancy(int nb_cases, 
+	int *Set_sizes, int **Sets, 
 	char **Ago_ascii, char **Aut_ascii, 
-	INT *Casenumbers)
+	int *Casenumbers)
 // Frees only those pointers that are not NULL
 {
-	INT i;
+	int i;
 	
 	if (Ago_ascii) {
 		for (i = 0; i < nb_cases; i++) {
@@ -3418,31 +3418,31 @@ void free_data_fancy(INT nb_cases,
 		}
 	if (Sets) {
 		for (i = 0; i < nb_cases; i++) {
-			FREE_INT(Sets[i]);
+			FREE_int(Sets[i]);
 			}
-		FREE_PINT(Sets);
+		FREE_pint(Sets);
 		}
 	if (Set_sizes) {
-		FREE_INT(Set_sizes);
+		FREE_int(Set_sizes);
 		}
 	if (Casenumbers) {
-		FREE_INT(Casenumbers);
+		FREE_int(Casenumbers);
 		}
 }
 
 void read_and_parse_data_file_fancy(const char *fname, 
-	INT f_casenumbers, 
-	INT &nb_cases, 
-	INT *&Set_sizes, INT **&Sets, 
+	int f_casenumbers, 
+	int &nb_cases, 
+	int *&Set_sizes, int **&Sets, 
 	char **&Ago_ascii, 
 	char **&Aut_ascii, 
-	INT *&Casenumbers, 
-	INT verbose_level)
+	int *&Casenumbers, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	char **data;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "read_and_parse_data_file_fancy: reading file " 
@@ -3494,11 +3494,11 @@ void read_and_parse_data_file_fancy(const char *fname,
 }
 
 void read_set_from_file(const char *fname, 
-	INT *&the_set, INT &set_size, INT verbose_level)
+	int *&the_set, int &set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, a;
 	
 	if (f_v) {
 		cout << "read_set_from_file opening file " << fname 
@@ -3512,7 +3512,7 @@ void read_set_from_file(const char *fname,
 		cout << "read_set_from_file allocating set of size " 
 			<< set_size << endl;
 		}
-	the_set = NEW_INT(set_size);
+	the_set = NEW_int(set_size);
 	
 	if (f_v) {
 		cout << "read_set_from_file reading set of size " 
@@ -3533,16 +3533,16 @@ void read_set_from_file(const char *fname,
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		INT_vec_print(cout, the_set, set_size);
+		int_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
 
 void write_set_to_file(const char *fname, 
-	INT *the_set, INT set_size, INT verbose_level)
+	int *the_set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "write_set_to_file opening file " 
@@ -3569,27 +3569,27 @@ void write_set_to_file(const char *fname,
 		}
 }
 
-void read_set_from_file_INT4(const char *fname, 
-	INT *&the_set, INT &set_size, INT verbose_level)
+void read_set_from_file_int4(const char *fname, 
+	int *&the_set, int &set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, b;
-	INT4 a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, b;
+	int4 a;
 	
 	if (f_v) {
-		cout << "read_set_from_file_INT4 opening file " << fname 
+		cout << "read_set_from_file_int4 opening file " << fname 
 			<< " of size " << file_size(fname) 
 			<< " for reading" << endl;
 		}
 	ifstream f(fname, ios::binary);
 	
-	f.read((char *) &a, sizeof(INT4));
+	f.read((char *) &a, sizeof(int4));
 	set_size = a;
-	the_set = NEW_INT(set_size);
+	the_set = NEW_int(set_size);
 	
 	for (i = 0; i < set_size; i++) {
-		f.read((char *) &a, sizeof(INT4));
+		f.read((char *) &a, sizeof(int4));
 		b = a;
 		//if (f_v) {
 			//cout << "read_set_from_file: the " << i << "-th number is " << a << endl;
@@ -3604,43 +3604,43 @@ void read_set_from_file_INT4(const char *fname,
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		INT_vec_print(cout, the_set, set_size);
+		int_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
 
-void write_set_to_file_as_INT4(const char *fname, 
-	INT *the_set, INT set_size, INT verbose_level)
+void write_set_to_file_as_int4(const char *fname, 
+	int *the_set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	INT4 a;
-	INT b;
+	int f_v = (verbose_level >= 1);
+	int i;
+	int4 a;
+	int b;
 	
 	if (f_v) {
-		cout << "write_set_to_file_as_INT4 opening file " 
+		cout << "write_set_to_file_as_int4 opening file " 
 			<< fname << " for writing" << endl;
 		}
 	{
 	ofstream f(fname, ios::binary);
 	
 
-	a = (INT4) set_size;
-	f.write((char *) &a, sizeof(INT4));
+	a = (int4) set_size;
+	f.write((char *) &a, sizeof(int4));
 	b = a;
 	if (b != set_size) {
-		cout << "write_set_to_file_as_INT4 data loss regarding set_size" << endl;
+		cout << "write_set_to_file_as_int4 data loss regarding set_size" << endl;
 		cout << "set_size=" << set_size << endl;
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
 		exit(1);
 		}
 	for (i = 0; i < set_size; i++) {
-		a = (INT4) the_set[i];
-		f.write((char *) &a, sizeof(INT4));
+		a = (int4) the_set[i];
+		f.write((char *) &a, sizeof(int4));
 		b = a;
 		if (b != the_set[i]) {
-			cout << "write_set_to_file_as_INT4 data loss" << endl;
+			cout << "write_set_to_file_as_int4 data loss" << endl;
 			cout << "i=" << i << endl;
 			cout << "the_set[i]=" << the_set[i] << endl;
 			cout << "a=" << a << endl;
@@ -3655,38 +3655,38 @@ void write_set_to_file_as_INT4(const char *fname,
 		}
 }
 
-void write_set_to_file_as_INT8(const char *fname, 
-	INT *the_set, INT set_size, INT verbose_level)
+void write_set_to_file_as_int8(const char *fname, 
+	int *the_set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	INT8 a;
-	INT b;
+	int f_v = (verbose_level >= 1);
+	int i;
+	int8 a;
+	int b;
 	
 	if (f_v) {
-		cout << "write_set_to_file_as_INT8 opening file " 
+		cout << "write_set_to_file_as_int8 opening file " 
 			<< fname << " for writing" << endl;
 		}
 	{
 	ofstream f(fname, ios::binary);
 	
 
-	a = (INT8) set_size;
-	f.write((char *) &a, sizeof(INT8));
+	a = (int8) set_size;
+	f.write((char *) &a, sizeof(int8));
 	b = a;
 	if (b != set_size) {
-		cout << "write_set_to_file_as_INT8 data loss regarding set_size" << endl;
+		cout << "write_set_to_file_as_int8 data loss regarding set_size" << endl;
 		cout << "set_size=" << set_size << endl;
 		cout << "a=" << a << endl;
 		cout << "b=" << b << endl;
 		exit(1);
 		}
 	for (i = 0; i < set_size; i++) {
-		a = (INT8) the_set[i];
-		f.write((char *) &a, sizeof(INT8));
+		a = (int8) the_set[i];
+		f.write((char *) &a, sizeof(int8));
 		b = a;
 		if (b != the_set[i]) {
-			cout << "write_set_to_file_as_INT8 data loss" << endl;
+			cout << "write_set_to_file_as_int8 data loss" << endl;
 			cout << "i=" << i << endl;
 			cout << "the_set[i]=" << the_set[i] << endl;
 			cout << "a=" << a << endl;
@@ -3701,12 +3701,12 @@ void write_set_to_file_as_INT8(const char *fname,
 		}
 }
 
-void read_k_th_set_from_file(const char *fname, INT k, 
-	INT *&the_set, INT &set_size, INT verbose_level)
+void read_k_th_set_from_file(const char *fname, int k, 
+	int *&the_set, int &set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, a, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, a, h;
 	
 	if (f_v) {
 		cout << "read_k_th_set_from_file opening file " 
@@ -3716,7 +3716,7 @@ void read_k_th_set_from_file(const char *fname, INT k,
 	ifstream f(fname);
 	
 	f >> set_size;
-	the_set = NEW_INT(set_size);
+	the_set = NEW_int(set_size);
 	
 	for (h = 0; h <= k; h++) {
 		for (i = 0; i < set_size; i++) {
@@ -3737,17 +3737,17 @@ void read_k_th_set_from_file(const char *fname, INT k,
 		}
 	if (f_vv) {
 		cout << "the set is:" << endl;
-		INT_vec_print(cout, the_set, set_size);
+		int_vec_print(cout, the_set, set_size);
 		cout << endl;
 		}
 }
 
 
 void write_incidence_matrix_to_file(char *fname, 
-	INT *Inc, INT m, INT n, INT verbose_level)
+	int *Inc, int m, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, nb_inc;
+	int f_v = (verbose_level >= 1);
+	int i, nb_inc;
 	
 	if (f_v) {
 		cout << "write_incidence_matrix_to_file opening file " 
@@ -3781,16 +3781,16 @@ void write_incidence_matrix_to_file(char *fname,
 
 #define READ_INCIDENCE_BUFSIZE 1000000
 
-void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n, 
-	char *inc_file_name, INT inc_file_idx, INT verbose_level)
+void read_incidence_matrix_from_inc_file(int *&M, int &m, int &n, 
+	char *inc_file_name, int inc_file_idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT nb_inc;
-	INT a, h, cnt;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_inc;
+	int a, h, cnt;
 	char buf[READ_INCIDENCE_BUFSIZE];
 	char *p_buf;
-	INT *X = NULL;
+	int *X = NULL;
 
 
 	if (f_v) {
@@ -3807,13 +3807,13 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 	if (strlen(buf) == 0) {
 		exit(1);
 		}
-	sscanf(buf, "%ld %ld %ld", &m, &n, &nb_inc);
+	sscanf(buf, "%d %d %d", &m, &n, &nb_inc);
 	if (f_vv) {
 		cout << "m=" << m;
 		cout << " n=" << n;
 		cout << " nb_inc=" << nb_inc << endl;
 		}
-	X = NEW_INT(nb_inc);
+	X = NEW_int(nb_inc);
 	cnt = 0;
 	while (TRUE) {
 		if (f.eof()) {
@@ -3854,7 +3854,7 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 			}
 		//f >> a; // skip aut group order
 		if (cnt == inc_file_idx) {
-			M = NEW_INT(m * n);
+			M = NEW_int(m * n);
 			for (h = 0; h < m * n; h++) {
 				M[h] = 0;
 				}
@@ -3871,20 +3871,20 @@ void read_incidence_matrix_from_inc_file(INT *&M, INT &m, INT &n,
 		cnt++;
 		}
 	}
-	FREE_INT(X);
+	FREE_int(X);
 }
 
-INT inc_file_get_number_of_geometries(
-	char *inc_file_name, INT verbose_level)
+int inc_file_get_number_of_geometries(
+	char *inc_file_name, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT nb_inc;
-	INT a, h, cnt;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_inc;
+	int a, h, cnt;
 	char buf[READ_INCIDENCE_BUFSIZE];
 	char *p_buf;
-	INT *X = NULL;
-	INT m, n;
+	int *X = NULL;
+	int m, n;
 
 
 	if (f_v) {
@@ -3901,13 +3901,13 @@ INT inc_file_get_number_of_geometries(
 	if (strlen(buf) == 0) {
 		exit(1);
 		}
-	sscanf(buf, "%ld %ld %ld", &m, &n, &nb_inc);
+	sscanf(buf, "%d %d %d", &m, &n, &nb_inc);
 	if (f_vv) {
 		cout << "m=" << m;
 		cout << " n=" << n;
 		cout << " nb_inc=" << nb_inc << endl;
 		}
-	X = NEW_INT(nb_inc);
+	X = NEW_int(nb_inc);
 	cnt = 0;
 	while (TRUE) {
 		if (f.eof()) {
@@ -3949,7 +3949,7 @@ INT inc_file_get_number_of_geometries(
 		cnt++;
 		}
 	}
-	FREE_INT(X);
+	FREE_int(X);
 	return cnt;
 }
 
@@ -3960,9 +3960,9 @@ void print_line_of_number_signs()
 	cout << "##################################################################################################" << endl;
 }
 
-void print_repeated_character(ostream &ost, char c, INT n)
+void print_repeated_character(ostream &ost, char c, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		ost << c;
@@ -3973,11 +3973,11 @@ void print_pointer_hex(ostream &ost, void *p)
 {
 	void *q = p;
 	uchar *pp = (uchar *)&q;
-	INT i, a, low, high;
+	int i, a, low, high;
 	
 	ost << "0x";
-	for (i = (INT)sizeof(pvoid) - 1; i >= 0; i--) {
-		a = (INT)pp[i];
+	for (i = (int)sizeof(pvoid) - 1; i >= 0; i--) {
+		a = (int)pp[i];
 		//cout << " a=" << a << " ";
 		low = a % 16;
 		high = a / 16;
@@ -3986,7 +3986,7 @@ void print_pointer_hex(ostream &ost, void *p)
 		}
 }
 
-void print_hex_digit(ostream &ost, INT digit)
+void print_hex_digit(ostream &ost, int digit)
 {
 	if (digit < 10) {
 		ost << (char)('0' + digit);
@@ -4001,10 +4001,10 @@ void print_hex_digit(ostream &ost, INT digit)
 }
 
 void count_number_of_solutions_in_file(const char *fname, 
-	INT &nb_solutions, 
-	INT verbose_level)
+	int &nb_solutions, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *buf;
 
 	if (f_v) {
@@ -4055,16 +4055,16 @@ void count_number_of_solutions_in_file(const char *fname,
 }
 
 void count_number_of_solutions_in_file_by_case(const char *fname, 
-	INT *&nb_solutions, INT *&case_nb, INT &nb_cases, 
-	INT verbose_level)
+	int *&nb_solutions, int *&case_nb, int &nb_cases, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *buf;
-	//INT nb_sol;
-	INT N = 1000;
-	INT i;
-	INT the_case;
-	INT the_case_count = 0;
+	//int nb_sol;
+	int N = 1000;
+	int i;
+	int the_case;
+	int the_case_count = 0;
 
 	if (f_v) {
 		cout << "count_number_of_solutions_in_file_by_case " 
@@ -4073,8 +4073,8 @@ void count_number_of_solutions_in_file_by_case(const char *fname,
 			<< file_size(fname) << endl;
 		}
 
-	nb_solutions = NEW_INT(N);
-	case_nb = NEW_INT(N);
+	nb_solutions = NEW_int(N);
+	case_nb = NEW_int(N);
 	nb_cases = 0;
 	if (file_size(fname) < 0) {
 		cout << "count_number_of_solutions_in_file_by_case file " 
@@ -4112,17 +4112,17 @@ void count_number_of_solutions_in_file_by_case(const char *fname,
 			}
 		else if (strncmp(buf, "# end case", 10) == 0) {
 			if (nb_cases == N) {
-				INT *nb_solutions1;
-				INT *case_nb1;
+				int *nb_solutions1;
+				int *case_nb1;
 
-				nb_solutions1 = NEW_INT(N + 1000);
-				case_nb1 = NEW_INT(N + 1000);
+				nb_solutions1 = NEW_int(N + 1000);
+				case_nb1 = NEW_int(N + 1000);
 				for (i = 0; i < N; i++) {
 					nb_solutions1[i] = nb_solutions[i];
 					case_nb1[i] = case_nb[i];
 					}
-				FREE_INT(nb_solutions);
-				FREE_INT(case_nb);
+				FREE_int(nb_solutions);
+				FREE_int(case_nb);
 				nb_solutions = nb_solutions1;
 				case_nb = case_nb1;
 				N += 1000;
@@ -4150,13 +4150,13 @@ void count_number_of_solutions_in_file_by_case(const char *fname,
 }
 
 void read_solutions_from_file(const char *fname, 
-	INT &nb_solutions, INT *&Solutions, INT solution_size, 
-	INT verbose_level)
+	int &nb_solutions, int *&Solutions, int solution_size, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *buf;
 	char *p_buf;
-	INT i, a, nb_sol;
+	int i, a, nb_sol;
 
 	if (f_v) {
 		cout << "read_solutions_from_file" << endl;
@@ -4182,7 +4182,7 @@ void read_solutions_from_file(const char *fname,
 
 
 
-	Solutions = NEW_INT(nb_solutions * solution_size);
+	Solutions = NEW_int(nb_solutions * solution_size);
 
 	nb_sol = 0;
 	{
@@ -4219,17 +4219,17 @@ void read_solutions_from_file(const char *fname,
 }
 
 void read_solutions_from_file_by_case(const char *fname, 
-	INT *nb_solutions, INT *case_nb, INT nb_cases, 
-	INT **&Solutions, INT solution_size, 
-	INT verbose_level)
+	int *nb_solutions, int *case_nb, int nb_cases, 
+	int **&Solutions, int solution_size, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char *buf;
-	//INT nb_sol;
-	INT i;
-	INT nb_case1;
-	INT the_case;
-	INT the_case_count = 0;
+	//int nb_sol;
+	int i;
+	int nb_case1;
+	int the_case;
+	int the_case_count = 0;
 
 	if (f_v) {
 		cout << "read_solutions_from_file_by_case" << endl;
@@ -4245,7 +4245,7 @@ void read_solutions_from_file_by_case(const char *fname,
 	
 	buf = NEW_char(MY_BUFSIZE);
 
-	Solutions = NEW_PINT(nb_cases);
+	Solutions = NEW_pint(nb_cases);
 
 	{
 	ifstream fp(fname);
@@ -4272,7 +4272,7 @@ void read_solutions_from_file_by_case(const char *fname,
 				cout << "read_solutions_from_file_by_case the_case != case_nb[nb_case1]" << endl;
 				exit(1);
 				}
-			Solutions[nb_case1] = NEW_INT(nb_solutions[nb_case1] * solution_size);
+			Solutions[nb_case1] = NEW_int(nb_solutions[nb_case1] * solution_size);
 			cout << "read_solutions_from_file_by_case read start case " << the_case << endl;
 			}
 		else if (strncmp(buf, "# end case", 10) == 0) {
@@ -4287,7 +4287,7 @@ void read_solutions_from_file_by_case(const char *fname,
 		else { 
 			if (the_case >= 0) {
 				char *p_buf;
-				INT sz, a;
+				int sz, a;
 				
 				//cout << "read_solutions_from_file_by_case reading solution " << the_case_count << " for case " << the_case << endl;
 				p_buf = buf;
@@ -4347,10 +4347,10 @@ void copy_file_to_ostream(ostream &ost, char *fname)
 
 }
 
-void INT_vec_write_csv(INT *v, INT len, 
+void int_vec_write_csv(int *v, int len, 
 	const char *fname, const char *label)
 {
-	INT i;
+	int i;
 
 	{
 	ofstream f(fname);
@@ -4363,10 +4363,10 @@ void INT_vec_write_csv(INT *v, INT len,
 	}
 }
 
-void INT_vecs_write_csv(INT *v1, INT *v2, INT len, 
+void int_vecs_write_csv(int *v1, int *v2, int len, 
 	const char *fname, const char *label1, const char *label2)
 {
-	INT i;
+	int i;
 
 	{
 	ofstream f(fname);
@@ -4379,12 +4379,12 @@ void INT_vecs_write_csv(INT *v1, INT *v2, INT len,
 	}
 }
 
-void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len, 
+void int_vec_array_write_csv(int nb_vecs, int **Vec, int len, 
 	const char *fname, const char **column_label)
 {
-	INT i, j;
+	int i, j;
 
-	cout << "INT_vec_array_write_csv nb_vecs=" << nb_vecs << endl;
+	cout << "int_vec_array_write_csv nb_vecs=" << nb_vecs << endl;
 	cout << "column labels:" << endl;
 	for (j = 0; j < nb_vecs; j++) {
 		cout << j << " : " << column_label[j] << endl;
@@ -4409,9 +4409,9 @@ void INT_vec_array_write_csv(INT nb_vecs, INT **Vec, INT len,
 	}
 }
 
-void INT_matrix_write_csv(const char *fname, INT *M, INT m, INT n)
+void int_matrix_write_csv(const char *fname, int *M, int m, int n)
 {
-	INT i, j;
+	int i, j;
 
 	{
 	ofstream f(fname);
@@ -4432,9 +4432,9 @@ void INT_matrix_write_csv(const char *fname, INT *M, INT m, INT n)
 	}
 }
 
-void double_matrix_write_csv(const char *fname, double *M, INT m, INT n)
+void double_matrix_write_csv(const char *fname, double *M, int m, int n)
 {
-	INT i, j;
+	int i, j;
 
 	{
 	ofstream f(fname);
@@ -4455,10 +4455,10 @@ void double_matrix_write_csv(const char *fname, double *M, INT m, INT n)
 	}
 }
 
-void INT_matrix_write_csv_with_labels(const char *fname, 
-	INT *M, INT m, INT n, const char **column_label)
+void int_matrix_write_csv_with_labels(const char *fname, 
+	int *M, int m, int n, const char **column_label)
 {
-	INT i, j;
+	int i, j;
 
 	{
 	ofstream f(fname);
@@ -4479,17 +4479,17 @@ void INT_matrix_write_csv_with_labels(const char *fname,
 	}
 }
 
-void INT_matrix_read_csv(const char *fname, 
-	INT *&M, INT &m, INT &n, INT verbose_level)
+void int_matrix_read_csv(const char *fname, 
+	int *&M, int &m, int &n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a;
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
 
 	if (f_v) {
-		cout << "INT_matrix_read_csv reading file " << fname << endl;
+		cout << "int_matrix_read_csv reading file " << fname << endl;
 		}
 	if (file_size(fname) <= 0) {
-		cout << "INT_matrix_read_csv file " << fname 
+		cout << "int_matrix_read_csv file " << fname 
 			<< " does not exist or is empty" << endl;
 		cout << "file_size(fname)=" << file_size(fname) << endl;
 		exit(1);
@@ -4501,7 +4501,7 @@ void INT_matrix_read_csv(const char *fname,
 
 	m = S.nb_rows - 1;
 	n = S.nb_cols - 1;
-	M = NEW_INT(m * n);
+	M = NEW_int(m * n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			a = my_atoi(S.get_string(i + 1, j + 1));
@@ -4510,16 +4510,16 @@ void INT_matrix_read_csv(const char *fname,
 		}
 	}
 	if (f_v) {
-		cout << "INT_matrix_read_csv done" << endl;
+		cout << "int_matrix_read_csv done" << endl;
 		}
 
 }
 
 void double_matrix_read_csv(const char *fname, 
-	double *&M, INT &m, INT &n, INT verbose_level)
+	double *&M, int &m, int &n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "double_matrix_read_csv reading file " 
@@ -4553,9 +4553,9 @@ void double_matrix_read_csv(const char *fname,
 
 }
 
-void INT_matrix_write_text(const char *fname, INT *M, INT m, INT n)
+void int_matrix_write_text(const char *fname, int *M, int m, int n)
 {
-	INT i, j;
+	int i, j;
 
 	{
 	ofstream f(fname);
@@ -4570,12 +4570,12 @@ void INT_matrix_write_text(const char *fname, INT *M, INT m, INT n)
 	}
 }
 
-void INT_matrix_read_text(const char *fname, INT *&M, INT &m, INT &n)
+void int_matrix_read_text(const char *fname, int *&M, int &m, int &n)
 {
-	INT i, j;
+	int i, j;
 
 	if (file_size(fname) <= 0) {
-		cout << "INT_matrix_read_text The file " 
+		cout << "int_matrix_read_text The file " 
 			<< fname << " does not exist" << endl;
 		exit(1);
 		}
@@ -4583,7 +4583,7 @@ void INT_matrix_read_text(const char *fname, INT *&M, INT &m, INT &n)
 	ifstream f(fname);
 	
 	f >> m >> n;
-	M = NEW_INT(m * n);
+	M = NEW_int(m * n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			f >> M[i * n + j];
@@ -4592,17 +4592,17 @@ void INT_matrix_read_text(const char *fname, INT *&M, INT &m, INT &n)
 	}
 }
 
-INT compare_sets(INT *set1, INT *set2, INT sz1, INT sz2)
+int compare_sets(int *set1, int *set2, int sz1, int sz2)
 {
-	INT *S1, *S2;
-	INT u, ret;
+	int *S1, *S2;
+	int u, ret;
 
-	S1 = NEW_INT(sz1);
-	S2 = NEW_INT(sz2);
-	INT_vec_copy(set1, S1, sz1);
-	INT_vec_copy(set2, S2, sz2);
-	INT_vec_heapsort(S1, sz1);
-	INT_vec_heapsort(S2, sz2);
+	S1 = NEW_int(sz1);
+	S2 = NEW_int(sz2);
+	int_vec_copy(set1, S1, sz1);
+	int_vec_copy(set2, S2, sz2);
+	int_vec_heapsort(S1, sz1);
+	int_vec_heapsort(S2, sz2);
 	for ( u = 0; u < sz1 + sz2; u++) {
 		if (u < sz1 && u < sz2) {
 			if (S1[u] < S2[u]) {
@@ -4630,26 +4630,26 @@ INT compare_sets(INT *set1, INT *set2, INT sz1, INT sz2)
 		}
 	ret = 0;
 finish:
-	FREE_INT(S1);
-	FREE_INT(S2);
+	FREE_int(S1);
+	FREE_int(S2);
 	return ret;
 }
 
-INT test_if_sets_are_disjoint(INT *set1, INT *set2, INT sz1, INT sz2)
+int test_if_sets_are_disjoint(int *set1, int *set2, int sz1, int sz2)
 {
-	INT *S1, *S2;
-	INT i, u, v, ret;
+	int *S1, *S2;
+	int i, u, v, ret;
 
-	S1 = NEW_INT(sz1);
-	S2 = NEW_INT(sz2);
+	S1 = NEW_int(sz1);
+	S2 = NEW_int(sz2);
 	for (i = 0; i < sz1; i++) {
 		S1[i] = set1[i];
 		}
 	for (i = 0; i < sz2; i++) {
 		S2[i] = set2[i];
 		}
-	INT_vec_heapsort(S1, sz1);
-	INT_vec_heapsort(S2, sz2);
+	int_vec_heapsort(S1, sz1);
+	int_vec_heapsort(S2, sz2);
 	u = v = 0;
 	while (u + v < sz1 + sz2) {
 		if (u < sz1 && v < sz2) {
@@ -4675,22 +4675,22 @@ INT test_if_sets_are_disjoint(INT *set1, INT *set2, INT sz1, INT sz2)
 		}
 	ret = TRUE;
 finish:
-	FREE_INT(S1);
-	FREE_INT(S2);
+	FREE_int(S1);
+	FREE_int(S2);
 	return ret;
 }
 
 void make_graph_of_disjoint_sets_from_rows_of_matrix(
-	INT *M, INT m, INT n, 
-	INT *&Adj, INT verbose_level)
+	int *M, int m, int n, 
+	int *&Adj, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a;
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
 
 	if (f_v) {
 		cout << "make_graph_of_disjoint_sets_from_rows_of_matrix" << endl;
 		}
-	Adj = NEW_INT(m * m);
+	Adj = NEW_int(m * m);
 	for (i = 0; i < m * m; i++) {
 		Adj[i] = 0;
 		}
@@ -4710,10 +4710,10 @@ void make_graph_of_disjoint_sets_from_rows_of_matrix(
 		}
 }
 
-void write_exact_cover_problem_to_file(INT *Inc, 
-		INT nb_rows, INT nb_cols, const char *fname)
+void write_exact_cover_problem_to_file(int *Inc, 
+		int nb_rows, int nb_cols, const char *fname)
 {
-	INT i, j, d;
+	int i, j, d;
 	
 	{
 	ofstream fp(fname);
@@ -4741,20 +4741,20 @@ void write_exact_cover_problem_to_file(INT *Inc,
 #define BUFSIZE_READ_SOLUTION_FILE ONE_MILLION
 
 void read_solution_file(char *fname, 
-	INT *Inc, INT nb_rows, INT nb_cols, 
-	INT *&Solutions, INT &sol_length, INT &nb_sol, 
-	INT verbose_level)
+	int *Inc, int nb_rows, int nb_cols, 
+	int *&Solutions, int &sol_length, int &nb_sol, 
+	int verbose_level)
 // sol_length must be constant
 {
-	INT f_v = (verbose_level >= 1);
-	INT nb, nb_max, i, j, a, nb_sol1;
-	INT *x, *y;
+	int f_v = (verbose_level >= 1);
+	int nb, nb_max, i, j, a, nb_sol1;
+	int *x, *y;
 	
 	if (f_v) {
 		cout << "read_solution_file" << endl;
 		}
-	x = NEW_INT(nb_cols);
-	y = NEW_INT(nb_rows);
+	x = NEW_int(nb_cols);
+	y = NEW_int(nb_rows);
 	if (f_v) {
 		cout << "read_solution_file reading file " << fname 
 			<< " of size " << file_size(fname) << endl;
@@ -4802,7 +4802,7 @@ void read_solution_file(char *fname,
 				for (i = 0; i < nb_rows; i++) {
 					if (y[i] != 1) {
 						cout << "read_solution_file Not a solution!" << endl;
-						INT_vec_print_fully(cout, y, nb_rows);
+						int_vec_print_fully(cout, y, nb_rows);
 						cout << endl;
 						exit(1);
 						}
@@ -4817,7 +4817,7 @@ void read_solution_file(char *fname,
 			<< " starting to read now." << endl;
 		}
 	sol_length = nb_max;
-	Solutions = NEW_INT(nb_sol * sol_length);
+	Solutions = NEW_int(nb_sol * sol_length);
 	nb_sol1 = 0;
 	{
 		ifstream f(fname);
@@ -4844,23 +4844,23 @@ void read_solution_file(char *fname,
 		cout << "read_solution_file: Read " << nb_sol 
 			<< " solutions from file " << fname << endl;
 		}
-	FREE_INT(x);
-	FREE_INT(y);
+	FREE_int(x);
+	FREE_int(y);
 	FREE_char(buf);
 	if (f_v) {
 		cout << "read_solution_file done" << endl;
 		}
 }
 
-void INT_vec_print_to_str(char *str, INT *data, INT len)
+void int_vec_print_to_str(char *str, int *data, int len)
 {
-	INT i, a;
+	int i, a;
 
 	str[0] = 0;
 	strcat(str, "\" ");
 	for (i = 0; i < len; i++) {
 		a = data[i];
-		sprintf(str + strlen(str), "%ld", a);
+		sprintf(str + strlen(str), "%d", a);
 		if (i < len - 1) {
 			strcat(str, ", ");
 			}
@@ -4868,17 +4868,17 @@ void INT_vec_print_to_str(char *str, INT *data, INT len)
 	strcat(str, "\"");
 }
 
-void INT_matrix_print_with_labels_and_partition(ostream &ost, 
-	INT *p, INT m, INT n, 
-	INT *row_labels, INT *col_labels, 
-	INT *row_part_first, INT *row_part_len, INT nb_row_parts,  
-	INT *col_part_first, INT *col_part_len, INT nb_col_parts, 
-	void (*process_function_or_NULL)(INT *p, INT m, INT n, 
-		INT i, INT j, INT val, char *output, void *data), 
+void int_matrix_print_with_labels_and_partition(ostream &ost, 
+	int *p, int m, int n, 
+	int *row_labels, int *col_labels, 
+	int *row_part_first, int *row_part_len, int nb_row_parts,  
+	int *col_part_first, int *col_part_len, int nb_col_parts, 
+	void (*process_function_or_NULL)(int *p, int m, int n, 
+		int i, int j, int val, char *output, void *data), 
 	void *data, 
-	INT f_tex)
+	int f_tex)
 {
-	INT i, j, I, J, u, v;
+	int i, j, I, J, u, v;
 	char output[1000];
 	
 	if (f_tex) {
@@ -4963,7 +4963,7 @@ void INT_matrix_print_with_labels_and_partition(ostream &ost,
 }
 
 
-INT is_csv_file(const char *fname)
+int is_csv_file(const char *fname)
 {
 	char ext[1000];
 
@@ -4976,7 +4976,7 @@ INT is_csv_file(const char *fname)
 		}
 }
 
-INT is_xml_file(const char *fname)
+int is_xml_file(const char *fname)
 {
 	char ext[1000];
 
@@ -4990,7 +4990,7 @@ INT is_xml_file(const char *fname)
 }
 
 
-void os_date_string(char *str, INT sz)
+void os_date_string(char *str, int sz)
 {
 	system("date >a");
 	{
@@ -4999,9 +4999,9 @@ void os_date_string(char *str, INT sz)
 	}
 }
 
-INT os_seconds_past_1970()
+int os_seconds_past_1970()
 {
-	INT a;
+	int a;
 	
 	{
 	ofstream fp("b");
@@ -5015,7 +5015,7 @@ INT os_seconds_past_1970()
 
 	ifstream f1("a");
 	f1.getline(str, sizeof(str));
-	sscanf(str, "%ld", &a);
+	sscanf(str, "%d", &a);
 	}
 	return a;
 }
@@ -5370,9 +5370,9 @@ void povray_bottom_plane(ostream &ost)
 
 }
 
-void povray_rotate_111(INT h, INT nb_frames, ostream &fp)
+void povray_rotate_111(int h, int nb_frames, ostream &fp)
 {
-	//INT nb_frames_per_rotation;
+	//int nb_frames_per_rotation;
 	//nb_frames_per_rotation = nb_frames;
 	double angle_zero_one = 1. - (h * 1. / (double) nb_frames);
 		// rotate in the opposite direction
@@ -5385,7 +5385,7 @@ void povray_rotate_111(INT h, INT nb_frames, ostream &fp)
 
 
 void povray_ini(ostream &ost, const char *fname_pov, 
-	INT first_frame, INT last_frame)
+	int first_frame, int last_frame)
 {
 	ost << "; Persistence Of Vision raytracer version 3.7 example file." << endl;
 	ost << "Antialias=On" << endl;
@@ -5407,35 +5407,35 @@ void povray_ini(ostream &ost, const char *fname_pov,
 void test_typedefs()
 {
 	cout << "test_typedefs()" << endl;
-	if (sizeof(INT2) != 2) {
-		cout << "warning: sizeof(INT2)=" << sizeof(INT2) << endl;
+	if (sizeof(int2) != 2) {
+		cout << "warning: sizeof(int2)=" << sizeof(int2) << endl;
 		}
-	if (sizeof(INT4) != 4) {
-		cout << "warning: sizeof(INT4)=" << sizeof(INT4) << endl;
+	if (sizeof(int4) != 4) {
+		cout << "warning: sizeof(int4)=" << sizeof(int4) << endl;
 		}
-	if (sizeof(INT8) != 8) {
-		cout << "warning: sizeof(INT8)=" << sizeof(INT8) << endl;
+	if (sizeof(int8) != 8) {
+		cout << "warning: sizeof(int8)=" << sizeof(int8) << endl;
 		}
-	if (sizeof(UINT2) != 2) {
-		cout << "warning: sizeof(UINT2)=" << sizeof(UINT2) << endl;
+	if (sizeof(uint2) != 2) {
+		cout << "warning: sizeof(uint2)=" << sizeof(uint2) << endl;
 		}
-	if (sizeof(UINT4) != 4) {
-		cout << "warning: sizeof(UINT2)=" << sizeof(UINT4) << endl;
+	if (sizeof(uint4) != 4) {
+		cout << "warning: sizeof(uint2)=" << sizeof(uint4) << endl;
 		}
-	if (sizeof(UINT8) != 8) {
-		cout << "warning: sizeof(UINT2)=" << sizeof(UINT8) << endl;
+	if (sizeof(uint8) != 8) {
+		cout << "warning: sizeof(uint2)=" << sizeof(uint8) << endl;
 		}
 	cout << "test_typedefs() done" << endl;
 }
 
-void concatenate_files(const char *fname_in_mask, INT N, 
-	const char *fname_out, const char *EOF_marker, INT f_title_line, 
-	INT verbose_level)
+void concatenate_files(const char *fname_in_mask, int N, 
+	const char *fname_out, const char *EOF_marker, int f_title_line, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname[1000];
 	char *buf;
-	INT h, cnt;
+	int h, cnt;
 
 	if (f_v) {
 		cout << "concatenate_files " << fname_in_mask 

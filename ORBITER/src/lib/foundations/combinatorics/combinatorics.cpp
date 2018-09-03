@@ -5,9 +5,9 @@
 
 #include "foundations.h"
 
-INT Hamming_distance_binary(INT a, INT b, INT n)
+int Hamming_distance_binary(int a, int b, int n)
 {
-	INT i, d, u, v;
+	int i, d, u, v;
 
 	d = 0;
 	for (i = 0; i < n; i++) {
@@ -22,9 +22,9 @@ INT Hamming_distance_binary(INT a, INT b, INT n)
 	return d;
 }
 
-INT INT_factorial(INT a)
+int int_factorial(int a)
 {
-	INT n, i;
+	int n, i;
 
 	n = 1;
 	for (i = 2; i <= a; i++) {
@@ -33,9 +33,9 @@ INT INT_factorial(INT a)
 	return n;
 }
 
-INT Kung_mue_i(INT *part, INT i, INT m)
+int Kung_mue_i(int *part, int i, int m)
 {
-	INT k, mue;
+	int k, mue;
 	
 	mue = 0;
 	for (k = 1; k <= i; k++) {
@@ -47,19 +47,19 @@ INT Kung_mue_i(INT *part, INT i, INT m)
 	return mue;
 }
 
-void partition_dual(INT *part, INT *dual_part, INT n, INT verbose_level)
+void partition_dual(int *part, int *dual_part, int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT s, i, j, aj;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int s, i, j, aj;
 
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "input: ";
-		INT_vec_print(cout, part, n);
+		int_vec_print(cout, part, n);
 		cout << endl;
 		}
-	INT_vec_zero(dual_part, n);
+	int_vec_zero(dual_part, n);
 	j = 0;
 	s = 0;
 	for (i = n; i >= 1; i--) {
@@ -87,38 +87,38 @@ void partition_dual(INT *part, INT *dual_part, INT n, INT verbose_level)
 	if (f_v) {
 		cout << "partition_dual" << endl;
 		cout << "output: ";
-		INT_vec_print(cout, dual_part, n);
+		int_vec_print(cout, dual_part, n);
 		cout << endl;
 		}
 }
 
-void make_all_partitions_of_n(INT n, INT *&Table, INT &nb, INT verbose_level)
+void make_all_partitions_of_n(int n, int *&Table, int &nb, int verbose_level)
 {
-	INT *v;
-	INT cnt;
+	int *v;
+	int cnt;
 
 	nb = count_all_partitions_of_n(n);
-	v = NEW_INT(n);
-	Table = NEW_INT(nb * n);
+	v = NEW_int(n);
+	Table = NEW_int(nb * n);
 	cnt = 0;
 	partition_first(v, n);
 	while (TRUE) {
-		INT_vec_copy(v, Table + cnt * n, n);
+		int_vec_copy(v, Table + cnt * n, n);
 		cnt++;
 		if (!partition_next(v, n)) {
 			break;
 			}
 		}
 
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-INT count_all_partitions_of_n(INT n)
+int count_all_partitions_of_n(int n)
 {
-	INT *v;
-	INT cnt;
+	int *v;
+	int cnt;
 
-	v = NEW_INT(n);
+	v = NEW_int(n);
 	partition_first(v, n);
 	cnt = 1;
 	while (TRUE) {
@@ -128,21 +128,21 @@ INT count_all_partitions_of_n(INT n)
 		cnt++;
 		}
 
-	FREE_INT(v);
+	FREE_int(v);
 	return cnt;
 }
 
-INT partition_first(INT *v, INT n)
+int partition_first(int *v, int n)
 {
-	INT_vec_zero(v, n);
+	int_vec_zero(v, n);
 	v[n - 1] = 1;
 	return TRUE;
 }
 
-INT partition_next(INT *v, INT n)
+int partition_next(int *v, int n)
 // next partition in exponential notation
 {
-	INT i, j, a, s;
+	int i, j, a, s;
 
 
 	s = v[0];
@@ -163,10 +163,10 @@ INT partition_next(INT *v, INT n)
 	return FALSE;
 }
 
-void partition_print(ostream &ost, INT *v, INT n)
+void partition_print(ostream &ost, int *v, int n)
 {
-	INT i, a;
-	INT f_first = TRUE;
+	int i, a;
+	int f_first = TRUE;
 
 	ost << "[";
 	for (i = n; i >= 1; i--) {
@@ -187,14 +187,14 @@ void partition_print(ostream &ost, INT *v, INT n)
 	ost << "]";
 }
 
-INT INT_vec_is_regular_word(INT *v, INT len, INT q)
+int int_vec_is_regular_word(int *v, int len, int q)
 // Returns TRUE if the word v of length n is regular, i.~e. 
 // lies in an orbit of length $n$ under the action of the cyclic group 
 // $C_n$ acting on the coordinates. 
 // Lueneburg~\cite{Lueneburg87a} p. 118.
 // v is a vector over $\{0, 1, \ldots , q-1\}$
 {
-	INT i, k, ipk, f_is_regular;
+	int i, k, ipk, f_is_regular;
 	
 	if (len == 1) {
 		return TRUE;
@@ -218,77 +218,77 @@ INT INT_vec_is_regular_word(INT *v, INT len, INT q)
 	return f_is_regular;
 }
 
-INT INT_vec_first_regular_word(INT *v, INT len, INT Q, INT q)
+int int_vec_first_regular_word(int *v, int len, int Q, int q)
 {
-	INT a;
+	int a;
 
 	for (a = 0; a < Q; a++) {
 		AG_element_unrank(q, v, 1, len, a);
-		if (INT_vec_is_regular_word(v, len, q)) {
+		if (int_vec_is_regular_word(v, len, q)) {
 			return TRUE;
 			}
 		}
 	return FALSE;
 }
 
-INT INT_vec_next_regular_word(INT *v, INT len, INT Q, INT q)
+int int_vec_next_regular_word(int *v, int len, int Q, int q)
 {
-	INT a;
+	int a;
 
 	AG_element_rank(q, v, 1, len, a);
-	//cout << "INT_vec_next_regular_word current rank = " << a << endl;
+	//cout << "int_vec_next_regular_word current rank = " << a << endl;
 	for (a++; a < Q; a++) {
 		AG_element_unrank(q, v, 1, len, a);
-		//cout << "INT_vec_next_regular_word testing ";
-		//INT_vec_print(cout, v, len);
+		//cout << "int_vec_next_regular_word testing ";
+		//int_vec_print(cout, v, len);
 		//cout << endl;
-		if (INT_vec_is_regular_word(v, len, q)) {
+		if (int_vec_is_regular_word(v, len, q)) {
 			return TRUE;
 			}
 		}
 	return FALSE;
 }
 
-INT is_subset_of(INT *A, INT sz_A, INT *B, INT sz_B)
+int is_subset_of(int *A, int sz_A, int *B, int sz_B)
 {
-	INT *B2;
-	INT i, idx;
-	INT ret = FALSE;
+	int *B2;
+	int i, idx;
+	int ret = FALSE;
 
-	B2 = NEW_INT(sz_B);
+	B2 = NEW_int(sz_B);
 	for (i = 0; i < sz_B; i++) {
 		B2[i] = B[i];
 		}
-	INT_vec_heapsort(B2, sz_B);
+	int_vec_heapsort(B2, sz_B);
 	for (i = 0; i < sz_A; i++) {
-		if (!INT_vec_search(B2, sz_B, A[i], idx)) {
+		if (!int_vec_search(B2, sz_B, A[i], idx)) {
 			goto done;
 			}
 		}
 	ret = TRUE;
 done:
-	FREE_INT(B2);
+	FREE_int(B2);
 	return ret;
 }
 
-INT set_find(INT *elts, INT size, INT a)
+int set_find(int *elts, int size, int a)
 {
-	INT idx;
+	int idx;
 	
-	if (!INT_vec_search(elts, size, a, idx)) {
+	if (!int_vec_search(elts, size, a, idx)) {
 		cout << "set_find fatal: did not find" << endl;
 		cout << "a=" << a << endl;
-		INT_vec_print(cout, elts, size);
+		int_vec_print(cout, elts, size);
 		cout << endl;
 		exit(1);
 		}
 	return idx;
 }
 
-void set_complement(INT *subset, INT subset_size, INT *complement, INT &size_complement, INT universal_set_size)
+void set_complement(int *subset, int subset_size, int *complement, int &size_complement, int universal_set_size)
 // subset must be in increasing order
 {
-	INT i, j;
+	int i, j;
 
 	j = 0;
 	size_complement = 0;
@@ -301,15 +301,15 @@ void set_complement(INT *subset, INT subset_size, INT *complement, INT &size_com
 		}
 }
 
-void set_complement_safe(INT *subset, INT subset_size, INT *complement, INT &size_complement, INT universal_set_size)
+void set_complement_safe(int *subset, int subset_size, int *complement, int &size_complement, int universal_set_size)
 // subset does not need to be in increasing order
 {
-	INT i, j;
-	INT *subset2;
+	int i, j;
+	int *subset2;
 
-	subset2 = NEW_INT(subset_size);
-	INT_vec_copy(subset, subset2, subset_size);
-	INT_vec_heapsort(subset2, subset_size);
+	subset2 = NEW_int(subset_size);
+	int_vec_copy(subset, subset2, subset_size);
+	int_vec_heapsort(subset2, subset_size);
 	
 	j = 0;
 	size_complement = 0;
@@ -320,23 +320,23 @@ void set_complement_safe(INT *subset, INT subset_size, INT *complement, INT &siz
 			}
 		complement[size_complement++] = i;
 		}
-	FREE_INT(subset2);
+	FREE_int(subset2);
 }
 
-void set_add_elements(INT *elts, INT &size, INT *elts_to_add, INT nb_elts_to_add)
+void set_add_elements(int *elts, int &size, int *elts_to_add, int nb_elts_to_add)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < nb_elts_to_add; i++) {
 		set_add_element(elts, size, elts_to_add[i]);
 		}
 }
 
-void set_add_element(INT *elts, INT &size, INT a)
+void set_add_element(int *elts, int &size, int a)
 {
-	INT idx, i;
+	int idx, i;
 	
-	if (INT_vec_search(elts, size, a, idx)) {
+	if (int_vec_search(elts, size, a, idx)) {
 		return;
 		}
 	for (i = size; i > idx; i--) {
@@ -346,9 +346,9 @@ void set_add_element(INT *elts, INT &size, INT a)
 	size++;
 }
 
-void set_delete_elements(INT *elts, INT &size, INT *elts_to_delete, INT nb_elts_to_delete)
+void set_delete_elements(int *elts, int &size, int *elts_to_delete, int nb_elts_to_delete)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < nb_elts_to_delete; i++) {
 		set_delete_element(elts, size, elts_to_delete[i]);
@@ -356,11 +356,11 @@ void set_delete_elements(INT *elts, INT &size, INT *elts_to_delete, INT nb_elts_
 }
 
 
-void set_delete_element(INT *elts, INT &size, INT a)
+void set_delete_element(int *elts, int &size, int a)
 {
-	INT idx, i;
+	int idx, i;
 	
-	if (!INT_vec_search(elts, size, a, idx)) {
+	if (!int_vec_search(elts, size, a, idx)) {
 		return;
 		}
 	for (i = idx; i < size; i++) {
@@ -370,9 +370,9 @@ void set_delete_element(INT *elts, INT &size, INT a)
 }
 
 
-INT compare_lexicographically(INT a_len, INT *a, INT b_len, INT *b)
+int compare_lexicographically(int a_len, int *a, int b_len, int *b)
 {
-	INT i, l;
+	int i, l;
 	
 	l = MINIMUM(a_len, b_len);
 	for (i = 0; i < l; i++) {
@@ -390,27 +390,27 @@ INT compare_lexicographically(INT a_len, INT *a, INT b_len, INT *b)
 	return 0;
 }
 
-INT INT_n_choose_k(INT n, INT k)
+int int_n_choose_k(int n, int k)
 {
-	INT r;
+	int r;
 	longinteger_object a;
 	longinteger_domain D;
 	
 	D.binomial(a, n, k, FALSE);
-	r = a.as_INT();
+	r = a.as_int();
 	return r;
 }
 
-void make_t_k_incidence_matrix(INT v, INT t, INT k, INT &m, INT &n, INT *&M, 
-	INT verbose_level)
+void make_t_k_incidence_matrix(int v, int t, int k, int &m, int &n, int *&M, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
 	
-	m = INT_n_choose_k(v, t);
-	n = INT_n_choose_k(v, k);
-	M = NEW_INT(m * n);
+	m = int_n_choose_k(v, t);
+	n = int_n_choose_k(v, k);
+	M = NEW_int(m * n);
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			M[i * n + j] = f_is_subset_of(v, t, k, i, j);
@@ -423,33 +423,33 @@ void make_t_k_incidence_matrix(INT v, INT t, INT k, INT &m, INT &n, INT *&M,
 	if (f_vv) {
 		print_k_subsets_by_rank(cout, v, t);
 		print_k_subsets_by_rank(cout, v, k);
-		print_INT_matrix(cout, M, m, n);
+		print_int_matrix(cout, M, m, n);
 		}
 }
 
-void print_k_subsets_by_rank(ostream &ost, INT v, INT k)
+void print_k_subsets_by_rank(ostream &ost, int v, int k)
 {
-	INT *set;
-	INT i, nb;
+	int *set;
+	int i, nb;
 	
-	set = NEW_INT(k);
-	nb = INT_n_choose_k(v, k);
+	set = NEW_int(k);
+	nb = int_n_choose_k(v, k);
 	for (i = 0; i < nb; i++) {
 		unrank_k_subset(i, set, v, k);
 		cout << i << " : ";
-		INT_set_print(ost, set, k);
+		int_set_print(ost, set, k);
 		cout << endl;
 		}
-	FREE_INT(set);
+	FREE_int(set);
 }
 
-INT f_is_subset_of(INT v, INT t, INT k, INT rk_t_subset, INT rk_k_subset)
+int f_is_subset_of(int v, int t, int k, int rk_t_subset, int rk_k_subset)
 {
-	INT *set1, *set2;
-	INT i, j = 0, f_subset = TRUE;
+	int *set1, *set2;
+	int i, j = 0, f_subset = TRUE;
 	
-	set1 = NEW_INT(t);
-	set2 = NEW_INT(k);
+	set1 = NEW_int(t);
+	set2 = NEW_int(k);
 	
 	unrank_k_subset(rk_t_subset, set1, v, t);
 	unrank_k_subset(rk_k_subset, set2, v, k);
@@ -468,22 +468,22 @@ INT f_is_subset_of(INT v, INT t, INT k, INT rk_t_subset, INT rk_k_subset)
 		j++;
 		}
 
-	FREE_INT(set1);
-	FREE_INT(set2);
+	FREE_int(set1);
+	FREE_int(set2);
 	return f_subset;
 }
 
-INT rank_subset(INT *set, INT sz, INT n)
+int rank_subset(int *set, int sz, int n)
 {
-	INT r = 0;
+	int r = 0;
 
 	rank_subset_recursion(set, sz, n, 0, r);
 	return r;
 }
 
-void rank_subset_recursion(INT *set, INT sz, INT n, INT a0, INT &r)
+void rank_subset_recursion(int *set, int sz, int n, int a0, int &r)
 {
-	INT a;
+	int a;
 	
 	if (sz == 0) {
 		return;
@@ -500,16 +500,16 @@ void rank_subset_recursion(INT *set, INT sz, INT n, INT a0, INT &r)
 		}
 }
 
-void unrank_subset(INT *set, INT &sz, INT n, INT r)
+void unrank_subset(int *set, int &sz, int n, int r)
 {
 	sz = 0;
 	
 	unrank_subset_recursion(set, sz, n, 0, r);
 }
 
-void unrank_subset_recursion(INT *set, INT &sz, INT n, INT a0, INT &r)
+void unrank_subset_recursion(int *set, int &sz, int n, int a0, int &r)
 {
-	INT a, b;
+	int a, b;
 	
 	if (r == 0) {
 		return;
@@ -529,9 +529,9 @@ void unrank_subset_recursion(INT *set, INT &sz, INT n, INT a0, INT &r)
 }
 
 
-INT rank_k_subset(INT *set, INT n, INT k)
+int rank_k_subset(int *set, int n, int k)
 {
-	INT r = 0, i, j;
+	int r = 0, i, j;
 	longinteger_object a, b;
 	longinteger_domain D;
 	
@@ -542,7 +542,7 @@ INT rank_k_subset(INT *set, INT n, INT k)
 	for (i = 0; i < n; i++) {
 		if (set[j] > i) {
 			D.binomial(a, n - i - 1, k - j - 1, FALSE);
-			r += a.as_INT();
+			r += a.as_int();
 			}
 		else {
 			j++;
@@ -554,9 +554,9 @@ INT rank_k_subset(INT *set, INT n, INT k)
 	return r;
 }
 
-void unrank_k_subset(INT rk, INT *set, INT n, INT k)
+void unrank_k_subset(int rk, int *set, int n, int k)
 {
-	INT r1, i, j;
+	int r1, i, j;
 	longinteger_object a, b;
 	longinteger_domain D;
 	
@@ -566,7 +566,7 @@ void unrank_k_subset(INT rk, INT *set, INT n, INT k)
 	j = 0;
 	for (i = 0; i < n; i++) {
 		D.binomial(a, n - i - 1, k - j - 1, FALSE);
-		r1 = a.as_INT();
+		r1 = a.as_int();
 		if (rk >= r1) {
 			rk -= r1;
 			continue;
@@ -578,9 +578,9 @@ void unrank_k_subset(INT rk, INT *set, INT n, INT k)
 		}
 }
 
-INT first_k_subset(INT *set, INT n, INT k)
+int first_k_subset(int *set, int n, int k)
 {
-	INT i;
+	int i;
 	
 	if (k > n) {
 		return FALSE;
@@ -591,9 +591,9 @@ INT first_k_subset(INT *set, INT n, INT k)
 	return TRUE;
 }
 
-INT next_k_subset(INT *set, INT n, INT k)
+int next_k_subset(int *set, int n, int k)
 {
-	INT i, ii, a;
+	int i, ii, a;
 	
 	for (i = 0; i < k; i++) {
 		a = set[k - 1 - i];
@@ -608,9 +608,9 @@ INT next_k_subset(INT *set, INT n, INT k)
 	return FALSE;
 }
 
-INT next_k_subset_at_level(INT *set, INT n, INT k, INT backtrack_level)
+int next_k_subset_at_level(int *set, int n, int k, int backtrack_level)
 {
-	INT i, ii, a, start;
+	int i, ii, a, start;
 	
 	start = k - 1 - backtrack_level;
 	for (i = start; i < k; i++) {
@@ -626,9 +626,9 @@ INT next_k_subset_at_level(INT *set, INT n, INT k, INT backtrack_level)
 	return FALSE;
 }
 
-void subset_permute_up_front(INT n, INT k, INT *set, INT *k_subset_idx, INT *permuted_set)
+void subset_permute_up_front(int n, int k, int *set, int *k_subset_idx, int *permuted_set)
 {
-	INT i, ii, j;
+	int i, ii, j;
 	
 	ii = 0;
 	j = -1;
@@ -649,9 +649,9 @@ void subset_permute_up_front(INT n, INT k, INT *set, INT *k_subset_idx, INT *per
 		}
 }
 
-INT ordered_pair_rank(INT i, INT j, INT n)
+int ordered_pair_rank(int i, int j, int n)
 {
-	INT a;
+	int a;
 	
 	if (i == j) {
 		cout << "ordered_pair_rank i == j" << endl;
@@ -669,12 +669,12 @@ INT ordered_pair_rank(INT i, INT j, INT n)
 		}
 }
 
-void ordered_pair_unrank(INT rk, INT &i, INT &j, INT n)
+void ordered_pair_unrank(int rk, int &i, int &j, int n)
 {
-	INT a;
+	int a;
 	
 	if (rk % 2) {
-		INT i1, j1;
+		int i1, j1;
 
 		// with swap
 		a = rk / 2;
@@ -689,13 +689,13 @@ void ordered_pair_unrank(INT rk, INT &i, INT &j, INT n)
 		}
 }
 
-INT unordered_triple_pair_rank(INT i, INT j, INT k, INT l, INT m, INT n)
+int unordered_triple_pair_rank(int i, int j, int k, int l, int m, int n)
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
-	INT a, b, u, rk;
-	INT six[5];
-	INT sz;
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
+	int a, b, u, rk;
+	int six[5];
+	int sz;
 	
 
 	if (f_v) {
@@ -725,7 +725,7 @@ INT unordered_triple_pair_rank(INT i, INT j, INT k, INT l, INT m, INT n)
 	sz = 2;
 
 
-	INT_vec_search(six, sz, l, b);
+	int_vec_search(six, sz, l, b);
 	for (u = sz; u > b; u--) {
 		six[u] = six[u - 1];
 		}
@@ -734,7 +734,7 @@ INT unordered_triple_pair_rank(INT i, INT j, INT k, INT l, INT m, INT n)
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
-		INT_vec_print(cout, six, sz); 
+		int_vec_print(cout, six, sz); 
 		cout << endl;
 		}
 
@@ -751,12 +751,12 @@ INT unordered_triple_pair_rank(INT i, INT j, INT k, INT l, INT m, INT n)
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " : ";
-		INT_vec_print(cout, six, sz); 
+		int_vec_print(cout, six, sz); 
 		cout << endl;
 		}
 
 
-	INT_vec_search(six, sz, j, a);
+	int_vec_search(six, sz, j, a);
 
 	if (f_v) {
 		cout << "unordered_triple_pair_rank : b = " << b << " a = " << a << endl;
@@ -767,11 +767,11 @@ INT unordered_triple_pair_rank(INT i, INT j, INT k, INT l, INT m, INT n)
 	return rk;
 }
 
-void unordered_triple_pair_unrank(INT rk, INT &i, INT &j, INT &k, INT &l, INT &m, INT &n)
+void unordered_triple_pair_unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n)
 {
-	INT a, b, u;
-	INT six[5];
-	INT sz;
+	int a, b, u;
+	int six[5];
+	int sz;
 	
 	a = rk / 3;
 	b = rk % 3;
@@ -784,7 +784,7 @@ void unordered_triple_pair_unrank(INT rk, INT &i, INT &j, INT &k, INT &l, INT &m
 	sz = 5;
 	j = six[a];
 
-	//INT_vec_print(cout, six, sz);
+	//int_vec_print(cout, six, sz);
 	//cout << " j=" << j << endl;
 
 	for (u = a + 1; u < sz; u++) {
@@ -794,7 +794,7 @@ void unordered_triple_pair_unrank(INT rk, INT &i, INT &j, INT &k, INT &l, INT &m
 	k = six[0];
 
 
-	//INT_vec_print(cout, six, sz);
+	//int_vec_print(cout, six, sz);
 	//cout << " k=" << k << endl;
 
 
@@ -805,7 +805,7 @@ void unordered_triple_pair_unrank(INT rk, INT &i, INT &j, INT &k, INT &l, INT &m
 	l = six[b];
 
 
-	//INT_vec_print(cout, six, sz);
+	//int_vec_print(cout, six, sz);
 	//cout << " l=" << l << endl;
 
 
@@ -819,14 +819,14 @@ void unordered_triple_pair_unrank(INT rk, INT &i, INT &j, INT &k, INT &l, INT &m
 		}
 	m = six[0];
 	n = six[1];
-	//INT_vec_print(cout, six, sz);
+	//int_vec_print(cout, six, sz);
 	//cout << " m=" << m << " n=" << n << endl;
 	//cout << "unordered_triple_pair_unrank rk=" << rk << " i=" << i << " j=" << j << " k=" << k << " l=" << l << " m=" << m << " n=" << n << endl;
 }
 
 
 
-INT ij2k(INT i, INT j, INT n)
+int ij2k(int i, int j, int n)
 {
 	if (i == j) {
 		cout << "ij2k() i == j" << endl;
@@ -840,9 +840,9 @@ INT ij2k(INT i, INT j, INT n)
 		}
 }
 
-void k2ij(INT k, INT & i, INT & j, INT n)
+void k2ij(int k, int & i, int & j, int n)
 {
-	INT ii, k_save = k;
+	int ii, k_save = k;
 	
 	for (ii = 0; ii < n; ii++) {
 		if (k < n - ii - 1) {
@@ -856,10 +856,10 @@ void k2ij(INT k, INT & i, INT & j, INT n)
 	exit(1);
 }
 
-INT ijk2h(INT i, INT j, INT k, INT n)
+int ijk2h(int i, int j, int k, int n)
 {
-	INT set[3];
-	INT h;
+	int set[3];
+	int h;
 
 	set[0] = i;
 	set[1] = j;
@@ -868,9 +868,9 @@ INT ijk2h(INT i, INT j, INT k, INT n)
 	return h;
 }
 
-void h2ijk(INT h, INT &i, INT &j, INT &k, INT n)
+void h2ijk(int h, int &i, int &j, int &k, int n)
 {
-	INT set[3];
+	int set[3];
 
 	unrank_k_subset(h, set, n, 3);
 	i = set[0];
@@ -879,10 +879,10 @@ void h2ijk(INT h, INT &i, INT &j, INT &k, INT n)
 }
 
 
-void random_permutation(INT *random_permutation, INT n)
+void random_permutation(int *random_permutation, int n)
 {
-	INT i, l, a;
-	INT *available_digits;
+	int i, l, a;
+	int *available_digits;
 	
 	if (n == 0)
 		return;
@@ -890,7 +890,7 @@ void random_permutation(INT *random_permutation, INT n)
 		random_permutation[0] = 0;
 		return;
 		}
-	available_digits = NEW_INT(n);
+	available_digits = NEW_int(n);
 	
 	for (i = 0; i < n; i++) {
 		available_digits[i] = i;
@@ -911,30 +911,30 @@ void random_permutation(INT *random_permutation, INT n)
 		l--;
 		}
 	
-	FREE_INT(available_digits);
+	FREE_int(available_digits);
 }
 
-void perm_move(INT *from, INT *to, INT n)
+void perm_move(int *from, int *to, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		to[i] = from[i];
 		}
 }
 
-void perm_identity(INT *a, INT n)
+void perm_identity(int *a, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		a[i] = i;
 		}
 }
 
-INT perm_is_identity(INT *a, INT n)
+int perm_is_identity(int *a, int n)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < n; i++) {
 		if (a[i] != i) {
@@ -944,9 +944,9 @@ INT perm_is_identity(INT *a, INT n)
 	return TRUE;
 }
 
-void perm_elementary_transposition(INT *a, INT n, INT f)
+void perm_elementary_transposition(int *a, int n, int f)
 {
-	INT i;
+	int i;
 
 	if (f >= n - 1) {
 		cout << "perm_elementary_transposition f >= n - 1" << endl;
@@ -959,9 +959,9 @@ void perm_elementary_transposition(INT *a, INT n, INT f)
 	a[f + 1] = f;
 }
 
-void perm_mult(INT *a, INT *b, INT *c, INT n)
+void perm_mult(int *a, int *b, int *c, int n)
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		j = a[i];
@@ -978,10 +978,10 @@ void perm_mult(INT *a, INT *b, INT *c, INT n)
 		}
 }
 
-void perm_conjugate(INT *a, INT *b, INT *c, INT n)
+void perm_conjugate(int *a, int *b, int *c, int n)
 // c := a^b = b^-1 * a * b
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		j = b[i];
@@ -992,10 +992,10 @@ void perm_conjugate(INT *a, INT *b, INT *c, INT n)
 		}
 }
 
-void perm_inverse(INT *a, INT *b, INT n)
+void perm_inverse(int *a, int *b, int n)
 // b := a^-1
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < n; i++) {
 		j = a[i];
@@ -1003,10 +1003,10 @@ void perm_inverse(INT *a, INT *b, INT n)
 		}
 }
 
-void perm_raise(INT *a, INT *b, INT e, INT n)
+void perm_raise(int *a, int *b, int e, int n)
 // b := a^e (e >= 0)
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		k = i;
@@ -1017,9 +1017,9 @@ void perm_raise(INT *a, INT *b, INT e, INT n)
 		}
 }
 
-void perm_direct_product(INT n1, INT n2, INT *perm1, INT *perm2, INT *perm3)
+void perm_direct_product(int n1, int n2, int *perm1, int *perm2, int *perm3)
 {
-	INT i, j, a, b, c;
+	int i, j, a, b, c;
 	
 	for (i = 0; i < n1; i++) {
 		for (j = 0; j < n2; j++) {
@@ -1031,9 +1031,9 @@ void perm_direct_product(INT n1, INT n2, INT *perm1, INT *perm2, INT *perm3)
 		}
 }
 
-void perm_print_list(ostream &ost, INT *a, INT n)
+void perm_print_list(ostream &ost, int *a, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		ost << a[i] << " ";
@@ -1045,9 +1045,9 @@ void perm_print_list(ostream &ost, INT *a, INT n)
 	cout << endl;
 }
 
-void perm_print_list_offset(ostream &ost, INT *a, INT n, INT offset)
+void perm_print_list_offset(ostream &ost, int *a, int n, int offset)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		ost << offset + a[i] << " ";
@@ -1059,7 +1059,7 @@ void perm_print_list_offset(ostream &ost, INT *a, INT n, INT offset)
 	cout << endl;
 }
 
-void perm_print_product_action(ostream &ost, INT *a, INT m_plus_n, INT m, INT offset, INT f_cycle_length)
+void perm_print_product_action(ostream &ost, int *a, int m_plus_n, int m, int offset, int f_cycle_length)
 {
 	//cout << "perm_print_product_action" << endl;
 	ost << "(";
@@ -1070,35 +1070,35 @@ void perm_print_product_action(ostream &ost, INT *a, INT m_plus_n, INT m, INT of
 	//cout << "perm_print_product_action done" << endl;
 }
 
-void perm_print(ostream &ost, INT *a, INT n)
+void perm_print(ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 0, FALSE, FALSE, 0, FALSE);
 }
 
-void perm_print_with_cycle_length(ostream &ost, INT *a, INT n)
+void perm_print_with_cycle_length(ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 0, TRUE, FALSE, 0, TRUE);
 }
 
-void perm_print_counting_from_one(ostream &ost, INT *a, INT n)
+void perm_print_counting_from_one(ostream &ost, int *a, int n)
 {
 	perm_print_offset(ost, a, n, 1, FALSE, FALSE, 0, FALSE);
 }
 
-void perm_print_offset(ostream &ost, INT *a, INT n, INT offset, INT f_cycle_length, 
-	INT f_max_cycle_length, INT max_cycle_length, INT f_orbit_structure)
+void perm_print_offset(ostream &ost, int *a, int n, int offset, int f_cycle_length, 
+	int f_max_cycle_length, int max_cycle_length, int f_orbit_structure)
 {
-	INT *have_seen;
-	INT i, l, l1, first, next, len;
-	INT f_nothing_printed_at_all = TRUE;
-	INT *orbit_length = NULL;
-	INT nb_orbits = 0;
+	int *have_seen;
+	int i, l, l1, first, next, len;
+	int f_nothing_printed_at_all = TRUE;
+	int *orbit_length = NULL;
+	int nb_orbits = 0;
 	
 	//cout << "perm_print_offset n=" << n << " offset=" << offset << endl;
 	if (f_orbit_structure) {
-		orbit_length = NEW_INT(n);
+		orbit_length = NEW_int(n);
 		}
-	have_seen = NEW_INT(n);
+	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
 		}
@@ -1185,21 +1185,21 @@ void perm_print_offset(ostream &ost, INT *a, INT n, INT offset, INT f_cycle_leng
 		C.init(orbit_length, nb_orbits, FALSE, 0);
 
 		cout << "cycle type: ";
-		//INT_vec_print(cout, orbit_length, nb_orbits);
+		//int_vec_print(cout, orbit_length, nb_orbits);
 		//cout << " = ";
 		C.print_naked(FALSE /* f_backwards*/);
 		
-		FREE_INT(orbit_length);
+		FREE_int(orbit_length);
 		}
-	FREE_INT(have_seen);
+	FREE_int(have_seen);
 }
 
-INT perm_order(INT *a, INT n)
+int perm_order(int *a, int n)
 {
-	INT *have_seen;
-	INT i, l, l1, first, next, len, order = 1;
+	int *have_seen;
+	int i, l, l1, first, next, len, order = 1;
 		
-	have_seen = NEW_INT(n);
+	have_seen = NEW_int(n);
 	for (l = 0; l < n; l++) {
 		have_seen[l] = FALSE;
 		}
@@ -1237,15 +1237,15 @@ INT perm_order(INT *a, INT n)
 		if (len == 1) {
 			continue;
 			}
-		order = len * order / gcd_INT(order, len);
+		order = len * order / gcd_int(order, len);
 		}
-	FREE_INT(have_seen);
+	FREE_int(have_seen);
 	return order;
 }
 
-INT perm_signum(INT *perm, INT n)
+int perm_signum(int *perm, int n)
 {
-	INT i, j, a, b, f;
+	int i, j, a, b, f;
 	// f = number of inversions
 	
 
@@ -1268,18 +1268,18 @@ INT perm_signum(INT *perm, INT n)
 		}
 }
 
-void first_lehmercode(INT n, INT *v)
+void first_lehmercode(int n, int *v)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		v[i] = 0;
 		}
 }
 
-INT next_lehmercode(INT n, INT *v)
+int next_lehmercode(int n, int *v)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		if (v[i] < n - 1 - i) {
@@ -1293,12 +1293,12 @@ INT next_lehmercode(INT n, INT *v)
 	return FALSE;
 }
 
-void lehmercode_to_permutation(INT n, INT *code, INT *perm)
+void lehmercode_to_permutation(int n, int *code, int *perm)
 {
-	INT *digits;
-	INT i, j, k;
+	int *digits;
+	int i, j, k;
 	
-	digits = NEW_INT(n);
+	digits = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		digits[i] = i;
 		}
@@ -1313,12 +1313,12 @@ void lehmercode_to_permutation(INT n, INT *code, INT *perm)
 			digits[j] = digits[j + 1];
 			}
 		}
-	FREE_INT(digits);
+	FREE_int(digits);
 }
 
-INT disjoint_binary_representation(INT u, INT v)
+int disjoint_binary_representation(int u, int v)
 {
-	INT u1, v1;
+	int u1, v1;
 	
 	while (u || v) {
 		u1 = u % 2;
@@ -1332,10 +1332,10 @@ INT disjoint_binary_representation(INT u, INT v)
 	return TRUE;
 }
 
-INT hall_test(INT *A, INT n, INT kmax, INT *memo, INT verbose_level)
+int hall_test(int *A, int n, int kmax, int *memo, int verbose_level)
 {
-	INT f_vv = (verbose_level >= 2);
-	INT k;
+	int f_vv = (verbose_level >= 2);
+	int k;
 	
 	for (k = 1; k <= MINIMUM(kmax, n); k++) {
 		if (!philip_hall_test(A, n, k, memo, verbose_level - 1)) {
@@ -1354,12 +1354,12 @@ INT hall_test(INT *A, INT n, INT kmax, INT *memo, INT verbose_level)
 	return TRUE;
 }
 
-INT philip_hall_test(INT *A, INT n, INT k, INT *memo, INT verbose_level)
-// memo points to free memory of n INT's
+int philip_hall_test(int *A, int n, int k, int *memo, int verbose_level)
+// memo points to free memory of n int's
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, l, c;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, l, c;
 	
 	if (!first_k_subset(memo, n, k))
 		return TRUE;
@@ -1382,7 +1382,7 @@ INT philip_hall_test(INT *A, INT n, INT k, INT *memo, INT verbose_level)
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
-				INT_set_print(memo, k);
+				int_set_print(memo, k);
 				cout << " c=" << c << " n=" << n << endl;
 				}
 			if (f_vv) {
@@ -1405,12 +1405,12 @@ INT philip_hall_test(INT *A, INT n, INT k, INT *memo, INT verbose_level)
 	return TRUE;
 }
 
-INT philip_hall_test_dual(INT *A, INT n, INT k, INT *memo, INT verbose_level)
-// memo points to free memory of n INT's
+int philip_hall_test_dual(int *A, int n, int k, int *memo, int verbose_level)
+// memo points to free memory of n int's
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, l, c;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, l, c;
 	
 	if (!first_k_subset(memo, n, k))
 		return TRUE;
@@ -1433,7 +1433,7 @@ INT philip_hall_test_dual(INT *A, INT n, INT k, INT *memo, INT verbose_level)
 		if (c < k) {
 			if (f_v) {
 				cout << "Hall test fails for " << k << "-set ";
-				INT_set_print(memo, k);
+				int_set_print(memo, k);
 				cout << " c=" << c << " n=" << n << endl;
 				}
 			if (f_vv) {
@@ -1456,9 +1456,9 @@ INT philip_hall_test_dual(INT *A, INT n, INT k, INT *memo, INT verbose_level)
 	return TRUE;
 }
 
-void print_01_matrix_with_stars(ostream &ost, INT *A, INT m, INT n)
+void print_01_matrix_with_stars(ostream &ost, int *A, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -1473,9 +1473,9 @@ void print_01_matrix_with_stars(ostream &ost, INT *A, INT m, INT n)
 		}
 }
 
-void print_INT_matrix(ostream &ost, INT *A, INT m, INT n)
+void print_int_matrix(ostream &ost, int *A, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -1485,12 +1485,12 @@ void print_INT_matrix(ostream &ost, INT *A, INT m, INT n)
 		}
 }
 
-INT create_roots_H4(finite_field *F, INT *roots)
+int create_roots_H4(finite_field *F, int *roots)
 {
-	INT i, j, k, j1, j2, j3, j4, n;
-	INT v[4];
-	INT L[4], P[4], sgn;
-	INT one, m_one, half, quarter, c, c2, /*tau, tau_inv,*/ a, b, m_a, m_b, m_half;
+	int i, j, k, j1, j2, j3, j4, n;
+	int v[4];
+	int L[4], P[4], sgn;
+	int one, m_one, half, quarter, c, c2, /*tau, tau_inv,*/ a, b, m_a, m_b, m_half;
 	
 	one = 1;
 	m_one = F->negate(one);
@@ -1620,9 +1620,9 @@ INT create_roots_H4(finite_field *F, INT *roots)
 }
 
 
-INT generalized_binomial(INT n, INT k, INT q)
+int generalized_binomial(int n, int k, int q)
 {
-	INT a, b, c, a1, b1, c1, d, e, g;
+	int a, b, c, a1, b1, c1, d, e, g;
 	
 	if (n == k || k == 0)
 		return 1;
@@ -1632,13 +1632,13 @@ INT generalized_binomial(INT n, INT k, INT q)
 	
 	b = i_power_j(q, k) - 1;
 	
-	g = gcd_INT(a, b);
+	g = gcd_int(a, b);
 	a1 = a / g;
 	b1 = b / g;
 	a = a1;
 	b = b1;
 
-	g = gcd_INT(c, b);
+	g = gcd_int(c, b);
 	c1 = c / g;
 	b1 = b / g;
 	c = c1;
@@ -1658,9 +1658,9 @@ INT generalized_binomial(INT n, INT k, INT q)
 	return e;
 }
 
-void print_tableau(INT *Tableau, INT l1, INT l2, INT *row_parts, INT *col_parts)
+void print_tableau(int *Tableau, int l1, int l2, int *row_parts, int *col_parts)
 {
-	INT i, j, a, b;
+	int i, j, a, b;
 
 	for (i = 0; i < l1; i++) {
 		a = row_parts[i];

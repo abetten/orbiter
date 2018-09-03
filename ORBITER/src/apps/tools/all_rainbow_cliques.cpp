@@ -12,7 +12,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 #if 0
@@ -28,42 +28,42 @@ fname, f_output_solution_raw,
 
 int main(int argc, char **argv)
 {
-	INT i, j;
+	int i, j;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;	
+	int verbose_level = 0;
+	int f_file = FALSE;	
 	const char *fname = NULL;
-	INT f_maxdepth = FALSE;
-	INT maxdepth = 0;
-	INT print_interval = 1000;
-	INT f_list_of_cases = FALSE;
+	int f_maxdepth = FALSE;
+	int maxdepth = 0;
+	int print_interval = 1000;
+	int f_list_of_cases = FALSE;
 	const char *fname_list_of_cases = NULL;
 	const char *fname_template = NULL;
-	INT f_prefix = FALSE;
+	int f_prefix = FALSE;
 	const char *prefix = "";
-	INT f_output_file = FALSE;
+	int f_output_file = FALSE;
 	const char *output_file = NULL;
-	INT f_tree = FALSE;
-	INT f_decision_nodes_only = FALSE;
+	int f_tree = FALSE;
+	int f_decision_nodes_only = FALSE;
 	const char *fname_tree = NULL;
-	INT f_output_solution_raw = FALSE;
-	INT f_no_colors = FALSE;
-	INT clique_size;
-	INT f_solution_file = FALSE;
-	INT f_restrictions = FALSE;
-	INT restrictions[1000];
-	INT nb_restrictions = 0;
-	INT f_export_magma = FALSE;
-	INT f_split = FALSE;
-	INT split_r = 0;
-	INT split_m = 0;
-	INT f_input_list_of_files = FALSE;
-	INT input_list_of_files_nb = 0;
-	INT input_list_of_files_case[100000];
+	int f_output_solution_raw = FALSE;
+	int f_no_colors = FALSE;
+	int clique_size;
+	int f_solution_file = FALSE;
+	int f_restrictions = FALSE;
+	int restrictions[1000];
+	int nb_restrictions = 0;
+	int f_export_magma = FALSE;
+	int f_split = FALSE;
+	int split_r = 0;
+	int split_m = 0;
+	int f_input_list_of_files = FALSE;
+	int input_list_of_files_nb = 0;
+	int input_list_of_files_case[100000];
 	const char *input_list_of_files_fname[100000];
-	INT f_success_file = FALSE;
+	int f_success_file = FALSE;
 	const char *success_fname = NULL;
-	INT f_nonrecursive = FALSE;
+	int f_nonrecursive = FALSE;
 
 
 	cout << argv[0] << endl;
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 					}
 				}
 			cout << "-restrictions ";
-			INT_vec_print(cout, restrictions, 3 * nb_restrictions);
+			int_vec_print(cout, restrictions, 3 * nb_restrictions);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-export_magma") == 0) {
@@ -211,8 +211,8 @@ int main(int argc, char **argv)
 			colored_graph CG;
 			//char fname_sol[1000];
 			//char fname_draw[1000];
-			INT nb_sol;
-			INT decision_step_counter;
+			int nb_sol;
+			int decision_step_counter;
 
 
 
@@ -234,7 +234,7 @@ int main(int argc, char **argv)
 
 			if (f_restrictions) {
 				for (i = 0; i < nb_restrictions; i++) {
-					sprintf(fname_solution + strlen(fname_solution), "_case%ld_%ld_%ld", 
+					sprintf(fname_solution + strlen(fname_solution), "_case%d_%d_%d", 
 						restrictions[3 * i + 0], restrictions[3 * i + 1], restrictions[3 * i + 2]);
 					}
 				}
@@ -288,7 +288,7 @@ int main(int argc, char **argv)
 
 
 			if (f_nonrecursive) {
-				INT nb_sol, nb_backtrack_nodes;
+				int nb_sol, nb_backtrack_nodes;
 
 				cout << "finding rainbow cliques, calling colored_graph_all_rainbow_cliques_nonrecursive" << endl;
 
@@ -302,7 +302,7 @@ int main(int argc, char **argv)
 			else {
 				cout << "finding rainbow cliques, calling colored_graph_all_cliques" << endl;
 
-				INT search_steps, decision_steps, nb_sol, dt;
+				int search_steps, decision_steps, nb_sol, dt;
 
 
 				colored_graph_all_cliques(fname, f_output_solution_raw, 
@@ -323,15 +323,15 @@ int main(int argc, char **argv)
 			}
 		}
 	else if (f_list_of_cases) {
-		INT *list_of_cases;
-		INT nb_cases;
+		int *list_of_cases;
+		int nb_cases;
 		char fname_sol[1000];
 		char fname_stats[1000];
 		char split[1000];
 		
 
 		if (f_split) {
-			sprintf(split, "_split_%ld_%ld.txt", split_r, split_m);
+			sprintf(split, "_split_%d_%d.txt", split_r, split_m);
 			}
 
 
@@ -364,7 +364,7 @@ int main(int argc, char **argv)
 			print_interval, 
 			verbose_level);
 		
-		FREE_INT(list_of_cases);
+		FREE_int(list_of_cases);
 		cout << "all_rainbow_cliques.out written file " << fname_sol << " of size " << file_size(fname_sol) << endl;
 		cout << "all_rainbow_cliques.out written file " << fname_stats << " of size " << file_size(fname_stats) << endl;
 		}

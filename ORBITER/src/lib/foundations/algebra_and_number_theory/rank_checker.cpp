@@ -21,33 +21,33 @@ rank_checker::~rank_checker()
 {
 	//cout << "in ~rank_checker()" << endl;
 	if (M1)
-		FREE_INT(M1);
+		FREE_int(M1);
 	if (M2)
-		FREE_INT(M2);
+		FREE_int(M2);
 	if (base_cols)
-		FREE_INT(base_cols);
+		FREE_int(base_cols);
 	if (set)
-		FREE_INT(set);
+		FREE_int(set);
 	//cout << "~rank_checker() finished" << endl;
 }
 
-void rank_checker::init(finite_field *GFq, INT m, INT n, INT d)
+void rank_checker::init(finite_field *GFq, int m, int n, int d)
 {
 	rank_checker::GFq = GFq;
 	rank_checker::m = m;
 	rank_checker::n = n;
 	rank_checker::d = d;
-	M1 = NEW_INT(m * n);
-	M2 = NEW_INT(m * n);
-	base_cols = NEW_INT(n);
-	set = NEW_INT(n);
+	M1 = NEW_int(m * n);
+	M2 = NEW_int(m * n);
+	base_cols = NEW_int(n);
+	set = NEW_int(n);
 }
 
-INT rank_checker::check_rank(INT len, INT *S, INT verbose_level)
+int rank_checker::check_rank(int len, int *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, aj, rk, f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, aj, rk, f_OK = TRUE;
 	
 	if (f_v) {
 		cout << "rank_checker::check_rank: checking the set ";
@@ -67,7 +67,7 @@ INT rank_checker::check_rank(INT len, INT *S, INT verbose_level)
 		return TRUE;
 	if (d <= 1)
 		return TRUE;
-	INT d1 = MINIMUM(d - 2, len  - 1);
+	int d1 = MINIMUM(d - 2, len  - 1);
 	if (f_vv) {
 		cout << "d1=" << d1 << endl;
 		}
@@ -98,7 +98,7 @@ INT rank_checker::check_rank(INT len, INT *S, INT verbose_level)
 			print_integer_matrix(cout, M2, m, d1 + 1);
 			}
 		
-		rk = GFq->Gauss_INT(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
+		rk = GFq->Gauss_int(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
 			FALSE /* f_P */, NULL, m /* m */, d1 + 1 /* n */, 0 /* Pn */, 
 			0 /* verbose_level */);
 		if (rk <= d1) {
@@ -118,18 +118,18 @@ INT rank_checker::check_rank(INT len, INT *S, INT verbose_level)
 	return TRUE;
 }
 
-INT rank_checker::check_rank_matrix_input(INT len, INT *S, INT dim_S, INT verbose_level)
+int rank_checker::check_rank_matrix_input(int len, int *S, int dim_S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, aj, rk, f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, aj, rk, f_OK = TRUE;
 	
 	// S is a m x len matrix
 	if (len <= 1)
 		return TRUE;
 	if (d <= 1)
 		return TRUE;
-	INT d1 = MINIMUM(d - 2, len  - 1);
+	int d1 = MINIMUM(d - 2, len  - 1);
 	if (f_vv) {
 		cout << "d1=" << d1 << endl;
 		}
@@ -157,7 +157,7 @@ INT rank_checker::check_rank_matrix_input(INT len, INT *S, INT dim_S, INT verbos
 			M2[i * (d1 + 1) + d1] = S[i * dim_S + len - 1];
 			}
 		
-		rk = GFq->Gauss_INT(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
+		rk = GFq->Gauss_int(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
 			FALSE /* f_P */, NULL, m /* m */, d1 + 1 /* n */, 0 /* Pn */, 
 			0 /* verbose_level */);
 		if (rk <= d1) {
@@ -177,11 +177,11 @@ INT rank_checker::check_rank_matrix_input(INT len, INT *S, INT dim_S, INT verbos
 	return TRUE;
 }
 
-INT rank_checker::check_rank_last_two_are_fixed(INT len, INT *S, INT verbose_level)
+int rank_checker::check_rank_last_two_are_fixed(int len, int *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, aj, rk, f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, aj, rk, f_OK = TRUE;
 	
 	if (f_v) {
 		cout << "rank_checker::check_rank_last_two_are_fixed: checking the set ";
@@ -201,7 +201,7 @@ INT rank_checker::check_rank_last_two_are_fixed(INT len, INT *S, INT verbose_lev
 		return TRUE;
 	if (d <= 2)
 		return TRUE;
-	INT d1 = MINIMUM(d - 3, len  - 2);
+	int d1 = MINIMUM(d - 3, len  - 2);
 	if (f_vv) {
 		cout << "d1=" << d1 << endl;
 		}
@@ -233,7 +233,7 @@ INT rank_checker::check_rank_last_two_are_fixed(INT len, INT *S, INT verbose_lev
 			print_integer_matrix(cout, M2, m, d1 + 2);
 			}
 		
-		rk = GFq->Gauss_INT(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
+		rk = GFq->Gauss_int(M2, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
 			FALSE /* f_P */, NULL, m /* m */, d1 + 2 /* n */, 0 /* Pn */, 
 			0 /* verbose_level */);
 		if (rk <= d1 + 1) {
@@ -255,11 +255,11 @@ INT rank_checker::check_rank_last_two_are_fixed(INT len, INT *S, INT verbose_lev
 	return TRUE;
 }
 
-INT rank_checker::compute_rank_row_vectors(INT len, INT *S, INT f_projective, INT verbose_level)
+int rank_checker::compute_rank_row_vectors(int len, int *S, int f_projective, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT j, rk;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int j, rk;
 	
 	if (f_vv) {
 		cout << "rank_checker::compute_rank_row_vectors set ";
@@ -282,7 +282,7 @@ INT rank_checker::compute_rank_row_vectors(INT len, INT *S, INT f_projective, IN
 		}
 
 		
-	rk = GFq->Gauss_INT(M1, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
+	rk = GFq->Gauss_int(M1, FALSE /* f_special */, FALSE /* f_complete */, base_cols, 
 		FALSE /* f_P */, NULL, len /* m */, n /* n */, 0 /* Pn */, 
 		0 /* verbose_level */);
 

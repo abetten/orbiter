@@ -13,10 +13,10 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
-INT callback_check_surface(INT len, INT *S, void *data, INT verbose_level);
+int callback_check_surface(int len, int *S, void *data, int verbose_level);
 
 int main(int argc, const char **argv)
 {
@@ -25,7 +25,7 @@ int main(int argc, const char **argv)
 
 	//start_memory_debug();
 	
-	INT f_memory_dump_at_end = FALSE;
+	int f_memory_dump_at_end = FALSE;
 	const char *memory_dump_at_end_fname = NULL;
 
 
@@ -35,23 +35,23 @@ int main(int argc, const char **argv)
 	linear_group *LG;
 
 
-	INT verbose_level = 0;
-	INT f_linear = FALSE;
-	INT f_report = FALSE;
-	INT f_read_double_sixes = FALSE;
-	INT f_double_sixes_only = FALSE;
-	INT f_read_surfaces = FALSE;
-	INT q;
-	INT f_draw_poset = FALSE;
-	INT f_draw_poset_full = FALSE;
-	INT f_automatic_memory_dump = FALSE;
-	INT automatic_dump_interval = 0;
+	int verbose_level = 0;
+	int f_linear = FALSE;
+	int f_report = FALSE;
+	int f_read_double_sixes = FALSE;
+	int f_double_sixes_only = FALSE;
+	int f_read_surfaces = FALSE;
+	int q;
+	int f_draw_poset = FALSE;
+	int f_draw_poset_full = FALSE;
+	int f_automatic_memory_dump = FALSE;
+	int automatic_dump_interval = 0;
 	const char *automatic_dump_mask = NULL;
-	INT f_memory_dump_at_peak = FALSE;
+	int f_memory_dump_at_peak = FALSE;
 	const char *memory_dump_at_peak_fname = NULL;
 
 
-	INT i;
+	int i;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -135,7 +135,7 @@ int main(int argc, const char **argv)
 				verbose_level);
 	}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 
 	F = NEW_OBJECT(finite_field);
@@ -177,7 +177,7 @@ int main(int argc, const char **argv)
 		{
 		char fname[1000];
 	
-		sprintf(fname, "Double_sixes_q%ld.data", q);
+		sprintf(fname, "Double_sixes_q%d.data", q);
 		cout << "Reading file " << fname << " of size " << file_size(fname) << endl;
 		{
 
@@ -222,7 +222,7 @@ int main(int argc, const char **argv)
 		{
 		char fname[1000];
 	
-		sprintf(fname, "Double_sixes_q%ld.data", q);
+		sprintf(fname, "Double_sixes_q%d.data", q);
 		{
 
 		ofstream fp(fname);
@@ -249,9 +249,9 @@ int main(int argc, const char **argv)
 	char title[1000];
 	char author[1000];
 
-	sprintf(title, "Cheat Sheet on Double Sixes over GF(%ld) ", q);
+	sprintf(title, "Cheat Sheet on Double Sixes over GF(%d) ", q);
 	sprintf(author, "");
-	sprintf(fname, "Double_sixes_q%ld.tex", q);
+	sprintf(fname, "Double_sixes_q%d.tex", q);
 
 		{
 		ofstream fp(fname);
@@ -290,7 +290,7 @@ int main(int argc, const char **argv)
 		{
 		char fname[1000];
 	
-		sprintf(fname, "Surfaces_q%ld.data", q);
+		sprintf(fname, "Surfaces_q%d.data", q);
 		cout << "Reading file " << fname << " of size " << file_size(fname) << endl;
 		{
 
@@ -323,7 +323,7 @@ int main(int argc, const char **argv)
 		{
 		char fname[1000];
 	
-		sprintf(fname, "Surfaces_q%ld.data", q);
+		sprintf(fname, "Surfaces_q%d.data", q);
 		{
 
 		ofstream fp(fname);
@@ -349,11 +349,11 @@ int main(int argc, const char **argv)
 		char fname[1000];
 		char title[1000];
 		char author[1000];
-		INT f_with_stabilizers = TRUE;
+		int f_with_stabilizers = TRUE;
 
-		sprintf(title, "Cubic Surfaces with 27 Lines over GF(%ld) ", q);
+		sprintf(title, "Cubic Surfaces with 27 Lines over GF(%d) ", q);
 		sprintf(author, "");
-		sprintf(fname, "Surfaces_q%ld.tex", q);
+		sprintf(fname, "Surfaces_q%d.tex", q);
 
 			{
 			ofstream fp(fname);

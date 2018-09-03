@@ -5,7 +5,7 @@
 
 #include "foundations.h"
 
-INT power_mod(INT a, INT n, INT p)
+int power_mod(int a, int n, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, N, M;
@@ -14,26 +14,26 @@ INT power_mod(INT a, INT n, INT p)
 	N.create(n);
 	M.create(p);
 	D.power_longint_mod(A, N, M, 0 /* verbose_level */);
-	return A.as_INT();
+	return A.as_int();
 }
 
-INT inverse_mod(INT a, INT p)
+int inverse_mod(int a, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, U, V, G;
-	INT u;
+	int u;
 	
 	A.create(a);
 	B.create(p);
 	D.extended_gcd(A,B, G, U, V, 0 /* verbose_level */);
-	u = U.as_INT();
+	u = U.as_int();
 	while (u < 0) {
 		u += p;
 		}
 	return u;
 }
 
-INT mult_mod(INT a, INT b, INT p)
+int mult_mod(int a, int b, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, C, P;
@@ -42,25 +42,25 @@ INT mult_mod(INT a, INT b, INT p)
 	B.create(b);
 	P.create(p);
 	D.mult_mod(A, B, C, P, 0 /* verbose_level */);
-	return C.as_INT();
+	return C.as_int();
 }
 
-INT add_mod(INT a, INT b, INT p)
+int add_mod(int a, int b, int p)
 {
 	longinteger_domain D;
 	longinteger_object A, B, C, P, Q;
-	INT r;
+	int r;
 	
 	A.create(a);
 	B.create(b);
 	P.create(p);
 	D.add(A, B, C);
-	D.integral_division_by_INT(C, 
+	D.integral_division_by_int(C, 
 		p, Q, r);
 	return r;
 }
 
-INT INT_abs(INT a)
+int int_abs(int a)
 {
 	if (a < 0) {
 		return -a;
@@ -70,9 +70,9 @@ INT INT_abs(INT a)
 		}
 }
 
-INT irem(INT a, INT m)
+int irem(int a, int m)
 {
-	INT b;
+	int b;
 	
 	if (a < 0) {
 		b = irem(-a, m);
@@ -81,7 +81,7 @@ INT irem(INT a, INT m)
 	return a % m;
 }
 
-INT gcd_INT(INT m, INT n)
+int gcd_int(int m, int n)
 {
 #if 0
 	longinteger_domain D;
@@ -91,9 +91,9 @@ INT gcd_INT(INT m, INT n)
 	M.create(m);
 	N.create(n);
 	D.extended_gcd(M, N, G, U, V, 0);
-	return G.as_INT();
+	return G.as_int();
 #else
-	INT r, s;
+	int r, s;
 	
 	if (m < 0) {
 		m *= -1;
@@ -121,7 +121,7 @@ INT gcd_INT(INT m, INT n)
 #endif
 }
 
-void extended_gcd_INT(INT m, INT n, INT &g, INT &u, INT &v)
+void extended_gcd_int(int m, int n, int &g, int &u, int &v)
 {
 	longinteger_domain D;
 	longinteger_object M, N, G, U, V;
@@ -130,16 +130,16 @@ void extended_gcd_INT(INT m, INT n, INT &g, INT &u, INT &v)
 	M.create(m);
 	N.create(n);
 	D.extended_gcd(M, N, G, U, V, 0);
-	g = G.as_INT();
-	u = U.as_INT();
-	v = V.as_INT();
+	g = G.as_int();
+	u = U.as_int();
+	v = V.as_int();
 }
 
-INT i_power_j(INT i, INT j)
+int i_power_j(int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
-	INT k, r = 1;
+	int k, r = 1;
 
 	//cout << "i_power_j() i=" << i << ", j=" << j << endl;
 	for (k = 0; k < j; k++) {
@@ -149,11 +149,11 @@ INT i_power_j(INT i, INT j)
 	return r;
 }
 
-INT order_mod_p(INT a, INT p)
+int order_mod_p(int a, int p)
 //Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
 //s.~th. $a^k \equiv 1$ mod $p$.
 {
-	INT o, b;
+	int o, b;
 	
 	if (a < 0) {
 		cout << "order_mod_p a < 0" << endl;
@@ -174,12 +174,12 @@ INT order_mod_p(INT a, INT p)
 	return o;
 }
 
-INT INT_log2(INT n)
+int int_log2(int n)
 // returns $\log_2(n)$ 
-{	INT i;
+{	int i;
 	
 	if (n <= 0) {
-		cout << "INT_log2 n <= 0" << endl;
+		cout << "int_log2 n <= 0" << endl;
 		exit(1);
 		}
 	for (i = 0; n > 0; i++) {
@@ -188,13 +188,13 @@ INT INT_log2(INT n)
 	return i;
 }
 
-INT INT_log10(INT n)
+int int_log10(int n)
 // returns $\log_{10}(n)$ 
 {
-	INT j;
+	int j;
 	
 	if (n <= 0) {
-		cout << "INT_log10 n <= 0" << endl;
+		cout << "int_log10 n <= 0" << endl;
 		cout << "n = " << n << endl;
 		exit(1);
 		}
@@ -206,12 +206,12 @@ INT INT_log10(INT n)
 	return j;
 }
 
-INT INT_logq(INT n, INT q)
+int int_logq(int n, int q)
 // returns the number of digits in base q representation
-{	INT i;
+{	int i;
 	
 	if (n < 0) {
-		cout << "INT_logq n < 0" << endl;
+		cout << "int_logq n < 0" << endl;
 		exit(1);
 		}
 	i = 0;
@@ -222,11 +222,11 @@ INT INT_logq(INT n, INT q)
 	return i;
 }
 
-INT is_strict_prime_power(INT q)
+int is_strict_prime_power(int q)
 // assuming that q is a prime power, this fuction tests 
 // whether or not q is a srict prime power
 {
-	INT p;
+	int p;
 	
 	p = smallest_primedivisor(q);
 	if (q != p)
@@ -235,9 +235,9 @@ INT is_strict_prime_power(INT q)
 		return FALSE;
 }
 
-INT is_prime(INT p)
+int is_prime(int p)
 {
-	INT p1;
+	int p1;
 	
 	p1 = smallest_primedivisor(p);
 	if (p1 != p)
@@ -246,16 +246,16 @@ INT is_prime(INT p)
 		return TRUE;
 }
 
-INT is_prime_power(INT q)
+int is_prime_power(int q)
 {
-	INT p, h;
+	int p, h;
 
 	return is_prime_power(q, p, h);
 }
 
-INT is_prime_power(INT q, INT &p, INT &h)
+int is_prime_power(int q, int &p, int &h)
 {
-	INT i;
+	int i;
 	
 	p = smallest_primedivisor(q);
 	//cout << "smallest prime in " << q << " is " << p << endl;
@@ -273,11 +273,11 @@ INT is_prime_power(INT q, INT &p, INT &h)
 	return TRUE;
 }
 
-INT smallest_primedivisor(INT n)
+int smallest_primedivisor(int n)
 //Computes the smallest prime dividing $n$. 
 //The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 {
-	INT flag, i, q;
+	int flag, i, q;
 	
 	if (EVEN(n))
 		return(2);
@@ -299,11 +299,11 @@ INT smallest_primedivisor(INT n)
 		}
 }
 
-INT sp_ge(INT n, INT p_min)
+int sp_ge(int n, int p_min)
 // Computes the smalles prime dividing $n$ 
 // which is greater than or equal to p\_min. 
 {
-	INT i, q;
+	int i, q;
 	
 	if (p_min == 0)
 		p_min = 2;
@@ -332,7 +332,7 @@ INT sp_ge(INT n, INT p_min)
 		i += 2;
 		}
 #if 0
-	INT flag;
+	int flag;
 	
 	if (EVEN((p_min - 1) >> 1))
 		/* p_min cong 1 mod 4 ? */
@@ -358,20 +358,20 @@ INT sp_ge(INT n, INT p_min)
 #endif
 }
 
-INT factor_INT(INT a, INT *&primes, INT *&exponents)
+int factor_int(int a, int *&primes, int *&exponents)
 {
-	INT alloc_len = 10, len = 0;
-	INT p, i;
+	int alloc_len = 10, len = 0;
+	int p, i;
 	
-	primes = NEW_INT(alloc_len);
-	exponents = NEW_INT(alloc_len);
+	primes = NEW_int(alloc_len);
+	exponents = NEW_int(alloc_len);
 	
 	if (a == 1) {
-		cout << "factor_INT, the number is one" << endl;
+		cout << "factor_int, the number is one" << endl;
 		return 0;
 		}
 	if (a <= 0) {
-		cout << "factor_INT, the number is <= 0" << endl;
+		cout << "factor_int, the number is <= 0" << endl;
 		exit(1);
 		}
 	while (a > 1) {
@@ -388,17 +388,17 @@ INT factor_INT(INT a, INT *&primes, INT *&exponents)
 				}
 			else {
 				if (len == alloc_len) {
-					INT *primes2, *exponents2;
+					int *primes2, *exponents2;
 					
 					alloc_len += 10;
-					primes2 = NEW_INT(alloc_len);
-					exponents2 = NEW_INT(alloc_len);
+					primes2 = NEW_int(alloc_len);
+					exponents2 = NEW_int(alloc_len);
 					for (i = 0; i < len; i++) {
 						primes2[i] = primes[i];
 						exponents2[i] = exponents[i];
 						}
-					FREE_INT(primes);
-					FREE_INT(exponents);
+					FREE_int(primes);
+					FREE_int(exponents);
 					primes = primes2;
 					exponents = exponents2;
 					}
@@ -411,7 +411,7 @@ INT factor_INT(INT a, INT *&primes, INT *&exponents)
 	return len;
 }
 
-void factor_prime_power(INT q, INT &p, INT &e)
+void factor_prime_power(int q, int &p, int &e)
 {
 	if (q == 1) {
 		cout << "factor_prime_power q is one" << endl;
@@ -430,12 +430,12 @@ void factor_prime_power(INT q, INT &p, INT &e)
 		}
 }
 
-INT primitive_root(INT p, INT verbose_level)
+int primitive_root(int p, int verbose_level)
 // Computes a primitive element for $\bbZ_p$, i.~e. an integer $k$ 
 // with $2 \le k \le p - 1$ s.~th. the order of $k$ mod $p$ is $p-1$.
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, o;
+	int f_v = (verbose_level >= 1);
+	int i, o;
 
 	if (p < 2) {
 		cout << "primitive_root(): p < 2" << endl;
@@ -456,20 +456,20 @@ INT primitive_root(INT p, INT verbose_level)
 	exit(1);
 }
 
-INT Legendre(INT a, INT p, INT verbose_level)
+int Legendre(int a, int p, int verbose_level)
 // Computes the Legendre symbol $\left( \frac{a}{p} \right)$.
 {
 	return Jacobi(a, p, verbose_level);
 }
 
-INT Jacobi(INT a, INT m, INT verbose_level)
+int Jacobi(int a, int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
-	INT f_v = (verbose_level >= 1);
-	INT a1, m1, ord2, r1;
-	INT g;
-	INT f_negative = FALSE;
-	INT t, t1, t2;
+	int f_v = (verbose_level >= 1);
+	int a1, m1, ord2, r1;
+	int g;
+	int f_negative = FALSE;
+	int t, t1, t2;
 	
 	if (f_v) {
 		cout << "Jacobi(" << a << ", " << m << ")" << endl;
@@ -477,7 +477,7 @@ INT Jacobi(INT a, INT m, INT verbose_level)
 	a1 = a;
 	m1 = m;
 	r1 = 1;
-	g = gcd_INT(a1, m1);
+	g = gcd_int(a1, m1);
 	if (ABS(g) != 1) {
 		return 0;
 		}
@@ -544,14 +544,14 @@ INT Jacobi(INT a, INT m, INT verbose_level)
 	exit(1);
 }
 
-INT Jacobi_with_key_in_latex(ostream &ost, INT a, INT m, INT verbose_level)
+int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level)
 //Computes the Jacobi symbol $\left( \frac{a}{m} \right)$.
 {
-	INT f_v = (verbose_level >= 1);
-	INT a1, m1, ord2, r1;
-	INT g;
-	INT f_negative = FALSE;
-	INT t, t1, t2;
+	int f_v = (verbose_level >= 1);
+	int a1, m1, ord2, r1;
+	int g;
+	int f_negative = FALSE;
+	int t, t1, t2;
 	
 	if (f_v) {
 		cout << "Jacobi(" << a << ", " << m << ")" << endl;
@@ -559,7 +559,7 @@ INT Jacobi_with_key_in_latex(ostream &ost, INT a, INT m, INT verbose_level)
 	a1 = a;
 	m1 = m;
 	r1 = 1;
-	g = gcd_INT(a1, m1);
+	g = gcd_int(a1, m1);
 	if (ABS(g) != 1) {
 		return 0;
 		}
@@ -725,13 +725,13 @@ INT Jacobi_with_key_in_latex(ostream &ost, INT a, INT m, INT verbose_level)
 	exit(1);
 }
 
-INT ny2(INT x, INT &x1)
+int ny2(int x, int &x1)
 //returns $n = \ny_2(x).$ 
 //Computes $x1 := \frac{x}{2^n}$. 
 {
-	INT xx = x;
-	INT n1;
-	INT f_negative;
+	int xx = x;
+	int n1;
+	int f_negative;
 	
 	n1 = 0;
 	if (xx == 0) {
@@ -757,10 +757,10 @@ INT ny2(INT x, INT &x1)
 	return n1;
 }
 
-INT ny_p(INT n, INT p)
+int ny_p(int n, int p)
 //Returns $\nu_p(n),$ the integer $k$ with $n=p^k n'$ and $p \nmid n'$.
 {
-	INT ny_p;
+	int ny_p;
 	
 	if (n == 0) {
 		cout << "ny_p n == 0" << endl;
@@ -778,10 +778,10 @@ INT ny_p(INT n, INT p)
 	return ny_p;
 }
 
-INT sqrt_mod_simple(INT a, INT p)
+int sqrt_mod_simple(int a, int p)
 // solves x^2 = a mod p. Returns x
 {
-	INT a1, x;
+	int a1, x;
 	
 	a1 = a % p;
 	for (x = 0; x < p; x++) {
@@ -793,9 +793,9 @@ INT sqrt_mod_simple(INT a, INT p)
 	exit(1);
 }
 
-void print_factorization(INT nb_primes, INT *primes, INT *exponents)
+void print_factorization(int nb_primes, int *primes, int *exponents)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_primes; i++) {
 		cout << primes[i];
@@ -806,10 +806,10 @@ void print_factorization(INT nb_primes, INT *primes, INT *exponents)
 		}
 }
 
-void print_longfactorization(INT nb_primes,
-		longinteger_object *primes, INT *exponents)
+void print_longfactorization(int nb_primes,
+		longinteger_object *primes, int *exponents)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_primes; i++) {
 		cout << primes[i];
@@ -820,16 +820,16 @@ void print_longfactorization(INT nb_primes,
 		}
 }
 
-INT euler_function(INT n)
+int euler_function(int n)
 //Computes Eulers $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
-	INT *primes;
-	INT *exponents;
-	INT len;
-	INT i, k, p1, e1;
+	int *primes;
+	int *exponents;
+	int len;
+	int i, k, p1, e1;
 			
-	len = factor_INT(n, primes, exponents);
+	len = factor_int(n, primes, exponents);
 	
 	k = 1;
 	for (i = 0; i < len; i++) {
@@ -840,17 +840,17 @@ INT euler_function(INT n)
 			}
 		k *= (p1 - 1);
 		}
-	FREE_INT(primes);
-	FREE_INT(exponents);
+	FREE_int(primes);
+	FREE_int(exponents);
 	return k;
 }
 
-void INT_add_fractions(INT at, INT ab,
-		INT bt, INT bb, INT &ct, INT &cb,
-		INT verbose_level)
+void int_add_fractions(int at, int ab,
+		int bt, int bb, int &ct, int &cb,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT g, a1, b1;
+	int f_v = (verbose_level >= 1);
+	int g, a1, b1;
 	
 	if (at == 0) {
 		ct = bt;
@@ -861,7 +861,7 @@ void INT_add_fractions(INT at, INT ab,
 		cb = ab;
 		}
 	else {
-		g = gcd_INT(ab, bb);
+		g = gcd_int(ab, bb);
 		a1 = ab / g;
 		b1 = bb / g;
 		cb = ab * b1;
@@ -871,23 +871,23 @@ void INT_add_fractions(INT at, INT ab,
 		cb *= -1;
 		ct *= -1;
 		}
-	g = gcd_INT(INT_abs(ct), cb);
+	g = gcd_int(int_abs(ct), cb);
 	if (g > 1) {
 		ct /= g;
 		cb /= g;
 		}
 	if (f_v) {
-		cout << "INT_add_fractions " << at <<  "/"
+		cout << "int_add_fractions " << at <<  "/"
 				<< ab << " + " << bt << "/" << bb << " = "
 				<< ct << "/" << cb << endl;
 		}
 }
 
-void INT_mult_fractions(INT at, INT ab,
-		INT bt, INT bb, INT &ct, INT &cb,
-		INT verbose_level)
+void int_mult_fractions(int at, int ab,
+		int bt, int bb, int &ct, int &cb,
+		int verbose_level)
 {
-	INT g;
+	int g;
 	
 	if (at == 0) {
 		ct = 0;
@@ -898,22 +898,22 @@ void INT_mult_fractions(INT at, INT ab,
 		cb = 1;
 		}
 	else {
-		g = gcd_INT(at, ab);
+		g = gcd_int(at, ab);
 		if (g != 1 && g != -1) {
 			at /= g;
 			ab /= g;
 			}
-		g = gcd_INT(bt, bb);
+		g = gcd_int(bt, bb);
 		if (g != 1 && g != -1) {
 			bt /= g;
 			bb /= g;
 			}
-		g = gcd_INT(at, bb);
+		g = gcd_int(at, bb);
 		if (g != 1 && g != -1) {
 			at /= g;
 			bb /= g;
 			}
-		g = gcd_INT(bt, ab);
+		g = gcd_int(bt, ab);
 		if (g != 1 && g != -1) {
 			bt /= g;
 			ab /= g;
@@ -925,7 +925,7 @@ void INT_mult_fractions(INT at, INT ab,
 		cb *= -1;
 		ct *= -1;
 		}
-	g = gcd_INT(INT_abs(ct), cb);
+	g = gcd_int(int_abs(ct), cb);
 	if (g > 1) {
 		ct /= g;
 		cb /= g;

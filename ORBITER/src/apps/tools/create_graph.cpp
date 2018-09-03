@@ -11,16 +11,16 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_save = FALSE;	
+	int verbose_level = 0;
+	int f_save = FALSE;	
 	const char *save_fname = NULL;
 
 	for (i = 1; i < argc; i++) {
@@ -39,10 +39,10 @@ int main(int argc, char **argv)
 	colored_graph CG;
 
 
-	INT nb_points = 6;
-	INT nb_colors = 3;
-	INT point_color[] = {0,1,2,0,1,2};
-	INT Adj[] = {1,1,0,1,1, 1,1,0,1, 1,1,0, 1,1, 1};
+	int nb_points = 6;
+	int nb_colors = 3;
+	int point_color[] = {0,1,2,0,1,2};
+	int Adj[] = {1,1,0,1,1, 1,1,0,1, 1,1,0, 1,1, 1};
 
 	CG.init_adjacency_upper_triangle(nb_points, nb_colors, 
 		point_color, Adj, verbose_level);

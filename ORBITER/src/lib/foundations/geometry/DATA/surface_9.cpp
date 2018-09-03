@@ -1,6 +1,6 @@
-INT surface_9_nb_reps = 2;
-INT surface_9_size = 20;
-INT surface_9_reps[] = {
+int surface_9_nb_reps = 2;
+int surface_9_size = 20;
+int surface_9_reps[] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 5, 0, 0, 2, 0, 8, 0, 0, 8, 6, 0, 6, 
 	0, 0, 0, 0, 0, 0, 1, 0, 8, 0, 0, 6, 0, 6, 0, 0, 8, 1, 5, 1, 
 };
@@ -8,20 +8,20 @@ const char *surface_9_stab_order[] = {
 	"240",
 	"432",
 };
-INT surface_9_nb_E[] = { 
+int surface_9_nb_E[] = { 
 	10, 9};
-INT surface_9_single_six[] = { 
+int surface_9_single_six[] = { 
 	0, 81, 7380, 173, 447, 2208, 
 	0, 81, 7380, 173, 447, 2422, 
 };
-INT surface_9_Lines[] = { 
+int surface_9_Lines[] = { 
 	0, 81, 551, 7380, 2457, 7461, 173, 2208, 447, 1058, 4560, 631, 145, 261, 2543, 330, 655, 800, 479, 3940, 2632, 6688, 3088, 2904, 6071, 7417, 5714, 
 	0, 81, 371, 7380, 7461, 173, 447, 3079, 812, 2422, 3330, 6400, 160, 3361, 309, 310, 781, 500, 609, 1319, 992, 4377, 3030, 7396, 6650, 2910, 4911, 
 };
-INT surface_9_make_element_size = 17;
-INT surface_9_stab_gens_fst[] = { 0, 5};
-INT surface_9_stab_gens_len[] = { 5, 4};
-INT surface_9_stab_gens[] = {
+int surface_9_make_element_size = 17;
+int surface_9_stab_gens_fst[] = { 0, 5};
+int surface_9_stab_gens_len[] = { 5, 4};
+int surface_9_stab_gens[] = {
 	3, 0, 0, 0, 0, 3, 0, 0, 2, 0, 6, 0, 2, 1, 0, 6, 0, 
 	7, 0, 0, 0, 4, 2, 0, 0, 1, 0, 3, 0, 1, 2, 3, 6, 1, 
 	1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 5, 5, 0, 0, 0, 7, 1, 

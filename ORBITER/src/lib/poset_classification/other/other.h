@@ -14,70 +14,70 @@
 
 void read_orbit_rep_and_candidates_from_files_and_process(action *A, 
 	char *prefix, 
-	INT level, INT orbit_at_level, INT level_of_candidates_file, 
-	void (*early_test_func_callback)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level), 
+	int level, int orbit_at_level, int level_of_candidates_file, 
+	void (*early_test_func_callback)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level), 
 	void *early_test_func_callback_data, 
-	INT *&starter,
-	INT &starter_sz,
+	int *&starter,
+	int &starter_sz,
 	sims *&Stab,
 	strong_generators *&Strong_gens, 
-	INT *&candidates,
-	INT &nb_candidates,
-	INT &nb_cases, 
-	INT verbose_level);
+	int *&candidates,
+	int &nb_candidates,
+	int &nb_cases, 
+	int verbose_level);
 void read_candidates_for_one_orbit_from_file(char *prefix,
-		INT level, INT orbit_at_level, INT level_of_candidates_file,
-		INT *S,
-		void (*early_test_func_callback)(INT *S, INT len,
-			INT *candidates, INT nb_candidates,
-			INT *good_candidates, INT &nb_good_candidates,
-			void *data, INT verbose_level),
+		int level, int orbit_at_level, int level_of_candidates_file,
+		int *S,
+		void (*early_test_func_callback)(int *S, int len,
+			int *candidates, int nb_candidates,
+			int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
 		void *early_test_func_callback_data,
-		INT *&candidates,
-		INT &nb_candidates,
-		INT verbose_level);
+		int *&candidates,
+		int &nb_candidates,
+		int verbose_level);
 void read_orbit_rep_and_candidates_from_files(action *A, char *prefix, 
-	INT level, INT orbit_at_level, INT level_of_candidates_file, 
-	INT *&starter,
-	INT &starter_sz,
+	int level, int orbit_at_level, int level_of_candidates_file, 
+	int *&starter,
+	int &starter_sz,
 	sims *&Stab,
 	strong_generators *&Strong_gens, 
-	INT *&candidates,
-	INT &nb_candidates,
-	INT &nb_cases, 
-	INT verbose_level);
-INT find_orbit_index_in_data_file(const char *prefix,
-		INT level_of_candidates_file, INT *starter,
-		INT verbose_level);
+	int *&candidates,
+	int &nb_candidates,
+	int &nb_cases, 
+	int verbose_level);
+int find_orbit_index_in_data_file(const char *prefix,
+		int level_of_candidates_file, int *starter,
+		int verbose_level);
 void compute_orbits_on_subsets(poset_classification *&gen,
-	INT target_depth,
+	int target_depth,
 	const char *prefix, 
-	INT f_W, INT f_w,
+	int f_W, int f_w,
 	action *A, action *A2, 
 	strong_generators *Strong_gens, 
-	void (*early_test_func_callback)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level),
+	void (*early_test_func_callback)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level),
 	void *early_test_func_data, 
-	INT (*candidate_incremental_check_func)(INT len, INT *S, 
-		void *data, INT verbose_level), 
+	int (*candidate_incremental_check_func)(int len, int *S, 
+		void *data, int verbose_level), 
 	void *candidate_incremental_check_data, 
-	INT verbose_level);
+	int verbose_level);
 void orbits_on_k_sets(action *A1, action *A2, 
 	strong_generators *Strong_gens, 
-	INT k, INT *&orbit_reps, INT &nb_orbits, INT verbose_level);
+	int k, int *&orbit_reps, int &nb_orbits, int verbose_level);
 poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	strong_generators *Strong_gens, 
-	INT k, INT verbose_level);
-void print_extension_type(ostream &ost, INT t);
+	int k, int verbose_level);
+void print_extension_type(ostream &ost, int t);
 const char *trace_result_as_text(trace_result r);
-INT trace_result_is_no_result(trace_result r);
-void wedge_product_export_magma(poset_classification *Gen, INT n, INT q,
-	INT vector_space_dimension, INT level, INT verbose_level);
+int trace_result_is_no_result(trace_result r);
+void wedge_product_export_magma(poset_classification *Gen, int n, int q,
+	int vector_space_dimension, int level, int verbose_level);
 
 
 

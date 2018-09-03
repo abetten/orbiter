@@ -55,9 +55,9 @@ void surface_create::freeself()
 void surface_create::init_with_data(
 	surface_create_description *Descr,
 	surface_with_action *Surf_A, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	
 	if (f_v) {
@@ -104,9 +104,9 @@ void surface_create::init_with_data(
 
 
 void surface_create::init(surface_create_description *Descr,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	
 	if (f_v) {
@@ -185,9 +185,9 @@ void surface_create::init(surface_create_description *Descr,
 		}
 }
 
-void surface_create::init2(INT verbose_level)
+void surface_create::init2(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	
 	if (f_v) {
@@ -225,9 +225,9 @@ void surface_create::init2(INT verbose_level)
 			}
 		f_has_group = TRUE;
 
-		sprintf(prefix, "family_q%ld_a%ld", F->q, Descr->parameter_a);
-		sprintf(label_txt, "family_q%ld_a%ld", F->q, Descr->parameter_a);
-		sprintf(label_tex, "family\\_q%ld\\_a%ld", F->q, Descr->parameter_a);
+		sprintf(prefix, "family_q%d_a%d", F->q, Descr->parameter_a);
+		sprintf(label_txt, "family_q%d_a%d", F->q, Descr->parameter_a);
+		sprintf(label_tex, "family\\_q%d\\_a%d", F->q, Descr->parameter_a);
 		
 		}
 	else if (Descr->f_by_coefficients) {
@@ -237,18 +237,18 @@ void surface_create::init2(INT verbose_level)
 					"by the coefficients" << endl;
 			}
 
-		INT *surface_coeffs;
-		INT nb_coeffs, nb_terms;	
-		INT i, a, b;
+		int *surface_coeffs;
+		int nb_coeffs, nb_terms;	
+		int i, a, b;
 	
-		INT_vec_scan(Descr->coefficients_text,
+		int_vec_scan(Descr->coefficients_text,
 				surface_coeffs, nb_coeffs);
 		if (ODD(nb_coeffs)) {
 			cout << "surface_create::init2 number of surface "
 					"coefficients must be even" << endl;
 			exit(1);
 			}
-		INT_vec_zero(coeffs, 20);
+		int_vec_zero(coeffs, 20);
 		nb_terms = nb_coeffs >> 1;
 		for (i = 0; i < nb_terms; i++) {
 			a = surface_coeffs[2 * i + 0];
@@ -265,11 +265,11 @@ void surface_create::init2(INT verbose_level)
 				}
 			coeffs[b] = a;
 			}
-		FREE_INT(surface_coeffs);
+		FREE_int(surface_coeffs);
 		f_has_lines = FALSE;
-		sprintf(prefix, "by_coefficients_q%ld", F->q);
-		sprintf(label_txt, "by_coefficients_q%ld", F->q);
-		sprintf(label_tex, "by\\_coefficients\\_q%ld", F->q);
+		sprintf(prefix, "by_coefficients_q%d", F->q);
+		sprintf(label_txt, "by_coefficients_q%d", F->q);
+		sprintf(label_tex, "by\\_coefficients\\_q%d", F->q);
 		}
 	else if (Descr->f_catalogue) {
 
@@ -277,9 +277,9 @@ void surface_create::init2(INT verbose_level)
 			cout << "surface_create::init2 "
 					"surface from catalogue" << endl;
 			}
-		INT *p_lines;
-		INT nb_iso;
-		//INT nb_E = 0;
+		int *p_lines;
+		int nb_iso;
+		//int nb_E = 0;
 
 		nb_iso = cubic_surface_nb_reps(q);
 		if (Descr->iso >= nb_iso) {
@@ -288,7 +288,7 @@ void surface_create::init2(INT verbose_level)
 			exit(1);
 			}
 		p_lines = cubic_surface_Lines(q, Descr->iso);
-		INT_vec_copy(p_lines, Lines, 27);
+		int_vec_copy(p_lines, Lines, 27);
 		//nb_E = cubic_surface_nb_Eckardt_points(q, Descr->iso);
 
 		Surf->rearrange_lines_according_to_double_six(
@@ -309,9 +309,9 @@ void surface_create::init2(INT verbose_level)
 			verbose_level);
 		f_has_group = TRUE;
 
-		sprintf(prefix, "catalogue_q%ld_%ld", F->q, Descr->iso);
-		sprintf(label_txt, "catalogue_q%ld_%ld", F->q, Descr->iso);
-		sprintf(label_tex, "catalogue\\_q%ld\\_%ld", F->q, Descr->iso);
+		sprintf(prefix, "catalogue_q%d_%d", F->q, Descr->iso);
+		sprintf(label_txt, "catalogue_q%d_%d", F->q, Descr->iso);
+		sprintf(label_tex, "catalogue\\_q%d\\_%d", F->q, Descr->iso);
 		if (f_v) {
 			cout << "surface_create::init2 after Sg->generators_"
 					"for_the_stabilizer_of_the_cubic_surface" << endl;
@@ -323,10 +323,10 @@ void surface_create::init2(INT verbose_level)
 			cout << "surface_create::init2 by arc lifting" << endl;
 			}
 
-		INT *arc;
-		INT arc_size;
+		int *arc;
+		int arc_size;
 
-		INT_vec_scan(Descr->arc_lifting_text, arc, arc_size);
+		int_vec_scan(Descr->arc_lifting_text, arc, arc_size);
 
 		if (arc_size != 6) {
 			cout << "surface_create::init arc_size != 6" << endl;
@@ -335,7 +335,7 @@ void surface_create::init2(INT verbose_level)
 		
 		if (f_v) {
 			cout << "surface_create::init2 arc: ";
-			INT_vec_print(cout, arc, 6);
+			int_vec_print(cout, arc, 6);
 			cout << endl;
 			}
 
@@ -365,22 +365,22 @@ void surface_create::init2(INT verbose_level)
 					"AL->create_surface" << endl;
 			}
 
-		INT_vec_copy(AL->The_surface_equations
+		int_vec_copy(AL->The_surface_equations
 				+ AL->lambda_rk * 20, coeffs, 20);
 
 		Sg = AL->Aut_gens->create_copy();
 		f_has_group = TRUE;
 		f_has_lines = FALSE;
-		sprintf(prefix, "arc_q%ld", F->q);
-		sprintf(label_txt, "arc_q%ld", F->q);
-		sprintf(label_tex, "arc\\_q%ld", F->q);
+		sprintf(prefix, "arc_q%d", F->q);
+		sprintf(label_txt, "arc_q%d", F->q);
+		sprintf(label_tex, "arc\\_q%d", F->q);
 
-		INT i;
+		int i;
 
 		for (i = 0; i < 6; i++) {
-			sprintf(prefix + strlen(prefix), "_%ld", arc[i]);
-			sprintf(label_txt + strlen(label_txt), "_%ld", arc[i]);
-			sprintf(label_tex + strlen(label_tex), "\\_%ld", arc[i]);
+			sprintf(prefix + strlen(prefix), "_%d", arc[i]);
+			sprintf(label_txt + strlen(label_txt), "_%d", arc[i]);
+			sprintf(label_tex + strlen(label_tex), "\\_%d", arc[i]);
 			}
 		
 		//AL->print(fp);
@@ -389,7 +389,7 @@ void surface_create::init2(INT verbose_level)
 		FREE_OBJECT(AL);
 		
 
-		FREE_INT(arc);
+		FREE_int(arc);
 		}
 	else {
 		cout << "surface_create::init2 we do not "
@@ -400,13 +400,13 @@ void surface_create::init2(INT verbose_level)
 
 	if (f_v) {
 		cout << "surface_create::init2 coeffs = ";
-		INT_vec_print(cout, coeffs, 20);
+		int_vec_print(cout, coeffs, 20);
 		cout << endl;
 		}
 
 	if (f_has_lines) {
 		cout << "surface_create::init2 Lines = ";
-		INT_vec_print(cout, Lines, 27);
+		int_vec_print(cout, Lines, 27);
 		cout << endl;
 		}
 	else {
@@ -433,15 +433,15 @@ void surface_create::init2(INT verbose_level)
 
 void surface_create::apply_transformations(
 	const char **transform_coeffs,
-	INT *f_inverse_transform, INT nb_transform, INT verbose_level)
+	int *f_inverse_transform, int nb_transform, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
+	int f_v = (verbose_level >= 1);
+	int h;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 	action *A;
-	INT desired_sz;
+	int desired_sz;
 	
 	if (f_v) {
 		cout << "surface_create::apply_transformations" << endl;
@@ -449,9 +449,9 @@ void surface_create::apply_transformations(
 	
 	A = Surf_A->A;
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 
 	if (f_semilinear) {
 		desired_sz = 17;
@@ -462,9 +462,9 @@ void surface_create::apply_transformations(
 
 
 	for (h = 0; h < nb_transform; h++) {
-		INT *transformation_coeffs;
-		INT sz;
-		INT coeffs_out[20];
+		int *transformation_coeffs;
+		int sz;
+		int coeffs_out[20];
 	
 		if (f_v) {
 			cout << "surface_create::apply_transformations "
@@ -472,7 +472,7 @@ void surface_create::apply_transformations(
 					<< nb_transform << ":" << endl;
 			}
 		
-		INT_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
+		int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
 
 		if (sz != desired_sz) {
 			cout << "surface_create::apply_transformations "
@@ -511,7 +511,7 @@ void surface_create::apply_transformations(
 		
 	
 		if (f_semilinear) {
-			INT n = 4;
+			int n = 4;
 			
 			Surf->substitute_semilinear(coeffs, coeffs_out,
 					TRUE, Elt2[n * n], Elt3, verbose_level);
@@ -530,7 +530,7 @@ void surface_create::apply_transformations(
 			cout << "$$" << endl;
 			}
 
-		INT_vec_copy(coeffs_out, coeffs, 20);
+		int_vec_copy(coeffs_out, coeffs, 20);
 
 		strong_generators *SG2;
 		
@@ -545,13 +545,13 @@ void surface_create::apply_transformations(
 		FREE_OBJECT(Sg);
 		Sg = SG2;
 
-		FREE_INT(transformation_coeffs);
+		FREE_int(transformation_coeffs);
 		}
 
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 
 	if (f_v) {
 		cout << "surface_create::apply_transformations done" << endl;

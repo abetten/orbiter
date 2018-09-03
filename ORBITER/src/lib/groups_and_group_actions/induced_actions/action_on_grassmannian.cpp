@@ -30,21 +30,21 @@ void action_on_grassmannian::null()
 
 void action_on_grassmannian::free()
 {
-	INT f_v = FALSE;
+	int f_v = FALSE;
 
 	if (M1) {
 		if (f_v) {
 			cout << "action_on_grassmannian::free "
 					"before free M1" << endl;
 			}
-		FREE_INT(M1);
+		FREE_int(M1);
 		}
 	if (M2) {
 		if (f_v) {
 			cout << "action_on_grassmannian::free "
 					"before free M2" << endl;
 			}
-		FREE_INT(M2);
+		FREE_int(M2);
 		}
 	if (GE) {
 		if (f_v) {
@@ -58,22 +58,22 @@ void action_on_grassmannian::free()
 			cout << "action_on_grassmannian::free "
 					"before free subspace_basis" << endl;
 			}
-		FREE_INT(subspace_basis);
+		FREE_int(subspace_basis);
 		}
 	if (subspace_basis2) {
 		if (f_v) {
 			cout << "action_on_grassmannian::free "
 					"before free subspace_basis2" << endl;
 			}
-		FREE_INT(subspace_basis2);
+		FREE_int(subspace_basis2);
 		}
 	null();
 }
 
 void action_on_grassmannian::init(action &A,
-		grassmann *G, INT verbose_level)
+		grassmann *G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	longinteger_domain D;
 	
@@ -97,8 +97,8 @@ void action_on_grassmannian::init(action &A,
 		}
 	
 
-	M1 = NEW_INT(k * n);
-	M2 = NEW_INT(k * n);
+	M1 = NEW_int(k * n);
+	M2 = NEW_int(k * n);
 	
 	if (!A.f_is_linear) {
 		cout << "action_on_grassmannian::init "
@@ -129,10 +129,10 @@ void action_on_grassmannian::init(action &A,
 		}
 }
 
-void action_on_grassmannian::init_embedding(INT big_n,
-		INT *ambient_space, INT verbose_level)
+void action_on_grassmannian::init_embedding(int big_n,
+		int *ambient_space, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::init_embedding" << endl;
@@ -145,19 +145,19 @@ void action_on_grassmannian::init_embedding(INT big_n,
 	f_embedding = TRUE;
 	GE = NEW_OBJECT(grassmann_embedded);
 	GE->init(big_n, n, G, ambient_space, verbose_level);
-	subspace_basis = NEW_INT(n * big_n);
-	subspace_basis2 = NEW_INT(n * big_n);
+	subspace_basis = NEW_int(n * big_n);
+	subspace_basis2 = NEW_int(n * big_n);
 }
 
 
 void action_on_grassmannian::compute_image_longinteger(
-	action *A, INT *Elt,
+	action *A, int *Elt,
 	longinteger_object &i, longinteger_object &j,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int h;
 	
 	if (f_v) {
 		cout << "action_on_grassmannian::compute_image_longinteger "
@@ -188,7 +188,7 @@ void action_on_grassmannian::compute_image_longinteger(
 				G->k, G->n, G->n, F->log10_of_q);
 		}
 	
-	INT_vec_copy(M1, G->M, k * n);
+	int_vec_copy(M1, G->M, k * n);
 #if 0
 	for (h = 0; h < k * n; h++) {
 		G->M[h] = M1[h];
@@ -201,37 +201,37 @@ void action_on_grassmannian::compute_image_longinteger(
 		}
 }
 
-INT action_on_grassmannian::compute_image_INT(
-	action *A, INT *Elt,
-	INT i, INT verbose_level)
+int action_on_grassmannian::compute_image_int(
+	action *A, int *Elt,
+	int i, int verbose_level)
 {
 	if (f_embedding) {
-		return compute_image_INT_embedded(A, Elt, i, verbose_level);
+		return compute_image_int_embedded(A, Elt, i, verbose_level);
 		}
 	else {
-		return compute_image_INT_ordinary(A, Elt, i, verbose_level);
+		return compute_image_int_ordinary(A, Elt, i, verbose_level);
 		}
 }
 
-INT action_on_grassmannian::compute_image_INT_ordinary(
-	action *A, INT *Elt,
-	INT i, INT verbose_level)
+int action_on_grassmannian::compute_image_int_ordinary(
+	action *A, int *Elt,
+	int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT h, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int h, j;
 	
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_ordinary "
+		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"i = " << i << endl;
 		cout << "A->low_level_point_size="
 				<< A->low_level_point_size << endl;
 		cout << "using action " << A->label << endl;
 		}
-	G->unrank_INT(i, verbose_level - 1);
+	G->unrank_int(i, verbose_level - 1);
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_ordinary "
-				"after G->unrank_INT" << endl;
+		cout << "action_on_grassmannian::compute_image_int_ordinary "
+				"after G->unrank_int" << endl;
 		print_integer_matrix_width(cout, G->M,
 				G->k, G->n, G->n, 2/* M->GFq->log10_of_q*/);
 		}
@@ -248,36 +248,36 @@ INT action_on_grassmannian::compute_image_INT_ordinary(
 		}
 #endif
 	
-	INT_vec_copy(M1, G->M, k * n);
+	int_vec_copy(M1, G->M, k * n);
 #if 0
 	for (h = 0; h < k * n; h++) {
 		G->M[h] = M1[h];
 		}
 #endif
-	j = G->rank_INT(verbose_level - 1);
+	j = G->rank_int(verbose_level - 1);
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_ordinary "
+		cout << "action_on_grassmannian::compute_image_int_ordinary "
 				"image of " << i << " is " << j << endl;
 		}
 	return j;
 }
 
-INT action_on_grassmannian::compute_image_INT_embedded(
-	action *A, INT *Elt,
-	INT i, INT verbose_level)
+int action_on_grassmannian::compute_image_int_embedded(
+	action *A, int *Elt,
+	int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT j, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int j, h;
 	
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded "
+		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"i = " << i << endl;
-		cout << "calling GE->unrank_INT" << endl;
+		cout << "calling GE->unrank_int" << endl;
 		}
-	GE->unrank_INT(subspace_basis, i, 0 /*verbose_level - 1*/);
+	GE->unrank_int(subspace_basis, i, 0 /*verbose_level - 1*/);
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded "
+		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"subspace_basis:" << endl;
 		cout << "k=" << k << endl;
 		cout << "big_n=" << big_n << endl;
@@ -297,7 +297,7 @@ INT action_on_grassmannian::compute_image_INT_embedded(
 	F->mult_matrix_matrix(subspace_basis, Elt,
 			subspace_basis2, k, big_n, big_n);
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded "
+		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"after mult_matrix_matrix:" << endl;
 		print_integer_matrix_width(cout, subspace_basis2,
 				k, big_n, big_n, F->log10_of_q);
@@ -313,23 +313,23 @@ INT action_on_grassmannian::compute_image_INT_embedded(
 #endif
 	
 	if (f_vv) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded "
+		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"subspace_basis after the action:" << endl;
 		print_integer_matrix_width(cout, subspace_basis2,
 				k, big_n, big_n, F->log10_of_q);
 		}
-	j = GE->rank_INT(subspace_basis2,
+	j = GE->rank_int(subspace_basis2,
 			0 /*verbose_level - 1 */);
 	if (f_v) {
-		cout << "action_on_grassmannian::compute_image_INT_embedded "
+		cout << "action_on_grassmannian::compute_image_int_embedded "
 				"image of " << i << " is " << j << endl;
 		}
 	return j;
 }
 
-void action_on_grassmannian::print_point(INT a, ostream &ost)
+void action_on_grassmannian::print_point(int a, ostream &ost)
 {
-	G->unrank_INT(a, 0);
+	G->unrank_int(a, 0);
 	print_integer_matrix_width(ost, G->M,
 			G->k, G->n, G->n, 2 /*M->GFq->log10_of_q*/);
 }

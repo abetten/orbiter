@@ -21,7 +21,7 @@ void mckay::tMCKAY::Init(diophant *lgs, const char *label, int aEqnAnz, int aVar
   active.resize(_eqnanz);
 	problem_label = label;
 #ifdef MCKAY_DEBUG
-	INT m;
+	int m;
 
 	m = MAXIMUM(_eqnanz, _varanz) + 1;
   range.resize(m);
@@ -97,11 +97,11 @@ void mckay::tMCKAY::possolve(vector<int> &lo, vector<int> &hi,
  It is used in function \|pruneqn|.
 */
 bool mckay::tMCKAY::subtract(
-	INT eqn1, equation &e1, int l1, int lors1, int hirs1, 
-	INT eqn2, equation &e2, int *pl2, int *plors2, int *phirs2, 
-	INT verbose_level)
+	int eqn1, equation &e1, int l1, int lors1, int hirs1, 
+	int eqn2, equation &e2, int *pl2, int *plors2, int *phirs2, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
         int i,j,k;
         term e1i;
         int l2,factor,minfactor;
@@ -150,9 +150,9 @@ bool mckay::tMCKAY::subtract(
  prune equations by subtraction.
 */
 void mckay::tMCKAY::pruneqn(vector<int> &lorhs, vector<int> &hirhs, 
-	vector<equation> &eqn, vector<int> &neqn, int numeqn, INT verbose_level)
+	vector<equation> &eqn, vector<int> &neqn, int numeqn, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
+	//int f_v = (verbose_level >= 1);
         bool ok;
         vector<bool> done;
         done.resize(_eqnanz);
@@ -190,9 +190,9 @@ void mckay::tMCKAY::pruneqn(vector<int> &lorhs, vector<int> &hirhs,
 void mckay::tMCKAY::varprune(vector<int> &lo, vector<int> &hi, 
 	vector<int> &lorhs, vector<int> &hirhs, 
 	vector<equation> &eqn, vector<int> &neqn, 
-	int numeqn, INT verbose_level)
+	int numeqn, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	int i,j,sum,len;
 
 	for (j = 0; j < numeqn; ++j) {
@@ -323,9 +323,9 @@ void mckay::tMCKAY::solve(int level,
 	vector<equation> &eqn, vector<int> &neqn, 
 	int numeqn, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
     int i,j;
 	vector<int> lo, hi;
 	lo.resize(_varanz);
@@ -333,8 +333,8 @@ void mckay::tMCKAY::solve(int level,
 	int isplit,mindiff;
 	vector<bool> active;
 	active.resize(_eqnanz);
-	INT current_node;
-	INT f_restriction_made;
+	int current_node;
+	int f_restriction_made;
 
 	current_node = nb_calls_to_solve;
 	nb_calls_to_solve++;
@@ -402,7 +402,7 @@ void mckay::tMCKAY::solve(int level,
 		    	cout << j << " : " << alo[j] << " : " << ahi[j] << endl;
 		    	}
 #ifdef MCKAY_DEBUG
-	        if (((os_ticks() - ticks0) / os_ticks_per_second()) > INTERVAL_IN_SECONDS) {
+	        if (((os_ticks() - ticks0) / os_ticks_per_second()) > intERVAL_IN_SECONDS) {
 			ticks0 = os_ticks();
 			f_debug = TRUE;
 		       	puteqns(alo,ahi,numvar,lorhs,hirhs,eqn,neqn,numeqn);
@@ -517,7 +517,7 @@ void mckay::tMCKAY::solve(int level,
    \|branch|, \|split| and \|range| are collected for debugging purposes.
 */
 
-	INT f_first_moved_has_changed = FALSE;
+	int f_first_moved_has_changed = FALSE;
 	
 		if ((f_v && (current_node % 10000) == 0) || f_vv) {
 			log_12l(current_node, level);
@@ -562,23 +562,23 @@ void mckay::tMCKAY::solve(int level,
 		}
 }
 
-INT mckay::tMCKAY::restrict_variables(int level, 
+int mckay::tMCKAY::restrict_variables(int level, 
 	vector<int> &lo, vector<int> &hi, 
 	vector<bool> &active, int numvar, 
 	vector<int> &lorhs, vector<int> &hirhs, 
 	vector<equation> &eqn, vector<int> &neqn, 
-	int numeqn, INT &f_restriction_made, int verbose_level)
+	int numeqn, int &f_restriction_made, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	//INT f_debug;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	//int f_debug;
     int i,j;
-	INT current_node;
+	int current_node;
     int losum,hisum,eic,eiv,lx,hx;
 	int nfree,ok, xlo,xhi;
-	INT save;
-	INT f_restriction_made_in_this_eqn;
+	int save;
+	int f_restriction_made_in_this_eqn;
 
 
 	current_node = nb_calls_to_solve;
@@ -863,7 +863,7 @@ INT mckay::tMCKAY::restrict_variables(int level,
 	return TRUE;
 }
 
-void mckay::tMCKAY::log_12l(INT current_node, int level)
+void mckay::tMCKAY::log_12l(int current_node, int level)
 {
 		cout << "solve " << problem_label 
 			<< " node " << current_node 

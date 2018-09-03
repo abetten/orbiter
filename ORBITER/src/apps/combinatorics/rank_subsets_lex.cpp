@@ -8,12 +8,12 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n;
-	INT *set;
-	INT N, r, sz;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n;
+	int *set;
+	int N, r, sz;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -31,23 +31,23 @@ int main(int argc, char **argv)
 		cout << "Please use option -n <n>" << endl;
 		exit(1);
 		}
-	set = NEW_INT(n);
+	set = NEW_int(n);
 
 	N = i_power_j(2, n);
 	for (i = 0; i < N; i++) {
 		cout << " rank " << i << " : ";
 		unrank_subset(set, sz, n, i);
 		cout << " : set ";
-		INT_vec_print(cout, set, sz);
+		int_vec_print(cout, set, sz);
 		cout << " : ";
 		r = rank_subset(set, sz, n);
 		cout << " has rank " << r << endl;
 		}
 
 	char fname[1000];
-	INT h;
+	int h;
 
-	sprintf(fname, "subsets_of_%ld.tree", n);
+	sprintf(fname, "subsets_of_%d.tree", n);
 	{
 	ofstream fp(fname);
 	
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 	sz = 2;
 	r = rank_subset(set, sz, n);
 	cout << "The set ";
-	INT_vec_print(cout, set, sz);
+	int_vec_print(cout, set, sz);
 	cout << " has rank " << r << endl;
 #endif
 }

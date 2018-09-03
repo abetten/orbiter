@@ -11,7 +11,7 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, const char **argv);
 
@@ -19,38 +19,38 @@ int main(int argc, const char **argv);
 
 int main(int argc, const char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_n = FALSE;
-	INT n = 0;
-	INT f_s = FALSE;
-	INT s = 0;
-	INT f_q = FALSE;
-	INT q;
-	INT f_depth = FALSE;
-	INT depth = 0;
-	INT f_print_generators = FALSE;
-	INT f_poly_q = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_n = FALSE;
+	int n = 0;
+	int f_s = FALSE;
+	int s = 0;
+	int f_q = FALSE;
+	int q;
+	int f_depth = FALSE;
+	int depth = 0;
+	int f_print_generators = FALSE;
+	int f_poly_q = FALSE;
 	const char *poly_q = NULL;
-	INT f_poly_Q = FALSE;
+	int f_poly_Q = FALSE;
 	const char *poly_Q = NULL;
-	INT f_semilinear = FALSE;
-	INT f_classify = FALSE;
-	INT f_read = FALSE;
-	INT f_intersections = FALSE;
-	INT f_draw_poset = FALSE;
-	INT f_classify_secondary = FALSE;
-	INT f_stabilizer = FALSE;
-	INT stabilizer_level = 0;
-	INT stabilizer_orbit_at_level = 0;
-	INT f_identify = FALSE;
-	INT f_print_level = FALSE;
-	INT print_level = 0;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_draw_poset_full = FALSE;
-	INT draw_poset_full_level = 0;
-	INT f_plesken = FALSE;
+	int f_semilinear = FALSE;
+	int f_classify = FALSE;
+	int f_read = FALSE;
+	int f_intersections = FALSE;
+	int f_draw_poset = FALSE;
+	int f_classify_secondary = FALSE;
+	int f_stabilizer = FALSE;
+	int stabilizer_level = 0;
+	int stabilizer_orbit_at_level = 0;
+	int f_identify = FALSE;
+	int f_print_level = FALSE;
+	int print_level = 0;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_draw_poset_full = FALSE;
+	int draw_poset_full_level = 0;
+	int f_plesken = FALSE;
 	
 	t0 = os_ticks();
 	
@@ -169,13 +169,13 @@ int main(int argc, const char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 #if 0
 	finite_field *FQ;
 	action *AQ;
-	INT m = 2;
-	INT Q = 16;
+	int m = 2;
+	int Q = 16;
 
 	FQ = new finite_field;
 	FQ->init(Q, 0);
@@ -221,19 +221,19 @@ int main(int argc, const char **argv)
 				draw_poset_full_level, 0 /* data */, f_embedded, f_sideways, x_stretch, 0 /*verbose_level*/);
 			}
 		if (f_plesken) {
-			INT *P;
-			INT N;
+			int *P;
+			int N;
 			cout << "computing Plesken matrices:" << endl;
 			LS->Gen->Plesken_matrix_up(depth, P, N, 0 /*verbose_level - 2*/);
 			cout << "Plesken matrix up:" << endl;
-			INT_matrix_print_tex(cout, P, N, N);
+			int_matrix_print_tex(cout, P, N, N);
 
-			FREE_INT(P);
+			FREE_int(P);
 			LS->Gen->Plesken_matrix_down(depth, P, N, 0/*verbose_level - 2*/);
 			cout << "Plesken matrix down:" << endl;
-			INT_matrix_print_tex(cout, P, N, N);
+			int_matrix_print_tex(cout, P, N, N);
 
-			FREE_INT(P);
+			FREE_int(P);
 			}
 		}
 	else if (f_read) {
@@ -269,7 +269,7 @@ int main(int argc, const char **argv)
 			strong_gens, 
 			verbose_level);
 
-		INT nb_W, cnt_w;
+		int nb_W, cnt_w;
 
 		nb_W = LS->Gen2->nb_orbits_at_level(LS->secondary_depth);
 

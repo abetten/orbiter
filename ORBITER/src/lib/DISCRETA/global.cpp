@@ -11,7 +11,7 @@
 
 #undef DEBUG_CALLOC_NOBJECTS_PLUS_LENGTH
 #undef TONELLI_VERBOSE
-#undef DEBUG_INVERT_MOD_INTEGER
+#undef DEBUG_INVERT_MOD_intEGER
 
 
 
@@ -19,12 +19,12 @@
 
 
 // printing_mode gl_printing_mode = printing_mode_ascii;
-// INT printing_mode = PRINTING_MODE_ASCII;
+// int printing_mode = PRintING_MODE_ASCII;
 
-#define MAX_PRINTING_MODE_STACK 100
+#define MAX_PRintING_MODE_STACK 100
 
-INT printing_mode_stack_size = 0;
-static enum printing_mode_enum printing_mode_stack[MAX_PRINTING_MODE_STACK];
+int printing_mode_stack_size = 0;
+static enum printing_mode_enum printing_mode_stack[MAX_PRintING_MODE_STACK];
 
 
 const char *discreta_home = NULL;
@@ -33,12 +33,12 @@ const char *discreta_arch = NULL;
 
 /**** global functions ***/
 
-static void Binomial_using_table(INT n, INT k, matrix & T, discreta_base & res);
+static void Binomial_using_table(int n, int k, matrix & T, discreta_base & res);
 
 void discreta_init()
 {
-	INT verbose_level = 0;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = 0;
+	int f_v = (verbose_level >= 1);
 	char str[1000];
 	
 	discreta_home = getenv("DISCRETA_HOME");
@@ -84,9 +84,9 @@ void freeobject(discreta_base *p)
 	operator delete(p); /* free(p); */
 }
 
-discreta_base *calloc_nobjects(INT n, kind k)
+discreta_base *calloc_nobjects(int n, kind k)
 {
-	INT i;
+	int i;
 	discreta_base *p;
 	
 	p = (discreta_base *) operator new(n * sizeof(discreta_base));
@@ -101,9 +101,9 @@ discreta_base *calloc_nobjects(INT n, kind k)
 	return p;
 }
 
-void free_nobjects(discreta_base *p, INT n)
+void free_nobjects(discreta_base *p, int n)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < n; i++) {
 		p[i].freeself();
@@ -111,9 +111,9 @@ void free_nobjects(discreta_base *p, INT n)
 	operator delete(p);
 }
 
-discreta_base *calloc_nobjects_plus_length(INT n, kind k)
+discreta_base *calloc_nobjects_plus_length(int n, kind k)
 {
-	INT i;
+	int i;
 	discreta_base *p;
 	
 #ifdef DEBUG_CALLOC_NOBJECTS_PLUS_LENGTH
@@ -129,14 +129,14 @@ discreta_base *calloc_nobjects_plus_length(INT n, kind k)
 		new( &p[i] ) discreta_base;
 		p[i].c_kind(k);
 		}
-	p[-1].c_kind(INTEGER);
+	p[-1].c_kind(intEGER);
 	p[-1].m_i_i(n);
 	return p;
 }
 
 void free_nobjects_plus_length(discreta_base *p)
 {
-	INT i, n;
+	int i, n;
 
 	n = p[-1].s_i_i();
 	if (n < 0) {
@@ -153,9 +153,9 @@ void free_nobjects_plus_length(discreta_base *p)
 	operator delete(p);
 }
 
-discreta_base *calloc_m_times_n_objects(INT m, INT n, kind k)
+discreta_base *calloc_m_times_n_objects(int m, int n, kind k)
 {
-	INT i;
+	int i;
 	discreta_base *p;
 	
 	p = (discreta_base *) operator new((m * n + 2) * sizeof(discreta_base));
@@ -169,16 +169,16 @@ discreta_base *calloc_m_times_n_objects(INT m, INT n, kind k)
 		new( &p[i] ) discreta_base;
 		p[i].c_kind(k);
 		}
-	p[-2].c_kind(INTEGER);
+	p[-2].c_kind(intEGER);
 	p[-2].m_i_i(m);
-	p[-1].c_kind(INTEGER);
+	p[-1].c_kind(intEGER);
 	p[-1].m_i_i(n);
 	return p;
 }
 
 void free_m_times_n_objects(discreta_base *p)
 {
-	INT i, m, n;
+	int i, m, n;
 
 	m = p[-2].s_i_i();
 	n = p[-1].s_i_i();
@@ -207,14 +207,14 @@ const char *kind_ascii(kind k)
 {
 	switch(k) {
 		case BASE: return "BASE";
-		case INTEGER: return "INTEGER";
+		case intEGER: return "intEGER";
 		case VECTOR: return "VECTOR";
 		case NUMBER_PARTITION: return "NUMBER_PARTITION";
 		case PERMUTATION: return "PERMUTATION";
 		
 		case MATRIX: return "MATRIX";
 
-		case LONGINTEGER: return "LONGINTEGER";
+		case LONGintEGER: return "LONGintEGER";
 		//case SUBGROUP_LATTICE: return "SUBGROUP_LATTICE";
 		//case SUBGROUP_ORBIT: return "SUBGROUP_ORBIT";
 
@@ -256,9 +256,9 @@ const char *action_kind_ascii(kind k)
 }
 
 #if 0
-void INT_swap(INT& x, INT& y)
+void int_swap(int& x, int& y)
 {
-	INT z;
+	int z;
 	
 	z = x;
 	x = y;
@@ -266,9 +266,9 @@ void INT_swap(INT& x, INT& y)
 }
 #endif
 
-void UINT4_swap(UINT4& x, UINT4& y)
+void uint4_swap(uint4& x, uint4& y)
 {
-	UINT4 z;
+	uint4 z;
 	
 	z = x;
 	x = y;
@@ -305,17 +305,17 @@ discreta_base operator + (discreta_base& x, discreta_base &y)
 }
 #endif
 
-INT lcm_INT(INT m, INT n)
+int lcm_int(int m, int n)
 {
-	INT g = gcd_INT(m, n);
-	INT r = m / g;
+	int g = gcd_int(m, n);
+	int r = m / g;
 	
 	r *= n;
 	return r;
 }
 
 #if 0
-INT gcd_INT(INT m, INT n)
+int gcd_int(int m, int n)
 {
 	integer M, N, U, V, G;
 	
@@ -326,7 +326,8 @@ INT gcd_INT(INT m, INT n)
 }
 #endif
 
-void extended_gcd_int(INT m, INT n, INT &u, INT &v, INT &g)
+#if 0
+void extended_gcd_int(int m, int n, int &u, int &v, int &g)
 {
 	integer M, N, U, V, G;
 	
@@ -337,18 +338,19 @@ void extended_gcd_int(INT m, INT n, INT &u, INT &v, INT &g)
 	v = V.s_i();
 	g = G.s_i();
 }
+#endif
 
-INT invert_mod_integer(INT i, INT p)
+int invert_mod_integer(int i, int p)
 {
 	integer a, b;
 	
-#ifdef DEBUG_INVERT_MOD_INTEGER
+#ifdef DEBUG_INVERT_MOD_intEGER
 	cout << "invert_mod_integer i=" << i << ", p=" << p << endl;
 #endif
 	a.m_i(i);
 	b.m_i(p);
 	a.power_int_mod(p - 2, b);
-#ifdef DEBUG_INVERT_MOD_INTEGER
+#ifdef DEBUG_INVERT_MOD_intEGER
 	cout << "i^-1=" << a.s_i() << endl;
 #endif
 	return a.s_i();
@@ -357,12 +359,12 @@ INT invert_mod_integer(INT i, INT p)
 	with ww(GFp, p);
 	integer x;
 
-#ifdef DEBUG_INVERT_MOD_INTEGER
+#ifdef DEBUG_INVERT_MOD_intEGER
 	cout << "invert_mod_integer i=" << i << ", p=" << p << endl;
 #endif
 	x.m_i(i);
 	x.invert();
-#ifdef DEBUG_INVERT_MOD_INTEGER
+#ifdef DEBUG_INVERT_MOD_intEGER
 	cout << "i^-1=" << x.s_i() << endl;
 #endif
 	return x.s_i();
@@ -370,11 +372,11 @@ INT invert_mod_integer(INT i, INT p)
 }
 
 #if 0
-INT i_power_j(INT i, INT j)
+int i_power_j(int i, int j)
 //Computes $i^j$ as integer.
 //There is no checking for overflow.
 {
-	INT k, r = 1;
+	int k, r = 1;
 
 	//cout << "i_power_j() i=" << i << ", j=" << j << endl;
 	for (k = 0; k < j; k++)
@@ -384,7 +386,7 @@ INT i_power_j(INT i, INT j)
 }
 #endif
 
-INT remainder_mod(INT i, INT n)
+int remainder_mod(int i, int n)
 {
 	if (i < 0) {
 		i *= -1;
@@ -398,11 +400,11 @@ INT remainder_mod(INT i, INT n)
 }
 
 #if 0
-INT smallest_primedivisor(INT n)
+int smallest_primedivisor(int n)
 //Computes the smallest prime dividing $n$. 
 //The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
 {
-	INT flag, i, q;
+	int flag, i, q;
 	
 	if (EVEN(n))
 		return(2);
@@ -424,11 +426,11 @@ INT smallest_primedivisor(INT n)
 		}
 }
 
-INT sp_ge(INT n, INT p_min)
+int sp_ge(int n, int p_min)
 //Computes the smalles prime dividing $n$ 
 //which is greater than or equal to p\_min. AB 230594.
 {
-	INT i, q;
+	int i, q;
 	
 	if (p_min == 0)
 		p_min = 2;
@@ -457,7 +459,7 @@ INT sp_ge(INT n, INT p_min)
 		i += 2;
 		}
 #if 0
-	INT flag;
+	int flag;
 	
 	if (EVEN((p_min - 1) >> 1))
 		/* p_min cong 1 mod 4 ? */
@@ -484,12 +486,12 @@ INT sp_ge(INT n, INT p_min)
 }
 #endif
 
-void factor_integer(INT n, Vector& primes, Vector& exponents)
+void factor_integer(int n, Vector& primes, Vector& exponents)
 //Factors the integer $n = \prod_{i=1}^r p_i^{e_i}$. 
 //The vector primes holds the primes $p_i$,
 //the vector exponents holds the $e_i$.
 {
-	INT d, last_prime = 2, l;
+	int d, last_prime = 2, l;
 	
 	if (n == 0) {
 		cout << "factor_integer(): n == 0\n";
@@ -529,7 +531,7 @@ void factor_integer(INT n, Vector& primes, Vector& exponents)
 void print_factorization(Vector& primes, Vector& exponents, ostream &o)
 //Prints the factorization.
 {
-	INT i, p, e, l;
+	int i, p, e, l;
 	
 	l = primes.s_l();
 	if (l != exponents.s_l()) {
@@ -570,7 +572,7 @@ void print_factorization(Vector& primes, Vector& exponents, ostream &o)
 void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith &h)
 //Prints the factorization.
 {
-	INT i, p, e, l;
+	int i, p, e, l;
 	
 	l = primes.s_l();
 	if (l != exponents.s_l()) {
@@ -617,12 +619,12 @@ void print_factorization_hollerith(Vector& primes, Vector& exponents, hollerith 
 		}
 }
 
-INT nb_primes(INT n)
+int nb_primes(int n)
 //Returns the number of primes in the prime factorization 
 //of $n$ (including multiplicities).
 {
-	INT i = 0;
-	INT d;
+	int i = 0;
+	int d;
 	
 	if (n < 0)
 		n = -n;
@@ -635,7 +637,7 @@ INT nb_primes(INT n)
 }
 
 #if 0
-INT is_prime(INT n)
+int is_prime(int n)
 //TRUE if and only if $n$ is prime.
 {
 	if (smallest_primedivisor(n) == n)
@@ -646,7 +648,7 @@ INT is_prime(INT n)
 #endif
 
 #if 0
-INT is_power_of_prime(INT n, INT p)
+int is_power_of_prime(int n, int p)
 //TRUE if and only if $n$ is a power of $p$.
 {
 	Vector vp, ve;
@@ -655,7 +657,7 @@ INT is_power_of_prime(INT n, INT p)
 	return (vp.s_l() == 1);
 }
 
-INT is_prime_power(INT n, INT &p, INT &e)
+int is_prime_power(int n, int &p, int &e)
 //TRUE if and only if $n$ is a prime power. 
 //If true, p and e are set to the prime and the exponent e such that n = p^e
 {
@@ -670,7 +672,7 @@ INT is_prime_power(INT n, INT &p, INT &e)
 }
 #endif
 
-INT factor_if_prime_power(INT n, INT *p, INT *e)
+int factor_if_prime_power(int n, int *p, int *e)
 //Computes $p$ and $e$ with $n=p^e$. 
 //If $n$ is not a prime power, FALSE is returned.
 {
@@ -686,7 +688,7 @@ INT factor_if_prime_power(INT n, INT *p, INT *e)
 }
 
 #if 0
-void factor_prime_power(INT n, INT *p, INT *e)
+void factor_prime_power(int n, int *p, int *e)
 //Computes $p$ and $e$ with $n=p^e$. 
 //If $n$ is not a prime power, an error is raised.
 {
@@ -702,12 +704,12 @@ void factor_prime_power(INT n, INT *p, INT *e)
 }
 #endif
 
-INT Euler(INT n)
+int Euler(int n)
 //Computes Eulers $\varphi$-function for $n$.
 //Uses the prime factorization of $n$. before: eulerfunc
 {
 	Vector p, e;
-	INT i, k, p1, e1, l;
+	int i, k, p1, e1, l;
 	
 	factor_integer(n, p, e);
 	k = 1;
@@ -722,11 +724,11 @@ INT Euler(INT n)
 	return k;
 }
 
-INT Moebius(INT i)
+int Moebius(int i)
 //Computes the number-theoretic $\mu$ (= moebius) function of $i$. before: moebius.
 {
 	Vector vp, ve;
-	INT j, a, l;
+	int j, a, l;
 	
 	factor_integer(i, vp, ve);
 	l = vp.s_l();
@@ -742,11 +744,11 @@ INT Moebius(INT i)
 }
 
 #if 0
-INT order_mod_p(INT a, INT p)
+int order_mod_p(int a, int p)
 //Computes the order of $a$ mod $p$, i.~e. the smallest $k$ 
 //s.~th. $a^k \equiv 1$ mod $p$.
 {
-	INT o, b;
+	int o, b;
 	
 	if (a < 0) {
 		cout << "order_mod_p() a < 0\n";
@@ -769,11 +771,11 @@ INT order_mod_p(INT a, INT p)
 #endif
 
 #if 0
-INT primitive_root(INT p, INT f_v)
+int primitive_root(int p, int f_v)
 //Computes a primitive element for $\EZ_p$, i.~e. an integer $k$ 
 //with $2 \le k \le p - 1$ s.~th. the order of $k$ mod $p$ is $p-1$.
 {
-	INT i, o;
+	int i, o;
 
 	if (p < 2) {
 		cout << "primitive_root(): p < 2\n";
@@ -796,11 +798,11 @@ INT primitive_root(INT p, INT f_v)
 #endif
 
 
-INT NormRemainder(INT a, INT m)
+int NormRemainder(int a, int m)
 //absolute smallest remainder: Computes $r$ such that 
 //$a \equiv r$ mod $m$ and $- \frac{m}{2} < r \le \frac{m}{2}$ holds.
 {
-	INT q, m0, m1, m_halbe;
+	int q, m0, m1, m_halbe;
 	
 	if (m == 0) {
 		cout << "NormRemainder() m == 0\n";
@@ -823,10 +825,10 @@ INT NormRemainder(INT a, INT m)
 	return m1;
 }
 
-INT log2(INT n)
+int log2(int n)
 //returns $\log_2(n)$ 
 {
-	INT i;
+	int i;
 	
 	if (n <= 0) {
 		cout << "log2(): n <= 0\n";
@@ -838,10 +840,10 @@ INT log2(INT n)
 	return i;
 }
 
-INT sqrt_mod(INT a, INT p)
+int sqrt_mod(int a, int p)
 // solves x^2 = a mod p. Returns x
 {
-	INT a1, x;
+	int a1, x;
 	
 	a1 = a % p;
 	if (p < 300) {
@@ -875,13 +877,13 @@ INT sqrt_mod(INT a, INT p)
 		}
 }
 
-INT sqrt_mod_involved(INT a, INT p)
+int sqrt_mod_involved(int a, int p)
 // solves x^2 = a mod p. Returns x
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	longinteger P, m1;
 	longinteger A, X, a2, a4, b, X2;
-	INT round;
+	int round;
 	
 	A.homo_z(a);
 	P.homo_z(p);
@@ -918,7 +920,7 @@ INT sqrt_mod_involved(INT a, INT p)
 		}
 	// now p % 8 == 1
 	// Tonelli / Shanks algorithm:
-	INT n, r, q, e, m;
+	int n, r, q, e, m;
 	longinteger Z, N, Y, B, T, d, mP, AB, Ypower, Bpower;
 
 #ifdef TONELLI_VERBOSE
@@ -936,7 +938,7 @@ INT sqrt_mod_involved(INT a, INT p)
 
 #if 0
 	do {
-		n = (INT)(((double)rand() * (double)p / RAND_MAX)) % p;
+		n = (int)(((double)rand() * (double)p / RAND_MAX)) % p;
 		r = Legendre(n, p, verbose_level - 1);
 		} while (r >= 0);
 #else
@@ -1061,7 +1063,7 @@ INT sqrt_mod_involved(INT a, INT p)
 }
 
 #if 0
-void latex_head(ostream& ost, INT f_book, INT f_title, char *title, char *author, INT f_toc, INT f_landscape)
+void latex_head(ostream& ost, int f_book, int f_title, char *title, char *author, int f_toc, int f_landscape)
 {
 ost << "\\documentclass[12pt]{";
 if (f_book)
@@ -1483,9 +1485,9 @@ void html_foot(ostream& ost)
 	ost << "</html>\n";
 }
 
-void sieve(Vector &primes, INT factorbase, INT f_v)
+void sieve(Vector &primes, int factorbase, int f_v)
 {
-	INT i, from, to, l, unit_size = 1000;
+	int i, from, to, l, unit_size = 1000;
 	
 	primes.m_l(0);
 	for (i = 0; ; i++) {
@@ -1505,9 +1507,9 @@ void sieve(Vector &primes, INT factorbase, INT f_v)
 		}
 }
 
-void sieve_primes(Vector &v, INT from, INT to, INT limit, INT f_v)
+void sieve_primes(Vector &v, int from, int to, int limit, int f_v)
 {
-	INT x, y, l, k, p, f_prime;
+	int x, y, l, k, p, f_prime;
 	
 	l = v.s_l();
 	if (ODD(from))
@@ -1550,7 +1552,7 @@ void sieve_primes(Vector &v, INT from, INT to, INT limit, INT f_v)
 
 void print_intvec_mod_10(Vector &v)
 {
-	INT i, l;
+	int i, l;
 	
 	l = v.s_l();
 	for (i = 0; i < l; i++) {
@@ -1575,33 +1577,33 @@ void print_intvec_mod_10(Vector &v)
 #define SYSTEMUNIX
 
 
-INT os_ticks()
+int os_ticks()
 {
 #ifdef SYSTEMMAC
 	clock_t t;
 	
 	t = clock();
-	return((INT)t);
+	return((int)t);
 #endif
 #ifdef SYSTEMUNIX
 	struct tms tms_buffer;
 
-	if (-1 == (INT) times(&tms_buffer))
+	if (-1 == (int) times(&tms_buffer))
 		return(-1);
 	return(tms_buffer.tms_utime);
 #endif
 	return(0);
 }
 
-static INT system_time0 = 0;
+static int system_time0 = 0;
 
-INT os_ticks_system()
+int os_ticks_system()
 {
 #ifdef SYSTEMMAC
 	clock_t t;
 	
 	t = clock();
-	return((INT)t);
+	return((int)t);
 #endif
 #ifdef SYSTEMUNIX
 #if 0
@@ -1611,7 +1613,7 @@ INT os_ticks_system()
 		return(-1);
 	return(tms_buffer.tms_stime);
 #endif
-	INT t;
+	int t;
 
 	t = time(NULL);
 	if (system_time0 == 0) {
@@ -1624,13 +1626,13 @@ INT os_ticks_system()
 	return(0);
 }
 
-INT os_ticks_per_second()
+int os_ticks_per_second()
 {
-	INT clk_tck = 1;
+	int clk_tck = 1;
 	
 #ifdef SYSTEMUNIX
 	clk_tck = sysconf(_SC_CLK_TCK);
-	/* printf("clk_tck = %ld\n", clk_tck); */
+	/* printf("clk_tck = %d\n", clk_tck); */
 #endif
 #ifdef SYSTEMMAC
 	clk_tck = CLOCKS_PER_SEC;
@@ -1638,9 +1640,9 @@ INT os_ticks_per_second()
 	return(clk_tck);
 }
 
-void os_ticks_to_dhms(INT ticks, INT tps, INT &d, INT &h, INT &m, INT &s)
+void os_ticks_to_dhms(int ticks, int tps, int &d, int &h, int &m, int &s)
 {
-	INT l1;
+	int l1;
 
 	l1 = ticks / tps;
 	s = l1 % 60;
@@ -1658,9 +1660,9 @@ void os_ticks_to_dhms(INT ticks, INT tps, INT &d, INT &h, INT &m, INT &s)
 
 #undef DEBUG_TRANSFORM_LLUR
 
-void transform_llur(INT *in, INT *out, INT &x, INT &y)
+void transform_llur(int *in, int *out, int &x, int &y)
 {
-	INT dx, dy;
+	int dx, dy;
 	double a, b;
 
 #ifdef DEBUG_TRANSFORM_LLUR
@@ -1670,8 +1672,8 @@ void transform_llur(INT *in, INT *out, INT &x, INT &y)
 	dy = y - in[1];
 	a = (double) dx / (double)(in[2] - in[0]);
 	b = (double) dy / (double)(in[3] - in[1]);
-	dx = (INT)(a * (double)(out[2] - out[0]));
-	dy = (INT)(b * (double)(out[3] - out[1]));
+	dx = (int)(a * (double)(out[2] - out[0]));
+	dy = (int)(b * (double)(out[3] - out[1]));
 	x = dx + out[0];
 	y = dy + out[1];
 #ifdef DEBUG_TRANSFORM_LLUR
@@ -1679,41 +1681,41 @@ void transform_llur(INT *in, INT *out, INT &x, INT &y)
 #endif
 }
 
-void transform_dist(INT *in, INT *out, INT &x, INT &y)
+void transform_dist(int *in, int *out, int &x, int &y)
 {
-	INT dx, dy;
+	int dx, dy;
 	double a, b;
 
 	a = (double) x / (double)(in[2] - in[0]);
 	b = (double) y / (double)(in[3] - in[1]);
-	dx = (INT)(a * (double) (out[2] - out[0]));
-	dy = (INT)(b * (double) (out[3] - out[1]));
+	dx = (int)(a * (double) (out[2] - out[0]));
+	dy = (int)(b * (double) (out[3] - out[1]));
 	x = dx;
 	y = dy;
 }
 
-void transform_dist_x(INT *in, INT *out, INT &x)
+void transform_dist_x(int *in, int *out, int &x)
 {
-	INT dx;
+	int dx;
 	double a;
 
 	a = (double) x / (double)(in[2] - in[0]);
-	dx = (INT)(a * (double) (out[2] - out[0]));
+	dx = (int)(a * (double) (out[2] - out[0]));
 	x = dx;
 }
 
-void transform_dist_y(INT *in, INT *out, INT &y)
+void transform_dist_y(int *in, int *out, int &y)
 {
-	INT dy;
+	int dy;
 	double b;
 
 	b = (double) y / (double)(in[3] - in[1]);
-	dy = (INT)(b * (double) (out[3] - out[1]));
+	dy = (int)(b * (double) (out[3] - out[1]));
 	y = dy;
 }
 #endif
 
-void stirling_second(INT n, INT k, INT f_ordered, discreta_base &res, INT f_v)
+void stirling_second(int n, int k, int f_ordered, discreta_base &res, int f_v)
 // number of set partitions of an n-set with exactly k classes
 {
 
@@ -1771,13 +1773,13 @@ void stirling_second(INT n, INT k, INT f_ordered, discreta_base &res, INT f_v)
 		}
 }
 
-void stirling_first(INT n, INT k, INT f_signless, discreta_base &res, INT f_v)
+void stirling_first(int n, int k, int f_signless, discreta_base &res, int f_v)
 // $(-1)^{n+k} \cdot$ number of elements in $\Sym_n$ with exactly k cycles
 {
 	// cout << "stirling_first() partition is currently disabled" << endl;
 	discreta_base a, b, c;
 	number_partition p;
-	INT l, x, ax;
+	int l, x, ax;
 
 	if (n == 0) {
 		if (k == 0) {
@@ -1846,9 +1848,9 @@ void stirling_first(INT n, INT k, INT f_signless, discreta_base &res, INT f_v)
 		}
 }
 
-void Catalan(INT n, Vector &v, INT f_v)
+void Catalan(int n, Vector &v, int f_v)
 {
-	INT i;
+	int i;
 	
 	v.m_l_n(n + 1);
 	v[0].m_i_i(1);
@@ -1858,9 +1860,9 @@ void Catalan(INT n, Vector &v, INT f_v)
 		}
 }
 
-void Catalan_n(INT n, Vector &v, discreta_base &res, INT f_v)
+void Catalan_n(int n, Vector &v, discreta_base &res, int f_v)
 {
-	INT i;
+	int i;
 	discreta_base a, b;
 	
 	a.m_i_i(0);
@@ -1875,9 +1877,9 @@ void Catalan_n(INT n, Vector &v, discreta_base &res, INT f_v)
 	a.swap(res);
 }
 
-void Catalan_nk_matrix(INT n, matrix &Cnk, INT f_v)
+void Catalan_nk_matrix(int n, matrix &Cnk, int f_v)
 {
-	INT i, k;
+	int i, k;
 	discreta_base a;
 	
 	Catalan_nk_star_matrix(n, Cnk, f_v);
@@ -1890,9 +1892,9 @@ void Catalan_nk_matrix(INT n, matrix &Cnk, INT f_v)
 		}
 }
 
-void Catalan_nk_star_matrix(INT n, matrix &Cnk, INT f_v)
+void Catalan_nk_star_matrix(int n, matrix &Cnk, int f_v)
 {
-	INT i, k;
+	int i, k;
 	
 	Cnk.m_mn_n(n + 1, n + 1);
 	
@@ -1914,9 +1916,9 @@ void Catalan_nk_star_matrix(INT n, matrix &Cnk, INT f_v)
 		}
 }
 
-void Catalan_nk_star(INT n, INT k, matrix &Cnk, discreta_base &res, INT f_v)
+void Catalan_nk_star(int n, int k, matrix &Cnk, discreta_base &res, int f_v)
 {
-	INT i;
+	int i;
 	discreta_base a, b;
 	
 	a.m_i_i(0);
@@ -1931,14 +1933,14 @@ void Catalan_nk_star(INT n, INT k, matrix &Cnk, discreta_base &res, INT f_v)
 	a.swap(res);
 }
 
-INT atoi(char *p)
+int atoi(char *p)
 {
-	INT x;
-	sscanf(p, "%ld", &x);
+	int x;
+	sscanf(p, "%d", &x);
 	return x;
 #if 0
 	char str[1024];
-	INT x;
+	int x;
 	
 	strcpy(str, p);
 	istrstream ins(str, sizeof(str));
@@ -1948,17 +1950,17 @@ INT atoi(char *p)
 }
 
 #if 0
-void itoa(char *p, INT len_of_p, INT i)
+void itoa(char *p, int len_of_p, int i)
 {
-	sprintf(p, "%ld", i);
+	sprintf(p, "%d", i);
 #if 0
 	ostrstream os(p, len_of_p);
 	os << i << ends;
 #endif
 }
 
-static INT f_has_swap_initialized = FALSE;
-static INT f_has_swap = 0;
+static int f_has_swap_initialized = FALSE;
+static int f_has_swap = 0;
 	// indicates if char swap is present 
 	// i.e., little endian / big endian 
 
@@ -1980,11 +1982,11 @@ static void test_swap()
 // buffer pointed to by "ptr" 
 // this routine goes back to Roland Grund
 
-void block_swap_chars(SCHAR *ptr, INT size, INT no)
+void block_swap_chars(SCHAR *ptr, int size, int no)
 {
 	SCHAR *ptr_end, *ptr_start;
 	SCHAR chr;
-	INT i;
+	int i;
 	
 	if (!f_has_swap_initialized)
 		test_swap();
@@ -2011,10 +2013,10 @@ void block_swap_chars(SCHAR *ptr, INT size, INT no)
 #include <unistd.h>
 #include <fcntl.h>
 
-INT file_size(char *name)
+int file_size(char *name)
 {
 #ifdef SYSTEMUNIX
-	INT handle, size;
+	int handle, size;
 	
 	handle = open(name, O_RDWR/*mode*/);
 	size = lseek(handle, 0L, SEEK_END);
@@ -2022,7 +2024,7 @@ INT file_size(char *name)
 	return(size);
 #endif
 #ifdef SYSTEMMAC
-	INT handle, size;
+	int handle, size;
 	
 	handle = open(name, O_RDONLY);
 		/* THINK C Unix Lib */
@@ -2032,8 +2034,8 @@ INT file_size(char *name)
 	return(size);
 #endif
 #ifdef SYSTEMWINDOWS
-	INT handle = _open (name,_O_RDONLY);
-	INT size   = _lseek (handle,0,SEEK_END);
+	int handle = _open (name,_O_RDONLY);
+	int size   = _lseek (handle,0,SEEK_END);
 	close (handle);
 	return (size);
 #endif
@@ -2042,7 +2044,7 @@ INT file_size(char *name)
 
 #include <ctype.h>
 
-INT s_scan_int(char **s, INT *i)
+int s_scan_int(char **s, int *i)
 {
 	char str1[512];
 	
@@ -2056,10 +2058,10 @@ INT s_scan_int(char **s, INT *i)
 	return TRUE;
 }
 
-INT s_scan_token(char **s, char *str)
+int s_scan_token(char **s, char *str)
 {
 	char c;
-	INT len;
+	int len;
 	
 	while (TRUE) {
 		c = **s;
@@ -2105,10 +2107,10 @@ INT s_scan_token(char **s, char *str)
 	return TRUE;
 }
 
-INT s_scan_token_arbitrary(char **s, char *str)
+int s_scan_token_arbitrary(char **s, char *str)
 {
 	char c;
-	INT len;
+	int len;
 	
 	//cout << "s_scan_token_arbitrary:" << *s << endl;
 	str[0] = 0;
@@ -2139,10 +2141,10 @@ INT s_scan_token_arbitrary(char **s, char *str)
 	return TRUE;
 }
 
-INT s_scan_str(char **s, char *str)
+int s_scan_str(char **s, char *str)
 {
 	char c;
-	INT len, f_break;
+	int len, f_break;
 	
 	while (TRUE) {
 		c = **s;
@@ -2190,7 +2192,7 @@ INT s_scan_str(char **s, char *str)
 }
 #endif
 
-void N_choose_K(discreta_base & n, INT k, discreta_base & res)
+void N_choose_K(discreta_base & n, int k, discreta_base & res)
 // Computes ${n \choose k}$ into res as an {\em object}.
 // This function uses a recursion formula.
 {
@@ -2228,7 +2230,7 @@ void N_choose_K(discreta_base & n, INT k, discreta_base & res)
 	// b = a / k;
 }
 
-void Binomial(INT n, INT k, discreta_base & n_choose_k)
+void Binomial(int n, int k, discreta_base & n_choose_k)
 // Computes binomial coefficients as {\em objects} 
 // so that large numbers are no problem. 
 // This function uses an internal table to remember all 
@@ -2236,7 +2238,7 @@ void Binomial(INT n, INT k, discreta_base & n_choose_k)
 // those computations where Binomial() is heavily involved !
 {
 	static matrix *T = NULL;
-	INT tn, i, j;
+	int tn, i, j;
 	
 	if (k < 0) {
 		cout << "Binomial(): k < 0" << endl;
@@ -2272,10 +2274,10 @@ void Binomial(INT n, INT k, discreta_base & n_choose_k)
 	Binomial_using_table(n, k, *T, n_choose_k);
 }
 
-static void Binomial_using_table(INT n, INT k, matrix & T, discreta_base & res)
+static void Binomial_using_table(int n, int k, matrix & T, discreta_base & res)
 {
 	discreta_base tmp1, tmp2;
-	INT m;
+	int m;
 	
 	m = T.s_m();
 	if (m < n) {
@@ -2330,11 +2332,11 @@ static void Binomial_using_table(INT n, INT k, matrix & T, discreta_base & res)
 		}
 }
 
-void Krawtchouk(INT n, INT q, INT i, INT j, discreta_base & a)
+void Krawtchouk(int n, int q, int i, int j, discreta_base & a)
 // $\sum_{u=0}^{\min(i,j)} (-1)^u \cdot (q-1)^{i-u} \cdot {j \choose u} \cdot $
 // ${n - j \choose i - u}$
 {
-	INT u, u_max;
+	int u, u_max;
 	discreta_base b, c, d;
 	
 	a.m_i_i(0);
@@ -2353,7 +2355,7 @@ void Krawtchouk(INT n, INT q, INT i, INT j, discreta_base & a)
 }
 
 #if 0
-INT ij2k(INT i, INT j, INT n)
+int ij2k(int i, int j, int n)
 {
 	if (i == j) {
 		cout << "ij2k() i == j" << endl;
@@ -2364,9 +2366,9 @@ INT ij2k(INT i, INT j, INT n)
 	return ((n - i) * i + ((i * (i - 1)) >> 1) + j - i - 1);
 }
 
-void k2ij(INT k, INT & i, INT & j, INT n)
+void k2ij(int k, int & i, int & j, int n)
 {
-	INT ii;
+	int ii;
 	
 	for (ii = 0; ii < n; ii++) {
 		if (k < n - ii - 1) {
@@ -2381,12 +2383,12 @@ void k2ij(INT k, INT & i, INT & j, INT n)
 }
 #endif
 
-void tuple2_rank(INT rank, INT &i, INT &j, INT n, INT f_injective)
+void tuple2_rank(int rank, int &i, int &j, int n, int f_injective)
 //enumeration of 2-tuples $(i,j)$ (f_injective TRUE iff $i=j$ forbidden).
 //this routine produces the tuple with number ``rank'' into $i$ and $j$. 
 //$n$ is the number of points $1 \le i,j \le n$.
 {
-	INT a;
+	int a;
 	
 	if (f_injective) {
 		a = rank % (n - 1);
@@ -2403,11 +2405,11 @@ void tuple2_rank(INT rank, INT &i, INT &j, INT n, INT f_injective)
 		}
 }
 
-INT tuple2_unrank(INT i, INT j, INT n, INT f_injective)
+int tuple2_unrank(int i, int j, int n, int f_injective)
 //inverse function of tuple2_rank(): 
 //returns the rank of a given tuple $(i,j)$.
 {
-	INT rank;
+	int rank;
 	
 	if (f_injective) {
 		rank = i * (n - 1);
@@ -2429,8 +2431,8 @@ INT tuple2_unrank(INT i, INT j, INT n, INT f_injective)
 #if 0
 void chop_off_extension_if_present(char *p, char *ext)
 {
-	INT l1 = strlen(p);
-	INT l2 = strlen(ext);
+	int l1 = strlen(p);
+	int l2 = strlen(ext);
 	
 	if (l1 > l2 && strcmp(p + l1 - l2, ext) == 0) {
 		p[l1 - l2] = 0;
@@ -2439,7 +2441,7 @@ void chop_off_extension_if_present(char *p, char *ext)
 
 void get_extension_if_present(char *p, char *ext)
 {
-	INT i, l = strlen(p);
+	int i, l = strlen(p);
 	
 	ext[0] = 0;
 	for (i = l - 1; i >= 0; i--) {
@@ -2454,7 +2456,7 @@ void get_extension_if_present(char *p, char *ext)
 
 void output_texable_string(ostream & ost, char *in)
 {
-	INT i, l;
+	int i, l;
 	char str[100], c;
 	
 	l = strlen(in);
@@ -2473,7 +2475,7 @@ void output_texable_string(ostream & ost, char *in)
 
 void texable_string(char *in, char *out)
 {
-	INT i, l;
+	int i, l;
 	char str[100], c;
 	
 	l = strlen(in);
@@ -2491,15 +2493,15 @@ void texable_string(char *in, char *out)
 		}
 }
 
-static INT table_of_primes[] = { 
+static int table_of_primes[] = { 
 		2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 
 		31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 
 		73, 79, 83, 89, 97 } ; // the first 25 primes 
-static INT table_of_primes_len = 25;
+static int table_of_primes_len = 25;
 
-void the_first_n_primes(Vector &P, INT n)
+void the_first_n_primes(Vector &P, int n)
 {
-	INT i;
+	int i;
 	
 	if (n <= table_of_primes_len) {
 		P.m_l(n);
@@ -2549,47 +2551,47 @@ double atan_grad(double x)
 	return phi;
 }
 
-void on_circle_int(INT *Px, INT *Py, INT idx, INT angle_in_degree, INT rad)
+void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad)
 {
 	
-	Px[idx] = (INT)(cos_grad(angle_in_degree) * (double) rad);
-	Py[idx] = (INT)(sin_grad(angle_in_degree) * (double) rad);
+	Px[idx] = (int)(cos_grad(angle_in_degree) * (double) rad);
+	Py[idx] = (int)(sin_grad(angle_in_degree) * (double) rad);
 }
 #endif
 
-void midpoint_of_2(INT *Px, INT *Py, INT i1, INT i2, INT idx)
+void midpoint_of_2(int *Px, int *Py, int i1, int i2, int idx)
 {
 	double x, y;
 	
 	x = (double)(Px[i1] + Px[i2]) * 0.5;
 	y = (double)(Py[i1] + Py[i2]) * 0.5;
-	Px[idx] = (INT) x;
-	Py[idx] = (INT) y;
+	Px[idx] = (int) x;
+	Py[idx] = (int) y;
 }
 
-void midpoint_of_5(INT *Px, INT *Py, INT i1, INT i2, INT i3, INT i4, INT i5, INT idx)
+void midpoint_of_5(int *Px, int *Py, int i1, int i2, int i3, int i4, int i5, int idx)
 {
 	double x, y;
 	
 	x = (double)(Px[i1] + Px[i2] + Px[i3] + Px[i4] + Px[i5]) * 0.2;
 	y = (double)(Py[i1] + Py[i2] + Py[i3] + Py[i4] + Py[i5]) * 0.2;
-	Px[idx] = (INT) x;
-	Py[idx] = (INT) y;
+	Px[idx] = (int) x;
+	Py[idx] = (int) y;
 }
 
-void ratio_int(INT *Px, INT *Py, INT idx_from, INT idx_to, INT idx_result, double r)
+void ratio_int(int *Px, int *Py, int idx_from, int idx_to, int idx_result, double r)
 {
-	INT dx, dy;
+	int dx, dy;
 
-	dx = (INT)((double)(Px[idx_to] - Px[idx_from]) * r);
-	dy = (INT)((double)(Py[idx_to] - Py[idx_from]) * r);
+	dx = (int)((double)(Px[idx_to] - Px[idx_from]) * r);
+	dy = (int)((double)(Py[idx_to] - Py[idx_from]) * r);
 	Px[idx_result] = Px[idx_from] + dx;
 	Py[idx_result] = Py[idx_from] + dy;
 }
 
-void time_check_delta(INT dt)
+void time_check_delta(int dt)
 {
-	INT tps, d, h, min, s;
+	int tps, d, h, min, s;
 
 	tps = os_ticks_per_second();
 	os_ticks_to_dhms(dt, tps, d, h, min, s);
@@ -2611,38 +2613,38 @@ void time_check_delta(INT dt)
 	cout << endl;
 }
 
-void time_check(INT t0)
+void time_check(int t0)
 {
-	INT t1, dt;
+	int t1, dt;
 	
 	t1 = os_ticks();
 	dt = t1 - t0;
 	time_check_delta(dt);
 }
 
-INT nb_of_bits()
+int nb_of_bits()
 {
-	return sizeof (UINT) * 8;
+	return sizeof (uint) * 8;
 }
 
-void bit_set(UINT & g, INT k)
+void bit_set(uint & g, int k)
 {
-	g |= (((UINT) 1) << k);
+	g |= (((uint) 1) << k);
 }
 
-void bit_clear(UINT & g, INT k)
+void bit_clear(uint & g, int k)
 {
-	g &= ~(((UINT) 1) << k);
+	g &= ~(((uint) 1) << k);
 }
 
-INT bit_test(UINT & g, INT k)
+int bit_test(uint & g, int k)
 {
-	return ( (g & (((UINT) 1) << k)) ? TRUE : FALSE );
+	return ( (g & (((uint) 1) << k)) ? TRUE : FALSE );
 }
 
-void bitset2vector(UINT g, Vector &v)
+void bitset2vector(uint g, Vector &v)
 {
-	INT i = 0;
+	int i = 0;
 	
 	v.m_l(0);
 	while (g != 0) {
@@ -2654,15 +2656,15 @@ void bitset2vector(UINT g, Vector &v)
 		}
 }
 
-void frobenius_in_PG(domain *dom, INT n, permutation &p)
+void frobenius_in_PG(domain *dom, int n, permutation &p)
 // n is the projective dimension
 {
 	with ww(dom);
-	INT i, j, l;
+	int i, j, l;
 	Vector v;
 	
-	INT qq = dom->order_int();
-	INT q = dom->order_subfield_int();
+	int qq = dom->order_int();
+	int q = dom->order_subfield_int();
 	l = nb_PG_elements(n, qq);
 	p.m_l(l);
 	v.m_l_n(n + 1);
@@ -2676,15 +2678,15 @@ void frobenius_in_PG(domain *dom, INT n, permutation &p)
 		}
 }
 
-void frobenius_in_AG(domain *dom, INT n, permutation &p)
+void frobenius_in_AG(domain *dom, int n, permutation &p)
 // n is the dimension
 {
 	with ww(dom);
-	INT i, j, l;
+	int i, j, l;
 	Vector v;
 	
-	INT qq = dom->order_int();
-	INT q = dom->order_subfield_int();
+	int qq = dom->order_int();
+	int q = dom->order_subfield_int();
 	l = nb_AG_elements(n, qq);
 	p.m_l(l);
 	v.m_l_n(n);
@@ -2698,13 +2700,13 @@ void frobenius_in_AG(domain *dom, INT n, permutation &p)
 		}
 }
 
-void translation_in_AG(domain *dom, INT n, INT i, discreta_base & a, permutation &p)
+void translation_in_AG(domain *dom, int n, int i, discreta_base & a, permutation &p)
 {
 	with ww(dom);
-	INT ii, j, l;
+	int ii, j, l;
 	Vector v;
 	
-	INT q = dom->order_int();
+	int q = dom->order_int();
 	l = nb_AG_elements(n, q);
 	p.m_l(l);
 	v.m_l_n(n);
@@ -2728,7 +2730,7 @@ enum printing_mode_enum current_printing_mode()
 
 printing_mode::printing_mode(enum printing_mode_enum printing_mode)
 {
-	if (printing_mode_stack_size == MAX_PRINTING_MODE_STACK) {
+	if (printing_mode_stack_size == MAX_PRintING_MODE_STACK) {
 		cout << "printing_mode() overflow in printing_mode stack" << endl;
 		exit(1);
 		}
@@ -2750,7 +2752,7 @@ void call_system(char *cmd)
 	system(cmd);
 }
 
-void fill_char(void *v, INT cnt, INT c)
+void fill_char(void *v, int cnt, int c)
 {
 	char ch = (char)c;
 	char *s;
@@ -2761,11 +2763,11 @@ void fill_char(void *v, INT cnt, INT c)
 		*s++ = ch;
 }
 
-#define HASH_PRIME ((INT)(1 << 30)-1)
+#define HASH_PRIME ((int)(1 << 30)-1)
 
-INT hash_INT(INT hash0, INT a)
+int hash_int(int hash0, int a)
 {
-	INT h = hash0;
+	int h = hash0;
 	
 	do {
 		h <<= 1;
@@ -2778,7 +2780,7 @@ INT hash_INT(INT hash0, INT a)
 	return h;
 }
 
-void queue_init(Vector &Q, INT elt)
+void queue_init(Vector &Q, int elt)
 {
 	Q.m_l(2);
 	Q.m_ii(0, 1);
@@ -2787,9 +2789,9 @@ void queue_init(Vector &Q, INT elt)
 	Q[1].as_vector().m_ii(0, elt);
 }
 
-INT queue_get_and_remove_first_element(Vector &Q)
+int queue_get_and_remove_first_element(Vector &Q)
 {
-	INT elt, i, l, a;
+	int elt, i, l, a;
 	Vector &v = Q[1].as_vector();
 	
 	l = Q.s_ii(0);
@@ -2806,17 +2808,17 @@ INT queue_get_and_remove_first_element(Vector &Q)
 	return elt;
 }
 
-INT queue_length(Vector &Q)
+int queue_length(Vector &Q)
 {
-	INT l;
+	int l;
 	
 	l = Q.s_ii(0);
 	return l;
 }
 
-void queue_append(Vector &Q, INT elt)
+void queue_append(Vector &Q, int elt)
 {
-	INT l;
+	int l;
 	
 	Vector &v = Q[1].as_vector();
 	l = Q.s_ii(0);
@@ -2836,7 +2838,7 @@ void print_classification_tex(Vector &content, Vector &multiplicities)
 
 void print_classification_tex(Vector &content, Vector &multiplicities, ostream& ost)
 {
-	INT i, l;
+	int i, l;
 	
 	l = content.s_l();
 	// ost << "(";
@@ -2852,27 +2854,27 @@ void print_classification_tex(Vector &content, Vector &multiplicities, ostream& 
 }
 
 #if 0
-void perm_move(INT *from, INT *to, INT n)
+void perm_move(int *from, int *to, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++)
 		to[i] = from[i];
 }
 
-void perm_mult(INT *a, INT *b, INT *c, INT n)
+void perm_mult(int *a, int *b, int *c, int n)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < n; i++) {
 		c[i] = b[a[i]];
 		}
 }
 
-void perm_conjugate(INT *a, INT *b, INT *c, INT n)
+void perm_conjugate(int *a, int *b, int *c, int n)
 // c := a^b = b^-1 * a * b
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		j = b[i];
@@ -2883,10 +2885,10 @@ void perm_conjugate(INT *a, INT *b, INT *c, INT n)
 		}
 }
 
-void perm_inverse(INT *a, INT *b, INT n)
+void perm_inverse(int *a, int *b, int n)
 // b := a^-1
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < n; i++) {
 		j = a[i];
@@ -2894,10 +2896,10 @@ void perm_inverse(INT *a, INT *b, INT n)
 		}
 }
 
-void perm_raise(INT *a, INT *b, INT e, INT n)
+void perm_raise(int *a, int *b, int e, int n)
 // b := a^e (e >= 0)
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	for (i = 0; i < n; i++) {
 		k = i;
@@ -2908,7 +2910,7 @@ void perm_raise(INT *a, INT *b, INT e, INT n)
 		}
 }
 
-void perm_print(INT *a, INT n)
+void perm_print(int *a, int n)
 {
 	permutation p;
 	perm2permutation(a, n, p);
@@ -2916,9 +2918,9 @@ void perm_print(INT *a, INT n)
 }
 #endif
 
-void perm2permutation(INT *a, INT n, permutation &p)
+void perm2permutation(int *a, int n, permutation &p)
 {
-	INT i;
+	int i;
 	
 	p.m_l_n(n);
 	for (i = 0; i < n; i++) {
@@ -2927,10 +2929,10 @@ void perm2permutation(INT *a, INT n, permutation &p)
 }
 
 #if 0
-void print_integer_matrix(ostream &ost, INT *p, INT m, INT n)
+void print_integer_matrix(ostream &ost, int *p, int m, int n)
 {
 	matrix M;
-	INT i, j;
+	int i, j;
 	
 	M.m_mn_n(m, n);
 	for (i = 0; i < m; i++) {
@@ -2943,10 +2945,10 @@ void print_integer_matrix(ostream &ost, INT *p, INT m, INT n)
 #endif
 
 #if 0
-void print_longinteger_matrix(ostream &ost, LONGINT *p, INT m, INT n)
+void print_longinteger_matrix(ostream &ost, LONGint *p, int m, int n)
 {
 	matrix M;
-	INT i, j;
+	int i, j;
 	longinteger a;
 	
 	M.m_mn_n(m, n);
@@ -2960,15 +2962,15 @@ void print_longinteger_matrix(ostream &ost, LONGINT *p, INT m, INT n)
 }
 #endif
 
-INT Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols, 
-	INT f_P, INT *P, INT m, INT n, INT Pn, 
-	INT q, INT *add_table, INT *mult_table, INT *negate_table, INT *inv_table, INT f_v)
+int Gauss_int(int *A, int f_special, int f_complete, int *base_cols, 
+	int f_P, int *P, int m, int n, int Pn, 
+	int q, int *add_table, int *mult_table, int *negate_table, int *inv_table, int f_v)
 // returns the rank which is the number of entries in base_cols
 // A is a m x n matrix,
 // P is a m x Pn matrix (if f_P is TRUE)
 {
-	INT rank, i, j, k, jj;
-	INT pivot, pivot_inv = 0, a, b, c, z, f;
+	int rank, i, j, k, jj;
+	int pivot, pivot_inv = 0, a, b, c, z, f;
 	
 	if (f_v) {
 		cout << "Gauss algorithm for matrix:" << endl;
@@ -2983,11 +2985,11 @@ INT Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols,
 				// pivot element found: 
 				if (k != i) {
 					for (jj = j; jj < n; jj++) {
-						INT_swap(A[i * n + jj], A[k * n + jj]);
+						int_swap(A[i * n + jj], A[k * n + jj]);
 						}
 					if (f_P) {
 						for (jj = 0; jj < Pn; jj++) {
-							INT_swap(P[i * Pn + jj], P[k * Pn + jj]);
+							int_swap(P[i * Pn + jj], P[k * Pn + jj]);
 							}
 						}
 					}
@@ -3125,18 +3127,18 @@ INT Gauss_INT(INT *A, INT f_special, INT f_complete, INT *base_cols,
 	return rank;
 }
 
-void char_move(char *p, char *q, INT len)
+void char_move(char *p, char *q, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) 
 		*q++ = *p++;
 }
 
 #if 0
-void char_swap(char *p, char *q, INT len)
+void char_swap(char *p, char *q, int len)
 {
-	INT i;
+	int i;
 	char c;
 	
 	for (i = 0; i < len; i++) {
@@ -3146,31 +3148,31 @@ void char_swap(char *p, char *q, INT len)
 		}
 }
 
-void uchar_move(uchar *p, uchar *q, INT len)
+void uchar_move(uchar *p, uchar *q, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) 
 		*q++ = *p++;
 }
 
-void INT_matrix_transpose(INT n, INT *A)
+void int_matrix_transpose(int n, int *A)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < i; j++) {
 			if (i != j)
-				INT_swap(A[i * n + j], A[j * n + i]);
+				int_swap(A[i * n + j], A[j * n + i]);
 			}
 		}
 }
 #endif
 
-void INT_vector_realloc(INT *&p, INT old_length, INT new_length)
+void int_vector_realloc(int *&p, int old_length, int new_length)
 {
-	INT *q = new INT[new_length];
-	INT m, i;
+	int *q = new int[new_length];
+	int m, i;
 	
 	m = MINIMUM(old_length, new_length);
 	for (i = 0; i < m; i++) {
@@ -3180,10 +3182,10 @@ void INT_vector_realloc(INT *&p, INT old_length, INT new_length)
 	p = q;
 }
 
-void INT_vector_shorten(INT *&p, INT new_length)
+void int_vector_shorten(int *&p, int new_length)
 {
-	INT *q = new INT[new_length];
-	INT i;
+	int *q = new int[new_length];
+	int i;
 
 	for (i = 0; i < new_length; i++) {
 		q[i] = p[i];
@@ -3192,12 +3194,12 @@ void INT_vector_shorten(INT *&p, INT new_length)
 	p = q;
 }
 
-void INT_matrix_realloc(INT *&p, INT old_m, INT new_m, INT old_n, INT new_n)
+void int_matrix_realloc(int *&p, int old_m, int new_m, int old_n, int new_n)
 {
-	INT *q = new INT[new_m * new_n];
-	INT m = MINIMUM(old_m, new_m);
-	INT n = MINIMUM(old_n, new_n);
-	INT i, j;
+	int *q = new int[new_m * new_n];
+	int m = MINIMUM(old_m, new_m);
+	int n = MINIMUM(old_n, new_n);
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -3209,10 +3211,10 @@ void INT_matrix_realloc(INT *&p, INT old_m, INT new_m, INT old_n, INT new_n)
 }
 
 #if 0
-void INT_matrix_shorten_rows(INT *&p, INT m, INT n)
+void int_matrix_shorten_rows(int *&p, int m, int n)
 {
-	INT *q = new INT[m * n];
-	INT i, j;
+	int *q = new int[m * n];
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -3223,10 +3225,10 @@ void INT_matrix_shorten_rows(INT *&p, INT m, INT n)
 	p = q;
 }
 
-void PINT_matrix_shorten_rows(PINT *&p, INT m, INT n)
+void pint_matrix_shorten_rows(pint *&p, int m, int n)
 {
-	PINT *q = new PINT[m * n];
-	INT i, j;
+	pint *q = new pint[m * n];
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -3238,21 +3240,21 @@ void PINT_matrix_shorten_rows(PINT *&p, INT m, INT n)
 }
 #endif
 
-INT code_is_irreducible(INT k, INT nmk, INT idx_zero, INT *M)
+int code_is_irreducible(int k, int nmk, int idx_zero, int *M)
 {
-	static INT col_reached[1000];
-	static INT row_reached[1000];
+	static int col_reached[1000];
+	static int row_reached[1000];
 	
 	/* 0: as yet not reached
 	 * 1: reached, but as yet not processed
 	 * 2: reached and processed. */
-	INT c_reached = 0; 
+	int c_reached = 0; 
 		/* number of 1's and 2's in c[] */
-	INT r_reached = 0;
-	INT c_processed = 0; 
+	int r_reached = 0;
+	int c_processed = 0; 
 		/* number of 2's in c[] */
-	INT r_processed = 0;
-	INT i, j;
+	int r_processed = 0;
+	int i, j;
 	
 	if (nmk >= 1000) {
 		cout << "code_is_irreducible() nmk > 1000" << endl;
@@ -3328,8 +3330,8 @@ INT code_is_irreducible(INT k, INT nmk, INT idx_zero, INT *M)
 			}
 		
 		}
-	// printf("code_is_irreducible() c_processed = %ld r_processed = %ld "
-	//	"nmk = %ld k = %ld\n", c_processed, r_processed, nmk, k);
+	// printf("code_is_irreducible() c_processed = %d r_processed = %d "
+	//	"nmk = %d k = %d\n", c_processed, r_processed, nmk, k);
 	if (c_processed < nmk || r_processed < k)
 		return FALSE;
 	return TRUE;
@@ -3338,10 +3340,10 @@ INT code_is_irreducible(INT k, INT nmk, INT idx_zero, INT *M)
 //#include "mindist.C"
 
 #if 0
-INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
+int int_vec_search(int *v, int len, int a, int &idx)
 {
-	INT l, r, m, res;
-	INT f_found = FALSE;
+	int l, r, m, res;
+	int f_found = FALSE;
 	
 	if (len == 0) {
 		idx = 0;
@@ -3379,7 +3381,7 @@ INT INT_vec_search(INT *v, INT len, INT a, INT &idx)
 void uchar_print_bitwise(ostream &ost, uchar u)
 {
 	uchar mask;
-	INT i;
+	int i;
 	
 	for (i = 0; i < 8; i++) {
 		mask = ((uchar) 1) << i;
@@ -3392,25 +3394,25 @@ void uchar_print_bitwise(ostream &ost, uchar u)
 #endif
 
 
-void fine_tune(finite_field *F, INT *mtxD, INT verbose_level)
+void fine_tune(finite_field *F, int *mtxD, int verbose_level)
 // added Dec 28 2009
 // This is here because it uses sqrt_mod_involved
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
-	INT q = F->q;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
+	int q = F->q;
 
 	if (f_v) {
 		cout << "fine_tune: tuning matrix:" << endl;
 		print_integer_matrix_width(cout, mtxD, 4, 4, 4, F->log10_of_q);
 		}
 
-	INT mtxGram[16];
-	INT mtxDt[16];
-	INT mtxE[16];
-	INT mtxF[16];
-	INT mtxG[16];
+	int mtxGram[16];
+	int mtxDt[16];
+	int mtxE[16];
+	int mtxF[16];
+	int mtxG[16];
 
 	for (i = 0; i < 16; i++) {
 		mtxGram[i] = 0;
@@ -3429,7 +3431,7 @@ void fine_tune(finite_field *F, INT *mtxD, INT verbose_level)
 		print_integer_matrix_width(cout, mtxF, 4, 4, 4, F->log10_of_q);
 		}
 
-	INT c, d, cv;
+	int c, d, cv;
 	
 	c = -1;
 	for (i = 0; i < 16; i++) {
@@ -3457,7 +3459,7 @@ void fine_tune(finite_field *F, INT *mtxD, INT verbose_level)
 	if (f_vv) {
 		cout << "cv = " << cv << endl;
 		}
-	INT p, h, s;
+	int p, h, s;
 	is_prime_power(q, p, h);
 	if (h > 1) {
 		cout << "q is not a prime" << endl;
@@ -3479,7 +3481,7 @@ void fine_tune(finite_field *F, INT *mtxD, INT verbose_level)
 		}
 
 
-	INT mtxGt[16];
+	int mtxGt[16];
 	F->transpose_matrix(mtxG, mtxGt, 4, 4);
 	F->mult_matrix_matrix(mtxGt, mtxGram, mtxE, 4, 4, 4);
 	F->mult_matrix_matrix(mtxE, mtxG, mtxF, 4, 4, 4);
@@ -3499,7 +3501,7 @@ void fine_tune(finite_field *F, INT *mtxD, INT verbose_level)
 		}
 
 
-	//INT At2[4], As2[4], f_switch2;
+	//int At2[4], As2[4], f_switch2;
 
 	//cout << "calling O4_isomorphism_4to2" << endl;
 	//O4_isomorphism_4to2(F, At2, As2, f_switch2, mtxG, verbose_level);

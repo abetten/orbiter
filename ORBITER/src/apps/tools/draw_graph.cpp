@@ -5,68 +5,68 @@
 
 #include "orbiter.h"
 
-void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed, 
-	INT f_no_point_labels, 
-	INT f_point_labels, INT *point_labels, 
-	INT point_label_offset, 
-	INT f_edge_labels, 
-	INT f_bipartite, INT size_of_bipartition, 
-	INT f_partition, const char *partition_text, 
-	INT f_vertex_selection, const char *vertex_selection_text, 
-	INT rad, 
-	INT verbose_level);
+void draw_graph(mp_graphics &G, int nb_v, int nb_e, int *E, int f_directed, 
+	int f_no_point_labels, 
+	int f_point_labels, int *point_labels, 
+	int point_label_offset, 
+	int f_edge_labels, 
+	int f_bipartite, int size_of_bipartition, 
+	int f_partition, const char *partition_text, 
+	int f_vertex_selection, const char *vertex_selection_text, 
+	int rad, 
+	int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT i, j;
-	INT xmax = 500000;
-	INT ymax = 500000;
-	INT dx = 400000;
-	INT dy = 400000;
-	INT f_rad = TRUE;
-	INT rad = 40000;
-	INT verbose_level = 0;
-	INT E[1000];
-	INT f_nb_V = FALSE;
-	INT nb_V = 0, nb_E = 0;
-	INT f_fname = FALSE;
+	int i, j;
+	int xmax = 500000;
+	int ymax = 500000;
+	int dx = 400000;
+	int dy = 400000;
+	int f_rad = TRUE;
+	int rad = 40000;
+	int verbose_level = 0;
+	int E[1000];
+	int f_nb_V = FALSE;
+	int nb_V = 0, nb_E = 0;
+	int f_fname = FALSE;
 	const char *fname = NULL;
-	INT point_label_offset = 0; 
-	INT f_edge_labels = FALSE;
-	INT f_directed = FALSE;
-	INT f_on_grid = FALSE;
-	INT *coords_2D;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_scale = FALSE;
+	int point_label_offset = 0; 
+	int f_edge_labels = FALSE;
+	int f_directed = FALSE;
+	int f_on_grid = FALSE;
+	int *coords_2D;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_scale = FALSE;
 	double tikz_global_scale = .45;
-	INT f_line_width = FALSE;
+	int f_line_width = FALSE;
 	double tikz_global_line_width = 1.5;
-	INT f_export = FALSE;
+	int f_export = FALSE;
 	const char *fname_export = NULL;
-	INT f_edge_set = FALSE;
+	int f_edge_set = FALSE;
 	const char *edge_set = NULL;
-	INT f_colored_graph = FALSE;
+	int f_colored_graph = FALSE;
 	const char *colored_graph_fname = NULL;
-	INT f_bipartite = FALSE;
-	INT size_of_bipartition = 0;
-	INT x, y, e, u, v;
-	INT f_partition = FALSE;
+	int f_bipartite = FALSE;
+	int size_of_bipartition = 0;
+	int x, y, e, u, v;
+	int f_partition = FALSE;
 	const char *partition_text = NULL;
 	char partition_text2[10000];
-	INT f_partition_by_color_classes = FALSE;
-	INT *partition = NULL;
-	INT *partition_first = NULL;
-	INT partition_length = NULL;
-	INT f_vertex_selection = FALSE;
+	int f_partition_by_color_classes = FALSE;
+	int *partition = NULL;
+	int *partition_first = NULL;
+	int partition_length = 0;
+	int f_vertex_selection = FALSE;
 	const char *vertex_selection_text = NULL;
-	INT f_no_point_labels = FALSE;
-	INT f_point_labels = FALSE;
-	INT *point_labels = NULL;
+	int f_no_point_labels = FALSE;
+	int f_point_labels = FALSE;
+	int *point_labels = NULL;
 
 
-	//INT t0 = os_ticks();
+	//int t0 = os_ticks();
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
 			verbose_level = atoi(argv[++i]);
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
 				nb_E++;
 				}
 			cout << "-E " << endl;
-			INT_matrix_print(E, nb_E, 2);
+			int_matrix_print(E, nb_E, 2);
 			}
 		else if (strcmp(argv[i], "-edges") == 0) {
 			while (TRUE) {
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 				nb_E++;
 				}
 			cout << "-edges " << endl;
-			INT_matrix_print(E, nb_E, 2);
+			int_matrix_print(E, nb_E, 2);
 			}
 		else if (strcmp(argv[i], "-fname") == 0) {
 			f_fname = TRUE;
@@ -141,13 +141,13 @@ int main(int argc, char **argv)
 			}
 		else if (strcmp(argv[i], "-on_grid") == 0) {
 			f_on_grid = TRUE;
-			coords_2D = NEW_INT(nb_V * 2);
-			INT j;
+			coords_2D = NEW_int(nb_V * 2);
+			int j;
 			for (j = 0; j < nb_V * 2; j++) {
 				coords_2D[j] = atoi(argv[++i]);
 				}
 			cout << "-on_grid ";
-			INT_vec_print(cout, coords_2D, nb_V * 2);
+			int_vec_print(cout, coords_2D, nb_V * 2);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-embedded") == 0) {
@@ -220,9 +220,9 @@ int main(int argc, char **argv)
 		}
 
 	if (f_edge_set) {
-		INT *Edges;
-		INT nb_edges;
-		INT_vec_scan(edge_set, Edges, nb_edges);
+		int *Edges;
+		int nb_edges;
+		int_vec_scan(edge_set, Edges, nb_edges);
 		nb_E = 0;
 		for (i = 0; i < nb_edges; i++) {
 			k2ij(Edges[i], u, v, nb_V);
@@ -270,15 +270,15 @@ int main(int argc, char **argv)
 			f_partition = TRUE;
 			partition_text2[0] = 0;
 			for (i = 0; i < partition_length; i++) {
-				sprintf(partition_text2 + strlen(partition_text2), "%ld", partition[i]);
+				sprintf(partition_text2 + strlen(partition_text2), "%d", partition[i]);
 				if (i < partition_length - 1) {
 					sprintf(partition_text2 + strlen(partition_text2), ",");
 					}
 				}
 			}
 		if (f_point_labels) {
-			point_labels = NEW_INT(CG->nb_points);
-			INT_vec_copy(CG->points, point_labels, CG->nb_points);
+			point_labels = NEW_int(CG->nb_points);
+			int_vec_copy(CG->points, point_labels, CG->nb_points);
 			}
 		}
 
@@ -300,14 +300,14 @@ int main(int argc, char **argv)
 
 #if 0
 	cout << "The edges are:" << endl;
-	INT_matrix_print(E, nb_E, 2);
+	int_matrix_print(E, nb_E, 2);
 #endif
 
 	{
 	//mp_graphics G;
 
-	INT x_min = 0, y_min = 0;
-	INT factor_1000 = 1000;
+	int x_min = 0, y_min = 0;
+	int factor_1000 = 1000;
 
 	
 	mp_graphics G(fname2, x_min, y_min, xmax, ymax, f_embedded, f_sideways);
@@ -326,25 +326,25 @@ int main(int argc, char **argv)
 
 
 	if (f_on_grid) {
-		//INT dx = 400000;
-		//INT dy = 400000;
-		INT Base[4];
+		//int dx = 400000;
+		//int dy = 400000;
+		int Base[4];
 
-		Base[0] = (INT)(dx * 0.5);
+		Base[0] = (int)(dx * 0.5);
 		Base[1] = 0;
-		//Base[2] = (INT)(dx * 0.5);
-		//Base[3] = (INT)(dy * 0.866025); // sqrt(3) / 2
-		Base[2] = (INT)(dx * 0.0);
-		Base[3] = (INT)(dy * 0.5); // sqrt(3) / 2
+		//Base[2] = (int)(dx * 0.5);
+		//Base[3] = (int)(dy * 0.866025); // sqrt(3) / 2
+		Base[2] = (int)(dx * 0.0);
+		Base[3] = (int)(dy * 0.5); // sqrt(3) / 2
 		cout << "before draw_graph_on_2D_grid" << endl;
 		draw_graph_on_2D_grid(&G, 0 /* x */, 0 /* y */, 
 			dx, dy, rad, nb_V, E, nb_E, coords_2D, Base, 
 			f_point_labels, point_label_offset, f_directed);
 		}
 	else {
-		INT *E2;
+		int *E2;
 
-		E2 = NEW_INT(nb_E);
+		E2 = NEW_int(nb_E);
 		for (i = 0; i < nb_E; i++) {
 			E2[i] = ij2k(E[2 * i + 0], E[2 * i + 1], nb_V);
 			}
@@ -359,7 +359,7 @@ int main(int argc, char **argv)
 			rad, verbose_level);
 			// not in GALOIS/draw.C
 
-		FREE_INT(E2);
+		FREE_int(E2);
 		}
 
 #if 0
@@ -367,17 +367,17 @@ int main(int argc, char **argv)
 		char str[1000];
 		
 		for (i = 0; i < nb_V; i++) {
-			sprintf(str, "%ld", i);
+			sprintf(str, "%d", i);
 			
 			}
 		}
 #endif
 	
 	if (f_export) {
-		INT *Adj;
+		int *Adj;
 
-		Adj = NEW_INT(nb_V * nb_V);
-		INT_vec_zero(Adj, nb_V * nb_V);
+		Adj = NEW_int(nb_V * nb_V);
+		int_vec_zero(Adj, nb_V * nb_V);
 		for (i = 0; i < nb_E; i++) {
 			x = E[2 * i + 0];
 			y = E[2 * i + 1];
@@ -413,58 +413,58 @@ int main(int argc, char **argv)
 			
 		}
 		cout << "Written file " << fname_export << " of size " << file_size(fname_export) << endl;
-		FREE_INT(Adj);
+		FREE_int(Adj);
 		}
 	G.finish(cout, TRUE);
 	}
 }
 
-void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed, 
-	INT f_no_point_labels, 
-	INT f_point_labels, INT *point_labels, 
-	INT point_label_offset, 
-	INT f_edge_labels, 
-	INT f_bipartite, INT size_of_bipartition, 
-	INT f_partition, const char *partition_text, 
-	INT f_vertex_selection, const char *vertex_selection_text, 
-	INT rad, 
-	INT verbose_level)
+void draw_graph(mp_graphics &G, int nb_v, int nb_e, int *E, int f_directed, 
+	int f_no_point_labels, 
+	int f_point_labels, int *point_labels, 
+	int point_label_offset, 
+	int f_edge_labels, 
+	int f_bipartite, int size_of_bipartition, 
+	int f_partition, const char *partition_text, 
+	int f_vertex_selection, const char *vertex_selection_text, 
+	int rad, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, h, e1, e2;
-	INT Px[1000], Py[1000];
-	INT Qx[1000], Qy[1000];
-	INT Rx[1000], Ry[1000];
+	int f_v = (verbose_level >= 1);
+	int i, h, e1, e2;
+	int Px[1000], Py[1000];
+	int Qx[1000], Qy[1000];
+	int Rx[1000], Ry[1000];
 	char str[1000];
 	double phi = ((double) 360) / nb_v;
 	double phi_half = phi * 0.5;
-	INT rad1 = 170000;
-	INT rad1a = rad1 * .8;
-	INT rad1b = rad1 * 1.2;
-	INT rad1c = rad1 * 1.3;
-	//INT rad = 30000;
-	INT dx, sz, sz0;
-	INT f_swap, a;
-	INT phi0 = 0;
+	int rad1 = 170000;
+	int rad1a = rad1 * .8;
+	int rad1b = rad1 * 1.2;
+	int rad1c = rad1 * 1.3;
+	//int rad = 30000;
+	int dx, sz, sz0;
+	int f_swap, a;
+	int phi0 = 0;
 
-	INT *partition;
-	INT *partition_first = NULL;
-	INT partition_length = 0;
-	INT *vertex_selection;
-	INT *f_vertex_selected;
-	INT vertex_selection_length;
-	INT f_go = FALSE;
+	int *partition;
+	int *partition_first = NULL;
+	int partition_length = 0;
+	int *vertex_selection;
+	int *f_vertex_selected;
+	int vertex_selection_length;
+	int f_go = FALSE;
 
 	if (f_v) {
 		cout << "draw_graph" << endl;
 		}
 	if (f_vertex_selection) {
-		INT_vec_scan(vertex_selection_text, vertex_selection, vertex_selection_length);
+		int_vec_scan(vertex_selection_text, vertex_selection, vertex_selection_length);
 		cout << "vertex_selection: ";
-		INT_vec_print(cout, vertex_selection, vertex_selection_length);
+		int_vec_print(cout, vertex_selection, vertex_selection_length);
 		cout << endl;
-		f_vertex_selected = NEW_INT(nb_v);
-		INT_vec_zero(f_vertex_selected, nb_v);
+		f_vertex_selected = NEW_int(nb_v);
+		int_vec_zero(f_vertex_selected, nb_v);
 		for (i = 0; i < vertex_selection_length; i++) {
 			a = vertex_selection[i];
 			f_vertex_selected[a] = TRUE;
@@ -472,11 +472,11 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 		}
 
 	if (f_partition) {
-		INT_vec_scan(partition_text, partition, partition_length);
+		int_vec_scan(partition_text, partition, partition_length);
 		cout << "partiton: ";
-		INT_vec_print(cout, partition, partition_length);
+		int_vec_print(cout, partition, partition_length);
 		cout << endl;
-		partition_first = NEW_INT(partition_length + 1);
+		partition_first = NEW_int(partition_length + 1);
 		partition_first[0] = 0;
 		for (i = 0; i < partition_length; i++) {
 			partition_first[i + 1] = partition_first[i] + partition[i];
@@ -494,7 +494,7 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 				sz = nb_v - size_of_bipartition;
 				}
 
-			dx = (INT)((double)(4 * rad1) / (sz - 1));	
+			dx = (int)((double)(4 * rad1) / (sz - 1));	
 			for (i = 0; i < sz; i++) {
 				Px[sz0 + i] = i * dx;
 				if (h == 0) {
@@ -508,15 +508,15 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 		}
 	else {
 		for (i = 0; i < nb_v; i++) {
-			on_circle_int(Px, Py, i, ((INT)(phi0 + i * phi)) % 360, rad1);
+			on_circle_int(Px, Py, i, ((int)(phi0 + i * phi)) % 360, rad1);
 			//cout << "i=" << i << " Px=" << Px[i] << " Py=" << Py[i] << endl;
 			}
 		for (i = 0; i < nb_v; i++) {
-			on_circle_int(Qx, Qy, 2 * i, ((INT)(phi0 + i * phi - phi_half)) % 360, rad1a);
+			on_circle_int(Qx, Qy, 2 * i, ((int)(phi0 + i * phi - phi_half)) % 360, rad1a);
 			//cout << "i=" << i << " Qx=" << Qx[2 * i] << " Qy=" << Qy[2 * i] << endl;
 			}
 		for (i = 0; i < nb_v; i++) {
-			on_circle_int(Qx, Qy, 2 * i + 1, ((INT)(phi0 + i * phi - phi_half)) % 360, rad1b);
+			on_circle_int(Qx, Qy, 2 * i + 1, ((int)(phi0 + i * phi - phi_half)) % 360, rad1b);
 			//cout << "i=" << i << " Qx=" << Qx[2 * i + 1] << " Qy=" << Qy[2 * i + 1] << endl;
 			}
 		if (f_partition) {
@@ -524,7 +524,7 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 				double m;
 
 				m = (double) partition_first[i] + (double) partition[i] * 0.5;
-				on_circle_int(Rx, Ry, i, ((INT)(phi0 + m * phi - phi_half)) % 360, rad1c);
+				on_circle_int(Rx, Ry, i, ((int)(phi0 + m * phi - phi_half)) % 360, rad1c);
 				}
 			}
 		}
@@ -563,7 +563,7 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 
 		if (f_go) {
 			if (f_directed) {
-				INT s, t;
+				int s, t;
 
 
 				G.sl_ends(0, 1);
@@ -634,19 +634,19 @@ void draw_graph(mp_graphics &G, INT nb_v, INT nb_e, INT *E, INT f_directed,
 		//G.sl_thickness(100);
 		G.circle(0, 0, rad1b);
 		for (i = 0; i < partition_length; i++) {
-			sprintf(str, "${\\bf C}_{%ld}$", i);
+			sprintf(str, "${\\bf C}_{%d}$", i);
 			a = partition_first[i];
 			G.polygon2(Qx, Qy, 2 * a + 0, 2 * a + 1);
 			G.aligned_text(Rx[i], Ry[i], "", str);
 			}
 		}
 	if (f_vertex_selection) {
-		FREE_INT(vertex_selection);
-		FREE_INT(f_vertex_selected);
+		FREE_int(vertex_selection);
+		FREE_int(f_vertex_selected);
 		}
 	if (f_partition) {
-		FREE_INT(partition);
-		FREE_INT(partition_first);
+		FREE_int(partition);
+		FREE_int(partition_first);
 		}
 	if (f_v) {
 		cout << "draw_graph done" << endl;

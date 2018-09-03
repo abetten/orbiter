@@ -26,39 +26,39 @@ void action_by_restriction::null()
 void action_by_restriction::free()
 {
 	if (points) {
-		FREE_INT(points);
+		FREE_int(points);
 		}
 	if (points_sorted) {
-		FREE_INT(points_sorted);
+		FREE_int(points_sorted);
 		}
 	if (perm_inv) {
-		FREE_INT(perm_inv);
+		FREE_int(perm_inv);
 		}
 	null();
 }
 
-void action_by_restriction::init_from_sv(INT *sv,
-		INT pt, INT verbose_level)
+void action_by_restriction::init_from_sv(int *sv,
+		int pt, int verbose_level)
 {
-	INT i, idx;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int i, idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "action_by_restriction::init_from_sv "
 				"pt=" << pt << endl;
 		}
-	INT n;
-	INT *pts;
-	INT *prev;
-	INT *label;
-	INT *depth;
-	INT *ancestor;
+	int n;
+	int *pts;
+	int *prev;
+	int *label;
+	int *depth;
+	int *ancestor;
 
-	INT *orbit_elt_idx;
-	INT *orbit_elts;
-	INT orbit_len;
+	int *orbit_elt_idx;
+	int *orbit_elts;
+	int orbit_len;
 
 	n = sv[0];
 	pts = sv + 1;
@@ -69,15 +69,15 @@ void action_by_restriction::init_from_sv(INT *sv,
 				"schreier vector of length " << n << endl;
 		}
 
-	if (!INT_vec_search(pts, n, pt, idx)) {
+	if (!int_vec_search(pts, n, pt, idx)) {
 		cout << "action_by_restriction::init_from_sv "
 				"fatal: point " << pt << " not found" << endl;
 		exit(1);
 		}
 
-	depth = NEW_INT(n);	
-	ancestor = NEW_INT(n);	
-	orbit_elt_idx = NEW_INT(n);	
+	depth = NEW_int(n);	
+	ancestor = NEW_int(n);	
+	orbit_elt_idx = NEW_int(n);	
 	
 	for (i = 0; i < n; i++) {
 		depth[i] = -1;
@@ -121,13 +121,13 @@ void action_by_restriction::init_from_sv(INT *sv,
 		cout << "action_by_restriction::init_from_sv "
 				"found orbit of length " << orbit_len << endl;
 		}
-	orbit_elts = NEW_INT(orbit_len);
+	orbit_elts = NEW_int(orbit_len);
 	for (i = 0; i < orbit_len; i++) {
 		orbit_elts[i] = pts[orbit_elt_idx[i]];
 		}
 	if (f_vv) {
 		cout << "the points in the orbit are: ";
-		INT_vec_print(cout, orbit_elts, orbit_len);
+		int_vec_print(cout, orbit_elts, orbit_len);
 		cout << endl;
 		}	
 	if (orbit_elts[0] != pt) {
@@ -144,44 +144,44 @@ void action_by_restriction::init_from_sv(INT *sv,
 		}
 	init(orbit_len, orbit_elts, verbose_level);
 	
-	FREE_INT(depth);
-	FREE_INT(ancestor);
-	FREE_INT(orbit_elt_idx);
-	FREE_INT(orbit_elts);
+	FREE_int(depth);
+	FREE_int(ancestor);
+	FREE_int(orbit_elt_idx);
+	FREE_int(orbit_elts);
 }
 
-void action_by_restriction::init(INT nb_points, INT *points,
-		INT verbose_level)
+void action_by_restriction::init(int nb_points, int *points,
+		int verbose_level)
 // the array points must be orderd
 {
-	INT i;
-	INT f_v = (verbose_level >= 1);
+	int i;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_by_restriction::init nb_points="
 				<< nb_points << endl;
 		}
 	action_by_restriction::nb_points = nb_points;
-	action_by_restriction::points = NEW_INT(nb_points);
-	action_by_restriction::points_sorted = NEW_INT(nb_points);
-	action_by_restriction::perm_inv = NEW_INT(nb_points);
+	action_by_restriction::points = NEW_int(nb_points);
+	action_by_restriction::points_sorted = NEW_int(nb_points);
+	action_by_restriction::perm_inv = NEW_int(nb_points);
 	for (i = 0; i < nb_points; i++) {
 		action_by_restriction::points[i] = points[i];
 		points_sorted[i] = points[i];
 		perm_inv[i] = i;
 		}
-	INT_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
+	int_vec_heapsort_with_log(points_sorted, perm_inv, nb_points);
 	if (f_v) {
 		cout << "action_by_restriction::init finished" << endl;
 		}
 }
 
-INT action_by_restriction::compute_image(
-		action *A, INT *Elt, INT i, INT verbose_level)
+int action_by_restriction::compute_image(
+		action *A, int *Elt, int i, int verbose_level)
 {
-	INT idx, b, c, h;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int idx, b, c, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "action_by_restriction::compute_image i = " << i << endl;
@@ -203,7 +203,7 @@ INT action_by_restriction::compute_image(
 	if (f_vv) {
 		cout << "image of " << points[i] << " is " << b << endl;
 		}
-	if (!INT_vec_search(points_sorted, nb_points, b, idx)) {
+	if (!int_vec_search(points_sorted, nb_points, b, idx)) {
 		cout << "action_by_restriction::compute_image fatal: "
 				"image point " << b << " not found" << endl;
 		cout << "action: ";
@@ -220,13 +220,13 @@ INT action_by_restriction::compute_image(
 		cout << "image of " << points[i] << " is " << b << endl;
 		cout << "nb_points=" << nb_points << endl;
 		cout << "points=";
-		INT_vec_print(cout, points, nb_points);
+		int_vec_print(cout, points, nb_points);
 		cout << endl;
 		cout << "points_sorted=" << endl;
 		for (h = 0; h < nb_points; h++) {
 			cout << h << " : " << points_sorted[h] << endl;
 			}
-		//INT_vec_print(cout, points_sorted, nb_points);
+		//int_vec_print(cout, points_sorted, nb_points);
 		//cout << endl;
 
 		cout << "We compute the image point again, "

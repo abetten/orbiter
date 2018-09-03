@@ -2,22 +2,22 @@
 
 #include "foundations.h"
 
-INT point_line::is_desarguesian_plane(INT f_v, INT f_vv)
+int point_line::is_desarguesian_plane(int f_v, int f_vv)
 {
-	INT line = 0;
-	INT *pts_on_line;
-	INT u, v, o, e = 0, loe, p0, a, i, y1, y2, slope, b, x, f_slope, f_b, f_x;
-	INT f_found_quadrangle = FALSE;
-	INT aa;
+	int line = 0;
+	int *pts_on_line;
+	int u, v, o, e = 0, loe, p0, a, i, y1, y2, slope, b, x, f_slope, f_b, f_x;
+	int f_found_quadrangle = FALSE;
+	int aa;
 	
 	if (f_vv) {
 		cout << "is_desarguesian_plane plane_order =" << plane_order << endl;
 		}
-	pts_on_line = NEW_INT(plane_order + 1);
+	pts_on_line = NEW_int(plane_order + 1);
 	plane_get_points_on_line(line, pts_on_line);
 	if (f_vv) {
 		cout << "line " << line << " ";
-		INT_set_print(cout, pts_on_line, plane_order + 1);
+		int_set_print(cout, pts_on_line, plane_order + 1);
 		}
 	u = pts_on_line[0];
 	v = pts_on_line[1];
@@ -138,36 +138,36 @@ INT point_line::is_desarguesian_plane(INT f_v, INT f_vv)
 	return TRUE;
 }
 
-INT point_line::identify_field_not_of_prime_order(INT f_v, INT f_vv)
+int point_line::identify_field_not_of_prime_order(int f_v, int f_vv)
 {
 	cout << "point_line::identify_field_not_of_prime_order not yet implemented" << endl;
 	exit(1);
 #if 0
-	INT m, n;  // the size of the incidence matrix
-	INT d, d2;
-	INT i, j, k, ii, jj, kk, a;
-	INT nb_inc = 0; // the number of incidences
-	INT mpn;
-	INT *M1;
-	INT *canonical_form1;
-	INT *canonical_form_inv1;
+	int m, n;  // the size of the incidence matrix
+	int d, d2;
+	int i, j, k, ii, jj, kk, a;
+	int nb_inc = 0; // the number of incidences
+	int mpn;
+	int *M1;
+	int *canonical_form1;
+	int *canonical_form_inv1;
 	permutation_group_generators Aut_gens1;
-	//INT *Aut_gens1;
-	//INT nb_Aut_gens1;
+	//int *Aut_gens1;
+	//int nb_Aut_gens1;
 	longinteger_object ago1;
-	INT *M2;
-	INT *canonical_form2;
-	INT *canonical_form_inv2;
+	int *M2;
+	int *canonical_form2;
+	int *canonical_form_inv2;
 	permutation_group_generators Aut_gens2;
-	//INT *Aut_gens2;
-	//INT nb_Aut_gens2;
+	//int *Aut_gens2;
+	//int nb_Aut_gens2;
 	longinteger_object ago2;
-	INT row_parts[5];
-	INT col_parts[3];
-	INT nb_row_parts = 3;
-	INT nb_col_parts = 3;
+	int row_parts[5];
+	int col_parts[3];
+	int nb_row_parts = 3;
+	int nb_col_parts = 3;
 	finite_field F;
-	INT ret = TRUE;
+	int ret = TRUE;
 	
 	d = plane_order;
 	d2 = d * d;
@@ -180,14 +180,14 @@ INT point_line::identify_field_not_of_prime_order(INT f_v, INT f_vv)
 	col_parts[0] = d;
 	col_parts[1] = d2;
 	col_parts[2] = d2;
-	M1 = NEW_INT(m * n);
-	canonical_form1 = NEW_INT(mpn);
-	canonical_form_inv1 = NEW_INT(mpn);
-	//Aut_gens1 = NEW_INT(mpn * mpn);
-	M2 = NEW_INT(m * n);
-	canonical_form2 = NEW_INT(mpn);
-	canonical_form_inv2 = NEW_INT(mpn);
-	//Aut_gens2 = NEW_INT(mpn * mpn);
+	M1 = NEW_int(m * n);
+	canonical_form1 = NEW_int(mpn);
+	canonical_form_inv1 = NEW_int(mpn);
+	//Aut_gens1 = NEW_int(mpn * mpn);
+	M2 = NEW_int(m * n);
+	canonical_form2 = NEW_int(mpn);
+	canonical_form_inv2 = NEW_int(mpn);
+	//Aut_gens2 = NEW_int(mpn * mpn);
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -236,7 +236,7 @@ INT point_line::identify_field_not_of_prime_order(INT f_v, INT f_vv)
 #endif
 
 	Aut_gens1.compute_group_order(ago1);
-	if (ago1.as_INT() != plane_exponent) {
+	if (ago1.as_int() != plane_exponent) {
 		cout << "the planar ternanry ring does not have the right number of automorphisms, not desarguesian" << endl;
 		ret = FALSE;
 		goto finish;
@@ -292,7 +292,7 @@ INT point_line::identify_field_not_of_prime_order(INT f_v, INT f_vv)
 		FALSE, FALSE, FALSE, FALSE);
 #endif
 	Aut_gens2.compute_group_order(ago2);
-	if (ago2.as_INT() != plane_exponent) {
+	if (ago2.as_int() != plane_exponent) {
 		cout << "the field does not have the right number of automorphisms, something is wrong" << endl;
 		exit(1);
 		}
@@ -342,22 +342,22 @@ INT point_line::identify_field_not_of_prime_order(INT f_v, INT f_vv)
 	
 	ret = TRUE;
 finish:
-	FREE_INT(M1);
-	FREE_INT(canonical_form1);
-	FREE_INT(canonical_form_inv1);
+	FREE_int(M1);
+	FREE_int(canonical_form1);
+	FREE_int(canonical_form_inv1);
 	//delete [] Aut_gens1;
-	FREE_INT(M2);
-	FREE_INT(canonical_form2);
-	FREE_INT(canonical_form_inv2);
+	FREE_int(M2);
+	FREE_int(canonical_form2);
+	FREE_int(canonical_form_inv2);
 	//delete [] Aut_gens2;
 	
 	return ret;
 #endif
 }
 
-void point_line::init_projective_plane(INT order, INT f_v)
+void point_line::init_projective_plane(int order, int f_v)
 {
-	INT i, j, h;
+	int i, j, h;
 	
 	f_plane_data_computed = FALSE;
 	if (f_v) {
@@ -366,8 +366,8 @@ void point_line::init_projective_plane(INT order, INT f_v)
 		}
 	plane_order = order;
 	nb_pts = m;
-	plane.points_on_lines = NEW_INT(nb_pts * (plane_order + 1));
-	plane.line_through_two_points = NEW_INT(nb_pts * nb_pts);
+	plane.points_on_lines = NEW_int(nb_pts * (plane_order + 1));
+	plane.line_through_two_points = NEW_int(nb_pts * nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		plane_get_points_on_line(i,
 				plane.points_on_lines + i * (plane_order + 1));
@@ -381,8 +381,8 @@ void point_line::init_projective_plane(INT order, INT f_v)
 			}
 		}
 	
-	dual_plane.points_on_lines = NEW_INT(nb_pts * (plane_order + 1));
-	dual_plane.line_through_two_points = NEW_INT(nb_pts * nb_pts);
+	dual_plane.points_on_lines = NEW_int(nb_pts * (plane_order + 1));
+	dual_plane.line_through_two_points = NEW_int(nb_pts * nb_pts);
 	for (i = 0; i < nb_pts; i++) {
 		plane_get_lines_through_point(i,
 				dual_plane.points_on_lines + i * (plane_order + 1));
@@ -400,18 +400,18 @@ void point_line::init_projective_plane(INT order, INT f_v)
 		cout << "allocating data for the coordinatization" << endl;
 		}
 	
-	pt_labels = NEW_INT(m);
-	points = NEW_INT(m);
+	pt_labels = NEW_int(m);
+	points = NEW_int(m);
 	// pt_labels and points are mutually inverse permutations of {0,1,...,m-1}
 	
-	pts_on_line_x_eq_y = NEW_INT(plane_order + 1);
-	pts_on_line_x_eq_y_labels = NEW_INT(plane_order + 1);
-	lines_through_X = NEW_INT(plane_order + 1);
-	lines_through_Y = NEW_INT(plane_order + 1);
-	pts_on_line = NEW_INT(plane_order + 1);
-	MOLS = NEW_INT((plane_order + 1) * plane_order * plane_order);
-	field_element = NEW_INT(plane_order);
-	field_element_inv = NEW_INT(plane_order);
+	pts_on_line_x_eq_y = NEW_int(plane_order + 1);
+	pts_on_line_x_eq_y_labels = NEW_int(plane_order + 1);
+	lines_through_X = NEW_int(plane_order + 1);
+	lines_through_Y = NEW_int(plane_order + 1);
+	pts_on_line = NEW_int(plane_order + 1);
+	MOLS = NEW_int((plane_order + 1) * plane_order * plane_order);
+	field_element = NEW_int(plane_order);
+	field_element_inv = NEW_int(plane_order);
 	if (f_v) {
 		cout << "finished" << endl;
 		}
@@ -421,27 +421,27 @@ void point_line::init_projective_plane(INT order, INT f_v)
 void point_line::free_projective_plane()
 {
 	if (f_plane_data_computed) {
-		FREE_INT(plane.points_on_lines);
-		FREE_INT(plane.line_through_two_points);
-		FREE_INT(dual_plane.points_on_lines);
-		FREE_INT(dual_plane.line_through_two_points);
-		FREE_INT(pt_labels);
-		FREE_INT(points);
-		FREE_INT(pts_on_line_x_eq_y);
-		FREE_INT(pts_on_line_x_eq_y_labels);
-		FREE_INT(lines_through_X);
-		FREE_INT(lines_through_Y);
-		FREE_INT(pts_on_line);
-		FREE_INT(MOLS);
-		FREE_INT(field_element);
-		FREE_INT(field_element_inv);
+		FREE_int(plane.points_on_lines);
+		FREE_int(plane.line_through_two_points);
+		FREE_int(dual_plane.points_on_lines);
+		FREE_int(dual_plane.line_through_two_points);
+		FREE_int(pt_labels);
+		FREE_int(points);
+		FREE_int(pts_on_line_x_eq_y);
+		FREE_int(pts_on_line_x_eq_y_labels);
+		FREE_int(lines_through_X);
+		FREE_int(lines_through_Y);
+		FREE_int(pts_on_line);
+		FREE_int(MOLS);
+		FREE_int(field_element);
+		FREE_int(field_element_inv);
 		f_plane_data_computed = FALSE;
 		}
 }
 
 void point_line::plane_report(ostream &ost)
 {
-	INT i, j, h;
+	int i, j, h;
 	
 	
 	ost << "lines on points:" << endl;
@@ -485,7 +485,7 @@ void point_line::plane_report(ostream &ost)
 	
 }
 
-INT point_line::plane_line_through_two_points(INT pt1, INT pt2)
+int point_line::plane_line_through_two_points(int pt1, int pt2)
 {
 	if (pt1 == pt2) {
 		cout << "point_line::plane_line_through_two_points "
@@ -496,7 +496,7 @@ INT point_line::plane_line_through_two_points(INT pt1, INT pt2)
 		return plane.line_through_two_points[pt1 * nb_pts + pt2];
 		}
 	else {
-		INT j;
+		int j;
 	
 		for (j = 0; j < n; j++) {
 			if (a[pt1 * n + j] && a[pt2 * n + j])
@@ -509,7 +509,7 @@ INT point_line::plane_line_through_two_points(INT pt1, INT pt2)
 		}
 }
 
-INT point_line::plane_line_intersection(INT line1, INT line2)
+int point_line::plane_line_intersection(int line1, int line2)
 {
 	if (line1 == line2) {
 		cout << "point_line::plane_line_intersection "
@@ -520,7 +520,7 @@ INT point_line::plane_line_intersection(INT line1, INT line2)
 		return dual_plane.line_through_two_points[line1 * nb_pts + line2];
 		}
 	else {
-		INT i;
+		int i;
 	
 		for (i = 0; i < m; i++) {
 			if (a[i * n + line1] && a[i * n + line2])
@@ -533,17 +533,17 @@ INT point_line::plane_line_intersection(INT line1, INT line2)
 		}
 }
 
-void point_line::plane_get_points_on_line(INT line, INT *pts)
+void point_line::plane_get_points_on_line(int line, int *pts)
 {
 	if (f_plane_data_computed) {
-		INT j;
+		int j;
 		
 		for (j = 0; j <= plane_order; j++) {
 			pts[j] = plane.points_on_lines[line * (plane_order + 1) + j];
 			}
 		}
 	else {
-		INT i, l;
+		int i, l;
 	
 		l = 0;
 		for (i = 0; i < m; i++) {
@@ -559,17 +559,17 @@ void point_line::plane_get_points_on_line(INT line, INT *pts)
 		}
 }
 
-void point_line::plane_get_lines_through_point(INT pt, INT *lines)
+void point_line::plane_get_lines_through_point(int pt, int *lines)
 {
 	if (f_plane_data_computed) {
-		INT j;
+		int j;
 		
 		for (j = 0; j <= plane_order; j++) {
 			lines[j] = dual_plane.points_on_lines[pt * (plane_order + 1) + j];
 			}
 		}
 	else {
-		INT j, l;
+		int j, l;
 	
 		l = 0;
 		for (j = 0; j < m; j++) {
@@ -585,10 +585,10 @@ void point_line::plane_get_lines_through_point(INT pt, INT *lines)
 		}
 }
 
-INT point_line::plane_points_collinear(
-		INT pt1, INT pt2, INT pt3)
+int point_line::plane_points_collinear(
+		int pt1, int pt2, int pt3)
 {
-	INT line;
+	int line;
 	line = plane_line_through_two_points(pt1, pt2);
 	if (a[pt3 * n + line])
 		return TRUE;
@@ -596,10 +596,10 @@ INT point_line::plane_points_collinear(
 		return FALSE;
 }
 
-INT point_line::plane_lines_concurrent(
-		INT line1, INT line2, INT line3)
+int point_line::plane_lines_concurrent(
+		int line1, int line2, int line3)
 {
-	INT pt;
+	int pt;
 	pt = plane_line_intersection(line1, line2);
 	if (a[pt * n + line3])
 		return TRUE;
@@ -607,11 +607,11 @@ INT point_line::plane_lines_concurrent(
 		return FALSE;
 }
 
-INT point_line::plane_first_quadrangle(
-		INT &pt1, INT &pt2, INT &pt3, INT &pt4)
+int point_line::plane_first_quadrangle(
+		int &pt1, int &pt2, int &pt3, int &pt4)
 {
-	// INT v = m;
-	INT pts[4];
+	// int v = m;
+	int pts[4];
 	
 	pts[0] = pt1;
 	pts[1] = pt2;
@@ -631,11 +631,11 @@ INT point_line::plane_first_quadrangle(
 		}
 }
 
-INT point_line::plane_next_quadrangle(
-		INT &pt1, INT &pt2, INT &pt3, INT &pt4)
+int point_line::plane_next_quadrangle(
+		int &pt1, int &pt2, int &pt3, int &pt4)
 {
-	// INT v = m;
-	INT pts[4];
+	// int v = m;
+	int pts[4];
 	
 	pts[0] = pt1;
 	pts[1] = pt2;
@@ -653,9 +653,9 @@ INT point_line::plane_next_quadrangle(
 		}
 }
 
-INT point_line::plane_quadrangle_first_i(INT *pt, INT i)
+int point_line::plane_quadrangle_first_i(int *pt, int i)
 {
-	INT v = m, pt0;
+	int v = m, pt0;
 	
 	if (i > 0)
 		pt0 = pt[i - 1] + 1;
@@ -687,9 +687,9 @@ INT point_line::plane_quadrangle_first_i(INT *pt, INT i)
 	return FALSE;
 }
 
-INT point_line::plane_quadrangle_next_i(INT *pt, INT i)
+int point_line::plane_quadrangle_next_i(int *pt, int i)
 {
-	INT v = m;
+	int v = m;
 	
 	if (i < 3) {
 		if (plane_quadrangle_next_i(pt, i + 1))
@@ -721,13 +721,13 @@ INT point_line::plane_quadrangle_next_i(INT *pt, INT i)
 	return FALSE;
 }
 
-void point_line::coordinatize_plane(INT O, INT I, INT X, INT Y,
-		INT *MOLS, INT f_v)
+void point_line::coordinatize_plane(int O, int I, int X, int Y,
+		int *MOLS, int f_v)
 // needs pt_labels, points, pts_on_line_x_eq_y, pts_on_line_x_eq_y_labels, 
 // lines_through_X, lines_through_Y, pts_on_line, MOLS to be allocated
 {
-	INT i, j, ii, jj, x, y, l, pt, line, pt2, pt3, b, pt_label;
-	INT slope;
+	int i, j, ii, jj, x, y, l, pt, line, pt2, pt3, b, pt_label;
+	int slope;
 	
 	quad_O = O;
 	quad_I = I;
@@ -923,26 +923,26 @@ void point_line::coordinatize_plane(INT O, INT I, INT X, INT Y,
 		}
 }
 
-INT &point_line::MOLSsxb(INT s, INT x, INT b)
+int &point_line::MOLSsxb(int s, int x, int b)
 {
 	return MOLS[s * plane_order * plane_order + x * plane_order + b];
 }
 
-INT &point_line::MOLSaddition(INT a, INT b)
+int &point_line::MOLSaddition(int a, int b)
 {
 	return MOLSsxb(0, a, b);
 }
 
-INT &point_line::MOLSmultiplication(INT a, INT b)
+int &point_line::MOLSmultiplication(int a, int b)
 {
 	return MOLSsxb(plane_order, a, b);
 }
 
-INT point_line::ternary_field_is_linear(INT *MOLS, INT f_v)
+int point_line::ternary_field_is_linear(int *MOLS, int f_v)
 {
-	INT x, m, b, y1, mx, y2;
-	INT *addition = MOLS;
-	INT *multiplication = MOLS + plane_order * plane_order * plane_order;
+	int x, m, b, y1, mx, y2;
+	int *addition = MOLS;
+	int *multiplication = MOLS + plane_order * plane_order * plane_order;
 	
 	for (m = 1; m < plane_order; m++) {
 		for (x = 0; x < plane_order; x++) {
@@ -970,7 +970,7 @@ INT point_line::ternary_field_is_linear(INT *MOLS, INT f_v)
 
 void point_line::print_MOLS(ostream &ost)
 {
-	INT *M, slope, i, j;
+	int *M, slope, i, j;
 		
 	ost << "all mutually orthogonal latin squares:" << endl;
 	ost << "addition:" << endl;
@@ -981,7 +981,7 @@ void point_line::print_MOLS(ostream &ost)
 			}
 		ost << endl;
 		}
-	FREE_INT(M);
+	FREE_int(M);
 	ost << "multiplication:" << endl;
 	get_MOLm(MOLS, plane_order, plane_order, M);
 	for (i = 0; i < plane_order; i++) {
@@ -990,7 +990,7 @@ void point_line::print_MOLS(ostream &ost)
 			}
 		ost << endl;
 		}
-	FREE_INT(M);
+	FREE_int(M);
 	for (slope = 1; slope < plane_order; slope++) {
 		ost << "for slope=" << slope << endl;
 		get_MOLm(MOLS, plane_order, slope, M);
@@ -1000,16 +1000,16 @@ void point_line::print_MOLS(ostream &ost)
 				}
 			ost << endl;
 			}
-		FREE_INT(M);
+		FREE_int(M);
 		}
 }
 
-INT point_line::is_projective_plane(partitionstack &P,
-		INT &order, INT f_v, INT f_vv)
+int point_line::is_projective_plane(partitionstack &P,
+		int &order, int f_v, int f_vv)
 // if it is a projective plane, the order is returned.
 // otherwise, 0 is returned.
 {
-	INT v, n, r, k, lambda, mu;
+	int v, n, r, k, lambda, mu;
 	
 	if (f_vv) {
 		cout << "checking for projective plane:" << endl;
@@ -1096,10 +1096,10 @@ INT point_line::is_projective_plane(partitionstack &P,
 	return TRUE;
 }
 
-INT point_line::count_RC(partitionstack &P,
-		INT row_cell, INT col_cell)
+int point_line::count_RC(partitionstack &P,
+		int row_cell, int col_cell)
 {
-	INT l1, i, nb = -1, nb1;
+	int l1, i, nb = -1, nb1;
 	
 	l1 = P.cellSize[row_cell];
 	for (i = 0; i < l1; i++) {
@@ -1118,10 +1118,10 @@ INT point_line::count_RC(partitionstack &P,
 	return nb;
 }
 
-INT point_line::count_CR(partitionstack &P,
-		INT col_cell, INT row_cell)
+int point_line::count_CR(partitionstack &P,
+		int col_cell, int row_cell)
 {
-	INT l1, i, nb = -1, nb1;
+	int l1, i, nb = -1, nb1;
 	
 	l1 = P.cellSize[col_cell];
 	for (i = 0; i < l1; i++) {
@@ -1139,11 +1139,11 @@ INT point_line::count_CR(partitionstack &P,
 	return nb;
 }
 
-INT point_line::count_RC_representative(partitionstack &P, 
-	INT row_cell, INT row_cell_pt, INT col_cell)
+int point_line::count_RC_representative(partitionstack &P, 
+	int row_cell, int row_cell_pt, int col_cell)
 {
-	INT f1, f2, /*l1,*/ l2, e1, e2, j, s = 0;
-	INT first_column_element = P.startCell[1];
+	int f1, f2, /*l1,*/ l2, e1, e2, j, s = 0;
+	int first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[row_cell];
 	f2 = P.startCell[col_cell];
@@ -1159,11 +1159,11 @@ INT point_line::count_RC_representative(partitionstack &P,
 	return s;
 }
 
-INT point_line::count_CR_representative(partitionstack &P, 
-	INT col_cell, INT col_cell_pt, INT row_cell)
+int point_line::count_CR_representative(partitionstack &P, 
+	int col_cell, int col_cell_pt, int row_cell)
 {
-	INT f1, f2, l1, /*l2,*/ e1, e2, i, s = 0;
-	INT first_column_element = P.startCell[1];
+	int f1, f2, l1, /*l2,*/ e1, e2, i, s = 0;
+	int first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[row_cell];
 	f2 = P.startCell[col_cell];
@@ -1179,10 +1179,10 @@ INT point_line::count_CR_representative(partitionstack &P,
 	return s;
 }
 
-INT point_line::count_pairs_RRC(partitionstack &P,
-		INT row_cell1, INT row_cell2, INT col_cell)
+int point_line::count_pairs_RRC(partitionstack &P,
+		int row_cell1, int row_cell2, int col_cell)
 {
-	INT l1, i, nb = -1, nb1;
+	int l1, i, nb = -1, nb1;
 	
 	l1 = P.cellSize[row_cell1];
 	for (i = 0; i < l1; i++) {
@@ -1201,10 +1201,10 @@ INT point_line::count_pairs_RRC(partitionstack &P,
 	return nb;
 }
 
-INT point_line::count_pairs_CCR(partitionstack &P,
-		INT col_cell1, INT col_cell2, INT row_cell)
+int point_line::count_pairs_CCR(partitionstack &P,
+		int col_cell1, int col_cell2, int row_cell)
 {
-	INT l1, i, nb = -1, nb1;
+	int l1, i, nb = -1, nb1;
 	
 	l1 = P.cellSize[col_cell1];
 	for (i = 0; i < l1; i++) {
@@ -1223,14 +1223,14 @@ INT point_line::count_pairs_CCR(partitionstack &P,
 	return nb;
 }
 
-INT point_line::count_pairs_RRC_representative(partitionstack &P,
-		INT row_cell1, INT row_cell_pt, INT row_cell2, INT col_cell)
+int point_line::count_pairs_RRC_representative(partitionstack &P,
+		int row_cell1, int row_cell_pt, int row_cell2, int col_cell)
 // returns the number of joinings from a point of
 // row_cell1 to elements of row_cell2 within col_cell
 // if that number exists, -1 otherwise
 {
-	INT f1, f2, f3, /*l1,*/ l2, l3, e1, e2, e3, u, j, nb = -1, nb1;
-	INT first_column_element = P.startCell[1];
+	int f1, f2, f3, /*l1,*/ l2, l3, e1, e2, e3, u, j, nb = -1, nb1;
+	int first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[row_cell1];
 	f2 = P.startCell[row_cell2];
@@ -1264,14 +1264,14 @@ INT point_line::count_pairs_RRC_representative(partitionstack &P,
 }
 
 
-INT point_line::count_pairs_CCR_representative(partitionstack &P,
-		INT col_cell1, INT col_cell_pt, INT col_cell2, INT row_cell)
+int point_line::count_pairs_CCR_representative(partitionstack &P,
+		int col_cell1, int col_cell_pt, int col_cell2, int row_cell)
 // returns the number of joinings from a point of
 // col_cell1 to elements of col_cell2 within row_cell
 // if that number exists, -1 otherwise
 {
-	INT f1, f2, f3, /*l1,*/ l2, l3, e1, e2, e3, u, i, nb = -1, nb1;
-	INT first_column_element = P.startCell[1];
+	int f1, f2, f3, /*l1,*/ l2, l3, e1, e2, e3, u, i, nb = -1, nb1;
+	int first_column_element = P.startCell[1];
 	
 	f1 = P.startCell[col_cell1];
 	f2 = P.startCell[col_cell2];
@@ -1308,11 +1308,11 @@ INT point_line::count_pairs_CCR_representative(partitionstack &P,
 // globals
 // ####################################################################################
 
-void get_MOLm(INT *MOLS, INT order, INT m, INT *&M)
+void get_MOLm(int *MOLS, int order, int m, int *&M)
 {
-	INT x, b, y, *mol = MOLS + m * order * order;
+	int x, b, y, *mol = MOLS + m * order * order;
 	
-	M = NEW_INT(order * order);
+	M = NEW_int(order * order);
 	for (x = 0; x < order; x++) {
 		for (b = 0; b < order; b++) {
 			y = mol[x * order + b];

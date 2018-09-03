@@ -53,24 +53,24 @@ void graph_node::freeself()
 		FREE_char(label);
 		}
 	if (neighbor_list) {
-		FREE_INT(neighbor_list);
+		FREE_int(neighbor_list);
 		}
 	if (f_has_vec_data) {
-		FREE_INT(vec_data);
+		FREE_int(vec_data);
 		}
 	if (child_id) {
-		FREE_INT(child_id);
+		FREE_int(child_id);
 		}
 	null();
 }
 
-void graph_node::add_neighbor(INT l, INT n, INT id)
+void graph_node::add_neighbor(int l, int n, int id)
 {
-	INT i;
+	int i;
 	
 	if (nb_neighbors >= neighbor_list_allocated) {
-		INT new_neighbor_list_allocated;
-		INT *new_neighbor_list;
+		int new_neighbor_list_allocated;
+		int *new_neighbor_list;
 		
 		if (neighbor_list_allocated) {
 			new_neighbor_list_allocated = 2 * neighbor_list_allocated;
@@ -78,12 +78,12 @@ void graph_node::add_neighbor(INT l, INT n, INT id)
 		else {
 			new_neighbor_list_allocated = 16;
 			}
-		new_neighbor_list = NEW_INT(new_neighbor_list_allocated);
+		new_neighbor_list = NEW_int(new_neighbor_list_allocated);
 		for (i = 0; i < nb_neighbors; i++) {
 			new_neighbor_list[i] = neighbor_list[i];
 			}
 		if (neighbor_list) {
-			FREE_INT(neighbor_list);
+			FREE_int(neighbor_list);
 			}
 		neighbor_list = new_neighbor_list;
 		neighbor_list_allocated = new_neighbor_list_allocated;
@@ -94,7 +94,7 @@ void graph_node::add_neighbor(INT l, INT n, INT id)
 
 void graph_node::add_text(const char *text)
 {
-	INT l;
+	int l;
 	char *p;
 
 	l = strlen(text);
@@ -106,44 +106,44 @@ void graph_node::add_text(const char *text)
 	label = p;
 }
 
-void graph_node::add_vec_data(INT *v, INT len)
+void graph_node::add_vec_data(int *v, int len)
 {
-	vec_data = NEW_INT(len);
+	vec_data = NEW_int(len);
 	vec_data_len = len;
-	INT_vec_copy(v, vec_data, len);
+	int_vec_copy(v, vec_data, len);
 	f_has_vec_data = TRUE;
 }
 
-void graph_node::set_distinguished_element(INT idx)
+void graph_node::set_distinguished_element(int idx)
 {
 	f_has_distinguished_element = TRUE;
 	distinguished_element_index = idx;
 }
 
 
-void graph_node::add_data1(INT data)
+void graph_node::add_data1(int data)
 {
 	f_has_data1 = TRUE;
 	data1 = data;
 }
 
-void graph_node::add_data2(INT data)
+void graph_node::add_data2(int data)
 {
 	f_has_data2 = TRUE;
 	data2 = data;
 }
 
-void graph_node::add_data3(INT data)
+void graph_node::add_data3(int data)
 {
 	f_has_data3 = TRUE;
 	data3 = data;
 }
 
 void graph_node::write_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "graph_node::write_memory_object" << endl;
@@ -185,10 +185,10 @@ void graph_node::write_memory_object(
 }
 
 void graph_node::read_memory_object(
-		memory_object *m, INT verbose_level)
+		memory_object *m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "graph_node::read_memory_object" << endl;
@@ -204,7 +204,7 @@ void graph_node::read_memory_object(
 	m->read_int(&f_has_vec_data);
 	if (f_has_vec_data) {
 		m->read_int(&vec_data_len);
-		vec_data = NEW_INT(vec_data_len);
+		vec_data = NEW_int(vec_data_len);
 		for (i = 0; i < vec_data_len; i++) {
 			m->read_int(&vec_data[i]);
 			}
@@ -220,7 +220,7 @@ void graph_node::read_memory_object(
 
 	m->read_int(&layer);
 	m->read_int(&nb_neighbors);
-	neighbor_list = NEW_INT(nb_neighbors);
+	neighbor_list = NEW_int(nb_neighbors);
 	for (i = 0; i < nb_neighbors; i++) {
 		m->read_int(&neighbor_list[i]);
 		}
@@ -232,9 +232,9 @@ void graph_node::read_memory_object(
 		}
 }
 
-void graph_node::allocate_tree_structure(INT verbose_level)
+void graph_node::allocate_tree_structure(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "graph_node::allocate_tree_structure" << endl;
@@ -242,17 +242,17 @@ void graph_node::allocate_tree_structure(INT verbose_level)
 	
 	nb_children = 0;
 	nb_children_allocated = 1000;
-	child_id = NEW_INT(nb_children_allocated);
+	child_id = NEW_int(nb_children_allocated);
 	
 	if (f_v) {
 		cout << "graph_node::allocate_tree_structure done" << endl;
 		}
 }
 
-INT graph_node::find_parent(layered_graph *G, INT verbose_level)
+int graph_node::find_parent(layered_graph *G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, id = 0, l, n;
+	int f_v = (verbose_level >= 1);
+	int i, id = 0, l, n;
 	
 	if (f_v) {
 		cout << "graph_node::find_parent" << endl;
@@ -276,21 +276,21 @@ INT graph_node::find_parent(layered_graph *G, INT verbose_level)
 }
 
 void graph_node::register_child(layered_graph *G,
-		INT id_child, INT verbose_level)
+		int id_child, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT l, n;
+	int f_v = (verbose_level >= 1);
+	int l, n;
 	
 	if (f_v) {
 		cout << "graph_node::register_child" << endl;
 		}
 	if (nb_children == nb_children_allocated) {
 		nb_children_allocated = 2 * nb_children_allocated;
-		INT *child_id_new;
+		int *child_id_new;
 
-		child_id_new = NEW_INT(nb_children_allocated);
-		INT_vec_copy(child_id, child_id_new, nb_children);
-		FREE_INT(child_id);
+		child_id_new = NEW_int(nb_children_allocated);
+		int_vec_copy(child_id, child_id_new, nb_children);
+		FREE_int(child_id);
 		child_id = child_id_new;
 		}
 	child_id[nb_children++] = id_child;
@@ -304,11 +304,11 @@ void graph_node::register_child(layered_graph *G,
 }
 
 void graph_node::place_x_based_on_tree(layered_graph *G,
-		double left, double right, INT verbose_level)
+		double left, double right, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, w, w0, w1;
-	INT id_child, l, n;
+	int f_v = (verbose_level >= 1);
+	int i, w, w0, w1;
+	int id_child, l, n;
 	double lft, rgt;
 	double dx;
 
@@ -344,10 +344,10 @@ void graph_node::place_x_based_on_tree(layered_graph *G,
 }
 
 void graph_node::depth_first_rank_recursion(
-		layered_graph *G, INT &r, INT verbose_level)
+		layered_graph *G, int &r, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, id_child, l, n;
+	int f_v = (verbose_level >= 1);
+	int i, id_child, l, n;
 
 	if (f_v) {
 		cout << "graph_node::depth_first_rank_recursion" << endl;

@@ -56,8 +56,8 @@ MODULES= \
 		foundations/combinatorics/brick_domain.o \
 		foundations/combinatorics/classify_bitvectors.o \
 		foundations/combinatorics/combinatorics.o \
-		foundations/data_structures/INT_matrix.o \
-		foundations/data_structures/INT_vector.o \
+		foundations/data_structures/int_matrix.o \
+		foundations/data_structures/int_vector.o \
 		foundations/data_structures/data_file.o \
 		foundations/data_structures/fancy_set.o \
 		foundations/data_structures/partitionstack.o \
@@ -214,7 +214,6 @@ MODULES= \
 		poset_classification/set_stabilizer/compute_stabilizer.o \
 		poset_classification/set_stabilizer/set_stabilizer_compute.o \
 		DISCRETA/base.o \
-		DISCRETA/bitmatrix.o \
 		DISCRETA/bt_key.o \
 		DISCRETA/btree.o \
 		DISCRETA/database.o \

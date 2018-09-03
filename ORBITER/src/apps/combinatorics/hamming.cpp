@@ -12,64 +12,64 @@
 
 // global data:
 
-INT t0; // the system time when the program started
-INT n;
-INT nb_points;
-INT nb_lines;
-INT nb_planes;
-INT nb_solids;
-INT nb_points_folded;
-INT nb_lines_folded;
-INT nb_planes_folded;
-INT nb_solids_folded;
+int t0; // the system time when the program started
+int n;
+int nb_points;
+int nb_lines;
+int nb_planes;
+int nb_solids;
+int nb_points_folded;
+int nb_lines_folded;
+int nb_planes_folded;
+int nb_solids_folded;
 
-INT nb_BLOCKS;
-INT nb_POINTS;
+int nb_BLOCKS;
+int nb_POintS;
 
 
-void create_object(INT verbose_level);
-void print_solid(INT *x, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3);
-void print_line(INT *x, INT d_1, INT e_1);
-INT is_adjacent(INT *v_solid, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3, INT *v_line, INT d_1, INT e_1);
-void create_geometry(INT verbose_level);
-INT point_rank(INT *x);
-void point_unrank(INT *x, INT rk);
-INT line_rank(INT *x, INT b_1, INT verbose_level);
-void line_unrank(INT rk, INT *x, INT &b_1, INT verbose_level);
-INT plane_rank(INT *x, INT b_1, INT b_2, INT verbose_level);
-void plane_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT verbose_level);
-INT solid_rank(INT *x, INT b_1, INT b_2, INT b_3, INT verbose_level);
-void solid_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT &b_3, INT verbose_level);
-INT line_vertex_pair_rank(INT *x, INT b_1, INT c_1, INT verbose_level);
-void line_vertex_pair_unrank(INT rk, INT *x, INT &b_1, INT &c_1, INT verbose_level);
-INT solid_diagonal_pair_rank(INT *x, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3, INT verbose_level);
-void solid_diagonal_pair_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT &b_3, 
-	INT &c_1, INT &c_2, INT &c_3, INT verbose_level);
-INT low_weight_3vec_rank(INT *x);
-void low_weight_3vec_unrank(INT rk, INT *x);
-void compress1(INT *x, INT *x_compressed, INT b_1);
-void expand1(INT *x, INT *x_compressed, INT b_1);
-void compress2(INT *x, INT *x_compressed, INT b_1, INT b_2);
-void expand2(INT *x, INT *x_compressed, INT b_1, INT b_2);
-void compress3(INT *x, INT *x_compressed, INT b_1, INT b_2, INT b_3);
-void expand3(INT *x, INT *x_compressed, INT b_1, INT b_2, INT b_3);
-INT is_incident_point_line(INT *v_point, INT *v_line, INT b_1);
-INT is_incident_line_solid(INT *v_line, INT b_1, INT *v_solid, INT c_1, INT c_2, INT c_3);
-INT is_incident_point_edge_solid(INT *v_line, INT e_1, 
-	INT *v_point, INT *v_solid, INT b_1, INT b_2, INT b_3);
-void representative_under_folding(INT *x, INT len);
-void representative_under_folding_line(INT *x, INT b_1);
-void representative_under_folding_plane(INT *x, INT b_1, INT b_2);
-void representative_under_folding_solid(INT *x, INT b_1, INT b_2, INT b_3);
-void opposite_under_folding_line(INT *x, INT b_1);
-void opposite_under_folding_plane(INT *x, INT b_1, INT b_2);
-void opposite_under_folding_solid(INT *x, INT b_1, INT b_2, INT b_3);
-void invert(INT *x, INT len);
+void create_object(int verbose_level);
+void print_solid(int *x, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3);
+void print_line(int *x, int d_1, int e_1);
+int is_adjacent(int *v_solid, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3, int *v_line, int d_1, int e_1);
+void create_geometry(int verbose_level);
+int point_rank(int *x);
+void point_unrank(int *x, int rk);
+int line_rank(int *x, int b_1, int verbose_level);
+void line_unrank(int rk, int *x, int &b_1, int verbose_level);
+int plane_rank(int *x, int b_1, int b_2, int verbose_level);
+void plane_unrank(int rk, int *x, int &b_1, int &b_2, int verbose_level);
+int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level);
+void solid_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, int verbose_level);
+int line_vertex_pair_rank(int *x, int b_1, int c_1, int verbose_level);
+void line_vertex_pair_unrank(int rk, int *x, int &b_1, int &c_1, int verbose_level);
+int solid_diagonal_pair_rank(int *x, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3, int verbose_level);
+void solid_diagonal_pair_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, 
+	int &c_1, int &c_2, int &c_3, int verbose_level);
+int low_weight_3vec_rank(int *x);
+void low_weight_3vec_unrank(int rk, int *x);
+void compress1(int *x, int *x_compressed, int b_1);
+void expand1(int *x, int *x_compressed, int b_1);
+void compress2(int *x, int *x_compressed, int b_1, int b_2);
+void expand2(int *x, int *x_compressed, int b_1, int b_2);
+void compress3(int *x, int *x_compressed, int b_1, int b_2, int b_3);
+void expand3(int *x, int *x_compressed, int b_1, int b_2, int b_3);
+int is_incident_point_line(int *v_point, int *v_line, int b_1);
+int is_incident_line_solid(int *v_line, int b_1, int *v_solid, int c_1, int c_2, int c_3);
+int is_incident_point_edge_solid(int *v_line, int e_1, 
+	int *v_point, int *v_solid, int b_1, int b_2, int b_3);
+void representative_under_folding(int *x, int len);
+void representative_under_folding_line(int *x, int b_1);
+void representative_under_folding_plane(int *x, int b_1, int b_2);
+void representative_under_folding_solid(int *x, int b_1, int b_2, int b_3);
+void opposite_under_folding_line(int *x, int b_1);
+void opposite_under_folding_plane(int *x, int b_1, int b_2);
+void opposite_under_folding_solid(int *x, int b_1, int b_2, int b_3);
+void invert(int *x, int len);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level;
-	INT i;
+	int verbose_level;
+	int i;
 	t0 = os_ticks();
 	
 	n = 4;
@@ -88,41 +88,41 @@ int main(int argc, char **argv)
 }
 
 #if 0
-void create_object(INT verbose_level)
+void create_object(int verbose_level)
 {
-	INT *x;
-	INT *y;
-	INT *Points;
-	INT *Blocks;
-	INT b_1, b_2, b_3;
-	INT coeff[3];
-	INT i, j, h, a, b;
-	INT POINT_width = n + 1;
-	INT BLOCK_width = n + n + 3;
+	int *x;
+	int *y;
+	int *Points;
+	int *Blocks;
+	int b_1, b_2, b_3;
+	int coeff[3];
+	int i, j, h, a, b;
+	int POint_width = n + 1;
+	int BLOCK_width = n + n + 3;
 	
 	cout << "create_object" << endl;
 	cout << "nb_points_folded=" << nb_points_folded << endl;
 	cout << "nb_lines_folded=" << nb_lines_folded << endl;
-	x = NEW_INT(n);
-	y = NEW_INT(n);
-	nb_POINTS = nb_lines_folded;
+	x = NEW_int(n);
+	y = NEW_int(n);
+	nb_POintS = nb_lines_folded;
 	nb_BLOCKS = nb_points_folded * nb_solids_folded;
 	
-	Points = NEW_INT(nb_POINTS * POINT_width);
-	Blocks = NEW_INT(nb_BLOCKS * BLOCK_width);
-	cout << "nb_POINTS=" << nb_POINTS << endl;
+	Points = NEW_int(nb_POintS * POint_width);
+	Blocks = NEW_int(nb_BLOCKS * BLOCK_width);
+	cout << "nb_POintS=" << nb_POintS << endl;
 	cout << "nb_BLOCKS=" << nb_BLOCKS << endl;
 
-	for (i = 0; i < nb_POINTS; i++) {
+	for (i = 0; i < nb_POintS; i++) {
 		line_unrank(i, x, b_1, 0);
 		representative_under_folding_line(x, b_1);
 		for (h = 0; h < n; h++) {
-			Points[i * POINT_width + h] = x[h];
+			Points[i * POint_width + h] = x[h];
 			}
-		Points[i * POINT_width + n] = b_1;
+		Points[i * POint_width + n] = b_1;
 		}
-	cout << "POINTS:" << endl;
-	print_integer_matrix_width(cout, Points, nb_POINTS, POINT_width, POINT_width, 1);
+	cout << "POintS:" << endl;
+	print_integer_matrix_width(cout, Points, nb_POintS, POint_width, POint_width, 1);
 
 	for (i = 0; i < nb_BLOCKS; i++) {
 		cout << "BLOCK " << i << ":";
@@ -157,23 +157,23 @@ void create_object(INT verbose_level)
 	cout << "BLOCKS:" << endl;
 	print_integer_matrix_width(cout, Blocks, nb_BLOCKS, BLOCK_width, BLOCK_width, 1);
 
-	INT *M1;
-	INT *v_line;
-	INT *v_point;
-	INT *v_solid;
-	INT e_1;
-	//INT a;
+	int *M1;
+	int *v_line;
+	int *v_point;
+	int *v_solid;
+	int e_1;
+	//int a;
 
-	M1 = NEW_INT(nb_POINTS * nb_BLOCKS);
-	for (i = 0; i < nb_POINTS * nb_BLOCKS; i++) {
+	M1 = NEW_int(nb_POintS * nb_BLOCKS);
+	for (i = 0; i < nb_POintS * nb_BLOCKS; i++) {
 		M1[i] = 0;
 		}
-	for (i = 0; i < nb_POINTS; i++) {
-		v_line = Points + i * POINT_width;
-		e_1 = Points[i * POINT_width + n];
+	for (i = 0; i < nb_POintS; i++) {
+		v_line = Points + i * POint_width;
+		e_1 = Points[i * POint_width + n];
 		
 		cout << "i=" << i << " : line ";
-		INT_vec_print(cout, v_line, n);
+		int_vec_print(cout, v_line, n);
 		cout << "e_1=" << e_1 << endl;
 		
 		for (j = 0; j < nb_BLOCKS; j++) {
@@ -184,9 +184,9 @@ void create_object(INT verbose_level)
 			b_3 = Blocks[j * BLOCK_width + n + n + 2];
 
 			cout << "j=" << j << " : point ";
-			INT_vec_print(cout, v_point, n);
+			int_vec_print(cout, v_point, n);
 			cout << " solid ";
-			INT_vec_print(cout, v_solid, n);
+			int_vec_print(cout, v_solid, n);
 			cout << " b_1=" << b_1;
 			cout << " b_2=" << b_2;
 			cout << " b_3=" << b_3;
@@ -204,81 +204,81 @@ void create_object(INT verbose_level)
 		}
 	cout << "incidence matrix:" << endl;
 	
-	print_integer_matrix_width(cout, M1, nb_POINTS, nb_BLOCKS, nb_BLOCKS, 1);
+	print_integer_matrix_width(cout, M1, nb_POintS, nb_BLOCKS, nb_BLOCKS, 1);
 	
-	INT *AAt;
+	int *AAt;
 
-	AAt = NEW_INT(nb_POINTS * nb_POINTS);
-	for (i = 0; i < nb_POINTS; i++) {
-		for (j = 0; j < nb_POINTS; j++) {
+	AAt = NEW_int(nb_POintS * nb_POintS);
+	for (i = 0; i < nb_POintS; i++) {
+		for (j = 0; j < nb_POintS; j++) {
 			a = 0;
 			for (h = 0; h < nb_BLOCKS; h++) {
 				a += M1[i * nb_BLOCKS + h] * M1[j * nb_BLOCKS + h];
 				}
-			AAt[i * nb_POINTS + j] = a;
+			AAt[i * nb_POintS + j] = a;
 			}
 		}
 
 	cout << "AAt:" << endl;
 	
-	print_integer_matrix_width(cout, AAt, nb_POINTS, nb_POINTS, nb_POINTS, 1);
+	print_integer_matrix_width(cout, AAt, nb_POintS, nb_POintS, nb_POintS, 1);
 	
 	{
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
-	Inc.init_by_matrix(nb_POINTS, nb_BLOCKS, M1, 0 /*verbose_level*/);
+	Inc.init_by_matrix(nb_POintS, nb_BLOCKS, M1, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
 	}
 	
 	
-	FREE_INT(x);
-	FREE_INT(y);
-	FREE_INT(M1);
-	FREE_INT(AAt);
+	FREE_int(x);
+	FREE_int(y);
+	FREE_int(M1);
+	FREE_int(AAt);
 }
 #else
-void create_object(INT verbose_level)
+void create_object(int verbose_level)
 {
-	INT *Points;
-	INT *Blocks;
-	INT *x;
-	INT *y;
-	INT b_1, b_2, b_3;
-	INT c_1, c_2, c_3;
-	INT d_1, e_1;
-	INT i, j, h, a, ii, jj;
-	INT POINT_width = n + 6;
-	INT BLOCK_width = n + 2;
+	int *Points;
+	int *Blocks;
+	int *x;
+	int *y;
+	int b_1, b_2, b_3;
+	int c_1, c_2, c_3;
+	int d_1, e_1;
+	int i, j, h, a, ii, jj;
+	int POint_width = n + 6;
+	int BLOCK_width = n + 2;
 	
 	cout << "create_object" << endl;
-	nb_POINTS = nb_solids * 4;
+	nb_POintS = nb_solids * 4;
 	nb_BLOCKS = nb_lines * 2;
 	
-	x = NEW_INT(n);
-	y = NEW_INT(n);
-	Points = NEW_INT(nb_POINTS * POINT_width);
-	Blocks = NEW_INT(nb_BLOCKS * BLOCK_width);
-	cout << "nb_POINTS=" << nb_POINTS << endl;
+	x = NEW_int(n);
+	y = NEW_int(n);
+	Points = NEW_int(nb_POintS * POint_width);
+	Blocks = NEW_int(nb_BLOCKS * BLOCK_width);
+	cout << "nb_POintS=" << nb_POintS << endl;
 	cout << "nb_BLOCKS=" << nb_BLOCKS << endl;
 
-	for (i = 0; i < nb_POINTS; i++) {
+	for (i = 0; i < nb_POintS; i++) {
 		solid_diagonal_pair_unrank(i, x, b_1, b_2, b_3, 
 			c_1, c_2, c_3, 0);
 		for (h = 0; h < n; h++) {
-			Points[i * POINT_width + h] = x[h];
+			Points[i * POint_width + h] = x[h];
 			}
-		Points[i * POINT_width + n + 0] = b_1;
-		Points[i * POINT_width + n + 1] = b_2;
-		Points[i * POINT_width + n + 2] = b_3;
-		Points[i * POINT_width + n + 3] = c_1;
-		Points[i * POINT_width + n + 4] = c_2;
-		Points[i * POINT_width + n + 5] = c_3;
+		Points[i * POint_width + n + 0] = b_1;
+		Points[i * POint_width + n + 1] = b_2;
+		Points[i * POint_width + n + 2] = b_3;
+		Points[i * POint_width + n + 3] = c_1;
+		Points[i * POint_width + n + 4] = c_2;
+		Points[i * POint_width + n + 5] = c_3;
 		}
-	cout << "POINTS:" << endl;
-	print_integer_matrix_width(cout, Points, nb_POINTS, POINT_width, POINT_width, 1);
+	cout << "POintS:" << endl;
+	print_integer_matrix_width(cout, Points, nb_POintS, POint_width, POint_width, 1);
 
 
 	for (i = 0; i < nb_BLOCKS; i++) {
@@ -293,22 +293,22 @@ void create_object(INT verbose_level)
 	cout << "BLOCKS:" << endl;
 	print_integer_matrix_width(cout, Blocks, nb_BLOCKS, BLOCK_width, BLOCK_width, 1);
 
-	INT *M1;
-	INT *v_line;
-	INT *v_solid;
+	int *M1;
+	int *v_line;
+	int *v_solid;
 
-	M1 = NEW_INT(nb_POINTS * nb_BLOCKS);
-	for (i = 0; i < nb_POINTS * nb_BLOCKS; i++) {
+	M1 = NEW_int(nb_POintS * nb_BLOCKS);
+	for (i = 0; i < nb_POintS * nb_BLOCKS; i++) {
 		M1[i] = 0;
 		}
-	for (i = 0; i < nb_POINTS; i++) {
-		v_solid = Points + i * POINT_width;
-		b_1 = Points[i * POINT_width + n + 0];
-		b_2 = Points[i * POINT_width + n + 1];
-		b_3 = Points[i * POINT_width + n + 2];
-		c_1 = Points[i * POINT_width + n + 3];
-		c_2 = Points[i * POINT_width + n + 4];
-		c_3 = Points[i * POINT_width + n + 5];
+	for (i = 0; i < nb_POintS; i++) {
+		v_solid = Points + i * POint_width;
+		b_1 = Points[i * POint_width + n + 0];
+		b_2 = Points[i * POint_width + n + 1];
+		b_3 = Points[i * POint_width + n + 2];
+		c_1 = Points[i * POint_width + n + 3];
+		c_2 = Points[i * POint_width + n + 4];
+		c_3 = Points[i * POint_width + n + 5];
 		
 		
 		for (j = 0; j < nb_BLOCKS; j++) {
@@ -324,7 +324,7 @@ void create_object(INT verbose_level)
 			if (a) {
 				cout << "solid i=" << i << " ";
 				print_solid(v_solid, b_1, b_2, b_3, c_1, c_2, c_3);
-				//INT_vec_print(cout, v_solid, n);
+				//int_vec_print(cout, v_solid, n);
 				//cout << " b_1=" << b_1;
 				//cout << " b_2=" << b_2;
 				//cout << " b_3=" << b_3;
@@ -334,7 +334,7 @@ void create_object(INT verbose_level)
 				//cout << endl;
 				cout << "and line j=" << j << " ";
 				print_line(v_line, d_1, e_1);
-				//INT_vec_print(cout, v_line, n);
+				//int_vec_print(cout, v_line, n);
 				//cout << " d_1=" << d_1;
 				//cout << " e_1=" << e_1;
 				cout << " are adjacent" << endl;
@@ -344,50 +344,50 @@ void create_object(INT verbose_level)
 		}
 	cout << "incidence matrix:" << endl;
 	
-	print_integer_matrix_width(cout, M1, nb_POINTS, nb_BLOCKS, nb_BLOCKS, 1);
+	print_integer_matrix_width(cout, M1, nb_POintS, nb_BLOCKS, nb_BLOCKS, 1);
 	
-	INT *AAt;
+	int *AAt;
 
-	AAt = NEW_INT(nb_POINTS * nb_POINTS);
-	for (i = 0; i < nb_POINTS; i++) {
-		for (j = 0; j < nb_POINTS; j++) {
+	AAt = NEW_int(nb_POintS * nb_POintS);
+	for (i = 0; i < nb_POintS; i++) {
+		for (j = 0; j < nb_POintS; j++) {
 			a = 0;
 			for (h = 0; h < nb_BLOCKS; h++) {
 				a += M1[i * nb_BLOCKS + h] * M1[j * nb_BLOCKS + h];
 				}
-			AAt[i * nb_POINTS + j] = a;
+			AAt[i * nb_POintS + j] = a;
 			}
 		}
 
 	cout << "AAt:" << endl;
 	
-	print_integer_matrix_width(cout, AAt, nb_POINTS, nb_POINTS, nb_POINTS, 1);
+	print_integer_matrix_width(cout, AAt, nb_POintS, nb_POintS, nb_POintS, 1);
 	
 	{
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
-	Inc.init_by_matrix(nb_POINTS, nb_BLOCKS, M1, 0 /*verbose_level*/);
+	Inc.init_by_matrix(nb_POintS, nb_BLOCKS, M1, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
 	}
 
 
 
-	INT *opposite_point;
-	INT *opposite_block;
-	INT *pts_sorted;
-	INT *blocks_sorted;
-	INT *Mtx2;
+	int *opposite_point;
+	int *opposite_block;
+	int *pts_sorted;
+	int *blocks_sorted;
+	int *Mtx2;
 
-	opposite_point = NEW_INT(nb_POINTS);
-	opposite_block = NEW_INT(nb_BLOCKS);
-	pts_sorted = NEW_INT(nb_POINTS);
-	blocks_sorted = NEW_INT(nb_BLOCKS);
-	Mtx2 = NEW_INT(nb_POINTS * nb_BLOCKS);
+	opposite_point = NEW_int(nb_POintS);
+	opposite_block = NEW_int(nb_BLOCKS);
+	pts_sorted = NEW_int(nb_POintS);
+	blocks_sorted = NEW_int(nb_BLOCKS);
+	Mtx2 = NEW_int(nb_POintS * nb_BLOCKS);
 	
-	for (i = 0; i < nb_POINTS; i++) {
+	for (i = 0; i < nb_POintS; i++) {
 		solid_diagonal_pair_unrank(i, x, b_1, b_2, b_3, c_1, c_2, c_3, 0);
 		for (h = 0; h < n; h++) {
 			y[h] = 1 - x[h];
@@ -399,7 +399,7 @@ void create_object(INT verbose_level)
 		opposite_point[i] = j;
 		}
 	cout << "i : opposite_point[i]" << endl;
-	for (i = 0; i < nb_POINTS; i++) {
+	for (i = 0; i < nb_POintS; i++) {
 		cout << setw(3) << i << " : " << setw(3) << opposite_point[i] << endl;
 		}
 
@@ -421,15 +421,15 @@ void create_object(INT verbose_level)
 	
 
 	j = 0;
-	for (i = 0; i < nb_POINTS; i++) {
+	for (i = 0; i < nb_POintS; i++) {
 		a = opposite_point[i];
 		if (a > i) {
 			pts_sorted[j++] = i;
 			pts_sorted[j++] = a;
 			}
 		}
-	if (j != nb_POINTS) {
-		cout << "j != nb_POINTS" << endl;
+	if (j != nb_POintS) {
+		cout << "j != nb_POintS" << endl;
 		exit(1);
 		}
 	cout << "i : pts_sorted[i]" << endl;
@@ -452,7 +452,7 @@ void create_object(INT verbose_level)
 	for (i = 0; i < nb_lines; i++) {
 		cout << setw(3) << i << " : " << setw(3) << blocks_sorted[i] << endl;
 		}
-	for (i = 0; i < nb_POINTS; i++) {
+	for (i = 0; i < nb_POintS; i++) {
 		ii = pts_sorted[i];
 		for (j = 0; j < nb_BLOCKS; j++) {
 			jj = blocks_sorted[j];
@@ -461,28 +461,28 @@ void create_object(INT verbose_level)
 		}
 	cout << "reordered incidence matrix:" << endl;
 	
-	print_integer_matrix_width(cout, Mtx2, nb_POINTS, nb_BLOCKS, nb_BLOCKS, 1);
+	print_integer_matrix_width(cout, Mtx2, nb_POintS, nb_BLOCKS, nb_BLOCKS, 1);
 	{
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
-	Inc.init_by_matrix(nb_POINTS, nb_BLOCKS, Mtx2, 0 /*verbose_level*/);
+	Inc.init_by_matrix(nb_POintS, nb_BLOCKS, Mtx2, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
 	}
 
 
-	INT *Mtx3;
-	INT nb_POINTS_folded, nb_BLOCKS_folded;
+	int *Mtx3;
+	int nb_POintS_folded, nb_BLOCKS_folded;
 	
-	nb_POINTS_folded = nb_POINTS / 2;
+	nb_POintS_folded = nb_POintS / 2;
 	nb_BLOCKS_folded = nb_BLOCKS / 2;
-	Mtx3 = NEW_INT(nb_POINTS_folded * nb_BLOCKS_folded);
-	for (i = 0; i < nb_POINTS_folded * nb_BLOCKS_folded; i++) {
+	Mtx3 = NEW_int(nb_POintS_folded * nb_BLOCKS_folded);
+	for (i = 0; i < nb_POintS_folded * nb_BLOCKS_folded; i++) {
 		Mtx3[i] = 0;
 		}
-	for (i = 0; i < nb_POINTS_folded; i++) {
+	for (i = 0; i < nb_POintS_folded; i++) {
 		ii = 2 * i;
 		for (j = 0; j < nb_BLOCKS_folded; j++) {
 			jj = 2 * j;
@@ -500,25 +500,25 @@ void create_object(INT verbose_level)
 		}
 	cout << "folded incidence matrix:" << endl;
 	
-	print_integer_matrix_width(cout, Mtx3, nb_POINTS_folded, nb_BLOCKS_folded, nb_BLOCKS_folded, 1);
+	print_integer_matrix_width(cout, Mtx3, nb_POintS_folded, nb_BLOCKS_folded, nb_BLOCKS_folded, 1);
 
 
-	INT *FFt;
+	int *FFt;
 
-	FFt = NEW_INT(nb_POINTS_folded * nb_POINTS_folded);
-	for (i = 0; i < nb_POINTS_folded; i++) {
-		for (j = 0; j < nb_POINTS_folded; j++) {
+	FFt = NEW_int(nb_POintS_folded * nb_POintS_folded);
+	for (i = 0; i < nb_POintS_folded; i++) {
+		for (j = 0; j < nb_POintS_folded; j++) {
 			a = 0;
 			for (h = 0; h < nb_BLOCKS_folded; h++) {
 				a += Mtx3[i * nb_BLOCKS_folded + h] * Mtx3[j * nb_BLOCKS_folded + h];
 				}
-			FFt[i * nb_POINTS_folded + j] = a;
+			FFt[i * nb_POintS_folded + j] = a;
 			}
 		}
 
 	cout << "FFt:" << endl;
 	
-	print_integer_matrix_width(cout, FFt, nb_POINTS_folded, nb_POINTS_folded, nb_POINTS_folded, 1);
+	print_integer_matrix_width(cout, FFt, nb_POintS_folded, nb_POintS_folded, nb_POintS_folded, 1);
 	
 
 
@@ -526,29 +526,29 @@ void create_object(INT verbose_level)
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
-	Inc.init_by_matrix(nb_POINTS_folded, nb_BLOCKS_folded, Mtx3, 0 /*verbose_level*/);
+	Inc.init_by_matrix(nb_POintS_folded, nb_BLOCKS_folded, Mtx3, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
 	}
 	
 
 	
-	FREE_INT(x);
-	FREE_INT(y);
-	FREE_INT(M1);
-	FREE_INT(AAt);
+	FREE_int(x);
+	FREE_int(y);
+	FREE_int(M1);
+	FREE_int(AAt);
 }
 
 #endif
 
-void print_solid(INT *x, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3)
+void print_solid(int *x, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3)
 {
-	INT *w;
-	INT c[3];
-	INT i;
+	int *w;
+	int c[3];
+	int i;
 	
-	w = NEW_INT(n);
+	w = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		w[i] = FALSE;
 		}
@@ -573,21 +573,21 @@ void print_solid(INT *x, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3)
 	w[b_1] = c[0];
 	w[b_2] = c[1];
 	w[b_3] = c[2];
-	INT_vec_print(cout, w, n);
+	int_vec_print(cout, w, n);
 	invert(c, 3);
 	w[b_1] = c[0];
 	w[b_2] = c[1];
 	w[b_3] = c[2];
-	INT_vec_print(cout, w, n);
-	FREE_INT(w);
+	int_vec_print(cout, w, n);
+	FREE_int(w);
 }
 
-void print_line(INT *x, INT d_1, INT e_1)
+void print_line(int *x, int d_1, int e_1)
 {
-	INT *w;
-	INT i;
+	int *w;
+	int i;
 	
-	w = NEW_INT(n);
+	w = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		w[i] = FALSE;
 		}
@@ -605,20 +605,20 @@ void print_line(INT *x, INT d_1, INT e_1)
 		w[i] = x[i];
 		}
 	w[d_1] = e_1;
-	INT_vec_print(cout, w, n);
-	FREE_INT(w);
+	int_vec_print(cout, w, n);
+	FREE_int(w);
 }
 
-INT is_adjacent(INT *v_solid, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3, INT *v_line, INT d_1, INT e_1)
+int is_adjacent(int *v_solid, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3, int *v_line, int d_1, int e_1)
 {
-	INT *x;
-	INT *y;
-	INT h;
-	INT c[3];
-	INT ret = FALSE;
+	int *x;
+	int *y;
+	int h;
+	int c[3];
+	int ret = FALSE;
 	
-	x = NEW_INT(n);
-	y = NEW_INT(n);
+	x = NEW_int(n);
+	y = NEW_int(n);
 	for (h = 0; h < n; h++) {
 		x[h] = v_solid[h];
 		}
@@ -634,7 +634,7 @@ INT is_adjacent(INT *v_solid, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c
 		x[b_2] = c[1];
 		x[b_3] = c[2];
 		y[d_1] = e_1;
-		if (INT_vec_compare(x, y, n) == 0) {
+		if (int_vec_compare(x, y, n) == 0) {
 			ret = TRUE;
 			goto done;
 			}
@@ -642,26 +642,26 @@ INT is_adjacent(INT *v_solid, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c
 		x[b_1] = c[0];
 		x[b_2] = c[1];
 		x[b_3] = c[2];
-		if (INT_vec_compare(x, y, n) == 0) {
+		if (int_vec_compare(x, y, n) == 0) {
 			ret = TRUE;
 			goto done;
 			}
 		}
 
 done:
-	FREE_INT(x);
-	FREE_INT(y);
+	FREE_int(x);
+	FREE_int(y);
 	return ret;
 }
 
-void create_geometry(INT verbose_level)
+void create_geometry(int verbose_level)
 {
-	INT i, j, h, a, b_1, b_2, b_3, ii, jj;
-	INT *x;
-	INT *y;
+	int i, j, h, a, b_1, b_2, b_3, ii, jj;
+	int *x;
+	int *y;
 	
-	x = NEW_INT(n);
-	y = NEW_INT(n);
+	x = NEW_int(n);
+	y = NEW_int(n);
 	nb_points = i_power_j(2, n);
 	nb_lines = i_power_j(2, n - 1) * n;
 	nb_planes = i_power_j(2, n - 2) * n * (n - 1) / 2;
@@ -678,7 +678,7 @@ void create_geometry(INT verbose_level)
 	for (i = 0; i < nb_lines; i++) {
 		line_unrank(i, x, b_1, 0);
 		cout << setw(3) << i << " : [";
-		INT_vec_print(cout, x, n);
+		int_vec_print(cout, x, n);
 		cout << " : " << b_1 << "]" << endl;
 		j = line_rank(x, b_1, 0);
 		if (j != i) {
@@ -692,7 +692,7 @@ void create_geometry(INT verbose_level)
 	for (i = 0; i < nb_planes; i++) {
 		plane_unrank(i, x, b_1, b_2, 0);
 		cout << setw(3) << i << " : [";
-		INT_vec_print(cout, x, n);
+		int_vec_print(cout, x, n);
 		cout << " : " << b_1 << "," << b_2 << "]" << endl;
 		j = plane_rank(x, b_1, b_2, 0);
 		if (j != i) {
@@ -705,7 +705,7 @@ void create_geometry(INT verbose_level)
 	for (i = 0; i < nb_solids; i++) {
 		solid_unrank(i, x, b_1, b_2, b_3, 0);
 		cout << setw(3) << i << " : [";
-		INT_vec_print(cout, x, n);
+		int_vec_print(cout, x, n);
 		cout << " : " << b_1 << "," << b_2 << "," << b_3 << "]" << endl;
 		j = solid_rank(x, b_1, b_2, b_3, 0);
 		if (j != i) {
@@ -714,11 +714,11 @@ void create_geometry(INT verbose_level)
 			}
 		}
 
-	INT *Mtx;
-	INT *Mtx2;
+	int *Mtx;
+	int *Mtx2;
 
-	Mtx = NEW_INT(nb_points * nb_lines);
-	Mtx2 = NEW_INT(nb_points * nb_lines);
+	Mtx = NEW_int(nb_points * nb_lines);
+	Mtx2 = NEW_int(nb_points * nb_lines);
 
 	for (i = 0; i < nb_points * nb_lines; i++) {
 		Mtx[i] = 0;
@@ -742,21 +742,21 @@ void create_geometry(INT verbose_level)
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
 	Inc.init_by_matrix(nb_points, nb_lines, Mtx, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
 	}
 	
-	INT *opposite_point;
-	INT *opposite_line;
-	INT *pts_sorted;
-	INT *lines_sorted;
+	int *opposite_point;
+	int *opposite_line;
+	int *pts_sorted;
+	int *lines_sorted;
 
-	opposite_point = NEW_INT(nb_points);
-	opposite_line = NEW_INT(nb_lines);
-	pts_sorted = NEW_INT(nb_points);
-	lines_sorted = NEW_INT(nb_lines);
+	opposite_point = NEW_int(nb_points);
+	opposite_line = NEW_int(nb_lines);
+	pts_sorted = NEW_int(nb_points);
+	lines_sorted = NEW_int(nb_lines);
 
 	for (i = 0; i < nb_points; i++) {
 		point_unrank(x, i);
@@ -830,16 +830,16 @@ void create_geometry(INT verbose_level)
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
 	Inc.init_by_matrix(nb_points, nb_lines, Mtx2, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
 	}
-	INT *Mtx3;
+	int *Mtx3;
 	
 	nb_points_folded = nb_points / 2;
 	nb_lines_folded = nb_lines / 2;
-	Mtx3 = NEW_INT(nb_points_folded * nb_lines_folded);
+	Mtx3 = NEW_int(nb_points_folded * nb_lines_folded);
 	for (i = 0; i < nb_points_folded * nb_lines_folded; i++) {
 		Mtx3[i] = 0;
 		}
@@ -864,7 +864,7 @@ void create_geometry(INT verbose_level)
 	incidence_structure Inc;
 	char fname[1000];
 
-	sprintf(fname, "HamG_%ld_2.inc", n);
+	sprintf(fname, "HamG_%d_2.inc", n);
 	
 	Inc.init_by_matrix(nb_points_folded, nb_lines_folded, Mtx2, 0 /*verbose_level*/);
 	Inc.save_inc_file(fname);
@@ -878,91 +878,91 @@ void create_geometry(INT verbose_level)
 	cout << "nb_points_folded=" << nb_points_folded << endl;
 	cout << "nb_lines_folded=" << nb_lines_folded << endl;
 	
-	FREE_INT(x);
-	FREE_INT(y);
-	FREE_INT(Mtx);
-	FREE_INT(Mtx2);
-	FREE_INT(Mtx3);
-	FREE_INT(opposite_point);
-	FREE_INT(opposite_line);
-	FREE_INT(pts_sorted);
-	FREE_INT(lines_sorted);
+	FREE_int(x);
+	FREE_int(y);
+	FREE_int(Mtx);
+	FREE_int(Mtx2);
+	FREE_int(Mtx3);
+	FREE_int(opposite_point);
+	FREE_int(opposite_line);
+	FREE_int(pts_sorted);
+	FREE_int(lines_sorted);
 }
 
-INT point_rank(INT *x)
+int point_rank(int *x)
 {
-	INT rk;
+	int rk;
 	
 	AG_element_rank(2, x, 1, n, rk);
 	return rk;
 }
 
-void point_unrank(INT *x, INT rk)
+void point_unrank(int *x, int rk)
 {
 	AG_element_unrank(2, x, 1, n, rk);
 }
 
-INT line_rank(INT *x, INT b_1, INT verbose_level)
+int line_rank(int *x, int b_1, int verbose_level)
 {
-	INT *y;
-	INT rk, rk1, co_rank;
+	int *y;
+	int rk, rk1, co_rank;
 	
 	x[b_1] = 0;
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	co_rank = b_1;
 	compress1(x, y, b_1);
 	AG_element_rank(2, y, 1, n - 1, rk1);
 	rk = rk1 * n + co_rank;
-	FREE_INT(y);
+	FREE_int(y);
 	return rk;
 }
 
-void line_unrank(INT rk, INT *x, INT &b_1, INT verbose_level)
+void line_unrank(int rk, int *x, int &b_1, int verbose_level)
 {
-	INT *y;
-	INT rk1, co_rank;
+	int *y;
+	int rk1, co_rank;
 	
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	co_rank = rk % n;
 	rk1 = rk / n;
 	b_1 = co_rank;
 	AG_element_unrank(2, y, 1, n - 1, rk1);
 	expand1(x, y, b_1);
 	x[b_1] = 0;
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-INT plane_rank(INT *x, INT b_1, INT b_2, INT verbose_level)
+int plane_rank(int *x, int b_1, int b_2, int verbose_level)
 {
-	INT *y;
-	INT rk, rk1, co_rank;
-	INT n2;
-	INT subset[2];
+	int *y;
+	int rk, rk1, co_rank;
+	int n2;
+	int subset[2];
 	
 	n2 = n * (n - 1) / 2;
 	x[b_1] = 0;
 	x[b_2] = 0;
 	subset[0] = b_1;
 	subset[1] = b_2;
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	co_rank = rank_k_subset(subset, n, 2);
 	compress2(x, y, b_1, b_2);
 	AG_element_rank(2, y, 1, n - 2, rk1);
 	rk = rk1 * n2 + co_rank;
-	FREE_INT(y);
+	FREE_int(y);
 	return rk;
 }
 
-void plane_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT verbose_level)
+void plane_unrank(int rk, int *x, int &b_1, int &b_2, int verbose_level)
 {
-	INT *y;
-	INT rk1, co_rank;
-	INT n2;
-	INT subset[2];
+	int *y;
+	int rk1, co_rank;
+	int n2;
+	int subset[2];
 
 	n2 = n * (n - 1) / 2;
 	
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	co_rank = rk % n2;
 	rk1 = rk / n2;
 	unrank_k_subset(co_rank, subset, n, 2);
@@ -972,15 +972,15 @@ void plane_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT verbose_level)
 	expand2(x, y, b_1, b_2);
 	x[b_1] = 0;
 	x[b_2] = 0;
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-INT solid_rank(INT *x, INT b_1, INT b_2, INT b_3, INT verbose_level)
+int solid_rank(int *x, int b_1, int b_2, int b_3, int verbose_level)
 {
-	INT *y;
-	INT rk, rk1, co_rank;
-	INT n3;
-	INT subset[3];
+	int *y;
+	int rk, rk1, co_rank;
+	int n3;
+	int subset[3];
 	
 	n3 = n * (n - 1) * (n - 2) / 6;
 	x[b_1] = 0;
@@ -989,25 +989,25 @@ INT solid_rank(INT *x, INT b_1, INT b_2, INT b_3, INT verbose_level)
 	subset[0] = b_1;
 	subset[1] = b_2;
 	subset[2] = b_3;
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	co_rank = rank_k_subset(subset, n, 3);
 	compress3(x, y, b_1, b_2, b_3);
 	AG_element_rank(2, y, 1, n - 3, rk1);
 	rk = rk1 * n3 + co_rank;
-	FREE_INT(y);
+	FREE_int(y);
 	return rk;
 }
 
-void solid_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT &b_3, INT verbose_level)
+void solid_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, int verbose_level)
 {
-	INT *y;
-	INT rk1, co_rank;
-	INT n3;
-	INT subset[3];
+	int *y;
+	int rk1, co_rank;
+	int n3;
+	int subset[3];
 
 	n3 = n * (n - 1) * (n - 2) / 6;
 	
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	co_rank = rk % n3;
 	rk1 = rk / n3;
 	unrank_k_subset(co_rank, subset, n, 3);
@@ -1020,12 +1020,12 @@ void solid_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT &b_3, INT verbose_leve
 	x[b_2] = 0;
 	x[b_3] = 0;
 
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-INT line_vertex_pair_rank(INT *x, INT b_1, INT c_1, INT verbose_level)
+int line_vertex_pair_rank(int *x, int b_1, int c_1, int verbose_level)
 {
-	INT rk, rk1, co_rank;
+	int rk, rk1, co_rank;
 
 	rk1 = line_rank(x, b_1, verbose_level);
 	co_rank = c_1;
@@ -1033,9 +1033,9 @@ INT line_vertex_pair_rank(INT *x, INT b_1, INT c_1, INT verbose_level)
 	return rk;
 }
 
-void line_vertex_pair_unrank(INT rk, INT *x, INT &b_1, INT &c_1, INT verbose_level)
+void line_vertex_pair_unrank(int rk, int *x, int &b_1, int &c_1, int verbose_level)
 {
-	INT rk1, co_rank;
+	int rk1, co_rank;
 
 	co_rank = rk % 2;
 	rk1 = rk / 2;
@@ -1043,10 +1043,10 @@ void line_vertex_pair_unrank(INT rk, INT *x, INT &b_1, INT &c_1, INT verbose_lev
 	c_1 = co_rank;
 }
 
-INT solid_diagonal_pair_rank(INT *x, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2, INT c_3, INT verbose_level)
+int solid_diagonal_pair_rank(int *x, int b_1, int b_2, int b_3, int c_1, int c_2, int c_3, int verbose_level)
 {
-	INT rk, rk1, co_rank;
-	INT c[3];
+	int rk, rk1, co_rank;
+	int c[3];
 
 	c[0] = c_1;
 	c[1] = c_2;
@@ -1057,11 +1057,11 @@ INT solid_diagonal_pair_rank(INT *x, INT b_1, INT b_2, INT b_3, INT c_1, INT c_2
 	return rk;
 }
 
-void solid_diagonal_pair_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT &b_3, 
-	INT &c_1, INT &c_2, INT &c_3, INT verbose_level)
+void solid_diagonal_pair_unrank(int rk, int *x, int &b_1, int &b_2, int &b_3, 
+	int &c_1, int &c_2, int &c_3, int verbose_level)
 {
-	INT rk1, co_rank;
-	INT c[3];
+	int rk1, co_rank;
+	int c[3];
 
 	co_rank = rk % 4;
 	rk1 = rk / 4;
@@ -1072,7 +1072,7 @@ void solid_diagonal_pair_unrank(INT rk, INT *x, INT &b_1, INT &b_2, INT &b_3,
 	solid_unrank(rk1, x, b_1, b_2, b_3, verbose_level);
 }
 
-INT low_weight_3vec_rank(INT *x)
+int low_weight_3vec_rank(int *x)
 {
 	representative_under_folding(x, 3);
 	if (x[0] == 0) {
@@ -1093,9 +1093,9 @@ INT low_weight_3vec_rank(INT *x)
 		}
 }
 
-void low_weight_3vec_unrank(INT rk, INT *x)
+void low_weight_3vec_unrank(int rk, int *x)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < 3; i++) {
 		x[i] = 0;
@@ -1112,9 +1112,9 @@ void low_weight_3vec_unrank(INT rk, INT *x)
 
 
 
-void compress1(INT *x, INT *x_compressed, INT b_1)
+void compress1(int *x, int *x_compressed, int b_1)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < b_1; i++) {
 		x_compressed[i] = x[i];
@@ -1125,9 +1125,9 @@ void compress1(INT *x, INT *x_compressed, INT b_1)
 	
 }
 
-void expand1(INT *x, INT *x_compressed, INT b_1)
+void expand1(int *x, int *x_compressed, int b_1)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < b_1; i++) {
 		x[i] = x_compressed[i];
@@ -1137,9 +1137,9 @@ void expand1(INT *x, INT *x_compressed, INT b_1)
 		}
 }
 
-void compress2(INT *x, INT *x_compressed, INT b_1, INT b_2)
+void compress2(int *x, int *x_compressed, int b_1, int b_2)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < b_1; i++) {
 		x_compressed[i] = x[i];
@@ -1153,9 +1153,9 @@ void compress2(INT *x, INT *x_compressed, INT b_1, INT b_2)
 	
 }
 
-void expand2(INT *x, INT *x_compressed, INT b_1, INT b_2)
+void expand2(int *x, int *x_compressed, int b_1, int b_2)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < b_1; i++) {
 		x[i] = x_compressed[i];
@@ -1168,9 +1168,9 @@ void expand2(INT *x, INT *x_compressed, INT b_1, INT b_2)
 		}
 }
 
-void compress3(INT *x, INT *x_compressed, INT b_1, INT b_2, INT b_3)
+void compress3(int *x, int *x_compressed, int b_1, int b_2, int b_3)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < b_1; i++) {
 		x_compressed[i] = x[i];
@@ -1187,9 +1187,9 @@ void compress3(INT *x, INT *x_compressed, INT b_1, INT b_2, INT b_3)
 	
 }
 
-void expand3(INT *x, INT *x_compressed, INT b_1, INT b_2, INT b_3)
+void expand3(int *x, int *x_compressed, int b_1, int b_2, int b_3)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < b_1; i++) {
 		x[i] = x_compressed[i];
@@ -1205,13 +1205,13 @@ void expand3(INT *x, INT *x_compressed, INT b_1, INT b_2, INT b_3)
 		}
 }
 
-INT is_incident_point_line(INT *v_point, INT *v_line, INT b_1)
+int is_incident_point_line(int *v_point, int *v_line, int b_1)
 {
-	INT *c;
-	INT i;
-	INT ret = TRUE;
+	int *c;
+	int i;
+	int ret = TRUE;
 
-	c = NEW_INT(n);
+	c = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		c[i] = TRUE;
 		}
@@ -1224,17 +1224,17 @@ INT is_incident_point_line(INT *v_point, INT *v_line, INT b_1)
 			break;
 			}
 		}
-	FREE_INT(c);
+	FREE_int(c);
 	return ret;
 }
 
-INT is_incident_line_solid(INT *v_line, INT b_1, INT *v_solid, INT c_1, INT c_2, INT c_3)
+int is_incident_line_solid(int *v_line, int b_1, int *v_solid, int c_1, int c_2, int c_3)
 {
-	INT *c;
-	INT i;
-	INT ret = TRUE;
+	int *c;
+	int i;
+	int ret = TRUE;
 
-	c = NEW_INT(n);
+	c = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		c[i] = TRUE;
 		}
@@ -1255,25 +1255,25 @@ INT is_incident_line_solid(INT *v_line, INT b_1, INT *v_solid, INT c_1, INT c_2,
 		}
 
 done:
-	FREE_INT(c);
+	FREE_int(c);
 	return ret;
 }
 
 
-INT is_incident_point_edge_solid(INT *v_line, INT e_1, 
-	INT *v_point, INT *v_solid, INT b_1, INT b_2, INT b_3)
+int is_incident_point_edge_solid(int *v_line, int e_1, 
+	int *v_point, int *v_solid, int b_1, int b_2, int b_3)
 {
-	INT i;
+	int i;
 	
 	if (is_incident_point_line(v_point, v_line, e_1) && 
 		is_incident_line_solid(v_line, e_1, v_solid, b_1, b_2, b_3)) {
 		return TRUE;
 		}
-	INT ret = FALSE;
-	INT *w_point;
-	INT *w_solid;
-	w_point = NEW_INT(n);
-	w_solid = NEW_INT(n);
+	int ret = FALSE;
+	int *w_point;
+	int *w_solid;
+	w_point = NEW_int(n);
+	w_solid = NEW_int(n);
 
 	for (i = 0; i < n; i++) {
 		w_point[i] = v_point[i];
@@ -1286,19 +1286,19 @@ INT is_incident_point_edge_solid(INT *v_line, INT e_1,
 		ret = TRUE;
 		}
 		
-	FREE_INT(w_point);
-	FREE_INT(w_solid);
+	FREE_int(w_point);
+	FREE_int(w_solid);
 	return ret;
 #if 0
-	INT *c;
-	INT i;
-	INT *xx;
-	INT *yy;
-	INT ret = TRUE;
+	int *c;
+	int i;
+	int *xx;
+	int *yy;
+	int ret = TRUE;
 
-	xx = NEW_INT(n);
-	yy = NEW_INT(n);
-	c = NEW_INT(n);
+	xx = NEW_int(n);
+	yy = NEW_int(n);
+	c = NEW_int(n);
 	for (i = 0; i < n; i++) {
 		xx[i] = v_point[i];
 		yy[i] = v_solid[i];
@@ -1306,7 +1306,7 @@ INT is_incident_point_edge_solid(INT *v_line, INT e_1,
 	//representative_under_folding(xx, n);
 	//representative_under_folding_solid(yy, b_1, b_2, b_3);
 	cout << "yy=solid";
-	INT_vec_print(cout, yy, n);
+	int_vec_print(cout, yy, n);
 	cout << " b_1=" << b_1;
 	cout << " b_2=" << b_2;
 	cout << " b_3=" << b_3;
@@ -1331,7 +1331,7 @@ INT is_incident_point_edge_solid(INT *v_line, INT e_1,
 		ret = TRUE; // second chance
 		opposite_under_folding_solid(yy, b_1, b_2, b_3);
 		cout << "opposite:";
-		INT_vec_print(cout, yy, n);
+		int_vec_print(cout, yy, n);
 		cout << " b_1=" << b_1;
 		cout << " b_2=" << b_2;
 		cout << " b_3=" << b_3;
@@ -1347,17 +1347,17 @@ INT is_incident_point_edge_solid(INT *v_line, INT e_1,
 		}
 #endif
 
-	FREE_INT(c);
-	FREE_INT(xx);
-	FREE_INT(yy);
+	FREE_int(c);
+	FREE_int(xx);
+	FREE_int(yy);
 	return ret;
 #endif
 
 }
 
-void representative_under_folding(INT *x, INT len)
+void representative_under_folding(int *x, int len)
 {
-	INT i, w;
+	int i, w;
 
 	w = 0;
 	for (i = 0; i < len; i++) {
@@ -1370,76 +1370,76 @@ void representative_under_folding(INT *x, INT len)
 		}
 }
 
-void representative_under_folding_line(INT *x, INT b_1)
+void representative_under_folding_line(int *x, int b_1)
 {
-	INT *y;
+	int *y;
 
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	compress1(x, y, b_1);
 	representative_under_folding(y, n - 1);
 	expand1(x, y, b_1);
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-void representative_under_folding_plane(INT *x, INT b_1, INT b_2)
+void representative_under_folding_plane(int *x, int b_1, int b_2)
 {
-	INT *y;
+	int *y;
 
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	compress2(x, y, b_1, b_2);
 	representative_under_folding(y, n - 2);
 	expand2(x, y, b_1, b_2);
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-void representative_under_folding_solid(INT *x, INT b_1, INT b_2, INT b_3)
+void representative_under_folding_solid(int *x, int b_1, int b_2, int b_3)
 {
-	INT *y;
+	int *y;
 
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	compress3(x, y, b_1, b_2, b_3);
 	representative_under_folding(y, n - 3);
 	expand3(x, y, b_1, b_2, b_3);
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-void opposite_under_folding_line(INT *x, INT b_1)
+void opposite_under_folding_line(int *x, int b_1)
 {
-	INT *y;
+	int *y;
 
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	compress1(x, y, b_1);
 	invert(y, n - 1);
 	expand1(x, y, b_1);
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-void opposite_under_folding_plane(INT *x, INT b_1, INT b_2)
+void opposite_under_folding_plane(int *x, int b_1, int b_2)
 {
-	INT *y;
+	int *y;
 
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	compress2(x, y, b_1, b_2);
 	invert(y, n - 2);
 	expand2(x, y, b_1, b_2);
-	FREE_INT(y);
+	FREE_int(y);
 }
 
-void opposite_under_folding_solid(INT *x, INT b_1, INT b_2, INT b_3)
+void opposite_under_folding_solid(int *x, int b_1, int b_2, int b_3)
 {
-	INT *y;
+	int *y;
 
-	y = NEW_INT(n);
+	y = NEW_int(n);
 	compress3(x, y, b_1, b_2, b_3);
 	invert(y, n - 3);
 	expand3(x, y, b_1, b_2, b_3);
-	FREE_INT(y);
+	FREE_int(y);
 }
 
 
-void invert(INT *x, INT len)
+void invert(int *x, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		if (x[i]) {

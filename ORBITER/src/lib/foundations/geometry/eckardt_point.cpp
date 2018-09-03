@@ -26,7 +26,7 @@ void eckardt_point::freeself()
 
 void eckardt_point::print()
 {
-	INT t, i, j;
+	int t, i, j;
 	
 	if (len == 3) {
 		cout << "E_{";
@@ -50,7 +50,7 @@ void eckardt_point::print()
 
 void eckardt_point::latex(ostream &ost)
 {
-	INT t, i, j;
+	int t, i, j;
 	
 	if (len == 3) {
 		ost << "E_{";
@@ -74,7 +74,7 @@ void eckardt_point::latex(ostream &ost)
 
 void eckardt_point::latex_index_only(ostream &ost)
 {
-	INT t, i, j;
+	int t, i, j;
 	
 	if (len == 3) {
 		for (t = 0; t < 3; t++) {
@@ -96,14 +96,14 @@ void eckardt_point::latex_index_only(ostream &ost)
 
 void eckardt_point::latex_to_str(char *str)
 {
-	INT t, i, j;
+	int t, i, j;
 	
 	str[0] = 0;
 	if (len == 3) {
 		sprintf(str + strlen(str), "E_{");
 		for (t = 0; t < 3; t++) {
 			k2ij(index[t], i, j, 6);
-			sprintf(str + strlen(str), "%ld%ld", i + 1, j + 1);
+			sprintf(str + strlen(str), "%d%d", i + 1, j + 1);
 			if (t < 2) {
 				sprintf(str + strlen(str), ",");
 				}
@@ -111,7 +111,7 @@ void eckardt_point::latex_to_str(char *str)
 		sprintf(str + strlen(str), "}");
 		}
 	else if (len == 2) {
-		sprintf(str + strlen(str), "E_{%ld%ld}", index[0] + 1, index[1] + 1);
+		sprintf(str + strlen(str), "E_{%d%d}", index[0] + 1, index[1] + 1);
 		}
 	else {
 		cout << "eckardt_point::latex len is illegal" << endl;
@@ -121,14 +121,14 @@ void eckardt_point::latex_to_str(char *str)
 
 void eckardt_point::latex_to_str_without_E(char *str)
 {
-	INT t, i, j;
+	int t, i, j;
 	
 	str[0] = 0;
 	if (len == 3) {
 		//sprintf(str + strlen(str), "{");
 		for (t = 0; t < 3; t++) {
 			k2ij(index[t], i, j, 6);
-			sprintf(str + strlen(str), "%ld%ld", i + 1, j + 1);
+			sprintf(str + strlen(str), "%d%d", i + 1, j + 1);
 			if (t < 2) {
 				sprintf(str + strlen(str), ",");
 				}
@@ -136,7 +136,7 @@ void eckardt_point::latex_to_str_without_E(char *str)
 		//sprintf(str + strlen(str), "}");
 		}
 	else if (len == 2) {
-		sprintf(str + strlen(str), "%ld%ld", index[0] + 1, index[1] + 1);
+		sprintf(str + strlen(str), "%d%d", index[0] + 1, index[1] + 1);
 		}
 	else {
 		cout << "eckardt_point::latex len is illegal" << endl;
@@ -146,14 +146,14 @@ void eckardt_point::latex_to_str_without_E(char *str)
 
 
 
-void eckardt_point::init2(INT i, INT j)
+void eckardt_point::init2(int i, int j)
 {
 	len = 2;
 	index[0] = i;
 	index[1] = j;
 }
 
-void eckardt_point::init3(INT ij, INT kl, INT mn)
+void eckardt_point::init3(int ij, int kl, int mn)
 {
 	len = 3;
 	index[0] = ij;
@@ -161,7 +161,7 @@ void eckardt_point::init3(INT ij, INT kl, INT mn)
 	index[2] = mn;
 }
 
-void eckardt_point::init6(INT i, INT j, INT k, INT l, INT m, INT n)
+void eckardt_point::init6(int i, int j, int k, int l, int m, int n)
 {
 	len = 3;
 	index[0] = ij2k(i, j, 6);
@@ -169,14 +169,14 @@ void eckardt_point::init6(INT i, INT j, INT k, INT l, INT m, INT n)
 	index[2] = ij2k(m, n, 6);
 }
 
-void eckardt_point::init_by_rank(INT rk)
+void eckardt_point::init_by_rank(int rk)
 {
 	if (rk < 30) {
 		len = 2;
 		ordered_pair_unrank(rk, index[0], index[1], 6);
 		}
 	else {
-		INT i, j, k, l, m, n;
+		int i, j, k, l, m, n;
 		
 		len = 3;
 		rk -= 30;
@@ -188,7 +188,7 @@ void eckardt_point::init_by_rank(INT rk)
 }
 
 
-void eckardt_point::three_lines(surface *S, INT *three_lines)
+void eckardt_point::three_lines(surface *S, int *three_lines)
 {
 	if (len == 2) {
 		three_lines[0] = S->line_ai(index[0]);
@@ -196,7 +196,7 @@ void eckardt_point::three_lines(surface *S, INT *three_lines)
 		three_lines[2] = S->line_cij(index[0], index[1]);
 		}
 	else if (len == 3) {
-		INT i, j;
+		int i, j;
 
 		k2ij(index[0], i, j, 6);
 		three_lines[0] = S->line_cij(i, j);
@@ -211,16 +211,16 @@ void eckardt_point::three_lines(surface *S, INT *three_lines)
 		}
 }
 
-INT eckardt_point::rank()
+int eckardt_point::rank()
 {
-	INT a;
+	int a;
 	
 	if (len == 2) {
 		a = ordered_pair_rank(index[0], index[1], 6);
 		return a;
 		}
 	else if (len == 3) {
-		INT i, j, k, l, m, n;
+		int i, j, k, l, m, n;
 
 		k2ij(index[0], i, j, 6);
 		k2ij(index[1], k, l, 6);
@@ -234,7 +234,7 @@ INT eckardt_point::rank()
 		}
 }
 
-void eckardt_point::unrank(INT rk, INT &i, INT &j, INT &k, INT &l, INT &m, INT &n)
+void eckardt_point::unrank(int rk, int &i, int &j, int &k, int &l, int &m, int &n)
 {
 	if (rk < 30) {
 		len = 2;

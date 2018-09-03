@@ -27,7 +27,7 @@ geometry::geometry(Vector & gen) : Vector()
 	init(gen);
 }
 
-geometry::geometry(INT n) : Vector()
+geometry::geometry(int n) : Vector()
 {
 	Vector gen;
 	permutation p;
@@ -203,7 +203,7 @@ void geometry::print_incma_latex_picture(ostream& ost)
 
 void geometry::print_inc(ostream &ost)
 {
-	INT v, b, nb_inc, i, j, a;
+	int v, b, nb_inc, i, j, a;
 	
 	v = X().s_m();
 	b = X().s_n();
@@ -234,7 +234,7 @@ void geometry::print_inc(ostream &ost)
 
 void geometry::print_inc_only(ostream &ost)
 {
-	INT v, b, nb_inc, i, j, a;
+	int v, b, nb_inc, i, j, a;
 	
 	nb_inc = 0;
 	v = X().s_m();
@@ -265,7 +265,7 @@ void geometry::print_inc_only(ostream &ost)
 
 void geometry::print_inc_header(ostream &ost)
 {
-	INT v, b, nb_inc, i, j, a;
+	int v, b, nb_inc, i, j, a;
 	
 	nb_inc = 0;
 	v = X().s_m();
@@ -288,7 +288,7 @@ void geometry::print_inc_header(ostream &ost)
 
 void geometry::print_ascii(ostream& ost)
 {
-	INT v, b, i, j, a, l;
+	int v, b, i, j, a, l;
 	
 	v = X().s_m();
 	b = X().s_n();
@@ -309,17 +309,17 @@ void geometry::print_ascii(ostream& ost)
 				}
 			}
 		else {
-			ost << "INTEGER_MATRIX" << endl;
+			ost << "intEGER_MATRIX" << endl;
 			ost << X();
 			}
-		ost << "LABELLING_OF_POINTS" << endl;
+		ost << "LABELLING_OF_POintS" << endl;
 		point_labels().print_unformatted(ost);
 		ost << endl;
 		ost << "LABELLING_OF_BLOCKS" << endl;
 		block_labels().print_unformatted(ost);
 		ost << endl;
 		if (f_row_decomp()) {
-			ost << "DECOMPOSITION_OF_POINTS" << endl;
+			ost << "DECOMPOSITION_OF_POintS" << endl;
 			ost << row_decomp().s_l() << " ";
 			row_decomp().print_unformatted(ost);
 			ost << endl;
@@ -341,7 +341,7 @@ void geometry::print_ascii(ostream& ost)
 			ost << endl;
 			}
 		if (f_canonical_labelling_points()) {
-			ost << "CANONICAL_LABELLING_OF_POINTS" << endl;
+			ost << "CANONICAL_LABELLING_OF_POintS" << endl;
 			canonical_labelling_points().print_unformatted(ost);
 			ost << endl;
 			}
@@ -355,7 +355,7 @@ void geometry::print_ascii(ostream& ost)
 			l = aut_gens().s_l();
 			ost << l << endl;
 			for (i = 0; i < l; i++) {
-				INT ll = aut_gens().s_i(i).as_permutation().s_l();
+				int ll = aut_gens().s_i(i).as_permutation().s_l();
 				for (j = 0; j < ll; j++) {
 					ost << aut_gens().s_i(i).as_permutation()[j] << " ";
 					}
@@ -375,9 +375,9 @@ void geometry::print_ascii(ostream& ost)
 
 #include <stdio.h>
 
-INT geometry::scan(istream& f)
+int geometry::scan(istream& f)
 {
-	INT nr;
+	int nr;
 	char buf[MYBUFSIZE];
 	char str1[MYBUFSIZE];
 	char *p_str;
@@ -408,9 +408,9 @@ INT geometry::scan(istream& f)
 
 }
 
-void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
+void geometry::scan_body(istream& f, int geo_nr, char *geo_label)
 {
-	INT v, b = 0, i, j, a, a1, l;
+	int v, b = 0, i, j, a, a1, l;
 	char buf[MYBUFSIZE];
 	char *p_str;
 	
@@ -440,7 +440,7 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 
 		f.getline(buf, sizeof(buf));
 		if (strncmp(buf, "v=", 2) == 0) {
-			sscanf(buf, "v=%ld b=%ld", &v, &b);
+			sscanf(buf, "v=%d b=%d", &v, &b);
 			point_labels().m_l(v);
 			for (i = 0; i < v; i++) {
 				point_labels().m_ii(i, i);
@@ -468,8 +468,8 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 				}
 			f_incidence_matrix() = TRUE;
 			}
-		else if (strncmp(buf, "INTEGER_MATRIX", 16) == 0) {
-			// cout << "reading INTEGER_MATRIX" << endl;
+		else if (strncmp(buf, "intEGER_MATRIX", 16) == 0) {
+			// cout << "reading intEGER_MATRIX" << endl;
 			X().m_mn_n(v, b);
 			for (i = 0; i < v; i++) {
 				if (f.eof()) {
@@ -483,8 +483,8 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 				}
 			f_incidence_matrix() = FALSE;
 			}
-		else if (strncmp(buf, "LABELLING_OF_POINTS", 19) == 0) {
-			// cout << "reading LABELLING_OF_POINTS" << endl;
+		else if (strncmp(buf, "LABELLING_OF_POintS", 19) == 0) {
+			// cout << "reading LABELLING_OF_POintS" << endl;
 			if (f.eof()) {
 				cout << "geometry::scan() primature end of file" << endl;
 				exit(1);
@@ -511,8 +511,8 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 				block_labels().m_ii(i, a);
 				}
 			}
-		else if (strncmp(buf, "DECOMPOSITION_OF_POINTS", 23) == 0) {
-			// cout << "reading DECOMPOSITION_OF_POINTS" << endl;
+		else if (strncmp(buf, "DECOMPOSITION_OF_POintS", 23) == 0) {
+			// cout << "reading DECOMPOSITION_OF_POintS" << endl;
 			if (f.eof()) {
 				cout << "geometry::scan() primature end of file" << endl;
 				exit(1);
@@ -575,8 +575,8 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 				ddb().m_ii(i, a);
 				}
 			}
-		else if (strncmp(buf, "CANONICAL_LABELLING_OF_POINTS", 29) == 0) {
-			// cout << "reading CANONICAL_LABELLING_OF_POINTS" << endl;
+		else if (strncmp(buf, "CANONICAL_LABELLING_OF_POintS", 29) == 0) {
+			// cout << "reading CANONICAL_LABELLING_OF_POintS" << endl;
 			if (f.eof()) {
 				cout << "geometry::scan() primature end of file" << endl;
 				exit(1);
@@ -608,14 +608,14 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 		else if (strncmp(buf, "AUT_GENS", 8) == 0) {
 			// cout << "reading AUT_GENS" << endl;
 			f_aut_gens() = TRUE;
-			sscanf(buf, "AUT_GENS (group order %ld)", &a);
+			sscanf(buf, "AUT_GENS (group order %d)", &a);
 			ago().m_i_i(a);
 			if (f.eof()) {
 				cout << "geometry::scan() primature end of file" << endl;
 				exit(1);
 				}
 			f.getline(buf, sizeof(buf));
-			sscanf(buf, "%ld", &l);
+			sscanf(buf, "%d", &l);
 			aut_gens().m_l(l);
 			for (i = 0; i < l; i++) {
 				aut_gens().s_i(i).change_to_permutation();
@@ -645,7 +645,7 @@ void geometry::scan_body(istream& f, INT geo_nr, char *geo_label)
 
 void geometry::transpose()
 {
-	INT a;
+	int a;
 	
 	X().transpose();
 	point_labels().swap(block_labels());
@@ -663,9 +663,9 @@ void geometry::transpose()
 	aut_gens().m_l(0);
 }
 
-static INT test_special_matrix(matrix &Y, INT diag, INT off_diag)
+static int test_special_matrix(matrix &Y, int diag, int off_diag)
 {
-	INT v, y, i, j;
+	int v, y, i, j;
 	
 	v = Y.s_m();
 	for (i = 0; i < v; i++) {
@@ -684,10 +684,10 @@ static INT test_special_matrix(matrix &Y, INT diag, INT off_diag)
 	return TRUE;
 }
 
-INT geometry::is_2design(INT &r, INT &lambda, INT f_v)
+int geometry::is_2design(int &r, int &lambda, int f_v)
 {
 	matrix Xt, Y;
-	INT a, b;
+	int a, b;
 	
 	Xt = X();
 	Xt.transpose();
@@ -711,7 +711,7 @@ INT geometry::is_2design(INT &r, INT &lambda, INT f_v)
 }
 
 #if 0
-void geometry::calc_lexleast_and_autgroup(INT f_v, INT f_vv, INT f_print_backtrack_points)
+void geometry::calc_lexleast_and_autgroup(int f_v, int f_vv, int f_print_backtrack_points)
 {
 	perm_group G;
 	permutation p, q;
@@ -743,8 +743,8 @@ void geometry::calc_lexleast_and_autgroup(INT f_v, INT f_vv, INT f_print_backtra
 	}
 }
 
-void geometry::calc_canon_and_autgroup(INT f_v, INT f_vv, INT f_vvv, INT f_vvvv, 
-	INT f_print_backtrack_points, INT f_tree_file)
+void geometry::calc_canon_and_autgroup(int f_v, int f_vv, int f_vvv, int f_vvvv, 
+	int f_print_backtrack_points, int f_tree_file)
 {
 	perm_group G;
 	permutation p, q, pv, qv;
@@ -781,8 +781,8 @@ void geometry::calc_canon_and_autgroup(INT f_v, INT f_vv, INT f_vvv, INT f_vvvv,
 #endif
 }
 
-void geometry::calc_canon_and_autgroup_partition_backtrack(INT f_v, INT f_vv, INT f_vvv, INT f_vvvv, 
-	INT f_print_backtrack_points, INT f_tree_file)
+void geometry::calc_canon_and_autgroup_partition_backtrack(int f_v, int f_vv, int f_vvv, int f_vvvv, 
+	int f_print_backtrack_points, int f_tree_file)
 {
 	perm_group G;
 	permutation p, q, pv, qv;
@@ -820,7 +820,7 @@ void geometry::calc_canon_and_autgroup_partition_backtrack(INT f_v, INT f_vv, IN
 }
 #endif
 
-void geometry::calc_canon_nauty(INT f_v, INT f_vv, INT f_vvv)
+void geometry::calc_canon_nauty(int f_v, int f_vv, int f_vvv)
 {
 	perm_group G;
 	permutation p, q;
@@ -856,7 +856,7 @@ void geometry::calc_canon_nauty(INT f_v, INT f_vv, INT f_vvv)
 }
 
 #if 0
-void geometry::calc_canon_tonchev(INT f_v, INT f_vv, INT f_vvv)
+void geometry::calc_canon_tonchev(int f_v, int f_vv, int f_vvv)
 {
 	perm_group G;
 	permutation p, q;
@@ -905,13 +905,13 @@ void geometry::get_lexleast_X(matrix & X0)
 
 // #define BUFSIZE 50000
 
-INT search_geo_file(matrix & X0, char *fname, INT geo_nr, char *geo_label, INT f_v)
+int search_geo_file(matrix & X0, char *fname, int geo_nr, char *geo_label, int f_v)
 {
 	char buf[MYBUFSIZE];
 	ifstream f(fname);
 	geometry G;
 	char *p_str;
-	INT geo_nr1;
+	int geo_nr1;
 	char geo_label1[MYBUFSIZE];
 	
 	G.allocate_geometry();

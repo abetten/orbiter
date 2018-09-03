@@ -15,32 +15,32 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q;
-	INT f_n = FALSE;
-	INT n;
-	INT f_k = FALSE;
-	INT k;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q;
+	int f_n = FALSE;
+	int n;
+	int f_k = FALSE;
+	int k;
+	int f_poly = FALSE;
 	char *poly = NULL;
-	INT f_conic_type = FALSE;
-	INT f_randomized = FALSE;
-	INT nb_times = 0;
-	INT f_file = FALSE;
+	int f_conic_type = FALSE;
+	int f_randomized = FALSE;
+	int nb_times = 0;
+	int f_file = FALSE;
 	const char *fname = NULL;
-	INT f_add_nucleus = FALSE;
-	INT f_TDO = FALSE;
-	INT f_maxdepth_for_TDO = FALSE;
-	INT maxdepth_for_TDO = INT_MAX;
-	INT f_stabilizer = FALSE;
-	INT stabilizer_starter_size = 0;
+	int f_add_nucleus = FALSE;
+	int f_TDO = FALSE;
+	int f_maxdepth_for_TDO = FALSE;
+	int maxdepth_for_TDO = INT_MAX;
+	int f_stabilizer = FALSE;
+	int stabilizer_starter_size = 0;
 
 
 
@@ -114,8 +114,8 @@ int main(int argc, char **argv)
 
 	finite_field *F;
 	projective_space *P;
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 		
 	if (f_v) {
 		cout << "process_PG" << endl;
@@ -142,9 +142,9 @@ int main(int argc, char **argv)
 		cout << "process_PG after P->init" << endl;
 		}
 
-	INT *set;
-	INT set_size;
-	INT nb_input;
+	int *set;
+	int set_size;
+	int nb_input;
 
 
 	if (file_size(fname) <= 0) {
@@ -158,11 +158,11 @@ int main(int argc, char **argv)
 	cout << "The file " << fname << " contains " << nb_input << " solutions" << endl;
 
 
-	set = NEW_INT(ONE_MILLION);
+	set = NEW_int(ONE_MILLION);
 	{
 	char buf[MY_BUFSIZE];
 	char *p_buf;
-	INT cnt;
+	int cnt;
 	
 	ifstream fp(fname);
 
@@ -177,7 +177,7 @@ int main(int argc, char **argv)
 			}
 		p_buf = buf;
 		while (TRUE) {
-			INT tmp;
+			int tmp;
 			if (!s_scan_int(&p_buf, &tmp)) {
 				break;
 				}
@@ -192,7 +192,7 @@ int main(int argc, char **argv)
 				}
 			if (FALSE) {
 				cout << "solution " << cnt << " / " << nb_input << " is ";
-				INT_vec_print(cout, set, set_size);
+				int_vec_print(cout, set, set_size);
 				cout << endl;
 				}
 
@@ -205,9 +205,9 @@ int main(int argc, char **argv)
 					cout << "solution " << cnt << " / " << nb_input << ", computing the conic intersection type" << endl;
 					}
 
-				INT *intersection_type;
-				INT highest_intersection_number;
-				INT f_save_largest_sets = TRUE;
+				int *intersection_type;
+				int highest_intersection_number;
+				int f_save_largest_sets = TRUE;
 				set_of_sets *largest_sets = NULL;
 		
 				P->conic_intersection_type(f_randomized, nb_times, 
@@ -226,24 +226,24 @@ int main(int argc, char **argv)
 					cout << endl;
 					}
 
-				INT *Inc;
-				INT m, n;
+				int *Inc;
+				int m, n;
 				
 				largest_sets->compute_incidence_matrix(Inc, m, n,  verbose_level);
-				INT_matrix_print(Inc, m, n);
+				int_matrix_print(Inc, m, n);
 
 				decomposition *D;
 
 				largest_sets->init_decomposition(D, verbose_level);
 
-				INT max_depth = 2;
+				int max_depth = 2;
 				
 				D->setup_default_partition(verbose_level);
 
 				D->compute_TDO(max_depth, verbose_level);
 
-				INT f_enter_math = TRUE;
-				INT f_print_subscripts = TRUE;
+				int f_enter_math = TRUE;
+				int f_print_subscripts = TRUE;
 
 				if (ODD(max_depth)) {
 					D->get_col_scheme(verbose_level);
@@ -255,34 +255,34 @@ int main(int argc, char **argv)
 					D->print_row_decomposition_tex(cout, 
 						f_enter_math, f_print_subscripts, verbose_level);
 					}
-				FREE_INT(Inc);
-				FREE_INT(intersection_type);
+				FREE_int(Inc);
+				FREE_int(intersection_type);
 				delete D;
 				}
 
 			else if (f_add_nucleus) {
-				INT nucleus;
-				INT *set2;
-				INT sz2;
+				int nucleus;
+				int *set2;
+				int sz2;
 				char fname_base[1000];
 				char fname2[1000];
 				
 				P->find_nucleus(set, set_size, nucleus, verbose_level);
 
 				sz2 = set_size + 1;
-				set2 = NEW_INT(sz2);
-				INT_vec_copy(set, set2, set_size);
+				set2 = NEW_int(sz2);
+				int_vec_copy(set, set2, set_size);
 				set2[set_size] = nucleus;
 				
 				get_fname_base(fname, fname_base);
-				sprintf(fname2, "%s_hyperoval_%ld.txt", fname_base, cnt);
+				sprintf(fname2, "%s_hyperoval_%d.txt", fname_base, cnt);
 				write_set_to_file(fname2, set2, sz2, verbose_level);
 				cout << "Written file " << fname2 << " of size " << file_size(fname2) << endl;
 				}
 
 			else if (f_TDO) {
 
-				INT max_depth;
+				int max_depth;
 
 				if (f_maxdepth_for_TDO) {
 					max_depth = maxdepth_for_TDO;
@@ -317,19 +317,19 @@ int main(int argc, char **argv)
 				cout << "before D->init_inc_and_stack" << endl;
 				D->init_inc_and_stack(Inc, Stack, verbose_level);
 
-				INT m, n;
-				INT *M;
+				int m, n;
+				int *M;
 				
 				P->make_incidence_matrix(m, n, M, verbose_level);
 				D->init_incidence_matrix(m, n, M, verbose_level);
-				FREE_INT(M);
+				FREE_int(M);
 				
 				cout << "before D->compute_TDO, max_depth=" << max_depth << endl;
 				D->compute_TDO(max_depth, verbose_level);
 				cout << "after D->compute_TDO" << endl;
 
-				INT f_enter_math = TRUE;
-				INT f_print_subscripts = TRUE;
+				int f_enter_math = TRUE;
+				int f_print_subscripts = TRUE;
 
 				if (ODD(max_depth) || max_depth == INT_MAX) {
 					D->get_col_scheme(verbose_level);
@@ -363,7 +363,7 @@ int main(int argc, char **argv)
 
 	} // fp
 
-	FREE_INT(set);
+	FREE_int(set);
 	delete P;
 	delete F;
 

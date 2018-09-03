@@ -10,21 +10,21 @@
 
 #undef CHANGE_KIND_VERBOSE
 #undef COPY_VERBOSE
-#undef DEBUG_INTEGRAL_DIVISION
+#undef DEBUG_intEGRAL_DIVISION
 
 static double square_root(double x);
-static void add_gsel(Vector & gsel, group_selection_type type, INT val1, INT val2, char *s);
+static void add_gsel(Vector & gsel, group_selection_type type, int val1, int val2, char *s);
 static void my_get_generators(discreta_base& a, Vector& gens);
-static INT compose_well_known_group(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v);
-static INT compose_linear_group(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v);
-static INT compose_group_unary_operator(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v);
-static INT compose_group_binary_operator(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v);
-static INT compose_group_of_solid(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v);
+static int compose_well_known_group(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v);
+static int compose_linear_group(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v);
+static int compose_group_unary_operator(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v);
+static int compose_group_binary_operator(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v);
+static int compose_group_of_solid(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v);
 
 static double square_root(double x)
 {
@@ -96,8 +96,8 @@ ostream& group_selection::print(ostream& ost)
 {
 	// cout << group_selection_type_as_text((group_selection_type) type()) << endl;
 	group_selection_type t = (group_selection_type) type();
-	INT v1 = val1();
-	INT v2 = val2();
+	int v1 = val1();
+	int v2 = val2();
 	char *str = s().s();
 	
 	if (t == SL) {
@@ -287,12 +287,12 @@ ostream& group_selection::print(ostream& ost)
 	return ost;
 }
 
-void group_selection::init(group_selection_type t, INT v1, INT v2, char *str)
+void group_selection::init(group_selection_type t, int v1, int v2, char *str)
 {
 	m_l(4);
 	c_kind(GROUP_SELECTION);
 	
-	type() = (INT) t;
+	type() = (int) t;
 	val1() = v1;
 	val2() = v2;
 	if (str)
@@ -301,9 +301,9 @@ void group_selection::init(group_selection_type t, INT v1, INT v2, char *str)
 		s().init("");
 }
 
-void compose_gsel_from_strings(Vector &gsel, INT num_args, char **args)
+void compose_gsel_from_strings(Vector &gsel, int num_args, char **args)
 {
-	INT i = 0, val1, val2;
+	int i = 0, val1, val2;
 	char *p, *str;
 	
 	gsel.m_l(0);
@@ -576,7 +576,7 @@ void compose_gsel_from_strings(Vector &gsel, INT num_args, char **args)
 	
 }
 
-static void add_gsel(Vector & gsel, group_selection_type type, INT val1, INT val2, char *s)
+static void add_gsel(Vector & gsel, group_selection_type type, int val1, int val2, char *s)
 {
 	group_selection gs;
 	
@@ -664,10 +664,10 @@ const char *group_selection_type_as_text(group_selection_type t)
 #define MAX_STACK_SIZE 1000
 
 void compose_group(Vector & gsel, Vector & gens, 
-	hollerith & group_label, hollerith & group_label_tex, hollerith & acting_on, INT f_v)
+	hollerith & group_label, hollerith & group_label_tex, hollerith & acting_on, int f_v)
 {
 	Vector Stack;
-	INT height = 0, i, l;
+	int height = 0, i, l;
 	char *g_label;
 	char *g_label_tex;
 	ostringstream gl;
@@ -750,15 +750,15 @@ static void my_get_generators(discreta_base& a, Vector& gens)
 		exit(1);
 		}
 }
-static INT compose_well_known_group(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v)
+static int compose_well_known_group(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v)
 {
 	group_selection_type t = (group_selection_type) gs.type();
 	Vector v;
 	Vector gen;
 	
 	if (t == Trivial) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Trivial group on " << deg << " points" << endl;
@@ -769,7 +769,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Symmetric) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Symmetric group on " << deg << " points" << endl;
@@ -780,7 +780,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Alternating) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Alternating group on " << deg << " points" << endl;
@@ -791,7 +791,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Dihedral) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Dihedral group on " << deg << " points" << endl;
@@ -802,7 +802,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Cyclic) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Cyclic group on " << deg << " points" << endl;
@@ -813,7 +813,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Holomorph_of_cyclic) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Holomorph_of_cyclic group on " << deg << " points" << endl;
@@ -824,8 +824,8 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Subgroup_of_holomorph_of_cyclic_group) {
-		INT deg = gs.val1();
-		INT index = gs.val2();
+		int deg = gs.val1();
+		int index = gs.val2();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Subgroup_of_holomorph_of_cyclic_group group on " << deg << " points, index=" << index << endl;
@@ -836,8 +836,8 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Sn_wreath_Sm) {
-		INT n = gs.val1();
-		INT m = gs.val2();
+		int n = gs.val1();
+		int m = gs.val2();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Sn_wreath_Sm group n=" << n << " m=" << m << endl;
@@ -848,7 +848,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		S[height++] = gen;
 		}
 	else if (t == Mathieu) {
-		INT deg = gs.val1();
+		int deg = gs.val1();
 		if (f_v) {
 			cout << "compose_well_known_group(): stack height = " << height << 
 				" Mathieu group on " << deg << " points" << endl;
@@ -860,7 +860,7 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 		}
 	else if (t == From_file) {
 		char *fname = gs.s().s();
-		INT f_cyclic_notation;
+		int f_cyclic_notation;
 		char ext[1000];
 		
 		if (f_v) {
@@ -920,15 +920,15 @@ static INT compose_well_known_group(group_selection & gs, Vector & S, INT & heig
 	return TRUE;
 }
 
-static INT compose_linear_group(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v)
+static int compose_linear_group(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v)
 {
 	group_selection_type t = (group_selection_type) gs.type();
 	Vector v;
 	
 	if (t == SL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" SL(" << n << "," << q << ")" << endl;
@@ -940,8 +940,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == GL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" GL(" << n << "," << q << ")" << endl;
@@ -953,8 +953,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == SSL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" SSL(" << n << "," << q << ")" << endl;
@@ -966,8 +966,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == GGL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" GGL(" << n << "," << q << ")" << endl;
@@ -979,8 +979,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == PSL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" PSL(" << n << "," << q << ")" << endl;
@@ -992,8 +992,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == PGL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" PGL(" << n << "," << q << ")" << endl;
@@ -1005,8 +1005,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == PSSL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" PSSL(" << n << "," << q << ")" << endl;
@@ -1018,8 +1018,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == PGGL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" PGGL(" << n << "," << q << ")" << endl;
@@ -1031,8 +1031,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == ASL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" ASL(" << n << "," << q << ")" << endl;
@@ -1044,8 +1044,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == AGL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" AGL(" << n << "," << q << ")" << endl;
@@ -1057,8 +1057,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == ASSL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" ASSL(" << n << "," << q << ")" << endl;
@@ -1070,8 +1070,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == AGGL) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" AGGL(" << n << "," << q << ")" << endl;
@@ -1083,8 +1083,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == Affine_translations) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" T(" << n << "," << q << ")" << endl;
@@ -1100,7 +1100,7 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 	else if (t == Suzuki) {
 		}
 	else if (t == A5_in_PSL) {
-		INT q = gs.val2();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" A5_in_PSL(2," << q << ")" << endl;
@@ -1112,7 +1112,7 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == S4_in_PSL) {
-		INT q = gs.val2();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" S4_in_PSL(2," << q << ")" << endl;
@@ -1124,14 +1124,14 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 		S[height++] = gen;
 		}
 	else if (t == On_projective_lines) {
-		INT n = gs.val1();
-		INT q = gs.val2();
+		int n = gs.val1();
+		int q = gs.val2();
 		if (f_v) {
 			cout << "compose_linear_group(): stack height = " << height << 
 				" On_projective_lines(" << n << "," << q << ")" << endl;
 			}
 		Vector & gen = S[height - 1].as_vector();
-		INT k = n - 1;
+		int k = n - 1;
 		vec_generators_induce_on_lines_of_PG_k_q(gen, k, q, TRUE /* f_v */, FALSE /* f_vv */);
 		g_label << "On_projective_lines_" << k << "_" << q;
 		g_label_tex << "on projective lines (" << k << "," << q << ")";
@@ -1141,8 +1141,8 @@ static INT compose_linear_group(group_selection & gs, Vector & S, INT & height,
 	return TRUE;
 }
 
-static INT compose_group_unary_operator(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v)
+static int compose_group_unary_operator(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v)
 {
 	group_selection_type t = (group_selection_type) gs.type();
 	
@@ -1231,8 +1231,8 @@ static INT compose_group_unary_operator(group_selection & gs, Vector & S, INT & 
 	return TRUE;
 }
 
-static INT compose_group_binary_operator(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v)
+static int compose_group_binary_operator(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v)
 {
 	group_selection_type t = (group_selection_type) gs.type();
 	
@@ -1340,8 +1340,8 @@ static INT compose_group_binary_operator(group_selection & gs, Vector & S, INT &
 
 #define SOLID_RADIUS 10000 
 
-static INT compose_group_of_solid(group_selection & gs, Vector & S, INT & height, 
-	ostream & g_label, ostream & g_label_tex, INT f_v)
+static int compose_group_of_solid(group_selection & gs, Vector & S, int & height, 
+	ostream & g_label, ostream & g_label_tex, int f_v)
 {
 	group_selection_type t = (group_selection_type) gs.type();
 	solid s;

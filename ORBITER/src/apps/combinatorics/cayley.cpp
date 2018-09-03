@@ -7,19 +7,19 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void do_D1(INT n, INT d, INT verbose_level);
+void do_D1(int n, int d, int verbose_level);
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_D1 = FALSE;
-	INT n = 0;
-	INT d = 0;
+	int i;
+	int verbose_level = 0;
+	int f_D1 = FALSE;
+	int n = 0;
+	int d = 0;
 	
 	t0 = os_ticks();
 
@@ -46,13 +46,13 @@ int main(int argc, char **argv)
 	
 }
 
-void do_D1(INT n, INT d, INT verbose_level)
+void do_D1(int n, int d, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, h, m;
-	INT n_over_d;
-	INT phi_n, phi_n_over_d;
-	INT *Rn, *Rn_over_d;
+	int f_v = (verbose_level >= 1);
+	int i, j, h, m;
+	int n_over_d;
+	int phi_n, phi_n_over_d;
+	int *Rn, *Rn_over_d;
 
 	if (f_v) {
 		cout << "do_D1" << endl;
@@ -72,10 +72,10 @@ void do_D1(INT n, INT d, INT verbose_level)
 	cout << "phi_n = " << phi_n << endl;
 	cout << "phi_n_over_d = " << phi_n_over_d << endl;
 
-	Rn = NEW_INT(phi_n);
+	Rn = NEW_int(phi_n);
 	j = 0;
 	for (i = 0; i < n; i++) {
-		if (gcd_INT(i, n) == 1) {
+		if (gcd_int(i, n) == 1) {
 			Rn[j++] = i;
 			}
 		}
@@ -84,13 +84,13 @@ void do_D1(INT n, INT d, INT verbose_level)
 		exit(1);
 		}
 	cout << "Rn=";
-	INT_vec_print(cout, Rn, phi_n);
+	int_vec_print(cout, Rn, phi_n);
 	cout << endl;
 	
-	Rn_over_d = NEW_INT(phi_n_over_d);
+	Rn_over_d = NEW_int(phi_n_over_d);
 	j = 0;
 	for (i = 0; i < n_over_d; i++) {
-		if (gcd_INT(i, n_over_d) == 1) {
+		if (gcd_int(i, n_over_d) == 1) {
 			Rn_over_d[j++] = i;
 			}
 		}
@@ -99,24 +99,24 @@ void do_D1(INT n, INT d, INT verbose_level)
 		exit(1);
 		}
 	cout << "Rn_over_d=";
-	INT_vec_print(cout, Rn_over_d, phi_n_over_d);
+	int_vec_print(cout, Rn_over_d, phi_n_over_d);
 	cout << endl;
 
 	action *A;
 	longinteger_object go;
-	INT goi;
+	int goi;
 
 	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 	cout << "Created group Sym(" << n << ") of size " << goi << endl;
 
 
 
-	INT nb_G;
-	INT *perms;
+	int nb_G;
+	int *perms;
 	vector_ge *gens_G;
 
 
@@ -143,12 +143,12 @@ void do_D1(INT n, INT d, INT verbose_level)
 	sims *G;
 
 
-	G = create_sims_from_generators_with_target_group_order_INT(A, 
+	G = create_sims_from_generators_with_target_group_order_int(A, 
 		gens_G, 2 * n, verbose_level);
 
 	G->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 
 	cout << "created group of order " << goi << endl;
 
@@ -157,11 +157,11 @@ void do_D1(INT n, INT d, INT verbose_level)
 		exit(1);
 		}
 
-	INT nb_S = 0;
+	int nb_S = 0;
 	vector_ge *gens_S;
-	INT *Elt1;
-	INT *Elt2;
-	INT a;
+	int *Elt1;
+	int *Elt2;
+	int a;
 
 	nb_S = 2 * (phi_n + phi_n_over_d);
 
@@ -170,22 +170,22 @@ void do_D1(INT n, INT d, INT verbose_level)
 	gens_S->init(A);
 	gens_S->allocate(nb_S);
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	j = 0;
 
 	
 	for (i = 0; i < phi_n; i++) {
 		a = Rn[i];
 		A->make_element(Elt1, perms + 0 * n, 0 /* verbose_level */);
-		A->element_power_INT_in_place(Elt1, a, 0 /* verbose_level */);
+		A->element_power_int_in_place(Elt1, a, 0 /* verbose_level */);
 		A->element_move(Elt1, gens_S->ith(j), 0 /* verbose_level */);
 		j++;
 		}
 	for (i = 0; i < phi_n_over_d; i++) {
 		a = d * Rn_over_d[i];
 		A->make_element(Elt1, perms + 0 * n, 0 /* verbose_level */);
-		A->element_power_INT_in_place(Elt1, a, 0 /* verbose_level */);
+		A->element_power_int_in_place(Elt1, a, 0 /* verbose_level */);
 		A->element_move(Elt1, gens_S->ith(j), 0 /* verbose_level */);
 		j++;
 		}
@@ -193,7 +193,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 		a = Rn[i];
 		A->make_element(Elt1, perms + 0 * n, 0 /* verbose_level */);
 		A->make_element(Elt2, perms + 1 * n, 0 /* verbose_level */);
-		A->element_power_INT_in_place(Elt1, a, 0 /* verbose_level */);
+		A->element_power_int_in_place(Elt1, a, 0 /* verbose_level */);
 		A->element_mult(Elt2, Elt1, gens_S->ith(j), 0 /* verbose_level */);
 		j++;
 		}
@@ -201,7 +201,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 		a = d * Rn_over_d[i];
 		A->make_element(Elt1, perms + 0 * n, 0 /* verbose_level */);
 		A->make_element(Elt2, perms + 1 * n, 0 /* verbose_level */);
-		A->element_power_INT_in_place(Elt1, a, 0 /* verbose_level */);
+		A->element_power_int_in_place(Elt1, a, 0 /* verbose_level */);
 		A->element_mult(Elt2, Elt1, gens_S->ith(j), 0 /* verbose_level */);
 		j++;
 		}
@@ -211,15 +211,15 @@ void do_D1(INT n, INT d, INT verbose_level)
 		}
 
 
-	INT *Adj;
+	int *Adj;
 
-	Adj = NEW_INT(goi * goi);
+	Adj = NEW_int(goi * goi);
 
-	INT_vec_zero(Adj, goi * goi);
+	int_vec_zero(Adj, goi * goi);
 
 	cout << "Computing the Cayley graph:" << endl;
 	for (i = 0; i < goi; i++) {
-		G->element_unrank_INT(i, Elt1);
+		G->element_unrank_int(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (h = 0; h < nb_S; h++) {
 			A->element_mult(Elt1, gens_S->ith(h), Elt2, 0);
@@ -232,7 +232,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 			cout << "Elt2=" << endl;
 			A->element_print_quick(Elt2, cout);
 #endif
-			j = G->element_rank_INT(Elt2);
+			j = G->element_rank_int(Elt2);
 			Adj[i * goi + j] = Adj[j * goi + i] = 1;
 			if (i == 0) {
 				cout << "edge " << i << " " << j << endl;
@@ -241,7 +241,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 		}
 
 	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
-	//INT_matrix_print(Adj, goi, goi);
+	//int_matrix_print(Adj, goi, goi);
 
 
 	{
@@ -251,7 +251,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
-	sprintf(fname, "Cayley_D_%ld_%ld.colored_graph", n, d);
+	sprintf(fname, "Cayley_D_%d_%d.colored_graph", n, d);
 
 	CG->save(fname, verbose_level);
 
@@ -279,7 +279,7 @@ void do_D1(INT n, INT d, INT verbose_level)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
-	sprintf(fname, "Cayley_D_%ld_%ld_complement.colored_graph", n, d);
+	sprintf(fname, "Cayley_D_%d_%d_complement.colored_graph", n, d);
 
 	CG->save(fname, verbose_level);
 
@@ -287,16 +287,16 @@ void do_D1(INT n, INT d, INT verbose_level)
 	FREE_OBJECT(CG);
 	}
 
-	FREE_INT(Adj);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Adj);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 
 	FREE_OBJECT(G);
 	FREE_OBJECT(gens_G);
 	FREE_OBJECT(gens_S);
 	FREE_OBJECT(A);
-	FREE_INT(perms);
-	FREE_INT(Rn);
-	FREE_INT(Rn_over_d);
+	FREE_int(perms);
+	FREE_int(Rn);
+	FREE_int(Rn_over_d);
 }
 

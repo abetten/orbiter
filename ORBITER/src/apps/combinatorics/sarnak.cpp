@@ -27,20 +27,20 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void do_it(INT p, INT q, INT verbose_level);
+void do_it(int p, int q, int verbose_level);
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_p = FALSE;
-	INT p = 0;
-	INT f_q = FALSE;
-	INT q = 0;
+	int i;
+	int verbose_level = 0;
+	int f_p = FALSE;
+	int p = 0;
+	int f_q = FALSE;
+	int q = 0;
 
 	t0 = os_ticks();
 
@@ -77,11 +77,11 @@ int main(int argc, char **argv)
 	
 }
 
-void do_it(INT p, INT q, INT verbose_level)
+void do_it(int p, int q, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, h, l, f_special = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, h, l, f_special = FALSE;
 
 
 
@@ -91,8 +91,8 @@ void do_it(INT p, INT q, INT verbose_level)
 
 	finite_field *F;
 	action *A;
-	INT f_semilinear = FALSE;
-	INT f_basis = TRUE;
+	int f_semilinear = FALSE;
+	int f_basis = TRUE;
 
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
@@ -125,26 +125,26 @@ void do_it(INT p, INT q, INT verbose_level)
 
 	
 	longinteger_object go;
-	INT goi;
+	int goi;
 	Sims->group_order(go);
 
 	cout << "found a group of order " << go << endl;
-	goi = go.as_INT();
+	goi = go.as_int();
 	cout << "found a group of order " << goi << endl;
 
 	
 
 
-	INT a0, a1, a2, a3;
-	INT sqrt_p;
+	int a0, a1, a2, a3;
+	int sqrt_p;
 
-	INT *sqrt_mod_q;
-	INT I;
-	INT *A4;
-	INT nb_A4 = 0;
+	int *sqrt_mod_q;
+	int I;
+	int *A4;
+	int nb_A4 = 0;
 
-	A4 = NEW_INT((p + 1) * 4);
-	sqrt_mod_q = NEW_INT(q);
+	A4 = NEW_int((p + 1) * 4);
+	sqrt_mod_q = NEW_int(q);
 	for (i = 0; i < q; i++) {
 		sqrt_mod_q[i] = -1;
 		}
@@ -153,7 +153,7 @@ void do_it(INT p, INT q, INT verbose_level)
 		sqrt_mod_q[j] = i;
 		}
 	cout << "sqrt_mod_q:" << endl;
-	INT_vec_print(cout, sqrt_mod_q, q);
+	int_vec_print(cout, sqrt_mod_q, q);
 	cout << endl;
 
 	sqrt_p = 0;
@@ -217,18 +217,18 @@ void do_it(INT p, INT q, INT verbose_level)
 		exit(1);
 		}
 
-	INT_matrix_print(A4, nb_A4, 4);
+	int_matrix_print(A4, nb_A4, 4);
 
 	vector_ge *gens;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT M4[4];
-	INT det; //, s, sv;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int M4[4];
+	int det; //, s, sv;
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 
 	gens = NEW_OBJECT(vector_ge);
 	gens->init(A);
@@ -270,7 +270,7 @@ void do_it(INT p, INT q, INT verbose_level)
 
 		if (f_vv) {
 			cout << "M4=";
-			INT_vec_print(cout, M4, 4);
+			int_vec_print(cout, M4, 4);
 			cout << endl;
 			}
 
@@ -296,7 +296,7 @@ void do_it(INT p, INT q, INT verbose_level)
 				}
 			if (f_vv) {
 				cout << "M4=";
-				INT_vec_print(cout, M4, 4);
+				int_vec_print(cout, M4, 4);
 				cout << endl;
 				}
 #endif
@@ -313,15 +313,15 @@ void do_it(INT p, INT q, INT verbose_level)
 		}
 	
 
-	INT *Adj;
+	int *Adj;
 
-	Adj = NEW_INT(goi * goi);
+	Adj = NEW_int(goi * goi);
 
-	INT_vec_zero(Adj, goi * goi);
+	int_vec_zero(Adj, goi * goi);
 
 	cout << "Computing the Cayley graph:" << endl;
 	for (i = 0; i < goi; i++) {
-		Sims->element_unrank_INT(i, Elt1);
+		Sims->element_unrank_int(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (h = 0; h < nb_A4; h++) {
 			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
@@ -334,7 +334,7 @@ void do_it(INT p, INT q, INT verbose_level)
 			cout << "Elt2=" << endl;
 			A->element_print_quick(Elt2, cout);
 #endif
-			j = Sims->element_rank_INT(Elt2);
+			j = Sims->element_rank_int(Elt2);
 			Adj[i * goi + j] = Adj[j * goi + i] = 1;
 			if (i == 0) {
 				cout << "edge " << i << " " << j << endl;
@@ -343,9 +343,9 @@ void do_it(INT p, INT q, INT verbose_level)
 		}
 
 	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
-	//INT_matrix_print(Adj, goi, goi);
+	//int_matrix_print(Adj, goi, goi);
 
-	INT k;
+	int k;
 	k = 0;
 	for (i = 0; i < goi; i++) {
 		if (Adj[0 * goi + i]) {
@@ -362,7 +362,7 @@ void do_it(INT p, INT q, INT verbose_level)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(goi, Adj, verbose_level);
 
-	sprintf(fname, "Sarnak_%ld_%ld.colored_graph", p, q);
+	sprintf(fname, "Sarnak_%d_%d.colored_graph", p, q);
 
 	CG->save(fname, verbose_level);
 
@@ -370,10 +370,10 @@ void do_it(INT p, INT q, INT verbose_level)
 	FREE_OBJECT(CG);
 	FREE_OBJECT(gens);
 	FREE_OBJECT(A);
-	FREE_INT(A4);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(A4);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 	FREE_OBJECT(F);
 
 }

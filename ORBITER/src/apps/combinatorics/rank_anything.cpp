@@ -5,18 +5,18 @@
 
 #include "orbiter.h"
 
-void rank_subsets(INT n, INT verbose_level);
-void rank_binary_trees(INT n, INT verbose_level);
+void rank_subsets(int n, int verbose_level);
+void rank_binary_trees(int n, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_subsets = FALSE;
-	INT f_binary_trees = FALSE;
-	INT f_n = FALSE;
-	INT n;
+	int verbose_level = 0;
+	int i;
+	int f_subsets = FALSE;
+	int f_binary_trees = FALSE;
+	int f_n = FALSE;
+	int n;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -58,29 +58,29 @@ int main(int argc, char **argv)
 		}
 }
 
-void rank_subsets(INT n, INT verbose_level)
+void rank_subsets(int n, int verbose_level)
 {
-	INT i;
-	INT *set;
-	INT N, r, sz;
+	int i;
+	int *set;
+	int N, r, sz;
 
-	set = NEW_INT(n);
+	set = NEW_int(n);
 
 	N = i_power_j(2, n);
 	for (i = 0; i < N; i++) {
 		cout << " rank " << i << " : ";
 		unrank_subset(set, sz, n, i);
 		cout << " : set ";
-		INT_vec_print(cout, set, sz);
+		int_vec_print(cout, set, sz);
 		cout << " : ";
 		r = rank_subset(set, sz, n);
 		cout << " has rank " << r << endl;
 		}
 
 	char fname[1000];
-	INT h;
+	int h;
 
-	sprintf(fname, "subsets_of_%ld.tree", n);
+	sprintf(fname, "subsets_of_%d.tree", n);
 	{
 	ofstream fp(fname);
 
@@ -101,26 +101,26 @@ void rank_subsets(INT n, INT verbose_level)
 	sz = 2;
 	r = rank_subset(set, sz, n);
 	cout << "The set ";
-	INT_vec_print(cout, set, sz);
+	int_vec_print(cout, set, sz);
 	cout << " has rank " << r << endl;
 #endif
-	FREE_INT(set);
+	FREE_int(set);
 }
 
-void rank_binary_trees(INT n, INT verbose_level)
+void rank_binary_trees(int n, int verbose_level)
 {
-	INT i;
-	INT *v;
-	INT N, r;
+	int i;
+	int *v;
+	int N, r;
 
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 	N = i_power_j(2, n);
 	for (i = 0; i < N; i++) {
 		cout << " rank " << i << " : ";
 		AG_element_unrank(2 /* q */, v, 1, n, i);
 		cout << " : bitstring ";
-		INT_vec_print(cout, v, n);
+		int_vec_print(cout, v, n);
 		cout << " : ";
 		AG_element_rank(2 /* q */, v, 1, n, r);
 		cout << " has rank " << r << endl;
@@ -131,9 +131,9 @@ void rank_binary_trees(INT n, INT verbose_level)
 		}
 
 	char fname[1000];
-	INT h;
+	int h;
 
-	sprintf(fname, "binary_tree_of_depth_%ld.tree", n);
+	sprintf(fname, "binary_tree_of_depth_%d.tree", n);
 	{
 	ofstream fp(fname);
 
@@ -154,10 +154,10 @@ void rank_binary_trees(INT n, INT verbose_level)
 	sz = 2;
 	r = rank_subset(set, sz, n);
 	cout << "The set ";
-	INT_vec_print(cout, set, sz);
+	int_vec_print(cout, set, sz);
 	cout << " has rank " << r << endl;
 #endif
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 

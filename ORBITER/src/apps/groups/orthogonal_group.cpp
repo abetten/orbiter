@@ -12,11 +12,11 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 void usage(int argc, char **argv);
 int main(int argc, char **argv);
-void do_it(INT epsilon, INT n, INT q, INT verbose_level);
+void do_it(int epsilon, int n, int q, int verbose_level);
 
 void usage(int argc, char **argv)
 {
@@ -32,14 +32,14 @@ void usage(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_epsilon = FALSE;
-	INT epsilon = 0;
-	INT f_d = FALSE;
-	INT d = 0;
-	INT f_q = FALSE;
-	INT q = 0;
+	int i;
+	int verbose_level = 0;
+	int f_epsilon = FALSE;
+	int epsilon = 0;
+	int f_d = FALSE;
+	int d = 0;
+	int f_q = FALSE;
+	int q = 0;
 
 	t0 = os_ticks();
 	
@@ -92,14 +92,14 @@ int main(int argc, char **argv)
 	the_end_quietly(t0);
 }
 
-void do_it(INT epsilon, INT n, INT q, INT verbose_level)
+void do_it(int epsilon, int n, int q, int verbose_level)
 {
 	finite_field *F;
 	action *A;
-	INT f_semilinear = FALSE;
-	INT f_basis = TRUE;
-	INT p, h, i, j, a;
-	INT *v;
+	int f_semilinear = FALSE;
+	int f_basis = TRUE;
+	int p, h, i, j, a;
+	int *v;
 	
 	A = NEW_OBJECT(action);
 	is_prime_power(q, p, h);
@@ -108,7 +108,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	else
 		f_semilinear = FALSE;
 	
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 	
 	F = NEW_OBJECT(finite_field);
@@ -141,7 +141,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	for (i = 0; i < A->degree; i++) {
 		O->unrank_point(v, 1 /* stride */, i, 0 /* verbose_level */);
 		cout << i << " / " << A->degree << " : ";
-		INT_vec_print(cout, v, n);
+		int_vec_print(cout, v, n);
 		cout << endl;
 		}
 	cout << "Generators are:" << endl;
@@ -174,17 +174,17 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	schreier *Sch;
 	char fname_tree[1000];
 	char fname_report[1000];
-	INT xmax = 2000000;
-	INT ymax = 1000000;
-	INT f_circletext = TRUE;
-	INT rad = 18000;
-	INT f_embedded = FALSE;
-	INT f_sideways = TRUE;
+	int xmax = 2000000;
+	int ymax = 1000000;
+	int f_circletext = TRUE;
+	int rad = 18000;
+	int f_embedded = FALSE;
+	int f_sideways = TRUE;
 	double scale = 0.35;
 	double line_width = 1.0;
 
-	sprintf(fname_tree, "O_%ld_%ld_%ld_tree", epsilon, n, q);
-	sprintf(fname_report, "O_%ld_%ld_%ld_report.tex", epsilon, n, q);
+	sprintf(fname_tree, "O_%d_%d_%d_tree", epsilon, n, q);
+	sprintf(fname_report, "O_%d_%d_%d_report.tex", epsilon, n, q);
 
 	Sch = NEW_OBJECT(schreier);
 
@@ -211,39 +211,39 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 
 
 	if (q == 3 && n == 5) {
-		INT u[] = { // singular vectors
+		int u[] = { // singular vectors
 				0,0,1,1,0,
 				1,2,0,2,1,
 				0,0,0,1,0,
 				1,0,0,2,1,
 				1,1,2,0,2
 		};
-		INT v[] = { // v is orthogonal to u
+		int v[] = { // v is orthogonal to u
 				0,1,2,0,2,
 				2,0,1,2,2,
 				1,0,0,0,0,
 				2,0,2,0,1,
 				0,2,2,0,2
 		};
-		INT w[] = {
+		int w[] = {
 				1,1,1,1,0
 		};
-		INT *Mtx;
+		int *Mtx;
 
-		Mtx = NEW_INT(6 * 25);
+		Mtx = NEW_int(6 * 25);
 		for (i = 0; i < 5; i++) {
 			cout << "creating Siegel transformation " << i << " / 5:" << endl;
 			::Siegel_Transformation(*F, 0 /*epsilon */, n - 1,
 					1 /*form_c1*/, 0 /*form_c2*/, 0 /*form_c3*/,
 					Mtx + i * 25, v + i * 5, u + i * 5, verbose_level);
-			INT_matrix_print(Mtx + i * 25, 5, 5);
+			int_matrix_print(Mtx + i * 25, 5, 5);
 			cout << endl;
 		}
 		O->make_orthogonal_reflection(Mtx + 5 * 25, w, verbose_level - 1);
-		INT_matrix_print(Mtx + 5 * 25, 5, 5);
+		int_matrix_print(Mtx + 5 * 25, 5, 5);
 		cout << endl;
 		cout << "generators for O(5,3) are:" << endl;
-		INT_matrix_print(Mtx, 6, 25);
+		int_matrix_print(Mtx, 6, 25);
 
 		vector_ge *gens;
 		gens = NEW_OBJECT(vector_ge);
@@ -260,7 +260,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 
 		char fname_tree2[1000];
 
-		sprintf(fname_tree2, "O_%ld_%ld_%ld_tree2", epsilon, n, q);
+		sprintf(fname_tree2, "O_%d_%d_%d_tree2", epsilon, n, q);
 		Sch2->draw_tree(fname_tree2, 0 /* orbit_no*/,
 				xmax, ymax, f_circletext, rad,
 				f_embedded, f_sideways,
@@ -285,7 +285,7 @@ void do_it(INT epsilon, INT n, INT q, INT verbose_level)
 	latex_foot(fp);
 
 	}
-	FREE_INT(v);
+	FREE_int(v);
 	FREE_OBJECT(A);
 	FREE_OBJECT(F);
 }

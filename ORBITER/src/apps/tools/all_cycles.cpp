@@ -12,33 +12,33 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 void select_cycles(colored_graph *CG, poset_classification *gen,
-		INT level, INT &nb_selected_orbits, INT *&orbits);
+		int level, int &nb_selected_orbits, int *&orbits);
 void print_orbits_at_level(poset_classification *gen,
-		INT level, INT verbose_level);
-void print_selected_orbits_at_level(poset_classification *gen, INT level,
-	INT nb_selected_orbits, INT *orbits, INT verbose_level);
-void early_test_function_paths_and_cycles(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
+		int level, int verbose_level);
+void print_selected_orbits_at_level(poset_classification *gen, int level,
+	int nb_selected_orbits, int *orbits, int verbose_level);
+void early_test_function_paths_and_cycles(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT i, j;
+	int i, j;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;	
+	int verbose_level = 0;
+	int f_file = FALSE;	
 	const char *fname = NULL;
-	INT f_depth = FALSE;
-	INT depth = 0;
-	INT f_draw_poset = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT nb_print_level = 0;
-	INT print_level[1000];
+	int f_depth = FALSE;
+	int depth = 0;
+	int f_draw_poset = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int nb_print_level = 0;
+	int print_level[1000];
 
 	
 	for (i = 1; i < argc; i++) {
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 
 
 
-	INT *Adj;
+	int *Adj;
 	action *Aut;
 	longinteger_object ago;
 
@@ -100,8 +100,8 @@ int main(int argc, char **argv)
 	//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
 
 
-	Adj = NEW_INT(CG->nb_points * CG->nb_points);
-	INT_vec_zero(Adj, CG->nb_points * CG->nb_points);
+	Adj = NEW_int(CG->nb_points * CG->nb_points);
+	int_vec_zero(Adj, CG->nb_points * CG->nb_points);
 	for (i = 0; i < CG->nb_points; i++) {
 		for (j = i + 1; j < CG->nb_points; j++) {
 			if (CG->is_adjacent(i, j)) {
@@ -113,8 +113,8 @@ int main(int argc, char **argv)
 
 	CG->compute_edges(verbose_level);
 
-	INT *M;
-	INT nb_rows, nb_cols;
+	int *M;
+	int nb_rows, nb_cols;
 	
 	create_incidence_matrix_of_graph(Adj,
 			CG->nb_points, M, nb_rows, nb_cols, verbose_level);
@@ -130,10 +130,10 @@ int main(int argc, char **argv)
 	cout << "ago=" << ago << endl;
 
 	action *Aut_on_edges;
-	INT *edges;
+	int *edges;
 	
 	Aut_on_edges = NEW_OBJECT(action);
-	edges = NEW_INT(nb_cols);
+	edges = NEW_int(nb_cols);
 	for (i = 0; i < nb_cols; i++) {
 		edges[i] = nb_rows + i;
 		}
@@ -181,17 +181,17 @@ int main(int argc, char **argv)
 			}
 		}
 
-	INT nb_selected_orbits;
-	INT *orbits;
+	int nb_selected_orbits;
+	int *orbits;
 
 	select_cycles(CG, gen, depth, nb_selected_orbits, orbits);
 	print_selected_orbits_at_level(gen,
 			depth, nb_selected_orbits, orbits, verbose_level);
 
-	FREE_INT(orbits);
-	FREE_INT(M);
-	FREE_INT(Adj);
-	FREE_INT(edges);
+	FREE_int(orbits);
+	FREE_int(M);
+	FREE_int(Adj);
+	FREE_int(edges);
 	FREE_OBJECT(Aut_on_edges);
 	FREE_OBJECT(Aut);
 	FREE_OBJECT(CG);
@@ -202,17 +202,17 @@ int main(int argc, char **argv)
 }
 
 void select_cycles(colored_graph *CG,
-		poset_classification *gen, INT level,
-		INT &nb_selected_orbits, INT *&orbits)
+		poset_classification *gen, int level,
+		int &nb_selected_orbits, int *&orbits)
 {
-	INT *set;
-	INT i, nb_orbits;
+	int *set;
+	int i, nb_orbits;
 
-	set = NEW_INT(level);
+	set = NEW_int(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 	nb_selected_orbits = 0;
-	orbits = NEW_INT(nb_orbits);
+	orbits = NEW_int(nb_orbits);
 
 	for (i = 0; i < nb_orbits; i++) {
 		
@@ -222,18 +222,18 @@ void select_cycles(colored_graph *CG,
 			}
 		}
 
-	FREE_INT(set);
+	FREE_int(set);
 }
 
 void print_orbits_at_level(poset_classification *gen,
-		INT level, INT verbose_level)
+		int level, int verbose_level)
 {
-	INT *set;
+	int *set;
 	longinteger_object go, ol, ago;
 	longinteger_domain D;
-	INT i, nb_orbits;
+	int i, nb_orbits;
 
-	set = NEW_INT(level);
+	set = NEW_int(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -253,25 +253,25 @@ void print_orbits_at_level(poset_classification *gen,
 
 		
 		cout << "Orbit " << i << " is the set ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 
 		
 		}
 
-	FREE_INT(set);
+	FREE_int(set);
 }
 
-void print_selected_orbits_at_level(poset_classification *gen, INT level,
-	INT nb_selected_orbits, INT *orbits, INT verbose_level)
+void print_selected_orbits_at_level(poset_classification *gen, int level,
+	int nb_selected_orbits, int *orbits, int verbose_level)
 {
-	INT *set;
+	int *set;
 	longinteger_object go, ol, ago;
 	longinteger_domain D;
-	INT i, j, nb_orbits;
+	int i, j, nb_orbits;
 
-	set = NEW_INT(level);
+	set = NEW_int(level);
 	nb_orbits = gen->nb_orbits_at_level(level);
 
 
@@ -294,23 +294,23 @@ void print_selected_orbits_at_level(poset_classification *gen, INT level,
 
 		
 		cout << "Orbit " << j << " is the set ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << " : " << go << " : " << ol << endl;
 		//cout << endl;
 
 		
 		}
 
-	FREE_INT(set);
+	FREE_int(set);
 }
 
-void early_test_function_paths_and_cycles(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_function_paths_and_cycles(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_function for set ";

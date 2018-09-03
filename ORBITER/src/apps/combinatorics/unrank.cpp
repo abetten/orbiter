@@ -8,10 +8,10 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_k_subset = FALSE;
-	INT n, k, r;
+	int verbose_level = 0;
+	int i;
+	int f_k_subset = FALSE;
+	int n, k, r;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -29,12 +29,12 @@ int main(int argc, char **argv)
 
 	
 	if (f_k_subset) {
-		INT *set = NEW_INT(k);
+		int *set = NEW_int(k);
 		unrank_k_subset(r, set, n, k);
 		cout << "set of rank " << r << " is ";
-		INT_vec_print(cout, set, k);
+		int_vec_print(cout, set, k);
 		cout << endl;
-		FREE_INT(set);
+		FREE_int(set);
 		}
 
 }

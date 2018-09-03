@@ -13,47 +13,47 @@
 
 // global data:
 
-INT t0; // the system time when the program started
-INT nb_sol = 0;
+int t0; // the system time when the program started
+int nb_sol = 0;
 
 void Wilson();
-void SOLS(INT n);
-void SOLS_recursion(INT n, INT i, INT j, INT *A, INT *pairs);
+void SOLS(int n);
+void SOLS_recursion(int n, int i, int j, int *A, int *pairs);
 void MacNeish();
-INT is_self_orthogonal(INT *A, INT n);
-void MacNeish_product(INT *A, INT m, INT *B, INT n, INT *C);
+int is_self_orthogonal(int *A, int n);
+void MacNeish_product(int *A, int m, int *B, int n, int *C);
 void test1();
 void test2();
 void Niketa();
 void Eric();
 void NateBurch();
 void PatrickWahl();
-INT count(INT n);
-void count_recursion(INT n, INT *digits, INT depth);
-void draw_action(char *fname_base, INT xmax, INT ymax, INT *Adjacency, INT m, INT n, INT f_cartesian);
-void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian);
+int count(int n);
+void count_recursion(int n, int *digits, int depth);
+void draw_action(char *fname_base, int xmax, int ymax, int *Adjacency, int m, int n, int f_cartesian);
+void draw_action_(mp_graphics &G, int *Adjacency, int m, int n, int f_cartesian);
 void Halls_theorem();
-void draw_matrix(matrix &H, char *fname, INT xmax, INT ymax, INT f_cartesian);
-void test_hall(INT n, INT nb_inc, INT verbose_level);
-void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, INT verbose_level);
-INT search_new_boy(matrix &H, Vector &x, Vector &y, INT l, INT &prev);
-void get_random_matrix(INT n, INT nb_inc, matrix &H, INT verbose_level);
-void get_random_Hall_matrix(INT n, INT nb_inc, matrix &H, INT verbose_level);
-INT test_hall_condition(matrix &A, Vector &S, INT n, INT &k);
-INT test_hall_condition1(matrix &A, Vector &S, INT n, INT k);
+void draw_matrix(matrix &H, char *fname, int xmax, int ymax, int f_cartesian);
+void test_hall(int n, int nb_inc, int verbose_level);
+void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, int verbose_level);
+int search_new_boy(matrix &H, Vector &x, Vector &y, int l, int &prev);
+void get_random_matrix(int n, int nb_inc, matrix &H, int verbose_level);
+void get_random_Hall_matrix(int n, int nb_inc, matrix &H, int verbose_level);
+int test_hall_condition(matrix &A, Vector &S, int n, int &k);
+int test_hall_condition1(matrix &A, Vector &S, int n, int k);
 void one_by_one();
 void MISSISSIPPI();
 void print_letter(int i);
 void palindromic_problem();
-INT distinct_digits(INT i);
-INT palindrom(INT i);
+int distinct_digits(int i);
+int palindrom(int i);
 void rank_set();
 
 
 
 int main(int argc, char **argv)
 {
-	//INT verbose_level = 2;
+	//int verbose_level = 2;
 	t0 = os_ticks();
 #if 0
 	if (argc <= 1) {
@@ -82,11 +82,11 @@ int main(int argc, char **argv)
 
 void Wilson()
 {
-	INT b, i, j, u, v, a1, a2;
-	INT *line;
+	int b, i, j, u, v, a1, a2;
+	int *line;
 	
-	INT A[13*13];
-	INT lines[13 * 4*4] = {
+	int A[13*13];
+	int lines[13 * 4*4] = {
 		0,1,2,3,
 		0,4,5,6,
 		0,7,8,9,
@@ -101,13 +101,13 @@ void Wilson()
 		3,5,9,10,
 		3,6,7,11,
 		};
-	INT L4[4*4] = {
+	int L4[4*4] = {
 		0,3,1,2,
 		2,1,3,0,
 		3,0,2,1,
 		1,2,0,3
 		};
-	INT L[13][4*4];
+	int L[13][4*4];
 	for (b = 0; b < 13; b++) {
 		line = lines + b * 4;
 		for (i = 0; i < 4; i++) {
@@ -156,14 +156,14 @@ void Wilson()
 		}	
 }
 
-void SOLS(INT n)
+void SOLS(int n)
 {
-	INT *A;
-	INT *pairs;
-	INT i;
+	int *A;
+	int *pairs;
+	int i;
 	
-	A = new INT[n * n];
-	pairs = new INT[n * n];
+	A = new int[n * n];
+	pairs = new int[n * n];
 	for (i = 0; i < n * n; i++) {
 		pairs[i] = FALSE;
 		A[i] = 0;
@@ -172,11 +172,11 @@ void SOLS(INT n)
 }
 
 
-void SOLS_recursion(INT n, INT i, INT j, INT *A, INT *pairs)
+void SOLS_recursion(int n, int i, int j, int *A, int *pairs)
 {
-	INT prev[100];
-	INT alphabet[100];
-	INT u, h, k, l, p1, p2, a, b, ii, jj;
+	int prev[100];
+	int alphabet[100];
+	int u, h, k, l, p1, p2, a, b, ii, jj;
 	
 	if (FALSE) {
 		cout << "SOLS_recursion i=" << i << " j=" << j << endl;
@@ -205,9 +205,9 @@ void SOLS_recursion(INT n, INT i, INT j, INT *A, INT *pairs)
 	for (jj = 0; jj < j; jj++) {
 		prev[l++] = A[i * n + jj];
 		}
-	INT_vec_sort(l, prev);
+	int_vec_sort(l, prev);
 	//cout << "prev=";
-	//INT_vec_print(cout, prev, l);
+	//int_vec_print(cout, prev, l);
 	//cout << endl;
 	h = 0;
 	u = 0;
@@ -220,7 +220,7 @@ void SOLS_recursion(INT n, INT i, INT j, INT *A, INT *pairs)
 		alphabet[u++] = k;
 		}
 	//cout << "alphabet=";
-	//INT_vec_print(cout, alphabet, u);
+	//int_vec_print(cout, alphabet, u);
 	//cout << endl;
 	for (k = 0; k < u; k++) {
 		a = alphabet[k];
@@ -261,13 +261,13 @@ void SOLS_recursion(INT n, INT i, INT j, INT *A, INT *pairs)
 
 void MacNeish()
 {
-	INT A[] = {
+	int A[] = {
 		0,3,1,2,
 		2,1,3,0,
 		3,0,2,1,
 		1,2,0,3};
-	INT C[16 * 16];
-	INT i, j;
+	int C[16 * 16];
+	int i, j;
 	
 	
 	MacNeish_product(A, 4, A, 4, C);
@@ -285,12 +285,12 @@ void MacNeish()
 		}	
 }
 
-INT is_self_orthogonal(INT *A, INT n)
+int is_self_orthogonal(int *A, int n)
 {
-	INT *vec;
-	INT i, j, a, b, c;
+	int *vec;
+	int i, j, a, b, c;
 	
-	vec = new INT[n * n];
+	vec = new int[n * n];
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
 			a = A[i * n + j];
@@ -299,7 +299,7 @@ INT is_self_orthogonal(INT *A, INT n)
 			vec[i * n + j] = c;
 			}
 		}
-	INT_vec_sort(n * n, vec);
+	int_vec_sort(n * n, vec);
 	for (i = 0; i < n * n; i++) {
 		if (vec[i] != i)
 			return FALSE;
@@ -308,9 +308,9 @@ INT is_self_orthogonal(INT *A, INT n)
 }
 
 
-void MacNeish_product(INT *A, INT m, INT *B, INT n, INT *C)
+void MacNeish_product(int *A, int m, int *B, int n, int *C)
 {
-	INT i, j, u, v, mn, a, b, c, ii, jj;
+	int i, j, u, v, mn, a, b, c, ii, jj;
 	
 	mn = m * n;
 	for (u = 0; u < n; u++) {
@@ -333,15 +333,15 @@ void MacNeish_product(INT *A, INT m, INT *B, INT n, INT *C)
 
 void test1()
 {
-	INT n, k, a, b, S;
+	int n, k, a, b, S;
 	
 	cout << "test1" << endl;
 	for (n = 1; n <= 15; n++) {
 		S = 0;
 		for (k = 1; k <= 10; k++) {
-			a = INT_n_choose_k(n - 1, k - 1);
+			a = int_n_choose_k(n - 1, k - 1);
 			//cout << n - 1 << " choose " << k - 1 << " = " << a << endl;
-			b = INT_n_choose_k(10, k);
+			b = int_n_choose_k(10, k);
 			//cout << 10 << " choose " << k << " = " << b << endl;
 			//cout << "together = " << a * b << endl;
 			S += a * b;
@@ -353,7 +353,7 @@ void test1()
 
 void test2()
 {
-	INT n, S;
+	int n, S;
 	
 	cout << "test2" << endl;
 	for (n = 1; n <= 15; n++) {
@@ -364,13 +364,13 @@ void test2()
 
 void Niketa()
 {
-	INT n, k, a, S;
+	int n, k, a, S;
 	
 	cout << "Niketa" << endl;
 	for (n = 1; n <= 15; n++) {
 		S = 0;
 		for (k = 0; k <= 9; k++) {
-			a = INT_n_choose_k(n + k - 1, n - 1);
+			a = int_n_choose_k(n + k - 1, n - 1);
 			S += a;
 			}
 		S--;
@@ -380,11 +380,11 @@ void Niketa()
 
 void Eric()
 {
-	INT n, S;
+	int n, S;
 	
 	cout << "Eric" << endl;
 	for (n = 1; n <= 15; n++) {
-		S = INT_n_choose_k(n + 10 - 1, n) - 1;
+		S = int_n_choose_k(n + 10 - 1, n) - 1;
 		cout << setw(3) << n << " : " << setw(10) << S << endl;
 		}
 }
@@ -392,11 +392,11 @@ void Eric()
 
 void NateBurch()
 {
-	INT n, S;
+	int n, S;
 	
 	cout << "NateBurch" << endl;
 	for (n = 1; n <= 15; n++) {
-		S = INT_n_choose_k(n + 9, 9) - 1;
+		S = int_n_choose_k(n + 9, 9) - 1;
 		cout << setw(3) << n << " : " << setw(10) << S << endl;
 		}
 }
@@ -404,14 +404,14 @@ void NateBurch()
 
 void PatrickWahl()
 {
-	INT n, i, j, a, S;
+	int n, i, j, a, S;
 	
 	cout << "PatrickWahl" << endl;
 	for (n = 1; n <= 15; n++) {
 		S = 1;
 		for (i = 0; i <= n - 1; i++) {
 			for (j = 0; j <= 8; j++) {
-				a = INT_n_choose_k(i + j, i);
+				a = int_n_choose_k(i + j, i);
 				//cout << i + j << " choose " << i << " = " << a << endl;
 				S += a;
 				}
@@ -423,19 +423,19 @@ void PatrickWahl()
 
 
 
-INT count(INT n)
+int count(int n)
 {
-	INT *digits;
+	int *digits;
 	
-	digits = new INT[n];
+	digits = new int[n];
 	nb_sol = 0;
 	count_recursion(n, digits, 0);
 	return nb_sol;
 }
 
-void count_recursion(INT n, INT *digits, INT depth)
+void count_recursion(int n, int *digits, int depth)
 {
-	INT i, f;
+	int i, f;
 	
 	if (depth == n) {
 		for (i = 0; i < n; i++) {
@@ -465,14 +465,14 @@ void count_recursion(INT n, INT *digits, INT depth)
 
 }
 
-void draw_action(char *fname_base, INT xmax, INT ymax, INT *Adjacency, INT m, INT n, INT f_cartesian)
+void draw_action(char *fname_base, int xmax, int ymax, int *Adjacency, int m, int n, int f_cartesian)
 {
-	INT x_min = -1500, x_max = 1500;
-	INT y_min = -1500, y_max = 1500;
-	INT factor_1000 = 1000;
+	int x_min = -1500, x_max = 1500;
+	int y_min = -1500, y_max = 1500;
+	int factor_1000 = 1000;
 	char fname_full[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 	
 	sprintf(fname_full, "%s.mp", fname_base);
 	{
@@ -497,18 +497,18 @@ void draw_action(char *fname_base, INT xmax, INT ymax, INT *Adjacency, INT m, IN
 }
 
 
-void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
+void draw_action_(mp_graphics &G, int *Adjacency, int m, int n, int f_cartesian)
 {
-	INT PX[100], PY[100];
+	int PX[100], PY[100];
 	double delta_phi1;
 	double delta_phi2;
 	double phi0, phi1, d_phi, phi_t, phi_tp1;
 	double r0, r1, r0a, r1a, dr, r_t, r_tp1;
 	double x1, y1, x2, y2;
 	double offset;
-	INT step;
-	INT i, j, t;
-	INT rad;
+	int step;
+	int i, j, t;
+	int rad;
 	char str[1000];
 	
 	if (f_cartesian) {
@@ -554,10 +554,10 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 					x2 = cos(phi_tp1) * r_tp1;
 					y2 = sin(phi_tp1) * r_tp1;
 					}
-				PX[0] = (INT)x1;
-				PY[0] = (INT)y1;
-				PX[1] = (INT)x2;
-				PY[1] = (INT)y2;
+				PX[0] = (int)x1;
+				PY[0] = (int)y1;
+				PX[1] = (int)x2;
+				PY[1] = (int)y2;
 				G.polygon2(PX, PY, 0, 1);
 				r_t = r_tp1;
 				phi_t = phi_tp1;
@@ -575,8 +575,8 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 			x1 = cos(phi0) * r0;
 			y1 = sin(phi0) * r0;
 			}
-		PX[0] = (INT)x1;
-		PY[0] = (INT)y1;
+		PX[0] = (int)x1;
+		PY[0] = (int)y1;
 		G.sf_interior(100);
 		G.sf_color(0);
 		G.circle(PX[0], PY[0], rad);
@@ -593,9 +593,9 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 			x1 = cos(phi0) * r0a;
 			y1 = sin(phi0) * r0a;
 			}
-		PX[0] = (INT)x1;
-		PY[0] = (INT)y1;
-		sprintf(str, "$x_{%ld}$", (INT) i + 1); 
+		PX[0] = (int)x1;
+		PY[0] = (int)y1;
+		sprintf(str, "$x_{%d}$", (int) i + 1); 
 		G.aligned_text(PX[0], PY[0], "", str);
 		}
 	for (i = 0; i < n; i++) {
@@ -608,8 +608,8 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 			x1 = cos(phi1) * r1;
 			y1 = sin(phi1) * r1;
 			}
-		PX[0] = (INT)x1;
-		PY[0] = (INT)y1;
+		PX[0] = (int)x1;
+		PY[0] = (int)y1;
 		G.sf_interior(100);
 		G.sf_color(0);
 		G.circle(PX[0], PY[0], rad);
@@ -626,9 +626,9 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 			x1 = cos(phi1) * r1a;
 			y1 = sin(phi1) * r1a;
 			}
-		PX[0] = (INT)x1;
-		PY[0] = (INT)y1;
-		sprintf(str, "$y_{%ld}$", (INT) i + 1); 
+		PX[0] = (int)x1;
+		PY[0] = (int)y1;
+		sprintf(str, "$y_{%d}$", (int) i + 1); 
 		G.aligned_text(PX[0], PY[0], "", str);
 		}
 		
@@ -638,9 +638,9 @@ void draw_action_(mp_graphics &G, INT *Adjacency, INT m, INT n, INT f_cartesian)
 void Halls_theorem()
 {
 	char fname[1000];
-	INT xmax = 1000;
-	INT ymax = 1000;
-	INT Adjacency[] = {
+	int xmax = 1000;
+	int ymax = 1000;
+	int Adjacency[] = {
 1,1,1,0,0,0,0,0,0,0,0,0,0,
 1,0,0,1,1,0,0,0,0,0,0,0,0,
 1,0,0,0,0,1,1,0,0,0,0,0,0,
@@ -655,10 +655,10 @@ void Halls_theorem()
 0,0,0,0,0,0,0,0,1,1,0,0,1,
 0,0,0,0,0,0,0,0,1,0,1,1,0,
 		};
-	INT m = 13;
-	INT n = 13;
-	INT k, a;
-	INT f_cartesian = FALSE;
+	int m = 13;
+	int n = 13;
+	int k, a;
+	int f_cartesian = FALSE;
 	
 	strcpy(fname, "Hall");
 	for (k = 0; k < 10; k++) {
@@ -668,14 +668,14 @@ void Halls_theorem()
 	draw_action(fname, xmax, ymax, Adjacency, m, n, f_cartesian);
 }
 
-void draw_matrix(matrix &H, char *fname, INT xmax, INT ymax, INT f_cartesian)
+void draw_matrix(matrix &H, char *fname, int xmax, int ymax, int f_cartesian)
 {
-	INT *Adjacency;
-	INT m, n, i, j;
+	int *Adjacency;
+	int m, n, i, j;
 	
 	m = H.s_m();
 	n = H.s_n();
-	Adjacency = new INT[m * n];
+	Adjacency = new int[m * n];
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
 			Adjacency[i * n + j] = H.s_iji(i, j);
@@ -684,17 +684,17 @@ void draw_matrix(matrix &H, char *fname, INT xmax, INT ymax, INT f_cartesian)
 	draw_action(fname, xmax, ymax, Adjacency, m, n, f_cartesian);
 }
 
-void test_hall(INT n, INT nb_inc, INT verbose_level)
+void test_hall(int n, int nb_inc, int verbose_level)
 {
 	matrix H;
 	Vector S;
 	Vector matching, matching_inv;
-	INT i, k;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT xmax = 1000;
-	INT ymax = 1000;
-	INT f_cartesian = TRUE;
+	int i, k;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int xmax = 1000;
+	int ymax = 1000;
+	int f_cartesian = TRUE;
 
 #if 0
 		get_random_Hall_matrix(n, nb_inc, H, verbose_level - 2);
@@ -726,19 +726,19 @@ void test_hall(INT n, INT nb_inc, INT verbose_level)
 				cout << "matching_inv=" << matching_inv << endl;
 				}
 			}
-		sprintf(fname, "Hall_%ld", i);
+		sprintf(fname, "Hall_%d", i);
 		draw_matrix(H, fname, xmax, ymax, f_cartesian);
 		}
 #endif
 }
 
-void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, INT verbose_level)
+void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT n, i, j, size, l, nb_complications = 0;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int n, i, j, size, l, nb_complications = 0;
 	Vector x, y, p;
-	INT prev;
+	int prev;
 	
 	if (f_v) {
 		cout << "matchmaker() H =" << endl;
@@ -847,9 +847,9 @@ void matchmaker(matrix &H, Vector &matching, Vector &matching_inv, INT verbose_l
 		}
 }
 
-INT search_new_boy(matrix &H, Vector &x, Vector &y, INT l, INT &prev)
+int search_new_boy(matrix &H, Vector &x, Vector &y, int l, int &prev)
 {
-	INT n, i, j, h;
+	int n, i, j, h;
 	
 	n = H.s_m();
 	for (j = 0; j < n; j++) {
@@ -880,10 +880,10 @@ INT search_new_boy(matrix &H, Vector &x, Vector &y, INT l, INT &prev)
 	exit(1);
 }
 
-void get_random_matrix(INT n, INT nb_inc, matrix &H, INT verbose_level)
+void get_random_matrix(int n, int nb_inc, matrix &H, int verbose_level)
 {
 	integer a, b;
-	INT i, j, h;
+	int i, j, h;
 	
 	H.m_mn_n(n, n);
 	for (h = 0; h < nb_inc; h++) {
@@ -900,13 +900,13 @@ void get_random_matrix(INT n, INT nb_inc, matrix &H, INT verbose_level)
 		}
 }
 
-void get_random_Hall_matrix(INT n, INT nb_inc, matrix &H, INT verbose_level)
+void get_random_Hall_matrix(int n, int nb_inc, matrix &H, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	Vector S;
 	integer a, b;
-	INT i, j, h, k, nb = 0, c;
+	int i, j, h, k, nb = 0, c;
 	
 	H.m_mn_n(n, n);
 	for (h = 0; h < nb_inc; h++) {
@@ -947,7 +947,7 @@ void get_random_Hall_matrix(INT n, INT nb_inc, matrix &H, INT verbose_level)
 		}
 }
 
-INT test_hall_condition(matrix &A, Vector &S, INT n, INT &k)
+int test_hall_condition(matrix &A, Vector &S, int n, int &k)
 {
 	for (k = 1; k <= n; k++) {
 		S.m_l_n(k);
@@ -960,10 +960,10 @@ INT test_hall_condition(matrix &A, Vector &S, INT n, INT &k)
 	return TRUE;
 }
 
-INT test_hall_condition1(matrix &A, Vector &S, INT n, INT k)
+int test_hall_condition1(matrix &A, Vector &S, int n, int k)
 {
 	Vector F;
-	INT h, i, j, m;
+	int h, i, j, m;
 	
 	F.m_l_n(n);
 	for (h = 0; h < k; h++) {
@@ -988,13 +988,13 @@ INT test_hall_condition1(matrix &A, Vector &S, INT n, INT k)
 
 void one_by_one()
 {
-	INT n = 20;
-	INT np1 = n + 1;
-	INT *M;
-	INT i, j;
+	int n = 20;
+	int np1 = n + 1;
+	int *M;
+	int i, j;
 	char fname[1000];
 	
-	M = new INT[np1 * np1];
+	M = new int[np1 * np1];
 	for (i = 1; i <= n; i++) {
 		M[i * np1 + 0] = i;
 		M[0 * np1 + i] = i;
@@ -1047,9 +1047,9 @@ void one_by_one()
 
 void MISSISSIPPI()
 {
-	INT word[4];
-	INT m[4];
-	INT i0, i1, i2, i3, i, cnt = 0;
+	int word[4];
+	int m[4];
+	int i0, i1, i2, i3, i, cnt = 0;
 	
 	
 	for (i0 = 0; i0 < 4; i0++) {
@@ -1070,7 +1070,7 @@ void MISSISSIPPI()
 						continue;
 					if (m[1] > 2)
 						continue;
-					INT_vec_quicksort_decreasingly(m, 4);
+					int_vec_quicksort_decreasingly(m, 4);
 					if (m[0] != 2)
 						continue;
 					if (m[1] != 2)
@@ -1102,7 +1102,7 @@ void print_letter(int i)
 
 void palindromic_problem()
 {
-	INT i, j, a, b, year = 2012;
+	int i, j, a, b, year = 2012;
 
 #if 0
 	for (i = 100; i < 999; i++) {
@@ -1130,9 +1130,9 @@ void palindromic_problem()
 
 }
 
-INT distinct_digits(INT i)
+int distinct_digits(int i)
 {
-	INT a, b, c;
+	int a, b, c;
 
 	c = i % 10;
 	i -= c;
@@ -1147,9 +1147,9 @@ INT distinct_digits(INT i)
 	return TRUE;
 }
 
-INT palindrom(INT i)
+int palindrom(int i)
 {
-	INT a, b, c, j;
+	int a, b, c, j;
 
 	c = i % 10;
 	i -= c;
@@ -1164,22 +1164,22 @@ INT palindrom(INT i)
 
 void rank_set()
 {
-	INT n = 72;
-	INT k = 3;
-	INT set[] = {11,50,51};
-	INT *set1;
-	INT rk;
+	int n = 72;
+	int k = 3;
+	int set[] = {11,50,51};
+	int *set1;
+	int rk;
 
-	set1 = NEW_INT(k);
+	set1 = NEW_int(k);
 	rk = rank_k_subset(set, n, k);
 	cout << "the rank of the set ";
-	INT_vec_print(cout, set, k);
+	int_vec_print(cout, set, k);
 	cout << " with n=" << n;
 	cout << " is " << rk << endl;
 
 	unrank_k_subset(rk, set1, n, k);
 	cout << "after unrank: ";
-	INT_vec_print(cout, set1, k);
+	int_vec_print(cout, set1, k);
 	cout << endl;
 	
 }

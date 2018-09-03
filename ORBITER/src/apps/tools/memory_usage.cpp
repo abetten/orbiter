@@ -11,21 +11,21 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 
-	INT f_file_mask = FALSE;
-	INT range_first = 0;
-	INT range_len = 0;
+	int f_file_mask = FALSE;
+	int range_first = 0;
+	int range_len = 0;
 	const char *fname_mask;
 
-	INT nb_extra_files = 0;
+	int nb_extra_files = 0;
 	const char *extra_files[1000];
 
 
@@ -51,12 +51,12 @@ int main(int argc, char **argv)
 			}
 		}
 
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 
-	INT nb_files = 0;
-	INT h;
+	int nb_files = 0;
+	int h;
 
 	if (f_file_mask) {
 		nb_files += range_len;
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	INT idx;
+	int idx;
 	mem_object_registry **M;
 
 	M = (mem_object_registry **) NEW_pvoid(nb_files);
@@ -97,7 +97,8 @@ int main(int argc, char **argv)
 		cout << "file " << idx << " / " << nb_files << " is " << fnames[idx] << ":" << endl;
 		spreadsheet *S;
 		char *p;
-		INT N, a;
+		int N;
+		long int a;
 
 		S = NEW_OBJECT(spreadsheet);
 
@@ -117,17 +118,17 @@ int main(int argc, char **argv)
 		for (i = 0; i < N; i++) {
 
 			p = S->get_string(i + 1, 1);
-			//sscanf(p, "%ld", &a);
+			//sscanf(p, "%d", &a);
 			std::stringstream ss;
 			ss << std::hex << p + 2;
 			ss >> a;
 			M[idx]->entries[i].pointer = (void *) a;
 
-			M[idx]->entries[i].time_stamp = S->get_INT(i + 1, 2);
+			M[idx]->entries[i].time_stamp = S->get_int(i + 1, 2);
 
 			M[idx]->entries[i].set_type_from_string(S->get_string(i + 1, 3));
-			M[idx]->entries[i].object_n = S->get_INT(i + 1, 4);
-			M[idx]->entries[i].object_size_of = S->get_INT(i + 1, 5);
+			M[idx]->entries[i].object_n = S->get_int(i + 1, 4);
+			M[idx]->entries[i].object_size_of = S->get_int(i + 1, 5);
 
 			p = S->get_string(i + 1, 6);
 			M[idx]->entries[i].extra_type_info = NEW_char(strlen(p) + 1);
@@ -137,7 +138,7 @@ int main(int argc, char **argv)
 			M[idx]->entries[i].source_file = NEW_char(strlen(p) + 1);
 			strcpy((char *) M[idx]->entries[i].source_file, p);
 
-			M[idx]->entries[i].source_line = S->get_INT(i + 1, 8);
+			M[idx]->entries[i].source_line = S->get_int(i + 1, 8);
 			}
 		M[idx]->nb_entries_used = N;
 		//M[idx]->dump();

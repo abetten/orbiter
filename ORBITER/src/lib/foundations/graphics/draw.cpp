@@ -11,15 +11,15 @@
 #include <math.h>
 
 
-void orbits_point(INT *Px, INT *Py, INT idx, INT sx, INT sy, INT i, INT j)
+void orbits_point(int *Px, int *Py, int idx, int sx, int sy, int i, int j)
 {
 	Px[idx] = 0 + sx * j;
 	Py[idx] = 0 - sy * i;
 }
 
-void orbits_draw_dot(mp_graphics &MP, INT sx, INT sy, INT i, INT j)
+void orbits_draw_dot(mp_graphics &MP, int sx, int sy, int i, int j)
 {
-	INT Px[1000], Py[1000];
+	int Px[1000], Py[1000];
 	
 	orbits_point(Px, Py, 0, sx, sy, i, j);
 	MP.sf_interior(100);
@@ -27,33 +27,33 @@ void orbits_draw_dot(mp_graphics &MP, INT sx, INT sy, INT i, INT j)
 	MP.circle(Px[0], Py[0], 4);
 }
 
-void orbits_draw_circle(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, INT j1)
+void orbits_draw_circle(mp_graphics &MP, int sx, int sy, int i0, int j0, int i1, int j1)
 {
-	INT Px[1000], Py[1000];
-	INT dx, dy, r;
+	int Px[1000], Py[1000];
+	int dx, dy, r;
 	
 	orbits_point(Px, Py, 0, sx, sy, i0, j0);
 	orbits_point(Px, Py, 1, sx, sy, i1, j1);
 	dx = Px[1] - Px[0];
 	dy = Py[1] - Py[0];
-	r = (INT)sqrt((double)(dx * dx + dy * dy));
+	r = (int)sqrt((double)(dx * dx + dy * dy));
 	// MP.sf_interior(100);
 	// MP.sf_color(1);
 	MP.circle(Px[0], Py[0], r);
 }
 
-void orbits_draw_line2(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, INT j1)
+void orbits_draw_line2(mp_graphics &MP, int sx, int sy, int i0, int j0, int i1, int j1)
 {
-	INT Px[1000], Py[1000];
+	int Px[1000], Py[1000];
 	
 	orbits_point(Px, Py, 0, sx, sy, i0, j0);
 	orbits_point(Px, Py, 1, sx, sy, i1, j1);
 	MP.polygon2(Px, Py, 0, 1);
 }
 
-void orbits_draw_line3(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, INT j1, INT i2, INT j2)
+void orbits_draw_line3(mp_graphics &MP, int sx, int sy, int i0, int j0, int i1, int j1, int i2, int j2)
 {
-	INT Px[1000], Py[1000];
+	int Px[1000], Py[1000];
 	
 	orbits_point(Px, Py, 0, sx, sy, i0, j0);
 	orbits_point(Px, Py, 1, sx, sy, i1, j1);
@@ -61,9 +61,9 @@ void orbits_draw_line3(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, 
 	MP.polygon3(Px, Py, 0, 1, 2);
 }
 
-void orbits_draw_line4(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, INT j1, INT i2, INT j2, INT i3, INT j3)
+void orbits_draw_line4(mp_graphics &MP, int sx, int sy, int i0, int j0, int i1, int j1, int i2, int j2, int i3, int j3)
 {
-	INT Px[1000], Py[1000];
+	int Px[1000], Py[1000];
 	
 	orbits_point(Px, Py, 0, sx, sy, i0, j0);
 	orbits_point(Px, Py, 1, sx, sy, i1, j1);
@@ -72,7 +72,7 @@ void orbits_draw_line4(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, 
 	MP.polygon4(Px, Py, 0, 1, 2, 3);
 }
 
-void orbits_draw_box(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, INT j1)
+void orbits_draw_box(mp_graphics &MP, int sx, int sy, int i0, int j0, int i1, int j1)
 {
 	orbits_draw_line2(MP, sx, sy, i0, j0, i1, j0);
 	orbits_draw_line2(MP, sx, sy, i1, j0, i1, j1);
@@ -82,9 +82,9 @@ void orbits_draw_box(mp_graphics &MP, INT sx, INT sy, INT i0, INT j0, INT i1, IN
 
 #undef DEBUG_TRANSFORM_LLUR
 
-void transform_llur(INT *in, INT *out, INT &x, INT &y)
+void transform_llur(int *in, int *out, int &x, int &y)
 {
-	INT dx, dy; //, rad;
+	int dx, dy; //, rad;
 	double a, b; //, f;
 
 #ifdef DEBUG_TRANSFORM_LLUR
@@ -111,10 +111,10 @@ void transform_llur(INT *in, INT *out, INT &x, INT &y)
 	//a = f * a;
 	//b = f * b;
 
-	//dx = (INT)(a * f);
-	//dy = (INT)(b * f);
-	dx = (INT)(a * (double)(out[2] - out[0]));
-	dy = (INT)(b * (double)(out[3] - out[1]));
+	//dx = (int)(a * f);
+	//dy = (int)(b * f);
+	dx = (int)(a * (double)(out[2] - out[0]));
+	dy = (int)(b * (double)(out[3] - out[1]));
 	x = dx + out[0];
 	y = dy + out[1];
 #ifdef DEBUG_TRANSFORM_LLUR
@@ -122,36 +122,36 @@ void transform_llur(INT *in, INT *out, INT &x, INT &y)
 #endif
 }
 
-void transform_dist(INT *in, INT *out, INT &x, INT &y)
+void transform_dist(int *in, int *out, int &x, int &y)
 {
-	INT dx, dy;
+	int dx, dy;
 	double a, b;
 
 	a = (double) x / (double)(in[2] - in[0]);
 	b = (double) y / (double)(in[3] - in[1]);
-	dx = (INT)(a * (double) (out[2] - out[0]));
-	dy = (INT)(b * (double) (out[3] - out[1]));
+	dx = (int)(a * (double) (out[2] - out[0]));
+	dy = (int)(b * (double) (out[3] - out[1]));
 	x = dx;
 	y = dy;
 }
 
-void transform_dist_x(INT *in, INT *out, INT &x)
+void transform_dist_x(int *in, int *out, int &x)
 {
-	INT dx;
+	int dx;
 	double a;
 
 	a = (double) x / (double)(in[2] - in[0]);
-	dx = (INT)(a * (double) (out[2] - out[0]));
+	dx = (int)(a * (double) (out[2] - out[0]));
 	x = dx;
 }
 
-void transform_dist_y(INT *in, INT *out, INT &y)
+void transform_dist_y(int *in, int *out, int &y)
 {
-	INT dy;
+	int dy;
 	double b;
 
 	b = (double) y / (double)(in[3] - in[1]);
-	dy = (INT)(b * (double) (out[3] - out[1]));
+	dy = (int)(b * (double) (out[3] - out[1]));
 	y = dy;
 }
 
@@ -178,14 +178,14 @@ void transform_llur_double(double *in, double *out, double &x, double &y)
 
 void draw(char *fname)
 {
-	INT n = 100, dx = 10, dy = 10;
-	INT xmin = -n * dx, xmax = n * dx;
-	INT ymin = -n * dy, ymax = 0;
-	INT factor_1000 = 1000;
-	INT Px[1000], Py[1000];
+	int n = 100, dx = 10, dy = 10;
+	int xmin = -n * dx, xmax = n * dx;
+	int ymin = -n * dy, ymax = 0;
+	int factor_1000 = 1000;
+	int Px[1000], Py[1000];
 	char fname_full[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 	
 	sprintf(fname_full, "%s.mp", fname);
 	mp_graphics G(fname_full, xmin, ymin, xmax, ymax, f_embedded, f_sideways);
@@ -221,7 +221,7 @@ void draw(char *fname)
 				G.sf_color(1);
 				G.circle(Px[1], Py[1], 5);
 
-				sprintf(str, "$%ld$", j);
+				sprintf(str, "$%d$", j);
 				G.aligned_text(Px, Py, 1, "t", str);
 				}
 			}
@@ -232,70 +232,70 @@ void draw(char *fname)
 	G.footer();
 }
 
-void on_circle_int(INT *Px, INT *Py, INT idx, INT angle_in_degree, INT rad)
+void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad)
 {
 	
-	Px[idx] = (INT)(cos_grad(angle_in_degree) * (double) rad);
-	Py[idx] = (INT)(sin_grad(angle_in_degree) * (double) rad);
+	Px[idx] = (int)(cos_grad(angle_in_degree) * (double) rad);
+	Py[idx] = (int)(sin_grad(angle_in_degree) * (double) rad);
 }
 
-void on_circle_double(double *Px, double *Py, INT idx, double angle_in_degree, double rad)
+void on_circle_double(double *Px, double *Py, int idx, double angle_in_degree, double rad)
 {
 	
 	Px[idx] = cos_grad(angle_in_degree) * rad;
 	Py[idx] = sin_grad(angle_in_degree) * rad;
 }
 
-void polygon3D(mp_graphics &G, INT *Px, INT *Py, INT dim, INT x0, INT y0, INT z0, INT x1, INT y1, INT z1)
+void polygon3D(mp_graphics &G, int *Px, int *Py, int dim, int x0, int y0, int z0, int x1, int y1, int z1)
 {
-	INT idx0, idx1;
+	int idx0, idx1;
 	idx0 = x0 * 9 + y0 * 3 + z0;
 	idx1 = x1 * 9 + y1 * 3 + z1;
 	G.polygon2(Px, Py, idx0, idx1);
 }
 
-void integer_4pts(mp_graphics &G, INT *Px, INT *Py, INT p1, INT p2, INT p3, INT p4, 
-	const char *align, INT a)
+void integer_4pts(mp_graphics &G, int *Px, int *Py, int p1, int p2, int p3, int p4, 
+	const char *align, int a)
 {
 	char str[100];
 	
-	sprintf(str, "%ld", a);
+	sprintf(str, "%d", a);
 	text_4pts(G, Px, Py, p1, p2, p3, p4, align, str);
 }
 
-void text_4pts(mp_graphics &G, INT *Px, INT *Py, INT p1, INT p2, INT p3, INT p4, 
+void text_4pts(mp_graphics &G, int *Px, int *Py, int p1, int p2, int p3, int p4, 
 	const char *align, const char *str)
 {
-	INT x = Px[p1] + Px[p2] + Px[p3] + Px[p4];
-	INT y = Py[p1] + Py[p2] + Py[p3] + Py[p4];
+	int x = Px[p1] + Px[p2] + Px[p3] + Px[p4];
+	int y = Py[p1] + Py[p2] + Py[p3] + Py[p4];
 	x >>= 2;
 	y >>= 2;
 	G.aligned_text(x, y, align, str);
 }
 
-void affine_pt1(INT *Px, INT *Py, INT p0, INT p1, INT p2, double f1, INT p3)
+void affine_pt1(int *Px, int *Py, int p0, int p1, int p2, double f1, int p3)
 {
-	INT x = Px[p0] + (INT)(f1 * (double)(Px[p2] - Px[p1]));
-	INT y = Py[p0] + (INT)(f1 * (double)(Py[p2] - Py[p1]));
+	int x = Px[p0] + (int)(f1 * (double)(Px[p2] - Px[p1]));
+	int y = Py[p0] + (int)(f1 * (double)(Py[p2] - Py[p1]));
 	Px[p3] = x;
 	Py[p3] = y;
 }
 
-void affine_pt2(INT *Px, INT *Py, INT p0, INT p1, INT p1b, 
-	double f1, INT p2, INT p2b, double f2, INT p3)
+void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b, 
+	double f1, int p2, int p2b, double f2, int p3)
 {
-	INT x = Px[p0] + (INT)(f1 * (double)(Px[p1b] - Px[p1])) + (INT)(f2 * (double)(Px[p2b] - Px[p2]));
-	INT y = Py[p0] + (INT)(f1 * (double)(Py[p1b] - Py[p1])) + (INT)(f2 * (double)(Py[p2b] - Py[p2]));
+	int x = Px[p0] + (int)(f1 * (double)(Px[p1b] - Px[p1])) + (int)(f2 * (double)(Px[p2b] - Px[p2]));
+	int y = Py[p0] + (int)(f1 * (double)(Py[p1b] - Py[p1])) + (int)(f2 * (double)(Py[p2b] - Py[p2]));
 	Px[p3] = x;
 	Py[p3] = y;
 }
 
-INT C3D(INT i, INT j, INT k)
+int C3D(int i, int j, int k)
 {
 	return i * 9 + j * 3 + k;
 }
 
-INT C2D(INT i, INT j)
+int C2D(int i, int j)
 {
 	return i * 5 + j;
 }
@@ -335,15 +335,15 @@ double atan_grad(double x)
 	return phi;
 }
 
-void adjust_coordinates_double(double *Px, double *Py, INT *Qx, INT *Qy, 
-	INT N, double xmin, double ymin, double xmax, double ymax, INT verbose_level)
+void adjust_coordinates_double(double *Px, double *Py, int *Qx, int *Qy, 
+	int N, double xmin, double ymin, double xmax, double ymax, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	double in[4], out[4];
 	double x_min, x_max;
 	double y_min, y_max;
-	INT i;
+	int i;
 	double x, y;
 	
 	x_min = x_max = Px[0];
@@ -386,15 +386,15 @@ void adjust_coordinates_double(double *Px, double *Py, INT *Qx, INT *Qy,
 			cout << "In:" << x << "," << y << " : ";
 			}
 		transform_llur_double(in, out, x, y);
-		Qx[i] = (INT)x;
-		Qy[i] = (INT)y;
+		Qx[i] = (int)x;
+		Qy[i] = (int)y;
 		if (f_vv) {
 			cout << " Out: " << Qx[i] << "," << Qy[i] << endl;
 			}
 		}
 }
 
-void Intersection_of_lines(double *X, double *Y, double *a, double *b, double *c, INT l1, INT l2, INT pt)
+void Intersection_of_lines(double *X, double *Y, double *a, double *b, double *c, int l1, int l2, int pt)
 {
 	intersection_of_lines(a[l1], b[l1], c[l1], a[l2], b[l2], c[l2], X[pt], Y[pt]);
 }
@@ -411,7 +411,7 @@ void intersection_of_lines(double a1, double b1, double c1, double a2, double b2
 }
 
 void Line_through_points(double *X, double *Y, double *a, double *b, double *c, 
-	INT pt1, INT pt2, INT line_idx)
+	int pt1, int pt2, int line_idx)
 {
 	line_through_points(X[pt1], Y[pt1], X[pt2], Y[pt2], a[line_idx], b[line_idx], c[line_idx]);
 }
@@ -482,7 +482,7 @@ void intersect_circle_line(double rad, double x0, double y0, double a, double b,
 	y2 = (-a * x2 - c) / b;
 }
 
-void affine_combination(double *X, double *Y, INT pt0, INT pt1, INT pt2, double alpha, INT new_pt)
+void affine_combination(double *X, double *Y, int pt0, int pt1, int pt2, double alpha, int new_pt)
 //X[new_pt] = X[pt0] + alpha * (X[pt2] - X[pt1]);
 //Y[new_pt] = Y[pt0] + alpha * (Y[pt2] - Y[pt1]);
 {
@@ -490,16 +490,16 @@ void affine_combination(double *X, double *Y, INT pt0, INT pt1, INT pt2, double 
 	Y[new_pt] = Y[pt0] + alpha * (Y[pt2] - Y[pt1]);
 }
 
-void draw_graph(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT *Edges, INT nb_E)
+void draw_graph(mp_graphics *G, int x, int y, int dx, int dy, int nb_V, int *Edges, int nb_E)
 {
 	double *X, *Y;
 	double h = dy * .7;
 	double w = dx * .7;
-	INT i, e, u, v;
+	int i, e, u, v;
 	double phi = M_PI * 2. / nb_V;
-	INT Px[2];
-	INT Py[2];
-	INT rad = (INT)(dx * .05);
+	int Px[2];
+	int Py[2];
+	int rad = (int)(dx * .05);
 	
 	//cout << "draw_graph nb_V=" << nb_V << endl;
 
@@ -514,34 +514,34 @@ void draw_graph(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT *Edg
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
 		k2ij(e, u, v, nb_V);
-		Px[0] = x + (INT) X[u];
-		Py[0] = y + (INT) Y[u];
-		Px[1] = x + (INT) X[v];
-		Py[1] = y + (INT) Y[v];
+		Px[0] = x + (int) X[u];
+		Py[0] = y + (int) Y[u];
+		Px[1] = x + (int) X[v];
+		Py[1] = y + (int) Y[v];
 		G->polygon2(Px, Py, 0, 1);
 		}
 	for (i = 0; i < nb_V; i++) {
-		Px[0] = x + (INT) X[i];
-		Py[0] = y + (INT) Y[i];
+		Px[0] = x + (int) X[i];
+		Py[0] = y + (int) Y[i];
 		G->nice_circle(Px[0], Py[0], rad);
 		}
 	delete X;
 	delete Y;
 }
 
-void draw_graph_with_distinguished_edge(mp_graphics *G, INT x, INT y, 
-	INT dx, INT dy, INT nb_V, INT *Edges, INT nb_E, 
-	INT distinguished_edge, INT verbose_level)
+void draw_graph_with_distinguished_edge(mp_graphics *G, int x, int y, 
+	int dx, int dy, int nb_V, int *Edges, int nb_E, 
+	int distinguished_edge, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double *X, *Y;
 	double h = dy * .7;
 	double w = dx * .7;
-	INT i, e, u, v;
+	int i, e, u, v;
 	double phi = M_PI * 2. / nb_V;
-	INT Px[2];
-	INT Py[2];
-	INT rad = (INT)(dx * .05);
+	int Px[2];
+	int Py[2];
+	int rad = (int)(dx * .05);
 	
 	if (f_v) {
 		cout << "draw_graph_with_distinguished_edge nb_V=" << nb_V << endl;
@@ -558,10 +558,10 @@ void draw_graph_with_distinguished_edge(mp_graphics *G, INT x, INT y,
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
 		k2ij(e, u, v, nb_V);
-		Px[0] = x + (INT) X[u];
-		Py[0] = y + (INT) Y[u];
-		Px[1] = x + (INT) X[v];
-		Py[1] = y + (INT) Y[v];
+		Px[0] = x + (int) X[u];
+		Py[0] = y + (int) Y[u];
+		Px[1] = x + (int) X[v];
+		Py[1] = y + (int) Y[v];
 		if (distinguished_edge == i) {
 			G->sl_thickness(80);
 			}
@@ -571,25 +571,25 @@ void draw_graph_with_distinguished_edge(mp_graphics *G, INT x, INT y,
 			}
 		}
 	for (i = 0; i < nb_V; i++) {
-		Px[0] = x + (INT) X[i];
-		Py[0] = y + (INT) Y[i];
+		Px[0] = x + (int) X[i];
+		Py[0] = y + (int) Y[i];
 		G->nice_circle(Px[0], Py[0], rad);
 		}
 	delete X;
 	delete Y;
 }
 
-void draw_graph_on_multiple_circles(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT *Edges, INT nb_E, INT nb_circles)
+void draw_graph_on_multiple_circles(mp_graphics *G, int x, int y, int dx, int dy, int nb_V, int *Edges, int nb_E, int nb_circles)
 {
 	double *X, *Y;
 	double h = dy * .7;
 	double w = dx * .7;
-	INT i, j, e, u, v;
+	int i, j, e, u, v;
 	double phi;
-	INT Px[2];
-	INT Py[2];
-	INT rad = (INT)(dx * .05);
-	INT nb_per_circle;
+	int Px[2];
+	int Py[2];
+	int rad = (int)(dx * .05);
+	int nb_per_circle;
 	
 	cout << "draw_graph_on_multiple_circles nb_V=" << nb_V << endl;
 	nb_per_circle = nb_V / nb_circles;
@@ -608,32 +608,32 @@ void draw_graph_on_multiple_circles(mp_graphics *G, INT x, INT y, INT dx, INT dy
 	for (i = 0; i < nb_E; i++) {
 		e = Edges[i];
 		k2ij(e, u, v, nb_V);
-		Px[0] = x + (INT) X[u];
-		Py[0] = y + (INT) Y[u];
-		Px[1] = x + (INT) X[v];
-		Py[1] = y + (INT) Y[v];
+		Px[0] = x + (int) X[u];
+		Py[0] = y + (int) Y[u];
+		Px[1] = x + (int) X[v];
+		Py[1] = y + (int) Y[v];
 		G->polygon2(Px, Py, 0, 1);
 		}
 	for (i = 0; i < nb_V; i++) {
-		Px[0] = x + (INT) X[i];
-		Py[0] = y + (INT) Y[i];
+		Px[0] = x + (int) X[i];
+		Py[0] = y + (int) Y[i];
 		G->nice_circle(Px[0], Py[0], rad);
 		}
 	delete X;
 	delete Y;
 }
 
-void draw_graph_on_2D_grid(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT rad, INT nb_V, 
-	INT *Edges, INT nb_E, INT *coords_2D, INT *Base, 
-	INT f_point_labels, INT point_label_offset, INT f_directed)
+void draw_graph_on_2D_grid(mp_graphics *G, int x, int y, int dx, int dy, int rad, int nb_V, 
+	int *Edges, int nb_E, int *coords_2D, int *Base, 
+	int f_point_labels, int point_label_offset, int f_directed)
 {
 	double *X, *Y;
 	//double h = dy * .7;
 	//double w = dx * .7;
-	INT i, u, v;
-	INT Px[2];
-	INT Py[2];
-	//INT rad = (INT)(dx * .1);
+	int i, u, v;
+	int Px[2];
+	int Py[2];
+	//int rad = (int)(dx * .1);
 	
 	cout << "draw_graph_on_2D_grid nb_V=" << nb_V << endl;
 	X = new double [nb_V];
@@ -652,15 +652,15 @@ void draw_graph_on_2D_grid(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT rad
 		u = Edges[2 * i + 0];
 		v = Edges[2 * i + 1];
 		//k2ij(e, u, v, nb_V);
-		Px[0] = x + (INT) X[u];
-		Py[0] = y + (INT) Y[u];
-		Px[1] = x + (INT) X[v];
-		Py[1] = y + (INT) Y[v];
+		Px[0] = x + (int) X[u];
+		Py[0] = y + (int) Y[u];
+		Px[1] = x + (int) X[v];
+		Py[1] = y + (int) Y[v];
 		G->polygon2(Px, Py, 0, 1);
 		}
 	for (i = 0; i < nb_V; i++) {
-		Px[0] = x + (INT) X[i];
-		Py[0] = y + (INT) Y[i];
+		Px[0] = x + (int) X[i];
+		Py[0] = y + (int) Y[i];
 		G->nice_circle(Px[0], Py[0], rad);
 		}
 
@@ -668,9 +668,9 @@ void draw_graph_on_2D_grid(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT rad
 		char str[1000];
 		
 		for (i = 0; i < nb_V; i++) {
-			sprintf(str, "%ld", i+ point_label_offset);
-			Px[0] = x + (INT) X[i];
-			Py[0] = y + (INT) Y[i];
+			sprintf(str, "%d", i+ point_label_offset);
+			Px[0] = x + (int) X[i];
+			Py[0] = y + (int) Y[i];
 			G->aligned_text(Px[0], Py[0], "", str);
 			}
 		}
@@ -681,17 +681,17 @@ void draw_graph_on_2D_grid(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT rad
 	delete Y;
 }
 
-void draw_tournament(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT *Edges, INT nb_E, INT verbose_level)
+void draw_tournament(mp_graphics *G, int x, int y, int dx, int dy, int nb_V, int *Edges, int nb_E, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double *X, *Y;
 	double h = dy * .7;
 	double w = dx * .7;
-	INT i, a, a2, swap, u, v;
+	int i, a, a2, swap, u, v;
 	double phi = M_PI * 2. / nb_V;
-	INT Px[3];
-	INT Py[3];
-	INT rad = (INT)(dx * .05);
+	int Px[3];
+	int Py[3];
+	int rad = (int)(dx * .05);
 	
 	if (f_v) {
 		cout << "draw_tournament nb_V=" << nb_V << endl;
@@ -715,10 +715,10 @@ void draw_tournament(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT
 
 
 
-		Px[0] = x + (INT) X[u];
-		Py[0] = y + (INT) Y[u];
-		Px[1] = x + (INT) X[v];
-		Py[1] = y + (INT) Y[v];
+		Px[0] = x + (int) X[u];
+		Py[0] = y + (int) Y[u];
+		Px[1] = x + (int) X[v];
+		Py[1] = y + (int) Y[v];
 		if (swap) {
 			Px[2] = (3 * Px[0] + Px[1]) >> 2;
 			Py[2] = (3 * Py[0] + Py[1]) >> 2;
@@ -736,27 +736,27 @@ void draw_tournament(mp_graphics *G, INT x, INT y, INT dx, INT dy, INT nb_V, INT
 	// now draw vertices:
 
 	for (i = 0; i < nb_V; i++) {
-		Px[0] = x + (INT) X[i];
-		Py[0] = y + (INT) Y[i];
+		Px[0] = x + (int) X[i];
+		Py[0] = y + (int) Y[i];
 		G->nice_circle(Px[0], Py[0], rad);
 		}
 	delete X;
 	delete Y;
 }
 
-void draw_bitmatrix(const char *fname_base, INT f_dots, 
-	INT f_partition, INT nb_row_parts, INT *row_part_first, INT nb_col_parts, INT *col_part_first, 
-	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, uchar *D, INT *M, 
-	INT m, INT n, INT xmax_in, INT ymax_in, INT xmax_out, INT ymax_out, 
+void draw_bitmatrix(const char *fname_base, int f_dots, 
+	int f_partition, int nb_row_parts, int *row_part_first, int nb_col_parts, int *col_part_first, 
+	int f_row_grid, int f_col_grid, 
+	int f_bitmatrix, uchar *D, int *M, 
+	int m, int n, int xmax_in, int ymax_in, int xmax_out, int ymax_out, 
 	double scale, double line_width, 
-	INT f_has_labels, INT *labels)
+	int f_has_labels, int *labels)
 {
 	mp_graphics G;
 	char fname_base2[1000];
 	char fname[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 	//double scale = .3;
 	//double line_width = 1.0;
 	
@@ -784,17 +784,17 @@ void draw_bitmatrix(const char *fname_base, INT f_dots,
 	cout << "draw_it written file " << fname << " of size " << file_size(fname) << endl;
 }
 
-void draw_bitmatrix2(mp_graphics &G, INT f_dots, 
-	INT f_partition, INT nb_row_parts, INT *row_part_first, INT nb_col_parts, INT *col_part_first, 
-	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, uchar *D, INT *M, 
-	INT m, INT n, INT xmax, INT ymax, 
-	INT f_has_labels, INT *labels)
+void draw_bitmatrix2(mp_graphics &G, int f_dots, 
+	int f_partition, int nb_row_parts, int *row_part_first, int nb_col_parts, int *col_part_first, 
+	int f_row_grid, int f_col_grid, 
+	int f_bitmatrix, uchar *D, int *M, 
+	int m, int n, int xmax, int ymax, 
+	int f_has_labels, int *labels)
 {
 	char comment[1000];
 	grid_frame F;
-	INT i, j, ii, jj, ij, a, cnt, mn, mtn, mtn1;
-	INT indent = 0;
+	int i, j, ii, jj, ij, a, cnt, mn, mtn, mtn1;
+	int indent = 0;
 	
 	mn = MAXIMUM(m, n);
 	F.f_matrix_notation = TRUE;
@@ -829,7 +829,7 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 		sprintf(comment, "row partition");
 		G.comment(comment);
 		for (i = 0; i < nb_row_parts + 1; i++) {
-			sprintf(comment, "part_%ld", i);
+			sprintf(comment, "part_%d", i);
 			G.comment(comment);
 			ii = row_part_first[i];
 			G.grid_polygon2(&F, ii * 10, 0 * 10, ii * 10, (n + 0) * 10);
@@ -838,7 +838,7 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 		sprintf(comment, "column partition");
 		G.comment(comment);
 		for (j = 0; j < nb_col_parts + 1; j++) {
-			sprintf(comment, "part_%ld", j);
+			sprintf(comment, "part_%d", j);
 			G.comment(comment);
 			jj = col_part_first[j];
 			G.grid_polygon2(&F, 0 * 10, jj * 10, (m + 0) * 10, jj * 10);
@@ -856,9 +856,9 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 
 	if (f_row_grid) {
 		for (i = 0; i < m; i++) {
-			sprintf(comment, "row_%ld", i);
+			sprintf(comment, "row_%d", i);
 			if (f_has_labels) {
-				sprintf(comment + strlen(comment), " label %ld", labels[i]);
+				sprintf(comment + strlen(comment), " label %d", labels[i]);
 				}
 			G.comment(comment);
 			j = 0;
@@ -873,9 +873,9 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 
 	if (f_col_grid) {
 		for (j = 0; j < n; j++) {
-			sprintf(comment, "col_%ld", j);
+			sprintf(comment, "col_%d", j);
 			if (f_has_labels) {
-				sprintf(comment + strlen(comment), " label %ld", labels[j]);
+				sprintf(comment + strlen(comment), " label %d", labels[j]);
 				}
 			G.comment(comment);
 			i = 0;
@@ -890,11 +890,11 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 
 	if (f_has_labels) {
 		for (i = 0; i < m; i++) {
-			sprintf(comment, "%ld", labels[i]);
+			sprintf(comment, "%d", labels[i]);
 			G.grid_aligned_text(&F, i * 10 + 5, -1 * 10, "", comment);
 			}
 		for (j = 0; j < n; j++) {
-			sprintf(comment, "%ld", labels[m + j] - m);
+			sprintf(comment, "%d", labels[m + j] - m);
 			G.grid_aligned_text(&F, -1 * 10, j * 10 + 5, "", comment);
 			}
 		}
@@ -941,7 +941,7 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 
 
 
-			sprintf(comment, "%ld_%ld", i, j);
+			sprintf(comment, "%d_%d", i, j);
 			G.comment(comment);
 
 			if (f_dots) {

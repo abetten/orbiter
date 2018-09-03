@@ -8,81 +8,81 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 int main(int argc, char **argv);
 void arc_lifting_from_classification_file(const char *classification_fname, 
-	projective_space *P, INT k, INT sz, 
-	INT f_Cook, INT f_DLX, INT f_McKay, 
-	INT f_split, INT split_r, INT split_m, 
-	INT f_save_system, const char *fname_system, 
-	INT f_solution_prefix, const char *solution_prefix, 
-	INT &nb_sol_total, 
-	INT verbose_level);
-void do_arc_lifting(projective_space *P, INT k, 
-	INT *arc, INT arc_sz, INT target_sz, 
-	INT f_save_system, const char *fname_system, 
-	INT f_Cook, INT f_DLX, INT f_McKay, 
-	INT verbose_level);
-void user_callback_solution_found(INT *sol, INT len, INT nb_sol, void *data);
-void search(INT level);
+	projective_space *P, int k, int sz, 
+	int f_Cook, int f_DLX, int f_McKay, 
+	int f_split, int split_r, int split_m, 
+	int f_save_system, const char *fname_system, 
+	int f_solution_prefix, const char *solution_prefix, 
+	int &nb_sol_total, 
+	int verbose_level);
+void do_arc_lifting(projective_space *P, int k, 
+	int *arc, int arc_sz, int target_sz, 
+	int f_save_system, const char *fname_system, 
+	int f_Cook, int f_DLX, int f_McKay, 
+	int verbose_level);
+void user_callback_solution_found(int *sol, int len, int nb_sol, void *data);
+void search(int level);
 
 
 	finite_field *F;
 	projective_space *P;
 	action *A_linear;
-INT *arc;
-INT arc_sz;
-	INT *free_points;
-	INT nb_free_points;
+int *arc;
+int arc_sz;
+	int *free_points;
+	int nb_free_points;
 
 
-	INT *Cook_table2;
-	INT *Sz2;
-	INT w;
-	INT nb_km1_lines;
-	INT *km1_lines2;
-	INT *row; // [nb_needed]
-	INT *col; // [nb_needed]
-	INT nb_needed;
-	INT *Arc;
-	INT *line_type;
-	INT *Line_type_after; // [nb_needed * P->N_lines]
-	INT k = 0;
-	INT nb_sol = 0;
-	INT cnt = 0;
+	int *Cook_table2;
+	int *Sz2;
+	int w;
+	int nb_km1_lines;
+	int *km1_lines2;
+	int *row; // [nb_needed]
+	int *col; // [nb_needed]
+	int nb_needed;
+	int *Arc;
+	int *line_type;
+	int *Line_type_after; // [nb_needed * P->N_lines]
+	int k = 0;
+	int nb_sol = 0;
+	int cnt = 0;
 	ofstream *fp;
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT f_k = FALSE;
-	INT f_sz = FALSE;
-	INT sz = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int f_k = FALSE;
+	int f_sz = FALSE;
+	int sz = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_poly = FALSE;
 	const char *poly = NULL;
-	INT f_arc = FALSE;
+	int f_arc = FALSE;
 	const char *arc_text = NULL;
-	INT f_fining_labels = FALSE;
-	INT f_cook_labels = FALSE;
-	INT f_classification = FALSE;
+	int f_fining_labels = FALSE;
+	int f_cook_labels = FALSE;
+	int f_classification = FALSE;
 	const char *classification_fname = NULL;
-	INT f_split = FALSE;
-	INT split_r = 0;
-	INT split_m = 0;
-	INT f_solution_prefix = FALSE;
+	int f_split = FALSE;
+	int split_r = 0;
+	int split_m = 0;
+	int f_solution_prefix = FALSE;
 	const char *solution_prefix = NULL;
-	INT f_Cook = FALSE;
-	INT f_DLX = FALSE;
-	INT f_McKay = FALSE;
-	INT f_save_system = FALSE;
+	int f_Cook = FALSE;
+	int f_DLX = FALSE;
+	int f_McKay = FALSE;
+	int f_save_system = FALSE;
 	const char *fname_system = NULL;
-	INT f_loop = FALSE;
-	INT loop_start = -1;
-	INT loop_increment = 0;
-	INT i;
+	int f_loop = FALSE;
+	int loop_start = -1;
+	int loop_increment = 0;
+	int i;
 
 	t0 = os_ticks();
 	cout << argv[0] << endl;
@@ -179,7 +179,7 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	cout << "k=" << k << endl;
 	cout << "q=" << q << endl;
@@ -219,20 +219,20 @@ int main(int argc, char **argv)
 	if (f_arc) {
 		cout << "processing a given arc" << endl;
 		if (f_fining_labels) {
-			INT a;
-			INT v[3];
+			int a;
+			int v[3];
 			
 			for (a = 1; a <= P->N_points; a++) {
 				PG_element_unrank_fining(*P->F, v, 3, a);
 				cout << a << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				cout << endl;
 				}
 			}
 		else if (f_cook_labels) {
-			INT a;
-			INT v[3];
-			INT j, qm1o2;
+			int a;
+			int v[3];
+			int j, qm1o2;
 			
 			qm1o2 = (q - 1) >> 1;
 			for (a = 0; a < P->N_points; a++) {
@@ -250,65 +250,65 @@ int main(int argc, char **argv)
 						cout << ", ";
 						}
 					}
-				//INT_vec_print(cout, v, 3);
+				//int_vec_print(cout, v, 3);
 				cout << ")" << endl;
 				}
 			}
 
-		INT *the_arc;
-		INT the_arc_sz;
+		int *the_arc;
+		int the_arc_sz;
 		
-		INT_vec_scan(arc_text, the_arc, the_arc_sz);
+		int_vec_scan(arc_text, the_arc, the_arc_sz);
 		cout << "input arc of size " << the_arc_sz << " = ";
-		INT_vec_print(cout, the_arc, the_arc_sz);
+		int_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 
 		if (f_fining_labels) {
-			INT a, b;
-			INT v[3];
-			INT w[3];
+			int a, b;
+			int v[3];
+			int w[3];
 			
 			cout << "changing from fining to orbiter:" << endl;
 			for (i = 0; i < the_arc_sz; i++) {
 				a = the_arc[i];
 				PG_element_unrank_fining(*P->F, v, 3, a);
-				INT_vec_copy(v, w, 3);
+				int_vec_copy(v, w, 3);
 				PG_element_rank_modified(*P->F, w, 1, 3, b);
 				cout << a << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				cout << " : " << b << endl;
 				the_arc[i] = b;
 				}
 			cout << "input arc in orbiter labels = ";
-			INT_vec_print(cout, the_arc, the_arc_sz);
+			int_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
 		else if (f_cook_labels) {
-			INT a, b;
-			INT v[3];
-			INT w[3];
+			int a, b;
+			int v[3];
+			int w[3];
 			
 			cout << "changing from Gary Cook to orbiter:" << endl;
 			for (i = 0; i < the_arc_sz; i++) {
 				a = the_arc[i];
 				PG_element_unrank_gary_cook(*P->F, v, 3, a);
-				INT_vec_copy(v, w, 3);
+				int_vec_copy(v, w, 3);
 				PG_element_rank_modified(*P->F, w, 1, 3, b);
 				cout << a << " : ";
-				INT_vec_print(cout, v, 3);
+				int_vec_print(cout, v, 3);
 				cout << " : " << b << endl;
 				the_arc[i] = b;
 				}
 			cout << "input arc in orbiter labels = ";
-			INT_vec_print(cout, the_arc, the_arc_sz);
+			int_vec_print(cout, the_arc, the_arc_sz);
 			cout << endl;
 			}
 
-		INT_vec_heapsort(the_arc, the_arc_sz);
+		int_vec_heapsort(the_arc, the_arc_sz);
 
 		cout << "input arc in orbiter labels sorted= ";
-		INT_vec_print(cout, the_arc, the_arc_sz);
+		int_vec_print(cout, the_arc, the_arc_sz);
 		cout << endl;
 
 		
@@ -325,8 +325,8 @@ int main(int argc, char **argv)
 		cout << "processing classification" << endl;
 		if (f_loop) {
 			char classification_fname2[10000];
-			INT loop_end, nb_loop_iterations = 0, cur_loop_iterations;
-			INT nb_sol_overall = 0;
+			int loop_end, nb_loop_iterations = 0, cur_loop_iterations;
+			int nb_sol_overall = 0;
 
 
 			for (cnt = loop_start; TRUE; cnt += loop_increment) {
@@ -346,7 +346,7 @@ int main(int argc, char **argv)
 				cout << "Loop " << cur_loop_iterations << "/ " << nb_loop_iterations << " is case " << cnt << ":" << endl;
 				sprintf(classification_fname2, classification_fname, cnt);
 
-				INT nb_sol_total = 0;
+				int nb_sol_total = 0;
 				arc_lifting_from_classification_file(classification_fname2, 
 					P, k, sz, 
 					f_Cook, f_DLX, f_McKay, 
@@ -361,7 +361,7 @@ int main(int argc, char **argv)
 			cout << "nb_sol_overall = " << nb_sol_overall << endl;
 			}
 		else {
-			INT nb_sol_total = 0;
+			int nb_sol_total = 0;
 			
 			arc_lifting_from_classification_file(classification_fname, 
 				P, k, sz, 
@@ -385,19 +385,19 @@ int main(int argc, char **argv)
 
 
 void arc_lifting_from_classification_file(const char *classification_fname, 
-	projective_space *P, INT k, INT sz, 
-	INT f_Cook, INT f_DLX, INT f_McKay, 
-	INT f_split, INT split_r, INT split_m, 
-	INT f_save_system, const char *fname_system, 
-	INT f_solution_prefix, const char *solution_prefix, 
-	INT &nb_sol_total, 
-	INT verbose_level)
+	projective_space *P, int k, int sz, 
+	int f_Cook, int f_DLX, int f_McKay, 
+	int f_split, int split_r, int split_m, 
+	int f_save_system, const char *fname_system, 
+	int f_solution_prefix, const char *solution_prefix, 
+	int &nb_sol_total, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	finite_field *F;
-	INT q;
+	int q;
 
 
 	if (f_v) {
@@ -415,8 +415,8 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 		}
 
 	action *A;
-	INT f_basis = TRUE;
-	INT f_semilinear = FALSE;
+	int f_basis = TRUE;
+	int f_semilinear = FALSE;
 	if (f_v) {
 		cout << "arc_generator::init calling init_matrix_group" << endl;
 		}
@@ -449,30 +449,30 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 		}
 
 	set_and_stabilizer *rep;
-	INT *Nb_sol;
-	INT *Cnt;
-	//INT nb_sol_total = 0;
-	INT orbit_idx;
+	int *Nb_sol;
+	int *Cnt;
+	//int nb_sol_total = 0;
+	int orbit_idx;
 
-	Nb_sol = NEW_INT(T->nb_orbits);
-	Cnt = NEW_INT(T->nb_orbits);
+	Nb_sol = NEW_int(T->nb_orbits);
+	Cnt = NEW_int(T->nb_orbits);
 
-	INT_vec_zero(Nb_sol, T->nb_orbits);
-	INT_vec_zero(Cnt, T->nb_orbits);
+	int_vec_zero(Nb_sol, T->nb_orbits);
+	int_vec_zero(Cnt, T->nb_orbits);
 
 
 	char solution_fname[1000];
 	char success_fname[1000];
 
 	if (!f_solution_prefix) {
-		sprintf(solution_fname, "arc_%ld_%ld_from_%s", sz, k, classification_fname);
+		sprintf(solution_fname, "arc_%d_%d_from_%s", sz, k, classification_fname);
 		}
 	else {
-		sprintf(solution_fname, "%sarc_%ld_%ld_from_%s", solution_prefix, sz, k, classification_fname);
+		sprintf(solution_fname, "%sarc_%d_%d_from_%s", solution_prefix, sz, k, classification_fname);
 		}
 
 	if (f_split) {
-		sprintf(solution_fname + strlen(solution_fname), "_case_r%ld_m%ld", split_r, split_m);
+		sprintf(solution_fname + strlen(solution_fname), "_case_r%d_m%d", split_r, split_m);
 		}
 	sprintf(success_fname, "%s.success", solution_fname);
 
@@ -484,7 +484,7 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 
 	{
 		ofstream Fp(solution_fname);
-		INT case_cnt = 0;
+		int case_cnt = 0;
 		fp = &Fp;
 
 
@@ -559,16 +559,16 @@ void arc_lifting_from_classification_file(const char *classification_fname,
 		}
 }
 
-void do_arc_lifting(projective_space *P, INT k, 
-	INT *arc, INT arc_sz, INT target_sz, 
-	INT f_save_system, const char *fname_system, 
-	INT f_Cook, INT f_DLX, INT f_McKay, 
-	INT verbose_level)
+void do_arc_lifting(projective_space *P, int k, 
+	int *arc, int arc_sz, int target_sz, 
+	int f_save_system, const char *fname_system, 
+	int f_Cook, int f_DLX, int f_McKay, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *Coord;
-	INT i, j, a, d, pt;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Coord;
+	int i, j, a, d, pt;
 
 	if (f_v) {
 		cout << "do_arc_lifting" << endl;
@@ -577,11 +577,11 @@ void do_arc_lifting(projective_space *P, INT k,
 	F = P->F;
 	if (f_v) {
 		cout << "do_arc_lifting, the arc is ";
-		INT_vec_print(cout, arc, arc_sz);
+		int_vec_print(cout, arc, arc_sz);
 		cout << endl;
 		}
 
-	free_points = NEW_INT(P->N_points);
+	free_points = NEW_int(P->N_points);
 
 	set_complement(arc, arc_sz, free_points, nb_free_points, P->N_points);
 
@@ -590,7 +590,7 @@ void do_arc_lifting(projective_space *P, INT k,
 		}
 
 
-	Coord = NEW_INT(arc_sz * d);
+	Coord = NEW_int(arc_sz * d);
 	for (i = 0; i < arc_sz; i++) {
 		a = arc[i];
 		F->projective_point_unrank(P->n, Coord + i * d, a);
@@ -599,22 +599,22 @@ void do_arc_lifting(projective_space *P, INT k,
 	if (f_vv) {
 		for (i = 0; i < arc_sz; i++) {
 			cout << arc[i] << " : ";
-			INT_vec_print(cout, Coord + i * d, d);
+			int_vec_print(cout, Coord + i * d, d);
 			cout << endl;
 			}
 		}
 
 
 	
-	INT *type_collected;
+	int *type_collected;
 
-	type_collected = NEW_INT(arc_sz + 1);
+	type_collected = NEW_int(arc_sz + 1);
 	P->line_intersection_type_collected(arc, arc_sz, 
 		type_collected, 0 /* verbose_level */);
 
 	if (f_vv) {
 		cout << "line type collected:";
-		INT_vec_print(cout, type_collected, arc_sz + 1);
+		int_vec_print(cout, type_collected, arc_sz + 1);
 		cout << endl;
 		for (i = 0; i <= arc_sz; i++) {
 			cout << i << " : " << type_collected[i] << endl;
@@ -622,7 +622,7 @@ void do_arc_lifting(projective_space *P, INT k,
 		}
 	
 	longinteger_object go;
-	INT f_semilinear;
+	int f_semilinear;
 
 	if (is_prime(F->q)) {
 		f_semilinear = FALSE;
@@ -640,10 +640,10 @@ void do_arc_lifting(projective_space *P, INT k,
 		cout << "computing stabilizer of the arc:" << endl;
 		}
 	sims *Stab;
-	INT canonical_pt;
-	INT *canonical_set;
+	int canonical_pt;
+	int *canonical_set;
 
-	canonical_set = NEW_INT(arc_sz);
+	canonical_set = NEW_int(arc_sz);
 
 	Stab = set_stabilizer_in_projective_space(
 		A_linear, P, 
@@ -658,7 +658,7 @@ void do_arc_lifting(projective_space *P, INT k,
 	if (f_v) {
 		cout << "The stabilizer of the arc is a group of order " << go << endl;
 		}
-	FREE_INT(canonical_set);
+	FREE_int(canonical_set);
 	delete Stab;
 	//exit(1);
 	}
@@ -666,15 +666,15 @@ void do_arc_lifting(projective_space *P, INT k,
 
 
 	diophant *D;
-	//INT *line_type;
+	//int *line_type;
 
 
 
-	line_type = NEW_INT(P->N_lines);
+	line_type = NEW_int(P->N_lines);
 	P->line_intersection_type(arc, arc_sz, line_type, 0 /* verbose_level */);
 	if (f_vv) {
 		cout << "line_type: ";
-		INT_vec_print_fully(cout, line_type, P->N_lines);
+		int_vec_print_fully(cout, line_type, P->N_lines);
 		cout << endl;
 		}
 
@@ -697,7 +697,7 @@ void do_arc_lifting(projective_space *P, INT k,
 
 	//exit(1);
 	
-	INT h;
+	int h;
 	
 	D = NEW_OBJECT(diophant);
 	D->open(P->N_lines + 1, nb_free_points);
@@ -762,7 +762,7 @@ void do_arc_lifting(projective_space *P, INT k,
 
 		cout << "Cook approach:" << endl;
 		
-		INT *km1_lines;
+		int *km1_lines;
 	
 
 		nb_km1_lines = 0;
@@ -774,27 +774,27 @@ void do_arc_lifting(projective_space *P, INT k,
 				nb_km1_lines++;
 				}
 			}
-		km1_lines = NEW_INT(nb_km1_lines);
+		km1_lines = NEW_int(nb_km1_lines);
 		h = 0;
 		for (i = 0; i < P->N_lines; i++) {
 			if (line_type[i] == k - 1) {
 				km1_lines[h++] = i;
 				}
 			}
-		INT *Cook_table;
-		INT line, idx;
+		int *Cook_table;
+		int line, idx;
 
 		w = F->q + 1 - (k - 1);
 
 
-		Cook_table = NEW_INT(nb_km1_lines * w);
+		Cook_table = NEW_int(nb_km1_lines * w);
 		for (i = 0; i < nb_km1_lines; i++) {
 			line = km1_lines[i];
 			h = 0;
 			for (j = 0; j < F->q + 1; j++) {
 				pt = P->Lines[line * P->k + j];
 			
-				if (!INT_vec_search(arc, arc_sz, pt, idx)) {
+				if (!int_vec_search(arc, arc_sz, pt, idx)) {
 					Cook_table[i * w + h++] = pt;
 					}
 				}
@@ -808,16 +808,16 @@ void do_arc_lifting(projective_space *P, INT k,
 			cout << "The Cook table:" << endl;
 			for (i = 0; i < nb_km1_lines; i++) {
 				cout << i << " : " << w << " : " << km1_lines[i] << " : ";
-				INT_vec_print(cout, Cook_table + i * w, w);
+				int_vec_print(cout, Cook_table + i * w, w);
 				cout << endl;
 				}
 			cout << endl;
 			}
 
-		INT *Sz;
-		INT l, u;
+		int *Sz;
+		int l, u;
 
-		Sz = NEW_INT(nb_km1_lines);
+		Sz = NEW_int(nb_km1_lines);
 		for (i = 0; i < nb_km1_lines; i++) {
 			Sz[i] = w;
 			}
@@ -841,35 +841,35 @@ void do_arc_lifting(projective_space *P, INT k,
 			cout << "The Cook table:" << endl;
 			for (i = 0; i < nb_km1_lines; i++) {
 				cout << i << " : " << Sz[i] << " : " << km1_lines[i] << " : ";
-				INT_vec_print(cout, Cook_table + i * w, Sz[i]);
+				int_vec_print(cout, Cook_table + i * w, Sz[i]);
 				cout << endl;
 				}
 			cout << endl;
 			}
 	
-		INT *perm;
-		INT *perm_inv;
-		INT ii;
+		int *perm;
+		int *perm_inv;
+		int ii;
 	
-		perm = NEW_INT(nb_km1_lines);
-		perm_inv = NEW_INT(nb_km1_lines);
+		perm = NEW_int(nb_km1_lines);
+		perm_inv = NEW_int(nb_km1_lines);
 	
 
 
 
 	
-		km1_lines2 = NEW_INT(nb_km1_lines);
-		Sz2 = NEW_INT(nb_km1_lines);
+		km1_lines2 = NEW_int(nb_km1_lines);
+		Sz2 = NEW_int(nb_km1_lines);
 
 
 
-		INT_vec_copy(Sz, Sz2, nb_km1_lines);
-		INT_vec_sorting_permutation(Sz2, nb_km1_lines, perm, perm_inv, FALSE /* f_increasingly */);
+		int_vec_copy(Sz, Sz2, nb_km1_lines);
+		int_vec_sorting_permutation(Sz2, nb_km1_lines, perm, perm_inv, FALSE /* f_increasingly */);
 
 
 
-		Cook_table2 = NEW_INT(nb_km1_lines * w);
-		INT_vec_zero(Cook_table2, nb_km1_lines * w);
+		Cook_table2 = NEW_int(nb_km1_lines * w);
+		int_vec_zero(Cook_table2, nb_km1_lines * w);
 		for (i = 0; i < nb_km1_lines; i++) {
 			ii = perm_inv[i];
 			for (j = 0; j < Sz[ii]; j++) {
@@ -883,7 +883,7 @@ void do_arc_lifting(projective_space *P, INT k,
 			cout << "The sorted Cook table:" << endl;
 			for (i = 0; i < nb_km1_lines; i++) {
 				cout << i << " : " << Sz2[i] << " : " << km1_lines2[i] << " : ";
-				INT_vec_print(cout, Cook_table2 + i * w, Sz2[i]);
+				int_vec_print(cout, Cook_table2 + i * w, Sz2[i]);
 				cout << endl;
 				}
 			cout << endl;
@@ -895,18 +895,18 @@ void do_arc_lifting(projective_space *P, INT k,
 			cout << "nb_needed = " << nb_needed << endl;
 			}
 
-		row = NEW_INT(nb_needed);
-		col = NEW_INT(nb_needed);
+		row = NEW_int(nb_needed);
+		col = NEW_int(nb_needed);
 
-		Arc = NEW_INT(nb_needed);
+		Arc = NEW_int(nb_needed);
 
 
 
-		line_type = NEW_INT(P->N_lines);
+		line_type = NEW_int(P->N_lines);
 		P->line_intersection_type(arc, arc_sz, line_type, 0 /* verbose_level */);
 		if (f_vv) {
 			cout << "line_type: " << endl;
-			INT_vec_print_fully(cout, line_type, P->N_lines);
+			int_vec_print_fully(cout, line_type, P->N_lines);
 			cout << endl;
 
 			cout << "line type:" << endl;
@@ -916,7 +916,7 @@ void do_arc_lifting(projective_space *P, INT k,
 			}
 
 
-		Line_type_after = NEW_INT(nb_needed * P->N_lines); // [nb_needed * P->N_lines]
+		Line_type_after = NEW_int(nb_needed * P->N_lines); // [nb_needed * P->N_lines]
 	
 
 #if 1
@@ -931,18 +931,18 @@ void do_arc_lifting(projective_space *P, INT k,
 		//exit(0);
 #endif
 
-		FREE_INT(km1_lines);
-		FREE_INT(Cook_table);
-		FREE_INT(Sz);
-		FREE_INT(perm);
-		FREE_INT(perm_inv);
-		FREE_INT(km1_lines2);
-		FREE_INT(Sz2);
-		FREE_INT(Cook_table2);
-		FREE_INT(row);
-		FREE_INT(col);
-		FREE_INT(Arc);
-		FREE_INT(Line_type_after);
+		FREE_int(km1_lines);
+		FREE_int(Cook_table);
+		FREE_int(Sz);
+		FREE_int(perm);
+		FREE_int(perm_inv);
+		FREE_int(km1_lines2);
+		FREE_int(Sz2);
+		FREE_int(Cook_table2);
+		FREE_int(row);
+		FREE_int(col);
+		FREE_int(Arc);
+		FREE_int(Line_type_after);
 
 		}
 	else if (f_DLX) {
@@ -961,7 +961,7 @@ void do_arc_lifting(projective_space *P, INT k,
 		if (f_v) {
 			cout << "before solve_all_mckay" << endl;
 			}
-		INT nb_backtrack_nodes;
+		int nb_backtrack_nodes;
 
 		D->solve_all_mckay(nb_backtrack_nodes, verbose_level - 2);
 		
@@ -972,14 +972,14 @@ void do_arc_lifting(projective_space *P, INT k,
 			cout << "after solve_all_mckay nb_sol = " << nb_sol << endl;
 			}
 		if (nb_sol) {
-			INT *Sol;
-			INT nb_sol;
-			INT i, j, a;
-			INT *big_arc;
+			int *Sol;
+			int nb_sol;
+			int i, j, a;
+			int *big_arc;
 
-			big_arc = NEW_INT(target_sz);
+			big_arc = NEW_int(target_sz);
 			
-			INT_vec_copy(arc, big_arc, arc_sz);
+			int_vec_copy(arc, big_arc, arc_sz);
 			D->get_solutions(Sol, nb_sol, 0 /* verbose_level */);
 			for (i = 0; i < nb_sol; i++) {
 				for (j = 0; j < D->sum; j++) {
@@ -996,8 +996,8 @@ void do_arc_lifting(projective_space *P, INT k,
 				*fp << endl;
 
 				}
-			FREE_INT(big_arc);
-			FREE_INT(Sol);
+			FREE_int(big_arc);
+			FREE_int(Sol);
 			}
 		if (f_v) {
 			cout << "after solve_once_mckay" << endl;
@@ -1017,15 +1017,15 @@ void do_arc_lifting(projective_space *P, INT k,
 	const char *fname_sol = "solutions.txt";
 
 	if (FALSE /*file_size(fname_sol) > 0*/) {
-		INT *Sol;
-		INT nb_sol;
+		int *Sol;
+		int nb_sol;
 
 		D->read_solutions_from_file(fname_sol, verbose_level);
 		D->get_solutions_full_length(Sol, nb_sol, verbose_level);
 		cout << "read solutions from file:" << endl;
 		for (i = 0; i < MINIMUM(10, nb_sol); i++) {
 			cout << "solution " << i << " / " << nb_sol << ":" << endl;
-			INT_vec_print_fully(cout, Sol + i * nb_free_points, nb_free_points);
+			int_vec_print_fully(cout, Sol + i * nb_free_points, nb_free_points);
 			cout << endl;
 			}
 		for (i = 0; i < nb_sol; i++) {
@@ -1051,52 +1051,52 @@ void do_arc_lifting(projective_space *P, INT k,
 
 	FREE_OBJECT(D);
 	FREE_OBJECT(A_linear);
-	FREE_INT(type_collected);
-	FREE_INT(Coord);
+	FREE_int(type_collected);
+	FREE_int(Coord);
 
-	FREE_INT(free_points);
-	FREE_INT(line_type);
+	FREE_int(free_points);
+	FREE_int(line_type);
 }
 
 
-void user_callback_solution_found(INT *sol, INT len, INT nb_sol, void *data)
+void user_callback_solution_found(int *sol, int len, int nb_sol, void *data)
 {
 	cout << "user_callback_solution_found" << endl;
 	nb_sol++;
 	cout << "nb_sol=" << nb_sol << endl;
 
-	INT *big_arc;
-	INT big_arc_size;
-	INT i, a;
+	int *big_arc;
+	int big_arc_size;
+	int i, a;
 
 
 	big_arc_size = arc_sz + len;
 	cout << "big_arc_size=" << big_arc_size << endl;
 	cout << "sol=";
-	INT_vec_print(cout, sol, len);
+	int_vec_print(cout, sol, len);
 	cout << endl;
 
-	big_arc = NEW_INT(big_arc_size);
-	INT_vec_copy(arc, big_arc, arc_sz);
+	big_arc = NEW_int(big_arc_size);
+	int_vec_copy(arc, big_arc, arc_sz);
 	for (i = 0; i < len; i++) {
 		a = sol[i];
 		big_arc[arc_sz + i] = free_points[a];
 		}
 
 	cout << "free_points: ";
-	INT_vec_print(cout, free_points, nb_free_points);
+	int_vec_print(cout, free_points, nb_free_points);
 	cout << endl;
 	cout << "The big arc is: ";
-	INT_vec_print(cout, big_arc, big_arc_size);
+	int_vec_print(cout, big_arc, big_arc_size);
 	cout << endl;
 	
-	INT *line_type;
+	int *line_type;
 
 
-	line_type = NEW_INT(P->N_lines);
+	line_type = NEW_int(P->N_lines);
 	P->line_intersection_type(big_arc, big_arc_size, line_type, 0 /* verbose_level */);
 	cout << "line_type: " << endl;
-	INT_vec_print_fully(cout, line_type, P->N_lines);
+	int_vec_print_fully(cout, line_type, P->N_lines);
 	cout << endl;
 
 	cout << "line type:" << endl;
@@ -1108,11 +1108,11 @@ void user_callback_solution_found(INT *sol, INT len, INT nb_sol, void *data)
 
 	cout << "computing stabilizer of the arc:" << endl;
 	sims *Stab;
-	INT canonical_pt;
+	int canonical_pt;
 	longinteger_object go;
-	INT *canonical_set2;
+	int *canonical_set2;
 
-	canonical_set2 = NEW_INT(big_arc_size);
+	canonical_set2 = NEW_int(big_arc_size);
 
 	Stab = set_stabilizer_in_projective_space(
 		A_linear, P, 
@@ -1124,16 +1124,16 @@ void user_callback_solution_found(INT *sol, INT len, INT nb_sol, void *data)
 	Stab->group_order(go);
 	cout << "It is a group of order " << go << endl;
 
-	FREE_INT(canonical_set2);
+	FREE_int(canonical_set2);
 
-	INT *type_collected;
+	int *type_collected;
 
-	type_collected = NEW_INT(big_arc_size + 1);
+	type_collected = NEW_int(big_arc_size + 1);
 	P->line_intersection_type_collected(big_arc, big_arc_size, 
 		type_collected, 0 /* verbose_level */);
 
 	cout << "line type collected:";
-	INT_vec_print(cout, type_collected, big_arc_size + 1);
+	int_vec_print(cout, type_collected, big_arc_size + 1);
 	cout << endl;
 	for (i = 0; i <= big_arc_size; i++) {
 		cout << i << " : " << type_collected[i] << endl;
@@ -1142,57 +1142,57 @@ void user_callback_solution_found(INT *sol, INT len, INT nb_sol, void *data)
 
 	//exit(1);
 
-	FREE_INT(type_collected);
-	FREE_INT(line_type);
-	FREE_INT(big_arc);
+	FREE_int(type_collected);
+	FREE_int(line_type);
+	FREE_int(big_arc);
 	
 }
  
 
-void search(INT level)
+void search(int level)
 {
-	INT b, i, line, pt, r0;
-	INT *line_type_before;
-	INT *line_type_after;
+	int b, i, line, pt, r0;
+	int *line_type_before;
+	int *line_type_after;
 	
 	cnt++;
 
 	if ((cnt & ((1 << 20) - 1)) == 0) {
 		cout << "cnt=" << cnt << " level = " << level << " :";
-		INT_vec_print(cout, row, level);
+		int_vec_print(cout, row, level);
 		cout << endl;
 		}
 	
 #if 0
 	cout << "cnt = " << cnt << " level = " << level << " : ";
-	INT_vec_print(cout, Arc, level);
+	int_vec_print(cout, Arc, level);
 	cout << endl;
 #endif
 	
 	if (level == nb_needed) {
 		cout << "found an arc, solution no " << nb_sol << " : ";
-		INT_vec_print(cout, Arc, nb_needed);
+		int_vec_print(cout, Arc, nb_needed);
 		//cout << endl;
 
-		INT *big_arc;
-		INT big_arc_size;
+		int *big_arc;
+		int big_arc_size;
 		
 		big_arc_size = arc_sz + nb_needed;
-		big_arc = NEW_INT(big_arc_size);
-		INT_vec_copy(arc, big_arc, arc_sz);
+		big_arc = NEW_int(big_arc_size);
+		int_vec_copy(arc, big_arc, arc_sz);
 		for (i = 0; i < nb_needed; i++) {
 			big_arc[arc_sz + i] = Arc[i];
 			}
 		cout << " : ";
-		INT_vec_print(cout, big_arc, big_arc_size);
+		int_vec_print(cout, big_arc, big_arc_size);
 		//cout << endl;
 
 		sims *Stab;
-		INT canonical_pt;
-		INT *canonical_set;
+		int canonical_pt;
+		int *canonical_set;
 		longinteger_object go;
 
-		canonical_set = NEW_INT(big_arc_size);
+		canonical_set = NEW_int(big_arc_size);
 
 		Stab = set_stabilizer_in_projective_space(
 			A_linear, P, 
@@ -1203,23 +1203,23 @@ void search(INT level)
 		Stab->group_order(go);
 			cout << " : go=" << go;
 
-		INT_vec_heapsort(canonical_set, big_arc_size);
+		int_vec_heapsort(canonical_set, big_arc_size);
 
 		cout << " : ";
-		INT_vec_print(cout, canonical_set, big_arc_size);
+		int_vec_print(cout, canonical_set, big_arc_size);
 		cout << endl;
 
-		FREE_INT(canonical_set);
+		FREE_int(canonical_set);
 		delete Stab;
 
-		INT *type_collected;
+		int *type_collected;
 
-		type_collected = NEW_INT(big_arc_size + 1);
+		type_collected = NEW_int(big_arc_size + 1);
 		P->line_intersection_type_collected(big_arc, big_arc_size, 
 			type_collected, 0 /* verbose_level */);
 
 		cout << "line type:" << endl;
-		//INT_vec_print(cout, type_collected, big_arc_size + 1);
+		//int_vec_print(cout, type_collected, big_arc_size + 1);
 		//cout << endl;
 		for (i = 0; i <= big_arc_size; i++) {
 			if (type_collected[i] == 0) {
@@ -1238,10 +1238,10 @@ void search(INT level)
 
 	//exit(1);
 
-	FREE_INT(type_collected);
+	FREE_int(type_collected);
 
 
-		FREE_INT(big_arc);
+		FREE_int(big_arc);
 
 		nb_sol++;
 		return;
@@ -1271,7 +1271,7 @@ void search(INT level)
 				}
 			line_type_after = Line_type_after + level * P->N_lines;
 			
-			INT_vec_copy(line_type_before, line_type_after, P->N_lines);
+			int_vec_copy(line_type_before, line_type_after, P->N_lines);
 			for (i = 0; i < F->q + 1; i++) {
 				line = P->Lines_on_point[pt * P->k + i];
 				line_type_after[line]++;

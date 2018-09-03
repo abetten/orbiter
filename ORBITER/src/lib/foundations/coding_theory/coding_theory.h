@@ -14,7 +14,7 @@
 
 int mindist(int n, int k, int q, int *G, 
 	int f_v, int f_vv, int idx_zero, int idx_one, 
-	INT *add_table, INT *mult_table);
+	int *add_table, int *mult_table);
 //Main routine for the code minimum distance computation.
 //The tables are only needed if $q = p^f$ with $f > 1$. 
 //In the GF(p) case, just pass a NULL pointer. 
@@ -24,37 +24,37 @@ int mindist(int n, int k, int q, int *G,
 // #############################################################################
 
 void twisted_tensor_product_codes(
-	INT *&H_subfield, INT &m, INT &n, 
+	int *&H_subfield, int &m, int &n, 
 	finite_field *F, finite_field *f, 
-	INT f_construction_A, INT f_hyperoval, 
-	INT f_construction_B, INT verbose_level);
+	int f_construction_A, int f_hyperoval, 
+	int f_construction_B, int verbose_level);
 void create_matrix_M(
-	INT *&M, 
+	int *&M, 
 	finite_field *F, finite_field *f,
-	INT &m, INT &n, INT &beta, INT &r, INT *exponents, 
-	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	INT f_elements_exponential, const char *symbol_for_print, 
-	INT verbose_level);
-	// INT exponents[9]
+	int &m, int &n, int &beta, int &r, int *exponents, 
+	int f_construction_A, int f_hyperoval, int f_construction_B, 
+	int f_elements_exponential, const char *symbol_for_print, 
+	int verbose_level);
+	// int exponents[9]
 void create_matrix_H_subfield(finite_field *F, finite_field*f, 
-	INT *H_subfield, INT *C, INT *C_inv, INT *M, INT m, INT n, 
-	INT beta, INT beta_q, 
-	INT f_elements_exponential, const char *symbol_for_print, 
+	int *H_subfield, int *C, int *C_inv, int *M, int m, int n, 
+	int beta, int beta_q, 
+	int f_elements_exponential, const char *symbol_for_print, 
 	const char *symbol_for_print_subfield, 
-	INT f_construction_A, INT f_hyperoval, INT f_construction_B, 
-	INT verbose_level);
+	int f_construction_A, int f_hyperoval, int f_construction_B, 
+	int verbose_level);
 void tt_field_reduction(finite_field &F, finite_field &f, 
-	INT m, INT n, INT *M, INT *MM, INT verbose_level);
+	int m, int n, int *M, int *MM, int verbose_level);
 
 
 void make_tensor_code_9dimensional_as_point_set(finite_field *F, 
-	INT *&the_set, INT &length, 
-	INT verbose_level);
-void make_tensor_code_9_dimensional(INT q, 
+	int *&the_set, int &length, 
+	int verbose_level);
+void make_tensor_code_9_dimensional(int q, 
 	const char *override_poly_Q, const char *override_poly, 
-	INT f_hyperoval, 
-	INT *&code, INT &length, 
-	INT verbose_level);
+	int f_hyperoval, 
+	int *&code, int &length, 
+	int verbose_level);
 
 
 

@@ -12,15 +12,15 @@
 
 int main(int argc, char **argv)
 {
-	INT i, j;
-	INT verbose_level = 0;
-	INT f_file_mask = FALSE;
+	int i, j;
+	int verbose_level = 0;
+	int f_file_mask = FALSE;
 	const char *file_mask = NULL;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_out_mask = FALSE;
+	int f_N = FALSE;
+	int N = 0;
+	int f_out_mask = FALSE;
 	const char *out_mask = NULL;
-	INT f_save = FALSE;
+	int f_save = FALSE;
 	const char *save_fname = NULL;
 
 
@@ -66,13 +66,13 @@ int main(int argc, char **argv)
 
 	cout << "N=" << N << endl;
 
-	INT **Sets;
-	INT *Set_sz;
+	int **Sets;
+	int *Set_sz;
 
-	Sets = NEW_PINT(N);
-	Set_sz = NEW_INT(N);
+	Sets = NEW_pint(N);
+	Set_sz = NEW_int(N);
 
-	INT M, h;
+	int M, h;
 
 	M = 0;
 
@@ -105,13 +105,13 @@ int main(int argc, char **argv)
 		for (j = 0; j < Set_sz[i]; j++, h++) {
 			char str[1000];
 
-			sprintf(str, "%ld", h);
+			sprintf(str, "%d", h);
 			S->fill_entry_with_text(1 + h /* row_idx */, 0 /* col_idx */, str);
-			sprintf(str, "%ld", i);
+			sprintf(str, "%d", i);
 			S->fill_entry_with_text(1 + h /* row_idx */, 1 /* col_idx */, str);
-			sprintf(str, "%ld", j);
+			sprintf(str, "%d", j);
 			S->fill_entry_with_text(1 + h /* row_idx */, 2 /* col_idx */, str);
-			sprintf(str, "%ld", Sets[i][j]);
+			sprintf(str, "%d", Sets[i][j]);
 			S->fill_entry_with_text(1 + h /* row_idx */, 3 /* col_idx */, str);
 			sprintf(str, out_mask, i, Sets[i][j]);
 			S->fill_entry_with_text(1 + h /* row_idx */, 4 /* col_idx */, str);

@@ -9,15 +9,15 @@
 #include "poset_classification/poset_classification.h"
 
 void poset_classification::recognize_start_over(
-	INT size, INT f_implicit_fusion, 
-	INT lvl, INT current_node, 
-	INT &final_node, INT verbose_level)
+	int size, int f_implicit_fusion, 
+	int lvl, int current_node, 
+	int &final_node, int verbose_level)
 // Called from oracle::find_automorphism_by_tracing_recursion
 // when trace_next_point returns FALSE
 // This can happen only if f_implicit_fusion is TRUE
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "poset_classification::recognize_start_over" << endl;
@@ -33,12 +33,12 @@ void poset_classification::recognize_start_over(
 		}
 
 
-	INT_vec_heapsort(set[lvl + 1], size /* - 1 */);
+	int_vec_heapsort(set[lvl + 1], size /* - 1 */);
 		// we don't keep the last point (i.e., the (len + 1)-th) extra
-	INT_vec_copy(set[lvl + 1], set[0], size);
-	//INT_vec_copy(size, set[lvl + 1], gen->set[0]);
+	int_vec_copy(set[lvl + 1], set[0], size);
+	//int_vec_copy(size, set[lvl + 1], gen->set[0]);
 	if (f_vv) {
-		INT_set_print(cout, set[0], size);
+		int_set_print(cout, set[0], size);
 		cout << endl;
 		}
 	A->element_move(
@@ -62,23 +62,23 @@ void poset_classification::recognize_start_over(
 }
 
 void poset_classification::recognize_recursion(
-	INT size, INT f_implicit_fusion, 
-	INT lvl, INT current_node, INT &final_node, 
-	INT verbose_level)
+	int size, int f_implicit_fusion, 
+	int lvl, int current_node, int &final_node, 
+	int verbose_level)
 // this routine is called by upstep_work::find_automorphism_by_tracing
 // we are dealing with a set of size size.
 // the tracing starts at lvl = 0 with current_node = 0
 {
 	//if (my_node == 9 && my_extension == 4) {verbose_level += 10;}
-	INT pt0, current_extension;
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_v10 = (verbose_level >= 10);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v4 = (verbose_level >= 3);
-	INT f_v5 = (verbose_level >= 3);
-	INT f_failure_to_find_point;
-	INT node;
+	int pt0, current_extension;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_v10 = (verbose_level >= 10);
+	int f_vvv = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 3);
+	int f_v5 = (verbose_level >= 3);
+	int f_failure_to_find_point;
+	int node;
 
 
 	node = current_node - first_poset_orbit_node_at_level[lvl];
@@ -111,7 +111,7 @@ void poset_classification::recognize_recursion(
 			<< endl;
 		cout << "node=" << O->node << " prev=" << O->prev
 				<< " pt=" << O->pt << endl;
-		INT_set_print(cout, set[lvl], size);
+		int_set_print(cout, set[lvl], size);
 		cout << endl;
 		}
 	if (f_v4) {
@@ -130,7 +130,7 @@ void poset_classification::recognize_recursion(
 					"node and set inconsistent, the node "
 					"corresponds to" << endl;
 			O->store_set_to(this, lvl - 1, set3);
-			INT_set_print(cout, set3, lvl);
+			int_set_print(cout, set3, lvl);
 			cout << endl;
 			exit(1);
 			}
@@ -138,10 +138,10 @@ void poset_classification::recognize_recursion(
 #endif
 
 	if (lvl == 0 && f_starter) {
-		INT *cur_set = set[0];
-		INT *next_set = set[0 + starter_size];
-		INT *cur_transporter = transporter->ith(0);
-		INT *next_transporter = transporter->ith(
+		int *cur_set = set[0];
+		int *next_set = set[0 + starter_size];
+		int *cur_transporter = transporter->ith(0);
+		int *next_transporter = transporter->ith(
 				0 + starter_size);
 		
 		O->trace_starter(this, size,
@@ -236,7 +236,7 @@ void poset_classification::recognize_recursion(
 		
 		cout << "poset_classification::recognize_recursion "
 				"the original set is" << endl;
-		INT_set_print(cout, set[0], size);
+		int_set_print(cout, set[0], size);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, size, gen->set[0],
@@ -244,7 +244,7 @@ void poset_classification::recognize_recursion(
 			//}
 		cout << "poset_classification::recognize_recursion "
 				"the current set is" << endl;
-		INT_set_print(cout, set[lvl + 1], size);
+		int_set_print(cout, set[lvl + 1], size);
 		cout << endl;
 		//if (f_print_function) {
 			//(*print_function)(cout, size, set[lvl + 1],
@@ -253,7 +253,7 @@ void poset_classification::recognize_recursion(
 		cout << "poset_classification::recognize_recursion "
 				"the node corresponds to" << endl;
 		O->store_set_to(this, lvl - 1, set3);
-		INT_set_print(cout, set3, lvl);
+		int_set_print(cout, set3, lvl);
 		cout << endl;
 
 		cout << "poset_classification::recognize_recursion "
@@ -272,7 +272,7 @@ void poset_classification::recognize_recursion(
 				<< " is extension no " << current_extension << endl;
 		}
 	if (f_allowed_to_show_group_elements && f_v4) {
-		INT *transporter1 = transporter->ith(lvl + 1);
+		int *transporter1 = transporter->ith(lvl + 1);
 		cout << "recognize_recursion transporter element:" << endl;
 		A2->element_print_quick(transporter1, cout);
 		//A2->element_print_as_permutation(transporter1, cout);
@@ -284,7 +284,7 @@ void poset_classification::recognize_recursion(
 	// now lvl < size - 1
 	
 	if (O->E[current_extension].type == EXTENSION_TYPE_FUSION) {
-		INT next_node;
+		int next_node;
 		
 		if (f_v4) {
 			cout << "poset_classification::recognize_recursion at ";
@@ -338,7 +338,7 @@ void poset_classification::recognize_recursion(
 
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_EXTENSION) {
-		INT next_node;
+		int next_node;
 		
 		if (f_v4) {
 			cout << "poset_classification::recognize_recursion "
@@ -375,9 +375,9 @@ void poset_classification::recognize_recursion(
 }
 
 void poset_classification::recognize(
-	INT *the_set, INT size, INT *transporter,
-	INT f_implicit_fusion,
-	INT &final_node, INT verbose_level)
+	int *the_set, int size, int *transporter,
+	int f_implicit_fusion,
+	int &final_node, int verbose_level)
 // This routine is called from upstep
 // (upstep_work::upstep_subspace_action).
 // It in turn calls oracle::find_automorphism_by_tracing_recursion
@@ -397,9 +397,9 @@ void poset_classification::recognize(
 // in the set-stabilizer of S[0,...,len-1],
 // (which is a subgroup of S[0,...,len]).  
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	if (f_vvv) {
 		cout << "poset_classification::recognize" << endl;
@@ -408,12 +408,12 @@ void poset_classification::recognize(
 	// tolerant search and do not have a final result
 	final_node = -1;
 	
-	INT_vec_copy(the_set, set[0], size);
+	int_vec_copy(the_set, set[0], size);
 
 	A->element_one(poset_classification::transporter->ith(0), 0);
 
 	if (f_vv) {
-		INT_vec_print(cout, set[0], size);
+		int_vec_print(cout, set[0], size);
 		cout << endl;
 		if (f_print_function) {
 			(*print_function)(size, set[0],
@@ -430,7 +430,7 @@ void poset_classification::recognize(
 	nb_times_trace++;
 
 	
-	INT_vec_copy(set[0], set0, size);
+	int_vec_copy(set[0], set0, size);
 
 	recognize_recursion(
 		size, f_implicit_fusion, 

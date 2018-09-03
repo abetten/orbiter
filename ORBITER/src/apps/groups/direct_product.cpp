@@ -13,12 +13,12 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 void usage(int argc, const char **argv);
 int main(int argc, const char **argv);
-INT design_search_check_conditions(INT len, INT *S,
-		void *data, INT verbose_level);
+int design_search_check_conditions(int len, int *S,
+		void *data, int verbose_level);
 
 
 typedef class direct_product_action direct_product_action;
@@ -31,10 +31,10 @@ public:
 	int argc;
 	const char **argv;
 
-	INT d1;
-	INT d2;
-	INT q1;
-	INT q2;
+	int d1;
+	int d2;
+	int q1;
+	int q2;
 
 	const char *group_label;
 
@@ -42,18 +42,18 @@ public:
 	finite_field *F2;
 
 
-	INT DELANDTSHEER_DOYEN_X;
-	INT DELANDTSHEER_DOYEN_Y;
-	INT K;
+	int DELANDTSHEER_DOYEN_X;
+	int DELANDTSHEER_DOYEN_Y;
+	int K;
 
-	INT Xsize; // = D = q1 = # of rows
-	INT Ysize; // = C = q2 = # of cols
+	int Xsize; // = D = q1 = # of rows
+	int Ysize; // = C = q2 = # of cols
 
-	INT V; // = Xsize * Ysize
-	INT b;
-	INT *line;        // [K];
-	INT *row_sum; // [Xsize]
-	INT *col_sum; // [Ysize]
+	int V; // = Xsize * Ysize
+	int b;
+	int *line;        // [K];
+	int *row_sum; // [Xsize]
+	int *col_sum; // [Ysize]
 
 
 	matrix_group *M1;
@@ -71,51 +71,51 @@ public:
 	poset_classification *Gen;
 
 	// orbits on pairs:
-	INT f_subgroup;
-	INT *pair_orbit; // [V * V]
-	INT nb_orbits;
-	INT *transporter;
-	INT *tmp_Elt;
-	INT *orbit_length; 		// [nb_orbits]
-	INT *orbit_covered; 		// [nb_orbits]
-	INT *orbit_covered_max; 	// [nb_orbits]
+	int f_subgroup;
+	int *pair_orbit; // [V * V]
+	int nb_orbits;
+	int *transporter;
+	int *tmp_Elt;
+	int *orbit_length; 		// [nb_orbits]
+	int *orbit_covered; 		// [nb_orbits]
+	int *orbit_covered_max; 	// [nb_orbits]
 		// orbit_covered_max[i] = orbit_length[i] / b;
-	INT *orbits_covered; 		// [K * K]
+	int *orbits_covered; 		// [K * K]
 
 
 	// intersection type tests:
 
-	INT inner_pairs_in_rows;
-	INT inner_pairs_in_cols;
+	int inner_pairs_in_rows;
+	int inner_pairs_in_cols;
 
 	// row intersection type
-	INT f_R;
-	INT nb_row_types;
-	INT *row_type;     		// [nb_row_types + 1]
-	INT *row_type_cur; 		// [nb_row_types + 1]
-	INT *row_type_this_or_bigger; 	// [nb_row_types + 1]
+	int f_R;
+	int nb_row_types;
+	int *row_type;     		// [nb_row_types + 1]
+	int *row_type_cur; 		// [nb_row_types + 1]
+	int *row_type_this_or_bigger; 	// [nb_row_types + 1]
 
 	// col intersection type
-	INT f_C;
-	INT nb_col_types;
-	INT *col_type;     		// [nb_col_types + 1]
-	INT *col_type_cur; 		// [nb_col_types + 1]
-	INT *col_type_this_or_bigger; 	// [nb_col_types + 1]
+	int f_C;
+	int nb_col_types;
+	int *col_type;     		// [nb_col_types + 1]
+	int *col_type_cur; 		// [nb_col_types + 1]
+	int *col_type_this_or_bigger; 	// [nb_col_types + 1]
 
 
 	// mask related test:
-	INT nb_mask_tests;
-	INT mask_test_level[MAX_MASK_TESTS];
-	INT mask_test_who[MAX_MASK_TESTS];
+	int nb_mask_tests;
+	int mask_test_level[MAX_MASK_TESTS];
+	int mask_test_who[MAX_MASK_TESTS];
 		// 1 = x
 		// 2 = y
 		// 3 = x+y
 		// 4 = singletons
-	INT mask_test_what[MAX_MASK_TESTS];
+	int mask_test_what[MAX_MASK_TESTS];
 		// 1 = eq
 		// 2 = ge
 		// 3 = le
-	INT mask_test_value[MAX_MASK_TESTS];
+	int mask_test_value[MAX_MASK_TESTS];
 
 	// a file where we print the solution, it has the extension bblt
 	// for "base block line transitive" design
@@ -123,49 +123,49 @@ public:
 	//char fname_solution_file[1000];
 
 	// for testing the mask:
-	INT *f_row_used; // [Xsize];
-	INT *f_col_used; // [Ysize];
-	INT *row_idx; // [Xsize];
-	INT *col_idx; // [Ysize];
-	INT *singletons; // [K];
+	int *f_row_used; // [Xsize];
+	int *f_col_used; // [Ysize];
+	int *row_idx; // [Xsize];
+	int *col_idx; // [Ysize];
+	int *singletons; // [K];
 
 	// temporary data
-	INT *row_col_idx; // [Xsize];
-	INT *col_row_idx; // [Ysize];
+	int *row_col_idx; // [Xsize];
+	int *col_row_idx; // [Ysize];
 
-	INT *live_points; // [V]
-	INT nb_live_points;
+	int *live_points; // [V]
+	int nb_live_points;
 
 	direct_product_action();
 	~direct_product_action();
 	void init(int argc, const char **argv,
-			INT d1, INT q1, INT d2, INT q2,
-			INT f_subgroup, const char *subgroup_gens_text,
+			int d1, int q1, int d2, int q2,
+			int f_subgroup, const char *subgroup_gens_text,
 			const char *subgroup_order_text,
 			const char *group_label,
-			INT depth,
-			INT verbose_level);
+			int depth,
+			int verbose_level);
 	void create_graph(
-			INT *line0, INT len, INT verbose_level);
-	void testing(strong_generators *SG, INT verbose_level);
-	INT find_pair_orbit(INT i, INT j, INT verbose_level);
-	INT find_pair_orbit_by_tracing(INT i, INT j, INT verbose_level);
-	void compute_pair_orbit_table(INT verbose_level);
-	void write_pair_orbit_file(INT verbose_level);
-	void print_mask_test_i(ostream &ost, INT i);
-	INT check_conditions(INT *S, INT len, INT verbose_level);
-	INT check_orbit_covering(INT *line,
-			INT len, INT verbose_level);
-	INT check_row_sums(INT *line,
-			INT len, INT verbose_level);
-	INT check_col_sums(INT *line,
-			INT len, INT verbose_level);
-	INT check_mask(INT *line,
-			INT len, INT verbose_level);
+			int *line0, int len, int verbose_level);
+	void testing(strong_generators *SG, int verbose_level);
+	int find_pair_orbit(int i, int j, int verbose_level);
+	int find_pair_orbit_by_tracing(int i, int j, int verbose_level);
+	void compute_pair_orbit_table(int verbose_level);
+	void write_pair_orbit_file(int verbose_level);
+	void print_mask_test_i(ostream &ost, int i);
+	int check_conditions(int *S, int len, int verbose_level);
+	int check_orbit_covering(int *line,
+			int len, int verbose_level);
+	int check_row_sums(int *line,
+			int len, int verbose_level);
+	int check_col_sums(int *line,
+			int len, int verbose_level);
+	int check_mask(int *line,
+			int len, int verbose_level);
 	void get_mask_core_and_singletons(
-		INT *line, INT len,
-		INT &nb_rows_used, INT &nb_cols_used,
-		INT &nb_singletons, INT verbose_level);
+		int *line, int len,
+		int &nb_rows_used, int &nb_cols_used,
+		int &nb_singletons, int verbose_level);
 };
 
 
@@ -187,19 +187,19 @@ void usage(int argc, const char **argv)
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_d1 = FALSE;
-	INT d1 = 0;
-	INT f_d2 = FALSE;
-	INT d2 = 0;
-	INT f_q1 = FALSE;
-	INT q1 = 0;
-	INT f_q2 = FALSE;
-	INT q2 = 0;
-	INT f_depth = FALSE;
-	INT depth = 0;
-	INT f_subgroup = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_d1 = FALSE;
+	int d1 = 0;
+	int f_d2 = FALSE;
+	int d2 = 0;
+	int f_q1 = FALSE;
+	int q1 = 0;
+	int f_q2 = FALSE;
+	int q2 = 0;
+	int f_depth = FALSE;
+	int depth = 0;
+	int f_subgroup = FALSE;
 	const char *subgroup_gens_text = NULL;
 	const char *subgroup_order_text = NULL;
 	const char *group_label = NULL;
@@ -396,91 +396,91 @@ direct_product_action::direct_product_action()
 direct_product_action::~direct_product_action()
 {
 	if (line) {
-		FREE_INT(line);
+		FREE_int(line);
 	}
 	if (row_sum) {
-		FREE_INT(row_sum);
+		FREE_int(row_sum);
 	}
 	if (col_sum) {
-		FREE_INT(col_sum);
+		FREE_int(col_sum);
 	}
 	if (pair_orbit) {
-		FREE_INT(pair_orbit);
+		FREE_int(pair_orbit);
 	}
 	if (transporter) {
-		FREE_INT(transporter);
+		FREE_int(transporter);
 	}
 	if (tmp_Elt) {
-		FREE_INT(tmp_Elt);
+		FREE_int(tmp_Elt);
 	}
 	if (orbit_length) {
-		FREE_INT(orbit_length);
+		FREE_int(orbit_length);
 	}
 	if (orbit_covered) {
-		FREE_INT(orbit_covered);
+		FREE_int(orbit_covered);
 	}
 	if (orbit_covered_max) {
-		FREE_INT(orbit_covered_max);
+		FREE_int(orbit_covered_max);
 	}
 	if (orbits_covered) {
-		FREE_INT(orbits_covered);
+		FREE_int(orbits_covered);
 	}
 	if (row_type) {
-		FREE_INT(row_type);
+		FREE_int(row_type);
 	}
 	if (row_type_cur) {
-		FREE_INT(row_type_cur);
+		FREE_int(row_type_cur);
 	}
 	if (row_type_this_or_bigger) {
-		FREE_INT(row_type_this_or_bigger);
+		FREE_int(row_type_this_or_bigger);
 	}
 	if (col_type) {
-		FREE_INT(col_type);
+		FREE_int(col_type);
 	}
 	if (col_type_cur) {
-		FREE_INT(col_type_cur);
+		FREE_int(col_type_cur);
 	}
 	if (col_type_this_or_bigger) {
-		FREE_INT(col_type_this_or_bigger);
+		FREE_int(col_type_this_or_bigger);
 	}
 	if (f_row_used) {
-		FREE_INT(f_row_used);
+		FREE_int(f_row_used);
 	}
 	if (f_col_used) {
-		FREE_INT(f_col_used);
+		FREE_int(f_col_used);
 	}
 	if (row_idx) {
-		FREE_INT(row_idx);
+		FREE_int(row_idx);
 	}
 	if (col_idx) {
-		FREE_INT(col_idx);
+		FREE_int(col_idx);
 	}
 	if (singletons) {
-		FREE_INT(singletons);
+		FREE_int(singletons);
 	}
 	if (row_col_idx) {
-		FREE_INT(row_col_idx);
+		FREE_int(row_col_idx);
 	}
 	if (col_row_idx) {
-		FREE_INT(col_row_idx);
+		FREE_int(col_row_idx);
 	}
 	if (live_points) {
-		FREE_INT(live_points);
+		FREE_int(live_points);
 	}
 }
 
 void direct_product_action::init(int argc, const char **argv,
-		INT d1, INT q1, INT d2, INT q2,
-		INT f_subgroup, const char *subgroup_gens_text,
+		int d1, int q1, int d2, int q2,
+		int f_subgroup, const char *subgroup_gens_text,
 		const char *subgroup_order_text,
 		const char *group_label,
-		INT depth,
-		INT verbose_level)
+		int depth,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, a;
-	INT f_K = FALSE;
-	INT f_singletons = FALSE;
+	int f_v = (verbose_level >= 1);
+	int i, j, a;
+	int f_K = FALSE;
+	int f_singletons = FALSE;
 
 	if (f_v) {
 		cout << "direct_product_action::init" << endl;
@@ -517,31 +517,31 @@ void direct_product_action::init(int argc, const char **argv,
 		else if (strcmp(argv[i], "-R") == 0) {
 			f_R = TRUE;
 			nb_row_types = atoi(argv[++i]);
-			row_type = NEW_INT(nb_row_types + 1);
-			row_type_cur = NEW_INT(nb_row_types + 1);
-			row_type_this_or_bigger = NEW_INT(nb_row_types + 1);
+			row_type = NEW_int(nb_row_types + 1);
+			row_type_cur = NEW_int(nb_row_types + 1);
+			row_type_this_or_bigger = NEW_int(nb_row_types + 1);
 			row_type[0] = 0;
 			for (j = 1; j <= nb_row_types; j++) {
 				row_type[j] = atoi(argv[++i]);
 				row_type_cur[j] = 0;
 				}
 			cout << "-R ";
-			INT_vec_print(cout, row_type + 1, nb_row_types);
+			int_vec_print(cout, row_type + 1, nb_row_types);
 			cout << endl;
 		}
 		else if (strcmp(argv[i], "-C") == 0) {
 			f_C = TRUE;
 			nb_col_types = atoi(argv[++i]);
-			col_type = NEW_INT(nb_col_types + 1);
-			col_type_cur = NEW_INT(nb_col_types + 1);
-			col_type_this_or_bigger = NEW_INT(nb_col_types + 1);
+			col_type = NEW_int(nb_col_types + 1);
+			col_type_cur = NEW_int(nb_col_types + 1);
+			col_type_this_or_bigger = NEW_int(nb_col_types + 1);
 			col_type[0] = 0;
 			for (j = 1; j <= nb_col_types; j++) {
 				col_type[j] = atoi(argv[++i]);
 				col_type_cur[j] = 0;
 				}
 			cout << "-C ";
-			INT_vec_print(cout, col_type + 1, nb_col_types);
+			int_vec_print(cout, col_type + 1, nb_col_types);
 			cout << endl;
 		}
 		else if (strcmp(argv[i], "-masktest") == 0) {
@@ -611,17 +611,17 @@ void direct_product_action::init(int argc, const char **argv,
 	cout << "Ysize=" << Ysize << endl;
 	cout << "V=" << V << endl;
 
-	line = NEW_INT(K);
-	row_sum = NEW_INT(Xsize);
-	col_sum = NEW_INT(Ysize);
-	live_points = NEW_INT(V);
+	line = NEW_int(K);
+	row_sum = NEW_int(Xsize);
+	col_sum = NEW_int(Ysize);
+	live_points = NEW_int(V);
 
 
 	cout << "DELANDTSHEER_DOYEN_X=" << DELANDTSHEER_DOYEN_X << endl;
 	cout << "DELANDTSHEER_DOYEN_Y=" << DELANDTSHEER_DOYEN_Y << endl;
 
-	INT_vec_zero(row_sum, Xsize);
-	INT_vec_zero(col_sum, Ysize);
+	int_vec_zero(row_sum, Xsize);
+	int_vec_zero(col_sum, Ysize);
 
 
 	M1 = NEW_OBJECT(matrix_group);
@@ -761,12 +761,12 @@ void direct_product_action::init(int argc, const char **argv,
 		cout << "The group has order " << go << endl;
 
 		action *Ar;
-		INT *points;
-		INT nb_points;
-		INT h;
+		int *points;
+		int nb_points;
+		int h;
 
 		nb_points = d1 * d2;
-		points = NEW_INT(nb_points);
+		points = NEW_int(nb_points);
 		h = 0;
 		for (i = 0; i < d1; i++) {
 			for (j = 0; j < d2; j++) {
@@ -851,11 +851,11 @@ void direct_product_action::init(int argc, const char **argv,
 
 	if (f_subgroup) {
 		Strong_gens = NEW_OBJECT(strong_generators);
-		INT *data;
-		INT sz;
-		INT nb_gens;
+		int *data;
+		int sz;
+		int nb_gens;
 
-		INT_vec_scan(subgroup_gens_text, data, sz);
+		int_vec_scan(subgroup_gens_text, data, sz);
 		nb_gens = sz / A->make_element_size;
 		if (f_v) {
 			cout << "before Strong_gens->init_from_data_"
@@ -877,7 +877,7 @@ void direct_product_action::init(int argc, const char **argv,
 		Pairs->read_arguments(argc, argv, 0);
 
 		//Pairs->prefix[0] = 0;
-		sprintf(Pairs->fname_base, "pairs_%s_%ld_%ld",
+		sprintf(Pairs->fname_base, "pairs_%s_%d_%d",
 				group_label, q1, q2);
 
 
@@ -895,7 +895,7 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 
 
-		INT nb_nodes = 1000;
+		int nb_nodes = 1000;
 
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -908,13 +908,13 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 		Pairs->root[0].init_root_node(Pairs, verbose_level - 1);
 
-		INT f_use_invariant_subset_if_available;
-		INT f_debug;
+		int f_use_invariant_subset_if_available;
+		int f_debug;
 
 		f_use_invariant_subset_if_available = TRUE;
 		f_debug = FALSE;
 
-		INT t0 = os_ticks();
+		int t0 = os_ticks();
 
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -950,18 +950,18 @@ void direct_product_action::init(int argc, const char **argv,
 					<< nb_orbits << endl;
 		}
 
-		transporter = NEW_INT(A0->elt_size_in_INT);
-		tmp_Elt = NEW_INT(A0->elt_size_in_INT);
+		transporter = NEW_int(A0->elt_size_in_int);
+		tmp_Elt = NEW_int(A0->elt_size_in_int);
 
-		orbit_length = NEW_INT(nb_orbits);
-		orbit_covered = NEW_INT(nb_orbits);
-		orbit_covered_max = NEW_INT(nb_orbits);
-		orbits_covered = NEW_INT(K * K);
+		orbit_length = NEW_int(nb_orbits);
+		orbit_covered = NEW_int(nb_orbits);
+		orbit_covered_max = NEW_int(nb_orbits);
+		orbits_covered = NEW_int(K * K);
 
-		INT_vec_zero(orbit_covered, nb_orbits);
+		int_vec_zero(orbit_covered, nb_orbits);
 
 		for (i = 0; i < nb_orbits; i++) {
-			orbit_length[i] = Pairs->orbit_length_as_INT(
+			orbit_length[i] = Pairs->orbit_length_as_int(
 					i /* orbit_at_level*/, 2 /* level*/);
 			orbit_covered_max[i] = orbit_length[i] / b;
 			if (orbit_covered_max[i] * b != orbit_length[i]) {
@@ -986,44 +986,44 @@ void direct_product_action::init(int argc, const char **argv,
 
 
 
-	f_row_used = NEW_INT(Xsize);
-	f_col_used = NEW_INT(Ysize);
-	row_idx = NEW_INT(Xsize);
-	col_idx = NEW_INT(Ysize);
-	singletons = NEW_INT(K);
+	f_row_used = NEW_int(Xsize);
+	f_col_used = NEW_int(Ysize);
+	row_idx = NEW_int(Xsize);
+	col_idx = NEW_int(Ysize);
+	singletons = NEW_int(K);
 
 	// temporary data
-	row_col_idx = NEW_INT(Xsize);
-	col_row_idx = NEW_INT(Ysize);
+	row_col_idx = NEW_int(Xsize);
+	col_row_idx = NEW_int(Ysize);
 
 
 	if (f_singletons) {
 		cout << "searching singletons" << endl;
 
-		INT target_depth;
+		int target_depth;
 		target_depth = K - depth;
 		cout << "target_depth=" << target_depth << endl;
 
 		orbiter_data_file *ODF;
 		char fname[1000];
-		//INT i, j;
-		INT level = depth;
+		//int i, j;
+		int level = depth;
 
-		sprintf(fname, "design_%s_%ld_%ld_lvl_%ld", group_label, q1, q2, level);
+		sprintf(fname, "design_%s_%d_%d_lvl_%d", group_label, q1, q2, level);
 
 		ODF = NEW_OBJECT(orbiter_data_file);
 		ODF->load(fname, verbose_level);
 		cout << "found " << ODF->nb_cases
 				<< " orbits at level " << level << endl;
 
-		INT *Orbit_idx;
-		INT nb_orbits_not_ruled_out;
-		INT orbit_idx;
-		INT nb_cases = 0;
-		INT nb_cases_eliminated = 0;
-		INT f_vv;
+		int *Orbit_idx;
+		int nb_orbits_not_ruled_out;
+		int orbit_idx;
+		int nb_cases = 0;
+		int nb_cases_eliminated = 0;
+		int f_vv;
 
-		Orbit_idx = NEW_INT(ODF->nb_cases);
+		Orbit_idx = NEW_int(ODF->nb_cases);
 		nb_orbits_not_ruled_out = 0;
 
 		for (orbit_idx = 0; orbit_idx < ODF->nb_cases; orbit_idx++) {
@@ -1043,13 +1043,13 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 			if (f_vv) {
 				cout << orbit_idx << " / " << ODF->nb_cases << " : ";
-				INT_vec_print(cout, ODF->sets[orbit_idx],
+				int_vec_print(cout, ODF->sets[orbit_idx],
 						ODF->set_sizes[orbit_idx]);
 				cout << " : " << ODF->Ago_ascii[orbit_idx] << " : "
 						<< ODF->Aut_ascii[orbit_idx] << endl;
 			}
 
-			INT *line0;
+			int *line0;
 
 			line0 = ODF->sets[orbit_idx];
 			if (ODF->set_sizes[orbit_idx] != level) {
@@ -1081,8 +1081,8 @@ void direct_product_action::init(int argc, const char **argv,
 		cout << "nb_cases=" << nb_cases << endl;
 		cout << "nb_cases_eliminated=" << nb_cases_eliminated << endl;
 
-		INT orbit_not_ruled_out;
-		INT nb_sol = 0;
+		int orbit_not_ruled_out;
+		int nb_sol = 0;
 
 		for (orbit_not_ruled_out = 0;
 				orbit_not_ruled_out < nb_orbits_not_ruled_out;
@@ -1103,7 +1103,7 @@ void direct_product_action::init(int argc, const char **argv,
 						<< " is orbit_idx " << orbit_idx << endl;
 			}
 
-			INT *line0;
+			int *line0;
 
 			line0 = ODF->sets[orbit_idx];
 			if (ODF->set_sizes[orbit_idx] != level) {
@@ -1122,8 +1122,8 @@ void direct_product_action::init(int argc, const char **argv,
 						<< " live points" << endl;
 			}
 			if (nb_live_points == target_depth) {
-				INT_vec_copy(line0, line, level);
-				INT_vec_copy(live_points, line + level, target_depth);
+				int_vec_copy(line0, line, level);
+				int_vec_copy(live_points, line + level, target_depth);
 				if (check_orbit_covering(line,
 					K, 0 /* verbose_level */)) {
 					cout << "found a solution in orbit " << orbit_idx << endl;
@@ -1138,15 +1138,15 @@ void direct_product_action::init(int argc, const char **argv,
 						<< orbit_idx << " / " << ODF->nb_cases
 						<< " we found " << nb_live_points
 						<< " live points, doing a search" << endl;
-				INT *subset;
-				INT nCk, l;
+				int *subset;
+				int nCk, l;
 
-				subset = NEW_INT(target_depth);
-				nCk = INT_n_choose_k(nb_live_points, target_depth);
+				subset = NEW_int(target_depth);
+				nCk = int_n_choose_k(nb_live_points, target_depth);
 				for (l = 0; l < nCk; l++) {
 					unrank_k_subset(l, subset, nb_live_points, target_depth);
-					INT_vec_copy(line0, line, level);
-					INT_vec_apply(subset, live_points, line + level, target_depth);
+					int_vec_copy(line0, line, level);
+					int_vec_apply(subset, live_points, line + level, target_depth);
 					if (check_orbit_covering(line,
 						K, 0 /* verbose_level */)) {
 						cout << "found a solution, subset " << l
@@ -1156,7 +1156,7 @@ void direct_product_action::init(int argc, const char **argv,
 					}
 				} // next l
 
-				FREE_INT(subset);
+				FREE_int(subset);
 			} // else
 		} // next orbit_not_ruled_out
 
@@ -1172,11 +1172,11 @@ void direct_product_action::init(int argc, const char **argv,
 		//Gen->prefix[0] = 0;
 
 		if (f_subgroup) {
-			sprintf(Gen->fname_base, "design_%s_%ld_%ld",
+			sprintf(Gen->fname_base, "design_%s_%d_%d",
 					group_label, q1, q2);
 		}
 		else {
-			sprintf(Gen->fname_base, "design_no_group_%ld_%ld",
+			sprintf(Gen->fname_base, "design_no_group_%d_%d",
 					d1, d2);
 
 		}
@@ -1198,7 +1198,7 @@ void direct_product_action::init(int argc, const char **argv,
 			(void *)this /* candidate_check_data */);
 
 
-		INT nb_nodes = 1000;
+		int nb_nodes = 1000;
 
 		if (f_v) {
 			cout << "direct_product_action::init "
@@ -1211,8 +1211,8 @@ void direct_product_action::init(int argc, const char **argv,
 			}
 		Gen->root[0].init_root_node(Gen, verbose_level - 1);
 
-		INT f_use_invariant_subset_if_available = TRUE;
-		INT f_debug = FALSE;
+		int f_use_invariant_subset_if_available = TRUE;
+		int f_debug = FALSE;
 
 		//t0 = os_ticks();
 
@@ -1258,17 +1258,17 @@ void direct_product_action::init(int argc, const char **argv,
 }
 
 void direct_product_action::create_graph(
-		INT *line0, INT len, INT verbose_level)
+		int *line0, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, a, x, y, h, ph, k, pk, o;
+	int f_v = (verbose_level >= 1);
+	int i, a, x, y, h, ph, k, pk, o;
 
 	if (f_v) {
 		cout << "direct_product_action::create_graph" << endl;
 	}
 
-	INT_vec_zero(row_sum, Xsize);
-	INT_vec_zero(col_sum, Ysize);
+	int_vec_zero(row_sum, Xsize);
+	int_vec_zero(col_sum, Ysize);
 
 	for (i = 0; i < len; i++) {
 		a = line0[i];
@@ -1326,10 +1326,10 @@ void direct_product_action::create_graph(
 }
 
 void direct_product_action::testing(
-		strong_generators *SG, INT verbose_level)
+		strong_generators *SG, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "direct_product_action::testing" << endl;
@@ -1337,27 +1337,27 @@ void direct_product_action::testing(
 
 
 	cout << "testing..." << endl;
-	INT r1, r2;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
-	INT *perm1;
-	INT *perm2;
-	INT *perm3;
-	INT *perm4;
-	INT *perm5;
-	INT cnt;
+	int r1, r2;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int *perm1;
+	int *perm2;
+	int *perm3;
+	int *perm4;
+	int *perm5;
+	int cnt;
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
-	perm1 = NEW_INT(A->degree);
-	perm2 = NEW_INT(A->degree);
-	perm3 = NEW_INT(A->degree);
-	perm4 = NEW_INT(A->degree);
-	perm5 = NEW_INT(A->degree);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	perm1 = NEW_int(A->degree);
+	perm2 = NEW_int(A->degree);
+	perm3 = NEW_int(A->degree);
+	perm4 = NEW_int(A->degree);
+	perm5 = NEW_int(A->degree);
 
 	for (cnt = 0; cnt < 10; cnt++) {
 		r1 = random_integer(SG->gens->len);
@@ -1500,7 +1500,7 @@ void direct_product_action::testing(
 #if 0
 	cout << "performing test 4:" << endl;
 
-	INT data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
+	int data[] = {2,0,1, 0,1,1,0, 1,0,0,1, 1,0,0,1 };
 	A->make_element(Elt1, data, verbose_level);
 	A->element_as_permutation(Elt1, perm1, 0 /* verbose_level */);
 	cout << "as Elt1 as permutation: " << endl;
@@ -1533,25 +1533,25 @@ void direct_product_action::testing(
 	cout << "test 4 passed" << endl;
 #endif
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
-	FREE_INT(perm1);
-	FREE_INT(perm2);
-	FREE_INT(perm3);
-	FREE_INT(perm4);
-	FREE_INT(perm5);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(perm1);
+	FREE_int(perm2);
+	FREE_int(perm3);
+	FREE_int(perm4);
+	FREE_int(perm5);
 
 	if (f_v) {
 		cout << "direct_product_action::testing done" << endl;
 	}
 }
 
-INT direct_product_action::find_pair_orbit(INT i, INT j, INT verbose_level)
+int direct_product_action::find_pair_orbit(int i, int j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT orbit_no;
+	int f_v = (verbose_level >= 1);
+	int orbit_no;
 
 	if (f_v) {
 		cout << "direct_product_action::find_pair_orbit" << endl;
@@ -1567,12 +1567,12 @@ INT direct_product_action::find_pair_orbit(INT i, INT j, INT verbose_level)
 	return orbit_no;
 }
 
-INT direct_product_action::find_pair_orbit_by_tracing(INT i, INT j, INT verbose_level)
+int direct_product_action::find_pair_orbit_by_tracing(int i, int j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT orbit_no;
-	INT set[2];
-	INT canonical_set[2];
+	int f_v = (verbose_level >= 1);
+	int orbit_no;
+	int set[2];
+	int canonical_set[2];
 
 	if (f_v) {
 		cout << "direct_product_action::find_pair_orbit_by_tracing" << endl;
@@ -1592,17 +1592,17 @@ INT direct_product_action::find_pair_orbit_by_tracing(INT i, INT j, INT verbose_
 	return orbit_no;
 }
 
-void direct_product_action::compute_pair_orbit_table(INT verbose_level)
+void direct_product_action::compute_pair_orbit_table(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, k;
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
 
 
 	if (f_v) {
 		cout << "direct_product_action::compute_pair_orbit_table" << endl;
 	}
-	pair_orbit = NEW_INT(V * V);
-	INT_vec_zero(pair_orbit, V * V);
+	pair_orbit = NEW_int(V * V);
+	int_vec_zero(pair_orbit, V * V);
 	for (i = 0; i < V; i++) {
 		for (j = i + 1; j < V; j++) {
 			k = find_pair_orbit_by_tracing(i, j, 0 /*verbose_level - 2*/);
@@ -1618,12 +1618,12 @@ void direct_product_action::compute_pair_orbit_table(INT verbose_level)
 	}
 }
 
-void direct_product_action::write_pair_orbit_file(INT verbose_level)
+void direct_product_action::write_pair_orbit_file(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname[1000];
-	INT set[1000];
-	INT i, j, k, n, size, l;
+	int set[1000];
+	int i, j, k, n, size, l;
 
 
 	if (f_v) {
@@ -1642,7 +1642,7 @@ void direct_product_action::write_pair_orbit_file(INT verbose_level)
 					"size != 2" << endl;
 			exit(1);
 			}
-		l = Pairs->orbit_length_as_INT(i, 2);
+		l = Pairs->orbit_length_as_int(i, 2);
 		f << set[0] << " " << set[1] << " " << l << endl;
 		}
 	for (i = 0; i < V; i++) {
@@ -1664,9 +1664,9 @@ void direct_product_action::write_pair_orbit_file(INT verbose_level)
 
 }
 
-void direct_product_action::print_mask_test_i(ostream &ost, INT i)
+void direct_product_action::print_mask_test_i(ostream &ost, int i)
 {
-	INT who, what;
+	int who, what;
 
 	ost << "mask test at level " << mask_test_level[i] << " : ";
 	who = mask_test_who[i];
@@ -1696,18 +1696,18 @@ void direct_product_action::print_mask_test_i(ostream &ost, INT i)
 	ost << endl;
 }
 
-INT direct_product_action::check_conditions(
-		INT *S, INT len, INT verbose_level)
+int direct_product_action::check_conditions(
+		int *S, int len, int verbose_level)
 {
 	//verbose_level = 4;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_OK = TRUE;
-	INT f_bad_orbit = FALSE;
-	INT f_bad_row = FALSE;
-	INT f_bad_col = FALSE;
-	INT f_bad_mask = FALSE;
-	INT pt, idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_OK = TRUE;
+	int f_bad_orbit = FALSE;
+	int f_bad_row = FALSE;
+	int f_bad_col = FALSE;
+	int f_bad_mask = FALSE;
+	int pt, idx;
 
 	if (f_v) {
 		cout << "direct_product_action::check_conditions "
@@ -1718,7 +1718,7 @@ INT direct_product_action::check_conditions(
 		}
 
 	pt = S[len - 1];
-	if (INT_vec_search_linear(S, len - 1, pt, idx)) {
+	if (int_vec_search_linear(S, len - 1, pt, idx)) {
 		if (f_v) {
 			cout << "direct_product_action::check_conditions not OK, "
 					"repeat entry" << endl;
@@ -1770,14 +1770,14 @@ INT direct_product_action::check_conditions(
 		}
 }
 
-INT direct_product_action::check_orbit_covering(INT *line,
-		INT len, INT verbose_level)
+int direct_product_action::check_orbit_covering(int *line,
+		int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i, pi, j, pj, o, f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i, pi, j, pj, o, f_OK = TRUE;
 
-	INT_vec_zero(orbit_covered, nb_orbits);
+	int_vec_zero(orbit_covered, nb_orbits);
 
 	for (i = 0; i < len; i++) {
 		pi = line[i];
@@ -1815,16 +1815,16 @@ INT direct_product_action::check_orbit_covering(INT *line,
 	return f_OK;
 }
 
-INT direct_product_action::check_row_sums(INT *line,
-		INT len, INT verbose_level)
+int direct_product_action::check_row_sums(int *line,
+		int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, p, x, y, s, f_OK = TRUE;
-	INT f_DD_problem = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, p, x, y, s, f_OK = TRUE;
+	int f_DD_problem = FALSE;
 
 	inner_pairs_in_rows = 0;
-	INT_vec_zero(row_sum, Xsize);
+	int_vec_zero(row_sum, Xsize);
 	if (f_R) {
 		for (i = 1; i <= nb_row_types; i++) {
 			row_type_cur[i] = 0;
@@ -1890,16 +1890,16 @@ INT direct_product_action::check_row_sums(INT *line,
 	return f_OK;
 }
 
-INT direct_product_action::check_col_sums(INT *line,
-		INT len, INT verbose_level)
+int direct_product_action::check_col_sums(int *line,
+		int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, p, x, y, s, f_OK = TRUE;
-	INT f_DD_problem = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, p, x, y, s, f_OK = TRUE;
+	int f_DD_problem = FALSE;
 
 	inner_pairs_in_cols = 0;
-	INT_vec_zero(col_sum, Ysize);
+	int_vec_zero(col_sum, Ysize);
 	if (f_C) {
 		for (i = 1; i <= nb_col_types; i++) {
 			col_type_cur[i] = 0;
@@ -1965,16 +1965,16 @@ INT direct_product_action::check_col_sums(INT *line,
 	return f_OK;
 }
 
-INT direct_product_action::check_mask(INT *line,
-		INT len, INT verbose_level)
+int direct_product_action::check_mask(int *line,
+		int len, int verbose_level)
 {
 	//verbose_level = 4;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_OK = TRUE;
-	INT k, who;
-	INT nb_rows_used, nb_cols_used;
-	INT nb_singletons;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_OK = TRUE;
+	int k, who;
+	int nb_rows_used, nb_cols_used;
+	int nb_singletons;
 
 
 	if (f_vv) {
@@ -2055,16 +2055,16 @@ INT direct_product_action::check_mask(INT *line,
 
 
 void direct_product_action::get_mask_core_and_singletons(
-	INT *line, INT len,
-	INT &nb_rows_used, INT &nb_cols_used,
-	INT &nb_singletons, INT verbose_level)
+	int *line, int len,
+	int &nb_rows_used, int &nb_cols_used,
+	int &nb_singletons, int verbose_level)
 {
-	INT i, j, h, a;
-	INT m = Xsize;
-	INT n = Ysize;
+	int i, j, h, a;
+	int m = Xsize;
+	int n = Ysize;
 
-	INT_vec_zero(f_row_used, m);
-	INT_vec_zero(f_col_used, n);
+	int_vec_zero(f_row_used, m);
+	int_vec_zero(f_col_used, n);
 	for (h = 0; h < len; h++) {
 		a = line[h];
 		i = a / Ysize;
@@ -2108,11 +2108,11 @@ void direct_product_action::get_mask_core_and_singletons(
 		}
 }
 
-INT design_search_check_conditions(INT len, INT *S,
-		void *data, INT verbose_level)
+int design_search_check_conditions(int len, int *S,
+		void *data, int verbose_level)
 {
 	direct_product_action *P = (direct_product_action *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "design_search_check_conditions" << endl;

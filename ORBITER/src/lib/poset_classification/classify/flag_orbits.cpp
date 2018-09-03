@@ -40,17 +40,17 @@ void flag_orbits::freeself()
 		FREE_OBJECTS(Flag_orbit_node);
 		}
 	if (Pt) {
-		FREE_INT(Pt);
+		FREE_int(Pt);
 		}
 	null();
 }
 
 void flag_orbits::init(action *A, action *A2, 
-	INT nb_primary_orbits_lower, 
-	INT pt_representation_sz, INT nb_flag_orbits, 
-	INT verbose_level)
+	int nb_primary_orbits_lower, 
+	int pt_representation_sz, int nb_flag_orbits, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "flag_orbits::init" << endl;
@@ -60,28 +60,28 @@ void flag_orbits::init(action *A, action *A2,
 	flag_orbits::nb_primary_orbits_lower = nb_primary_orbits_lower;
 	flag_orbits::pt_representation_sz = pt_representation_sz;
 	flag_orbits::nb_flag_orbits = nb_flag_orbits;
-	Pt = NEW_INT(nb_flag_orbits * pt_representation_sz);
+	Pt = NEW_int(nb_flag_orbits * pt_representation_sz);
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	if (f_v) {
 		cout << "flag_orbits::init done" << endl;
 		}
 }
 
-void flag_orbits::write_file(ofstream &fp, INT verbose_level)
+void flag_orbits::write_file(ofstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "flag_orbits::write_file" << endl;
 		}
-	fp.write((char *) &nb_primary_orbits_lower, sizeof(INT));
-	fp.write((char *) &nb_primary_orbits_upper, sizeof(INT));
-	fp.write((char *) &nb_flag_orbits, sizeof(INT));
-	fp.write((char *) &pt_representation_sz, sizeof(INT));
+	fp.write((char *) &nb_primary_orbits_lower, sizeof(int));
+	fp.write((char *) &nb_primary_orbits_upper, sizeof(int));
+	fp.write((char *) &nb_flag_orbits, sizeof(int));
+	fp.write((char *) &pt_representation_sz, sizeof(int));
 
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
-		fp.write((char *) &Pt[i], sizeof(INT));
+		fp.write((char *) &Pt[i], sizeof(int));
 		}
 	for (i = 0; i < nb_flag_orbits; i++) {
 		Flag_orbit_node[i].write_file(fp, 0 /*verbose_level*/);
@@ -92,22 +92,22 @@ void flag_orbits::write_file(ofstream &fp, INT verbose_level)
 		}
 }
 
-void flag_orbits::read_file(ifstream &fp, INT verbose_level)
+void flag_orbits::read_file(ifstream &fp, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "flag_orbits::read_file" << endl;
 		}
-	fp.read((char *) &nb_primary_orbits_lower, sizeof(INT));
-	fp.read((char *) &nb_primary_orbits_upper, sizeof(INT));
-	fp.read((char *) &nb_flag_orbits, sizeof(INT));
-	fp.read((char *) &pt_representation_sz, sizeof(INT));
+	fp.read((char *) &nb_primary_orbits_lower, sizeof(int));
+	fp.read((char *) &nb_primary_orbits_upper, sizeof(int));
+	fp.read((char *) &nb_flag_orbits, sizeof(int));
+	fp.read((char *) &pt_representation_sz, sizeof(int));
 
-	Pt = NEW_INT(nb_flag_orbits * pt_representation_sz);
+	Pt = NEW_int(nb_flag_orbits * pt_representation_sz);
 	for (i = 0; i < nb_flag_orbits * pt_representation_sz; i++) {
-		fp.read((char *) &Pt[i], sizeof(INT));
+		fp.read((char *) &Pt[i], sizeof(int));
 		}
 	Flag_orbit_node = NEW_OBJECTS(flag_orbit_node, nb_flag_orbits);
 	for (i = 0; i < nb_flag_orbits; i++) {

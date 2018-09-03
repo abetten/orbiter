@@ -9,9 +9,9 @@
 
 int main(int argc, char **argv)
 {
-	INT t0 = os_ticks();
-	INT i;
-	INT verbose_level = 0;
+	int t0 = os_ticks();
+	int i;
+	int verbose_level = 0;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

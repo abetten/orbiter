@@ -44,12 +44,12 @@
 // added class andre_construction andre_construction: June 2, 2013
 // added class andre_construction_point_element: June 2, 2013
 // added class andre_construction_line_element: June 2, 2013
-// added class INT_matrix: October 23, 2013
+// added class int_matrix: October 23, 2013
 // added class gl_classes: October 23, 2013
 // added class layered_graph: January 6, 2014
 // added class graph_layer: January 6, 2014
 // added class graph_node: January 6, 2014
-// added class INT_vector: August 12, 2014
+// added class int_vector: August 12, 2014
 // added class projective_space (moved here from ACTION): December 31, 2014
 // added class buekenhout_metz (moved here from TOP_LEVEL): December 31, 2014
 // added class a_domain March 14, 2015
@@ -109,7 +109,7 @@ using namespace std;
 
 #if defined(__APPLE__) || defined(__MACH__)
 #define SYSTEMUNIX
-#define SYSTEM_IS_MACINTOSH
+#define SYSTEM_IS_MACintOSH
 	// use Mac specific stuff like asking how much memory the process uses.
 #endif
 
@@ -137,45 +137,44 @@ using namespace std;
 
 
 // define exactly one of the following to match your system:
-#undef INT_HAS_2_charS
-#define INT_HAS_4_charS
-#undef INT_HAS_8_charS
+#undef int_HAS_2_charS
+#define int_HAS_4_charS
+#undef int_HAS_8_charS
 
-#ifdef INT_HAS_2_charS
-typedef short INT2;
-typedef long INT4;
-typedef long INT8;
-typedef unsigned short UINT2;
-typedef unsigned long UINT4;
-typedef unsigned long UINT8;
+#ifdef int_HAS_2_charS
+typedef short int2;
+typedef long int4;
+typedef long int8;
+typedef unsigned short uint2;
+typedef unsigned long uint4;
+typedef unsigned long uint8;
 #endif
-#ifdef INT_HAS_4_charS
-typedef short INT2;
-typedef int INT4;
-typedef long INT8;
-typedef unsigned short UINT2;
-typedef unsigned int UINT4;
-typedef unsigned long UINT8;
+#ifdef int_HAS_4_charS
+typedef short int2;
+typedef int int4;
+typedef long int8;
+typedef unsigned short uint2;
+typedef unsigned int uint4;
+typedef unsigned long uint8;
 #endif
-#ifdef INT_HAS_8_charS
-typedef short INT2;
-typedef short int INT4;
-typedef int INT8;
-typedef unsigned short UINT2;
-typedef unsigned short int UINT4;
-typedef unsigned int UINT8;
+#ifdef int_HAS_8_charS
+typedef short int2;
+typedef short int int4;
+typedef int int8;
+typedef unsigned short uint2;
+typedef unsigned short int uint4;
+typedef unsigned int uint8;
 #endif
 
 
-typedef long int INT;
-typedef INT *PINT;
-typedef INT **PPINT;
-typedef unsigned long UINT;
-typedef UINT *PUINT;
-typedef long LONG;
-typedef LONG *PLONG;
-typedef unsigned long ULONG;
-typedef ULONG *PULONG;
+typedef int *pint;
+typedef int **ppint;
+//typedef unsigned long uint;
+//typedef uint *puint;
+//typedef long LONG;
+//typedef LONG *PLONG;
+//typedef unsigned long ULONG;
+//typedef ULONG *PULONG;
 typedef short SHORT;
 typedef SHORT *PSHORT;
 typedef char *pchar;
@@ -206,7 +205,7 @@ typedef void *pvoid;
 #define ODD(x)      ( ((x) % 2) == 1 )
 #define DOUBLYEVEN(x)     ( ((x) % 4) == 0 )
 #define SINGLYEVEN(x)     ( ((x) % 4) == 2 )
-#define ONE_char_INT(a) (((a) > -126) && ((a) < 127))
+#define ONE_char_int(a) (((a) > -126) && ((a) < 127))
 #define ONE_MILLION 1000000
 #define ONE_HUNDRED_THOUSAND 100000
 
@@ -258,14 +257,14 @@ typedef class memory_object memory_object;
 typedef class tree_node tree_node;
 typedef tree_node *ptree_node;
 typedef class tree tree;
-typedef class INT_matrix INT_matrix;
+typedef class int_matrix int_matrix;
 typedef class gl_classes gl_classes;
 typedef class gl_class_rep gl_class_rep;
 typedef class matrix_block_data matrix_block_data;
 typedef class layered_graph layered_graph;
 typedef class graph_layer graph_layer;
 typedef class graph_node graph_node;
-typedef class INT_vector INT_vector;
+typedef class int_vector int_vector;
 typedef class projective_space projective_space;
 typedef class buekenhout_metz buekenhout_metz;
 typedef class a_domain a_domain;
@@ -301,9 +300,9 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #ifdef MEMORY_DEBUG
 #define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
 #define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
-#define NEW_INT(n) global_mem_object_registry.allocate_INT(n, __FILE__, __LINE__)
-#define NEW_PINT(n) global_mem_object_registry.allocate_PINT(n, __FILE__, __LINE__)
-#define NEW_PPINT(n) global_mem_object_registry.allocate_PPINT(n, __FILE__, __LINE__)
+//#define NEW_int(n) global_mem_object_registry.allocate_int(n, __FILE__, __LINE__)
+#define NEW_pint(n) global_mem_object_registry.allocate_pint(n, __FILE__, __LINE__)
+#define NEW_ppint(n) global_mem_object_registry.allocate_ppint(n, __FILE__, __LINE__)
 #define NEW_char(n) global_mem_object_registry.allocate_char(n, __FILE__, __LINE__)
 #define NEW_uchar(n) global_mem_object_registry.allocate_uchar(n, __FILE__, __LINE__)
 #define NEW_pchar(n) global_mem_object_registry.allocate_pchar(n, __FILE__, __LINE__)
@@ -313,9 +312,9 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_OBJECTS(type, n) (type *)global_mem_object_registry.allocate_OBJECTS(new type[n], n, sizeof(type), #type, __FILE__, __LINE__)
 #define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
 #define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
-#define FREE_INT(p) global_mem_object_registry.free_INT(p, __FILE__, __LINE__)
-#define FREE_PINT(p) global_mem_object_registry.free_PINT(p, __FILE__, __LINE__)
-#define FREE_PPINT(p) global_mem_object_registry.free_PPINT(p, __FILE__, __LINE__)
+//#define FREE_int(p) global_mem_object_registry.free_int(p, __FILE__, __LINE__)
+#define FREE_pint(p) global_mem_object_registry.free_pint(p, __FILE__, __LINE__)
+#define FREE_ppint(p) global_mem_object_registry.free_ppint(p, __FILE__, __LINE__)
 #define FREE_char(p) global_mem_object_registry.free_char(p, __FILE__, __LINE__)
 #define FREE_uchar(p) global_mem_object_registry.free_uchar(p, __FILE__, __LINE__)
 #define FREE_pchar(p) global_mem_object_registry.free_pchar(p, __FILE__, __LINE__)
@@ -326,9 +325,9 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #else
 #define NEW_int(n) new int[n]
 #define NEW_pint(n) new pint[n]
-#define NEW_INT(n) new INT[n]
-#define NEW_PINT(n) new PINT[n]
-#define NEW_PPINT(n) new PPINT[n]
+//#define NEW_int(n) new int[n]
+#define NEW_pint(n) new pint[n]
+#define NEW_ppint(n) new ppint[n]
 #define NEW_char(n) new char[n]
 #define NEW_uchar(n) new uchar[n]
 #define NEW_pchar(n) new pchar[n]
@@ -338,9 +337,9 @@ typedef class mem_object_registry_entry mem_object_registry_entry;
 #define NEW_OBJECTS(type, n) new type[n]
 #define FREE_int(p) delete [] p
 #define FREE_pint(p) delete [] p
-#define FREE_INT(p) delete [] p
-#define FREE_PINT(p) delete [] p
-#define FREE_PPINT(p) delete [] p
+//#define FREE_int(p) delete [] p
+#define FREE_pint(p) delete [] p
+#define FREE_ppint(p) delete [] p
 #define FREE_char(p) delete [] p
 #define FREE_uchar(p) delete [] p
 #define FREE_pchar(p) delete [] p
@@ -371,29 +370,29 @@ typedef enum diophant_equation_type diophant_equation_type;
 // for otherwise we would create incomplete type compile errors:
 
 // #############################################################################
-// INT_matrix.C:
+// int_matrix.C:
 // #############################################################################
 
 
-//! a class to represent matrices over INT
+//! a class to represent matrices over int
 
 
-class INT_matrix {
+class int_matrix {
 public:
 
-	INT *M;
-	INT m;
-	INT n;
+	int *M;
+	int m;
+	int n;
 
-	INT_matrix();
-	~INT_matrix();
+	int_matrix();
+	~int_matrix();
 	void null();
 	void freeself();
-	void allocate(INT m, INT n);
-	void allocate_and_init(INT m, INT n, INT *Mtx);
-	INT &s_ij(INT i, INT j);
-	INT &s_m();
-	INT &s_n();
+	void allocate(int m, int n);
+	void allocate_and_init(int m, int n, int *Mtx);
+	int &s_ij(int i, int j);
+	int &s_m();
+	int &s_n();
 	void print();
 
 	
@@ -404,7 +403,7 @@ public:
 // longinteger_object.C:
 // #############################################################################
 
-extern INT longinteger_f_print_scientific;
+extern int longinteger_f_print_scientific;
 
 //! a class to represent aritrary precision integers
 
@@ -424,23 +423,23 @@ public:
 	char &sign() { return sgn; };
 	int &len() { return l; };
 	char *&rep() { return r; };
-	void create(INT i);
-	void create_product(INT nb_factors, INT *factors);
-	void create_power(INT a, INT e);
+	void create(int i);
+	void create_product(int nb_factors, int *factors);
+	void create_power(int a, int e);
 		// creates a^e
-	void create_power_minus_one(INT a, INT e);
+	void create_power_minus_one(int a, int e);
 		// creates a^e  - 1
-	void create_from_base_b_representation(INT b, INT *rep, INT len);
-	void create_from_base_10_string(const char *str, INT verbose_level);
+	void create_from_base_b_representation(int b, int *rep, int len);
+	void create_from_base_10_string(const char *str, int verbose_level);
 	void create_from_base_10_string(const char *str);
-	INT as_INT();
+	int as_int();
 	void as_longinteger(longinteger_object &a);
 	void assign_to(longinteger_object &b);
 	void swap_with(longinteger_object &b);
 	ostream& print(ostream& ost);
 	ostream& print_not_scientific(ostream& ost);
-	INT output_width();
-	void print_width(ostream& ost, INT width);
+	int output_width();
+	void print_width(ostream& ost, int width);
 	void print_to_string(char *str);
 	void normalize();
 	void negate();
@@ -452,9 +451,9 @@ public:
 	void one();
 	void increment();
 	void decrement();
-	void add_INT(INT a);
-	void create_i_power_j(INT i, INT j);
-	INT compare_with_INT(INT a);
+	void add_int(int a);
+	void create_i_power_j(int i, int j);
+	int compare_with_int(int a);
 };
 
 ostream& operator<<(ostream& ost, longinteger_object& p);

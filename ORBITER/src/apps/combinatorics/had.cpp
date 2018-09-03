@@ -7,14 +7,14 @@
 
 #include "orbiter.h"
 
-void do_it(INT verbose_level);
+void do_it(int verbose_level);
 
-INT t0;
+int t0;
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
+	int i;
+	int verbose_level = 0;
 	
  	t0 = os_ticks();
 	
@@ -31,28 +31,28 @@ int main(int argc, char **argv)
 
 }
 
-void do_it(INT verbose_level)
+void do_it(int verbose_level)
 {
-	INT H[16] = {
+	int H[16] = {
 		1,1,1,1,
 		1,-1,1,-1,
 		1,1,-1,-1,
 		1,-1,-1,1
 		};
-	INT L[16] = {
+	int L[16] = {
 		0,1,2,3,
 		1,0,3,2,
 		2,3,0,1,
 		3,2,1,0
 		};
 	
-	INT C[4][16];
+	int C[4][16];
 
-	INT A[16 * 16];
-	INT A2[16 * 16];
+	int A[16 * 16];
+	int A2[16 * 16];
 
 
-	INT h, i, j, I, J, l, a, b;
+	int h, i, j, I, J, l, a, b;
 
 	for (h = 0; h < 4; h++) {
 		for (i = 0; i < 4; i++) {
@@ -64,7 +64,7 @@ void do_it(INT verbose_level)
 
 	for (h = 0; h < 4; h++) {
 		cout << "C_" << h << ":" << endl;
-		INT_matrix_print(C[h], 4, 4);
+		int_matrix_print(C[h], 4, 4);
 		cout << endl;
 		}
 
@@ -80,7 +80,7 @@ void do_it(INT verbose_level)
 			}
 		}
 	cout << "A=" << endl;
-	INT_matrix_print(A, 16, 16);
+	int_matrix_print(A, 16, 16);
 	cout << endl;
 
 	for (i = 0; i < 16; i++) {
@@ -97,7 +97,7 @@ void do_it(INT verbose_level)
 		}
 	
 	cout << "A=" << endl;
-	INT_matrix_print(A, 16, 16);
+	int_matrix_print(A, 16, 16);
 	cout << endl;
 
 	for (i = 0; i < 16; i++) {
@@ -110,7 +110,7 @@ void do_it(INT verbose_level)
 			}
 		}
 	cout << "A2=" << endl;
-	INT_matrix_print(A2, 16, 16);
+	int_matrix_print(A2, 16, 16);
 	cout << endl;
 	
 }

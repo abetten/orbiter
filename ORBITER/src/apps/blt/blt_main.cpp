@@ -13,30 +13,30 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
 
 int main(int argc, const char **argv)
 {
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT f_poly = FALSE;
+	int verbose_level = 0;
+	int f_q = FALSE;
+	int q = 0;
+	int f_poly = FALSE;
 	const char *poly = NULL;
-	INT f_starter = FALSE;
-	INT f_list = FALSE;
-	INT f_draw_poset = FALSE;
+	int f_starter = FALSE;
+	int f_list = FALSE;
+	int f_draw_poset = FALSE;
 
 
-	INT i;
-	INT f_Law71 = FALSE;
+	int i;
+	int f_Law71 = FALSE;
 
 
-	INT f_create_graphs = FALSE;
-	INT create_graphs_r, create_graphs_m, create_graphs_level;
-	INT f_eliminate_graphs_if_possible = FALSE;
-	INT f_create_graphs_list_of_cases = FALSE;
+	int f_create_graphs = FALSE;
+	int create_graphs_r, create_graphs_m, create_graphs_level;
+	int f_eliminate_graphs_if_possible = FALSE;
+	int f_create_graphs_list_of_cases = FALSE;
 	const char *create_graphs_list_of_cases = NULL;
 	const char *create_graphs_list_of_cases_prefix = NULL;
 
@@ -107,7 +107,7 @@ int main(int argc, const char **argv)
 	IA->read_arguments(argc, argv, verbose_level);
 
 
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (!f_q) {
 		cout << "Please use option -q <q>" << endl;
@@ -124,8 +124,8 @@ int main(int argc, const char **argv)
 
 	{
 	blt_set Gen;
-	INT schreier_depth = ECA->starter_size;
-	INT f_debug = FALSE;
+	int schreier_depth = ECA->starter_size;
+	int f_debug = FALSE;
 	
 	finite_field *F;
 
@@ -147,7 +147,7 @@ int main(int argc, const char **argv)
 	
 	Gen.init2(verbose_level);
 	
-	INT f_use_invariant_subset_if_available = TRUE;
+	int f_use_invariant_subset_if_available = TRUE;
 
 	if (Gen.f_override_schreier_depth) {
 		schreier_depth = Gen.override_schreier_depth;
@@ -168,9 +168,9 @@ int main(int argc, const char **argv)
 
 	if (f_starter) {
 
-		INT depth;
-		INT f_embedded = TRUE;
-		INT f_sideways = FALSE;
+		int depth;
+		int f_embedded = TRUE;
+		int f_sideways = FALSE;
 
 		depth = Gen.gen->main(t0, schreier_depth, 
 			f_use_invariant_subset_if_available, 
@@ -189,7 +189,7 @@ int main(int argc, const char **argv)
 				spreadsheet *Sp;
 				Gen.gen->make_spreadsheet_of_orbit_reps(Sp, depth);
 				char fname_csv[1000];
-				sprintf(fname_csv, "partial_BLT_sets_%ld_%ld.csv",
+				sprintf(fname_csv, "partial_BLT_sets_%d_%d.csv",
 						q, depth);
 				Sp->save(fname_csv, verbose_level);
 				delete Sp;

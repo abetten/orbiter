@@ -11,14 +11,14 @@ void convert(ifstream &f, ofstream &g, int f_simple);
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	char *cc_fname;
 	char str[1000];
 	char ext[1000];
 	char fname_out[1000];
 	//char label[1000];
-	INT verbose_level = 0;
-	INT f_simple = FALSE;
+	int verbose_level = 0;
+	int f_simple = FALSE;
 		
 	if (argc <= 1) {
 		//print_usage();
@@ -34,8 +34,8 @@ int main(int argc, char **argv)
 			cout << "-simple " << endl;
 			}
 		}
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 
 	cc_fname = argv[argc - 1];
 	strcpy(str, cc_fname);
@@ -58,26 +58,26 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 {
 	//char type[64];
 	//FILE *fp;
-	INT b_len = 0, *B = NULL, b = 0;
-	INT v_len = 0, *V = NULL, v = 0;
-	INT *tdo = NULL;
-	INT *s_type = NULL, *s_flag = NULL;
-	INT *r_type = NULL, *r_from = NULL, *r_len = NULL;
-	INT *f_flush = NULL;
-	INT nb_fuse = 0, *fuse = NULL;
-	INT i, j, ff, l, no;
-	INT f_v = FALSE;
-	INT f_vv = FALSE;
-	INT f_do_iso_test = FALSE;
-	INT f_do_aut_group = FALSE;
-	INT f_transpose = FALSE;
-	//INT gen_print_interval = 1;
-	//INT f_resolve = FALSE;
-	//INT f_resolve_with_aut_group = FALSE;
-	//INT f_lambda = FALSE;
-	//INT lambda = FALSE;
-	//INT f_find_square = TRUE; /* JS 120100 */
-	//INT f_simple = FALSE; /* JS 180100 */
+	int b_len = 0, *B = NULL, b = 0;
+	int v_len = 0, *V = NULL, v = 0;
+	int *tdo = NULL;
+	int *s_type = NULL, *s_flag = NULL;
+	int *r_type = NULL, *r_from = NULL, *r_len = NULL;
+	int *f_flush = NULL;
+	int nb_fuse = 0, *fuse = NULL;
+	int i, j, ff, l, no;
+	int f_v = FALSE;
+	int f_vv = FALSE;
+	int f_do_iso_test = FALSE;
+	int f_do_aut_group = FALSE;
+	int f_transpose = FALSE;
+	//int gen_print_interval = 1;
+	//int f_resolve = FALSE;
+	//int f_resolve_with_aut_group = FALSE;
+	//int f_lambda = FALSE;
+	//int lambda = FALSE;
+	//int f_find_square = TRUE; /* JS 120100 */
+	//int f_simple = FALSE; /* JS 180100 */
 	//ISO_TYPE *it;
 	string str;
 	char buf[100000];
@@ -90,9 +90,9 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 		f.getline(buf, 100000, '\n');
 		if (buf[0] == '#')
 			continue;
-		if (strncmp(buf, "STARTINGPOINT", 13) == 0) {
-			sscanf(buf + 13, "%ld", &no);
-			printf("found STARTINGPOINT %ld\n", no);
+		if (strncmp(buf, "STARTINGPOint", 13) == 0) {
+			sscanf(buf + 13, "%d", &no);
+			printf("found STARTINGPOint %d\n", no);
 			printf("%s\n", buf);
 			break;				
 			}
@@ -112,7 +112,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 		if (strncmp(buf, "B", 1) == 0) {
 			f >> str;
 			b_len = str2int(str);
-			B = new INT[b_len];
+			B = new int[b_len];
 			b = 0;
 			for (i = 0; i < b_len; i++) {
 				f >> B[i];
@@ -120,15 +120,15 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				}
 			printf("B: ");
 			for (i = 0; i < b_len; i++) {
-				printf("%ld ", B[i]);
+				printf("%d ", B[i]);
 				}
-			printf(" (b = %ld)\n", b);
+			printf(" (b = %d)\n", b);
 			}
 		
 		if (strncmp(buf, "V", 1) == 0) {
 			f >> str;
 			v_len = str2int(str);
-			V = new INT[v_len];
+			V = new int[v_len];
 			v = 0;
 			for (i = 0; i < v_len; i++) {
 				f >> V[i];
@@ -136,13 +136,13 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				}
 			printf("V: ");
 			for (i = 0; i < v_len; i++) {
-				printf("%ld ", V[i]);
+				printf("%d ", V[i]);
 				}
-			printf(" (v = %ld)\n", v);
+			printf(" (v = %d)\n", v);
 			
 			
-			s_type = new INT[v + 1];
-			s_flag = new INT[v + 1];
+			s_type = new int[v + 1];
+			s_flag = new int[v + 1];
 			for (i = 0; i <= v; i++) {
 				s_type[i] = 0;
 				s_flag[i] = 0;
@@ -150,10 +150,10 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 			s_type[v - 1] = 1;
 			s_flag[v - 1] = 0; //s_flag_opt_zahl; /* urspr�nglicher Wert FTFF (JS 120100) */
 			
-			r_type = new INT[v + 1];
-			r_from = new INT[v + 1];
-			r_len = new INT[v + 1];
-			f_flush = new INT[v + 1];
+			r_type = new int[v + 1];
+			r_from = new int[v + 1];
+			r_len = new int[v + 1];
+			f_flush = new int[v + 1];
 			for (i = 0; i <= v; i++) {
 				r_type[i] = 0;
 				r_from[i] = 0;
@@ -169,7 +169,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				}
 			f >> str;
 			nb_fuse = str2int(str);
-			fuse = new INT[nb_fuse];
+			fuse = new int[nb_fuse];
 			ff = 0;
 			for (i = 0; i < nb_fuse; i++) {
 				f >> fuse[i];
@@ -181,29 +181,29 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				}
 			printf("fuse: ");
 			for (i = 0; i < nb_fuse; i++) {
-				printf("%ld ", fuse[i]);
+				printf("%d ", fuse[i]);
 				}
 			printf("\n");
 			}
 		
 #if 0
 		if (strncmp(buf, "FLUSH", 5) == 0) {
-			sscanf(buf + 6, "%ld ", &i);
+			sscanf(buf + 6, "%d ", &i);
 			f_flush[i - 1] = TRUE;
-			printf("FLUSH at line %ld\n", i);
+			printf("FLUSH at line %d\n", i);
 			}
 		
 		if (strncmp(buf, "R", 1) == 0) {
-			sscanf(buf + 1, "%ld %ld %ld", &i, &ff, &l);
+			sscanf(buf + 1, "%d %d %d", &i, &ff, &l);
 			r_type[i - 1] = 1;
 			r_from[i - 1] = ff;
 			r_len[i - 1] = l;
-			printf("R: %ld [%ld-%ld]\n", i, ff, ff + l - 1);
+			printf("R: %d [%d-%d]\n", i, ff, ff + l - 1);
 			}
 		
 		if (strncmp(buf, "S1", 2) == 0 || 
 			strncmp(buf, "S2", 2) == 0) {
-			sscanf(buf + 2, "%ld %s", &l, type);
+			sscanf(buf + 2, "%d %s", &l, type);
 			t = 0;
 			if (type[0] == 'T')
 				t += 8;
@@ -218,7 +218,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 			else
 				s_type[l - 1] = 2;
 			s_flag[l - 1] = t;
-			printf("S%ld: line %ld type %s = %ld\n", s_type[l - 1], l, type, t);
+			printf("S%d: line %d type %s = %d\n", s_type[l - 1], l, type, t);
 			}
 #endif
 
@@ -231,7 +231,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 				printf("V not specified !\n");
 				exit(1);
 				}
-			tdo = new INT[v_len * b_len];
+			tdo = new int[v_len * b_len];
 			for (i = 0; i < v_len; i++) {
 				for (j = 0; j < b_len; j++) {
 					f >> tdo[i * b_len + j];
@@ -240,7 +240,7 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 			printf("TDO: \n");
 			for (i = 0; i < v_len; i++) {
 				for (j = 0; j < b_len; j++) {
-					printf("%ld ", tdo[i * b_len + j]);
+					printf("%d ", tdo[i * b_len + j]);
 					}
 				printf("\n");
 				}
@@ -290,8 +290,8 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 
 #if 0
 		if (strcmp(buf, "print_interval") == 0) {
-			fscanf(fp, "%ld", &gen_print_interval);
-			printf("gen_print_interval = %ld\n", gen_print_interval);
+			fscanf(fp, "%d", &gen_print_interval);
+			printf("gen_print_interval = %d\n", gen_print_interval);
 			}
 
 		if (strcmp(buf, "f_resolve") == 0) {
@@ -307,8 +307,8 @@ void convert(ifstream &f, ofstream &g, int f_simple)
 		
 		if (strcmp(buf, "f_lambda") == 0) {
 			f_lambda = TRUE;
-			fscanf(fp, "%ld", &lambda);
-			printf("lambda = %ld\n", lambda);
+			fscanf(fp, "%d", &lambda);
+			printf("lambda = %d\n", lambda);
 			}
 		if (strcmp(buf, "f_ignore_square") == 0) { /* JS 120100 */
 			f_find_square = FALSE;

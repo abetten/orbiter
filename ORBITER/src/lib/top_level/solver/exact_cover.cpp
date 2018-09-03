@@ -39,24 +39,24 @@ void exact_cover::null()
 void exact_cover::freeself()
 {
 	if (starter) {
-		FREE_INT(starter);
+		FREE_int(starter);
 		}
 	if (random_permutation) {
-		FREE_INT(random_permutation);
+		FREE_int(random_permutation);
 		}
 	null();
 }
 
 void exact_cover::init_basic(void *user_data, 
 	action *A_base, action *A_on_blocks, 
-	INT target_size, INT starter_size, 
+	int target_size, int starter_size, 
 	const char *input_prefix, const char *output_prefix, 
 	const char *solution_prefix, const char *base_fname, 
-	INT f_lex, 
-	INT verbose_level)
+	int f_lex, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "exact_cover::init_basic" << endl;
@@ -86,7 +86,7 @@ void exact_cover::init_basic(void *user_data,
 
 	char fname[1000];
 
-	sprintf(fname, "%s%s_lvl_%ld", input_prefix, base_fname, starter_size);
+	sprintf(fname, "%s%s_lvl_%d", input_prefix, base_fname, starter_size);
 	if (f_v) {
 		cout << "exact_cover::init_basic counting number of orbits from file " << fname << endl;
 		}
@@ -99,14 +99,14 @@ void exact_cover::init_basic(void *user_data,
 		cout << "exact_cover::init_basic starter_nb_cases = " << starter_nb_cases << endl;
 		}
 
-	sprintf(fname_solutions, "%s%s_depth_%ld_solutions.txt", solution_prefix, base_fname, starter_size);
-	sprintf(fname_statistics, "%s%s_depth_%ld_statistics.csv", solution_prefix, base_fname, starter_size);
+	sprintf(fname_solutions, "%s%s_depth_%d_solutions.txt", solution_prefix, base_fname, starter_size);
+	sprintf(fname_statistics, "%s%s_depth_%d_statistics.csv", solution_prefix, base_fname, starter_size);
 
 	if (f_vv) {
 		cout << "exact_cover::init_basic fname_solutions = " << fname_solutions << endl;
 		cout << "exact_cover::init_basic fname_statistics = " << fname_statistics << endl;
 		}
-	starter = NEW_INT(starter_size + 1);
+	starter = NEW_int(starter_size + 1);
 
 	if (f_v) {
 		cout << "exact_cover::init_basic done" << endl;
@@ -114,14 +114,14 @@ void exact_cover::init_basic(void *user_data,
 }
 
 void exact_cover::init_early_test_func(
-	void (*early_test_func)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level), 
+	void (*early_test_func)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level), 
 	void *early_test_func_data,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "exact_cover::init_early_test_func" << endl;
@@ -131,14 +131,14 @@ void exact_cover::init_early_test_func(
 }
 
 void exact_cover::init_prepare_function_new(
-	void (*prepare_function_new)(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-		diophant *&Dio, INT *&col_label, 
-		INT &f_ruled_out, 
-		INT verbose_level),
-	INT verbose_level)
+	void (*prepare_function_new)(exact_cover *E, int starter_case, 
+		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+		diophant *&Dio, int *&col_label, 
+		int &f_ruled_out, 
+		int verbose_level),
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "exact_cover::init_prepare_function_new" << endl;
@@ -146,53 +146,53 @@ void exact_cover::init_prepare_function_new(
 	exact_cover::prepare_function_new = prepare_function_new;
 }
 
-void exact_cover::set_split(INT split_r, INT split_m, INT verbose_level)
+void exact_cover::set_split(int split_r, int split_m, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	exact_cover::f_split = TRUE;
 	exact_cover::split_r = split_r;
 	exact_cover::split_m = split_m;
-	sprintf(fname_solutions, "%s%s_depth_%ld_split_%ld_%ld_solutions.txt", solution_prefix, base_fname, starter_size, split_r, split_m);
-	sprintf(fname_statistics, "%s%s_depth_%ld_split_%ld_%ld_statistics.csv", solution_prefix, base_fname, starter_size, split_r, split_m);
+	sprintf(fname_solutions, "%s%s_depth_%d_split_%d_%d_solutions.txt", solution_prefix, base_fname, starter_size, split_r, split_m);
+	sprintf(fname_statistics, "%s%s_depth_%d_split_%d_%d_statistics.csv", solution_prefix, base_fname, starter_size, split_r, split_m);
 	if (f_v) {
 		cout << "exact_cover::set_split fname_solutions = " << fname_solutions << endl;
 		cout << "exact_cover::set_split fname_statistics = " << fname_statistics << endl;
 		}
 }
 
-void exact_cover::set_single_case(INT single_case, INT verbose_level)
+void exact_cover::set_single_case(int single_case, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	exact_cover::f_single_case = TRUE;
 	exact_cover::single_case = single_case;
-	sprintf(fname_solutions, "%s%s_depth_%ld_case_%ld_solutions.txt", solution_prefix, base_fname, starter_size, single_case);
-	sprintf(fname_statistics, "%s%s_depth_%ld_case_%ld_statistics.csv", solution_prefix, base_fname, starter_size, single_case);
+	sprintf(fname_solutions, "%s%s_depth_%d_case_%d_solutions.txt", solution_prefix, base_fname, starter_size, single_case);
+	sprintf(fname_statistics, "%s%s_depth_%d_case_%d_statistics.csv", solution_prefix, base_fname, starter_size, single_case);
 	if (f_v) {
 		cout << "exact_cover::set_single_case fname_solutions = " << fname_solutions << endl;
 		cout << "exact_cover::set_single_case fname_statistics = " << fname_statistics << endl;
 		}
 }
 
-void exact_cover::randomize(const char *random_permutation_fname, INT verbose_level)
+void exact_cover::randomize(const char *random_permutation_fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "exact_cover::randomize" << endl;
 		}
-	INT m, n;
+	int m, n;
 	
 	f_randomized = TRUE;
 	exact_cover::random_permutation_fname = random_permutation_fname;
-	INT_matrix_read_csv(random_permutation_fname, random_permutation, m, n, verbose_level);
+	int_matrix_read_csv(random_permutation_fname, random_permutation, m, n, verbose_level);
 	if (n != 1) {
-		cout << "exact_cover::randomize after INT_matrix_read_csv n != n" << endl;
+		cout << "exact_cover::randomize after int_matrix_read_csv n != n" << endl;
 		exit(1);
 		}
 	if (m != starter_nb_cases) {
-		cout << "exact_cover::randomize INT_matrix_read_csv m != starter_nb_cases" << endl;
+		cout << "exact_cover::randomize int_matrix_read_csv m != starter_nb_cases" << endl;
 		exit(1);
 		}
 	if (f_v) {
@@ -201,11 +201,11 @@ void exact_cover::randomize(const char *random_permutation_fname, INT verbose_le
 }
 
 void exact_cover::add_solution_test_function(
-	INT (*solution_test_func)(exact_cover *EC, INT *S, INT len, void *data, INT verbose_level), 
+	int (*solution_test_func)(exact_cover *EC, int *S, int len, void *data, int verbose_level), 
 	void *solution_test_func_data,
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "exact_cover::add_solution_test_function" << endl;
@@ -216,7 +216,7 @@ void exact_cover::add_solution_test_function(
 }
 
 void exact_cover::add_late_cleanup_function(
-	void (*late_cleanup_function)(exact_cover *E, INT starter_case, INT verbose_level)
+	void (*late_cleanup_function)(exact_cover *E, int starter_case, int verbose_level)
 	)
 {
 	f_has_late_cleanup_function = TRUE;
@@ -225,25 +225,25 @@ void exact_cover::add_late_cleanup_function(
 
 
 
-void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_instead, 
-	INT f_draw_system, const char *fname_system, 
-	INT f_write_tree, const char *fname_tree, INT verbose_level)
+void exact_cover::compute_liftings_new(int f_solve, int f_save, int f_read_instead, 
+	int f_draw_system, const char *fname_system, 
+	int f_write_tree, const char *fname_tree, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 3);
-	INT Nb_sol_total;
-	INT *Case_nb;
-	INT *Nb_col;
-	INT *Nb_sol;
-	INT *Nb_backtrack;
-	INT *Dt;
-	INT *Dt_in_sec;
-	INT nb_cases;
-	INT total_solutions;
-	INT nb_deleted_solutions = 0;
-	INT starter_case;
-	INT the_starter_case;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 3);
+	int Nb_sol_total;
+	int *Case_nb;
+	int *Nb_col;
+	int *Nb_sol;
+	int *Nb_backtrack;
+	int *Dt;
+	int *Dt_in_sec;
+	int nb_cases;
+	int total_solutions;
+	int nb_deleted_solutions = 0;
+	int starter_case;
+	int the_starter_case;
 
 
 
@@ -262,16 +262,16 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 	Nb_sol_total = 0;
 	Nb_sol = 0;
 	nb_cases = 0;
-	Case_nb = NEW_INT(starter_nb_cases);
-	Nb_col = NEW_INT(starter_nb_cases);
-	Nb_sol = NEW_INT(starter_nb_cases);
-	Nb_backtrack = NEW_INT(starter_nb_cases);
-	Dt = NEW_INT(starter_nb_cases);
-	Dt_in_sec = NEW_INT(starter_nb_cases);
+	Case_nb = NEW_int(starter_nb_cases);
+	Nb_col = NEW_int(starter_nb_cases);
+	Nb_sol = NEW_int(starter_nb_cases);
+	Nb_backtrack = NEW_int(starter_nb_cases);
+	Dt = NEW_int(starter_nb_cases);
+	Dt_in_sec = NEW_int(starter_nb_cases);
 	{
 	ofstream fp(fname_solutions);
-	INT f_do_it;
-	INT nb_col, nb_sol, nb_sol_deleted, nb_backtrack, dt, sol_length;
+	int f_do_it;
+	int nb_col, nb_sol, nb_sol_deleted, nb_backtrack, dt, sol_length;
 
 	total_solutions = 0;
 
@@ -304,7 +304,7 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 		nb_col = 0;
 		nb_sol = 0;
 
-		INT *Solutions = NULL;
+		int *Solutions = NULL;
 		char fname1[1000];
 
 
@@ -316,10 +316,10 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 		char fname_tree2[1000];
 
 		if (f_draw_system) {
-			sprintf(fname_system2, "%s_%ld", fname_system, the_starter_case);
+			sprintf(fname_system2, "%s_%d", fname_system, the_starter_case);
 			}
 		if (f_write_tree) {
-			sprintf(fname_tree2, "%s_%ld", fname_tree, the_starter_case);
+			sprintf(fname_tree2, "%s_%d", fname_tree, the_starter_case);
 			}
 		compute_liftings_single_case_new(the_starter_case, 
 			f_solve, f_save, f_read_instead, 
@@ -332,7 +332,7 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 			// see below
 		
 		if (f_v) {
-			INT tps, ts, tm, th, td;
+			int tps, ts, tm, th, td;
 
 			tps = os_ticks_per_second();
 			os_ticks_to_dhms(dt, tps, td, th, tm, ts);
@@ -352,7 +352,7 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 
 			if (f_v3) {
 				cout << "exact_cover::compute_liftings_new There are " << nb_sol << " solutions" << endl;
-				//INT_matrix_print(Solutions, nb_sol, sol_length);
+				//int_matrix_print(Solutions, nb_sol, sol_length);
 				}
 
 
@@ -360,17 +360,17 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 				cout << "exact_cover::compute_liftings_new final processing of solutions" << endl;
 				}
 			
-			INT *the_solution;
+			int *the_solution;
 
-			the_solution = NEW_INT(starter_size + sol_length);
-			INT i, j, f_do_it;
+			the_solution = NEW_int(starter_size + sol_length);
+			int i, j, f_do_it;
 
 			for (i = 0; i < nb_sol; i++) {
 				if (FALSE /* f_v3 */) {
 					cout << "exact_cover::compute_liftings_new solution " << i << " / " << nb_sol << endl;
 					}
 
-				INT_vec_copy(starter, the_solution, starter_size);
+				int_vec_copy(starter, the_solution, starter_size);
 				for (j = 0; j < sol_length; j++) {
 					the_solution[starter_size + j] = Solutions[i * sol_length + j];
 					}
@@ -406,8 +406,8 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 					nb_deleted_solutions++;
 					}
 				}
-			FREE_INT(the_solution);
-			FREE_INT(Solutions);
+			FREE_int(the_solution);
+			FREE_int(Solutions);
 			}
 
 		if (f_has_late_cleanup_function) {
@@ -435,7 +435,7 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 	cout << "total_solutions = " << Nb_sol_total << endl;
 	cout << "nb_deleted_solutions=" << nb_deleted_solutions << endl;
 	
-	INT *Vec[6];
+	int *Vec[6];
 	const char *column_labels[6] = {"Case_nb", "Nb_sol", "Nb_backtrack", "Nb_col", "Dt", "Dt_in_sec" };
 	Vec[0] = Case_nb;
 	Vec[1] = Nb_sol;
@@ -444,35 +444,35 @@ void exact_cover::compute_liftings_new(INT f_solve, INT f_save, INT f_read_inste
 	Vec[4] = Dt;
 	Vec[5] = Dt_in_sec;
 	
-	INT_vec_array_write_csv(6, Vec, nb_cases, fname_statistics, column_labels);
-	//INT_vecs_write_csv(Nb_sol, Nb_col, nb_cases, fname_statistics, "Nb_sol", "Nb_col");
+	int_vec_array_write_csv(6, Vec, nb_cases, fname_statistics, column_labels);
+	//int_vecs_write_csv(Nb_sol, Nb_col, nb_cases, fname_statistics, "Nb_sol", "Nb_col");
 	cout << "written file " << fname_statistics << " of size " << file_size(fname_statistics) << endl;
 	
 
 	
-	FREE_INT(Case_nb);
-	FREE_INT(Nb_col);
-	FREE_INT(Nb_sol);
-	FREE_INT(Nb_backtrack);
-	FREE_INT(Dt);
-	FREE_INT(Dt_in_sec);
+	FREE_int(Case_nb);
+	FREE_int(Nb_col);
+	FREE_int(Nb_sol);
+	FREE_int(Nb_backtrack);
+	FREE_int(Dt);
+	FREE_int(Dt_in_sec);
 	if (f_v) {
 		cout << "exact_cover::compute_liftings_new done" << endl;
 		}
 }
 
 
-void exact_cover::compute_liftings_single_case_new(INT starter_case, 
-	INT f_solve, INT f_save, INT f_read_instead, 
-	INT &nb_col, 
-	INT *&Solutions, INT &sol_length, INT &nb_sol, INT &nb_backtrack, INT &dt, 
-	INT f_draw_system, const char *fname_system, 
-	INT f_write_tree, const char *fname_tree, 
-	INT verbose_level)
+void exact_cover::compute_liftings_single_case_new(int starter_case, 
+	int f_solve, int f_save, int f_read_instead, 
+	int &nb_col, 
+	int *&Solutions, int &sol_length, int &nb_sol, int &nb_backtrack, int &dt, 
+	int f_draw_system, const char *fname_system, 
+	int f_write_tree, const char *fname_tree, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v4 = (verbose_level >= 4);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v4 = (verbose_level >= 4);
 	char str[1000];
 
 
@@ -516,13 +516,13 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 		cout << "exact_cover::compute_liftings_single_case_new case " << starter_case << " / " << starter_nb_cases << " after R->init_from_file str=" << str << endl;
 		}
 
-		// R has: INT *candidates; INT nb_candidates;
+		// R has: int *candidates; int nb_candidates;
 	
-	INT_vec_copy(R->rep, starter, starter_size);
+	int_vec_copy(R->rep, starter, starter_size);
 
 	if (f_v) {
 		cout << "exact_cover::compute_liftings_single_case case " << starter_case << " / " << starter_nb_cases << " stab_go = " << *R->stab_go << " starter = ";
-		INT_vec_print(cout, starter, starter_size);
+		int_vec_print(cout, starter, starter_size);
 		cout << endl;
 		}
 
@@ -531,8 +531,8 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 		}
 
 	diophant *Dio = NULL;
-	INT *col_labels;
-	INT f_ruled_out = FALSE;
+	int *col_labels;
+	int f_ruled_out = FALSE;
 
 	(*prepare_function_new)(this, starter_case, 
 		R->candidates, R->nb_candidates, R->Strong_gens, 
@@ -565,10 +565,10 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 
 
 		if (f_draw_system) {
-			INT xmax_in = 1000000;
-			INT ymax_in = 1000000;
-			INT xmax_out = 1000000;
-			INT ymax_out = 1000000;
+			int xmax_in = 1000000;
+			int ymax_in = 1000000;
+			int xmax_out = 1000000;
+			int ymax_out = 1000000;
 		
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new drawing the system" << endl;
@@ -583,9 +583,9 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 		char fname_Levi[1000];
 		char fname_sol[1000];
 
-		sprintf(fname, "%ssystem_%ld.txt", output_prefix, starter_case);
-		sprintf(fname_Levi, "%ssystem_%ld_Levi_graph.bin", output_prefix, starter_case);
-		sprintf(fname_sol, "%ssystem_%ld.sol", output_prefix, starter_case);
+		sprintf(fname, "%ssystem_%d.txt", output_prefix, starter_case);
+		sprintf(fname_Levi, "%ssystem_%d_Levi_graph.bin", output_prefix, starter_case);
+		sprintf(fname_sol, "%ssystem_%d.sol", output_prefix, starter_case);
 
 
 		if (f_save) {
@@ -606,8 +606,8 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 				}
 			}
 		if (f_solve || f_read_instead) {
-			INT t0 = 0, t1 = 0;
-			INT i, j, a, b;
+			int t0 = 0, t1 = 0;
+			int i, j, a, b;
 
 			if (f_v) {
 				cout << "exact_cover::compute_liftings_single_case_new before solve_all_DLX_with_RHS" << endl;
@@ -622,7 +622,7 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 				}
 			else if (f_read_instead) {
 				char fname_sol[1000];
-				const char *fname_solutions_mask = "%ssystem_%ld.solutions";
+				const char *fname_solutions_mask = "%ssystem_%d.solutions";
 				
 				sprintf(fname_sol, fname_solutions_mask, solution_prefix, starter_case);
 
@@ -652,11 +652,11 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 				if (f_v4) {
 					cout << "exact_cover::compute_liftings_single_case_new nb_sol=" << nb_sol << endl;
 					//cout << "exact_cover::compute_liftings_single_case_new Solutions:" << endl;
-					//INT_matrix_print(Solutions, nb_sol, sol_length);
+					//int_matrix_print(Solutions, nb_sol, sol_length);
 					}
 
 				if (f_save) {
-					INT_matrix_write_text(fname_sol, Solutions, nb_sol, sol_length);
+					int_matrix_write_text(fname_sol, Solutions, nb_sol, sol_length);
 					}
 				for (i = 0; i < nb_sol; i++) {
 					for (j = 0; j < sol_length; j++) {
@@ -668,7 +668,7 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 				if (f_v4) {
 					cout << "exact_cover::compute_liftings_single_case_new nb_sol=" << nb_sol << endl;
 					//cout << "exact_cover::compute_liftings_single_case_new Solutions in terms of col_labels[]:" << endl;
-					//INT_matrix_print(Solutions, nb_sol, sol_length);
+					//int_matrix_print(Solutions, nb_sol, sol_length);
 					}
 				}
 			else {
@@ -688,7 +688,7 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 
 	if (Dio) {
 		delete Dio;
-		FREE_INT(col_labels);
+		FREE_int(col_labels);
 			// we don't use cleanup_function any more
 		}
 
@@ -701,16 +701,16 @@ void exact_cover::compute_liftings_single_case_new(INT starter_case,
 
 }
 
-void exact_cover::lexorder_test(INT *live_blocks2, INT &nb_live_blocks2, vector_ge *stab_gens, 
-	INT verbose_level)
+void exact_cover::lexorder_test(int *live_blocks2, int &nb_live_blocks2, vector_ge *stab_gens, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vvv = (verbose_level >= 3);
 
 	if (f_v) {
 		cout << "exact_cover::lexorder_test" << endl;
 		}
-	INT nb_accepted, max_starter;
+	int nb_accepted, max_starter;
 
 	if (starter_size) {
 		max_starter = starter[starter_size - 1];

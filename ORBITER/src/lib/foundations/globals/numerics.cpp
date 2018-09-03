@@ -12,9 +12,9 @@
 
 #define EPSILON 0.01
 
-void double_vec_print(double *a, INT len)
+void double_vec_print(double *a, int len)
 {
-	INT i;
+	int i;
 	
 	cout << "(";
 	for (i = 0; i < len; i++) {
@@ -26,40 +26,40 @@ void double_vec_print(double *a, INT len)
 	cout << ")";
 }
 
-void double_vec_add(double *a, double *b, double *c, INT len)
+void double_vec_add(double *a, double *b, double *c, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		c[i] = a[i] + b[i];
 		}
 }
 
-void double_vec_subtract(double *a, double *b, double *c, INT len)
+void double_vec_subtract(double *a, double *b, double *c, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		c[i] = a[i] - b[i];
 		}
 }
 
-void double_vec_scalar_multiple(double *a, double lambda, INT len)
+void double_vec_scalar_multiple(double *a, double lambda, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		a[i] *= lambda;
 		}
 }
 
-INT Gauss_elimination(double *A, INT m, INT n, 
-	INT *base_cols, INT f_complete, 
-	INT verbose_level)
+int Gauss_elimination(double *A, int m, int n, 
+	int *base_cols, int f_complete, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, k, jj, rank;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k, jj, rank;
 	double a, b, c, f, z;
 	double pivot, pivot_inv;
 
@@ -214,9 +214,9 @@ INT Gauss_elimination(double *A, INT m, INT n,
 	return rank;
 }
 
-void print_system(double *A, INT m, INT n)
+void print_system(double *A, int m, int n)
 {
-	INT i, j;
+	int i, j;
 	
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -226,16 +226,16 @@ void print_system(double *A, INT m, INT n)
 		}
 }
 
-void get_kernel(double *M, INT m, INT n, 
-	INT *base_cols, INT nb_base_cols, 
-	INT &kernel_m, INT &kernel_n, 
+void get_kernel(double *M, int m, int n, 
+	int *base_cols, int nb_base_cols, 
+	int &kernel_m, int &kernel_n, 
 	double *kernel)
 // kernel must point to the appropriate amount of memory! 
 // (at least n * (n - nb_base_cols) doubles)
 // m is not used!
 {
-	INT r, k, i, j, ii, iii, a, b;
-	INT *kcol;
+	int r, k, i, j, ii, iii, a, b;
+	int *kcol;
 	double m_one;
 	
 	if (kernel == NULL) {
@@ -248,7 +248,7 @@ void get_kernel(double *M, INT m, INT n,
 	kernel_m = n;
 	kernel_n = k;
 	
-	kcol = NEW_INT(k);
+	kcol = NEW_int(k);
 	
 	ii = 0;
 	j = 0;
@@ -312,18 +312,18 @@ void get_kernel(double *M, INT m, INT n,
 			ii++;
 			}
 		}
-	FREE_INT(kcol);
+	FREE_int(kcol);
 }
 
-INT Null_space(double *M, INT m, INT n, double *K, 
-	INT verbose_level)
+int Null_space(double *M, int m, int n, double *K, 
+	int verbose_level)
 // K will be k x n
 // where k is the return value.
 {
-	INT f_v = (verbose_level >= 1);
-	INT *base_cols;
-	INT rk, i, j;
-	INT kernel_m, kernel_n;
+	int f_v = (verbose_level >= 1);
+	int *base_cols;
+	int rk, i, j;
+	int kernel_m, kernel_n;
 	double *Ker;
 
 	if (f_v) {
@@ -331,7 +331,7 @@ INT Null_space(double *M, INT m, INT n, double *K,
 		}
 	Ker = new double [n * n];
 	
-	base_cols = NEW_INT(n);
+	base_cols = NEW_int(n);
 	
 	rk = Gauss_elimination(M, m, n, base_cols, 
 		TRUE /* f_complete */, 0 /* verbose_level */);
@@ -350,7 +350,7 @@ INT Null_space(double *M, INT m, INT n, double *K,
 			}
 		}
 	
-	FREE_INT(base_cols);
+	FREE_int(base_cols);
 	delete [] Ker;
 	
 	if (f_v) {
@@ -359,9 +359,9 @@ INT Null_space(double *M, INT m, INT n, double *K,
 	return kernel_n;
 }
 
-void double_vec_normalize_from_back(double *v, INT len)
+void double_vec_normalize_from_back(double *v, int len)
 {
-	INT i, j;
+	int i, j;
 	double av;
 
 	for (i = len - 1; i >= 0; i--) {
@@ -379,9 +379,9 @@ void double_vec_normalize_from_back(double *v, INT len)
 		}
 }
 
-void double_vec_normalize_to_minus_one_from_back(double *v, INT len)
+void double_vec_normalize_to_minus_one_from_back(double *v, int len)
 {
-	INT i, j;
+	int i, j;
 	double av;
 
 	for (i = len - 1; i >= 0; i--) {
@@ -402,13 +402,13 @@ void double_vec_normalize_to_minus_one_from_back(double *v, INT len)
 #define EPS 0.001
 
 
-INT triangular_prism(double *P1, double *P2, double *P3, 
+int triangular_prism(double *P1, double *P2, double *P3, 
 	double *abc3, double *angles3, double *T3, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	double P4[3];
 	double P5[3];
 	double P6[3];
@@ -575,13 +575,13 @@ INT triangular_prism(double *P1, double *P2, double *P3,
 	return TRUE;
 }
 
-INT general_prism(double *Pts, INT nb_pts, double *Pts_xy, 
+int general_prism(double *Pts, int nb_pts, double *Pts_xy, 
 	double *abc3, double *angles3, double *T3, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, h;
 	double *Moved_pts1;
 	double *Moved_pts2;
 	double *Moved_pts3;
@@ -792,7 +792,7 @@ double rad2deg(double phi)
 
 void mult_matrix(double *v, double *R, double *vR)
 {
-	INT i, j;
+	int i, j;
 	double c;
 
 	for (j = 0; j < 3; j++) {
@@ -806,7 +806,7 @@ void mult_matrix(double *v, double *R, double *vR)
 
 void print_matrix(double *R)
 {
-	INT i, j;
+	int i, j;
 
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
@@ -819,7 +819,7 @@ void print_matrix(double *R)
 void make_Rz(double *R, double phi)
 {
 	double c, s;
-	INT i;
+	int i;
 
 	c = cos(phi);
 	s = sin(phi);
@@ -836,7 +836,7 @@ void make_Rz(double *R, double phi)
 void make_Ry(double *R, double psi)
 {
 	double c, s;
-	INT i;
+	int i;
 
 	c = cos(psi);
 	s = sin(psi);
@@ -854,7 +854,7 @@ void make_Ry(double *R, double psi)
 void make_Rx(double *R, double chi)
 {
 	double c, s;
-	INT i;
+	int i;
 
 	c = cos(chi);
 	s = sin(chi);
@@ -896,10 +896,10 @@ double atan_xy(double x, double y)
 	return phi;
 }
 
-double dot_product(double *u, double *v, INT len)
+double dot_product(double *u, double *v, int len)
 {
 	double d;
-	INT i;
+	int i;
 
 	d = 0;
 	for (i = 0; i < len; i++) {
@@ -915,10 +915,10 @@ void cross_product(double *u, double *v, double *n)
 	n[2] = u[0] * v[1] - u[1] * v[0];
 }
 
-double distance_euclidean(double *x, double *y, INT len)
+double distance_euclidean(double *x, double *y, int len)
 {
 	double d, a;
-	INT i;
+	int i;
 
 	d = 0;
 	for (i = 0; i < len; i++) {
@@ -937,10 +937,10 @@ double distance_from_origin(double x1, double x2, double x3)
 	return d;
 }
 
-double distance_from_origin(double *x, INT len)
+double distance_from_origin(double *x, int len)
 {
 	double d;
-	INT i;
+	int i;
 
 	d = 0;
 	for (i = 0; i < len; i++) {
@@ -950,7 +950,7 @@ double distance_from_origin(double *x, INT len)
 	return d;
 }
 
-void make_unit_vector(double *v, INT len)
+void make_unit_vector(double *v, int len)
 {
 	double d, dv;
 
@@ -963,10 +963,10 @@ void make_unit_vector(double *v, INT len)
 	double_vec_scalar_multiple(v, dv, len);
 }
 
-void center_of_mass(double *Pts, INT len, 
-	INT *Pt_idx, INT nb_pts, double *c)
+void center_of_mass(double *Pts, int len, 
+	int *Pt_idx, int nb_pts, double *c)
 {
-	INT i, h, idx;
+	int i, h, idx;
 	double a;
 
 	for (i = 0; i < len; i++) {
@@ -985,7 +985,7 @@ void center_of_mass(double *Pts, INT len,
 void plane_through_three_points(double *p1, double *p2, double *p3, 
 	double *n, double &d)
 {
-	INT i;
+	int i;
 	double a, b;
 	double u[3];
 	double v[3];
@@ -1031,10 +1031,10 @@ void plane_through_three_points(double *p1, double *p2, double *p3,
 
 void orthogonal_transformation_from_point_to_basis_vector(
 	double *from, 
-	double *A, double *Av, INT verbose_level)
+	double *A, double *Av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, i0, i1, j;
+	int f_v = (verbose_level >= 1);
+	int i, i0, i1, j;
 	double d, a;
 
 	if (f_v) {
@@ -1119,7 +1119,7 @@ void output_double(double a, ostream &ost)
 
 void mult_matrix_4x4(double *v, double *R, double *vR)
 {
-	INT i, j;
+	int i, j;
 	double c;
 
 	for (j = 0; j < 4; j++) {
@@ -1134,7 +1134,7 @@ void mult_matrix_4x4(double *v, double *R, double *vR)
 
 void transpose_matrix_4x4(double *A, double *At)
 {
-	INT i, j;
+	int i, j;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < 4; j++) {
@@ -1145,7 +1145,7 @@ void transpose_matrix_4x4(double *A, double *At)
 
 void substitute_quadric_linear(
 	double *coeff_in, double *coeff_out,
-	double *A4_inv, INT verbose_level)
+	double *A4_inv, int verbose_level)
 // uses povray ordering of monomials
 // 1: x^2
 // 2: xy
@@ -1158,8 +1158,8 @@ void substitute_quadric_linear(
 // 9: z
 // 10: 1
 {
-	INT f_v = (verbose_level >= 1);
-	INT Variables[] = {
+	int f_v = (verbose_level >= 1);
+	int Variables[] = {
 		0,0,
 		0,1,
 		0,2,
@@ -1171,17 +1171,17 @@ void substitute_quadric_linear(
 		2,3,
 		3,3
 		};
-	INT Affine_to_monomial[16];
-	INT *V;
-	INT nb_monomials = 10;
-	INT degree = 2;
-	INT n = 4;
+	int Affine_to_monomial[16];
+	int *V;
+	int nb_monomials = 10;
+	int degree = 2;
+	int n = 4;
 	double coeff2[10];
 	double coeff3[10];
 	double b, c;
-	INT h, i, j, a, nb_affine, idx;
-	INT A[2];
-	INT v[4];
+	int h, i, j, a, nb_affine, idx;
+	int A[2];
+	int v[4];
 
 	if (f_v) {
 		cout << "substitute_quadric_linear" << endl;
@@ -1191,13 +1191,13 @@ void substitute_quadric_linear(
 
 	for (i = 0; i < nb_affine; i++) {
 		AG_element_unrank(n /* q */, A, 1, degree, i);
-		INT_vec_zero(v, n);
+		int_vec_zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
 			v[a]++;
 			}
 		for (idx = 0; idx < 10; idx++) {
-			if (INT_vec_compare(v, Variables + idx * 2, 2) == 0) {
+			if (int_vec_compare(v, Variables + idx * 2, 2) == 0) {
 				break;
 				}
 			}
@@ -1262,7 +1262,7 @@ void substitute_quadric_linear(
 }
 
 void substitute_cubic_linear(double *coeff_in, double *coeff_out, 
-	double *A4_inv, INT verbose_level)
+	double *A4_inv, int verbose_level)
 // uses povray ordering of monomials
 // http://www.povray.org/documentation/view/3.6.1/298/
 // 1: x^3
@@ -1286,8 +1286,8 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 // 19: z
 // 20: 1
 {
-	INT f_v = (verbose_level >= 1);
-	INT Variables[] = {
+	int f_v = (verbose_level >= 1);
+	int Variables[] = {
 		0,0,0,
 		0,0,1,
 		0,0,2,
@@ -1309,18 +1309,18 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		2,3,3,
 		3,3,3,
 		};
-	INT *Monomials;
-	INT Affine_to_monomial[64];
-	INT *V;
-	INT nb_monomials = 20;
-	INT degree = 3;
-	INT n = 4;
+	int *Monomials;
+	int Affine_to_monomial[64];
+	int *V;
+	int nb_monomials = 20;
+	int degree = 3;
+	int n = 4;
 	double coeff2[20];
 	double coeff3[20];
 	double b, c;
-	INT h, i, j, a, nb_affine, idx;
-	INT A[3];
-	INT v[4];
+	int h, i, j, a, nb_affine, idx;
+	int A[3];
+	int v[4];
 
 	if (f_v) {
 		cout << "substitute_cubic_linear" << endl;
@@ -1331,10 +1331,10 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 
 	if (FALSE) {
 		cout << "Variables:" << endl;
-		INT_matrix_print(Variables, 20, 3);
+		int_matrix_print(Variables, 20, 3);
 		}
-	Monomials = NEW_INT(nb_monomials * n);
-	INT_vec_zero(Monomials, nb_monomials * n);
+	Monomials = NEW_int(nb_monomials * n);
+	int_vec_zero(Monomials, nb_monomials * n);
 	for (i = 0; i < nb_monomials; i++) {
 		for (j = 0; j < degree; j++) {
 			a = Variables[i * degree + j];
@@ -1343,27 +1343,27 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		}
 	if (FALSE) {
 		cout << "Monomials:" << endl;
-		INT_matrix_print(Monomials, 20, 4);
+		int_matrix_print(Monomials, 20, 4);
 		}
 
 	for (i = 0; i < nb_affine; i++) {
 		AG_element_unrank(n /* q */, A, 1, degree, i);
-		INT_vec_zero(v, n);
+		int_vec_zero(v, n);
 		for (j = 0; j < degree; j++) {
 			a = A[j];
 			v[a]++;
 			}
 		for (idx = 0; idx < 20; idx++) {
-			if (INT_vec_compare(v, Monomials + idx * 4, 4) == 0) {
+			if (int_vec_compare(v, Monomials + idx * 4, 4) == 0) {
 				break;
 				}
 			}
 		if (idx == 20) {
 			cout << "could not determine Affine_to_monomial" << endl;
 			cout << "Monomials:" << endl;
-			INT_matrix_print(Monomials, 20, 4);
+			int_matrix_print(Monomials, 20, 4);
 			cout << "v=";
-			INT_vec_print(cout, v, 4);
+			int_vec_print(cout, v, 4);
 			exit(1);
 			}
 		Affine_to_monomial[i] = idx;	
@@ -1371,7 +1371,7 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 
 	if (FALSE) {
 		cout << "Affine_to_monomial:";
-		INT_vec_print(cout, Affine_to_monomial, nb_affine);
+		int_vec_print(cout, Affine_to_monomial, nb_affine);
 		cout << endl;
 		}
 
@@ -1422,23 +1422,23 @@ void substitute_cubic_linear(double *coeff_in, double *coeff_out,
 		coeff_out[j] = coeff3[j];
 		}
 
-	FREE_INT(Monomials);
+	FREE_int(Monomials);
 	
 	if (f_v) {
 		cout << "substitute_cubic_linear done" << endl;
 		}
 }
 
-void make_transform_t_varphi_u_double(INT n, 
+void make_transform_t_varphi_u_double(int n, 
 	double *varphi, 
 	double *u, double *A, double *Av, 
-	INT verbose_level)
+	int verbose_level)
 // varphi are the dual coordinates of a plane.
 // u is a vector such that varphi(u) \neq -1.
 // A = I + varphi * u.
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int i, j;
 
 	if (f_v) {
 		cout << "make_transform_t_varphi_u_double" << endl;
@@ -1459,20 +1459,20 @@ void make_transform_t_varphi_u_double(INT n,
 		}
 }
 
-void matrix_double_inverse(double *A, double *Av, INT n, 
-	INT verbose_level)
+void matrix_double_inverse(double *A, double *Av, int n, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	double *M;
-	INT *base_cols;
-	INT i, j, two_n, rk;
+	int *base_cols;
+	int i, j, two_n, rk;
 
 	if (f_v) {
 		cout << "matrix_double_inverse" << endl;
 		}
 	two_n = n * 2;
 	M = new double [n * n * 2];
-	base_cols = NEW_INT(two_n);
+	base_cols = NEW_int(two_n);
 
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < n; j++) {
@@ -1504,14 +1504,14 @@ void matrix_double_inverse(double *A, double *Av, INT n,
 		}
 	
 	delete [] M;
-	FREE_INT(base_cols);
+	FREE_int(base_cols);
 	if (f_v) {
 		cout << "matrix_double_inverse done" << endl;
 		}
 }
 
 
-INT line_centered(double *pt1_in, double *pt2_in, 
+int line_centered(double *pt1_in, double *pt2_in, 
 	double *pt1_out, double *pt2_out, double r)
 {
 	double v[3];

@@ -78,22 +78,22 @@ void knarr::null()
 void knarr::freeself()
 {
 	if (BLT_line_idx) {
-		FREE_INT(BLT_line_idx);
+		FREE_int(BLT_line_idx);
 		}
 	if (Basis) {
-		FREE_INT(Basis);
+		FREE_int(Basis);
 		}
 	if (Basis2) {
-		FREE_INT(Basis2);
+		FREE_int(Basis2);
 		}
 	if (subspace_basis) {
-		FREE_INT(subspace_basis);
+		FREE_int(subspace_basis);
 		}
 	if (Basis_Pperp) {
-		FREE_INT(Basis_Pperp);
+		FREE_int(Basis_Pperp);
 		}
 	if (Basis_intersection) {
-		FREE_INT(Basis_intersection);
+		FREE_int(Basis_intersection);
 		}
 
 	//cout << "freeing things 1" << endl;
@@ -106,7 +106,7 @@ void knarr::freeself()
 		FREE_OBJECT(type_b_lines);
 		}
 	if (type_a_line_BLT_idx) {
-		FREE_INT(type_a_line_BLT_idx);
+		FREE_int(type_a_line_BLT_idx);
 		}
 
 	//cout << "freeing things 2" << endl;
@@ -119,11 +119,11 @@ void knarr::freeself()
 	null();
 }
 
-void knarr::init(finite_field *F, INT BLT_no, INT verbose_level)
+void knarr::init(finite_field *F, int BLT_no, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, a;
 	
 	knarr::F = F;
 	knarr::q = F->q;
@@ -154,18 +154,18 @@ void knarr::init(finite_field *F, INT BLT_no, INT verbose_level)
 	G63->init(6, 3, F, verbose_level - 2);
 
 	D.q_binomial(six_choose_three_q, 6, 3, q, 0);
-	six_choose_three_q_INT = six_choose_three_q.as_INT();
+	six_choose_three_q_int = six_choose_three_q.as_int();
 	if (f_v) {
-		cout << "Number of planes in P5 = " << six_choose_three_q_INT << endl;
+		cout << "Number of planes in P5 = " << six_choose_three_q_int << endl;
 		}
 
 	BLT = BLT_representative(q, BLT_no);
-	BLT_line_idx = NEW_INT(q + 1);
-	Basis = NEW_INT(4 * 6);
-	Basis2 = NEW_INT(4 * 6);
-	subspace_basis = NEW_INT(3 * 6);
-	Basis_Pperp = NEW_INT(5 * 6);
-	Basis_intersection = NEW_INT(6 * 6);
+	BLT_line_idx = NEW_int(q + 1);
+	Basis = NEW_int(4 * 6);
+	Basis2 = NEW_int(4 * 6);
+	subspace_basis = NEW_int(3 * 6);
+	Basis_Pperp = NEW_int(5 * 6);
+	Basis_intersection = NEW_int(6 * 6);
 	
 	for (i = 0; i < q + 1; i++) {
 		BLT_line_idx[i] = W->Line_idx[BLT[i]];
@@ -186,14 +186,14 @@ void knarr::init(finite_field *F, INT BLT_no, INT verbose_level)
 
 }
 
-void knarr::points_and_lines(INT verbose_level)
+void knarr::points_and_lines(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v4 = (verbose_level >= 4);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 4);
 
-	INT i, j, a, c, jj, h, hh, rk, u;
+	int i, j, a, c, jj, h, hh, rk, u;
 
 
 	if (f_v) {
@@ -237,10 +237,10 @@ void knarr::points_and_lines(INT verbose_level)
 	
 	type_ii_points->init(P5->N_lines, 0);
 
-	type_a_lines->init(six_choose_three_q_INT, 0);
-	type_b_lines->init(six_choose_three_q_INT, 0);
+	type_a_lines->init(six_choose_three_q_int, 0);
+	type_b_lines->init(six_choose_three_q_int, 0);
 
-	type_a_line_BLT_idx = NEW_INT(six_choose_three_q_INT);
+	type_a_line_BLT_idx = NEW_int(six_choose_three_q_int);
 	
 	// figure out type b) lines and type ii) points:
 
@@ -257,7 +257,7 @@ void knarr::points_and_lines(INT verbose_level)
 			cout << endl;
 			}
 
-		INT_vec_zero(Basis2, 3 * 6);
+		int_vec_zero(Basis2, 3 * 6);
 #if 0
 		for (hh = 0; hh < 3 * 6; hh++) {
 			Basis2[hh] = 0;
@@ -279,7 +279,7 @@ void knarr::points_and_lines(INT verbose_level)
 		for (i = 0; i < 3 * 6; i++) {
 			G63->M[i] = Basis2[i];
 			}
-		i = G63->rank_INT(0);
+		i = G63->rank_int(0);
 		if (f_v4) {
 			cout << "This plane has rank " << i
 					<< " and will be added as type b line" << endl;
@@ -297,18 +297,18 @@ void knarr::points_and_lines(INT verbose_level)
 		Gre->init(6, 3, G32, Basis2, verbose_level - 3);
 
 		for (jj = 0; jj < Gre->degree; jj++) {
-			Gre->unrank_INT(subspace_basis, jj, 0);
+			Gre->unrank_int(subspace_basis, jj, 0);
 			for (hh = 0; hh < 2 * 6; hh++) {
 				P5->Grass_lines->M[hh] = subspace_basis[hh];
 				}
-			j = P5->Grass_lines->rank_INT(0);
+			j = P5->Grass_lines->rank_int(0);
 			if (f_v4) {
 				cout << "Subspace " << jj << " has a basis:" << endl;
 				print_integer_matrix_width(cout, subspace_basis,
 						2, 6, 6, F->log10_of_q);
 				cout << "and has rank " << j << endl;
 				}
-			INT_vec_zero(subspace_basis + 2 * 6, 6);
+			int_vec_zero(subspace_basis + 2 * 6, 6);
 #if 0
 			for (hh = 0; hh < 6; hh++) {
 				subspace_basis[2 * 6 + hh] = 0;
@@ -359,15 +359,15 @@ void knarr::points_and_lines(INT verbose_level)
 
 
 
-	for (i = 0; i < six_choose_three_q_INT; i++) {
+	for (i = 0; i < six_choose_three_q_int; i++) {
 		
-		G63->unrank_INT(i, 0);
+		G63->unrank_int(i, 0);
 		for (h = 0; h < 3 * 6; h++) {
 			Basis[h] = G63->M[h];
 			}
 		if (f_v4) {
 			cout << "Subspace i=" << i << " / "
-					<< six_choose_three_q_INT << endl;
+					<< six_choose_three_q_int << endl;
 			print_integer_matrix_width(cout, Basis, 3, 6, 6, F->log10_of_q);
 			cout << endl;
 			}
@@ -437,7 +437,7 @@ void knarr::points_and_lines(INT verbose_level)
 		for (h = 0; h < 3 * 6; h++) {
 			G63->M[h] = Basis_intersection[h];
 			}
-		j = G63->rank_INT(0);
+		j = G63->rank_int(0);
 		
 		if (type_b_lines->is_contained(j)) {
 
@@ -500,7 +500,7 @@ void knarr::points_and_lines(INT verbose_level)
 
 	
 	if (f_vvv) {
-		INT cnt;
+		int cnt;
 		cout << "type a) lines by BLT_idx:" << endl;
 		for (h = 0; h < q + 1; h++) {
 			cnt = 0;
@@ -510,7 +510,7 @@ void knarr::points_and_lines(INT verbose_level)
 					continue;
 					}
 				i = type_a_lines->set[u];
-				G63->unrank_INT(i, 0);
+				G63->unrank_int(i, 0);
 				for (hh = 0; hh < 3 * 6; hh++) {
 					Basis[hh] = G63->M[hh];
 					}
@@ -527,21 +527,21 @@ void knarr::points_and_lines(INT verbose_level)
 
 }
 
-void knarr::incidence_matrix(INT *&Inc,
-		INT &nb_points, INT &nb_lines, INT verbose_level)
+void knarr::incidence_matrix(int *&Inc,
+		int &nb_points, int &nb_lines, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = FALSE;
+	//int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = FALSE;
 
-	INT i, j, a, b, c, h;
+	int i, j, a, b, c, h;
 
-	INT I, J, row, col, row0, col0, L1, L2;
-	INT *Basis_U, dim_U;
-	INT *Basis_V, dim_V;
+	int I, J, row, col, row0, col0, L1, L2;
+	int *Basis_U, dim_U;
+	int *Basis_V, dim_V;
 
-	Basis_U = NEW_INT(3 * 6);
-	Basis_V = NEW_INT(3 * 6);
+	Basis_U = NEW_int(3 * 6);
+	Basis_V = NEW_int(3 * 6);
 	
 	nb_points = type_i_points->k + type_ii_points->k + 1;
 	nb_lines = type_a_lines->k + type_b_lines->k;
@@ -551,7 +551,7 @@ void knarr::incidence_matrix(INT *&Inc,
 	
 	cout << "Computing the incidence matrix..." << endl;
 	
-	Inc = NEW_INT(nb_points * nb_lines);
+	Inc = NEW_int(nb_points * nb_lines);
 	for (i = 0; i < nb_points * nb_lines; i++) {
 		Inc[i] = 0;
 		}
@@ -579,7 +579,7 @@ void knarr::incidence_matrix(INT *&Inc,
 				}
 			else if (I == 1) {
 				a = type_ii_points->set[i];
-				P5->Grass_lines->unrank_INT(a, 0);
+				P5->Grass_lines->unrank_int(a, 0);
 				for (h = 0; h < 2 * 6; h++) {
 					Basis_U[h] = P5->Grass_lines->M[h];
 					}
@@ -615,7 +615,7 @@ void knarr::incidence_matrix(INT *&Inc,
 
 					if (J == 0) {
 						b = type_a_lines->set[j];
-						G63->unrank_INT(b, 0);
+						G63->unrank_int(b, 0);
 						for (h = 0; h < 3 * 6; h++) {
 							Basis_V[h] = G63->M[h];
 							}
@@ -623,7 +623,7 @@ void knarr::incidence_matrix(INT *&Inc,
 						}
 					else {
 						b = type_b_lines->set[j];
-						G63->unrank_INT(b, 0);
+						G63->unrank_int(b, 0);
 						for (h = 0; h < 3 * 6; h++) {
 							Basis_V[h] = G63->M[h];
 							}
@@ -659,15 +659,15 @@ void knarr::incidence_matrix(INT *&Inc,
 
 	char fname[1000];
 
-	sprintf(fname, "GQ_Knarr_BLT_%ld_%ld.inc", q, BLT_no);
+	sprintf(fname, "GQ_Knarr_BLT_%d_%d.inc", q, BLT_no);
 	write_incidence_matrix_to_file(fname, Inc,
 			nb_points, nb_lines, verbose_level);
 	cout << "Written file " << fname
 			<< " of size " << file_size(fname) << endl;
 #endif
 
-	FREE_INT(Basis_U);
-	FREE_INT(Basis_V);
+	FREE_int(Basis_U);
+	FREE_int(Basis_V);
 }
 
 

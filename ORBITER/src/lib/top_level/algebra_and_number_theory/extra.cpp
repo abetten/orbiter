@@ -11,7 +11,7 @@
 
 #include "orbiter.h"
 
-void isomorph_print_set(ostream &ost, INT len, INT *S, void *data)
+void isomorph_print_set(ostream &ost, int len, int *S, void *data)
 {
 	//isomorph *G = (isomorph *) data;
 	
@@ -21,13 +21,13 @@ void isomorph_print_set(ostream &ost, INT len, INT *S, void *data)
 
 
 sims *create_sims_for_stabilizer(action *A, 
-	INT *set, INT set_size, INT verbose_level)
+	int *set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	set_stabilizer_compute STAB;
 	sims *Stab;
-	INT nb_backtrack_nodes;
-	INT t0 = os_ticks();
+	int nb_backtrack_nodes;
+	int t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "create_sims_for_stabilizer" << endl;
@@ -54,14 +54,14 @@ sims *create_sims_for_stabilizer(action *A,
 
 sims *create_sims_for_stabilizer_with_input_group(action *A, 
 	action *A0, strong_generators *Strong_gens, 
-	INT *set, INT set_size, INT verbose_level)
+	int *set, int set_size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	set_stabilizer_compute STAB;
 	strong_generators *Aut_gens;
 	sims *Stab;
-	INT nb_backtrack_nodes;
-	INT t0 = os_ticks();
+	int nb_backtrack_nodes;
+	int t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "create_sims_for_stabilizer_with_input_group" << endl;
@@ -99,9 +99,9 @@ sims *create_sims_for_stabilizer_with_input_group(action *A,
 
 
 
-void compute_lifts(exact_cover_arguments *ECA, INT verbose_level)
+void compute_lifts(exact_cover_arguments *ECA, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "compute_lifts" << endl;
@@ -124,31 +124,31 @@ void compute_lifts_new(
 	const char *base_fname, 
 	const char *input_prefix, const char *output_prefix, 
 	const char *solution_prefix, 
-	INT starter_size, INT target_size, 
-	INT f_lex, INT f_split, INT split_r, INT split_m, 
-	INT f_solve, INT f_save, INT f_read_instead, 
-	INT f_draw_system, const char *fname_system, 
-	INT f_write_tree, const char *fname_tree,
-	void (*prepare_function_new)(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-		diophant *&Dio, INT *&col_label, 
-		INT &f_ruled_out, 
-		INT verbose_level), 
-	void (*early_test_function)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level), 
+	int starter_size, int target_size, 
+	int f_lex, int f_split, int split_r, int split_m, 
+	int f_solve, int f_save, int f_read_instead, 
+	int f_draw_system, const char *fname_system, 
+	int f_write_tree, const char *fname_tree,
+	void (*prepare_function_new)(exact_cover *E, int starter_case, 
+		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+		diophant *&Dio, int *&col_label, 
+		int &f_ruled_out, 
+		int verbose_level), 
+	void (*early_test_function)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level), 
 	void *early_test_function_data,
-	INT f_has_solution_test_function, 
-	INT (*solution_test_func)(exact_cover *EC,
-			INT *S, INT len, void *data, INT verbose_level),
+	int f_has_solution_test_function, 
+	int (*solution_test_func)(exact_cover *EC,
+			int *S, int len, void *data, int verbose_level),
 	void *solution_test_func_data,
-	INT f_has_late_cleanup_function, 
+	int f_has_late_cleanup_function, 
 	void (*late_cleanup_function)(exact_cover *EC,
-			INT starter_case, INT verbose_level),
-	INT verbose_level)
+			int starter_case, int verbose_level),
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "compute_lifts_new" << endl;

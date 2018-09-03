@@ -7,16 +7,16 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void do_it(INT verbose_level);
+void do_it(int verbose_level);
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
+	int i;
+	int verbose_level = 0;
 	
 	t0 = os_ticks();
 
@@ -35,9 +35,9 @@ int main(int argc, char **argv)
 	
 }
 
-void do_it(INT verbose_level)
+void do_it(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "do_it" << endl;
@@ -45,19 +45,19 @@ void do_it(INT verbose_level)
 
 	action *A;
 	longinteger_object go;
-	INT goi;
-	INT **Elt_S;
+	int goi;
+	int **Elt_S;
 	vector_ge *gens_G;
-	INT *v;
-	INT n = 8;
-	INT i, j, h;
-	INT nb_G, nb_S;
+	int *v;
+	int n = 8;
+	int i, j, h;
+	int nb_G, nb_S;
 
 	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 	cout << "Created group Sym(" << n << ") of size " << goi << endl;
 
 
@@ -68,11 +68,11 @@ void do_it(INT verbose_level)
 	gens_G->allocate(nb_G);
 
 
-	Elt_S = NEW_PINT(nb_S);
+	Elt_S = NEW_pint(nb_S);
 	for (i = 0; i < nb_S; i++) {
-		Elt_S[i] = NEW_INT(A->elt_size_in_INT);
+		Elt_S[i] = NEW_int(A->elt_size_in_int);
 		}
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 
 	for (i = 0; i < nb_G; i++) {
@@ -162,12 +162,12 @@ void do_it(INT verbose_level)
 	sims *G;
 
 
-	G = create_sims_from_generators_with_target_group_order_INT(A, 
+	G = create_sims_from_generators_with_target_group_order_int(A, 
 		gens_G, 16, verbose_level);
 
 	G->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 
 	cout << "created group of order " << goi << endl;
 
@@ -176,18 +176,18 @@ void do_it(INT verbose_level)
 		exit(1);
 		}
 
-	INT *Adj;
-	INT *Elt1, *Elt2;
+	int *Adj;
+	int *Elt1, *Elt2;
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Adj = NEW_INT(goi * goi);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Adj = NEW_int(goi * goi);
 
-	INT_vec_zero(Adj, goi * goi);
+	int_vec_zero(Adj, goi * goi);
 
 	cout << "Computing the Cayley graph:" << endl;
 	for (i = 0; i < goi; i++) {
-		G->element_unrank_INT(i, Elt1);
+		G->element_unrank_int(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (h = 0; h < nb_S; h++) {
 			A->element_mult(Elt1, Elt_S[h], Elt2, 0);
@@ -200,7 +200,7 @@ void do_it(INT verbose_level)
 			cout << "Elt2=" << endl;
 			A->element_print_quick(Elt2, cout);
 #endif
-			j = G->element_rank_INT(Elt2);
+			j = G->element_rank_int(Elt2);
 			Adj[i * goi + j] = Adj[j * goi + i] = 1;
 			if (i == 0) {
 				cout << "edge " << i << " " << j << endl;
@@ -209,7 +209,7 @@ void do_it(INT verbose_level)
 		}
 
 	cout << "The adjacency matrix of a graph with " << goi << " vertices has been computed" << endl;
-	//INT_matrix_print(Adj, goi, goi);
+	//int_matrix_print(Adj, goi, goi);
 
 
 	colored_graph *CG;
@@ -226,15 +226,15 @@ void do_it(INT verbose_level)
 
 
 	FREE_OBJECT(CG);
-	FREE_INT(Adj);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(v);
+	FREE_int(Adj);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(v);
 	FREE_OBJECT(gens_G);
 	for (i = 0; i < nb_S; i++) {
-		FREE_INT(Elt_S[i]);
+		FREE_int(Elt_S[i]);
 		}
-	FREE_PINT(Elt_S);
+	FREE_pint(Elt_S);
 		
 }
 

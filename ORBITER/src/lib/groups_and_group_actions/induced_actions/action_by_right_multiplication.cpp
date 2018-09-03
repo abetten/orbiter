@@ -30,18 +30,18 @@ void action_by_right_multiplication::free()
 		delete Base_group;
 		}
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		}
 	if (Elt2) {
-		FREE_INT(Elt2);
+		FREE_int(Elt2);
 		}
 	null();
 }
 
 
-void action_by_right_multiplication::init(sims *Base_group, INT f_ownership, INT verbose_level)
+void action_by_right_multiplication::init(sims *Base_group, int f_ownership, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	action *A;
 	
@@ -52,17 +52,17 @@ void action_by_right_multiplication::init(sims *Base_group, INT f_ownership, INT
 	action_by_right_multiplication::f_ownership = f_ownership;
 	A = Base_group->A;
 	Base_group->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "action_by_right_multiplication::init we are acting on a group of order " << goi << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 }
 
-void action_by_right_multiplication::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbose_level)
+void action_by_right_multiplication::compute_image(action *A, int *Elt, int i, int &j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image i = " << i << endl;
@@ -71,9 +71,9 @@ void action_by_right_multiplication::compute_image(action *A, INT *Elt, INT i, I
 		cout << "action_by_right_multiplication::compute_image i = " << i << " out of range" << endl;
 		exit(1);
 		}
-	Base_group->element_unrank_INT(i, Elt1);
+	Base_group->element_unrank_int(i, Elt1);
 	A->mult(Elt1, Elt, Elt2);
-	j = Base_group->element_rank_INT(Elt2);
+	j = Base_group->element_rank_int(Elt2);
 	if (f_v) {
 		cout << "action_by_right_multiplication::compute_image image is " << j << endl;
 		}

@@ -9,8 +9,8 @@
 #include "poset_classification/poset_classification.h"
 
 trace_result upstep_work::find_automorphism_by_tracing(
-	INT &final_node, INT &final_ex, INT f_tolerant,
-	INT verbose_level)
+	int &final_node, int &final_ex, int f_tolerant,
+	int verbose_level)
 // This routine is called from upstep
 // (upstep_work::upstep_subspace_action).
 // It in turn calls poset_orbit_node::find_automorphism_by_tracing_recursion
@@ -31,10 +31,10 @@ trace_result upstep_work::find_automorphism_by_tracing(
 // (which is a subgroup of S[0,...,len]).  
 {
 	trace_result r;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT len = size - 1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int len = size - 1;
 	
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -48,7 +48,7 @@ trace_result upstep_work::find_automorphism_by_tracing(
 	
 	if (f_vv) {
 		print_level_extension_coset_info();
-		INT_vec_print(cout, gen->set[0], len + 1);
+		int_vec_print(cout, gen->set[0], len + 1);
 		cout << endl;
 		if (gen->f_print_function) {
 			(*gen->print_function)(size,
@@ -76,8 +76,8 @@ trace_result upstep_work::find_automorphism_by_tracing(
 		}
 #endif
 	
-	INT_vec_copy(gen->set[0], gen->set0, size);
-	INT_vec_heapsort(gen->set0, size - 1);
+	int_vec_copy(gen->set[0], gen->set0, size);
+	int_vec_heapsort(gen->set0, size - 1);
 		// important: we keep the last point separate
 	
 	if (f_v) {
@@ -107,9 +107,9 @@ trace_result upstep_work::find_automorphism_by_tracing(
 }
 
 trace_result upstep_work::find_automorphism_by_tracing_recursion(
-	INT lvl, INT current_node,
-	INT &final_node, INT &final_ex,
-	INT f_tolerant, INT verbose_level)
+	int lvl, int current_node,
+	int &final_node, int &final_ex,
+	int f_tolerant, int verbose_level)
 // this routine is called from
 // upstep_work::find_automorphism_by_tracing
 // we are dealing with a set of size len + 1.
@@ -117,15 +117,15 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 // the tracing starts at lvl = 0 with current_node = 0
 {
 	//if (my_node == 9 && my_extension == 4) {verbose_level += 10;}
-	INT pt0, current_extension;
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_v10 = (verbose_level >= 10);
-	INT f_vvv = (verbose_level >= 3);
-	INT f_v4 = (verbose_level >= 3);
-	INT f_v5 = (verbose_level >= 3);
-	INT len = size - 1;
-	INT f_failure_to_find_point;
+	int pt0, current_extension;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_v10 = (verbose_level >= 10);
+	int f_vvv = (verbose_level >= 3);
+	int f_v4 = (verbose_level >= 3);
+	int f_v5 = (verbose_level >= 3);
+	int len = size - 1;
+	int f_failure_to_find_point;
 	
 	poset_orbit_node *O;
 
@@ -139,7 +139,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			<< endl;
 		cout << "node=" << O->node << " prev="
 				<< O->prev << " pt=" << O->pt << endl;
-		INT_set_print(cout, gen->set[lvl], size);
+		int_set_print(cout, gen->set[lvl], size);
 		cout << endl;
 	}
 	if (current_node < path[lvl]) {
@@ -165,20 +165,20 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 					"node and set inconsistent, "
 					"the node corresponds to" << endl;
 			O->store_set_to(gen, lvl - 1, gen->set3);
-			INT_set_print(cout, gen->set3, lvl);
+			int_set_print(cout, gen->set3, lvl);
 			cout << endl;
 			exit(1);
 		}
 	}
 	
 	if (lvl == 0 && gen->f_starter) {
-		INT *cur_set =
+		int *cur_set =
 				gen->set[0];
-		INT *next_set =
+		int *next_set =
 				gen->set[0 + gen->starter_size];
-		INT *cur_transporter =
+		int *cur_transporter =
 				gen->transporter->ith(0);
-		INT *next_transporter =
+		int *next_transporter =
 				gen->transporter->ith(0 + gen->starter_size);
 		
 		O->trace_starter(gen,
@@ -279,14 +279,14 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 		cout << "upstep_work::find_automorphism_by_tracing_recursion "
 				"failure in find_extension_from_point" << endl;
 		cout << "the original set is" << endl;
-		INT_set_print(cout, gen->set[0], len + 1);
+		int_set_print(cout, gen->set[0], len + 1);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, len + 1, gen->set[0],
 			// gen->print_function_data);
 			//}
 		cout << "the current set is" << endl;
-		INT_set_print(cout, gen->set[lvl + 1], len + 1);
+		int_set_print(cout, gen->set[lvl + 1], len + 1);
 		cout << endl;
 		//if (gen->f_print_function) {
 			//(*gen->print_function)(cout, len + 1, gen->set[lvl + 1],
@@ -294,7 +294,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 			//}
 		cout << "the node corresponds to" << endl;
 		O->store_set_to(gen, lvl - 1, gen->set3);
-		INT_set_print(cout, gen->set3, lvl);
+		int_set_print(cout, gen->set3, lvl);
 		cout << endl;
 
 		cout << "lvl = " << lvl << endl;
@@ -340,7 +340,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 		}
 	if (gen->f_allowed_to_show_group_elements
 			&& f_v4) {
-		INT *transporter = gen->transporter->ith(lvl + 1);
+		int *transporter = gen->transporter->ith(lvl + 1);
 		cout << "upstep_work::find_automorphism_by_tracing_recursion "
 				"transporter element:" << endl;
 		gen->A2->element_print_quick(transporter, cout);
@@ -378,7 +378,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 	// now lvl < len
 	
 	if (O->E[current_extension].type == EXTENSION_TYPE_FUSION) {
-		INT next_node;
+		int next_node;
 		
 		if (f_v4) {
 			print_level_extension_coset_info();
@@ -456,7 +456,7 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 
 		}
 	else if (O->E[current_extension].type == EXTENSION_TYPE_EXTENSION) {
-		INT next_node;
+		int next_node;
 		
 		if (f_v4) {
 			cout << "extension node" << endl;
@@ -504,16 +504,16 @@ trace_result upstep_work::find_automorphism_by_tracing_recursion(
 }
 
 trace_result upstep_work::handle_last_level(
-	INT lvl, INT current_node,
-	INT current_extension, INT pt0,
-	INT &final_node, INT &final_ex,  
-	INT verbose_level)
+	int lvl, int current_node,
+	int current_extension, int pt0,
+	int &final_node, int &final_ex,  
+	int verbose_level)
 // called from poset_orbit_node::find_automorphism_by_tracing_recursion
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT next_node;
-	INT my_current_node;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int next_node;
+	int my_current_node;
 
 	poset_orbit_node *O = &gen->root[current_node];
 
@@ -636,14 +636,14 @@ trace_result upstep_work::handle_last_level(
 		cout << " extension node at level len, "
 				"this should not happen" << endl;
 		cout << "the original set is" << endl;
-		INT_set_print(cout, gen->set[0], lvl + 1);
+		int_set_print(cout, gen->set[0], lvl + 1);
 		cout << endl;
 		cout << "the current set is" << endl;
-		INT_set_print(cout, gen->set[lvl + 1], lvl + 1);
+		int_set_print(cout, gen->set[lvl + 1], lvl + 1);
 		cout << endl;
 		cout << "the node corresponds to" << endl;
 		O->store_set_to(gen, lvl - 1, gen->set3);
-		INT_set_print(cout, gen->set3, lvl);
+		int_set_print(cout, gen->set3, lvl);
 		cout << endl;
 		exit(1);
 #else
@@ -663,15 +663,15 @@ trace_result upstep_work::handle_last_level(
 }
 
 trace_result upstep_work::start_over(
-	INT lvl, INT current_node, 
-	INT &final_node, INT &final_ex,
-	INT f_tolerant, INT verbose_level)
+	int lvl, int current_node, 
+	int &final_node, int &final_ex,
+	int f_tolerant, int verbose_level)
 // Called from poset_orbit_node::find_automorphism_by_tracing_recursion
 // when trace_next_point returns FALSE
 // This can happen only if f_implicit_fusion is TRUE
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		print_level_extension_coset_info();
@@ -690,12 +690,12 @@ trace_result upstep_work::start_over(
 		}
 
 
-	INT_vec_heapsort(gen->set[lvl + 1], size - 1);
+	int_vec_heapsort(gen->set[lvl + 1], size - 1);
 		// we keep the last point (i.e., the (len + 1)-th) extra
-	INT_vec_copy(gen->set[lvl + 1], gen->set[0], size);
+	int_vec_copy(gen->set[lvl + 1], gen->set[0], size);
 
 	if (f_vv) {
-		INT_set_print(cout, gen->set[0], size);
+		int_set_print(cout, gen->set[0], size);
 		cout << endl;
 		}
 	gen->A->element_move(

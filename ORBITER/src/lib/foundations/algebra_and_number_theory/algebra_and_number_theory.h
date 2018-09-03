@@ -23,91 +23,91 @@ enum domain_kind {
 class a_domain {
 public:
 	domain_kind kind;
-	INT size_of_instance_in_INT;
+	int size_of_instance_in_int;
 	
 	a_domain();
 	~a_domain();
 	void null();
 	void freeself();
 	
-	void init_integers(INT verbose_level);
-	void init_integer_fractions(INT verbose_level);
-	INT as_INT(INT *elt, INT verbose_level);
-	void make_integer(INT *elt, INT n, INT verbose_level);
-	void make_zero(INT *elt, INT verbose_level);
-	void make_zero_vector(INT *elt, INT len, INT verbose_level);
-	INT is_zero_vector(INT *elt, INT len, INT verbose_level);
-	INT is_zero(INT *elt, INT verbose_level);
-	void make_one(INT *elt, INT verbose_level);
-	INT is_one(INT *elt, INT verbose_level);
-	void copy(INT *elt_from, INT *elt_to, INT verbose_level);
-	void copy_vector(INT *elt_from, INT *elt_to, 
-		INT len, INT verbose_level);
-	void swap_vector(INT *elt1, INT *elt2, INT n, INT verbose_level);
-	void swap(INT *elt1, INT *elt2, INT verbose_level);
-	void add(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level);
-	void add_apply(INT *elt_a, INT *elt_b, INT verbose_level);
-	void subtract(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level);
-	void negate(INT *elt, INT verbose_level);
-	void negate_vector(INT *elt, INT len, INT verbose_level);
-	void mult(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level);
-	void mult_apply(INT *elt_a, INT *elt_b, INT verbose_level);
-	void power(INT *elt_a, INT *elt_b, INT n, INT verbose_level);
-	void divide(INT *elt_a, INT *elt_b, INT *elt_c, INT verbose_level);
-	void inverse(INT *elt_a, INT *elt_b, INT verbose_level);
-	void print(INT *elt);
-	void print_vector(INT *elt, INT n);
-	void print_matrix(INT *A, INT m, INT n);
-	void print_matrix_for_maple(INT *A, INT m, INT n);
-	void make_element_from_integer(INT *elt, INT n, INT verbose_level);
-	void mult_by_integer(INT *elt, INT n, INT verbose_level);
-	void divide_by_integer(INT *elt, INT n, INT verbose_level);
-	INT *offset(INT *A, INT i);
-	INT Gauss_echelon_form(INT *A, INT f_special, INT f_complete, 
-		INT *base_cols, 
-		INT f_P, INT *P, INT m, INT n, INT Pn, INT verbose_level);
+	void init_integers(int verbose_level);
+	void init_integer_fractions(int verbose_level);
+	int as_int(int *elt, int verbose_level);
+	void make_integer(int *elt, int n, int verbose_level);
+	void make_zero(int *elt, int verbose_level);
+	void make_zero_vector(int *elt, int len, int verbose_level);
+	int is_zero_vector(int *elt, int len, int verbose_level);
+	int is_zero(int *elt, int verbose_level);
+	void make_one(int *elt, int verbose_level);
+	int is_one(int *elt, int verbose_level);
+	void copy(int *elt_from, int *elt_to, int verbose_level);
+	void copy_vector(int *elt_from, int *elt_to, 
+		int len, int verbose_level);
+	void swap_vector(int *elt1, int *elt2, int n, int verbose_level);
+	void swap(int *elt1, int *elt2, int verbose_level);
+	void add(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void add_apply(int *elt_a, int *elt_b, int verbose_level);
+	void subtract(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void negate(int *elt, int verbose_level);
+	void negate_vector(int *elt, int len, int verbose_level);
+	void mult(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void mult_apply(int *elt_a, int *elt_b, int verbose_level);
+	void power(int *elt_a, int *elt_b, int n, int verbose_level);
+	void divide(int *elt_a, int *elt_b, int *elt_c, int verbose_level);
+	void inverse(int *elt_a, int *elt_b, int verbose_level);
+	void print(int *elt);
+	void print_vector(int *elt, int n);
+	void print_matrix(int *A, int m, int n);
+	void print_matrix_for_maple(int *A, int m, int n);
+	void make_element_from_integer(int *elt, int n, int verbose_level);
+	void mult_by_integer(int *elt, int n, int verbose_level);
+	void divide_by_integer(int *elt, int n, int verbose_level);
+	int *offset(int *A, int i);
+	int Gauss_echelon_form(int *A, int f_special, int f_complete, 
+		int *base_cols, 
+		int f_P, int *P, int m, int n, int Pn, int verbose_level);
 		// returns the rank which is the number 
 		// of entries in base_cols
 		// A is a m x n matrix,
 		// P is a m x Pn matrix (if f_P is TRUE)
-	void Gauss_step(INT *v1, INT *v2, INT len, INT idx, INT verbose_level);
+	void Gauss_step(int *v1, int *v2, int len, int idx, int verbose_level);
 		// afterwards: v2[idx] = 0 and v1,v2 span the same space as before
 		// v1 is not changed if v1[idx] is nonzero
-	void matrix_get_kernel(INT *M, INT m, INT n, INT *base_cols, 
-		INT nb_base_cols, 
-		INT &kernel_m, INT &kernel_n, INT *kernel, INT verbose_level);
+	void matrix_get_kernel(int *M, int m, int n, int *base_cols, 
+		int nb_base_cols, 
+		int &kernel_m, int &kernel_n, int *kernel, int verbose_level);
 		// kernel must point to the appropriate amount of memory! 
-		// (at least n * (n - nb_base_cols) INT's)
+		// (at least n * (n - nb_base_cols) int's)
 		// kernel is stored as column vectors, 
 		// i.e. kernel_m = n and kernel_n = n - nb_base_cols.
-	void matrix_get_kernel_as_row_vectors(INT *M, INT m, INT n, 
-		INT *base_cols, INT nb_base_cols, 
-		INT &kernel_m, INT &kernel_n, INT *kernel, INT verbose_level);
+	void matrix_get_kernel_as_row_vectors(int *M, int m, int n, 
+		int *base_cols, int nb_base_cols, 
+		int &kernel_m, int &kernel_n, int *kernel, int verbose_level);
 		// kernel must point to the appropriate amount of memory! 
-		// (at least n * (n - nb_base_cols) INT's)
+		// (at least n * (n - nb_base_cols) int's)
 		// kernel is stored as row vectors, 
 		// i.e. kernel_m = n - nb_base_cols and kernel_n = n.
-	void get_image_and_kernel(INT *M, INT n, INT &rk, INT verbose_level);
-	void complete_basis(INT *M, INT m, INT n, INT verbose_level);
-	void mult_matrix(INT *A, INT *B, INT *C, INT ma, INT na, INT nb, 
-		INT verbose_level);
-	void mult_matrix3(INT *A, INT *B, INT *C, INT *D, INT n, 
-		INT verbose_level);
-	void add_apply_matrix(INT *A, INT *B, INT m, INT n, 
-		INT verbose_level);
-	void matrix_mult_apply_scalar(INT *A, INT *s, INT m, INT n, 
-		INT verbose_level);
-	void make_block_matrix_2x2(INT *Mtx, INT n, INT k, 
-		INT *A, INT *B, INT *C, INT *D, INT verbose_level);
+	void get_image_and_kernel(int *M, int n, int &rk, int verbose_level);
+	void complete_basis(int *M, int m, int n, int verbose_level);
+	void mult_matrix(int *A, int *B, int *C, int ma, int na, int nb, 
+		int verbose_level);
+	void mult_matrix3(int *A, int *B, int *C, int *D, int n, 
+		int verbose_level);
+	void add_apply_matrix(int *A, int *B, int m, int n, 
+		int verbose_level);
+	void matrix_mult_apply_scalar(int *A, int *s, int m, int n, 
+		int verbose_level);
+	void make_block_matrix_2x2(int *Mtx, int n, int k, 
+		int *A, int *B, int *C, int *D, int verbose_level);
 		// A is k x k, 
 		// B is k x (n - k), 
 		// C is (n - k) x k, 
 		// D is (n - k) x (n - k), 
 		// Mtx is n x n
-	void make_identity_matrix(INT *A, INT n, INT verbose_level);
-	void matrix_inverse(INT *A, INT *Ainv, INT n, INT verbose_level);
-	void matrix_invert(INT *A, INT *T, INT *basecols, INT *Ainv, INT n, 
-		INT verbose_level);
+	void make_identity_matrix(int *A, int n, int verbose_level);
+	void matrix_inverse(int *A, int *Ainv, int n, int verbose_level);
+	void matrix_invert(int *A, int *T, int *basecols, int *Ainv, int n, 
+		int verbose_level);
 
 };
 
@@ -121,18 +121,18 @@ public:
 class finite_field {
 
 private:
-	INT f_has_table;
-	INT *add_table; // [q * q]
-	INT *mult_table; // [q * q]
+	int f_has_table;
+	int *add_table; // [q * q]
+	int *mult_table; // [q * q]
 		// add_table and mult_table are needed in mindist
 
-	INT *negate_table;
-	INT *inv_table;
-	INT *frobenius_table; // x \mapsto x^p
-	INT *absolute_trace_table;
-	INT *log_alpha_table;
-	INT *alpha_power_table;
-	INT *v1, *v2, *v3; // vectors of length e.
+	int *negate_table;
+	int *inv_table;
+	int *frobenius_table; // x \mapsto x^p
+	int *absolute_trace_table;
+	int *log_alpha_table;
+	int *alpha_power_table;
+	int *v1, *v2, *v3; // vectors of length e.
 	char *symbol_for_print;
 
 public:
@@ -140,29 +140,29 @@ public:
 	char *polynomial;
 		// the actual polynomial we consider 
 		// as integer (in text form)
-	INT q, p, e;
-	INT alpha; // primitive element
-	INT log10_of_q; // needed for printing purposes
-	INT f_print_as_exponentials;
+	int q, p, e;
+	int alpha; // primitive element
+	int log10_of_q; // needed for printing purposes
+	int f_print_as_exponentials;
 	
 	finite_field();
 	void null();
 	~finite_field();
-	void init(INT q);
-	void init(INT q, INT verbose_level);
+	void init(int q);
+	void init(int q, int verbose_level);
 	void init_symbol_for_print(const char *symbol);
-	void init_override_polynomial(INT q, const char *poly, 
-		INT verbose_level);
-	void print_minimum_polynomial(INT p, const char *polynomial);
-	INT compute_subfield_polynomial(INT order_subfield, 
-		INT verbose_level);
-	void compute_subfields(INT verbose_level);
-	void create_alpha_table(INT verbose_level);
-	void create_alpha_table_extension_field(INT verbose_level);
-	void create_alpha_table_prime_field(INT verbose_level);
-	void create_tables_prime_field(INT verbose_level);
-	void create_tables_extension_field(INT verbose_level);
-	void print(INT f_add_mult_table);
+	void init_override_polynomial(int q, const char *poly, 
+		int verbose_level);
+	void print_minimum_polynomial(int p, const char *polynomial);
+	int compute_subfield_polynomial(int order_subfield, 
+		int verbose_level);
+	void compute_subfields(int verbose_level);
+	void create_alpha_table(int verbose_level);
+	void create_alpha_table_extension_field(int verbose_level);
+	void create_alpha_table_prime_field(int verbose_level);
+	void create_tables_prime_field(int verbose_level);
+	void create_tables_extension_field(int verbose_level);
+	void print(int f_add_mult_table);
 	void print_add_mult_tables();
 	void print_tables();
 	void print_tables_extension_field(const char *poly);
@@ -171,66 +171,66 @@ public:
 	void display_N2(ostream &ost);
 	void display_N3(ostream &ost);
 	void print_integer_matrix_zech(ostream &ost, 
-		INT *p, INT m, INT n);
+		int *p, int m, int n);
 
-	INT *private_add_table();
-	INT *private_mult_table();
-	INT zero();
-	INT one();
-	INT minus_one();
-	INT is_zero(INT i);
-	INT is_one(INT i);
-	INT mult(INT i, INT j);
-	INT mult3(INT a1, INT a2, INT a3);
-	INT product3(INT a1, INT a2, INT a3);
-	INT mult4(INT a1, INT a2, INT a3, INT a4);
-	INT product4(INT a1, INT a2, INT a3, INT a4);
-	INT product5(INT a1, INT a2, INT a3, INT a4, INT a5);
-	INT product_n(INT *a, INT n);
-	INT square(INT a);
-	INT twice(INT a);
-	INT four_times(INT a);
-	INT Z_embedding(INT k);
-	INT add(INT i, INT j);
-	INT add3(INT i1, INT i2, INT i3);
-	INT add4(INT i1, INT i2, INT i3, INT i4);
-	INT add5(INT i1, INT i2, INT i3, INT i4, INT i5);
-	INT add6(INT i1, INT i2, INT i3, INT i4, INT i5, INT i6);
-	INT add7(INT i1, INT i2, INT i3, INT i4, INT i5, INT i6, 
-		INT i7);
-	INT add8(INT i1, INT i2, INT i3, INT i4, INT i5, INT i6, 
-		INT i7, INT i8);
-	INT negate(INT i);
-	INT inverse(INT i);
-	INT power(INT a, INT n); // computes a^n
-	INT frobenius_power(INT a, INT i); // computes a^{p^i}
-	INT absolute_trace(INT i);
-	INT absolute_norm(INT i);
-	INT alpha_power(INT i);
-	INT log_alpha(INT i);
-	INT square_root(INT i, INT &root);
-	INT primitive_root();
-	INT N2(INT a);
-	INT N3(INT a);
-	INT T2(INT a);
-	INT T3(INT a);
-	INT bar(INT a);
-	void abc2xy(INT a, INT b, INT c, INT &x, INT &y, 
-		INT verbose_level);
+	int *private_add_table();
+	int *private_mult_table();
+	int zero();
+	int one();
+	int minus_one();
+	int is_zero(int i);
+	int is_one(int i);
+	int mult(int i, int j);
+	int mult3(int a1, int a2, int a3);
+	int product3(int a1, int a2, int a3);
+	int mult4(int a1, int a2, int a3, int a4);
+	int product4(int a1, int a2, int a3, int a4);
+	int product5(int a1, int a2, int a3, int a4, int a5);
+	int product_n(int *a, int n);
+	int square(int a);
+	int twice(int a);
+	int four_times(int a);
+	int Z_embedding(int k);
+	int add(int i, int j);
+	int add3(int i1, int i2, int i3);
+	int add4(int i1, int i2, int i3, int i4);
+	int add5(int i1, int i2, int i3, int i4, int i5);
+	int add6(int i1, int i2, int i3, int i4, int i5, int i6);
+	int add7(int i1, int i2, int i3, int i4, int i5, int i6, 
+		int i7);
+	int add8(int i1, int i2, int i3, int i4, int i5, int i6, 
+		int i7, int i8);
+	int negate(int i);
+	int inverse(int i);
+	int power(int a, int n); // computes a^n
+	int frobenius_power(int a, int i); // computes a^{p^i}
+	int absolute_trace(int i);
+	int absolute_norm(int i);
+	int alpha_power(int i);
+	int log_alpha(int i);
+	int square_root(int i, int &root);
+	int primitive_root();
+	int N2(int a);
+	int N3(int a);
+	int T2(int a);
+	int T3(int a);
+	int bar(int a);
+	void abc2xy(int a, int b, int c, int &x, int &y, 
+		int verbose_level);
 		// given a, b, c, determine x and y such that 
 		// c = a * x^2 + b * y^2
 		// such elements x and y exist for any choice of a, b, c.
-	INT retract(finite_field &subfield, INT index, INT a, 
-		INT verbose_level);
-	void retract_INT_vec(finite_field &subfield, INT index, 
-		INT *v_in, INT *v_out, INT len, INT verbose_level);
-	INT embed(finite_field &subfield, INT index, INT b, 
-		INT verbose_level);
+	int retract(finite_field &subfield, int index, int a, 
+		int verbose_level);
+	void retract_int_vec(finite_field &subfield, int index, 
+		int *v_in, int *v_out, int len, int verbose_level);
+	int embed(finite_field &subfield, int index, int b, 
+		int verbose_level);
 	void subfield_embedding_2dimensional(finite_field &subfield, 
-		INT *&components, INT *&embedding, 
-		INT *&pair_embedding, INT verbose_level);
+		int *&components, int *&embedding, 
+		int *&pair_embedding, int verbose_level);
 	void print_embedding(finite_field &subfield, 
-		INT *components, INT *embedding, INT *pair_embedding);
+		int *components, int *embedding, int *pair_embedding);
 		// we think of F as two dimensional vector space 
 		// over f with basis (1,alpha)
 		// for i,j \in f, with x = i + j * alpha \in F, we have 
@@ -244,447 +244,447 @@ public:
 		// embedding[q]
 		// pair_embedding[q * q]
 	void print_embedding_tex(finite_field &subfield, 
-		INT *components, INT *embedding, INT *pair_embedding);
-	void print_indicator_square_nonsquare(INT a);
-	void print_element(ostream &ost, INT a);
+		int *components, int *embedding, int *pair_embedding);
+	void print_indicator_square_nonsquare(int a);
+	void print_element(ostream &ost, int a);
 	void print_element_with_symbol(ostream &ost, 
-		INT a, INT f_exponential, INT width, const char *symbol);
-	void INT_vec_print(ostream &ost, INT *v, INT len);
-	void INT_vec_print_elements_exponential(ostream &ost, 
-		INT *v, INT len, const char *symbol_for_print);
+		int a, int f_exponential, int width, const char *symbol);
+	void int_vec_print(ostream &ost, int *v, int len);
+	void int_vec_print_elements_exponential(ostream &ost, 
+		int *v, int len, const char *symbol_for_print);
 	void latex_addition_table(ostream &f, 
-		INT f_elements_exponential, const char *symbol_for_print);
+		int f_elements_exponential, const char *symbol_for_print);
 	void latex_multiplication_table(ostream &f, 
-		INT f_elements_exponential, const char *symbol_for_print);
-	void latex_matrix(ostream &f, INT f_elements_exponential, 
-		const char *symbol_for_print, INT *M, INT m, INT n);
-	void power_table(INT t, INT *power_table, INT len);
-	INT evaluate_conic_form(INT *six_coeffs, INT *v3);
-	INT evaluate_quadric_form_in_PG_three(INT *ten_coeffs, INT *v4);
-	INT Pluecker_12(INT *x4, INT *y4);
-	INT Pluecker_21(INT *x4, INT *y4);
-	INT Pluecker_13(INT *x4, INT *y4);
-	INT Pluecker_31(INT *x4, INT *y4);
-	INT Pluecker_14(INT *x4, INT *y4);
-	INT Pluecker_41(INT *x4, INT *y4);
-	INT Pluecker_23(INT *x4, INT *y4);
-	INT Pluecker_32(INT *x4, INT *y4);
-	INT Pluecker_24(INT *x4, INT *y4);
-	INT Pluecker_42(INT *x4, INT *y4);
-	INT Pluecker_34(INT *x4, INT *y4);
-	INT Pluecker_43(INT *x4, INT *y4);
-	INT Pluecker_ij(INT i, INT j, INT *x4, INT *y4);
-	INT evaluate_symplectic_form(INT len, INT *x, INT *y);
-	INT evaluate_quadratic_form_x0x3mx1x2(INT *x);
-	INT is_totally_isotropic_wrt_symplectic_form(INT k, 
-		INT n, INT *Basis);
-	void cheat_sheet(ostream &f, INT verbose_level);
-	void cheat_sheet_top(ostream &f, INT nb_cols);
+		int f_elements_exponential, const char *symbol_for_print);
+	void latex_matrix(ostream &f, int f_elements_exponential, 
+		const char *symbol_for_print, int *M, int m, int n);
+	void power_table(int t, int *power_table, int len);
+	int evaluate_conic_form(int *six_coeffs, int *v3);
+	int evaluate_quadric_form_in_PG_three(int *ten_coeffs, int *v4);
+	int Pluecker_12(int *x4, int *y4);
+	int Pluecker_21(int *x4, int *y4);
+	int Pluecker_13(int *x4, int *y4);
+	int Pluecker_31(int *x4, int *y4);
+	int Pluecker_14(int *x4, int *y4);
+	int Pluecker_41(int *x4, int *y4);
+	int Pluecker_23(int *x4, int *y4);
+	int Pluecker_32(int *x4, int *y4);
+	int Pluecker_24(int *x4, int *y4);
+	int Pluecker_42(int *x4, int *y4);
+	int Pluecker_34(int *x4, int *y4);
+	int Pluecker_43(int *x4, int *y4);
+	int Pluecker_ij(int i, int j, int *x4, int *y4);
+	int evaluate_symplectic_form(int len, int *x, int *y);
+	int evaluate_quadratic_form_x0x3mx1x2(int *x);
+	int is_totally_isotropic_wrt_symplectic_form(int k, 
+		int n, int *Basis);
+	void cheat_sheet(ostream &f, int verbose_level);
+	void cheat_sheet_top(ostream &f, int nb_cols);
 	void cheat_sheet_bottom(ostream &f);
-	INT evaluate_monomial(INT *monomial, INT *variables, INT nb_vars);
-	void projective_point_unrank(INT n, INT *v, INT rk);
-	INT projective_point_rank(INT n, INT *v);
+	int evaluate_monomial(int *monomial, int *variables, int nb_vars);
+	void projective_point_unrank(int n, int *v, int rk);
+	int projective_point_rank(int n, int *v);
 
 	// #########################################################################
 	// finite_field_linear_algebra.C:
 	// #########################################################################
 
-	void copy_matrix(INT *A, INT *B, INT ma, INT na);
-	void reverse_matrix(INT *A, INT *B, INT ma, INT na);
-	void identity_matrix(INT *A, INT n);
-	INT is_identity_matrix(INT *A, INT n);
-	INT is_diagonal_matrix(INT *A, INT n);
-	INT is_scalar_multiple_of_identity_matrix(INT *A, 
-		INT n, INT &scalar);
-	void diagonal_matrix(INT *A, INT n, INT alpha);
-	void matrix_minor(INT f_semilinear, INT *A, 
-		INT *B, INT n, INT f, INT l);
+	void copy_matrix(int *A, int *B, int ma, int na);
+	void reverse_matrix(int *A, int *B, int ma, int na);
+	void identity_matrix(int *A, int n);
+	int is_identity_matrix(int *A, int n);
+	int is_diagonal_matrix(int *A, int n);
+	int is_scalar_multiple_of_identity_matrix(int *A, 
+		int n, int &scalar);
+	void diagonal_matrix(int *A, int n, int alpha);
+	void matrix_minor(int f_semilinear, int *A, 
+		int *B, int n, int f, int l);
 		// initializes B as the l x l minor of A 
 		// (which is n x n) starting from row f. 
-	void mult_matrix(INT *A, INT *B, INT *C, 
-		INT ma, INT na, INT nb);
-	void mult_vector_from_the_left(INT *v, INT *A, 
-		INT *vA, INT m, INT n);
+	void mult_matrix(int *A, int *B, int *C, 
+		int ma, int na, int nb);
+	void mult_vector_from_the_left(int *v, int *A, 
+		int *vA, int m, int n);
 		// v[m], A[m][n], vA[n]
-	void mult_vector_from_the_right(INT *A, INT *v, 
-		INT *Av, INT m, INT n);
+	void mult_vector_from_the_right(int *A, int *v, 
+		int *Av, int m, int n);
 		// A[m][n], v[n], Av[m]
-	void mult_matrix_matrix_verbose(INT *A, INT *B, 
-		INT *C, INT m, INT n, INT o, INT verbose_level);
-	void mult_matrix_matrix(INT *A, INT *B, INT *C, 
-		INT m, INT n, INT o);
+	void mult_matrix_matrix_verbose(int *A, int *B, 
+		int *C, int m, int n, int o, int verbose_level);
+	void mult_matrix_matrix(int *A, int *B, int *C, 
+		int m, int n, int o);
 		// multiplies C := A * B, 
 		// where A is m x n and B is n x o, 
 		// so that C is m by o
 		// C must already be allocated
-	void semilinear_matrix_mult(INT *A, INT *B, INT *AB, INT n);
+	void semilinear_matrix_mult(int *A, int *B, int *AB, int n);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
-	void semilinear_matrix_mult_memory_given(INT *A, INT *B, 
-		INT *AB, INT *tmp_B, INT n);
+	void semilinear_matrix_mult_memory_given(int *A, int *B, 
+		int *AB, int *tmp_B, int n);
 		// (A,f1) * (B,f2) = (A*B^{\varphi^{-f1}},f1+f2)
-	void matrix_mult_affine(INT *A, INT *B, INT *AB, 
-		INT n, INT verbose_level);
-	void semilinear_matrix_mult_affine(INT *A, INT *B, INT *AB, INT n);
-	INT matrix_determinant(INT *A, INT n, INT verbose_level);
-	void matrix_inverse(INT *A, INT *Ainv, INT n, INT verbose_level);
-	void matrix_invert(INT *A, INT *Tmp, 
-		INT *Tmp_basecols, INT *Ainv, INT n, INT verbose_level);
-		// Tmp points to n * n + 1 INT's
-		// Tmp_basecols points to n INT's
-	void semilinear_matrix_invert(INT *A, INT *Tmp, 
-		INT *Tmp_basecols, INT *Ainv, INT n, INT verbose_level);
-		// Tmp points to n * n + 1 INT's
-		// Tmp_basecols points to n INT's
-	void semilinear_matrix_invert_affine(INT *A, INT *Tmp, 
-		INT *Tmp_basecols, INT *Ainv, INT n, INT verbose_level);
-		// Tmp points to n * n + 1 INT's
-		// Tmp_basecols points to n INT's
-	void matrix_invert_affine(INT *A, INT *Tmp, INT *Tmp_basecols, 
-		INT *Ainv, INT n, INT verbose_level);
-		// Tmp points to n * n + 1 INT's
-		// Tmp_basecols points to n INT's
-	void projective_action_from_the_right(INT f_semilinear, 
-		INT *v, INT *A, INT *vA, INT n, INT verbose_level);
+	void matrix_mult_affine(int *A, int *B, int *AB, 
+		int n, int verbose_level);
+	void semilinear_matrix_mult_affine(int *A, int *B, int *AB, int n);
+	int matrix_determinant(int *A, int n, int verbose_level);
+	void matrix_inverse(int *A, int *Ainv, int n, int verbose_level);
+	void matrix_invert(int *A, int *Tmp, 
+		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
+		// Tmp points to n * n + 1 int's
+		// Tmp_basecols points to n int's
+	void semilinear_matrix_invert(int *A, int *Tmp, 
+		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
+		// Tmp points to n * n + 1 int's
+		// Tmp_basecols points to n int's
+	void semilinear_matrix_invert_affine(int *A, int *Tmp, 
+		int *Tmp_basecols, int *Ainv, int n, int verbose_level);
+		// Tmp points to n * n + 1 int's
+		// Tmp_basecols points to n int's
+	void matrix_invert_affine(int *A, int *Tmp, int *Tmp_basecols, 
+		int *Ainv, int n, int verbose_level);
+		// Tmp points to n * n + 1 int's
+		// Tmp_basecols points to n int's
+	void projective_action_from_the_right(int f_semilinear, 
+		int *v, int *A, int *vA, int n, int verbose_level);
 		// vA = (v * A)^{p^f}  if f_semilinear (where f = A[n *  n]), 
 		// vA = v * A otherwise
-	void general_linear_action_from_the_right(INT f_semilinear, 
-		INT *v, INT *A, INT *vA, INT n, INT verbose_level);
-	void semilinear_action_from_the_right(INT *v, 
-		INT *A, INT *vA, INT n);
+	void general_linear_action_from_the_right(int f_semilinear, 
+		int *v, int *A, int *vA, int n, int verbose_level);
+	void semilinear_action_from_the_right(int *v, 
+		int *A, int *vA, int n);
 		// vA = (v * A)^{p^f}  (where f = A[n *  n])
-	void semilinear_action_from_the_left(INT *A, 
-		INT *v, INT *Av, INT n);
+	void semilinear_action_from_the_left(int *A, 
+		int *v, int *Av, int n);
 		// Av = A * v^{p^f}
-	void affine_action_from_the_right(INT f_semilinear, 
-		INT *v, INT *A, INT *vA, INT n);
+	void affine_action_from_the_right(int f_semilinear, 
+		int *v, int *A, int *vA, int n);
 		// vA = (v * A)^{p^f} + b
-	void zero_vector(INT *A, INT m);
-	void all_one_vector(INT *A, INT m);
-	void support(INT *A, INT m, INT *&support, INT &size);
-	void characteristic_vector(INT *A, INT m, INT *set, INT size);
-	INT is_zero_vector(INT *A, INT m);
-	void add_vector(INT *A, INT *B, INT *C, INT m);
-	void negate_vector(INT *A, INT *B, INT m);
-	void negate_vector_in_place(INT *A, INT m);
-	void scalar_multiply_vector_in_place(INT c, INT *A, INT m);
-	void vector_frobenius_power_in_place(INT *A, INT m, INT f);
-	INT dot_product(INT len, INT *v, INT *w);
-	void transpose_matrix(INT *A, INT *At, INT ma, INT na);
-	void transpose_matrix_in_place(INT *A, INT m);
-	void invert_matrix(INT *A, INT *A_inv, INT n);
-	void transform_form_matrix(INT *A, INT *Gram, 
-		INT *new_Gram, INT d);
+	void zero_vector(int *A, int m);
+	void all_one_vector(int *A, int m);
+	void support(int *A, int m, int *&support, int &size);
+	void characteristic_vector(int *A, int m, int *set, int size);
+	int is_zero_vector(int *A, int m);
+	void add_vector(int *A, int *B, int *C, int m);
+	void negate_vector(int *A, int *B, int m);
+	void negate_vector_in_place(int *A, int m);
+	void scalar_multiply_vector_in_place(int c, int *A, int m);
+	void vector_frobenius_power_in_place(int *A, int m, int f);
+	int dot_product(int len, int *v, int *w);
+	void transpose_matrix(int *A, int *At, int ma, int na);
+	void transpose_matrix_in_place(int *A, int m);
+	void invert_matrix(int *A, int *A_inv, int n);
+	void transform_form_matrix(int *A, int *Gram, 
+		int *new_Gram, int d);
 		// computes new_Gram = A * Gram * A^\top
-	INT rank_of_matrix(INT *A, INT m, INT verbose_level);
-	INT rank_of_matrix_memory_given(INT *A, 
-		INT m, INT *B, INT *base_cols, INT verbose_level);
-	INT rank_of_rectangular_matrix(INT *A, 
-		INT m, INT n, INT verbose_level);
-	INT rank_of_rectangular_matrix_memory_given(INT *A, 
-		INT m, INT n, INT *B, INT *base_cols, 
-		INT verbose_level);
-	INT rank_and_basecols(INT *A, INT m, 
-		INT *base_cols, INT verbose_level);
-	void Gauss_step(INT *v1, INT *v2, INT len, 
-		INT idx, INT verbose_level);
+	int rank_of_matrix(int *A, int m, int verbose_level);
+	int rank_of_matrix_memory_given(int *A, 
+		int m, int *B, int *base_cols, int verbose_level);
+	int rank_of_rectangular_matrix(int *A, 
+		int m, int n, int verbose_level);
+	int rank_of_rectangular_matrix_memory_given(int *A, 
+		int m, int n, int *B, int *base_cols, 
+		int verbose_level);
+	int rank_and_basecols(int *A, int m, 
+		int *base_cols, int verbose_level);
+	void Gauss_step(int *v1, int *v2, int len, 
+		int idx, int verbose_level);
 		// afterwards: v2[idx] = 0 
 		// and v1,v2 span the same space as before
 		// v1 is not changed if v1[idx] is nonzero
-	void Gauss_step_make_pivot_one(INT *v1, INT *v2, 
-		INT len, INT idx, INT verbose_level);
+	void Gauss_step_make_pivot_one(int *v1, int *v2, 
+		int len, int idx, int verbose_level);
 		// afterwards: v2[idx] = 0 
 		// and v1,v2 span the same space as before
 		// v1[idx] is zero
-	INT base_cols_and_embedding(INT m, INT n, INT *A, 
-		INT *base_cols, INT *embedding, INT verbose_level);
+	int base_cols_and_embedding(int m, int n, int *A, 
+		int *base_cols, int *embedding, int verbose_level);
 		// returns the rank rk of the matrix.
 		// It also computes base_cols[rk] and embedding[m - rk]
 		// It leaves A unchanged
-	INT Gauss_easy(INT *A, INT m, INT n);
+	int Gauss_easy(int *A, int m, int n);
 		// returns the rank
-	INT Gauss_easy_memory_given(INT *A, INT m, INT n, INT *base_cols);
-	INT Gauss_simple(INT *A, INT m, INT n, 
-		INT *base_cols, INT verbose_level);
+	int Gauss_easy_memory_given(int *A, int m, int n, int *base_cols);
+	int Gauss_simple(int *A, int m, int n, 
+		int *base_cols, int verbose_level);
 		// returns the rank which is the 
 		// number of entries in base_cols
-	INT Gauss_INT(INT *A, INT f_special, 
-		INT f_complete, INT *base_cols, 
-		INT f_P, INT *P, INT m, INT n, 
-		INT Pn, INT verbose_level);
+	int Gauss_int(int *A, int f_special, 
+		int f_complete, int *base_cols, 
+		int f_P, int *P, int m, int n, 
+		int Pn, int verbose_level);
 		// returns the rank which is the 
 		// number of entries in base_cols
 		// A is m x n,
 		// P is m x Pn (provided f_P is TRUE)
-	INT Gauss_INT_with_pivot_strategy(INT *A, 
-		INT f_special, INT f_complete, INT *pivot_perm, 
-		INT m, INT n, 
-		INT (*find_pivot_function)(INT *A, INT m, INT n, INT r, 
-		INT *pivot_perm, void *data),
+	int Gauss_int_with_pivot_strategy(int *A, 
+		int f_special, int f_complete, int *pivot_perm, 
+		int m, int n, 
+		int (*find_pivot_function)(int *A, int m, int n, int r, 
+		int *pivot_perm, void *data),
 		void *find_pivot_data,  
-		INT verbose_level);
+		int verbose_level);
 		// returns the rank which is the number of entries in pivots
 		// A is a m x n matrix
-	void Gauss_INT_with_given_pivots(INT *A, 
-		INT f_special, INT f_complete, INT *pivots, INT nb_pivots, 
-		INT m, INT n, 
-		INT verbose_level);
+	void Gauss_int_with_given_pivots(int *A, 
+		int f_special, int f_complete, int *pivots, int nb_pivots, 
+		int m, int n, 
+		int verbose_level);
 		// A is a m x n matrix
-	void kernel_columns(INT n, INT nb_base_cols, 
-		INT *base_cols, INT *kernel_cols);
-	void matrix_get_kernel_as_INT_matrix(INT *M, INT m, INT n, 
-		INT *base_cols, INT nb_base_cols, 
-		INT_matrix *kernel);
-	void matrix_get_kernel(INT *M, INT m, INT n, 
-		INT *base_cols, INT nb_base_cols, 
-		INT &kernel_m, INT &kernel_n, INT *kernel);
+	void kernel_columns(int n, int nb_base_cols, 
+		int *base_cols, int *kernel_cols);
+	void matrix_get_kernel_as_int_matrix(int *M, int m, int n, 
+		int *base_cols, int nb_base_cols, 
+		int_matrix *kernel);
+	void matrix_get_kernel(int *M, int m, int n, 
+		int *base_cols, int nb_base_cols, 
+		int &kernel_m, int &kernel_n, int *kernel);
 		// kernel must point to the appropriate amount of memory! 
-		// (at least n * (n - nb_base_cols) INT's)
-	INT perp(INT n, INT k, INT *A, INT *Gram);
-	INT RREF_and_kernel(INT n, INT k, INT *A, INT verbose_level);
-	INT perp_standard(INT n, INT k, INT *A, INT verbose_level);
-	INT perp_standard_with_temporary_data(INT n, INT k, INT *A, 
-		INT *B, INT *K, INT *base_cols, 
-		INT verbose_level);
-	INT intersect_subspaces(INT n, INT k1, INT *A, INT k2, INT *B, 
-		INT &k3, INT *intersection, INT verbose_level);
-	INT n_choose_k_mod_p(INT n, INT k, INT verbose_level);
-	void Dickson_polynomial(INT *map, INT *coeffs);
+		// (at least n * (n - nb_base_cols) int's)
+	int perp(int n, int k, int *A, int *Gram);
+	int RREF_and_kernel(int n, int k, int *A, int verbose_level);
+	int perp_standard(int n, int k, int *A, int verbose_level);
+	int perp_standard_with_temporary_data(int n, int k, int *A, 
+		int *B, int *K, int *base_cols, 
+		int verbose_level);
+	int intersect_subspaces(int n, int k1, int *A, int k2, int *B, 
+		int &k3, int *intersection, int verbose_level);
+	int n_choose_k_mod_p(int n, int k, int verbose_level);
+	void Dickson_polynomial(int *map, int *coeffs);
 		// compute the coefficients of a degree q-1 polynomial 
 		// which interpolates a given map
 		// from F_q to F_q
-	void projective_action_on_columns_from_the_left(INT *A, 
-		INT *M, INT m, INT n, INT *perm, INT verbose_level);
-	void builtin_transversal_rep_GLnq(INT *A, INT n, 
-		INT f_semilinear, INT i, INT j, INT verbose_level);
-	void affine_translation(INT n, INT coordinate_idx, 
-		INT field_base_idx, INT *perm);
-		// perm points to q^n INT's
+	void projective_action_on_columns_from_the_left(int *A, 
+		int *M, int m, int n, int *perm, int verbose_level);
+	void builtin_transversal_rep_GLnq(int *A, int n, 
+		int f_semilinear, int i, int j, int verbose_level);
+	void affine_translation(int n, int coordinate_idx, 
+		int field_base_idx, int *perm);
+		// perm points to q^n int's
 		// field_base_idx is the base element whose 
 		// translation we compute, 0 \le field_base_idx < e
 		// coordinate_idx is the coordinate in which we shift, 
 		// 0 \le coordinate_idx < n
-	void affine_multiplication(INT n, 
-		INT multiplication_order, INT *perm);
-		// perm points to q^n INT's
+	void affine_multiplication(int n, 
+		int multiplication_order, int *perm);
+		// perm points to q^n int's
 		// compute the diagonal multiplication by alpha, i.e. 
 		// the multiplication by alpha of each component
-	void affine_frobenius(INT n, INT k, INT *perm);
-		// perm points to q^n INT's
+	void affine_frobenius(int n, int k, int *perm);
+		// perm points to q^n int's
 		// compute the diagonal action of the Frobenius 
 		// automorphism to the power k, i.e., 
 		// raises each component to the p^k-th power
-	INT all_affine_translations_nb_gens(INT n);
-	void all_affine_translations(INT n, INT *gens);
-	void affine_generators(INT n, INT f_translations, 
-		INT f_semilinear, INT frobenius_power, 
-		INT f_multiplication, INT multiplication_order, 
-		INT &nb_gens, INT &degree, INT *&gens, 
-		INT &base_len, INT *&the_base);
-	INT evaluate_bilinear_form(INT n, INT *v1, INT *v2, INT *Gram);
-	INT evaluate_standard_hyperbolic_bilinear_form(INT n, 
-		INT *v1, INT *v2);
-	INT evaluate_quadratic_form(INT n, INT nb_terms, 
-		INT *i, INT *j, INT *coeff, INT *x);
-	void find_singular_vector_brute_force(INT n, INT form_nb_terms, 
-		INT *form_i, INT *form_j, INT *form_coeff, INT *Gram, 
-		INT *vec, INT verbose_level);
-	void find_singular_vector(INT n, INT form_nb_terms, 
-		INT *form_i, INT *form_j, INT *form_coeff, INT *Gram, 
-		INT *vec, INT verbose_level);
-	void complete_hyperbolic_pair(INT n, INT form_nb_terms, 
-		INT *form_i, INT *form_j, INT *form_coeff, INT *Gram, 
-		INT *vec1, INT *vec2, INT verbose_level);
-	void find_hyperbolic_pair(INT n, INT form_nb_terms, 
-		INT *form_i, INT *form_j, INT *form_coeff, INT *Gram, 
-		INT *vec1, INT *vec2, INT verbose_level);
-	void restrict_quadratic_form_list_coding(INT k,
-		INT n, INT *basis, 
-		INT form_nb_terms, 
-		INT *form_i, INT *form_j, INT *form_coeff, 
-		INT &restricted_form_nb_terms, 
-		INT *&restricted_form_i, INT *&restricted_form_j, 
-		INT *&restricted_form_coeff, 
-		INT verbose_level);
-	void restrict_quadratic_form(INT k, INT n, INT *basis, 
-		INT *C, INT *D, INT verbose_level);
-	INT compare_subspaces_ranked(INT *set1, INT *set2, INT size, 
-		INT vector_space_dimension, INT verbose_level);
+	int all_affine_translations_nb_gens(int n);
+	void all_affine_translations(int n, int *gens);
+	void affine_generators(int n, int f_translations, 
+		int f_semilinear, int frobenius_power, 
+		int f_multiplication, int multiplication_order, 
+		int &nb_gens, int &degree, int *&gens, 
+		int &base_len, int *&the_base);
+	int evaluate_bilinear_form(int n, int *v1, int *v2, int *Gram);
+	int evaluate_standard_hyperbolic_bilinear_form(int n, 
+		int *v1, int *v2);
+	int evaluate_quadratic_form(int n, int nb_terms, 
+		int *i, int *j, int *coeff, int *x);
+	void find_singular_vector_brute_force(int n, int form_nb_terms, 
+		int *form_i, int *form_j, int *form_coeff, int *Gram, 
+		int *vec, int verbose_level);
+	void find_singular_vector(int n, int form_nb_terms, 
+		int *form_i, int *form_j, int *form_coeff, int *Gram, 
+		int *vec, int verbose_level);
+	void complete_hyperbolic_pair(int n, int form_nb_terms, 
+		int *form_i, int *form_j, int *form_coeff, int *Gram, 
+		int *vec1, int *vec2, int verbose_level);
+	void find_hyperbolic_pair(int n, int form_nb_terms, 
+		int *form_i, int *form_j, int *form_coeff, int *Gram, 
+		int *vec1, int *vec2, int verbose_level);
+	void restrict_quadratic_form_list_coding(int k,
+		int n, int *basis, 
+		int form_nb_terms, 
+		int *form_i, int *form_j, int *form_coeff, 
+		int &restricted_form_nb_terms, 
+		int *&restricted_form_i, int *&restricted_form_j, 
+		int *&restricted_form_coeff, 
+		int verbose_level);
+	void restrict_quadratic_form(int k, int n, int *basis, 
+		int *C, int *D, int verbose_level);
+	int compare_subspaces_ranked(int *set1, int *set2, int size, 
+		int vector_space_dimension, int verbose_level);
 		// Compares the span of two sets of vectors.
 		// returns 0 if equal, 1 if not
 		// (this is so that it matches to the result 
 		// of a compare function)
-	INT compare_subspaces_ranked_with_unrank_function(
-		INT *set1, INT *set2, INT size, 
-		INT vector_space_dimension, 
-		void (*unrank_point_func)(INT *v, INT rk, void *data), 
+	int compare_subspaces_ranked_with_unrank_function(
+		int *set1, int *set2, int size, 
+		int vector_space_dimension, 
+		void (*unrank_point_func)(int *v, int rk, void *data), 
 		void *rank_point_data, 
-		INT verbose_level);
-	INT Gauss_canonical_form_ranked(INT *set1, INT *set2, INT size, 
-		INT vector_space_dimension, INT verbose_level);
+		int verbose_level);
+	int Gauss_canonical_form_ranked(int *set1, int *set2, int size, 
+		int vector_space_dimension, int verbose_level);
 		// Computes the Gauss canonical form 
 		// for the generating set in set1.
 		// The result is written to set2.
 		// Returns the rank of the span of the elements in set1.
-	INT lexleast_canonical_form_ranked(INT *set1, INT *set2, INT size, 
-		INT vector_space_dimension, INT verbose_level);
+	int lexleast_canonical_form_ranked(int *set1, int *set2, int size, 
+		int vector_space_dimension, int verbose_level);
 		// Computes the lexleast generating set the subspace 
 		// spanned by the elements in set1.
 		// The result is written to set2.
 		// Returns the rank of the span of the elements in set1.
 	void reduce_mod_subspace_and_get_coefficient_vector(
-		INT k, INT len, INT *basis, INT *base_cols, 
-		INT *v, INT *coefficients, INT verbose_level);
-	void reduce_mod_subspace(INT k, 
-		INT len, INT *basis, INT *base_cols, 
-		INT *v, INT verbose_level);
-	INT is_contained_in_subspace(INT k, 
-		INT len, INT *basis, INT *base_cols, 
-		INT *v, INT verbose_level);
-	void compute_and_print_projective_weights(INT *M, 
-		INT n, INT k);
-	INT code_minimum_distance(INT n, INT k, 
-		INT *code, INT verbose_level);
+		int k, int len, int *basis, int *base_cols, 
+		int *v, int *coefficients, int verbose_level);
+	void reduce_mod_subspace(int k, 
+		int len, int *basis, int *base_cols, 
+		int *v, int verbose_level);
+	int is_contained_in_subspace(int k, 
+		int len, int *basis, int *base_cols, 
+		int *v, int verbose_level);
+	void compute_and_print_projective_weights(int *M, 
+		int n, int k);
+	int code_minimum_distance(int n, int k, 
+		int *code, int verbose_level);
 		// code[k * n]
-	void codewords_affine(INT n, INT k, 
-		INT *code, // [k * n]
-		INT *codewords, // q^k
-		INT verbose_level);
-	void code_projective_weight_enumerator(INT n, INT k, 
-		INT *code, // [k * n]
-		INT *weight_enumerator, // [n + 1]
-		INT verbose_level);
-	void code_weight_enumerator(INT n, INT k, 
-		INT *code, // [k * n]
-		INT *weight_enumerator, // [n + 1]
-		INT verbose_level);
-	void code_weight_enumerator_fast(INT n, INT k, 
-		INT *code, // [k * n]
-		INT *weight_enumerator, // [n + 1]
-		INT verbose_level);
-	void code_projective_weights(INT n, INT k, 
-		INT *code, // [k * n]
-		INT *&weights,
+	void codewords_affine(int n, int k, 
+		int *code, // [k * n]
+		int *codewords, // q^k
+		int verbose_level);
+	void code_projective_weight_enumerator(int n, int k, 
+		int *code, // [k * n]
+		int *weight_enumerator, // [n + 1]
+		int verbose_level);
+	void code_weight_enumerator(int n, int k, 
+		int *code, // [k * n]
+		int *weight_enumerator, // [n + 1]
+		int verbose_level);
+	void code_weight_enumerator_fast(int n, int k, 
+		int *code, // [k * n]
+		int *weight_enumerator, // [n + 1]
+		int verbose_level);
+	void code_projective_weights(int n, int k, 
+		int *code, // [k * n]
+		int *&weights,
 			// will be allocated [N] 
 			// where N = theta_{k-1}
-		INT verbose_level);
-	INT is_subspace(INT d, INT dim_U, INT *Basis_U, INT dim_V, 
-		INT *Basis_V, INT verbose_level);
-	void Kronecker_product(INT *A, INT *B, 
-		INT n, INT *AB);
-	void Kronecker_product_square_but_arbitrary(INT *A, INT *B, 
-		INT na, INT nb, INT *AB, INT &N, INT verbose_level);
-	INT dependency(INT d, INT *v, INT *A, INT m, INT *rho, 
-		INT verbose_level);
+		int verbose_level);
+	int is_subspace(int d, int dim_U, int *Basis_U, int dim_V, 
+		int *Basis_V, int verbose_level);
+	void Kronecker_product(int *A, int *B, 
+		int n, int *AB);
+	void Kronecker_product_square_but_arbitrary(int *A, int *B, 
+		int na, int nb, int *AB, int &N, int verbose_level);
+	int dependency(int d, int *v, int *A, int m, int *rho, 
+		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a} p. 104.
 		// A is a matrix of size d + 1 times d
 		// v[d]
 		// rho is a column permutation of degree d
-	void order_ideal_generator(INT d, INT idx, INT *mue, INT &mue_deg, 
-		INT *A, INT *Frobenius, 
-		INT verbose_level);
+	void order_ideal_generator(int d, int idx, int *mue, int &mue_deg, 
+		int *A, int *Frobenius, 
+		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a} p. 105.
 		// Frobenius is a matrix of size d x d
 		// A is (d + 1) x d
 		// mue[d + 1]
-	void span_cyclic_module(INT *A, INT *v, INT n, INT *Mtx, 
-		INT verbose_level);
-	void random_invertible_matrix(INT *M, INT k, INT verbose_level);
+	void span_cyclic_module(int *A, int *v, int n, int *Mtx, 
+		int verbose_level);
+	void random_invertible_matrix(int *M, int k, int verbose_level);
 	void make_all_irreducible_polynomials_of_degree_d(
-		INT d, INT &nb, INT *&Table, INT verbose_level);
-	INT count_all_irreducible_polynomials_of_degree_d(
-		INT d, INT verbose_level);
-	void adjust_basis(INT *V, INT *U, INT n, INT k, INT d, 
-		INT verbose_level);
+		int d, int &nb, int *&Table, int verbose_level);
+	int count_all_irreducible_polynomials_of_degree_d(
+		int d, int verbose_level);
+	void adjust_basis(int *V, int *U, int n, int k, int d, 
+		int verbose_level);
 	void choose_vector_in_here_but_not_in_here_column_spaces(
-		INT_matrix *V, INT_matrix *W, INT *v, INT verbose_level);
+		int_matrix *V, int_matrix *W, int *v, int verbose_level);
 	void choose_vector_in_here_but_not_in_here_or_here_column_spaces(
-		INT_matrix *V, INT_matrix *W1, INT_matrix *W2, INT *v, 
-		INT verbose_level);
-	INT 
+		int_matrix *V, int_matrix *W1, int_matrix *W2, int *v, 
+		int verbose_level);
+	int 
 	choose_vector_in_here_but_not_in_here_or_here_column_spaces_coset(
-		INT &coset, 
-		INT_matrix *V, INT_matrix *W1, INT_matrix *W2, INT *v, 
-		INT verbose_level);
-	void vector_add_apply(INT *v, INT *w, INT c, INT n);
-	void vector_add_apply_with_stride(INT *v, INT *w, INT stride, 
-		INT c, INT n);
-	INT test_if_commute(INT *A, INT *B, INT k, INT verbose_level);
-	void unrank_point_in_PG(INT *v, INT len, INT rk);
+		int &coset, 
+		int_matrix *V, int_matrix *W1, int_matrix *W2, int *v, 
+		int verbose_level);
+	void vector_add_apply(int *v, int *w, int c, int n);
+	void vector_add_apply_with_stride(int *v, int *w, int stride, 
+		int c, int n);
+	int test_if_commute(int *A, int *B, int k, int verbose_level);
+	void unrank_point_in_PG(int *v, int len, int rk);
 		// len is the length of the vector, 
 		// not the projective dimension
-	INT rank_point_in_PG(INT *v, INT len);
-	INT nb_points_in_PG(INT n);
+	int rank_point_in_PG(int *v, int len);
+	int nb_points_in_PG(int n);
 		// n is projective dimension
-	void Borel_decomposition(INT n, INT *M, INT *B1, INT *B2, 
-		INT *pivots, INT verbose_level);
-	void map_to_standard_frame(INT d, INT *A, 
-		INT *Transform, INT verbose_level);
+	void Borel_decomposition(int n, int *M, int *B1, int *B2, 
+		int *pivots, int verbose_level);
+	void map_to_standard_frame(int d, int *A, 
+		int *Transform, int verbose_level);
 		// d = vector space dimension
 		// maps d + 1 points to the frame 
 		// e_1, e_2, ..., e_d, e_1+e_2+..+e_d 
 		// A is (d + 1) x d
 		// Transform is d x d
-	void map_frame_to_frame_with_permutation(INT d, INT *A, 
-		INT *perm, INT *B, INT *Transform, INT verbose_level);
-	void map_points_to_points_projectively(INT d, INT k, 
-		INT *A, INT *B, INT *Transform, 
-		INT &nb_maps, INT verbose_level);
+	void map_frame_to_frame_with_permutation(int d, int *A, 
+		int *perm, int *B, int *Transform, int verbose_level);
+	void map_points_to_points_projectively(int d, int k, 
+		int *A, int *B, int *Transform, 
+		int &nb_maps, int verbose_level);
 		// A and B are (d + k + 1) x d
 		// Transform is d x d
 		// returns TRUE if a map exists
-	INT BallChowdhury_matrix_entry(INT *Coord, INT *C, 
-		INT *U, INT k, INT sz_U, 
-		INT *T, INT verbose_level);
-	void cubic_surface_family_24_generators(INT f_with_normalizer, 
-		INT f_semilinear, 
-		INT *&gens, INT &nb_gens, INT &data_size, 
-		INT &group_order, INT verbose_level);
+	int BallChowdhury_matrix_entry(int *Coord, int *C, 
+		int *U, int k, int sz_U, 
+		int *T, int verbose_level);
+	void cubic_surface_family_24_generators(int f_with_normalizer, 
+		int f_semilinear, 
+		int *&gens, int &nb_gens, int &data_size, 
+		int &group_order, int verbose_level);
 
 	// #########################################################################
 	// finite_field_representations.C:
 	// #########################################################################
 
-	void representing_matrix8_R(INT *A, 
-		INT q, INT a, INT b, INT c, INT d);
-	void representing_matrix9_R(INT *A, 
-		INT q, INT a, INT b, INT c, INT d);
-	void representing_matrix9_U(INT *A, 
-		INT a, INT b, INT c, INT d, INT beta);
-	void representing_matrix8_U(INT *A, 
-		INT a, INT b, INT c, INT d, INT beta);
-	void representing_matrix8_V(INT *A, INT beta);
-	void representing_matrix9b(INT *A, INT beta);
-	void representing_matrix8a(INT *A, 
-		INT a, INT b, INT c, INT d, INT beta);
-	void representing_matrix8b(INT *A, INT beta);
-	INT Term1(INT a1, INT e1);
-	INT Term2(INT a1, INT a2, INT e1, INT e2);
-	INT Term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3);
-	INT Term4(INT a1, INT a2, INT a3, INT a4, INT e1, INT e2, INT e3, 
-		INT e4);
-	INT Term5(INT a1, INT a2, INT a3, INT a4, INT a5, INT e1, INT e2, 
-		INT e3, INT e4, INT e5);
-	INT term1(INT a1, INT e1);
-	INT term2(INT a1, INT a2, INT e1, INT e2);
-	INT term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3);
-	INT term4(INT a1, INT a2, INT a3, INT a4, INT e1, INT e2, INT e3, 
-		INT e4);
-	INT term5(INT a1, INT a2, INT a3, INT a4, INT a5, INT e1, INT e2, 
-		INT e3, INT e4, INT e5);
-	INT m_term(INT q, INT a1, INT a2, INT a3);
-	INT beta_trinomial(INT q, INT beta, INT a1, INT a2, INT a3);
-	INT T3product2(INT a1, INT a2);
+	void representing_matrix8_R(int *A, 
+		int q, int a, int b, int c, int d);
+	void representing_matrix9_R(int *A, 
+		int q, int a, int b, int c, int d);
+	void representing_matrix9_U(int *A, 
+		int a, int b, int c, int d, int beta);
+	void representing_matrix8_U(int *A, 
+		int a, int b, int c, int d, int beta);
+	void representing_matrix8_V(int *A, int beta);
+	void representing_matrix9b(int *A, int beta);
+	void representing_matrix8a(int *A, 
+		int a, int b, int c, int d, int beta);
+	void representing_matrix8b(int *A, int beta);
+	int Term1(int a1, int e1);
+	int Term2(int a1, int a2, int e1, int e2);
+	int Term3(int a1, int a2, int a3, int e1, int e2, int e3);
+	int Term4(int a1, int a2, int a3, int a4, int e1, int e2, int e3, 
+		int e4);
+	int Term5(int a1, int a2, int a3, int a4, int a5, int e1, int e2, 
+		int e3, int e4, int e5);
+	int term1(int a1, int e1);
+	int term2(int a1, int a2, int e1, int e2);
+	int term3(int a1, int a2, int a3, int e1, int e2, int e3);
+	int term4(int a1, int a2, int a3, int a4, int e1, int e2, int e3, 
+		int e4);
+	int term5(int a1, int a2, int a3, int a4, int a5, int e1, int e2, 
+		int e3, int e4, int e5);
+	int m_term(int q, int a1, int a2, int a3);
+	int beta_trinomial(int q, int beta, int a1, int a2, int a3);
+	int T3product2(int a1, int a2);
 };
 
 // #############################################################################
 // finite_field_tables.C:
 // #############################################################################
 
-extern INT finitefield_primes[];
-extern INT finitefield_nb_primes;
-extern INT finitefield_largest_degree_irreducible_polynomial[];
+extern int finitefield_primes[];
+extern int finitefield_nb_primes;
+extern int finitefield_largest_degree_irreducible_polynomial[];
 extern const char *finitefield_primitive_polynomial[][100];
-const char *get_primitive_polynomial(INT p, INT e, INT verbose_level);
+const char *get_primitive_polynomial(int p, int e, int verbose_level);
 
 // #############################################################################
 // finite_ring.C:
@@ -697,17 +697,17 @@ const char *get_primitive_polynomial(INT p, INT e, INT verbose_level);
 
 class finite_ring {
 
-	INT *add_table; // [q * q]
-	INT *mult_table; // [q * q]
+	int *add_table; // [q * q]
+	int *mult_table; // [q * q]
 
-	INT *f_is_unit_table;
-	INT *negate_table;
-	INT *inv_table;
+	int *f_is_unit_table;
+	int *negate_table;
+	int *inv_table;
 
 public:
-	INT q;
-	INT p;
-	INT e;
+	int q;
+	int p;
+	int e;
 
 	finite_field *Fp;
 
@@ -716,20 +716,20 @@ public:
 	~finite_ring();
 	void null();
 	void freeself();
-	void init(INT q, INT verbose_level);
-	INT zero();
-	INT one();
-	INT is_zero(INT i);
-	INT is_one(INT i);
-	INT is_unit(INT i);
-	INT add(INT i, INT j);
-	INT mult(INT i, INT j);
-	INT negate(INT i);
-	INT inverse(INT i);
-	INT Gauss_INT(INT *A, INT f_special, 
-		INT f_complete, INT *base_cols, 
-		INT f_P, INT *P, INT m, INT n, INT Pn, 
-		INT verbose_level);
+	void init(int q, int verbose_level);
+	int zero();
+	int one();
+	int is_zero(int i);
+	int is_one(int i);
+	int is_unit(int i);
+	int add(int i, int j);
+	int mult(int i, int j);
+	int negate(int i);
+	int inverse(int i);
+	int Gauss_int(int *A, int f_special, 
+		int f_complete, int *base_cols, 
+		int f_P, int *P, int m, int n, int Pn, 
+		int verbose_level);
 		// returns the rank which is the number 
 		// of entries in base_cols
 		// A is a m x n matrix,
@@ -748,38 +748,38 @@ class generators_symplectic_group {
 public:
 
 	finite_field *F; // no ownership, do not destroy
-	INT n; // must be even
-	INT n_half; // n / 2
-	INT q;
-	INT qn; // = q^n
+	int n; // must be even
+	int n_half; // n / 2
+	int q;
+	int qn; // = q^n
 
-	INT *nb_candidates; // [n + 1]
-	INT *cur_candidate; // [n]
-	INT **candidates; // [n + 1][q^n]
+	int *nb_candidates; // [n + 1]
+	int *cur_candidate; // [n]
+	int **candidates; // [n + 1][q^n]
 	
-	INT *Mtx; // [n * n]
-	INT *v; // [n]
-	INT *v2; // [n]
-	INT *w; // [n]
-	INT *Points; // [qn * n]
+	int *Mtx; // [n * n]
+	int *v; // [n]
+	int *v2; // [n]
+	int *w; // [n]
+	int *Points; // [qn * n]
 
-	INT nb_gens;
-	INT *Data;
-	INT *transversal_length;
+	int nb_gens;
+	int *Data;
+	int *transversal_length;
 
 	generators_symplectic_group();
 	~generators_symplectic_group();
 	void null();
 	void freeself();
-	void init(finite_field *F, INT n, INT verbose_level);
-	INT count_strong_generators(INT &nb, INT *transversal_length, 
-		INT &first_moved, INT depth, INT verbose_level);
-	INT get_strong_generators(INT *Data, INT &nb, INT &first_moved, 
-		INT depth, INT verbose_level);
-	//void backtrack_search(INT &nb_sol, INT depth, INT verbose_level);
-	void create_first_candidate_set(INT verbose_level);
-	void create_next_candidate_set(INT level, INT verbose_level);
-	INT dot_product(INT *u1, INT *u2);
+	void init(finite_field *F, int n, int verbose_level);
+	int count_strong_generators(int &nb, int *transversal_length, 
+		int &first_moved, int depth, int verbose_level);
+	int get_strong_generators(int *Data, int &nb, int &first_moved, 
+		int depth, int verbose_level);
+	//void backtrack_search(int &nb_sol, int depth, int verbose_level);
+	void create_first_candidate_set(int verbose_level);
+	void create_next_candidate_set(int level, int verbose_level);
+	int dot_product(int *u1, int *u2);
 };
 
 // #############################################################################
@@ -790,85 +790,85 @@ public:
 
 class gl_classes {
 public:
-	INT k;
-	INT q;
+	int k;
+	int q;
 	finite_field *F;
-	INT nb_irred;
-	INT *Nb_irred;
-	INT *First_irred;
-	INT *Nb_part;
-	INT **Tables;
-	INT **Partitions;
-	INT *Degree;
+	int nb_irred;
+	int *Nb_irred;
+	int *First_irred;
+	int *Nb_part;
+	int **Tables;
+	int **Partitions;
+	int *Degree;
 
 	gl_classes();
 	~gl_classes();
 	void null();
 	void freeself();
-	void init(INT k, finite_field *F, INT verbose_level);
+	void init(int k, finite_field *F, int verbose_level);
 	void print_polynomials(ofstream &ost);
-	INT select_polynomial_first(INT *Select, INT verbose_level);
-	INT select_polynomial_next(INT *Select, INT verbose_level);
-	INT select_partition_first(INT *Select, INT *Select_partition, 
-		INT verbose_level);
-	INT select_partition_next(INT *Select, INT *Select_partition, 
-		INT verbose_level);
-	INT first(INT *Select, INT *Select_partition, INT verbose_level);
-	INT next(INT *Select, INT *Select_partition, INT verbose_level);
+	int select_polynomial_first(int *Select, int verbose_level);
+	int select_polynomial_next(int *Select, int verbose_level);
+	int select_partition_first(int *Select, int *Select_partition, 
+		int verbose_level);
+	int select_partition_next(int *Select, int *Select_partition, 
+		int verbose_level);
+	int first(int *Select, int *Select_partition, int verbose_level);
+	int next(int *Select, int *Select_partition, int verbose_level);
 	void print_matrix_and_centralizer_order_latex(ofstream &ost, 
 		gl_class_rep *R);
-	void make_matrix_from_class_rep(INT *Mtx, gl_class_rep *R, 
-		INT verbose_level);
-	void make_matrix(INT *Mtx, INT *Select, INT *Select_Partition, 
-		INT verbose_level);
-	void centralizer_order_Kung_basic(INT nb_irreds, 
-		INT *poly_degree, INT *poly_mult, INT *partition_idx, 
+	void make_matrix_from_class_rep(int *Mtx, gl_class_rep *R, 
+		int verbose_level);
+	void make_matrix(int *Mtx, int *Select, int *Select_Partition, 
+		int verbose_level);
+	void centralizer_order_Kung_basic(int nb_irreds, 
+		int *poly_degree, int *poly_mult, int *partition_idx, 
 		longinteger_object &co, 
-		INT verbose_level);
-	void centralizer_order_Kung(INT *Select_polynomial, 
-		INT *Select_partition, longinteger_object &co, 
-		INT verbose_level);
+		int verbose_level);
+	void centralizer_order_Kung(int *Select_polynomial, 
+		int *Select_partition, longinteger_object &co, 
+		int verbose_level);
 		// Computes the centralizer order of a matrix in GL(k,q) 
 		// according to Kung's formula~\cite{Kung81}.
-	void make_classes(gl_class_rep *&R, INT &nb_classes, 
-		INT f_no_eigenvalue_one, INT verbose_level);
-	void identify_matrix(INT *Mtx, gl_class_rep *R, INT *Basis, 
-		INT verbose_level);
-	void identify2(INT *Mtx, unipoly_object &poly, INT *Mult, 
-		INT *Select_partition, INT *Basis, INT verbose_level);
-	void compute_data_on_blocks(INT *Mtx, INT *Irreds, INT nb_irreds, 
-		INT *Degree, INT *Mult, matrix_block_data *Data,
-		INT verbose_level);
-	void compute_generalized_kernels(matrix_block_data *Data, INT *M2, 
-		INT d, INT b0, INT m, INT *poly_coeffs, INT verbose_level);
-	INT identify_partition(INT *part, INT m, INT verbose_level);
-	void choose_basis_for_rational_normal_form(INT *Mtx, 
-		matrix_block_data *Data, INT nb_irreds, 
-		INT *Basis, 
-		INT verbose_level);
-	void choose_basis_for_rational_normal_form_block(INT *Mtx, 
+	void make_classes(gl_class_rep *&R, int &nb_classes, 
+		int f_no_eigenvalue_one, int verbose_level);
+	void identify_matrix(int *Mtx, gl_class_rep *R, int *Basis, 
+		int verbose_level);
+	void identify2(int *Mtx, unipoly_object &poly, int *Mult, 
+		int *Select_partition, int *Basis, int verbose_level);
+	void compute_data_on_blocks(int *Mtx, int *Irreds, int nb_irreds, 
+		int *Degree, int *Mult, matrix_block_data *Data,
+		int verbose_level);
+	void compute_generalized_kernels(matrix_block_data *Data, int *M2, 
+		int d, int b0, int m, int *poly_coeffs, int verbose_level);
+	int identify_partition(int *part, int m, int verbose_level);
+	void choose_basis_for_rational_normal_form(int *Mtx, 
+		matrix_block_data *Data, int nb_irreds, 
+		int *Basis, 
+		int verbose_level);
+	void choose_basis_for_rational_normal_form_block(int *Mtx, 
 		matrix_block_data *Data, 
-		INT *Basis, INT &b, 
-		INT verbose_level);
-	void generators_for_centralizer(INT *Mtx, gl_class_rep *R, 
-		INT *Basis, INT **&Gens, INT &nb_gens, INT &nb_alloc, 
-		INT verbose_level);
-	void centralizer_generators(INT *Mtx, unipoly_object &poly, 
-		INT *Mult, INT *Select_partition, 
-		INT *Basis, INT **&Gens, INT &nb_gens, INT &nb_alloc,  
-		INT verbose_level);
-	void centralizer_generators_block(INT *Mtx, matrix_block_data *Data, 
-		INT nb_irreds, INT h, 
-		INT **&Gens, INT &nb_gens, INT &nb_alloc,  
-		INT verbose_level);
-	INT choose_basis_for_rational_normal_form_coset(INT level1, 
-		INT level2, INT &coset, 
-		INT *Mtx, matrix_block_data *Data, INT &b, INT *Basis, 
-		INT verbose_level);
-	void factor_polynomial(unipoly_object &char_poly, INT *Mult, 
-		INT verbose_level);
-	INT find_class_rep(gl_class_rep *Reps, INT nb_reps, 
-		gl_class_rep *R, INT verbose_level);
+		int *Basis, int &b, 
+		int verbose_level);
+	void generators_for_centralizer(int *Mtx, gl_class_rep *R, 
+		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc, 
+		int verbose_level);
+	void centralizer_generators(int *Mtx, unipoly_object &poly, 
+		int *Mult, int *Select_partition, 
+		int *Basis, int **&Gens, int &nb_gens, int &nb_alloc,  
+		int verbose_level);
+	void centralizer_generators_block(int *Mtx, matrix_block_data *Data, 
+		int nb_irreds, int h, 
+		int **&Gens, int &nb_gens, int &nb_alloc,  
+		int verbose_level);
+	int choose_basis_for_rational_normal_form_coset(int level1, 
+		int level2, int &coset, 
+		int *Mtx, matrix_block_data *Data, int &b, int *Basis, 
+		int verbose_level);
+	void factor_polynomial(unipoly_object &char_poly, int *Mult, 
+		int verbose_level);
+	int find_class_rep(gl_class_rep *Reps, int nb_reps, 
+		gl_class_rep *R, int verbose_level);
 
 };
 
@@ -876,43 +876,43 @@ public:
 
 class gl_class_rep {
 public:
-	INT_matrix type_coding;
+	int_matrix type_coding;
 	longinteger_object centralizer_order;
 	longinteger_object class_length;
 
 	gl_class_rep();
 	~gl_class_rep();
-	void init(INT nb_irred, INT *Select_polynomial, 
-		INT *Select_partition, INT verbose_level);
-	void compute_vector_coding(gl_classes *C, INT &nb_irred, 
-		INT *&Poly_degree, INT *&Poly_mult, INT *&Partition_idx, 
-		INT verbose_level);
+	void init(int nb_irred, int *Select_polynomial, 
+		int *Select_partition, int verbose_level);
+	void compute_vector_coding(gl_classes *C, int &nb_irred, 
+		int *&Poly_degree, int *&Poly_mult, int *&Partition_idx, 
+		int verbose_level);
 	void centralizer_order_Kung(gl_classes *C, longinteger_object &co, 
-		INT verbose_level);
+		int verbose_level);
 };
 
 //! auxiliary class for conjugacy classes in GL(n,q)
 
 class matrix_block_data {
 public:
-	INT d;
-	INT m;
-	INT *poly_coeffs;
-	INT b0;
-	INT b1;
+	int d;
+	int m;
+	int *poly_coeffs;
+	int b0;
+	int b1;
 	
-	INT_matrix *K;
-	INT cnt;
-	INT *dual_part;
-	INT *part;
-	INT height;
-	INT part_idx;
+	int_matrix *K;
+	int cnt;
+	int *dual_part;
+	int *part;
+	int height;
+	int part_idx;
 	
 	matrix_block_data();
 	~matrix_block_data();
 	void null();
 	void freeself();
-	void allocate(INT k);
+	void allocate(int k);
 };
 
 // #############################################################################
@@ -920,142 +920,142 @@ public:
 // #############################################################################
 
 
-void diagonal_orbit_perm(INT n, finite_field &GFq, 
-	INT *orbit, INT *orbit_inv, INT verbose_level);
-void frobenius_orbit_perm(INT n, finite_field &GFq, 
-	INT *orbit, INT *orbit_inv, INT verbose_level);
-void translation_in_AG(finite_field &GFq, INT n, INT i, 
-	INT a, INT *perm, INT *v, INT verbose_level);
+void diagonal_orbit_perm(int n, finite_field &GFq, 
+	int *orbit, int *orbit_inv, int verbose_level);
+void frobenius_orbit_perm(int n, finite_field &GFq, 
+	int *orbit, int *orbit_inv, int verbose_level);
+void translation_in_AG(finite_field &GFq, int n, int i, 
+	int a, int *perm, int *v, int verbose_level);
 	// v[n] needs to be allocated 
 	// p[q^n] needs to be allocated
-void frobenius_in_AG(finite_field &GFq, INT n, 
-	INT *perm, INT *v, INT verbose_level);
+void frobenius_in_AG(finite_field &GFq, int n, 
+	int *perm, int *v, int verbose_level);
 	// v[n] needs to be allocated 
 	// p[q^n] needs to be allocated
-void frobenius_in_PG(finite_field &GFq, INT n, 
-	INT *perm, INT *v, INT verbose_level);
+void frobenius_in_PG(finite_field &GFq, int n, 
+	int *perm, int *v, int verbose_level);
 	// v[n + 1] needs to be allocated 
 	// p[q^n+...+q+1] needs to be allocated
 void AG_representation_of_matrix(finite_field &GFq, 
-	INT n, INT f_from_the_right, 
-	INT *M, INT *v, INT *w, INT *perm, INT verbose_level);
+	int n, int f_from_the_right, 
+	int *M, int *v, int *w, int *perm, int verbose_level);
 	// perm[q^n] needs to be already allocated
 void AG_representation_one_dimensional(finite_field &GFq, 
-	INT a, INT *perm, INT verbose_level);
+	int a, int *perm, int verbose_level);
 	// perm[q] needs to be already allocated
-INT nb_generators_affine_translations(finite_field &GFq, INT n);
+int nb_generators_affine_translations(finite_field &GFq, int n);
 void generators_affine_translations(finite_field &GFq, 
-	INT n, INT *perms, INT verbose_level);
+	int n, int *perms, int verbose_level);
 	// primes[n * d] needs to be allocated, where d = q^n
 void generators_AGL1xAGL1_subdirect1(finite_field &GFq1, 
-	finite_field &GFq2, INT u, INT v, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
+	finite_field &GFq2, int u, int v, 
+	int &nb_perms, int *&perms, int verbose_level);
 void generators_AGL1q(finite_field &GFq, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
+	int &nb_perms, int *&perms, int verbose_level);
 void generators_AGL1q_subgroup(finite_field &GFq, 
-	INT index_in_multiplicative_group, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
+	int index_in_multiplicative_group, 
+	int &nb_perms, int *&perms, int verbose_level);
 void generators_AGL1_x_AGL1(finite_field &GFq1, 
-	finite_field &GFq2, INT &deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
+	finite_field &GFq2, int &deg, 
+	int &nb_perms, int *&perms, int verbose_level);
 void generators_AGL1_x_AGL1_extension(finite_field &GFq1, 
-	finite_field &GFq2, INT u, INT v, 
-	INT &deg, INT &nb_perms, INT *&perms, INT verbose_level);
+	finite_field &GFq2, int u, int v, 
+	int &deg, int &nb_perms, int *&perms, int verbose_level);
 void generators_AGL1_x_AGL1_extended_once(finite_field &F1, 
-	finite_field &F2, INT u, INT v, 
-	INT &deg, INT &nb_perms, INT *&perms, INT verbose_level);
+	finite_field &F2, int u, int v, 
+	int &deg, int &nb_perms, int *&perms, int verbose_level);
 void generators_AGL1_x_AGL1_extended_twice(finite_field &F1, 
-	finite_field &F2, INT u1, INT v1, 
-	INT u2, INT v2, INT &deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void generators_symmetric_group(INT deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void generators_cyclic_group(INT deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void generators_dihedral_group(INT deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void generators_dihedral_involution(INT deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void generators_identity_group(INT deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void order_Bn_group_factorized(INT n, 
-	INT *&factors, INT &nb_factors);
-void generators_Bn_group(INT n, INT &deg, 
-	INT &nb_perms, INT *&perms, INT verbose_level);
-void generators_direct_product(INT deg1, INT nb_perms1, INT *perms1, 
-	INT deg2, INT nb_perms2, INT *perms2, 
-	INT &deg3, INT &nb_perms3, INT *&perms3, 
-	INT verbose_levels);
-void generators_concatenate(INT deg1, INT nb_perms1, INT *perms1, 
-	INT deg2, INT nb_perms2, INT *perms2, 
-	INT &deg3, INT &nb_perms3, INT *&perms3, 
-	INT verbose_level);
+	finite_field &F2, int u1, int v1, 
+	int u2, int v2, int &deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void generators_symmetric_group(int deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void generators_cyclic_group(int deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void generators_dihedral_group(int deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void generators_dihedral_involution(int deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void generators_identity_group(int deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void order_Bn_group_factorized(int n, 
+	int *&factors, int &nb_factors);
+void generators_Bn_group(int n, int &deg, 
+	int &nb_perms, int *&perms, int verbose_level);
+void generators_direct_product(int deg1, int nb_perms1, int *perms1, 
+	int deg2, int nb_perms2, int *perms2, 
+	int &deg3, int &nb_perms3, int *&perms3, 
+	int verbose_levels);
+void generators_concatenate(int deg1, int nb_perms1, int *perms1, 
+	int deg2, int nb_perms2, int *perms2, 
+	int &deg3, int &nb_perms3, int *&perms3, 
+	int verbose_level);
 void O4_isomorphism_4to2(finite_field *F, 
-	INT *At, INT *As, INT &f_switch, INT *B, 
-	INT verbose_level);
+	int *At, int *As, int &f_switch, int *B, 
+	int verbose_level);
 void O4_isomorphism_2to4(finite_field *F, 
-	INT *At, INT *As, INT f_switch, INT *B);
+	int *At, int *As, int f_switch, int *B);
 void O4_grid_coordinates_rank(finite_field &F, 
-	INT x1, INT x2, INT x3, INT x4, 
-	INT &grid_x, INT &grid_y, INT verbose_level);
+	int x1, int x2, int x3, int x4, 
+	int &grid_x, int &grid_y, int verbose_level);
 void O4_grid_coordinates_unrank(finite_field &F, 
-	INT &x1, INT &x2, INT &x3, INT &x4, INT grid_x, 
-	INT grid_y, INT verbose_level);
+	int &x1, int &x2, int &x3, int &x4, int grid_x, 
+	int grid_y, int verbose_level);
 void O4_find_tangent_plane(finite_field &F, 
-	INT pt_x1, INT pt_x2, INT pt_x3, INT pt_x4, 
-	INT *tangent_plane, INT verbose_level);
-INT matrix_group_base_len_projective_group(INT n, INT q, 
-	INT f_semilinear, INT verbose_level);
-INT matrix_group_base_len_affine_group(INT n, INT q, 
-	INT f_semilinear, INT verbose_level);
-INT matrix_group_base_len_general_linear_group(INT n, INT q, 
-	INT f_semilinear, INT verbose_level);
-void projective_matrix_group_base_and_orbits(INT n, 
-	finite_field *F, INT f_semilinear, 
-	INT base_len, INT degree, 
-	INT *base, INT *transversal_length, 
-	INT **orbit, INT **orbit_inv, 
-	INT verbose_level);
-void projective_matrix_group_base_and_transversal_length(INT n,
-	finite_field *F, INT f_semilinear,
-	INT base_len, INT degree,
-	INT *base, INT *transversal_length,
-	INT verbose_level);
-void affine_matrix_group_base_and_transversal_length(INT n, 
-	finite_field *F, INT f_semilinear, 
-	INT base_len, INT degree, 
-	INT *base, INT *transversal_length, 
-	INT verbose_level);
-void general_linear_matrix_group_base_and_transversal_length(INT n, 
-	finite_field *F, INT f_semilinear, 
-	INT base_len, INT degree, 
-	INT *base, INT *transversal_length, 
-	INT verbose_level);
-void strong_generators_for_projective_linear_group(INT n, finite_field *F, 
-	INT f_semilinear, 
-	INT *&data, INT &size, INT &nb_gens, 
-	INT verbose_level);
-void strong_generators_for_affine_linear_group(INT n, finite_field *F, 
-	INT f_semilinear, 
-	INT *&data, INT &size, INT &nb_gens, 
-	INT verbose_level);
-void strong_generators_for_general_linear_group(INT n, finite_field *F, 
-	INT f_semilinear, 
-	INT *&data, INT &size, INT &nb_gens, 
-	INT verbose_level);
-void generators_for_parabolic_subgroup(INT n, finite_field *F, 
-	INT f_semilinear, INT k, 
-	INT *&data, INT &size, INT &nb_gens, 
-	INT verbose_level);
+	int pt_x1, int pt_x2, int pt_x3, int pt_x4, 
+	int *tangent_plane, int verbose_level);
+int matrix_group_base_len_projective_group(int n, int q, 
+	int f_semilinear, int verbose_level);
+int matrix_group_base_len_affine_group(int n, int q, 
+	int f_semilinear, int verbose_level);
+int matrix_group_base_len_general_linear_group(int n, int q, 
+	int f_semilinear, int verbose_level);
+void projective_matrix_group_base_and_orbits(int n, 
+	finite_field *F, int f_semilinear, 
+	int base_len, int degree, 
+	int *base, int *transversal_length, 
+	int **orbit, int **orbit_inv, 
+	int verbose_level);
+void projective_matrix_group_base_and_transversal_length(int n,
+	finite_field *F, int f_semilinear,
+	int base_len, int degree,
+	int *base, int *transversal_length,
+	int verbose_level);
+void affine_matrix_group_base_and_transversal_length(int n, 
+	finite_field *F, int f_semilinear, 
+	int base_len, int degree, 
+	int *base, int *transversal_length, 
+	int verbose_level);
+void general_linear_matrix_group_base_and_transversal_length(int n, 
+	finite_field *F, int f_semilinear, 
+	int base_len, int degree, 
+	int *base, int *transversal_length, 
+	int verbose_level);
+void strong_generators_for_projective_linear_group(int n, finite_field *F, 
+	int f_semilinear, 
+	int *&data, int &size, int &nb_gens, 
+	int verbose_level);
+void strong_generators_for_affine_linear_group(int n, finite_field *F, 
+	int f_semilinear, 
+	int *&data, int &size, int &nb_gens, 
+	int verbose_level);
+void strong_generators_for_general_linear_group(int n, finite_field *F, 
+	int f_semilinear, 
+	int *&data, int &size, int &nb_gens, 
+	int verbose_level);
+void generators_for_parabolic_subgroup(int n, finite_field *F, 
+	int f_semilinear, int k, 
+	int *&data, int &size, int &nb_gens, 
+	int verbose_level);
 void generators_for_stabilizer_of_three_collinear_points_in_PGL4(
 	finite_field *F, 
-	INT f_semilinear, 
-	INT *&data, INT &size, INT &nb_gens, 
-	INT verbose_level);
+	int f_semilinear, 
+	int *&data, int &size, int &nb_gens, 
+	int verbose_level);
 void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F, 
-	INT f_semilinear, 
-	INT *&data, INT &size, INT &nb_gens, 
-	INT verbose_level);
+	int f_semilinear, 
+	int *&data, int &size, int &nb_gens, 
+	int verbose_level);
 
 
 // #############################################################################
@@ -1068,31 +1068,31 @@ void generators_for_stabilizer_of_triangle_in_PGL4(finite_field *F,
 class heisenberg {
 
 public:
-	INT q;
+	int q;
 	finite_field *F;
-	INT n;
-	INT len; // 2 * n + 1
-	INT group_order; // q^len
+	int n;
+	int len; // 2 * n + 1
+	int group_order; // q^len
 
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
 
 	heisenberg();
 	~heisenberg();
 	void null();
 	void freeself();
-	void init(finite_field *F, INT n, INT verbose_level);
-	void unrank_element(INT *Elt, INT rk);
-	INT rank_element(INT *Elt);
-	void element_add(INT *Elt1, INT *Elt2, INT *Elt3, INT verbose_level);
-	void element_negate(INT *Elt1, INT *Elt2, INT verbose_level);
-	INT element_add_by_rank(INT rk_a, INT rk_b, INT verbose_level);
-	INT element_negate_by_rank(INT rk_a, INT verbose_level);
-	void group_table(INT *&Table, INT verbose_level);
-	void group_table_abv(INT *&Table_abv, INT verbose_level);
-	void generating_set(INT *&gens, INT &nb_gens, INT verbose_level);
+	void init(finite_field *F, int n, int verbose_level);
+	void unrank_element(int *Elt, int rk);
+	int rank_element(int *Elt);
+	void element_add(int *Elt1, int *Elt2, int *Elt3, int verbose_level);
+	void element_negate(int *Elt1, int *Elt2, int verbose_level);
+	int element_add_by_rank(int rk_a, int rk_b, int verbose_level);
+	int element_negate_by_rank(int rk_a, int verbose_level);
+	void group_table(int *&Table, int verbose_level);
+	void group_table_abv(int *&Table_abv, int verbose_level);
+	void generating_set(int *&gens, int &nb_gens, int verbose_level);
 
 
 };
@@ -1107,87 +1107,87 @@ public:
 class homogeneous_polynomial_domain {
 
 public:
-	INT q;
-	INT n; // number of variables
-	INT degree;
+	int q;
+	int n; // number of variables
+	int degree;
 	finite_field *F;
-	INT nb_monomials;
-	INT *Monomials; // [nb_monomials * n]
+	int nb_monomials;
+	int *Monomials; // [nb_monomials * n]
 	char **symbols;
 	char **symbols_latex;
-	INT *Variables; // [nb_monomials * degree]
+	int *Variables; // [nb_monomials * degree]
 		// Variables contains the monomials written out 
 		// as a sequence of length degree 
 		// with entries in 0,..,n-1.
 		// the entries are listed in increasing order.
 		// For instance, the monomial x_0^2x_1x_3 
 		// is recorded as 0,0,1,3
-	INT nb_affine; // n^degree
-	INT *Affine; // [nb_affine * degree]
+	int nb_affine; // n^degree
+	int *Affine; // [nb_affine * degree]
 		// the affine elements are used for foiling 
 		// when doing a linear substitution
-	INT *v; // [n]
-	INT *Affine_to_monomial; // [nb_affine]
+	int *v; // [n]
+	int *Affine_to_monomial; // [nb_affine]
 		// for each vector in the affine space, 
 		// record the monomial associated with it.
 	projective_space *P;
 
-	INT *coeff2; // [nb_monomials], used in substitute_linear
-	INT *coeff3; // [nb_monomials], used in substitute_linear
-	INT *coeff4; // [nb_monomials], used in substitute_linear
-	INT *factors; // [degree]
-	INT *my_affine; // [degree], used in substitute_linear
-	INT *base_cols; // [nb_monomials]
-	INT *type1; // [degree + 1]
-	INT *type2; // [degree + 1]
+	int *coeff2; // [nb_monomials], used in substitute_linear
+	int *coeff3; // [nb_monomials], used in substitute_linear
+	int *coeff4; // [nb_monomials], used in substitute_linear
+	int *factors; // [degree]
+	int *my_affine; // [degree], used in substitute_linear
+	int *base_cols; // [nb_monomials]
+	int *type1; // [degree + 1]
+	int *type2; // [degree + 1]
 
 	homogeneous_polynomial_domain();
 	~homogeneous_polynomial_domain();
 	void freeself();
 	void null();
-	void init(finite_field *F, INT nb_vars, INT degree, 
-		INT f_init_incidence_structure, INT verbose_level);
-	void make_monomials(INT verbose_level);
-	void rearrange_monomials_by_partition_type(INT verbose_level);
-	INT index_of_monomial(INT *v);
-	void print_monomial(ostream &ost, INT i);
-	void print_monomial(ostream &ost, INT *mon);
-	void print_monomial(char *str, INT i);
-	void print_equation(ostream &ost, INT *coeffs);
+	void init(finite_field *F, int nb_vars, int degree, 
+		int f_init_incidence_structure, int verbose_level);
+	void make_monomials(int verbose_level);
+	void rearrange_monomials_by_partition_type(int verbose_level);
+	int index_of_monomial(int *v);
+	void print_monomial(ostream &ost, int i);
+	void print_monomial(ostream &ost, int *mon);
+	void print_monomial(char *str, int i);
+	void print_equation(ostream &ost, int *coeffs);
 	void print_equation_with_line_breaks_tex(ostream &ost, 
-		INT *coeffs, INT nb_terms_per_line, 
+		int *coeffs, int nb_terms_per_line, 
 		const char *new_line_text);
-	void enumerate_points(INT *coeff, INT *Pts, INT &nb_pts, 
-		INT verbose_level);
-	INT evaluate_at_a_point_by_rank(INT *coeff, INT pt);
-	INT evaluate_at_a_point(INT *coeff, INT *pt_vec);
-	void substitute_linear(INT *coeff_in, INT *coeff_out, 
-		INT *Mtx_inv, INT verbose_level);
-	void substitute_semilinear(INT *coeff_in, INT *coeff_out, 
-		INT f_semilinear, INT frob_power, INT *Mtx_inv, 
-		INT verbose_level);
-	INT is_zero(INT *coeff);
-	void unrank_point(INT *v, INT rk);
-	INT rank_point(INT *v);
-	void unrank_coeff_vector(INT *v, INT rk);
-	INT rank_coeff_vector(INT *v);
-	INT test_weierstrass_form(INT rk, 
-		INT &a1, INT &a2, INT &a3, INT &a4, INT &a6, 
-		INT verbose_level);
-	void vanishing_ideal(INT *Pts, INT nb_pts, INT &r, INT *Kernel, 
-		INT verbose_level);
-	INT compare_monomials(INT *M1, INT *M2);
+	void enumerate_points(int *coeff, int *Pts, int &nb_pts, 
+		int verbose_level);
+	int evaluate_at_a_point_by_rank(int *coeff, int pt);
+	int evaluate_at_a_point(int *coeff, int *pt_vec);
+	void substitute_linear(int *coeff_in, int *coeff_out, 
+		int *Mtx_inv, int verbose_level);
+	void substitute_semilinear(int *coeff_in, int *coeff_out, 
+		int f_semilinear, int frob_power, int *Mtx_inv, 
+		int verbose_level);
+	int is_zero(int *coeff);
+	void unrank_point(int *v, int rk);
+	int rank_point(int *v);
+	void unrank_coeff_vector(int *v, int rk);
+	int rank_coeff_vector(int *v);
+	int test_weierstrass_form(int rk, 
+		int &a1, int &a2, int &a3, int &a4, int &a6, 
+		int verbose_level);
+	void vanishing_ideal(int *Pts, int nb_pts, int &r, int *Kernel, 
+		int verbose_level);
+	int compare_monomials(int *M1, int *M2);
 	void print_monomial_ordering(ostream &ost);
 
 
 };
 
-INT homogeneous_polynomial_domain_compare_monomial_with(void *data, 
-	INT i, INT *data2, void *extra_data);
-INT homogeneous_polynomial_domain_compare_monomial(void *data, 
-	INT i, INT j, void *extra_data);
+int homogeneous_polynomial_domain_compare_monomial_with(void *data, 
+	int i, int *data2, void *extra_data);
+int homogeneous_polynomial_domain_compare_monomial(void *data, 
+	int i, int j, void *extra_data);
 void homogeneous_polynomial_domain_swap_monomial(void *data, 
-	INT i, INT j, void *extra_data);
+	int i, int j, void *extra_data);
 
 
 
@@ -1200,8 +1200,8 @@ void homogeneous_polynomial_domain_swap_monomial(void *data,
 class longinteger_domain {
 
 public:
-	INT compare(longinteger_object &a, longinteger_object &b);
-	INT compare_unsigned(longinteger_object &a, longinteger_object &b);
+	int compare(longinteger_object &a, longinteger_object &b);
+	int compare_unsigned(longinteger_object &a, longinteger_object &b);
 		// returns -1 if a < b, 0 if a = b, 
 		// and 1 if a > b, treating a and b as unsigned.
 	void subtract_signless(longinteger_object &a, 
@@ -1217,100 +1217,100 @@ public:
 	void mult(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &c);
 	void mult_in_place(longinteger_object &a, longinteger_object &b);
-	void mult_integer_in_place(longinteger_object &a, INT b);
+	void mult_integer_in_place(longinteger_object &a, int b);
 	void mult_mod(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &c, 
-		longinteger_object &m, INT verbose_level);
-	void multiply_up(longinteger_object &a, INT *x, INT len);
-	INT quotient_as_INT(longinteger_object &a, longinteger_object &b);
+		longinteger_object &m, int verbose_level);
+	void multiply_up(longinteger_object &a, int *x, int len);
+	int quotient_as_int(longinteger_object &a, longinteger_object &b);
 	void integral_division_exact(longinteger_object &a, 
 		longinteger_object &b, longinteger_object &a_over_b);
 	void integral_division(
 		longinteger_object &a, longinteger_object &b, 
 		longinteger_object &q, longinteger_object &r, 
-		INT verbose_level);
-	void integral_division_by_INT(longinteger_object &a, 
-		INT b, longinteger_object &q, INT &r);
+		int verbose_level);
+	void integral_division_by_int(longinteger_object &a, 
+		int b, longinteger_object &q, int &r);
 	void extended_gcd(longinteger_object &a, longinteger_object &b, 
 		longinteger_object &g, longinteger_object &u, 
-		longinteger_object &v, INT verbose_level);
-	INT logarithm_base_b(longinteger_object &a, INT b);
+		longinteger_object &v, int verbose_level);
+	int logarithm_base_b(longinteger_object &a, int b);
 	void base_b_representation(longinteger_object &a, 
-		INT b, INT *&rep, INT &len);
-	void power_int(longinteger_object &a, INT n);
-	void power_int_mod(longinteger_object &a, INT n, 
+		int b, int *&rep, int &len);
+	void power_int(longinteger_object &a, int n);
+	void power_int_mod(longinteger_object &a, int n, 
 		longinteger_object &m);
 	void power_longint_mod(longinteger_object &a, 
 		longinteger_object &n, longinteger_object &m, 
-		INT verbose_level);
-	void create_qnm1(longinteger_object &a, INT q, INT n);
-	void binomial(longinteger_object &a, INT n, INT k, 
-		INT verbose_level);
+		int verbose_level);
+	void create_qnm1(longinteger_object &a, int q, int n);
+	void binomial(longinteger_object &a, int n, int k, 
+		int verbose_level);
 	void size_of_conjugacy_class_in_sym_n(longinteger_object &a, 
-		INT n, INT *part);
+		int n, int *part);
 	void q_binomial(longinteger_object &a, 
-		INT n, INT k, INT q, INT verbose_level);
+		int n, int k, int q, int verbose_level);
 	void q_binomial_no_table(longinteger_object &a, 
-		INT n, INT k, INT q, INT verbose_level);
-	void krawtchouk(longinteger_object &a, INT n, INT q, INT k, INT x);
-	INT is_even(longinteger_object &a);
-	INT is_odd(longinteger_object &a);
-	INT remainder_mod_INT(longinteger_object &a, INT p);
-	INT multiplicity_of_p(longinteger_object &a, 
-		longinteger_object &residue, INT p);
-	INT smallest_primedivisor(longinteger_object &a, INT p_min, 
-		INT verbose_level);
+		int n, int k, int q, int verbose_level);
+	void krawtchouk(longinteger_object &a, int n, int q, int k, int x);
+	int is_even(longinteger_object &a);
+	int is_odd(longinteger_object &a);
+	int remainder_mod_int(longinteger_object &a, int p);
+	int multiplicity_of_p(longinteger_object &a, 
+		longinteger_object &residue, int p);
+	int smallest_primedivisor(longinteger_object &a, int p_min, 
+		int verbose_level);
 	void factor_into_longintegers(longinteger_object &a, 
-		INT &nb_primes, longinteger_object *&primes, 
-		INT *&exponents, INT verbose_level);
-	void factor(longinteger_object &a, INT &nb_primes, 
-		INT *&primes, INT *&exponents, 
-		INT verbose_level);
-	INT jacobi(longinteger_object &a, longinteger_object &m, 
-		INT verbose_level);
+		int &nb_primes, longinteger_object *&primes, 
+		int *&exponents, int verbose_level);
+	void factor(longinteger_object &a, int &nb_primes, 
+		int *&primes, int *&exponents, 
+		int verbose_level);
+	int jacobi(longinteger_object &a, longinteger_object &m, 
+		int verbose_level);
 	void random_number_less_than_n(longinteger_object &n, 
 		longinteger_object &r);
 	void find_probable_prime_above(
 		longinteger_object &a, 
-		INT nb_solovay_strassen_tests, INT f_miller_rabin_test, 
-		INT verbose_level);
-	INT solovay_strassen_is_prime(
-		longinteger_object &n, INT nb_tests, INT verbose_level);
-	INT solovay_strassen_is_prime_single_test(
-		longinteger_object &n, INT verbose_level);
-	INT solovay_strassen_test(
+		int nb_solovay_strassen_tests, int f_miller_rabin_test, 
+		int verbose_level);
+	int solovay_strassen_is_prime(
+		longinteger_object &n, int nb_tests, int verbose_level);
+	int solovay_strassen_is_prime_single_test(
+		longinteger_object &n, int verbose_level);
+	int solovay_strassen_test(
 		longinteger_object &n, longinteger_object &a, 
-		INT verbose_level);
-	INT miller_rabin_test(
-		longinteger_object &n, INT verbose_level);
+		int verbose_level);
+	int miller_rabin_test(
+		longinteger_object &n, int verbose_level);
 	void get_k_bit_random_pseudoprime(
-		longinteger_object &n, INT k, 
-		INT nb_tests_solovay_strassen, 
-		INT f_miller_rabin_test, INT verbose_level);
+		longinteger_object &n, int k, 
+		int nb_tests_solovay_strassen, 
+		int f_miller_rabin_test, int verbose_level);
 	void RSA_setup(longinteger_object &n, 
 		longinteger_object &p, longinteger_object &q, 
 		longinteger_object &a, longinteger_object &b, 
-		INT nb_bits, 
-		INT nb_tests_solovay_strassen, INT f_miller_rabin_test, 
-		INT verbose_level);
+		int nb_bits, 
+		int nb_tests_solovay_strassen, int f_miller_rabin_test, 
+		int verbose_level);
 	void matrix_product(longinteger_object *A, longinteger_object *B, 
-		longinteger_object *&C, INT Am, INT An, INT Bn);
+		longinteger_object *&C, int Am, int An, int Bn);
 	void matrix_entries_integral_division_exact(longinteger_object *A, 
-		longinteger_object &b, INT Am, INT An);
+		longinteger_object &b, int Am, int An);
 	void matrix_print_GAP(ostream &ost, longinteger_object *A, 
-		INT Am, INT An);
+		int Am, int An);
 	void matrix_print_tex(ostream &ost, longinteger_object *A, 
-		INT Am, INT An);
+		int Am, int An);
 	void power_mod(char *aa, char *bb, char *nn, 
-		longinteger_object &result, INT verbose_level);
-	void factorial(longinteger_object &result, INT n);
+		longinteger_object &result, int verbose_level);
+	void factorial(longinteger_object &result, int n);
 	void group_order_PGL(longinteger_object &result, 
-		INT n, INT q, INT f_semilinear);
-	INT singleton_bound_for_d(INT n, INT k, INT q, INT verbose_level);
-	INT hamming_bound_for_d(INT n, INT k, INT q, INT verbose_level);
-	INT plotkin_bound_for_d(INT n, INT k, INT q, INT verbose_level);
-	INT griesmer_bound_for_d(INT n, INT k, INT q, INT verbose_level);
-	INT griesmer_bound_for_n(INT k, INT d, INT q, INT verbose_level);
+		int n, int q, int f_semilinear);
+	int singleton_bound_for_d(int n, int k, int q, int verbose_level);
+	int hamming_bound_for_d(int n, int k, int q, int verbose_level);
+	int plotkin_bound_for_d(int n, int k, int q, int verbose_level);
+	int griesmer_bound_for_d(int n, int k, int q, int verbose_level);
+	int griesmer_bound_for_n(int k, int d, int q, int verbose_level);
 };
 
 void test_longinteger();
@@ -1321,19 +1321,19 @@ void test_longinteger5();
 void test_longinteger6();
 void test_longinteger7();
 void test_longinteger8();
-void mac_williams_equations(longinteger_object *&M, INT n, INT k, INT q);
+void mac_williams_equations(longinteger_object *&M, int n, int k, int q);
 void determine_weight_enumerator();
-void longinteger_collect_setup(INT &nb_agos, 
-	longinteger_object *&agos, INT *&multiplicities);
-void longinteger_collect_free(INT &nb_agos, 
-	longinteger_object *&agos, INT *&multiplicities);
-void longinteger_collect_add(INT &nb_agos, 
-	longinteger_object *&agos, INT *&multiplicities, 
+void longinteger_collect_setup(int &nb_agos, 
+	longinteger_object *&agos, int *&multiplicities);
+void longinteger_collect_free(int &nb_agos, 
+	longinteger_object *&agos, int *&multiplicities);
+void longinteger_collect_add(int &nb_agos, 
+	longinteger_object *&agos, int *&multiplicities, 
 	longinteger_object &ago);
-void longinteger_collect_print(ostream &ost, INT &nb_agos, 
-	longinteger_object *&agos, INT *&multiplicities);
+void longinteger_collect_print(ostream &ost, int &nb_agos, 
+	longinteger_object *&agos, int *&multiplicities);
 void longinteger_free_global_data();
-void longinteger_print_digits(char *rep, INT len);
+void longinteger_print_digits(char *rep, int len);
 
 
 
@@ -1345,17 +1345,17 @@ void longinteger_print_digits(char *rep, INT len);
 
 class norm_tables {
 public:
-	INT *norm_table;
-	INT *norm_table_sorted;
-	INT *sorting_perm, *sorting_perm_inv;
-	INT nb_types;
-	INT *type_first, *type_len;
-	INT *the_type;
+	int *norm_table;
+	int *norm_table_sorted;
+	int *sorting_perm, *sorting_perm_inv;
+	int nb_types;
+	int *type_first, *type_len;
+	int *the_type;
 
 	norm_tables();
 	~norm_tables();
-	void init(unusual_model &U, INT verbose_level);
-	INT choose_an_element_of_given_norm(INT norm, INT verbose_level);
+	void init(unusual_model &U, int verbose_level);
+	int choose_an_element_of_given_norm(int norm, int verbose_level);
 	
 };
 
@@ -1370,35 +1370,35 @@ class null_polarity_generator {
 public:
 
 	finite_field *F; // no ownership, do not destroy
-	INT n, q;
-	INT qn; // = q^n
+	int n, q;
+	int qn; // = q^n
 
-	INT *nb_candidates; // [n + 1]
-	INT *cur_candidate; // [n]
-	INT **candidates; // [n + 1][q^n]
+	int *nb_candidates; // [n + 1]
+	int *cur_candidate; // [n]
+	int **candidates; // [n + 1][q^n]
 	
-	INT *Mtx; // [n * n]
-	INT *v; // [n]
-	INT *w; // [n]
-	INT *Points; // [qn * n]
+	int *Mtx; // [n * n]
+	int *v; // [n]
+	int *w; // [n]
+	int *Points; // [qn * n]
 
-	INT nb_gens;
-	INT *Data;
-	INT *transversal_length;
+	int nb_gens;
+	int *Data;
+	int *transversal_length;
 
 	null_polarity_generator();
 	~null_polarity_generator();
 	void null();
 	void freeself();
-	void init(finite_field *F, INT n, INT verbose_level);
-	INT count_strong_generators(INT &nb, INT *transversal_length, 
-		INT &first_moved, INT depth, INT verbose_level);
-	INT get_strong_generators(INT *Data, INT &nb, INT &first_moved, 
-		INT depth, INT verbose_level);
-	void backtrack_search(INT &nb_sol, INT depth, INT verbose_level);
-	void create_first_candidate_set(INT verbose_level);
-	void create_next_candidate_set(INT level, INT verbose_level);
-	INT dot_product(INT *u1, INT *u2);
+	void init(finite_field *F, int n, int verbose_level);
+	int count_strong_generators(int &nb, int *transversal_length, 
+		int &first_moved, int depth, int verbose_level);
+	int get_strong_generators(int *Data, int &nb, int &first_moved, 
+		int depth, int verbose_level);
+	void backtrack_search(int &nb_sol, int depth, int verbose_level);
+	void create_first_candidate_set(int verbose_level);
+	void create_next_candidate_set(int level, int verbose_level);
+	int dot_product(int *u1, int *u2);
 };
 
 // #############################################################################
@@ -1406,47 +1406,47 @@ public:
 // #############################################################################
 
 
-INT power_mod(INT a, INT n, INT p);
-INT inverse_mod(INT a, INT p);
-INT mult_mod(INT a, INT b, INT p);
-INT add_mod(INT a, INT b, INT p);
-INT INT_abs(INT a);
-INT irem(INT a, INT m);
-INT gcd_INT(INT m, INT n);
-void extended_gcd_INT(INT m, INT n, INT &g, INT &u, INT &v);
-INT i_power_j(INT i, INT j);
-INT order_mod_p(INT a, INT p);
-INT INT_log2(INT n);
-INT INT_log10(INT n);
-INT INT_logq(INT n, INT q);
+int power_mod(int a, int n, int p);
+int inverse_mod(int a, int p);
+int mult_mod(int a, int b, int p);
+int add_mod(int a, int b, int p);
+int int_abs(int a);
+int irem(int a, int m);
+int gcd_int(int m, int n);
+void extended_gcd_int(int m, int n, int &g, int &u, int &v);
+int i_power_j(int i, int j);
+int order_mod_p(int a, int p);
+int int_log2(int n);
+int int_log10(int n);
+int int_logq(int n, int q);
 // returns the number of digits in base q representation
-INT is_strict_prime_power(INT q);
+int is_strict_prime_power(int q);
 // assuming that q is a prime power, this fuction tests 
 // whether or not q is a strict prime power
-INT is_prime(INT p);
-INT is_prime_power(INT q);
-INT is_prime_power(INT q, INT &p, INT &h);
-INT smallest_primedivisor(INT n);
+int is_prime(int p);
+int is_prime_power(int q);
+int is_prime_power(int q, int &p, int &h);
+int smallest_primedivisor(int n);
 //Computes the smallest prime dividing $n$. 
 //The algorithm is based on Lueneburg~\cite{Lueneburg87a}.
-INT sp_ge(INT n, INT p_min);
-INT factor_INT(INT a, INT *&primes, INT *&exponents);
-void factor_prime_power(INT q, INT &p, INT &e);
-INT primitive_root(INT p, INT verbose_level);
-INT Legendre(INT a, INT p, INT verbose_level);
-INT Jacobi(INT a, INT m, INT verbose_level);
-INT Jacobi_with_key_in_latex(ostream &ost, INT a, INT m, INT verbose_level);
-INT ny2(INT x, INT &x1);
-INT ny_p(INT n, INT p);
-INT sqrt_mod_simple(INT a, INT p);
-void print_factorization(INT nb_primes, INT *primes, INT *exponents);
-void print_longfactorization(INT nb_primes, 
-	longinteger_object *primes, INT *exponents);
-INT euler_function(INT n);
-void INT_add_fractions(INT at, INT ab, INT bt, INT bb, 
-	INT &ct, INT &cb, INT verbose_level);
-void INT_mult_fractions(INT at, INT ab, INT bt, INT bb, 
-	INT &ct, INT &cb, INT verbose_level);
+int sp_ge(int n, int p_min);
+int factor_int(int a, int *&primes, int *&exponents);
+void factor_prime_power(int q, int &p, int &e);
+int primitive_root(int p, int verbose_level);
+int Legendre(int a, int p, int verbose_level);
+int Jacobi(int a, int m, int verbose_level);
+int Jacobi_with_key_in_latex(ostream &ost, int a, int m, int verbose_level);
+int ny2(int x, int &x1);
+int ny_p(int n, int p);
+int sqrt_mod_simple(int a, int p);
+void print_factorization(int nb_primes, int *primes, int *exponents);
+void print_longfactorization(int nb_primes, 
+	longinteger_object *primes, int *exponents);
+int euler_function(int n);
+void int_add_fractions(int at, int ab, int bt, int bb, 
+	int &ct, int &cb, int verbose_level);
+void int_mult_fractions(int at, int ab, int bt, int bb, 
+	int &ct, int &cb, int verbose_level);
 
 
 // #############################################################################
@@ -1461,23 +1461,23 @@ class rank_checker {
 
 public:
 	finite_field *GFq;
-	INT m, n, d;
+	int m, n, d;
 	
-	INT *M1; // [m * n]
-	INT *M2; // [m * n]
-	INT *base_cols; // [n]
-	INT *set; // [n] used in check_mindist
+	int *M1; // [m * n]
+	int *M2; // [m * n]
+	int *base_cols; // [n]
+	int *set; // [n] used in check_mindist
 
 	rank_checker();
 	~rank_checker();
-	void init(finite_field *GFq, INT m, INT n, INT d);
-	INT check_rank(INT len, INT *S, INT verbose_level);
-	INT check_rank_matrix_input(INT len, INT *S, INT dim_S, 
-		INT verbose_level);
-	INT check_rank_last_two_are_fixed(INT len, INT *S, INT verbose_level);
-	INT compute_rank(INT len, INT *S, INT f_projective, INT verbose_level);
-	INT compute_rank_row_vectors(INT len, INT *S, INT f_projective, 
-		INT verbose_level);
+	void init(finite_field *GFq, int m, int n, int d);
+	int check_rank(int len, int *S, int verbose_level);
+	int check_rank_matrix_input(int len, int *S, int dim_S, 
+		int verbose_level);
+	int check_rank_last_two_are_fixed(int len, int *S, int verbose_level);
+	int compute_rank(int len, int *S, int f_projective, int verbose_level);
+	int compute_rank_row_vectors(int len, int *S, int f_projective, 
+		int verbose_level);
 };
 
 // #############################################################################
@@ -1491,47 +1491,47 @@ public:
 
 	finite_field *FQ;
 	finite_field *Fq;
-	INT Q;
-	INT q;
-	INT s; // subfield index: q^s = Q
-	INT *Basis;
+	int Q;
+	int q;
+	int s; // subfield index: q^s = Q
+	int *Basis;
 		// [s], entries are elements in FQ
 
-	INT *embedding; 
+	int *embedding; 
 		// [Q], entries are elements in FQ, 
 		// indexed by elements in AG(s,q)
-	INT *embedding_inv;
+	int *embedding_inv;
 		// [Q], entries are ranks of elements in AG(s,q), 
 		// indexed by elements in FQ
 		// the inverse of embedding
 
-	INT *components;
+	int *components;
 		// [Q * s], entries are elements in Fq
 		// the vectors corresponding to the AG(s,q) 
 		// ranks in embedding_inv[]
 
-	INT *FQ_embedding; 
+	int *FQ_embedding; 
 		// [q] entries are elements in FQ corresponding to 
 		// the elements in Fq
-	INT *Fq_element;
+	int *Fq_element;
 		// [Q], entries are the elements in Fq 
 		// corresponding to a given FQ element
 		// or -1 if the FQ element does not belong to Fq.
-	INT *v; // [s]
+	int *v; // [s]
 	
 	subfield_structure();
 	~subfield_structure();
 	void null();
 	void freeself();
-	void init(finite_field *FQ, finite_field *Fq, INT verbose_level);
+	void init(finite_field *FQ, finite_field *Fq, int verbose_level);
 	void init_with_given_basis(finite_field *FQ, finite_field *Fq, 
-		INT *given_basis, INT verbose_level);
+		int *given_basis, int verbose_level);
 	void print_embedding();
-	INT evaluate_over_FQ(INT *v);
-	INT evaluate_over_Fq(INT *v);
-	void lift_matrix(INT *MQ, INT m, INT *Mq, INT verbose_level);
-	void retract_matrix(INT *Mq, INT n, INT *MQ, INT m, 
-		INT verbose_level);
+	int evaluate_over_FQ(int *v);
+	int evaluate_over_Fq(int *v);
+	void lift_matrix(int *MQ, int m, int *Mq, int verbose_level);
+	void retract_matrix(int *Mq, int n, int *MQ, int m, 
+		int verbose_level);
 
 };
 
@@ -1544,85 +1544,85 @@ public:
 class unipoly_domain {
 public:
 	finite_field *gfq;
-	INT f_factorring;
-	INT factor_degree;
-	INT *factor_coeffs;
+	int f_factorring;
+	int factor_degree;
+	int *factor_coeffs;
 	unipoly_object factor_poly;
 
 	unipoly_domain(finite_field *GFq);
 	unipoly_domain(finite_field *GFq, unipoly_object m);
 	~unipoly_domain();
-	INT &s_i(unipoly_object p, INT i)
-		{ INT *rep = (INT *) p; return rep[i + 1]; };
-	void create_object_of_degree(unipoly_object &p, INT d);
+	int &s_i(unipoly_object p, int i)
+		{ int *rep = (int *) p; return rep[i + 1]; };
+	void create_object_of_degree(unipoly_object &p, int d);
 	void create_object_of_degree_with_coefficients(unipoly_object &p, 
-		INT d, INT *coeff);
-	void create_object_by_rank(unipoly_object &p, INT rk);
+		int d, int *coeff);
+	void create_object_by_rank(unipoly_object &p, int rk);
 	void create_object_by_rank_longinteger(unipoly_object &p, 
-		longinteger_object &rank, INT verbose_level);
+		longinteger_object &rank, int verbose_level);
 	void create_object_by_rank_string(unipoly_object &p, 
-		const char *rk, INT verbose_level);
-	void create_Dickson_polynomial(unipoly_object &p, INT *map);
+		const char *rk, int verbose_level);
+	void create_Dickson_polynomial(unipoly_object &p, int *map);
 	void delete_object(unipoly_object &p);
-	void unrank(unipoly_object p, INT rk);
+	void unrank(unipoly_object p, int rk);
 	void unrank_longinteger(unipoly_object p, longinteger_object &rank);
-	INT rank(unipoly_object p);
+	int rank(unipoly_object p);
 	void rank_longinteger(unipoly_object p, longinteger_object &rank);
-	INT degree(unipoly_object p);
+	int degree(unipoly_object p);
 	ostream& print_object(unipoly_object p, ostream& ost);
 	void assign(unipoly_object a, unipoly_object &b);
 	void one(unipoly_object p);
 	void m_one(unipoly_object p);
 	void zero(unipoly_object p);
-	INT is_one(unipoly_object p);
-	INT is_zero(unipoly_object p);
+	int is_one(unipoly_object p);
+	int is_zero(unipoly_object p);
 	void negate(unipoly_object a);
 	void make_monic(unipoly_object &a);
 	void add(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult_easy(unipoly_object a, unipoly_object b, unipoly_object &c);
 	void mult_mod(unipoly_object a, unipoly_object b, unipoly_object &c, 
-		INT factor_polynomial_degree, 
-		INT *factor_polynomial_coefficents_negated, 
-		INT verbose_level);
-	void Frobenius_matrix(INT *&Frob, unipoly_object factor_polynomial, 
-		INT verbose_level);
-	void Berlekamp_matrix(INT *&B, unipoly_object factor_polynomial, 
-		INT verbose_level);
+		int factor_polynomial_degree, 
+		int *factor_polynomial_coefficents_negated, 
+		int verbose_level);
+	void Frobenius_matrix(int *&Frob, unipoly_object factor_polynomial, 
+		int verbose_level);
+	void Berlekamp_matrix(int *&B, unipoly_object factor_polynomial, 
+		int verbose_level);
 	void integral_division_exact(unipoly_object a, 
-		unipoly_object b, unipoly_object &q, INT verbose_level);
+		unipoly_object b, unipoly_object &q, int verbose_level);
 	void integral_division(unipoly_object a, unipoly_object b, 
-		unipoly_object &q, unipoly_object &r, INT verbose_level);
+		unipoly_object &q, unipoly_object &r, int verbose_level);
 	void derive(unipoly_object a, unipoly_object &b);
-	INT compare_euclidean(unipoly_object m, unipoly_object n);
+	int compare_euclidean(unipoly_object m, unipoly_object n);
 	void greatest_common_divisor(unipoly_object m, unipoly_object n, 
-		unipoly_object &g, INT verbose_level);
+		unipoly_object &g, int verbose_level);
 	void extended_gcd(unipoly_object m, unipoly_object n, 
 		unipoly_object &u, unipoly_object &v, 
-		unipoly_object &g, INT verbose_level);
-	INT is_squarefree(unipoly_object p, INT verbose_level);
-	void compute_normal_basis(INT d, INT *Normal_basis, 
-		INT *Frobenius, INT verbose_level);
-	void order_ideal_generator(INT d, INT idx, unipoly_object &mue, 
-		INT *A, INT *Frobenius, 
-		INT verbose_level);
+		unipoly_object &g, int verbose_level);
+	int is_squarefree(unipoly_object p, int verbose_level);
+	void compute_normal_basis(int d, int *Normal_basis, 
+		int *Frobenius, int verbose_level);
+	void order_ideal_generator(int d, int idx, unipoly_object &mue, 
+		int *A, int *Frobenius, 
+		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a} p. 105.
 		// Frobenius is a matrix of size d x d
 		// A is a matrix of size (d + 1) x d
-	void matrix_apply(unipoly_object &p, INT *Mtx, INT n, 
-		INT verbose_level);
+	void matrix_apply(unipoly_object &p, int *Mtx, int n, 
+		int verbose_level);
 		// The matrix is applied on the left
 	void substitute_matrix_in_polynomial(unipoly_object &p, 
-		INT *Mtx_in, INT *Mtx_out, INT k, INT verbose_level);
+		int *Mtx_in, int *Mtx_out, int k, int verbose_level);
 		// The matrix is substituted into the polynomial
-	INT substitute_scalar_in_polynomial(unipoly_object &p, 
-		INT scalar, INT verbose_level);
+	int substitute_scalar_in_polynomial(unipoly_object &p, 
+		int scalar, int verbose_level);
 		// The scalar 'scalar' is substituted into the polynomial
-	void module_structure_apply(INT *v, INT *Mtx, INT n, 
-		unipoly_object p, INT verbose_level);
+	void module_structure_apply(int *v, int *Mtx, int n, 
+		unipoly_object p, int verbose_level);
 	void take_away_all_factors_from_b(unipoly_object a, 
 		unipoly_object b, unipoly_object &a_without_b, 
-		INT verbose_level);
+		int verbose_level);
 		// Computes the polynomial $r$ with
 		//\begin{enumerate}
 		//\item
@@ -1633,48 +1633,48 @@ public:
 		//each irreducible polynomial dividing $a/r$ divides $b$.
 		//Lueneburg~\cite{Lueneburg87a}, p. 37.
 		//\end{enumerate}
-	INT is_irreducible(unipoly_object a, INT verbose_level);
+	int is_irreducible(unipoly_object a, int verbose_level);
 	void singer_candidate(unipoly_object &m, 
-		INT p, INT d, INT b, INT a);
-	INT is_primitive(unipoly_object &m, 
+		int p, int d, int b, int a);
+	int is_primitive(unipoly_object &m, 
 		longinteger_object &qm1, 
-		INT nb_primes, longinteger_object *primes, 
-		INT verbose_level);
+		int nb_primes, longinteger_object *primes, 
+		int verbose_level);
 	void get_a_primitive_polynomial(unipoly_object &m, 
-		INT f, INT verbose_level);
+		int f, int verbose_level);
 	void get_an_irreducible_polynomial(unipoly_object &m, 
-		INT f, INT verbose_level);
-	void power_INT(unipoly_object &a, INT n, INT verbose_level);
+		int f, int verbose_level);
+	void power_int(unipoly_object &a, int n, int verbose_level);
 	void power_longinteger(unipoly_object &a, longinteger_object &n);
-	void power_coefficients(unipoly_object &a, INT n);
+	void power_coefficients(unipoly_object &a, int n);
 	void minimum_polynomial(unipoly_object &a, 
-		INT alpha, INT p, INT verbose_level);
-	INT minimum_polynomial_factorring(INT alpha, INT p, 
-		INT verbose_level);
+		int alpha, int p, int verbose_level);
+	int minimum_polynomial_factorring(int alpha, int p, 
+		int verbose_level);
 	void minimum_polynomial_factorring_longinteger(
 		longinteger_object &alpha, 
 		longinteger_object &rk_minpoly, 
-		INT p, INT verbose_level);
-	void BCH_generator_polynomial(unipoly_object &g, INT n, 
-		INT designed_distance, INT &bose_distance, 
-		INT &transversal_length, INT *&transversal, 
+		int p, int verbose_level);
+	void BCH_generator_polynomial(unipoly_object &g, int n, 
+		int designed_distance, int &bose_distance, 
+		int &transversal_length, int *&transversal, 
 		longinteger_object *&rank_of_irreducibles, 
-		INT verbose_level);
-	void compute_generator_matrix(unipoly_object a, INT *&genma, 
-		INT n, INT &k, INT verbose_level);
-	void print_vector_of_polynomials(unipoly_object *sigma, INT deg);
+		int verbose_level);
+	void compute_generator_matrix(unipoly_object a, int *&genma, 
+		int n, int &k, int verbose_level);
+	void print_vector_of_polynomials(unipoly_object *sigma, int deg);
 	void minimum_polynomial_extension_field(unipoly_object &g, 
 		unipoly_object m, 
-		unipoly_object &minpol, INT d, INT *Frobenius, 
-		INT verbose_level);
+		unipoly_object &minpol, int d, int *Frobenius, 
+		int verbose_level);
 		// Lueneburg~\cite{Lueneburg87a}, p. 112.
-	void characteristic_polynomial(INT *Mtx, INT k, 
-		unipoly_object &char_poly, INT verbose_level);
-	void print_matrix(unipoly_object *M, INT k);
-	void determinant(unipoly_object *M, INT k, unipoly_object &p, 
-		INT verbose_level);
-	void deletion_matrix(unipoly_object *M, INT k, INT delete_row, 
-		INT delete_column, unipoly_object *&N, INT verbose_level);
+	void characteristic_polynomial(int *Mtx, int k, 
+		unipoly_object &char_poly, int verbose_level);
+	void print_matrix(unipoly_object *M, int k);
+	void determinant(unipoly_object *M, int k, unipoly_object &p, 
+		int verbose_level);
+	void deletion_matrix(unipoly_object *M, int k, int delete_row, 
+		int delete_column, unipoly_object *&N, int verbose_level);
 
 };
 

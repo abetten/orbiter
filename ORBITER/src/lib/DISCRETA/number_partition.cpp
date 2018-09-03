@@ -17,7 +17,7 @@ number_partition::number_partition() : Vector()
 	self.vector_pointer = NULL;
 }
 
-number_partition::number_partition(INT n) : Vector()
+number_partition::number_partition(int n) : Vector()
 {
 	k = NUMBER_PARTITION;
 	self.vector_pointer = NULL;
@@ -91,7 +91,7 @@ void number_partition::copyobject_to(discreta_base &x)
 
 ostream& number_partition::print(ostream& ost)
 {
-	INT i, l, a;
+	int i, l, a;
 	
 	l = s_self().s_l();
 	if (s_type() == PARTITION_TYPE_VECTOR) {
@@ -106,7 +106,7 @@ ostream& number_partition::print(ostream& ost)
 		}
 	else {
 		ost << "(";
-		INT f_first = TRUE;
+		int f_first = TRUE;
 		for (i = 0; i < l; i++) {
 			a = s_i(i);
 			if (a == 0)
@@ -129,7 +129,7 @@ ostream& number_partition::print(ostream& ost)
 	return ost;
 }
 
-void number_partition::first(INT n)
+void number_partition::first(int n)
 {
 	// cout << "number_partition::first()\n";
 	allocate_number_partition();
@@ -138,7 +138,7 @@ void number_partition::first(INT n)
 	s_i(n - 1) = 1;
 }
 
-INT number_partition::next()
+int number_partition::next()
 {
 	// cout << "number_partition::next()\n";
 	if (s_type() == PARTITION_TYPE_EXPONENT)
@@ -147,9 +147,9 @@ INT number_partition::next()
 		return next_vector();
 }
 
-INT number_partition::next_exponent()
+int number_partition::next_exponent()
 {
-	INT i, j, n, a, s;
+	int i, j, n, a, s;
 	// cout << "number_partition::next_exponent()\n";
 	n = s_self().s_l();
 	s = s_i(0);
@@ -170,15 +170,15 @@ INT number_partition::next_exponent()
 	return FALSE;
 }
 
-INT number_partition::next_vector()
+int number_partition::next_vector()
 {
 	// cout << "number_partition::next_vector()\n";
 	return FALSE;
 }
 
-INT number_partition::first_into_k_parts(INT n, INT k)
+int number_partition::first_into_k_parts(int n, int k)
 {
-	INT s;
+	int s;
 	
 	first(n);
 	do {
@@ -189,9 +189,9 @@ INT number_partition::first_into_k_parts(INT n, INT k)
 	return FALSE;
 }
 
-INT number_partition::next_into_k_parts(INT n, INT k)
+int number_partition::next_into_k_parts(int n, int k)
 {
-	INT s;
+	int s;
 	
 	while (next()) {
 		s = nb_parts();
@@ -201,9 +201,9 @@ INT number_partition::next_into_k_parts(INT n, INT k)
 	return FALSE;
 }
 
-INT number_partition::first_into_at_most_k_parts(INT n, INT k)
+int number_partition::first_into_at_most_k_parts(int n, int k)
 {
-	INT s;
+	int s;
 	
 	first(n);
 	do {
@@ -214,9 +214,9 @@ INT number_partition::first_into_at_most_k_parts(INT n, INT k)
 	return FALSE;
 }
 
-INT number_partition::next_into_at_most_k_parts(INT n, INT k)
+int number_partition::next_into_at_most_k_parts(int n, int k)
 {
-	INT s;
+	int s;
 	
 	while (next()) {
 		s = nb_parts();
@@ -226,9 +226,9 @@ INT number_partition::next_into_at_most_k_parts(INT n, INT k)
 	return FALSE;
 }
 
-INT number_partition::nb_parts()
+int number_partition::nb_parts()
 {
-	INT i, n, s = 0;
+	int i, n, s = 0;
 	
 	n = s_l();
 	for (i = 0; i < n; i++) {
@@ -241,7 +241,7 @@ INT number_partition::nb_parts()
 void number_partition::conjugate()
 {
 	Vector q;
-	INT i, ii = 0, n, s, a;
+	int i, ii = 0, n, s, a;
 	
 	n = s_l();
 	q.m_l_n(n);
@@ -261,7 +261,7 @@ void number_partition::conjugate()
 
 void number_partition::type(number_partition &q)
 {
-	INT s, i, n, a;
+	int s, i, n, a;
 	
 	s = nb_parts();
 	q.allocate_number_partition();
@@ -274,10 +274,10 @@ void number_partition::type(number_partition &q)
 		}
 }
 
-void number_partition::multinomial(discreta_base &res, INT f_v)
+void number_partition::multinomial(discreta_base &res, int f_v)
 {
 	discreta_base a, b, c;
-	INT i, n, m;
+	int i, n, m;
 	
 	n = s_l();
 	a.factorial(n);
@@ -301,7 +301,7 @@ void number_partition::multinomial(discreta_base &res, INT f_v)
 		}
 }
 
-void number_partition::multinomial_ordered(discreta_base &res, INT f_v)
+void number_partition::multinomial_ordered(discreta_base &res, int f_v)
 {
 	number_partition q;
 	discreta_base a;
@@ -316,9 +316,9 @@ void number_partition::multinomial_ordered(discreta_base &res, INT f_v)
 		}
 }
 
-INT number_partition::sum_of_decreased_parts()
+int number_partition::sum_of_decreased_parts()
 {
-	INT i, n, s;
+	int i, n, s;
 	
 	s = 0;
 	if (s_type() != PARTITION_TYPE_EXPONENT) {
@@ -332,9 +332,9 @@ INT number_partition::sum_of_decreased_parts()
 	return s;
 }
 
-INT first_passport(Vector &pass, INT n, INT k)
+int first_passport(Vector &pass, int n, int k)
 {
-	INT i, S;
+	int i, S;
 	
 	pass.m_l(k);
 	for (i = 0; i < k; i++) {
@@ -368,9 +368,9 @@ INT first_passport(Vector &pass, INT n, INT k)
 		}
 }
 
-INT next_passport(Vector &pass, INT n, INT k)
+int next_passport(Vector &pass, int n, int k)
 {
-	INT i, S = n - 1;
+	int i, S = n - 1;
 	
 	i = k - 1;
 	while (TRUE) {
@@ -396,9 +396,9 @@ INT next_passport(Vector &pass, INT n, INT k)
 		}
 }
 
-INT first_passport_i(Vector &pass, INT n, INT k, INT i, INT & S)
+int first_passport_i(Vector &pass, int n, int k, int i, int & S)
 {
-	INT s;
+	int s;
 	
 	pass.s_i(i).as_number_partition().first(n);
 	while (TRUE) {
@@ -421,9 +421,9 @@ INT first_passport_i(Vector &pass, INT n, INT k, INT i, INT & S)
 		}
 }
 
-INT next_passport_i(Vector &pass, INT n, INT k, INT i, INT & S)
+int next_passport_i(Vector &pass, int n, int k, int i, int & S)
 {
-	INT s;
+	int s;
 	
 	s = pass.s_i(i).as_number_partition().sum_of_decreased_parts();
 	S -= s;

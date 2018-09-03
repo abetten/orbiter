@@ -11,18 +11,18 @@
 #include "orbiter.h"
 
 
-void create_factor_group(action *A, sims *S, INT goi, 
-	INT size_subgroup, INT *subgroup, factor_group *F,
-	INT verbose_level)
+void create_factor_group(action *A, sims *S, int goi, 
+	int size_subgroup, int *subgroup, factor_group *F,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt1;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int *Elt1;
+	int i;
 	
 	if (f_v) {
 		cout << "create_factor_group" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	
 	F->goi = goi;
 	F->A = A;
@@ -30,7 +30,7 @@ void create_factor_group(action *A, sims *S, INT goi,
 	F->size_subgroup = size_subgroup;
 	F->subgroup = subgroup;
 	
-	F->all_cosets = NEW_INT(goi);
+	F->all_cosets = NEW_int(goi);
 	
 	
 	if (f_v) {
@@ -38,7 +38,7 @@ void create_factor_group(action *A, sims *S, INT goi,
 		cout << "the subgroup is:" << endl;
 		for (i = 0; i < size_subgroup; i++) {
 			cout << i << " element has rank " << subgroup[i] << endl;
-			S->element_unrank_INT(subgroup[i], Elt1);
+			S->element_unrank_int(subgroup[i], Elt1);
 			A->print(cout, Elt1);
 			//A->print_as_permutation(cout, Elt1);
 			cout << endl;
@@ -94,11 +94,11 @@ void create_factor_group(action *A, sims *S, INT goi,
 
 
 #if 0
-	//INT goi_factor_group;
+	//int goi_factor_group;
 	longinteger_object go;
 	
 	F->FactorGroup->Sims->group_order(go);
-	F->goi_factor_group = go.as_INT();
+	F->goi_factor_group = go.as_int();
 	if (f_v) {
 		cout << "create_factor_group: goi_factor_group = "
 				<< F->goi_factor_group << ":" << endl;
@@ -129,6 +129,6 @@ void create_factor_group(action *A, sims *S, INT goi,
 #endif
 
 
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 }
 

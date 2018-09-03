@@ -28,10 +28,10 @@ void action_on_flags::free()
 	null();
 }
 
-void action_on_flags::init(action *A, INT *type,
-		INT type_len, INT verbose_level)
+void action_on_flags::init(action *A, int *type,
+		int type_len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_on_flags::init" << endl;
@@ -65,17 +65,17 @@ void action_on_flags::init(action *A, INT *type,
 		cout << "action_on_flags::init degree = " << degree << endl;
 		}
 
-	M1 = NEW_INT(n * n);
-	M2 = NEW_INT(n * n);
+	M1 = NEW_int(n * n);
+	M2 = NEW_int(n * n);
 	if (f_v) {
 		cout << "action_on_flags::init done" << endl;
 		}
 }
 
-INT action_on_flags::compute_image(INT *Elt, INT i, INT verbose_level)
+int action_on_flags::compute_image(int *Elt, int i, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, j;
+	int f_v = (verbose_level >= 1);
+	int h, j;
 
 	if (f_v) {
 		cout << "action_on_flags::compute_image "
@@ -93,7 +93,7 @@ INT action_on_flags::compute_image(INT *Elt, INT i, INT verbose_level)
 	Flag->unrank(i, M1, 0 /*verbose_level*/);
 	if (f_v) {
 		cout << "action_on_flags::compute_image M1=" << endl;
-		INT_matrix_print(M1, Flag->K, n);
+		int_matrix_print(M1, Flag->K, n);
 		}
 	if (f_v) {
 		cout << "action_on_flags::compute_image "
@@ -109,7 +109,7 @@ INT action_on_flags::compute_image(INT *Elt, INT i, INT verbose_level)
 		}
 	if (f_v) {
 		cout << "action_on_flags::compute_image M2=" << endl;
-		INT_matrix_print(M2, Flag->K, n);
+		int_matrix_print(M2, Flag->K, n);
 		}
 	j = Flag->rank(M2, 0 /*verbose_level*/);
 

@@ -5,7 +5,7 @@
 
 #include "orbiter.h"
 
-INT t0;
+int t0;
 
 const char *version = "tdo_start Jan 30 2008";
 
@@ -13,15 +13,15 @@ char buf[BUFSIZE];
 
 void print_usage();
 int main(int argc, char **argv);
-void create_all_linetypes(char *label_base, INT m, INT verbose_level);
-void write_tdo_line_type(ofstream &g, char *label_base, INT m, INT n, 
-	INT nb_line_types, INT *lines, INT *multiplicities);
-void write_row_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
-	INT *V, INT *B, INT *the_scheme);
-void write_col_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
-	INT *V, INT *B, INT *the_scheme);
-void write_td_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
-	INT *V, INT *B, INT *the_scheme);
+void create_all_linetypes(char *label_base, int m, int verbose_level);
+void write_tdo_line_type(ofstream &g, char *label_base, int m, int n, 
+	int nb_line_types, int *lines, int *multiplicities);
+void write_row_scheme(ofstream &g, char *label_base, int nb_V, int nb_B, 
+	int *V, int *B, int *the_scheme);
+void write_col_scheme(ofstream &g, char *label_base, int nb_V, int nb_B, 
+	int *V, int *B, int *the_scheme);
+void write_td_scheme(ofstream &g, char *label_base, int nb_V, int nb_B, 
+	int *V, int *B, int *the_scheme);
 
 void print_usage()
 {
@@ -50,20 +50,20 @@ int main(int argc, char **argv)
 {
 	char fname_out[1000];
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_conf = FALSE;
-	INT f_all = FALSE;
-	INT f_linearspace = FALSE;
-	INT f_rowscheme = FALSE;
-	INT f_colscheme = FALSE;
-	INT f_tdscheme = FALSE;
-	INT nb_V, nb_B;
-	INT *V, *B, *the_scheme;
-	INT row_level, col_level, lambda_level, extra_row_level, extra_col_level;
-	INT i, m, n, r, k, a, m2, a2, ii, jj;
-	INT nb_lines;
-	INT line_size[1000];
-	INT line_multiplicity[1000];
+	int verbose_level = 0;
+	int f_conf = FALSE;
+	int f_all = FALSE;
+	int f_linearspace = FALSE;
+	int f_rowscheme = FALSE;
+	int f_colscheme = FALSE;
+	int f_tdscheme = FALSE;
+	int nb_V, nb_B;
+	int *V, *B, *the_scheme;
+	int row_level, col_level, lambda_level, extra_row_level, extra_col_level;
+	int i, m, n, r, k, a, m2, a2, ii, jj;
+	int nb_lines;
+	int line_size[1000];
+	int line_multiplicity[1000];
 	char *label_base;
 	char label[1000];
 
@@ -109,9 +109,9 @@ int main(int argc, char **argv)
 			f_rowscheme = TRUE;
 			nb_V = atoi(argv[++i]);
 			nb_B = atoi(argv[++i]);
-			V = new INT[nb_V];
-			B = new INT[nb_B];
-			the_scheme = new INT[nb_V * nb_B];
+			V = new int[nb_V];
+			B = new int[nb_B];
+			the_scheme = new int[nb_V * nb_B];
 			for (ii = 0; ii < nb_V; ii++) {
 				V[ii] = atoi(argv[++i]);
 				}
@@ -129,9 +129,9 @@ int main(int argc, char **argv)
 			nb_V = atoi(argv[++i]);
 			nb_B = atoi(argv[++i]);
 			cout << "-colscheme " << nb_V << " " << nb_B << endl;
-			V = new INT[nb_V];
-			B = new INT[nb_B];
-			the_scheme = new INT[nb_V * nb_B];
+			V = new int[nb_V];
+			B = new int[nb_B];
+			the_scheme = new int[nb_V * nb_B];
 			for (ii = 0; ii < nb_V; ii++) {
 				V[ii] = atoi(argv[++i]);
 				}
@@ -165,9 +165,9 @@ int main(int argc, char **argv)
 			f_tdscheme = TRUE;
 			nb_V = atoi(argv[++i]);
 			nb_B = atoi(argv[++i]);
-			V = new INT[nb_V];
-			B = new INT[nb_B];
-			the_scheme = new INT[nb_V * nb_B];
+			V = new int[nb_V];
+			B = new int[nb_B];
+			the_scheme = new int[nb_V * nb_B];
 			for (ii = 0; ii < nb_V; ii++) {
 				V[ii] = atoi(argv[++i]);
 				}
@@ -258,23 +258,23 @@ int main(int argc, char **argv)
 	cout << endl;
 }
 
-void create_all_linetypes(char *label_base, INT m, INT verbose_level)
+void create_all_linetypes(char *label_base, int m, int verbose_level)
 {
 	char fname[1000];
 	char label[1000];
-	INT nb_line_types;
-	INT *lines;
-	INT *multiplicities;
-	INT *types;
-	INT nb_eqns = 2, nb_vars = m;
-	INT nb_sol, m2, i, /* k, */ j, a, n, Nb_sol;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int nb_line_types;
+	int *lines;
+	int *multiplicities;
+	int *types;
+	int nb_eqns = 2, nb_vars = m;
+	int nb_sol, m2, i, /* k, */ j, a, n, Nb_sol;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	cout << "create all line types of linear spaces on " << m << " points" << endl;
-	lines = new INT[m];
-	multiplicities = new INT[m];
+	lines = new int[m];
+	multiplicities = new int[m];
 	
 	diophant D;
 	
@@ -318,7 +318,7 @@ void create_all_linetypes(char *label_base, INT m, INT verbose_level)
 		cout << "found " << nb_sol << " line types" << endl;
 		}
 	Nb_sol = nb_sol;
-	types = new INT[Nb_sol * nb_vars];
+	types = new int[Nb_sol * nb_vars];
 	nb_sol = 0;
 	if (D.solve_first_betten(f_vvv)) {
 	
@@ -360,7 +360,7 @@ void create_all_linetypes(char *label_base, INT m, INT verbose_level)
 				nb_line_types++;
 				}
 			n = m2 - types[i * nb_vars + nb_vars - 1];
-			sprintf(label, "%s.%ld", label_base, i + 1);
+			sprintf(label, "%s.%d", label_base, i + 1);
 			write_tdo_line_type(g, label, m, n, 
 				nb_line_types, lines, multiplicities);
 			}
@@ -373,10 +373,10 @@ void create_all_linetypes(char *label_base, INT m, INT verbose_level)
 	delete [] types;
 }
 
-void write_tdo_line_type(ofstream &g, char *label_base, INT m, INT n, 
-	INT nb_line_types, INT *lines, INT *multiplicities)
+void write_tdo_line_type(ofstream &g, char *label_base, int m, int n, 
+	int nb_line_types, int *lines, int *multiplicities)
 {
-	INT a, j, row_level, col_level, lambda_level, extra_row_level, extra_col_level;
+	int a, j, row_level, col_level, lambda_level, extra_row_level, extra_col_level;
 	
 	g << label_base << " " << m + n << " " << m << " ";
 	a = multiplicities[0];
@@ -402,12 +402,12 @@ void write_tdo_line_type(ofstream &g, char *label_base, INT m, INT n,
 		<< endl;
 }
 
-void write_row_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
-	INT *V, INT *B, INT *the_scheme)
+void write_row_scheme(ofstream &g, char *label_base, int nb_V, int nb_B, 
+	int *V, int *B, int *the_scheme)
 {
-	INT i, j, ii, jj, m, n, f, row_level, col_level, lambda_level;
-	INT extra_row_level = -1;
-	INT extra_col_level = -1;
+	int i, j, ii, jj, m, n, f, row_level, col_level, lambda_level;
+	int extra_row_level = -1;
+	int extra_col_level = -1;
 	
 	m = 0;
 	for (i = 0; i < nb_V; i++) {
@@ -456,12 +456,12 @@ void write_row_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B,
 		<< endl;
 }
 
-void write_col_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
-	INT *V, INT *B, INT *the_scheme)
+void write_col_scheme(ofstream &g, char *label_base, int nb_V, int nb_B, 
+	int *V, int *B, int *the_scheme)
 {
-	INT i, j, ii, jj, m, n, f, row_level, col_level, lambda_level;
-	INT extra_row_level = -1;
-	INT extra_col_level = -1;
+	int i, j, ii, jj, m, n, f, row_level, col_level, lambda_level;
+	int extra_row_level = -1;
+	int extra_col_level = -1;
 	
 	m = 0;
 	for (i = 0; i < nb_V; i++) {
@@ -510,12 +510,12 @@ void write_col_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B,
 		<< endl;
 }
 
-void write_td_scheme(ofstream &g, char *label_base, INT nb_V, INT nb_B, 
-	INT *V, INT *B, INT *the_scheme)
+void write_td_scheme(ofstream &g, char *label_base, int nb_V, int nb_B, 
+	int *V, int *B, int *the_scheme)
 {
-	INT i, j, ii, jj, m, n, f, row_level, col_level, lambda_level, a, b, c;
-	INT extra_row_level = -1;
-	INT extra_col_level = -1;
+	int i, j, ii, jj, m, n, f, row_level, col_level, lambda_level, a, b, c;
+	int extra_row_level = -1;
+	int extra_col_level = -1;
 	
 	m = 0;
 	for (i = 0; i < nb_V; i++) {

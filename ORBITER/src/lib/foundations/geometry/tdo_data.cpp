@@ -24,23 +24,23 @@ tdo_data::~tdo_data()
 void tdo_data::free()
 {
 	if (types_first) {
-		FREE_INT(types_first);
+		FREE_int(types_first);
 		types_first = NULL;
 		}
 	if (types_len) {
-		FREE_INT(types_len);
+		FREE_int(types_len);
 		types_len = NULL;
 		}
 	if (only_one_type) {
-		FREE_INT(only_one_type);
+		FREE_int(only_one_type);
 		only_one_type = NULL;
 		}
 	if (multiple_types) {
-		FREE_INT(multiple_types);
+		FREE_int(multiple_types);
 		multiple_types = NULL;
 		}
 	if (types_first2) {
-		FREE_INT(types_first2);
+		FREE_int(types_first2);
 		types_first2 = NULL;
 		}
 	if (D1) {
@@ -53,24 +53,24 @@ void tdo_data::free()
 		}
 }
 
-void tdo_data::allocate(INT R)
+void tdo_data::allocate(int R)
 {
-	types_first = NEW_INT(R + 1);
-	types_len = NEW_INT(R);
-	only_one_type = NEW_INT(R);
-	multiple_types = NEW_INT(R);
-	types_first2 = NEW_INT(R);
+	types_first = NEW_int(R + 1);
+	types_len = NEW_int(R);
+	only_one_type = NEW_int(R);
+	multiple_types = NEW_int(R);
+	types_first2 = NEW_int(R);
 	D1 = NEW_OBJECT(diophant);
 	D2 = NEW_OBJECT(diophant);
 }
 
-INT tdo_data::solve_first_system(INT verbose_level, 
-	INT *&line_types, INT &nb_line_types, INT &line_types_allocated)
+int tdo_data::solve_first_system(int verbose_level, 
+	int *&line_types, int &nb_line_types, int &line_types_allocated)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i, nb_sol, nb_vars;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i, nb_sol, nb_vars;
 	
 	if (f_v) {
 		cout << "solve_first_system" << endl;
@@ -81,15 +81,15 @@ INT tdo_data::solve_first_system(INT verbose_level,
 	
 		while (TRUE) {
 			if (nb_line_types >= line_types_allocated) {
-				INT new_nb_line_types = line_types_allocated + 100;
+				int new_nb_line_types = line_types_allocated + 100;
 				if (f_vvv) {
 					cout << "reallocating to " << new_nb_line_types << endl;
 					}
-				INT *new_line_types = NEW_INT(new_nb_line_types * nb_vars);
+				int *new_line_types = NEW_int(new_nb_line_types * nb_vars);
 				for (i = 0; i < nb_line_types * nb_vars; i++) {
 					new_line_types[i] = line_types[i];
 					}
-				FREE_INT(line_types);
+				FREE_int(line_types);
 				line_types = new_line_types;
 				line_types_allocated = new_nb_line_types;
 				}
@@ -116,20 +116,20 @@ INT tdo_data::solve_first_system(INT verbose_level,
 	return nb_sol;
 }
 
-void tdo_data::solve_second_system_omit(INT verbose_level,
-	INT *classes_len, 
-	INT *&line_types, INT &nb_line_types, 
-	INT *&distributions, INT &nb_distributions,
-	INT omit)
+void tdo_data::solve_second_system_omit(int verbose_level,
+	int *classes_len, 
+	int *&line_types, int &nb_line_types, 
+	int *&distributions, int &nb_distributions,
+	int omit)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT nb_sol;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int nb_sol;
 	
 	if (f_v) {
 		cout << "tdo_data::solve_second_system_omit omit=" << omit << endl;
 		}
-	INT s, i, r = 0, f, l, h, j, u, first, len, N, a, ii, f_bad;
+	int s, i, r = 0, f, l, h, j, u, first, len, N, a, ii, f_bad;
 	
 	f = types_first2[0];
 	l = 0;
@@ -140,9 +140,9 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 		s += classes_len[r];
 		}
 	diophant D;
-	INT nb_eqns_replaced;
-	INT *eqns_replaced;
-	INT *eqn_number;
+	int nb_eqns_replaced;
+	int *eqns_replaced;
+	int *eqn_number;
 		
 	if (f_v) {
 		cout << r << " : " << setw(3) << classes_len[r] << " : " << setw(3) << f << " : " << setw(3) << l << endl;
@@ -165,7 +165,7 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 		cout << "number of solutions = " << nb_sol << " in " << D.nb_steps_betten << " steps" << endl;
 		}
 	nb_distributions = 0;
-	distributions = NEW_INT(nb_sol * nb_line_types);
+	distributions = NEW_int(nb_sol * nb_line_types);
 
 
 	for (N = 0; N < nb_sol; N++) {
@@ -208,10 +208,10 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 			}
 
 		diophant DD;
-		INT nb_eqns_replaced2;
-		INT *eqns_replaced2;
-		INT *eqn_number2;
-		INT F, L, nb_sol2;
+		int nb_eqns_replaced2;
+		int *eqns_replaced2;
+		int *eqn_number2;
+		int F, L, nb_sol2;
 		F = l;
 		L = 0;
 		s = 0;
@@ -250,7 +250,7 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 			// Since out solver finds in fact all solutions, this test is 
 			// too expensive, hence we do not do it any more.
 			
-			INT nb_backtrack;
+			int nb_backtrack;
 			nb_sol2 = diophant_solve_all_mckay(&DD, nb_backtrack, 0/*verbose_level*/);
 			if (f_v) {
 				cout << "N=" << N << " / " << nb_sol << " number of solutions = " << nb_sol2 << endl;
@@ -260,8 +260,8 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 				continue;
 				}
 			}
-		FREE_INT(eqns_replaced2);
-		FREE_INT(eqn_number2);
+		FREE_int(eqns_replaced2);
+		FREE_int(eqn_number2);
 
 
 		for (h = 0; h < nb_only_one_type; h++) {
@@ -292,14 +292,14 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 			}
 		}
 
-	FREE_INT(eqns_replaced);
-	FREE_INT(eqn_number);
+	FREE_int(eqns_replaced);
+	FREE_int(eqn_number);
 
 #if 0
 	for (i = 0; i < nb_multiple_types; i++) {
 		diophant D;
-		INT nb_eqns_replaced;
-		INT *eqns_replaced;
+		int nb_eqns_replaced;
+		int *eqns_replaced;
 		
 		r = multiple_types[i];
 		f = types_first2[i];
@@ -311,19 +311,19 @@ void tdo_data::solve_second_system_omit(INT verbose_level,
 		D.sum = classes_len[r];
 		D.print();
 		D.solve_first(verbose_level);
-		FREE_INT(eqns_replaced);
+		FREE_int(eqns_replaced);
 		}
 #endif
 }
 
-void tdo_data::solve_second_system_with_help(INT verbose_level,
-	INT f_use_mckay_solver, INT f_once, 
-	INT *classes_len, INT f_scale, INT scaling,
-	INT *&line_types, INT &nb_line_types, 
-	INT *&distributions, INT &nb_distributions,
-	INT cnt_second_system, solution_file_data *Sol)
+void tdo_data::solve_second_system_with_help(int verbose_level,
+	int f_use_mckay_solver, int f_once, 
+	int *classes_len, int f_scale, int scaling,
+	int *&line_types, int &nb_line_types, 
+	int *&distributions, int &nb_distributions,
+	int cnt_second_system, solution_file_data *Sol)
 {
-	INT i;
+	int i;
 	
 	if (Sol) {
 		for (i = 0; i < Sol->nb_solution_files; i++) {
@@ -341,19 +341,19 @@ void tdo_data::solve_second_system_with_help(INT verbose_level,
 		distributions, nb_distributions);
 }
 
-void tdo_data::solve_second_system_from_file(INT verbose_level,
-	INT *classes_len, INT f_scale, INT scaling,
-	INT *&line_types, INT &nb_line_types, 
-	INT *&distributions, INT &nb_distributions, char *solution_file_name)
+void tdo_data::solve_second_system_from_file(int verbose_level,
+	int *classes_len, int f_scale, int scaling,
+	int *&line_types, int &nb_line_types, 
+	int *&distributions, int &nb_distributions, char *solution_file_name)
 {
 	int f_v = (verbose_level >= 1);
-	INT cnt, i, j, a, nb_sol, *the_solution;
-	INT h, r, u, f, l, first, distributions_allocated;
-	INT Nb_vars; //, Nb_eqns;
+	int cnt, i, j, a, nb_sol, *the_solution;
+	int h, r, u, f, l, first, distributions_allocated;
+	int Nb_vars; //, Nb_eqns;
 	
 	//Nb_eqns = D2->m;
 	Nb_vars = D2->n;
-	the_solution = NEW_INT(Nb_vars);
+	the_solution = NEW_int(Nb_vars);
 	{
 	ifstream ff(solution_file_name);
 	
@@ -372,7 +372,7 @@ void tdo_data::solve_second_system_from_file(INT verbose_level,
 	cout << "the solution file " << solution_file_name << " contains " << nb_sol << " solutions" << endl;
 	distributions_allocated = nb_sol;
 	nb_distributions = 0;
-	distributions = NEW_INT(distributions_allocated * nb_line_types);
+	distributions = NEW_int(distributions_allocated * nb_line_types);
 	{
 	ifstream ff(solution_file_name);
 	for (cnt = 0; cnt < nb_sol; cnt++) {
@@ -404,23 +404,23 @@ void tdo_data::solve_second_system_from_file(INT verbose_level,
 		}
 	
 	}
-	FREE_INT(the_solution);
+	FREE_int(the_solution);
 	if (f_v) {
 		cout << "solve_second_system_from_file: found " << nb_distributions << " distributions." << endl;
 		}
 }
 
-void tdo_data::solve_second_system(INT verbose_level,
-	INT f_use_mckay_solver, INT f_once, 
-	INT *classes_len, INT f_scale, INT scaling,
-	INT *&line_types, INT &nb_line_types, 
-	INT *&distributions, INT &nb_distributions)
+void tdo_data::solve_second_system(int verbose_level,
+	int f_use_mckay_solver, int f_once, 
+	int *classes_len, int f_scale, int scaling,
+	int *&line_types, int &nb_line_types, 
+	int *&distributions, int &nb_distributions)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT distributions_allocated, nb_sol, a, h, r, u, i, f, l, j, first, ret;
-	INT Nb_vars, /*Nb_eqns,*/ nb_steps = 0;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int distributions_allocated, nb_sol, a, h, r, u, i, f, l, j, first, ret;
+	int Nb_vars, /*Nb_eqns,*/ nb_steps = 0;
 	
 	if (f_v) {
 		cout << "tdo_data::solve_second_system" << endl;
@@ -432,7 +432,7 @@ void tdo_data::solve_second_system(INT verbose_level,
 
 	distributions_allocated = 100;
 	nb_distributions = 0;
-	distributions = NEW_INT(distributions_allocated * nb_line_types);
+	distributions = NEW_int(distributions_allocated * nb_line_types);
 		
 	
 	nb_sol = 0;
@@ -451,16 +451,16 @@ void tdo_data::solve_second_system(INT verbose_level,
 				cout << "solve_second_system: " << nb_distributions << " distributions" << endl;
 				}
 			if (nb_distributions >= distributions_allocated) {
-				INT new_nb_distributions = distributions_allocated + 100;
+				int new_nb_distributions = distributions_allocated + 100;
 				if (f_vv) {
 					cout << "reallocating to " << new_nb_distributions << endl;
 					}
 				
-				INT *new_distributions = NEW_INT(new_nb_distributions * nb_line_types);
+				int *new_distributions = NEW_int(new_nb_distributions * nb_line_types);
 				for (i = 0; i < nb_distributions * nb_line_types; i++) {
 					new_distributions[i] = distributions[i];
 					}
-				FREE_INT(distributions);
+				FREE_int(distributions);
 				distributions = new_distributions;
 				distributions_allocated = new_nb_distributions;
 				}

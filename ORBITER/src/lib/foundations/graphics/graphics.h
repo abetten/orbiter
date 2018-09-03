@@ -11,44 +11,44 @@
 // draw.C
 // #############################################################################
 
-void transform_llur(INT *in, INT *out, INT &x, INT &y);
-void transform_dist(INT *in, INT *out, INT &x, INT &y);
-void transform_dist_x(INT *in, INT *out, INT &x);
-void transform_dist_y(INT *in, INT *out, INT &y);
+void transform_llur(int *in, int *out, int &x, int &y);
+void transform_dist(int *in, int *out, int &x, int &y);
+void transform_dist_x(int *in, int *out, int &x);
+void transform_dist_y(int *in, int *out, int &y);
 void transform_llur_double(double *in, double *out, double &x, double &y);
 void draw(char *fname);
-void on_circle_int(INT *Px, INT *Py, INT idx, INT angle_in_degree, INT rad);
-void on_circle_double(double *Px, double *Py, INT idx, 
+void on_circle_int(int *Px, int *Py, int idx, int angle_in_degree, int rad);
+void on_circle_double(double *Px, double *Py, int idx, 
 	double angle_in_degree, double rad);
-void polygon3D(mp_graphics &G, INT *Px, INT *Py, INT dim, 
-	INT x0, INT y0, INT z0, INT x1, INT y1, INT z1);
-void integer_4pts(mp_graphics &G, INT *Px, INT *Py, 
-	INT p1, INT p2, INT p3, INT p4, 
-	const char *align, INT a);
-void text_4pts(mp_graphics &G, INT *Px, INT *Py, 
-	INT p1, INT p2, INT p3, INT p4, 
+void polygon3D(mp_graphics &G, int *Px, int *Py, int dim, 
+	int x0, int y0, int z0, int x1, int y1, int z1);
+void integer_4pts(mp_graphics &G, int *Px, int *Py, 
+	int p1, int p2, int p3, int p4, 
+	const char *align, int a);
+void text_4pts(mp_graphics &G, int *Px, int *Py, 
+	int p1, int p2, int p3, int p4, 
 	const char *align, const char *str);
-void affine_pt1(INT *Px, INT *Py, INT p0, INT p1, INT p2, 
-	double f1, INT p3);
-void affine_pt2(INT *Px, INT *Py, INT p0, INT p1, INT p1b, 
-	double f1, INT p2, INT p2b, double f2, INT p3);
-INT C3D(INT i, INT j, INT k);
-INT C2D(INT i, INT j);
+void affine_pt1(int *Px, int *Py, int p0, int p1, int p2, 
+	double f1, int p3);
+void affine_pt2(int *Px, int *Py, int p0, int p1, int p1b, 
+	double f1, int p2, int p2b, double f2, int p3);
+int C3D(int i, int j, int k);
+int C2D(int i, int j);
 double cos_grad(double phi);
 double sin_grad(double phi);
 double tan_grad(double phi);
 double atan_grad(double x);
-void adjust_coordinates_double(double *Px, double *Py, INT *Qx, INT *Qy, 
-	INT N, double xmin, double ymin, double xmax, double ymax, 
-	INT verbose_level);
+void adjust_coordinates_double(double *Px, double *Py, int *Qx, int *Qy, 
+	int N, double xmin, double ymin, double xmax, double ymax, 
+	int verbose_level);
 void Intersection_of_lines(double *X, double *Y, 
-	double *a, double *b, double *c, INT l1, INT l2, INT pt);
+	double *a, double *b, double *c, int l1, int l2, int pt);
 void intersection_of_lines(double a1, double b1, double c1, 
 	double a2, double b2, double c2, 
 	double &x, double &y);
 void Line_through_points(double *X, double *Y, 
 	double *a, double *b, double *c, 
-	INT pt1, INT pt2, INT line_idx);
+	int pt1, int pt2, int line_idx);
 void line_through_points(double pt1_x, double pt1_y, 
 	double pt2_x, double pt2_y, double &a, double &b, double &c);
 void intersect_circle_line_through(double rad, double x0, double y0, 
@@ -59,38 +59,38 @@ void intersect_circle_line(double rad, double x0, double y0,
 	double a, double b, double c, 
 	double &x1, double &y1, double &x2, double &y2);
 void affine_combination(double *X, double *Y, 
-	INT pt0, INT pt1, INT pt2, double alpha, INT new_pt);
-void draw_graph(mp_graphics *G, INT x, INT y, INT dx, INT dy, 
-	INT nb_V, INT *Edges, INT nb_E);
-void draw_graph_with_distinguished_edge(mp_graphics *G, INT x, INT y, 
-	INT dx, INT dy, INT nb_V, INT *Edges, INT nb_E, 
-	INT distinguished_edge, INT verbose_level);
-void draw_graph_on_multiple_circles(mp_graphics *G, INT x, INT y, 
-	INT dx, INT dy, INT nb_V, 
-	INT *Edges, INT nb_E, INT nb_circles);
+	int pt0, int pt1, int pt2, double alpha, int new_pt);
+void draw_graph(mp_graphics *G, int x, int y, int dx, int dy, 
+	int nb_V, int *Edges, int nb_E);
+void draw_graph_with_distinguished_edge(mp_graphics *G, int x, int y, 
+	int dx, int dy, int nb_V, int *Edges, int nb_E, 
+	int distinguished_edge, int verbose_level);
+void draw_graph_on_multiple_circles(mp_graphics *G, int x, int y, 
+	int dx, int dy, int nb_V, 
+	int *Edges, int nb_E, int nb_circles);
 void draw_graph_on_2D_grid(mp_graphics *G, 
-	INT x, INT y, INT dx, INT dy, 
-	INT rad, INT nb_V, 
-	INT *Edges, INT nb_E, INT *coords_2D, INT *Base, 
-	INT f_point_labels, INT point_label_offset, INT f_directed);
+	int x, int y, int dx, int dy, 
+	int rad, int nb_V, 
+	int *Edges, int nb_E, int *coords_2D, int *Base, 
+	int f_point_labels, int point_label_offset, int f_directed);
 void draw_tournament(mp_graphics *G, 
-	INT x, INT y, INT dx, INT dy, INT nb_V, 
-	INT *Edges, INT nb_E, INT verbose_level);
-void draw_bitmatrix(const char *fname_base, INT f_dots, 
-	INT f_partition, INT nb_row_parts, INT *row_part_first, 
-	INT nb_col_parts, INT *col_part_first, 
-	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, uchar *D, INT *M, 
-	INT m, INT n, INT xmax_in, INT ymax_in, INT xmax, INT ymax, 
+	int x, int y, int dx, int dy, int nb_V, 
+	int *Edges, int nb_E, int verbose_level);
+void draw_bitmatrix(const char *fname_base, int f_dots, 
+	int f_partition, int nb_row_parts, int *row_part_first, 
+	int nb_col_parts, int *col_part_first, 
+	int f_row_grid, int f_col_grid, 
+	int f_bitmatrix, uchar *D, int *M, 
+	int m, int n, int xmax_in, int ymax_in, int xmax, int ymax, 
 	double scale, double line_width, 
-	INT f_has_labels, INT *labels);
-void draw_bitmatrix2(mp_graphics &G, INT f_dots, 
-	INT f_partition, INT nb_row_parts, INT *row_part_first, 
-	INT nb_col_parts, INT *col_part_first, 
-	INT f_row_grid, INT f_col_grid, 
-	INT f_bitmatrix, uchar *D, INT *M, 
-	INT m, INT n, INT xmax, INT ymax, 
-	INT f_has_labels, INT *labels);
+	int f_has_labels, int *labels);
+void draw_bitmatrix2(mp_graphics &G, int f_dots, 
+	int f_partition, int nb_row_parts, int *row_part_first, 
+	int nb_col_parts, int *col_part_first, 
+	int f_row_grid, int f_col_grid, 
+	int f_bitmatrix, uchar *D, int *M, 
+	int m, int n, int xmax, int ymax, 
+	int f_has_labels, int *labels);
 
 
 // #############################################################################
@@ -100,11 +100,11 @@ void draw_bitmatrix2(mp_graphics &G, INT f_dots,
 //! a class to help with drawing elements in a 2D grid fashion
 
 struct grid_frame {
-	INT f_matrix_notation;
+	int f_matrix_notation;
 	double origin_x;
 	double origin_y;
-	INT m; // number of rows in the grid
-	INT n; // number of columns in the grid
+	int m; // number of rows in the grid
+	int n; // number of columns in the grid
 	double dx;
 	double dy;
 };
@@ -122,54 +122,54 @@ class mp_graphics {
 	ofstream fp_mp;
 	ofstream fp_log;
 	ofstream fp_tikz;
-	INT f_file_open;
+	int f_file_open;
 	
 	
 	// coordinate systems:
 	
-	INT user[4]; // llx/lly/urx/ury 
-	INT dev[4]; // llx/lly/urx/ury 
+	int user[4]; // llx/lly/urx/ury 
+	int dev[4]; // llx/lly/urx/ury 
 
-	INT x_min, x_max, y_min, y_max, f_min_max_set;
+	int x_min, x_max, y_min, y_max, f_min_max_set;
 
-	INT txt_halign;
+	int txt_halign;
 		// 0=left aligned, 
 		// 1=centered, 
 		// 2=right aligned; 
 		// default=0
-	INT txt_valign; // 0=bottom, 1=middle, 2=top; default=0
-	INT txt_boxed; //  default=0
-	INT txt_overwrite; // default=0
-	INT txt_rotate; // default = 0 (in degree)
+	int txt_valign; // 0=bottom, 1=middle, 2=top; default=0
+	int txt_boxed; //  default=0
+	int txt_overwrite; // default=0
+	int txt_rotate; // default = 0 (in degree)
 
-	INT line_beg_style; // default=0
-	INT line_end_style; // 0=nothing, 1=arrow; default=0
+	int line_beg_style; // default=0
+	int line_end_style; // 0=nothing, 1=arrow; default=0
 
-	INT line_thickness; // 1,2,3
-	INT line_color; // 0=white, 1=black, 2=red, 3=green
+	int line_thickness; // 1,2,3
+	int line_color; // 0=white, 1=black, 2=red, 3=green
 
 
-	INT fill_interior;
+	int fill_interior;
 		// in 1/100th, 
 		// 0= none (used for pie-drawing); 
 		// default=0
-	INT fill_color; // 0 = white, 1 = black; default=0
-	INT fill_shape; // 0 =  .., 1 = -- ; default=1
-	INT fill_outline; // default=0
-	INT fill_nofill; // default=0
+	int fill_color; // 0 = white, 1 = black; default=0
+	int fill_shape; // 0 =  .., 1 = -- ; default=1
+	int fill_outline; // default=0
+	int fill_nofill; // default=0
 
 
-	INT line_dashing;
+	int line_dashing;
 		// 0 = no dashing, 
 		// otherwise scaling factor 1/100th evenly
 		// default=0
 	
-	INT cur_path;
+	int cur_path;
 
-	INT f_embedded;
+	int f_embedded;
 		// have a header so that the file 
 		// can be compiled standalone (for tikz)
-	INT f_sideways;
+	int f_sideways;
 
 public:
 	// for tikz:
@@ -179,161 +179,161 @@ public:
 
 	mp_graphics();
 	mp_graphics(const char *file_name, 
-		INT xmin, INT ymin, INT xmax, INT ymax, 
-		INT f_embedded, INT f_sideways);
+		int xmin, int ymin, int xmax, int ymax, 
+		int f_embedded, int f_sideways);
 	~mp_graphics();
 	void default_values();
 	void init(const char *file_name, 
-		INT xmin, INT ymin, INT xmax, INT ymax, 
-		INT f_embedded, INT f_sideways);
-	void exit(ostream &ost, INT verbose_level);
+		int xmin, int ymin, int xmax, int ymax, 
+		int f_embedded, int f_sideways);
+	void exit(ostream &ost, int verbose_level);
 	void setup(const char *fname_base, 
-		INT in_xmin, INT in_ymin, INT in_xmax, INT in_ymax, 
-		INT xmax, INT ymax, INT f_embedded, INT f_sideways, 
+		int in_xmin, int in_ymin, int in_xmax, int in_ymax, 
+		int xmax, int ymax, int f_embedded, int f_sideways, 
 		double scale, double line_width);
 	void set_parameters(double scale, double line_width);
 	void set_scale(double scale);
 	void frame(double move_out);
 	void frame_constant_aspect_ratio(double move_out);
-	void finish(ostream &ost, INT verbose_level);
+	void finish(ostream &ost, int verbose_level);
 
-	INT& out_xmin();
-	INT& out_ymin();
-	INT& out_xmax();
-	INT& out_ymax();
+	int& out_xmin();
+	int& out_ymin();
+	int& out_xmax();
+	int& out_ymax();
 
-	void user2dev(INT &x, INT &y);
-	void dev2user(INT &x, INT &y);
-	void user2dev_dist_x(INT &x);
-	void user2dev_dist_y(INT &y);
+	void user2dev(int &x, int &y);
+	void dev2user(int &x, int &y);
+	void user2dev_dist_x(int &x);
+	void user2dev_dist_y(int &y);
 
-	void draw_polar_grid(double r_max, INT nb_circles, 
-		INT nb_rays, double x_stretch);
+	void draw_polar_grid(double r_max, int nb_circles, 
+		int nb_rays, double x_stretch);
 	void draw_axes_and_grid(
 		double x_min, double x_max, 
 		double y_min, double y_max, 
 		double x_stretch, double y_stretch, 
-		INT f_x_axis_at_y_min, INT f_y_axis_at_x_min, 
-		INT x_mod, INT y_mod, INT x_tick_mod, INT y_tick_mod, 
+		int f_x_axis_at_y_min, int f_y_axis_at_x_min, 
+		int x_mod, int y_mod, int x_tick_mod, int y_tick_mod, 
 		double x_labels_offset, double y_labels_offset, 
 		double x_tick_half_width, double y_tick_half_width, 
-		INT f_v_lines, INT subdivide_v, 
-		INT f_h_lines, INT subdivide_h);
-	void plot_curve(INT N, INT *f_DNE, 
+		int f_v_lines, int subdivide_v, 
+		int f_h_lines, int subdivide_h);
+	void plot_curve(int N, int *f_DNE, 
 		double *Dx, double *Dy, double dx, double dy);
-	void nice_circle(INT x, INT y, INT rad);
-	void grid_polygon2(grid_frame *F, INT x0, INT y0, 
-		INT x1, INT y1);
-	void grid_polygon4(grid_frame *F, INT x0, INT y0, 
-		INT x1, INT y1, INT x2, INT y2, INT x3, INT y3);
-	void grid_polygon5(grid_frame *F, INT x0, INT y0, 
-		INT x1, INT y1, INT x2, INT y2, 
-		INT x3, INT y3, INT x4, INT y4);
-	void polygon(INT *Px, INT *Py, INT n);
-	void polygon2(INT *Px, INT *Py, INT i1, INT i2);
-	void polygon3(INT *Px, INT *Py, INT i1, INT i2, INT i3);
-	void polygon4(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4);
-	void polygon5(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5);
-	void polygon6(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6);
-	void polygon7(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7);
-	void polygon8(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8);
-	void polygon9(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8, INT i9);
-	void polygon10(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8, INT i9, 
-		INT i10);
-	void polygon11(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8, INT i9, 
-		INT i10, INT i11);
-	void polygon_idx(INT *Px, INT *Py, INT *Idx, INT n);
-	void bezier(INT *Px, INT *Py, INT n);
-	void bezier2(INT *Px, INT *Py, INT i1, INT i2);
-	void bezier3(INT *Px, INT *Py, INT i1, INT i2, INT i3);
-	void bezier4(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4);
-	void bezier5(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5);
-	void bezier6(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6);
-	void bezier7(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7);
-	void bezier_idx(INT *Px, INT *Py, INT *Idx, INT n);
+	void nice_circle(int x, int y, int rad);
+	void grid_polygon2(grid_frame *F, int x0, int y0, 
+		int x1, int y1);
+	void grid_polygon4(grid_frame *F, int x0, int y0, 
+		int x1, int y1, int x2, int y2, int x3, int y3);
+	void grid_polygon5(grid_frame *F, int x0, int y0, 
+		int x1, int y1, int x2, int y2, 
+		int x3, int y3, int x4, int y4);
+	void polygon(int *Px, int *Py, int n);
+	void polygon2(int *Px, int *Py, int i1, int i2);
+	void polygon3(int *Px, int *Py, int i1, int i2, int i3);
+	void polygon4(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4);
+	void polygon5(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5);
+	void polygon6(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6);
+	void polygon7(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7);
+	void polygon8(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8);
+	void polygon9(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8, int i9);
+	void polygon10(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8, int i9, 
+		int i10);
+	void polygon11(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8, int i9, 
+		int i10, int i11);
+	void polygon_idx(int *Px, int *Py, int *Idx, int n);
+	void bezier(int *Px, int *Py, int n);
+	void bezier2(int *Px, int *Py, int i1, int i2);
+	void bezier3(int *Px, int *Py, int i1, int i2, int i3);
+	void bezier4(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4);
+	void bezier5(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5);
+	void bezier6(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6);
+	void bezier7(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7);
+	void bezier_idx(int *Px, int *Py, int *Idx, int n);
 	void grid_fill_polygon4(grid_frame *F, 
-		INT x0, INT y0, INT x1, INT y1, INT x2, 
-		INT y2, INT x3, INT y3);
+		int x0, int y0, int x1, int y1, int x2, 
+		int y2, int x3, int y3);
 	void grid_fill_polygon5(grid_frame *F, 
-		INT x0, INT y0, INT x1, INT y1, 
-		INT x2, INT y2, INT x3, INT y3, 
-		INT x4, INT y4);
-	void fill_polygon3(INT *Px, INT *Py, INT i1, INT i2, INT i3);
-	void fill_polygon4(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4);
-	void fill_polygon5(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5);
-	void fill_polygon6(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6);
-	void fill_polygon7(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7);
-	void fill_polygon8(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8);
-	void fill_polygon9(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8, INT i9);
-	void fill_polygon10(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8, INT i9, INT i10);
-	void fill_polygon11(INT *Px, INT *Py, INT i1, INT i2, INT i3, 
-		INT i4, INT i5, INT i6, INT i7, INT i8, 
-		INT i9, INT i10, INT i11);
-	void polygon2_arrow_halfway(INT *Px, INT *Py, INT i1, INT i2);
-	void polygon2_arrow_halfway_and_label(INT *Px, INT *Py, INT i1, INT i2, 
+		int x0, int y0, int x1, int y1, 
+		int x2, int y2, int x3, int y3, 
+		int x4, int y4);
+	void fill_polygon3(int *Px, int *Py, int i1, int i2, int i3);
+	void fill_polygon4(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4);
+	void fill_polygon5(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5);
+	void fill_polygon6(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6);
+	void fill_polygon7(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7);
+	void fill_polygon8(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8);
+	void fill_polygon9(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8, int i9);
+	void fill_polygon10(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8, int i9, int i10);
+	void fill_polygon11(int *Px, int *Py, int i1, int i2, int i3, 
+		int i4, int i5, int i6, int i7, int i8, 
+		int i9, int i10, int i11);
+	void polygon2_arrow_halfway(int *Px, int *Py, int i1, int i2);
+	void polygon2_arrow_halfway_and_label(int *Px, int *Py, int i1, int i2, 
 		const char *alignment, const char *txt);
-	void grid_aligned_text(grid_frame *F, INT x, INT y, 
+	void grid_aligned_text(grid_frame *F, int x, int y, 
 		const char *alignment, const char *p);
-	void aligned_text(INT x, INT y, const char *alignment, const char *p);
-	void aligned_text_array(INT *Px, INT *Py, INT idx, 
+	void aligned_text(int x, int y, const char *alignment, const char *p);
+	void aligned_text_array(int *Px, int *Py, int idx, 
 		const char *alignment, const char *p);
-	void aligned_text_with_offset(INT x, INT y, INT xoffset, INT yoffset, 
+	void aligned_text_with_offset(int x, int y, int xoffset, int yoffset, 
 		const char *alignment, const char *p);
 
-	void st_alignment(INT txt_halign, INT txt_valign);
-	void sl_udsty(INT line_dashing);
-	void sl_ends(INT line_beg_style, INT line_end_style);
-	void sl_thickness(INT line_thickness);
-	void sl_color(INT line_color);
-	void sf_interior(INT fill_interior);
-	void sf_color(INT fill_color);
-	void sf_shape(INT fill_shape);
-	void sf_outline(INT fill_outline);
-	void sf_nofill(INT fill_nofill);
-	void st_boxed(INT txt_boxed);
-	void st_overwrite(INT txt_overwrite);
-	void st_rotate(INT txt_rotate);
-	void coords_min_max(INT x, INT y);
+	void st_alignment(int txt_halign, int txt_valign);
+	void sl_udsty(int line_dashing);
+	void sl_ends(int line_beg_style, int line_end_style);
+	void sl_thickness(int line_thickness);
+	void sl_color(int line_color);
+	void sf_interior(int fill_interior);
+	void sf_color(int fill_color);
+	void sf_shape(int fill_shape);
+	void sf_outline(int fill_outline);
+	void sf_nofill(int fill_nofill);
+	void st_boxed(int txt_boxed);
+	void st_overwrite(int txt_overwrite);
+	void st_rotate(int txt_rotate);
+	void coords_min_max(int x, int y);
 
 	// output commands:
 	void header();
 	void footer();
-	void begin_figure(INT factor_1000);
+	void begin_figure(int factor_1000);
 	void end_figure();
 
 	void comment(const char *p);
-	void text(INT x, INT y, const char *p);
-	void circle(INT x, INT y, INT rad);
-	void circle_text(INT x, INT y, INT rad, const char *text);
+	void text(int x, int y, const char *p);
+	void circle(int x, int y, int rad);
+	void circle_text(int x, int y, int rad, const char *text);
 #if 0
-	void polygon_or_bezier_idx(INT *Px, INT *Py, INT *Idx, INT n, 
-		const char *symbol, INT f_cycle);
+	void polygon_or_bezier_idx(int *Px, int *Py, int *Idx, int n, 
+		const char *symbol, int f_cycle);
 #endif
-	void polygon_idx2(INT *Px, INT *Py, INT *Idx, INT n,
-			INT f_cycle);
-	void bezier_idx2(INT *Px, INT *Py, INT *Idx, INT n,
-			INT f_cycle);
-	void fill_idx(INT *Px, INT *Py, INT *Idx, INT n, 
-		const char *symbol, INT f_cycle);
+	void polygon_idx2(int *Px, int *Py, int *Idx, int n,
+			int f_cycle);
+	void bezier_idx2(int *Px, int *Py, int *Idx, int n,
+			int f_cycle);
+	void fill_idx(int *Px, int *Py, int *Idx, int n, 
+		const char *symbol, int f_cycle);
 
 
 	// output commands log file:
@@ -353,37 +353,37 @@ public:
 	void st_boxed_log();
 	void st_overwrite_log();
 	void st_rotate_log();
-	void bezier_idx_log(INT *Px, INT *Py, INT *Idx, INT n);
-	void polygon_log(INT *Px, INT *Py, INT n);
-	void polygon_idx_log(INT *Px, INT *Py, INT *Idx, INT n);
-	void text_log(INT x1, INT y1, const char *p);
-	void circle_log(INT x1, INT y1, INT rad);
+	void bezier_idx_log(int *Px, int *Py, int *Idx, int n);
+	void polygon_log(int *Px, int *Py, int n);
+	void polygon_idx_log(int *Px, int *Py, int *Idx, int n);
+	void text_log(int x1, int y1, const char *p);
+	void circle_log(int x1, int y1, int rad);
 
 
 	// output commands metapost:
 	void header_mp(char *str_date);
 	void footer_mp();
 	void comment_mp(const char *p);
-	void text_mp(INT x1, INT y1, const char *p);
-	void begin_figure_mp(INT factor_1000);
+	void text_mp(int x1, int y1, const char *p);
+	void begin_figure_mp(int factor_1000);
 	void end_figure_mp();
-	void circle_mp(INT x, INT y, INT rad);
-	void output_circle_text_mp(INT x, INT y, INT idx, const char *text);
+	void circle_mp(int x, int y, int rad);
+	void output_circle_text_mp(int x, int y, int idx, const char *text);
 #if 0
-	void polygon_or_bezier_idx_mp(INT *Px, INT *Py, INT *Idx, 
-		INT n, const char *symbol, INT f_cycle);
+	void polygon_or_bezier_idx_mp(int *Px, int *Py, int *Idx, 
+		int n, const char *symbol, int f_cycle);
 #endif
-	void polygon_idx_mp(INT *Px, INT *Py,
-			INT *Idx, INT n, INT f_cycle);
-	void bezier_idx_mp(INT *Px, INT *Py,
-			INT *Idx, INT n, INT f_cycle);
-	void color_tikz(ofstream &fp, INT color);
-	void fill_idx_mp(INT *Px, INT *Py, INT *Idx, INT n, 
-		const char *symbol, INT f_cycle);
-	void output_xy_metapost(INT x, INT y);
-	void output_x_metapost(INT x);
-	void output_y_metapost(INT y);
-	INT get_label(INT x, INT y);
+	void polygon_idx_mp(int *Px, int *Py,
+			int *Idx, int n, int f_cycle);
+	void bezier_idx_mp(int *Px, int *Py,
+			int *Idx, int n, int f_cycle);
+	void color_tikz(ofstream &fp, int color);
+	void fill_idx_mp(int *Px, int *Py, int *Idx, int n, 
+		const char *symbol, int f_cycle);
+	void output_xy_metapost(int x, int y);
+	void output_x_metapost(int x);
+	void output_y_metapost(int y);
+	int get_label(int x, int y);
 	void get_alignment_mp(char *align);
 	void line_thickness_mp();
 
@@ -391,23 +391,23 @@ public:
 	void header_tikz(char *str_date);
 	void footer_tikz();
 	void comment_tikz(const char *p);
-	void text_tikz(INT x1, INT y1, const char *p);
-	void circle_tikz(INT x, INT y, INT rad);
-	void output_circle_text_tikz(INT x, INT y, INT idx, INT rad, 
+	void text_tikz(int x1, int y1, const char *p);
+	void circle_tikz(int x, int y, int rad);
+	void output_circle_text_tikz(int x, int y, int idx, int rad, 
 		const char *text);
 #if 0
-	void polygon_or_bezier_idx_tikz(INT *Px, INT *Py, INT *Idx, INT n, 
-		const char *symbol, INT f_cycle);
+	void polygon_or_bezier_idx_tikz(int *Px, int *Py, int *Idx, int n, 
+		const char *symbol, int f_cycle);
 #endif
-	void polygon_idx_tikz(INT *Px, INT *Py,
-			INT *Idx, INT n, INT f_cycle);
-	void bezier_idx_tikz(INT *Px, INT *Py,
-			INT *Idx, INT n, INT f_cycle);
-	void fill_idx_tikz(ofstream &fp, INT *Px, INT *Py, INT *Idx, INT n, 
-		const char *symbol, INT f_cycle);
-	void output_xy_tikz(INT x, INT y);
-	void output_x_tikz(INT x);
-	void output_y_tikz(INT y);
+	void polygon_idx_tikz(int *Px, int *Py,
+			int *Idx, int n, int f_cycle);
+	void bezier_idx_tikz(int *Px, int *Py,
+			int *Idx, int n, int f_cycle);
+	void fill_idx_tikz(ofstream &fp, int *Px, int *Py, int *Idx, int n, 
+		const char *symbol, int f_cycle);
+	void output_xy_tikz(int x, int y);
+	void output_x_tikz(int x);
+	void output_y_tikz(int y);
 
 
 
@@ -419,59 +419,59 @@ public:
 // plot.C:
 // #############################################################################
 
-void draw_density(char *prefix, INT *the_set, INT set_size,
-	INT f_title, const char *title, INT out_of, 
+void draw_density(char *prefix, int *the_set, int set_size,
+	int f_title, const char *title, int out_of, 
 	const char *label_x, 
-	INT f_circle, INT circle_at, INT circle_rad, 
-	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
-	INT xmax, INT ymax, INT offset_x, 
-	INT f_switch_x, INT no, INT f_embedded, 
-	INT verbose_level);
+	int f_circle, int circle_at, int circle_rad, 
+	int f_mu, int f_sigma, int nb_standard_deviations, 
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
+	int xmax, int ymax, int offset_x, 
+	int f_switch_x, int no, int f_embedded, 
+	int verbose_level);
 void draw_density_multiple_curves(char *prefix,
-	INT **Data, INT *Data_size, INT nb_data_sets, 
-	INT f_title, const char *title, INT out_of, 
+	int **Data, int *Data_size, int nb_data_sets, 
+	int f_title, const char *title, int out_of, 
 	const char *label_x, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
-	INT xmax, INT ymax, INT offset_x, INT f_switch_x, 
-	INT f_v_logarithmic, double log_base, INT no, INT f_embedded, 
-	INT verbose_level);
-void draw_density2(mp_graphics &G, INT no, 
-	INT *outline_value, INT *outline_number, INT outline_sz, 
-	INT min_value, INT max_value, INT offset_x, INT f_switch_x, 
-	INT f_title, const char *title, 
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
+	int xmax, int ymax, int offset_x, int f_switch_x, 
+	int f_v_logarithmic, double log_base, int no, int f_embedded, 
+	int verbose_level);
+void draw_density2(mp_graphics &G, int no, 
+	int *outline_value, int *outline_number, int outline_sz, 
+	int min_value, int max_value, int offset_x, int f_switch_x, 
+	int f_title, const char *title, 
 	const char *label_x, 
-	INT f_circle, INT circle_at, INT circle_rad, 
-	INT f_mu, INT f_sigma, INT nb_standard_deviations, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid);
-void draw_density2_multiple_curves(mp_graphics &G, INT no, 
-	INT **outline_value, INT **outline_number, 
-	INT *outline_sz, INT nb_curves, 
-	INT min_x, INT max_x, INT min_y, INT max_y, 
-	INT offset_x, INT f_switch_x, 
-	INT f_title, const char *title, 
+	int f_circle, int circle_at, int circle_rad, 
+	int f_mu, int f_sigma, int nb_standard_deviations, 
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid);
+void draw_density2_multiple_curves(mp_graphics &G, int no, 
+	int **outline_value, int **outline_number, 
+	int *outline_sz, int nb_curves, 
+	int min_x, int max_x, int min_y, int max_y, 
+	int offset_x, int f_switch_x, 
+	int f_title, const char *title, 
 	const char *label_x, 
-	INT f_v_grid, INT v_grid, INT f_h_grid, INT h_grid, 
-	INT f_v_logarithmic, double log_base);
+	int f_v_grid, int v_grid, int f_h_grid, int h_grid, 
+	int f_v_logarithmic, double log_base);
 void read_numbers_from_file(const char *fname, 
-	INT *&the_set, INT &set_size, INT verbose_level);
-void get_coord(INT *Px, INT *Py, INT idx, INT x, INT y, 
-	INT min_x, INT min_y, INT max_x, INT max_y, INT f_switch_x);
-void get_coord_log(INT *Px, INT *Py, INT idx, INT x, INT y, 
-	INT min_x, INT min_y, INT max_x, INT max_y, 
-	double log_base, INT f_switch_x);
-void y_to_pt_on_curve(INT y_in, INT &x, INT &y,  
-	INT *outline_value, INT *outline_number, INT outline_sz);
-void projective_plane_draw_grid(const char *fname, INT xmax, INT ymax, 
-	INT f_with_points, INT rad, 
-	INT q, INT *Table, INT nb, 
-	INT f_point_labels, char **Point_labels, 
-	INT f_embedded, INT f_sideways, 
-	INT verbose_level);
-void projective_plane_draw_grid2(mp_graphics &G, INT q, INT *Table, 
-	INT nb, INT f_with_points, INT rad, 
-	INT f_point_labels, char **Point_labels, INT verbose_level);
-void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3, 
+	int *&the_set, int &set_size, int verbose_level);
+void get_coord(int *Px, int *Py, int idx, int x, int y, 
+	int min_x, int min_y, int max_x, int max_y, int f_switch_x);
+void get_coord_log(int *Px, int *Py, int idx, int x, int y, 
+	int min_x, int min_y, int max_x, int max_y, 
+	double log_base, int f_switch_x);
+void y_to_pt_on_curve(int y_in, int &x, int &y,  
+	int *outline_value, int *outline_number, int outline_sz);
+void projective_plane_draw_grid(const char *fname, int xmax, int ymax, 
+	int f_with_points, int rad, 
+	int q, int *Table, int nb, 
+	int f_point_labels, char **Point_labels, 
+	int f_embedded, int f_sideways, 
+	int verbose_level);
+void projective_plane_draw_grid2(mp_graphics &G, int q, int *Table, 
+	int nb, int f_with_points, int rad, 
+	int f_point_labels, char **Point_labels, int verbose_level);
+void projective_plane_make_affine_point(int q, int x1, int x2, int x3, 
 	double &a, double &b);
 
 // #############################################################################
@@ -480,7 +480,7 @@ void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3,
 
 #define SCENE_MAX_LINES 100000
 #define SCENE_MAX_EDGES 100000
-#define SCENE_MAX_POINTS 100000
+#define SCENE_MAX_POintS 100000
 #define SCENE_MAX_PLANES 10000
 #define SCENE_MAX_QUADRICS 10000
 #define SCENE_MAX_CUBICS 10000
@@ -497,33 +497,33 @@ void projective_plane_make_affine_point(INT q, INT x1, INT x2, INT x3,
 class scene {
 public:
 	
-	INT nb_lines;
+	int nb_lines;
 	double *Line_coords;
 		// [nb_lines * 6] a line is given by two points
 	
-	INT nb_edges;
-	INT *Edge_points;
+	int nb_edges;
+	int *Edge_points;
 		// [nb_edges * 2]
 
-	INT nb_points;
+	int nb_points;
 	double *Point_coords;
 		// [nb_points * 3]
 
-	INT nb_planes;
+	int nb_planes;
 	double *Plane_coords;
 		// [nb_planes * 4]
 
-	INT nb_quadrics;
+	int nb_quadrics;
 	double *Quadric_coords;
 		// [nb_quadrics * 10]
 
-	INT nb_cubics;
+	int nb_cubics;
 	double *Cubic_coords;
 		// [nb_cubics * 20]
 
-	INT nb_faces;
-	INT *Nb_face_points; // [nb_faces]
-	INT **Face_points; // [nb_faces]
+	int nb_faces;
+	int *Nb_face_points; // [nb_faces]
+	int **Face_points; // [nb_faces]
 
 
 	
@@ -534,50 +534,50 @@ public:
 	~scene();
 	void null();
 	void freeself();
-	void init(INT verbose_level);
+	void init(int verbose_level);
 	scene *transformed_copy(double *A4, double *A4_inv, 
-		double rad, INT verbose_level);
+		double rad, int verbose_level);
 	void print();
 	void transform_lines(scene *S, double *A4, double *A4_inv, 
-		double rad, INT verbose_level);
+		double rad, int verbose_level);
 	void copy_edges(scene *S, double *A4, double *A4_inv, 
-		INT verbose_level);
+		int verbose_level);
 	void transform_points(scene *S, double *A4, double *A4_inv, 
-		INT verbose_level);
+		int verbose_level);
 	void transform_planes(scene *S, double *A4, double *A4_inv, 
-		INT verbose_level);
+		int verbose_level);
 	void transform_quadrics(scene *S, double *A4, double *A4_inv, 
-		INT verbose_level);
+		int verbose_level);
 	void transform_cubics(scene *S, double *A4, double *A4_inv, 
-		INT verbose_level);
+		int verbose_level);
 	void copy_faces(scene *S, double *A4, double *A4_inv, 
-		INT verbose_level);
-	INT line_pt_and_dir(double *x6, double rad);
-	INT line6(double *x6);
-	INT line(double x1, double x2, double x3, 
+		int verbose_level);
+	int line_pt_and_dir(double *x6, double rad);
+	int line6(double *x6);
+	int line(double x1, double x2, double x3, 
 		double y1, double y2, double y3);
-	INT line_through_two_points(INT pt1, INT pt2, 
+	int line_through_two_points(int pt1, int pt2, 
 		double rad);
-	INT edge(INT pt1, INT pt2);
-	void points(double *Coords, INT nb_points);
-	INT point(double x1, double x2, double x3);
-	INT point_center_of_mass_of_face(INT face_idx);
-	INT point_center_of_mass_of_edge(INT edge_idx);
-	INT point_center_of_mass(INT *Pt_idx, INT nb_pts);
-	INT triangle(INT line1, INT line2, INT line3, INT verbose_level);
-	INT point_as_intersection_of_two_lines(INT line1, INT line2);
-	INT plane_from_dual_coordinates(double *x4);
-	INT plane(double x1, double x2, double x3, double a);
+	int edge(int pt1, int pt2);
+	void points(double *Coords, int nb_points);
+	int point(double x1, double x2, double x3);
+	int point_center_of_mass_of_face(int face_idx);
+	int point_center_of_mass_of_edge(int edge_idx);
+	int point_center_of_mass(int *Pt_idx, int nb_pts);
+	int triangle(int line1, int line2, int line3, int verbose_level);
+	int point_as_intersection_of_two_lines(int line1, int line2);
+	int plane_from_dual_coordinates(double *x4);
+	int plane(double x1, double x2, double x3, double a);
 		// A plane is called a polynomial shape because 
 		// it is defined by a first order polynomial equation. 
 		// Given a plane: plane { <A, B, C>, D }
 		// it can be represented by the equation 
 		// A*x + B*y + C*z - D*sqrt(A^2 + B^2 + C^2) = 0.
 		// see http://www.povray.org/documentation/view/3.6.1/297/
-	INT plane_through_three_points(INT pt1, INT pt2, INT pt3);
-	INT quadric_through_three_lines(INT line_idx1, 
-		INT line_idx2, INT line_idx3, INT verbose_level);
-	INT quadric(double *coeff);
+	int plane_through_three_points(int pt1, int pt2, int pt3);
+	int quadric_through_three_lines(int line_idx1, 
+		int line_idx2, int line_idx3, int verbose_level);
+	int quadric(double *coeff);
 	// povray ordering of monomials:
 	// http://www.povray.org/documentation/view/3.6.1/298/
 	// 1: x^2
@@ -590,7 +590,7 @@ public:
 	// 8: z^2
 	// 9: z
 	// 10: 1
-	INT cubic(double *coeff);
+	int cubic(double *coeff);
 	// povray ordering of monomials:
 	// http://www.povray.org/documentation/view/3.6.1/298/
 	// 1: x^3
@@ -613,28 +613,28 @@ public:
 	// 18: z^2
 	// 19: z
 	// 20: 1
-	INT face(INT *pts, INT nb_pts);
-	INT face3(INT pt1, INT pt2, INT pt3);
-	INT face4(INT pt1, INT pt2, INT pt3, INT pt4);
-	INT face5(INT pt1, INT pt2, INT pt3, INT pt4, INT pt5);
-	void draw_lines_with_selection(INT *selection, INT nb_select, 
+	int face(int *pts, int nb_pts);
+	int face3(int pt1, int pt2, int pt3);
+	int face4(int pt1, int pt2, int pt3, int pt4);
+	int face5(int pt1, int pt2, int pt3, int pt4, int pt5);
+	void draw_lines_with_selection(int *selection, int nb_select, 
 		double r, const char *options, ostream &ost);
-	void draw_line_with_selection(INT line_idx, 
+	void draw_line_with_selection(int line_idx, 
 		double r, const char *options, ostream &ost);
-	void draw_lines_cij_with_selection(INT *selection, INT nb_select, 
+	void draw_lines_cij_with_selection(int *selection, int nb_select, 
 		ostream &ost);
 	void draw_lines_cij(ostream &ost);
-	void draw_lines_ai_with_selection(INT *selection, INT nb_select, 
+	void draw_lines_ai_with_selection(int *selection, int nb_select, 
 		ostream &ost);
 	void draw_lines_ai(ostream &ost);
-	void draw_lines_bj_with_selection(INT *selection, INT nb_select, 
+	void draw_lines_bj_with_selection(int *selection, int nb_select, 
 		ostream &ost);
 	void draw_lines_bj(ostream &ost);
-	void draw_edges_with_selection(INT *selection, INT nb_select, 
+	void draw_edges_with_selection(int *selection, int nb_select, 
 		double rad, const char *options, ostream &ost);
-	void draw_faces_with_selection(INT *selection, INT nb_select, 
+	void draw_faces_with_selection(int *selection, int nb_select, 
 		double thickness_half, const char *options, ostream &ost);
-	void draw_face(INT idx, double thickness_half, const char *options, 
+	void draw_face(int idx, double thickness_half, const char *options, 
 		ostream &ost);
 	void draw_text(const char *text, double thickness_half, double extra_spacing, 
 			double scale, 
@@ -643,54 +643,54 @@ public:
 			double x, double y, double z, 
 			double up_x, double up_y, double up_z, 
 			double view_x, double view_y, double view_z, 
-			ostream &ost, INT verbose_level);
-	void draw_planes_with_selection(INT *selection, INT nb_select, 
+			ostream &ost, int verbose_level);
+	void draw_planes_with_selection(int *selection, int nb_select, 
 		const char *options, ostream &ost);
-	void draw_points_with_selection(INT *selection, INT nb_select, 
+	void draw_points_with_selection(int *selection, int nb_select, 
 		double rad, const char *options, ostream &ost);
-	void draw_cubic_with_selection(INT *selection, INT nb_select, 
+	void draw_cubic_with_selection(int *selection, int nb_select, 
 		const char *options, ostream &ost);
-	void draw_quadric_with_selection(INT *selection, INT nb_select, 
+	void draw_quadric_with_selection(int *selection, int nb_select, 
 		const char *options, ostream &ost);
-	INT intersect_line_and_plane(INT line_idx, INT plane_idx, 
-		INT &intersection_point_idx, 
-		INT verbose_level);
-	INT intersect_line_and_line(INT line1_idx, INT line2_idx, 
+	int intersect_line_and_plane(int line_idx, int plane_idx, 
+		int &intersection_point_idx, 
+		int verbose_level);
+	int intersect_line_and_line(int line1_idx, int line2_idx, 
 		double &lambda, 
-		INT verbose_level);
+		int verbose_level);
 #if 0
-	INT line_centered(double *pt1_in, double *pt2_in, 
+	int line_centered(double *pt1_in, double *pt2_in, 
 		double *pt1_out, double *pt2_out, 
 		double r);
 #endif
-	INT line_extended(double x1, double x2, double x3, 
+	int line_extended(double x1, double x2, double x3, 
 		double y1, double y2, double y3, 
 		double r);
-	void map_a_line(INT line1, INT line2, 
-		INT plane_idx, INT line_idx, double spread, 
-		INT nb_pts, 
-		INT *New_line_idx, INT &nb_new_lines, 
-		INT *New_pt_idx, INT &nb_new_points, INT verbose_level);
-	INT map_a_point(INT line1, INT line2, 
-		INT plane_idx, double pt_in[3], 
-		INT &new_line_idx, INT &new_pt_idx, 
-		INT verbose_level);
+	void map_a_line(int line1, int line2, 
+		int plane_idx, int line_idx, double spread, 
+		int nb_pts, 
+		int *New_line_idx, int &nb_new_lines, 
+		int *New_pt_idx, int &nb_new_points, int verbose_level);
+	int map_a_point(int line1, int line2, 
+		int plane_idx, double pt_in[3], 
+		int &new_line_idx, int &new_pt_idx, 
+		int verbose_level);
 	void lines_a();
 	void lines_b();
 	void lines_cij();
 	void Eckardt_points();
 	void fourD_cube(double rad_desired);
-	void rescale(INT first_pt_idx, double rad_desired);
-	double euclidean_distance(INT pt1, INT pt2);
-	double distance_from_origin(INT pt);
-	void fourD_cube_edges(INT first_pt_idx);
-	void hypercube(INT n, double rad_desired);
+	void rescale(int first_pt_idx, double rad_desired);
+	double euclidean_distance(int pt1, int pt2);
+	double distance_from_origin(int pt);
+	void fourD_cube_edges(int first_pt_idx);
+	void hypercube(int n, double rad_desired);
 	void Dodecahedron_points();
-	void Dodecahedron_edges(INT first_pt_idx);
-	void Dodecahedron_planes(INT first_pt_idx);
+	void Dodecahedron_edges(int first_pt_idx);
+	void Dodecahedron_planes(int first_pt_idx);
 	void tritangent_planes();
 	void clebsch_cubic();
-	double distance_between_two_points(INT pt1, INT pt2);
+	double distance_between_two_points(int pt1, int pt2);
 	void create_five_plus_one();
 	void create_Hilbert_model();
 
@@ -711,30 +711,30 @@ public:
 
 	tree_node *root;
 	
-	INT nb_nodes;
-	INT max_depth;
+	int nb_nodes;
+	int max_depth;
 	
-	INT *path;
+	int *path;
 
-	INT f_count_leaves;
-	INT leaf_count;
+	int f_count_leaves;
+	int leaf_count;
 
 	tree();
 	~tree();
-	void init(const char *fname, INT xmax, INT ymax, INT verbose_level);
-	void draw(char *fname, INT xmax_in, INT ymax_in, INT xmax, INT ymax, 
-		INT rad, 
-		INT f_circle, INT f_circletext, INT f_i, INT f_edge_labels, 
-		INT f_has_draw_vertex_callback, 
+	void init(const char *fname, int xmax, int ymax, int verbose_level);
+	void draw(char *fname, int xmax_in, int ymax_in, int xmax, int ymax, 
+		int rad, 
+		int f_circle, int f_circletext, int f_i, int f_edge_labels, 
+		int f_has_draw_vertex_callback, 
 		void (*draw_vertex_callback)(tree *T, mp_graphics *G, 
-			INT *v, INT layer, tree_node *N, 
-			INT x, INT y, INT dx, INT dy), 
-		INT f_embedded, INT f_sideways, INT f_on_circle, 
+			int *v, int layer, tree_node *N, 
+			int x, int y, int dx, int dy), 
+		int f_embedded, int f_sideways, int f_on_circle, 
 		double tikz_global_scale, double tikz_global_line_width
 		);
-	void circle_center_and_radii(INT xmax, INT ymax, INT max_depth, 
-		INT &x0, INT &y0, INT *&rad);
-	void compute_DFS_ranks(INT &nb_nodes, INT verbose_level);
+	void circle_center_and_radii(int xmax, int ymax, int max_depth, 
+		int &x0, int &y0, int *&rad);
+	void compute_DFS_ranks(int &nb_nodes, int verbose_level);
 };
 
 // #############################################################################
@@ -749,63 +749,63 @@ class tree_node {
 
 public:
 	tree_node *parent;
-	INT depth;
-	INT f_value;
-	INT value;
+	int depth;
+	int f_value;
+	int value;
 	
-	INT f_int_data;
-	INT int_data;
+	int f_int_data;
+	int int_data;
 	char *char_data;
-	INT nb_children;
+	int nb_children;
 	tree_node **children;
 
-	INT weight;
-	INT placement_x;
-	INT placement_y;
-	INT width;
+	int weight;
+	int placement_x;
+	int placement_y;
+	int width;
 
-	INT DFS_rank;
+	int DFS_rank;
 
 	tree_node();
 	~tree_node();
-	void init(INT depth, tree_node *parent, INT f_value, INT value, 
-		INT f_i_data, INT i_data, char *c_data, INT verbose_level);
+	void init(int depth, tree_node *parent, int f_value, int value, 
+		int f_i_data, int i_data, char *c_data, int verbose_level);
 	void print_path();
 	void print_depth_first();
-	void compute_DFS_rank(INT &rk);
-	void get_coordinates(INT &idx, INT *coord_xy);
-	void get_coordinates_and_width(INT &idx, INT *coord_xyw);
+	void compute_DFS_rank(int &rk);
+	void get_coordinates(int &idx, int *coord_xy);
+	void get_coordinates_and_width(int &idx, int *coord_xyw);
 	void calc_weight();
-	void place_xy(INT left, INT right, INT ymax, INT max_depth);
-	void place_on_circle(INT xmax, INT ymax, INT max_depth);
-	void add_node(INT l, INT depth, INT *path, INT i_data, char *c_data, 
-		INT verbose_level);
-	INT find_child(INT val);
-	void get_values(INT *v);
-	void draw_edges(mp_graphics &G, INT rad, INT f_circle, 
-		INT f_circletext, INT f_i, 
-		INT f_has_parent, INT parent_x, INT parent_y, 
-		INT max_depth, INT f_edge_labels, 
-		INT f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, INT *v, 
-			INT layer, tree_node *N, INT x, INT y, INT dx, INT dy),
+	void place_xy(int left, int right, int ymax, int max_depth);
+	void place_on_circle(int xmax, int ymax, int max_depth);
+	void add_node(int l, int depth, int *path, int i_data, char *c_data, 
+		int verbose_level);
+	int find_child(int val);
+	void get_values(int *v);
+	void draw_edges(mp_graphics &G, int rad, int f_circle, 
+		int f_circletext, int f_i, 
+		int f_has_parent, int parent_x, int parent_y, 
+		int max_depth, int f_edge_labels, 
+		int f_has_draw_vertex_callback, 
+		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, 
+			int layer, tree_node *N, int x, int y, int dx, int dy),
 		tree *T
 		);
-	void draw_vertices(mp_graphics &G, INT rad, INT f_circle, 
-		INT f_circletext, INT f_i, 
-		INT f_has_parent, INT parent_x, INT parent_y, INT max_depth, 
-		INT f_edge_labels, 
-		INT f_has_draw_vertex_callback, 
-		void (*draw_vertex_callback)(tree *T, mp_graphics *G, INT *v, 
-			INT layer, tree_node *N, INT x, INT y, INT dx, INT dy),
+	void draw_vertices(mp_graphics &G, int rad, int f_circle, 
+		int f_circletext, int f_i, 
+		int f_has_parent, int parent_x, int parent_y, int max_depth, 
+		int f_edge_labels, 
+		int f_has_draw_vertex_callback, 
+		void (*draw_vertex_callback)(tree *T, mp_graphics *G, int *v, 
+			int layer, tree_node *N, int x, int y, int dx, int dy),
 		tree *T
 		);
-	void draw_sideways(mp_graphics &G, INT f_circletext, INT f_i, 
-		INT f_has_parent, INT parent_x, INT parent_y, 
-		INT max_depth, INT f_edge_labels);
+	void draw_sideways(mp_graphics &G, int f_circletext, int f_i, 
+		int f_has_parent, int parent_x, int parent_y, 
+		int max_depth, int f_edge_labels);
 };
 
-INT tree_node_calc_y_coordinate(INT ymax, INT l, INT max_depth);
+int tree_node_calc_y_coordinate(int ymax, int l, int max_depth);
 
 
 

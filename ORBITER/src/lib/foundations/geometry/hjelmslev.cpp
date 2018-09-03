@@ -37,20 +37,20 @@ void hjelmslev::freeself()
 		FREE_OBJECT(G);
 		}
 	if (Mtx) {
-		FREE_INT(Mtx);
+		FREE_int(Mtx);
 		}
 	if (base_cols) {
-		FREE_INT(base_cols);
+		FREE_int(base_cols);
 		}
 	if (v) {
-		FREE_INT(v);
+		FREE_int(v);
 		}
 	null();
 }
 
-void hjelmslev::init(finite_ring *R, INT n, INT k, INT verbose_level)
+void hjelmslev::init(finite_ring *R, int n, int k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "hjelmslev::init n=" << n << " k=" << k << " q=" << R->q << endl;
@@ -64,24 +64,24 @@ void hjelmslev::init(finite_ring *R, INT n, INT k, INT verbose_level)
 		}
 	G = NEW_OBJECT(grassmann);
 	G->init(n, k, R->Fp, verbose_level);
-	Mtx = NEW_INT(k * n);
-	base_cols = NEW_INT(n);
-	v = NEW_INT(k * (n - k));
+	Mtx = NEW_int(k * n);
+	base_cols = NEW_int(n);
+	v = NEW_int(k * (n - k));
 }
 
-INT hjelmslev::number_of_submodules()
+int hjelmslev::number_of_submodules()
 {
 	return n_choose_k_p * i_power_j(R->p, (R->e - 1) * k * (n - k));
 }
 
-void hjelmslev::unrank_INT(INT *M, INT rk, INT verbose_level)
+void hjelmslev::unrank_int(int *M, int rk, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT a, b, c, i, j, h;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, b, c, i, j, h;
 	
 	if (f_v) {
-		cout << "hjelmslev::unrank_INT " << rk << endl;
+		cout << "hjelmslev::unrank_int " << rk << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	if (k == 0) {
@@ -92,11 +92,11 @@ void hjelmslev::unrank_INT(INT *M, INT rk, INT verbose_level)
 	if (f_vv) {
 		cout << "rk=" << rk << " a=" << a << " b=" << b << endl;
 		}
-	G->unrank_INT(a, 0);
+	G->unrank_int(a, 0);
 	AG_element_unrank(R->e, v, 1, k * (n - k), b);
 	if (f_vv) {
 		print_integer_matrix_width(cout, G->M, k, n, n, 5);
-		INT_vec_print(cout, v, k * (n - k));
+		int_vec_print(cout, v, k * (n - k));
 		cout << endl;
 		}
 	for (i = 0; i < k * n; i++) {
@@ -114,38 +114,38 @@ void hjelmslev::unrank_INT(INT *M, INT rk, INT verbose_level)
 		}
 }
 
-INT hjelmslev::rank_INT(INT *M, INT verbose_level)
+int hjelmslev::rank_int(int *M, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT a, b, c, i, j, h, rk, rk_mtx;
-	INT f_special = FALSE;
-	INT f_complete = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, b, c, i, j, h, rk, rk_mtx;
+	int f_special = FALSE;
+	int f_complete = TRUE;
 	
 	if (f_v) {
-		cout << "hjelmslev::rank_INT " << endl;
+		cout << "hjelmslev::rank_int " << endl;
 		print_integer_matrix_width(cout, M, k, n, n, 5);
 		cout << "verbose_level=" << verbose_level << endl;
 		}
 	for (i = 0; i < k * n; i++) {
 		Mtx[i] = M[i];
 		}
-	rk_mtx = R->Gauss_INT(Mtx, f_special, f_complete, base_cols, FALSE, NULL, k, n, n, 0);
+	rk_mtx = R->Gauss_int(Mtx, f_special, f_complete, base_cols, FALSE, NULL, k, n, n, 0);
 	if (f_v) {
-		cout << "hjelmslev::rank_INT after Gauss, rk_mtx=" << rk_mtx << endl;
+		cout << "hjelmslev::rank_int after Gauss, rk_mtx=" << rk_mtx << endl;
 		print_integer_matrix_width(cout, Mtx, k, n, n, 5);
 		cout << "base_cols=";
-		INT_vec_print(cout, base_cols, rk_mtx);
+		int_vec_print(cout, base_cols, rk_mtx);
 		cout << endl;
 		}
-	INT_vec_complement(base_cols, n, k);
+	int_vec_complement(base_cols, n, k);
 	if (rk_mtx != k) {
-		cout << "hjelmslev::rank_INT fatal: rk_mtx != k" << endl;
+		cout << "hjelmslev::rank_int fatal: rk_mtx != k" << endl;
 		exit(1);
 		}
 	if (f_v) {
 		cout << "complement:";
-		INT_vec_print(cout, base_cols + k, n - k);
+		int_vec_print(cout, base_cols + k, n - k);
 		cout << endl;
 		}
 	for (j = 0; j < n - k; j++) {
@@ -161,14 +161,14 @@ INT hjelmslev::rank_INT(INT *M, INT verbose_level)
 		G->M[i] = Mtx[i];
 		}
 	if (f_vv) {
-		INT_vec_print(cout, v, k * (n - k));
+		int_vec_print(cout, v, k * (n - k));
 		cout << endl;
 		}
 	AG_element_rank(R->e, v, 1, k * (n - k), b);
-	a = G->rank_INT(0);
+	a = G->rank_int(0);
 	rk = b * n_choose_k_p + a;
 	if (f_v) {
-		cout << "hjelmslev::rank_INT rk=" << rk << " a=" << a << " b=" << b << endl;
+		cout << "hjelmslev::rank_int rk=" << rk << " a=" << a << " b=" << b << endl;
 		}
 	return rk;
 }

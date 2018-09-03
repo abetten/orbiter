@@ -28,9 +28,9 @@ void action_on_bricks::free()
 }
 
 void action_on_bricks::init(action *A, brick_domain *B, 
-	INT f_linear_action, INT verbose_level)
+	int f_linear_action, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "action_on_bricks::init q=" << B->q << " f_linear_action=" << f_linear_action << endl;
@@ -47,7 +47,7 @@ void action_on_bricks::init(action *A, brick_domain *B,
 		}
 }
 
-void action_on_bricks::compute_image(INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_bricks::compute_image(int *Elt, int i, int &j, int verbose_level)
 {
 	if (f_linear_action) {
 		compute_image_linear_action(Elt, i, j, verbose_level);
@@ -57,13 +57,13 @@ void action_on_bricks::compute_image(INT *Elt, INT i, INT &j, INT verbose_level)
 		}
 }
 
-void action_on_bricks::compute_image_linear_action(INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_bricks::compute_image_linear_action(int *Elt, int i, int &j, int verbose_level)
 {
 	//verbose_level = 3; // !!!
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT v[3], w[3], rk_v, rk_w;
-	INT vv[3], ww[3], rk_vv, rk_ww;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int v[3], w[3], rk_v, rk_w;
+	int vv[3], ww[3], rk_vv, rk_ww;
 
 	if (f_v) {
 		cout << "action_on_bricks::compute_image i = " << i << endl;
@@ -77,10 +77,10 @@ void action_on_bricks::compute_image_linear_action(INT *Elt, INT i, INT &j, INT 
 	w[2] = 1;
 	if (f_v) {
 		cout << "action_on_bricks::compute_image v=";
-		INT_vec_print(cout, v, 3);
+		int_vec_print(cout, v, 3);
 		cout << endl;
 		cout << "action_on_bricks::compute_image w=";
-		INT_vec_print(cout, w, 3);
+		int_vec_print(cout, w, 3);
 		cout << endl;
 		}
 	
@@ -102,10 +102,10 @@ void action_on_bricks::compute_image_linear_action(INT *Elt, INT i, INT &j, INT 
 	PG_element_unrank_modified(*B->F, ww, 1, 3, rk_ww);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image vv=";
-		INT_vec_print(cout, vv, 3);
+		int_vec_print(cout, vv, 3);
 		cout << endl;
 		cout << "action_on_bricks::compute_image ww=";
-		INT_vec_print(cout, ww, 3);
+		int_vec_print(cout, ww, 3);
 		cout << endl;
 		}
 	if (vv[2] == 0) {
@@ -120,10 +120,10 @@ void action_on_bricks::compute_image_linear_action(INT *Elt, INT i, INT &j, INT 
 	PG_element_normalize(*B->F, ww, 1, 3);
 	if (f_v) {
 		cout << "action_on_bricks::compute_image after normalize vv=";
-		INT_vec_print(cout, vv, 3);
+		int_vec_print(cout, vv, 3);
 		cout << endl;
 		cout << "action_on_bricks::compute_image after normalize ww=";
-		INT_vec_print(cout, ww, 3);
+		int_vec_print(cout, ww, 3);
 		cout << endl;
 		}
 	j = B->rank_coordinates(vv[0], vv[1], ww[0], ww[1], 0);
@@ -133,13 +133,13 @@ void action_on_bricks::compute_image_linear_action(INT *Elt, INT i, INT &j, INT 
 		}
 }
 
-void action_on_bricks::compute_image_permutation_action(INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_bricks::compute_image_permutation_action(int *Elt, int i, int &j, int verbose_level)
 {
 	//verbose_level = 3; // !!!
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT x0, y0, x1, y1, x2, y2, x3, y3;
-	INT a, b, c, d;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int x0, y0, x1, y1, x2, y2, x3, y3;
+	int a, b, c, d;
 
 	if (f_v) {
 		cout << "action_on_bricks::compute_image_permutation_action i = " << i << endl;

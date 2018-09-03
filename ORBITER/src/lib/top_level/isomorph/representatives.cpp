@@ -34,14 +34,14 @@ representatives::~representatives()
 
 void representatives::free()
 {
-	INT i;
-	INT f_v = TRUE;
+	int i;
+	int f_v = TRUE;
 
 	if (f_v) {
 		cout << "representatives::free" << endl;
 		}
 	if (rep) {
-		FREE_INT(rep);
+		FREE_int(rep);
 		rep = NULL;
 		}
 	if (stab) {
@@ -55,28 +55,28 @@ void representatives::free()
 		stab = NULL;
 		}
 	if (fusion) {
-		FREE_INT(fusion);
+		FREE_int(fusion);
 		fusion = NULL;
 		}
 	if (handle) {
-		FREE_INT(handle);
+		FREE_int(handle);
 		handle = NULL;
 		}
 	if (Elt1) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		Elt1 = NULL;
 		}
 	if (tl) {
-		FREE_INT(tl);
+		FREE_int(tl);
 		tl = NULL;
 		}
 }
 
 void representatives::init(action *A,
-		INT nb_objects, char *prefix, INT verbose_level)
+		int nb_objects, char *prefix, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 
 	if (f_v) {
 		cout << "representatives::init prefix=" << prefix << endl;
@@ -86,12 +86,12 @@ void representatives::init(action *A,
 	strcpy(representatives::prefix, prefix);
 	
 	
-	rep = NEW_INT(nb_objects);
+	rep = NEW_int(nb_objects);
 	stab = new psims[nb_objects];
-	fusion = NEW_INT(nb_objects);
-	handle = NEW_INT(nb_objects);
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	tl = NEW_INT(A->base_len);
+	fusion = NEW_int(nb_objects);
+	handle = NEW_int(nb_objects);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	tl = NEW_int(A->base_len);
 
 	count = 0;
 	for (i = 0; i < nb_objects; i++) {
@@ -105,12 +105,12 @@ void representatives::init(action *A,
 	sprintf(fname_fusion_ge, "%sclassification_fusion_ge.bin", prefix);
 }
 
-void representatives::write_fusion(INT verbose_level)
+void representatives::write_fusion(int verbose_level)
 // Writes fusion[] and handle[]
 // If the object is a chosen representative for an isomorphism type 
 // (i.e., if fusion[i] == i) then the identity element is written.
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "representatives::write_fusion" << endl;
@@ -118,7 +118,7 @@ void representatives::write_fusion(INT verbose_level)
 	{
 	ofstream f1(fname_fusion);
 	FILE *f2;
-	INT i;
+	int i;
 	
 	f2 = fopen(fname_fusion_ge, "wb");
 	
@@ -151,11 +151,11 @@ void representatives::write_fusion(INT verbose_level)
 	
 }
 
-void representatives::read_fusion(INT verbose_level)
+void representatives::read_fusion(int verbose_level)
 // Reads fusion[] and handle[]
 {
-	INT f_v = (verbose_level >= 1);
-	INT a, b, i;
+	int f_v = (verbose_level >= 1);
+	int a, b, i;
 
 	if (f_v) {
 		cout << "representatives::read_fusion nb_objects="
@@ -205,9 +205,9 @@ void representatives::read_fusion(INT verbose_level)
 }
 
 void representatives::write_representatives_and_stabilizers(
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "representatives::write_representatives_"
@@ -216,7 +216,7 @@ void representatives::write_representatives_and_stabilizers(
 	{
 	ofstream f1(fname_rep);
 	FILE *f2;
-	INT i, j, cnt = 0;
+	int i, j, cnt = 0;
 
 	f2 = fopen(fname_stabgens, "wb");
 	
@@ -271,10 +271,10 @@ void representatives::write_representatives_and_stabilizers(
 }
 
 void representatives::read_representatives_and_stabilizers(
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE;//(verbose_level >=2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;//(verbose_level >=2);
 	
 	if (f_v) {
 		cout << "representatives::read_representatives_and_"
@@ -285,7 +285,7 @@ void representatives::read_representatives_and_stabilizers(
 	{
 	ifstream f1(fname_rep);
 	FILE *f2;
-	INT i, j, /*first,*/ len, a, b, c, d, e;
+	int i, j, /*first,*/ len, a, b, c, d, e;
 	
 	f2 = fopen(fname_stabgens, "rb");
 	
@@ -336,7 +336,7 @@ void representatives::read_representatives_and_stabilizers(
 				cout << endl;
 				}
 			cout << "transversal lengths:" << endl;
-			INT_vec_print(cout, tl, A->base_len);
+			int_vec_print(cout, tl, A->base_len);
 			cout << endl;
 			}
 		Stab->init(A);
@@ -362,9 +362,9 @@ void representatives::read_representatives_and_stabilizers(
 		}
 }
 
-void representatives::save(INT verbose_level)
+void representatives::save(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "representatives::save" << endl;
@@ -376,9 +376,9 @@ void representatives::save(INT verbose_level)
 		}
 }
 
-void representatives::load(INT verbose_level)
+void representatives::load(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "representatives::load" << endl;
@@ -393,7 +393,7 @@ void representatives::load(INT verbose_level)
 
 void representatives::calc_fusion_statistics()
 {
-	INT i;
+	int i;
 	
 	nb_open = 0;
 	nb_reps = 0;

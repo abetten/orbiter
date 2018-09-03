@@ -13,28 +13,28 @@
 
 
 static page_table **btree_page_table = NULL;
-static INT *btree_page_table_f_used = NULL;
+static int *btree_page_table_f_used = NULL;
 
 
 
 
 
-static INT btree_page_registry_key_pair_compare_void_void(void *K1v, void *K2v);
+static int btree_page_registry_key_pair_compare_void_void(void *K1v, void *K2v);
 
 // ##########################################################################################################
 // global function
 // ##########################################################################################################
 
-void page_table_init(INT verbose_level)
+void page_table_init(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "page_table_init" << endl;
 		}
 	btree_page_table = new ppage_table[MAX_BTREE_PAGE_TABLE];
-	btree_page_table_f_used = new INT[MAX_BTREE_PAGE_TABLE];
+	btree_page_table_f_used = new int[MAX_BTREE_PAGE_TABLE];
 	
 	for (i = 0; i < MAX_BTREE_PAGE_TABLE; i++) {
 		btree_page_table[i] = NULL;
@@ -43,9 +43,9 @@ void page_table_init(INT verbose_level)
 	
 }
 
-void page_table_exit(INT verbose_level)
+void page_table_exit(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "page_table_exit" << endl;
@@ -61,11 +61,11 @@ void page_table_exit(INT verbose_level)
 	
 }
 
-INT page_table_alloc(INT verbose_level)
+int page_table_alloc(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "page_table_alloc, verbose_level=" << verbose_level << endl;
@@ -90,10 +90,10 @@ INT page_table_alloc(INT verbose_level)
 	exit(1);
 }
 
-void page_table_free(INT idx, INT verbose_level)
+void page_table_free(int idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "page_table_free freeing slot " << idx << endl;
@@ -122,7 +122,7 @@ void page_table_free(INT idx, INT verbose_level)
 		}
 }
 
-page_table *page_table_pointer(INT slot)
+page_table *page_table_pointer(int slot)
 {
 	page_table *T;
 	
@@ -140,7 +140,7 @@ page_table *page_table_pointer(INT slot)
 }
 
 
-static INT btree_page_registry_key_pair_compare_void_void(void *K1v, void *K2v)
+static int btree_page_registry_key_pair_compare_void_void(void *K1v, void *K2v)
 {
 	btree_page_registry_key_pair *K1, *K2;
 
@@ -189,17 +189,17 @@ page_table::~page_table()
 	//cout << "page_table::~page_table done" << endl;
 }
 
-void page_table::init(INT verbose_level)
+void page_table::init(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "page_table::init, verbose_level=" << verbose_level << endl;
 		}
 	btree_pages = new page_storage;
 	
-	INT page_length_log = BTREE_PAGE_LENGTH_LOG;
+	int page_length_log = BTREE_PAGE_LENGTH_LOG;
 	
 	btree_pages->init(
 		sizeof(PageTyp), 
@@ -215,12 +215,12 @@ void page_table::init(INT verbose_level)
 	btree_table = new btree_page_registry_key_pair[btree_page_registry_allocated_length];
 }
 
-void page_table::reallocate_table(INT verbose_level)
+void page_table::reallocate_table(int verbose_level)
 {
-	INT new_length, i;
+	int new_length, i;
 	
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 1);
 	
 	if (f_vv) {
 		cout << "page_table::reallocate_table" << endl;
@@ -246,7 +246,7 @@ void page_table::reallocate_table(INT verbose_level)
 
 void page_table::print()
 {
-	INT i;
+	int i;
 	
 	cout << "page registry of length " << btree_page_registry_length << endl;
 	cout << "i : x : idx : ref" << endl;
@@ -258,7 +258,7 @@ void page_table::print()
 		}
 }
 
-INT page_table::search(INT len, INT btree_idx, INT btree_x, INT &idx)
+int page_table::search(int len, int btree_idx, int btree_x, int &idx)
 {
 	btree_page_registry_key_pair K;
 	
@@ -267,11 +267,11 @@ INT page_table::search(INT len, INT btree_idx, INT btree_x, INT &idx)
 	return page_table::search_key_pair(len, &K, idx);
 }
 
-INT page_table::search_key_pair(INT len, btree_page_registry_key_pair *K, INT &idx)
+int page_table::search_key_pair(int len, btree_page_registry_key_pair *K, int &idx)
 {
-	INT l, r, m, c;
+	int l, r, m, c;
 	//void *res;
-	INT f_found = FALSE;
+	int f_found = FALSE;
 	
 	if (len == 0) {
 		idx = 0;
@@ -310,10 +310,10 @@ INT page_table::search_key_pair(INT len, btree_page_registry_key_pair *K, INT &i
 	return f_found;
 }
 
-void page_table::save_page(Buffer *BF, INT buf_idx, INT verbose_level)
+void page_table::save_page(Buffer *BF, int buf_idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT x, idx, ref;
+	int f_v = (verbose_level >= 1);
+	int x, idx, ref;
 	PageTyp *P;
 	
 	if (f_v) {
@@ -349,10 +349,10 @@ void page_table::save_page(Buffer *BF, INT buf_idx, INT verbose_level)
 	*P = BF->Page;
 }
 
-INT page_table::load_page(Buffer *BF, INT x, INT buf_idx, INT verbose_level)
+int page_table::load_page(Buffer *BF, int x, int buf_idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT idx, ref;
+	int f_v = (verbose_level >= 1);
+	int idx, ref;
 	PageTyp *P;
 	
 	if (f_v) {
@@ -375,11 +375,11 @@ INT page_table::load_page(Buffer *BF, INT x, INT buf_idx, INT verbose_level)
 	return TRUE;
 }
 
-void page_table::allocate_rec(Buffer *BF, INT buf_idx, INT x, INT verbose_level)
+void page_table::allocate_rec(Buffer *BF, int buf_idx, int x, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ref;
-	INT idx, i;
+	int f_v = (verbose_level >= 1);
+	int ref;
+	int idx, i;
 
 	if (f_v) {
 		cout << "page_table::allocate_rec x=" << x << endl;
@@ -410,10 +410,10 @@ void page_table::allocate_rec(Buffer *BF, INT buf_idx, INT x, INT verbose_level)
 		}*/
 }
 
-void page_table::write_pages_to_file(btree *B, INT buf_idx, INT verbose_level)
+void page_table::write_pages_to_file(btree *B, int buf_idx, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, ref, x;
+	int f_v = (verbose_level >= 1);
+	int i, ref, x;
 	PageTyp *P;
 
 	if (f_v) {

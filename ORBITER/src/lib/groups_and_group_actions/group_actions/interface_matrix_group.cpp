@@ -19,12 +19,12 @@
 
 
 
-INT matrix_group_element_image_of(action &A, INT a, void *elt, INT verbose_level)
+int matrix_group_element_image_of(action &A, int a, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT b;
+	int *Elt = (int *) elt;
+	int b;
 	
 	if (f_v) {
 		cout << "matrix_group_element_image_of computing image of " << a << endl;
@@ -37,15 +37,15 @@ INT matrix_group_element_image_of(action &A, INT a, void *elt, INT verbose_level
 	return b;
 }
 
-void matrix_group_element_image_of_low_level(action &A, INT *input, INT *output, void *elt, INT verbose_level)
+void matrix_group_element_image_of_low_level(action &A, int *input, int *output, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	if (f_v) {
 		cout << "matrix_group_element_image_of_low_level computing image of ";
-		INT_vec_print(cout, input, A.low_level_point_size);
+		int_vec_print(cout, input, A.low_level_point_size);
 		cout << " in action " << A.label << endl;
 		}
 	G.action_from_the_right_all_types(input, Elt, output, verbose_level - 1);
@@ -53,19 +53,19 @@ void matrix_group_element_image_of_low_level(action &A, INT *input, INT *output,
 
 	if (f_v) {
 		cout << "matrix_group_element_image_of_low_level ";
-		INT_vec_print(cout, input, A.low_level_point_size);
+		int_vec_print(cout, input, A.low_level_point_size);
 		cout << " -> ";
-		INT_vec_print(cout, output, A.low_level_point_size);
+		int_vec_print(cout, output, A.low_level_point_size);
 		cout << endl;
 		}
 }
 
-INT matrix_group_element_linear_entry_ij(action &A, void *elt, INT i, INT j, INT verbose_level)
+int matrix_group_element_linear_entry_ij(action &A, void *elt, int i, int j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT w;
+	int *Elt = (int *) elt;
+	int w;
 
 	if (f_v) {
 		cout << "matrix_group_element_linear_entry_ij i=" << i << " j=" << j << endl;
@@ -74,12 +74,12 @@ INT matrix_group_element_linear_entry_ij(action &A, void *elt, INT i, INT j, INT
 	return w;
 }
 
-INT matrix_group_element_linear_entry_frobenius(action &A, void *elt, INT verbose_level)
+int matrix_group_element_linear_entry_frobenius(action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT w;
+	int *Elt = (int *) elt;
+	int w;
 
 	if (f_v) {
 		cout << "matrix_group_element_linear_entry_frobenius" << endl;
@@ -88,11 +88,11 @@ INT matrix_group_element_linear_entry_frobenius(action &A, void *elt, INT verbos
 	return w;
 }
 
-void matrix_group_element_one(action &A, void *elt, INT verbose_level)
+void matrix_group_element_one(action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	
 	if (f_v) {
 		cout << "matrix_group_element_one calling GL_one" << endl;
@@ -100,12 +100,12 @@ void matrix_group_element_one(action &A, void *elt, INT verbose_level)
 	G.GL_one(Elt);
 }
 
-INT matrix_group_element_is_one(action &A, void *elt, INT verbose_level)
+int matrix_group_element_is_one(action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT f_is_one, i, j;
+	int *Elt = (int *) elt;
+	int f_is_one, i, j;
 	
 	if (f_v) {
 		cout << "matrix_group_element_is_one" << endl;
@@ -145,11 +145,11 @@ INT matrix_group_element_is_one(action &A, void *elt, INT verbose_level)
 	return f_is_one;
 }
 
-void matrix_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_level)
+void matrix_group_element_unpack(action &A, void *elt, void *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
@@ -158,11 +158,11 @@ void matrix_group_element_unpack(action &A, void *elt, void *Elt, INT verbose_le
 	G.GL_unpack(elt1, Elt1, verbose_level - 1);
 }
 
-void matrix_group_element_pack(action &A, void *Elt, void *elt, INT verbose_level)
+void matrix_group_element_pack(action &A, void *Elt, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt1 = (INT *) Elt;
+	int *Elt1 = (int *) Elt;
 	uchar *elt1 = (uchar *)elt;
 	
 	if (f_v) {
@@ -171,11 +171,11 @@ void matrix_group_element_pack(action &A, void *Elt, void *elt, INT verbose_leve
 	G.GL_pack(Elt1, elt1);
 }
 
-void matrix_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_level)
+void matrix_group_element_retrieve(action &A, int hdl, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	uchar *p_elt;
 	
 	if (f_v) {
@@ -191,12 +191,12 @@ void matrix_group_element_retrieve(action &A, INT hdl, void *elt, INT verbose_le
 		}
 }
 
-INT matrix_group_element_store(action &A, void *elt, INT verbose_level)
+int matrix_group_element_store(action &A, void *elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	INT hdl;
+	int *Elt = (int *) elt;
+	int hdl;
 	
 	if (f_v) {
 		cout << "matrix_group_element_store" << endl;
@@ -209,14 +209,14 @@ INT matrix_group_element_store(action &A, void *elt, INT verbose_level)
 	return hdl;
 }
 
-void matrix_group_element_mult(action &A, void *a, void *b, void *ab, INT verbose_level)
+void matrix_group_element_mult(action &A, void *a, void *b, void *ab, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
-	INT *AB = (INT *) ab;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
+	int *AB = (int *) ab;
 
 	if (f_v) {
 		cout << "matrix_group_element_mult" << endl;
@@ -237,13 +237,13 @@ void matrix_group_element_mult(action &A, void *a, void *b, void *ab, INT verbos
 		}
 }
 
-void matrix_group_element_invert(action &A, void *a, void *av, INT verbose_level)
+void matrix_group_element_invert(action &A, void *a, void *av, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *AA = (INT *) a;
-	INT *AAv = (INT *) av;
+	int *AA = (int *) a;
+	int *AAv = (int *) av;
 
 	if (f_v) {
 		cout << "matrix_group_element_invert" << endl;
@@ -262,13 +262,13 @@ void matrix_group_element_invert(action &A, void *a, void *av, INT verbose_level
 		}
 }
 
-void matrix_group_element_transpose(action &A, void *a, void *at, INT verbose_level)
+void matrix_group_element_transpose(action &A, void *a, void *at, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *AA = (INT *) a;
-	INT *Atv = (INT *) at;
+	int *AA = (int *) a;
+	int *Atv = (int *) at;
 
 	if (f_v) {
 		cout << "matrix_group_element_transpose" << endl;
@@ -287,12 +287,12 @@ void matrix_group_element_transpose(action &A, void *a, void *at, INT verbose_le
 		}
 }
 
-void matrix_group_element_move(action &A, void *a, void *b, INT verbose_level)
+void matrix_group_element_move(action &A, void *a, void *b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
-	INT *AA = (INT *) a;
-	INT *BB = (INT *) b;
+	int *AA = (int *) a;
+	int *BB = (int *) b;
 
 	if (f_v) {
 		cout << "matrix_group_element_move" << endl;
@@ -300,9 +300,9 @@ void matrix_group_element_move(action &A, void *a, void *b, INT verbose_level)
 	G.GL_copy(AA, BB);
 }
 
-void matrix_group_element_dispose(action &A, INT hdl, INT verbose_level)
+void matrix_group_element_dispose(action &A, int hdl, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	matrix_group &G = *A.G.matrix_grp;
 
 	if (f_v) {
@@ -314,7 +314,7 @@ void matrix_group_element_dispose(action &A, INT hdl, INT verbose_level)
 void matrix_group_element_print(action &A, void *elt, ostream &ost)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 	
 
 	G.GL_print_easy(Elt, ost);
@@ -326,14 +326,14 @@ void matrix_group_element_print(action &A, void *elt, ostream &ost)
 		}
 
 #if 0
-	INT *fp, n;
+	int *fp, n;
 
-	fp = NEW_INT(A.degree);
+	fp = NEW_int(A.degree);
 	n = A.find_fixed_points(elt, fp, 0);
 	cout << "with " << n << " fixed points ";
 	A.element_print_base_images(Elt, ost);
 	cout << endl;
-	FREE_INT(fp);
+	FREE_int(fp);
 #endif
 
 	if (A.degree < 0 /*1000*/) {
@@ -343,10 +343,10 @@ void matrix_group_element_print(action &A, void *elt, ostream &ost)
 		}
 }
 
-void matrix_group_element_code_for_make_element(action &A, void *elt, INT *data)
+void matrix_group_element_code_for_make_element(action &A, void *elt, int *data)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	//cout << "matrix_group_element_code_for_make_element calling GL_print_for_make_element" << endl;
 	G.GL_code_for_make_element(Elt, data);
@@ -356,7 +356,7 @@ void matrix_group_element_code_for_make_element(action &A, void *elt, INT *data)
 void matrix_group_element_print_for_make_element(action &A, void *elt, ostream &ost)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	//cout << "matrix_group_element_print_for_make_element calling GL_print_for_make_element" << endl;
 	G.GL_print_for_make_element(Elt, ost);
@@ -366,7 +366,7 @@ void matrix_group_element_print_for_make_element(action &A, void *elt, ostream &
 void matrix_group_element_print_for_make_element_no_commas(action &A, void *elt, ostream &ost)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	//cout << "matrix_group_element_print_for_make_element_no_commas calling GL_print_for_make_element_no_commas" << endl;
 	G.GL_print_for_make_element_no_commas(Elt, ost);
@@ -376,8 +376,8 @@ void matrix_group_element_print_for_make_element_no_commas(action &A, void *elt,
 void matrix_group_element_print_quick(action &A, void *elt, ostream &ost)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
-	//INT *fp; //, n;
+	int *Elt = (int *) elt;
+	//int *fp; //, n;
 	
 
 	G.GL_print_easy(Elt, ost);
@@ -394,10 +394,10 @@ void matrix_group_element_print_quick(action &A, void *elt, ostream &ost)
 	A.element_print_base_images_verbose(Elt, ost, 0);
 	ost << endl;
 #endif
-	//fp = NEW_INT(A.degree);
+	//fp = NEW_int(A.degree);
 	//n = A.find_fixed_points(elt, fp, 0);
 	//cout << "with " << n << " fixed points" << endl;
-	//FREE_INT(fp);
+	//FREE_int(fp);
 	if (FALSE /*A.degree < 0*/ /*1000*/) {
 		//cout << "matrix_group_element_print: printing element as permutation" << endl;
 		matrix_group_element_print_as_permutation(A, elt, ost);
@@ -408,7 +408,7 @@ void matrix_group_element_print_quick(action &A, void *elt, ostream &ost)
 void matrix_group_element_print_latex(action &A, void *elt, ostream &ost)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.GL_print_latex(Elt, ost);
 	//G.GL_print_easy_latex(Elt, ost);
@@ -417,14 +417,14 @@ void matrix_group_element_print_latex(action &A, void *elt, ostream &ost)
 void matrix_group_element_print_as_permutation(action &A, void *elt, ostream &ost)
 {
 	//matrix_group &G = *A.G.matrix_grp;
-	INT f_v = FALSE;
-	INT *Elt = (INT *) elt;
-	INT i, j;
+	int f_v = FALSE;
+	int *Elt = (int *) elt;
+	int i, j;
 	
 	if (f_v) {
 		cout << "matrix_group_element_print_as_permutation degree = " << A.degree << endl;
 		}
-	INT *p = NEW_INT(A.degree);
+	int *p = NEW_int(A.degree);
 	for (i = 0; i < A.degree; i++) {
 		//cout << "matrix_group_element_print_as_permutation computing image of i=" << i << endl;
 		//if (i == 3)
@@ -435,26 +435,26 @@ void matrix_group_element_print_as_permutation(action &A, void *elt, ostream &os
 		p[i] = j;
 		}
 	perm_print(ost, p, A.degree);
-	FREE_INT(p);
+	FREE_int(p);
 }
 
 void matrix_group_element_print_verbose(action &A, void *elt, ostream &ost)
 {
 	matrix_group &G = *A.G.matrix_grp;
-	INT *Elt = (INT *) elt;
+	int *Elt = (int *) elt;
 
 	G.GL_print_easy(Elt, ost);
 	ost << "\n";
-	INT i, j;
+	int i, j;
 	
 	if (A.degree < 1000) {
-		INT *p = NEW_INT(A.degree);
+		int *p = NEW_int(A.degree);
 		for (i = 0; i < A.degree; i++) {
 			j = A.element_image_of(i, Elt, FALSE);
 			p[i] = j;
 			}
 		perm_print(ost, p, A.degree);
-		FREE_INT(p);
+		FREE_int(p);
 		}
 	else {
 #if 0
@@ -474,14 +474,14 @@ void matrix_group_elt_print(void *elt, void *data, ostream &ost)
 {
 	matrix_group &G = * (matrix_group *) data;
 	uchar *p_elt = (uchar *) elt;
-	INT Elt[1000];
+	int Elt[1000];
 	
 	G.GL_unpack(p_elt, Elt, FALSE);
 	G.GL_print_easy(Elt, ost);
 }
 #endif
 
-void matrix_group_print_point(action &A, INT a, ostream &ost)
+void matrix_group_print_point(action &A, int a, ostream &ost)
 {
 	matrix_group *G = A.G.matrix_grp;
 	
@@ -498,7 +498,7 @@ void matrix_group_print_point(action &A, INT a, ostream &ost)
 		cout << "matrix_group_print_point unknown group type" << endl;
 		exit(1);
 		}
-	INT_vec_print(ost, G->v1, G->n);
+	int_vec_print(ost, G->v1, G->n);
 }
 
 

@@ -8,11 +8,11 @@
 
 void regular_ls_generator::init_basic(int argc, const char **argv, 
 	const char *input_prefix, const char *base_fname, 
-	INT starter_size, 
-	INT verbose_level)
+	int starter_size, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 
 	if (f_v) {
 		cout << "regular_ls_generator::init_basic" << endl;
@@ -35,24 +35,24 @@ void regular_ls_generator::init_basic(int argc, const char **argv,
 	target_size = n;
 
 	m2 = (m * (m - 1)) >> 1;
-	v1 = NEW_INT(m);
+	v1 = NEW_int(m);
 
-	row_sum = NEW_INT(m);
-	pairs = NEW_INT(m2);
-	open_rows = NEW_INT(m);
-	open_row_idx = NEW_INT(m);
-	open_pairs = NEW_INT(m2);
-	open_pair_idx = NEW_INT(m2);
+	row_sum = NEW_int(m);
+	pairs = NEW_int(m2);
+	open_rows = NEW_int(m);
+	open_row_idx = NEW_int(m);
+	open_pairs = NEW_int(m2);
+	open_pair_idx = NEW_int(m2);
 
 }
 
 void regular_ls_generator::read_arguments(int argc, const char **argv)
 {
-	INT i;
-	INT f_m = FALSE;
-	INT f_n = FALSE;
-	INT f_k = FALSE;
-	INT f_r = FALSE;
+	int i;
+	int f_m = FALSE;
+	int f_n = FALSE;
+	int f_k = FALSE;
+	int f_r = FALSE;
 	
 	gen->read_arguments(argc, argv, 0);
 	
@@ -124,32 +124,32 @@ void regular_ls_generator::null()
 void regular_ls_generator::freeself()
 {
 	if (initial_pair_covering) {
-		FREE_INT(initial_pair_covering);
+		FREE_int(initial_pair_covering);
 		}
 	if (row_sum) {
-		FREE_INT(row_sum);
+		FREE_int(row_sum);
 		}
 	if (pairs) {
-		FREE_INT(pairs);
+		FREE_int(pairs);
 		}
 	if (open_rows) {
-		FREE_INT(open_rows);
+		FREE_int(open_rows);
 		}
 	if (open_row_idx) {
-		FREE_INT(open_row_idx);
+		FREE_int(open_row_idx);
 		}
 	if (open_pairs) {
-		FREE_INT(open_pairs);
+		FREE_int(open_pairs);
 		}
 	if (open_pair_idx) {
-		FREE_INT(open_pair_idx);
+		FREE_int(open_pair_idx);
 		}
 	null();
 }
 
-void regular_ls_generator::init_group(INT verbose_level)
+void regular_ls_generator::init_group(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "regular_ls_generator::init_group" << endl;
@@ -167,9 +167,9 @@ void regular_ls_generator::init_group(INT verbose_level)
 		}
 }
 
-void regular_ls_generator::init_action_on_k_subsets(INT k, INT verbose_level)
+void regular_ls_generator::init_action_on_k_subsets(int k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "regular_ls_generator::init_action_on_k_subsets" << endl;
@@ -195,20 +195,20 @@ void regular_ls_generator::init_action_on_k_subsets(INT k, INT verbose_level)
 }
 
 void regular_ls_generator::init_generator(
-	INT f_has_initial_pair_covering, INT *initial_pair_covering,
+	int f_has_initial_pair_covering, int *initial_pair_covering,
 	strong_generators *Strong_gens, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int i;
 
 	if (f_v) {
 		cout << "regular_ls_generator::init_generator" << endl;
 		}
 	if (regular_ls_generator::initial_pair_covering) {
-		FREE_INT(regular_ls_generator::initial_pair_covering);
+		FREE_int(regular_ls_generator::initial_pair_covering);
 		}
 	if (gen->f_max_depth) {
 		gen->depth = gen->max_depth;
@@ -216,7 +216,7 @@ void regular_ls_generator::init_generator(
 	else {
 		gen->depth = target_size;
 		}
-	regular_ls_generator::initial_pair_covering = NEW_INT(m2);
+	regular_ls_generator::initial_pair_covering = NEW_int(m2);
 	if (f_has_initial_pair_covering) {
 		for (i = 0; i < m2; i++) {
 			regular_ls_generator::initial_pair_covering[i] = initial_pair_covering[i];
@@ -262,7 +262,7 @@ void regular_ls_generator::init_generator(
 	gen->print_function_data = (void *) this;
 	
 	
-	INT nb_nodes = ONE_MILLION;
+	int nb_nodes = ONE_MILLION;
 	
 	if (f_vv) {
 		cout << "regular_ls_generator::init_generator calling init_poset_orbit_node with " << nb_nodes << " nodes" << endl;
@@ -284,11 +284,11 @@ void regular_ls_generator::init_generator(
 }
 
 void regular_ls_generator::compute_starter(
-	//INT f_lex, 
-	INT f_write_candidate_file, 
-	INT f_draw_poset, INT f_embedded, INT f_sideways, INT verbose_level)
+	//int f_lex, 
+	int f_write_candidate_file, 
+	int f_draw_poset, int f_embedded, int f_sideways, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//char cmd[1000];
 
 	if (f_v) {
@@ -318,31 +318,31 @@ void regular_ls_generator::compute_starter(
 
 }
 
-void regular_ls_generator::early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	INT verbose_level)
+void regular_ls_generator::early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	int verbose_level)
 {
 	//verbose_level = 10;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, a, b, p;
-	INT f_OK;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, a, b, p;
+	int f_OK;
 
 	if (f_v) {
 		cout << "regular_ls_generator::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		INT_vec_print(cout, candidates, nb_candidates);
+		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		}
-	INT_vec_zero(row_sum, m);
-	INT_vec_copy(initial_pair_covering, pairs, m2);
+	int_vec_zero(row_sum, m);
+	int_vec_copy(initial_pair_covering, pairs, m2);
 
 	if (f_vv) {
 		cout << "pairs initially:" << endl;
-		INT_vec_print(cout, pairs, m2);
+		int_vec_print(cout, pairs, m2);
 		cout << endl;
 		}
 	for (i = 0; i < len; i++) {
@@ -359,7 +359,7 @@ void regular_ls_generator::early_test_func(INT *S, INT len,
 		}
 	if (f_vv) {
 		cout << "pairs after adding in the chosen sets:" << endl;
-		INT_vec_print(cout, pairs, m2);
+		int_vec_print(cout, pairs, m2);
 		cout << endl;
 		}
 	
@@ -377,7 +377,7 @@ void regular_ls_generator::early_test_func(INT *S, INT len,
 		unrank_k_subset(candidates[j], v1, m, k);
 		if (f_vv) {
 			cout << "Testing candidate " << j << " = " << candidates[j] << " = ";
-			INT_vec_print(cout, v1, k);
+			int_vec_print(cout, v1, k);
 			cout << endl;
 			}
 		for (a = 0; a < k; a++) {
@@ -407,11 +407,11 @@ void regular_ls_generator::early_test_func(INT *S, INT len,
 		}
 }
 
-INT regular_ls_generator::check_function_incremental(INT len, INT *S, INT verbose_level)
+int regular_ls_generator::check_function_incremental(int len, int *S, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, a, b, p;
-	INT f_OK;
+	int f_v = (verbose_level >= 1);
+	int i, a, b, p;
+	int f_OK;
 		
 	if (f_v) {
 		cout << "regular_ls_generator::check_function_incremental checking set ";
@@ -419,8 +419,8 @@ INT regular_ls_generator::check_function_incremental(INT len, INT *S, INT verbos
 		cout << endl;
 		}
 
-	INT_vec_zero(row_sum, m);
-	INT_vec_copy(initial_pair_covering, pairs, m2);
+	int_vec_zero(row_sum, m);
+	int_vec_copy(initial_pair_covering, pairs, m2);
 
 	for (i = 0; i < len - 1; i++) {
 
@@ -457,9 +457,9 @@ INT regular_ls_generator::check_function_incremental(INT len, INT *S, INT verbos
 	return f_OK;
 }
 
-void regular_ls_generator::print(INT *S, INT len)
+void regular_ls_generator::print(int *S, int len)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < len; i++) {
 		cout << S[i] << " ";
@@ -467,17 +467,17 @@ void regular_ls_generator::print(INT *S, INT len)
 	cout << endl;
 }
 
-void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT starter_case, 
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level)
+void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, int starter_case, 
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, a, h1, h2, p, idx;
-	INT nb_needed;
-	INT nb_open_rows, nb_open_pairs;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, a, h1, h2, p, idx;
+	int nb_needed;
+	int nb_open_rows, nb_open_pairs;
 
 	if (f_v) {
 		cout << "regular_ls_generator::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
@@ -487,12 +487,12 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 	f_ruled_out = FALSE;
 
 
-	INT_vec_zero(row_sum, m);
-	INT_vec_copy(initial_pair_covering, pairs, m2);
+	int_vec_zero(row_sum, m);
+	int_vec_copy(initial_pair_covering, pairs, m2);
 
 	if (f_vv) {
 		cout << "pairs initially:" << endl;
-		INT_vec_print(cout, pairs, m2);
+		int_vec_print(cout, pairs, m2);
 		cout << endl;
 		}
 	for (i = 0; i < E->starter_size; i++) {
@@ -509,7 +509,7 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 		}
 
 	nb_open_rows = 0;
-	INT_vec_mone(open_row_idx, m);
+	int_vec_mone(open_row_idx, m);
 	for (i = 0; i < m; i++) {
 		if (row_sum[i] < r) {
 			open_rows[nb_open_rows] = i;
@@ -519,7 +519,7 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 		}
 
 	nb_open_pairs = 0;
-	INT_vec_mone(open_pair_idx, m2);
+	int_vec_mone(open_pair_idx, m2);
 
 	for (i = 0; i < m2; i++) {
 		if (pairs[i] == FALSE) {
@@ -530,10 +530,10 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 		}
 
 	
-	col_labels = NEW_INT(nb_candidates);
+	col_labels = NEW_int(nb_candidates);
 
 
-	INT_vec_copy(candidates, col_labels, nb_candidates);
+	int_vec_copy(candidates, col_labels, nb_candidates);
 
 	if (E->f_lex) {
 		E->lexorder_test(col_labels, nb_candidates, Strong_gens->gens, 
@@ -551,8 +551,8 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 	// open rows and open pairs versus candidate blocks:
 
 
-	INT nb_rows;
-	INT nb_cols;
+	int nb_rows;
+	int nb_cols;
 
 	nb_rows = nb_open_rows + nb_open_pairs;
 	nb_cols = nb_candidates;
@@ -622,7 +622,7 @@ void regular_ls_generator::lifting_prepare_function_new(exact_cover *E, INT star
 
 
 
-void print_set(INT len, INT *S, void *data)
+void print_set(int len, int *S, void *data)
 {
 	regular_ls_generator *Gen = (regular_ls_generator *) data;
 	
@@ -630,13 +630,13 @@ void print_set(INT len, INT *S, void *data)
 	Gen->print(S, len);
 }
 
-void rls_generator_early_test_function(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void rls_generator_early_test_function(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	regular_ls_generator *Gen = (regular_ls_generator *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "rls_generator_early_test_function for set ";
@@ -652,23 +652,23 @@ void rls_generator_early_test_function(INT *S, INT len,
 		}
 }
 
-INT check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level)
+int check_function_incremental_callback(int len, int *S, void *data, int verbose_level)
 {
 	regular_ls_generator *Gen = (regular_ls_generator *) data;
-	INT f_OK;
+	int f_OK;
 	
 	f_OK = Gen->check_function_incremental(len, S, verbose_level);
 	return f_OK; 
 }
 
 
-void rls_generator_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level)
+void rls_generator_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	regular_ls_generator *Gen = (regular_ls_generator *) EC->user_data;
 
 	if (f_v) {

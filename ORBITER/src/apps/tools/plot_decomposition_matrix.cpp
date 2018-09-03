@@ -11,41 +11,41 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void split(const char *fname_base, INT split_v, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
+void split(const char *fname_base, int split_v, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
 	double scale, double line_width);
 void read_orbit_data(const char *fname, 
-	INT &nb_orbits, INT &N, 
-	INT *&orbit_fst, 
-	INT *&orbit_len, 
-	INT *&orbit_number, 
-	INT *&orbit_perm, 
-	INT *&orbit_perm_inv, 
-	INT *&schreier_vector, 
-	INT *&schreier_prev, 
-	INT verbose_level);
-void draw_it(const char *fname_base, INT idx, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
+	int &nb_orbits, int &N, 
+	int *&orbit_fst, 
+	int *&orbit_len, 
+	int *&orbit_number, 
+	int *&orbit_perm, 
+	int *&orbit_perm_inv, 
+	int *&schreier_vector, 
+	int *&schreier_prev, 
+	int verbose_level);
+void draw_it(const char *fname_base, int idx, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
 	double scale, double line_width);
-void draw_it2(mp_graphics &G, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax);
+void draw_it2(mp_graphics &G, int f_dots, uchar *D, int m, int n, int xmax, int ymax);
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 	const char *fname1 = NULL;
 	const char *fname2 = NULL;
 	const char *fname3 = NULL;
-	INT f_output_fname = FALSE;
+	int f_output_fname = FALSE;
 	const char *output_fname = NULL;
-	INT xmax = 1000;
-	INT ymax = 1000;
-	INT f_dots = FALSE;
-	INT f_split_v = FALSE;
-	INT split_v = 1;
-	INT f_scale = FALSE;
+	int xmax = 1000;
+	int ymax = 1000;
+	int f_dots = FALSE;
+	int f_split_v = FALSE;
+	int split_v = 1;
+	int f_scale = FALSE;
 	double scale = .45;
-	INT f_line_width = FALSE;
+	int f_line_width = FALSE;
 	double line_width = 1.5;
 
 	t0 = os_ticks();
@@ -117,21 +117,21 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
-	INT *M1;
-	INT m1, n1;
-	INT *M2;
-	INT m2, n2;
+	int *M1;
+	int m1, n1;
+	int *M2;
+	int m2, n2;
 	uchar *D; // bitvector
 
-	INT m, n;
-	INT *up_fst;
-	INT *up_len;
-	INT j, a, col, orb, idx, row, len, sol_idx;
+	int m, n;
+	int *up_fst;
+	int *up_len;
+	int j, a, col, orb, idx, row, len, sol_idx;
 
 	cout << "reading file " << fname1 << endl;
-	INT_matrix_read_csv(fname1, M1, m1, n1, verbose_level - 1);
+	int_matrix_read_csv(fname1, M1, m1, n1, verbose_level - 1);
 	cout << "reading file " << fname2 << endl;
-	INT_matrix_read_csv(fname2, M2, m2, n2, verbose_level - 1);
+	int_matrix_read_csv(fname2, M2, m2, n2, verbose_level - 1);
 
 	m = m1;
 	n = M2[(m2 - 1) * n2 + 0] + 1;
@@ -139,8 +139,8 @@ int main(int argc, char **argv)
 	cout << "m=" << m << endl;
 	cout << "n=" << n << endl;
 
-	up_fst = NEW_INT(m + 1);
-	up_len = NEW_INT(m);
+	up_fst = NEW_int(m + 1);
+	up_len = NEW_int(m);
 	j = 0;
 	for (i = 0; i < m; i++) {
 		a = M1[i];
@@ -160,14 +160,14 @@ int main(int argc, char **argv)
 
 
 	cout << "Reading file " << fname3 << endl;
-	INT nb_orbits, N;
-	INT *orbit_fst;
-	INT *orbit_len;
-	INT *orbit_number;
-	INT *orbit_perm;
-	INT *orbit_perm_inv;
-	INT *schreier_vector;
-	INT *schreier_prev;
+	int nb_orbits, N;
+	int *orbit_fst;
+	int *orbit_len;
+	int *orbit_number;
+	int *orbit_perm;
+	int *orbit_perm_inv;
+	int *schreier_vector;
+	int *schreier_prev;
 
 	read_orbit_data(fname3, 
 		nb_orbits, N, 
@@ -189,7 +189,7 @@ int main(int argc, char **argv)
 		col = M2[i * n2 + 0];
 		sol_idx = M2[i * n2 + 2];
 		orb = orbit_number[orbit_perm_inv[sol_idx]];
-		if (!INT_vec_search(up_fst, m + 1, orb, idx)) {
+		if (!int_vec_search(up_fst, m + 1, orb, idx)) {
 			// find the last occurence 
 			idx--;
 			}
@@ -222,12 +222,12 @@ int main(int argc, char **argv)
 	the_end_quietly(t0);
 }
 
-void split(const char *fname_base, INT split_v, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
+void split(const char *fname_base, int split_v, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
 	double scale, double line_width)
 {
-	INT nb_pic;
-	INT h;
-	INT i0, i1, i, j, m1, len;
+	int nb_pic;
+	int h;
+	int i0, i1, i, j, m1, len;
 	uchar *D1;
 
 	nb_pic = m / split_v + 1;
@@ -255,15 +255,15 @@ void split(const char *fname_base, INT split_v, INT f_dots, uchar *D, INT m, INT
 }
 
 void read_orbit_data(const char *fname, 
-	INT &nb_orbits, INT &N, 
-	INT *&orbit_fst, 
-	INT *&orbit_len, 
-	INT *&orbit_number, 
-	INT *&orbit_perm, 
-	INT *&orbit_perm_inv, 
-	INT *&schreier_vector, 
-	INT *&schreier_prev, 
-	INT verbose_level)
+	int &nb_orbits, int &N, 
+	int *&orbit_fst, 
+	int *&orbit_len, 
+	int *&orbit_number, 
+	int *&orbit_perm, 
+	int *&orbit_perm_inv, 
+	int *&schreier_vector, 
+	int *&schreier_prev, 
+	int verbose_level)
 // Reads from the file 'fname_staborbits'
 // Reads nb_orbits, N, 
 // orbit_fst[nb_orbits + 1]
@@ -274,10 +274,10 @@ void read_orbit_data(const char *fname,
 // schreier_prev[N]
 // and computed orbit_perm_inv[N]
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	ifstream f(fname);
-	INT i, a;
+	int i, a;
 	
 	if (f_v) {
 		cout << "read_orbit_data" << endl;
@@ -288,13 +288,13 @@ void read_orbit_data(const char *fname,
 		cout << "N=" << N << endl;
 		}
 	
-	orbit_fst = NEW_INT(nb_orbits + 1);
-	orbit_len = NEW_INT(nb_orbits);
-	orbit_number = NEW_INT(N);
-	orbit_perm = NEW_INT(N);
-	orbit_perm_inv = NEW_INT(N);
-	schreier_vector = NEW_INT(N);
-	schreier_prev = NEW_INT(N);
+	orbit_fst = NEW_int(nb_orbits + 1);
+	orbit_len = NEW_int(nb_orbits);
+	orbit_number = NEW_int(N);
+	orbit_perm = NEW_int(N);
+	orbit_perm_inv = NEW_int(N);
+	schreier_vector = NEW_int(N);
+	schreier_prev = NEW_int(N);
 	
 	for (i = 0; i < nb_orbits; i++) {
 		f >> a;
@@ -320,16 +320,16 @@ void read_orbit_data(const char *fname,
 		}
 }
 
-void draw_it(const char *fname_base, INT idx, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax, 
+void draw_it(const char *fname_base, int idx, int f_dots, uchar *D, int m, int n, int xmax, int ymax, 
 	double scale, double line_width)
 {
 	mp_graphics G;
 	char fname_base2[1000];
 	char fname[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = TRUE;
+	int f_embedded = TRUE;
+	int f_sideways = TRUE;
 	
-	sprintf(fname_base2, "%s_%ld", fname_base, idx);
+	sprintf(fname_base2, "%s_%d", fname_base, idx);
 	sprintf(fname, "%s.mp", fname_base2);
 	{
 	G.setup(fname_base2, 0, 0, ONE_MILLION, ONE_MILLION, xmax, ymax, f_embedded, f_sideways, 
@@ -344,10 +344,10 @@ void draw_it(const char *fname_base, INT idx, INT f_dots, uchar *D, INT m, INT n
 	cout << "draw_it written file " << fname << " of size " << file_size(fname) << endl;
 }
 
-void draw_it2(mp_graphics &G, INT f_dots, uchar *D, INT m, INT n, INT xmax, INT ymax)
+void draw_it2(mp_graphics &G, int f_dots, uchar *D, int m, int n, int xmax, int ymax)
 {
 	grid_frame F;
-	INT i, j, a, cnt, mn;
+	int i, j, a, cnt, mn;
 	
 	mn = MAXIMUM(m, n);
 	F.f_matrix_notation = TRUE;

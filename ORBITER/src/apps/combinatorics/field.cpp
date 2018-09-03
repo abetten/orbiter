@@ -11,26 +11,26 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void draw_empty_grid(INT q, INT type, INT param_a, INT xmax, INT ymax, INT verbose_level);
-void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbose_level);
-void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level);
-void draw_grid_(mp_graphics &G, INT xmax, INT ymax, INT q, INT type, INT param_a);
-void prepare_latex_simple(char *fname_base, INT verbose_level);
+void draw_empty_grid(int q, int type, int param_a, int xmax, int ymax, int verbose_level);
+void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbose_level);
+void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level);
+void draw_grid_(mp_graphics &G, int xmax, int ymax, int q, int type, int param_a);
+void prepare_latex_simple(char *fname_base, int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
-	INT f_q = FALSE;
-	INT q = 0;
-	INT xmax = 300;
-	INT ymax = 300;
-	INT f_type = FALSE;
-	INT type = 0;
-	INT param_a = 0;
+	int verbose_level = 0;
+	int i;
+	int f_q = FALSE;
+	int q = 0;
+	int xmax = 300;
+	int ymax = 300;
+	int f_type = FALSE;
+	int type = 0;
+	int param_a = 0;
 	
  	t0 = os_ticks();
 	
@@ -72,14 +72,14 @@ int main(int argc, char **argv)
 	the_end(t0);
 }
 
-void draw_empty_grid(INT q, INT type, INT param_a, INT xmax, INT ymax, INT verbose_level)
+void draw_empty_grid(int q, int type, int param_a, int xmax, int ymax, int verbose_level)
 {
 	{
 	char fname[1000];
 	{
 	mp_graphics *G;
 
-	sprintf(fname, "grid_%ld_%ld", q, type);
+	sprintf(fname, "grid_%d_%d", q, type);
 	draw_beginning(fname, G, xmax, ymax, verbose_level);
 
 	draw_grid_(*G, xmax, ymax, q, type, param_a);
@@ -92,14 +92,14 @@ void draw_empty_grid(INT q, INT type, INT param_a, INT xmax, INT ymax, INT verbo
 
 
 
-void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbose_level)
+void draw_beginning(char *fname, mp_graphics *&G, int xmax, int ymax, int verbose_level)
 {
-	INT x_min = 0, x_max = ONE_MILLION;
-	INT y_min = 0, y_max = ONE_MILLION;
-	INT factor_1000 = 1000;
+	int x_min = 0, x_max = ONE_MILLION;
+	int y_min = 0, y_max = ONE_MILLION;
+	int factor_1000 = 1000;
 	char fname_full[1000];
-	INT f_embedded = TRUE;
-	INT f_sideways = FALSE;
+	int f_embedded = TRUE;
+	int f_sideways = FALSE;
 	
 	//cout << "draw_grid q=" << q << endl;
 	sprintf(fname_full, "%s.mp", fname);
@@ -118,11 +118,11 @@ void draw_beginning(char *fname, mp_graphics *&G, INT xmax, INT ymax, INT verbos
 	//draw_grid_(G, q, verbose_level);
 }
 
-void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level)
+void draw_end(char *fname, mp_graphics *G, int xmax, int ymax, int verbose_level)
 {
-	//INT x_min = 0, x_max = 1000;
-	//INT y_min = 0, y_max = 1000;
-	//INT factor_1000 = 1000;
+	//int x_min = 0, x_max = 1000;
+	//int y_min = 0, y_max = 1000;
+	//int factor_1000 = 1000;
 	char fname_full[1000];
 	
 	sprintf(fname_full, "%s.mp", fname);
@@ -136,14 +136,14 @@ void draw_end(char *fname, mp_graphics *G, INT xmax, INT ymax, INT verbose_level
 
 
 
-void draw_grid_(mp_graphics &G, INT xmax, INT ymax, 
-	INT q, INT type, INT param_a)
+void draw_grid_(mp_graphics &G, int xmax, int ymax, 
+	int q, int type, int param_a)
 {
 	grid_frame F;
-	INT i, j;
-	INT Px[10], Py[10];
+	int i, j;
+	int Px[10], Py[10];
 	char text[1000];
-	INT rad = 10000;
+	int rad = 10000;
 
 	F.f_matrix_notation = FALSE;
 	F.m = q - 1;
@@ -157,32 +157,32 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 	cout << "dx=" << F.dx << endl;
 	cout << "dy=" << F.dy << endl;
 
-	//INT line_dashing = 5;
+	//int line_dashing = 5;
 	//G.sl_udsty(line_dashing);
 
 	// draw horizontal lines 
 	for (i = 0; i <= q - 1; i++) {
-		Px[0] = (INT)(F.origin_x + F.m * F.dx);
-		Py[0] = (INT)(F.origin_y + i * F.dy);
-		Px[1] = (INT)(F.origin_x + 0 * F.dx);
+		Px[0] = (int)(F.origin_x + F.m * F.dx);
+		Py[0] = (int)(F.origin_y + i * F.dy);
+		Px[1] = (int)(F.origin_x + 0 * F.dx);
 		Py[1] = Py[0];
-		Px[2] = (INT)(F.origin_x + (-1) * F.dx);
-		Py[2] = (INT)(F.origin_y + i * F.dy);
+		Px[2] = (int)(F.origin_x + (-1) * F.dx);
+		Py[2] = (int)(F.origin_y + i * F.dy);
 		G.polygon2(Px, Py, 0, 1);
-		sprintf(text, "%ld", i);
+		sprintf(text, "%d", i);
 		G.aligned_text(Px[2], Py[2], "", text);
 		}
 
 	// draw vertical lines 
 	for (i = 0; i <= q - 1; i++) {
-		Px[0] = (INT)(F.origin_x + i * F.dx);
-		Py[0] = (INT)(F.origin_y);
+		Px[0] = (int)(F.origin_x + i * F.dx);
+		Py[0] = (int)(F.origin_y);
 		Px[1] = Px[0];
-		Py[1] = (INT)(F.origin_y + (F.n) * F.dy);
-		Px[2] = (INT)(F.origin_x + i * F.dx);
-		Py[2] = (INT)(F.origin_y + (-1) * F.dy);
+		Py[1] = (int)(F.origin_y + (F.n) * F.dy);
+		Px[2] = (int)(F.origin_x + i * F.dx);
+		Py[2] = (int)(F.origin_y + (-1) * F.dy);
 		G.polygon2(Px, Py, 0, 1);
-		sprintf(text, "%ld", i);
+		sprintf(text, "%d", i);
 		G.aligned_text(Px[2], Py[2], "", text);
 		}
 
@@ -224,8 +224,8 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 			}
 		
 
-		Px[0] = (INT)(F.origin_x + i * F.dx);
-		Py[0] = (INT)(F.origin_y + j * F.dy);
+		Px[0] = (int)(F.origin_x + i * F.dx);
+		Py[0] = (int)(F.origin_y + j * F.dy);
 
 		G.nice_circle(Px[0], Py[0], rad);
 		}
@@ -236,7 +236,7 @@ void draw_grid_(mp_graphics &G, INT xmax, INT ymax,
 
 }
 
-void prepare_latex_simple(char *fname_base, INT verbose_level)
+void prepare_latex_simple(char *fname_base, int verbose_level)
 {
 	char tex_file_name[1000];
 	char dvi_file_name[1000];

@@ -7,52 +7,52 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
-void do_it(INT n, INT verbose_level);
-void create_matrix(matrix &M, INT i, INT *S, INT nb_classes, 
-	INT *character_degree, INT *class_size, 
-	INT verbose_level);
-void compute_character_table(a_domain *D, INT nb_classes, INT *Omega, 
-	INT *character_degree, INT *class_size, 
-	INT *&character_table, INT verbose_level);
-void compute_character_degrees(a_domain *D, INT goi, INT nb_classes, INT *Omega, INT *class_size, 
-	INT *&character_degree, INT verbose_level);
-void compute_omega(a_domain *D, INT *N0, INT nb_classes, INT *Mu, INT nb_mu, INT *&Omega, INT verbose_level);
-INT compute_r0(INT *N, INT nb_classes, INT verbose_level);
+void do_it(int n, int verbose_level);
+void create_matrix(matrix &M, int i, int *S, int nb_classes, 
+	int *character_degree, int *class_size, 
+	int verbose_level);
+void compute_character_table(a_domain *D, int nb_classes, int *Omega, 
+	int *character_degree, int *class_size, 
+	int *&character_table, int verbose_level);
+void compute_character_degrees(a_domain *D, int goi, int nb_classes, int *Omega, int *class_size, 
+	int *&character_degree, int verbose_level);
+void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int *&Omega, int verbose_level);
+int compute_r0(int *N, int nb_classes, int verbose_level);
 void compute_multiplication_constants_center_of_group_ring(action *A, 
 	action_by_conjugation *ABC, 
-	schreier *Sch, INT nb_classes, INT *&N, INT verbose_level);
+	schreier *Sch, int nb_classes, int *&N, int verbose_level);
 void compute_Distribution_table(action *A, action_by_conjugation *ABC, 
-	schreier *Sch, INT nb_classes, 
-	INT **Gens, INT nb_gens, INT t_max, INT *&Distribution, INT verbose_level);
-void multiply_word(action *A, INT **Gens, INT *Choice, INT t, INT *Elt1, INT *Elt2, INT verbose_level);
-void create_generators(action *A, INT n, INT **&Elt, INT &nb_gens, INT f_special, INT verbose_level);
-void integral_eigenvalues(INT *M, INT n, 
-	INT *&Lambda, 
-	INT &nb_lambda, 
-	INT *&Mu, 
-	INT *&Mu_mult, 
-	INT &nb_mu, 
-	INT verbose_level);
-void characteristic_poly(INT *N, INT size, unipoly &charpoly, INT verbose_level);
+	schreier *Sch, int nb_classes, 
+	int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level);
+void multiply_word(action *A, int **Gens, int *Choice, int t, int *Elt1, int *Elt2, int verbose_level);
+void create_generators(action *A, int n, int **&Elt, int &nb_gens, int f_special, int verbose_level);
+void integral_eigenvalues(int *M, int n, 
+	int *&Lambda, 
+	int &nb_lambda, 
+	int *&Mu, 
+	int *&Mu_mult, 
+	int &nb_mu, 
+	int verbose_level);
+void characteristic_poly(int *N, int size, unipoly &charpoly, int verbose_level);
 void double_swap(double &a, double &b);
-INT double_Gauss(double *A, INT m, INT n, INT *base_cols, INT verbose_level);
-void double_matrix_print(double *A, INT m, INT n);
+int double_Gauss(double *A, int m, int n, int *base_cols, int verbose_level);
+void double_matrix_print(double *A, int m, int n);
 double double_abs(double x);
-void kernel_columns(INT n, INT nb_base_cols, INT *base_cols, INT *kernel_cols);
-void matrix_get_kernel(double *M, INT m, INT n, INT *base_cols, INT nb_base_cols, 
-	INT &kernel_m, INT &kernel_n, double *kernel);
-INT double_as_INT(double x);
+void kernel_columns(int n, int nb_base_cols, int *base_cols, int *kernel_cols);
+void matrix_get_kernel(double *M, int m, int n, int *base_cols, int nb_base_cols, 
+	int &kernel_m, int &kernel_n, double *kernel);
+int double_as_int(double x);
 
 
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_n = FALSE;
-	INT n = 0;
+	int i;
+	int verbose_level = 0;
+	int f_n = FALSE;
+	int n = 0;
 	
 	t0 = os_ticks();
 
@@ -80,9 +80,9 @@ int main(int argc, char **argv)
 	
 }
 
-void do_it(INT n, INT verbose_level)
+void do_it(int n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "do_it" << endl;
@@ -96,25 +96,25 @@ void do_it(INT n, INT verbose_level)
 
 	action *A;
 	longinteger_object go;
-	INT goi;
-	INT *Elt;
-	INT i, j;
+	int goi;
+	int *Elt;
+	int i, j;
 
 	A = NEW_OBJECT(action);
 	A->init_symmetric_group(n, verbose_level);
 	A->group_order(go);
 
-	goi = go.as_INT();
+	goi = go.as_int();
 	cout << "Created group Sym(" << n << ") of size " << goi << endl;
 
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 
 	sims *S;
 
 	S = A->Sims;
 
 	for (i = 0; i < goi; i++) {
-		S->element_unrank_INT(i, Elt);
+		S->element_unrank_int(i, Elt);
 		cout << "element " << i << " is ";
 		A->element_print_quick(Elt, cout);
 		cout << endl;
@@ -160,25 +160,25 @@ void do_it(INT n, INT verbose_level)
 	Sch->compute_all_point_orbits(verbose_level);
 	
 
-	INT nb_classes;
-	INT *class_size;
+	int nb_classes;
+	int *class_size;
 
 	nb_classes = Sch->nb_orbits;
 
-	class_size = NEW_INT(nb_classes);
+	class_size = NEW_int(nb_classes);
 	
 	for (i = 0; i < nb_classes; i++) {
 		class_size[i] = Sch->orbit_len[i];
 		}
 	cout << "class sizes : ";
-	INT_vec_print(cout, class_size, nb_classes);
+	int_vec_print(cout, class_size, nb_classes);
 	cout << endl;
 
 
 
 
-	INT *N;
-	INT r, r0;
+	int *N;
+	int r, r0;
 
 
 	compute_multiplication_constants_center_of_group_ring(A, 
@@ -188,7 +188,7 @@ void do_it(INT n, INT verbose_level)
 
 	for (r = 0; r < nb_classes; r++) {
 		cout << "N_" << r << ":" << endl;
-		INT_matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
+		int_matrix_print(N + r * nb_classes * nb_classes, nb_classes, nb_classes);
 		cout << endl;
 		}
 
@@ -204,18 +204,18 @@ void do_it(INT n, INT verbose_level)
 
 	cout << "r0=" << r0 << endl;
 
-	INT *N0;
+	int *N0;
 
 	N0 = N + r0 * nb_classes * nb_classes;
 
 
 
 
-	INT *Lambda;
-	INT nb_lambda;
-	INT *Mu;
-	INT *Mu_mult;
-	INT nb_mu;
+	int *Lambda;
+	int nb_lambda;
+	int *Mu;
+	int *Mu_mult;
+	int nb_mu;
 
 	cout << "N_" << r0 << ":" << endl;
 
@@ -231,14 +231,14 @@ void do_it(INT n, INT verbose_level)
 
 
 	cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-	INT_vec_print(cout, Lambda, nb_lambda);
+	int_vec_print(cout, Lambda, nb_lambda);
 	cout << endl;		
 	cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 	for (i = 0; i < nb_mu; i++) {
 		cout << Mu[i] << " with multiplicity " << Mu_mult[i] << endl;
 		}
 
-	INT *Omega;
+	int *Omega;
 
 
 	compute_omega(D, N0, nb_classes, Mu, nb_mu, Omega, verbose_level);
@@ -252,7 +252,7 @@ void do_it(INT n, INT verbose_level)
 
 
 
-	INT *character_degree;
+	int *character_degree;
 
 
 	compute_character_degrees(D, goi, nb_classes, Omega, class_size, 
@@ -260,11 +260,11 @@ void do_it(INT n, INT verbose_level)
 
 
 	cout << "character degrees : ";
-	INT_vec_print(cout, character_degree, nb_classes);
+	int_vec_print(cout, character_degree, nb_classes);
 	cout << endl;
 	
 
-	INT *character_table;
+	int *character_table;
 
 
 	compute_character_table(D, nb_classes, Omega, 
@@ -272,13 +272,13 @@ void do_it(INT n, INT verbose_level)
 		character_table, verbose_level);
 
 	cout << "character table:" << endl;
-	INT_matrix_print(character_table, nb_classes, nb_classes);
+	int_matrix_print(character_table, nb_classes, nb_classes);
 
-	INT f_special = TRUE;
-	INT **Gens;
-	INT nb_gens;
-	INT t_max;
-	INT *Distribution;
+	int f_special = TRUE;
+	int **Gens;
+	int nb_gens;
+	int t_max;
+	int *Distribution;
 	
 	t_max = character_degree[0];
 	for (i = 0; i < nb_classes; i++) {
@@ -299,20 +299,20 @@ void do_it(INT n, INT verbose_level)
 
 
 	cout << "Distribution table:" << endl;
-	INT_matrix_print(Distribution + nb_classes, t_max, nb_classes);
+	int_matrix_print(Distribution + nb_classes, t_max, nb_classes);
 
 	
 	for (i = 0; i < nb_classes; i++) {
 		
 		cout << "character " << i << " / " << nb_classes << ":" << endl;
-		INT_vec_print(cout, character_table + i * nb_classes, nb_classes);
+		int_vec_print(cout, character_table + i * nb_classes, nb_classes);
 		cout << endl;
 
 		
-		INT *S, a, t;
+		int *S, a, t;
 
-		S = NEW_INT(t_max + 1);
-		INT_vec_zero(S, t_max + 1);
+		S = NEW_int(t_max + 1);
+		int_vec_zero(S, t_max + 1);
 
 		for (t = 0; t <= t_max; t++) {
 			S[t] = 0;
@@ -325,13 +325,13 @@ void do_it(INT n, INT verbose_level)
 				}			
 			}
 		cout << "S=";
-		INT_vec_print(cout, S + 1, t_max);
+		int_vec_print(cout, S + 1, t_max);
 		cout << endl;
 
 
 		matrix M;
 
-		INT /*n,*/ deg;
+		int /*n,*/ deg;
 
 		//n = character_degree[i];
 		
@@ -358,44 +358,44 @@ void do_it(INT n, INT verbose_level)
 
 
 
-		FREE_INT(S);
+		FREE_int(S);
 		}
 
 
 
-	FREE_INT(Distribution);
+	FREE_int(Distribution);
 	for (i = 0; i < nb_gens; i++) {
-		FREE_INT(Gens[i]);
+		FREE_int(Gens[i]);
 		}
-	FREE_PINT(Gens);
+	FREE_pint(Gens);
 
 
-	FREE_INT(character_table);
-	FREE_INT(character_degree);
+	FREE_int(character_table);
+	FREE_int(character_degree);
 	
-	FREE_INT(Omega);
+	FREE_int(Omega);
 
-	FREE_INT(Lambda);
-	FREE_INT(Mu);
-	FREE_INT(Mu_mult);
+	FREE_int(Lambda);
+	FREE_int(Mu);
+	FREE_int(Mu_mult);
 
 
-	FREE_INT(N);
+	FREE_int(N);
 	FREE_OBJECT(SG);
 	FREE_OBJECT(Sch);
 	FREE_OBJECT(Aconj);
 
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	FREE_OBJECT(A);
 	FREE_OBJECT(D);
 }
 
-void create_matrix(matrix &M, INT i, INT *S, INT nb_classes, 
-	INT *character_degree, INT *class_size, 
-	INT verbose_level)
+void create_matrix(matrix &M, int i, int *S, int nb_classes, 
+	int *character_degree, int *class_size, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT n, ii, j;
+	int f_v = (verbose_level >= 1);
+	int n, ii, j;
 
 
 	if (f_v) {
@@ -444,19 +444,19 @@ void create_matrix(matrix &M, INT i, INT *S, INT nb_classes,
 		}
 }
 
-void compute_character_table(a_domain *D, INT nb_classes, INT *Omega, 
-	INT *character_degree, INT *class_size, 
-	INT *&character_table, INT verbose_level)
+void compute_character_table(a_domain *D, int nb_classes, int *Omega, 
+	int *character_degree, int *class_size, 
+	int *&character_table, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 3);
-	INT i, j, w;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 3);
+	int i, j, w;
 	
 	if (f_v) {
 		cout << "compute_character_table" << endl;
 		}
 
-	character_table = NEW_INT(nb_classes * nb_classes);
+	character_table = NEW_int(nb_classes * nb_classes);
 	
 	for (i = 0; i < nb_classes; i++) {
 		
@@ -464,10 +464,10 @@ void compute_character_table(a_domain *D, INT nb_classes, INT *Omega,
 
 			if (f_vv) {
 				cout << "i=" << i << " j=" << j << " character_degree[i]=" << character_degree[i] 
-					<< " omega_ij=" << D->as_INT(D->offset(Omega, j * nb_classes + i), 0) << " class_size[j]=" << class_size[j] << endl;
+					<< " omega_ij=" << D->as_int(D->offset(Omega, j * nb_classes + i), 0) << " class_size[j]=" << class_size[j] << endl;
 				}
 			
-			w = character_degree[i] * D->as_INT(D->offset(Omega, j * nb_classes + i), 0);
+			w = character_degree[i] * D->as_int(D->offset(Omega, j * nb_classes + i), 0);
 			if (w % class_size[j]) {
 				cout << "class size does not divide w" << endl;
 				exit(1);
@@ -482,28 +482,28 @@ void compute_character_table(a_domain *D, INT nb_classes, INT *Omega,
 		}
 }
 
-void compute_character_degrees(a_domain *D, INT goi, INT nb_classes, INT *Omega, INT *class_size, 
-	INT *&character_degree, INT verbose_level)
+void compute_character_degrees(a_domain *D, int goi, int nb_classes, int *Omega, int *class_size, 
+	int *&character_degree, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, r, d, f;
-	INT *A, *B, *C, *Cv, *G, *S, *Sv, *E, *F;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, r, d, f;
+	int *A, *B, *C, *Cv, *G, *S, *Sv, *E, *F;
 
 	if (f_v) {
 		cout << "compute_character_degrees" << endl;
 		}
 	
-	character_degree = NEW_INT(nb_classes);
-	A = NEW_INT(D->size_of_instance_in_INT);
-	B = NEW_INT(D->size_of_instance_in_INT);
-	C = NEW_INT(D->size_of_instance_in_INT);
-	Cv = NEW_INT(D->size_of_instance_in_INT);
-	G = NEW_INT(D->size_of_instance_in_INT);
-	S = NEW_INT(D->size_of_instance_in_INT);
-	Sv = NEW_INT(D->size_of_instance_in_INT);
-	E = NEW_INT(D->size_of_instance_in_INT);
-	F = NEW_INT(D->size_of_instance_in_INT);
+	character_degree = NEW_int(nb_classes);
+	A = NEW_int(D->size_of_instance_in_int);
+	B = NEW_int(D->size_of_instance_in_int);
+	C = NEW_int(D->size_of_instance_in_int);
+	Cv = NEW_int(D->size_of_instance_in_int);
+	G = NEW_int(D->size_of_instance_in_int);
+	S = NEW_int(D->size_of_instance_in_int);
+	Sv = NEW_int(D->size_of_instance_in_int);
+	E = NEW_int(D->size_of_instance_in_int);
+	F = NEW_int(D->size_of_instance_in_int);
 
 	for (i = 0; i < nb_classes; i++) {
 
@@ -531,7 +531,7 @@ void compute_character_degrees(a_domain *D, INT goi, INT nb_classes, INT *Omega,
 		D->mult(G, Sv, F, 0);
 
 		
-		f = D->as_INT(F, 0);
+		f = D->as_int(F, 0);
 		d = sqrt(f);
 
 		if (d * d != f) {
@@ -545,34 +545,34 @@ void compute_character_degrees(a_domain *D, INT goi, INT nb_classes, INT *Omega,
 
 		character_degree[i] = d;
 		}
-	FREE_INT(A);
-	FREE_INT(B);
-	FREE_INT(C);
-	FREE_INT(Cv);
-	FREE_INT(G);
-	FREE_INT(S);
-	FREE_INT(Sv);
-	FREE_INT(E);
-	FREE_INT(F);
+	FREE_int(A);
+	FREE_int(B);
+	FREE_int(C);
+	FREE_int(Cv);
+	FREE_int(G);
+	FREE_int(S);
+	FREE_int(Sv);
+	FREE_int(E);
+	FREE_int(F);
 	if (f_v) {
 		cout << "compute_character_degrees done" << endl;
 		}
 }
 
-void compute_omega(a_domain *D, INT *N0, INT nb_classes, INT *Mu, INT nb_mu, INT *&Omega, INT verbose_level)
+void compute_omega(a_domain *D, int *N0, int nb_classes, int *Mu, int nb_mu, int *&Omega, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *M;
-	INT *base_cols;
-	INT h, x, rk, i, j, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *M;
+	int *base_cols;
+	int h, x, rk, i, j, a;
 
 	if (f_v) {
 		cout << "compute_omega" << endl;
 		}
-	Omega = NEW_INT(nb_classes * nb_classes * D->size_of_instance_in_INT);
-	M = NEW_INT(nb_classes * nb_classes * D->size_of_instance_in_INT);
-	base_cols = NEW_INT(nb_classes);
+	Omega = NEW_int(nb_classes * nb_classes * D->size_of_instance_in_int);
+	M = NEW_int(nb_classes * nb_classes * D->size_of_instance_in_int);
+	base_cols = NEW_int(nb_classes);
 	
 	for (h = 0; h < nb_mu; h++) {
 
@@ -612,10 +612,10 @@ void compute_omega(a_domain *D, INT *N0, INT nb_classes, INT *Mu, INT nb_mu, INT
 			exit(1);
 			}
 
-		INT *b, *c;
+		int *b, *c;
 
-		b = NEW_INT(D->size_of_instance_in_INT);
-		c = NEW_INT(D->size_of_instance_in_INT);
+		b = NEW_int(D->size_of_instance_in_int);
+		c = NEW_int(D->size_of_instance_in_int);
 		D->copy(D->offset(M, (nb_classes - 1) * nb_classes), b, 0);
 		D->inverse(b, c, 0);
 
@@ -634,8 +634,8 @@ void compute_omega(a_domain *D, INT *N0, INT nb_classes, INT *Mu, INT nb_mu, INT
 		for (i = 0; i < nb_classes; i++) {
 			D->copy(D->offset(M, (nb_classes - 1) * nb_classes + i), D->offset(Omega, i * nb_classes + h), 0);
 			}
-		FREE_INT(b);
-		FREE_INT(c);
+		FREE_int(b);
+		FREE_int(c);
 
 
 
@@ -648,18 +648,18 @@ void compute_omega(a_domain *D, INT *N0, INT nb_classes, INT *Mu, INT nb_mu, INT
 		D->print_matrix(Omega, nb_classes, nb_classes);
 		}
 
-	FREE_INT(M);
-	FREE_INT(base_cols);
+	FREE_int(M);
+	FREE_int(base_cols);
 	if (f_v) {
 		cout << "compute_omega done" << endl;
 		}
 }
 
-INT compute_r0(INT *N, INT nb_classes, INT verbose_level)
+int compute_r0(int *N, int nb_classes, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 3);
-	INT r, r0, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 3);
+	int r, r0, i;
 	
 	if (f_v) {
 		cout << "compute_r0" << endl;
@@ -668,11 +668,11 @@ INT compute_r0(INT *N, INT nb_classes, INT verbose_level)
 
 	for (r = 0; r < nb_classes; r++) {
 
-		INT *Lambda;
-		INT nb_lambda;
-		INT *Mu;
-		INT *Mu_mult;
-		INT nb_mu;
+		int *Lambda;
+		int nb_lambda;
+		int *Mu;
+		int *Mu_mult;
+		int nb_mu;
 
 		if (f_vv) {
 			cout << "N_" << r << ":" << endl;
@@ -692,7 +692,7 @@ INT compute_r0(INT *N, INT nb_classes, INT verbose_level)
 
 
 			cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-			INT_vec_print(cout, Lambda, nb_lambda);
+			int_vec_print(cout, Lambda, nb_lambda);
 			cout << endl;		
 			cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 			for (i = 0; i < nb_mu; i++) {
@@ -705,9 +705,9 @@ INT compute_r0(INT *N, INT nb_classes, INT verbose_level)
 			}
 
 
-		FREE_INT(Lambda);
-		FREE_INT(Mu);
-		FREE_INT(Mu_mult);
+		FREE_int(Lambda);
+		FREE_int(Mu);
+		FREE_int(Mu_mult);
 
 
 		}
@@ -719,18 +719,18 @@ INT compute_r0(INT *N, INT nb_classes, INT verbose_level)
 
 void compute_multiplication_constants_center_of_group_ring(action *A, 
 	action_by_conjugation *ABC, 
-	schreier *Sch, INT nb_classes, INT *&N, INT verbose_level)
+	schreier *Sch, int nb_classes, int *&N, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT r, rl, rf, s, sl, sf, i, a, j, b, c, idx, t, tf; //, tl;
+	int f_v = (verbose_level >= 1);
+	int r, rl, rf, s, sl, sf, i, a, j, b, c, idx, t, tf; //, tl;
 
 
 	if (f_v) {
 		cout << "compute_multiplication_constants_center_of_group_ring" << endl;
 		}
 
-	N = NEW_INT(nb_classes * nb_classes * nb_classes);
-	INT_vec_zero(N, nb_classes * nb_classes * nb_classes);
+	N = NEW_int(nb_classes * nb_classes * nb_classes);
+	int_vec_zero(N, nb_classes * nb_classes * nb_classes);
 	
 	
 	for (r = 0; r < nb_classes; r++) {
@@ -771,28 +771,28 @@ void compute_multiplication_constants_center_of_group_ring(action *A,
 }
 
 void compute_Distribution_table(action *A, action_by_conjugation *ABC, 
-	schreier *Sch, INT nb_classes, 
-	INT **Gens, INT nb_gens, INT t_max, INT *&Distribution, INT verbose_level)
+	schreier *Sch, int nb_classes, 
+	int **Gens, int nb_gens, int t_max, int *&Distribution, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT *Elt1;
-	INT *Elt2;
-	INT *Choice;
-	INT *Nb;
-	INT t, h, i, /*idx,*/ j;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int *Elt1;
+	int *Elt2;
+	int *Choice;
+	int *Nb;
+	int t, h, i, /*idx,*/ j;
 
 	if (f_v) {
 		cout << "compute_Distribution_table" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	
-	Choice = NEW_INT(t_max);
-	Distribution = NEW_INT((t_max + 1) * nb_classes);
-	INT_vec_zero(Distribution, (t_max + 1) * nb_classes);
-	Nb = NEW_INT(t_max + 1);
+	Choice = NEW_int(t_max);
+	Distribution = NEW_int((t_max + 1) * nb_classes);
+	int_vec_zero(Distribution, (t_max + 1) * nb_classes);
+	Nb = NEW_int(t_max + 1);
 
 	for (t = 1; t <= t_max; t++) {
 		Nb[t] = i_power_j(nb_gens, t);
@@ -800,7 +800,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 
 	if (f_v) {
 		cout << "Nb : ";
-		INT_vec_print(cout, Nb + 1, t_max);
+		int_vec_print(cout, Nb + 1, t_max);
 		cout << endl;
 		}
 	
@@ -811,7 +811,7 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 
 			if (f_vvv) {
 				cout << "h=" << h << " Choice=";
-				INT_vec_print(cout, Choice, t);
+				int_vec_print(cout, Choice, t);
 				cout << endl;
 				}
 
@@ -837,14 +837,14 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 
 		if (f_v) {
 			cout << "after t=" << t << " Distribution:" << endl;
-			INT_matrix_print(Distribution, t + 1, nb_classes);
+			int_matrix_print(Distribution, t + 1, nb_classes);
 			}
 		}
 
-	FREE_INT(Choice);
-	FREE_INT(Nb);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Choice);
+	FREE_int(Nb);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	
 	if (f_v) {
 		cout << "compute_Distribution_table done" << endl;
@@ -852,9 +852,9 @@ void compute_Distribution_table(action *A, action_by_conjugation *ABC,
 }
 
 
-void multiply_word(action *A, INT **Gens, INT *Choice, INT t, INT *Elt1, INT *Elt2, INT verbose_level)
+void multiply_word(action *A, int **Gens, int *Choice, int t, int *Elt1, int *Elt2, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	A->element_move(Gens[Choice[0]], Elt1, 0);
 	for (i = 1; i < t; i++) {
@@ -863,21 +863,21 @@ void multiply_word(action *A, INT **Gens, INT *Choice, INT t, INT *Elt1, INT *El
 		}
 }
 
-void create_generators(action *A, INT n, INT **&Elt, INT &nb_gens, INT f_special, INT verbose_level)
+void create_generators(action *A, int n, int **&Elt, int &nb_gens, int f_special, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j;
-	INT *v;
+	int f_v = (verbose_level >= 1);
+	int i, j;
+	int *v;
 	
 	if (f_v) {
 		cout << "create_generators" << endl;
 		}
 	nb_gens = n - 1;
-	Elt = NEW_PINT(nb_gens);
+	Elt = NEW_pint(nb_gens);
 	for (i = 0; i < nb_gens; i++) {
-		Elt[i] = NEW_INT(A->elt_size_in_INT);
+		Elt[i] = NEW_int(A->elt_size_in_int);
 		}
-	v = NEW_INT(n);
+	v = NEW_int(n);
 
 
 	if (f_special) {
@@ -907,24 +907,24 @@ void create_generators(action *A, INT n, INT **&Elt, INT &nb_gens, INT f_special
 		cout << endl;
 		}
 
-	FREE_INT(v);
+	FREE_int(v);
 
 }
 
 
-void integral_eigenvalues(INT *M, INT n, 
-	INT *&Lambda, 
-	INT &nb_lambda, 
-	INT *&Mu, 
-	INT *&Mu_mult, 
-	INT &nb_mu, 
-	INT verbose_level)
+void integral_eigenvalues(int *M, int n, 
+	int *&Lambda, 
+	int &nb_lambda, 
+	int *&Mu, 
+	int *&Mu_mult, 
+	int &nb_mu, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	unipoly charpoly;
-	INT *A;
-	INT *B;
-	INT i, deg, a, x;
+	int *A;
+	int *B;
+	int i, deg, a, x;
 
 	if (f_v) {
 		cout << "integral_eigenvalues" << endl;
@@ -939,22 +939,22 @@ void integral_eigenvalues(INT *M, INT n,
 		cout << "has degree " << deg << endl;
 		}
 
-	A = NEW_INT(deg + 1);
-	B = NEW_INT(deg + 1);
+	A = NEW_int(deg + 1);
+	B = NEW_int(deg + 1);
 		
 	for (i = 0; i <= deg; i++) {
 		A[i] = charpoly.s_ii(i);
 		}
 	if (f_v) {
 		cout << "coeffs : ";
-		INT_vec_print(cout, A, deg + 1);
+		int_vec_print(cout, A, deg + 1);
 		cout << endl;
 		}
 
 
-	Lambda = NEW_INT(deg);
-	Mu = NEW_INT(deg);
-	Mu_mult = NEW_INT(deg);
+	Lambda = NEW_int(deg);
+	Mu = NEW_int(deg);
+	Mu_mult = NEW_int(deg);
 	nb_lambda = 0;
 	nb_mu = 0;
 
@@ -989,11 +989,11 @@ void integral_eigenvalues(INT *M, INT n,
 					exit(1);
 					}
 				}
-			INT_vec_copy(B, A, deg);
+			int_vec_copy(B, A, deg);
 			deg--;
 			if (f_v) {
 				cout << "after dividing off, the polynomial is: ";
-				INT_vec_print(cout, A, deg + 1);
+				int_vec_print(cout, A, deg + 1);
 				cout << endl;
 				}
 
@@ -1004,13 +1004,13 @@ void integral_eigenvalues(INT *M, INT n,
 
 	if (f_v) {
 		cout << "after dividing off integer roots, the polynomial is: ";
-		INT_vec_print(cout, A, deg + 1);
+		int_vec_print(cout, A, deg + 1);
 		cout << endl;
 		}
 
 	if (f_v) {
 		cout << "We found " << nb_lambda << " integer roots, they are: " << endl;
-		INT_vec_print(cout, Lambda, nb_lambda);
+		int_vec_print(cout, Lambda, nb_lambda);
 		cout << endl;		
 		cout << "We found " << nb_mu << " distinct integer roots, they are: " << endl;
 		for (i = 0; i < nb_mu; i++) {
@@ -1018,15 +1018,15 @@ void integral_eigenvalues(INT *M, INT n,
 			}
 		}
 
-	FREE_INT(A);
-	FREE_INT(B);
+	FREE_int(A);
+	FREE_int(B);
 }
 
-void characteristic_poly(INT *N, INT size, unipoly &charpoly, INT verbose_level)
+void characteristic_poly(int *N, int size, unipoly &charpoly, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, k, a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, k, a;
 	matrix M, M1, P, Pv, Q, Qv, S, T;
 	
 	if (f_v) {
@@ -1070,8 +1070,8 @@ void characteristic_poly(INT *N, INT size, unipoly &charpoly, INT verbose_level)
 	cout << "T=" << endl << T << endl;
 #endif
 
-	//INT deg;
-	//INT l, lv, b;
+	//int deg;
+	//int l, lv, b;
 
 
 	M.determinant(charpoly, verbose_level);
@@ -1111,12 +1111,12 @@ void double_swap(double &a, double &b)
 	b = c;
 }
 
-INT double_Gauss(double *A, INT m, INT n, INT *base_cols, INT verbose_level)
+int double_Gauss(double *A, int m, int n, int *base_cols, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	double pivot, pivot_inv, z, f, a, b, c, p;
-	INT i, j, k, jj, rank, idx;
+	int i, j, k, jj, rank, idx;
 	
 	if (f_v) {
 		cout << "double_Gauss" << endl;
@@ -1254,9 +1254,9 @@ INT double_Gauss(double *A, INT m, INT n, INT *base_cols, INT verbose_level)
 	return rank;
 }
 
-void double_matrix_print(double *A, INT m, INT n)
+void double_matrix_print(double *A, int m, int n)
 {
-	INT i, j;
+	int i, j;
 
 	for (i = 0; i < m; i++) {
 		for (j = 0; j < n; j++) {
@@ -1276,9 +1276,9 @@ double double_abs(double x)
 		}
 }
 
-void kernel_columns(INT n, INT nb_base_cols, INT *base_cols, INT *kernel_cols)
+void kernel_columns(int n, int nb_base_cols, int *base_cols, int *kernel_cols)
 {
-	INT i, j, k;
+	int i, j, k;
 	
 	j = k = 0;
 	for (i = 0; i < n; i++) {
@@ -1290,19 +1290,19 @@ void kernel_columns(INT n, INT nb_base_cols, INT *base_cols, INT *kernel_cols)
 		}
 }
 
-void matrix_get_kernel(double *M, INT m, INT n, INT *base_cols, INT nb_base_cols, 
-	INT &kernel_m, INT &kernel_n, double *kernel)
-	// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) INT's)
+void matrix_get_kernel(double *M, int m, int n, int *base_cols, int nb_base_cols, 
+	int &kernel_m, int &kernel_n, double *kernel)
+	// kernel must point to the appropriate amount of memory! (at least n * (n - nb_base_cols) int's)
 {
-	INT r, k, i, j, ii, iii, a, b;
-	INT *kcol;
+	int r, k, i, j, ii, iii, a, b;
+	int *kcol;
 	
 	r = nb_base_cols;
 	k = n - r;
 	kernel_m = n;
 	kernel_n = k;
 	
-	kcol = NEW_INT(k);
+	kcol = NEW_int(k);
 	
 	ii = 0;
 	j = 0;
@@ -1366,22 +1366,22 @@ void matrix_get_kernel(double *M, INT m, INT n, INT *base_cols, INT nb_base_cols
 			ii++;
 			}
 		}
-	FREE_INT(kcol);
+	FREE_int(kcol);
 }
 
 
-INT double_as_INT(double x)
+int double_as_int(double x)
 {
-	INT a;
+	int a;
 	double a1, a2;
 
-	a = (INT) (x);
+	a = (int) (x);
 	a1 = (double)a - 0.000001;
 	a2 = (double)a + 0.000001;
 	if (a1 < a && a < a2) {
 		return a;
 		}
-	cout << "error in double_as_INT" << endl;
+	cout << "error in double_as_int" << endl;
 	exit(1);
 }
 

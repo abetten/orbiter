@@ -37,7 +37,7 @@ void spread_create::freeself()
 		FREE_OBJECT(F);
 		}
 	if (set) {
-		FREE_INT(set);
+		FREE_int(set);
 		}
 	if (Sg) {
 		FREE_OBJECT(Sg);
@@ -45,9 +45,9 @@ void spread_create::freeself()
 	null();
 }
 
-void spread_create::init(spread_create_description *Descr, INT verbose_level)
+void spread_create::init(spread_create_description *Descr, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	
 	if (f_v) {
@@ -114,7 +114,7 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 				"computing lex least base done" << endl;
 		cout << "BLT_set_create::init "
 				"base: ";
-		INT_vec_print(cout, A->base, A->base_len);
+		int_vec_print(cout, A->base, A->base_len);
 		cout << endl;
 		}
 	
@@ -146,17 +146,17 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 					"surface is given by the coefficients" << endl;
 			}
 
-		INT *surface_coeffs;
-		INT nb_coeffs, nb_terms;	
-		INT i, a, b;
+		int *surface_coeffs;
+		int nb_coeffs, nb_terms;	
+		int i, a, b;
 	
-		INT_vec_scan(Descr->coefficients_text, surface_coeffs, nb_coeffs);
+		int_vec_scan(Descr->coefficients_text, surface_coeffs, nb_coeffs);
 		if (ODD(nb_coeffs)) {
 			cout << "surface_create::init "
 					"number of surface coefficients must be even" << endl;
 			exit(1);
 			}
-		INT_vec_zero(coeffs, 20);
+		int_vec_zero(coeffs, 20);
 		nb_terms = nb_coeffs >> 1;
 		for (i = 0; i < nb_terms; i++) {
 			a = surface_coeffs[2 * i + 0];
@@ -173,11 +173,11 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 				}
 			coeffs[b] = a;
 			}
-		FREE_INT(surface_coeffs);
+		FREE_int(surface_coeffs);
 
-		sprintf(prefix, "by_coefficients_q%ld", F->q);
-		sprintf(label_txt, "by_coefficients_q%ld", F->q);
-		sprintf(label_tex, "by\\_coefficients\\_q%ld", F->q);
+		sprintf(prefix, "by_coefficients_q%d", F->q);
+		sprintf(label_txt, "by_coefficients_q%d", F->q);
+		sprintf(label_tex, "by\\_coefficients\\_q%d", F->q);
 		}
 #endif
 
@@ -187,7 +187,7 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 			cout << "spread_create::init "
 					"spread from catalogue" << endl;
 			}
-		INT nb_iso;
+		int nb_iso;
 
 		nb_iso = Spread_nb_reps(q, k);
 		if (Descr->iso >= nb_iso) {
@@ -196,11 +196,11 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 			exit(1);
 			}
 
-		INT *rep;
+		int *rep;
 
 		rep = Spread_representative(q, k, Descr->iso, sz);
-		set = NEW_INT(sz);
-		INT_vec_copy(rep, set, sz);
+		set = NEW_int(sz);
+		int_vec_copy(rep, set, sz);
 
 		Sg = NEW_OBJECT(strong_generators);
 
@@ -214,11 +214,11 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 			verbose_level);
 		f_has_group = TRUE;
 
-		sprintf(prefix, "catalogue_q%ld_k%ld_%ld",
+		sprintf(prefix, "catalogue_q%d_k%d_%d",
 				q, k, Descr->iso);
-		sprintf(label_txt, "catalogue_q%ld_k%ld_%ld",
+		sprintf(label_txt, "catalogue_q%d_k%d_%d",
 				q, k, Descr->iso);
-		sprintf(label_tex, "catalogue\\_q%ld\\_k%ld\\_%ld",
+		sprintf(label_tex, "catalogue\\_q%d\\_k%d\\_%d",
 				q, k, Descr->iso);
 		if (f_v) {
 			cout << "BLT_set_create::init "
@@ -234,7 +234,7 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 
 	if (f_v) {
 		cout << "spread_create::init set = ";
-		INT_vec_print(cout, set, sz);
+		int_vec_print(cout, set, sz);
 		cout << endl;
 		}
 
@@ -252,17 +252,17 @@ void spread_create::init(spread_create_description *Descr, INT verbose_level)
 
 void spread_create::apply_transformations(
 	const char **transform_coeffs,
-	INT *f_inverse_transform, INT nb_transform,
-	INT verbose_level)
+	int *f_inverse_transform, int nb_transform,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 #if 0
-	INT h;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
+	int h;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 	action *A;
-	INT desired_sz;
+	int desired_sz;
 	
 	if (f_v) {
 		cout << "BLT_set_create::apply_transformations" << endl;
@@ -270,9 +270,9 @@ void spread_create::apply_transformations(
 	
 	A = Surf_A->A;
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 
 	if (f_semilinear) {
 		desired_sz = 17;
@@ -283,9 +283,9 @@ void spread_create::apply_transformations(
 
 
 	for (h = 0; h < nb_transform; h++) {
-		INT *transformation_coeffs;
-		INT sz;
-		INT coeffs_out[20];
+		int *transformation_coeffs;
+		int sz;
+		int coeffs_out[20];
 	
 		if (f_v) {
 			cout << "BLT_set_create::apply_transformations "
@@ -293,7 +293,7 @@ void spread_create::apply_transformations(
 					<< nb_transform << ":" << endl;
 			}
 		
-		INT_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
+		int_vec_scan(transform_coeffs[h], transformation_coeffs, sz);
 
 		if (sz != desired_sz) {
 			cout << "BLT_set_create::apply_transformations "
@@ -332,7 +332,7 @@ void spread_create::apply_transformations(
 		
 	
 		if (f_semilinear) {
-			INT n = 4;
+			int n = 4;
 			
 			Surf->substitute_semilinear(coeffs, coeffs_out,
 					TRUE, Elt2[n * n], Elt3, verbose_level);
@@ -351,7 +351,7 @@ void spread_create::apply_transformations(
 			cout << "$$" << endl;
 			}
 
-		INT_vec_copy(coeffs_out, coeffs, 20);
+		int_vec_copy(coeffs_out, coeffs, 20);
 
 		strong_generators *SG2;
 		
@@ -366,13 +366,13 @@ void spread_create::apply_transformations(
 		FREE_OBJECT(Sg);
 		Sg = SG2;
 
-		FREE_INT(transformation_coeffs);
+		FREE_int(transformation_coeffs);
 		}
 
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 #endif
 
 	if (f_v) {

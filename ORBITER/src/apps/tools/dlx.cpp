@@ -7,19 +7,19 @@
 #include "orbiter.h"
 
 
-INT t0;
+int t0;
 
 
 
 int main(int argc, const char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_file = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_file = FALSE;
 	const char *fname;
-	INT f_solution_file = FALSE;
+	int f_solution_file = FALSE;
 	const char *solution_fname = NULL;
-	INT f_tree_file = FALSE;
+	int f_tree_file = FALSE;
 	const char *tree_fname = NULL;
 
 
@@ -51,17 +51,17 @@ int main(int argc, const char **argv)
 		cout << "Please use option -file <fname>" << endl;
 		exit(1);
 		}
-	INT *M;
-	INT m, n;
-	INT j, d, h;
-	INT nb_sol, nb_backtrack;
+	int *M;
+	int m, n;
+	int j, d, h;
+	int nb_sol, nb_backtrack;
 	{
 		ifstream fp(fname);
 
 		fp >> m >> n;
 
 		cout << "Reading input of size " << m << " x " << n << endl;
-		M = NEW_INT(m * n);
+		M = NEW_int(m * n);
 		for (i = 0; i < m * n; i++) {
 			M[i] = 0;
 			}

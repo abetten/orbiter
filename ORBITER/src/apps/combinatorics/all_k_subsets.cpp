@@ -8,14 +8,14 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i, h;
-	INT f_n = FALSE;
-	INT n;
-	INT f_k = FALSE;
-	INT k;
-	INT *set;
-	INT N;
+	int verbose_level = 0;
+	int i, h;
+	int f_n = FALSE;
+	int n;
+	int f_k = FALSE;
+	int k;
+	int *set;
+	int N;
 	char fname[1000];
 
 	for (i = 1; i < argc; i++) {
@@ -44,9 +44,9 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
-	sprintf(fname, "all_k_subsets_%ld_%ld.tree", n, k);
-	set = NEW_INT(k);
-	N = INT_n_choose_k(n, k);
+	sprintf(fname, "all_k_subsets_%d_%d.tree", n, k);
+	set = NEW_int(k);
+	N = int_n_choose_k(n, k);
 
 	
 	{
@@ -62,5 +62,5 @@ int main(int argc, char **argv)
 		}
 	fp << "-1" << endl;
 	}
-	FREE_INT(set);
+	FREE_int(set);
 }

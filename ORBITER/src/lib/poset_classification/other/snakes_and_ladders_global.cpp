@@ -12,27 +12,27 @@
 
 void read_orbit_rep_and_candidates_from_files_and_process(
 	action *A, char *prefix,
-	INT level, INT orbit_at_level, INT level_of_candidates_file, 
-	void (*early_test_func_callback)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level), 
+	int level, int orbit_at_level, int level_of_candidates_file, 
+	void (*early_test_func_callback)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level), 
 	void *early_test_func_callback_data, 
-	INT *&starter,
-	INT &starter_sz,
+	int *&starter,
+	int &starter_sz,
 	sims *&Stab,
 	strong_generators *&Strong_gens, 
-	INT *&candidates,
-	INT &nb_candidates,
-	INT &nb_cases, 
-	INT verbose_level)
+	int *&candidates,
+	int &nb_candidates,
+	int &nb_cases, 
+	int verbose_level)
 // A needs to be the base action
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *candidates1;
-	INT nb_candidates1;
-	INT h; //, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *candidates1;
+	int nb_candidates1;
+	int h; //, i;
 
 	if (f_v) {
 		cout << "read_orbit_rep_and_candidates_from_files_and_process" << endl;
@@ -51,15 +51,15 @@ void read_orbit_rep_and_candidates_from_files_and_process(
 
 	for (h = level_of_candidates_file; h < level; h++) {
 
-		INT *candidates2;
-		INT nb_candidates2;
+		int *candidates2;
+		int nb_candidates2;
 
 		if (f_vv) {
 			cout << "read_orbit_rep_and_candidates_from_files_and_process "
 					"testing candidates at level " << h
 					<< " number of candidates = " << nb_candidates1 << endl;
 			}
-		candidates2 = NEW_INT(nb_candidates1);
+		candidates2 = NEW_int(nb_candidates1);
 		
 		(*early_test_func_callback)(starter, h + 1, 
 			candidates1, nb_candidates1, 
@@ -74,10 +74,10 @@ void read_orbit_rep_and_candidates_from_files_and_process(
 					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 	
-		INT_vec_copy(candidates2, candidates1, nb_candidates2);
+		int_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
-		FREE_INT(candidates2);
+		FREE_int(candidates2);
 		}
 
 	candidates = candidates1;
@@ -90,21 +90,21 @@ void read_orbit_rep_and_candidates_from_files_and_process(
 }
 
 void read_candidates_for_one_orbit_from_file(char *prefix,
-		INT level, INT orbit_at_level, INT level_of_candidates_file,
-		INT *S,
-		void (*early_test_func_callback)(INT *S, INT len,
-			INT *candidates, INT nb_candidates,
-			INT *good_candidates, INT &nb_good_candidates,
-			void *data, INT verbose_level),
+		int level, int orbit_at_level, int level_of_candidates_file,
+		int *S,
+		void (*early_test_func_callback)(int *S, int len,
+			int *candidates, int nb_candidates,
+			int *good_candidates, int &nb_good_candidates,
+			void *data, int verbose_level),
 		void *early_test_func_callback_data,
-		INT *&candidates,
-		INT &nb_candidates,
-		INT verbose_level)
+		int *&candidates,
+		int &nb_candidates,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, orbit_idx;
-	INT *candidates1 = NULL;
-	INT nb_candidates1;
+	int f_v = (verbose_level >= 1);
+	int h, orbit_idx;
+	int *candidates1 = NULL;
+	int nb_candidates1;
 
 	if (f_v) {
 		cout << "read_candidates_for_one_orbit_from_file" << endl;
@@ -128,7 +128,7 @@ void read_candidates_for_one_orbit_from_file(char *prefix,
 				"before generator_read_candidates_of_orbit" << endl;
 		}
 	char fname2[1000];
-	sprintf(fname2, "%s_lvl_%ld_candidates.bin",
+	sprintf(fname2, "%s_lvl_%d_candidates.bin",
 			prefix, level_of_candidates_file);
 	poset_classification_read_candidates_of_orbit(
 		fname2, orbit_idx,
@@ -137,15 +137,15 @@ void read_candidates_for_one_orbit_from_file(char *prefix,
 
 	for (h = level_of_candidates_file; h < level; h++) {
 
-		INT *candidates2;
-		INT nb_candidates2;
+		int *candidates2;
+		int nb_candidates2;
 
 		if (f_v) {
 			cout << "read_orbit_rep_and_candidates_from_files_"
 					"and_process testing candidates at level " << h
 					<< " number of candidates = " << nb_candidates1 << endl;
 			}
-		candidates2 = NEW_INT(nb_candidates1);
+		candidates2 = NEW_int(nb_candidates1);
 
 		(*early_test_func_callback)(S, h + 1,
 			candidates1, nb_candidates1,
@@ -160,10 +160,10 @@ void read_candidates_for_one_orbit_from_file(char *prefix,
 					<< nb_candidates1 - nb_candidates2 << endl;
 			}
 
-		INT_vec_copy(candidates2, candidates1, nb_candidates2);
+		int_vec_copy(candidates2, candidates1, nb_candidates2);
 		nb_candidates1 = nb_candidates2;
 
-		FREE_INT(candidates2);
+		FREE_int(candidates2);
 		}
 
 	candidates = candidates1;
@@ -175,19 +175,19 @@ void read_candidates_for_one_orbit_from_file(char *prefix,
 }
 
 void read_orbit_rep_and_candidates_from_files(action *A, char *prefix, 
-	INT level, INT orbit_at_level, INT level_of_candidates_file, 
-	INT *&starter,
-	INT &starter_sz,
+	int level, int orbit_at_level, int level_of_candidates_file, 
+	int *&starter,
+	int &starter_sz,
 	sims *&Stab,
 	strong_generators *&Strong_gens, 
-	INT *&candidates,
-	INT &nb_candidates,
-	INT &nb_cases, 
-	INT verbose_level)
+	int *&candidates,
+	int &nb_candidates,
+	int &nb_cases, 
+	int verbose_level)
 // A needs to be the base action
 {
-	INT f_v = (verbose_level >= 1);
-	INT orbit_at_candidate_level = -1;
+	int f_v = (verbose_level >= 1);
+	int orbit_at_candidate_level = -1;
 
 
 	if (f_v) {
@@ -199,7 +199,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, char *prefix,
 	//longinteger_object stab_go;
 
 	char fname1[1000];
-	sprintf(fname1, "%s_lvl_%ld", prefix, level);
+	sprintf(fname1, "%s_lvl_%d", prefix, level);
 	
 	A->read_set_and_stabilizer(fname1, 
 		orbit_at_level, starter, starter_sz, Stab, 
@@ -215,7 +215,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, char *prefix,
 		cout << "read_orbit_rep_and_candidates_from_files "
 				"Read starter " << orbit_at_level << " / "
 				<< nb_cases << " : ";
-		INT_vec_print(cout, starter, starter_sz);
+		int_vec_print(cout, starter, starter_sz);
 		cout << endl;
 		//cout << "read_orbit_rep_and_candidates_from_files "
 		//"Group order=" << stab_go << endl;
@@ -241,13 +241,13 @@ void read_orbit_rep_and_candidates_from_files(action *A, char *prefix,
 			exit(1);
 			}
 		ifstream f(fname3);
-		INT a, i, cnt;
-		INT *S;
+		int a, i, cnt;
+		int *S;
 		char buf[MY_OWN_BUFSIZE];
-		INT len, str_len;
+		int len, str_len;
 		char *p_buf;
 
-		S = NEW_INT(level_of_candidates_file);
+		S = NEW_int(level_of_candidates_file);
 	
 		cnt = 0;
 		f.getline(buf, MY_OWN_BUFSIZE, '\n'); // skip the first line
@@ -298,7 +298,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, char *prefix,
 				cnt++;
 				}
 			}
-		FREE_INT(S);
+		FREE_int(S);
 #else
 		orbit_at_candidate_level =
 				find_orbit_index_in_data_file(prefix,
@@ -320,7 +320,7 @@ void read_orbit_rep_and_candidates_from_files(action *A, char *prefix,
 				"before generator_read_candidates_of_orbit" << endl;
 		}
 	char fname2[1000];
-	sprintf(fname2, "%s_lvl_%ld_candidates.bin", prefix,
+	sprintf(fname2, "%s_lvl_%d_candidates.bin", prefix,
 			level_of_candidates_file);
 	poset_classification_read_candidates_of_orbit(
 		fname2, orbit_at_candidate_level,
@@ -349,19 +349,19 @@ void read_orbit_rep_and_candidates_from_files(action *A, char *prefix,
 		}
 }
 
-INT find_orbit_index_in_data_file(const char *prefix,
-		INT level_of_candidates_file, INT *starter,
-		INT verbose_level)
+int find_orbit_index_in_data_file(const char *prefix,
+		int level_of_candidates_file, int *starter,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char fname[1000];
-	INT orbit_idx;
+	int orbit_idx;
 
 	if (f_v) {
 		cout << "find_orbit_index_in_data_file" << endl;
 	}
 
-	sprintf(fname, "%s_lvl_%ld", prefix, level_of_candidates_file);
+	sprintf(fname, "%s_lvl_%d", prefix, level_of_candidates_file);
 
 	if (file_size(fname) <= 0) {
 		cout << "find_orbit_index_in_data_file file "
@@ -369,13 +369,13 @@ INT find_orbit_index_in_data_file(const char *prefix,
 		exit(1);
 		}
 	ifstream f(fname);
-	INT a, i, cnt;
-	INT *S;
+	int a, i, cnt;
+	int *S;
 	char buf[MY_OWN_BUFSIZE];
-	INT len, str_len;
+	int len, str_len;
 	char *p_buf;
 
-	S = NEW_INT(level_of_candidates_file);
+	S = NEW_int(level_of_candidates_file);
 
 	cnt = 0;
 	f.getline(buf, MY_OWN_BUFSIZE, '\n'); // skip the first line
@@ -429,7 +429,7 @@ INT find_orbit_index_in_data_file(const char *prefix,
 			cnt++;
 			}
 		}
-	FREE_INT(S);
+	FREE_int(S);
 	if (f_v) {
 		cout << "find_orbit_index_in_data_file done" << endl;
 	}
@@ -437,28 +437,28 @@ INT find_orbit_index_in_data_file(const char *prefix,
 }
 
 void compute_orbits_on_subsets(poset_classification *&gen,
-	INT target_depth,
+	int target_depth,
 	const char *prefix, 
-	INT f_W, INT f_w,
+	int f_W, int f_w,
 	action *A, action *A2, 
 	strong_generators *Strong_gens, 
-	void (*early_test_func_callback)(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		void *data, INT verbose_level),
+	void (*early_test_func_callback)(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		void *data, int verbose_level),
 	void *early_test_func_data, 
-	INT (*candidate_incremental_check_func)(INT len,
-			INT *S, void *data, INT verbose_level),
+	int (*candidate_incremental_check_func)(int len,
+			int *S, void *data, int verbose_level),
 	void *candidate_incremental_check_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT nb_poset_orbit_nodes = 1000;
-	INT schreier_depth = target_depth;
-	INT f_use_invariant_subset_if_available = TRUE;
-	//INT f_implicit_fusion = FALSE;
-	INT f_debug = FALSE;
-	INT t0 = os_ticks();
+	int f_v = (verbose_level >= 1);
+	int nb_poset_orbit_nodes = 1000;
+	int schreier_depth = target_depth;
+	int f_use_invariant_subset_if_available = TRUE;
+	//int f_implicit_fusion = FALSE;
+	int f_debug = FALSE;
+	int t0 = os_ticks();
 	
 
 	if (f_v) {
@@ -511,7 +511,7 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 		f_debug, 
 		verbose_level - 1);
 
-	INT i, fst, len;
+	int i, fst, len;
 
 	if (f_v) {
 		cout << "compute_orbits_on_subsets done" << endl;
@@ -528,9 +528,9 @@ void compute_orbits_on_subsets(poset_classification *&gen,
 
 void orbits_on_k_sets(action *A1, action *A2, 
 	strong_generators *Strong_gens, 
-	INT k, INT *&orbit_reps, INT &nb_orbits, INT verbose_level)
+	int k, int *&orbit_reps, int &nb_orbits, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	poset_classification *Gen;
 
 	if (f_v) {
@@ -549,7 +549,7 @@ void orbits_on_k_sets(action *A1, action *A2,
 	
 #if 0
 	nb_orbits = Gen->nb_orbits_at_level(k);
-	orbit_reps = NEW_INT(k * nb_orbits);
+	orbit_reps = NEW_int(k * nb_orbits);
 	for (i = 0; i < nb_orbits; i++) {
 		Gen->get_set_by_level(k, i, orbit_reps + i * k);
 		}
@@ -568,10 +568,10 @@ void orbits_on_k_sets(action *A1, action *A2,
 
 poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	strong_generators *Strong_gens, 
-	INT k, INT verbose_level)
+	int k, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
 	poset_classification *Gen;
 	
 
@@ -605,7 +605,7 @@ poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 	Gen->print_function_data = this;
 #endif	
 
-	INT nb_poset_orbit_nodes = 1000;
+	int nb_poset_orbit_nodes = 1000;
 	
 	if (f_v) {
 		cout << "orbits_on_k_sets calling Gen->init_oracle" << endl;
@@ -616,11 +616,11 @@ poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 		}
 	Gen->root[0].init_root_node(Gen, verbose_level - 1);
 	
-	INT schreier_depth = Gen->depth;
-	INT f_use_invariant_subset_if_available = TRUE;
-	//INT f_implicit_fusion = FALSE;
-	INT f_debug = FALSE;
-	INT t0 = os_ticks();
+	int schreier_depth = Gen->depth;
+	int f_use_invariant_subset_if_available = TRUE;
+	//int f_implicit_fusion = FALSE;
+	int f_debug = FALSE;
+	int t0 = os_ticks();
 	
 	if (f_v) {
 		cout << "orbits_on_k_sets_compute: calling generator_main" << endl;
@@ -640,7 +640,7 @@ poset_classification *orbits_on_k_sets_compute(action *A1, action *A2,
 
 
 
-void print_extension_type(ostream &ost, INT t)
+void print_extension_type(ostream &ost, int t)
 {
 	if (t == EXTENSION_TYPE_UNPROCESSED) {
 		ost << "   unprocessed";
@@ -684,7 +684,7 @@ const char *trace_result_as_text(trace_result r)
 		}
 }
 
-INT trace_result_is_no_result(trace_result r)
+int trace_result_is_no_result(trace_result r)
 {
 	if (r == no_result_extension_not_found || 
 		r == no_result_fusion_node_installed || 
@@ -699,29 +699,29 @@ INT trace_result_is_no_result(trace_result r)
 
 
 void wedge_product_export_magma(poset_classification *Gen,
-		INT n, INT q, INT vector_space_dimension,
-		INT level, INT verbose_level)
+		int n, int q, int vector_space_dimension,
+		int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 
 	if (f_v) {
 		cout << "wedge_product_export_magma" << endl;
 		}
 	
-	//INT level;
-	INT *the_set;
-	INT *v;
-	INT a, i, j, h, fst, len, ii, jj;
+	//int level;
+	int *the_set;
+	int *v;
+	int a, i, j, h, fst, len, ii, jj;
 	longinteger_object go;
-	INT *Elt;
+	int *Elt;
 	
 	//level = depth_completed + 1;
 
 
-	the_set = NEW_INT(level);
-	v = NEW_INT(vector_space_dimension);
-	Elt = NEW_INT(Gen->A->elt_size_in_INT);
+	the_set = NEW_int(level);
+	v = NEW_int(vector_space_dimension);
+	Elt = NEW_int(Gen->A->elt_size_in_int);
 	
 	fst = Gen->first_poset_orbit_node_at_level[level];
 	len = Gen->first_poset_orbit_node_at_level[level + 1] - fst;
@@ -732,7 +732,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 	poset_orbit_node *O;
 	char fname[1000];
 
-	sprintf(fname, "Wedge_n%ld_q%ld_d%ld.magma", n, q, level);
+	sprintf(fname, "Wedge_n%d_q%d_d%d.magma", n, q, level);
 
 	{
 	ofstream f(fname);
@@ -838,7 +838,7 @@ void wedge_product_export_magma(poset_classification *Gen,
 				<< O->nb_strong_generators << " strong generators";
 		if (O->nb_strong_generators) {
 			f << ", transversal lengths: ";
-			INT_vec_print(f, O->tl, Gen->A->base_len);
+			int_vec_print(f, O->tl, Gen->A->base_len);
 			}
 		f << endl;
 		f << "[" << endl;
@@ -887,9 +887,9 @@ void wedge_product_export_magma(poset_classification *Gen,
         		 << endl << endl;
 	} // file f
 
-	FREE_INT(the_set);
-	FREE_INT(v);
-	FREE_INT(Elt);
+	FREE_int(the_set);
+	FREE_int(v);
+	FREE_int(Elt);
 
 	if (f_v) {
 		cout << "written file " << fname << " of size "

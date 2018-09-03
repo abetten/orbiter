@@ -12,13 +12,13 @@
 void isomorph_read_statistic_files(
 	action *A_base, action *A,
 	poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix, INT level,
-	const char **fname, INT nb_files,
-	INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix, int level,
+	const char **fname, int nb_files,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
 	
 
 	if (f_v) {
@@ -33,7 +33,7 @@ void isomorph_read_statistic_files(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 
 
 	if (f_v) {
@@ -65,9 +65,9 @@ void isomorph_read_statistic_files(
 	// Row,Case_nb,Nb_sol,Nb_backtrack,Nb_col,Dt,Dt_in_sec
 
 	spreadsheet *S;
-	INT i, h, Case_nb, Nb_sol, Nb_backtrack, Nb_col, Dt, Dt_in_sec;
-	INT case_nb, nb_sol, nb_backtrack, nb_col, dt, dt_in_sec;
-	INT *Stats;
+	int i, h, Case_nb, Nb_sol, Nb_backtrack, Nb_col, Dt, Dt_in_sec;
+	int case_nb, nb_sol, nb_backtrack, nb_col, dt, dt_in_sec;
+	int *Stats;
 
 	S = NEW_OBJECTS(spreadsheet, nb_files);
 	for (i = 0; i < nb_files; i++) {
@@ -78,8 +78,8 @@ void isomorph_read_statistic_files(
 	cout << "Allocating array Stats for " << Iso.nb_starter
 			<< " starter cases" << endl;
 	 
-	Stats = NEW_INT(6 * Iso.nb_starter);
-	INT_vec_zero(Stats, 6 * Iso.nb_starter);
+	Stats = NEW_int(6 * Iso.nb_starter);
+	int_vec_zero(Stats, 6 * Iso.nb_starter);
 	for (i = 0; i < Iso.nb_starter; i++) {
 		Stats[i * 6 + 0] = -1;
 		}
@@ -94,12 +94,12 @@ void isomorph_read_statistic_files(
 		Dt = S[h].find_by_column("Dt");
 		Dt_in_sec = S[h].find_by_column("Dt_in_sec");
 		for (i = 1; i < S[h].nb_rows; i++) {
-			case_nb = S[h].get_INT(i, Case_nb);
-			nb_sol = S[h].get_INT(i, Nb_sol);
-			nb_backtrack = S[h].get_INT(i, Nb_backtrack);
-			nb_col = S[h].get_INT(i, Nb_col);
-			dt = S[h].get_INT(i, Dt);
-			dt_in_sec = S[h].get_INT(i, Dt_in_sec);
+			case_nb = S[h].get_int(i, Case_nb);
+			nb_sol = S[h].get_int(i, Nb_sol);
+			nb_backtrack = S[h].get_int(i, Nb_backtrack);
+			nb_col = S[h].get_int(i, Nb_col);
+			dt = S[h].get_int(i, Dt);
+			dt_in_sec = S[h].get_int(i, Dt_in_sec);
 			Stats[case_nb * 6 + 0] = 1;
 			Stats[case_nb * 6 + 1] = nb_sol;
 			Stats[case_nb * 6 + 2] = nb_backtrack;
@@ -131,7 +131,7 @@ void isomorph_read_statistic_files(
 			}
 		}
 
-	INT Nb_cases = 0;
+	int Nb_cases = 0;
 
 	Nb_cases = 0;
 	for (i = 0; i < Iso.nb_starter; i++) {
@@ -140,14 +140,14 @@ void isomorph_read_statistic_files(
 			}
 		}
 
-	INT *Stats_short;
+	int *Stats_short;
 
 	
-	Stats_short = NEW_INT(6 * Nb_cases);
+	Stats_short = NEW_int(6 * Nb_cases);
 	h = 0;
 	for (i = 0; i < Iso.nb_starter; i++) {
 		if (Stats[i * 6 + 1]) {
-			INT_vec_copy(Stats + 6 * i, Stats_short + 6 * h, 6);
+			int_vec_copy(Stats + 6 * i, Stats_short + 6 * h, 6);
 			Stats_short[h * 6 + 0] = i;
 			h++;
 			}
@@ -164,7 +164,7 @@ void isomorph_read_statistic_files(
 		"Dt_in_sec" 
 		};
 	const char *fname_collected = "stats_collected.csv";
-	INT_matrix_write_csv_with_labels(fname_collected,
+	int_matrix_write_csv_with_labels(fname_collected,
 			Stats_short, Nb_cases, 6, Column_label);
 
 	cout << "Written file " << fname_collected << " of size "
@@ -195,7 +195,7 @@ void isomorph_read_statistic_files(
 		cout << "isomorph_read_statistic_files "
 				"before Iso.count_solutions" << endl;
 		}
-	INT f_get_statistics = FALSE;
+	int f_get_statistics = FALSE;
 
 
 	Iso.count_solutions(nb_files, fname,
@@ -219,13 +219,13 @@ void isomorph_read_statistic_files(
 
 void isomorph_build_db(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
+	int i;
 	
 	if (f_v) {
 		cout << "isomorph_build_db" << endl;
@@ -240,7 +240,7 @@ void isomorph_build_db(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 	
 	if (f_v) {
 		cout << "isomorph_build_db before Iso.init" << endl;
@@ -274,17 +274,17 @@ void isomorph_build_db(
 
 void isomorph_read_solution_files(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	const char **fname, INT nb_files, 
-	INT f_has_final_test_function, 
-	INT (*final_test_function)(INT *data, INT sz,
-			void *final_test_data, INT verbose_level),
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	const char **fname, int nb_files, 
+	int f_has_final_test_function, 
+	int (*final_test_function)(int *data, int sz,
+			void *final_test_data, int verbose_level),
 	void *final_test_data, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
 	
 
 	if (f_v) {
@@ -299,7 +299,7 @@ void isomorph_read_solution_files(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 
 
 	if (f_v) {
@@ -330,7 +330,7 @@ void isomorph_read_solution_files(
 		cout << "isomorph_read_solution_files "
 				"before Iso.count_solutions" << endl;
 		}
-	INT f_get_statistics = FALSE;
+	int f_get_statistics = FALSE;
 	Iso.count_solutions(nb_files, fname, f_get_statistics, 
 			f_has_final_test_function,
 			final_test_function, final_test_data,
@@ -357,12 +357,12 @@ void isomorph_read_solution_files(
 
 void isomorph_init_solutions_from_memory(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	INT **Solutions, INT *Nb_sol, INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	int **Solutions, int *Nb_sol, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
 		cout << "isomorph_init_solutions_from_memory" << endl;
@@ -375,7 +375,7 @@ void isomorph_init_solutions_from_memory(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 
 
 	if (f_v) {
@@ -414,7 +414,7 @@ void isomorph_init_solutions_from_memory(
 		cout << "isomorph_init_solutions_from_memory "
 				"before Iso.init_solutions" << endl;
 		}
-	//INT f_get_statistics = FALSE;
+	//int f_get_statistics = FALSE;
 	Iso.init_solutions(Solutions, Nb_sol, verbose_level - 1);
 			// in isomorph_files.C
 			//
@@ -436,11 +436,11 @@ void isomorph_init_solutions_from_memory(
 
 void isomorph_read_solution_files_from_clique_finder_case_by_case(
 		action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify, const char *prefix_iso, INT level, 
-	const char **fname, INT *list_of_cases, INT nb_files, INT verbose_level)
+	int size, const char *prefix_classify, const char *prefix_iso, int level, 
+	const char **fname, int *list_of_cases, int nb_files, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_clique_"
@@ -454,7 +454,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 
 
 	if (f_v) {
@@ -495,7 +495,7 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 				"case_by_case before Iso.count_solutions_"
 				"from_clique_finder" << endl;
 		}
-	//INT f_get_statistics = FALSE;
+	//int f_get_statistics = FALSE;
 	Iso.count_solutions_from_clique_finder_case_by_case(nb_files,
 			list_of_cases, fname, /*f_get_statistics,*/
 			verbose_level - 1);
@@ -532,11 +532,11 @@ void isomorph_read_solution_files_from_clique_finder_case_by_case(
 
 void isomorph_read_solution_files_from_clique_finder(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify, const char *prefix_iso, INT level, 
-	const char **fname, INT nb_files, INT verbose_level)
+	int size, const char *prefix_classify, const char *prefix_iso, int level, 
+	const char **fname, int nb_files, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
 		cout << "isomorph_read_solution_files_from_"
@@ -550,7 +550,7 @@ void isomorph_read_solution_files_from_clique_finder(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 
 
 	if (f_v) {
@@ -588,7 +588,7 @@ void isomorph_read_solution_files_from_clique_finder(
 		cout << "isomorph_read_solution_files_from_clique_finder "
 				"before Iso.count_solutions_from_clique_finder" << endl;
 		}
-	//INT f_get_statistics = FALSE;
+	//int f_get_statistics = FALSE;
 	Iso.count_solutions_from_clique_finder(nb_files, fname,
 			verbose_level - 1);
 			// in isomorph_files.C
@@ -622,11 +622,11 @@ void isomorph_read_solution_files_from_clique_finder(
 
 void isomorph_compute_orbits(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level, INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
 
 	if (f_v) {
 		cout << "isomorph_compute_orbits" << endl;
@@ -637,7 +637,7 @@ void isomorph_compute_orbits(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = TRUE;
+	int f_use_database_for_starter = TRUE;
 
 	
 	if (f_v) {
@@ -671,14 +671,14 @@ void isomorph_compute_orbits(
 
 void isomorph_testing(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	INT f_play_back, const char *old_event_file,
-	INT print_mod, INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	int f_play_back, const char *old_event_file,
+	int print_mod, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
-	INT t0;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
+	int t0;
 
 
 	t0 = os_ticks();
@@ -693,7 +693,7 @@ void isomorph_testing(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = FALSE;
+	int f_use_database_for_starter = FALSE;
 
 	
 	if (f_v) {
@@ -727,7 +727,7 @@ void isomorph_testing(
 	Iso.gen->recreate_schreier_vectors_up_to_level(level - 1,
 			TRUE /* f_compact */, verbose_level - 1);
 
-	INT i;
+	int i;
 	
 	if (f_v) {
 		for (i = 0; i <= level + 1; i++) {
@@ -744,7 +744,7 @@ void isomorph_testing(
 
 	Iso.iso_test_init(verbose_level - 1);
 
-	INT f_implicit_fusion = FALSE;
+	int f_implicit_fusion = FALSE;
 	
 	Iso.gen->f_allowed_to_show_group_elements = FALSE;
 	
@@ -760,8 +760,8 @@ void isomorph_testing(
 	Iso.Reps->save(verbose_level - 1);
 
 
-	INT data1[1000];
-	INT id, orbit;
+	int data1[1000];
+	int id, orbit;
 
 	Iso.setup_and_open_solution_database(verbose_level - 1);
 	
@@ -779,7 +779,7 @@ void isomorph_testing(
 		if (FALSE) {
 			cout << "read representative of orbit " << orbit
 					<< " (id=" << id << ")" << endl;
-			INT_vec_print(cout, data1, Iso.size);
+			int_vec_print(cout, data1, Iso.size);
 			cout << endl;
 			}
 
@@ -825,13 +825,13 @@ void isomorph_testing(
 
 void isomorph_classification_graph(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
-	//INT t0;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
+	//int t0;
 
 
 	//t0 = os_ticks();
@@ -846,7 +846,7 @@ void isomorph_classification_graph(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = FALSE;
+	int f_use_database_for_starter = FALSE;
 
 	
 	if (f_v) {
@@ -884,15 +884,15 @@ void isomorph_classification_graph(
 
 void isomorph_identify(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	INT identify_nb_files, const char **fname, INT *Iso_type, 
-	INT f_save, INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	int identify_nb_files, const char **fname, int *Iso_type, 
+	int f_save, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
-	INT *the_set;
-	INT set_size;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
+	int *the_set;
+	int set_size;
 	char fname_transporter[1000];
 
 
@@ -907,7 +907,7 @@ void isomorph_identify(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = FALSE;
+	int f_use_database_for_starter = FALSE;
 
 	
 	if (f_v) {
@@ -925,7 +925,7 @@ void isomorph_identify(
 			prefix_classify, verbose_level);
 
 
-	INT i;
+	int i;
 	
 	for (i = 0; i < identify_nb_files; i++) {
 	
@@ -933,7 +933,7 @@ void isomorph_identify(
 		if (f_v) {
 			cout << "isomorph_identify read file " << fname[i] << endl;
 			cout << "the_set = ";
-			INT_vec_print(cout, the_set, set_size);
+			int_vec_print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -967,7 +967,7 @@ void isomorph_identify(
 				<< " belongs to isomorphism type " << Iso_type[i] << endl;
 			}
 
-		FREE_INT(the_set);
+		FREE_int(the_set);
 		}
 
 
@@ -986,16 +986,16 @@ void isomorph_identify(
 
 void isomorph_identify_table(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify,
-	const char *prefix_iso, INT level,
-	INT nb_rows, INT *Table, INT *Iso_type, 
-	INT verbose_level)
+	int size, const char *prefix_classify,
+	const char *prefix_iso, int level,
+	int nb_rows, int *Table, int *Iso_type, 
+	int verbose_level)
 // Table[nb_rows * size]
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_implicit_fusion = FALSE;
-	INT *the_set;
-	INT set_size;
+	int f_v = (verbose_level >= 1);
+	int f_implicit_fusion = FALSE;
+	int *the_set;
+	int set_size;
 
 
 
@@ -1009,7 +1009,7 @@ void isomorph_identify_table(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = FALSE;
+	int f_use_database_for_starter = FALSE;
 
 	
 	if (f_v) {
@@ -1028,22 +1028,22 @@ void isomorph_identify_table(
 	Iso.read_everything_including_classification(
 			prefix_classify, verbose_level);
 
-	INT i;
+	int i;
 	
 
 
 	set_size = size;
-	the_set = NEW_INT(set_size);
+	the_set = NEW_int(set_size);
 
 	for (i = 0; i < nb_rows; i++) {
 	
-		INT_vec_copy(Table + i * set_size, the_set, set_size);
+		int_vec_copy(Table + i * set_size, the_set, set_size);
 		
 		if (f_v) {
 			cout << "isomorph_identify_table "
 					"Identifying set no " << i << endl;
 			cout << "the_set = ";
-			INT_vec_print(cout, the_set, set_size);
+			int_vec_print(cout, the_set, set_size);
 			cout << endl;
 			}
 
@@ -1069,7 +1069,7 @@ void isomorph_identify_table(
 			}
 
 		}
-	FREE_INT(the_set);
+	FREE_int(the_set);
 
 
 	if (f_v) {
@@ -1087,12 +1087,12 @@ void isomorph_identify_table(
 
 void isomorph_worker(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify, const char *prefix_iso, 
-	void (*work_callback)(isomorph *Iso, void *data, INT verbose_level), 
+	int size, const char *prefix_classify, const char *prefix_iso, 
+	void (*work_callback)(isomorph *Iso, void *data, int verbose_level), 
 	void *work_data, 
-	INT level, INT verbose_level)
+	int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph_worker" << endl;
@@ -1105,8 +1105,8 @@ void isomorph_worker(
 
 	{
 	isomorph Iso;
-	INT f_use_database_for_starter = FALSE;
-	INT f_implicit_fusion = FALSE;
+	int f_use_database_for_starter = FALSE;
+	int f_implicit_fusion = FALSE;
 	
 	if (f_v) {
 		cout << "isomorph_worker before Iso.init" << endl;
@@ -1153,11 +1153,11 @@ void isomorph_worker(
 
 void isomorph_compute_down_orbits(
 	action *A_base, action *A, poset_classification *gen,
-	INT size, const char *prefix_classify, const char *prefix, 
+	int size, const char *prefix_classify, const char *prefix, 
 	void *data, 
-	INT level, INT verbose_level)
+	int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits "
@@ -1176,30 +1176,30 @@ void isomorph_compute_down_orbits(
 }
 
 void isomorph_compute_down_orbits_worker(
-		isomorph *Iso, void *data, INT verbose_level)
+		isomorph *Iso, void *data, int verbose_level)
 // data is not needed
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT orbit;
-	INT *Nb_orbits;
-	INT nb_orbits = 0;
-	INT nb_special_orbits = 0;
-	INT **Down_orbit_identify;
-	INT *Down_identify;
-	INT h, i, idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int orbit;
+	int *Nb_orbits;
+	int nb_orbits = 0;
+	int nb_special_orbits = 0;
+	int **Down_orbit_identify;
+	int *Down_identify;
+	int h, i, idx;
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_worker" << endl;
 		}
 
 	//f_memory_debug = TRUE;
-	Nb_orbits = NEW_INT(Iso->Reps->count * 2);
-	Down_orbit_identify = NEW_PINT(Iso->Reps->count);
+	Nb_orbits = NEW_int(Iso->Reps->count * 2);
+	Down_orbit_identify = NEW_pint(Iso->Reps->count);
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
 
-		INT cnt_orbits, cnt_special_orbits;
-		INT *special_orbit_identify;
+		int cnt_orbits, cnt_special_orbits;
+		int *special_orbit_identify;
 
 		isomorph_compute_down_orbits_for_isomorphism_type(
 				Iso, orbit, cnt_orbits, cnt_special_orbits,
@@ -1226,7 +1226,7 @@ void isomorph_compute_down_orbits_worker(
 
 		}
 
-	INT_matrix_write_csv("Nb_down_orbits.csv",
+	int_matrix_write_csv("Nb_down_orbits.csv",
 			Nb_orbits, Iso->Reps->count, 2);
 	
 	if (f_v) {
@@ -1235,7 +1235,7 @@ void isomorph_compute_down_orbits_worker(
 		cout << "nb_special_orbits=" << nb_special_orbits << endl;
 		}
 
-	Down_identify = NEW_INT(nb_special_orbits * 3);
+	Down_identify = NEW_int(nb_special_orbits * 3);
 	h = 0;
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
 		for (i = 0; i < Nb_orbits[orbit * 2 + 1]; i++) {
@@ -1247,30 +1247,30 @@ void isomorph_compute_down_orbits_worker(
 			}
 		}
 	
-	INT_matrix_write_csv("Down_identify.csv",
+	int_matrix_write_csv("Down_identify.csv",
 			Down_identify, nb_special_orbits, 3);
 
 	for (orbit = 0; orbit < Iso->Reps->count; orbit++) {
-		FREE_INT(Down_orbit_identify[orbit]);
+		FREE_int(Down_orbit_identify[orbit]);
 		}
-	FREE_PINT(Down_orbit_identify);
-	FREE_INT(Down_identify);
-	FREE_INT(Nb_orbits);
+	FREE_pint(Down_orbit_identify);
+	FREE_int(Down_identify);
+	FREE_int(Nb_orbits);
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_worker done" << endl;
 		}
 }
 
 void isomorph_compute_down_orbits_for_isomorphism_type(
-	isomorph *Iso, INT orbit,
-	INT &cnt_orbits, INT &cnt_special_orbits,
-	INT *&special_orbit_identify, INT verbose_level)
+	isomorph *Iso, int orbit,
+	int &cnt_orbits, int &cnt_special_orbits,
+	int *&special_orbit_identify, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT id, rep, first; //, c;
-	INT data[1000];
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int id, rep, first; //, c;
+	int data[1000];
 
 	if (f_v) {
 		cout << "isomorph_compute_down_orbits_for_isomorphism_type "
@@ -1307,7 +1307,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		
 	if (f_vv) {
 		cout << "data after induced_action_on_set:" << endl;
-		INT_vec_print(cout, data, Iso->size);
+		int_vec_print(cout, data, Iso->size);
 		cout << endl;
 		}
 		
@@ -1326,12 +1326,12 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 		}
 
 	if (FALSE /*go1.is_one()*/) {
-		cnt_orbits = INT_n_choose_k(Iso->size, Iso->level);
+		cnt_orbits = int_n_choose_k(Iso->size, Iso->level);
 		cnt_special_orbits = 1;
 		}
 	else {
-		INT *orbit_reps;
-		INT nb_orbits;
+		int *orbit_reps;
+		int nb_orbits;
 
 		if (f_vv) {
 			cout << "isomorph_compute_down_orbits_for_isomorphism_type "
@@ -1348,7 +1348,7 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 
 		if (f_vvv) {
 			cout << "Orbit reps: nb_orbits=" << nb_orbits << endl;
-			INT_matrix_print(orbit_reps, nb_orbits, Iso->level);
+			int_matrix_print(orbit_reps, nb_orbits, Iso->level);
 			}
 
 		if (f_vv) {
@@ -1356,26 +1356,26 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 					<< nb_orbits << ".\\\\" << endl;
 			}
 
-		INT *rearranged_set;
-		INT *transporter;
-		INT u;
-		INT case_nb;
-		INT f_implicit_fusion = FALSE;
-		INT idx;
+		int *rearranged_set;
+		int *transporter;
+		int u;
+		int case_nb;
+		int f_implicit_fusion = FALSE;
+		int idx;
 		
-		rearranged_set = NEW_INT(Iso->size);
-		transporter = NEW_INT(Iso->A_base->elt_size_in_INT);
+		rearranged_set = NEW_int(Iso->size);
+		transporter = NEW_int(Iso->A_base->elt_size_in_int);
 
 		cnt_orbits = nb_orbits;
 		cnt_special_orbits = 0;
-		special_orbit_identify = NEW_INT(nb_orbits);
+		special_orbit_identify = NEW_int(nb_orbits);
 		for (u = 0; u < nb_orbits; u++) {
 
 			if (f_vv) {
 				cout << "iso type " << orbit << " / " << Iso->Reps->count
 						<< " down_orbit " << u << " / "
 						<< nb_orbits << ":" << endl;
-				INT_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
+				int_vec_print(cout, orbit_reps + u * Iso->level, Iso->level);
 				cout << endl;
 				}
 
@@ -1387,9 +1387,9 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 				// in GALOIS/sorting.C
 
 
-			//INT_vec_print(cout, rearranged_set, Iso.size);
+			//int_vec_print(cout, rearranged_set, Iso.size);
 			//cout << endl;
-			INT f_failure_to_find_point, f_found;
+			int f_failure_to_find_point, f_found;
 
 			Iso->A_base->element_one(transporter, 0);
 			case_nb = Iso->trace_set(rearranged_set, transporter, 
@@ -1437,20 +1437,20 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 					<< ".\\\\" << endl;
 			}
 
-		INT *soi;
-		INT i;
+		int *soi;
+		int i;
 
-		soi = NEW_INT(cnt_special_orbits);
+		soi = NEW_int(cnt_special_orbits);
 		for (i = 0; i < cnt_special_orbits; i++) {
 			soi[i] = special_orbit_identify[i];
 			}
-		FREE_INT(special_orbit_identify);
+		FREE_int(special_orbit_identify);
 		special_orbit_identify = soi;
 
 
-		FREE_INT(rearranged_set);
-		FREE_INT(transporter);
-		FREE_INT(orbit_reps);
+		FREE_int(rearranged_set);
+		FREE_int(transporter);
+		FREE_int(orbit_reps);
 	}
 	FREE_OBJECT(Strong_gens);
 
@@ -1463,20 +1463,20 @@ void isomorph_compute_down_orbits_for_isomorphism_type(
 void isomorph_report_data_in_source_code_inside_tex(
 		isomorph &Iso, const char *prefix,
 		char *label_of_structure_plural, ostream &f,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT *selection;
-	INT selection_size;
-	INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int *selection;
+	int selection_size;
+	int i;
 
 	if (f_v) {
 		cout << "isomorph_report_data_in_source_code" << endl;
 		}
 	selection_size = Iso.Reps->count;
-	selection = NEW_INT(selection_size);
+	selection = NEW_int(selection_size);
 	for (i = 0; i < selection_size; i++) {
 		selection[i] = i;
 		}
@@ -1484,21 +1484,21 @@ void isomorph_report_data_in_source_code_inside_tex(
 		Iso, prefix,
 		label_of_structure_plural, f, 
 		selection_size, selection, verbose_level);
-	FREE_INT(selection);
+	FREE_int(selection);
 }
 
 
 void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		isomorph &Iso, const char *prefix,
 		char *label_of_structure_plural, ostream &fp,
-		INT selection_size, INT *selection,
-		INT verbose_level)
+		int selection_size, int *selection,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT h, rep, first, /*c,*/ id, i, s;
-	INT data[1000];
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int h, rep, first, /*c,*/ id, i, s;
+	int data[1000];
 
 	if (f_v) {
 		cout << "isomorph_report_data_in_source_code" << endl;
@@ -1524,9 +1524,9 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 		fp << "\\\\" << endl;
 		}
 	fp << "\\begin{verbatim}" << endl << endl;
-	fp << "INT " << prefix << "_size = " << Iso.size << ";" << endl;
-	fp << "INT " << prefix << "_nb_reps = " << selection_size << ";" << endl;
-	fp << "INT " << prefix << "_reps[] = {" << endl;
+	fp << "int " << prefix << "_size = " << Iso.size << ";" << endl;
+	fp << "int " << prefix << "_nb_reps = " << selection_size << ";" << endl;
+	fp << "int " << prefix << "_reps[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		rep = Iso.Reps->rep[h];
@@ -1568,22 +1568,22 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 	fp << "};" << endl;
 	
 	{
-	INT *stab_gens_first;
-	INT *stab_gens_len;
-	INT fst;
+	int *stab_gens_first;
+	int *stab_gens_len;
+	int fst;
 
-	stab_gens_first = NEW_INT(selection_size);
-	stab_gens_len = NEW_INT(selection_size);
+	stab_gens_first = NEW_int(selection_size);
+	stab_gens_len = NEW_int(selection_size);
 	fst = 0;
-	fp << "INT " << prefix << "_stab_gens[] = {" << endl;
+	fp << "int " << prefix << "_stab_gens[] = {" << endl;
 	for (s = 0; s < selection_size; s++) {
 		h = selection[s];
 		vector_ge *gens;
-		INT *tl;
-		INT j;
+		int *tl;
+		int j;
 
 		gens = NEW_OBJECT(vector_ge);
-		tl = NEW_INT(Iso.A_base->base_len);
+		tl = NEW_int(Iso.A_base->base_len);
 		
 		if (f_vv) {
 			cout << "isomorph_report_data_in_source_code_inside_"
@@ -1609,11 +1609,11 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 			fp << endl;
 			}
 
-		FREE_INT(tl);
+		FREE_int(tl);
 		FREE_OBJECT(gens);
 		}
 	fp << "};" << endl;
-	fp << "INT " << prefix << "_stab_gens_fst[] = { ";
+	fp << "int " << prefix << "_stab_gens_fst[] = { ";
 	for (s = 0; s < selection_size; s++) {
 		fp << stab_gens_first[s];
 		if (s < selection_size - 1) {
@@ -1621,7 +1621,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 			}
 		}
 	fp << "};" << endl;
-	fp << "INT " << prefix << "_stab_gens_len[] = { ";
+	fp << "int " << prefix << "_stab_gens_len[] = { ";
 	for (s = 0; s < selection_size; s++) {
 		fp << stab_gens_len[s];
 		if (s < selection_size - 1) {
@@ -1629,7 +1629,7 @@ void isomorph_report_data_in_source_code_inside_tex_with_selection(
 			}
 		}
 	fp << "};" << endl;
-	fp << "INT " << prefix << "_make_element_size = "
+	fp << "int " << prefix << "_make_element_size = "
 			<< Iso.A_base->make_element_size << ";" << endl;
 	}
 	fp << "\\end{verbatim}" << endl << endl;

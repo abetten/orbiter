@@ -87,7 +87,7 @@ void design_parameter::init()
 	source().m_l(0);
 }
 
-void design_parameter::init(INT t, INT v, INT k, INT lambda)
+void design_parameter::init(int t, int v, int k, int lambda)
 {
 	init();
 	design_parameter::t() = t;
@@ -96,7 +96,7 @@ void design_parameter::init(INT t, INT v, INT k, INT lambda)
 	design_parameter::lambda().m_i_i(lambda);
 }
 
-void design_parameter::init(INT t, INT v, INT k, discreta_base& lambda)
+void design_parameter::init(int t, int v, int k, discreta_base& lambda)
 {
 	init();
 	design_parameter::t() = t;
@@ -129,7 +129,7 @@ void design_parameter::text(hollerith& h)
 		h.append(hh.s());
 		h.append(")");
 		}
-	for (INT i = 0; i < source().s_l(); i++) {
+	for (int i = 0; i < source().s_l(); i++) {
 		hollerith hh;
 		
 		source_i(i).text2(*this, hh);
@@ -179,7 +179,7 @@ void design_parameter::reduced_t(design_parameter& p)
 	p.source().append(S);
 }
 
-INT design_parameter::increased_t(design_parameter& p)
+int design_parameter::increased_t(design_parameter& p)
 {
 	discreta_base lambda_new;
 	integer a, b, q, r;
@@ -244,7 +244,7 @@ void design_parameter::derived(design_parameter& p)
 	p.source().append(S);
 }
 
-INT design_parameter::derived_inverse(design_parameter& p)
+int design_parameter::derived_inverse(design_parameter& p)
 {
 	design_parameter p1;
 	
@@ -302,7 +302,7 @@ void design_parameter::residual(design_parameter& p)
 	p.source().append(S);
 }
 
-INT design_parameter::residual_inverse(design_parameter& p)
+int design_parameter::residual_inverse(design_parameter& p)
 {
 	discreta_base a, a1, b, q, r;
 	design_parameter p1;
@@ -325,10 +325,10 @@ INT design_parameter::residual_inverse(design_parameter& p)
 	return TRUE;
 }
 
-void design_parameter::ancestor(design_parameter& p, Vector & path, INT f_v, INT f_vv)
+void design_parameter::ancestor(design_parameter& p, Vector & path, int f_v, int f_vv)
 {
 	design_parameter s, q;
-	INT f_special = FALSE;
+	int f_special = FALSE;
 	
 	path.m_l_n(3);
 	s = *this;
@@ -344,7 +344,7 @@ void design_parameter::ancestor(design_parameter& p, Vector & path, INT f_v, INT
 			}
 		}
 	if (f_special) {
-		INT v, t, k, n;
+		int v, t, k, n;
 		
 		v = s.v();
 		t = s.t();
@@ -416,7 +416,7 @@ void design_parameter::supplementary_residual(design_parameter& p)
 	p.source().append(S);
 }
 
-INT design_parameter::trung_complementary(design_parameter& p)
+int design_parameter::trung_complementary(design_parameter& p)
 {
 	discreta_base lambda_new;
 	integer a, b;
@@ -443,8 +443,8 @@ INT design_parameter::trung_complementary(design_parameter& p)
 	return TRUE;
 }
 
-INT design_parameter::trung_left_partner(INT& t1, INT& v1, INT& k1, discreta_base& lambda1,
-	INT& t_new, INT& v_new, INT& k_new, discreta_base& lambda_new)
+int design_parameter::trung_left_partner(int& t1, int& v1, int& k1, discreta_base& lambda1,
+	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new)
 {
 	discreta_base a, q, r;
 	integer b, c;
@@ -468,8 +468,8 @@ INT design_parameter::trung_left_partner(INT& t1, INT& v1, INT& k1, discreta_bas
 	return TRUE;
 }
 
-INT design_parameter::trung_right_partner(INT& t1, INT& v1, INT& k1, discreta_base& lambda1,
-	INT& t_new, INT& v_new, INT& k_new, discreta_base& lambda_new)
+int design_parameter::trung_right_partner(int& t1, int& v1, int& k1, discreta_base& lambda1,
+	int& t_new, int& v_new, int& k_new, discreta_base& lambda_new)
 {
 	discreta_base a, q, r;
 	integer b, c;
@@ -493,7 +493,7 @@ INT design_parameter::trung_right_partner(INT& t1, INT& v1, INT& k1, discreta_ba
 	return TRUE;
 }
 
-INT design_parameter::alltop(design_parameter& p)
+int design_parameter::alltop(design_parameter& p)
 // Alltop~\cite{Alltop75}.
 // returns TRUE iff alltop could be applied;
 // in this case, p contains the new design parameter set.
@@ -560,7 +560,7 @@ void design_parameter::supplementary(design_parameter& p)
 {
 	discreta_base lambda_new, a;
 	design_parameter_source S;
-	INT num, denom, n, d, g, i;
+	int num, denom, n, d, g, i;
 	
 	num = 1;
 	denom = 1;
@@ -571,7 +571,7 @@ void design_parameter::supplementary(design_parameter& p)
 		denom *= d;
 		n--;
 		d--;
-		g = gcd_INT(num, denom);
+		g = gcd_int(num, denom);
 		if (g != 1 && g != -1) {
 			num /= g;
 			denom /= g;
@@ -598,7 +598,7 @@ void design_parameter::supplementary(design_parameter& p)
 	p.source().append(S);
 }
 
-INT design_parameter::is_selfsupplementary()
+int design_parameter::is_selfsupplementary()
 {
 	design_parameter q;
 	discreta_base a, b, c;
@@ -634,8 +634,8 @@ void design_parameter::init_database(database& D, char *path)
 {
 	btree B;
 	hollerith hh, h0, h1, h2, h3, h4;
-	INT f_compress = TRUE;
-	INT f_duplicatekeys = TRUE;
+	int f_compress = TRUE;
+	int f_duplicatekeys = TRUE;
 	
 	hh.init(path);
 	h0.init(path);
@@ -650,50 +650,50 @@ void design_parameter::init_database(database& D, char *path)
 	h3.append("design_parameters3.idx");
 	h4.append("design_parameters4.idx");
 	
-	INT idx_id = 0;
-	INT idx_t = 1;
-	INT idx_v = 2;
-	INT idx_k = 3;
-	INT idx_lambda = 4;
+	int idx_id = 0;
+	int idx_t = 1;
+	int idx_v = 2;
+	int idx_k = 3;
+	int idx_lambda = 4;
 	
 	
 	D.init(hh.s(), DESIGN_PARAMETER, f_compress);
 	
 	B.init(h0.s(), f_duplicatekeys, 0 /* btree_idx */);
-	B.add_key_INT4(idx_id, 0);
-	B.add_key_INT4(idx_v, 0);
-	B.add_key_INT4(idx_t, 0);
-	B.add_key_INT4(idx_k, 0);
-	B.add_key_INT4(idx_lambda, 0);
+	B.add_key_int4(idx_id, 0);
+	B.add_key_int4(idx_v, 0);
+	B.add_key_int4(idx_t, 0);
+	B.add_key_int4(idx_k, 0);
+	B.add_key_int4(idx_lambda, 0);
 	D.btree_access().append(B);
 
 	B.init(h1.s(), f_duplicatekeys, 1 /* btree_idx */);
-	B.add_key_INT4(idx_v, 0);
-	B.add_key_INT4(idx_t, 0);
-	B.add_key_INT4(idx_k, 0);
-	B.add_key_INT4(idx_lambda, 0);
-	B.add_key_INT4(idx_id, 0);
+	B.add_key_int4(idx_v, 0);
+	B.add_key_int4(idx_t, 0);
+	B.add_key_int4(idx_k, 0);
+	B.add_key_int4(idx_lambda, 0);
+	B.add_key_int4(idx_id, 0);
 	D.btree_access().append(B);
 
 	B.init(h2.s(), f_duplicatekeys, 2 /* btree_idx */);
-	B.add_key_INT4(idx_t, 0);
-	B.add_key_INT4(idx_v, 0);
-	B.add_key_INT4(idx_k, 0);
-	B.add_key_INT4(idx_lambda, 0);
-	B.add_key_INT4(idx_id, 0);
+	B.add_key_int4(idx_t, 0);
+	B.add_key_int4(idx_v, 0);
+	B.add_key_int4(idx_k, 0);
+	B.add_key_int4(idx_lambda, 0);
+	B.add_key_int4(idx_id, 0);
 	D.btree_access().append(B);
 
 	B.init(h3.s(), f_duplicatekeys, 3 /* btree_idx */);
-	B.add_key_INT4(idx_lambda, 0);
-	B.add_key_INT4(idx_v, 0);
-	B.add_key_INT4(idx_t, 0);
-	B.add_key_INT4(idx_k, 0);
-	B.add_key_INT4(idx_id, 0);
+	B.add_key_int4(idx_lambda, 0);
+	B.add_key_int4(idx_v, 0);
+	B.add_key_int4(idx_t, 0);
+	B.add_key_int4(idx_k, 0);
+	B.add_key_int4(idx_id, 0);
 	D.btree_access().append(B);
 
 	B.init(h4.s(), f_duplicatekeys, 4 /* btree_idx */);
-	B.add_key_INT4(idx_k, 0);
-	B.add_key_INT4(idx_id, 0);
+	B.add_key_int4(idx_k, 0);
+	B.add_key_int4(idx_id, 0);
 	D.btree_access().append(B);
 }
 

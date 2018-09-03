@@ -12,65 +12,65 @@
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void early_test_function_cliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
-void early_test_function_cocliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
-void characteristic_polynomial(colored_graph *CG, INT verbose_level);
+void early_test_function_cliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
+void early_test_function_cocliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
+void characteristic_polynomial(colored_graph *CG, int verbose_level);
 
 int main(int argc, char **argv)
 {
-	INT i, j;
+	int i, j;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_file = FALSE;	
+	int verbose_level = 0;
+	int f_file = FALSE;	
 	const char *fname = NULL;
-	INT f_coordinates = FALSE;
-	INT xmax_in = ONE_MILLION;
-	INT ymax_in = ONE_MILLION;
-	INT xmax_out = ONE_MILLION;
-	INT ymax_out = ONE_MILLION;
-	INT f_export_magma = FALSE;
+	int f_coordinates = FALSE;
+	int xmax_in = ONE_MILLION;
+	int ymax_in = ONE_MILLION;
+	int xmax_out = ONE_MILLION;
+	int ymax_out = ONE_MILLION;
+	int f_export_magma = FALSE;
 	const char *magma_fname = NULL;
-	INT f_export_matlab = FALSE;
+	int f_export_matlab = FALSE;
 	const char *matlab_fname = NULL;
-	INT f_on_circle = FALSE;
-	INT f_bitmatrix = FALSE;
-	INT f_labels = FALSE;
-	INT f_embedded = FALSE;
-	INT f_sideways = FALSE;
-	INT f_scale = FALSE;
+	int f_on_circle = FALSE;
+	int f_bitmatrix = FALSE;
+	int f_labels = FALSE;
+	int f_embedded = FALSE;
+	int f_sideways = FALSE;
+	int f_scale = FALSE;
 	double scale = .45;
-	INT f_line_width = FALSE;
+	int f_line_width = FALSE;
 	double line_width = 1.5;
-	INT f_aut = FALSE;
-	INT f_is_association_scheme = FALSE;
-	INT f_all_cliques = FALSE;
-	INT f_all_cocliques = FALSE;
-	INT f_characteristic_polynomial = FALSE;
-	INT f_export = FALSE;
+	int f_aut = FALSE;
+	int f_is_association_scheme = FALSE;
+	int f_all_cliques = FALSE;
+	int f_all_cocliques = FALSE;
+	int f_characteristic_polynomial = FALSE;
+	int f_export = FALSE;
 	const char *export_fname = NULL;
-	INT f_export_laplacian = FALSE;
+	int f_export_laplacian = FALSE;
 	const char *export_laplacian_fname = NULL;
-	INT f_expand_power = FALSE;
-	INT expand_power = 0;
-	INT expand_power_nb_graphs;
+	int f_expand_power = FALSE;
+	int expand_power = 0;
+	int expand_power_nb_graphs;
 	const char *expand_power_graph_fname[1000];
-	INT f_partitioned = FALSE;
-	INT f_partition = FALSE;
-	INT part[1000];
-	INT nb_parts = 0;
-	INT f_Levi = FALSE;
-	INT Levi_m = 0;
-	INT Levi_n = 0;
-	INT f_Levi_discrete = FALSE;
-	INT f_radius = FALSE;
+	int f_partitioned = FALSE;
+	int f_partition = FALSE;
+	int part[1000];
+	int nb_parts = 0;
+	int f_Levi = FALSE;
+	int Levi_m = 0;
+	int Levi_n = 0;
+	int f_Levi_discrete = FALSE;
+	int f_radius = FALSE;
 	double radius = 1000;
 	
 	for (i = 1; i < argc; i++) {
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
 			}
 		else if (strcmp(argv[i], "-expand_power") == 0) {
 			f_expand_power = TRUE;
-			sscanf(argv[++i], "%ld", &expand_power);
+			sscanf(argv[++i], "%d", &expand_power);
 			for (j = 0; ; j++) {
 				expand_power_graph_fname[j] = argv[++i];
 				cout << "j=" << j << " : " << expand_power_graph_fname[j] << endl;
@@ -274,18 +274,18 @@ int main(int argc, char **argv)
 			}
 		else if (f_Levi) {
 
-			INT f_partition_Levi = FALSE;
-			INT nb_row_parts = 0;
-			INT *row_part_first = NULL;
-			INT nb_col_parts = 0;
-			INT *col_part_first = NULL;
+			int f_partition_Levi = FALSE;
+			int nb_row_parts = 0;
+			int *row_part_first = NULL;
+			int nb_col_parts = 0;
+			int *col_part_first = NULL;
 
 			if (f_Levi_discrete) {
 				f_partition_Levi = TRUE;
 				nb_row_parts = Levi_m;
-				row_part_first = NEW_INT(Levi_m + 1);
+				row_part_first = NEW_int(Levi_m + 1);
 				nb_col_parts = Levi_n;
-				col_part_first = NEW_INT(Levi_n + 1);
+				col_part_first = NEW_int(Levi_n + 1);
 				for (i = 0; i < Levi_m + 1; i++) {
 					row_part_first[i] = i;
 					}
@@ -308,7 +308,7 @@ int main(int argc, char **argv)
 
 	if (f_aut) {
 		
-		INT *Adj;
+		int *Adj;
 		action *Aut;
 		longinteger_object ago;
 
@@ -316,8 +316,8 @@ int main(int argc, char **argv)
 		//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
 
 
-		Adj = NEW_INT(CG->nb_points * CG->nb_points);
-		INT_vec_zero(Adj, CG->nb_points * CG->nb_points);
+		Adj = NEW_int(CG->nb_points * CG->nb_points);
+		int_vec_zero(Adj, CG->nb_points * CG->nb_points);
 		for (i = 0; i < CG->nb_points; i++) {
 			for (j = i + 1; j < CG->nb_points; j++) {
 				if (CG->is_adjacent(i, j)) {
@@ -330,7 +330,7 @@ int main(int argc, char **argv)
 		Aut->group_order(ago);	
 		cout << "ago=" << ago << endl;
 
-		INT pt;
+		int pt;
 		schreier *Sch;
 		sims *Stab;
 		strong_generators *stab_gens;
@@ -353,16 +353,16 @@ int main(int argc, char **argv)
 		FREE_OBJECT(stab_gens);
 		FREE_OBJECT(Stab);
 		FREE_OBJECT(Sch);
-		FREE_INT(Adj);
+		FREE_int(Adj);
 		}
 
 	if (f_is_association_scheme) {
 
-		INT n = CG->nb_points;
-		INT *Adj;
+		int n = CG->nb_points;
+		int *Adj;
 	
-		Adj = NEW_INT(n * n);
-		INT_vec_zero(Adj, n * n);
+		Adj = NEW_int(n * n);
+		int_vec_zero(Adj, n * n);
 		for (i = 0; i < n; i++) {
 			for (j = i + 1; j < n; j++) {
 				if (CG->is_adjacent(i, j)) {
@@ -377,9 +377,9 @@ int main(int argc, char **argv)
 			Adj[i * n + i] = 0;
 			}
 	
-		INT *Pijk;
-		//INT *colors;
-		//INT nb_colors;
+		int *Pijk;
+		//int *colors;
+		//int nb_colors;
 		
 		if (is_association_scheme(Adj, n, Pijk, 
 			CG->point_color, CG->nb_colors, verbose_level)) {
@@ -389,27 +389,27 @@ int main(int argc, char **argv)
 			cout << "Is NOT an association scheme" << endl;
 			}
 
-		FREE_INT(Adj);
+		FREE_int(Adj);
 		
 		}
 
 	if (f_expand_power) {
 
 
-		INT n = CG->nb_points;
-		INT *Adj;
-		INT *A, *B;
-		INT e, c, k, diag, p;
+		int n = CG->nb_points;
+		int *Adj;
+		int *A, *B;
+		int e, c, k, diag, p;
 
 		if (expand_power <= 1) {
 			cout << "expand_power <= 1" << endl;
 			exit(1);
 			}
 
-		Adj = NEW_INT(n * n);
-		A = NEW_INT(n * n);
-		B = NEW_INT(n * n);
-		INT_vec_zero(Adj, n * n);
+		Adj = NEW_int(n * n);
+		A = NEW_int(n * n);
+		B = NEW_int(n * n);
+		int_vec_zero(Adj, n * n);
 		for (i = 0; i < n; i++) {
 			for (j = i + 1; j < n; j++) {
 				if (CG->is_adjacent(i, j)) {
@@ -418,7 +418,7 @@ int main(int argc, char **argv)
 					}
 				}
 			}
-		INT_vec_copy(Adj, A, n * n);
+		int_vec_copy(Adj, A, n * n);
 		e = 1;
 
 		while (e < expand_power) {
@@ -432,14 +432,14 @@ int main(int argc, char **argv)
 					B[i * n + j] = c;
 					}
 				}
-			INT_vec_copy(B, A, n * n);
+			int_vec_copy(B, A, n * n);
 			e++;
 
 
 			}
 
 		cout << "the " << expand_power << " power of the adjacency matrix is:" << endl;
-		INT_matrix_print(B, n, n);
+		int_matrix_print(B, n, n);
 		
 		diag = B[0 * n + 0];
 		for (i = 0; i < n; i++) {
@@ -454,7 +454,7 @@ int main(int argc, char **argv)
 			}
 
 		cout << "after subtracting " << diag << " times the identity, the matrix is:" << endl;
-		INT_matrix_print(B, n, n);
+		int_matrix_print(B, n, n);
 
 		for (p = 0; p < n * n; p++) {
 			if (Adj[p]) {
@@ -481,16 +481,16 @@ int main(int argc, char **argv)
 		
 
 		cout << "after subtracting " << c << " times the original graph, the matrix is:" << endl;
-		INT_matrix_print(B, n, n);
+		int_matrix_print(B, n, n);
 
 
-		INT h;
-		INT *coeffs;
+		int h;
+		int *coeffs;
 		colored_graph *CG_basis;
 
-		coeffs = NEW_INT(expand_power_nb_graphs + 2);
+		coeffs = NEW_int(expand_power_nb_graphs + 2);
 		CG_basis = NEW_OBJECTS(colored_graph, expand_power_nb_graphs);
-		INT_vec_zero(coeffs, expand_power_nb_graphs);
+		int_vec_zero(coeffs, expand_power_nb_graphs);
 		coeffs[expand_power_nb_graphs] = c;
 		coeffs[expand_power_nb_graphs + 1] = diag;
 
@@ -501,10 +501,10 @@ int main(int argc, char **argv)
 				cout << "the graph " << expand_power_graph_fname[h] << " has the wrong number of vertices" << endl;
 				exit(1);
 				}
-			INT *H;
+			int *H;
 
-			H = NEW_INT(n * n);
-			INT_vec_zero(H, n * n);
+			H = NEW_int(n * n);
+			int_vec_zero(H, n * n);
 			for (i = 0; i < n; i++) {
 				for (j = i + 1; j < n; j++) {
 					if (CG_basis[h].is_adjacent(i, j)) {
@@ -537,24 +537,24 @@ int main(int argc, char **argv)
 					}
 				}
 			cout << "after subtracting " << coeffs[h] << " times the graph " << expand_power_graph_fname[h] << ", the matrix is:" << endl;
-			INT_matrix_print(B, n, n);
+			int_matrix_print(B, n, n);
 			
-			FREE_INT(H);
+			FREE_int(H);
 			}
 
 		cout << "coeffs=";
-		INT_vec_print(cout, coeffs, expand_power_nb_graphs + 2);
+		int_vec_print(cout, coeffs, expand_power_nb_graphs + 2);
 		cout << endl;
 		
-		FREE_INT(Adj);
-		FREE_INT(A);
-		FREE_INT(B);
+		FREE_int(Adj);
+		FREE_int(A);
+		FREE_int(B);
 		}
 
 	if (f_all_cliques || f_all_cocliques) {
 
 
-		INT *Adj;
+		int *Adj;
 		action *Aut;
 		longinteger_object ago;
 
@@ -562,8 +562,8 @@ int main(int argc, char **argv)
 		//Aut = create_automorphism_group_of_colored_graph_object(CG, verbose_level);
 
 
-		Adj = NEW_INT(CG->nb_points * CG->nb_points);
-		INT_vec_zero(Adj, CG->nb_points * CG->nb_points);
+		Adj = NEW_int(CG->nb_points * CG->nb_points);
+		int_vec_zero(Adj, CG->nb_points * CG->nb_points);
 		for (i = 0; i < CG->nb_points; i++) {
 			for (j = i + 1; j < CG->nb_points; j++) {
 				if (CG->is_adjacent(i, j)) {
@@ -577,10 +577,10 @@ int main(int argc, char **argv)
 		cout << "ago=" << ago << endl;
 
 		action *Aut_on_points;
-		INT *points;
+		int *points;
 		
 		Aut_on_points = NEW_OBJECT(action);
-		points = NEW_INT(CG->nb_points);
+		points = NEW_int(CG->nb_points);
 		for (i = 0; i < CG->nb_points; i++) {
 			points[i] = i;
 			}
@@ -595,7 +595,7 @@ int main(int argc, char **argv)
 		
 		char prefix[1000];
 		poset_classification *gen;
-		INT nb_orbits, depth;
+		int nb_orbits, depth;
 		
 
 		strcpy(prefix, fname);
@@ -651,11 +651,11 @@ int main(int argc, char **argv)
 				}
 			}
 
-		INT *set;
+		int *set;
 		longinteger_object go, ol;
 		longinteger_domain D;
 
-		set = NEW_INT(depth);
+		set = NEW_int(depth);
 		nb_orbits = gen->nb_orbits_at_level(depth);
 
 		cout << "orbit : representative : stabilizer order : orbit length" << endl;
@@ -670,16 +670,16 @@ int main(int argc, char **argv)
 
 
 			cout << "Orbit " << i << " is the set ";
-			INT_vec_print(cout, set, depth);
+			int_vec_print(cout, set, depth);
 			cout << " : " << go << " : " << ol << endl;
 			cout << endl;
 
 			
 			}
 
-		FREE_INT(set);
-		FREE_INT(Adj);
-		FREE_INT(points);
+		FREE_int(set);
+		FREE_int(Adj);
+		FREE_int(points);
 		FREE_OBJECT(Aut);
 		FREE_OBJECT(Aut_on_points);
 
@@ -702,13 +702,13 @@ int main(int argc, char **argv)
 
 }
 
-void early_test_function_cliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_function_cliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_function for set ";
@@ -727,13 +727,13 @@ void early_test_function_cliques(INT *S, INT len,
 		}
 }
 
-void early_test_function_cocliques(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void early_test_function_cocliques(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	colored_graph *CG = (colored_graph *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "early_test_function for set ";
@@ -752,12 +752,12 @@ void early_test_function_cocliques(INT *S, INT len,
 		}
 }
 
-void characteristic_polynomial(colored_graph *CG, INT verbose_level)
+void characteristic_polynomial(colored_graph *CG, int verbose_level)
 {
-	INT q;
-	INT size;
+	int q;
+	int size;
 	matrix M;
-	INT i, j, sq;
+	int i, j, sq;
 	finite_field Fq;
 
 
@@ -813,8 +813,8 @@ void characteristic_polynomial(colored_graph *CG, INT verbose_level)
 
 
 	unipoly charpoly;
-	INT deg;
-	INT l, lv, b, c;
+	int deg;
+	int l, lv, b, c;
 
 	charpoly = M.s_ij(size - 1, size - 1);
 		

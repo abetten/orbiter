@@ -8,13 +8,13 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	finite_field *F;
-	INT i, j, a;
-	INT *Adj;
-	INT f_q = FALSE;
-	INT q;
-	INT *f_is_square;
+	int i, j, a;
+	int *Adj;
+	int f_q = FALSE;
+	int q;
+	int *f_is_square;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -44,16 +44,16 @@ int main(int argc, char **argv)
 	F = NEW_OBJECT(finite_field);
 	F->init(q, verbose_level);
 
-	f_is_square = NEW_INT(q);
-	INT_vec_zero(f_is_square, q);
+	f_is_square = NEW_int(q);
+	int_vec_zero(f_is_square, q);
 	
 	for (i = 0; i < q; i++) {
 		j = F->mult(i, i);
 		f_is_square[j] = TRUE;
 		}
 
-	Adj = NEW_INT(q * q);
-	INT_vec_zero(Adj, q * q);
+	Adj = NEW_int(q * q);
+	int_vec_zero(Adj, q * q);
 	
 	for (i = 0; i < q; i++) {
 		for (j = i + 1; j < q; j++) {
@@ -72,13 +72,13 @@ int main(int argc, char **argv)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(q, Adj, verbose_level);
 
-	sprintf(fname, "Paley_%ld.colored_graph", q);
+	sprintf(fname, "Paley_%d.colored_graph", q);
 
 	CG->save(fname, verbose_level);
 
 	FREE_OBJECT(CG);
-	FREE_INT(Adj);
-	FREE_INT(f_is_square);
+	FREE_int(Adj);
+	FREE_int(f_is_square);
 	FREE_OBJECT(F);
 }
 

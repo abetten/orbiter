@@ -15,7 +15,7 @@ page_storage::page_storage()
 
 page_storage::~page_storage()
 {
-	INT i;
+	int i;
 	
 	//cout << "page_storage::~page_storage" << endl;
 	if (pages) {
@@ -36,12 +36,12 @@ page_storage::~page_storage()
 	//cout << "page_storage::~page_storage done" << endl;
 }
 
-void page_storage::init(INT entry_size,
-		INT page_length_log, INT verbose_level)
+void page_storage::init(int entry_size,
+		int page_length_log, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "page_storage::init "
@@ -56,10 +56,10 @@ void page_storage::init(INT entry_size,
 	//f_v = TRUE;
 	
 	page_storage::entry_size = entry_size;
-	if (entry_size < (INT)sizeof(INT)) {
-		page_storage::entry_size = sizeof(INT);
+	if (entry_size < (int)sizeof(int)) {
+		page_storage::entry_size = sizeof(int);
 		if (f_v) {
-			cout << "warning: raising entry_size to sizeof(INT) = "
+			cout << "warning: raising entry_size to sizeof(int) = "
 					<< page_storage::entry_size << endl;
 			}
 		}
@@ -72,8 +72,8 @@ void page_storage::init(INT entry_size,
 		if (f_v) {
 			cout << "page_storage::entry_size="
 					<< page_storage::entry_size << endl;
-			cout << "(INT)sizeof(INT)="
-					<< (INT)sizeof(INT) << endl;
+			cout << "(int)sizeof(int)="
+					<< (int)sizeof(int) << endl;
 			cout << "page_length_log = "
 					<< page_storage::page_length_log << endl;
 			cout << "page_length = "
@@ -162,13 +162,13 @@ void page_storage::print()
 	print_storage_used();
 }
 
-uchar *page_storage::s_i_and_allocate(INT i)
+uchar *page_storage::s_i_and_allocate(int i)
 {
 	uchar *p, *q;
-	INT j;
+	int j;
 	
-	INT page_idx = i & (page_length - 1);
-	INT page = i >> page_length_log;
+	int page_idx = i & (page_length - 1);
+	int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i_and_allocate "
 				"page >= page_ptr_used" << endl;
@@ -185,10 +185,10 @@ uchar *page_storage::s_i_and_allocate(INT i)
 	p = pages[page];
 	p += page_idx * entry_size;
 	q = allocation_tables[page];
-	INT word = page_idx >> 3;
-	INT bit = page_idx & 7;
+	int word = page_idx >> 3;
+	int bit = page_idx & 7;
 	uchar mask = ((uchar) 1) << bit;
-	//cout << "p=" << ((INT) p) << " q=" << ((INT)(q + word)) << endl;
+	//cout << "p=" << ((int) p) << " q=" << ((int)(q + word)) << endl;
 	
 	if (word >= allocation_table_length) {
 		cout << "page_storage::s_i_and_allocate "
@@ -219,9 +219,9 @@ uchar *page_storage::s_i_and_allocate(INT i)
 		cout << "page=" << page << endl;
 		cout << "word=" << word << endl;
 		cout << "bit=" << bit << endl;
-		cout << "mask=" << (INT)mask << endl;
+		cout << "mask=" << (int)mask << endl;
 		for (j = 0; j < 10; j++) {
-			cout << (INT)q[word + j] << " ";
+			cout << (int)q[word + j] << " ";
 			}
 		cout << endl;
 		for (j = 0; j < 10; j++) {
@@ -249,7 +249,7 @@ uchar *page_storage::s_i_and_allocate(INT i)
 	return p;
 }
 
-uchar *page_storage::s_i_and_deallocate(INT i)
+uchar *page_storage::s_i_and_deallocate(int i)
 {
 	uchar *p;
 	
@@ -260,8 +260,8 @@ uchar *page_storage::s_i_and_deallocate(INT i)
 		print();
 		exit(1);
 		}
-	INT page_idx = i & (page_length - 1);
-	INT page = i >> page_length_log;
+	int page_idx = i & (page_length - 1);
+	int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i_and_deallocate "
 				"page >= page_ptr_used" << endl;
@@ -272,8 +272,8 @@ uchar *page_storage::s_i_and_deallocate(INT i)
 	//cout << "s_i(" << i << ") page=" << page
 	// << " page_idx=" << page_idx << endl;
 	p = pages[page] + page_idx * entry_size;
-	INT word = page_idx >> 3;
-	INT bit = page_idx & 7;
+	int word = page_idx >> 3;
+	int bit = page_idx & 7;
 	uchar mask = ((uchar) 1) << bit;
 	uchar not_mask = ~mask;
 	if ((allocation_tables[page][word] & mask) == 0) {
@@ -287,7 +287,7 @@ uchar *page_storage::s_i_and_deallocate(INT i)
 	return p;
 }
 
-uchar *page_storage::s_i(INT i)
+uchar *page_storage::s_i(int i)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -297,8 +297,8 @@ uchar *page_storage::s_i(INT i)
 		exit(1);
 		}
 	
-	INT page_idx = i & (page_length - 1);
-	INT page = i >> page_length_log;
+	int page_idx = i & (page_length - 1);
+	int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i "
 				"page >= page_ptr_used" << endl;
@@ -306,8 +306,8 @@ uchar *page_storage::s_i(INT i)
 		print();
 		exit(1);
 		}
-	INT word = page_idx >> 3;
-	INT bit = page_idx & 7;
+	int word = page_idx >> 3;
+	int bit = page_idx & 7;
 	uchar mask = ((uchar) 1) << bit;
 	if ((allocation_tables[page][word] & mask) == 0) {
 		cout << "page_storage::s_i "
@@ -321,7 +321,7 @@ uchar *page_storage::s_i(INT i)
 	return pages[page] + page_idx * entry_size;
 }
 
-uchar *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
+uchar *page_storage::s_i_and_allocation_bit(int i, int &f_allocated)
 {
 	if (i >= overall_length) {
 		cout << "page_storage::s_i "
@@ -331,8 +331,8 @@ uchar *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
 		exit(1);
 		}
 	
-	INT page_idx = i & (page_length - 1);
-	INT page = i >> page_length_log;
+	int page_idx = i & (page_length - 1);
+	int page = i >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "page_storage::s_i "
 				"page >= page_ptr_used" << endl;
@@ -340,8 +340,8 @@ uchar *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
 		print();
 		exit(1);
 		}
-	INT word = page_idx >> 3;
-	INT bit = page_idx & 7;
+	int word = page_idx >> 3;
+	int bit = page_idx & 7;
 	uchar mask = ((uchar) 1) << bit;
 	if (allocation_tables[page][word] & mask) {
 		f_allocated = TRUE;
@@ -355,27 +355,27 @@ uchar *page_storage::s_i_and_allocation_bit(INT i, INT &f_allocated)
 
 void page_storage::check_allocation_table()
 {
-	INT page_idx = overall_length & (page_length - 1);
-	INT page = overall_length >> page_length_log;
+	int page_idx = overall_length & (page_length - 1);
+	int page = overall_length >> page_length_log;
 	if (page >= page_ptr_used) {
 		cout << "check_allocation_table::s_i "
 				"page >= page_ptr_used" << endl;
 		print();
 		exit(1);
 		}
-	INT word = page_idx >> 3;
-	//INT bit = page_idx & 7;
+	int word = page_idx >> 3;
+	//int bit = page_idx & 7;
 	//uchar mask = ((uchar) 1) << bit;
 	for (word++; word < allocation_table_length; word++) {
 		if (allocation_tables[page][word]) {
-			INT j;
+			int j;
 			
 			cout << "page_storage::check_allocation_table "
 					"allocation_tables[page][word]" << endl;
 			cout << "page_idx >> 3 = " << (page_idx >> 3) << endl;
 			cout << "word = " << word << endl;
 			for (j = 0; j < 10; j++) {
-				cout << (INT)allocation_tables[page][word + j] << " ";
+				cout << (int)allocation_tables[page][word + j] << " ";
 				}
 			cout << endl;
 			for (j = 0; j < 10; j++) {
@@ -390,18 +390,18 @@ void page_storage::check_allocation_table()
 		}
 }
 
-INT page_storage::store(uchar *elt)
+int page_storage::store(uchar *elt)
 {
-	INT i, hdl;
+	int i, hdl;
 	uchar *p, *q;
 	
 	if (nb_free_entries) {
-		INT nfe = next_free_entry;
+		int nfe = next_free_entry;
 		
 		p = s_i_and_allocate(nfe);
-		INT next_next_free_entry;
+		int next_next_free_entry;
 		
-		uchar_move(p, (uchar *) &next_next_free_entry, sizeof(INT));
+		uchar_move(p, (uchar *) &next_next_free_entry, sizeof(int));
 		if (nb_free_entries > 1) {
 			if (next_next_free_entry < 0 ||
 					next_next_free_entry >= overall_length) {
@@ -490,13 +490,13 @@ INT page_storage::store(uchar *elt)
 	return hdl;
 }
 
-void page_storage::dispose(INT hdl)
+void page_storage::dispose(int hdl)
 {
 #if 1
 	uchar *p = s_i_and_deallocate(hdl);
 
-	INT next_next_free_entry = next_free_entry;
-	uchar_move((uchar *) &next_next_free_entry, p, sizeof(INT));
+	int next_next_free_entry = next_free_entry;
+	uchar_move((uchar *) &next_next_free_entry, p, sizeof(int));
 	next_free_entry = hdl;
 	nb_free_entries++;
 	//check_free_list();
@@ -508,7 +508,7 @@ void page_storage::dispose(INT hdl)
 
 void page_storage::check_free_list()
 {
-	INT nb = 0, nfe, f_allocated; 
+	int nb = 0, nfe, f_allocated; 
 	uchar *p;
 	
 	if (nb_free_entries == 0)
@@ -526,7 +526,7 @@ void page_storage::check_free_list()
 			print();
 			exit(1);
 			}
-		uchar_move(p, (uchar *) &nfe, sizeof(INT));
+		uchar_move(p, (uchar *) &nfe, sizeof(int));
 		if (nfe == -1)
 			break;
 		}
@@ -548,14 +548,14 @@ void page_storage::print_storage_used()
 		<< nb_free_entries << " entries currently empty" << endl;
 }
 
-void test_page_storage(INT f_v)
+void test_page_storage(int f_v)
 {
 	{
 	page_storage *Elts;
 	Elts = NEW_OBJECT(page_storage);
 	
-	INT char_per_elt = 20;
-	INT page_length_log = PAGE_LENGTH_LOG;
+	int char_per_elt = 20;
+	int page_length_log = PAGE_LENGTH_LOG;
 	
 	Elts->init(char_per_elt /* entry_size */, page_length_log, f_v);
 	cout << "destroying Elts" << endl;

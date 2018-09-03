@@ -8,21 +8,21 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i, j;
-	INT *Adj;
-	INT f_epsilon = FALSE;
-	INT epsilon;
-	INT f_d = FALSE;
-	INT d;
-	INT f_q = FALSE;
-	INT q;
-	INT f_list_points = FALSE;
+	int verbose_level = 0;
+	int i, j;
+	int *Adj;
+	int f_epsilon = FALSE;
+	int epsilon;
+	int f_d = FALSE;
+	int d;
+	int f_q = FALSE;
+	int q;
+	int f_list_points = FALSE;
 	finite_field *F;
-	INT n, N, a, nb_e, nb_inc;
-	INT c1 = 0, c2 = 0, c3 = 0;
-	INT *v, *v2;
-	INT *Gram; // Gram matrix
+	int n, N, a, nb_e, nb_inc;
+	int c1 = 0, c2 = 0, c3 = 0;
+	int *v, *v2;
+	int *Gram; // Gram matrix
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {
@@ -65,9 +65,9 @@ int main(int argc, char **argv)
 
 	n = d - 1; // projective dimension
 
-	v = NEW_INT(d);
-	v2 = NEW_INT(d);
-	Gram = NEW_INT(d * d);
+	v = NEW_int(d);
+	v2 = NEW_int(d);
+	Gram = NEW_int(d * d);
 	
 	cout << "epsilon=" << epsilon << " n=" << n << " q=" << q << endl;
 	
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 		for (i = 0; i < N; i++) {
 			Q_epsilon_unrank(*F, v, 1, epsilon, n, c1, c2, c3, i);
 			cout << i << " : ";
-			INT_vec_print(cout, v, n + 1);
+			int_vec_print(cout, v, n + 1);
 			j = Q_epsilon_rank(*F, v, 1, epsilon, n, c1, c2, c3);
 			cout << " : " << j << endl;
 		
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 
 	
 	cout << "allocating adjacency matrix" << endl;
-	Adj = NEW_INT(N * N);
+	Adj = NEW_int(N * N);
 	cout << "allocating adjacency matrix was successfull" << endl;
 	nb_e = 0;
 	nb_inc = 0;
@@ -144,15 +144,15 @@ int main(int argc, char **argv)
 	CG = NEW_OBJECT(colored_graph);
 	CG->init_adjacency_no_colors(N, Adj, verbose_level);
 
-	sprintf(fname, "O_%ld_%ld_%ld.colored_graph", epsilon, d, q);
+	sprintf(fname, "O_%d_%d_%d.colored_graph", epsilon, d, q);
 
 	CG->save(fname, verbose_level);
 
 	FREE_OBJECT(CG);
-	FREE_INT(Adj);
-	FREE_INT(v);
-	FREE_INT(v2);
-	FREE_INT(Gram);
+	FREE_int(Adj);
+	FREE_int(v);
+	FREE_int(v2);
+	FREE_int(Gram);
 	FREE_OBJECT(F);
 }
 

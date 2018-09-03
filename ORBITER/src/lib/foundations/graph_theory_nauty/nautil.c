@@ -591,7 +591,7 @@ shortprune(set *set1, set *set2, int m)
 {
     int i;
 
-    for (i = 0; i < M; ++i) INTERSECT(set1[i],set2[i]);
+    for (i = 0; i < M; ++i) intERSECT(set1[i],set2[i]);
 }
 
 /*****************************************************************************
@@ -652,7 +652,7 @@ longprune(set *tcell, set *fix, set *bottom, set *top, int m)
         bottom += M;
 
         if (i == M)
-            for (i = 0; i < M; ++i) INTERSECT(tcell[i],bottom[i]);
+            for (i = 0; i < M; ++i) intERSECT(tcell[i],bottom[i]);
         bottom += M;
     }
 }

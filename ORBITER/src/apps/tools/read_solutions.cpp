@@ -12,19 +12,19 @@
 
 int main(int argc, char **argv)
 {
-	INT i, j;
-	INT verbose_level = 0;
-	INT f_file_mask_data = FALSE;
+	int i, j;
+	int verbose_level = 0;
+	int f_file_mask_data = FALSE;
 	const char *file_mask_data = NULL;
-	INT f_file_mask_success = FALSE;
+	int f_file_mask_success = FALSE;
 	const char *file_mask_success = NULL;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_nb_cases = FALSE;
-	INT nb_cases = 0;
-	INT f_data_set_size = FALSE;
-	INT data_set_size = 0;
-	INT f_save = FALSE;
+	int f_N = FALSE;
+	int N = 0;
+	int f_nb_cases = FALSE;
+	int nb_cases = 0;
+	int f_data_set_size = FALSE;
+	int data_set_size = 0;
+	int f_save = FALSE;
 	const char *save_prefix = NULL;
 
 	cout << argv[0] << endl;
@@ -85,15 +85,15 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 	
-	INT nb_missing = 0;
-	INT *Missing = NULL;
-	INT nb_existing = 0;
-	INT *Existing = NULL;
+	int nb_missing = 0;
+	int *Missing = NULL;
+	int nb_existing = 0;
+	int *Existing = NULL;
 	char fname[1000];
 	
 	
-	Missing = NEW_INT(N);
-	Existing = NEW_INT(N);
+	Missing = NEW_int(N);
+	Existing = NEW_int(N);
 
 	for (i = 0; i < N; i++) {
 		sprintf(fname, file_mask_success, i);
@@ -110,19 +110,19 @@ int main(int argc, char **argv)
 	cout << "There are " << nb_missing << " missing files" << endl;
 	cout << "There are " << nb_existing << " existing files" << endl;
 
-	INT h, e, l, o, k, a;
-	INT *f_solution_read = NULL;
-	INT *solution_first = NULL;
-	INT *nb_solutions = NULL;
-	INT nb_data_sets_allocated = 0;
-	INT nb_data_sets_used = 0;
-	INT *Data_sets = NULL;
+	int h, e, l, o, k, a;
+	int *f_solution_read = NULL;
+	int *solution_first = NULL;
+	int *nb_solutions = NULL;
+	int nb_data_sets_allocated = 0;
+	int nb_data_sets_used = 0;
+	int *Data_sets = NULL;
 	
-	f_solution_read = NEW_INT(nb_cases);
-	nb_solutions = NEW_INT(nb_cases);
-	solution_first = NEW_INT(nb_cases);
-	INT_vec_zero(nb_solutions, nb_cases);
-	INT_vec_zero(solution_first, nb_cases);
+	f_solution_read = NEW_int(nb_cases);
+	nb_solutions = NEW_int(nb_cases);
+	solution_first = NEW_int(nb_cases);
+	int_vec_zero(nb_solutions, nb_cases);
+	int_vec_zero(solution_first, nb_cases);
 	for (i = 0; i < nb_cases; i++) {
 		f_solution_read[i] = FALSE;
 		nb_solutions[i] = 0;
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
 
 	nb_data_sets_allocated = 1024;
 	nb_data_sets_used = 0;
-	Data_sets = NEW_INT(nb_data_sets_allocated * data_set_size);
+	Data_sets = NEW_int(nb_data_sets_allocated * data_set_size);
 
 
 	char *p_buf;
@@ -165,7 +165,7 @@ int main(int argc, char **argv)
 				}
 
 				if (strncmp(buf, "start orbit", 11) == 0) {
-					sscanf(buf + 12, "%ld", &o);
+					sscanf(buf + 12, "%d", &o);
 					//cout << "Reading solutions for orbit " << o << endl;
 
 					if (o >= nb_cases) {
@@ -202,14 +202,14 @@ int main(int argc, char **argv)
 							p_buf = buf + 3;
 
 							if (nb_data_sets_used == nb_data_sets_allocated) {
-								INT alloc_new;
-								INT *Data_new;
+								int alloc_new;
+								int *Data_new;
 
 								alloc_new = 2 * nb_data_sets_allocated;
-								Data_new = NEW_INT(alloc_new * data_set_size);
-								INT_vec_copy(Data_sets, Data_new, nb_data_sets_used * data_set_size);
+								Data_new = NEW_int(alloc_new * data_set_size);
+								int_vec_copy(Data_sets, Data_new, nb_data_sets_used * data_set_size);
 
-								FREE_INT(Data_sets);
+								FREE_int(Data_sets);
 								Data_sets = Data_new;
 								nb_data_sets_allocated = alloc_new;
 								}
@@ -234,15 +234,15 @@ int main(int argc, char **argv)
 		}
 	
 	cout << "done reading solutions, we found " << nb_data_sets_used << " solutions" << endl;
-	INT *Data_sorted;
-	INT *FstLen;
+	int *Data_sorted;
+	int *FstLen;
 
 
-	Data_sorted = NEW_INT(nb_data_sets_used * data_set_size);
+	Data_sorted = NEW_int(nb_data_sets_used * data_set_size);
 	h = 0;
 	for (o = 0; o < nb_cases; o++) {
 		if (f_solution_read[o]) {
-			INT_vec_copy(Data_sets + solution_first[o] * data_set_size, Data_sorted + h * data_set_size, nb_solutions[o] * data_set_size);
+			int_vec_copy(Data_sets + solution_first[o] * data_set_size, Data_sorted + h * data_set_size, nb_solutions[o] * data_set_size);
 			solution_first[o] = h;
 			h += nb_solutions[o];
 			}
@@ -251,18 +251,18 @@ int main(int argc, char **argv)
 		cout << "warning: h != nb_data_sets_used" << endl;
 		}
 	nb_data_sets_used = h;
-	FstLen = NEW_INT(nb_cases * 2);
+	FstLen = NEW_int(nb_cases * 2);
 	for (o = 0; o < nb_cases; o++) {
 		FstLen[2 * o + 0] = solution_first[o];
 		FstLen[2 * o + 1] = nb_solutions[o];
 		}
 	cout << "There are " << nb_missing << " missing files" << endl;
 	cout << "They are:";
-	INT_vec_print(cout, Missing, nb_missing);
+	int_vec_print(cout, Missing, nb_missing);
 	cout << endl;
 
-	INT nb_missing_cases;
-	INT *Missing_cases;
+	int nb_missing_cases;
+	int *Missing_cases;
 	
 	nb_missing_cases = 0;
 	for (o = 0; o < nb_cases; o++) {
@@ -270,7 +270,7 @@ int main(int argc, char **argv)
 			nb_missing_cases++;
 			}
 		}
-	Missing_cases = NEW_INT(nb_missing_cases);
+	Missing_cases = NEW_int(nb_missing_cases);
 	h = 0;
 	for (o = 0; o < nb_cases; o++) {
 		if (!f_solution_read[o]) {
@@ -279,7 +279,7 @@ int main(int argc, char **argv)
 		}
 	cout << "There are " << nb_missing_cases << " missing cases" << endl;
 	cout << "They are:";
-	INT_vec_print(cout, Missing_cases, nb_missing_cases);
+	int_vec_print(cout, Missing_cases, nb_missing_cases);
 	cout << endl;
 	
 
@@ -287,14 +287,14 @@ int main(int argc, char **argv)
 		char fname_FstLen[1000];
 	
 		sprintf(fname_FstLen, "%s_FstLen.csv", save_prefix);
-		INT_matrix_write_csv(fname_FstLen, FstLen, nb_cases, 2);
+		int_matrix_write_csv(fname_FstLen, FstLen, nb_cases, 2);
 
 		cout << "Written file " << fname_FstLen << " of size " << file_size(fname_FstLen) << endl;
 
 		char fname_Data[1000];
 	
 		sprintf(fname_Data, "%s_Data.csv", save_prefix);
-		INT_matrix_write_csv(fname_Data, Data_sorted, nb_data_sets_used, data_set_size);
+		int_matrix_write_csv(fname_Data, Data_sorted, nb_data_sets_used, data_set_size);
 
 		cout << "Written file " << fname_Data << " of size " << file_size(fname_Data) << endl;
 		}

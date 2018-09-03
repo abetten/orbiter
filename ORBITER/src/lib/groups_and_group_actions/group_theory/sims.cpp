@@ -53,20 +53,20 @@ sims::~sims()
 
 void sims::freeself()
 {
-	INT i;
-	INT f_v = FALSE;
+	int i;
+	int f_v = FALSE;
 	
 	if (f_v) {
 		cout << "sims::freeself freeing gen_depth" << endl;
 		}
 	if (gen_depth)
-		FREE_INT(gen_depth);
+		FREE_int(gen_depth);
 	if (gen_perm)
-		FREE_INT(gen_perm);
+		FREE_int(gen_perm);
 	if (nb_gen)
-		FREE_INT(nb_gen);
+		FREE_int(nb_gen);
 	if (path)
-		FREE_INT(path);
+		FREE_int(path);
 		
 	if (f_v) {
 		cout << "sims::freeself freeing orbit, "
@@ -80,58 +80,58 @@ void sims::freeself()
 			if (f_v) {
 				cout << "sims::freeself freeing orbit[i]" << endl;
 				}
-			FREE_INT(orbit[i]);
+			FREE_int(orbit[i]);
 			if (f_v) {
 				cout << "sims::freeself freeing orbit_inv[i]" << endl;
 				}
-			FREE_INT(orbit_inv[i]);
+			FREE_int(orbit_inv[i]);
 			if (f_v) {
 				cout << "sims::freeself freeing prev[i]" << endl;
 				}
-			FREE_INT(prev[i]);
+			FREE_int(prev[i]);
 			if (f_v) {
 				cout << "sims::freeself freeing label[i]" << endl;
 				}
-			FREE_INT(label[i]);
+			FREE_int(label[i]);
 			}
 		if (f_v) {
 			cout << "sims::freeself freeing orbit"<< endl;
 			}
-		FREE_PINT(orbit);
-		FREE_PINT(orbit_inv);
-		FREE_PINT(prev);
-		FREE_PINT(label);
+		FREE_pint(orbit);
+		FREE_pint(orbit_inv);
+		FREE_pint(prev);
+		FREE_pint(label);
 		}
 
 	if (f_v) {
 		cout << "sims::freeself freeing orbit_len" << endl;
 		}
 	if (orbit_len)
-		FREE_INT(orbit_len);
+		FREE_int(orbit_len);
 	if (Elt1)
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 	if (Elt2)
-		FREE_INT(Elt2);
+		FREE_int(Elt2);
 	if (Elt3)
-		FREE_INT(Elt3);
+		FREE_int(Elt3);
 	if (Elt4)
-		FREE_INT(Elt4);
+		FREE_int(Elt4);
 	if (strip1)
-		FREE_INT(strip1);
+		FREE_int(strip1);
 	if (strip2)
-		FREE_INT(strip2);
+		FREE_int(strip2);
 	if (eltrk1)
-		FREE_INT(eltrk1);
+		FREE_int(eltrk1);
 	if (eltrk2)
-		FREE_INT(eltrk2);
+		FREE_int(eltrk2);
 	if (cosetrep)
-		FREE_INT(cosetrep);
+		FREE_int(cosetrep);
 	if (cosetrep_tmp)
-		FREE_INT(cosetrep_tmp);
+		FREE_int(cosetrep_tmp);
 	if (schreier_gen)
-		FREE_INT(schreier_gen);
+		FREE_int(schreier_gen);
 	if (schreier_gen1)
-		FREE_INT(schreier_gen1);
+		FREE_int(schreier_gen1);
 	A = NULL;
 	if (f_v) {
 		cout << "sims::freeself before delete_images" << endl;
@@ -148,22 +148,22 @@ void sims::freeself()
 
 void sims::delete_images()
 {
-	INT i;
+	int i;
 	
 	if (images) {
 		for (i = 0; i < nb_images; i++) {
-			FREE_INT(images[i]);
+			FREE_int(images[i]);
 			}
 		nb_images = 0;
-		FREE_PINT(images);
+		FREE_pint(images);
 		images = NULL;
 		}
 }
 
-void sims::init_images(INT nb_images)
+void sims::init_images(int nb_images)
 {
 #if 1
-	INT i, j; //, a;
+	int i, j; //, a;
 	
 	if (A == NULL) {
 		cout << "sims::init_images() action is NULL" << endl;
@@ -171,9 +171,9 @@ void sims::init_images(INT nb_images)
 		}
 	delete_images();
 	sims::nb_images = nb_images;
-	images = NEW_PINT(nb_images);
+	images = NEW_pint(nb_images);
 	for (i = 0; i < nb_images; i++) {
-		images[i] = NEW_INT(A->degree);
+		images[i] = NEW_int(A->degree);
 		for (j = 0; j < A->degree; j++) {
 			images[i][j] = -1;
 			//a = A->image_of(gens.ith(i), j);
@@ -187,10 +187,10 @@ void sims::init_images(INT nb_images)
 void sims::images_append()
 {
 #if 1
-	INT **new_images = NEW_PINT(nb_images + 1);
-	INT i, j; //, a;
+	int **new_images = NEW_pint(nb_images + 1);
+	int i, j; //, a;
 	
-	new_images[nb_images] = NEW_INT(A->degree);
+	new_images[nb_images] = NEW_int(A->degree);
 	for (j = 0; j < A->degree; j++) {
 		new_images[nb_images][j] = -1;
 		}
@@ -204,7 +204,7 @@ void sims::images_append()
 		new_images[i] = images[i];
 		}
 	if (images)
-		FREE_PINT(images);
+		FREE_pint(images);
 	images = new_images;
 	nb_images++;
 #endif
@@ -213,34 +213,34 @@ void sims::images_append()
 void sims::init(action *A)
 // initializes the trivial group with the base as given in A
 {
-	INT i;
+	int i;
 	
 	init_without_base(A);
 	
 	my_base_len = A->base_len;
 	
-	orbit = NEW_PINT(my_base_len);
-	orbit_inv = NEW_PINT(my_base_len);
-	prev = NEW_PINT(my_base_len);
-	label = NEW_PINT(my_base_len);
+	orbit = NEW_pint(my_base_len);
+	orbit_inv = NEW_pint(my_base_len);
+	prev = NEW_pint(my_base_len);
+	label = NEW_pint(my_base_len);
 	for (i = 0; i < my_base_len; i++) {
-		orbit[i] = NEW_INT(A->degree);
-		orbit_inv[i] = NEW_INT(A->degree);
-		prev[i] = NEW_INT(A->degree);
-		label[i] = NEW_INT(A->degree);
+		orbit[i] = NEW_int(A->degree);
+		orbit_inv[i] = NEW_int(A->degree);
+		prev[i] = NEW_int(A->degree);
+		label[i] = NEW_int(A->degree);
 		}
 	
-	FREE_INT(nb_gen);
+	FREE_int(nb_gen);
 	
 	
-	nb_gen = NEW_INT(my_base_len + 1);
+	nb_gen = NEW_int(my_base_len + 1);
 	for (i = 0; i <= my_base_len; i++) {
 		nb_gen[i] = 0;
 		}
 	
-	path = NEW_INT(my_base_len);
+	path = NEW_int(my_base_len);
 
-	orbit_len = NEW_INT(my_base_len);
+	orbit_len = NEW_int(my_base_len);
 	
 	for (i = 0; i < my_base_len; i++) {
 		initialize_table(i);
@@ -258,33 +258,33 @@ void sims::init_without_base(action *A)
 	gens.init(A);
 	gens_inv.init(A);
 	
-	nb_gen = NEW_INT(1);
+	nb_gen = NEW_int(1);
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
-	strip1 = NEW_INT(A->elt_size_in_INT);
-	strip2 = NEW_INT(A->elt_size_in_INT);
-	eltrk1 = NEW_INT(A->elt_size_in_INT);
-	eltrk2 = NEW_INT(A->elt_size_in_INT);
-	cosetrep = NEW_INT(A->elt_size_in_INT);
-	cosetrep_tmp = NEW_INT(A->elt_size_in_INT);
-	schreier_gen = NEW_INT(A->elt_size_in_INT);
-	schreier_gen1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	strip1 = NEW_int(A->elt_size_in_int);
+	strip2 = NEW_int(A->elt_size_in_int);
+	eltrk1 = NEW_int(A->elt_size_in_int);
+	eltrk2 = NEW_int(A->elt_size_in_int);
+	cosetrep = NEW_int(A->elt_size_in_int);
+	cosetrep_tmp = NEW_int(A->elt_size_in_int);
+	schreier_gen = NEW_int(A->elt_size_in_int);
+	schreier_gen1 = NEW_int(A->elt_size_in_int);
 }
 
-void sims::reallocate_base(INT old_base_len, INT verbose_level)
+void sims::reallocate_base(int old_base_len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
-	INT *old_nb_gen = nb_gen;
-	INT *old_path = path;
-	INT *old_orbit_len = orbit_len;
-	INT **old_orbit = orbit;
-	INT **old_orbit_inv = orbit_inv;
-	INT **old_prev = prev;
-	INT **old_label = label;
+	int f_v = (verbose_level >= 1);
+	int i;
+	int *old_nb_gen = nb_gen;
+	int *old_path = path;
+	int *old_orbit_len = orbit_len;
+	int **old_orbit = orbit;
+	int **old_orbit_inv = orbit_inv;
+	int **old_prev = prev;
+	int **old_label = label;
 	
 	if (f_v) {
 		cout << "sims::reallocate_base from " 
@@ -293,13 +293,13 @@ void sims::reallocate_base(INT old_base_len, INT verbose_level)
 
 	my_base_len = A->base_len;
 	
-	nb_gen = NEW_INT(my_base_len + 1);
-	path = NEW_INT(my_base_len);
-	orbit_len = NEW_INT(my_base_len);
-	orbit = NEW_PINT(my_base_len);
-	orbit_inv = NEW_PINT(my_base_len);
-	prev = NEW_PINT(my_base_len);
-	label = NEW_PINT(my_base_len);
+	nb_gen = NEW_int(my_base_len + 1);
+	path = NEW_int(my_base_len);
+	orbit_len = NEW_int(my_base_len);
+	orbit = NEW_pint(my_base_len);
+	orbit_inv = NEW_pint(my_base_len);
+	prev = NEW_pint(my_base_len);
+	label = NEW_pint(my_base_len);
 	for (i = 0; i < old_base_len /* A->base_len - 1 */; i++) {
 		nb_gen[i] = old_nb_gen[i];
 		path[i] = old_path[i];
@@ -312,10 +312,10 @@ void sims::reallocate_base(INT old_base_len, INT verbose_level)
 	for (i = old_base_len; i < my_base_len; i++) {
 		nb_gen[i] = 0;
 		path[i] = 0;
-		orbit[i] = NEW_INT(A->degree);
-		orbit_inv[i] = NEW_INT(A->degree);
-		prev[i] = NEW_INT(A->degree);
-		label[i] = NEW_INT(A->degree);
+		orbit[i] = NEW_int(A->degree);
+		orbit_inv[i] = NEW_int(A->degree);
+		prev[i] = NEW_int(A->degree);
+		label[i] = NEW_int(A->degree);
 		initialize_table(i);
 		init_trivial_orbit(i);
 		}
@@ -324,32 +324,32 @@ void sims::reallocate_base(INT old_base_len, INT verbose_level)
 	nb_gen[A->base_len - 1] = old_nb_gen[A->base_len - 1];
 	nb_gen[A->base_len] = 0;
 	path[A->base_len - 1] = 0;
-	orbit[A->base_len - 1] = NEW_INT(A->degree);
-	orbit_inv[A->base_len - 1] = NEW_INT(A->degree);
-	prev[A->base_len - 1] = NEW_INT(A->degree);
-	label[A->base_len - 1] = NEW_INT(A->degree);
+	orbit[A->base_len - 1] = NEW_int(A->degree);
+	orbit_inv[A->base_len - 1] = NEW_int(A->degree);
+	prev[A->base_len - 1] = NEW_int(A->degree);
+	label[A->base_len - 1] = NEW_int(A->degree);
 	initialize_table(A->base_len - 1);
 	init_trivial_orbit(A->base_len - 1);
 #endif
 	if (old_nb_gen)
-		FREE_INT(old_nb_gen);
+		FREE_int(old_nb_gen);
 	if (old_path)
-		FREE_INT(old_path);
+		FREE_int(old_path);
 	if (old_orbit_len)
-		FREE_INT(old_orbit_len);
+		FREE_int(old_orbit_len);
 	if (old_orbit)
-		FREE_PINT(old_orbit);
+		FREE_pint(old_orbit);
 	if (old_orbit_inv)
-		FREE_PINT(old_orbit_inv);
+		FREE_pint(old_orbit_inv);
 	if (old_prev)
-		FREE_PINT(old_prev);
+		FREE_pint(old_prev);
 	if (old_label)
-		FREE_PINT(old_label);
+		FREE_pint(old_label);
 }
 
-void sims::initialize_table(INT i)
+void sims::initialize_table(int i)
 {
-	INT j;
+	int j;
 	
 	perm_identity(orbit[i], A->degree);
 	perm_identity(orbit_inv[i], A->degree);
@@ -360,14 +360,14 @@ void sims::initialize_table(INT i)
 	orbit_len[i] = 0;
 }
 
-void sims::init_trivial_group(INT verbose_level)
+void sims::init_trivial_group(int verbose_level)
 // clears the generators array, 
 // and sets the i-th transversal to contain
 // only the i-th base point (for all i).
 {
-	INT f_v = (verbose_level >= 2);
-	INT f_vv = (verbose_level >= 3);
-	INT i;
+	int f_v = (verbose_level >= 2);
+	int f_vv = (verbose_level >= 3);
+	int i;
 	
 	if (f_v) {
 		cout << "sims::init_trivial_group" << endl;
@@ -389,9 +389,9 @@ void sims::init_trivial_group(INT verbose_level)
 		}
 }
 
-void sims::init_trivial_orbit(INT i)
+void sims::init_trivial_orbit(int i)
 {
-	INT coset_of_base_point;
+	int coset_of_base_point;
 	
 	if (my_base_len != A->base_len) {
 		cout << "sims::init_trivial_orbit: "
@@ -409,9 +409,9 @@ void sims::init_trivial_orbit(INT i)
 }
 
 void sims::init_generators(vector_ge &generators,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "sims::init_generators" << endl;
@@ -426,15 +426,15 @@ void sims::init_generators(vector_ge &generators,
 		}
 }
 
-void sims::init_generators(INT nb, INT *elt,
-		INT verbose_level)
+void sims::init_generators(int nb, int *elt,
+		int verbose_level)
 // copies the given elements into the generator array, 
 // then computes depth and perm
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i;
 	
 	if (f_v) {
 		cout << "sims::init_generators nb = " << nb << endl;
@@ -446,12 +446,12 @@ void sims::init_generators(INT nb, INT *elt,
 			cout << "sims::init_generators "
 					"i = " << i << " / " << nb << ":" << endl;
 			}
-		gens.copy_in(i, elt + i * A->elt_size_in_INT);
+		gens.copy_in(i, elt + i * A->elt_size_in_int);
 		if (f_vvv) {
 			A->element_print_quick(
-					elt + i * A->elt_size_in_INT, cout);
+					elt + i * A->elt_size_in_int, cout);
 			}
-		A->element_invert(elt + i * A->elt_size_in_INT,
+		A->element_invert(elt + i * A->elt_size_in_int,
 				gens_inv.ith(i), FALSE);
 		}
 	if (f_v) {
@@ -468,9 +468,9 @@ void sims::init_generators(INT nb, INT *elt,
 		}
 }
 
-void sims::init_generators_by_hdl(INT nb_gen, INT *gen_hdl)
+void sims::init_generators_by_hdl(int nb_gen, int *gen_hdl)
 {
-	INT i;
+	int i;
 	
 	gens.allocate(nb_gen);
 	gens_inv.allocate(nb_gen);
@@ -485,11 +485,11 @@ void sims::init_generators_by_hdl(INT nb_gen, INT *gen_hdl)
 
 }
 
-void sims::init_generator_depth_and_perm(INT verbose_level)
+void sims::init_generator_depth_and_perm(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, d;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, d;
 	
 	if (f_v) {
 		cout << "sims::init_generator_depth_and_perm" << endl;
@@ -505,8 +505,8 @@ void sims::init_generator_depth_and_perm(INT verbose_level)
 	for (i = 0; i <= A->base_len; i++) {
 		nb_gen[i] = 0;
 		}
-	gen_depth = NEW_INT(gens.len);
-	gen_perm = NEW_INT(gens.len);
+	gen_depth = NEW_int(gens.len);
+	gen_perm = NEW_int(gens.len);
 	for (i = 0; i < gens.len; i++) {
 		gen_perm[i] = i;
 		gen_depth[i] = generator_depth(i);
@@ -538,16 +538,16 @@ void sims::init_generator_depth_and_perm(INT verbose_level)
 		}
 }
 
-void sims::add_generator(INT *elt, INT verbose_level)
+void sims::add_generator(int *elt, int verbose_level)
 // adds elt to list of generators, 
 // computes the depth of the element, 
 // updates the arrays gen_depth, gen_perm and nb_gen accordingly
 // does not change the transversals
 {
-	INT f_v = (verbose_level >= 1);
-	INT old_nb_gen, idx, depth, i;
-	INT *new_gen_depth = NEW_INT(gens.len + 1);
-	INT *new_gen_perm = NEW_INT(gens.len + 1);
+	int f_v = (verbose_level >= 1);
+	int old_nb_gen, idx, depth, i;
+	int *new_gen_depth = NEW_int(gens.len + 1);
+	int *new_gen_perm = NEW_int(gens.len + 1);
 	
 	if (f_v) {
 		cout << "sims::add_generator "
@@ -566,8 +566,8 @@ void sims::add_generator(INT *elt, INT verbose_level)
 		new_gen_perm[i] = gen_perm[i];
 		}
 	if (gen_depth) {
-		FREE_INT(gen_depth);
-		FREE_INT(gen_perm);
+		FREE_int(gen_depth);
+		FREE_int(gen_perm);
 		}
 	gen_depth = new_gen_depth;
 	gen_perm = new_gen_perm;
@@ -591,23 +591,23 @@ void sims::add_generator(INT *elt, INT verbose_level)
 }
 
 void sims::create_group_tree(const char *fname,
-		INT f_full, INT verbose_level)
+		int f_full, int verbose_level)
 {
-	INT i, j, h, go, l;
+	int i, j, h, go, l;
 	longinteger_object Go;
-	INT *Elt;
-	INT *Fst;
+	int *Elt;
+	int *Fst;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(Go);
-	go = Go.as_INT();
+	go = Go.as_int();
 	//cout << "Group of order " << go << endl;
 
 	{
 	ofstream fp(fname);
 	
 	l = last_moved_base_point() + 1;
-	Fst = NEW_INT(l);
+	Fst = NEW_int(l);
 	for (i = 0; i < l; i++) {
 		if (i == 0) {
 			Fst[i] = 0;
@@ -618,9 +618,9 @@ void sims::create_group_tree(const char *fname,
 		}
 	if (f_full) {
 		for (h = 0; h < go; h++) {
-			element_unrank_INT(h, Elt);
+			element_unrank_int(h, Elt);
 			//cout << "Element " << h << " / " << go << " : path=";
-			//INT_vec_print(cout, S->path, S->A->base_len);
+			//int_vec_print(cout, S->path, S->A->base_len);
 			//cout << endl;
 			fp << l;
 			for (i = 0; i < l; i++) {
@@ -646,7 +646,7 @@ void sims::create_group_tree(const char *fname,
 				if (h < l - 1 && j == 0) {
 					continue;
 					}
-				INT_vec_zero(path, l);
+				int_vec_zero(path, l);
 				path[h] = j;
 				fp << h + 1;
 				for (i = 0; i <= h; i++) {
@@ -661,13 +661,13 @@ void sims::create_group_tree(const char *fname,
 	}
 	cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;
-	FREE_INT(Elt);
-	FREE_INT(Fst);
+	FREE_int(Elt);
+	FREE_int(Fst);
 }
 
 void sims::print_transversals()
 {
-	INT i, j, l;
+	int i, j, l;
 	cout << "sims data structure, a group of order ";
 	print_group_order(cout);
 	cout << endl;
@@ -689,7 +689,7 @@ void sims::print_transversals()
 
 void sims::print_transversals_short()
 {
-	INT i, j, l;
+	int i, j, l;
 
 	if (my_base_len != A->base_len) {
 		cout << "sims::print_transversals_short: "
@@ -713,10 +713,10 @@ void sims::print_transversals_short()
 
 void sims::print_transversal_lengths()
 {
-	INT_vec_print(cout, orbit_len, A->base_len);
+	int_vec_print(cout, orbit_len, A->base_len);
 	cout << endl;
 #if 0
-	INT i, l;
+	int i, l;
 	
 	l = last_moved_base_point();
 	for (i = 0 ; i <= l; i++) {
@@ -728,7 +728,7 @@ void sims::print_transversal_lengths()
 
 void sims::print_orbit_len()
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < A->base_len; i++) {
 		cout << orbit_len[i] << " ";
@@ -738,12 +738,12 @@ void sims::print_orbit_len()
 
 
 
-void sims::print(INT verbose_level)
+void sims::print(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i, j;
 	
 	j = last_moved_base_point();
 	cout << "sims data structure, a group of order ";
@@ -772,7 +772,7 @@ void sims::print(INT verbose_level)
 
 void sims::print_generators()
 {
-	INT i, j, nbg, nbg1, gen_idx;
+	int i, j, nbg, nbg1, gen_idx;
 
 	cout << "generators are:" << endl;
 	//gens.print(cout);
@@ -797,7 +797,7 @@ void sims::print_generators()
 
 void sims::print_generators_tex(ostream &ost)
 {
-	INT i, j, nbg, nbg1, gen_idx, cnt, f_first;
+	int i, j, nbg, nbg1, gen_idx, cnt, f_first;
 
 	ost << "\\begin{align*}" << endl;
 	cnt = 0;
@@ -831,7 +831,7 @@ void sims::print_generators_tex(ostream &ost)
 
 void sims::print_generators_as_permutations()
 {
-	INT i, l;
+	int i, l;
 	
 	cout << "generators as permutations:" << endl;
 	l = gens.len;
@@ -846,7 +846,7 @@ void sims::print_generators_as_permutations()
 void sims::print_generators_as_permutations_override_action(
 		action *A)
 {
-	INT i, l;
+	int i, l;
 	
 	cout << "generators as permutations (override action):" << endl;
 	l = gens.len;
@@ -860,7 +860,7 @@ void sims::print_generators_as_permutations_override_action(
 
 void sims::print_basic_orbits()
 {
-	INT i;
+	int i;
 	
 	if (my_base_len != A->base_len) {
 		cout << "sims::print_basic_orbits: "
@@ -872,9 +872,9 @@ void sims::print_basic_orbits()
 		}
 }
 
-void sims::print_basic_orbit(INT i)
+void sims::print_basic_orbit(int i)
 {
-	INT j;
+	int j;
 	
 	cout << "basic orbit " << i << " of length " << orbit_len[i] << endl; 
 	cout << "j : orbit[i][j] : prev[i][j] : label[i][j]" << endl;
@@ -894,7 +894,7 @@ void sims::print_basic_orbit(INT i)
 
 void sims::print_generator_depth_and_perm()
 {
-	INT i;
+	int i;
 	
 	cout << "depth:" << endl;
 	for (i = 0; i < gens.len; i++) {
@@ -919,11 +919,11 @@ void sims::print_generator_depth_and_perm()
 	cout << endl;
 }
 
-INT sims::generator_depth(INT gen_idx)
+int sims::generator_depth(int gen_idx)
 // returns the index of the first base point 
 // which is moved by a given generator. 
 {
-	INT i, bi, j;
+	int i, bi, j;
 	
 	for (i = 0; i < A->base_len; i++) {
 		bi = A->base[i];
@@ -934,11 +934,11 @@ INT sims::generator_depth(INT gen_idx)
 	return A->base_len;
 }
 
-INT sims::generator_depth(INT *elt)
+int sims::generator_depth(int *elt)
 // returns the index of the first base point 
 // which is moved by the given element
 {
-	INT i, bi, j;
+	int i, bi, j;
 	
 	for (i = 0; i < A->base_len; i++) {
 		bi = A->base[i];
@@ -956,19 +956,19 @@ void sims::group_order(longinteger_object &go)
 	//cout << "sims::group_order before D.multiply_up" << endl;
 	//cout << "A->base_len=" << A->base_len << endl;
 	//cout << "orbit_len=";
-	//INT_vec_print(cout, orbit_len, A->base_len);
+	//int_vec_print(cout, orbit_len, A->base_len);
 	//cout << endl;
 	D.multiply_up(go, orbit_len, A->base_len);
 	//cout << "sims::group_order after D.multiply_up" << endl;
 	
 }
 
-INT sims::group_order_INT()
+int sims::group_order_int()
 {
 	longinteger_object go;
 
 	group_order(go);
-	return go.as_INT();
+	return go.as_int();
 }
 
 void sims::print_group_order(ostream &ost)
@@ -980,7 +980,7 @@ void sims::print_group_order(ostream &ost)
 
 void sims::print_group_order_factored(ostream &ost)
 {
-	INT i, j, f_first = TRUE;
+	int i, j, f_first = TRUE;
 	
 	j = last_moved_base_point();
 	for (i = 0; i <= j; i++) {
@@ -994,9 +994,9 @@ void sims::print_group_order_factored(ostream &ost)
 		}
 }
 
-INT sims::is_trivial_group()
+int sims::is_trivial_group()
 {
-	INT j = last_moved_base_point();
+	int j = last_moved_base_point();
 	
 	if (j == -1)
 		return TRUE;
@@ -1004,10 +1004,10 @@ INT sims::is_trivial_group()
 		return FALSE;
 }
 
-INT sims::last_moved_base_point()
+int sims::last_moved_base_point()
 // j == -1 means the group is trivial
 {
-	INT j;
+	int j;
 	
 	for (j = A->base_len - 1; j >= 0; j--) {
 		if (orbit_len[j] != 1)
@@ -1016,13 +1016,13 @@ INT sims::last_moved_base_point()
 	return j;
 }
 
-INT sims::get_image(INT i, INT gen_idx)
+int sims::get_image(int i, int gen_idx)
 // get the image of a point i under
 // generator gen_idx, goes through a
 // table of stored images by default.
 // Computes the image only if not yet available.
 {
-	INT a;
+	int a;
 	
 	if (nb_images == 0 || images == NULL) {
 		a = A->element_image_of(i, gens.ith(gen_idx), 0);
@@ -1041,17 +1041,17 @@ INT sims::get_image(INT i, INT gen_idx)
 	return a;
 }
 
-INT sims::get_image(INT i, INT *elt)
+int sims::get_image(int i, int *elt)
 // get the image of a point i under a given group element,
 // does not goes through a table.
 {
 	return A->element_image_of(i, elt, FALSE);
 }
 
-void sims::swap_points(INT lvl, INT i, INT j)
+void sims::swap_points(int lvl, int i, int j)
 // swaps two points given by their cosets
 {
-	INT pi, pj;
+	int pi, pj;
 	
 	pi = orbit[lvl][i];
 	pj = orbit[lvl][j];
@@ -1061,18 +1061,18 @@ void sims::swap_points(INT lvl, INT i, INT j)
 	orbit_inv[lvl][pj] = i;
 }
 
-void sims::random_element(INT *elt, INT verbose_level)
+void sims::random_element(int *elt, int verbose_level)
 // compute a random element among the group
 // elements represented by the chain
 // (chooses random cosets along the stabilizer chain)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int i;
 	
 	if (f_v) {
 		cout << "sims::random_element" << endl;
 		cout << "sims::random_element orbit_len=";
-		INT_vec_print(cout, orbit_len, A->base_len);
+		int_vec_print(cout, orbit_len, A->base_len);
 		cout << endl;
 		//cout << "transversals:" << endl;
 		//print_transversals();
@@ -1083,7 +1083,7 @@ void sims::random_element(INT *elt, INT verbose_level)
 	if (f_v) {
 		cout << "sims::random_element" << endl;
 		cout << "path=";
-		INT_vec_print(cout, path, A->base_len);
+		int_vec_print(cout, path, A->base_len);
 		cout << endl;
 		}
 	element_from_path(elt, verbose_level /*- 1 */);
@@ -1092,12 +1092,12 @@ void sims::random_element(INT *elt, INT verbose_level)
 		}
 }
 
-void sims::random_element_of_order(INT *elt,
-		INT order, INT verbose_level)
+void sims::random_element_of_order(int *elt,
+		int order, int verbose_level)
 {
-	INT f_v = (verbose_level >=1);
-	INT f_vv = (verbose_level >=2);
-	INT o, n, cnt;
+	int f_v = (verbose_level >=1);
+	int f_vv = (verbose_level >=2);
+	int o, n, cnt;
 	
 	if (f_v) {
 		cout << "sims::random_element_of_order " << order << endl;
@@ -1123,16 +1123,16 @@ void sims::random_element_of_order(INT *elt,
 		cout << "sims::random_element_of_order we will raise to the "
 				<< n << "-th power" << endl;
 		}
-	A->element_power_INT_in_place(elt, n, 0);
+	A->element_power_int_in_place(elt, n, 0);
 	if (f_vv) {
 		A->element_print_quick(elt, cout);
 		}
 }
 
 void sims::random_elements_of_order(vector_ge *elts,
-		INT *orders, INT nb, INT verbose_level)
+		int *orders, int nb, int verbose_level)
 {
-	INT i;
+	int i;
 	
 	elts->init(A);
 	elts->allocate(nb);
@@ -1142,9 +1142,9 @@ void sims::random_elements_of_order(vector_ge *elts,
 		}
 }
 
-void sims::path_unrank_INT(INT a)
+void sims::path_unrank_int(int a)
 {
-	INT h, l;
+	int h, l;
 	
 	for (h = A->base_len - 1; h >= 0; h--) {
 		l = orbit_len[h];
@@ -1154,9 +1154,9 @@ void sims::path_unrank_INT(INT a)
 		}
 }
 
-INT sims::path_rank_INT()
+int sims::path_rank_int()
 {
-	INT h, a;
+	int h, a;
 	
 	a = 0;
 	for (h = 0; h < A->base_len; h++) {
@@ -1168,21 +1168,21 @@ INT sims::path_rank_INT()
 	return a;
 }
 
-void sims::element_from_path(INT *elt, INT verbose_level)
+void sims::element_from_path(int *elt, int verbose_level)
 // given coset representatives in path[], the corresponding 
 // element is multiplied.
 // uses eltrk1, eltrk2
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j;
 	
 	if (f_v) {
 		cout << "sims::element_from_path" << endl;
 		}
 	if (f_vv) {
 		cout << "path=";
-		INT_vec_print(cout, path, A->base_len);
+		int_vec_print(cout, path, A->base_len);
 		cout << endl;
 		cout << "A->degree=" << A->degree << endl;
 		}
@@ -1238,7 +1238,7 @@ void sims::element_from_path(INT *elt, INT verbose_level)
 		}
 }
 
-void sims::element_from_path_inv(INT *elt)
+void sims::element_from_path_inv(int *elt)
 // very specialized routine, used in backtrack.C
 // action_is_minimal_recursion
 // used coset_rep_inv instead of coset_rep,
@@ -1249,7 +1249,7 @@ void sims::element_from_path_inv(INT *elt)
 // element is multiplied.
 // uses eltrk1, eltrk2
 {
-	INT i, j;
+	int i, j;
 	
 #if 0
 	cout << "sims::element_from_path() path=";
@@ -1276,7 +1276,7 @@ void sims::element_from_path_inv(INT *elt)
 }
 
 void sims::element_unrank(longinteger_object &a,
-		INT *elt, INT verbose_level)
+		int *elt, int verbose_level)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
 // are enumerated 0, ... go - 1
@@ -1284,8 +1284,8 @@ void sims::element_unrank(longinteger_object &a,
 // for the identity element.
 // The computed group element will be computed into Elt1
 {
-	INT f_v = (verbose_level >= 1);
-	INT ii, l, r;
+	int f_v = (verbose_level >= 1);
+	int ii, l, r;
 	longinteger_domain D;
 	longinteger_object q;
 	
@@ -1295,7 +1295,7 @@ void sims::element_unrank(longinteger_object &a,
 	for (ii = A->base_len - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
 
-		D.integral_division_by_INT(a, l, q, r);
+		D.integral_division_by_int(a, l, q, r);
 		q.assign_to(a);
 		
 		path[ii] = r;
@@ -1304,7 +1304,7 @@ void sims::element_unrank(longinteger_object &a,
 	//cout << endl;
 	if (f_v) {
 		cout << "sims::element_unrank path=";
-		INT_vec_print(cout, path, A->base_len);
+		int_vec_print(cout, path, A->base_len);
 		cout << endl;
 		}
 	element_from_path(elt, 0);
@@ -1313,7 +1313,7 @@ void sims::element_unrank(longinteger_object &a,
 		}
 }
 
-void sims::element_unrank(longinteger_object &a, INT *elt)
+void sims::element_unrank(longinteger_object &a, int *elt)
 // Returns group element whose rank is a. 
 // the elements represented by the chain
 // are enumerated 0, ... go - 1
@@ -1321,14 +1321,14 @@ void sims::element_unrank(longinteger_object &a, INT *elt)
 // for the identity element.
 // The computed group element will be computed into Elt1
 {
-	INT ii, l, r;
+	int ii, l, r;
 	longinteger_domain D;
 	longinteger_object q;
 	
 	for (ii = A->base_len - 1; ii >= 0; ii--) {
 		l = orbit_len[ii];
 
-		D.integral_division_by_INT(a, l, q, r);
+		D.integral_division_by_int(a, l, q, r);
 		q.assign_to(a);
 		
 		path[ii] = r;
@@ -1338,11 +1338,11 @@ void sims::element_unrank(longinteger_object &a, INT *elt)
 	element_from_path(elt, 0);
 }
 
-void sims::element_rank(longinteger_object &a, INT *elt)
+void sims::element_rank(longinteger_object &a, int *elt)
 // Computes the rank of the element in elt into a.
 // uses eltrk1, eltrk2
 {
-	INT i, j, bi, jj, l;
+	int i, j, bi, jj, l;
 	longinteger_domain D;
 	longinteger_object b, c;
 	
@@ -1368,10 +1368,10 @@ void sims::element_rank(longinteger_object &a, INT *elt)
 			cout << "jj=bi^elt=" << jj << endl;
 			cout << "j=orbit_inv[i][jj]=" << j << endl;
 			cout << "base=";
-			INT_vec_print(cout, A->base, A->base_len);
+			int_vec_print(cout, A->base, A->base_len);
 			cout << endl;
 			cout << "orbit_len=";
-			INT_vec_print(cout, orbit_len, A->base_len);
+			int_vec_print(cout, orbit_len, A->base_len);
 			cout << endl;
 			cout << "elt=" << endl;
 			A->element_print(eltrk1, cout);
@@ -1388,45 +1388,45 @@ void sims::element_rank(longinteger_object &a, INT *elt)
 		}
 }
 
-void sims::element_unrank_INT(INT rk, INT *Elt, INT verbose_level)
+void sims::element_unrank_int(int rk, int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//longinteger_object a;
 
 	if (f_v) {
-		cout << "sims::element_unrank_INT rk=" << rk << endl;
+		cout << "sims::element_unrank_int rk=" << rk << endl;
 		}
 	//a.create(rk);
 	//element_unrank(a, Elt);
-	path_unrank_INT(rk);
+	path_unrank_int(rk);
 	if (f_v) {
 		cout << "sims::element_unrank path=";
-		INT_vec_print(cout, path, A->base_len);
+		int_vec_print(cout, path, A->base_len);
 		cout << endl;
 		}
 	element_from_path(Elt, 0);
 
 }
 
-void sims::element_unrank_INT(INT rk, INT *Elt)
+void sims::element_unrank_int(int rk, int *Elt)
 {
 	//longinteger_object a;
 	
 	//a.create(rk);
-	element_unrank_INT(rk, Elt, 0);
+	element_unrank_int(rk, Elt, 0);
 }
 
-INT sims::element_rank_INT(INT *Elt)
+int sims::element_rank_int(int *Elt)
 {
 	longinteger_object a;
 	
 	element_rank(a, Elt);
-	return a.as_INT();
+	return a.as_int();
 }
 
-INT sims::is_element_of(INT *elt)
+int sims::is_element_of(int *elt)
 {
-	INT i, j, bi, jj; //, l;
+	int i, j, bi, jj; //, l;
 	
 	A->element_move(elt, eltrk1, FALSE);
 	for (i = 0; i < A->base_len; i++) {
@@ -1453,11 +1453,11 @@ INT sims::is_element_of(INT *elt)
 void sims::test_element_rank_unrank()
 {
 	longinteger_object go, a, b;
-	INT i, j, goi;
-	INT *elt = NEW_INT(A->elt_size_in_INT);
+	int i, j, goi;
+	int *elt = NEW_int(A->elt_size_in_int);
 	
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	for (i = 0; i < goi; i++) {
 		a.create(i);
 		element_unrank(a, elt);
@@ -1466,17 +1466,17 @@ void sims::test_element_rank_unrank()
 		cout << " : ";
 		A->element_print_as_permutation(elt, cout);
 		element_rank(b, elt);
-		j = b.as_INT();
+		j = b.as_int();
 		cout << " : " << j << endl;
 		if (i != j) {
 			cout << "error in sims::test_element_rank_unrank" << endl;
 			exit(1);
 			}
 		}
-	FREE_INT(elt);
+	FREE_int(elt);
 }
 
-void sims::coset_rep(INT i, INT j, INT verbose_level)
+void sims::coset_rep(int i, int j, int verbose_level)
 // computes a coset representative in
 // transversal i which maps
 // the i-th base point to the point
@@ -1484,8 +1484,8 @@ void sims::coset_rep(INT i, INT j, INT verbose_level)
 // j is a coset, not a point
 // result is in cosetrep
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "sims::coset_rep i=" << i << " j=" << j << endl;
@@ -1493,11 +1493,11 @@ void sims::coset_rep(INT i, INT j, INT verbose_level)
 			<< " orbit[i][j]=" << orbit[i][j] << endl;
 		}
 
-	INT depth;
-	INT *Path;
-	INT *Label;
-	INT *gen;
-	INT h, a;
+	int depth;
+	int *Path;
+	int *Label;
+	int *gen;
+	int h, a;
 
 	if (f_v) {
 		cout << "sims::coset_rep "
@@ -1510,10 +1510,10 @@ void sims::coset_rep(INT i, INT j, INT verbose_level)
 				"after compute_coset_rep_path" << endl;
 		cout << "depth=" << depth << endl;
 		cout << "Path=";
-		INT_vec_print(cout, Path, depth);
+		int_vec_print(cout, Path, depth);
 		cout << endl;
 		cout << "Label=";
-		INT_vec_print(cout, Label, depth);
+		int_vec_print(cout, Label, depth);
 		cout << endl;
 		}
 
@@ -1542,8 +1542,8 @@ void sims::coset_rep(INT i, INT j, INT verbose_level)
 		}
 	
 	
-	FREE_INT(Path);
-	FREE_INT(Label);
+	FREE_int(Path);
+	FREE_int(Label);
 
 	if (f_v) {
 		cout << "sims::coset_rep i=" << i << " j=" << j << endl;
@@ -1562,11 +1562,11 @@ void sims::coset_rep(INT i, INT j, INT verbose_level)
 		}
 }
 
-INT sims::compute_coset_rep_depth(INT i, INT j, INT verbose_level)
+int sims::compute_coset_rep_depth(int i, int j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 1);
-	INT p, depth, jj;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+	int p, depth, jj;
 	
 	if (f_v) {
 		cout << "sims::compute_coset_rep_depth "
@@ -1598,13 +1598,13 @@ INT sims::compute_coset_rep_depth(INT i, INT j, INT verbose_level)
 	return depth;
 }
 
-void sims::compute_coset_rep_path(INT i, INT j,
-		INT *&Path, INT *&Label, INT &depth,
-		INT verbose_level)
+void sims::compute_coset_rep_path(int i, int j,
+		int *&Path, int *&Label, int &depth,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; // (verbose_level >= 2);
-	INT p, d, jj;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; // (verbose_level >= 2);
+	int p, d, jj;
 	
 	if (f_v) {
 		cout << "sims::compute_coset_rep_path "
@@ -1620,8 +1620,8 @@ void sims::compute_coset_rep_path(INT i, INT j,
 		}
 	
 
-	Path = NEW_INT(depth + 1);
-	Label = NEW_INT(depth);
+	Path = NEW_int(depth + 1);
+	Label = NEW_int(depth);
 
 	jj = j;
 	d = 0;
@@ -1661,10 +1661,10 @@ void sims::compute_coset_rep_path(INT i, INT j,
 		}
 	if (f_vv) {
 		cout << "sims::compute_coset_rep_path path = ";
-		INT_vec_print(cout, Path, depth + 1);
+		int_vec_print(cout, Path, depth + 1);
 		cout << endl;
 		cout << "sims::compute_coset_rep_path label = ";
-		INT_vec_print(cout, Label, depth);
+		int_vec_print(cout, Label, depth);
 		cout << endl;
 		}
 	if (f_v) {
@@ -1674,17 +1674,17 @@ void sims::compute_coset_rep_path(INT i, INT j,
 		}
 }
 
-void sims::coset_rep_inv(INT i, INT j,
-		INT verbose_level)
+void sims::coset_rep_inv(int i, int j,
+		int verbose_level)
 // computes the inverse element of what coset_rep computes,
 // i.e. an element which maps the j-th point in the orbit to the 
 // i-th base point.
 // j is a coset, not a point
 // result is in cosetrep
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT a;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a;
 	
 	if (f_v) {
 		cout << "coset_rep_inv i=" << i << " j=" << j << endl;
@@ -1745,11 +1745,11 @@ void sims::coset_rep_inv(INT i, INT j,
 		}
 }
 
-void sims::compute_base_orbits(INT verbose_level)
+void sims::compute_base_orbits(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "sims::compute_base_orbits" << endl;
@@ -1772,21 +1772,21 @@ void sims::compute_base_orbits(INT verbose_level)
 		}
 	if (f_v) {
 		cout << "sims::compute_base_orbits done, orbit_len=";
-		INT_vec_print(cout, orbit_len, A->base_len);
+		int_vec_print(cout, orbit_len, A->base_len);
 		cout << endl;
 		}
 }
 
-void sims::compute_base_orbits_known_length(INT *tl,
-		INT verbose_level)
+void sims::compute_base_orbits_known_length(int *tl,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int i;
 	
 	if (f_v) {
 		cout << "sims::compute_base_orbits_known_length: ";
-		INT_vec_print(cout, tl, A->base_len);
+		int_vec_print(cout, tl, A->base_len);
 		cout << endl;
 		cout << "verbose_level=" << verbose_level << endl;
 		}
@@ -1814,14 +1814,14 @@ void sims::compute_base_orbits_known_length(INT *tl,
 		}
 }
 
-void sims::extend_base_orbit(INT new_gen_idx, INT lvl,
-		INT verbose_level)
+void sims::extend_base_orbit(int new_gen_idx, int lvl,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = FALSE; //(verbose_level >= 3);
-	INT i, cur, cur_pt, total, total0;
-	INT next_pt, next_pt_loc, gen_idx, nbg;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = FALSE; //(verbose_level >= 3);
+	int i, cur, cur_pt, total, total0;
+	int next_pt, next_pt_loc, gen_idx, nbg;
 	
 	if (f_v) {
 		cout << "sims::extend_base_orbit " << lvl << endl;
@@ -1885,15 +1885,15 @@ void sims::extend_base_orbit(INT new_gen_idx, INT lvl,
 		}
 }
 
-void sims::compute_base_orbit(INT lvl, INT verbose_level)
+void sims::compute_base_orbit(int lvl, int verbose_level)
 // applies all generators at the given level to compute
 // the corresponding basic orbit.
 // the generators are the first nb_gen[lvl] in the generator arry
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
-	INT pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
+	int pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
 	
 	pt = A->base[lvl];
 	pt_loc = orbit_inv[lvl][pt];
@@ -1959,17 +1959,17 @@ void sims::compute_base_orbit(INT lvl, INT verbose_level)
 		}
 }
 
-void sims::compute_base_orbit_known_length(INT lvl,
-		INT target_length, INT verbose_level)
+void sims::compute_base_orbit_known_length(int lvl,
+		int target_length, int verbose_level)
 // applies all generators at the given level to compute
 // the corresponding basic orbit.
 // the generators are the first nb_gen[lvl] in the generator arry
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE;
-	//INT f_vvv = (verbose_level >= 3);
-	//INT f_v10 = FALSE; // (verbose_level >= 10);
-	INT pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE;
+	//int f_vvv = (verbose_level >= 3);
+	//int f_v10 = FALSE; // (verbose_level >= 10);
+	int pt, pt_loc, cur, cur_pt, i, next_pt, next_pt_loc, gen_idx;
 	
 	pt = A->base[lvl];
 	pt_loc = orbit_inv[lvl][pt];
@@ -2059,12 +2059,12 @@ void sims::compute_base_orbit_known_length(INT lvl,
 }
 
 void sims::extract_strong_generators_in_order(vector_ge &SG,
-		INT *tl, INT verbose_level)
+		int *tl, int verbose_level)
 {
-	INT i, nbg, nbg1, j, k = 0, gen_idx;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int i, nbg, nbg1, j, k = 0, gen_idx;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "extract_strong_generators_in_order" << endl;
@@ -2132,19 +2132,19 @@ void sims::extract_strong_generators_in_order(vector_ge &SG,
 }
 
 void sims::transitive_extension(schreier &O,
-		vector_ge &SG, INT *tl, INT verbose_level)
+		vector_ge &SG, int *tl, int verbose_level)
 {
 	transitive_extension_tolerant(O, SG, tl, FALSE, verbose_level);
 }
 
-INT sims::transitive_extension_tolerant(schreier &O,
-	vector_ge &SG, INT *tl,
-	INT f_tolerant, INT verbose_level)
+int sims::transitive_extension_tolerant(schreier &O,
+	vector_ge &SG, int *tl,
+	int f_tolerant, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, ol, ego, cur_ego, rgo, rem;
-	INT orbit_len, j;
+	int orbit_len, j;
 	longinteger_domain D;
 
 	orbit_len = O.orbit_len[0];
@@ -2233,11 +2233,11 @@ INT sims::transitive_extension_tolerant(schreier &O,
 }
 
 void sims::transitive_extension_using_coset_representatives_extract_generators(
-	INT *coset_reps, INT nb_cosets, 
-	vector_ge &SG, INT *tl, 
-	INT verbose_level)
+	int *coset_reps, int nb_cosets, 
+	vector_ge &SG, int *tl, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "sims::transitive_extension_using_coset_"
@@ -2255,13 +2255,13 @@ void sims::transitive_extension_using_coset_representatives_extract_generators(
 
 
 void sims::transitive_extension_using_coset_representatives(
-	INT *coset_reps, INT nb_cosets, 
-	INT verbose_level)
+	int *coset_reps, int nb_cosets, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, ol, ego, cur_ego, rgo, rem;
-	INT orbit_len, j;
+	int orbit_len, j;
 	longinteger_domain D;
 
 	orbit_len = nb_cosets;
@@ -2307,14 +2307,14 @@ void sims::transitive_extension_using_coset_representatives(
 				
 		random_element(Elt2, verbose_level - 1);
 		
-		A->element_mult(coset_reps + j * A->elt_size_in_INT,
+		A->element_mult(coset_reps + j * A->elt_size_in_int,
 				Elt2, Elt3, 0);
 		
 		if (f_vv) {
 			cout << "sims::transitive_extension_using_coset_"
 					"representatives choosing random coset "
 					<< j << ", random element ";
-			INT_vec_print(cout, path, A->base_len);
+			int_vec_print(cout, path, A->base_len);
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -2346,14 +2346,14 @@ void sims::transitive_extension_using_coset_representatives(
 }
 
 void sims::transitive_extension_using_generators(
-	INT *Elt_gens, INT nb_gens, INT subgroup_index, 
-	vector_ge &SG, INT *tl, 
-	INT verbose_level)
+	int *Elt_gens, int nb_gens, int subgroup_index, 
+	vector_ge &SG, int *tl, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, ol, ego, cur_ego, rgo, rem;
-	INT j;
+	int j;
 	longinteger_domain D;
 
 	if (f_v) {
@@ -2391,12 +2391,12 @@ void sims::transitive_extension_using_generators(
 				
 		random_element(Elt2, verbose_level - 1);
 		
-		A->element_mult(Elt_gens + j * A->elt_size_in_INT, Elt2, Elt3, 0);
+		A->element_mult(Elt_gens + j * A->elt_size_in_int, Elt2, Elt3, 0);
 		
 		if (f_vv) {
 			cout << "sims::transitive_extension_using_generators "
 					"choosing random coset " << j << ", random element ";
-			INT_vec_print(cout, path, A->base_len);
+			int_vec_print(cout, path, A->base_len);
 			cout << endl;
 			//A->element_print(Elt3, cout);
 			//cout << endl;
@@ -2430,7 +2430,7 @@ void sims::transitive_extension_using_generators(
 
 
 void sims::point_stabilizer_stabchain_with_action(action *A2,
-		sims &S, INT pt, INT verbose_level)
+		sims &S, int pt, int verbose_level)
 // first computes the orbit of the point pt in action A2
 // under the generators
 // that are stored at present (using a temporary schreier object),
@@ -2438,12 +2438,12 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 {
 	schreier O;
 	longinteger_object go, stab_order, cur_stab_order, rgo, rem;
-	INT orbit_len, r, cnt = 0, image; // d
+	int orbit_len, r, cnt = 0, image; // d
 	longinteger_domain D;
 
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
@@ -2465,7 +2465,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 	if (f_vvv && A2->degree < 150) {
 		O.print_generators();
 		O.print_generators_with_permutations();
-		INT j;
+		int j;
 		for (j = 0; j < O.gens.len; j++) {
 			cout << "generator " << j << ":" << endl;
 			//A->element_print(gens.ith(j), cout);
@@ -2491,7 +2491,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 	if (f_vvv && A2->degree < 150) {
 		O.print(cout);
 		}
-	D.integral_division_by_INT(go, orbit_len, stab_order, r);
+	D.integral_division_by_int(go, orbit_len, stab_order, r);
 	if (r != 0) {
 		cout << "sims::point_stabilizer_stabchain_with_action "
 				"orbit_len does not divide group order" << endl;
@@ -2524,8 +2524,8 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 	//stab_gens.append(O.schreier_gen);
 	
 	//sims S;
-	//INT drop_out_level, image;
-	INT *p_schreier_gen;
+	//int drop_out_level, image;
+	int *p_schreier_gen;
 	
 	S.init(A);
 	S.init_generators(stab_gens, verbose_level - 2);
@@ -2637,7 +2637,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 				<< " strong generators" << endl;
 			}
 
-		INT cmp;
+		int cmp;
 		
 		cmp = D.compare_unsigned(cur_stab_order, stab_order);
 		if (f_vv) {
@@ -2696,7 +2696,7 @@ void sims::point_stabilizer_stabchain_with_action(action *A2,
 }
 
 void sims::point_stabilizer(vector_ge &SG,
-		INT *tl, INT pt, INT verbose_level)
+		int *tl, int pt, int verbose_level)
 // computes strong generating set for the stabilizer of point pt
 {
 	sims S;
@@ -2708,13 +2708,13 @@ void sims::point_stabilizer(vector_ge &SG,
 }
 
 void sims::point_stabilizer_with_action(action *A2,
-		vector_ge &SG, INT *tl, INT pt, INT verbose_level)
+		vector_ge &SG, int *tl, int pt, int verbose_level)
 // computes strong generating set for
 // the stabilizer of point pt in action A2
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	
 	sims S;
 	
@@ -2748,14 +2748,14 @@ void sims::point_stabilizer_with_action(action *A2,
 		}
 }
 
-INT sims::strip_and_add(INT *elt, INT *residue, INT verbose_level)
+int sims::strip_and_add(int *elt, int *residue, int verbose_level)
 // returns TRUE if something was added,
 // FALSE if element stripped through
 {
-	INT drop_out_level, image;
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT f_vvv = (verbose_level >= 3);
+	int drop_out_level, image;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "sims::strip_and_add" << endl;
@@ -2800,13 +2800,13 @@ INT sims::strip_and_add(INT *elt, INT *residue, INT verbose_level)
 	return TRUE;
 }
 
-INT sims::strip(INT *elt, INT *residue,
-		INT &drop_out_level, INT &image, INT verbose_level)
+int sims::strip(int *elt, int *residue,
+		int &drop_out_level, int &image, int verbose_level)
 // returns TRUE if the element sifts through
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, bi, j, j_coset;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, bi, j, j_coset;
 	
 	if (f_v) {
 		cout << "sims::strip" << endl;
@@ -2897,15 +2897,15 @@ INT sims::strip(INT *elt, INT *residue,
 	return TRUE;
 }
 
-void sims::add_generator_at_level(INT *elt,
-		INT lvl, INT verbose_level)
+void sims::add_generator_at_level(int *elt,
+		int lvl, int verbose_level)
 // add the generator to the array of generators and then extends the 
 // basic orbits 0,..,lvl using extend_base_orbit
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	INT i;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	int i;
 	
 	if (f_v) {
 		cout << "adding generator at level " << lvl << endl;
@@ -2927,14 +2927,14 @@ void sims::add_generator_at_level(INT *elt,
 		}
 }
 
-void sims::add_generator_at_level_only(INT *elt,
-		INT lvl, INT verbose_level)
+void sims::add_generator_at_level_only(int *elt,
+		int lvl, int verbose_level)
 // add the generator to the array of generators and then extends the 
 // basic orbit lvl using extend_base_orbit
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "adding generator at level " << lvl << endl;
@@ -2950,14 +2950,14 @@ void sims::add_generator_at_level_only(INT *elt,
 	extend_base_orbit(gens.len - 1, lvl, verbose_level - 1);
 }
 
-void sims::random_schreier_generator(INT verbose_level)
+void sims::random_schreier_generator(int verbose_level)
 // computes random Schreier generator into schreier_gen
 {
-	INT i, r1, r2, pt, pt1, pt1b, pt2, pt2_coset;
-	INT *gen, gen_idx, nbg;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
+	int i, r1, r2, pt, pt1, pt1b, pt2, pt2_coset;
+	int *gen, gen_idx, nbg;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "sims:random_schreier_generator" << endl;
@@ -3141,7 +3141,7 @@ void sims::random_schreier_generator(INT verbose_level)
 		cout << "cosetrep(" << pt2 << ")^-1=" << endl;
 		A->element_print(cosetrep, cout);
 		}
-	INT pt2b;
+	int pt2b;
 
 	pt2b = A->element_image_of(pt2, cosetrep, FALSE);
 	if (f_vv) {
@@ -3167,7 +3167,7 @@ void sims::random_schreier_generator(INT verbose_level)
 		}
 
 	if (A->element_image_of(pt, schreier_gen, 0) != pt) {
-		INT im;
+		int im;
 		
 		cout << "sims::random_schreier_generator() "
 				"fatal: schreier generator does not stabilize pt" << endl;
@@ -3192,9 +3192,9 @@ finish:
 }
 
 void sims::build_up_group_random_process_no_kernel(
-		sims *old_G, INT verbose_level)
+		sims *old_G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go, go1;
 	sims K;
 	
@@ -3229,9 +3229,9 @@ void sims::build_up_group_random_process_no_kernel(
 
 void sims::extend_group_random_process_no_kernel(
 		sims *extending_by_G, longinteger_object &target_go,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	//longinteger_object go, go1, go2;
 	//longinteger_domain D;
 	sims K;
@@ -3258,18 +3258,18 @@ void sims::extend_group_random_process_no_kernel(
 }
 
 void sims::conjugate(action *A,
-	sims *old_G, INT *Elt,
-	INT f_overshooting_OK,
-	INT verbose_level)
+	sims *old_G, int *Elt,
+	int f_overshooting_OK,
+	int verbose_level)
 // Elt * g * Elt^{-1} where g is in old_G
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 4);
-	//INT f_vvv = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 4);
+	//int f_vvv = (verbose_level >= 3);
 	longinteger_domain D;
 	longinteger_object go, target_go, quo, rem;
-	INT *Elt2, *Elt3, *Elt4, *Elt5;
-	INT cnt, drop_out_level, image, f_added, c;
+	int *Elt2, *Elt3, *Elt4, *Elt5;
+	int cnt, drop_out_level, image, f_added, c;
 	
 	if (f_v) {
 		cout << "sims::conjugate "
@@ -3283,10 +3283,10 @@ void sims::conjugate(action *A,
 		A->print(cout, Elt);
 		}
 	
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
-	Elt5 = NEW_INT(A->elt_size_in_INT);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
+	Elt5 = NEW_int(A->elt_size_in_int);
 	init(A);
 	init_trivial_group(verbose_level - 1);
 	group_order(go);
@@ -3324,7 +3324,7 @@ void sims::conjugate(action *A,
 			old_G->random_element(A->Elt1, verbose_level - 1);
 			if (FALSE) {
 				cout << "random element chosen, path = ";
-				INT_vec_print(cout, old_G->path, old_G->A->base_len);
+				int_vec_print(cout, old_G->path, old_G->A->base_len);
 				cout << endl;
 				}
 			if (FALSE) {
@@ -3397,31 +3397,31 @@ void sims::conjugate(action *A,
 				exit(1);
 			}
 		}
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
-	FREE_INT(Elt5);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
+	FREE_int(Elt5);
 	if (f_v) {
 		cout << "sims::conjugate done" << endl;
 		}
 }
 
-INT sims::test_if_in_set_stabilizer(action *A,
-		INT *set, INT size, INT verbose_level)
+int sims::test_if_in_set_stabilizer(action *A,
+		int *set, int size, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, a;
-	INT goi, i, ret;
-	INT *Elt1;
+	int goi, i, ret;
+	int *Elt1;
 	
 	if (f_v) {
 		cout << "sims::test_if_in_set_stabilizer "
 				"action = " << A->label << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "testing group of order " << goi << endl;
 		}
@@ -3445,25 +3445,25 @@ INT sims::test_if_in_set_stabilizer(action *A,
 			break;
 			}
 		}
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 	return ret;
 }
 
-INT sims::test_if_subgroup(sims *old_G, INT verbose_level)
+int sims::test_if_subgroup(sims *old_G, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go, a, b;
-	INT goi, i, ret, drop_out_level, image;
-	INT *Elt1, *Elt2;
+	int goi, i, ret, drop_out_level, image;
+	int *Elt1, *Elt2;
 	
 	if (f_v) {
 		cout << "sims::test_if_subgroup" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	old_G->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "testing group of order " << goi << endl;
 		}
@@ -3490,29 +3490,29 @@ INT sims::test_if_subgroup(sims *old_G, INT verbose_level)
 			break;
 			}
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	return ret;
 }
 
 void sims::build_up_group_random_process(sims *K, 
 	sims *old_G, 
 	longinteger_object &target_go, 
-	INT f_override_choose_next_base_point,
-	INT (*choose_next_base_point_method)(action *A,
-			INT *Elt, INT verbose_level),
-	INT verbose_level)
+	int f_override_choose_next_base_point,
+	int (*choose_next_base_point_method)(action *A,
+			int *Elt, int verbose_level),
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 1);
-	//INT f_vvv = (verbose_level >= 1);
-	//INT f_vvvv = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 6);
-	INT f_v4 = (verbose_level >= 7);
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+	//int f_vvv = (verbose_level >= 1);
+	//int f_vvvv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 6);
+	int f_v4 = (verbose_level >= 7);
 	longinteger_domain D;
 	longinteger_object go, G_order, K_order, KG_order, quo, rem;
-	INT drop_out_level, image, cnt, b, c, /*f_added,*/ old_base_len;
+	int drop_out_level, image, cnt, b, c, /*f_added,*/ old_base_len;
 	action *GA;
 	action *KA;
 	
@@ -3584,7 +3584,7 @@ void sims::build_up_group_random_process(sims *K,
 			if (f_vv) {
 				cout << "sims::build_up_group_random_process: "
 						"random element chosen, path = ";
-				INT_vec_print(cout, old_G->path, old_G->A->base_len);
+				int_vec_print(cout, old_G->path, old_G->A->base_len);
 				cout << endl;
 				}
 			if (f_v4) {
@@ -3777,7 +3777,7 @@ void sims::build_up_group_random_process(sims *K,
 					"K_order=" << K_order << endl;
 			}
 		//cout << "K tl: ";
-		//INT_vec_print(cout, K->orbit_len, K->A->base_len);
+		//int_vec_print(cout, K->orbit_len, K->A->base_len);
 		//cout << endl;
 		//cout << "K action " << K->A->label << endl;
 		D.mult(G_order, K_order, KG_order);
@@ -3844,20 +3844,20 @@ void sims::build_up_group_random_process(sims *K,
 
 void sims::build_up_group_from_generators(sims *K,
 	vector_ge *gens,
-	INT f_target_go, longinteger_object *target_go, 
-	INT f_override_choose_next_base_point,
-	INT (*choose_next_base_point_method)(action *A,
-			INT *Elt, INT verbose_level),
-	INT verbose_level)
+	int f_target_go, longinteger_object *target_go, 
+	int f_override_choose_next_base_point,
+	int (*choose_next_base_point_method)(action *A,
+			int *Elt, int verbose_level),
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_vvv = (verbose_level >= 3);
-	//INT f_vvvv = (verbose_level >= 4);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_vvv = (verbose_level >= 3);
+	//int f_vvvv = (verbose_level >= 4);
 	longinteger_domain D;
 	longinteger_object G_order, K_order, KG_order;
-	INT drop_out_level, image, f_added, j;
-	INT level, base_point, b, old_base_len;
+	int drop_out_level, image, f_added, j;
+	int level, base_point, b, old_base_len;
 	action *GA;
 	action *KA;
 	vector_ge subset_of_gens;
@@ -3868,7 +3868,7 @@ void sims::build_up_group_from_generators(sims *K,
 	
 	if (f_v) {
 		cout << "sims::build_up_group_from_generators base: ";
-		INT_vec_print(cout, GA->base, GA->base_len);
+		int_vec_print(cout, GA->base, GA->base_len);
 		cout << endl;
 
 #if 0
@@ -4077,7 +4077,7 @@ void sims::build_up_group_from_generators(sims *K,
 
 	
 	if (f_target_go) {
-		INT c, cnt;
+		int c, cnt;
 		
 		cnt = 0;
 		while (TRUE) {
@@ -4145,16 +4145,16 @@ void sims::build_up_group_from_generators(sims *K,
 		}
 }
 
-INT sims::closure_group(INT nb_times, INT verbose_level)
+int sims::closure_group(int nb_times, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 1);
-	//INT f_vvv = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT f_v3 = (verbose_level >= 6);
-	INT i, f_extended = FALSE;
-	INT *Elt1;
-	INT *Elt2;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 1);
+	//int f_vvv = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int f_v3 = (verbose_level >= 6);
+	int i, f_extended = FALSE;
+	int *Elt1;
+	int *Elt2;
 	longinteger_object old_go, go, go1;
 	
 	if (f_v) {
@@ -4164,8 +4164,8 @@ INT sims::closure_group(INT nb_times, INT verbose_level)
 		print_transversal_lengths();
 		cout << "verbose_level=" << verbose_level << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	
 	group_order(old_go);
 	if (f_vv) {
@@ -4173,8 +4173,8 @@ INT sims::closure_group(INT nb_times, INT verbose_level)
 				<< old_go << endl;
 		}
 	if (old_go.is_one()) {
-		FREE_INT(Elt1);
-		FREE_INT(Elt2);
+		FREE_int(Elt1);
+		FREE_int(Elt2);
 		if (f_v) {
 			cout << "sims::closure_group finishing with FALSE "
 					"because the old group order is one" << endl;
@@ -4217,8 +4217,8 @@ INT sims::closure_group(INT nb_times, INT verbose_level)
 			f_extended = TRUE;
 			}
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	if (f_extended) {
 		if (f_v) {
 			cout << "sims::closure_group group order extended from "
@@ -4237,22 +4237,22 @@ INT sims::closure_group(INT nb_times, INT verbose_level)
 	return f_extended;
 }
 
-void sims::write_all_group_elements(char *fname, INT verbose_level)
+void sims::write_all_group_elements(char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int *Elt;
 	//char *elt;
 	longinteger_object go;
 	FILE *fp;
-	INT i;
+	int i;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	//elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 	
 	fp = fopen(fname, "wb");
-	for (i = 0; i < go.as_INT(); i++) {
-		element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		element_unrank_int(i, Elt);
 		A->element_write_file_fp(Elt, fp, 0/* verbose_level*/);
 		}
 	fclose(fp);
@@ -4260,27 +4260,27 @@ void sims::write_all_group_elements(char *fname, INT verbose_level)
 		cout << "written file " << fname << " of size "
 				<< file_size(fname) << endl;
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	//FREE_char(elt);
 }
 
 void sims::print_all_group_elements_to_file(char *fname,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int *Elt;
 	longinteger_object go;
-	INT i;
+	int i;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	
 	{
 	ofstream fp(fname);
-	for (i = 0; i < go.as_INT(); i++) {
-		element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		element_unrank_int(i, Elt);
 		fp << "Element " << setw(5) << i << " / "
-				<< go.as_INT() << endl;
+				<< go.as_int() << endl;
 		A->element_print(Elt, fp);
 		fp << endl;
 		}
@@ -4289,80 +4289,80 @@ void sims::print_all_group_elements_to_file(char *fname,
 		cout << "written file " << fname << " of size "
 				<< file_size(fname) << endl;
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void sims::print_all_group_elements()
 {
-	INT *Elt;
+	int *Elt;
 	longinteger_object go;
-	INT i;
+	int i;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	
-	for (i = 0; i < go.as_INT(); i++) {
-		element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		element_unrank_int(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
-				<< go.as_INT() << ":" << endl;
+				<< go.as_int() << ":" << endl;
 		A->element_print(Elt, cout);
 		cout << endl;
 		A->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void sims::print_all_group_elements_as_permutations()
 {
-	INT *Elt;
+	int *Elt;
 	longinteger_object go;
-	INT i;
+	int i;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	
-	for (i = 0; i < go.as_INT(); i++) {
-		element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		element_unrank_int(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
-				<< go.as_INT() << ":" << endl;
+				<< go.as_int() << ":" << endl;
 		//A->element_print(Elt, cout);
 		//cout << endl;
 		A->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void sims::print_all_group_elements_as_permutations_in_special_action(
 		action *A_special)
 {
-	INT *Elt;
+	int *Elt;
 	longinteger_object go;
-	INT i;
+	int i;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	
-	for (i = 0; i < go.as_INT(); i++) {
-		element_unrank_INT(i, Elt);
+	for (i = 0; i < go.as_int(); i++) {
+		element_unrank_int(i, Elt);
 		cout << "Element " << setw(5) << i << " / "
-				<< go.as_INT() << ":" << endl;
+				<< go.as_int() << ":" << endl;
 		A->element_print(Elt, cout);
 		cout << endl;
 		A_special->element_print_as_permutation(Elt, cout);
 		cout << endl;
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void sims::print_all_transversal_elements()
 {
-	INT *Elt;
+	int *Elt;
 	longinteger_object go;
-	INT i, j, ii;
+	int i, j, ii;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
 	
 	for (i = A->base_len - 1; i >= 0; i--) {
@@ -4386,75 +4386,75 @@ void sims::print_all_transversal_elements()
 			cout << endl;
 			}
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 }
 
 void sims::element_as_permutation(action *A_special,
-		INT elt_rk, INT *perm, INT verbose_level)
+		int elt_rk, int *perm, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "sims::element_as_permutation" << endl;
 		}
-	INT *Elt;
+	int *Elt;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	
-	element_unrank_INT(elt_rk, Elt);
+	element_unrank_int(elt_rk, Elt);
 
 	A_special->element_as_permutation(Elt, perm, 0);
 	
 
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	if (f_v) {
 		cout << "sims::element_as_permutation done" << endl;
 		}
 }
 
 void sims::table_of_group_elements_in_data_form(
-		INT *&Table, INT &len, INT &sz, INT verbose_level)
+		int *&Table, int &len, int &sz, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int *Elt;
 	longinteger_object go;
-	INT i;
+	int i;
 	
 	if (f_v) {
 		cout << "sims::table_of_group_elements_in_data_form" << endl;
 		}
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	group_order(go);
-	len = go.as_INT();
+	len = go.as_int();
 	sz = A->make_element_size;
-	Table = NEW_INT(len * sz);
+	Table = NEW_int(len * sz);
 	for (i = 0; i < len; i++) {
-		element_unrank_INT(i, Elt);
-		INT_vec_copy(Elt, Table + i * sz, sz);
+		element_unrank_int(i, Elt);
+		int_vec_copy(Elt, Table + i * sz, sz);
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	if (f_v) {
 		cout << "sims::table_of_group_elements_in_data_form done" << endl;
 		}
 }
 
-void sims::regular_representation(INT *Elt,
-		INT *perm, INT verbose_level)
+void sims::regular_representation(int *Elt,
+		int *perm, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	INT goi, i, j;
-	INT *Elt1;
-	INT *Elt2;
+	int goi, i, j;
+	int *Elt1;
+	int *Elt2;
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	for (i = 0; i < goi; i++) {
-		element_unrank_INT(i, Elt1);
+		element_unrank_int(i, Elt1);
 		A->mult(Elt1, Elt, Elt2);
-		j = element_rank_INT(Elt2);
+		j = element_rank_int(Elt2);
 		perm[i] = j;
 		}
 	if (f_v) {
@@ -4465,45 +4465,45 @@ void sims::regular_representation(INT *Elt,
 		perm_print(cout, perm, goi);
 		cout << endl;
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 }
 
 void sims::element_ranks_subgroup(sims *subgroup,
-		INT *element_ranks, INT verbose_level)
+		int *element_ranks, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	INT goi;
-	INT i, j;
-	INT *Elt1;
+	int goi;
+	int i, j;
+	int *Elt1;
 
 	subgroup->group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "sims::element_ranks_subgroup subgroup of order "
 				<< goi << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	for (i = 0; i < goi; i++) {
-		subgroup->element_unrank_INT(i, Elt1);
-		j = element_rank_INT(Elt1);
+		subgroup->element_unrank_int(i, Elt1);
+		j = element_rank_int(Elt1);
 		element_ranks[i] = j;
 		}
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 }
 
 void sims::center(vector_ge &gens,
-		INT *center_element_ranks, INT &nb_elements,
-		INT verbose_level)
+		int *center_element_ranks, int &nb_elements,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
 	vector_ge gens_inv;
-	INT goi, i, j, k, len;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
+	int goi, i, j, k, len;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 	
 	len = gens.len;
 	gens_inv.init(A);
@@ -4511,22 +4511,22 @@ void sims::center(vector_ge &gens,
 	for (i = 0; i < len; i++) {
 		A->invert(gens.ith(i), gens_inv.ith(i));
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 	nb_elements = 0;
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "sims::center computing the center "
 				"of a group of order " << goi << endl;
 		}
 	for (i = 0; i < goi; i++) {
-		element_unrank_INT(i, Elt1);
+		element_unrank_int(i, Elt1);
 		for (j = 0; j < len; j++) {
 			A->mult(gens_inv.ith(j), Elt1, Elt2);
 			A->mult(Elt2, gens.ith(j), Elt3);
-			k = element_rank_INT(Elt3);
+			k = element_rank_int(Elt3);
 			if (k != i)
 				break;
 			}
@@ -4537,30 +4537,30 @@ void sims::center(vector_ge &gens,
 	if (f_v) {
 		cout << "sims::center center is of order "
 				<< nb_elements << ":" << endl;
-		INT_vec_print(cout, center_element_ranks, nb_elements);
+		int_vec_print(cout, center_element_ranks, nb_elements);
 		cout << endl;
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 }
 
-void sims::all_cosets(INT *subset, INT size,
-		INT *all_cosets, INT verbose_level)
+void sims::all_cosets(int *subset, int size,
+		int *all_cosets, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	INT goi, i, j, k, nb_cosets, cnt;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *f_taken;
+	int goi, i, j, k, nb_cosets, cnt;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *f_taken;
 	
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "sims::all_cosets" << endl;
 		cout << "action " << A->label << endl;
@@ -4571,7 +4571,7 @@ void sims::all_cosets(INT *subset, INT size,
 	if (size * nb_cosets != goi) {
 		cout << "sims::all_cosets size * nb_cosets != goi" << endl;
 		}
-	f_taken = NEW_INT(goi);
+	f_taken = NEW_int(goi);
 	for (i = 0; i < goi; i++) {
 		f_taken[i] = FALSE;
 		}
@@ -4579,11 +4579,11 @@ void sims::all_cosets(INT *subset, INT size,
 	for (i = 0; i < goi; i++) {
 		if (f_taken[i])
 			continue;
-		element_unrank_INT(i, Elt1);
+		element_unrank_int(i, Elt1);
 		for (j = 0; j < size; j++) {
-			element_unrank_INT(subset[j], Elt2);
+			element_unrank_int(subset[j], Elt2);
 			A->mult(Elt2, Elt1, Elt3); // we need right cosets!!!
-			k = element_rank_INT(Elt3);
+			k = element_rank_int(Elt3);
 			if (f_taken[k]) {
 				cout << "sims::all_cosets error: f_taken[k]" << endl;
 				exit(1);
@@ -4603,92 +4603,92 @@ void sims::all_cosets(INT *subset, INT size,
 				all_cosets, nb_cosets, size, size, 2);
 		cout << endl;
 		}
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(f_taken);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(f_taken);
 }
 
-void sims::find_standard_generators_INT(INT ord_a, INT ord_b,
-		INT ord_ab, INT &a, INT &b, INT &nb_trials,
-		INT verbose_level)
+void sims::find_standard_generators_int(int ord_a, int ord_b,
+		int ord_ab, int &a, int &b, int &nb_trials,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT nb_trials1, o;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
+	int f_v = (verbose_level >= 1);
+	int nb_trials1, o;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 	
 	if (f_v) {
-		cout << "sims::find_standard_generators_INT "
+		cout << "sims::find_standard_generators_int "
 				"ord_a=" << ord_a
 				<< " ord_b=" << ord_b
 				<< " ord_ab=" << ord_ab << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
 	while (TRUE) {
-		a = find_element_of_given_order_INT(ord_a,
+		a = find_element_of_given_order_int(ord_a,
 				nb_trials1, verbose_level - 1);
 		nb_trials += nb_trials1;
-		b = find_element_of_given_order_INT(ord_b,
+		b = find_element_of_given_order_int(ord_b,
 				nb_trials1, verbose_level - 1);
 		nb_trials += nb_trials1;
-		element_unrank_INT(a, Elt1);
-		element_unrank_INT(b, Elt2);
+		element_unrank_int(a, Elt1);
+		element_unrank_int(b, Elt2);
 		A->mult(Elt1, Elt2, Elt3);
 		o = A->element_order(Elt3);
 		if (o == ord_ab)
 			break;
 		}
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 	if (f_v) {
 		cout << "found a=" << a << " b=" << b
 				<< " nb_trials=" << nb_trials << endl;
 		}
 }
 
-INT sims::find_element_of_given_order_INT(INT ord,
-		INT &nb_trials, INT verbose_level)
+int sims::find_element_of_given_order_int(int ord,
+		int &nb_trials, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	INT o, d, a, goi;
-	INT *Elt1;
+	int o, d, a, goi;
+	int *Elt1;
 
 	nb_trials = 0;
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT" << endl;
+		cout << "sims::find_element_of_given_order_int" << endl;
 		cout << "action " << A->label << endl;
 		cout << "group of order " << goi << endl;
 		cout << "looking for an element of order " << ord << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	while (TRUE) {
 		nb_trials++;
 		if (f_v) {
-			cout << "sims::find_element_of_given_order_INT "
+			cout << "sims::find_element_of_given_order_int "
 					"before random_element" << endl;
 			}
 		random_element(Elt1, 0 /*verbose_level - 1*/);
 		if (f_v) {
-			cout << "sims::find_element_of_given_order_INT :"
+			cout << "sims::find_element_of_given_order_int :"
 					"after random_element" << endl;
 			}
 		o = A->element_order(Elt1);
 		if (f_v) {
-			cout << "sims::find_element_of_given_order_INT "
+			cout << "sims::find_element_of_given_order_int "
 					"random_element has order " << o << endl;
 			}
 		if (o % ord == 0) {
 			if (f_v) {
-				cout << "sims::find_element_of_given_order_INT "
+				cout << "sims::find_element_of_given_order_int "
 						"the order is divisible by " << ord
 						<< " which is good" << endl;
 				}
@@ -4697,60 +4697,60 @@ INT sims::find_element_of_given_order_INT(INT ord,
 		}
 	d = o / ord;
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT "
+		cout << "sims::find_element_of_given_order_int "
 				"raising to the power " << d << endl;
 		}
-	A->element_power_INT_in_place(Elt1, d, verbose_level - 1);
+	A->element_power_int_in_place(Elt1, d, verbose_level - 1);
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT "
+		cout << "sims::find_element_of_given_order_int "
 				"after raising to the power " << d << endl;
 		}
-	a = element_rank_INT(Elt1);
-	FREE_INT(Elt1);
+	a = element_rank_int(Elt1);
+	FREE_int(Elt1);
 	return a;
 }
 
-INT sims::find_element_of_given_order_INT(INT *Elt,
-		INT ord, INT &nb_trials, INT max_trials,
-		INT verbose_level)
+int sims::find_element_of_given_order_int(int *Elt,
+		int ord, int &nb_trials, int max_trials,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 4);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 4);
 	longinteger_object go;
-	INT o, d, goi;
-	INT *Elt1;
+	int o, d, goi;
+	int *Elt1;
 
 	nb_trials = 0;
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT" << endl;
+		cout << "sims::find_element_of_given_order_int" << endl;
 		cout << "action " << A->label << endl;
 		cout << "group of order " << goi << endl;
 		cout << "looking for an element of order " << ord << endl;
 		cout << "max_trials = " << max_trials << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	o = 0;
 	while (nb_trials < max_trials) {
 		nb_trials++;
 		if (f_vv) {
-			cout << "sims::find_element_of_given_order_INT "
+			cout << "sims::find_element_of_given_order_int "
 					"before random_element" << endl;
 			}
 		random_element(Elt1, 0 /*verbose_level - 1*/);
 		if (f_vv) {
-			cout << "sims::find_element_of_given_order_INT "
+			cout << "sims::find_element_of_given_order_int "
 					"after random_element" << endl;
 			}
 		o = A->element_order(Elt1);
 		if (f_vv) {
-			cout << "sims::find_element_of_given_order_INT "
+			cout << "sims::find_element_of_given_order_int "
 					"random_element has order " << o << endl;
 			}
 		if (o % ord == 0) {
 			if (f_vv) {
-				cout << "sims::find_element_of_given_order_INT "
+				cout << "sims::find_element_of_given_order_int "
 						"the order is divisible by " << ord
 						<< " which is good" << endl;
 				}
@@ -4758,38 +4758,38 @@ INT sims::find_element_of_given_order_INT(INT *Elt,
 			}
 		}
 	if (nb_trials == max_trials) {
-		FREE_INT(Elt1);
+		FREE_int(Elt1);
 		if (f_v) {
-			cout << "sims::find_element_of_given_order_INT "
+			cout << "sims::find_element_of_given_order_int "
 					"unsuccessful" << endl;
 			}
 		return FALSE;
 		}
 	d = o / ord;
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT "
+		cout << "sims::find_element_of_given_order_int "
 				"raising to the power " << d << endl;
 		}
-	A->element_power_INT_in_place(Elt1, d, verbose_level - 1);
+	A->element_power_int_in_place(Elt1, d, verbose_level - 1);
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT "
+		cout << "sims::find_element_of_given_order_int "
 				"after raising to the power " << d << endl;
 		}
 	A->element_move(Elt1, Elt, 0);
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 	if (f_v) {
-		cout << "sims::find_element_of_given_order_INT done" << endl;
+		cout << "sims::find_element_of_given_order_int done" << endl;
 		}
 	return TRUE;
 }
 
-void sims::find_element_of_prime_power_order(INT p,
-		INT *Elt, INT &e, INT &nb_trials,
-		INT verbose_level)
+void sims::find_element_of_prime_power_order(int p,
+		int *Elt, int &e, int &nb_trials,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	longinteger_object go;
-	INT o;
+	int o;
 
 	nb_trials = 0;
 	group_order(go);
@@ -4812,31 +4812,31 @@ void sims::find_element_of_prime_power_order(INT p,
 			break;
 			}
 		}
-	A->element_power_INT_in_place(Elt, o, verbose_level - 1);
+	A->element_power_int_in_place(Elt, o, verbose_level - 1);
 	if (f_v) {
 		cout << "sims::find_element_of_prime_power_order done, "
 				"e=" << e << " nb_trials=" << nb_trials << endl;
 		}
 }
 
-void sims::save_list_of_elements(char *fname, INT verbose_level)
+void sims::save_list_of_elements(char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt1;
+	int f_v = (verbose_level >= 1);
+	int *Elt1;
 	FILE *f2;
-	INT goi, i;
+	int goi, i;
 	longinteger_object go;
 
 	group_order(go);
-	goi = go.as_INT();
+	goi = go.as_int();
 	if (f_v) {
 		cout << "sims::save_list_of_elements(): saving "
 				<< goi << " elements to file " << fname << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
 	f2 = fopen(fname, "wb");
 	for (i = 0; i < goi; i++) {
-		element_unrank_INT(i, Elt1);
+		element_unrank_int(i, Elt1);
 		//cout << "element " << i << ":" << endl;
 		//A->element_print(Elt1, cout);
 		A->element_write_file_fp(Elt1, f2, 0/* verbose_level*/);
@@ -4845,7 +4845,7 @@ void sims::save_list_of_elements(char *fname, INT verbose_level)
 		//cout << endl;
 		}
 	fclose(f2);
-	FREE_INT(Elt1);
+	FREE_int(Elt1);
 	if (f_v) {
 		cout << "written file " << fname << " of size "
 				<< file_size(fname) << endl;
@@ -4853,20 +4853,20 @@ void sims::save_list_of_elements(char *fname, INT verbose_level)
 }
 
 void sims::read_list_of_elements(action *A, char *fname,
-		INT verbose_level)
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt1, *Elt2;
+	int f_v = (verbose_level >= 1);
+	int *Elt1, *Elt2;
 	FILE *f2;
-	INT goi, i;
+	int goi, i;
 
 	goi = file_size(fname) / A->coded_elt_size_in_char;
 	if (f_v) {
 		cout << "sims::read_list_of_elements(): reading "
 				<< goi << " elements from file " << fname << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	f2 = fopen(fname, "rb");
 	
 	init(A);
@@ -4878,54 +4878,54 @@ void sims::read_list_of_elements(action *A, char *fname,
 		strip_and_add(Elt1, Elt2, verbose_level - 1);
 		}
 	fclose(f2);
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	if (f_v) {
 		cout << "read file " << fname << " of size "
 				<< file_size(fname) << endl;
 		}
 }
 
-void sims::evaluate_word_INT(INT word_len,
-		INT *word, INT *Elt, INT verbose_level)
+void sims::evaluate_word_int(int word_len,
+		int *word, int *Elt, int verbose_level)
 {
-	INT *Elt1;
-	INT *Elt2;
-	INT i, j;
+	int *Elt1;
+	int *Elt2;
+	int i, j;
 	
 
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 	A->one(Elt);
 	for (i = 0; i < word_len; i++) {
 		j = word[i];
-		element_unrank_INT(j, Elt1);
+		element_unrank_int(j, Elt1);
 		A->mult(Elt1, Elt, Elt2);
 		A->move(Elt2, Elt);
 		}
 	
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 }
 
-void sims::write_sgs(const char *fname, INT verbose_level)
+void sims::write_sgs(const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int *Elt;
 	char *elt;
 	longinteger_object go;
-	INT i;
+	int i;
 	vector_ge SG;
-	INT *tl;
+	int *tl;
 	
 	if (f_v) {
 		cout << "sims::write_sgs fname=" << fname << endl;
 		}
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	elt = NEW_char(A->coded_elt_size_in_char);
 	group_order(go);
 
-	tl = NEW_INT(A->base_len);
+	tl = NEW_int(A->base_len);
 	extract_strong_generators_in_order(SG, tl, 0 /*verbose_level*/);
 
 
@@ -4960,7 +4960,7 @@ void sims::write_sgs(const char *fname, INT verbose_level)
 		cout << "written file " << fname << " of size "
 				<< file_size(fname) << endl;
 		}
-	FREE_INT(Elt);
+	FREE_int(Elt);
 	FREE_char(elt);
 }
 
@@ -4970,22 +4970,22 @@ void sims::write_sgs(const char *fname, INT verbose_level)
 
 
 void sims::read_sgs(const char *fname,
-		vector_ge *SG, INT verbose_level)
+		vector_ge *SG, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT *Elt;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int *Elt;
 	char *elt;
 	longinteger_object go;
-	INT i, j;
+	int i, j;
 	char label[1000];
 	char *buf;
-	INT base_length;
-	INT *base1; // [base_length]
-	INT *tl; //[base_length]
-	INT nb_gens;
-	INT make_element_size1;
-	INT *data; // [nb_gens * make_element_size1]
+	int base_length;
+	int *base1; // [base_length]
+	int *tl; //[base_length]
+	int nb_gens;
+	int make_element_size1;
+	int *data; // [nb_gens * make_element_size1]
 	//char str[1000];
 
 	if (f_v) {
@@ -4993,7 +4993,7 @@ void sims::read_sgs(const char *fname,
 		}
 
 	buf = NEW_char(READ_SGS_BUF_SIZE);
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 	elt = NEW_char(A->coded_elt_size_in_char);
 	//group_order(go);
 	
@@ -5029,7 +5029,7 @@ void sims::read_sgs(const char *fname,
 			cout << "base_length=" << base_length << endl;
 			}
 
-		base1 = NEW_INT(base_length);
+		base1 = NEW_int(base_length);
 		// reading comment
 		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
 		// reading base
@@ -5043,11 +5043,11 @@ void sims::read_sgs(const char *fname,
 			}
 		if (f_vv) {
 			cout << "read base: ";
-			INT_vec_print(cout, base1, base_length);
+			int_vec_print(cout, base1, base_length);
 			cout << endl;
 			}
 
-		tl = NEW_INT(base_length);
+		tl = NEW_int(base_length);
 
 		// reading comment "transversal lengths ..."
 		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
@@ -5066,7 +5066,7 @@ void sims::read_sgs(const char *fname,
 			}
 		if (f_vv) {
 			cout << "read tl: ";
-			INT_vec_print(cout, tl, base_length);
+			int_vec_print(cout, tl, base_length);
 			cout << endl;
 			}
 
@@ -5094,7 +5094,7 @@ void sims::read_sgs(const char *fname,
 		// reading comment "generators are ..."
 		fp.getline(buf, READ_SGS_BUF_SIZE, '\n');
 		
-		data = NEW_INT(nb_gens * make_element_size1);
+		data = NEW_int(nb_gens * make_element_size1);
 		for (i = 0; i < nb_gens; i++) {
 			// reading generator i:
 			if (f_vv) {
@@ -5155,7 +5155,7 @@ void sims::read_sgs(const char *fname,
 		A->base_len = base_length;
 		if (f_vv) {
 			cout << "the base is: ";
-			INT_vec_print(cout, A->base, A->base_len);
+			int_vec_print(cout, A->base, A->base_len);
 			cout << endl;
 
 			cout << "rallocating base:" << endl;
@@ -5181,10 +5181,10 @@ void sims::read_sgs(const char *fname,
 				<< go << endl;
 		}
 	
-	FREE_INT(data);
-	FREE_INT(tl);
-	FREE_INT(base1);
-	FREE_INT(Elt);
+	FREE_int(data);
+	FREE_int(tl);
+	FREE_int(base1);
+	FREE_int(Elt);
 	FREE_char(elt);
 	FREE_char(buf);
 }
@@ -5192,12 +5192,12 @@ void sims::read_sgs(const char *fname,
 
 
 
-INT sims::least_moved_point_at_level(INT lvl, INT verbose_level)
+int sims::least_moved_point_at_level(int lvl, int verbose_level)
 // returns -1 if there are no generators
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, h, nbg, gen_idx, least_moved_point = -1;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, h, nbg, gen_idx, least_moved_point = -1;
 	
 	if (f_v) {
 		cout << "sims::least_moved_point_at_level  lvl=" << lvl << endl;
@@ -5234,12 +5234,12 @@ INT sims::least_moved_point_at_level(INT lvl, INT verbose_level)
 }
 
 #if 0
-INT sims::identify_group(char *path_t144,
-		char *discreta_home, INT verbose_level)
+int sims::identify_group(char *path_t144,
+		char *discreta_home, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT group_idx;
-	INT h, i, j, *Elt;
+	int f_v = (verbose_level >= 1);
+	int group_idx;
+	int h, i, j, *Elt;
 	longinteger_object go;
 	const char *fname = "group_generators.txt";
 
@@ -5292,92 +5292,92 @@ INT sims::identify_group(char *path_t144,
 }
 #endif
 
-INT sims::mult_by_rank(INT rk_a, INT rk_b, INT verbose_level)
+int sims::mult_by_rank(int rk_a, int rk_b, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk_c;
+	int f_v = (verbose_level >= 1);
+	int rk_c;
 
 	if (f_v) {
 		cout << "sims::mult_by_rank" << endl;
 		}
-	element_unrank_INT(rk_a, Elt1);
-	element_unrank_INT(rk_b, Elt2);
+	element_unrank_int(rk_a, Elt1);
+	element_unrank_int(rk_b, Elt2);
 	A->element_mult(Elt1, Elt2, Elt3, 0);
-	rk_c = element_rank_INT(Elt3);
+	rk_c = element_rank_int(Elt3);
 	return rk_c;
 }
 
-INT sims::mult_by_rank(INT rk_a, INT rk_b)
+int sims::mult_by_rank(int rk_a, int rk_b)
 {
-	INT rk_c;
+	int rk_c;
 
 	rk_c = mult_by_rank(rk_a, rk_b, 0);
 	return rk_c;
 }
 
-INT sims::invert_by_rank(INT rk_a, INT verbose_level)
+int sims::invert_by_rank(int rk_a, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk_b;
+	int f_v = (verbose_level >= 1);
+	int rk_b;
 
 	if (f_v) {
 		cout << "sims::invert_by_rank" << endl;
 		}
-	element_unrank_INT(rk_a, Elt1);
+	element_unrank_int(rk_a, Elt1);
 	A->element_invert(Elt1, Elt2, 0);
-	rk_b = element_rank_INT(Elt2);
+	rk_b = element_rank_int(Elt2);
 	return rk_b;
 }
 
-INT sims::conjugate_by_rank(INT rk_a, INT rk_b,
-		INT verbose_level)
+int sims::conjugate_by_rank(int rk_a, int rk_b,
+		int verbose_level)
 // comutes b^{-1} * a * b
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk_c;
+	int f_v = (verbose_level >= 1);
+	int rk_c;
 
 	if (f_v) {
 		cout << "sims::conjugate_by_rank" << endl;
 		}
-	element_unrank_INT(rk_a, Elt1); // Elt1 = a
-	element_unrank_INT(rk_b, Elt2); // Elt2 = b
+	element_unrank_int(rk_a, Elt1); // Elt1 = a
+	element_unrank_int(rk_b, Elt2); // Elt2 = b
 	A->element_invert(Elt2, Elt3, 0); // Elt3 = b^{-1}
 	A->element_mult(Elt3, Elt1, Elt4, 0);
 	A->element_mult(Elt4, Elt2, Elt3, 0);
-	rk_c = element_rank_INT(Elt3);
+	rk_c = element_rank_int(Elt3);
 	return rk_c;
 }
 
-INT sims::conjugate_by_rank_b_bv_given(INT rk_a,
-		INT *Elt_b, INT *Elt_bv, INT verbose_level)
+int sims::conjugate_by_rank_b_bv_given(int rk_a,
+		int *Elt_b, int *Elt_bv, int verbose_level)
 // comutes b^{-1} * a * b
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk_c;
+	int f_v = (verbose_level >= 1);
+	int rk_c;
 
 	if (f_v) {
 		cout << "sims::conjugate_by_rank_b_bv_given" << endl;
 		}
-	element_unrank_INT(rk_a, Elt1); // Elt1 = a
+	element_unrank_int(rk_a, Elt1); // Elt1 = a
 	A->element_mult(Elt_bv, Elt1, Elt4, 0);
 	A->element_mult(Elt4, Elt_b, Elt3, 0);
-	rk_c = element_rank_INT(Elt3);
+	rk_c = element_rank_int(Elt3);
 	return rk_c;
 }
 
-void sims::sylow_subgroup(INT p, sims *P, INT verbose_level)
+void sims::sylow_subgroup(int p, sims *P, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT *Elt1, *Elt2;
+	int f_v = (verbose_level >= 1);
+	int *Elt1, *Elt2;
 	longinteger_domain D;
 	longinteger_object go, go1, go_P, go_P1;
-	INT i, e, e1, c, nb_trials;
+	int i, e, e1, c, nb_trials;
 
 	if (f_v) {
 		cout << "sims::sylow_subgroup" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
 
 	group_order(go);
 	if (f_v) {
@@ -5427,7 +5427,7 @@ void sims::sylow_subgroup(INT p, sims *P, INT verbose_level)
 					}
 				break;
 				}
-			A->element_power_INT_in_place(Elt1, p,
+			A->element_power_int_in_place(Elt1, p,
 					0 /* verbose_level */);
 			}
 		}
@@ -5436,31 +5436,31 @@ void sims::sylow_subgroup(INT p, sims *P, INT verbose_level)
 				<< "-Sylow subgroup of order " << go_P1 << endl;
 		}
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 	if (f_v) {
 		cout << "sims::sylow_subgroup done" << endl;
 		}
 }
 
-INT sims::is_normalizing(INT *Elt, INT verbose_level)
+int sims::is_normalizing(int *Elt, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT ret = FALSE;
-	INT i;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
-	INT *Elt4;
-	INT drop_out_level, image;
+	int f_v = (verbose_level >= 1);
+	int ret = FALSE;
+	int i;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
+	int *Elt4;
+	int drop_out_level, image;
 
 	if (f_v) {
 		cout << "sims::is_normalizing" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Elt4 = NEW_INT(A->elt_size_in_INT);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Elt4 = NEW_int(A->elt_size_in_int);
 
 	for (i = 0; i < nb_gen[0]; i++) {
 		A->element_invert(Elt, Elt1, 0);
@@ -5489,10 +5489,10 @@ INT sims::is_normalizing(INT *Elt, INT verbose_level)
 		ret = FALSE;
 		}
 	
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
-	FREE_INT(Elt4);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
+	FREE_int(Elt4);
 	if (f_v) {
 		cout << "sims::is_normalizing done" << endl;
 		}
@@ -5500,30 +5500,30 @@ INT sims::is_normalizing(INT *Elt, INT verbose_level)
 }
 
 void sims::create_Cayley_graph(vector_ge *gens,
-		INT *&Adj, INT &n, INT verbose_level)
+		int *&Adj, int &n, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, h, j;
+	int f_v = (verbose_level >= 1);
+	int i, h, j;
 	longinteger_object go;
-	INT *Elt1;
-	INT *Elt2;
+	int *Elt1;
+	int *Elt2;
 
 	if (f_v) {
 		cout << "sims::create_Cayley_graph" << endl;
 		}
 	group_order(go);
-	n = go.as_INT();
+	n = go.as_int();
 	if (f_v) {
 		cout << "sims::create_Cayley_graph "
 				"Computing the adjacency matrix of a graph with "
 				<< n << " vertices" << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Adj = NEW_INT(n * n);
-	INT_vec_zero(Adj, n * n);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Adj = NEW_int(n * n);
+	int_vec_zero(Adj, n * n);
 	for (i = 0; i < n; i++) {
-		element_unrank_INT(i, Elt1);
+		element_unrank_int(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (h = 0; h < gens->len; h++) {
 			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
@@ -5536,7 +5536,7 @@ void sims::create_Cayley_graph(vector_ge *gens,
 			cout << "Elt2=" << endl;
 			A->element_print_quick(Elt2, cout);
 #endif
-			j = element_rank_INT(Elt2);
+			j = element_rank_int(Elt2);
 			Adj[i * n + j] = Adj[j * n + i] = 1;
 #if 0
 			if (i == 0) {
@@ -5549,11 +5549,11 @@ void sims::create_Cayley_graph(vector_ge *gens,
 #if 0
 	cout << "The adjacency matrix of a graph with "
 			<< n << " vertices has been computed" << endl;
-	//INT_matrix_print(Adj, goi, goi);
+	//int_matrix_print(Adj, goi, goi);
 #endif
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
 
 
 	if (f_v) {
@@ -5561,36 +5561,36 @@ void sims::create_Cayley_graph(vector_ge *gens,
 		}
 }
 
-void sims::create_group_table(INT *&Table, INT &n,
-		INT verbose_level)
+void sims::create_group_table(int *&Table, int &n,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, j, k;
+	int f_v = (verbose_level >= 1);
+	int i, j, k;
 	longinteger_object go;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Elt3;
+	int *Elt1;
+	int *Elt2;
+	int *Elt3;
 
 	if (f_v) {
 		cout << "sims::create_group_table" << endl;
 		}
 	group_order(go);
-	n = go.as_INT();
+	n = go.as_int();
 	if (f_v) {
 		cout << "sims::create_group_table "
 				"Computing the table of a group of order "
 				<< n << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Elt3 = NEW_INT(A->elt_size_in_INT);
-	Table = NEW_INT(n * n);
-	INT_vec_zero(Table, n * n);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Elt3 = NEW_int(A->elt_size_in_int);
+	Table = NEW_int(n * n);
+	int_vec_zero(Table, n * n);
 	for (i = 0; i < n; i++) {
-		element_unrank_INT(i, Elt1);
+		element_unrank_int(i, Elt1);
 		//cout << "i=" << i << endl;
 		for (j = 0; j < n; j++) {
-			element_unrank_INT(j, Elt2);
+			element_unrank_int(j, Elt2);
 			A->element_mult(Elt1, Elt2, Elt3, 0);
 #if 0
 			cout << "i=" << i << " j=" << j << endl;
@@ -5601,14 +5601,14 @@ void sims::create_group_table(INT *&Table, INT &n,
 			cout << "Elt3=" << endl;
 			A->element_print_quick(Elt3, cout);
 #endif
-			k = element_rank_INT(Elt3);
+			k = element_rank_int(Elt3);
 			Table[i * n + j] = k;
 			}
 		}
 
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Elt3);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Elt3);
 
 	if (f_v) {
 		cout << "sims::create_group_table done" << endl;
@@ -5616,29 +5616,29 @@ void sims::create_group_table(INT *&Table, INT &n,
 }
 
 void sims::write_as_magma_permutation_group(const char *fname_base,
-		vector_ge *gens, INT verbose_level)
+		vector_ge *gens, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, k, n, l, h;
+	int f_v = (verbose_level >= 1);
+	int i, k, n, l, h;
 	longinteger_object go;
-	INT *Elt1;
-	INT *Elt2;
-	INT *Table;
+	int *Elt1;
+	int *Elt2;
+	int *Table;
 
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group" << endl;
 		}
 	group_order(go);
-	n = go.as_INT();
+	n = go.as_int();
 	l = gens->len;
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group "
 				"Computing the Table, go=" << go << endl;
 		}
-	Elt1 = NEW_INT(A->elt_size_in_INT);
-	Elt2 = NEW_INT(A->elt_size_in_INT);
-	Table = NEW_INT(l * n);
-	INT_vec_zero(Table, l * n);
+	Elt1 = NEW_int(A->elt_size_in_int);
+	Elt2 = NEW_int(A->elt_size_in_int);
+	Table = NEW_int(l * n);
+	int_vec_zero(Table, l * n);
 	for (h = 0; h < l; h++) {
 		if (f_v) {
 			cout << "sims::write_as_magma_permutation_group "
@@ -5649,7 +5649,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 				cout << "sims::write_as_magma_permutation_group "
 						"i = " << i <<  " / " << n << endl;
 				}
-			element_unrank_INT(i, Elt1);
+			element_unrank_int(i, Elt1);
 
 			A->element_mult(Elt1, gens->ith(h), Elt2, 0);
 
@@ -5657,7 +5657,7 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 				cout << "Elt2=" << endl;
 				A->element_print(Elt2, cout);
 				}
-			k = element_rank_INT(Elt2);
+			k = element_rank_int(Elt2);
 			if (f_v) {
 				cout << "has rank k=" << k << endl;
 				}
@@ -5686,9 +5686,9 @@ void sims::write_as_magma_permutation_group(const char *fname_base,
 	cout << "Written file " << fname << " of size "
 			<< file_size(fname) << endl;
 	
-	FREE_INT(Elt1);
-	FREE_INT(Elt2);
-	FREE_INT(Table);
+	FREE_int(Elt1);
+	FREE_int(Elt2);
+	FREE_int(Table);
 
 	if (f_v) {
 		cout << "sims::write_as_magma_permutation_group done" << endl;

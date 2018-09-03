@@ -22,10 +22,10 @@ public:
 	job_table();
 	~job_table();
 
-	INT f_task_assigned;
-	INT task;
-	INT the_case;
-	INT job;
+	int f_task_assigned;
+	int task;
+	int the_case;
+	int job;
 	char target_fname[1000];
 	char command[1000];
 	const char *target_file_mask;
@@ -37,60 +37,60 @@ public:
 
 // global data:
 
-INT t0; // the system time when the program started
+int t0; // the system time when the program started
 
-void do_collate(INT N, const char *collate_output_file_mask, const char *collated_fname, INT verbose_level);
-void do_scheduling(INT N, INT *list_of_cases, 
-	INT J, 
-	INT f_input_file_mask, const char *input_file_mask, 
+void do_collate(int N, const char *collate_output_file_mask, const char *collated_fname, int verbose_level);
+void do_scheduling(int N, int *list_of_cases, 
+	int J, 
+	int f_input_file_mask, const char *input_file_mask, 
 	const char *target_file_mask, 
-	INT f_command_mask, const char *command_mask, 
-	INT *excluded_cases, INT nb_excluded_cases,
-	INT f_reload, 
-	INT f_batch, const char *job_fname, const char *batch_template, INT template_nb_times, 
-	INT f_randomized, const char *randomized_fname, 
-	INT f_log_prefix, const char *log_prefix, 
-	INT verbose_level);
-INT find_free_job(job_table *JT, INT J);
-void assign_task(job_table *JT, INT t, INT j, 
-	INT *list_of_cases, const char *log_prefix, 
-	INT f_batch, const char *job_fname, const char *batch_template, INT template_nb_times, 
-	INT verbose_level);
+	int f_command_mask, const char *command_mask, 
+	int *excluded_cases, int nb_excluded_cases,
+	int f_reload, 
+	int f_batch, const char *job_fname, const char *batch_template, int template_nb_times, 
+	int f_randomized, const char *randomized_fname, 
+	int f_log_prefix, const char *log_prefix, 
+	int verbose_level);
+int find_free_job(job_table *JT, int J);
+void assign_task(job_table *JT, int t, int j, 
+	int *list_of_cases, const char *log_prefix, 
+	int f_batch, const char *job_fname, const char *batch_template, int template_nb_times, 
+	int verbose_level);
 
 
 int main(int argc, char **argv)
 {
-	INT i;
+	int i;
 	t0 = os_ticks();
-	INT verbose_level = 0;
-	INT f_input_file_mask = FALSE;	
+	int verbose_level = 0;
+	int f_input_file_mask = FALSE;	
 	const char *input_file_mask = NULL;
-	INT f_target_file_mask = FALSE;	
+	int f_target_file_mask = FALSE;	
 	const char *target_file_mask = NULL;
-	INT f_command_mask = FALSE;	
+	int f_command_mask = FALSE;	
 	const char *command_mask = NULL;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_list_of_cases = FALSE;
+	int f_N = FALSE;
+	int N = 0;
+	int f_list_of_cases = FALSE;
 	const char *fname_list_of_cases = NULL;
-	INT f_J = FALSE;
-	INT J = 1;
-	INT nb_excluded_cases = 0;
-	INT excluded_cases[1000];
-	INT f_reload = FALSE;
-	INT f_batch = FALSE;
+	int f_J = FALSE;
+	int J = 1;
+	int nb_excluded_cases = 0;
+	int excluded_cases[1000];
+	int f_reload = FALSE;
+	int f_batch = FALSE;
 	const char *job_fname = NULL;
 	const char *batch_template = NULL;
-	INT template_nb_times = 0;
-	INT f_randomized = FALSE;
+	int template_nb_times = 0;
+	int f_randomized = FALSE;
 	const char *randomized_fname = NULL;
-	INT f_log_prefix = FALSE;
+	int f_log_prefix = FALSE;
 	const char *log_prefix = "";
-	INT f_collate = FALSE;
+	int f_collate = FALSE;
 	const char *collate_output_file_mask = NULL;
 	const char *collated_fname = NULL;
 
-	INT nb_symbols = 0;
+	int nb_symbols = 0;
 	const char *symbol_key[1000];
 	const char *symbol_value[1000];
 
@@ -120,7 +120,7 @@ int main(int argc, char **argv)
 	char str[10000];
 	char key[10000];
 	char *p; 
-	INT h, j, l, k;
+	int h, j, l, k;
 	char **Argv;
 
 
@@ -280,25 +280,25 @@ int main(int argc, char **argv)
 		exit(1);
 		}
 
-	INT *list_of_cases;
+	int *list_of_cases;
 
 	if (f_list_of_cases) {
 		read_set_from_file(fname_list_of_cases, list_of_cases, N, verbose_level);
 		cout << "nb_cases=N=" << N << endl;
 		cout << "list of cases from file: ";
-		INT_vec_print(cout, list_of_cases, N);
+		int_vec_print(cout, list_of_cases, N);
 		cout << endl;
 		}
 	else {
-		list_of_cases = NEW_INT(N);
+		list_of_cases = NEW_int(N);
 		for (i = 0; i < N; i++) {
 			list_of_cases[i] = i;
 			}
 		}
 
-	INT_vec_heapsort(excluded_cases, nb_excluded_cases);
+	int_vec_heapsort(excluded_cases, nb_excluded_cases);
 	cout << "There are " << nb_excluded_cases << " excluded cases: ";
-	INT_vec_print(cout, excluded_cases, nb_excluded_cases);
+	int_vec_print(cout, excluded_cases, nb_excluded_cases);
 	cout << endl;
 	
 
@@ -318,7 +318,7 @@ int main(int argc, char **argv)
 		do_collate(N, collate_output_file_mask, collated_fname, verbose_level);
 		}
 
-	FREE_INT(list_of_cases);
+	FREE_int(list_of_cases);
 
 	cout << "scheduler.out is done" << endl;
 	the_end(t0);
@@ -326,13 +326,13 @@ int main(int argc, char **argv)
 
 }
 
-void do_collate(INT N, const char *collate_output_file_mask, const char *collated_fname, INT verbose_level)
+void do_collate(int N, const char *collate_output_file_mask, const char *collated_fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char output_fname[1000];
-	INT i, j, a, len, nb_sol, total_sol;
-	INT *missing_cases;
-	INT nb_missing_cases = 0;
+	int i, j, a, len, nb_sol, total_sol;
+	int *missing_cases;
+	int nb_missing_cases = 0;
 	char buf[MY_BUFSIZE];
 	char *p_buf;
 
@@ -340,7 +340,7 @@ void do_collate(INT N, const char *collate_output_file_mask, const char *collate
 		cout << "do_collate" << endl;
 		}
 
-	missing_cases = NEW_INT(N);
+	missing_cases = NEW_int(N);
 	total_sol = 0;
 	{
 	ofstream fp(collated_fname);
@@ -398,13 +398,13 @@ void do_collate(INT N, const char *collate_output_file_mask, const char *collate
 		}
 	else {
 		fp << " the file is incomplete, " << nb_missing_cases << " cases are missing, they are ";
-		INT_vec_print(fp, missing_cases, nb_missing_cases);
+		int_vec_print(fp, missing_cases, nb_missing_cases);
 		fp << endl;
 		}
 	}
 	cout << "written file " << collated_fname << " of size " << file_size(collated_fname) << " with " << total_sol << " solutions. Number of missing cases = " << nb_missing_cases << endl;
 	cout << "missing cases: ";
-	INT_vec_print(cout, missing_cases, nb_missing_cases);
+	int_vec_print(cout, missing_cases, nb_missing_cases);
 	cout << endl;
 	
 	if (f_v) {
@@ -412,20 +412,20 @@ void do_collate(INT N, const char *collate_output_file_mask, const char *collate
 		}
 }
 
-void do_scheduling(INT N, INT *list_of_cases, 
-	INT J, 
-	INT f_input_file_mask, const char *input_file_mask, 
+void do_scheduling(int N, int *list_of_cases, 
+	int J, 
+	int f_input_file_mask, const char *input_file_mask, 
 	const char *target_file_mask, 
-	INT f_command_mask, const char *command_mask, 
-	INT *excluded_cases, INT nb_excluded_cases,
-	INT f_reload, 
-	INT f_batch, const char *job_fname, const char *batch_template, INT template_nb_times, 
-	INT f_randomized, const char *randomized_fname, 
-	INT f_log_prefix, const char *log_prefix, 
-	INT verbose_level)
+	int f_command_mask, const char *command_mask, 
+	int *excluded_cases, int nb_excluded_cases,
+	int f_reload, 
+	int f_batch, const char *job_fname, const char *batch_template, int template_nb_times, 
+	int f_randomized, const char *randomized_fname, 
+	int f_log_prefix, const char *log_prefix, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT i, c;
+	int f_v = (verbose_level >= 1);
+	int i, c;
 
 	if (f_v) {
 		cout << "do_scheduling" << endl;
@@ -451,30 +451,30 @@ void do_scheduling(INT N, INT *list_of_cases,
 			}
 		}
 
-	INT *task_completed;
-	INT nb_tasks_completed = 0;
+	int *task_completed;
+	int nb_tasks_completed = 0;
 	char input_fname[1000];
 	char target_fname[1000];
 
-	INT *random_perm = NULL;
+	int *random_perm = NULL;
 
 	if (f_randomized) {
-		INT m, n;
+		int m, n;
 		
-		INT_matrix_read_csv(randomized_fname, random_perm, m, n, verbose_level);
+		int_matrix_read_csv(randomized_fname, random_perm, m, n, verbose_level);
 		if (n != 1) {
-			cout << "INT_matrix_read_csv n != n" << endl;
+			cout << "int_matrix_read_csv n != n" << endl;
 			exit(1);
 			}
 		if (m != N) {
-			cout << "INT_matrix_read_csv m != N" << endl;
+			cout << "int_matrix_read_csv m != N" << endl;
 			exit(1);
 			}
 		cout << "read the random permutation of degree " << m << " from file " << randomized_fname << endl;
 		}
 
 	
-	task_completed = NEW_INT(N);
+	task_completed = NEW_int(N);
 
 	for (i = 0; i < N; i++) {
 		c = list_of_cases[i];
@@ -506,7 +506,7 @@ void do_scheduling(INT N, INT *list_of_cases,
 	cout << endl;
 
 
-	INT idx;
+	int idx;
 	
 	if (f_command_mask) {
 
@@ -522,7 +522,7 @@ void do_scheduling(INT N, INT *list_of_cases,
 
 		while (TRUE) {
 
-			INT t, tt, j;
+			int t, tt, j;
 	
 			for (t = 0; t < N; t++) {
 				if (f_randomized) {
@@ -532,7 +532,7 @@ void do_scheduling(INT N, INT *list_of_cases,
 					tt = t;
 					}
 				if (task_completed[tt] == 0 && 
-					!INT_vec_search(excluded_cases, nb_excluded_cases, tt, idx)) {
+					!int_vec_search(excluded_cases, nb_excluded_cases, tt, idx)) {
 					j = find_free_job(JT, J);
 					if (j == -1) {
 						break;
@@ -594,9 +594,9 @@ void do_scheduling(INT N, INT *list_of_cases,
 		}
 }
 
-INT find_free_job(job_table *JT, INT J)
+int find_free_job(job_table *JT, int J)
 {
-	INT i;
+	int i;
 
 	for (i = 0; i < J; i++) {
 		if (!JT[i].f_task_assigned) {
@@ -606,14 +606,14 @@ INT find_free_job(job_table *JT, INT J)
 	return -1;
 }
 
-void assign_task(job_table *JT, INT t, INT j, 
-	INT *list_of_cases, const char *log_prefix, 
-	INT f_batch, const char *job_fname, const char *batch_template, INT template_nb_times, 
-	INT verbose_level)
+void assign_task(job_table *JT, int t, int j, 
+	int *list_of_cases, const char *log_prefix, 
+	int f_batch, const char *job_fname, const char *batch_template, int template_nb_times, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	char str[1000];
-	INT c;
+	int c;
 
 	c = list_of_cases[t];
 	if (f_v) {
@@ -625,7 +625,7 @@ void assign_task(job_table *JT, INT t, INT j,
 		str[0] = 0;
 		}
 	else {
-		sprintf(str, "  >%slog_%ld &", log_prefix, c);
+		sprintf(str, "  >%slog_%d &", log_prefix, c);
 		}
 	strcat(JT[j].command, str);
 	JT[j].task = t;
@@ -654,7 +654,7 @@ void assign_task(job_table *JT, INT t, INT j,
 			}
 		{
 			ofstream fp(JT[j].batch_fname);
-			INT i, l, h;
+			int i, l, h;
 
 			l = strlen(JT[j].batch_file);
 			i = 0;

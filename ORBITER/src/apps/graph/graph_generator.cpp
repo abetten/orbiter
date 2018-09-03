@@ -71,19 +71,19 @@ graph_generator::~graph_generator()
 		FREE_OBJECT(gen);
 	}
 	if (adjacency) {
-		FREE_INT(adjacency);
+		FREE_int(adjacency);
 	}
 	if (degree_sequence) {
-		FREE_INT(degree_sequence);
+		FREE_int(degree_sequence);
 		}
 	if (neighbor) {
-		FREE_INT(neighbor);
+		FREE_int(neighbor);
 		}
 	if (neighbor_idx) {
-		FREE_INT(neighbor_idx);
+		FREE_int(neighbor_idx);
 		}
 	if (distance) {
-		FREE_INT(distance);
+		FREE_int(distance);
 		}
 	
 }
@@ -105,17 +105,17 @@ void graph_generator::read_arguments(int argc, const char **argv)
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-regular") == 0) {
 			f_regular = TRUE;
-			sscanf(argv[++i], "%ld", &regularity);
+			sscanf(argv[++i], "%d", &regularity);
 			cout << "-regular " << regularity << endl;
 			}
 		else if (strcmp(argv[i], "-n") == 0) {
 			f_n = TRUE;
-			sscanf(argv[++i], "%ld", &n);
+			sscanf(argv[++i], "%d", &n);
 			cout << "-n " << n << endl;
 			}
 		else if (strcmp(argv[i], "-girth") == 0) {
 			f_girth = TRUE;
-			sscanf(argv[++i], "%ld", &girth);
+			sscanf(argv[++i], "%d", &girth);
 			cout << "-girth " << girth << endl;
 			}
 		else if (strcmp(argv[i], "-list") == 0) {
@@ -165,7 +165,7 @@ void graph_generator::read_arguments(int argc, const char **argv)
 			}
 		else if (strcmp(argv[i], "-draw_level_graph") == 0) {
 			f_draw_level_graph = TRUE;
-			sscanf(argv[++i], "%ld", &level_graph_level);
+			sscanf(argv[++i], "%d", &level_graph_level);
 			cout << "-draw_level_graph " << level_graph_level << endl;
 			}
 		else if (strcmp(argv[i], "-plesken") == 0) {
@@ -177,7 +177,7 @@ void graph_generator::read_arguments(int argc, const char **argv)
 			cout << "-draw_full_poset" << endl;
 			}
 		else if (strcmp(argv[i], "-identify") == 0) {
-			INT a, j;
+			int a, j;
 			
 			f_identify = TRUE;
 			j = 0;
@@ -190,12 +190,12 @@ void graph_generator::read_arguments(int argc, const char **argv)
 				}
 			identify_data_sz = j;
 			cout << "-identify ";
-			INT_vec_print(cout, identify_data, identify_data_sz);
+			int_vec_print(cout, identify_data, identify_data_sz);
 			cout << endl;
 			}
 		else if (strcmp(argv[i], "-depth") == 0) {
 			f_depth = TRUE;
-			sscanf(argv[++i], "%ld", &depth);
+			sscanf(argv[++i], "%d", &depth);
 			cout << "-depth " << depth << endl;
 			}
 		else if (strcmp(argv[i], "-x_stretch") == 0) {
@@ -213,8 +213,8 @@ void graph_generator::read_arguments(int argc, const char **argv)
 
 void graph_generator::init(int argc, const char **argv)
 {
-	INT N;
-	INT target_depth;
+	int N;
+	int target_depth;
 	char prefix[1000];
 	
 	A_base = NEW_OBJECT(action);
@@ -223,8 +223,8 @@ void graph_generator::init(int argc, const char **argv)
 	
 	read_arguments(argc, argv);
 	
-	INT verbose_level = gen->verbose_level;
-	INT f_v = (verbose_level >= 1);
+	int verbose_level = gen->verbose_level;
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "graph_generator::init" << endl;
@@ -235,7 +235,7 @@ void graph_generator::init(int argc, const char **argv)
 			cout << "graph_generator::init tournaments "
 					"on " << n << " vertices" << endl;
 			}
-		sprintf(prefix, "tournament_%ld", n);
+		sprintf(prefix, "tournament_%d", n);
 		if (f_no_superking) {
 			sprintf(prefix + strlen(prefix), "_no_superking");
 			}
@@ -245,17 +245,17 @@ void graph_generator::init(int argc, const char **argv)
 			cout << "graph_generator::init graphs "
 					"on " << n << " vertices" << endl;
 			}
-		sprintf(prefix, "graph_%ld", n);
+		sprintf(prefix, "graph_%d", n);
 		}
 	
 
 	
 	if (f_regular) {
-		sprintf(prefix + strlen(prefix), "_r%ld", regularity);
+		sprintf(prefix + strlen(prefix), "_r%d", regularity);
 		}
 	
 	if (f_girth) {
-		sprintf(prefix + strlen(prefix), "_g%ld", girth);
+		sprintf(prefix + strlen(prefix), "_g%d", girth);
 		}
 
 	if (f_v) {
@@ -263,7 +263,7 @@ void graph_generator::init(int argc, const char **argv)
 		}
 	
 	
-	n2 = INT_n_choose_k(n, 2);	
+	n2 = int_n_choose_k(n, 2);	
 	if (f_v) {
 		cout << "n2=" << n2 << endl;
 		}
@@ -317,13 +317,13 @@ void graph_generator::init(int argc, const char **argv)
 		}
 
 	
-	adjacency = NEW_INT(n * n);
+	adjacency = NEW_int(n * n);
 
 	if (f_tournament) {
 		target_depth = n2;
 		}
 	if (f_regular) {
-		degree_sequence = NEW_INT(n);
+		degree_sequence = NEW_int(n);
 		N = n * regularity;
 		if (ODD(N)) {
 			cout << "n * regularity must be even" << endl;
@@ -340,9 +340,9 @@ void graph_generator::init(int argc, const char **argv)
 		target_depth = depth;
 		}
 	if (f_girth) {
-		neighbor = NEW_INT(n);
-		neighbor_idx = NEW_INT(n);
-		distance = NEW_INT(n);
+		neighbor = NEW_int(n);
+		neighbor_idx = NEW_int(n);
+		distance = NEW_int(n);
 		}
 	else {
 		neighbor = NULL;
@@ -377,15 +377,15 @@ void graph_generator::init(int argc, const char **argv)
 
 }
 
-INT graph_generator::check_conditions(INT len,
-		INT *S, INT verbose_level)
+int graph_generator::check_conditions(int len,
+		int *S, int verbose_level)
 {
 	//verbose_level = 2;
 
-	INT f_OK = TRUE;
-	INT f_not_regular = FALSE;
-	INT f_bad_girth = FALSE;
-	INT f_v = (verbose_level >= 1);
+	int f_OK = TRUE;
+	int f_not_regular = FALSE;
+	int f_bad_girth = FALSE;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "graph_generator::check_conditions checking set ";
@@ -422,17 +422,17 @@ INT graph_generator::check_conditions(INT len,
 		}
 }
 
-INT graph_generator::check_conditions_tournament(
-		INT len, INT *S, INT verbose_level)
+int graph_generator::check_conditions_tournament(
+		int len, int *S, int verbose_level)
 {
 	//verbose_level = 2;
 
 
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT a, a2, swap, swap2, b2, b, i, idx;
-	INT *S_sorted;
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int a, a2, swap, swap2, b2, b, i, idx;
+	int *S_sorted;
 	
 	if (f_v) {
 		cout << "graph_generator::check_conditions_tournament "
@@ -440,9 +440,9 @@ INT graph_generator::check_conditions_tournament(
 		print_set(cout, len, S);
 		}
 
-	S_sorted = NEW_INT(len);
-	INT_vec_copy(S, S_sorted, len);
-	INT_vec_heapsort(S_sorted, len);
+	S_sorted = NEW_int(len);
+	int_vec_copy(S, S_sorted, len);
+	int_vec_heapsort(S_sorted, len);
 
 	for (i = 0; i < len; i++) {
 		a = S_sorted[i];
@@ -451,7 +451,7 @@ INT graph_generator::check_conditions_tournament(
 		swap2 = 1 - swap;
 		b2 = a2;
 		b = 2 * b2 + swap2;
-		if (INT_vec_search(S_sorted, len, b, idx)) {
+		if (int_vec_search(S_sorted, len, b, idx)) {
 			if (f_vv) {
 				cout << "graph_generator::check_conditions_tournament "
 						"elements " << a << " and " << b
@@ -464,11 +464,11 @@ INT graph_generator::check_conditions_tournament(
 
 
 	if (f_OK && f_no_superking) {
-		INT *score;
-		INT u, v;
+		int *score;
+		int u, v;
 
-		score = NEW_INT(n);
-		INT_vec_zero(score, n);
+		score = NEW_int(n);
+		int_vec_zero(score, n);
 		for (i = 0; i < len && f_OK; i++) {
 			a = S_sorted[i];
 			swap = a % 2;
@@ -488,9 +488,9 @@ INT graph_generator::check_conditions_tournament(
 				}
 			}
 
-		FREE_INT(score);
+		FREE_int(score);
 		}
-	FREE_INT(S_sorted);
+	FREE_int(S_sorted);
 
 	if (f_OK) {
 		if (f_v) {
@@ -507,15 +507,15 @@ INT graph_generator::check_conditions_tournament(
 }
 
 
-INT graph_generator::check_regularity(
-		INT *S, INT len, INT verbose_level)
+int graph_generator::check_regularity(
+		int *S, int len, int verbose_level)
 {
-	INT f_OK;
-	INT f_v = (verbose_level >= 1);
+	int f_OK;
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "check_regularity for ";
-		INT_vec_print(cout, S, len);
+		int_vec_print(cout, S, len);
 		cout << endl;
 		}
 	f_OK = compute_degree_sequence(S, len);
@@ -531,16 +531,16 @@ INT graph_generator::check_regularity(
 }
 
 
-INT graph_generator::compute_degree_sequence(INT *S, INT len)
+int graph_generator::compute_degree_sequence(int *S, int len)
 {
-	INT h, a, i, j;
+	int h, a, i, j;
 	
 	if (f_tournament) {
 		cout << "graph_generator::compute_degree_sequence "
 				"tournament is TRUE" << endl;
 		exit(1);
 		}
-	INT_vec_zero(degree_sequence, n);
+	int_vec_zero(degree_sequence, n);
 	for (h = 0; h < len; h++) {
 		a = S[h];
 		k2ij(a, i, j, n);
@@ -556,16 +556,16 @@ INT graph_generator::compute_degree_sequence(INT *S, INT len)
 	return TRUE;
 }
 
-INT graph_generator::girth_check(INT *line, INT len,
-		INT verbose_level)
+int graph_generator::girth_check(int *line, int len,
+		int verbose_level)
 {
-	INT f_OK = TRUE, i;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_OK = TRUE, i;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "girth check for ";
-		INT_vec_print(cout, line, len);
+		int_vec_print(cout, line, len);
 		cout << endl;
 		}
 	for (i = 0; i < n; i++) {
@@ -589,12 +589,12 @@ INT graph_generator::girth_check(INT *line, INT len,
 	return f_OK;
 }
 
-INT graph_generator::girth_test_vertex(INT *S, INT len,
-		INT vertex, INT girth,
-		INT verbose_level)
+int graph_generator::girth_test_vertex(int *S, int len,
+		int vertex, int girth,
+		int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT l, i, cur = 0, a, b, da, db, g;
+	int f_v = (verbose_level >= 1);
+	int l, i, cur = 0, a, b, da, db, g;
 	
 	get_adjacency(S, len, verbose_level - 1);
 	for (i = 0; i < n; i++) {
@@ -651,15 +651,15 @@ INT graph_generator::girth_test_vertex(INT *S, INT len,
 	return TRUE;
 }
 
-void graph_generator::get_adjacency(INT *S, INT len, INT verbose_level)
+void graph_generator::get_adjacency(int *S, int len, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, i, j, a;
+	int f_v = (verbose_level >= 1);
+	int h, i, j, a;
 	
-	INT_vec_zero(adjacency, n * n);
+	int_vec_zero(adjacency, n * n);
 
 	if (f_tournament) {
-		INT swap, a2;
+		int swap, a2;
 		
 		for (h = 0; h < len; h++) {
 			a = S[h];
@@ -694,9 +694,9 @@ void graph_generator::get_adjacency(INT *S, INT len, INT verbose_level)
 		}
 }
 
-void graph_generator::print(INT *S, INT len)
+void graph_generator::print(int *S, int len)
 {
-	INT i, j;
+	int i, j;
 	
 	cout << "graph_generator::print" << endl;
 	
@@ -715,20 +715,20 @@ void graph_generator::print(INT *S, INT len)
 }
 
 void graph_generator::print_score_sequences(
-		INT level, INT verbose_level)
+		int level, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, nb_orbits;
-	INT *set;
-	INT *score;
+	int f_v = (verbose_level >= 1);
+	int h, nb_orbits;
+	int *set;
+	int *score;
 
 	if (f_v) {
 		cout << "graph_generator::print_score_sequences "
 				"level = " << level << endl;
 		}
 
-	set = NEW_INT(level);
-	score = NEW_INT(n);
+	set = NEW_int(level);
+	score = NEW_int(n);
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
@@ -742,28 +742,28 @@ void graph_generator::print_score_sequences(
 
 
 		cout << h << " : ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << " : " << go << " : ";
 		
 		score_sequence(n, set, level, score, verbose_level - 1);
 
-		INT_vec_print(cout, score, n);
+		int_vec_print(cout, score, n);
 		cout << endl;
 
 		delete Strong_gens;
 		}
 
-	FREE_INT(set);
-	FREE_INT(score);
+	FREE_int(set);
+	FREE_int(score);
 
 }
 
-void graph_generator::score_sequence(INT n,
-		INT *set, INT sz, INT *score, INT verbose_level)
+void graph_generator::score_sequence(int n,
+		int *set, int sz, int *score, int verbose_level)
 {
-	INT i, a, swap, a2, u, v;
+	int i, a, swap, a2, u, v;
 
-	INT_vec_zero(score, n);
+	int_vec_zero(score, n);
 	for (i = 0; i < sz; i++) {
 		a = set[i];
 
@@ -786,23 +786,23 @@ void graph_generator::score_sequence(INT n,
 }
 
 
-void graph_generator::draw_graphs(INT level,
-	double scale, INT xmax_in, INT ymax_in,
-	INT xmax, INT ymax, INT f_embedded, INT f_sideways,
-	INT verbose_level)
+void graph_generator::draw_graphs(int level,
+	double scale, int xmax_in, int ymax_in,
+	int xmax, int ymax, int f_embedded, int f_sideways,
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT h, i, nb_orbits;
-	INT *set;
-	INT *v;
+	int f_v = (verbose_level >= 1);
+	int h, i, nb_orbits;
+	int *set;
+	int *v;
 
 	if (f_v) {
 		cout << "graph_generator::draw_graphs "
 				"level = " << level << endl;
 		}
 
-	set = NEW_INT(level);
-	v = NEW_INT(n2);
+	set = NEW_int(level);
+	v = NEW_int(n2);
 	nb_orbits = gen->nb_orbits_at_level(level);
 	for (h = 0; h < nb_orbits; h++) {
 		strong_generators *Strong_gens;
@@ -814,13 +814,13 @@ void graph_generator::draw_graphs(INT level,
 
 		Strong_gens->group_order(go);
 		
-		INT_vec_zero(v, n2);
+		int_vec_zero(v, n2);
 		for (i = 0; i < level; i++) {
 			v[set[i]] = 1;
 			}
 
 		cout << h << " : ";
-		INT_vec_print(cout, set, level);
+		int_vec_print(cout, set, level);
 		cout << " : ";
 		for (i = 0; i < n2; i++) {
 			cout << v[i];
@@ -830,11 +830,11 @@ void graph_generator::draw_graphs(INT level,
 
 		char fname_full[1000];
 
-		sprintf(fname_full, "%s_rep_%ld_%ld.mp",
+		sprintf(fname_full, "%s_rep_%d_%d.mp",
 				gen->fname_base, level, h);
-		INT x_min = 0, x_max = xmax_in;
-		INT y_min = 0, y_max = ymax_in;
-		INT x, y, dx, dy;
+		int x_min = 0, x_max = xmax_in;
+		int y_min = 0, y_max = ymax_in;
+		int x, y, dx, dy;
 
 		x = (x_max - x_min) >> 1;
 		y = (y_max - y_min) >> 1;
@@ -873,7 +873,7 @@ void graph_generator::draw_graphs(INT level,
 		delete Strong_gens;
 		}
 
-	FREE_INT(set);
+	FREE_int(set);
 }
 
 
@@ -882,7 +882,7 @@ void graph_generator::draw_graphs(INT level,
 // #############################################################################
 
 
-INT check_conditions(INT len, INT *S, void *data, INT verbose_level)
+int check_conditions(int len, int *S, void *data, int verbose_level)
 {
 	graph_generator *Gen = (graph_generator *) data;
 
@@ -894,7 +894,7 @@ INT check_conditions(INT len, INT *S, void *data, INT verbose_level)
 		}
 }
 
-void print_set(INT len, INT *S, void *data)
+void print_set(int len, int *S, void *data)
 {
 	graph_generator *Gen = (graph_generator *) data;
 	

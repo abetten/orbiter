@@ -89,7 +89,7 @@ ostream& hollerith::print(ostream& ost)
 	return ost;
 }
 
-INT hollerith::compare_with(discreta_base &a)
+int hollerith::compare_with(discreta_base &a)
 {
 	char *p1, *p2;
 	
@@ -104,7 +104,7 @@ INT hollerith::compare_with(discreta_base &a)
 
 void hollerith::init(const char *p)
 {
-	INT l;
+	int l;
 	
 	// cout << "hollerith::init() for string \"" << p << "\"" << endl;
 	freeself_hollerith();
@@ -115,7 +115,7 @@ void hollerith::init(const char *p)
 
 void hollerith::append(const char *p)
 {
-	INT l1, l2, l3;
+	int l1, l2, l3;
 	char *q;
 	
 	l1 = strlen(s());
@@ -128,7 +128,7 @@ void hollerith::append(const char *p)
 	self.char_pointer = q;
 }
 
-void hollerith::append_i(INT i)
+void hollerith::append_i(int i)
 {
 	char str[1000];
 	
@@ -136,9 +136,9 @@ void hollerith::append_i(INT i)
 	append(str);
 }
 
-void hollerith::write_mem(memory & m, INT debug_depth)
+void hollerith::write_mem(memory & m, int debug_depth)
 {
-	INT i, l;
+	int i, l;
 	
 	if (s()) {
 		l = strlen(s());
@@ -151,9 +151,9 @@ void hollerith::write_mem(memory & m, INT debug_depth)
 
 //#define BUFSIZE 1000
 
-void hollerith::read_mem(memory & m, INT debug_depth)
+void hollerith::read_mem(memory & m, int debug_depth)
 {
-	INT l;
+	int l;
 	char buf[BUFSIZE + 1], c;
 	
 	freeself();
@@ -171,7 +171,7 @@ void hollerith::read_mem(memory & m, INT debug_depth)
 		}	
 }
 
-INT hollerith::csf()
+int hollerith::csf()
 {
 	if (s())
 		return strlen(s()) + 1;
@@ -182,8 +182,8 @@ INT hollerith::csf()
 void hollerith::chop_off_extension_if_present(char *ext)
 {
 	char *p = s();
-	INT l1 = strlen(p);
-	INT l2 = strlen(ext);
+	int l1 = strlen(p);
+	int l2 = strlen(ext);
 	
 	if (l1 > l2 && strcmp(p + l1 - l2, ext) == 0) {
 		p[l1 - l2] = 0;
@@ -193,7 +193,7 @@ void hollerith::chop_off_extension_if_present(char *ext)
 void hollerith::get_extension_if_present(char *ext)
 {
 	char *p = s();
-	INT i, l = strlen(p);
+	int i, l = strlen(p);
 	
 	ext[0] = 0;
 	for (i = l - 1; i >= 0; i--) {

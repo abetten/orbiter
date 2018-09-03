@@ -23,15 +23,15 @@ void brick_domain::null()
 
 void brick_domain::freeself()
 {
-	//INT i;
+	//int i;
 	
 	null();
 }
 
-void brick_domain::init(finite_field *F, INT verbose_level)
+void brick_domain::init(finite_field *F, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT i;
+	int f_v = (verbose_level >= 1);
+	//int i;
 	
 	brick_domain::F = F;
 	q = F->q;
@@ -45,9 +45,9 @@ void brick_domain::init(finite_field *F, INT verbose_level)
 		}
 }
 
-void brick_domain::unrank(INT rk, INT &f_vertical, INT &x0, INT &y0, INT verbose_level)
+void brick_domain::unrank(int rk, int &f_vertical, int &x0, int &y0, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	f_vertical = rk % 2;
 	rk >>= 1;
@@ -59,10 +59,10 @@ void brick_domain::unrank(INT rk, INT &f_vertical, INT &x0, INT &y0, INT verbose
 		}
 }
 
-INT brick_domain::rank(INT f_vertical, INT x0, INT y0, INT verbose_level)
+int brick_domain::rank(int f_vertical, int x0, int y0, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk;
+	int f_v = (verbose_level >= 1);
+	int rk;
 	
 	rk = y0;
 	rk *= q;
@@ -77,10 +77,10 @@ INT brick_domain::rank(INT f_vertical, INT x0, INT y0, INT verbose_level)
 	return rk;
 }
 
-void brick_domain::unrank_coordinates(INT rk, INT &x1, INT &y1, INT &x2, INT &y2, INT verbose_level)
+void brick_domain::unrank_coordinates(int rk, int &x1, int &y1, int &x2, int &y2, int verbose_level)
 {
-	//INT f_v = (verbose_level >= 1);
-	INT x0, y0, f_vertical;
+	//int f_v = (verbose_level >= 1);
+	int x0, y0, f_vertical;
 
 	unrank(rk, f_vertical, x0, y0, verbose_level);
 	x1 = x0;
@@ -95,11 +95,11 @@ void brick_domain::unrank_coordinates(INT rk, INT &x1, INT &y1, INT &x2, INT &y2
 		}
 }
 
-INT brick_domain::rank_coordinates(INT x1, INT y1, INT x2, INT y2, INT verbose_level)
+int brick_domain::rank_coordinates(int x1, int y1, int x2, int y2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT rk;
-	INT x0, y0, f_vertical;
+	int f_v = (verbose_level >= 1);
+	int rk;
+	int x0, y0, f_vertical;
 	
 	if (x1 == x2) {
 		f_vertical = TRUE;
@@ -146,11 +146,11 @@ INT brick_domain::rank_coordinates(INT x1, INT y1, INT x2, INT y2, INT verbose_l
 	return rk;
 }
 
-void brick_test(INT q, INT verbose_level)
+void brick_test(int q, int verbose_level)
 {
 	brick_domain B;
-	INT i, j;
-	INT f_vertical, x, y, x2, y2;
+	int i, j;
+	int f_vertical, x, y, x2, y2;
 	finite_field F;
 	
 	F.init(q, 0);

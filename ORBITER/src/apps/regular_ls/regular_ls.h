@@ -14,85 +14,85 @@ typedef class regular_ls_generator regular_ls_generator;
 class regular_ls_generator {
 
 public:
-	INT m;
-	INT n;
-	INT k;
-	INT r;
+	int m;
+	int n;
+	int k;
+	int r;
 
-	//INT onk;
-	//INT onr;
-	INT starter_size;
-	INT target_size;
-	INT *initial_pair_covering;
+	//int onk;
+	//int onr;
+	int starter_size;
+	int target_size;
+	int *initial_pair_covering;
 
 	char starter_directory_name[1000];
 	char prefix[1000];
 	char prefix_with_directory[1000];
 
-	INT m2;
-	INT *v1; // [k]
+	int m2;
+	int *v1; // [k]
 	
 	poset_classification *gen;
 	action *A;
 	action *A2;
 	action_on_k_subsets *Aonk; // only a pointer, do not free
 
-	INT *row_sum; // [m]
-	INT *pairs; // [m2]
-	INT *open_rows; // [m]
-	INT *open_row_idx; // [m]
-	INT *open_pairs; // [m2]
-	INT *open_pair_idx; // [m2]
+	int *row_sum; // [m]
+	int *pairs; // [m2]
+	int *open_rows; // [m]
+	int *open_row_idx; // [m]
+	int *open_pairs; // [m2]
+	int *open_pair_idx; // [m2]
 	
 	void init_basic(int argc, const char **argv, 
 		const char *input_prefix, const char *base_fname, 
-		INT starter_size, 
-		INT verbose_level);
+		int starter_size, 
+		int verbose_level);
 	void read_arguments(int argc, const char **argv);
 	regular_ls_generator();
 	~regular_ls_generator();
 	void null();
 	void freeself();
-	void init_group(INT verbose_level);
-	void init_action_on_k_subsets(INT onk, INT verbose_level);
+	void init_group(int verbose_level);
+	void init_action_on_k_subsets(int onk, int verbose_level);
 	void init_generator(
-		INT f_has_initial_pair_covering, INT *initial_pair_covering, 
+		int f_has_initial_pair_covering, int *initial_pair_covering, 
 		strong_generators *Strong_gens, 
-		INT verbose_level);
+		int verbose_level);
 	void compute_starter(
-		//INT f_lex, 
-		INT f_write_candidate_file, 
-		INT f_draw_poset, INT f_embedded, INT f_sideways, INT verbose_level);
-	void early_test_func(INT *S, INT len, 
-		INT *candidates, INT nb_candidates, 
-		INT *good_candidates, INT &nb_good_candidates, 
-		INT verbose_level);
-	INT check_function_incremental(INT len, INT *S, INT verbose_level);
-	void print(INT *S, INT len);
-	void lifting_prepare_function_new(exact_cover *E, INT starter_case, 
-		INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-		diophant *&Dio, INT *&col_labels, 
-		INT &f_ruled_out, 
-		INT verbose_level);
+		//int f_lex, 
+		int f_write_candidate_file, 
+		int f_draw_poset, int f_embedded, int f_sideways, int verbose_level);
+	void early_test_func(int *S, int len, 
+		int *candidates, int nb_candidates, 
+		int *good_candidates, int &nb_good_candidates, 
+		int verbose_level);
+	int check_function_incremental(int len, int *S, int verbose_level);
+	void print(int *S, int len);
+	void lifting_prepare_function_new(exact_cover *E, int starter_case, 
+		int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+		diophant *&Dio, int *&col_labels, 
+		int &f_ruled_out, 
+		int verbose_level);
 #if 0
 	void extend(const char *fname, 
-		INT f_single_case, INT single_case, 
-		INT N, INT K, INT R, INT f_lambda_reached, INT depth, 
-		INT f_lexorder_test, 
-		INT verbose_level);
+		int f_single_case, int single_case, 
+		int N, int K, int R, int f_lambda_reached, int depth, 
+		int f_lexorder_test, 
+		int verbose_level);
 	void extend_a_single_case(const char *fname, 
-		INT N, INT K, INT R, INT f_lambda_reached, 
-		INT f_lexorder_test, 
-		INT orbit_at_level, INT nb_orbits, INT depth, 
-		INT verbose_level);
+		int N, int K, int R, int f_lambda_reached, 
+		int f_lexorder_test, 
+		int orbit_at_level, int nb_orbits, int depth, 
+		int verbose_level);
 	void handle_starter(const char *fname, 
-		INT N, INT K, INT R, INT f_lambda_reached, 
-		INT f_lexorder_test, 
-		INT orbit_at_level, INT nb_orbits, 
-		INT orbit_at_depth, INT nb_starters, INT depth, 
-		INT *pairs, 
-		INT *&Solutions, INT &nb_sol, 
-		INT verbose_level);
+		int N, int K, int R, int f_lambda_reached, 
+		int f_lexorder_test, 
+		int orbit_at_level, int nb_orbits, 
+		int orbit_at_depth, int nb_starters, int depth, 
+		int *pairs, 
+		int *&Solutions, int &nb_sol, 
+		int verbose_level);
 #endif
 };
 
@@ -103,15 +103,15 @@ public:
 
 
 
-void print_set(INT len, INT *S, void *data);
-void rls_generator_early_test_function(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level);
-INT check_function_incremental_callback(INT len, INT *S, void *data, INT verbose_level);
-void rls_generator_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level);
+void print_set(int len, int *S, void *data);
+void rls_generator_early_test_function(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level);
+int check_function_incremental_callback(int len, int *S, void *data, int verbose_level);
+void rls_generator_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level);
 

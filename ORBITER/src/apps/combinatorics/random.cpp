@@ -8,8 +8,8 @@
 
 int main(int argc, char **argv)
 {
-	INT verbose_level = 0;
-	INT i;
+	int verbose_level = 0;
+	int i;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

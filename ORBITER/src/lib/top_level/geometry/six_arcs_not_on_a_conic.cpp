@@ -32,17 +32,17 @@ void six_arcs_not_on_a_conic::freeself()
 		FREE_OBJECT(Gen);
 		}
 	if (Not_on_conic_idx) {
-		FREE_INT(Not_on_conic_idx);
+		FREE_int(Not_on_conic_idx);
 		}
 	null();
 }
 
 void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2, 
 	int argc, const char **argv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT level = 6;
+	int f_v = (verbose_level >= 1);
+	int level = 6;
 
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init" << endl;
@@ -51,7 +51,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 	six_arcs_not_on_a_conic::F = F;
 	six_arcs_not_on_a_conic::P2 = P2;
 	
-	sprintf(base_fname, "arcs_%ld", F->q);
+	sprintf(base_fname, "arcs_%d", F->q);
 
 	
 	Gen = NEW_OBJECT(arc_generator);
@@ -108,13 +108,13 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 
 
 	
-	INT Arc6[6];
-	INT h, j;
+	int Arc6[6];
+	int h, j;
 	
 
 	nb_arcs_not_on_conic = 0;
 
-	Not_on_conic_idx = NEW_INT(nb_orbits);	
+	Not_on_conic_idx = NEW_int(nb_orbits);	
 	
 	if (f_v) {
 		cout << "six_arcs_not_on_a_conic::init "
@@ -132,9 +132,9 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 		Gen->gen->get_set_by_level(level, h, Arc6);
 		
 		
-		INT **Pts_on_conic;
-		INT *nb_pts_on_conic;
-		INT len1;
+		int **Pts_on_conic;
+		int *nb_pts_on_conic;
+		int len1;
 
 
 		
@@ -156,10 +156,10 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 			}
 
 		for (j = 0; j < len1; j++) {
-			FREE_INT(Pts_on_conic[j]);
+			FREE_int(Pts_on_conic[j]);
 			}
-		FREE_PINT(Pts_on_conic);
-		FREE_INT(nb_pts_on_conic);
+		FREE_pint(Pts_on_conic);
+		FREE_int(nb_pts_on_conic);
 		}
 
 	if (f_v) {
@@ -180,7 +180,7 @@ void six_arcs_not_on_a_conic::init(finite_field *F, projective_space *P2,
 
 void six_arcs_not_on_a_conic::report_latex(ostream &ost)
 {
-	INT h;
+	int h;
 	
 	ost << "\\subsection*{Classification of 6-arcs not on a conic "
 			"in $\\PG(2," << F->q << ")$}" << endl;

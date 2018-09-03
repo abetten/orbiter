@@ -60,9 +60,9 @@ void exact_cover_arguments::freeself()
 }
 
 void exact_cover_arguments::read_arguments(int argc, const char **argv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT i;
+	int i;
 
 	for (i = 1; i < argc; i++) {
 		if (argv[i][0] != '-') {
@@ -138,9 +138,9 @@ void exact_cover_arguments::read_arguments(int argc, const char **argv,
 		}
 }
 
-void exact_cover_arguments::compute_lifts(INT verbose_level)
+void exact_cover_arguments::compute_lifts(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "exact_cover_arguments::compute_lifts" << endl;

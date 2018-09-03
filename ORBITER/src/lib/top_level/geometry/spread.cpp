@@ -72,22 +72,22 @@ void spread::freeself()
 		FREE_OBJECT(R);
 		}
 	if (Starter) {
-		FREE_INT(Starter);
+		FREE_int(Starter);
 		}
 	if (Starter_Strong_gens) {
 		FREE_OBJECT(Starter_Strong_gens);
 		}
 	if (tmp_M1) {
-		FREE_INT(tmp_M1);
+		FREE_int(tmp_M1);
 		}
 	if (tmp_M2) {
-		FREE_INT(tmp_M2);
+		FREE_int(tmp_M2);
 		}
 	if (tmp_M3) {
-		FREE_INT(tmp_M3);
+		FREE_int(tmp_M3);
 		}
 	if (tmp_M4) {
-		FREE_INT(tmp_M4);
+		FREE_int(tmp_M4);
 		}
 
 	
@@ -101,29 +101,29 @@ void spread::freeself()
 		FREE_OBJECT(Klein);
 		}
 	if (Data1) {
-		FREE_INT(Data1);
+		FREE_int(Data1);
 		}
 	if (Data2) {
-		FREE_INT(Data2);
+		FREE_int(Data2);
 		}
 #if 0
 	if (Data3) {
-		FREE_INT(Data3);
+		FREE_int(Data3);
 		}
 #endif
 	null();
 }
 
-void spread::init(INT order, INT n, INT k, INT max_depth, 
-	finite_field *F, INT f_recoordinatize, 
+void spread::init(int order, int n, int k, int max_depth, 
+	finite_field *F, int f_recoordinatize, 
 	const char *input_prefix, 
 	const char *base_fname,
-	INT starter_size,  
+	int starter_size,  
 	int argc, const char **argv, 
-	INT verbose_level)
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	longinteger_object go;
 	
 	
@@ -152,10 +152,10 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 	spread::starter_size = starter_size;
 
 
-	tmp_M1 = NEW_INT(n * n);
-	tmp_M2 = NEW_INT(n * n);
-	tmp_M3 = NEW_INT(n * n);
-	tmp_M4 = NEW_INT(n * n);
+	tmp_M1 = NEW_int(n * n);
+	tmp_M2 = NEW_int(n * n);
+	tmp_M3 = NEW_int(n * n);
+	tmp_M4 = NEW_int(n * n);
 	
 	gen = NEW_OBJECT(poset_classification);
 	gen->read_arguments(argc, argv, 1);
@@ -250,16 +250,16 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 		}
 #endif
 
-	//INT len;
+	//int len;
 	
 
 
 	if (f_print_generators) {
-		INT f_print_as_permutation = TRUE;
-		INT f_offset = FALSE;
-		INT offset = 1;
-		INT f_do_it_anyway_even_for_big_degree = TRUE;
-		INT f_print_cycles_of_length_one = FALSE;
+		int f_print_as_permutation = TRUE;
+		int f_offset = FALSE;
+		int offset = 1;
+		int f_do_it_anyway_even_for_big_degree = TRUE;
+		int f_print_cycles_of_length_one = FALSE;
 		
 		cout << "printing generators for the group:" << endl;
 		A->Strong_gens->gens->print(cout, f_print_as_permutation, 
@@ -344,9 +344,9 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 		cout << "spread::init allocating Data1 and Data2" << endl;
 		}
 	
-	Data1 = NEW_INT(max_depth * kn);
-	Data2 = NEW_INT(n * n);
-	//Data3 = NEW_INT(n * n);
+	Data1 = NEW_int(max_depth * kn);
+	Data2 = NEW_int(n * n);
+	//Data3 = NEW_int(n * n);
 	
 
 #if 0
@@ -384,71 +384,71 @@ void spread::init(INT order, INT n, INT k, INT max_depth,
 		}
 }
 
-void spread::unrank_point(INT *v, INT a)
+void spread::unrank_point(int *v, int a)
 {
 	PG_element_unrank_modified(*F, v, 1, n, a);
 }
 
-INT spread::rank_point(INT *v)
+int spread::rank_point(int *v)
 {
-	INT a;
+	int a;
 	
 	PG_element_rank_modified(*F, v, 1, n, a);
 	return a;
 }
 
-void spread::unrank_subspace(INT *M, INT a)
+void spread::unrank_subspace(int *M, int a)
 {
-	Grass->unrank_INT_here(M, a, 0/*verbose_level - 4*/);
+	Grass->unrank_int_here(M, a, 0/*verbose_level - 4*/);
 }
 
-INT spread::rank_subspace(INT *M)
+int spread::rank_subspace(int *M)
 {
-	INT a;
+	int a;
 	
-	a = Grass->rank_INT_here(M, 0 /*verbose_level*/);
+	a = Grass->rank_int_here(M, 0 /*verbose_level*/);
 	return a;
 }
 
 void spread::print_points()
 {
-	INT *v;
-	INT i;
+	int *v;
+	int i;
 
 	cout << "spread::print_points" << endl;
-	v = NEW_INT(n);
+	v = NEW_int(n);
 	for (i = 0; i < nb_pts; i++) {
 		unrank_point(v, i);
 		cout << "point " << i << " : ";
-		INT_vec_print(cout, v, n);
+		int_vec_print(cout, v, n);
 		cout << endl;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
-void spread::print_points(INT *pts, INT len)
+void spread::print_points(int *pts, int len)
 {
-	INT *v;
-	INT h, i;
+	int *v;
+	int h, i;
 
 	cout << "spread::print_points" << endl;
-	v = NEW_INT(n);
+	v = NEW_int(n);
 	for (h = 0; h < len; h++) {
 		i = pts[h];
 		unrank_point(v, i);
 		cout << "point " << h << " : " << i << " : ";
-		INT_vec_print(cout, v, n);
+		int_vec_print(cout, v, n);
 		cout << endl;
 		}
-	FREE_INT(v);
+	FREE_int(v);
 }
 
 void spread::print_elements()
 {
-	INT i, j;
-	INT *M;
+	int i, j;
+	int *M;
 	
-	M = NEW_INT(kn);
+	M = NEW_int(kn);
 	for (i = 0; i < nCkq; i++) {
 		if (FALSE) {
 			cout << i << ":" << endl;
@@ -463,20 +463,20 @@ void spread::print_elements()
 			exit(1);
 			}
 		}
-	FREE_INT(M);
+	FREE_int(M);
 }
 
 void spread::print_elements_and_points()
 {
-	INT i, a, b;
-	INT *M, *v, *w;
-	INT *Line;
+	int i, a, b;
+	int *M, *v, *w;
+	int *Line;
 
 	cout << "spread::print_elements_and_points" << endl;
-	M = NEW_INT(kn);
-	v = NEW_INT(k);
-	w = NEW_INT(n);
-	Line = NEW_INT(r);
+	M = NEW_int(kn);
+	v = NEW_int(k);
+	w = NEW_int(n);
+	Line = NEW_int(r);
 	for (i = 0; i < nCkq; i++) {
 		if (FALSE) {
 			cout << i << ":" << endl;
@@ -491,18 +491,18 @@ void spread::print_elements_and_points()
 		cout << "line " << i << ":" << endl;
 		print_integer_matrix_width(cout, M, k, n, n, F->log10_of_q + 1);
 		cout << "points on subspace " << i << " : ";
-		INT_vec_print(cout, Line, r);
+		int_vec_print(cout, Line, r);
 		cout << endl;
 		}
-	FREE_INT(M);
-	FREE_INT(v);
-	FREE_INT(w);
-	FREE_INT(Line);
+	FREE_int(M);
+	FREE_int(v);
+	FREE_int(w);
+	FREE_int(Line);
 }
 
 void spread::read_arguments(int argc, const char **argv)
 {
-	INT i;
+	int i;
 	
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-schreier") == 0) {
@@ -517,11 +517,11 @@ void spread::read_arguments(int argc, const char **argv)
 		}
 }
 
-void spread::init2(INT verbose_level)
+void spread::init2(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	//INT f_vv = (verbose_level >= 2);
-	//INT depth;
+	int f_v = (verbose_level >= 1);
+	//int f_vv = (verbose_level >= 2);
+	//int depth;
 	
 	if (f_v) {
 		cout << "spread::init2" << endl;
@@ -602,13 +602,13 @@ void spread::init2(INT verbose_level)
 		}
 }
 
-void spread::compute(INT verbose_level)
+void spread::compute(int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT schreier_depth = gen->depth;
-	INT f_use_invariant_subset_if_available = TRUE;
-	INT f_debug = FALSE;
-	INT t0;
+	int f_v = (verbose_level >= 1);
+	int schreier_depth = gen->depth;
+	int f_use_invariant_subset_if_available = TRUE;
+	int f_debug = FALSE;
+	int t0;
 
 
 	if (f_v) {
@@ -633,7 +633,7 @@ void spread::compute(INT verbose_level)
 		f_debug, 
 		verbose_level - 1);
 	
-	INT length;
+	int length;
 	
 	if (f_v) {
 		cout << "spread::compute done with generator_main" << endl;
@@ -654,28 +654,28 @@ void spread::compute(INT verbose_level)
 }
 
 
-void spread::early_test_func(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	INT verbose_level)
+void spread::early_test_func(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i0, i, j, rk;
-	INT *M;
-	INT *MM;
-	INT *B, *base_cols;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i0, i, j, rk;
+	int *M;
+	int *MM;
+	int *B, *base_cols;
 		
 	if (f_v) {
 		cout << "spread::early_test_func checking set ";
 		print_set(cout, len, S);
 		cout << endl;
 		cout << "candidate set of size " << nb_candidates << ":" << endl;
-		INT_vec_print(cout, candidates, nb_candidates);
+		int_vec_print(cout, candidates, nb_candidates);
 		cout << endl;
 		if (f_vv) {
 			for (i = 0; i < nb_candidates; i++) {
-				Grass->unrank_INT(candidates[i], 0/*verbose_level - 4*/);
+				Grass->unrank_int(candidates[i], 0/*verbose_level - 4*/);
 				cout << "candidate " << i << "=" << candidates[i] << ":" << endl;
 				print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
 				}
@@ -703,7 +703,7 @@ void spread::early_test_func(INT *S, INT len,
 	
 	nb_good_candidates = 0;
 	for (j = 0; j < nb_candidates; j++) {
-		Grass->unrank_INT(candidates[j], 0/*verbose_level - 4*/);
+		Grass->unrank_int(candidates[j], 0/*verbose_level - 4*/);
 		if (len == 0) {
 			i0 = 0;
 			}
@@ -711,8 +711,8 @@ void spread::early_test_func(INT *S, INT len,
 			i0 = len - 1;
 			}
 		for (i = i0; i < len; i++) {
-			INT_vec_copy(MM + i * kn, M, k * n);
-			INT_vec_copy(Grass->M, M + kn, k * n);
+			int_vec_copy(MM + i * kn, M, k * n);
+			int_vec_copy(Grass->M, M + kn, k * n);
 
 			if (f_vv) {
 				cout << "testing (p_" << i << ",candidates[" << j << "])=(" << S[i] <<  "," << candidates[j] << ")" << endl;
@@ -741,15 +741,15 @@ void spread::early_test_func(INT *S, INT len,
 		}
 }
 
-INT spread::check_function(INT len, INT *S, INT verbose_level)
+int spread::check_function(int len, int *S, int verbose_level)
 // checks all {len \choose 2} pairs. This is very inefficient.
 {
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, rk;
-	INT *M, *M1;
-	INT *B, *base_cols;
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, rk;
+	int *M, *M1;
+	int *B, *base_cols;
 		
 	if (f_v) {
 		cout << "spread::check_function checking set ";
@@ -764,7 +764,7 @@ INT spread::check_function(INT len, INT *S, INT verbose_level)
 	if (f_v) {
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
-			Grass->unrank_INT(S[i], 0/*verbose_level - 4*/);
+			Grass->unrank_int(S[i], 0/*verbose_level - 4*/);
 			print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
 			}
 		}
@@ -772,7 +772,7 @@ INT spread::check_function(INT len, INT *S, INT verbose_level)
 	for (i = 0; i < len; i++) {
 		unrank_subspace(M1, S[i]);
 		for (j = i + 1; j < len; j++) {
-			INT_vec_copy(M1, M, kn);
+			int_vec_copy(M1, M, kn);
 			unrank_subspace(M + kn, S[j]);
 
 			if (f_vv) {
@@ -812,15 +812,15 @@ INT spread::check_function(INT len, INT *S, INT verbose_level)
 
 }
 
-INT spread::check_function_incremental(INT len, INT *S, INT verbose_level)
+int spread::check_function_incremental(int len, int *S, int verbose_level)
 // checks the pairs (0,len-1),(1,len-1),\ldots,(len-2,len-1) 
 {
-	INT f_OK = TRUE;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT i, j, rk;
-	INT *M, *M1;
-	INT *B, *base_cols;
+	int f_OK = TRUE;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int i, j, rk;
+	int *M, *M1;
+	int *B, *base_cols;
 		
 	if (f_v) {
 		cout << "spread::check_function_incremental checking set ";
@@ -839,7 +839,7 @@ INT spread::check_function_incremental(INT len, INT *S, INT verbose_level)
 	if (f_v) {
 		for (i = 0; i < len; i++) {
 			cout << "p_" << i << "=" << S[i] << ":" << endl;
-			Grass->unrank_INT(S[i], 0/*verbose_level - 4*/);
+			Grass->unrank_int(S[i], 0/*verbose_level - 4*/);
 			print_integer_matrix_width(cout, Grass->M, k, n, n, F->log10_of_q + 1);
 			}
 		}
@@ -849,7 +849,7 @@ INT spread::check_function_incremental(INT len, INT *S, INT verbose_level)
 	unrank_subspace(M1, S[j]);
 	for (i = 0; i < len - 1; i++) {
 		unrank_subspace(M, S[i]);
-		INT_vec_copy(M1, M + kn, kn);
+		int_vec_copy(M1, M + kn, kn);
 		
 		if (f_vv) {
 			cout << "testing (p_" << i << ",p_" << j << ")=(" << S[i] <<  "," << S[j] << ")" << endl;
@@ -886,13 +886,13 @@ finish:
 
 }
 
-INT spread::check_function_pair(INT rk1, INT rk2, INT verbose_level)
+int spread::check_function_pair(int rk1, int rk2, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT rk;
-	INT *M;
-	INT *B, *base_cols;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int rk;
+	int *M;
+	int *B, *base_cols;
 		
 	if (f_v) {
 		cout << "spread::check_function_pair checking (" << rk1 << "," << rk2 << ")" << endl;
@@ -924,14 +924,14 @@ INT spread::check_function_pair(INT rk1, INT rk2, INT verbose_level)
 		}
 }
 
-void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case, 
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level)
+void spread::lifting_prepare_function_new(exact_cover *E, int starter_case, 
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_v3 = (verbose_level >= 3);
+	int f_v = (verbose_level >= 1);
+	int f_v3 = (verbose_level >= 3);
 	
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new nb_candidates=" << nb_candidates << endl;
@@ -965,8 +965,8 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
 		}
 
-	INT *col_color;
-	INT nb_colors;
+	int *col_color;
+	int nb_colors;
 
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new before SL->find_coloring" << endl;
@@ -980,7 +980,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 
 	if (f_v3) {
 		cout << "col_color=";
-		INT_vec_print(cout, col_color, Dio->n);
+		int_vec_print(cout, col_color, Dio->n);
 		cout << endl;
 		}
 
@@ -1011,7 +1011,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 	
 	char fname_clique_graph[1000];
 
-	sprintf(fname_clique_graph, "%sgraph_%ld.bin", E->output_prefix, starter_case);
+	sprintf(fname_clique_graph, "%sgraph_%d.bin", E->output_prefix, starter_case);
 	CG->save(fname_clique_graph, verbose_level - 1);
 	if (f_v) {
 		cout << "Written file " << fname_clique_graph << " of size " << file_size(fname_clique_graph) << endl;
@@ -1024,7 +1024,7 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 
 	FREE_OBJECT(SL);
 	//FREE_uchar(Adj);
-	FREE_INT(col_color);
+	FREE_int(col_color);
 	
 	if (f_v) {
 		cout << "spread::lifting_prepare_function_new after SL->create_system" << endl;
@@ -1037,9 +1037,9 @@ void spread::lifting_prepare_function_new(exact_cover *E, INT starter_case,
 
 
 
-void spread::compute_dual_spread(INT *spread, INT *dual_spread, INT verbose_level)
+void spread::compute_dual_spread(int *spread, int *dual_spread, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "spread::compute_dual_spread" << endl;
@@ -1052,10 +1052,10 @@ void spread::compute_dual_spread(INT *spread, INT *dual_spread, INT verbose_leve
 		}
 }
 
-void spread::print(INT len, INT *S)
+void spread::print(int len, int *S)
 {
-	INT i;
-	INT f_elements_exponential = FALSE;
+	int i;
+	int f_elements_exponential = FALSE;
 	const char *symbol_for_print = "\\alpha";
 	
 	if (len == 0) {
@@ -1063,7 +1063,7 @@ void spread::print(INT len, INT *S)
 		}
 	for (i = 0; i < len; i++) {
 		cout << "$S_{" << i + 1 << "}$ has rank " << S[i] << " and is generated by\\\\" << endl;
-		Grass->unrank_INT(S[i], 0);
+		Grass->unrank_int(S[i], 0);
 		cout << "$$" << endl;
 		cout << "\\left[" << endl;
 		F->latex_matrix(cout, f_elements_exponential, symbol_for_print, 
@@ -1080,13 +1080,13 @@ void spread::print(INT len, INT *S)
 // #############################################################################
 
 
-void spread_lifting_early_test_function(INT *S, INT len, 
-	INT *candidates, INT nb_candidates, 
-	INT *good_candidates, INT &nb_good_candidates, 
-	void *data, INT verbose_level)
+void spread_lifting_early_test_function(int *S, int len, 
+	int *candidates, int nb_candidates, 
+	int *good_candidates, int &nb_good_candidates, 
+	void *data, int verbose_level)
 {
 	spread *T = (spread *) data;
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	
 	if (f_v) {
 		cout << "spread_lifting_early_test_function for set ";
@@ -1102,13 +1102,13 @@ void spread_lifting_early_test_function(INT *S, INT len,
 		}
 }
 
-void spread_lifting_prepare_function_new(exact_cover *EC, INT starter_case, 
-	INT *candidates, INT nb_candidates, strong_generators *Strong_gens, 
-	diophant *&Dio, INT *&col_labels, 
-	INT &f_ruled_out, 
-	INT verbose_level)
+void spread_lifting_prepare_function_new(exact_cover *EC, int starter_case, 
+	int *candidates, int nb_candidates, strong_generators *Strong_gens, 
+	diophant *&Dio, int *&col_labels, 
+	int &f_ruled_out, 
+	int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	spread *T = (spread *) EC->user_data;
 
 	if (f_v) {
@@ -1137,11 +1137,11 @@ void spread_lifting_prepare_function_new(exact_cover *EC, INT starter_case,
 
 
 
-INT starter_canonize_callback(INT *Set, INT len, INT *Elt, void *data, INT verbose_level)
+int starter_canonize_callback(int *Set, int len, int *Elt, void *data, int verbose_level)
 {
 	spread *T = (spread *) data;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (f_v) {
 		cout << "starter_canonize_callback" << endl;
@@ -1158,10 +1158,10 @@ INT starter_canonize_callback(INT *Set, INT len, INT *Elt, void *data, INT verbo
 	return TRUE;
 }
 
-INT spread_check_function_incremental(INT len, INT *S, void *data, INT verbose_level)
+int spread_check_function_incremental(int len, int *S, void *data, int verbose_level)
 {
 	spread *T = (spread *) data;
-	INT ret;
+	int ret;
 
 	ret = T->check_function_incremental(len, S, verbose_level);
 	return ret;

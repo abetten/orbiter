@@ -7,16 +7,16 @@
 #include "orbiter.h"
 
 
-static void prepare_entry(Vector &entry, INT i, INT j, INT h, INT t, INT v, INT k, INT lambda);
-static void determine_minimal_and_maximal_path(Vector &v, Vector & min_path, Vector & max_path, INT & max_depth);
-static void determine_dominating_ancestor(INT t, INT v, INT k, discreta_base & lambda, Vector & path, design_parameter &dominating_ancestor);
+static void prepare_entry(Vector &entry, int i, int j, int h, int t, int v, int k, int lambda);
+static void determine_minimal_and_maximal_path(Vector &v, Vector & min_path, Vector & max_path, int & max_depth);
+static void determine_dominating_ancestor(int t, int v, int k, discreta_base & lambda, Vector & path, design_parameter &dominating_ancestor);
 static void reduce_path(Vector &cmp, Vector &min_path);
-static void family_report(database & D, ostream& fhtml, ostream &ftex, INT t, INT v, INT k, discreta_base &lambda, Vector & cm, Vector & cmp, INT minimal_t);
+static void family_report(database & D, ostream& fhtml, ostream &ftex, int t, int v, int k, discreta_base &lambda, Vector & cm, Vector & cmp, int minimal_t);
 
 
-INT design_parameters_admissible(INT v, INT t, INT k, discreta_base & lambda)
+int design_parameters_admissible(int v, int t, int k, discreta_base & lambda)
 {
-	INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	discreta_base b, q, r;
 	
 	b.m_i_i(delta_lambda);
@@ -31,10 +31,10 @@ INT design_parameters_admissible(INT v, INT t, INT k, discreta_base & lambda)
 	return TRUE;
 }
 
-INT calc_delta_lambda(INT v, INT t, INT k, INT f_v)
+int calc_delta_lambda(int v, int t, int k, int f_v)
 {
 	discreta_base lambda;
-	INT i;
+	int i;
 	discreta_base a, b, a1, b1, g, rhs_a, rhs_b, delta_lambda, dl, a2, b2, gg;
 	
 	// f_v = TRUE;
@@ -69,7 +69,7 @@ INT calc_delta_lambda(INT v, INT t, INT k, INT f_v)
 			rhs_b = b;
 			}
 		}
-	if (delta_lambda.s_kind() == INTEGER)
+	if (delta_lambda.s_kind() == intEGER)
 		return delta_lambda.s_i_i();
 	else {
 		cout << "calc_delta_lambda() delta_lambda in longinteger" << endl;
@@ -77,12 +77,12 @@ INT calc_delta_lambda(INT v, INT t, INT k, INT f_v)
 		}
 }
 
-void design_lambda_max(INT t, INT v, INT k, discreta_base & lambda_max)
+void design_lambda_max(int t, int v, int k, discreta_base & lambda_max)
 {
 	Binomial(v - t, k - t, lambda_max);
 }
 
-void design_lambda_max_half(INT t, INT v, INT k, discreta_base & lambda_max_half)
+void design_lambda_max_half(int t, int v, int k, discreta_base & lambda_max_half)
 {
 	discreta_base lambda_max, two, r;
 	
@@ -91,9 +91,9 @@ void design_lambda_max_half(INT t, INT v, INT k, discreta_base & lambda_max_half
 	lambda_max.integral_division(two, lambda_max_half, r, 0);
 }
 
-void design_lambda_ijs_matrix(INT t, INT v, INT k, discreta_base& lambda, INT s, matrix & M)
+void design_lambda_ijs_matrix(int t, int v, int k, discreta_base& lambda, int s, matrix & M)
 {
-	INT i, j;
+	int i, j;
 	
 	M.m_mn_n(t + 1, t + 1);
 	for (i = 0; i <= t; i++) {
@@ -103,12 +103,12 @@ void design_lambda_ijs_matrix(INT t, INT v, INT k, discreta_base& lambda, INT s,
 		}
 }
 
-void design_lambda_ijs(INT t, INT v, INT k, discreta_base& lambda, INT s, INT i, INT j, discreta_base & lambda_ijs)
+void design_lambda_ijs(int t, int v, int k, discreta_base& lambda, int s, int i, int j, discreta_base & lambda_ijs)
 //\lambda_{i,j}^{(s)} = \sum_{h=0}^j (-1)^h {j \choose h} {\lambda_{i+h} \choose s}
 //cf. Wilson, Van Lint~\cite{VanLintWilson92}.
 {
 	discreta_base a, b, c;
-	INT h;
+	int h;
 	
 	lambda_ijs.m_i_i(0);
 	for (h = 0; h <= j; h++) {
@@ -122,7 +122,7 @@ void design_lambda_ijs(INT t, INT v, INT k, discreta_base& lambda, INT s, INT i,
 		}
 }
 
-void design_lambda_ij(INT t, INT v, INT k, discreta_base& lambda, INT i, INT j, discreta_base & lambda_ij)
+void design_lambda_ij(int t, int v, int k, discreta_base& lambda, int i, int j, discreta_base & lambda_ij)
 //\lambda_{i,j} = \lambda \frac{{v-i-j \choose k-i}}{{v-t \choose k-t}}
 //cf. Wilson, Van Lint~\cite{VanLintWilson92}.
 {
@@ -138,11 +138,11 @@ void design_lambda_ij(INT t, INT v, INT k, discreta_base& lambda, INT i, INT j, 
 	lambda_ij.divide_by_exact(b);
 }
 
-INT is_trivial_clan(INT t, INT v, INT k)
+int is_trivial_clan(int t, int v, int k)
 {
 	discreta_base dl, lambda_max;
 	
-	INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	dl.m_i_i(delta_lambda);
 	design_lambda_max(t, v, k, lambda_max);
 	if (dl.eq(lambda_max))
@@ -151,24 +151,24 @@ INT is_trivial_clan(INT t, INT v, INT k)
 		return FALSE;
 }
 
-void print_clan_tex_INT(INT t, INT v, INT k)
+void print_clan_tex_int(int t, int v, int k)
 {
 	integer T(t), V(v), K(k);
 	discreta_base lambda_max, m_max;
 	
-	INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	design_lambda_max(t, v, k, lambda_max);
 	lambda_max.integral_division_by_integer_exact(delta_lambda, m_max);
 	print_clan_tex(T, V, K, delta_lambda, m_max);
 }
 
-void print_clan_tex_INT(INT t, INT v, INT k, INT delta_lambda, discreta_base &m_max)
+void print_clan_tex_int(int t, int v, int k, int delta_lambda, discreta_base &m_max)
 {
 	integer T(t), V(v), K(k);
 	print_clan_tex(T, V, K, delta_lambda, m_max);
 }
 
-void print_clan_tex(discreta_base &t, discreta_base &v, discreta_base &k, INT delta_lambda, discreta_base &m_max)
+void print_clan_tex(discreta_base &t, discreta_base &v, discreta_base &k, int delta_lambda, discreta_base &m_max)
 {
 	Vector vp, ve;
 	
@@ -186,15 +186,15 @@ void print_clan_tex(discreta_base &t, discreta_base &v, discreta_base &k, INT de
 	cout << "}";
 }
 
-INT is_ancestor(INT t, INT v, INT k)
+int is_ancestor(int t, int v, int k)
 {
-	INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+	int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 	return is_ancestor(t, v, k, delta_lambda);
 }
 
-INT is_ancestor(INT t, INT v, INT k, INT delta_lambda)
+int is_ancestor(int t, int v, int k, int delta_lambda)
 {
-	INT c, T, V, K, Delta_lambda;
+	int c, T, V, K, Delta_lambda;
 	
 	if (calc_redinv(t, v, k, delta_lambda, c, T, V, K, Delta_lambda) && c == 1) {
 		// cout << "is_ancestor(): " << t << " " << v << " " << k << " is not ancestor, red^-1 is possible for c=" << c << endl;
@@ -211,9 +211,9 @@ INT is_ancestor(INT t, INT v, INT k, INT delta_lambda)
 	return TRUE;
 }
 
-INT calc_redinv(INT t, INT v, INT k, INT delta_lambda, INT &c, INT &T, INT &V, INT &K, INT &Delta_lambda)
+int calc_redinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
-	INT vt, kt, g, v1, k1, gg;
+	int vt, kt, g, v1, k1, gg;
 	
 	if (t == k)
 		return FALSE;
@@ -222,16 +222,16 @@ INT calc_redinv(INT t, INT v, INT k, INT delta_lambda, INT &c, INT &T, INT &V, I
 	K = k;
 	vt = v - t;
 	kt = k - t;
-	g = gcd_INT(vt, kt);
+	g = gcd_int(vt, kt);
 	v1 = vt / g;
 	k1 = kt / g;
-	gg = gcd_INT(delta_lambda, v1);
+	gg = gcd_int(delta_lambda, v1);
 	c = v1 / gg;
 	Delta_lambda = k1 * delta_lambda / gg;
 	return TRUE;
 }
 
-INT calc_derinv(INT t, INT v, INT k, INT delta_lambda, INT &c, INT &T, INT &V, INT &K, INT &Delta_lambda)
+int calc_derinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
 	T = t + 1;
 	V = v + 1;
@@ -241,9 +241,9 @@ INT calc_derinv(INT t, INT v, INT k, INT delta_lambda, INT &c, INT &T, INT &V, I
 	return TRUE;
 }
 
-INT calc_resinv(INT t, INT v, INT k, INT delta_lambda, INT &c, INT &T, INT &V, INT &K, INT &Delta_lambda)
+int calc_resinv(int t, int v, int k, int delta_lambda, int &c, int &T, int &V, int &K, int &Delta_lambda)
 {
-	INT a, b, g;
+	int a, b, g;
 	
 	if (t == k)
 		return FALSE;
@@ -253,12 +253,12 @@ INT calc_resinv(INT t, INT v, INT k, INT delta_lambda, INT &c, INT &T, INT &V, I
 	Delta_lambda = calc_delta_lambda(V, T, K, FALSE);
 	a = Delta_lambda * (v + 1 - k);
 	b = delta_lambda * (k - t);
-	g = gcd_INT(a, b);
+	g = gcd_int(a, b);
 	c = a / g;
 	return TRUE;
 }
 
-void design_mendelsohn_coefficient_matrix(INT t, INT m, matrix & M)
+void design_mendelsohn_coefficient_matrix(int t, int m, matrix & M)
 //The Mendelsohn equations for any $t$-$(v,k,\lambda)$ design $\cD = (\cV, \cB)$  
 //and any $m$-subset $M \subseteq \cV$ are for $s \ge 1$:
 //\[
@@ -267,7 +267,7 @@ void design_mendelsohn_coefficient_matrix(INT t, INT m, matrix & M)
 //\]
 //cf. Mendelsohn~\cite{Mendelsohn71}.
 {
-	INT i, j;
+	int i, j;
 	
 	M.m_mn_n(t + 1, m + 1);
 	for (i = 0; i <= t; i++) {
@@ -277,9 +277,9 @@ void design_mendelsohn_coefficient_matrix(INT t, INT m, matrix & M)
 		}
 }
 
-void design_mendelsohn_rhs(INT v, INT t, INT k, discreta_base& lambda, INT m, INT s, Vector & rhs)
+void design_mendelsohn_rhs(int v, int t, int k, discreta_base& lambda, int m, int s, Vector & rhs)
 {
-	INT i;
+	int i;
 	discreta_base a, b, c;
 	
 	rhs.m_l(t + 1);
@@ -291,12 +291,12 @@ void design_mendelsohn_rhs(INT v, INT t, INT k, discreta_base& lambda, INT m, IN
 		}
 }
 
-INT design_parameter_database_already_there(database &D, design_parameter &p, INT& idx)
+int design_parameter_database_already_there(database &D, design_parameter &p, int& idx)
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	btree& B_tvkl = D.btree_access_i(2);
 	
-	idx = B_tvkl.search_unique_INT4_INT4_INT4_INT4(
+	idx = B_tvkl.search_unique_int4_int4_int4_int4(
 		p.t(), p.v(), p.K(), p.lambda().s_i_i(), verbose_level);
 	if (idx == -1)
 		return FALSE;
@@ -304,10 +304,10 @@ INT design_parameter_database_already_there(database &D, design_parameter &p, IN
 		return TRUE;
 }
 
-void design_parameter_database_add_if_new(database &D, design_parameter &p, INT& highest_id, INT verbose_level)
+void design_parameter_database_add_if_new(database &D, design_parameter &p, int& highest_id, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT idx;
+	int f_v = (verbose_level >= 1);
+	int idx;
 	
 	if (!design_parameter_database_already_there(D, p, idx)) {
 		p.id() = ++highest_id;
@@ -317,7 +317,7 @@ void design_parameter_database_add_if_new(database &D, design_parameter &p, INT&
 			}
 		}
 	else {
-		INT btree_idx = 2;
+		int btree_idx = 2;
 		btree& B_tvkl = D.btree_access_i(btree_idx);
 	
 		design_parameter p1;
@@ -327,7 +327,7 @@ void design_parameter_database_add_if_new(database &D, design_parameter &p, INT&
 		B_tvkl.ith(idx, &key, &data, verbose_level - 1);
 		D.get_object(&data, p1, verbose_level - 2);
 		// D.ith_object(idx, btree_idx, p1, FALSE, FALSE);
-		for (INT i = 0; i < p.source().s_l(); i++) {
+		for (int i = 0; i < p.source().s_l(); i++) {
 			p1.source().append(p.source_i(i));
 			}
 		D.delete_object(p1, data.datref, verbose_level - 2);
@@ -338,19 +338,19 @@ void design_parameter_database_add_if_new(database &D, design_parameter &p, INT&
 		}
 }
 
-void design_parameter_database_closure(database &D, INT highest_id_already_closed, INT minimal_t, INT verbose_level)
+void design_parameter_database_closure(database &D, int highest_id_already_closed, int minimal_t, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
 	
 	if (!D.f_open()) {
 		cout << "design_parameter_database_closure() database not open" << endl;
 		exit(1);
 		}
-	INT highest_id, old_highest_id, id;
-	INT btree_idx_id = 0;
+	int highest_id, old_highest_id, id;
+	int btree_idx_id = 0;
 	
-	highest_id = D.get_highest_INT4(btree_idx_id);
+	highest_id = D.get_highest_int4(btree_idx_id);
 	old_highest_id = highest_id;
 	if (f_v) {
 		cout << "design_parameter_database_closure() highest_id_already_closed=" << highest_id_already_closed 
@@ -359,39 +359,39 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 	for (id = highest_id_already_closed + 1; id <= highest_id; id++) {
 		design_parameter p, q;
 		
-		D.get_object_by_unique_INT4(btree_idx_id, id, p, verbose_level);
+		D.get_object_by_unique_int4(btree_idx_id, id, p, verbose_level);
 		if (f_vv) {
 			cout << "closure of design #" << id << " : " << p << endl;
 			}
 		
 		if (f_vv) cout << "reduced_t:" << endl;
 		p.reduced_t(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 		
 		if (f_vv) cout << "derived:" << endl;
 		p.derived(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 		
 		if (f_vv) cout << "residual:" << endl;
 		p.residual(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 		
 		if (p.trung_complementary(q)) {
 			if (f_vv) cout << "trung_complementary:" << endl;
-			if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+			if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 				design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 				}
 			}
 		
 		if (p.alltop(q)) {
 			if (f_vv) cout << "alltop:" << endl;
-			if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+			if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 				design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 				}
 			}
@@ -399,7 +399,7 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 		if (p.v() == 2 * p.K() + 1) {
 			if (f_vv) cout << "complementary design:" << endl;
 			p.complementary(q);
-			if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+			if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 				design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 				}
 			}
@@ -407,36 +407,36 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 #if 0
 		if (f_vv) cout << "supplementary design:" << endl;
 		p.supplementary(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 #endif
 		
 		if (f_vv) cout << "supplementary_reduced_t:" << endl;
 		p.supplementary_reduced_t(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 
 		if (f_vv) cout << "supplementary_derived:" << endl;
 		p.supplementary_derived(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 		
 		if (f_vv) cout << "supplementary_residual:" << endl;
 		p.supplementary_residual(q);
-		if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+		if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 			design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 			}
 		
-		INT t1, v1, k1;
+		int t1, v1, k1;
 		discreta_base lambda1;
-		INT t_new, v_new, k_new;
+		int t_new, v_new, k_new;
 		discreta_base lambda_new;
-		INT idx;
+		int idx;
 		
-		if (p.trung_left_partner(t1, v1, k1, lambda1, t_new, v_new, k_new, lambda_new) && lambda_new.s_kind() == INTEGER) {
+		if (p.trung_left_partner(t1, v1, k1, lambda1, t_new, v_new, k_new, lambda_new) && lambda_new.s_kind() == intEGER) {
 			if (f_vv) cout << "trung_left_partner:" << endl;
 			q.init();
 			q.t() = t1;
@@ -453,13 +453,13 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 				S.rule() = rule_trung_left;
 				S.prev() = p.id();
 				q.source().append(S);
-				if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+				if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 					design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 					}
 				}
 			}
 		
-		if (p.trung_right_partner(t1, v1, k1, lambda1, t_new, v_new, k_new, lambda_new) && lambda_new.s_kind() == INTEGER) {
+		if (p.trung_right_partner(t1, v1, k1, lambda1, t_new, v_new, k_new, lambda_new) && lambda_new.s_kind() == intEGER) {
 			if (f_vv) cout << "trung_right_partner:" << endl;
 			q.init();
 			q.t() = t1;
@@ -476,7 +476,7 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 				S.rule() = rule_trung_right;
 				S.prev() = p.id();
 				q.source().append(S);
-				if (q.t() >= minimal_t && q.lambda().s_kind() == INTEGER) {
+				if (q.t() >= minimal_t && q.lambda().s_kind() == intEGER) {
 					design_parameter_database_add_if_new(D, q, highest_id, verbose_level - 2);
 					}
 				}
@@ -492,12 +492,12 @@ void design_parameter_database_closure(database &D, INT highest_id_already_close
 
 //#define BUFSIZE 50000
 
-void design_parameter_database_read_design_txt(char *fname_design_txt, char *path_db, INT f_form_closure, INT minimal_t, INT verbose_level)
+void design_parameter_database_read_design_txt(char *fname_design_txt, char *path_db, int f_form_closure, int minimal_t, int verbose_level)
 {
 	char buf[BUFSIZE], *p_buf;
 	char comment[BUFSIZE];
-	INT t, v, k, lambda;
-	INT btree_idx_id = 0;
+	int t, v, k, lambda;
+	int btree_idx_id = 0;
 
 	ifstream f(fname_design_txt);
 	if (!f) {
@@ -510,8 +510,8 @@ void design_parameter_database_read_design_txt(char *fname_design_txt, char *pat
 	p.init_database(D, path_db);
 	D.open(verbose_level - 1);
 
-	INT id = 0;
-	INT highest_id_already_closed = -1;
+	int id = 0;
+	int highest_id_already_closed = -1;
 	while (TRUE) {
 		if (f.eof()) {
 			break;
@@ -549,10 +549,10 @@ void design_parameter_database_read_design_txt(char *fname_design_txt, char *pat
 		design_lambda_ijs_matrix(t, v, k, lambda_object, 1 /* s */, M);
 		}
 		
-		INT idx;
+		int idx;
 		if (design_parameter_database_already_there(D, p, idx)) {
 			cout << "already there, we are changing the dataset:" << endl;
-			INT highest_id = -1;
+			int highest_id = -1;
 				// highest_id is not used in the following routine 
 				//as we know the dataset is already there:
 			design_parameter_database_add_if_new(D, p, highest_id, verbose_level - 2);
@@ -563,7 +563,7 @@ void design_parameter_database_read_design_txt(char *fname_design_txt, char *pat
 			if (f_form_closure)
 				design_parameter_database_closure(D, highest_id_already_closed, minimal_t, verbose_level - 2);
 	
-			highest_id_already_closed = D.get_highest_INT4(btree_idx_id);
+			highest_id_already_closed = D.get_highest_int4(btree_idx_id);
 			id = highest_id_already_closed + 1;
 			}
 		}
@@ -576,9 +576,9 @@ void design_parameter_database_read_design_txt(char *fname_design_txt, char *pat
 
 void design_parameter_database_export_tex(char *path_db)
 {
-	INT verbose_level = 0;
-	INT btree_idx_id = 0;
-	INT btree_idx_tvkl = 2;
+	int verbose_level = 0;
+	int btree_idx_id = 0;
+	int btree_idx_tvkl = 2;
 	
 	design_parameter p;
 	database D;
@@ -586,15 +586,15 @@ void design_parameter_database_export_tex(char *path_db)
 	p.init_database(D, path_db);
 	D.open(verbose_level);
 
-	INT id, highest_id;
+	int id, highest_id;
 	
-	highest_id = D.get_highest_INT4(btree_idx_id);
+	highest_id = D.get_highest_int4(btree_idx_id);
 
 	cout << "design_parameter_database_export_tex() db_path=" << path_db << " highest_id = " << highest_id << endl;
 
 
 
-	INT highest_page = highest_id / 100, i, page;
+	int highest_page = highest_id / 100, i, page;
 	Vector fname_page;
 	
 	fname_page.m_l(highest_page + 1);
@@ -625,8 +625,8 @@ void design_parameter_database_export_tex(char *path_db)
 
 	f << "\n\\chapter{Designs by $t, v, k, \\lambda$}\n\n";
 	btree &B = D.btree_access_i(btree_idx_tvkl);
-	INT idx, len;
-	INT t_min, t_max, t;
+	int idx, len;
+	int t_min, t_max, t;
 	
 	len = B.length(verbose_level - 2);
 	D.ith_object(0, btree_idx_tvkl, p, verbose_level - 2);
@@ -650,14 +650,14 @@ void design_parameter_database_export_tex(char *path_db)
 	fhtml_dir << "<ul>" << endl;
 	
 	for (t = t_min; t <= t_max; t++) {
-		INT first, len;
-		INT v, v_min, v_max;
+		int first, len;
+		int v, v_min, v_max;
 		
-		B.search_interval_INT4(t, t, first, len, verbose_level);
+		B.search_interval_int4(t, t, first, len, verbose_level);
 		if (len == 0)
 			continue;
 		
-		INT nb_restricted = determine_restricted_number_of_designs_t(D, B, btree_idx_tvkl, t, first, len);
+		int nb_restricted = determine_restricted_number_of_designs_t(D, B, btree_idx_tvkl, t, first, len);
 
 
 		f << "\\newpage\n\n";
@@ -680,17 +680,17 @@ void design_parameter_database_export_tex(char *path_db)
 
 		fhtml_dir << "<ul>" << endl;
 		for (v = v_min; v <= v_max; v++) {
-			INT first, len;
-			INT k, k_min, k_max;
+			int first, len;
+			int k, k_min, k_max;
 		
-			B.search_interval_INT4_INT4(t, t, v, v, first, len, verbose_level);
+			B.search_interval_int4_int4(t, t, v, v, first, len, verbose_level);
 			if (len == 0)
 				continue;
 		
 		
 			f << "\n\\subsection{Designs with $t=" << t << "$, $v=" << v << "$}\n\n";
 		
-			INT nb_restricted = determine_restricted_number_of_designs_t_v(D, B, btree_idx_tvkl, t, v, first, len);
+			int nb_restricted = determine_restricted_number_of_designs_t_v(D, B, btree_idx_tvkl, t, v, first, len);
 			
 			f << "There are alltogether " << nb_restricted << " parameter sets of designs with $t=" << t << "$ and $v=" << v << "$.\\\\" << endl;
 		
@@ -726,9 +726,9 @@ void design_parameter_database_export_tex(char *path_db)
 
 
 			for (k = k_min; k <= k_max; k++) {
-				INT first, len;
+				int first, len;
 		
-				B.search_interval_INT4_INT4_INT4(t, t, v, v, k, k, first, len, verbose_level);
+				B.search_interval_int4_int4_int4(t, t, v, v, k, k, first, len, verbose_level);
 				if (len == 0)
 					continue;
 				
@@ -736,7 +736,7 @@ void design_parameter_database_export_tex(char *path_db)
 				design_lambda_max(t, v, k, lambda_max);
 				design_lambda_max_half(t, v, k, lambda_max_half);
 				// cout << "t=" << t << " v=" << v << " k=" << k << " lambda_max=" << lambda_max << endl;
-				INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+				int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 
 
 
@@ -746,8 +746,8 @@ void design_parameter_database_export_tex(char *path_db)
 				v_lambda.m_l(len);
 				v_id.m_l_n(len);
 				
-				INT l = 0;
-				for (INT i = 0; i < len; i++) {
+				int l = 0;
+				for (int i = 0; i < len; i++) {
 					idx = first + i;
 					D.ith_object(idx, btree_idx_tvkl, p, verbose_level - 2);
 					
@@ -761,7 +761,7 @@ void design_parameter_database_export_tex(char *path_db)
 				if (l) {
 					if (l == 1) {
 						hollerith link;
-						INT id = v_id.s_ii(0);
+						int id = v_id.s_ii(0);
 						prepare_link(link, id);
 						f << "$" << t << "$-$(" << v << "," << k << ", " << v_lambda.s_i(0) << "_{\\#" << v_id.s_ii(0) << "})$" << endl;
 						fhtml << "<a href=\"" << link.s() << "\">" << t << "-(" << v << "," << k << ", " << v_lambda.s_i(0) << ") </a><br>" << endl;
@@ -769,9 +769,9 @@ void design_parameter_database_export_tex(char *path_db)
 					else {
 						f << t << "-(" << v << "," << k << ",$\\lambda$) for $\\lambda \\in \\{";
 						fhtml << t << "-(" << v << "," << k << ",lambda) for lambda in {";
-						for (INT ii = 0; ii < l; ii++) {
+						for (int ii = 0; ii < l; ii++) {
 							hollerith link;
-							INT id = v_id.s_ii(ii);
+							int id = v_id.s_ii(ii);
 							prepare_link(link, id);
 
 							f << v_lambda.s_i(ii) << "_{\\#" << v_id.s_ii(ii) << "}";
@@ -821,7 +821,7 @@ void design_parameter_database_export_tex(char *path_db)
 			f << "\n\\section{ID $\\ge " << id << "$}\n\n";
 			cout << "ID >= " << id << endl;
 			}
-		if (!D.get_object_by_unique_INT4_if_there(btree_idx_id, id, p, verbose_level))
+		if (!D.get_object_by_unique_int4_if_there(btree_idx_id, id, p, verbose_level))
 			continue;
 		// f << "\\subsection*{\\# " << id << "}\n";
 		// f << "\\label{designID" << id << "}\n";
@@ -830,7 +830,7 @@ void design_parameter_database_export_tex(char *path_db)
 		p.text_parameter(h);
 		f << "\\# " << p.id() << ": " << h.s() << endl;
 			
-		INT j, l;
+		int j, l;
 			
 		design_parameter p1, ancestor;
 		Vector path;
@@ -892,14 +892,14 @@ void design_parameter_database_export_tex(char *path_db)
 		html_head(fhtml, h1.s(), h2.s());	
 
 		for (id = page * 100; id <= MINIMUM((page + 1) * 100 - 1, highest_id); id++) {
-			if (!D.get_object_by_unique_INT4_if_there(btree_idx_id, id, p, verbose_level))
+			if (!D.get_object_by_unique_int4_if_there(btree_idx_id, id, p, verbose_level))
 				continue;
 		
 			hollerith h;
 			p.text_parameter(h);
 			fhtml << "<a name=\"design"<< p.id() << "\"> # " << p.id() << ": " << h.s() << "</a>" << endl;
 			
-			INT j, l;
+			int j, l;
 			
 			design_parameter ancestor, p1;
 			Vector path;
@@ -958,13 +958,13 @@ void design_parameter_database_export_tex(char *path_db)
 	
 }
 
-INT determine_restricted_number_of_designs_t(database &D, btree &B, 
-	INT btree_idx_tvkl, INT t, INT first, INT len)
+int determine_restricted_number_of_designs_t(database &D, btree &B, 
+	int btree_idx_tvkl, int t, int first, int len)
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	design_parameter p;
-	INT v, v_min, v_max;
-	INT nb_restricted = 0;
+	int v, v_min, v_max;
+	int nb_restricted = 0;
 	
 	D.ith_object(first, btree_idx_tvkl, p, verbose_level - 2);
 	v_min = p.v();
@@ -972,9 +972,9 @@ INT determine_restricted_number_of_designs_t(database &D, btree &B,
 	v_max = p.v();
 
 	for (v = v_min; v <= v_max; v++) {
-		INT first, len;
+		int first, len;
 		
-		B.search_interval_INT4_INT4(t, t, v, v, first, len, verbose_level);
+		B.search_interval_int4_int4(t, t, v, v, first, len, verbose_level);
 		if (len == 0)
 			continue;
 		
@@ -985,13 +985,13 @@ INT determine_restricted_number_of_designs_t(database &D, btree &B,
 	return nb_restricted;
 }
 
-INT determine_restricted_number_of_designs_t_v(database &D, btree &B, 
-	INT btree_idx_tvkl, INT t, INT v, INT first, INT len)
+int determine_restricted_number_of_designs_t_v(database &D, btree &B, 
+	int btree_idx_tvkl, int t, int v, int first, int len)
 {
-	INT verbose_level = 0;
+	int verbose_level = 0;
 	design_parameter p;
-	INT k, k_min, k_max;
-	INT nb_restricted = 0;
+	int k, k_min, k_max;
+	int nb_restricted = 0;
 	
 	D.ith_object(first, btree_idx_tvkl, p, verbose_level - 2);
 	k_min = p.K();
@@ -999,9 +999,9 @@ INT determine_restricted_number_of_designs_t_v(database &D, btree &B,
 	k_max = p.K();
 
 	for (k = k_min; k <= k_max; k++) {
-		INT first, len;
+		int first, len;
 		
-		B.search_interval_INT4_INT4_INT4(t, t, v, v, k, k, first, len, verbose_level);
+		B.search_interval_int4_int4_int4(t, t, v, v, k, k, first, len, verbose_level);
 		if (len == 0)
 			continue;
 				
@@ -1009,11 +1009,11 @@ INT determine_restricted_number_of_designs_t_v(database &D, btree &B,
 		design_lambda_max(t, v, k, lambda_max);
 		design_lambda_max_half(t, v, k, lambda_max_half);
 		// cout << "t=" << t << " v=" << v << " k=" << k << " lambda_max=" << lambda_max << endl;
-		// INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		// int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 
-		INT l = 0;
-		for (INT i = 0; i < len; i++) {
-			INT idx = first + i;
+		int l = 0;
+		for (int i = 0; i < len; i++) {
+			int idx = first + i;
 			D.ith_object(idx, btree_idx_tvkl, p, verbose_level - 2);
 					
 			if (p.lambda().s_i_i() > lambda_max_half.s_i_i())
@@ -1025,13 +1025,13 @@ INT determine_restricted_number_of_designs_t_v(database &D, btree &B,
 	return nb_restricted;
 }
 
-void prepare_design_parameters_from_id(database &D, INT id, hollerith& h)
+void prepare_design_parameters_from_id(database &D, int id, hollerith& h)
 {
-	INT verbose_level = 0;
-	INT btree_idx_id = 0;
+	int verbose_level = 0;
+	int btree_idx_id = 0;
 	design_parameter p;
 	
-	D.get_object_by_unique_INT4(btree_idx_id, id, p, verbose_level);
+	D.get_object_by_unique_int4(btree_idx_id, id, p, verbose_level);
 	h.init("");
 	h.append_i(p.t());
 	h.append("-(");
@@ -1043,9 +1043,9 @@ void prepare_design_parameters_from_id(database &D, INT id, hollerith& h)
 	h.append(")");
 }
 
-void prepare_link(hollerith& link, INT id)
+void prepare_link(hollerith& link, int id)
 {
-	INT page = id / 100;
+	int page = id / 100;
 	link.init("design_id_ge_");
 	link.append_i(page * 100);
 	link.append(".html#design");
@@ -1054,11 +1054,11 @@ void prepare_link(hollerith& link, INT id)
 
 #include <stdio.h>
 
-void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_vv)
+void design_parameter_database_clans(char *path_db, int f_html, int f_v, int f_vv)
 {
-	INT verbose_level = 0;
-	INT btree_idx_id = 0;
-	//INT btree_idx_tvkl = 2;
+	int verbose_level = 0;
+	int btree_idx_id = 0;
+	//int btree_idx_tvkl = 2;
 	
 	design_parameter p, q;
 	database D;
@@ -1067,9 +1067,9 @@ void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_v
 	p.init_database(D, path_db);
 	D.open(verbose_level);
 
-	INT id, highest_id, idx1, idx2;
+	int id, highest_id, idx1, idx2;
 	
-	highest_id = D.get_highest_INT4(btree_idx_id);
+	highest_id = D.get_highest_int4(btree_idx_id);
 
 	ancestor.m_l(0);
 	clan_lambda.m_l(0);
@@ -1077,7 +1077,7 @@ void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_v
 	clan_member_path.m_l(0);
 	for (id = 0; id <= highest_id; id++) {
 
-		if (!D.get_object_by_unique_INT4_if_there(btree_idx_id, id, p, verbose_level))
+		if (!D.get_object_by_unique_int4_if_there(btree_idx_id, id, p, verbose_level))
 			continue;
 		
 				
@@ -1142,17 +1142,17 @@ void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_v
 		// cout << "clan = " << ancestor << endl;
 		}
 	
-	INT i, l, j, ll, h, lll;
+	int i, l, j, ll, h, lll;
 	l = ancestor.s_l();
 	cout << "there are " << l << " clans of design parameter sets:" << endl;
 	for (i = 0; i < l; i++) {
 		cout << "clan no " << i << " : ancestor = " << ancestor[i];
 		Vector &g = ancestor[i].as_vector();
-		INT t = g.s_ii(0);
-		INT v = g.s_ii(1);
-		INT k = g.s_ii(2);
+		int t = g.s_ii(0);
+		int v = g.s_ii(1);
+		int k = g.s_ii(2);
 		
-		INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 		cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half;
 		design_lambda_max(t, v, k, lambda_max);
@@ -1164,11 +1164,11 @@ void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_v
 	for (i = 0; i < l; i++) {
 		cout << i << " & " << ancestor[i];
 		Vector &g = ancestor[i].as_vector();
-		INT t = g.s_ii(0);
-		INT v = g.s_ii(1);
-		INT k = g.s_ii(2);
+		int t = g.s_ii(0);
+		int v = g.s_ii(1);
+		int k = g.s_ii(2);
 		
-		INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 		cout << " & " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half;
 		design_lambda_max(t, v, k, lambda_max);
@@ -1195,11 +1195,11 @@ void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_v
 	for (i = 0; i < l; i++) {
 		cout << "clan no " << i << " : ancestor = " << ancestor[i];
 		Vector &g = ancestor[i].as_vector();
-		INT t = g.s_ii(0);
-		INT v = g.s_ii(1);
-		INT k = g.s_ii(2);
+		int t = g.s_ii(0);
+		int v = g.s_ii(1);
+		int k = g.s_ii(2);
 		
-		INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 		cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half;
 		design_lambda_max(t, v, k, lambda_max);
@@ -1231,11 +1231,11 @@ void design_parameter_database_clans(char *path_db, INT f_html, INT f_v, INT f_v
 		}
 }
 
-void design_parameter_database_family_report(char *path_db, INT t, INT v, INT k, INT lambda, INT minimal_t)
+void design_parameter_database_family_report(char *path_db, int t, int v, int k, int lambda, int minimal_t)
 {
-	INT verbose_level = 0;
-	// INT btree_idx_id = 0;
-	INT btree_idx_tvkl = 2;
+	int verbose_level = 0;
+	// int btree_idx_id = 0;
+	int btree_idx_tvkl = 2;
 	
 	cout << "design_parameter_database_family_report() t=" << t << " v=" << v << " k=" << k << " lambda=" << lambda << endl;
 	design_parameter p;
@@ -1248,7 +1248,7 @@ void design_parameter_database_family_report(char *path_db, INT t, INT v, INT k,
 	
 	btree& B_tvkl = D.btree_access_i(btree_idx_tvkl);
 	
-	INT h, i, j, idx, id;
+	int h, i, j, idx, id;
 	
 	Layers.m_l(t + 1);
 	for (h = 0; h <= t; h++) {
@@ -1268,8 +1268,8 @@ void design_parameter_database_family_report(char *path_db, INT t, INT v, INT k,
 
 				prepare_entry(entry, i, j, h, t, v, k, lambda);
 				id = -1;
-				if (entry.s_i(3).s_kind() == INTEGER) {
-					idx = B_tvkl.search_unique_INT4_INT4_INT4_INT4(entry.s_ii(0), entry.s_ii(1), entry.s_ii(2), entry.s_ii(3), verbose_level);
+				if (entry.s_i(3).s_kind() == intEGER) {
+					idx = B_tvkl.search_unique_int4_int4_int4_int4(entry.s_ii(0), entry.s_ii(1), entry.s_ii(2), entry.s_ii(3), verbose_level);
 					// idx is -1 if the dataset has not been found.
 					if (idx != -1) {
 						D.ith_object(idx, btree_idx_tvkl, p, verbose_level - 2);
@@ -1308,11 +1308,11 @@ void design_parameter_database_family_report(char *path_db, INT t, INT v, INT k,
 		} // next h
 }
 
-static void prepare_entry(Vector &entry, INT i, INT j, INT h, INT t, INT v, INT k, INT lambda)
+static void prepare_entry(Vector &entry, int i, int j, int h, int t, int v, int k, int lambda)
 {
 	design_parameter p, q;
 	
-	INT h1 = h - i - j, u;
+	int h1 = h - i - j, u;
 	if (h1 < 0) {
 		cout << "prepare_entry() h1 < 0" << endl;
 		exit(1);
@@ -1341,9 +1341,9 @@ static void prepare_entry(Vector &entry, INT i, INT j, INT h, INT t, INT v, INT 
 
 void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vector &clan_lambda, Vector & clan_member, Vector & clan_member_path)
 {
-	INT verbose_level = 0;
-	INT btree_idx_id = 0;
-	//INT btree_idx_tvkl = 2;
+	int verbose_level = 0;
+	int btree_idx_id = 0;
+	//int btree_idx_tvkl = 2;
 	
 	design_parameter p, q;
 	database D;
@@ -1351,9 +1351,9 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 	p.init_database(D, path_db);
 	D.open(verbose_level);
 
-	INT highest_id;
+	int highest_id;
 	
-	highest_id = D.get_highest_INT4(btree_idx_id);
+	highest_id = D.get_highest_int4(btree_idx_id);
 
 	hollerith fname, fname_tex, fname_dir, h1, h2;
 
@@ -1369,14 +1369,14 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 	fhtml_dir << "in brackets: number of families / overall number of design parameter sets per clan<br>" << endl;
 
 	fhtml_dir << "<ul>" << endl;
-	INT i, j, l, ll, s, lll;
+	int i, j, l, ll, s, lll;
 	l = ancestor.s_l();
 	for (i = 0; i < l; i++) {
 		Vector &a = ancestor[i].as_vector();
-		INT t = a.s_ii(0);
-		INT v = a.s_ii(1);
-		INT k = a.s_ii(2);
-		INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int t = a.s_ii(0);
+		int v = a.s_ii(1);
+		int k = a.s_ii(2);
+		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 		//cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half, m_max, dl, r;
 		dl.m_i_i(delta_lambda);
@@ -1400,9 +1400,9 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 	for (i = 0; i < l; i++) {
 
 		Vector &a = ancestor[i].as_vector();
-		INT t = a.s_ii(0);
-		INT v = a.s_ii(1);
-		INT k = a.s_ii(2);
+		int t = a.s_ii(0);
+		int v = a.s_ii(1);
+		int k = a.s_ii(2);
 		fname.init("design_clan_");
 		fname.append_i(t);
 		fname.append("_");
@@ -1433,7 +1433,7 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 		html_head(fhtml, h1.s(), h2.s());	
 
 
-		INT delta_lambda = calc_delta_lambda(v, t, k, FALSE);
+		int delta_lambda = calc_delta_lambda(v, t, k, FALSE);
 		//cout << " delta_lambda = " << delta_lambda;
 		discreta_base lambda_max, lambda_max_half, m_max, dl, r;
 		dl.m_i_i(delta_lambda);
@@ -1468,10 +1468,10 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 			ftex << "\\subsubsection*{Family with $\\lambda=" << lambda << "$}" << endl;
 			ftex << "The family contains " << lll << " design parameter sets:\\\\" << endl;
 #if 0
-			INT h;
+			int h;
 			for (h = 0; h < lll; h++) {
 				hollerith link, text1;
-				INT id = cm.s_ii(h);
+				int id = cm.s_ii(h);
 				Vector &path = cmp.s_i(h).as_vector();
 				prepare_link(link, id);
 				fhtml << " <a href=\"" << link.s() << "\">";
@@ -1483,7 +1483,7 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 			fhtml << endl;
 #endif
 			Vector min_path, max_path;
-			INT max_depth, minimal_t;
+			int max_depth, minimal_t;
 		
 			determine_minimal_and_maximal_path(cmp, min_path, max_path, max_depth);
 			minimal_t = t - max_depth;
@@ -1505,9 +1505,9 @@ void design_parameter_database_clan_report(char *path_db, Vector &ancestor, Vect
 	D.close(verbose_level);
 }
 
-static void determine_minimal_and_maximal_path(Vector &v, Vector & min_path, Vector & max_path, INT & max_depth)
+static void determine_minimal_and_maximal_path(Vector &v, Vector & min_path, Vector & max_path, int & max_depth)
 {
-	INT i, l, j, ll, depth;
+	int i, l, j, ll, depth;
 	
 	l = v.s_l();
 	if (l == 0) {
@@ -1533,10 +1533,10 @@ static void determine_minimal_and_maximal_path(Vector &v, Vector & min_path, Vec
 		}
 }
 
-static void determine_dominating_ancestor(INT t, INT v, INT k, discreta_base & lambda, Vector & path, design_parameter &dominating_ancestor)
+static void determine_dominating_ancestor(int t, int v, int k, discreta_base & lambda, Vector & path, design_parameter &dominating_ancestor)
 {
 	design_parameter p, q;
-	INT u;
+	int u;
 	
 	p.init(t, v, k, lambda);
 	for (u = 0; u < path.s_ii(0); u++) {
@@ -1556,7 +1556,7 @@ static void determine_dominating_ancestor(INT t, INT v, INT k, discreta_base & l
 
 static void reduce_path(Vector &cmp, Vector &min_path)
 {
-	INT i, l, j;
+	int i, l, j;
 	
 	l = cmp.s_l();
 	for (i = 0; i < l; i++) {
@@ -1567,9 +1567,9 @@ static void reduce_path(Vector &cmp, Vector &min_path)
 		}
 }
 
-static void family_report(database & D, ostream& fhtml, ostream &ftex, INT t, INT v, INT k, discreta_base &lambda, Vector & cm, Vector & cmp, INT minimal_t)
+static void family_report(database & D, ostream& fhtml, ostream &ftex, int t, int v, int k, discreta_base &lambda, Vector & cm, Vector & cmp, int minimal_t)
 {
-	INT h, i, j, idx, idx1, id, nb_found = 0;
+	int h, i, j, idx, idx1, id, nb_found = 0;
 	Vector Layers;
 	
 	permutation per;
@@ -1624,7 +1624,7 @@ static void family_report(database & D, ostream& fhtml, ostream &ftex, INT t, IN
 		matrix &M = Layers[h].as_matrix();
 		for (i = 0; i <= h; i++) {
 			for (j = 0; j <= h - i; j++) {
-				INT id = M.s_iji(i, j);
+				int id = M.s_iji(i, j);
 				Vector path;
 				
 				path.m_l_n(3);
@@ -1661,10 +1661,10 @@ static void family_report(database & D, ostream& fhtml, ostream &ftex, INT t, IN
 	fhtml << "</ul>" << endl;
 }
 
-static void f_m_j(INT m, INT j, discreta_base &a)
+static void f_m_j(int m, int j, discreta_base &a)
 {
-	INT q = m / j;
-	INT r = m % j;
+	int q = m / j;
+	int r = m % j;
 	if (q == 0) {
 		a.m_i_i(0);
 		return;
@@ -1688,9 +1688,9 @@ static void f_m_j(INT m, INT j, discreta_base &a)
 	a = c;
 }
 
-static INT max_m(INT i, INT j)
+static int max_m(int i, int j)
 {
-	INT m;
+	int m;
 	discreta_base a, b, c, d, two;
 	
 	two.m_i_i(2);
@@ -1706,9 +1706,9 @@ static INT max_m(INT i, INT j)
 		}
 }
 
-INT Maxfit(INT i, INT j)
+int Maxfit(int i, int j)
 {
-	INT a, b, c;
+	int a, b, c;
 	
 	a = max_m(i, j);
 	b = max_m(j, i);
@@ -1722,8 +1722,8 @@ void create_all_masks(char *label,
 	int nb_row_partitions, char *row_partitions[], 
 	int nb_col_partitions, char *col_partitions[])
 {
-	INT ci, cj;
-	INT no;
+	int ci, cj;
+	int no;
 	matrix number_of_masks;
 
 	number_of_masks.m_mn_n(nb_row_partitions, nb_col_partitions);
@@ -1741,17 +1741,17 @@ void create_all_masks(char *label,
 }
 
 	
-INT create_masks(char *label, 
+int create_masks(char *label, 
 	int nb_row_partitions, char *row_partitions[], 
 	int nb_col_partitions, char *col_partitions[], 
 	int ci, int cj)
 {
-	INT no = 0;
+	int no = 0;
 	geo_generate G;
 	Vector v;
 	Vector aut_generators;
 	base ago;
-	INT i, j, l, ll, h, idx, first, jj, l1, l2;
+	int i, j, l, ll, h, idx, first, jj, l1, l2;
 	Vector prev_row, prev_col;
 	hollerith fname;
 	matrix M;
@@ -1853,11 +1853,11 @@ INT create_masks(char *label,
 			cout << "reduced mask:" << endl << M << endl;
 			{
 				hollerith hh;
-				INT f_row_decomp = FALSE;
-				INT f_col_decomp = FALSE;
+				int f_row_decomp = FALSE;
+				int f_col_decomp = FALSE;
 				Vector row_decomp, col_decomp;
-				INT f_labelling_points = FALSE;
-				INT f_labelling_blocks = FALSE;
+				int f_labelling_points = FALSE;
+				int f_labelling_blocks = FALSE;
 				Vector point_labels, block_labels;
 				
 				hh.init(label);
@@ -1886,7 +1886,7 @@ INT create_masks(char *label,
 #endif
 
 #if 0
-void orbits_in_product_action(INT n1, INT n2, INT f_v, INT f_vv)
+void orbits_in_product_action(int n1, int n2, int f_v, int f_vv)
 {
 	char * s[] = { "C", "", "C", "", "X" };
 	char s_n1[100];
@@ -1905,7 +1905,7 @@ void orbits_in_product_action(INT n1, INT n2, INT f_v, INT f_vv)
 	cout << "group " << group_label << ", " << group_label_tex << endl;
 	cout << gen << endl;
 	
-	INT f_cyclic_notation = TRUE;
+	int f_cyclic_notation = TRUE;
 	write_file_of_generators_xml_group_label(gen, group_label.s(), f_cyclic_notation);
 	write_file_of_generators_group_label(gen, group_label.s());
 	write_file_of_generators_gap_group_label(gen, group_label.s());
@@ -1915,7 +1915,7 @@ void orbits_in_product_action(INT n1, INT n2, INT f_v, INT f_vv)
 	
 }
 
-void orbits_in_product_action_D_CC(INT n1, INT p1, INT p2, INT f_v, INT f_vv)
+void orbits_in_product_action_D_CC(int n1, int p1, int p2, int f_v, int f_vv)
 {
 	char * s[] = { "D", "", "C", "", "C", "", "X", "X" };
 	char s_n1[100];
@@ -1937,7 +1937,7 @@ void orbits_in_product_action_D_CC(INT n1, INT p1, INT p2, INT f_v, INT f_vv)
 	cout << "group " << group_label << ", " << group_label_tex << endl;
 	cout << gen << endl;
 	
-	INT f_cyclic_notation = TRUE;
+	int f_cyclic_notation = TRUE;
 	write_file_of_generators_xml_group_label(gen, group_label.s(), f_cyclic_notation);
 	write_file_of_generators_group_label(gen, group_label.s());
 	write_file_of_generators_gap_group_label(gen, group_label.s());
@@ -1945,7 +1945,7 @@ void orbits_in_product_action_D_CC(INT n1, INT p1, INT p2, INT f_v, INT f_vv)
 	prepare_2_orbits_in_product_action(group_label.s(), gen, n1, p1 * p2, f_v, f_vv);
 }
 
-void orbits_in_product_action_CC_D(INT p1, INT p2, INT n2, INT f_v, INT f_vv)
+void orbits_in_product_action_CC_D(int p1, int p2, int n2, int f_v, int f_vv)
 {
 	char * s[] = { "C", "", "C", "", "X", "D", "", "X" };
 	char s_p1[100];
@@ -1967,7 +1967,7 @@ void orbits_in_product_action_CC_D(INT p1, INT p2, INT n2, INT f_v, INT f_vv)
 	cout << "group " << group_label << ", " << group_label_tex << endl;
 	cout << gen << endl;
 	
-	INT f_cyclic_notation = TRUE;
+	int f_cyclic_notation = TRUE;
 	write_file_of_generators_xml_group_label(gen, group_label.s(), f_cyclic_notation);
 	write_file_of_generators_group_label(gen, group_label.s());
 	write_file_of_generators_gap_group_label(gen, group_label.s());
@@ -1975,22 +1975,22 @@ void orbits_in_product_action_CC_D(INT p1, INT p2, INT n2, INT f_v, INT f_vv)
 	prepare_2_orbits_in_product_action(group_label.s(), gen, p1 * p2, n2, f_v, f_vv);
 }
 
-void orbits_in_product_action_extended(INT q1, INT q2, INT u, INT v, INT f_v, INT f_vv)
+void orbits_in_product_action_extended(int q1, int q2, int u, int v, int f_v, int f_vv)
 {
 	Vector gen;
 	hollerith label;
-	INT f_write_generators_to_file = TRUE;
+	int f_write_generators_to_file = TRUE;
 	vec_generators_q1_q2_aubv(q1, q2, u, v, gen, label, f_write_generators_to_file, f_v, f_vv);
 	
 	prepare_2_orbits_in_product_action(label.s(), gen, q1, q2, f_v, f_vv);
 }
 
-void orbits_in_product_action_extended_twice(INT q1, INT q2, INT u1, INT v1, INT u2, INT v2, 
-	INT f_cycle_index, INT f_cycle_index_on_pairs, INT f_v, INT f_vv)
+void orbits_in_product_action_extended_twice(int q1, int q2, int u1, int v1, int u2, int v2, 
+	int f_cycle_index, int f_cycle_index_on_pairs, int f_v, int f_vv)
 {
 	hollerith label;
 	Vector gen;
-	INT f_write_generators_to_file = TRUE;
+	int f_write_generators_to_file = TRUE;
 	
 	cout << "design.C: orbits_in_product_action_extended_twice" << endl;
 	
@@ -2019,15 +2019,15 @@ void orbits_in_product_action_extended_twice(INT q1, INT q2, INT u1, INT v1, INT
 
 }
 
-void extract_subgroup(INT q1, INT q2, INT u1, INT v1, INT f_cycle_index)
+void extract_subgroup(int q1, int q2, int u1, int v1, int f_cycle_index)
 {
 	Vector gen, gen1;
-	INT f_v = FALSE;
-	INT f_vv = FALSE;
+	int f_v = FALSE;
+	int f_vv = FALSE;
 	hollerith label;
-	INT f_write_generators_to_file = FALSE;
+	int f_write_generators_to_file = FALSE;
 	vec_generators_q1_q2_aubv(q1, q2, u1, v1, gen, label, f_write_generators_to_file, f_v, f_vv);
-	INT l;
+	int l;
 	
 	gen1.m_l(1);
 	l = gen.s_l();

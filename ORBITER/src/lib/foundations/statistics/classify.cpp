@@ -32,32 +32,32 @@ classify::~classify()
 {
 	//cout << "in ~classify()" << endl;
 	if (data_sorted)
-		FREE_INT(data_sorted);
+		FREE_int(data_sorted);
 	if (sorting_perm)
-		FREE_INT(sorting_perm);
+		FREE_int(sorting_perm);
 	if (sorting_perm_inv)
-		FREE_INT(sorting_perm_inv);
+		FREE_int(sorting_perm_inv);
 	if (type_first)
-		FREE_INT(type_first);
+		FREE_int(type_first);
 	if (type_len)
-		FREE_INT(type_len);
+		FREE_int(type_len);
 	if (second_data_sorted)
-		FREE_INT(second_data_sorted);
+		FREE_int(second_data_sorted);
 	if (second_sorting_perm)
-		FREE_INT(second_sorting_perm);
+		FREE_int(second_sorting_perm);
 	if (second_sorting_perm_inv)
-		FREE_INT(second_sorting_perm_inv);
+		FREE_int(second_sorting_perm_inv);
 	if (second_type_first)
-		FREE_INT(second_type_first);
+		FREE_int(second_type_first);
 	if (second_type_len)
-		FREE_INT(second_type_len);
+		FREE_int(second_type_len);
 	//cout << "~classify() finished" << endl;
 }
 
-void classify::init(INT *data,
-		INT data_length, INT f_second, INT verbose_level)
+void classify::init(int *data,
+		int data_length, int f_second, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "classify::init" << endl;
@@ -66,12 +66,12 @@ void classify::init(INT *data,
 	classify::data_length = data_length;
 	classify::f_second = f_second;
 	
-	INT_vec_classify(data_length, data, data_sorted, 
+	int_vec_classify(data_length, data, data_sorted, 
 		sorting_perm, sorting_perm_inv, 
 		nb_types, type_first, type_len);
 	
 	if (f_second) {
-		INT_vec_classify(nb_types, type_len, second_data_sorted, 
+		int_vec_classify(nb_types, type_len, second_data_sorted, 
 			second_sorting_perm, second_sorting_perm_inv, 
 			second_nb_types, second_type_first, second_type_len);
 		}
@@ -81,9 +81,9 @@ void classify::init(INT *data,
 }
 
 #if 0
-INT classify::compare_type(INT *type_coded, INT nb_types)
+int classify::compare_type(int *type_coded, int nb_types)
 {
-	INT i;
+	int i;
 	
 	for (i = 0; i < nb_types; i++) {
 		if (
@@ -91,9 +91,9 @@ INT classify::compare_type(INT *type_coded, INT nb_types)
 }
 #endif
 
-INT classify::class_of(INT pt_idx)
+int classify::class_of(int pt_idx)
 {
-	INT a, i;
+	int a, i;
 
 	a = sorting_perm[pt_idx];
 	for (i = 0; i < nb_types; i++) {
@@ -106,7 +106,7 @@ INT classify::class_of(INT pt_idx)
 	exit(1);
 }
 
-void classify::print(INT f_backwards)
+void classify::print(int f_backwards)
 {
 	if (f_second) {
 		print_second(f_backwards);
@@ -116,70 +116,70 @@ void classify::print(INT f_backwards)
 		}
 }
 
-void classify::print_first(INT f_backwards)
+void classify::print_first(int f_backwards)
 {
-	INT_vec_print_types(cout, f_backwards, data_sorted, 
+	int_vec_print_types(cout, f_backwards, data_sorted, 
 		nb_types, type_first, type_len);
 	cout << endl;	
 }
 
-void classify::print_second(INT f_backwards)
+void classify::print_second(int f_backwards)
 {
 	if (f_second) {
-		INT_vec_print_types(cout, f_backwards, second_data_sorted, 
+		int_vec_print_types(cout, f_backwards, second_data_sorted, 
 			second_nb_types, second_type_first, second_type_len);
 		cout << endl;	
 		}
 
 }
 
-void classify::print_file(ostream &ost, INT f_backwards)
+void classify::print_file(ostream &ost, int f_backwards)
 {
 	if (f_second) {
-		INT_vec_print_types_naked(ost, f_backwards, second_data_sorted, 
+		int_vec_print_types_naked(ost, f_backwards, second_data_sorted, 
 			second_nb_types, second_type_first, second_type_len);
 		ost << endl;	
 		}
 	else {
-		INT_vec_print_types_naked(ost, f_backwards, data_sorted, 
+		int_vec_print_types_naked(ost, f_backwards, data_sorted, 
 			nb_types, type_first, type_len);
 		ost << endl;	
 		}
 }
 
-void classify::print_file_tex(ostream &ost, INT f_backwards)
+void classify::print_file_tex(ostream &ost, int f_backwards)
 {
 	if (f_second) {
 		ost << "$(";
-		INT_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted, 
+		int_vec_print_types_naked_tex(ost, f_backwards, second_data_sorted, 
 			second_nb_types, second_type_first, second_type_len);
 		ost << ")$";
 		ost << endl;	
 		}
 	else {
 		ost << "$(";
-		INT_vec_print_types_naked_tex(ost, f_backwards, data_sorted, 
+		int_vec_print_types_naked_tex(ost, f_backwards, data_sorted, 
 			nb_types, type_first, type_len);
 		ost << ")$";
 		ost << endl;	
 		}
 }
 
-void classify::print_naked(INT f_backwards)
+void classify::print_naked(int f_backwards)
 {
 	if (f_second) {
-		INT_vec_print_types_naked(cout, f_backwards, second_data_sorted, 
+		int_vec_print_types_naked(cout, f_backwards, second_data_sorted, 
 			second_nb_types, second_type_first, second_type_len);
 		//cout << endl;	
 		}
 	else {
-		INT_vec_print_types_naked(cout, f_backwards, data_sorted, 
+		int_vec_print_types_naked(cout, f_backwards, data_sorted, 
 			nb_types, type_first, type_len);
 		//cout << endl;	
 		}
 }
 
-void classify::print_naked_tex(ostream &ost, INT f_backwards)
+void classify::print_naked_tex(ostream &ost, int f_backwards)
 {
 	if (f_second) {
 		print_types_naked_tex(ost, f_backwards, second_data_sorted, 
@@ -194,10 +194,10 @@ void classify::print_naked_tex(ostream &ost, INT f_backwards)
 }
 
 void classify::print_types_naked_tex(
-	ostream &ost, INT f_backwards, INT *the_vec_sorted,
-	INT nb_types, INT *type_first, INT *type_len)
+	ostream &ost, int f_backwards, int *the_vec_sorted,
+	int nb_types, int *type_first, int *type_len)
 {
-	INT i, f, l, a;
+	int i, f, l, a;
 
 	if (f_backwards) {
 		for (i = nb_types - 1; i >= 0; i--) {
@@ -239,7 +239,7 @@ void classify::print_types_naked_tex(
 
 double classify::average()
 {
-	INT i, f, l, L, a, s;
+	int i, f, l, L, a, s;
 	
 	s = 0;
 	L = 0;
@@ -255,7 +255,7 @@ double classify::average()
 
 double classify::average_of_non_zero_values()
 {
-	INT i, f, l, L, a, s;
+	int i, f, l, L, a, s;
 	
 	s = 0;
 	L = 0;
@@ -272,14 +272,14 @@ double classify::average_of_non_zero_values()
 }
 
 void classify::get_data_by_multiplicity(
-		INT *&Pts, INT &nb_pts, INT multiplicity, INT verbose_level)
+		int *&Pts, int &nb_pts, int multiplicity, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "classify::get_data_by_multiplicity" << endl;
 		}
-	INT i, j, f, l;
+	int i, j, f, l;
 	
 	nb_pts = 0;
 	for (i = 0; i < nb_types; i++) {
@@ -288,7 +288,7 @@ void classify::get_data_by_multiplicity(
 			nb_pts++;
 			}
 		}
-	Pts = NEW_INT(nb_pts);
+	Pts = NEW_int(nb_pts);
 	j = 0;
 	for (i = 0; i < nb_types; i++) {
 		l = type_len[i];
@@ -300,28 +300,28 @@ void classify::get_data_by_multiplicity(
 }
 
 void classify::get_class_by_value(
-		INT *&Pts, INT &nb_pts, INT value, INT verbose_level)
+		int *&Pts, int &nb_pts, int value, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "classify::get_class_by_value" << endl;
 		}
-	INT i, j, f, l;
+	int i, j, f, l;
 	
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = type_len[i];
 		if (data_sorted[f] == value) {
 			nb_pts = l;
-			Pts = NEW_INT(nb_pts);
+			Pts = NEW_int(nb_pts);
 			for (j = 0; j < l; j++) {
 				Pts[j] = sorting_perm_inv[f + j];
 				}
 			return;
 			}
 		}
-	Pts = NEW_INT(1);
+	Pts = NEW_int(1);
 	nb_pts = 0;
 	//cout << "classify::get_class_by_value
 	//ßdid not find the value" << endl;
@@ -329,11 +329,11 @@ void classify::get_class_by_value(
 }
 
 set_of_sets *classify::get_set_partition_and_types(
-		INT *&types, INT &nb_types, INT verbose_level)
+		int *&types, int &nb_types, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 	set_of_sets *SoS;
-	INT i, j, f, l;
+	int i, j, f, l;
 
 	if (f_v) {
 		cout << "classify::get_set_partition_and_types" << endl;
@@ -343,7 +343,7 @@ set_of_sets *classify::get_set_partition_and_types(
 	SoS->init_basic(data_length /* underlying_set_size */,
 			classify::nb_types, type_len, 0 /* verbose_level */);
 	nb_types = classify::nb_types;
-	types = NEW_INT(nb_types);
+	types = NEW_int(nb_types);
 	for (i = 0; i < nb_types; i++) {
 		f = type_first[i];
 		l = type_len[i];

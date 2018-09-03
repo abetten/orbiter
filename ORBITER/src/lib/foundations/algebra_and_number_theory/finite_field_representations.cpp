@@ -10,10 +10,10 @@
 
 #include "foundations.h"
 
-void finite_field::representing_matrix8_R(INT *A,
-		INT q, INT a, INT b, INT c, INT d)
+void finite_field::representing_matrix8_R(int *A,
+		int q, int a, int b, int c, int d)
 {
-	INT i;	
+	int i;	
 	
 	for (i = 0; i < 8 * 8; i++) {
 		A[i] = 0;
@@ -93,15 +93,15 @@ void finite_field::representing_matrix8_R(INT *A,
 	transpose_matrix_in_place(A, 8);
 }
 
-void finite_field::representing_matrix9_R(INT *A,
-		INT q, INT a, INT b, INT c, INT d)
+void finite_field::representing_matrix9_R(int *A,
+		int q, int a, int b, int c, int d)
 {
-	INT i;
-	INT tq = 2 * q;
-	INT tq1 = 2 * q + 1;
-	INT tq2 = 2 * q + 2;
-	INT q1 = q + 1;
-	INT q2 = q + 2;
+	int i;
+	int tq = 2 * q;
+	int tq1 = 2 * q + 1;
+	int tq2 = 2 * q + 2;
+	int q1 = q + 1;
+	int q2 = q + 2;
 	
 	
 	for (i = 0; i < 9 * 9; i++) {
@@ -200,11 +200,11 @@ void finite_field::representing_matrix9_R(INT *A,
 	
 }
 
-void finite_field::representing_matrix9_U(INT *A,
-		INT a, INT b, INT c, INT d, INT beta)
+void finite_field::representing_matrix9_U(int *A,
+		int a, int b, int c, int d, int beta)
 {
-	INT beta_q, delta, gamma;
-	INT r, q, q1,q2,tq, tq1; //, tq2;
+	int beta_q, delta, gamma;
+	int r, q, q1,q2,tq, tq1; //, tq2;
 	
 	r = e >> 1;
 	if (e != 2 * r) {
@@ -315,14 +315,14 @@ void finite_field::representing_matrix9_U(INT *A,
 	
 }
 
-void finite_field::representing_matrix8_U(INT *A, INT a, INT b, INT c, INT d, INT beta)
+void finite_field::representing_matrix8_U(int *A, int a, int b, int c, int d, int beta)
 {
-	INT delta1, delta2;
-	INT r, q, i, j;
-	INT beta_2, beta_11, beta_22, beta_21, beta_12, beta_123, beta_132;
-	INT gamma3, gamma4, gamma5, gamma6, gamma7, gamma8;
-	INT *eta, *M1, *B1;
-	INT *zeta, *M2, *B2;
+	int delta1, delta2;
+	int r, q, i, j;
+	int beta_2, beta_11, beta_22, beta_21, beta_12, beta_123, beta_132;
+	int gamma3, gamma4, gamma5, gamma6, gamma7, gamma8;
+	int *eta, *M1, *B1;
+	int *zeta, *M2, *B2;
 	
 	
 	
@@ -356,12 +356,12 @@ void finite_field::representing_matrix8_U(INT *A, INT a, INT b, INT c, INT d, IN
 	//cout << "beta_trinomial(q, beta, 1, 2, 3)=" << beta_trinomial(q, beta, 1, 2, 3) << endl;
 	//cout << "beta_trinomial(q, beta, 2, 1, 3)=" << beta_trinomial(q, beta, 2, 1, 3) << endl;
 	
-	eta = NEW_INT(2 * 3);
-	zeta = NEW_INT(2 * 3);
-	M1 = NEW_INT(2 * 3);
-	M2 = NEW_INT(2 * 3);
-	B1 = NEW_INT(3 * 3);
-	B2 = NEW_INT(3 * 3);
+	eta = NEW_int(2 * 3);
+	zeta = NEW_int(2 * 3);
+	M1 = NEW_int(2 * 3);
+	M2 = NEW_int(2 * 3);
+	B1 = NEW_int(3 * 3);
+	B2 = NEW_int(3 * 3);
 	
 	M1[0 * 3 + 0] = m_term(q, d, b, c);
 	M1[0 * 3 + 1] = m_term(q, d, a, d);
@@ -399,10 +399,10 @@ void finite_field::representing_matrix8_U(INT *A, INT a, INT b, INT c, INT d, IN
 	
 	mult_matrix(M1, B1, eta, 2, 3, 3);
 	mult_matrix(M2, B2, zeta, 2, 3, 3);
-	INT eta11, eta12, eta13;
-	INT eta21, eta22, eta23;
-	INT zeta11, zeta12, zeta13;
-	INT zeta21, zeta22, zeta23;
+	int eta11, eta12, eta13;
+	int eta21, eta22, eta23;
+	int zeta11, zeta12, zeta13;
+	int zeta21, zeta22, zeta23;
 	eta11 = eta[0*3+0];
 	eta12 = eta[0*3+1];
 	eta13 = eta[0*3+2];
@@ -501,19 +501,19 @@ void finite_field::representing_matrix8_U(INT *A, INT a, INT b, INT c, INT d, IN
 			A[i * 8 + j] = mult(A[i * 8 + j], delta2);
 			}
 		}
-	FREE_INT(eta);
-	FREE_INT(zeta);
-	FREE_INT(M1);
-	FREE_INT(M2);
-	FREE_INT(B1);
-	FREE_INT(B2);
+	FREE_int(eta);
+	FREE_int(zeta);
+	FREE_int(M1);
+	FREE_int(M2);
+	FREE_int(B1);
+	FREE_int(B2);
 }
 
-void finite_field::representing_matrix8_V(INT *A, INT beta)
+void finite_field::representing_matrix8_V(int *A, int beta)
 {
-	INT delta1, delta2;
-	INT beta_21, beta_12, beta_123, beta_132;
-	INT r, q, i, j;
+	int delta1, delta2;
+	int beta_21, beta_12, beta_123, beta_132;
+	int r, q, i, j;
 	
 	
 	
@@ -571,9 +571,9 @@ void finite_field::representing_matrix8_V(INT *A, INT beta)
 }
 
 
-void finite_field::representing_matrix9b(INT *A, INT beta)
+void finite_field::representing_matrix9b(int *A, int beta)
 {
-	INT r, /*q,*/ beta_q, delta, minus_one, i;
+	int r, /*q,*/ beta_q, delta, minus_one, i;
 		// gamma, betagamma, i, Tgamma, Tbetagamma, nTgamma;
 	
 	r = e / 2;
@@ -631,14 +631,14 @@ void finite_field::representing_matrix9b(INT *A, INT beta)
 #endif
 }
 
-void finite_field::representing_matrix8a(INT *A,
-		INT a, INT b, INT c, INT d, INT beta)
+void finite_field::representing_matrix8a(int *A,
+		int a, int b, int c, int d, int beta)
 {
 
 
 #if 0
-	INT delta, omega, gamma, eta, zeta, epsilon, xi, tau;
-	INT r, q;
+	int delta, omega, gamma, eta, zeta, epsilon, xi, tau;
+	int r, q;
 	
 	r = e / 3;
 	if (e != 3 * r) {
@@ -741,9 +741,9 @@ A[7 * 8 + 7] = N3(a);
 #endif
 }
 
-void finite_field::representing_matrix8b(INT *A, INT beta)
+void finite_field::representing_matrix8b(int *A, int beta)
 {
-	INT r, q, delta, omega, i;
+	int r, q, delta, omega, i;
 	
 	r = e / 3;
 	if (e != 3 * r) {
@@ -805,51 +805,51 @@ void finite_field::representing_matrix8b(INT *A, INT beta)
 #endif
 }
 
-INT finite_field::Term1(INT a1, INT e1)
+int finite_field::Term1(int a1, int e1)
 {
-	INT x;
+	int x;
 	
 	x = term1(a1, e1);
 	return T2(x);
 }
 
-INT finite_field::Term2(INT a1, INT a2, INT e1, INT e2)
+int finite_field::Term2(int a1, int a2, int e1, int e2)
 {
-	INT x;
+	int x;
 	
 	x = term2(a1, a2, e1, e2);
 	return T2(x);
 }
 
-INT finite_field::Term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3)
+int finite_field::Term3(int a1, int a2, int a3, int e1, int e2, int e3)
 {
-	INT x;
+	int x;
 	
 	x = term3(a1, a2, a3, e1, e2, e3);
 	return T2(x);
 }
 
-INT finite_field::Term4(INT a1, INT a2, INT a3, INT a4,
-		INT e1, INT e2, INT e3, INT e4)
+int finite_field::Term4(int a1, int a2, int a3, int a4,
+		int e1, int e2, int e3, int e4)
 {
-	INT x;
+	int x;
 	
 	x = term4(a1, a2, a3, a4, e1, e2, e3, e4);
 	return T2(x);
 }
 
-INT finite_field::Term5(INT a1, INT a2, INT a3, INT a4, INT a5,
-		INT e1, INT e2, INT e3, INT e4, INT e5)
+int finite_field::Term5(int a1, int a2, int a3, int a4, int a5,
+		int e1, int e2, int e3, int e4, int e5)
 {
-	INT x;
+	int x;
 	
 	x = term5(a1, a2, a3, a4, a5, e1, e2, e3, e4, e5);
 	return T2(x);
 }
 
-INT finite_field::term1(INT a1, INT e1)
+int finite_field::term1(int a1, int e1)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	if (e1) {
@@ -858,9 +858,9 @@ INT finite_field::term1(INT a1, INT e1)
 	return x;
 }
 
-INT finite_field::term2(INT a1, INT a2, INT e1, INT e2)
+int finite_field::term2(int a1, int a2, int e1, int e2)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	if (e1) {
@@ -872,9 +872,9 @@ INT finite_field::term2(INT a1, INT a2, INT e1, INT e2)
 	return x;
 }
 
-INT finite_field::term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3)
+int finite_field::term3(int a1, int a2, int a3, int e1, int e2, int e3)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	if (e1) {
@@ -889,10 +889,10 @@ INT finite_field::term3(INT a1, INT a2, INT a3, INT e1, INT e2, INT e3)
 	return x;
 }
 
-INT finite_field::term4(INT a1, INT a2, INT a3, INT a4,
-		INT e1, INT e2, INT e3, INT e4)
+int finite_field::term4(int a1, int a2, int a3, int a4,
+		int e1, int e2, int e3, int e4)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	if (e1) {
@@ -910,10 +910,10 @@ INT finite_field::term4(INT a1, INT a2, INT a3, INT a4,
 	return x;
 }
 
-INT finite_field::term5(INT a1, INT a2, INT a3, INT a4, INT a5,
-		INT e1, INT e2, INT e3, INT e4, INT e5)
+int finite_field::term5(int a1, int a2, int a3, int a4, int a5,
+		int e1, int e2, int e3, int e4, int e5)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	if (e1) {
@@ -935,18 +935,18 @@ INT finite_field::term5(INT a1, INT a2, INT a3, INT a4, INT a5,
 }
 
 #if 0
-INT finite_field::product2(INT a1, INT a2)
+int finite_field::product2(int a1, int a2)
 {
-	INT x;
+	int x;
 	
 	x = mult(x, power(a1, a2));
 	return x;
 }
 #endif
 
-INT finite_field::m_term(INT q, INT a1, INT a2, INT a3)
+int finite_field::m_term(int q, int a1, int a2, int a3)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	x = mult(x, power(a1, q * q));
@@ -955,9 +955,9 @@ INT finite_field::m_term(INT q, INT a1, INT a2, INT a3)
 	return x;
 }
 
-INT finite_field::beta_trinomial(INT q, INT beta, INT a1, INT a2, INT a3)
+int finite_field::beta_trinomial(int q, int beta, int a1, int a2, int a3)
 {
-	INT x;
+	int x;
 	
 	x = 1;
 	x = mult(x, power(beta, a1 * q * q));
@@ -966,9 +966,9 @@ INT finite_field::beta_trinomial(INT q, INT beta, INT a1, INT a2, INT a3)
 	return x;
 }
 
-INT finite_field::T3product2(INT a1, INT a2)
+int finite_field::T3product2(int a1, int a2)
 {
-	INT x;
+	int x;
 	
 	x = mult(a1, a2);
 	return T3(x);

@@ -10,14 +10,14 @@
 
 int main(int argc, char **argv)
 {
-	INT i;
-	INT verbose_level = 0;
-	INT f_command_mask = FALSE;
+	int i;
+	int verbose_level = 0;
+	int f_command_mask = FALSE;
 	const char *command_mask = NULL;
-	INT f_N = FALSE;
-	INT N = 0;
-	INT f_nb = FALSE;
-	INT nb = 0;
+	int f_N = FALSE;
+	int N = 0;
+	int f_nb = FALSE;
+	int nb = 0;
 
 	for (i = 1; i < argc; i++) {
 		if (strcmp(argv[i], "-v") == 0) {

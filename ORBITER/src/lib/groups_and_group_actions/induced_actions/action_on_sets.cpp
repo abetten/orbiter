@@ -26,55 +26,55 @@ void action_on_sets::null()
 
 void action_on_sets::free()
 {
-	INT i;
+	int i;
 	
 	if (sets) {
 		for (i = 0; i < nb_sets; i++) {
-			FREE_INT(sets[i]);
+			FREE_int(sets[i]);
 			}
-		FREE_PINT(sets);
+		FREE_pint(sets);
 		}
 	if (image_set) {
-		FREE_INT(image_set);
+		FREE_int(image_set);
 		}
 	if (perm) {
-		FREE_INT(perm);
+		FREE_int(perm);
 		}
 	if (perm_inv) {
-		FREE_INT(perm_inv);
+		FREE_int(perm_inv);
 		}
 	null();
 }
 
 
-void action_on_sets::init(INT nb_sets, INT set_size, INT *input_sets, INT verbose_level)
+void action_on_sets::init(int nb_sets, int set_size, int *input_sets, int verbose_level)
 {
-	INT i, j;
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = FALSE; //(verbose_level >= 5);
+	int i, j;
+	int f_v = (verbose_level >= 1);
+	int f_vv = FALSE; //(verbose_level >= 5);
 	
 	if (f_v) {
 		cout << "action_on_sets::init nb_sets=" << nb_sets << " set_size=" << set_size << endl;
 		}
 	action_on_sets::nb_sets = nb_sets;
 	action_on_sets::set_size = set_size;
-	sets = NEW_PINT(nb_sets);
-	image_set = NEW_INT(set_size);
-	perm = NEW_INT(nb_sets);
-	perm_inv = NEW_INT(nb_sets);
+	sets = NEW_pint(nb_sets);
+	image_set = NEW_int(set_size);
+	perm = NEW_int(nb_sets);
+	perm_inv = NEW_int(nb_sets);
 	for (i = 0; i < nb_sets; i++) {
 		perm[i] = i;
 		perm_inv[i] = i;
 		}
 	for (i = 0; i < nb_sets; i++) {
-		sets[i] = NEW_INT(set_size);
+		sets[i] = NEW_int(set_size);
 		for (j = 0; j < set_size; j++) {
 			sets[i][j] = input_sets[i * set_size + j];
 			}
-		INT_vec_quicksort_increasingly(sets[i], set_size);
+		int_vec_quicksort_increasingly(sets[i], set_size);
 		if (f_vv) {
 			cout << "set " << setw(3) << i << " is ";
-			INT_vec_print(cout, sets[i], set_size);
+			int_vec_print(cout, sets[i], set_size);
 			cout << endl;
 			}
 		}
@@ -102,7 +102,7 @@ void action_on_sets::init(INT nb_sets, INT set_size, INT *input_sets, INT verbos
 		for (i = 0; i < nb_sets; i++) {
 			j = perm_inv[i];
 			cout << "set " << i << " is set " << j << " : ";
-			INT_vec_print(cout, sets[j], set_size);
+			int_vec_print(cout, sets[j], set_size);
 			cout << endl;
 			}
 #endif
@@ -112,11 +112,11 @@ void action_on_sets::init(INT nb_sets, INT set_size, INT *input_sets, INT verbos
 		}
 }
 
-void action_on_sets::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbose_level)
+void action_on_sets::compute_image(action *A, int *Elt, int i, int &j, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
-	INT f_vv = (verbose_level >= 2);
-	INT idx, res;
+	int f_v = (verbose_level >= 1);
+	int f_vv = (verbose_level >= 2);
+	int idx, res;
 
 	if (f_v) {
 		cout << "action_on_sets::compute_image i = " << i << endl;
@@ -136,7 +136,7 @@ void action_on_sets::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbo
 		}
 	if (f_vv) {
 		cout << "sets[perm[i]]:" << endl;
-		INT_vec_print(cout, sets[perm[i]], set_size);
+		int_vec_print(cout, sets[perm[i]], set_size);
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << sets[perm[i]][j] << " : " << endl;
@@ -147,7 +147,7 @@ void action_on_sets::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbo
 	A->map_a_set_and_reorder(sets[perm[i]], image_set, set_size, Elt, 0);
 	if (f_vv) {
 		cout << "after map_a_set_and_reorder:" << endl;
-		INT_vec_print(cout, image_set, set_size);
+		int_vec_print(cout, image_set, set_size);
 		cout << endl;
 		for (j = 0; j < set_size; j++) {
 			cout << j << " : " << image_set[j] << " : " << endl;
@@ -156,7 +156,7 @@ void action_on_sets::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbo
 			}
 		}
 	if (!vec_search((void **)sets, action_on_sets_compare_inverted, this, nb_sets, image_set, idx, verbose_level)) {
-		INT u, a, b;
+		int u, a, b;
 		cout << "action_on_sets::compute_image image set not found" << endl;
 		cout << "action = " << A->label << endl;
 
@@ -170,14 +170,14 @@ void action_on_sets::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbo
 		cout << "i=" << i << endl;
 		cout << "perm[i]=" << perm[i] << endl;
 		cout << "sets[perm[i]]:" << endl;
-		INT_vec_print_fully(cout, sets[perm[i]], set_size);
+		int_vec_print_fully(cout, sets[perm[i]], set_size);
 		cout << endl;
 		cout << "image_set:" << endl;
-		INT_vec_print_fully(cout, image_set, set_size);
+		int_vec_print_fully(cout, image_set, set_size);
 		cout << endl;
 		for (u = 0; u < nb_sets; u++) {
 			cout << u << " : ";
-			INT_vec_print(cout, sets[u], set_size);
+			int_vec_print(cout, sets[u], set_size);
 			cout << endl;
 			}
 		for (u = 0; u < set_size; u++) {
@@ -206,31 +206,31 @@ void action_on_sets::compute_image(action *A, INT *Elt, INT i, INT &j, INT verbo
 
 void action_on_sets::print_sets_sorted()
 {
-	INT i;
+	int i;
 	
 	cout << "the sets in the sorted ordering:" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " : is " << perm_inv[i] << " : ";
-		INT_vec_print(cout, sets[i], set_size);
+		int_vec_print(cout, sets[i], set_size);
 		cout << endl;
 		}
 }
 
 void action_on_sets::print_sets_in_original_ordering()
 {
-	INT i;
+	int i;
 	
 	cout << "the sets in the original ordering:" << endl;
 	for (i = 0; i < nb_sets; i++) {
 		cout << "set " << i << " : is " << perm[i] << " : ";
-		INT_vec_print(cout, sets[perm[i]], set_size);
+		int_vec_print(cout, sets[perm[i]], set_size);
 		cout << endl;
 		}
 }
 
 void action_on_sets::test_sets()
 {
-	INT i, c;
+	int i, c;
 	
 	for (i = 0; i < nb_sets - 1; i++) {
 		c = action_on_sets_compare(sets[i], sets[i + 1], this);
@@ -244,25 +244,25 @@ void action_on_sets::test_sets()
 
 
 
-INT action_on_sets_compare(void *a, void *b, void *data)
+int action_on_sets_compare(void *a, void *b, void *data)
 {
 	action_on_sets *AOS = (action_on_sets *) data;
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
-	INT c;
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int c;
 	
-	c = INT_vec_compare(A, B, AOS->set_size);
+	c = int_vec_compare(A, B, AOS->set_size);
 	return c;
 }
 
-INT action_on_sets_compare_inverted(void *a, void *b, void *data)
+int action_on_sets_compare_inverted(void *a, void *b, void *data)
 {
 	action_on_sets *AOS = (action_on_sets *) data;
-	INT *A = (INT *)a;
-	INT *B = (INT *)b;
-	INT c;
+	int *A = (int *)a;
+	int *B = (int *)b;
+	int c;
 	
-	c = INT_vec_compare(B, A, AOS->set_size);
+	c = int_vec_compare(B, A, AOS->set_size);
 	return c;
 }
 

@@ -8,27 +8,27 @@
 
 #include "orbiter.h"
 
-INT test_function_for_arc(INT len, INT *S, void *data, INT verbose_level);
+int test_function_for_arc(int len, int *S, void *data, int verbose_level);
 void do_simeon(set_and_stabilizer *SaS);
 
 
 // global variables:
-	INT verbose_level = 0;
-	INT q = 11;
-	INT d = 2; // largest number of points per line
-	INT n = 2; // projective dimension
-	INT k = 9; // size of the arc
+	int verbose_level = 0;
+	int q = 11;
+	int d = 2; // largest number of points per line
+	int n = 2; // projective dimension
+	int k = 9; // size of the arc
 	finite_field *F;
-	INT f_projective = TRUE;
-	INT f_general = FALSE;
-	INT f_affine = FALSE;
-	INT f_semilinear = FALSE;
-	INT f_special = FALSE;
+	int f_projective = TRUE;
+	int f_general = FALSE;
+	int f_affine = FALSE;
+	int f_semilinear = FALSE;
+	int f_special = FALSE;
 	sims *S;
 	action *A;
 	longinteger_object go;
-	INT *Elt;
-	INT *v;
+	int *Elt;
+	int *v;
 	schreier *Sch;
 	poset_classification *Gen;
 	projective_space *P;
@@ -41,10 +41,10 @@ void do_simeon(set_and_stabilizer *SaS);
 
 int main()
 {
-	INT i;
+	int i;
 
 		
-	v = NEW_INT(n + 1);
+	v = NEW_int(n + 1);
 
 	F = NEW_OBJECT(finite_field);
 	F->init(q, 0);
@@ -58,11 +58,11 @@ int main()
 	A->group_order(go);
 	cout << "created a group of order " << go << endl;
 	
-	Elt = NEW_INT(A->elt_size_in_INT);
+	Elt = NEW_int(A->elt_size_in_int);
 
 #if 0
-	for (i = 0; i < go.as_INT(); i++) {
-		S->element_unrank_INT(i, Elt, 0 /* verbose_level */);
+	for (i = 0; i < go.as_int(); i++) {
+		S->element_unrank_int(i, Elt, 0 /* verbose_level */);
 		cout << "element " << i << " / " << go << ":" << endl;
 		A->element_print_quick(Elt, cout);
 		}
@@ -71,7 +71,7 @@ int main()
 	for (i = 0; i < A->degree; i++) {
 		PG_element_unrank_modified(*F, v, 1, n + 1, i);
 		cout << "point " << i << " / " << A->degree << " is ";
-		INT_vec_print(cout, v, d);
+		int_vec_print(cout, v, d);
 		cout << endl;
 		}
 
@@ -100,12 +100,12 @@ int main()
 		FALSE /* f_W */, FALSE /* f_w */,
 		A /* action *A */, A /* action *A2 */, 
 		A->Strong_gens /* strong_generators *Strong_gens */, 
-		NULL /* void (*early_test_func_callback)(INT *S, INT len, 
-			INT *candidates, INT nb_candidates, 
-			INT *good_candidates, INT &nb_good_candidates, 
-			void *data, INT verbose_level) */,
+		NULL /* void (*early_test_func_callback)(int *S, int len, 
+			int *candidates, int nb_candidates, 
+			int *good_candidates, int &nb_good_candidates, 
+			void *data, int verbose_level) */,
 		NULL /* void *early_test_func_data */, 
-		test_function_for_arc /* INT (*candidate_incremental_check_func)(INT len, INT *S, void *data, INT verbose_level) */, 
+		test_function_for_arc /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level) */, 
 		NULL /* void *candidate_incremental_check_data */, 
 		verbose_level);
 
@@ -118,7 +118,7 @@ int main()
 
 	Gen->print_orbit_numbers(k);
 
-	INT nb_orbits;
+	int nb_orbits;
 
 	nb_orbits = Gen->nb_orbits_at_level(k);
 	cout << "We found " << nb_orbits << " orbits of subsets of size " << k << endl;
@@ -144,45 +144,45 @@ int main()
 }
 
 
-INT test_function_for_arc(INT len, INT *S, void *data, INT verbose_level)
+int test_function_for_arc(int len, int *S, void *data, int verbose_level)
 {
-	INT *type_collected;
-	INT i;
+	int *type_collected;
+	int i;
 
 	//cout << "test_function_for_arc" << endl;
-	type_collected = NEW_INT(len + 1);
-	P->line_intersection_type_collected(S /*INT *set */, len /* INT set_size */, 
+	type_collected = NEW_int(len + 1);
+	P->line_intersection_type_collected(S /*int *set */, len /* int set_size */, 
 		type_collected, 2 /*verbose_level */);
 	for (i = d + 1; i < len + 1; i++) {
 		if (type_collected[i]) {
-			FREE_INT(type_collected);
+			FREE_int(type_collected);
 			//cout << "test_function_for_arc fail" << endl;
 			return FALSE;
 			}
 		}
-	FREE_INT(type_collected);
+	FREE_int(type_collected);
 	//cout << "test_function_for_arc OK" << endl;
 	return TRUE;
 }
 
 void do_simeon(set_and_stabilizer *SaS)
 {
-	INT *type;
-	INT *original_arc;
-	INT original_arc_sz;
-	INT *bisecants;
-	INT *c2_points;
-	INT *external_lines;
-	INT nb_external_lines;
-	INT h, i, j, pi, pj, nb_bisecants, nb_c2points, bi, bj, a, idx, u, pt;
+	int *type;
+	int *original_arc;
+	int original_arc_sz;
+	int *bisecants;
+	int *c2_points;
+	int *external_lines;
+	int nb_external_lines;
+	int h, i, j, pi, pj, nb_bisecants, nb_c2points, bi, bj, a, idx, u, pt;
 
 	original_arc = SaS->data;
 	original_arc_sz = SaS->sz;
 
-	nb_bisecants = INT_n_choose_k(original_arc_sz, 2);
+	nb_bisecants = int_n_choose_k(original_arc_sz, 2);
 	nb_c2points = nb_bisecants * nb_bisecants;
-	type = NEW_INT(P->N_lines);
-	external_lines = NEW_INT(P->N_lines);
+	type = NEW_int(P->N_lines);
+	external_lines = NEW_int(P->N_lines);
 	nb_external_lines = 0;
 	P->line_intersection_type(original_arc, original_arc_sz, type, 0 /*verbose_level*/);
 
@@ -192,13 +192,13 @@ void do_simeon(set_and_stabilizer *SaS)
 			}
 		}
 	cout << "We found " << nb_external_lines << " external lines, they are: ";
-	INT_vec_print(cout, external_lines, nb_external_lines);
+	int_vec_print(cout, external_lines, nb_external_lines);
 	cout << endl;
 
 	cout << "compute bisecants and c2 points:" << endl;
 
 
-	bisecants = NEW_INT(nb_bisecants);
+	bisecants = NEW_int(nb_bisecants);
 	
 	h = 0;
 	for (i = 0; i < original_arc_sz; i++) {
@@ -213,10 +213,10 @@ void do_simeon(set_and_stabilizer *SaS)
 		exit(1);
 		}
 	cout << "We found " << nb_bisecants << " bisecants : ";
-	INT_vec_print(cout, bisecants, nb_bisecants);
+	int_vec_print(cout, bisecants, nb_bisecants);
 	cout << endl;
 	
-	c2_points = NEW_INT(nb_c2points);
+	c2_points = NEW_int(nb_c2points);
 
 	h = 0;
 	for (i = 0; i < nb_bisecants; i++) {
@@ -229,10 +229,10 @@ void do_simeon(set_and_stabilizer *SaS)
 				bj = bisecants[j];
 				a = P->line_intersection(bi, bj);
 			
-				if (INT_vec_search_linear(original_arc, original_arc_sz, a, idx)) {
+				if (int_vec_search_linear(original_arc, original_arc_sz, a, idx)) {
 					}
 				else {
-					if (!INT_vec_search(c2_points, h, a, idx)) {
+					if (!int_vec_search(c2_points, h, a, idx)) {
 						for (u = h; u > idx; u--) {
 							c2_points[u] = c2_points[u - 1];
 							}
@@ -244,22 +244,22 @@ void do_simeon(set_and_stabilizer *SaS)
 			}
 		}
 	cout << "We found " << h << " c2-points: ";
-	INT_vec_print(cout, c2_points, h);
+	int_vec_print(cout, c2_points, h);
 	cout << endl;
 
 	cout << "filtering the external lines:" << endl;
-	INT nb_filtered_lines;
-	INT *filtered_lines;
-	INT cnt;
+	int nb_filtered_lines;
+	int *filtered_lines;
+	int cnt;
 
 	nb_filtered_lines = 0;
-	filtered_lines = NEW_INT(nb_external_lines);
+	filtered_lines = NEW_int(nb_external_lines);
 	for (i = 0; i < nb_external_lines; i++) {
 		a = external_lines[i];
 		cnt = 0;
 		for (j = 0; j < q + 1; j++) {
 			pt = P->Lines[a * (q + 1) + j];
-			if (INT_vec_search(c2_points, h, pt, idx)) {
+			if (int_vec_search(c2_points, h, pt, idx)) {
 				cnt++;
 				}
 			}
@@ -274,7 +274,7 @@ void do_simeon(set_and_stabilizer *SaS)
 	A3 = A2->restricted_action(filtered_lines, nb_filtered_lines, verbose_level);
 
 
-	INT target_depth = 5;
+	int target_depth = 5;
 	poset_classification *Gen2;
 
 	compute_orbits_on_subsets(Gen2, 
@@ -283,27 +283,27 @@ void do_simeon(set_and_stabilizer *SaS)
 		FALSE /* f_W */, FALSE /* f_w */,
 		A /* action *A */, A3 /* action *A2 */, 
 		SaS->Strong_gens /* strong_generators *Strong_gens */, 
-		NULL /* void (*early_test_func_callback)(INT *S, INT len, 
-			INT *candidates, INT nb_candidates, 
-			INT *good_candidates, INT &nb_good_candidates, 
-			void *data, INT verbose_level) */,
+		NULL /* void (*early_test_func_callback)(int *S, int len, 
+			int *candidates, int nb_candidates, 
+			int *good_candidates, int &nb_good_candidates, 
+			void *data, int verbose_level) */,
 		NULL /* void *early_test_func_data */, 
-		NULL /* INT (*candidate_incremental_check_func)(INT len, INT *S, void *data, INT verbose_level) */, 
+		NULL /* int (*candidate_incremental_check_func)(int len, int *S, void *data, int verbose_level) */, 
 		NULL /* void *candidate_incremental_check_data */, 
 		5 /* verbose_level */);
 	
 	
 	Gen2->print_orbit_numbers(target_depth);
 
-	INT nb_orbits;
-	INT *covering_number;
-	INT count;
-	INT nb_sol = 0;
+	int nb_orbits;
+	int *covering_number;
+	int count;
+	int nb_sol = 0;
 
 	nb_orbits = Gen2->nb_orbits_at_level(target_depth);
 	cout << "We found " << nb_orbits << " orbits of subsets of filtered external lines of size " << k << endl;
 
-	covering_number = NEW_INT(h);
+	covering_number = NEW_int(h);
 
 	for (i = 0; i < nb_orbits; i++) {
 	
@@ -314,7 +314,7 @@ void do_simeon(set_and_stabilizer *SaS)
 		if ((i % 10000) == 0) {
 			cout << "testing orbit " << i << endl;
 			}
-		INT_vec_zero(covering_number, h);
+		int_vec_zero(covering_number, h);
 		for (j = 0; j < h; j++) {
 			for (u = 0; u < target_depth; u++) {
 				a = SaS->data[u];
@@ -335,7 +335,7 @@ void do_simeon(set_and_stabilizer *SaS)
 			SaS->print_set_tex(cout);
 			cout << endl;
 			cout << "covering_number: ";
-			INT_vec_print(cout, covering_number, h);
+			int_vec_print(cout, covering_number, h);
 			cout << endl;
 			nb_sol++;
 			}
@@ -347,7 +347,7 @@ void do_simeon(set_and_stabilizer *SaS)
 	cout << "number of solutions = " << nb_sol << endl;
 
 	
-	FREE_INT(type);
+	FREE_int(type);
 }
 
 

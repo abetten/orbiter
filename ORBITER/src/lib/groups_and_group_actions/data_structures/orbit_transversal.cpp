@@ -34,9 +34,9 @@ void orbit_transversal::freeself()
 }
 
 void orbit_transversal::read_from_file(
-		action *A, action *A2, const char *fname, INT verbose_level)
+		action *A, action *A2, const char *fname, int verbose_level)
 {
-	INT f_v = (verbose_level >= 1);
+	int f_v = (verbose_level >= 1);
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file fname = " << fname << endl;
@@ -45,13 +45,13 @@ void orbit_transversal::read_from_file(
 	orbit_transversal::A = A;
 	orbit_transversal::A2 = A2;
 
-	INT *Set_sizes;
-	INT **Sets;
+	int *Set_sizes;
+	int **Sets;
 	char **Ago_ascii;
 	char **Aut_ascii; 
-	INT *Casenumbers;
-	INT nb_cases, nb_cases_mod;
-	INT i;
+	int *Casenumbers;
+	int nb_cases, nb_cases_mod;
+	int i;
 
 	if (f_v) {
 		cout << "orbit_transversal::read_from_file "
@@ -87,14 +87,14 @@ void orbit_transversal::read_from_file(
 					<< 100. * (double) i / (double) nb_cases << "%" << endl;
 			}
 		strong_generators *gens;
-		INT *set;
+		int *set;
 
 		gens = NEW_OBJECT(strong_generators);
 		gens->init_from_ascii_coding(A,
 				Aut_ascii[i], 0 /* verbose_level */);
 		
-		set = NEW_INT(Set_sizes[i]);
-		INT_vec_copy(Sets[i], set, Set_sizes[i]);
+		set = NEW_int(Set_sizes[i]);
+		int_vec_copy(Sets[i], set, Set_sizes[i]);
 		Reps[i].init_everything(A, A2, set, Set_sizes[i], 
 			gens, 0 /* verbose_level */);
 
