@@ -516,87 +516,6 @@ void mem_object_registry::free_pint(int **p, const char *file, int line)
 	delete [] p;
 }
 
-#if 0
-int *mem_object_registry::allocate_int(int n, const char *file, int line)
-{
-	int f_v = (memory_debug_verbose_level >= 1);
-
-	if (f_v) {
-		cout << "mem_object_registry::allocate_int int[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
-	int *p;
-	p = new int[n];
-	if (f_memory_debug) {
-		add_to_registry(p /* pointer */,
-				POINTER_TYPE_int, (int) n, sizeof(int),
-				"", file, line,
-				memory_debug_verbose_level - 1);
-		}
-	return p;
-}
-
-void mem_object_registry::free_int(int *p, const char *file, int line)
-{
-	int f_v = (memory_debug_verbose_level >= 1);
-
-	if (f_v) {
-		cout << "mem_object_registry::free_int int[n], "
-				" file=" << file << " line=" << line << endl;
-	}
-	if (p == NULL) {
-		cout << "mem_object_registry::free_int "
-				"NULL pointer, ignoring" << endl;
-		cout << "p=" << p << " file=" << file
-				<< " line=" << line << endl;
-		return;
-		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
-	}
-	delete [] p;
-}
-
-int **mem_object_registry::allocate_pint(int n, const char *file, int line)
-{
-	int f_v = (memory_debug_verbose_level >= 1);
-
-	if (f_v) {
-		cout << "mem_object_registry::allocate_pint pint[n], "
-				"n=" << n << " file=" << file << " line=" << line << endl;
-	}
-	int **p;
-	p = new pint[n];
-	if (f_memory_debug) {
-		add_to_registry(p /* pointer */,
-				POINTER_TYPE_pint, (int) n, sizeof(int *),
-				"", file, line,
-				memory_debug_verbose_level - 1);
-		}
-	return p;
-}
-
-void mem_object_registry::free_pint(int **p, const char *file, int line)
-{
-	int f_v = (memory_debug_verbose_level >= 1);
-
-	if (f_v) {
-		cout << "mem_object_registry::free_pint pint[n], "
-				" file=" << file << " line=" << line << endl;
-	}
-	if (p == NULL) {
-		cout << "mem_object_registry::free_pint "
-				"NULL pointer, ignoring" << endl;
-		cout << "p=" << p << " file=" << file
-				<< " line=" << line << endl;
-		return;
-		}
-	if (f_memory_debug) {
-		delete_from_registry(p, memory_debug_verbose_level - 1);
-	}
-	delete [] p;
-}
-#endif
 int ***mem_object_registry::allocate_ppint(int n, const char *file, int line)
 {
 	int f_v = (memory_debug_verbose_level >= 1);
@@ -1170,6 +1089,7 @@ void mem_object_registry::sort_by_location_and_get_frequency(int verbose_level)
 	delete [] type_len;
 	delete [] perm;
 	delete [] perm_inv;
+	delete [] frequency;
 
 	if (f_v) {
 		cout << "mem_object_registry::sort_by_location_and_get_frequency" << endl;
