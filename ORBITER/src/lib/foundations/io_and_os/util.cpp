@@ -2077,7 +2077,7 @@ static void test_swap()
 {
 	//unsigned long test_long = 0x11223344L;
 	int4 test = 0x11223344L;
-	SCHAR *ptr;
+	char *ptr;
 	
 	ptr = (char *) &test;
 	if (ptr[0] == 0x44) {
@@ -2101,10 +2101,10 @@ static void test_swap()
 // There are "no" intervals of size "size".
 // This routine is due to Roland Grund
 
-void block_swap_chars(SCHAR *ptr, int size, int no)
+void block_swap_chars(char *ptr, int size, int no)
 {
-	SCHAR *ptr_end, *ptr_start;
-	SCHAR chr;
+	char *ptr_end, *ptr_start;
+	char chr;
 	int i;
 	
 	if (!f_has_swap_initialized)

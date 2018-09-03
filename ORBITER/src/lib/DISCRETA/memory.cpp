@@ -265,7 +265,7 @@ void memory::write_int(int i)
 #ifdef DEBUG_WRITE_int
 	cout << "memory::write_int(), at " << used_length() << ", writing int " << i1 << endl;
 #endif
-	block_swap_chars((SCHAR *) &i1, 4, 1);
+	block_swap_chars((char *) &i1, 4, 1);
 	append(4, (char *) &i1);
 }
 
@@ -290,7 +290,7 @@ void memory::read_int(int *i)
 		cp++;
 		}
 	/* i1 = *(int *) (cp + cur_p); */
-	block_swap_chars((SCHAR *) &i1, 4, 1);
+	block_swap_chars((char *) &i1, 4, 1);
 #ifdef DEBUG_WRITE_int
 	cout << "memory::read_int(), at " << cur_pointer() << ", reading " << i1 << endl;
 #endif

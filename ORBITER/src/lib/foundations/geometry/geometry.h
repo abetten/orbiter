@@ -930,7 +930,6 @@ int binomial2(int a);
 int binomial3(int a);
 int minus_one_if_positive(int i);
 void int_vec_bubblesort_increasing(int len, int *p);
-//int int_vec_search(int *v, int len, int a, int &idx);
 void int_vec_print(int *v, int len);
 int integer_vec_compare(int *p, int *q, int len);
 int int_ij2k(int i, int j, int n);

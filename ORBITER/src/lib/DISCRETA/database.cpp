@@ -174,7 +174,7 @@ void database::put_file_size()
 		}
 	file_seek(DB_POS_FILESIZE);
 	l = l1 = (int4) file_size();
-	block_swap_chars((SCHAR *)&l, sizeof(int4), 1);
+	block_swap_chars((char *)&l, sizeof(int4), 1);
 	file_write(&l, 4, 1);
 }
 
@@ -188,7 +188,7 @@ void database::get_file_size()
 		}
 	file_seek(DB_POS_FILESIZE);
 	file_read(&l, 4, 1);
-	block_swap_chars((SCHAR *)&l, sizeof(int4), 1);
+	block_swap_chars((char *)&l, sizeof(int4), 1);
 	file_size() = l;
 }
 
@@ -413,8 +413,8 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 		int4 *header2 = header + 4;
 		
 		pc1 = d + 8 * 4;
-		block_swap_chars((SCHAR *)header, sizeof(int4), 4);
-		block_swap_chars((SCHAR *)header2, sizeof(int4), 4);
+		block_swap_chars((char *)header, sizeof(int4), 4);
+		block_swap_chars((char *)header2, sizeof(int4), 4);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_object()|header: no MAGIC_SYNC" << endl;
 			cout << "data_type->datref=" << data_type->datref << endl;
@@ -453,7 +453,7 @@ void database::get_object(DATATYPE *data_type, Vector &the_object,
 		int4 *header = (int4 *) d;
 		
 		pc1 = d + 4 * 2;
-		block_swap_chars((SCHAR *)header, sizeof(int4), 2);
+		block_swap_chars((char *)header, sizeof(int4), 2);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_object()|header: no MAGIC_SYNC" << endl;
 			cout << "data_type->datref=" << data_type->datref << endl;
@@ -805,7 +805,7 @@ int database::get_size_from_datref(uint4 datref, int verbose_level)
 		header = new int4[8];
 		file_seek(((uint)datref) << size_of_header_log());
 		file_read((char *)header, 1, 8 * 4);
-		block_swap_chars((SCHAR *)header, sizeof(int4), 8);
+		block_swap_chars((char *)header, sizeof(int4), 8);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_size_from_datref()|header: no MAGIC_SYNC, probably the datref is wrong" << endl;
 			cout << "datref=" << datref << endl;
@@ -822,7 +822,7 @@ int database::get_size_from_datref(uint4 datref, int verbose_level)
 		header = new int4[2];
 		file_seek(((uint)datref) << size_of_header_log());
 		file_read((char *)header, 1, 4 * 2);
-		block_swap_chars((SCHAR *)header, sizeof(int4), 2);
+		block_swap_chars((char *)header, sizeof(int4), 2);
 		if (header[0] != MAGIC_SYNC) {
 			cout << "database::get_size_from_datref()|header: no MAGIC_SYNC, probably the datref is wrong" << endl;
 			cout << "datref=" << datref << endl;
@@ -884,7 +884,7 @@ void database::add_data_DB_standard(void *d,
 	header[1] = TRUE;
 	header[2] = (int4) size;
 	header[3] = (int4) total;
-	block_swap_chars((SCHAR *)header, sizeof(int4), 4);
+	block_swap_chars((char *)header, sizeof(int4), 4);
 	pi = (int4 *)data2;
 	pi[0] = header[0];
 	pi[1] = header[1];
@@ -894,7 +894,7 @@ void database::add_data_DB_standard(void *d,
 	pi[5] = header[1];
 	pi[6] = header[2];
 	pi[7] = header[3];
-	block_swap_chars((SCHAR *)header, sizeof(int4), 4);
+	block_swap_chars((char *)header, sizeof(int4), 4);
 		// swap header back, there will be another test 
 	pc = (char *)(pi + 8);
 	pc0 = (char *)d;
@@ -925,7 +925,7 @@ void database::add_data_DB_standard(void *d,
 	
 	file_seek(old_file_size);
 	file_read(new_header, 4, 4);
-	block_swap_chars((SCHAR *)new_header, sizeof(int4), 4);
+	block_swap_chars((char *)new_header, sizeof(int4), 4);
 	if (header[0] != new_header[0]) {
 		cout << "header[0] != new_header[0]\n";
 		}
@@ -964,11 +964,11 @@ void database::add_data_DB_compact(void *d,
 	data2 = (char *) new char[total];
 	header[0] = MAGIC_SYNC;
 	header[1] = (int4) size;
-	block_swap_chars((SCHAR *)header, sizeof(int4), 2);
+	block_swap_chars((char *)header, sizeof(int4), 2);
 	pi = (int4 *)data2;
 	pi[0] = header[0];
 	pi[1] = header[1];
-	block_swap_chars((SCHAR *)header, sizeof(int4), 2);
+	block_swap_chars((char *)header, sizeof(int4), 2);
 		// swap header back, there will be another test 
 	pc = (char *)(pi + 2);
 	pc0 = (char *)d;
@@ -995,7 +995,7 @@ void database::add_data_DB_compact(void *d,
 	
 	file_seek(old_file_size);
 	file_read(new_header, 4, 2);
-	block_swap_chars((SCHAR *)new_header, sizeof(int4), 2);
+	block_swap_chars((char *)new_header, sizeof(int4), 2);
 	if (header[0] != new_header[0]) {
 		cout << "header[0] != new_header[0]\n";
 		}
@@ -1020,7 +1020,7 @@ void database::free_data_DB(uint4 datref, int size, int verbose_level)
 	file_seek(((uint)datref) << size_of_header_log());
 	total = 8 * 4;
 	file_read(header, 1, total);
-	block_swap_chars((SCHAR *)header, 4, 8);
+	block_swap_chars((char *)header, 4, 8);
 	if (header[0] != MAGIC_SYNC) {
 		cout << "database::free_data_DB()|header: no MAGIC_SYNC\n";
 		exit(1);
@@ -1051,7 +1051,7 @@ void database::free_data_DB(uint4 datref, int size, int verbose_level)
 		}
 	header[1] = FALSE;
 	header[5] = FALSE;
-	block_swap_chars((SCHAR *)header, 4, 8);
+	block_swap_chars((char *)header, 4, 8);
 	file_seek(((uint)datref) << size_of_header_log());
 	file_write(header, 1, total);
 }
